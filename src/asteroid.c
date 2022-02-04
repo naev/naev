@@ -23,21 +23,17 @@
 #define DEBRIS_BUFFER         1000 /**< Buffer to smooth appearance of debris */
 
 /*
- * Asteroid types stack.
+ * Useful data for asteroids.
  */
-static AsteroidType *asteroid_types = NULL; /**< Asteroid types stack. */
-
-/*
- * Misc.
- */
-static glTexture **asteroid_gfx = NULL; /**< Graphics for the asteroids. */
+static AsteroidType *asteroid_types = NULL; /**< Asteroid types stack (array.h). */
+static glTexture **asteroid_gfx = NULL; /**< Graphics for the asteroids (array.h). */
 
 /* Prototypes. */
-static int asteroidTypes_cmp( const void *p1, const void *p2 );
-static int asteroidTypes_parse( AsteroidType *at, const char *file );
+static int asttype_cmp( const void *p1, const void *p2 );
+static int asttype_parse( AsteroidType *at, const char *file );
 static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
-static int asteroidTypes_load (void);
 static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys );
+static int asttype_load (void);
 
 static void space_renderAsteroid( const Asteroid *a );
 static void space_renderDebris( const Debris *d, double x, double y );
@@ -489,7 +485,7 @@ int asteroids_load (void)
    char **asteroid_files, file[PATH_MAX];
 
    /* Load asteroid types. */
-   ret = asteroidTypes_load();
+   ret = asttype_load();
    if (ret < 0)
       return ret;
 
@@ -505,7 +501,7 @@ int asteroids_load (void)
    return 0;
 }
 
-static int asteroidTypes_cmp( const void *p1, const void *p2 )
+static int asttype_cmp( const void *p1, const void *p2 )
 {
    const AsteroidType *at1, *at2;
    at1 = (const AsteroidType*) p1;
@@ -518,13 +514,13 @@ static int asteroidTypes_cmp( const void *p1, const void *p2 )
  *
  *    @return 0 on success.
  */
-static int asteroidTypes_load (void)
+static int asttype_load (void)
 {
    char **asteroid_files = ndata_listRecursive( ASTEROID_DATA_PATH );
    asteroid_types = array_create( AsteroidType );
    for (int i=0; i < array_size( asteroid_files ); i++) {
       if (ndata_matchExt( asteroid_files[i], "xml" )) {
-         int ret = asteroidTypes_parse( &array_grow(&asteroid_types), asteroid_files[i] );
+         int ret = asttype_parse( &array_grow(&asteroid_types), asteroid_files[i] );
          if (ret < 0) {
             int n = array_size(asteroid_types);
             array_erase( &asteroid_types, &asteroid_types[n-1], &asteroid_types[n] );
@@ -534,7 +530,7 @@ static int asteroidTypes_load (void)
    }
    array_free( asteroid_files );
 
-   qsort( asteroid_types, array_size(asteroid_types), sizeof(AsteroidType), asteroidTypes_cmp );
+   qsort( asteroid_types, array_size(asteroid_types), sizeof(AsteroidType), asttype_cmp );
 
    /* Shrink to minimum. */
    array_shrink( &asteroid_types );
@@ -548,7 +544,7 @@ static int asteroidTypes_load (void)
  *    @param[out] at Outfit asteroid type.
  *    @param file File containing the XML information.
  */
-static int asteroidTypes_parse( AsteroidType *at, const char *file )
+static int asttype_parse( AsteroidType *at, const char *file )
 {
    char *str;
    xmlNodePtr parent, node, cur;
@@ -863,7 +859,7 @@ const AsteroidType *asttype_get( int id )
 int asttype_getName( const char *name )
 {
    const AsteroidType q = { .name=(char*)name };
-   AsteroidType *at = bsearch( &q, asteroid_types, array_size(asteroid_types), sizeof(AsteroidType), asteroidTypes_cmp );
+   AsteroidType *at = bsearch( &q, asteroid_types, array_size(asteroid_types), sizeof(AsteroidType), asttype_cmp );
    if (at != NULL)
       return at-asteroid_types;
    return -1;
