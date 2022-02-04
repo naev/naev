@@ -286,7 +286,6 @@ typedef struct AsteroidAnchor_ {
    double radius; /**< Radius of the anchor. */
    double area;   /**< Field's area. */
    int *type;     /**< Types of asteroids. */
-   int ntype;     /**< Number of types. */
    double maxspeed;/**< Maxmimum speed the asteroids can have in the field. */
    double thrust; /**< Thrust applied when out of radius towards center. */
    double margin; /**< Extra margin to use when doing distance computations. */
@@ -511,7 +510,7 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *
 /*
  * Asteroids
  */
-int asteroids_computeInternals( AsteroidAnchor *a );
+void asteroids_computeInternals( AsteroidAnchor *a );
 void asteroid_hit( Asteroid *a, const Damage *dmg );
 int space_isInField( const Vector2d *p );
 const AsteroidType *space_getType( int ID );

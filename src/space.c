@@ -1772,7 +1772,7 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    ast->scanned = 0;
 
    /* randomly init the type of asteroid */
-   id = RNG(0,field->ntype-1);
+   id = RNG(0,array_size(field->type)-1);
    ast->type = field->type[id];
    /* randomly init the gfx ID */
    at = &asteroid_types[ast->type];
@@ -3315,8 +3315,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    pos         = 1;
    a->density  = 0.2;
    a->area     = 0.;
-   a->ntype    = 0;
-   a->type     = NULL;
+   a->type     = array_create( int );
    a->radius   = 0.;
    a->maxspeed = 20.;
    a->thrust   = 1.;
@@ -3336,18 +3335,11 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
       /* Handle types of asteroids. */
       if (xml_isNode(cur,"type")) {
          const char *name = xml_get(cur);
-
-         a->ntype++;
-         if (a->type==NULL)
-            a->type = malloc( sizeof(int) );
-         else
-            a->type = realloc( a->type, (a->ntype)*sizeof(int) );
-
-         /* Find the ID */
          const AsteroidType q = { .name=(char*)name };
+         /* Find the ID */
          AsteroidType *at = bsearch( &q, asteroid_types, array_size(asteroid_types), sizeof(AsteroidType), asteroidTypes_cmp );
          if (at != NULL)
-            a->type[a->ntype-1] = at-asteroid_types;
+            array_push_back( &a->type, at-asteroid_types );
          else
             WARN("Unknown AsteroidType '%s' in StarSystem '%s'", name, sys->name);
          continue;
@@ -3374,10 +3366,9 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
       WARN(_("Asteroid field in %s has no radius."), sys->name);
 
    /* By default, take the first in the list. */
-   if (a->type == NULL) {
-       a->type = malloc( sizeof(int) );
-       a->ntype = 1;
-       a->type[0] = 0;
+   if (array_size(a->type) == 0) {
+      WARN(_("Asteroid field in system '%s' has no asteroid types defined!"),sys->name);
+      array_push_back( &a->type, 0 );
    }
 
    /* Update internals. */
@@ -3389,7 +3380,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 /**
  * @brief Updates internal alues of an asteroid field.
  */
-int asteroids_computeInternals( AsteroidAnchor *a )
+void asteroids_computeInternals( AsteroidAnchor *a )
 {
    /* Calculate area */
    a->area = M_PI * a->radius * a->radius;
