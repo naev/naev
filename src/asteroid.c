@@ -339,7 +339,9 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    /* Parse data. */
    cur = node->xmlChildrenNode;
    do {
-      xmlr_float( cur,"density", a->density );
+      xml_onlyNodes(cur);
+
+      xmlr_float( cur, "density", a->density );
       xmlr_float( cur, "radius", a->radius );
       xmlr_float( cur, "maxspeed", a->maxspeed );
       xmlr_float( cur, "thrust", a->thrust );
@@ -367,22 +369,18 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
          continue;
       }
 
+      WARN(_("Asteroid Field in Star System '%s' has unknown node '%s'"), sys->name, node->name);
    } while (xml_nextNode(cur));
-
-   if (!pos)
-      WARN(_("Asteroid field in %s has no position."), sys->name);
-
-   if (a->radius == 0.)
-      WARN(_("Asteroid field in %s has no radius."), sys->name);
-
-   /* By default, take the first in the list. */
-   if (array_size(a->type) == 0) {
-      WARN(_("Asteroid field in system '%s' has no asteroid types defined!"),sys->name);
-      array_push_back( &a->type, 0 );
-   }
 
    /* Update internals. */
    asteroids_computeInternals( a );
+
+#define MELEMENT(o,s) \
+if (o) WARN(_("Asteroid Field in Star System '%s' has missing/invalid '%s' element"), sys->name, s) /**< Define to help check for data errors. */
+   MELEMENT(!pos,"pos");
+   MELEMENT(a->radius<=0.,"radius");
+   MELEMENT(array_size(a->type)==0,"type");
+#undef MELEMENT
 
    return 0;
 }
@@ -422,7 +420,7 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
    memset( a, 0, sizeof(*a) );
 
    /* Initialize stuff. */
-   pos         = 0;
+   pos = 0;
 
    /* Parse data. */
    cur = node->xmlChildrenNode;
@@ -439,15 +437,16 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
 
          /* Set position. */
          vect_cset( &a->pos, x, y );
+         continue;
       }
-
+      WARN(_("Asteroid Exclusion Zone in Star System '%s' has unknown node '%s'"), sys->name, node->name);
    } while (xml_nextNode(cur));
 
-   if (!pos)
-      WARN(_("Asteroid exclusion in %s has no position."), sys->name);
-
-   if (a->radius == 0.)
-      WARN(_("Asteroid exclusion in %s has no radius."), sys->name);
+#define MELEMENT(o,s) \
+if (o) WARN(_("Asteroid Exclusion Zone in Star System '%s' has missing/invalid '%s' element"), sys->name, s) /**< Define to help check for data errors. */
+   MELEMENT(!pos,"pos");
+   MELEMENT(a->radius<=0.,"radius");
+#undef MELEMENT
 
    return 0;
 }
