@@ -98,6 +98,7 @@ typedef struct AsteroidExclusion_ {
 /* Initialization and parsing. */
 int asteroids_load (void);
 void asteroids_free (void);
+void asteroid_free( AsteroidAnchor *ast );
 void asteroids_parse( const xmlNodePtr parent, StarSystem *sys );
 void asteroids_init (void);
 

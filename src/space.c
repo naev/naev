@@ -3418,13 +3418,8 @@ void space_exit (void)
       array_free(sys->tags);
 
       /* Free the asteroids. */
-      for (int j=0; j < array_size(sys->asteroids); j++) {
-         AsteroidAnchor *ast = &sys->asteroids[j];
-         free(ast->label);
-         free(ast->asteroids);
-         free(ast->debris);
-         array_free(ast->type);
-      }
+      for (int j=0; j < array_size(sys->asteroids); j++)
+         asteroid_free( &sys->asteroids[j] );
       array_free(sys->asteroids);
       array_free(sys->astexclude);
 

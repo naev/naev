@@ -755,6 +755,19 @@ static void space_renderDebris( const Debris *d, double x, double y )
 }
 
 /**
+ * @brief Frees an asteroid anchor.
+ *
+ *    @param ast Asteroid anchor to free.
+ */
+void asteroid_free( AsteroidAnchor *ast )
+{
+   free(ast->label);
+   free(ast->asteroids);
+   free(ast->debris);
+   array_free(ast->type);
+}
+
+/**
  * @brief Cleans up the system.
  */
 void asteroids_free (void)

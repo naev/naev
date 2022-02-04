@@ -147,6 +147,7 @@ static void sysedit_editJumpClose( unsigned int wid, const char *unused );
 static void sysedit_editAsteroids (void);
 static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused );
 static void sysedit_genAsteroidsList( unsigned int wid );
+static void sysedit_btnAsteroidsDelete( unsigned int wid, const char *unused );
 static void sysedit_btnRmAsteroid( unsigned int wid, const char *unused );
 static void sysedit_btnAddAsteroid( unsigned int wid, const char *unused );
 /* Keybindings handling. */
@@ -1628,13 +1629,13 @@ static void sysedit_editAsteroids (void)
    window_addText( wid, 20+bw+15, 20+BUTTON_HEIGHT+15+200+5, bw, gl_smallFont.h,
          1, "txtAsteroidsAvailable", NULL, NULL, _("Available") );
 
-   /* List buttons. */
+   /* Bottom buttons. */
    window_addButton( wid, 20, 20, bw, BUTTON_HEIGHT,
          "btnRmAsteroid", _("Rm Asteroid"), sysedit_btnRmAsteroid );
    window_addButton( wid, 20 + bw + 15, 20, bw, BUTTON_HEIGHT,
          "btnAddAsteroid", _("Add Asteroid"), sysedit_btnAddAsteroid );
-
-   /* Bottom buttons. */
+   window_addButton( wid, 20 + 2*(bw + 15), 20, bw, BUTTON_HEIGHT,
+         "btnDelete", _("Delete"), sysedit_btnAsteroidsDelete );
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
          "btnClose", _("Close"), sysedit_editAsteroidsClose );
 
@@ -1716,6 +1717,23 @@ static void sysedit_btnAddAsteroid( unsigned int wid, const char *unused )
    sysedit_genAsteroidsList( wid );
 }
 
+static void sysedit_btnAsteroidsDelete( unsigned int wid, const char *unused )
+{
+   int i = dialogue_YesNo( _("Remove Asteroid Field"), _("Are you sure you want to remove this asteroid field?") );
+   if (i==0)
+      return;
+
+   AsteroidAnchor *ast = &sysedit_sys->asteroids[ sysedit_select[0].u.asteroid ];
+
+   asteroid_free( ast );
+   array_erase( &sysedit_sys->asteroids, ast, ast+1 );
+
+   if (conf.devautosave)
+      dsys_saveSystem( sysedit_sys );
+
+   window_close( wid, unused );
+}
+
 static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
 {
    (void) unused;
@@ -1728,6 +1746,9 @@ static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
 
    /* Need to update some internals based on new values. */
    asteroids_computeInternals( ast );
+
+   if (conf.devautosave)
+      dsys_saveSystem( sysedit_sys );
 
    window_close( wid, unused );
 }
