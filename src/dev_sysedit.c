@@ -1645,7 +1645,8 @@ static void sysedit_btnRmAsteroid( unsigned int wid, const char *unused )
    int pos = toolkit_getListPos( wid, "lstAsteroidsHave" );
    AsteroidAnchor *ast = &sysedit_sys->asteroids[ sysedit_select[0].u.asteroid ];
 
-   array_erase( &ast->type, &ast->type[pos], &ast->type[pos+1] );
+   if (array_size(ast->type) > 0)
+      array_erase( &ast->type, &ast->type[pos], &ast->type[pos+1] );
 
    sysedit_genAsteroidsList( wid );
 }
