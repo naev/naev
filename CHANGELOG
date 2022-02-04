@@ -1,6 +1,7 @@
 * 0.9.3 (unreleased)
    * Bug fix: if the German translation was active, casino minigames' explanation (Erklärung) didn't work
    * Fix errors/slowdown in Diversion from (...) missions
+   * Fixed a bug that allowed the player to get infinite escorts
    * Work around bugs in at least one OpenGL driver
 
 * 0.9.2
