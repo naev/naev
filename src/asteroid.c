@@ -18,6 +18,7 @@
 #include "opengl.h"
 #include "toolkit.h"
 #include "ndata.h"
+#include "player.h"
 
 #define DEBRIS_BUFFER         1000 /**< Buffer to smooth appearance of debris */
 
@@ -167,7 +168,7 @@ void asteroids_update( double dt )
 
       x = 0.;
       y = 0.;
-      pplayer = pilot_get( PLAYER_ID );
+      pplayer = player.p;
       if (pplayer != NULL) {
          Solid *psolid = pplayer->solid;
          x = psolid->vel.x;
@@ -644,7 +645,7 @@ if (o) WARN(_("Asteroid type '%s' missing/invalid '%s' element"), at->name, s) /
 void asteroids_renderOverlay (void)
 {
    /* Render the debris. */
-   Pilot *pplayer = pilot_get( PLAYER_ID );
+   Pilot *pplayer = player.p;
    if (pplayer != NULL) {
       Solid *psolid  = pplayer->solid;
       for (int i=0; i < array_size(cur_system->asteroids); i++) {
@@ -669,7 +670,7 @@ void asteroids_render (void)
    Solid *psolid;
 
    /* Get the player in order to compute the offset for debris. */
-   pplayer = pilot_get( PLAYER_ID );
+   pplayer = player.p;
    if (pplayer != NULL)
       psolid  = pplayer->solid;
 
@@ -863,7 +864,6 @@ const AsteroidType *asttype_get( int id )
 int asttype_getName( const char *name )
 {
    const AsteroidType q = { .name=(char*)name };
-   /* Find the ID */
    AsteroidType *at = bsearch( &q, asteroid_types, array_size(asteroid_types), sizeof(AsteroidType), asteroidTypes_cmp );
    if (at != NULL)
       return at-asteroid_types;
