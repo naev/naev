@@ -946,7 +946,6 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
       double w, double h, double rx, double ry, void *data )
 {
    (void) data;
-   int i;
    unsigned int lastClick;
    StarSystem *sys, *clickedsys;
    int inselection;
@@ -971,13 +970,13 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
-         if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
+         if ((mx < 60.) || (mx > w) || (my < 0.) || (my > h-130))
             return 0;
          window_setFocus( wid, "cstSysEdit" );
          lastClick = uniedit_lastClick;
          uniedit_lastClick = SDL_GetTicks();
 
-         /* selecting star system */
+         /* Selecting star system */
          mx -= w/2. - uniedit_xpos;
          my -= h/2. - uniedit_ypos;
          mx /= uniedit_zoom;
@@ -992,7 +991,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
          /* Find clicked system. */
          clickedsys = NULL;
-         for (i=0; i<array_size(systems_stack); i++) {
+         for (int i=0; i<array_size(systems_stack); i++) {
             sys = system_getIndex(i);
             if ((pow2(mx-sys->pos.x)+pow2(my-sys->pos.y)) > pow2(UNIEDIT_CLICK_THRESHOLD))
                continue;
@@ -1001,7 +1000,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          }
 
          /* Set jump if applicable. */
-         if (clickedsys!=NULL && uniedit_mode == UNIEDIT_JUMP) {
+         if (clickedsys!=NULL && uniedit_mode==UNIEDIT_JUMP) {
             uniedit_toggleJump( clickedsys );
             uniedit_mode = UNIEDIT_DEFAULT;
             return 1;
@@ -1010,7 +1009,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* See if it is selected. */
          inselection = 0;
          if (clickedsys != NULL) {
-            for (i=0; i<array_size(uniedit_sys); i++) {
+            for (int i=0; i<array_size(uniedit_sys); i++) {
                if (uniedit_sys[i] != clickedsys)
                   continue;
                inselection = 1;
@@ -1049,10 +1048,6 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                uniedit_deselect();
             uniedit_selectAdd( clickedsys );
             uniedit_tsys      = NULL;
-
-            /* Start dragging anyway. */
-            uniedit_dragSys   = 1;
-            uniedit_moved     = 0;
             return 1;
          }
 
@@ -1087,7 +1082,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             }
             uniedit_dragSys   = 0;
             if (conf.devautosave)
-               for (i=0; i<array_size(uniedit_sys); i++)
+               for (int i=0; i<array_size(uniedit_sys); i++)
                   dsys_saveSystem(uniedit_sys[i]);
          }
          break;
@@ -1108,7 +1103,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          }
          else if (uniedit_dragSys && (array_size(uniedit_sys) > 0)) {
             if ((uniedit_moved > UNIEDIT_MOVE_THRESHOLD) || (SDL_GetTicks() - uniedit_lastClick > UNIEDIT_DRAG_THRESHOLD)) {
-               for (i=0; i<array_size(uniedit_sys); i++) {
+               for (int i=0; i<array_size(uniedit_sys); i++) {
                   uniedit_sys[i]->pos.x += rx / uniedit_zoom;
                   uniedit_sys[i]->pos.y -= ry / uniedit_zoom;
                }
