@@ -38,7 +38,9 @@ typedef struct AsteroidType_ {
    glTexture **gfxs; /**< asteroid possible gfxs. */
    Commodity **material; /**< Materials contained in the asteroid. */
    int *quantity;    /**< Quantities of materials. */
-   double armour;    /**< Starting "armour" of the asteroid. */
+   double armour_min;/**< Minimum "armour" of the asteroid. */
+   double armour_max;/**< Maximum "armour" of the asteroid. */
+   double absorb;    /**< Absorption of the asteroid. */
 } AsteroidType;
 
 /**
@@ -68,6 +70,7 @@ typedef struct Asteroid_ {
    int type;      /**< The ID of the asteroid type */
    int scanned;   /**< Wether the player already scanned this asteroid. */
    double armour; /**< Current "armour" of the asteroid. */
+   double absorb; /**< Absorption of the asteroid. */
 } Asteroid;
 
 /**

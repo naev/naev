@@ -252,7 +252,8 @@ static void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    /* randomly init the gfx ID */
    at = &asteroid_types[ast->type];
    ast->gfxID = RNG(0, array_size(at->gfxs)-1);
-   ast->armour = at->armour;
+   ast->armour = at->armour_min + RNGF() * (at->armour_max-at->armour_min);
+   ast->absorb = at->absorb;
 
    do {
       double angle = RNGF() * 2. * M_PI;
@@ -580,7 +581,9 @@ static int asteroidTypes_parse( AsteroidType *at, const char *file )
       /* Only handle nodes. */
       xml_onlyNodes(node);
 
-      xmlr_float( node, "armour", at->armour );
+      xmlr_float( node, "armour_min", at->armour_min );
+      xmlr_float( node, "armour_max", at->armour_max );
+      xmlr_float( node, "absorb", at->absorb );
 
       if (xml_isNode(node,"gfx")) {
          array_push_back( &at->gfxs, xml_parseTexture( node, SPOB_GFX_SPACE_PATH"asteroid/%s", 1, 1,  OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
@@ -605,21 +608,32 @@ static int asteroidTypes_parse( AsteroidType *at, const char *file )
                qttdef = 1;
                continue;
             }
-            WARN(_("Asteroid has unknown node '%s'"), cur->name);
+            WARN(_("Asteroid type '%s' has unknown node '%s'"), at->name, cur->name);
          } while (xml_nextNode(cur));
 
          if (namdef == 0 || qttdef == 0)
-            WARN(_("Asteroid type's commodity lacks name or quantity."));
+            WARN(_("Asteroid type '%s' has commodity that lacks name or quantity."), at->name);
          continue;
       }
-      WARN(_("Asteroid has unknown node '%s'"), node->name);
+      WARN(_("Asteroid type '%s' has unknown node '%s'"), at->name, node->name);
    } while (xml_nextNode(node));
-
-   if (array_size(at->gfxs)==0)
-      WARN(_("Asteroid type has no gfx associated."));
 
    /* Clean up. */
    xmlFreeDoc(doc);
+
+   /* Some post-process. */
+   at->absorb = CLAMP( 0., 1., at->absorb / 100. );
+
+   /* Checks. */
+   if (at->armour_max < at->armour_min)
+      WARN(_("Asteroid type '%s' has armour_max below armour_min"), at->name);
+
+#define MELEMENT(o,s) \
+if (o) WARN(_("Asteroid type '%s' missing/invalid '%s' element"), at->name, s) /**< Define to help check for data errors. */
+   MELEMENT(array_size(at->gfxs)==0,"gfx");
+   MELEMENT(at->armour_min <= 0.,"armour_min");
+   MELEMENT(at->armour_max <= 0.,"armour_max");
+#undef MELEMENT
 
    return 0;
 }
@@ -865,7 +879,8 @@ int asttype_getName( const char *name )
 void asteroid_hit( Asteroid *a, const Damage *dmg )
 {
    double darmour;
-   dtype_calcDamage( NULL, &darmour, 1, NULL, dmg, NULL );
+   double absorb = 1. - CLAMP( 0., 1., a->absorb - dmg->penetration );
+   dtype_calcDamage( NULL, &darmour, absorb, NULL, dmg, NULL );
 
    a->armour -= darmour;
    if (a->armour <= 0) {

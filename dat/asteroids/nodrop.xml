@@ -8,5 +8,6 @@
  <gfx>asteroid-D11.webp</gfx>
  <gfx>asteroid-D12.webp</gfx>
  <gfx>asteroid-D13.webp</gfx>
- <armour>200</armour>
+ <armour_min>170</armour_min>
+ <armour_max>230</armour_max>
 </asteroid>

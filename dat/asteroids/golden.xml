@@ -7,7 +7,8 @@
  <gfx>asteroid-D05.webp</gfx>
  <gfx>asteroid-D06.webp</gfx>
  <gfx>asteroid-D14.webp</gfx>
- <armour>140</armour>
+ <armour_min>120</armour_min>
+ <armour_max>160</armour_max>
  <commodity>
   <name>Ore</name>
   <quantity>4</quantity>
