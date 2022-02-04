@@ -4000,19 +4000,15 @@ static void space_renderAsteroid( const Asteroid *a )
  */
 static void space_renderDebris( const Debris *d, double x, double y )
 {
-   double scale;
-   Vector2d *testVect;
+   double scale = 0.5;
+   Vector2d v;
 
-   scale = 0.5;
+   v.x = d->pos.x + x;
+   v.y = d->pos.y + y;
 
-   testVect = malloc(sizeof(Vector2d));
-   testVect->x = d->pos.x + x;
-   testVect->y = d->pos.y + y;
-
-   if (space_isInField( testVect ) == 0)
+   if (space_isInField( &v ) == 0)
       gl_renderSpriteInterpolateScale( asteroid_gfx[d->gfxID], asteroid_gfx[d->gfxID], 1,
-                                     testVect->x, testVect->y, scale, scale, 0, 0, &cInert );
-   free(testVect);
+                                       v.x, v.y, scale, scale, 0, 0, &cInert );
 }
 
 /**
