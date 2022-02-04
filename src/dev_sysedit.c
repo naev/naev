@@ -703,12 +703,7 @@ static void sysedit_renderAsteroidsField( double bx, double by, const AsteroidAn
    ty = by + ast->pos.y*z;
 
    if (selected) {
-      const glColour csel = {
-         .r = cFontBlue.r,
-         .g = cFontBlue.g,
-         .b = cFontBlue.b,
-         .a = 0.5,
-      };
+      const glColour csel = COL_ALPHA( cFontBlue, 0.5 );
       gl_renderCircle( tx, ty, ast->radius * sysedit_zoom, &csel, 1 );
    }
 
@@ -737,12 +732,7 @@ static void sysedit_renderAsteroidExclusion( double bx, double by, const Asteroi
    rr = r * sin(M_PI / 4.);
 
    if (selected) {
-      const glColour csel = {
-         .r = cFontBlue.r,
-         .g = cFontBlue.g,
-         .b = cFontBlue.b,
-         .a = 0.5,
-      };
+      const glColour csel = COL_ALPHA( cFontBlue, 0.5 );
       gl_renderCircle( tx, ty, aexcl->radius * sysedit_zoom, &csel, 1 );
    }
 
@@ -813,12 +803,7 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
 
    /* Selection graphic. */
    if (selected) {
-      const glColour csel = {
-         .r = cFontBlue.r,
-         .g = cFontBlue.g,
-         .b = cFontBlue.b,
-         .a = 0.5,
-      };
+      const glColour csel = COL_ALPHA( cFontBlue, 0.5 );
       gl_renderCircle( bx + x*z, by + y*z, gfx->sw*z*1.1, &csel, 1 );
    }
 

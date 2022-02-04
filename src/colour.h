@@ -22,6 +22,9 @@ typedef struct glColour_ {
  */
 #include "colours.gen.h"
 
+#define COL_ALPHA( col, alpha ) \
+{ .r = col.r, .g = col.g, .b = col.b, .a = alpha }
+
 /*
  * Colour space conversion routines.
  */
