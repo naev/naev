@@ -211,7 +211,12 @@ int dsys_saveSystem( StarSystem *sys )
          xmlw_endElem( writer ); /* "pos" */
 
          /* Misc. properties. */
-         xmlw_elem( writer, "density", "%f", ast->density );
+         if (ast->density != ASTEROID_DEFAULT_DENSITY)
+            xmlw_elem( writer, "density", "%f", ast->density );
+         if (ast->maxspeed != ASTEROID_DEFAULT_MAXSPEED)
+            xmlw_elem( writer, "maxspeed", "%f", ast->maxspeed );
+         if (ast->thrust != ASTEROID_DEFAULT_THRUST)
+            xmlw_elem( writer, "thrust", "%f", ast->thrust );
          xmlw_endElem( writer ); /* "asteroid" */
       }
       for (int i=0; i<array_size(sys->astexclude); i++) {

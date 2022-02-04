@@ -40,7 +40,6 @@
    <type>massive</type>
    <radius>4000.000000</radius>
    <pos x="4000.000000" y="6000.000000"/>
-   <density>1.000000</density>
   </asteroid>
  </asteroids>
 </ssys>
