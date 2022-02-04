@@ -49,9 +49,11 @@
 /*
  * Selection types.
  */
-#define SELECT_NONE        0 /**< No selection. */
-#define SELECT_SPOB        1 /**< Selection is a spob. */
-#define SELECT_JUMPPOINT   2 /**< Selection is a jump point. */
+enum {
+   SELECT_NONE,      /**< No selection. */
+   SELECT_SPOB,      /**< Selection is a spob. */
+   SELECT_JUMPPOINT, /**< Selection is a jump point. */
+};
 
 /**
  * @brief Selection generic for stuff in a system.
@@ -61,6 +63,7 @@ typedef struct Select_s {
    union {
       int spob;
       int jump;
+      int asteroid;
    } u; /**< Data itself. */
 } Select_t;
 static Select_t *sysedit_select  = NULL; /**< Current system selection. */
@@ -531,6 +534,16 @@ void sysedit_sysScale( StarSystem *sys, double factor )
    for (int i=0; i<array_size(sys->jumps); i++) {
       JumpPoint *jp = &sys->jumps[i];
       vect_cset( &jp->pos, jp->pos.x*factor, jp->pos.y*factor );
+   }
+
+   /* Scale asteroids. */
+   for (int i=0; i<array_size(sys->asteroids); i++) {
+      AsteroidAnchor *ast = &sys->asteroids[i];
+      vect_cset( &ast->pos, ast->pos.x*factor, ast->pos.y*factor );
+   }
+   for (int i=0; i<array_size(sys->astexclude); i++) {
+      AsteroidExclusion *exc = &sys->astexclude[i];
+      vect_cset( &exc->pos, exc->pos.x*factor, exc->pos.y*factor );
    }
 
    /* Must reconstruct jumps. */
