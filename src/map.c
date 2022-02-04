@@ -276,6 +276,7 @@ void map_open (void)
    window_setCancel( wid, map_window_close );
    window_handleKeys( wid, map_keyHandler );
    window_dimWindow( wid, &w, &h );
+   window_setBorder( wid, 0 );
 
    /*
     * The map itself.
