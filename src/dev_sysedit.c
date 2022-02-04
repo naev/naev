@@ -1471,8 +1471,6 @@ static void sysedit_editJump( void )
    window_setInputFilter( wid, "inpHide", INPUT_FILTER_NUMBER );
    x += 50 + 10;
 
-   (void)x;
-
    /* Bottom buttons. */
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
          "btnClose", _("Close"), sysedit_editJumpClose );
@@ -1748,8 +1746,8 @@ static void sysedit_btnTechEdit( unsigned int wid, const char *unused )
 static void sysedit_genTechList( unsigned int wid )
 {
    Spob *p;
-   char **have, **lack, **tmp;
-   int i, j, n, x, y, w, h, hpos, lpos;
+   char **have, **lack;
+   int j, n, x, y, w, h, hpos, lpos;
 
    hpos = lpos = -1;
 
@@ -1784,8 +1782,8 @@ static void sysedit_genTechList( unsigned int wid )
    /* Omit the techs that the spob already has from the list.  */
    n = 0;
    if (p->tech != NULL) {
-      tmp = tech_getAllItemNames( &j );
-      for (i=0; i<j; i++)
+      char **tmp = tech_getAllItemNames( &j );
+      for (int i=0; i<j; i++)
          if (!tech_hasItem( p->tech, tmp[i] ))
             n++;
 
@@ -1796,13 +1794,13 @@ static void sysedit_genTechList( unsigned int wid )
       else {
          lack = malloc( sizeof(char*) * j );
          n = 0;
-         for (i=0; i<j; i++)
+         for (int i=0; i<j; i++)
             if (!tech_hasItem( p->tech, tmp[i] ))
                lack[n++] = strdup( tmp[i] );
       }
 
       /* Clean up. */
-      for (i=0; i<j; i++)
+      for (int i=0; i<j; i++)
          free(tmp[i]);
 
       free(tmp);
