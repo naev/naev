@@ -4108,7 +4108,7 @@ void space_exit (void)
          free(ast->label);
          free(ast->asteroids);
          free(ast->debris);
-         free(ast->type);
+         array_free(ast->type);
       }
       array_free(sys->asteroids);
       array_free(sys->astexclude);
