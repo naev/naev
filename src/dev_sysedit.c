@@ -114,7 +114,8 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
       double w, double h, double xr, double yr, void *data );
 /* Button functions. */
 static void sysedit_close( unsigned int wid, const char *wgt );
-static void sysedit_btnNew( unsigned int wid_unused, const char *unused );
+static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused );
+static void sysedit_btnNewAsteroids( unsigned int wid_unused, const char *unused );
 static void sysedit_btnRename( unsigned int wid_unused, const char *unused );
 static void sysedit_btnRemove( unsigned int wid_unused, const char *unused );
 static void sysedit_btnReset( unsigned int wid_unused, const char *unused );
@@ -224,8 +225,13 @@ void sysedit_open( StarSystem *sys )
 
    /* New spob. */
    window_addButtonKey( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnNew", _("New Spob"), sysedit_btnNew, SDLK_n );
-   i += 2;
+         "btnNewSpob", _("New Spob"), sysedit_btnNewSpob, SDLK_n );
+   i += 1;
+
+   /* New asteroids. */
+   window_addButtonKey( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnNewAsteroids", _("New Asteroids"), sysedit_btnNewAsteroids, SDLK_a );
+   i += 1;
 
    /* Toggle Grid. */
    window_addButtonKey( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -349,7 +355,7 @@ static void sysedit_editPntClose( unsigned int wid, const char *unused )
 /**
  * @brief Enters the editor in new spob mode.
  */
-static void sysedit_btnNew( unsigned int wid_unused, const char *unused )
+static void sysedit_btnNewSpob( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -366,7 +372,7 @@ static void sysedit_btnNew( unsigned int wid_unused, const char *unused )
       dialogue_alert( _("Spob by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
             name, spob_getSystem( name ) );
       free(name);
-      sysedit_btnNew( 0, NULL );
+      sysedit_btnNewSpob( 0, NULL );
       return;
    }
 
@@ -397,6 +403,54 @@ static void sysedit_btnNew( unsigned int wid_unused, const char *unused )
 
    /* Reload graphics. */
    space_gfxLoad( sysedit_sys );
+}
+
+
+/**
+ * @brief Enters the editor in new spob mode.
+ */
+static void sysedit_btnNewAsteroids( unsigned int wid_unused, const char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+   const char *title, *caption, *ret;
+   const char *opts[] = {
+      _("Asteroid Field"),
+      _("Exclusion Zone"),
+   };
+
+   /* See if we want to make a field or exclusion zone. */
+   title = _("Add asteriod field or exclusion zone?");
+   caption = _("Do you wish to add an asteroid field or an asteroid exclusion zone that will remove all asteroids that will appear in it?");
+   dialogue_makeChoice( title, caption, 2 );
+   dialogue_addChoice( title, caption, opts[0] );
+   dialogue_addChoice( title, caption, opts[1] );
+   ret = dialogue_runChoice();
+   if (ret==NULL)
+      ret = opts[0];
+
+   if (strcmp(ret, opts[0])==0) {
+      AsteroidAnchor *ast = &array_grow( &sysedit_sys->asteroids );
+      memset( ast, 0, sizeof(AsteroidAnchor) );
+      ast->density  = 1.;
+      ast->type     = array_create( int );
+      ast->radius   = 2500.;
+      ast->maxspeed = 20.;
+      ast->thrust   = 1.;
+      ast->pos.x    = sysedit_xpos / sysedit_zoom;
+      ast->pos.y    = sysedit_ypos / sysedit_zoom;
+      asteroids_computeInternals( ast );
+   }
+   else {
+      AsteroidExclusion *exc = &array_grow( &sysedit_sys->astexclude );
+      memset( exc, 0, sizeof(AsteroidExclusion) );
+      exc->radius = 1000.;
+      exc->pos.x  = sysedit_xpos / sysedit_zoom;
+      exc->pos.y  = sysedit_ypos / sysedit_zoom;
+   }
+
+   if (conf.devautosave)
+      dsys_saveSystem( sysedit_sys );
 }
 
 static void sysedit_btnRename( unsigned int wid_unused, const char *unused )

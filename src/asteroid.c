@@ -325,13 +325,11 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
    /* Initialize stuff. */
    pos         = 1;
-   a->density  = 0.2;
-   a->area     = 0.;
+   a->density  = 1.;
    a->type     = array_create( int );
    a->radius   = 0.;
    a->maxspeed = 20.;
    a->thrust   = 1.;
-   vect_cset( &a->pos, 0., 0. );
 
    /* Parse label if available. */
    xmlr_attr_strd( node, "label", a->label );
@@ -423,8 +421,6 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
 
    /* Initialize stuff. */
    pos         = 0;
-   a->radius   = 0.;
-   vect_cset( &a->pos, 0., 0. );
 
    /* Parse data. */
    cur = node->xmlChildrenNode;
