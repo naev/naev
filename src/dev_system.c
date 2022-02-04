@@ -195,9 +195,9 @@ int dsys_saveSystem( StarSystem *sys )
          xmlw_startElem( writer, "asteroid" );
 
          /* Types */
-         if (!(ast->ntype == 1 && ast->type[0] == 0)) {
+         if (!(array_size(ast->type) == 1 && ast->type[0] == 0)) {
             /* With no <type>, the first asteroid type is the default */
-            for (int j=0; j<ast->ntype; j++) {
+            for (int j=0; j<array_size(ast->type); j++) {
                xmlw_elem( writer, "type", "%s", space_getType(ast->type[j])->name );
             }
          }
