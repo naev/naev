@@ -41,6 +41,10 @@ typedef struct AsteroidType_ {
    double armour_min;/**< Minimum "armour" of the asteroid. */
    double armour_max;/**< Maximum "armour" of the asteroid. */
    double absorb;    /**< Absorption of the asteroid. */
+   double damage;    /**< Damage on explosion. */
+   double disable;   /**< Disable on explosion. */
+   double penetration;/**< Penetration of the explosion. */
+   double exp_radius; /**< Explosion radius. */
 } AsteroidType;
 
 /**
@@ -70,7 +74,6 @@ typedef struct Asteroid_ {
    int type;      /**< The ID of the asteroid type */
    int scanned;   /**< Wether the player already scanned this asteroid. */
    double armour; /**< Current "armour" of the asteroid. */
-   double absorb; /**< Absorption of the asteroid. */
 } Asteroid;
 
 /**

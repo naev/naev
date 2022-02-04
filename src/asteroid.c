@@ -250,7 +250,6 @@ static void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    at = &asteroid_types[ast->type];
    ast->gfxID = RNG(0, array_size(at->gfxs)-1);
    ast->armour = at->armour_min + RNGF() * (at->armour_max-at->armour_min);
-   ast->absorb = at->absorb;
 
    do {
       double angle = RNGF() * 2. * M_PI;
@@ -567,6 +566,9 @@ static int asttype_parse( AsteroidType *at, const char *file )
    at->gfxs       = array_create( glTexture* );
    at->material   = array_create( Commodity* );
    at->quantity   = array_create( int );
+   at->damage     = 100;
+   at->penetration = 100.;
+   at->exp_radius = 50.;
 
    xmlr_attr_strd(parent,"name",at->name);
    if (at->name == NULL)
@@ -580,6 +582,10 @@ static int asttype_parse( AsteroidType *at, const char *file )
       xmlr_float( node, "armour_min", at->armour_min );
       xmlr_float( node, "armour_max", at->armour_max );
       xmlr_float( node, "absorb", at->absorb );
+      xmlr_float( node, "damage", at->damage );
+      xmlr_float( node, "disable", at->disable );
+      xmlr_float( node, "penetration", at->penetration );
+      xmlr_float( node, "exp_radius", at->exp_radius );
 
       if (xml_isNode(node,"gfx")) {
          array_push_back( &at->gfxs, xml_parseTexture( node, SPOB_GFX_SPACE_PATH"asteroid/%s", 1, 1,  OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
@@ -619,6 +625,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
 
    /* Some post-process. */
    at->absorb = CLAMP( 0., 1., at->absorb / 100. );
+   at->penetration = CLAMP( 0., 1., at->penetration / 100. );
 
    /* Checks. */
    if (at->armour_max < at->armour_min)
@@ -874,7 +881,8 @@ int asttype_getName( const char *name )
 void asteroid_hit( Asteroid *a, const Damage *dmg )
 {
    double darmour;
-   double absorb = 1. - CLAMP( 0., 1., a->absorb - dmg->penetration );
+   AsteroidType *at = &asteroid_types[a->type];
+   double absorb = 1. - CLAMP( 0., 1., at->absorb - dmg->penetration );
    dtype_calcDamage( NULL, &darmour, absorb, NULL, dmg, NULL );
 
    a->armour -= darmour;
@@ -897,23 +905,22 @@ static void asteroid_explode( Asteroid *a, AsteroidAnchor *field, int give_rewar
 {
    Damage dmg;
    char buf[16];
+   AsteroidType *at = &asteroid_types[a->type];
 
    /* Manage the explosion */
    dmg.type          = dtype_get("explosion_splash");
-   dmg.damage        = 100.;
-   dmg.penetration   = 1.; /* Full penetration. */
+   dmg.damage        = at->damage;
+   dmg.penetration   = at->penetration; /* Full penetration. */
    dmg.disable       = 0.;
    expl_explode( a->pos.x, a->pos.y, a->vel.x, a->vel.y,
-                 50., &dmg, NULL, EXPL_MODE_SHIP );
+                 at->exp_radius, &dmg, NULL, EXPL_MODE_SHIP );
 
    /* Play random explosion sound. */
    snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
    sound_playPos( sound_get(buf), a->pos.x, a->pos.y, a->vel.x, a->vel.y );
 
+   /* Release commodity rewards. */
    if (give_reward) {
-      /* Release commodity. */
-      AsteroidType *at = &asteroid_types[a->type];
-
       for (int i=0; i < array_size(at->material); i++) {
          int nb = RNG(0,at->quantity[i]);
          Commodity *com = at->material[i];
