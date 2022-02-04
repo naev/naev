@@ -1050,20 +1050,40 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* Dragging selection around. */
          else if (sysedit_dragSel && (sysedit_nselect > 0)) {
             if ((sysedit_moved > SYSEDIT_MOVE_THRESHOLD) || (SDL_GetTicks() - sysedit_dragTime > SYSEDIT_DRAG_THRESHOLD)) {
+               double xmove = xr / sysedit_zoom;
+               double ymove = -yr / sysedit_zoom;
                for (int i=0; i<sysedit_nselect; i++) {
+                  Spob *p;
+                  JumpPoint *jp;
+                  AsteroidAnchor *ast;
+                  AsteroidExclusion *exc;
+                  Select_t *sel = &sysedit_select[i];
 
-                  /* Spobs. */
-                  if (sysedit_select[i].type == SELECT_SPOB) {
-                     Spob *p = sys->spobs[ sysedit_select[i].u.spob ];
-                     p->pos.x += xr / sysedit_zoom;
-                     p->pos.y -= yr / sysedit_zoom;
-                  }
-                  /* Jump point. */
-                  else if (sysedit_select[i].type == SELECT_JUMPPOINT) {
-                     JumpPoint *jp = &sys->jumps[ sysedit_select[i].u.jump ];
-                     jp->flags &= ~(JP_AUTOPOS);
-                     jp->pos.x += xr / sysedit_zoom;
-                     jp->pos.y -= yr / sysedit_zoom;
+                  switch (sel->type) {
+                     case SELECT_SPOB:
+                        p = sys->spobs[ sel->u.spob ];
+                        p->pos.x += xmove;
+                        p->pos.y += ymove;
+                        break;
+
+                     case SELECT_JUMPPOINT:
+                        jp = &sys->jumps[ sel->u.jump ];
+                        jp->flags &= ~(JP_AUTOPOS);
+                        jp->pos.x += xmove;
+                        jp->pos.y += ymove;
+                        break;
+
+                     case SELECT_ASTEROID:
+                        ast = &sys->asteroids[ sel->u.asteroid ];
+                        ast->pos.x += xmove;
+                        ast->pos.y += ymove;
+                        break;
+
+                     case SELECT_ASTEXCLUDE:
+                        exc = &sys->astexclude[ sel->u.astexclude ];
+                        exc->pos.x += xmove;
+                        exc->pos.y += ymove;
+                        break;
                   }
                }
             }
