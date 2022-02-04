@@ -546,7 +546,7 @@ static int asttype_load (void)
 static int asttype_parse( AsteroidType *at, const char *file )
 {
    char *str;
-   xmlNodePtr parent, node, cur;
+   xmlNodePtr parent, node;
    xmlDocPtr doc;
 
    /* Load the data. */
@@ -593,27 +593,27 @@ static int asttype_parse( AsteroidType *at, const char *file )
       else if (xml_isNode(node,"commodity")) {
          /* Check that name and quantity are defined. */
          int namdef = 0;
-         int qttdef = 0;
          AsteroidReward material;
+         memset( &material, 0, sizeof(material) );
 
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
             xml_onlyNodes(cur);
+
+            xmlr_int( cur, "quantity", material.quantity );
+            xmlr_int( cur, "rarity", material.rarity );
+
             if (xml_isNode(cur,"name")) {
                str = xml_get(cur);
                material.material = commodity_get( str );
                namdef = 1;
                continue;
             }
-            else if (xml_isNode(cur,"quantity")) {
-               material.quantity = xml_getInt(cur);
-               qttdef = 1;
-               continue;
-            }
+
             WARN(_("Asteroid type '%s' has unknown node '%s'"), at->name, cur->name);
          } while (xml_nextNode(cur));
 
-         if (namdef == 0 || qttdef == 0)
+         if (namdef==0 || material.quantity==0)
             WARN(_("Asteroid type '%s' has commodity that lacks name or quantity."), at->name);
 
          array_push_back( &at->material, material );
