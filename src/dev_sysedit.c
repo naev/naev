@@ -696,7 +696,7 @@ static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *
    double tx, ty, z;
 
    /* Render icon */
-   sysedit_renderSprite( asteroid_gfx[0], bx, by, ast->pos.x, ast->pos.y,
+   sysedit_renderSprite( NULL, bx, by, ast->pos.x, ast->pos.y,
                          0, 0, NULL, selected, _("Asteroid Field") );
 
    /* Inits. */
@@ -791,10 +791,6 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
    /* Comfort. */
    z  = sysedit_zoom;
 
-   /* Translate coords. */
-   tx = bx + (x - gfx->sw/2.)*z;
-   ty = by + (y - gfx->sh/2.)*z;
-
    /* Selection graphic. */
    if (selected) {
       cc.r = cFontBlue.r;
@@ -804,8 +800,16 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
       gl_renderCircle( bx + x*z, by + y*z, gfx->sw*z*1.1, &cc, 1 );
    }
 
-   /* Blit the spob. */
-   gl_renderScaleSprite( gfx, tx, ty, sx, sy, gfx->sw*z, gfx->sh*z, c );
+   if (gfx != NULL) {
+      /* Translate coords. */
+      tx = bx + (x - gfx->sw/2.)*z;
+      ty = by + (y - gfx->sh/2.)*z;
+      /* Blit the spob. */
+      gl_renderScaleSprite( gfx, tx, ty, sx, sy, gfx->sw*z, gfx->sh*z, c );
+   }
+   else {
+      tx = ty = 0.;
+   }
 
    /* Display caption. */
    if (caption != NULL) {

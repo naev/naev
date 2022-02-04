@@ -104,7 +104,7 @@ static nlua_env landing_env = LUA_NOREF; /**< Landing lua env. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 static int space_simulating = 0; /**< Are we simulating space? */
 static int space_simulating_effects = 0; /**< Are we doing special effects? */
-glTexture **asteroid_gfx = NULL;
+static glTexture **asteroid_gfx = NULL; /**< Graphics for the asteroids. */
 static size_t nasterogfx = 0; /**< Nb of asteroid gfx. */
 static Spob *space_landQueueSpob = NULL;
 

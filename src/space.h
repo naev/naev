@@ -270,7 +270,6 @@ typedef struct Asteroid_ {
    int scanned;   /**< Wether the player already scanned this asteroid. */
    double armour; /**< Current "armour" of the asteroid. */
 } Asteroid;
-extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
 
 /**
  * @brief Represents an asteroid field anchor.
