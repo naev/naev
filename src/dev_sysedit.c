@@ -109,7 +109,7 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
       int sx, int sy, const glColour *c, int selected, const char *caption );
 static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static void sysedit_focusLose( unsigned int wid, const char* wgtname );
-static int sysedit_mouseTrySelect( const Select_t *sel, double x, double y, double t, double mx, double my, SDL_Keymod mod );
+static int sysedit_mouseTrySelect( const Select_t *sel, double x, double y, double t, double mx, double my, SDL_Keymod mod, void (*func)(void) );
 static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double xr, double yr, void *data );
 /* Button functions. */
@@ -122,7 +122,7 @@ static void sysedit_btnScale( unsigned int wid_unused, const char *unused );
 static void sysedit_btnGrid( unsigned int wid_unused, const char *unused );
 static void sysedit_btnEdit( unsigned int wid_unused, const char *unused );
 /* Spob editing. */
-static void sysedit_editPnt( void );
+static void sysedit_editPnt (void);
 static void sysedit_editPntClose( unsigned int wid, const char *unused );
 static void sysedit_spobDesc( unsigned int wid, const char *unused );
 static void sysedit_spobDescReturn( unsigned int wid, const char *unused );
@@ -141,7 +141,7 @@ static void sysedit_btnFaction( unsigned int wid_unused, const char *unused );
 static void sysedit_btnFactionSet( unsigned int wid, const char *unused );
 static void sysedit_editJumpClose( unsigned int wid, const char *unused );
 /* Jump editing */
-static void sysedit_editJump( void );
+static void sysedit_editJump (void);
 /* Keybindings handling. */
 static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 /* Selection. */
@@ -847,7 +847,7 @@ static void sysedit_focusLose( unsigned int wid, const char* wgtname )
    sysedit_drag = sysedit_dragSel = 0;
 }
 
-static int sysedit_mouseTrySelect( const Select_t *sel, double x, double y, double t, double mx, double my, SDL_Keymod mod )
+static int sysedit_mouseTrySelect( const Select_t *sel, double x, double y, double t, double mx, double my, SDL_Keymod mod, void (*func)(void) )
 {
    x *= sysedit_zoom;
    y *= sysedit_zoom;
@@ -857,27 +857,29 @@ static int sysedit_mouseTrySelect( const Select_t *sel, double x, double y, doub
 
    /* Check if already selected. */
    for (int j=0; j<sysedit_nselect; j++) {
-      if (sysedit_selectCmp( sel, &sysedit_select[j] )) {
-         sysedit_dragSel   = 1;
-         sysedit_tsel      = *sel;
+      if (!sysedit_selectCmp( sel, &sysedit_select[j] ))
+         continue;
 
-         /* Check modifier. */
-         if (mod & (KMOD_LCTRL | KMOD_RCTRL))
-            sysedit_tadd      = 0;
-         else {
-            /* Detect double click to open spob editor. */
-            if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD*2)
-                  && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
-               sysedit_editJump();
-               sysedit_dragSel = 0;
-               return 1;
-            }
-            sysedit_tadd      = -1;
+      sysedit_dragSel   = 1;
+      sysedit_tsel      = *sel;
+
+      /* Check modifier. */
+      if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+         sysedit_tadd      = 0;
+      else {
+         /* Detect double click to open spob editor. */
+         if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD*2)
+               && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
+            if (func != NULL)
+               func();
+            sysedit_dragSel = 0;
+            return 1;
          }
-         sysedit_dragTime  = SDL_GetTicks();
-         sysedit_moved     = 0;
-         return 1;
+         sysedit_tadd      = -1;
       }
+      sysedit_dragTime  = SDL_GetTicks();
+      sysedit_moved     = 0;
+      return 1;
    }
 
    /* Add the system if not selected. */
@@ -943,7 +945,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             t *= pow2(2.*sysedit_zoom);
 
             /* Try to select. */
-            if (sysedit_mouseTrySelect( &sel, p->pos.x, p->pos.y, t, mx, my, mod ))
+            if (sysedit_mouseTrySelect( &sel, p->pos.x, p->pos.y, t, mx, my, mod, sysedit_editPnt ))
                return 1;
          }
 
@@ -960,7 +962,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             t *= pow2(2.*sysedit_zoom);
 
             /* Try to select. */
-            if (sysedit_mouseTrySelect( &sel, jp->pos.x, jp->pos.y, t, mx, my, mod ))
+            if (sysedit_mouseTrySelect( &sel, jp->pos.x, jp->pos.y, t, mx, my, mod, sysedit_editJump ))
                return 1;
          }
 
@@ -974,7 +976,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             double t = pow2(exc->radius*sysedit_zoom);
 
             /* Try to select. */
-            if (sysedit_mouseTrySelect( &sel, exc->pos.x, exc->pos.y, t, mx, my, mod ))
+            if (sysedit_mouseTrySelect( &sel, exc->pos.x, exc->pos.y, t, mx, my, mod, NULL ))
                return 1;
          }
 
@@ -988,7 +990,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             double t = pow2(ast->radius*sysedit_zoom);
 
             /* Try to select. */
-            if (sysedit_mouseTrySelect( &sel, ast->pos.x, ast->pos.y, t, mx, my, mod ))
+            if (sysedit_mouseTrySelect( &sel, ast->pos.x, ast->pos.y, t, mx, my, mod, NULL ))
                return 1;
          }
 
@@ -1248,7 +1250,7 @@ static int sysedit_isSelected( const Select_t *sel )
 /**
  * @brief Edits a spob.
  */
-static void sysedit_editPnt( void )
+static void sysedit_editPnt (void)
 {
    unsigned int wid;
    int x, y, w, l, bw;
@@ -1426,7 +1428,7 @@ static void jp_type_check_exit_update( unsigned int wid, const char* str )
 /**
  * @brief Edits a jump.
  */
-static void sysedit_editJump( void )
+static void sysedit_editJump (void)
 {
    unsigned int wid;
    int x, y, w, l, bw;
