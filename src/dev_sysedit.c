@@ -145,6 +145,7 @@ static void sysedit_editJumpClose( unsigned int wid, const char *unused );
 /* Asteroid editing. */
 static void sysedit_editAsteroids (void);
 static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused );
+static void sysedit_genAsteroidsList( unsigned int wid );
 /* Keybindings handling. */
 static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 /* Selection. */
@@ -1531,14 +1532,11 @@ static void sysedit_editAsteroids (void)
 
    bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
 
-   /* Target lable. */
-   y = -20;
-
    /* Input widgets and labels. */
    x = 20;
 
    /* Add some inputs. */
-   y -= 30;
+   y = -40;
    s = _("Density: ");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtDensity", NULL, NULL, s );
@@ -1550,7 +1548,8 @@ static void sysedit_editAsteroids (void)
    window_addText( wid, x, y, l, 20, 1, "txtInput", NULL, NULL, s );
    window_addInput( wid, x + l + 8, y, 80, 20, "inpRadius", 10, 1, NULL );
    window_setInputFilter( wid, "inpRadius", INPUT_FILTER_NUMBER );
-   y -= 30;
+   x = 120;
+   y = -40;
    s = _("Max Speed: ");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtMaxspeed", NULL, NULL, s );
@@ -1563,7 +1562,8 @@ static void sysedit_editAsteroids (void)
    window_addInput( wid, x + l + 8, y, 80, 20, "inpThrust", 10, 1, NULL );
    window_setInputFilter( wid, "inpThrust", INPUT_FILTER_NUMBER );
 
-   /* TODO list with types. */
+   /* List to choose the different asteroids that appear. */
+   sysedit_genAsteroidsList( wid );
 
    /* Bottom buttons. */
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
@@ -1578,6 +1578,11 @@ static void sysedit_editAsteroids (void)
    window_setInput( wid, "inpMaxspeed", buf );
    snprintf( buf, sizeof(buf), "%g", ast->thrust );
    window_setInput( wid, "inpThrust", buf );
+}
+
+static void sysedit_genAsteroidsList( unsigned int wid )
+{
+   (void) wid;
 }
 
 static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
