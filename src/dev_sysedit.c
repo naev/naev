@@ -109,6 +109,7 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
       int sx, int sy, const glColour *c, int selected, const char *caption );
 static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static void sysedit_focusLose( unsigned int wid, const char* wgtname );
+static int sysedit_mouseTrySelect( const Select_t *sel, double x, double y, double t, double mx, double my, SDL_Keymod mod );
 static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double xr, double yr, void *data );
 /* Button functions. */
@@ -846,6 +847,52 @@ static void sysedit_focusLose( unsigned int wid, const char* wgtname )
    sysedit_drag = sysedit_dragSel = 0;
 }
 
+static int sysedit_mouseTrySelect( const Select_t *sel, double x, double y, double t, double mx, double my, SDL_Keymod mod )
+{
+   if ((pow2(mx-x)+pow2(my-y)) > t)
+      return 0;
+
+   /* Check if already selected. */
+   for (int j=0; j<sysedit_nselect; j++) {
+      if (sysedit_selectCmp( sel, &sysedit_select[j] )) {
+         sysedit_dragSel   = 1;
+         sysedit_tsel      = *sel;
+
+         /* Check modifier. */
+         if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+            sysedit_tadd      = 0;
+         else {
+            /* Detect double click to open spob editor. */
+            if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD*2)
+                  && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
+               sysedit_editJump();
+               sysedit_dragSel = 0;
+               return 1;
+            }
+            sysedit_tadd      = -1;
+         }
+         sysedit_dragTime  = SDL_GetTicks();
+         sysedit_moved     = 0;
+         return 1;
+      }
+   }
+
+   /* Add the system if not selected. */
+   if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+      sysedit_selectAdd( sel );
+   else {
+      sysedit_deselect();
+      sysedit_selectAdd( sel );
+   }
+   sysedit_tsel.type = SELECT_NONE;
+
+   /* Start dragging anyway. */
+   sysedit_dragSel   = 1;
+   sysedit_dragTime  = SDL_GetTicks();
+   sysedit_moved     = 0;
+   return 1;
+}
+
 /**
  * @brief System editor custom widget mouse handling.
  */
@@ -903,49 +950,9 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             t  = p->gfx_space->sw * p->gfx_space->sh / 4.; /* Radius^2 */
             t *= pow2(2.*sysedit_zoom);
 
-            /* Can select. */
-            if ((pow2(mx-x)+pow2(my-y)) < t) {
-
-               /* Check if already selected. */
-               for (int j=0; j<sysedit_nselect; j++) {
-                  if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
-                     sysedit_dragSel   = 1;
-                     sysedit_tsel      = sel;
-
-                     /* Check modifier. */
-                     if (mod & (KMOD_LCTRL | KMOD_RCTRL))
-                        sysedit_tadd      = 0;
-                     else {
-                        /* Detect double click to open spob editor. */
-                        if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD*2)
-                              && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
-                           sysedit_editPnt();
-                           sysedit_dragSel = 0;
-                           return 1;
-                        }
-                        sysedit_tadd      = -1;
-                     }
-                     sysedit_dragTime  = SDL_GetTicks();
-                     sysedit_moved     = 0;
-                     return 1;
-                  }
-               }
-
-               /* Add the system if not selected. */
-               if (mod & (KMOD_LCTRL | KMOD_RCTRL))
-                  sysedit_selectAdd( &sel );
-               else {
-                  sysedit_deselect();
-                  sysedit_selectAdd( &sel );
-               }
-               sysedit_tsel.type = SELECT_NONE;
-
-               /* Start dragging anyway. */
-               sysedit_dragSel   = 1;
-               sysedit_dragTime  = SDL_GetTicks();
-               sysedit_moved     = 0;
+            /* Try to select. */
+            if (sysedit_mouseTrySelect( &sel, x, y, t, mx, my, mod ))
                return 1;
-            }
          }
 
          /* Check jump points. */
@@ -964,49 +971,9 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             t  = jumppoint_gfx->sw * jumppoint_gfx->sh / 4.; /* Radius^2 */
             t *= pow2(2.*sysedit_zoom);
 
-            /* Can select. */
-            if ((pow2(mx-x)+pow2(my-y)) < t) {
-
-               /* Check if already selected. */
-               for (int j=0; j<sysedit_nselect; j++) {
-                  if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
-                     sysedit_dragSel   = 1;
-                     sysedit_tsel      = sel;
-
-                     /* Check modifier. */
-                     if (mod & (KMOD_LCTRL | KMOD_RCTRL))
-                        sysedit_tadd      = 0;
-                     else {
-                        /* Detect double click to open spob editor. */
-                        if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD*2)
-                              && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
-                           sysedit_editJump();
-                           sysedit_dragSel = 0;
-                           return 1;
-                        }
-                        sysedit_tadd      = -1;
-                     }
-                     sysedit_dragTime  = SDL_GetTicks();
-                     sysedit_moved     = 0;
-                     return 1;
-                  }
-               }
-
-               /* Add the system if not selected. */
-               if (mod & (KMOD_LCTRL | KMOD_RCTRL))
-                  sysedit_selectAdd( &sel );
-               else {
-                  sysedit_deselect();
-                  sysedit_selectAdd( &sel );
-               }
-               sysedit_tsel.type = SELECT_NONE;
-
-               /* Start dragging anyway. */
-               sysedit_dragSel   = 1;
-               sysedit_dragTime  = SDL_GetTicks();
-               sysedit_moved     = 0;
+            /* Try to select. */
+            if (sysedit_mouseTrySelect( &sel, x, y, t, mx, my, mod ))
                return 1;
-            }
          }
 
          /* Start dragging. */
