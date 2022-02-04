@@ -900,15 +900,8 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
       double w, double h, double xr, double yr, void *data )
 {
    (void) data;
-   double x,y, t;
-   SDL_Keymod mod;
-   StarSystem *sys;
-
-   /* Comfort. */
-   sys = sysedit_sys;
-
-   /* Handle modifiers. */
-   mod = SDL_GetModState();
+   StarSystem *sys = sysedit_sys;
+   SDL_Keymod mod = SDL_GetModState();
 
    switch (event->type) {
 
@@ -941,6 +934,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                .type = SELECT_SPOB,
                .u.spob = i,
             };
+            double x, y, t;
 
             /* Position. */
             x = p->pos.x * sysedit_zoom;
@@ -962,6 +956,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                .type = SELECT_JUMPPOINT,
                .u.jump = i,
             };
+            double x, y, t;
 
             /* Position. */
             x = jp->pos.x * sysedit_zoom;
