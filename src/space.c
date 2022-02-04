@@ -1802,9 +1802,9 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    mod   = RNGF()*field->maxspeed;
    vect_pset( &ast->vel, mod, theta );
 
-   /* Grow effect stuff */
-   ast->state = ASTEROID_XX_TO_BG;
-   ast->timer_max = ast->timer = 1.+RNGF()*3.;
+   /* Fade in stuff. */
+   ast->state = ASTEROID_XX;
+   ast->timer_max = ast->timer = -1.;
 }
 
 /**
