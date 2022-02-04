@@ -1587,8 +1587,10 @@ void land_cleanup (void)
    land_generated = 0;
 
    /* Destroy window. */
-   if (land_wid > 0)
+   if (land_wid > 0) {
       window_destroy(land_wid);
+      window_setFade( land_wid, NULL, 0. );
+   }
    land_wid       = 0;
 
    /* Clean up possible stray graphic. */
