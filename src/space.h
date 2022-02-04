@@ -299,6 +299,7 @@ typedef struct AsteroidAnchor_ {
 typedef struct AsteroidExclusion_ {
    Vector2d pos;  /**< Position in the system (from center). */
    double radius; /**< Radius of the exclusion zone. */
+   int affects;   /**< Temporary internal value when rendering. */
 } AsteroidExclusion;
 
 /**

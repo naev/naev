@@ -1422,7 +1422,18 @@ void space_update( double dt, double real_dt )
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       double x, y;
       Pilot *pplayer;
+      int has_exclusion = 0;
       AsteroidAnchor *ast = &cur_system->asteroids[i];
+
+      for (int k=0; k<array_size(cur_system->astexclude); k++) {
+         AsteroidExclusion *exc = &cur_system->astexclude[k];
+         if (vect_dist2( &ast->pos, &exc->pos ) < pow2(ast->radius+exc->radius)) {
+            exc->affects = 1;
+            has_exclusion = 1;
+         }
+         else
+            exc->affects = 0;
+      }
 
       for (int j=0; j<ast->nb; j++) {
          double offx, offy, d;
@@ -1449,13 +1460,19 @@ void space_update( double dt, double real_dt )
             a->vel.y += ast->thrust * dt * offy / d;
             setvel = 1;
          }
-         else {
+         else if (has_exclusion) {
             /* Push away from exclusion areas. */
             for (int k=0; k<array_size(cur_system->astexclude); k++) {
                AsteroidExclusion *exc = &cur_system->astexclude[k];
-               double ex = a->pos.x - exc->pos.x;
-               double ey = a->pos.y - exc->pos.y;
-               double ed = pow2(ex) + pow2(ey);
+               double ex, ey, ed;
+
+               /* Ignore exclusion zones that shouldn't affect. */
+               if (!exc->affects)
+                  continue;
+
+               ex = a->pos.x - exc->pos.x;
+               ey = a->pos.y - exc->pos.y;
+               ed = pow2(ex) + pow2(ey);
                if (ed <= pow2(exc->radius)) {
                   ed = sqrt(ed);
                   a->vel.x += ast->thrust * dt * ex / ed;
