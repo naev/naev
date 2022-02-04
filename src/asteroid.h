@@ -31,26 +31,32 @@ enum {
 };
 
 /**
+ * @brief Represents a potential reward from the asteroid.
+ */
+typedef struct AsteroidReward_ {
+   Commodity *material; /**< Material dropped. */
+   int quantity;        /**< Maximum amount. */
+   int rarity;          /**< Rarity. */
+} AsteroidReward;
+
+/**
  * @brief Represents a type of asteroid.
  */
 typedef struct AsteroidType_ {
-   char *name;       /**< Name of the asteroid type. */
-   glTexture **gfxs; /**< asteroid possible gfxs. */
-   Commodity **material; /**< Materials contained in the asteroid. */
-   int *quantity;    /**< Quantities of materials. */
-   double armour_min;/**< Minimum "armour" of the asteroid. */
-   double armour_max;/**< Maximum "armour" of the asteroid. */
-   double absorb;    /**< Absorption of the asteroid. */
-   double damage;    /**< Damage on explosion. */
-   double disable;   /**< Disable on explosion. */
-   double penetration;/**< Penetration of the explosion. */
-   double exp_radius; /**< Explosion radius. */
+   char *name;          /**< Name of the asteroid type. */
+   glTexture **gfxs;    /**< asteroid possible gfxs. */
+   AsteroidReward *material; /**< Materials contained in the asteroid. */
+   double armour_min;   /**< Minimum "armour" of the asteroid. */
+   double armour_max;   /**< Maximum "armour" of the asteroid. */
+   double absorb;       /**< Absorption of the asteroid. */
+   double damage;       /**< Damage on explosion. */
+   double disable;      /**< Disable on explosion. */
+   double penetration;  /**< Penetration of the explosion. */
+   double exp_radius;   /**< Explosion radius. */
 } AsteroidType;
 
 /**
  * @brief Represents a small player-rendered debris.
- *
- * @TODO this should be moved to spfx and probably generated on the fly.
  */
 typedef struct Debris_ {
    int gfxID;     /**< ID of the asteroid gfx. */

@@ -564,8 +564,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
    /* Set up the element. */
    memset( at, 0, sizeof(AsteroidType) );
    at->gfxs       = array_create( glTexture* );
-   at->material   = array_create( Commodity* );
-   at->quantity   = array_create( int );
+   at->material   = array_create( AsteroidReward );
    at->damage     = 100;
    at->penetration = 100.;
    at->exp_radius = 50.;
@@ -595,18 +594,19 @@ static int asttype_parse( AsteroidType *at, const char *file )
          /* Check that name and quantity are defined. */
          int namdef = 0;
          int qttdef = 0;
+         AsteroidReward material;
 
          cur = node->xmlChildrenNode;
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"name")) {
                str = xml_get(cur);
-               array_push_back( &at->material, commodity_get( str ) );
+               material.material = commodity_get( str );
                namdef = 1;
                continue;
             }
             else if (xml_isNode(cur,"quantity")) {
-               array_push_back( &at->quantity, xml_getInt(cur) );
+               material.quantity = xml_getInt(cur);
                qttdef = 1;
                continue;
             }
@@ -615,6 +615,8 @@ static int asttype_parse( AsteroidType *at, const char *file )
 
          if (namdef == 0 || qttdef == 0)
             WARN(_("Asteroid type '%s' has commodity that lacks name or quantity."), at->name);
+
+         array_push_back( &at->material, material );
          continue;
       }
       WARN(_("Asteroid type '%s' has unknown node '%s'"), at->name, node->name);
@@ -748,9 +750,10 @@ static void space_renderAsteroid( const Asteroid *a )
       return;
    gl_gameToScreenCoords( &nx, &ny, a->pos.x, a->pos.y );
    for (int i=0; i<array_size(at->material); i++) {
-      Commodity *com = at->material[i];
+      AsteroidReward *mat = &at->material[i];
+      Commodity *com = mat->material;
       gl_renderSprite( com->gfx_space, a->pos.x, a->pos.y-10.*i, 0, 0, NULL );
-      snprintf(c, sizeof(c), "x%i", at->quantity[i]);
+      snprintf(c, sizeof(c), "x%i", mat->quantity);
       gl_printRaw( &gl_smallFont, nx+10, ny-5-10.*i, &cFontWhite, -1., c );
    }
 }
@@ -799,7 +802,6 @@ void asteroids_free (void)
       AsteroidType *at = &asteroid_types[i];
       free(at->name);
       array_free(at->material);
-      array_free(at->quantity);
       for (int j=0; j<array_size(at->gfxs); j++)
          gl_freeTexture(at->gfxs[j]);
       array_free(at->gfxs);
@@ -922,8 +924,8 @@ static void asteroid_explode( Asteroid *a, AsteroidAnchor *field, int give_rewar
    /* Release commodity rewards. */
    if (give_reward) {
       for (int i=0; i < array_size(at->material); i++) {
-         int nb = RNG(0,at->quantity[i]);
-         Commodity *com = at->material[i];
+         AsteroidReward *mat = &at->material[i];
+         int nb = RNG(0,mat->quantity);
          for (int j=0; j < nb; j++) {
             Vector2d pos, vel;
             pos = a->pos;
@@ -932,7 +934,7 @@ static void asteroid_explode( Asteroid *a, AsteroidAnchor *field, int give_rewar
             pos.y += (RNGF()*30.-15.);
             vel.x += (RNGF()*20.-10.);
             vel.y += (RNGF()*20.-10.);
-            gatherable_init( com, pos, vel, -1., RNG(1,5) );
+            gatherable_init( mat->material, pos, vel, -1., RNG(1,5) );
          }
       }
    }

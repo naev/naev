@@ -1472,8 +1472,9 @@ void player_targetAsteroidSet( int field, int id )
 
             player_message( _("Asteroid targeted, composition: ") );
             for (int i=0; i<array_size(at->material); i++) {
-              Commodity *com = at->material[i];
-              player_message( _("%s, quantity: %i"), _(com->name), at->quantity[i] );
+               AsteroidReward *mat = &at->material[i];
+               Commodity *com = mat->material;
+               player_message( _("%s, quantity: %i"), _(com->name), mat->quantity );
             }
             ast->scanned = 1;
          }
