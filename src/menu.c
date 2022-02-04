@@ -220,7 +220,7 @@ void menu_main (void)
 
    /* Handle the fade. */
    window_setFade( bwid, NULL, 0. );
-   window_setFade( wid, NULL, 1. );
+   //window_setFade( wid, NULL, 1. );
 
    /* Buttons. */
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
