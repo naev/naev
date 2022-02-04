@@ -849,6 +849,9 @@ static void sysedit_focusLose( unsigned int wid, const char* wgtname )
 
 static int sysedit_mouseTrySelect( const Select_t *sel, double x, double y, double t, double mx, double my, SDL_Keymod mod )
 {
+   x *= sysedit_zoom;
+   y *= sysedit_zoom;
+
    if ((pow2(mx-x)+pow2(my-y)) > t)
       return 0;
 
@@ -934,18 +937,13 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                .type = SELECT_SPOB,
                .u.spob = i,
             };
-            double x, y, t;
-
-            /* Position. */
-            x = p->pos.x * sysedit_zoom;
-            y = p->pos.y * sysedit_zoom;
 
             /* Threshold. */
-            t  = p->gfx_space->sw * p->gfx_space->sh / 4.; /* Radius^2 */
+            double t = p->gfx_space->sw * p->gfx_space->sh / 4.; /* Radius^2 */
             t *= pow2(2.*sysedit_zoom);
 
             /* Try to select. */
-            if (sysedit_mouseTrySelect( &sel, x, y, t, mx, my, mod ))
+            if (sysedit_mouseTrySelect( &sel, p->pos.x, p->pos.y, t, mx, my, mod ))
                return 1;
          }
 
@@ -956,18 +954,39 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                .type = SELECT_JUMPPOINT,
                .u.jump = i,
             };
-            double x, y, t;
-
-            /* Position. */
-            x = jp->pos.x * sysedit_zoom;
-            y = jp->pos.y * sysedit_zoom;
 
             /* Threshold. */
-            t  = jumppoint_gfx->sw * jumppoint_gfx->sh / 4.; /* Radius^2 */
+            double t = jumppoint_gfx->sw * jumppoint_gfx->sh / 4.; /* Radius^2 */
             t *= pow2(2.*sysedit_zoom);
 
             /* Try to select. */
-            if (sysedit_mouseTrySelect( &sel, x, y, t, mx, my, mod ))
+            if (sysedit_mouseTrySelect( &sel, jp->pos.x, jp->pos.y, t, mx, my, mod ))
+               return 1;
+         }
+
+         /* Check asteroids exclusions. */
+         for (int i=0; i<array_size(sys->astexclude); i++) {
+            AsteroidExclusion *exc = &sys->astexclude[i];
+            const Select_t sel = {
+               .type = SELECT_ASTEXCLUDE,
+               .u.astexclude = i,
+            };
+
+            /* Try to select. */
+            if (sysedit_mouseTrySelect( &sel, exc->pos.x, exc->pos.y, exc->radius, mx, my, mod ))
+               return 1;
+         }
+
+         /* Check asteroids. */
+         for (int i=0; i<array_size(sys->asteroids); i++) {
+            AsteroidAnchor *ast = &sys->asteroids[i];
+            const Select_t sel = {
+               .type = SELECT_ASTEROID,
+               .u.asteroid = i,
+            };
+
+            /* Try to select. */
+            if (sysedit_mouseTrySelect( &sel, ast->pos.x, ast->pos.y, ast->radius, mx, my, mod ))
                return 1;
          }
 
