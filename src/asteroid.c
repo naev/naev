@@ -264,14 +264,14 @@ static void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
       /* If this is the first time and it's spawned outside the field,
        * we get rid of it so that density remains roughly consistent. */
       if ((ast->state == ASTEROID_XX_TO_BG) &&
-            (space_isInField(&ast->pos) < 0)) {
+            (asteroids_inField(&ast->pos) < 0)) {
          ast->state = ASTEROID_XX;
          ast->timer_max = ast->timer = 10. + RNGF()*20.;
          return;
       }
 
       attempts++;
-   } while ((space_isInField(&ast->pos) < 0) && (attempts < 1000));
+   } while ((asteroids_inField(&ast->pos) < 0) && (attempts < 1000));
 
    /* And a random velocity */
    theta = RNGF()*2.*M_PI;
@@ -757,7 +757,7 @@ static void space_renderDebris( const Debris *d, double x, double y )
    v.x = d->pos.x + x;
    v.y = d->pos.y + y;
 
-   if (space_isInField( &v ) == 0)
+   if (asteroids_inField( &v ) == 0)
       gl_renderSpriteInterpolateScale( asteroid_gfx[d->gfxID], asteroid_gfx[d->gfxID], 1,
                                        v.x, v.y, scale, scale, 0, 0, &cInert );
 }
@@ -795,7 +795,7 @@ void asteroids_free (void)
  *    @param p pointer to the position.
  *    @return -1 If false; index of the field otherwise.
  */
-int space_isInField( const Vector2d *p )
+int asteroids_inField( const Vector2d *p )
 {
    /* Always return -1 if in an exclusion zone */
    for (int i=0; i < array_size(cur_system->astexclude); i++) {

@@ -95,16 +95,21 @@ typedef struct AsteroidExclusion_ {
    int affects;   /**< Temporary internal value when rendering. */
 } AsteroidExclusion;
 
-void asteroids_update( double dt );
+/* Initialization and parsing. */
 int asteroids_load (void);
 void asteroids_free (void);
 void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys );
-
 void asteroids_init (void);
+
+/* Updating and rendering. */
+void asteroids_update( double dt );
 void asteroids_render (void);
 void asteroids_renderOverlay (void);
 
-int space_isInField( const Vector2d *p );
+/* Asteroid types. */
+const AsteroidType *space_getType( int ID );
+
+/* Misc functions. */
+int asteroids_inField( const Vector2d *p );
 void asteroids_computeInternals( AsteroidAnchor *a );
 void asteroid_hit( Asteroid *a, const Damage *dmg );
-const AsteroidType *space_getType( int ID );
