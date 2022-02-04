@@ -4521,7 +4521,7 @@ static int getPresenceIndex( StarSystem *sys, int faction )
  */
 void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
 {
-   int i, x, curSpill;
+   int id, curSpill;
    Queue q, qn;
    StarSystem *cur;
    double spillfactor;
@@ -4550,12 +4550,12 @@ void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
    fgens = faction_generators( faction );
 
    /* Add the presence to the current system. */
-   i = getPresenceIndex(sys, faction);
-   sys->presence[i].base   = MAX( sys->presence[i].base, base );
-   sys->presence[i].bonus += bonus;
-   sys->presence[i].value  = sys->presence[i].base + sys->presence[i].bonus;
-   for (i=0; i<array_size(fgens); i++) {
-      x = getPresenceIndex(sys, fgens[i].id);
+   id = getPresenceIndex(sys, faction);
+   sys->presence[id].base   = MAX( sys->presence[id].base, base );
+   sys->presence[id].bonus += bonus;
+   sys->presence[id].value  = sys->presence[id].base + sys->presence[id].bonus;
+   for (int i=0; i<array_size(fgens); i++) {
+      int x = getPresenceIndex(sys, fgens[i].id);
       sys->presence[x].base   = MAX( sys->presence[x].base, MAX(0., base*fgens[i].weight) );
       sys->presence[x].bonus += MAX(0., bonus*fgens[i].weight);
       sys->presence[x].value  = sys->presence[x].base + sys->presence[x].bonus;
@@ -4572,7 +4572,7 @@ void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
    qn             = q_create();
 
    /* Create the initial queue consisting of sys adjacencies. */
-   for (i=0; i < array_size(sys->jumps); i++) {
+   for (int i=0; i < array_size(sys->jumps); i++) {
       if (sys->jumps[i].target->spilled == 0 && (usehidden || !jp_isFlag( &sys->jumps[i], JP_HIDDEN )) && !jp_isFlag( &sys->jumps[i], JP_EXITONLY )) {
          q_enqueue( q, sys->jumps[i].target );
          sys->jumps[i].target->spilled = 1;
@@ -4590,6 +4590,8 @@ void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
    }
 
    while (curSpill < range) {
+      int x;
+
       /* Pull one off the current range queue. */
       cur = q_dequeue(q);
 
@@ -4598,7 +4600,7 @@ void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
          break;
 
       /* Enqueue all its adjacencies to the next range queue. */
-      for (i=0; i<array_size(cur->jumps); i++) {
+      for (int i=0; i<array_size(cur->jumps); i++) {
          if (cur->jumps[i].target->spilled == 0 && (usehidden || !jp_isFlag( &cur->jumps[i], JP_HIDDEN )) && !jp_isFlag( &cur->jumps[i], JP_EXITONLY )) {
             q_enqueue( qn, cur->jumps[i].target );
             cur->jumps[i].target->spilled = 1;
@@ -4612,11 +4614,11 @@ void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
       cur->presence[x].bonus += bonus * spillfactor;
       cur->presence[x].value  = cur->presence[x].base + cur->presence[x].bonus;
 
-      for (i=0; i<array_size(fgens); i++) {
-         x = getPresenceIndex(cur, fgens[i].id);
-         cur->presence[x].base   = MAX( cur->presence[x].base, MAX(0., base*spillfactor*fgens[i].weight) );
-         cur->presence[x].bonus += MAX(0., bonus*spillfactor*fgens[i].weight );
-         cur->presence[x].value  = cur->presence[x].base + cur->presence[x].bonus;
+      for (int i=0; i<array_size(fgens); i++) {
+         int y = getPresenceIndex(cur, fgens[i].id);
+         cur->presence[y].base   = MAX( cur->presence[y].base, MAX(0., base*spillfactor*fgens[i].weight) );
+         cur->presence[y].bonus += MAX(0., bonus*spillfactor*fgens[i].weight );
+         cur->presence[y].value  = cur->presence[y].base + cur->presence[y].bonus;
       }
 
       /* Check to see if we've finished this range and grab the next queue. */
@@ -4634,7 +4636,7 @@ void system_presenceAddSpob( StarSystem *sys, const SpobPresence *ap )
 
 sys_cleanup:
    /* Clean up our mess. */
-   for (i=0; i < array_size(systems_stack); i++)
+   for (int i=0; i < array_size(systems_stack); i++)
       systems_stack[i].spilled = 0;
    return;
 }
