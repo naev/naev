@@ -2702,6 +2702,8 @@ src/ai.c
 src/ai.h
 src/array.c
 src/array.h
+src/asteroid.c
+src/asteroid.h
 src/attributes.h
 src/background.c
 src/background.h
@@ -3008,6 +3010,7 @@ src/sound_openal.c
 src/sound_openal.h
 src/space.c
 src/space.h
+src/space_fdecl.h
 src/spfx.c
 src/spfx.h
 src/start.c

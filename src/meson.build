@@ -3,6 +3,7 @@
 ####
 source = files(
    'array.c',
+   'asteroid.c',
    'background.c',
    'base64.c',
    'board.c',
@@ -191,6 +192,7 @@ naev_source = [
 headers = files(
    'ai.h',
    'array.h',
+   'asteroid.h',
    'background.h',
    'base64.h',
    'board.h',
@@ -344,6 +346,7 @@ headers = files(
    'sound.h',
    'sound_openal.h',
    'space.h',
+   'space_fdecl.h',
    'spfx.h',
    'start.h',
    'tech.h',
