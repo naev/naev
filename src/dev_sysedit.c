@@ -102,8 +102,8 @@ static int jp_exit   = 0; /**< Jump point exit only checkbox value. */
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, const char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
-static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *ast, int selected );
-static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclusion *aexcl, int selected );
+static void sysedit_renderAsteroidsField( double bx, double by, const AsteroidAnchor *ast, int selected );
+static void sysedit_renderAsteroidExclusion( double bx, double by, const AsteroidExclusion *aexcl, int selected );
 static void sysedit_renderBG( double bx, double bw, double w, double h, double x, double y );
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
       int sx, int sy, const glColour *c, int selected, const char *caption );
@@ -691,7 +691,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
  * @brief Draws an asteroid field on the map.
  *
  */
-static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *ast, int selected )
+static void sysedit_renderAsteroidsField( double bx, double by, const AsteroidAnchor *ast, int selected )
 {
    double tx, ty, z;
 
@@ -722,7 +722,7 @@ static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *
  * @brief Draws an asteroid exclusion zone on the map.
  *
  */
-static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclusion *aexcl, int selected )
+static void sysedit_renderAsteroidExclusion( double bx, double by, const AsteroidExclusion *aexcl, int selected )
 {
    double tx, ty, z, r, rr;
    const glColour *col;
