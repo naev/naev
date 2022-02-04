@@ -4367,23 +4367,17 @@ int space_sysSave( xmlTextWriterPtr writer )
    xmlw_startElem(writer,"space");
 
    for (int i=0; i<array_size(systems_stack); i++) {
-      StarSystem *sys;
+      StarSystem *sys = &systems_stack[i];
 
-      if (!sys_isKnown(&systems_stack[i]))
+      if (!sys_isKnown(sys))
          continue; /* not known */
 
       xmlw_startElem(writer,"known");
-
-      sys = &systems_stack[i];
-
       xmlw_attr(writer,"sys","%s",sys->name);
-
       if (sys_isFlag(sys, SYSTEM_PMARKED))
          xmlw_attr(writer,"pmarked","%s","true");
-
       if (sys->note != NULL)
          xmlw_attr(writer,"note","%s",sys->note);
-
       for (int j=0; j<array_size(sys->spobs); j++) {
          if (!spob_isKnown(sys->spobs[j]))
             continue; /* not known */
@@ -4398,7 +4392,6 @@ int space_sysSave( xmlTextWriterPtr writer )
 
       xmlw_endElem(writer);
    }
-
    xmlw_endElem(writer); /* "space" */
 
    return 0;
