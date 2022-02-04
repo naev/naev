@@ -139,9 +139,12 @@ static void sysedit_btnGFXClose( unsigned int wid, const char *wgt );
 static void sysedit_btnGFXApply( unsigned int wid, const char *wgt );
 static void sysedit_btnFaction( unsigned int wid_unused, const char *unused );
 static void sysedit_btnFactionSet( unsigned int wid, const char *unused );
-static void sysedit_editJumpClose( unsigned int wid, const char *unused );
 /* Jump editing */
 static void sysedit_editJump (void);
+static void sysedit_editJumpClose( unsigned int wid, const char *unused );
+/* Asteroid editing. */
+static void sysedit_editAsteroids (void);
+static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused );
 /* Keybindings handling. */
 static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 /* Selection. */
@@ -990,7 +993,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             double t = pow2(ast->radius*sysedit_zoom);
 
             /* Try to select. */
-            if (sysedit_mouseTrySelect( &sel, ast->pos.x, ast->pos.y, t, mx, my, mod, NULL ))
+            if (sysedit_mouseTrySelect( &sel, ast->pos.x, ast->pos.y, t, mx, my, mod, sysedit_editAsteroids ))
                return 1;
          }
 
@@ -1512,6 +1515,54 @@ static void sysedit_editJumpClose( unsigned int wid, const char *unused )
 }
 
 /**
+ * @brief Opens the asteroid editor.
+ */
+static void sysedit_editAsteroids (void)
+{
+   unsigned int wid;
+   int x, y, l, bw;
+   char buf[STRMAX_SHORT];
+   const char *s;
+   AsteroidAnchor *ast = &sysedit_sys->asteroids[ sysedit_select[0].u.asteroid ];
+
+   /* Create the window. */
+   wid = window_create( "wdwAsteroidsEditor", _("Asteroid Field Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   sysedit_widEdit = wid;
+
+   bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
+
+   /* Target lable. */
+   y = -40;
+
+   /* Input widgets and labels. */
+   x = 20;
+
+   s = _("Radius");
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtInput", NULL, NULL, s );
+   window_addInput( wid, x + l + 8, y, 80, 20, "inpRadius", 10, 1, NULL );
+   window_setInputFilter( wid, "inpRadius", INPUT_FILTER_NUMBER );
+
+   /* Bottom buttons. */
+   window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
+         "btnClose", _("Close"), sysedit_editAsteroidsClose );
+
+   /* Load current values. */
+   snprintf( buf, sizeof(buf), "%g", ast->radius );
+   window_setInput( wid, "inpRadius", buf );
+}
+
+static void sysedit_editAsteroidsClose( unsigned int wid, const char *unused )
+{
+   (void) unused;
+   AsteroidAnchor *ast = &sysedit_sys->asteroids[ sysedit_select[0].u.asteroid ];
+
+   ast->radius = atof(window_getInput( sysedit_widEdit, "inpRadius" ));
+
+   window_close( wid, unused );
+}
+
+/**
  * @brief Displays the spob landing description and bar description in a separate window.
  */
 static void sysedit_spobDesc( unsigned int wid, const char *unused )
@@ -1970,8 +2021,8 @@ static void sysedit_btnEdit( unsigned int wid_unused, const char *unused )
       sysedit_editPnt();
    else if (sel->type==SELECT_JUMPPOINT)
       sysedit_editJump();
-   //else if (sel->type==SELECT_ASTEROID)
-   //   sysedit_editAsteroid();
+   else if (sel->type==SELECT_ASTEROID)
+      sysedit_editAsteroids();
 }
 
 /**
