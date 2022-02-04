@@ -847,12 +847,9 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
       double w, double h, double xr, double yr, void *data )
 {
    (void) data;
-   int i, j;
    double x,y, t;
    SDL_Keymod mod;
    StarSystem *sys;
-   Spob *p;
-   JumpPoint *jp;
    Select_t sel;
 
    /* Comfort. */
@@ -886,8 +883,8 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          my -= h/2 - sysedit_ypos;
 
          /* Check spobs. */
-         for (i=0; i<array_size(sys->spobs); i++) {
-            p = sys->spobs[i];
+         for (int i=0; i<array_size(sys->spobs); i++) {
+            Spob *p = sys->spobs[i];
 
             /* Position. */
             x = p->pos.x * sysedit_zoom;
@@ -905,7 +902,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             if ((pow2(mx-x)+pow2(my-y)) < t) {
 
                /* Check if already selected. */
-               for (j=0; j<sysedit_nselect; j++) {
+               for (int j=0; j<sysedit_nselect; j++) {
                   if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
                      sysedit_dragSel   = 1;
                      sysedit_tsel      = sel;
@@ -947,8 +944,8 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          }
 
          /* Check jump points. */
-         for (i=0; i<array_size(sys->jumps); i++) {
-            jp = &sys->jumps[i];
+         for (int i=0; i<array_size(sys->jumps); i++) {
+            JumpPoint *jp = &sys->jumps[i];
 
             /* Position. */
             x = jp->pos.x * sysedit_zoom;
@@ -966,7 +963,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             if ((pow2(mx-x)+pow2(my-y)) < t) {
 
                /* Check if already selected. */
-               for (j=0; j<sysedit_nselect; j++) {
+               for (int j=0; j<sysedit_nselect; j++) {
                   if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
                      sysedit_dragSel   = 1;
                      sysedit_tsel      = sel;
@@ -1027,7 +1024,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             sysedit_drag      = 0;
 
             if (conf.devautosave)
-               for (i=0; i<sysedit_nselect; i++)
+               for (int i=0; i<sysedit_nselect; i++)
                   dpl_saveSpob(sysedit_sys->spobs[ sysedit_select[i].u.spob ]);
          }
          if (sysedit_dragSel) {
@@ -1044,7 +1041,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
             /* Save all spobs in our selection - their positions might have changed. */
             if (conf.devautosave)
-               for (i=0; i<sysedit_nselect; i++)
+               for (int i=0; i<sysedit_nselect; i++)
                   if (sysedit_select[i].type == SELECT_SPOB)
                      dpl_saveSpob( sys->spobs[ sysedit_select[i].u.spob ] );
          }
@@ -1067,17 +1064,17 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* Dragging selection around. */
          else if (sysedit_dragSel && (sysedit_nselect > 0)) {
             if ((sysedit_moved > SYSEDIT_MOVE_THRESHOLD) || (SDL_GetTicks() - sysedit_dragTime > SYSEDIT_DRAG_THRESHOLD)) {
-               for (i=0; i<sysedit_nselect; i++) {
+               for (int i=0; i<sysedit_nselect; i++) {
 
                   /* Spobs. */
                   if (sysedit_select[i].type == SELECT_SPOB) {
-                     p = sys->spobs[ sysedit_select[i].u.spob ];
+                     Spob *p = sys->spobs[ sysedit_select[i].u.spob ];
                      p->pos.x += xr / sysedit_zoom;
                      p->pos.y -= yr / sysedit_zoom;
                   }
                   /* Jump point. */
                   else if (sysedit_select[i].type == SELECT_JUMPPOINT) {
-                     jp         = &sys->jumps[ sysedit_select[i].u.jump ];
+                     JumpPoint *jp = &sys->jumps[ sysedit_select[i].u.jump ];
                      jp->flags &= ~(JP_AUTOPOS);
                      jp->pos.x += xr / sysedit_zoom;
                      jp->pos.y -= yr / sysedit_zoom;
