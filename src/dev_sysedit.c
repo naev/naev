@@ -971,9 +971,10 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                .type = SELECT_ASTEXCLUDE,
                .u.astexclude = i,
             };
+            double t = pow2(exc->radius*sysedit_zoom);
 
             /* Try to select. */
-            if (sysedit_mouseTrySelect( &sel, exc->pos.x, exc->pos.y, exc->radius, mx, my, mod ))
+            if (sysedit_mouseTrySelect( &sel, exc->pos.x, exc->pos.y, t, mx, my, mod ))
                return 1;
          }
 
@@ -984,9 +985,10 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                .type = SELECT_ASTEROID,
                .u.asteroid = i,
             };
+            double t = pow2(ast->radius*sysedit_zoom);
 
             /* Try to select. */
-            if (sysedit_mouseTrySelect( &sel, ast->pos.x, ast->pos.y, ast->radius, mx, my, mod ))
+            if (sysedit_mouseTrySelect( &sel, ast->pos.x, ast->pos.y, t, mx, my, mod ))
                return 1;
          }
 
