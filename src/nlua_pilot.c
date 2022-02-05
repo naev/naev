@@ -72,6 +72,7 @@ static int pilotL_id( lua_State *L );
 static int pilotL_exists( lua_State *L );
 static int pilotL_target( lua_State *L );
 static int pilotL_setTarget( lua_State *L );
+static int pilotL_targetAsteroid( lua_State *L );
 static int pilotL_inrange( lua_State *L );
 static int pilotL_scandone( lua_State *L );
 static int pilotL_withPlayer( lua_State *L );
@@ -208,6 +209,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "exists", pilotL_exists },
    { "target", pilotL_target },
    { "setTarget", pilotL_setTarget },
+   { "targetAsteroid", pilotL_targetAsteroid },
    { "inrange", pilotL_inrange },
    { "scandone", pilotL_scandone },
    { "withPlayer", pilotL_withPlayer },
@@ -1198,6 +1200,72 @@ static int pilotL_setTarget( lua_State *L )
    else
       pilot_setTarget( p, t );
    return 0;
+}
+
+/**
+ * @brief Gets the asteroid target of the pilot.
+ *
+ * @usage target = p:targetAsteroid()
+ *
+ *    @luatparam Pilot p Pilot to get asteroid target of.
+ *    @luatreturn table|nil nil if no asteroid is selected, otherwise a table with information about the selected asteroid.
+ * @luafunc targetAsteroid
+ */
+static int pilotL_targetAsteroid( lua_State *L )
+{
+   const AsteroidAnchor *field;
+   const Asteroid *ast;
+   const AsteroidType *at;
+
+   Pilot *p = luaL_validpilot(L,1);
+   if (p->nav_asteroid == 0)
+      return 0;
+
+   field = &cur_system->asteroids[p->nav_anchor];
+   ast = &field->asteroids[p->nav_asteroid];
+   at = asttype_get( ast->type );
+
+   lua_newtable(L);
+
+   lua_pushvector(L,ast->pos);
+   lua_setfield(L,-2,"pos");
+
+   lua_pushvector(L,ast->vel);
+   lua_setfield(L,-2,"vel");
+
+   lua_pushboolean(L,ast->scanned);
+   lua_setfield(L,-2,"scanned");
+
+   lua_pushnumber(L,ast->timer);
+   lua_setfield(L,-2,"timer");
+
+   lua_pushnumber(L,ast->timer_max);
+   lua_setfield(L,-2,"timer_max");
+
+   lua_pushnumber(L,ast->armour);
+   lua_setfield(L,-2,"armour");
+
+   /* Type stuff below. */
+   lua_newtable(L);
+   for (int i=0; i<array_size(at->material); i++) {
+      const AsteroidReward *mat = &at->material[i];
+
+      lua_pushcommodity( L, mat->material );
+      lua_setfield(L,-2,"commodity");
+
+      lua_pushnumber( L, mat->quantity );
+      lua_setfield(L,-2,"quantity");
+
+      lua_pushnumber( L, mat->rarity );
+      lua_setfield(L,-2,"rarity");
+
+      lua_rawseti( L, -2, i+1 );
+   }
+   lua_setfield(L,-2,"material");
+
+   /* Push target. */
+   lua_pushpilot(L, p->target);
+   return 1;
 }
 
 /**
