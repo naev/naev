@@ -19,9 +19,11 @@
 #include "nluadef.h"
 #include "nlua_vec2.h"
 #include "nlua_commodity.h"
+#include "nlua_pilot.h"
 
 /* Asteroid methods. */
 static int asteroidL_eq( lua_State *L );
+static int asteroidL_get( lua_State *L );
 static int asteroidL_pos( lua_State *L );
 static int asteroidL_vel( lua_State *L );
 static int asteroidL_scanned( lua_State *L );
@@ -32,6 +34,7 @@ static int asteroidL_setArmour( lua_State *L );
 static int asteroidL_materials( lua_State *L );
 static const luaL_Reg asteroidL_methods[] = {
    { "__eq", asteroidL_eq },
+   { "get", asteroidL_get },
    { "pos", asteroidL_pos },
    { "vel", asteroidL_vel },
    { "scanned", asteroidL_scanned },
@@ -163,6 +166,77 @@ static int asteroidL_eq( lua_State *L )
    a1 = luaL_checkasteroid(L,1);
    a2 = luaL_checkasteroid(L,2);
    lua_pushboolean( L, (memcmp( a1, a2, sizeof(LuaAsteroid_t) )==0) );
+   return 1;
+}
+
+static int asteroidL_get( lua_State *L )
+{
+   const Vector2d *pos;
+   LuaAsteroid_t la;
+   if (lua_isvector(L,1))
+      pos = lua_tovector(L,1);
+
+   else if (lua_ispilot(L,1))
+      pos = &luaL_validpilot(L,1)->solid->pos;
+
+   else if (lua_isnoneornil(L,1)) {
+      /* Random asteroid. */
+      int field = RNG(0,array_size(cur_system->asteroids)-1);
+      int ast   = RNG(0,cur_system->asteroids[field].nb-1);
+      int bad_asteroid = 0;
+      Asteroid *a = &cur_system->asteroids[field].asteroids[ast];
+
+      if (a->state != ASTEROID_FG) {
+         /* Switch to next index until we find a valid one, or until we come full-circle. */
+         bad_asteroid = 1;
+         for (int i=0; i<cur_system->asteroids[field].nb; i++) {
+            ast = (ast+1) % cur_system->asteroids[field].nb;
+            a = &cur_system->asteroids[field].asteroids[ast];
+            if (a->state == ASTEROID_FG) {
+               bad_asteroid = 0;
+               break;
+            }
+         }
+      }
+
+      if (bad_asteroid)
+         return 0;
+
+      la.parent = field;
+      la.id = ast;
+      lua_pushasteroid(L,la);
+      return 1;
+   }
+   else
+      NLUA_INVALID_PARAMETER(L);
+
+   /* Try to find nearest asteroid. */
+   Asteroid *a_closest = NULL;
+   double dist2 = HUGE_VAL;
+   for (int i=0; i<array_size(cur_system->asteroids); i++) {
+      AsteroidAnchor *ast = &cur_system->asteroids[i];
+      for (int j=0; j<ast->nb; j++) {
+         double d2;
+         Asteroid *a = &ast->asteroids[j];
+
+         if (a->state != ASTEROID_FG)
+            continue;
+
+         d2 = vect_dist2( pos, &a->pos );
+         if (d2 > dist2)
+            continue;
+
+         a_closest = a;
+         dist2 = d2;
+      }
+   }
+   if (a_closest==NULL)
+      return 0;
+
+   /* Got an asteroid, ship it. */
+   la.parent = a_closest->parent;
+   la.id     = a_closest->id;
+   lua_pushasteroid(L,la);
    return 1;
 }
 
