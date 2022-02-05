@@ -74,6 +74,7 @@ static int pilotL_exists( lua_State *L );
 static int pilotL_target( lua_State *L );
 static int pilotL_setTarget( lua_State *L );
 static int pilotL_targetAsteroid( lua_State *L );
+static int pilotL_setTargetAsteroid( lua_State *L );
 static int pilotL_inrange( lua_State *L );
 static int pilotL_scandone( lua_State *L );
 static int pilotL_withPlayer( lua_State *L );
@@ -211,6 +212,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "target", pilotL_target },
    { "setTarget", pilotL_setTarget },
    { "targetAsteroid", pilotL_targetAsteroid },
+   { "setTargetAsteroid", pilotL_setTargetAsteroid },
    { "inrange", pilotL_inrange },
    { "scandone", pilotL_scandone },
    { "withPlayer", pilotL_withPlayer },
@@ -1218,13 +1220,35 @@ static int pilotL_targetAsteroid( lua_State *L )
    LuaAsteroid_t la;
 
    Pilot *p = luaL_validpilot(L,1);
-   if (p->nav_asteroid == 0)
+   if (p->nav_asteroid < 0)
       return 0;
 
    la.parent = p->nav_anchor;
    la.id = p->nav_asteroid;
    lua_pushasteroid(L, la);
    return 1;
+}
+
+/**
+ * @brief Sets the pilot's asteroid target.
+ *
+ *    @luatparam Pilot p Pilot to set asteroid target of.
+ *    @luatparam Asteroid a Asteroid to set pilot's target to.
+ * @luafunc setTargetAsteroid
+ */
+static int pilotL_setTargetAsteroid( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   LuaAsteroid_t *la = luaL_checkasteroid(L,2);
+
+   /* Set the target asteroid. */
+   p->nav_anchor = la->parent;
+   p->nav_asteroid = la->id;
+
+   /* Untarget pilot. */
+   p->target = p->id;
+
+   return 0;
 }
 
 /**
