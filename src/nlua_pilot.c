@@ -24,6 +24,7 @@
 #include "land_outfits.h"
 #include "log.h"
 #include "nlua.h"
+#include "nlua_asteroid.h"
 #include "nlua_col.h"
 #include "nlua_commodity.h"
 #include "nlua_faction.h"
@@ -353,8 +354,9 @@ int nlua_loadPilot( nlua_env env )
 {
    nlua_register(env, PILOT_METATABLE, pilotL_methods, 1);
 
-   /* Pilot always loads ship. */
+   /* Pilot always loads ship and asteroid. */
    nlua_loadShip(env);
+   nlua_loadAsteroid(env);
 
    return 0;
 }
@@ -1213,58 +1215,15 @@ static int pilotL_setTarget( lua_State *L )
  */
 static int pilotL_targetAsteroid( lua_State *L )
 {
-   const AsteroidAnchor *field;
-   const Asteroid *ast;
-   const AsteroidType *at;
+   LuaAsteroid_t la;
 
    Pilot *p = luaL_validpilot(L,1);
    if (p->nav_asteroid == 0)
       return 0;
 
-   field = &cur_system->asteroids[p->nav_anchor];
-   ast = &field->asteroids[p->nav_asteroid];
-   at = asttype_get( ast->type );
-
-   lua_newtable(L);
-
-   lua_pushvector(L,ast->pos);
-   lua_setfield(L,-2,"pos");
-
-   lua_pushvector(L,ast->vel);
-   lua_setfield(L,-2,"vel");
-
-   lua_pushboolean(L,ast->scanned);
-   lua_setfield(L,-2,"scanned");
-
-   lua_pushnumber(L,ast->timer);
-   lua_setfield(L,-2,"timer");
-
-   lua_pushnumber(L,ast->timer_max);
-   lua_setfield(L,-2,"timer_max");
-
-   lua_pushnumber(L,ast->armour);
-   lua_setfield(L,-2,"armour");
-
-   /* Type stuff below. */
-   lua_newtable(L);
-   for (int i=0; i<array_size(at->material); i++) {
-      const AsteroidReward *mat = &at->material[i];
-
-      lua_pushcommodity( L, mat->material );
-      lua_setfield(L,-2,"commodity");
-
-      lua_pushnumber( L, mat->quantity );
-      lua_setfield(L,-2,"quantity");
-
-      lua_pushnumber( L, mat->rarity );
-      lua_setfield(L,-2,"rarity");
-
-      lua_rawseti( L, -2, i+1 );
-   }
-   lua_setfield(L,-2,"material");
-
-   /* Push target. */
-   lua_pushpilot(L, p->target);
+   la.parent = p->nav_anchor;
+   la.id = p->nav_asteroid;
+   lua_pushasteroid(L, la);
    return 1;
 }
 

@@ -14,10 +14,28 @@
 
 #include "nlua_asteroid.h"
 
+#include "array.h"
+#include "space.h"
+#include "nluadef.h"
+#include "nlua_vec2.h"
+#include "nlua_commodity.h"
+
 /* Asteroid methods. */
 static int asteroidL_eq( lua_State *L );
+static int asteroidL_pos( lua_State *L );
+static int asteroidL_vel( lua_State *L );
+static int asteroidL_scanned( lua_State *L );
+static int asteroidL_timer( lua_State *L );
+static int asteroidL_armour( lua_State *L );
+static int asteroidL_materials( lua_State *L );
 static const luaL_Reg asteroidL_methods[] = {
    { "__eq", asteroidL_eq },
+   { "pos", asteroidL_pos },
+   { "vel", asteroidL_vel },
+   { "scanned", asteroidL_scanned },
+   { "timer", asteroidL_timer },
+   { "armour", asteroidL_armour },
+   { "materials", asteroidL_materials },
    {0,0}
 }; /**< AsteroidLua methods. */
 
@@ -57,6 +75,31 @@ LuaAsteroid_t* luaL_checkasteroid( lua_State *L, int ind )
       return lua_toasteroid(L,ind);
    luaL_typerror(L, ind, ASTEROID_METATABLE);
    return NULL;
+}
+/**
+ * @brief Gets asteroid at index raising an error if type doesn't match.
+ *
+ *    @param L Lua state to get system from.
+ *    @param ind Index position of system.
+ *    @return The Asteroid at ind.
+ */
+Asteroid* luaL_validasteroid( lua_State *L, int ind )
+{
+   Asteroid *a;
+   if (lua_isasteroid(L, ind)) {
+      LuaAsteroid_t *la = luaL_checkasteroid(L, ind);
+      AsteroidAnchor *field = &cur_system->asteroids[ la->parent ];
+      a = &field->asteroids[ la->id ];
+   }
+   else {
+      luaL_typerror(L, ind, ASTEROID_METATABLE);
+      return NULL;
+   }
+
+   if (a == NULL)
+      NLUA_ERROR(L, _("Asteroid is invalid"));
+
+   return a;
 }
 /**
  * @brief Pushes a asteroid on the stack.
@@ -116,5 +159,109 @@ static int asteroidL_eq( lua_State *L )
    a1 = luaL_checkasteroid(L,1);
    a2 = luaL_checkasteroid(L,2);
    lua_pushboolean( L, (memcmp( a1, a2, sizeof(LuaAsteroid_t) )==0) );
+   return 1;
+}
+
+/**
+ * @brief Gets the position of an asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to get position of.
+ *    @luatreturn Vector Position of the asteroid.
+ * @luafunc pos
+ */
+static int asteroidL_pos( lua_State *L )
+{
+   Asteroid *a = luaL_validasteroid(L,1);
+   lua_pushvector(L,a->pos);
+   return 1;
+}
+
+/**
+ * @brief Gets the velocity of an asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to get velocity of.
+ *    @luatreturn Vector Position of the asteroid.
+ * @luafunc vel
+ */
+static int asteroidL_vel( lua_State *L )
+{
+   Asteroid *a = luaL_validasteroid(L,1);
+   lua_pushvector(L,a->vel);
+   return 1;
+}
+
+/**
+ * @brief Gets whether or not an asteroid got scanned.
+ *
+ *    @luatparam Asteroid a Asteroid to get scanned state of.
+ *    @luatreturn boolean Whether or not the asteroid was scanned.
+ * @luafunc scanned
+ */
+static int asteroidL_scanned( lua_State *L )
+{
+   Asteroid *a = luaL_validasteroid(L,1);
+   lua_pushboolean(L,a->scanned);
+   return 1;
+}
+
+/**
+ * @brief Gets the time left on the asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to get time left on.
+ *    @luatreturn number Seconds left before the asteroid is unavailable.
+ *    @luatreturn number Total number of seconds the asteroid had to live.
+ * @luafunc timer
+ */
+static int asteroidL_timer( lua_State *L )
+{
+   Asteroid *a = luaL_validasteroid(L,1);
+   lua_pushnumber(L,a->timer);
+   lua_pushnumber(L,a->timer_max);
+   return 2;
+}
+
+/**
+ * @brief Gets the armour (health) left on the asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to get armour of.
+ *    @luatreturn number Armour left before the asteroid is destroyed.
+ * @luafunc armour
+ */
+static int asteroidL_armour( lua_State *L )
+{
+   Asteroid *a = luaL_validasteroid(L,1);
+   lua_pushboolean(L,a->armour);
+   return 1;
+}
+
+/**
+ * @brief Gets the materials the asteroid can potentially drop.
+ *
+ *    @luatparam Asteroid a Asteroid to get materials of.
+ *    @luatreturn table Table containing the materials.
+ * @luafunc materials
+ */
+static int asteroidL_materials( lua_State *L )
+{
+   Asteroid *a = luaL_validasteroid(L,1);
+   const AsteroidType *at = asttype_get( a->type );
+
+   lua_newtable(L);
+   for (int i=0; i<array_size(at->material); i++) {
+      const AsteroidReward *mat = &at->material[i];
+
+      lua_pushcommodity( L, mat->material );
+      lua_setfield(L,-2,"commodity");
+
+      lua_pushnumber( L, mat->quantity );
+      lua_setfield(L,-2,"quantity");
+
+      lua_pushnumber( L, mat->rarity );
+      lua_setfield(L,-2,"rarity");
+
+      lua_rawseti( L, -2, i+1 );
+   }
+   lua_setfield(L,-2,"material");
+
    return 1;
 }
