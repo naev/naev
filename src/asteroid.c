@@ -887,11 +887,8 @@ void asteroid_hit( Asteroid *a, const Damage *dmg )
    dtype_calcDamage( NULL, &darmour, absorb, NULL, dmg, NULL );
 
    a->armour -= darmour;
-   if (a->armour <= 0) {
-      a->state = ASTEROID_BG_TO_XX;
-      a->timer_max = a->timer = 0.5;
+   if (a->armour <= 0)
       asteroid_explode( a, 1 );
-   }
 }
 
 /**
@@ -921,7 +918,7 @@ void asteroid_explode( Asteroid *a, int give_reward )
 
    /* Release commodity rewards. */
    if (give_reward) {
-      for (int i=0; i < array_size(at->material); i++) {
+      for (int i=0; i<array_size(at->material); i++) {
          AsteroidReward *mat = &at->material[i];
          int nb = RNG(0,mat->quantity);
          for (int j=0; j < nb; j++) {
@@ -942,6 +939,6 @@ void asteroid_explode( Asteroid *a, int give_reward )
 
    /* Make it respawn elsewhere */
    asteroid_init( a, field );
-   a->state = ASTEROID_XX;
-   a->timer_max = a->timer = 10. + RNGF()*20.;
+   a->state = ASTEROID_BG_TO_XX;
+   a->timer_max = a->timer = 0.5;
 }
