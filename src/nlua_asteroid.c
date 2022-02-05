@@ -25,6 +25,7 @@
 static int asteroidL_eq( lua_State *L );
 static int asteroidL_get( lua_State *L );
 static int asteroidL_exists( lua_State *L );
+static int asteroidL_field( lua_State *L );
 static int asteroidL_pos( lua_State *L );
 static int asteroidL_vel( lua_State *L );
 static int asteroidL_scanned( lua_State *L );
@@ -37,6 +38,7 @@ static const luaL_Reg asteroidL_methods[] = {
    { "__eq", asteroidL_eq },
    { "get", asteroidL_get },
    { "exists", asteroidL_exists },
+   { "field", asteroidL_field },
    { "pos", asteroidL_pos },
    { "vel", asteroidL_vel },
    { "scanned", asteroidL_scanned },
@@ -273,6 +275,20 @@ static int asteroidL_exists( lua_State *L )
 {
    Asteroid *a = luaL_validasteroid(L,1);
    lua_pushboolean(L,(a->state==ASTEROID_FG));
+   return 1;
+}
+
+/**
+ * @brief Gets the field the asteroid belongs to (useful for getting more asteroids from the same field).
+ *
+ *    @luatparam Asteroid a Asteroid to get what field it belongs to.
+ *    @luatreturn number ID of the field the asteroid belongs to.
+ * @luafunc field
+ */
+static int asteroidL_field( lua_State *L )
+{
+   LuaAsteroid_t *la = luaL_checkasteroid(L,1);
+   lua_pushinteger(L,la->parent+1);
    return 1;
 }
 
