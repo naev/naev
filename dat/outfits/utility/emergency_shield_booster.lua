@@ -3,7 +3,6 @@ local cooldown = 8 -- cooldown time in seconds
 local boost = 5 -- How much the shield regen is increased by
 local efficiency = 3 -- MJ of energy used per shield recovered
 
-
 local function turnon( p, po )
    -- Still on cooldown
    if mem.timer > 0 then
