@@ -174,7 +174,7 @@ static int asteroidL_eq( lua_State *L )
 /**
  * @brief Gets an asteroid in the system.
  *
- *    @luatparam nil|Vector|Pilot If not supplied, gets a random asteroid, if not it tries to get the asteroid closest to the Vector or Pilot.
+ *    @luatparam nil|number|Vector|Pilot If not supplied, gets a random asteroid, if not it tries to get the asteroid closest to the Vector or Pilot. In the case of a number, it tries to get a random asteroid from the asteroid field with the number as an id.
  *    @luatreturn Asteroid The closest asteroid or nil if not found.
  * @luafunc get
  */
@@ -182,6 +182,7 @@ static int asteroidL_get( lua_State *L )
 {
    const Vector2d *pos;
    LuaAsteroid_t la;
+
    if (lua_isvector(L,1))
       pos = lua_tovector(L,1);
 
@@ -191,6 +192,36 @@ static int asteroidL_get( lua_State *L )
    else if (lua_isnoneornil(L,1)) {
       /* Random asteroid. */
       int field = RNG(0,array_size(cur_system->asteroids)-1);
+      int ast   = RNG(0,cur_system->asteroids[field].nb-1);
+      int bad_asteroid = 0;
+      Asteroid *a = &cur_system->asteroids[field].asteroids[ast];
+
+      if (a->state != ASTEROID_FG) {
+         /* Switch to next index until we find a valid one, or until we come full-circle. */
+         bad_asteroid = 1;
+         for (int i=0; i<cur_system->asteroids[field].nb; i++) {
+            ast = (ast+1) % cur_system->asteroids[field].nb;
+            a = &cur_system->asteroids[field].asteroids[ast];
+            if (a->state == ASTEROID_FG) {
+               bad_asteroid = 0;
+               break;
+            }
+         }
+      }
+
+      if (bad_asteroid)
+         return 0;
+
+      la.parent = field;
+      la.id = ast;
+      lua_pushasteroid(L,la);
+      return 1;
+   }
+   else if (lua_isnumber(L,1)) {
+      int field = luaL_checkinteger(L,1)-1;
+      if ((field < 0) || (field >= array_size(cur_system->asteroids)))
+         NLUA_INVALID_PARAMETER(L);
+      /* Random asteroid. */
       int ast   = RNG(0,cur_system->asteroids[field].nb-1);
       int bad_asteroid = 0;
       Asteroid *a = &cur_system->asteroids[field].asteroids[ast];

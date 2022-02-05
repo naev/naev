@@ -887,10 +887,8 @@ end
 -- Mines an asteroid
 --]]
 -- luacheck: globals mine (AI Task functions passed by name)
-function mine( fieldNast )
+function mine( ast )
    ai.weapset( 1 )
-   local field     = fieldNast[1]
-   local ast       = fieldNast[2]
    local p         = ai.pilot()
    local wrange    = ai.getweaprange(nil, 0)
    local erange    = 100
@@ -905,10 +903,10 @@ function mine( fieldNast )
       return
    end
 
-   ai.setasterotarget( field, ast )
+   ai.setasterotarget( ast )
 
-   local target, vel = system.asteroidPos( field, ast )
-
+   local target = ast:pos()
+   local vel = ast:vel()
    local _dist, angle = vec2.polar( p:pos() - target )
 
    -- First task : place the ship close to the asteroid
@@ -925,17 +923,15 @@ function mine( fieldNast )
    local relvel = vec2.add( p:vel(), vec2.mul(vel,-1) ):mod()
 
    if relpos < wrange and relvel < 10 then
-      ai.pushsubtask("_killasteroid", fieldNast )
+      ai.pushsubtask("_killasteroid", ast )
    end
 end
 
 -- luacheck: globals _killasteroid (AI Task functions passed by name)
-function _killasteroid( fieldNast )
-   local field     = fieldNast[1]
-   local ast       = fieldNast[2]
+function _killasteroid( ast )
    local wrange    = ai.getweaprange()
 
-   local target = system.asteroidPos( field, ast )
+   local target = ast:pos()
    local dir  = ai.face(target)
 
     -- See if there's a gatherable; if so, pop this task and gather instead
@@ -958,7 +954,7 @@ function _killasteroid( fieldNast )
       ai.shoot()
       ai.shoot(true)
    end
-   if system.asteroidDestroyed( field, ast ) then
+   if not ast:exists() then
       ai.poptask()
       -- Last task : gather
       ai.pushtask("gather")

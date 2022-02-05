@@ -80,6 +80,7 @@
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
+#include "nlua_asteroid.h"
 #include "nlua_faction.h"
 #include "nlua_pilot.h"
 #include "nlua_spob.h"
@@ -233,7 +234,7 @@ static int aiL_credits( lua_State *L ); /* credits( number ) */
 static int aiL_board( lua_State *L ); /* boolean board() */
 static int aiL_refuel( lua_State *L ); /* boolean, boolean refuel() */
 static int aiL_messages( lua_State *L );
-static int aiL_setasterotarget( lua_State *L ); /* setasterotarget( number, number ) */
+static int aiL_setasterotarget( lua_State *L ); /* setasterotarget( Asteroid ) */
 static int aiL_gatherablePos( lua_State *L ); /* gatherablepos( number ) */
 static int aiL_shoot_indicator( lua_State *L ); /* get shoot indicator */
 static int aiL_set_shoot_indicator( lua_State *L ); /* set shoot indicator */
@@ -2746,11 +2747,11 @@ static int aiL_settarget( lua_State *L )
  */
 static int aiL_setasterotarget( lua_State *L )
 {
-   int field = lua_tointeger(L,1);
-   int ast   = lua_tointeger(L,2);
+   LuaAsteroid_t *la = luaL_checkasteroid(L,1);
 
-   cur_pilot->nav_anchor = field;
-   cur_pilot->nav_asteroid = ast;
+   /* Set the target asteroid. */
+   cur_pilot->nav_anchor = la->parent;
+   cur_pilot->nav_asteroid = la->id;
 
    /* Untarget pilot. */
    cur_pilot->target = cur_pilot->id;

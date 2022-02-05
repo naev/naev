@@ -34,6 +34,7 @@ stds.Basic={
 }
 stds.AI = {read_globals={"ai"}} -- the C function is ai_loadProfile() in this case
 stds.Audio = {read_globals={"audio"}}
+stds.Asteroid = {read_globals={"asteroid"}}
 stds.Background = {read_globals={"bkg"}}
 stds.Camera = {read_globals={"camera"}}
 stds.Canvas = {read_globals={"canvas"}}
@@ -73,7 +74,7 @@ stds.Transform = {read_globals={"transform"}}
 stds.Var = {read_globals={"var"}}
 stds.Vector = {read_globals={"vec2"}}
 
-PILOT = "+_Pilot+Ship"
+PILOT = "+_Pilot+Ship+Asteroid"
 STANDARD = "+Naev+Var+Spob+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+LinOpt+Safelanes"
 GFX = "+_GFX+Col+Tex+Font+Transform+Shader+Canvas"
 TK = "+_Tk+Col" .. GFX
