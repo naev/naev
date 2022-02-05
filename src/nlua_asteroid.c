@@ -24,6 +24,7 @@
 /* Asteroid methods. */
 static int asteroidL_eq( lua_State *L );
 static int asteroidL_get( lua_State *L );
+static int asteroidL_exists( lua_State *L );
 static int asteroidL_pos( lua_State *L );
 static int asteroidL_vel( lua_State *L );
 static int asteroidL_scanned( lua_State *L );
@@ -35,6 +36,7 @@ static int asteroidL_materials( lua_State *L );
 static const luaL_Reg asteroidL_methods[] = {
    { "__eq", asteroidL_eq },
    { "get", asteroidL_get },
+   { "exists", asteroidL_exists },
    { "pos", asteroidL_pos },
    { "vel", asteroidL_vel },
    { "scanned", asteroidL_scanned },
@@ -169,6 +171,13 @@ static int asteroidL_eq( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Gets an asteroid in the system.
+ *
+ *    @luatparam nil|Vector|Pilot If not supplied, gets a random asteroid, if not it tries to get the asteroid closest to the Vector or Pilot.
+ *    @luatreturn Asteroid The closest asteroid or nil if not found.
+ * @luafunc get
+ */
 static int asteroidL_get( lua_State *L )
 {
    const Vector2d *pos;
@@ -237,6 +246,20 @@ static int asteroidL_get( lua_State *L )
    la.parent = a_closest->parent;
    la.id     = a_closest->id;
    lua_pushasteroid(L,la);
+   return 1;
+}
+
+/**
+ * @brief Checks to see if an asteroid exists.
+ *
+ *    @luatparam Asteroid a Asteroid to check to see if exists.
+ *    @luatreturn boolean true if te asteroid exists, false otherwise.
+ * @luafunc exists
+ */
+static int asteroidL_exists( lua_State *L )
+{
+   Asteroid *a = luaL_validasteroid(L,1);
+   lua_pushboolean(L,(a->state==ASTEROID_FG));
    return 1;
 }
 
