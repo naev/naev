@@ -5,8 +5,18 @@ local love           = require 'love'
 local lg             = require 'love.graphics'
 --local fmt            = require 'format'
 
+local frag_pointer = love.filesystem.read( "pointer.frag" )
+local vertexcode = [[
+#pragma language glsl3
+vec4 position( mat4 transform_projection, vec4 vertex_position )
+{
+   return transform_projection * vertex_position;
+}
+]]
+
 local moving, pointer, speed, cx, cy, transition, alpha, done, targets, shots, shots_max, shots_timer, z_cur, z_max, mfont
 local radius = 200
+local img, shd_pointer
 function mining.load()
    mfont       = lg.newFont(32)
    pointer     = 0
@@ -17,6 +27,14 @@ function mining.load()
    -- Outfit-dependent
    speed       = math.pi
    shots_max   = 3
+
+   -- Create constant image
+   local idata = love.image.newImageData( 1, 1 )
+   idata:setPixel( 0, 0, 0.5, 0.5, 0.5, 1 )
+   img = love.graphics.newImage( idata )
+
+   -- Load shaders
+   shd_pointer = lg.newShader( frag_pointer, vertexcode )
 
    -- TODO center on player
    local lw, lh = lg.getDimensions()
@@ -105,8 +123,13 @@ function mining.draw()
    lg.rectangle( "fill", 0, 0, lw, lh )
 
    -- Background
-   lg.setColor( 1, 1, 1, alpha )
-   lg.circle( "fill", cx, cy, radius )
+   --lg.setColor( 1, 1, 1, alpha )
+   --lg.circle( "fill", cx, cy, radius )
+   lg.setColor( 0.7, 0.7, 0.7, 0.7*alpha )
+   shd_pointer:send( "radius", radius )
+   lg.setShader( shd_pointer )
+   lg.draw( img, cx-radius, cy-radius, 0, radius*2, radius*2 )
+   lg.setShader()
 
    -- Pointer
    lg.setColor( 0, 1, 0, alpha )
@@ -114,7 +137,7 @@ function mining.draw()
 
    -- Cut out "hole" of the circle
    lg.setColor( 0.2, 0.2, 0.2, alpha )
-   lg.circle( "fill", cx, cy, radius*0.8 )
+   --lg.circle( "fill", cx, cy, radius*0.8 )
 
    -- Start Area
    lg.setColor( 0.1, 0.1, 0.1, alpha )
