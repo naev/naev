@@ -116,6 +116,10 @@ function mining.draw()
    lg.setColor( 0.2, 0.2, 0.2, alpha )
    lg.circle( "fill", cx, cy, radius*0.8 )
 
+   -- Start Area
+   lg.setColor( 0.1, 0.1, 0.1, alpha )
+   lg.rectangle( "fill", cx+radius*0.7, cy-2, radius*0.4, 5 )
+
    -- Targets
    for k,t in ipairs(targets) do
       local y = ease( math.max( 0, 1-t.y ) )
