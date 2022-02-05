@@ -2844,6 +2844,8 @@ src/nfile.c
 src/nfile.h
 src/nlua.c
 src/nlua.h
+src/nlua_asteroid.c
+src/nlua_asteroid.h
 src/nlua_audio.c
 src/nlua_audio.h
 src/nlua_bkg.c

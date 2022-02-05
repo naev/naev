@@ -136,6 +136,7 @@ source = files(
 
 nlua_source = files(
    'ai.c',
+   'nlua_asteroid.c',
    'nlua_audio.c',
    'nlua_bkg.c',
    'nlua_camera.c',
@@ -264,6 +265,7 @@ headers = files(
    'news.h',
    'nfile.h',
    'nlua.h',
+   'nlua_asteroid.h',
    'nlua_audio.h',
    'nlua_bkg.h',
    'nlua_camera.h',
