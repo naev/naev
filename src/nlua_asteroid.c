@@ -26,7 +26,9 @@ static int asteroidL_pos( lua_State *L );
 static int asteroidL_vel( lua_State *L );
 static int asteroidL_scanned( lua_State *L );
 static int asteroidL_timer( lua_State *L );
+static int asteroidL_setTimer( lua_State *L );
 static int asteroidL_armour( lua_State *L );
+static int asteroidL_setArmour( lua_State *L );
 static int asteroidL_materials( lua_State *L );
 static const luaL_Reg asteroidL_methods[] = {
    { "__eq", asteroidL_eq },
@@ -34,7 +36,9 @@ static const luaL_Reg asteroidL_methods[] = {
    { "vel", asteroidL_vel },
    { "scanned", asteroidL_scanned },
    { "timer", asteroidL_timer },
+   { "setTimer", asteroidL_setTimer },
    { "armour", asteroidL_armour },
+   { "setArmour", asteroidL_setArmour },
    { "materials", asteroidL_materials },
    {0,0}
 }; /**< AsteroidLua methods. */
@@ -221,6 +225,21 @@ static int asteroidL_timer( lua_State *L )
 }
 
 /**
+ * @brief Sets the time left on the asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to set time left of.
+ *    @luatparam number Time left to set to in seconds.
+ * @luafunc setTimer
+ */
+static int asteroidL_setTimer( lua_State *L )
+{
+   Asteroid *a = luaL_validasteroid(L,1);
+   a->timer = luaL_checknumber(L,2);
+   a->timer_max = MAX( a->timer_max, a->timer );
+   return 0;
+}
+
+/**
  * @brief Gets the armour (health) left on the asteroid.
  *
  *    @luatparam Asteroid a Asteroid to get armour of.
@@ -232,6 +251,22 @@ static int asteroidL_armour( lua_State *L )
    Asteroid *a = luaL_validasteroid(L,1);
    lua_pushboolean(L,a->armour);
    return 1;
+}
+
+/**
+ * @brief Sets the armour of the asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to set armour of.
+ *    @luatparam number Amount to set the armour to (negative values will explode it).
+ * @luafunc setTimer
+ */
+static int asteroidL_setArmour( lua_State *L )
+{
+   Asteroid *a = luaL_validasteroid(L,1);
+   a->armour = luaL_checknumber(L,2);
+   if (a->armour <= 0.)
+      asteroid_explode( a, 0 );
+   return 0;
 }
 
 /**

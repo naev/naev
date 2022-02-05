@@ -37,7 +37,6 @@ static int asttype_load (void);
 
 static void space_renderAsteroid( const Asteroid *a );
 static void space_renderDebris( const Debris *d, double x, double y );
-static void asteroid_explode( Asteroid *a, AsteroidAnchor *field, int give_reward );
 static void debris_init( Debris *deb );
 static void asteroid_init( Asteroid *ast, AsteroidAnchor *field );
 
@@ -891,8 +890,7 @@ void asteroid_hit( Asteroid *a, const Damage *dmg )
    if (a->armour <= 0) {
       a->state = ASTEROID_BG_TO_XX;
       a->timer_max = a->timer = 0.5;
-
-      asteroid_explode( a, &cur_system->asteroids[a->parent], 1 );
+      asteroid_explode( a, 1 );
    }
 }
 
@@ -900,14 +898,14 @@ void asteroid_hit( Asteroid *a, const Damage *dmg )
  * @brief Makes an asteroid explode.
  *
  *    @param a asteroid to make explode
- *    @param field Asteroid field the asteroid belongs to.
  *    @param give_reward Whether a pilot blew the asteroid up and should be rewarded.
  */
-static void asteroid_explode( Asteroid *a, AsteroidAnchor *field, int give_reward )
+void asteroid_explode( Asteroid *a, int give_reward )
 {
    Damage dmg;
    char buf[16];
-   AsteroidType *at = &asteroid_types[a->type];
+   const AsteroidType *at = &asteroid_types[a->type];
+   AsteroidAnchor *field = &cur_system->asteroids[a->parent];
 
    /* Manage the explosion */
    dmg.type          = dtype_get("explosion_splash");

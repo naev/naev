@@ -132,3 +132,4 @@ int asttype_getName( const char *name );
 int asteroids_inField( const Vector2d *p );
 void asteroids_computeInternals( AsteroidAnchor *a );
 void asteroid_hit( Asteroid *a, const Damage *dmg );
+void asteroid_explode( Asteroid *a, int give_reward );
