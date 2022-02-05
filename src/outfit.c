@@ -1339,6 +1339,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    int l;
    xmlNodePtr node;
    double C, area;
+   double dshield, darmour, dknockback;
    char *shader;
 
    /* Defaults. */
@@ -1432,7 +1433,12 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
-   SDESC_ADD(  l, temp, "%s", _(outfit_getType(temp)) );
+   SDESC_ADD(  l, temp, _("%s [%s]"), _(outfit_getType(temp)),
+         _(dtype_damageTypeToStr(temp->u.bem.dmg.type)) );
+   dtype_raw( temp->u.bem.dmg.type, &dshield, &darmour, &dknockback );
+   SDESC_COLOURT(  l, temp, _("\n     %.0f%% vs armour"), 100., darmour*100. );
+   SDESC_COLOURT(  l, temp, _("\n     %.0f%% vs shield"), 100., dshield*100. );
+   SDESC_COND( l, temp, _("\n     %.0f%% knockback"), dknockback*100. );
    SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
    SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.bem.dmg.penetration*100 );
    SDESC_ADD(  l, temp, _("\n%.2f DPS [%s]"),
@@ -1478,6 +1484,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 {
    ShipStatList *ll;
    xmlNodePtr node;
+   double dshield, darmour, dknockback;
    int l;
 
    temp->u.lau.trackmin    = -1.;
@@ -1625,6 +1632,10 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    l = 0;
    SDESC_ADD(  l, temp, _("%s [%s]"), _(outfit_getType(temp)),
          _(dtype_damageTypeToStr(temp->u.lau.dmg.type)) );
+   dtype_raw( temp->u.lau.dmg.type, &dshield, &darmour, &dknockback );
+   SDESC_COLOURT(  l, temp, _("\n     %.0f%% vs armour"), 100., darmour*100. );
+   SDESC_COLOURT(  l, temp, _("\n     %.0f%% vs shield"), 100., dshield*100. );
+   SDESC_COND( l, temp, _("\n     %.0f%% knockback"), dknockback*100. );
    SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
 
    if (outfit_isSeeker(temp)) {
