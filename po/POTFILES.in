@@ -2662,6 +2662,9 @@ dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/cardio.lua
 dat/scripts/minigames/chuckaluck.lua
 dat/scripts/minigames/diceio.lua
+dat/scripts/minigames/mining/conf.lua
+dat/scripts/minigames/mining/core.lua
+dat/scripts/minigames/mining/main.lua
 dat/scripts/minigames/sokoban.lua
 dat/scripts/minigames/sokoban/conf.lua
 dat/scripts/minigames/sokoban/core.lua
