@@ -367,8 +367,10 @@ static void menu_main_new( unsigned int wid, const char *str )
 static void menu_main_credits( unsigned int wid, const char *str )
 {
    (void) str;
-   (void) wid;
+   window_destroy( wid );
+   menu_Close(MENU_MAIN);
    intro_display( "AUTHORS", "credits" );
+   menu_main();
    /* We'll need to start music again. */
    music_choose("load");
 }
