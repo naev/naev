@@ -320,10 +320,8 @@ static void sysedit_close( unsigned int wid, const char *wgt )
 static void sysedit_editPntClose( unsigned int wid, const char *unused )
 {
    (void) unused;
-   Spob *p;
    const char *inp;
-
-   p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
+   Spob *p = sysedit_sys->spobs[ sysedit_select[0].u.spob ];
 
    p->population = (uint64_t)strtoull( window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
 
@@ -1706,6 +1704,7 @@ static void sysedit_genAsteroidsList( unsigned int wid )
    available = malloc( sizeof(char*) * array_size(asttypes) );
    for (int i=0; i<array_size(asttypes); i++)
       available[i] = strdup( asttypes[i].name );
+   qsort( available, array_size(asttypes), sizeof(char*), strsort );
    window_addList( wid, x, y, w, h, "lstAsteroidsAvailable", available, array_size(asttypes), 0, NULL, sysedit_btnAddAsteroid );
 
    /* Restore positions. */
