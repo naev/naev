@@ -5,6 +5,7 @@ local love           = require 'love'
 local lg             = require 'love.graphics'
 --local fmt            = require 'format'
 
+local frag_background = love.filesystem.read( "background.frag" )
 local frag_pointer = love.filesystem.read( "pointer.frag" )
 local vertexcode = [[
 #pragma language glsl3
@@ -14,12 +15,13 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 }
 ]]
 
-local moving, pointer, speed, cx, cy, transition, alpha, done, targets, shots, shots_max, shots_timer, z_cur, z_max, mfont
+local moving, pointer, pointer_tail, speed, cx, cy, transition, alpha, done, targets, shots, shots_max, shots_timer, z_cur, z_max, mfont
 local radius = 200
-local img, shd_pointer
+local img, shd_background, shd_pointer
 function mining.load()
    mfont       = lg.newFont(32)
    pointer     = 0
+   pointer_tail = -math.pi/4
    moving      = false
    transition  = 0
    shots       = 0
@@ -34,6 +36,7 @@ function mining.load()
    img = love.graphics.newImage( idata )
 
    -- Load shaders
+   shd_background = lg.newShader( frag_background, vertexcode )
    shd_pointer = lg.newShader( frag_pointer, vertexcode )
 
    -- TODO center on player
@@ -123,17 +126,19 @@ function mining.draw()
    lg.rectangle( "fill", 0, 0, lw, lh )
 
    -- Background
-   --lg.setColor( 1, 1, 1, alpha )
-   --lg.circle( "fill", cx, cy, radius )
    lg.setColor( 0.7, 0.7, 0.7, 0.7*alpha )
-   shd_pointer:send( "radius", radius )
-   lg.setShader( shd_pointer )
+   shd_background:send( "radius", radius )
+   lg.setShader( shd_background )
    lg.draw( img, cx-radius, cy-radius, 0, radius*2, radius*2 )
    lg.setShader()
 
    -- Pointer
-   lg.setColor( 0, 1, 0, alpha )
-   lg.arc( "fill", cx, cy, radius, 0, pointer )
+   shd_pointer:send( "pointer", pointer )
+   lg.setColor( 0.0, 1.0, 1.0, 1.0*alpha )
+   shd_pointer:send( "radius", radius*1.2 )
+   lg.setShader( shd_pointer )
+   lg.draw( img, cx-radius, cy-radius, 0, radius*2, radius*2 )
+   lg.setShader()
 
    -- Cut out "hole" of the circle
    lg.setColor( 0.2, 0.2, 0.2, alpha )
@@ -229,6 +234,9 @@ function mining.update( dt )
             pointer = 2*math.pi
          end
       end
+   end
+   if pointer_tail > 0 or moving then
+      pointer_tail = pointer_tail + speed * dt
    end
 
    for i=1,shots do
