@@ -691,12 +691,12 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
    int q, max;
 
    /* Failure cases. */
-   if (!outfit_isLauncher(s->outfit) && !outfit_isFighterBay(s->outfit))
-      return 0;
-   else if (s->outfit == NULL) {
+   if (s->outfit == NULL) {
       WARN(_("Pilot '%s': Trying to add ammo to unequipped slot."), pilot->name );
       return 0;
    }
+   else if (!outfit_isLauncher(s->outfit) && !outfit_isFighterBay(s->outfit))
+      return 0;
 
    /* Add the ammo. */
    max                 = pilot_maxAmmoO(pilot,s->outfit) - s->u.ammo.deployed;
