@@ -37,8 +37,8 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <type>default</type>
-   <type>liquid</type>
+   <group>default</group>
+   <group>liquid</group>
    <radius>3000.000000</radius>
    <pos x="7500.000000" y="1000.000000"/>
   </asteroid>

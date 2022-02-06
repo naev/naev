@@ -26,11 +26,11 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <type>default</type>
-   <type>default</type>
-   <type>default</type>
-   <type>default</type>
-   <type>golden</type>
+   <group>default</group>
+   <group>default</group>
+   <group>default</group>
+   <group>default</group>
+   <group>golden</group>
    <radius>2000.000000</radius>
    <pos x="1000.000000" y="3000.000000"/>
   </asteroid>

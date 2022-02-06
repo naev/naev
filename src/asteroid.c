@@ -26,11 +26,13 @@
  * Useful data for asteroids.
  */
 static AsteroidType *asteroid_types = NULL; /**< Asteroid types stack (array.h). */
+static AsteroidTypeGroup *asteroid_groups = NULL; /**< Asteroid type groups stack (array.h). */
 static glTexture **asteroid_gfx = NULL; /**< Graphics for the asteroids (array.h). */
 
 /* Prototypes. */
 static int asttype_cmp( const void *p1, const void *p2 );
 static int asttype_parse( AsteroidType *at, const char *file );
+static int astgroup_cmp( const void *p1, const void *p2 );
 static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
 static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys );
 static int asttype_load (void);
@@ -234,19 +236,34 @@ void asteroids_init (void)
  */
 static void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
 {
-   int id;
-   double mod, theta;
-   AsteroidType *at;
+   double mod, theta, wmax, r;
+   AsteroidType *at = NULL;
    int attempts = 0;
 
    ast->parent = field->id;
    ast->scanned = 0;
 
    /* randomly init the type of asteroid */
-   id = RNG(0,array_size(field->type)-1);
-   ast->type = field->type[id];
-   /* randomly init the gfx ID */
-   at = &asteroid_types[ast->type];
+   r = field->groupswtotal * RNGF();
+   wmax = 0.;
+   for (int i=0; i<array_size(field->groups); i++) {
+      wmax += field->groupsw[i];
+      if (r > wmax)
+         continue;
+      AsteroidTypeGroup *grp = field->groups[i];
+      double wi = 0.;
+      r = grp->wtotal * RNGF();
+      for (int j=0; j<array_size(grp->types); j++) {
+         wi += grp->weights[j];
+         if (r > wi)
+            continue;
+         at = grp->types[j];
+      }
+   }
+
+   ast->type = at-asteroid_types;
+
+   /* Randomly init the gfx ID */
    ast->gfxID = RNG(0, array_size(at->gfxs)-1);
    ast->armour = at->armour_min + RNGF() * (at->armour_max-at->armour_min);
 
@@ -322,7 +339,8 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    /* Initialize stuff. */
    pos         = 1;
    a->density  = ASTEROID_DEFAULT_DENSITY;
-   a->type     = array_create( int );
+   a->groups   = array_create( AsteroidTypeGroup* );
+   a->groupsw  = array_create( double );
    a->radius   = 0.;
    a->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
    a->thrust   = ASTEROID_DEFAULT_THRUST;
@@ -341,13 +359,9 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
       xmlr_float( cur, "thrust", a->thrust );
 
       /* Handle types of asteroids. */
-      if (xml_isNode(cur,"type")) {
+      if (xml_isNode(cur,"group")) {
          const char *name = xml_get(cur);
-         int id = asttype_getName( name );
-         if (id >= 0)
-            array_push_back( &a->type, id );
-         else
-            WARN("Unknown AsteroidType '%s' in StarSystem '%s'", name, sys->name);
+         array_push_back( &a->groups, astgroup_getName(name) );
          continue;
       }
 
@@ -373,7 +387,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 if (o) WARN(_("Asteroid Field in Star System '%s' has missing/invalid '%s' element"), sys->name, s) /**< Define to help check for data errors. */
    MELEMENT(!pos,"pos");
    MELEMENT(a->radius<=0.,"radius");
-   MELEMENT(array_size(a->type)==0,"type");
+   MELEMENT(array_size(a->groups)==0,"groups");
 #undef MELEMENT
 
    return 0;
@@ -507,6 +521,14 @@ static int asttype_cmp( const void *p1, const void *p2 )
    return strcmp(at1->name,at2->name);
 }
 
+static int astgroup_cmp( const void *p1, const void *p2 )
+{
+   const AsteroidTypeGroup *at1, *at2;
+   at1 = (const AsteroidTypeGroup*) p1;
+   at2 = (const AsteroidTypeGroup*) p2;
+   return strcmp(at1->name,at2->name);
+}
+
 /**
  * @brief Loads the asteroids types.
  *
@@ -514,9 +536,10 @@ static int asttype_cmp( const void *p1, const void *p2 )
  */
 static int asttype_load (void)
 {
-   char **asteroid_files = ndata_listRecursive( ASTEROID_DATA_PATH );
+   char **asteroid_files = ndata_listRecursive( ASTEROID_TYPES_DATA_PATH );
    asteroid_types = array_create( AsteroidType );
-   for (int i=0; i < array_size( asteroid_files ); i++) {
+
+   for (int i=0; i<array_size( asteroid_files ); i++) {
       if (ndata_matchExt( asteroid_files[i], "xml" )) {
          int ret = asttype_parse( &array_grow(&asteroid_types), asteroid_files[i] );
          if (ret < 0) {
@@ -527,11 +550,39 @@ static int asttype_load (void)
       free( asteroid_files[i] );
    }
    array_free( asteroid_files );
-
+   array_shrink( &asteroid_types );
    qsort( asteroid_types, array_size(asteroid_types), sizeof(AsteroidType), asttype_cmp );
 
-   /* Shrink to minimum. */
-   array_shrink( &asteroid_types );
+   asteroid_groups = array_create( AsteroidTypeGroup );
+   /*
+   asteroid_files = ndata_listRecursive( ASTEROID_GROUPS_DATA_PATH );
+   for (int i=0; i<array_size( asteroid_files ); i++) {
+      if (ndata_matchExt( asteroid_files[i], "xml" )) {
+         int ret = astgroup_parse( &array_grow(&asteroid_types), asteroid_files[i] );
+         if (ret < 0) {
+            int n = array_size(asteroid_types);
+            array_erase( &asteroid_types, &asteroid_types[n-1], &asteroid_types[n] );
+         }
+      }
+      free( asteroid_files[i] );
+   }
+   */
+   /* Add asteroid types as individual groups. */
+   for (int i=0; i<array_size( asteroid_types ); i++) {
+      AsteroidType *at = &asteroid_types[i];
+      AsteroidTypeGroup grp = {
+         .name   = strdup(at->name),
+         .types  = array_create( AsteroidType* ),
+         .weights= array_create( double ),
+         .wtotal = 1.
+      };
+      array_push_back( &grp.types, at );
+      array_push_back( &grp.weights, 1. );
+      array_push_back( &asteroid_groups, grp );
+   }
+   //array_free( asteroid_files );
+   array_shrink( &asteroid_groups );
+   qsort( asteroid_groups, array_size(asteroid_groups), sizeof(AsteroidTypeGroup), astgroup_cmp );
 
    return 0;
 }
@@ -783,7 +834,8 @@ void asteroid_free( AsteroidAnchor *ast )
    free(ast->label);
    free(ast->asteroids);
    free(ast->debris);
-   array_free(ast->type);
+   array_free(ast->groups);
+   array_free(ast->groupsw);
 }
 
 /**
@@ -871,6 +923,20 @@ int asttype_getName( const char *name )
    if (at != NULL)
       return at-asteroid_types;
    return -1;
+}
+
+const AsteroidTypeGroup *astgroup_getAll (void)
+{
+   return asteroid_groups;
+}
+
+AsteroidTypeGroup *astgroup_getName( const char *name )
+{
+   const AsteroidTypeGroup q = { .name=(char*)name };
+   AsteroidTypeGroup *ag = bsearch( &q, asteroid_groups, array_size(asteroid_groups), sizeof(AsteroidTypeGroup), astgroup_cmp );
+   if (ag != NULL)
+      return ag;;
+   return NULL;
 }
 
 /**

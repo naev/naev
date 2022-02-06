@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file ndata.c
  *
@@ -9,7 +8,6 @@
  *        We choose our underlying directories in ndata_setupWriteDir() and ndata_setupReadDirs().
  *        However, conf.c code may have seeded the search path based on command-line arguments.
  */
-
 /** @cond */
 #include <limits.h>
 #include <stdarg.h>
@@ -36,14 +34,12 @@
 #include "nfile.h"
 #include "nstring.h"
 
-
 /*
  * Prototypes.
  */
 static void ndata_testVersion (void);
 static int ndata_found (void);
 static int ndata_enumerateCallback( void* data, const char* origdir, const char* fname );
-
 
 /**
  * @brief Checks to see if the physfs search path is enough to find game data.
@@ -55,7 +51,6 @@ static int ndata_found( void )
     */
    return PHYSFS_exists( "VERSION" ) && PHYSFS_exists( START_DATA_PATH );
 }
-
 
 /**
  * @brief Test version to see if it matches.
@@ -86,7 +81,6 @@ static void ndata_testVersion (void)
    free( buf );
 }
 
-
 /**
  * @brief Gets Naev's data path (for user data such as saves and screenshots)
  */
@@ -108,7 +102,6 @@ void ndata_setupWriteDir (void)
       PHYSFS_setWriteDir( "./naev/" );
    }
 }
-
 
 /**
  * @brief Sets up the PhysicsFS search path.
@@ -145,7 +138,6 @@ void ndata_setupReadDirs (void)
    PHYSFS_mount( PHYSFS_getWriteDir(), NULL, 0 );
    ndata_testVersion();
 }
-
 
 /**
  * @brief Reads a file from the ndata (will be NUL terminated).
@@ -225,7 +217,6 @@ void* ndata_read( const char* path, size_t *filesize )
    return buf;
 }
 
-
 /**
  * @brief Lists all the visible files in a directory, at any depth.
  *
@@ -235,14 +226,11 @@ void* ndata_read( const char* path, size_t *filesize )
  */
 char **ndata_listRecursive( const char *path )
 {
-   char **files;
-   int i;
-
-   files = array_create( char * );
+   char **files = array_create( char * );
    PHYSFS_enumerate( path, ndata_enumerateCallback, &files );
    /* Ensure unique. PhysicsFS can enumerate a path twice if it's in multiple components of a union. */
    qsort( files, array_size(files), sizeof(char*), strsort );
-   for (i=0; i+1<array_size(files); i++)
+   for (int i=0; i+1<array_size(files); i++)
       if (strcmp(files[i], files[i+1]) == 0) {
          free( files[i] );
          array_erase( &files, &files[i], &files[i+1] );
@@ -280,7 +268,6 @@ static int ndata_enumerateCallback( void* data, const char* origdir, const char*
    return PHYSFS_ENUM_OK;
 }
 
-
 /**
  * @brief Backup a file, if it exists.
  *
@@ -291,17 +278,16 @@ int ndata_backupIfExists( const char *path )
 {
    char backup[ PATH_MAX ];
 
-   if ( path == NULL )
+   if (path == NULL)
       return -1;
 
-   if ( !PHYSFS_exists( path ) )
+   if (!PHYSFS_exists( path ))
       return 0;
 
    snprintf(backup, sizeof(backup), "%s.backup", path);
 
    return ndata_copyIfExists( path, backup );
 }
-
 
 /**
  * @brief Copy a file, if it exists.
@@ -363,7 +349,6 @@ err:
    return -1;
 }
 
-
 /**
  * @brief Sees if a file matches an extension.
  *
@@ -382,7 +367,6 @@ int ndata_matchExt( const char *path, const char *ext )
       return 0;
    return strcmp( &path[i+1], ext )==0;
 }
-
 
 /**
  * @brief Tries to see if a file is in a default path before seeing if it is an absolute path.

@@ -194,12 +194,9 @@ int dsys_saveSystem( StarSystem *sys )
          const AsteroidAnchor *ast = &sys->asteroids[i];
          xmlw_startElem( writer, "asteroid" );
 
-         /* Types */
-         if (!(array_size(ast->type) == 1 && ast->type[0] == 0)) {
-            /* With no <type>, the first asteroid type is the default */
-            for (int j=0; j<array_size(ast->type); j++)
-               xmlw_elem( writer, "type", "%s", asttype_get(ast->type[j])->name );
-         }
+         /* Type Groups */
+         for (int j=0; j<array_size(ast->groups); j++)
+            xmlw_elem( writer, "group", "%s", ast->groups[j]->name );
 
          /* Radius */
          xmlw_elem( writer, "radius", "%f", ast->radius );

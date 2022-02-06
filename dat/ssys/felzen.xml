@@ -32,11 +32,11 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <type>default</type>
-   <type>default</type>
-   <type>default</type>
-   <type>massive</type>
-   <type>liquid</type>
+   <group>default</group>
+   <group>default</group>
+   <group>default</group>
+   <group>massive</group>
+   <group>liquid</group>
    <radius>4000.000000</radius>
    <pos x="0.000000" y="0.000000"/>
    <density>0.500000</density>

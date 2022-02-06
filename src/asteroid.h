@@ -56,6 +56,16 @@ typedef struct AsteroidType_ {
 } AsteroidType;
 
 /**
+ * @brief Represents a group of asteroids.
+ */
+typedef struct AsteroidTypeGroup_ {
+   char *name;          /**< Name of the type group. */
+   AsteroidType **types;/**< Types of asteroids in the group. */
+   double *weights;     /**< Weights of each element in the group. */
+   double wtotal;       /**< Sum of weights in the group. */
+} AsteroidTypeGroup;
+
+/**
  * @brief Represents a small player-rendered debris.
  */
 typedef struct Debris_ {
@@ -96,7 +106,9 @@ typedef struct AsteroidAnchor_ {
    int ndebris;   /**< Number of debris. */
    double radius; /**< Radius of the anchor. */
    double area;   /**< Field's area. */
-   int *type;     /**< Types of asteroids. */
+   AsteroidTypeGroup **groups; /**< Groups of asteroids. */
+   double *groupsw;/**< Weight of the groups of asteroids. */
+   double groupswtotal;/**< Sum of the weights of the groups. */
    double maxspeed;/**< Maxmimum speed the asteroids can have in the field. */
    double thrust; /**< Thrust applied when out of radius towards center. */
    double margin; /**< Extra margin to use when doing distance computations. */
@@ -127,6 +139,10 @@ void asteroids_renderOverlay (void);
 const AsteroidType *asttype_getAll (void);
 const AsteroidType *asttype_get( int id );
 int asttype_getName( const char *name );
+
+/* Asteroid type groups. */
+const AsteroidTypeGroup *astgroup_getAll (void);
+AsteroidTypeGroup *astgroup_getName( const char *name );
 
 /* Misc functions. */
 int asteroids_inField( const Vector2d *p );

@@ -15,7 +15,7 @@
  <jumps/>
  <asteroids>
   <asteroid>
-   <type>nodrop</type>
+   <group>nodrop</group>
    <radius>4000.000000</radius>
    <pos x="0.000000" y="0.000000"/>
    <density>1.300000</density>
