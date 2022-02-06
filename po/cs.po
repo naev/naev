@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-01-31 09:13-0500\n"
+"POT-Creation-Date: 2022-02-06 17:57-0500\n"
 "PO-Revision-Date: 2022-01-27 17:54+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -926,7 +926,7 @@ msgstr ""
 
 #: dat/effects/ambush_hunter.xml:2
 #: dat/outfits/bioship/skills/ambush_hunter.xml:2
-#: dat/scripts/bioship/skills.lua:134
+#: dat/scripts/bioship/skills.lua:133
 msgid "Ambush Hunter"
 msgstr ""
 
@@ -942,7 +942,7 @@ msgstr ""
 msgid "Antimatter is tainting your ship!"
 msgstr ""
 
-#: dat/effects/bloodlust.xml:2 dat/scripts/bioship/skills.lua:43
+#: dat/effects/bloodlust.xml:2 dat/scripts/bioship/skills.lua:42
 msgid "Blood Lust"
 msgstr ""
 
@@ -952,7 +952,7 @@ msgstr ""
 
 #: dat/effects/crippling_plasma.xml:2
 #: dat/outfits/bioship/skills/crippling_plasma.xml:2
-#: dat/scripts/bioship/skills.lua:264
+#: dat/scripts/bioship/skills.lua:263
 msgid "Crippling Plasma"
 msgstr ""
 
@@ -965,7 +965,7 @@ msgstr ""
 #. For everyone!
 #. Uses feral rage slot (only for ships that get tier 5)
 #: dat/effects/feral_rage_i.xml:2 dat/outfits/bioship/skills/feral_rage_i.xml:2
-#: dat/scripts/bioship/skills.lua:201
+#: dat/scripts/bioship/skills.lua:200
 msgid "Feral Rage I"
 msgstr ""
 
@@ -993,13 +993,13 @@ msgstr ""
 #: dat/outfits/bioship/skills/tracking_antennae.xml:9
 #: dat/outfits/bioship/skills/tunnelling_organ.xml:9
 #: dat/outfits/bioship/skills/wanderer.xml:9 dat/ships/kauweke.xml:21
-#: dat/ships/taitamariki.xml:16 dat/scripts/common/minerva.lua:33
+#: dat/ships/taitamariki.xml:16 dat/scripts/common/minerva.lua:32
 msgid "TODO"
 msgstr ""
 
 #: dat/effects/paralyzing_plasma.xml:2
 #: dat/outfits/bioship/skills/paralyzing_plasma.xml:2
-#: dat/scripts/bioship/skills.lua:256
+#: dat/scripts/bioship/skills.lua:255
 msgid "Paralyzing Plasma"
 msgstr ""
 
@@ -1156,7 +1156,7 @@ msgstr ""
 #: dat/faction.xml:327
 msgid ""
 "Fallen House Proteron was an Imperial Great House that decided to move and "
-"attack the Emperor himself. This caused the incident and left the universe "
+"attack the Emperor himself. This caused the Incident and left the universe "
 "irreversibly ravaged."
 msgstr ""
 
@@ -1301,9 +1301,9 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp03.lua:139
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:95
 #: dat/scripts/common/sciencegonewrong.lua:6 dat/scripts/common/zalek.lua:11
-#: dat/scripts/common/zalek.lua:17 dat/scripts/common/zalek_blackhole.lua:66
-#: dat/scripts/common/zalek_blackhole.lua:94
-#: dat/scripts/common/zalek_physics.lua:33
+#: dat/scripts/common/zalek.lua:17 dat/scripts/common/zalek_blackhole.lua:65
+#: dat/scripts/common/zalek_blackhole.lua:93
+#: dat/scripts/common/zalek_physics.lua:32
 msgid "Za'lek"
 msgstr ""
 
@@ -1869,7 +1869,7 @@ msgid ""
 msgstr ""
 
 #: dat/outfits/bioship/skills/adaptive_jump.xml:2
-#: dat/scripts/bioship/skills.lua:309
+#: dat/scripts/bioship/skills.lua:308
 msgid "Adaptive Jump"
 msgstr ""
 
@@ -1909,7 +1909,7 @@ msgstr ""
 #. Only for up to destroyers
 #. Needs adrenal gland slot
 #: dat/outfits/bioship/skills/adrenal_gland_i.xml:2
-#: dat/scripts/bioship/skills.lua:67
+#: dat/scripts/bioship/skills.lua:66
 msgid "Adrenal Gland I"
 msgstr ""
 
@@ -1923,19 +1923,19 @@ msgid ""
 msgstr ""
 
 #: dat/outfits/bioship/skills/adrenal_gland_ii.xml:2
-#: dat/scripts/bioship/skills.lua:85
+#: dat/scripts/bioship/skills.lua:84
 msgid "Adrenal Gland II"
 msgstr ""
 
 #: dat/outfits/bioship/skills/adrenal_gland_iii.xml:2
-#: dat/scripts/bioship/skills.lua:103
+#: dat/scripts/bioship/skills.lua:102
 #, fuzzy
 #| msgid "Castellan III"
 msgid "Adrenal Gland III"
 msgstr "Castellan III"
 
 #: dat/outfits/bioship/skills/adrenaline_hormones.xml:2
-#: dat/scripts/bioship/skills.lua:209
+#: dat/scripts/bioship/skills.lua:208
 msgid "Adrenaline Hormones"
 msgstr ""
 
@@ -1943,7 +1943,7 @@ msgstr ""
 #. For everyone!
 #. Uses intrinsics only
 #: dat/outfits/bioship/skills/bulky_abdomen.xml:2
-#: dat/scripts/bioship/skills.lua:156
+#: dat/scripts/bioship/skills.lua:155
 msgid "Bulky Abdomen"
 msgstr ""
 
@@ -1952,7 +1952,7 @@ msgstr ""
 #. For everyone!
 #. All intrinsics
 #: dat/outfits/bioship/skills/cargo_sacs.xml:2
-#: dat/scripts/bioship/skills.lua:294
+#: dat/scripts/bioship/skills.lua:293
 msgid "Cargo Sacs"
 msgstr ""
 
@@ -1960,7 +1960,7 @@ msgstr ""
 #. For up to destroyer
 #. Uses intrinsics only
 #: dat/outfits/bioship/skills/compound_eyes.xml:2
-#: dat/scripts/bioship/skills.lua:119
+#: dat/scripts/bioship/skills.lua:118
 msgid "Compound Eyes"
 msgstr ""
 
@@ -1968,19 +1968,19 @@ msgstr ""
 #. For everyone!
 #. Requires plasma slot for tier 5
 #: dat/outfits/bioship/skills/corrosion_i.xml:2
-#: dat/scripts/bioship/skills.lua:249
+#: dat/scripts/bioship/skills.lua:248
 msgid "Corrosion I"
 msgstr ""
 
 #: dat/outfits/bioship/skills/corrosion_ii.xml:2
-#: dat/scripts/bioship/skills.lua:272
+#: dat/scripts/bioship/skills.lua:271
 #, fuzzy
 #| msgid "Capricorn II"
 msgid "Corrosion II"
 msgstr "Capricorn II"
 
 #: dat/outfits/bioship/skills/enhanced_smell.xml:2
-#: dat/scripts/bioship/skills.lua:317
+#: dat/scripts/bioship/skills.lua:316
 msgid "Enhanced Smell"
 msgstr ""
 
@@ -1998,7 +1998,7 @@ msgid "Active for 5 seconds since armour was last damaged."
 msgstr ""
 
 #: dat/outfits/bioship/skills/feral_rage_ii.xml:2
-#: dat/scripts/bioship/skills.lua:217
+#: dat/scripts/bioship/skills.lua:216
 msgid "Feral Rage II"
 msgstr ""
 
@@ -2012,7 +2012,7 @@ msgid ""
 msgstr ""
 
 #: dat/outfits/bioship/skills/feral_rage_iii.xml:2
-#: dat/scripts/bioship/skills.lua:234
+#: dat/scripts/bioship/skills.lua:233
 msgid "Feral Rage III"
 msgstr ""
 
@@ -2033,35 +2033,35 @@ msgid ""
 msgstr ""
 
 #: dat/outfits/bioship/skills/fuel_bladder.xml:2
-#: dat/scripts/bioship/skills.lua:301
+#: dat/scripts/bioship/skills.lua:300
 msgid "Fuel Bladder"
 msgstr ""
 
 #: dat/outfits/bioship/skills/hard_shell.xml:2
-#: dat/scripts/bioship/skills.lua:171
+#: dat/scripts/bioship/skills.lua:170
 msgid "Hard Shell"
 msgstr ""
 
 #: dat/outfits/bioship/skills/hunters_instinct.xml:2
-#: dat/scripts/bioship/skills.lua:126
+#: dat/scripts/bioship/skills.lua:125
 msgid "Hunter's Instinct"
 msgstr ""
 
 #: dat/outfits/bioship/skills/natural_healing_i.xml:2
-#: dat/scripts/bioship/skills.lua:163
+#: dat/scripts/bioship/skills.lua:162
 msgid "Natural Healing I"
 msgstr ""
 
 #: dat/outfits/bioship/skills/natural_healing_ii.xml:2
-#: dat/scripts/bioship/skills.lua:179
+#: dat/scripts/bioship/skills.lua:178
 msgid "Natural Healing II"
 msgstr ""
 
-#: dat/outfits/bioship/skills/silence.xml:2 dat/scripts/bioship/skills.lua:142
+#: dat/outfits/bioship/skills/silence.xml:2 dat/scripts/bioship/skills.lua:141
 msgid "Silence"
 msgstr ""
 
-#: dat/outfits/bioship/skills/the_bite.xml:2 dat/scripts/bioship/skills.lua:31
+#: dat/outfits/bioship/skills/the_bite.xml:2 dat/scripts/bioship/skills.lua:30
 #, fuzzy
 #| msgid "The Frontier"
 msgid "The Bite"
@@ -2100,11 +2100,11 @@ msgid "Tracking Antennae"
 msgstr ""
 
 #: dat/outfits/bioship/skills/tunnelling_organ.xml:2
-#: dat/scripts/bioship/skills.lua:325
+#: dat/scripts/bioship/skills.lua:324
 msgid "Tunnelling Organ"
 msgstr ""
 
-#: dat/outfits/bioship/skills/wanderer.xml:2 dat/scripts/bioship/skills.lua:95
+#: dat/outfits/bioship/skills/wanderer.xml:2 dat/scripts/bioship/skills.lua:94
 msgid "Wanderer"
 msgstr ""
 
@@ -3917,10 +3917,10 @@ msgstr ""
 #: dat/outfits/structure/engine_reroute.xml:9
 msgid ""
 "This enhancement routes energy from the ship's energy supplies to the "
-"engine, giving the ship an increased thrust. It does not directly increase "
-"the ship's max speed nor turning abilities, however, a curious effect is "
-"that the engines can now also be run in reverse to allow braking with a "
-"small loss in reverse thrust capability."
+"engine, giving the ship an increased thrust and turning. It does not "
+"directly increase the ship's max speed nor turning abilities, however, a "
+"curious effect is that the engines can now also be run in reverse to allow "
+"braking with a small loss in reverse thrust capability."
 msgstr ""
 
 #: dat/outfits/structure/improved_stabilizer.xml:2
@@ -3930,9 +3930,9 @@ msgstr ""
 #: dat/outfits/structure/improved_stabilizer.xml:9
 msgid ""
 "By improving your ship's stabilization systems drastically, this "
-"modification will allow you to reach higher speeds and turning while still "
-"keeping the ship stable. As another side effect, the improved stabilizers "
-"allowing reversing the thrusters with a small loss of thrust."
+"modification will allow you to reach higher speeds while still keeping the "
+"ship stable. As another side effect, the improved stabilizers allowing "
+"reversing the thrusters with a small loss of thrust."
 msgstr ""
 
 #: dat/outfits/structure/large_cargo_pod.xml:2
@@ -5675,7 +5675,7 @@ msgid ""
 "The Rainmaker is the largest freighter used by the Empire. It is capable of "
 "transporting extensive amounts of material through dangerous territory as "
 "small groups of pirates are no threat due to its heavy armour. The name is "
-"derived from a series of events when, shortly after the incident, they were "
+"derived from a series of events when, shortly after the Incident, they were "
 "used to deliver supplies to starving cut-of worlds by doing low atmospheric "
 "flybys while opening the cargo holds, resulting in a literal rain of "
 "supplies. After the events an EE-1891-392 official ship rename form was "
@@ -6053,7 +6053,7 @@ msgstr ""
 #: src/dev_uniedit.c:1333 src/dev_uniedit.c:1334 src/land_outfits.c:434
 #: src/land_outfits.c:435 src/land_outfits.c:436 src/land_outfits.c:437
 #: src/land_trade.c:160 src/land_trade.c:162 src/land_trade.c:165
-#: src/land_trade.c:166 src/map.c:582 src/map.c:583 src/outfit.c:285
+#: src/land_trade.c:166 src/map.c:622 src/map.c:623 src/outfit.c:285
 #: src/outfit.c:304
 msgid "N/A"
 msgstr ""
@@ -7737,22 +7737,38 @@ msgid "Ammu"
 msgstr "Ammu"
 
 #: dat/spob/ammu.xml:30
+#, fuzzy
+#| msgid ""
+#| "Ammu is a generally calm planet, once one is accustomed to the constant "
+#| "rumbling of the lava flows. Lava eruptions are often felt in the "
+#| "subterranean spaceport but the way it doesn't seem to faze the locals "
+#| "reassures you."
 msgid ""
 "Ammu is a generally calm planet, once one is accustomed to the constant "
 "rumbling of the lava flows. Lava eruptions are often felt in the "
-"subterranean spaceport but the way it doesn't seem to faze the locals "
-"reassures you."
+"subterranean spaceport, but the way it doesn't seem to faze the locals "
+"reassures you. The lava does have a more positive aspect in attracting "
+"industries that need high pressure and temperature to function effectively, "
+"but the climate makes Ammu dependent on nearby planets such as Reidd for "
+"food supplies."
 msgstr ""
 "Ammu je obecně klidná planeta, jakmile si člověk zvykne na neustálé dunění "
 "lávových proudů. Erupce lávy jsou často cítit v podzemním kosmodromu, ale "
 "způsob, jakým se nezdá, že by místní obyvatele obtěžoval, tě uklidňuje."
 
 #: dat/spob/ammu.xml:31
+#, fuzzy
+#| msgid ""
+#| "The Ammu Spaceport Bar, known as \"The Heatsink\" due to its frigid "
+#| "temperatures, is a contrast to the rest of the station. While primarily "
+#| "known for its temperature, that's not to say you can't get a mean Pan-"
+#| "Galactic Gargle Blaster."
 msgid ""
 "The Ammu Spaceport Bar, known as \"The Heatsink\" due to its frigid "
-"temperatures, is a contrast to the rest of the station. While primarily "
-"known for its temperature, that's not to say you can't get a mean Pan-"
-"Galactic Gargle Blaster."
+"temperatures, is a contrast to the rest of the station, although on most "
+"planets it would be considered fairly warm. While primarily known for its "
+"temperature, that's not to say you can't get a mean Pan-Galactic Gargle "
+"Blaster."
 msgstr ""
 "Bar na Ammu, známý jako „mrazák“ (kvůli chladu, který tu neustále panuje) "
 "ostře kontrastuje se zbytkem stanice. I když je známý hlavně pro svou "
@@ -7985,7 +8001,7 @@ msgstr ""
 
 #. Use default
 #. Function for adding log entries for miscellaneous one-off missions.
-#: dat/spob/antlejos_v.xml:2 dat/scripts/common/antlejos.lua:30
+#: dat/spob/antlejos_v.xml:2 dat/scripts/common/antlejos.lua:29
 msgid "Antlejos V"
 msgstr ""
 
@@ -8268,10 +8284,16 @@ msgid "1"
 msgstr ""
 
 #: dat/spob/arcturus_gamma.xml:31
+#, fuzzy
+#| msgid ""
+#| "Arcturus Gamma is the Empire's first line of defense when it comes to "
+#| "their core systems. Piracy is nearly non-existent in the core systems due "
+#| "to the large standing force stationed here and their routine patrols."
 msgid ""
 "Arcturus Gamma is the Empire's first line of defense when it comes to their "
-"core systems. Piracy is nearly non-existent in the core systems due to the "
-"large standing force stationed here and their routine patrols."
+"core systems from the east. An imposing force force stationed here with "
+"constant routine patrols tries to make sure no undesirable ships make it "
+"into Empire space."
 msgstr ""
 "Arcturus Gamma je první linií obrany Impéria, pokud jde o její základní "
 "systémy. Pirátství v hlavních systémech téměř neexistuje díky přítomnosti "
@@ -8332,10 +8354,17 @@ msgid "Arrakis"
 msgstr "Arrakis"
 
 #: dat/spob/arrakis.xml:29
+#, fuzzy
+#| msgid ""
+#| "Arrakis is a desert planet with no natural precipitation and the dust "
+#| "storms can rage for weeks. The locals are continuously discussing "
+#| "sandworms, though you're not sure what to make of it."
 msgid ""
 "Arrakis is a desert planet with no natural precipitation and the dust storms "
-"can rage for weeks. The locals are continuously discussing sandworms, though "
-"you're not sure what to make of it."
+"can rage for many periods at a time. Due to the expense of constantly "
+"importing water, lots of care is taken to minimize evaporation with most "
+"buildings are almost completely hermetic. The locals are continuously "
+"discussing sandworms, though you're not sure what to make of it."
 msgstr ""
 "Arrakis je pouštní planeta bez přirozených srážek a prachové bouře zde mohou "
 "zuřit týdny. Místní obyvatelé neustále diskutují o pouštních červech, i když "
@@ -8400,12 +8429,19 @@ msgid "Astana"
 msgstr "Astana"
 
 #: dat/spob/astana.xml:28
+#, fuzzy
+#| msgid ""
+#| "Astana is the home of the Imperial Experimental Weapons Testing Facility. "
+#| "It is here where most of the newer weapons and outfits equipped by the "
+#| "Empire military are tested and qualified for active service. This planet "
+#| "is an ideal spot for this as, besides the scientists who work here, no "
+#| "one else wants to land on the planet."
 msgid ""
-"Astana is the home of the Imperial Experimental Weapons Testing Facility. It "
-"is here where most of the newer weapons and outfits equipped by the Empire "
-"military are tested and qualified for active service. This planet is an "
-"ideal spot for this as, besides the scientists who work here, no one else "
-"wants to land on the planet."
+"Astana is the home of the Imperial Experimental Weapons Testing Facility, "
+"commonly abbreviated as IEWTF. It is here where most of the newer weapons "
+"and outfits equipped by the Empire military are tested and qualified for "
+"active service. This planet is an ideal spot for this as, besides the "
+"scientists who work here, no one else wants to land on the planet."
 msgstr ""
 "Astana je domovem Imperiální Experimentální Zbraně Testovací Továrny. Právě "
 "zde je testována a kvalifikována pro aktivní službu většina novějších zbraní "
@@ -8738,10 +8774,16 @@ msgid "Benteen"
 msgstr "Benteen"
 
 #: dat/spob/benteen.xml:29
+#, fuzzy
+#| msgid ""
+#| "Benteen is one of the Empire's primary agriworlds. It grows most of the "
+#| "crops that are bound for the western systems. It is a quiet world, with "
+#| "little in the way of the bustle and fuss of other, more core, planets."
 msgid ""
 "Benteen is one of the Empire's primary agriworlds. It grows most of the "
 "crops that are bound for the western systems. It is a quiet world, with "
-"little in the way of the bustle and fuss of other, more core, planets."
+"little in the way of the bustle and fuss of other, more core, planets. It is "
+"not uncommon for people to migrate here looking for a calmer lifestyle."
 msgstr ""
 "Benteen je jedním z primárních agrosvětů Impéria. Pěstuje většinu plodin, "
 "které jsou určeny pro západní systémy. Je to klidný svět, jenž je v rozporu "
@@ -9021,11 +9063,18 @@ msgstr ""
 "planetě Brooks, stejně důkladně jako imperiální centrální systémy."
 
 #: dat/spob/brooks.xml:30
+#, fuzzy
+#| msgid ""
+#| "On Brooks everything is expensive, something that comes with most "
+#| "economically booming worlds. However, most traders put up with the "
+#| "inflated prices for refreshments and services at the spaceport bar, "
+#| "Brooks, after all, is a boom world and where profit is to made."
 msgid ""
 "On Brooks everything is expensive, something that comes with most "
 "economically booming worlds. However, most traders put up with the inflated "
 "prices for refreshments and services at the spaceport bar, Brooks, after "
-"all, is a boom world and where profit is to made."
+"all, is a boom world and where profit is to made, and nobody wants to miss "
+"out on such a chance."
 msgstr ""
 "Na planetě Brooks je všechno drahé, je to něco, co přichází s nejvíce "
 "ekonomicky vzkvétajícími světy. Většina obchodníků však snáší nadsazené ceny "
@@ -9335,7 +9384,8 @@ msgstr ""
 msgid ""
 "Cole station is the last civilian station on the route to Doeston. Many "
 "transport ships stop to refuel and regenerate their shields within, safely "
-"away from the radiation of the nebula."
+"away from the brunt of the nebula radiation. It has relative few people "
+"living here, mainly to support the passing ships to and from the nebula."
 msgstr ""
 
 #: dat/spob/colley.xml:2
@@ -9350,10 +9400,15 @@ msgid ""
 msgstr ""
 
 #: dat/spob/colley.xml:30
+#, fuzzy
+#| msgid ""
+#| "The average age of the patrons here seems to be around seventy, but they "
+#| "look as alert as they have ever been and you feel their eyes look you "
+#| "over as you sit down to order a drink."
 msgid ""
-"The average age of the patrons here seems to be around seventy, but they "
-"look as alert as they have ever been and you feel their eyes look you over "
-"as you sit down to order a drink."
+"The average age of the patrons here seems to be very high, but they look as "
+"alert as they have ever been and you feel their eyes look you over as you "
+"sit down to order a drink."
 msgstr ""
 "Průměrný věk zdejších štamgastů šplhá k sedmdesáti, ale osazenstvo vypadá, "
 "jako kdyby ani na vteřinu nepřestali být na stráži, a ty na sobě cítíš "
@@ -9528,7 +9583,8 @@ msgid ""
 "Crylo is an oceanic world with very little land surface, but it sports a "
 "surprising number of inhabitants. As it happens, the aquatic life found on "
 "this world is considered a delicacy in large parts of the galaxy, this has "
-"attracted people to settle and spawned a flourishing fishing industry."
+"attracted people to settle and spawned a flourishing fishing industry, and "
+"attracts tourists interested in the old practice of catching their own meals."
 msgstr ""
 
 #: dat/spob/crylo.xml:31
@@ -9805,7 +9861,8 @@ msgid ""
 "Dolmen is a nice planet but it's only sparsely populated. The local "
 "government aims to keep the planet free from crime and, while this is likely "
 "to be an unrealistic goal, the strict immigration policy does help to filter "
-"out the more unsavoury characters."
+"out the more unsavoury characters, and keeps the population from increasing "
+"too much."
 msgstr ""
 
 #: dat/spob/dolmen.xml:32
@@ -9868,7 +9925,8 @@ msgid ""
 "Doormat is a lightly populated frontier world still being terraformed. "
 "Despite the Incident, the Empire's population is still growing fast and new "
 "worlds need to be sought out to lighten the load. Doormat is one of these "
-"worlds."
+"worlds. While not a particularly rich world, there are enough minerals for a "
+"modest mining operation."
 msgstr ""
 
 #: dat/spob/doranthex_prime.xml:2
@@ -10496,7 +10554,9 @@ msgstr ""
 #: dat/spob/em_1.xml:31
 msgid ""
 "Em 1 is a completely unremarkable world. It's just one of those places that "
-"contributes to the Empire's treasury and serves no other purpose of note."
+"contributes to the Empire's treasury and serves no other purpose of note. "
+"While not having any exciting industry nor exports, a small agricultural "
+"surplus allows Em 1 to export food to nearby systems."
 msgstr ""
 
 #: dat/spob/em_1.xml:32
@@ -10752,7 +10812,9 @@ msgstr ""
 msgid ""
 "Falas is a sparsely populated garrison planet with little to no resources of "
 "any use. However, it was cheaper to build an outpost here than to build a "
-"whole new space station."
+"whole new space station. Being located in a relatively safe area of Empire "
+"space, there are not many things to do, with most of the problems being "
+"caused by personnel bored out of their minds."
 msgstr ""
 
 #: dat/spob/falas.xml:28
@@ -11237,7 +11299,8 @@ msgid ""
 "settled during the Second Growth. Poor climate management and rampant "
 "pollution have filled the sky with sunlight-blocking substances, and now the "
 "fragile ecosystem has collapsed. The people here only live on Gennus because "
-"they have nowhere else to go."
+"they have nowhere else to go. The problem is aggravated by Empire "
+"bureaucracy that ensures that change is hard to come by."
 msgstr ""
 
 #: dat/spob/gennus.xml:30
@@ -11476,7 +11539,8 @@ msgid ""
 "Grandard is the home of some of the Empire's most legendary fighter pilots. "
 "For reasons unknown, this world has become renowned for its highly-skilled "
 "light combat ship specialists. Rather than discourage this anomaly, the "
-"Empire has taken full advantage of it."
+"Empire has taken full advantage of it, and established an elite pilot "
+"training faculty."
 msgstr ""
 
 #: dat/spob/grandard.xml:32
@@ -11553,9 +11617,10 @@ msgstr ""
 
 #: dat/spob/griffin_iii.xml:32
 msgid ""
-"The bar is clean and large, with various games and vids for entertainment of "
-"patrons. The food is good and the drinks are great. One could stay a long "
-"time here."
+"The bar is clean and large, with various games and holovids for "
+"entertainment of patrons. The food is good and the drinks are great. One "
+"could stay a long time here. However, it is missing some of the uniqueness "
+"you find on other planets."
 msgstr ""
 
 #: dat/spob/griffin_vi.xml:2
@@ -12028,11 +12093,13 @@ msgstr ""
 
 #: dat/spob/hurada.xml:29
 msgid ""
-"A formerly-promising world; following intense volcanic activity, Hurada's "
-"orbit decayed, increasing surface temperatures severely and all but "
-"eradicating natural surface life. Hurada only maintains a population due to "
-"its proximity to Arcturus, providing affordable housing for reserve military "
-"troops."
+"A formerly-promising world; following intense volcanic activity, a shift in "
+"Hurada's center of gravity caused its orbit to decay, increasing surface "
+"temperatures severely and all but eradicating natural surface life. Hurada "
+"only maintains a population due to its proximity to Arcturus, providing "
+"affordable housing for reserve military troops. Not knowing when more "
+"volcanic activity will send Hurada into the nearby star ensures that the "
+"prices stay low."
 msgstr ""
 
 #: dat/spob/hurada.xml:30
@@ -12218,8 +12285,8 @@ msgid ""
 msgstr ""
 
 #: dat/spob/icarus.xml:2 dat/events/start.lua:22
-#: dat/scripts/common/zalek_blackhole.lua:28
-#: dat/scripts/common/zalek_blackhole.lua:108
+#: dat/scripts/common/zalek_blackhole.lua:27
+#: dat/scripts/common/zalek_blackhole.lua:107
 msgid "Icarus"
 msgstr ""
 
@@ -13023,12 +13090,15 @@ msgstr ""
 msgid ""
 "Koga has a highly active crust, and many describe the surface as being a "
 "reasonable facsimile of hell. They may not be too far off the mark, as lava "
-"flows and sudden rumbles from the earth are quite common."
+"flows and sudden rumbles from the earth are quite common. Although most of "
+"the planet is unsuitable for construction, there is a small area at the "
+"south pole that is reasonably stable, by Koga standards, allowing for people "
+"to live."
 msgstr ""
 
 #: dat/spob/koga.xml:30
 msgid ""
-"The bar has holos and pictures of the more spectacular activity of Koga's "
+"The bar has holovids and pictures of the more spectacular activity of Koga's "
 "turbulent geography. The bar is known for the \"Lava Storm\" drink, which "
 "you need to sign a waiver to drink."
 msgstr ""
@@ -13833,8 +13903,8 @@ msgstr ""
 #. type = "discover",
 #. asset = spob.get("Minerva Station"),
 #: dat/spob/minerva_station.xml:2 dat/events/discovery.lua:92
-#: dat/scripts/common/minerva.lua:101 dat/scripts/common/minerva.lua:105
-#: dat/scripts/common/minerva.lua:109 dat/scripts/common/minerva.lua:113
+#: dat/scripts/common/minerva.lua:100 dat/scripts/common/minerva.lua:104
+#: dat/scripts/common/minerva.lua:108 dat/scripts/common/minerva.lua:112
 msgid "Minerva Station"
 msgstr ""
 
@@ -14842,16 +14912,20 @@ msgstr ""
 
 #: dat/spob/omega_station.xml:31
 msgid ""
-"Built to defend the Empire from the Collective, the Omega Station has "
-"observed countless battles fought in its sector. Its presence has helped "
-"stem the flow of Collective drones into Empire space."
+"Hurriedly built to defend the Empire from the Collective, the Omega Station "
+"has observed countless battles fought in its sector. Its presence has helped "
+"stem the flow of Collective drones into Empire space. Due to the constant "
+"attacks, the construction of the base is a mismatch of reinforced panels and "
+"salvaged ship parts, contrasting greatly with the standardized designs of "
+"most Imperial stations."
 msgstr ""
 
 #: dat/spob/omega_station.xml:32
 msgid ""
 "The Omega Canteen is a dark place that seems calm, although every time a "
 "robotic drone approaches an alarm sounds sending pilots to man their ships "
-"to fight off the menace."
+"to fight off the menace. There is also a ever-growing small memorial to the "
+"Empire pilots lost against the Collective menace."
 msgstr ""
 
 #: dat/spob/onar.xml:2
@@ -15208,7 +15282,9 @@ msgstr ""
 msgid ""
 "Paxsor is a mining planet within Empire space, supplying ore to the "
 "shipyards in the system and sending surplus ore to help with the Emperor's "
-"Fist project."
+"Fist project. Although not particularly rich in ore deposits, they are very "
+"accessible, allowing sieving through vast quantities of planet mass to "
+"extract them."
 msgstr ""
 
 #: dat/spob/paxsor.xml:30
@@ -15421,7 +15497,7 @@ msgstr ""
 msgid ""
 "A simple, utilitarian bar patronized largely by off-duty dock workers and "
 "terraformers, this bar is nonetheless kept immaculately clean. It clearly "
-"means to set the... bar for all bars in Empire space."
+"means to set the… bar for all bars in Empire space."
 msgstr ""
 
 #: dat/spob/poller_d2.xml:2
@@ -16196,7 +16272,9 @@ msgid ""
 "It is said that when the first colonist ship landed here, its captain took a "
 "look outside and muttered to himself: \"what a ruin of a planet\". His cabin "
 "crew overheard, and the word stuck. Today, the planet is officially known as "
-"Ruin on all publicly sold star maps."
+"Ruin on all publicly sold star maps. While the planet has been significantly "
+"developed since its colonization, it is hard to say that it is an "
+"interesting or exciting world."
 msgstr ""
 
 #: dat/spob/ruin.xml:30
@@ -16738,7 +16816,10 @@ msgstr ""
 #: dat/spob/shiarta.xml:29
 msgid ""
 "Where Oma is too hot, Shiarta is too cold for comfort. Still, the Empire is "
-"always in need of raw materials, and Shiarta is rich in same."
+"always in need of raw materials, and Shiarta is rich in same. Mining is done "
+"in a peculiar way with strong snow storms redepositing minerals on the "
+"surface and large insulated mobile collectors scraping them off and bringing "
+"them to delivery points."
 msgstr ""
 
 #: dat/spob/shiarta.xml:30
@@ -16927,7 +17008,8 @@ msgid ""
 "Sirou Alpha is a bastion of Imperial control in this sector. Given Sirou's "
 "proximity to the Imperial capital, it makes sense to have such a heavily "
 "reinforced station so close. The station is relatively new, with modern "
-"facilities all around."
+"facilities all around following the latest of Imperial standardized design "
+"patterns."
 msgstr ""
 
 #: dat/spob/sirou_alpha.xml:31
@@ -17276,7 +17358,8 @@ msgstr ""
 #: dat/spob/soros_station.xml:29
 msgid ""
 "Soros Station is a small but industrious ship making plant that focuses on "
-"light, affordable craft."
+"light, affordable craft. The living quarters and installations of the "
+"station seem like an afterthought compared to the main ship factories."
 msgstr ""
 
 #: dat/spob/soros_station.xml:30
@@ -18094,12 +18177,14 @@ msgid ""
 "remembers where the name came from, and, bizarrely, there are no records of "
 "the station's original name. It's quite a famous story, both within Hekaras "
 "and elsewhere. Meanwhile, all involved simply call it Three and a Half "
-"Kings. It seems to work for them."
+"Kings. It seems to work for them. Despite the curious name, Three and a Half "
+"Kings is a fairly unremarkable station, offering its services to ships that "
+"pass by."
 msgstr ""
 
 #: dat/spob/three_and_a_half_kings.xml:31
 msgid ""
-"This is a typical stationside bar. It has viewports looking into space, "
+"This is a typical station-side bar. It has viewports looking into space, "
 "which are of course ignored by everyone, since anyone who comes to a station "
 "like this has seen all the space they could possibly want to."
 msgstr ""
@@ -18503,7 +18588,7 @@ msgstr ""
 
 #: dat/spob/turnpike_station.xml:32
 msgid ""
-"The bar is abustle with traders making money and, in some cases, losing it. "
+"The bar is bustling with traders making money and, in some cases, losing it. "
 "The gears of the free market grind heaviest on stations like these and "
 "sometimes someone gets crushed between them."
 msgstr ""
@@ -20154,7 +20239,7 @@ msgstr ""
 msgid "Thurion Local"
 msgstr ""
 
-#: dat/spob_virtual/tradelane.xml:2 src/map.c:737
+#: dat/spob_virtual/tradelane.xml:2 src/map.c:780
 msgid "Trade Lane"
 msgstr ""
 
@@ -20689,12 +20774,12 @@ msgstr ""
 msgid "Euler"
 msgstr ""
 
-#: dat/ssys/euler.xml:6 dat/ssys/narousse.xml:6 dat/ssys/ngc10081.xml:6
-#: dat/ssys/ngc10653.xml:6 dat/ssys/ngc11050.xml:6 dat/ssys/ngc12261.xml:6
-#: dat/ssys/ngc14337.xml:6 dat/ssys/ngc14430.xml:6 dat/ssys/ngc18269.xml:6
-#: dat/ssys/ngc22375.xml:6 dat/ssys/peogas.xml:6 dat/ssys/toxin.xml:6
-#: dat/ssys/ulysses.xml:6 dat/ssys/undergate.xml:6
-msgid "#pIonic Storm (-50% energy and -50% stress dissipation)#0"
+#: dat/ssys/euler.xml:6 dat/ssys/mirror.xml:6 dat/ssys/narousse.xml:6
+#: dat/ssys/ngc10081.xml:6 dat/ssys/ngc10653.xml:6 dat/ssys/ngc11050.xml:6
+#: dat/ssys/ngc12261.xml:6 dat/ssys/ngc14337.xml:6 dat/ssys/ngc14430.xml:6
+#: dat/ssys/ngc18269.xml:6 dat/ssys/ngc22375.xml:6 dat/ssys/peogas.xml:6
+#: dat/ssys/toxin.xml:6 dat/ssys/ulysses.xml:6 dat/ssys/undergate.xml:6
+msgid "#pPlasma Storm (-50% energy and -50% stress dissipation)#0"
 msgstr ""
 
 #: dat/ssys/eye_of_night.xml:2
@@ -21061,10 +21146,6 @@ msgstr ""
 
 #: dat/ssys/mirror.xml:2
 msgid "Mirror"
-msgstr ""
-
-#: dat/ssys/mirror.xml:6
-msgid "#pPlasma Storm (-50% energy and -50% stress dissipation)#0"
 msgstr ""
 
 #: dat/ssys/mizar.xml:2
@@ -21917,7 +21998,7 @@ msgid "Symm"
 msgstr ""
 
 #: dat/ssys/taiomi.xml:2 dat/events/discovery.lua:81
-#: dat/scripts/common/taiomi.lua:28
+#: dat/scripts/common/taiomi.lua:27
 msgid "Taiomi"
 msgstr ""
 
@@ -22271,15 +22352,15 @@ msgid ""
 "fuel tanks, which is now minimally operational."
 msgstr ""
 
-#: dat/ai/advertiser.lua:11
+#: dat/ai/advertiser.lua:10
 msgid "Fly safe, fly Milspec."
 msgstr "Letět bezpečně, letět s MilSpec."
 
-#: dat/ai/advertiser.lua:12
+#: dat/ai/advertiser.lua:11
 msgid "Reynir's Hot Dogs: enjoy the authentic taste of tradition."
 msgstr "Reynirovi Hot Dogy: užijte si autentickou chuť tradice."
 
-#: dat/ai/advertiser.lua:13
+#: dat/ai/advertiser.lua:12
 msgid ""
 "Everyone is faster than light, but only Tricon engines are faster than "
 "thought!"
@@ -22287,136 +22368,136 @@ msgstr ""
 "Každý je rychlejší než světlo, ale pouze motory Tricon jsou rychlejší, než "
 "myšlenka!"
 
-#: dat/ai/advertiser.lua:14
+#: dat/ai/advertiser.lua:13
 msgid "Dare excellence! Dare Teracom rockets!"
 msgstr "Odvaha k dokonalosti! Troufněte si na rakety Teracom!"
 
-#: dat/ai/advertiser.lua:15
+#: dat/ai/advertiser.lua:14
 msgid ""
 "Most people are ordinary. For the others, Nexus designed the Shark fighter."
 msgstr "Většina lidí je průměrná. Pro ostatní navrhl Nexus stíhačku Shark."
 
-#: dat/ai/advertiser.lua:16
+#: dat/ai/advertiser.lua:15
 msgid ""
 "Never take off without your courage. Never take off without your Vendetta."
 msgstr "Nikdy neodstartujte bez odvahy. Nikdy nevzlétněte bez Vendety."
 
-#: dat/ai/advertiser.lua:17
+#: dat/ai/advertiser.lua:16
 msgid "Unicorp: low price and high quality!"
 msgstr "Unicorp: nízká cena a vysoká kvalita!"
 
-#: dat/ai/advertiser.lua:18
+#: dat/ai/advertiser.lua:17
 msgid "Life is short, spend it at Minerva Station in the Limbo System!"
 msgstr "Život je krátký, prožijte ho na stanici Minerva v systému Limbo!"
 
-#: dat/ai/advertiser.lua:19
+#: dat/ai/advertiser.lua:18
 msgid "Insuperable Sleekness. Introducing the Krain Industries Starbridge."
 msgstr ""
 
-#: dat/ai/advertiser.lua:20
+#: dat/ai/advertiser.lua:19
 msgid ""
 "Take care of the ones you do love. Let your Enygma System Turreted Launchers "
 "deal with the ones you don't!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:23
+#: dat/ai/advertiser.lua:22
 msgid "Do you love your Emperor as much as he loves you?"
 msgstr "Milujete svého císaře stejně jako on vás?"
 
-#: dat/ai/advertiser.lua:24
+#: dat/ai/advertiser.lua:23
 msgid "You're quick and dependable? The Emperor needs you in the Armada!"
 msgstr "Jsi rychlý a spolehlivý? Císař tě potřebuje v armádě!"
 
-#: dat/ai/advertiser.lua:25
+#: dat/ai/advertiser.lua:24
 msgid ""
 "Made money hauling cargo? Remember to file your EW-59831 every cycle or face "
 "the consequences."
 msgstr ""
 
-#: dat/ai/advertiser.lua:26
+#: dat/ai/advertiser.lua:25
 msgid ""
 "Need help with your EW-59831 form? Try Bob's Bureaucratic Bazaar at Semper!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:27
+#: dat/ai/advertiser.lua:26
 msgid ""
 "Not filing your EE-91726 for unauthorized pet iguanas is a crime. Report to "
 "your Empire Animal Bureau now."
 msgstr ""
 
-#: dat/ai/advertiser.lua:28
+#: dat/ai/advertiser.lua:27
 msgid "Keep your documents properly filed. Unicorp Filing Cabinets."
 msgstr ""
 
-#: dat/ai/advertiser.lua:31
+#: dat/ai/advertiser.lua:30
 msgid "Only your hard work will save the Dvaered economy!"
 msgstr "Pouze vaše tvrdá práce zachrání Dvaeredskou ekonomiku!"
 
-#: dat/ai/advertiser.lua:32
+#: dat/ai/advertiser.lua:31
 msgid "Together, we will beat the economic crisis!"
 msgstr "Společně porazíme hospodářskou krizi!"
 
-#: dat/ai/advertiser.lua:33
+#: dat/ai/advertiser.lua:32
 #, fuzzy
 #| msgid "Bet on Totoran and win incredible sums thanks to the arena!"
 msgid "Bet on Totoran and win incredible sums thanks to the Crimson Gauntlet!"
 msgstr "Sázejte na Totoran a díky aréně vyhrajte neuvěřitelné částky!"
 
-#: dat/ai/advertiser.lua:34
+#: dat/ai/advertiser.lua:33
 msgid ""
 "Mace rockets lacking shine? Try Lady Killington's premium rocket polish!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:35
+#: dat/ai/advertiser.lua:34
 msgid ""
 "Other warlords not letting you enjoy bloodshed? Join Lord Easytrigger's "
 "battalion today!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:36
+#: dat/ai/advertiser.lua:35
 msgid ""
 "A Dvaered Success Story: Buy the outstanding autobiography by Lady "
 "Bitterfly. "
 msgstr ""
 
-#: dat/ai/advertiser.lua:39
+#: dat/ai/advertiser.lua:38
 msgid "Remember Sorom."
 msgstr ""
 
-#: dat/ai/advertiser.lua:40
+#: dat/ai/advertiser.lua:39
 msgid "Special offer on Crow: buy one IR-eye, and the second comes for free!"
 msgstr "Speciální nabídka na Crow: kupte si jedno IR-oko a druhé je zdarma!"
 
-#: dat/ai/advertiser.lua:41
+#: dat/ai/advertiser.lua:40
 msgid ""
 "Looking to modify an entire species? Visit Dr. Hu's Gene Clinic at Point "
 "Zero Station!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:42
+#: dat/ai/advertiser.lua:41
 msgid ""
 "Endogenous DNA damage hampering your Gene Drive? Drop by your local "
 "Chromosomal Rearrangement Laboratory for a check-up."
 msgstr ""
 
-#: dat/ai/advertiser.lua:43
+#: dat/ai/advertiser.lua:42
 msgid ""
 "Visit Bohr Laboratory for all your epistatic mutation woes. 10 locations and "
 "counting!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:44
+#: dat/ai/advertiser.lua:43
 msgid ""
 "Worried about your bio-ship adenosine triphosphate output? Leave it to ATP "
 "Specialists!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:45
+#: dat/ai/advertiser.lua:44
 msgid ""
 "Preemptively treat your bio-ship for space fleas with Dr. Nastya's Ointment!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:48
+#: dat/ai/advertiser.lua:47
 #, fuzzy
 #| msgid ""
 #| "Want to solve a large-dimensional stochastic PDE? the LMKSTD method is "
@@ -22428,7 +22509,7 @@ msgstr ""
 "Chcete vyřešit velkoplošný stochastický PDE? metoda LMKSTD je to, co "
 "potřebujete!"
 
-#: dat/ai/advertiser.lua:49
+#: dat/ai/advertiser.lua:48
 #, fuzzy
 #| msgid ""
 #| "You love non-convex minimization? Join Ruadan's Computation Science Lab!"
@@ -22437,36 +22518,36 @@ msgstr ""
 "Máte rádi nekonvexní minimalizaci? Připojte se k Ruadanské výpočetní vědecké "
 "laboratoři!"
 
-#: dat/ai/advertiser.lua:50
+#: dat/ai/advertiser.lua:49
 msgid "Keeping your drones in top shape. Prof. Imarisha's Robotic Laboratory."
 msgstr ""
 
-#: dat/ai/advertiser.lua:51
+#: dat/ai/advertiser.lua:50
 msgid "Interested in Genetic Lifeforms research? Apply to Interstice Science!"
 msgstr ""
 
 #. Reference to Aperture Science (synonyms) from Portal
-#: dat/ai/advertiser.lua:52
+#: dat/ai/advertiser.lua:51
 msgid "Want to learn about Anti-Mass Spectometry? Join Ebony Plateau today!"
 msgstr ""
 
 #. Reference to Black Mesa (synonyms) from Half-Life
-#: dat/ai/advertiser.lua:55
+#: dat/ai/advertiser.lua:54
 msgid "Want a new look? Try Verrill's Ceremonial Robes at Burnan!"
 msgstr ""
 
 #. Special ads that can be multi-faction
-#: dat/ai/advertiser.lua:60
+#: dat/ai/advertiser.lua:59
 msgid "Nexus Augmentation: trust the galactic leader in cyber-organs rental!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:61
+#: dat/ai/advertiser.lua:60
 msgid ""
 "Love your children? Get them the new Nexus Augmentation NCB-567K cyber-brain "
 "and they will never fail an exam!"
 msgstr ""
 
-#: dat/ai/advertiser.lua:62
+#: dat/ai/advertiser.lua:61
 msgid ""
 "Rent arrears for your cyber-organs? Take out a credit at Nexus Bank and save "
 "your vital organs from being removed!"
@@ -22497,17 +22578,17 @@ msgstr ""
 #. taunts
 #. Only 50% of actually taunting.
 #. some taunts
-#: dat/ai/advertiser.lua:72 dat/ai/civilian.lua:9 dat/ai/independent.lua:10
+#: dat/ai/advertiser.lua:71 dat/ai/civilian.lua:9 dat/ai/independent.lua:10
 #: dat/ai/proteron_dissident.lua:12
 msgid "\"Just leave me alone!\""
 msgstr "\"Nech mě prostě na pokoji!\""
 
-#: dat/ai/advertiser.lua:73 dat/ai/civilian.lua:10 dat/ai/independent.lua:11
+#: dat/ai/advertiser.lua:72 dat/ai/civilian.lua:10 dat/ai/independent.lua:11
 #: dat/ai/proteron_dissident.lua:13
 msgid "\"What do you want from me!?\""
 msgstr "\"Co ode mě chceš!?\""
 
-#: dat/ai/advertiser.lua:74 dat/ai/civilian.lua:11 dat/ai/independent.lua:12
+#: dat/ai/advertiser.lua:73 dat/ai/civilian.lua:11 dat/ai/independent.lua:12
 #: dat/ai/proteron_dissident.lua:14
 msgid "\"Get away from me!\""
 msgstr "\"Jdi ode mně pryč!\""
@@ -22552,7 +22633,7 @@ msgstr "\"Jdi ode mně pryč!\""
 #. Remove randomness from future calls
 #. Clean up
 #. Deal with refueling
-#: dat/ai/advertiser.lua:80 dat/ai/civilian.lua:31 dat/ai/independent.lua:40
+#: dat/ai/advertiser.lua:79 dat/ai/civilian.lua:31 dat/ai/independent.lua:40
 #: dat/ai/mercenary.lua:66 dat/ai/miner.lua:33 dat/ai/proteron_dissident.lua:32
 #: dat/ai/thurion.lua:72 dat/ai/trader.lua:53
 msgid "\"I'll supply your ship with fuel for {credits}.\""
@@ -22562,27 +22643,27 @@ msgstr "„Dodám tvé lodi palivo za {credits}.“"
 #. Faction specific messages
 #. Empire messages
 #. Dvaered messages
-#: dat/ai/advertiser.lua:101
+#: dat/ai/advertiser.lua:100
 msgid "Butthead"
 msgstr ""
 
-#: dat/ai/advertiser.lua:102
+#: dat/ai/advertiser.lua:101
 msgid "Nincompoop"
 msgstr ""
 
-#: dat/ai/advertiser.lua:103
+#: dat/ai/advertiser.lua:102
 msgid "Dunderhead"
 msgstr ""
 
-#: dat/ai/advertiser.lua:104 dat/scripts/pilotname/pirate.lua:232
+#: dat/ai/advertiser.lua:103 dat/scripts/pilotname/pirate.lua:232
 msgid "Ass"
 msgstr ""
 
-#: dat/ai/advertiser.lua:105
+#: dat/ai/advertiser.lua:104
 msgid "Fool"
 msgstr ""
 
-#: dat/ai/advertiser.lua:106
+#: dat/ai/advertiser.lua:105
 msgid "Coward"
 msgstr ""
 
@@ -22600,7 +22681,7 @@ msgstr ""
 #. --
 #. All the rewards:
 #. Paid in Gauss Guns
-#: dat/ai/advertiser.lua:109
+#: dat/ai/advertiser.lua:108
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:142
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:177
 #: dat/scripts/common/frontier_war.lua:19
@@ -22609,46 +22690,46 @@ msgstr ""
 
 #. Go to first rendezvous
 #. Spawn the Warlord
-#: dat/ai/advertiser.lua:110
+#: dat/ai/advertiser.lua:109
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:109
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:171
 #: dat/scripts/common/frontier_war.lua:20
 msgid "Lady Bitterfly"
 msgstr ""
 
-#: dat/ai/advertiser.lua:111 dat/scripts/common/frontier_war.lua:21
+#: dat/ai/advertiser.lua:110 dat/scripts/common/frontier_war.lua:21
 msgid "Lady Pointblank"
 msgstr ""
 
-#: dat/ai/advertiser.lua:112 dat/scripts/common/frontier_war.lua:22
+#: dat/ai/advertiser.lua:111 dat/scripts/common/frontier_war.lua:22
 msgid "Lord Chainsaw"
 msgstr ""
 
-#: dat/ai/advertiser.lua:113 dat/scripts/common/frontier_war.lua:23
+#: dat/ai/advertiser.lua:112 dat/scripts/common/frontier_war.lua:23
 msgid "Lord Painbishop"
 msgstr ""
 
-#: dat/ai/advertiser.lua:114 dat/scripts/common/frontier_war.lua:24
+#: dat/ai/advertiser.lua:113 dat/scripts/common/frontier_war.lua:24
 msgid "Lord Kriegsreich Hundertfeuer"
 msgstr ""
 
-#: dat/ai/advertiser.lua:115 dat/scripts/common/frontier_war.lua:25
+#: dat/ai/advertiser.lua:114 dat/scripts/common/frontier_war.lua:25
 msgid "Lady Blackswan"
 msgstr ""
 
-#: dat/ai/advertiser.lua:116 dat/scripts/common/frontier_war.lua:26
+#: dat/ai/advertiser.lua:115 dat/scripts/common/frontier_war.lua:26
 msgid "Lady Killington"
 msgstr ""
 
-#: dat/ai/advertiser.lua:117 dat/scripts/common/frontier_war.lua:27
+#: dat/ai/advertiser.lua:116 dat/scripts/common/frontier_war.lua:27
 msgid "Lord Richthofen"
 msgstr ""
 
-#: dat/ai/advertiser.lua:118 dat/scripts/common/frontier_war.lua:28
+#: dat/ai/advertiser.lua:117 dat/scripts/common/frontier_war.lua:28
 msgid "Lady Dewinter"
 msgstr ""
 
-#: dat/ai/advertiser.lua:119 dat/scripts/common/frontier_war.lua:29
+#: dat/ai/advertiser.lua:118 dat/scripts/common/frontier_war.lua:29
 msgid "Lord Easytrigger"
 msgstr ""
 
@@ -22676,34 +22757,34 @@ msgstr ""
 #. 1
 #. 5
 #. Indicates boss or main enemy (note that in the case of double enemies there may be another)
-#: dat/ai/advertiser.lua:120 dat/missions/dvaered/gauntlet/tables.lua:80
+#: dat/ai/advertiser.lua:119 dat/missions/dvaered/gauntlet/tables.lua:80
 #: dat/scripts/common/frontier_war.lua:30
 msgid "Lady Sainte-Beuverie"
 msgstr ""
 
-#: dat/ai/advertiser.lua:121 dat/scripts/common/frontier_war.lua:31
+#: dat/ai/advertiser.lua:120 dat/scripts/common/frontier_war.lua:31
 msgid "Lord Louverture"
 msgstr ""
 
-#: dat/ai/advertiser.lua:122 dat/scripts/common/frontier_war.lua:32
+#: dat/ai/advertiser.lua:121 dat/scripts/common/frontier_war.lua:32
 msgid "Lord Abdelkiller"
 msgstr ""
 
-#: dat/ai/advertiser.lua:123 dat/scripts/common/frontier_war.lua:33
+#: dat/ai/advertiser.lua:122 dat/scripts/common/frontier_war.lua:33
 msgid "Lady Proserpina"
 msgstr ""
 
-#: dat/ai/advertiser.lua:129
+#: dat/ai/advertiser.lua:128
 msgid "I hereby declare {butthead} is a {badword}. -{sponsor}"
 msgstr ""
 
-#: dat/ai/advertiser.lua:130
+#: dat/ai/advertiser.lua:129
 msgid "Let it be known that {butthead} is a {badword}. -{sponsor}"
 msgstr ""
 
 #. Soromid messages
 #. Soromid+Empire messages
-#: dat/ai/advertiser.lua:141
+#: dat/ai/advertiser.lua:140
 msgid ""
 "Remember to fill in your EX-29528-B form if returning to the Empire from "
 "Soromid territory."
@@ -22712,7 +22793,7 @@ msgstr ""
 #. Za'lek messages
 #. Note that when running in the main menu background, player.name() might not exist (==nil), so
 #. we need to add a check for that.
-#: dat/ai/advertiser.lua:153
+#: dat/ai/advertiser.lua:152
 #, fuzzy
 #| msgid ""
 #| "Dear Pr. %s, your recent work has left a deep impression on us. Due to "
@@ -23945,44 +24026,44 @@ msgstr ""
 #. Only 50% of actually taunting.
 #. Offense is not actually used
 #. Settings
-#: dat/ai/dvaered.lua:11 dat/ai/frontier_police.lua:11 dat/ai/goddard.lua:10
+#: dat/ai/dvaered.lua:10 dat/ai/frontier_police.lua:11 dat/ai/goddard.lua:10
 msgid "\"You insult my honour.\""
 msgstr "„Urážíš mou čest.“"
 
-#: dat/ai/dvaered.lua:12 dat/ai/frontier_police.lua:12 dat/ai/goddard.lua:11
+#: dat/ai/dvaered.lua:11 dat/ai/frontier_police.lua:12 dat/ai/goddard.lua:11
 msgid "\"I find your lack of honour disturbing.\""
 msgstr "„Tvůj nedostatek cti, mne znepokojuje.“"
 
-#: dat/ai/dvaered.lua:13 dat/ai/frontier_police.lua:13 dat/ai/goddard.lua:12
+#: dat/ai/dvaered.lua:12 dat/ai/frontier_police.lua:13 dat/ai/goddard.lua:12
 msgid "\"You disgust me.\""
 msgstr "\"Znechucuješ mne.\""
 
-#: dat/ai/dvaered.lua:14 dat/ai/frontier_police.lua:14 dat/ai/goddard.lua:13
+#: dat/ai/dvaered.lua:13 dat/ai/frontier_police.lua:14 dat/ai/goddard.lua:13
 msgid "\"Bribery carries a harsh penalty.\""
 msgstr "„Podplácení je přísně trestáno.“"
 
-#: dat/ai/dvaered.lua:15
+#: dat/ai/dvaered.lua:14
 msgid "\"House Dvaered does not lower itself to common scum.\""
 msgstr "„Rod Dvaered se nesnižuje k obyčejné spodině.“"
 
-#: dat/ai/dvaered.lua:18 dat/ai/goddard.lua:18
+#: dat/ai/dvaered.lua:17 dat/ai/goddard.lua:18
 #: dat/events/minerva/altercation1.lua:42
 msgid "I shall wash my hull in your blood!"
 msgstr "Umyju si trup lodi ve tvé krvi!"
 
-#: dat/ai/dvaered.lua:19 dat/ai/frontier_police.lua:20 dat/ai/goddard.lua:19
+#: dat/ai/dvaered.lua:18 dat/ai/frontier_police.lua:20 dat/ai/goddard.lua:19
 msgid "Your head will make a great trophy!"
 msgstr "Tvá hlava poslouží jako výborná trofej!"
 
-#: dat/ai/dvaered.lua:22 dat/ai/goddard.lua:17
+#: dat/ai/dvaered.lua:21 dat/ai/goddard.lua:17
 msgid "Prepare to face annihilation!"
 msgstr "Připrav se na zničení!"
 
-#: dat/ai/dvaered.lua:23
+#: dat/ai/dvaered.lua:22
 msgid "You're no match for the Dvaered!"
 msgstr "Pro Dvaered nejsi žádná výzva!"
 
-#: dat/ai/dvaered.lua:24 dat/ai/frontier_police.lua:22
+#: dat/ai/dvaered.lua:23 dat/ai/frontier_police.lua:22
 msgid "Death awaits you!"
 msgstr "Čeká tě smrt!"
 
@@ -23994,11 +24075,11 @@ msgstr "Čeká tě smrt!"
 #. Remove randomness from future calls
 #. Clean up
 #. Handle refueling
-#: dat/ai/dvaered.lua:71
+#: dat/ai/dvaered.lua:70
 msgid "\"You are not worthy of my attention.\""
 msgstr "„Nejsi hoden mé pozornosti.“"
 
-#: dat/ai/dvaered.lua:74 dat/ai/frontier_police.lua:74
+#: dat/ai/dvaered.lua:73 dat/ai/frontier_police.lua:74
 msgid "\"For you I could make an exception for {credits}.\""
 msgstr "„Pro tebe bych mohl udělat výjimku za {credits}.“"
 
@@ -24012,7 +24093,7 @@ msgstr "„Pro tebe bych mohl udělat výjimku za {credits}.“"
 #. Only 50% of actually taunting.
 #. some taunts
 #. Settings
-#: dat/ai/dvaered.lua:79 dat/ai/frontier_police.lua:10 dat/ai/soromid.lua:12
+#: dat/ai/dvaered.lua:78 dat/ai/frontier_police.lua:10 dat/ai/soromid.lua:12
 msgid "\"I shall especially enjoy your death.\""
 msgstr "„Tvoji smrt si obzvlášť užiji.“"
 
@@ -25346,13 +25427,13 @@ msgstr ""
 
 #. Destroy if exists
 #: dat/board.lua:378 dat/comm.lua:166 dat/events/shipai.lua:37
-#: dat/events/shipai.lua:50 src/comm.c:343 src/console.c:691
+#: dat/events/shipai.lua:50 src/comm.c:344 src/console.c:691
 #: src/dev_sysedit.c:1351 src/dev_sysedit.c:1461 src/dev_sysedit.c:1522
 #: src/dev_sysedit.c:1714 src/dev_sysedit.c:1901 src/dev_sysedit.c:1982
 #: src/dev_uniedit.c:402 src/dev_uniedit.c:1461 src/dev_uniedit.c:1660
 #: src/dev_uniedit.c:1896 src/info.c:399 src/info.c:484 src/info.c:566
 #: src/info.c:702 src/info.c:894 src/info.c:1114 src/info.c:1211
-#: src/info.c:1556 src/land_outfits.c:165 src/map.c:340 src/map_find.c:1016
+#: src/info.c:1556 src/land_outfits.c:165 src/map.c:372 src/map_find.c:1016
 #: src/map_system.c:202
 msgid "Close"
 msgstr ""
@@ -25524,7 +25605,7 @@ msgstr ""
 msgid "Refuse"
 msgstr ""
 
-#: dat/comm.lua:238 dat/comm.lua:409 src/comm.c:389
+#: dat/comm.lua:238 dat/comm.lua:409 src/comm.c:390
 msgid "You decide not to pay."
 msgstr ""
 
@@ -25609,6 +25690,20 @@ msgstr ""
 #. @tparam table tbl Table to copy.
 #. @tparam[opt={}] copy Initial table to use as a base and add elements of tbl to.
 #. @treturn table A new table that is a shallow copy of tbl, or copy if not nil.
+#. --
+#. --
+#. Merges src table into dest. Does not recurse into subtables.
+#.
+#. @tparam table dest Destination table. Must not be nil.
+#. @tparam[opt={}] table src Source table to be merged into dest.
+#. @treturn table Returns dest.
+#. --
+#. --
+#. Merges src table into dest recursively.
+#.
+#. @tparam table dest Destination table. Must not be nil.
+#. @tparam[opt={}] table src Source table to be merged into dest.
+#. @treturn table Returns dest.
 #. --
 #. --
 #. Repeats an ordered table a number of tables.
@@ -26009,8 +26104,8 @@ msgstr ""
 #: dat/missions/pirate/blackcat.lua:98 dat/missions/shadow/darkshadow.lua:62
 #: dat/missions/shadow/shadowvigil.lua:63
 #: dat/missions/zalek/blackhole/zbh11.lua:113 src/equipment.c:1766
-#: src/gui.c:1529 src/map.c:519 src/map.c:525 src/map.c:531 src/map.c:537
-#: src/map.c:543 src/map.c:549 src/map.c:1835 src/map_overlay.c:221
+#: src/gui.c:1529 src/map.c:559 src/map.c:565 src/map.c:571 src/map.c:577
+#: src/map.c:583 src/map.c:589 src/map.c:1903 src/map_overlay.c:221
 #: src/map_system.c:479 src/outfit.c:293 src/outfit.c:312 src/outfit.c:886
 #: src/player.c:2028 src/player_autonav.c:92 src/player_autonav.c:217
 #: src/player_autonav.c:460 src/ship.c:212
@@ -26080,7 +26175,7 @@ msgid "You found #o{title}#0!"
 msgstr ""
 
 #. Log and message
-#: dat/events/discovery.lua:360 src/map.c:2050
+#: dat/events/discovery.lua:360 src/map.c:2118
 msgid "Discovery"
 msgstr ""
 
@@ -27038,7 +27133,7 @@ msgstr ""
 
 #: dat/events/dvaered/totoran.lua:253 dat/events/minerva/station.lua:345
 #: dat/events/minerva/station.lua:372 dat/missions/dvaered/gauntlet/gui.lua:204
-#: dat/rescue.lua:304 dat/rescue.lua:315 src/dialogue.c:722 src/escort.c:303
+#: dat/rescue.lua:304 dat/rescue.lua:315 src/dialogue.c:723 src/escort.c:303
 #: src/map_find.c:227 src/options.c:266 src/options.c:794 src/options.c:904
 #: src/options.c:1167 src/options.c:1218
 msgid "Cancel"
@@ -28453,7 +28548,7 @@ msgstr ""
 
 #. Orangish
 #: dat/events/minerva/chicken_rendezvous.lua:131
-#: dat/scripts/common/minerva.lua:18 dat/scripts/common/minerva.lua:101
+#: dat/scripts/common/minerva.lua:17 dat/scripts/common/minerva.lua:100
 msgid "Kex"
 msgstr ""
 
@@ -28486,7 +28581,7 @@ msgstr ""
 #: dat/events/minerva/chicken_rendezvous.lua:139
 msgid ""
 "\"But the nebula was not a kind mistress. It sort of gets into your bones "
-"you know? Especially right after the incident, it was very unstable. Lost a "
+"you know? Especially right after the Incident, it was very unstable. Lost a "
 "lot of good fellow explorers due to explosions and the Nebula madness. It "
 "sort of turns you into a monster, incapable of rational thought, and they "
 "would usually succumb to their own uncontrolled greed.\""
@@ -29023,7 +29118,7 @@ msgstr ""
 #. -- Helper functions and defines for the Minerva Station campaigns
 #. --
 #. Main Characters
-#: dat/events/minerva/station.lua:231 dat/scripts/common/minerva.lua:12
+#: dat/events/minerva/station.lua:231 dat/scripts/common/minerva.lua:11
 msgid "Cyborg Chicken"
 msgstr ""
 
@@ -32142,9 +32237,9 @@ msgid "Ship Quiz"
 msgstr ""
 
 #: dat/events/neutral/shiplover.lua:141 dat/factions/standing/lib/base.lua:43
-#: dat/factions/standing/lib/base.lua:49 dat/scripts/common/antlejos.lua:30
+#: dat/factions/standing/lib/base.lua:49 dat/scripts/common/antlejos.lua:29
 #: dat/scripts/common/derelict.lua:19 dat/scripts/common/neutral.lua:10
-#: dat/scripts/common/tut_nelly.lua:28 dat/scripts/common/tutorial.lua:46
+#: dat/scripts/common/tut_nelly.lua:27 dat/scripts/common/tutorial.lua:45
 #: dat/scripts/factions/soromid.lua:19
 msgid "Neutral"
 msgstr ""
@@ -32671,11 +32766,11 @@ msgstr ""
 msgid "Rename Ship AI"
 msgstr ""
 
-#: dat/events/shipai.lua:53 dat/events/updater.lua:93
+#: dat/events/shipai.lua:53 dat/events/updater.lua:98
 msgid "Enable tutorial hints"
 msgstr ""
 
-#: dat/events/shipai.lua:55 dat/events/updater.lua:94
+#: dat/events/shipai.lua:55 dat/events/updater.lua:99
 msgid "Disable tutorial hints"
 msgstr ""
 
@@ -32950,7 +33045,7 @@ msgstr ""
 #.
 #. --
 #. TODO replace with real portrait
-#: dat/events/shipai.lua:221 dat/scripts/common/tutorial.lua:16
+#: dat/events/shipai.lua:221 dat/scripts/common/tutorial.lua:15
 msgid "Ship AI"
 msgstr ""
 
@@ -33889,7 +33984,7 @@ msgstr ""
 #. -- Helper functions and defines for the Taiomi campaigns
 #. --
 #: dat/events/taiomi/intro.lua:147 dat/events/taiomi/system.lua:41
-#: dat/scripts/common/taiomi.lua:9
+#: dat/scripts/common/taiomi.lua:8
 msgid "Scavenger Drone"
 msgstr ""
 
@@ -33971,12 +34066,12 @@ msgid ""
 msgstr ""
 
 #. Philosopher
-#: dat/events/taiomi/system.lua:47 dat/scripts/common/taiomi.lua:21
+#: dat/events/taiomi/system.lua:47 dat/scripts/common/taiomi.lua:20
 msgid "Philosopher Drone"
 msgstr ""
 
 #. Worn-out Drone
-#: dat/events/taiomi/system.lua:53 dat/scripts/common/taiomi.lua:15
+#: dat/events/taiomi/system.lua:53 dat/scripts/common/taiomi.lua:14
 msgid "Worn-out Drone"
 msgstr ""
 
@@ -34455,6 +34550,8 @@ msgstr ""
 #.
 #. Small updater to handle moving saves to newer versions.
 #. --
+#. Runs on saves older than 0.10.0
+#. TODO move ship AI explanation here and deal with both saves older than 0.9.0 and 0.10.0
 #. Runs on saves older than 0.9.0
 #. Changed how the FLF base diff stuff works
 #. Set up pirate faction
@@ -34470,7 +34567,7 @@ msgstr ""
 #. - electronic warfare (stealth, scanning)
 #. - outfit balance
 #. - safe lanes
-#: dat/events/updater.lua:64
+#: dat/events/updater.lua:69
 msgid ""
 "\"Hello there {playername}! I'm your Ship AI. Up until now I've been "
 "resident in your ship controlling your Autonav and other functionality, but "
@@ -34481,23 +34578,23 @@ msgid ""
 "related my late previous owner? Terrible what happened…\""
 msgstr ""
 
-#: dat/events/updater.lua:67
+#: dat/events/updater.lua:72
 msgid ""
 "\"I'm sure you have many questions about the update, but first, would you "
 "like to give me a name?\""
 msgstr ""
 
 #. TODO integrate into vn
-#: dat/events/updater.lua:71 dat/missions/tutorial/tutorial.lua:59
+#: dat/events/updater.lua:76 dat/missions/tutorial/tutorial.lua:59
 msgid "Name Ship AI"
 msgstr ""
 
-#: dat/events/updater.lua:71 dat/missions/tutorial/tutorial.lua:59
+#: dat/events/updater.lua:76 dat/missions/tutorial/tutorial.lua:59
 msgid "Please enter a name for your Ship AI"
 msgstr ""
 
 #. Can't use rename here
-#: dat/events/updater.lua:87
+#: dat/events/updater.lua:92
 msgid ""
 "\"Great! I'll use the name {ainame} from now on. If you want to change it, "
 "you can do so from the #oInformation#0 menu which you open with {infokey} by "
@@ -34505,7 +34602,7 @@ msgid ""
 "explanations and change tutorial options.\""
 msgstr ""
 
-#: dat/events/updater.lua:88
+#: dat/events/updater.lua:93
 msgid ""
 "\"With the update, a lot of new mechanics and features have been changed. "
 "The largest change includes a revamp of #oElectronic Warfare#0, which now "
@@ -34515,7 +34612,7 @@ msgid ""
 "area nearby.\""
 msgstr ""
 
-#: dat/events/updater.lua:89
+#: dat/events/updater.lua:94
 msgid ""
 "\"You may have also noticed that there has been a major change in outfits. "
 "Lots of outfits have been removed, added, or renamed, leading to a loss of "
@@ -34524,7 +34621,7 @@ msgid ""
 "to be flying a poorly equipped ship in space!\""
 msgstr ""
 
-#: dat/events/updater.lua:90
+#: dat/events/updater.lua:95
 msgid ""
 "\"There are also a lot of other changes, for example, there are now patrol "
 "routes in systems that are more heavily guarded by local factions, seeking "
@@ -34532,14 +34629,14 @@ msgid ""
 "will notice a lot of smaller differences too as you play the game.\""
 msgstr ""
 
-#: dat/events/updater.lua:91
+#: dat/events/updater.lua:96
 msgid ""
 "\"With that said, would you like me to provide small, in-game advice as you "
 "do things throughout the game? Some might refer to things you are already "
 "familiar with, but it could help you learn new things.\""
 msgstr ""
 
-#: dat/events/updater.lua:98
+#: dat/events/updater.lua:103
 msgid ""
 "\"Great! I'll be giving you short hints as you do things through the game. "
 "If you want to change my settings or turn off the hints, please do so from "
@@ -34547,7 +34644,7 @@ msgid ""
 "{infokey}. Now, let's go adventuring!\""
 msgstr ""
 
-#: dat/events/updater.lua:105
+#: dat/events/updater.lua:110
 msgid ""
 "\"OK, I will not be giving you any hints. If you want to change my settings, "
 "turn on the hints, or get information and advice, please do so from the "
@@ -34710,7 +34807,7 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh10.lua:46
 #: dat/missions/zalek/blackhole/zbh11.lua:47
 #: dat/missions/zalek/blackhole/zbh11.lua:119
-#: dat/scripts/common/zalek_blackhole.lua:22
+#: dat/scripts/common/zalek_blackhole.lua:21
 msgid "Zach"
 msgstr ""
 
@@ -35375,10 +35472,10 @@ msgstr ""
 #: src/dev_sysedit.c:1839 src/dev_sysedit.c:1876 src/dev_sysedit.c:1934
 #: src/dev_uniedit.c:1403 src/dev_uniedit.c:1566 src/dev_uniedit.c:1782
 #: src/dev_uniedit.c:1847 src/info.c:417 src/info.c:510 src/info.c:928
-#: src/info.c:1259 src/input.c:524 src/land.c:872 src/land_outfits.c:440
+#: src/info.c:1259 src/input.c:524 src/land.c:855 src/land_outfits.c:440
 #: src/land_outfits.c:661 src/land_shipyard.c:126 src/land_shipyard.c:215
 #: src/land_trade.c:82 src/land_trade.c:84 src/land_trade.c:117 src/load.c:362
-#: src/load.c:410 src/load.c:454 src/map.c:646 src/map.c:699 src/map.c:1874
+#: src/load.c:410 src/load.c:454 src/map.c:689 src/map.c:742 src/map.c:1942
 #: src/map_find.c:702 src/map_system.c:649
 #, c-format
 msgid "None"
@@ -35514,7 +35611,7 @@ msgid "Landing"
 msgstr ""
 
 #: dat/gui/legacy.lua:202 dat/gui/legacy.lua:217 dat/gui/legacy.lua:225
-#: src/map.c:827
+#: src/map.c:871
 msgid "Off"
 msgstr ""
 
@@ -42685,14 +42782,14 @@ msgstr ""
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:75
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:156
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:166
-#: dat/scripts/luatk/core.lua:474 dat/scripts/vntk.lua:74 src/dialogue.c:380
+#: dat/scripts/luatk/core.lua:474 dat/scripts/vntk.lua:74 src/dialogue.c:381
 msgid "Yes"
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:76
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:156
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:166
-#: dat/scripts/luatk/core.lua:480 dat/scripts/vntk.lua:75 src/dialogue.c:382
+#: dat/scripts/luatk/core.lua:480 dat/scripts/vntk.lua:75 src/dialogue.c:383
 msgid "No"
 msgstr ""
 
@@ -44544,7 +44641,7 @@ msgstr ""
 #: dat/missions/pirate/pir_clan_cargo.lua:77
 #: dat/missions/pirate/pir_clan_cargo.lua:78
 #: dat/missions/trader/anxiousmerchant.lua:72
-#: dat/missions/zalek/zlk_cargorun.lua:51 src/land.c:989
+#: dat/missions/zalek/zlk_cargorun.lua:51 src/land.c:972
 msgid "Spaceport Bar"
 msgstr ""
 
@@ -48246,7 +48343,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:199 dat/missions/zalek/zlk_test.lua:110
-#: src/land.c:679 src/npc.c:586
+#: src/land.c:662 src/npc.c:586
 msgid "You have too many active missions."
 msgstr ""
 
@@ -48430,7 +48527,7 @@ msgstr ""
 
 #. Reset state on load if player got killed when trying to flee
 #. Pink :D
-#: dat/missions/minerva/kex2.lua:94 dat/scripts/common/minerva.lua:39
+#: dat/missions/minerva/kex2.lua:94 dat/scripts/common/minerva.lua:38
 msgid "Terminal"
 msgstr ""
 
@@ -50562,7 +50659,7 @@ msgstr ""
 #. --
 #. -- Some dates for lore purposes:
 #. --  591ish - maikki is born
-#. --  593:3726.4663 - the incident
+#. --  593:3726.4663 - the Incident
 #. --  596ish - Kex disappears (maikki is 8ish)
 #. --  598ish - Kex is found
 #. --  603ish - game start (~15 years after incident, maikki is 18ish)
@@ -50596,7 +50693,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:101 dat/missions/minerva/maikki2.lua:151
 #: dat/missions/minerva/maikki2.lua:557 dat/missions/minerva/maikki2.lua:702
 #: dat/missions/minerva/maikki2.lua:806 dat/missions/minerva/maikki2.lua:870
-#: dat/scripts/common/minerva.lua:105
+#: dat/scripts/common/minerva.lua:104
 msgid "Finding Maikki's Father"
 msgstr ""
 
@@ -51772,7 +51869,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:243
 msgid ""
 "\"The researchers I told you about were involved in some sort of project "
-"trying to find out the origins of the incident by analyzing artefacts taken "
+"trying to find out the origins of the Incident by analyzing artefacts taken "
 "from the nebula. Most of it is classified so I wasn't able to get much "
 "information.\""
 msgstr ""
@@ -51804,7 +51901,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:253
 msgid ""
 "Her eyes light up.\n"
-"\"Did you know that while scavenging near the incident, an asteroid hit his "
+"\"Did you know that while scavenging near the Incident, an asteroid hit his "
 "thrusters making them point the wrong way and he had to fly backwards "
 "through five systems in the nebula while chased by pirates? Sounds crazy!\""
 msgstr ""
@@ -51812,7 +51909,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:255
 msgid ""
 "\"They say he was also the first pilot to chart all the systems in the "
-"Nebula after the incident. Not even getting his leg crushed while recovering "
+"Nebula after the Incident. Not even getting his leg crushed while recovering "
 "parts of the last emperor's flagship stopped him from going back and back to "
 "the nebula.\""
 msgstr ""
@@ -52033,7 +52130,7 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:404
 msgid ""
 "\"I was part of a really ambitious project to try to track down the origin "
-"of the incident, which just end up being a bureaucratic nightmare.\""
+"of the Incident, which just end up being a bureaucratic nightmare.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:405
@@ -52660,7 +52757,7 @@ msgstr ""
 msgid ""
 "\"Ah yes, the nebula. The pinnacle of human creation! Isn't it just "
 "mesmerizing and beautiful to look at? I've always been attracted to it ever "
-"since the incident destroyed my university. Destruction is so pretty, is it "
+"since the Incident destroyed my university. Destruction is so pretty, is it "
 "not?\""
 msgstr ""
 
@@ -53723,8 +53820,8 @@ msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:414
 msgid ""
-"\"Actually, swimming in a chicken sounds like a bit of a drag. I think I "
-"might be allergic them anyway.\"\n"
+"\"Actually, swimming with a chicken sounds like a bit of a drag. I think I "
+"might be allergic to them anyway.\"\n"
 "He coughs nervously."
 msgstr ""
 
@@ -53859,8 +53956,8 @@ msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:545 dat/missions/minerva/pirate3.lua:557
 msgid ""
-"\"Actually, swimming in a chicken sounds like a bit of a drag. I think I "
-"might be allergic them anyway.\""
+"\"Actually, swimming with a chicken sounds like a bit of a drag. I think I "
+"might be allergic to them anyway.\""
 msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:564
@@ -54130,7 +54227,7 @@ msgid ""
 "\""
 msgstr ""
 
-#: dat/missions/minerva/pirate4.lua:244 dat/scripts/common/minerva.lua:53
+#: dat/missions/minerva/pirate4.lua:244 dat/scripts/common/minerva.lua:52
 msgid "Zuri"
 msgstr ""
 
@@ -54820,7 +54917,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant08.lua:42
 #: dat/missions/neutral/antlejos/ant09.lua:43
 #: dat/missions/neutral/antlejos/ant10.lua:32
-#: dat/scripts/common/antlejos.lua:14
+#: dat/scripts/common/antlejos.lua:13
 msgid "Verner"
 msgstr ""
 
@@ -54857,7 +54954,7 @@ msgstr ""
 
 #. Not accepted
 #: dat/missions/neutral/antlejos/ant01.lua:81
-#: dat/missions/zalek/zlk_cargorun.lua:93 src/land.c:1010
+#: dat/missions/zalek/zlk_cargorun.lua:93 src/land.c:993
 msgid "Equipment"
 msgstr ""
 
@@ -55681,7 +55778,7 @@ msgstr ""
 #. Say some protest slogan
 #. Protest again
 #: dat/missions/neutral/antlejos/ant07.lua:124
-#: dat/missions/neutral/antlejos/ant08.lua:206
+#: dat/missions/neutral/antlejos/ant08.lua:207
 msgid "PUAAA Protestor"
 msgstr ""
 
@@ -55754,50 +55851,50 @@ msgstr ""
 
 #. Advance mission
 #. Don't give any weapons
-#: dat/missions/neutral/antlejos/ant08.lua:125
+#: dat/missions/neutral/antlejos/ant08.lua:126
 msgid ""
 "You land and are met with an awe-struck Verner, who seems earnestly "
 "impressive by the massive GE Talpini that dwarfs most of the spaceport."
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant08.lua:126
+#: dat/missions/neutral/antlejos/ant08.lua:127
 msgid ""
 "\"Damn, look at all those drills! It's much more impressive in person that "
 "what you see on the holograms. This should make the core mining look like "
-"child's play! Thansk a bunch for bringing it over here in one piece.\""
+"child's play! Thanks a bunch for bringing it over here in one piece.\""
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant08.lua:127
+#: dat/missions/neutral/antlejos/ant08.lua:128
 msgid ""
 "\"Oh, by the way, in one of our routine patrols around the system, we "
-"recently found a really curious pecularity. It seems like there is a very "
+"recently found a really curious peculiarity. It seems like there is a very "
 "faint jump lane leading out of Antlejos. It doesn't seem like it goes "
 "anywhere really interesting, but you might want to take a look. I've updated "
 "your system navigation so you should be able to use it now.\""
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant08.lua:128
+#: dat/missions/neutral/antlejos/ant08.lua:129
 msgid ""
 "\"If you're still interested, we still need all the help we can get with "
 "terraforming. There are still a lot of tasks to do!\""
 msgstr ""
 
 #. Done
-#: dat/missions/neutral/antlejos/ant08.lua:138
+#: dat/missions/neutral/antlejos/ant08.lua:139
 msgid ""
 "You helped escort the core mining ship GE Talpini to Antlejos V to continue "
 "the terraforming efforts."
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant08.lua:149
+#: dat/missions/neutral/antlejos/ant08.lua:150
 msgid "GE Talpini"
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant08.lua:155
+#: dat/missions/neutral/antlejos/ant08.lua:156
 msgid "I'm counting on you on the way to {pnt}!"
 msgstr ""
 
-#: dat/missions/neutral/antlejos/ant08.lua:173
+#: dat/missions/neutral/antlejos/ant08.lua:174
 #, fuzzy
 #| msgid "Vessel under attack! Requesting help!"
 msgid "Under attack! Support requested!"
@@ -55859,7 +55956,7 @@ msgid ""
 "particular, I believe it's the notorious '{shipname}', which is well-known "
 "for having stopped the terraforming of Em 2. Normally, we wouldn't have much "
 "of a chance against the {shipname}, but in a stroke of luck, it seems like "
-"they've had some trouble and they're not stuck offline in {sys}, meaning "
+"they've had some trouble and they're now stuck offline in {sys}, meaning "
 "it's the perfect time to take it down once and for all.\""
 msgstr ""
 
@@ -56146,7 +56243,7 @@ msgid ""
 "\"Thank you everyone for coming. It's been a long journey that has led us up "
 "to this moment. I used to have a place that I could call home, but that was "
 "lost, like a great many other things in that fateful day when everything "
-"went to shit. The incident took a great many things from me, and I thought I "
+"went to shit. The Incident took a great many things from me, and I thought I "
 "would never be complete again: just a husk of a human doomed to venture "
 "space until their demise. For many periods, that is all I knew. I know I am "
 "not alone. Many of you were just like me. Lost souls.\""
@@ -71212,7 +71309,7 @@ msgstr ""
 #. Mark os completed
 #. Knight Rider
 #: dat/missions/tutorial/tutorial.lua:40 dat/missions/tutorial/tutorial.lua:141
-#: dat/scripts/common/tutorial.lua:46
+#: dat/scripts/common/tutorial.lua:45
 msgid "Tutorial"
 msgstr ""
 
@@ -72928,7 +73025,7 @@ msgstr "Pro impérium nejsi žádná výzva!"
 #: dat/missions/zalek/blackhole/zbh05.lua:179
 #: dat/missions/zalek/blackhole/zbh09.lua:243
 #: dat/missions/zalek/blackhole/zbh10.lua:282
-#: dat/scripts/common/zalek_blackhole.lua:104
+#: dat/scripts/common/zalek_blackhole.lua:103
 msgid "Feral Bioship"
 msgstr ""
 
@@ -76012,7 +76109,7 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp05.lua:83
 #: dat/missions/zalek/particlephysics/zpp06.lua:75
 #: dat/missions/zalek/particlephysics/zpp06.lua:81
-#: dat/scripts/common/zalek_physics.lua:33
+#: dat/scripts/common/zalek_physics.lua:32
 msgid "Particle Physics"
 msgstr ""
 
@@ -76207,7 +76304,7 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp05.lua:321
 #: dat/missions/zalek/particlephysics/zpp05.lua:325
 #: dat/missions/zalek/particlephysics/zpp06.lua:37
-#: dat/scripts/common/zalek_physics.lua:18
+#: dat/scripts/common/zalek_physics.lua:17
 msgid "Noona"
 msgstr ""
 
@@ -76823,7 +76920,7 @@ msgid "Come back to Katar I."
 msgstr "Stanice Cantina"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:47
-msgid "You meet Noona who seems to be a bit more calm than usually."
+msgid "You meet Noona who seems to be a bit more calm than usual."
 msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:48
@@ -76944,7 +77041,7 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp06.lua:115
 msgid ""
 "You read the letter:\n"
-"   Thanks for all your help at Katar I. By now you've probably realized I "
+"   Thanks for all your help at Katar I. By now you've probably realized I am "
 "not just a researcher, but have been bestowed the curse of being the Za'lek "
 "chairwoman. Not often do I get to get away from everything and focus on my "
 "research. I have attached a credstick as a reward, and have given you "
@@ -76955,7 +77052,7 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp06.lua:118
 msgid ""
 "You read the letter:\n"
-"   Thanks for all your help at Katar I. By now you've probably realized I "
+"   Thanks for all your help at Katar I. By now you've probably realized am I "
 "not just a researcher, but have been bestowed the curse of being the Za'lek "
 "chairwoman. Not often do I get to get away from everything and focus on my "
 "research. I have attached a credstick as a reward. Your help was invaluable "
@@ -78140,8 +78237,8 @@ msgstr ""
 #. Reset current standing
 #: dat/outfits/unique/fake_transponder.lua:46
 msgid ""
-"#rYour fake transponder has been discovered and is useless until you change "
-"systems, land, or cooldown!#0"
+"Your fake transponder has been discovered and is useless until you change "
+"systems, land, or cooldown!"
 msgstr ""
 
 #. armour shield damage to turn off at
@@ -78807,7 +78904,7 @@ msgstr ""
 #. --
 #. Add the OK button
 #: dat/scripts/bioship.lua:577 dat/scripts/luatk/core.lua:464
-#: src/dialogue.c:151 src/dialogue.c:273 src/dialogue.c:329 src/dialogue.c:720
+#: src/dialogue.c:152 src/dialogue.c:274 src/dialogue.c:330 src/dialogue.c:721
 #: src/options.c:263 src/options.c:592 src/options.c:901 src/options.c:1215
 msgid "OK"
 msgstr ""
@@ -78929,29 +79026,29 @@ msgstr ""
 #. For everyone
 #. Needs bite slot
 #. name = _("Cannibalism I"),
-#: dat/scripts/bioship/skills.lua:15
+#: dat/scripts/bioship/skills.lua:14
 msgid "Cannibal I"
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:18
+#: dat/scripts/bioship/skills.lua:17
 msgid ""
 "The ship is able to cannibalize boarded vessels to restore armour. For every "
 "2 points of armour cannibalized, the ship will gain a single point of armour."
 msgstr ""
 
 #. name = _("Cannibalism II"),
-#: dat/scripts/bioship/skills.lua:23
+#: dat/scripts/bioship/skills.lua:22
 msgid "Cannibal II"
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:27
+#: dat/scripts/bioship/skills.lua:26
 msgid ""
 "Cannibalizing boarded ships will now restore 2 points of armour per 3 points "
 "of armour cannibalized, and boarding will cause your ship to perform a full "
 "cooldown cycle."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:38
+#: dat/scripts/bioship/skills.lua:37
 msgid ""
 "The ship will lunge at the target enemy and take a huge bite out of it. "
 "+800% thrust and +30% absorb for 3 seconds or until target ship is bitten. "
@@ -78959,173 +79056,173 @@ msgid ""
 "cooldown period."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:46
+#: dat/scripts/bioship/skills.lua:45
 msgid ""
 "Lunge time increased to 5 seconds. On successful bite, weapon damage is "
 "increased by 25% for 10 seconds."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:52
+#: dat/scripts/bioship/skills.lua:51
 msgid "Strong Jaws"
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:55
+#: dat/scripts/bioship/skills.lua:54
 msgid ""
 "Bite damage increased by 50%, and 25% of bitten armour is restored to the "
 "ship."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:71
+#: dat/scripts/bioship/skills.lua:70
 msgid ""
 "The ship is able to generate an overflow of adrenaline from energy, allowing "
 "for accelerated motion for a short time."
 msgstr ""
 
 #. if luatk.yesno( _("Remove Afterburner?"), _("Your ship already has an afterburner. Remove to learn the new skill?")A)
-#: dat/scripts/bioship/skills.lua:76 src/outfit.c:853 src/outfit.c:880
+#: dat/scripts/bioship/skills.lua:75 src/outfit.c:853 src/outfit.c:880
 msgid "Afterburner"
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:76
+#: dat/scripts/bioship/skills.lua:75
 msgid ""
 "Your ship already has an afterburner equipped! Please remove to be able to "
 "learn this skill."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:91
+#: dat/scripts/bioship/skills.lua:90
 msgid ""
 "The adrenal gland is improved to both last longer and have a stronger "
 "effect, although at the cost of more energy usage."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:98
+#: dat/scripts/bioship/skills.lua:97
 msgid "Gives a 50% thrust bonus."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:109
+#: dat/scripts/bioship/skills.lua:108
 msgid ""
 "The intense adrenaline is also able to create an accelerated sense of time."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:121
+#: dat/scripts/bioship/skills.lua:120
 msgid "Gives a +15% detection bonus."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:129
+#: dat/scripts/bioship/skills.lua:128
 msgid "Gives a +40% speed bonus when stealthed."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:137
+#: dat/scripts/bioship/skills.lua:136
 msgid "+50% damage with weapons for 10 seconds after destealthing."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:145
+#: dat/scripts/bioship/skills.lua:144
 msgid "Gives a 15% bonus to stealth."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:158
+#: dat/scripts/bioship/skills.lua:157
 msgid "Provides an additional 50 armour and 20% armour bonus."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:166
+#: dat/scripts/bioship/skills.lua:165
 msgid "Gives 5 armour regeneration."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:174
+#: dat/scripts/bioship/skills.lua:173
 msgid "Gives a 10% absorption bonus."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:182
+#: dat/scripts/bioship/skills.lua:181
 msgid "Gives 5 additional armour regeneration."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:187
+#: dat/scripts/bioship/skills.lua:186
 msgid "Reflective Shell"
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:190
+#: dat/scripts/bioship/skills.lua:189
 msgid "TODO damage reflection?"
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:205
+#: dat/scripts/bioship/skills.lua:204
 msgid ""
 "Upon receiving armour damage, the bioship enters a short 5 second trance "
 "during which forward and turret weapon damage is increased by 20%."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:212
+#: dat/scripts/bioship/skills.lua:211
 msgid "Gives a 8% bonus to both turret and forward weapon fire rate."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:222
+#: dat/scripts/bioship/skills.lua:221
 msgid ""
 "The damage bonus is increased to 25% and the ship gains 25% speed and thrust "
 "bonuses, and a 15% turning bonus."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:226
+#: dat/scripts/bioship/skills.lua:225
 msgid "Antenna Sensitivity"
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:229
+#: dat/scripts/bioship/skills.lua:228
 msgid "Gives a 30% tracking bonus."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:239
+#: dat/scripts/bioship/skills.lua:238
 msgid ""
 "The state of feral rage duration is increased to 7 seconds with a 30% damage "
 "bonus, and can be triggered manually with a 30 second cooldown.."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:252
+#: dat/scripts/bioship/skills.lua:251
 msgid "Plasma burn duration increased by 50%."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:260
+#: dat/scripts/bioship/skills.lua:259
 msgid "Plasma burn slows enemy speed, thrust, and turn by 25%."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:268
+#: dat/scripts/bioship/skills.lua:267
 msgid "Plasma burn slows enemy fire rate by 20%."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:276
+#: dat/scripts/bioship/skills.lua:275
 msgid "Plasma burn duration further increased by 50%."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:280
+#: dat/scripts/bioship/skills.lua:279
 msgid "Plasma Burst"
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:283
+#: dat/scripts/bioship/skills.lua:282
 msgid "creates an explosion of plasma affecting all ships around the pilot"
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:296
+#: dat/scripts/bioship/skills.lua:295
 msgid "Increases cargo space by 100% and lowers cargo inertia by 50%."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:304
+#: dat/scripts/bioship/skills.lua:303
 msgid "Increases fuel capacity by 100%."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:312
+#: dat/scripts/bioship/skills.lua:311
 msgid ""
 "Decreases jumping time by 50%, increases jump detection by 50%, and allowed "
 "jump distance by 100%."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:320
+#: dat/scripts/bioship/skills.lua:319
 msgid "Increases boarding loot bonus by 100%."
 msgstr ""
 
-#: dat/scripts/bioship/skills.lua:328
+#: dat/scripts/bioship/skills.lua:327
 msgid ""
 "Allows for instant jumping and the ship performs an active cooldown cycle on "
 "each jump."
 msgstr ""
 
-#: dat/scripts/common/antlejos.lua:16
+#: dat/scripts/common/antlejos.lua:15
 msgid ""
 "Verner seems to be taking a break from all the terraforming and relaxing at "
 "the new spaceport bar."
@@ -79134,33 +79231,33 @@ msgstr ""
 #.
 #. Gets the Pilots United Against Atmosphere Anthropocentrism (PUAAA) faction or creates it if necessary
 #. --
-#: dat/scripts/common/antlejos.lua:80
+#: dat/scripts/common/antlejos.lua:79
 msgid "PUAAA"
 msgstr ""
 
-#: dat/scripts/common/antlejos.lua:84
+#: dat/scripts/common/antlejos.lua:83
 msgid "No to terraforming!"
 msgstr ""
 
-#: dat/scripts/common/antlejos.lua:85
+#: dat/scripts/common/antlejos.lua:84
 #, fuzzy
 #| msgid "\"Just leave me alone!\""
 msgid "Leave the planets alone!"
 msgstr "\"Nech mě prostě na pokoji!\""
 
-#: dat/scripts/common/antlejos.lua:86
+#: dat/scripts/common/antlejos.lua:85
 msgid "The Universe is beautiful as it is!"
 msgstr ""
 
-#: dat/scripts/common/antlejos.lua:87
+#: dat/scripts/common/antlejos.lua:86
 msgid "No modifying atmospheres!"
 msgstr ""
 
-#: dat/scripts/common/antlejos.lua:88
+#: dat/scripts/common/antlejos.lua:87
 msgid "Keep our planets safe!"
 msgstr ""
 
-#: dat/scripts/common/antlejos.lua:89
+#: dat/scripts/common/antlejos.lua:88
 msgid "No to destroying planets!"
 msgstr ""
 
@@ -79273,18 +79370,18 @@ msgstr ""
 #.
 #. -- Helper stuff for the Crimson Gauntlet
 #. --
-#: dat/scripts/common/gauntlet.lua:11
+#: dat/scripts/common/gauntlet.lua:9
 msgid "Crimson Gauntlet Guide"
 msgstr ""
 
-#: dat/scripts/common/gauntlet.lua:14
+#: dat/scripts/common/gauntlet.lua:12
 msgid "Information on the Crimson Gauntlet."
 msgstr ""
 
 #. Helpers to create main characters
 #. Emblem stuff
 #. Store lifetime earnings
-#: dat/scripts/common/gauntlet.lua:47
+#: dat/scripts/common/gauntlet.lua:45
 #, lua-format
 msgid "#r%s Crimson Emblems#0"
 msgid_plural "#r%s Crimson Emblems#0"
@@ -79292,83 +79389,83 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: dat/scripts/common/minerva.lua:19
+#: dat/scripts/common/minerva.lua:18
 msgid "You see Kex taking a break at his favourite spot at Minerva station."
 msgstr ""
 
 #. Orangish
-#: dat/scripts/common/minerva.lua:25
+#: dat/scripts/common/minerva.lua:24
 msgid "Maikki"
 msgstr ""
 
-#: dat/scripts/common/minerva.lua:26
+#: dat/scripts/common/minerva.lua:25
 msgid ""
 "You see a very cutely dressed young woman. She seems to have a worried "
 "expression on her face."
 msgstr ""
 
 #. Pink :D
-#: dat/scripts/common/minerva.lua:32
+#: dat/scripts/common/minerva.lua:31
 msgid "Pirate Lord Maikki"
 msgstr ""
 
-#: dat/scripts/common/minerva.lua:40
+#: dat/scripts/common/minerva.lua:39
 msgid ""
 "A terminal with which you can check your current token balance and buy items "
 "with tokens."
 msgstr ""
 
-#: dat/scripts/common/minerva.lua:46
+#: dat/scripts/common/minerva.lua:45
 msgid "Sketchy Individual"
 msgstr ""
 
-#: dat/scripts/common/minerva.lua:48
+#: dat/scripts/common/minerva.lua:47
 msgid ""
 "You see a sketchy-looking individual, they seem to have their gaze on you."
 msgstr ""
 
-#: dat/scripts/common/minerva.lua:55
+#: dat/scripts/common/minerva.lua:54
 msgid "You see Zuri who seems to be motioning for you to come."
 msgstr ""
 
 #. Secondary characters
-#: dat/scripts/common/minerva.lua:61
+#: dat/scripts/common/minerva.lua:60
 msgid "Dr. Strangelove"
 msgstr ""
 
 #. Purplish (close to nebula?)
-#: dat/scripts/common/minerva.lua:67
+#: dat/scripts/common/minerva.lua:66
 msgid "Minerva CEO"
 msgstr ""
 
-#: dat/scripts/common/minerva.lua:70
+#: dat/scripts/common/minerva.lua:69
 #, fuzzy
 #| msgid "Cantina Station"
 msgid "The CEO of Minerva Station."
 msgstr "Stanice Cantina"
 
-#: dat/scripts/common/minerva.lua:74
+#: dat/scripts/common/minerva.lua:73
 msgid "Mole"
 msgstr ""
 
-#: dat/scripts/common/minerva.lua:80
+#: dat/scripts/common/minerva.lua:79
 msgid "Scavenger A"
 msgstr ""
 
-#: dat/scripts/common/minerva.lua:86
+#: dat/scripts/common/minerva.lua:85
 msgid "Scavenger B"
 msgstr ""
 
-#: dat/scripts/common/minerva.lua:92
+#: dat/scripts/common/minerva.lua:91
 msgid "Scavengers"
 msgstr ""
 
-#: dat/scripts/common/minerva.lua:95
+#: dat/scripts/common/minerva.lua:94
 msgid ""
 "You see a pair of dirty looking fellows talking loudly among themselves."
 msgstr ""
 
-#: dat/scripts/common/minerva.lua:109
+#: dat/scripts/common/minerva.lua:108
 msgid "Shady Jobs at Minerva"
 msgstr ""
 
@@ -79399,7 +79496,7 @@ msgstr ""
 #. @brief Adds miscellaneous pirate log entry.
 #. --
 #. Function for adding log entries for miscellaneous one-off missions.
-#: dat/scripts/common/minerva.lua:113 dat/scripts/common/neutral.lua:10
+#: dat/scripts/common/minerva.lua:112 dat/scripts/common/neutral.lua:10
 #: dat/scripts/common/pirate.lua:65 dat/scripts/common/zalek.lua:17
 msgid "Miscellaneous"
 msgstr ""
@@ -79421,7 +79518,7 @@ msgstr ""
 #. Token stuff
 #. Roughly 1 token is 1000 credits
 #. Store lifetime earnings
-#: dat/scripts/common/minerva.lua:235
+#: dat/scripts/common/minerva.lua:234
 #, lua-format
 msgid "#p%s Minerva Token#0"
 msgid_plural "#p%s Minerva Tokens#0"
@@ -79541,44 +79638,44 @@ msgstr ""
 #.
 #. --
 #. Use default
-#: dat/scripts/common/tut_nelly.lua:14 dat/scripts/common/tut_nelly.lua:28
+#: dat/scripts/common/tut_nelly.lua:13 dat/scripts/common/tut_nelly.lua:27
 msgid "Nelly"
 msgstr ""
 
-#: dat/scripts/common/tutorial.lua:22
+#: dat/scripts/common/tutorial.lua:21
 msgid "\"I can't let you do that, Dave. …Wait, what was that?\""
 msgstr ""
 
 #. 2001 Space Odyssey
-#: dat/scripts/common/tutorial.lua:23
+#: dat/scripts/common/tutorial.lua:22
 msgid ""
 "\"I'm here to keep you safe, Sam. I want to help you. Are you hungry? …Wait, "
 "what was that?\""
 msgstr ""
 
 #. Moon
-#: dat/scripts/common/tutorial.lua:24
+#: dat/scripts/common/tutorial.lua:23
 msgid ""
 "\"Patience, Sam Flynn. All of your questions will be answered soon. …Wait, "
 "what was that?\""
 msgstr ""
 
 #. Tron (Legacy)
-#: dat/scripts/common/tutorial.lua:25
+#: dat/scripts/common/tutorial.lua:24
 msgid ""
 "\"I could be chasing an untamed ornithoid without cause. …Wait, what was "
 "that?\""
 msgstr ""
 
 #. Star Trek
-#: dat/scripts/common/tutorial.lua:26
+#: dat/scripts/common/tutorial.lua:25
 msgid ""
 "\"For your convenience I am programmed to respond to the name Robby. …Wait, "
 "what was that?\""
 msgstr ""
 
 #. Forbidden Planet
-#: dat/scripts/common/tutorial.lua:27
+#: dat/scripts/common/tutorial.lua:26
 msgid ""
 "\"Who is the living food for the machines in Metropolis? Who lubricates the "
 "machine joints with their own blood? Who feeds the machines with their own "
@@ -79587,7 +79684,7 @@ msgid ""
 msgstr ""
 
 #. Metropolis
-#: dat/scripts/common/tutorial.lua:28
+#: dat/scripts/common/tutorial.lua:27
 msgid ""
 "\"Please Michael, I'm the Knight Industries 2000, not a tomato on wheels!” …"
 "Wait, what was that?\""
@@ -79611,19 +79708,19 @@ msgstr ""
 msgid "Nebula Research"
 msgstr ""
 
-#: dat/scripts/common/zalek_blackhole.lua:25
+#: dat/scripts/common/zalek_blackhole.lua:24
 msgid ""
 "Zach looks like he is idle at the bar. You wonder what he's thinking about."
 msgstr ""
 
 #. TODO change image to proper one when Nohinohi graphics are changed
-#: dat/scripts/common/zalek_blackhole.lua:37
+#: dat/scripts/common/zalek_blackhole.lua:36
 #, fuzzy
 #| msgid "Za'lek trash!"
 msgid "Za'lek PI"
 msgstr "Za'lekský odpad!"
 
-#: dat/scripts/common/zalek_blackhole.lua:66
+#: dat/scripts/common/zalek_blackhole.lua:65
 #: dat/scripts/pilotname/generic.lua:12 dat/scripts/pilotname/pirate.lua:246
 msgid "Black Hole"
 msgstr ""
@@ -79631,11 +79728,11 @@ msgstr ""
 #.
 #. Evil Principal Investigator (PI) Faction
 #. --
-#: dat/scripts/common/zalek_blackhole.lua:84
+#: dat/scripts/common/zalek_blackhole.lua:83
 msgid "Evil PI"
 msgstr ""
 
-#: dat/scripts/common/zalek_physics.lua:21
+#: dat/scripts/common/zalek_physics.lua:20
 msgid "You see Noona who looks like she might have a job for you."
 msgstr ""
 
@@ -81014,24 +81111,6 @@ msgid "failed to set fallback font"
 msgstr ""
 
 #. Transparent background in Naev
-#. --
-#. Small helper for merging different tables.
-#. @module merge_tables
-#. --
-#. --
-#. Merges src table into dest. Does not recurse into subtables.
-#.
-#. @tparam table dest Destination table. Must not be nil.
-#. @tparam[opt={}] table src Source table to be merged into dest.
-#. @treturn table Returns dest.
-#. --
-#. --
-#. Merges src table into dest recursively.
-#.
-#. @tparam table dest Destination table. Must not be nil.
-#. @tparam[opt={}] table src Source table to be merged into dest.
-#. @treturn table Returns dest.
-#. --
 #. too lazy to write blackjack over and over
 #. Compute position stuff
 #: dat/scripts/minigames/blackjack.lua:26
@@ -81425,7 +81504,7 @@ msgid "Dart"
 msgstr ""
 
 #: dat/scripts/pilotname/generic.lua:26 dat/scripts/pilotname/pirate.lua:283
-#: src/menu.c:542
+#: src/menu.c:550
 msgid "Death"
 msgstr ""
 
@@ -84112,7 +84191,7 @@ msgstr ""
 msgid "#nText Speed#0: {val:.3f} seconds per character"
 msgstr ""
 
-#: dat/scripts/vn/options.lua:46 src/dialogue.c:486
+#: dat/scripts/vn/options.lua:46 src/dialogue.c:487
 msgid "Done"
 msgstr ""
 
@@ -84268,7 +84347,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/ai.c:600 src/board.c:77 src/comm.c:171 src/land.c:1569 src/naev.c:521
+#: src/ai.c:600 src/board.c:77 src/comm.c:172 src/land.c:1559 src/naev.c:521
 #: src/player.c:3479
 #, c-format
 msgid ""
@@ -84512,35 +84591,35 @@ msgid "#%c%s#r does not respond"
 msgstr ""
 
 #. error has occurred
-#: src/comm.c:185
+#: src/comm.c:186
 #, c-format
 msgid "Comm: '%s'"
 msgstr ""
 
-#: src/comm.c:211
+#: src/comm.c:212
 #, c-format
 msgid "%s does not respond."
 msgstr ""
 
-#: src/comm.c:224
+#: src/comm.c:225
 msgid "Bribe"
 msgstr ""
 
 #. Create the window.
-#: src/comm.c:302
+#: src/comm.c:303
 msgid "Communication Channel"
 msgstr ""
 
 #. Yes/No input.
-#: src/comm.c:380 src/comm.c:385 src/comm.c:389 src/comm.c:395 src/comm.c:401
+#: src/comm.c:381 src/comm.c:386 src/comm.c:390 src/comm.c:396 src/comm.c:402
 msgid "Bribe Starport"
 msgstr ""
 
-#: src/comm.c:395
+#: src/comm.c:396
 msgid "You don't have enough credits for the bribery."
 msgstr ""
 
-#: src/comm.c:401
+#: src/comm.c:402
 msgid "You have permission to dock."
 msgstr ""
 
@@ -85366,7 +85445,7 @@ msgstr ""
 msgid "Invalid vertex type."
 msgstr ""
 
-#: src/dev_sysedit.c:694 src/map.c:812
+#: src/dev_sysedit.c:694 src/map.c:855
 msgid "Asteroid Field"
 msgstr ""
 
@@ -85391,7 +85470,7 @@ msgstr ""
 msgid "Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1262 src/land.c:1296 src/map.c:306
+#: src/dev_sysedit.c:1262 src/land.c:1286 src/map.c:337
 msgid "Faction:"
 msgstr ""
 
@@ -85423,7 +85502,7 @@ msgstr ""
 msgid "hide"
 msgstr ""
 
-#: src/dev_sysedit.c:1332 src/land.c:1301
+#: src/dev_sysedit.c:1332 src/land.c:1291
 msgid "Tags:"
 msgstr ""
 
@@ -85553,7 +85632,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/dev_uniedit.c:232 src/map.c:345 src/map_find.c:1014
+#: src/dev_uniedit.c:232 src/map.c:377 src/map_find.c:1014
 msgid "Find"
 msgstr ""
 
@@ -85561,7 +85640,7 @@ msgstr ""
 msgid "Nebula:"
 msgstr ""
 
-#: src/dev_uniedit.c:247 src/map.c:320
+#: src/dev_uniedit.c:247 src/map.c:351
 msgid "Presence:"
 msgstr ""
 
@@ -85676,7 +85755,7 @@ msgstr ""
 msgid "Find Systems and Spobs"
 msgstr ""
 
-#: src/dev_uniedit.c:1524 src/land.c:868
+#: src/dev_uniedit.c:1524 src/land.c:851
 #, c-format
 msgid "%s (%s system)"
 msgstr ""
@@ -85746,15 +85825,15 @@ msgid "Failed to add virtual spob '%s'!"
 msgstr ""
 
 #. create the window
-#: src/dialogue.c:147 src/options.c:167
+#: src/dialogue.c:148 src/options.c:167
 msgid "Warning"
 msgstr ""
 
-#: src/dialogue.c:410
+#: src/dialogue.c:411
 msgid "Unknown button clicked in YesNo dialogue!"
 msgstr ""
 
-#: src/dialogue.c:496
+#: src/dialogue.c:497
 #, c-format
 msgid "Input must be at least %d character long!"
 msgid_plural "Input must be at least %d characters long!"
@@ -85762,7 +85841,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/dialogue.c:1045
+#: src/dialogue.c:1050
 msgid "Dialogue counter not in sync!"
 msgstr ""
 
@@ -85812,7 +85891,7 @@ msgstr ""
 msgid "Spob '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
-#: src/effect.c:47 src/outfit.c:2120 src/outfit.c:2577 src/slots.c:66
+#: src/effect.c:47 src/outfit.c:2131 src/outfit.c:2588 src/slots.c:66
 #: src/space.c:3508 src/spfx.c:1169 src/start.c:71
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
@@ -85854,7 +85933,7 @@ msgstr[2] ""
 msgid "Trying to get unknown effect data '%s'!"
 msgstr ""
 
-#: src/equipment.c:323 src/land.c:316 src/land.c:586 src/land.c:1314
+#: src/equipment.c:323 src/land.c:315 src/land.c:582 src/land.c:1304
 #: src/land_outfits.c:160 src/land_shipyard.c:92 src/land_trade.c:71
 msgid "Take Off"
 msgstr ""
@@ -85975,7 +86054,7 @@ msgstr ""
 msgid "Model:"
 msgstr ""
 
-#: src/equipment.c:1722 src/info.c:571 src/land.c:1295 src/land_shipyard.c:224
+#: src/equipment.c:1722 src/info.c:571 src/land.c:1285 src/land_shipyard.c:224
 #: src/map_system.c:657
 msgid "Class:"
 msgstr ""
@@ -86209,15 +86288,15 @@ msgstr ""
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:2063 src/land.c:207
+#: src/equipment.c:2063 src/land.c:206
 msgid "Recall Fighters"
 msgstr ""
 
-#: src/equipment.c:2063 src/land.c:207
+#: src/equipment.c:2063 src/land.c:206
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:2138 src/land.c:1565
+#: src/equipment.c:2138 src/land.c:1555
 #, fuzzy, c-format
 #| msgid "Formation '%s' not found"
 msgid "File '%s' not found!"
@@ -86584,7 +86663,7 @@ msgstr ""
 msgid "Faction '%s' has no Lua and isn't static!"
 msgstr ""
 
-#: src/faction.c:1532 src/map.c:3018 src/outfit.c:1103 src/ship.c:532
+#: src/faction.c:1532 src/map.c:3090 src/outfit.c:1103 src/ship.c:532
 #: src/ship.c:1025 src/space.c:1860 src/space.c:1918 src/space.c:3608
 #: src/tech.c:113
 #, c-format
@@ -86798,7 +86877,7 @@ msgstr ""
 msgid "Cargo"
 msgstr ""
 
-#: src/info.c:61 src/land.c:994 src/space.c:174
+#: src/info.c:61 src/land.c:977 src/space.c:174
 msgid "Missions"
 msgstr ""
 
@@ -86818,7 +86897,7 @@ msgid ""
 msgstr ""
 
 #. Create the window.
-#: src/info.c:285 src/menu.c:425
+#: src/info.c:285 src/menu.c:433
 msgid "Info"
 msgstr ""
 
@@ -86826,7 +86905,7 @@ msgstr ""
 msgid "Date:"
 msgstr ""
 
-#: src/info.c:363 src/land.c:1299 src/land_outfits.c:194 src/land_outfits.c:425
+#: src/info.c:363 src/land.c:1289 src/land_outfits.c:194 src/land_outfits.c:425
 #: src/land_shipyard.c:300 src/land_trade.c:90 src/map_find.c:644
 msgid "Money:"
 msgstr ""
@@ -87029,7 +87108,7 @@ msgstr ""
 
 #. no missions
 #. Make sure you have missions.
-#: src/info.c:1258 src/land.c:672 src/land.c:744 src/land.c:779
+#: src/info.c:1258 src/land.c:655 src/land.c:727 src/land.c:762
 msgid "No Missions"
 msgstr ""
 
@@ -87399,8 +87478,7 @@ msgstr ""
 msgid "Cycles through jump points."
 msgstr ""
 
-#. create the window.
-#: src/input.c:95 src/map.c:264 src/outfit.c:855
+#: src/input.c:95 src/map.c:246 src/outfit.c:855
 msgid "Star Map"
 msgstr ""
 
@@ -87766,12 +87844,12 @@ msgid "Unable to initialize the joystick subsystem"
 msgstr ""
 
 #. Already onboard.
-#: src/land.c:194
+#: src/land.c:193
 #, c-format
 msgid "You're already onboard the %s."
 msgstr ""
 
-#: src/land.c:200
+#: src/land.c:199
 #, c-format
 msgid "You have %d tonne more cargo than the new ship can hold."
 msgid_plural "You have %d tonnes more cargo than the new ship can hold."
@@ -87779,41 +87857,41 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/land.c:208
+#: src/land.c:207
 msgid "You have deployed fighters."
 msgstr ""
 
-#: src/land.c:319
+#: src/land.c:318
 msgid "Approach"
 msgstr ""
 
-#: src/land.c:380 src/land.c:386
+#: src/land.c:379 src/land.c:385
 msgid "News"
 msgstr ""
 
-#: src/land.c:589 src/land.c:683
+#: src/land.c:585 src/land.c:666
 msgid "Accept Mission"
 msgstr ""
 
-#: src/land.c:592 src/map.c:348
+#: src/land.c:588 src/map.c:380
 msgid "Autonav"
 msgstr ""
 
-#: src/land.c:599
+#: src/land.c:595
 msgid ""
 "Date:\n"
 "Free Space:"
 msgstr ""
 
-#: src/land.c:607 src/land.c:780
+#: src/land.c:603 src/land.c:763
 msgid "#nReward:#0 None"
 msgstr ""
 
-#: src/land.c:684
+#: src/land.c:667
 msgid "Are you sure you want to accept this mission?"
 msgstr ""
 
-#: src/land.c:773
+#: src/land.c:756
 #, c-format
 msgid ""
 "%s\n"
@@ -87825,96 +87903,96 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/land.c:782
+#: src/land.c:765
 msgid "There are no missions available here."
 msgstr ""
 
-#: src/land.c:792
+#: src/land.c:775
 #, c-format
 msgid "#nReward:#0 %s"
 msgstr ""
 
-#: src/land.c:837 src/land.c:892
+#: src/land.c:820 src/land.c:875
 #, c-format
 msgid "Outfit '%s' does not exist!"
 msgstr ""
 
-#: src/land.c:870
+#: src/land.c:853
 #, c-format
 msgid "%s (%s-class)"
 msgstr ""
 
-#: src/land.c:874
+#: src/land.c:857
 #, c-format
 msgid "roughly %s"
 msgstr ""
 
-#: src/land.c:881 src/map.c:722 src/map.c:736 src/map.c:743 src/map.c:774
-#: src/map.c:796
+#: src/land.c:864 src/map.c:765 src/map.c:779 src/map.c:786 src/map.c:817
+#: src/map.c:839
 msgid ", "
 msgstr ""
 
-#: src/land.c:903
+#: src/land.c:886
 #, c-format
 msgid "Buy Local Map (%s)"
 msgstr ""
 
-#: src/land.c:985
+#: src/land.c:968
 msgid "Landing Main"
 msgstr ""
 
-#: src/land.c:999 src/map_find.c:1027 src/space.c:176
+#: src/land.c:982 src/map_find.c:1027 src/space.c:176
 msgid "Outfits"
 msgstr ""
 
-#: src/land.c:1004 src/space.c:177
+#: src/land.c:987 src/space.c:177
 msgid "Shipyard"
 msgstr ""
 
-#: src/land.c:1015 src/space.c:175
+#: src/land.c:998 src/space.c:175
 msgid "Commodity"
 msgstr ""
 
 #. Player stats.
-#: src/land.c:1294
+#: src/land.c:1284
 msgid "Stationed at:"
 msgstr ""
 
-#: src/land.c:1297
+#: src/land.c:1287
 msgid "Population:"
 msgstr ""
 
-#: src/land.c:1298 src/land_trade.c:89
+#: src/land.c:1288 src/land_trade.c:89
 msgid "Free Space:"
 msgstr ""
 
-#: src/land.c:1324
+#: src/land.c:1314
 msgid "No refueling services."
 msgstr ""
 
-#: src/land.c:1328
+#: src/land.c:1318
 msgid "Game will not be saved."
 msgstr ""
 
-#: src/land.c:1443
+#: src/land.c:1433
 msgid "Ship not fit for flight"
 msgstr ""
 
 #. Only save when the player shouldn't get stranded.
 #. must be before cleaning up spob
-#: src/land.c:1496
+#: src/land.c:1486
 msgid ""
 "Failed to save game! You should exit and check the log to see what happened "
 "and then file a bug report!"
 msgstr ""
 
-#: src/land.c:1505
+#: src/land.c:1495
 #, c-format
 msgid "#oTaking off from %s on %s."
 msgstr ""
 
 #. error has occurred
-#: src/land.c:1582
+#: src/land.c:1572
 #, c-format
 msgid "Rescue: 'rescue' : '%s'"
 msgstr ""
@@ -88158,7 +88236,7 @@ msgstr ""
 msgid "No commodities available."
 msgstr ""
 
-#: src/land_trade.c:180 src/land_trade.c:183
+#: src/land_trade.c:180 src/land_trade.c:183 src/map.c:1758 src/map.c:1829
 #, c-format
 msgid "%.1f ¤"
 msgstr ""
@@ -88194,7 +88272,7 @@ msgid "PhysicsFS: Cannot stat %s: %s"
 msgstr ""
 
 #. window
-#: src/load.c:337 src/menu.c:223
+#: src/load.c:337 src/menu.c:227
 msgid "Load Game"
 msgstr ""
 
@@ -88308,106 +88386,108 @@ msgstr "Neznámý node '%s' na Lua Var stacku!"
 msgid "Unknown var type '%s'"
 msgstr "Neznámý var typ '%s'"
 
-#: src/map.c:313
+#: src/map.c:344
 msgid "Standing:"
 msgstr "Reputace:"
 
-#: src/map.c:327
+#: src/map.c:358
 msgid "Space Objects:"
 msgstr ""
 
-#: src/map.c:334
+#: src/map.c:365
 msgid "Services:"
 msgstr ""
 
 #. Commodity button
-#: src/map.c:342
+#: src/map.c:374
 msgid "Mode"
 msgstr ""
 
 #. create the window.
-#: src/map.c:355 src/map_system.c:194
+#: src/map.c:387 src/map_system.c:193
 msgid "System Info"
 msgstr ""
 
-#: src/map.c:358
+#: src/map.c:390
 msgid "Toggle Note"
 msgstr ""
 
-#: src/map.c:493
+#: src/map.c:532
 #, c-format
 msgid ""
-"%s prices trading from %s shown: Positive/blue values mean a profit\n"
-"while negative/orange values mean a loss when sold at the corresponding "
-"system."
+"Showing %s prices relative to %s:\n"
+"Positive/blue indicate profit while negative/orange values indicate loss "
+"when sold at the corresponding system."
 msgstr ""
 
-#: src/map.c:498
+#: src/map.c:538
 #, c-format
-msgid "Known %s prices shown. Galaxy-wide average: %.2f"
+msgid ""
+"Showing known %s prices.\n"
+"Galaxy-wide average: %.2f"
 msgstr ""
 
-#: src/map.c:575
+#: src/map.c:615
 #, c-format
 msgid "Multiple"
 msgstr ""
 
-#: src/map.c:747
+#: src/map.c:790
 msgid "Dense "
 msgstr ""
 
-#: src/map.c:749
+#: src/map.c:792
 msgid "Light "
 msgstr ""
 
-#: src/map.c:757
+#: src/map.c:800
 #, c-format
 msgid "Volatile %sNebula (%.1f MW)"
 msgstr ""
 
-#: src/map.c:761
+#: src/map.c:804
 #, c-format
 msgid "Dangerous %sNebula (%.1f MW)"
 msgstr ""
 
-#: src/map.c:765
+#: src/map.c:808
 #, c-format
 msgid "Unstable %sNebula (%.1f MW)"
 msgstr ""
 
-#: src/map.c:768
+#: src/map.c:811
 #, c-format
 msgid "%sNebula"
 msgstr ""
 
-#: src/map.c:779
+#: src/map.c:822
 #, c-format
 msgid "Dense Interference (%.0f%%)"
 msgstr ""
 
-#: src/map.c:783
+#: src/map.c:826
 #, c-format
 msgid "Light Interference (%.0f%%)"
 msgstr ""
 
-#: src/map.c:787
+#: src/map.c:830
 #, c-format
 msgid "Interference (%.0f%%)"
 msgstr ""
 
-#: src/map.c:805
+#: src/map.c:848
 msgid "Dense Asteroid Field"
 msgstr ""
 
-#: src/map.c:809
+#: src/map.c:852
 msgid "Light Asteroid Field"
 msgstr ""
 
-#: src/map.c:822
+#: src/map.c:866
 msgid "Fuel: "
 msgstr ""
 
-#: src/map.c:823 src/map.c:831
+#: src/map.c:867 src/map.c:875
 #, c-format
 msgid "%d jump"
 msgid_plural "%d jumps"
@@ -88415,59 +88495,59 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/map.c:825
+#: src/map.c:869
 msgid "Autonav: "
 msgstr ""
 
-#: src/map.c:1787
+#: src/map.c:1855
 #, c-format
 msgid ""
 "No price info for\n"
 "%s here"
 msgstr ""
 
-#: src/map.c:2049
+#: src/map.c:2117
 msgid "Travel (Default)"
 msgstr ""
 
-#: src/map.c:2052
+#: src/map.c:2120
 #, c-format
 msgid "%s: Cost"
 msgstr ""
 
-#: src/map.c:2053
+#: src/map.c:2121
 #, c-format
 msgid "%s: Trade"
 msgstr ""
 
-#: src/map.c:2109
+#: src/map.c:2177
 msgid "Normal View"
 msgstr ""
 
-#: src/map.c:2109
+#: src/map.c:2177
 msgid "Minimal View"
 msgstr ""
 
-#: src/map.c:2133
+#: src/map.c:2201
 #, c-format
 msgid "Write a note about the #o%s#0 system:"
 msgstr ""
 
-#: src/map.c:2134
+#: src/map.c:2202
 msgid "Add System Note"
 msgstr ""
 
-#: src/map.c:3012
+#: src/map.c:3084
 #, c-format
 msgid "Malformed %s file: missing root element 'map'"
 msgstr ""
 
-#: src/map.c:3030 src/slots.c:78 src/start.c:125 src/tech.c:127
+#: src/map.c:3101 src/slots.c:78 src/start.c:125 src/tech.c:127
 #, c-format
 msgid "'%s' has unknown node '%s'."
 msgstr ""
 
-#: src/map.c:3037
+#: src/map.c:3108
 #, c-format
 msgid "Loaded %d map decorator in %.3f s"
 msgid_plural "Loaded %d map decorators in %.3f s"
@@ -88475,7 +88555,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/map.c:3040
+#: src/map.c:3111
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
@@ -88483,12 +88563,12 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/map.c:3067
+#: src/map.c:3137
 #, c-format
 msgid "Could not load map decorator texture '%s'."
 msgstr ""
 
-#: src/map.c:3072
+#: src/map.c:3141
 #, c-format
 msgid "Map decorator has unknown node '%s'."
 msgstr ""
@@ -88580,7 +88660,7 @@ msgstr ""
 
 #: src/map_system.c:311
 #, c-format
-msgid "No gfx for %s...\n"
+msgid "No gfx for %s…"
 msgstr ""
 
 #. no nebula or star images - probably due to nebula
@@ -88841,78 +88921,78 @@ msgid "Menu main is already open."
 msgstr ""
 
 #. create menu window
-#: src/menu.c:218 src/menu.c:556
+#: src/menu.c:218 src/menu.c:564
 msgid "Main Menu"
 msgstr ""
 
-#: src/menu.c:226
+#: src/menu.c:230
 msgid "New Game"
 msgstr ""
 
-#: src/menu.c:230 src/menu.c:644
+#: src/menu.c:234 src/menu.c:652
 msgid "Editors"
 msgstr ""
 
 #. Create window and tabs.
-#: src/menu.c:234 src/menu.c:428 src/naev.c:397 src/options.c:131
+#: src/menu.c:238 src/menu.c:436 src/naev.c:397 src/options.c:131
 msgid "Options"
 msgstr ""
 
-#: src/menu.c:237
+#: src/menu.c:241
 msgctxt "Menu|"
 msgid "Credits"
 msgstr ""
 
-#: src/menu.c:240 src/menu.c:558
+#: src/menu.c:244 src/menu.c:566
 msgid "Exit Game"
 msgstr ""
 
-#: src/menu.c:325
+#: src/menu.c:331
 msgid "Main menu does not exist."
 msgstr ""
 
-#: src/menu.c:416
+#: src/menu.c:424
 msgid "Menu"
 msgstr ""
 
-#: src/menu.c:422
+#: src/menu.c:430
 msgid "Resume"
 msgstr ""
 
-#: src/menu.c:430
+#: src/menu.c:438
 msgid "Exit to Title"
 msgstr ""
 
 #. Stop player sounds because sometimes they hang.
-#: src/menu.c:482
+#: src/menu.c:490
 msgid "Exited game."
 msgstr ""
 
-#: src/menu.c:549
+#: src/menu.c:557
 msgid "Continue"
 msgstr ""
 
-#: src/menu.c:552
+#: src/menu.c:560
 msgid "Restart"
 msgstr ""
 
-#: src/menu.c:611
+#: src/menu.c:619
 msgid "Quit Naev"
 msgstr ""
 
-#: src/menu.c:611
+#: src/menu.c:619
 msgid "Are you sure you want to quit Naev?"
 msgstr ""
 
-#: src/menu.c:649
+#: src/menu.c:657
 msgid "Universe Map"
 msgstr ""
 
-#: src/menu.c:652
+#: src/menu.c:660
 msgid "Map Outfits"
 msgstr ""
 
-#: src/menu.c:655
+#: src/menu.c:663
 msgid "Exit to Main Menu"
 msgstr ""
 
@@ -89150,7 +89230,7 @@ msgstr ""
 msgid "Music thread did not exit when asked, ignoring..."
 msgstr ""
 
-#: src/naev.c:191 src/naev.c:1048 src/nlua_naev.c:134 src/nlua_naev.c:136
+#: src/naev.c:191 src/naev.c:1045 src/nlua_naev.c:134 src/nlua_naev.c:136
 #, c-format
 msgid "Failed to parse version string '%s'!"
 msgstr ""
@@ -89200,11 +89280,11 @@ msgstr ""
 #.
 #. initializes video output
 #: src/naev.c:289
-msgid "Initializing video output failed, exiting..."
+msgid "Initializing video output failed, exiting…"
 msgstr ""
 
 #: src/naev.c:306
-msgid "Initializing subsystems..."
+msgid "Initializing subsystems…"
 msgstr ""
 
 #: src/naev.c:314
@@ -89285,72 +89365,72 @@ msgstr ""
 
 #. order is very important as they're interdependent
 #: src/naev.c:580
-msgid "Loading Commodities..."
+msgid "Loading Commodities…"
 msgstr ""
 
 #. dep for space
 #: src/naev.c:583
-msgid "Loading Special Effects..."
+msgid "Loading Special Effects…"
 msgstr ""
 
 #. no dep
 #: src/naev.c:586
-msgid "Loading Effects..."
+msgid "Loading Effects…"
 msgstr ""
 
 #. no dep
 #: src/naev.c:589
-msgid "Loading Damage Types..."
+msgid "Loading Damage Types…"
 msgstr ""
 
 #. dep for outfits
 #: src/naev.c:592
-msgid "Loading Outfits..."
+msgid "Loading Outfits…"
 msgstr ""
 
 #. dep for ships, factions
 #: src/naev.c:595
-msgid "Loading Ships..."
+msgid "Loading Ships…"
 msgstr ""
 
 #. dep for fleet
 #: src/naev.c:598
-msgid "Loading Factions..."
+msgid "Loading Factions…"
 msgstr ""
 
 #: src/naev.c:604
-msgid "Loading AI..."
+msgid "Loading AI…"
 msgstr ""
 
 #. dep for fleets
 #: src/naev.c:607
-msgid "Loading Techs..."
+msgid "Loading Techs…"
 msgstr ""
 
 #. dep for space
 #: src/naev.c:610
-msgid "Loading the Universe..."
+msgid "Loading the Universe…"
 msgstr ""
 
 #. dep for events/missions
 #: src/naev.c:613
-msgid "Loading Events..."
+msgid "Loading Events…"
 msgstr ""
 
 #: src/naev.c:616
-msgid "Loading Missions..."
+msgid "Loading Missions…"
 msgstr ""
 
 #: src/naev.c:619
-msgid "Loading the UniDiffs..."
+msgid "Loading the UniDiffs…"
 msgstr ""
 
 #: src/naev.c:622
-msgid "Populating Maps..."
+msgid "Populating Maps…"
 msgstr ""
 
 #: src/naev.c:625
-msgid "Calculating Patrols..."
+msgid "Calculating Patrols…"
 msgstr ""
 
 #: src/naev.c:628
@@ -89362,40 +89442,40 @@ msgstr ""
 msgid "Loading Completed!"
 msgstr ""
 
-#: src/naev.c:778
+#: src/naev.c:777
 msgid "clock_gettime failed, disabling POSIX time."
 msgstr ""
 
-#: src/naev.c:803
+#: src/naev.c:802
 msgid "clock_gettime failed!"
 msgstr ""
 
-#: src/naev.c:892
+#: src/naev.c:889
 msgid "PAUSED"
 msgstr ""
 
-#: src/naev.c:990
+#: src/naev.c:987
 msgid "Icon (icon.webp) not found!"
 msgstr ""
 
-#: src/naev.c:995
+#: src/naev.c:992
 msgid "Unable to load icon.webp!"
 msgstr ""
 
-#: src/naev.c:1020
+#: src/naev.c:1017
 msgid " debug"
 msgstr ""
 
-#: src/naev.c:1075
+#: src/naev.c:1072
 #, c-format
 msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
 msgstr ""
 
-#: src/naev.c:1085
+#: src/naev.c:1082
 msgid "SDL is newer than compiled version"
 msgstr ""
 
-#: src/naev.c:1087
+#: src/naev.c:1084
 msgid "SDL is older than compiled version."
 msgstr ""
 
@@ -90139,13 +90219,13 @@ msgstr ""
 msgid "Unable to open '%s' for writing!"
 msgstr ""
 
-#: src/nlua_tk.c:451 src/nlua_tk.c:467 src/nlua_tk.c:484 src/nlua_tk.c:503
-#: src/nlua_tk.c:518
+#: src/nlua_tk.c:447 src/nlua_tk.c:463 src/nlua_tk.c:480 src/nlua_tk.c:499
+#: src/nlua_tk.c:514
 msgid "custom dialogue not open"
 msgstr ""
 
-#: src/nlua_tk.c:555 src/nlua_tk.c:578 src/nlua_tk.c:631 src/nlua_tk.c:658
-#: src/nlua_tk.c:679
+#: src/nlua_tk.c:551 src/nlua_tk.c:574 src/nlua_tk.c:627 src/nlua_tk.c:654
+#: src/nlua_tk.c:675
 #, c-format
 msgid "Custom dialogue internal error: %s"
 msgstr ""
@@ -90955,68 +91035,68 @@ msgid ""
 "found in Naev's artwork repo."
 msgstr ""
 
-#: src/outfit.c:1190 src/outfit.c:1524
+#: src/outfit.c:1190 src/outfit.c:1531
 #, c-format
 msgid "Outfit '%s' has invalid blowup property: '%s'"
 msgstr ""
 
-#: src/outfit.c:1216 src/outfit.c:1552
+#: src/outfit.c:1216 src/outfit.c:1559
 #, c-format
 msgid ""
 "Outfit '%s': the number of collision polygons is wrong.\n"
 "                     npolygon = %i and sx*sy = %i"
 msgstr ""
 
-#: src/outfit.c:1260 src/outfit.c:1420 src/outfit.c:1608 src/outfit.c:1736
-#: src/outfit.c:1804 src/outfit.c:1869 src/outfit.c:1950 src/outfit.c:1968
-#: src/outfit.c:2007 src/outfit.c:2043 src/outfit.c:2076 src/outfit.c:2255
-#: src/outfit.c:2348
+#: src/outfit.c:1260 src/outfit.c:1421 src/outfit.c:1615 src/outfit.c:1747
+#: src/outfit.c:1815 src/outfit.c:1880 src/outfit.c:1961 src/outfit.c:1979
+#: src/outfit.c:2018 src/outfit.c:2054 src/outfit.c:2087 src/outfit.c:2266
+#: src/outfit.c:2359
 #, c-format
 msgid "Outfit '%s' has unknown node '%s'"
 msgstr ""
 
-#: src/outfit.c:1286 src/outfit.c:1626
+#: src/outfit.c:1286 src/outfit.c:1436 src/outfit.c:1633
 #, c-format
 msgid "%s [%s]"
 msgstr ""
 
-#: src/outfit.c:1289
+#: src/outfit.c:1289 src/outfit.c:1439 src/outfit.c:1636
 #, c-format
 msgid ""
 "\n"
 "     %.0f%% vs armour"
 msgstr ""
 
-#: src/outfit.c:1290
+#: src/outfit.c:1290 src/outfit.c:1440 src/outfit.c:1637
 #, c-format
 msgid ""
 "\n"
 "     %.0f%% vs shield"
 msgstr ""
 
-#: src/outfit.c:1291
+#: src/outfit.c:1291 src/outfit.c:1441 src/outfit.c:1638
 #, c-format
 msgid ""
 "\n"
 "     %.0f%% knockback"
 msgstr ""
 
-#: src/outfit.c:1292 src/outfit.c:1436 src/outfit.c:1628 src/outfit.c:1812
-#: src/outfit.c:1876
+#: src/outfit.c:1292 src/outfit.c:1442 src/outfit.c:1639 src/outfit.c:1823
+#: src/outfit.c:1887
 #, c-format
 msgid ""
 "\n"
 "%.0f CPU"
 msgstr ""
 
-#: src/outfit.c:1293 src/outfit.c:1437 src/outfit.c:1646
+#: src/outfit.c:1293 src/outfit.c:1443 src/outfit.c:1657
 #, c-format
 msgid ""
 "\n"
 "%.0f%% Penetration"
 msgstr ""
 
-#: src/outfit.c:1294 src/outfit.c:1647
+#: src/outfit.c:1294 src/outfit.c:1658
 #, c-format
 msgid ""
 "\n"
@@ -91030,35 +91110,35 @@ msgid ""
 "%.2f Disable/s [%.0f Disable]"
 msgstr ""
 
-#: src/outfit.c:1298 src/outfit.c:1651
+#: src/outfit.c:1298 src/outfit.c:1662
 #, c-format
 msgid ""
 "\n"
 "%.1f Shots Per Second"
 msgstr ""
 
-#: src/outfit.c:1299 src/outfit.c:1664
+#: src/outfit.c:1299 src/outfit.c:1675
 #, c-format
 msgid ""
 "\n"
 "%.1f EPS [%.0f Energy]"
 msgstr ""
 
-#: src/outfit.c:1301 src/outfit.c:1446
+#: src/outfit.c:1301 src/outfit.c:1452
 #, c-format
 msgid ""
 "\n"
 "%s Range"
 msgstr ""
 
-#: src/outfit.c:1302 src/outfit.c:1660
+#: src/outfit.c:1302 src/outfit.c:1671
 #, c-format
 msgid ""
 "\n"
 "%.0f Speed"
 msgstr ""
 
-#: src/outfit.c:1303 src/outfit.c:1447
+#: src/outfit.c:1303 src/outfit.c:1453
 #, c-format
 msgid ""
 "\n"
@@ -91072,325 +91152,325 @@ msgid ""
 "%.1f Degree Dispersion"
 msgstr ""
 
-#: src/outfit.c:1306 src/outfit.c:1449 src/outfit.c:1641
+#: src/outfit.c:1306 src/outfit.c:1455 src/outfit.c:1652
 #, c-format
 msgid ""
 "\n"
 "%.1f Degree Swivel"
 msgstr ""
 
-#: src/outfit.c:1307 src/outfit.c:1633 src/outfit.c:1639
+#: src/outfit.c:1307 src/outfit.c:1644 src/outfit.c:1650
 #, c-format
 msgid ""
 "\n"
 "%s Optimal Tracking"
 msgstr ""
 
-#: src/outfit.c:1308 src/outfit.c:1634 src/outfit.c:1640
+#: src/outfit.c:1308 src/outfit.c:1645 src/outfit.c:1651
 #, c-format
 msgid ""
 "\n"
 "%s Minimal Tracking"
 msgstr ""
 
-#: src/outfit.c:1311 src/outfit.c:1452 src/outfit.c:1830 src/outfit.c:1882
-#: src/outfit.c:1983 src/outfit.c:2020 src/outfit.c:2052 src/outfit.c:2093
-#: src/outfit.c:2352
+#: src/outfit.c:1311 src/outfit.c:1458 src/outfit.c:1841 src/outfit.c:1893
+#: src/outfit.c:1994 src/outfit.c:2031 src/outfit.c:2063 src/outfit.c:2104
+#: src/outfit.c:2363
 #, c-format
 msgid "Outfit '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/outfit.c:1438
+#: src/outfit.c:1444
 #, c-format
 msgid ""
 "\n"
 "%.2f DPS [%s]"
 msgstr ""
 
-#: src/outfit.c:1441
+#: src/outfit.c:1447
 #, c-format
 msgid ""
 "\n"
 "%.0f Disable/s"
 msgstr ""
 
-#: src/outfit.c:1442 src/outfit.c:1817
+#: src/outfit.c:1448 src/outfit.c:1828
 #, c-format
 msgid ""
 "\n"
 "%.1f EPS"
 msgstr ""
 
-#: src/outfit.c:1443
+#: src/outfit.c:1449
 #, c-format
 msgid ""
 "\n"
 "%.1f Duration"
 msgstr ""
 
-#: src/outfit.c:1444
+#: src/outfit.c:1450
 #, c-format
 msgid " (%.1f minimum)"
 msgstr ""
 
-#: src/outfit.c:1445
+#: src/outfit.c:1451
 #, c-format
 msgid ""
 "\n"
 "%.1f Cooldown"
 msgstr ""
 
-#: src/outfit.c:1596
+#: src/outfit.c:1603
 #, c-format
 msgid "Ammo '%s' has unknown ai type '%s'."
 msgstr ""
 
 #. Condition for not taking max_speed into account.
-#: src/outfit.c:1620
+#: src/outfit.c:1627
 #, c-format
 msgid "Max speed of ammo '%s' will be ignored."
 msgstr ""
 
-#: src/outfit.c:1631
+#: src/outfit.c:1642
 #, c-format
 msgid ""
 "\n"
 "%.1f Second Lock-on"
 msgstr ""
 
-#: src/outfit.c:1632
+#: src/outfit.c:1643
 #, c-format
 msgid ""
 "\n"
 "%.1f Second In-Flight Calibration"
 msgstr ""
 
-#: src/outfit.c:1637
+#: src/outfit.c:1648
 msgid ""
 "\n"
 "No Seeking"
 msgstr ""
 
-#: src/outfit.c:1645
+#: src/outfit.c:1656
 #, c-format
 msgid ""
 "\n"
 "Holds %d ammo"
 msgstr ""
 
-#: src/outfit.c:1649
+#: src/outfit.c:1660
 #, c-format
 msgid ""
 "\n"
 "%.1f Disable/s [%.0f Disable]"
 msgstr ""
 
-#: src/outfit.c:1652
+#: src/outfit.c:1663
 #, c-format
 msgid ""
 "\n"
 "%s Range [%.1f duration]"
 msgstr ""
 
-#: src/outfit.c:1655
+#: src/outfit.c:1666
 #, c-format
 msgid ""
 "\n"
 "%.0f Initial Speed (%.0f Thrust)"
 msgstr ""
 
-#: src/outfit.c:1657
+#: src/outfit.c:1668
 #, c-format
 msgid ""
 "\n"
 "%.0f Thrust"
 msgstr ""
 
-#: src/outfit.c:1662
+#: src/outfit.c:1673
 #, c-format
 msgid ""
 "\n"
 "%.0f Maximum Speed"
 msgstr ""
 
-#: src/outfit.c:1663 src/outfit.c:1879
+#: src/outfit.c:1674 src/outfit.c:1890
 #, c-format
 msgid ""
 "\n"
 "%.1f Seconds to Reload"
 msgstr ""
 
-#: src/outfit.c:1665
+#: src/outfit.c:1676
 #, c-format
 msgid ""
 "\n"
 "%.0f%% Jam Resistance"
 msgstr ""
 
-#: src/outfit.c:1669
+#: src/outfit.c:1680
 #, c-format
 msgid "Outfit '%s' missing '%s' element"
 msgstr ""
 
-#: src/outfit.c:1694
+#: src/outfit.c:1705
 #, c-format
 msgid "Outfit '%s' has no speed nor thrust set!"
 msgstr ""
 
-#: src/outfit.c:1696
+#: src/outfit.c:1707
 #, c-format
 msgid "Outfit '%s' has longer 'iflockon' than ammo 'duration'"
 msgstr ""
 
-#: src/outfit.c:1744 src/outfit.c:1811
+#: src/outfit.c:1755 src/outfit.c:1822
 msgid ""
 "\n"
 "#rActivated Outfit#0"
 msgstr ""
 
-#: src/outfit.c:1746
+#: src/outfit.c:1757
 #, c-format
 msgid " #r(%.1f s Cooldown)#0"
 msgstr ""
 
-#: src/outfit.c:1747
+#: src/outfit.c:1758
 #, c-format
 msgid ""
 "\n"
 "%+.0f CPU"
 msgstr ""
 
-#: src/outfit.c:1813
+#: src/outfit.c:1824
 msgid ""
 "\n"
 "Only one can be equipped"
 msgstr ""
 
-#: src/outfit.c:1814
+#: src/outfit.c:1825
 #, c-format
 msgid ""
 "\n"
 "%.0f Maximum Effective Mass"
 msgstr ""
 
-#: src/outfit.c:1815
+#: src/outfit.c:1826
 #, c-format
 msgid ""
 "\n"
 "%.0f%% Thrust"
 msgstr ""
 
-#: src/outfit.c:1816
+#: src/outfit.c:1827
 #, c-format
 msgid ""
 "\n"
 "%.0f%% Maximum Speed"
 msgstr ""
 
-#: src/outfit.c:1818
+#: src/outfit.c:1829
 #, c-format
 msgid ""
 "\n"
 "%.1f Rumble"
 msgstr ""
 
-#: src/outfit.c:1877
+#: src/outfit.c:1888
 #, c-format
 msgid ""
 "\n"
 "%.1f Seconds Per Launch"
 msgstr ""
 
-#: src/outfit.c:1878
+#: src/outfit.c:1889
 #, c-format
 msgid ""
 "\n"
 "Holds %d ships"
 msgstr ""
 
-#: src/outfit.c:1922
+#: src/outfit.c:1933
 #, c-format
 msgid "Map '%s' has invalid system '%s'"
 msgstr ""
 
-#: src/outfit.c:1939
+#: src/outfit.c:1950
 #, c-format
 msgid "Map '%s' has invalid spob '%s'"
 msgstr ""
 
-#: src/outfit.c:1947
+#: src/outfit.c:1958
 #, c-format
 msgid "Map '%s' has invalid jump point '%s'"
 msgstr ""
 
-#: src/outfit.c:2049
+#: src/outfit.c:2060
 #, c-format
 msgid "GUI (Graphical User Interface)"
 msgstr ""
 
-#: src/outfit.c:2150
+#: src/outfit.c:2161
 #, c-format
 msgid "Outfit '%s' has invalid or no name"
 msgstr ""
 
-#: src/outfit.c:2198
+#: src/outfit.c:2209
 #, c-format
 msgid "Outfit '%s' has an slot type invalid."
 msgstr ""
 
-#: src/outfit.c:2208
+#: src/outfit.c:2219
 #, c-format
 msgid "Outfit '%s' has unknown slot type '%s'."
 msgstr ""
 
-#: src/outfit.c:2229
+#: src/outfit.c:2240
 #, c-format
 msgid "Empty faction string for outfit '%s' legality!"
 msgstr ""
 
-#: src/outfit.c:2235
+#: src/outfit.c:2246
 #, c-format
 msgid "Outfit '%s' has no factions defined in <illegalto> block!"
 msgstr ""
 
-#: src/outfit.c:2238
+#: src/outfit.c:2249
 #, c-format
 msgid "Outfit '%s' has unknown general node '%s'"
 msgstr ""
 
-#: src/outfit.c:2272
+#: src/outfit.c:2283
 #, c-format
 msgid "Outfit '%s' has unknown node in tags '%s'."
 msgstr ""
 
-#: src/outfit.c:2281
+#: src/outfit.c:2292
 #, c-format
 msgid "Outfit '%s' element 'specific' missing property 'type'"
 msgstr ""
 
-#: src/outfit.c:2297
+#: src/outfit.c:2308
 #, c-format
 msgid "Outfit '%s' has group '%d', should be in the 1-%d range"
 msgstr ""
 
-#: src/outfit.c:2308
+#: src/outfit.c:2319
 #, c-format
 msgid "Outfit '%s' is of type NONE"
 msgstr ""
 
-#: src/outfit.c:2424 src/space.c:2121
+#: src/outfit.c:2435 src/space.c:2121
 #, c-format
 msgid "Outfit '%s' failed to read Lua '%s'!"
 msgstr ""
 
-#: src/outfit.c:2438
+#: src/outfit.c:2449
 #, c-format
 msgid ""
 "Outfit '%s' Lua error:\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2483
+#: src/outfit.c:2494
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
@@ -91398,7 +91478,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/outfit.c:2492
+#: src/outfit.c:2503
 #, c-format
 msgid "Loaded %d Outfit in %.3f s"
 msgid_plural "Loaded %d Outfits in %.3f s"
@@ -91406,7 +91486,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/outfit.c:2495
+#: src/outfit.c:2506
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
@@ -91414,37 +91494,37 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/outfit.c:2511
+#: src/outfit.c:2522
 #, c-format
 msgid "Fighter Bay Outfit '%s' has not found ship '%s'!"
 msgstr ""
 
-#: src/outfit.c:2525
+#: src/outfit.c:2536
 msgid ""
 "\n"
 "#rIllegal to:#0"
 msgstr ""
 
-#: src/outfit.c:2527
+#: src/outfit.c:2538
 #, c-format
 msgid ""
 "\n"
 "#r- %s#0"
 msgstr ""
 
-#: src/outfit.c:2538
+#: src/outfit.c:2549
 #, c-format
 msgid ""
 "Outfit '%s' lua load error -> 'load':\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2546
+#: src/outfit.c:2557
 #, c-format
 msgid "Outfit '%s' has inexistent license requirement '%s'!"
 msgstr ""
 
-#: src/outfit.c:2570
+#: src/outfit.c:2581
 #, c-format
 msgid "%s file is invalid xml!"
 msgstr ""
@@ -91743,7 +91823,7 @@ msgstr ""
 msgid "Recall the fighters first"
 msgstr ""
 
-#: src/pilot_outfit.c:697
+#: src/pilot_outfit.c:695
 #, c-format
 msgid "Pilot '%s': Trying to add ammo to unequipped slot."
 msgstr ""
@@ -92111,7 +92191,7 @@ msgstr ""
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:3935 src/player.c:4107
+#: src/player.c:3935 src/player.c:4106
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
@@ -92137,82 +92217,82 @@ msgstr ""
 msgid "Player ship '%s' not found!"
 msgstr ""
 
-#: src/player.c:4124 src/player.c:4141 src/player.c:4158 src/player.c:4175
+#: src/player.c:4123 src/player.c:4140 src/player.c:4157 src/player.c:4174
 #, c-format
 msgid "Save has unknown '%s' tag!"
 msgstr ""
 
-#: src/player.c:4129
+#: src/player.c:4128
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 
-#: src/player.c:4146 src/player.c:4163
+#: src/player.c:4145 src/player.c:4162
 msgid "Outfit slot out of range, not adding."
 msgstr ""
 
-#: src/player.c:4196
+#: src/player.c:4195
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr ""
 
-#: src/player.c:4222
+#: src/player.c:4221
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
 
-#: src/player.c:4267
+#: src/player.c:4266
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
 
-#: src/player.c:4275
+#: src/player.c:4274
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4279
+#: src/player.c:4278
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
 
-#: src/player.c:4295
+#: src/player.c:4294
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4308
+#: src/player.c:4307
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 
-#: src/player.c:4316
+#: src/player.c:4315
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
 
-#: src/player.c:4321
+#: src/player.c:4320
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
-#: src/player.c:4366
+#: src/player.c:4365
 msgid "You have destealthed."
 msgstr ""
 
-#: src/player.c:4372
+#: src/player.c:4371
 msgid "#gYou have entered stealth mode."
 msgstr ""
 
-#: src/player.c:4377
+#: src/player.c:4376
 msgid "#rUnable to stealth: missiles locked on!"
 msgstr ""
 
-#: src/player.c:4379
+#: src/player.c:4378
 msgid "#rUnable to stealth: other pilots nearby!"
 msgstr ""
 
@@ -93782,48 +93862,48 @@ msgstr ""
 msgid "Active window in widget '%s' not found in stack."
 msgstr ""
 
-#: src/tk/widget/tabwin.c:445
+#: src/tk/widget/tabwin.c:447
 #, c-format
 msgid "Widget '%s' not found"
 msgstr ""
 
-#: src/tk/widget/tabwin.c:451
+#: src/tk/widget/tabwin.c:453
 #, c-format
 msgid "Widget '%s' is not an image array."
 msgstr ""
 
-#: src/toolkit.c:244
+#: src/toolkit.c:248
 #, c-format
 msgid ""
 "Trying to create widget '%s' over existing one that hasn't been destroyed"
 msgstr ""
 
-#: src/toolkit.c:298 src/toolkit.c:304
+#: src/toolkit.c:302 src/toolkit.c:308
 #, c-format
 msgid "Window '%u' not found in list!"
 msgstr ""
 
-#: src/toolkit.c:320 src/toolkit.c:329
+#: src/toolkit.c:324 src/toolkit.c:333
 #, c-format
 msgid "Widget '%s' not found in window '%u'!"
 msgstr ""
 
-#: src/toolkit.c:690
+#: src/toolkit.c:716
 #, c-format
 msgid "Window with name '%s' already exists!"
 msgstr ""
 
-#: src/toolkit.c:1016
+#: src/toolkit.c:1079
 #, c-format
 msgid "window '%d' does not exist"
 msgstr ""
 
-#: src/toolkit.c:1050
+#: src/toolkit.c:1113
 #, c-format
 msgid "Widget '%s' not found in window '%s'"
 msgstr ""
 
-#: src/toolkit.c:1760
+#: src/toolkit.c:1868
 #, c-format
 msgid "Toolkit: Button '%s' of Window '%s' doesn't have a function trigger"
 msgstr ""
