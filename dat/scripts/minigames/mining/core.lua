@@ -10,7 +10,7 @@ local frag_pointer = love.filesystem.read( "pointer.frag" )
 local frag_target = love.filesystem.read( "target.frag" )
 local frag_shot = love.filesystem.read( "shot.frag" )
 
-local moving, pointer, pointer_tail, speed, cx, cy, transition, alpha, done, targets, shots, shots_max, shots_timer, shots_visual, z_cur, z_max, mfont
+local moving, pointer, pointer_tail, speed, cx, cy, transition, alpha, done, targets, shots, shots_max, shots_timer, shots_visual, z_cur, z_max, mfont, telapsed
 local radius = 200
 local img, shd_background, shd_pointer, shd_target, shd_shot
 function mining.load()
@@ -22,6 +22,7 @@ function mining.load()
    shots       = 0
    shots_visual = {}
    z_cur       = 1
+   telapsed    = 0
    -- Outfit-dependent
    speed       = math.pi
    shots_max   = 3
@@ -126,6 +127,7 @@ local function ease( x )
    return -2*x*x + 4*x - 1
 end
 
+local tsincestart = 0
 function mining.draw()
    local lw, lh = love.window.getDesktopDimensions()
 
@@ -194,6 +196,8 @@ function mining.draw()
    local m = 10
    local x = cx - ((w+m)*shots_max-m)/2
    local y = cy + radius + 20
+   lg.setColor( 0, 0, 0, 0.5*alpha )
+   lg.rectangle( "fill", x-10, y-10, (w+m)*shots_max+20-m, h+20 )
    for i=1,shots_max do
       local a = 1-shots_timer[i]
       if a > 0 then
@@ -229,6 +233,14 @@ function mining.draw()
    if z_cur > z_max then
       lg.setColor( 1, 1, 1, alpha )
       lg.printf( "COMPLETE", mfont, cx-100, cy-mfont:getHeight()/2, 200, "center" )
+
+   elseif not moving or tsincestart < 0.1 then
+      local a = alpha * (1-ease( tsincestart / 0.1 ))
+      lg.setColor( 1, 1, 1, a )
+      local text = "PRESS ANY KEY TO START"
+      local _width, wrappedtext = mfont:getWrap( text, radius )
+      local th = mfont:getHeight() * #wrappedtext
+      lg.printf( text, mfont, cx-radius/2, cy-th/2, radius, "center" )
    end
 end
 
@@ -244,7 +256,6 @@ local function compute_bonus ()
 end
 --]]
 
-local telapsed = 0
 function mining.update( dt )
    --transition = transition + dt*10
    transition = transition + 1
@@ -261,6 +272,7 @@ function mining.update( dt )
    end
 
    if moving then
+      tsincestart = tsincestart + dt
       pointer = pointer + speed * dt
       if pointer > 2*math.pi then
          pointer = pointer - math.pi*2
