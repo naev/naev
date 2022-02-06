@@ -855,7 +855,8 @@ static void space_renderAsteroid( const Asteroid *a )
    for (int i=0; i<array_size(at->material); i++) {
       AsteroidReward *mat = &at->material[i];
       Commodity *com = mat->material;
-      gl_renderSprite( com->gfx_space, a->pos.x, a->pos.y-10.*i, 0, 0, NULL );
+      if (com->gfx_space!=NULL)
+         gl_renderSprite( com->gfx_space, a->pos.x, a->pos.y-10.*i, 0, 0, NULL );
       snprintf(c, sizeof(c), "x%i", mat->quantity);
       gl_printRaw( &gl_smallFont, nx+10, ny-5-10.*i, &cFontWhite, -1., c );
    }

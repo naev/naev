@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asteroid name="default">
+ <gfx>asteroid-D00.webp</gfx>
+ <gfx>asteroid-D07.webp</gfx>
+ <gfx>asteroid-D08.webp</gfx>
+ <gfx>asteroid-D09.webp</gfx>
+ <gfx>asteroid-D10.webp</gfx>
+ <gfx>asteroid-D11.webp</gfx>
+ <gfx>asteroid-D12.webp</gfx>
+ <gfx>asteroid-D13.webp</gfx>
+ <armour_min>80</armour_min>
+ <armour_max>120</armour_max>
+ <commodity>
+  <name>Iron</name>
+  <quantity>5</quantity>
+ </commodity>
+</asteroid>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asteroid_group name="typeA-rich">
+ <type weight="3.5">Iron-Nickel</type>
+ <type weight="4">Gold-Platinum</type>
+ <type weight="2.5">Therite</type>
+</asteroid_group>

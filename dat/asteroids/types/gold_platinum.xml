@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asteroid name="Gold-Platinum">
+ <gfx>asteroid-D01.webp</gfx>
+ <gfx>asteroid-D02.webp</gfx>
+ <gfx>asteroid-D03.webp</gfx>
+ <gfx>asteroid-D04.webp</gfx>
+ <gfx>asteroid-D05.webp</gfx>
+ <gfx>asteroid-D06.webp</gfx>
+ <gfx>asteroid-D14.webp</gfx>
+ <armour_min>180</armour_min>
+ <armour_max>200</armour_max>
+ <absorb>60</absorb>
+ <commodity>
+  <name>Iron</name>
+  <quantity>5</quantity>
+ </commodity>
+ <commodity>
+  <name>Nickel</name>
+  <quantity>5</quantity>
+ </commodity>
+ <commodity>
+  <name>Gold</name>
+  <quantity>5</quantity>
+  <rarity>1</rarity>
+ </commodity>
+ <commodity>
+  <name>Platinum</name>
+  <quantity>5</quantity>
+  <rarity>1</rarity>
+ </commodity>
+</asteroid>

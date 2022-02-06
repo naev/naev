@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commodity>
+ <name>Platinum</name>
+ <description>Platinum is a highly nonreactive precious metal, commonly used in high-end equipment. Although there is high demand for it, it is rather uncommonly found throughout space.</description>
+ <gfx_store>gold.webp</gfx_store>
+ <gfx_space>gold.webp</gfx_space>
+ <price_ref>Gold</price_ref>
+ <price_mod>1.25</price_mod>
+ <always_can_sell/>
+</commodity>

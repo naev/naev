@@ -32,11 +32,7 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <group>default</group>
-   <group>massive</group>
-   <group>golden</group>
-   <group>diamond</group>
-   <group>liquid</group>
+   <group>typeA-rich</group>
    <radius>2000.000000</radius>
    <pos x="3000.000000" y="1500.000000"/>
   </asteroid>

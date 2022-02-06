@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asteroid name="Iron-Nickel">
+ <gfx>asteroid-D00.webp</gfx>
+ <gfx>asteroid-D07.webp</gfx>
+ <gfx>asteroid-D08.webp</gfx>
+ <gfx>asteroid-D09.webp</gfx>
+ <gfx>asteroid-D10.webp</gfx>
+ <gfx>asteroid-D11.webp</gfx>
+ <gfx>asteroid-D12.webp</gfx>
+ <gfx>asteroid-D13.webp</gfx>
+ <armour_min>80</armour_min>
+ <armour_max>120</armour_max>
+ <absorb>30</absorb>
+ <commodity>
+  <name>Iron</name>
+  <quantity>5</quantity>
+ </commodity>
+ <commodity>
+  <name>Nickel</name>
+  <quantity>5</quantity>
+ </commodity>
+ <commodity>
+  <name>Silicate</name>
+  <quantity>1</quantity>
+ </commodity>
+</asteroid>

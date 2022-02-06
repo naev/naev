@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commodity>
+ <name>Silicate</name>
+ <description>Silicate covers a diverse set of materials including silica and quartz. Due to their versalitility they are commonly used in manufacturing of many different fundamental components to space-faring life.</description>
+ <gfx_store>ore.webp</gfx_store>
+ <price_mod>1.15</price_mod>
+ <price_ref>Ore</price_ref>
+ <always_can_sell/>
+</commodity>
