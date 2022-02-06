@@ -80,6 +80,7 @@ int comm_openPilot( unsigned int pilot )
    unsigned int wid;
    Pilot *p;
    Pilot *const* pltstk;
+   int nhook = 0;
 
    /* Get the pilot. */
    p  = pilot_get( pilot );
@@ -124,13 +125,6 @@ int comm_openPilot( unsigned int pilot )
    /* Set up for the comm_get* functions. */
    ai_setPilot( p );
 
-   /* Check to see if pilot wants to communicate. */
-   msg = comm_getString( p, "comm_no" );
-   if (msg != NULL) {
-      player_messageRaw( msg );
-      return 0;
-   }
-
    /* Have pilot stop hailing. */
    pilot_rmFlag( p, PILOT_HAILING );
 
@@ -144,7 +138,15 @@ int comm_openPilot( unsigned int pilot )
       { .type = HOOK_PARAM_SENTINEL } };
    if (pilot_canTarget( p )) {
       hooks_runParam( "hail", hparam );
-      pilot_runHook( p, PILOT_HOOK_HAIL );
+      nhook = pilot_runHook( p, PILOT_HOOK_HAIL );
+   }
+
+   /* Check to see if pilot wants to communicate. */
+   msg = comm_getString( p, "comm_no" );
+   if (msg != NULL) {
+      if (comm_commClose==0)
+         player_messageRaw( msg );
+      return 0;
    }
 
    /* Run generic hail hooks on all pilots. */
