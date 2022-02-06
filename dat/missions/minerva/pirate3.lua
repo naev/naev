@@ -411,7 +411,7 @@ He gulps.
             vn.jump("broke")
          end
       end )
-      h(_([["Actually, swimming with a chicken sounds like a bit of a drag. I think I might be allergic them anyway."
+      h(_([["Actually, swimming with a chicken sounds like a bit of a drag. I think I might be allergic to them anyway."
 He coughs nervously.]]))
       vn.sfxMoney()
       vn.func( function ()
@@ -542,7 +542,7 @@ He scoffs at you and closes the transmission.]]))
          vn.jump("broke")
       end
    end )
-   h(_([["Actually, swimming with a chicken sounds like a bit of a drag. I think I might be allergic them anyway."]]))
+   h(_([["Actually, swimming with a chicken sounds like a bit of a drag. I think I might be allergic to them anyway."]]))
    vn.sfxMoney()
    vn.func( function ()
       _harper_done()
@@ -554,7 +554,7 @@ He scoffs at you and closes the transmission.]]))
    vn.jump("leave")
 
    vn.label("money_tkn")
-   h(_([["Actually, swimming with a chicken sounds like a bit of a drag. I think I might be allergic them anyway."]]))
+   h(_([["Actually, swimming with a chicken sounds like a bit of a drag. I think I might be allergic to them anyway."]]))
    vn.sfxMoney()
    vn.func( function ()
       _harper_done()
