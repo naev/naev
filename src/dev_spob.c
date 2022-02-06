@@ -121,8 +121,9 @@ int dpl_saveSpob( const Spob *p )
       if (p->presence.faction > 0) {
          xmlw_startElem( writer, "commodities" );
          for (int i=0; i<array_size(p->commodities); i++) {
-            if (p->commodities[i]->standard == 0)
-               xmlw_elem( writer, "commodity", "%s", p->commodities[i]->name );
+            Commodity *c = p->commodities[i];
+            if (commodity_isFlag(c,COMMODITY_FLAG_STANDARD))
+               xmlw_elem( writer, "commodity", "%s", c->name );
          }
          xmlw_endElem( writer ); /* "commodities" */
       }

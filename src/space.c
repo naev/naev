@@ -2195,7 +2195,7 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
                   if (xml_isNode(ccur,"commodity")) {
                      /* If the commodity is standard, don't re-add it. */
                      Commodity *com = commodity_get( xml_get(ccur) );
-                     if (com->standard == 1)
+                     if (commodity_isFlag(com, COMMODITY_FLAG_STANDARD))
                         continue;
 
                      array_push_back( &comms, com );

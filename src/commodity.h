@@ -17,18 +17,22 @@ typedef int64_t credits_t;
 #define CREDITS_MIN        (-CREDITS_MAX)         /**< Minimum credits_t value that round-trips through Lua. */
 #define CREDITS_PRI        PRIu64
 
+#define COMMODITY_FLAG_STANDARD        (1<<1)   /**< Commodity is considered a standard commodity available everywhere. */
+#define COMMODITY_FLAG_ALWAYSSELLABLE  (1<<2)   /**< Commodity is always sellable, even when not available normally at a spob. */
+#define commodity_isFlag(c,f)    ((c)->flags & (f)) /**< Checks commodity flag. */
+#define commodity_setFlag(c,f)   ((c)->flags |= (f)) /**< Sets a commodity flag. */
+#define commodity_rmFlag(c,f)    ((c)->flags &= ~(f)) /**< Removes a commodity flag. */
+
 /**
  * @struct CommodityModifier
  *
  * @brief Represents a dictionary of values used to modify a commodity.
- *
  */
-struct CommodityModifier_ {
+typedef struct CommodityModifier_ {
    char *name;
    float value;
    struct CommodityModifier_ *next;
-};
-typedef struct CommodityModifier_ CommodityModifier;
+} CommodityModifier;
 
 /**
  * @struct Commodity
@@ -38,19 +42,24 @@ typedef struct CommodityModifier_ CommodityModifier;
 typedef struct Commodity_ {
    char* name; /**< Name of the commodity. */
    char* description; /**< Description of the commodity. */
-   unsigned int standard; /**< Wether or not this commodity is standard. */
+   unsigned int flags; /**< Commodity flags. */
+
    /* Prices. */
-   double raw_price; /**< Raw price of the commodity. */
-   double price; /**< Base price of the commodity. */
-   glTexture* gfx_store; /**< Store graphic. */
-   glTexture* gfx_space; /**< Space graphic. */
+   double raw_price;    /**< Raw price of the commodity. */
+   double price;        /**< Base price of the commodity. */
+   glTexture* gfx_store;/**< Store graphic. */
+   glTexture* gfx_space;/**< Space graphic. */
+
+   /* Misc stuff. */
+   credits_t lastPurchasePrice; /**< Price paid when last purchasing this commodity. */
+   int istemp; /**< This commodity is temporary. */
+   int *illegalto; /**< Factions this commodity is illegal to. */
+
+   /* Dynamic economy stuff. */
    CommodityModifier *spob_modifier; /**< The price modifier for different spob types. */
    double period; /**< Period of price fluctuation. */
    double population_modifier; /**< Scale of price modification due to population. */
    CommodityModifier *faction_modifier; /**< Price modifier for different factions. */
-   credits_t lastPurchasePrice; /**< Price paid when last purchasing this commodity. */
-   int istemp; /**< This commodity is temporary. */
-   int *illegalto; /**< Factions this commodity is illegal to. */
 } Commodity;
 
 typedef struct CommodityPrice_ {

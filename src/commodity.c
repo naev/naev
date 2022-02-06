@@ -241,7 +241,7 @@ Commodity ** standard_commodities (void)
    Commodity **com = array_create_size( Commodity*, n );
    for (int i=0; i<n; i++) {
       Commodity *c = &commodity_stack[i];
-      if (c->standard)
+      if (commodity_isFlag(c,COMMODITY_FLAG_STANDARD))
          array_push_back( &com, c );
    }
    return com;
@@ -262,7 +262,6 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    memset( temp, 0, sizeof(Commodity) );
    temp->period = 200;
    temp->population_modifier = 0.;
-   temp->standard = 0;
 
    /* Parse body. */
    node = parent->xmlChildrenNode;
@@ -284,7 +283,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          continue;
       }
       if (xml_isNode(node, "standard")) {
-         temp->standard = 1;
+         commodity_setFlag( temp, COMMODITY_FLAG_STANDARD );
          continue;
       }
       if (xml_isNode(node, "illegalto")) {
