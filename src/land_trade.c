@@ -36,7 +36,7 @@
  * Quantity to buy on one click
 */
 static int commodity_mod = 10; /**< Amount you can buy or sell in a single click. */
-static const Commodity **commodity_list = NULL;
+static Commodity **commodity_list = NULL;
 
 /**
  * @brief Opens the local market window.
@@ -130,7 +130,7 @@ void commodity_exchange_open( unsigned int wid )
             continue;
          cgoods[j].image = gl_dupTexture(pc->commodity->gfx_store);
          cgoods[j].caption = strdup( _(pc->commodity->name) );
-         commodity_list[j] = pc->commodity;
+         commodity_list[j] = (Commodity*) pc->commodity;
          j++;
       }
 
@@ -315,7 +315,7 @@ void commodity_buy( unsigned int wid, const char *str )
    /* Get selected. */
    q     = commodity_getMod();
    i     = toolkit_getImageArrayPos( wid, "iarTrade" );
-   com   = land_spob->commodities[i];
+   com   = commodity_list[i];
    price = spob_commodityPrice( land_spob, com );
 
    /* Check stuff. */
@@ -357,7 +357,7 @@ void commodity_sell( unsigned int wid, const char *str )
    /* Get parameters. */
    q     = commodity_getMod();
    i     = toolkit_getImageArrayPos( wid, "iarTrade" );
-   com   = land_spob->commodities[i];
+   com   = commodity_list[i];
    price = spob_commodityPrice( land_spob, com );
 
    /* Check stuff. */
