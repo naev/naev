@@ -230,7 +230,7 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p, credits_t 
  */
 int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std )
 {
-   int i,j,k;
+   int i, k;
    CommodityPrice *commPrice;
    double av = 0;
    double av2 = 0;
@@ -255,7 +255,7 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
          break;
 
    /* Check if found */
-   if ( i>= array_size(econ_comm)) {
+   if (i >= array_size(econ_comm)) {
       WARN(_("Average price for commodity '%s' not known."), com->name);
       *mean = 0;
       *std = 0;
@@ -263,18 +263,19 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
    }
    for (i=0; i<array_size(systems_stack) ; i++) {
       StarSystem *sys = &systems_stack[i];
-      for (j=0; j<array_size(sys->spobs); j++) {
+      for (int j=0; j<array_size(sys->spobs); j++) {
          Spob *p = sys->spobs[j];
+
          /* and get the index on this spob */
-         for ( k=0; k<array_size(p->commodities); k++) {
-            if ( ( strcmp(p->commodities[k]->name, com->name) == 0 ) )
+         for (k=0; k<array_size(p->commodities); k++) {
+            if ((strcmp(p->commodities[k]->name, com->name) == 0 ))
                break;
          }
          if (k < array_size(p->commodityPrice)) {
             commPrice=&p->commodityPrice[k];
             if ( commPrice->cnt>0) {
-               av+=commPrice->sum/commPrice->cnt;
-               av2+=commPrice->sum*commPrice->sum/(commPrice->cnt*commPrice->cnt);
+               av  += commPrice->sum/commPrice->cnt;
+               av2 += commPrice->sum*commPrice->sum/(commPrice->cnt*commPrice->cnt);
                cnt++;
             }
          }
