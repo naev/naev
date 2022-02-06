@@ -97,11 +97,19 @@ local function shoot ()
       return
    end
 
+   --local didhit = false
    for k,t in ipairs(targets) do
       if z_cur==t.z and math.abs(pointer-t.cur) < t.size then
          t.hit = true
+         --didhit = true
       end
    end
+
+   --[[ TODO play some sounds
+   if didhit then
+   else
+   end
+   --]]
 
    table.insert( shots_visual, {pos=pointer, timer=0} )
 
@@ -118,6 +126,7 @@ function mining.keypressed( key )
          done = 1
       elseif not moving then
          moving = true
+         -- TODO play start sound
       else
          shoot()
       end
@@ -169,11 +178,13 @@ function mining.draw()
          local s = r*t.size
          local p = t.cur
          if t.hit then
+            lg.setColor( 1, 1, 0, a*0.8 )
             r = r * y
          else
+            lg.setColor( 1, 0.4, 0, a*0.8 )
             r = r * (2-y)
          end
-         if t.z >= z_cur then
+         if not t.hit and t.z >= z_cur then
             if t.m then
                r = r + 150 * (ease(1-t.m) + t.z-z_cur)
             else
@@ -187,7 +198,6 @@ function mining.draw()
          local sx = radius*0.4
          local sy = s + 0.2*radius
          shd_target:send( "size", {sx, sy, 0.9*radius, s} )
-         lg.setColor( 1, 0, 0, a*0.8 )
          lg.draw( img, -sx, -sy, 0, 2*sx, 2*sy )
 
          lg.pop()
@@ -297,6 +307,7 @@ function mining.update( dt )
          if z_cur > z_max then
             moving = false
             pointer = 2*math.pi
+            -- TODO play finished sound
          end
       end
    end
