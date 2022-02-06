@@ -238,11 +238,11 @@ function mining.draw()
    local ta, text
    if z_cur > z_max then
       ta = alpha * ease( math.min(tcompleted/0.1,1.0) )
-      text = "MINING COMPLETED"
+      text = _("MINING COMPLETED")
 
    elseif not moving or tsincestart < 0.1 then
       ta = alpha * (1-ease( tsincestart / 0.1 ))
-      text = "PRESS ANY KEY TO START"
+      text = _("PRESS ANY KEY TO START")
    end
 
    if text then
