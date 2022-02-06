@@ -406,7 +406,12 @@ void asteroids_computeInternals( AsteroidAnchor *a )
    a->ndebris = floor( 100.*a->density );
 
    /* Computed from your standard physics equations (with a bit of margin). */
-   a->margin   = pow2(a->maxspeed) / (4.*a->thrust) + 50.;
+   a->margin  = pow2(a->maxspeed) / (4.*a->thrust) + 50.;
+
+   /* Compute weight total. */
+   a->groupswtotal = 0.;
+   for (int i=0; i<array_size(a->groupsw); i++)
+      a->groupswtotal += a->groupsw[i];
 }
 
 /**
@@ -849,7 +854,7 @@ void asteroids_free (void)
    array_free(asteroid_gfx);
 
    /* Free the asteroid types. */
-   for (int i=0; i < array_size(asteroid_types); i++) {
+   for (int i=0; i<array_size(asteroid_types); i++) {
       AsteroidType *at = &asteroid_types[i];
       free(at->name);
       array_free(at->material);
@@ -859,6 +864,16 @@ void asteroids_free (void)
    }
    array_free(asteroid_types);
    asteroid_types = NULL;
+
+   /* Free the asteroid groups. */
+   for (int i=0; i<array_size(asteroid_groups); i++) {
+      AsteroidTypeGroup *ag = &asteroid_groups[i];
+      free(ag->name);
+      array_free(ag->types);
+      array_free(ag->weights);
+   }
+   array_free(asteroid_groups);
+   asteroid_groups = NULL;
 
    /* Free the gatherable stack. */
    gatherable_free();
