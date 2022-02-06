@@ -169,6 +169,17 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p, credits_t 
 {
    int i,k;
    CommodityPrice *commPrice;
+
+   if (com->price_ref != NULL) {
+      const Commodity *ref = commodity_get( com->price_ref );
+      if (ref==NULL)
+         return -1;
+      int ret = economy_getAverageSpobPrice( ref, p, mean, std );
+      *mean = (credits_t) ((double)*mean*com->price_mod+0.5);
+      *std = (*std*com->price_mod);
+      return ((double)ret*com->price_mod+0.5);
+   }
+
    /* Get position in stack */
    k = com - commodity_stack;
 
@@ -224,6 +235,17 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
    double av = 0;
    double av2 = 0;
    int cnt = 0;
+
+   if (com->price_ref != NULL) {
+      const Commodity *ref = commodity_get( com->price_ref );
+      if (ref==NULL)
+         return -1;
+      int ret = economy_getAveragePrice( ref, mean, std );
+      *mean = (credits_t) ((double)*mean*com->price_mod+0.5);
+      *std = (*std*com->price_mod);
+      return ((double)ret*com->price_mod+0.5);
+   }
+
    /* Get position in stack */
    k = com - commodity_stack;
 
