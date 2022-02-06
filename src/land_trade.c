@@ -114,34 +114,35 @@ void commodity_exchange_open( unsigned int wid )
          continue;
       ngoods++;
    }
-   cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
-   if (commodity_list != NULL)
-      free(commodity_list);
-   commodity_list = malloc( ngoods*sizeof(Commodity*) );
-   j = 0;
+   if (ngoods > 0) {
+      cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
+      if (commodity_list != NULL)
+         free(commodity_list);
+      commodity_list = malloc( ngoods*sizeof(Commodity*) );
+      j = 0;
 
-   /* First add special sellable. */
-   for (int i=0; i<array_size(player.p->commodities); i++) {
-      PilotCommodity *pc = &player.p->commodities[i];
-      if (pc->id > 0) /* Ignore mission stuff. */
-         continue;
-      if (!commodity_isFlag(pc->commodity, COMMODITY_FLAG_ALWAYSCANSELL))
-         continue;
-      cgoods[j].image = gl_dupTexture(pc->commodity->gfx_store);
-      cgoods[j].caption = strdup( _(pc->commodity->name) );
-      commodity_list[j] = pc->commodity;
-      j++;
+      /* First add special sellable. */
+      for (int i=0; i<array_size(player.p->commodities); i++) {
+         PilotCommodity *pc = &player.p->commodities[i];
+         if (pc->id > 0) /* Ignore mission stuff. */
+            continue;
+         if (!commodity_isFlag(pc->commodity, COMMODITY_FLAG_ALWAYSCANSELL))
+            continue;
+         cgoods[j].image = gl_dupTexture(pc->commodity->gfx_store);
+         cgoods[j].caption = strdup( _(pc->commodity->name) );
+         commodity_list[j] = pc->commodity;
+         j++;
+      }
+
+      /* Then add default. */
+      for (int i=0; i<array_size(land_spob->commodities); i++) {
+         cgoods[j].image = gl_dupTexture(land_spob->commodities[i]->gfx_store);
+         cgoods[j].caption = strdup( _(land_spob->commodities[i]->name) );
+         commodity_list[j] = land_spob->commodities[i];
+         j++;
+      }
    }
-
-   /* Then add default. */
-   for (int i=0; i<array_size(land_spob->commodities); i++) {
-      cgoods[j].image = gl_dupTexture(land_spob->commodities[i]->gfx_store);
-      cgoods[j].caption = strdup( _(land_spob->commodities[i]->name) );
-      commodity_list[j] = land_spob->commodities[i];
-      j++;
-   }
-
-   if (ngoods==0) {
+   else {
       ngoods   = 1;
       cgoods   = calloc( ngoods, sizeof(ImageArrayCell) );
       cgoods[0].image = NULL;
@@ -367,7 +368,7 @@ void commodity_sell( unsigned int wid, const char *str )
    q = pilot_cargoRm( player.p, com, q );
    price = price * (credits_t)q;
    player_modCredits( price );
-   if ( pilot_cargoOwned( player.p, com ) == 0 ) /* None left, set purchase price to zero, in case missions add cargo. */
+   if (pilot_cargoOwned( player.p, com ) == 0) /* None left, set purchase price to zero, in case missions add cargo. */
      com->lastPurchasePrice = 0;
    commodity_update(wid, NULL);
 
