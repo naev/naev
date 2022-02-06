@@ -9,6 +9,7 @@
  * Helper functions.
  */
 void commodity_exchange_open( unsigned int wid );
+void commodity_exchange_cleanup (void);
 void commodity_update( unsigned int wid, const char *str );
 void commodity_buy( unsigned int wid, const char *str );
 void commodity_sell( unsigned int wid, const char *str );

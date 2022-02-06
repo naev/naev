@@ -36,6 +36,7 @@
  * Quantity to buy on one click
 */
 static int commodity_mod = 10; /**< Amount you can buy or sell in a single click. */
+static const Commodity **commodity_list = NULL;
 
 /**
  * @brief Opens the local market window.
@@ -114,6 +115,9 @@ void commodity_exchange_open( unsigned int wid )
       ngoods++;
    }
    cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
+   if (commodity_list != NULL)
+      free(commodity_list);
+   commodity_list = malloc( ngoods*sizeof(Commodity*) );
    j = 0;
 
    /* First add special sellable. */
@@ -125,6 +129,7 @@ void commodity_exchange_open( unsigned int wid )
          continue;
       cgoods[j].image = gl_dupTexture(pc->commodity->gfx_store);
       cgoods[j].caption = strdup( _(pc->commodity->name) );
+      commodity_list[j] = pc->commodity;
       j++;
    }
 
@@ -132,6 +137,7 @@ void commodity_exchange_open( unsigned int wid )
    for (int i=0; i<array_size(land_spob->commodities); i++) {
       cgoods[j].image = gl_dupTexture(land_spob->commodities[i]->gfx_store);
       cgoods[j].caption = strdup( _(land_spob->commodities[i]->name) );
+      commodity_list[j] = land_spob->commodities[i];
       j++;
    }
 
@@ -156,7 +162,13 @@ void commodity_exchange_open( unsigned int wid )
 
    /* Set default keyboard focuse to the list */
    window_setFocus( wid , "iarTrade" );
- }
+}
+
+void commodity_exchange_cleanup (void)
+{
+   free(commodity_list);
+   commodity_list = NULL;
+}
 
 /**
  * @brief Updates the commodity window.
@@ -169,7 +181,7 @@ void commodity_update( unsigned int wid, const char *str )
    char buf[STRMAX];
    char buf_purchase_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN];
    size_t l = 0;
-   Commodity *com;
+   const Commodity *com;
    credits_t mean,globalmean;
    double std, globalstd;
    char buf_mean[ECON_CRED_STRLEN], buf_globalmean[ECON_CRED_STRLEN];
@@ -195,7 +207,7 @@ void commodity_update( unsigned int wid, const char *str )
       window_disableButton( wid, "btnCommoditySell" );
       return;
    }
-   com = land_spob->commodities[i];
+   com = commodity_list[i];
 
    /* modify image */
    window_modifyImage( wid, "imgStore", com->gfx_store, 192, 192 );

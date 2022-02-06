@@ -1627,4 +1627,5 @@ void land_exit (void)
    land_cleanup();
    equipment_cleanup();
    outfits_cleanup();
+   commodity_exchange_cleanup();
 }
