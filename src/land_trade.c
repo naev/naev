@@ -42,7 +42,7 @@ static int commodity_mod = 10; /**< Amount you can buy or sell in a single click
  */
 void commodity_exchange_open( unsigned int wid )
 {
-   int i, ngoods;
+   int j, ngoods;
    ImageArrayCell *cgoods;
    int w, h, iw, ih, dw, bw, titleHeight, infoHeight;
    char buf[STRMAX_SHORT];
@@ -102,15 +102,40 @@ void commodity_exchange_open( unsigned int wid )
          "txtDesc", &gl_smallFont, NULL, NULL );
 
    /* goods list */
-   if (array_size(land_spob->commodities) > 0) {
-      ngoods = array_size( land_spob->commodities );
-      cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
-      for (i=0; i<ngoods; i++) {
-         cgoods[i].image = gl_dupTexture(land_spob->commodities[i]->gfx_store);
-         cgoods[i].caption = strdup( _(land_spob->commodities[i]->name) );
-      }
+   ngoods  = array_size( land_spob->commodities );
+
+   /* Count always sellable goods. */
+   for (int i=0; i<array_size(player.p->commodities); i++) {
+      PilotCommodity *pc = &player.p->commodities[i];
+      if (pc->id > 0) /* Ignore mission stuff. */
+         continue;
+      if (!commodity_isFlag(pc->commodity, COMMODITY_FLAG_ALWAYSCANSELL))
+         continue;
+      ngoods++;
    }
-   else {
+   cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
+   j = 0;
+
+   /* First add special sellable. */
+   for (int i=0; i<array_size(player.p->commodities); i++) {
+      PilotCommodity *pc = &player.p->commodities[i];
+      if (pc->id > 0) /* Ignore mission stuff. */
+         continue;
+      if (!commodity_isFlag(pc->commodity, COMMODITY_FLAG_ALWAYSCANSELL))
+         continue;
+      cgoods[j].image = gl_dupTexture(pc->commodity->gfx_store);
+      cgoods[j].caption = strdup( _(pc->commodity->name) );
+      j++;
+   }
+
+   /* Then add default. */
+   for (int i=0; i<array_size(land_spob->commodities); i++) {
+      cgoods[j].image = gl_dupTexture(land_spob->commodities[i]->gfx_store);
+      cgoods[j].caption = strdup( _(land_spob->commodities[i]->name) );
+      j++;
+   }
+
+   if (ngoods==0) {
       ngoods   = 1;
       cgoods   = calloc( ngoods, sizeof(ImageArrayCell) );
       cgoods[0].image = NULL;
