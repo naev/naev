@@ -201,7 +201,8 @@ static int asteroidL_get( lua_State *L )
       pos = &luaL_validpilot(L,1)->solid->pos;
 
    else if (lua_isnoneornil(L,1)) {
-      field = RNG(0,array_size(cur_system->asteroids)-1);
+      int max_field = array_size(cur_system->asteroids) - 1;
+      field = (max_field < 0 ? max_field : RNG(0, max_field));
    }
    else if (lua_isnumber(L,1)) {
       field = luaL_checkinteger(L,1)-1;
