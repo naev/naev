@@ -254,7 +254,7 @@ void commodity_update( unsigned int wid, const char *str )
 
 int commodity_canBuy( const Commodity* com )
 {
-   int failure;
+   int failure, incommodities;
    unsigned int q, price;
    char buf[ECON_CRED_STRLEN];
 
@@ -269,6 +269,18 @@ int commodity_canBuy( const Commodity* com )
    }
    if (pilot_cargoFree(player.p) <= 0) {
       land_errDialogueBuild(_("No cargo space available!"));
+      failure = 1;
+   }
+
+   incommodities = 0;
+   for (int i=0; i<array_size(land_spob->commodities); i++) {
+      if (land_spob->commodities[i] == com) {
+         incommodities = 1;
+         break;
+      }
+   }
+   if (!incommodities) {
+      land_errDialogueBuild(_("%s is not sold here!"), _(com->name));
       failure = 1;
    }
 
