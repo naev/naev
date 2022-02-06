@@ -112,7 +112,7 @@ end
 
 
 function land ()
-   if mem.misn_state==4 then
+   if mem.misn_state==4 and spob.cur() == spob.get("Minerva Station") then
       vn.clear()
       vn.scene()
       vn.music( minerva.loops.pirate )
