@@ -849,9 +849,9 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
       case SS_DATA_TYPE_BOOLEAN:
          destint  = (int*) &ptr[ sl->offset ];
          if (overwrite)
-            *destint = !(fabs(value) > 1e-5);
+            *destint = (fabs(value) > 1e-5);
          else
-            *destint |= !(fabs(value) > 1e-5);
+            *destint |= (fabs(value) > 1e-5);
          break;
 
       case SS_DATA_TYPE_INTEGER:
