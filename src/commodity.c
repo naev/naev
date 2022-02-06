@@ -270,9 +270,11 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       xmlr_strd(node, "name", temp->name);
       xmlr_strd(node, "description", temp->description);
       xmlr_int(node, "price", temp->price);
-      if (xml_isNode(node,"gfx_space"))
+      if (xml_isNode(node,"gfx_space")) {
          temp->gfx_space = xml_parseTexture( node,
                COMMODITY_GFX_PATH"space/%s", 1, 1, OPENGL_TEX_MIPMAPS );
+         continue;
+      }
       if (xml_isNode(node,"gfx_store")) {
          temp->gfx_store = xml_parseTexture( node,
                COMMODITY_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS );
@@ -284,6 +286,10 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       }
       if (xml_isNode(node, "standard")) {
          commodity_setFlag( temp, COMMODITY_FLAG_STANDARD );
+         continue;
+      }
+      if (xml_isNode(node, "alwayscansell")) {
+         commodity_setFlag( temp, COMMODITY_FLAG_ALWAYSCANSELL );
          continue;
       }
       if (xml_isNode(node, "illegalto")) {
@@ -317,9 +323,12 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          continue;
       }
 
+      WARN(_("Commodity '%s' has unknown node '%s'"),temp->name, node->name);
    } while (xml_nextNode(node));
+
    if (temp->name == NULL)
       WARN( _("Commodity from %s has invalid or no name"), COMMODITY_DATA_PATH);
+
    if ((temp->price > 0)) {
       if (temp->gfx_store == NULL) {
          WARN(_("No <gfx_store> node found, using default texture for commodity \"%s\""), temp->name);
