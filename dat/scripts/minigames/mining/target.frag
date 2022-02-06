@@ -19,11 +19,13 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    vec2 p = (uv * size.xy / size.z + vec2(1.0,0.0) );
    float d = abs(length(p)-1.0)-0.25;
    d = max( d, (abs(p.y)-size.w/size.z*p.x) );
-   d = max( d, -(d+3.0*m) ); /* Hollow out inside. */
+   float dout = d;
+   d = max( d, -(d+3.0*m) );
 
    d = max( d, -(abs(length(p)-1.0)-0.15) );
    d = max( d, -(abs(p.y)-size.w/size.z*p.x*0.5) );
 
    float alpha = smoothstep( -m, 0.0, -d);
-	return colour * vec4( vec3(1.0), alpha );
+   float aout  = smoothstep( -m, 0.0, -dout);
+   return colour * vec4( vec3(1.0), max(alpha, 0.2*aout) );
 }
