@@ -76,6 +76,7 @@ static int pilotL_setTarget( lua_State *L );
 static int pilotL_targetAsteroid( lua_State *L );
 static int pilotL_setTargetAsteroid( lua_State *L );
 static int pilotL_inrange( lua_State *L );
+static int pilotL_inrangeAsteroid( lua_State *L );
 static int pilotL_scandone( lua_State *L );
 static int pilotL_withPlayer( lua_State *L );
 static int pilotL_nav( lua_State *L );
@@ -214,6 +215,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "targetAsteroid", pilotL_targetAsteroid },
    { "setTargetAsteroid", pilotL_setTargetAsteroid },
    { "inrange", pilotL_inrange },
+   { "inrangeAsteroid", pilotL_inrangeAsteroid },
    { "scandone", pilotL_scandone },
    { "withPlayer", pilotL_withPlayer },
    { "nav", pilotL_nav },
@@ -1252,7 +1254,7 @@ static int pilotL_setTargetAsteroid( lua_State *L )
 }
 
 /**
- * @brief Checks to see if pilot is in range of pilot.
+ * @brief Checks to see if a target pilot is in range of a pilot.
  *
  * @usage detected, scanned = p:inrange( target )
  *
@@ -1283,6 +1285,25 @@ static int pilotL_inrange( lua_State *L )
       lua_pushboolean(L,0);
    }
    return 2;
+}
+
+/**
+ * @brief Checks to see if an asteroid is in range of a pilot.
+ *
+ *    @luatparam Pilot p Pilot checking to see if an asteroid is in range.
+ *    @luatparam Asteroid a Asteroid to check to see if is in range.
+ *    @luatreturn boolean true if in range, false otherwise.
+ * @luafunc inrangeAsteroid
+ */
+static int pilotL_inrangeAsteroid( lua_State *L )
+{
+   /* Parse parameters. */
+   Pilot *p = luaL_validpilot(L,1);
+   LuaAsteroid_t *la = luaL_checkasteroid(L,2);
+
+   /* Check if in range. */
+   lua_pushboolean(L, pilot_inRangeAsteroid( p, la->id, la->parent ));
+   return 1;
 }
 
 /**

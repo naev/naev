@@ -18,11 +18,10 @@ function ontoggle( p, _po, on )
 
    -- See if there's an asteroid targetted
    local a = p:targetAsteroid()
-   if not a then
+   if not a or not p:inrangeAsteroid( a ) then
       -- Get nearest if not found
       a = asteroid.get( p )
-      -- TODO visibility check
-      if not a then
+      if not a or not p:inrangeAsteroid( a ) then
          if mem.isp then
             player.msg("#r".._("No asteroids available to mine"))
          end
