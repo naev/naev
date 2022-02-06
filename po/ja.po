@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-01-29 16:39-0500\n"
-"PO-Revision-Date: 2022-01-30 17:55+0000\n"
+"PO-Revision-Date: 2022-02-06 17:57+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "ja/>\n"
@@ -27747,7 +27747,7 @@ msgstr "この人は現在あなたの飛行隊にいるパイロットだ。"
 #. Whitelist control of reasons
 #: dat/events/hired_escorts.lua:304 dat/events/hired_escorts.lua:337
 msgid "'{name}' ({ship}) has left your employment."
-msgstr "｢{name}｣ ({ship}) があなたの雇用のもとから外れました。"
+msgstr "｢{name}｣ ({ship}) があなたの雇用のもとからはずれました。"
 
 #. Asks the player whether or not they want to fire the pilot
 #: dat/events/hired_escorts.lua:346
@@ -27903,9 +27903,7 @@ msgstr ""
 msgid ""
 "\"You were using a bloody computation drone to cheat, you dirty Za'lek stink!"
 "\""
-msgstr ""
-"｢おまえたちは血なまぐさいコンピュータードローンを使ってずるをしている。きたな"
-"いザレクの鼻つまみ！｣"
+msgstr "｢おまえたちはとんでもないコンピュータードローンを使ってずるをしている。きたないザレクの鼻つまみ！｣"
 
 #: dat/events/minerva/altercation1.lua:67
 msgid ""
@@ -28052,63 +28050,68 @@ msgid ""
 "station. As you get closer you see what seems to be a group of people "
 "chasing something small… Wait, is that a chicken?"
 msgstr ""
+"またミネルバ・ステーションの翼のひとつから、大きな騒動の音が聞こえてきた。あなたが近づいてみると、集まった人びとがなにか小さいものを追いかけているらしいと"
+"わかった。……ちょっと、あれはニワトリ？"
 
 #: dat/events/minerva/altercation2.lua:55
 msgid "\"Get back here you thief! Give me back my tokens! There is no way \""
-msgstr ""
+msgstr "｢戻ってこい、この泥棒！　おれのトークンを返せ！　逃げられないぞ｣"
 
 #: dat/events/minerva/altercation2.lua:57
 msgid "\"Puk Puk Pukaaak! Quack!\""
-msgstr ""
+msgstr "｢プカップカップカーーック！　クアーック！｣"
 
 #: dat/events/minerva/altercation2.lua:60
 msgid "\"Filthy little animal! I'll beat you into a pulp!\""
-msgstr ""
+msgstr "｢けがらわしいちびの畜生が！　たたきつぶしてやる！｣"
 
 #: dat/events/minerva/altercation2.lua:63
 msgid "\"Cluck Quack Clukuk Pukaaaaaaaaak!\""
-msgstr ""
+msgstr "｢クルック、クアック、クルックク、プカーーーーーック！｣"
 
 #: dat/events/minerva/altercation2.lua:65
 msgid ""
 "Cyborg Chicken runs itself into a corner and it doesn't seem like station "
 "security will make it in time. What do you do?"
-msgstr ""
+msgstr "サイボーグチキンは隅に追いつめられた。そしてステーションの警備係は間にあいそうにない。あなたはどうする？"
 
 #: dat/events/minerva/altercation2.lua:67
 msgid "Try to intervene"
-msgstr ""
+msgstr "仲裁しようとする"
 
 #: dat/events/minerva/altercation2.lua:68
 msgid "Wait"
-msgstr ""
+msgstr "待つ"
 
 #: dat/events/minerva/altercation2.lua:72
 msgid "You approach the chicken and thug and try to mediate."
-msgstr ""
+msgstr "あなたはニワトリとならず者に近づいて、仲裁しようとした。"
 
 #: dat/events/minerva/altercation2.lua:73
 msgid ""
 "As the thug is distracted by you, Cyborg Chicken suddenly sprints and runs "
 "past you. Did it wink at you?"
 msgstr ""
+"ならず者があなたに気をとられると、サイボーグチキンはとつぜん全力疾走をして、あなたのところを通りすぎて逃げていった。あいつはあなたにウィンクをした？"
 
 #: dat/events/minerva/altercation2.lua:77
 msgid ""
 "\"Not such a tough chicken anymore, huh? Going to beat you so bad we'll have "
 "chicken nuggets for lunch!\""
-msgstr ""
+msgstr "｢こんなしぶといニワトリもこれまでだな、えっ？　めちゃくちゃにたたきつぶして昼飯はチキンナゲットだ！｣"
 
 #: dat/events/minerva/altercation2.lua:78
 msgid ""
 "Cyborg Chicken blinks twice then sprints through the thugs legs and runs "
 "past you. The thug tries to chase but ends up bumping into you."
 msgstr ""
+"サイボーグチキンは二度まばたきをすると、ならず者の足の間を全力疾走で抜けて、あなたのところを通りすぎて逃げていった。ならず者は追いかけようとしたが、あなた"
+"に突きあたってそれまでとなった。"
 
 #: dat/events/minerva/altercation2.lua:92
 msgid ""
 "\"You let the chicken get away punk! How are you going to make up for this!\""
-msgstr ""
+msgstr "｢あんたがニワトリを逃したんだ、役立たず！　どうしてくれるつもりだ！｣"
 
 #: dat/events/minerva/altercation2.lua:93
 msgid ""
@@ -28116,10 +28119,12 @@ msgid ""
 "thug away. As you go back to what you were doing, you see cyborg chicken in "
 "the distance who seems to wink at you. What was that all about?"
 msgstr ""
+"あなたが時間を稼ぐと、やっとステーションの警備係がやってきて、ならず者を連れ去った。あなたが自分のしていたことに戻ると、サイボーグチキンが遠くからあなたに"
+"ウィンクしているらしいとわかった。あれはいったいぜんたいなんなんだ？"
 
 #: dat/events/minerva/altercation2.lua:97
 msgid "You sort of helped cyborg chicken get away from a thug."
-msgstr ""
+msgstr "あなたはサイボーグチキンがならず者から逃げるのにいくらか手を貸した。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -28146,12 +28151,14 @@ msgid ""
 "blasting music and flashing lights before triumphantly announcing to "
 "everyone in the vicinity:"
 msgstr ""
+"あなたはいちばん近くの端末に当たりくじを見せた。端末はとつぜん大きな音で音楽を流して、あかりをぴかぴかさせはじめると、近くにいた全員に意気揚々と発表をする"
+"。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:35
 msgid ""
 "\"CONGRATULATIONS MISTER HARPER BOWDOIN ON WINNING THE EXCLUSIVE STAY AT THE "
 "MINERVA SPA.\""
-msgstr ""
+msgstr "｢ミネルバ温泉への独占滞在を勝ちとったハーパー・ボードン氏にお祝い申しあげます｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:36
 msgid ""
@@ -28160,6 +28167,8 @@ msgid ""
 "the same gaudy decorations and similar patrons. You wonder if you will be "
 "able to make it back to where you came from."
 msgstr ""
+"端末がもっと控えめだったら……。端末が温泉施設の方へあなたを案内するので、あなたは端末につづいた。通りぬける部屋はすべて、けばけばしい装飾と似たような得意"
+"客がいるように見える。あなたはもとの場所へ戻れるのだろうかと思った。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:37
 msgid ""
@@ -28168,6 +28177,8 @@ msgid ""
 "\"I BELIEVE YOU WILL BE VERY IMPRESSED WITH THE ACCOMMODATIONS AT THE SPA. "
 "THE RENOVATIONS TOOK ALMOST A CYCLE AND IT IS MORE BEAUTIFUL THAN EVER.\""
 msgstr ""
+"端末はミネルバ・ステーションという迷路をまわってすべるように進んでいった。そのあいだ、端末の頭はうしろに回ってあなたと顔をあわせている。\n"
+"｢温泉の設備にはとても感動すると信じています。改装にはほぼ 1 周期かけましたし、以前よりもっと美しいのです｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:39
 msgid ""
@@ -28176,12 +28187,14 @@ msgid ""
 "THE ZA'LEK AND SHOULD EVEN SURPASS THE ANTI-AGING PROPERTIES OF THE SOROMID "
 "SKIN LEECHES, WITHOUT EVEN CLOUDING THE WATER.\""
 msgstr ""
+"｢本日はお湯にナノボットを満たしています。そのナノボットは抗老化作用に特殊化したもので、浸かったあとは以前より若く見えることでしょう。これはザレクが開発し"
+"たもので、ソロミドのスキンリーチの抗老化特性をずっとしのぐはずですし、お湯がにごることもありません｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:40
 msgid ""
 "As you walk, you feel that the surrounding decorations are starting to get "
 "fancier, you must be nearing the VIP area."
-msgstr ""
+msgstr "歩きながら、あなたは取りかこんでいる装飾が派手になりはじめたと感じた。要人用の区画に近づいているにちがいない。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:41
 msgid ""
@@ -28189,6 +28202,8 @@ msgid ""
 "HIS CYBORG IMPLEMENTS ARE ALL WATER-PROOF UNLIKE MY BODY. MAKE SURE TO MAKE "
 "MOST OF THIS ONCE IN A LIFETIME OPPORTUNITY.\""
 msgstr ""
+"｢そのうえ、サイボーグチキンがあなたと温泉で合流します。心配は無用です。チキンのサイボーグ機器はわたしの体とちがってすべて防水です。人生に一度のこの機会を"
+"最大限楽しんでください｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:42
 msgid ""
@@ -28196,6 +28211,8 @@ msgid ""
 "be diamonds on a gold enamel.\n"
 "\"WE HAVE REACHED OUR DESTINATION. PLEASE ENJOY YOURSELF.\""
 msgstr ""
+"端末はエアロックの前で動くのをやめた。そのエアロックは、金色のエナメルの上にダイアモンドが乗っているように見えるもので覆われている。\n"
+"｢目的地に到着しました。どうぞお楽しみください｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:45
 msgid ""
@@ -28203,6 +28220,7 @@ msgid ""
 "of the changing rooms. You get rid of your clothes, take a small towel, and "
 "proceed to enter the spa area."
 msgstr ""
+"あなたが近づくとエアロックが開いた。そしてあなたは自分が更衣室の入口にいるのがわかった。服を脱いで小さなタオルを持ち、あなたは温泉区画に入った。"
 
 #. Start the fancy spa scene!
 #: dat/events/minerva/chicken_rendezvous.lua:63
@@ -28212,6 +28230,8 @@ msgid ""
 "alone. It smells like some sort of mix between lemons and assorted herbs, "
 "but is rather quite pleasant."
 msgstr ""
+"温泉に入ると、あなたは湯気の大波にぶつかった。おそらく、端末が説明したナノボットで満たされているのだろう。そしてあなたはひとりだとわかった。レモンと詰あわ"
+"せのハーブが混じったようなにおいがする。しかしむしろなかなか感じがよい。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:64
 msgid ""
@@ -28220,6 +28240,8 @@ msgid ""
 "standards of volcanic world natural springs, it is very impressive when you "
 "consider that this installation is located inside a space station."
 msgstr ""
+"濃い霧の中にいくつか大きな浴槽があるのがわかった。そして絶え間なくお湯が流れる背景音がする。火山の世界の自然の温泉を基準にすると、あまり上質ということはな"
+"いが、この施設が宇宙ステーションの中にあるのだと思えば、とても感動的だ。"
 
 #. Special case doing Minerva Pirate mission
 #: dat/events/minerva/chicken_rendezvous.lua:68
@@ -28228,6 +28250,7 @@ msgid ""
 "to in a corner of the room so that it won't be noticed. That should make "
 "your current employer happy and get your work out of the way."
 msgstr ""
+"楽しむまえに、あなたは気づかれないように部屋の隅に置くことになっていた盗聴装置を置いた。これで現在の雇用主は満足するので、あなたの仕事は片づいたはずだ。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:71
 msgid ""
@@ -28238,6 +28261,8 @@ msgid ""
 "accumulates by space travel, probably obtained on all sorts of different "
 "planets."
 msgstr ""
+"きちんとした入浴のしかたを説明する標識がある。あなたは最初に小さな個室で体を洗ってから、大きな浴槽に入ることになっているようだ。あなたはそれから徹底的に体"
+"を洗い、旅の汚れをすべて取り去った。宇宙旅行で集まるほこりの量には驚くべきものがある。おそらくいろいろ異なる惑星からもたらされたものだろう。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:72
 msgid ""
@@ -28245,6 +28270,8 @@ msgid ""
 "pore of your skin in an incredibly relaxing and soothing manner. You melt "
 "into the water and let it all flow in. You should come here more often."
 msgstr ""
+"あなたは見つけた最初の浴槽に入った。そのお湯は、信じられないくらい穏やかに落ちついたやりかたで、あなたの皮膚のすべての毛穴からしみいってくるようだった。あ"
+"なたはお湯に溶けこみ、すべてを流れこませた。ここへはもっとよく来るべきだ。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:73
 msgid ""
@@ -28254,24 +28281,26 @@ msgid ""
 "question why the management decided to include Cyborg Chicken into this "
 "renovation event deal."
 msgstr ""
+"あなたが時空に没頭していると、かすかな水しぶきの音で現実に呼びもどされた。そうだった。あなたは温泉でサイボーグチキンと合流することになっていたのだ。温泉が"
+"こんなにすばらしいのだから、経営陣がこの改装記念の賞品にサイボーグチキンを含めようと決めたのには疑問を感じざるをえなかった。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:74
 msgid ""
 "The splashing sound stops, and you hear the pit-pat sound of chicken feet "
 "approaching you."
-msgstr ""
+msgstr "水しぶきの音が止まり、あなたに近づいてくるニワトリの足のぱたぱたする音が聞こえた。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:78
 msgid ""
 "Cyborg Chicken comes up to the pool you are in and tests the water by "
 "sticking a foot in. Seeming satisfied, it jumps in and starts floating."
-msgstr ""
+msgstr "サイボーグチキンがあなたの入っている浴槽のところまで来た。そして片足を入れてお湯をたしかめている。満足したらしく、飛びこんで漂いはじめた。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:79
 msgid ""
 "Concentrating on the cathartic spa water, you let your thoughts wander, "
 "while Cyborg Chicken floats around lazily."
-msgstr ""
+msgstr "温泉のお湯による浄化に集中しながら、あなたは思いを漂わせた。いっぽう、サイボーグチキンはまわりでぷかぷかと漂っている。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:82
 msgid ""
@@ -28279,6 +28308,8 @@ msgid ""
 "father? What is the shady character's objective? It seems like there are "
 "many loose ends at Minerva station."
 msgstr ""
+"ステーションにモグラはほんとうにいるのか？　メイッキーの父親はどうなったのか？　あのいかがわしい人物の目的はなんなのか？　"
+"ミネルバ・ステーションにはやり残した仕事がたくさんあるようだ。"
 
 #. else -- TODO case other missions when implemented
 #: dat/events/minerva/chicken_rendezvous.lua:86
@@ -28287,28 +28318,30 @@ msgid ""
 "a spa with a chicken, that happens to be a cyborg. This doesn't seem like is "
 "something that happens very often."
 msgstr ""
+"やがてあなたは夢見心地の考えごとから抜けだして、温泉にニワトリといっしょに入っていることを思いだした。そしてそのニワトリはたまたまサイボーグだ。このような"
+"ことは、とてもよくあることではない。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:88
 msgid "Squawk at the chicken"
-msgstr ""
+msgstr "ニワトリにガーガー鳴く"
 
 #: dat/events/minerva/chicken_rendezvous.lua:89
 msgid "\"Yo chicken!\""
-msgstr ""
+msgstr "｢やあ、チキン！｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:92
 msgid "Cyborg Chicken stares at you intensely."
-msgstr ""
+msgstr "サイボーグチキンが激しくあなたを見つめた。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:93
 msgid ""
 "You once again wonder about what the entire point of swimming with a chicken "
 "is, even if it is a cyborg one."
-msgstr ""
+msgstr "あなたはもういちどニワトリと泳ぐことの全体的な趣旨はなんなのかと疑問に思った。ニワトリがサイボーグだとしてもだ。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:94
 msgid "They still are staring at you with a creepy fixation."
-msgstr ""
+msgstr "サイボーグチキンはぞっとするほど執着してあなたをじっと見つめている。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:95
 msgid ""
@@ -28316,10 +28349,11 @@ msgid ""
 "chicken, you hear a small faint sound come out of it. However, you can't "
 "make out what the sound was."
 msgstr ""
+"ついに、永遠かと思えるほどニワトリに見つめられていたあとで、あなたはかすかな音がニワトリからするのを聞いた。とはいえ、その音がなんなのかはわからなかった。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:97
 msgid "Cyborg Duck?"
-msgstr ""
+msgstr "サイボーグダック？"
 
 #: dat/events/minerva/chicken_rendezvous.lua:98
 msgid ""
@@ -28328,6 +28362,8 @@ msgid ""
 "\"Actually, I'm not a chicken: I'm a duck. Well, genetically speaking, "
 "mostly a duck.\""
 msgstr ""
+"サイボーグチキンは目であなたをまっすぐ見てから話しはじめた。ゆっくりと声が大きくなる。\n"
+"｢じつは、おれはニワトリではない。アヒルだ。まあ、遺伝学的にいうと、ほどんどがアヒルだ｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:102
 #: dat/missions/minerva/kex4.lua:158 dat/missions/minerva/kex5.lua:521
@@ -28339,7 +28375,7 @@ msgstr "……"
 
 #: dat/events/minerva/chicken_rendezvous.lua:103
 msgid "\"A duck?\""
-msgstr ""
+msgstr "｢アヒル？｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:108
 msgid ""
@@ -28349,26 +28385,31 @@ msgid ""
 "for a living? Oh wait, I'm a damn male.\"\n"
 "They continue rambling furiously."
 msgstr ""
+"｢とんでもないアヒルだ！　"
+"くそみたいにできないサイバネティックインプラントとは名ばかりのこのくだらないものもついている。いったいおれがアヒルとしてなにをやることになっているのか？　"
+"床にくそをするのか？　鳥の餌を食うのか？　そいつはどんな一生なんだ？　たぶん卵をひりだして生活のために売ることができるな？　"
+"おっと待った、おれはくそったれのオスだった｣\n"
+"アヒルは怒り狂ってとりとめもなくしゃべりつづけた。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:111
 msgid "\"Are you okay?…\""
-msgstr ""
+msgstr "｢だいじょうぶですか……？｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:112
 msgid "\"Quack\""
-msgstr ""
+msgstr "｢クワック｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:115
 msgid ""
 "\"Do I look like I'm bloody OK? Stuck in the middle of no where as a bloody "
 "duck!\""
-msgstr ""
+msgstr "｢おれがとんでもなくだいじょうぶなように見えるか？　とんでもないアヒルとしてどこともわからない場所のどまんなかで缶詰になってるんだぞ！｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:118
 msgid ""
 "\"Bloody hell! What did I deserve to get mocked in a space station in the "
 "middle of no where!\""
-msgstr ""
+msgstr "｢とんでもないちくしょうめ！　なんの報いでどこともわからない場所のどまんなかの宇宙ステーションでばかにされるんだ！｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:121
 msgid ""
@@ -28377,6 +28418,9 @@ msgid ""
 "lover or whatever with a ton of credits, you're going to end up broke crying "
 "in the toilet stall. Bloody who do they think they are.\""
 msgstr ""
+"｢強制されて、毎日ブラックジャックをやらされてるんだよ。八百長ゲームで金持ちになれると考えてるまぬけども相手にしてな。いやいや、大量のクレジットを持って配"
+"偶者だか愛人だかなんだかを驚かしてやることにはならないよ。トイレの小部屋で泣きながら破滅して終わるんだ。とんでもないあいつらはいったい何様のつもりなんだ？"
+"｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:122
 msgid ""
@@ -28384,14 +28428,16 @@ msgid ""
 "lit up with neon lights that attracts idiots as surely as moths to flame. "
 "Whatever happened to me, Kex, intrepid explorer of the nebula…\""
 msgstr ""
+"｢おれはこんなものになってしまったのか？　意地の悪いステーションのくそったれな見世物にな。ネオンのあかりで照らしてやって、炎に飛びこむガみたいにしっかりま"
+"ぬけどもを引きつけようって場所でな。おれはいったいどうなってしまったんだ。あのケクス、星雲の大胆な探検家が……｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:124
 msgid "\"Kex…!\""
-msgstr ""
+msgstr "｢ケクス……！｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:125
 msgid "\"Intrepid explorer…?\""
-msgstr ""
+msgstr "｢大胆な探検家……？｣"
 
 #. Orangish
 #: dat/events/minerva/chicken_rendezvous.lua:131
@@ -28406,6 +28452,9 @@ msgid ""
 "\"You look like a good kid, and I'm bloody fed up with everything to give a "
 "shit anymore.\""
 msgstr ""
+"｢ああ、正真正銘そのおれだ。おまえは話をぜんぶ聞きたいと思ってるんだろうな｣\n"
+"アヒルが深くため息をついた。\n"
+"｢おまえはよい子みたいだな。だからこれ以上はないってくらいぜんぶのくそを、とんでもなくいっぱい食わせてやるよ｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:135
 msgid ""
@@ -28415,6 +28464,10 @@ msgid ""
 "\"You see, I was lucky enough to not get caught in the Incident, although "
 "most of my friends and family were caught up in it.\""
 msgstr ""
+"｢おれはケクス・マクファーソンだ……いや、ちがう……こんなちゃかされたものになるまえはケクス・マクファーソンだったものといったほうがいい。星雲の勇敢な探検"
+"家のな｣\n"
+"アヒルの目がすこし涙っぽくなり、アヒルが過去を思いだしはじめた。\n"
+"｢なあ、おれは事象に巻きこまれなかったくらい運がよかったんだ。友人や家族のほとんどはあれに巻きこまれたがな｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:138
 msgid ""
@@ -28424,6 +28477,9 @@ msgid ""
 "sure the world would be a better place for her. You know, like not repeating "
 "the mistakes of the past, and figure out what went wrong.\""
 msgstr ""
+"｢ただ座ったままではいられないとわかっていたので、おれはなにか見つからないか確認しようと決心した。なにがおきたのか、なにか手がかりがないか、それでなくても"
+"いちおうなにか見つからないかと。おれは若くて単純だった。娘がそのころ生まれて、世界が娘にとってもっといい場所になるようにしたかった。わかるだろ。過去のまち"
+"がいをくり返さないように、なにがまずかったのか知るってことだ｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:139
 msgid ""
@@ -28441,6 +28497,8 @@ msgid ""
 "parts of civilian vessels, but sometimes we found really weird shit, you "
 "know? Stuff that we had no idea where it came from.\""
 msgstr ""
+"｢ひどいことを見てはいたが、おれは気をつけていて、けっして取りこまれなかった。おれたちはたくさんの人工遺物を持ってかえったよ。見わけられたものの一部は民間"
+"船の部品のようなものだったが、ときどきはほんとうに異様なくそを見つけた。わかるか？　どこから来たのかぜんぜんわからないものだよ｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:141
 msgid ""
@@ -28450,6 +28508,9 @@ msgid ""
 "paid the bills. Sometimes life doesn't really give you options, you just "
 "have to make do.\""
 msgstr ""
+"｢それでもおれは生計を立てなきゃならなかった。だからその人工遺物の多くをザレクに売ろうとした。ザレクはだいたいぜんぶ買おうとしたな。あいつらがそれでいった"
+"いなにをしようとしていたのかは知らなかったが、おれにはまだ面倒を見なきゃならない妻と娘がいた。そしてあれは生活費を稼いでくれたんだ。ときどき人生ではほんと"
+"うに選択の余地がなくなって、とにかく折りあいをつけなきゃならないことがあるんだよ｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:142
 msgid ""
@@ -28459,6 +28520,9 @@ msgid ""
 "new reality much before that station was up and running. I miss those days, "
 "the good old times.\""
 msgstr ""
+"｢おれと最初の相棒のミレイア・シベコは、生涯のほとんどを星雲を出入りする旅ですごすつもりだった。ドズトンにケルベロス・ステーションが建設されると、なにかす"
+"るのはずっと簡単になった。だがあのステーションが立ちあがって運営されるずっとまえに、おれたちはすでに新しい真実をさぐっていたんだ。あの日々が懐かしい。古き"
+"よき時代が｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:143
 msgid ""
@@ -28468,6 +28532,9 @@ msgid ""
 "really have much memory of all that traumatic experience. You can't really "
 "expect to remember much when you are blacking out from pure agony.\""
 msgstr ""
+"｢ある日、なにか思いだせないことがおきた。ただどうも事故かなにかに巻きこまれたようだな。すべてが暗くなって、目が覚めたときには、あのむかつく野郎の研究室の"
+"中にいて、切り刻まれて改造されていた。あの心に傷を残す経験すべての記憶はじつはあまり残っていない。まじりけない苦痛で意識を失ってたら、ほんとうに多くを覚え"
+"ているなんて期待できないものなんだ｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:144
 msgid ""
@@ -28476,6 +28543,8 @@ msgid ""
 "monstrosity. I'm a bloody fusion of hell knows what poultry and horrible "
 "Za'lek technology.\""
 msgstr ""
+"｢とはいえ、やつのとんでもない名前はけっして忘れないだろう。おれをこうしたあの野郎、ストレンジラブはおれで実験をして、拷問をして、この奇形に変えたんだ。お"
+"れは家畜の鳥として知られる畜生と、ぞっとするザレクの技術のとんでもない融合体なんだよ｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:145
 msgid ""
@@ -28485,6 +28554,9 @@ msgid ""
 "state. I'd rather have them think I died a great explorer.\"\n"
 "He looks depressed."
 msgstr ""
+"｢ときどき頭の中でインプラントがほんとうに大きな音で響きはじめて、苦痛で意識を失うことがある……。こんなものを頼んだことはないぞ。おれは人生をさびしく生き"
+"ていくように運命づけられた。こんな情けないありさまを家族に見られるところを考えると耐えられなくなる。むしろ偉大な探検家として死んだと考えてもらいたい｣\n"
+"アヒルは気落ちしたように見える。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:147
 msgid ""
@@ -28493,6 +28565,8 @@ msgid ""
 "feign stupidity to avoid any issues. Pretending I had some blackjack "
 "software or something also saved me from potentially worse fates.\""
 msgstr ""
+"｢どうもあの野郎には返してない借金かなにかがあったらしいな。それでおれは白痴どもに捕らえられて、奴隷のペットとしてここへ連れてこられた。おれは愚かなふりを"
+"してどんな問題でも避けることができた。ブラックジャックのソフトウェアのようなものをもってるふりをして、もっと悪くなりえた運命から救われもした｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:148
 msgid ""
@@ -28500,6 +28574,8 @@ msgid ""
 "\"\n"
 "He seems to be fidgety."
 msgstr ""
+"｢そしていまここにおれがいる。ただ過去を見つめつづけ、なにかをする能力もなく｣\n"
+"アヒルは落ちつきをなくしているように見えた。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:150
 msgid ""
@@ -28507,6 +28583,8 @@ msgid ""
 "away. I yearn for the stars. Maybe getting back out in space will make me "
 "forget all this mockery of an existence.\""
 msgstr ""
+"｢とはいえ、おれはでたらめをたらふく食わされている。これは生きているんじゃない。腐っていっているんだ。おれは星々を懐かしく思う。たぶん宇宙に戻れば、この生"
+"きかたの茶番すべてを忘れさせてくれるだろう｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:151
 msgid ""
@@ -28515,6 +28593,9 @@ msgid ""
 "of what you have, lady fortune sometimes will deal you a bad one and there "
 "might not be any coming back.\""
 msgstr ""
+"ため息をつきながら、アヒルがあなたに目をやった。\n"
+"｢高い価値を見いだすのは失ったときだけなんだ、若者。持っているものは最大限活用したほうがいいぞ。幸運の女神はときどき悪い手を配ることがあるし、すこしも取り"
+"もどせないかもしれないんだ｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:153
 msgid ""
@@ -28523,6 +28604,8 @@ msgid ""
 "to a place I like to hang out at the station. It's quiet enough that nobody "
 "will give us trouble. You can find me there when I'm off my shifts.\""
 msgstr ""
+"｢いいことを教えてやる。おまえと話したのは精神療法だかその手のくそみたいになった。そのうちいつか話をしてもいいな。ほら、おれがステーションでよく出入りする"
+"場所を教えてやるよ。そこはだれも面倒を持ちこんでこないくらい静かなところなんだ。勤務時間外ならおれはそこで見つかるよ｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:154
 msgid ""
@@ -28531,6 +28614,9 @@ msgid ""
 "You hear the sound of his duck feet grow fainter until it is quiet except "
 "for the sound of running water."
 msgstr ""
+"｢勤務時間といえば、次のやつに遅れているのはたしかだと思う。じゃあな｣\n"
+"ケクスはお湯から滑りでて、羽毛を逆立ててから、湯気の中に消えていった。アヒルの足音がじょじょに小さくなっていくのが聞こえ、それから水の流れる音を除けば静か"
+"になった。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:159
 msgid ""
@@ -28538,12 +28624,14 @@ msgid ""
 "unleashed to you by Kex. With nothing better to do, you once again melt into "
 "the thermal water and let your mind wander."
 msgstr ""
+"あなたはまた温泉でひとりになって、ケクスがあなたに解き放ったすべての情報を思いだして整理した。ほかにもっとやりたいこともなかったので、あなたはまたお湯に溶"
+"けこみ、思考を漂わせた。"
 
 #: dat/events/minerva/chicken_rendezvous.lua:160
 msgid ""
 "Eventually you leave the baths, get changed back into your space clothes and "
 "head out towards the station."
-msgstr ""
+msgstr "ついにあなたは風呂から出て、自分の宇宙用の服に着替えてから、ステーションの方へ向かった。"
 
 #. Go back to normal BG
 #: dat/events/minerva/chicken_rendezvous.lua:169
@@ -28552,12 +28640,15 @@ msgid ""
 "you feel younger from the anti-aging nanobots. Maybe you should get a spa "
 "for your ship…"
 msgstr ""
+"騒音とあかりがまた厳しい現実に戻ったあなたの気にさわった。せめてものことだが、あなたは抗老化ナノボットのおかげで若くなったように感じた。たぶん船に温泉をつ"
+"けるべきなのだろう……"
 
 #: dat/events/minerva/chicken_rendezvous.lua:173
 msgid ""
 "You found out that Cyborg Chicken is Kex, Maikki's father. He told you of a "
 "spot you can meet up with him on Minerva station."
 msgstr ""
+"あなたはあのサイボーグチキンがケクス、メイッキーの父親であることを発見した。ケクスはあなたにミネルバ・ステーションでケクスと会える場所を教えた。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -28581,7 +28672,7 @@ msgstr ""
 msgid ""
 "You are minding your own business when suddenly a big fanfare plays while "
 "the lights begin strobing."
-msgstr ""
+msgstr "あなたが自分の用事のことを気にかけていると、とつぜん大きなファンファーレが鳴って、あかりがぴかぴか光りはじめた。"
 
 #: dat/events/minerva/spa_propaganda.lua:30
 msgid ""
@@ -28590,6 +28681,9 @@ msgid ""
 "\"WELCOME LADIES AND GENTLEMEN. ARE YOU HAVING A GOOD TIME?\"\n"
 "Some of the patrons cheer at the terminals."
 msgstr ""
+"端末がすべて同時に起動して、拡声器が大きな声を出しはじめる。\n"
+"｢ようこそ、ご婦人と殿方のみなさま。楽しい時をおすごしでしょうか？｣\n"
+"得意客のなかには端末に声援をおくる者もいた。"
 
 #: dat/events/minerva/spa_propaganda.lua:33
 msgid ""
@@ -28599,6 +28693,8 @@ msgid ""
 "TO GIVE EVERYONE AN OPPORTUNITY TO BE ABLE TO ENJOY THE HEALING AND LIFE-"
 "EXTENDING PROPERTIES OF THE NEBULA-DUST INFUSED MINERAL WATER.\""
 msgstr ""
+"｢ミネルバ・ステーションは、みなさまにすばらしくとくべつな機会をお知らせすることを光栄に思います。快適なミネルバ・ステーション天然温泉の開業 1 "
+"周期を祝うために、すべてのみなさまに星雲の粉末を溶かしたミネラルウォーターによる癒やしと長寿の効能を経験する機会を提供したいと考えています｣"
 
 #: dat/events/minerva/spa_propaganda.lua:34
 msgid ""
@@ -28606,6 +28702,8 @@ msgid ""
 "BUYS A TICKET WILL BE ENTERED TO SPEND AN UNFORGETTABLE NIGHT AT THE SPA, "
 "THE FAVOURITE OF THE EMPEROR'S THIRD PET IGUANA'S CARETAKER.\""
 msgstr ""
+"｢伝統的なミネルバのやりかたで、くじ引きをおこなうつもりです。くじを買った人ならだれでも、皇帝の 3 "
+"番めのペットのイグアナの世話役が愛好する、温泉ですごす忘れられない夜に応募できます｣"
 
 #: dat/events/minerva/spa_propaganda.lua:35
 msgid ""
@@ -28614,6 +28712,9 @@ msgid ""
 "SPECIAL SURPRISE FOR YOU!\"\n"
 "The terminal pauses for effect."
 msgstr ""
+"｢それでもうめいっぱい興奮してると考えているなら、信じられない思いであごが落ちる用意をしてください！　"
+"あなたは温泉を楽しめるだけではなく、すばらしくとくべつな驚きが待っているのです！｣\n"
+"端末は効果をねらって間をあけた。"
 
 #: dat/events/minerva/spa_propaganda.lua:37
 msgid ""
@@ -28622,12 +28723,14 @@ msgid ""
 "BACK WINNER OF THE 'I WOULD EAT THIS IF IT WEREN'T ILLEGAL' POPULAR HOLO-"
 "CAST SHOW.\""
 msgstr ""
+"｢あなたは温泉で正真正銘のサイボーグチキンといっしょに時をすごすことができるのです。サイボーグチキンはミネルバ・ステーションの愛されるマスコットであり、人"
+"気のホロキャストショー『違法じゃなければ食っていた』の 3 回連続優勝者です｣"
 
 #: dat/events/minerva/spa_propaganda.lua:38
 msgid ""
 "\"EVEN IF YOU HAVE BEEN TO THE SPA BEFORE, THIS IS A ONCE IN A LIFETIME "
 "OPPORTUNITY THAT MANY WOULD DIE FOR. I KNOW I WOULD.\""
-msgstr ""
+msgstr "｢以前この温泉に行ったことがあるとしても、これは多くの者が死んでも欲しがるような人生に一度の機会です。わたしも欲しいですよ｣"
 
 #: dat/events/minerva/spa_propaganda.lua:39
 msgid ""
@@ -28635,20 +28738,22 @@ msgid ""
 "TERMINAL. PARTICIPATION COST IS #p100 MINERVA TOKENS#0. ONLY ONE TICKET PER "
 "PARTICIPANT. SOME TERMS AND CONDITIONS MAY APPLY.\""
 msgstr ""
+"｢応募に必要なのは、ミネルバ・ステーションの端末でチケットを買うことだけです。応募費用は#p 100 枚のミネルバトークン#0で、応募ごとにチケットは "
+"1 枚だけ必要です。これにはいくつかの契約条件が適用される場合があります｣"
 
 #: dat/events/minerva/spa_propaganda.lua:40
 msgid "\"AND REMEMBER, LIFE IS SHORT, SPEND IT AT MINERVA STATION.\""
-msgstr ""
+msgstr "｢そしてお忘れなきようにお願いします。人生は短い、リンボ星系のミネルバ・ステーションですごそう｣"
 
 #: dat/events/minerva/spa_propaganda.lua:41
 msgid "As if nothing happened, Minerva Station returns to normality."
-msgstr ""
+msgstr "まるで何事もなかったかのように、ミネルバ・ステーションは正常に戻った。"
 
 #: dat/events/minerva/spa_propaganda.lua:44
 msgid ""
 "Minerva station terminals announced an event where you can buy a ticket to "
 "enter a raffle. The winner can go to the spa with cyborg chicken."
-msgstr ""
+msgstr "ミネルバ・ステーションの端末が、抽選会に入れるチケットを買えるという行事を発表した。勝者はサイボーグチキンといっしょに温泉に行けるのだ。"
 
 #. One off event
 #.
@@ -28771,8 +28876,7 @@ msgid ""
 "\"I really want to go to the VIP hot springs they have, but I don't have the "
 "tokens. How does that even work in a space station?\""
 msgstr ""
-"｢ここにある VIP 向けの温泉に行きたいとほんとうに思ってるんだけど、トークンを"
-"持ってないんだよ。まったく宇宙ステーションの中でどうやってるんだろうね？｣"
+"｢ここにある要人向けの温泉に行きたいとほんとうに思ってるんだけど、トークンを持ってないんだよ。まったく宇宙ステーションの中でどうやってるんだろうね？｣"
 
 #: dat/events/minerva/station.lua:77
 msgid ""
@@ -31510,9 +31614,7 @@ msgstr ""
 msgid ""
 "\"You better not mess with House Dvaered. Our military is the largest and "
 "strongest in the galaxy. Nobody can stand up to us!\""
-msgstr ""
-"｢ドベーレッド荘と面倒をおこさないほうがいい。われわれの軍隊は銀河で最大最強な"
-"んだ。だれもわれわれには立ち向かえない！｣"
+msgstr "｢ドベーレッド荘と面倒をおこさないほうがいい。われわれの軍隊は銀河で最大最強なんだ。だれもわれわれには立ちむかえない！｣"
 
 #: dat/events/neutral/npc.lua:118
 msgid ""
@@ -46905,9 +47007,7 @@ msgstr ""
 msgid ""
 "You failed in your attempt to rescue a VIP for the Empire. Meet with "
 "Commander Soldner on Halir to try again."
-msgstr ""
-"あなたは帝国のための VIP 救出の試みに失敗した。ソルドナー中佐とハリルで会い、"
-"また試せ。"
+msgstr "あなたは帝国のための要人救出の試みに失敗した。ソルドナー中佐とハリルで会い、また試せ。"
 
 #: dat/missions/empire/shipping/es02.lua:61
 msgid "Commander Soldner is waiting for you."
@@ -46930,12 +47030,12 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:88
 #: dat/missions/empire/shipping/es02.lua:231
 msgid "Empire VIP Rescue"
-msgstr "帝国 VIP の救出"
+msgstr "帝国要人の救出"
 
 #: dat/missions/empire/shipping/es02.lua:82
 #: dat/missions/empire/shipping/es02.lua:89
 msgid "Rescue the VIP from a transport ship in the {sys} system"
-msgstr "{sys}星系の輸送船から VIP を救出せよ。"
+msgstr "{sys}星系の輸送船から要人を救出せよ。"
 
 #: dat/missions/empire/shipping/es02.lua:85
 msgid ""
@@ -46952,17 +47052,12 @@ msgid ""
 "must not allow the transport ship to be destroyed before you rescue the VIP. "
 "His survival is vital.\""
 msgstr ""
-"ソルドナー中佐はうなずいてつづけた。｢VIP を乗せた輸送船が攻撃をうけていると報"
-"告があったんです。輸送船はどうにか逃げだせましたが、けっきょく{sys}星系でエン"
-"ジンが動かなくなりました。その船はいま機能停止状態なので、われわれはその船に"
-"移乗して VIP を救出する人を必要としています。その区域の近くには FLF の船がた"
-"くさん探知されていますが、どうにかドベーレッドの護衛を準備できました。\n"
-"    ｢あなたは{sys}星系に飛ぶ必要があります。その輸送船を見つけて移乗したら、"
-"VIP を救出してから戻ってきてください。その区域はきっと激しいことになるはずで"
-"す。それでドベーレッドの護衛が参加することになります。この任務では、敵対する"
-"可能性のあるすべての船の気を散らして手を出せないようにすることになるでしょ"
-"う。VIP を救出するまえに輸送船を破壊されてはなりません。その人が生きのびるこ"
-"とは、きわめて重要です｣"
+"ソルドナー中佐はうなずいてつづけた。｢要人を乗せた輸送船が攻撃をうけていると報告があったんです。輸送船はどうにか逃げだせましたが、けっきょく{sys}星系"
+"でエンジンが動かなくなりました。その船はいま機能停止状態なので、われわれはその船に移乗して要人を救出する人を必要としています。その区域の近くには FLF "
+"の船がたくさん探知されていますが、どうにかドベーレッドの護衛を準備できました。\n"
+"    ｢あなたは{sys}星系に飛ぶ必要があります。その輸送船を見つけて移乗したら、要人を救出してから戻ってきてください。その区域はきっと激しいことにな"
+"るはずです。それでドベーレッドの護衛が参加することになります。この任務では、敵対する可能性のあるすべての船の気を散らして手を出せないようにすることになるで"
+"しょう。要人を救出するまえに輸送船を破壊されてはなりません。その人が生きのびることは、きわめて重要です｣"
 
 #: dat/missions/empire/shipping/es02.lua:87
 msgid ""
@@ -46970,9 +47065,8 @@ msgid ""
 "accidentally destroy the transport ship. If all goes well, you'll be paid "
 "{credits} when you return with the VIP. Good luck, pilot.\""
 msgstr ""
-"｢ドベーレッドには注意してください。ちょっと鈍感なこともあるので、輸送船をうっ"
-"かり破壊するかもしれません。もしすべてがうまくいけば、VIP とともに戻ったとき"
-"に {credits} が支払われます。幸運を、パイロット｣"
+"｢ドベーレッドには注意してください。ちょっと鈍感なこともあるので、輸送船をうっかり破壊するかもしれません。もしすべてがうまくいけば、"
+"要人とともに戻ったときに {credits} が支払われます。幸運を、パイロット｣"
 
 #: dat/missions/empire/shipping/es02.lua:119
 msgid ""
@@ -46984,22 +47078,17 @@ msgid ""
 "Heavy Combat Vessel License; congratulations! We have nothing more for you "
 "now, but check in periodically in case something comes up for you.\""
 msgstr ""
-"あなたは宇宙港に着陸した。VIP はすでに回復しているらしい。あなたにたっぷり礼"
-"をいうと、出ていった。あなたはつづけてソルドナー中佐を訪問した。中佐は喜んで"
-"いるようだ。こんどだけは。\n"
-"    ｢みごとにやってのけられたようですね。最初は疑いをもっていましたが、あなた"
-"はとても腕がたつパイロットだと証明してみせました。ああ、それであなたには大型"
-"戦闘艦免許の許可を与えました。おめでとう！　いまはあなたにしてもらうことはこ"
-"れ以上ありませんが、なにかあなたむきのことがおきたときのために、定期的に確認"
-"してください｣"
+"あなたは宇宙港に着陸した。要人はすでに回復しているらしい。あなたにたっぷり礼をいうと、出ていった。あなたはつづけてソルドナー中佐を訪問した。中佐は喜んでい"
+"るようだ。こんどだけは。\n"
+"    ｢みごとにやってのけられたようですね。最初は疑いをもっていましたが、あなたはとても腕がたつパイロットだと証明してみせました。ああ、それであなたには"
+"大型戦闘艦免許の許可を与えました。おめでとう！　"
+"いまはあなたにしてもらうことはこれ以上ありませんが、なにかあなたむきのことがおきたときのために、定期的に確認してください｣"
 
 #: dat/missions/empire/shipping/es02.lua:121
 msgid ""
 "You successfully rescued a VIP for the Empire and have been cleared for a "
 "Heavy Combat Vessel License; you can now buy one at the outfitter."
-msgstr ""
-"あなたは帝国のために VIP を救出するのに成功し、大型戦闘艦免許の許可をもらっ"
-"た。あなたはもう艤装所で免許を買えるようになった。"
+msgstr "あなたは帝国のために要人を救出するのに成功し、大型戦闘艦免許の許可をもらった。あなたはもう艤装所で免許を買えるようになった。"
 
 #: dat/missions/empire/shipping/es02.lua:124
 msgid ""
@@ -47010,17 +47099,14 @@ msgid ""
 "but you've proven to be a very skilled pilot. We have nothing more for you "
 "now, but check in periodically in case something comes up for you.\""
 msgstr ""
-"あなたは宇宙港に着陸した。VIP はすでに回復しているらしい。あなたにたっぷり礼"
-"をいうと、出ていった。あなたはつづけてソルドナー中佐を訪問した。中佐は喜んで"
-"いるようだ。こんどだけは。\n"
-"    ｢みごとにやってのけられたようですね。最初は疑いをもっていましたが、あなた"
-"はとても腕がたつパイロットだと証明してみせました。いまはあなたにしてもらうこ"
-"とはこれ以上ありませんが、なにかあなたむきのことがおきたときのために、定期的"
-"に確認してください｣"
+"あなたは宇宙港に着陸した。要人はすでに回復しているらしい。あなたにたっぷり礼をいうと、出ていった。あなたはつづけてソルドナー中佐を訪問した。中佐は喜んでい"
+"るようだ。こんどだけは。\n"
+"    ｢みごとにやってのけられたようですね。最初は疑いをもっていましたが、あなたはとても腕がたつパイロットだと証明してみせました。いまはあなたにしてもら"
+"うことはこれ以上ありませんが、なにかあなたむきのことがおきたときのために、定期的に確認してください｣"
 
 #: dat/missions/empire/shipping/es02.lua:126
 msgid "You successfully rescued a VIP for the Empire."
-msgstr "あなたは帝国のために VIP を救出するのに成功した。"
+msgstr "あなたは帝国のために要人を救出するのに成功した。"
 
 #. Force FLF combat music (note: must clear this later on).
 #. Put the VIP a ways off of the player but near the jump.
@@ -47028,7 +47114,7 @@ msgstr "あなたは帝国のために VIP を救出するのに成功した
 #: dat/missions/empire/shipping/es02.lua:146
 #: dat/missions/empire/shipping/es02.lua:223
 msgid "VIP"
-msgstr "VIP"
+msgstr "要人"
 
 #. To make it more interesting a vendetta will solely target the player.
 #. If player is seen, have them target player
@@ -47043,7 +47129,7 @@ msgstr "VIP"
 #: dat/missions/empire/shipping/es02.lua:192
 #: dat/missions/empire/shipping/es02.lua:256
 msgid "You abandoned the VIP."
-msgstr "あなたは VIP を見捨てた。"
+msgstr "あなたは要人を見捨てた。"
 
 #: dat/missions/empire/shipping/es02.lua:223
 msgid "A Very Important Person."
@@ -47057,21 +47143,19 @@ msgstr "無力化された船"
 msgid ""
 "The ship's hatch opens and immediately an unconscious VIP is brought aboard "
 "by his bodyguard. Looks like there is no one else aboard."
-msgstr ""
-"船のハッチを開くと、すぐに VIP の護衛が意識を失った VIP を船に連れてきた。ほ"
-"かにはだれも乗りこんでこないようだ。"
+msgstr "船のハッチを開くと、すぐに要人の護衛が意識を失った要人を船に連れてきた。ほかにはだれも乗りこんでこないようだ。"
 
 #. Update mission details
 #: dat/missions/empire/shipping/es02.lua:230
 #: dat/missions/empire/shipping/es02.lua:232
 msgid "Return to {pnt} in the {sys} system with the VIP"
-msgstr "VIPといっしょに{sys}星系の{pnt}へ戻れ。"
+msgstr "要人といっしょに{sys}星系の{pnt}へ戻れ。"
 
 #. Force unboard
 #. Notify of death
 #: dat/missions/empire/shipping/es02.lua:245
 msgid "VIP is dead."
-msgstr "VIP が死んだ。"
+msgstr "要人が死んだ。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -49219,19 +49303,13 @@ msgid ""
 "be moving against them in force very soon, and I will make sure you'll be "
 "given the chance to be part of that. I'm sure it'll be worth your while.\""
 msgstr ""
-"アーナスは自分の葉巻を一服し、煙の輪を飛ばした。長いあいだに大佐がたまたま手"
-"にした最高の物件があなたであることは、天才でなくてもわかった。\n"
-"    ｢とにかく、あなたにはかね、立場、それに機会を約束した。そしてわたしはその"
-"約束を履行するつもりだ。あなたのかねはすでに口座に入っている。残高をあとで確"
-"認してくれ。立場については、あなたがなにをしたのか詮索しようとするドベーレッ"
-"ドがいないことは保証できる。軍事組織が気にするかぎりでは、あなたは FLF とはな"
-"にもしていない。それどころか、あなたは FLF との戦いでは有力な味方であったこと"
-"が知られている！　最後に機会だが。話したように、われわれはあなたの飛行記録か"
-"らの情報を分析している。そしてこれが終わったら、二、三質問をさせてもらうつも"
-"りだ。それをもとにすれば、われわれは FLF に対抗する新しい戦略をたてることがで"
-"きる。わたしの推測が完全に外れていないかぎり、FLF にたいする動きは大挙してす"
-"ぐにでもおこなうことになるだろう。そしてあなたにはそれに参加する機会をまちが"
-"いなく与えることにする。それにはやりがいがあると確信しているよ｣"
+"アーナスは自分の葉巻を一服し、煙の輪を飛ばした。長いあいだに大佐がたまたま手にした最高の物件があなたであることは、天才でなくてもわかった。\n"
+"    ｢とにかく、あなたにはかね、立場、それに機会を約束した。そしてわたしはその約束を履行するつもりだ。あなたのかねはすでに口座に入っている。残高をあと"
+"で確認してくれ。立場については、あなたがなにをしたのか詮索しようとするドベーレッドがいないことは保証できる。軍事組織が気にするかぎりでは、あなたは "
+"FLF とはなにもしていない。それどころか、あなたは FLF との戦いでは有力な味方であったことが知られている！　最後に機会だが。話したように、われわれは"
+"あなたの飛行記録からの情報を分析している。そしてこれが終わったら、二、三質問をさせてもらうつもりだ。それをもとにすれば、われわれは FLF "
+"に対抗する新しい戦略をたてることができる。わたしの推測が完全にはずれていないかぎり、FLF にたいする動きは大挙してすぐにでもおこなうことになるだろう。そ"
+"してあなたにはそれに参加する機会をまちがいなく与えることにする。それにはやりがいがあると確信しているよ｣"
 
 #: dat/missions/flf/flf_pre02.lua:320
 msgid ""
@@ -49672,7 +49750,7 @@ msgstr ""
 #: dat/missions/minerva/pirate3.lua:177 dat/missions/minerva/pirate4.lua:130
 #: dat/missions/minerva/pirate5.lua:148
 msgid "Ask about the job"
-msgstr ""
+msgstr "仕事についてたずねる"
 
 #: dat/missions/minerva/kex1.lua:144
 msgid ""
@@ -51008,7 +51086,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex4.lua:243 dat/missions/minerva/pirate3.lua:178
 msgid "Ask about Minerva Station"
-msgstr ""
+msgstr "ミネルバ・ステーションについてたずねる"
 
 #: dat/missions/minerva/kex4.lua:244
 msgid "Ask about the Minerva CEO"
@@ -52360,7 +52438,7 @@ msgid ""
 "what should have been my childhood…\"\n"
 "She reminisces."
 msgstr ""
-"｢この写真の父はとても滑稽で、母はとても幸せそう……。わたしが小さかったときはこうだったはずなのね……｣\n"
+"｢この写真の父はとてもこっけいで、母はとても幸せそう……。わたしが小さかったときはこうだったはずなのね……｣\n"
 "メイッキーは思い出にふけった。"
 
 #. TODO flashback with her family
@@ -54499,7 +54577,7 @@ msgid ""
 "job that I would like you to do, and, in exchange, I might give you the "
 "information you seek.\""
 msgstr ""
-"｢アハハ、興味がある、ない？　"
+"｢アハハ、興味がある、ちがうか？　"
 "情報が安く手に入ることはない。わたしにはきみにしてもらいたい仕事がある。そして交換に、きみが求めている情報を与えるかもしれない｣"
 
 #: dat/missions/minerva/maikki2.lua:794
@@ -54572,8 +54650,9 @@ msgid ""
 "appropriate it!\"\n"
 "He smiles mischievously."
 msgstr ""
-"｢どうだ？　最先端のザレク研究室だ！　過去の勤め口からたくさんのものを借りてこなくてはならなかったが、取り戻せやしないよ。もうすべてわたしのものだからな！"
-"　すべてにわたってたしかにわたしの臭跡を覆いかくすようにしたから、あいつらに盗むことはできないだろうな！｣\n"
+"｢どうだ？　最先端のザレク研究室だ！　"
+"過去の勤め口からたくさんのものを借りてこなくてはならなかったが、取りもどせやしないよ。もうすべてわたしのものだからな！　"
+"すべてにわたってたしかにわたしの臭跡を覆いかくすようにしたから、あいつらに盗むことはできないだろうな！｣\n"
 "老人は反抗的な感じをさせてほほえんだ。"
 
 #: dat/missions/minerva/maikki2.lua:822
@@ -54853,23 +54932,23 @@ msgstr "あなたがホログラム映写機をとめると、ストレンジラ
 #. luacheck: globals enter harassed heartbeat land thugs_attacked thugs_dead (Hook functions passed by name)
 #: dat/missions/minerva/pirate1.lua:54
 msgid "Someone wants you to mess around with Dvaered thugs."
-msgstr ""
+msgstr "ある人があなたにドベーレッドのならず者とじゃれあわせたがっている。"
 
 #: dat/missions/minerva/pirate1.lua:55 dat/missions/minerva/pirate2.lua:68
 #: dat/missions/minerva/pirate3.lua:65 dat/missions/minerva/pirate4.lua:52
 #: dat/missions/minerva/pirate5.lua:56
 msgid "Cold hard credits"
-msgstr ""
+msgstr "冷たく厳しいクレジット"
 
 #: dat/missions/minerva/pirate1.lua:56 dat/missions/minerva/pirate1.lua:157
 #: dat/missions/minerva/pirate1.lua:181 dat/missions/minerva/pirate2.lua:69
 msgid "Dvaered Thugs"
-msgstr ""
+msgstr "ドベーレッドのならず者"
 
 #: dat/missions/minerva/pirate1.lua:67
 msgid ""
 "You approach the sketchy individual who seems to be calling your attention."
-msgstr ""
+msgstr "あなたの注意をひこうとしているらしい、怪しい人にあなたは近づいた。"
 
 #: dat/missions/minerva/pirate1.lua:68
 msgid ""
@@ -54877,6 +54956,8 @@ msgid ""
 "Always getting into fights with each other and creating trouble for those "
 "who just want to enjoy life. Such a bother.\""
 msgstr ""
+"｢あのザレクとドベーレッドについてどう思う？　かなりの入れこみようだろ？　"
+"いつもおたがいに戦いだして、たんに人生を楽しみたがってるだけのやつらにやっかいごとをひきおこしてるんだ。なんとも迷惑なこった｣"
 
 #: dat/missions/minerva/pirate1.lua:69
 msgid ""
@@ -54884,17 +54965,19 @@ msgid ""
 "a somewhat non-standard job? Nothing very out of the ordinary, just want to "
 "ruffle some feathers.\""
 msgstr ""
+"｢なんつうか、あんたはかなり親切なパイロットだってのは知ってる。で、多少は枠からはずれた仕事に興味はないか？　"
+"あまりとんでもないってことはなくて、ちょっと波風たてようってだけだ｣"
 
 #: dat/missions/minerva/pirate1.lua:72 dat/missions/minerva/pirate2.lua:86
 #: dat/missions/minerva/pirate3.lua:125 dat/missions/minerva/pirate4.lua:105
 #: dat/missions/minerva/pirate5.lua:123
 msgid "Kindly decline"
-msgstr ""
+msgstr "ていねいに辞退する"
 
 #: dat/missions/minerva/pirate1.lua:76 dat/missions/minerva/pirate3.lua:129
 #: dat/missions/minerva/pirate5.lua:127
 msgid "You decline their offer and take your leave."
-msgstr ""
+msgstr "あなたは申し出を断ってから、いとまを告げた。"
 
 #: dat/missions/minerva/pirate1.lua:83
 msgid ""
@@ -54905,6 +54988,9 @@ msgid ""
 "directly, we can sort of encourage them to take care of each other and "
 "problem solved, no?\""
 msgstr ""
+"｢いいね。たぶんあんたも知ってるとおり、ザレクとドベーレッドはこのステーションを支配したがってる。それゆえ大量の軍人がステーションじゅうをはいまわっている"
+"わけだ。それの必然的な結果ってのが、仲たがい、口論、とっくみあい、けんか騒ぎ、戦い、とかなんとかだ。で、その面倒を直接みるかわりに、あいつらをちょっとあお"
+"ってやればだな、おたがいの面倒をみさせて問題を解決できるだろ。ちがうか？｣"
 
 #: dat/missions/minerva/pirate1.lua:84
 msgid ""
@@ -54913,6 +54999,8 @@ msgid ""
 "cleverest of folks, so I want you to provoke them. You know, just rough them "
 "up a little and get out of there.\""
 msgstr ""
+"｢あんたが考えてることはわかってるよ。それはいい考えだ、だろ？　それでそいつはとても単純だ。何人かのドベーレッドのならず者が星系のどこかを持ち場としていて"
+"、そいつらはとくべつ利口なみなさんじゃない。だからあんたにそいつらを扇動してほしいんだ。わかるだろ。とにかくちょっと手荒く扱って、そこから消えるんだ｣"
 
 #: dat/missions/minerva/pirate1.lua:85
 msgid ""
@@ -54922,6 +55010,9 @@ msgid ""
 "probably would think that there is some kind of Za'lek involvement. They're "
 "not the smartest fellows in the world if you catch my drift.\""
 msgstr ""
+"｢子どもっぽく聞こえる、そうなんだろ？　かもしれないな。だからどうにかザレクのドローンの船体を手に入れたんだ。そいつが持ってるのは、エンジンと基本的な追尾"
+"ソフトウェアだけで、武器も装備もない。仮にあんたがそいつを引っぱりながら、ならず者を困らせてやったとしたら、連中はおそらくなんらかの形でザレクがかかわって"
+"ると考えるはずだ。あいつらは世界でもっとも気のきいた連中ってわけじゃないんだよ。いってることわかるよな｣"
 
 #: dat/missions/minerva/pirate1.lua:86
 msgid ""
@@ -54930,6 +55021,8 @@ msgid ""
 "don't kill them! We want them to tell the other Dvaereds about this. Once "
 "the time is up, get the hell away from there, in one piece if possible.\""
 msgstr ""
+"｢ならず者たちがしっかりいらだつようにするため、最初にいた場所近くで 15 秒はかけて困らせてやってほしい。しっかり困らせてやれ。殺すんじゃないぞ！　"
+"そのことをほかのドベーレッドに知らせるようにしたいんだ。時間がたったら、とっととそこから逃げるんだ。無事にな、できるなら｣"
 
 #: dat/missions/minerva/pirate1.lua:87
 msgid ""
@@ -54939,39 +55032,44 @@ msgid ""
 "look even more like the Za'lek did it.\"\n"
 "They beam a smile at you."
 msgstr ""
+"｢ザレクのドローンとドベーレッドのならず者の両方の座標を送った。なんとかみごとにやってのけてくれれば、かなりの支払いをするつもりだ。ああ、それからもうひと"
+"つ。逃げるときは{sys}星系にジャンプして、さらにザレクがしたらしく見せかけるようにしてくれ｣\n"
+"怪しげな人はあなたにほほえみかけた。"
 
 #. If not accepted, mem.misn_state will still be nil
 #: dat/missions/minerva/pirate1.lua:96
 msgid ""
 "You accepted a job from a sketchy individual to harass Dvaered thugs in the "
 "Limbo system and make it seem like the Za'lek were involved."
-msgstr ""
+msgstr "あなたは怪しい人から仕事を引き受けた。リンボ星系にいるドベーレッドのならず者を困らせて、ザレクがかかわっているように見せるのだ。"
 
 #: dat/missions/minerva/pirate1.lua:99
 msgid "Thug Decoy"
-msgstr ""
+msgstr "ならず者をひっかける"
 
 #: dat/missions/minerva/pirate1.lua:100
 msgid "Get the drone to follow you"
-msgstr ""
+msgstr "ドローンがあなたについてくるようにしろ。"
 
 #: dat/missions/minerva/pirate1.lua:101
 msgid "Harass the thugs"
-msgstr ""
+msgstr "ならず者たちを困らせろ。"
 
 #: dat/missions/minerva/pirate1.lua:102
 msgid "Jump to {sys}"
-msgstr ""
+msgstr "{sys}星系にジャンプしろ。"
 
 #: dat/missions/minerva/pirate1.lua:103 dat/missions/minerva/pirate2.lua:108
 msgid "Go back to Minerva Station"
-msgstr ""
+msgstr "ミネルバ・ステーションに戻れ。"
 
 #: dat/missions/minerva/pirate1.lua:121
 msgid ""
 "After you land on Minerva Station you are once again greeted by the sketchy "
 "character that gave you the job dealing with the Dvaered thugs."
 msgstr ""
+"ミネルバ・ステーションに着陸してから、あなたはもういちどあの怪しい人物にあいさつをされた。ドベーレッドのならず者たちに対処する仕事をあなたに与えた、あの怪"
+"しい人だ。"
 
 #: dat/missions/minerva/pirate1.lua:122
 msgid ""
@@ -54979,6 +55077,8 @@ msgid ""
 "Za'lek and the Dvaered so we can get them off this station. However, this is "
 "only the beginning.\""
 msgstr ""
+"｢そこそこうまくいったと聞いた。これでさらなる緊張がザレクとドベーレッドのあいだに生じるはずだ。だからあいつらをこのステーションから追いだせる。とはいえ、"
+"これは始まりでしかない｣"
 
 #: dat/missions/minerva/pirate1.lua:123
 msgid ""
@@ -54988,50 +55088,53 @@ msgid ""
 "reward for your services.\"\n"
 "She winks at you and walks way."
 msgstr ""
+"｢もし興味があるなら、あんたにはまた仕事があるかもしれない。あんたはそいつを十二分に扱う能力があると信じてるよ。もっと情報がほしかったらバーで会ってくれ。"
+"それから、骨折りの報酬としてある額のクレジットをあんたの口座に振りこんでおいた｣\n"
+"女はあなたにウィンクしてから歩き去った。"
 
 #: dat/missions/minerva/pirate1.lua:132
 msgid ""
 "You succeeded in making the Dvaered think that the Za'lek were harassing "
 "their thugs near Minerva station."
-msgstr ""
+msgstr "あなたはザレクがミネルバ・ステーション近くでドベーレッドのならず者を困らせたとドベーレッドに思わせることに成功した。"
 
 #: dat/missions/minerva/pirate1.lua:140 dat/missions/minerva/pirate1.lua:207
 msgid "You were supposed to harass the thugs with the drone."
-msgstr ""
+msgstr "あばたはドローンをつれてならず者を困らせることになっていた。"
 
 #: dat/missions/minerva/pirate1.lua:149
 msgid "You were supposed to jump to the {sys} system!"
-msgstr ""
+msgstr "あなたは{sys}星系にジャンプすることになっていた！"
 
 #: dat/missions/minerva/pirate1.lua:180 dat/missions/minerva/pirate2.lua:196
 #: dat/missions/minerva/pirate2.lua:211
 msgid "Za'lek Drone"
-msgstr ""
+msgstr "ザレクのドローン"
 
 #: dat/missions/minerva/pirate1.lua:192
 msgid "#gThe drone begins to follow you."
-msgstr ""
+msgstr "#gドローンがあなたを追いかけはじめた。"
 
 #. Make enemies
 #: dat/missions/minerva/pirate1.lua:210
 msgid "I'm going to wash my ship's hull with your blood, Za'lek Scum!"
-msgstr ""
+msgstr "おれの船の船殻をおまえの血で洗ってやる、ザレクのくずが！"
 
 #: dat/missions/minerva/pirate1.lua:224
 msgid "You were supposed to harass the thugs, not kill them!"
-msgstr ""
+msgstr "あなたはならず者を殺すのではなく、困らせることになっていた！"
 
 #: dat/missions/minerva/pirate1.lua:233
 msgid "#rYou are moving too far away from the harassment point!"
-msgstr ""
+msgstr "#rあなたはいやがらせ地点から遠くまで行きすぎている！"
 
 #: dat/missions/minerva/pirate1.lua:239
 msgid "You moved too far away from the harassment location!"
-msgstr ""
+msgstr "あなたはいやがらせの場所から遠くまで行きすぎた！"
 
 #: dat/missions/minerva/pirate1.lua:246
 msgid "#gThe thugs seem to be sufficiently riled up."
-msgstr ""
+msgstr "#gならず者たちはじゅうぶんに怒っているようだ。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -55066,25 +55169,28 @@ msgstr ""
 msgid ""
 "Someone wants you to incapacitate a suspicious Za'lek drone with only "
 "Dvaered weapons. Usable weapons are:"
-msgstr ""
+msgstr "ある人があなたに、うさんくさいザレクのドローンをドベーレッドの武器だけで無力化させたがっている。使用可能な武器は、"
 
 #: dat/missions/minerva/pirate2.lua:64
 msgid ""
 "\n"
 "* "
 msgstr ""
+"\n"
+"・"
 
 #: dat/missions/minerva/pirate2.lua:80
 msgid ""
 "You approach the sketchy individual who seems to be calling your attention "
 "once again."
-msgstr ""
+msgstr "もういちどあなたの注意をひこうとしているらしい、怪しい人にあなたは近づいた。"
 
 #: dat/missions/minerva/pirate2.lua:81
 msgid ""
 "\"It seems like our last job worked better than we thought. The Dvaered are "
 "all riled up, just as planned. However, there is still a lot left to do.\""
 msgstr ""
+"｢前回の仕事は思った以上にうまい結果になったらしい。ドベーレッドはすっかり怒ってる。ちょうど計画したとおりにな。とはいえ、することはまだたくさん残ってる｣"
 
 #: dat/missions/minerva/pirate2.lua:82
 msgid ""
@@ -55093,10 +55199,12 @@ msgid ""
 "improve the situation.\"\n"
 "She smiles at you."
 msgstr ""
+"｢あんたに興味があるなら次の仕事がある。このまえより簡単なはずだ。今回われわれはドベーレッドでなくザレクだけを標的として、状況を……改善してみたい｣\n"
+"女があなたにほほえみかけた。"
 
 #: dat/missions/minerva/pirate2.lua:90 dat/missions/minerva/pirate4.lua:109
 msgid "You decline her offer and take your leave."
-msgstr ""
+msgstr "あなたは申し出を断ってから、いとまを告げた。"
 
 #: dat/missions/minerva/pirate2.lua:95
 msgid ""
@@ -55105,6 +55213,8 @@ msgid ""
 "Nothing very conspicuous, but there are some scout drones here and there. I "
 "want you to take them out.\""
 msgstr ""
+"｢あんたがまた乗ってくれてくれしいよ！　で、この考えはとても単純なものだ。ザレクが星系じゅうを偵察するものを用意してるってのがわかっててな。あまり目につく"
+"ものじゃまったくないんだが、あちこちに偵察ドローンがいるわけだ。あんたにはそれを取り除いてほしい｣"
 
 #: dat/missions/minerva/pirate2.lua:96
 msgid ""
@@ -55114,17 +55224,20 @@ msgid ""
 "Guns, Shredders, Mass Drivers, Railguns and such. Make sure to not use any "
 "non-Dvaered weapons!\""
 msgstr ""
+"｢ただそいつらを破壊するだけでは穴をうがつことにはらない。そいつは今回ドベーレッドがやったように見せる必要がある。とはいえ、たいしたことはないはずだ。破壊"
+"するときにドベーレッドの武器を使うようにするんだよ。知ってるだろ、メイス発射機、バルカンガン、シュレッダー、マスドライバー、レールガンとかそんなものだ。ド"
+"ベーレッド以外の武器はなにも使わないようにしとけ！｣"
 
 #: dat/missions/minerva/pirate2.lua:97
 msgid ""
 "\"There should be two drones out there. I have given you the locations where "
 "they were last seen. Try to take out the drones as fast as possible and get "
 "back here in one piece.\""
-msgstr ""
+msgstr "｢外にはドローンが 2 機いるはずだ。最後に見られた場所をあんたに送っておいた。できるだけ早くドローンを破壊して、無事にここへ戻ってきてくれ｣"
 
 #: dat/missions/minerva/pirate2.lua:107
 msgid "Destroy the scout drone with Dvaered weapons"
-msgstr ""
+msgstr "ドベーレッドの武器でザレクのドローンを破壊せよ。"
 
 #: dat/missions/minerva/pirate2.lua:113
 msgid ""
@@ -55132,18 +55245,21 @@ msgid ""
 "scout drones around Minerva Station with Dvaered weapons only to make it "
 "seem like the Dvaered are targeting Za'lek drones."
 msgstr ""
+"あなたは怪しい人から次の仕事を引き受けた。ミネルバ・ステーションのまわりにいるザレクの偵察ドローンをドベーレッドの武器だけで破壊して、ドベーレッドがザレク"
+"のドローンを標的にしているように見せかけるのだ。"
 
 #: dat/missions/minerva/pirate2.lua:128
 msgid ""
 "After you land on Minerva Station you are once again greeted by the sketchy "
 "character that gave you the job to clear the Za'lek drones."
 msgstr ""
+"ミネルバ・ステーションに着陸してから、あなたはもういちどあの怪しい人物にあいさつをされた。ザレクのドローンを掃除する仕事をあなたに与えた、あの怪しい人だ。"
 
 #: dat/missions/minerva/pirate2.lua:129
 msgid ""
 "\"Excellent piloting there. We didn't think that the Za'lek would catch on "
 "so fast and send in reinforcements, however, it all worked out in the end.\""
-msgstr ""
+msgstr "｢むこうではすばらしい操縦ぶりだった。ザレクがあんなに早く察知して増援を送るとは考えてなかったが、けっきょくはすべてうまくいった｣"
 
 #: dat/missions/minerva/pirate2.lua:130
 msgid ""
@@ -55153,43 +55269,47 @@ msgid ""
 "slow, so let us try to accelerate the process a bit more.\"\n"
 "She winks at you."
 msgstr ""
+"｢これでドベーレッドとザレクのあいだにある疑惑の高まりは最高記録となるはずだ。すでにこの 1 時限のあいだに戦いで 20 人の負傷者がでているんだ！　この"
+"具合でいくと、あいつらは基本的に自分たちで解決することになる。しかし、それにはちょっと時間がかかるかもしれないな。だからもうちょっと進行を早めてやろうじゃ"
+"ないか｣\n"
+"女があなたにウィンクした。"
 
 #: dat/missions/minerva/pirate2.lua:132
 msgid ""
 "\"I've wired you some credits for your efforts. Meet me up at the bar for "
 "another potential job.\""
-msgstr ""
+msgstr "｢あんたの努力にたいしていくらかクレジットを送金した。次の仕事があるかもしれないから、バーで会ってくれ｣"
 
 #: dat/missions/minerva/pirate2.lua:140
 msgid ""
 "You succeeded in destroying Za'lek drones and making it seem like the "
 "Dvaered were involved."
-msgstr ""
+msgstr "あなたはザレクのドローンを破壊して、ドベーレッドがかかわっているように見せることに成功した。"
 
 #. Need weapons
 #: dat/missions/minerva/pirate2.lua:186
 msgid "#oNon-Dvaered equipped weapons detected: {list}"
-msgstr ""
+msgstr "#oドベーレッド以外の武器が装備されているのを検出 : {list}"
 
 #: dat/missions/minerva/pirate2.lua:205
 msgid "You were supposed to kill the drones with Dvaered-only weapons!"
-msgstr ""
+msgstr "あなたはドベーレッドの武器だけを使ってドローンを破壊することになっていた！"
 
 #: dat/missions/minerva/pirate2.lua:212
 msgid "You detected another Za'lek drone in the system!"
-msgstr ""
+msgstr "星系内に別のザレクドローンを探知した！"
 
 #: dat/missions/minerva/pirate2.lua:228
 msgid "You let a drone get away!"
-msgstr ""
+msgstr "あなたはドローンを逃してしまった！"
 
 #: dat/missions/minerva/pirate2.lua:236
 msgid "Your sensors are detecting a Za'lek fleet inbound!"
-msgstr ""
+msgstr "あなたの船のセンサーが向かってくるザレク艦隊を探知した！"
 
 #: dat/missions/minerva/pirate2.lua:259
 msgid "#oZa'lek reinforcements have arrived!"
-msgstr ""
+msgstr "#oザレクの増援が到着した！"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -55218,7 +55338,7 @@ msgstr ""
 #: dat/missions/minerva/pirate3.lua:40
 msgid ""
 "Present your winning ticket at the terminal to enter the Minerva Station Spa."
-msgstr ""
+msgstr "当たりくじを端末に提出して、ミネルバ・ステーションの温泉に入れ。"
 
 #. Mission states:
 #. nil: mission not accepted yet
@@ -55238,24 +55358,24 @@ msgstr ""
 msgid ""
 "Someone wants you to find a Dvaered spy that appears to be located at "
 "Minerva Station."
-msgstr ""
+msgstr "ある人があなたに、ミネルバ・ステーションに駐在するらしいドベーレッドのスパイを見つけてもらいたがっている。"
 
 #: dat/missions/minerva/pirate3.lua:66
 msgid "Finding the Dvaered Spy"
-msgstr ""
+msgstr "ドベーレッドのスパイの発見"
 
 #. Clear variable just in case
 #. If not accepted, mem.misn_state will still be nil
 #: dat/missions/minerva/pirate3.lua:91 dat/missions/minerva/pirate3.lua:256
 msgid "Minerva Station Spa"
-msgstr ""
+msgstr "ミネルバ・ステーションの温泉"
 
 #. Not accepted
 #: dat/missions/minerva/pirate3.lua:121
 msgid ""
 "You approach the sketchy individual who seems to be calling your attention "
 "yet once again."
-msgstr ""
+msgstr "またあなたの注意をひこうとしているらしい、怪しい人にあなたは近づいた。"
 
 #: dat/missions/minerva/pirate3.lua:122
 msgid ""
@@ -55264,21 +55384,23 @@ msgid ""
 "infiltrated into the station infrastructure. Would you be up to the "
 "challenge of helping us get rid of them?\""
 msgstr ""
+"｢またどうも。あんたのためにまた仕事がある。以前の活動の結果として、われわれはステーションの下部組織に深く浸透したドベーレッドとザレクのスパイが数人いると"
+"信じるようになった。そいつらを追いだすのに挑戦して手を貸せると思うか？｣"
 
 #: dat/missions/minerva/pirate3.lua:137 dat/missions/minerva/pirate3.lua:239
 #: dat/missions/minerva/pirate3.lua:254
 msgid "Minerva Moles"
-msgstr ""
+msgstr "ミネルバのモグラ"
 
 #: dat/missions/minerva/pirate3.lua:138 dat/missions/minerva/pirate3.lua:241
 msgid "Plant a listening device in a VIP room."
-msgstr ""
+msgstr "要人用の部屋に盗聴装置を置け。"
 
 #: dat/missions/minerva/pirate3.lua:143
 msgid ""
 "You accepted another job from the sketchy individual to uncover moles at "
 "Minerva Station."
-msgstr ""
+msgstr "あなたは怪しい人から次の仕事を引き受けた。ミネルバ・ステーションにいるモグラを正体をあばくのだ。"
 
 #: dat/missions/minerva/pirate3.lua:145
 msgid ""
@@ -55287,6 +55409,8 @@ msgid ""
 "some moles at Minerva Station. They are probably really deep so it won't be "
 "an easy task to drive them out.\""
 msgstr ""
+"｢あんたがまた乗ってくれてくれしいよ。ドベーレッドとザレクの通信をちょっと傍受して復号できたところからすると、ミネルバ・ステーションには数人のモグラがいる"
+"かもしれないようなんだ。そいつらはほんとうに深くにいるらしいんで、退治するのは簡単な仕事じゃないだろうな｣"
 
 #: dat/missions/minerva/pirate3.lua:146
 msgid ""
@@ -55295,6 +55419,9 @@ msgid ""
 "don't know what to make of it.\n"
 "\"Ain't she a beauty?\""
 msgstr ""
+"｢こいつが登場するのはそこでだ｣\n"
+"女はポケットから金属製の物体を取りだして、あなたに見せた。それをどう考えればいいのかあなたにはわからなかった。\n"
+"｢みごとな娘じゃないか？｣"
 
 #: dat/missions/minerva/pirate3.lua:149
 msgid ""
@@ -55303,6 +55430,8 @@ msgid ""
 "we're going to need you to plant it in a VIP room or some place where we "
 "might catch the mole.\""
 msgstr ""
+"｢こいつはくそったれな先端技術で、あるおたく連中から手に入れたものだ。最新世代の信号記録装置で、ほとんどの妨害装置を回避できるはずだ。そうはいっても、モグ"
+"ラを捕まえられそうな要人用の部屋かどこかにこいつを置くのにあんたを必要としている｣"
 
 #: dat/missions/minerva/pirate3.lua:150 dat/missions/minerva/pirate3.lua:199
 msgid ""
@@ -55310,6 +55439,8 @@ msgid ""
 "to access, so we're going to have to keep our eyes open and see if we can "
 "spot an opportunity to plant the device.\""
 msgstr ""
+"｢今われわれが手にしているおもな問題は、要人用の部屋とかそういうところは簡単には出入りできないということだ。だからわれわれは目を開きつづけて、装置を置く機"
+"会を見きわめられるか確認しなければならないんだ｣"
 
 #: dat/missions/minerva/pirate3.lua:151
 msgid ""
@@ -55318,17 +55449,19 @@ msgid ""
 "\"Take the device and see if you can find a chance to place it. I'll be at "
 "the spaceport bar if you figure anything out.\""
 msgstr ""
+"女はあなたに信号記録装置を手渡してから、仕組みを手短に説明した。\n"
+"｢装置を持って、置く機会が見つかるかどうか確認してくれ。もしなにかわかったら、わたしは宇宙港のバーにいるから｣"
 
 #. Accepted.
 #: dat/missions/minerva/pirate3.lua:155 dat/missions/minerva/pirate4.lua:124
 msgid "You approach the sketchy character you have become familiarized with."
-msgstr ""
+msgstr "あなたは見なれてきた怪しい人に近づいた。"
 
 #: dat/missions/minerva/pirate3.lua:159
 msgid ""
 "You explain to them that you were able to successfully plant the device in "
 "the Minerva Spa."
-msgstr ""
+msgstr "あなたは首尾よく装置をミネルバ温泉に置くことができたと説明した。"
 
 #: dat/missions/minerva/pirate3.lua:160
 msgid ""
@@ -55337,29 +55470,31 @@ msgid ""
 "how to catch the asshole. Meet me again at the bar in a bit, I have a "
 "feeling we will catch them soon.\""
 msgstr ""
+"｢よくやった！　あんたに素質があるのはわかってたよ。もうモグラを捕まえるのは、たんなる時間の問題だ。情報を集めてそれを調べてしまえば、くそったれを捕まえる"
+"方法がわかる。もうちょっとしたらまたバーで会ってくれ。すぐにモグラは捕まる気がするんだ｣"
 
 #: dat/missions/minerva/pirate3.lua:164
 msgid ""
 "You planted a listening device in the Minerva Spa to catch a mole and were "
 "rewarded for your actions."
-msgstr ""
+msgstr "あなたはモグラを捕まえるための盗聴装置をミネルバ温泉に置いて、その働きのおかげで報酬をもらった。"
 
 #: dat/missions/minerva/pirate3.lua:174 dat/missions/minerva/pirate4.lua:128
 #: dat/missions/minerva/pirate5.lua:145
 msgid "\"Is there anything you would like to know?\""
-msgstr ""
+msgstr "｢なにか知りたいことはないか？｣"
 
 #: dat/missions/minerva/pirate3.lua:183
 msgid "Ask them about the spa"
-msgstr ""
+msgstr "温泉についてたずねる"
 
 #: dat/missions/minerva/pirate3.lua:185
 msgid "Show them the spa ticket"
-msgstr ""
+msgstr "温泉のくじを見せる"
 
 #: dat/missions/minerva/pirate3.lua:190
 msgid "Show them the winning ticket"
-msgstr ""
+msgstr "当たりくじを見せる"
 
 #: dat/missions/minerva/pirate3.lua:196
 msgid ""
@@ -55367,6 +55502,8 @@ msgid ""
 "decode, it seems like we might have some moles at Minerva Station. They are "
 "probably really deep so it won't be an easy task to drive them out.\""
 msgstr ""
+"｢ドベーレッドとザレクの通信をちょっと傍受して復号できたところからすると、ミネルバ・ステーションには数人のモグラがいるかもしれないようなんだ。そいつらはほ"
+"んとうに深くにいるらしいんで、退治するのは簡単な仕事じゃないだろうな｣"
 
 #: dat/missions/minerva/pirate3.lua:197
 msgid ""
@@ -55374,6 +55511,8 @@ msgid ""
 "bypass most jammers. However, you're going to have to plant it in a VIP room "
 "or in some place where we might be able to catch the mole.\""
 msgstr ""
+"｢渡したのは最先端技術を使った最新世代の信号記録装置で、ほとんどの妨害装置を回避できるはずだ。とはいえ、あんたはモグラを捕まえられそうな要人用の部屋かどこ"
+"かにこいつを置かなければならない｣"
 
 #: dat/missions/minerva/pirate3.lua:201
 msgid ""
@@ -55382,24 +55521,28 @@ msgid ""
 "we can get lucky. If not, we may have to take other measures to ensure "
 "success.\""
 msgstr ""
+"｢温泉は信号記録装置を設置するのに完璧な場所のようだな。物があってもだれも疑わないだろうよ！　"
+"温泉のくじを買って幸運を引きあてるかどうか試すべきだ。運がなくても、ほかの手段でまちがいなく当たるようにできるにちがいない｣"
 
 #: dat/missions/minerva/pirate3.lua:204
 msgid ""
 "\"I can't believe we didn't win a ticket to the Spa. However, it seems like "
 "this guy called Harper Bowdown managed to get it instead.\""
-msgstr ""
+msgstr "｢温泉のくじが当たらなかったとは信じられない。だがかわりにこのハーパー・ボウダウンというやつがどうにか手に入れたらしい｣"
 
 #: dat/missions/minerva/pirate3.lua:205
 msgid ""
 "\"I need you to go pay this guy a visit. See if you can 'encourage' them to "
 "give the ticket to you. Everyone has a price at Minerva Station.\""
 msgstr ""
+"｢あんたにその男のところへ行ってもらう必要がある。くじをあんたに渡すように『後押し』できるかたしかめるんだ。ミネルバ・ステーションではすべてのものに値段が"
+"ついている｣"
 
 #: dat/missions/minerva/pirate3.lua:210
 msgid ""
 "\"You got the ticket to the Minerva Spa, so all you have to do now is go in, "
 "plant the listening device, and enjoy the thermal waters.\""
-msgstr ""
+msgstr "｢ミネルバ温泉のくじを手に入れたんだから、もうやらなければならないのは、行って、盗聴装置を置いて、温泉を楽しむことだけだ｣"
 
 #: dat/missions/minerva/pirate3.lua:215
 msgid ""
@@ -55408,6 +55551,9 @@ msgid ""
 "everything that goes on here is just incredible! Makes you want to root for "
 "their success you know?\""
 msgstr ""
+"｢この場所はすごくないか？　"
+"ここでどうにか信じられないほど成功した営業手法をととのえられたんだな。帝国がここでおこなわれているすべてに目をつぶるやりかたは、とにかく途方もないよ！　"
+"その成功に声援を送りたくなるだろう、なあ？｣"
 
 #: dat/missions/minerva/pirate3.lua:216
 msgid ""
@@ -55416,12 +55562,16 @@ msgid ""
 "things went tits up and either the Dvaered or Za'lek were able to take over "
 "this wonderful place.\""
 msgstr ""
+"｢問題は、仕組みはすごかったとしても、あのドベーレッドとザレクの口論すべてがとにかくなんでも台なしにするってことだな。もしことが失敗して、ドベーレッドかザ"
+"レクのどちらかがこのすばらしい場所を乗っとれたら、ほんとうに残念だろうな｣"
 
 #: dat/missions/minerva/pirate3.lua:217
 msgid ""
 "\"So me and my investors thought to ourselves, what could we do to ensure "
 "the success of such a wonderful place? This led to that and here we are.\""
 msgstr ""
+"｢だからわたしと投資者たちは、ひそかに考えたんだ。このようなすばらしい場所の成功を守るためになにができるのか？　"
+"これでああなって、われわれがここにいるんだよ｣"
 
 #: dat/missions/minerva/pirate3.lua:221
 msgid ""
@@ -55431,10 +55581,13 @@ msgid ""
 "measures to ensure success.\"\n"
 "She winks at you."
 msgstr ""
+"｢ああ、するとあんたもあのニュースを聞いたんだ？　温泉は信号記録装置を設置するのに完璧な場所のようだな。物があってもだれも疑わないだろうよ！　"
+"温泉のくじを買って幸運を引きあてるかどうか試すべきだ。運がなくても、ほかの手段でまちがいなく当たるようにできるにちがいない｣\n"
+"女があなたにウィンクした。"
 
 #: dat/missions/minerva/pirate3.lua:226
 msgid "Our chances of getting into the Spa can't be that bad, can they?"
-msgstr ""
+msgstr "｢温泉に入れる見こみはそんなに悪くなりようがないよな？｣"
 
 #: dat/missions/minerva/pirate3.lua:229
 msgid ""
@@ -55444,12 +55597,15 @@ msgid ""
 "CHICKEN EVENT!\"\n"
 "The terminal pauses for emphasis."
 msgstr ""
+"とつぜん、あなたのまわりにあった端末が大きな音でファンファーレを鳴らし、拡声器で話しはじめた。\n"
+"｢伝説的な温泉とサイボーグチキンの催しの当選者を発表することをうれしく思います！｣\n"
+"端末が効果を高めるために間をおいた。"
 
 #: dat/missions/minerva/pirate3.lua:232
 msgid ""
 "\"THE WINNER IS HARPER BOWDOIN! PLEASE COME TO YOUR NEAREST TERMINAL TO "
 "COLLECT YOUR PRIZE.\""
-msgstr ""
+msgstr "｢当選者はハーパー・ボードン！　どうかお近くの端末まで来られて賞品をお受けとりください｣"
 
 #: dat/missions/minerva/pirate3.lua:234
 msgid ""
@@ -55457,12 +55613,14 @@ msgid ""
 "She starts frantically typing into her portable holo-deck. It makes weird "
 "beeps and noises."
 msgstr ""
+"｢くそっ！　あれは仕組んでおいたと思ったんだが。くそったれめ。ちょっと待ってくれ｣\n"
+"女がやっきになって持ち運び式のホロデッキに入力をはじめた。それが異様な発信音と雑音を発する。"
 
 #: dat/missions/minerva/pirate3.lua:236
 msgid ""
 "\"OK, so we aren't so bad off. It seems like the winner was doing some space "
 "tourism around the system. Not like there is anything to see here.\""
-msgstr ""
+msgstr "｢よし、そうするとそこまで悪くない。当選者は星系をまわる宇宙観光旅行をやってるらしい。ここでのことはなにも見ていないようだ｣"
 
 #: dat/missions/minerva/pirate3.lua:237
 msgid ""
@@ -55470,20 +55628,22 @@ msgid ""
 "'encourage' them to give the ticket to you. Everyone has a price at Minerva "
 "Station.\""
 msgstr ""
+"｢では計画を変更する。あんたにその男のところへ行ってもらう必要がある。くじをあんたに渡すように『後押し』できるかたしかめるんだ。ミネルバ・ステーションでは"
+"すべてのものに値段がついている｣"
 
 #: dat/missions/minerva/pirate3.lua:240
 msgid "Get Harper Bowdoin's ticket in Limbo."
-msgstr ""
+msgstr "リンボ星系でハーパー・ボードンのくじを手に入れろ。"
 
 #: dat/missions/minerva/pirate3.lua:243
 msgid ""
 "You did not obtain the winning ticket of the Minerva Spa event and were "
 "tasked with obtaining it from a so called Harper Bowdoin."
-msgstr ""
+msgstr "あなたはミネルバ温泉の催しの当たりくじを手に入れなかった。それでハーパー・ボードンという者から手に入れる仕事を課された。"
 
 #: dat/missions/minerva/pirate3.lua:248
 msgid "You show them the winning ticket you took from Harper Bowdoin."
-msgstr ""
+msgstr "あなたはハーパー・ボードンから手に入れた当たりくじを見せた。"
 
 #: dat/missions/minerva/pirate3.lua:249
 msgid ""
@@ -55492,20 +55652,23 @@ msgid ""
 "\"Now go enjoy yourself at the Spa and don't forget to plant the listening "
 "device!\""
 msgstr ""
+"｢むこうではよい仕事をしたな。赤ん坊からあめを取るようなものだ｣\n"
+"女があなたにほほえみかけた。\n"
+"｢もう温泉を楽しみに行ってくれ。盗聴装置を置くのを忘れないようにな！｣"
 
 #: dat/missions/minerva/pirate3.lua:255
 msgid "Plant a listening device in the Spa."
-msgstr ""
+msgstr "盗聴装置を温泉に置け。"
 
 #: dat/missions/minerva/pirate3.lua:257
 msgid "You obtained the winning ticket to enter the Minerva Spa."
-msgstr ""
+msgstr "あなたはミネルバ温泉に入る当たりくじを手に入れた。"
 
 #: dat/missions/minerva/pirate3.lua:263
 msgid ""
 "You take your leave and ponder where you should start looking. The casino "
 "seems to be your best bet."
-msgstr ""
+msgstr "あなたは辞去して、どこを見はじめるべきか思案した。賭博場がいちばん確実なようだ。"
 
 #. Don't stop spawns, but claimed in case something else stops spawns
 #. TODO maybe add Minerva patrols that aggro ta make it a bit harder?
@@ -55515,48 +55678,48 @@ msgstr ""
 #. Clear variables to be kind to the player
 #: dat/missions/minerva/pirate3.lua:303
 msgid "You were supposed to get the ticket, but you blew up Harper's ship!"
-msgstr ""
+msgstr "あなたはくじを手に入れることになっていたのに、ハーパーの船を吹き飛ばしてしまった！"
 
 #. Case harper lands with the ticket, i.e., ran away
 #: dat/missions/minerva/pirate3.lua:311
 msgid "You were supposed to get the ticket but Harper got away!"
-msgstr ""
+msgstr "あなたはくじを手に入れることになっていたのに、ハーパーを逃してしまった！"
 
 #: dat/missions/minerva/pirate3.lua:325
 msgid ""
 "You violently enter Harper's ship and plunder the ticket which you were "
 "after, while Harper spends his time cowering in the corner of the cockpit."
-msgstr ""
+msgstr "あなたはハーパーの船に手荒く入りこみ、ねらっていたくじを強奪した。そのあいだ、ハーパーは操縦室の隅で縮こまってすごしていた。"
 
 #. Run to land at the station
 #: dat/missions/minerva/pirate3.lua:355
 msgid "Stop shooting! Maybe we can reach an agreement!"
-msgstr ""
+msgstr "撃つのをやめろ！　たぶん合意できるはずだ！"
 
 #: dat/missions/minerva/pirate3.lua:365
 msgid "Harper"
-msgstr ""
+msgstr "ハーパー"
 
 #: dat/missions/minerva/pirate3.lua:371
 msgid "Pay him {credits} (#rnot enough!#0)"
-msgstr ""
+msgstr "{credits} 払う (#r払えない！#0)"
 
 #: dat/missions/minerva/pirate3.lua:373
 msgid "Pay him {credits}"
-msgstr ""
+msgstr "{credits} 払う"
 
 #: dat/missions/minerva/pirate3.lua:379
 msgid "Offer {credits} (#rnot enough!#0)"
-msgstr ""
+msgstr "{credits} を提案する (#r払えない！#0)"
 
 #: dat/missions/minerva/pirate3.lua:381
 msgid "Offer {credits}"
-msgstr ""
+msgstr "{credits} を提案する"
 
 #. He goes land now
 #: dat/missions/minerva/pirate3.lua:399
 msgid "You see Harper's hologram appear into view. He looks paler than usual."
-msgstr ""
+msgstr "ハーパーのホログラフが画面に現れた。ふつうより青ざめて見える。"
 
 #: dat/missions/minerva/pirate3.lua:400
 msgid ""
@@ -55564,10 +55727,13 @@ msgid ""
 "He gulps.\n"
 "\"How about I give you the ticket for a mere {credits}?"
 msgstr ""
+"｢考えが変わったよ｣\n"
+"ハーパーは感情をおさえていた。\n"
+"｢たった {credits} で渡すってのはどうだい？｣"
 
 #: dat/missions/minerva/pirate3.lua:405
 msgid "Threaten him"
-msgstr ""
+msgstr "脅す"
 
 #: dat/missions/minerva/pirate3.lua:414
 msgid ""
@@ -55575,13 +55741,15 @@ msgid ""
 "might be allergic them anyway.\"\n"
 "He coughs nervously."
 msgstr ""
+"｢じっさい、ニワトリと泳ぐってのはちょっと退屈な感じだよな。どっちにしてもニワトリアレルギーかもしれないと思うし｣\n"
+"ハーパーが神経質にせき払いをした。"
 
 #. Player can theoretically board to loot it back
 #: dat/missions/minerva/pirate3.lua:423 dat/missions/minerva/pirate3.lua:553
 msgid ""
 "You wire him the money and he gives you the digital code that represents the "
 "ticket. Looks like you are set."
-msgstr ""
+msgstr "あなたがかねを送ると、ハーパーはくじのかわりとなるデジタルコードを送ってきた。あなたの用意はできたようだ。"
 
 #: dat/missions/minerva/pirate3.lua:427
 msgid ""
@@ -55589,10 +55757,12 @@ msgid ""
 "\"You have to be kidding right? You wouldn't kill me in cold blood would "
 "you? I have a family waiting for me back home."
 msgstr ""
+"ハーパーが神経質に笑った。\n"
+"｢冗談にちがいないですよね？　わたしを平気で殺すつもりはないんでしょ？　故郷では家族が待っているんです｣"
 
 #: dat/missions/minerva/pirate3.lua:431
 msgid "Aim your weapons at him"
-msgstr ""
+msgstr "武器のねらいをつける"
 
 #: dat/missions/minerva/pirate3.lua:435
 msgid ""
@@ -55600,22 +55770,24 @@ msgid ""
 "to leave her an orphan would you?\"\n"
 "He is sweating profusely."
 msgstr ""
+"｢わたしには娘がいるんです！　すぐに 5 歳になるんです。無情にも娘を孤児にするつもりはないですよね？｣\n"
+"ハーパーは大量に汗をかいている。"
 
 #: dat/missions/minerva/pirate3.lua:439
 msgid "Prime your weapon systems"
-msgstr ""
+msgstr "武器システムを起動する"
 
 #: dat/missions/minerva/pirate3.lua:443
 msgid ""
 "\"Ah, damn this! I've still got things worth living for. Here, just take the "
 "damn thing.\""
-msgstr ""
+msgstr "｢ああ、このくそったれ！　わたしには生きがいってものがあるんだ。ほら、なんでもいいからこのくそったれなものを持ってけ｣"
 
 #: dat/missions/minerva/pirate3.lua:444 dat/missions/minerva/pirate3.lua:455
 msgid ""
 "He gives you the digital code that represents the ticket. Looks like you are "
 "set."
-msgstr ""
+msgstr "ハーパーはくじのかわりとなるデジタルコードを送ってきた。あなたの用意はできたようだ。"
 
 #: dat/missions/minerva/pirate3.lua:452
 msgid ""
@@ -55624,38 +55796,41 @@ msgid ""
 "\"Ah, damn this. I've still got things worth living for. Here, just take the "
 "damn thing.\""
 msgstr ""
+"｢待った。かねはないっていうことですか？｣\n"
+"ハーパーは神経質にまわりを見まわした。\n"
+"｢ああ、このくそったれ！　わたしには生きがいってものがあるんだ。ほら、なんでもいいからこのくそったれなものを持ってけ｣"
 
 #: dat/missions/minerva/pirate3.lua:468
 msgid "Get away from me!"
-msgstr ""
+msgstr "あっちへ行け！"
 
 #: dat/missions/minerva/pirate3.lua:478
 msgid "An impatient man appears into view."
-msgstr ""
+msgstr "もどかしそうにしている男が画面に現れた。"
 
 #: dat/missions/minerva/pirate3.lua:479
 msgid "\"You again? I don't have time to deal with you.\""
-msgstr ""
+msgstr "｢またあんたか？　あんたと取引する暇はない｣"
 
 #: dat/missions/minerva/pirate3.lua:480
 msgid "The comm goes silent…"
-msgstr ""
+msgstr "通信が切れた……"
 
 #: dat/missions/minerva/pirate3.lua:492
 msgid "You hail Harper's vessel and you see him appear into view."
-msgstr ""
+msgstr "あなたがハーパーの船に呼びかけると、ハーパーが画面に現れたのがわかった。"
 
 #: dat/missions/minerva/pirate3.lua:493
 msgid "\"What do you want? Can't you see I'm celebrating my luck?\""
-msgstr ""
+msgstr "｢なんの用だ？　わたしが幸運を祝っているのがわからないのか？｣"
 
 #: dat/missions/minerva/pirate3.lua:495
 msgid "\"Luck?\""
-msgstr ""
+msgstr "｢幸運？｣"
 
 #: dat/missions/minerva/pirate3.lua:496
 msgid "\"Celebrating?\""
-msgstr ""
+msgstr "｢祝う？｣"
 
 #: dat/missions/minerva/pirate3.lua:499
 msgid ""
@@ -55665,60 +55840,65 @@ msgid ""
 "gold!\"\n"
 "He looks triumphant as he boasts."
 msgstr ""
+"｢ああ、ニュースを聞いたかもしれないが、わたしがミネルバ温泉の催しに大当たりをひいたんだ！　ミネルバ・ステーションには初めてなのにな！　"
+"たぶんこれでとうとう背中の痛みがすっかり治るんだろうな。あのくじは純金みたいに思えるよ！｣\n"
+"ハーパーは自慢しながら意気揚々に見えた。"
 
 #: dat/missions/minerva/pirate3.lua:502
 msgid "\"About the ticket…\""
-msgstr ""
+msgstr "｢くじのことですが……｣"
 
 #: dat/missions/minerva/pirate3.lua:503 dat/missions/minerva/pirate3.lua:510
 #: dat/missions/minerva/pirate3.lua:527 dat/missions/minerva/pirate3.lua:575
 msgid "End transmission"
-msgstr ""
+msgstr "通信を終える"
 
 #: dat/missions/minerva/pirate3.lua:506
 msgid "\"What about it?\""
-msgstr ""
+msgstr "｢そのことでなにか？｣"
 
 #: dat/missions/minerva/pirate3.lua:508
 msgid "\"Give it to me. Now.\""
-msgstr ""
+msgstr "｢それを渡せ。いますぐ｣"
 
 #: dat/missions/minerva/pirate3.lua:509
 msgid "\"I would like to take it off your hands.\""
-msgstr ""
+msgstr "｢それを手放してほしいんです｣"
 
 #: dat/missions/minerva/pirate3.lua:514
 msgid ""
 "\"What are you going to do? Shoot me?\"\n"
 "He scoffs at you and closes the transmission."
 msgstr ""
+"｢どうするつもりだ？　撃つのか？｣\n"
+"ハーパーはあなたをあざけり、通信を切った。"
 
 #: dat/missions/minerva/pirate3.lua:522
 msgid ""
 "\"I don't know. This is very valuable you know? What would you trade for it?"
 "\""
-msgstr ""
+msgstr "｢さあなあ。これはとても貴重だってわかってるよな？　なにと交換するつもりなんだ？｣"
 
 #: dat/missions/minerva/pirate3.lua:531
 msgid "Offer {bribe} (have {tokens})"
-msgstr ""
+msgstr "{bribe}を提案する ({tokens}を持っています)"
 
 #: dat/missions/minerva/pirate3.lua:545 dat/missions/minerva/pirate3.lua:557
 msgid ""
 "\"Actually, swimming in a chicken sounds like a bit of a drag. I think I "
 "might be allergic them anyway.\""
-msgstr ""
+msgstr "｢じっさい、ニワトリと泳ぐってのはちょっと退屈な感じだよな。どっちにしてもニワトリアレルギーかもしれないと思うし｣"
 
 #: dat/missions/minerva/pirate3.lua:564
 msgid ""
 "You wire him the tokens and he gives you the digital code that represents "
 "the ticket. Looks like you are set."
-msgstr ""
+msgstr "あなたがトークンを送ると、ハーパーはくじのかわりとなるデジタルコードを送ってきた。あなたの用意はできたようだ。"
 
 #: dat/missions/minerva/pirate3.lua:572
 msgid ""
 "\"{credits} only? I spent more than that gambling just to get this ticket.\""
-msgstr ""
+msgstr "｢たった {credits}？　このくじを買うためだけでももっと賭けに使ったよ｣"
 
 #: dat/missions/minerva/pirate3.lua:579
 msgid ""
@@ -55726,10 +55906,12 @@ msgid ""
 "Anyway, I'm busy now.\"\n"
 "He cuts the transmission."
 msgstr ""
+"｢あんたはからかおうとしてるのか、なにかなのか？　必要なだけのクレジットをもってないんだろ。とにかく、わたしは今忙しいんだ｣\n"
+"ハーパーが通信を切った。"
 
 #: dat/missions/minerva/pirate3.lua:584
 msgid "You close the transmission channel."
-msgstr ""
+msgstr "あなたは通信を閉じた。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -55766,7 +55948,7 @@ msgstr ""
 msgid ""
 "Someone wants you to deal with a Dvaered spy that appears to be located at "
 "Minerva Station."
-msgstr ""
+msgstr "ある人があなたに、ミネルバ・ステーションに駐在するらしいドベーレッドのスパイに対処してもらいたがっている。"
 
 #. In the case the player failed/crashed the mission ,we want to clear the
 #. change so they can repeat it without modifying their save
@@ -55776,22 +55958,22 @@ msgstr ""
 #: dat/missions/minerva/pirate4.lua:53 dat/missions/minerva/pirate4.lua:68
 #: dat/missions/minerva/pirate4.lua:175 dat/missions/minerva/pirate4.lua:323
 msgid "Minerva Mole"
-msgstr ""
+msgstr "ミネルバのモグラ"
 
 #: dat/missions/minerva/pirate4.lua:69
 msgid "Find out who the mole is"
-msgstr ""
+msgstr "モグラがだれなのか見つけだせ。"
 
 #: dat/missions/minerva/pirate4.lua:74
 msgid ""
 "You accepted another job from the sketchy individual to deal with a mole at "
 "Minerva Station."
-msgstr ""
+msgstr "あなたは怪しい人から次の仕事を引き受けた。ミネルバ・ステーションにいるモグラに対処するのだ。"
 
 #. Not accepted
 #: dat/missions/minerva/pirate4.lua:100
 msgid "You approach the sketchy individual who seems to be somewhat excited."
-msgstr ""
+msgstr "あなたは怪しい人に近づいた。いくぶん興奮しているように見える。"
 
 #: dat/missions/minerva/pirate4.lua:101
 msgid ""
@@ -55800,6 +55982,9 @@ msgid ""
 "them. Are you up to the task? Things might get a little… messy though.\"\n"
 "They beam you a smile."
 msgstr ""
+"｢われわれの労働の成果がついに得られはじめたようだ。モグラを見つけたとわれわれは信じている。そしてその対処に手を貸してもらいたい。その仕事はやりこなせるか"
+"？　ことがすこし……汚いことになるかもしれないんだが｣\n"
+"怪しい人があなたにほほえみかけた。"
 
 #: dat/missions/minerva/pirate4.lua:114
 msgid ""
@@ -55808,6 +55993,8 @@ msgid ""
 "Now, there are not many places to work at the station, so it is likely that "
 "they are involved in the gambling facility.\""
 msgstr ""
+"｢あんたがまた乗ってくれてくれしいよ！　で、われわれはモグラを追いつめて、傍受した通信からステーションで働いているというのがいちばんありそうだとわかった。"
+"さて、ステーションで働くための場所は多くない。だからおそらく賭博施設が関係していると思われる｣"
 
 #: dat/missions/minerva/pirate4.lua:115
 msgid ""
@@ -55818,16 +56005,22 @@ msgid ""
 "They should you a crumpled up dirty piece of paper that has '10k¤ 5-6-3-1' "
 "on it and hands it to you."
 msgstr ""
+"｢悪い知らせは、だれがモグラなのか正確には知らないことだ。そうはいってもよい知らせがあって、連絡係は途中で捕まえられた。渡したあとだったので、あまり興味を"
+"ひかれるものはなにも手に入れられなかったが、手がかりになりそうな簡単な覚え書きは見つかった｣\n"
+"怪しい人がしわくちゃになった汚い紙片をあなたに見せたが、それには ｢10k¤ 5-6-3-1｣ "
+"と書いてあった。それから怪しい人がその紙片をあなたに手渡した。"
 
 #: dat/missions/minerva/pirate4.lua:118
 msgid "Crumpled Up Note"
-msgstr ""
+msgstr "しわくちゃになった覚え書き"
 
 #: dat/missions/minerva/pirate4.lua:118
 msgid ""
 "This is a crumpled up note that says '10k¤ 5-6-3-1' on it. How could this be "
 "related to the Dvaered spy on Minerva Station?"
 msgstr ""
+"これはしわくちゃになった覚え書きで、｢10k¤ 5-6-3-1｣ "
+"と書いてある。これがミネルバ・ステーションにいるドベーレッドのスパイにどう関係しているというのか？"
 
 #: dat/missions/minerva/pirate4.lua:121
 msgid ""
@@ -55836,6 +56029,8 @@ msgid ""
 "them we'll kindly escort them to an interrogation ship we have and we can "
 "try to get them to spill the beans.\""
 msgstr ""
+"｢われわれはいまだ正確にはだれなのか見つけようと努力しているが、その覚え書きがわれわれの最大の手がかりだ。たぶんさがすときにそれがあんたの役に立つこともあ"
+"るだろう。そいつを捕まえてしまえば、われわれが所有する尋問用の船までていねいに案内して、秘密を話してもらうように試してみられる｣"
 
 #: dat/missions/minerva/pirate4.lua:136
 msgid ""
@@ -55843,12 +56038,14 @@ msgid ""
 "mole. Our best bet is still the note I gave you that says '10k¤ 5-6-3-1' on "
 "it. Maybe it's some sort of code for something?\""
 msgstr ""
+"｢捜索をどうやって進めるか？　モグラについてはなにも新しい手がかりが見つかっていない。いまだにいちばん確実なのは、あんたに渡した『10k¤ "
+"5-6-3-1』と書いてあるあの覚え書きだ。たぶんなにかの暗号のようなものじゃないか？｣"
 
 #: dat/missions/minerva/pirate4.lua:150
 msgid ""
 "After the chuck-a-luck dealer's shift you follow him to a back alley in the "
 "station."
-msgstr ""
+msgstr "チャンク゠ア゠ラックのディーラーの勤務時間が終わると、あなたはステーションの裏通りをディーラーについていった。"
 
 #: dat/missions/minerva/pirate4.lua:151
 msgid ""
@@ -55857,10 +56054,13 @@ msgid ""
 "They make a cutting gesture from their belly up to their neck.\n"
 "\"Poor kid, not the best way to leave this world.\""
 msgstr ""
+"｢あんたは見覚えがないな。新しい連絡係なのか？　このまえのやつは薄切りにされたよ｣\n"
+"ディーラーは腹から首まで切るようなしぐさをした。\n"
+"｢かわいそうな若者だ。この世を去る方法としては、最高のものじゃないな｣"
 
 #: dat/missions/minerva/pirate4.lua:154
 msgid "\"Hey, wait a moment. Haven't I seen you around?\""
-msgstr ""
+msgstr "｢おい、ちょっと待て。あんたのことはこのへんで見たことがなかったかな？｣"
 
 #: dat/missions/minerva/pirate4.lua:155
 msgid ""
@@ -55869,6 +56069,8 @@ msgid ""
 "stiffen. They quickly drop to the ground and a familiar face appears into "
 "view."
 msgstr ""
+"ディーラーが眉を寄せると同時に、あなたはとつぜんどさっという柔らかい音と、強力な電流の音を聞いた。ディーラーの目がどんよりとして、筋肉が硬直するのがあなた"
+"にはわかった。ディーラーがすばやく床に崩れおちると、見なれた顔が視界の中に現れた。"
 
 #: dat/missions/minerva/pirate4.lua:160
 msgid ""
@@ -55878,6 +56080,9 @@ msgid ""
 "bring him to the {sys} system. There should be a ship waiting for him in the "
 "middle of the asteroid field, it might be a bit hard to spot at first.\""
 msgstr ""
+"｢よくやった！　モグラを見つけたようだな。しかしわれわれのここでの仕事は終わっていない。しぼりとれる情報はすべて手に入れなければならないんだ。これはこのミ"
+"ネルバ・ステーションでできることではない。ほら、こいつをあんたの船に乗せて、{sys}星系に連れていってくれ。小惑星帯のまんなかにこいつを待っている船がい"
+"るはずだ。最初に見つけるのはちょっとたいへんかもしれないな｣"
 
 #: dat/missions/minerva/pirate4.lua:161
 msgid ""
@@ -55886,32 +56091,34 @@ msgid ""
 "have taken him. We're not expecting much trouble, but bring a strong ship "
 "just in case.\""
 msgstr ""
+"｢こっちは乗員といっしょに船で待っている。かならずこいつを連れてきてくれ。しかしドベーレッドの巡視船には注意するんだ。こいつを手に入れたことは知られたくな"
+"いんだ。大きな問題は予想していないが、念のために強い船で連れていくんだな｣"
 
 #. Add illegal cargo
 #: dat/missions/minerva/pirate4.lua:165
 msgid "Dvaered Mole"
-msgstr ""
+msgstr "ドベーレッドのモグラ"
 
 #: dat/missions/minerva/pirate4.lua:165
 msgid ""
 "An unconscious and restrained Dvaered mole. You better not let Dvaered ships "
 "find out you are carrying this individual."
-msgstr ""
+msgstr "意識を失って拘束されたドベーレッドのモグラ。ドベーレッド船には、あなたがこの人を運んでいることを見つけられないほうがいい。"
 
 #: dat/missions/minerva/pirate4.lua:176
 msgid "Take the mole to the interrogation facility at {sys}"
-msgstr ""
+msgstr "モグラを{sys}星系にある尋問施設に連れていけ。"
 
 #: dat/missions/minerva/pirate4.lua:186
 msgid "You were supposed to protect the interrogation ship!"
-msgstr ""
+msgstr "あなたは尋問用の船を守ることになっていた！"
 
 #. Clear system
 #. TODO maybe don't clear everything, leave some dvaered and stuff around as an obstacle
 #. Main ship player has to protect
 #: dat/missions/minerva/pirate4.lua:196
 msgid "Interrogation Ship"
-msgstr ""
+msgstr "尋問用の船"
 
 #. only fight back
 #. Stay around origin
@@ -55929,13 +56136,13 @@ msgstr ""
 #. Mission should be done
 #: dat/missions/minerva/pirate4.lua:227 dat/missions/minerva/pirate4.lua:419
 msgid "Strangely Familiar Voice"
-msgstr ""
+msgstr "奇妙にもなじみのある声"
 
 #: dat/missions/minerva/pirate4.lua:229
 msgid ""
 "You board the ship and are once again greeting by the sketchy figure you are "
 "getting used to."
-msgstr ""
+msgstr "あなたが船に乗りこむと、見なれた怪しい人影にまた出迎えられた。"
 
 #: dat/missions/minerva/pirate4.lua:230
 msgid ""
@@ -55943,6 +56150,8 @@ msgid ""
 "Some crew members escort the Dvaered mole towards the inner part of the "
 "ship. They have fairly rough and burly complexions."
 msgstr ""
+"｢心配してた。ここに無事に来てくれてうれしいよ！｣\n"
+"数人の乗員たちが、ドベーレッドのモグラを船のもっと内部の方へと連れていった。乗員たちはかなり荒っぽくてたくましい姿をしていた。"
 
 #: dat/missions/minerva/pirate4.lua:232
 msgid ""
@@ -55951,6 +56160,9 @@ msgid ""
 "\"If all goes well, we'll get the information we were looking for in the "
 "next few periods and we can all go "
 msgstr ""
+"｢モグラのことは心配しないでくれ。これからはこっちで面倒を見るつもりだ｣\n"
+"女があなたにほほえみかけた。\n"
+"｢すべてがうまくいったら、あと二、三時限で求めている情報が手に入るだろう。そしてらもう行ける｣"
 
 #: dat/missions/minerva/pirate4.lua:235
 msgid ""
@@ -55958,12 +56170,16 @@ msgid ""
 "\"What the hell are you guys doing loafing around? We have work to do! I "
 "don't pay you to sit on your bums all day!\""
 msgstr ""
+"あなたは奇妙にもなじみがあるように聞こえる怒った声をかすかに聞いた。\n"
+"｢いったいなんであんたたちはぶらついてるの？　やる仕事があるんだよ！　一日じゅう尻の上に座ってたら給料払わないからね！｣"
 
 #: dat/missions/minerva/pirate4.lua:237
 msgid ""
 "They visibly wince when they hear the angry voice.\n"
 "\"Let us talk about your payment.\""
 msgstr ""
+"怒りの声を聞くと、怪しい人が目に見えてたじろいだ。\n"
+"｢あんたの報酬について話そうか｣"
 
 #. blaring alarm
 #. Using boars as slang for Dvaered
@@ -55973,6 +56189,8 @@ msgid ""
 "\"Zuri! We've got incoming boars closing in our or position! Take care of it!"
 "\""
 msgstr ""
+"なじみのある怒りの声が遠くでどなった。\n"
+"｢ズリ！　われわれかこの位置を包囲しようとしてイノシシがやってきた！　始末して！｣"
 
 #: dat/missions/minerva/pirate4.lua:244 dat/scripts/common/minerva.lua:53
 msgid "Zuri"
@@ -55985,35 +56203,38 @@ msgid ""
 "here.\"\n"
 "She rushes off into the depths of the ship."
 msgstr ""
+"｢くそっ、ドベーレッドの来客があるようだ。この船は見つからないようにしないと！　わからんが、とにかく撃つかなにかしてくれ！　"
+"こっちはここの砲塔に人員を配置する｣\n"
+"女は船の深みの中へいそいで行ってしまった。"
 
 #: dat/missions/minerva/pirate4.lua:247
 msgid "You race to get back to your ship before the Dvaereds jump in."
-msgstr ""
+msgstr "あなたはドベーレッドが飛びこんでくるまえに、疾走して自分の船に戻った。"
 
 #. Set up stuff
 #. Should fight back a bit
 #. Dvaered jump in hooks
 #: dat/missions/minerva/pirate4.lua:258
 msgid "Sensors detecting Dvaered patrol incoming from {sys}!"
-msgstr ""
+msgstr "センサーが{sys}星系からやってくるドベーレッドの巡視隊を探知した！"
 
 #. Unboard
 #: dat/missions/minerva/pirate4.lua:278
 msgid "We are under attack!"
-msgstr ""
+msgstr "われわれは攻撃をうけている！"
 
 #: dat/missions/minerva/pirate4.lua:288
 msgid "We have been discovered!"
-msgstr ""
+msgstr "われわれは発見された！"
 
 #: dat/missions/minerva/pirate4.lua:294
 msgid "The interrogation ship was destroyed!"
-msgstr ""
+msgstr "尋問用の船が破壊された！"
 
 #. Get ready!
 #: dat/missions/minerva/pirate4.lua:299
 msgid "Reinforcements are coming!"
-msgstr ""
+msgstr "増援がやってくる！"
 
 #. Reinforcement spawners
 #. Try to guard the Rhino
@@ -56021,35 +56242,35 @@ msgstr ""
 #. Message stuff
 #: dat/missions/minerva/pirate4.lua:322
 msgid "Support incoming! Hurrah!"
-msgstr ""
+msgstr "支援部隊が来た！　やったー！"
 
 #: dat/missions/minerva/pirate4.lua:324
 msgid "Clean up the Dvaered patrols"
-msgstr ""
+msgstr "ドベーレッドの巡視隊を掃除せよ。"
 
 #. Detect all Dvaered deaths
 #: dat/missions/minerva/pirate4.lua:332
 msgid "Try to buy us time! We have reinforcements coming!"
-msgstr ""
+msgstr "時間を稼いでくれ！　増援が来るんだ！"
 
 #: dat/missions/minerva/pirate4.lua:335
 msgid "They keep on coming! Keep them distracted!"
-msgstr ""
+msgstr "増援はこちらへ向かっている！　注意をそらしつづけてくれ！"
 
 #: dat/missions/minerva/pirate4.lua:338
 msgid "Just a bit more and reinforcements should arrive!"
-msgstr ""
+msgstr "もうちょっとだけだ。そうすれば増援が到着するはずだ！"
 
 #: dat/missions/minerva/pirate4.lua:341
 msgid "Shit, is that a Dvaered Goddard?"
-msgstr ""
+msgstr "くそっ、あれはドベーレッドのゴダードか？"
 
 #: dat/missions/minerva/pirate4.lua:421
 msgid ""
 "As everything settles down you receive an incoming transmission from the "
 "interrogation ship, and the individual apparently known as 'Zuri' appears on "
 "screen.."
-msgstr ""
+msgstr "すべてが落ちつくと、あなたは尋問用の船から送信された通信を受信した。見たところ ｢ズリ｣ と呼ばれるらしいあの人が、画面に現れた。"
 
 #: dat/missions/minerva/pirate4.lua:422
 msgid ""
@@ -56057,6 +56278,8 @@ msgid ""
 "trail us over here. Pretty sure the damn mole had some sort of tracking "
 "device we must have missed.\""
 msgstr ""
+"｢くそったれめ、あれは危なかった。ドベーレッドがここまで跡を追えるほどこうかつになれるとはまったく考えてなかった。われわれが見逃してたある種の追跡装置をあ"
+"のくそったれモグラが持っていたのはかなり確実だな｣"
 
 #: dat/missions/minerva/pirate4.lua:423
 msgid ""
@@ -56064,6 +56287,8 @@ msgid ""
 "answers. We can't linger here long, the Dvaered are bound to be back, and "
 "this time in larger numbers.\""
 msgstr ""
+"｢質問がたくさんあるのはわかってるが、今はこたえるときじゃない。ここに長く居残ってられないんだ。かならずドベーレッドが戻ってくるからな。そしてこんどはもっ"
+"と多数でだ｣"
 
 #: dat/missions/minerva/pirate4.lua:424
 msgid ""
@@ -56071,6 +56296,8 @@ msgid ""
 "\"Zuri! Get your ass back to navigation! Wait until I tell you how that "
 "Dvaered squealed like a pig!\""
 msgstr ""
+"やはりなじみのある声が口をはさんだ。\n"
+"｢ズリ！　あんたの尻を航法席に戻して！　あのドベーレッドがブタみたいにキーキーいったことを教えるまで待ってな！｣"
 
 #: dat/missions/minerva/pirate4.lua:426
 msgid ""
@@ -56079,11 +56306,15 @@ msgid ""
 "She gives you a tired grin.\n"
 "\"Anyway, I'll wire you a reward. Meet me back at Minerva Station.\""
 msgstr ""
+"ズリは迷惑な妨害にやや複雑な表情を見せた。\n"
+"｢面倒を見ることになってる仕事があるんだ｣\n"
+"ズリはあなたにくたびれた感じで笑いかけた。\n"
+"｢とにかく、あんたに報酬を送っておく。ミネルバ・ステーションに戻ったら会ってくれ｣"
 
 #. Rewards
 #: dat/missions/minerva/pirate4.lua:433
 msgid "You helped defend an interrogation ship from Dvaered vessels."
-msgstr ""
+msgstr "あなたは尋問用の船をドベーレッド船から防衛するのを助けた。"
 
 #. Pirates go away
 #. Guard AI is bad for stuff other than guarding
@@ -56129,12 +56360,12 @@ msgstr ""
 msgid ""
 "Zuri wants you to disable a Za'lek hacking centre located near Minerva "
 "Station."
-msgstr ""
+msgstr "ズリがあなたに、ミネルバ・ステーション近くに位置するザレクのハッキング拠点を無力化してもらいたがっている。"
 
 #. If not accepted, mem.misn_state will still be nil
 #: dat/missions/minerva/pirate5.lua:57 dat/missions/minerva/pirate5.lua:69
 msgid "Za'lek Hacking Centre"
-msgstr ""
+msgstr "ザレクのハッキング拠点"
 
 #: dat/missions/minerva/pirate5.lua:70 dat/missions/pirate/raid.lua:180
 msgid "Go to the {sys} system"
@@ -56142,32 +56373,33 @@ msgstr "{sys}星系へ行け。"
 
 #: dat/missions/minerva/pirate5.lua:71
 msgid "Destroy the hacking centre"
-msgstr ""
+msgstr "ハッキング拠点を破壊せよ。"
 
 #: dat/missions/minerva/pirate5.lua:72
 msgid "Return to Minerva Station"
-msgstr ""
+msgstr "ミネルバ・ステーションに戻れ。"
 
 #: dat/missions/minerva/pirate5.lua:76
 msgid ""
 "You accepted a job from Zuri to take out a Za'lek hacking centre at the "
 "{sys} system"
-msgstr ""
+msgstr "あなたはズリから仕事を引き受けた。{sys}星系にあるザレクのハッキング拠点を取り除くのだ。"
 
 #: dat/missions/minerva/pirate5.lua:77
 msgid "High-Density Explosives"
-msgstr ""
+msgstr "高密度な爆発物"
 
 #: dat/missions/minerva/pirate5.lua:77
 msgid ""
 "Explosives that can be used to detonate all sorts of critical infrastructure."
-msgstr ""
+msgstr "あらゆる種類の重要施設を爆破するのに使える爆発物。"
 
 #: dat/missions/minerva/pirate5.lua:100
 msgid ""
 "You approach Zuri to report your success. She listens to you intently as you "
 "explain how things went down when you took out the hacking centre."
 msgstr ""
+"あなたはズリに近づいて成功を報告した。ズリはあなたがハッキング拠点を除去したときに、ものごとがどういうふうに落ちついたのか説明するのを熱心に聞いた。"
 
 #: dat/missions/minerva/pirate5.lua:101
 msgid ""
@@ -56177,6 +56409,9 @@ msgid ""
 "been able to properly pilot a ship in ages. Boss just never cuts me any "
 "slack.\""
 msgstr ""
+"｢むこうではすばらしい仕事をしてくれた。これでまちがいなくザレクのたくらみは二、三デカ時限遅れることになるだろう。ハッキングステーションの破壊のような花火"
+"大会を見て満足しなければな。それをわたしも見られたらとほんとうに思うけど、昔から船をきちんと操縦できたことがなくてね。ボスはちょっと大目に見てくれたことが"
+"ないんだ｣"
 
 #: dat/missions/minerva/pirate5.lua:102
 msgid ""
@@ -56186,19 +56421,23 @@ msgid ""
 "Station is free from Za'lek and Dvaered inference. Meet me up in the bar in "
 "a bit if you want to help.\""
 msgstr ""
+"｢いつもどおり、あんたの報酬は送っておいた｣\n"
+"ズリがあなたににやっと笑いかけた。\n"
+"｢そうはいっても、われわれの仕事はまだ終わりにはほど遠い。われわれはミネルバ・ステーションがザレクとドベーレッドの干渉から自由になるまでやめるつもりはない"
+"。もし手助けがしたかったら、もうちょっとしたらバーで会ってくれ｣"
 
 #. Rewards
 #: dat/missions/minerva/pirate5.lua:108
 msgid ""
 "You took down an advanced Za'lek hacking centre and got rewarded for your "
 "efforts."
-msgstr ""
+msgstr "あなたはザレクの先進ハッキング拠点を除去して、その努力のおかげで報酬をもらった。"
 
 #. Not accepted
 #: dat/missions/minerva/pirate5.lua:116
 msgid ""
 "You approach Zuri who seems to be motioning to you. She seems faintly tired."
-msgstr ""
+msgstr "あなたは合図しているらしいズリに近づいた。わずかに疲れて見える。"
 
 #: dat/missions/minerva/pirate5.lua:117
 msgid ""
@@ -56207,13 +56446,15 @@ msgid ""
 "more, and it seems like they were part of the scouts of an advanced hacking "
 "attack on Minerva Station.\""
 msgstr ""
+"｢質問がたくさんあると思うが、最初に大事なことを。うさんくさいザレクのドローンを覚えているか？　"
+"さて、われわれはあれをさらにいくらか調べることができた。それであれはミネルバ・ステーションでの先進ハッキング攻撃の偵察に参加しているらしいんだ｣"
 
 #: dat/missions/minerva/pirate5.lua:118
 msgid ""
 "\"Those Za'lek are always pretending to talk about science and research, and "
 "the moment you turn your back on them, they start prodding and stealing "
 "everything they can find.\""
-msgstr ""
+msgstr "｢あのザレクはいつも科学と研究について話していると見せかけていて、それで背中を見せると、見つけたものをすべて突きまわして盗みはじめるんだ｣"
 
 #: dat/missions/minerva/pirate5.lua:119
 msgid ""
@@ -56222,6 +56463,9 @@ msgid ""
 "finesse. Will you help us again?\"\n"
 "She smiles at you."
 msgstr ""
+"｢簡単にいうと、あんたには近くにある連中のハッキング拠点を取り除いてもらう必要がある。今回は、あまり腕力を使うことはできないだろう。もっと巧妙な処理をしな"
+"ければならないはずだ。また助けてくれるつもりはあるか？｣\n"
+"ズリがあなたにほほえみかけた。"
 
 #: dat/missions/minerva/pirate5.lua:132
 msgid ""
@@ -56233,6 +56477,9 @@ msgid ""
 "taking out the hacking centre, but it looks like it won't be possible "
 "without taking out the drone controllers too.\""
 msgstr ""
+"｢いいね！　あんたはいつでも当てにできる。\n"
+"｢で、いったとおり、ザレクは近くの{sys}星系にとても重大な偵察・ハッキング施設を建設した。われわれは斥候を送ってすばやくそいつを眺めてきたが、あいつら"
+"はハッキング拠点以外にもいくつかドローン制御装置を用意したようだ。主要目標はハッキング拠点の除去だが、ドローン制御装置も破壊しなければ不可能なようだ｣"
 
 #: dat/missions/minerva/pirate5.lua:134
 msgid ""
@@ -56245,6 +56492,10 @@ msgid ""
 "take them out, that should incapacitate most of the drones and make taking "
 "out the hacking centre a piece of cake.\""
 msgstr ""
+"｢おもな問題は、その星系にはザレクのドローンが群がっているってことだ。大きいやつ、爆撃機、軽いやつ、とかなんでもだ。ふつうならあんたのようなすごいパイロッ"
+"トには本物の挑戦ってわけじゃないだろうが、とてつもない数だから正面から攻撃したら殺されて終わるだけだろう。そうはいっても、あんなにたくさんのドローンを制御"
+"するにはその基盤となる施設が必要だ。それにザレクは、のろまなぐうたらだろ、あいつらは。だから船から指示を出したりしないで、ドローン制御装置を使うんだ。もし"
+"あんたがそいつを破壊できたら、ほとんどのドローンは能力を失って、ハッキング拠点を取り除くのは楽勝になる｣"
 
 #: dat/missions/minerva/pirate5.lua:135
 msgid ""
@@ -56258,6 +56509,11 @@ msgid ""
 "said than done, but I know you can do it.\"\n"
 "She grins at you."
 msgstr ""
+"｢お勧めは{sys}星系にジャンプして入って、目立たないようにしていることだ。われわれはほんとうにいい爆発物をいくつか手に入れたんで、そいつをあんたに渡し"
+"ておく。あんたがドローン制御装置かハッキングステーションにじゅうぶん近づけるなら、その爆発物で取り除けるはずだ。だからこっそりとドローンをぜんぶ通りぬける"
+"ように努力して、ドローン制御装置に爆弾をしかけてから、そいつが終わったらハッキング拠点にも同じことをするんだ。もちろん、昔かたぎのやりかたを好むなら、ミサ"
+"イルとかレールガンとかあんたの手にあるものならどんなものでもハッキング拠点を撃ち落とせる。おそらくいうはやすしだが、あんたにできるのはわかってるよ｣\n"
+"ズリがあなたににやっと笑いかけた。"
 
 #: dat/missions/minerva/pirate5.lua:137
 msgid ""
@@ -56268,15 +56524,18 @@ msgid ""
 "\"Oh and about the explosives, they've already been loaded onto your ship so "
 "you don't have to worry about them.\""
 msgstr ""
+"｢そうはいっても、ドローンの量からして、おそらくは見つかりにくい船を使うべきだろう。そのうえ見つかったときには何機か破壊できる船だな。ドローンはほんとうに"
+"速いから、爆発物をしかけながらふりきれそうもないからな。\n"
+"｢ああ、それから爆発物についてだが、すでにあんたの船に積んであるから、心配する必要はないぞ｣"
 
 #. Accepted.
 #: dat/missions/minerva/pirate5.lua:141
 msgid "You approach Zuri."
-msgstr ""
+msgstr "あなたはズリに近づいた。"
 
 #: dat/missions/minerva/pirate5.lua:149
 msgid "Are you pirates?"
-msgstr ""
+msgstr "｢あなたは海賊なんですか？｣"
 
 #: dat/missions/minerva/pirate5.lua:156
 msgid ""
@@ -56287,6 +56546,9 @@ msgid ""
 "several drone controllers. You should probably take them out first if you "
 "want to have a shot at the hacking centre.\""
 msgstr ""
+"｢この仕事はいままでわれわれがしてきたよりは、ちょっと芸当がいる。だがあんたなら対処できるはずだ。主要目標は{sys}星系にあるザレクのハッキング拠点の除"
+"去で、ほかのすべては無視できる。そうはいっても、星系にはいくつかのドローン制御装置で制御されているドローンが群がっている。だからハッキング拠点をやっつけた"
+"いんだったら、おそらく制御装置を最初に破壊すべきだ｣"
 
 #: dat/missions/minerva/pirate5.lua:157
 msgid ""
@@ -56298,6 +56560,10 @@ msgid ""
 "\"Make sure you take a stealthy ship that can take down a couple of drones "
 "if things go wrong, and you get caught.\""
 msgstr ""
+"｢爆発物はあんたの船に積みこんでおいた。だからドローンを避けられたら、ドローン制御装置に乗りこんでくれ。できたらハッキング拠点でもいいぞ。起爆は簡単にでき"
+"るはずだ。だが制御装置やハッキング拠点は通常の武器でも破壊できる。なんでもいいからあんたにとって簡単なほうでいい｣\n"
+"ズリがあなたにほほえみかけた。\n"
+"｢見つかりにくい船を使うようにしてくれ。それとなんかまずくなったりばれたときにドローンを数機は破壊できる船だ｣"
 
 #: dat/missions/minerva/pirate5.lua:163
 msgid ""
@@ -56308,18 +56574,22 @@ msgid ""
 "and aristocracy, all the while starving and exploiting the workers all over. "
 "Is this what we want?\""
 msgstr ""
+"｢海賊？｣\n"
+"ズリが含み笑いをした。\n"
+"｢ひとつ聞かせてくれ。老いぼれの帝国をいいものだと思ってるのか？　"
+"市民に重税をかけつつ重労働をさせて見えをはる官僚と貴族を養いながら、そこらじゅうの労働者を飢えさせて食いものにしている。これがわれわれの望むものなのか？｣"
 
 #: dat/missions/minerva/pirate5.lua:167
 msgid "\"Yes, it brings stability.\""
-msgstr ""
+msgstr "｢はい。安定をもたらしてくれます｣"
 
 #: dat/missions/minerva/pirate5.lua:168
 msgid "\"No, it hampers human development.\""
-msgstr ""
+msgstr "｢いいえ。人類の発展を妨害しています｣"
 
 #: dat/missions/minerva/pirate5.lua:169
 msgid "\"How is this related to my question?\""
-msgstr ""
+msgstr "｢それとわたしの質問がどう関係するんですか？｣"
 
 #: dat/missions/minerva/pirate5.lua:172
 msgid ""
@@ -56329,6 +56599,9 @@ msgid ""
 "represent the status quo. They do not want anyone to challenge their reign "
 "and want to continue their life of luxury.\""
 msgstr ""
+"｢われわれはこの専制政治と圧政に立ちむかいたがっている者たちを代表している。そしてもっとよい宇宙はありえるんだと信じているんだ。たしかに、われわれのことを"
+"軽蔑的に海賊とか悪党とかに分類する者はいる。しかしそれはそいつらが現状を弁護しているからなんだ。そいつらはだれにも自分たちの支配に挑戦してほしくなくて、ぜ"
+"いたくな生活をつづけたがっているんだよ｣"
 
 #: dat/missions/minerva/pirate5.lua:173
 msgid ""
@@ -56338,6 +56611,9 @@ msgid ""
 "and they die a sad, depressed life filled with delusions of grandeur. This "
 "is not the universe we wish for humankind.\""
 msgstr ""
+"｢もちろん、そんな簡単なことじゃない。多くの人びとは自分自身の利益に反しても共謀してるからな。そいつらはじゅうぶんにがんばって働けば上流階級の一部になれる"
+"と信じてるんだ。ほら、帝国の夢ってやつだよ。だがそんなことはけっしておこらない。みんな壮大な妄想に満ちた悲しく憂うつな人生を生きて死んでいく。これはわれわ"
+"れが人類のために望む宇宙じゃない｣"
 
 #: dat/missions/minerva/pirate5.lua:174
 msgid ""
@@ -56348,6 +56624,9 @@ msgid ""
 "their full potential, even though we have to ruffle some feathers here and "
 "there.\""
 msgstr ""
+"｢こんな大きな体制と一対一でいくのは簡単じゃない。だからわれわれは影で働き小さな目標に集中しなければならないんだ。ミネルバ・ステーションのようにな。このス"
+"テーションにはそんな潜在能力がある。今はザレクとドベーレッドのけんかで無駄になっているがな。われわれはミネルバ・ステーションの人たちに完全な可能性のある生"
+"活をする自由を望んでいる。そこらじゅうで波風をたてなきゃならないとしてもな｣"
 
 #: dat/missions/minerva/pirate5.lua:175
 msgid ""
@@ -56355,11 +56634,13 @@ msgid ""
 "you and I.\"\n"
 "Her eyes blaze with hard determination."
 msgstr ""
+"｢だからそのとおり。たぶんわれわれは海賊なんだろう。あんたやわたしのために、もっとよい宇宙を夢見る海賊だ｣\n"
+"ズリの目は固い決意に輝いていた。"
 
 #. Controller spawning functions
 #: dat/missions/minerva/pirate5.lua:252
 msgid "Drone Controller"
-msgstr ""
+msgstr "ドローン制御装置"
 
 #. Controllers can't detect anything
 #. Much more bulky than normal
@@ -56370,7 +56651,7 @@ msgstr ""
 #. Spawn the main controllers
 #: dat/missions/minerva/pirate5.lua:295
 msgid "Hacking Centre"
-msgstr ""
+msgstr "ハッキング拠点"
 
 #. patrol forever
 #. Main boss, isn't necessary to kill
@@ -56389,16 +56670,16 @@ msgstr ""
 msgid ""
 "Due to military exercises, {sys} is under lockdown. Please evacuate the area "
 "immediately."
-msgstr ""
+msgstr "軍事演習のため、{sys}星系は封鎖されています。どうかこの領域から即座に立ち退いてください"
 
 #: dat/missions/minerva/pirate5.lua:407
 msgid "Unwelcome ships will be terminated. You have been warned."
-msgstr ""
+msgstr "歓迎されていない船は消滅させられます。あなたは警告されました"
 
 #. Drone controllers disable their respective drones
 #: dat/missions/minerva/pirate5.lua:419
 msgid "You plant explosives on the ship."
-msgstr ""
+msgstr "あなたは船に爆発物をしかけた。"
 
 #. Move the boss a bit away
 #.
@@ -64684,10 +64965,8 @@ msgid ""
 "what the other ship is doing, but you can not find it anywhere. They seem to "
 "have a knack for fleeing."
 msgstr ""
-"あなたは走って捕まえようとしたが、エアロックが閉じる音と固定具が外れる音が聞"
-"こえた。あなたは船長席まで走ってもどり、むこうの船がしていることを確認しよう"
-"とする。しかしあの船はどこにも見つからなかった。あの船は逃げるこつをつかんで"
-"いるようだ。"
+"あなたは走って捕まえようとしたが、エアロックが閉じる音と固定具がはずれる音が聞こえた。あなたは船長席まで走ってもどり、むこうの船がしていることを確認しよう"
+"とする。しかしあの船はどこにも見つからなかった。あの船は逃げるこつをつかんでいるようだ。"
 
 #: dat/missions/pirate/blackcat.lua:282
 msgid ""
@@ -81588,7 +81867,7 @@ msgstr "いろいろ"
 #, lua-format
 msgid "#p%s Minerva Token#0"
 msgid_plural "#p%s Minerva Tokens#0"
-msgstr[0] "#p %s 枚のミネルバトークン#0"
+msgstr[0] "#p%s 枚のミネルバトークン#0"
 
 #. List of all the pirate factions
 #. List of all the pirate clan factions
@@ -91335,7 +91614,7 @@ msgstr "巡視隊の計算中……"
 
 #: src/naev.c:684
 msgid "Initializing Details.."
-msgstr "詳細を初期化中..."
+msgstr "詳細を初期化中……"
 
 #. Initialize player stuff.
 #: src/naev.c:691
