@@ -66,6 +66,14 @@ function mining.load()
          reward = 0.5,
          z = 2,
       }
+   targets[4] = {
+         pos = 0.6*2*math.pi,
+         sway_range = 0.1*2*math.pi,
+         sway_period = 1,
+         size = math.pi/8,
+         reward = 0.5,
+         z = 3,
+      }
 
    z_max = 0
    for k,t in ipairs(targets) do
@@ -153,10 +161,12 @@ function mining.draw()
          else
             r = r * (2-y)
          end
-         if t.z == z_cur+1 then
-            r = r + 150
-         elseif t.m then
-            r = r + 150*ease(1-t.m)
+         if t.z >= z_cur then
+            if t.m then
+               r = r + 150 * (ease(1-t.m) + t.z-z_cur)
+            else
+               r = r + 150 * (t.z-z_cur)
+            end
          end
          lg.push()
          lg.translate( cx+math.cos(p)*r, cy+math.sin(p)*r )
@@ -227,8 +237,8 @@ function mining.update( dt )
          pointer = pointer - math.pi*2
          z_cur = z_cur+1
          for k,t in ipairs(targets) do
-            if t.z==z_cur then
-               t.m = 0
+            if t.z >= z_cur then
+               t.m = -dt -- Gets dt added in the same loop
             end
          end
          if z_cur > z_max then
