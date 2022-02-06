@@ -9,9 +9,11 @@ dat/commodities/diamond.xml
 dat/commodities/food.xml
 dat/commodities/gold.xml
 dat/commodities/industrial_goods.xml
+dat/commodities/iron.xml
 dat/commodities/luxury_goods.xml
 dat/commodities/medicine.xml
 dat/commodities/ore.xml
+dat/commodities/therite.xml
 dat/commodities/water.xml
 dat/damagetype.xml
 dat/effects/ambush_hunter.xml

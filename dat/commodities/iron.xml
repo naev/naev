@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commodity>
+ <name>Iron</name>
+ <description>Iron plays a fundamental role in many different chemical and material production processes. Despite the wide availability in asteroids, there is always significant demand for more.</description>
+ <gfx_store>ore.webp</gfx_store>
+ <price_ref>Ore</price_ref>
+ <always_can_sell/>
+</commodity>
