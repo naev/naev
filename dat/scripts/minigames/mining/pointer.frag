@@ -17,7 +17,7 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    if (pointer < a)
       d = 1.0;
    else
-      colour.a *= 1.0-0.5*(pointer-a);
+      colour.a *= 1.0-0.8*pow(pointer-a,0.5);
 
    float alpha = smoothstep( -m, 0.0, -d);
 	return colour * vec4( vec3(1.0), alpha );
