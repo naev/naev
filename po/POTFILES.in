@@ -1,4 +1,5 @@
 po/credits.pot
+dat/asteroids/groups/commonA.xml
 dat/asteroids/types/default.xml
 dat/asteroids/types/diamond.xml
 dat/asteroids/types/golden.xml
