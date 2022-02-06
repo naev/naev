@@ -146,7 +146,7 @@ function mining.draw()
       local a = alpha * y
       if a > 0 then
          local r = radius*0.9
-         local s = r*t.size * (y*0.5+0.5)
+         local s = r*t.size
          local p = t.cur
          if t.hit then
             r = r * y
@@ -165,7 +165,7 @@ function mining.draw()
          local sx = radius*0.4
          local sy = s + 0.2*radius
          shd_target:send( "size", {sx, sy, 0.9*radius, s} )
-         lg.setColor( 1, 0, 0, a )
+         lg.setColor( 1, 0, 0, a*0.8 )
          lg.draw( img, -sx, -sy, 0, 2*sx, 2*sy )
 
          lg.pop()
