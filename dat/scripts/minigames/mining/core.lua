@@ -163,8 +163,8 @@ function mining.draw()
          lg.rotate( p )
 
          local sx = radius*0.4
-         local sy = s
-         shd_target:send( "size", {sx, sy, radius} )
+         local sy = s + 0.2*radius
+         shd_target:send( "size", {sx, sy, 0.9*radius, s} )
          lg.setColor( 1, 0, 0, a )
          lg.draw( img, -sx, -sy, 0, 2*sx, 2*sy )
 
