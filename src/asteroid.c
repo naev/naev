@@ -259,7 +259,9 @@ static void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
          if (r > wi)
             continue;
          at = grp->types[j];
+         break;
       }
+      break;
    }
 
    ast->type = at-asteroid_types;
@@ -361,8 +363,11 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
       /* Handle types of asteroids. */
       if (xml_isNode(cur,"group")) {
+         double w;
          const char *name = xml_get(cur);
+         xmlr_attr_float_def(cur,"weight",w,1.);
          array_push_back( &a->groups, astgroup_getName(name) );
+         array_push_back( &a->groupsw, w );
          continue;
       }
 
