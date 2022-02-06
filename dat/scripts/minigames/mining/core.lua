@@ -8,10 +8,11 @@ local lg             = require 'love.graphics'
 local frag_background = love.filesystem.read( "background.frag" )
 local frag_pointer = love.filesystem.read( "pointer.frag" )
 local frag_target = love.filesystem.read( "target.frag" )
+local frag_shot = love.filesystem.read( "shot.frag" )
 
-local moving, pointer, pointer_tail, speed, cx, cy, transition, alpha, done, targets, shots, shots_max, shots_timer, z_cur, z_max, mfont
+local moving, pointer, pointer_tail, speed, cx, cy, transition, alpha, done, targets, shots, shots_max, shots_timer, shots_visual, z_cur, z_max, mfont
 local radius = 200
-local img, shd_background, shd_pointer, shd_target
+local img, shd_background, shd_pointer, shd_target, shd_shot
 function mining.load()
    mfont       = lg.newFont(32)
    pointer     = 0
@@ -19,6 +20,7 @@ function mining.load()
    moving      = false
    transition  = 0
    shots       = 0
+   shots_visual = {}
    z_cur       = 1
    -- Outfit-dependent
    speed       = math.pi
@@ -33,6 +35,7 @@ function mining.load()
    shd_background = lg.newShader( frag_background )
    shd_pointer = lg.newShader( frag_pointer )
    shd_target = lg.newShader( frag_target )
+   shd_shot = lg.newShader( frag_shot )
 
    -- TODO center on player
    local lw, lh = lg.getDimensions()
@@ -97,6 +100,8 @@ local function shoot ()
          t.hit = true
       end
    end
+
+   table.insert( shots_visual, {pos=pointer, timer=0} )
 
    shots = shots + 1
 end
@@ -197,6 +202,30 @@ function mining.draw()
       end
    end
 
+   -- Shots
+   lg.setShader( shd_shot )
+   for k,s in ipairs(shots_visual) do
+      local p = s.pos
+      local a
+      local r = radius*0.9
+      local sy, sx = 10, radius*0.15
+      if s.timer < 0.05 then
+         a = alpha * ease( s.timer / 0.05 )
+      else
+         a = alpha * (1 - ease( (s.timer-0.05) / 0.95 ))
+      end
+
+      lg.push()
+      lg.translate( cx+math.cos(p)*r, cy+math.sin(p)*r )
+      lg.rotate( p )
+
+      lg.setColor( 1, 0.6, 0.2, a )
+      lg.draw( img, -sx, -sy/2, 0, 2*sx, 2*sy )
+
+      lg.pop()
+   end
+   lg.setShader()
+
    if z_cur > z_max then
       lg.setColor( 1, 1, 1, alpha )
       lg.printf( "COMPLETE", mfont, cx-100, cy-mfont:getHeight()/2, 200, "center" )
@@ -270,6 +299,15 @@ function mining.update( dt )
          t.y = t.y + dt
       end
    end
+
+   local sv = {}
+   for k,s in ipairs(shots_visual) do
+      s.timer = s.timer + dt
+      if s.timer < 1 then
+         table.insert( sv, s )
+      end
+   end
+   shots_visual = sv
 end
 
 return mining
