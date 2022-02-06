@@ -1,20 +1,20 @@
 local mining = {}
 
-local love           = require 'love'
---local audio          = require 'love.audio'
-local lg             = require 'love.graphics'
---local fmt            = require 'format'
+local love     = require 'love'
+--local audio    = require 'love.audio'
+local lg       = require 'love.graphics'
+local lfile    = require "love.filesystem"
 
-local frag_background = love.filesystem.read( "background.frag" )
-local frag_pointer = love.filesystem.read( "pointer.frag" )
-local frag_target = love.filesystem.read( "target.frag" )
-local frag_shot = love.filesystem.read( "shot.frag" )
+local frag_background = lfile.read( "background.frag" )
+local frag_pointer = lfile.read( "pointer.frag" )
+local frag_target = lfile.read( "target.frag" )
+local frag_shot = lfile.read( "shot.frag" )
 
 local moving, pointer, pointer_tail, speed, cx, cy, transition, alpha, done, targets, shots, shots_max, shots_timer, shots_visual, z_cur, z_max, mfont, telapsed
-local radius = 200
+local radius = 150
 local img, shd_background, shd_pointer, shd_target, shd_shot
 function mining.load()
-   mfont       = lg.newFont(32)
+   mfont       = lg.newFont(16)
    pointer     = 0
    pointer_tail = -math.pi/4
    moving      = false
@@ -23,6 +23,7 @@ function mining.load()
    shots_visual = {}
    z_cur       = 1
    telapsed    = 0
+   alpha       = 0
    -- Outfit-dependent
    speed       = math.pi
    shots_max   = 3
@@ -37,11 +38,10 @@ function mining.load()
    shd_pointer = lg.newShader( frag_pointer )
    shd_target = lg.newShader( frag_target )
    shd_shot = lg.newShader( frag_shot )
+   lg.setBackgroundColor(0, 0, 0, 0)
 
-   -- TODO center on player
-   local lw, lh = lg.getDimensions()
-   cx = lw/2
-   cy = lh/2
+   -- Center on player
+   cx, cy = naev.gfx.screencoords( naev.camera.get(), true ):get()
 
    -- Generate targets
    targets = {}
@@ -113,7 +113,10 @@ function mining.keypressed( key )
       transition = 0
       done = 1
    else
-      if not moving then
+      if z_cur > z_max then
+         transition = 0
+         done = 1
+      elseif not moving then
          moving = true
       else
          shoot()
@@ -134,11 +137,11 @@ function mining.draw()
    local lw, lh = love.window.getDesktopDimensions()
 
    -- Background
-   lg.setColor( 0.2, 0.2, 0.2, alpha )
+   lg.setColor( 0.0, 0.0, 0.0, 0.7*alpha )
    lg.rectangle( "fill", 0, 0, lw, lh )
 
    -- Background
-   lg.setColor( 0.7, 0.7, 0.7, 0.7*alpha )
+   lg.setColor( 0.7, 0.7, 0.7, 0.5*alpha )
    shd_background:send( "radius", radius )
    lg.setShader( shd_background )
    lg.draw( img, cx-radius, cy-radius, 0, radius*2, radius*2 )
@@ -146,14 +149,14 @@ function mining.draw()
 
    -- Pointer
    shd_pointer:send( "pointer", pointer )
-   lg.setColor( 0.0, 1.0, 1.0, 1.0*alpha )
+   lg.setColor( 0.0, 1.0, 1.0, 0.9*alpha )
    shd_pointer:send( "radius", radius*1.2 )
    lg.setShader( shd_pointer )
    lg.draw( img, cx-radius, cy-radius, 0, radius*2, radius*2 )
    lg.setShader()
 
    -- Start Area
-   lg.setColor( 0.1, 0.1, 0.1, alpha )
+   lg.setColor( 0.1, 0.1, 0.1, 0.9*alpha )
    lg.rectangle( "fill", cx+radius*0.7, cy-2, radius*0.4, 5 )
 
    -- Targets
@@ -193,9 +196,9 @@ function mining.draw()
    lg.setShader()
 
    -- Ammunition
-   local w = 10
-   local h = 20
-   local m = 10
+   local w = 5
+   local h = 10
+   local m = 5
    local x = cx - ((w+m)*shots_max-m)/2
    local y = cy + radius + 20
    lg.setColor( 0, 0, 0, 0.5*alpha )
@@ -263,8 +266,7 @@ end
 --]]
 
 function mining.update( dt )
-   --transition = transition + dt*10
-   transition = transition + 1
+   transition = transition + dt*10
    if transition >= 1 then
       alpha = 1
       if done then

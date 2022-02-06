@@ -1,4 +1,4 @@
 function love.conf(t)
-   --t.window.fullscreen = true
-   t.gammacorrect = true
+   t.window.fullscreen = true
+   --t.gammacorrect = true
 end

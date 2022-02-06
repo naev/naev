@@ -20,7 +20,7 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    float d = abs(length(p)-1.0)-0.25;
    d = max( d, (abs(p.y)-size.w/size.z*p.x) );
    float dout = d;
-   d = max( d, -(d+3.0*m) );
+   d = max( d, -(d+1.0*m) );
 
    d = max( d, -(abs(length(p)-1.0)-0.15) );
    d = max( d, -(abs(p.y)-size.w/size.z*p.x*0.5) );

@@ -1,4 +1,4 @@
-local sokoban = require "minigames.sokoban"
+local mining = require "minigames.mining"
 
 -- Global stats
 local dist_threshold = math.pow( 50, 2 )
@@ -36,7 +36,7 @@ function ontoggle( p, _po, on )
       return false
    end
 
-   sokoban.love()
+   mining.love()
 
    return true
 end
