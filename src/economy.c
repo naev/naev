@@ -85,8 +85,7 @@ int economy_sysLoad( xmlNodePtr parent );
 credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Spob *p )
 {
-   /* Get current time in periods.
-   */
+   /* Get current time in periods. */
    return economy_getPriceAtTime( com, sys, p, ntime_get());
 }
 
@@ -102,16 +101,25 @@ credits_t economy_getPrice( const Commodity *com,
 credits_t economy_getPriceAtTime( const Commodity *com,
       const StarSystem *sys, const Spob *p, ntime_t tme )
 {
+   (void) sys;
    int i, k;
    double price;
    double t;
    CommodityPrice *commPrice;
-   (void) sys;
+
+   /* If commodity is using a reference, just return that. */
+   if (com->price_ref != NULL) {
+      const Commodity *ref = commodity_get( com->price_ref );
+      if (ref==NULL)
+         return 1e6; /* Just arbitrary large number so players notice. */
+      price = economy_getPriceAtTime( ref, sys, p, tme ) * com->price_mod;
+      return (credits_t) (price+0.5);
+   }
+
    /* Get current time in periods.
     * Note, taking off and landing takes about 1e7 ntime, which is 1 period.
     * Time does not advance when on a spob.
-    * Journey with a single jump takes approx 3e7, so about 3 periods.
-    */
+    * Journey with a single jump takes approx 3e7, so about 3 periods. */
    t = ntime_convertSeconds( tme ) / NT_PERIOD_SECONDS;
 
    /* Get position in stack. */

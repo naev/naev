@@ -35,7 +35,7 @@
 /*
  * Quantity to buy on one click
 */
-static int commodity_mod = 10;
+static int commodity_mod = 10; /**< Amount you can buy or sell in a single click. */
 
 /**
  * @brief Opens the local market window.

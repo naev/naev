@@ -40,11 +40,13 @@ typedef struct CommodityModifier_ {
  * @brief Represents a commodity.
  */
 typedef struct Commodity_ {
-   char* name; /**< Name of the commodity. */
-   char* description; /**< Description of the commodity. */
+   char *name; /**< Name of the commodity. */
+   char *description; /**< Description of the commodity. */
    unsigned int flags; /**< Commodity flags. */
 
    /* Prices. */
+   char *price_ref;     /**< Name of the commodity to which this one is referenced to. */
+   char price_mod;      /**< Modifier on price_ref. */
    double raw_price;    /**< Raw price of the commodity. */
    double price;        /**< Base price of the commodity. */
    glTexture* gfx_store;/**< Store graphic. */

@@ -184,6 +184,7 @@ static void commodity_freeOne( Commodity* com )
    CommodityModifier *this,*next;
    free(com->name);
    free(com->description);
+   free(com->price_ref);
    gl_freeTexture(com->gfx_store);
    gl_freeTexture(com->gfx_space);
    next = com->spob_modifier;
@@ -258,9 +259,10 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
 {
    xmlNodePtr node;
 
-   /* Clear memory. */
+   /* Clear memory and set defaults. */
    memset( temp, 0, sizeof(Commodity) );
-   temp->period = 200;
+   temp->period   = 200;
+   temp->price_mod = 1.;
 
    /* Parse body. */
    node = parent->xmlChildrenNode;
@@ -270,6 +272,8 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       xmlr_strd(node, "name", temp->name);
       xmlr_strd(node, "description", temp->description);
       xmlr_int(node, "price", temp->price);
+      xmlr_float(node, "price_mod", temp->price_mod);
+      xmlr_strd(node, "price_ref", temp->price_ref);
 
       if (xml_isNode(node,"gfx_space")) {
          temp->gfx_space = xml_parseTexture( node,
@@ -337,6 +341,11 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       }
       if (temp->gfx_space == NULL)
          temp->gfx_space = gl_newImage( COMMODITY_GFX_PATH"space/_default.webp", 0 );
+   }
+
+   if (temp->price_ref != NULL) {
+      if (temp->price > 0.)
+         WARN(_("Commodity '%s' is setting both 'price' and 'price_ref'."),temp->name);
    }
 
 #if 0 /* shouldn't be needed atm */
