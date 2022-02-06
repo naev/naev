@@ -257,19 +257,20 @@ Commodity ** standard_commodities (void)
 static int commodity_parse( Commodity *temp, xmlNodePtr parent )
 {
    xmlNodePtr node;
-   CommodityModifier *newdict;
+
    /* Clear memory. */
    memset( temp, 0, sizeof(Commodity) );
    temp->period = 200;
-   temp->population_modifier = 0.;
 
    /* Parse body. */
    node = parent->xmlChildrenNode;
    do {
       xml_onlyNodes(node);
+
       xmlr_strd(node, "name", temp->name);
       xmlr_strd(node, "description", temp->description);
       xmlr_int(node, "price", temp->price);
+
       if (xml_isNode(node,"gfx_space")) {
          temp->gfx_space = xml_parseTexture( node,
                COMMODITY_GFX_PATH"space/%s", 1, 1, OPENGL_TEX_MIPMAPS );
@@ -307,7 +308,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       xmlr_float(node, "population_modifier", temp->population_modifier);
       xmlr_float(node, "period", temp->period);
       if (xml_isNode(node, "spob_modifier")) {
-         newdict = malloc(sizeof(CommodityModifier));
+         CommodityModifier *newdict = malloc(sizeof(CommodityModifier));
          newdict->next = temp->spob_modifier;
          xmlr_attr_strd(node, "type", newdict->name);
          newdict->value = xml_getFloat(node);
@@ -315,7 +316,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          continue;
       }
       if (xml_isNode(node, "faction_modifier")) {
-         newdict = malloc(sizeof(CommodityModifier));
+         CommodityModifier *newdict = malloc(sizeof(CommodityModifier));
          newdict->next = temp->faction_modifier;
          xmlr_attr_strd(node, "type", newdict->name);
          newdict->value = xml_getFloat(node);
