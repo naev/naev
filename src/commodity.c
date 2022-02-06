@@ -283,10 +283,6 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
       if (xml_isNode(node,"gfx_store")) {
          temp->gfx_store = xml_parseTexture( node,
                COMMODITY_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS );
-         if (temp->gfx_store != NULL) {
-         } else {
-            temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.webp", 0 );
-         }
          continue;
       }
       if (xml_isNode(node, "standard")) {
@@ -338,14 +334,14 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    if (temp->name == NULL)
       WARN( _("Commodity from %s has invalid or no name"), COMMODITY_DATA_PATH);
 
-   if ((temp->price > 0)) {
+   if ((temp->price > 0) || (temp->price_ref != NULL)) {
       if (temp->gfx_store == NULL) {
          WARN(_("No <gfx_store> node found, using default texture for commodity \"%s\""), temp->name);
          temp->gfx_store = gl_newImage( COMMODITY_GFX_PATH"_default.webp", 0 );
       }
-      if (temp->gfx_space == NULL)
-         temp->gfx_space = gl_newImage( COMMODITY_GFX_PATH"space/_default.webp", 0 );
    }
+   if (temp->gfx_space == NULL)
+      temp->gfx_space = gl_newImage( COMMODITY_GFX_PATH"space/_default.webp", 0 );
 
    if (temp->price_ref != NULL) {
       if (temp->price > 0.)

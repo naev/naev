@@ -604,7 +604,6 @@ static int asttype_load (void)
  */
 static int asttype_parse( AsteroidType *at, const char *file )
 {
-   char *str;
    xmlNodePtr parent, node;
    xmlDocPtr doc;
 
@@ -663,8 +662,10 @@ static int asttype_parse( AsteroidType *at, const char *file )
             xmlr_int( cur, "rarity", material.rarity );
 
             if (xml_isNode(cur,"name")) {
-               str = xml_get(cur);
+               const char *str = xml_get(cur);
                material.material = commodity_get( str );
+               if (material.material->gfx_space==NULL)
+                  WARN(_("Asteroid Type '%s' has Commodity '%s' with no 'gfx_space'."),at->name,str);
                namdef = 1;
                continue;
             }
