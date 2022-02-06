@@ -141,7 +141,7 @@ function mining.draw()
    lg.rectangle( "fill", 0, 0, lw, lh )
 
    -- Background
-   lg.setColor( 0.7, 0.7, 0.7, 0.5*alpha )
+   lg.setColor( 0.3, 0.3, 0.3, 0.5*alpha )
    shd_background:send( "radius", radius )
    lg.setShader( shd_background )
    lg.draw( img, cx-radius, cy-radius, 0, radius*2, radius*2 )
