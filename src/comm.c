@@ -80,7 +80,6 @@ int comm_openPilot( unsigned int pilot )
    unsigned int wid;
    Pilot *p;
    Pilot *const* pltstk;
-   int nhook = 0;
 
    /* Get the pilot. */
    p  = pilot_get( pilot );
@@ -138,7 +137,7 @@ int comm_openPilot( unsigned int pilot )
       { .type = HOOK_PARAM_SENTINEL } };
    if (pilot_canTarget( p )) {
       hooks_runParam( "hail", hparam );
-      nhook = pilot_runHook( p, PILOT_HOOK_HAIL );
+      pilot_runHook( p, PILOT_HOOK_HAIL );
    }
 
    /* Check to see if pilot wants to communicate. */
