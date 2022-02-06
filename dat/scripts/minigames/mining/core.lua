@@ -5,12 +5,7 @@ local love     = require 'love'
 local lg       = require 'love.graphics'
 local lfile    = require "love.filesystem"
 
-local frag_background = lfile.read( "background.frag" )
-local frag_pointer = lfile.read( "pointer.frag" )
-local frag_target = lfile.read( "target.frag" )
-local frag_shot = lfile.read( "shot.frag" )
-
-local moving, pointer, pointer_tail, speed, cx, cy, transition, alpha, done, targets, shots, shots_max, shots_timer, shots_visual, z_cur, z_max, mfont, telapsed
+local moving, pointer, pointer_tail, speed, cx, cy, transition, alpha, done, targets, shots, shots_max, shots_timer, shots_visual, z_cur, z_max, mfont, telapsed, tsincestart, tcompleted
 local radius = 150
 local img, shd_background, shd_pointer, shd_target, shd_shot
 function mining.load()
@@ -24,6 +19,9 @@ function mining.load()
    z_cur       = 1
    telapsed    = 0
    alpha       = 0
+   tsincestart = 0
+   tcompleted  = 0
+   done        = false
    -- Outfit-dependent
    speed       = math.pi
    shots_max   = 3
@@ -34,6 +32,10 @@ function mining.load()
    img = love.graphics.newImage( idata )
 
    -- Load shaders
+   local frag_background = lfile.read( "background.frag" )
+   local frag_pointer = lfile.read( "pointer.frag" )
+   local frag_target = lfile.read( "target.frag" )
+   local frag_shot = lfile.read( "shot.frag" )
    shd_background = lg.newShader( frag_background )
    shd_pointer = lg.newShader( frag_pointer )
    shd_target = lg.newShader( frag_target )
@@ -140,8 +142,6 @@ local function ease( x )
    return -2*x*x + 4*x - 1
 end
 
-local tsincestart = 0
-local tcompleted = 0
 function mining.draw()
    local lw, lh = love.window.getDesktopDimensions()
 
