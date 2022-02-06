@@ -78,6 +78,7 @@ function mining.load()
          reward = 0.5,
          z = 3,
       }
+   targets[4] = nil
 
    z_max = 0
    for k,t in ipairs(targets) do
@@ -128,6 +129,7 @@ local function ease( x )
 end
 
 local tsincestart = 0
+local tcompleted = 0
 function mining.draw()
    local lw, lh = love.window.getDesktopDimensions()
 
@@ -230,14 +232,18 @@ function mining.draw()
    end
    lg.setShader()
 
+   local ta, text
    if z_cur > z_max then
-      lg.setColor( 1, 1, 1, alpha )
-      lg.printf( "COMPLETE", mfont, cx-100, cy-mfont:getHeight()/2, 200, "center" )
+      ta = alpha * ease( math.min(tcompleted/0.1,1.0) )
+      text = "MINING COMPLETED"
 
    elseif not moving or tsincestart < 0.1 then
-      local a = alpha * (1-ease( tsincestart / 0.1 ))
-      lg.setColor( 1, 1, 1, a )
-      local text = "PRESS ANY KEY TO START"
+      ta = alpha * (1-ease( tsincestart / 0.1 ))
+      text = "PRESS ANY KEY TO START"
+   end
+
+   if text then
+      lg.setColor( 1, 1, 1, ta )
       local _width, wrappedtext = mfont:getWrap( text, radius )
       local th = mfont:getHeight() * #wrappedtext
       lg.printf( text, mfont, cx-radius/2, cy-th/2, radius, "center" )
@@ -269,6 +275,10 @@ function mining.update( dt )
       if done then
          alpha = 1-alpha
       end
+   end
+
+   if z_cur > z_max then
+      tcompleted = tcompleted + dt
    end
 
    if moving then
