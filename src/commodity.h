@@ -63,16 +63,16 @@ typedef struct Commodity_ {
 } Commodity;
 
 typedef struct CommodityPrice_ {
-  double price; /**< Average price of a commodity on a particular spob */
+  double price;   /**< Average price of a commodity on a particular spob */
   double spobPeriod; /**< Minor time period (days) over which commidity price varies */
   double sysPeriod; /** Major time period */
   double spobVariation; /**< Mmount by which a commodity price varies */
   double sysVariation; /**< System level commodity price variation.  At a given time, commodity price is equal to price + sysVariation*sin(2pi t/sysPeriod) + spobVariation*sin(2pi t/spobPeriod) */
   int64_t updateTime; /**< used for averaging and to hold the time last average was calculated. */
-  char *name; /**< used for keeping tabs during averaging */
-  double sum; /**< used when averaging over jump points during setup, and then for capturing the moving average when the player visits a spob. */
-  double sum2; /**< sum of (squared prices seen), used for calc of standard deviation. */
-  int cnt; /**< used for calc of mean and standard deviation - number of records in the data. */
+  char *name;     /**< used for keeping tabs during averaging */
+  double sum;     /**< used when averaging over jump points during setup, and then for capturing the moving average when the player visits a spob. */
+  double sum2;    /**< sum of (squared prices seen), used for calc of standard deviation. */
+  int cnt;        /**< used for calc of mean and standard deviation - number of records in the data. */
 } CommodityPrice;
 
 /**
