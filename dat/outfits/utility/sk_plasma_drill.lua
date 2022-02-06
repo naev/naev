@@ -13,7 +13,7 @@ end
 
 function ontoggle( p, _po, on )
    if not on then
-      return true
+      return false
    end
 
    -- See if there's an asteroid targetted
@@ -47,7 +47,12 @@ function ontoggle( p, _po, on )
       return false
    end
 
-   mining.love()
+   -- Only player gets minigame
+   if mem.isp then
+      mining.love()
+      mining.reward() -- TODO do something with the reward
+   end
+   a:setTimer( -1 ) -- Get rid of the asteroid
 
-   return true
+   return false
 end
