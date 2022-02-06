@@ -496,9 +496,26 @@ end
 --[[
 -- Shader class
 --]]
+-- Set some sane defaults.
+local _pixelcode = [[
+vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   vec4 texcolor = texture(tex, texture_coords );
+   return texcolor * color;
+}
+]]
+local _vertexcode = [[
+vec4 position( mat4 transform_projection, vec4 vertex_position )
+{
+   return transform_projection * vertex_position;
+}
+]]
 graphics.Shader = class.inheritsFrom( object.Object )
 graphics.Shader._type = "Shader"
 function graphics.newShader( pixelcode, vertexcode )
+   pixelcode = pixelcode or _pixelcode
+   vertexcode = vertexcode or _vertexcode
+
    local prepend = [[
 #version 140
 // Syntax sugar
@@ -664,22 +681,6 @@ function graphics.getDPIScale()
    local _w, _h, scale = naev.gfx.dim()
    return 1/scale
 end
-
-
--- Set some sane defaults.
-local _pixelcode = [[
-vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
-{
-   vec4 texcolor = texture(tex, texture_coords );
-   return texcolor * color;
-}
-]]
-local _vertexcode = [[
-vec4 position( mat4 transform_projection, vec4 vertex_position )
-{
-   return transform_projection * vertex_position;
-}
-]]
 -- Have to initialize properly the dimensions here for when using the graphics
 -- API outside of the love framework
 local nw, nh = naev.gfx.dim()
@@ -690,7 +691,7 @@ love.h = nh
 graphics.setDefaultFilter( "linear", "linear", 1 )
 graphics.setNewFont( 12 )
 graphics.origin()
-graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
+graphics._shader_default = graphics.newShader()
 graphics.setShader( graphics._shader_default )
 graphics.setCanvas( nil )
 --graphics._mode = "alpha"
