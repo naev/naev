@@ -1,15 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 /**
  * @file pilot_cargo.c
  *
  * @brief Handles the pilot cargo stuff.
  */
-
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -21,7 +17,6 @@
 #include "gui.h"
 #include "log.h"
 
-
 /* Private common implementation */
 static int pilot_cargoAddNeglectingStats( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id );
@@ -30,8 +25,6 @@ static int pilot_cargoAddNeglectingStats( Pilot* pilot, const Commodity* cargo,
 static unsigned int mission_cargo_id = 0; /**< ID generator for special mission cargo.
                                                Not guaranteed to be absolutely unique,
                                                only unique for each pilot. */
-
-
 
 /**
  * @brief Gets how many of the commodity the player.p has.
@@ -42,15 +35,12 @@ static unsigned int mission_cargo_id = 0; /**< ID generator for special mission 
  */
 int pilot_cargoOwned( const Pilot* pilot, const Commodity* cargo )
 {
-   int i;
-
-   for (i=0; i<array_size(pilot->commodities); i++)
+   for (int i=0; i<array_size(pilot->commodities); i++)
       if (!pilot->commodities[i].id &&
             strcmp(cargo->name, pilot->commodities[i].commodity->name)==0)
          return pilot->commodities[i].quantity;
    return 0;
 }
-
 
 /**
  * @brief Gets the pilot's free cargo space.
@@ -63,7 +53,6 @@ int pilot_cargoFree( const Pilot* p )
    return p->cargo_free;
 }
 
-
 /**
  * @brief Moves cargo from one pilot to another.
  *
@@ -75,8 +64,6 @@ int pilot_cargoFree( const Pilot* p )
  */
 int pilot_cargoMove( Pilot* dest, Pilot* src )
 {
-   int i;
-
    /* Check if it fits. */
    if (pilot_cargoUsed(src) > pilot_cargoFree(dest)) {
       WARN(_("Unable to copy cargo over from pilot '%s' to '%s'. Leaving cargo as is."), src->name, dest->name );
@@ -84,7 +71,7 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
    }
 
    /* Copy over. */
-   for (i=0; i<array_size(src->commodities); i++)
+   for (int i=0; i<array_size(src->commodities); i++)
       pilot_cargoAddNeglectingStats( dest, src->commodities[i].commodity,
             src->commodities[i].quantity, src->commodities[i].id );
 
@@ -94,7 +81,6 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
 
    return 0;
 }
-
 
 /**
  * @brief Adds cargo to the pilot's "commodities" array only.
@@ -107,14 +93,14 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
 static int pilot_cargoAddNeglectingStats( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id )
 {
-   int i, q;
+   int q;
    PilotCommodity *pc;
 
    q = quantity;
 
    /* If not mission cargo check to see if already exists. */
    if (id == 0) {
-      for (i=0; i<array_size(pilot->commodities); i++)
+      for (int i=0; i<array_size(pilot->commodities); i++)
          if (!pilot->commodities[i].id &&
                (pilot->commodities[i].commodity == cargo)) {
             pilot->commodities[i].quantity += q;
@@ -133,7 +119,6 @@ static int pilot_cargoAddNeglectingStats( Pilot* pilot, const Commodity* cargo,
    return q;
 }
 
-
 /**
  * @brief Adds cargo without checking the pilot's free space.
  *
@@ -147,9 +132,7 @@ static int pilot_cargoAddNeglectingStats( Pilot* pilot, const Commodity* cargo,
 int pilot_cargoAddRaw( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id )
 {
-   int q;
-
-   q = pilot_cargoAddNeglectingStats( pilot, cargo, quantity, id );
+   int q = pilot_cargoAddNeglectingStats( pilot, cargo, quantity, id );
    pilot->cargo_free    -= q;
    pilot->mass_cargo    += q;
    pilot->solid->mass   += pilot->stats.cargo_inertia * q;
@@ -158,7 +141,6 @@ int pilot_cargoAddRaw( Pilot* pilot, const Commodity* cargo,
 
    return q;
 }
-
 
 /**
  * @brief Tries to add quantity of cargo to pilot.
@@ -172,16 +154,13 @@ int pilot_cargoAddRaw( Pilot* pilot, const Commodity* cargo,
 int pilot_cargoAdd( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id )
 {
-   int freespace;
-
    /* Check to see how much to add. */
-   freespace = pilot_cargoFree(pilot);
+   int freespace = pilot_cargoFree(pilot);
    if (freespace < quantity)
       quantity = freespace;
 
    return pilot_cargoAddRaw( pilot, cargo, quantity, id );
 }
-
 
 /**
  * @brief Gets how much cargo ship has on board.
@@ -191,15 +170,12 @@ int pilot_cargoAdd( Pilot* pilot, const Commodity* cargo,
  */
 int pilot_cargoUsed( const Pilot* pilot )
 {
-   int i, q;
-
-   q = 0;
-   for (i=0; i<array_size(pilot->commodities); i++)
+   int q = 0;
+   for (int i=0; i<array_size(pilot->commodities); i++)
       q += pilot->commodities[i].quantity;
 
    return q;
 }
-
 
 /**
  * @brief Calculates how much cargo ship has left and such.
@@ -214,7 +190,6 @@ void pilot_cargoCalc( Pilot* pilot )
    pilot_updateMass( pilot );
 }
 
-
 /**
  * @brief Adds special mission cargo, can't sell it and such.
  *
@@ -225,7 +200,6 @@ void pilot_cargoCalc( Pilot* pilot )
  */
 unsigned int pilot_addMissionCargo( Pilot* pilot, const Commodity* cargo, int quantity )
 {
-   int i;
    unsigned int id, max_id;
 
    /* Get ID. */
@@ -233,7 +207,7 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, const Commodity* cargo, int qu
 
    /* Check for collisions with pilot and set ID generator to the max. */
    max_id = 0;
-   for (i=0; i<array_size(pilot->commodities); i++)
+   for (int i=0; i<array_size(pilot->commodities); i++)
       if (pilot->commodities[i].id > max_id)
          max_id = pilot->commodities[i].id;
    if (max_id >= id) {
@@ -247,7 +221,6 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, const Commodity* cargo, int qu
    return id;
 }
 
-
 /**
  * @brief Removes special mission cargo based on id.
  *
@@ -259,7 +232,6 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, const Commodity* cargo, int qu
 int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
 {
    int i;
-
    /* check if pilot has it */
    for (i=0; i<array_size(pilot->commodities); i++)
       if (pilot->commodities[i].id == cargo_id)
@@ -288,7 +260,6 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
    return 0;
 }
 
-
 /**
  * @brief Tries to get rid of quantity cargo from pilot.  Can remove mission cargo.
  *
@@ -300,12 +271,9 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
  */
 int pilot_cargoRmRaw( Pilot* pilot, const Commodity* cargo, int quantity, int cleanup )
 {
-   int i;
-   int q;
-
-   /* check if pilot has it */
-   q = quantity;
-   for (i=0; i<array_size(pilot->commodities); i++) {
+   /* Check if pilot has it */
+   int q = quantity;
+   for (int i=0; i<array_size(pilot->commodities); i++) {
       if (pilot->commodities[i].commodity != cargo)
          continue;
 
@@ -347,12 +315,9 @@ int pilot_cargoRmRaw( Pilot* pilot, const Commodity* cargo, int quantity, int cl
  */
 int pilot_cargoRmAll( Pilot* pilot, int cleanup )
 {
-   int i;
-   int q;
-
-   /* check if pilot has it */
-   q = 0;
-   for (i=array_size(pilot->commodities)-1; i>=0; i--) {
+   /* Check if pilot has it */
+   int q = 0;
+   for (int i=array_size(pilot->commodities)-1; i>=0; i--) {
       /* Must not be mission cargo unless cleaning up. */
       if (!cleanup && (pilot->commodities[i].id != 0))
          continue;
