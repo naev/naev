@@ -18,7 +18,8 @@ typedef int64_t credits_t;
 #define CREDITS_PRI        PRIu64
 
 #define COMMODITY_FLAG_STANDARD        (1<<0)   /**< Commodity is considered a standard commodity available everywhere. */
-#define COMMODITY_FLAG_ALWAYSCANSELL   (1<<1)   /**< Commodity is always sellable, even when not available normally at a spob. */
+#define COMMODITY_FLAG_ALWAYS_CAN_SELL (1<<1)   /**< Commodity is always sellable, even when not available normally at a spob. */
+#define COMMODITY_FLAG_PRICE_CONSTANT  (1<<2)   /**< Commodity price is always constant. */
 #define commodity_isFlag(c,f)    ((c)->flags & (f)) /**< Checks commodity flag. */
 #define commodity_setFlag(c,f)   ((c)->flags |= (f)) /**< Sets a commodity flag. */
 #define commodity_rmFlag(c,f)    ((c)->flags &= ~(f)) /**< Removes a commodity flag. */

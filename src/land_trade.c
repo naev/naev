@@ -110,7 +110,7 @@ void commodity_exchange_open( unsigned int wid )
       PilotCommodity *pc = &player.p->commodities[i];
       if (pc->id > 0) /* Ignore mission stuff. */
          continue;
-      if (!commodity_isFlag(pc->commodity, COMMODITY_FLAG_ALWAYSCANSELL))
+      if (!commodity_isFlag(pc->commodity, COMMODITY_FLAG_ALWAYS_CAN_SELL))
          continue;
       ngoods++;
    }
@@ -126,7 +126,7 @@ void commodity_exchange_open( unsigned int wid )
          PilotCommodity *pc = &player.p->commodities[i];
          if (pc->id > 0) /* Ignore mission stuff. */
             continue;
-         if (!commodity_isFlag(pc->commodity, COMMODITY_FLAG_ALWAYSCANSELL))
+         if (!commodity_isFlag(pc->commodity, COMMODITY_FLAG_ALWAYS_CAN_SELL))
             continue;
          cgoods[j].image = gl_dupTexture(pc->commodity->gfx_store);
          cgoods[j].caption = strdup( _(pc->commodity->name) );

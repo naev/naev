@@ -116,6 +116,10 @@ credits_t economy_getPriceAtTime( const Commodity *com,
       return (credits_t) (price+0.5);
    }
 
+   /* Constant price. */
+   if (commodity_isFlag(com, COMMODITY_FLAG_PRICE_CONSTANT))
+      return com->price;
+
    /* Get current time in periods.
     * Note, taking off and landing takes about 1e7 ntime, which is 1 period.
     * Time does not advance when on a spob.
@@ -180,6 +184,13 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p, credits_t 
       return ((double)ret*com->price_mod+0.5);
    }
 
+   /* Constant price. */
+   if (commodity_isFlag(com, COMMODITY_FLAG_PRICE_CONSTANT)) {
+      *mean = com->price;
+      *std  = 0.;
+      return com->price;
+   }
+
    /* Get position in stack */
    k = com - commodity_stack;
 
@@ -189,26 +200,26 @@ int economy_getAverageSpobPrice( const Commodity *com, const Spob *p, credits_t 
          break;
 
    /* Check if found */
-   if (i>= array_size(econ_comm)) {
+   if (i >= array_size(econ_comm)) {
       WARN(_("Average price for commodity '%s' not known."), com->name);
       *mean = 0;
-      *std = 0;
+      *std  = 0;
       return -1;
    }
 
    /* and get the index on this spob */
-   for ( i=0; i<array_size(p->commodities); i++) {
-      if ( ( strcmp(p->commodities[i]->name, com->name) == 0 ) )
+   for (i=0; i<array_size(p->commodities); i++) {
+      if ((strcmp(p->commodities[i]->name, com->name) == 0))
          break;
    }
    if (i >= array_size(p->commodities)) {
       WARN(_("Price for commodity '%s' not known on this spob."), com->name);
       *mean = 0;
-      *std = 0;
+      *std  = 0;
       return -1;
    }
    commPrice = &p->commodityPrice[i];
-   if ( commPrice->cnt>0 ) {
+   if (commPrice->cnt > 0) {
       *mean = (credits_t)(commPrice->sum/commPrice->cnt + 0.5); /* +0.5 to round*/
       *std = (sqrt(commPrice->sum2 / commPrice->cnt
                - (commPrice->sum * commPrice->sum)
@@ -244,6 +255,13 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
       *mean = (credits_t) ((double)*mean*com->price_mod+0.5);
       *std = (*std*com->price_mod);
       return ((double)ret*com->price_mod+0.5);
+   }
+
+   /* Constant price. */
+   if (commodity_isFlag(com, COMMODITY_FLAG_PRICE_CONSTANT)) {
+      *mean = com->price;
+      *std  = 0.;
+      return com->price;
    }
 
    /* Get position in stack */

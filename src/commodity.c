@@ -293,8 +293,12 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          commodity_setFlag( temp, COMMODITY_FLAG_STANDARD );
          continue;
       }
-      if (xml_isNode(node, "alwayscansell")) {
-         commodity_setFlag( temp, COMMODITY_FLAG_ALWAYSCANSELL );
+      if (xml_isNode(node, "always_can_sell")) {
+         commodity_setFlag( temp, COMMODITY_FLAG_ALWAYS_CAN_SELL );
+         continue;
+      }
+      if (xml_isNode(node, "price_constant")) {
+         commodity_setFlag( temp, COMMODITY_FLAG_PRICE_CONSTANT );
          continue;
       }
       if (xml_isNode(node, "illegalto")) {
