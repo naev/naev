@@ -7,17 +7,11 @@ local lg             = require 'love.graphics'
 
 local frag_background = love.filesystem.read( "background.frag" )
 local frag_pointer = love.filesystem.read( "pointer.frag" )
-local vertexcode = [[
-#pragma language glsl3
-vec4 position( mat4 transform_projection, vec4 vertex_position )
-{
-   return transform_projection * vertex_position;
-}
-]]
+local frag_target = love.filesystem.read( "target.frag" )
 
 local moving, pointer, pointer_tail, speed, cx, cy, transition, alpha, done, targets, shots, shots_max, shots_timer, z_cur, z_max, mfont
 local radius = 200
-local img, shd_background, shd_pointer
+local img, shd_background, shd_pointer, shd_target
 function mining.load()
    mfont       = lg.newFont(32)
    pointer     = 0
@@ -36,8 +30,9 @@ function mining.load()
    img = love.graphics.newImage( idata )
 
    -- Load shaders
-   shd_background = lg.newShader( frag_background, vertexcode )
-   shd_pointer = lg.newShader( frag_pointer, vertexcode )
+   shd_background = lg.newShader( frag_background )
+   shd_pointer = lg.newShader( frag_pointer )
+   shd_target = lg.newShader( frag_target )
 
    -- TODO center on player
    local lw, lh = lg.getDimensions()
@@ -145,6 +140,7 @@ function mining.draw()
    lg.rectangle( "fill", cx+radius*0.7, cy-2, radius*0.4, 5 )
 
    -- Targets
+   lg.setShader( shd_target )
    for k,t in ipairs(targets) do
       local y = ease( math.max( 0, 1-t.y ) )
       local a = alpha * y
@@ -162,10 +158,20 @@ function mining.draw()
          elseif t.m then
             r = r + 150*ease(1-t.m)
          end
+         lg.push()
+         lg.translate( cx+math.cos(p)*r, cy+math.sin(p)*r )
+         lg.rotate( p )
+
+         local sx = radius*0.4
+         local sy = s
+         shd_target:send( "size", {sx, sy, radius} )
          lg.setColor( 1, 0, 0, a )
-         lg.circle( "fill", cx+math.cos(p)*r, cy+math.sin(p)*r, s )
+         lg.draw( img, -sx, -sy, 0, 2*sx, 2*sy )
+
+         lg.pop()
       end
    end
+   lg.setShader()
 
    -- Ammunition
    local w = 10
