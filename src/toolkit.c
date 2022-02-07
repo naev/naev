@@ -733,6 +733,8 @@ unsigned int window_createFlags( const char* name, const char *displayname,
    wdw->exposed      = !window_isFlag(wdw, WINDOW_NOFOCUS);
    wdw->timer_max = wdw->timer = WINDOW_FADEIN_TIME;
 
+   /* In the case a window is getting recreated over an old one, we can skip
+    * the fade on both of them, and just replace it. */
    if ((old != NULL) && window_isFlag( old, WINDOW_KILL | WINDOW_FADEOUT )) {
       old->timer = 0.;
       window_rmFlag( wdw, WINDOW_FADEIN | WINDOW_FADEDELAY );
