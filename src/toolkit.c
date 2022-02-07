@@ -487,6 +487,36 @@ void window_resizeWidget( unsigned int wid,
 }
 
 /**
+ * @brief Allows or disallows focusing a widget.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget to resize
+ *    @param canfocus Whether or not the widget should be able to be focused.
+ */
+void window_canFocusWidget( unsigned int wid,
+      const char* name, int canfocus )
+{
+   Window *wdw;
+   Widget *wgt;
+
+   /* Get window. */
+   wdw = window_wget(wid);
+   if (wdw == NULL)
+      return;
+
+   /* Get widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Set position. */
+   if (canfocus)
+      wgt_setFlag( wgt, WGT_FLAG_CANFOCUS );
+   else
+      wgt_rmFlag( wgt, WGT_FLAG_CANFOCUS );
+}
+
+/**
  * @brief Checks to see if a window is at the top.
  *
  *    @param wid indow ID to see if is top.
