@@ -57,6 +57,7 @@ typedef struct filedata {
 static nsave_t *load_saves = NULL; /**< Array of saves */
 static char **player_names = NULL; /**< Array of player names */
 static int old_saves_detected = 0, player_warned = 0;
+static char *selected_player = NULL;
 extern int save_loaded; /**< From save.c */
 
 /*
@@ -432,6 +433,15 @@ void load_freePlayerNames (void)
 }
 
 /**
+ * @brief Frees selected player name.
+ */
+void load_freeSelectedPlayerName (void)
+{
+   free( selected_player );
+   selected_player = NULL;
+}
+
+/**
  * @brief Gets the array (array.h) of player names.
  */
 const char **load_getPlayerNames (void)
@@ -455,6 +465,7 @@ void load_loadGameMenu (void)
    unsigned int wid;
    char **names;
    int n;
+   int pos = 0;
 
    /* window */
    wid = window_create( "wdwLoadGameMenu", _("Load Pilot"), -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
@@ -466,9 +477,12 @@ void load_loadGameMenu (void)
    n = array_size( player_names );
    if (n > 0) {
       names = malloc( sizeof(char*)*n );
-      for (int i=0; i<n; i++)
+      for (int i=0; i<n; i++) {
          names[i] = strdup( player_names[i] );
+         if (selected_player != NULL && !strcmp( names[i], selected_player ))
+            pos = i;
       }
+   }
    /* case there are no players */
    else {
       names = malloc(sizeof(char*));
@@ -482,7 +496,7 @@ void load_loadGameMenu (void)
 
    window_addList( wid, 20, -50,
          LOAD_WIDTH-240-60, LOAD_HEIGHT-110,
-         "lstNames", names, n, 0, load_menu_update, load_menu_load );
+         "lstNames", names, n, pos, load_menu_update, load_menu_load );
 
    /* Buttons */
    window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -510,14 +524,20 @@ void load_loadSnapshotMenu ( const char *name )
    char **names;
    nsave_t *ns;
    int n, can_save;
+   char *player_name = strdup( name );
 
    /* window */
    wid = window_create( "wdwLoadSnapshotMenu", _("Load Snapshot"), -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
    window_setAccept( wid, load_snapshot_menu_load );
    window_setCancel( wid, load_snapshot_menu_close );
 
+   free(selected_player);
+   selected_player = strdup( player_name );
+
    /* Load loads. */
-   load_refresh( name );
+   load_refresh( player_name );
+
+   free( player_name );
 
    /* load the saves */
    n = array_size( load_saves );
@@ -877,12 +897,10 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
    load_snapshot_menu_close( wdw, str );
    if (window_exists( "wdwLoadGameMenu" )) {
       wid = window_get( "wdwLoadGameMenu" );
-      save = toolkit_getList( wid, "lstNames" );
       load_menu_close( wid, str );
       load_loadGameMenu();
-      load_loadSnapshotMenu( save );
-   } else
-      load_loadSnapshotMenu( player.name );
+   }
+   load_loadSnapshotMenu( selected_player );
 }
 
 static void load_compatSlots (void)

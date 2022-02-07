@@ -47,3 +47,5 @@ const nsave_t *load_getList (void);
 int load_refreshPlayerNames (void);
 void load_freePlayerNames (void);
 const char **load_getPlayerNames (void);
+
+void load_freeSelectedPlayerName (void);
