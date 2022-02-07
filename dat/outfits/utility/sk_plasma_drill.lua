@@ -1,4 +1,5 @@
 local mining = require "minigames.mining"
+local fmt = require "format"
 
 -- Global stats
 local dist_threshold = math.pow( 50, 2 )
@@ -49,8 +50,31 @@ function ontoggle( p, _po, on )
 
    -- Only player gets minigame
    if mem.isp then
-      mining.love()
-      mining.reward() -- TODO do something with the reward
+      -- Try to figure out difficulty
+      local max_rarity = -1
+      local mat = a:materials()
+      for k,m in ipairs(mat) do
+         max_rarity = math.max( max_rarity, m.rarity )
+      end
+
+      mining.love{ difficulty=max_rarity }
+      --local bonus = mining.reward()
+
+      local r = max_rarity -- TODO reward-based
+      local rwd = {}
+      for k,m in ipairs(mat) do
+         if m.rarity==r then
+            table.insert( rwd, m )
+         end
+      end
+      if #rwd > 0 then
+         local rget = rwd[ rnd.rnd(1,#rwd) ]
+         local bonus = p:shipstat("mining_bonus",true)
+         local c = rget.commodity
+         local q = math.floor(rget.quantity * bonus + 0.5)
+         p:cargoAdd( c, q )
+         player.msg("#g"..fmt.f(_("You obtained {amount} of {cargo}"),{amount=fmt.tonnes(q),cargo=c}))
+      end
    end
    a:setTimer( -1 ) -- Get rid of the asteroid
 
