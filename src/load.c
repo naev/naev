@@ -205,11 +205,6 @@ int load_refreshPlayerNames (void)
    dirs = array_create( filedata_t );
    PHYSFS_enumerate( "saves", load_enumeratePlayerNamesCallback, &dirs );
 
-   if (old_saves_detected && !player_warned) {
-      dialogue_alert( _("Old saves have been backed up into saves-pre-0.10.0 directory.") );
-      player_warned = 1;
-   }
-
    qsort( dirs, array_size(dirs), sizeof(filedata_t), load_sortCompare );
 
    n = array_size(dirs);
@@ -498,6 +493,11 @@ void load_loadGameMenu (void)
          "btnLoad", _("Load"), load_menu_load, SDLK_l );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDelete", _("Delete"), load_menu_delete );
+
+   if (old_saves_detected && !player_warned) {
+      dialogue_alert( _("Old saves have been backed up into saves-pre-0.10.0 directory.") );
+      player_warned = 1;
+   }
 }
 
 /**
@@ -807,7 +807,8 @@ static void load_snapshot_menu_load( unsigned int wdw, const char *str )
       /* Close the main and the load menu. */
       load_menu_close( window_get( "wdwLoadGameMenu" ), NULL );
       menu_main_close();
-   }
+   } else
+      menu_small_close();
 
    /* Try to load the game. */
    if (load_game( &load_saves[pos] )) {
