@@ -72,11 +72,8 @@ function ontoggle( p, _po, on )
          if #rwd > 0 then
             local rget = rwd[ rnd.rnd(1,#rwd) ]
             local rwd_bonus = p:shipstat("mining_bonus",true)
-            if bonus>=1 then
-               rwd_bonus = rwd_bonus * 1.2
-            end
             local c = rget.commodity
-            local q = math.floor(rget.quantity * rwd_bonus + 0.5)
+            local q = math.floor(rget.quantity * (rwd_bonus*rnd.rnd()+0.5) + 0.5)
             p:cargoAdd( c, q )
             player.msg("#g"..fmt.f(_("You obtained {amount} of {cargo}"),{amount=fmt.tonnes(q),cargo=c}))
             return c, q
