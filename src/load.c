@@ -510,6 +510,9 @@ static void load_menu_delete( unsigned int wdw, const char *str )
    /* need to reload the menu */
    load_menu_close(wdw, NULL);
    load_loadGameMenu();
+   /* Don't refade in. */
+   wid = window_get( "wdwLoadGameMenu" );
+   window_setFade( wid, NULL, 0. );
 }
 
 static void load_compatSlots (void)
