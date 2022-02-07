@@ -13,7 +13,7 @@ local function generate_targets( difficulty )
          pos = (0.5+0.3*rnd.rnd()) * 2*math.pi,
          sway_range = 0.2*2*math.pi * rnd.rnd(),
          sway_period = 1 + rnd.rnd(),
-         size = math.pi/16,
+         size = math.pi/12,
          reward = 1,
          z = 1,
       } )
