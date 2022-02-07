@@ -7,7 +7,7 @@
   <mass>30</mass>
   <price>270000</price>
   <gfx_store>placeholder.webp</gfx_store>
-  <description>TODO</description>
+  <description>The S&amp;K Plasma Drill is an alternate approach to the conventional mining lances. Although it requires getting up close to the asteroid and accurate controls to be able to extract minerals, it obtains significantly better yields. An integrated asteroid scanner is just the icing on the cake.</description>
   <desc_extra>#gAllows precise mining of asteroids to extract rare minerals.#0</desc_extra>
   <limit>mining_system</limit>
  </general>

@@ -7,7 +7,7 @@
   <mass>150</mass>
   <price>650000</price>
   <gfx_store>placeholder.webp</gfx_store>
-  <description>TODO</description>
+  <description>Given the popularity of the Plasma Drill and the inexhaustible demand of resources by human civilization, Schafer &amp; Kane Industries produced a heavy variant of the same. The new design makes no compromises on functionality at the cost of significantly increased size requirements. However, for the ships that can outfit it, the Heavy Plasma Drill can convert them into a formidable mining vessel.</description>
   <desc_extra>#gAllows precise mining of asteroids to extract rare minerals.#0</desc_extra>
   <limit>mining_system</limit>
  </general>
