@@ -4,8 +4,9 @@ local love     = require 'love'
 --local audio    = require 'love.audio'
 local lg       = require 'love.graphics'
 local lfile    = require "love.filesystem"
+local fmt      = require "format"
 
-local moving, pointer, pointer_tail, speed, cx, cy, transition, alpha, done, targets, shots, shots_max, shots_timer, shots_visual, z_cur, z_max, mfont, telapsed, tsincestart, tcompleted
+local moving, pointer, pointer_tail, speed, cx, cy, transition, alpha, done, targets, shots, shots_max, shots_timer, shots_visual, z_cur, z_max, mfont, telapsed, tsincestart, tcompleted, completed, reward
 local radius = 150
 local img, shd_background, shd_pointer, shd_target, shd_shot
 function mining.load()
@@ -22,6 +23,8 @@ function mining.load()
    tsincestart = 0
    tcompleted  = 0
    done        = false
+   completed   = false
+   reward      = nil
    -- Outfit-dependent
    speed       = math.pi
    shots_max   = 3
@@ -80,6 +83,7 @@ function mining.load()
          reward = 0.5,
          z = 3,
       }
+   targets[3] = nil
    targets[4] = nil
 
    z_max = 0
@@ -206,18 +210,18 @@ function mining.draw()
    lg.setShader()
 
    -- Ammunition
-   local w = 5
-   local h = 10
-   local m = 5
-   local x = cx - ((w+m)*shots_max-m)/2
-   local y = cy + radius + 20
+   local aw = 5
+   local ah = 10
+   local am = 5
+   local ax = cx - ((aw+am)*shots_max-am)/2
+   local ay = cy + radius + 20
    lg.setColor( 0, 0, 0, 0.5*alpha )
-   lg.rectangle( "fill", x-10, y-10, (w+m)*shots_max+20-m, h+20 )
+   lg.rectangle( "fill", ax-10, ay-10, (aw+am)*shots_max+20-am, ah+20 )
    for i=1,shots_max do
       local a = 1-shots_timer[i]
       if a > 0 then
          lg.setColor( 1, 1, 1, a )
-         lg.rectangle( "fill", x+(i-1)*(w+m), y, w, h )
+         lg.rectangle( "fill", ax+(i-1)*(aw+am), ay, aw, ah )
       end
    end
 
@@ -245,17 +249,36 @@ function mining.draw()
    end
    lg.setShader()
 
-   local ta, text
    if z_cur > z_max then
-      ta = alpha * ease( math.min(tcompleted/0.1,1.0) )
-      text = _("MINING COMPLETED")
+      local h
+      local fh = mfont:getHeight()
+      if reward then
+         h = 64+fh*5+30
+      else
+         h = fh
+      end
+
+      local ta = alpha * ease( math.min(tcompleted/0.1,1.0) )
+      local text = _("MINING COMPLETED")
+      lg.setColor( 1, 1, 1, ta )
+      local y = cy-h/2+fh
+      lg.printf( text, mfont, cx-radius, y, 2*radius, "center" )
+
+      if reward then
+         y = y+10+fh
+         lg.printf( _("ACQUIRED:"), mfont, cx-radius, y, 2*radius, "center" )
+         y = y+64
+         lg.setColor( 0, 0, 0, 0.8*ta )
+         lg.rectangle( "fill", cx-36, y-36, 72, 72 )
+         lg.setColor( 1, 1, 1, ta )
+         lg.draw( reward.icon, cx-32, y-32, 0, 64/reward.sw, 64/reward.sh )
+         y = y+2*fh+10
+         lg.printf( reward.text, mfont, cx-radius, y, 2*radius, "center" )
+      end
 
    elseif not moving or tsincestart < 0.1 then
-      ta = alpha * (1-ease( tsincestart / 0.1 ))
-      text = _("PRESS ANY KEY TO START")
-   end
-
-   if text then
+      local ta = alpha * (1-ease( tsincestart / 0.1 ))
+      local text = _("PRESS ANY KEY TO START")
       lg.setColor( 1, 1, 1, ta )
       local _width, wrappedtext = mfont:getWrap( text, radius )
       local th = mfont:getHeight() * #wrappedtext
@@ -263,17 +286,15 @@ function mining.draw()
    end
 end
 
---[[
 local function compute_bonus ()
-   local reward = 0
+   local rwd = 0
    for k,t in ipairs(targets) do
       if t.hit then
-         reward = reward + t.reward
+         rwd = rwd + t.reward
       end
    end
-   return reward
+   return rwd
 end
---]]
 
 function mining.update( dt )
    transition = transition + dt*10
@@ -290,6 +311,24 @@ function mining.update( dt )
    end
 
    if z_cur > z_max then
+      if not completed then
+         completed = true
+         local cc = naev.cache()
+         local rf = cc.mining.reward_func
+         if rf then
+            local c, q = rf( compute_bonus() )
+            if c then
+               reward = {
+                  c = c,
+                  q = q,
+                  text = c:name().."\n"..fmt.tonnes(q),
+                  icon = lg.newImage( c:icon() ),
+               }
+               reward.sw, reward.sh = reward.icon:getDimensions()
+               reward.s = math.max( reward.sw, reward.sh )
+            end
+         end
+      end
       tcompleted = tcompleted + dt
    end
 

@@ -12,7 +12,7 @@ local function setup( params, standalone )
    c.mining = {}
    c.mining.params = params
    c.mining.standalone = standalone
-   c.mining.reward = 0
+   c.mining.reward_func = params.reward_func
 end
 
 --[[
@@ -45,11 +45,6 @@ function mining.vn( params )
       end
    end
    return s
-end
-
-function mining.reward ()
-   local c = naev.cache()
-   return (c.mining and c.mining.reward)
 end
 
 return mining
