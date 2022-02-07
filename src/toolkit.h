@@ -57,6 +57,7 @@ char* window_getFocus( unsigned int wid );
 void window_posWidget( unsigned int wid, const char* name, int *x, int *y );
 void window_moveWidget( unsigned int wid, const char* name, int x, int y );
 void window_resizeWidget( unsigned int wid, const char* name, int w, int h );
+void window_canFocusWidget( unsigned int wid, const char* name, int canfocus );
 int window_isTop( unsigned int wid );
 int widget_isCovered( unsigned int wid, const char *name, int x, int y );
 
