@@ -733,7 +733,7 @@ unsigned int window_createFlags( const char* name, const char *displayname,
    wdw->exposed      = !window_isFlag(wdw, WINDOW_NOFOCUS);
    wdw->timer_max = wdw->timer = WINDOW_FADEIN_TIME;
 
-   if ((old != NULL) && !window_isFlag( old, WINDOW_KILL | WINDOW_FADEOUT )) {
+   if ((old != NULL) && window_isFlag( old, WINDOW_KILL | WINDOW_FADEOUT )) {
       old->timer = 0.;
       window_rmFlag( wdw, WINDOW_FADEIN | WINDOW_FADEDELAY );
       wdw->timer = 0.;
