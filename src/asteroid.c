@@ -805,8 +805,8 @@ void asteroids_render (void)
    /* Render the asteroids & debris. */
    for (int i=0; i < array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *ast = &cur_system->asteroids[i];
-      //for (int j=0; j < ast->nb; j++)
-      //  space_renderAsteroid( &ast->asteroids[j] );
+      for (int j=0; j < ast->nb; j++)
+        space_renderAsteroid( &ast->asteroids[j] );
 
       if (pplayer != NULL) {
          double x = psolid->pos.x - SCREEN_W/2;
