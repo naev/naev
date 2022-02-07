@@ -94,6 +94,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_COOLDOWN_TIME,   /**< Speeds up or slows down the cooldown time. */
    SS_TYPE_D_JUMP_DISTANCE,   /**< Modifies the distance from a jump point at which the pilot can jump. */
    SS_TYPE_D_JUMP_WARMUP,     /**< Modifies the time it takes to warm up to jump. */
+   SS_TYPE_D_MINING_BONUS,    /**< Bonus when mining asteroids. */
 
    /*
     * A: Absolute double type data. Should be continuous.
@@ -292,7 +293,8 @@ typedef struct ShipStats_ {
    double nebu_absorb;     /**< Shield nebula resistance. */
    int misc_instant_jump;  /**< Do not require brake or chargeup to jump. */
    int misc_reverse_thrust;/**< Slows down the ship instead of turning it around. */
-   double misc_asteroid_scan; /**< Able to scan asteroids. */
+   double asteroid_scan;   /**< Distance at which asteroids can be scanned. */
+   double mining_bonus;    /**< Bonus when mining asteroids. */
    int misc_hidden_jump_detect; /**< Degree of hidden jump detection. */
    int fuel;               /**< Maximum fuel modifier. */
    double fuel_regen;      /**< Absolute fuel regeneration. */

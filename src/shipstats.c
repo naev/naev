@@ -146,6 +146,7 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_COOLDOWN_TIME,      cooldown_time,       N_("Ship Cooldown Time") ),
    D__ELEM( SS_TYPE_D_JUMP_DISTANCE,      jump_distance,       N_("Jump Distance") ),
    DI_ELEM( SS_TYPE_D_JUMP_WARMUP,        jump_warmup,         N_("Jump Warmup") ),
+   A__ELEM( SS_TYPE_D_MINING_BONUS,       mining_bonus,        N_("Mining Bonus") ),
 
    A__ELEM( SS_TYPE_A_THRUST,             thrust,              N_("kN/tonne Thrust") ),
    A__ELEM( SS_TYPE_A_TURN,               turn,                N_("deg/s Turn Rate") ),
@@ -166,7 +167,7 @@ static const ShipStatsLookup ss_lookup[] = {
    A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             N_("CPU Capacity") ),
    A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        N_("Engine Mass Limit") ),
    A__ELEM( SS_TYPE_A_FUEL_REGEN,         fuel_regen,          N_("Fuel Regeneration") ),
-   A__ELEM( SS_TYPE_A_ASTEROID_SCAN,      misc_asteroid_scan,  N_("Asteroid Scanner Range") ),
+   A__ELEM( SS_TYPE_A_ASTEROID_SCAN,      asteroid_scan,       N_("Asteroid Scanner Range") ),
 
    P__ELEM( SS_TYPE_P_ABSORB,             absorb,              N_("Damage Absorption") ),
 

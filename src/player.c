@@ -1347,8 +1347,8 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 
    /* Handle passive scanning of nearby asteroids. */
    /* TODO should probably handle player escorts in the future. */
-   if (player.p->stats.misc_asteroid_scan > 0.) {
-      double range = player.p->stats.misc_asteroid_scan;
+   if (player.p->stats.asteroid_scan > 0.) {
+      double range = player.p->stats.asteroid_scan;
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
          double r2;
          AsteroidAnchor *ast = &cur_system->asteroids[i];

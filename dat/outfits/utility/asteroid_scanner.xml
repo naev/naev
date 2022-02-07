@@ -10,6 +10,6 @@
   <limit>asteroid_scanner</limit>
  </general>
  <specific type="modification">
-  <misc_asteroid_scan>1</misc_asteroid_scan>
+  <asteroid_scan>300</asteroid_scan>
  </specific>
 </outfit>

@@ -7,7 +7,8 @@ local vel_threshold  = math.pow( 15, 2 )
 function init( p, po )
    -- Since this outfit is usually off, we use shipstats to forcibly set the
    -- base stats
-   po:set( "misc_asteroid_scan", 200 )
+   po:set( "asteroid_scan", 200 )
+   po:set( "mining_bonus", 50 )
    mem.isp = (p == player.pilot())
 end
 
