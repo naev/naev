@@ -775,8 +775,8 @@ void asteroids_renderOverlay (void)
    /* Render the debris. */
    Pilot *pplayer = player.p;
    if (pplayer != NULL) {
-      Solid *psolid  = pplayer->solid;
-      for (int i=0; i < array_size(cur_system->asteroids); i++) {
+      Solid *psolid = pplayer->solid;
+      for (int i=0; i<array_size(cur_system->asteroids); i++) {
          double x, y;
          AsteroidAnchor *ast = &cur_system->asteroids[i];
          x = psolid->pos.x - SCREEN_W/2;
@@ -803,15 +803,15 @@ void asteroids_render (void)
       psolid  = pplayer->solid;
 
    /* Render the asteroids & debris. */
-   for (int i=0; i < array_size(cur_system->asteroids); i++) {
+   for (int i=0; i<array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *ast = &cur_system->asteroids[i];
-      for (int j=0; j < ast->nb; j++)
+      for (int j=0; j<ast->nb; j++)
         space_renderAsteroid( &ast->asteroids[j] );
 
       if (pplayer != NULL) {
          double x = psolid->pos.x - SCREEN_W/2;
          double y = psolid->pos.y - SCREEN_H/2;
-         for (int j=0; j < ast->ndebris; j++) {
+         for (int j=0; j<ast->ndebris; j++) {
            if (ast->debris[j].height < 1.)
               space_renderDebris( &ast->debris[j], x, y );
          }
