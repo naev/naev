@@ -302,10 +302,37 @@ Window* window_wget( unsigned int wid )
       WARN(_("Window '%u' not found in list!"), wid );
       return NULL;
    }
+   Window *w = window_wgetW( wid );
+   if (w==NULL)
+      WARN(_("Window '%u' not found in list!"), wid );
+   return w;
+}
+
+/**
+ * @brief Gets a Window by ID, without warning.
+ *
+ *    @param wid ID of the window to get.
+ *    @return Window matching wid.
+ */
+Window* window_wgetW( unsigned int wid )
+{
    for (Window *w = windows; w != NULL; w = w->next)
       if (w->id == wid)
          return w;
-   WARN(_("Window '%u' not found in list!"), wid );
+   return NULL;
+}
+
+/**
+ * @brief Gets a Window by name, without warning.
+ *
+ *    @param name Name of the window to get.
+ *    @return Window matching wid.
+ */
+Window* window_wgetNameW( const char *name )
+{
+   for (Window *w = windows; w != NULL; w = w->next)
+      if (strcmp( w->name, name )==0)
+         return w;
    return NULL;
 }
 
@@ -687,7 +714,7 @@ unsigned int window_create( const char* name, const char *displayname,
 unsigned int window_createFlags( const char* name, const char *displayname,
       const int x, const int y, const int w, const int h, unsigned int flags )
 {
-   /* Allocate memory. */
+   Window *old = window_wgetNameW( name );
    Window *wdw = calloc( 1, sizeof(Window) );
 
    const int wid = (++genwid); /* unique id */
@@ -705,6 +732,12 @@ unsigned int window_createFlags( const char* name, const char *displayname,
    wdw->flags        = flags | WINDOW_FADEIN | WINDOW_FADEDELAY;
    wdw->exposed      = !window_isFlag(wdw, WINDOW_NOFOCUS);
    wdw->timer_max = wdw->timer = WINDOW_FADEIN_TIME;
+
+   if ((old != NULL) && !window_isFlag( old, WINDOW_KILL | WINDOW_FADEOUT )) {
+      old->timer = 0.;
+      window_rmFlag( wdw, WINDOW_FADEIN | WINDOW_FADEDELAY );
+      wdw->timer = 0.;
+   }
 
    /* Dimensions. */
    wdw->w            = (w == -1) ? gl_screen.nw : (double) w;
