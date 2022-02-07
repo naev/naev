@@ -1,5 +1,6 @@
 * 0.10.0 (unreleased)
    * New Mechanics
+      * Mining has been completely redone with a new mining mini-game and rarity mechanics
       * Support for restrictions for outfits and ships
       * Significantly improved how faction reputation caps are handled
       * Pilots can have intrinsic outfits
@@ -11,16 +12,21 @@
       * Removed nearly redundant launchers
       * Nerfed beams
       * Factional ships are more widely sold
-      * Asteroids no longer randomly explode
+      * Asteroids no longer randomly explode with redone visuals
+      * Asteroid scanning is no longer binary, but distance-based
+      * Schroedinger uses less fuel instead of getting a large bonus
    * New Content
       * Added a gigantic black hole
-      * Added space anomalies
+      * Added new space anomalies such as plasma storms
+      * Lots of new asteroid types and commodities
       * More engine sounds
       * 20 New missions
          * More terraforming
          * Continuation of the Za'lek story
-         * Help the Dvaered do tasks
+         * Help the Dvaered do some tasks
       * 3 New ships
+      * Lots of new outfits
+      * New commodities that are only available from mining
    * Quality of Life
       * Can ask pilots to refuel you more than 100 units at a time
       * Engine sound volume is configurable
@@ -35,6 +41,8 @@
       * Support for "shotgun"-type weapons
       * Backgrounds no longer use an orthographic projection
       * Minor transitions added to the toolkit
+      * Asteroids redone to be more flexible and easy to add using groups
+      * Asteroid field support in the editor
 
 * 0.9.3 (unreleased)
    * Bug fix: if the German translation was active, casino minigames' explanation (Erklärung) didn't work
