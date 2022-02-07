@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Mining Lance MK2">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <mass>50</mass>
+  <price>170000</price>
+  <description>Mining lances are optimized for high destructive power at short range, specialized in mining space asteroids. While they are able to do significant damage to heavy armour, they are impractical against shields. The Mining Lance MK2 uses its larger size to overcome one of the main drawbacks of the Mining Lance MK1, namely that the short range creates a tendency for mining ships to get caught up and damage by the exploding asteroids.</description>
+  <gfx_store>orion.webp</gfx_store>
+  <cpu>-50</cpu>
+ </general>
+ <specific type="beam">
+  <delay>1.5</delay>
+  <duration>2</duration>
+  <range>250</range>
+  <energy>50</energy>
+  <heatup>50</heatup>
+  <swivel>22</swivel>
+  <mining_rarity>1</mining_rarity>
+  <damage>
+   <type>armourbreaker</type>
+   <penetrate>90</penetrate>
+   <physical>130</physical>
+  </damage>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <sound>beam_fuzzy</sound>
+  <sound_off>beam_fuzzy_off</sound_off>
+  <shader r="0.95" g="0.2" b="0.95" a="1." width="20.">beam_unstable</shader>
+ </specific>
+</outfit>

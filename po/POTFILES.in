@@ -320,6 +320,8 @@ dat/outfits/weapons/laser_cannon_mk2.xml
 dat/outfits/weapons/laser_turret_mk1.xml
 dat/outfits/weapons/laser_turret_mk2.xml
 dat/outfits/weapons/mass_driver.xml
+dat/outfits/weapons/mining_lance_mk1.xml
+dat/outfits/weapons/mining_lance_mk2.xml
 dat/outfits/weapons/neutron_disruptor.xml
 dat/outfits/weapons/neutron_disruptor_heavy.xml
 dat/outfits/weapons/orion_beam.xml
@@ -343,7 +345,6 @@ dat/outfits/weapons/repeating_railgun.xml
 dat/outfits/weapons/ripper_cannon.xml
 dat/outfits/weapons/shredder.xml
 dat/outfits/weapons/slicer.xml
-dat/outfits/weapons/small_mining_lance.xml
 dat/outfits/weapons/tesla_cannon.xml
 dat/outfits/weapons/turbolaser.xml
 dat/outfits/weapons/turreted_gauss_gun.xml
