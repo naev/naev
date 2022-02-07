@@ -417,6 +417,7 @@ static int asteroidL_materials( lua_State *L )
    lua_newtable(L);
    for (int i=0; i<array_size(at->material); i++) {
       const AsteroidReward *mat = &at->material[i];
+      lua_newtable(L);
 
       lua_pushcommodity( L, mat->material );
       lua_setfield(L,-2,"commodity");
@@ -429,7 +430,6 @@ static int asteroidL_materials( lua_State *L )
 
       lua_rawseti( L, -2, i+1 );
    }
-   lua_setfield(L,-2,"material");
 
    return 1;
 }
