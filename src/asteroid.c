@@ -1078,7 +1078,6 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
                continue;
 
             int nb = RNG(0, round((double)mat->quantity * mining_bonus));
-            DEBUG("%d * %f = %d", mat->quantity, mining_bonus, nb);
             for (int j=0; j<nb; j++) {
                Vector2d pos, vel;
                pos = a->pos;
