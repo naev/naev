@@ -13,6 +13,6 @@
  </general>
  <specific type="modification">
   <lua>outfits/utility/sk_plasma_drill.lua</lua>
-  <misc_asteroid_scan>1</misc_asteroid_scan>
+  <misc_asteroid_scan>200</misc_asteroid_scan>
  </specific>
 </outfit>

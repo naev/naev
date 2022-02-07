@@ -119,6 +119,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_A_CPU_MAX,         /**< Maximum CPU modifier. */
    SS_TYPE_A_ENGINE_LIMIT,    /**< Engine's mass limit. */
    SS_TYPE_A_FUEL_REGEN,      /**< Fuel regeneration. */
+   SS_TYPE_A_ASTEROID_SCAN,   /**< DIstance at which ship can gather informations from asteroids. */
 
    /*
     * P: Absolute percent type datas. Should be continuous.
@@ -141,7 +142,6 @@ typedef enum ShipStatsType_ {
    SS_TYPE_B_HIDDEN_JUMP_DETECT,/**< Hidden jump detection. */
    SS_TYPE_B_INSTANT_JUMP,    /**< Do not require brake or chargeup to jump. */
    SS_TYPE_B_REVERSE_THRUST,  /**< Ship slows down rather than turning on reverse. */
-   SS_TYPE_B_ASTEROID_SCAN,   /**< Ship can gather informations from asteroids. */
 
    /*
     * End of list.
@@ -292,7 +292,7 @@ typedef struct ShipStats_ {
    double nebu_absorb;     /**< Shield nebula resistance. */
    int misc_instant_jump;  /**< Do not require brake or chargeup to jump. */
    int misc_reverse_thrust;/**< Slows down the ship instead of turning it around. */
-   int misc_asteroid_scan; /**< Able to scan asteroids. */
+   double misc_asteroid_scan; /**< Able to scan asteroids. */
    int misc_hidden_jump_detect; /**< Degree of hidden jump detection. */
    int fuel;               /**< Maximum fuel modifier. */
    double fuel_regen;      /**< Absolute fuel regeneration. */

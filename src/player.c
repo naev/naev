@@ -1344,6 +1344,30 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
          player_hailTimer = 3.;
       }
    }
+
+   /* Handle passive scanning of nearby asteroids. */
+   /* TODO should probably handle player escorts in the future. */
+   if (player.p->stats.misc_asteroid_scan > 0.) {
+      double range = player.p->stats.misc_asteroid_scan;
+      for (int i=0; i<array_size(cur_system->asteroids); i++) {
+         double r2;
+         AsteroidAnchor *ast = &cur_system->asteroids[i];
+
+         /* Field out of range. */
+         if (vect_dist2( &ast->pos, &player.p->solid->pos ) > pow2(range+ast->radius+ast->margin))
+            continue;
+
+         r2 = pow2(range);
+         for (int j=0; j<ast->nb; j++) {
+            Asteroid *a = &ast->asteroids[j];
+
+            if (vect_dist2( &a->pos, &player.p->solid->pos ) > r2)
+               continue;
+
+            a->scanned = 1;
+         }
+      }
+   }
 }
 
 /*
@@ -1462,24 +1486,6 @@ void player_targetAsteroidSet( int field, int id )
    if (old != id) {
       if (id >= 0) {
          player_soundPlayGUI(snd_nav, 1);
-
-         /* See if the player has the asteroid scanner. */
-         if (player.p->stats.misc_asteroid_scan) {
-            /* Recover and display some info about the asteroid. */
-            AsteroidAnchor *anchor = &cur_system->asteroids[field];
-            Asteroid *ast = &anchor->asteroids[id];
-            const AsteroidType *at = asttype_get( ast->type );
-
-            player_message( _("Asteroid targeted, composition: ") );
-            for (int i=0; i<array_size(at->material); i++) {
-               AsteroidReward *mat = &at->material[i];
-               Commodity *com = mat->material;
-               player_message( _("%s, quantity: %i"), _(com->name), mat->quantity );
-            }
-            ast->scanned = 1;
-         }
-         else
-            player_message( _("Asteroid targeted") );
       }
    }
 
