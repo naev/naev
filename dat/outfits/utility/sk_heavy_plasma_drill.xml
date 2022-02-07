@@ -1,19 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="S&amp;K Plasma Drill">
+<outfit name="S&amp;K Heavy Plasma Drill">
  <general>
   <typename>Mining System</typename>
   <slot>utility</slot>
-  <size>medium</size>
-  <mass>30</mass>
-  <price>270000</price>
+  <size>heavy</size>
+  <mass>150</mass>
+  <price>650000</price>
   <gfx_store>placeholder.webp</gfx_store>
   <description>TODO</description>
   <desc_extra>#gAllows precise mining of asteroids to extract rare minerals.#0</desc_extra>
   <limit>mining_system</limit>
  </general>
  <specific type="modification">
-  <lua>outfits/utility/sk_plasma_drill.lua</lua>
-  <asteroid_scan>200</asteroid_scan>
-  <mining_bonus>50</mining_bonus>
+  <lua>outfits/utility/sk_heavy_plasma_drill.lua</lua>
+  <asteroid_scan>350</asteroid_scan>
+  <mining_bonus>80</mining_bonus>
  </specific>
 </outfit>

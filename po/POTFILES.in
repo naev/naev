@@ -292,6 +292,7 @@ dat/outfits/utility/milspec_jammer.xml
 dat/outfits/utility/milspec_scrambler.xml
 dat/outfits/utility/neural_accelerator_interface.xml
 dat/outfits/utility/sensor_array.xml
+dat/outfits/utility/sk_heavy_plasma_drill.xml
 dat/outfits/utility/sk_plasma_drill.xml
 dat/outfits/utility/targeting_array.xml
 dat/outfits/utility/targeting_conduit.xml
@@ -2578,6 +2579,7 @@ dat/outfits/utility/hyperbolic_blink_engine.lua
 dat/outfits/utility/low_radiation_sensor_modulator.lua
 dat/outfits/utility/mining_drill.lua
 dat/outfits/utility/neural_accelerator_interface.lua
+dat/outfits/utility/sk_heavy_plasma_drill.lua
 dat/outfits/utility/sk_plasma_drill.lua
 dat/outfits/utility/targeting_conduit.lua
 dat/outfits/utility/weakness_harmonizer_ai.lua
