@@ -12,8 +12,10 @@
 #include "naev.h"
 /** @endcond */
 
-#include "array.h"
 #include "asteroid.h"
+
+#include "array.h"
+#include "camera.h"
 #include "space.h"
 #include "opengl.h"
 #include "toolkit.h"
@@ -176,6 +178,8 @@ void asteroids_update( double dt )
       if (!space_isSimulation()) {
          for (int j=0; j<ast->ndebris; j++) {
             Debris *d = &ast->debris[j];
+            int infield;
+            Vector2d v;
 
             d->pos.x += (d->vel.x-x) * dt;
             d->pos.y += (d->vel.y-y) * dt;
@@ -189,6 +193,14 @@ void asteroids_update( double dt )
                d->pos.x += SCREEN_W + 2.*DEBRIS_BUFFER;
             else if (d->pos.y < -DEBRIS_BUFFER)
                d->pos.y += SCREEN_H + 2.*DEBRIS_BUFFER;
+
+            /* Set alpha based on position. */
+            gl_screenToGameCoords( &v.x, &v.y, d->pos.x, d->pos.y );
+            infield = asteroids_inField( &v );
+            if (infield>=0)
+               d->alpha = MIN( 1.0, d->alpha + 0.5 * dt );
+            else
+               d->alpha = MAX( 0.0, d->alpha - 0.5 * dt );
          }
       }
    }
@@ -320,6 +332,7 @@ static void debris_init( Debris *deb )
 
    /* Random height vs player. */
    deb->height = 0.8 + RNGF()*0.4;
+   deb->alpha = 0.;
 }
 
 /**
@@ -792,8 +805,8 @@ void asteroids_render (void)
    /* Render the asteroids & debris. */
    for (int i=0; i < array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *ast = &cur_system->asteroids[i];
-      for (int j=0; j < ast->nb; j++)
-        space_renderAsteroid( &ast->asteroids[j] );
+      //for (int j=0; j < ast->nb; j++)
+      //  space_renderAsteroid( &ast->asteroids[j] );
 
       if (pplayer != NULL) {
          double x = psolid->pos.x - SCREEN_W/2;
@@ -877,14 +890,11 @@ static void space_renderAsteroid( const Asteroid *a )
  */
 static void space_renderDebris( const Debris *d, double x, double y )
 {
-   double scale = 0.5;
-   Vector2d v;
+   const double scale = 0.5;
+   const glColour col = COL_ALPHA( cInert, d->alpha );
 
-   v.x = d->pos.x + x;
-   v.y = d->pos.y + y;
-
-   if (asteroids_inField( &v ) == 0)
-      gl_renderSpriteScale( asteroid_gfx[d->gfxID], v.x, v.y, scale, scale, 0, 0, &cInert );
+   gl_renderSpriteScale( asteroid_gfx[d->gfxID],
+         d->pos.x+x, d->pos.y+y, scale, scale, 0, 0, &col );
 }
 
 /**

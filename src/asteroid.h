@@ -74,6 +74,7 @@ typedef struct Debris_ {
    Vector2d pos;  /**< Position. */
    Vector2d vel;  /**< Velocity. */
    double height; /**< height vs player */
+   double alpha;  /**< Alpha value. */
 } Debris;
 
 /**
