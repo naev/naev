@@ -1018,7 +1018,6 @@ void land_genWindows( int load, int changetab )
    if (land_wid > 0) {
       land_regen = 2; /* Mark we're regenning. */
       window_destroy( land_wid );
-      window_setFade( land_wid, NULL, 0. );
 
       /* Mark tabs as not generated. */
       land_generated = 0;
@@ -1041,8 +1040,6 @@ void land_genWindows( int load, int changetab )
    }
    land_wid = window_create( "wdwLand", spob_name(p), -1, -1, w, h );
    window_onCleanup( land_wid, land_cleanupWindow );
-   if (land_regen)
-      window_setFade( land_wid, NULL, 0. );
 
    /* Create tabbed window. */
    land_setupTabs();
@@ -1587,10 +1584,8 @@ void land_cleanup (void)
    land_generated = 0;
 
    /* Destroy window. */
-   if (land_wid > 0) {
+   if (land_wid > 0)
       window_destroy(land_wid);
-      window_setFade( land_wid, NULL, 0. );
-   }
    land_wid       = 0;
 
    /* Clean up possible stray graphic. */

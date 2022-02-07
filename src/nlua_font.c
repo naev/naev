@@ -88,8 +88,7 @@ glFont* luaL_checkfont( lua_State *L, int ind )
  */
 glFont* lua_pushfont( lua_State *L, glFont font )
 {
-   glFont *c;
-   c = (glFont*) lua_newuserdata(L, sizeof(glFont));
+   glFont *c = (glFont*) lua_newuserdata(L, sizeof(glFont));
    *c = font;
    luaL_getmetatable(L, FONT_METATABLE);
    lua_setmetatable(L, -2);
