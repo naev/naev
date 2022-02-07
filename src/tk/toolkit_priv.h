@@ -184,6 +184,8 @@ typedef struct Window_ {
 /* Window stuff. */
 Window* toolkit_getActiveWindow (void);
 Window* window_wget( const unsigned int wid );
+Window* window_wgetW( const unsigned int wid );
+Window* window_wgetNameW( const char *name );
 void toolkit_setWindowPos( Window *wdw, int x, int y );
 int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge );
 void window_render( Window* w );
