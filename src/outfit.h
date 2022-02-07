@@ -132,6 +132,7 @@ typedef struct OutfitBoltData_ {
    double dispersion;/**< Angle amount to spread particles around independent of heat. */
    double speed_dispersion;/**< Dispersion, but for speed. */
    int shots;        /**< Number of particles shot when fired. */
+   int mining_rarity;/**< Maximum mining rarity the weapon can mine. */
 
    /* Sound and graphics. */
    glTexture* gfx_space; /**< Normal graphic. */
@@ -164,6 +165,7 @@ typedef struct OutfitBeamData_ {
    double heatup;    /**< How long it should take for the weapon to heat up (approx). */
    double heat;      /**< Heat per second. */
    double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct). */
+   int mining_rarity;/**< Maximum mining rarity the weapon can mine. */
 
    /* Graphics and sound. */
    glColour colour;  /**< Color to use for the shader. */
@@ -196,6 +198,7 @@ typedef struct OutfitLauncherData_ {
    double dispersion;/**< Angle amount to spread particles around independent of heat. */
    double speed_dispersion;/**< Dispersion, but for speed. */
    int shots;        /**< Number of particles shot when fired. */
+   int mining_rarity;/**< Maximum mining rarity the weapon can mine. */
 
    double ammo_mass; /**< How heavy it is. */
    double duration;  /**< How long the ammo lives. */
@@ -439,6 +442,7 @@ double outfit_speed( const Outfit* o );
 double outfit_spin( const Outfit* o );
 double outfit_trackmin( const Outfit* o );
 double outfit_trackmax( const Outfit* o );
+int outfit_miningRarity( const Outfit* o );
 int outfit_sound( const Outfit* o );
 int outfit_soundHit( const Outfit* o );
 double outfit_ammoMass( const Outfit *o );

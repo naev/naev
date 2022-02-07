@@ -398,7 +398,7 @@ static int asteroidL_setArmour( lua_State *L )
    Asteroid *a = luaL_validasteroid(L,1);
    a->armour = luaL_checknumber(L,2);
    if (a->armour <= 0.)
-      asteroid_explode( a, 0 );
+      asteroid_explode( a, -1, 0. );
    return 0;
 }
 

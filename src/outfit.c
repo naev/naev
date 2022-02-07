@@ -774,6 +774,18 @@ double outfit_trackmax( const Outfit* o )
    return -1.;
 }
 /**
+ * @brief Gets the maximum rarity the outfit can mine up to.
+ *    @param o Outfit to get information from.
+ *    @return Outfit's maximum mining rarity.
+ */
+int outfit_miningRarity( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.mining_rarity;
+   else if (outfit_isLauncher(o)) return o->u.lau.mining_rarity;
+   else if (outfit_isBeam(o)) return o->u.bem.mining_rarity;
+   return -1;
+}
+/**
  * @brief Gets the outfit's sound.
  *    @param o Outfit to get sound from.
  *    @return Outfit's sound.
@@ -1178,6 +1190,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"dispersion",temp->u.blt.dispersion);
       xmlr_float(node,"speed_dispersion",temp->u.blt.speed_dispersion);
       xmlr_int(node,"shots",temp->u.blt.shots);
+      xmlr_int(node,"mining_rarity",temp->u.blt.mining_rarity);
       xmlr_strd(node,"lua",temp->lua_file);
       if (xml_isNode(node,"range")) {
          xmlr_attr_strd(node,"blowup",buf);
@@ -1359,6 +1372,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"warmup",temp->u.bem.warmup);
       xmlr_float(node,"heatup",temp->u.bem.heatup);
       xmlr_float(node,"swivel",temp->u.bem.swivel);
+      xmlr_int(node,"mining_rarity",temp->u.bem.mining_rarity);
       xmlr_strd(node,"lua",temp->lua_file);
 
       if (xml_isNode(node, "duration")) {
@@ -1512,6 +1526,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"dispersion",temp->u.blt.dispersion);
       xmlr_float(node,"speed_dispersion",temp->u.blt.speed_dispersion);
       xmlr_int(node,"shots",temp->u.blt.shots);
+      xmlr_int(node,"mining_rarity",temp->u.lau.mining_rarity);
       xmlr_strd(node,"lua",temp->lua_file);
 
       if (!outfit_isTurret(temp))

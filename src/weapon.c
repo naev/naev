@@ -1286,6 +1286,8 @@ static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* 
    int s, spfx;
    Damage dmg;
    const Damage *odmg;
+   Pilot *parent;
+   double mining_bonus;
 
    /* Get general details. */
    odmg              = outfit_damage( w->outfit );
@@ -1308,7 +1310,10 @@ static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* 
    spfx_add( spfx, pos->x, pos->y,VX(a->vel), VY(a->vel), layer );
 
    weapon_destroy(w);
-   asteroid_hit( a, &dmg );
+
+   parent = pilot_get( w->parent );
+   mining_bonus = (parent != NULL) ? parent->stats.mining_bonus : 1.;
+   asteroid_hit( a, &dmg, outfit_miningRarity(w->outfit), mining_bonus );
 }
 
 /**
@@ -1381,6 +1386,8 @@ static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
    (void) layer;
    Damage dmg;
    const Damage *odmg;
+   Pilot *parent;
+   double mining_bonus;
 
    /* Get general details. */
    odmg              = outfit_damage( w->outfit );
@@ -1389,7 +1396,9 @@ static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
    dmg.type          = odmg->type;
    dmg.disable       = odmg->disable * dt;
 
-   asteroid_hit( a, &dmg );
+   parent = pilot_get( w->parent );
+   mining_bonus = (parent != NULL) ? parent->stats.mining_bonus : 1.;
+   asteroid_hit( a, &dmg, outfit_miningRarity(w->outfit), mining_bonus );
 
    /* Add sprite. */
    if (w->timer2 == -1.) {

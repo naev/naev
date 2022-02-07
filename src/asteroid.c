@@ -1014,8 +1014,10 @@ AsteroidTypeGroup *astgroup_getName( const char *name )
  *
  *    @param a hit asteroid
  *    @param dmg Damage being done
+ *    @param max_rarity Maximum rarity of the rewards to give if destroyed.
+ *    @param mining_bonus Bonus to mining.
  */
-void asteroid_hit( Asteroid *a, const Damage *dmg )
+void asteroid_hit( Asteroid *a, const Damage *dmg, int max_rarity, double mining_bonus )
 {
    double darmour;
    AsteroidType *at = &asteroid_types[a->type];
@@ -1024,16 +1026,17 @@ void asteroid_hit( Asteroid *a, const Damage *dmg )
 
    a->armour -= darmour;
    if (a->armour <= 0)
-      asteroid_explode( a, 1 );
+      asteroid_explode( a, max_rarity, mining_bonus );
 }
 
 /**
  * @brief Makes an asteroid explode.
  *
  *    @param a asteroid to make explode
- *    @param give_reward Whether a pilot blew the asteroid up and should be rewarded.
+ *    @param max_rarity Maximum rarity of the rewards to give, set to -1 for none.
+ *    @param mining_bonus Bonus to mining.
  */
-void asteroid_explode( Asteroid *a, int give_reward )
+void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
 {
    Damage dmg;
    char buf[16];
@@ -1053,19 +1056,40 @@ void asteroid_explode( Asteroid *a, int give_reward )
    sound_playPos( sound_get(buf), a->pos.x, a->pos.y, a->vel.x, a->vel.y );
 
    /* Release commodity rewards. */
-   if (give_reward) {
+   if (max_rarity >= 0) {
+      double prob, accum;
+      int ndrops = 0;
       for (int i=0; i<array_size(at->material); i++) {
          AsteroidReward *mat = &at->material[i];
-         int nb = RNG(0,mat->quantity);
-         for (int j=0; j < nb; j++) {
-            Vector2d pos, vel;
-            pos = a->pos;
-            vel = a->vel;
-            pos.x += (RNGF()*30.-15.);
-            pos.y += (RNGF()*30.-15.);
-            vel.x += (RNGF()*20.-10.);
-            vel.y += (RNGF()*20.-10.);
-            gatherable_init( mat->material, pos, vel, -1., RNG(1,5) );
+         if (mat->rarity > max_rarity)
+            continue;
+         ndrops++;
+      }
+      if (ndrops > 0) {
+         double r = RNGF();
+         prob = 1./(double)ndrops;
+         accum = 0.;
+         for (int i=0; i<array_size(at->material); i++) {
+            AsteroidReward *mat = &at->material[i];
+            if (mat->rarity > max_rarity)
+               continue;
+            accum += prob;
+            if (r > accum)
+               continue;
+
+            int nb = RNG(0, round((double)mat->quantity * mining_bonus));
+            DEBUG("%d * %f = %d", mat->quantity, mining_bonus, nb);
+            for (int j=0; j<nb; j++) {
+               Vector2d pos, vel;
+               pos = a->pos;
+               vel = a->vel;
+               pos.x += (RNGF()*30.-15.);
+               pos.y += (RNGF()*30.-15.);
+               vel.x += (RNGF()*20.-10.);
+               vel.y += (RNGF()*20.-10.);
+               gatherable_init( mat->material, pos, vel, -1., RNG(1,5) );
+            }
+            break;
          }
       }
    }
