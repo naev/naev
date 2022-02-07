@@ -899,6 +899,9 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
       wid = window_get( "wdwLoadGameMenu" );
       load_menu_close( wid, str );
       load_loadGameMenu();
+      /* Don't refade in. */
+      wid = window_get( "wdwLoadGameMenu" );
+      window_setFade( wid, NULL, 0. );
    }
    load_loadSnapshotMenu( selected_player );
 }

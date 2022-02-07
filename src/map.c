@@ -373,8 +373,8 @@ void map_open (void)
    /* Commodity button */
    window_addButton( wid, -20 - (BUTTON_WIDTH+20), y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommod", _("Mode"), map_buttonCommodity );
    /* Find button */
-   window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), y, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnFind", _("Find"), map_inputFind );
+   window_addButtonKey( wid, -20 - 2*(BUTTON_WIDTH+20), y, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnFind", _("Find"), map_inputFind, SDLK_f );
    /* Autonav button */
    window_addButtonKey( wid, -20 - 3*(BUTTON_WIDTH+20), y, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnAutonav", _("Autonav"), player_autonavStartWindow, SDLK_a );
