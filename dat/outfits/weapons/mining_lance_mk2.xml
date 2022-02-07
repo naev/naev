@@ -9,6 +9,9 @@
   <gfx_store>orion.webp</gfx_store>
   <cpu>-50</cpu>
  </general>
+ <stats>
+  <mining_bonus>20</mining_bonus>
+ </stats>
  <specific type="beam">
   <delay>1.5</delay>
   <duration>2</duration>
