@@ -469,6 +469,48 @@ void gl_renderSprite( const glTexture* sprite, double bx, double by,
 }
 
 /**
+ * @brief Blits a sprite, position is relative to the player.
+ *
+ * Since position is in "game coordinates" it is subject to all
+ * sorts of position transformations.
+ *
+ *    @param sprite Sprite to blit.
+ *    @param bx X position of the texture relative to the player.
+ *    @param by Y position of the texture relative to the player.
+ *    @param scalew Scaling of width.
+ *    @param scaleh Scaling of height.
+ *    @param sx X position of the sprite to use.
+ *    @param sy Y position of the sprite to use.
+ *    @param c Colour to use (modifies texture colour).
+ */
+void gl_renderSpriteScale( const glTexture* sprite, double bx, double by,
+      double scalew, double scaleh,
+      int sx, int sy, const glColour* c )
+{
+   double x,y, w,h, tx,ty, z;
+
+   /* Translate coords. */
+   z = cam_getZoom();
+   gl_gameToScreenCoords( &x, &y, bx - sprite->sw/2., by - sprite->sh/2. );
+
+   /* Scaled sprite dimensions. */
+   w = sprite->sw*z*scalew;
+   h = sprite->sh*z*scaleh;
+
+   /* check if inbounds */
+   if ((x < -w) || (x > SCREEN_W+w) ||
+         (y < -h) || (y > SCREEN_H+h))
+      return;
+
+   /* texture coords */
+   tx = sprite->sw*(double)(sx)/sprite->w;
+   ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->h;
+
+   gl_renderTexture( sprite, x, y, w, h,
+         tx, ty, sprite->srw, sprite->srh, c, 0. );
+}
+
+/**
  * @brief Blits a sprite interpolating, position is relative to the player.
  *
  * Since position is in "game coordinates" it is subject to all

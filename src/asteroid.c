@@ -884,8 +884,7 @@ static void space_renderDebris( const Debris *d, double x, double y )
    v.y = d->pos.y + y;
 
    if (asteroids_inField( &v ) == 0)
-      gl_renderSpriteInterpolateScale( asteroid_gfx[d->gfxID], asteroid_gfx[d->gfxID], 1,
-                                       v.x, v.y, scale, scale, 0, 0, &cInert );
+      gl_renderSpriteScale( asteroid_gfx[d->gfxID], v.x, v.y, scale, scale, 0, 0, &cInert );
 }
 
 /**
