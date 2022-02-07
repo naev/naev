@@ -495,7 +495,7 @@ void load_loadGameMenu (void)
          "btnDelete", _("Delete"), load_menu_delete );
 
    if (old_saves_detected && !player_warned) {
-      dialogue_alert( _("Old saves have been backed up into saves-pre-0.10.0 directory.") );
+      dialogue_alert( _("Naev has detected saves in pre-0.10.0 format, and has automatically migrated them to the new format. Old saves have been backed up at '%s'."), "saves-pre-0.10.0");
       player_warned = 1;
    }
 }
@@ -878,6 +878,8 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
    if (window_exists( "wdwLoadGameMenu" )) {
       wid = window_get( "wdwLoadGameMenu" );
       save = toolkit_getList( wid, "lstNames" );
+      load_menu_close( wid, str );
+      load_loadGameMenu();
       load_loadSnapshotMenu( save );
    } else
       load_loadSnapshotMenu( player.name );
