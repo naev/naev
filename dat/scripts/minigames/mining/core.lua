@@ -6,10 +6,59 @@ local lg       = require 'love.graphics'
 local lfile    = require "love.filesystem"
 local fmt      = require "format"
 
-local moving, pointer, pointer_tail, speed, cx, cy, transition, alpha, done, targets, shots, shots_max, shots_timer, shots_visual, z_cur, z_max, mfont, telapsed, tsincestart, tcompleted, completed, reward
+local targets
+local function generate_targets( difficulty )
+   if difficulty >= 2 then
+      table.insert( targets, {
+         pos = (0.6+0.3*rnd.rnd()) * 2*math.pi,
+         sway_range = 0.1*2*math.pi * rnd.rnd(),
+         sway_period = 1 + rnd.rnd(),
+         size = math.pi/16,
+         reward = 1,
+         z = 1,
+      } )
+      table.insert( targets, {
+         pos = (0.7+0.3*rnd.rnd()) * 2*math.pi - math.pi/16,
+         sway_range = 0,
+         sway_period = 0,
+         size = math.pi/20,
+         reward = 1,
+         z = 1,
+      } )
+   elseif difficulty == 1 then
+      table.insert( targets, {
+         pos = (0.6+0.3*rnd.rnd()) * 2*math.pi,
+         sway_range = 0.1*2*math.pi * rnd.rnd(),
+         sway_period = 1 + rnd.rnd(),
+         size = math.pi/8,
+         reward = 1,
+         z = 1,
+      } )
+      table.insert( targets, {
+         pos = (0.7+0.3*rnd.rnd()) * 2*math.pi - math.pi/16,
+         sway_range = 0,
+         sway_period = 0,
+         size = math.pi/16,
+         reward = 1,
+         z = 1,
+      } )
+   else
+      table.insert( targets, {
+         pos = (0.6+0.3*rnd.rnd()) * 2*math.pi,
+         sway_range = 0.1*2*math.pi * rnd.rnd(),
+         sway_period = 1 + rnd.rnd(),
+         size = math.pi/8,
+         reward = 1,
+         z = 1,
+      } )
+   end
+end
+
+local moving, pointer, pointer_tail, speed, cx, cy, transition, alpha, done, shots, shots_max, shots_timer, shots_visual, z_cur, z_max, mfont, telapsed, tsincestart, tcompleted, completed, reward
 local radius = 150
 local img, shd_background, shd_pointer, shd_target, shd_shot
 function mining.load()
+   local cc    = naev.cache().mining
    mfont       = lg.newFont(16)
    pointer     = 0
    pointer_tail = -math.pi/4
@@ -25,9 +74,10 @@ function mining.load()
    done        = false
    completed   = false
    reward      = nil
+   targets     = {}
    -- Outfit-dependent
-   speed       = math.pi
-   shots_max   = 3
+   speed       = cc.speed or math.pi
+   shots_max   = cc.shots_max or 3
 
    -- Create constant image
    local idata = love.image.newImageData( 1, 1 )
@@ -49,42 +99,8 @@ function mining.load()
    cx, cy = naev.gfx.screencoords( naev.camera.get(), true ):get()
 
    -- Generate targets
-   targets = {}
-
-   targets[1] = {
-         pos = 0.6*2*math.pi,
-         sway_range = 0.1*2*math.pi,
-         sway_period = 1,
-         size = math.pi/8,
-         reward = 0.5,
-         z = 1,
-      }
-   targets[2] = {
-         pos = 0.9*2*math.pi,
-         sway_range = 0,
-         sway_period = 0,
-         size = math.pi/16,
-         reward = 0.8,
-         z = 1,
-      }
-   targets[3] = {
-         pos = 0.8*2*math.pi,
-         sway_range = 0.1*2*math.pi,
-         sway_period = 1,
-         size = math.pi/8,
-         reward = 0.5,
-         z = 2,
-      }
-   targets[4] = {
-         pos = 0.6*2*math.pi,
-         sway_range = 0.1*2*math.pi,
-         sway_period = 1,
-         size = math.pi/8,
-         reward = 0.5,
-         z = 3,
-      }
-   targets[3] = nil
-   targets[4] = nil
+   local difficulty = cc.difficulty or 0
+   generate_targets( difficulty )
 
    z_max = 0
    for k,t in ipairs(targets) do

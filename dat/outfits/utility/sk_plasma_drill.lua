@@ -83,7 +83,12 @@ function ontoggle( p, _po, on )
          end
       end
 
-      mining.love{ difficulty=max_rarity, reward_func=reward }
+      mining.love{
+         speed = math.pi,
+         shots_max = 3,
+         difficulty = max_rarity,
+         reward_func = reward,
+      }
    end
    a:setTimer( -1 ) -- Get rid of the asteroid
 

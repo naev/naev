@@ -12,6 +12,7 @@ local function setup( params, standalone )
    c.mining = {}
    c.mining.params = params
    c.mining.standalone = standalone
+   c.mining.difficulty = params.difficulty
    c.mining.reward_func = params.reward_func
 end
 
