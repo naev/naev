@@ -195,6 +195,8 @@ void asteroids_update( double dt )
                d->pos.y += SCREEN_H + 2.*DEBRIS_BUFFER;
 
             /* Set alpha based on position. */
+            /* TODO there seems to be some offset mistake or something going on
+             * here, not too big of an issue though. */
             gl_screenToGameCoords( &v.x, &v.y, d->pos.x, d->pos.y );
             infield = asteroids_inField( &v );
             if (infield>=0)
