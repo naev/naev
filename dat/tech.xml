@@ -35,6 +35,8 @@
   <item>Plasma Turret MK1</item>
   <item>Plasma Turret MK2</item>
   <item>Plasma Cluster Cannon</item>
+  <item>Mining Lance MK1</item>
+  <item>Mining Lance MK2</item>
   <item>Ragnarok Beam</item>
   <item>Grave Beam</item>
   <item>Orion Beam</item>
@@ -247,6 +249,7 @@
   <item>Pinpoint Combat AI</item>
   <item>Hunting Combat AI</item>
   <item>Scanning Combat AI</item>
+  <item>S&amp;K Plasma Drill</item>
  </tech>
  <tech name="All Ships">
   <item>Llama</item>
