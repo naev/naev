@@ -10,15 +10,15 @@ local targets
 local function generate_targets( difficulty )
    if difficulty >= 2 then
       table.insert( targets, {
-         pos = (0.6+0.3*rnd.rnd()) * 2*math.pi,
-         sway_range = 0.1*2*math.pi * rnd.rnd(),
+         pos = (0.5+0.3*rnd.rnd()) * 2*math.pi,
+         sway_range = 0.2*2*math.pi * rnd.rnd(),
          sway_period = 1 + rnd.rnd(),
          size = math.pi/16,
          reward = 1,
          z = 1,
       } )
       table.insert( targets, {
-         pos = (0.7+0.3*rnd.rnd()) * 2*math.pi - math.pi/16,
+         pos = (0.8+0.2*rnd.rnd()) * 2*math.pi - math.pi/20,
          sway_range = 0,
          sway_period = 0,
          size = math.pi/20,
@@ -27,15 +27,15 @@ local function generate_targets( difficulty )
       } )
    elseif difficulty == 1 then
       table.insert( targets, {
-         pos = (0.6+0.3*rnd.rnd()) * 2*math.pi,
-         sway_range = 0.1*2*math.pi * rnd.rnd(),
+         pos = (0.5+0.3*rnd.rnd()) * 2*math.pi,
+         sway_range = 0.15*2*math.pi * rnd.rnd(),
          sway_period = 1 + rnd.rnd(),
          size = math.pi/8,
          reward = 1,
          z = 1,
       } )
       table.insert( targets, {
-         pos = (0.7+0.3*rnd.rnd()) * 2*math.pi - math.pi/16,
+         pos = (0.8+0.2*rnd.rnd()) * 2*math.pi - math.pi/16,
          sway_range = 0,
          sway_period = 0,
          size = math.pi/16,
