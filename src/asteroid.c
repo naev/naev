@@ -636,6 +636,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
       /* Only handle nodes. */
       xml_onlyNodes(node);
 
+      xmlr_strd( node, "scanned", at->scanned_msg );
       xmlr_float( node, "armour_min", at->armour_min );
       xmlr_float( node, "armour_max", at->armour_max );
       xmlr_float( node, "absorb", at->absorb );
@@ -670,16 +671,16 @@ static int asttype_parse( AsteroidType *at, const char *file )
                continue;
             }
 
-            WARN(_("Asteroid type '%s' has unknown node '%s'"), at->name, cur->name);
+            WARN(_("Asteroid Type '%s' has unknown node '%s'"), at->name, cur->name);
          } while (xml_nextNode(cur));
 
          if (namdef==0 || material.quantity==0)
-            WARN(_("Asteroid type '%s' has commodity that lacks name or quantity."), at->name);
+            WARN(_("Asteroid Type '%s' has commodity that lacks name or quantity."), at->name);
 
          array_push_back( &at->material, material );
          continue;
       }
-      WARN(_("Asteroid type '%s' has unknown node '%s'"), at->name, node->name);
+      WARN(_("Asteroid Type '%s' has unknown node '%s'"), at->name, node->name);
    } while (xml_nextNode(node));
 
    /* Clean up. */
@@ -691,10 +692,11 @@ static int asttype_parse( AsteroidType *at, const char *file )
 
    /* Checks. */
    if (at->armour_max < at->armour_min)
-      WARN(_("Asteroid type '%s' has armour_max below armour_min"), at->name);
+      WARN(_("Asteroid Type '%s' has armour_max below armour_min"), at->name);
 
 #define MELEMENT(o,s) \
-if (o) WARN(_("Asteroid type '%s' missing/invalid '%s' element"), at->name, s) /**< Define to help check for data errors. */
+if (o) WARN(_("Asteroid Type '%s' missing/invalid '%s' element"), at->name, s) /**< Define to help check for data errors. */
+   MELEMENT(at->scanned_msg==NULL,"scanned");
    MELEMENT(array_size(at->gfxs)==0,"gfx");
    MELEMENT(at->armour_min <= 0.,"armour_min");
    MELEMENT(at->armour_max <= 0.,"armour_max");
@@ -743,7 +745,7 @@ static int astgroup_parse( AsteroidTypeGroup *ag, const char *file )
          ag->wtotal += w;
          continue;
       }
-      WARN(_("Asteroid type group '%s' has unknown node '%s'"), ag->name, node->name);
+      WARN(_("Asteroid Type Group '%s' has unknown node '%s'"), ag->name, node->name);
    } while (xml_nextNode(node));
 
    /* Clean up. */
@@ -814,7 +816,6 @@ static void space_renderAsteroid( const Asteroid *a )
 {
    double nx, ny;
    AsteroidType *at;
-   char c[32];
    glColour col;
    double progress;
    const glColour darkcol = cGrey20;
@@ -858,6 +859,8 @@ static void space_renderAsteroid( const Asteroid *a )
    if (!a->scanned || (a->state != ASTEROID_FG))
       return;
    gl_gameToScreenCoords( &nx, &ny, a->pos.x, a->pos.y );
+   gl_printRaw( &gl_smallFont, nx+at->gfxs[a->gfxID]->sw/2, ny-gl_smallFont.h/2, &cFontWhite, -1., _(at->scanned_msg) );
+   /*
    for (int i=0; i<array_size(at->material); i++) {
       AsteroidReward *mat = &at->material[i];
       Commodity *com = mat->material;
@@ -866,6 +869,7 @@ static void space_renderAsteroid( const Asteroid *a )
       snprintf(c, sizeof(c), "x%i", mat->quantity);
       gl_printRaw( &gl_smallFont, nx+10, ny-5-10.*i, &cFontWhite, -1., c );
    }
+   */
 }
 
 /**
@@ -912,6 +916,7 @@ void asteroids_free (void)
    for (int i=0; i<array_size(asteroid_types); i++) {
       AsteroidType *at = &asteroid_types[i];
       free(at->name);
+      free(at->scanned_msg);
       array_free(at->material);
       for (int j=0; j<array_size(at->gfxs); j++)
          gl_freeTexture(at->gfxs[j]);

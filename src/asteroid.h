@@ -44,6 +44,7 @@ typedef struct AsteroidReward_ {
  */
 typedef struct AsteroidType_ {
    char *name;          /**< Name of the asteroid type. */
+   char *scanned_msg;   /**< Scanned message. */
    glTexture **gfxs;    /**< asteroid possible gfxs. */
    AsteroidReward *material; /**< Materials contained in the asteroid. */
    double armour_min;   /**< Minimum "armour" of the asteroid. */

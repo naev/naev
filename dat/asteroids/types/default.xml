@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asteroid name="default">
+ <scanned>common</scanned>
  <gfx>asteroid-D00.webp</gfx>
  <gfx>asteroid-D07.webp</gfx>
  <gfx>asteroid-D08.webp</gfx>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asteroid name="Gold-Platinum">
+ <scanned>uncommon</scanned>
  <gfx>asteroid-D01.webp</gfx>
  <gfx>asteroid-D02.webp</gfx>
  <gfx>asteroid-D03.webp</gfx>
