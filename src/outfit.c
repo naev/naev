@@ -98,6 +98,7 @@ static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
 static int outfit_loadPLG( Outfit *temp, const char *buf, unsigned int bolt );
+static void sdesc_miningRarity( int *l, Outfit *temp, int rarity );
 
 static int outfit_cmp( const void *p1, const void *p2 )
 {
@@ -1027,6 +1028,18 @@ static OutfitType outfit_strToOutfitType( char *buf )
 #undef O_CMP
 
 /**
+ * @brief Adds a small blurb about rarity mining.
+ */
+static void sdesc_miningRarity( int *l, Outfit *temp, int rarity )
+{
+   if (rarity == 0)
+      return;
+   if (rarity == 2)
+      SDESC_ADD( *l, temp, "\n#g%s#0", _("Can mine uncommon and rare minerals") );
+   SDESC_ADD( *l, temp, "\n#g%s#0", _("Can mine uncommon minerals") );
+}
+
+/**
  * @brief Parses a damage node.
  *
  * Example damage node would be:
@@ -1319,6 +1332,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       SDESC_ADD(  l, temp, _("\n%.1f Degree Swivel"), temp->u.blt.swivel*180./M_PI );
    SDESC_ADD(  l, temp, _("\n%s Optimal Tracking"), num2strU( temp->u.blt.trackmax, 0 ) );
    SDESC_ADD(  l, temp, _("\n%s Minimal Tracking"), num2strU( temp->u.blt.trackmin, 0 ) );
+   sdesc_miningRarity( &l, temp, temp->u.blt.mining_rarity );
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
@@ -1467,6 +1481,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    SDESC_COND( l, temp, _("\n%.1f second heat up"),temp->u.bem.heatup );
    if (!outfit_isTurret(temp))
       SDESC_ADD(  l, temp, _("\n%.1f Degree Swivel"), temp->u.bem.swivel*180./M_PI );
+   sdesc_miningRarity( &l, temp, temp->u.bem.mining_rarity );
 
 #define MELEMENT(o,s) \
 if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
@@ -1689,7 +1704,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    SDESC_ADD(  l, temp, _("\n%.1f Seconds to Reload"), temp->u.lau.reload_time );
    SDESC_COND( l, temp, _("\n%.1f EPS [%.0f Energy]"), temp->u.lau.delay * temp->u.lau.energy, temp->u.lau.energy );
    SDESC_COND( l, temp, _("\n%.0f%% Jam Resistance"), temp->u.lau.resist * 100. );
-
+   sdesc_miningRarity( &l, temp, temp->u.lau.mining_rarity );
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to help check for data errors. */
