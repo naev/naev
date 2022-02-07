@@ -2095,6 +2095,10 @@ void player_targetSet( unsigned int id )
    }
    gui_setTarget();
 
+   /* Clear the asteroid target. */
+   player.p->nav_asteroid = -1;
+   player.p->nav_anchor = -1;
+
    /* The player should not continue following if the target pilot has been changed. */
    if (player_isFlag(PLAYER_AUTONAV) && player.autonav == AUTONAV_PLT_FOLLOW)
       player_autonavAbort(NULL);
@@ -2166,17 +2170,18 @@ void player_targetPrev( int mode )
 void player_targetClear (void)
 {
    gui_forceBlink();
-   if ((player.p->target == PLAYER_ID) && (player.p->nav_spob < 0)
-         && (preemption == 1 || player.p->nav_spob == -1)
-         && !pilot_isFlag(player.p, PILOT_HYP_PREP)) {
+   if (player.p->target != PLAYER_ID)
+      player_targetSet( PLAYER_ID );
+   else if (player.p->nav_asteroid >= 0)
+      player_targetAsteroidSet( -1, -1 );
+   else if (player.p->nav_spob >= 0)
+      player_targetSpobSet( -1 );
+   else if ((preemption == 1 || player.p->nav_spob == -1) &&
+         !pilot_isFlag(player.p, PILOT_HYP_PREP)) {
       player.p->nav_hyperspace = -1;
       player_hyperspacePreempt(0);
       map_clear();
    }
-   else if (player.p->target == PLAYER_ID)
-      player_targetSpobSet( -1 );
-   else
-      player_targetSet( PLAYER_ID );
    gui_setNav();
 }
 

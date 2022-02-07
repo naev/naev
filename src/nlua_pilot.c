@@ -3735,7 +3735,7 @@ static int pilotL_getStats( lua_State *L )
  *    @luatparam Pilot p Pilot to get ship stat of.
  *    @luatparam[opt=nil] string name Name of the ship stat to get.
  *    @luatparam[opt=false] boolean internal Whether or not to use the internal representation.
- *    @luareturn Value of the ship stat or a tale containing all the ship stats if name is not specified.
+ *    @luareturn Value of the ship stat or a table containing all the ship stats if name is not specified.
  * @luafunc shipstat
  */
 static int pilotL_getShipStat( lua_State *L )
