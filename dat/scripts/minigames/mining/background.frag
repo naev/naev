@@ -9,6 +9,5 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    float m = 1.0 / radius;
 
    float alpha = smoothstep(    -m, 0.0, -d);
-   float beta  = smoothstep(-2.0*m,  -m, -d);
-   return colour * vec4( vec3(alpha), beta );
+   return colour * vec4( vec3(1.0), alpha );
 }
