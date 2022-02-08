@@ -8,9 +8,9 @@
   <price>540000</price>
   <description>An additional proccessing unit to supplement the main processor of the core system, giving capital ships a little more processing power.</description>
   <gfx_store>placeholder.webp</gfx_store>
-  <cpu>120</cpu>
  </general>
  <specific type="modification">
+  <cpu_max>120</cpu_max>
   <energy_regen_malus>32</energy_regen_malus>
  </specific>
 </outfit>
