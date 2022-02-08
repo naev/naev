@@ -853,12 +853,15 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
 
    /* Handle background. */
    else if (uniedit_viewmode == UNIEDIT_VIEW_ASTEROIDS) {
+      double density = 0.;
       l = 0;
       for (int i=0; i<array_size(sys->asteroids); i++) {
          AsteroidAnchor *ast = &sys->asteroids[i];
+         density += ast->area * ast->density / ASTEROID_REF_AREA;
          for (int j=0; j<array_size(ast->groups); j++)
             l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?"\n":"", ast->groups[j]->name );
       }
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("\nDensity: %g"), density );
       toolkit_drawAltText( x, y, buf);
       return;
    }
