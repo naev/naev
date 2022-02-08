@@ -228,6 +228,7 @@ int dsys_saveSystem( StarSystem *sys )
          xmlw_attr( writer, "x", "%f", aexcl->pos.x );
          xmlw_attr( writer, "y", "%f", aexcl->pos.y );
          xmlw_endElem( writer ); /* "pos" */
+         xmlw_endElem( writer ); /* "exclusion" */
       }
       xmlw_endElem( writer ); /* "asteroids" */
    }
