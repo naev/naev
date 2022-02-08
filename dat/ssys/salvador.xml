@@ -37,7 +37,7 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <group>typeB-poor</group>
+   <group>typeA-standard</group>
    <radius>2500.000000</radius>
    <pos x="13911.948261" y="-2384.905416"/>
   </asteroid>

@@ -31,11 +31,23 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
- <stats>
-  <fuel_regen>1.000000</fuel_regen>
- </stats>
- <tags>
-  <tag>northstellarwind</tag>
-  <tag>stellarwind</tag>
- </tags>
+ <asteroids>
+  <asteroid>
+   <group>typeB-standard</group>
+   <radius>5000.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
+   <density>0.800000</density>
+  </asteroid>
+  <exclusion>
+   <radius>3000.000000</radius>
+   <pos x="0.000000" y="0.000000"/>
+  </exclusion>
+  <stats>
+   <fuel_regen>1.000000</fuel_regen>
+  </stats>
+  <tags>
+   <tag>northstellarwind</tag>
+   <tag>stellarwind</tag>
+  </tags>
+ </asteroids>
 </ssys>
