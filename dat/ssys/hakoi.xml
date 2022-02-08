@@ -44,6 +44,7 @@
    <group>typeA-poor</group>
    <radius>7000.000000</radius>
    <pos x="4682.507829" y="-4041.380148"/>
+   <density>0.500000</density>
   </asteroid>
   <exclusion>
    <radius>3000.000000</radius>

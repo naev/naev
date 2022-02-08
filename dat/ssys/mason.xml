@@ -52,12 +52,12 @@
    <radius>2000.000000</radius>
    <pos x="19488.279962" y="-6613.235987"/>
   </exclusion>
-  <stats>
-   <fuel_regen>1.000000</fuel_regen>
-  </stats>
-  <tags>
-   <tag>northstellarwind</tag>
-   <tag>stellarwind</tag>
-  </tags>
  </asteroids>
+ <stats>
+  <fuel_regen>1.000000</fuel_regen>
+ </stats>
+ <tags>
+  <tag>northstellarwind</tag>
+  <tag>stellarwind</tag>
+ </tags>
 </ssys>
