@@ -327,7 +327,6 @@ int CollidePolygon( const CollPoly* at, const Vector2d* ap,
 int pointInPolygon( const CollPoly* at, const Vector2d* ap,
       float x, float y )
 {
-   int i;
    float vprod, sprod, angle;
    float dxi, dxip, dyi, dyip;
 
@@ -336,7 +335,7 @@ int pointInPolygon( const CollPoly* at, const Vector2d* ap,
       If the final angle is 0, we are outside the polygon
       Otherwise, the angle should be +/- 2pi*/
    angle = 0.0;
-   for (i=0; i<=at->npt-2; i++) {
+   for (int i=0; i<=at->npt-2; i++) {
       dxi  = at->x[i]  +VX(*ap)-x;
       dxip = at->x[i+1]+VX(*ap)-x;
       dyi  = at->y[i]  +VY(*ap)-y;
@@ -629,14 +628,14 @@ int CollideLinePolygon( const Vector2d* ap, double ad, double al,
    vectnull( &tmp_crash );
 
    /* Check if the beginning point is inside polygon */
-   if ( pointInPolygon( bt, bp, (float) ap->x, (float) ap->y ) ) {
+   if (pointInPolygon( bt, bp, (float) ap->x, (float) ap->y )) {
       crash[real_hits].x = ap->x;
       crash[real_hits].y = ap->y;
       real_hits++;
    }
 
    /* same thing for end point */
-   if ( pointInPolygon( bt, bp, (float) ep[0], (float) ep[1] ) ) {
+   if (pointInPolygon( bt, bp, (float) ep[0], (float) ep[1] )) {
       crash[real_hits].x = ep[0];
       crash[real_hits].y = ep[1];
       real_hits++;

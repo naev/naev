@@ -3000,7 +3000,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
 
    /* Targets. */
    pilot_setTarget( pilot, pilot->id ); /* No target. */
-   pilot->nav_spob       = -1;
+   pilot->nav_spob         = -1;
    pilot->nav_hyperspace   = -1;
    pilot->nav_anchor       = -1;
    pilot->nav_asteroid     = -1;

@@ -941,7 +941,7 @@ static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
  */
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
-   int b, psx, psy, k, n;
+   int b, psx, psy, n;
    unsigned int coll, usePoly=1;
    const glTexture *gfx;
    const CollPoly *plg, *polygon;
@@ -1006,7 +1006,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          /* Check for collision. */
          if (weapon_checkCanHit(w,p)) {
             if (usePoly) {
-               k = p->ship->gfx_space->sx * psy + psx;
+               int k = p->ship->gfx_space->sx * psy + psx;
                coll = CollideLinePolygon( &w->solid->pos, w->solid->dir,
                      w->outfit->u.bem.range, &p->ship->polygon[k],
                      &p->solid->pos, crash);
@@ -1028,7 +1028,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          if ((((pilot_stack[i]->id == w->target) && !isjammed) || isjammed) &&
                weapon_checkCanHit(w,p) ) {
             if (usePoly) {
-               k = p->ship->gfx_space->sx * psy + psx;
+               int k = p->ship->gfx_space->sx * psy + psx;
                coll = CollidePolygon( &p->ship->polygon[k], &p->solid->pos,
                         polygon, &w->solid->pos, &crash[0] );
             }
@@ -1047,7 +1047,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       else {
          if (weapon_checkCanHit(w,p)) {
             if (usePoly) {
-               k = p->ship->gfx_space->sx * psy + psx;
+               int k = p->ship->gfx_space->sx * psy + psx;
                coll = CollidePolygon( &p->ship->polygon[k], &p->solid->pos,
                         polygon, &w->solid->pos, &crash[0] );
             }

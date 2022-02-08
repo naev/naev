@@ -1516,9 +1516,6 @@ void space_init( const char* sysname, int do_simulate )
       spob_updateLand( pnt );
    }
 
-   /* Set up asteroids. */
-   asteroids_init();
-
    /* See if we should get a new music song. */
    if (player.p != NULL)
       music_choose(NULL);
@@ -1549,6 +1546,7 @@ void space_init( const char* sysname, int do_simulate )
    /* Simulate system. */
    space_simulating = 1;
    space_simulating_effects = 0;
+   asteroids_init(); /* Set up asteroids. */
    if (player.p != NULL)
       pilot_setFlag( player.p, PILOT_HIDE );
    player_messageToggle( 0 );

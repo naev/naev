@@ -30,6 +30,7 @@
 static AsteroidType *asteroid_types = NULL; /**< Asteroid types stack (array.h). */
 static AsteroidTypeGroup *asteroid_groups = NULL; /**< Asteroid type groups stack (array.h). */
 static glTexture **asteroid_gfx = NULL; /**< Graphics for the asteroids (array.h). */
+static int asteroid_creating = 0;
 
 /* Prototypes. */
 static int asttype_cmp( const void *p1, const void *p2 );
@@ -43,7 +44,7 @@ static int asttype_load (void);
 static void space_renderAsteroid( const Asteroid *a );
 static void space_renderDebris( const Debris *d, double x, double y );
 static void debris_init( Debris *deb );
-static void asteroid_init( Asteroid *ast, AsteroidAnchor *field );
+static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field );
 
 
 /**
@@ -213,6 +214,7 @@ void asteroids_update( double dt )
  */
 void asteroids_init (void)
 {
+   asteroid_creating = 1;
    /* Set up asteroids. */
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *ast = &cur_system->asteroids[i];
@@ -224,7 +226,8 @@ void asteroids_init (void)
          double r = RNGF();
          Asteroid *a = &ast->asteroids[j];
          a->id = j;
-         asteroid_init(a, ast);
+         if (asteroid_init(a, ast))
+            continue;
          if (r > 0.6)
             a->state = ASTEROID_FG;
          else if (r > 0.8)
@@ -242,6 +245,7 @@ void asteroids_init (void)
          debris_init(d);
       }
    }
+   asteroid_creating = 0;
 }
 
 /**
@@ -249,16 +253,36 @@ void asteroids_init (void)
  *    @param ast Asteroid to initialize.
  *    @param field Asteroid field the asteroid belongs to.
  */
-static void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
+static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
 {
-   double mod, theta, wmax, r;
+   double mod, theta, wmax, r, r2;
    AsteroidType *at = NULL;
+   int outfield;
    int attempts = 0;
 
    ast->parent = field->id;
-   ast->scanned = 0;
+   r2 = pow2( field->radius );
 
-   /* randomly init the type of asteroid */
+   do {
+      /* Try to keep density uniform using cartesian coordinates. */
+      ast->pos.x = field->pos.x + (RNGF()*2.-1.)*field->radius;
+      ast->pos.y = field->pos.y + (RNGF()*2.-1.)*field->radius;
+
+      /* Check if out of the field. */
+      outfield = (asteroids_inField(&ast->pos) < 0);
+
+      /* If this is the first time and it's spawned outside the field,
+       * we get rid of it so that density remains roughly consistent. */
+      if (asteroid_creating && outfield && (vect_dist2( &ast->pos, &field->pos ) < r2)) {
+         ast->state = ASTEROID_XX;
+         ast->timer_max = ast->timer = HUGE_VAL; /* Don't reappear. */
+         /* TODO probably do a more proper solution removing total number of asteroids. */
+         return -1;
+      }
+
+   } while (outfield && (attempts++ < 1000));
+
+   /* Randomly init the type of asteroid */
    r = field->groupswtotal * RNGF();
    wmax = 0.;
    for (int i=0; i<array_size(field->groups); i++) {
@@ -278,29 +302,10 @@ static void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
       break;
    }
 
-   ast->type = at-asteroid_types;
-
    /* Randomly init the gfx ID */
+   ast->type = at-asteroid_types;
    ast->gfxID = RNG(0, array_size(at->gfxs)-1);
    ast->armour = at->armour_min + RNGF() * (at->armour_max-at->armour_min);
-
-   do {
-      /* Try to keep density uniform using cartesian coordinates. */
-      ast->pos.x = field->pos.x + (RNGF()*2.-1.)*field->radius;
-      ast->pos.y = field->pos.y + (RNGF()*2.-1.)*field->radius;
-
-      /* If this is the first time and it's spawned outside the field,
-       * we get rid of it so that density remains roughly consistent. */
-      if ((ast->state == ASTEROID_XX_TO_BG) &&
-            (asteroids_inField(&ast->pos) < 0)) {
-         ast->state = ASTEROID_XX;
-         ast->timer_max = ast->timer = HUGE_VAL; /* Don't reappear. */
-         /* TODO probably do a more proper solution removing total number of asteroids. */
-         return;
-      }
-
-      attempts++;
-   } while ((asteroids_inField(&ast->pos) < 0) && (attempts < 1000));
 
    /* And a random velocity */
    theta = RNGF()*2.*M_PI;
@@ -310,6 +315,8 @@ static void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    /* Fade in stuff. */
    ast->state = ASTEROID_XX;
    ast->timer_max = ast->timer = -1.;
+
+   return 0;
 }
 
 /**
@@ -319,7 +326,6 @@ static void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
 static void debris_init( Debris *deb )
 {
    double theta, mod;
-
    /* Position */
    deb->pos.x = -DEBRIS_BUFFER + RNGF()*(SCREEN_W + 2.*DEBRIS_BUFFER);
    deb->pos.y = -DEBRIS_BUFFER + RNGF()*(SCREEN_H + 2.*DEBRIS_BUFFER);
@@ -959,14 +965,14 @@ void asteroids_free (void)
 int asteroids_inField( const Vector2d *p )
 {
    /* Always return -1 if in an exclusion zone */
-   for (int i=0; i < array_size(cur_system->astexclude); i++) {
+   for (int i=0; i<array_size(cur_system->astexclude); i++) {
       AsteroidExclusion *e = &cur_system->astexclude[i];
       if (vect_dist2( p, &e->pos ) <= pow2(e->radius))
          return -1;
    }
 
    /* Check if in asteroid field */
-   for (int i=0; i < array_size(cur_system->asteroids); i++) {
+   for (int i=0; i<array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *a = &cur_system->asteroids[i];
       if (vect_dist2( p, &a->pos ) <= pow2(a->radius))
          return i;
