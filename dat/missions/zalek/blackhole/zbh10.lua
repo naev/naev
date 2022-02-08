@@ -262,7 +262,7 @@ function heartbeat ()
          end
 
          local bl = badguys[1]
-         local ba = bl:health()
+         local ba = (bl:exists() and bl:health()) or -1
          if not feralpack and (ba < 90 or bl:pos():dist( mainpnt:pos() ) < 3000 or naev.ticksGame()-fightstart > 300) then
             local fferals = zbh.feralbioship()
             local fbadguys = zbh.evilpi()
