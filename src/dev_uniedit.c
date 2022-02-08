@@ -403,7 +403,7 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    }
    qsort( &str[n], k-n, sizeof(char*), strsort );
    h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
-   window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h, "lstViewModes", str, k, 0, NULL, NULL );
+   window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h, "lstViewModes", str, k, 0, NULL, uniedit_btnViewModeSet );
 
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
