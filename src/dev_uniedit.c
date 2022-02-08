@@ -65,6 +65,7 @@ typedef enum UniEditViewMode_ {
    UNIEDIT_VIEW_VIRTUALSPOBS,
    UNIEDIT_VIEW_RADIUS,
    UNIEDIT_VIEW_BACKGROUND,
+   UNIEDIT_VIEW_ASTEROIDS,
    UNIEDIT_VIEW_TECH,
    UNIEDIT_VIEW_PRESENCE_SUM,
    UNIEDIT_VIEW_PRESENCE,
@@ -390,9 +391,10 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    str[1]= strdup(_("Virtual Spobs"));
    str[2]= strdup(_("System Radius"));
    str[3]= strdup(_("Background"));
-   str[4]= strdup(_("Tech"));
-   str[5]= strdup(_("Sum of Presences"));
-   n     = 6; /* Number of special cases. */
+   str[4]= strdup(_("Asteroids"));
+   str[5]= strdup(_("Tech"));
+   str[6]= strdup(_("Sum of Presences"));
+   n     = 7; /* Number of special cases. */
    k     = n;
    for (int i=0; i<array_size(factions); i++) {
       int f = factions[i];
@@ -575,6 +577,27 @@ static void uniedit_renderBackground( double x, double y, double r )
    }
 }
 
+static void uniedit_renderAsteroids( double x, double y, double r )
+{
+   const glColour c = { .r=1., .g=1., .b=1., .a=0.3 };
+
+   for (int i=0; i<array_size(systems_stack); i++) {
+      double tx, ty, sr;
+      StarSystem *sys = system_getIndex( i );
+
+      if (array_size(sys->asteroids) <= 0)
+         continue;
+
+      tx = x + sys->pos.x*uniedit_zoom;
+      ty = y + sys->pos.y*uniedit_zoom;
+
+      /* Draw disk. */
+      sr = 7.*M_PI * uniedit_zoom;
+      (void) r;
+      gl_renderCircle( tx, ty, sr, &c, 1 );
+   }
+}
+
 static void uniedit_renderTech( double x, double y, double r )
 {
    const glColour c = { .r=1., .g=1., .b=1., .a=0.3 };
@@ -652,6 +675,10 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
 
       case UNIEDIT_VIEW_BACKGROUND:
          uniedit_renderBackground( x, y, r );
+         break;
+
+      case UNIEDIT_VIEW_ASTEROIDS:
+         uniedit_renderAsteroids( x, y, r );
          break;
 
       case UNIEDIT_VIEW_TECH:
@@ -809,12 +836,24 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       return;
    }
 
-   /* Handle radius view. */
+   /* Handle background. */
    else if (uniedit_viewmode == UNIEDIT_VIEW_BACKGROUND) {
       if (sys->background != NULL) {
          scnprintf( &buf[0], sizeof(buf), _("Background: %s"), sys->background );
          toolkit_drawAltText( x, y, buf);
       }
+      return;
+   }
+
+   /* Handle background. */
+   else if (uniedit_viewmode == UNIEDIT_VIEW_ASTEROIDS) {
+      l = 0;
+      for (int i=0; i<array_size(sys->asteroids); i++) {
+         AsteroidAnchor *ast = &sys->asteroids[i];
+         for (int j=0; j<array_size(ast->groups); j++)
+            l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?"\n":"", ast->groups[j]->name );
+      }
+      toolkit_drawAltText( x, y, buf);
       return;
    }
 
@@ -1986,11 +2025,16 @@ static void uniedit_btnViewModeSet( unsigned int wid, const char *unused )
       return;
    }
    else if (pos==4) {
-      uniedit_viewmode = UNIEDIT_VIEW_TECH;
+      uniedit_viewmode = UNIEDIT_VIEW_ASTEROIDS;
       window_close( wid, unused );
       return;
    }
    else if (pos==5) {
+      uniedit_viewmode = UNIEDIT_VIEW_TECH;
+      window_close( wid, unused );
+      return;
+   }
+   else if (pos==6) {
       uniedit_viewmode = UNIEDIT_VIEW_PRESENCE_SUM;
       window_close( wid, unused );
       return;
