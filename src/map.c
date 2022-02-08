@@ -833,22 +833,10 @@ static void map_update( unsigned int wid )
       }
       /* Asteroids. */
       if (array_size(sys->asteroids) > 0) {
-         double density;
+         double density = sys->asteroid_density;
 
          if (buf[0] != '\0')
             p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
-
-         density = 0.;
-         for (int i=0; i<array_size(sys->asteroids); i++) {
-            AsteroidAnchor *ast = &sys->asteroids[i];
-            density += ast->area * ast->density / ASTEROID_REF_AREA;
-
-            /* Have to subtract excluded area. */
-            for (int j=0; j<array_size(sys->astexclude); j++) {
-               AsteroidExclusion *exc = &sys->astexclude[j];
-               density -= CollideCircleIntersection( &ast->pos, ast->radius, &exc->pos, exc->radius ) * ast->density / ASTEROID_REF_AREA;
-            }
-         }
 
          if (density >= 1000.) {
             p += scnprintf(&buf[p], sizeof(buf)-p, "#o" );

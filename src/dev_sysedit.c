@@ -293,6 +293,9 @@ static void sysedit_close( unsigned int wid, const char *wgt )
    /* Set the dominant faction. */
    system_setFaction( sysedit_sys );
 
+   /* Update asteroid info. */
+   system_updateAsteroids( sysedit_sys );
+
    /* Save the system */
    if (conf.devautosave)
       dsys_saveSystem( sysedit_sys );

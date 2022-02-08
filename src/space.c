@@ -298,6 +298,27 @@ int spob_averageSpobPrice( const Spob *p, const Commodity *c, credits_t *mean, d
 }
 
 /**
+ * @brief Updates some internal calculations about asteroids in a system.
+ *
+ *    @param sys System to update.
+ */
+void system_updateAsteroids( StarSystem *sys )
+{
+   double density = 0.;
+   for (int i=0; i<array_size(sys->asteroids); i++) {
+      AsteroidAnchor *ast = &sys->asteroids[i];
+      density += ast->area * ast->density / ASTEROID_REF_AREA;
+
+      /* Have to subtract excluded area. */
+      for (int j=0; j<array_size(sys->astexclude); j++) {
+         AsteroidExclusion *exc = &sys->astexclude[j];
+         density -= CollideCircleIntersection( &ast->pos, ast->radius, &exc->pos, exc->radius ) * ast->density / ASTEROID_REF_AREA;
+      }
+   }
+   sys->asteroid_density = density;
+}
+
+/**
  * @brief Changes the spobs faction.
  *
  *    @param p Spob to change faction of.
@@ -3153,6 +3174,9 @@ static int systems_load (void)
       sys = system_new();
       system_parse( sys, node );
       asteroids_parse(node, sys); /* load the asteroids anchors */
+
+      /* Update asteroid info. */
+      system_updateAsteroids( sys );
 
       /* Clean up. */
       xmlFreeDoc(doc);

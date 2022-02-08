@@ -247,6 +247,7 @@ struct StarSystem_ {
    /* Asteroids. */
    AsteroidAnchor *asteroids; /**< Array (array.h): Asteroid fields in the system */
    AsteroidExclusion *astexclude; /**< Array (array.h): Asteroid exclusion zones in the system */
+   double asteroid_density;/**< Represents totaly density of asteroids in the system. */
 
    /* Calculated. */
    double *prices;      /**< Handles the prices in the system. */
@@ -425,6 +426,7 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *
 /*
  * Misc.
  */
+void system_updateAsteroids( StarSystem *sys );
 void system_setFaction( StarSystem *sys );
 void space_checkLand (void);
 void space_factionChange (void);
