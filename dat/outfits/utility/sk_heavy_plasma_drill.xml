@@ -3,7 +3,7 @@
  <general>
   <typename>Mining System</typename>
   <slot>utility</slot>
-  <size>heavy</size>
+  <size>large</size>
   <mass>150</mass>
   <price>650000</price>
   <gfx_store>placeholder.webp</gfx_store>
