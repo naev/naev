@@ -171,14 +171,10 @@ function enter ()
    -- Fleets should have leaders with different speeds or they clump together
    local ppss = player.pilot():ship():size()
    if ppss >= 5 then
-      local bossfleet = {"Za'lek Mephisto", "Za'lek Diablo", "Za'lek Demon", "Za'lek Demon" }
-      if ppss >= 6 then
-         table.insert( bossfleet, "Za'lek Diablo" )
-      end
-      create_fleet( bossfleet )
-      create_fleet{"Za'lek Demon", "Za'lek Demon", "Za'lek Heavy Drone", "Za'lek Heavy Drone"}
-      create_fleet{"Za'lek Sting", "Za'lek Sting", "Za'lek Light Drone", "Za'lek Light Drone"}
-      create_fleet{"Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone"}
+      create_fleet{"Za'lek Mephisto", "Za'lek Diablo", "Za'lek Demon" }
+      create_fleet{"Za'lek Demon", "Za'lek Demon", "Za'lek Heavy Drone"}
+      create_fleet{"Za'lek Sting", "Za'lek Sting", "Za'lek Light Drone"}
+      create_fleet{"Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone"}
    else
       create_fleet{"Za'lek Mephisto", "Za'lek Demon", "Za'lek Demon" }
       create_fleet{"Za'lek Demon", "Za'lek Heavy Drone"}
