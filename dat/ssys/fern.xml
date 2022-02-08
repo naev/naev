@@ -19,11 +19,7 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <group>default</group>
-   <group>default</group>
-   <group>default</group>
-   <group>default</group>
-   <group>golden</group>
+   <group>typeC-rich</group>
    <radius>3000.000000</radius>
    <pos x="0.000000" y="0.000000"/>
   </asteroid>
