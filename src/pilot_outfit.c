@@ -529,15 +529,15 @@ const char* pilot_checkSpaceworthy( const Pilot *p )
       return _("Insufficient CPU");
 
    /* Movement. */
-   if (p->thrust < 0.)
+   if (p->thrust <= 0.)
       return _("Insufficient Thrust");
-   if (p->speed < 0.)
+   if (p->speed <= 0.)
       return _("Insufficient Speed");
-   if (p->turn < 0.)
+   if (p->turn <= 0.)
       return _("Insufficient Turn");
 
    /* Health. */
-   if (p->armour_max < 0.)
+   if (p->armour_max <= 0.)
       return _("Insufficient Armour");
    if (p->armour_regen < 0.)
       return _("Insufficient Armour Regeneration");
@@ -545,7 +545,7 @@ const char* pilot_checkSpaceworthy( const Pilot *p )
       return _("Insufficient Shield");
    if (p->shield_regen < 0.)
       return _("Insufficient Shield Regeneration");
-   if (p->energy_max < 0.)
+   if (p->energy_max <= 0.)
       return _("Insufficient Energy");
    if (p->energy_regen < 0.)
       return _("Insufficient Energy Regeneration");
@@ -553,7 +553,7 @@ const char* pilot_checkSpaceworthy( const Pilot *p )
    /* Misc. */
    if (p->fuel_max < 0)
       return _("Insufficient Fuel Maximum");
-   if (p->fuel_consumption < 0)
+   if (p->fuel_consumption <= 0)
       return _("Insufficient Fuel Consumption");
    if (p->cargo_free < 0)
       return _("Insufficient Free Cargo Space");
