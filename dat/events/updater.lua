@@ -16,6 +16,12 @@ local fmt = require 'format'
 -- Runs on saves older than 0.10.0
 local function updater0100 ()
    -- TODO move ship AI explanation here and deal with both saves older than 0.9.0 and 0.10.0
+
+   --[[
+   Important new features we should probably introduce:
+   1. Notes in the star map
+   1. New asteroids
+   --]]
 end
 
 -- Runs on saves older than 0.9.0
