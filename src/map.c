@@ -840,14 +840,14 @@ static void map_update( unsigned int wid )
 
          density = 0.;
          for (int i=0; i<array_size(sys->asteroids); i++) {
-            density += sys->asteroids[i].area * sys->asteroids[i].density;
+            density += sys->asteroids[i].area * sys->asteroids[i].density / ASTEROID_REF_AREA;
          }
 
-         if (density >= 1.5) {
+         if (density >= 1000.) {
             p += scnprintf(&buf[p], sizeof(buf)-p, "#o" );
             p += scnprintf(&buf[p], sizeof(buf)-p, _("Dense Asteroid Field"));
          }
-         else if (density <= 0.5) {
+         else if (density <= 300.) {
             p += scnprintf(&buf[p], sizeof(buf)-p, "#y" );
             p += scnprintf(&buf[p], sizeof(buf)-p, _("Light Asteroid Field"));
          }
