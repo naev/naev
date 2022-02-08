@@ -294,7 +294,8 @@ static void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
       if ((ast->state == ASTEROID_XX_TO_BG) &&
             (asteroids_inField(&ast->pos) < 0)) {
          ast->state = ASTEROID_XX;
-         ast->timer_max = ast->timer = 10. + RNGF()*20.;
+         ast->timer_max = ast->timer = HUGE_VAL; /* Don't reappear. */
+         /* TODO probably do a more proper solution removing total number of asteroids. */
          return;
       }
 
