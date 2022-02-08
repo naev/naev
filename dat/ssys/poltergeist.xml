@@ -11,6 +11,7 @@
   <y>-756.063426</y>
  </pos>
  <spobs>
+  <spob_virtual>Miner Local</spob_virtual>
   <spob_virtual>Trade Lane (Za'lek)</spob_virtual>
  </spobs>
  <jumps>
@@ -31,4 +32,12 @@
    <hide>0.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeC-poor</group>
+   <radius>6000.000000</radius>
+   <pos x="-3709.852869" y="-2649.894907"/>
+   <density>0.400000</density>
+  </asteroid>
+ </asteroids>
 </ssys>
