@@ -584,15 +584,21 @@ static void uniedit_renderAsteroids( double x, double y, double r )
    for (int i=0; i<array_size(systems_stack); i++) {
       double tx, ty, sr;
       StarSystem *sys = system_getIndex( i );
+      double density = 0.;
 
-      if (array_size(sys->asteroids) <= 0)
+      for (int j=0; j<array_size(sys->asteroids); j++) {
+         AsteroidAnchor *ast = &sys->asteroids[j];
+         density += ast->area * ast->density / ASTEROID_REF_AREA;
+      }
+
+      if (density <= 0.)
          continue;
 
       tx = x + sys->pos.x*uniedit_zoom;
       ty = y + sys->pos.y*uniedit_zoom;
 
       /* Draw disk. */
-      sr = 7.*M_PI * uniedit_zoom;
+      sr = 0.3*M_PI*sqrt(density) * uniedit_zoom;
       (void) r;
       gl_renderCircle( tx, ty, sr, &c, 1 );
    }
