@@ -1609,6 +1609,7 @@ static void sysedit_editAsteroids (void)
    /* Create the window. */
    wid = window_create( "wdwAsteroidsEditor", _("Asteroid Field Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    sysedit_widEdit = wid;
+   window_setCancel( wid, sysedit_editAsteroidsClose );
 
    /* Input widgets and labels. */
    x = 20;
@@ -1787,6 +1788,7 @@ static void sysedit_editExclusion (void)
    /* Create the window. */
    wid = window_create( "wdwExclusionEditor", _("Asteroid Exclusion Zone Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    sysedit_widEdit = wid;
+   window_setCancel( wid, sysedit_editExclusionClose );
 
    /* Add some inputs. */
    x = 20;

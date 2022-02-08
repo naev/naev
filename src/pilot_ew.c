@@ -167,10 +167,9 @@ static double pilot_ewMass( double mass )
 static double pilot_ewAsteroid( const Pilot *p )
 {
    int infield = asteroids_inField(&p->solid->pos);
-   if (infield>=0)
-      return 1. / (1. + 0.4*cur_system->asteroids[infield].density);
-   else
+   if (infield < 0)
       return 1.;
+   return 1. / (1. + 0.4*cur_system->asteroids[infield].density);
 }
 
 /**
