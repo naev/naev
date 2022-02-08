@@ -33,4 +33,21 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeA-standard</group>
+   <radius>4000.000000</radius>
+   <pos x="5592.795801" y="13108.408451"/>
+   <density>2.000000</density>
+  </asteroid>
+  <asteroid>
+   <group>typeA-poor</group>
+   <radius>7000.000000</radius>
+   <pos x="4682.507829" y="-4041.380148"/>
+  </asteroid>
+  <exclusion>
+   <radius>3000.000000</radius>
+   <pos x="5707.808601" y="13185.083651"/>
+  </exclusion>
+ </asteroids>
 </ssys>
