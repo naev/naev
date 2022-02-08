@@ -420,10 +420,10 @@ if (o) WARN(_("Asteroid Field in Star System '%s' has missing/invalid '%s' eleme
 void asteroids_computeInternals( AsteroidAnchor *a )
 {
    /* Calculate area */
-   a->area = M_PI * a->radius * a->radius;
+   a->area = M_PI * pow2(a->radius);
 
    /* Compute number of asteroids */
-   a->nb      = floor( ABS(a->area) / ASTEROID_REF_AREA * a->density );
+   a->nb      = floor( a->area / ASTEROID_REF_AREA * a->density );
    a->ndebris = floor( 100.*a->density );
 
    /* Computed from your standard physics equations (with a bit of margin). */
