@@ -1203,21 +1203,21 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
          projection = gl_Matrix4_Scale(projection, sw, sh, 1);
 
          /* Start the program. */
-         glUseProgram( sys->ms.program );
+         glUseProgram( sys->ms->program );
 
          /* Set shader uniforms. */
-         gl_Matrix4_Uniform(sys->ms.projection, projection);
-         glUniform1f(sys->ms.time, map_dt);
-         glUniform2f(sys->ms.globalpos, sys->pos.x, sys->pos.y );
-         glUniform1f(sys->ms.alpha, alpha);
+         gl_Matrix4_Uniform(sys->ms->projection, projection);
+         glUniform1f(sys->ms->time, map_dt);
+         glUniform2f(sys->ms->globalpos, sys->pos.x, sys->pos.y );
+         glUniform1f(sys->ms->alpha, alpha);
 
          /* Draw. */
-         glEnableVertexAttribArray( sys->ms.vertex );
-         gl_vboActivateAttribOffset( gl_squareVBO, sys->ms.vertex, 0, 2, GL_FLOAT, 0 );
+         glEnableVertexAttribArray( sys->ms->vertex );
+         gl_vboActivateAttribOffset( gl_squareVBO, sys->ms->vertex, 0, 2, GL_FLOAT, 0 );
          glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
          /* Clean up. */
-         glDisableVertexAttribArray( sys->ms.vertex );
+         glDisableVertexAttribArray( sys->ms->vertex );
          glUseProgram(0);
          gl_checkErr();
       }
@@ -1371,6 +1371,10 @@ static void map_renderPath( double x, double y, double zoom, double radius, doub
    int jmax, jcur;
 
    if (array_size(map_path) == 0)
+      return;
+
+   /* Player must exist. */
+   if (player.p==NULL)
       return;
 
    jmax = pilot_getJumps(player.p); /* Maximum jumps. */
