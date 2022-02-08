@@ -90,6 +90,7 @@ static VirtualSpob *vspob_stack = NULL; /**< Virtual spob stack. */
 static int systemstack_changed = 0; /**< Whether or not the systems_stack was changed after loading. */
 static int spobstack_changed = 0; /**< Whether or not the spob_stack was changed after loading. */
 #endif /* DEBUGGING */
+static MapShader **mapshaders = NULL; /**< Map shaders. */
 
 /*
  * Asteroid types stack.
@@ -151,6 +152,8 @@ static void space_renderSpob( const Spob *p );
 static void space_updateSpob( const Spob *p, double dt, double real_dt );
 static void space_renderAsteroid( const Asteroid *a );
 static void space_renderDebris( const Debris *d, double x, double y );
+/* Map shaders. */
+static const MapShader *mapshader_get( const char *name );
 /*
  * Externed prototypes.
  */
@@ -2724,9 +2727,9 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
 static void system_init( StarSystem *sys )
 {
    memset( sys, 0, sizeof(StarSystem) );
-   sys->spobs   = array_create( Spob* );
+   sys->spobs     = array_create( Spob* );
    sys->spobs_virtual = array_create( VirtualSpob* );
-   sys->spobsid = array_create( int );
+   sys->spobsid   = array_create( int );
    sys->jumps     = array_create( JumpPoint );
    sys->asteroids = array_create( AsteroidAnchor );
    sys->astexclude= array_create( AsteroidExclusion );
@@ -2848,7 +2851,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 
    xmlr_attr_strd( parent, "name", sys->name );
 
-   node  = parent->xmlChildrenNode;
+   node = parent->xmlChildrenNode;
    do { /* load all the data */
       /* Only handle nodes. */
       xml_onlyNodes(node);
@@ -2959,14 +2962,8 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    sys->nebu_hue /= 360.;
 
    /* Load the shader. */
-   if (sys->map_shader != NULL) {
-      sys->ms.program   = gl_program_vert_frag( "system_map.vert", sys->map_shader );
-      sys->ms.vertex    = glGetAttribLocation( sys->ms.program,  "vertex" );
-      sys->ms.projection= glGetUniformLocation( sys->ms.program, "projection" );
-      sys->ms.time      = glGetUniformLocation( sys->ms.program, "time" );
-      sys->ms.globalpos = glGetUniformLocation( sys->ms.program, "globalpos" );
-      sys->ms.alpha     = glGetUniformLocation( sys->ms.program, "alpha" );
-   }
+   if (sys->map_shader != NULL)
+      sys->ms = mapshader_get( sys->map_shader );
 
 #define MELEMENT(o,s)      if (o) WARN(_("Star System '%s' missing '%s' element"), sys->name, s)
    if (sys->name == NULL) WARN(_("Star System '%s' missing 'name' tag"), sys->name);
@@ -4007,6 +4004,15 @@ void space_exit (void)
    /* Free the gatherable stack. */
    gatherable_free();
 
+   /* Free the map shaders. */
+   for (int i=0; i<array_size(mapshaders); i++) {
+      MapShader *ms = mapshaders[i];
+      free( ms->name );
+      glDeleteProgram( ms->program );
+      free(ms);
+   }
+   array_free( mapshaders );
+
    /* Free landing lua. */
    nlua_freeEnv( landing_env );
    landing_env = LUA_NOREF;
@@ -4857,4 +4863,32 @@ const char *space_populationStr( uint64_t population )
    }
 
    return pop;
+}
+
+static const MapShader *mapshader_get( const char *name )
+{
+   MapShader *ms;
+
+   if (mapshaders==NULL)
+      mapshaders = array_create( MapShader* );
+
+   for (int i=0; i<array_size(mapshaders); i++) {
+      MapShader *t = mapshaders[i];
+      if (strcmp(t->name,name)==0)
+         return t;
+   }
+
+   /* Allocate and set up. */
+   ms = malloc( sizeof(MapShader) );
+   array_push_back( &mapshaders, ms );
+
+   ms->name      = strdup( name );
+   ms->program   = gl_program_vert_frag( "system_map.vert", name );
+   ms->vertex    = glGetAttribLocation(  ms->program,  "vertex" );
+   ms->projection= glGetUniformLocation( ms->program, "projection" );
+   ms->time      = glGetUniformLocation( ms->program, "time" );
+   ms->globalpos = glGetUniformLocation( ms->program, "globalpos" );
+   ms->alpha     = glGetUniformLocation( ms->program, "alpha" );
+
+   return ms;
 }
