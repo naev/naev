@@ -1378,6 +1378,10 @@ static void map_renderPath( double x, double y, double zoom, double radius, doub
    if (array_size(map_path) == 0)
       return;
 
+   /* Player must exist. */
+   if (player.p==NULL)
+      return;
+
    jmax = pilot_getJumps(player.p); /* Maximum jumps. */
    jcur = jmax; /* Jump range remaining. */
 
