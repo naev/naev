@@ -32,4 +32,15 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeA-poor</group>
+   <radius>2500.000000</radius>
+   <pos x="-2465.123452" y="1371.224920"/>
+  </asteroid>
+  <exclusion>
+   <radius>1700.000000</radius>
+   <pos x="-2495.937495" y="1340.410877"/>
+  </exclusion>
+ </asteroids>
 </ssys>
