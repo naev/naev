@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="Straight Row">
  <general>
-  <radius>25000.000000</radius>
+  <radius>20000.000000</radius>
   <stars>400</stars>
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
@@ -34,4 +34,15 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeC-standard</group>
+   <radius>10000.000000</radius>
+   <pos x="5188.150723" y="2740.678343"/>
+  </asteroid>
+  <exclusion>
+   <radius>8000.000000</radius>
+   <pos x="5258.385206" y="2717.369083"/>
+  </exclusion>
+ </asteroids>
 </ssys>

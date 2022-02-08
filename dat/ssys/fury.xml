@@ -24,4 +24,16 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeB-rich</group>
+   <radius>2500.000000</radius>
+   <pos x="-6433.972210" y="554.652777"/>
+   <density>1.500000</density>
+  </asteroid>
+  <exclusion>
+   <radius>2000.000000</radius>
+   <pos x="-6323.041654" y="517.675925"/>
+  </exclusion>
+ </asteroids>
 </ssys>

@@ -36,6 +36,24 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeC-rich</group>
+   <radius>3000.000000</radius>
+   <pos x="-8918.816649" y="-1730.516663"/>
+   <density>0.200000</density>
+  </asteroid>
+  <asteroid>
+   <group>typeC-poor</group>
+   <radius>6000.000000</radius>
+   <pos x="15127.836154" y="89.510112"/>
+   <density>0.500000</density>
+  </asteroid>
+  <exclusion>
+   <radius>2000.000000</radius>
+   <pos x="-8895.397976" y="-1751.346956"/>
+  </exclusion>
+ </asteroids>
  <stats>
   <fuel_regen>1.000000</fuel_regen>
  </stats>

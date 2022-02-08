@@ -25,4 +25,11 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeC-poor</group>
+   <radius>5000.000000</radius>
+   <pos x="-2422.723329" y="452.596666"/>
+  </asteroid>
+ </asteroids>
 </ssys>

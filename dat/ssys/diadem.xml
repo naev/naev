@@ -32,51 +32,31 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <group>default</group>
-   <group>default</group>
-   <group>default</group>
-   <group>massive</group>
-   <group>diamond</group>
+   <group>typeC-poor</group>
    <radius>1000.000000</radius>
-   <pos x="-2000.000000" y="-3000.000000"/>
+   <pos x="-2308.140431" y="-3102.713477"/>
    <density>0.500000</density>
   </asteroid>
   <asteroid>
-   <group>default</group>
-   <group>default</group>
-   <group>default</group>
-   <group>massive</group>
-   <group>diamond</group>
+   <group>typeB-standard</group>
    <radius>1000.000000</radius>
    <pos x="-1000.000000" y="-2500.000000"/>
    <density>0.500000</density>
   </asteroid>
   <asteroid>
-   <group>default</group>
-   <group>default</group>
-   <group>default</group>
-   <group>massive</group>
-   <group>diamond</group>
+   <group>typeB-poor</group>
    <radius>1500.000000</radius>
    <pos x="0.000000" y="-1000.000000"/>
    <density>0.500000</density>
   </asteroid>
   <asteroid>
-   <group>default</group>
-   <group>default</group>
-   <group>default</group>
-   <group>massive</group>
-   <group>diamond</group>
+   <group>typeB-poor</group>
    <radius>1000.000000</radius>
-   <pos x="500.000000" y="500.000000"/>
+   <pos x="795.301247" y="795.301247"/>
    <density>0.500000</density>
   </asteroid>
   <asteroid>
-   <group>default</group>
-   <group>default</group>
-   <group>default</group>
-   <group>massive</group>
-   <group>diamond</group>
+   <group>typeB-rich</group>
    <radius>500.000000</radius>
    <pos x="1400.000000" y="-2000.000000"/>
    <density>0.750000</density>
