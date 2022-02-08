@@ -285,10 +285,9 @@ static void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    ast->armour = at->armour_min + RNGF() * (at->armour_max-at->armour_min);
 
    do {
-      double angle = RNGF() * 2. * M_PI;
-      double radius = RNGF() * field->radius;
-      ast->pos.x = radius * cos(angle) + field->pos.x;
-      ast->pos.y = radius * sin(angle) + field->pos.y;
+      /* Try to keep density uniform using cartesian coordinates. */
+      ast->pos.x = field->pos.x + (RNGF()*2.-1.)*field->radius;
+      ast->pos.y = field->pos.y + (RNGF()*2.-1.)*field->radius;
 
       /* If this is the first time and it's spawned outside the field,
        * we get rid of it so that density remains roughly consistent. */
