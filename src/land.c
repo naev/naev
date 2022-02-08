@@ -26,6 +26,7 @@
 #include "escort.h"
 #include "event.h"
 #include "gui.h"
+#include "gui_omsg.h"
 #include "hook.h"
 #include "land_outfits.h"
 #include "land_shipyard.h"
@@ -1472,6 +1473,9 @@ void takeoff( int delay )
 
    /* Clear pilots other than player. */
    pilots_clean(0);
+
+   /* Clear omsg. */
+   omsg_cleanup();
 
    /* initialize the new space */
    h = player.p->nav_hyperspace;

@@ -352,7 +352,7 @@ function wave_round_setup ()
    wave_enemies = enemies_list
 
    -- Count down
-   player.omsgAdd( string.format( _("#pWAVE %d#0"), mem.wave_round ), 8 )
+   player.omsgAdd( string.format( "#p".._("WAVE %d").."#0", mem.wave_round ), 8 )
    countdown_start()
 
    mem.all_enemies_dead = wave_end
@@ -467,7 +467,7 @@ function wave_end ()
       local n = #score_str
       local s = 1.2 -- time to display each message
       local f = (n+2)*s
-      player.omsgAdd( string.format( _("#pWAVE %d CLEAR#0"), mem.wave_round ), f )
+      player.omsgAdd( string.format( "#p".._("WAVE %d CLEAR").."#0", mem.wave_round ), f )
       sfx_clear:play()
       for k,v in pairs(score_str) do
          local start = k*s
