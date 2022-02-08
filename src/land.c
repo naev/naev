@@ -26,6 +26,7 @@
 #include "escort.h"
 #include "event.h"
 #include "gui.h"
+#include "gui_omsg.h"
 #include "hook.h"
 #include "land_outfits.h"
 #include "land_shipyard.h"
