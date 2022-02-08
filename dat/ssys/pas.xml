@@ -22,4 +22,11 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeA-rich</group>
+   <radius>4500.000000</radius>
+   <pos x="9672.116410" y="2782.389652"/>
+  </asteroid>
+ </asteroids>
 </ssys>

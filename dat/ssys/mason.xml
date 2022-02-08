@@ -18,6 +18,7 @@
   <spob>Mason II</spob>
   <spob>Mason IV</spob>
   <spob>Vault</spob>
+  <spob_virtual>Miner Local</spob_virtual>
  </spobs>
  <jumps>
   <jump target="C-28">
@@ -35,11 +36,28 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
- <stats>
-  <fuel_regen>1.000000</fuel_regen>
- </stats>
- <tags>
-  <tag>northstellarwind</tag>
-  <tag>stellarwind</tag>
- </tags>
+ <asteroids>
+  <asteroid>
+   <group>typeB-rich</group>
+   <radius>2800.000000</radius>
+   <pos x="19424.383962" y="-6549.339987"/>
+   <density>2.000000</density>
+  </asteroid>
+  <asteroid>
+   <group>typeB-standard</group>
+   <radius>6000.000000</radius>
+   <pos x="-7649.629105" y="9608.680461"/>
+  </asteroid>
+  <exclusion>
+   <radius>2000.000000</radius>
+   <pos x="19488.279962" y="-6613.235987"/>
+  </exclusion>
+  <stats>
+   <fuel_regen>1.000000</fuel_regen>
+  </stats>
+  <tags>
+   <tag>northstellarwind</tag>
+   <tag>stellarwind</tag>
+  </tags>
+ </asteroids>
 </ssys>

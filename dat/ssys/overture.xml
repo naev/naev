@@ -38,4 +38,11 @@
    <hide>0.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeA-standard</group>
+   <radius>6000.000000</radius>
+   <pos x="2053.668553" y="-927.463217"/>
+  </asteroid>
+ </asteroids>
 </ssys>
