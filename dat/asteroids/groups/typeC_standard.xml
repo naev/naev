@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asteroid_group name="typeC-standard">
+ <type weight="6">Iron-Nickel</type>
+ <type weight="3">Gold-Platinum</type>
+ <type weight="1">Therite</type>
+</asteroid_group>

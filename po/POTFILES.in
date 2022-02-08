@@ -2,6 +2,12 @@ po/credits.pot
 dat/asteroids/groups/typeA_poor.xml
 dat/asteroids/groups/typeA_rich.xml
 dat/asteroids/groups/typeA_standard.xml
+dat/asteroids/groups/typeB_poor.xml
+dat/asteroids/groups/typeB_rich.xml
+dat/asteroids/groups/typeB_standard.xml
+dat/asteroids/groups/typeC_poor.xml
+dat/asteroids/groups/typeC_rich.xml
+dat/asteroids/groups/typeC_standard.xml
 dat/asteroids/types/default.xml
 dat/asteroids/types/diamond.xml
 dat/asteroids/types/gold_platinum.xml
