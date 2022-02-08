@@ -657,7 +657,8 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   map_renderDecorators( x, y, zoom, 1, 1. );
+   if (UNIEDIT_VIEW_DEFAULT)
+      map_renderDecorators( x, y, zoom, 1, 1. );
 
    /* Render faction disks. */
    switch (uniedit_viewmode) {
