@@ -840,7 +840,14 @@ static void map_update( unsigned int wid )
 
          density = 0.;
          for (int i=0; i<array_size(sys->asteroids); i++) {
-            density += sys->asteroids[i].area * sys->asteroids[i].density / ASTEROID_REF_AREA;
+            AsteroidAnchor *ast = &sys->asteroids[i];
+            density += ast->area * ast->density / ASTEROID_REF_AREA;
+
+            /* Have to subtract excluded area. */
+            for (int j=0; j<array_size(sys->astexclude); j++) {
+               AsteroidExclusion *exc = &sys->astexclude[j];
+               density -= CollideCircleIntersection( &ast->pos, ast->radius, &exc->pos, exc->radius ) * ast->density / ASTEROID_REF_AREA;
+            }
          }
 
          if (density >= 1000.) {

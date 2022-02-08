@@ -847,3 +847,39 @@ int CollideLineCircle( const Vector2d* p1, const Vector2d* p2,
 }
 #undef FX
 #undef FY
+
+/**
+ */
+double CollideCircleIntersection( const Vector2d *p1, double r1,
+      const Vector2d *p2, double r2 )
+{
+   double dist2 = vect_dist2( p1, p2 );
+
+   /* No intersection. */
+   if (dist2 > pow2(r1+r2))
+      return 0.;
+
+   /* One inside the other. */
+   if (dist2 <= pow2(fabs(r1-r2)))
+      return M_PI * pow2( MIN(r1, r2) );
+
+#if 0
+   /* Case exactly the same. */
+   if ((dist2==0.) && (r1==r2))
+      return M_PI * pow2(r1);
+#endif
+
+   /* Distances. */
+   double dist = sqrt( dist2 );
+   double distc1 = (pow2(r1) - pow2(r2) + dist2) / (2. * dist); /* First center point to middle line. */
+   double distc2 = dist - distc1; /* Second center point to middle line. */
+   double height = sqrt( pow2(r1) - pow2(distc1) ); /* Half of middle line. */
+   /* Angles. */
+   double ang1 = fmod( atan2( height, distc1 ) * 2. + 2.*M_PI, 2.*M_PI ); /* Center angle for first circle. */
+   double ang2 = fmod( atan2( height, distc2 ) * 2. + 2.*M_PI, 2.*M_PI ); /*< Center angle for second circle. */
+   /* Areas. */
+   double A1 = pow2(r1) / 2.0 * (ang1 - sin(ang1)); /* Area of first circula segment. */
+   double A2 = pow2(r2) / 2.0 * (ang2 - sin(ang2)); /* Area of second circula segment. */
+
+   return A1+A2;
+}
