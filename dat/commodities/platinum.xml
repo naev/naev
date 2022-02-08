@@ -5,6 +5,6 @@
  <gfx_store>gold.webp</gfx_store>
  <gfx_space>gold.webp</gfx_space>
  <price_ref>Gold</price_ref>
- <price_mod>1.25</price_mod>
+ <price_mod>1.28</price_mod>
  <always_can_sell/>
 </commodity>

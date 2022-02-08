@@ -4,6 +4,6 @@
  <description>Nickel is commonly used in alloys and for creating magnetic fields. Although quite common among asteroids like Iron, the wide applicability makes it so there is a constant and steady demand throughout the galaxy.</description>
  <gfx_store>ore.webp</gfx_store>
  <price_ref>Ore</price_ref>
- <price_mod>1.2</price_mod>
+ <price_mod>1.23</price_mod>
  <always_can_sell/>
 </commodity>

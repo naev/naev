@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commodity>
+ <name>Kermite</name>
+ <description>TODO</description>
+ <gfx_store>ore.webp</gfx_store>
+ <gfx_space>diamonds.webp</gfx_space>
+ <price>2700</price>
+ <always_can_sell/>
+ <price_constant/>
+</commodity>

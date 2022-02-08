@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commodity>
+ <name>Clay</name>
+ <description>TODO</description>
+ <gfx_store>ore.webp</gfx_store>
+ <price_mod>0.92</price_mod>
+ <price_ref>Water</price_ref>
+ <always_can_sell/>
+</commodity>

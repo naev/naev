@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commodity>
+ <name>Olivine</name>
+ <description>TODO</description>
+ <gfx_store>ore.webp</gfx_store>
+ <price_mod>1.3</price_mod>
+ <price_ref>Ore</price_ref>
+ <always_can_sell/>
+</commodity>

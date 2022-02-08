@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asteroid_group name="typeB-rich">
- <type weight="3.5">Iron-Nickel</type>
- <type weight="4">Gold-Platinum</type>
- <type weight="2.5">Therite</type>
+ <type weight="3.5">Silicate-Olivine</type>
+ <type weight="4">Rhodium-Yttrium</type>
+ <type weight="2.5">Vixilium</type>
 </asteroid_group>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commodity>
+ <name>Yttrium</name>
+ <description>TODO</description>
+ <gfx_store>gold.webp</gfx_store>
+ <gfx_space>gold.webp</gfx_space>
+ <price_ref>Gold</price_ref>
+ <price_mod>1.47</price_mod>
+ <always_can_sell/>
+</commodity>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asteroid_group name="typeB-poor">
- <type weight="8">Iron-Nickel</type>
- <type weight="2">Gold-Platinum</type>
+ <type weight="8">Silicate-Olivine</type>
+ <type weight="2">Rhodium-Yttrium</type>
 </asteroid_group>
