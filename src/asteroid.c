@@ -56,8 +56,6 @@ void asteroids_update( double dt )
 {
    /* Asteroids/Debris update */
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
-      double x, y;
-      Pilot *pplayer;
       int has_exclusion = 0;
       AsteroidAnchor *ast = &cur_system->asteroids[i];
 
@@ -167,16 +165,19 @@ void asteroids_update( double dt )
          }
       }
 
-      x = 0.;
-      y = 0.;
-      pplayer = player.p;
-      if (pplayer != NULL) {
-         Solid *psolid = pplayer->solid;
-         x = psolid->vel.x;
-         y = psolid->vel.y;
-      }
-
+      /* Only have to update stuff if not simulating. */
       if (!space_isSimulation()) {
+         double x, y;
+         if (player.p != NULL) {
+            Solid *psolid = player.p->solid;
+            x = psolid->vel.x;
+            y = psolid->vel.y;
+         }
+         else {
+            x = 0.;
+            y = 0.;
+         }
+
          for (int j=0; j<ast->ndebris; j++) {
             Debris *d = &ast->debris[j];
             int infield;
@@ -545,6 +546,9 @@ int asteroids_load (void)
    return 0;
 }
 
+/**
+ * @brief Compares two asteroid types.
+ */
 static int asttype_cmp( const void *p1, const void *p2 )
 {
    const AsteroidType *at1, *at2;
@@ -553,6 +557,9 @@ static int asttype_cmp( const void *p1, const void *p2 )
    return strcmp(at1->name,at2->name);
 }
 
+/**
+ * @brief Compares two asteroid type groups.
+ */
 static int astgroup_cmp( const void *p1, const void *p2 )
 {
    const AsteroidTypeGroup *at1, *at2;
