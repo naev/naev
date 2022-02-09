@@ -13,6 +13,8 @@
 #define INFO_STANDINGS  5 /**< Standings info window. */
 #define INFO_SHIPLOG    6 /**< Ship log info window. */
 
+#define INFO_DEFAULT    -1 /**< Default window (only when opening. */
+
 /*
  * Menu opening routines.
  */

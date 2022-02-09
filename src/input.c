@@ -1007,7 +1007,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
    /* shows pilot information */
    } else if (KEY("info") && NOHYP() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) menu_info( INFO_MAIN );
+      if (value==KEY_PRESS) menu_info( INFO_DEFAULT );
 
    /* Opens the Lua console. */
    } else if (KEY("console") && NODEAD() && !repeat) {

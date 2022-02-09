@@ -352,7 +352,7 @@ static int guiL_menuInfo( lua_State *L )
       str = luaL_checkstring(L,1);
    else {
       /* No parameter. */
-      menu_info( INFO_MAIN );
+      menu_info( INFO_DEFAULT );
       return 0;
    }
 

@@ -79,6 +79,7 @@ static InfoButton_t *info_buttons = NULL;
 
 static unsigned int info_wid = 0;
 static unsigned int *info_windows = NULL;
+static int info_lastTab;   /**< Last open tab. */
 
 static CstSlotWidget info_eq;
 static CstSlotWidget info_eq_weaps;
@@ -307,6 +308,8 @@ void menu_info( int window )
 
    /* Set active window. */
    window_tabWinOnChange( info_wid, "tabInfo", info_changeTab );
+   if (window == INFO_DEFAULT)
+      window = info_lastTab;
    window_tabWinSetActive( info_wid, "tabInfo", CLAMP( 0, 6, window ) );
 }
 /**
@@ -317,6 +320,8 @@ static void info_close( unsigned int wid, const char *str )
 {
    (void) wid;
    if (info_wid > 0) {
+      info_lastTab = window_tabWinGetActive( info_wid, "tabInfo" );
+
       window_close( info_wid, str );
       info_wid = 0;
       info_windows = NULL;
