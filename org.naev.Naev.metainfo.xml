@@ -11,7 +11,7 @@
   <url type="bugtracker">https://github.com/naev/naev/issues</url>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
-  <update_contact>bobbens@gmail.com</update_contact>
+  <update_contact>bobbens_AT_gmail.com</update_contact>
 
   <recommends>
     <control>pointing</control>
