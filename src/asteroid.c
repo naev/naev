@@ -585,6 +585,12 @@ static int asttype_load (void)
    array_shrink( &asteroid_types );
    qsort( asteroid_types, array_size(asteroid_types), sizeof(AsteroidType), asttype_cmp );
 
+   /* Check for name collisions. */
+   for (int i=0; i<array_size(asteroid_types)-1; i++)
+      if (strcmp( asteroid_types[i].name, asteroid_types[i+1].name )==0)
+         WARN(_("Asteroid Type Groups with same name '%s'"),asteroid_types[i].name);
+
+   /* Load the asteroid groups from XML definitions. */
    asteroid_groups = array_create( AsteroidTypeGroup );
    asteroid_files = ndata_listRecursive( ASTEROID_GROUPS_DATA_PATH );
    for (int i=0; i<array_size( asteroid_files ); i++) {
@@ -613,6 +619,11 @@ static int asttype_load (void)
    }
    array_shrink( &asteroid_groups );
    qsort( asteroid_groups, array_size(asteroid_groups), sizeof(AsteroidTypeGroup), astgroup_cmp );
+
+   /* Check for name collisions. */
+   for (int i=0; i<array_size(asteroid_groups)-1; i++)
+      if (strcmp( asteroid_groups[i].name, asteroid_groups[i+1].name )==0)
+         WARN(_("Asteroid Type Groups with same name '%s'"),asteroid_groups[i].name);
 
    return 0;
 }
@@ -726,6 +737,13 @@ if (o) WARN(_("Asteroid Type '%s' missing/invalid '%s' element"), at->name, s) /
    return 0;
 }
 
+/**
+ * @brief Parses an asteroid type group from a file.
+ *
+ *    @param[out] ag Asteroid type group to load.
+ *    @param file File to load from.
+ *    @return 0 on success.
+ */
 static int astgroup_parse( AsteroidTypeGroup *ag, const char *file )
 {
    xmlNodePtr parent, node;
@@ -781,18 +799,16 @@ static int astgroup_parse( AsteroidTypeGroup *ag, const char *file )
 void asteroids_renderOverlay (void)
 {
    /* Render the debris. */
-   Pilot *pplayer = player.p;
-   if (pplayer != NULL) {
-      Solid *psolid = pplayer->solid;
-      for (int i=0; i<array_size(cur_system->asteroids); i++) {
-         double x, y;
-         AsteroidAnchor *ast = &cur_system->asteroids[i];
-         x = psolid->pos.x - SCREEN_W/2;
-         y = psolid->pos.y - SCREEN_H/2;
-         for (int j=0; j < ast->ndebris; j++) {
-           if (ast->debris[j].height > 1.)
-              space_renderDebris( &ast->debris[j], x, y );
-         }
+   if (player.p == NULL)
+      return;
+   for (int i=0; i<array_size(cur_system->asteroids); i++) {
+      double x, y;
+      AsteroidAnchor *ast = &cur_system->asteroids[i];
+      x = player.p->solid->pos.x - SCREEN_W/2;
+      y = player.p->solid->pos.y - SCREEN_H/2;
+      for (int j=0; j < ast->ndebris; j++) {
+         if (ast->debris[j].height > 1.)
+            space_renderDebris( &ast->debris[j], x, y );
       }
    }
 }
