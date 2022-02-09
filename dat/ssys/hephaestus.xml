@@ -23,7 +23,7 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <group>typeC-poor</group>
+   <group>typeC-rich</group>
    <radius>2000.000000</radius>
    <pos x="-2000.000000" y="-2000.000000"/>
   </asteroid>

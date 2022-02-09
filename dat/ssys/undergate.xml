@@ -27,6 +27,23 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeC-standard</group>
+   <radius>6500.000000</radius>
+   <pos x="-861.215845" y="12189.516571"/>
+   <density>0.200000</density>
+  </asteroid>
+  <asteroid>
+   <group>typeC-poor</group>
+   <radius>3300.000000</radius>
+   <pos x="9110.832346" y="-4465.384277"/>
+  </asteroid>
+  <exclusion>
+   <radius>1000.000000</radius>
+   <pos x="9792.089754" y="-4255.232503"/>
+  </exclusion>
+ </asteroids>
  <stats>
   <energy_mod>-50.000000</energy_mod>
   <stress_dissipation>-50.000000</stress_dissipation>

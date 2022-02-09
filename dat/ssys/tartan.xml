@@ -11,6 +11,7 @@
   <y>-652.339318</y>
  </pos>
  <spobs>
+  <spob_virtual>Miner Local</spob_virtual>
   <spob_virtual>Trade Lane (Sirius)</spob_virtual>
  </spobs>
  <jumps>
@@ -32,4 +33,12 @@
    <hide>0.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeC-standard</group>
+   <radius>3700.000000</radius>
+   <pos x="-4372.326596" y="-1192.452708"/>
+   <density>0.300000</density>
+  </asteroid>
+ </asteroids>
 </ssys>

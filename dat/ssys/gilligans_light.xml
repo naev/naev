@@ -16,6 +16,7 @@
   <spob>Gilligan's Light III</spob>
   <spob>The Frontier Council</spob>
   <spob_virtual>FLF Small</spob_virtual>
+  <spob_virtual>Miner Local</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Ingot">
@@ -33,4 +34,12 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeA-poor</group>
+   <radius>7000.000000</radius>
+   <pos x="11924.527081" y="10202.095391"/>
+   <density>0.100000</density>
+  </asteroid>
+ </asteroids>
 </ssys>
