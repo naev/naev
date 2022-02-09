@@ -588,7 +588,7 @@ static int asttype_load (void)
    /* Check for name collisions. */
    for (int i=0; i<array_size(asteroid_types)-1; i++)
       if (strcmp( asteroid_types[i].name, asteroid_types[i+1].name )==0)
-         WARN(_("Asteroid Type Groups with same name '%s'"),asteroid_types[i].name);
+         WARN(_("Asteroid Types with same name '%s'"),asteroid_types[i].name);
 
    /* Load the asteroid groups from XML definitions. */
    asteroid_groups = array_create( AsteroidTypeGroup );
