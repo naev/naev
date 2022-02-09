@@ -1017,11 +1017,22 @@ AsteroidType *asttype_getName( const char *name )
    return at;
 }
 
+/**
+ * @brief Gets all the asteroid type groups.
+ *
+ *    @return An array (array.h) containing all the asteroid type groups.
+ */
 const AsteroidTypeGroup *astgroup_getAll (void)
 {
    return asteroid_groups;
 }
 
+/**
+ * @brief Gets an asteroid type group by name.
+ *
+ *    @param name Name of the asteroid type group to get.
+ *    @return The asteroid type group matching the name.
+ */
 AsteroidTypeGroup *astgroup_getName( const char *name )
 {
    const AsteroidTypeGroup q = { .name=(char*)name };
