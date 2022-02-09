@@ -2,7 +2,7 @@
 <commodity>
  <name>Rhodium</name>
  <description>TODO</description>
- <gfx_store>gold.webp</gfx_store>
+ <gfx_store>rhodium.webp</gfx_store>
  <gfx_space>gold.webp</gfx_space>
  <price_ref>Gold</price_ref>
  <price_mod>0.91</price_mod>

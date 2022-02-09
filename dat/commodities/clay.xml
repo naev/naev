@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <commodity>
  <name>Clay</name>
- <description>TODO</description>
- <gfx_store>ore.webp</gfx_store>
+ <description>Clay mined from asteroids tends to have different properties from those found on planetary bodies and have a wide diverse of usages such as shielding material or construction. Depending on the precedence of the clay it can have many different compositions and material properties.</description>
+ <gfx_store>clay.webp</gfx_store>
  <price_mod>0.92</price_mod>
  <price_ref>Water</price_ref>
  <always_can_sell/>

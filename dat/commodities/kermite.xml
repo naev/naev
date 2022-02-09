@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <commodity>
  <name>Kermite</name>
- <description>TODO</description>
- <gfx_store>ore.webp</gfx_store>
+ <description>Although one of the more rare materials found in asteroids, Kermite has secured a fundamental core it many different technological applications due to space-time bending effects when subject to particular combinations of pressure and radiation. It is commonly used in certain types of shield generators, practically ensuring their widespread demand throughout the universe.</description>
+ <gfx_store>kermite.webp</gfx_store>
  <gfx_space>diamonds.webp</gfx_space>
  <price>2700</price>
  <always_can_sell/>

@@ -2,7 +2,7 @@
 <commodity>
  <name>Vixilium</name>
  <description>TODO</description>
- <gfx_store>ore.webp</gfx_store>
+ <gfx_store>vixilium.webp</gfx_store>
  <gfx_space>diamonds.webp</gfx_space>
  <price>2600</price>
  <always_can_sell/>
