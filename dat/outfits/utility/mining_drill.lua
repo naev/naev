@@ -86,8 +86,10 @@ function drill.ontoggle( p, _po, on )
          end
       end
 
+      local time_mod = p:shipstat("time_mod",true)
+
       mining.love{
-         speed = drill.speed,
+         speed = drill.speed * time_mod,
          shots_max = drill.shots_max,
          difficulty = max_rarity,
          reward_func = reward,
