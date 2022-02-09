@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Arck">
  <pos>
-  <x>12334.289410</x>
-  <y>-27610.810025</y>
+  <x>14520.452708</x>
+  <y>-19462.383187</y>
  </pos>
  <GFX>
   <space>M01.webp</space>
@@ -10,8 +10,8 @@
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>

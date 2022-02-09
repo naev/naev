@@ -10,7 +10,9 @@
   <x>1058.705225</x>
   <y>-755.196225</y>
  </pos>
- <spobs/>
+ <spobs>
+  <spob_virtual>Miner Local</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Churchill">
    <autopos/>
@@ -21,4 +23,23 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeC-standard</group>
+   <radius>7000.000000</radius>
+   <pos x="452.596666" y="1304.543331"/>
+  </asteroid>
+  <exclusion>
+   <radius>3000.000000</radius>
+   <pos x="-4020.123325" y="-638.959999"/>
+  </exclusion>
+  <exclusion>
+   <radius>3000.000000</radius>
+   <pos x="4898.693324" y="3301.293327"/>
+  </exclusion>
+  <exclusion>
+   <radius>3000.000000</radius>
+   <pos x="532.466666" y="1251.296664"/>
+  </exclusion>
+ </asteroids>
 </ssys>

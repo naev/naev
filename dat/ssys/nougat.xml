@@ -31,10 +31,7 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <group>default</group>
-   <group>default</group>
-   <group>default</group>
-   <group>diamond</group>
+   <group>typeC-standard</group>
    <radius>800.000000</radius>
    <pos x="-480.000000" y="10020.000000"/>
    <density>5.000000</density>

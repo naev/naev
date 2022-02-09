@@ -15,6 +15,7 @@
   <spob>Fidelis IV</spob>
   <spob>Mannannan</spob>
   <spob>Petaat</spob>
+  <spob_virtual>Miner Local</spob_virtual>
   <spob_virtual>Trade Lane (Dvaered)</spob_virtual>
  </spobs>
  <jumps>
@@ -31,4 +32,11 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeA-rich</group>
+   <radius>5000.000000</radius>
+   <pos x="-12582.897264" y="5418.913256"/>
+  </asteroid>
+ </asteroids>
 </ssys>

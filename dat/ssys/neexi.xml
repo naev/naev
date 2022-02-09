@@ -27,6 +27,13 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeB-poor</group>
+   <radius>4500.000000</radius>
+   <pos x="4636.778887" y="-6838.262316"/>
+  </asteroid>
+ </asteroids>
  <stats>
   <shield_mod>-50.000000</shield_mod>
   <shield_regen_mod>-50.000000</shield_regen_mod>
