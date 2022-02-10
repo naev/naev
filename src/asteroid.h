@@ -153,4 +153,4 @@ AsteroidTypeGroup *astgroup_getName( const char *name );
 int asteroids_inField( const Vector2d *p );
 void asteroids_computeInternals( AsteroidAnchor *a );
 void asteroid_hit( Asteroid *a, const Damage *dmg, int max_rarity, double mine_bonus );
-void asteroid_explode( Asteroid *a, int give_reward, double mine_bonus );
+void asteroid_explode( Asteroid *a, int max_rarity, double mine_bonus );
