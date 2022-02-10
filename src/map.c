@@ -1053,10 +1053,9 @@ void map_renderParams( double bx, double by, double xpos, double ypos,
  */
 void map_renderDecorators( double x, double y, double zoom, int editor, double alpha )
 {
-   glColour ccol = { .r=1., .g=1., .b=1., .a=2./3. }; /**< White */
+   const glColour ccol = { .r=1., .g=1., .b=1., .a=2./3.*alpha }; /**< White */
 
    /* Fade in the decorators to allow toggling between commodity and nothing */
-   ccol.a *= alpha;
    for (int i=0; i<array_size(decorator_stack); i++) {
       int visible;
       MapDecorator *decorator = &decorator_stack[i];
