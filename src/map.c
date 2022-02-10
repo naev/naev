@@ -840,14 +840,14 @@ static void map_update( unsigned int wid )
 
          if (density >= 1000.) {
             p += scnprintf(&buf[p], sizeof(buf)-p, "#o" );
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dense Asteroid Field"));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dense Asteroids"));
          }
          else if (density <= 300.) {
             p += scnprintf(&buf[p], sizeof(buf)-p, "#y" );
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Light Asteroid Field"));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Light Asteroids"));
          }
          else
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Asteroid Field"));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Asteroids"));
          p += scnprintf(&buf[p], sizeof(buf)-p, "#0" );
       }
       /* Update the string. */
