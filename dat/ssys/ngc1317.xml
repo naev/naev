@@ -10,7 +10,9 @@
   <x>-488.742649</x>
   <y>-1226.233536</y>
  </pos>
- <spobs/>
+ <spobs>
+  <spob_virtual>Miner Local</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="NGC-10907">
    <autopos/>
