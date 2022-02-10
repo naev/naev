@@ -911,7 +911,7 @@ static void space_renderAsteroid( const Asteroid *a )
    gl_renderSprite( at->gfxs[a->gfxID], a->pos.x, a->pos.y, 0, 0, &col );
 
    /* Add the commodities if scanned. */
-   if (!a->scanned || (a->state != ASTEROID_FG))
+   if (!a->scanned)
       return;
    col = cFontWhite;
    col.a = a->scan_alpha;
