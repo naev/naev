@@ -43,8 +43,8 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
 static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys );
 static int asttype_load (void);
 
-static void space_renderAsteroid( const Asteroid *a );
-static void space_renderDebris( const Debris *d, double x, double y );
+static void asteroid_renderSingle( const Asteroid *a );
+static void debris_renderSingle( const Debris *d, double x, double y );
 static void debris_init( Debris *deb );
 static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field );
 
@@ -826,7 +826,7 @@ void asteroids_renderOverlay (void)
       y = player.p->solid->pos.y - SCREEN_H/2;
       for (int j=0; j < ast->ndebris; j++) {
          if (ast->debris[j].height > 1.)
-            space_renderDebris( &ast->debris[j], x, y );
+            debris_renderSingle( &ast->debris[j], x, y );
       }
    }
 }
@@ -848,14 +848,14 @@ void asteroids_render (void)
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *ast = &cur_system->asteroids[i];
       for (int j=0; j<ast->nb; j++)
-        space_renderAsteroid( &ast->asteroids[j] );
+        asteroid_renderSingle( &ast->asteroids[j] );
 
       if (pplayer != NULL) {
          double x = psolid->pos.x - SCREEN_W/2;
          double y = psolid->pos.y - SCREEN_H/2;
          for (int j=0; j<ast->ndebris; j++) {
            if (ast->debris[j].height < 1.)
-              space_renderDebris( &ast->debris[j], x, y );
+              debris_renderSingle( &ast->debris[j], x, y );
          }
       }
    }
@@ -867,7 +867,7 @@ void asteroids_render (void)
 /**
  * @brief Renders an asteroid.
  */
-static void space_renderAsteroid( const Asteroid *a )
+static void asteroid_renderSingle( const Asteroid *a )
 {
    double nx, ny;
    const AsteroidType *at;
@@ -932,7 +932,7 @@ static void space_renderAsteroid( const Asteroid *a )
 /**
  * @brief Renders a debris.
  */
-static void space_renderDebris( const Debris *d, double x, double y )
+static void debris_renderSingle( const Debris *d, double x, double y )
 {
    const double scale = 0.5;
    const glColour col = COL_ALPHA( cInert, d->alpha );
