@@ -315,8 +315,8 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
    }
 
    /* Randomly init the gfx ID */
-   ast->type = at-asteroid_types;
-   ast->gfxID = RNG(0, array_size(at->gfxs)-1);
+   ast->type = at;
+   ast->gfx = asteroid_gfx[ RNG(0, array_size(at->gfxs)-1) ];
    ast->armour = at->armour_min + RNGF() * (at->armour_max-at->armour_min);
 
    /* And a random velocity */
@@ -870,7 +870,7 @@ void asteroids_render (void)
 static void space_renderAsteroid( const Asteroid *a )
 {
    double nx, ny;
-   AsteroidType *at;
+   const AsteroidType *at;
    glColour col;
    double progress;
    const glColour darkcol = cGrey20;
@@ -907,8 +907,8 @@ static void space_renderAsteroid( const Asteroid *a )
          break;
    }
 
-   at = &asteroid_types[a->type];
-   gl_renderSprite( at->gfxs[a->gfxID], a->pos.x, a->pos.y, 0, 0, &col );
+   at = a->type;
+   gl_renderSprite( a->gfx, a->pos.x, a->pos.y, 0, 0, &col );
 
    /* Add the commodities if scanned. */
    if (!a->scanned)
@@ -916,7 +916,7 @@ static void space_renderAsteroid( const Asteroid *a )
    col = cFontWhite;
    col.a = a->scan_alpha;
    gl_gameToScreenCoords( &nx, &ny, a->pos.x, a->pos.y );
-   gl_printRaw( &gl_smallFont, nx+at->gfxs[a->gfxID]->sw/2, ny-gl_smallFont.h/2, &col, -1., _(at->scanned_msg) );
+   gl_printRaw( &gl_smallFont, nx+a->gfx->sw/2, ny-gl_smallFont.h/2, &col, -1., _(at->scanned_msg) );
    /*
    for (int i=0; i<array_size(at->material); i++) {
       AsteroidReward *mat = &at->material[i];
@@ -1089,8 +1089,7 @@ AsteroidTypeGroup *astgroup_getName( const char *name )
 void asteroid_hit( Asteroid *a, const Damage *dmg, int max_rarity, double mining_bonus )
 {
    double darmour;
-   AsteroidType *at = &asteroid_types[a->type];
-   double absorb = 1. - CLAMP( 0., 1., at->absorb - dmg->penetration );
+   double absorb = 1. - CLAMP( 0., 1., a->type->absorb - dmg->penetration );
    dtype_calcDamage( NULL, &darmour, absorb, NULL, dmg, NULL );
 
    a->armour -= darmour;
@@ -1109,7 +1108,7 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
 {
    Damage dmg;
    char buf[16];
-   const AsteroidType *at = &asteroid_types[a->type];
+   const AsteroidType *at = a->type;
    AsteroidAnchor *field = &cur_system->asteroids[a->parent];
 
    /* Manage the explosion */

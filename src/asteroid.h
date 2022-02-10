@@ -85,8 +85,8 @@ typedef struct Asteroid_ {
    int id;        /**< ID of the asteroid, for targeting. */
    int parent;    /**< ID of the anchor parent. */
    int state;     /**< State of the asteroid. */
-   int type;      /**< The ID of the asteroid type */
-   int gfxID;     /**< ID of the asteroid gfx. */
+   const AsteroidType *type; /**< Type of the asteroid. */
+   const glTexture *gfx; /**< Graphic of the asteroid. */
    double armour; /**< Current "armour" of the asteroid. */
    /* Movement. */
    Vector2d pos;  /**< Position. */

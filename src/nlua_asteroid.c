@@ -412,7 +412,7 @@ static int asteroidL_setArmour( lua_State *L )
 static int asteroidL_materials( lua_State *L )
 {
    Asteroid *a = luaL_validasteroid(L,1);
-   const AsteroidType *at = asttype_get( a->type );
+   const AsteroidType *at = a->type;
 
    lua_newtable(L);
    for (int i=0; i<array_size(at->material); i++) {

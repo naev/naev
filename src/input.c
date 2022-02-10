@@ -1296,16 +1296,11 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
       r  = MAX( 1.5 * jp->radius * zoom, minr );
    }
    else if (astid >= 0) {
-      const AsteroidType *at;
       AsteroidAnchor *field = &cur_system->asteroids[fieid];
       Asteroid *ast = &field->asteroids[astid];
 
       /* Recover the right gfx */
-      at = asttype_get( ast->type );
-      if (ast->gfxID >= array_size(at->gfxs))
-         WARN(_("Gfx index out of range"));
-      r  = MAX( MAX( at->gfxs[ast->gfxID]->w * zoom, minr ),
-                at->gfxs[ast->gfxID]->h * zoom );
+      r = MAX( MAX( ast->gfx->sw * zoom, minr ), ast->gfx->sh * zoom );
    }
    else
       r  = 0.;

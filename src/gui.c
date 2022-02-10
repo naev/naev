@@ -393,18 +393,11 @@ static void gui_renderSpobTarget (void)
    if (player.p->nav_asteroid >= 0) {
       AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
       Asteroid *ast = &field->asteroids[player.p->nav_asteroid];
-      const AsteroidType *at = asttype_get( ast->type );
       c = &cWhite;
-
-      /* Recover the right gfx */
-      if (ast->gfxID >= array_size(at->gfxs)) {
-         WARN(_("Gfx index out of range"));
-         return;
-      }
 
       x = ast->pos.x;
       y = ast->pos.y;
-      r = at->gfxs[ast->gfxID]->w * 0.5;
+      r = ast->gfx->sw * 0.5;
       gui_renderTargetReticles( &shaders.targetship, x, y, r, 0., c );
    }
 }
