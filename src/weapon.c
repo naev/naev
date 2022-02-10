@@ -946,7 +946,6 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    const glTexture *gfx;
    const CollPoly *plg, *polygon;
    Vector2d crash[2];
-   const AsteroidType *at;
    Pilot *const* pilot_stack;
    int isjammed;
 
