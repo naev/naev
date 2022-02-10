@@ -81,17 +81,21 @@ typedef struct Debris_ {
  * @brief Represents a single asteroid.
  */
 typedef struct Asteroid_ {
+   /* Intrinsics. */
    int id;        /**< ID of the asteroid, for targeting. */
    int parent;    /**< ID of the anchor parent. */
    int state;     /**< State of the asteroid. */
+   int type;      /**< The ID of the asteroid type */
+   int gfxID;     /**< ID of the asteroid gfx. */
+   double armour; /**< Current "armour" of the asteroid. */
+   /* Movement. */
    Vector2d pos;  /**< Position. */
    Vector2d vel;  /**< Velocity. */
-   int gfxID;     /**< ID of the asteroid gfx. */
+   /* Stats. */
    double timer;  /**< Internal timer for animations. */
    double timer_max; /**< Internal timer initial value. */
-   int type;      /**< The ID of the asteroid type */
+   double scan_alpha; /**< Alpha value for scanning stuff. */
    int scanned;   /**< Wether the player already scanned this asteroid. */
-   double armour; /**< Current "armour" of the asteroid. */
 } Asteroid;
 
 /**

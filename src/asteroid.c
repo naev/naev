@@ -24,6 +24,8 @@
 
 #define DEBRIS_BUFFER         1000 /**< Buffer to smooth appearance of debris */
 
+static const double scan_fade = 10.; /**< 1/time it takes to fade in/out scanning text. */
+
 /*
  * Useful data for asteroids.
  */
@@ -128,6 +130,14 @@ void asteroids_update( double dt )
          /* Update position. */
          a->pos.x += a->vel.x * dt;
          a->pos.y += a->vel.y * dt;
+
+         /* Update scanned state if necessary. */
+         if (a->scanned) {
+            if (a->state == ASTEROID_FG)
+               a->scan_alpha = MIN( a->scan_alpha+scan_fade*dt, 1.);
+            else
+               a->scan_alpha = MAX( a->scan_alpha-scan_fade*dt, 0.);
+         }
 
          a->timer -= dt;
          if (a->timer < 0.) {
@@ -261,7 +271,8 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
    int outfield;
    int attempts = 0;
 
-   ast->parent = field->id;
+   ast->parent  = field->id;
+   ast->scanned = 0;
    r2 = pow2( field->radius );
 
    do {
@@ -902,8 +913,10 @@ static void space_renderAsteroid( const Asteroid *a )
    /* Add the commodities if scanned. */
    if (!a->scanned || (a->state != ASTEROID_FG))
       return;
+   col = cFontWhite;
+   col.a = a->scan_alpha;
    gl_gameToScreenCoords( &nx, &ny, a->pos.x, a->pos.y );
-   gl_printRaw( &gl_smallFont, nx+at->gfxs[a->gfxID]->sw/2, ny-gl_smallFont.h/2, &cFontWhite, -1., _(at->scanned_msg) );
+   gl_printRaw( &gl_smallFont, nx+at->gfxs[a->gfxID]->sw/2, ny-gl_smallFont.h/2, &col, -1., _(at->scanned_msg) );
    /*
    for (int i=0; i<array_size(at->material); i++) {
       AsteroidReward *mat = &at->material[i];
