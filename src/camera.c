@@ -30,6 +30,8 @@ static int zoom_override   = 0; /**< Whether or not to override the zoom. */
 static double camera_Z     = 1.; /**< Current in-game zoom. */
 static double camera_X     = 0.; /**< X position of camera. */
 static double camera_Y     = 0.; /**< Y position of camera. */
+static double camera_DX    = 0.; /**< Derivative of X position (velocity) of the camera. */
+static double camera_DY    = 0.; /**< Derivative of Y position (velocity) of the camera. */
 /* Old is used to compensate pilot movement. */
 static double old_X        = 0.; /**< Old X positiion. */
 static double old_Y        = 0.; /**< Old Y position. */
@@ -112,6 +114,15 @@ void cam_getPos( double *x, double *y )
 {
    *x = camera_X;
    *y = camera_Y;
+}
+
+/**
+ * @brief Gets the camera position differential (change in last frame).
+ */
+void cam_getDPos( double *dx, double *dy )
+{
+   *dx = camera_DX;
+   *dy = camera_DY;
 }
 
 /**
@@ -199,6 +210,8 @@ void cam_update( double dt )
    double dx, dy;
 
    /* Calculate differential. */
+   camera_DX = camera_X;
+   camera_DY = camera_Y;
    dx    = old_X;
    dy    = old_Y;
 
@@ -245,6 +258,10 @@ void cam_update( double dt )
             p->solid->pos.x, p->solid->pos.y,
             p->solid->vel.x, p->solid->vel.y );
    }
+
+   /* Compute the position differential. */
+   camera_DX = (camera_X - camera_DX);
+   camera_DY = (camera_Y - camera_DY);
 }
 
 /**

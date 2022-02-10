@@ -34,9 +34,9 @@ typedef struct Debris_ {
    double alpha;  /**< Alpha value. */
 } Debris;
 
-#define DEBRIS_BUFFER         1000 /**< Buffer to smooth appearance of debris */
+const double DEBRIS_BUFFER = 1000.; /**< Buffer to smooth appearance of debris */
 
-static const double scan_fade = 10.; /**< 1/time it takes to fade in/out scanning text. */
+static const double SCAN_FADE = 10.; /**< 1/time it takes to fade in/out scanning text. */
 
 static Debris *debris_stack = NULL; /**< All the debris in the current system (array.h). */
 
@@ -148,9 +148,9 @@ void asteroids_update( double dt )
          /* Update scanned state if necessary. */
          if (a->scanned) {
             if (a->state == ASTEROID_FG)
-               a->scan_alpha = MIN( a->scan_alpha+scan_fade*dt, 1.);
+               a->scan_alpha = MIN( a->scan_alpha+SCAN_FADE*dt, 1.);
             else
-               a->scan_alpha = MAX( a->scan_alpha-scan_fade*dt, 0.);
+               a->scan_alpha = MAX( a->scan_alpha-SCAN_FADE*dt, 0.);
          }
 
          a->timer -= dt;
@@ -192,26 +192,16 @@ void asteroids_update( double dt )
 
    /* Only have to update stuff if not simulating. */
    if (!space_isSimulation()) {
-      double vx, vy;
-
-      /* TODO Should be camera, NOT player based. */
-      if (player.p != NULL) {
-         Solid *psolid = player.p->solid;
-         vx = psolid->vel.x;
-         vy = psolid->vel.y;
-      }
-      else {
-         vx = 0.;
-         vy = 0.;
-      }
+      double dx, dy;
+      cam_getDPos( &dx, &dy );
 
       for (int j=0; j<array_size(debris_stack); j++) {
          Debris *d = &debris_stack[j];
          int infield;
          Vector2d v;
 
-         d->pos.x += (d->vel.x-vx) * dt;
-         d->pos.y += (d->vel.y-vy) * dt;
+         d->pos.x += d->vel.x * dt - dx;
+         d->pos.y += d->vel.y * dt - dy;
 
          /* Check boundaries */
          if (d->pos.x > SCREEN_W + DEBRIS_BUFFER)
