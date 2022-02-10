@@ -14,6 +14,7 @@
 
 #include "asteroid.h"
 
+#include "conf.h"
 #include "array.h"
 #include "camera.h"
 #include "space.h"
@@ -22,9 +23,22 @@
 #include "ndata.h"
 #include "player.h"
 
+/**
+ * @brief Represents a small asteroid debris rendered in the player frame.
+ */
+typedef struct Debris_ {
+   const glTexture *gfx; /**< Graphic of the debris. */
+   Vector2d pos;  /**< Position. */
+   Vector2d vel;  /**< Velocity. */
+   double height; /**< height vs player */
+   double alpha;  /**< Alpha value. */
+} Debris;
+
 #define DEBRIS_BUFFER         1000 /**< Buffer to smooth appearance of debris */
 
 static const double scan_fade = 10.; /**< 1/time it takes to fade in/out scanning text. */
+
+static Debris *debris_stack = NULL; /**< All the debris in the current system (array.h). */
 
 /*
  * Useful data for asteroids.
@@ -44,7 +58,7 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
 static int asttype_load (void);
 
 static void asteroid_renderSingle( const Asteroid *a );
-static void debris_renderSingle( const Debris *d, double x, double y );
+static void debris_renderSingle( const Debris *d, double cx, double cy );
 static void debris_init( Debris *deb );
 static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field );
 
@@ -174,48 +188,50 @@ void asteroids_update( double dt )
             a->state = (a->state+1) % ASTEROID_STATE_MAX;
          }
       }
+   }
 
-      /* Only have to update stuff if not simulating. */
-      if (!space_isSimulation()) {
-         double x, y;
-         if (player.p != NULL) {
-            Solid *psolid = player.p->solid;
-            x = psolid->vel.x;
-            y = psolid->vel.y;
-         }
-         else {
-            x = 0.;
-            y = 0.;
-         }
+   /* Only have to update stuff if not simulating. */
+   if (!space_isSimulation()) {
+      double vx, vy;
 
-         for (int j=0; j<ast->ndebris; j++) {
-            Debris *d = &ast->debris[j];
-            int infield;
-            Vector2d v;
+      /* TODO Should be camera, NOT player based. */
+      if (player.p != NULL) {
+         Solid *psolid = player.p->solid;
+         vx = psolid->vel.x;
+         vy = psolid->vel.y;
+      }
+      else {
+         vx = 0.;
+         vy = 0.;
+      }
 
-            d->pos.x += (d->vel.x-x) * dt;
-            d->pos.y += (d->vel.y-y) * dt;
+      for (int j=0; j<array_size(debris_stack); j++) {
+         Debris *d = &debris_stack[j];
+         int infield;
+         Vector2d v;
 
-            /* Check boundaries */
-            if (d->pos.x > SCREEN_W + DEBRIS_BUFFER)
-               d->pos.x -= SCREEN_W + 2.*DEBRIS_BUFFER;
-            else if (d->pos.y > SCREEN_H + DEBRIS_BUFFER)
-               d->pos.y -= SCREEN_H + 2.*DEBRIS_BUFFER;
-            else if (d->pos.x < -DEBRIS_BUFFER)
-               d->pos.x += SCREEN_W + 2.*DEBRIS_BUFFER;
-            else if (d->pos.y < -DEBRIS_BUFFER)
-               d->pos.y += SCREEN_H + 2.*DEBRIS_BUFFER;
+         d->pos.x += (d->vel.x-vx) * dt;
+         d->pos.y += (d->vel.y-vy) * dt;
 
-            /* Set alpha based on position. */
-            /* TODO there seems to be some offset mistake or something going on
-             * here, not too big of an issue though. */
-            gl_screenToGameCoords( &v.x, &v.y, d->pos.x, d->pos.y );
-            infield = asteroids_inField( &v );
-            if (infield>=0)
-               d->alpha = MIN( 1.0, d->alpha + 0.5 * dt );
-            else
-               d->alpha = MAX( 0.0, d->alpha - 0.5 * dt );
-         }
+         /* Check boundaries */
+         if (d->pos.x > SCREEN_W + DEBRIS_BUFFER)
+            d->pos.x -= SCREEN_W + 2.*DEBRIS_BUFFER;
+         else if (d->pos.y > SCREEN_H + DEBRIS_BUFFER)
+            d->pos.y -= SCREEN_H + 2.*DEBRIS_BUFFER;
+         else if (d->pos.x < -DEBRIS_BUFFER)
+            d->pos.x += SCREEN_W + 2.*DEBRIS_BUFFER;
+         else if (d->pos.y < -DEBRIS_BUFFER)
+            d->pos.y += SCREEN_H + 2.*DEBRIS_BUFFER;
+
+         /* Set alpha based on position. */
+         /* TODO there seems to be some offset mistake or something going on
+            * here, not too big of an issue though. */
+         gl_screenToGameCoords( &v.x, &v.y, d->pos.x, d->pos.y );
+         infield = asteroids_inField( &v );
+         if (infield>=0)
+            d->alpha = MIN( 1.0, d->alpha + 0.5 * dt );
+         else
+            d->alpha = MAX( 0.0, d->alpha - 0.5 * dt );
       }
    }
 }
@@ -225,6 +241,8 @@ void asteroids_update( double dt )
  */
 void asteroids_init (void)
 {
+   double density_max = 0.;
+   int ndebris;
    asteroid_creating = 1;
    /* Set up asteroids. */
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
@@ -249,13 +267,22 @@ void asteroids_init (void)
             a->state = ASTEROID_XX;
          a->timer = a->timer_max = 30.*RNGF();
       }
-      /* Add the debris to the anchor */
-      ast->debris = realloc( ast->debris, (ast->ndebris) * sizeof(Debris) );
-      for (int j=0; j<ast->ndebris; j++) {
-         Debris *d = &ast->debris[j];
-         debris_init(d);
-      }
+
+      density_max = MAX( density_max, ast->density );
    }
+
+   /* Add the debris to the anchor */
+   if (debris_stack == NULL)
+      debris_stack = array_create( Debris );
+
+   /* We compute a fixed amount and scale depending on how big the screen is
+    * compared the reference (minimum resolution). */
+   ndebris = density_max * 100. * (SCREEN_W+2.*DEBRIS_BUFFER * SCREEN_H+2.*DEBRIS_BUFFER) / (RESOLUTION_W_MIN * RESOLUTION_H_MIN);
+   array_resize( &debris_stack, ndebris );
+
+   for (int j=0; j<array_size(debris_stack); j++)
+      debris_init( &debris_stack[j] );
+
    asteroid_creating = 0;
 }
 
@@ -442,7 +469,6 @@ void asteroids_computeInternals( AsteroidAnchor *a )
 
    /* Compute number of asteroids */
    a->nb      = floor( a->area / ASTEROID_REF_AREA * a->density );
-   a->ndebris = floor( 100.*a->density );
 
    /* Computed from your standard physics equations (with a bit of margin). */
    a->margin  = pow2(a->maxspeed) / (4.*a->thrust) + 50.;
@@ -816,18 +842,16 @@ static int astgroup_parse( AsteroidTypeGroup *ag, const char *file )
  */
 void asteroids_renderOverlay (void)
 {
+   double cx, cy;
+   cam_getPos( &cx, &cy );
+   cx -= SCREEN_W/2.;
+   cy -= SCREEN_H/2.;
+
    /* Render the debris. */
-   if (player.p == NULL)
-      return;
-   for (int i=0; i<array_size(cur_system->asteroids); i++) {
-      double x, y;
-      AsteroidAnchor *ast = &cur_system->asteroids[i];
-      x = player.p->solid->pos.x - SCREEN_W/2;
-      y = player.p->solid->pos.y - SCREEN_H/2;
-      for (int j=0; j < ast->ndebris; j++) {
-         if (ast->debris[j].height > 1.)
-            debris_renderSingle( &ast->debris[j], x, y );
-      }
+   for (int j=0; j<array_size(debris_stack); j++) {
+      Debris *d = &debris_stack[j];
+      if (d->height > 1.)
+         debris_renderSingle( d, cx, cy );
    }
 }
 
@@ -836,28 +860,23 @@ void asteroids_renderOverlay (void)
  */
 void asteroids_render (void)
 {
-   Pilot *pplayer;
-   Solid *psolid;
-
-   /* Get the player in order to compute the offset for debris. */
-   pplayer = player.p;
-   if (pplayer != NULL)
-      psolid  = pplayer->solid;
+   double cx, cy;
+   cam_getPos( &cx, &cy );
+   cx -= SCREEN_W/2.;
+   cy -= SCREEN_H/2.;
 
    /* Render the asteroids & debris. */
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *ast = &cur_system->asteroids[i];
       for (int j=0; j<ast->nb; j++)
         asteroid_renderSingle( &ast->asteroids[j] );
+   }
 
-      if (pplayer != NULL) {
-         double x = psolid->pos.x - SCREEN_W/2;
-         double y = psolid->pos.y - SCREEN_H/2;
-         for (int j=0; j<ast->ndebris; j++) {
-           if (ast->debris[j].height < 1.)
-              debris_renderSingle( &ast->debris[j], x, y );
-         }
-      }
+   /* Render the debris. */
+   for (int j=0; j<array_size(debris_stack); j++) {
+      Debris *d = &debris_stack[j];
+      if (d->height <= 1.)
+         debris_renderSingle( d, cx, cy );
    }
 
    /* Render gatherable stuff. */
@@ -932,12 +951,12 @@ static void asteroid_renderSingle( const Asteroid *a )
 /**
  * @brief Renders a debris.
  */
-static void debris_renderSingle( const Debris *d, double x, double y )
+static void debris_renderSingle( const Debris *d, double cx, double cy )
 {
    const double scale = 0.5;
    const glColour col = COL_ALPHA( cInert, d->alpha );
 
-   gl_renderSpriteScale( d->gfx, d->pos.x+x, d->pos.y+y, scale, scale, 0, 0, &col );
+   gl_renderSpriteScale( d->gfx, d->pos.x+cx, d->pos.y+cy, scale, scale, 0, 0, &col );
 }
 
 /**
@@ -949,7 +968,6 @@ void asteroid_free( AsteroidAnchor *ast )
 {
    free(ast->label);
    free(ast->asteroids);
-   free(ast->debris);
    array_free(ast->groups);
    array_free(ast->groupsw);
 }
@@ -986,6 +1004,10 @@ void asteroids_free (void)
    }
    array_free(asteroid_groups);
    asteroid_groups = NULL;
+
+   /* Clean up debris. */
+   array_free( debris_stack );
+   debris_stack = NULL;
 
    /* Free the gatherable stack. */
    gatherable_free();

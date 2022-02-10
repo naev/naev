@@ -67,17 +67,6 @@ typedef struct AsteroidTypeGroup_ {
 } AsteroidTypeGroup;
 
 /**
- * @brief Represents a small player-rendered debris.
- */
-typedef struct Debris_ {
-   const glTexture *gfx; /**< Graphic of the debris. */
-   Vector2d pos;  /**< Position. */
-   Vector2d vel;  /**< Velocity. */
-   double height; /**< height vs player */
-   double alpha;  /**< Alpha value. */
-} Debris;
-
-/**
  * @brief Represents a single asteroid.
  */
 typedef struct Asteroid_ {
@@ -108,8 +97,6 @@ typedef struct AsteroidAnchor_ {
    double density;/**< Density of the field. */
    Asteroid *asteroids; /**< Asteroids belonging to the field. */
    int nb;        /**< Number of asteroids. */
-   Debris *debris;/**< Debris belonging to the field. */
-   int ndebris;   /**< Number of debris. */
    double radius; /**< Radius of the anchor. */
    double area;   /**< Field's area. */
    AsteroidTypeGroup **groups; /**< Groups of asteroids. */
