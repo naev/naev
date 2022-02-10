@@ -70,7 +70,7 @@ typedef struct AsteroidTypeGroup_ {
  * @brief Represents a small player-rendered debris.
  */
 typedef struct Debris_ {
-   int gfxID;     /**< ID of the asteroid gfx. */
+   const glTexture *gfx; /**< Graphic of the debris. */
    Vector2d pos;  /**< Position. */
    Vector2d vel;  /**< Velocity. */
    double height; /**< height vs player */
@@ -143,7 +143,6 @@ void asteroids_renderOverlay (void);
 
 /* Asteroid types. */
 const AsteroidType *asttype_getAll (void);
-const AsteroidType *asttype_get( int id );
 AsteroidType *asttype_getName( const char *name );
 
 /* Asteroid type groups. */

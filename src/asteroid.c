@@ -348,7 +348,7 @@ static void debris_init( Debris *deb )
    vect_pset( &deb->vel, mod, theta );
 
    /* Randomly init the gfx ID */
-   deb->gfxID = RNG(0,(int)array_size(asteroid_gfx)-1);
+   deb->gfx = asteroid_gfx[ RNG(0,(int)array_size(asteroid_gfx)-1) ];
 
    /* Random height vs player. */
    deb->height = 0.8 + RNGF()*0.4;
@@ -937,8 +937,7 @@ static void space_renderDebris( const Debris *d, double x, double y )
    const double scale = 0.5;
    const glColour col = COL_ALPHA( cInert, d->alpha );
 
-   gl_renderSpriteScale( asteroid_gfx[d->gfxID],
-         d->pos.x+x, d->pos.y+y, scale, scale, 0, 0, &col );
+   gl_renderSpriteScale( d->gfx, d->pos.x+x, d->pos.y+y, scale, scale, 0, 0, &col );
 }
 
 /**
@@ -1025,17 +1024,6 @@ int asteroids_inField( const Vector2d *p )
 const AsteroidType *asttype_getAll (void)
 {
    return asteroid_types;
-}
-
-/**
- * @brief Returns the asteroid type corresponding to an ID
- *
- *    @param id ID of the type.
- *    @return AsteroidType object.
- */
-const AsteroidType *asttype_get( int id )
-{
-   return &asteroid_types[ id ];
 }
 
 /**
