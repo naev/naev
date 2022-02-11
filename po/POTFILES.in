@@ -2544,6 +2544,7 @@ dat/missions/trader/trader_escort.lua
 dat/missions/trader/trader_rehab.lua
 dat/missions/tutorial/nelly01.lua
 dat/missions/tutorial/nelly02.lua
+dat/missions/tutorial/nelly03.lua
 dat/missions/tutorial/tutorial.lua
 dat/missions/zalek/blackhole/zbh01.lua
 dat/missions/zalek/blackhole/zbh02.lua

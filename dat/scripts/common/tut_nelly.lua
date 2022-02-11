@@ -31,6 +31,7 @@ end
 tutnel.reward = {
    nelly01 = 80e3,
    nelly02 = 120e3,
+   nelly03 = 57928, -- Spare change
 }
 
 return tutnel
