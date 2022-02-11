@@ -39,11 +39,11 @@
    3. Return back
 --]]
 local tutnel= require "common.tut_nelly"
---local tut   = require "common.tutorial"
+local tut   = require "common.tutorial"
 local vn    = require 'vn'
 local fmt   = require "format"
 local lmisn = require "lmisn"
---local mining= require "minigame.mining"
+local mining = require "minigames.mining"
 
 --[[
    Mission States:
@@ -55,6 +55,7 @@ mem.misn_state = nil
 -- luacheck: globals enter land heartbeat (Hook functions passed by name)
 
 local reward_amount = tutnel.reward.nelly03
+local reward_cargo = commodity.get("Nickel")
 
 function create ()
    -- Save current system to return to
@@ -134,7 +135,7 @@ She runs off out of the spaceport bar.]]))
    vn.na(_("You wait, and after what seems to be quite a while, she comes back. Wait, is she covered in more grease than before!?"))
    nel(_([["All set, ready to go!"]]))
    vn.na(_("You go with her to the spaceport docks to board your ship, she seems a bit more giddy than usual."))
-   vn.na(_("You get to your ship and the first thing you immediately notice is that someone taped an enormous drill onto your ship that has 'DRILLMASTER 5000' written on the side in permanent marker. You're amazed it doesn't fall off and turn to Nelly to ask for an explanation, only to find her beaming radiantly, likely very proud of her modification. You give up scolding and gesture towards the 'Drillmaster'."))
+   vn.na(_("You get to your ship and the first thing you immediately notice is that someone taped an enormous drill onto your ship that has 'DRILLMASTER 5000' written on the side in permanent marker. It also has some crude flames drawn on it. You're amazed it doesn't fall off and turn to Nelly to ask for an explanation, only to find her beaming radiantly, likely very proud of her modification. You give up scolding and gesture towards the 'Drillmaster'."))
    nel(fmt.f(_([["Isn't it awesome! I figure we would need some drilling hardware to be able to get to the materials in the asteroid! You do know that normal weapons aren't able to extract materials properly right? Usually you have to use something like a {tool1}, or even better, a {tool2}! However, I'm pretty sure this should work as good or better! I wasn't able to fit an asteroid scanner, so we will have to eyeball it, but I'm great at that! Leave it to me."]]),
       {tool1=outfit.get("Mining Lance MK1"), tool2=outfit.get("S&K Plasma Drill")}))
    nel(_([["Time is credits or so they say, so let's go drill some asteroids!"]]))
@@ -149,13 +150,13 @@ She runs off out of the spaceport bar.]]))
    misn.accept()
 
    mem.misn_state = 0
-   mem.misn_marker = misn.markerAdd( mem.retsys )
+   mem.misn_marker = misn.markerAdd( mem.destsys )
 
    local title = _("Helping Nelly Out… Again")
 
    misn.osdCreate( title, {
       fmt.f(_("Go to an asteroid field in the {sys} system"),{sys=mem.destsys}),
-      _("Get close to an asteroid and mine it"),
+      _("Get close and match speeds to an asteroid and mine it"),
       fmt.f(_("Return to {pnt} ({sys} system)"),{pnt=mem.retpnt,sys=mem.retsys}),
    } )
 
@@ -167,15 +168,120 @@ She runs off out of the spaceport bar.]]))
    hook.land("land")
 end
 
+local hb_state
 function enter ()
    local scur = system.cur()
    local ast = scur:asteroidFields()
    if #ast > 0 then
+      hb_state = 1
       hook.timer( 5, "heartbeat" )
    end
 end
 
+local function nelly_say( msg )
+   player.autonavReset( 3 )
+   player.pilot():comm(fmt.f(_([[Nelly: "{msg}"]]),{msg=msg}))
+end
+
+local function drilltime ()
+   local mining_success = false
+   local mining_tries = 0
+
+   vn.clear()
+   vn.scene()
+   local nel = vn.newCharacter( tutnel.vn_nelly() )
+   vn.transition( tutnel.nelly.transition )
+   vn.na(_("You approach the asteroid, Nelly seems a bit nervous."))
+   nel(_([["Time for the big moment! I've never actually tried the 'DRILLMASTER 5000'. This is like a maiden's voyage!"]]))
+   nel(_([["When I activate it, you'll see the drill interface. It will start stopped and you have to press any key for it to start. You have to press the trigger when the blue scanning thing is inside the red optimal target zone. I guess this is easier shown then done. Let me start it up and go ahead and try it!"]]))
+
+   vn.label("mining")
+   mining.vn{ difficulty = 0, reward_func = function( bonus )
+      mining_tries = mining_tries + 1
+      if bonus >= 1 then
+         mining_success = true
+      end
+   end }
+   vn.func( function ()
+      if mining_success then
+         vn.jump( "mining_success" )
+      elseif mining_tries > 3 then
+         vn.jump( "mining_tries" )
+      else
+         vn.jump( "mining_failure" )
+      end
+   end )
+
+   vn.label("mining_failure")
+   nel(_([["You have to try to time it a bit better. We won't get the best minerals otherwise! Try again!"]]))
+   vn.jump("mining")
+
+   vn.label("mining_tries")
+   nel(_([["You still don't have the timing down, but I think we have enough materials for now. Do you want to try again?"]]))
+   vn.menu{
+      {_("Try again!"), "mining"},
+      {_("Enough."), "mining_done"},
+   }
+
+   vn.label("mining_success")
+   nel(_([["Great job! You really nailed it!"]]))
+   vn.label("mining_done")
+   nel(fmt.f(_([["With all the materials we got, I should be able to repair the ship no problem. Take us back to {pnt}!"]]),
+      {pnt=mem.retpnt}))
+
+   vn.func( function ()
+      local pp = player.pilot()
+      mem.cargo_added = pp:cargoFree()
+      if mem.cargo_added > 0 then
+         pp:cargoAdd( reward_cargo, pp:cargoFree() ) -- Fill cargo hold
+      else
+         vn.jump("noadd")
+      end
+   end )
+   vn.na( function () return fmt.f(_("You have obtained {mass} of {cargo}!"),{mass=fmt.tonnes(mem.cargo_added),cargo=reward_cargo}) end )
+   vn.label("noadd")
+   vn.na(_("It seems like just in time too, because as Nelly talks, you hear a groan on the hull and see what is left of the 'Drillmaster' is left as an irreparable damaged mess that you have no choice to leave behind."))
+   nel(_([["Drillmaster, we hardly knew thee."
+She gives a small reverence to the debris before coming back to her happy self.
+"Oh well, I found that in an Imperial garbage dump anyway. Although I was pretty proud of the flames I drew on it…"]]))
+   nel(fmt.f(_([["On to {pnt}!"]]), {pnt=mem.retpnt}))
+
+   vn.sfxBingo()
+   vn.done( tutnel.nelly.transition )
+   vn.run()
+
+   misn.osdActive(3)
+end
+
 function heartbeat ()
+   if hb_state==1 then
+      local af = system.cur():asteroidFields()
+      nelly_say(fmt.f(_("I've marked an asteroid field on your overlay. Use {overlaykey} to check it!"),
+         {overlaykey=tut.getKey("overlay")}))
+      system.mrkAdd( af[ rnd.rnd(1,#af) ].pos )
+      hb_state = hb_state+1
+   elseif hb_state==2 then
+      local af = system.cur():asteroidFields()
+      local ppos = player.pos()
+      for k,v in ipairs(af) do
+         if ppos:dist( v.pos ) < v.radius+1000 then
+            nelly_say(_("Get close to an asteroid try to stop ontop of it. I want to try the Drillmaster!"))
+            misn.osdActive(2)
+            hb_state = hb_state+1
+         end
+      end
+
+   elseif hb_state==3 then
+      local pp = player.pilot()
+      local a = asteroid.get( pp )
+      if a:pos():dist( pp:pos() ) < 50 and a:vel():dist( pp:vel() ) < 15 then
+         system.mrkClear()
+         drilltime()
+         return -- We're done here
+      end
+   end
+
+   hook.timer( 0.5, "heartbeat" )
 end
 
 function land ()
@@ -186,12 +292,18 @@ function land ()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.transition( tutnel.nelly.transition )
-      nel(_([[""]]))
+      nel(_([["Great! That was awesome. Now it is my time to shine and repair my ship!"]]))
+      nel(_([["Here, let me transfer a nice reward for you!"]]))
       vn.sfxVictory()
       vn.na(fmt.reward(reward_amount))
       vn.func( function () -- Rewards
          player.pay( reward_amount )
       end )
+      if mem.cargo_added > 0 then
+         nel(fmt.f(_([["You can also keep the extra {cargo} we got. I would recommend selling it, but I'm really bad at finding out the most expensive place to make money. Maybe you are better?"]]),
+            {cargo=reward_cargo}))
+      end
+      vn.na(_("With some materials in hand, she rushes towards her beaten-up Llama to begin the reparations. Hopefully she'll be able to pull this off, but it's best for her to try herself."))
       vn.done( tutnel.nelly.transition )
       vn.run()
 
