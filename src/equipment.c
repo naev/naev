@@ -472,8 +472,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       else
          dc = outfit_slotSizeColour( &lst[i].sslot->slot );
 
-      /* Choose colours based on size. */
-      if ((i==selected) && (dc == NULL))
+      if (dc == NULL)
          dc = &cGrey60;
 
       /* Draw background. */
