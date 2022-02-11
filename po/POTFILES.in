@@ -2698,9 +2698,9 @@ dat/scripts/luatk/conf.lua
 dat/scripts/luatk/core.lua
 dat/scripts/luatk/main.lua
 dat/scripts/minigames/blackjack.lua
-dat/scripts/minigames/cardio.lua
 dat/scripts/minigames/chuckaluck.lua
-dat/scripts/minigames/diceio.lua
+dat/scripts/minigames/lib/cardio.lua
+dat/scripts/minigames/lib/diceio.lua
 dat/scripts/minigames/mining.lua
 dat/scripts/minigames/mining/conf.lua
 dat/scripts/minigames/mining/core.lua

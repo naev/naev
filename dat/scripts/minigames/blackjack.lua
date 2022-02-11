@@ -1,7 +1,7 @@
 local minerva = require "common.minerva"
 local lg = require 'love.graphics'
 local la = require 'love.audio'
-local cardio = require 'minigames.cardio'
+local cardio = require 'minigames.lib.cardio'
 local love_math = require 'love.math'
 local fmt = require "format"
 
