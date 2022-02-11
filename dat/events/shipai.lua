@@ -108,6 +108,7 @@ local function clicked ()
          {_("Weapon Sets"), "tut_weaponsets"},
          {_("Electronic Warfare"), "tut_ewarfare"},
          {_("Stealth"), "tut_stealth"},
+         {_("Asteroids and Mining"), "tut_mining"},
          {_("Nevermind"), "mainmenu"},
       }
       if var.peek( "tut_illegal" ) then
@@ -144,6 +145,13 @@ local function clicked ()
    sai(_([["Besides making your ship invisible to other ships, #ostealth#0 slows down your ship by 50% to mask your gravitational presence. This also has the effect of letting you jump out from jumpoints further away. There are many outfits that can change and modify this behaviour to get more out of stealth."]]))
    sai(_([["When not in stealth, ships can target your ship to perform a scan. This can uncover unwanted information, such as illegal cargo or outfits. The time to scan depends on the mass of the ship. If you don't want to be scanned, you should use stealth as much as possible. Enemy ships may also use stealth. Similarly to how you get uncovered when ships enter your #ostealth#0 range, you can uncover neutral or hostile ships by entering their #ostealth#0 range, however, you will not be able to know where they are until you are on top of them."]]))
    sai(_([["Finally, escorts and fighters will automatically stealth when their leader goes into stealth, so you don't have to worry giving stealth orders to ships you may be commanding. Friendly ships will also not uncover your stealth, so it is good to make as many friends as possible."]]))
+   vn.jump("tutorials")
+
+   vn.label("tut_mining")
+   sai(_([["Asteroid mining can be a lucrative business. Asteroid field scan be found throughout the galaxy in many different shapes and sizes. They can be a good source of many precious materials that fetch a good price on the commodity exchange. However, not all asteroid fields are made equal. In general, the more easily accessible asteroid fields are generally over-mined, leading to low yields. On the other hand, hard to access asteroid fields in dangerous areas have not yet succumbed to the hordes of ravenous mining fleets. If you find a good mining spot, I recommend you add a note on the #bSystem Map#0 so you don't forget."]]))
+   sai(_([["Standard ship sensors are not designed for prospecting asteroid fields, so if you want to be able to get a rough estimate of what materials are in each asteroid, you will need to get an asteroid scanner. They can be either sold as standalone outfits, or integrated into mining tools such as drills. With an asteroid scanner equipped, all you have to do is get close to asteroids and their material composition will be displayed. You can also equip multiple asteroid scanners at the same time to increase the scanning range."]]))
+   sai(fmt.f(_([["Once you have found a good potential mining spot, mining is as straight forward as shooting asteroid with damaging weapons. However, with most weapons, this will only yield common materials and not be a very efficient way of mining. By using mining-specific weapons such as {tool1}, you can also obtain more expensive materials. Furthermore, integrated tools such as {tool2} can be used as a solution for both scanning and extraction. One important point is that asteroid mining is fairly noisy and can attract unwanted attention. One of my previous owners found that out the hard way."]]),
+      {tool1=outfit.get("Mining Lance MK1"), tool2=outfit.get("S&K Plasma Drill")}))
    vn.jump("tutorials")
 
    vn.label("tut_bioship")
@@ -191,6 +199,13 @@ function advice ()
       table.insert( adv, msg_heat )
    end
 
+   local msg_asteroids = fmt.f(_([["Asteroid fields can be a good way to make credits. It is simple enough to shoot at asteroids to release minerals and then approach to collect them with your ship's scoop. However, most weapons destroy uncommon and rare materials, and are only suitable for mining common materials. If you want to mine for better materials, you have to use mining-specific weapons or tools such as the {tool1} or {tool2}. You do have to watch out though, as mining is generally a fairly noisy process and can attract unwanted attention."]]),
+      {tool1=outfit.get("Mining Lance MK1"), tool2=outfit.get("S&K Plasma Drill")})
+   table.insert( adv_rnd, msg_asteroids )
+   if #system.cur():asteroidFields() > 0 then
+      table.insert( adv, msg_asteroids )
+   end
+
    local armour = pp:health()
    local msg_armour = _([["In general, ships are unable to regenerate armour damage in space. If you take heavy armour damage, it is best to try to find a safe place to land to get fully repaired. However, there exists many different outfits that allow you to repair your ship, and some ships have built-in  armour regeneration allowing you to survive longer in space."]])
    table.insert( adv_rnd, msg_armour )
@@ -199,7 +214,7 @@ function advice ()
    end
 
    if bioship.playerisbioship() then
-      local msg_bioship = _([["Bioships gain experience over time, allowing them to advance to new stages and learn new abilities. Bioships must land to advance to new stages, and only while landed will they will be able to learn new skills. You can set the skills fro mthe bioship interface which is accessible from the #bInfo window#0 which you can open with #b{infokey}#0."]],
+      local msg_bioship = _([["Bioships gain experience over time, allowing them to advance to new stages and learn new abilities. Bioships must land to advance to new stages, and only while landed will they will be able to learn new skills. You can set the skills from the bioship interface which is accessible from the #bInfo window#0 which you can open with #b{infokey}#0."]],
          {infokey=tut.getKey("info")})
       table.insert( adv_rnd, msg_bioship )
       if bioship.skillpointsfree() > 0 then
