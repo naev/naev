@@ -268,18 +268,18 @@ function mining.draw()
    lg.setShader()
 
    if z_cur > z_max then
-      local h
+      local y
       local fh = mfont:getHeight()
       if reward then
-         h = 64+fh*5+30
+         local h = 64+fh*5+30
+         y = cy-h/2+fh
       else
-         h = fh
+         y = cy-fh/2
       end
 
       local ta = alpha * ease( math.min(tcompleted/0.1,1.0) )
       local text = _("MINING COMPLETED")
       lg.setColor( 1, 1, 1, ta )
-      local y = cy-h/2+fh
       lg.printf( text, mfont, cx-radius, y, 2*radius, "center" )
 
       if reward then

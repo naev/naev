@@ -278,6 +278,7 @@ function heartbeat ()
       if a:pos():dist( pp:pos() ) < 50 and a:vel():dist( pp:vel() ) < 15 then
          system.mrkClear()
          drilltime()
+         a:setTimer( -1 ) -- Get rid of the asteroid
          return -- We're done here
       end
    end
