@@ -57,7 +57,7 @@ int localmap_map( const Outfit *lmap );
 int localmap_isUseless( const Outfit *lmap );
 
 /* shows a map at x, y (relative to wid) with size w,h  */
-void map_show( int wid, int x, int y, int w, int h, double zoom );
+void map_show( int wid, int x, int y, int w, int h, double zoom, double xoff, double yoff );
 int map_center( int wid, const char *sys );
 
 /* Internal rendering sort of stuff. */

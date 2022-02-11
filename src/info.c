@@ -1229,7 +1229,7 @@ static void info_openMissions( unsigned int wid )
          "txtDesc", &gl_smallFont, NULL, NULL );
 
    /* Put a map. */
-   map_show( wid, 20, 20, 300, 260, 0.75 );
+   map_show( wid, 20, 20, 300, 260, 0.75, 0., 0. );
 
    /* list */
    mission_menu_genList(wid ,1);

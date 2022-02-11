@@ -63,6 +63,8 @@ typedef struct FactionPresence_ {
  * @brief Map widget data.
  */
 typedef struct CstMapWidget_ {
+   double xoff;            /**< X offset for centering. */
+   double yoff;            /**< Y offset for centering. */
    double zoom;            /**< Level of zoom. */
    double xpos;            /**< Centered x position. */
    double ypos;            /**< Centered y position. */
@@ -281,7 +283,7 @@ void map_open (void)
    /*
     * The map itself.
     */
-   map_show( wid, 0, 0, w, h, 1. ); /* Reset zoom. */
+   map_show( wid, 0, 0, w, h, 1., RCOL_W/2., BBAR_H/2. ); /* Reset zoom. */
 
    /* Map title. */
 #if 0
@@ -3008,8 +3010,10 @@ int localmap_isUseless( const Outfit *lmap )
  *    @param w Width of map to open.
  *    @param h Height of map to open.
  *    @param zoom Default zoom to use.
+ *    @param xoff X offset when centering.
+ *    @param yoff Y offset when centering.
  */
-void map_show( int wid, int x, int y, int w, int h, double zoom )
+void map_show( int wid, int x, int y, int w, int h, double zoom, double xoff, double yoff )
 {
    CstMapWidget *cst = calloc( 1, sizeof(CstMapWidget) );
 
@@ -3021,9 +3025,13 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
    /* Set up stuff. */
    map_setup();
 
+   /* Centering stuff. */
+   cst->xoff = xoff;
+   cst->yoff = yoff;
+
    /* Set position to focus on current system. */
-   cst->xtarget = cst->xpos = cur_system->pos.x * zoom + RCOL_W/2;
-   cst->ytarget = cst->ypos = cur_system->pos.y * zoom + BBAR_H/2;
+   cst->xtarget = cst->xpos = cur_system->pos.x * zoom + cst->xoff;
+   cst->ytarget = cst->ypos = cur_system->pos.y * zoom + cst->yoff;
 
    /* Set zoom. */
    map_setZoom( wid, zoom );
@@ -3049,8 +3057,8 @@ int map_center( int wid, const char *sys )
       return -1;
 
    /* Center on the system. */
-   cst->xtarget = ssys->pos.x * cst->zoom + RCOL_W/2;
-   cst->ytarget = ssys->pos.y * cst->zoom + BBAR_H/2;
+   cst->xtarget = ssys->pos.x * cst->zoom + cst->xoff;
+   cst->ytarget = ssys->pos.y * cst->zoom + cst->yoff;
 
    /* Compute flyto speed. */
    d = MOD( cst->xtarget-cst->xpos, cst->ytarget-cst->ypos );

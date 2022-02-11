@@ -608,8 +608,7 @@ static void misn_open( unsigned int wid )
          "txtDesc", &gl_defFont, NULL, NULL );
 
    /* map */
-   map_show( wid, 20, 20,
-         w/2 - 30, h/2 - 35, 0.75 );
+   map_show( wid, 20, 20, w/2 - 30, h/2 - 35, 0.75, 0., 0. );
 
    misn_genList(wid, 1);
 }
