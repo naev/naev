@@ -188,7 +188,7 @@ static void map_setup (void)
    /* Mark systems as discovered as necessary. */
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = &systems_stack[i];
-      sys_rmFlag( sys, SYSTEM_DISCOVERED );
+      sys_rmFlag( sys, SYSTEM_DISCOVERED | SYSTEM_INTEREST );
 
       /* Check to see if system has landable spobs. */
       sys_rmFlag( sys, SYSTEM_HAS_LANDABLE );

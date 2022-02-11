@@ -873,12 +873,12 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       /* Count spobs. */
       l = 0;
       for (int j=0; j<array_size(sys->spobs); j++) {
-         Spob *pnt = sys->spobs[j];
+         Spob *spob = sys->spobs[j];
          int n;
          char **techs;
-         if (pnt->tech==NULL)
+         if (spob->tech==NULL)
             continue;
-         techs = tech_getItemNames( pnt->tech, &n );
+         techs = tech_getItemNames( spob->tech, &n );
          for (int k=0; (k<n) && (ntechs<len-1) ; k++)
             techlist[ ntechs++ ] = techs[k];
          free( techs );
@@ -931,11 +931,11 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
 
       /* Local presence sources. */
       for (int j=0; j<array_size(sys->spobs); j++) {
-         Spob *pnt = sys->spobs[j];
-         if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
+         Spob *spob = sys->spobs[j];
+         if (!getPresenceVal( f, &spob->presence, &base, &bonus ))
             continue;
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
-               getValCol(base), base, getValCol(bonus), bonus, spob_name(pnt) );
+               getValCol(base), base, getValCol(bonus), bonus, spob_name(spob) );
       }
       for (int j=0; j<array_size(sys->spobs_virtual); j++) {
          VirtualSpob *va = sys->spobs_virtual[j];
@@ -951,11 +951,11 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       for (int k=0; k<array_size(sys->jumps); k++) {
          cur = sys->jumps[k].target;
          for (int j=0; j<array_size(cur->spobs); j++) {
-            Spob *pnt = cur->spobs[j];
-            if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
+            Spob *spob = cur->spobs[j];
+            if (!getPresenceVal( f, &spob->presence, &base, &bonus ))
                continue;
             l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
-                  getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, spob_name(pnt), _(cur->name) );
+                  getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, spob_name(spob), _(cur->name) );
          }
          for (int j=0; j<array_size(cur->spobs_virtual); j++) {
             VirtualSpob *va = cur->spobs_virtual[j];
@@ -1552,8 +1552,8 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
    /* Add spobs to the found table. */
    for (int i=0; i<nspobs; i++) {
       /* Spob must be real. */
-      Spob *pnt = spob_get( spobs[i] );
-      if (pnt == NULL)
+      Spob *spob = spob_get( spobs[i] );
+      if (spob == NULL)
          continue;
 
       char *sysname = spob_getSystem( spobs[i] );
@@ -1565,7 +1565,7 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
          continue;
 
       /* Set some values. */
-      found[n].pnt      = pnt;
+      found[n].spob     = spob;
       found[n].sys      = sys;
 
       /* Set fancy name. */
@@ -1580,7 +1580,7 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
       StarSystem *sys = system_get( systems[i] );
 
       /* Set some values. */
-      found[n].pnt      = NULL;
+      found[n].spob     = NULL;
       found[n].sys      = sys;
 
       strncpy(found[n].display, sys->name, sizeof(found[n].display)-1);

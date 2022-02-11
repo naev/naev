@@ -56,7 +56,7 @@ static int map_findSearchShips( unsigned int wid_map_find, const char *name );
 static void map_findSearch( unsigned int wid_map_find, const char* str );
 static void map_showOutfitDetail(unsigned int wid, const char* wgtname, int x, int y, int w, int h);
 /* Misc. */
-static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys, Spob *pnt );
+static void map_findAccumulateResult( map_find_t *found, int n, StarSystem *sys, Spob *spob );
 static void map_findSelect( const StarSystem *sys );
 static int map_sortCompare( const void *p1, const void *p2 );
 static void map_sortFound( map_find_t *found, int n );
@@ -265,7 +265,7 @@ static void map_sortFound( map_find_t *found, int n )
 /**
  * @brief Gets the distance.
  */
-static int map_findDistance( StarSystem *sys, Spob *pnt, int *jumps, double *distance )
+static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *distance )
 {
    StarSystem **slist;
    double d;
@@ -278,8 +278,8 @@ static int map_findDistance( StarSystem *sys, Spob *pnt, int *jumps, double *dis
    /* Special case it's the current system. */
    if (sys == cur_system) {
       *jumps = 0;
-      if (pnt != NULL)
-         *distance = vect_dist( &player.p->solid->pos, &pnt->pos );
+      if (spob != NULL)
+         *distance = vect_dist( &player.p->solid->pos, &spob->pos );
       else
          *distance = 0.;
 
@@ -348,7 +348,7 @@ static int map_findDistance( StarSystem *sys, Spob *pnt, int *jumps, double *dis
    }
 
    /* Account final travel to spob for spob targets. */
-   if (pnt != NULL) {
+   if (spob != NULL) {
       if (i > 0) {
          StarSystem *ss = slist[ i ];
          for (int j=0; j < array_size(ss->jumps); j++) {
@@ -359,7 +359,7 @@ static int map_findDistance( StarSystem *sys, Spob *pnt, int *jumps, double *dis
          }
       }
 
-      ve = &pnt->pos;
+      ve = &spob->pos;
 
       assert( vs != NULL );
       assert( ve != NULL );
@@ -380,20 +380,20 @@ static int map_findDistance( StarSystem *sys, Spob *pnt, int *jumps, double *dis
  *    @param found Results array to save into.
  *    @param n Position to use.
  *    @param sys Result's star system.
- *    @param pnt Result's spob, or NULL to leave unspecified.
+ *    @param spob Result's spob, or NULL to leave unspecified.
  *
  */
-static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys, Spob *pnt )
+static void map_findAccumulateResult( map_find_t *found, int n, StarSystem *sys, Spob *spob )
 {
    int ret;
    char route_info[STRMAX_SHORT];
 
    /* Set some values. */
-   found[n].pnt   = pnt;
+   found[n].spob  = spob;
    found[n].sys   = sys;
 
    /* Set more values. */
-   ret = map_findDistance( sys, pnt, &found[n].jumps, &found[n].distance );
+   ret = map_findDistance( sys, spob, &found[n].jumps, &found[n].distance );
    if (ret) {
       found[n].jumps    = 10e3;
       found[n].distance = 1e6;
@@ -405,14 +405,14 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
             found[n].jumps, found[n].distance/1000. );
 
    /* Set fancy name. */
-   if (pnt == NULL)
+   if (spob == NULL)
       snprintf( found[n].display, sizeof(found[n].display),
             _("%s (%s)"), _(sys->name), route_info );
    else
       snprintf( found[n].display, sizeof(found[n].display),
-            _("#%c%s%s (%s, %s)"), map_getSpobColourChar(pnt),
-            map_getSpobSymbol(pnt),
-            spob_name(pnt), _(sys->name), route_info );
+            _("#%c%s%s (%s, %s)"), map_getSpobColourChar(spob),
+            map_getSpobSymbol(spob),
+            spob_name(spob), _(sys->name), route_info );
 }
 
 /**
@@ -494,22 +494,22 @@ static int map_findSearchSpobs( unsigned int wid_map_find, const char *name )
    char **names;
    int len, n;
    map_find_t *found;
-   const char *pntname;
+   const char *spobname;
 
    /* Match spob first. */
-   pntname = spob_existsCase( name );
+   spobname = spob_existsCase( name );
    names   = spob_searchFuzzyCase( name, &len );
    if (names == NULL)
       return -1;
 
    /* Exact match. */
-   if ((pntname != NULL) && (len == 1)) {
+   if ((spobname != NULL) && (len == 1)) {
       /* Check exact match. */
-      const char *sysname = spob_getSystem( pntname );
+      const char *sysname = spob_getSystem( spobname );
       if (sysname != NULL) {
          /* Make sure it's known. */
-         Spob *pnt = spob_get( pntname );
-         if ((pnt != NULL) && spob_isKnown(pnt)) {
+         Spob *spob = spob_get( spobname );
+         if ((spob != NULL) && spob_isKnown(spob)) {
 
             /* Select and show. */
             StarSystem *sys = system_get(sysname);
@@ -530,10 +530,10 @@ static int map_findSearchSpobs( unsigned int wid_map_find, const char *name )
       StarSystem *sys;
 
       /* Spob must be real. */
-      Spob *pnt = spob_get( names[i] );
-      if (pnt == NULL)
+      Spob *spob = spob_get( names[i] );
+      if (spob == NULL)
          continue;
-      if (!spob_isKnown(pnt))
+      if (!spob_isKnown(spob))
          continue;
 
       /* System must be known. */
@@ -547,7 +547,7 @@ static int map_findSearchSpobs( unsigned int wid_map_find, const char *name )
       if (found == NULL) /* Allocate results array on first match. */
          found = malloc( sizeof(map_find_t) * len );
 
-      map_findAccumulateResult( found, n, sys, pnt );
+      map_findAccumulateResult( found, n, sys, spob );
       n++;
    }
    free(names);
@@ -722,7 +722,7 @@ static int map_findSearchOutfits( unsigned int wid_map_find, const char *name )
    int i, j;
    int len, n;
    map_find_t *found;
-   Spob *pnt;
+   Spob *spob;
    StarSystem *sys;
    const char *oname, *sysname;
    char **list;
@@ -773,14 +773,14 @@ static int map_findSearchOutfits( unsigned int wid_map_find, const char *name )
       olist = NULL;
       if (j < 0)
          continue;
-      pnt = map_known_spobs[i];
+      spob = map_known_spobs[i];
 
       /* Must have an outfitter. */
-      if (!spob_hasService(pnt,SPOB_SERVICE_OUTFITS))
+      if (!spob_hasService(spob,SPOB_SERVICE_OUTFITS))
          continue;
 
       /* System must be known. */
-      sysname = spob_getSystem( pnt->name );
+      sysname = spob_getSystem( spob->name );
       if (sysname == NULL)
          continue;
       sys = system_get( sysname );
@@ -790,7 +790,7 @@ static int map_findSearchOutfits( unsigned int wid_map_find, const char *name )
       if (found == NULL) /* Allocate results array on first match. */
          found = malloc( sizeof(map_find_t) * len );
 
-      map_findAccumulateResult( found, n, sys, pnt );
+      map_findAccumulateResult( found, n, sys, spob );
       n++;
    }
 
@@ -844,7 +844,7 @@ static int map_findSearchShips( unsigned int wid_map_find, const char *name )
    char **names;
    int len, n;
    map_find_t *found;
-   Spob *pnt;
+   Spob *spob;
    StarSystem *sys;
    const char *sname, *sysname;
    char **list;
@@ -894,14 +894,14 @@ static int map_findSearchShips( unsigned int wid_map_find, const char *name )
       slist = NULL;
       if (j < 0)
          continue;
-      pnt = map_known_spobs[i];
+      spob = map_known_spobs[i];
 
       /* Must have an shipyard. */
-      if (!spob_hasService(pnt,SPOB_SERVICE_SHIPYARD))
+      if (!spob_hasService(spob,SPOB_SERVICE_SHIPYARD))
          continue;
 
       /* System must be known. */
-      sysname = spob_getSystem( pnt->name );
+      sysname = spob_getSystem( spob->name );
       if (sysname == NULL)
          continue;
       sys = system_get( sysname );
@@ -911,7 +911,7 @@ static int map_findSearchShips( unsigned int wid_map_find, const char *name )
       if (found == NULL) /* Allocate results array on first match. */
          found = malloc( sizeof(map_find_t) * len );
 
-      map_findAccumulateResult( found, n, sys, pnt );
+      map_findAccumulateResult( found, n, sys, spob );
       n++;
    }
 

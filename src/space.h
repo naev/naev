@@ -159,6 +159,7 @@ typedef struct Spob_ {
 #define SYSTEM_HAS_LANDABLE (1<<7) /**< System has landable spobs (temporary use by map!) */
 #define SYSTEM_NOLANES     (1<<8) /**< System should not use safe lanes at all. */
 #define SYSTEM_PMARKED     (1<<9) /**< System is marked by a player. */
+#define SYSTEM_INTEREST    (1<<10) /**< System is temporary marked as "of interest". Used when rendering map. */
 #define sys_isFlag(s,f)    ((s)->flags & (f)) /**< Checks system flag. */
 #define sys_setFlag(s,f)   ((s)->flags |= (f)) /**< Sets a system flag. */
 #define sys_rmFlag(s,f)    ((s)->flags &= ~(f)) /**< Removes a system flag. */
