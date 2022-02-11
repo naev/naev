@@ -450,7 +450,7 @@
   <item>Patchwork Heavy Plating</item>
   <item>Unicorp D-48 Heavy Plating</item>
   <item>Unicorp D-68 Heavy Plating</item>
-  <item>Mining Laser MK1</item>
+  <item>Mining Lance MK1</item>
  </tech>
  <tech name="Basic Outfits 2">
   <item>Laser Cannon MK2</item>
@@ -516,7 +516,7 @@
   <item>Weapons Ionizer</item>
   <item>Hyena Dock</item>
   <item>Hyena Bay</item>
-  <item>Mining Laser MK2</item>
+  <item>Mining Lance MK2</item>
  </tech>
  <tech name="Heavy Weapons 2">
   <item>Laser Turret MK2</item>
@@ -529,7 +529,7 @@
   <item>Medium Combat Vessel License</item>
   <item>Mercenary License</item>
   <item>Lancelot Bay</item>
-  <time>Nexus Drill Lance</time>
+  <item>Nexus Drill Lance</item>
  </tech>
  <tech name="Low Tech Upgrades">
   <item>Battery I</item>
