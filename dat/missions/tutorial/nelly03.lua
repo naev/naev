@@ -129,6 +129,8 @@ function accept ()
       nel(fmt.f(_([["Anyway, if my info is correct, there should be an asteroid field nearby at the {sys} system! You just have to take us there, and get some materials from it and we should all be set!"]]),
          {sys=mem.destsys}))
    end
+   nel(fmt.f(_([["I've recently learned about the notes functionality in the system map, it's very useful for writing down where good asteroids are! You can add notes to systems from the system map which you can access with the {mapkey}. You should try it out."]]),
+      {mapkey=tut.getKey("starmap")}))
 
    nel(_([["One second. I have to… uh… go to the bathroom before we can be off!"
 She runs off out of the spaceport bar.]]))
