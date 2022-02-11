@@ -93,6 +93,8 @@ static void load_snapshot_menu_close( unsigned int wdw, const char *str );
 static void load_snapshot_menu_load( unsigned int wdw, const char *str );
 static void load_snapshot_menu_delete( unsigned int wdw, const char *str );
 static void load_snapshot_menu_save( unsigned int wdw, const char *str );
+static void display_save_info( unsigned int wid, const nsave_t *ns );
+static void move_old_save( const char *path, const char *fname, const char *ext, const char *new_name );
 static int load_load( nsave_t *save, const char *path );
 static int load_game( nsave_t *ns );
 static int load_gameInternal( const char* file, const char* version );
@@ -335,36 +337,9 @@ static int load_enumeratePlayerNamesCallback( void* data, const char* origdir, c
       if (!ndata_copyIfExists( path, backup_path ))
          old_saves_detected = 1;
       free( backup_path );
-      if (name_len >= 4 && !strcmp( &fname[name_len-3], ".ns" )) {
-         char *dirname = strdup( fname );
-         dirname[strlen(dirname) - 3] = '\0';
-         char *new_path;
-         asprintf( &new_path, "saves/%s", dirname );
-         if (!PHYSFS_exists( new_path ))
-            PHYSFS_mkdir( new_path );
-         free( new_path );
-         asprintf( &new_path, "saves/%s/autosave.ns", dirname );
-         if (!ndata_copyIfExists( path, new_path ))
-            if (!PHYSFS_delete( path ))
-               dialogue_alert( _("Unable to delete %s"), path );
-         free( new_path );
-         free( dirname );
-      }
-      if (name_len >= 11 && !strcmp( &fname[name_len-10], ".ns.backup" )) {
-         char *dirname = strdup( fname );
-         dirname[strlen(dirname) - 10] = '\0';
-         char *new_path;
-         asprintf( &new_path, "saves/%s", dirname );
-         if (!PHYSFS_exists( new_path ))
-            PHYSFS_mkdir( new_path );
-         free( new_path );
-         asprintf( &new_path, "saves/%s/backup.ns", dirname );
-         if (!ndata_copyIfExists( path, new_path ))
-            if (!PHYSFS_delete( path ))
-               dialogue_alert( _("Unable to delete %s"), path );
-         free( new_path );
-         free( dirname );
-      }
+      move_old_save( path, fname, ".ns", "autosave.ns" );
+      move_old_save( path, fname, ".ns.backup", "backup.ns" );
+
    } else if (stat.filetype == PHYSFS_FILETYPE_DIRECTORY) {
       load_refresh( fname );
       if (array_size( load_getList() ) == 0) {
@@ -651,33 +626,15 @@ static void load_snapshot_menu_close( unsigned int wdw, const char *str )
 }
 
 /**
- * @brief Updates the load menu.
- *    @param wid Widget triggering function.
- *    @param str Unused.
- */
-static void load_menu_update( unsigned int wid, const char *str )
+* @brief Displays Naev save info.
+*    @param wid Widget for displaying save info.
+*    @param ns Naev save.
+*/
+static void display_save_info( unsigned int wid, const nsave_t *ns )
 {
-   (void) str;
-   int pos;
-   char *player_name;
-   const nsave_t *ns;
-   const char *save;
    char buf[STRMAX_SHORT], credits[ECON_CRED_STRLEN], date[64];
    size_t l = 0;
 
-   /* Make sure list is ok. */
-   save = toolkit_getList( wid, "lstNames" );
-   if (strcmp(save,_("None")) == 0)
-      return;
-
-   /* Get position. */
-   pos = toolkit_getListPos( wid, "lstNames" );
-   player_name = player_names[pos];
-
-   load_refresh( player_name );
-   ns = &load_getList()[0];
-
-   /* Display text. */
    credits2str( credits, ns->credits, 2 );
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
    l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s", _("Name:") );
@@ -700,6 +657,62 @@ static void load_menu_update( unsigned int wid, const char *str )
 }
 
 /**
+* @brief Moves old Naev saves to subdirectories.
+*    @param path Path to old file.
+*    @param fname Old filename.
+*    @param ext Extension of file to move.
+*    @param new_name Name for file in subdirectory.
+*/
+static void move_old_save( const char *path, const char *fname, const char *ext, const char *new_name )
+{
+   size_t name_len = strlen(fname);
+   size_t ext_len = strlen(ext);
+   if (name_len >= ext_len + 1 && !strcmp( &fname[name_len - ext_len], ext )) {
+      char *dirname = strdup( fname );
+      dirname[name_len - ext_len] = '\0';
+      char *new_path;
+      asprintf( &new_path, "saves/%s", dirname );
+      if (!PHYSFS_exists( new_path ))
+         PHYSFS_mkdir( new_path );
+      free( new_path );
+      asprintf( &new_path, "saves/%s/%s", dirname, new_name );
+      if (!ndata_copyIfExists( path, new_path ))
+         if (!PHYSFS_delete( path ))
+            dialogue_alert( _("Unable to delete %s"), path );
+      free( new_path );
+      free( dirname );
+   }
+}
+
+/**
+ * @brief Updates the load menu.
+ *    @param wid Widget triggering function.
+ *    @param str Unused.
+ */
+static void load_menu_update( unsigned int wid, const char *str )
+{
+   (void) str;
+   int pos;
+   char *player_name;
+   const nsave_t *ns;
+   const char *save;
+
+   /* Make sure list is ok. */
+   save = toolkit_getList( wid, "lstNames" );
+   if (strcmp(save,_("None")) == 0)
+      return;
+
+   /* Get position. */
+   pos = toolkit_getListPos( wid, "lstNames" );
+   player_name = player_names[pos];
+
+   load_refresh( player_name );
+   ns = &load_getList()[0];
+
+   display_save_info( wid, ns );
+}
+
+/**
  * @brief Updates the load snapshot menu.
  *    @param wid Widget triggering function.
  *    @param str Unused.
@@ -710,8 +723,6 @@ static void load_snapshot_menu_update( unsigned int wid, const char *str )
    int pos;
    nsave_t *ns;
    const char *save;
-   char buf[STRMAX_SHORT], credits[ECON_CRED_STRLEN], date[64];
-   size_t l = 0;
 
    /* Make sure list is ok. */
    save = toolkit_getList( wid, "lstSaves" );
@@ -722,26 +733,7 @@ static void load_snapshot_menu_update( unsigned int wid, const char *str )
    pos = toolkit_getListPos( wid, "lstSaves" );
    ns  = &load_saves[pos];
 
-   /* Display text. */
-   credits2str( credits, ns->credits, 2 );
-   ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s", _("Name:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->name );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Version:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->version );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Date:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", date );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Chapter:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->chapter );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Spob:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->spob );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Credits:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", credits );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Name:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->shipname );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Model:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->shipmodel );
-   window_modifyText( wid, "txtPilot", buf );
+   display_save_info( wid, ns );
 }
 
 /**
