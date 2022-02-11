@@ -54,11 +54,12 @@ local function generate_targets( difficulty )
    end
 end
 
-local moving, pointer, pointer_tail, speed, cx, cy, transition, alpha, done, shots, shots_max, shots_timer, shots_visual, z_cur, z_max, mfont, telapsed, tsincestart, tcompleted, completed, reward
+local moving, pointer, pointer_tail, speed, cx, cy, transition, alpha, done, shots, shots_max, shots_timer, shots_visual, z_cur, z_max, mfont, telapsed, tsincestart, tcompleted, completed, reward, standalone
 local radius = 150
 local img, shd_background, shd_pointer, shd_target, shd_shot
 function mining.load()
    local cc    = naev.cache().mining
+   standalone  = cc.standalone
    mfont       = lg.newFont(16)
    pointer     = 0
    pointer_tail = -math.pi/4
@@ -85,10 +86,11 @@ function mining.load()
    img = love.graphics.newImage( idata )
 
    -- Load shaders
-   local frag_background = lfile.read( "background.frag" )
-   local frag_pointer = lfile.read( "pointer.frag" )
-   local frag_target = lfile.read( "target.frag" )
-   local frag_shot = lfile.read( "shot.frag" )
+   local path = "scripts/minigames/mining/"
+   local frag_background = lfile.read( path.."background.frag" )
+   local frag_pointer = lfile.read( path.."pointer.frag" )
+   local frag_target = lfile.read( path.."target.frag" )
+   local frag_shot = lfile.read( path.."shot.frag" )
    shd_background = lg.newShader( frag_background )
    shd_pointer = lg.newShader( frag_pointer )
    shd_target = lg.newShader( frag_target )
@@ -317,7 +319,10 @@ function mining.update( dt )
    if transition >= 1 then
       alpha = 1
       if done then
-         love.event.quit()
+         if standalone then
+            love.event.quit()
+         end
+         return true
       end
    else
       alpha = ease(transition)
@@ -398,6 +403,7 @@ function mining.update( dt )
       end
    end
    shots_visual = sv
+   return false
 end
 
 return mining

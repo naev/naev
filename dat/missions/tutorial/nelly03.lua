@@ -48,8 +48,7 @@ local mining = require "minigames.mining"
 --[[
    Mission States:
    0: Accepted and going to mine
-   1: Acquired something
-   2: Flying back
+   1: Acquired something and flying back
 --]]
 mem.misn_state = nil
 -- luacheck: globals enter land heartbeat (Hook functions passed by name)
@@ -71,9 +70,10 @@ function create ()
    if #system.cur():asteroidFields() > 0 then
       mem.destsys = system.cur()
    else
-      mem.destsys = lmisn.getSysAtDistance( system.cur(), 0, 1, function( s )
+      local candidates = lmisn.getSysAtDistance( system.cur(), 0, 1, function( s )
          return (#s:asteroidFields() > 0)
       end )
+      mem.destsys = candidates[ rnd.rnd(1,#candidates) ]
    end
    if not misn.claim{ mem.destsys } then
       misn.finish()
@@ -196,7 +196,7 @@ local function drilltime ()
    nel(_([["When I activate it, you'll see the drill interface. It will start stopped and you have to press any key for it to start. You have to press the trigger when the blue scanning thing is inside the red optimal target zone. I guess this is easier shown then done. Let me start it up and go ahead and try it!"]]))
 
    vn.label("mining")
-   mining.vn{ difficulty = 0, reward_func = function( bonus )
+   mining.vn{ difficulty=0, shots_max=2, reward_func=function( bonus )
       mining_tries = mining_tries + 1
       if bonus >= 1 then
          mining_success = true
@@ -250,6 +250,7 @@ She gives a small reverence to the debris before coming back to her happy self.
    vn.done( tutnel.nelly.transition )
    vn.run()
 
+   mem.misn_state = 1
    misn.osdActive(3)
 end
 
@@ -286,7 +287,7 @@ end
 
 function land ()
    local cpnt = spob.cur()
-   if cpnt == mem.retpnt and mem.misn_state >= 3 then
+   if cpnt == mem.retpnt and mem.misn_state >= 1 then
       -- Finished mission
       vn.clear()
       vn.scene()

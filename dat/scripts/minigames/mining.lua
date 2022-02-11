@@ -14,6 +14,8 @@ local function setup( params, standalone )
    c.mining.standalone = standalone
    c.mining.difficulty = params.difficulty
    c.mining.reward_func = params.reward_func
+   c.mining.speed = params.speed
+   c.mining.shots_max = params.shot_max
 end
 
 --[[
