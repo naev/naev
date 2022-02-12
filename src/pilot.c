@@ -1000,12 +1000,12 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
    /* Send message to player. */
    if (p->id == PLAYER_ID) {
       if (p->ctimer < 0.)
-         player_message(_("#oActive cooldown completed."));
+         player_message("#o%s",_("Active cooldown completed."));
       else {
          if (reason != NULL)
             player_message(_("#rActive cooldown aborted: %s!"), reason);
          else
-            player_message(_("#rActive cooldown aborted!"));
+            player_message("#r%s",_("Active cooldown aborted!"));
       }
    }
 
@@ -2611,14 +2611,14 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
          if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
-               player_message( _("#rStrayed too far from jump point: jump aborted.") );
+               player_message( "#r%s", _("Strayed too far from jump point: jump aborted.") );
       }
       else if (pilot_isFlag(p,PILOT_AFTERBURNER)) {
          pilot_hyperspaceAbort( p );
 
          if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
-               player_message( _("#rAfterburner active: jump aborted.") );
+               player_message( "#r%s", _("Afterburner active: jump aborted.") );
       }
       else {
          if (p->ptimer < 0.) { /* engines ready */
@@ -2638,7 +2638,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
          if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
-               player_message( _("#rStrayed too far from jump point: jump aborted.") );
+               player_message( "#r%s", _("Strayed too far from jump point: jump aborted.") );
       }
       else {
          /* If the ship needs to charge up its hyperdrive, brake. */
