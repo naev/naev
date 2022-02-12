@@ -26,9 +26,7 @@ end
 local function __estimate_strength( pilots )
    local str = 0
    for k,p in ipairs(pilots) do
-      -- TODO this is awful, do something better
-      local s = math.pow( p:ship():size(), 1.5 )
-      str = str + s
+      str = str + p:ship():points()
    end
    -- Diminishing returns for large strengths
    -- ((x+1)**(1-n) - 1)/(1-n)
