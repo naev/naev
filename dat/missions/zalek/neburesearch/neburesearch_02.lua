@@ -29,6 +29,7 @@
 
 local fmt = require "format"
 local nebu_research = require "common.nebu_research"
+local vn = require 'vn'
 
 local mensing_portrait = nebu_research.mensing.portrait
 
@@ -55,7 +56,7 @@ function accept()
     vn.transition("fade")
 
     mensing(fmt.f(_([["Well met, {player}! In fact, it's a lucky coincidence that we meet. You see, I'm in dire need of your service."]]), {player=player:name()}))
-    mensing(_([["I'm here on a... conference of sorts, not a real one. We are obligated to present the newest results of our research to scientists of the Empire once per period - even though these jokers lack the skills to understand our works! It's just a pointless ritual anyway."]]))
+    mensing(_([["I'm here on a... conference of sorts, not a real one. We are obligated to present the newest results of our research to scientists of the Empire once per period - even though these jokers lack the skills to understand our work! It's just a pointless ritual anyway."]]))
     mensing(_([["But I just got an ingenious idea on how to prevent the volatile Sol nebula from disrupting ship shields! I will spare you with the details - to ensure my idea is not going to be stolen, nothing personal. You can never be sure who is listening."]]))
     mensing(fmt.f(_([["Anyway, you have to take me back to my lab on {pnt} in the {sys} system immediately! I'd also pay {credits} if necessary."]]), {pnt=homeworld, sys=homeworld_sys, credits=fmt.credits(credits)}))
     vn.menu( {
@@ -102,7 +103,7 @@ But before I forget, there's some issue..."]]))
     misn.setDesc(fmt.f(_("Take Dr. Mensing to {pnt} in the {sys} system as fast as possible!"), {pnt=homeworld, sys=homeworld_sys}))
     mem.misn_marker = misn.markerAdd(homeworld, "low")
 
-    local c = commodity.new( N_("Dr. Mensing"), N_("You need to bring Dr. Mensing to {sys} but the Empire will assume you have kidnapped her if they scan you!") )
+    local c = commodity.new( N_("Dr. Mensing"), fmt.f(N_("You need to bring Dr. Mensing to {sys} but the Empire will assume you have kidnapped her if they scan you!"), {sys=homeworld_sys}) )
     c:illegalto( {"Empire"} )
     mem.carg_id = misn.cargoAdd( c, 0 )
 
@@ -121,9 +122,9 @@ function land()
         vn.scene()
         local mensing = vn.newCharacter( nebu_research.vn_mensing() )
         vn.transition("fade")
-        mensing(fmt.f(_([["Finally! I can't await getting started. Before I forget -" She hands you over a credit chip worth {credits}.]]), {credits=fmt.credits(credits)}))
+        mensing(fmt.f(_([["Finally! I can't await getting started. Before I forget -" She hands you a credit chip worth {credits}.]]), {credits=fmt.credits(credits)}))
         mensing(_([["There's actually another thing I've almost forgotten. I also have to attend another conference very soon on behalf of professor Voges who obviously is very busy with some project he would not tell me about. But I don't want to go there - my research is far too important! So could you instead bring Robert there? You remember the student you helped out recently? I'm sure he will do the presentation just fine! I'll tell him to meet you in the bar as soon as possible!"]]))
-        mensing(_("With that being said Dr. Mensing leaves you immediately without waiting for your answer. It appears you should head to the bar to meet up with the student."))
+        mensing(_("With that being said, Dr. Mensing leaves you immediately without waiting for your answer. It appears you should head to the bar to meet up with the student."))
         vn.done()
         vn.run()
         player.pay(credits)

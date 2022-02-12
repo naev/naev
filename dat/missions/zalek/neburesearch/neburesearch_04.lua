@@ -10,6 +10,7 @@
   <chance>10</chance>
   <location>Bar</location>
   <faction>Za'lek</faction>
+  <cond>system.get("Hideyoshi's Star"):jumpDist() &gt; 2</cond>
  </avail>
  <notes>
   <campaign>Nebula Research</campaign>
@@ -27,6 +28,7 @@
 --]]
 local fmt = require "format"
 local nebu_research = require "common.nebu_research"
+local vn = require 'vn'
 
 local mensing_portrait = nebu_research.mensing.portrait
 
@@ -38,7 +40,7 @@ local dest_planet, dest_sys = spob.getS("Jurai")
 local credits = nebu_research.rewards.credits04
 
 function create()
-    misn.setNPC(_("Dr. Mensing"), mensing_portrait, _("She probably has a new poorly paid job for you. Maybe she won't notice you if you leave now."))
+    misn.setNPC(_("Dr. Mensing"), mensing_portrait, _("She probably has a new poorly-paid job for you. Maybe she won't notice you if you leave now."))
 end
 
 function accept()
@@ -69,11 +71,12 @@ function accept()
     end
 
     mem.stage = 0
+    mem.dest_planet = dest_planet
 
     -- Set up mission information
     misn.setTitle(_("Shielding Prototype Funding"))
     misn.setReward(fmt.credits(credits))
-    misn.setDesc(_("Help Dr. Mensing to get funding for constructing a shielding prototype."))
+    misn.setDesc(_("Help Dr. Mensing to get funding to construct a shielding prototype."))
     mem.misn_marker = misn.markerAdd(dest_sys, "low")
 
     misn.accept()
@@ -88,57 +91,59 @@ function accept()
 end
 
 local function dest_updated()
-   misn.markerMove(mem.misn_marker, dest_planet)
+   misn.markerMove(mem.misn_marker, mem.dest_planet)
    misn.osdCreate(_("Shielding Prototype Funding"), {
-      fmt.f(_("Land on {pnt} in the {sys} system."), {pnt=dest_planet, sys=dest_sys}),
+      fmt.f(_("Land on {pnt} in the {sys} system."), {pnt=mem.dest_planet, sys=dest_sys}),
       fmt.f(_("Return to {pnt} in the {sys} system."), {pnt=homeworld, sys=homeworld_sys}),
     })
 end
 
 function land()
     mem.landed = spob.cur()
-    if mem.landed == dest_planet then
+    if mem.landed == mem.dest_planet then
         vn.clear()
         vn.scene()
         local mensing = vn.newCharacter( nebu_research.vn_mensing() )
         vn.transition("fade")
         if mem.stage == 0 then
             mem.stage = 1
-            dest_planet, dest_sys = planet.getS("Neo Pomerania")
-            vn.na(_([[After landing on {cur_pnt} Dr. Mensing tells you to wait until she returns. "Not more than a couple of periods." she said; in fact you had to wait for only two periods until she returned. She comes back looking defeated.]]))
-            mensing(fmt.f(_([["This is the first time that one of my applications was rejected. That's weird, I got positive feedback at first. It makes no sense that my application was rejected at the last minute. I guess things like this happen. Let's just go to {pnt} in the {sys} system next and try again."]]), {cur_pnt=mem.landed, pnt=dest_planet, sys=dest_sys}))
+            mem.dest_planet, dest_sys = spob.getS("Neo Pomerania")
+            vn.na(fmt.f(_([[After landing on {cur_pnt}, Dr. Mensing tells you to wait until she returns. "Not more than a couple of periods." she said; in fact you had to wait for only two periods until she returned. She comes back looking defeated.]]), {cur_pnt=mem.landed}))
+            mensing(fmt.f(_([["This is the first time that one of my applications was rejected. That's weird. I got positive feedback at first. It makes no sense that my application was rejected at the last minute. I guess things like this happen. Let's just go to {pnt} in the {sys} system next and try again."]]), {pnt=mem.dest_planet, sys=dest_sys}))
             vn.done()
             vn.run()
             dest_updated()
         elseif mem.stage == 2 then
             mem.stage = 3
-            dest_planet, dest_sys = planet.getS("Ruadan Prime")
+            mem.dest_planet, dest_sys = spob.getS("Ruadan Prime")
             mensing(fmt.f(_([["Alright, I'm sure it will work out this time!", Dr. Mensing said on arriving on {cur_pnt}.]]), {cur_pnt=mem.landed}))
             vn.na(_([[This time you have to wait even longer for her to return. The result is the same as her first try.]]))
-            mensing(fmt.f(_([["I don't get it. My presentation is flawless and my proposal is exciting. Why wouldn't they grant me additional funds? I tell you, something is wrong here! Hmm... Time to change tactics. I have to speak with Professor Voges himself but he is currently on {pnt} in the {sys} system and just ignores us. I guess we have to go there to speak with him face-to-face."]]), {pnt=dest_planet, sys=dest_sys}))
+            mensing(fmt.f(_([["I don't get it. My presentation is flawless and my proposal is exciting. Why wouldn't they grant me additional funds? I tell you, something is wrong here! Hmm... Time to change tactics. I have to speak with Professor Voges himself but he is currently on {pnt} in the {sys} system and just ignores us. I guess we have to go there to speak with him face-to-face."]]), {pnt=mem.dest_planet, sys=dest_sys}))
             vn.done()
             vn.run()
             dest_updated()
         elseif mem.stage == 4 then
             mem.stage = 5
-            dest_planet, dest_sys = planet.getS("Excelcior")
-            mensing(fmt.f(_([["Good news! I asked around and found a clue how to contact Professor Voges. He promised one of his colleagues to show up to his party. Something about his wife, like they have gotten married or she died or something. Anyway, I managed to get invited there as well. So let's go to {pnt} in the {sys} system!"]]), {pnt=dest_planet, sys=dest_sys}))
+            mem.dest_planet, dest_sys = spob.getS("Excelcior")
+            mensing(fmt.f(_([["Good news! I asked around and found a way to contact Professor Voges. He promised to show up to one of his colleague's parties. Something about his wife, like they have gotten married, or she died, or something. Anyway, I managed to get invited there as well. So let's go to {pnt} in the {sys} system!"]]), {pnt=mem.dest_planet, sys=dest_sys}))
             vn.done()
             vn.run()
             dest_updated()
         elseif mem.stage == 5 or mem.stage == 6 then
             mem.stage = 7
-            dest_planet = homeworld
+            mem.dest_planet = homeworld
             dest_sys = homeworld_sys
-            vn.na(_([[The two of you arrive at the party site.]]))
-            mensing(_([["Listen, this is probably your first party so let me briefly explain to you how it works. Your goal usually is to talk with all people, draw some attention, let them know you were attending the party. Efficiency is most important here. The earlier you're done with demonstrating your presence and making a good impression; the earlier you can leave and do something useful."]]))
-            mensing(_([["You'll need an escape strategy to leave unnoticed though; It'd be rude when someone sees you leaving early. As you're a beginner I give you a tip: take the window of the bath room in the ground floor. No one will be able to see you from inside the house if you climb over the fence."]]))
-            vn.na(_([[You wonder if anything of that was meant serious. Before you can ask, Dr. Mensing runs off engaging an older looking man, probably Professor Voges. She does not waste any time and brings up the issue straight on, visibly discomforting him. It's time to explore the party.]]))
-            vn.na(_([[You expect a Za'lek party to be much different from a regular party. In fact the first two things you notice are the classical music and the absence of any alcoholic drinks. There is however a buffet, in particular there is a small fridge with ice cream. You can spot a fair amount of people eating ice cream. Is this the Za'lek equivalent of beer?]]))
-            vn.na(_([[Before you know it you've engaged in a conversation with one of the scientists; He saw you enter with Dr. Mensing which motivates him to ask the question of the hour.. whether you and her are dating. In an attempt to clear his misgivings about the situation you tell him that she hired you. Hopefully he believes you..]]))
-            vn.na(_([[You continue your tour, as you come close to one of the windows from the corner of your eye you see something fall outside, followed by a dull thump. Looking out of the window you see a figure dressed in a lab coat trying to stand up slowly. You're about to open the window and ask if he needs help, but he notices you and gestures to be silent as he hobbles off. Those Za'lek are indeed trying to escape the party.]]))
+            vn.na(_([[The two of you arrive at the location of the party.]]))
+            mensing(_([["Listen, this is probably your first party, so let me briefly explain to you how it works. Your goal, usually, is to talk with all people, draw some attention, let them know you attended the party. Efficiency is most important here. The earlier you're done with demonstrating your presence and making a good impression; the earlier you can leave and do something useful."]]))
+            mensing(_([["You'll need an escape strategy to leave unnoticed though; It's gauche if someone sees you leaving early. As you're a beginner, I'll give you a tip: sneak out the window of the bathroom on the ground floor. No one will be able to see you from inside the house if you climb over the fence."]]))
+            vn.na(_([[You wonder if Dr. Mensing meant any of that seriously. Before you can ask, Dr. Mensing runs off, engaging an older looking man, probably Professor Voges. She does not waste any time and brings the issue straight on, visibly discomforting him. It's time to explore the party.]]))
+            vn.disappear( mensing, "slideleft" )
+            vn.na(_([[You expect a Za'lek party to be much different from a regular party. In fact, the first two things you notice are the classical music and the absence of any alcoholic drinks. There is, however, a buffet. In particular, there is a small fridge with ice cream. You spot a fair amount of people eating ice cream. Is this the Za'lek equivalent of beer?]]))
+            vn.na(_([[Before you know it, you've engaged in a conversation with one of the scientists; He saw you enter with Dr. Mensing, which motivates him to ask the question of the hour… whether you and her are dating. In an attempt to clear his misgivings about the situation you tell him that she hired you. Hopefully he believes you…]]))
+            vn.na(_([[You continue your tour. As you come close to one of the windows from the corner of your eye you see something fall outside, followed by a dull thump. Looking out of the window you see a figure dressed in a lab coat trying to stand up slowly. You're about to open the window and ask if he needs help, but he notices you and gestures to be silent as he hobbles off. These Za'lek are indeed trying to escape the party.]]))
             vn.na(_([["At least the ice cream is great!" you think as you take another bite. Suddenly someone grabs your arm.]]))
-            mensing(fmt.f(_([["We're done here. Bring me back to {pnt}!" Dr. Mensing quietly tells you.]]), {pnt=dest_planet}))
+            vn.appear( mensing, "slideleft" )
+            mensing(fmt.f(_([["We're done here. Bring me back to {pnt}!" Dr. Mensing quietly tells you.]]), {pnt=mem.dest_planet}))
             vn.na(_([[For a moment you wonder what she is doing as she drags you towards the bathroom; finally you remember what she said about her 'escape strategy'. She mentioned that you are supposed to leave the building through the window of the bathroom.]]))
             vn.done()
             vn.run()
@@ -161,9 +166,9 @@ function jumpin()
    if mem.stage == 1 and system.cur() == dest_sys then
       local scom = {}
       mem.stage = 2
-      scom[1] = pilot.add("Za'lek Light Drone", "Mercenary", dest_planet, nil, {ai="baddiepos"})
-      scom[2] = pilot.add("Za'lek Light Drone", "Mercenary", dest_planet, nil, {ai="baddiepos"})
-      scom[3] = pilot.add("Za'lek Heavy Drone", "Mercenary", dest_planet, nil, {ai="baddiepos"})
+      scom[1] = pilot.add("Za'lek Light Drone", "Mercenary", mem.dest_planet, nil, {ai="baddiepos"})
+      scom[2] = pilot.add("Za'lek Light Drone", "Mercenary", mem.dest_planet, nil, {ai="baddiepos"})
+      scom[3] = pilot.add("Za'lek Heavy Drone", "Mercenary", mem.dest_planet, nil, {ai="baddiepos"})
       for k,p in ipairs(scom) do
          p:setHostile(true)
          p:memory().guardpos = player.pos() -- Just go towards the player position and attack if they are around
@@ -210,17 +215,17 @@ function startAmbush()
 end
 
 function cannotLand()
-    local cur_planet = dest_planet
+    local cur_planet = mem.dest_planet
     mem.stage = 4
-    dest_planet, dest_sys = spob.getS("Ruadan Station")
+    mem.dest_planet, dest_sys = spob.getS("Ruadan Station")
     vn.clear()
     vn.scene()
     local mensing = vn.newCharacter( nebu_research.vn_mensing() )
     vn.transition("fade")
-    vn.na(fmt.f(_([[Apparently you are not allowed to land on {cur_pnt} and explaining the situation was futile. Dr. Mensing enters the cockpit asking why you aren't landing."]]), {cur_pnt=cur_planet}))
+    vn.na(fmt.f(_([[Apparently, you are not allowed to land on {cur_pnt} and explaining the situation was futile. Dr. Mensing enters the cockpit asking why you aren't landing.]]), {cur_pnt=cur_planet}))
     mensing(_([["We're not allowed to? Let me try to talk with them."]]))
     vn.na(_([[After a heated discussion Dr. Mensing gives up.]]))
-    mensing(fmt.f(_([["Right, they won't allow anyone to land on {cur_pnt}. That's so frustrating. Let's land on {pnt} instead."]]), {cur_pnt=cur_planet, pnt=dest_planet}))
+    mensing(fmt.f(_([["Right, they won't allow anyone to land on {cur_pnt}. That's so frustrating. Let's land on {pnt} instead."]]), {cur_pnt=cur_planet, pnt=mem.dest_planet}))
     vn.done()
     vn.run()
     dest_updated()

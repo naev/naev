@@ -37,7 +37,7 @@ local student_portrait = nebu_research.student.portrait
 
 -- Mission Constants
 local t_sys = { system.get("Doeston"), system.get("Iris") }
-local homeworld, homeworld_sys = planet.getS("Jorla")
+local homeworld, homeworld_sys = spob.getS("Jorla")
 local credits = nebu_research.rewards.credits00
 -- Mission states:
 --  nil: mission not accepted yet
@@ -82,7 +82,7 @@ He leaves the bar. It appears he has given up finding a pilot, at least for now.
     } )
     vn.label( "decline" )
     student(_([["Hold up! Look, the problem is that my grant was not permitted to the extent that I asked for. Those assholes cut my funds because they just don't understand the relevance of my research. Just because I'm still a student they completely underestimate my abilities!"]]))
-    student(_([["Now I've spent all my credits on this sensor suit without the ability to use it. You must know how this feels. I mean, your ship obviously could use some work. So why don't you just help me out here?"]]))
+    student(_([["Now I've spent all my credits on this sensor suite without the ability to use it. You must know how this feels. I mean, your ship obviously could use some work. So why don't you just help me out here?"]]))
     vn.menu( {
         { _("Offer to help him"), "finally_accept" },
         { _("Decline to help"), "really_decline" },
@@ -91,7 +91,7 @@ He leaves the bar. It appears he has given up finding a pilot, at least for now.
     vn.na(_("You decline. Why would you accept such a dangerous job without a proper payment?"))
     vn.done()
     vn.label( "accept" )
-    student(_([["So it is not a problem at all? I'm still a student and spent all funds I got on the sensor suit. Thank you for helping me out here! I'll start to load the sensors into your ship right away. We should be ready to take off soon."
+    student(_([["So it is not a problem at all? I'm still a student and spent all funds I got on the sensor suite. Thank you for helping me out here! I'll start to load the sensors into your ship right away. We should be ready to take off soon."
 With that said he hurries and leaves the bar.]]))
     vn.func( function () accepted = true end )
     vn.done()
@@ -108,7 +108,7 @@ With that said he hurries and leaves the bar.]]))
     end
 
     -- Add cargo
-    local c = misn.cargoNew( N_("Nebula Sensor Suit"), N_("A heavy suit with lots of fancy looking sensors.") )
+    local c = commodity.new( N_("Nebula Sensor Suite"), N_("A heavy suite with lots of fancy looking sensors.") )
     mem.cargo = misn.cargoAdd(c, 5)
 
     -- Set up mission information
@@ -133,7 +133,7 @@ With that said he hurries and leaves the bar.]]))
 end
 
 function land()
-    mem.landed = planet.cur()
+    mem.landed = spob.cur()
     if mem.misn_stage == 3 and mem.landed == homeworld then
         vn.clear()
         vn.scene()
@@ -161,7 +161,7 @@ function takeoff()
     student:rename(_("Student"))
     vn.transition("fade")
     vn.na(_("As you enter your ship you notice dozens of cables of various colors stretched across your ship's corridors. It is a complete mess. You follow the direction most of the cables seem to lead to and find the culprit."))
-    student(fmt.f(_([["Oh, hello again, Captain! I'm done with my work here, so we can take off whenever you're ready. I have to calibrate the sensors during the flight so there is no need to rush. Our first destination is {sys}."]]), {sys=t_sys[1]}))
+    student(fmt.f(_([["Oh, hello again, Captain! I'm done with my work here, so we can take off whenever you're ready. I have to calibrate the sensors during the flight, so there is no need to rush. Our first destination is {sys}."]]), {sys=t_sys[1]}))
     vn.na(_("You try to maintain composure as you ask him what he has done to your ship."))
     student(_([["Oh, I just installed the sensors. It should have no unwanted side effects on your ship."]]))
     student(_([["A mess, you say? Haven't you noticed the color coding? Don't worry, I know exactly what I'm doing!"
@@ -231,7 +231,7 @@ function stopProblems()
     vn.scene()
     local student = vn.newCharacter( nebu_research.vn_student() )
     vn.transition("fade")
-    vn.na(_("You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful considering his response."))
+    vn.na(_("You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful, considering his response."))
     if zlk.hasZalekShip() then
         student(_([["Sorry for causing trouble. I seem to have underestimated the polarity feedback loop granularity. If it weren't for your Za'lek ship the problem would have been much worse!"]]))
     else
