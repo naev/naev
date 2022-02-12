@@ -447,6 +447,10 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    const glColour *c, *dc, *rc;
    glColour bc;
 
+   /* Shouldn't be happening, but let's be nice and not crash. */
+   if (lst==NULL)
+      return;
+
    /* Render text. */
    if ((o != NULL) && (lst[0].sslot->slot.type == o->slot.type))
       c = &cFontGreen;
