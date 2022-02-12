@@ -256,7 +256,7 @@ function handle_messages( si, dopush )
    local p = ai.pilot()
    local l = p:leader()
    for i, msg in ipairs(ai.messages()) do
-      local sender, msgtype, data = table.unpack(msg)
+      local sender, msgtype, data = msg[1], msg[2], msg[3]
 
       -- This is the case that the message is being sent from the environment, such as asteroids
       if sender==nil then
