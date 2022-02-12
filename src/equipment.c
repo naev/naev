@@ -2315,4 +2315,7 @@ void equipment_cleanup (void)
       free(iar_outfits);
       iar_outfits = NULL;
    }
+
+   /* Safe defaults. */
+   eq_wgt.selected      = NULL;
 }
