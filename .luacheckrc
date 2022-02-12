@@ -119,6 +119,7 @@ stds.AI.globals = {
    "create_post",               -- the standardized final step of every create()
    "idle",                      -- a task, commonly called and overridden
    "should_attack",             -- discretion may or may not be the better part of valor. Everyone gets an opinion.
+   "should_investigate",
    "taunt",                     -- everyone has their own!
    "transportParam",            -- initialization helper for the AIs
 }

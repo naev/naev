@@ -95,6 +95,7 @@ function drill.ontoggle( p, _po, on )
          reward_func = reward,
       }
    end
+
    a:setTimer( -1 ) -- Get rid of the asteroid
 
    return false

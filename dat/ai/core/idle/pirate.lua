@@ -343,6 +343,18 @@ function should_attack( enemy, si )
    return true
 end
 
+-- Try to investigate
+function should_investigate( pos, _si )
+   local d = ai.dist2( pos )
+   local ec = mem.enemyclose or math.huge
+   if d < lanes.getDistance2P( ai.pilot(), pos ) then
+      return false
+   elseif d < ec then
+      return true
+   end
+   return false
+end
+
 -- Settings
 mem.doscans       = false
 mem.loiter        = math.huge -- They loiter until they can steal!

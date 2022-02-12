@@ -54,6 +54,7 @@ typedef struct AsteroidType_ {
    double disable;      /**< Disable on explosion. */
    double penetration;  /**< Penetration of the explosion. */
    double exp_radius;   /**< Explosion radius. */
+   double alert_range;  /**< Range to alert other ships. */
 } AsteroidType;
 
 /**

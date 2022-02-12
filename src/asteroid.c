@@ -22,6 +22,7 @@
 #include "toolkit.h"
 #include "ndata.h"
 #include "player.h"
+#include "nlua_asteroid.h"
 
 /**
  * @brief Represents a small asteroid debris rendered in the player frame.
@@ -692,6 +693,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
    at->damage     = 100;
    at->penetration = 100.;
    at->exp_radius = 50.;
+   at->alert_range = 7000.;
 
    xmlr_attr_strd(parent,"name",at->name);
    if (at->name == NULL)
@@ -710,6 +712,7 @@ static int asttype_parse( AsteroidType *at, const char *file )
       xmlr_float( node, "disable", at->disable );
       xmlr_float( node, "penetration", at->penetration );
       xmlr_float( node, "exp_radius", at->exp_radius );
+      xmlr_float( node, "alert_range", at->alert_range );
 
       if (xml_isNode(node,"gfx")) {
          array_push_back( &at->gfxs, xml_parseTexture( node, SPOB_GFX_SPACE_PATH"asteroid/%s", 1, 1,  OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
@@ -1108,8 +1111,11 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
 {
    Damage dmg;
    char buf[16];
+   double rad2;
+   LuaAsteroid_t la;
    const AsteroidType *at = a->type;
    AsteroidAnchor *field = &cur_system->asteroids[a->parent];
+   Pilot *const* pilot_stack = pilot_getAll();
 
    /* Manage the explosion */
    dmg.type          = dtype_get("explosion_splash");
@@ -1122,6 +1128,21 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
    /* Play random explosion sound. */
    snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
    sound_playPos( sound_get(buf), a->pos.x, a->pos.y, a->vel.x, a->vel.y );
+
+   /* Alert nearby pilots. */
+   rad2 = pow2( at->alert_range );
+   la.parent = a->parent;
+   la.id = a->id;
+   lua_pushasteroid( naevL, la );
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *p = pilot_stack[i];
+
+      if (vect_dist2( &p->solid->pos, &a->pos ) > rad2)
+         continue;
+
+      pilot_msg( NULL, p, "asteroid", -1 );
+   }
+   lua_pop(naevL,1);
 
    /* Release commodity rewards. */
    if (max_rarity >= 0) {

@@ -255,11 +255,22 @@ function handle_messages( si, dopush )
    local taskchange = false
    local p = ai.pilot()
    local l = p:leader()
-   for _, msg in ipairs(ai.messages()) do
+   for i, msg in ipairs(ai.messages()) do
       local sender, msgtype, data = table.unpack(msg)
 
+      -- This is the case that the message is being sent from the environment, such as asteroids
+      if sender==nil then
+         if msgtype == "asteroid" then
+            local ap = data:pos()
+            if not si.fighting and not si.noattack and should_investigate( ap, si ) then
+               ap = ap + vec2.newP( 500*rnd.rnd(), rnd.angle () )
+               ai.pushtask("inspect_moveto", ap )
+               taskchange = true
+            end
+         end
+
       -- Special case leader is gone but we want to follow, so e ignore if they're non-existent.
-      if sender == l then
+      elseif sender == l then
          if msgtype == "hyperspace" then
             if dopush then
                ai.pushtask("hyperspace", data)
@@ -271,10 +282,9 @@ function handle_messages( si, dopush )
                taskchange = true
             end
          end
-      end
 
       -- Skip message from nonexistent sender
-      if sender:exists() then
+      elseif sender:exists() then
 
          -- Below we only handle if they came from allies
          -- (So far, only allies would send in the first place, but this check future-proofs things.
@@ -367,7 +377,9 @@ local function sameFleet( pa, pb )
    return la == lb
 end
 
-
+--[[
+-- Whether or not the pilot should try to attack an enemy.
+--]]
 function should_attack( enemy, si )
    if not enemy or not enemy:exists() then
       return false
@@ -418,6 +430,17 @@ function should_attack( enemy, si )
          return true
       end
    else
+      return true
+   end
+   return false
+end
+
+--[[
+-- Whether or not the pilot should investigate a certain location.
+--]]
+function should_investigate( pos, _si )
+   local d = mem.enemyclose or math.huge
+   if mem.doscans and rnd.rnd() < 0.2 and ai.dist2(pos) < d then
       return true
    end
    return false
