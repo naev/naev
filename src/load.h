@@ -14,8 +14,10 @@
  * @brief A naev save.
  */
 typedef struct nsave_s {
+   char *save_name; /** Snapshot name. */
    char *name; /**< Player name. */
    char *path; /**< File path relative to PhysicsFS write directory. */
+   PHYSFS_sint64 modtime;
 
    /* Naev info. */
    char *version; /**< Naev version. */
@@ -33,10 +35,17 @@ typedef struct nsave_s {
 } nsave_t;
 
 void load_loadGameMenu (void);
+void load_loadSnapshotMenu ( const char *name );
+
 int load_gameDiff( const char* file );
 int load_gameFile( const char* file );
-int load_game( nsave_t *ns );
 
-int load_refresh (void);
+int load_refresh ( const char *name );
 void load_free (void);
 const nsave_t *load_getList (void);
+
+int load_refreshPlayerNames (void);
+void load_freePlayerNames (void);
+const char **load_getPlayerNames (void);
+
+void load_freeSelectedPlayerName (void);
