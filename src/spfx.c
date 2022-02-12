@@ -1146,7 +1146,6 @@ static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
  */
 static int trailSpec_load (void)
 {
-   TrailSpec *tc, *parent;
    xmlNodePtr first, node;
    xmlDocPtr doc;
    char *name, *inherits;
@@ -1172,11 +1171,12 @@ static int trailSpec_load (void)
 
    trail_spec_stack = array_create( TrailSpec );
 
+   /* First pass sets up and prepares inheritance. */
    node = first;
    do {
       xml_onlyNodes( node );
       if (xml_isNode(node,"trail")) {
-         tc = &array_grow( &trail_spec_stack );
+         TrailSpec *tc = &array_grow( &trail_spec_stack );
          memset( tc, 0, sizeof(TrailSpec) );
          for(int i=0; i<MODE_MAX; i++)
             tc->style[i].thick = 1.;
@@ -1188,6 +1188,7 @@ static int trailSpec_load (void)
             trailSpec_parse( node, tc );
          else
             free( inherits );
+         continue;
       }
    } while (xml_nextNode(node));
 
@@ -1196,6 +1197,7 @@ static int trailSpec_load (void)
    do {
       xml_onlyNodes( node );
       if (xml_isNode(node,"trail")) {
+         TrailSpec *tc, *parent;
          /* Only interested in inherits. */
          xmlr_attr_strd( node, "inherits", inherits );
          if (inherits == NULL)
@@ -1221,10 +1223,12 @@ static int trailSpec_load (void)
 
          /* Load remaining properties (overrides parent). */
          trailSpec_parse( node, tc );
+         continue;
       }
    } while (xml_nextNode(node));
 
-   for (tc=array_begin(trail_spec_stack); tc!=array_end(trail_spec_stack); tc++) {
+   /* Set up thickness. */
+   for (TrailSpec *tc=array_begin(trail_spec_stack); tc!=array_end(trail_spec_stack); tc++) {
       for(int i=0; i<MODE_MAX; i++)
          tc->style[i].thick *= tc->def_thick;
    }
