@@ -4918,7 +4918,8 @@ static int pilotL_msg( lua_State *L )
    if (!lua_istable(L,2)) {
       receiver = luaL_validpilot(L,2);
       pilot_msg(p, receiver, type, data);
-   } else {
+   }
+   else {
       lua_pushnil(L);
       while (lua_next(L, 2) != 0) {
          receiver = luaL_validpilot(L,-1);

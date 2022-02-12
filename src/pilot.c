@@ -3730,8 +3730,10 @@ void pilot_msg( Pilot *p, Pilot *receiver, const char *type, unsigned int idx )
 
    lua_newtable(naevL); /* data, msg */
 
-   lua_pushpilot(naevL, p->id); /* data, msg, sender */
-   lua_rawseti(naevL, -2, 1); /* data, msg */
+   if (p != NULL) {
+      lua_pushpilot(naevL, p->id); /* data, msg, sender */
+      lua_rawseti(naevL, -2, 1); /* data, msg */
+   }
 
    lua_pushstring(naevL, type); /* data, msg, type */
    lua_rawseti(naevL, -2, 2); /* data, msg */
