@@ -43,7 +43,7 @@
 #define LOAD_WIDTH      600 /**< Load window width. */
 #define LOAD_HEIGHT     530 /**< Load window height. */
 
-#define BUTTON_WIDTH    200 /**< Button width. */
+#define BUTTON_WIDTH    120 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
 
 /**
@@ -466,19 +466,19 @@ void load_loadGameMenu (void)
    }
 
    /* Player text. */
-   window_addText( wid, -20, -40, 240, LOAD_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
+   window_addText( wid, -20, -40, BUTTON_WIDTH*2+20, LOAD_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
          0, "txtPilot", &gl_smallFont, NULL, NULL );
 
-   window_addList( wid, 20, -50,
-         LOAD_WIDTH-240-60, LOAD_HEIGHT-110,
+   window_addList( wid, 20, -40,
+         LOAD_WIDTH-BUTTON_WIDTH*2-80, LOAD_HEIGHT-110,
          "lstNames", names, n, pos, load_menu_update, load_menu_load );
 
    /* Buttons */
    window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnBack", _("Back"), load_menu_close, SDLK_b );
-   window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT+5, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButtonKey( wid, -20-BUTTON_WIDTH-20, 20 + BUTTON_HEIGHT+15, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSnapshots", _("Snapshots"), load_menu_snapshots, SDLK_s );
-   window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT*2+10, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT+15, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnLoad", _("Load"), load_menu_load, SDLK_l );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDelete", _("Delete"), load_menu_delete );
@@ -531,19 +531,19 @@ void load_loadSnapshotMenu ( const char *name )
    }
 
    /* Player text. */
-   window_addText( wid, -20, -40, 240, LOAD_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
+   window_addText( wid, -20, -40, BUTTON_WIDTH*2+20, LOAD_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
          0, "txtPilot", &gl_smallFont, NULL, NULL );
 
-   window_addList( wid, 20, -50,
-         LOAD_WIDTH-240-60, LOAD_HEIGHT-110,
+   window_addList( wid, 20, -40,
+         LOAD_WIDTH-BUTTON_WIDTH*2-80, LOAD_HEIGHT-110,
          "lstSaves", names, n, 0, load_snapshot_menu_update, load_snapshot_menu_load );
 
    /* Buttons */
    window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnBack", _("Back"), load_snapshot_menu_close, SDLK_b );
-   window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT+5, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButtonKey( wid, -20-BUTTON_WIDTH-20, 20 + BUTTON_HEIGHT+15, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSave", _("Save"), load_snapshot_menu_save, SDLK_s );
-   window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT*2+10, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT+15, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnLoad", _("Load"), load_snapshot_menu_load, SDLK_l );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDelete", _("Delete"), load_snapshot_menu_delete );
