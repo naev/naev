@@ -1,17 +1,7 @@
-local scans = {}
-
 --[[
--- Helper function that checks to see if a value is in a table
+-- Handles
 --]]
-local function __intable( t, val )
-   for k,v in ipairs(t) do
-      if v==val then
-         return true
-      end
-   end
-   return false
-end
-
+local scans = {}
 
 --[[
 -- Checks to see if a pilot is visible
@@ -196,7 +186,7 @@ function scans.get_target ()
             v = l
          end
 
-         if not __intable( inserted, v ) then
+         if not inlist( inserted, v ) then
             if __wanttoscan( p, v ) then
                local d = ai.dist2( v )
                local m = v:mass()
