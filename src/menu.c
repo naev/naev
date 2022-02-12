@@ -79,7 +79,8 @@ static void menu_main_new( unsigned int wid, const char *str );
 static void menu_main_credits( unsigned int wid, const char *str );
 static void menu_main_cleanBG( unsigned int wid, const char *str );
 /* small menu */
-static void menu_small_close( unsigned int wid, const char *str );
+static void menu_small_load( unsigned int wid, const char *str );
+static void menu_small_resume( unsigned int wid, const char *str );
 static void menu_small_info( unsigned int wid, const char *str );
 static void menu_small_exit( unsigned int wid, const char *str );
 static void exit_game (void);
@@ -101,6 +102,7 @@ static void menu_options_button( unsigned int wid, const char *str );
  */
 static int menu_main_bkg_system (void)
 {
+   const char **pn;
    const nsave_t *ns;
    const char *sys;
    double cx, cy;
@@ -109,24 +111,29 @@ static int menu_main_bkg_system (void)
    pilots_cleanAll();
    sys = NULL;
 
-   /* Refresh saves. */
-   load_refresh();
+   load_refreshPlayerNames();
+   load_refreshPlayerNames();
+   pn = load_getPlayerNames();
 
-   /* Load saves. */
-   ns = load_getList();
+   if (array_size( pn ) > 0) {
+      load_refresh ( pn[0] );
 
-   /* Try to apply unidiff. */
-   if (array_size( ns ) > 0) {
-      load_gameDiff( ns[0].path );
+      /* Load saves. */
+      ns = load_getList();
 
-      /* Get start position. */
-      if (spob_exists( ns[0].spob )) {
-         Spob *pnt = spob_get( ns[0].spob );
-         if (pnt != NULL) {
-            sys = spob_getSystem( ns[0].spob );
-            if (sys != NULL) {
-               cx = pnt->pos.x;
-               cy = pnt->pos.y;
+      /* Try to apply unidiff. */
+      if (array_size( ns ) > 0) {
+         load_gameDiff( ns[0].path );
+
+         /* Get start position. */
+         if (spob_exists( ns[0].spob )) {
+            Spob *pnt = spob_get( ns[0].spob );
+            if (pnt != NULL) {
+               sys = spob_getSystem( ns[0].spob );
+               if (sys != NULL) {
+                  cx = pnt->pos.x;
+                  cy = pnt->pos.y;
+               }
             }
          }
       }
@@ -244,7 +251,7 @@ void menu_main (void)
          "btnExit", _("Exit Game"), menu_exit, SDLK_x );
 
    /* Disable load button if there are no saves. */
-   if (array_size( load_getList() ) == 0) {
+   if (array_size( load_getPlayerNames() ) == 0) {
       window_disableButton( wid, "btnLoad" );
       window_setFocus( wid, "btnNew" );
    }
@@ -409,7 +416,9 @@ static void menu_main_cleanBG( unsigned int wid, const char *str )
  */
 void menu_small (void)
 {
+   int can_save;
    unsigned int wid;
+   int y;
 
    /* Check if menu should be openable. */
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED) ||
@@ -421,33 +430,69 @@ void menu_small (void)
             menu_isOpen(MENU_DEATH) ))
       return;
 
-   wid = window_create( "wdwMenuSmall", _("Menu"), -1, -1, MENU_WIDTH, MENU_HEIGHT );
+   can_save = landed && !player_isFlag(PLAYER_NOSAVE);
 
-   window_setCancel( wid, menu_small_close );
+   y = 20 + (BUTTON_HEIGHT+20)*4;
+   wid = window_create( "wdwMenuSmall", _("Menu"), -1, -1, MENU_WIDTH, MENU_HEIGHT + BUTTON_HEIGHT + 20 );
 
-   window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*3 + 20*3,
+   window_setCancel( wid, menu_small_resume );
+
+   window_addButtonKey( wid, 20, y,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnResume", _("Resume"), menu_small_close, SDLK_r );
-   window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2,
+         "btnResume", _("Resume"), menu_small_resume, SDLK_r );
+   y -= BUTTON_HEIGHT+20;
+   window_addButtonKey( wid, 20, y,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnInfo", _("Info"), menu_small_info, SDLK_i );
-   window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT + 20,
+   y -= BUTTON_HEIGHT+20;
+   window_addButtonKey( wid, 20, y,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnSave", can_save ? _("Load / Save") : _("Load"), menu_small_load, SDLK_l );
+   y -= BUTTON_HEIGHT+20;
+   window_addButtonKey( wid, 20, y,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", _("Options"), menu_options_button, SDLK_o );
-   window_addButtonKey( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   y -= BUTTON_HEIGHT+20;
+   window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", _("Exit to Title"), menu_small_exit, SDLK_x );
 
    menu_Open(MENU_SMALL);
 }
 
 /**
+ * @brief Opens the load menu.
+ *    @param wid Unused.
+ *    @param str Unused.
+ */
+static void menu_small_load( unsigned int wid, const char *str )
+{
+   (void) wid;
+   (void) str;
+
+   load_loadSnapshotMenu( player.name );
+}
+
+/**
  * @brief Closes the small in-game menu.
  *    @param str Unused.
  */
-static void menu_small_close( unsigned int wid, const char *str )
+static void menu_small_resume( unsigned int wid, const char *str )
 {
    (void)str;
    window_destroy( wid );
+   menu_Close(MENU_SMALL);
+}
+
+/**
+ * @brief Closes the small menu.
+ */
+void menu_small_close (void)
+{
+   if (window_exists( "wdwMenuSmall" ))
+      window_destroy( window_get( "wdwMenuSmall" ) );
+   else
+      WARN( _("Small menu does not exist.") );
+
    menu_Close(MENU_SMALL);
 }
 
@@ -545,14 +590,13 @@ static void menu_death_restart( unsigned int wid, const char *str )
 void menu_death (void)
 {
    unsigned int wid;
-   char path[PATH_MAX];
 
    wid = window_create( "wdwRIP", _("Death"), -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
    window_onClose( wid, menu_death_close );
 
    /* Allow the player to continue if the saved game exists, if not, propose to restart */
-   snprintf( path, sizeof(path), "saves/%s.ns", player.name );
-   if (PHYSFS_exists( path ))
+   load_refresh ( player.name );
+   if (array_size( load_getList() ) > 0)
       window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnContinue", _("Continue"), menu_death_continue, SDLK_c );
    else
