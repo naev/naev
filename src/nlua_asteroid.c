@@ -32,6 +32,7 @@ static int asteroidL_scanned( lua_State *L );
 static int asteroidL_timer( lua_State *L );
 static int asteroidL_setTimer( lua_State *L );
 static int asteroidL_armour( lua_State *L );
+static int asteroidL_alertRange( lua_State *L );
 static int asteroidL_setArmour( lua_State *L );
 static int asteroidL_materials( lua_State *L );
 static const luaL_Reg asteroidL_methods[] = {
@@ -45,6 +46,7 @@ static const luaL_Reg asteroidL_methods[] = {
    { "timer", asteroidL_timer },
    { "setTimer", asteroidL_setTimer },
    { "armour", asteroidL_armour },
+   { "alertRange", asteroidL_alertRange },
    { "setArmour", asteroidL_setArmour },
    { "materials", asteroidL_materials },
    {0,0}
@@ -382,7 +384,21 @@ static int asteroidL_setTimer( lua_State *L )
 static int asteroidL_armour( lua_State *L )
 {
    Asteroid *a = luaL_validasteroid(L,1);
-   lua_pushboolean(L,a->armour);
+   lua_pushnumber(L,a->armour);
+   return 1;
+}
+
+/**
+ * @brief Gets the alert range of an asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to get alert range of.
+ *    @luatreturn number Alert range of the asteroid.
+ * @luafunc alertRange
+ */
+static int asteroidL_alertRange( lua_State *L )
+{
+   Asteroid *a = luaL_validasteroid(L,1);
+   lua_pushnumber(L,a->type->alert_range);
    return 1;
 }
 
