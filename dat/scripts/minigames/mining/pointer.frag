@@ -1,9 +1,9 @@
 #pragma language glsl3
 
+#include "lib/math.glsl"
+
 uniform float radius;
 uniform float pointer;
-
-#define M_PI 3.141592653
 
 vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {

@@ -1,15 +1,9 @@
 #pragma language glsl3
 
+#include "lib/math.glsl"
+#include "lib/sdf.glsl"
+
 uniform vec4 size;
-
-#define M_PI 3.141592653
-
-float sdSegment( in vec2 p, in vec2 a, in vec2 b )
-{
-   vec2 pa = p-a, ba = b-a;
-   float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );
-   return length( pa - ba*h );
-}
 
 vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
