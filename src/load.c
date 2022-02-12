@@ -819,8 +819,12 @@ static void load_snapshot_menu_load( unsigned int wdw, const char *str )
       /* Close the main and the load menu. */
       load_menu_close( window_get( "wdwLoadGameMenu" ), NULL );
       menu_main_close();
-   } else
+   }
+   else {
+      if (landed)
+         land_cleanup();
       menu_small_close();
+   }
 
    /* Try to load the game. */
    if (load_game( &load_saves[pos] )) {
