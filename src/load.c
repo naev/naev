@@ -582,21 +582,21 @@ static void load_menu_snapshots( unsigned int wdw, const char *str )
  */
 static void load_snapshot_menu_save( unsigned int wdw, const char *str )
 {
-   char *save_name = dialogue_input( _("Save game"), 1, 60, _("Please write snapshot name:") );
+   char *save_name = dialogue_input( _("Save game"), 1, 60, _("Please give the new snapshot a name:") );
    if (save_name == NULL)
       return;
    char path[PATH_MAX];
    snprintf(path, sizeof(path), "saves/%s/%s.ns", player.name, save_name);
    if (PHYSFS_exists( path )) {
       int r = dialogue_YesNo(_("Overwrite"),
-         _("You already have a snapshot named %s. Overwrite?"), save_name);
+         _("You already have a snapshot named '%s'. Overwrite?"), save_name);
       if (r==0) {
          load_snapshot_menu_save( wdw, str );
          return;
       }
    }
    if (save_all_with_name(save_name) < 0)
-      dialogue_alert( _("Failed to save game! You should exit and check the log to see what happened and then file a bug report!") );
+      dialogue_alert( _("Failed to save the game! You should exit and check the log to see what happened and then file a bug report!") );
    else {
       load_snapshot_menu_close( wdw, str );
       load_loadSnapshotMenu( player.name );
@@ -638,19 +638,19 @@ static void display_save_info( unsigned int wid, const nsave_t *ns )
    credits2str( credits, ns->credits, 2 );
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
    l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s", _("Name:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->name );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->name );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Version:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->version );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->version );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Date:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", date );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", date );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Chapter:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->chapter );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->chapter );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Spob:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->spob );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->spob );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Credits:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", credits );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", credits );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Name:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s\n", ns->shipname );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->shipname );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Model:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->shipmodel );
    window_modifyText( wid, "txtPilot", buf );
