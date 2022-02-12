@@ -4911,7 +4911,10 @@ static int pilotL_msg( lua_State *L )
 
    NLUA_CHECKRW(L);
 
-   p = luaL_validpilot(L,1);
+   if (lua_isnoneornil(L,1))
+      p = NULL;
+   else
+      p = luaL_validpilot(L,1);
    type = luaL_checkstring(L,3);
    data = lua_gettop(L) > 3 ? 4 : 0;
 
