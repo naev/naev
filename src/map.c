@@ -2447,7 +2447,7 @@ void map_jump (void)
    if (array_size(map_path) != 0) {
       array_erase( &map_path, &map_path[0], &map_path[1] );
       if (array_size(map_path) == 0)
-         player_targetHyperspaceSet( -1, 0 );
+         player_targetHyperspaceSet( -1, 1 );
       else { /* get rid of bottom of the path */
          int j;
          /* set the next jump to be to the next in path */

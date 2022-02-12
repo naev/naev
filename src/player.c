@@ -1756,9 +1756,9 @@ void player_board (void)
  * @brief Sets the player's hyperspace target.
  *
  *    @param id ID of the hyperspace target.
- *    @param autonavcont Whether or not autonav is continuing.
+ *    @param nomsg Whether or not to display a message regarding aborting autonav.
  */
-void player_targetHyperspaceSet( int id, int autonavcont )
+void player_targetHyperspaceSet( int id, int nomsg )
 {
    int old;
 
@@ -1779,7 +1779,7 @@ void player_targetHyperspaceSet( int id, int autonavcont )
       player_soundPlayGUI(snd_nav,1);
    gui_setNav();
 
-   if (!autonavcont && (old != id) && ((player.autonav == AUTONAV_JUMP_APPROACH) ||
+   if (!nomsg && (old != id) && ((player.autonav == AUTONAV_JUMP_APPROACH) ||
          (player.autonav == AUTONAV_JUMP_BRAKE)))
       player_autonavAbort(NULL);
 
