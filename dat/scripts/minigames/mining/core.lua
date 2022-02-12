@@ -85,16 +85,18 @@ function mining.load()
    idata:setPixel( 0, 0, 0.5, 0.5, 0.5, 1 )
    img = love.graphics.newImage( idata )
 
-   -- Load shaders
+   -- Load shaders if necessary
    local path = "scripts/minigames/mining/"
-   local frag_background = lfile.read( path.."background.frag" )
-   local frag_pointer = lfile.read( path.."pointer.frag" )
-   local frag_target = lfile.read( path.."target.frag" )
-   local frag_shot = lfile.read( path.."shot.frag" )
-   shd_background = lg.newShader( frag_background )
-   shd_pointer = lg.newShader( frag_pointer )
-   shd_target = lg.newShader( frag_target )
-   shd_shot = lg.newShader( frag_shot )
+   if not shd_background or not shd_pointer or not shd_target or not shd_shot then
+      local frag_background = lfile.read( path.."background.frag" )
+      local frag_pointer = lfile.read( path.."pointer.frag" )
+      local frag_target = lfile.read( path.."target.frag" )
+      local frag_shot = lfile.read( path.."shot.frag" )
+      shd_background = lg.newShader( frag_background )
+      shd_pointer = lg.newShader( frag_pointer )
+      shd_target = lg.newShader( frag_target )
+      shd_shot = lg.newShader( frag_shot )
+   end
    lg.setBackgroundColor(0, 0, 0, 0)
 
    -- Load audio
