@@ -326,6 +326,7 @@ static int load_enumeratePlayerNamesCallback( void* data, const char* origdir, c
    if (!PHYSFS_stat( path, &stat ))
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
             PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+   /* TODO remove this sometime in the future. Maybe 0.12.0 or 0.13.0? */
    else if (stat.filetype == PHYSFS_FILETYPE_REGULAR) {
       if ((name_len < 4 || strcmp( &fname[name_len-3], ".ns" )) && (name_len < 11 || strcmp( &fname[name_len-10], ".ns.backup" ))) {
          free( path );
@@ -339,8 +340,8 @@ static int load_enumeratePlayerNamesCallback( void* data, const char* origdir, c
       free( backup_path );
       move_old_save( path, fname, ".ns", "autosave.ns" );
       move_old_save( path, fname, ".ns.backup", "backup.ns" );
-
-   } else if (stat.filetype == PHYSFS_FILETYPE_DIRECTORY) {
+   }
+   else if (stat.filetype == PHYSFS_FILETYPE_DIRECTORY) {
       load_refresh( fname );
       if (array_size( load_getList() ) == 0) {
          free( path );
@@ -362,10 +363,10 @@ static int load_enumeratePlayerNamesCallback( void* data, const char* origdir, c
  */
 static int load_sortCompare( const void *p1, const void *p2 )
 {
-   filedata_t *f1, *f2;
+   const filedata_t *f1, *f2;
 
-   f1 = (filedata_t*) p1;
-   f2 = (filedata_t*) p2;
+   f1 = (const filedata_t*) p1;
+   f2 = (const filedata_t*) p2;
 
    if (f1->stat.modtime > f2->stat.modtime)
       return -1;
@@ -484,6 +485,7 @@ void load_loadGameMenu (void)
          "btnDelete", _("Delete"), load_menu_delete );
 
    if (old_saves_detected && !player_warned) {
+      /* TODO we should print the full OS path if possible here. */
       dialogue_alert( _("Naev has detected saves in pre-0.10.0 format, and has automatically migrated them to the new format. Old saves have been backed up at '%s'."), "saves-pre-0.10.0");
       player_warned = 1;
    }
@@ -564,7 +566,7 @@ void load_loadSnapshotMenu ( const char *name )
  */
 static void load_menu_snapshots( unsigned int wdw, const char *str )
 {
-   (void)str;
+   (void) str;
    int pos;
    const char *name;
 
@@ -829,12 +831,14 @@ static void load_snapshot_menu_load( unsigned int wdw, const char *str )
    /* Try to load the game. */
    if (load_game( &load_saves[pos] )) {
       /* Failed so reopen both. */
+      /* TODO how to handle failure here? It can happen at many different points now. */
       /*menu_main();
       load_loadGameMenu();*/
    }
 }
 
-static void load_menu_delete( unsigned int wdw, const char *str ) {
+static void load_menu_delete( unsigned int wdw, const char *str )
+{
    const char *name;
    unsigned int wid;
    int n;
