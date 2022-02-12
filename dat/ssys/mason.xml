@@ -38,4 +38,8 @@
  <stats>
   <fuel_regen>1.000000</fuel_regen>
  </stats>
+ <tags>
+  <tag>northstellarwind</tag>
+  <tag>stellarwind</tag>
+ </tags>
 </ssys>

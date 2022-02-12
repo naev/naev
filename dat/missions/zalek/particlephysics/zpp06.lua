@@ -44,7 +44,7 @@ function accept ()
    vn.scene()
    local n = vn.newCharacter( zpp.vn_noona() )
    vn.transition( zpp.noona.transition )
-   vn.na(_([[You meet Noona who seems to be a bit more calm than usually.]]))
+   vn.na(_([[You meet Noona who seems to be a bit more calm than usual.]]))
    n(fmt.f(_([["Thanks for all you've done for me. I've got a ton of data from the experiment that will take me a long time to process. In the meantime, I've written up a preliminary report that I need to send to {pnt} in the {sys} system. I would go myself, except, I'm… a bit busy. Would you be willing to do me this favour and deliver my report to {pnt}?"]]),
       {pnt=destpnt, sys=destsys}))
    vn.menu{
@@ -113,10 +113,10 @@ function land ()
    vn.na(_([[The Za'lek officers leave as fast as they got there, barely acknowledging your presence. Pondering how House Za'lek manages to get anything done, you take your leave and open up the envelope that you got handed back. It has a letter from Noona.]]))
    if getlicense then
       n(_([[You read the letter:
-   Thanks for all your help at Katar I. By now you've probably realized I not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward, and have given you clearance for the Heavy Combat Vessel License. Your help was invaluable and I hope we meet again.]]))
+   Thanks for all your help at Katar I. By now you've probably realized I am not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward, and have given you clearance for the Heavy Combat Vessel License. Your help was invaluable and I hope we meet again.]]))
    else
       n(_([[You read the letter:
-   Thanks for all your help at Katar I. By now you've probably realized I not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward. Your help was invaluable and I hope we meet again.]]))
+   Thanks for all your help at Katar I. By now you've probably realized am I not just a researcher, but have been bestowed the curse of being the Za'lek chairwoman. Not often do I get to get away from everything and focus on my research. I have attached a credstick as a reward. Your help was invaluable and I hope we meet again.]]))
    end
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )

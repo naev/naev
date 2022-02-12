@@ -28,8 +28,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Built to defend the Empire from the Collective, the Omega Station has observed countless battles fought in its sector. Its presence has helped stem the flow of Collective drones into Empire space.</description>
-  <bar>The Omega Canteen is a dark place that seems calm, although every time a robotic drone approaches an alarm sounds sending pilots to man their ships to fight off the menace.</bar>
+  <description>Hurriedly built to defend the Empire from the Collective, the Omega Station has observed countless battles fought in its sector. Its presence has helped stem the flow of Collective drones into Empire space. Due to the constant attacks, the construction of the base is a mismatch of reinforced panels and salvaged ship parts, contrasting greatly with the standardized designs of most Imperial stations.</description>
+  <bar>The Omega Canteen is a dark place that seems calm, although every time a robotic drone approaches an alarm sounds sending pilots to man their ships to fight off the menace. There is also a ever-growing small memorial to the Empire pilots lost against the Collective menace.</bar>
  </general>
  <tech>
   <item>Hulls Medium</item>
@@ -40,8 +40,11 @@
   <item>Low Tech Upgrades</item>
   <item>Star Maps</item>
   <item>Basic Outfits 2</item>
+  <item>Empire Ships Small</item>
+  <item>Empire Ships Medium</item>
  </tech>
  <tags>
   <tag>restricted</tag>
+  <tag>military</tag>
  </tags>
 </spob>

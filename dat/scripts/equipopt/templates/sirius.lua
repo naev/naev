@@ -1,5 +1,4 @@
 local optimize = require 'equipopt.optimize'
-local mt = require 'merge_tables'
 local ecores = require 'equipopt.cores'
 local eoutfits = require 'equipopt.outfits'
 local eparams = require 'equipopt.params'
@@ -74,9 +73,9 @@ local function equip_sirius( p, opt_params )
    -- Per ship tweaks
    local sp = sirius_params[ sname ]
    if sp then
-      params = mt.merge_tables_recursive( params, sp() )
+      params = tmerge_r( params, sp() )
    end
-   params = mt.merge_tables( params, opt_params )
+   params = tmerge( params, opt_params )
 
    -- See cores
    local cores

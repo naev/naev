@@ -103,7 +103,7 @@ function outfit_buy( outfitname )
       elseif o == outfit.get("Heavy Combat Vessel License") and not var.peek( "tut_lic_hvycom" ) then
          text = {
             _([["Looks like you finally got your hands on the #oHeavy Combat Vessel License#0! This will allow you to pilot the largest of the combat ships, which includes #oCruiser#0-, #oBattleship#0-, and #oCarrier#0-class ships. These ships sacrifice size and utility for survivability and firepower, being able to lay devastating barrages to lay waste to enemy forces."]]),
-            _([["#oCruisers#0 are the smallest of the three categories, but also the lowest mass and highest manoeuvrability. They can be seen more or less as a heavier version of a destroyer. #oBattleships#0 push the firepower to the max and can chew through any ship that is unable to evade their concentrated firepower. #oCarriers#0 use a different strategy of using fighter to do the combat for them while maximizing survivability."]]),
+            _([["#oCruisers#0 are the smallest of the three categories, but also the lowest mass and highest manoeuvrability. They can be seen more or less as a heavier version of a destroyer. #oBattleships#0 push the firepower to the max and can chew through any ship that is unable to evade their concentrated firepower. #oCarriers#0 use a different strategy of using fighters to do the combat for them while maximizing survivability."]]),
             _([["Flying a heavy combat vessel is very different from other classes of ships. Given their size, usually time seems to pass at a faster rate than smaller ships which can be seen by their '#oTime dilation#0' value. Furthermore, given their size, stealth becomes difficult and they can be vulnerable to volleys of torpedoes. Escorts and fighter bays can help them deal with enemy bombers."]]),
          }
          var.push( "tut_lic_medcom", true )
@@ -137,7 +137,7 @@ function ship_buy( shipname )
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
-      sai(fmt.f(_([["Congratulations on buying a brand new {ship}! Unless you trade-in your ship, when you buy a new ship it is added to your available ships. Usually, ships come with only core outfits quipped, so you should head over to the #oEquipment#0 window to deck the ship out and swap it with your current one if you want to use it. You can swap ships at any planet or station with a shipyard and there is no penalty nor cost associated with swapping. In fact, getting a diversity of ships and switching to the one that best fits your need is a great way to get things done."]]),{ship=s}))
+      sai(fmt.f(_([["Congratulations on buying a brand new {ship}! Unless you trade-in your ship, when you buy a new ship it is added to your available ships. Usually, ships come with only core outfits equipped, so you should head over to the #oEquipment#0 window to deck the ship out and swap it with your current one if you want to use it. You can swap ships at any planet or station with a shipyard and there is no penalty nor cost associated with swapping. In fact, getting a diversity of ships and switching to the one that best fits your need is a great way to get things done."]]),{ship=s}))
       sai(_([["You also don't have to worry about your ship AI changing, I am automatically transferred between your ships. You can't get away from me, ha ha."]]))
       vn.done( tut.shipai.transition )
       vn.run()
@@ -148,9 +148,9 @@ function ship_buy( shipname )
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
-      sai(_([["Wow! Looks like you acquired a bioship! My data banks show that they grown ontop of synthetic structures and have varying degrees of sentience. However, because of this they start at lower stages and have to gain experience to reach their full potential. As bioships unlock their potential, you will be able to customize and modify them at will. However, be aware that the choices that you make are not easy to reverse."]]))
+      sai(_([["Wow! Looks like you acquired a bioship! My data banks show that they grown on top of synthetic structures and have varying degrees of sentience. However, because of this they start at lower stages and have to gain experience to reach their full potential. As bioships unlock their potential, you will be able to customize and modify them at will. However, be aware that the choices that you make are not easy to reverse."]]))
       sai(fmt.f(_([["You can see the status of your current bioship from the #bInfo menu#0, which you can access with #b{infokey}#0. As your bioship gains experience, and advances to new stages, you'll be able to obtain new skills that open up new possibilities. Make sure to choose your skills carefully as it is not easy to change them once they have been chosen."]]),{infokey=tut.getKey("info")}))
-      sai(_([[I've never been run in a bioship before. I wonder what it wil be like?"]]))
+      sai(_([[I've never been run in a bioship before. I wonder what it will be like?"]]))
       vn.done( tut.shipai.transition )
       vn.run()
       var.push( "tut_bioship", true )

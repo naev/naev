@@ -90,6 +90,7 @@ static VirtualSpob *vspob_stack = NULL; /**< Virtual spob stack. */
 static int systemstack_changed = 0; /**< Whether or not the systems_stack was changed after loading. */
 static int spobstack_changed = 0; /**< Whether or not the spob_stack was changed after loading. */
 #endif /* DEBUGGING */
+static MapShader **mapshaders = NULL; /**< Map shaders. */
 
 /*
  * Asteroid types stack.
@@ -151,6 +152,8 @@ static void space_renderSpob( const Spob *p );
 static void space_updateSpob( const Spob *p, double dt, double real_dt );
 static void space_renderAsteroid( const Asteroid *a );
 static void space_renderDebris( const Debris *d, double x, double y );
+/* Map shaders. */
+static const MapShader *mapshader_get( const char *name );
 /*
  * Externed prototypes.
  */
@@ -1569,7 +1572,7 @@ void space_init( const char* sysname, int do_simulate )
       }
       else {
          /* Background is starry */
-         background_initStars( cur_system->stars );
+         background_initDust( cur_system->stars );
 
          /* Set up sound. */
          sound_env( SOUND_ENV_NORMAL, 0. );
@@ -2724,9 +2727,9 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
 static void system_init( StarSystem *sys )
 {
    memset( sys, 0, sizeof(StarSystem) );
-   sys->spobs   = array_create( Spob* );
+   sys->spobs     = array_create( Spob* );
    sys->spobs_virtual = array_create( VirtualSpob* );
-   sys->spobsid = array_create( int );
+   sys->spobsid   = array_create( int );
    sys->jumps     = array_create( JumpPoint );
    sys->asteroids = array_create( AsteroidAnchor );
    sys->astexclude= array_create( AsteroidExclusion );
@@ -2844,10 +2847,11 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    sys->presence  = array_create( SystemPresence );
    sys->ownerpresence = 0.;
    sys->nebu_hue  = NEBULA_DEFAULT_HUE;
+   sys->stars     = -1;
 
    xmlr_attr_strd( parent, "name", sys->name );
 
-   node  = parent->xmlChildrenNode;
+   node = parent->xmlChildrenNode;
    do { /* load all the data */
       /* Only handle nodes. */
       xml_onlyNodes(node);
@@ -2958,20 +2962,14 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    sys->nebu_hue /= 360.;
 
    /* Load the shader. */
-   if (sys->map_shader != NULL) {
-      sys->ms.program   = gl_program_vert_frag( "system_map.vert", sys->map_shader );
-      sys->ms.vertex    = glGetAttribLocation( sys->ms.program,  "vertex" );
-      sys->ms.projection= glGetUniformLocation( sys->ms.program, "projection" );
-      sys->ms.time      = glGetUniformLocation( sys->ms.program, "time" );
-      sys->ms.globalpos = glGetUniformLocation( sys->ms.program, "globalpos" );
-      sys->ms.alpha     = glGetUniformLocation( sys->ms.program, "alpha" );
-   }
+   if (sys->map_shader != NULL)
+      sys->ms = mapshader_get( sys->map_shader );
 
 #define MELEMENT(o,s)      if (o) WARN(_("Star System '%s' missing '%s' element"), sys->name, s)
    if (sys->name == NULL) WARN(_("Star System '%s' missing 'name' tag"), sys->name);
    MELEMENT((flags&FLAG_XSET)==0,"x");
    MELEMENT((flags&FLAG_YSET)==0,"y");
-   MELEMENT(sys->stars==0,"stars");
+   MELEMENT(sys->stars<0,"stars");
    MELEMENT(sys->radius==0.,"radius");
    MELEMENT((flags&FLAG_INTERFERENCESET)==0,"inteference");
 #undef MELEMENT
@@ -3618,8 +3616,10 @@ static int systems_load (void)
       free( file );
    }
    qsort( systems_stack, array_size(systems_stack), sizeof(StarSystem), system_cmp );
-   for (int j=0; j<array_size(systems_stack); j++)
+   for (int j=0; j<array_size(systems_stack); j++) {
       systems_stack[j].id = j;
+      systems_stack[j].note = NULL; /* just to be sure */
+   }
 
    /*
     * Second pass - loads all the jump routes.
@@ -3959,7 +3959,9 @@ void space_exit (void)
 
       free(sys->name);
       free(sys->background);
+      free(sys->map_shader);
       free(sys->features);
+      free(sys->note);
       array_free(sys->jumps);
       array_free(sys->presence);
       array_free(sys->spobs);
@@ -4002,6 +4004,15 @@ void space_exit (void)
    /* Free the gatherable stack. */
    gatherable_free();
 
+   /* Free the map shaders. */
+   for (int i=0; i<array_size(mapshaders); i++) {
+      MapShader *ms = mapshaders[i];
+      free( ms->name );
+      glDeleteProgram( ms->program );
+      free(ms);
+   }
+   array_free( mapshaders );
+
    /* Free landing lua. */
    nlua_freeEnv( landing_env );
    landing_env = LUA_NOREF;
@@ -4018,6 +4029,8 @@ void space_clearKnown (void)
       sys_rmFlag(sys,SYSTEM_HIDDEN);
       for (int j=0; j<array_size(sys->jumps); j++)
          jp_rmFlag(&sys->jumps[j],JP_KNOWN);
+      free(sys->note);
+      sys->note=NULL;
    }
    for (int j=0; j<array_size(spob_stack); j++)
       spob_rmFlag(&spob_stack[j],SPOB_KNOWN);
@@ -4240,9 +4253,15 @@ int space_sysSave( xmlTextWriterPtr writer )
 
       xmlw_startElem(writer,"known");
 
-      xmlw_attr(writer,"sys","%s",systems_stack[i].name);
-
       sys = &systems_stack[i];
+
+      xmlw_attr(writer,"sys","%s",sys->name);
+
+      if (sys_isFlag(sys, SYSTEM_PMARKED))
+         xmlw_attr(writer,"pmarked","%s","true");
+
+      if (sys->note != NULL)
+         xmlw_attr(writer,"note","%s",sys->note);
 
       for (int j=0; j<array_size(sys->spobs); j++) {
          if (!spob_isKnown(sys->spobs[j]))
@@ -4292,10 +4311,26 @@ int space_sysLoad( xmlNodePtr parent )
                }
                else /* load from 5.0 saves */
                   sys = system_get(xml_get(cur));
+
                if (sys != NULL) { /* Must exist */
+
                   sys_setFlag(sys,SYSTEM_KNOWN);
+
+                  xmlr_attr_strd(cur,"pmarked",str);
+                  if (str != NULL) {
+                     sys_setFlag(sys,SYSTEM_PMARKED);
+                     free(str);
+                  }
+
+                  xmlr_attr_strd(cur,"note",str);
+                  if (str != NULL) {
+                     xmlr_attr_strd(cur,"note",sys->note);
+                     free(str);
+                  }
+
                   space_parseSpobs(cur, sys);
                }
+
             }
          } while (xml_nextNode(cur));
       }
@@ -4828,4 +4863,32 @@ const char *space_populationStr( uint64_t population )
    }
 
    return pop;
+}
+
+static const MapShader *mapshader_get( const char *name )
+{
+   MapShader *ms;
+
+   if (mapshaders==NULL)
+      mapshaders = array_create( MapShader* );
+
+   for (int i=0; i<array_size(mapshaders); i++) {
+      MapShader *t = mapshaders[i];
+      if (strcmp(t->name,name)==0)
+         return t;
+   }
+
+   /* Allocate and set up. */
+   ms = malloc( sizeof(MapShader) );
+   array_push_back( &mapshaders, ms );
+
+   ms->name      = strdup( name );
+   ms->program   = gl_program_vert_frag( "system_map.vert", name );
+   ms->vertex    = glGetAttribLocation(  ms->program,  "vertex" );
+   ms->projection= glGetUniformLocation( ms->program, "projection" );
+   ms->time      = glGetUniformLocation( ms->program, "time" );
+   ms->globalpos = glGetUniformLocation( ms->program, "globalpos" );
+   ms->alpha     = glGetUniformLocation( ms->program, "alpha" );
+
+   return ms;
 }

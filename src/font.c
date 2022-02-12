@@ -1743,13 +1743,16 @@ void gl_freeFont( glFont* font )
    gl_vboDestroy(stsh->vbo_vert);
    free(stsh->vbo_tex_data);
    free(stsh->vbo_vert_data);
+#if DEBUGGING
    memset( stsh, 0, sizeof(glFontStash) );
+#endif /* DEBUGGING */
 }
 
 /**
  * @brief Frees resources referenced by a glFontStashFreetype struct.
  */
-static void gl_fontstashftDestroy( glFontStashFreetype *ft ) {
+static void gl_fontstashftDestroy( glFontStashFreetype *ft )
+{
    if (--ft->file->refcount == 0) {
       free(ft->file->name);
       free(ft->file->data);

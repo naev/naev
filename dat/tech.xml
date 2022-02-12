@@ -77,11 +77,16 @@
   <item>Shield Capacitor II</item>
   <item>Shield Capacitor III</item>
   <item>Shield Capacitor IV</item>
+  <item>Auxiliary Proccessing Unit I</item>
+  <item>Auxiliary Proccessing Unit II</item>
+  <item>Auxiliary Proccessing Unit III</item>
+  <item>Auxiliary Proccessing Unit IV</item>
   <item>Small Shield Booster</item>
   <item>Medium Shield Booster</item>
   <item>Large Shield Booster</item>
   <item>Adaptive Stealth Plating</item>
   <item>Plasteel Plating</item>
+  <item>Microbond Plating</item>
   <item>Active Plating</item>
   <item>Nanobond Plating</item>
   <item>Biometal Armour</item>
@@ -235,6 +240,7 @@
   <item>Nexus Stealth Coating</item>
   <item>Photo-Voltaic Nanobot Coating</item>
   <item>Nebula Resistant Coating</item>
+  <item>Efficiency Combat AI</item>
   <item>Bio-Neural Combat AI</item>
   <item>Cyclic Combat AI</item>
   <item>Hive Combat AI</item>
@@ -497,6 +503,7 @@
   <item>EMP Grenade Launcher</item>
   <item>Enygma Systems Spearhead Launcher</item>
   <item>TeraCom Vengeance Launcher</item>
+  <item>TeraCom Headhunter Launcher</item>
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
   <item>Mercenary License</item>
@@ -536,6 +543,8 @@
   <item>Mercenary License</item>
  </tech>
  <tech name="High Tech Upgrades 1">
+  <item>Auxiliary Proccessing Unit I</item>
+  <item>Auxiliary Proccessing Unit II</item>
   <item>Battery I</item>
   <item>Battery II</item>
   <item>Reactor Class I</item>
@@ -546,6 +555,7 @@
   <item>Medium Shield Booster</item>
   <item>Large Shield Booster</item>
   <item>Plasteel Plating</item>
+  <item>Microbond Plating</item>
   <item>Nanobond Plating</item>
   <item>Engine Reroute</item>
   <item>Improved Stabilizer</item>
@@ -563,12 +573,15 @@
   <item>Emergency Shield Booster</item>
   <item>Asteroid Scanner</item>
   <item>Agility Combat AI</item>
+  <item>Efficiency Combat AI</item>
   <item>Boarding Androids MK1</item>
   <item>Targeting Conduit</item>
   <item>Blink Drive</item>
   <item>Cryogenic Repair Nanobots</item>
  </tech>
  <tech name="High Tech Upgrades 2">
+  <item>Auxiliary Proccessing Unit III</item>
+  <item>Auxiliary Proccessing Unit IV</item>
   <item>Battery III</item>
   <item>Battery IV</item>
   <item>Reactor Class II</item>
@@ -749,13 +762,17 @@
  <tech name="Goddard Ship">
   <item>Goddard</item>
  </tech>
- <tech name="Empire Military Ships">
-  <item>Empire Admonisher</item>
-  <item>Empire Hawking</item>
-  <item>Empire Lancelot</item>
-  <item>Empire Pacifier</item>
-  <item>Empire Peacemaker</item>
+ <tech name="Empire Ships Small">
   <item>Empire Shark</item>
+  <item>Empire Lancelot</item>
+ </tech>
+ <tech name="Empire Ships Medium">
+  <item>Empire Admonisher</item>
+  <item>Empire Pacifier</item>
+ </tech>
+ <tech name="Empire Ships Large">
+  <item>Empire Hawking</item>
+  <item>Empire Peacemaker</item>
   <item>Empire Rainmaker</item>
  </tech>
  <tech name="FLF Ships">
@@ -852,10 +869,12 @@
  <tech name="__Heavy Combat Vessel License">
   <item>Heavy Combat Vessel License</item>
  </tech>
- <tech name="__Collective">
+ <tech name="__Collective Outfits">
   <item>Neutron Disruptor</item>
   <item>Shatterer Launcher</item>
   <item>Drone Bay</item>
+ </tech>
+ <tech name="__Collective Ships">
   <item>Drone</item>
   <item>Heavy Drone</item>
  </tech>

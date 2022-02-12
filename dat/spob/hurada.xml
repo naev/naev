@@ -26,7 +26,10 @@
    <commodity/>
   </services>
   <commodities/>
-  <description>A formerly-promising world; following intense volcanic activity, Hurada's orbit decayed, increasing surface temperatures severely and all but eradicating natural surface life. Hurada only maintains a population due to its proximity to Arcturus, providing affordable housing for reserve military troops.</description>
+  <description>A formerly-promising world; following intense volcanic activity, a shift in Hurada's center of gravity caused its orbit to decay, increasing surface temperatures severely and all but eradicating natural surface life. Hurada only maintains a population due to its proximity to Arcturus, providing affordable housing for reserve military troops. Not knowing when more volcanic activity will send Hurada into the nearby star ensures that the prices stay low.</description>
   <bar>The Hurada bar is large, yet nearly deserted. The booth seats in the back have long been unused, and have collected a layer of dust in that time. The brews are stale, and the bartender doesn't look like he wants to be here.</bar>
  </general>
+ <tags>
+  <tag>poor</tag>
+ </tags>
 </spob>

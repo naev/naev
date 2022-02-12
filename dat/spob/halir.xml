@@ -44,5 +44,11 @@
   <item>Basic Civilian Ships</item>
   <item>Light Civilian Combat Ships</item>
   <item>Bulk Trade Ships</item>
+  <item>Empire Ships Small</item>
+  <item>Empire Ships Medium</item>
  </tech>
+ <tags>
+  <tag>trade</tag>
+  <tag>urban</tag>
+ </tags>
 </spob>

@@ -47,8 +47,12 @@
   <item>Basic Outfits 2</item>
   <item>Low Tech Upgrades</item>
   <item>Engines High</item>
+  <item>Empire Ships Small</item>
+  <item>Empire Ships Medium</item>
+  <item>Empire Ships Large</item>
  </tech>
  <tags>
   <tag>tourism</tag>
+  <tag>rich</tag>
  </tags>
 </spob>

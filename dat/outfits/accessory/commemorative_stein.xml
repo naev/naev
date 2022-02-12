@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Commemorative Stein">
+ <general>
+  <unique />
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>This is a stein commemorating the terraforming and establishment of a permanent colony on Antlejos V. The stein is intricately engraved with what seems to be scenes from the short history of the colony. You can make out what seems to be some individuals wrestling, lots of heavy machinery, and people doing some sort of circle dance. Did that all happen? On the bottom there is an inscription saying "Screw the PUAAA, long live the Hero of Antlejos!" with an illegible signature.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <ew_track>15</ew_track>
+  <launch_lockon>20</launch_lockon>
+ </specific>
+</outfit>

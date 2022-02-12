@@ -2,6 +2,7 @@
    Some sort of stellar wind type background.
 --]]
 local bgshaders = require "bkg.lib.bgshaders"
+local love = require 'love'
 local love_shaders = require 'love_shaders'
 local lg = require "love.graphics"
 local lf = require 'love.filesystem'
@@ -56,6 +57,7 @@ local function star_add( added, num_added )
    local nmove = math.max( 0.05, prng:random()*0.1 )
    local move  = 0.02 + nmove
    local scale = 1.0 - (1 - nmove/0.2)/5
+   scale = scale * 0.75
    bkg.image( img, x, y, move, scale ) -- On the background
    return num
 end
@@ -119,6 +121,8 @@ function starfield.init( params )
       motionblur = 0
    end
 
+   -- Ensure we're caught up with the current window/screen dimensions.
+   love.origin()
    -- Initialize shader
    shader = lg.newShader( string.format(starfield_frag, motionblur, rx, ry, rz, theta, phi, psi), love_shaders.vertexcode )
 
@@ -128,8 +132,8 @@ function starfield.init( params )
          texw = params.size
          texh = params.size
       else
-         texw = nw / nconf.zoom_far
-         texh = nh / nconf.zoom_far
+         texw = nw
+         texh = nh
          local texs = 4096 / math.max( texw, texh )
          if texs < 1 then
             texw = texw / texs
@@ -162,9 +166,8 @@ end
 
 function starfield.render( dt )
    if static then
-      local z = 1/camera.getZoom()
       lg.setColor( {sb,sb,sb,1} )
-      cvs:draw( (nw-texw*z)/2, (nh-texh*z)/2, 0, z, z )
+      cvs:draw( 0, 0 )
       return
    end
    -- Get camera properties

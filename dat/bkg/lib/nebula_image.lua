@@ -44,7 +44,7 @@ function nebula_image.init( filename )
       if 1280 < scale * md then
          scale = 1280 / md
       end
-      scale = scale * (nw*nh)/(1280*720)
+      scale = scale * (nw*nh)/(1280*720) * 0.75
       bkg.image( img, x, y, move, scale, angle, col )
 
       -- Default nebula background

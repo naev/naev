@@ -557,6 +557,27 @@ vec4 sdf_vndone( vec4 colour, vec2 uv )
    return colour;
 }
 
+vec4 sdf_notemarker( vec4 colour, vec2 uv )
+{
+   vec2 pos = uv.yx;
+   const vec2 b = vec2( 0.8, 0.25 );
+   const vec2 c = vec2( -0.15, 0.0);
+   const mat2 R = mat2(
+      M_SQRT1_2, M_SQRT1_2,
+     -M_SQRT1_2, M_SQRT1_2
+   );
+   float m = 1.0 / dimensions.x;
+
+   float d = sdEgg( pos+vec2(0.2,0.0), b-2.0*m );
+   vec2 cpos = R*(pos+c)+vec2(m,0.0);
+   d = min( d, sdBox( cpos, vec2(0.4) )-0.16 );
+   d = max( d, -sdSegment( abs(cpos), vec2(-0.38,0.33), vec2(0.38,0.33) )+0.08 );
+   d = max( d, -sdSegment( cpos, vec2(-0.38,0.0), vec2(0.38,0.0) )+0.08 );
+   colour.a *= smoothstep( -m, 0.0, -d );
+
+   return colour;
+}
+
 vec4 bg( vec2 uv )
 {
    vec3 c;
@@ -593,7 +614,8 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_selectposition( colour, uv_rel );
    //col_out = sdf_vnarrow( colour, uv_rel );
    //col_out = sdf_vncont( colour, uv_rel );
-   col_out = sdf_vndone( colour, uv_rel );
+   //col_out = sdf_vndone( colour, uv_rel );
+   col_out = sdf_notemarker( colour, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }

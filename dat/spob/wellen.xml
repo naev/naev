@@ -42,4 +42,8 @@
   <item>Missiles 1</item>
   <item>Basic Civilian Ships</item>
  </tech>
+ <tags>
+  <tag>poor</tag>
+  <tag>urban</tag>
+ </tags>
 </spob>

@@ -139,7 +139,7 @@ function land ()
          if level < l and total > levelup[l] then
             -- TODO better messages
             vntk.msg(_("Terraforming Progress"),_("Through the new supplies and volunteers, Antlejos V has been able to expand its facilities."))
-            ant.unidiff( ant.unidiff_list[6] )
+            ant.unidiff( ant.unidiff_list[level+1] )
             break
          end
       end

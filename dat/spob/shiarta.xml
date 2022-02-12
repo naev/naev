@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>P</class>
-  <population>1.5e+08</population>
+  <population>1.5e+06</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -26,7 +26,7 @@
    <outfits/>
   </services>
   <commodities/>
-  <description>Where Oma is too hot, Shiarta is too cold for comfort. Still, the Empire is always in need of raw materials, and Shiarta is rich in same.</description>
+  <description>Where Oma is too hot, Shiarta is too cold for comfort. Still, the Empire is always in need of raw materials, and Shiarta is rich in same. Mining is done in a peculiar way with strong snow storms redepositing minerals on the surface and large insulated mobile collectors scraping them off and bringing them to delivery points.</description>
   <bar>The spaceport bar sells only a select number of drinks. Like most mining worlds, there is not much in the way of luxury to be found on Shiarta. There is, however, one small piece of good news: ice cubes are free of charge.</bar>
  </general>
  <tech>
@@ -37,4 +37,7 @@
   <item>Basic Outfits 2</item>
   <item>Missiles 1</item>
  </tech>
+ <tags>
+  <tag>mining</tag>
+ </tags>
 </spob>

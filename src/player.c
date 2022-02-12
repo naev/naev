@@ -34,6 +34,7 @@
 #include "intro.h"
 #include "land.h"
 #include "land_outfits.h"
+#include "load.h"
 #include "log.h"
 #include "map.h"
 #include "map_overlay.h"
@@ -231,7 +232,7 @@ static void player_newSetup()
 void player_new (void)
 {
    const char *title, *caption;
-   char *ret, buf[PATH_MAX];
+   char *ret;
 
    const char *speed_opts[] = {
       _("Normal Speed"),
@@ -254,10 +255,10 @@ void player_new (void)
       return;
    }
 
-   snprintf( buf, sizeof(buf), "saves/%s.ns", player.name);
-   if (PHYSFS_exists( buf )) {
+   load_refresh( player.name );
+   if (array_size( load_getList() ) > 0) {
       int r = dialogue_YesNo(_("Overwrite"),
-            _("You already have a pilot named %s. Overwrite?"),player.name);
+            _("You already have a pilot named %s. Their autosave and backup save will be overwritten. Do you wish to continue?"), player.name);
       if (r==0) { /* no */
          player_new();
          return;
@@ -731,7 +732,7 @@ void player_cleanup (void)
    /* Free stuff. */
    free(player.name);
    player.name = NULL;
-   array_free( player.ps.shipvar );
+   lvar_freeArray( player.ps.shipvar );
    memset( &player.ps, 0, sizeof(PlayerShip_t) );
 
    free(player_message_noland);
@@ -746,8 +747,10 @@ void player_cleanup (void)
    info_buttonClear();
 
    /* clean up the stack */
-   for (int i=0; i<array_size(player_stack); i++)
+   for (int i=0; i<array_size(player_stack); i++) {
+      lvar_freeArray( player_stack[i].shipvar );
       pilot_free(player_stack[i].p);
+   }
    array_free(player_stack);
    player_stack = NULL;
    /* nothing left */
@@ -893,7 +896,7 @@ void player_soundResume (void)
  *    @param x X value of the position to warp to.
  *    @param y Y value of the position to warp to.
  */
-void player_warp( const double x, const double y )
+void player_warp( double x, double y )
 {
    vect_cset( &player.p->solid->pos, x, y );
 }
@@ -4047,9 +4050,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    /* Player is currently on this ship */
    if (is_player != 0) {
-      unsigned int pid = pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
+      pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
       ship = player.p;
-      cam_setTargetPilot( pid, 0 );
    }
    else
       ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), "player", flags );

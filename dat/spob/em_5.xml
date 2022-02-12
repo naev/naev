@@ -16,7 +16,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>150000</population>
+  <population>1.5e+06</population>
   <hide>2.000000</hide>
   <services>
    <land/>
@@ -39,5 +39,9 @@
   <item>Basic Outfits 2</item>
   <item>Star Maps</item>
   <item>Hulls High</item>
+  <item>Empire Ships Small</item>
  </tech>
+ <tags>
+  <tag>tourism</tag>
+ </tags>
 </spob>

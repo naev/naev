@@ -45,7 +45,7 @@ end
 function create()
    local pp = player.pilot()
    pp:rename( name() ) -- Assign a random name to the player's ship.
-   pp:outfitAdd( "Laser Cannon MK1", 1 )
+   pp:outfitAdd( "Laser Cannon MK1", 1 ) -- Tutorials tell the player to buy and equip ion cannon later, need one weapon slot empty
    jump.setKnown( "Delta Polaris", "Jade" )
 
    -- Give all GUIs
@@ -57,11 +57,7 @@ function create()
    player.outfitAdd( "GUI - Slimv2" )
    player.outfitAdd( "GUI - Legacy" )
 
-   -- TODO remove when releasing 0.9.0
-   -- This line stops the tutorial updater from running
-   var.push( "tut_update", "0.9.0" )
-
-   hook.timer(3.0, "timer_tutorial")
+   hook.timer(3, "timer_tutorial")
 end
 
 function timer_tutorial()

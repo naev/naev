@@ -13,8 +13,8 @@
  <spobs/>
  <jumps>
   <jump target="NGC-13747">
-   <autopos/>
-   <hide>1.000000</hide>
+   <pos x="-14595.521693" y="1315.384068"/>
+   <hide>0.300000</hide>
   </jump>
   <jump target="NGC-344">
    <autopos/>

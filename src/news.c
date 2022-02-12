@@ -332,6 +332,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
 
    /* Create the custom widget. */
    window_addCust( wid, x, y, w, h, "cstNews", 1, news_render, news_mouse, NULL, news_focusLose, NULL );
+   window_canFocusWidget( wid, "cstNews", 0 );
 }
 
 /* clears newslines for bar text, for when taking off */

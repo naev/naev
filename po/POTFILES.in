@@ -21,6 +21,7 @@ dat/faction.xml
 dat/map.xml
 dat/outfits/accessory/air_freshener.xml
 dat/outfits/accessory/black_cat_doll.xml
+dat/outfits/accessory/commemorative_stein.xml
 dat/outfits/accessory/dv_handbook.xml
 dat/outfits/accessory/fuzzy_dice.xml
 dat/outfits/accessory/left_boot.xml
@@ -206,6 +207,10 @@ dat/outfits/misc/medium_weapon_license.xml
 dat/outfits/misc/mercenary_license.xml
 dat/outfits/structure/active_plating.xml
 dat/outfits/structure/adaptive_stealth_plating.xml
+dat/outfits/structure/auxiliary_processing_unit_i.xml
+dat/outfits/structure/auxiliary_processing_unit_ii.xml
+dat/outfits/structure/auxiliary_processing_unit_iii.xml
+dat/outfits/structure/auxiliary_processing_unit_iv.xml
 dat/outfits/structure/battery_i.xml
 dat/outfits/structure/battery_ii.xml
 dat/outfits/structure/battery_iii.xml
@@ -219,6 +224,7 @@ dat/outfits/structure/large_shield_booster.xml
 dat/outfits/structure/medium_cargo_pod.xml
 dat/outfits/structure/medium_fuel_pod.xml
 dat/outfits/structure/medium_shield_booster.xml
+dat/outfits/structure/microbond_plating.xml
 dat/outfits/structure/nanobond_plating.xml
 dat/outfits/structure/nebular_shielding_prototype.xml
 dat/outfits/structure/plasteel_plating.xml
@@ -246,6 +252,7 @@ dat/outfits/utility/combat_hologram_projector.xml
 dat/outfits/utility/combatai/agility_combat_ai.xml
 dat/outfits/utility/combatai/bioneural_combat_ai.xml
 dat/outfits/utility/combatai/cyclic_combat_ai.xml
+dat/outfits/utility/combatai/efficiency_combat_ai.xml
 dat/outfits/utility/combatai/hive_combat_ai.xml
 dat/outfits/utility/combatai/hunting_combat_ai.xml
 dat/outfits/utility/combatai/pinpoint_combat_ai.xml
@@ -796,8 +803,8 @@ dat/spob/grandard.xml
 dat/spob/green_eye.xml
 dat/spob/greenberg.xml
 dat/spob/greis.xml
-dat/spob/griffin__ii.xml
 dat/spob/griffin_i.xml
+dat/spob/griffin_ii.xml
 dat/spob/griffin_iii.xml
 dat/spob/griffin_vi.xml
 dat/spob/grindstone_shipyards.xml
@@ -1856,12 +1863,15 @@ dat/ssys/neon.xml
 dat/ssys/new_haven.xml
 dat/ssys/newmarch.xml
 dat/ssys/ngc1001.xml
+dat/ssys/ngc10081.xml
 dat/ssys/ngc10180.xml
 dat/ssys/ngc10284.xml
 dat/ssys/ngc10452.xml
+dat/ssys/ngc10653.xml
 dat/ssys/ngc10789.xml
 dat/ssys/ngc10907.xml
 dat/ssys/ngc1098.xml
+dat/ssys/ngc11050.xml
 dat/ssys/ngc11231.xml
 dat/ssys/ngc11444.xml
 dat/ssys/ngc11718.xml
@@ -1878,14 +1888,20 @@ dat/ssys/ngc13564.xml
 dat/ssys/ngc13674.xml
 dat/ssys/ngc13747.xml
 dat/ssys/ngc13798.xml
+dat/ssys/ngc14337.xml
+dat/ssys/ngc14430.xml
 dat/ssys/ngc14479.xml
 dat/ssys/ngc14549.xml
+dat/ssys/ngc14676.xml
 dat/ssys/ngc1562.xml
 dat/ssys/ngc15670.xml
+dat/ssys/ngc18269.xml
 dat/ssys/ngc1872.xml
 dat/ssys/ngc1931.xml
+dat/ssys/ngc20489.xml
 dat/ssys/ngc2175.xml
 dat/ssys/ngc2232.xml
+dat/ssys/ngc22375.xml
 dat/ssys/ngc23.xml
 dat/ssys/ngc2601.xml
 dat/ssys/ngc2836.xml
@@ -1910,6 +1926,7 @@ dat/ssys/ngc6901.xml
 dat/ssys/ngc7061.xml
 dat/ssys/ngc7078.xml
 dat/ssys/ngc728.xml
+dat/ssys/ngc7319.xml
 dat/ssys/ngc7402.xml
 dat/ssys/ngc7533.xml
 dat/ssys/ngc7784.xml
@@ -2264,6 +2281,7 @@ dat/events/tutorial/tut_enter.lua
 dat/events/tutorial/tut_land.lua
 dat/events/updater.lua
 dat/events/wormhole.lua
+dat/events/zalek/sigma13.lua
 dat/factions/equip/dvaered.lua
 dat/factions/equip/empire.lua
 dat/factions/equip/generic.lua
@@ -2404,6 +2422,9 @@ dat/missions/neutral/antlejos/ant04.lua
 dat/missions/neutral/antlejos/ant05.lua
 dat/missions/neutral/antlejos/ant06.lua
 dat/missions/neutral/antlejos/ant07.lua
+dat/missions/neutral/antlejos/ant08.lua
+dat/missions/neutral/antlejos/ant09.lua
+dat/missions/neutral/antlejos/ant10.lua
 dat/missions/neutral/antlejos/ant_supplies.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
@@ -2494,6 +2515,7 @@ dat/missions/zalek/blackhole/zbh07.lua
 dat/missions/zalek/blackhole/zbh08.lua
 dat/missions/zalek/blackhole/zbh09.lua
 dat/missions/zalek/blackhole/zbh10.lua
+dat/missions/zalek/blackhole/zbh11.lua
 dat/missions/zalek/neburesearch/neburesearch_00.lua
 dat/missions/zalek/neburesearch/neburesearch_01.lua
 dat/missions/zalek/neburesearch/neburesearch_02.lua
@@ -2587,6 +2609,7 @@ dat/scripts/equipopt/templates/soromid.lua
 dat/scripts/equipopt/templates/thurion.lua
 dat/scripts/equipopt/templates/zalek.lua
 dat/scripts/equipopt/wrapper.lua
+dat/scripts/escort.lua
 dat/scripts/factions/dvaered.lua
 dat/scripts/factions/empire.lua
 dat/scripts/factions/frontier.lua
@@ -2631,7 +2654,6 @@ dat/scripts/luatk.lua
 dat/scripts/luatk/conf.lua
 dat/scripts/luatk/core.lua
 dat/scripts/luatk/main.lua
-dat/scripts/merge_tables.lua
 dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/cardio.lua
 dat/scripts/minigames/chuckaluck.lua

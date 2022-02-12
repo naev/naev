@@ -32,7 +32,6 @@ local reward = zbh.rewards.zbh01
 local destpnt, destsys = spob.getS("Research Post Sigma-13")
 
 function create ()
-   if not var.peek("testing") then misn.finish(false) end
    misn.setNPC( _("Za'lek Scientist"), zbh.zach.portrait, _("You see a Za'lek scientist nervously sitting at the bar. It seems like they might have a job for you.") )
 end
 

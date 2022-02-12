@@ -27,4 +27,7 @@
   <description>The Emperor's Fist project needs a lot of raw materials. A portion of those materials are mined right here on New Mars, which has the advantage that no trip through hyperspace is needed to get them to location. New Mars is being systematically strip-mined, and as such the planet has nothing to offer in the way of leisure or tourism.</description>
   <bar>Clean and functional, this bar has been built according to recent Imperial standards. It's more a utility service than a place to unwind.</bar>
  </general>
+ <tags>
+  <tag>mining</tag>
+ </tags>
 </spob>

@@ -518,6 +518,21 @@ function spawnDrones()
    mem.tronkDeath = true -- This says that at next jump, Tronk will die
 end
 
+-- Spawns a group of civilian ships whose role is to discover a stealth player
+local function spawnStealthBreakers( pos )
+   local radius = 2000
+   local dist   = 1000
+   local nb     = math.ceil(2*math.pi*radius / dist)
+   local theta  = 2*math.pi/nb
+
+   local group = {}
+   for i = 1, nb do
+      group[i] = pilot.add( "Mule", "Trader", pos + vec2.newP( radius, i*theta ) )
+      group[i]:setSpeedLimit( .0001 )
+      group[i]:setFriendly( false )
+   end
+end
+
 -- Spawn blockade ships
 function spawnZlkSquadron( pos, bloc )
    squad = {}
@@ -545,6 +560,7 @@ function spawnZlkSquadron( pos, bloc )
    if mem.firstBloc then
       scanHooks[#scanHooks+1] = hook.timer(0.5, "proximityScan", {focus = squad[2], funcname = "scanBloc"})
    end
+   spawnStealthBreakers( pos )
 end
 function spawnEmpSquadron( pos, bloc )
    squad = {}
@@ -568,6 +584,7 @@ function spawnEmpSquadron( pos, bloc )
       j:setSpeedLimit( .0001 ) -- 0 disables the stuff so it's unusable
       j:setHostile(bloc)
    end
+   spawnStealthBreakers( pos )
 end
 
 -- The player sees the blocus fleet
@@ -588,11 +605,12 @@ end
 
 -- Strafer enters the system
 function spawnStrafer()
-   strafer = pilot.add( "Gawain", "Trader", _("Trader Gawain") )
+   strafer = pilot.add( "Gawain", "Trader", nil, _("Trader Gawain") )
    strafer:setHilight(true)
    strafer:setVisible(true)
    strafer:control(true)
    strafer:follow( player.pilot() )
+   strafer:setFriendly()
    camera.set( strafer, true )
    mem.prox = hook.timer(0.5, "proximity", {anchor = strafer, radius = 2000, funcname = "straferDiscuss", focus = player.pilot()})
 end

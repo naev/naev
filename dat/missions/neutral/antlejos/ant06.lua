@@ -37,7 +37,7 @@ local mainsys = system.get("Knave")
 
 function create ()
    if not misn.claim(mainsys) then misn.finish() end
-   misn.setNPC( _("Verner"), ant.verner.portrait, _("Verner seems to be taking a break from all the terraforming and relaxing at the new spaceport bar.") )
+   misn.setNPC( _("Verner"), ant.verner.portrait, ant.verner.description )
 end
 
 local firsttime = true
@@ -155,7 +155,7 @@ function enter ()
    for k,s in ipairs{ "Lancelot", "Shark", "Shark" } do
       local p = pilot.add( s, puaaa, pos+vec2.newP( 100+rnd.rnd(100), rnd.angle() ), _("PUAAA Escort"), {ai="baddiepos"} )
       p:setLeader( supplyship )
-      table.insert( protestors, supplyship )
+      table.insert( protestors, p )
    end
 
    for k,p in ipairs(protestors) do
@@ -165,7 +165,7 @@ end
 
 function supplydeath ()
    if mem.state == 2 then return end
-   player.msg(_("#gYou eliminated the target!#0"))
+   player.msg("#g".._("You eliminated the target!").."#0")
    mem.state = 2
    misn.osdActive(3)
    misn.markerMove( mem.mrk, retpnt )

@@ -775,6 +775,10 @@ static int map_findSearchOutfits( unsigned int wid_map_find, const char *name )
          continue;
       pnt = map_known_spobs[i];
 
+      /* Must have an outfitter. */
+      if (!spob_hasService(pnt,SPOB_SERVICE_OUTFITS))
+         continue;
+
       /* System must be known. */
       sysname = spob_getSystem( pnt->name );
       if (sysname == NULL)
@@ -891,6 +895,10 @@ static int map_findSearchShips( unsigned int wid_map_find, const char *name )
       if (j < 0)
          continue;
       pnt = map_known_spobs[i];
+
+      /* Must have an shipyard. */
+      if (!spob_hasService(pnt,SPOB_SERVICE_SHIPYARD))
+         continue;
 
       /* System must be known. */
       sysname = spob_getSystem( pnt->name );

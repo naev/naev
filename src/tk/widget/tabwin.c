@@ -425,8 +425,10 @@ static void tab_renderOverlay( Widget* tab, double bx, double by )
 static void tab_cleanup( Widget *tab )
 {
    for (int i=0; i<tab->dat.tab.ntabs; i++) {
+      Window *w = window_wget( tab->dat.tab.windows[i] );
+      if (w)
+         window_kill( w );
       free( tab->dat.tab.tabnames[i] );
-      window_destroy( tab->dat.tab.windows[i] );
    }
    free( tab->dat.tab.tabnames );
    free( tab->dat.tab.windows );

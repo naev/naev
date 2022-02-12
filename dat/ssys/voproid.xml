@@ -19,6 +19,10 @@
    <autopos/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="NGC-7319">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
  <tags>
   <tag>restricted</tag>

@@ -6,7 +6,7 @@ uniform float u_time;
 uniform vec3 u_camera = vec3(1.0); /* xy corresponds to screen space */
 
 const float DRAGMULT    = 10.0;
-const float SCALE       = 1000.0;
+const float SCALE       = 300.0;
 const vec3 COL_BACK     = vec3( 150.0, 50.0, 150.0 ) / 255.;
 const vec3 COL_FRONT    = vec3( 220.0, 80.0, 220.0 ) / 255.;
 
@@ -17,7 +17,7 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
    uv.z = u_time;
 
    /* Generate the base noise. */
-   float s = wavenoise( uv.xy, DRAGMULT, snoise(vec3(uv.xy*1.7,uv.z/10.0))+u_time*0.3);
+   float s = wavenoise( uv.xy, DRAGMULT, snoise(vec3(uv.xy*1.7,uv.z/10.0))+u_time*0.1);
    s = s*s;
    vec4 colour;
    colour.rgb = mix( COL_BACK, COL_FRONT, s );

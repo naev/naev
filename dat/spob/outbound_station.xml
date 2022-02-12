@@ -41,4 +41,7 @@
   <item>Food</item>
   <item>Medicine</item>
  </tech>
+ <tags>
+  <tag>trade</tag>
+ </tags>
 </spob>

@@ -1,9 +1,7 @@
 --[[
 -- Helper stuff for the Crimson Gauntlet
 --]]
-
 local vn = require 'vn'
-local mt = require 'merge_tables'
 local fmt = require "format"
 
 local totoran = {
@@ -19,7 +17,7 @@ local totoran = {
 -- Helpers to create main characters
 function totoran.vn_guide( params )
    return vn.Character.new( totoran.guide.name,
-         mt.merge_tables( {
+         tmerge( {
             image=totoran.guide.image,
             color=totoran.guide.colour,
          }, params) )

@@ -120,13 +120,9 @@ if buildExec.disabled() == false
       pcre2,
       sdl,
       sdl_image,
-      declare_dependency(
-         dependencies: dependency('libpng', required: true),
-         compile_args: '-DNOLOGPRINTFCONSOLE',
-         link_args: '-DNOLOGPRINTFCONSOLE')
+      dependency('libpng', required: true),
+      dependency('libwebp', required: true, static: get_option('steamruntime')),
    ]
-
-   naev_deps += dependency('libwebp', required: true, static: get_option('steamruntime'))
 
    # Lua
    useLuaJIT = get_option('luajit')

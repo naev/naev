@@ -27,7 +27,7 @@
    <outfits/>
   </services>
   <commodities/>
-  <description>Rogan is a relatively prosperous world, despite the fact that much of the planetary surface is desert. However, these deserts conveniently has huge repositories of valuable minerals, and the oceans teem with sea life. The result is a rich planet with a booming population.</description>
+  <description>Rogan is a relatively prosperous world, despite the fact that much of the planetary surface is desert. However, these deserts conveniently have huge repositories of valuable minerals, and the oceans teem with sea life. The result is a rich planet with a booming population.</description>
   <bar>You see several rich trading magnates talking business in this bar. It seems to be split between the rich section and the poorer section, for tramp traders and miners.</bar>
  </general>
  <tech>
@@ -45,4 +45,9 @@
   <item>Laser 2</item>
   <item>Empire Elite Outfits</item>
  </tech>
+ <tags>
+  <tag>agriculture</tag>
+  <tag>mining</tag>
+  <tag>rich</tag>
+ </tags>
 </spob>

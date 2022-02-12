@@ -15,8 +15,14 @@ uniform sampler2D u_prevtex;
 const vec3 R      = vec3( %f, %f, %f);
 const vec3 UP     = vec3( 0.0, 1.0, 0.0 );
 const vec3 AZ     = normalize( -R );
+/* A user with Windows 10 and a "GeForce GT 610" GPU reported "error C1059: non constant expression in initialization" from
 const vec3 AX     = normalize( cross( AZ, UP ) );
 const vec3 AY     = normalize( cross( AX, AZ ) );
+*/
+const vec2 AZ_xz_n= normalize( AZ.xz );
+const vec3 AX     = vec3( -AZ_xz_n.y, 0, AZ_xz_n.x );
+const vec3 AY     = vec3( -AZ.y * AX.z, AX.z * AZ.x - AX.x * AZ.z, AZ.y * AX.x );
+/* The above formulas are equivalent. */
 const mat3 A      = mat3( AX, AY, AZ );
 const float theta = %f;
 const float cx = cos(theta);

@@ -26,7 +26,11 @@
    <commodity/>
   </services>
   <commodities/>
-  <description>Benteen is one of the Empire's primary agriworlds. It grows most of the crops that are bound for the western systems. It is a quiet world, with little in the way of the bustle and fuss of other, more core, planets.</description>
+  <description>Benteen is one of the Empire's primary agriworlds. It grows most of the crops that are bound for the western systems. It is a quiet world, with little in the way of the bustle and fuss of other, more core, planets. It is not uncommon for people to migrate here looking for a calmer lifestyle.</description>
   <bar>The bar is a place to relax after a long trip or a hard day's work. The beer is fine and the locals seem friendly enough. Mostly harmless.</bar>
  </general>
+ <tags>
+  <tag>agriculture</tag>
+  <tag>rural</tag>
+ </tags>
 </spob>

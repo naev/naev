@@ -240,7 +240,7 @@ She winks at you.]]))
    vn.menu( opts )
 
    vn.label( "researchers" )
-   maikki(_([["The researchers I told you about were involved in some sort of project trying to find out the origins of the incident by analyzing artefacts taken from the nebula. Most of it is classified so I wasn't able to get much information."]]))
+   maikki(_([["The researchers I told you about were involved in some sort of project trying to find out the origins of the Incident by analyzing artefacts taken from the nebula. Most of it is classified so I wasn't able to get much information."]]))
    maikki(_([["Apparently the project was disbanded for some reason or other, and some members went missing. However, I was able to track down a few of them, but it wasn't too easy. They have some weird system called tenure that nobody understands and makes them move constantly from research laboratory to research laboratory. So droll!"]]))
    seekoutmsg()
    maikki(_([["I don't think it will be easy for you to get information from the Za'lek. They never give a straight answer and it's all "that is illogical" and "ma'am that beaker of acid is not a toy". So boring!"
@@ -251,8 +251,8 @@ She frowns and shakes her head.]]))
    vn.label( "father" )
    maikki(_([["I don't remember much about my father, most of what I know about him are from stories from my late mother and pilots who knew him."]]))
    maikki(_([[Her eyes light up.
-"Did you know that while scavenging near the incident, an asteroid hit his thrusters making them point the wrong way and he had to fly backwards through five systems in the nebula while chased by pirates? Sounds crazy!"]]))
-   maikki(_([["They say he was also the first pilot to chart all the systems in the Nebula after the incident. Not even getting his leg crushed while recovering parts of the last emperor's flagship stopped him from going back and back to the nebula."]]))
+"Did you know that while scavenging near the Incident, an asteroid hit his thrusters making them point the wrong way and he had to fly backwards through five systems in the nebula while chased by pirates? Sounds crazy!"]]))
+   maikki(_([["They say he was also the first pilot to chart all the systems in the Nebula after the Incident. Not even getting his leg crushed while recovering parts of the last emperor's flagship stopped him from going back and back to the nebula."]]))
    maikki(_([[Her eyes darken a little and her voice softens.
 "His obsession with finding the truth meant he was away from home most of the time and my mother was probably very lonely. She told me he never came to any of my birthdays…"]]))
    maikki(_([[Her eyes light up again.
@@ -401,7 +401,7 @@ function approach_hint2 ()
    vn.na(_("You inquire to about whether or not they are interested in artefacts from the nebula."))
    prof(_([[They rubs their temples.
 "Ah, the nebula artefacts… Not very good experiences with those, no, not really interested in them anymore."]]))
-   prof(_([["I was part of a really ambitious project to try to track down the origin of the incident, which just end up being a bureaucratic nightmare."]]))
+   prof(_([["I was part of a really ambitious project to try to track down the origin of the Incident, which just end up being a bureaucratic nightmare."]]))
    prof(_([["You see, the bigger the research project, the more the project leader and co-leaders want to have meetings and goals and work packages."
 They shudder when they says the word "work packages".]]))
    prof(_([["At the end, we were just chaining meetings and answering e-mails and not getting anything done. We ended up handing in a 5-page report written by an intern for the mid-project evaluation and almost lost all the funding. The project leader panicked and it all went to hell from there."]]))
@@ -774,7 +774,7 @@ You glance at a crate labelled 'NEBULA ARTEFACTS #082' in the corner of the room
    end )
 
    vn.label("nebula")
-   dr(_([["Ah yes, the nebula. The pinnacle of human creation! Isn't it just mesmerizing and beautiful to look at? I've always been attracted to it ever since the incident destroyed my university. Destruction is so pretty, is it not?"]]))
+   dr(_([["Ah yes, the nebula. The pinnacle of human creation! Isn't it just mesmerizing and beautiful to look at? I've always been attracted to it ever since the Incident destroyed my university. Destruction is so pretty, is it not?"]]))
    dr(_([["I recently had the great opportunity to work directly on nebula research. It was a fabulous project with hundreds of the brightest Za'lek minds working in tandem! Not as brilliant as me, but the numbers were what mattered."
 He grins as nostalgia takes him over.]]))
    dr(_([["We were able to have dedicated teams recovering all sorts of incredible items! We even found the remains of a Proteron replicator! It was only able to replicate cheese fondue, but it was incredible. I integrated it with a drone platform and that has kept me healthy and in shape since! It should be in the bar if you want to try it."

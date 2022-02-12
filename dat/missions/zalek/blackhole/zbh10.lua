@@ -58,7 +58,7 @@ function accept ()
    vn.na(_([[You clear your throat to catch his attention, and after your third try, he finally seems to recognize your presence.]]))
    z(_([["Hey, how's it going? Wait… didn't I have something for you? One second."
 He fumbles with his cyberdeck looking for something.
-"I've been looking over the scan analysis of the area and haven't rally found anything, however, the signal is weak towards the Anubis Black Hole. It's a bit of a shot in the dark, but I think we should try to…]]))
+"I've been looking over the scan analysis of the area and haven't really found anything, however, the signal is weak towards the Anubis Black Hole. It's a bit of a shot in the dark, but I think we should try to…]]))
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
    vn.na(fmt.f(_([[He gets suddenly cut off by the blaring siren.
 "ALERT: Large hostile ships detected inbound from {sys}."]]),{sys=jumpsys}))
@@ -171,14 +171,10 @@ function enter ()
    -- Fleets should have leaders with different speeds or they clump together
    local ppss = player.pilot():ship():size()
    if ppss >= 5 then
-      local bossfleet = {"Za'lek Mephisto", "Za'lek Diablo", "Za'lek Demon", "Za'lek Demon" }
-      if ppss >= 6 then
-         table.insert( bossfleet, "Za'lek Diablo" )
-      end
-      create_fleet( bossfleet )
-      create_fleet{"Za'lek Demon", "Za'lek Demon", "Za'lek Heavy Drone", "Za'lek Heavy Drone"}
-      create_fleet{"Za'lek Sting", "Za'lek Sting", "Za'lek Light Drone", "Za'lek Light Drone"}
-      create_fleet{"Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone"}
+      create_fleet{"Za'lek Mephisto", "Za'lek Mephisto" }
+      create_fleet{"Za'lek Demon", "Za'lek Demon", "Za'lek Heavy Drone"}
+      create_fleet{"Za'lek Sting", "Za'lek Sting", "Za'lek Light Drone"}
+      create_fleet{"Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone", "Za'lek Light Drone"}
    else
       create_fleet{"Za'lek Mephisto", "Za'lek Demon", "Za'lek Demon" }
       create_fleet{"Za'lek Demon", "Za'lek Heavy Drone"}
@@ -266,7 +262,7 @@ function heartbeat ()
          end
 
          local bl = badguys[1]
-         local ba = bl:health()
+         local ba = (bl:exists() and bl:health()) or -1
          if not feralpack and (ba < 90 or bl:pos():dist( mainpnt:pos() ) < 3000 or naev.ticksGame()-fightstart > 300) then
             local fferals = zbh.feralbioship()
             local fbadguys = zbh.evilpi()

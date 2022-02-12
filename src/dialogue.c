@@ -27,6 +27,7 @@
 
 #include "input.h"
 #include "log.h"
+#include "conf.h"
 #include "menu.h"
 #include "ndata.h"
 #include "nstring.h"
@@ -853,13 +854,14 @@ static int dialogue_custom_event( unsigned int wid, SDL_Event *event )
  *    @param update Custom render callback.
  *    @param render Custom render callback.
  *    @param event Custom event callback.
- *    @param data Custom data;
+ *    @param data Custom data.
+ *    @param autofree Should \p data be freed when the window is destroyed?
  */
 void dialogue_custom( const char* caption, int width, int height,
       int (*update) (double dt, void* data),
       void (*render) (double x, double y, double w, double h, void* data),
       int (*event) (unsigned int wid, SDL_Event* event, void* data),
-      void* data )
+      void* data, int autofree )
 {
    struct dialogue_custom_data_s cd;
    dialogue_update_t du;
@@ -877,6 +879,7 @@ void dialogue_custom( const char* caption, int width, int height,
    else
       wid = window_create( "dlgMsg", caption, -1, -1, width+40, height+60 );
    window_setData( wid, &done );
+   window_setFade( wid, NULL, 0. );
 
    /* custom widget for all! */
    if (fullscreen) {
@@ -888,6 +891,8 @@ void dialogue_custom( const char* caption, int width, int height,
       wgtx = wgty = 20;
    }
    window_addCust( wid, wgtx, wgty, width, height, "cstCustom", 0, render, NULL, NULL, NULL, data );
+   if (autofree)
+      window_custAutoFreeData( wid, "cstCustom" );
    window_custSetClipping( wid, "cstCustom", 1 );
 
    /* set up event stuff. */
@@ -983,7 +988,7 @@ int dialogue_customResize( int width, int height )
 static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 {
    unsigned int time_ms = SDL_GetTicks();
-   const double fps_max = 1./30.;
+   const double fps_max = (conf.fps_max > 0) ? 1./(double)conf.fps_max : fps_min;
    int quit_game = 0;
 
    /* Delay a toolkit iteration. */
@@ -996,7 +1001,7 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
    while (!(*loop_done) && toolkit_isOpen() && !naev_isQuit()) {
       SDL_Event event;
       unsigned int t;
-      double dt, delay;
+      double dt;
 
       /* Loop first so exit condition is checked before next iteration. */
       main_loop( 0 );
@@ -1024,8 +1029,8 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
       time_ms = t;
       /* Sleep if necessary. */
       if (dt < fps_max) {
-         delay    = fps_max - dt;
-         SDL_Delay( (unsigned int)(delay * 1000) );
+         double delay = fps_max - dt;
+         SDL_Delay( (unsigned int)(delay * 1000.) );
       }
 
       /* Update stuff. */

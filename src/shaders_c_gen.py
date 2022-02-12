@@ -89,7 +89,7 @@ SHADERS = [
       vs_path = "texture.vert",
       fs_path = "texture.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "tex_mat"],
+      uniforms = ["projection", "color", "tex_mat", "sampler"],
       subroutines = {},
    ),
    Shader(
@@ -289,6 +289,10 @@ SHADERS = [
    SimpleShader(
       name = "sysmarker",
       fs_path = "sysmarker.frag",
+   ),
+   SimpleShader(
+      name = "notemarker",
+      fs_path = "notemarker.frag",
    ),
    SimpleShader(
       name = "asteroidmarker",

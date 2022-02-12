@@ -594,6 +594,7 @@ static int misn_accept( lua_State *L )
    else { /* copy it over */
       *player_missions[i] = *cur_mission;
       memset( cur_mission, 0, sizeof(Mission) );
+      cur_mission->accepted = 1; /* Propagated to the mission computer. */
       cur_mission = player_missions[i];
       cur_mission->accepted = 1; /* Mark as accepted. */
 

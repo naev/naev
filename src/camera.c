@@ -266,7 +266,7 @@ static void cam_updateFly( double x, double y, double dt )
    }
    camera_X += dx;
    camera_Y += dy;
-   background_moveStars( -dx, -dy );
+   background_moveDust( -dx, -dy );
 
    /* Stop within 100 pixels. */
    if (FABS((pow2(camera_X)+pow2(camera_Y)) - (pow2(x)+pow2(y))) < 100*100) {
@@ -345,7 +345,7 @@ static void cam_updatePilot( Pilot *follow, double dt )
    k = 0.5*dt/dt_mod;
    dx = (targ_x-camera_X)*k;
    dy = (targ_y-camera_Y)*k;
-   background_moveStars( -(mx+dx), -(my+dy) );
+   background_moveDust( -(mx+dx), -(my+dy) );
 
    /* Update camera. */
    camera_X += dx;

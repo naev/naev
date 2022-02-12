@@ -26,6 +26,7 @@
 #include "escort.h"
 #include "event.h"
 #include "gui.h"
+#include "gui_omsg.h"
 #include "hook.h"
 #include "land_outfits.h"
 #include "land_shipyard.h"
@@ -127,7 +128,6 @@ static void bar_approach( unsigned int wid, const char *str );
 static int news_load (void);
 /* mission computer */
 static void misn_open( unsigned int wid );
-static void misn_close( unsigned int wid, const char *name );
 static void misn_autonav( unsigned int wid, const char *str );
 static void misn_accept( unsigned int wid, const char *str );
 static void misn_genList( unsigned int wid, int first );
@@ -300,7 +300,7 @@ static void bar_open( unsigned int wid )
    land_tabGenerate(LAND_WINDOW_BAR);
 
    /* Set window functions. */
-   window_onClose( wid, bar_close );
+   window_onCleanup( wid, bar_close );
 
    /* Get dimensions. */
    desc = (land_spob->bar_description!=NULL) ? _(land_spob->bar_description) : "(NULL)";
@@ -577,9 +577,6 @@ static void misn_open( unsigned int wid )
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
 
-   /* Set window functions. */
-   window_onClose( wid, misn_close );
-
    /* buttons */
    window_addButtonKey( wid, -20, 20,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnCloseMission",
@@ -615,19 +612,6 @@ static void misn_open( unsigned int wid )
          w/2 - 30, h/2 - 35, 0.75 );
 
    misn_genList(wid, 1);
-}
-/**
- * @brief Closes the mission computer window.
- *    @param wid Window to close.
- *    @param name Unused.
- */
-static void misn_close( unsigned int wid, const char *name )
-{
-   (void) wid;
-   (void) name;
-
-   /* Remove computer markers just in case. */
-   space_clearComputerMarkers();
 }
 /**
  * @brief Autonav to selected mission.
@@ -686,17 +670,25 @@ static void misn_accept( unsigned int wid, const char *str )
       misn = &mission_computer[pos];
       ret = mission_accept( misn );
       if ((ret==0) || (ret==3) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
-         if (ret==-1)
+         int changed = 0;
+         if (ret==-1) {
             mission_cleanup( &mission_computer[pos] );
-         memmove( &mission_computer[pos], &mission_computer[pos+1],
-               sizeof(Mission) * (mission_ncomputer-pos-1) );
-         mission_ncomputer--;
+            changed = 1;
+         }
+         if (misn->accepted)
+            changed = 1;
 
-         /* Regenerate list. */
-         misn_genList(wid, 0);
-         /* Add position persistancey after a mission has been accepted */
-         /* NOTE: toolkit_setListPos protects us from a bad position by clamping */
-         toolkit_setListPos( wid, "lstMission", pos-1 ); /*looks better without the -1, makes more sense with*/
+         if (changed) {
+            memmove( &mission_computer[pos], &mission_computer[pos+1],
+                  sizeof(Mission) * (mission_ncomputer-pos-1) );
+            mission_ncomputer--;
+
+            /* Regenerate list. */
+            misn_genList(wid, 0);
+            /* Add position persistancey after a mission has been accepted */
+            /* NOTE: toolkit_setListPos protects us from a bad position by clamping */
+            toolkit_setListPos( wid, "lstMission", pos-1 ); /*looks better without the -1, makes more sense with*/
+         }
       }
 
       /* Reset markers. */
@@ -1026,7 +1018,7 @@ void land_genWindows( int load, int changetab )
    /* Destroy old window if exists. */
    if (land_wid > 0) {
       land_regen = 2; /* Mark we're regenning. */
-      window_destroy(land_wid);
+      window_destroy( land_wid );
 
       /* Mark tabs as not generated. */
       land_generated = 0;
@@ -1048,7 +1040,7 @@ void land_genWindows( int load, int changetab )
       h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
    }
    land_wid = window_create( "wdwLand", spob_name(p), -1, -1, w, h );
-   window_onClose( land_wid, land_cleanupWindow );
+   window_onCleanup( land_wid, land_cleanupWindow );
 
    /* Create tabbed window. */
    land_setupTabs();
@@ -1061,7 +1053,6 @@ void land_genWindows( int load, int changetab )
     *  3) Generate missions - so that campaigns are fluid.
     *  4) Create other tabs - lists depend on NPC and missions.
     */
-
    /* 1) Create main tab. */
    land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
 
@@ -1153,7 +1144,8 @@ void land_genWindows( int load, int changetab )
    land_loaded = 1;
 
    /* Necessary if player.land() was run in an abort() function. */
-   window_lower( land_wid );
+   if (!load)
+      window_lower( land_wid );
 }
 
 /**
@@ -1234,6 +1226,10 @@ void land( Spob* p, int load )
 
    /* Just in case? */
    bar_regen();
+
+   /* Don't do a fade in. */
+   if (load)
+      window_setFade( land_wid, NULL, 0. );
 
    /* Do a lua collection pass. */
    lua_gc( naevL, LUA_GCCOLLECT, 0 );
@@ -1478,6 +1474,9 @@ void takeoff( int delay )
    /* Clear pilots other than player. */
    pilots_clean(0);
 
+   /* Clear omsg. */
+   omsg_cleanup();
+
    /* initialize the new space */
    h = player.p->nav_hyperspace;
    space_init( NULL, 1 );
@@ -1597,6 +1596,9 @@ void land_cleanup (void)
    if (gfx_exterior != NULL)
       gl_freeTexture( gfx_exterior );
    gfx_exterior   = NULL;
+
+   /* Remove computer markers just in case. */
+   space_clearComputerMarkers();
 
    /* Clean up mission computer. */
    for (int i=0; i<mission_ncomputer; i++)

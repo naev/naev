@@ -14,10 +14,10 @@ void background_renderOverlay( double dt );
 unsigned int background_addImage( glTexture *image, double x, double y,
       double move, double scale, double angle, const glColour *col, int foreground );
 
-/* Stars. */
-void background_initStars( int n );
-void background_renderStars( const double dt );
-void background_moveStars( double x, double y );
+/* Space Dust. */
+void background_initDust( int n );
+void background_renderDust( const double dt );
+void background_moveDust( double x, double y );
 
 /* Init. */
 int background_init (void);

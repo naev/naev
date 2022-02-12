@@ -43,7 +43,7 @@ local function disable( _p, po, domsg )
    end
    po:state("off")
    if domsg then
-      player.msg(_("#rYour fake transponder has been discovered and is useless until you change systems, land, or cooldown!#0"))
+      player.msg("#r".._("Your fake transponder has been discovered and is useless until you change systems, land, or cooldown!").."#0")
    end
    mem.isactive = false
 end

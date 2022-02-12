@@ -2,7 +2,6 @@ require 'ai.core.core'
 require 'ai.core.idle.advertiser'
 require 'ai.core.misc.distress'
 local fmt = require "format"
-local mt = require 'merge_tables'
 
 mem.lanes_useneutral = true
 mem.simplecombat = true
@@ -81,7 +80,7 @@ function create ()
          {credits=fmt.credits(mem.refuel)})
 
    -- Set up potential advertiser messages in msg variable
-   local msg = mt.merge_tables( {}, ads_generic )
+   local msg = tmerge( {}, ads_generic )
 
    -- Faction specific messages
    local fpres = system.cur():presences()
@@ -89,14 +88,14 @@ function create ()
    -- Empire messages
    local fem = fpres["Empire"] or 0
    if fem > 1 then
-      msg = mt.merge_tables( msg, ads_empire )
-      msg = mt.merge_tables( msg, ads_cyber )
+      msg = tmerge( msg, ads_empire )
+      msg = tmerge( msg, ads_cyber )
    end
 
    -- Dvaered messages
    local fdv = fpres["Dvaered"] or 0
    if fdv > 1 then
-      msg = mt.merge_tables( msg, ads_dvaered )
+      msg = tmerge( msg, ads_dvaered )
       local badwords = {
          _("Butthead"),
          _("Nincompoop"),
@@ -133,7 +132,7 @@ function create ()
    -- Soromid messages
    local fsr = fpres["Soromid"] or 0
    if fsr > 1 then
-      msg = mt.merge_tables( msg, ads_soromid )
+      msg = tmerge( msg, ads_soromid )
    end
 
    -- Soromid+Empire messages
@@ -144,8 +143,8 @@ function create ()
    -- Za'lek messages
    local fzl = fpres["Za'lek"] or 0
    if fzl > 1 then
-      msg = mt.merge_tables( msg, ads_zalek )
-      msg = mt.merge_tables( msg, ads_cyber )
+      msg = tmerge( msg, ads_zalek )
+      msg = tmerge( msg, ads_cyber )
       -- Note that when running in the main menu background, player.name() might not exist (==nil), so
       -- we need to add a check for that.
       local pn = player.name()
@@ -157,7 +156,7 @@ function create ()
    -- Sirius messages
    local fsi = fpres["Sirius"] or 0
    if fsi > 1 then
-      msg = mt.merge_tables( msg, ads_sirius )
+      msg = tmerge( msg, ads_sirius )
    end
 
    mem.ad = msg[rnd.rnd(1,#msg)]

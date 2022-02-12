@@ -25,8 +25,14 @@
   <spob name="S58309">remove</spob>
   <spob name="S91456">remove</spob>
  </system>
+ <tech name="Heavy Weapons 1">
+  <add>__Collective Outfits</add>
+ </tech>
+ <tech name="Heavy Weapons 2">
+  <add>__Collective Outfits</add>
+ </tech>
  <tech name="Heavy Civilian Combat Ships">
-  <add>__Collective</add>
+  <add>__Collective Ships</add>
  </tech>
  <faction name="Collective">
   <invisible />

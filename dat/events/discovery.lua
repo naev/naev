@@ -231,39 +231,40 @@ local custom_events = {
    },
    NorthWinds = {
       test = function ()
-         local nsys = {
-            "Pilatis",
-            "Defa",
-            "Vedalus",
-            "Titus",
-            "New Haven",
-            "Daled",
-            "Mason",
-         }
-         return test_systems( nsys )
+         return system.cur():tags().northstellarwind ~= nil
       end,
       type = "enter",
       name = "disc_northwinds",
-      title = _("Northern Stellar Winds"),
+      title = "#b".._("Northern Stellar Winds").."#0",
       --subtitle = _("None"),
    },
    SouthWinds = {
       test = function ()
-         local nsys = {
-            "Kretogg",
-            "Unicorn",
-            "Volus",
-            "Sheffield",
-            "Gold",
-            "Fried",
-         }
-         return test_systems( nsys )
+         return system.cur():tags().southstellarwind ~= nil
       end,
       type = "enter",
       name = "disc_southwinds",
-      title = _("Southern Stellar Winds"),
+      title = "#b".._("Southern Stellar Winds").."#0",
       --subtitle = _("None"),
    },
+   Haze = {
+      test = function ()
+         return system.cur():tags().haze ~= nil
+      end,
+      type = "enter",
+      name = "disc_haze",
+      title = "#r".._("The Haze").."#0",
+      --subtitle = _("None"),
+   },
+   --[[PlasmaStorm = {
+      test = function ()
+         return system.cur():tags().plasmastorm ~= nil
+      end,
+      type = "enter",
+      name = "disc_plasmastorm",
+      title = _("Sirii Plasma Storm"),
+      --subtitle = _("None"),
+   },--]]
    BlackHole = {
       test = function ()
          return system.cur():background() == "blackhole"

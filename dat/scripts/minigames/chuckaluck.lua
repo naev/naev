@@ -225,10 +225,10 @@ function cl.play( value )
       msg = fmt.f(n_("#gYou won #p{n} Minerva Token#g (matched one)!#0", "#gYou won #p{n} Minerva Tokens#g (matched one)!#0", won), {n=won})
    elseif matches==2 then
       won = won*2
-      msg = fmt.f(n_("#gYou won #p{n} Minerva Token#g (matched one)!#0", "#gYou won #p{n} Minerva Tokens#g (matched two)!#0", won), {n=won})
+      msg = fmt.f(n_("#gYou won #p{n} Minerva Token#g (matched two)!#0", "#gYou won #p{n} Minerva Tokens#g (matched two)!#0", won), {n=won})
    elseif matches==3 then
       won = won*10
-      msg = fmt.f(n_("#gYou won #p{n} Minerva Token#g (matched one)!#0", "#gYou won #p{n} Minerva Tokens#g (matched three)!#0", won), {n=won})
+      msg = fmt.f(n_("#gYou won #p{n} Minerva Token#g (matched three)!#0", "#gYou won #p{n} Minerva Tokens#g (matched three)!#0", won), {n=won})
    end
    if won > 0 then
       minerva.tokens_pay( won )

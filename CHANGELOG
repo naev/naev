@@ -7,20 +7,25 @@
       * Plasma has a burning effect
       * Scripting support for space objects (spob)
    * Gameplay Changes
-      * Weapon types are more differenciated
+      * Weapon types are more differentiated
       * Removed nearly redundant launchers
+      * Nerfed beams
+      * Factional ships are more widely sold
    * New Content
       * Added a gigantic black hole
       * Added space anomalies
       * More engine sounds
-      * 17 New missions
+      * 20 New missions
          * More terraforming
          * Continuation of the Za'lek story
          * Help the Dvaered do tasks
       * 3 New ships
    * Quality of Life
+      * Support for save snapshots for each pilot
       * Can ask pilots to refuel you more than 100 units at a time
       * Engine sound volume is configurable
+      * Revamped the star map to be large and more useful
+      * Can add notes to the star map
    * Engine changes
       * Simplified terminology with spob (space objects) replacing planet/asset
       * Support for tags in missions
@@ -28,6 +33,13 @@
       * Weapon outfits support some Lua scripting
       * Ammunition/fighters merged into launchers/fighter bays
       * Support for "shotgun"-type weapons
+      * Backgrounds no longer use an orthographic projection
+      * Minor transitions added to the toolkit
+
+* 0.9.3 (unreleased)
+   * Bug fix: if the German translation was active, casino minigames' explanation (Erklärung) didn't work
+   * Fix errors/slowdown in Diversion from (...) missions
+   * Work around bugs in at least one OpenGL driver
 
 * 0.9.2
    * Fix reward messages in the Particle Physics campaign

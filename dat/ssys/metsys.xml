@@ -12,6 +12,7 @@
  </pos>
  <spobs>
   <spob>FD-24</spob>
+  <spob_virtual>Thurion Local</spob_virtual>
  </spobs>
  <jumps>
   <jump target="Adran">

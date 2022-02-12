@@ -4,7 +4,6 @@
 
 --]]
 local vn = require "vn"
-local mt = require 'merge_tables'
 
 local tutnel = {}
 
@@ -18,7 +17,7 @@ tutnel.nelly = {
 
 function tutnel.vn_nelly( params )
    return vn.Character.new( tutnel.nelly.name,
-         mt.merge_tables( {
+         tmerge( {
             image=tutnel.nelly.image,
             color=tutnel.nelly.colour,
          }, params) )

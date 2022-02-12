@@ -4899,7 +4899,7 @@ static int pilotL_setLeader( lua_State *L )
 
    prev_leader = pilot_get(p->parent);
 
-   if (lua_isnil(L, 2)) {
+   if (lua_isnoneornil(L, 2)) {
       p->parent = 0;
    }
    else {

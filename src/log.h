@@ -30,7 +30,7 @@
 #endif /* DEBUG */
 #define DEBUG_BLANK() DEBUG("%s", "")
 
-PRINTF_FORMAT( 3, 4 ) int logprintf( FILE *stream, int newline, const char *fmt, ... );
+PRINTF_FORMAT( 3, 4 ) NONNULL(3) int logprintf( FILE *stream, int newline, const char *fmt, ... );
 void log_init (void);
 void log_redirect (void);
 void log_clean (void);

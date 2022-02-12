@@ -10,7 +10,7 @@ local prng = require("prng").new()
 
 local pixelcode = lf.read( "bkg/shaders/blackhole.frag" )
 
-local blackhole, shader, time, bx, by, sf
+local blackhole, shader, time, bx, by, sf, move
 local bgstars
 function background ()
    local nconf = naev.conf()
@@ -24,11 +24,13 @@ function background ()
    local scale
 
    if sysname == "Anubis Black Hole" then
-      scale = 7
+      scale = 8
       off = vec2.new()
+      move = 0.01
    else
       scale = 1
       off = vec2.newP( 4, a )
+      move = 0.00025
    end
    bx, by = off:get()
 
@@ -46,10 +48,10 @@ end
 
 function renderbg( dt )
    local x, y = camera.get():get()
-   local z = camera.getZoom()
    time = time + dt
    shader:send( "u_time", time )
-   shader:send( "u_camera", bx+x*0.00025, -by-y*0.00025, z*sf )
+
+   shader:send( "u_camera", bx+x*move, -by-y*move, sf )
 
    lg.setCanvas( bgstars )
    starfield.render( dt )

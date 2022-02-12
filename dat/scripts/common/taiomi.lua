@@ -1,5 +1,4 @@
 local vn = require 'vn'
-local mt = require 'merge_tables'
 
 --[[
 -- Helper functions and defines for the Taiomi campaigns
@@ -34,21 +33,21 @@ local taiomi = {
 -- Helpers to create main characters
 function taiomi.vn_scavenger( params )
    return vn.Character.new( taiomi.scavenger.name,
-         mt.merge_tables( {
+         tmerge( {
             image=taiomi.scavenger.image,
             color=taiomi.scavenger.colour,
          }, params) )
 end
 function taiomi.vn_wornout( params )
    return vn.Character.new( taiomi.wornout.name,
-         mt.merge_tables( {
+         tmerge( {
             image=taiomi.wornout.image,
             color=taiomi.wornout.colour,
          }, params) )
 end
 function taiomi.vn_philosopher( params )
    return vn.Character.new( taiomi.philosopher.name,
-         mt.merge_tables( {
+         tmerge( {
             image=taiomi.philosopher.image,
             color=taiomi.philosopher.colour,
          }, params) )

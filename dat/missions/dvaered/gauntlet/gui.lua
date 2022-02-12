@@ -1,17 +1,26 @@
 --[[
 -- Fancy GUI interface for the Crimson Gauntlet
 --]]
-
 local luatk = require 'luatk'
 local lg = require 'love.graphics'
+local fmt = require "format"
 
 local gauntlet_option, gauntlet_start, gauntlet_type
 local btn_enter, btn_modifiers, btn_options, btn_types, headerh, modifiers_divider, options_divider
 
 local gauntlet_modifiers = {
-   { id = "doubledmgtaken", str = _("Double Damage Enemies (#g+50%#0)"), var = "gauntlet_unlock_doubledmgtaken", enabled = false },
-   { id = "nohealing", str = _("No Healing Between Waves (#g+25%#0)"), var = "gauntlet_unlock_nohealing", enabled = false },
-   { id = "doubleenemy", str = _("Double Enemies"), var = nil, enabled = false },
+   { id = "doubledmgtaken",
+    str = fmt.f(_("Double Damage Enemies ({bonus})"), {bonus="#g+50%#0"}),
+    var = "gauntlet_unlock_doubledmgtaken",
+    enabled = false },
+   { id = "nohealing",
+    str = fmt.f(_("No Healing Between Waves ({bonus})"),{bonus="#g+25%#0"}),
+    var = "gauntlet_unlock_nohealing",
+    enabled = false },
+   { id = "doubleenemy",
+    str = _("Double Enemies"),
+    var = nil,
+    enabled = false },
 }
 
 local function button_list( wdw, captions, bx, by, bw, bh, w, _h, handler )

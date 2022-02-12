@@ -1,5 +1,4 @@
 local optimize = require 'equipopt.optimize'
-local mt = require 'merge_tables'
 local eparams = require 'equipopt.params'
 local ecores = require 'equipopt.cores'
 local eoutfits = require 'equipopt.outfits'
@@ -16,7 +15,7 @@ local function equip_generic( p, opt_params, cores, outfits )
 
    -- Choose parameters and make Pirateish
    local params = eparams.choose( p )
-   params = mt.merge_tables( params, opt_params )
+   params = tmerge( params, opt_params )
 
    -- Get stuff
    local ocores = ecores.get( p, { all=cores } )

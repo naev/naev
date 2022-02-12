@@ -397,42 +397,38 @@ static int tkL_merchantOutfit( lua_State *L )
  */
 static int tkL_custom( lua_State *L )
 {
-   int w, h;
-   const char *caption;
-   custom_functions_t cf;
-
-   caption = luaL_checkstring(L, 1);
-   w = luaL_checkinteger(L, 2);
-   h = luaL_checkinteger(L, 3);
+   int w = luaL_checkinteger(L, 2);
+   int h = luaL_checkinteger(L, 3);
+   const char *caption = luaL_checkstring(L, 1);
+   custom_functions_t *cf = calloc( 1, sizeof(custom_functions_t) );
 
    /* Set up custom function pointers (working backward from top of stack). */
-   cf.L = L;
-   cf.done = 0;
+   cf->L = L;
    luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf.resize   = luaL_ref(L, LUA_REGISTRYINDEX);
+   cf->resize   = luaL_ref(L, LUA_REGISTRYINDEX);
    luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf.mouse    = luaL_ref(L, LUA_REGISTRYINDEX);
+   cf->mouse    = luaL_ref(L, LUA_REGISTRYINDEX);
    luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf.keyboard = luaL_ref(L, LUA_REGISTRYINDEX);
+   cf->keyboard = luaL_ref(L, LUA_REGISTRYINDEX);
    luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf.draw     = luaL_ref(L, LUA_REGISTRYINDEX);
+   cf->draw     = luaL_ref(L, LUA_REGISTRYINDEX);
    luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf.update   = luaL_ref(L, LUA_REGISTRYINDEX);
+   cf->update   = luaL_ref(L, LUA_REGISTRYINDEX);
 
    /* Set done condition. */
    lua_pushboolean(L, 0);
    lua_setglobal(L, TK_CUSTOMDONE );
 
    /* Create the dialogue. */
-   dialogue_custom( caption, w, h, cust_update, cust_render, cust_event, &cf );
+   dialogue_custom( caption, w, h, cust_update, cust_render, cust_event, cf, 1 );
 
    /* Clean up. */
-   cf.done = 1;
-   luaL_unref(L, LUA_REGISTRYINDEX, cf.update);
-   luaL_unref(L, LUA_REGISTRYINDEX, cf.draw);
-   luaL_unref(L, LUA_REGISTRYINDEX, cf.keyboard);
-   luaL_unref(L, LUA_REGISTRYINDEX, cf.mouse);
-   luaL_unref(L, LUA_REGISTRYINDEX, cf.resize);
+   cf->done = 1;
+   luaL_unref(L, LUA_REGISTRYINDEX, cf->update);
+   luaL_unref(L, LUA_REGISTRYINDEX, cf->draw);
+   luaL_unref(L, LUA_REGISTRYINDEX, cf->keyboard);
+   luaL_unref(L, LUA_REGISTRYINDEX, cf->mouse);
+   luaL_unref(L, LUA_REGISTRYINDEX, cf->resize);
 
    return 0;
 }

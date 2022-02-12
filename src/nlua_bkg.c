@@ -75,8 +75,8 @@ static int bkgL_clear( lua_State *L )
  *    @luatparam Tex image Image to use.
  *    @luatparam number x X position.
  *    @luatparam number y Y position.
- *    @luatparam number move Fraction of a pixel to move when the player moves one pixel.
- *    @luatparam number scale How much to scale the image.
+ *    @luatparam[opt=0] number move Fraction of a pixel to move when the player moves one pixel. A value of 0 indicates static and centered.
+ *    @luatparam[opt=1] number scale How much to scale the image.
  *    @luatparam[opt=0] Rotation angle, in radians.
  *    @luatparam[opt] Colour col Colour to tint image.
  *    @luatparam[opt=false] boolean foreground Whether or not it should be rendered above the stars.
@@ -97,8 +97,8 @@ static int bkgL_image( lua_State *L )
    tex   = luaL_checktex(L,1);
    x     = luaL_checknumber(L,2);
    y     = luaL_checknumber(L,3);
-   move  = luaL_checknumber(L,4);
-   scale = luaL_checknumber(L,5);
+   move  = luaL_optnumber(L,4,0.);
+   scale = luaL_optnumber(L,5,1.);
    angle = luaL_optnumber(L,6,0.);
    col   = luaL_optcolour(L,7,&cWhite);
    foreground = lua_toboolean(L,8);

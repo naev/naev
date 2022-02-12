@@ -26,7 +26,10 @@
    <commodity/>
   </services>
   <commodities/>
-  <description>Paxsor is a mining planet within Empire space, supplying ore to the shipyards in the system and sending surplus ore to help with the Emperor's Fist project.</description>
+  <description>Paxsor is a mining planet within Empire space, supplying ore to the shipyards in the system and sending surplus ore to help with the Emperor's Fist project. Although not particularly rich in ore deposits, they are very accessible, allowing sieving through vast quantities of planet mass to extract them.</description>
   <bar>The Paxsorian bar is a rather simple one, patronized mostly by traders trafficking ore. Given the limited nature of the planet's public facilities, it's impossible to know whether the Nexus employees are hard at work or drinking at a bar of their own.</bar>
  </general>
+ <tags>
+  <tag>mining</tag>
+ </tags>
 </spob>

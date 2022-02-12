@@ -4,7 +4,6 @@
 
 --]]
 local vn = require "vn"
-local mt = require 'merge_tables'
 local love_shaders = require "love_shaders"
 local love = require "love"
 local lg = require "love.graphics"
@@ -23,7 +22,7 @@ zpp.noona = {
 
 function zpp.vn_noona( params )
    return vn.Character.new( zpp.noona.name,
-         mt.merge_tables( {
+         tmerge( {
             image=zpp.noona.image,
             color=zpp.noona.colour,
          }, params) )
