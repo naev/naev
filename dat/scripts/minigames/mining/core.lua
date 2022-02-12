@@ -1,7 +1,7 @@
 local mining = {}
 
 local love     = require 'love'
---local audio    = require 'love.audio'
+local audio    = require 'love.audio'
 local lg       = require 'love.graphics'
 local lfile    = require "love.filesystem"
 local fmt      = require "format"
@@ -97,6 +97,16 @@ function mining.load()
    shd_shot = lg.newShader( frag_shot )
    lg.setBackgroundColor(0, 0, 0, 0)
 
+   -- Load audio
+   if not mining.sfx then
+      mining.sfx = {
+         start    = audio.newSource( 'snd/sounds/computer_jam.ogg' ),
+         hit      = audio.newSource( 'snd/sounds/sokoban/goal.ogg' ),
+         miss     = audio.newSource( 'snd/sounds/sokoban/invalid.ogg' ),
+         complete = audio.newSource( 'snd/sounds/jingles/success.ogg' ),
+      }
+   end
+
    -- Center on player
    cx, cy = naev.gfx.screencoords( naev.camera.get(), true ):get()
 
@@ -121,19 +131,20 @@ local function shoot ()
       return
    end
 
-   --local didhit = false
+   local didhit = false
    for k,t in ipairs(targets) do
       if z_cur==t.z and math.abs(pointer-t.cur) < t.size then
          t.hit = true
-         --didhit = true
+         didhit = true
       end
    end
 
-   --[[ TODO play some sounds
+   -- Play a sound
    if didhit then
+      mining.sfx.hit:play()
    else
+      mining.sfx.miss:play()
    end
-   --]]
 
    table.insert( shots_visual, {pos=pointer, timer=0} )
 
@@ -150,7 +161,7 @@ function mining.keypressed( key )
          done = 1
       elseif not moving then
          moving = true
-         -- TODO play start sound
+         mining.sfx.start:play()
       else
          shoot()
       end
@@ -349,6 +360,7 @@ function mining.update( dt )
                reward.s = math.max( reward.sw, reward.sh )
             end
          end
+         mining.sfx.complete:play()
       end
       tcompleted = tcompleted + dt
    end
