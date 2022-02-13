@@ -101,9 +101,9 @@ function accept()
 
     misn.accept()
     local osd_msg   = {}
-    osd_msg[1] = fmt.f(_("Land on {pnt} in the {sys} system."), {pnt=dest_planet:name(), sys=dest_sys:name()})
-    osd_msg[2] = fmt.f(_("Fly to the {sys} system and carry out the testing procedure."), {sys=testing_sys:name()})
-    osd_msg[3] = fmt.f(_("Return to {pnt} in the {sys} system."), {pnt=homeworld:name(), sys=homeworld_sys:name()})
+    osd_msg[1] = fmt.f(_("Land on {pnt} in the {sys} system"), {pnt=dest_planet:name(), sys=dest_sys:name()})
+    osd_msg[2] = fmt.f(_("Fly to the {sys} system and carry out the testing procedure"), {sys=testing_sys:name()})
+    osd_msg[3] = fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld:name(), sys=homeworld_sys:name()})
     misn.osdCreate(osd_title, osd_msg)
 
     hook.land("land")
@@ -182,8 +182,8 @@ end
 
 function arrive_at_testing_sys()
     local osd_msg = {}
-    osd_msg[1] = fmt.f(_("Fly to the checkpoint in the {sys} system."), {sys=testing_sys:name()})
-    osd_msg[2] = fmt.f(_("Return to {pnt} in the {sys} system."), {pnt=homeworld:name(), sys=homeworld_sys:name()})
+    osd_msg[1] = fmt.f(_("Fly to the checkpoint in the {sys} system"), {sys=testing_sys:name()})
+    osd_msg[2] = fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld:name(), sys=homeworld_sys:name()})
     mem.stage = 3
     vn.clear()
     vn.scene()
@@ -213,7 +213,7 @@ function timer()
     if player.pos():dist(point_pos) < 500 then
         local osd_msg = {}
         osd_msg[1] = _("Wait...")
-        osd_msg[2] = fmt.f(_("Return to {pnt} in the {sys} system."), {pnt=homeworld:name(), sys=homeworld_sys:name()})
+        osd_msg[2] = fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld:name(), sys=homeworld_sys:name()})
         mem.stage = 4
         system.mrkRm(marker)
         misn.osdCreate(osd_title, osd_msg)
@@ -248,8 +248,8 @@ function endScan()
     local osd_msg = {}
     local ps = player.pilot()
     mem.stage = 5
-    osd_msg[1] = _("Survive.")
-    osd_msg[2] = fmt.f(_("Return to {pnt} in the {sys} system."), {pnt=homeworld:name(), sys=homeworld_sys:name()})
+    osd_msg[1] = _("Survive")
+    osd_msg[2] = fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld:name(), sys=homeworld_sys:name()})
     ghost:hyperspace()
     player.cinematics(true)
     player.cinematics(false)

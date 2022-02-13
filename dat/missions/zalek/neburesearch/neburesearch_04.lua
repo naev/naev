@@ -81,8 +81,8 @@ function accept()
 
     misn.accept()
     misn.osdCreate(_("Shielding Prototype Funding"), {
-        fmt.f(_("Land on {pnt} in the {sys} system."), {pnt=dest_planet, sys=dest_sys}),
-        fmt.f(_("Return to {pnt} in the {pnt} system."), {pnt=homeworld, sys=homeworld_sys}),
+        fmt.f(_("Land on {pnt} in the {sys} system"), {pnt=dest_planet, sys=dest_sys}),
+        fmt.f(_("Return to {pnt} in the {pnt} system"), {pnt=homeworld, sys=homeworld_sys}),
     })
 
     hook.land("land")
@@ -93,8 +93,8 @@ end
 local function dest_updated()
    misn.markerMove(mem.misn_marker, mem.dest_planet)
    misn.osdCreate(_("Shielding Prototype Funding"), {
-      fmt.f(_("Land on {pnt} in the {sys} system."), {pnt=mem.dest_planet, sys=dest_sys}),
-      fmt.f(_("Return to {pnt} in the {sys} system."), {pnt=homeworld, sys=homeworld_sys}),
+      fmt.f(_("Land on {pnt} in the {sys} system"), {pnt=mem.dest_planet, sys=dest_sys}),
+      fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld, sys=homeworld_sys}),
     })
 end
 

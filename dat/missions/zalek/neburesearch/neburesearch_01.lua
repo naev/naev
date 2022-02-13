@@ -40,9 +40,9 @@ local spawnTransporter, updateGoalDisplay -- Forward-declared functions
 
 -- Mission info stuff
 local osd_msg   = {}
-osd_msg[1] = _("Escort the transport ship to {pnt} in the {sys} system.")
-osd_msg[2] = _("Land on {pnt} in the {sys} system.")
-osd_msg[3] = _("Fly back to {pnt} in the {sys} system.")
+osd_msg[1] = _("Escort the transport ship to {pnt} in the {sys} system")
+osd_msg[2] = _("Land on {pnt} in the {sys} system")
+osd_msg[3] = _("Fly back to {pnt} in the {sys} system")
 
 local station = spob.get("PSO Monitor")
 local homeworld = spob.get("Bastion Station")
