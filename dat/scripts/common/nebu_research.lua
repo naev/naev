@@ -49,6 +49,12 @@ nebu_research.rewards = {
    credits05 = 800e3,
 }
 
+nebu_research.fctmod = {
+   znr03_lab_coat = 1,
+   znr03_learned_speech = 1,
+   znr03_glasses = 1,
+   znr03_questions = 1,
+}
 
 
 -- Helpers to create main characters

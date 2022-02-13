@@ -268,16 +268,16 @@ function enter_ship()
     vn.func( function ()
         if mem.has_lab_coat then
             mem.text1 = _("Wearing a lab coat, you blend in nicely with your audience.")
-            faction.modPlayerSingle("Za'lek", 1)
+            faction.modPlayer("Za'lek", nebu_research.fctmod.znr03_lab_coat)
         else
             mem.text1 = _("It is just now that you realize that you're the only person not wearing a lab coat. This is a nightmare! Well, maybe it would be for a scientist?")
         end
         if mem.learned_text then
             mem.text2 = _([[You start reciting the speech you got from the student. It turned out learning your text was the right choice. Some of the occurring terms are difficult to pronounce correctly.]])
-            faction.modPlayerSingle("Za'lek", 1)
+            faction.modPlayer("Za'lek", nebu_research.fctmod.znr03_learned_speech)
         elseif mem.has_glasses then
             mem.text2 = _([[You start reciting the speech you got from the student. With the text being displayed on your glasses you don't have to look down on a paper to read the text, but some of the occurring terms are difficult to pronounce correctly.]])
-            faction.modPlayerSingle("Za'lek", 1)
+            faction.modPlayer("Za'lek", nebu_research.fctmod.znr03_glasses)
         else
             mem.text2 = _([[You start reciting the speech you got from the student. You realize that you should have learned the text as some of the occurring terms are difficult to pronounce correctly.]])
         end
@@ -296,7 +296,7 @@ You haven't understood the question, not even a single word.]]))
     vn.label( "avoid_question" )
     vn.na(_([[You try to avoid the question. The scientist seems to be upset. There are no further questions. Apparently, there is another talk that starts very soon so people hurry off. You manage to leave without gaining much attention and return to your ship. Enough science for today!]]))
     vn.func( function ()
-        faction.modPlayerSingle("Za'lek", 1)
+        faction.modPlayer("Za'lek", nebu_research.fctmod.znr03_questions)
     end )
     vn.done()
     
