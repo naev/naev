@@ -12,7 +12,7 @@
   <gfx_store>misc02.webp</gfx_store>
  <rarity>6</rarity></general>
  <specific type="modification">
-  <stress_dissipation>10</stress_dissipation>
-  <heat_dissipation>10</heat_dissipation>
+  <stress_dissipation>25</stress_dissipation>
+  <heat_dissipation>25</heat_dissipation>
  </specific>
 </outfit>
