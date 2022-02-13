@@ -20,7 +20,7 @@
    
    Mission: Expert Nebula Research
    
-   Description: The nebula shielding prototype is ready and the player has to test it. The first mem.stages go well, but in the final mem.stage the prototype fails and the player is about to die in the Sol nebula. He gets rescued by a Thurion carrier instead and is bought into Thurion space.
+   Description: The nebula shielding prototype is ready and the player has to test it. The first stages go well, but in the final stage the prototype fails and the player is about to die in the Sol nebula. He gets rescued by an Empire carrier instead and is bought back into Empire space.
    
    Difficulty: Easy (requires at least a corvette class ship)
 
