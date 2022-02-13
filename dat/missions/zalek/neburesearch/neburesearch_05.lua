@@ -11,6 +11,9 @@
   <location>Bar</location>
   <spob>Jorla</spob>
  </avail>
+ <tags>
+  <tag>zlk_cap_ch01_med</tag>
+ </tags>
  <notes>
   <campaign>Nebula Research</campaign>
  </notes>
