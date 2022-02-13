@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-01-29 16:39-0500\n"
-"PO-Revision-Date: 2022-02-06 17:57+0000\n"
+"PO-Revision-Date: 2022-02-13 16:57+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "ja/>\n"
@@ -27263,7 +27263,7 @@ msgstr ""
 #: dat/missions/minerva/pirate3.lua:265 dat/missions/minerva/pirate4.lua:140
 #: dat/missions/minerva/pirate5.lua:180
 msgid "You take your leave."
-msgstr "あなたは立ち去った。"
+msgstr "あなたは辞去した。"
 
 #. Spawns a merchant ship that explains what happens
 #: dat/events/dvaered/warlords_battle.lua:86
@@ -44609,12 +44609,9 @@ msgid ""
 "    \"Good luck and be careful out there,\" he adds, before saluting you off "
 "onto your mission."
 msgstr ""
-"｢すべてがうまくいったら、奇襲部隊は 10 時限後に結果を持ってここへ戻ってきま"
-"す。そうしたらわれわれは、あの通信問題に最終的な回答を得られるでしょう。帰り"
-"に問題がおきるとは予想していませんが、まんいち追跡されたときのために数隻の船"
-"を用意するつもりです。\n"
-"    ｢幸運を。そしてむこうでは気をつけてください｣ と、少佐はつけくわえてから、"
-"任務にむかうあなたに敬礼をした。"
+"｢すべてがうまくいったら、奇襲部隊は 10 時限後に結果を持ってここへ戻ってきます。そうしたらわれわれは、あの通信問題に最終的な回答を得られるでしょう。帰"
+"りに問題がおきるとは予想していませんが、まんいち追跡されたときのために数隻の船を用意するつもりです。\n"
+"    ｢幸運を。そしてむこうでは気をつけてください｣ と、少佐はつけくわえてから、任務に向かうあなたに敬礼をした。"
 
 #: dat/missions/empire/collective/ec03.lua:91
 #: dat/missions/empire/collective/ec04.lua:70
@@ -49603,7 +49600,7 @@ msgstr ""
 #: dat/missions/minerva/kex3.lua:58 dat/missions/minerva/kex4.lua:56
 #: dat/missions/minerva/kex5.lua:61
 msgid "A step closer to Kex's freedom"
-msgstr ""
+msgstr "ケクスの解放に一歩近づく"
 
 #. Advance the state
 #. Advance
@@ -49614,26 +49611,26 @@ msgstr ""
 #: dat/missions/minerva/kex4.lua:74 dat/missions/minerva/kex4.lua:266
 #: dat/missions/minerva/kex5.lua:62 dat/missions/minerva/kex5.lua:114
 msgid "Freeing Kex"
-msgstr ""
+msgstr "ケクスの解放"
 
 #: dat/missions/minerva/kex1.lua:53
 msgid ""
 "Kex wants you to help him find dirt on the Minerva CEO by raiding a "
 "transport headed to Minerva Station."
-msgstr ""
+msgstr "ケクスはあなたに、ミネルバ・ステーションへ向かう輸送船を襲撃して、ミネルバ CEO の汚点をさがすのを手伝ってもらいたがっている。"
 
 #. We avoid creating a giver NPC and directly use "normal NPC"
 #. Have to make sure to check if misn.accept() works
 #: dat/missions/minerva/kex1.lua:77 dat/missions/minerva/kex2.lua:147
 #: dat/missions/minerva/kex3.lua:186 dat/missions/minerva/kex4.lua:183
 msgid "You find Kex taking a break at his favourite spot at Minerva station."
-msgstr ""
+msgstr "あなたはミネルバ・ステーションのお気に入りの場所で休んでいるケクスを見つけた。"
 
 #: dat/missions/minerva/kex1.lua:84
 msgid ""
 "You tell Kex about your encounter with the transports and how you weren't "
 "able to find the supposed cargo."
-msgstr ""
+msgstr "あなたは輸送船と遭遇したことと、あることになっていた積み荷が見つからなかったことを伝えた。"
 
 #: dat/missions/minerva/kex1.lua:85
 msgid ""
@@ -49642,29 +49639,31 @@ msgid ""
 "the most likely, but there was also another at the same time, and it could "
 "have been that one.\""
 msgstr ""
+"｢くそっ。そいつはおとりだったにちがいないな。この配達記録はいつもめちゃくちゃなんだ。それにいつもほぼ同一の項目でいっぱいに見える。おれはいちばんもっとも"
+"らしいものを選びだしたんだが、そのうえもうひとつ同じ時間のもあった。だからそいつだったのかもしれないな｣"
 
 #: dat/missions/minerva/kex1.lua:89
 msgid ""
 "You suddenly hear a large thump. You are only able to catch a glimpse of a "
 "shadow before it runs away."
-msgstr ""
+msgstr "とつぜん大きなどしんという音があなたに聞こえた。あなたには走り去るまえの影がちらっと見えただけだった。"
 
 #: dat/missions/minerva/kex1.lua:92
 msgid ""
 "You go investigate what happened and find a secured crate. Kex quietly "
 "follows and looks surprised when he sees the crate."
-msgstr ""
+msgstr "あなたはなにがおきたのか調査しに行き、頑丈な枠箱を見つけた。ケクスがそっとついてきて、枠箱を見ると驚いたようだ。"
 
 #: dat/missions/minerva/kex1.lua:93
 msgid ""
 "\"This is one of the secured crates that I was talking about! How the hell "
 "did it get here?\""
-msgstr ""
+msgstr "｢これはおれが話してた頑丈な枠箱のひとつだな！　いったいどうしてそれがこんなところへ来たんだ？｣"
 
 #: dat/missions/minerva/kex1.lua:94
 msgid ""
 "You look around but there seems to be nobody else other than the two of you."
-msgstr ""
+msgstr "あなたはまわりを見まわしたが、あなたたち二人以外はだれもいないようだ。"
 
 #: dat/missions/minerva/kex1.lua:95
 msgid ""
@@ -49674,6 +49673,9 @@ msgid ""
 "in the nebula and nothing good ever came from investigating. Just remember "
 "to keep an eye open.\""
 msgstr ""
+"ケクスがあなたをじっと見つめた。\n"
+"｢このような場合、質問しないのがおそらくいちばんだ。そしてなにかの恩恵のようにただ受けとるんだ。このようなことは星雲のなかではいつもだったし、調査してもま"
+"ったくなにもいいことは生まれなかった。ただ目を光らせておくのを忘れるな｣"
 
 #: dat/missions/minerva/kex1.lua:97
 msgid ""
@@ -49682,6 +49684,9 @@ msgid ""
 "think they make these anymore. Shouldn't be a problem for my implant system."
 "\""
 msgstr ""
+"もうケクスは枠箱を見ていた。\n"
+"｢これを開けるか確認させてくれ。うーむ、かなり見かけだおしのネクサスの錠前だ。これはもう作られていないと思ってた。おれのインプラントシステムにとっては問題"
+"じゃないはずだ｣"
 
 #: dat/missions/minerva/kex1.lua:99
 msgid ""
@@ -49689,6 +49694,8 @@ msgid ""
 "and he begins to hum an old tune.  It almost sounds like a nursery rhyme. "
 "This goes on for a while before he suddenly jolts back with his eyes open."
 msgstr ""
+"ケクスが翼を錠前の上に置くと、あなたはかちっというような音を聞いた。ケクスは目を閉じて、ある古い歌の鼻歌を始めたが、それがまるでわらべ歌のように聞こえてく"
+"る。これはしばらくつづいたが、それからとつぜんケクスが激しく震えて、その目が開いた。"
 
 #: dat/missions/minerva/kex1.lua:101
 msgid ""
@@ -49697,6 +49704,9 @@ msgid ""
 "\"Damn, looks like we have no incriminating evidence, however, it does seem "
 "like we can use this as a starting point.\""
 msgstr ""
+"｢よし、ここにあるものを見てみよう｣\n"
+"枠箱があっさりと開いて、ケクスが見つめる。\n"
+"｢くそっ、手に入れたのは犯罪の証拠じゃないみたいだ。しかし開始地点としてこれが使えそうなのはたしかだ｣"
 
 #: dat/missions/minerva/kex1.lua:104
 msgid ""
@@ -49706,44 +49716,51 @@ msgid ""
 "you like with it.\"\n"
 "It is signed \"Baroness Eve\"."
 msgstr ""
+"ケクスが文書をあなたに渡した。それにはこう書いてあった。\n"
+"｢次の船積みは思っていたより大きくなるが、そちらではいつもどおり対処できると思っている。どうかこの手数料を受けとって、なんでも好きなものに使ってほしい｣"
+"\n"
+"これには署名がある。｢女男爵 イブ｣"
 
 #: dat/missions/minerva/kex1.lua:107
 msgid ""
 "\"I'm not too sure who this 'Baroness Eve' is, but let me see if I can get "
 "some information on them and we can see what we can do from there on.\""
 msgstr ""
+"｢この『イブ男爵』がだれなのかあまり確信はないが、これについていくらか情報が得られるかどうか確認させてくれ。そうすればそこからなにができるのかわかる｣"
 
 #: dat/missions/minerva/kex1.lua:108
 msgid ""
 "\"Oh, I almost forgot. There's quite a few credits in the crate too, I think "
 "it's only fair to give you most of them as a reward for your help.\""
-msgstr ""
+msgstr "｢おっと、忘れかけていた。枠箱にはかなりのクレジットも入っていた。ほとんどは助力の報酬としてあんたに渡さないと公平じゃないと思う｣"
 
 #: dat/missions/minerva/kex1.lua:112
 msgid ""
 "\"Meet me up here again in a bit, I'm going to go get some information.\"\n"
 "Kex runs off and disappears into the station."
 msgstr ""
+"｢もうちょっとしたらまたここで会ってくれ。いくつか情報を集めに行ってくるつもりなんだ｣\n"
+"ケクスが走り去って、ステーションの中へ姿を消した。"
 
 #: dat/missions/minerva/kex1.lua:117
 msgid ""
 "You managed to find a crate destined to the Minerva CEO through luck, and "
 "found that it was sent by Baroness Eve."
-msgstr ""
+msgstr "あなたは運よくミネルバ CEO 宛の枠箱をひとつ見つけることができた。そしてそれはイブ男爵から送られたものだとわかった。"
 
 #. Remove unnecessary variables to keep it clean
 #: dat/missions/minerva/kex1.lua:128 dat/missions/minerva/kex2.lua:150
 #: dat/missions/minerva/kex3.lua:190 dat/missions/minerva/kex4.lua:187
 msgid "\"What's up kid?\""
-msgstr ""
+msgstr "｢なにかあったのか、若者？｣"
 
 #: dat/missions/minerva/kex1.lua:131
 msgid "Ask about the station"
-msgstr ""
+msgstr "ステーションについてたずねる"
 
 #: dat/missions/minerva/kex1.lua:135
 msgid "Ask about the CEO"
-msgstr ""
+msgstr "CEO についてたずねる"
 
 #: dat/missions/minerva/kex1.lua:138 dat/missions/minerva/kex2.lua:160
 #: dat/missions/minerva/kex3.lua:193 dat/missions/minerva/kex4.lua:190
@@ -49758,6 +49775,8 @@ msgid ""
 "people from all over the universe, most of whom end up returning broke and "
 "in rags. This station is a graveyard of hopes and dreams.\""
 msgstr ""
+"｢この場所でほんとうにすばらしいことはなにもない。どうしてこんなに多くの人たちを宇宙のいたるところから来させられるのかわからないな。ほとんどは一文なしにな"
+"ってぼろ服を着て帰ることになるんだぞ。このステーションは希望と夢の墓場だ｣"
 
 #: dat/missions/minerva/kex1.lua:145
 msgid ""
@@ -49765,6 +49784,8 @@ msgid ""
 "celebrate his engagement. They got absorbed into the game and decided to bet "
 "the money they'd saved for their wedding.\""
 msgstr ""
+"｢この周期には、ある若者がいたよ。幼なじみと婚約してな、婚約祝いに来たんだ。ゲームで吸いあげられて、結婚のために取っておいたかねを賭けることに決めたんだな"
+"｣"
 
 #: dat/missions/minerva/kex1.lua:146
 msgid ""
@@ -49772,6 +49793,8 @@ msgid ""
 "ended up getting into a fight with station security and they took him away "
 "in a stretcher with a broken back. Not very pretty.\""
 msgstr ""
+"｢道理を聞くわけもなかったから、ついには貯金をぜんぶなくしてしまった。そいつはけっきょくステーションの警備員とけんかになって、背骨を折って担架で連れていか"
+"れたよ。たいしてひどくはなかったな｣"
 
 #: dat/missions/minerva/kex1.lua:147
 msgid ""
@@ -49779,24 +49802,27 @@ msgid ""
 "had quite a lot saved up until he came here. Just another day at the station."
 "\""
 msgstr ""
+"｢ひとつの人生が破滅しても、経営陣はそこそこ満足してた。あいつはここへ来るまでにかなりたくさんためていたようだからな。ステーションの平凡な一日だ｣"
 
 #: dat/missions/minerva/kex1.lua:148
 msgid ""
 "\"When you've been here as long as I have, you tend to see the rhythm of the "
 "station, and it isn't very good. Brings out the worst in people.\""
 msgstr ""
+"｢おれと同じくらいここにいたら、ステーションの律動がわかるようになる。そしてそれはあまりいいもんじゃない。人びとの最悪なところが引きだされるんだ｣"
 
 #: dat/missions/minerva/kex1.lua:149
 msgid ""
 "\"Most of the problem lies in the management, they're all a bunch of "
 "assholes led by the CEO, who is an even bigger asshole.\""
-msgstr ""
+msgstr "｢問題のほとんどは経営陣にある。あいつらは CEO に率いられたまったくのくその山だ。CEO のほうは、ずっとでかいくそだな｣"
 
 #: dat/missions/minerva/kex1.lua:161
 msgid ""
 "\"They've been running this joint since before I got here. There are enough "
 "rumours of them doing shady stuff that some are bound to be true.\""
 msgstr ""
+"｢やつはおれが来るまえからこのいかがわしい場所を運営してたんだ。うさんくさいことをしていたといううわさには事欠かないし、一部はきっと真実にちがいない｣"
 
 #: dat/missions/minerva/kex1.lua:162
 msgid ""
@@ -49804,6 +49830,8 @@ msgid ""
 "is going on, but there are some patterns like mysterious packages and "
 "unaccounted amounts of credits disappearing.\""
 msgstr ""
+"｢ステーションは活気に満ちているから、おきていることを監視しているのはかなり難しい。しかし謎の小包や帳簿外で消えるクレジットのようないくつか基本となるやり"
+"かたが存在する｣"
 
 #: dat/missions/minerva/kex1.lua:163
 msgid ""
@@ -49811,10 +49839,12 @@ msgid ""
 "owns me. They don't believe I am fully sentient, but I'm sure if they knew "
 "it would just make everything harder for me, so I have to lay low.\""
 msgstr ""
+"｢おれが自由になれない唯一の理由は、法的には CEO がおれを所有しているという事実だ。CEO はおれが完全に意識をもつと信じていないが、もしそれを知られ"
+"たら、おれにとってすべてがもっと難しくなるだけなのはたしかだと思う。だからおれは目立たないようにする必要がある｣"
 
 #: dat/missions/minerva/kex1.lua:164
 msgid "You ask about where you can find the CEO."
-msgstr ""
+msgstr "あなたは CEO がどこにいるのかたずねた。"
 
 #: dat/missions/minerva/kex1.lua:165
 msgid ""
@@ -49824,16 +49854,21 @@ msgid ""
 "\"\n"
 "He lets out a sigh."
 msgstr ""
+"｢見つけるのはあまり難しくないはずだ。CEO には飲酒癖があるから、7 階のバーの社交室あたりでふつうは見つけられる。話そうとしているんじゃないよな？　"
+"そんなことをしてもなにも変わったりしないぞ｣\n"
+"ケクスがため息をついた。"
 
 #: dat/missions/minerva/kex1.lua:176
 msgid ""
 "\"Oh, you already talked to him? How did it go?\"\n"
 "He looks at you expectantly."
 msgstr ""
+"｢ああ、もう CEO と話した？　それでどうなった？｣\n"
+"期待してケクスはあなたを見つめた。"
 
 #: dat/missions/minerva/kex1.lua:178
 msgid "You mention that you got nowhere."
-msgstr ""
+msgstr "あなたはどうにもならなかったといった。"
 
 #: dat/missions/minerva/kex1.lua:179
 msgid ""
@@ -49842,6 +49877,9 @@ msgid ""
 "\"\n"
 "He stops to think a bit."
 msgstr ""
+"ケクスはちょっと不機嫌に見えた。\n"
+"｢ああ、どんな道理もあいつにいって聞かせる方法があるとは思ってなかった……。たぶんおれたちが……｣\n"
+"ケクスが話すのをやめてちょっと考えている。"
 
 #: dat/missions/minerva/kex1.lua:182
 msgid ""
@@ -49851,6 +49889,9 @@ msgid ""
 "\"Given that the issue is the CEO, if we can somehow get rid of the CEO, "
 "there should be no issue, right?\""
 msgstr ""
+"｢これはいかれて聞こえるかもしれないが、うまくいくかもしれないと考えている。聞いたところからすると、あんたはいいパイロットなんだろ？｣\n"
+"ケクスは決意とともにあなたを見つめた。\n"
+"｢問題はあの CEO なんだから、どうにかして CEO を追い払えば、問題はなくなるはずだよな？｣"
 
 #: dat/missions/minerva/kex1.lua:185
 msgid ""
@@ -49858,6 +49899,8 @@ msgid ""
 "\"unsavoury business\", all we have to do is get him busted and in the "
 "confusion it should be more than easy for me to go free.\""
 msgstr ""
+"｢やつが関係しているのをよく知ってるんだが、それを『かんばしくない仕事』と呼んでおこうか。だからおれたちがしなければならないのは、やつを逮捕させることだ。"
+"そうすれば混乱のなかで、おれが自由に出ていくのはもっと簡単になるはずだ｣"
 
 #: dat/missions/minerva/kex1.lua:186
 msgid ""
@@ -49865,14 +49908,16 @@ msgid ""
 "\"I know we've known each other for a relatively short time, but would you "
 "help a duck out? I might be able to make it worth your while afterwards.\""
 msgstr ""
+"ケクスが床を見おろした。\n"
+"｢おれたちがおたがいを知りあったのは比較的短い時間なのはわかっているが、アヒルに手を貸すつもりはあるだろうか？　あとで埋めあわせはできるかもしれない｣"
 
 #: dat/missions/minerva/kex1.lua:189
 msgid "Help a duck out."
-msgstr ""
+msgstr "アヒルを助ける。"
 
 #: dat/missions/minerva/kex1.lua:190
 msgid "Maybe later."
-msgstr ""
+msgstr "たぶんあとで。"
 
 #: dat/missions/minerva/kex1.lua:194
 msgid ""
@@ -49882,6 +49927,8 @@ msgid ""
 "evidence and it should be easy as pie! I'll send you the precise information "
 "later.\""
 msgstr ""
+"｢いいぞ！　おれはうまくステーションの配達記録を見られたんだ。するとここへ向かううさんくさい配達があるらしい。できるなら{sys}星系へ行ってくれ。しなけ"
+"ればならないのは、そいつを途中で横取りして有罪の証拠を手に入れることだけだから、とても簡単なはずだ！　あとで詳細な情報は送るよ｣"
 
 #: dat/missions/minerva/kex1.lua:195 dat/missions/minerva/kex1.lua:225
 msgid ""
@@ -49889,6 +49936,8 @@ msgid ""
 "itself, however, given that it is always delivered in secured vaults, you "
 "should be able to recover the vault from the debris if you roll that way.\""
 msgstr ""
+"｢船を無力化して船自体が証拠になれば理想的だろうな。しかしいつも頑丈な保管所に入れて配達されるから、あんたがそうしてやるなら、破片から保管所を回収できるは"
+"ずだ｣"
 
 #: dat/missions/minerva/kex1.lua:199 dat/missions/zalek/zlk_test.lua:109
 #: src/land.c:646 src/npc.c:586
@@ -49899,18 +49948,18 @@ msgstr "遂行中の任務が多すぎます。"
 msgid ""
 "You agreed to help Kex to find dirt on the Minerva Station CEO to try to get "
 "him free."
-msgstr ""
+msgstr "あなたはケクスを助けることに同意して、ミネルバ・ステーション CEO の汚点を見つけてケクス解放にむけた努力をすることになった。"
 
 #: dat/missions/minerva/kex1.lua:207
 msgid "Intercept the transport at {sys}"
-msgstr ""
+msgstr "{sys}星系で輸送船を迎撃せよ。"
 
 #: dat/missions/minerva/kex1.lua:208 dat/missions/minerva/kex2.lua:69
 #: dat/missions/minerva/kex3.lua:79 dat/missions/minerva/kex3.lua:108
 #: dat/missions/minerva/kex4.lua:76 dat/missions/minerva/kex4.lua:268
 #: dat/missions/minerva/kex5.lua:116
 msgid "Return to Kex at Minerva Station"
-msgstr ""
+msgstr "ミネルバ・ステーションのケクスのところへ戻れ。"
 
 #: dat/missions/minerva/kex1.lua:218 dat/missions/minerva/kex2.lua:183
 #: dat/missions/minerva/kex3.lua:174 dat/missions/minerva/kex4.lua:172
@@ -49918,12 +49967,14 @@ msgid ""
 "He looks dejected.\n"
 "\"I see. If you change your mind, I'll be around.\""
 msgstr ""
+"ケクスは落胆して見えた。\n"
+"｢わかった。考えが変わったら、このへんにいるから｣"
 
 #: dat/missions/minerva/kex1.lua:223
 msgid ""
 "\"We have to find dirt on the CEO and get him removed. It is the only chance "
 "I have for freedom.\""
-msgstr ""
+msgstr "｢おれたちは CEO の汚点を見つけて辞めさせなければならない。おれが自由になる可能性は、それだけだ｣"
 
 #: dat/missions/minerva/kex1.lua:224
 msgid ""
@@ -49931,12 +49982,14 @@ msgid ""
 "system before it gets here. I have sent you all the precise information. It "
 "should be a breeze what with your piloting skills."
 msgstr ""
+"｢CEO は配達を受けとろうとしているはずなんだ。あんたはそいつがここへ着くまえに、{sys}星系までそいつを迎撃しに行くべきだ。あんたに詳細情報は送った"
+"よな。あんたの操縦の腕前からすれば、たやすいはずだ｣"
 
 #: dat/missions/minerva/kex1.lua:240
 msgid ""
 "You find the Minerva CEO drinking alone. He looks somewhat drunk. You "
 "approach him and start a conversation."
-msgstr ""
+msgstr "あなたはミネルバ CEO がひとりで飲んでいるのを見つけた。CEO はやや酔っているようだ。あなたは CEO に近づいて、会話をはじめた。"
 
 #: dat/missions/minerva/kex1.lua:242
 msgid ""
@@ -49945,14 +49998,18 @@ msgid ""
 "\"You're not Fred.\"\n"
 "He takes a large swig of his drink."
 msgstr ""
+"｢そこにいるあんたはフレッドか？｣\n"
+"CEO はあなたの方を見てから目を細めた。\n"
+"｢あんたはフレッドじゃない｣\n"
+"CEO は飲み物を大きくひと飲みした。"
 
 #: dat/missions/minerva/kex1.lua:246
 msgid "\"Well, what do you want?\""
-msgstr ""
+msgstr "｢さて、なんの用なんだ？｣"
 
 #: dat/missions/minerva/kex1.lua:247
 msgid "You ask about the cyborg chicken."
-msgstr ""
+msgstr "あなたはサイボーグチキンについてたずねた。"
 
 #: dat/missions/minerva/kex1.lua:248
 msgid ""
@@ -49960,16 +50017,18 @@ msgid ""
 "uh… pineapple on the pizza?\"\n"
 "He furrows his brows a bit."
 msgstr ""
+"｢ミネルバ・ステーションの王冠の宝石？　黄金の卵を生むガチョウ？　そして、えー……、ピザにのったパイナップル？｣\n"
+"CEO はすこし眉にしわを寄せた。"
 
 #: dat/missions/minerva/kex1.lua:250
 msgid ""
 "\"Ever since I got that absurd chicken, business has been booming. I "
 "wouldn't sell the beast for all the credits in the world!\""
-msgstr ""
+msgstr "｢あのおかしなニワトリを手に入れて以来、業績は急成長している。世界じゅうのクレジットをぜんぶ積まれてもあの動物は売るつもりにならないな｣"
 
 #: dat/missions/minerva/kex1.lua:251
 msgid "You mention that everything must have its price."
-msgstr ""
+msgstr "すべてのものにはかならず値段があると、あなたはちょっといってみた。"
 
 #: dat/missions/minerva/kex1.lua:252
 msgid ""
@@ -49978,18 +50037,21 @@ msgid ""
 "Damn, that sounded better in my head.\"\n"
 "He takes another swig from his drinks."
 msgstr ""
+"CEO はまた目を細めてあなたを見た。\n"
+"｢きみの根性は好きだよ。だがその根性でわたしのニワトリを手にすることはない。くそっ、頭の中ではもっとうまく聞こえたんだがな｣\n"
+"CEO はまた飲み物をがぶ飲みした。"
 
 #: dat/missions/minerva/kex1.lua:255
 msgid "\"Now unless you are getting me another drink you can scoot off.\""
-msgstr ""
+msgstr "｢さあ、きみがもう一杯おごってくれるんじゃなければ、さっさと行っていいぞ｣"
 
 #: dat/missions/minerva/kex1.lua:256
 msgid "It doesn't look like you are getting anywhere. You take your leave."
-msgstr ""
+msgstr "あなたはうまくやれていないようだ。あなたはいとまを告げた。"
 
 #: dat/missions/minerva/kex1.lua:267
 msgid "You were supposed to raid the transport!"
-msgstr ""
+msgstr "あなたは輸送船を襲撃することになっていた！"
 
 #. Tier 1
 #. mem.tier==1
@@ -50000,7 +50062,7 @@ msgstr "護送船団"
 
 #: dat/missions/minerva/kex1.lua:273
 msgid "Transport"
-msgstr ""
+msgstr "輸送船"
 
 #: dat/missions/minerva/kex1.lua:284 src/faction.c:319 src/faction.c:1037
 #: src/faction.c:1086
@@ -50009,11 +50071,11 @@ msgstr "僚船"
 
 #: dat/missions/minerva/kex1.lua:300
 msgid "The transport got away!"
-msgstr ""
+msgstr "輸送船が逃げた！"
 
 #: dat/missions/minerva/kex1.lua:308
 msgid "Transport under attack! Help requested immediately!"
-msgstr ""
+msgstr "輸送船が攻撃をうけている！　即時の救援を要請する！"
 
 #: dat/missions/minerva/kex1.lua:326
 msgid ""
@@ -50021,17 +50083,20 @@ msgid ""
 "get there you find it is empty. You proceed to explore the rest of the ship "
 "to see if there is anything of interest."
 msgstr ""
+"あなたは輸送船に突進し、船倉に向かった。けれども、あなたが着いてみると、そこは空っぽだとわかった。あなたは船の残りの調査を進め、なにか興味をひかれるものが"
+"あるかどうか調べた。"
 
 #: dat/missions/minerva/kex1.lua:327
 msgid ""
 "You are not able to find what you were looking for, but you were able to "
 "find {credits} that likely won't be necessary to the crew anymore."
 msgstr ""
+"あなたはさがしていたものを見つけることはできなかったが、{credits} を見つけることはできた。もうこれを乗員が必要とすることはなさそうだ。"
 
 #: dat/missions/minerva/kex1.lua:328
 msgid ""
 "It might be best to report back to Kex to see if his information was correct."
-msgstr ""
+msgstr "ケクスのところへ報告に戻って、情報が正しかったのか確認するのがいちばんかもしれない。"
 
 #. Permanently disable mainguy
 #. Message update
@@ -50039,34 +50104,34 @@ msgstr ""
 msgid ""
 "You boarded a transport destined for the Minerva CEO, but didn't find "
 "anything."
-msgstr ""
+msgstr "あなたはミネルバ CEO のところへ向かう輸送船に乗りこんだが、なにも見つからなかった。"
 
 #: dat/missions/minerva/kex1.lua:347
 msgid ""
 "You scan the debris of the transport for any potential cargo, but can't find "
 "anything."
-msgstr ""
+msgstr "あなたは積み荷の可能性がありそうな輸送船の破片をすべてスキャンしたが、なにも見つからなかった。"
 
 #: dat/missions/minerva/kex1.lua:348
 msgid ""
 "You destroyed a transport destined for the Minerva CEO, but didn't find "
 "anything in the debris."
-msgstr ""
+msgstr "あなたはミネルバ CEO のところへ向かう輸送船を破壊したが、破片からはなにも見つからなかった。"
 
 #: dat/missions/minerva/kex2.lua:50
 msgid ""
 "You have been entrusted with stealing information from Baroness Eve at {pnt} "
 "in the {sys} system."
-msgstr ""
+msgstr "あなたは{sys}星系の{pnt}にいるイブ男爵から情報を盗む仕事を任せられた。"
 
 #. If not accepted, mem.misn_state will still be nil
 #: dat/missions/minerva/kex2.lua:65
 msgid "You have agreed to help Kex steal information from Baroness Eve."
-msgstr ""
+msgstr "あなたはイブ男爵から情報を盗んでケクスを助けるのに同意した。"
 
 #: dat/missions/minerva/kex2.lua:68
 msgid "Go to {pnt} in the {sys} system and hack the main database"
-msgstr ""
+msgstr "{sys}星系の{pnt}へ行って、主要データベースに侵入せよ。"
 
 #. Reset state on load if player got killed when trying to flee
 #. Pink :D
@@ -50078,13 +50143,13 @@ msgstr "端末"
 msgid ""
 "A discrete terminal in the corner of the landing bay, you should be able to "
 "use it to load the program Kex gave you."
-msgstr ""
+msgstr "着岸所の隅にぽつんと置かれた端末。これを使ってケクスから渡されたプログラムをロードできるはずだ。"
 
 #: dat/missions/minerva/kex2.lua:103
 msgid ""
 "You land on {pnt} and discretely approach one of the terminals.  You upload "
 "the program that Kex gave you."
-msgstr ""
+msgstr "あなたは{pnt}に着陸して、端末のひとつに慎重に近づいた。そしてあなたはケクスから渡されたプログラムをアップロードした。"
 
 #: dat/missions/minerva/kex2.lua:104
 msgid ""
@@ -50092,6 +50157,8 @@ msgid ""
 "program. After a while it seems to begin downloading large amounts of data "
 "while you nervously wait."
 msgstr ""
+"端末はぼんやりと光りだし、プログラムに入っていたものをすべて実行しはじめた。しばらくすると、大量の情報をダウンロードしはじめたらしい。そのあいだ、あなたは"
+"びくびくしながら待っていた。"
 
 #. blaring alarm
 #: dat/missions/minerva/kex2.lua:106
@@ -50101,6 +50168,8 @@ msgid ""
 "ship. In the background, you hear people yelling and running around. It "
 "seems like you have to get out of here as soon as possible."
 msgstr ""
+"とつぜん、警報が鳴り響きはじめた。保安用の遮蔽板が端末の上に出てくるまえに、あなたはプログラムをつかみつつ船に向かって走ることができた。背後から、人びとが"
+"大声で叫んで走りまわる音が聞こえる。できるだけ早くここから出なければならないようだ。"
 
 #: dat/missions/minerva/kex2.lua:107
 msgid ""
@@ -50108,6 +50177,7 @@ msgid ""
 "have a head start on your pursuers, but you may not be able to count on it "
 "for long."
 msgstr ""
+"ケクスがいっていた、ことがまずくなるというのがたぶんこれなんだろう。あなたは追っ手より先を行っていたが、たぶん長いあいだそれに頼ることはできないだろう。"
 
 #. Advance mission and get out of there
 #. Mission is over
@@ -50115,17 +50185,17 @@ msgstr ""
 msgid ""
 "Still tired from your escapade, you look for Kex at his favourite spot at "
 "Minerva station."
-msgstr ""
+msgstr "まだあの脱出のおかげで疲れてはいたが、あなたはミネルバ・ステーションのケクスのお気に入りの場所でケクスをさがした。"
 
 #: dat/missions/minerva/kex2.lua:128
 msgid "\"You look like a mess kid. You alright?\""
-msgstr ""
+msgstr "｢ひどいめにあったみたいだな、若者。だいじょうぶか？｣"
 
 #: dat/missions/minerva/kex2.lua:129
 msgid ""
 "You explain how you weren't able to get all the data before you had to bug "
 "out of there, and hand him what data you were able to recover."
-msgstr ""
+msgstr "あなたはあそこから急いで逃げだすまえに、すべての情報を手に入れることはできなかった経緯を説明した。そして回収できた情報をケクスに手渡す。"
 
 #: dat/missions/minerva/kex2.lua:130
 msgid ""
@@ -50133,6 +50203,8 @@ msgid ""
 "in one piece despite the opposition. Aristocrats always seem to have cards "
 "up their sleeves.\""
 msgstr ""
+"｢くそっ、保安処置が予想より厳しかったんだな。そんな抵抗にあっても無事に帰ってきてくれてうれしいよ。貴族みたいな連中はいつもそでにカードを隠してるみたいだ"
+"な｣"
 
 #: dat/missions/minerva/kex2.lua:131
 msgid ""
@@ -50143,30 +50215,36 @@ msgid ""
 "database had much more than expected. It will probably take me quite a bit "
 "longer to process this all and see what we got.\""
 msgstr ""
+"｢収集できた情報をちょっと見させてくれ｣\n"
+"ケクスは翼の下にあるポートに直接プログラムを差しこんだ。するとケクスの目がちょっとのあいだうつろになった。\n"
+"｢なるほど。あんたはかなりたくさんの情報を手に入れられたようだな。とはいえ、連中のデータベースは予想よりずっと大きい。これをぜんぶ調査してなにを手に入れた"
+"のか確認するには、たぶんかなりかかりそうだ｣"
 
 #: dat/missions/minerva/kex2.lua:134
 msgid ""
 "\"In the meantime, it looks like we were also able to grab some credits. "
 "I'll wire you a reward for your efforts.\""
-msgstr ""
+msgstr "｢ついでだが、いくらかクレジットも強奪できたようだな。苦労してもらった報酬を送金したよ｣"
 
 #: dat/missions/minerva/kex2.lua:138
 msgid ""
 "\"I'm going to go process this data. It's going to take me a while, but come "
 "back here in a period or so and I should hopefully have some more results.\""
 msgstr ""
+"｢おれはこの情報を調査しに行くことにする。それにはしばらくかかるだろうが、1 "
+"時限かそこらでここへ戻ってくる。うまくいけばなにかもっと成果を手にしているはずだ｣"
 
 #: dat/missions/minerva/kex2.lua:142
 msgid "You stole information from Baroness Eve for Kex."
-msgstr ""
+msgstr "あなたはケクスのために、イブ男爵から情報を盗んだ。"
 
 #: dat/missions/minerva/kex2.lua:153
 msgid "Ask about being a duck"
-msgstr ""
+msgstr "アヒルでいることについてたずねる"
 
 #: dat/missions/minerva/kex2.lua:157
 msgid "Ask about Baroness Eve"
-msgstr ""
+msgstr "イブ男爵についてたずねる"
 
 #: dat/missions/minerva/kex2.lua:166
 msgid ""
@@ -50175,6 +50253,8 @@ msgid ""
 "Za'lek, although there also seems to be some nasty rumours about her "
 "floating around.\""
 msgstr ""
+"｢聞いてくれてよかった。男爵はどうも{sys}星系の{pnt}では大物らしい。男爵は帝国とザレクのあいだのあらゆる種類の貿易を取り扱っている。しかしそのう"
+"え、男爵の周辺についてはいくらかたちの悪いうわさもあるようだけどな｣"
 
 #: dat/missions/minerva/kex2.lua:167
 msgid ""
@@ -50183,6 +50263,8 @@ msgid ""
 "and pirates in the system. It disrupted the trade routes of the area for "
 "quite a few periods.\""
 msgstr ""
+"｢正確になにがあったのかはあまりはっきりしていないんだが、かなり大きな出来事があって、最後は星系内での傭兵と帝国軍と海賊のあいだの大きな戦いになったことが"
+"ある。それでかなり長時限のあいだ、あの領域の交易路が混乱したんだ｣"
 
 #: dat/missions/minerva/kex2.lua:168
 msgid ""
@@ -50192,6 +50274,8 @@ msgid ""
 "to access their main database, however, I'm going to need you to upload it "
 "by hand.\""
 msgstr ""
+"｢枠箱にあったほかの文書から、さらに情報を得られた。細かい保安のいくつかでは、かなりいいかげんだったみたいだからな。おれはどうにか小さなプログラムをまとめ"
+"ることができた。うまくいけば男爵の主要データベースにアクセスできるはずだ。そうはいっても、手先としてそれをアップロードするのにあんたが必要になる｣"
 
 #: dat/missions/minerva/kex2.lua:169
 msgid ""
@@ -50200,6 +50284,8 @@ msgid ""
 "will be different once you get over to {pnt}. Still, I think you should be "
 "able to handle this easily. Would you be up for the challenge?\""
 msgstr ""
+"｢今回の仕事は、おそらくこのまえのやつよりずっと手ぎわが必要になるだろう。文書にはいくらか保安上の問題があったにせよ、{pnt}に行ってしまえば物事が異な"
+"ってくることになりそうだ。それでもあんたなら容易に対処できるはずだと思っている。挑戦してみるつもりはあるか？｣"
 
 #: dat/missions/minerva/kex2.lua:171 dat/missions/minerva/kex3.lua:170
 #: dat/missions/minerva/kex3.lua:318 dat/missions/minerva/kex4.lua:168
@@ -50243,6 +50329,8 @@ msgid ""
 "on {pnt} and plug it in to any terminal you find around the docks. That "
 "should also make it easier for you to get out of there if things go sour.\""
 msgstr ""
+"｢よし！　あんたにプログラムを渡そう。やらなきゃならないのは、{pnt}に着陸して、着岸所のあたりで見つけた端末にこいつを差しこむことだけだ。これはことが"
+"まずくなったときに、そこから出るのを簡単にもしてくれるはずだ｣"
 
 #: dat/missions/minerva/kex2.lua:188
 msgid ""
@@ -50251,6 +50339,8 @@ msgid ""
 "that they have dealings with each other, it seems like there has to be "
 "something there if we can access all the data.\""
 msgstr ""
+"｢だから、発想としてはイブ男爵のデータベースに侵入してみようってことだな。それでミネルバ・ステーションの CEO の汚点をなにかつかめるかどうか確認するん"
+"だ。二人がおたがいに取引しているのはすでに知っているから、すべての情報を入手できたら、そこになにかあるにちがいないように思えるだろ｣"
 
 #: dat/missions/minerva/kex2.lua:189
 msgid ""
@@ -50258,13 +50348,15 @@ msgid ""
 "any terminal that there should be around the docks. That should also make it "
 "easier for you to get out of there if things go sour.\""
 msgstr ""
+"｢あんたがやらなきゃならないのは、{pnt}に着陸して、おれが渡したプログラムを端末にアップロードすることだけだ。端末は、着岸所のあたりにあるはずだよ。そ"
+"いつはことがまずくなったときに、そこから出るのを簡単にもしてくれるはずだ｣"
 
 #: dat/missions/minerva/kex2.lua:190
 msgid ""
 "\"It's likely that there will be more security around this time, so make "
 "sure you take a ship that can deal with trouble. Although, I don't think "
 "that will be a problem for you.\""
-msgstr ""
+msgstr "｢この頃はもっと警備が固くなっていそうだから、かならず問題に対処できる船を選んでくれ。あんたなら問題はないと思ってるがな｣"
 
 #: dat/missions/minerva/kex2.lua:194
 msgid ""
@@ -50272,6 +50364,8 @@ msgid ""
 "fly short distances, but I can't reach any tall places and have to "
 "constantly avoid getting stepped on.\""
 msgstr ""
+"｢ひどいもんだ。あんたがアヒルに予想しているとおりにな。つまり、たしかに浮いたり短い距離を飛んだりできるが、高いところには届かないし、つねに踏みつぶされな"
+"いように避けなければならないんだ｣"
 
 #: dat/missions/minerva/kex2.lua:195
 msgid ""
@@ -50279,6 +50373,8 @@ msgid ""
 "humanity and can't engage in all the activities I used to like. You know, "
 "drinking with friends, going out, basic human empathy, shit like that.\""
 msgstr ""
+"｢最悪なところは話し相手がいないことだな。つまり、おれはちょっと人間的なところをなくしてるし、以前は好きだった活動にかかわれないだろ。ほら、友人と飲むとか"
+"、出かけるとか、人間としての基本的な共感とか、そういうくそだ｣"
 
 #: dat/missions/minerva/kex2.lua:196
 msgid ""
@@ -50287,6 +50383,8 @@ msgid ""
 "in the morning, and I still haven't remembered I'm a duck, but it soon comes "
 "crashing down. I just can't get used to it.\""
 msgstr ""
+"｢これだけ長い周期がたって、おれはこれに慣れたと思いたいが、けっして慣れることはないんだ。朝に目覚めた最初の瞬間は至福の時だ。まだ自分がアヒルだと思いだし"
+"てないんだからな。そしてすぐに急落の時が来る。とにかくそれに慣れることはできない｣"
 
 #: dat/missions/minerva/kex2.lua:197
 msgid ""
@@ -50295,12 +50393,14 @@ msgid ""
 "All the things I used to have and cherish, they're all gone. My work, my "
 "friends, my family…\""
 msgstr ""
+"｢このごろはがんばって耐えるのがちょっとうまくなったが、最初のころはひときわ厳しかった。とにかく生きる気力をすべて失ってしまうんだ。元に戻ることはできない"
+"らしい、だろ？　かつて持っていたり大事にしていたものはすべて、みんななくなってしまった。仕事、友人、家族……｣"
 
 #: dat/missions/minerva/kex2.lua:198
 msgid ""
 "\"I never chose to be in this state and often think that it would have been "
 "better if I had never been saved from the wreckage, but here I am.\""
-msgstr ""
+msgstr "｢おれはこの状態でいることをけっして望まなかったし、残骸からまったく救助されなければよかったとよく思うんだ。だがこれがおれだ｣"
 
 #: dat/missions/minerva/kex2.lua:200
 msgid ""
@@ -50309,17 +50409,22 @@ msgid ""
 "did this to me. Turning me into this is beyond humiliating and I intend to "
 "have him suffer as much as I have.\""
 msgstr ""
+"ケクスの表情が険悪になった。\n"
+"｢おれを動かしつづけているほんとうの動機はただひとつ。おれにこんなことをした野郎への復讐だ。おれをこんなふうに変えるなんて、恥辱どころではない。だからやつ"
+"にはおれと同じくらいの経験をしてもらうつもりだ｣"
 
 #: dat/missions/minerva/kex2.lua:203
 msgid ""
 "\"If you can avoid it, don't become a duck, kid.\"\n"
 "He seems to lighten up a bit."
 msgstr ""
+"｢もし避けられるなら、アヒルにはなるなよ、若者｣\n"
+"ケクスはちょっとあかるくなったようだ。"
 
 #. Main stuff starts
 #: dat/missions/minerva/kex2.lua:218
 msgid "Baroness Eve"
-msgstr ""
+msgstr "イブ男爵"
 
 #: dat/missions/minerva/kex3.lua:60
 msgid ""
@@ -50660,7 +50765,7 @@ msgstr ""
 #: dat/missions/minerva/kex3.lua:312 dat/missions/minerva/maikki2.lua:479
 #: dat/missions/minerva/maikki2.lua:760
 msgid "\"What do you want?\""
-msgstr "｢どうしたいんですか？｣"
+msgstr "｢なんの用ですか？｣"
 
 #: dat/missions/minerva/kex3.lua:313
 msgid ""
@@ -53108,7 +53213,7 @@ msgstr "わいろを試す (#r{credits}#0)"
 #. TODO possibly add a pacifist option here too
 #: dat/missions/minerva/maikki1.lua:803
 msgid "\"What do you want to talk about asshole? This is our job.\""
-msgstr "｢なにについて話したいんだ、くそったれ？　これはおれたちの仕事だ｣"
+msgstr "｢なんについて話したいんだ、くそったれ？　これはおれたちの仕事だ｣"
 
 #: dat/missions/minerva/maikki1.lua:818
 msgid "You found a wreck and bribed scavengers so that they left."
@@ -56410,8 +56515,8 @@ msgid ""
 "slack.\""
 msgstr ""
 "｢むこうではすばらしい仕事をしてくれた。これでまちがいなくザレクのたくらみは二、三デカ時限遅れることになるだろう。ハッキングステーションの破壊のような花火"
-"大会を見て満足しなければな。それをわたしも見られたらとほんとうに思うけど、昔から船をきちんと操縦できたことがなくてね。ボスはちょっと大目に見てくれたことが"
-"ないんだ｣"
+"大会を見て満足したにちがいないな。それをわたしも見られたらとほんとうに思うけど、昔から船をきちんと操縦できたことがなくてね。ボスはちょっと大目に見てくれた"
+"ことがないんだ｣"
 
 #: dat/missions/minerva/pirate5.lua:102
 msgid ""
@@ -74775,27 +74880,18 @@ msgid ""
 "the cargo to {pnt} in the {sys} system. Could you? I'll give you the payment "
 "for the mission if you do it; it means a lot!\""
 msgstr ""
-"あなたが座ると、貿易商はろうばいした表情であなたを見あげた。｢あっ！　なにをし"
-"てほしんですか？　すでにやることはじゅうぶんにあるってわからないんですか？｣。"
-"あなたはその貿易商に落ちつくようにいい、飲み物を頼んだ。｢おっと、親切な人です"
-"ね……。ハハッ、たぶん今日は運がいいんでしょうね！｣\n"
-"    あなたが飲み物を二つつかみ、ひとつをわずかにくつろいだ表情になった貿易商"
-"に手渡すと、貿易商は話を始めた。｢それで、わたしは貿易商同業組合のために働いて"
-"いるんです。組合のためにものを運ぶと、組合が支払いをします。唯一の問題は、わ"
-"たしのエンジンは貨物を引き受ける途中で海賊から逃げたことで傷んだらしいという"
-"ことです。ちょっと速度が出なくて、納期に間にあうようには戻れないのがもうわ"
-"かっています。そしておまけに、今も請求書の支払いに遅れているんです。もう新し"
-"いエンジンを買う余裕なんてありませんよ！　まるでシールド生成器なしでソル星雲"
-"にいるみたいなものです｣\n"
-"    あなたは貿易商に、関係を切られるまでにはきっといくらか余裕を見てくれると"
-"いって、安心させようと試みた。｢見てくれるわけないですよ！　すでに以前まったく"
-"同じことで、仕事のやりかたについて小言をいわれてるんです！　もしこの{pnt}へ"
-"の {tonnes}の{cargo}の輸送を取れなかったら……。わたしにはほんとうにこの仕事が"
-"必要なんです。わかりますか？　どうしたらいいのかわたしにはわかりません……｣。貿"
-"易商がすこし思案した。｢もしかして……いいですか、あなたならわたしを助けられるん"
-"じゃないでしょうか？　貨物を{sys}星系の{pnt}まであなたに運んでもらえばいいだ"
-"けです。できますか？　そうしてもらえれば、任務の支払いはあなたに受けとっても"
-"らいます。これは重要なことなんですよ！｣"
+"あなたが座ると、貿易商はろうばいした表情であなたを見あげた。｢あっ！　なんの用ですか？　すでにやることはじゅうぶんにあるってわからないんですか？｣。あなた"
+"はその貿易商に落ちつくようにいい、飲み物を頼んだ。｢おっと、親切な人ですね……。ハハッ、たぶん今日は運がいいんでしょうね！｣\n"
+"    あなたが飲み物を二つつかみ、ひとつをわずかにくつろいだ表情になった貿易商に手渡すと、貿易商は話を始めた。｢それで、わたしは貿易商同業組合のために働"
+"いているんです。組合のためにものを運ぶと、組合が支払いをします。唯一の問題は、わたしのエンジンは貨物を引き受ける途中で海賊から逃げたことで傷んだらしいとい"
+"うことです。ちょっと速度が出なくて、納期に間にあうようには戻れないのがもうわかっています。そしておまけに、今も請求書の支払いに遅れているんです。もう新しい"
+"エンジンを買う余裕なんてありませんよ！　まるでシールド生成器なしでソル星雲にいるみたいなものです｣\n"
+"    あなたは貿易商に、関係を切られるまでにはきっといくらか余裕を見てくれるといって、安心させようと試みた。｢見てくれるわけないですよ！　"
+"すでに以前まったく同じことで、仕事のやりかたについて小言をいわれてるんです！　もしこの{pnt}への "
+"{tonnes}の{cargo}の輸送を取れなかったら……。わたしにはほんとうにこの仕事が必要なんです。わかりますか？　"
+"どうしたらいいのかわたしにはわかりません……｣。貿易商がすこし思案した。｢もしかして……いいですか、あなたならわたしを助けられるんじゃないでしょうか？　"
+"貨物を{sys}星系の{pnt}まであなたに運んでもらえばいいだけです。できますか？　"
+"そうしてもらえれば、任務の支払いはあなたに受けとってもらいます。これは重要なことなんですよ！｣"
 
 #: dat/missions/trader/anxiousmerchant.lua:85
 msgid ""
@@ -90548,7 +90644,7 @@ msgstr "船の種類 :"
 
 #: src/load.c:453
 msgid "Save game version mismatch"
-msgstr "保存されたゲームのバージョンが一致しません。"
+msgstr "セーブされたゲームのバージョンが一致しません。"
 
 #: src/load.c:454
 #, c-format
@@ -90558,8 +90654,8 @@ msgid ""
 "   Naev version: %s\n"
 "Are you sure you want to load this game? It may lose data."
 msgstr ""
-"保存されたゲーム ｢%s｣ のバージョンが、Naev のバージョンと一致しません:\n"
-"   保存されたバージョン : #r%s#0\n"
+"セーブされたゲーム ｢%s｣ のバージョンが、Naev のバージョンと一致しません:\n"
+"   セーブされたバージョン : #r%s#0\n"
 "   Naev のバージョン: %s\n"
 "ほんとうにこのゲームをロードしたいですか？　データが失われるかもしれません。"
 
@@ -90574,7 +90670,7 @@ msgstr "ほんとうに ｢%s｣ を完全に削除したいですか？"
 
 #: src/load.c:560 src/load.c:625
 msgid "Saved game file seems to have been deleted."
-msgstr "保存されたゲームのファイルは、どうも消されてしまったようです。"
+msgstr "セーブされたゲームのファイルは、どうも消されてしまったようです。"
 
 #: src/load.c:583 src/load.c:707
 #, c-format
@@ -92824,7 +92920,7 @@ msgstr "マウスによる飛行で推力制御"
 
 #: src/options.c:379
 msgid "Enable saved game compression"
-msgstr "ゲームの保存の圧縮"
+msgstr "セーブされたゲームの圧縮"
 
 #: src/options.c:381
 msgid "Visible Messages"
