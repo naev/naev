@@ -111,7 +111,7 @@ function accept()
     mensing(fmt.f(_([["We will travel through {sys2}, {sys3}, and {sys4}. Just passing through the systems should be sufficient. Also, I want to visit the {station} station before returning back to {pnt}. You have to make sure no one shoots us down during our expedition."]]), {sys2=t_sys[2], sys3=t_sys[3], sys4=t_sys[4], station=station, pnt=homeworld}))
     vn.done()
     vn.run()
-    
+
     -- Set up mission information
     mem.destsys = t_sys[1]
     misn.setTitle(_("Advanced Nebula Research"))

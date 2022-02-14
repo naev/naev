@@ -4,9 +4,7 @@
 
 --]]
 local vn = require 'vn'
-local colour = require 'colour'
 local mt = require 'merge_tables'
-local fmt = require "format"
 
 local nebu_research = {
     -- Main Characters

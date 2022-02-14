@@ -39,7 +39,7 @@ local dest_planet, dest_sys = spob.getS("Neo Pomerania")
 local lab_coat_price = 25e3
 local glasses_price = 40e3
 
-local enter_ship, enter_spaceport, start_talk -- Forward-declared functions
+local enter_ship -- Forward-declared functions
 -- luacheck: globals land tick (Hook functions passed by name)
 
 function create()
@@ -299,12 +299,12 @@ You haven't understood the question, not even a single word.]]))
         faction.modPlayer("Za'lek", nebu_research.fctmod.znr03_questions)
     end )
     vn.done()
-    
+
     vn.label( "run" )
     vn.na(_([[You decide to run towards the closest door and leave the building as fast as possible. You continue running until you reach the spaceport and enter your ship. You can't be the first one running from a talk, right?]]))
     vn.done()
     vn.run()
-    
+
     nebu_research.log(fmt.f(_([[You gave a scientific talk on {pnt}. Did anyone notice you're not a scientist?]]), {pnt=dest_planet}))
     misn.finish(true)
 end

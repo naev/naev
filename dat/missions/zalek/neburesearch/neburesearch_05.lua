@@ -20,11 +20,11 @@
 </mission>
 --]]
 --[[
-   
+
    Mission: Expert Nebula Research
-   
+
    Description: The nebula shielding prototype is ready and the player has to test it. The first stages go well, but in the final stage the prototype fails and the player is about to die in the Sol nebula. He gets rescued by an Empire carrier instead and is bought back into Empire space.
-   
+
    Difficulty: Easy (requires at least a corvette class ship)
 
 --]]
@@ -36,7 +36,8 @@ local vn = require 'vn'
 
 local mensing_portrait = nebu_research.mensing.portrait
 
--- luacheck: globals (Hook functions passed by name)
+-- luacheck: globals land takeoff jumpin arrive_at_testing_sys timer moveto endScan peacemaker board rescue (Hook functions passed by name)
+local hasShieldingPrototypeEquiped, beginScan -- Forward-declared functions
 
 -- Mission constants
 local credits = nebu_research.rewards.credits05
@@ -337,7 +338,7 @@ function peacemaker()
     vn.run()
 end
 
-function board(pilot)
+function board(_pilot)
     player.unboard()
     hook.timer(0.1, "rescue")
 end
@@ -376,5 +377,3 @@ You decide that it's better not to tell her about your finding.]]))
     misn.markerMove(mem.misn_marker, homeworld_sys)
     misn.osdActive(2)
 end
-
-
