@@ -16,7 +16,7 @@
 --]]
 --[[
 -- Dvaered Propaganda
--- The player has to overfly a planet and escpae ships pursuing them.
+-- The player has to overfly a planet and escape ships pursuing them.
 
    Stages :
    0) Way to target planet
