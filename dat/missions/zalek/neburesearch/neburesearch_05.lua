@@ -262,7 +262,7 @@ function endScan()
     vn.clear()
     vn.scene()
     vn.transition("fade")
-    vn.na(_([[Looking out of the window you see blury shapes moving past your ship vaguely resembling space ships of unfamiliar design. Your sensors show nothing out there, though. Maybe you started to imagine things that do not exist. You wonder if you have spent too much time inside the nebula. Or maybe the rumors about ghost ships are true after all...]]))
+    vn.na(_([[Looking out of the window you see blurry shapes moving past your ship vaguely resembling space ships of unfamiliar design. Your sensors show nothing out there, though. Maybe you started to imagine things that do not exist. You wonder if you have spent too much time inside the nebula. Or maybe the rumors about ghost ships are true after all...]]))
     vn.na(_([[Suddenly, without a warning, your shield energy begins to drop at a rapid pace. The shielding prototype must be broken! You hope it is just a temporary problem and ask Robert what the problem is. His reply is simply "Busy!"]]))
     vn.menu( {
         { fmt.f(_("Retreat to {sys}"), {sys=system.get("Arandon"):name()}), "retreat" },
