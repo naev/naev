@@ -56,6 +56,7 @@ dat/faction.xml
 dat/map.xml
 dat/outfits/accessory/air_freshener.xml
 dat/outfits/accessory/black_cat_doll.xml
+dat/outfits/accessory/broken_nebular_shielding_prototype.xml
 dat/outfits/accessory/commemorative_stein.xml
 dat/outfits/accessory/dv_handbook.xml
 dat/outfits/accessory/fuzzy_dice.xml
@@ -2562,6 +2563,7 @@ dat/missions/zalek/neburesearch/neburesearch_01.lua
 dat/missions/zalek/neburesearch/neburesearch_02.lua
 dat/missions/zalek/neburesearch/neburesearch_03.lua
 dat/missions/zalek/neburesearch/neburesearch_04.lua
+dat/missions/zalek/neburesearch/neburesearch_05.lua
 dat/missions/zalek/particlephysics/zpp01.lua
 dat/missions/zalek/particlephysics/zpp02.lua
 dat/missions/zalek/particlephysics/zpp03.lua
@@ -2624,6 +2626,7 @@ dat/scripts/common/empire.lua
 dat/scripts/common/frontier_war.lua
 dat/scripts/common/gauntlet.lua
 dat/scripts/common/minerva.lua
+dat/scripts/common/nebu_research.lua
 dat/scripts/common/neutral.lua
 dat/scripts/common/pirate.lua
 dat/scripts/common/sciencegonewrong.lua
