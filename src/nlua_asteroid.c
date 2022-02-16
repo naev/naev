@@ -196,6 +196,10 @@ static int asteroidL_get( lua_State *L )
    int field = -1;
    const Vector2d *pos = NULL;
 
+   /* No asteroids, so everything just returns nil. */
+   if (array_size(cur_system->asteroids) <= 0)
+      return 0;
+
    if (lua_isvector(L,1))
       pos = lua_tovector(L,1);
 
