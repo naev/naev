@@ -113,6 +113,7 @@ static void land_stranded (void);
 /*
  * prototypes
  */
+static int land_gc( void *unused );
 static int land_hasLocalMap (void);
 static void land_createMainTab( unsigned int wid );
 static void land_setupTabs (void);
@@ -1231,12 +1232,22 @@ void land( Spob* p, int load )
    if (load)
       window_setFade( land_wid, NULL, 0. );
 
-   /* Do a lua collection pass. */
-   lua_gc( naevL, LUA_GCCOLLECT, 0 );
+   /* Do a lua collection pass. Run in a hook since land can be called indirectly from Lua. */
+   hook_addFunc( land_gc, NULL, "safe" );
 
    /* Mission forced take off. */
    if (land_takeoff)
       takeoff(0);
+}
+
+/**
+ * @brief Runs Lua garbage collection.
+ */
+static int land_gc( void *unused )
+{
+   (void) unused;
+   lua_gc( naevL, LUA_GCCOLLECT, 0 );
+   return 0;
 }
 
 /**
