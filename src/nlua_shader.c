@@ -99,8 +99,7 @@ LuaShader_t* luaL_checkshader( lua_State *L, int ind )
  */
 LuaShader_t* lua_pushshader( lua_State *L, LuaShader_t shader )
 {
-   LuaShader_t *c;
-   c = (LuaShader_t*) lua_newuserdata(L, sizeof(LuaShader_t));
+   LuaShader_t *c = (LuaShader_t*) lua_newuserdata(L, sizeof(LuaShader_t));
    *c = shader;
    luaL_getmetatable(L, SHADER_METATABLE);
    lua_setmetatable(L, -2);
