@@ -2994,7 +2994,8 @@ void player_runHooks (void)
       player_rmFlag( PLAYER_HOOK_JUMPIN );
    }
    if (player_isFlag( PLAYER_HOOK_LAND )) {
-      land( cur_system->spobs[ player.p->nav_spob ], 0 );
+      if (player.p->nav_spob >= 0)
+         land( cur_system->spobs[ player.p->nav_spob ], 0 );
       player_rmFlag( PLAYER_HOOK_LAND );
    }
 }
