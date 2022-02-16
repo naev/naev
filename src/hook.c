@@ -213,7 +213,8 @@ void hook_exclusionEnd( double dt )
    hooks_update( dt );
 
    /* Run assorted hooks. */
-   player_runHooks();
+   if (player.p != NULL) /* All these hooks rely on player actually existing. */
+      player_runHooks();
 
    /* Time hooks. */
    temp = hook_time_accum;

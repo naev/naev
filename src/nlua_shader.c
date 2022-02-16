@@ -194,10 +194,8 @@ static int shaderL_new( lua_State *L )
 {
    LuaShader_t shader;
    const char *pixelcode, *vertexcode;
-   GLint i, ntex;
+   GLint ntex;
    GLsizei length;
-   LuaUniform_t *u;
-   LuaTexture_t *t;
 
    /* Get arguments. */
    pixelcode  = luaL_checkstring(L,1);
@@ -231,8 +229,8 @@ static int shaderL_new( lua_State *L )
    glGetProgramiv( shader.program, GL_ACTIVE_UNIFORMS, &shader.nuniforms );
    shader.uniforms = calloc( shader.nuniforms, sizeof(LuaUniform_t) );
    ntex = 0;
-   for (i=0; i<shader.nuniforms; i++) {
-      u = &shader.uniforms[i];
+   for (GLint i=0; i<shader.nuniforms; i++) {
+      LuaUniform_t *u = &shader.uniforms[i];
       glGetActiveUniform( shader.program, (GLuint)i, SHADER_NAME_MAXLEN, &length, &u->size, &u->type, u->name );
       u->id = glGetUniformLocation( shader.program, u->name );
       u->tex = -1;
@@ -241,7 +239,7 @@ static int shaderL_new( lua_State *L )
       if ((u->type==GL_SAMPLER_2D) && (strcmp(u->name,"MainTex")!=0)) {
          if (shader.tex == NULL)
             shader.tex = array_create(LuaTexture_t);
-         t = &array_grow( &shader.tex );
+         LuaTexture_t *t = &array_grow( &shader.tex );
          ntex++;
          t->active = GL_TEXTURE0+ntex;
          t->texid = 0;
