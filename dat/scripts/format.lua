@@ -144,6 +144,67 @@ function format.list( words )
 end
 
 --[[--
+Converts a number to a human readable string.
+
+Has to be implemented on a per-language basis.
+
+   @tparam num Number to convert to a human readable string.
+   @treturn string Human readable string.
+--]]
+function format.humanize( num )
+   local anum = math.abs(num)
+   if anum < 1e13 then
+      local lang = naev.language()
+      if inlist( {"en", "de"}, lang ) then
+         local sign = (num < 0 and "-") or ""
+         if anum > 1e9 then
+            return sign..string.format(_("%.1f billion"), anum/1e9 )
+         elseif anum > 1e6 then
+            return sign..string.format(_("%.1f million"), anum/1e6 )
+         elseif anum > 1e3 then
+            return sign..string.format(_("%.1f thousand"), anum/1e3 )
+         else
+            return string.format("%.0f",num)
+         end
+
+      elseif inlist( {"ja"}, lang ) then
+         local sign = (num < 0 and "-") or ""
+         if anum > 1e8 then
+            return sign..string.format(_("%.1f億"), anum/1e8)
+         elseif anum > 1e4 then
+            return sign..string.format(_("%.1f万"), anum/1e4)
+         else
+            return string.format("%.0f",num)
+         end
+
+      end
+   end
+
+   local digits = { "\226\129\176", "\194\185", "\194\178", "\194\179", "\226\129\180", "\226\129\181", "\226\129\182", "\226\129\183", "\226\129\184", "\226\129\185" }
+   local state = 0
+   local COEF = 0
+   local E = 1
+   local EXP = 4
+   local o = ""
+   local s = string.format("%.1e",num)
+   for i=1,#s do
+      local c = string.sub(s,i,i)
+      if state==COEF and c ~= "e" then
+         o = o..c
+      elseif state==COEF then
+         o = o.."\194\183".."10"
+         state = E
+      elseif state==E and (c=="+" or c=="0") then
+         state = E
+      else
+         o = o..digits[ string.byte(c)-string.byte("0") + 1 ]
+         state = EXP
+      end
+   end
+   return o
+end
+
+--[[--
 String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings">f-strings</a> but closer to Python's str.format().
 
    Prefer this over string.format because it allows translations to change the word order.
