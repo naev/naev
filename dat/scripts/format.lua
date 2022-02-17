@@ -170,9 +170,11 @@ function format.humanize( num )
       elseif inlist( {"ja"}, lang ) then
          local sign = (num < 0 and "-") or ""
          if anum > 1e8 then
-            return sign..string.format(_("%.1f億"), anum/1e8)
+            -- Not necessary to translate for languages without 4 decimal comma separators
+            return sign..string.format(_("%.1f hundred millions"), anum/1e8)
          elseif anum > 1e4 then
-            return sign..string.format(_("%.1f万"), anum/1e4)
+            -- Not necessary to translate for languages without 4 decimal comma separators
+            return sign..string.format(_("%.1f ten thousands"), anum/1e4)
          else
             return string.format("%.0f",num)
          end
