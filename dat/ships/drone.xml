@@ -11,7 +11,7 @@
  <time_mod>0.8</time_mod>
  <trail_generator x="-8" y="0" h="-3" always_under="1" />
  <fabricator>Robosys</fabricator>
- <description>This is a modified version of the robotic drone that includes a life support system for humans.</description>
+ <description>This is a modified version of the Collective Drone that now includes a life support system for humans.</description>
  <health>
   <armour>40</armour>
   <armour_regen>7</armour_regen>

@@ -15,7 +15,7 @@
  <trail_generator x="-55" y="-12" h="0" />
  <fabricator>Proteron</fabricator>
  <license>Heavy Combat Vessel</license>
- <description>The heart of the Proteron battle fleet is formed by the Watsons. Acting as a mobile launch base as well as a command and control unit, this vessel coordinates the others in the fight for dominance over the galaxy.</description>
+ <description>The heart of the Proteron battle fleet is formed by the Watson. Acting as a mobile launch base as well as a command and control unit, this vessel co-ordinates the rest of the fleet in the fight for dominance over the galaxy.</description>
  <health>
   <armour>1200</armour>
   <armour_regen>0</armour_regen>

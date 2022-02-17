@@ -11,7 +11,7 @@
  <time_mod>0.9</time_mod>
  <trail_generator x="-20" y="0" h="0" always_under="1">soromid</trail_generator>
  <fabricator>Soromid</fabricator>
- <description>Nohinohi were originally created as Soromid Reaver Bio-Fighters. However, although the process is not entirely clear, when the original Soromid Reaver is abandoned or lost through misfortune, it can undergo a remarkable transformation where the biological components of the ship end up dominating the synthetic parts. These ships are commonly referred to as feral bioships and not much is known about them.</description>
+ <description>Nohinohi were originally created as Soromid Reaver Bio-Fighters. However, although the process is not entirely clear, when the original Soromid Reaver is abandoned or lost through misfortune it can undergo a remarkable transformation where the biological components of the ship end up dominating the synthetic parts. These ships are commonly referred to as "Feral Bioships" and not much is known about them.</description>
  <health>
   <armour>75</armour>
  </health>

@@ -13,7 +13,7 @@
  <trail_generator x="-9" y="-13" h="0">nebula</trail_generator>
  <trail_generator x="-8" y="0" h="-3" always_under="1" />
  <fabricator>Robosys</fabricator>
- <description>This is a modified version of the robotic drone that includes a life support system for humans, disguised as a Hyena.</description>
+ <description>This is a modified version of the Collective Drone that now includes a life support system for humans and is also disguised as a Hyena.</description>
  <health>
   <armour>40</armour>
   <armour_regen>7</armour_regen>

@@ -18,7 +18,7 @@
  <trail_generator x="0" y="15" h="-15">nebula</trail_generator>
  <trail_generator x="0" y="-15" h="-15">nebula</trail_generator>
  <fabricator>Soromid</fabricator>
- <description>TODO</description>
+ <description>Still to do...</description>
  <health>
   <armour>1300</armour>
  </health>
