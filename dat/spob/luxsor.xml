@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Luxsor">
- <pos>
-  <x>-638.461900</x>
-  <y>8974.249360</y>
- </pos>
+ <pos x="-638.461900" y="8974.249360"/>
  <GFX>
   <space>moon-A00.webp</space>
   <exterior>forest.webp</exterior>

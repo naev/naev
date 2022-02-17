@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Falas">
- <pos>
-  <x>16315.074449</x>
-  <y>5139.003418</y>
- </pos>
+ <pos x="16315.074449" y="5139.003418"/>
  <GFX>
   <space>moon-D02.webp</space>
   <exterior>asteroid.webp</exterior>

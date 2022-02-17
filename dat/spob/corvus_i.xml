@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Corvus I">
- <pos>
-  <x>2251.356163</x>
-  <y>-1379.659409</y>
- </pos>
+ <pos x="2251.356163" y="-1379.659409"/>
  <GFX>
   <space>moon-D02.webp</space>
   <exterior>asteroid.webp</exterior>

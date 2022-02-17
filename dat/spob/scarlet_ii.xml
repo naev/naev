@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Scarlet II">
- <pos>
-  <x>-1999.786603</x>
-  <y>-5743.429194</y>
- </pos>
+ <pos x="-1999.786603" y="-5743.429194"/>
  <GFX>
   <space>moon-G00.webp</space>
   <exterior>oceanic2.webp</exterior>

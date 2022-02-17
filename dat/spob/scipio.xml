@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Scipio">
- <pos>
-  <x>23055.346808</x>
-  <y>-11526.247373</y>
- </pos>
+ <pos x="23055.346808" y="-11526.247373"/>
  <GFX>
   <space>C00.webp</space>
   <exterior>desertic2.webp</exterior>

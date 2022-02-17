@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Aldous' moon">
- <pos>
-  <x>3481.905633</x>
-  <y>-5531.743534</y>
- </pos>
+ <pos x="3481.905633" y="-5531.743534"/>
  <GFX>
   <space>moon-A00.webp</space>
   <exterior>snow.webp</exterior>

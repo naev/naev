@@ -6,10 +6,7 @@
   <interference>2.439020</interference>
   <nebula volatility="0.000000" hue="290.000000">300.000000</nebula>
  </general>
- <pos>
-  <x>190.678211</x>
-  <y>-888.714763</y>
- </pos>
+ <pos x="190.678211" y="-888.714763"/>
  <spobs>
   <spob>Faust III</spob>
   <spob>Faust VI</spob>

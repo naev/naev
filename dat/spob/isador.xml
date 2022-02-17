@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Isador">
- <pos>
-  <x>-9353.454279</x>
-  <y>-12594.310510</y>
- </pos>
+ <pos x="-9353.454279" y="-12594.310510"/>
  <GFX>
   <space>O04.webp</space>
   <exterior>aquatic2.webp</exterior>

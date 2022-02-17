@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Haleb IV">
- <pos>
-  <x>-9097.124865</x>
-  <y>-8125.122171</y>
- </pos>
+ <pos x="-9097.124865" y="-8125.122171"/>
  <GFX>
   <space>I04.webp</space>
   <exterior>traderoom.webp</exterior>

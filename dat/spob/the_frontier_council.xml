@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="The Frontier Council">
- <pos>
-  <x>-4232.400889</x>
-  <y>9914.102486</y>
- </pos>
+ <pos x="-4232.400889" y="9914.102486"/>
  <GFX>
   <space>station-cylinder.webp</space>
   <exterior>traderoom.webp</exterior>

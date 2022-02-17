@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Gaula">
- <pos>
-  <x>18382.262202</x>
-  <y>-2733.462146</y>
- </pos>
+ <pos x="18382.262202" y="-2733.462146"/>
  <GFX>
   <space>O00.webp</space>
   <exterior>aquatic2.webp</exterior>

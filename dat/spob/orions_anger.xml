@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Orion's Anger">
- <pos>
-  <x>5679.644433</x>
-  <y>2218.611107</y>
- </pos>
+ <pos x="5679.644433" y="2218.611107"/>
  <GFX>
   <space>A01.webp</space>
   <exterior>oceanic.webp</exterior>

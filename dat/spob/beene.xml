@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Beene">
- <pos>
-  <x>9360.000000</x>
-  <y>-6320.000000</y>
- </pos>
+ <pos x="9360.000000" y="-6320.000000"/>
  <GFX>
   <space>G01.webp</space>
   <exterior>mining5.webp</exterior>

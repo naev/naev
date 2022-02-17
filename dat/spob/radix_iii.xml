@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Radix III">
- <pos>
-  <x>9292.187990</x>
-  <y>5727.672471</y>
- </pos>
+ <pos x="9292.187990" y="5727.672471"/>
  <GFX>
   <space>I00.webp</space>
   <exterior>lava.webp</exterior>

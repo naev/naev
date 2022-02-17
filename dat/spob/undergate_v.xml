@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Undergate V">
- <pos>
-  <x>-8733.535288</x>
-  <y>-14793.696020</y>
- </pos>
+ <pos x="-8733.535288" y="-14793.696020"/>
  <GFX>
   <space>moon-P01.webp</space>
   <exterior>station03.webp</exterior>

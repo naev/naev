@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Awowa V">
- <pos>
-  <x>5232.591396</x>
-  <y>-5915.373586</y>
- </pos>
+ <pos x="5232.591396" y="-5915.373586"/>
  <GFX>
   <space>G01.webp</space>
   <exterior>mining5.webp</exterior>

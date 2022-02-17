@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Alteris V">
- <pos>
-  <x>15451.388889</x>
-  <y>-3935.185185</y>
- </pos>
+ <pos x="15451.388889" y="-3935.185185"/>
  <GFX>
   <space>P03.webp</space>
   <exterior>methane.webp</exterior>

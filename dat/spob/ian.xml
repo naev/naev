@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ian">
- <pos>
-  <x>-30777.238017</x>
-  <y>7088.682857</y>
- </pos>
+ <pos x="-30777.238017" y="7088.682857"/>
  <GFX>
   <space>moon-M02.webp</space>
   <exterior>forest.webp</exterior>

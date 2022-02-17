@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Burnan">
- <pos>
-  <x>-6250.670883</x>
-  <y>4135.478736</y>
- </pos>
+ <pos x="-6250.670883" y="4135.478736"/>
  <GFX>
   <space>M07.webp</space>
   <exterior>forest.webp</exterior>

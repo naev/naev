@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Stelman I-3">
- <pos>
-  <x>-4392.849991</x>
-  <y>-5739.990655</y>
- </pos>
+ <pos x="-4392.849991" y="-5739.990655"/>
  <GFX>
   <space>I06.webp</space>
   <exterior>station01.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Akra Station">
- <pos>
-  <x>-2449.716430</x>
-  <y>-2403.495366</y>
- </pos>
+ <pos x="-2449.716430" y="-2403.495366"/>
  <GFX>
   <space>station-commerce2.webp</space>
   <exterior>traderoom.webp</exterior>

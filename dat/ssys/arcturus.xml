@@ -6,10 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-58.833333</x>
-  <y>-227.000000</y>
- </pos>
+ <pos x="-58.833333" y="-227.000000"/>
  <spobs>
   <spob>Antica</spob>
   <spob>Arcturus Gamma</spob>

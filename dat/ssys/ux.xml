@@ -6,10 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-434.672018</x>
-  <y>-482.147547</y>
- </pos>
+ <pos x="-434.672018" y="-482.147547"/>
  <spobs>
   <spob>Astana</spob>
   <spob>Grandard</spob>

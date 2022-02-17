@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Point Zero Station">
- <pos>
-  <x>2859.481738</x>
-  <y>1778.531207</y>
- </pos>
+ <pos x="2859.481738" y="1778.531207"/>
  <GFX>
   <space>station-sphere.webp</space>
   <exterior>traderoom.webp</exterior>

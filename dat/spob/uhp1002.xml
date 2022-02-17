@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="UHP-1002">
- <pos>
-  <x>9584.399981</x>
-  <y>-6134.015988</y>
- </pos>
+ <pos x="9584.399981" y="-6134.015988"/>
  <GFX>
   <space>J03.webp</space>
   <exterior>oceanic2.webp</exterior>

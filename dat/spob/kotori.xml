@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Kotori">
- <pos>
-  <x>25299.285122</x>
-  <y>31660.203761</y>
- </pos>
+ <pos x="25299.285122" y="31660.203761"/>
  <GFX>
   <space>moon-I00.webp</space>
   <exterior>station01.webp</exterior>

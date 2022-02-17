@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Kan'ar">
- <pos>
-  <x>12237.361896</x>
-  <y>-8924.993262</y>
- </pos>
+ <pos x="12237.361896" y="-8924.993262"/>
  <GFX>
   <space>O05.webp</space>
   <exterior>aquatic3.webp</exterior>

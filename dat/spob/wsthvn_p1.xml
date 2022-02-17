@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="WSTHVN P-1">
- <pos>
-  <x>-2939.659716</x>
-  <y>-3642.219900</y>
- </pos>
+ <pos x="-2939.659716" y="-3642.219900"/>
  <GFX>
   <space>P02.webp</space>
   <exterior>lava.webp</exterior>

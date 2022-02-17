@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Servax">
- <pos>
-  <x>-6295.057079</x>
-  <y>-2668.425966</y>
- </pos>
+ <pos x="-6295.057079" y="-2668.425966"/>
  <GFX>
   <space>X01.webp</space>
   <exterior>station00.webp</exterior>

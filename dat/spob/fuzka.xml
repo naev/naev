@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fuzka">
- <pos>
-  <x>-13133.181669</x>
-  <y>-5107.348427</y>
- </pos>
+ <pos x="-13133.181669" y="-5107.348427"/>
  <GFX>
   <space>M02.webp</space>
   <exterior>forest2.webp</exterior>

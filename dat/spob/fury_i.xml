@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fury I">
- <pos>
-  <x>-6350.000000</x>
-  <y>500.000000</y>
- </pos>
+ <pos x="-6350.000000" y="500.000000"/>
  <GFX>
   <space>G00.webp</space>
   <exterior>desertic3.webp</exterior>

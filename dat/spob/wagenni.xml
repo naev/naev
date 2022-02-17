@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Wagenni">
- <pos>
-  <x>-5791.124494</x>
-  <y>-1722.738390</y>
- </pos>
+ <pos x="-5791.124494" y="-1722.738390"/>
  <GFX>
   <space>moon-G00.webp</space>
   <exterior>mining.webp</exterior>

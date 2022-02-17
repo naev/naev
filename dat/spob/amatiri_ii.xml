@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Amatiri II">
- <pos>
-  <x>15214.229200</x>
-  <y>-3059.346390</y>
- </pos>
+ <pos x="15214.229200" y="-3059.346390"/>
  <GFX>
   <space>moon-C00.webp</space>
   <exterior>desertic.webp</exterior>

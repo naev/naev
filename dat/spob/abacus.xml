@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Abacus">
- <pos>
-  <x>15843.686373</x>
-  <y>970.564365</y>
- </pos>
+ <pos x="15843.686373" y="970.564365"/>
  <GFX>
   <space>A02.webp</space>
   <exterior>methane.webp</exterior>

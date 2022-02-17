@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Hekaras IV">
- <pos>
-  <x>-20146.206410</x>
-  <y>11878.412610</y>
- </pos>
+ <pos x="-20146.206410" y="11878.412610"/>
  <GFX>
   <space>I06.webp</space>
   <exterior>lava.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Donnar">
- <pos>
-  <x>23841.859354</x>
-  <y>5606.161715</y>
- </pos>
+ <pos x="23841.859354" y="5606.161715"/>
  <GFX>
   <space>G00.webp</space>
   <exterior>desertic2.webp</exterior>

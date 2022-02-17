@@ -9,10 +9,7 @@
   <interference>15.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-143.260000</x>
-  <y>716.113333</y>
- </pos>
+ <pos x="-143.260000" y="716.113333"/>
  <spobs>
   <spob>Medenus Observatory</spob>
   <spob>Sleuth II</spob>

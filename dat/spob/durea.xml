@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Durea">
- <pos>
-  <x>-18400.000000</x>
-  <y>-3440.000000</y>
- </pos>
+ <pos x="-18400.000000" y="-3440.000000"/>
  <GFX>
   <space>G03.webp</space>
   <exterior>snow.webp</exterior>

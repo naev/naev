@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Provectus Nova Ia">
- <pos>
-  <x>-6064.192692</x>
-  <y>-2294.350136</y>
- </pos>
+ <pos x="-6064.192692" y="-2294.350136"/>
  <GFX>
   <space>moon-O01.webp</space>
   <exterior>traderoom.webp</exterior>

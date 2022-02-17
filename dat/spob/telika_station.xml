@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Telika Station">
- <pos>
-  <x>-6628.943924</x>
-  <y>-5140.913146</y>
- </pos>
+ <pos x="-6628.943924" y="-5140.913146"/>
  <GFX>
   <space>station-sphere.webp</space>
   <exterior>desertic.webp</exterior>

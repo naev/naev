@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Bolero">
- <pos>
-  <x>-11735.014766</x>
-  <y>-3466.579854</y>
- </pos>
+ <pos x="-11735.014766" y="-3466.579854"/>
  <GFX>
   <space>M00.webp</space>
   <exterior>oceanic.webp</exterior>

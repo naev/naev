@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Churchill II">
- <pos>
-  <x>-22400.000000</x>
-  <y>-8820.000000</y>
- </pos>
+ <pos x="-22400.000000" y="-8820.000000"/>
  <GFX>
   <space>J05.webp</space>
   <exterior>methane.webp</exterior>

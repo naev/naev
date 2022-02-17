@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Margarita I">
- <pos>
-  <x>1330.092102</x>
-  <y>-4491.122039</y>
- </pos>
+ <pos x="1330.092102" y="-4491.122039"/>
  <GFX>
   <space>moon-A01.webp</space>
   <exterior>methane.webp</exterior>

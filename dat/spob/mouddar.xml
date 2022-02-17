@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Mouddar">
- <pos>
-  <x>4755.463992</x>
-  <y>-15972.357019</y>
- </pos>
+ <pos x="4755.463992" y="-15972.357019"/>
  <GFX>
   <space>O00.webp</space>
   <exterior>aquatic2.webp</exterior>

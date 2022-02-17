@@ -6,10 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-485.105351</x>
-  <y>-204.314213</y>
- </pos>
+ <pos x="-485.105351" y="-204.314213"/>
  <spobs>
   <spob>Jade Court</spob>
   <spob>Jade I</spob>

@@ -9,10 +9,7 @@
   <interference>20.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-161.148148</x>
-  <y>-972.078704</y>
- </pos>
+ <pos x="-161.148148" y="-972.078704"/>
  <spobs/>
  <jumps>
   <jump target="Sheffield">

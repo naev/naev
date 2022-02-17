@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sigma Station">
- <pos>
-  <x>3150.528370</x>
-  <y>-2234.267876</y>
- </pos>
+ <pos x="3150.528370" y="-2234.267876"/>
  <GFX>
   <space>station-fleetbase.webp</space>
   <exterior>station03.webp</exterior>

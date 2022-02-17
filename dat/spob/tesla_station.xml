@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Tesla Station">
- <pos>
-  <x>860.225371</x>
-  <y>1014.295587</y>
- </pos>
+ <pos x="860.225371" y="1014.295587"/>
  <GFX>
   <space>zalek_station1.webp</space>
   <exterior>zalek_station1.webp</exterior>

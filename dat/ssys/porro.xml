@@ -6,10 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>1204.787260</x>
-  <y>-841.970013</y>
- </pos>
+ <pos x="1204.787260" y="-841.970013"/>
  <spobs>
   <spob>Porro Farming Station</spob>
   <spob>Porro II</spob>

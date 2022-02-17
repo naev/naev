@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fairfax Station">
- <pos>
-  <x>1670.614163</x>
-  <y>4658.343787</y>
- </pos>
+ <pos x="1670.614163" y="4658.343787"/>
  <GFX>
   <space>station-fleetbase2.webp</space>
   <exterior>traderoom.webp</exterior>

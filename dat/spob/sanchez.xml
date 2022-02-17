@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sanchez">
- <pos>
-  <x>-7072.689032</x>
-  <y>12459.780596</y>
- </pos>
+ <pos x="-7072.689032" y="12459.780596"/>
  <GFX>
   <space>moon-G01.webp</space>
   <exterior>mining3.webp</exterior>

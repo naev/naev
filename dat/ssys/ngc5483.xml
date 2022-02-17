@@ -7,10 +7,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-683.293879</x>
-  <y>-329.515175</y>
- </pos>
+ <pos x="-683.293879" y="-329.515175"/>
  <spobs>
   <spob_virtual>Empire Unpresence (Range 1)</spob_virtual>
   <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>

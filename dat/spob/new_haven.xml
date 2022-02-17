@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="New Haven">
- <pos>
-  <x>-34532.161684</x>
-  <y>3671.278901</y>
- </pos>
+ <pos x="-34532.161684" y="3671.278901"/>
  <GFX>
   <space>X01.webp</space>
   <exterior>gas.webp</exterior>

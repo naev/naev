@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Medenus Observatory">
- <pos>
-  <x>-4753.862391</x>
-  <y>7054.118386</y>
- </pos>
+ <pos x="-4753.862391" y="7054.118386"/>
  <GFX>
   <space>station-powerplant.webp</space>
   <exterior>traderoom.webp</exterior>

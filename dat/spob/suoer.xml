@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Suoer">
- <pos>
-  <x>23465.000000</x>
-  <y>3380.000000</y>
- </pos>
+ <pos x="23465.000000" y="3380.000000"/>
  <GFX>
   <space>moon-M04.webp</space>
   <exterior>aquatic2.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Corinth Foods">
- <pos>
-  <x>-25770.227968</x>
-  <y>17754.295875</y>
- </pos>
+ <pos x="-25770.227968" y="17754.295875"/>
  <GFX>
   <space>station-commerce.webp</space>
   <exterior>forest2.webp</exterior>

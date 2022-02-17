@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Lapra">
- <pos>
-  <x>8924.769604</x>
-  <y>18652.646412</y>
- </pos>
+ <pos x="8924.769604" y="18652.646412"/>
  <GFX>
   <space>K02.webp</space>
   <exterior>mining.webp</exterior>

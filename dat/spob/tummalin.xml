@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Tummalin">
- <pos>
-  <x>-10552.541995</x>
-  <y>2257.612042</y>
- </pos>
+ <pos x="-10552.541995" y="2257.612042"/>
  <GFX>
   <space>moon-M04.webp</space>
   <exterior>station00.webp</exterior>

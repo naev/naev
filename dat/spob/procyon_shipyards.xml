@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Procyon Shipyards">
- <pos>
-  <x>8475.845489</x>
-  <y>-5830.602046</y>
- </pos>
+ <pos x="8475.845489" y="-5830.602046"/>
  <GFX>
   <space>station-shipyard.webp</space>
   <exterior>station04.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ramen">
- <pos>
-  <x>-2483.222826</x>
-  <y>1436.483160</y>
- </pos>
+ <pos x="-2483.222826" y="1436.483160"/>
  <GFX>
   <space>moon-A00.webp</space>
   <exterior>lava.webp</exterior>

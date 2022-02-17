@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Amhurst">
- <pos>
-  <x>3546.227993</x>
-  <y>2108.567996</y>
- </pos>
+ <pos x="3546.227993" y="2108.567996"/>
  <GFX>
   <space>H04.webp</space>
   <exterior>desertic4.webp</exterior>

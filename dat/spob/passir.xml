@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Passir">
- <pos>
-  <x>-1258.751198</x>
-  <y>13565.120773</y>
- </pos>
+ <pos x="-1258.751198" y="13565.120773"/>
  <GFX>
   <space>M05.webp</space>
   <exterior>aquatic3.webp</exterior>

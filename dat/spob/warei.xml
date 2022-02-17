@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Warei">
- <pos>
-  <x>9355.543527</x>
-  <y>-10118.223706</y>
- </pos>
+ <pos x="9355.543527" y="-10118.223706"/>
  <GFX>
   <space>P00.webp</space>
   <exterior>mining3.webp</exterior>

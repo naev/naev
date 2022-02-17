@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Facett Outpost">
- <pos>
-  <x>-5141.467977</x>
-  <y>-9293.620418</y>
- </pos>
+ <pos x="-5141.467977" y="-9293.620418"/>
  <GFX>
   <space>station-fleetbase2.webp</space>
   <exterior>station03.webp</exterior>

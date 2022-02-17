@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Stormy">
- <pos>
-  <x>6517.391987</x>
-  <y>7092.455986</y>
- </pos>
+ <pos x="6517.391987" y="7092.455986"/>
  <GFX>
   <space>I02.webp</space>
   <exterior>gas.webp</exterior>

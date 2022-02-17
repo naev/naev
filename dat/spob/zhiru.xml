@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Zhiru">
- <pos>
-  <x>9549.349193</x>
-  <y>-1582.542056</y>
- </pos>
+ <pos x="9549.349193" y="-1582.542056"/>
  <GFX>
   <space>M04.webp</space>
   <exterior>oceanic.webp</exterior>

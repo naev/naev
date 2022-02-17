@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sroolu">
- <pos>
-  <x>4159.837315</x>
-  <y>-21174.045924</y>
- </pos>
+ <pos x="4159.837315" y="-21174.045924"/>
  <GFX>
   <space>moon-H00.webp</space>
   <exterior>oceanic.webp</exterior>

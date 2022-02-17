@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Neexi I">
- <pos>
-  <x>4600.511991</x>
-  <y>-6762.752627</y>
- </pos>
+ <pos x="4600.511991" y="-6762.752627"/>
  <GFX>
   <space>I02.webp</space>
   <exterior>oceanic2.webp</exterior>

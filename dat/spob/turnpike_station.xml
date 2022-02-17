@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Turnpike Station">
- <pos>
-  <x>-1571.841597</x>
-  <y>6862.430386</y>
- </pos>
+ <pos x="-1571.841597" y="6862.430386"/>
  <GFX>
   <space>station-commerce2.webp</space>
   <exterior>forest.webp</exterior>

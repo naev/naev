@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vean II">
- <pos>
-  <x>5251.831478</x>
-  <y>-4763.956423</y>
- </pos>
+ <pos x="5251.831478" y="-4763.956423"/>
  <GFX>
   <space>K02.webp</space>
   <exterior>traderoom.webp</exterior>

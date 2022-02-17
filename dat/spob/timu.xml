@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Timu">
- <pos>
-  <x>2753.842426</x>
-  <y>-4289.403784</y>
- </pos>
+ <pos x="2753.842426" y="-4289.403784"/>
  <GFX>
   <space>moon-P03.webp</space>
   <exterior>aquatic2.webp</exterior>

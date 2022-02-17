@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Arcturus I">
- <pos>
-  <x>-4256.504551</x>
-  <y>1153.374908</y>
- </pos>
+ <pos x="-4256.504551" y="1153.374908"/>
  <GFX>
   <space>moon-G01.webp</space>
   <exterior>aquatic.webp</exterior>

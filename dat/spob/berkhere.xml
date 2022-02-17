@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Berkhere">
- <pos>
-  <x>-9197.292455</x>
-  <y>14843.960873</y>
- </pos>
+ <pos x="-9197.292455" y="14843.960873"/>
  <GFX>
   <space>H00.webp</space>
   <exterior>desertic2.webp</exterior>

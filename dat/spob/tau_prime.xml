@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Tau Prime">
- <pos>
-  <x>8491.064816</x>
-  <y>-13844.050924</y>
- </pos>
+ <pos x="8491.064816" y="-13844.050924"/>
  <GFX>
   <space>M02.webp</space>
   <exterior>traderoom.webp</exterior>

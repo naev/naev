@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Aleph">
- <pos>
-  <x>-3900.793946</x>
-  <y>-3495.111376</y>
- </pos>
+ <pos x="-3900.793946" y="-3495.111376"/>
  <GFX>
   <space>G02.webp</space>
   <exterior>mining6.webp</exterior>

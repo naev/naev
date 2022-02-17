@@ -6,10 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>1103.000000</x>
-  <y>484.000000</y>
- </pos>
+ <pos x="1103.000000" y="484.000000"/>
  <spobs>
   <spob>Protera Sigma</spob>
   <spob>Sigma Station</spob>

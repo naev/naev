@@ -64,8 +64,8 @@ int dpl_saveSpob( const Spob *p )
 
    /* Position. */
    xmlw_startElem( writer, "pos" );
-   xmlw_elem( writer, "x", "%f", p->pos.x );
-   xmlw_elem( writer, "y", "%f", p->pos.y );
+   xmlw_attr( writer, "x", "%f", p->pos.x );
+   xmlw_attr( writer, "y", "%f", p->pos.y );
    xmlw_endElem( writer ); /* "pos" */
 
    /* GFX. */

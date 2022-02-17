@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Alteris IV">
- <pos>
-  <x>11009.542695</x>
-  <y>14054.105967</y>
- </pos>
+ <pos x="11009.542695" y="14054.105967"/>
  <GFX>
   <space>moon-A01.webp</space>
   <exterior>forest.webp</exterior>

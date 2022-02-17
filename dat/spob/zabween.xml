@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Zabween">
- <pos>
-  <x>285.354495</x>
-  <y>12012.328125</y>
- </pos>
+ <pos x="285.354495" y="12012.328125"/>
  <GFX>
   <space>000.webp</space>
   <exterior>station00.webp</exterior>

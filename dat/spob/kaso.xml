@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Kaso">
- <pos>
-  <x>-6968.000000</x>
-  <y>-4914.000000</y>
- </pos>
+ <pos x="-6968.000000" y="-4914.000000"/>
  <GFX>
   <space>moon-C01.webp</space>
   <exterior>station04.webp</exterior>

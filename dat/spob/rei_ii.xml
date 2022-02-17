@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Rei II">
- <pos>
-  <x>-3584.272380</x>
-  <y>2023.954802</y>
- </pos>
+ <pos x="-3584.272380" y="2023.954802"/>
  <GFX>
   <space>M05.webp</space>
   <exterior>forest.webp</exterior>

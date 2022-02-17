@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Newmarch A-1">
- <pos>
-  <x>-2890.302562</x>
-  <y>-1497.904875</y>
- </pos>
+ <pos x="-2890.302562" y="-1497.904875"/>
  <GFX>
   <space>A00.webp</space>
   <exterior>methane.webp</exterior>

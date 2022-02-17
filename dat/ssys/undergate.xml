@@ -9,10 +9,7 @@
   <interference>25.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>1313.421519</x>
-  <y>-668.973290</y>
- </pos>
+ <pos x="1313.421519" y="-668.973290"/>
  <spobs>
   <spob>Cornwal Ordinance</spob>
   <spob>Sollebor</spob>

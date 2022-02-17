@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Coran">
- <pos>
-  <x>1053.000000</x>
-  <y>-1027.000000</y>
- </pos>
+ <pos x="1053.000000" y="-1027.000000"/>
  <GFX>
   <space>X01.webp</space>
   <exterior>methane.webp</exterior>

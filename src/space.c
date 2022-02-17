@@ -63,11 +63,10 @@
 #define SPOB_GFX_EXTERIOR_PATH_H 400 /**< Spob exterior graphic height. */
 
 /* used to overcome warnings due to 0 values */
-#define FLAG_XSET             (1<<0) /**< Set the X position value. */
-#define FLAG_YSET             (1<<1) /**< Set the Y position value. */
-#define FLAG_INTERFERENCESET  (1<<3) /**< Set the interference value. */
-#define FLAG_SERVICESSET      (1<<4) /**< Set the service value. */
-#define FLAG_FACTIONSET       (1<<5) /**< Set the faction value. */
+#define FLAG_POSSET           (1<<0) /**< Set the position. */
+#define FLAG_INTERFERENCESET  (1<<1) /**< Set the interference value. */
+#define FLAG_SERVICESSET      (1<<2) /**< Set the service value. */
+#define FLAG_FACTIONSET       (1<<3) /**< Set the faction value. */
 
 #define DEBRIS_BUFFER         1000 /**< Buffer to smooth appearance of debris */
 
@@ -2131,27 +2130,15 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
          continue;
       }
       else if (xml_isNode(node,"pos")) {
-         xmlNodePtr cur = node->children;
-         do {
-            xml_onlyNodes(cur);
-            if (xml_isNode(cur,"x")) {
-               flags |= FLAG_XSET;
-               spob->pos.x = xml_getFloat(cur);
-               continue;
-            }
-            if (xml_isNode(cur,"y")) {
-               flags |= FLAG_YSET;
-               spob->pos.y = xml_getFloat(cur);
-               continue;
-            }
-            WARN(_("Unknown node '%s' in spob '%s'"),node->name,spob->name);
-         } while (xml_nextNode(cur));
+         xmlr_attr_float( node, "x", spob->pos.x );
+         xmlr_attr_float( node, "y", spob->pos.y );
+         flags |= FLAG_POSSET;
          continue;
       }
       else if (xml_isNode(node, "presence")) {
          spob_parsePresence( node, &spob->presence );
          if (spob->presence.faction>=0)
-            flags += FLAG_FACTIONSET;
+            flags |= FLAG_FACTIONSET;
          continue;
       }
       else if (xml_isNode(node,"general")) {
@@ -2271,8 +2258,7 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
          spob->gfx_exterior==NULL,"GFX exterior");
    MELEMENT( spob_hasService(spob,SPOB_SERVICE_INHABITED) &&
          (spob->population==0), "population");
-   MELEMENT((flags&FLAG_XSET)==0,"x");
-   MELEMENT((flags&FLAG_YSET)==0,"y");
+   MELEMENT((flags&FLAG_POSSET)==0,"pos");
    MELEMENT(spob->class==NULL,"class");
    MELEMENT( spob_hasService(spob,SPOB_SERVICE_LAND) &&
          spob->description==NULL,"description");
@@ -2684,17 +2670,9 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       xml_onlyNodes(node);
 
       if (xml_isNode(node,"pos")) {
-         xmlNodePtr cur = node->children;
-         do {
-            if (xml_isNode(cur,"x")) {
-               flags |= FLAG_XSET;
-               sys->pos.x = xml_getFloat(cur);
-            }
-            else if (xml_isNode(cur,"y")) {
-               flags |= FLAG_YSET;
-               sys->pos.y = xml_getFloat(cur);
-            }
-         } while (xml_nextNode(cur));
+         flags |= FLAG_POSSET;
+         xmlr_attr_float( node, "x", sys->pos.x );
+         xmlr_attr_float( node, "y", sys->pos.y );
          continue;
       }
       else if (xml_isNode(node,"general")) {
@@ -2794,8 +2772,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 
 #define MELEMENT(o,s)      if (o) WARN(_("Star System '%s' missing '%s' element"), sys->name, s)
    if (sys->name == NULL) WARN(_("Star System '%s' missing 'name' tag"), sys->name);
-   MELEMENT((flags&FLAG_XSET)==0,"x");
-   MELEMENT((flags&FLAG_YSET)==0,"y");
+   MELEMENT((flags&FLAG_POSSET)==0,"pos");
    MELEMENT(sys->stars<0,"stars");
    MELEMENT(sys->radius==0.,"radius");
    MELEMENT((flags&FLAG_INTERFERENCESET)==0,"inteference");

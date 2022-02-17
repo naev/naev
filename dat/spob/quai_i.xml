@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Quai I">
- <pos>
-  <x>-9142.137428</x>
-  <y>10533.332254</y>
- </pos>
+ <pos x="-9142.137428" y="10533.332254"/>
  <GFX>
   <space>P01.webp</space>
   <exterior>snow.webp</exterior>

@@ -7,10 +7,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-841.031298</x>
-  <y>-630.990848</y>
- </pos>
+ <pos x="-841.031298" y="-630.990848"/>
  <spobs>
   <spob>Wormhole NGC-13674</spob>
  </spobs>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Corax">
- <pos>
-  <x>-11052.025114</x>
-  <y>-1285.227681</y>
- </pos>
+ <pos x="-11052.025114" y="-1285.227681"/>
  <GFX>
   <space>C01.webp</space>
   <exterior>mining5.webp</exterior>

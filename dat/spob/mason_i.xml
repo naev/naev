@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Mason I">
- <pos>
-  <x>-6268.132613</x>
-  <y>-6415.466081</y>
- </pos>
+ <pos x="-6268.132613" y="-6415.466081"/>
  <GFX>
   <space>J02.webp</space>
   <exterior>snow.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Heronus Orbital">
- <pos>
-  <x>-12991.493773</x>
-  <y>17143.680277</y>
- </pos>
+ <pos x="-12991.493773" y="17143.680277"/>
  <GFX>
   <space>station-battlestation.webp</space>
   <exterior>station04.webp</exterior>

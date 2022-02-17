@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Takeru">
- <pos>
-  <x>-5332.000000</x>
-  <y>11438.000000</y>
- </pos>
+ <pos x="-5332.000000" y="11438.000000"/>
  <GFX>
   <space>M04.webp</space>
   <exterior>forest.webp</exterior>

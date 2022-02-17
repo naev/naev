@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Eist Shipyard">
- <pos>
-  <x>-4735.935159</x>
-  <y>13099.426837</y>
- </pos>
+ <pos x="-4735.935159" y="13099.426837"/>
  <GFX>
   <space>station-shipyard.webp</space>
   <exterior>station04.webp</exterior>

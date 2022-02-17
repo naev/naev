@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Research Post Sigma-13">
- <pos>
-  <x>13999.436084</x>
-  <y>3949.127770</y>
- </pos>
+ <pos x="13999.436084" y="3949.127770"/>
  <GFX>
   <space>001.webp</space>
   <exterior>station_scene.webp</exterior>

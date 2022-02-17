@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Monsoon Station">
- <pos>
-  <x>3975.396126</x>
-  <y>-907.323198</y>
- </pos>
+ <pos x="3975.396126" y="-907.323198"/>
  <GFX>
   <space>station-fleetbase2.webp</space>
   <exterior>station03.webp</exterior>

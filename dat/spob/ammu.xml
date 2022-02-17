@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ammu">
- <pos>
-  <x>8159.024083</x>
-  <y>10841.160191</y>
- </pos>
+ <pos x="8159.024083" y="10841.160191"/>
  <GFX>
   <space>A04.webp</space>
   <exterior>lava.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Delta Pavonis IIa">
- <pos>
-  <x>-9556.282127</x>
-  <y>10023.908927</y>
- </pos>
+ <pos x="-9556.282127" y="10023.908927"/>
  <GFX>
   <space>moon-I00.webp</space>
   <exterior>methane.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Paxsor">
- <pos>
-  <x>-1290.185819</x>
-  <y>9645.898630</y>
- </pos>
+ <pos x="-1290.185819" y="9645.898630"/>
  <GFX>
   <space>G01.webp</space>
   <exterior>mining6.webp</exterior>

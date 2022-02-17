@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Atalanta">
- <pos>
-  <x>25805.000000</x>
-  <y>-5070.000000</y>
- </pos>
+ <pos x="25805.000000" y="-5070.000000"/>
  <GFX>
   <space>P03.webp</space>
   <exterior>aquatic.webp</exterior>

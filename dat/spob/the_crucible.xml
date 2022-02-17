@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="The Crucible">
- <pos>
-  <x>5212.946189</x>
-  <y>780.244879</y>
- </pos>
+ <pos x="5212.946189" y="780.244879"/>
  <GFX>
   <space>003.webp</space>
   <exterior>traderoom.webp</exterior>

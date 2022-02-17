@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Wildwood Station">
- <pos>
-  <x>-7343.434885</x>
-  <y>-3353.838054</y>
- </pos>
+ <pos x="-7343.434885" y="-3353.838054"/>
  <GFX>
   <space>station-commerce3.webp</space>
   <exterior>traderoom.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Impala">
- <pos>
-  <x>2960.095590</x>
-  <y>2281.447104</y>
- </pos>
+ <pos x="2960.095590" y="2281.447104"/>
  <GFX>
   <space>moon-D02.webp</space>
   <exterior>uninhabited-rocky-airless-02.webp</exterior>

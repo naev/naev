@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Malebolge V">
- <pos>
-  <x>18653.849320</x>
-  <y>-16906.574866</y>
- </pos>
+ <pos x="18653.849320" y="-16906.574866"/>
  <GFX>
   <space>P02.webp</space>
   <exterior>snow.webp</exterior>

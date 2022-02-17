@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Shariff Station">
- <pos>
-  <x>8176.922812</x>
-  <y>-3831.949938</y>
- </pos>
+ <pos x="8176.922812" y="-3831.949938"/>
  <GFX>
   <space>station-fleetbase.webp</space>
   <exterior>station03.webp</exterior>

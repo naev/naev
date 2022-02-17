@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Brock">
- <pos>
-  <x>-6988.624986</x>
-  <y>-11971.255763</y>
- </pos>
+ <pos x="-6988.624986" y="-11971.255763"/>
  <GFX>
   <space>S00.webp</space>
   <exterior>methane.webp</exterior>

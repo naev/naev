@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="UX VII">
- <pos>
-  <x>-7533.875175</x>
-  <y>-3032.160629</y>
- </pos>
+ <pos x="-7533.875175" y="-3032.160629"/>
  <GFX>
   <space>O02.webp</space>
   <exterior>station04.webp</exterior>

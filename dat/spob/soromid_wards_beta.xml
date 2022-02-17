@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Soromid Wards Beta">
- <pos>
-  <x>7808.800001</x>
-  <y>16514.977244</y>
- </pos>
+ <pos x="7808.800001" y="16514.977244"/>
  <GFX>
   <space>station-commerce.webp</space>
   <exterior>traderoom.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Anubis">
- <pos>
-  <x>-18055.631906</x>
-  <y>49.276734</y>
- </pos>
+ <pos x="-18055.631906" y="49.276734"/>
  <GFX>
   <space>Y00.webp</space>
   <exterior>lava.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Culex">
- <pos>
-  <x>-17337.694408</x>
-  <y>-16625.248069</y>
- </pos>
+ <pos x="-17337.694408" y="-16625.248069"/>
  <GFX>
   <space>moon-M06.webp</space>
   <exterior>oceanic.webp</exterior>

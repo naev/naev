@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Peogas II">
- <pos>
-  <x>-11328.300726</x>
-  <y>-1059.957963</y>
- </pos>
+ <pos x="-11328.300726" y="-1059.957963"/>
  <GFX>
   <space>moon-G00.webp</space>
   <exterior>desertic4.webp</exterior>

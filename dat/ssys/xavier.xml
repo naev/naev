@@ -6,10 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-315.118348</x>
-  <y>-952.475452</y>
- </pos>
+ <pos x="-315.118348" y="-952.475452"/>
  <spobs>
   <spob>Akios Station</spob>
   <spob>Cyrene</spob>

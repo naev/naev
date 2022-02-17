@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Neurri">
- <pos>
-  <x>25997.457782</x>
-  <y>-4421.823264</y>
- </pos>
+ <pos x="25997.457782" y="-4421.823264"/>
  <GFX>
   <space>O02.webp</space>
   <exterior>mining2.webp</exterior>

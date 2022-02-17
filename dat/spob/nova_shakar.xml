@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Nova Shakar">
- <pos>
-  <x>-10796.405599</x>
-  <y>-7216.167022</y>
- </pos>
+ <pos x="-10796.405599" y="-7216.167022"/>
  <GFX>
   <space>M05.webp</space>
   <exterior>forest2.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Solvac Crops">
- <pos>
-  <x>6658.627705</x>
-  <y>10334.743487</y>
- </pos>
+ <pos x="6658.627705" y="10334.743487"/>
  <GFX>
   <space>station-agriculture.webp</space>
   <exterior>station01.webp</exterior>

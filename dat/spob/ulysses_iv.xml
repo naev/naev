@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ulysses IV">
- <pos>
-  <x>-1010.973396</x>
-  <y>12827.593622</y>
- </pos>
+ <pos x="-1010.973396" y="12827.593622"/>
  <GFX>
   <space>I07.webp</space>
   <exterior>desertic2.webp</exterior>

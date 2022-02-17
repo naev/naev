@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="UMW-1231d">
- <pos>
-  <x>1789.528426</x>
-  <y>-1085.509351</y>
- </pos>
+ <pos x="1789.528426" y="-1085.509351"/>
  <GFX>
   <space>O02.webp</space>
   <exterior>traderoom.webp</exterior>

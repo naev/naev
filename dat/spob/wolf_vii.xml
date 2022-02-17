@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Wolf VII">
- <pos>
-  <x>-4406.557961</x>
-  <y>-11646.599861</y>
- </pos>
+ <pos x="-4406.557961" y="-11646.599861"/>
  <GFX>
   <space>K02.webp</space>
   <exterior>mining.webp</exterior>

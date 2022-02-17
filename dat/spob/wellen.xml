@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Wellen">
- <pos>
-  <x>326.106374</x>
-  <y>-3415.535179</y>
- </pos>
+ <pos x="326.106374" y="-3415.535179"/>
  <GFX>
   <space>moon-J00.webp</space>
   <exterior>mining5.webp</exterior>

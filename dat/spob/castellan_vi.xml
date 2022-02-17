@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Castellan VI">
- <pos>
-  <x>25682.128164</x>
-  <y>16763.575618</y>
- </pos>
+ <pos x="25682.128164" y="16763.575618"/>
  <GFX>
   <space>I07.webp</space>
   <exterior>traderoom.webp</exterior>

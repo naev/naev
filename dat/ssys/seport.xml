@@ -6,10 +6,7 @@
   <interference>20.000000</interference>
   <nebula volatility="16.200000" hue="280.000000">600.000000</nebula>
  </general>
- <pos>
-  <x>805.716049</x>
-  <y>310.198302</y>
- </pos>
+ <pos x="805.716049" y="310.198302"/>
  <spobs>
   <spob>Coran</spob>
   <spob>HS-224</spob>

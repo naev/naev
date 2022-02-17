@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Freshwater Station">
- <pos>
-  <x>-13589.830053</x>
-  <y>11789.469068</y>
- </pos>
+ <pos x="-13589.830053" y="11789.469068"/>
  <GFX>
   <space>station-agriculture.webp</space>
   <exterior>traderoom.webp</exterior>

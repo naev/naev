@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Massia IV">
- <pos>
-  <x>-950.807860</x>
-  <y>-15321.049666</y>
- </pos>
+ <pos x="-950.807860" y="-15321.049666"/>
  <GFX>
   <space>D02.webp</space>
   <exterior>methane.webp</exterior>

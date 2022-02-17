@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Zesta">
- <pos>
-  <x>-5564.779304</x>
-  <y>11195.805981</y>
- </pos>
+ <pos x="-5564.779304" y="11195.805981"/>
  <GFX>
   <space>A03.webp</space>
   <exterior>lava.webp</exterior>

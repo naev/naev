@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Andors Refining">
- <pos>
-  <x>3338.188008</x>
-  <y>1360.953572</y>
- </pos>
+ <pos x="3338.188008" y="1360.953572"/>
  <GFX>
   <space>station-powerplant.webp</space>
   <exterior>station00.webp</exterior>

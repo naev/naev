@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Pastor VI">
- <pos>
-  <x>-11883.058577</x>
-  <y>-14744.959432</y>
- </pos>
+ <pos x="-11883.058577" y="-14744.959432"/>
  <GFX>
   <space>K00.webp</space>
   <exterior>station01.webp</exterior>

@@ -9,10 +9,7 @@
   <interference>15.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>66.468747</x>
-  <y>904.819147</y>
- </pos>
+ <pos x="66.468747" y="904.819147"/>
  <spobs>
   <spob>Hasselt II</spob>
   <spob>Hasselt IV</spob>

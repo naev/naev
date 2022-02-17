@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Triton Station">
- <pos>
-  <x>-589.969301</x>
-  <y>15169.574360</y>
- </pos>
+ <pos x="-589.969301" y="15169.574360"/>
  <GFX>
   <space>station-shipyard.webp</space>
   <exterior>station05.webp</exterior>

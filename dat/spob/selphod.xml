@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Selphod">
- <pos>
-  <x>1916.666665</x>
-  <y>-6583.333335</y>
- </pos>
+ <pos x="1916.666665" y="-6583.333335"/>
  <GFX>
   <space>P00.webp</space>
   <exterior>snow.webp</exterior>

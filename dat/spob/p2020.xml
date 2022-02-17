@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="P2020">
- <pos>
-  <x>-19460.000000</x>
-  <y>28280.000000</y>
- </pos>
+ <pos x="-19460.000000" y="28280.000000"/>
  <GFX>
   <space>moon-I01.webp</space>
   <exterior>station03.webp</exterior>

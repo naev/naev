@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Urbanus III">
- <pos>
-  <x>9628.507834</x>
-  <y>-13749.470096</y>
- </pos>
+ <pos x="9628.507834" y="-13749.470096"/>
  <GFX>
   <space>moon-H00.webp</space>
   <exterior>traderoom.webp</exterior>

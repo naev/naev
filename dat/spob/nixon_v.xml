@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Nixon V">
- <pos>
-  <x>-8247.923534</x>
-  <y>-8049.634419</y>
- </pos>
+ <pos x="-8247.923534" y="-8049.634419"/>
  <GFX>
   <space>J04.webp</space>
   <exterior>forest.webp</exterior>

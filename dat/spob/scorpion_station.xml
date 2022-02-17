@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Scorpion Station">
- <pos>
-  <x>-11302.327703</x>
-  <y>7269.819086</y>
- </pos>
+ <pos x="-11302.327703" y="7269.819086"/>
  <GFX>
   <space>station-fleetbase2.webp</space>
   <exterior>station04.webp</exterior>

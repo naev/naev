@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Haldr">
- <pos>
-  <x>-30090.992878</x>
-  <y>13378.186545</y>
- </pos>
+ <pos x="-30090.992878" y="13378.186545"/>
  <GFX>
   <space>X01.webp</space>
   <exterior>aquatic2.webp</exterior>

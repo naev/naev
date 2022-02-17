@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Heronus">
- <pos>
-  <x>-13175.246585</x>
-  <y>17327.640126</y>
- </pos>
+ <pos x="-13175.246585" y="17327.640126"/>
  <GFX>
   <space>moon-M04.webp</space>
   <exterior>aquatic3.webp</exterior>

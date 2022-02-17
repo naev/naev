@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Suk II">
- <pos>
-  <x>-2765.868513</x>
-  <y>3048.741429</y>
- </pos>
+ <pos x="-2765.868513" y="3048.741429"/>
  <GFX>
   <space>D00.webp</space>
   <exterior>desertic4.webp</exterior>

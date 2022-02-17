@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Rhu IV">
- <pos>
-  <x>-10311.023588</x>
-  <y>-29879.919265</y>
- </pos>
+ <pos x="-10311.023588" y="-29879.919265"/>
  <GFX>
   <space>G03.webp</space>
   <exterior>traderoom.webp</exterior>

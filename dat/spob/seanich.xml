@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Seanich">
- <pos>
-  <x>18820.828324</x>
-  <y>10428.462646</y>
- </pos>
+ <pos x="18820.828324" y="10428.462646"/>
  <GFX>
   <space>moon-M00.webp</space>
   <exterior>forest.webp</exterior>

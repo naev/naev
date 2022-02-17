@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Magellan">
- <pos>
-  <x>-21235.409585</x>
-  <y>-5683.691180</y>
- </pos>
+ <pos x="-21235.409585" y="-5683.691180"/>
  <GFX>
   <space>H00.webp</space>
   <exterior>desertic.webp</exterior>

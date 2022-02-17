@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Neon I">
- <pos>
-  <x>7152.094307</x>
-  <y>3479.958901</y>
- </pos>
+ <pos x="7152.094307" y="3479.958901"/>
  <GFX>
   <space>O02.webp</space>
   <exterior>station04.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Pauldur">
- <pos>
-  <x>-7605.964301</x>
-  <y>-7782.151406</y>
- </pos>
+ <pos x="-7605.964301" y="-7782.151406"/>
  <GFX>
   <space>moon-M06.webp</space>
   <exterior>forest.webp</exterior>

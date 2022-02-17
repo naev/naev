@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Za'lek II">
- <pos>
-  <x>976.188887</x>
-  <y>-6877.694431</y>
- </pos>
+ <pos x="976.188887" y="-6877.694431"/>
  <GFX>
   <space>Y00.webp</space>
   <exterior>lava.webp</exterior>

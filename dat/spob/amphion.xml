@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Amphion">
- <pos>
-  <x>6123.453755</x>
-  <y>2327.102217</y>
- </pos>
+ <pos x="6123.453755" y="2327.102217"/>
  <GFX>
   <space>P01.webp</space>
   <exterior>aquatic3.webp</exterior>

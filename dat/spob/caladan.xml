@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Caladan">
- <pos>
-  <x>-13061.286600</x>
-  <y>-11944.148856</y>
- </pos>
+ <pos x="-13061.286600" y="-11944.148856"/>
  <GFX>
   <space>M01.webp</space>
   <exterior>oceanic.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Greis">
- <pos>
-  <x>-6442.157187</x>
-  <y>14944.299442</y>
- </pos>
+ <pos x="-6442.157187" y="14944.299442"/>
  <GFX>
   <space>G01.webp</space>
   <exterior>mining5.webp</exterior>

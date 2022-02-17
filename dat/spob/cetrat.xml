@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Cetrat">
- <pos>
-  <x>-5040.078848</x>
-  <y>-3946.220808</y>
- </pos>
+ <pos x="-5040.078848" y="-3946.220808"/>
  <GFX>
   <space>O01.webp</space>
   <exterior>aquatic2.webp</exterior>

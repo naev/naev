@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vaal">
- <pos>
-  <x>-186.078200</x>
-  <y>-429.722785</y>
- </pos>
+ <pos x="-186.078200" y="-429.722785"/>
  <GFX>
   <space>J08.webp</space>
   <exterior>uninhabited-rocky-red-01.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Greenberg">
- <pos>
-  <x>-6733.386104</x>
-  <y>-5801.470834</y>
- </pos>
+ <pos x="-6733.386104" y="-5801.470834"/>
  <GFX>
   <space>G03.webp</space>
   <exterior>desertic2.webp</exterior>

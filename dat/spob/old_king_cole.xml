@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Old King Cole">
- <pos>
-  <x>-8638.593499</x>
-  <y>12524.922010</y>
- </pos>
+ <pos x="-8638.593499" y="12524.922010"/>
  <GFX>
   <space>J06.webp</space>
   <exterior>oceanic2.webp</exterior>

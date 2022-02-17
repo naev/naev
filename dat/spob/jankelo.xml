@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Jankelo">
- <pos>
-  <x>26239.708008</x>
-  <y>11834.928284</y>
- </pos>
+ <pos x="26239.708008" y="11834.928284"/>
  <GFX>
   <space>K04.webp</space>
   <exterior>methane.webp</exterior>

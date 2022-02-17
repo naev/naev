@@ -2,10 +2,7 @@
 <spob name="Hypergate Kiwi">
  <display>Construction</display>
  <marker>spobmarker_triangle</marker>
- <pos>
-  <x>-470.770104</x>
-  <y>4172.735010</y>
- </pos>
+ <pos x="-470.770104" y="4172.735010"/>
  <GFX>
   <space>hypergate_early_construction_stage.webp</space>
  </GFX>

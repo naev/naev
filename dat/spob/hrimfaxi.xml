@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Hrimfaxi">
- <pos>
-  <x>2962.677185</x>
-  <y>-7513.628599</y>
- </pos>
+ <pos x="2962.677185" y="-7513.628599"/>
  <GFX>
   <space>O00.webp</space>
   <exterior>aquatic2.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Icarus">
- <pos>
-  <x>-3624.623724</x>
-  <y>-1715.052669</y>
- </pos>
+ <pos x="-3624.623724" y="-1715.052669"/>
  <GFX>
   <space>A04.webp</space>
   <exterior>lava.webp</exterior>

@@ -6,10 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>812.622626</x>
-  <y>-213.210183</y>
- </pos>
+ <pos x="812.622626" y="-213.210183"/>
  <spobs/>
  <jumps>
   <jump target="Anger">

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Rogan">
- <pos>
-  <x>-6362.374227</x>
-  <y>-13921.738082</y>
- </pos>
+ <pos x="-6362.374227" y="-13921.738082"/>
  <GFX>
   <space>H03.webp</space>
   <exterior>oceanic.webp</exterior>

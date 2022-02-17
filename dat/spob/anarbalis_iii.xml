@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Anarbalis III">
- <pos>
-  <x>10212.291799</x>
-  <y>-1801.492703</y>
- </pos>
+ <pos x="10212.291799" y="-1801.492703"/>
  <GFX>
   <space>O03.webp</space>
   <exterior>aquatic.webp</exterior>

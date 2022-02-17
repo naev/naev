@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Crylo">
- <pos>
-  <x>-12956.459922</x>
-  <y>-11240.786446</y>
- </pos>
+ <pos x="-12956.459922" y="-11240.786446"/>
  <GFX>
   <space>J05.webp</space>
   <exterior>aquatic3.webp</exterior>

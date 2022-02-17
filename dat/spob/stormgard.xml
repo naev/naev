@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Stormgard">
- <pos>
-  <x>-4680.952735</x>
-  <y>5298.838496</y>
- </pos>
+ <pos x="-4680.952735" y="5298.838496"/>
  <GFX>
   <space>P03.webp</space>
   <exterior>snow.webp</exterior>

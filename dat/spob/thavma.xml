@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Thavma">
- <pos>
-  <x>6558.489894</x>
-  <y>9804.611155</y>
- </pos>
+ <pos x="6558.489894" y="9804.611155"/>
  <GFX>
   <space>M10.webp</space>
   <exterior>forest.webp</exterior>

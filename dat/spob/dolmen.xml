@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Dolmen">
- <pos>
-  <x>-4074.386855</x>
-  <y>-3544.385313</y>
- </pos>
+ <pos x="-4074.386855" y="-3544.385313"/>
  <GFX>
   <space>M09.webp</space>
   <exterior>oceanic.webp</exterior>

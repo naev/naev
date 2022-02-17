@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Zemur III">
- <pos>
-  <x>12471.893149</x>
-  <y>2447.867982</y>
- </pos>
+ <pos x="12471.893149" y="2447.867982"/>
  <GFX>
   <space>moon-H02.webp</space>
   <exterior>oceanic.webp</exterior>

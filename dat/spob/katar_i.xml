@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Katar I">
- <pos>
-  <x>-4678.865189</x>
-  <y>-6280.187291</y>
- </pos>
+ <pos x="-4678.865189" y="-6280.187291"/>
  <GFX>
   <space>moon-X00.webp</space>
   <exterior>rocky_small.webp</exterior>

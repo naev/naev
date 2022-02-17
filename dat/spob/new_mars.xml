@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="New Mars">
- <pos>
-  <x>12735.693828</x>
-  <y>-19340.936117</y>
- </pos>
+ <pos x="12735.693828" y="-19340.936117"/>
  <GFX>
   <space>K00.webp</space>
   <exterior>desertic.webp</exterior>

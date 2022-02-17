@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fidelis III">
- <pos>
-  <x>-12133.885661</x>
-  <y>8242.003348</y>
- </pos>
+ <pos x="-12133.885661" y="8242.003348"/>
  <GFX>
   <space>A01.webp</space>
   <exterior>lava.webp</exterior>

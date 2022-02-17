@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Topkapi Station">
- <pos>
-  <x>16417.722190</x>
-  <y>13311.666640</y>
- </pos>
+ <pos x="16417.722190" y="13311.666640"/>
  <GFX>
   <space>zalek_station1.webp</space>
   <exterior>zalek_station1.webp</exterior>

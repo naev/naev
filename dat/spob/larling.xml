@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Larling">
- <pos>
-  <x>-8640.000000</x>
-  <y>680.000000</y>
- </pos>
+ <pos x="-8640.000000" y="680.000000"/>
  <GFX>
   <space>K00.webp</space>
   <exterior>desertic3.webp</exterior>

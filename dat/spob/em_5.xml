@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Em 5">
- <pos>
-  <x>-26760.000000</x>
-  <y>2884.722224</y>
- </pos>
+ <pos x="-26760.000000" y="2884.722224"/>
  <GFX>
   <space>M03.webp</space>
   <exterior>oceanic2.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Wahri IV">
- <pos>
-  <x>-7488.713024</x>
-  <y>14174.177838</y>
- </pos>
+ <pos x="-7488.713024" y="14174.177838"/>
  <GFX>
   <space>J02.webp</space>
   <exterior>traderoom.webp</exterior>

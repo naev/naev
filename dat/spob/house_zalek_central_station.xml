@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="House Za'lek Central Station">
- <pos>
-  <x>10464.449053</x>
-  <y>5380.131934</y>
- </pos>
+ <pos x="10464.449053" y="5380.131934"/>
  <GFX>
   <space>zalek_hq.webp</space>
   <exterior>traderoom.webp</exterior>

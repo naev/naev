@@ -6,10 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-998.963668</x>
-  <y>-934.863408</y>
- </pos>
+ <pos x="-998.963668" y="-934.863408"/>
  <spobs/>
  <jumps>
   <jump target="NGC-5838">

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Laarss">
- <pos>
-  <x>14354.175136</x>
-  <y>-15731.478785</y>
- </pos>
+ <pos x="14354.175136" y="-15731.478785"/>
  <GFX>
   <space>G02.webp</space>
   <exterior>mining6.webp</exterior>

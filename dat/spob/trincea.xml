@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Trincea">
- <pos>
-  <x>25920.867918</x>
-  <y>-2288.818362</y>
- </pos>
+ <pos x="25920.867918" y="-2288.818362"/>
  <GFX>
   <space>M02.webp</space>
   <exterior>desertic2.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="New Deimos">
- <pos>
-  <x>-1403.081683</x>
-  <y>3894.469528</y>
- </pos>
+ <pos x="-1403.081683" y="3894.469528"/>
  <GFX>
   <space>I06.webp</space>
   <exterior>traderoom.webp</exterior>

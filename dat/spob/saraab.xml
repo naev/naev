@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Saraab">
- <pos>
-  <x>12706.429531</x>
-  <y>4420.183280</y>
- </pos>
+ <pos x="12706.429531" y="4420.183280"/>
  <GFX>
   <space>moon-G01.webp</space>
   <exterior>aquatic2.webp</exterior>

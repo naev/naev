@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Euler I">
- <pos>
-  <x>-10891.203810</x>
-  <y>-3968.860038</y>
- </pos>
+ <pos x="-10891.203810" y="-3968.860038"/>
  <GFX>
   <space>J00.webp</space>
   <exterior>gas.webp</exterior>

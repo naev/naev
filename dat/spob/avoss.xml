@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Avoss">
- <pos>
-  <x>-25201.083266</x>
-  <y>26782.578820</y>
- </pos>
+ <pos x="-25201.083266" y="26782.578820"/>
  <GFX>
   <space>A03.webp</space>
   <exterior>lava.webp</exterior>

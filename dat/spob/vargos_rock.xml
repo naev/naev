@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vargo's Rock">
- <pos>
-  <x>20025.798638</x>
-  <y>-6063.478210</y>
- </pos>
+ <pos x="20025.798638" y="-6063.478210"/>
  <GFX>
   <space>D01.webp</space>
   <exterior>station04.webp</exterior>

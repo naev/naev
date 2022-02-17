@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vuere">
- <pos>
-  <x>4053.695496</x>
-  <y>17341.104186</y>
- </pos>
+ <pos x="4053.695496" y="17341.104186"/>
  <GFX>
   <space>C01.webp</space>
   <exterior>oceanic2.webp</exterior>

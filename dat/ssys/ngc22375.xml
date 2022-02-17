@@ -9,10 +9,7 @@
   <interference>25.000000</interference>
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>1366.211148</x>
-  <y>-772.025370</y>
- </pos>
+ <pos x="1366.211148" y="-772.025370"/>
  <spobs/>
  <jumps>
   <jump target="Toxin">

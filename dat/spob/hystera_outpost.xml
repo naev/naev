@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Hystera Outpost">
- <pos>
-  <x>5647.850814</x>
-  <y>6361.203738</y>
- </pos>
+ <pos x="5647.850814" y="6361.203738"/>
  <GFX>
   <space>station-commerce3.webp</space>
   <exterior>traderoom.webp</exterior>

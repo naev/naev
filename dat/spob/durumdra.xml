@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Durumdra">
- <pos>
-  <x>6810.831786</x>
-  <y>-20480.644679</y>
- </pos>
+ <pos x="6810.831786" y="-20480.644679"/>
  <GFX>
   <space>P01.webp</space>
   <exterior>snow.webp</exterior>

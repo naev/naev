@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Armorhead I-1 b">
- <pos>
-  <x>3198.176870</x>
-  <y>1987.900812</y>
- </pos>
+ <pos x="3198.176870" y="1987.900812"/>
  <GFX>
   <space>moon-C00.webp</space>
   <exterior>station03.webp</exterior>

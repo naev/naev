@@ -9,10 +9,7 @@
   <interference>15.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-98.531254</x>
-  <y>761.485813</y>
- </pos>
+ <pos x="-98.531254" y="761.485813"/>
  <spobs>
   <spob>Neexi I</spob>
   <spob>Neexi II</spob>

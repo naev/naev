@@ -9,10 +9,7 @@
   <interference>27.272700</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>139.446006</x>
-  <y>316.062882</y>
- </pos>
+ <pos x="139.446006" y="316.062882"/>
  <spobs/>
  <jumps>
   <jump target="Dendria">

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Klantar I">
- <pos>
-  <x>-6491.131770</x>
-  <y>20494.399354</y>
- </pos>
+ <pos x="-6491.131770" y="20494.399354"/>
  <GFX>
   <space>O00.webp</space>
   <exterior>forest.webp</exterior>

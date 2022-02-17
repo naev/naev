@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="PSO 2434">
- <pos>
-  <x>10617.598299</x>
-  <y>-9561.397421</y>
- </pos>
+ <pos x="10617.598299" y="-9561.397421"/>
  <GFX>
   <space>X01.webp</space>
   <exterior>forest.webp</exterior>

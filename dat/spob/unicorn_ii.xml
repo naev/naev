@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Unicorn II">
- <pos>
-  <x>6710.934095</x>
-  <y>7981.746765</y>
- </pos>
+ <pos x="6710.934095" y="7981.746765"/>
  <GFX>
   <space>moon-C00.webp</space>
   <exterior>desertic.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Hasselt II">
- <pos>
-  <x>-14309.432497</x>
-  <y>-7949.684720</y>
- </pos>
+ <pos x="-14309.432497" y="-7949.684720"/>
  <GFX>
   <space>I00.webp</space>
   <exterior>aquatic3.webp</exterior>

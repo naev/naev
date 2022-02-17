@@ -6,10 +6,7 @@
   <interference>2.439024</interference>
   <nebula volatility="0.000000" hue="290.000000">50.000000</nebula>
  </general>
- <pos>
-  <x>-1.634259</x>
-  <y>-986.932870</y>
- </pos>
+ <pos x="-1.634259" y="-986.932870"/>
  <spobs>
   <spob>Amaroq I</spob>
   <spob>Amaroq III</spob>

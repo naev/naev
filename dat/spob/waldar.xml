@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Waldar">
- <pos>
-  <x>6726.246120</x>
-  <y>1637.860561</y>
- </pos>
+ <pos x="6726.246120" y="1637.860561"/>
  <GFX>
   <space>M02.webp</space>
   <exterior>forest2.webp</exterior>

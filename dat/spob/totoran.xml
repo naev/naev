@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Totoran">
- <pos>
-  <x>16083.220696</x>
-  <y>24917.325789</y>
- </pos>
+ <pos x="16083.220696" y="24917.325789"/>
  <GFX>
   <space>M06.webp</space>
   <exterior>traderoom.webp</exterior>

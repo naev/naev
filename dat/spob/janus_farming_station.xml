@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Janus Farming Station">
- <pos>
-  <x>-5154.532907</x>
-  <y>-4133.193687</y>
- </pos>
+ <pos x="-5154.532907" y="-4133.193687"/>
  <GFX>
   <space>station-agriculture.webp</space>
   <exterior>forest2.webp</exterior>

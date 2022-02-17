@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vault">
- <pos>
-  <x>-298.113177</x>
-  <y>607.267583</y>
- </pos>
+ <pos x="-298.113177" y="607.267583"/>
  <GFX>
   <space>O03.webp</space>
   <exterior>snowy_cliffs.webp</exterior>

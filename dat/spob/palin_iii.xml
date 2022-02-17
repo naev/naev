@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Palin III">
- <pos>
-  <x>11874.006643</x>
-  <y>8998.686649</y>
- </pos>
+ <pos x="11874.006643" y="8998.686649"/>
  <GFX>
   <space>K04.webp</space>
   <exterior>gas.webp</exterior>

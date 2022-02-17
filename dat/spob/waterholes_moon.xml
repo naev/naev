@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Waterhole's Moon">
- <pos>
-  <x>-5089.422980</x>
-  <y>-1733.131108</y>
- </pos>
+ <pos x="-5089.422980" y="-1733.131108"/>
  <GFX>
   <space>moon-G00.webp</space>
   <exterior>oceanic2.webp</exterior>

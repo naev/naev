@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Jaxheen">
- <pos>
-  <x>13061.773645</x>
-  <y>-3555.275667</y>
- </pos>
+ <pos x="13061.773645" y="-3555.275667"/>
  <GFX>
   <space>M08.webp</space>
   <exterior>forest2.webp</exterior>

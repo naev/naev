@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Seiben IV">
- <pos>
-  <x>-2943.786333</x>
-  <y>865.278053</y>
- </pos>
+ <pos x="-2943.786333" y="865.278053"/>
  <GFX>
   <space>I07.webp</space>
   <exterior>desertic2.webp</exterior>

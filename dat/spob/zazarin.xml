@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Zazarin">
- <pos>
-  <x>7738.764025</x>
-  <y>-1440.447283</y>
- </pos>
+ <pos x="7738.764025" y="-1440.447283"/>
  <GFX>
   <space>G01.webp</space>
   <exterior>mining.webp</exterior>

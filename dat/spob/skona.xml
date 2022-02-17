@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Skona">
- <pos>
-  <x>-10623.852497</x>
-  <y>8565.472416</y>
- </pos>
+ <pos x="-10623.852497" y="8565.472416"/>
  <GFX>
   <space>K05.webp</space>
   <exterior>forest.webp</exterior>

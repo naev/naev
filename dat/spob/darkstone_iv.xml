@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Darkstone IV">
- <pos>
-  <x>14490.000000</x>
-  <y>6930.000000</y>
- </pos>
+ <pos x="14490.000000" y="6930.000000"/>
  <GFX>
   <space>P03.webp</space>
   <exterior>oceanic2.webp</exterior>

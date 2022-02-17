@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Elza I">
- <pos>
-  <x>-2287.252336</x>
-  <y>-2453.597961</y>
- </pos>
+ <pos x="-2287.252336" y="-2453.597961"/>
  <GFX>
   <space>D01.webp</space>
   <exterior>asteroid.webp</exterior>

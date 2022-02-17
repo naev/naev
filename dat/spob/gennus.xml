@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Gennus">
- <pos>
-  <x>11660.739501</x>
-  <y>-1503.113254</y>
- </pos>
+ <pos x="11660.739501" y="-1503.113254"/>
  <GFX>
   <space>M05.webp</space>
   <exterior>forest.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Halir">
- <pos>
-  <x>-12053.358215</x>
-  <y>-6447.649991</y>
- </pos>
+ <pos x="-12053.358215" y="-6447.649991"/>
  <GFX>
   <space>M07.webp</space>
   <exterior>oceanic.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Bastion Station">
- <pos>
-  <x>-596.226354</x>
-  <y>-3709.852869</y>
- </pos>
+ <pos x="-596.226354" y="-3709.852869"/>
  <GFX>
   <space>zalek_station1.webp</space>
   <exterior>zalek_station1.webp</exterior>

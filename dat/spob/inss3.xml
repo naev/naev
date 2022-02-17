@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="INSS-3">
- <pos>
-  <x>-540.665429</x>
-  <y>14054.067443</y>
- </pos>
+ <pos x="-540.665429" y="14054.067443"/>
  <GFX>
   <space>station-agriculture.webp</space>
   <exterior>forest.webp</exterior>

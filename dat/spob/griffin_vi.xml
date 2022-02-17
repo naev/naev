@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Griffin VI">
- <pos>
-  <x>3757.367071</x>
-  <y>-16242.025363</y>
- </pos>
+ <pos x="3757.367071" y="-16242.025363"/>
  <GFX>
   <space>J05.webp</space>
   <exterior>station03.webp</exterior>

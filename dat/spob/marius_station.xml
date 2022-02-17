@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Marius Station">
- <pos>
-  <x>-6450.889110</x>
-  <y>8554.815028</y>
- </pos>
+ <pos x="-6450.889110" y="8554.815028"/>
  <GFX>
   <space>station-battlestation.webp</space>
   <exterior>station04.webp</exterior>

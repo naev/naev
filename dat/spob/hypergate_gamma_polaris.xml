@@ -2,10 +2,7 @@
 <spob name="Hypergate Gamma Polaris">
  <display>Construction</display>
  <marker>spobmarker_triangle</marker>
- <pos>
-  <x>830.647998</x>
-  <y>5143.627990</y>
- </pos>
+ <pos x="830.647998" y="5143.627990"/>
  <GFX>
   <space>hypergate_early_construction_stage.webp</space>
  </GFX>

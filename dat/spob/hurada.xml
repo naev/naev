@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Hurada">
- <pos>
-  <x>-6368.749009</x>
-  <y>-1742.409055</y>
- </pos>
+ <pos x="-6368.749009" y="-1742.409055"/>
  <GFX>
   <space>H01.webp</space>
   <exterior>desertic4.webp</exterior>

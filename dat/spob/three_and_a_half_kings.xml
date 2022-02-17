@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Three and a Half Kings">
- <pos>
-  <x>-19071.692886</x>
-  <y>12147.629022</y>
- </pos>
+ <pos x="-19071.692886" y="12147.629022"/>
  <GFX>
   <space>003.webp</space>
   <exterior>station03.webp</exterior>

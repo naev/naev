@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Grandard">
- <pos>
-  <x>3736.202732</x>
-  <y>-141.231031</y>
- </pos>
+ <pos x="3736.202732" y="-141.231031"/>
  <GFX>
   <space>M05.webp</space>
   <exterior>aquatic2.webp</exterior>

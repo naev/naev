@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Wayline">
- <pos>
-  <x>-1404.285821</x>
-  <y>1179.600089</y>
- </pos>
+ <pos x="-1404.285821" y="1179.600089"/>
  <GFX>
   <space>P03.webp</space>
   <exterior>snow.webp</exterior>

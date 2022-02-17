@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Outbound Station">
- <pos>
-  <x>-1766.596605</x>
-  <y>7508.035569</y>
- </pos>
+ <pos x="-1766.596605" y="7508.035569"/>
  <GFX>
   <space>station-commerce3.webp</space>
   <exterior>station05.webp</exterior>

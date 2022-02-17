@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Phosarrus">
- <pos>
-  <x>-7220.963621</x>
-  <y>1126.205335</y>
- </pos>
+ <pos x="-7220.963621" y="1126.205335"/>
  <GFX>
   <space>M02.webp</space>
   <exterior>station04.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Gorgate">
- <pos>
-  <x>5763.521422</x>
-  <y>6955.974130</y>
- </pos>
+ <pos x="5763.521422" y="6955.974130"/>
  <GFX>
   <space>M02.webp</space>
   <exterior>aquatic.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ruadan Station">
- <pos>
-  <x>-8313.446778</x>
-  <y>-6385.162765</y>
- </pos>
+ <pos x="-8313.446778" y="-6385.162765"/>
  <GFX>
   <space>000.webp</space>
   <exterior>station00.webp</exterior>

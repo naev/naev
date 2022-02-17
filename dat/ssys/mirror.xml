@@ -9,10 +9,7 @@
   <interference>10.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>1379.009482</x>
-  <y>-533.312606</y>
- </pos>
+ <pos x="1379.009482" y="-533.312606"/>
  <spobs>
   <spob>Gorgate</spob>
   <spob>Mirror I</spob>

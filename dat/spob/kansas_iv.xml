@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Kansas IV">
- <pos>
-  <x>5415.337131</x>
-  <y>-22648.669396</y>
- </pos>
+ <pos x="5415.337131" y="-22648.669396"/>
  <GFX>
   <space>I01.webp</space>
   <exterior>lava.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Cerberus II">
- <pos>
-  <x>9956.762660</x>
-  <y>-5395.400593</y>
- </pos>
+ <pos x="9956.762660" y="-5395.400593"/>
  <GFX>
   <space>G02.webp</space>
   <exterior>station00.webp</exterior>

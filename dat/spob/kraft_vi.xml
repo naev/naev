@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Kraft VI">
- <pos>
-  <x>11601.225390</x>
-  <y>3879.160230</y>
- </pos>
+ <pos x="11601.225390" y="3879.160230"/>
  <GFX>
   <space>moon-D02.webp</space>
   <exterior>station04.webp</exterior>

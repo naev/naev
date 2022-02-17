@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vertigo">
- <pos>
-  <x>-1176.579442</x>
-  <y>26162.619259</y>
- </pos>
+ <pos x="-1176.579442" y="26162.619259"/>
  <GFX>
   <space>moon-D01.webp</space>
   <exterior>mining5.webp</exterior>

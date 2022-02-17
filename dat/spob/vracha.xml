@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vracha">
- <pos>
-  <x>5096.652507</x>
-  <y>-4150.810917</y>
- </pos>
+ <pos x="5096.652507" y="-4150.810917"/>
  <GFX>
   <space>moon-D02.webp</space>
   <exterior>rocky_small.webp</exterior>

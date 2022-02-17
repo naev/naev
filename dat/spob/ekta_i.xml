@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ekta I">
- <pos>
-  <x>10276.833832</x>
-  <y>-1905.957803</y>
- </pos>
+ <pos x="10276.833832" y="-1905.957803"/>
  <GFX>
   <space>C01.webp</space>
   <exterior>station01.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sarcophagus IIb">
- <pos>
-  <x>-13519.748039</x>
-  <y>8039.294972</y>
- </pos>
+ <pos x="-13519.748039" y="8039.294972"/>
  <GFX>
   <space>moon-A00.webp</space>
   <exterior>traderoom.webp</exterior>

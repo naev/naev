@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Emperor's Fist">
- <pos>
-  <x>14437.024197</x>
-  <y>4251.607749</y>
- </pos>
+ <pos x="14437.024197" y="4251.607749"/>
  <GFX>
   <space>C00.webp</space>
   <exterior>mining5.webp</exterior>

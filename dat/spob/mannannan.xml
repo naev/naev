@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Mannannan">
- <pos>
-  <x>-7152.264249</x>
-  <y>-10820.708001</y>
- </pos>
+ <pos x="-7152.264249" y="-10820.708001"/>
  <GFX>
   <space>M06.webp</space>
   <exterior>traderoom.webp</exterior>

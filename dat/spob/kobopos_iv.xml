@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Kobopos IV">
- <pos>
-  <x>-8335.974251</x>
-  <y>13632.186765</y>
- </pos>
+ <pos x="-8335.974251" y="13632.186765"/>
  <GFX>
   <space>M08.webp</space>
   <exterior>forest.webp</exterior>

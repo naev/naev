@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Arcadia">
- <pos>
-  <x>4505.013108</x>
-  <y>-5546.527767</y>
- </pos>
+ <pos x="4505.013108" y="-5546.527767"/>
  <GFX>
   <space>C01.webp</space>
   <exterior>forest.webp</exterior>

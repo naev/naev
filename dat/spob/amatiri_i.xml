@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Amatiri I">
- <pos>
-  <x>-6790.695294</x>
-  <y>2121.850081</y>
- </pos>
+ <pos x="-6790.695294" y="2121.850081"/>
  <GFX>
   <space>I07.webp</space>
   <exterior>oceanic2.webp</exterior>

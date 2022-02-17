@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Skater">
- <pos>
-  <x>-11245.776216</x>
-  <y>-13331.796276</y>
- </pos>
+ <pos x="-11245.776216" y="-13331.796276"/>
  <GFX>
   <space>K04.webp</space>
   <exterior>traderoom.webp</exterior>

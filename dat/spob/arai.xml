@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Arai">
- <pos>
-  <x>8430.520088</x>
-  <y>16821.213540</y>
- </pos>
+ <pos x="8430.520088" y="16821.213540"/>
  <GFX>
   <space>J05.webp</space>
   <exterior>methane.webp</exterior>

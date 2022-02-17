@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Simoen">
- <pos>
-  <x>4705.190678</x>
-  <y>-10883.354542</y>
- </pos>
+ <pos x="4705.190678" y="-10883.354542"/>
  <GFX>
   <space>G03.webp</space>
   <exterior>desertic4.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Nartur IV">
- <pos>
-  <x>-2384.730872</x>
-  <y>26572.715435</y>
- </pos>
+ <pos x="-2384.730872" y="26572.715435"/>
  <GFX>
   <space>I05.webp</space>
   <exterior>station00.webp</exterior>

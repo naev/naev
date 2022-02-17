@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Arcturus Gamma">
- <pos>
-  <x>11296.801928</x>
-  <y>6891.698934</y>
- </pos>
+ <pos x="11296.801928" y="6891.698934"/>
  <GFX>
   <space>station-fleetbase2.webp</space>
   <exterior>station03.webp</exterior>

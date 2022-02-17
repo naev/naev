@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Perhelion Alpha">
- <pos>
-  <x>-2137.665534</x>
-  <y>-5766.200038</y>
- </pos>
+ <pos x="-2137.665534" y="-5766.200038"/>
  <GFX>
   <space>moon-M03.webp</space>
   <exterior>oceanic2.webp</exterior>

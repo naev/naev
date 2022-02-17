@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Hasselt IV">
- <pos>
-  <x>20341.623819</x>
-  <y>2004.903126</y>
- </pos>
+ <pos x="20341.623819" y="2004.903126"/>
  <GFX>
   <space>J02.webp</space>
   <exterior>traderoom.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Nera">
- <pos>
-  <x>5670.230758</x>
-  <y>14988.019003</y>
- </pos>
+ <pos x="5670.230758" y="14988.019003"/>
  <GFX>
   <space>moon-O01.webp</space>
   <exterior>aquatic3.webp</exterior>

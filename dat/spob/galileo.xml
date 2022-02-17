@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Galileo">
- <pos>
-  <x>3194.799994</x>
-  <y>-7481.156652</y>
- </pos>
+ <pos x="3194.799994" y="-7481.156652"/>
  <GFX>
   <space>003.webp</space>
   <exterior>station01.webp</exterior>

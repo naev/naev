@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Qex II">
- <pos>
-  <x>-8211.694386</x>
-  <y>2773.849123</y>
- </pos>
+ <pos x="-8211.694386" y="2773.849123"/>
  <GFX>
   <space>M05.webp</space>
   <exterior>forest2.webp</exterior>

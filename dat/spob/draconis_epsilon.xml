@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Draconis Epsilon">
- <pos>
-  <x>30869.632172</x>
-  <y>22915.385326</y>
- </pos>
+ <pos x="30869.632172" y="22915.385326"/>
  <GFX>
   <space>M01.webp</space>
   <exterior>station04.webp</exterior>

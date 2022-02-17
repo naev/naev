@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Gem">
- <pos>
-  <x>-2316.897947</x>
-  <y>-3385.866684</y>
- </pos>
+ <pos x="-2316.897947" y="-3385.866684"/>
  <GFX>
   <space>moon-P03.webp</space>
   <exterior>aquatic.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Onasan">
- <pos>
-  <x>7761.198150</x>
-  <y>-6443.647780</y>
- </pos>
+ <pos x="7761.198150" y="-6443.647780"/>
  <GFX>
   <space>J04.webp</space>
   <exterior>station03.webp</exterior>

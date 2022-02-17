@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Inios Station">
- <pos>
-  <x>16510.246913</x>
-  <y>862.507713</y>
- </pos>
+ <pos x="16510.246913" y="862.507713"/>
  <GFX>
   <space>003.webp</space>
   <exterior>station04.webp</exterior>

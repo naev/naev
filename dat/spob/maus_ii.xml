@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Maus II">
- <pos>
-  <x>-13429.068145</x>
-  <y>2759.397564</y>
- </pos>
+ <pos x="-13429.068145" y="2759.397564"/>
  <GFX>
   <space>P03.webp</space>
   <exterior>forest.webp</exterior>

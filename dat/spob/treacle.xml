@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Treacle">
- <pos>
-  <x>5222.980314</x>
-  <y>2033.726848</y>
- </pos>
+ <pos x="5222.980314" y="2033.726848"/>
  <GFX>
   <space>C01.webp</space>
   <exterior>station01.webp</exterior>

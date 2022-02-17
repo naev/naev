@@ -130,8 +130,8 @@ int dsys_saveSystem( StarSystem *sys )
 
    /* Position. */
    xmlw_startElem( writer, "pos" );
-   xmlw_elem( writer, "x", "%f", sys->pos.x );
-   xmlw_elem( writer, "y", "%f", sys->pos.y );
+   xmlw_attr( writer, "x", "%f", sys->pos.x );
+   xmlw_attr( writer, "y", "%f", sys->pos.y );
    xmlw_endElem( writer ); /* "pos" */
 
    /* Sort spobs. */

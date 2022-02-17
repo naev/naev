@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Harnaar">
- <pos>
-  <x>9263.676140</x>
-  <y>4945.098859</y>
- </pos>
+ <pos x="9263.676140" y="4945.098859"/>
  <GFX>
   <space>P00.webp</space>
   <exterior>snow.webp</exterior>

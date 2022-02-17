@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ember">
- <pos>
-  <x>1418.183425</x>
-  <y>-19401.440034</y>
- </pos>
+ <pos x="1418.183425" y="-19401.440034"/>
  <GFX>
   <space>moon-A01.webp</space>
   <exterior>traderoom.webp</exterior>

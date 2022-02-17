@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Maus III">
- <pos>
-  <x>10669.670581</x>
-  <y>1287.718863</y>
- </pos>
+ <pos x="10669.670581" y="1287.718863"/>
  <GFX>
   <space>Y00.webp</space>
   <exterior>methane.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Alteris I">
- <pos>
-  <x>3161.494856</x>
-  <y>-2251.603909</y>
- </pos>
+ <pos x="3161.494856" y="-2251.603909"/>
  <GFX>
   <space>K02.webp</space>
   <exterior>aquatic2.webp</exterior>

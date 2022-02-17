@@ -9,10 +9,7 @@
   <interference>23.809524</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-165.826389</x>
-  <y>-1054.354167</y>
- </pos>
+ <pos x="-165.826389" y="-1054.354167"/>
  <spobs>
   <spob>Unicorn I</spob>
   <spob>Unicorn II</spob>

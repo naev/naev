@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Dowue">
- <pos>
-  <x>-2774.694760</x>
-  <y>-3802.503709</y>
- </pos>
+ <pos x="-2774.694760" y="-3802.503709"/>
  <GFX>
   <space>P02.webp</space>
   <exterior>snow.webp</exterior>

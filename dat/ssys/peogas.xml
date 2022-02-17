@@ -9,10 +9,7 @@
   <interference>25.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>1357.249837</x>
-  <y>-615.671978</y>
- </pos>
+ <pos x="1357.249837" y="-615.671978"/>
  <spobs>
   <spob>Boowoy</spob>
   <spob>Peogas II</spob>

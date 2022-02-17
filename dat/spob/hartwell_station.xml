@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Hartwell Station">
- <pos>
-  <x>10165.228472</x>
-  <y>-10541.797739</y>
- </pos>
+ <pos x="10165.228472" y="-10541.797739"/>
  <GFX>
   <space>station-fleetbase2.webp</space>
   <exterior>station03.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ruin">
- <pos>
-  <x>-9965.733675</x>
-  <y>-3889.141259</y>
- </pos>
+ <pos x="-9965.733675" y="-3889.141259"/>
  <GFX>
   <space>G02.webp</space>
   <exterior>oceanic.webp</exterior>

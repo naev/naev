@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Wahri">
- <pos>
-  <x>-5939.054155</x>
-  <y>-4578.683324</y>
- </pos>
+ <pos x="-5939.054155" y="-4578.683324"/>
  <GFX>
   <space>moon-C00.webp</space>
   <exterior>desertic.webp</exterior>

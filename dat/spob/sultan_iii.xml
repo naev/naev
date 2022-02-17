@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sultan III">
- <pos>
-  <x>4203.975314</x>
-  <y>-3362.793021</y>
- </pos>
+ <pos x="4203.975314" y="-3362.793021"/>
  <GFX>
   <space>K04.webp</space>
   <exterior>desertic2.webp</exterior>

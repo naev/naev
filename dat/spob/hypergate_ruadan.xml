@@ -2,10 +2,7 @@
 <spob name="Hypergate Ruadan">
  <display>Construction</display>
  <marker>spobmarker_triangle</marker>
- <pos>
-  <x>10131.451960</x>
-  <y>3980.866234</y>
- </pos>
+ <pos x="10131.451960" y="3980.866234"/>
  <GFX>
   <space>hypergate_early_construction_stage.webp</space>
  </GFX>

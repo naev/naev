@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Aquilia">
- <pos>
-  <x>-7923.103984</x>
-  <y>-7667.519985</y>
- </pos>
+ <pos x="-7923.103984" y="-7667.519985"/>
  <GFX>
   <space>G01.webp</space>
   <exterior>mining6.webp</exterior>

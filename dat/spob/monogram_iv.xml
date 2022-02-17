@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Monogram IV">
- <pos>
-  <x>2630.704808</x>
-  <y>12688.318564</y>
- </pos>
+ <pos x="2630.704808" y="12688.318564"/>
  <GFX>
   <space>I00.webp</space>
   <exterior>station01.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Trinel">
- <pos>
-  <x>6823.479385</x>
-  <y>5299.789814</y>
- </pos>
+ <pos x="6823.479385" y="5299.789814"/>
  <GFX>
   <space>D01.webp</space>
   <exterior>mining4.webp</exterior>

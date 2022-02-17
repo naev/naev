@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Folevo">
- <pos>
-  <x>-30202.482562</x>
-  <y>-19224.091941</y>
- </pos>
+ <pos x="-30202.482562" y="-19224.091941"/>
  <GFX>
   <space>moon-A01.webp</space>
   <exterior>lava.webp</exterior>

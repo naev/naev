@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Orville Shipyard">
- <pos>
-  <x>-8020.974940</x>
-  <y>-6034.193104</y>
- </pos>
+ <pos x="-8020.974940" y="-6034.193104"/>
  <GFX>
   <space>station-shipyard.webp</space>
   <exterior>station04.webp</exterior>

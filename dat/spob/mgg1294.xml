@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="MGG-1294">
- <pos>
-  <x>14774.142214</x>
-  <y>-7163.122858</y>
- </pos>
+ <pos x="14774.142214" y="-7163.122858"/>
  <GFX>
   <space>P03.webp</space>
   <exterior>aquatic.webp</exterior>

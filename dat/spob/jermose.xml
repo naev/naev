@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Jermose">
- <pos>
-  <x>-2785.720764</x>
-  <y>-9153.238293</y>
- </pos>
+ <pos x="-2785.720764" y="-9153.238293"/>
  <GFX>
   <space>O03.webp</space>
   <exterior>aquatic2.webp</exterior>

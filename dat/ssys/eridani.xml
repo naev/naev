@@ -6,10 +6,7 @@
   <interference>5.882353</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>131.000000</x>
-  <y>40.000000</y>
- </pos>
+ <pos x="131.000000" y="40.000000"/>
  <spobs>
   <spob>Eridani II</spob>
   <spob>Eridani III</spob>

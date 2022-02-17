@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Brendon I">
- <pos>
-  <x>-2362.251437</x>
-  <y>2690.207925</y>
- </pos>
+ <pos x="-2362.251437" y="2690.207925"/>
  <GFX>
   <space>moon-D00.webp</space>
   <exterior>traderoom.webp</exterior>

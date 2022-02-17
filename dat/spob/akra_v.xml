@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Akra V">
- <pos>
-  <x>-22362.490650</x>
-  <y>652.148409</y>
- </pos>
+ <pos x="-22362.490650" y="652.148409"/>
  <GFX>
   <space>S00.webp</space>
   <exterior>forest.webp</exterior>

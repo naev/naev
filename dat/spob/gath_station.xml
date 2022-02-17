@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Gath Station">
- <pos>
-  <x>-4187.579162</x>
-  <y>-3678.679076</y>
- </pos>
+ <pos x="-4187.579162" y="-3678.679076"/>
  <GFX>
   <space>station-battlestation.webp</space>
   <exterior>station03.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Stint III">
- <pos>
-  <x>10283.064402</x>
-  <y>-9053.807598</y>
- </pos>
+ <pos x="10283.064402" y="-9053.807598"/>
  <GFX>
   <space>J02.webp</space>
   <exterior>methane.webp</exterior>

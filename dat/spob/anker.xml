@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Anker">
- <pos>
-  <x>15899.369441</x>
-  <y>15634.379950</y>
- </pos>
+ <pos x="15899.369441" y="15634.379950"/>
  <GFX>
   <space>H02.webp</space>
   <exterior>forest2.webp</exterior>

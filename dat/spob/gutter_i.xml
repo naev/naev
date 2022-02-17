@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Gutter I">
- <pos>
-  <x>-4883.507374</x>
-  <y>3850.185524</y>
- </pos>
+ <pos x="-4883.507374" y="3850.185524"/>
  <GFX>
   <space>G01.webp</space>
   <exterior>mining.webp</exterior>

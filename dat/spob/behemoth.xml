@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Behemoth">
- <pos>
-  <x>2511.437898</x>
-  <y>2385.866003</y>
- </pos>
+ <pos x="2511.437898" y="2385.866003"/>
  <GFX>
   <space>K02.webp</space>
   <exterior>station00.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sergio Vix I">
- <pos>
-  <x>6080.000000</x>
-  <y>-8160.000000</y>
- </pos>
+ <pos x="6080.000000" y="-8160.000000"/>
  <GFX>
   <space>K00.webp</space>
   <exterior>mining2.webp</exterior>

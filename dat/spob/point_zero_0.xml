@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Point Zero 0">
- <pos>
-  <x>2957.142857</x>
-  <y>2168.571429</y>
- </pos>
+ <pos x="2957.142857" y="2168.571429"/>
  <GFX>
   <space>D00.webp</space>
   <exterior>desertic4.webp</exterior>

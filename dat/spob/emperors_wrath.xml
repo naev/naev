@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Emperor's Wrath">
- <pos>
-  <x>15119.671497</x>
-  <y>4696.420377</y>
- </pos>
+ <pos x="15119.671497" y="4696.420377"/>
  <GFX>
   <space>wrath.webp</space>
   <exterior>station03.webp</exterior>

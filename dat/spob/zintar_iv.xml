@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Zintar IV">
- <pos>
-  <x>8748.214329</x>
-  <y>11780.505497</y>
- </pos>
+ <pos x="8748.214329" y="11780.505497"/>
  <GFX>
   <space>D02.webp</space>
   <exterior>methane.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vennis">
- <pos>
-  <x>9321.283353</x>
-  <y>2238.834901</y>
- </pos>
+ <pos x="9321.283353" y="2238.834901"/>
  <GFX>
   <space>X00.webp</space>
   <exterior>methane.webp</exterior>

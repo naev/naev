@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Drognain">
- <pos>
-  <x>11736.452755</x>
-  <y>5635.272211</y>
- </pos>
+ <pos x="11736.452755" y="5635.272211"/>
  <GFX>
   <space>K02.webp</space>
   <exterior>methane.webp</exterior>

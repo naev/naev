@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Porro II">
- <pos>
-  <x>8992.795004</x>
-  <y>-8378.968812</y>
- </pos>
+ <pos x="8992.795004" y="-8378.968812"/>
  <GFX>
   <space>G00.webp</space>
   <exterior>traderoom.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Burnan's moon">
- <pos>
-  <x>-5978.756475</x>
-  <y>4450.447601</y>
- </pos>
+ <pos x="-5978.756475" y="4450.447601"/>
  <GFX>
   <space>moon-J02.webp</space>
   <exterior>forest2.webp</exterior>

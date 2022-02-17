@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="DVNN Central">
- <pos>
-  <x>11185.917396</x>
-  <y>25623.169472</y>
- </pos>
+ <pos x="11185.917396" y="25623.169472"/>
  <GFX>
   <space>station-powerplant.webp</space>
   <exterior>traderoom.webp</exterior>

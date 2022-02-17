@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Jemard">
- <pos>
-  <x>-5923.799568</x>
-  <y>-7950.928562</y>
- </pos>
+ <pos x="-5923.799568" y="-7950.928562"/>
  <GFX>
   <space>moon-A00.webp</space>
   <exterior>gas.webp</exterior>

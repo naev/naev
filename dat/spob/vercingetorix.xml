@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vercingetorix">
- <pos>
-  <x>16688.139634</x>
-  <y>16085.639162</y>
- </pos>
+ <pos x="16688.139634" y="16085.639162"/>
  <GFX>
   <space>X01.webp</space>
   <exterior>gas.webp</exterior>

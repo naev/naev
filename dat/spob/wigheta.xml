@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Wigheta">
- <pos>
-  <x>997.580582</x>
-  <y>15496.946610</y>
- </pos>
+ <pos x="997.580582" y="15496.946610"/>
  <GFX>
   <space>O00.webp</space>
   <exterior>aquatic.webp</exterior>

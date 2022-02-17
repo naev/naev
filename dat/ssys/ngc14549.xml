@@ -6,10 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-46.279193</x>
-  <y>-1132.531523</y>
- </pos>
+ <pos x="-46.279193" y="-1132.531523"/>
  <spobs>
   <spob>Hypergate NGC-14549</spob>
  </spobs>

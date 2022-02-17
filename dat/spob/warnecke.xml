@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Warnecke">
- <pos>
-  <x>625.881357</x>
-  <y>-569.295766</y>
- </pos>
+ <pos x="625.881357" y="-569.295766"/>
  <GFX>
   <space>J09.webp</space>
   <exterior>station04.webp</exterior>

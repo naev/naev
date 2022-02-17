@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Shickhaw I">
- <pos>
-  <x>8332.129630</x>
-  <y>-9159.722222</y>
- </pos>
+ <pos x="8332.129630" y="-9159.722222"/>
  <GFX>
   <space>D01.webp</space>
   <exterior>station04.webp</exterior>

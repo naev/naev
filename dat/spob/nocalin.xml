@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Nocalin">
- <pos>
-  <x>7592.974652</x>
-  <y>-5092.511190</y>
- </pos>
+ <pos x="7592.974652" y="-5092.511190"/>
  <GFX>
   <space>K00.webp</space>
   <exterior>desertic.webp</exterior>

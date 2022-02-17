@@ -6,10 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-827.371225</x>
-  <y>-868.012175</y>
- </pos>
+ <pos x="-827.371225" y="-868.012175"/>
  <spobs>
   <spob_virtual>Miner Local</spob_virtual>
  </spobs>

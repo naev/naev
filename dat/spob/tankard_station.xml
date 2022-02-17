@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Tankard Station">
- <pos>
-  <x>-20551.681519</x>
-  <y>12636.184692</y>
- </pos>
+ <pos x="-20551.681519" y="12636.184692"/>
  <GFX>
   <space>station-commerce3.webp</space>
   <exterior>traderoom.webp</exterior>

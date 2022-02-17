@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Mendez">
- <pos>
-  <x>-6889.594173</x>
-  <y>-7813.338644</y>
- </pos>
+ <pos x="-6889.594173" y="-7813.338644"/>
  <GFX>
   <space>G01.webp</space>
   <exterior>station03.webp</exterior>

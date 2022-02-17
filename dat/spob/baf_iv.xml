@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Baf IV">
- <pos>
-  <x>-9038.785990</x>
-  <y>6291.200476</y>
- </pos>
+ <pos x="-9038.785990" y="6291.200476"/>
  <GFX>
   <space>L00.webp</space>
   <exterior>mining2.webp</exterior>

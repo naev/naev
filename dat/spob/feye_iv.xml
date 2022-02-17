@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Feye IV">
- <pos>
-  <x>-13276.262204</x>
-  <y>-12777.389788</y>
- </pos>
+ <pos x="-13276.262204" y="-12777.389788"/>
  <GFX>
   <space>G01.webp</space>
   <exterior>desertic.webp</exterior>

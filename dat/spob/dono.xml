@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Dono">
- <pos>
-  <x>580.608000</x>
-  <y>521.856000</y>
- </pos>
+ <pos x="580.608000" y="521.856000"/>
  <GFX>
   <space>moon-M06.webp</space>
   <exterior>forest.webp</exterior>

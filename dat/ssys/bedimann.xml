@@ -6,10 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-834.313048</x>
-  <y>-785.181493</y>
- </pos>
+ <pos x="-834.313048" y="-785.181493"/>
  <spobs>
   <spob>Bedimann Shipyards</spob>
   <spob>Neo Pomerania</spob>

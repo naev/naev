@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Gutter III">
- <pos>
-  <x>13056.714501</x>
-  <y>11991.245864</y>
- </pos>
+ <pos x="13056.714501" y="11991.245864"/>
  <GFX>
   <space>moon-I00.webp</space>
   <exterior>traderoom.webp</exterior>

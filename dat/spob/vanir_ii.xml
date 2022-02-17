@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vanir II">
- <pos>
-  <x>17819.200000</x>
-  <y>-6571.200000</y>
- </pos>
+ <pos x="17819.200000" y="-6571.200000"/>
  <GFX>
   <space>I00.webp</space>
   <exterior>aquatic2.webp</exterior>

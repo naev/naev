@@ -9,10 +9,7 @@
   <interference>33.333300</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>43.485983</x>
-  <y>294.880618</y>
- </pos>
+ <pos x="43.485983" y="294.880618"/>
  <spobs>
   <spob>Green Eye</spob>
   <spob>New Haven</spob>

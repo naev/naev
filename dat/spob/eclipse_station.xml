@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Eclipse Station">
- <pos>
-  <x>-9543.149055</x>
-  <y>-11138.579005</y>
- </pos>
+ <pos x="-9543.149055" y="-11138.579005"/>
  <GFX>
   <space>000.webp</space>
   <exterior>station00.webp</exterior>

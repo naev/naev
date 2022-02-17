@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Shade &amp; Sunshine Station">
- <pos>
-  <x>-5993.939706</x>
-  <y>12577.624148</y>
- </pos>
+ <pos x="-5993.939706" y="12577.624148"/>
  <GFX>
   <space>station-agriculture.webp</space>
   <exterior>forest.webp</exterior>

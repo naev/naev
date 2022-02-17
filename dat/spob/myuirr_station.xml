@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Myuirr Station">
- <pos>
-  <x>6203.038328</x>
-  <y>-8375.950143</y>
- </pos>
+ <pos x="6203.038328" y="-8375.950143"/>
  <GFX>
   <space>station-cylinder.webp</space>
   <exterior>station03.webp</exterior>

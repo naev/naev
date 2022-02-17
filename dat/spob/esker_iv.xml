@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Esker IV">
- <pos>
-  <x>22979.409893</x>
-  <y>3080.488220</y>
- </pos>
+ <pos x="22979.409893" y="3080.488220"/>
  <GFX>
   <space>P03.webp</space>
   <exterior>snow.webp</exterior>

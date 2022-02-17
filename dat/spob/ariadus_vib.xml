@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ariadus VIb">
- <pos>
-  <x>-791.881071</x>
-  <y>-15992.802931</y>
- </pos>
+ <pos x="-791.881071" y="-15992.802931"/>
  <GFX>
   <space>moon-P01.webp</space>
   <exterior>lava.webp</exterior>

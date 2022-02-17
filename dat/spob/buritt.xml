@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Buritt">
- <pos>
-  <x>-17923.429420</x>
-  <y>-1441.372771</y>
- </pos>
+ <pos x="-17923.429420" y="-1441.372771"/>
  <GFX>
   <space>M02.webp</space>
   <exterior>forest2.webp</exterior>

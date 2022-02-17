@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fort Sirius">
- <pos>
-  <x>16942.631753</x>
-  <y>-6095.098630</y>
- </pos>
+ <pos x="16942.631753" y="-6095.098630"/>
  <GFX>
   <space>000.webp</space>
   <exterior>station00.webp</exterior>

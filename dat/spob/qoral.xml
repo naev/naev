@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Qoral">
- <pos>
-  <x>17749.592764</x>
-  <y>3014.081790</y>
- </pos>
+ <pos x="17749.592764" y="3014.081790"/>
  <GFX>
   <space>S01.webp</space>
   <exterior>mining4.webp</exterior>

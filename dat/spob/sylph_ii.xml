@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sylph II">
- <pos>
-  <x>-7426.495754</x>
-  <y>-6432.418827</y>
- </pos>
+ <pos x="-7426.495754" y="-6432.418827"/>
  <GFX>
   <space>D02.webp</space>
   <exterior>station04.webp</exterior>

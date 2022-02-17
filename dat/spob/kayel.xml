@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Kayel">
- <pos>
-  <x>-5434.715148</x>
-  <y>4000.053426</y>
- </pos>
+ <pos x="-5434.715148" y="4000.053426"/>
  <GFX>
   <space>M01.webp</space>
   <exterior>oceanic.webp</exterior>

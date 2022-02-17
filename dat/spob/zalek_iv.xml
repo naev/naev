@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Za'lek IV">
- <pos>
-  <x>1428.710400</x>
-  <y>358.732800</y>
- </pos>
+ <pos x="1428.710400" y="358.732800"/>
  <GFX>
   <space>moon-C00.webp</space>
   <exterior>desertic.webp</exterior>

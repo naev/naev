@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Stalwart Station">
- <pos>
-  <x>24.688611</x>
-  <y>59.531501</y>
- </pos>
+ <pos x="24.688611" y="59.531501"/>
  <GFX>
   <space>station-fleetbase.webp</space>
   <exterior>station04.webp</exterior>

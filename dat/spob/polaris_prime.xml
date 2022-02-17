@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Polaris Prime">
- <pos>
-  <x>14060.037687</x>
-  <y>4973.423281</y>
- </pos>
+ <pos x="14060.037687" y="4973.423281"/>
  <GFX>
   <space>002.webp</space>
   <exterior>traderoom.webp</exterior>

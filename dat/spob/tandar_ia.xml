@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Tandar Ia">
- <pos>
-  <x>10681.332054</x>
-  <y>-4812.595335</y>
- </pos>
+ <pos x="10681.332054" y="-4812.595335"/>
  <GFX>
   <space>moon-D02.webp</space>
   <exterior>station04.webp</exterior>

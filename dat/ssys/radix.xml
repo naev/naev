@@ -6,10 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>226.000000</x>
-  <y>-671.000000</y>
- </pos>
+ <pos x="226.000000" y="-671.000000"/>
  <spobs>
   <spob>Myuirr Station</spob>
   <spob>Radix I</spob>

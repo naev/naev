@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Cerberus IV">
- <pos>
-  <x>-1772.222222</x>
-  <y>30966.666667</y>
- </pos>
+ <pos x="-1772.222222" y="30966.666667"/>
  <GFX>
   <space>D02.webp</space>
   <exterior>asteroid.webp</exterior>

@@ -9,10 +9,7 @@
   <interference>15.000000</interference>
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-304.634880</x>
-  <y>625.210678</y>
- </pos>
+ <pos x="-304.634880" y="625.210678"/>
  <spobs>
   <spob_virtual>Independent All Unpresence (Range 1)</spob_virtual>
   <spob_virtual>Soromid Unpresence (Range 1)</spob_virtual>

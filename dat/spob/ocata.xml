@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ocata">
- <pos>
-  <x>-2418.286106</x>
-  <y>3527.591660</y>
- </pos>
+ <pos x="-2418.286106" y="3527.591660"/>
  <GFX>
   <space>moon-I00.webp</space>
   <exterior>station01.webp</exterior>

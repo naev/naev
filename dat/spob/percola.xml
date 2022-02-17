@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Percola">
- <pos>
-  <x>-10266.857313</x>
-  <y>-3918.579198</y>
- </pos>
+ <pos x="-10266.857313" y="-3918.579198"/>
  <GFX>
   <space>moon-M05.webp</space>
   <exterior>forest.webp</exterior>

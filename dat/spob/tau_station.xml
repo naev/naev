@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Tau Station">
- <pos>
-  <x>8917.170749</x>
-  <y>-13303.144273</y>
- </pos>
+ <pos x="8917.170749" y="-13303.144273"/>
  <GFX>
   <space>000.webp</space>
   <exterior>station04.webp</exterior>

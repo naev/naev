@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ummula">
- <pos>
-  <x>13539.716197</x>
-  <y>1770.971587</y>
- </pos>
+ <pos x="13539.716197" y="1770.971587"/>
  <GFX>
   <space>M01.webp</space>
   <exterior>forest.webp</exterior>

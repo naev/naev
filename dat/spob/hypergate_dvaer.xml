@@ -2,10 +2,7 @@
 <spob name="Hypergate Dvaer">
  <display>Construction</display>
  <marker>spobmarker_triangle</marker>
- <pos>
-  <x>-11138.452932</x>
-  <y>-1797.573385</y>
- </pos>
+ <pos x="-11138.452932" y="-1797.573385"/>
  <GFX>
   <space>hypergate_early_construction_stage.webp</space>
  </GFX>

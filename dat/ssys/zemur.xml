@@ -7,10 +7,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-374.705351</x>
-  <y>-157.314213</y>
- </pos>
+ <pos x="-374.705351" y="-157.314213"/>
  <spobs>
   <spob>Aldous</spob>
   <spob>Aldous' moon</spob>

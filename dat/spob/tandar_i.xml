@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Tandar I">
- <pos>
-  <x>10181.809557</x>
-  <y>-5624.964705</y>
- </pos>
+ <pos x="10181.809557" y="-5624.964705"/>
  <GFX>
   <space>I02.webp</space>
   <exterior>oceanic2.webp</exterior>

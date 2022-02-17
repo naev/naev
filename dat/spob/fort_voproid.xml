@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fort Voproid">
- <pos>
-  <x>8721.803983</x>
-  <y>-1214.023998</y>
- </pos>
+ <pos x="8721.803983" y="-1214.023998"/>
  <GFX>
   <space>station-battlestation.webp</space>
   <exterior>station04.webp</exterior>

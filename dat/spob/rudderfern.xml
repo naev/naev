@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Rudderfern">
- <pos>
-  <x>-22830.899336</x>
-  <y>-7419.439987</y>
- </pos>
+ <pos x="-22830.899336" y="-7419.439987"/>
  <GFX>
   <space>moon-L00.webp</space>
   <exterior>forest2.webp</exterior>

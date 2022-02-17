@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Adius">
- <pos>
-  <x>-2165.400011</x>
-  <y>-9649.663014</y>
- </pos>
+ <pos x="-2165.400011" y="-9649.663014"/>
  <GFX>
   <space>moon-C01.webp</space>
   <exterior>gas.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Haven">
- <pos>
-  <x>8514.404296</x>
-  <y>8209.228516</y>
- </pos>
+ <pos x="8514.404296" y="8209.228516"/>
  <GFX>
   <space>A02.webp</space>
   <exterior>desertic.webp</exterior>

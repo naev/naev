@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Tau Secundus">
- <pos>
-  <x>-6772.829083</x>
-  <y>9757.569064</y>
- </pos>
+ <pos x="-6772.829083" y="9757.569064"/>
  <GFX>
   <space>S00.webp</space>
   <exterior>oceanic.webp</exterior>

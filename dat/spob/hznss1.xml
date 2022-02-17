@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="HZNSS-1">
- <pos>
-  <x>-4189.198255</x>
-  <y>8197.765081</y>
- </pos>
+ <pos x="-4189.198255" y="8197.765081"/>
  <GFX>
   <space>station-agriculture.webp</space>
   <exterior>forest2.webp</exterior>

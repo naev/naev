@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Socrates Military Academy">
- <pos>
-  <x>2760.307195</x>
-  <y>-7182.319320</y>
- </pos>
+ <pos x="2760.307195" y="-7182.319320"/>
  <GFX>
   <space>000.webp</space>
   <exterior>station00.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Narousse I">
- <pos>
-  <x>3487.684954</x>
-  <y>-564.638417</y>
- </pos>
+ <pos x="3487.684954" y="-564.638417"/>
  <GFX>
   <space>A00.webp</space>
   <exterior>forest.webp</exterior>

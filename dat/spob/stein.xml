@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Stein">
- <pos>
-  <x>2790.961087</x>
-  <y>-2025.740177</y>
- </pos>
+ <pos x="2790.961087" y="-2025.740177"/>
  <GFX>
   <space>O05.webp</space>
   <exterior>aquatic.webp</exterior>

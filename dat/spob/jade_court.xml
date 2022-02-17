@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Jade Court">
- <pos>
-  <x>-2507.492761</x>
-  <y>-4718.400357</y>
- </pos>
+ <pos x="-2507.492761" y="-4718.400357"/>
  <GFX>
   <space>station-commerce.webp</space>
   <exterior>traderoom.webp</exterior>

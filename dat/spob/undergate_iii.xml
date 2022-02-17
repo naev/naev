@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Undergate III">
- <pos>
-  <x>19697.628816</x>
-  <y>6644.689858</y>
- </pos>
+ <pos x="19697.628816" y="6644.689858"/>
  <GFX>
   <space>I05.webp</space>
   <exterior>snow.webp</exterior>

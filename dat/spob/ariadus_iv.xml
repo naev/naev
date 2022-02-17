@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ariadus IV">
- <pos>
-  <x>-15096.260218</x>
-  <y>10875.462653</y>
- </pos>
+ <pos x="-15096.260218" y="10875.462653"/>
  <GFX>
   <space>J03.webp</space>
   <exterior>oceanic.webp</exterior>

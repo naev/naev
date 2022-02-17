@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Dunmer">
- <pos>
-  <x>-3757.585211</x>
-  <y>-10069.112936</y>
- </pos>
+ <pos x="-3757.585211" y="-10069.112936"/>
  <GFX>
   <space>moon-M06.webp</space>
   <exterior>oceanic2.webp</exterior>

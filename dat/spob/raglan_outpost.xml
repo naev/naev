@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Raglan Outpost">
- <pos>
-  <x>1830.182334</x>
-  <y>12469.138345</y>
- </pos>
+ <pos x="1830.182334" y="12469.138345"/>
  <GFX>
   <space>station-battlestation.webp</space>
   <exterior>station05.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Corinth 1">
- <pos>
-  <x>-13745.682176</x>
-  <y>10005.786912</y>
- </pos>
+ <pos x="-13745.682176" y="10005.786912"/>
  <GFX>
   <space>A00.webp</space>
   <exterior>forest.webp</exterior>

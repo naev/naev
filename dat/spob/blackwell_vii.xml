@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Blackwell VII">
- <pos>
-  <x>18932.148111</x>
-  <y>4733.037028</y>
- </pos>
+ <pos x="18932.148111" y="4733.037028"/>
  <GFX>
   <space>J02.webp</space>
   <exterior>snow.webp</exterior>

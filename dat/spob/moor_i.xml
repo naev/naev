@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Moor I">
- <pos>
-  <x>8220.644613</x>
-  <y>-3741.195748</y>
- </pos>
+ <pos x="8220.644613" y="-3741.195748"/>
  <GFX>
   <space>A00.webp</space>
   <exterior>mining4.webp</exterior>

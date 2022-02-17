@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sirou VI">
- <pos>
-  <x>28264.232318</x>
-  <y>5317.606564</y>
- </pos>
+ <pos x="28264.232318" y="5317.606564"/>
  <GFX>
   <space>C01.webp</space>
   <exterior>mining4.webp</exterior>

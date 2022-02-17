@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Manuel Station">
- <pos>
-  <x>-6490.624381</x>
-  <y>-8887.528980</y>
- </pos>
+ <pos x="-6490.624381" y="-8887.528980"/>
  <GFX>
   <space>station-shipyard.webp</space>
   <exterior>station03.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Zuner">
- <pos>
-  <x>12745.111262</x>
-  <y>6444.312909</y>
- </pos>
+ <pos x="12745.111262" y="6444.312909"/>
  <GFX>
   <space>M02.webp</space>
   <exterior>agricultural.webp</exterior>

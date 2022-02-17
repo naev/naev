@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Dakron V">
- <pos>
-  <x>-15902.754472</x>
-  <y>-7429.667292</y>
- </pos>
+ <pos x="-15902.754472" y="-7429.667292"/>
  <GFX>
   <space>G02.webp</space>
   <exterior>forest.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Dundrop Station">
- <pos>
-  <x>6031.569401</x>
-  <y>7541.218892</y>
- </pos>
+ <pos x="6031.569401" y="7541.218892"/>
  <GFX>
   <space>station-commerce2.webp</space>
   <exterior>traderoom.webp</exterior>

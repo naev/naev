@@ -6,10 +6,7 @@
   <interference>5.882350</interference>
   <nebula volatility="0.250000" hue="250.000000">300.000000</nebula>
  </general>
- <pos>
-  <x>380.000000</x>
-  <y>-109.000000</y>
- </pos>
+ <pos x="380.000000" y="-109.000000"/>
  <spobs>
   <spob>Cole Station</spob>
  </spobs>

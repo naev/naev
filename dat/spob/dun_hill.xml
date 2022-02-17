@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Dun Hill">
- <pos>
-  <x>2810.240735</x>
-  <y>10261.076369</y>
- </pos>
+ <pos x="2810.240735" y="10261.076369"/>
  <GFX>
   <space>H02.webp</space>
   <exterior>desertic4.webp</exterior>

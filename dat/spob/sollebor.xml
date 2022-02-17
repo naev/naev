@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sollebor">
- <pos>
-  <x>22929.999657</x>
-  <y>-16606.297744</y>
- </pos>
+ <pos x="22929.999657" y="-16606.297744"/>
  <GFX>
   <space>P04.webp</space>
   <exterior>mining4.webp</exterior>

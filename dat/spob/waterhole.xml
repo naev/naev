@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Waterhole">
- <pos>
-  <x>-5555.000000</x>
-  <y>-2200.000000</y>
- </pos>
+ <pos x="-5555.000000" y="-2200.000000"/>
  <GFX>
   <space>O00.webp</space>
   <exterior>oceanic2.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Aldous">
- <pos>
-  <x>3801.811993</x>
-  <y>-6006.223988</y>
- </pos>
+ <pos x="3801.811993" y="-6006.223988"/>
  <GFX>
   <space>S00.webp</space>
   <exterior>aquatic2.webp</exterior>

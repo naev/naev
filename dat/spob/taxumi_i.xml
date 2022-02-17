@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Taxumi I">
- <pos>
-  <x>-5783.813977</x>
-  <y>-6392.661671</y>
- </pos>
+ <pos x="-5783.813977" y="-6392.661671"/>
  <GFX>
   <space>000.webp</space>
   <exterior>station03.webp</exterior>

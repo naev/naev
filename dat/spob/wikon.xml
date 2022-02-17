@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Wikon">
- <pos>
-  <x>-7993.567073</x>
-  <y>1973.321463</y>
- </pos>
+ <pos x="-7993.567073" y="1973.321463"/>
  <GFX>
   <space>M02.webp</space>
   <exterior>forest.webp</exterior>

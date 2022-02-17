@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Tarrum">
- <pos>
-  <x>-979.392945</x>
-  <y>10377.298010</y>
- </pos>
+ <pos x="-979.392945" y="10377.298010"/>
  <GFX>
   <space>moon-J01.webp</space>
   <exterior>mining6.webp</exterior>

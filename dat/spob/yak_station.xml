@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Yak Station">
- <pos>
-  <x>4560.027486</x>
-  <y>-14530.257072</y>
- </pos>
+ <pos x="4560.027486" y="-14530.257072"/>
  <GFX>
   <space>station-fleetbase2.webp</space>
   <exterior>station01.webp</exterior>

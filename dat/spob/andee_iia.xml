@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Andee IIa">
- <pos>
-  <x>-17730.525819</x>
-  <y>343.637937</y>
- </pos>
+ <pos x="-17730.525819" y="343.637937"/>
  <GFX>
   <space>moon-H02.webp</space>
   <exterior>mining2.webp</exterior>

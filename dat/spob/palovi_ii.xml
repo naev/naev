@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Palovi II">
- <pos>
-  <x>8006.155966</x>
-  <y>3651.019523</y>
- </pos>
+ <pos x="8006.155966" y="3651.019523"/>
  <GFX>
   <space>moon-J02.webp</space>
   <exterior>traderoom.webp</exterior>

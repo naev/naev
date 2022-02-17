@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Cornwal Ordinance">
- <pos>
-  <x>19513.608336</x>
-  <y>8530.899774</y>
- </pos>
+ <pos x="19513.608336" y="8530.899774"/>
  <GFX>
   <space>station-commerce.webp</space>
   <exterior>station03.webp</exterior>

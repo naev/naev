@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Botarn I">
- <pos>
-  <x>5688.021909</x>
-  <y>-2757.751355</y>
- </pos>
+ <pos x="5688.021909" y="-2757.751355"/>
  <GFX>
   <space>X01.webp</space>
   <exterior>aquatic2.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Racheka Secundus">
- <pos>
-  <x>-2069.391983</x>
-  <y>2764.209655</y>
- </pos>
+ <pos x="-2069.391983" y="2764.209655"/>
  <GFX>
   <space>moon-D01.webp</space>
   <exterior>station04.webp</exterior>

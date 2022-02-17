@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Arashu">
- <pos>
-  <x>-6854.762866</x>
-  <y>-5382.599029</y>
- </pos>
+ <pos x="-6854.762866" y="-5382.599029"/>
  <GFX>
   <space>M04.webp</space>
   <exterior>aquatic3.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Griffin I">
- <pos>
-  <x>-6522.156506</x>
-  <y>7149.136931</y>
- </pos>
+ <pos x="-6522.156506" y="7149.136931"/>
  <GFX>
   <space>moon-A00.webp</space>
   <exterior>aquatic2.webp</exterior>

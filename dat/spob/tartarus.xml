@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Tartarus">
- <pos>
-  <x>-5198.420582</x>
-  <y>-5218.858043</y>
- </pos>
+ <pos x="-5198.420582" y="-5218.858043"/>
  <GFX>
   <space>moon-H00.webp</space>
   <exterior>oceanic.webp</exterior>

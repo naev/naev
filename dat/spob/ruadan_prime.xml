@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ruadan Prime">
- <pos>
-  <x>5279.566099</x>
-  <y>4132.067302</y>
- </pos>
+ <pos x="5279.566099" y="4132.067302"/>
  <GFX>
   <space>M09.webp</space>
   <exterior>traderoom.webp</exterior>

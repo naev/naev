@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="The Stinker">
- <pos>
-  <x>-319.479999</x>
-  <y>-1022.335998</y>
- </pos>
+ <pos x="-319.479999" y="-1022.335998"/>
  <GFX>
   <space>X01.webp</space>
   <exterior>forest2.webp</exterior>

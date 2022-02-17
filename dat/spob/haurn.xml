@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Haurn">
- <pos>
-  <x>-16267.120738</x>
-  <y>12825.307328</y>
- </pos>
+ <pos x="-16267.120738" y="12825.307328"/>
  <GFX>
   <space>moon-M02.webp</space>
   <exterior>agricultural.webp</exterior>

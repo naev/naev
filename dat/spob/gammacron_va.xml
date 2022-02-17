@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Gammacron Va">
- <pos>
-  <x>18474.585201</x>
-  <y>10021.170402</y>
- </pos>
+ <pos x="18474.585201" y="10021.170402"/>
  <GFX>
   <space>moon-J02.webp</space>
   <exterior>aquatic2.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Faust III">
- <pos>
-  <x>4714.548602</x>
-  <y>3300.184021</y>
- </pos>
+ <pos x="4714.548602" y="3300.184021"/>
  <GFX>
   <space>L00.webp</space>
   <exterior>desertic3.webp</exterior>

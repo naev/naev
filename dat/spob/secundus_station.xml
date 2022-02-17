@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Secundus Station">
- <pos>
-  <x>-5198.478537</x>
-  <y>-9255.152333</y>
- </pos>
+ <pos x="-5198.478537" y="-9255.152333"/>
  <GFX>
   <space>003.webp</space>
   <exterior>station05.webp</exterior>

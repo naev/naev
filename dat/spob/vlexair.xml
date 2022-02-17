@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vlexair">
- <pos>
-  <x>-23920.000000</x>
-  <y>1840.000000</y>
- </pos>
+ <pos x="-23920.000000" y="1840.000000"/>
  <GFX>
   <space>P01.webp</space>
   <exterior>snow.webp</exterior>

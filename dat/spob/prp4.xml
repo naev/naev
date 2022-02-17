@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="PRP-4">
- <pos>
-  <x>16694.337913</x>
-  <y>-10864.569118</y>
- </pos>
+ <pos x="16694.337913" y="-10864.569118"/>
  <GFX>
   <space>003.webp</space>
   <exterior>traderoom.webp</exterior>

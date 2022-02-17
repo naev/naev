@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ruadan J-1">
- <pos>
-  <x>10982.124978</x>
-  <y>7565.463874</y>
- </pos>
+ <pos x="10982.124978" y="7565.463874"/>
  <GFX>
   <space>J02.webp</space>
   <exterior>mining2.webp</exterior>

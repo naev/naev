@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Uridhrion I">
- <pos>
-  <x>14700.000000</x>
-  <y>10010.000000</y>
- </pos>
+ <pos x="14700.000000" y="10010.000000"/>
  <GFX>
   <space>D00.webp</space>
   <exterior>lava.webp</exterior>

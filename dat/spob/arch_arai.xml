@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Arch Arai">
- <pos>
-  <x>9162.462434</x>
-  <y>16600.550706</y>
- </pos>
+ <pos x="9162.462434" y="16600.550706"/>
  <GFX>
   <space>moon-P03.webp</space>
   <exterior>traderoom.webp</exterior>

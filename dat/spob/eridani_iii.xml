@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Eridani III">
- <pos>
-  <x>-7624.845518</x>
-  <y>5497.946499</y>
- </pos>
+ <pos x="-7624.845518" y="5497.946499"/>
  <GFX>
   <space>D00.webp</space>
   <exterior>asteroid.webp</exterior>

@@ -6,10 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>-532.145427</x>
-  <y>-1304.358536</y>
- </pos>
+ <pos x="-532.145427" y="-1304.358536"/>
  <spobs>
   <spob_virtual>Independent All Unpresence</spob_virtual>
  </spobs>

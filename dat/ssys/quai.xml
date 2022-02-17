@@ -6,10 +6,7 @@
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>720.995077</x>
-  <y>-903.282028</y>
- </pos>
+ <pos x="720.995077" y="-903.282028"/>
  <spobs>
   <spob>Quai I</spob>
   <spob>Quai II</spob>

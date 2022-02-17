@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ruadan Bastion">
- <pos>
-  <x>11792.645737</x>
-  <y>7261.141426</y>
- </pos>
+ <pos x="11792.645737" y="7261.141426"/>
  <GFX>
   <space>station-battlestation.webp</space>
   <exterior>station03.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="August">
- <pos>
-  <x>12020.844486</x>
-  <y>3728.889205</y>
- </pos>
+ <pos x="12020.844486" y="3728.889205"/>
  <GFX>
   <space>P01.webp</space>
   <exterior>snow.webp</exterior>

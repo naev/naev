@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="NS-63">
- <pos>
-  <x>6744.155177</x>
-  <y>-4563.066694</y>
- </pos>
+ <pos x="6744.155177" y="-4563.066694"/>
  <GFX>
   <space>001.webp</space>
   <exterior>station01.webp</exterior>

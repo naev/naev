@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Brimstone Ib">
- <pos>
-  <x>12985.797915</x>
-  <y>-10726.166185</y>
- </pos>
+ <pos x="12985.797915" y="-10726.166185"/>
  <GFX>
   <space>moon-J02.webp</space>
   <exterior>forest2.webp</exterior>

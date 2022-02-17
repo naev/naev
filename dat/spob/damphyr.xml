@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Damphyr">
- <pos>
-  <x>6357.048692</x>
-  <y>-9005.703200</y>
- </pos>
+ <pos x="6357.048692" y="-9005.703200"/>
  <GFX>
   <space>moon-O00.webp</space>
   <exterior>forest2.webp</exterior>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Hadosh III">
- <pos>
-  <x>1051.896104</x>
-  <y>19942.611407</y>
- </pos>
+ <pos x="1051.896104" y="19942.611407"/>
  <GFX>
   <space>P00.webp</space>
   <exterior>snow.webp</exterior>

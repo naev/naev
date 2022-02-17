@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Protera Sigma">
- <pos>
-  <x>5541.887113</x>
-  <y>5474.271638</y>
- </pos>
+ <pos x="5541.887113" y="5474.271638"/>
  <GFX>
   <space>M05.webp</space>
   <exterior>oceanic2.webp</exterior>

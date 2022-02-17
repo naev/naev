@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fried III">
- <pos>
-  <x>12505.292605</x>
-  <y>2285.984224</y>
- </pos>
+ <pos x="12505.292605" y="2285.984224"/>
  <GFX>
   <space>I04.webp</space>
   <exterior>gas.webp</exterior>

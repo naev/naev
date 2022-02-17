@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Opal Station">
- <pos>
-  <x>-1838.125142</x>
-  <y>11472.033093</y>
- </pos>
+ <pos x="-1838.125142" y="11472.033093"/>
  <GFX>
   <space>000.webp</space>
   <exterior>traderoom.webp</exterior>

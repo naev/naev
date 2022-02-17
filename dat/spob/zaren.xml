@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Zaren">
- <pos>
-  <x>-5608.155853</x>
-  <y>-5484.899681</y>
- </pos>
+ <pos x="-5608.155853" y="-5484.899681"/>
  <GFX>
   <space>Y00.webp</space>
   <exterior>methane.webp</exterior>

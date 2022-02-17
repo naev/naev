@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Red Eye">
- <pos>
-  <x>-32733.624362</x>
-  <y>2128.040959</y>
- </pos>
+ <pos x="-32733.624362" y="2128.040959"/>
  <GFX>
   <space>moon-A00.webp</space>
   <exterior>traderoom.webp</exterior>

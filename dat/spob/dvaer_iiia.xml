@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Dvaer IIIa">
- <pos>
-  <x>18099.291283</x>
-  <y>3275.976128</y>
- </pos>
+ <pos x="18099.291283" y="3275.976128"/>
  <GFX>
   <space>moon-A00.webp</space>
   <exterior>lava.webp</exterior>

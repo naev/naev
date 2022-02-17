@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fortitude I">
- <pos>
-  <x>-3973.895332</x>
-  <y>-4159.591375</y>
- </pos>
+ <pos x="-3973.895332" y="-4159.591375"/>
  <GFX>
   <space>A01.webp</space>
   <exterior>asteroid.webp</exterior>

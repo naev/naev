@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Gammacron V">
- <pos>
-  <x>17964.422940</x>
-  <y>9988.554651</y>
- </pos>
+ <pos x="17964.422940" y="9988.554651"/>
  <GFX>
   <space>J07.webp</space>
   <exterior>station00.webp</exterior>

@@ -6,10 +6,7 @@
   <interference>5.882353</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
- <pos>
-  <x>145.248810</x>
-  <y>251.809064</y>
- </pos>
+ <pos x="145.248810" y="251.809064"/>
  <spobs>
   <spob>Elixir I</spob>
  </spobs>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Racheka">
- <pos>
-  <x>-2670.288085</x>
-  <y>3099.441530</y>
- </pos>
+ <pos x="-2670.288085" y="3099.441530"/>
  <GFX>
   <space>M01.webp</space>
   <exterior>mining4.webp</exterior>

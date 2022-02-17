@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Delta Pavonis I">
- <pos>
-  <x>3454.768521</x>
-  <y>-3991.342595</y>
- </pos>
+ <pos x="3454.768521" y="-3991.342595"/>
  <GFX>
   <space>J04.webp</space>
   <exterior>forest.webp</exterior>

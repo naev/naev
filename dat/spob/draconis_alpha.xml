@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Draconis Alpha">
- <pos>
-  <x>-259.396052</x>
-  <y>11636.934797</y>
- </pos>
+ <pos x="-259.396052" y="11636.934797"/>
  <GFX>
   <space>K03.webp</space>
   <exterior>desertic.webp</exterior>
