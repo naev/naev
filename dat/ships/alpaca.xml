@@ -1,28 +1,28 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ship name="Llama">
+<ship name="Alpaca">
  <points>20</points>
  <base_type>Llama</base_type>
  <GFX size="47">llama</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Yacht</class>
- <price>120000</price>
+ <price>125000</price>
  <time_mod>1</time_mod>
- <trail_generator x="-12" y="-16" h="-2">nebula</trail_generator>
- <trail_generator x="-12" y="16" h="-2">nebula</trail_generator>
+ <trail_generator x="-10" y="-16" h="-2">nebula</trail_generator>
+ <trail_generator x="-10" y="16" h="-2">nebula</trail_generator>
  <trail_generator x="-12" y="-6" h="0">fire-thin</trail_generator>
  <trail_generator x="-12" y="0" h="0">fire-thin</trail_generator>
  <trail_generator x="-12" y="6" h="0">fire-thin</trail_generator>
  <fabricator>Melendez Corp.</fabricator>
- <description>One of the most widely used ships in the galaxy. Renowned for its stability and stubbornness. The design hasn't been modified much since its creation many, many cycles ago. It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
+ <description>Derived from one of the most widely used ships in the galaxy, the Llama, the Alpaca (known more commonly as the "Llama MK III") is a little more sleek though no less  stable and stubborn than it's earlier incarnation. This variant saw greater take up in Sirian space than other areas of the Galaxy hence its other moniker, the "Sirian Llama".</description>
  <characteristics>
   <crew>2</crew>
-  <mass>80</mass>
+  <mass>75</mass>
   <fuel_consumption>100</fuel_consumption>
   <cargo>15</cargo>
  </characteristics>
  <health>
-  <armour>25</armour>
+  <armour>20</armour>
   <armour_regen>0</armour_regen>
  </health>
  <slots>
@@ -38,13 +38,13 @@
   <structure size="small" />
  </slots>
  <stats>
-  <turn_mod>-20</turn_mod>
-  <speed_mod>-10</speed_mod>
-  <turn_mod>-10</turn_mod>
-  <cargo_mod>20</cargo_mod>
-  <armour_mod>10</armour_mod>
+  <turn_mod>-15</turn_mod>
+  <speed_mod>-5</speed_mod>
+  <turn_mod>-5</turn_mod>
+  <cargo_mod>15</cargo_mod>
+  <armour_mod>5</armour_mod>
   <cargo_inertia>-20</cargo_inertia>
-  <ew_hide>-10</ew_hide>
+  <ew_hide>-5</ew_hide>
  </stats>
  <tags>
   <tag>standard</tag>
