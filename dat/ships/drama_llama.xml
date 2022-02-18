@@ -40,7 +40,6 @@
   <structure size="small" />
  </slots>
  <stats>
-  <turn_mod>-15</turn_mod>
   <speed_mod>5</speed_mod>
   <turn_mod>-5</turn_mod>
   <cargo_mod>20</cargo_mod>
