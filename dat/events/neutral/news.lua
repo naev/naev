@@ -318,7 +318,7 @@ articles["Pirate"] = {
    --]]
    {
       tag = N_([[Emperor Weaker Than Ever]]),
-      desc = _([[Recent actions demonstrate the inefficiency and weakness of the Emperor. One of the last irrational decisions left Eridani without a defense fleet to protect the traders. It's a great time to be a pirate.]])
+      desc = _([[Recent actions demonstrate the inefficiency and weakness of the Emperor. One of the last irrational decisions left Eridani without a defence fleet to protect the traders. It's a great time to be a pirate.]])
    },
    --[[
       Human interest.

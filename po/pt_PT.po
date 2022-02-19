@@ -3143,7 +3143,7 @@ msgstr ""
 msgid ""
 "This powerful energy weapon is built to bombard a target from great range "
 "with ion bursts, causing debilitating damage to a target's shields and "
-"electrical systems, which can leave a ship effectively defenseless. It was "
+"electrical systems, which can leave a ship effectively defenceless. It was "
 "developed by the Za'lek to be used by their heavier droness to supplement "
 "the short range and high damage of their beams."
 msgstr ""
@@ -4118,7 +4118,7 @@ msgstr ""
 
 #: dat/outfits/structure/shield_capacitor_iv.xml:9
 msgid ""
-"The pinnacle in shield boosting technology, reinforcing the defenses of "
+"The pinnacle in shield boosting technology, reinforcing the defences of "
 "ships fighting on the front lines."
 msgstr ""
 
@@ -5058,7 +5058,7 @@ msgstr ""
 #: dat/outfits/weapons/laser_turret_mk1.xml:9
 msgid ""
 "A pair of laser cannons mounted on a rotating turret, providing excellent "
-"point-defense capabilities. With a full 360 degrees of rotation, laser "
+"point-defence capabilities. With a full 360 degrees of rotation, laser "
 "turrets provide affordable, energy-efficient firepower to courier vessels."
 msgstr ""
 
@@ -5205,7 +5205,7 @@ msgstr ""
 #: dat/outfits/weapons/plasma_turret_mk1.xml:9
 msgid ""
 "The plasma turret essentially takes a plasma blaster and mounts it on a "
-"turret. Its short range makes it ill-suited for defense, so it is not "
+"turret. Its short range makes it ill-suited for defence, so it is not "
 "especially popular with traders and merchants, but it has found a niche "
 "among inexperienced mercenaries who are not as well-practiced at aiming as "
 "the pros."
@@ -5381,7 +5381,7 @@ msgstr ""
 #: dat/outfits/weapons/turreted_gauss_gun.xml:9
 msgid ""
 "One of the more common countermeasures employed by low-budget merchant "
-"ships, the turret version of the Gauss Gun provides basic defense against "
+"ships, the turret version of the Gauss Gun provides basic defence against "
 "lone pirates. A more determined attacker is unlikely to be deterred, however."
 msgstr ""
 
@@ -5859,7 +5859,7 @@ msgstr ""
 msgid ""
 "The stock Admonisher is a powerful vessel, especially for its size. Through "
 "the usual Skull and Bones refit the Pirate Admonisher features improved "
-"manoeuvrability, more weapons space, and slightly improved defenses, at a "
+"manoeuvrability, more weapons space, and slightly improved defences, at a "
 "cost of cargo capacity and armour regeneration rates."
 msgstr ""
 
@@ -6520,7 +6520,7 @@ msgstr ""
 
 #: dat/ships/zalek_hephaestus.xml:18
 msgid ""
-"The crown of the House Za'lek Defense Fleet, these proud buttresses of the "
+"The crown of the House Za'lek Defence Fleet, these proud buttresses of the "
 "Za'lek's ideals frequently serve as the nerve centre of a Za'lek battle "
 "fleet, thanks to their superior sensor suite. The Hephaestus is rarely-seen, "
 "but commands respect."
@@ -6636,7 +6636,7 @@ msgstr ""
 #: dat/slots.xml:35
 msgid ""
 "This slot is used for the shell, the biological equivalent to Hull "
-"Modifications. The shell is the last line of defense for the organism, "
+"Modifications. The shell is the last line of defence for the organism, "
 "protecting critical organs from damage. It is also helps determine the "
 "organism's cargo space."
 msgstr ""
@@ -7997,7 +7997,7 @@ msgstr ""
 
 #: dat/spob/arcturus_gamma.xml:31
 msgid ""
-"Arcturus Gamma is the Empire's first line of defense when it comes to their "
+"Arcturus Gamma is the Empire's first line of defence when it comes to their "
 "core systems from the east. An imposing force force stationed here with "
 "constant routine patrols tries to make sure no undesirable ships make it "
 "into Empire space."
@@ -8265,10 +8265,10 @@ msgstr ""
 
 #: dat/spob/bastion_station.xml:29
 msgid ""
-"Bastion Station is one of the two primary defense, border guard, and patrol "
+"Bastion Station is one of the two primary defence, border guard, and patrol "
 "base stations leading into Za'lek space. As such, it is one of the few "
 "military expenditures that goes (largely) unchallenged even by the notorious "
-"Za'lek political scene. The House Za'lek Defense Force conducts most of "
+"Za'lek political scene. The House Za'lek Defence Force conducts most of "
 "their foreign contact here, where they can keep an eye on affairs."
 msgstr ""
 
@@ -8279,7 +8279,7 @@ msgstr ""
 #: dat/spob/bedimann_shipyards.xml:28
 msgid ""
 "These shipyards are one of the places where Za'lek vessels are built and "
-"sent out to the defense forces. It also maintains a small contingent of "
+"sent out to the defence forces. It also maintains a small contingent of "
 "Za'lek vessels at home to serve as a in-system guard."
 msgstr ""
 
@@ -8870,7 +8870,7 @@ msgstr ""
 #: dat/spob/coral_station.xml:26
 msgid ""
 "Coral Station acts as a border guard. The forces stationed here are the "
-"first line of defense against threats coming from outside Sirian space. The "
+"first line of defence against threats coming from outside Sirian space. The "
 "station inspects all trade traffic entering Sirius space this way as well as "
 "keeping an eye on outbound traffic too."
 msgstr ""
@@ -11808,7 +11808,7 @@ msgid ""
 "controlled territories. Though officially not a military complex, Inios does "
 "garrison far more combat capable ships that one might expect of a commercial "
 "station. Whenever the Dvaered send in skirmish fleets to try the Sirius "
-"defenses, it is Inios Station that sends them on their way home."
+"defences, it is Inios Station that sends them on their way home."
 msgstr ""
 
 #: dat/spob/inios_station.xml:32
@@ -12932,7 +12932,7 @@ msgid ""
 "In a strange twist of fate, Madeleine Station was named after the "
 "granddaughter of the first commander to be stationed here. The place serves "
 "as the Empire's southernmost military base. It was originally little more "
-"than a minor depot, but has grown into an important line of defense against "
+"than a minor depot, but has grown into an important line of defence against "
 "the southern pirates in recent cycles."
 msgstr ""
 
@@ -13123,7 +13123,7 @@ msgstr ""
 msgid ""
 "Marius Station used to be a customs station of the old Empire, checking "
 "traffic bound for Sol and the core Imperial systems. Now, in the post-"
-"Incident era, the station serves as the first line of defense from hostile "
+"Incident era, the station serves as the first line of defence from hostile "
 "elements that threaten the isolated colonies at Tau Prime and beyond. But "
 "since it is perpetually under-staffed and under-equipped, Marius Station is "
 "barely capable of maintaining its own presence in Raelid, let alone protect "
@@ -17264,7 +17264,7 @@ msgstr ""
 msgid ""
 "Tarsus Station is a Dvaered military base. It was constructed shortly after "
 "the Incident, when piracy and the FLF began to gain in power. Tarsus Station "
-"serves as one of the key fortifications in the defense of the Dvaered core "
+"serves as one of the key fortifications in the defence of the Dvaered core "
 "systems."
 msgstr ""
 
@@ -18229,7 +18229,7 @@ msgstr ""
 msgid ""
 "If you didn't know better, you'd think you were on a Dvaered military base, "
 "from the look of the bar. It's utterly utilitarian, though in the owner's "
-"defense an attempt has been made at fitting in with the station's purpose, "
+"defence an attempt has been made at fitting in with the station's purpose, "
 "testament the withered plant on the corner of the bar."
 msgstr ""
 
@@ -18599,7 +18599,7 @@ msgstr ""
 
 #: dat/spob/vigilance_station.xml:29
 msgid ""
-"Vigilance Station is the defense centre for Procyon. Unusually for a Za'lek "
+"Vigilance Station is the defence centre for Procyon. Unusually for a Za'lek "
 "military asset, it is well-supplied and cared for, with the staff being "
 "ready at a moment's notice to come to Procyon's aid."
 msgstr ""
@@ -26599,7 +26599,7 @@ msgid ""
 "    Benito clears her throat. \"But I'm sure you can guess what your mission "
 "is. You need to join with the others in the fight against the incoming "
 "Empire ships. You have to destroy all of the ships. I will be here helping "
-"to man the station; our defenses are weak, but better than nothing.\""
+"to man the station; our defences are weak, but better than nothing.\""
 msgstr ""
 
 #: dat/events/flf/flf_catastrophe.lua:64
@@ -27004,7 +27004,7 @@ msgid "Za'lek trash!"
 msgstr ""
 
 #: dat/events/minerva/altercation1.lua:46
-msgid "My defense protocols will make short work of you!"
+msgid "My defence protocols will make short work of you!"
 msgstr ""
 
 #: dat/events/minerva/altercation1.lua:47
@@ -29537,7 +29537,7 @@ msgstr ""
 #: dat/events/neutral/news.lua:321
 msgid ""
 "Recent actions demonstrate the inefficiency and weakness of the Emperor. One "
-"of the last irrational decisions left Eridani without a defense fleet to "
+"of the last irrational decisions left Eridani without a defence fleet to "
 "protect the traders. It's a great time to be a pirate."
 msgstr ""
 
@@ -33481,7 +33481,7 @@ msgstr ""
 #: dat/events/tutorial/tut_land.lua:164
 msgid ""
 "\"In general, due to the low manoeuvrability of large ships, you should "
-"consider using turret weapons and/or fighter bays for self defense. They "
+"consider using turret weapons and/or fighter bays for self defence. They "
 "allow you to worry less about aiming and more about getting jobs done. "
 "Turrets rely heavily on their tracking values. '#oMinimum Tracking#0' refers "
 "to the '#oEvasion#0' value of a target ship at which the turret will not be "
@@ -34047,7 +34047,7 @@ msgstr ""
 msgid "Trader Llama"
 msgstr ""
 
-#. hook an abstract deciding function to player entering a system when not part of defense
+#. hook an abstract deciding function to player entering a system when not part of defence
 #. Decides what to do when player either takes off starting planet or jumps into another system
 #: dat/factions/spawn/trader.lua:15 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168 dat/missions/neutral/dts_02.lua:108
@@ -37213,7 +37213,7 @@ msgstr ""
 msgid ""
 "\"My General has just retired from the High Command and is now looking to "
 "become the Warlord of a planetary system. Unfortunately, our loyal forces "
-"seem insufficient to take on any existing planetary defense forces head on.\n"
+"seem insufficient to take on any existing planetary defence forces head on.\n"
 "      \"However, it looks like there may be an opportunity for us in {sys}. "
 "Warlord Khan of {pnt} has been building his newest flagship, the Hawk, and "
 "will be onboard the Hawk as it tests its hyperspace capabilities. Since its "
@@ -54530,7 +54530,7 @@ msgstr ""
 msgid ""
 "\"How did it go? I see, the PUAAA haven't been discouraged by their supply "
 "ship getting taken out… This must mean they have someone or something else "
-"supporting them… It might also be worth trying to set up our own defense "
+"supporting them… It might also be worth trying to set up our own defence "
 "force. As the stakes get higher we can't keep on letting the PUAAA boss us "
 "around. I'll have to think of what we can do. In the meantime, we still have "
 "lots of things to do.\""
@@ -54563,7 +54563,7 @@ msgstr ""
 
 #: dat/missions/neutral/antlejos/ant08.lua:65
 msgid ""
-"\"Great! The core miner isn't really equipped with proper defenses, so it's "
+"\"Great! The core miner isn't really equipped with proper defences, so it's "
 "somewhat of a sitting duck. It was recently doing some operations on the "
 "Sander seafloor, but I gave them an offer they can't refuse and they're "
 "willing to come immediately if they get some protection given the recent… "
@@ -56669,7 +56669,7 @@ msgstr ""
 #.
 #. Notable events:
 #.
-#. * Stage one: From the bar, the player learns of a pirate fleet attacking the system and joins a defense force.
+#. * Stage one: From the bar, the player learns of a pirate fleet attacking the system and joins a defence force.
 #. * Stage two: The volunteer force attacks the pirates.
 #. * Stage three: When a sufficient number have been killed, the pirates retreat.
 #. * Stage four: The portmaster welcomes the fleet back and thanks them with money.
@@ -56712,7 +56712,7 @@ msgstr ""
 #.
 #. Notable events:
 #.
-#. * Stage one: From the bar, the player learns of a pirate fleet attacking the system and joins a defense force.
+#. * Stage one: From the bar, the player learns of a pirate fleet attacking the system and joins a defence force.
 #. * Stage two: The volunteer force attacks the pirates.
 #. * Stage three: When a sufficient number have been killed, the pirates retreat.
 #. * Stage four: The portmaster welcomes the fleet back and thanks them with money.
@@ -56755,7 +56755,7 @@ msgstr ""
 #.
 #. Notable events:
 #.
-#. * Stage one: From the bar, the player learns of a pirate fleet attacking the system and joins a defense force.
+#. * Stage one: From the bar, the player learns of a pirate fleet attacking the system and joins a defence force.
 #. * Stage two: The volunteer force attacks the pirates.
 #. * Stage three: When a sufficient number have been killed, the pirates retreat.
 #. * Stage four: The portmaster welcomes the fleet back and thanks them with money.
@@ -56810,7 +56810,7 @@ msgid ""
 "Shipping is at a standstill. It's a disaster.\"\n"
 "    There's a shout and you turn to see the portmaster standing at the door. "
 "\"Listen up,\" he bellows. \"The thugs out there have caught us without a "
-"defense fleet in system and somehow they've jammed our link with the rest of "
+"defence fleet in system and somehow they've jammed our link with the rest of "
 "the Empire. So, I'm here looking for volunteers. Everyone who steps forward "
 "will get forty thousand credits when they get back - and of course the "
 "thanks of a grateful planet and the pride of serving the Empire.\n"
@@ -56873,7 +56873,7 @@ msgstr ""
 msgid "Watch the action."
 msgstr ""
 
-#. hook an abstract deciding function to player entering a system when not part of defense
+#. hook an abstract deciding function to player entering a system when not part of defence
 #. Decides what to do when player either takes off starting planet or jumps into another system
 #: dat/missions/neutral/dts_00.lua:107 dat/missions/neutral/dts_01.lua:105
 #: dat/missions/neutral/dts_02.lua:111
@@ -56991,12 +56991,12 @@ msgstr ""
 msgid ""
 "The barman has just asked you for your order when the portmaster bursts "
 "though the door, out of breath. \"Pirates, all over the system!  The navy's "
-"on maneuvers. Quickly, we need to organize a defense.\"\n"
+"on maneuvers. Quickly, we need to organize a defence.\"\n"
 "    All the pilots in the room scramble to their feet. \"How many are there?"
 "\" someone asks. \"How long have they been in system?\" another calls out.\n"
 "    Into the confusion steps a steely-haired, upright, uniformed figure. Her "
 "stripes mark her as a navy Commodore.\n"
-"    \"I'm with the navy and I will organize the defense,\" her voice cuts "
+"    \"I'm with the navy and I will organize the defence,\" her voice cuts "
 "through the commotion. \"Who here is a pilot?  We must strike back quickly. "
 "I will arrange a reward for everyone who volunteers. We'll need as many "
 "pilots as possible. Follow me.\""
@@ -72811,7 +72811,7 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh10.lua:65
 msgid ""
 "\"Shit! Not again. At least they didn't catch us with our pants down. I've "
-"prepared some defense drones, but I don't think they'll be much help. We "
+"prepared some defence drones, but I don't think they'll be much help. We "
 "must not let {pnt} fall! Try to defend the station and I'll see what I can "
 "do over here!\""
 msgstr ""
@@ -73009,11 +73009,11 @@ msgstr ""
 #. Get nearest enemy
 #. Deploy drones if close to the planet
 #: dat/missions/zalek/blackhole/zbh10.lua:251
-msgid "Deploying defense drones!"
+msgid "Deploying defence drones!"
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh10.lua:255
-msgid "Defense Drone"
+msgid "Defence Drone"
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh10.lua:272

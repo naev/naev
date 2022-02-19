@@ -43,7 +43,7 @@ local dv_msgs = {
    _("Za'lek trash!"),
 }
 local zl_msgs = {
-   _("My defense protocols will make short work of you!"),
+   _("My defence protocols will make short work of you!"),
    _("I'll teach you physics Dvaered punk!"),
    _("My ship's hull is less thick than your Dvaered skull!"),
    _("You Dvaereds smell worse than my vials of thiol!"),

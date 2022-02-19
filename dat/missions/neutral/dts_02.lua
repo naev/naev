@@ -27,7 +27,7 @@
 
       Notable events:
 
-         * Stage one: From the bar, the player learns of a pirate fleet attacking the system and joins a defense force.
+         * Stage one: From the bar, the player learns of a pirate fleet attacking the system and joins a defence force.
          * Stage two: The volunteer force attacks the pirates.
          * Stage three: When a sufficient number have been killed, the pirates retreat.
          * Stage four: The portmaster welcomes the fleet back and thanks them with money.
@@ -94,7 +94,7 @@ function create()
       misn.setTitle( _("Observe the action."))
       mem.defender = false
 
-  -- hook an abstract deciding function to player entering a system when not part of defense
+  -- hook an abstract deciding function to player entering a system when not part of defence
       hook.enter( "enter_system")
    end
 end

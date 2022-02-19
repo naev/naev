@@ -30,7 +30,7 @@
 
       Notable events:
 
-         * Stage one: From the bar, the player learns of a pirate fleet attacking the system and joins a defense force.
+         * Stage one: From the bar, the player learns of a pirate fleet attacking the system and joins a defence force.
          * Stage two: The volunteer force attacks the pirates.
          * Stage three: When a sufficient number have been killed, the pirates retreat.
          * Stage four: The portmaster welcomes the fleet back and thanks them with money.
@@ -66,7 +66,7 @@ function create ()
 
    if tk.yesno( _("In the bar"), fmt.f( _([[The bar is buzzing when you walk in. All the pilots are talking at once. Every screen in sight carries the same news feed: live footage of a space battle in orbit around {pnt}.
     "A big fleet of pirates have just invaded the system," a woman wearing Nexus insignia explains. "They swarm any ship that tries to take off. Shipping is at a standstill. It's a disaster."
-    There's a shout and you turn to see the portmaster standing at the door. "Listen up," he bellows. "The thugs out there have caught us without a defense fleet in system and somehow they've jammed our link with the rest of the Empire. So, I'm here looking for volunteers. Everyone who steps forward will get forty thousand credits when they get back - and of course the thanks of a grateful planet and the pride of serving the Empire.
+    There's a shout and you turn to see the portmaster standing at the door. "Listen up," he bellows. "The thugs out there have caught us without a defence fleet in system and somehow they've jammed our link with the rest of the Empire. So, I'm here looking for volunteers. Everyone who steps forward will get forty thousand credits when they get back - and of course the thanks of a grateful planet and the pride of serving the Empire.
     "Are you brave enough?"]]), {pnt=mem.this_planet} ) ) then
       misn.accept()
       tk.msg( _("Volunteers"), _([[You step forward and eight other pilots join you. Together, all of you march off to your ships and take off to face the pirate horde.]]))
@@ -91,7 +91,7 @@ function create ()
       misn.setTitle( _("Watch the action."))
       mem.defender = false
 
-      -- hook an abstract deciding function to player entering a system when not part of defense
+      -- hook an abstract deciding function to player entering a system when not part of defence
       hook.enter( "enter_system")
    end
 end

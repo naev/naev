@@ -27,7 +27,7 @@
 
       Notable events:
 
-         * Stage one: From the bar, the player learns of a pirate fleet attacking the system and joins a defense force.
+         * Stage one: From the bar, the player learns of a pirate fleet attacking the system and joins a defence force.
          * Stage two: The volunteer force attacks the pirates.
          * Stage three: When a sufficient number have been killed, the pirates retreat.
          * Stage four: The portmaster welcomes the fleet back and thanks them with money.
@@ -62,10 +62,10 @@ function create()
       misn.finish(false)
    end
 
-   if tk.yesno( _("In the bar"), _([[The barman has just asked you for your order when the portmaster bursts though the door, out of breath. "Pirates, all over the system!  The navy's on maneuvers. Quickly, we need to organize a defense."
+   if tk.yesno( _("In the bar"), _([[The barman has just asked you for your order when the portmaster bursts though the door, out of breath. "Pirates, all over the system!  The navy's on maneuvers. Quickly, we need to organize a defence."
     All the pilots in the room scramble to their feet. "How many are there?" someone asks. "How long have they been in system?" another calls out.
     Into the confusion steps a steely-haired, upright, uniformed figure. Her stripes mark her as a navy Commodore.
-    "I'm with the navy and I will organize the defense," her voice cuts through the commotion. "Who here is a pilot?  We must strike back quickly. I will arrange a reward for everyone who volunteers. We'll need as many pilots as possible. Follow me."]]) ) then
+    "I'm with the navy and I will organize the defence," her voice cuts through the commotion. "Who here is a pilot?  We must strike back quickly. I will arrange a reward for everyone who volunteers. We'll need as many pilots as possible. Follow me."]]) ) then
       misn.accept()
       tk.msg( _("Volunteers"), _([["Take as many out of the fight early as you can," advises the Commodore before you board your ships. "If you can't chase them off, you might at least improve the odds. Good luck."]]))
       misn.setReward( fmt.f( _("{credits} and the pleasure of serving the Empire."), {credits=fmt.credits(mem.reward)}) )
@@ -89,7 +89,7 @@ function create()
       misn.setTitle( _("Observe the action."))
       mem.defender = false
 
-      -- hook an abstract deciding function to player entering a system when not part of defense
+      -- hook an abstract deciding function to player entering a system when not part of defence
       hook.enter( "enter_system")
    end
 end
