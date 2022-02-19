@@ -56,7 +56,7 @@ function cens.testInRange( detected, fact_list )
             if not inlist( detected, p ) then -- Has not to be in pilots list
                detected[#detected+1] = p
                p:memory().loiter = 0 -- Trick to make the pilot leave asap
-               player.msg( fmt.f(_("Data on a {fact_name} ship acquired"), {fact_name=p:faction():name()} ) )
+               player.msg( fmt.f(_("Data on a {fact_name} ship acquired"), {fact_name=p:faction()} ) )
             end
          end
       end

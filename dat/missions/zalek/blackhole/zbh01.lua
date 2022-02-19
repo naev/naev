@@ -113,7 +113,7 @@ He looks pale.]]))
    }
    vn.label("cont01")
    vn.na(_("You and Zach don your space suits and begin to search the atmosphere-less breached station in eerie silence. A floating spoon, some dirty boots… It seems like the station had inhabitants in it until quite recently. Although the base is quite a mess, knowing the Za'lek, chances are that was the usual state of affairs at the station. As you go through all the rooms one by one, but are unable to find any signs of life. During the whole ordeal, Zach remains silent and concentrated."))
-   vn.na(fmt.f(_("You eventually make your way around the entire station and end up back at the docks, near your ship, {shipname}. Zach seems to be staring at some of the of the damage. As you struggle with how to break the silence, you notice that Zach has become fixed on some structural damage."), {shipname=player.pilot():name()} ))
+   vn.na(fmt.f(_("You eventually make your way around the entire station and end up back at the docks, near your ship, {shipname}. Zach seems to be staring at some of the of the damage. As you struggle with how to break the silence, you notice that Zach has become fixed on some structural damage."), {shipname=player.pilot()} ))
    z(_([["Say, doesn't that over there look like bite marks?"]]))
    vn.na(_([[You look over at where Zach is pointing, but can't really make out what he's getting at. However, after a while of staring and squinting, you seem to make out some damage that could indeed be bite marks, but what on earth would bite a station?]]))
    z(_([["Something isn't right here."

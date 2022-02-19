@@ -69,6 +69,8 @@ def analyze(fn):
 
             keys = set(re.findall(r'{([^{}:]*)(?::[^{}]*|)}', m.group('bstr') or m.group('qstr') or ''))
             tab = m.group('table')[1:-1].strip().rstrip(',')
+            if ':name()' in tab:
+                yield tab, tab.replace(':name()', ''), m.group(0)
             l = 1 + len(tab)
             while l > len(tab):
                 l = len(tab)
