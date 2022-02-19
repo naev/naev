@@ -64,7 +64,7 @@ function accept()
     vn.scene()
     local mensing = vn.newCharacter( nebu_research.vn_mensing() )
     vn.transition("fade")
-    mensing(fmt.f(_([["{player}? Great timing! I need someone insane.. eh.. I meant brave enough to test the nebula resistant shielding prototype in a realistic testing environment. And there is no better place for this tests than the Sol nebula itself!"]]), {player=player:name()}))
+    mensing(fmt.f(_([["{player}? Great timing! I need someone insane.. eh.. I meant brave enough to test the nebula resistant shielding prototype in a realistic testing environment. And there is no better place for this tests than the Sol nebula itself!"]]), {player=player.name()}))
     mensing(_([["No no, it's absolutely safe! We ran some basic tests on the device in a simulation chamber and tested it on a ship in space. It works absolutely fine so far. The next step is to actually test it within the Sol nebula itself. This is your chance to make history! Are you ready?"]]))
     vn.menu( {
         { _("Accept the job"), "accept" },
