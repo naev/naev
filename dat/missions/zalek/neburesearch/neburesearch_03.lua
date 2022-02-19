@@ -283,8 +283,8 @@ function enter_ship()
         end
     end )
     vn.na(_([[You make your way to the institute where you are supposed to give the talk, following the signs. On arriving you ask around where you should head to for your talk. Apparently you were already awaited. You are lead to a rather small seminar room. Finally you are ready to give your talk and a few scientist take seat. Actually you expected more than 17 listeners. Maybe this talk is not such a big deal as you expected. They wouldn't just send you to an important presentation, right?]]))
-    vn.na(mem.text1)
-    vn.na(mem.text2)
+    vn.na(function() return mem.text1 end)
+    vn.na(function() return mem.text2 end)
     vn.na(_([[Finally, you are finished with your text and sigh in relief. After a brief applause, someone raises his hand. Apparently, he wants to ask a question. What should you do?
 You haven't understood the question, not even a single word.]]))
     vn.menu( {
