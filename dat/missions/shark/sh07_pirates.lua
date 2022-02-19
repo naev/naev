@@ -82,7 +82,7 @@ function accept()
    mem.godname = fmt.f( _("{name} II"), {name=pilotname.pirate()} )
 
    if tk.yesno(_("The mission"), _([["Hello again. As you know, I've agreed with the FLF on a contract that will extend our sales of ships to them substantially. Of course, this deal must remain a secret, which is why it is being done through a false black market dealer.
-    "However, we have reason to suspect that a few key influential pirates may have their eyes on the FLF as possible buyers of the Skull & Bones pirate ships. We don't think the FLF will have any interest in those ships, but the pirates' ambitions could give them motivation to attack our false dealer's trade posts, destroying our deal with the FLF anyway. We, of course, can't have that.
+    "However, we have reason to suspect that a few key influential pirates may have their eyes on the FLF as possible buyers of the Skull &amp; Bones pirate ships. We don't think the FLF will have any interest in those ships, but the pirates' ambitions could give them motivation to attack our false dealer's trade posts, destroying our deal with the FLF anyway. We, of course, can't have that.
     "So what we want you to do, quite simply, is to eliminate these pirates. There's not that many of them; there are four pirates we need eliminated, and thankfully, they're all spread out. That being said, some of them do have quite big ships, so you will have to make sure you can handle that. Are you willing to do this job for us?"]])) then
       misn.accept()
       tk.msg(_("Very good"), fmt.f(_([["So, here are the details we have gathered about these pirates:
@@ -275,7 +275,7 @@ end
 function generic_dead()
    --Are there still other pirates to kill ?
    if mem.gawdead == true and mem.kerdead1 == true and mem.kerdead2 == true and mem.goddead == true then
-      tk.msg(_("Mission accomplished"), fmt.f(_("You have killed the four pirates. Now to return to {sys} and collect your payment..."), {sys=paysys}))
+      tk.msg(_("Mission accomplished"), fmt.f(_([["You have killed the four pirates. Now to return to {sys} and collect your payment..."]]), {sys=paysys}))
       mem.stage = 1
       misn.osdActive(2)
       mem.marker2 = misn.markerAdd(paypla, "low")
@@ -283,5 +283,5 @@ function generic_dead()
 end
 
 function generic_jumped()
-   tk.msg(_("Target is gone!"), fmt.f(_("It seems the pirate left. Don't worry: I'll bet that if you come back a little later, they will be back.")
+   tk.msg(_("Target is gone!"), _([["It seems the pirate left. Don't worry: I'll bet that if you come back a little later, they will be back."]]))
 end
