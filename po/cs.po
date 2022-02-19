@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-02-18 19:12-0500\n"
+"POT-Creation-Date: 2022-02-19 12:45-0500\n"
 "PO-Revision-Date: 2022-01-27 17:54+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -1581,7 +1581,7 @@ msgstr ""
 #: dat/missions/shark/sh02_tapping.lua:328
 #: dat/missions/shark/sh02_tapping.lua:333
 #: dat/missions/soromid/comingout/srm_comingout3.lua:89
-#: dat/missions/soromid/comingout/srm_comingout5.lua:85
+#: dat/missions/soromid/comingout/srm_comingout5.lua:84
 #: dat/missions/soromid/comingout/srm_comingout6.lua:110
 msgid "Mercenary"
 msgstr ""
@@ -1696,8 +1696,8 @@ msgstr ""
 
 #. Time for !!FUN!!
 #: dat/faction.xml:674 dat/faction.xml:703
-#: dat/missions/soromid/comingout/srm_comingout3.lua:123
-#: dat/missions/soromid/comingout/srm_comingout5.lua:126
+#: dat/missions/soromid/comingout/srm_comingout3.lua:90
+#: dat/missions/soromid/comingout/srm_comingout5.lua:85
 #: dat/missions/zalek/particlephysics/zpp04.lua:183
 #: dat/missions/zalek/particlephysics/zpp04.lua:186
 msgid "Thugs"
@@ -1788,9 +1788,9 @@ msgstr ""
 #: dat/outfits/accessory/air_freshener.xml:11
 msgid ""
 "Apparently air fresheners have been traditionally used in human vehicles as "
-"an ornament for ages. They used to have scents, but since they have no "
-"effect with modern ships powerful filtration system, these days they are for "
-"cosmetic purposes only."
+"ornaments. They used to have scents but, since these have no impact with "
+"modern ships' powerful filtration systems, these days they are entirely "
+"cosmetic."
 msgstr ""
 
 #: dat/outfits/accessory/black_cat_doll.xml:2
@@ -1799,8 +1799,8 @@ msgstr ""
 
 #: dat/outfits/accessory/black_cat_doll.xml:11
 msgid ""
-"A crude doll of a black cat made from authentic \"Felis catus\" fur you that "
-"was all over your ship. It's quite cute."
+"A crude doll of a black cat made from authentic \"Felis catus\" fur you made "
+"that was all over your ship. It's quite cute."
 msgstr ""
 
 #: dat/outfits/accessory/black_cat_doll.xml:13
@@ -1815,9 +1815,9 @@ msgstr ""
 #: dat/outfits/accessory/broken_nebular_shielding_prototype.xml:11
 msgid ""
 "A broken prototype for a novel shielding device that is supposed to enable "
-"travels into the Sol nebula. However, due to its malfunction you almost "
-"died. It seams, however, to absorb harmful energy and emit heat radiation "
-"into space."
+"travel into the Sol Nebula. However, due to its malfunction you almost died. "
+"On the other hand it does seem to absorb harmful energy and emit heat "
+"radiation into space."
 msgstr ""
 
 #: dat/outfits/accessory/commemorative_stein.xml:2
@@ -1829,7 +1829,7 @@ msgid ""
 "This is a stein commemorating the terraforming and establishment of a "
 "permanent colony on Antlejos V. The stein is intricately engraved with what "
 "seems to be scenes from the short history of the colony. You can make out "
-"what seems to be some individuals wrestling, lots of heavy machinery, and "
+"what appears to be some individuals wrestling, lots of heavy machinery, and "
 "people doing some sort of circle dance. Did that all happen? On the bottom "
 "there is an inscription saying \"Screw the PUAAA, long live the Hero of "
 "Antlejos!\" with an illegible signature."
@@ -1843,11 +1843,12 @@ msgstr ""
 msgid ""
 "When does a gentleman use the head of another gentleman as a trophy in their "
 "bathroom? And when is it more proper to use it as a mug? When is it allowed "
-"to burn the house of one of your victims, and when is it an absolute "
+"to burn the house of one of your victims? And when is it an absolute "
 "misstep? Lord Chainsaw, one of the most successful Warlords of our time, "
-"answers those thorny questions and many other in this essential little book. "
-"\"This book has allowed me to quickly work my way up through the highest "
-"ranks\" -- Colonel Urnus, Executive Office Manager at the High Command"
+"answers these thorny questions and many others in this essential little "
+"book. \"This book has allowed me to quickly work my way up through the "
+"highest ranks\" -- Colonel Urnus, Executive Office Manager at the High "
+"Command"
 msgstr ""
 
 #: dat/outfits/accessory/fuzzy_dice.xml:2
@@ -1857,9 +1858,9 @@ msgstr ""
 #: dat/outfits/accessory/fuzzy_dice.xml:11
 msgid ""
 "A pair of fuzzy dice that can be hung inside your ship. Apparently they are "
-"supposed to bring you good luck. This particular pair was said to belong to "
-"starship pilot Mireia, who was famous for recovering artefacts from the "
-"nebula before she disappeared mysteriously."
+"supposed to bring you good fortune. This particular pair is said to have "
+"belonged to starship pilot Mireia, who was famous for recovering artefacts "
+"from the Nebula before she disappeared mysteriously."
 msgstr ""
 
 #: dat/outfits/accessory/fuzzy_dice.xml:12
@@ -1932,7 +1933,7 @@ msgstr ""
 
 #: dat/outfits/accessory/satellite_mockup.xml:11
 msgid ""
-"A mock-up of a satellite you helped launch into the nebula. It even has cute "
+"A mock-up of a satellite you helped launch into the Nebula. It even has cute "
 "blinking lights!"
 msgstr ""
 
@@ -1973,10 +1974,10 @@ msgstr ""
 
 #: dat/outfits/accessory/trading_card_common.xml:11
 msgid ""
-"A #oHyena#0 trading card game card of common rarity. It describes into "
-"detail all the important statistics of the Hyena. Did you know that early "
-"models of the Hyena put so much strain on the pilots that it could crush "
-"them during high acceleration?"
+"A #oHyena#0 trading card game card of common rarity. It describes in detail "
+"all the important statistics of the Hyena. Did you know that early models of "
+"the Hyena put so much strain on the pilots that it could crush them during "
+"high acceleration?"
 msgstr ""
 
 #: dat/outfits/accessory/trading_card_rare.xml:2
@@ -1997,7 +1998,7 @@ msgstr ""
 #: dat/outfits/accessory/trading_card_uncommon.xml:11
 msgid ""
 "A #oDvaered Vigilance#0 trading card game card of #buncommon#0 rarity. It "
-"describes into detail all the important statistics of the Dvaered Vigilance. "
+"describes in detail all the important statistics of the Dvaered Vigilance. "
 "Did you know that the Vigilance has triply redundant life support systems, "
 "allowing the crew to man it past damage that would usually incapacitate "
 "normal ships?"
@@ -3759,7 +3760,7 @@ msgstr ""
 #: dat/outfits/maps/map_thurion.xml:7
 msgid ""
 "This map provides the hidden route to the Thurion core systems outside of "
-"the nebula."
+"the Nebula."
 msgstr ""
 
 #: dat/outfits/maps/map_zalek_core.xml:2
@@ -3786,11 +3787,11 @@ msgstr ""
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:8
 msgid ""
-"Through marksman craftsmanship, pirate software engineers are able to create "
-"near perfect replicas of the Heavy Combat Vessel License. However, this "
-"comes at a significant mark-up compared to the standard license prices. This "
-"license will authorize you to buy cruiser and carrier-class ships on worlds "
-"that perform background checks."
+"Through long-honed craftsmanship, pirate software engineers are able to "
+"create near perfect replicas of the Heavy Combat Vessel License. However, "
+"this comes at a significant mark-up compared to the standard license prices. "
+"This license will authorize you to buy cruiser and carrier-class ships on "
+"worlds that perform background checks."
 msgstr ""
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:11
@@ -3804,11 +3805,11 @@ msgstr ""
 
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:8
 msgid ""
-"Through marksman craftsmanship, pirate software engineers are able to create "
-"near perfect replicas of the Heavy Weapon License. However, this comes at a "
-"significant mark-up compared to the standard license prices. This license "
-"will authorize you to buy and use heavy weapons like the heavy ion turret on "
-"worlds that perform background checks."
+"Through long-honed craftsmanship, pirate software engineers are able to "
+"create near perfect replicas of the Heavy Weapon License. However, this "
+"comes at a significant mark-up compared to the standard license prices. This "
+"license will authorize you to buy and use heavy weapons, like the heavy ion "
+"turret, on worlds that perform background checks."
 msgstr ""
 
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:11
@@ -3923,8 +3924,8 @@ msgstr ""
 
 #: dat/outfits/misc/mercenary_license.xml:7
 msgid ""
-"This license will authorize you to do mercenary missions and collect "
-"bounties."
+"This license will authorize you to do mercenary missions and, more "
+"importantly, collect bounties."
 msgstr ""
 
 #: dat/outfits/structure/active_plating.xml:2
@@ -4325,7 +4326,7 @@ msgstr ""
 
 #: dat/outfits/unique/fake_transponder.xml:11
 msgid ""
-"A fake transponder to make ship appear like a non-descript and harmless "
+"A fake transponder to make ships appear to be a non-descript and harmless "
 "independent ship."
 msgstr ""
 
@@ -4357,10 +4358,10 @@ msgstr ""
 #: dat/outfits/unique/valkyrie_beam.xml:10
 msgid ""
 "The Valkyrie Beam is a heavily modified version of the Ragnarok Beam, where "
-"the shields of the ship are significantly rerouted to to the beam weapon to "
+"the shields of the ship are significantly rerouted into the beam weapon to "
 "increase the output damage. The result is an incredibly potent beam that has "
 "a tendency to leave the ship as a sitting duck if it is unable to destroy "
-"the target in a single swipe."
+"the target in a single shot."
 msgstr ""
 
 #: dat/outfits/utility/asteroid_scanner.xml:2
@@ -4607,7 +4608,7 @@ msgstr ""
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:11
 msgid ""
 "Developed to solve needle in haystack-type problems, the Pinpoint Combat AI "
-"excels at finding and locking on small objects in the vastness of space. "
+"excels at finding and locking onto small objects in the vastness of space. "
 "Through fusing it with the ship's missile launching systems, the AI is able "
 "to increase both the range and the lock-on speed of all missile launchers on "
 "the ship."
@@ -4732,7 +4733,7 @@ msgstr ""
 #: dat/outfits/utility/hidden_jump_scanner.xml:9
 msgid ""
 "A specialized piece of sensor technology that can scan its immediate "
-"surroundings for unusual anomalies in the fabric of space. Although short "
+"surroundings for unusual anomalies in the fabric of space. Although short-"
 "ranged and only capable of scanning for a limited amount of time before "
 "needing to recharge, this scanner is capable of discovering jump points that "
 "regular sensors can't detect."
@@ -4790,11 +4791,12 @@ msgstr ""
 
 #: dat/outfits/utility/hullcoating/nebula_resistant_coating.xml:10
 msgid ""
-"Protecting ships from the nebula radiation is not an easy task given the "
+"Protecting ships from nebula radiation is not an easy task given the "
 "fluctuations and parameters of the different types of radiation being "
-"emitted, which are yet not fully understood. While not making a ship immune "
-"to the nebula effects, this hull coating does make a ship significantly more "
-"resistant, although prolonged exposure is still not recommended."
+"emitted, much of which is not fully understood. While not making a ship "
+"immune to the Nebula effects, this hull coating does make a ship "
+"significantly more resistant, although prolonged exposure is still not "
+"recommended."
 msgstr ""
 
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:2
@@ -4804,8 +4806,8 @@ msgstr ""
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:9
 msgid ""
 "Modern ship sensors are based on detecting gravitational anormalities to "
-"detect ships and are very robust in most situations. Nexus Shipyards have "
-"developed a breakthrough hull coating that using quantum entangled self-"
+"spot ships and are very robust in most situations. Nexus Shipyards have "
+"developed a breakthrough hull coating that uses quantum entangled self-"
 "projections that can confuse gravitational readings."
 msgstr ""
 
@@ -4954,12 +4956,12 @@ msgstr ""
 
 #: dat/outfits/utility/sk_heavy_plasma_drill.xml:10
 msgid ""
-"Given the popularity of the Plasma Drill and the inexhaustible demand of "
+"Given the popularity of the Plasma Drill and the inexhaustible demand for "
 "resources by human civilization, Schafer & Kane Industries produced a heavy "
-"variant of the same. The new design makes no compromises on functionality at "
+"variant of the same. The new design makes no compromises in functionality at "
 "the cost of significantly increased size requirements. However, for the "
-"ships that can outfit it, the Heavy Plasma Drill can convert them into a "
-"formidable mining vessel."
+"ships that can outfit it, the Heavy Plasma Drill can convert them into "
+"formidable mining vessels."
 msgstr ""
 
 #: dat/outfits/utility/sk_heavy_plasma_drill.xml:11
@@ -4973,10 +4975,10 @@ msgstr ""
 
 #: dat/outfits/utility/sk_plasma_drill.xml:10
 msgid ""
-"The S&K Plasma Drill is an alternate approach to the conventional mining "
-"lances. Although it requires getting up close to the asteroid and accurate "
-"controls to be able to extract minerals, it obtains significantly better "
-"yields. An integrated asteroid scanner is just the icing on the cake."
+"The S&K Plasma Drill is an alternate approach to conventional mining lances. "
+"Although it requires getting up close to the asteroid and accurate controls "
+"to be able to extract minerals, it obtains significantly better yields. An "
+"integrated asteroid scanner is just the icing on the cake."
 msgstr ""
 
 #: dat/outfits/utility/targeting_array.xml:2
@@ -5062,7 +5064,7 @@ msgstr ""
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:11
 msgid ""
 "This is an upgrade to the sensor systems that is able to learn from nearby "
-"hostile ship common weaknesses. The AI is able to extract subtle features "
+"hostile ships common weaknesses. The AI is able to extract subtle features "
 "that the human eye misses and extrapolate into great detail to point out "
 "weaknesses in enemy ships. The more ships it is able to analyse and "
 "extrapolate from, the stronger the effect."
@@ -6046,7 +6048,7 @@ msgstr ""
 msgid ""
 "The Koala is your standard cargo vessel. It's a small ship with little "
 "weapon space but a decent amount of cargo space. Good for the entrepreneur "
-"working his way area a vast space trading empire."
+"working looking to turn a profit while making their way across the stars."
 msgstr ""
 
 #: dat/ships/lancelot.xml:2
@@ -54533,6 +54535,10 @@ msgid ""
 msgstr ""
 
 #. blaring alarm
+#: dat/missions/minerva/pirate4.lua:240
+msgid "Suddenly an alarm starts blaring throughout the ship."
+msgstr ""
+
 #. Using boars as slang for Dvaered
 #: dat/missions/minerva/pirate4.lua:242
 msgid ""
@@ -62386,12 +62392,12 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/wastedump.lua:89
-#: dat/missions/soromid/comingout/srm_comingout5.lua:107
+#: dat/missions/soromid/comingout/srm_comingout5.lua:108
 msgid "Waste Containers"
 msgstr ""
 
 #: dat/missions/neutral/wastedump.lua:89
-#: dat/missions/soromid/comingout/srm_comingout5.lua:107
+#: dat/missions/soromid/comingout/srm_comingout5.lua:108
 msgid "A bunch of waste containers leaking all sorts of indescribable liquids."
 msgstr ""
 
@@ -69916,10 +69922,10 @@ msgstr ""
 #. Spawn Chelsea
 #: dat/missions/soromid/comingout/srm_comingout2.lua:37
 #: dat/missions/soromid/comingout/srm_comingout3.lua:46
-#: dat/missions/soromid/comingout/srm_comingout3.lua:91
+#: dat/missions/soromid/comingout/srm_comingout3.lua:94
 #: dat/missions/soromid/comingout/srm_comingout4.lua:38
 #: dat/missions/soromid/comingout/srm_comingout5.lua:42
-#: dat/missions/soromid/comingout/srm_comingout5.lua:88
+#: dat/missions/soromid/comingout/srm_comingout5.lua:89
 #: dat/missions/soromid/comingout/srm_comingout6.lua:54
 #: dat/missions/soromid/comingout/srm_comingout6.lua:112
 msgid "Chelsea"
@@ -70085,7 +70091,7 @@ msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:128
 #: dat/missions/soromid/comingout/srm_comingout4.lua:125
-#: dat/missions/soromid/comingout/srm_comingout5.lua:132
+#: dat/missions/soromid/comingout/srm_comingout5.lua:128
 #, fuzzy
 #| msgid "Thug"
 msgid "Thug {ship}"
@@ -70120,12 +70126,12 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:182
-#: dat/missions/soromid/comingout/srm_comingout5.lua:162
+#: dat/missions/soromid/comingout/srm_comingout5.lua:158
 msgid "Mission Failed"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:182
-#: dat/missions/soromid/comingout/srm_comingout5.lua:162
+#: dat/missions/soromid/comingout/srm_comingout5.lua:158
 msgid "You have lost contact with Chelsea and therefore failed the mission."
 msgstr ""
 
@@ -70384,11 +70390,11 @@ msgid ""
 "all this garbage...\""
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:152
+#: dat/missions/soromid/comingout/srm_comingout5.lua:148
 msgid "The Unbearable Smell Now Ends"
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:152
+#: dat/missions/soromid/comingout/srm_comingout5.lua:148
 msgid ""
 "As you dock, you can't help but notice the foul smell of garbage all around "
 "you. The planet really does fit the name. You grimace as you watch workers "
@@ -70399,7 +70405,7 @@ msgid ""
 "hold of their ship clean."
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:158
+#: dat/missions/soromid/comingout/srm_comingout5.lua:154
 msgid ""
 "You helped Chelsea get rid of a load of garbage they naively agreed to take "
 "to The Stinker as a mission, defending them from thugs along the way."
@@ -73554,6 +73560,12 @@ msgid ""
 "\""
 msgstr ""
 
+#: dat/missions/zalek/blackhole/zbh04.lua:113
+msgid ""
+"A couple of drones fly past you and head towards the feral bioship, which "
+"reacts in fear and runs away until you can barely see it in the distance."
+msgstr ""
+
 #: dat/missions/zalek/blackhole/zbh04.lua:114
 msgid ""
 "\"Fear of drones? Something must have happened it to react this way. Very "
@@ -75448,6 +75460,13 @@ msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh11.lua:246
 msgid "I wonder how close we can get…"
+msgstr ""
+
+#: dat/missions/zalek/blackhole/zbh11.lua:263
+msgid ""
+"You hook up to the damage drone and are able to access the control panel. "
+"Since Zach seems to be distracted, it seems like you have to access it "
+"yourself."
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh11.lua:281
