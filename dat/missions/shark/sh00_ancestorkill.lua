@@ -99,7 +99,6 @@ function land()
    if spob.cur() == mispla and mem.stage == 4 then
       tk.msg(_("Congratulations!"), _([[As you step on the ground, Arnold Smith greets you. "That was a great demonstration! Thank you. I haven't been able to speak to the Baron about the results yet, but I am confident he will be impressed." He hands you your pay. "I may have another mission for you later. Be sure to check back!"]]))
       player.pay(shark.rewards.sh00)
-      misn.osdDestroy()
       hook.rm(mem.enterhook)
       hook.rm(mem.landhook)
       hook.rm(mem.jumpouthook)
