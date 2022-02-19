@@ -123,8 +123,6 @@ function land ()
       pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay(shark.rewards.sh07)
       player.outfitAdd("Sandwich Holder")
-      hook.rm(mem.enterhook)
-      hook.rm(mem.landhook)
       shark.addLog( _([[You eliminated some pirates that were about to get in the way of Nexus Shipyards' business.]]) )
       misn.finish(true)
    end
@@ -274,7 +272,7 @@ end
 function generic_dead()
    --Are there still other pirates to kill ?
    if mem.gawdead == true and mem.kerdead1 == true and mem.kerdead2 == true and mem.goddead == true then
-      tk.msg(_("Mission accomplished"), fmt.f(_([["You have killed the four pirates. Now to return to {sys} and collect your payment..."]]), {sys=paysys}))
+      tk.msg(_("Mission accomplished"), fmt.f(_([[You have killed the four pirates. Now to return to {sys} and collect your payment...]]), {sys=paysys}))
       mem.stage = 1
       misn.osdActive(2)
       mem.marker2 = misn.markerAdd(paypla, "low")
@@ -282,5 +280,5 @@ function generic_dead()
 end
 
 function generic_jumped()
-   tk.msg(_("Target is gone!"), _([["It seems the pirate left. Don't worry: I'll bet that if you come back a little later, they will be back."]]))
+   tk.msg(_("Target is gone!"), _([[It seems the pirate left. Don't worry: I'll bet that if you come back a little later, they will be back.]]))
 end

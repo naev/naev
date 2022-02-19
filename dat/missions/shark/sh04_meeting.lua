@@ -95,8 +95,6 @@ function land()
          tk.msg(_("End of mission"), _([[Smith gets out of your ship and looks at you, smiling. "You know, it's like that in our kind of job. Sometimes it works and sometimes it fails. It's not our fault. Anyway, here is your pay."]]))
          player.pay(shark.rewards.sh04)
          pir.reputationNormalMission(rnd.rnd(2,3))
-         hook.rm(mem.enterhook)
-         hook.rm(mem.landhook)
          shark.addLog( _([[You transported Arnold Smith to a secret meeting for Nexus Shipyards. The meeting supposedly did not go as well as he hoped, but was a partial success.]]) )
          misn.finish(true)
       end

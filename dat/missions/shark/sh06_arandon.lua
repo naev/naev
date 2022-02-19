@@ -79,8 +79,6 @@ function land()
          tk.msg(_("Well done!"), _([[Smith thanks you for the job well done. "Here is your pay," he says. "I will be in the bar if I have another task for you."]]))
          pir.reputationNormalMission(rnd.rnd(2,3))
          player.pay(shark.rewards.sh06)
-         hook.rm(mem.enterhook)
-         hook.rm(mem.landhook)
          shark.addLog( _([[You transported Arnold Smith to a meeting with someone from the FLF. He said that he had good results.]]) )
          misn.finish(true)
       end
