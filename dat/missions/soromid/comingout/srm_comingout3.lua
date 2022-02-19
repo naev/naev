@@ -28,7 +28,7 @@ local fmt = require "format"
 local car = require "common.cargo"
 local srm = require "common.soromid"
 
--- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land fass fthug jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (shared with derived mission srm_comingout5)
+-- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land fass jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (shared with derived mission srm_comingout5)
 -- luacheck: globals chelsea_distress_timer (Hook functions passed by name)
 
 mem.misn_title = _("A Friend's Aid")
@@ -120,7 +120,7 @@ end
 
 
 function spawnThug( param )
-   fthug = faction.dynAdd( "Mercenary", "Comingout_thugs", _("Thugs") )
+   local fthug = faction.dynAdd( "Mercenary", "Comingout_thugs", _("Thugs") )
    fthug:dynEnemy(fass)
 
    local shiptypes = { "Hyena", "Hyena", "Hyena", "Shark", "Lancelot" }
