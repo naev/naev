@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-01-29 16:39-0500\n"
+"POT-Creation-Date: 2022-02-19 12:43-0500\n"
 "PO-Revision-Date: 2022-01-01 22:53+0000\n"
 "Last-Translator: Étienne Girard <etienne.g.girard@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
@@ -14048,7 +14048,7 @@ msgstr ""
 #: dat/missions/shark/sh02_tapping.lua:330
 #: dat/missions/shark/sh02_tapping.lua:335
 #: dat/missions/soromid/comingout/srm_comingout3.lua:89
-#: dat/missions/soromid/comingout/srm_comingout5.lua:85
+#: dat/missions/soromid/comingout/srm_comingout5.lua:84
 #: dat/missions/soromid/comingout/srm_comingout6.lua:110
 msgid "Mercenary"
 msgstr "Mercenaire"
@@ -14164,8 +14164,8 @@ msgstr "Associés"
 
 #. Time for !!FUN!!
 #: dat/faction.xml:674 dat/faction.xml:703
-#: dat/missions/soromid/comingout/srm_comingout3.lua:123
-#: dat/missions/soromid/comingout/srm_comingout5.lua:126
+#: dat/missions/soromid/comingout/srm_comingout3.lua:90
+#: dat/missions/soromid/comingout/srm_comingout5.lua:85
 #: dat/missions/zalek/particlephysics/zpp04.lua:183
 #: dat/missions/zalek/particlephysics/zpp04.lua:186
 msgid "Thugs"
@@ -17834,7 +17834,7 @@ msgid ""
 "designed a scanner array able to deduce the surface composition from "
 "spectroscopy, and, what is more impressive, to infer the internal "
 "composition via inverse electrical impedance. Of course, that comes at a "
-"price that not any miner can pay."
+"price that not just any miner can pay."
 msgstr ""
 
 #: dat/outfits/utility/berserk_chip.xml:2
@@ -17932,11 +17932,11 @@ msgstr ""
 
 #: dat/outfits/utility/combat_hologram_projector.xml:12
 msgid ""
-"The combat hologram projector uses state of the art technology to create do "
-"create a hologram of a ship nearly indistinguishible from real ones. Such "
-"holographic displays are very efficient at drawing away enemy fire and "
-"creating confusion, however, when engaged in actual combat the cover is "
-"usually quickly blown away."
+"The combat hologram projector uses state of the art technology to create a "
+"hologram of a ship nearly indistinguishable from real ones. Such holographic "
+"displays are very efficient at drawing away enemy fire and creating "
+"confusion, however, when engaged in actual combat the cover is usually "
+"quickly blown away."
 msgstr ""
 
 #: dat/outfits/utility/combat_hologram_projector.xml:13
@@ -18010,10 +18010,10 @@ msgstr ""
 
 #: dat/outfits/utility/combatai/hunting_combat_ai.xml:11
 msgid ""
-"Similar to how ambush hunters work, the Hunting Combat AI is able to focus "
-"on exploiting the element of surprise and weaknesses in the enemy ships "
-"hulls, resulting in a slower firerate with significant increased damage for "
-"turret weapons."
+"Similar to a hunter's ambush, the Hunting Combat AI is able to focus on "
+"exploiting the element of surprise and the weaknesses of enemy ship hulls, "
+"resulting in a significant increase in damage for turret weapons, albeit "
+"with a reduced fire rate."
 msgstr ""
 
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:2
@@ -18051,12 +18051,13 @@ msgstr ""
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:10
 msgid ""
-"Repair nanobots are able to perform what seems short of a miracle, restoring "
-"the hull and armour of ships to pristine condition. While they show "
-"remarkable behaviour in laboratory conditions, in practice, they need a "
+"Repair nanobots are able to perform what seems nothing short of a miracle, "
+"restoring the hull and armour of ships to pristine condition. While they "
+"show remarkable behaviour in laboratory conditions, in practice they need a "
 "fairly still environment to work in. The active cooling stage of a ship "
 "provides an excellent opportunity for the nanobots to show what they are "
-"fully capable, and when the ship is in motion they go into hibernation."
+"fully capable of, however when the ship is in motion they go into "
+"hibernation."
 msgstr ""
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:11
@@ -18069,7 +18070,7 @@ msgstr ""
 
 #: dat/outfits/utility/droid_repair_crew.xml:10
 msgid ""
-"This low maintenance droid crew will scour your ship to repair any damages "
+"This low maintenance droid crew will scour your ship to repair any damage "
 "caused by space hazards. They are very small and able to work both on the "
 "interior or exterior of the ship. Power is drawn from the ship to feed the "
 "robots, although the load is generally very low compared to the benefits of "
@@ -18228,8 +18229,8 @@ msgstr ""
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:9
 msgid ""
 "A coating of photo-voltaic nanobot paint covers the entire ship hull and is "
-"able harness solar energy and redirect it to the power system of the ship. "
-"The nanobots are self-regulating and self-repairing, requiring no "
+"able to harness solar energy and redirect it to the power system of the "
+"ship. The nanobots are self-regulating and self-repairing, requiring no "
 "maintenance once a colony has been established."
 msgstr ""
 
@@ -18241,8 +18242,8 @@ msgstr ""
 msgid ""
 "The hyperbolic blink engine seems to be designed as a response to the "
 "question \"How much mass is it possible to move across a space-time fold?\". "
-"It seems to disregard significantly about actually being able to control "
-"such space-time folding, and only focuses on whether or not is possible. Due "
+"It seems to have significant disregard for maintaining careful control of "
+"the space-time folding instead focusing on maximum possible throughput. Due "
 "to the heavy amount of disruption to the ship's systems and personnel, after "
 "each space-time fold or \"blink\", it takes a while for the ship to be fully "
 "responsive again."
@@ -18303,9 +18304,9 @@ msgstr ""
 msgid ""
 "Does your work require you to venture into dangerous territory? Are you "
 "facing opposition your shields can't handle? The Milspec U-9 \"Magus\" "
-"jammer is what you need! Throw the bloodhounds off your scent with a press "
+"jammer is what you need! Throw the bloodhounds off your scent with the press "
 "of a button. While your enemies are still trying to make sense out of the "
-"garble they're getting on their sensors, you will already have made your "
+"garbage they're getting on their sensors, you will have already made your "
 "escape! Fly safe, fly Milspec."
 msgstr ""
 
@@ -18430,7 +18431,7 @@ msgstr ""
 #: dat/outfits/utility/unicorp_scrambler.xml:9
 msgid ""
 "Scramblers distort a ship's electromagnetic signature, making it harder for "
-"various sensors to pick it up. In effect, a scrambler reduces the distance "
+"various sensors to pick it up. In effect, a scrambler increases the distance "
 "at which the ship can be detected and scanned, and makes it harder for "
 "missiles to lock on. The effect is quite limited, but on the upside, "
 "scramblers put a minimal strain on the ship's resources, and are always "
@@ -18470,8 +18471,8 @@ msgid ""
 "weapon energy to an ion field generator. While energy usage increases and "
 "damage output significantly decreases, the ion field allows conventional "
 "weapons to do ionizing damage while the outfit is active. It is designed to "
-"automatically active when the target's armour is below 50%, but can also be "
-"triggered manually."
+"automatically activate when the target's armour is below 50%, but can also "
+"be triggered manually."
 msgstr ""
 
 #: dat/outfits/utility/weapons_ionizer.xml:12
@@ -34059,7 +34060,7 @@ msgstr ""
 #: src/dev_sysedit.c:1839 src/dev_sysedit.c:1876 src/dev_sysedit.c:1934
 #: src/dev_uniedit.c:1412 src/dev_uniedit.c:1579 src/dev_uniedit.c:1799
 #: src/dev_uniedit.c:1864 src/info.c:279 src/info.c:408 src/info.c:826
-#: src/info.c:1156 src/input.c:524 src/land.c:834 src/land_outfits.c:365
+#: src/info.c:1156 src/input.c:524 src/land.c:833 src/land_outfits.c:365
 #: src/land_outfits.c:398 src/land_outfits.c:579 src/land_shipyard.c:125
 #: src/land_shipyard.c:214 src/land_trade.c:82 src/land_trade.c:84
 #: src/land_trade.c:117 src/load.c:355 src/load.c:403 src/load.c:445
@@ -42774,7 +42775,7 @@ msgstr ""
 #: dat/missions/pirate/pir_clan_cargo.lua:77
 #: dat/missions/pirate/pir_clan_cargo.lua:78
 #: dat/missions/trader/anxiousmerchant.lua:72
-#: dat/missions/zalek/zlk_cargorun.lua:51 src/land.c:951
+#: dat/missions/zalek/zlk_cargorun.lua:51 src/land.c:950
 msgid "Spaceport Bar"
 msgstr ""
 
@@ -46522,7 +46523,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:199 dat/missions/zalek/zlk_test.lua:109
-#: src/land.c:646 src/npc.c:586
+#: src/land.c:645 src/npc.c:586
 msgid "You have too many active missions."
 msgstr ""
 
@@ -52384,6 +52385,10 @@ msgid ""
 msgstr ""
 
 #. blaring alarm
+#: dat/missions/minerva/pirate4.lua:240
+msgid "Suddenly an alarm starts blaring throughout the ship."
+msgstr ""
+
 #. Using boars as slang for Dvaered
 #: dat/missions/minerva/pirate4.lua:242
 msgid ""
@@ -53024,7 +53029,7 @@ msgstr ""
 
 #. Not accepted
 #: dat/missions/neutral/antlejos/ant01.lua:81
-#: dat/missions/zalek/zlk_cargorun.lua:93 src/land.c:972
+#: dat/missions/zalek/zlk_cargorun.lua:93 src/land.c:971
 msgid "Equipment"
 msgstr "Équipement"
 
@@ -59418,12 +59423,12 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/wastedump.lua:89
-#: dat/missions/soromid/comingout/srm_comingout5.lua:107
+#: dat/missions/soromid/comingout/srm_comingout5.lua:108
 msgid "Waste Containers"
 msgstr "Conteneurs de Déchets"
 
 #: dat/missions/neutral/wastedump.lua:89
-#: dat/missions/soromid/comingout/srm_comingout5.lua:107
+#: dat/missions/soromid/comingout/srm_comingout5.lua:108
 msgid "A bunch of waste containers leaking all sorts of indescribable liquids."
 msgstr ""
 
@@ -66987,10 +66992,10 @@ msgstr ""
 #. Spawn Chelsea
 #: dat/missions/soromid/comingout/srm_comingout2.lua:37
 #: dat/missions/soromid/comingout/srm_comingout3.lua:46
-#: dat/missions/soromid/comingout/srm_comingout3.lua:91
+#: dat/missions/soromid/comingout/srm_comingout3.lua:94
 #: dat/missions/soromid/comingout/srm_comingout4.lua:38
 #: dat/missions/soromid/comingout/srm_comingout5.lua:42
-#: dat/missions/soromid/comingout/srm_comingout5.lua:88
+#: dat/missions/soromid/comingout/srm_comingout5.lua:89
 #: dat/missions/soromid/comingout/srm_comingout6.lua:54
 #: dat/missions/soromid/comingout/srm_comingout6.lua:112
 msgid "Chelsea"
@@ -67156,7 +67161,7 @@ msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:128
 #: dat/missions/soromid/comingout/srm_comingout4.lua:125
-#: dat/missions/soromid/comingout/srm_comingout5.lua:132
+#: dat/missions/soromid/comingout/srm_comingout5.lua:128
 #, fuzzy
 #| msgid "Thugs"
 msgid "Thug {ship}"
@@ -67193,12 +67198,12 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:182
-#: dat/missions/soromid/comingout/srm_comingout5.lua:162
+#: dat/missions/soromid/comingout/srm_comingout5.lua:158
 msgid "Mission Failed"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:182
-#: dat/missions/soromid/comingout/srm_comingout5.lua:162
+#: dat/missions/soromid/comingout/srm_comingout5.lua:158
 msgid "You have lost contact with Chelsea and therefore failed the mission."
 msgstr ""
 
@@ -67461,11 +67466,11 @@ msgid ""
 "all this garbage...\""
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:152
+#: dat/missions/soromid/comingout/srm_comingout5.lua:148
 msgid "The Unbearable Smell Now Ends"
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:152
+#: dat/missions/soromid/comingout/srm_comingout5.lua:148
 msgid ""
 "As you dock, you can't help but notice the foul smell of garbage all around "
 "you. The planet really does fit the name. You grimace as you watch workers "
@@ -67476,7 +67481,7 @@ msgid ""
 "hold of their ship clean."
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:158
+#: dat/missions/soromid/comingout/srm_comingout5.lua:154
 msgid ""
 "You helped Chelsea get rid of a load of garbage they naively agreed to take "
 "to The Stinker as a mission, defending them from thugs along the way."
@@ -78322,8 +78327,8 @@ msgid_plural "Loaded %d AI Profiles"
 msgstr[0] "Loaded %d AI Profile"
 msgstr[1] "Loaded %d AI Profiles"
 
-#: src/ai.c:582 src/board.c:77 src/comm.c:168 src/info.c:378 src/land.c:1499
-#: src/player.c:3341
+#: src/ai.c:582 src/board.c:77 src/comm.c:168 src/info.c:378 src/land.c:1498
+#: src/player.c:3343
 #, c-format
 msgid ""
 "Error loading file: %s\n"
@@ -78472,7 +78477,7 @@ msgid "unknown error"
 msgstr ""
 
 #. error has occurred
-#: src/board.c:92 src/player.c:3355
+#: src/board.c:92 src/player.c:3357
 #, c-format
 msgid "Board: '%s'"
 msgstr ""
@@ -79403,7 +79408,7 @@ msgstr "Nom : "
 msgid "Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1262 src/land.c:1249 src/map.c:300
+#: src/dev_sysedit.c:1262 src/land.c:1248 src/map.c:300
 msgid "Faction:"
 msgstr "Faction :"
 
@@ -79439,7 +79444,7 @@ msgstr ""
 msgid "hide"
 msgstr ""
 
-#: src/dev_sysedit.c:1332 src/land.c:1254
+#: src/dev_sysedit.c:1332 src/land.c:1253
 msgid "Tags:"
 msgstr ""
 
@@ -79697,7 +79702,7 @@ msgstr ""
 msgid "Find Systems and Assets"
 msgstr ""
 
-#: src/dev_uniedit.c:1537 src/land.c:830
+#: src/dev_uniedit.c:1537 src/land.c:829
 #, c-format
 msgid "%s (%s system)"
 msgstr ""
@@ -79832,7 +79837,7 @@ msgstr ""
 msgid "Planet '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
-#: src/equipment.c:323 src/land.c:298 src/land.c:578 src/land.c:1267
+#: src/equipment.c:323 src/land.c:297 src/land.c:577 src/land.c:1266
 #: src/land_outfits.c:154 src/land_shipyard.c:91 src/land_trade.c:71
 msgid "Take Off"
 msgstr ""
@@ -79861,7 +79866,7 @@ msgstr "Déséquiper"
 msgid "Model:"
 msgstr ""
 
-#: src/equipment.c:365 src/info.c:469 src/land.c:1248 src/land_shipyard.c:223
+#: src/equipment.c:365 src/info.c:469 src/land.c:1247 src/land_shipyard.c:223
 #: src/map_system.c:657
 msgid "Class:"
 msgstr ""
@@ -80155,15 +80160,15 @@ msgstr "Déséquiper le vaisseau"
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:1975 src/land.c:194
+#: src/equipment.c:1975 src/land.c:193
 msgid "Recall Fighters"
 msgstr ""
 
-#: src/equipment.c:1975 src/land.c:194
+#: src/equipment.c:1975 src/land.c:193
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:2049 src/land.c:1495
+#: src/equipment.c:2049 src/land.c:1494
 #, c-format
 msgid "File '%s' not found!"
 msgstr ""
@@ -80717,7 +80722,7 @@ msgstr "Armes"
 msgid "Cargo"
 msgstr ""
 
-#: src/info.c:61 src/land.c:956 src/space.c:170
+#: src/info.c:61 src/land.c:955 src/space.c:170
 msgid "Missions"
 msgstr ""
 
@@ -80738,7 +80743,7 @@ msgstr ""
 msgid "Date:"
 msgstr ""
 
-#: src/info.c:224 src/land.c:1252 src/land_outfits.c:188
+#: src/info.c:224 src/land.c:1251 src/land_outfits.c:188
 #: src/land_shipyard.c:299 src/land_trade.c:90 src/map_find.c:664
 msgid "Money:"
 msgstr ""
@@ -80966,7 +80971,7 @@ msgstr ""
 
 #. no missions
 #. Make sure you have missions.
-#: src/info.c:1155 src/land.c:639 src/land.c:706 src/land.c:743
+#: src/info.c:1155 src/land.c:638 src/land.c:705 src/land.c:742
 msgid "No Missions"
 msgstr ""
 
@@ -81704,51 +81709,51 @@ msgid "Unable to initialize the joystick subsystem"
 msgstr ""
 
 #. Already onboard.
-#: src/land.c:181
+#: src/land.c:180
 #, c-format
 msgid "You're already onboard the %s."
 msgstr ""
 
-#: src/land.c:187
+#: src/land.c:186
 #, c-format
 msgid "You have %d tonne more cargo than the new ship can hold."
 msgid_plural "You have %d tonnes more cargo than the new ship can hold."
 msgstr[0] "You have %d tonne more cargo than the new ship can hold."
 msgstr[1] "You have %d tonnes more cargo than the new ship can hold."
 
-#: src/land.c:195
+#: src/land.c:194
 #, fuzzy
 #| msgid "You discovered #%c%s#0."
 msgid "You have deployed fighters."
 msgstr "Vous avez découvert #%c%s#0."
 
-#: src/land.c:301
+#: src/land.c:300
 msgid "Approach"
 msgstr ""
 
-#: src/land.c:371 src/land.c:377
+#: src/land.c:370 src/land.c:376
 msgid "News"
 msgstr ""
 
-#: src/land.c:581 src/land.c:650
+#: src/land.c:580 src/land.c:649
 msgid "Accept Mission"
 msgstr ""
 
-#: src/land.c:588
+#: src/land.c:587
 msgid ""
 "Date:\n"
 "Free Space:"
 msgstr ""
 
-#: src/land.c:596 src/land.c:744
+#: src/land.c:595 src/land.c:743
 msgid "#nReward:#0 None"
 msgstr ""
 
-#: src/land.c:651
+#: src/land.c:650
 msgid "Are you sure you want to accept this mission?"
 msgstr ""
 
-#: src/land.c:737
+#: src/land.c:736
 #, c-format
 msgid ""
 "%s\n"
@@ -81763,95 +81768,95 @@ msgstr[1] ""
 "%s\n"
 "%d Tonnes"
 
-#: src/land.c:746
+#: src/land.c:745
 msgid "There are no missions available here."
 msgstr ""
 
-#: src/land.c:755
+#: src/land.c:754
 #, c-format
 msgid "#nReward:#0 %s"
 msgstr ""
 
-#: src/land.c:799 src/land.c:854
+#: src/land.c:798 src/land.c:853
 #, c-format
 msgid "Outfit '%s' does not exist!"
 msgstr ""
 
-#: src/land.c:832
+#: src/land.c:831
 #, c-format
 msgid "%s (%s-class)"
 msgstr ""
 
-#: src/land.c:836
+#: src/land.c:835
 #, c-format
 msgid "roughly %s"
 msgstr ""
 
-#: src/land.c:843 src/map.c:695 src/map.c:702 src/map.c:726 src/map.c:741
+#: src/land.c:842 src/map.c:695 src/map.c:702 src/map.c:726 src/map.c:741
 msgid ", "
 msgstr ""
 
-#: src/land.c:865
+#: src/land.c:864
 #, c-format
 msgid "Buy Local Map (%s)"
 msgstr ""
 
-#: src/land.c:947
+#: src/land.c:946
 msgid "Landing Main"
 msgstr ""
 
-#: src/land.c:961 src/map_find.c:1042 src/space.c:172
+#: src/land.c:960 src/map_find.c:1042 src/space.c:172
 msgid "Outfits"
 msgstr ""
 
-#: src/land.c:966 src/space.c:173
+#: src/land.c:965 src/space.c:173
 msgid "Shipyard"
 msgstr ""
 
-#: src/land.c:977 src/space.c:171
+#: src/land.c:976 src/space.c:171
 msgid "Commodity"
 msgstr ""
 
 #. Player stats.
-#: src/land.c:1247
+#: src/land.c:1246
 msgid "Stationed at:"
 msgstr ""
 
-#: src/land.c:1250
+#: src/land.c:1249
 #, fuzzy
 #| msgid "Faction:"
 msgid "Population:"
 msgstr "Faction :"
 
-#: src/land.c:1251 src/land_trade.c:89
+#: src/land.c:1250 src/land_trade.c:89
 #, fuzzy
 #| msgid "Spaceworthy"
 msgid "Free Space:"
 msgstr "Capable d'aller dans l'espace"
 
-#: src/land.c:1273
+#: src/land.c:1272
 msgid "No refueling services."
 msgstr ""
 
-#: src/land.c:1383
+#: src/land.c:1382
 msgid "Ship not fit for flight"
 msgstr ""
 
 #. Only save when the player shouldn't get stranded.
 #. must be before cleaning up planet
-#: src/land.c:1436
+#: src/land.c:1435
 msgid ""
 "Failed to save game! You should exit and check the log to see what happened "
 "and then file a bug report!"
 msgstr ""
 
-#: src/land.c:1445
+#: src/land.c:1444
 #, c-format
 msgid "#oTaking off from %s on %s."
 msgstr ""
 
 #. error has occurred
-#: src/land.c:1512
+#: src/land.c:1511
 #, c-format
 msgid "Rescue: 'rescue' : '%s'"
 msgstr ""
@@ -86042,61 +86047,61 @@ msgid "Player ship '%s' not found in stack"
 msgstr ""
 
 #: src/player.c:2969
-msgid "Escort is undeployed"
+msgid "Escort is undeployed, removing."
 msgstr ""
 
-#: src/player.c:3183
+#: src/player.c:3185
 msgid "Found mission cargo without associated mission."
 msgstr ""
 
-#: src/player.c:3184
+#: src/player.c:3186
 msgid "Please reload save game to remove the dead cargo."
 msgstr ""
 
-#: src/player.c:3410
+#: src/player.c:3412
 #, c-format
 msgid "Saved license does not exist and could not be found or updated: '%s'!"
 msgstr ""
 
-#: src/player.c:3479
+#: src/player.c:3481
 msgid "Malformed time in save game!"
 msgstr ""
 
-#: src/player.c:3516
+#: src/player.c:3518
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
 
-#: src/player.c:3540
+#: src/player.c:3542
 msgid "Player ship does not exist!"
 msgstr ""
 
-#: src/player.c:3543
+#: src/player.c:3545
 msgid "Player has no other ships, giving starting ship."
 msgstr ""
 
-#: src/player.c:3554
+#: src/player.c:3556
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr ""
 
-#: src/player.c:3560
+#: src/player.c:3562
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 
-#: src/player.c:3570
+#: src/player.c:3572
 msgid "Save has no time information, setting to start information."
 msgstr ""
 
-#: src/player.c:3576
+#: src/player.c:3578
 msgid "Player save was updated!"
 msgstr ""
 
-#: src/player.c:3577
+#: src/player.c:3579
 msgid "Save Game Updated"
 msgstr ""
 
-#: src/player.c:3577
+#: src/player.c:3579
 msgid ""
 "The loaded save games has had outfits and ships updated to the current Naev "
 "version. You will find that some outfits and ships you have had have been "
@@ -86104,140 +86109,140 @@ msgid ""
 "refunded the cost in credits."
 msgstr ""
 
-#: src/player.c:3585
+#: src/player.c:3587
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid planet '%s',trying to find a "
 "suitable one instead."
 msgstr ""
 
-#: src/player.c:3615
+#: src/player.c:3617
 #, c-format
 msgid "Could not find a planet satisfying criteria %d."
 msgstr ""
 
-#: src/player.c:3619
+#: src/player.c:3621
 msgid "Could not find a suitable planet. Choosing a random planet."
 msgstr ""
 
-#: src/player.c:3666
+#: src/player.c:3668
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3688
+#: src/player.c:3690
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3710
+#: src/player.c:3712
 msgid "License node is missing name attribute."
 msgstr ""
 
-#: src/player.c:3737
+#: src/player.c:3739
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:3798
+#: src/player.c:3800
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
 
-#: src/player.c:3817
+#: src/player.c:3819
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:3825
+#: src/player.c:3827
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:3846
+#: src/player.c:3848
 msgid "Empty ship slot node found, skipping."
 msgstr ""
 
-#: src/player.c:3912
+#: src/player.c:3914
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr ""
 
-#: src/player.c:3959
+#: src/player.c:3961
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 
-#: src/player.c:3972 src/player.c:3985
+#: src/player.c:3974 src/player.c:3987
 msgid "Outfit slot out of range, not adding."
 msgstr ""
 
-#: src/player.c:4004
+#: src/player.c:4006
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr ""
 
-#: src/player.c:4028
+#: src/player.c:4030
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
 
-#: src/player.c:4078
+#: src/player.c:4080
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
 
-#: src/player.c:4086
+#: src/player.c:4088
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4090
+#: src/player.c:4092
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
 
-#: src/player.c:4106
+#: src/player.c:4108
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4119
+#: src/player.c:4121
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 
-#: src/player.c:4127
+#: src/player.c:4129
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
 
-#: src/player.c:4132
+#: src/player.c:4134
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
-#: src/player.c:4171
+#: src/player.c:4173
 #, fuzzy
 #| msgid "You discovered #%c%s#0."
 msgid "You have destealthed."
 msgstr "Vous avez découvert #%c%s#0."
 
-#: src/player.c:4177
+#: src/player.c:4179
 msgid "#gYou have entered stealth mode."
 msgstr ""
 
-#: src/player.c:4182
+#: src/player.c:4184
 msgid "#rUnable to stealth: missiles locked on!"
 msgstr ""
 
-#: src/player.c:4184
+#: src/player.c:4186
 msgid "#rUnable to stealth: other pilots nearby!"
 msgstr ""
 
