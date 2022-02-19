@@ -37,7 +37,7 @@ local vn = require 'vn'
 local mensing_portrait = nebu_research.mensing.portrait
 
 -- luacheck: globals land takeoff jumpin arrive_at_testing_sys timer moveto endScan peacemaker board rescue (Hook functions passed by name)
-local hasShieldingPrototypeEquiped, beginScan -- Forward-declared functions
+local hasShieldingPrototypeEquipped, beginScan -- Forward-declared functions
 
 -- Mission constants
 local credits = nebu_research.rewards.credits05
@@ -124,7 +124,7 @@ function land()
         student(_([[Shortly after landing you are greeted by the student.
 "That took long enough! Being stuck in a place like this.. It's always us students who have to do all the hard work!]]))
         student(_([["Anyway, I'm done here with my measurements. Since the shielding prototype requires fine tuning of some parameters these measurements are essential. I just need a few minutes to configure the device. We can start anytime soon."]]))
-        if not hasShieldingPrototypeEquiped() then
+        if not hasShieldingPrototypeEquipped() then
             student(_([["You did remember to install the shielding prototype, right?"]]))
         end
         vn.done()
@@ -164,7 +164,7 @@ With this she hands you a credit chip worth {credits}.]]), {credits=fmt.credits(
 end
 
 function takeoff()
-    if mem.stage == 1 then
+    if mem.stage == 1 and hasShieldingPrototypeEquipped() then
         vn.clear()
         vn.scene()
         local student = vn.newCharacter( nebu_research.vn_student() )
@@ -176,10 +176,11 @@ function takeoff()
         mem.stage = 2
         misn.markerMove(mem.misn_marker, testing_sys)
     end
+    -- TODO: nag player if they somehow ditch the prototype after the above scene has played out?
 end
 
 function jumpin()
-    if mem.stage == 2 and system.cur() == testing_sys then
+    if mem.stage == 2 and system.cur() == testing_sys and hasShieldingPrototypeEquipped() then
         hook.timer(5.0, "arrive_at_testing_sys")
     end
 end
@@ -203,7 +204,7 @@ function arrive_at_testing_sys()
     hook.timer(1.0, "timer")
 end
 
-function hasShieldingPrototypeEquiped()
+function hasShieldingPrototypeEquipped()
     local o = player.pilot():outfits("structure")
     for i=1,#o do
         if o[i]:nameRaw()=="Nebular Shielding Prototype" then
