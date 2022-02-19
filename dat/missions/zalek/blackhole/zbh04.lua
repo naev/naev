@@ -110,7 +110,7 @@ function land ()
    vn.na(_([[You land while the feral bioship waits cautiously outside the space docks. It seems like it's not entirely sure what to do.]]))
    z(_([[Zach is peeking out of the airlock.
 "Damn, it's more impressive when it's up close. We have to be careful though, it's not clear what its intentions are, although it does not seem to be aggressive. Let me see if my drones can scan it and give us more details."]]))
-   vn.na([[A couple of drones fly past you and head towards the feral bioship, which reacts in fear and runs away until you can barely see it in the distance.]])
+   vn.na(_([[A couple of drones fly past you and head towards the feral bioship, which reacts in fear and runs away until you can barely see it in the distance.]]))
    z(_([["Fear of drones? Something must have happened it to react this way. Very interesting how it seems to behave almost like a normal animal. Let's see if I can get it back here."]]))
    z(_([[He sits cross-legged on the floor and sets his cyberdeck on his lap, spending a second to stretch, before engaging in a furious typing spree. The drones come back and hover nearby him, patiently awaiting orders.]]))
    z(_([[He begins muttering to himself.
