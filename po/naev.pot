@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-02-19 12:45-0500\n"
+"POT-Creation-Date: 2022-02-19 12:52-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33730,6 +33730,10 @@ msgstr ""
 #. - electronic warfare (stealth, scanning)
 #. - outfit balance
 #. - safe lanes
+#: dat/events/updater.lua:74
+msgid "Suddenly, a hologram materializes in front of you."
+msgstr ""
+
 #: dat/events/updater.lua:75
 msgid ""
 "\"Hello there {playername}! I'm your Ship AI. Up until now I've been "
