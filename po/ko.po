@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-02-19 12:43-0500\n"
+"POT-Creation-Date: 2022-02-19 12:48-0500\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -33852,6 +33852,10 @@ msgstr ""
 #. - electronic warfare (stealth, scanning)
 #. - outfit balance
 #. - safe lanes
+#: dat/events/updater.lua:64
+msgid "Suddenly, a hologram materializes in front of you."
+msgstr ""
+
 #: dat/events/updater.lua:65
 msgid ""
 "\"Hello there {playername}! I'm your Ship AI. Up until now I've been "
