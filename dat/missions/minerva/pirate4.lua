@@ -237,7 +237,7 @@ She beams you a smile.
    pir(_([[They visibly wince when they hear the angry voice.
 "Let us talk about your payment."]]))
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
-   vn.na("Suddenly an alarm starts blaring throughout the ship.")
+   vn.na(_([[Suddenly an alarm starts blaring throughout the ship.]]))
    -- Using boars as slang for Dvaered
    maikki(_([[The familiar and angry voice bellows in the distance.
 "Zuri! We've got incoming boars closing in our or position! Take care of it!"]]))
