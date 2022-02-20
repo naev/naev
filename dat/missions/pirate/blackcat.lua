@@ -51,7 +51,8 @@ function create ()
    local cat = vn.Character.new( _("Black Cat"), {image=cat_image, color=cat_colour} )
    vn.transition()
    vn.na(_([[You make your way through the derelict, each step you take resonating throughout the vacuous vessel. As your traverse a hallway you notice a peculiar texture on one of the walls. As your light illuminates the wall, you can make out a hastily written graffiti. Although it is hard to read, you can make out the following text "#rBEW-RE OF C-T#0". What could it mean?]]))
-   vn.na(_([[You eventually reach the command room when your ship suddenly informs you that there is a life form present on the ship. Not only that, it's very close! You frantically ready your weapons and prepare for the worst…
+   vn.na(_([[You eventually reach the command room when your ship suddenly informs you that there is a life form present on the ship. Not only that, it's very close! You frantically ready for a fight
+ and prepare for the worst…
 
 It's right on top of you!]]))
    vn.sfx( meow )
@@ -59,8 +60,8 @@ It's right on top of you!]]))
    cat(_([[You make out two glowing eyes glinting in the darkness. As you shine your light on them, a dark shape emerges from the shadows.
 "Meow."]]))
    cat(fmt.f(_([[In front of you is what {shipai} confirms to be a Felis catus or domesticated house cat. It looks at you with expressionless eyes with a gaze that seems to pierce your soul.
-After what seems an eternity with you holding your breath, the cat stands up, and walks past you.]]),{shipai=tut.ainame()}))
-   cat(_([[You follow the cat throughout the ship as it leads you to… the airlock you came in from.
+After what seems an eternity with you holding your breath, the cat stands up and walks past you.]]),{shipai=tut.ainame()}))
+   cat(_([[You follow the cat throughout the ship as it leads you to… the airlock you came in from!
 It seems like it wants to come back with you. What do you do?]]))
    vn.menu{
       {_("Take the cat with you"), "takecat"},
@@ -70,12 +71,12 @@ It seems like it wants to come back with you. What do you do?]]))
    vn.sfx( meow )
    vn.func( function () tookcat = true end )
    cat(_([[You open the airlock and the cat enters your ship, only to immediately turn around and start scratching the airlock again. You open the airlock again and it goes back into the derelict. Soon after, you hear scratching on the other side of the door. You let out a big sigh and the cat walks into your ship again. Not wanting to get stuck in an infinite loop, you gently prod the cat so it goes into your ship.]]))
-   cat(_([[The cat struts around and behaves like it owns the place. You're going to have to figure out what to do with it. Your ship is no place for a cat to live in.]]))
+   cat(_([[The cat struts around and behaves like it owns the place. You're going to have to figure out what to do with it. Your ship is no place for a cat to live.]]))
    vn.sfx( der.sfx.unboard )
    vn.done()
 
    vn.label("leavecat")
-   vn.na(_("Are you sure you want to abandon the cat to its fate aboard the sinister derelict ship?"))
+   vn.na(_("Are you sure you want to abandon the cat to its fate aboard the sinister, derelict ship?"))
    vn.menu{
       {_("Take the cute cat with you"), "takecat"},
       {_("Definitely let the beast be"), "leavecatdef"},
@@ -87,6 +88,8 @@ It seems like it wants to come back with you. What do you do?]]))
    vn.run()
 
    if not tookcat then
+      der.addMiscLog(fmt.f(_([[You left a sinister black cat on an abandoned derelict ship in {sys}.]]), {sys=system.cur()}))
+
       misn.finish(false)
       return
    end
@@ -129,7 +132,7 @@ local event_list = {
       local pp = player.pilot()
       meow:play()
       if islucky() then
-         player.msg(_("Black cat hair has clogs the radiators but burns up before overheating the ship."), true)
+         player.msg(_("Black cat hair has clogged the radiators but burns up before overheating the ship."), true)
          return
       end
       local t = pp:temp()
@@ -137,13 +140,13 @@ local event_list = {
       player.msg(_("Black cat hair has clogged the radiators and overheated the ship!"), true)
       player.autonavReset()
    end,
-   function () -- Temporary disable
+   function () -- Temporarily disable
       local pp = player.pilot()
       local _a, _s, _st, dis = pp:health()
       if dis then return end -- Already disabled
       meow:play()
       if islucky() then
-         player.msg(_("The black cat accidently hit the ship restart button, but nothing happens."), true)
+         player.msg(_("The black cat accidentally hit the ship restart button, but nothing happens."), true)
          return
       end
       pp:disable( true )
@@ -175,7 +178,7 @@ local function event ()
          _("You hear weird noises from the black cat freaking out over nothing."),
          _("The black cat suddenly sprints through the ship."),
          _("The black cat curls up and falls asleep on top of the control panel."),
-         _("The black cat shows you its belly, but bites you when you pet it."),
+         _("The black cat shows you its belly, but bites you when you try to pet it."),
          _("The black cat uses the commander chair as a scratching post."),
          _("The black cat bumps into your ship's self-destruct button, but you manage to abort it in time."),
       }
@@ -271,7 +274,7 @@ function owner_hail ()
 
    vn.label("catno")
    vn.sfx( meow )
-   vn.na(_([[Just as you utter the word "No", the black cat drowns out your reply with a resonating "meow", that is clearly heard on the other side of the communication channel.]]))
+   vn.na(_([[Just as you utter the word "No", the black cat drowns out your reply with a resonating "Meow", that is clearly heard on the other side of the communication channel.]]))
    vn.jump("catyes")
 
    vn.label("catyes")
@@ -299,20 +302,20 @@ function owner_board ()
    vn.sfx( der.sfx.board )
    vn.transition()
    vn.na(fmt.f(_("Your ship locks its boarding clamps on the {plt}, and the airlock opens up revealing some strangely musty air and pitch black darkness. How odd."),{plt=owner}))
-   vn.na(_("You realize the cat is no where to be seen, and start to search for it to bring it over. Funny how it always seems to be where you don't want it and when you need it you can't find it."))
+   vn.na(_("You realize the cat is nowhere to be seen and start to search for it to bring it over. Funny how it always seems to be where you don't want it and when you need it you can't find it."))
    vn.sfx( meow )
    vn.na(_("You scour the ship and end up going back to the commander chair. As you are about to look behind it, you hear a sonorous meow and a black shadow flies past you towards the airlock."))
    vn.sfx( der.sfx.unboard )
    vn.na(_("You run to try to catch it, but hear the sound of the airlock closing and detaching of the locking clamps. You run back to your command chair to see what the other ship is doing, but you can not find it anywhere. They seem to have a knack for fleeing."))
    vn.na(fmt.f(_("You sit resigned and outwitted at your command chair when you notice a credit chip with {credits} on the floor. It looks like it has cat bite marks too."),{credits=fmt.credits(credit_reward)}))
    vn.sfxVictory()
-   vn.na(_("You then get around to cleaning up the copious amounts of cat hair invading every last corner of your ship. With the amount collected you make a cute black cat doll. It's like a tiny version of the real thing without the assholeness."))
+   vn.na(_("You then get around to cleaning up the copious amounts of cat hair invading every last corner of your ship. With the amount collected you make a cute black cat doll. It's like a tiny version of the real thing without the assholiness."))
    vn.run()
 
    player.pay( credit_reward )
    player.outfitAdd( "Black Cat Doll" )
 
-   pir.addMiscLog(_("You rescued a black cat from a derelict ship and safely delivered it to its owner, who was flying a Wild Ones pirate ship."))
+   der.addMiscLog(_([[You rescued a black cat from a derelict ship and safely delivered it to its owner, who was flying a Wild Ones pirate ship.]]))
    faction.get("Wild Ones"):modPlayerSingle(3)
 
    player.unboard()
@@ -325,6 +328,9 @@ function owner_gone ()
 end
 
 function abort ()
-   vntk.msg(_("No cat in sight…"), _("You go to get rid of the black cat, but can not find it in sight. After a long search you reach the only logical conclusion that it vanished. Guess you can forget about it for now."))
+   vntk.msg(_("No cat in sight…"), _("You go to get rid of the black cat, but can not find it anywhere. After a long search you reach the only logical conclusion; that it vanished into thin air. Guess you can forget about it for now."))
+
+   der.addMiscLog(fmt.f(_([[You rescued a black cat from a derelict ship only to have it disappear into thin air in {sys}.]]), {sys=system.cur()}))
+
    misn.finish(false)
 end

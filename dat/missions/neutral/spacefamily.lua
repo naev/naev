@@ -98,7 +98,9 @@ function land()
     Inside the box, you find a sum of credits and a note written in neat, feminine handwriting that says, "Sorry for the trouble."]]) ) -- Final message
          player.pay( reward )
          misn.cargoJet(mem.carg_id)
-         neu.addMiscLog( _([[You rescued a bad-tempered man and his family who were stranded aboard their ship. After a lot of annoying complaints, the man and his family finally left your ship, the man's wife leaving a generous payment for the trouble.]]) )
+
+         der.addMiscLog(fmt.f(_([[You rescued a bad-tempered man and his family who were stranded aboard their ship. After a lot of annoying complaints, the man and his family finally left your ship on {pnt} ({sys}), the man's wife leaving a generous payment for the trouble.]]), {pnt, sys=spob.cur()}))
+
          misn.finish(true)
       else
          mem.nextstop = mem.nextstop + 1
@@ -150,8 +152,12 @@ end
 function abort ()
    if mem.inspace then
       tk.msg(_("A parting of ways"), _([[You unceremoniously shove your passengers out of the airlock and into the coldness of space. You're done playing taxi; it's time to get back to important things!]]))
+
+      der.addMiscLog(fmt.f(_([[You rescued a bad-tempered man and his family who were stranded aboard their ship. After a lot of annoying complaints, you dumped the family out of the airlock in {sys}!]]), {sys=system.cur()}))
    else
       tk.msg(_("A parting of ways"), _([[You unceremoniously shove your passengers out of the airlock, leaving them to their fate on this planet. You're done playing taxi; it's time to get back to important things!]]))
+
+      der.addMiscLog(fmt.f(_([[You rescued a bad-tempered man and his family who were stranded aboard their ship. After a lot of annoying complaints, you turfed the family out on {pnt} ({sys})!]]), {pnt, sys=spob.cur()}))
    end
    misn.cargoJet(mem.carg_id)
    misn.finish(true)

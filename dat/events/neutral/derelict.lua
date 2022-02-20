@@ -91,7 +91,7 @@ function create ()
    hook.land("destroyevent")
 end
 
-local function derelict_msg( title, text )
+local function derelict_msg( title, text, log )
    vntk.msg( title, text, {
       pre = function ()
          vn.music( der.sfx.ambient )
@@ -101,6 +101,8 @@ local function derelict_msg( title, text )
          vn.sfx( der.sfx.unboard )
       end,
    } )
+
+   der.addMiscLog( log )
 end
 
 local function islucky ()
@@ -123,7 +125,7 @@ function board()
    local pp = player.pilot()
    local stats = pp:stats()
    if stats.fuel < stats.fuel_consumption and rnd.rnd() < 0.8 then
-      derelict_msg(_("Lucky find!"), _([[The derelict appears deserted, with most everything of value long gone. As explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in good state and you siphon it off to fill your ships fuel tanks. Talk about good timing.]]) )
+      derelict_msg(_("Lucky find!"), _([[The derelict appears deserted, with almost everything of value long gone. As you explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in a good state and you siphon it off to fill your ship's fuel tanks. Talk about good timing.]]), fmt.f(_([[Just as you were running out of fuel you found a derelict with some to spare in {sys}, what good fortune!]]), {sys=system.cur()}))
       pp:setFuel( true )
       destroyevent()
       return
@@ -153,26 +155,29 @@ function board()
 end
 
 function neutralevent()
-   local ntitle = _("Empty derelict")
-   local ntext = {
-      _([[You spend some time searching the derelict, but it doesn't appear there are any remaining passengers, nor is there anything of interest to you. You decide to return to your ship.]]),
-      _([[This ship has clearly been abandoned a long time ago. Looters have been here many times, and all of the primary and backup systems are down. However, there is one console that is still operational. It appears to be running an ancient computer game about space exploration, trade and combat. Intrigued, you decide to give the game a try, and before long you find yourself hooked on it. You spend many fun periods hauling cargo, upgrading your ship, fighting enemies and exploring the universe. But of course you can't stay here forever. You regretfully leave the game behind and return to the reality of your everyday life.]]),
-      _([[You are exploring the derelict ship when you hear a strange creaking noise. You decide to follow it to see what is causing it, but you never seem to be able to pinpoint the source. After about an hour of fruitlessly opening up panels, pressing your ear against the deck and running hull scans from your own ship, you decide to give up and leave the derelict to its creepy creaking.]]),
-      _([[While exploring the cockpit of this derelict, you come across the captain's logs. Hoping to find some information that could be of use to you, you decide to play back the most recent entries. Unfortunately, it turns out the captain's logs are little more than recordings of the captain having heated arguments with her co-pilot. After about ten hectoseconds, you decide you probably aren't going to find anything worthwhile here, so you return to your ship.]]),
-      _([[This derelict is not deserted. The crew are still onboard. Unfortunately for them, they didn't survive whatever wrecked their ship. You decide to give them a decent space burial before moving on.]]),
-      _([[This derelict seems to have been visited by looters already. You find a message carved into the wall near the airlock. It reads: "I WUS HEAR". Below it is another carved message that says "NO U WASNT". Otherwise, there is nothing of interest left on this ship.]]),
-      _([[This derelict seems to have at one time been used as an illegal casino. There are roulette tables and slot machines set up in the cargo hold. However, it seems the local authorities caught wind of the operation, because there are also scorch marks on the furniture and the walls, and there are assault rifle shells underfoot. You don't reckon you're going to find anything here, so you leave.]]),
-      _([[When the airlock opens, you are hammered in the face by an ungodly smell that almost makes you pass out on the spot. You hurriedly close the airlock again and flee back into your own ship. Whatever is on that derelict, you don't want to find out!]]),
-      _([[This derelict has really been beaten up badly. Most of the corridors are blocked by mangled metal, and your scans read depressurized compartments all over the ship. There's not much you can do here, so you decide to leave the derelict alone.]]),
-      _([[The interior of this ship is decorated in a gaudy fashion. There are cute plushies hanging from the doorways, drapes on every viewport, coloured pillows in the corners of most compartments and cheerful graffiti on almost all the walls. A scan of the ship's computer shows that this ship belonged to a trio of adventurous young ladies who decided to have a wonderful trip through space. Sadly, it turned out none of them really knew how to fly a space ship, and so they ended up stranded and had to be rescued. Shaking your head, you return to your own ship.]]),
-      _([[The artificial gravity on this ship has bizarrely failed, managing to somehow reverse itself. As soon as you step aboard you fall upwards and onto the ceiling, getting some nasty bruises in the process. Annoyed, you search the ship, but without result. You return to your ship - but forget about the polarized gravity at the airlock, so you again smack against the deck plates.]]),
-      _([[The cargo hold of this ship contains several heavy, metal chests. You pry them open, but they are empty. Whatever was in them must have been pilfered by other looters already. You decide not to waste any time on this ship, and return to your own.]]),
-      _([[You have attached your docking clamp to the derelict's airlock, but the door refuses to open. A few diagnostics reveal that the other side isn't pressurized. The derelict must have suffered hull breaches over the years. It doesn't seem like there's much you can do here.]]),
-      _([[As you walk through the corridors of the derelict, you can't help but notice the large scratch marks on the walls, the floor and even the ceiling. It's as if something went on a rampage throughout this ship - something big, with a lot of very sharp claws and teeth… You feel it might be best to leave as soon as possible, so you abandon the search of the derelict and disengage your docking clamp.]]),
+   -- neuevent is a table of tables { {title of event, text of event, log of event}, {...}, ... }
+   local neuevent = {
+      {"Empty derelict", _([[You spend some time searching the derelict, but it doesn't appear there are any remaining passengers, nor is there anything of interest to you. You decide to return to your ship.]]), fmt.f(_([[You searched an empty derelict in {sys}.]]), {sys=system.cur()})},
+      {"Distracting derelict", fmt.f(_([[This ship has clearly been abandoned a long time ago. Looters have been here many times and all of the primary and backup systems are down. However, there is one console that is still operational. It appears to be running an ancient computer game about space exploration, trade and combat. Intrigued, you decide to give the game a try, and before long you find yourself hooked on it. You spend many fun periods hauling cargo, upgrading your ship, fighting enemies and exploring the universe. But of course you can't stay here forever and besides the chriping from {shipai} is getting annoying. You regretfully leave the game behind and return to the reality of your everyday life.]]), {shipai=tut.ainame()}), fmt.f(_([[You searched a derelict in {sys} and ended up spending an inordinate amount of time playing an ancient computer game!]]), {sys=system.cur()})},
+      {"Errie derelict", _([[You are exploring the derelict ship when you hear a strange creaking noise. You decide to follow it to see what is causing it, but you never seem to be able to pinpoint the source. After about an hour of fruitlessly opening up panels, pressing your ear against the deck and running hull scans from your own ship, you decide to give up and leave the derelict to its creepy creaking.]]), fmt.f(_([[You searched an empty, creaking derelict in {sys}.]]), {sys=system.cur()})},
+      {"Distracting derelict", fmt.f(_([[While exploring the cockpit of this derelict, you come across the captain's logs. Hoping to find some information that could be of use to you, you decide to play back the most recent entries. Unfortunately, it turns out the captain's logs are little more than recordings of the captain having heated arguments with her co-pilot. It isn't long before you decide you probably aren't going to find anything worthwhile here. Having returned to your ship {shipai} confirms there is little but "emotional human chatter" in the captain's logs.]]), {shipai=tut.ainame()}), fmt.f(_([[You searched a derelict in {sys} but found little but for "emotional human chatter" in the captain's logs.]]), {sys=system.cur()})},
+      {"Wrecked derelict", fmt.f(_([[This derelict is not deserted. The crew are still onboard. Unfortunately for them, they didn't survive whatever wrecked their ship, neither did much of their ship. {shipai} and you decide to give the crew and their ship a decent space burial before moving on.]]), {shipai=tut.ainame()}), fmt.f(_([[You found a wrecked derelict in {sys} and gave it and its crew a decent space burial.]]), {sys=system.cur()})},
+      {"Empty derelict", _([[This derelict seems to have been visited by looters already. You find a message carved into the wall near the airlock. It reads: "I WUS HEAR". Below it is another carved message that says "NO U WASNT". Otherwise, there is nothing of interest left on this ship.]]), fmt.f(_([[You searched an empty derelict in {sys} and found only graffiti.]]), {sys=system.cur()})},
+      {"Not-so-empty derelict", _([[This derelict seems to have been, at one time, used as an illegal casino. There are roulette tables and slot machines set up in the cargo hold. However, it seems the local authorities caught wind of the operation; there are scorch marks on the furniture and walls and assault rifle shells underfoot. You don't reckon you're going to find anything useful here so you leave.]]), fmt.f(_([[You boarded a derelict in {sys} and found an ex-hive of illegal activity.]]), {sys=system.cur()})},
+      {"Not-so-empty derelict", _([[When the airlock opens, you are hammered in the face by an ungodly smell that almost makes you pass out on the spot. You hurriedly close the airlock again and flee back into your own ship. Whatever is on that derelict, you don't want to find out!]]), fmt.f(_([[An ungodly smell stopped you from searching a derelict in {sys}.]]), {sys=system.cur()})},
+      {"Wrecked derelict", fmt.f(_([[This derelict has been really badly beaten up. Most of the corridors are blocked by mangled metal and {shipai} tells you there are depressurized compartments all over the ship. There's not much you can do here, so you decide to leave the derelict to itself.]]), {shipai=tut.ainame()}), fmt.f(_([[You tried to search a wrecked derelict in {sys} but there wasn't much left.]]), {sys=system.cur()})},
+      {"Distracting derelict", _([[The interior of this ship is decorated in a gaudy fashion. There are cute plushies hanging from the doorways, drapes on every viewport, coloured pillows in the corners of most compartments and cheerful graffiti on almost all the walls. A scan of the ship's computer shows that this ship belonged to a trio of adventurous young ladies who decided to have a wonderful trip through space. Sadly, the ship's log tells you none of them really knew how to fly a space ship, so they ended up stranded and had to be rescued. Shaking your head, you return to your own ship.]]), fmt.f(_([[You searched a gaudily decorated derelict in {sys} and found the previous occupants had already been rescued]]), {sys=system.cur()})},
+      {"Errie derelict", _([[The artificial gravity on this ship has bizarrely failed, managing to somehow reverse itself. As soon as you step aboard you fall upwards and onto the ceiling, getting some nasty bruises in the process. Annoyed, you search the ship but without result. You return to your ship - but forget about the polarized gravity at the airlock, so you, again, smack against the deck plates.]]), fmt.f(_([[Having searched a derelict in {sys} you remind youself always to check the gravity before boarding another ship. Ow.]]), {sys=system.cur()})},
+      {"Empty derelict", _([[The cargo hold of this ship contains several heavy, metal chests. You pry them open but they are empty. Whatever was in them must have been pilfered by other looters already. You decide not to waste any time on this ship and return to your own.]]), fmt.f(_([[You found some empty chests on an empty derelict in {sys} system.]]), {sys=system.cur()})},
+      {"Wrecked derelict", fmt.f(_([[You have attached your docking clamp to the derelict's airlock but the door refuses to open. {shipai} tells you that the other side isn't pressurized and the doors are trying to save your life. The derelict must have suffered too many hull breaches over the years. It doesn't seem like there's much you can do here.]]), {shipai=tut.ainame()}), fmt.f(_([[You tried to search an empty derelict in {sys} but your airlock doors and the vacuum of space defeated you!]]), {sys=system.cur()})},
+      {"Errie derelict", fmt.f(_([[As you walk through the corridors of the derelict, you can't help but notice the large scratch marks on the walls, the floor and even the ceiling. It's as if something went on a rampage throughout this ship - something big, with a lot of very sharp claws and teeth… You feel it might be best to leave as soon as possible, despite {shipai}'s assurances of sensing no signs of life onboard, so you abandon the search and swiftly disengage your boardinig clamp.]]), {shipai=tut.ainame()}), fmt.f(_([[You left an empty, torn-up (literally) derelict you found in {sys} system to itself.]]), {sys=system.cur()})},
+      {"Errie derelict", fmt.f(_([[Entering your airlock you see the derelict's own airlock, oddly, spiral open onto a faintly-purple glowing, octagonal corridor. Noting this slightly strange interior design choice you continue along the faintly radiating corridor to find yourself in an octagonal ("Truncated cuboctahedronal" chirps in {shipai} over comms) room eminating a rather stranger purply-green or greeny-purple eldritch colour. What furnishings you can see are angular in a way that makes your eyes water. These design choices go from strange too… "Thump"! You land on the floor(?) as you trip over your gravity confused feet! Seriously!?! They rigged gravity to the outside "walls" of the room!?! You decide it might be better _not_ to discover anything more about this ship without an appropriately equipped boarding party, maybe one with a magician!]]), {shipai=tut.ainame()}), fmt.f(_([[An eldritch, possibly derelict, {shp} in {sys} system unnerved you, its true story is no longer your concern, thankfully!]]), {shp=derelict.ship(), sys=system.cur()})},
+      {"Empty derelict", _([[Your airlock doors slide open starting, what turns out to be, the most uneventful, dull, mudane, entirely-boring and mind-numbingly unhelpful waste of time that any boarding of a derelict ship has ever been, it even tempts you not to do this again on the off chance you run across another such distressingly worthless derelict.]]), fmt.f(_([[You became disenchanted with boarding derelicts on a ship in {sys}… next time better to watch paint dry.]]), {sys=system.cur})},
    }
 
    -- Pick a random message from the list, display it, unboard.
-   derelict_msg( ntitle, ntext[rnd.rnd(1, #ntext)] )
+   chosen=rnd.rnd(1, #neuevent)
+   derelict_msg( neuevent[chosen][1], neuevent[chosen][2], neuevent[chosen][3] )
    destroyevent()
 end
 
@@ -181,7 +186,7 @@ function goodevent()
 
    local goodevent_list = {
       function ()
-         derelict_msg(gtitle, _([[The derelict appears deserted, its passengers long gone. However, they seem to have left behind a small amount of credit chips in their hurry to leave! You decide to help yourself to them, and leave the derelict.]]) )
+         derelict_msg(gtitle, _([[The derelict appears deserted, its passengers long gone. However, they seem to have left behind a small amount of credit chips in their hurry to leave! You decide to help yourself to them and leave the derelict.]]), fmt.f(_([[You found a derelict in {sys}, it was empty but for some scattered credit chips. Lucky you!]]), {sys=system.cur()}))
          player.pay( rnd.rnd(5e3,30e3) )
       end,
       function ()
@@ -222,19 +227,22 @@ function goodevent()
             end
          end
          local rndfact = fcts[ rnd.rnd(1, #fcts) ]
-         derelict_msg(gtitle, fmt.f(_([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging, and contact the {fct} authorities. Your reputation with them has slightly improved.]]), {fct=rndfact}))
-         faction.modPlayerSingle(rndfact, 3)
+         derelict_msg(gtitle, fmt.f(_([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced according to {shipai}! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging and contact the {fct} authorities. Your reputation with them has slightly improved.]]), {shipai=tut.ainame, fct=rndfact}), fmt.f(_([[In the {sys} system you found a very rare antique derelict {shp} and reported it to the, happy to hear from you, {fct} authorities.]]), {sys=system.cur(), shp=derelict.ship(), fct=rndfact}))
+         faction.modPlayerSingle(rndfact, 2, "script")
       end,
    }
 
    -- See if we should add maps
    local maps = {
-      ["Map: Dvaered-Soromid trade route"] = _("Dvaered-Soromid trade route"),
-      ["Map: Sirian border systems"] = _("Sirian border systems"),
-      ["Map: Dvaered Core"] = _("Dvaered core systems"),
+      ["Map: Local System Map"]  = _("local system"),
       ["Map: Empire Core"]  = _("Empire core systems"),
-      ["Map: Nebula Edge"]  = _("Sol nebula edge"),
+      ["Map: Za'lek Core"] = _("Za'lek core systems"),
+      ["Map: Dvaered Core"] = _("Dvaered core systems"),
+      ["Map: Dvaered-Soromid trade route"] = _("Dvaered-Soromid trade route"),
+      ["Map: Sirius Core"] = _("Sirius ｃore systems"),
+      ["Map: Sirian border systems"] = _("Sirian border systems"),
       ["Map: The Frontier"] = _("Frontier systems")
+      ["Map: Nebula Edge"]  = _("Imperial Nebula edge"),
    }
    local unknown = {}
    for k,v in pairs(maps) do
@@ -246,7 +254,7 @@ function goodevent()
    if #unknown > 0 then
       table.insert( goodevent_list, function ()
          local choice = unknown[rnd.rnd(1,#unknown)]
-         derelict_msg(gtitle, fmt.f(_([[The derelict is empty, and seems to have been thoroughly picked over by other space buccaneers. However, the ship's computer contains a map of the {mapname}! You download it into your own computer.]]), {mapname=maps[choice]}))
+         derelict_msg(gtitle, fmt.f(_([[The derelict is empty and seems to have been thoroughly picked over by other space buccaneers. However, the ship's computer contains a map of the {smp}! You download it to your own computer.]]), {smp=maps[choice]}), fmt.f(_([[You found a derelict in {sys}, it was empty but the nav system contained a {smp} map! Nice!]]), {sys=system.cur(), smp=maps[choice]}))
          player.outfitAdd(choice, 1)
       end )
    end
@@ -256,7 +264,7 @@ function goodevent()
    local stats = pp:stats()
    if stats.fuel < 2*stats.fuel_consumption then
       table.insert( goodevent_list, function ()
-         derelict_msg(gtitle, _([[The derelict appears deserted, with most everything of value long gone. As explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in good state and you siphon it off to fill your ships fuel tanks.]]) )
+         derelict_msg(gtitle, _([[The derelict appears deserted, with almost everything of value long gone. As you explore the ship your handyscan suddenly picks up a back-up fuel tank hidden in the walls. The fuel is in a good state and you siphon it off to fill your own ship's fuel tanks.]]), fmt.f(_([[A derelict you found in {sys} was empty but for a reserve fuel tank you fortuitously discovered!]]), {sys=system.cur()})))
          pp:setFuel(true)
       end )
    end
@@ -265,7 +273,7 @@ function goodevent()
    local armour, shield = pp:health()
    if armour < 50 and stats.armour_regen <= 0 then
       table.insert( goodevent_list, function ()
-         derelict_msg(gtitle, _([[The derelict is deserted and striped of everything of value, however, you notice that the ship hull is in very good shape. In fact, it is rather suspicious that a ship in such good ship became a derelict. Without thinking much deeper about it you strip hull components and are able to repair your ship's armour.]]) )
+         derelict_msg(gtitle, fmt.f(_([[The derelict is deserted and striped of everything of value, however, you notice that the ship hull is in very good shape. In fact, it is rather suspicious that a ship in such good repair became a derelict. Hushing {shipai} and without thinking too deeply about it you strip some of the hull components and are able to repair your own ship's armour.]]), {shipai=tut.ainame()}), fmt.f(_([[The hull of a derelict you found in {sys} provided you with the resources to repair your own, very useful in the circumstances!]]), {sys=system.cur()})))
          pp:setHealth( 100, shield )
       end )
    end
@@ -280,18 +288,18 @@ function badevent()
    local badevent_list = {
       function ()
          derelict:hookClear() -- So the pilot doesn't end the event by dying.
-         derelict_msg(btitle, _([[The moment you affix your boarding clamp to the derelict ship, it triggers a booby trap! The derelict explodes, severely damaging your ship. You escaped death this time, but it was a close call!]]))
+         derelict_msg(btitle, _([[The moment you affix your boarding clamp to the derelict ship, it triggers a booby trap! The derelict explodes, severely damaging your ship. You escaped death this time, but it was a close call!]]), fmt.f(_([[It was a trap! A derelict you found in {sys} was rigged to explode when your boarding clamp closed! That was a little too close for comfort.]]), {sys=system.cur()})))
          derelict:setHealth(0,0)
          player.pilot():control(true)
          hook.pilot(derelict, "exploded", "derelict_exploded")
       end,
       function ()
-         derelict_msg(btitle, _([[You board the derelict ship and search its interior, but you find nothing. When you return to your ship, however, it turns out there were Space Leeches onboard the derelict - and they've now attached themselves to your ship! You scorch them off with a plasma torch, but it's too late. The little buggers have already drunk all of your fuel. You're not jumping anywhere until you find some more!]]))
+         derelict_msg(btitle, fmt.f(_([[You board the derelict ship and search its interior, but you find nothing. When you return to your ship, however, {shipai} finds there were Space Leeches onboard the derelict - and they've now attached themselves to your ship! You scorch them off with a plasma torch, but it's too late. The little buggers have already drunk all of your fuel. You're not jumping anywhere until you find some more!]]), {shipai=tut.ainame()}), fmt.f(_([[Space Leeches attached to a derelict you found in {sys} sucked your ship empty of jump fuel before you could get rid of them! Rough break.]]), {sys=system.cur()})))
          player.pilot():setFuel(false)
          destroyevent()
       end,
       function ()
-         derelict_msg(btitle, _([[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a couple of hectoseconds searching the interior when there is a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to unboard, but you've lost precious time. The pirates are already in firing range…]]))
+         derelict_msg(btitle, fmt.f(_([[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a little time searching the interior when {shipai} sounds a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to undock, but you've lost precious time. The pirates are already in firing range…]]), {shipai=tut.ainame()}), fmt.f(_([[It was a trap! Pirates baited you with a derelict ship in {sys}, fortunately you lived to tell the tale but you'll be more wary next time you board a derelict.]]), {sys=system.cur()})))
 
          local s = player.pilot():ship():size()
          local enemies_tiny = {
