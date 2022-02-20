@@ -109,8 +109,7 @@ LuaLinOpt_t* luaL_checklinopt( lua_State *L, int ind )
  */
 LuaLinOpt_t* lua_pushlinopt( lua_State *L, LuaLinOpt_t linopt )
 {
-   LuaLinOpt_t *c;
-   c = (LuaLinOpt_t*) lua_newuserdata(L, sizeof(LuaLinOpt_t));
+   LuaLinOpt_t *c = (LuaLinOpt_t*) lua_newuserdata(L, sizeof(LuaLinOpt_t));
    *c = linopt;
    luaL_getmetatable(L, LINOPT_METATABLE);
    lua_setmetatable(L, -2);
