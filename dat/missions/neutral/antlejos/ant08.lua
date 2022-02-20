@@ -62,7 +62,7 @@ function accept ()
    vn.done()
 
    vn.label("accept")
-   v(fmt.f(_([["Great! The core miner isn't really equipped with proper defenses, so it's somewhat of a sitting duck. It was recently doing some operations on the Sander seafloor, but I gave them an offer they can't refuse and they're willing to come immediately if they get some protection given the recent… incidents. I've been feeding some fake data to the PUAAA to hopefully distract them a bit, but I don't think we'll be able to sneak in such a large ship, so prepare for the worst. Try to protect the core miner at all costs on the way here from {pnt}! It'll be nearly impossible to replace if lost."]]),
+   v(fmt.f(_([["Great! The core miner isn't really equipped with proper defences, so it's somewhat of a sitting duck. It was recently doing some operations on the Sander seafloor, but I gave them an offer they can't refuse and they're willing to come immediately if they get some protection given the recent… incidents. I've been feeding some fake data to the PUAAA to hopefully distract them a bit, but I don't think we'll be able to sneak in such a large ship, so prepare for the worst. Try to protect the core miner at all costs on the way here from {pnt}! It'll be nearly impossible to replace if lost."]]),
       {pnt=mainpnt}))
    vn.func( function () accepted = true end )
 

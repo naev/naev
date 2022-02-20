@@ -70,11 +70,10 @@ function accept()
       local c = commodity.new( N_("Smith"), N_("Arnold Smith of Nexus Shipyards.") )
       mem.smith = misn.cargoAdd( c, 0 )
 
-      mem.landhook = hook.land("land")
-      mem.enterhook = hook.enter("enter")
-      else
+      hook.land("land")
+      hook.enter("enter")
+   else
       tk.msg(_("Sorry, not interested"), _([["OK, come back when you are ready."]]))
-      misn.finish(false)
    end
 end
 
@@ -95,9 +94,6 @@ function land()
          tk.msg(_("End of mission"), _([[Smith gets out of your ship and looks at you, smiling. "You know, it's like that in our kind of job. Sometimes it works and sometimes it fails. It's not our fault. Anyway, here is your pay."]]))
          player.pay(shark.rewards.sh04)
          pir.reputationNormalMission(rnd.rnd(2,3))
-         misn.osdDestroy()
-         hook.rm(mem.enterhook)
-         hook.rm(mem.landhook)
          shark.addLog( _([[You transported Arnold Smith to a secret meeting for Nexus Shipyards. The meeting supposedly did not go as well as he hoped, but was a partial success.]]) )
          misn.finish(true)
       end

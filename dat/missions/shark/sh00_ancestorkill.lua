@@ -78,12 +78,11 @@ function accept()
 
       mem.markeri = misn.markerAdd(mispla, "low")
 
-      mem.jumpouthook = hook.jumpout("jumpout")
-      mem.landhook = hook.land("land")
-      mem.enterhook = hook.enter("enter")
+      hook.jumpout("jumpout")
+      hook.land("land")
+      hook.enter("enter")
    else
       tk.msg(_("Sorry, not interested"), _([["That's your choice," the man says. "Don't hesitate to tell me if you change your mind."]]))
-      misn.finish(false)
    end
 end
 
@@ -99,10 +98,6 @@ function land()
    if spob.cur() == mispla and mem.stage == 4 then
       tk.msg(_("Congratulations!"), _([[As you step on the ground, Arnold Smith greets you. "That was a great demonstration! Thank you. I haven't been able to speak to the Baron about the results yet, but I am confident he will be impressed." He hands you your pay. "I may have another mission for you later. Be sure to check back!"]]))
       player.pay(shark.rewards.sh00)
-      misn.osdDestroy()
-      hook.rm(mem.enterhook)
-      hook.rm(mem.landhook)
-      hook.rm(mem.jumpouthook)
       shark.addLog( _([[You helped Nexus Shipyards demonstrate the capabilities of their ships by destroying a Pirate Ancestor.]]) )
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)

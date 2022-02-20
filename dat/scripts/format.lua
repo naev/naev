@@ -148,7 +148,7 @@ Converts a number to a human readable string.
 
 Has to be implemented on a per-language basis.
 
-   @tparam num Number to convert to a human readable string.
+   @tparam number num Number to convert to a human readable string.
    @treturn string Human readable string.
 --]]
 function format.humanize( num )

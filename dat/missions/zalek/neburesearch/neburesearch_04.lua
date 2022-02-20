@@ -50,7 +50,7 @@ function accept()
     local mensing = vn.newCharacter( nebu_research.vn_mensing() )
     vn.transition("fade")
 
-    mensing(fmt.f(_([["It appears we keep running into each other, {player}. You may be happy to hear that I finished my theoretical work on the nebula resistant shielding technique. Of course I can't provide you a shielding system; we scientists usually don't bother with engineering. However, in this case, I'd actually like to build a prototype shielding device. The prospect of exploring the Sol system is far too tempting."]]),{player=player:name()}))
+    mensing(fmt.f(_([["It appears we keep running into each other, {player}. You may be happy to hear that I finished my theoretical work on the nebula resistant shielding technique. Of course I can't provide you a shielding system; we scientists usually don't bother with engineering. However, in this case, I'd actually like to build a prototype shielding device. The prospect of exploring the Sol system is far too tempting."]]),{player=player.name()}))
     mensing(_([["This is were you come into play. I need a few capable engineers and some expensive hardware; my budget is too small though. This is why I have to acquire additional funding. Your task will be to chauffeur me around. Apparently it is sometimes required to show up in person. So annoying..."]]))
     vn.menu( {
         { _("Accept the job"), "accept" },

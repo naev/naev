@@ -62,7 +62,7 @@ He fumbles with his cyberdeck looking for something.
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
    vn.na(fmt.f(_([[He gets suddenly cut off by the blaring siren.
 "ALERT: Large hostile ships detected inbound from {sys}."]]),{sys=jumpsys}))
-   z(fmt.f(_([["Shit! Not again. At least they didn't catch us with our pants down. I've prepared some defense drones, but I don't think they'll be much help. We must not let {pnt} fall! Try to defend the station and I'll see what I can do over here!"]]),{pnt=mainpnt}))
+   z(fmt.f(_([["Shit! Not again. At least they didn't catch us with our pants down. I've prepared some defence drones, but I don't think they'll be much help. We must not let {pnt} fall! Try to defend the station and I'll see what I can do over here!"]]),{pnt=mainpnt}))
    vn.na(_([[Zach heads to the command center, and you make your way to your ship while mentally preparing you for the challenge to come..]]))
    vn.done( zbh.zach.transition )
    vn.run()
@@ -248,11 +248,11 @@ function heartbeat ()
             -- Deploy drones if close to the planet
             if d < 3000 then
                player.autonavReset( 6 )
-               zach_say( _("Deploying defense drones!") )
+               zach_say( _("Deploying defence drones!") )
                local fgoodguys = zbh.fzach()
                local fbadguys = zbh.evilpi()
                fgoodguys:dynEnemy( fbadguys )
-               defense_drones = fleet.add( 5, {"Za'lek Light Drone"}, fgoodguys, mainpnt, _("Defense Drone"), {ai="guard"} )
+               defense_drones = fleet.add( 5, {"Za'lek Light Drone"}, fgoodguys, mainpnt, _("Defence Drone"), {ai="guard"} )
                for k,p in ipairs(defense_drones) do
                   p:setFriendly(true)
                   p:memory().guardpos = mainpnt:pos() + vec2.newP(200*rnd.rnd(), rnd.angle() )

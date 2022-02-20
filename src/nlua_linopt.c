@@ -109,8 +109,7 @@ LuaLinOpt_t* luaL_checklinopt( lua_State *L, int ind )
  */
 LuaLinOpt_t* lua_pushlinopt( lua_State *L, LuaLinOpt_t linopt )
 {
-   LuaLinOpt_t *c;
-   c = (LuaLinOpt_t*) lua_newuserdata(L, sizeof(LuaLinOpt_t));
+   LuaLinOpt_t *c = (LuaLinOpt_t*) lua_newuserdata(L, sizeof(LuaLinOpt_t));
    *c = linopt;
    luaL_getmetatable(L, LINOPT_METATABLE);
    lua_setmetatable(L, -2);
@@ -590,14 +589,19 @@ static int linoptL_solve( lua_State *L )
    int ret, ismip;
    glp_iocp parm_iocp;
    glp_smcp parm_smcp;
+#if DEBUGGING
+   Uint32 starttime = SDL_GetTicks();
+#endif /* DEBUGGING */
 
    /* Parameters. */
    ismip = (glp_get_num_int( lp->prob ) > 0);
    glp_init_smcp(&parm_smcp);
    parm_smcp.msg_lev = GLP_MSG_ERR;
+   parm_smcp.tm_lim = 1000;
    if (ismip) {
       glp_init_iocp(&parm_iocp);
       parm_iocp.msg_lev  = GLP_MSG_ERR;
+      parm_iocp.tm_lim = 1000;
    }
 
    /* Load parameters. */
@@ -695,6 +699,12 @@ static int linoptL_solve( lua_State *L )
       lua_pushnumber( L, z ); /* t, z */
       lua_rawseti( L, -2, i ); /* t */
    }
+
+   /* Complain about time. */
+#if DEBUGGING
+   if (SDL_GetTicks() - starttime > 1000)
+      WARN(_("glpk: too over 1 second to optimize!"));
+#endif /* DEBUGGING */
 
    return 3;
 }

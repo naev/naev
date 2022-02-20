@@ -89,7 +89,7 @@ function hail()
          _("Your task"),
          fmt.f(
             _([["Very good choice, colleague!" The pilot answers. "Go to {system}, and you will be hailed by an other Vendetta for your briefing."]]),
-            {system=targetsys:name()} ) )
+            {system=targetsys} ) )
       stage = 1
    elseif c == 2 then
       tk.msg(_("Too bad"), _([["I see. Stay tuned, then, maybe we will see each other again!"]]))

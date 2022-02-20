@@ -66,11 +66,10 @@ function accept()
 
       mem.marker = misn.markerAdd(mem.missys, "low")
 
-      mem.landhook = hook.land("land")
-      mem.enterhook = hook.enter("enter")
-      else
+      hook.land("land")
+      hook.enter("enter")
+   else
       tk.msg(_("Sorry, not interested"), _([["OK, come back when you are interested."]]))
-      misn.finish(false)
    end
 end
 
@@ -81,9 +80,6 @@ function land()
    tk.msg(_("Good job"), fmt.f(_([[Smith seems to relax as you tell him that everything went according to plan. "Fantastic! I have another mission for you; meet me in the bar when you are ready to bring me to {pnt} in the {sys} system."]]), {pnt=nextpla, sys=nextsys}))
       player.pay(shark.rewards.sh03)
       pir.reputationNormalMission(rnd.rnd(2,3))
-      misn.osdDestroy()
-      hook.rm(mem.enterhook)
-      hook.rm(mem.landhook)
       shark.addLog( _([[You helped Nexus Shipyards initiate a secret meeting with a member of the Frontier Council. Arnold Smith said that he has another mission for you and to meet him in the bar on Darkshed when you are ready to transport him to Curie.]]) )
       misn.finish(true)
    end

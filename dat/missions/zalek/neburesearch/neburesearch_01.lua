@@ -82,7 +82,7 @@ function accept()
     mensing:rename(_("A scientist"))
     vn.transition("fade")
 
-    mensing(fmt.f(_([["Captain {player} if I'm not mistaken? Well met. I heard you recently helped one of our students. My name is Dr. Mensing and I am working for professor Voges as well."]]), {player=player:name()}))
+    mensing(fmt.f(_([["Captain {player} if I'm not mistaken? Well met. I heard you recently helped one of our students. My name is Dr. Mensing and I am working for professor Voges as well."]]), {player=player.name()}))
     mensing(_([["Your timing is just perfect. You see, we planned an expedition but the captain we hired to escort our transport ship backed out in the last minute. It's quite bothersome being stranded right in Dvaered space. Would you be willing to assist us instead?"]]))
     vn.menu( {
         { _("Accept the job"), "accept" },
@@ -151,7 +151,7 @@ function takeoff()
         vn.scene()
         local mensing = vn.newCharacter( nebu_research.vn_mensing() )
         vn.transition("fade")
-        mensing(fmt.f(_([["Please follow us, {player}. Make sure to jump to the next system after we jumped out. We'll have to land on some planets on our way to refuel."]]), {player=player:name()}))
+        mensing(fmt.f(_([["Please follow us, {player}. Make sure to jump to the next system after we jumped out. We'll have to land on some planets on our way to refuel."]]), {player=player.name()}))
         vn.done()
         vn.run()
         mem.firstTakeOff = false
@@ -337,7 +337,7 @@ function ambushHail()
     vn.na(_("With this answer the comm shuts off. Your sensors show that a Dvaered patrol changed their course and is heading straight towards the transporter."))
     mensing(_([["The situation would have escalated anyway." argues Dr. Mensing, this time directly speaking to you.]]))
     mensing(_([["I must admit, it is suspicious for a refitted transport ship with such advanced sensor suites to show up in Dvaered space. I hadn't considered this point."]]))
-    mensing(fmt.f(_([["I'm counting on you, {player}. Please help us."]]), {player=player:name()}))
+    mensing(fmt.f(_([["I'm counting on you, {player}. Please help us."]]), {player=player.name()}))
     vn.done()
     vn.run()
 end

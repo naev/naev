@@ -71,7 +71,7 @@ local function updater090 ()
    -- - electronic warfare (stealth, scanning)
    -- - outfit balance
    -- - safe lanes
-   vn.na("Suddenly, a hologram materializes in front of you.")
+   vn.na(_([[Suddenly, a hologram materializes in front of you.]]))
    sai(fmt.f(_([["Hello there {playername}! I'm your Ship AI. Up until now I've been resident in your ship controlling your Autonav and other functionality, but with new updates, I can now materialize and communicate directly with you as a hologram."
 They stare at you for a few seconds.
 "Say, now that I can see you, you look very familiar. You wouldn't be related my late previous owner? Terrible what happened…"]]),{playername=player.name()}))

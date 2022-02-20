@@ -55,7 +55,7 @@ function accept()
     local mensing = vn.newCharacter( nebu_research.vn_mensing() )
     vn.transition("fade")
 
-    mensing(fmt.f(_([["Well met, {player}! In fact, it's a lucky coincidence that we meet. You see, I'm in dire need of your service."]]), {player=player:name()}))
+    mensing(fmt.f(_([["Well met, {player}! In fact, it's a lucky coincidence that we meet. You see, I'm in dire need of your service."]]), {player=player.name()}))
     mensing(_([["I'm here on a... conference of sorts, not a real one. We are obligated to present the newest results of our research to scientists of the Empire once per period - even though these jokers lack the skills to understand our work! It's just a pointless ritual anyway."]]))
     mensing(_([["But I just got an ingenious idea on how to prevent the volatile Sol nebula from disrupting ship shields! I will spare you with the details - to ensure my idea is not going to be stolen, nothing personal. You can never be sure who is listening."]]))
     mensing(fmt.f(_([["Anyway, you have to take me back to my lab on {pnt} in the {sys} system immediately! I'd also pay {credits} if necessary."]]), {pnt=homeworld, sys=homeworld_sys, credits=fmt.credits(credits)}))

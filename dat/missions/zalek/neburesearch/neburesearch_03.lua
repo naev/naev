@@ -65,7 +65,7 @@ function accept()
     student(fmt.f(_([["Ah, right. There is a conference on {pnt} in the {sys} system soon. Actually she is supposed to be the substitute for professor Voges. He's been absent for weeks by now. No one knows what he is doing on Ruadan. Anyway, back to topic. You have to bring me there as ersatz-substitution for Dr. Mensing as she got seriously ill. But you already know that as you brought her here."]]), {pnt=dest_planet, sys=dest_sys}))
     vn.na(_("You tell him that she looked perfectly fine and said she wants to conduct her research instead of going to the conference."))
     student(_([["WHAT?? It was MY idea initially! She just wants to kick me out! I bet she thinks she could just pull it off entirely without me and be the only author! No way she could ever achieve that!"]]))
-    student(fmt.f(_([["{player}, you have to go to the conference instead! What do you mean you don't know anything about science? How about this, I just give you my presentation and while you're on the way I type the exact speech I'd recite during my talk and send it to you. Just recite it on my behalf and it'll go fine!"]]), {player=player:name()}))
+    student(fmt.f(_([["{player}, you have to go to the conference instead! What do you mean you don't know anything about science? How about this, I just give you my presentation and while you're on the way I type the exact speech I'd recite during my talk and send it to you. Just recite it on my behalf and it'll go fine!"]]), {player=player.name()}))
     student(_([["No time for discussions, sorry. While we're talking Dr. Mensing is trying to get an advantage! I have no time to lose!"]]))
     student(_([[He stands up and searches his pockets for something.
 "Here, the presentation," he says and hands you a small data chip. He further adds, "And don't be too late!" before rushing out of the bar in a hurry.]]))
@@ -282,9 +282,9 @@ function enter_ship()
             mem.text2 = _([[You start reciting the speech you got from the student. You realize that you should have learned the text as some of the occurring terms are difficult to pronounce correctly.]])
         end
     end )
-    vn.na(_([[You make your way to the institute where you are supposed to give the talk, following the signs. On arriving you ask around where you should head to for your talk. Apparently you were already awaited. You are lead to a rather small seminar room. Finally you are ready to give your talk and a few scientist take seat. Actually you expected more than 17 listeners. Maybe this talk is not such a big deal as you expected. They wouldn't just send you to an important presentation, right?]]))
-    vn.na(mem.text1)
-    vn.na(mem.text2)
+    vn.na(_([[You make your way to the institute where you are supposed to give the talk, following the signs. On arriving you ask around where you should head to for your talk. Apparently you were already awaited. You are led to a rather small seminar room. Finally you are ready to give your talk and a few scientists take seats. Actually you expected more than 17 listeners. Maybe this talk is not such a big deal as you expected. They wouldn't just send you to an important presentation, right?]]))
+    vn.na(function() return mem.text1 end)
+    vn.na(function() return mem.text2 end)
     vn.na(_([[Finally, you are finished with your text and sigh in relief. After a brief applause, someone raises his hand. Apparently, he wants to ask a question. What should you do?
 You haven't understood the question, not even a single word.]]))
     vn.menu( {

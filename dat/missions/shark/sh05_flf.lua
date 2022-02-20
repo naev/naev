@@ -65,12 +65,11 @@ function accept()
       })
       misn.osdActive(1)
 
-      hook.land( "land" )
-      hook.hail( "hail" )
-      hook.board( "board" )
+      hook.land("land")
+      hook.hail("hail")
+      hook.board("board")
    else
       tk.msg(_("Sorry, not interested"), _([["Alright, then. I'll see if anyone else is interested."]]))
-      misn.finish(false)
    end
 end
 

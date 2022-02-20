@@ -37,7 +37,7 @@ local vn = require 'vn'
 local mensing_portrait = nebu_research.mensing.portrait
 
 -- luacheck: globals land takeoff jumpin arrive_at_testing_sys timer moveto endScan peacemaker board rescue (Hook functions passed by name)
-local hasShieldingPrototypeEquiped, beginScan -- Forward-declared functions
+local hasShieldingPrototypeEquipped, beginScan -- Forward-declared functions
 
 -- Mission constants
 local credits = nebu_research.rewards.credits05
@@ -64,7 +64,7 @@ function accept()
     vn.scene()
     local mensing = vn.newCharacter( nebu_research.vn_mensing() )
     vn.transition("fade")
-    mensing(fmt.f(_([["{player}? Great timing! I need someone insane.. eh.. I meant brave enough to test the nebula resistant shielding prototype in a realistic testing environment. And there is no better place for this tests than the Sol nebula itself!"]]), {player=player:name()}))
+    mensing(fmt.f(_([["{player}? Great timing! I need someone insane.. eh.. I meant brave enough to test the nebula resistant shielding prototype in a realistic testing environment. And there is no better place for this tests than the Sol nebula itself!"]]), {player=player.name()}))
     mensing(_([["No no, it's absolutely safe! We ran some basic tests on the device in a simulation chamber and tested it on a ship in space. It works absolutely fine so far. The next step is to actually test it within the Sol nebula itself. This is your chance to make history! Are you ready?"]]))
     vn.menu( {
         { _("Accept the job"), "accept" },
@@ -105,9 +105,9 @@ function accept()
 
     misn.accept()
     local osd_msg   = {}
-    osd_msg[1] = fmt.f(_("Land on {pnt} in the {sys} system"), {pnt=dest_planet:name(), sys=dest_sys:name()})
-    osd_msg[2] = fmt.f(_("Fly to the {sys} system and carry out the testing procedure"), {sys=testing_sys:name()})
-    osd_msg[3] = fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld:name(), sys=homeworld_sys:name()})
+    osd_msg[1] = fmt.f(_("Land on {pnt} in the {sys} system"), {pnt=dest_planet, sys=dest_sys})
+    osd_msg[2] = fmt.f(_("Fly to the {sys} system and carry out the testing procedure"), {sys=testing_sys})
+    osd_msg[3] = fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld, sys=homeworld_sys})
     misn.osdCreate(osd_title, osd_msg)
 
     hook.land("land")
@@ -124,7 +124,7 @@ function land()
         student(_([[Shortly after landing you are greeted by the student.
 "That took long enough! Being stuck in a place like this.. It's always us students who have to do all the hard work!]]))
         student(_([["Anyway, I'm done here with my measurements. Since the shielding prototype requires fine tuning of some parameters these measurements are essential. I just need a few minutes to configure the device. We can start anytime soon."]]))
-        if not hasShieldingPrototypeEquiped() then
+        if not hasShieldingPrototypeEquipped() then
             student(_([["You did remember to install the shielding prototype, right?"]]))
         end
         vn.done()
@@ -164,30 +164,31 @@ With this she hands you a credit chip worth {credits}.]]), {credits=fmt.credits(
 end
 
 function takeoff()
-    if mem.stage == 1 then
+    if mem.stage == 1 and hasShieldingPrototypeEquipped() then
         vn.clear()
         vn.scene()
         local student = vn.newCharacter( nebu_research.vn_student() )
         vn.transition("fade")
         vn.na(_("The last time you were out here with the student you almost died due to his tinkering with your ship's electronics and now you're doing something even more dangerous. Was it really a good idea to accept this mission?"))
-        student(fmt.f(_([["Alright, let's go to the {sys} system. I'm going to monitor the prototype to make sure everything is right."]]), {sys=testing_sys:name()}))
+        student(fmt.f(_([["Alright, let's go to the {sys} system. I'm going to monitor the prototype to make sure everything is right."]]), {sys=testing_sys}))
         vn.done()
         vn.run()
         mem.stage = 2
         misn.markerMove(mem.misn_marker, testing_sys)
     end
+    -- TODO: nag player if they somehow ditch the prototype after the above scene has played out?
 end
 
 function jumpin()
-    if mem.stage == 2 and system.cur() == testing_sys then
+    if mem.stage == 2 and system.cur() == testing_sys and hasShieldingPrototypeEquipped() then
         hook.timer(5.0, "arrive_at_testing_sys")
     end
 end
 
 function arrive_at_testing_sys()
     local osd_msg = {}
-    osd_msg[1] = fmt.f(_("Fly to the checkpoint in the {sys} system"), {sys=testing_sys:name()})
-    osd_msg[2] = fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld:name(), sys=homeworld_sys:name()})
+    osd_msg[1] = fmt.f(_("Fly to the checkpoint in the {sys} system"), {sys=testing_sys})
+    osd_msg[2] = fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld, sys=homeworld_sys})
     mem.stage = 3
     vn.clear()
     vn.scene()
@@ -195,15 +196,15 @@ function arrive_at_testing_sys()
     vn.transition("fade")
     point_pos = vec2.new(0, 0)
     marker = system.mrkAdd(point_pos, _("Checkpoint"))
-    vn.na(fmt.f(_("You arrived in the {sys} system and the student signals you that everything works as expected."), {sys=testing_sys:name()}))
-    student(fmt.f(_([["To proceed, please fly towards the checkpoint that I just marked on your map. Afterwards we'll return to the {sys} system."]]), {sys=dest_sys:name()}))
+    vn.na(fmt.f(_("You arrived in the {sys} system and the student signals you that everything works as expected."), {sys=testing_sys}))
+    student(fmt.f(_([["To proceed, please fly towards the checkpoint that I just marked on your map. Afterwards we'll return to the {sys} system."]]), {sys=dest_sys}))
     vn.done()
     vn.run()
     misn.osdCreate(osd_title, osd_msg)
     hook.timer(1.0, "timer")
 end
 
-function hasShieldingPrototypeEquiped()
+function hasShieldingPrototypeEquipped()
     local o = player.pilot():outfits("structure")
     for i=1,#o do
         if o[i]:nameRaw()=="Nebular Shielding Prototype" then
@@ -217,7 +218,7 @@ function timer()
     if player.pos():dist(point_pos) < 500 then
         local osd_msg = {}
         osd_msg[1] = _("Wait...")
-        osd_msg[2] = fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld:name(), sys=homeworld_sys:name()})
+        osd_msg[2] = fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld, sys=homeworld_sys})
         mem.stage = 4
         system.mrkRm(marker)
         misn.osdCreate(osd_title, osd_msg)
@@ -253,7 +254,7 @@ function endScan()
     local ps = player.pilot()
     mem.stage = 5
     osd_msg[1] = _("Survive")
-    osd_msg[2] = fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld:name(), sys=homeworld_sys:name()})
+    osd_msg[2] = fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=homeworld, sys=homeworld_sys})
     ghost:hyperspace()
     player.cinematics(true)
     player.cinematics(false)
@@ -265,7 +266,7 @@ function endScan()
     vn.na(_([[Looking out of the window you see blurry shapes moving past your ship vaguely resembling space ships of unfamiliar design. Your sensors show nothing out there, though. Maybe you started to imagine things that do not exist. You wonder if you have spent too much time inside the nebula. Or maybe the rumors about ghost ships are true after all...]]))
     vn.na(_([[Suddenly, without a warning, your shield energy begins to drop at a rapid pace. The shielding prototype must be broken! You hope it is just a temporary problem and ask Robert what the problem is. His reply is simply "Busy!"]]))
     vn.menu( {
-        { fmt.f(_("Retreat to {sys}"), {sys=system.get("Arandon"):name()}), "retreat" },
+        { fmt.f(_("Retreat to {sys}"), {sys=system.get("Arandon")}), "retreat" },
         { _("Talk to Robert"), "talk" },
     } )
 
@@ -332,7 +333,7 @@ function peacemaker()
 
     vn.clear()
     vn.scene()
-    vn.na(fmt.f(_("An empire Peacemaker emerged! The ship approaches slowly towards your direction, as if they knew exactly your current position. Finally, you receive a message from the Peacemaker. They command you to dock with their ship so that their shields can protect your ship on the way back to the {sys} system."), {sys=dest_sys:name()}))
+    vn.na(fmt.f(_("An empire Peacemaker emerged! The ship approaches slowly towards your direction, as if they knew exactly your current position. Finally, you receive a message from the Peacemaker. They command you to dock with their ship so that their shields can protect your ship on the way back to the {sys} system."), {sys=dest_sys}))
     vn.na(_("You have no time to lose!"))
     vn.done()
     vn.run()
@@ -344,7 +345,7 @@ function board(_pilot)
 end
 
 function rescue()
-    player.teleport(dest_sys:name())
+    player.teleport(dest_sys)
     local peacemaker = pilot.add("Empire Peacemaker", "Empire", player.pos())
     peacemaker:control()
     peacemaker:hyperspace()
@@ -359,7 +360,7 @@ function rescue()
         { _("Apologize"), "apologize" },
     } )
     vn.label("signal")
-    vn.na(fmt.f(_("You ask the captain for the sensor logs regarding the distress signal. At first she refuses your request. While she ultimately declines to hand you out the logs she allows you to at least take a look on them. You don't see anything remarkable except the time stamp. The distress signal was received shortly after you jumped into the {sys} system!"), {sys=testing_sys:name()}))
+    vn.na(fmt.f(_("You ask the captain for the sensor logs regarding the distress signal. At first she refuses your request. While she ultimately declines to hand you out the logs she allows you to at least take a look on them. You don't see anything remarkable except the time stamp. The distress signal was received shortly after you jumped into the {sys} system!"), {sys=testing_sys}))
     vn.na(_("While that explains how the Empire ship reached you in time it raises several new questions."))
     captain(_([["Seeing anything interesting?"
 You decide that it's better not to tell her about your finding.]]))
@@ -369,7 +370,7 @@ You decide that it's better not to tell her about your finding.]]))
     vn.na(_("While she was just joking you can't help but realise how much look you had."))
     vn.label("end_talk")
     captain(_([["You may leave now, civilian. But be aware that we'll keep an eye on you."]]))
-    vn.na(fmt.f(_("An officer leads you back onto your ship. Your journey to {sys} is uneventful and you are ordered to depart after arriving."), {sys=dest_sys:name()}))
+    vn.na(fmt.f(_("An officer leads you back onto your ship. Your journey to {sys} is uneventful and you are ordered to depart after arriving."), {sys=dest_sys}))
     vn.done()
     vn.run()
 

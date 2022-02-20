@@ -556,7 +556,7 @@ function bioship.window ()
       return true
    end
    wdw:setCancel( wdw_done )
-   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Stage {stage} {name}"),{stage=stage,name=ps:name()}), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Stage {stage} {name}"),{stage=stage,name=ps}), nil, "center" )
    local stagetxt
    local maxstage = bioship.maxstage(pp)
    if stage==maxstage then

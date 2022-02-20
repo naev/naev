@@ -4,7 +4,6 @@
 
 --]]
 local vn = require 'vn'
-local mt = require 'merge_tables'
 
 local nebu_research = {
     -- Main Characters
@@ -58,28 +57,28 @@ nebu_research.fctmod = {
 -- Helpers to create main characters
 function nebu_research.vn_student( params )
     return vn.Character.new( nebu_research.student.name,
-        mt.merge_tables( {
+        tmerge( {
             image=nebu_research.student.image,
             color=nebu_research.student.colour,
         }, params) )
 end
 function nebu_research.vn_mensing( params )
     return vn.Character.new( nebu_research.mensing.name,
-        mt.merge_tables( {
+        tmerge( {
             image=nebu_research.mensing.image,
             color=nebu_research.mensing.colour,
         }, params) )
 end
 function nebu_research.vn_dvaered_officer( params )
     return vn.Character.new( nebu_research.dvaered_officer.name,
-        mt.merge_tables( {
+        tmerge( {
             image=nebu_research.dvaered_officer.image,
             color=nebu_research.dvaered_officer.colour,
         }, params) )
 end
 function nebu_research.vn_empire_captain( params )
     return vn.Character.new( nebu_research.empire_captain.name,
-        mt.merge_tables( {
+        tmerge( {
             image=nebu_research.empire_captain.image,
             color=nebu_research.empire_captain.colour,
         }, params) )

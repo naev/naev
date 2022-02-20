@@ -151,7 +151,7 @@ local function dvaered_weapons( p )
       return false, baditems -- Need weapons
    end
    for k,o in ipairs(weapons) do
-      if not inlist( o:nameRaw(), allowed ) then
+      if not inlist( allowed, o:nameRaw() ) then
          table.insert( baditems, o:name() )
       end
    end
