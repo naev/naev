@@ -82,7 +82,7 @@ function accept()
    mem.godname = fmt.f( _("{name} II"), {name=pilotname.pirate()} )
 
    if tk.yesno(_("The mission"), _([["Hello again. As you know, I've agreed with the FLF on a contract that will extend our sales of ships to them substantially. Of course, this deal must remain a secret, which is why it is being done through a false black market dealer.
-    "However, we have reason to suspect that a few key influential pirates may have their eyes on the FLF as possible buyers of the Skull and Bones pirate ships. We don't think the FLF will have any interest in those ships, but the pirates' ambitions could give them motivation to attack our false dealer's trade posts, destroying our deal with the FLF anyway. We, of course, can't have that.
+    "However, we have reason to suspect that a few key influential pirates may have their eyes on the FLF as possible buyers of the Skull &amp; Bones pirate ships. We don't think the FLF will have any interest in those ships, but the pirates' ambitions could give them motivation to attack our false dealer's trade posts, destroying our deal with the FLF anyway. We, of course, can't have that.
     "So what we want you to do, quite simply, is to eliminate these pirates. There's not that many of them; there are four pirates we need eliminated, and thankfully, they're all spread out. That being said, some of them do have quite big ships, so you will have to make sure you can handle that. Are you willing to do this job for us?"]])) then
       misn.accept()
       tk.msg(_("Very good"), fmt.f(_([["So, here are the details we have gathered about these pirates:
@@ -106,8 +106,8 @@ function accept()
       mem.kermarker2 = misn.markerAdd(mem.kersys2, "high")
       mem.godmarker = misn.markerAdd(mem.godsys, "high")
 
-      hook.enter("enter")
-      hook.land("land")
+      mem.enterhook = hook.enter("enter")
+      mem.landhook = hook.land("land")
 
    else
       tk.msg(_("Sorry, not interested"), _([["I'm sorry to hear that. Don't hesitate to come back if you change your mind."]]))
@@ -143,7 +143,7 @@ function enter ()
       baddie:control()
       baddie:moveto(pos)
 
-      --The pirate becomes nice defensive outfits
+      --The pirate comes with nice defensive outfits
       baddie:outfitRm("all")
       baddie:outfitRm("cores")
       baddie:cargoRm( "all" )
@@ -155,7 +155,7 @@ function enter ()
       baddie:outfitAdd("Shield Capacitor I")
       baddie:outfitAdd("Plasteel Plating")
       baddie:outfitAdd("Milspec Impacto-Plastic Coating")
-      baddie:outfitAdd("Laser Cannon MK1",2)
+      baddie:outfitAdd("Laser Cannon MK1", 2)
 
       baddie:setHealth(100,100)
       baddie:setEnergy(100)
@@ -163,6 +163,7 @@ function enter ()
       hook.pilot(baddie, "idle", "idle", pos)
       hook.pilot(baddie, "attacked", "attacked")
       hook.pilot(baddie, "death", "gawain_dead")
+      hook.pilot(baddie, "jump", "generic_jumped")
 
    elseif system.cur() == mem.kersys1 and mem.kerdead1 == false then  --The Kestrel
       pilot.clear()
@@ -181,7 +182,8 @@ function enter ()
       baddie:setHilight()
       baddie:setHostile()
 
-      hook.pilot( baddie, "death", "kestrel_dead1")
+      hook.pilot(baddie, "death", "kestrel_dead1")
+      hook.pilot(baddie, "jump", "generic_jumped")
 
    elseif system.cur() == mem.kersys2 and mem.kerdead2 == false then  --The Kestrel
       pilot.clear()
@@ -202,7 +204,8 @@ function enter ()
       baddie:setHilight()
       baddie:setHostile()
 
-      hook.pilot( baddie, "death", "kestrel_dead2")
+      hook.pilot(baddie, "death", "kestrel_dead2")
+      hook.pilot(baddie, "jump", "generic_jumped")
 
    elseif system.cur() == mem.godsys and mem.goddead == false then  --The Goddard
       pilot.clear()
@@ -222,7 +225,8 @@ function enter ()
       baddie:setHilight()
       baddie:setHostile()
 
-      hook.pilot( baddie, "death", "goddard_dead")
+      hook.pilot(baddie, "death", "goddard_dead")
+      hook.pilot(baddie, "jump", "generic_jumped")
 
    end
 end
@@ -268,9 +272,13 @@ end
 function generic_dead()
    --Are there still other pirates to kill ?
    if mem.gawdead == true and mem.kerdead1 == true and mem.kerdead2 == true and mem.goddead == true then
-      tk.msg(_("Mission accomplished"), fmt.f(_("You have killed the four pirates. Now to return to {sys} and collect your payment..."), {sys=paysys}))
+      tk.msg(_("Mission accomplished"), fmt.f(_([[You have killed the four pirates. Now to return to {sys} and collect your payment...]]), {sys=paysys}))
       mem.stage = 1
       misn.osdActive(2)
       mem.marker2 = misn.markerAdd(paypla, "low")
    end
+end
+
+function generic_jumped()
+   tk.msg(_("Target is gone!"), _([[It seems the pirate left. Don't worry: I'll bet that if you come back a little later, they will be back.]]))
 end

@@ -97,10 +97,6 @@ function land()
       tk.msg(_("Reward"), _([[As you land, you see Arnold Smith waiting for you. He explains that the Baron was so impressed by the battle that he signed an updated contract with Nexus Shipyards, solidifying Nexus as the primary supplier of ships for his fleet. As a reward, they give you twice the sum of credits they promised to you.]]))
       pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay(shark.rewards.sh01)
-      misn.osdDestroy()
-      hook.rm(mem.enterhook)
-      hook.rm(mem.landhook)
-      hook.rm(mem.jumpouthook)
       shark.addLog( _([[You helped Nexus Shipyards fake a demonstration by allowing a Lancelot to disable your Destroyer class ship.]]) )
       misn.finish(true)
    end
@@ -161,8 +157,4 @@ function disabled(pilot, attacker)
    --making sure the shark doesn't continue attacking the player
    sharkboy:hyperspace(escapesys, true)
    sharkboy:setNoDeath(true)
-
-   -- Clean up now unneeded hooks
-   hook.rm(mem.shark_dead_hook)
-   hook.rm(mem.disabled_hook)
 end
