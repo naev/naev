@@ -26,11 +26,14 @@ function comm.nameboxUpdate( plt )
       local _std, str = fac:playerStanding()
       if plt:hostile() then
          faction_str = string.format( "#r%s#0", _("Hostile") )
+      elseif not fac:known() then
+         faction_str = _("Unknown")
       else
          faction_str = str
       end
    end
-   local namebox_text = string.format("%s\n%s\n%s", fac:name(), plt:name(), faction_str )
+   local facname = (fac:known() and fac:name()) or _("Unknown")
+   local namebox_text = string.format("%s\n%s\n%s", facname, plt:name(), faction_str )
    local namebox_col = fac:colour()
    if namebox_col then namebox_col = {namebox_col:rgb()}
    else namebox_col = {1,1,1}
