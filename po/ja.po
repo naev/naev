@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-02-19 12:48-0500\n"
-"PO-Revision-Date: 2022-02-13 16:57+0000\n"
+"PO-Revision-Date: 2022-02-20 16:55+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "ja/>\n"
@@ -18108,14 +18108,6 @@ msgid "Asteroid Scanner"
 msgstr "小惑星スキャナー"
 
 #: dat/outfits/utility/asteroid_scanner.xml:8
-#, fuzzy
-#| msgid ""
-#| "Any scanner can give the mass, position and velocity of an asteroid. But "
-#| "miners prefer to know the asteroid's value. For that purpose, Milspec "
-#| "designed a scanner array able to deduce the surface composition from "
-#| "spectroscopy, and, what is more impressive, to infer the internal "
-#| "composition via inverse electrical impedance. Of course, that comes at a "
-#| "price that not any miner can pay."
 msgid ""
 "Any scanner can give the mass, position and velocity of an asteroid. But "
 "miners prefer to know the asteroid's value. For that purpose, Milspec "
@@ -18124,11 +18116,9 @@ msgid ""
 "composition via inverse electrical impedance. Of course, that comes at a "
 "price that not just any miner can pay."
 msgstr ""
-"どのスキャナーでも小惑星の質量・位置・速度を示してくれる。しかし採掘者は小惑"
-"星の価値を知りたがっている。その目的のために、ミルスペックは分光学で表面の組"
-"成を導きだせるスキャナーアレイを設計した。さらに、もっと感動的なのは、電気的"
-"逆インピーダンスから内部組成を推測できることだ。もちろん、これはどんな採掘者"
-"でも買える価格にはならなかった。"
+"どのスキャナーでも小惑星の質量・位置・速度を示してくれる。しかし採掘者は小惑星の価値を知りたがっている。その目的のために、ミルスペックは分光学で表面の組成"
+"を導きだせるスキャナーアレイを設計した。さらに、もっと感動的なのは、電気的逆インピーダンスから内部組成を推測できることだ。もちろん、これはなみの採掘者が買"
+"える価格にはならなかった。"
 
 #: dat/outfits/utility/berserk_chip.xml:2
 msgid "Berserk Chip"
@@ -18247,13 +18237,6 @@ msgid "Holograph Projector"
 msgstr "ホログラフ映写機"
 
 #: dat/outfits/utility/combat_hologram_projector.xml:12
-#, fuzzy
-#| msgid ""
-#| "The combat hologram projector uses state of the art technology to create "
-#| "do create a hologram of a ship nearly indistinguishible from real ones. "
-#| "Such holographic displays are very efficient at drawing away enemy fire "
-#| "and creating confusion, however, when engaged in actual combat the cover "
-#| "is usually quickly blown away."
 msgid ""
 "The combat hologram projector uses state of the art technology to create a "
 "hologram of a ship nearly indistinguishable from real ones. Such holographic "
@@ -18261,10 +18244,8 @@ msgid ""
 "confusion, however, when engaged in actual combat the cover is usually "
 "quickly blown away."
 msgstr ""
-"戦闘用ホログラム映写機は、本物の船とほとんど区別がつかない船のホログラフィー"
-"を作る最新の技術を使っている。そのようなホログラフィック表示器は、敵の砲火を"
-"引き離したり、混乱を招いたりするのにとても効果的だ。とはいえ、じっさいに戦闘"
-"がおきると、一般的にこの代役はすばやく消しとばされてしまう。"
+"戦闘用ホログラム映写機は、本物の船とほとんど区別がつかない船のホログラフィーを作る最新の技術を使っている。そのようなホログラフィック表示器は、敵の砲火を引"
+"き離したり、混乱を招いたりするのにとても効果的だ。とはいえ、じっさいに戦闘がおきると、一般的にこの代役はすばやく消しとばされてしまう。"
 
 #: dat/outfits/utility/combat_hologram_projector.xml:13
 msgid ""
@@ -18353,21 +18334,14 @@ msgid "Hunting Combat AI"
 msgstr "ハンティング戦闘用 AI"
 
 #: dat/outfits/utility/combatai/hunting_combat_ai.xml:11
-#, fuzzy
-#| msgid ""
-#| "Similar to how ambush hunters work, the Hunting Combat AI is able to "
-#| "focus on exploiting the element of surprise and weaknesses in the enemy "
-#| "ships hulls, resulting in a slower firerate with significant increased "
-#| "damage for turret weapons."
 msgid ""
 "Similar to a hunter's ambush, the Hunting Combat AI is able to focus on "
 "exploiting the element of surprise and the weaknesses of enemy ship hulls, "
 "resulting in a significant increase in damage for turret weapons, albeit "
 "with a reduced fire rate."
 msgstr ""
-"待ち伏せ猟師の仕事のしかたと似ているハンティング戦闘用 AI は、奇襲の要素と敵"
-"の船殻の弱点を利用することに焦点をあわせられるものだ。砲塔型武器の発砲率低下"
-"と与える損害のいちじるしい増加がその結果となる。"
+"猟師の待ち伏せと似ているハンティング戦闘用 AI "
+"は、奇襲の要素と敵の船殻の弱点を利用することに焦点をあわせられるものだ。その結果、砲塔型武器の発砲率は低下するものの、与える損害はいちじるしく増加する。"
 
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:2
 msgid "Pinpoint Combat AI"
@@ -18410,15 +18384,6 @@ msgid "Armour Repair"
 msgstr "装甲修理"
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:10
-#, fuzzy
-#| msgid ""
-#| "Repair nanobots are able to perform what seems short of a miracle, "
-#| "restoring the hull and armour of ships to pristine condition. While they "
-#| "show remarkable behaviour in laboratory conditions, in practice, they "
-#| "need a fairly still environment to work in. The active cooling stage of a "
-#| "ship provides an excellent opportunity for the nanobots to show what they "
-#| "are fully capable, and when the ship is in motion they go into "
-#| "hibernation."
 msgid ""
 "Repair nanobots are able to perform what seems nothing short of a miracle, "
 "restoring the hull and armour of ships to pristine condition. While they "
@@ -18428,11 +18393,9 @@ msgid ""
 "fully capable of, however when the ship is in motion they go into "
 "hibernation."
 msgstr ""
-"修理用ナノボットは、奇跡に近いことをする。船殻と船の装甲をもとの状態に戻すの"
-"だ。ナノボットは実験室では注目すべきふるまいをみせるが、じっさいには働かせる"
-"のにかなり落ちついた環境が必要となる。船の冷却器作動期間は、ナノボットが完全"
-"に機能してみせるすばらしい機会を与える。そして船が動いているときには、ナノ"
-"ボットは冬眠状態になる。"
+"修理用ナノボットは、まるで奇跡のようなことをする。船殻と船の装甲をもとの状態に戻すのだ。ナノボットは実験室では注目すべきふるまいをみせるが、じっさいには働"
+"かせるのにかなり落ちついた環境が必要となる。船の冷却器作動期間は、ナノボットが完全に機能してみせるすばらしい機会を与えるが、船が動いているときには、ナノボ"
+"ットは冬眠状態になる。"
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:11
 msgid "Restores armour to full when performing an active cooldown."
@@ -18443,14 +18406,6 @@ msgid "Droid Repair Crew"
 msgstr "ドロイド修理要員"
 
 #: dat/outfits/utility/droid_repair_crew.xml:10
-#, fuzzy
-#| msgid ""
-#| "This low maintenance droid crew will scour your ship to repair any "
-#| "damages caused by space hazards. They are very small and able to work "
-#| "both on the interior or exterior of the ship. Power is drawn from the "
-#| "ship to feed the robots, although the load is generally very low compared "
-#| "to the benefits of having a robotic repair crew. Due to the simplicity of "
-#| "the droid tools, they are unable to restore armour beyond 50%."
 msgid ""
 "This low maintenance droid crew will scour your ship to repair any damage "
 "caused by space hazards. They are very small and able to work both on the "
@@ -18459,11 +18414,9 @@ msgid ""
 "having a robotic repair crew. Due to the simplicity of the droid tools, they "
 "are unable to restore armour beyond 50%."
 msgstr ""
-"これは単純な保守用ドロイド要員で、あなたの船を磨いて宇宙の偶然で生じたどんな"
-"損害でも修理する。ドロイドはとても小さくて、船の内部と外部の両方で働くことが"
-"できる。電力は船から取られてロボットに供給される。しかしその負荷は、一般的に"
-"はロボット修理要員がいることからくる利益と比べてとても低い。ドロイドの工具は"
-"簡素なものなので、50% をこえた装甲の修復をすることはできない。"
+"これは単純な保守用ドロイド要員で、あなたの船を磨いて宇宙の偶然で生じたどんな損害でも修理する。ドロイドはとても小さくて、船の内部と外部の両方で働くことがで"
+"きる。電力は船から取られてロボットに供給される。しかしその負荷は、一般的にはロボット修理要員がいることからくる利益と比べてとても低い。ドロイドの工具は簡素"
+"なものなので、50% をこえた装甲の修復をすることはできない。"
 
 #: dat/outfits/utility/droid_repair_crew.xml:11
 msgid "Can only restore armour when below 50%."
@@ -18653,36 +18606,20 @@ msgid "Photo-Voltaic Nanobot Coating"
 msgstr "光電池ナノボット被覆"
 
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:9
-#, fuzzy
-#| msgid ""
-#| "A coating of photo-voltaic nanobot paint covers the entire ship hull and "
-#| "is able harness solar energy and redirect it to the power system of the "
-#| "ship. The nanobots are self-regulating and self-repairing, requiring no "
-#| "maintenance once a colony has been established."
 msgid ""
 "A coating of photo-voltaic nanobot paint covers the entire ship hull and is "
 "able to harness solar energy and redirect it to the power system of the "
 "ship. The nanobots are self-regulating and self-repairing, requiring no "
 "maintenance once a colony has been established."
 msgstr ""
-"光電池ナノボットペンキの被覆は、船殻全体を覆って太陽エネルギーを利用し、船の"
-"電力系統へ送ることができる。ナノボットは自己調整と自己修復をする。群れが定着"
-"してしまえば、保守は必要ない。"
+"光電池ナノボットペンキの被覆は、船殻全体を覆って太陽エネルギーを利用し、船の電力系統へ送ることができる。ナノボットは自己調整と自己修復をする。群れが定着し"
+"てしまえば、保守は必要ない。"
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:2
 msgid "Hyperbolic Blink Engine"
 msgstr "ハイパーボリックブリンクエンジン"
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:10
-#, fuzzy
-#| msgid ""
-#| "The hyperbolic blink engine seems to be designed as a response to the "
-#| "question \"How much mass is it possible to move across a space-time fold?"
-#| "\". It seems to disregard significantly about actually being able to "
-#| "control such space-time folding, and only focuses on whether or not is "
-#| "possible. Due to the heavy amount of disruption to the ship's systems and "
-#| "personnel, after each space-time fold or \"blink\", it takes a while for "
-#| "the ship to be fully responsive again."
 msgid ""
 "The hyperbolic blink engine seems to be designed as a response to the "
 "question \"How much mass is it possible to move across a space-time fold?\". "
@@ -18692,12 +18629,9 @@ msgid ""
 "each space-time fold or \"blink\", it takes a while for the ship to be fully "
 "responsive again."
 msgstr ""
-"ハイパーボリックブリンクエンジンは、この質問への回答として設計されたようだ。"
-"｢時空を折りたたんで移動できるのはどのくらいの質量までだろう？｣。じっさいにそ"
-"のような時空折りたたみを制御可能にすることについては、かなり軽視されているら"
-"しく、焦点を当てられているのは移動できるかどうかだけである。船のシステムや人"
-"員に与える混乱は大きいので、時空折りたたみ、つまり ｢ブリンク｣ するごとに、船"
-"がまた完全に反応できるようになるまでにはしばらく時間が必要だ。"
+"ハイパーボリックブリンクエンジンは、この質問への回答として設計されたようだ。｢時空を折りたたんで移動できるのはどのくらいの質量までだろう？｣。時空折りたた"
+"みを注意深く制御しつづけることは軽視されていて、そのかわりに最大限可能な処理量に焦点をあてられているらしい。船のシステムや人員に与える混乱は大きいので、時"
+"空折りたたみ、つまり ｢ブリンク｣ するごとに、船がまた完全に反応できるようになるまでにはしばらく時間が必要だ。"
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:11
 msgid ""
@@ -18764,14 +18698,6 @@ msgid "Electronic Warfare Jammer"
 msgstr "電子戦ジャマー"
 
 #: dat/outfits/utility/milspec_jammer.xml:9
-#, fuzzy
-#| msgid ""
-#| "Does your work require you to venture into dangerous territory? Are you "
-#| "facing opposition your shields can't handle? The Milspec U-9 \"Magus\" "
-#| "jammer is what you need! Throw the bloodhounds off your scent with a "
-#| "press of a button. While your enemies are still trying to make sense out "
-#| "of the garble they're getting on their sensors, you will already have "
-#| "made your escape! Fly safe, fly Milspec."
 msgid ""
 "Does your work require you to venture into dangerous territory? Are you "
 "facing opposition your shields can't handle? The Milspec U-9 \"Magus\" "
@@ -18780,12 +18706,9 @@ msgid ""
 "garbage they're getting on their sensors, you will have already made your "
 "escape! Fly safe, fly Milspec."
 msgstr ""
-"あなたの仕事は危険な領域へ思いきって行くことを必要としますか？　あなたはシー"
-"ルドで対処できない妨害に直面していますか？　ミルスペックの U-9 ｢メイガス｣ "
-"ジャマーがあなたの必要とするものです！　ボタンを押して、あなたのにおいをしつ"
-"こい犬に投げつけよう。敵がまだ船のセンサーから得た誤情報を解釈しようとしてい"
-"るあいだに、あなたはもう脱出していることでしょう！　安全に飛ぼう。ミルスペッ"
-"クで飛ぼう。"
+"あなたの仕事は危険な領域へ思いきって行くことを必要としますか？　あなたはシールドで対処できない妨害に直面していますか？　ミルスペックの U-9 "
+"｢メイガス｣ ジャマーがあなたの必要とするものです！　ボタンを押して、あなたのにおいをしつこい犬に投げつけよう。敵がまだ船のセンサーから得た誤情報を解釈し"
+"ようとしているあいだに、あなたはもう脱出していることでしょう！　安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/utility/milspec_scrambler.xml:2
 msgid "Milspec Scrambler"
@@ -18936,14 +18859,6 @@ msgid "Unicorp Scrambler"
 msgstr "ユニコープ・スクランブラー"
 
 #: dat/outfits/utility/unicorp_scrambler.xml:9
-#, fuzzy
-#| msgid ""
-#| "Scramblers distort a ship's electromagnetic signature, making it harder "
-#| "for various sensors to pick it up. In effect, a scrambler reduces the "
-#| "distance at which the ship can be detected and scanned, and makes it "
-#| "harder for missiles to lock on. The effect is quite limited, but on the "
-#| "upside, scramblers put a minimal strain on the ship's resources, and are "
-#| "always active."
 msgid ""
 "Scramblers distort a ship's electromagnetic signature, making it harder for "
 "various sensors to pick it up. In effect, a scrambler increases the distance "
@@ -18952,11 +18867,9 @@ msgid ""
 "scramblers put a minimal strain on the ship's resources, and are always "
 "active."
 msgstr ""
-"スクランブラーは、船の電磁的識別特性をゆがめて、いろいろなセンサーから検出さ"
-"れにくくするものだ。ようするに、スクランブラーは船が探知・スキャン可能となる"
-"距離を短くして、ミサイルに捕捉されにくくする。効果はかなり限られたものだが、"
-"よい面を見れば、スクランブラーは船の資源に最小限の負担しかかけないし、つねに"
-"作動させておける。"
+"スクランブラーは、船の電磁的識別特性をゆがめて、いろいろなセンサーから検出されにくくするものだ。ようするに、スクランブラーは船が探知・スキャン可能となる距"
+"離を長くして、ミサイルに捕捉されにくくする。効果はかなり限られたものだが、よい面を見れば、スクランブラーは船の資源に最小限の負担しかかけないし、つねに作動"
+"させておける。"
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:2
 msgid "Weakness Harmonizer AI"
@@ -18992,14 +18905,6 @@ msgid "Weapon Modification"
 msgstr "武器修正"
 
 #: dat/outfits/utility/weapons_ionizer.xml:9
-#, fuzzy
-#| msgid ""
-#| "The weapons ionizer works on the principle of diverting massive amounts "
-#| "of weapon energy to an ion field generator. While energy usage increases "
-#| "and damage output significantly decreases, the ion field allows "
-#| "conventional weapons to do ionizing damage while the outfit is active. It "
-#| "is designed to automatically active when the target's armour is below "
-#| "50%, but can also be triggered manually."
 msgid ""
 "The weapons ionizer works on the principle of diverting massive amounts of "
 "weapon energy to an ion field generator. While energy usage increases and "
@@ -19008,11 +18913,9 @@ msgid ""
 "automatically activate when the target's armour is below 50%, but can also "
 "be triggered manually."
 msgstr ""
-"ウエポンズイオナイザーは、大量の武器エネルギーをイオン場生成器へ振りむけるし"
-"くみによって動作する。この艤装品が作動しているあいだ、エネルギー使用量は増え"
-"て、与えられる損害はいちじるしく低下するが、イオン場で通常兵器はイオン化ダ"
-"メージを与えられるようになる。目標の装甲が 50% 未満になると自動的に作動する設"
-"計となっているが、手動で起動することもできる。"
+"ウエポンズイオナイザーは、大量の武器エネルギーをイオン場生成器へ振りむけるしくみによって動作する。この艤装品が作動しているあいだ、エネルギー使用量は増えて"
+"、与えられる損害はいちじるしく低下するが、イオン場で通常兵器はイオン化ダメージを与えられるようになる。目標の装甲が 50% "
+"未満になると自動的に作動する設計となっているが、手動で起動することもできる。"
 
 #: dat/outfits/utility/weapons_ionizer.xml:12
 msgid "Automatically triggers when target armour is below 50%."
@@ -35617,7 +35520,7 @@ msgstr ""
 #. - safe lanes
 #: dat/events/updater.lua:64
 msgid "Suddenly, a hologram materializes in front of you."
-msgstr ""
+msgstr "とつぜん、ホログラフがあなたの目の前に姿を現した。"
 
 #: dat/events/updater.lua:65
 msgid ""
@@ -50757,16 +50660,16 @@ msgstr "イブ男爵"
 msgid ""
 "You have been assigned with obtaining information from Major Malik at {pnt} "
 "in the {sys} system."
-msgstr ""
+msgstr "あなたは{sys}星系の{pnt}にいるマリク少佐から情報を入手する仕事を割りあてられた。"
 
 #. If not accepted, mem.misn_state will still be nil
 #: dat/missions/minerva/kex3.lua:75
 msgid "You have agreed to help Kex obtain information from Major Malik."
-msgstr ""
+msgstr "あなたはマリク少佐から情報を入手してケクスを助けるのに同意した。"
 
 #: dat/missions/minerva/kex3.lua:78
 msgid "Go to {pnt} in the {sys} system to find Major Malik"
-msgstr ""
+msgstr "{sys}星系の{pnt}へ行き、マリク少佐を見つけろ。"
 
 #: dat/missions/minerva/kex3.lua:98
 msgid ""
@@ -50909,7 +50812,7 @@ msgstr ""
 msgid ""
 "You find Kex taking a break at his favourite spot at Minerva station. His "
 "eyes light up when he sees you and he runs over to you."
-msgstr ""
+msgstr "あなたはミネルバ・ステーションのお気に入りの場所で休んでいるケクスを見つけた。あなたに気づいて駆けよってきたときの、ケクスの目は輝いていた。"
 
 #: dat/missions/minerva/kex3.lua:167
 msgid ""
@@ -50917,6 +50820,8 @@ msgid ""
 "had some dirt on the CEO. Looks like they're involved in some sort of money "
 "laundering, but this alone won't get us anywhere, we need more intel.\""
 msgstr ""
+"｢よい知らせだ、若者！　イブ男爵から手に入れた情報は CEO "
+"の汚点だったようだ。ある種の資金洗浄に関係しているらしいが、これだけではどうにもならない。もっと情報が必要だ｣"
 
 #: dat/missions/minerva/kex3.lua:168
 msgid ""
@@ -50925,6 +50830,8 @@ msgid ""
 "Would you be up for paying him a visit and seeing what you can get out of "
 "him?\""
 msgstr ""
+"｢別の共謀加担者の手がかりがあるんだ。今回はドベーレッド宙域だな。マリク少佐という名のある人物も、資金洗浄に関係しているらしい。少佐のところへ行って、なに"
+"か聞きだせないか確認してもらえないか？｣"
 
 #: dat/missions/minerva/kex3.lua:179
 msgid ""
@@ -50934,6 +50841,8 @@ msgid ""
 "convince him you mean business. I'll also send you his picture so you can "
 "easily recognize him when you see him.\""
 msgstr ""
+"｢今回は簡単であることを願ってるよ。マリク少佐は{sys}星系の{pnt}にいる。少佐はかなり歳をとっているから、まっすぐ立ちむかって話をするだけでじゅう"
+"ぶんなはずだ。あんたが本気で来たと納得させるのに役立つ覚え書きを渡そう。少佐の写真も送るから、見れば簡単に見わけられる｣"
 
 #: dat/missions/minerva/kex3.lua:180
 msgid ""
@@ -50943,10 +50852,13 @@ msgid ""
 "takes in case he doesn't.\"\n"
 "He winks his cyborg eye at you."
 msgstr ""
+"｢覚え書き？　つきなみなゆすりでしかないよ。マリク少佐本人のことはほんとうに気にしなくていい。われわれが求めているのは CEO の汚点だ。うまくいけば少佐"
+"は分別ある態度をとって、望みのものを渡してくれる。とはいえ、まんいちそうしなかった場合には、あんたが必要なことをしてくれると当てにしてるからな｣\n"
+"ケクスがあなたにサイボーグの目でウィンクした。"
 
 #: dat/missions/minerva/kex3.lua:194
 msgid "Ask about his past"
-msgstr ""
+msgstr "ケクスの過去についてたずねる"
 
 #: dat/missions/minerva/kex3.lua:202
 msgid ""
@@ -50954,18 +50866,20 @@ msgid ""
 "dealings with the Minerva CEO. If you hand him the note I gave you it should "
 "be enough to convince him.\""
 msgstr ""
+"｢この仕事はかなり単純だ。マリク少佐にはミネルバ CEO との取引のことで話す必要がある。おれが渡したあの覚え書きを手渡すだけで、少佐を説得できるはずだ｣"
 
 #: dat/missions/minerva/kex3.lua:203
 msgid ""
 "\"You should be able to find him at {pnt} in the {sys} system. I don't think "
 "he should give much trouble.\""
-msgstr ""
+msgstr "｢{sys}星系の{pnt}で少佐を見つけられるはずだ。少佐が大きな問題になるとは思わない｣"
 
 #: dat/missions/minerva/kex3.lua:205
 msgid ""
 "\"Oh, so Major Malik wasn't at {targetplanet}? That is really weird. Let's "
 "hope you can find him at {pnt} in the {sys} system.\""
 msgstr ""
+"｢おっと、じゃあ{targetplanet}にマリク少佐はいなかった？　ほんとうに変だな。{sys}星系の{pnt}で見つかることを期待しようじゃないか｣"
 
 #: dat/missions/minerva/kex3.lua:210
 msgid ""
@@ -50975,6 +50889,9 @@ msgid ""
 "period drifting in the Nebula?\"\n"
 "\"No? Great!\""
 msgstr ""
+"｢あんたはかなり知りたがりな若者だな。当時は自分の人生がすべてあんなにすばらしくてやる気に満ちていたなんて考えてなかった。しかし近ごろは、古きよき時代のよ"
+"うに空を飛ぶことにあこがれている。星雲でキロ時限も漂流してすごしたときのことを話したことがあったかな？\n"
+"｢ない？　そうか！｣"
 
 #: dat/missions/minerva/kex3.lua:212
 msgid ""
@@ -57037,7 +56954,7 @@ msgstr ""
 #. blaring alarm
 #: dat/missions/minerva/pirate4.lua:240
 msgid "Suddenly an alarm starts blaring throughout the ship."
-msgstr ""
+msgstr "とつぜん、警報が船じゅうで鳴り響きはじめた。"
 
 #. Using boars as slang for Dvaered
 #: dat/missions/minerva/pirate4.lua:242
