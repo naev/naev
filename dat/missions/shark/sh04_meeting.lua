@@ -70,11 +70,10 @@ function accept()
       local c = commodity.new( N_("Smith"), N_("Arnold Smith of Nexus Shipyards.") )
       mem.smith = misn.cargoAdd( c, 0 )
 
-      mem.landhook = hook.land("land")
-      mem.enterhook = hook.enter("enter")
-      else
+      hook.land("land")
+      hook.enter("enter")
+   else
       tk.msg(_("Sorry, not interested"), _([["OK, come back when you are ready."]]))
-      misn.finish(false)
    end
 end
 

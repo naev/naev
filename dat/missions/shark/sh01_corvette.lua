@@ -74,12 +74,11 @@ function accept()
 
       mem.marker = misn.markerAdd(battlesys, "low")
 
-      mem.jumpouthook = hook.jumpout("jumpout")
-      mem.landhook = hook.land("land")
-      mem.enterhook = hook.enter("enter")
+      hook.jumpout("jumpout")
+      hook.land("land")
+      hook.enter("enter")
    else
       tk.msg(_("Sorry, not interested"), _([["OK, that's alright."]]))
-      misn.finish(false)
    end
 end
 

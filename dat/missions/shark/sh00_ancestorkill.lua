@@ -78,12 +78,11 @@ function accept()
 
       mem.markeri = misn.markerAdd(mispla, "low")
 
-      mem.jumpouthook = hook.jumpout("jumpout")
-      mem.landhook = hook.land("land")
-      mem.enterhook = hook.enter("enter")
+      hook.jumpout("jumpout")
+      hook.land("land")
+      hook.enter("enter")
    else
       tk.msg(_("Sorry, not interested"), _([["That's your choice," the man says. "Don't hesitate to tell me if you change your mind."]]))
-      misn.finish(false)
    end
 end
 

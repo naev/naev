@@ -106,12 +106,10 @@ function accept()
       mem.kermarker2 = misn.markerAdd(mem.kersys2, "high")
       mem.godmarker = misn.markerAdd(mem.godsys, "high")
 
-      mem.enterhook = hook.enter("enter")
-      mem.landhook = hook.land("land")
-
+      hook.enter("enter")
+      hook.land("land")
    else
       tk.msg(_("Sorry, not interested"), _([["I'm sorry to hear that. Don't hesitate to come back if you change your mind."]]))
-      misn.finish(false)
    end
 end
 

@@ -75,11 +75,10 @@ function accept()
 
       mem.marker = misn.markerAdd(mem.mispla, "low")
 
-      mem.landhook = hook.land("land")
-      mem.enterhook = hook.enter("enter")
+      hook.land("land")
+      hook.enter("enter")
    else
       tk.msg(_("Sorry, not interested"), _([["OK, sorry to bother you."]]))
-      misn.finish(false)
    end
 end
 
