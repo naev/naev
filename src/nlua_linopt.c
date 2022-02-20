@@ -594,9 +594,11 @@ static int linoptL_solve( lua_State *L )
    ismip = (glp_get_num_int( lp->prob ) > 0);
    glp_init_smcp(&parm_smcp);
    parm_smcp.msg_lev = GLP_MSG_ERR;
+   parm_smcp.tm_lim = 1000;
    if (ismip) {
       glp_init_iocp(&parm_iocp);
       parm_iocp.msg_lev  = GLP_MSG_ERR;
+      parm_iocp.tm_lim = 1000;
    }
 
    /* Load parameters. */
