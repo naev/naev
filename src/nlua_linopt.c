@@ -11,6 +11,7 @@
 /** @cond */
 #include <glpk.h>
 #include <lauxlib.h>
+#include "physfs.h"
 
 #include "naev.h"
 /** @endcond */
@@ -18,6 +19,7 @@
 #include "nlua_linopt.h"
 
 #include "log.h"
+#include "nstring.h"
 #include "nluadef.h"
 
 #define LINOPT_MAX_TM   1000  /**< Maximum time to optimize (in ms). Applied to linear relaxation and MIP independently. */
@@ -728,13 +730,16 @@ static int linoptL_readProblem( lua_State *L )
    const char *fname = luaL_checkstring(L,1);
    int glpk_format   = lua_toboolean(L,2);
    int maximize      = lua_toboolean(L,3);
+   const char *dirname = PHYSFS_getRealDir( fname );
+   char *fpath;
    int ret;
    LuaLinOpt_t lp;
+   if (dirname == NULL)
+      NLUA_ERROR( L, _("Failed to read LP problem \"%s\"!"), fname );
+   asprintf( &fpath, "%s/%s", dirname, fname );
    lp.prob = glp_create_prob();
-   if (glpk_format)
-      ret = glp_read_prob( lp.prob, 0, fname );
-   else
-      ret = glp_read_mps(  lp.prob, GLP_MPS_FILE, NULL, fname );
+   ret = glpk_format ? glp_read_prob( lp.prob, 0, fpath ) : glp_read_mps(  lp.prob, GLP_MPS_FILE, NULL, fpath );
+   free( fpath );
    if (ret != 0) {
       glp_delete_prob( lp.prob );
       NLUA_ERROR( L, _("Failed to read LP problem \"%s\"!"), fname );
@@ -760,11 +765,11 @@ static int linoptL_writeProblem( lua_State *L )
    LuaLinOpt_t *lp   = luaL_checklinopt(L,1);
    const char *fname = luaL_checkstring(L,2);
    int glpk_format   = lua_toboolean(L,3);
+   const char *dirname = PHYSFS_getWriteDir();
+   char *fpath;
    int ret;
-   if (glpk_format)
-      ret = glp_write_prob( lp->prob, 0, fname );
-   else
-      ret = glp_write_mps(  lp->prob, GLP_MPS_FILE, NULL, fname );
+   asprintf( &fpath, "%s/%s", dirname, fpath );
+   ret = glpk_format ? glp_write_prob( lp->prob, 0, fpath ) : glp_write_mps(  lp->prob, GLP_MPS_FILE, NULL, fname );
    lua_pushboolean( L, ret==0 );
    return 1;
 }
