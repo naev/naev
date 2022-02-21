@@ -55,7 +55,7 @@ local function disable( _p, po, domsg )
       if f ~= nil then
          f:setPlayerStanding( fval )
       else
-         warn(fmt.f(_("Faction '{fname}' standingnot found in fake transponder variables!"),{fname=f}))
+         warn(fmt.f(_("Faction '{fname}' standing not found in fake transponder variables!"),{fname=f}))
       end
       fclear( f )
    end
