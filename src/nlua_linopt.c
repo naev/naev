@@ -651,18 +651,20 @@ static int linoptL_solve( lua_State *L )
 #endif
 
    /* Optimization. */
-   ret = glp_simplex( lp->prob, &parm_smcp );
-   if (ret != 0) {
-      lua_pushnil(L);
-      lua_pushstring(L, linopt_error(ret));
-      return 2;
-   }
-   /* Check for optimality of continuous problem. */
-   ret = glp_get_status(lp->prob);
-   if (ret != GLP_OPT) {
-      lua_pushnil(L);
-      lua_pushstring(L, linopt_status(ret));
-      return 2;
+   if (!ismip || !parm_iocp.presolve) {
+      ret = glp_simplex( lp->prob, &parm_smcp );
+      if (ret != 0) {
+         lua_pushnil(L);
+         lua_pushstring(L, linopt_error(ret));
+         return 2;
+      }
+      /* Check for optimality of continuous problem. */
+      ret = glp_get_status(lp->prob);
+      if (ret != GLP_OPT) {
+         lua_pushnil(L);
+         lua_pushstring(L, linopt_status(ret));
+         return 2;
+      }
    }
    if (ismip) {
       ret = glp_intopt( lp->prob, &parm_iocp );
