@@ -20,6 +20,8 @@
 #include "log.h"
 #include "nluadef.h"
 
+#define LINOPT_MAX_TM   1000  /**< Maximum time to optimize (in ms). Applied to linear relaxation and MIP independently. */
+
 /**
  * @brief Our cute little linear program wrapper.
  */
@@ -597,11 +599,11 @@ static int linoptL_solve( lua_State *L )
    ismip = (glp_get_num_int( lp->prob ) > 0);
    glp_init_smcp(&parm_smcp);
    parm_smcp.msg_lev = GLP_MSG_ERR;
-   parm_smcp.tm_lim = 1000;
+   parm_smcp.tm_lim = LINOPT_MAX_TM;
    if (ismip) {
       glp_init_iocp(&parm_iocp);
       parm_iocp.msg_lev  = GLP_MSG_ERR;
-      parm_iocp.tm_lim = 1000;
+      parm_iocp.tm_lim = LINOPT_MAX_TM;
    }
 
    /* Load parameters. */
@@ -702,7 +704,7 @@ static int linoptL_solve( lua_State *L )
 
    /* Complain about time. */
 #if DEBUGGING
-   if (SDL_GetTicks() - starttime > 1000)
+   if (SDL_GetTicks() - starttime > LINOPT_MAX_TM)
       WARN(_("glpk: too over 1 second to optimize!"));
 #endif /* DEBUGGING */
 
