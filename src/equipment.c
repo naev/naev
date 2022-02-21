@@ -787,7 +787,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    p   = wgt->selected;
 
    /* Must have selected ship. */
-   if (wgt->selected == NULL)
+   if (p == NULL)
       return;
 
    /* Get dimensions. */
