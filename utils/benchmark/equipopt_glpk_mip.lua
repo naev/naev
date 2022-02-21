@@ -14,8 +14,7 @@ benchmark.csv_writereps( csvfile, bl_vals )
 csvfile:write(string.format("%f,%f,def,def,def,def,def,def,def,def,def,def,def", def_mean, def_stddev ) )
 benchmark.csv_writereps( csvfile, def_vals )
 local curbest = def_mean
-local trials = {}
-for row in benchmark.product(
+local trials = benchmark.shuffled_product(
       {"ffv","lfv","mfv","dth","pch"},
       {"dfs","bfs","blb","bph"},
       {"none","root","all"},
@@ -25,11 +24,8 @@ for row in benchmark.product(
       {"on","off"},
       {"on","off"},
       {"on","off"},
-      {"on","off"} ) do
-   -- Randomize in the hope of getting "close" in the search space earlier.
-   -- May help data quality *a little* if the machine's speed varies over time too.
-   table.insert( trials, 1+rnd.rnd(#trials), row )
-end
+      {"on","off"} )
+
 for n, trial in ipairs(trials) do
    local br_tech, bt_tech, pp_tech, sr_heur, fp_heur, ps_heur, gmi_cuts, mir_cuts, cov_cuts, clq_cuts = table.unpack(trial)
    local s = string.format("br=%s,bt=%s,pp=%s,sr=%s,fp=%s,ps=%s,gmi=%s,mir=%s,cov=%s,clq=%s",
