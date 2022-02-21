@@ -29,27 +29,31 @@ end
 
 local function reset( _p, po )
    for k,f in ipairs(factions) do
-      local os = fget( f )
-      local s  = f:playerStanding()
+      local os = fget( f ) -- original standing
+      local cs = f:playerStanding() -- current standing
+      local ds = f:playerStandingDefault() -- default standing
       -- See how to modify saved value
       if not os then
          -- If not set, just set
-         fset( f, s )
+         fset( f, cs )
       else
-         -- Otherwise, we use negative hits until the player drops to 0 (in case of positive)
-         if s < 0 and os > 0 then
-            fset( f, math.min( os+s, 0 ) )
+         -- Otherwise, we use negative hits until the player drops to default (in case of positive)
+         local offset = cs-ds
+         if offset < 0 then
+            fset( f, math.min( os+offset, ds ) ) -- offset will be negative
          end
       end
       -- Reset current standing
-      f:setPlayerStanding( f:playerStandingDefault() )
+      f:setPlayerStanding( ds )
    end
    po:state("on")
    mem.isactive = true
 end
 
 local function disable( _p, po, domsg )
+   -- Ignore if not active
    if not mem.isactive then return end
+
    for k,f in ipairs(factions) do
       local fval = fget( f )
       if f ~= nil then
