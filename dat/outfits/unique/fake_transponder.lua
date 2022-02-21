@@ -1,17 +1,30 @@
-local factions
+--[[
+   Fake transponder outfit
 
+   Gives the player a way to not be killed on sight by many factions.
+   Basically it replaces the standing with the factions the outfit is illegal
+   to with the default standing for those factions, until the player is
+   scanned. When they are scanned, their faction is restored until they perform
+   a full cool-down.
+--]]
+local fmt = require "format"
+
+-- This outfit applies to all factions it is illegal with!
+-- Creates this table once when loading data.
+local factions
 function onload( o )
    factions = o:illegality()
 end
 
+local fpre = "faket_" -- Variable prefix
 local function fget( f )
-   return var.peek("faket_"..f:nameRaw())
+   return var.peek( fpre..f:nameRaw() )
 end
 local function fset( f, v )
-   return var.push("faket_"..f:nameRaw(), v)
+   return var.push( fpre..f:nameRaw(), v )
 end
 local function fclear( f )
-   var.pop("faket_"..f:nameRaw())
+   var.pop( fpre..f:nameRaw() )
 end
 
 local function reset( _p, po )
@@ -38,7 +51,12 @@ end
 local function disable( _p, po, domsg )
    if not mem.isactive then return end
    for k,f in ipairs(factions) do
-      f:setPlayerStanding( fget( f ) )
+      local fval = fget( f )
+      if f ~= nil then
+         f:setPlayerStanding( fval )
+      else
+         warn(fmt.f(_("Faction '{fname}' standingnot found in fake transponder variables!"),{fname=f}))
+      end
       fclear( f )
    end
    po:state("off")
