@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spob name="Holly I">
+ <pos x="0.000000" y="5000.000000"/>
+ <GFX>
+  <space>G01.webp</space>
+  <exterior>lava.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Trader</faction>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>F</class>
+  <population>6e+06</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Holly I</description>
+  <bar>Like many spaceport bars, this one is loud, crowded and a little smelly. In other words, it's a home away from home for those who make their living in space.</bar>
+ </general>
+ <tech>
+  -- <item>Mining stuff TODO</item>
+ </tech>
+</spob>
