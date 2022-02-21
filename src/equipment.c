@@ -352,9 +352,9 @@ void equipment_open( unsigned int wid )
    }
 
    /* Safe defaults. */
-   equipment_lastick    = SDL_GetTicks();
-   equipment_dir        = 0.;
-   eq_wgt.selected      = NULL;
+   equipment_lastick = SDL_GetTicks();
+   equipment_dir     = 0.;
+   memset( &eq_wgt, 0, sizeof(CstSlotWidget) );
 
    /* Add ammo. */
    equipment_addAmmo();
