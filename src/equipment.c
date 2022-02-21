@@ -535,7 +535,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
  *    @param n Number of columns.
  *    @param m Number of rows.
  */
-static void equipment_calculateSlots( Pilot *p, double bw, double bh,
+static void equipment_calculateSlots( const Pilot *p, double bw, double bh,
       double *w, double *h, int *n, int *m )
 {
    double tw, th, s;
