@@ -79,7 +79,7 @@ function benchmark.csv_writereps( csvfile, vals )
    csvfile:write("\n")
 end
 
-function benchmark.product( ... )
+function benchmark.iproduct( ... )
    local sets = { ... }
    local tuple = {}
    local function descend( i )
@@ -96,6 +96,17 @@ function benchmark.product( ... )
       end
    end
    return coroutine.wrap(function() descend(1) end)
+end
+
+-- Return a listing of the Cartesian product of the input tables.
+-- Randomize the order, as we're exploring a search space and this should get us "close" to optimal earlier on average.
+-- This may help data quality *a little* if the machine's speed varies over time too.
+function benchmark.shuffled_product( ... )
+   local trials = {}
+   for row in benchmark.iproduct( ... ) do
+      table.insert( trials, 1+rnd.rnd(#trials), tcopy( row ) )
+   end
+   return trials
 end
 
 return benchmark

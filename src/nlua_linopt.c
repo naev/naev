@@ -11,6 +11,7 @@
 /** @cond */
 #include <glpk.h>
 #include <lauxlib.h>
+#include "physfs.h"
 
 #include "naev.h"
 /** @endcond */
@@ -18,6 +19,7 @@
 #include "nlua_linopt.h"
 
 #include "log.h"
+#include "nstring.h"
 #include "nluadef.h"
 
 #define LINOPT_MAX_TM   1000  /**< Maximum time to optimize (in ms). Applied to linear relaxation and MIP independently. */
@@ -42,6 +44,7 @@ static int linoptL_setcol( lua_State *L );
 static int linoptL_setrow( lua_State *L );
 static int linoptL_loadmatrix( lua_State *L );
 static int linoptL_solve( lua_State *L );
+static int linoptL_readProblem( lua_State *L );
 static int linoptL_writeProblem( lua_State *L );
 static const luaL_Reg linoptL_methods[] = {
    { "__gc", linoptL_gc },
@@ -54,6 +57,7 @@ static const luaL_Reg linoptL_methods[] = {
    { "set_row", linoptL_setrow },
    { "load_matrix", linoptL_loadmatrix },
    { "solve", linoptL_solve },
+   { "read_problem", linoptL_readProblem },
    { "write_problem", linoptL_writeProblem },
    {0,0}
 }; /**< Optim metatable methods. */
@@ -177,7 +181,7 @@ static int linoptL_eq( lua_State *L )
  *    @luatparam[opt=nil] string name Name of the optimization program.
  *    @luatparam number cols Number of columns in the optimization program.
  *    @luatparam number rows Number of rows in the optimization program.
- *    @luatparam[opt=false] boolean maximize Whether or not to maximize or minimize the function.
+ *    @luatparam[opt=false] boolean maximize Whether to maximize (rather than minimize) the function.
  *    @luatreturn Optim New linopt object.
  * @luafunc new
  */
@@ -647,18 +651,20 @@ static int linoptL_solve( lua_State *L )
 #endif
 
    /* Optimization. */
-   ret = glp_simplex( lp->prob, &parm_smcp );
-   if (ret != 0) {
-      lua_pushnil(L);
-      lua_pushstring(L, linopt_error(ret));
-      return 2;
-   }
-   /* Check for optimality of continuous problem. */
-   ret = glp_get_status(lp->prob);
-   if (ret != GLP_OPT) {
-      lua_pushnil(L);
-      lua_pushstring(L, linopt_status(ret));
-      return 2;
+   if (!ismip || !parm_iocp.presolve) {
+      ret = glp_simplex( lp->prob, &parm_smcp );
+      if (ret != 0) {
+         lua_pushnil(L);
+         lua_pushstring(L, linopt_error(ret));
+         return 2;
+      }
+      /* Check for optimality of continuous problem. */
+      ret = glp_get_status(lp->prob);
+      if (ret != GLP_OPT) {
+         lua_pushnil(L);
+         lua_pushstring(L, linopt_status(ret));
+         return 2;
+      }
    }
    if (ismip) {
       ret = glp_intopt( lp->prob, &parm_iocp );
@@ -713,7 +719,43 @@ static int linoptL_solve( lua_State *L )
 #undef GETOPT_IOCP
 
 /**
- * @brief Writes a optimization problem to a file for debugging purposes.
+ * @brief Reads an optimization problem from a file for debugging purposes.
+ *
+ *    @luatparam string fname Path to the file.
+ *    @luatparam[opt=false] boolean glpk_format Whether the program is in GLPK format instead of MPS format.
+ *    @luatparam[opt=false] boolean maximize Whether to maximize (rather than minimize) the function.
+ *    @luatreturn LinOpt Linear program in the file.
+ * @luafunc read_problem
+ */
+static int linoptL_readProblem( lua_State *L )
+{
+   const char *fname = luaL_checkstring(L,1);
+   int glpk_format   = lua_toboolean(L,2);
+   int maximize      = lua_toboolean(L,3);
+   const char *dirname = PHYSFS_getRealDir( fname );
+   char *fpath;
+   int ret;
+   LuaLinOpt_t lp;
+   if (dirname == NULL)
+      NLUA_ERROR( L, _("Failed to read LP problem \"%s\"!"), fname );
+   asprintf( &fpath, "%s/%s", dirname, fname );
+   lp.prob = glp_create_prob();
+   ret = glpk_format ? glp_read_prob( lp.prob, 0, fpath ) : glp_read_mps(  lp.prob, GLP_MPS_FILE, NULL, fpath );
+   free( fpath );
+   if (ret != 0) {
+      glp_delete_prob( lp.prob );
+      NLUA_ERROR( L, _("Failed to read LP problem \"%s\"!"), fname );
+   }
+   lp.ncols = glp_get_num_cols( lp.prob );
+   lp.nrows = glp_get_num_rows( lp.prob );
+   if (maximize)
+      glp_set_obj_dir( lp.prob, GLP_MAX );
+   lua_pushlinopt( L, lp );
+   return 1;
+}
+
+/**
+ * @brief Writes an optimization problem to a file for debugging purposes.
  *
  *    @luatparam LinOpt lp Linear program to write.
  *    @luatparam string fname Path to write the program to.
@@ -725,11 +767,11 @@ static int linoptL_writeProblem( lua_State *L )
    LuaLinOpt_t *lp   = luaL_checklinopt(L,1);
    const char *fname = luaL_checkstring(L,2);
    int glpk_format   = lua_toboolean(L,3);
+   const char *dirname = PHYSFS_getWriteDir();
+   char *fpath;
    int ret;
-   if (glpk_format)
-      ret = glp_write_prob( lp->prob, 0, fname );
-   else
-      ret = glp_write_mps(  lp->prob, GLP_MPS_FILE, NULL, fname );
+   asprintf( &fpath, "%s/%s", dirname, fpath );
+   ret = glpk_format ? glp_write_prob( lp->prob, 0, fpath ) : glp_write_mps(  lp->prob, GLP_MPS_FILE, NULL, fname );
    lua_pushboolean( L, ret==0 );
    return 1;
 }
