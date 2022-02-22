@@ -190,7 +190,6 @@ static int gfxL_renderTex( lua_State *L )
    double x, y;
    int sx, sy;
 
-   NLUA_CHECKRW(L);
 
    /* Parameters. */
    col = NULL;
@@ -246,7 +245,6 @@ static int gfxL_renderTexScale( lua_State *L )
    double x, y, bw, bh;
    int sx, sy;
 
-   NLUA_CHECKRW(L);
 
    /* Parameters. */
    col = NULL;
@@ -316,7 +314,6 @@ static int gfxL_renderTexRaw( lua_State *L )
    double angle;
    int sx, sy;
 
-   NLUA_CHECKRW(L);
 
    /* Parameters. */
    t  = luaL_checktex( L, 1 );
@@ -375,7 +372,6 @@ static int gfxL_renderTexH( lua_State *L )
 
    ID = gl_Matrix4_Identity();
 
-   NLUA_CHECKRW(L);
 
    /* Parameters. */
    t     = luaL_checktex( L,1 );
@@ -450,7 +446,6 @@ static int gfxL_renderRect( lua_State *L )
    double x,y, w,h;
    int empty;
 
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    x     = luaL_checknumber( L, 1 );
@@ -479,7 +474,6 @@ static int gfxL_renderRect( lua_State *L )
  */
 static int gfxL_renderRectH( lua_State *L )
 {
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    const gl_Matrix4 *H = luaL_checktransform(L,1);
@@ -508,7 +502,6 @@ static int gfxL_renderCircle( lua_State *L )
    double x,y, r;
    int empty;
 
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    x     = luaL_checknumber( L, 1 );
@@ -533,7 +526,6 @@ static int gfxL_renderCircle( lua_State *L )
  */
 static int gfxL_renderCircleH( lua_State *L )
 {
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    const gl_Matrix4 *H = luaL_checktransform(L,1);
@@ -719,7 +711,6 @@ static int gfxL_printf( lua_State *L )
    glColour *col;
    int max, mid;
 
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    font  = luaL_checkfont(L,1);
@@ -758,7 +749,6 @@ static int gfxL_printH( lua_State *L )
    const glColour *col;
    double outline;
 
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    H     = luaL_checktransform(L,1);
@@ -796,7 +786,6 @@ static int gfxL_print( lua_State *L )
    glColour *col;
    int max, mid;
 
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;
@@ -840,7 +829,6 @@ static int gfxL_printText( lua_State *L )
    double x, y;
    glColour *col;
 
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;

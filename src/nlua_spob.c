@@ -695,7 +695,6 @@ static int spobL_canland( lua_State *L )
  */
 static int spobL_landOverride( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    Spob *p = luaL_validspob(L,1);
    int old = p->land_override;
 
@@ -915,7 +914,6 @@ static int spobL_setKnown( lua_State *L )
    int b, changed;
    Spob *p;
 
-   NLUA_CHECKRW(L);
 
    p = luaL_validspob(L,1);
    b = lua_toboolean(L, 2);
@@ -944,7 +942,6 @@ static int spobL_setKnown( lua_State *L )
  */
 static int spobL_recordCommodityPriceAtTime( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    Spob *p = luaL_validspob(L,1);
    ntime_t t = luaL_validtime(L, 2);
    spob_averageSeenPricesAtTime( p, t );

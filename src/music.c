@@ -443,7 +443,7 @@ static int music_luaSetup (void)
 {
    /* Reset the environment. */
    nlua_freeEnv(music_env);
-   music_env = nlua_newEnv(1);
+   music_env = nlua_newEnv();
    nlua_loadStandard(music_env);
    nlua_loadMusic(music_env); /* write it */
    return 0;

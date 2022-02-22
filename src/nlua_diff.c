@@ -70,7 +70,6 @@ int nlua_loadDiff( nlua_env env )
  */
 static int diff_applyL( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    const char *name = luaL_checkstring(L,1);
    diff_apply( name );
    return 0;
@@ -84,7 +83,6 @@ static int diff_applyL( lua_State *L )
  */
 static int diff_removeL( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    const char *name = luaL_checkstring(L,1);
    diff_remove( name );
    return 0;

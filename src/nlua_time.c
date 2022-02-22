@@ -371,7 +371,6 @@ static int timeL_str( lua_State *L )
  */
 static int timeL_inc( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    ntime_inc( luaL_validtime(L,1) );
    return 0;
 }

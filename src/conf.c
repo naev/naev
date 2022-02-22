@@ -277,7 +277,7 @@ void conf_loadConfigPath( void )
    if (!nfile_fileExists(file))
       return;
 
-   nlua_env lEnv = nlua_newEnv( 0 );
+   nlua_env lEnv = nlua_newEnv();
    if ( nlua_dofileenv( lEnv, file ) == 0 )
       conf_loadString( lEnv, "datapath", conf.datapath );
 
@@ -301,7 +301,7 @@ int conf_loadConfig ( const char* file )
       return nfile_touch(file);
 
    /* Load the configuration. */
-   nlua_env lEnv = nlua_newEnv( 0 );
+   nlua_env lEnv = nlua_newEnv();
    if ( nlua_dofileenv( lEnv, file ) == 0 ) {
 
       /* ndata. */

@@ -1649,7 +1649,7 @@ static int spobs_load (void)
    Commodity **stdList;
 
    /* Load landing stuff. */
-   landing_env = nlua_newEnv(0);
+   landing_env = nlua_newEnv();
    nlua_loadStandard(landing_env);
    buf         = ndata_read( LANDING_DATA_PATH, &bufsize );
    if (nlua_dobufenv(landing_env, buf, bufsize, LANDING_DATA_PATH) != 0) {
@@ -1951,7 +1951,7 @@ void spob_gfxLoad( Spob *spob )
             return;
          }
 
-         env = nlua_newEnv(1);
+         env = nlua_newEnv();
          nlua_loadStandard( env );
          nlua_loadGFX( env );
          nlua_loadCamera( env );

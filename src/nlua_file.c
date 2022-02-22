@@ -286,7 +286,6 @@ static int fileL_write( lua_State *L )
    size_t write, wrote, len;
    const char *buf;
 
-   NLUA_CHECKRW(L);
 
    if (lf->rw == NULL)
       NLUA_ERROR(L, _("file not open!"));

@@ -170,7 +170,6 @@ static int colL_new( lua_State *L )
    glColour col;
    const glColour *col2;
 
-   NLUA_CHECKRW(L);
 
    if (lua_gettop(L)==0) {
       col.r = col.g = col.b = col.a = 1.;
@@ -284,7 +283,6 @@ static int colL_hsv( lua_State *L )
  */
 static int colL_setrgb( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    glColour *col = luaL_checkcolour(L,1);
    col->r  = luaL_checknumber(L,2);
    col->g  = luaL_checknumber(L,3);
@@ -307,7 +305,6 @@ static int colL_setrgb( lua_State *L )
  */
 static int colL_sethsv( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    float h, s, v;
    glColour *col = luaL_checkcolour(L,1);
    h  = luaL_checknumber(L,2);
@@ -330,7 +327,6 @@ static int colL_sethsv( lua_State *L )
  */
 static int colL_setalpha( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    glColour *col = luaL_checkcolour(L,1);
    col->a = luaL_checknumber(L,2);
    return 0;

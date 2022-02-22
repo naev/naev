@@ -155,7 +155,7 @@ static int mission_init( Mission* mission, const MissionData* misn, int genid, i
    }
 
    /* init Lua */
-   mission->env = nlua_newEnv(1);
+   mission->env = nlua_newEnv();
 
    misn_loadLibs( mission->env ); /* load our custom libraries */
 

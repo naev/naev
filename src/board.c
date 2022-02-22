@@ -68,7 +68,7 @@ int board_hook( void *data )
 
    /* Set up environment first time. */
    if (board_env == LUA_NOREF) {
-      board_env = nlua_newEnv(1);
+      board_env = nlua_newEnv();
       nlua_loadStandard( board_env );
 
       size_t bufsize;

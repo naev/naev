@@ -248,8 +248,6 @@ static int naevL_keyEnable( lua_State *L )
    const char *key;
    int enable;
 
-   NLUA_CHECKRW(L);
-
    /* Parameters. */
    key = luaL_checkstring(L,1);
    enable = lua_toboolean(L,2);
@@ -266,7 +264,7 @@ static int naevL_keyEnable( lua_State *L )
  */
 static int naevL_keyEnableAll( lua_State *L )
 {
-   NLUA_CHECKRW(L);
+   (void) L;
    input_enableAll();
    return 0;
 }
@@ -279,7 +277,7 @@ static int naevL_keyEnableAll( lua_State *L )
  */
 static int naevL_keyDisableAll( lua_State *L )
 {
-   NLUA_CHECKRW(L);
+   (void) L;
    input_disableAll();
    return 0;
 }
@@ -297,7 +295,6 @@ static int naevL_eventStart( lua_State *L )
    int ret;
    const char *str;
 
-   NLUA_CHECKRW(L);
    str = luaL_checkstring(L, 1);
    ret = event_start( str, NULL );
 
@@ -321,7 +318,6 @@ static int naevL_missionStart( lua_State *L )
    int ret;
    const char *str;
 
-   NLUA_CHECKRW(L);
    str = luaL_checkstring(L, 1);
    ret = mission_start( str, NULL );
 
@@ -346,7 +342,6 @@ static int naevL_eventReload( lua_State *L )
    int ret;
    const char *str;
 
-   NLUA_CHECKRW(L);
    str = luaL_checkstring(L, 1);
    ret = event_reload( str );
 
@@ -368,7 +363,6 @@ static int naevL_missionReload( lua_State *L )
    int ret;
    const char *str;
 
-   NLUA_CHECKRW(L);
 
    str = luaL_checkstring(L, 1);
    ret = mission_reload( str );

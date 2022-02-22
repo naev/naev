@@ -101,7 +101,6 @@ int nlua_loadGUI( nlua_env env )
  */
 static int guiL_viewport( lua_State *L )
 {
-   NLUA_CHECKRW(L);
 
    /* Parameters. */
    double x = luaL_checknumber(L,1);
@@ -125,7 +124,6 @@ static int guiL_viewport( lua_State *L )
  */
 static int guiL_fpsPos( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    double x = luaL_checknumber(L,1);
    double y = luaL_checknumber(L,2);
    fps_setPos( x, y );
@@ -143,7 +141,6 @@ static int guiL_fpsPos( lua_State *L )
  */
 static int guiL_osdInit( lua_State *L )
 {
-   NLUA_CHECKRW(L);
 
    /* Parameters. */
    int x = luaL_checkinteger(L,1);
@@ -166,7 +163,6 @@ static int guiL_osdInit( lua_State *L )
  */
 static int guiL_mesgInit( lua_State *L )
 {
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    int w = luaL_checkinteger( L, 1 );
@@ -188,7 +184,6 @@ static int guiL_mesgInit( lua_State *L )
  */
 static int guiL_omsgInit( lua_State *L )
 {
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    double w = luaL_checkinteger( L, 1 );
@@ -214,7 +209,6 @@ static int guiL_radarInit( lua_State *L )
 {
    int id, circle, width, height;
 
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    circle = lua_toboolean( L, 1 );
@@ -241,7 +235,6 @@ static int guiL_radarInit( lua_State *L )
  */
 static int guiL_radarRender( lua_State *L )
 {
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    double x = luaL_checknumber( L, 1 );
@@ -260,7 +253,6 @@ static int guiL_radarRender( lua_State *L )
  */
 static int guiL_targetSpobGFX( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    gui_targetSpobGFX( luaL_checktex( L, 1 ) );
    return 0;
 }
@@ -273,7 +265,6 @@ static int guiL_targetSpobGFX( lua_State *L )
  */
 static int guiL_targetPilotGFX( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    gui_targetPilotGFX( luaL_checktex( L, 1 ) );
    return 0;
 }
@@ -291,7 +282,6 @@ static int guiL_targetPilotGFX( lua_State *L )
 static int guiL_mouseClickEnable( lua_State *L )
 {
    int b;
-   NLUA_CHECKRW(L);
    if (lua_gettop(L) > 0)
       b = lua_toboolean(L,1);
    else
@@ -313,7 +303,6 @@ static int guiL_mouseClickEnable( lua_State *L )
 static int guiL_mouseMoveEnable( lua_State *L )
 {
    int b;
-   NLUA_CHECKRW(L);
    if (lua_gettop(L) > 0)
       b = lua_toboolean(L,1);
    else
@@ -343,7 +332,6 @@ static int guiL_menuInfo( lua_State *L )
    const char *str;
    int window;
 
-   NLUA_CHECKRW(L);
 
    if (menu_open)
       return 0;
@@ -390,7 +378,6 @@ static int guiL_menuInfo( lua_State *L )
 static int guiL_menuSmall( lua_State *L )
 {
    (void) L;
-   NLUA_CHECKRW(L);
    if (menu_open)
       return 0;
    menu_small();
@@ -408,7 +395,6 @@ static int guiL_menuSmall( lua_State *L )
  */
 static int guiL_setMapOverlayBounds( lua_State *L )
 {
-   NLUA_CHECKRW(L);
 
    int top    = luaL_checkinteger(L,1);
    int right  = luaL_checkinteger(L,2);

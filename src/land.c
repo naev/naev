@@ -1557,7 +1557,7 @@ static void land_stranded (void)
       char *buf;
       size_t bufsize;
 
-      rescue_env = nlua_newEnv(1);
+      rescue_env = nlua_newEnv();
       nlua_loadStandard( rescue_env );
       nlua_loadTk( rescue_env );
 

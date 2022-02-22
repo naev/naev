@@ -184,7 +184,6 @@ static int texL_new( lua_State *L )
    SDL_RWops *rw;
    char *name;
 
-   NLUA_CHECKRW(L);
 
    /* Defaults. */
    lf = NULL;
@@ -452,7 +451,6 @@ static int texL_sprites( lua_State *L )
  */
 static int texL_spriteFromDir( lua_State *L )
 {
-   NLUA_CHECKRW(L);
 
    int sx, sy;
 

@@ -394,7 +394,7 @@ static nlua_env background_create( const char *name )
    snprintf( path, sizeof(path), BACKGROUND_PATH"%s.lua", name );
 
    /* Create the Lua env. */
-   env = nlua_newEnv(1);
+   env = nlua_newEnv();
    nlua_loadStandard(env);
    nlua_loadTex(env);
    nlua_loadCol(env);

@@ -152,7 +152,6 @@ int newsL_add( lua_State *L )
    char *title, *content, *faction;
    ntime_t date, date_to_rm;
 
-   NLUA_CHECKRW(L);
 
    n_article = NULL;
    title   = NULL;
@@ -278,7 +277,6 @@ int newsL_add( lua_State *L )
  */
 int newsL_rm( lua_State *L )
 {
-   NLUA_CHECKRW(L);
 
    if (lua_istable(L, 1)) {
       lua_pushnil(L);
@@ -494,7 +492,6 @@ int newsL_bind( lua_State *L )
    news_t *article_ptr;
    char *tag;
 
-   NLUA_CHECKRW(L);
 
    a = NULL;
    tag = NULL;

@@ -163,7 +163,7 @@ int comm_openPilot( unsigned int pilot )
 
    /* Set up environment first time. */
    if (comm_env == LUA_NOREF) {
-      comm_env = nlua_newEnv(1);
+      comm_env = nlua_newEnv();
       nlua_loadStandard( comm_env );
 
       size_t bufsize;
