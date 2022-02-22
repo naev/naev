@@ -290,17 +290,27 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
 }
 
 /**
+ * @brief Have to clean up stuf for bad things happens (tm)
+ */
+static void equipment_onclose( unsigned int wid, const char *unused )
+{
+   (void) wid;
+   (void) unused;
+   memset( &eq_wgt, 0, sizeof(eq_wgt) );
+   eq_wgt->slot      = -1;
+   eq_wgt->mouseover = -1;
+   eq_wgt->weapons   = -1;
+}
+
+/**
  * @brief Opens the player's equipment window.
  */
 void equipment_open( unsigned int wid )
 {
-   int w, h;
-   int sw, sh;
-   int ow, oh;
-   int bw, bh;
-   int ew, eh;
-   int cw, ch;
-   int x, y;
+   int w,h, sw,sh, ow,oh, bw,bh, ew,eh, cw,ch, x,y;
+
+   /* Handle clean up. */
+   window_onClose( wid, equipment_onclose );
 
    /* Load the outfit mode. */
    equipment_outfitMode = player.eq_outfitMode;
