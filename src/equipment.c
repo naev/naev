@@ -297,9 +297,9 @@ static void equipment_onclose( unsigned int wid, const char *unused )
    (void) wid;
    (void) unused;
    memset( &eq_wgt, 0, sizeof(eq_wgt) );
-   eq_wgt->slot      = -1;
-   eq_wgt->mouseover = -1;
-   eq_wgt->weapons   = -1;
+   eq_wgt.slot       = -1;
+   eq_wgt.mouseover  = -1;
+   eq_wgt.weapons    = -1;
 }
 
 /**
