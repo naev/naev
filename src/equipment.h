@@ -11,6 +11,7 @@
  */
 void equipment_open( unsigned int wid );
 void equipment_cleanup (void);
+void equipment_deselect (void);
 
 /*
  * Misc.

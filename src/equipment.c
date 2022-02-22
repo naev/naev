@@ -290,27 +290,11 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
 }
 
 /**
- * @brief Have to clean up stuf for bad things happens (tm)
- */
-static void equipment_onclose( unsigned int wid, const char *unused )
-{
-   (void) wid;
-   (void) unused;
-   memset( &eq_wgt, 0, sizeof(eq_wgt) );
-   eq_wgt.slot       = -1;
-   eq_wgt.mouseover  = -1;
-   eq_wgt.weapons    = -1;
-}
-
-/**
  * @brief Opens the player's equipment window.
  */
 void equipment_open( unsigned int wid )
 {
    int w,h, sw,sh, ow,oh, bw,bh, ew,eh, cw,ch, x,y;
-
-   /* Handle clean up. */
-   window_onClose( wid, equipment_onclose );
 
    /* Load the outfit mode. */
    equipment_outfitMode = player.eq_outfitMode;
@@ -435,10 +419,7 @@ void equipment_slotWidget( unsigned int wid,
       CstSlotWidget *data )
 {
    /* Initialize data. */
-   memset( data, 0, sizeof(CstSlotWidget) );
-   data->slot        = -1;
-   data->mouseover   = -1;
-   data->weapons     = -1;
+   equipment_deselect();
 
    /* Create the widget. */
    window_addCust( wid, x, y, w, h, "cstEquipment", 0,
@@ -899,11 +880,11 @@ static void equipment_renderShip( double bx, double by,
    double pw, ph;
    Vector2d v;
 
-   /* Must have selected ship. */
-   if (eq_wgt.selected == NULL)
-      return;
-
    p = eq_wgt.selected;
+
+   /* Must have selected ship. */
+   if (p == NULL)
+      return;
 
    tick = SDL_GetTicks();
    dt   = (double)(tick - equipment_lastick)/1000.;
@@ -2326,6 +2307,17 @@ void equipment_cleanup (void)
       iar_outfits = NULL;
    }
 
+   equipment_deselect();
+}
+
+/**
+ * @brief Deselects equipment stuff.
+ */
+void equipment_deselect (void)
+{
    /* Safe defaults. */
-   eq_wgt.selected      = NULL;
+   memset( &eq_wgt, 0, sizeof(eq_wgt) );
+   eq_wgt.slot       = -1;
+   eq_wgt.mouseover  = -1;
+   eq_wgt.weapons    = -1;
 }

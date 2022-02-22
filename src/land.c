@@ -1630,6 +1630,9 @@ void land_cleanup (void)
    /* Clean up rescue Lua. */
    nlua_freeEnv(rescue_env);
    rescue_env = LUA_NOREF;
+
+   /* Deselect stuff. */
+   equipment_deselect();
 }
 
 /**
