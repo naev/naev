@@ -95,6 +95,7 @@ static glTexture *mission_portrait = NULL; /**< Mission portrait. */
  * player stuff
  */
 static int last_window = 0; /**< Default window. */
+static int land_taboverride = 0; /**< Whether or not tab got overwritten. */
 
 /*
  * Error handling.
@@ -1024,6 +1025,7 @@ void land_genWindows( int load, int changetab )
       land_generated = 0;
    }
    land_loaded = 0;
+   land_taboverride = 0; /* Can get overwritten later. */
 
    /* Get spob. */
    p     = land_spob;
@@ -1130,7 +1132,7 @@ void land_genWindows( int load, int changetab )
 
    /* Go to last open tab. */
    window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
-   if (changetab && land_windowsMap[ last_window ] != -1)
+   if ((land_taboverride || changetab) && land_windowsMap[ last_window ] != -1)
       window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
 
    /* Refresh the map button in case the player couldn't afford it prior to
@@ -1158,6 +1160,8 @@ int land_setWindow( int window )
 {
    if (land_windowsMap[ window ] < 0)
       return -1;
+   last_window = window;
+   land_taboverride = 1;
    window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[window] );
    return 0;
 }
