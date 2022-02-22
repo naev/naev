@@ -605,7 +605,6 @@ static int playerL_cinematics( lua_State *L )
    const char *abort_msg;
    int f_gui, f_2x;
 
-
    /* Defaults. */
    abort_msg = NULL;
    f_gui     = 0;
@@ -731,7 +730,6 @@ static int playerL_isLanded( lua_State *L )
  */
 static int playerL_takeoff( lua_State *L )
 {
-
    if (!landed) {
       NLUA_ERROR(L,_("Player must be landed to force takeoff."));
       return 0;
@@ -841,7 +839,6 @@ static int playerL_landWindow( lua_State *L )
    int ret;
    const char *str;
    int win;
-
 
    if (!landed) {
       NLUA_ERROR(L, _("Must be landed to set the active land window."));

@@ -180,7 +180,7 @@ function nerds_land2()
       end
       cleanup()
 
-         if player.pilot():cargoFree() >= 4 then
+      if player.pilot():cargoFree() >= 4 then
       -- player has enough free cargo
          nerds_return()
       else
