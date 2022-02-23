@@ -57,7 +57,7 @@ It's right on top of you!]]))
    vn.appear( cat )
    cat(_([[You make out two glowing eyes glinting in the darkness. As you shine your light on them, a dark shape emerges from the shadows.
 "Meow."]]))
-   cat(fmt.f(_([[In front of you is what {shipai} confirms to be a Felis catus or domesticated house cat. It looks at you with expressionless eyes with a gaze that seems to pierce your soul.
+   cat(fmt.f(_([[In front of you is what {shipai}, your ship's AI, confirms to be a Felis catus or domesticated house cat. It looks at you with expressionless eyes with a gaze that seems to pierce your soul.
 After what seems an eternity with you holding your breath, the cat stands up and walks past you.]]),{shipai=tut.ainame()}))
    cat(_([[You follow the cat throughout the ship as it leads you to… the airlock you came in from!
 It seems like it wants to come back with you. What do you do?]]))
