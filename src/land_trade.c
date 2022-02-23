@@ -251,7 +251,12 @@ void commodity_update( unsigned int wid, const char *str )
       window_modifyText( wid, "txtDRef", buf );
    }
    else if (com->price_ref != NULL) {
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("Price is based on the price of #o%s#0."), _(com->price_ref) );
+      char c = '0';
+      if (com->price_mod > 1.)
+         c = 'g';
+      else if (com->price_mod < 1.)
+         c = 'r';
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("Price is based on the #%c%.0f%%#0 of the price of #o%s#0."), c, com->price_mod*100., _(com->price_ref) );
       window_modifyText( wid, "txtDRef", buf );
    }
    else
