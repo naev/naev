@@ -234,15 +234,15 @@ function goodevent()
 
    -- See if we should add maps
    local maps = {
-      ["Map: Local System Map"]  = _("local system"),
-      ["Map: Empire Core"]  = _("Empire core systems"),
+      ["Map: Local System Map"] = _("local system"),
+      ["Map: Empire Core"] = _("Empire core systems"),
       ["Map: Za'lek Core"] = _("Za'lek core systems"),
       ["Map: Dvaered Core"] = _("Dvaered core systems"),
       ["Map: Dvaered-Soromid trade route"] = _("Dvaered-Soromid trade route"),
       ["Map: Sirius Core"] = _("Sirius ｃore systems"),
       ["Map: Sirian border systems"] = _("Sirian border systems"),
-      ["Map: The Frontier"] = _("Frontier systems")
-      ["Map: Nebula Edge"]  = _("Imperial Nebula edge"),
+      ["Map: The Frontier"] = _("Frontier systems"),
+      ["Map: Nebula Edge"] = _("Imperial Nebula edge"),
    }
    local unknown = {}
    for k,v in pairs(maps) do

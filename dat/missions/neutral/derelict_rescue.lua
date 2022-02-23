@@ -105,7 +105,7 @@ function land ()
    vn.sfxVictory()
    vn.run()
 
-   der.addMiscLog(fmt.f(_([[You rescued the crew of a derelict ship and returned them safely to {pnt} ({sys}).]]), {pnt=mem.destpnt, sys=mem.destsys}))
+   der.addMiscLog(fmt.f(_([[You rescued the crew of a derelict ship and returned them safely to {pnt} ({sys}).]]), {pnt=spob.cur(), sys=system.cur()}))
 
    misn.finish( true )
 end
@@ -115,7 +115,7 @@ function abort ()
    if player.isLanded() then
       vntk.msg(nil, _("You inform the crew you rescued from the derelict that you won't be taking them any further. They thank you and depart your ship."))
 
-      der.addMiscLog(fmt.f(_([[You rescued the crew of a derelict ship and dumped them at {pnt} ({sys}).]]), {pnt, sys=spob.cur()}))
+      der.addMiscLog(fmt.f(_([[You rescued the crew of a derelict ship and dumped them at {pnt} ({sys}).]]), {pnt=spob.cur(), sys=system.cur()}))
 
    else
       vntk.msg(nil, _("You jettison the crew you rescued from the derelict out of the airlock."))

@@ -20,7 +20,7 @@
 --]]
 local fmt = require "format"
 local lmisn = require "lmisn"
-local neu = require "common.neutral"
+local der = require "common.derelict"
 
 local reward = 500e3
 local getlandable, getlandablesystems -- Forward-declared functions
@@ -99,7 +99,7 @@ function land()
          player.pay( reward )
          misn.cargoJet(mem.carg_id)
 
-         der.addMiscLog(fmt.f(_([[You rescued a bad-tempered man and his family who were stranded aboard their ship. After a lot of annoying complaints, the man and his family finally left your ship on {pnt} ({sys}), the man's wife leaving a generous payment for the trouble.]]), {pnt, sys=spob.cur()}))
+         der.addMiscLog(fmt.f(_([[You rescued a bad-tempered man and his family who were stranded aboard their ship. After a lot of annoying complaints, the man and his family finally left your ship on {pnt} ({sys}), the man's wife leaving a generous payment for the trouble.]]), {pnt=spob.cur(), sys=system.cur()}))
 
          misn.finish(true)
       else
@@ -157,7 +157,7 @@ function abort ()
    else
       tk.msg(_("A parting of ways"), _([[You unceremoniously shove your passengers out of the airlock, leaving them to their fate on this planet. You're done playing taxi; it's time to get back to important things!]]))
 
-      der.addMiscLog(fmt.f(_([[You rescued a bad-tempered man and his family who were stranded aboard their ship. After a lot of annoying complaints, you turfed the family out on {pnt} ({sys})!]]), {pnt, sys=spob.cur()}))
+      der.addMiscLog(fmt.f(_([[You rescued a bad-tempered man and his family who were stranded aboard their ship. After a lot of annoying complaints, you turfed the family out on {pnt} ({sys})!]]), {pnt=spob.cur(), sys=system.cur()}))
    end
    misn.cargoJet(mem.carg_id)
    misn.finish(true)

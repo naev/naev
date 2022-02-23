@@ -19,7 +19,6 @@
    Black cat found on a derelict ship. Have to return it.
 
 ]]--
-local pir = require "common.pirate"
 local fmt = require "format"
 local vn  = require 'vn'
 local vntk= require 'vntk'
@@ -51,8 +50,7 @@ function create ()
    local cat = vn.Character.new( _("Black Cat"), {image=cat_image, color=cat_colour} )
    vn.transition()
    vn.na(_([[You make your way through the derelict, each step you take resonating throughout the vacuous vessel. As your traverse a hallway you notice a peculiar texture on one of the walls. As your light illuminates the wall, you can make out a hastily written graffiti. Although it is hard to read, you can make out the following text "#rBEW-RE OF C-T#0". What could it mean?]]))
-   vn.na(_([[You eventually reach the command room when your ship suddenly informs you that there is a life form present on the ship. Not only that, it's very close! You frantically ready for a fight
- and prepare for the worst…
+   vn.na(_([[You eventually reach the command room when your ship suddenly informs you that there is a life form present on the ship. Not only that, it's very close! You frantically ready for a fight and prepare for the worst…
 
 It's right on top of you!]]))
    vn.sfx( meow )
