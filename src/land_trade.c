@@ -85,16 +85,16 @@ void commodity_exchange_open( unsigned int wid )
    window_addText( wid, 40 + iw, -40, dw, titleHeight, 0,
          "txtName", &gl_defFont, NULL, _("None") );
 
-   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0", _("You have:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Purchased for:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Market Price:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Free Space:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Money:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Average price here:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Average price all:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("You have:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Purchased for:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Market Price:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Free Space:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Money:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Average price here:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Average price all:") );
    infoHeight = gl_printHeightRaw( &gl_smallFont, LAND_BUTTON_WIDTH+80, buf );
    window_addText( wid, 40 + iw, -60 - titleHeight, 200, infoHeight, 0,
-         "txtSInfo", &gl_smallFont, NULL, buf );
+         "txtSInfo", &gl_smallFont, &cFontGrey, buf );
    window_addText( wid, 40 + iw + 224, -60 - titleHeight,
          dw - (200 + 20+192), infoHeight, 0,
          "txtDInfo", &gl_smallFont, NULL, NULL );
