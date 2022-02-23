@@ -254,6 +254,9 @@ void commodity_update( unsigned int wid, const char *str )
       window_disableButtonSoft( wid, "btnCommoditySell" );
 }
 
+/**
+ * @brief Checks to see if the player can buy a commodity.
+ */
 int commodity_canBuy( const Commodity* com )
 {
    int failure, incommodities;
@@ -289,6 +292,9 @@ int commodity_canBuy( const Commodity* com )
    return !failure;
 }
 
+/**
+ * @brief Checks to see if a player can sell a commodity.
+ */
 int commodity_canSell( const Commodity* com )
 {
    int failure = 0;
@@ -348,7 +354,7 @@ void commodity_buy( unsigned int wid, const char *str )
  */
 void commodity_sell( unsigned int wid, const char *str )
 {
-   (void)str;
+   (void) str;
    int i;
    Commodity *com;
    unsigned int q;
@@ -420,6 +426,6 @@ void commodity_renderMod( double bx, double by, double w, double h, void *data )
       commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
       commodity_mod = q;
    }
-   snprintf( buf, 8, "%dx", q );
+   snprintf( buf, sizeof(buf), "%dx", q );
    gl_printMidRaw( &gl_smallFont, w, bx, by, &cFontWhite, -1, buf );
 }
