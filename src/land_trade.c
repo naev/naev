@@ -256,7 +256,7 @@ void commodity_update( unsigned int wid, const char *str )
          c = 'g';
       else if (com->price_mod < 1.)
          c = 'r';
-      l += scnprintf( &buf[l], sizeof(buf)-l, _("Price is based on the #%c%.0f%%#0 of the price of #o%s#0."), c, com->price_mod*100., _(com->price_ref) );
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("Price is based on #%c%.0f%%#0 of the price of #o%s#0."), c, com->price_mod*100., _(com->price_ref) );
       window_modifyText( wid, "txtDRef", buf );
    }
    else
