@@ -179,7 +179,7 @@ void commodity_exchange_cleanup (void)
  */
 void commodity_update( unsigned int wid, const char *str )
 {
-   (void)str;
+   (void) str;
    char buf[STRMAX];
    char buf_purchase_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN];
    size_t l = 0;
