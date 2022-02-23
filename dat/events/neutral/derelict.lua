@@ -16,6 +16,7 @@
 --]]
 local vntk = require 'vntk'
 local fmt = require 'format'
+local tut = require 'common.tutorial'
 local der = require 'common.derelict'
 local vn = require 'vn'
 
@@ -176,7 +177,7 @@ function neutralevent()
    }
 
    -- Pick a random message from the list, display it, unboard.
-   chosen=rnd.rnd(1, #neuevent)
+   local chosen = rnd.rnd(1, #neuevent)
    derelict_msg( neuevent[chosen][1], neuevent[chosen][2], neuevent[chosen][3] )
    destroyevent()
 end
