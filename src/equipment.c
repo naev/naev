@@ -348,7 +348,6 @@ void equipment_open( unsigned int wid )
    /* Safe defaults. */
    equipment_lastick = SDL_GetTicks();
    equipment_dir     = 0.;
-   memset( &eq_wgt, 0, sizeof(CstSlotWidget) );
 
    /* Add ammo. */
    equipment_addAmmo();
@@ -384,6 +383,7 @@ void equipment_open( unsigned int wid )
 
    /* Slot widget. Designed so that 10 slots barely fit. */
    equipment_slotWidget( wid, 20+sw+15, -40-5, ew, eh, &eq_wgt );
+   equipment_slotDeselect( &eq_wgt );
    eq_wgt.canmodify = 1;
 
    /* Separator. */
@@ -419,7 +419,7 @@ void equipment_slotWidget( unsigned int wid,
       CstSlotWidget *data )
 {
    /* Initialize data. */
-   equipment_deselect();
+   equipment_slotDeselect( data );
 
    /* Create the widget. */
    window_addCust( wid, x, y, w, h, "cstEquipment", 0,
@@ -2307,17 +2307,19 @@ void equipment_cleanup (void)
       iar_outfits = NULL;
    }
 
-   equipment_deselect();
+   equipment_slotDeselect( &eq_wgt );
 }
 
 /**
  * @brief Deselects equipment stuff.
  */
-void equipment_deselect (void)
+void equipment_slotDeselect( CstSlotWidget *wgt )
 {
+   if (wgt==NULL)
+      wgt = &eq_wgt;
    /* Safe defaults. */
-   memset( &eq_wgt, 0, sizeof(eq_wgt) );
-   eq_wgt.slot       = -1;
-   eq_wgt.mouseover  = -1;
-   eq_wgt.weapons    = -1;
+   memset( wgt, 0, sizeof(CstSlotWidget) );
+   wgt->slot      = -1;
+   wgt->mouseover = -1;
+   wgt->weapons   = -1;
 }

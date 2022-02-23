@@ -1632,7 +1632,7 @@ void land_cleanup (void)
    rescue_env = LUA_NOREF;
 
    /* Deselect stuff. */
-   equipment_deselect();
+   equipment_slotDeselect( NULL );
 }
 
 /**
