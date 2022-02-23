@@ -449,6 +449,14 @@ function should_investigate( pos, _si )
    return false
 end
 
+--[[
+-- Table of think functions for the different tasks (uses task name as an index).
+-- These are used after the general thought process, including things like
+-- handling messages and running away.
+--
+-- They should return true if the pilot is not interested in attacking while
+-- doing the task, or false otherwise.
+--]]
 control_funcs = {}
 function control_funcs.generic_attack( si )
    si = si or _stateinfo( ai.taskname() )
