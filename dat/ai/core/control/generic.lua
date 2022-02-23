@@ -268,96 +268,99 @@ function handle_messages( si, dopush )
                taskchange = true
             end
          end
+      else
 
-      -- Special case leader is gone but we want to follow, so e ignore if they're non-existent.
-      elseif sender == l then
-         if msgtype == "hyperspace" then
-            if dopush then
-               ai.pushtask("hyperspace", data)
-               taskchange = true
-            end
-         elseif msgtype == "land" then
-            if dopush then
-               ai.pushtask("land", data)
-               taskchange = true
-            end
-         end
-
-      -- Skip message from nonexistent sender
-      elseif sender:exists() then
-
-         -- Below we only handle if they came from allies
-         -- (So far, only allies would send in the first place, but this check future-proofs things.
-         -- One day it might be interesting to have non-allied snitches whose tips get checked out...)
-         if p:faction():areAllies( sender:faction() ) then
-            if msgtype == "scanned" then
-               if mem.doscans and data ~= nil and data:exists() then
-                  mem.scanned = mem.scanned or {} -- Create table if doesn't exist
-                  table.insert( mem.scanned, data )
-                  -- Stop scanning if they got information about the scan
-                  if ai.taskname() == "scan" and ai.taskdata() == data then
-                     ai.poptask()
-                     taskchange = true
-                  end
+         -- Special case leader is gone but we want to follow, so e ignore if they're non-existent.
+         if sender == l then
+            if msgtype == "hyperspace" then
+               if dopush then
+                  ai.pushtask("hyperspace", data)
+                  taskchange = true
+               end
+            elseif msgtype == "land" then
+               if dopush then
+                  ai.pushtask("land", data)
+                  taskchange = true
                end
             end
          end
 
-         -- Messages coming from followers
-         if sender:leader() == p then
-            if msgtype == "f_attacked" then
-               if not si.fighting and should_attack( data, si ) then
-                  -- Also signal to other followers
-                  for k,v in ipairs(p:followers()) do
-                     p:msg( v, "l_attacked", data )
-                  end
-                  if dopush then
-                     ai.pushtask("attack", data)
-                     taskchange = true
-                  end
-               end
-            end
+         -- Skip message from nonexistent sender
+         if sender:exists() then
 
-         -- Below we only handle if they came from the glorious leader
-         elseif sender == l then
-            if msgtype == "form-pos" then
-               mem.form_pos = data
-            elseif msgtype == "l_attacked" then
-               if not si.fighting and should_attack( data, si ) then
-                  if dopush then
-                     ai.pushtask("attack", data)
-                     taskchange = true
-                  end
-               end
-
-            -- Escort commands
-            elseif dopush then
-               -- Attack target
-               if msgtype == "e_attack" then
-                  if data ~= nil and data:exists() then
-                     if data:leader() ~= l then -- Don't kill from same team
-                        clean_task()
-                        --if (si.attack and si.forced and ai.taskdata()==data) or data:flags("disabled") then
-                        if data:flags("disabled") then
-                           ai.pushtask("attack_forced_kill", data)
-                        else
-                           ai.pushtask("attack_forced", data)
-                        end
+            -- Below we only handle if they came from allies
+            -- (So far, only allies would send in the first place, but this check future-proofs things.
+            -- One day it might be interesting to have non-allied snitches whose tips get checked out...)
+            if p:faction():areAllies( sender:faction() ) then
+               if msgtype == "scanned" then
+                  if mem.doscans and data ~= nil and data:exists() then
+                     mem.scanned = mem.scanned or {} -- Create table if doesn't exist
+                     table.insert( mem.scanned, data )
+                     -- Stop scanning if they got information about the scan
+                     if ai.taskname() == "scan" and ai.taskdata() == data then
+                        ai.poptask()
                         taskchange = true
                      end
                   end
-               -- Hold position
-               elseif msgtype == "e_hold" then
-                  ai.pushtask("hold")
-                  taskchange = true
-               -- Return to carrier
-               elseif msgtype == "e_return" then
-                  ai.pushtask( "flyback", p:flags("carried") )
-                  taskchange = true
-               -- Clear orders
-               elseif msgtype == "e_clear" then
-                  p:taskClear()
-                  taskchange = true
+               end
+            end
+
+            -- Messages coming from followers
+            if sender:leader() == p then
+               if msgtype == "f_attacked" then
+                  if not si.fighting and should_attack( data, si ) then
+                     -- Also signal to other followers
+                     for k,v in ipairs(p:followers()) do
+                        p:msg( v, "l_attacked", data )
+                     end
+                     if dopush then
+                        ai.pushtask("attack", data)
+                        taskchange = true
+                     end
+                  end
+               end
+
+            -- Below we only handle if they came from the glorious leader
+            elseif sender == l then
+               if msgtype == "form-pos" then
+                  mem.form_pos = data
+               elseif msgtype == "l_attacked" then
+                  if not si.fighting and should_attack( data, si ) then
+                     if dopush then
+                        ai.pushtask("attack", data)
+                        taskchange = true
+                     end
+                  end
+
+               -- Escort commands
+               elseif dopush then
+                  -- Attack target
+                  if msgtype == "e_attack" then
+                     if data ~= nil and data:exists() then
+                        if data:leader() ~= l then -- Don't kill from same team
+                           clean_task()
+                           --if (si.attack and si.forced and ai.taskdata()==data) or data:flags("disabled") then
+                           if data:flags("disabled") then
+                              ai.pushtask("attack_forced_kill", data)
+                           else
+                              ai.pushtask("attack_forced", data)
+                           end
+                           taskchange = true
+                        end
+                     end
+                  -- Hold position
+                  elseif msgtype == "e_hold" then
+                     ai.pushtask("hold")
+                     taskchange = true
+                  -- Return to carrier
+                  elseif msgtype == "e_return" then
+                     ai.pushtask( "flyback", p:flags("carried") )
+                     taskchange = true
+                  -- Clear orders
+                  elseif msgtype == "e_clear" then
+                     p:taskClear()
+                     taskchange = true
+                  end
                end
             end
          end
