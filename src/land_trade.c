@@ -99,6 +99,8 @@ void commodity_exchange_open( unsigned int wid )
          dw - (200 + 20+192), infoHeight, 0,
          "txtDInfo", &gl_smallFont, NULL, NULL );
 
+   window_addText( wid, 40 + iw, -80-titleHeight-infoHeight,
+         dw, 100, 0, "txtDRef", &gl_smallFont, NULL, NULL );
    window_addText( wid, 40 + iw, MIN(-80-titleHeight-infoHeight, -192-60),
          dw, h - (80+titleHeight+infoHeight) - (40+LAND_BUTTON_HEIGHT), 0,
          "txtDesc", &gl_smallFont, NULL, NULL );
@@ -241,6 +243,19 @@ void commodity_update( unsigned int wid, const char *str )
    window_modifyText( wid, "txtDInfo", buf );
    window_modifyText( wid, "txtName", _(com->name) );
    window_modifyText( wid, "txtDesc", _(com->description) );
+
+   /* Add relative price. */
+   l = 0;
+   if (commodity_isFlag(com, COMMODITY_FLAG_PRICE_CONSTANT)) {
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("Price is constant.") );
+      window_modifyText( wid, "txtDRef", buf );
+   }
+   else if (com->price_ref != NULL) {
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("Price is based on the price of #o%s#0."), _(com->price_ref) );
+      window_modifyText( wid, "txtDRef", buf );
+   }
+   else
+      window_modifyText( wid, "txtDRef", NULL );
 
    /* Button enabling/disabling */
    if (commodity_canBuy( com ))
