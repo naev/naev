@@ -47,7 +47,7 @@ typedef struct Commodity_ {
 
    /* Prices. */
    char *price_ref;     /**< Name of the commodity to which this one is referenced to. */
-   char price_mod;      /**< Modifier on price_ref. */
+   double price_mod;    /**< Modifier on price_ref. */
    double raw_price;    /**< Raw price of the commodity. */
    double price;        /**< Base price of the commodity. */
    glTexture* gfx_store;/**< Store graphic. */
