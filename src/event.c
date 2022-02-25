@@ -61,6 +61,7 @@ typedef struct EventData_ {
    char *spob; /**< Spob name. */
    char *system; /**< System name. */
    char *chapter; /**< Chapter name. */
+   pcre2_code *chapter_re; /**< Compiled regex chapter if applicable. */
 
    EventTrigger_t trigger; /**< What triggers the event. */
    char *cond; /**< Conditional Lua code to execute. */
@@ -329,8 +330,23 @@ void events_trigger( EventTrigger_t trigger )
          continue;
 
       /* If chapter, must match chapter. TODO make this regex. */
-      if ((ed->chapter != NULL) && (strcmp(ed->chapter,player.chapter)!=0))
-         continue;
+      if (ed->chapter_re != NULL) {
+         pcre2_match_data *match_data = pcre2_match_data_create_from_pattern( ed->chapter_re, NULL );
+         int rc = pcre2_match( ed->chapter_re, (PCRE2_SPTR)player.chapter, strlen(player.chapter), 0, 0, match_data, NULL );
+         pcre2_match_data_free( match_data );
+         if (rc < 0) {
+            switch (rc) {
+               case PCRE2_ERROR_NOMATCH:
+                  break;
+               default:
+                  WARN(_("Matching error %d"), rc );
+                  break;
+            }
+            continue;
+         }
+         else if (rc == 0)
+            continue;
+      }
 
       /* Make sure chance is succeeded. */
       if (RNGF() > ed->chance)
@@ -438,6 +454,17 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
 
    /* Process. */
    temp->chance /= 100.;
+
+   if (temp->chapter != NULL) {
+      int errornumber;
+      PCRE2_SIZE erroroffset;
+      temp->chapter_re = pcre2_compile( (PCRE2_SPTR)temp->chapter, PCRE2_ZERO_TERMINATED, 0, &errornumber, &erroroffset, NULL );
+      if (temp->chapter_re == NULL){
+         PCRE2_UCHAR buffer[256];
+         pcre2_get_error_message( errornumber, buffer, sizeof(buffer) );
+         WARN(_("Mission '%s' chapter PCRE2 compilation failed at offset %d: %s"), temp->name, (int)erroroffset, buffer );
+      }
+   }
 
 #define MELEMENT(o,s) \
    if (o) WARN(_("Event '%s' missing/invalid '%s' element"), temp->name, s)

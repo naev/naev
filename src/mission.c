@@ -245,6 +245,7 @@ static int mission_meetReq( int mission, int faction,
    if (misn->avail.chapter_re != NULL) {
       pcre2_match_data *match_data = pcre2_match_data_create_from_pattern( misn->avail.chapter_re, NULL );
       int rc = pcre2_match( misn->avail.chapter_re, (PCRE2_SPTR)player.chapter, strlen(player.chapter), 0, 0, match_data, NULL );
+      pcre2_match_data_free( match_data );
       if (rc < 0) {
          switch (rc) {
             case PCRE2_ERROR_NOMATCH:
@@ -253,9 +254,9 @@ static int mission_meetReq( int mission, int faction,
                WARN(_("Matching error %d"), rc );
                break;
          }
-         pcre2_match_data_free( match_data );
       }
-      return 0;
+      else if (rc == 0)
+         return 0;
    }
 
    /* Match faction. */
@@ -1011,7 +1012,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
       WARN(_("Unknown node '%s' in mission '%s'"),node->name,temp->name);
    } while (xml_nextNode(node));
 
-   if (temp->avail.chapter_re != NULL) {
+   if (temp->avail.chapter != NULL) {
       int errornumber;
       PCRE2_SIZE erroroffset;
       temp->avail.chapter_re = pcre2_compile( (PCRE2_SPTR)temp->avail.chapter, PCRE2_ZERO_TERMINATED, 0, &errornumber, &erroroffset, NULL );
