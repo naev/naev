@@ -27,7 +27,9 @@ local function fclear( f )
    var.pop( fpre..f:nameRaw() )
 end
 
-local function reset( _p, po )
+local function reset( p, po )
+   if p ~= player.pilot() then return end
+
    for k,f in ipairs(factions) do
       local os = fget( f ) -- original standing
       local cs = f:playerStanding() -- current standing
@@ -50,7 +52,9 @@ local function reset( _p, po )
    mem.isactive = true
 end
 
-local function disable( _p, po, domsg )
+local function disable( p, po, domsg )
+   if p ~= player.pilot() then return end
+
    -- Ignore if not active
    if not mem.isactive then return end
 
