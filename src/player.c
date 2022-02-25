@@ -578,11 +578,11 @@ void player_swapShip( const char *shipname, int move_cargo )
       pilot_cargoMove( ship, player.p );
 
    /* Copy target info */
-   ship->target = player.p->target;
-   ship->nav_spob = player.p->nav_spob;
+   ship->target      = player.p->target;
+   ship->nav_spob    = player.p->nav_spob;
    ship->nav_hyperspace = player.p->nav_hyperspace;
-   ship->nav_anchor = player.p->nav_anchor;
-   ship->nav_asteroid = player.p->nav_asteroid;
+   ship->nav_anchor  = player.p->nav_anchor;
+   ship->nav_asteroid= player.p->nav_asteroid;
 
    /* Store position. */
    v     = player.p->solid->pos;
