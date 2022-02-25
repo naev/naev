@@ -615,6 +615,7 @@ static void event_freeData( EventData *event )
    free( event->spob );
    free( event->system );
    free( event->chapter );
+   pcre2_code_free( event->chapter_re );
 
    free( event->cond );
 #if DEBUGGING

@@ -753,6 +753,7 @@ static void mission_freeData( MissionData* mission )
    free(mission->avail.spob);
    free(mission->avail.system);
    free(mission->avail.chapter);
+   pcre2_code_free( mission->avail.chapter_re );
    array_free(mission->avail.factions);
    free(mission->avail.cond);
    free(mission->avail.done);
