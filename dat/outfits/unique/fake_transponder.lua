@@ -28,7 +28,10 @@ local function fclear( f )
 end
 
 local function reset( p, po )
+   print(string.format("RESET %s",p:name()))
    if p ~= player.pilot() then return end
+   warn("what")
+   print("RESET OK")
 
    for k,f in ipairs(factions) do
       local os = fget( f ) -- original standing
@@ -53,7 +56,9 @@ local function reset( p, po )
 end
 
 local function disable( p, po, domsg )
+   print(string.format("DISABLE %s",p:name()))
    if p ~= player.pilot() then return end
+   print("DISABLE OK")
 
    -- Ignore if not active
    if not mem.isactive then return end

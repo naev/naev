@@ -4023,8 +4023,7 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
 static int player_parseShip( xmlNodePtr parent, int is_player )
 {
    char *name, *model;
-   int n, id;
-   int fuel;
+   int id, fuel;
    const Ship *ship_parsed;
    Pilot* ship;
    xmlNodePtr node;
@@ -4132,6 +4131,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       if (xml_isNode(node,"outfits_structure")) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do { /* load each outfit */
+            int n;
             xml_onlyNodes(cur);
             if (!xml_isNode(cur,"outfit")) {
                WARN(_("Save has unknown '%s' tag!"),xml_get(cur));
@@ -4149,6 +4149,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       else if (xml_isNode(node,"outfits_utility")) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do { /* load each outfit */
+            int n;
             xml_onlyNodes(cur);
             if (!xml_isNode(cur,"outfit")) {
                WARN(_("Save has unknown '%s' tag!"),xml_get(cur));
@@ -4166,6 +4167,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       else if (xml_isNode(node,"outfits_weapon")) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do { /* load each outfit */
+            int n;
             xml_onlyNodes(cur);
             if (!xml_isNode(cur,"outfit")) {
                WARN(_("Save has unknown '%s' tag!"),xml_get(cur));
