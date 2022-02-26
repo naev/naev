@@ -569,6 +569,8 @@ void player_swapShip( const char *shipname, int move_cargo )
 
    /* Swap player and ship */
    ship = player.ps.p;
+   pilot_rmFlag( ship, PILOT_EMPTY );
+   pilot_setFlag( ps->p, PILOT_EMPTY );
 
    /* move credits over */
    ship->credits = player.p->credits;
@@ -4064,9 +4066,12 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    if (is_player != 0) {
       pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
       ship = player.p;
+      pilot_rmFlag( ship, PILOT_EMPTY );
    }
-   else
+   else {
       ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), "player", flags );
+      pilot_setFlag( ship, PILOT_EMPTY );
+   }
    ps.p = ship;
 
    /* Ship should not have default outfits. */
