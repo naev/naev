@@ -158,22 +158,87 @@ end
 function neutralevent()
    -- neuevent is a table of tables { {title of event, text of event, log of event}, {...}, ... }
    local neuevent = {
-      {"Empty derelict", _([[You spend some time searching the derelict, but it doesn't appear there are any remaining passengers, nor is there anything of interest to you. You decide to return to your ship.]]), fmt.f(_([[You searched an empty derelict in {sys}.]]), {sys=system.cur()})},
-      {"Distracting derelict", fmt.f(_([[This ship has clearly been abandoned a long time ago. Looters have been here many times and all of the primary and backup systems are down. However, there is one console that is still operational. It appears to be running an ancient computer game about space exploration, trade and combat. Intrigued, you decide to give the game a try, and before long you find yourself hooked on it. You spend many fun periods hauling cargo, upgrading your ship, fighting enemies and exploring the universe. But of course you can't stay here forever and besides the chriping over the comms from your ship's AI, {shipai}, is getting annoying. You regretfully leave the game behind and return to the reality of your everyday life.]]), {shipai=tut.ainame()}), fmt.f(_([[You searched a derelict in {sys} and ended up spending an inordinate amount of time playing an ancient computer game!]]), {sys=system.cur()})},
-      {"Errie derelict", _([[You are exploring the derelict ship when you hear a strange creaking noise. You decide to follow it to see what is causing it, but you never seem to be able to pinpoint the source. After about an hour of fruitlessly opening up panels, pressing your ear against the deck and running hull scans from your own ship, you decide to give up and leave the derelict to its creepy creaking.]]), fmt.f(_([[You searched an empty, creaking derelict in {sys}.]]), {sys=system.cur()})},
-      {"Distracting derelict", fmt.f(_([[While exploring the cockpit of this derelict, you come across the captain's logs. Hoping to find some information that could be of use to you, you decide to play back the most recent entries. Unfortunately, it turns out the captain's logs are little more than recordings of the captain having heated arguments with her co-pilot. It isn't long before you decide you probably aren't going to find anything worthwhile here. Having returned to your ship {shipai}, your Ship AI, confirms there is little but "emotional human chatter" in the captain's logs.]]), {shipai=tut.ainame()}), fmt.f(_([[You searched a derelict in {sys} but found little but for "emotional human chatter" in the captain's logs.]]), {sys=system.cur()})},
-      {"Wrecked derelict", fmt.f(_([[This derelict is not deserted. The crew are still onboard. Unfortunately for them, they didn't survive whatever wrecked their ship, neither did much of their ship. Your ship, {shipai}, and you decide to give the crew and their ship a decent space burial before moving on.]]), {shipai=tut.ainame()}), fmt.f(_([[You found a wrecked derelict in {sys} and gave it and its crew a decent space burial.]]), {sys=system.cur()})},
-      {"Empty derelict", _([[This derelict seems to have been visited by looters already. You find a message carved into the wall near the airlock. It reads: "I WUS HEAR". Below it is another carved message that says "NO U WASNT". Otherwise, there is nothing of interest left on this ship.]]), fmt.f(_([[You searched an empty derelict in {sys} and found only graffiti.]]), {sys=system.cur()})},
-      {"Not-so-empty derelict", _([[This derelict seems to have been, at one time, used as an illegal casino. There are roulette tables and slot machines set up in the cargo hold. However, it seems the local authorities caught wind of the operation; there are scorch marks on the furniture and walls and assault rifle shells underfoot. You don't reckon you're going to find anything useful here so you leave.]]), fmt.f(_([[You boarded a derelict in {sys} and found an ex-hive of illegal activity.]]), {sys=system.cur()})},
-      {"Not-so-empty derelict", _([[When the airlock opens, you are hammered in the face by an ungodly smell that almost makes you pass out on the spot. You hurriedly close the airlock again and flee back into your own ship. Whatever is on that derelict, you don't want to find out!]]), fmt.f(_([[An ungodly smell stopped you from searching a derelict in {sys}.]]), {sys=system.cur()})},
-      {"Wrecked derelict", fmt.f(_([[This derelict has been really badly beaten up. Most of the corridors are blocked by mangled metal and your ship, {shipai}, tells you there are depressurized compartments all over the ship. There's not much you can do here, so you decide to leave the derelict to itself.]]), {shipai=tut.ainame()}), fmt.f(_([[You tried to search a wrecked derelict in {sys} but there wasn't much left.]]), {sys=system.cur()})},
-      {"Distracting derelict", _([[The interior of this ship is decorated in a gaudy fashion. There are cute plushies hanging from the doorways, drapes on every viewport, coloured pillows in the corners of most compartments and cheerful graffiti on almost all the walls. A scan of the ship's computer shows that this ship belonged to a trio of adventurous young ladies who decided to have a wonderful trip through space. Sadly, the ship's log tells you none of them really knew how to fly a space ship, so they ended up stranded and had to be rescued. Shaking your head, you return to your own ship.]]), fmt.f(_([[You searched a gaudily decorated derelict in {sys} and found the previous occupants had already been rescued]]), {sys=system.cur()})},
-      {"Errie derelict", _([[The artificial gravity on this ship has bizarrely failed, managing to somehow reverse itself. As soon as you step aboard you fall upwards and onto the ceiling, getting some nasty bruises in the process. Annoyed, you search the ship but without result. You return to your ship - but forget about the polarized gravity at the airlock, so you, again, smack against the deck plates.]]), fmt.f(_([[Having searched a derelict in {sys} you remind youself always to check the gravity before boarding another ship. Ow.]]), {sys=system.cur()})},
-      {"Empty derelict", _([[The cargo hold of this ship contains several heavy, metal chests. You pry them open but they are empty. Whatever was in them must have been pilfered by other looters already. You decide not to waste any time on this ship and return to your own.]]), fmt.f(_([[You found some empty chests on an empty derelict in {sys} system.]]), {sys=system.cur()})},
-      {"Wrecked derelict", fmt.f(_([[You have attached your docking clamp to the derelict's airlock but the door refuses to open. {shipai}, your ship, tells you that the other side isn't pressurized and the doors are trying to save your life. The derelict must have suffered too many hull breaches over the years. It doesn't seem like there's much you can do here.]]), {shipai=tut.ainame()}), fmt.f(_([[You tried to search an empty derelict in {sys} but your airlock doors and the vacuum of space defeated you!]]), {sys=system.cur()})},
-      {"Errie derelict", _([[As you walk through the corridors of the derelict, you can't help but notice the large scratch marks on the walls, the floor and even the ceiling. It's as if something went on a rampage throughout this ship - something big, with a lot of very sharp claws and teeth… You feel it might be best to leave as soon as possible, despite your ship's assurances of sensing no signs of life onboard, so you abandon the search and swiftly disengage your boardinig clamp.]]), fmt.f(_([[You left an empty, torn-up (literally) derelict you found in {sys} system to itself.]]), {sys=system.cur()})},
-      {"Errie derelict", fmt.f(_([[Entering your airlock you see the derelict's own airlock, oddly, spiral open onto a faintly-purple glowing, octagonal corridor. Noting this slightly strange interior design choice you continue along the faintly radiating corridor to find yourself in an octagonal ("Truncated cuboctahedronal" chirps in {shipai}, your ship) room eminating a rather stranger purply-green or greeny-purple eldritch colour. What furnishings you can see are angular in a way that makes your eyes water. These design choices go from strange too… "Thump"! You land on the floor(?) as you trip over your gravity confused feet! Seriously!?! They rigged gravity to the outside "walls" of the room!?! You decide it might be better _not_ to discover anything more about this ship without an appropriately equipped boarding party, maybe one with a magician!]]), {shipai=tut.ainame()}), fmt.f(_([[An eldritch, possibly derelict, {shp} in {sys} system unnerved you, its true story is no longer your concern, thankfully!]]), {shp=derelict.ship(), sys=system.cur()})},
-      {"Empty derelict", _([[Your airlock doors slide open starting, what turns out to be, the most uneventful, dull, mudane, entirely-boring and mind-numbingly unhelpful waste of time that any boarding of a derelict ship has ever been, it even tempts you not to do this again on the off chance you run across another such distressingly worthless derelict.]]), fmt.f(_([[You became disenchanted with boarding derelicts on a ship in {sys}… next time better to watch paint dry.]]), {sys=system.cur})},
+      {
+         _("Empty derelict"),
+         _([[You spend some time searching the derelict, but it doesn't appear there are any remaining passengers, nor is there anything of interest to you. You decide to return to your ship.]]),
+         fmt.f(_([[You searched an empty derelict in {sys}.]]), {sys=system.cur()})
+      },
+      {
+         _("Distracting Derelict"),
+         fmt.f(_([[This ship has clearly been abandoned a long time ago. Looters have been here many times and all of the primary and backup systems are down. However, there is one console that is still operational. It appears to be running an ancient computer game about space exploration, trade and combat. Intrigued, you decide to give the game a try, and before long you find yourself hooked on it. You spend many fun periods hauling cargo, upgrading your ship, fighting enemies and exploring the universe. But of course you can't stay here forever and besides the chirping over the comms from your ship's AI, {shipai}, is getting annoying. You regretfully leave the game behind and return to the reality of your everyday life.]]), {shipai=tut.ainame()}),
+         fmt.f(_([[You searched a derelict in {sys} and ended up spending an inordinate amount of time playing an ancient computer game!]]), {sys=system.cur()})
+      },
+      {
+         _("Errie Derelict"),
+         _([[You are exploring the derelict ship when you hear a strange creaking noise. You decide to follow it to see what is causing it, but you never seem to be able to pinpoint the source. After about an hour of fruitlessly opening up panels, pressing your ear against the deck and running hull scans from your own ship, you decide to give up and leave the derelict to its creepy creaking.]]),
+         fmt.f(_([[You searched an empty, creaking derelict in {sys}.]]), {sys=system.cur()})
+      },
+      {
+         _("Distracting Derelict"),
+         fmt.f(_([[While exploring the cockpit of this derelict, you come across the captain's logs. Hoping to find some information that could be of use to you, you decide to play back the most recent entries. Unfortunately, it turns out the captain's logs are little more than recordings of the captain having heated arguments with her co-pilot. It isn't long before you decide you probably aren't going to find anything worthwhile here. Having returned to your ship {shipai}, your Ship AI, confirms there is little but "emotional human chatter" in the captain's logs.]]), {shipai=tut.ainame()}),
+         fmt.f(_([[You searched a derelict in {sys} but found little but for "emotional human chatter" in the captain's logs.]]), {sys=system.cur()})
+      },
+      {
+         _("Wrecked Derelict"),
+         fmt.f(_([[This derelict is not deserted. The crew are still onboard. Unfortunately for them, they didn't survive whatever wrecked their ship, neither did much of their ship. Your ship, {shipai}, and you decide to give the crew and their ship a decent space burial before moving on.]]), {shipai=tut.ainame()}),
+         fmt.f(_([[You found a wrecked derelict in {sys} and gave it and its crew a decent space burial.]]), {sys=system.cur()})
+      },
+      {
+         _("Empty Derelict"),
+         _([[This derelict seems to have been visited by looters already. You find a message carved into the wall near the airlock. It reads: "I WUS HEAR". Below it is another carved message that says "NO U WASNT". Otherwise, there is nothing of interest left on this ship.]]),
+         fmt.f(_([[You searched an empty derelict in {sys} and found only graffiti.]]), {sys=system.cur()})
+      },
+      {
+         _("Not-so-empty Derelict"),
+         _([[This derelict seems to have been, at one time, used as an illegal casino. There are roulette tables and slot machines set up in the cargo hold. However, it seems the local authorities caught wind of the operation; there are scorch marks on the furniture and walls and assault rifle shells underfoot. You don't reckon you're going to find anything useful here so you leave.]]),
+         fmt.f(_([[You boarded a derelict in {sys} and found an ex-hive of illegal activity.]]), {sys=system.cur()})
+      },
+      {
+         _("Not-so-empty Derelict"),
+         _([[When the airlock opens, you are hammered in the face by an ungodly smell that almost makes you pass out on the spot. You hurriedly close the airlock again and flee back into your own ship. Whatever is on that derelict, you don't want to find out!]]),
+         fmt.f(_([[An ungodly smell stopped you from searching a derelict in {sys}.]]), {sys=system.cur()})
+      },
+      {
+         _("Wrecked Derelict"),
+         fmt.f(_([[This derelict has been really badly beaten up. Most of the corridors are blocked by mangled metal and your ship, {shipai}, tells you there are depressurized compartments all over the ship. There's not much you can do here, so you decide to leave the derelict to itself.]]), {shipai=tut.ainame()}),
+         fmt.f(_([[You tried to search a wrecked derelict in {sys} but there wasn't much left.]]), {sys=system.cur()})
+      },
+      {
+         _("Distracting Derelict"),
+         _([[The interior of this ship is decorated in a gaudy fashion. There are cute plushes hanging from the doorways, drapes on every viewport, coloured pillows in the corners of most compartments and cheerful graffiti on almost all the walls. A scan of the ship's computer shows that this ship belonged to a trio of adventurous young ladies who decided to have a wonderful trip through space. Sadly, the ship's log tells you none of them really knew how to fly a space ship, so they ended up stranded and had to be rescued. Shaking your head, you return to your own ship.]]),
+         fmt.f(_([[You searched a gaudily decorated derelict in {sys} and found the previous occupants had already been rescued]]), {sys=system.cur()})
+      },
+      {
+         _("Eerie Derelict"),
+         _([[The artificial gravity on this ship has bizarrely failed, managing to somehow reverse itself. As soon as you step aboard you fall upwards and onto the ceiling, getting some nasty bruises in the process. Annoyed, you search the ship but without result. You return to your ship - but forget about the polarized gravity at the airlock, so you, again, smack against the deck plates.]]),
+         fmt.f(_([[Having searched a derelict in {sys} you remind yourself always to check the gravity before boarding another ship. Ow.]]), {sys=system.cur()})
+      },
+      {
+         _("Empty derelict"),
+         _([[The cargo hold of this ship contains several heavy, metal chests. You pry them open but they are empty. Whatever was in them must have been pilfered by other looters already. You decide not to waste any time on this ship and return to your own.]]),
+         fmt.f(_([[You found some empty chests on an empty derelict in {sys} system.]]), {sys=system.cur()})
+      },
+      {
+         _("Wrecked Derelict"),
+         fmt.f(_([[You have attached your docking clamp to the derelict's airlock but the door refuses to open. {shipai}, your ship, tells you that the other side isn't pressurized and the doors are trying to save your life. The derelict must have suffered too many hull breaches over the years. It doesn't seem like there's much you can do here.]]), {shipai=tut.ainame()}),
+         fmt.f(_([[You tried to search an empty derelict in {sys} but your airlock doors and the vacuum of space defeated you!]]), {sys=system.cur()})
+      },
+      {
+         _("Eerie Derelict"),
+         _([[As you walk through the corridors of the derelict, you can't help but notice the large scratch marks on the walls, the floor and even the ceiling. It's as if something went on a rampage throughout this ship - something big, with a lot of very sharp claws and teeth… You feel it might be best to leave as soon as possible, despite your ship's assurances of sensing no signs of life onboard, so you abandon the search and swiftly disengage your boarding clamp.]]),
+         fmt.f(_([[You left an empty, torn-up (literally) derelict you found in {sys} system to itself.]]),
+         {sys=system.cur()})
+      },
+      {
+         _("Eerie Derelict"),
+         fmt.f(_([[Entering your airlock you see the derelict's own airlock, oddly, spiral open onto a faintly-purple glowing, octagonal corridor. Noting this slightly strange interior design choice you continue along the faintly radiating corridor to find yourself in an octagonal ("Truncated cuboctahedronal" chirps in {shipai}, your ship AI) room emanating a rather stranger purple-green or green-purple eldritch colour. What furnishings you can see are angular in a way that makes your eyes water. These design choices go from strange too… "Thump"! You land on the floor(?) as you trip over your gravity confused feet! Seriously!?! They rigged gravity to the outside "walls" of the room!?! You decide it might be better _not_ to discover anything more about this ship without an appropriately equipped boarding party, maybe one with a magician!]]), {shipai=tut.ainame()}),
+         fmt.f(_([[An eldritch, possibly derelict, {shp} in {sys} system unnerved you, its true story is no longer your concern, thankfully!]]), {shp=derelict.ship(), sys=system.cur()})
+      },
+      {
+         _("Empty Derelict"),
+         _([[Your airlock doors slide open starting, what turns out to be, the most uneventful, dull, mundane, entirely-boring and mind-numbingly unhelpful waste of time that any boarding of a derelict ship has ever been, it even tempts you not to do this again on the off chance you run across another such distressingly worthless derelict.]]),
+         fmt.f(_([[You became disenchanted with boarding derelicts on a ship in {sys}… next time better to watch paint dry.]]), {sys=system.cur})
+      },
    }
 
    -- Pick a random message from the list, display it, unboard.
