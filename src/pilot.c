@@ -2973,7 +2973,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
       pilot->update           = player_update; /* Players get special update. */
       pilot->render           = NULL; /* render will get called from player_think */
       pilot->render_overlay   = NULL;
-      if (!pilot_isFlagRaw( flags, PILOT_EMPTY )) { /* Sort of a hack. */
+      if (!pilot_isFlagRaw( flags, PILOT_INACTIVE )) { /* Sort of a hack. */
          player.p = pilot;
          player.ps.p = pilot;
       }
@@ -3083,7 +3083,7 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
  *    @param name Name of the pilot ship (NULL uses ship name).
  *    @param faction Faction of the ship.
  *    @param ai AI to use, or NULL to use the faction's.
- *    @param flags Flags for tweaking, PILOT_EMPTY is added.
+ *    @param flags Flags for tweaking, PILOT_INACTIVE is added.
  *    @return Pointer to the new pilot (not added to stack).
  */
 Pilot* pilot_createEmpty( const Ship* ship, const char* name,
@@ -3094,7 +3094,7 @@ Pilot* pilot_createEmpty( const Ship* ship, const char* name,
       WARN(_("Unable to allocate memory"));
       return 0;
    }
-   pilot_setFlagRaw( flags, PILOT_EMPTY );
+   pilot_setFlagRaw( flags, PILOT_INACTIVE );
    pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags, 0, 0 );
    return dyn;
 }

@@ -17,7 +17,7 @@ enum {
    PILOT_PLAYER,        /**< Pilot is a player. */
    PILOT_CARRIED,       /**< Pilot usually resides in a fighter bay. */
    PILOT_CREATED_AI,    /**< Pilot has already created AI. */
-   PILOT_EMPTY,         /**< Do not add pilot to stack. */
+   PILOT_INACTIVE,      /**< Pilot is not active (mainly for player "pilots" that are stored and not on the stack. */
    PILOT_NO_OUTFITS,    /**< Do not create the pilot with outfits. */
    /*
     * Dynamic flags
