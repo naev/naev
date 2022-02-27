@@ -855,6 +855,7 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 #ifdef DEBUGGING
    if ((dir > 2.*M_PI) || (dir < 0.)) {
       WARN(_("Angle not between 0 and 2.*M_PI [%f]."), dir);
+      *x = *y = 0;
       return;
    }
 #endif /* DEBUGGING */
