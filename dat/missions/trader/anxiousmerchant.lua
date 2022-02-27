@@ -3,7 +3,7 @@
 <mission name="Anxious Merchant">
  <avail>
   <priority>3</priority>
-  <chance>1</chance>
+  <chance>5</chance>
   <location>Bar</location>
   <faction>Dvaered</faction>
   <faction>Empire</faction>
@@ -72,18 +72,18 @@ function accept()
    if not tk.yesno(_("Spaceport Bar"), fmt.f(_([[As you sit down, the merchant looks up at you with a panicked expression, "Ahh! What do you want? Can't you see I've enough on my plate as it is?" You tell the merchant to calm down and offer a drink. "Jeez, that's nice of you... Ha, maybe I can get a break today!"
     You grab a couple of drinks and hand one to the slightly more relaxed looking merchant as they start to talk. "So, I work for the Traders Guild. I transport stuff for them and they pay me. Only problem is, I kinda strained my engines running from pirates on the way to the pick-up and now I'm realising that my engines just don't have the speed to get me back to beat the deadline. And to top it all off, I'm late on my bills as is; I can't afford new engines now! It's like I'm in the Sol nebula without a shield generator."
     You attempt to reassure the merchant by telling them that, surely, the company will cut them some slack. "Like hell they will! I've already been scolded by management for this exact same thing before! If I don't get this shipment of {tonnes} of {cargo} to {pnt}... I really need this job, you know? I don't know what to do..." The merchant pauses. "Unless... Say, you wouldn't be able to help me out here, would you? I'd just need you to take the cargo to {pnt} in the {sys} system. Could you? I'll give you the payment for the mission if you do it; it means a lot!"]]), {tonnes=fmt.tonnes(mem.cargo_size), cargo=_(mem.cargo), pnt=mem.dest_planet, sys=mem.dest_sys})) then
-      misn.finish()
+      return
    end
    if player.pilot():cargoFree() < mem.cargo_size then
       tk.msg(_("No Room"), _([[You don't have enough cargo space to accept this mission.]]))  -- Not enough space
-      misn.finish()
+      return
    end
    player.pilot():cargoAdd(mem.cargo, mem.cargo_size)
    local player_best = car.getTransit(mem.num_jumps, mem.travel_dist)
    player.pilot():cargoRm(mem.cargo, mem.cargo_size)
    if mem.time_limit < player_best then
       if not tk.yesno(_("Too slow"), fmt.f(_([[The goods have to arrive in {time_limit} but it will take {time} for your ship to reach {pnt}. Accept the mission anyway?]]) {time_limit=(mem.time_limit - time.get()), time=(player_best - time.get()), pnt=mem.dest_planet})) then
-         misn.finish()
+         return
       end
    end
 
