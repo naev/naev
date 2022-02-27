@@ -667,29 +667,27 @@ static void misn_accept( unsigned int wid, const char *str )
 
    if (dialogue_YesNo( _("Accept Mission"),
          _("Are you sure you want to accept this mission?"))) {
+      int changed = 0;
       pos = toolkit_getListPos( wid, "lstMission" );
       misn = &mission_computer[pos];
       ret = mission_accept( misn );
-      if ((ret==0) || (ret==3) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
-         int changed = 0;
-         if (ret==-1) {
-            mission_cleanup( &mission_computer[pos] );
-            changed = 1;
-         }
-         if (misn->accepted)
-            changed = 1;
+      if (ret==-1) { /* Errored out. */
+         mission_cleanup( &mission_computer[pos] );
+         changed = 1;
+      }
+      if ((ret==2) || (ret==3)) /* Deleted or accepted. */
+         changed = 1;
 
-         if (changed) {
-            memmove( &mission_computer[pos], &mission_computer[pos+1],
-                  sizeof(Mission) * (mission_ncomputer-pos-1) );
-            mission_ncomputer--;
+      if (changed) {
+         memmove( &mission_computer[pos], &mission_computer[pos+1],
+               sizeof(Mission) * (mission_ncomputer-pos-1) );
+         mission_ncomputer--;
 
-            /* Regenerate list. */
-            misn_genList(wid, 0);
-            /* Add position persistancey after a mission has been accepted */
-            /* NOTE: toolkit_setListPos protects us from a bad position by clamping */
-            toolkit_setListPos( wid, "lstMission", pos-1 ); /*looks better without the -1, makes more sense with*/
-         }
+         /* Regenerate list. */
+         misn_genList(wid, 0);
+         /* Add position persistancey after a mission has been accepted */
+         /* NOTE: toolkit_setListPos protects us from a bad position by clamping */
+         toolkit_setListPos( wid, "lstMission", pos-1 ); /*looks better without the -1, makes more sense with*/
       }
 
       /* Reset markers. */

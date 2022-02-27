@@ -143,8 +143,8 @@ int nlua_loadMisn( nlua_env env )
  *
  *    @param misn Mission that owns the function.
  *    @param func Name of the function to call.
- *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
- *            and 0 normally.
+ *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted,
+ *          3 if the mission got accepted, and 0 normally.
  */
 int misn_tryRun( Mission *misn, const char *func )
 {
@@ -164,8 +164,8 @@ int misn_tryRun( Mission *misn, const char *func )
  *
  *    @param misn Mission that owns the function.
  *    @param func Name of the function to call.
- *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
- *            and 0 normally.
+ *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted,
+ *          3 if the mission got accepted, and 0 normally.
  */
 int misn_run( Mission *misn, const char *func )
 {

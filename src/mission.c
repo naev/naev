@@ -189,8 +189,8 @@ static int mission_init( Mission* mission, const MissionData* misn, int genid, i
  * @brief Small wrapper for misn_run.
  *
  *    @param mission Mission to accept.
- *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
- *            and 0 normally.
+ *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted,
+ *          3 if the mission got accepted, and 0 normally.
  *
  * @sa misn_run
  */
