@@ -252,7 +252,7 @@ function goodevent()
 
    local goodevent_list = {
       function ()
-         derelict_msg(gtitle, _([[The derelict appears deserted, its passengers long gone. However, they seem to have left behind a small amount of credit chips in their hurry to leave! You decide to help yourself to them and leave the derelict.]]), fmt.f(_([[You found a derelict in {sys}, it was empty but for some scattered credit chips. Lucky you!]]), {sys=system.cur()}))
+         derelict_msg( gtitle, _([[The derelict appears deserted, its passengers long gone. However, they seem to have left behind a small amount of credit chips in their hurry to leave! You decide to help yourself to them and leave the derelict.]]), fmt.f(_([[You found a derelict in {sys}, it was empty but for some scattered credit chips. Lucky you!]]), {sys=system.cur()}) )
          player.pay( rnd.rnd(5e3,30e3) )
       end,
       function ()
@@ -300,16 +300,22 @@ function goodevent()
 
    -- See if we should add maps
    local maps = {
-      ["Map: Local System Map"] = _("local system"),
+      ["Local System Map"] = _("local system"),
       ["Map: Empire Core"] = _("Empire core systems"),
       ["Map: Za'lek Core"] = _("Za'lek core systems"),
       ["Map: Dvaered Core"] = _("Dvaered core systems"),
-      ["Map: Dvaered-Soromid trade route"] = _("Dvaered-Soromid trade route"),
-      ["Map: Sirius Core"] = _("Sirius ｃore systems"),
-      ["Map: Sirian border systems"] = _("Sirian border systems"),
+      ["Map: Dvaered-Soromid Trade Route"] = _("Dvaered-Soromid trade route"),
+      ["Map: Sirius Core"] = _("Sirius core systems"),
+      ["Map: Sirian Border Systems"] = _("Sirian border systems"),
       ["Map: The Frontier"] = _("Frontier systems"),
       ["Map: Nebula Edge"] = _("Imperial Nebula edge"),
    }
+   if __debugging then -- Make sure map names are valid
+      for k,v in pairs(maps) do
+         local _o = outfit.get(k)
+      end
+   end
+
    local unknown = {}
    for k,v in pairs(maps) do
       if player.numOutfit(k) == 0 then
