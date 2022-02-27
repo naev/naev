@@ -49,11 +49,11 @@ end
 
 function accept ()
    if not tk.yesno( _("Spaceport Bar"), _([[This Za'lek scientist seems to be looking for someone. As you approach, he begins to speak. "Excuse me, but do you happen to know a ship captain who can help me with something?"]]) ) then
-      misn.finish()
+      return
 
    elseif player.pilot():cargoFree() < 20 then
       tk.msg( _("No Room"), _([[You don't have enough cargo space to accept this mission.]]) )  -- Not enough space
-      misn.finish()
+      return
 
    else
       misn.accept()
@@ -85,7 +85,7 @@ function land ()
    if spob.cur() == mem.pickupWorld and not mem.pickedup then
       if player.pilot():cargoFree() < 20 then
          tk.msg( _("No Room"), _([[You don't have enough cargo space to accept this mission.]]) )  -- Not enough space
-         misn.finish()
+         return
 
       else
 
