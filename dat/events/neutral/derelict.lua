@@ -232,7 +232,7 @@ function neutralevent()
       {
          _("Eerie Derelict"),
          fmt.f(_([[Entering your airlock you see the derelict's own airlock, oddly, spiral open onto a faintly-purple glowing, octagonal corridor. Noting this slightly strange interior design choice you continue along the faintly radiating corridor to find yourself in an octagonal ("Truncated cuboctahedronal" chirps in {shipai}, your ship AI) room emanating a rather stranger purple-green or green-purple eldritch colour. What furnishings you can see are angular in a way that makes your eyes water. These design choices go from strange too… "Thump"! You land on the floor(?) as you trip over your gravity confused feet! Seriously!?! They rigged gravity to the outside "walls" of the room!?! You decide it might be better _not_ to discover anything more about this ship without an appropriately equipped boarding party, maybe one with a magician!]]), {shipai=tut.ainame()}),
-         fmt.f(_([[An eldritch, possibly derelict, {shp} in {sys} system unnerved you, its true story is no longer your concern, thankfully!]]), {shp=derelict.ship(), sys=system.cur()})
+         fmt.f(_([[An eldritch, possibly derelict, {shp} in {sys} system unnerved you, its true story is no longer your concern, thankfully!]]), {shp=derelict:ship(), sys=system.cur()})
       },
       {
          _("Empty Derelict"),
@@ -293,7 +293,7 @@ function goodevent()
             end
          end
          local rndfact = fcts[ rnd.rnd(1, #fcts) ]
-         derelict_msg(gtitle, fmt.f(_([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced according to your ship, {shipai}! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging and contact the {fct} authorities. Your reputation with them has slightly improved.]]), {shipai=tut.ainame, fct=rndfact}), fmt.f(_([[In the {sys} system you found a very rare antique derelict {shp} and reported it to the, happy to hear from you, {fct} authorities.]]), {sys=system.cur(), shp=derelict.ship(), fct=rndfact}))
+         derelict_msg(gtitle, fmt.f(_([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced according to your ship, {shipai}! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging and contact the {fct} authorities. Your reputation with them has slightly improved.]]), {shipai=tut.ainame, fct=rndfact}), fmt.f(_([[In the {sys} system you found a very rare antique derelict {shp} and reported it to the, happy to hear from you, {fct} authorities.]]), {sys=system.cur(), shp=derelict:ship(), fct=rndfact}))
          faction.modPlayerSingle(rndfact, 2, "script")
       end,
    }
