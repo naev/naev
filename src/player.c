@@ -1594,14 +1594,14 @@ int player_land( int loud )
       return PLAYER_LAND_DENIED;
    }
    else if (pilot_isFlag( player.p, PILOT_NOLAND)) {
-      player_message( _("#rDocking stabilizers malfunctioning, cannot land.") );
+      player_message( "#r%s", _("Docking stabilizers malfunctioning, cannot land.") );
       return PLAYER_LAND_DENIED;
    }
 
    /* attempt to land at selected spob */
    spob = cur_system->spobs[player.p->nav_spob];
    if ((spob->lua_can_land==LUA_NOREF) && !spob_hasService(spob, SPOB_SERVICE_LAND)) {
-      player_messageRaw( _("#rYou can't land here.") );
+      player_message( "#r%s", _("You can't land here.") );
       return PLAYER_LAND_DENIED;
    }
    else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
@@ -1747,7 +1747,7 @@ void player_board (void)
       if ((!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) ||
             pilot_isFlag(p,PILOT_NOBOARD)) {
          player_targetClear();
-         player_message( _("#rYou need a target to board first!") );
+         player_message( "#r%s", _("You need a target to board first!") );
          return;
       }
    }
@@ -1921,20 +1921,20 @@ int player_jump (void)
    /* Already jumping, so we break jump. */
    if (pilot_isFlag(player.p, PILOT_HYP_PREP)) {
       pilot_hyperspaceAbort(player.p);
-      player_message(_("#rAborting hyperspace sequence."));
+      player_message( "#r%s", _("Aborting hyperspace sequence."));
       return 0;
    }
 
    /* Try to hyperspace. */
    h = space_hyperspace(player.p);
    if (h == -1)
-      player_message(_("#rYou are too far from a jump point to initiate hyperspace."));
+      player_message( "#r%s", _("You are too far from a jump point to initiate hyperspace."));
    else if (h == -2)
-      player_message(_("#rHyperspace drive is offline."));
+      player_message( "#r%s", _("Hyperspace drive is offline."));
    else if (h == -3)
-      player_message(_("#rYou do not have enough fuel to hyperspace jump."));
+      player_message( "#r%s", _("You do not have enough fuel to hyperspace jump."));
    else {
-      player_message(_("#oPreparing for hyperspace."));
+      player_message( "#o%s", _("Preparing for hyperspace."));
       /* Stop acceleration noise. */
       player_accelOver();
       /* Stop possible shooting. */
@@ -2349,7 +2349,7 @@ void player_hail (void)
          player_spobOutOfRangeMsg();
    }
    else
-      player_message(_("#rNo target selected to hail."));
+      player_message( "#r%s", _("No target selected to hail.") );
 
    /* Clear hails if none found. */
    player_checkHail();
@@ -2371,7 +2371,7 @@ void player_hailSpob (void)
          player_spobOutOfRangeMsg();
    }
    else
-      player_message(_("#rNo target selected to hail."));
+      player_message( "#r%s", _("No target selected to hail.") );
 }
 
 /**
@@ -2404,7 +2404,7 @@ void player_autohail (void)
       }
    }
 
-   player_message(_("#rYou haven't been hailed by any pilots."));
+   player_message( "#r%s", _("You haven't been hailed by any pilots.") );
 }
 
 /**
@@ -2417,13 +2417,13 @@ void player_toggleMouseFly(void)
 
    if (!player_isFlag(PLAYER_MFLY)) {
       input_mouseShow();
-      player_message(_("#oMouse flying enabled."));
+      player_message( "#o%s", _("Mouse flying enabled.") );
       player_setFlag(PLAYER_MFLY);
    }
    else {
       input_mouseHide();
       player_rmFlag(PLAYER_MFLY);
-      player_message(_("#rMouse flying disabled."));
+      player_message( "#o%s", _("Mouse flying disabled.") );
 
       if (conf.mouse_thrust)
          player_accelOver();
@@ -4389,13 +4389,13 @@ void player_stealth (void)
 
    /* Stealth case. */
    if (pilot_stealth( player.p )) {
-      player_message(_("#gYou have entered stealth mode."));
+      player_message( "#g%s", _("You have entered stealth mode.") );
    }
    else {
       /* Stealth failed. */
       if (player.p->lockons > 0)
-         player_message(_("#rUnable to stealth: missiles locked on!"));
+         player_message( "#r%s", _("Unable to stealth: missiles locked on!") );
       else
-         player_message(_("#rUnable to stealth: other pilots nearby!"));
+         player_message( "#r%s", _("Unable to stealth: other pilots nearby!") );
    }
 }
