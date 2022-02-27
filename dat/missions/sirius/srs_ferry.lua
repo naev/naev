@@ -188,7 +188,7 @@ function accept()
         if not tk.yesno( _("Too slow"), fmt.f(_([[The passenger requests arrival within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline.
 
 Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet}) ) then
-            misn.finish()
+            return
         end
     end
 
@@ -209,8 +209,8 @@ Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(p
 
         if counter == 0 then
             -- Something has changed with the system map, and this mission is no longer valid
-            print( _("Error: no landable planets in the Aesir system. This mission is broken.\n") )
-            misn.finish()
+            print( _("Error: no landable planets in the Aesir system. This mission is broken.") )
+            return
         end
 
         mem.altdest = rnd.rnd(1,counter)
@@ -245,7 +245,7 @@ Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(p
             tk.msg(_("Deficient clearance"), no_clearance_p1 .. no_clearance_text)
         end
         if not ok then
-            misn.finish()
+            return
         end
 
         mem.destplanet = altplanets[mem.altdest]
@@ -262,16 +262,16 @@ Accept the mission anyway?]]), {time_limit=(mem.timelimit - time.get()), time=(p
         if picky > 2 then
             -- Demands to be delivered in a Sirian ship
             tk.msg(_("Transportation details"), _("As you arrive at the hangar, the Sirian looks at your ship and remarks, \"What? This is to be the ship for my pilgrimage? This is unacceptable - such a crude ship must not be allowed to touch the sacred soil of Mutris. I will wait for a pilot who can ferry me in a true Sirian vessel.\""))
-            misn.finish()
+            return
         elseif picky > 0 then
             -- Could be persuaded, for a discount
             mem.reward = mem.reward*0.6666
             if not tk.yesno(_("Transportation details"), fmt.f(_("As you arrive at the hangar, the Sirian looks at your ship and remarks, \"Oh, you didn't tell me your ship is not from our native Sirian shipyards. Since that is the case, I would prefer to wait for another pilot. A pilgrimage is a sacred matter, and the vessel should be likewise.\"\nThe Sirian looks like they might be open to negotiating, however. Would you offer to fly the mission for {credits}?"), {credits=fmt.credits(mem.reward)})) then
-                misn.finish() -- Player won't offer a discount
+                return -- Player won't offer a discount
             end
             if picky > 1 then
                 tk.msg(_("Offer denied"), _("\"I'm sorry. Your price is reasonable, but piety is of greater value.\""))
-                misn.finish() -- Would not be persuaded by a discount
+                return -- Would not be persuaded by a discount
             else
                 tk.msg(_("Offer accepted"), _("\"Very well. For a price that reasonable, I will adjust my expectations.\""))  -- discount is ok
             end

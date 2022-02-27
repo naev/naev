@@ -102,7 +102,7 @@ function accept ()
       vntk.msg( _("No room in ship"), fmt.f(
          _("You don't have enough cargo space to accept this mission. It requires {tonnes_free} of free space ({tonnes_short} more than you have)."),
          { tonnes_free = fmt.tonnes(mem.amount), tonnes_short = fmt.tonnes( mem.amount - freecargo ) } ) )
-      misn.finish()
+      return
    end
    misn.accept()
    misn.cargoAdd(mem.cargo, mem.amount)

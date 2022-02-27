@@ -129,7 +129,7 @@ function accept()
       vntk.msg( _("No room in ship"), fmt.f(
          _("You don't have enough cargo space to accept this mission. It requires {tonnes_free} of free space ({tonnes_short} more than you have)."),
          { tonnes_free = fmt.tonnes(mem.amount), tonnes_short = fmt.tonnes( mem.amount - player.pilot():cargoFree() ) } ) )
-      misn.finish()
+      return
    end
    player.pilot():cargoAdd( mem.cargo, mem.amount )
    local playerbest = car.getTransit( mem.numjumps, mem.traveldist )
@@ -138,13 +138,13 @@ function accept()
       if not tk.yesno( _("Too slow"), fmt.f(
             _("This shipment must arrive within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline. Accept the mission anyway?"),
 	    {time_limit=(mem.timelimit - time.get()), time=(playerbest - time.get()), pnt=mem.destplanet} ) ) then
-         misn.finish()
+         return
       end
    elseif system.cur():jumpDist(mem.destsys, false, true) > mem.numjumps then
       if not tk.yesno( _("Unknown route"), fmt.f(
             _("The fastest route to {pnt} is not currently known to you. Landing to buy maps, spending time searching for unknown jumps, or taking a route longer than {jumps} may cause you to miss the deadline. Accept the mission anyway?"),
 	    {pnt=mem.destplanet, jumps=fmt.jumps(mem.numjumps)} ) ) then
-         misn.finish()
+         return
       end
    end
    misn.accept()
