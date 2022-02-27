@@ -112,17 +112,17 @@
   <item>Map: Nebula Edge</item>
   <item>Map: Collective Space</item>
   <item>Map: Dvaered-Soromid Trade Route</item>
-  <item>Map: Sirian border systems</item>
+  <item>Map: Sirian Border Systems</item>
   <item>Map: The Frontier</item>
   <item>Map: Sol</item>
   <item>Map: Dvaered Core</item>
   <item>Map: Empire Core</item>
   <item>Map: Sirius Core</item>
   <item>Map: Za'lek Core</item>
-  <item>Map: Pirate strongholds</item>
+  <item>Map: Pirate Strongholds</item>
   <item>Map: Qorel Expanse</item>
-  <item>Map: New Haven's hidden jump points</item>
-  <item>Map: Kretogg's hidden jump points</item>
+  <item>Map: New Haven's Secrets</item>
+  <item>Map: Kretogg's Secrets</item>
   <item>Map: FLF Hidden Jumps</item>
   <item>Map: FLF-Pirate Route</item>
   <item>Map: Inner Nebula Secret Jump</item>
@@ -637,7 +637,7 @@
  <tech name="Star Maps">
   <item>Map: Nebula Edge</item>
   <item>Map: Dvaered-Soromid Trade Route</item>
-  <item>Map: Sirian border systems</item>
+  <item>Map: Sirian Border Systems</item>
   <item>Map: The Frontier</item>
   <item>Map: Sol</item>
   <item>Map: Dvaered Core</item>
@@ -990,13 +990,13 @@
   <item>S&amp;K Superheavy Combat Plating</item>
  </tech>
  <tech name="Pirate Maps">
-  <item>Map: Pirate strongholds</item>
+  <item>Map: Pirate Strongholds</item>
   <item>Map: Qorel Expanse</item>
  </tech>
  <tech name="New Haven Maps">
-  <item>Map: New Haven's hidden jump points</item>
+  <item>Map: New Haven's Secrets</item>
  </tech>
  <tech name="Kretogg Maps">
-  <item>Map: Kretogg's hidden jump points</item>
+  <item>Map: Kretogg's Secrets</item>
  </tech>
 </Techs>
