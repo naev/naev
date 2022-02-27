@@ -32,7 +32,6 @@
    Note: Variant of the Drunkard and Rush Cargo missions combined
 
 ]]--
-
 local car = require "common.cargo"
 local fmt = require "format"
 local portrait = require "portrait"
@@ -56,11 +55,11 @@ function create()
    local stu_takeoff = 10300
    mem.time_limit = time.get() + time.create(0, 0, stu_distance + stu_jumps + stu_takeoff)
 
-    -- Allow extra time for refuelling stops.
-    local jumpsperstop = 3 + math.min(tier, 3)
-    if mem.num_jumps > jumpsperstop then
-        mem.time_limit:add(time.create( 0, 0, math.floor((mem.num_jumps-1) / jumpsperstop) * stu_jumps ))
-    end
+   -- Allow extra time for refuelling stops.
+   local jumpsperstop = 3 + math.min(tier, 3)
+   if mem.num_jumps > jumpsperstop then
+      mem.time_limit:add(time.create( 0, 0, math.floor((mem.num_jumps-1) / jumpsperstop) * stu_jumps ))
+   end
 
    mem.payment = 20 * (stu_distance + (stu_jumps / 10))
 
@@ -121,13 +120,13 @@ function land()
 end
 
 function tick()
-    local osd_msg
-    if mem.time_limit >= time.get() then -- still in time
-        osd_msg = {fmt.f(_("Drop off the goods at {pnt} in the {sys} system (You have {time} remaining)"), {pnt=mem.dest_planet, sys=mem.dest_sys, time=(mem.time_limit - time.get())})}
-    else -- missed deadline
-        osd_msg = {fmt.f(_("Drop off the goods at {pnt} in the {sys} system (You are late)"), {pnt=mem.dest_planet, sys=mem.dest_sys})}
-        mem.intime = false
-        hook.rm(mem.date_hook)
-    end
-    misn.osdCreate(_("Help the Merchant"), osd_msg)
+   local osd_msg
+   if mem.time_limit >= time.get() then -- still in time
+      osd_msg = {fmt.f(_("Drop off the goods at {pnt} in the {sys} system (You have {time} remaining)"), {pnt=mem.dest_planet, sys=mem.dest_sys, time=(mem.time_limit - time.get())})}
+   else -- missed deadline
+      osd_msg = {fmt.f(_("Drop off the goods at {pnt} in the {sys} system (You are late)"), {pnt=mem.dest_planet, sys=mem.dest_sys})}
+      mem.intime = false
+      hook.rm(mem.date_hook)
+   end
+   misn.osdCreate(_("Help the Merchant"), osd_msg)
 end
