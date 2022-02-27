@@ -260,7 +260,7 @@ function handle_messages( si, dopush )
 
       -- This is the case that the message is being sent from the environment, such as asteroids
       if sender==nil then
-         if msgtype == "asteroid" then
+         if msgtype == "asteroid" and data and data:exists() then
             local ap = data:pos()
             if not si.fighting and not si.noattack and should_investigate( ap, si ) then
                ap = ap + vec2.newP( 500*rnd.rnd(), rnd.angle () )
