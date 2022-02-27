@@ -499,7 +499,7 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
       if (p->ew_stealth_timer < 0.) {
          pilot_destealth( p );
          if (pilot_isPlayer(p))
-            player_message(_("You have been uncovered!"));
+            player_message( "#r%s", _("You have been uncovered!"));
          else if (isplayer)
             player_message(_("You have uncovered '#%c%s#0'!"), pilot_getFactionColourChar(p), p->name);
          ai_discovered( p );
