@@ -69,7 +69,7 @@ function accept ()
    -- Intro text
    if not tk.yesno( _("Commander Soldner"), fmt.f( _([[You meet up once more with Commander Soldner at the bar.
     "Hello again, {player}. Still interested in doing another mission? This one will be more dangerous."]]), {player=player.name()} ) ) then
-      misn.finish()
+      return
    end
 
    -- Accept the mission

@@ -43,7 +43,7 @@ function accept ()
    misn.markerAdd( targetworld, "low" )
    ---Intro Text
    if not tk.yesno( _("Spaceport Bar"), _([[Lieutenant Czesc sits at the bar. He really does seem to handle business all across the Empire. You take the seat next to him. "Thanks to your help, the Empire Armada Shipping Division will soon operate across the galaxy. Our next mission is to get House Za'lek on board. Interested in helping out again?"]]) ) then
-      misn.finish()
+      return
    end
    -- Flavour text and mini-briefing
    tk.msg( _("Za'lek Long Distance Recruitment"), fmt.f( _([["I had a feeling you would!" says Lieutenant Czesc. "I've got another bureaucrat ready to establish trade ties. The Za'lek are rather mysterious, so keep your wits about you. The diplomat only needs to go to the {pnt} in the {sys} system. He will let me know when trade relations have been established. There is still more work to be done, so I expect to see you again soon."]]), {pnt=targetworld, sys=targetworld_sys} ) )

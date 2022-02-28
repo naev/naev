@@ -43,7 +43,7 @@ function accept ()
    misn.markerAdd( targetworld, "low" )
    ---Intro Text
    if not tk.yesno( _("Spaceport Bar"), _([[Lieutenant Czesc approaches as you enter the bar. "If it isn't my favourite Empire Armada employee. We're on track to establish a deal with House Sirius. This should be the last contract to be negotiated. Ready to go?"]]) ) then
-      misn.finish()
+      return
    end
    -- Flavour text and mini-briefing
    tk.msg( _("Sirius Long Distance Recruitment"), fmt.f( _([["You know how this goes by now." says Lieutenant Czesc, "Drop the bureaucrat off at {pnt} in the {sys} system. Sirius space is quite a distance, so be prepared for anything. Afterwards, come find me one more time and we'll finalize the paperwork to get you all set up for these missions."]]), {pnt=targetworld, sys=targetworld_sys} ) )
