@@ -124,7 +124,7 @@ function accept()
 
    else
       tk.msg(_("Sorry, not interested"), _([["That's your choice. Goodbye, then."]]))
-      misn.finish(false)
+      return
    end
 end
 

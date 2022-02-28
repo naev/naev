@@ -74,7 +74,7 @@ end
 function accept()
    if not tk.yesno( _("Ready for another mission?"), fmt.f(_([[You sit at Tam's table and wait for him to speak. "Hello, citizen {player}. You remember Lord Battleaddict, the old warlord who tried to kill us twice? I have good news: with a few other members of the Space Force, we've devised a way to make him regret what he did, and we need a civilian pilot, like you. Are you in?"]]), {player=player.name()}) ) then
       tk.msg(_("Refusal"), _([["Alight, citizen, see you later, then."]]))
-      misn.finish(false)
+      return
    end
    tk.msg(_("The plan"), _([["I knew you would accept!" Says Major Tam. "Here is the situation:
    "The general I am working for, General Klank, is in charge of... hem... in charge of a crucial operation the High Command wants to carry out. This operation will involve troops of the High Command, but also Warlords, including Battleaddict. The problem is that General Klank and Lord Battleaddict disagree on everything about this plan. As a consequence, they are going to have a Goddard duel, which is usually how two important Dvaered generals settle deep disagreements."]]))

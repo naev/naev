@@ -106,7 +106,7 @@ function accept()
    "The High Command summoned, under request of General Klank, a special meeting of the high council of Warlords, and all of them have agreed to come..." You frown, and before you have a chance to ask why that's a problem, he continues: "... but we received an intelligence report according to which the ex-Colonel Hamelsen, who has already tried to murder Major Tam several times, is going to take advantage of this meeting to take action against us."
    "Do you want to help us against this threat?"]]) ) then
       tk.msg(_("Too bad"), _([[Mm. I see. you probably have much more interesting things to do than being loyal to the Dvaered Nation...]]))
-      misn.finish(false)
+      return
    end
    tk.msg(_("Here is the situation"), _([["General Klank has summoned the Warlords in order to present them with the Frontier invasion plan. When a meeting of the high council of Warlords occurs, a short truce takes place and they all come to the DHC station with their Goddards. This fact alone is already enough to put the station's security service under pressure, as the warlords constantly provoke each other and start brawls. But this time, we believe that Hamelsen will try to either assassinate warlords, or record our invasion plan in order to sell it to hostile foreign powers.
    "This is why Major Tam wants our squadron from the Special Operations Forces to support the regular units of the station. Fly to Dvaer Prime and meet me in the bar there."]]))

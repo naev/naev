@@ -105,7 +105,7 @@ function accept()
         hook.land("land")
     else
         tk.msg(_("Refusal"), _([["Understood, citizen. Keep in mind, though, that as long as the operation isn't yet underway, you may still choose to participate. Simply come back to me if you change your mind."]]))
-        misn.finish()
+        return
     end
 end
 
