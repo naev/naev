@@ -15,4 +15,7 @@
  <spob name="Hypergate Ruadan">
   <gfx_space>hypergate_under_construction.webp</gfx_space>
  </spob>
+ <spob name="Hypergate NGC-14549">
+  <gfx_space>hypergate_under_construction.webp</gfx_space>
+ </spob>
 </unidiff>
