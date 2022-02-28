@@ -44,22 +44,22 @@ function accept ()
    -- Introductions and a bit of bargaining
    if not mem.started then
       if not tk.yesno( _("Absence Makes The Heart Grow Fonder"), fmt.f(_([[You can't help but wonder why the man in the corner is writing on paper instead of a datapad. As you approach the table he motions you to sit. "You must be wondering why I am using such an old fashioned way of recording information," he remarks with a grin. You take a sip of your drink as he continues. "I am writing a poem to my beloved. She lives on {pnt}." You glance at the flowing hand writing, back at the man, and back at the paper. "You wouldn't happen to be heading to {pnt} would you?" he asks.]]), {pnt=targetworld} ) ) then
-         misn.finish()
+         return
       end
       mem.started = true
       if not tk.yesno( _("Absence Makes The Heart Grow Fonder"), fmt.f(_([["It is a nice place I hear!" he exclaims visibly excited. "Say, I have written a ton of these letters at this point. You wouldn't be able to drop them off, would you?" You raise your eyebrow. "There would be a few credits in it for you... say, {credits}?" The man adds quickly with a hopeful expression. It seems like a low reward for a long journey...]]), {credits=fmt.credits(mem.reward)} ) ) then
          mem.reward = mem.reward * 2 --look at you go, double the reward
          if not tk.yesno(_("Absence Makes The Heart Grow Fonder"), fmt.f(_([[The man grabs your arm as you begin to get up. "Alright, how about {credits}? Look, I wouldn't want The Empire reading these. The Emperor himself would blush." You sigh and give the man a long pause before answering.]]), {credits=fmt.credits(mem.reward)} ) ) then
-            misn.finish()
+            return
          end
       end
       if player.pilot():cargoFree() <  1 then
          tk.msg( _("Absence Makes The Heart Grow Fonder"), _([[You run a check of your cargo hold and notice it is packed to the brim. "Did I not mention I wrote a tonne of these letters? You don't have enough space for all of these," the man says. "I will be in the bar if you free up some space." You didn't expect him to have a LITERAL tonne of letters...]]) )
-         misn.finish()
+         return
       end
    else
       if not tk.yesno( _("Absence Makes The Heart Grow Fonder"), _([["Ah, are you able to deliver my ton of letters for me now?"]]) ) then
-         misn.finish()
+         return
       end
    end
 

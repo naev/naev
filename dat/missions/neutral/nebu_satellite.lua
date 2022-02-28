@@ -62,13 +62,13 @@ function accept ()
    -- See if rejects mission
    if not tk.yesno( _("Bar"), _([[You approach the scientists. They seem a bit nervous and one mutters something about whether it's a good idea or not. Eventually one of them comes up to you.
     "Hello Captain, we're looking for a ship to take us into the Sol Nebula. Would you be willing to take us there?"]]) ) then
-      misn.finish()
+      return
    end
 
    -- Check for cargo space
    if player.pilot():cargoFree() <  3 then
       tk.msg( _("Bar"), _([["You do not have enough free cargo space to accept this mission!"]]) )
-      misn.finish()
+      return
    end
 
    -- Add cargo

@@ -36,7 +36,7 @@ end
 function accept()
    if not tk.yesno( _("A Tasty Job"), fmt.f(_([[The woman smiles. "Aren't you the pilot that delivered those sweet love letters to me? I think you are! My name is Paddy. Sorry I didn't introduce myself before. I was caught up in the moment; Michal's letters are always very exciting." She blushes. "Anyway, Michal is trying to start a restaurant on {pnt}. Would you be interested in giving him a hand?"]]), {pnt=targetworld} ) ) then
       tk.msg( _("A Tasty Job"), _([["Oh, that's too bad. I thought it was such a good idea, too..."]]) )
-      misn.finish()
+      return
    end
 
    misn.accept()

@@ -52,7 +52,7 @@ function accept ()
         hook.enter("enter")
         mem.targetlive = true
     else
-        misn.finish()
+        return
     end
 end
 

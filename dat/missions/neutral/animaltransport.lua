@@ -68,7 +68,7 @@ function accept ()
       misn.markerAdd( mem.destplanet, "high" )
       hook.land("land")
    else
-      misn.finish()
+      return
    end
 end
 

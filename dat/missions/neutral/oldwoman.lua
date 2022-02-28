@@ -89,7 +89,7 @@ function accept ()
       hook.date(time.create(0, 0, 300), "date")
       hook.land("land")
    else
-      misn.finish()
+      return
    end
 end
 

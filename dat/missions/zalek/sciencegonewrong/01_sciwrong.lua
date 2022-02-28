@@ -53,7 +53,7 @@ function accept()
    -- Mission details:
    if not tk.yesno( _([[In the bar]]), _([["Ah, there you are! I've got a job for you. Specifically, some... acquisition... of technology from the Soromid, who haven't been very cooperative. Are you up for it?" It sounds like he wants you to do something that would get you in trouble with Soromid authorities. Do you accept the job?]]) ) then
       tk.msg(_("No Science Today"), _("But I really thought you were into science..."))
-      misn.finish()
+      return
    end
    tk.msg( _([[In the bar]]), fmt.f(_([["Excellent. From what I have been told, it looks like this." He gestures with his hands to no merit. "You will recognize it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the {plt}."
     So he wants you to steal something top secret from the Soromid. Quirky people, those Za'leks. With the coordinates, the signature of the target ship, and the handheld, which you hope helps you detect the box, you set off on your way.]]), {plt=shpnm} ) )

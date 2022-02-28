@@ -44,7 +44,7 @@ function accept ()
    Regrettably, you are not the first pilot I've contacted regarding this matter. Your predecessor was intercepted when they landed en route to {sys}. The crime lord has many underlings lurking in nearby spaceports -- you must NOT land until you've delivered the data."
    Given the dangers, you're not sure whether the reward will make this worth your while. Do you accept?]]), {sys=mem.targetsystem}
           ) ) then --if accepted
-      misn.finish()
+      return
    end
 
    misn.accept()

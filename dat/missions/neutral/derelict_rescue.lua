@@ -70,6 +70,7 @@ function create ()
 
    -- Player didn't accept
    if not doaccept then
+      -- We have to finish here because the derelict is one-time only
       misn.finish(false)
    end
 
