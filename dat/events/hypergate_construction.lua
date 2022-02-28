@@ -1,0 +1,218 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Restricted zone">
+ <trigger>enter</trigger>
+ <chance>100</chance>
+ <chapter>[01]</chapter>
+</event>
+--]]
+--[[
+   Hypergate construction animations and possibility to sell rare ores.
+--]]
+local fmt = require "format"
+local vn = require "vn"
+local der = require "common.derelict"
+
+-- luacheck: globals endevent boss_first boss_hail boss_board (Hook functions passed by name)
+
+local hypergates_list = {
+   "Hypergate Dvaer", -- Dvaered
+   "Hypergate Feye", -- Soromid
+   "Hypergate Gamma Polaris", -- Empire
+   "Hypergate Kiwi", -- Sirius
+   "Hypergate Ruadan", -- Za'lek
+   --"Hypergate NGC-14549", -- Pirate
+   --"Hypergate Polaris", -- Ruined
+}
+local systems_list = {}
+for k,h in ipairs(hypergates_list) do
+   hypergates_list[k], systems_list[k] = spob.get(h)
+end
+
+local boss_ship_list = {
+   ["Za'lek"]  = "Za'lek Mammon",
+   ["Dvaered"] = "Dvaered Arsenal",
+   ["Soromid"] = "Soromid Copia",
+   ["Sirius"]  = "Sirius Providence",
+   ["Empire"]  = "Empire Rainmaker",
+}
+
+local boss_name_list = {
+   ["Za'lek"]  = _("Supervisor"),
+   ["Dvaered"] = _("Boss"),
+   ["Soromid"] = _("Chief"),
+   ["Sirius"]  = _("Shepherd"),
+   ["Empire"]  = _("Administrator"),
+}
+
+local boss_message_list = {
+   ["Za'lek"]  = _("Mineral acquiration skills required. Inquire within."),
+   ["Dvaered"] = _("Interested in blowing asteroids up? Looking for miners!"),
+   ["Soromid"] = _("Seeking mineral gatherers."),
+   ["Sirius"]  = _("Requiring miners for Sirichana."),
+   ["Empire"]  = _("Mine minerals for the Empire!"),
+}
+
+local mineral_list = { "Therite", "Kermite", "Vixilium" } -- Only rares
+local markup = 1.2 -- Multiplier for amount being paid
+
+local id, shiptype, hypergate, boss, talked_check
+
+function create ()
+   local csys = system.cur()
+   -- Make sure system isn't claimed, but we don't claim it
+   if not evt.claim( csys, true ) then evt.finish() end
+
+   -- Only care if we're in a system with hypergates
+   local sysid
+   for k,h in ipairs(systems_list) do
+      if h==csys then
+         sysid = k
+         break
+      end
+   end
+   if not sysid then evt.finish() end
+
+   hypergate = spob.get( hypergates_list[id] )
+
+   -- We assume dominant faction is the one we want here
+   local sysfct = hypergate:faction()
+   id = sysfct:nameRaw()
+   shiptype = boss_ship_list[ id ] or "Zebra"
+   local shipname = boss_name_list[ id ] or _("Supervisor")
+   local pos = hypergate:pos() + vec2.newP( 200+300*rnd.rnd(), rnd.angle() )
+
+   talked_check = "hypconst_"..sysfct:nameRaw().."_talked"
+
+   -- Add the head guy
+   boss = pilot.add( shiptype, sysfct, pos, shipname )
+   boss:setHilight(true)
+   boss:control()
+   boss:brake()
+   boss:setDir( rnd.angle() )
+   hook.pilot( boss, "hail", "boss_hail" )
+   if var.peek( talked_check ) then
+      boss:setActiveBoard(true)
+      hook.pilot( boss, "board", "boss_board" )
+   else
+      hook.timer( 5, "boss_first" )
+   end
+
+   hook.land( "endevent" )
+   hook.jumpout( "endevent" )
+end
+
+local function vn_boss( params )
+   return vn.Character.new( boss:name(),
+      tmerge( {
+         image = ship.get( shiptype ):gfxComm(),
+      }, params) )
+end
+
+function boss_first ()
+   if not boss or not boss:exists() then return end
+
+   local dist = player.pos():dist( boss )
+   if dist > 5000 then
+      hook.timer( 5, "boss_first" )
+      return
+   end
+
+   local msg = boss_message_list[ id ] or _("TODO")
+
+   boss:broadcast( msg )
+   boss:hailPlayer()
+end
+
+function boss_hail ()
+   vn.clear()
+   vn.scene()
+   local b = vn.newCharacter( vn_boss() )
+   vn.transition()
+
+   if not var.peek( talked_check ) then
+      b(fmt.f(_([["We are looking for miners to obtain valuable minerals such as {minerals}. Given the difficulty of acquiring them, we are willing to pay {markup}% of the market price. If you are interested, please bring the minerals and board to do the transaction."]]),{minerals=fmt.list(mineral_list),markup=markup*100}))
+      vn.func( function ()
+         boss:setActiveBoard(true)
+         hook.pilot( boss, "board", "boss_board" )
+         var.push( talked_check, true )
+      end )
+   else
+      b(_([["Do you have minerals available? If so, please board for the transaction."]]))
+   end
+
+   vn.run()
+
+   player.commClose()
+end
+
+function boss_board ()
+   local pp = player.pilot()
+   local minerals = {}
+   for i,m in ipairs(mineral_list) do
+      minerals[i] = commodity.get(m)
+   end
+
+   -- Boarding sound
+   der.sfx.board:play()
+
+   vn.clear()
+   vn.scene()
+   local b = vn.newCharacter( vn_boss() )
+   vn.transition()
+
+   vn.na( function ()
+      local s = fmt.f(_([[You board the {ship}, and find that the cargo bay has been set up to efficiently process minerals. There is a holosign with the needed resources and their prices:]]),{ship=boss:name()})
+      for i,m in ipairs(mineral_list) do
+         s = s .. "\n   " .. fmt.f(_("{mineral}: {price}"),{mineral=m,price=m:price()*markup})
+      end
+      return s
+   end )
+
+   vn.label("menu")
+   vn.na(_("What do you want to do?"))
+   vn.menu( function ()
+      local opts = { _("Leave."), "leave" }
+      for i,m in ipairs(minerals) do
+         local a = pp:cargoHas(m)
+         if a > 0 then
+            table.insert( opts, 1, {
+               fmt.f(_("Trade {mineral} for {value} (You have {amount})"),
+                  {mineral=m, amount=fmt.tonnes(a), value=fmt.credits(markup*m:price())}), m:nameRaw() } )
+         end
+      end
+      table.insert( opts, 1, { _("Ask about the construction."), "ask" } )
+      return opts
+   end )
+
+   vn.label("ask")
+   b(_([["It's some sort of high power quantum energy translator or something like that. I'm not too up-to-date on the details, but I do recall there was something similar to this back at Sol before the incident…"]]))
+   vn.jump("menu")
+
+   -- Mineral options
+   for i,m in ipairs(minerals) do
+      vn.label( m:nameRaw() )
+      b(function ()
+         local a = pp:cargoHas(m)
+         return fmt.f(_([[You deliver the {amount} of {mineral}.
+{reward}]]),{amount=a, mineral=m, reward=fmt.reward(a * markup * m:price())})
+      end )
+      vn.func( function ()
+         local a = pp:cargoHas(m)
+         pp:cargoRm( m, a )
+         player.pay( a * markup * m:price() )
+      end )
+      vn.jump("menu")
+   end
+
+   vn.label("leave")
+   vn.run()
+   player.unboard()
+
+   -- Boarding sound
+   der.sfx.unboard:play()
+end
+
+function endevent ()
+   evt.finish()
+end
