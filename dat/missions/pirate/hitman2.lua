@@ -42,8 +42,8 @@ Mission entry point.
 --]]
 function accept ()
    -- Mission details:
-   if not tk.yesno( _("Spaceport Bar"), _([[As you approach, the man turns to face you and his anxiety seems to abate somewhat. As you take a seat he greets you, "Ah, so we meet again. My, shall we say... problem, has recurred." Leaning closer, he continues, "This will be somewhat bloodier than last time, but I'll pay you more for your trouble. Are you up for it?"]]) ) then
-      misn.finish()
+   if not tk.yesno( _("Spaceport Bar"), _([[As you approach, the man turns to face you and his anxiety seems to abate somewhat. As you take a seat he greets you, "Ah, so we meet again. My, shall we say… problem, has recurred." Leaning closer, he continues, "This will be somewhat bloodier than last time, but I'll pay you more for your trouble. Are you up for it?"]]) ) then
+      return
    end
    misn.accept()
 

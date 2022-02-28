@@ -29,14 +29,14 @@ local bhfleet, harja -- Non-persistent state
 -- luacheck: globals talkHarja talkJoanne (NPC functions passed by name)
 
 local grumblings = {
-	        _("Where's that Harja? He should be showing up any time now."),
-                _("I can't wait to pay that Harja back for the stunt he pulled."),
-                _("I swear, the moment he comes out of hyperspace I'll make him wish he hadn't."),
-                _("Come on, Harja, come and get it."),
-                _("He should be here by now."),
-                _("Harja won't know what hit him."),
-                _("I've got a laser cannon with Harja's name on it, right here!")
-               }
+   _("Where's that Harja? He should be showing up any time now."),
+   _("I can't wait to pay that Harja back for the stunt he pulled."),
+   _("I swear, the moment he comes out of hyperspace I'll make him wish he hadn't."),
+   _("Come on, Harja, come and get it."),
+   _("He should be here by now."),
+   _("Harja won't know what hit him."),
+   _("I've got a laser cannon with Harja's name on it, right here!")
+}
 
 -- Mission info stuff
 

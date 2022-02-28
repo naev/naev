@@ -70,7 +70,6 @@ function accept()
       hook.land("land")
    else
       tk.msg( _("The Patrol"), _([["Gah! I should have known you would be so spineless! Get out of my sight!"]]) )
-      misn.finish( false )
    end
 end
 

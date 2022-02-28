@@ -45,7 +45,7 @@ Mission entry point.
 function accept ()
    -- Mission details:
    if not tk.yesno( _("Spaceport Bar"), _([[The man motions for you to take a seat next to him. Voice barely above a whisper, he asks, "How'd you like to earn some easy money? If you're comfortable with getting your hands dirty, that is."]]) ) then
-      misn.finish()
+      return
    end
    misn.accept()
 

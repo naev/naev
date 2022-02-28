@@ -52,7 +52,7 @@ function accept()
 
    local msg = fmt.f(_([[You run up to Draga, who has a look of desperation on his face. "We need to go, now," he says. "The Sirii are overwhelming us, they're about to finish us off. Will you take me, and as many Nasin as you can carry, to {pnt} in the {sys} system? This is our most desperate hour!"]]), {pnt=targetasset, sys=targetsys} )
    if not tk.yesno(_("The Egress"), msg) then
-      misn.finish ()
+      return
    end
    misn.accept()
    player.allowSave(false) -- so the player won't get stuck with a mission they can't complete.
