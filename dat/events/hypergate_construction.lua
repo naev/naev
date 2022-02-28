@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Restricted zone">
+<event name="Hypergate Construction">
  <trigger>enter</trigger>
  <chance>100</chance>
  <chapter>[01]</chapter>
