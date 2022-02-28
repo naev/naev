@@ -70,7 +70,7 @@ function accept ()
       hook.enter( "enter" )
    else
       tk.msg( _("Not This Time"), _([["Okay. Just let me know if you change your mind."]]) )
-      misn.finish( false )
+      return
    end
 end
 

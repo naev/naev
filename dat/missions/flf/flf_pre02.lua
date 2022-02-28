@@ -81,7 +81,7 @@ function accept ()
       hook.land( "leave" )
    else
       tk.msg( _("Some other time perhaps"), _([["I see. That's a fair answer, I'm sure you have your reasons. But if you ever change your mind, I'll be around on Sindbad. You won't have trouble finding me, I'm sure."]]) )
-      misn.finish( false )
+      return
    end
 end
 
