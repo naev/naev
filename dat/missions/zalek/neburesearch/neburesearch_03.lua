@@ -79,12 +79,12 @@ function accept()
     mem.time_left = 5
 
     -- Set up mission information
+    misn.accept()
     misn.setTitle(_("The Substitute Speaker"))
     misn.setReward(_("a reputation as scientist (?)"))
     misn.setDesc(fmt.f(_("Fly to {pnt} in the {sys} system before {time} and give a scientific talk."), {pnt=dest_planet, sys=dest_sys, time=mem.timelimit}))
     mem.misn_marker = misn.markerAdd(dest_planet, "high")
 
-    misn.accept()
     hook.land("land")
     hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
     tick() -- set OSD
