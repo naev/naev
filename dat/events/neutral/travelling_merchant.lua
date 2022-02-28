@@ -15,7 +15,7 @@ Spawns a travelling merchant that can sell the player if interested.
 --]]
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'
-local der = require "derelict"
+local der = require "common.derelict"
 
 local p, broadcastid, hailed_player, timerdelay -- Non-persistent state
 
