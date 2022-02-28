@@ -3,6 +3,7 @@
 <event name="Hypergate Construction">
  <trigger>enter</trigger>
  <chance>100</chance>
+ <chapter>[01]</chapter>
 </event>
 --]]
 --[[
