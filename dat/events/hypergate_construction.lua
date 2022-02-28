@@ -3,7 +3,6 @@
 <event name="Hypergate Construction">
  <trigger>enter</trigger>
  <chance>100</chance>
- <chapter>[01]</chapter>
 </event>
 --]]
 --[[
@@ -12,6 +11,7 @@
 local fmt = require "format"
 local vn = require "vn"
 local der = require "common.derelict"
+local ccomm = require "common.comm"
 
 -- luacheck: globals endevent boss_first boss_hail boss_board (Hook functions passed by name)
 
@@ -26,7 +26,7 @@ local hypergates_list = {
 }
 local systems_list = {}
 for k,h in ipairs(hypergates_list) do
-   hypergates_list[k], systems_list[k] = spob.get(h)
+   hypergates_list[k], systems_list[k] = spob.getS(h)
 end
 
 local boss_ship_list = {
@@ -56,7 +56,7 @@ local boss_message_list = {
 local mineral_list = { "Therite", "Kermite", "Vixilium" } -- Only rares
 local markup = 1.2 -- Multiplier for amount being paid
 
-local id, shiptype, hypergate, boss, talked_check
+local id, hypergate, boss, talked_check
 
 function create ()
    local csys = system.cur()
@@ -73,12 +73,12 @@ function create ()
    end
    if not sysid then evt.finish() end
 
-   hypergate = spob.get( hypergates_list[id] )
+   hypergate = spob.get( hypergates_list[sysid] )
 
    -- We assume dominant faction is the one we want here
    local sysfct = hypergate:faction()
    id = sysfct:nameRaw()
-   shiptype = boss_ship_list[ id ] or "Zebra"
+   local shiptype = boss_ship_list[ id ] or "Zebra"
    local shipname = boss_name_list[ id ] or _("Supervisor")
    local pos = hypergate:pos() + vec2.newP( 200+300*rnd.rnd(), rnd.angle() )
 
@@ -102,17 +102,10 @@ function create ()
    hook.jumpout( "endevent" )
 end
 
-local function vn_boss( params )
-   return vn.Character.new( boss:name(),
-      tmerge( {
-         image = ship.get( shiptype ):gfxComm(),
-      }, params) )
-end
-
 function boss_first ()
    if not boss or not boss:exists() then return end
 
-   local dist = player.pos():dist( boss )
+   local dist = player.pos():dist( boss:pos() )
    if dist > 5000 then
       hook.timer( 5, "boss_first" )
       return
@@ -125,9 +118,9 @@ function boss_first ()
 end
 
 function boss_hail ()
-   vn.clear()
+   vn.reset()
    vn.scene()
-   local b = vn.newCharacter( vn_boss() )
+   local b = ccomm.newCharacter( vn, boss )
    vn.transition()
 
    if not var.peek( talked_check ) then
@@ -156,15 +149,15 @@ function boss_board ()
    -- Boarding sound
    der.sfx.board:play()
 
-   vn.clear()
+   vn.reset()
    vn.scene()
-   local b = vn.newCharacter( vn_boss() )
+   local b = ccomm.newCharacter( vn, boss )
    vn.transition()
 
    vn.na( function ()
       local s = fmt.f(_([[You board the {ship}, and find that the cargo bay has been set up to efficiently process minerals. There is a holosign with the needed resources and their prices:]]),{ship=boss:name()})
-      for i,m in ipairs(mineral_list) do
-         s = s .. "\n   " .. fmt.f(_("{mineral}: {price}"),{mineral=m,price=m:price()*markup})
+      for i,m in ipairs(minerals) do
+         s = s .. "\n   " .. fmt.f(_("{mineral}: {price}"),{mineral=m, price=fmt.credits(m:price()*markup)})
       end
       return s
    end )
@@ -172,7 +165,9 @@ function boss_board ()
    vn.label("menu")
    vn.na(_("What do you want to do?"))
    vn.menu( function ()
-      local opts = { _("Leave."), "leave" }
+      local opts = {
+         {_("Leave."), "leave"}
+      }
       for i,m in ipairs(minerals) do
          local a = pp:cargoHas(m)
          if a > 0 then
