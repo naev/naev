@@ -84,6 +84,7 @@ function create ()
    local shipname = boss_name_list[ id ] or _("Supervisor")
    local pos = hypergate:pos() + vec2.newP( 200+300*rnd.rnd(), rnd.angle() )
 
+   -- Some useful variable names
    talked_check = "hypconst_"..sysfct:nameRaw().."_talked"
    traded_amount = "hypconst_"..sysfct:nameRaw().."_traded"
 
@@ -101,6 +102,7 @@ function create ()
       hook.timer( 5, "boss_first" )
    end
 
+   -- Event finishes when leaving system
    hook.land( "endevent" )
    hook.jumpout( "endevent" )
 end
