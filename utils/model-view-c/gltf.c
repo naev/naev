@@ -67,11 +67,11 @@ typedef struct Material_ {
    char *name; /**< Name of the material if applicable. */
    int blend;  /**< Whether or not to blend it. */
    /* pbr_metallic_roughness */
-   GLuint baseColour_tex;
-   GLuint metallic_tex;
-   GLfloat metallicFactor;
-   GLfloat roughnessFactor;
-   GLfloat baseColour[4];
+   GLuint baseColour_tex;  /**< Base colour of the material. */
+   GLuint metallic_tex;    /**< Metallic/roughness map of the material. Metallic is stored in G channel, hile roughness is in the B channel. */
+   GLfloat metallicFactor; /**< Metallic factor (single value). Multplies the map if available. */
+   GLfloat roughnessFactor;/**< Roughness factor (single value). Multiplies the map if available. */
+   GLfloat baseColour[4];  /**< Base colour of the material. Multiplies the texture if available. */
    /* pbr_specular_glossiness */
    /* TODO */
    /* clearcoat */
@@ -101,6 +101,9 @@ typedef struct Mesh_ {
    int material;     /**< ID of material to use. */
 } Mesh;
 
+/**
+ * @brief Represents a node of an object. Each node can have multiple meshes and children nodes with an associated transformation.
+ */
 struct Node_;
 typedef struct Node_ {
    char *name;       /**< Name information. */
@@ -124,6 +127,13 @@ struct Object_ {
    vec3 aabb_max;       /**< Maximum value of AABB wrapping around it. */
 };
 
+/**
+ * @brief Loads a texture if applicable, uses default value otherwise.
+ *
+ *    @param ctex Texture to load.
+ *    @param def Default texture to use if not defined.
+ *    @return OpenGL ID of the new texture.
+ */
 static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
 {
    GLuint tex;
@@ -251,8 +261,11 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
 
 /**
  * @brief Loads a VBO from an accessor.
+ *
+ *    @param acc Accessor to load from.
+ *    @return OpenGL ID of the new VBO.
  */
-static GLuint object_loadVBO( cgltf_accessor *acc )
+static GLuint object_loadVBO( const cgltf_accessor *acc )
 {
    GLuint vid;
    cgltf_size num = cgltf_accessor_unpack_floats( acc, NULL, 0 );
@@ -342,6 +355,9 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
    return 0;
 }
 
+/**
+ * @brief Renders a mesh with a transform.
+ */
 static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloat H[16] )
 {
    const Material *mat;
