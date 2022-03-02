@@ -525,6 +525,12 @@ void object_renderNode( const Object *obj, const Node *node, const GLfloat H[16]
    gl_checkErr();
 }
 
+/**
+ * @brief Renders an object (with a transformation).
+ *
+ *    @param obj Object to render.
+ *    @param H Transformation to apply (or NULL to use identity).
+ */
 void object_render( const Object *obj, const GLfloat *H )
 {
    const GLfloat I[16] = { 1.0, 0.0, 0.0, 0.0,
@@ -536,6 +542,12 @@ void object_render( const Object *obj, const GLfloat *H )
       object_renderNode( obj, &obj->nodes[i], (H!=NULL) ? H : I );
 }
 
+/**
+ * @brief Loads an object from a file.
+ *
+ *    @param filename Name of the file to load from.
+ *    @return Newly loaded object file.
+ */
 Object *object_loadFromFile( const char *filename )
 {
    Object *obj;

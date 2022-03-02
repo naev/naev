@@ -28,7 +28,8 @@ const mat4 view = mat4(
       0.0, -sin(view_angle), cos(view_angle), 0.0,
       0.0,             0.0,              0.0, 1.0 );
 
-void main(void) {
+void main (void)
+{
    mat4 H      = view * model;
    vec4 pos    = H *vec4( vertex, 1.0 );
    //vec4 pos    = model * vec4( vertex, 1.0 );
