@@ -659,7 +659,7 @@ He coughs violently again, spasms overtaking his body. The medical robot seems t
       { _([["Kex sends you his regards" (draw weapon)"]]), "kex_weapon" },
       { _([[Unplug his life support.]]), "kex_unplug" },
       { _([[Comfort him.]]), "kex_letbe" },
-      { _([[…]]), "cont4" },
+      { _([[…]]), "4cont" },
    }
 
    vn.label("kex_unplug")
@@ -684,7 +684,7 @@ He seems to be looking at something in the distance.]]))
       { _([[Pull the trigger.]]), "kex_shot" },
       { _([[Unplug his life support.]]), "kex_unplug" },
       { _([[Comfort him.]]), "kex_letbe" },
-      { _([[…]]), "cont4" },
+      { _([[…]]), "4cont" },
    }
 
    vn.label("kex_shot")
