@@ -36,6 +36,18 @@ double vec3_dot( const vec3 *a, const vec3 *b )
       o += a->v[i] * b->v[i];
    return o;
 }
+void vec3_cross( vec3 *out, const vec3 *a, const vec3 *b )
+{
+   out->v[0] =  a->v[1]*b->v[2] - a->v[2]*b->v[1];
+   out->v[1] = -a->v[0]*b->v[2] + a->v[2]*b->v[0];
+   out->v[2] =  a->v[0]*b->v[1] - a->v[1]*b->v[0];
+}
+void vec3_normalize( vec3 *a )
+{
+   double n = sqrt( vec3_dot( a, a ) );
+   for (int i=0; i<3; i++)
+      a->v[i] /= n;
+}
 double vec3_dist( const vec3 *a, const vec3 *b )
 {
    double o = 0.;

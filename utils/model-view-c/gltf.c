@@ -505,6 +505,50 @@ static void matmul( GLfloat H[16], const GLfloat R[16] )
    H[14] += R[14];
 }
 
+void lookat( GLfloat H[16], const vec3 *eye, const vec3 *center, const vec3 *up )
+{
+   vec3 forward, side, upc;
+   GLfloat H2[16];
+
+   vec3_sub( &forward, center, eye );
+   vec3_normalize( &forward );
+
+   /* side = forward x up */
+   vec3_cross( &side, &forward, up );
+   vec3_normalize( &side );
+
+   /* upc = side x forward */
+   vec3_cross( &upc, &side, &forward );
+
+   /* First column. */
+   H2[0]  = side.v[0];
+   H2[4]  = side.v[1];
+   H2[8]  = side.v[2];
+   H2[12] = 0.;
+   /* Second column. */
+   H2[1]  = upc.v[0];
+   H2[5]  = upc.v[1];
+   H2[9]  = upc.v[2];
+   H2[13] = 0.;
+   /* Third column. */
+   H2[2]  = -forward.v[0];
+   H2[6]  = -forward.v[1];
+   H2[10] = -forward.v[2];
+   H2[14] = 0.;
+   /* Fourth column. */
+   H2[3]  = 0.;
+   H2[7]  = 0.;
+   H2[11] = 0.;
+   H2[15] = 1.;
+
+   /* Multiply. */
+   matmul( H, H2 );
+   /* Translate to eye. */
+   H[3]  -= eye->v[0];
+   H[7]  -= eye->v[1];
+   H[11] -= eye->v[2];
+}
+
 void object_renderNode( const Object *obj, const Node *node, const GLfloat H[16] )
 {
    /* Multiply matrices, can be animated so not caching. */
