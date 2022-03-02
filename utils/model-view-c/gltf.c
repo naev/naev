@@ -9,6 +9,7 @@
 #define CGLTF_IMPLEMENTATION
 #include "cgltf.h"
 
+#include "vec3.h"
 #include "shader_min.h"
 
 #define STR_HELPER(x) #x
@@ -97,12 +98,17 @@ typedef struct Node_ {
    size_t nchildren; /**< Number of children mesh. */
 } Node;
 
+/**
+ * @brief Defines a complete object.
+ */
 struct Object_ {
    Node *nodes;         /**< Nodes the object has. */
    size_t nnodes;       /**< Number of nodes. */
    Material *materials; /**< Available materials. */
    size_t nmaterials;   /**< Number of materials. */
    GLfloat radius;      /**< Sphere fit on the model centered at 0,0. */
+   vec3 aabb_min;       /**< Minimum value of AABB wrapping around it. */
+   vec3 aabb_max;       /**< Maximum value of AABB wrapping around it. */
 };
 
 static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
