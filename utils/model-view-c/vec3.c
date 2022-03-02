@@ -2,7 +2,7 @@
 
 #include <math.h>
 
-#define MAX(a,b)  (((a)>(b))?(a):(b))
+#include "common.h"
 
 void vec3_add( vec3 *out, const vec3 *a, const vec3 *b )
 {
@@ -19,6 +19,16 @@ void vec3_wadd( vec3 *out, const vec3 *a, const vec3 *b, double wa, double wb )
    for (int i=0; i<3; i++)
       out->v[i] = wa*a->v[i] + wb*b->v[i];
 }
+void vec3_max( vec3 *out, const vec3 *a, const vec3 *b )
+{
+   for (int i=0; i<3; i++)
+      out->v[i] = MAX( a->v[i], b->v[i] );
+}
+void vec3_min( vec3 *out, const vec3 *a, const vec3 *b )
+{
+   for (int i=0; i<3; i++)
+      out->v[i] = MIN( a->v[i], b->v[i] );
+}
 double vec3_dot( const vec3 *a, const vec3 *b )
 {
    double o = 0.;
@@ -31,6 +41,13 @@ double vec3_dist( const vec3 *a, const vec3 *b )
    double o = 0.;
    for (int i=0; i<3; i++)
       o += pow( a->v[i]-b->v[i], 2. );
+   return sqrt(o);
+}
+double vec3_length( const vec3 *a )
+{
+   double o = 0.;
+   for (int i=0; i<3; i++)
+      o += pow( a->v[i], 2. );
    return sqrt(o);
 }
 

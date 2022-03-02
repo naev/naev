@@ -99,6 +99,10 @@ typedef struct Mesh_ {
    GLuint vbo_nor;   /**< Normal VBO. */
    GLuint vbo_tex;   /**< Texture coordinate VBO. */
    int material;     /**< ID of material to use. */
+
+   GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
+   vec3 aabb_min;    /**< Minimum value of AABB wrapping around it. */
+   vec3 aabb_max;    /**< Maximum value of AABB wrapping around it. */
 } Mesh;
 
 /**
@@ -112,6 +116,10 @@ typedef struct Node_ {
    size_t nmesh;     /**< Number of meshes. */
    struct Node_ *children; /**< Children mesh. */
    size_t nchildren; /**< Number of children mesh. */
+
+   GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
+   vec3 aabb_min;    /**< Minimum value of AABB wrapping around it. */
+   vec3 aabb_max;    /**< Maximum value of AABB wrapping around it. */
 } Node;
 
 /**
@@ -265,7 +273,7 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
  *    @param acc Accessor to load from.
  *    @return OpenGL ID of the new VBO.
  */
-static GLuint object_loadVBO( const cgltf_accessor *acc )
+static GLuint object_loadVBO( const cgltf_accessor *acc, GLfloat *radius, vec3 *aabb_min, vec3 *aabb_max )
 {
    GLuint vid;
    cgltf_size num = cgltf_accessor_unpack_floats( acc, NULL, 0 );
@@ -277,6 +285,22 @@ static GLuint object_loadVBO( const cgltf_accessor *acc )
    glBindBuffer( GL_ARRAY_BUFFER, vid );
    glBufferData( GL_ARRAY_BUFFER, sizeof(cgltf_float) * num, dat, GL_STATIC_DRAW );
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
+
+   /* If applicable, store some useful stuff. */
+   if (radius != NULL) {
+      *radius = 0.;
+      memset( aabb_min, 0, sizeof(vec3) );
+      memset( aabb_max, 0, sizeof(vec3) );
+      for (unsigned int i=0; i<num; i+=3) {
+         vec3 v;
+         for (unsigned int j=0; j<3; j++) {
+            aabb_min->v[j] = MIN( dat[i+j], aabb_min->v[j] );
+            aabb_max->v[j] = MAX( dat[i+j], aabb_max->v[j] );
+            v.v[j] = dat[i+j];
+         }
+         *radius = vec3_length( &v );
+      }
+   }
 
    gl_checkErr();
    free( dat );
@@ -292,6 +316,11 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
    /* Get transform for node. */
    cgltf_node_transform_local( cnode, node->H );
    //cgltf_node_transform_world( cnode, node->H );
+
+   /* Some defaults. */
+   node->radius = 0.;
+   memset( &node->aabb_min, 0, sizeof(vec3) );
+   memset( &node->aabb_max, 0, sizeof(vec3) );
 
    if (cmesh == NULL) {
       node->nmesh = 0;
@@ -327,15 +356,18 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
             cgltf_attribute *attr = &prim->attributes[j];
             switch (attr->type) {
                case cgltf_attribute_type_position:
-                  mesh->vbo_pos = object_loadVBO( attr->data );
+                  mesh->vbo_pos = object_loadVBO( attr->data, &mesh->radius, &mesh->aabb_min, &mesh->aabb_max );
+                  node->radius = MAX( node->radius, mesh->radius );
+                  vec3_max( &node->aabb_max, &node->aabb_max, &mesh->aabb_max );
+                  vec3_min( &node->aabb_min, &node->aabb_min, &mesh->aabb_min );
                   break;
 
                case cgltf_attribute_type_normal:
-                  mesh->vbo_nor = object_loadVBO( attr->data );
+                  mesh->vbo_nor = object_loadVBO( attr->data, NULL, NULL, NULL );
                   break;
 
                case cgltf_attribute_type_texcoord:
-                  mesh->vbo_tex = object_loadVBO( attr->data );
+                  mesh->vbo_tex = object_loadVBO( attr->data, NULL, NULL, NULL );
                   break;
 
                case cgltf_attribute_type_color:
@@ -350,8 +382,13 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
    /* Iterate over children. */
    node->children = calloc( cnode->children_count, sizeof(Node) );
    node->nchildren = cnode->children_count;
-   for (size_t i=0; i<cnode->children_count; i++)
-      object_loadNodeRecursive( data, &node->children[i], cnode->children[i] );
+   for (size_t i=0; i<cnode->children_count; i++) {
+      Node *child = &node->children[i];
+      object_loadNodeRecursive( data, child, cnode->children[i] );
+      node->radius = MAX( node->radius, child->radius );
+      vec3_max( &node->aabb_max, &node->aabb_max, &child->aabb_max );
+      vec3_min( &node->aabb_min, &node->aabb_min, &child->aabb_min );
+   }
    return 0;
 }
 
@@ -512,18 +549,18 @@ Object *object_loadFromFile( const char *filename )
    cgltf_options opts;
    memset( &opts, 0, sizeof(opts) );
 
+   /* Initialize object. */
    obj = calloc( sizeof(Object), 1 );
 
+   /* Start loading the file. */
    res = cgltf_parse_file( &opts, filename, &data );
    assert( res == cgltf_result_success );
 
 #if DEBUGGING
+   /* Validate just in case. */
    res = cgltf_validate( data );
    assert( res == cgltf_result_success );
 #endif /* DEBUGGING */
-
-   res = cgltf_validate( data );
-   assert( res == cgltf_result_success );
 
    /* TODO load buffers properly from physfs. */
    res = cgltf_load_buffers( &opts, data, "./" );
@@ -539,8 +576,13 @@ Object *object_loadFromFile( const char *filename )
    cgltf_scene *scene = &data->scenes[0]; /* data->scene may be NULL */
    obj->nodes = calloc( scene->nodes_count, sizeof(Node) );
    obj->nnodes = scene->nodes_count;
-   for (size_t i=0; i<scene->nodes_count; i++)
-      object_loadNodeRecursive( data, &obj->nodes[i], scene->nodes[i] );
+   for (size_t i=0; i<scene->nodes_count; i++) {
+      Node *n = &obj->nodes[i];
+      object_loadNodeRecursive( data, n, scene->nodes[i] );
+      obj->radius = MAX( obj->radius, n->radius );
+      vec3_max( &obj->aabb_max, &obj->aabb_max, &n->aabb_max );
+      vec3_min( &obj->aabb_min, &obj->aabb_min, &n->aabb_min );
+   }
 
    cgltf_free(data);
 

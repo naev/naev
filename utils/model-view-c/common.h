@@ -4,6 +4,7 @@
 #define DEBUG(str, args...)   (fprintf(stdout, str"\n", ## args))
 #define WARN(str, args...)    (fprintf(stderr, "WARNING %s:%d [%s]: ", __FILE__, __LINE__, __func__), fprintf(stderr, str"\n", ## args))
 #define MIN(x,y)              (((x)>(y))?(y):(x)) /**< Returns minimum. */
+#define MAX(x,y)              (((x)<(y))?(y):(x)) /**< Returns maximum. */
 
 #define DEBUGGING 1
 
