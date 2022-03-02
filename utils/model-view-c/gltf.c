@@ -317,11 +317,6 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
    cgltf_node_transform_local( cnode, node->H );
    //cgltf_node_transform_world( cnode, node->H );
 
-   /* Some defaults. */
-   node->radius = 0.;
-   memset( &node->aabb_min, 0, sizeof(vec3) );
-   memset( &node->aabb_max, 0, sizeof(vec3) );
-
    if (cmesh == NULL) {
       node->nmesh = 0;
    }
