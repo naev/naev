@@ -457,5 +457,5 @@ function hacking_center_dead ()
    misn.markerMove( mem.mrk_mainsys, spob.get("Minerva Station") )
    misn.osdActive(3)
    mem.misn_state = 3
-   player.msg(_("#gThe hacking centre has been destroyed!#0"))
+   player.msg("#g".._("The hacking centre has been destroyed!").."#0")
 end
