@@ -12,11 +12,15 @@
 #include "vec3.h"
 #include "shader_min.h"
 
+/* Horrible hack that turns a variable name into a string. */
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
-#define MAX_LIGHTS 4
+#define MAX_LIGHTS 4    /**< Maximum amount of lights. TODO deferred rendering. */
 
+/**
+ * @brief Simple point light model.
+ */
 typedef struct ShaderLight_ {
    GLuint position;  /* vec3 */
    GLuint range;     /* float */
@@ -24,6 +28,9 @@ typedef struct ShaderLight_ {
    GLuint intensity; /* float */
 } ShaderLight;
 
+/**
+ * @brief Shader to use witha material.
+ */
 typedef struct Shader_ {
    GLuint program;
    /* Attriutes. */
@@ -53,6 +60,9 @@ static Shader object_shader;
 static GLuint tex_zero = -1;
 static GLuint tex_ones = -1;
 
+/**
+ * @brief PBR Material of an object.
+ */
 typedef struct Material_ {
    char *name; /**< Name of the material if applicable. */
    int blend;  /**< Whether or not to blend it. */
@@ -79,6 +89,9 @@ typedef struct Material_ {
 } Material;
 static Material material_default;
 
+/**
+ * @brief Represents an underlying 3D mesh.
+ */
 typedef struct Mesh_ {
    size_t nidx;      /**< Number of indices. */
    GLuint vbo_idx;   /**< Index VBO. */
