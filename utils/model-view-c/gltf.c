@@ -18,6 +18,8 @@
 
 #define MAX_LIGHTS 4    /**< Maximum amount of lights. TODO deferred rendering. */
 
+#define SHADOWMAP_SIZE  512   /**< Size of the shadow map. */
+
 /**
  * @brief Simple point light model.
  */
@@ -57,8 +59,11 @@ typedef struct Shader_ {
    GLuint blend;
 } Shader;
 static Shader object_shader;
-static GLuint tex_zero = -1;
-static GLuint tex_ones = -1;
+static Shader shadow_shader;
+static GLuint fbo_shadow;
+static GLuint tex_shadow;
+static GLuint tex_zero;
+static GLuint tex_ones;
 
 /**
  * @brief PBR Material of an object.
@@ -388,6 +393,57 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
 }
 
 /**
+ * @brief Renders a mesh shadow with a transform.
+ */
+static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const GLfloat H[16] )
+{
+   const Shader *shd = &shadow_shader;
+
+   glBindFramebuffer(GL_FRAMEBUFFER, fbo_shadow);
+   glClear(GL_DEPTH_BUFFER_BIT);
+
+   /* Depth testing. */
+   glEnable( GL_DEPTH_TEST );
+   glDepthFunc( GL_LESS );
+
+   glViewport(0, 0, SHADOWMAP_SIZE, SHADOWMAP_SIZE);
+   glEnable(GL_CULL_FACE);
+   glCullFace(GL_FRONT);
+
+   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
+
+   /* TODO put everything in a single VBO */
+   glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_pos );
+   glVertexAttribPointer( shd->vertex, 3, GL_FLOAT, GL_FALSE, 0, NULL );
+   glEnableVertexAttribArray( shd->vertex );
+
+   /* Set up shader. */
+   glUseProgram( shd->program );
+   const GLfloat sca = 0.1;
+   const GLfloat Hprojection[16] = {
+      sca, 0.0, 0.0, 0.0,
+      0.0, sca, 0.0, 0.0,
+      0.0, 0.0, sca, 0.0,
+      0.0, 0.0, 0.0, 1.0 };
+   glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
+   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H );
+
+   glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
+
+   glUseProgram( 0 );
+
+   glBindTexture( GL_TEXTURE_2D, 0 );
+
+   glBindBuffer( GL_ARRAY_BUFFER, 0 );
+   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+   glDisable(GL_DEPTH_TEST);
+   glCullFace(GL_BACK);
+
+   gl_checkErr();
+}
+
+/**
  * @brief Renders a mesh with a transform.
  */
 static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloat H[16] )
@@ -505,7 +561,10 @@ static void matmul( GLfloat H[16], const GLfloat R[16] )
    H[14] += R[14];
 }
 
-void lookat( GLfloat H[16], const vec3 *eye, const vec3 *center, const vec3 *up )
+/**
+ * @brief Fills a matrix with a transformation to look at a center point from an eye with an up vector.
+ */
+static void lookat( GLfloat H[16], const vec3 *eye, const vec3 *center, const vec3 *up )
 {
    vec3 forward, side, upc;
    GLfloat H2[16];
@@ -695,7 +754,9 @@ int object_init (void)
 {
    const GLubyte data_zero[4] = { 0, 0, 0, 0 };
    const GLubyte data_ones[4] = { 255, 255, 255, 255 };
-   Shader *shd = &object_shader;
+   static GLfloat b[4] = { 1., 1., 1., 1. };
+   GLenum status;
+   Shader *shd;
 
    /* Load textures. */
    glGenTextures( 1, &tex_zero );
@@ -710,11 +771,46 @@ int object_init (void)
    /* Set up default material. */
    object_loadMaterial( &material_default, NULL );
 
+   /* Set up shadow buffer depth tex. */
+   glGenTextures(1, &tex_shadow);
+   glBindTexture(GL_TEXTURE_2D, tex_shadow);
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOWMAP_SIZE, SHADOWMAP_SIZE, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+   glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, b);
+   glBindTexture(GL_TEXTURE_2D, 0);
+   /* Set up shadow buffer FBO. */
+   glGenFramebuffers( 1, &fbo_shadow );
+   glBindFramebuffer(GL_FRAMEBUFFER, fbo_shadow);
+   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, tex_shadow, 0);
+   glDrawBuffer(GL_NONE);
+   glReadBuffer(GL_NONE);
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
+   status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+   if (status != GL_FRAMEBUFFER_COMPLETE)
+      WARN(_("Error setting up framebuffer!"));
+
+   /* Compile the shadow shader. */
+   shd = &shadow_shader;
+   shd->program = gl_program_vert_frag( "shadow.vert", "shadow.frag", "" );
+   if (shd->program==0)
+      return -1;
+   glUseProgram( shd->program );
+   /** Attributes. */
+   shd->vertex          = glGetAttribLocation( shd->program, "vertex" );
+   /* Vertex uniforms. */
+   shd->Hprojection     = glGetUniformLocation( shd->program, "projection");
+   shd->Hmodel          = glGetUniformLocation( shd->program, "model");
+
    /* Compile the shader. */
+   shd = &object_shader;
    shd->program = gl_program_vert_frag( "gltf.vert", "gltf_pbr.frag", "#define MAX_LIGHTS "STR(MAX_LIGHTS)"\n" );
    if (shd->program==0)
       return -1;
-
    glUseProgram( shd->program );
    /** Attributes. */
    shd->vertex          = glGetAttribLocation( shd->program, "vertex" );
