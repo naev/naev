@@ -868,6 +868,10 @@ int object_init (void)
 
 void object_exit (void)
 {
+   glDeleteTextures( 1, &tex_shadow );
+   glDeleteFramebuffers( 1, &fbo_shadow );
    glDeleteTextures( 1, &tex_zero );
    glDeleteTextures( 1, &tex_ones );
+   glDeleteProgram( object_shader.program );
+   glDeleteProgram( shadow_shader.program );
 }
