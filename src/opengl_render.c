@@ -48,10 +48,6 @@ static gl_vbo *gl_triangleVBO = 0;
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
 static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
 
-/*
- * prototypes
- */
-
 void gl_beginSolidProgram(gl_Matrix4 projection, const glColour *c)
 {
    glUseProgram(shaders.solid.program);
