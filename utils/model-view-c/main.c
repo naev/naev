@@ -61,11 +61,6 @@ int main( int argc, char *argv[] )
    if (object_init())
       return -1;
 
-   //Object *obj = object_loadFromFile( "minimal.gltf" );
-   //Object *obj = object_loadFromFile( "simple.gltf" );
-   //Object *obj = object_loadFromFile( "simple_mat.gltf" );
-   //Object *obj = object_loadFromFile( "simple_tex.gltf" );
-   //Object *obj = object_loadFromFile( "admonisher.gltf" );
    Object *obj = object_loadFromFile( argv[1] );
    gl_checkErr();
 
