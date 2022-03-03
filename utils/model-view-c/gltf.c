@@ -42,6 +42,7 @@ typedef struct Shader_ {
    /* Vertex Uniforms. */
    GLuint Hmodel;
    GLuint Hprojection;
+   GLuint Hshadow_projection;
    /* Fragment uniforms. */
    GLuint baseColour_tex;
    GLuint metallic_tex;
@@ -860,6 +861,7 @@ int object_init (void)
    shd->vertex_tex0     = glGetAttribLocation( shd->program, "vertex_tex0" );
    /* Vertex uniforms. */
    shd->Hprojection     = glGetUniformLocation( shd->program, "projection");
+   shd->Hshadow_projection = glGetUniformLocation( shd->program, "shadow_projection");
    shd->Hmodel          = glGetUniformLocation( shd->program, "model");
    /* Fragment uniforms. */
    shd->blend           = glGetUniformLocation( shd->program, "u_blend" );
