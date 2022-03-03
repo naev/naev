@@ -409,10 +409,7 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
    const Shader *shd = &shadow_shader;
 
    glBindFramebuffer(GL_FRAMEBUFFER, fbo_shadow);
-   glClear(GL_DEPTH_BUFFER_BIT);
-
    glViewport(0, 0, SHADOWMAP_SIZE, SHADOWMAP_SIZE);
-
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
 
    /* TODO put everything in a single VBO */
@@ -432,10 +429,11 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
       0.0, sca, 0.0, 0.0,
       0.0, 0.0, sca, 0.0,
       0.0, 0.0, 0.0, 1.0 };
-   lookat( Hview, &light_pos, &center, &up );
-   matmul( Hview, H );
+   //lookat( Hview, &light_pos, &center, &up );
+   //matmul( Hview, H );
    glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
-   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hview );
+   //glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hview );
+   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H );
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
 
@@ -622,7 +620,7 @@ static void lookat( GLfloat H[16], const vec3 *eye, const vec3 *center, const ve
 /**
  * @brief Recursive rendering to the shadow buffer.
  */
-void object_renderNodeShadow( const Object *obj, const Node *node, const GLfloat H[16] )
+static void object_renderNodeShadow( const Object *obj, const Node *node, const GLfloat H[16] )
 {
    /* Multiply matrices, can be animated so not caching. */
    /* TODO cache when not animated. */
@@ -667,14 +665,8 @@ void object_renderNodeMesh( const Object *obj, const Node *node, const GLfloat H
 
 void object_renderNode( const Object *obj, const Node *node, const GLfloat H[16] )
 {
-   /* Depth testing. */
-   glEnable( GL_DEPTH_TEST );
-   glDepthFunc( GL_LESS );
-
    object_renderNodeShadow( obj, node, H );
    object_renderNodeMesh( obj, node, H );
-
-   glDisable( GL_DEPTH_TEST );
 }
 
 /**
@@ -689,9 +681,18 @@ void object_render( const Object *obj, const GLfloat *H )
                            0.0, 1.0, 0.0, 0.0,
                            0.0, 0.0, 1.0, 0.0,
                            0.0, 0.0, 0.0, 1.0 };
+   /* Depth testing. */
+   glEnable( GL_DEPTH_TEST );
+   glDepthFunc( GL_LESS );
+
+   glBindFramebuffer(GL_FRAMEBUFFER, fbo_shadow);
+   glClear(GL_DEPTH_BUFFER_BIT);
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
    for (size_t i=0; i<obj->nnodes; i++)
       object_renderNode( obj, &obj->nodes[i], (H!=NULL) ? H : I );
+
+   glDisable( GL_DEPTH_TEST );
 }
 
 /**
