@@ -57,6 +57,7 @@ typedef struct Shader_ {
    ShaderLight lights[MAX_LIGHTS];
    GLuint nlights;
    GLuint blend;
+   GLuint shadowmap;
 } Shader;
 static Shader object_shader;
 static Shader shadow_shader;
@@ -139,6 +140,12 @@ struct Object_ {
    vec3 aabb_min;       /**< Minimum value of AABB wrapping around it. */
    vec3 aabb_max;       /**< Maximum value of AABB wrapping around it. */
 };
+
+/*
+ * Prototypes.
+ */
+static void matmul( GLfloat H[16], const GLfloat R[16] );
+static void lookat( GLfloat H[16], const vec3 *eye, const vec3 *center, const vec3 *up );
 
 /**
  * @brief Loads a texture if applicable, uses default value otherwise.
@@ -397,14 +404,13 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
  */
 static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const GLfloat H[16] )
 {
+   (void) obj;
    const Shader *shd = &shadow_shader;
 
    glBindFramebuffer(GL_FRAMEBUFFER, fbo_shadow);
    glClear(GL_DEPTH_BUFFER_BIT);
 
    glViewport(0, 0, SHADOWMAP_SIZE, SHADOWMAP_SIZE);
-   glEnable(GL_CULL_FACE);
-   glCullFace(GL_FRONT);
 
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
 
@@ -415,14 +421,20 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
 
    /* Set up shader. */
    glUseProgram( shd->program );
+   GLfloat Hview[16];
+   const vec3 up = { .v = {0., 0., 1.} };
+   const vec3 light_pos = { .v = {4., 2., -20.} };
+   const vec3 center = { .v = {0., 0., 0.} };
    const GLfloat sca = 0.1;
    const GLfloat Hprojection[16] = {
       sca, 0.0, 0.0, 0.0,
       0.0, sca, 0.0, 0.0,
       0.0, 0.0, sca, 0.0,
       0.0, 0.0, 0.0, 1.0 };
+   lookat( Hview, &light_pos, &center, &up );
+   matmul( Hview, H );
    glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
-   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H );
+   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hview );
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
 
@@ -433,8 +445,6 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
-   glCullFace(GL_BACK);
-   glDisable(GL_CULL_FACE);
    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
    gl_checkErr();
@@ -503,6 +513,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    glUniform1f( sl->range, -1. );
    glUniform3f( sl->colour, 1.0, 1.0, 1.0 );
    glUniform1f( sl->intensity, 500. );
+   glUniform1i( shd->shadowmap, tex_shadow );
 
    /* Texture. */
    glActiveTexture( GL_TEXTURE0 );
@@ -601,7 +612,10 @@ static void lookat( GLfloat H[16], const vec3 *eye, const vec3 *center, const ve
    H[11] -= eye->v[2];
 }
 
-void object_renderNode( const Object *obj, const Node *node, const GLfloat H[16] )
+/**
+ * @brief Recursive rendering to the shadow buffer.
+ */
+void object_renderNodeShadow( const Object *obj, const Node *node, const GLfloat H[16] )
 {
    /* Multiply matrices, can be animated so not caching. */
    /* TODO cache when not animated. */
@@ -610,23 +624,50 @@ void object_renderNode( const Object *obj, const Node *node, const GLfloat H[16]
    memcpy( HH, node->H, sizeof(GLfloat)*16 );
    matmul( HH, H );
 
+   /* Draw meshes. */
+   for (size_t i=0; i<node->nmesh; i++)
+      object_renderMeshShadow( obj, &node->mesh[i], HH );
+
+   /* Draw children. */
+   for (size_t i=0; i<node->nchildren; i++)
+      object_renderNodeShadow( obj, &node->children[i], HH );
+
+   gl_checkErr();
+}
+
+/**
+ * @brief Recursive rendering of a mesh.
+ */
+void object_renderNodeMesh( const Object *obj, const Node *node, const GLfloat H[16] )
+{
+   /* Multiply matrices, can be animated so not caching. */
+   /* TODO cache when not animated. */
+   //matmul( H, node->H );
+   GLfloat HH[16];
+   memcpy( HH, node->H, sizeof(GLfloat)*16 );
+   matmul( HH, H );
+
+   /* Draw meshes. */
+   for (size_t i=0; i<node->nmesh; i++)
+      object_renderMesh( obj, &node->mesh[i], HH );
+
+   /* Draw children. */
+   for (size_t i=0; i<node->nchildren; i++)
+      object_renderNodeMesh( obj, &node->children[i], HH );
+
+   gl_checkErr();
+}
+
+void object_renderNode( const Object *obj, const Node *node, const GLfloat H[16] )
+{
    /* Depth testing. */
    glEnable( GL_DEPTH_TEST );
    glDepthFunc( GL_LESS );
 
-   /* Draw meshes. */
-   for (size_t i=0; i<node->nmesh; i++) {
-      object_renderMesh( obj, &node->mesh[i], HH );
-      object_renderMeshShadow( obj, &node->mesh[i], HH );
-   }
+   object_renderNodeShadow( obj, node, H );
+   object_renderNodeMesh( obj, node, H );
 
    glDisable( GL_DEPTH_TEST );
-
-   /* Draw children. */
-   for (size_t i=0; i<node->nchildren; i++)
-      object_renderNode( obj, &node->children[i], HH );
-
-   gl_checkErr();
 }
 
 /**
@@ -846,6 +887,7 @@ int object_init (void)
       sl->intensity     = glGetUniformLocation( shd->program, buf );
    }
    shd->nlights         = glGetUniformLocation( shd->program, "u_nlights" );
+   shd->shadowmap       = glGetUniformLocation( shd->program, "shadowmap" );
    glUseProgram(0);
    gl_checkErr();
 

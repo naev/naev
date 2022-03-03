@@ -19,6 +19,7 @@ uniform sampler2D emissive_tex; /**< Emission texture. */
 /* misc */
 uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
 uniform int u_blend = 0;
+uniform sampler2DShadow shadowmap; /**< Shadow map. */
 
 in vec2 tex_coord0;
 in vec3 position;
