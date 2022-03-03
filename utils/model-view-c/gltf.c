@@ -754,7 +754,7 @@ int object_init (void)
 {
    const GLubyte data_zero[4] = { 0, 0, 0, 0 };
    const GLubyte data_ones[4] = { 255, 255, 255, 255 };
-   static GLfloat b[4] = { 1., 1., 1., 1. };
+   const GLfloat b[4] = { 1., 1., 1., 1. };
    GLenum status;
    Shader *shd;
 
