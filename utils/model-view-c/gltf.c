@@ -402,10 +402,6 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
    glBindFramebuffer(GL_FRAMEBUFFER, fbo_shadow);
    glClear(GL_DEPTH_BUFFER_BIT);
 
-   /* Depth testing. */
-   glEnable( GL_DEPTH_TEST );
-   glDepthFunc( GL_LESS );
-
    glViewport(0, 0, SHADOWMAP_SIZE, SHADOWMAP_SIZE);
    glEnable(GL_CULL_FACE);
    glCullFace(GL_FRONT);
@@ -437,8 +433,9 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
-   glDisable(GL_DEPTH_TEST);
    glCullFace(GL_BACK);
+   glDisable(GL_CULL_FACE);
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
    gl_checkErr();
 }
@@ -456,12 +453,11 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    else
       mat = &obj->materials[ mesh->material ];
 
-   /* Depth testing. */
-   glEnable( GL_DEPTH_TEST );
-   glDepthFunc( GL_LESS );
-
    glEnable(GL_BLEND);
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+
+   /* TODO use SCREEN_W and SCREEN_H. */
+   glViewport(0, 0, 1280, 1280 );
 
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
 
@@ -535,8 +531,6 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
-
-   glDisable(GL_DEPTH_TEST);
 
    gl_checkErr();
 }
@@ -617,9 +611,17 @@ void object_renderNode( const Object *obj, const Node *node, const GLfloat H[16]
    memcpy( HH, node->H, sizeof(GLfloat)*16 );
    matmul( HH, H );
 
+   /* Depth testing. */
+   glEnable( GL_DEPTH_TEST );
+   glDepthFunc( GL_LESS );
+
    /* Draw meshes. */
-   for (size_t i=0; i<node->nmesh; i++)
+   for (size_t i=0; i<node->nmesh; i++) {
       object_renderMesh( obj, &node->mesh[i], HH );
+      object_renderMeshShadow( obj, &node->mesh[i], HH );
+   }
+
+   glDisable( GL_DEPTH_TEST );
 
    /* Draw children. */
    for (size_t i=0; i<node->nchildren; i++)
