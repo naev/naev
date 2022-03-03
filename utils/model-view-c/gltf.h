@@ -15,3 +15,5 @@ Object *object_loadFromFile( const char *filename );
 void object_free( Object *obj );
 
 void object_render( const Object *obj, const GLfloat *H );
+
+GLuint object_shadowmap (void);

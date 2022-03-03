@@ -926,3 +926,8 @@ void object_exit (void)
    glDeleteProgram( object_shader.program );
    glDeleteProgram( shadow_shader.program );
 }
+
+GLuint object_shadowmap (void)
+{
+   return tex_shadow;
+}

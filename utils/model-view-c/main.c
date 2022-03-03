@@ -9,6 +9,7 @@
 #include "glad.h"
 
 #include "gltf.h"
+#include "shader_min.h"
 
 static void matmul( GLfloat H[16], const GLfloat R[16] )
 {
@@ -61,9 +62,30 @@ int main( int argc, char *argv[] )
    if (object_init())
       return -1;
 
+   /* Load the object. */
    Object *obj = object_loadFromFile( argv[1] );
    gl_checkErr();
 
+   /* Set up some stuff. */
+   GLuint shadowvbo;
+   GLuint shadowmap = object_shadowmap();
+   const GLfloat shadowvbo_data[8] = {
+      0., 0.,
+      1., 0.,
+      0., 1.,
+      1., 1. };
+   glGenBuffers( 1, &shadowvbo );
+   glBindBuffer( GL_ARRAY_BUFFER, shadowvbo );
+   glBufferData( GL_ARRAY_BUFFER, sizeof(GLfloat) * 8, shadowvbo_data, GL_STATIC_DRAW );
+   glBindBuffer( GL_ARRAY_BUFFER, 0 );
+   GLuint shadowshader = gl_program_vert_frag( "depth.vert", "depth.frag", "" );
+   glUseProgram( shadowshader );
+   GLuint shadowvertex = glGetAttribLocation( shadowshader, "vertex" );
+   GLuint shadowtex    = glGetUniformLocation( shadowshader, "sampler" );
+   glUniform1i( shadowtex, 0 );
+   glUseProgram( 0 );
+
+   int rendermode = 1;
    int quit = 0;
    float rotx = 0.;
    float roty = M_PI_2;
@@ -80,6 +102,14 @@ int main( int argc, char *argv[] )
                case SDLK_q:
                case SDLK_ESCAPE:
                   quit = 1;
+                  break;
+
+               case SDLK_0:
+                  rendermode = 0;
+                  break;
+
+               case SDLK_1:
+                  rendermode = 1;
                   break;
 
                default:
@@ -120,7 +150,26 @@ int main( int argc, char *argv[] )
          0.0, 0.0, 0.0, 1.0
       };
       matmul( Hy, Hx );
+
       object_render( obj, Hy );
+
+      if (rendermode) {
+         glClear( GL_COLOR_BUFFER_BIT );
+         glUseProgram( shadowshader );
+
+         glBindBuffer( GL_ARRAY_BUFFER, shadowvbo );
+         glVertexAttribPointer( shadowvertex, 2, GL_FLOAT, GL_FALSE, 0, NULL );
+         glEnableVertexAttribArray( shadowvertex );
+
+         glActiveTexture( GL_TEXTURE0 );
+         glBindTexture( GL_TEXTURE_2D, shadowmap );
+
+         glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+         glBindBuffer( GL_ARRAY_BUFFER, 0 );
+         glDisableVertexAttribArray( shadowvertex );
+         glUseProgram( 0 );
+      }
 
       SDL_GL_SwapWindow( win );
 
