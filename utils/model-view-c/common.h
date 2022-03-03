@@ -11,6 +11,9 @@
 #define PATH_MAX  512
 #define STRMAX    8192
 
+#define SCREEN_W  1280
+#define SCREEN_H  1280
+
 #define _(String) String
 #define gl_checkErr()   gl_checkHandleError( __func__, __LINE__ )
 void gl_checkHandleError( const char *func, int line );

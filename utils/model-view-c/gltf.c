@@ -456,8 +456,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    glEnable(GL_BLEND);
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
-   /* TODO use SCREEN_W and SCREEN_H. */
-   glViewport(0, 0, 1280, 1280 );
+   glViewport(0, 0, SCREEN_W, SCREEN_H );
 
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
 
