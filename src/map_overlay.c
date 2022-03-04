@@ -77,14 +77,14 @@ static OverlayBounds_t ovr_bounds;
 static void force_collision( float *ox, float *oy,
       float x, float y, float w, float h,
       float mx, float my, float mw, float mh );
-static void ovr_optimizeLayout( int items, const Vector2d** pos,
+static void ovr_optimizeLayout( int items, const vec2** pos,
       MapOverlayPos** mo );
 static void ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
-      float x, float y, float w, float h, const Vector2d** pos,
+      float x, float y, float w, float h, const vec2** pos,
       MapOverlayPos** mo, int items, int self,
       float *offx, float *offy, float *offdx, float *offdy );
 /* Render. */
-static int ovr_safelaneKnown( SafeLane *sf, Vector2d *posns[2] );
+static int ovr_safelaneKnown( SafeLane *sf, vec2 *posns[2] );
 static void map_overlayToScreenPos( double *ox, double *oy, double x, double y );
 /* Markers. */
 static void ovr_mrkRenderAll( double res, int fg );
@@ -194,7 +194,7 @@ void ovr_refresh (void)
 {
    double max_x, max_y;
    int items, jumpitems;
-   const Vector2d **pos;
+   const vec2 **pos;
    MapOverlayPos **mo;
    char buf[STRMAX_SHORT];
 
@@ -207,7 +207,7 @@ void ovr_refresh (void)
 
    /* Calculate max size. */
    items = 0;
-   pos = calloc(array_size(cur_system->jumps) + array_size(cur_system->spobs), sizeof(Vector2d*));
+   pos = calloc(array_size(cur_system->jumps) + array_size(cur_system->spobs), sizeof(vec2*));
    mo  = calloc(array_size(cur_system->jumps) + array_size(cur_system->spobs), sizeof(MapOverlayPos*));
    max_x = 0.;
    max_y = 0.;
@@ -259,7 +259,7 @@ void ovr_refresh (void)
 /**
  * @brief Makes a best effort to fit the given spobs' overlay indicators and labels fit without collisions.
  */
-static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo )
+static void ovr_optimizeLayout( int items, const vec2** pos, MapOverlayPos** mo )
 {
    float cx, cy, r, sx, sy;
    float x, y, w, h, mx, my, mw, mh;
@@ -484,7 +484,7 @@ static void force_collision( float *ox, float *oy,
  * @brief Compute how an element overlaps with text and force to move away.
  */
 static void ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
-      float x, float y, float w, float h, const Vector2d** pos,
+      float x, float y, float w, float h, const vec2** pos,
       MapOverlayPos** mo, int items, int self,
       float *offx, float *offy, float *offdx, float *offdy )
 {
@@ -531,7 +531,7 @@ void ovr_initAlpha (void)
 
    safelanes = safelanes_get( -1, 0, cur_system );
    for (int i=0; i<array_size(safelanes); i++) {
-      Vector2d *posns[2];
+      vec2 *posns[2];
       if (!ovr_safelaneKnown( &safelanes[i], posns ))
          safelanes[i].map_alpha = 0.;
       else
@@ -587,7 +587,7 @@ void ovr_key( int type )
    }
 }
 
-static int ovr_safelaneKnown( SafeLane *sf, Vector2d *posns[2] )
+static int ovr_safelaneKnown( SafeLane *sf, vec2 *posns[2] )
 {
    /* This is a bit asinine, but should be easily replaceable by decent code when we have a System Objects API.
       * Specifically, a generic pos and isKnown test would clean this up nicely. */
@@ -652,7 +652,7 @@ void ovr_render( double dt )
    safelanes = safelanes_get( -1, 0, cur_system );
    for (int i=0; i<array_size(safelanes); i++) {
       glColour col;
-      Vector2d *posns[2];
+      vec2 *posns[2];
       double r;
       if (!ovr_safelaneKnown( &safelanes[i], posns ))
          continue;

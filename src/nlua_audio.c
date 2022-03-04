@@ -811,7 +811,7 @@ static int audioL_getPitch( lua_State *L )
 static int audioL_soundPlay( lua_State *L )
 {
    const char *name;
-   Vector2d *pos, *vel, vel0;
+   vec2 *pos, *vel, vel0;
    int dopos;
 
    /* Flag wether to use sound_playPos or sound_play. */

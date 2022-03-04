@@ -155,8 +155,8 @@ static int gfxL_dim( lua_State *L )
  */
 static int gfxL_screencoords( lua_State *L )
 {
-   Vector2d screen;
-   Vector2d *game = luaL_checkvector( L, 1 );
+   vec2 screen;
+   vec2 *game = luaL_checkvector( L, 1 );
    int invert = lua_toboolean( L, 2 );
    gl_gameToScreenCoords( &screen.x, &screen.y, game->x, game->y );
    if (invert)

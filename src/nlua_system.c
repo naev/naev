@@ -679,7 +679,7 @@ static int systemL_addGatherable( lua_State *L )
 {
    int nb;
    Commodity *commodity;
-   Vector2d *pos, *vel;
+   vec2 *pos, *vel;
    double lifelength;
 
    /* Handle parameters. */
@@ -968,7 +968,7 @@ static int systemL_mrkClear( lua_State *L )
 static int systemL_mrkAdd( lua_State *L )
 {
    const char *str;
-   Vector2d *vec;
+   vec2 *vec;
    unsigned int id;
 
 

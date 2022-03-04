@@ -484,7 +484,7 @@ static PlayerShip_t *player_newShipMake( const char *name )
    if (player.p == NULL) {
       double px, py, dir;
       unsigned int id;
-      Vector2d vp, vv;
+      vec2 vp, vv;
 
       /* Set position to defaults. */
       if (player.p != NULL) {
@@ -538,7 +538,7 @@ void player_swapShip( const char *shipname, int move_cargo )
 {
    HookParam hparam[5];
    Pilot *ship;
-   Vector2d v;
+   vec2 v;
    double dir;
    PlayerShip_t *ps = NULL;
    PlayerShip_t ptemp;
@@ -3040,7 +3040,7 @@ int player_addEscorts (void)
 
    for (int i=0; i<array_size(player.p->escorts); i++) {
       double a;
-      Vector2d v;
+      vec2 v;
       unsigned int e;
       int dockslot = -1;
 

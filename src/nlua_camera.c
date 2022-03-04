@@ -77,7 +77,7 @@ int nlua_loadCamera( nlua_env env )
 static int camL_set( lua_State *L )
 {
    Pilot *p;
-   Vector2d *vec;
+   vec2 *vec;
    double x, y, d;
    int hard_over, speed;
 
@@ -126,7 +126,7 @@ static int camL_set( lua_State *L )
  */
 static int camL_get( lua_State *L )
 {
-   Vector2d v;
+   vec2 v;
    cam_getPos( &v.x, &v.y );
    lua_pushvector( L, v );
    return 1;

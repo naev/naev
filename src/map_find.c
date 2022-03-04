@@ -270,7 +270,7 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *di
    StarSystem **slist;
    double d;
    int i;
-   Vector2d *vs, *ve;
+   vec2 *vs, *ve;
 
    /* Defaults. */
    ve = NULL;

@@ -143,7 +143,7 @@ void pilot_lockClear( Pilot *p )
  *    @param[out] v Position of the mount.
  *    @return 0 on success.
  */
-int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
+int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, vec2 *v )
 {
    double a, x, y;
    double cm, sm;

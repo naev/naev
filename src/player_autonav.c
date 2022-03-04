@@ -41,9 +41,9 @@ static int target_known = 0; /**< Is the target known? */
  */
 static int player_autonavSetup (void);
 static void player_autonav (void);
-static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target );
-static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow, double *dist2 );
-static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel, double *dist2, double sw );
+static int player_autonavApproach( const vec2 *pos, double *dist2, int count_target );
+static void player_autonavFollow( const vec2 *pos, const vec2 *vel, const int follow, double *dist2 );
+static int player_autonavApproachBoard( const vec2 *pos, const vec2 *vel, double *dist2, double sw );
 static int player_autonavBrake (void);
 
 /**
@@ -497,7 +497,7 @@ static void player_autonav (void)
  *    @param count_target If 1 it subtracts the braking distance from dist2. Otherwise it returns the full distance.
  *    @return 1 on completion.
  */
-static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target )
+static int player_autonavApproach( const vec2 *pos, double *dist2, int count_target )
 {
    double d, t, vel, dist;
 
@@ -545,10 +545,10 @@ static int player_autonavApproach( const Vector2d *pos, double *dist2, int count
  *    @param[in] follow Whether to follow, or arrive at
  *    @param[out] dist2 Distance left to target.
  */
-static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow, double *dist2 )
+static void player_autonavFollow( const vec2 *pos, const vec2 *vel, const int follow, double *dist2 )
 {
    double angle, radius, d, timeFactor;
-   Vector2d dir, point;
+   vec2 dir, point;
 
    /* timeFactor is a time constant of the ship, used to heuristically determine the ratio Kd/Kp. */
    timeFactor = M_PI/player.p->turn + player.p->speed/player.p->thrust*player.p->solid->mass;
@@ -583,10 +583,10 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, cons
       *dist2 = vect_dist( pos, &player.p->solid->pos );
 }
 
-static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel, double *dist2, double sw )
+static int player_autonavApproachBoard( const vec2 *pos, const vec2 *vel, double *dist2, double sw )
 {
    double d, timeFactor;
-   Vector2d dir;
+   vec2 dir;
 
    /* timeFactor is a time constant of the ship, used to heuristically determine the ratio Kd/Kp. */
    timeFactor = M_PI/player.p->turn + player.p->speed/player.p->thrust*player.p->solid->mass;
@@ -627,7 +627,7 @@ static int player_autonavBrake (void)
 {
    int ret;
    if ((player.autonav == AUTONAV_JUMP_BRAKE) && (player.p->nav_hyperspace != -1)) {
-      Vector2d pos;
+      vec2 pos;
       JumpPoint *jp  = &cur_system->jumps[ player.p->nav_hyperspace ];
 
       pilot_brakeDist( player.p, &pos );

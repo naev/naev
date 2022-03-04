@@ -91,7 +91,7 @@ typedef struct Spob_ {
    char *name;    /**< Spob name */
    char *display; /**< Name to be displayed to the player. Defaults to name if not set. */
    char *feature; /**< Name of the feature the spob provides if applicable. */
-   Vector2d pos;  /**< position in star system */
+   vec2 pos;  /**< position in star system */
    double radius; /**< Radius of the space object. WARNING: lazy-loaded with gfx_space. */
    const SimpleShader *marker; /**< GUI marker. */
 
@@ -201,7 +201,7 @@ struct JumpPoint_ {
    int targetid;     /**< ID of the target star system. */
    StarSystem *target; /**< Target star system to jump to. */
    JumpPoint *returnJump; /**< How to get back. Can be NULL */
-   Vector2d pos;     /**< Position in the system. */
+   vec2 pos;     /**< Position in the system. */
    double radius;    /**< Radius of jump range. */
    unsigned int flags;/**< Flags related to the jump point's status. */
    double hide;      /**< ewarfare hide value for the jump point */
@@ -239,7 +239,7 @@ struct StarSystem_ {
 
    /* General. */
    char* name;             /**< star system name */
-   Vector2d pos;           /**< Position */
+   vec2 pos;           /**< Position */
    int stars;              /**< Amount of "stars" it has. */
    double interference;    /**< in % @todo implement interference. */
    double nebu_hue;        /**< Hue of the nebula (0. - 1.) */
@@ -428,7 +428,7 @@ int system_hasSpob( const StarSystem *sys );
  */
 int space_canHyperspace( const Pilot *p);
 int space_hyperspace( Pilot *p );
-int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir, const Pilot *p );
+int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, vec2 *pos, vec2 *vel, double *dir, const Pilot *p );
 
 /*
  * Misc.

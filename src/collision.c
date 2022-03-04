@@ -18,10 +18,10 @@
 /*
  * Prototypes
  */
-static int pointInPolygon( const CollPoly* at, const Vector2d* ap,
+static int pointInPolygon( const CollPoly* at, const vec2* ap,
       float x, float y );
-static int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
-      float x1, float y1, float x2, float y2, Vector2d* crash );
+static int LineOnPolygon( const CollPoly* at, const vec2* ap,
+      float x1, float y1, float x2, float y2, vec2* crash );
 
 /**
  * @brief Loads a polygon from an xml node.
@@ -94,9 +94,9 @@ void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
  *    @param[out] crash Actual position of the collision (only set on collision).
  *    @return 1 on collision, 0 else.
  */
-int CollideSprite( const glTexture* at, const int asx, const int asy, const Vector2d* ap,
-      const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp,
-      Vector2d* crash )
+int CollideSprite( const glTexture* at, const int asx, const int asy, const vec2* ap,
+      const glTexture* bt, const int bsx, const int bsy, const vec2* bp,
+      vec2* crash )
 {
    int x,y;
    int ax1,ax2, ay1,ay2;
@@ -176,9 +176,9 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
  *    @param[out] crash Actual position of the collision (only set on collision).
  *    @return 1 on collision, 0 else.
  */
-int CollideSpritePolygon( const CollPoly* at, const Vector2d* ap,
-      const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp,
-      Vector2d* crash )
+int CollideSpritePolygon( const CollPoly* at, const vec2* ap,
+      const glTexture* bt, const int bsx, const int bsy, const vec2* bp,
+      vec2* crash )
 {
    int x,y;
    int ax1,ax2, ay1,ay2;
@@ -251,8 +251,8 @@ int CollideSpritePolygon( const CollPoly* at, const Vector2d* ap,
  *    @param[out] crash Actual position of the collision (only set on collision).
  *    @return 1 on collision, 0 else.
  */
-int CollidePolygon( const CollPoly* at, const Vector2d* ap,
-      const CollPoly* bt, const Vector2d* bp, Vector2d* crash )
+int CollidePolygon( const CollPoly* at, const vec2* ap,
+      const CollPoly* bt, const vec2* bp, vec2* crash )
 {
    int ax1,ax2, ay1,ay2;
    int bx1,bx2, by1,by2;
@@ -324,7 +324,7 @@ int CollidePolygon( const CollPoly* at, const Vector2d* ap,
  *    @param[in] y Coordinate of point.
  *    @return 1 on collision, 0 else.
  */
-int pointInPolygon( const CollPoly* at, const Vector2d* ap,
+int pointInPolygon( const CollPoly* at, const vec2* ap,
       float x, float y )
 {
    float vprod, sprod, angle;
@@ -370,8 +370,8 @@ int pointInPolygon( const CollPoly* at, const Vector2d* ap,
  *    @param[out] crash coordinates of the intersection.
  *    @return 1 on collision, 0 else.
  */
-int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
-      float x1, float y1, float x2, float y2, Vector2d* crash )
+int LineOnPolygon( const CollPoly* at, const vec2* ap,
+      float x1, float y1, float x2, float y2, vec2* crash )
 {
    float xi, xip, yi, yip;
 
@@ -411,7 +411,7 @@ int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
  *              1 if lines just collide on a point, or 0 if they don't.
  */
 int CollideLineLine( double s1x, double s1y, double e1x, double e1y,
-      double s2x, double s2y, double e2x, double e2y, Vector2d* crash )
+      double s2x, double s2y, double e2x, double e2y, vec2* crash )
 {
    double ua_t, ub_t, u_b;
    double ua, ub;
@@ -463,14 +463,14 @@ int CollideLineLine( double s1x, double s1y, double e1x, double e1y,
  *
  * @sa CollideSprite
  */
-int CollideLineSprite( const Vector2d* ap, double ad, double al,
-      const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp,
-      Vector2d crash[2] )
+int CollideLineSprite( const vec2* ap, double ad, double al,
+      const glTexture* bt, const int bsx, const int bsy, const vec2* bp,
+      vec2 crash[2] )
 {
    int x,y, rbsy, bbx,bby;
    double ep[2], bl[2], tr[2], v[2], mod;
    int hits, real_hits;
-   Vector2d tmp_crash, border[2];
+   vec2 tmp_crash, border[2];
 
    /* Make sure texture has transparency map. */
    if (bt->trans == NULL) {
@@ -612,13 +612,13 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
  *
  * @sa CollideLinePolygon
  */
-int CollideLinePolygon( const Vector2d* ap, double ad, double al,
-      const CollPoly* bt, const Vector2d* bp, Vector2d crash[2] )
+int CollideLinePolygon( const vec2* ap, double ad, double al,
+      const CollPoly* bt, const vec2* bp, vec2 crash[2] )
 {
    double ep[2], bl[2], tr[2];
    double xi, yi, xip, yip;
    int hits, real_hits;
-   Vector2d tmp_crash;
+   vec2 tmp_crash;
 
    /* Set up end point of line. */
    ep[0] = ap->x + al*cos(ad);
@@ -748,8 +748,8 @@ static int linePointOnSegment( double d1, double x1, double y1, double x2, doubl
  *    @param[out] crash Position of the collision.
  *    @return 1 on collision, 0 else.
  */
-int CollideLineCircle( const Vector2d* p1, const Vector2d* p2,
-      const Vector2d *cc, double cr, Vector2d crash[2] )
+int CollideLineCircle( const vec2* p1, const vec2* p2,
+      const vec2 *cc, double cr, vec2 crash[2] )
 {
    double x0 = cc->x;
    double y0 = cc->y;
@@ -849,8 +849,8 @@ int CollideLineCircle( const Vector2d* p1, const Vector2d* p2,
 
 /**
  */
-double CollideCircleIntersection( const Vector2d *p1, double r1,
-      const Vector2d *p2, double r2 )
+double CollideCircleIntersection( const vec2 *p1, double r1,
+      const vec2 *p2, double r2 )
 {
    double dist2 = vect_dist2( p1, p2 );
 

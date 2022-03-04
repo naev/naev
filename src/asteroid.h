@@ -79,8 +79,8 @@ typedef struct Asteroid_ {
    const glTexture *gfx; /**< Graphic of the asteroid. */
    double armour; /**< Current "armour" of the asteroid. */
    /* Movement. */
-   Vector2d pos;  /**< Position. */
-   Vector2d vel;  /**< Velocity. */
+   vec2 pos;  /**< Position. */
+   vec2 vel;  /**< Velocity. */
    /* Stats. */
    double timer;  /**< Internal timer for animations. */
    double timer_max; /**< Internal timer initial value. */
@@ -94,7 +94,7 @@ typedef struct Asteroid_ {
 typedef struct AsteroidAnchor_ {
    char *label;   /**< Label used for unidiffs. */
    int id;        /**< ID of the anchor, for targeting. */
-   Vector2d pos;  /**< Position in the system (from center). */
+   vec2 pos;  /**< Position in the system (from center). */
    double density;/**< Density of the field. */
    Asteroid *asteroids; /**< Asteroids belonging to the field. */
    int nb;        /**< Number of asteroids. */
@@ -112,7 +112,7 @@ typedef struct AsteroidAnchor_ {
  * @brief Represents an asteroid exclusion zone.
  */
 typedef struct AsteroidExclusion_ {
-   Vector2d pos;  /**< Position in the system (from center). */
+   vec2 pos;  /**< Position in the system (from center). */
    double radius; /**< Radius of the exclusion zone. */
    int affects;   /**< Temporary internal value when rendering. */
 } AsteroidExclusion;
@@ -138,7 +138,7 @@ const AsteroidTypeGroup *astgroup_getAll (void);
 AsteroidTypeGroup *astgroup_getName( const char *name );
 
 /* Misc functions. */
-int asteroids_inField( const Vector2d *p );
+int asteroids_inField( const vec2 *p );
 void asteroids_computeInternals( AsteroidAnchor *a );
 void asteroid_hit( Asteroid *a, const Damage *dmg, int max_rarity, double mine_bonus );
 void asteroid_explode( Asteroid *a, int max_rarity, double mine_bonus );

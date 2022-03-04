@@ -85,8 +85,8 @@ typedef struct CommodityPrice_ {
  */
 typedef struct Gatherable_ {
    const Commodity *type; /**< Type of commodity. */
-   Vector2d pos; /**< Position. */
-   Vector2d vel; /**< Velocity. */
+   vec2 pos; /**< Position. */
+   vec2 vel; /**< Velocity. */
    double timer; /**< Timer to de-spawn the gatherable. */
    double lifeleng; /**< nb of seconds before de-spawn. */
    int quantity; /**< Quantity of material. */
@@ -115,10 +115,10 @@ int commodity_tempIllegalto( Commodity *com, int faction );
 /*
  * Gatherable objects
  */
-int gatherable_init( const Commodity* com, Vector2d pos, Vector2d vel, double lifeleng, int qtt );
+int gatherable_init( const Commodity* com, vec2 pos, vec2 vel, double lifeleng, int qtt );
 void gatherable_render( void );
-int gatherable_getClosest( Vector2d pos, double rad );
-int gatherable_getPos( Vector2d* pos, Vector2d* vel, int id );
+int gatherable_getClosest( vec2 pos, double rad );
+int gatherable_getPos( vec2* pos, vec2* vel, int id );
 void gatherable_free( void );
 void gatherable_update( double dt );
 void gatherable_gather( int pilot );

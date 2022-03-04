@@ -56,7 +56,7 @@ double angle_diff( double ref, double a )
  *    @param x X value for vector.
  *    @param y Y value for vector.
  */
-void vect_cset( Vector2d* v, double x, double y )
+void vect_cset( vec2* v, double x, double y )
 {
    v->x     = x;
    v->y     = y;
@@ -71,7 +71,7 @@ void vect_cset( Vector2d* v, double x, double y )
  *    @param x X value for vector.
  *    @param y Y value for vector.
  */
-void vect_csetmin( Vector2d* v, double x, double y )
+void vect_csetmin( vec2* v, double x, double y )
 {
    v->x = x;
    v->y = y;
@@ -84,7 +84,7 @@ void vect_csetmin( Vector2d* v, double x, double y )
  *    @param mod Modulus of the vector.
  *    @param angle Angle of the vector.
  */
-void vect_pset( Vector2d* v, double mod, double angle )
+void vect_pset( vec2* v, double mod, double angle )
 {
    v->mod   = mod;
    v->angle = angle;
@@ -97,7 +97,7 @@ void vect_pset( Vector2d* v, double mod, double angle )
  *
  *    @param v Vector to set to NULL.
  */
-void vectnull( Vector2d* v )
+void vectnull( vec2* v )
 {
    v->x     = 0.;
    v->y     = 0.;
@@ -112,7 +112,7 @@ void vectnull( Vector2d* v )
  *    @param v Vector to get angle from reference vector.
  *    @return Angle between ref and v.
  */
-double vect_angle( const Vector2d* ref, const Vector2d* v )
+double vect_angle( const vec2* ref, const vec2* v )
 {
    double x = v->x - ref->x;
    double y = v->y - ref->y;
@@ -126,7 +126,7 @@ double vect_angle( const Vector2d* ref, const Vector2d* v )
  *    @param x X value to add to vector.
  *    @param y Y value to add to vector.
  */
-void vect_cadd( Vector2d* v, double x, double y )
+void vect_cadd( vec2* v, double x, double y )
 {
    v->x    += x;
    v->y    += y;
@@ -141,7 +141,7 @@ void vect_cadd( Vector2d* v, double x, double y )
  *    @param m Module of vector to add.
  *    @param a Angle of vector to add.
  */
-void vect_padd( Vector2d* v, double m, double a )
+void vect_padd( vec2* v, double m, double a )
 {
    v->x    += m*cos(a);
    v->y    += m*sin(a);
@@ -156,7 +156,7 @@ void vect_padd( Vector2d* v, double m, double a )
  *    @param v Vector to reflect.
  *    @param n Normal to reflect off of.
  */
-void vect_reflect( Vector2d* r, const Vector2d* v, const Vector2d* n )
+void vect_reflect( vec2* r, const vec2* v, const vec2* n )
 {
    double dot = vect_dot( v, n );
    r->x     = v->x - ((2. * dot) * n->x);
@@ -172,7 +172,7 @@ void vect_reflect( Vector2d* r, const Vector2d* v, const Vector2d* n )
  *    @param b Vector 2 for dot product.
  *    @return Dot product of vectors.
  */
-double vect_dot( const Vector2d* a, const Vector2d* b )
+double vect_dot( const vec2* a, const vec2* b )
 {
    return a->x * b->x + a->y * b->y;
 }
@@ -185,9 +185,9 @@ double vect_dot( const Vector2d* a, const Vector2d* b )
  *    @param source Source vector.
  *    @param reference_vector Reference vector.
  */
-void vect_uv( double* u, double* v, const Vector2d* source, const Vector2d* reference_vector )
+void vect_uv( double* u, double* v, const vec2* source, const vec2* reference_vector )
 {
-   Vector2d unit_parallel, unit_perpendicular;
+   vec2 unit_parallel, unit_perpendicular;
 
    vect_uv_decomp( &unit_parallel, &unit_perpendicular, reference_vector );
 
@@ -202,7 +202,7 @@ void vect_uv( double* u, double* v, const Vector2d* source, const Vector2d* refe
  *    @param[out] v Perpendicular component of the reference vector.
  *    @param reference_vector The reference vector to decompose.
  */
-void vect_uv_decomp( Vector2d* u, Vector2d* v, const Vector2d* reference_vector )
+void vect_uv_decomp( vec2* u, vec2* v, const vec2* reference_vector )
 {
    vect_pset(u, 1, VANGLE(*reference_vector));
    vect_pset(v, 1, VANGLE(*reference_vector)+M_PI_2);
@@ -390,7 +390,7 @@ double solid_maxspeed( const Solid *s, double speed, double thrust )
  *    @param vel Initial solid velocity.
  */
 void solid_init( Solid* dest, double mass, double dir,
-      const Vector2d* pos, const Vector2d* vel, int update )
+      const vec2* pos, const vec2* vel, int update )
 {
    memset(dest, 0, sizeof(Solid));
 
@@ -449,7 +449,7 @@ void solid_init( Solid* dest, double mass, double dir,
  *    @return A newly created solid.
  */
 Solid* solid_create( double mass, double dir,
-      const Vector2d* pos, const Vector2d* vel, int update )
+      const vec2* pos, const vec2* vel, int update )
 {
    Solid* dyn = malloc(sizeof(Solid));
    if (dyn==NULL)

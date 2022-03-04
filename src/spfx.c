@@ -54,8 +54,8 @@ static Trail_spfx** trail_spfx_stack; /**< Active trail effects. */
 /* shake aka rumble */
 static unsigned int shake_shader_pp_id = 0; /**< ID of the post-processing shader for the shake. */
 static LuaShader_t shake_shader; /**< Shader to use for shake effects. */
-static Vector2d shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. */
-static Vector2d shake_vel = { .x = 0., .y = 0. }; /**< Current shake velocity. */
+static vec2 shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. */
+static vec2 shake_vel = { .x = 0., .y = 0. }; /**< Current shake velocity. */
 static double shake_force_mod = 0.; /**< Shake force modifier. */
 static double shake_force_mean = 0.; /**< Running mean of the force. */
 static float shake_force_ang = 0.; /**< Shake force angle. */
@@ -116,8 +116,8 @@ static SPFX_Base *spfx_effects = NULL; /**< Total special effects. */
  * @brief An actual in-game active special effect.
  */
 typedef struct SPFX_ {
-   Vector2d pos; /**< Current position. */
-   Vector2d vel; /**< Current velocity. */
+   vec2 pos; /**< Current position. */
+   vec2 vel; /**< Current velocity. */
 
    int lastframe; /**< Needed when paused */
    int effect; /**< The real effect */

@@ -194,7 +194,7 @@ static int asteroidL_get( lua_State *L )
 {
    LuaAsteroid_t la;
    int field = -1;
-   const Vector2d *pos = NULL;
+   const vec2 *pos = NULL;
 
    /* No asteroids, so everything just returns nil. */
    if (array_size(cur_system->asteroids) <= 0)

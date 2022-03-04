@@ -29,8 +29,8 @@
  */
 typedef struct Debris_ {
    const glTexture *gfx; /**< Graphic of the debris. */
-   Vector2d pos;  /**< Position. */
-   Vector2d vel;  /**< Velocity. */
+   vec2 pos;  /**< Position. */
+   vec2 vel;  /**< Velocity. */
    double height; /**< height vs player */
    double alpha;  /**< Alpha value. */
 } Debris;
@@ -199,7 +199,7 @@ void asteroids_update( double dt )
       for (int j=0; j<array_size(debris_stack); j++) {
          Debris *d = &debris_stack[j];
          int infield;
-         Vector2d v;
+         vec2 v;
 
          d->pos.x += d->vel.x * dt - dx;
          d->pos.y += d->vel.y * dt - dy;
@@ -1012,7 +1012,7 @@ void asteroids_free (void)
  *    @param p pointer to the position.
  *    @return -1 If false; index of the field otherwise.
  */
-int asteroids_inField( const Vector2d *p )
+int asteroids_inField( const vec2 *p )
 {
    /* Always return -1 if in an exclusion zone */
    for (int i=0; i<array_size(cur_system->astexclude); i++) {
@@ -1168,7 +1168,7 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
 
             int nb = RNG(0, round((double)mat->quantity * mining_bonus));
             for (int j=0; j<nb; j++) {
-               Vector2d pos, vel;
+               vec2 pos, vel;
                pos = a->pos;
                vel = a->vel;
                pos.x += (RNGF()*30.-15.);

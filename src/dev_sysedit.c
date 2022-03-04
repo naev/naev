@@ -724,7 +724,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    /* Render safe lanes. */
    SafeLane* safelanes = safelanes_get( -1, 0, sys );
    for (int i=0; i<array_size(safelanes); i++) {
-      Vector2d *posns[2];
+      vec2 *posns[2];
       Spob *pnt;
       JumpPoint *njp;
       glColour col;

@@ -151,9 +151,9 @@ static int aiL_subtaskdata( lua_State *L ); /* pointer subtaskdata() */
 static int aiL_pilot( lua_State *L ); /* number pilot() */
 static int aiL_getrndpilot( lua_State *L ); /* number getrndpilot() */
 static int aiL_getnearestpilot( lua_State *L ); /* number getnearestpilot() */
-static int aiL_getdistance( lua_State *L ); /* number getdist(Vector2d) */
-static int aiL_getdistance2( lua_State *L ); /* number getdist(Vector2d) */
-static int aiL_getflybydistance( lua_State *L ); /* number getflybydist(Vector2d) */
+static int aiL_getdistance( lua_State *L ); /* number getdist(vec2) */
+static int aiL_getdistance2( lua_State *L ); /* number getdist(vec2) */
+static int aiL_getflybydistance( lua_State *L ); /* number getflybydist(vec2) */
 static int aiL_minbrakedist( lua_State *L ); /* number minbrakedist( [number] ) */
 static int aiL_isbribed( lua_State *L ); /* bool isbribed( number ) */
 static int aiL_getGatherable( lua_State *L ); /* integer getgatherable( radius ) */
@@ -1391,7 +1391,7 @@ static int aiL_getnearestpilot( lua_State *L )
  */
 static int aiL_getdistance( lua_State *L )
 {
-   Vector2d *v;
+   vec2 *v;
 
    /* vector as a parameter */
    if (lua_isvector(L,1))
@@ -1418,7 +1418,7 @@ static int aiL_getdistance( lua_State *L )
  */
 static int aiL_getdistance2( lua_State *L )
 {
-   Vector2d *v;
+   vec2 *v;
 
    /* vector as a parameter */
    if (lua_isvector(L,1))
@@ -1445,8 +1445,8 @@ static int aiL_getdistance2( lua_State *L )
  */
 static int aiL_getflybydistance( lua_State *L )
 {
-   Vector2d *v;
-   Vector2d perp_motion_unit, offset_vect;
+   vec2 *v;
+   vec2 perp_motion_unit, offset_vect;
    int offset_distance;
 
    /* vector as a parameter */
@@ -1486,7 +1486,7 @@ static int aiL_getflybydistance( lua_State *L )
 static int aiL_minbrakedist( lua_State *L )
 {
    double time, dist, vel;
-   Vector2d vv;
+   vec2 vv;
 
    /* More complicated calculation based on relative velocity. */
    if (lua_gettop(L) > 0) {
@@ -1697,7 +1697,7 @@ static int aiL_turn( lua_State *L )
  */
 static int aiL_face( lua_State *L )
 {
-   Vector2d *tv; /* get the position to face */
+   vec2 *tv; /* get the position to face */
    double k_diff, k_vel, diff, vx, vy, dx, dy;
    int vel;
 
@@ -1787,7 +1787,7 @@ static int aiL_face( lua_State *L )
  */
 static int aiL_careful_face( lua_State *L )
 {
-   Vector2d *tv, F, F1;
+   vec2 *tv, F, F1;
    Pilot* p;
    Pilot *p_i;
    double k_diff, k_goal, k_enemy, k_mult,
@@ -1905,7 +1905,7 @@ static int aiL_aim( lua_State *L )
 static int aiL_iface( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   Vector2d *vec, drift, reference_vector; /* get the position to face */
+   vec2 *vec, drift, reference_vector; /* get the position to face */
    Pilot* p;
    double diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
    int azimuthal_sign;
@@ -1993,7 +1993,7 @@ static int aiL_iface( lua_State *L )
 static int aiL_dir( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   Vector2d *vec, sv, tv; /* get the position to face */
+   vec2 *vec, sv, tv; /* get the position to face */
    Pilot* p;
    double diff;
    int n;
@@ -2035,7 +2035,7 @@ static int aiL_dir( lua_State *L )
 static int aiL_idir( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   Vector2d *vec, drift, reference_vector; /* get the position to face */
+   vec2 *vec, drift, reference_vector; /* get the position to face */
    Pilot* p;
    double diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
    double speedmap;
@@ -2169,7 +2169,7 @@ static int aiL_getnearestspob( lua_State *L )
  */
 static int aiL_getspobfrompos( lua_State *L )
 {
-   Vector2d *pos;
+   vec2 *pos;
    double dist, d;
    int i, j;
    LuaSpob spob;
@@ -2399,7 +2399,7 @@ static int aiL_sethyptarget( lua_State *L )
 {
    JumpPoint *jp;
    LuaJump *lj;
-   Vector2d vec;
+   vec2 vec;
    double a, rad;
 
    lj = luaL_checkjump( L, 1 );
@@ -2549,7 +2549,7 @@ static int aiL_rndhyptarget( lua_State *L )
 static int aiL_relvel( lua_State *L )
 {
    double dot, mod;
-   Vector2d vv, pv;
+   vec2 vv, pv;
    int absolute;
    Pilot *p = luaL_validpilot(L,1);
 
@@ -2589,7 +2589,7 @@ static int aiL_relvel( lua_State *L )
  */
 static int aiL_follow_accurate( lua_State *L )
 {
-   Vector2d point, cons, goal, pv;
+   vec2 point, cons, goal, pv;
    double radius, angle, Kp, Kd, angle2;
    Pilot *p, *target;
    const char *method;
@@ -2648,7 +2648,7 @@ static int aiL_follow_accurate( lua_State *L )
  */
 static int aiL_face_accurate( lua_State *L )
 {
-   Vector2d point, cons, goal, *pos, *vel;
+   vec2 point, cons, goal, *pos, *vel;
    double radius, angle, Kp, Kd;
    Pilot *p = cur_pilot;
    pos = lua_tovector(L,1);
@@ -2797,7 +2797,7 @@ static int aiL_getGatherable( lua_State *L )
 static int aiL_gatherablePos( lua_State *L )
 {
    int i, did;
-   Vector2d pos, vel;
+   vec2 pos, vel;
 
    i = lua_tointeger(L,1);
 

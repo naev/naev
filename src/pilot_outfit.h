@@ -46,7 +46,7 @@ void pilot_healLanded( Pilot *pilot );
 PilotOutfitSlot *pilot_getSlotByName( Pilot *pilot, const char *name );
 
 /* Special outfit stuff. */
-int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v );
+int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, vec2 *v );
 
 /* Lua outfit stuff. */
 int pilot_slotIsActive( const PilotOutfitSlot *o );

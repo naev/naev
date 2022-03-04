@@ -63,7 +63,7 @@ static const double pilot_commFade     = 5.; /**< Time for text above pilot to f
  */
 /* Create. */
 static void pilot_init( Pilot* dest, const Ship* ship, const char* name, int faction, const char *ai,
-      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot );
 /* Update. */
 static void pilot_hyperspace( Pilot* pilot, double dt );
@@ -823,7 +823,7 @@ int pilot_brake( Pilot *p )
  *    @param[out] pos Estimated final position once braked.
  *    @return Estimated Braking distance based on current speed.
  */
-double pilot_brakeDist( Pilot *p, Vector2d *pos )
+double pilot_brakeDist( Pilot *p, vec2 *pos )
 {
    double fdiff, bdiff, ftime, btime;
    double vang, speed, dist;
@@ -1032,7 +1032,7 @@ double pilot_aimAngle( Pilot *p, const Pilot *target )
 {
    double x, y;
    double t;
-   Vector2d tv, approach_vector, relative_location, orthoradial_vector;
+   vec2 tv, approach_vector, relative_location, orthoradial_vector;
    double dist;
    double speed;
    double radial_speed;
@@ -1901,7 +1901,7 @@ void pilot_render( Pilot* p, const double dt )
 #ifdef DEBUGGING
    double dircos, dirsin;
    int debug_mark_emitter = debug_isFlag(DEBUG_MARK_EMITTER);
-   Vector2d v;
+   vec2 v;
    if (debug_mark_emitter) {
       dircos = cos(p->solid->dir);
       dirsin = sin(p->solid->dir);
@@ -2867,7 +2867,7 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  *    @param dockslot The outfit slot which launched this pilot (-1 if N/A).
  */
 static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int faction, const char *ai,
-      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
    PilotOutfitSlot *dslot;
@@ -3048,7 +3048,7 @@ static void pilot_init_trails( Pilot* p )
  * @sa pilot_init
  */
 unsigned int pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
-      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
    Pilot *dyn, **p;
@@ -3138,7 +3138,7 @@ Pilot* pilot_replacePlayer( Pilot* after )
  *    @param ignore_rules Whether or not to ignore all rules.
  *    @param guerilla Whether or not to spawn in deep space.
  */
-void pilot_choosePoint( Vector2d *vp, Spob **spob, JumpPoint **jump, int lf, int ignore_rules, int guerilla )
+void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ignore_rules, int guerilla )
 {
    int *ind;
    JumpPoint **validJumpPoints;

@@ -837,9 +837,9 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
  *    @param pos Target's position.
  *    @param vel Target's velocity.
  */
-double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const Vector2d *pos, const Vector2d *vel )
+double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos, const vec2 *vel )
 {
-   Vector2d approach_vector, relative_location, orthoradial_vector;
+   vec2 approach_vector, relative_location, orthoradial_vector;
    double speed, radial_speed, orthoradial_speed, dist, t;
 
    dist = vect_dist( &parent->solid->pos, pos );
@@ -993,7 +993,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
  */
 static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
 {
-   Vector2d vp, vv;
+   vec2 vp, vv;
    double rate_mod, energy_mod;
    double energy;
    int dockslot = -1;

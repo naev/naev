@@ -878,7 +878,7 @@ static void equipment_renderShip( double bx, double by,
    double dt;
    double px, py;
    double pw, ph;
-   Vector2d v;
+   vec2 v;
 
    p = eq_wgt.selected;
 

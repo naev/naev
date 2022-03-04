@@ -497,7 +497,7 @@ static int pilotL_choosePoint( lua_State *L )
    int ignore_rules, guerilla;
    Spob *spob = NULL;
    JumpPoint *jump = NULL;
-   Vector2d vp;
+   vec2 vp;
 
    /* Parameters. */
    lf             = luaL_validfaction(L,1);
@@ -550,7 +550,7 @@ static int pilotL_add( lua_State *L )
    const char *pilotname, *ai;
    unsigned int p;
    double a, r;
-   Vector2d vv, vp, vn;
+   vec2 vv, vp, vn;
    LuaFaction lf;
    StarSystem *ss;
    Spob *spob;
@@ -906,7 +906,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
    Pilot *p;
    double dist;
    int inrange, dis, fighters;
-   Vector2d *v;
+   vec2 *v;
    Pilot *const* pilot_stack;
    LuaFaction lf;
 
@@ -2151,7 +2151,7 @@ static int pilotL_setPosition( lua_State *L )
 
    /* Parse parameters */
    Pilot *p       = luaL_validpilot(L,1);
-   Vector2d *vec  = luaL_checkvector(L,2);
+   vec2 *vec  = luaL_checkvector(L,2);
 
    /* Insert skip in trail. */
    pilot_sample_trails( p, 1 );
@@ -2178,7 +2178,7 @@ static int pilotL_setPosition( lua_State *L )
 static int pilotL_setVelocity( lua_State *L )
 {
    Pilot *p;
-   Vector2d *vec;
+   vec2 *vec;
 
 
    /* Parse parameters */
@@ -4394,7 +4394,7 @@ static int pilotL_moveto( lua_State *L )
 {
    Pilot *p;
    Task *t;
-   Vector2d *vec;
+   vec2 *vec;
    int brake, compensate;
    const char *tsk;
 
@@ -4443,7 +4443,7 @@ static int pilotL_moveto( lua_State *L )
 static int pilotL_face( lua_State *L )
 {
    Pilot *p, *pt;
-   Vector2d *vec;
+   vec2 *vec;
    Task *t;
    int towards;
 
@@ -5022,7 +5022,7 @@ static const CollPoly *getCollPoly( const Pilot *p )
  */
 static int pilotL_collisionTest( lua_State *L )
 {
-   Vector2d crash;
+   vec2 crash;
    Pilot *p = luaL_validpilot(L,1);
    Pilot *t = luaL_validpilot(L,2);
 
@@ -5095,12 +5095,12 @@ static int pilotL_knockback( lua_State *L )
 {
    Pilot *p1      = luaL_validpilot(L,1);
    double m1      = p1->solid->mass;
-   Vector2d *v1   = &p1->solid->vel;
-   Vector2d *x1   = &p1->solid->pos;
+   vec2 *v1   = &p1->solid->vel;
+   vec2 *x1   = &p1->solid->pos;
    Pilot *p2;
    double m2;
-   Vector2d *v2;
-   Vector2d *x2;
+   vec2 *v2;
+   vec2 *x2;
    double e;
    if (lua_ispilot(L,2)) {
       p2 = luaL_validpilot(L,2);

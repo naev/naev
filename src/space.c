@@ -451,7 +451,7 @@ int space_hyperspace( Pilot* p )
  *    @param[out] dir Angle calculated.
  *    @param p Pilot that is entering to use stats of (or NULL if not important).
  */
-int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir, const Pilot *p )
+int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, vec2 *pos, vec2 *vel, double *dir, const Pilot *p )
 {
    JumpPoint *jp;
    double a, d, x, y;

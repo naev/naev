@@ -101,23 +101,23 @@ int nlua_loadVector( nlua_env env )
  *
  *    @param L Lua state to get vector from.
  *    @param ind Index position of vector.
- *    @return The Vector2d at ind.
+ *    @return The vec2 at ind.
  */
-Vector2d* lua_tovector( lua_State *L, int ind )
+vec2* lua_tovector( lua_State *L, int ind )
 {
-   return (Vector2d*) lua_touserdata(L,ind);
+   return (vec2*) lua_touserdata(L,ind);
 }
 /**
  * @brief Gets vector at index making sure type is valid.
  *
  *    @param L Lua state to get vector from.
  *    @param ind Index position of vector.
- *    @return The Vector2d at ind.
+ *    @return The vec2 at ind.
  */
-Vector2d* luaL_checkvector( lua_State *L, int ind )
+vec2* luaL_checkvector( lua_State *L, int ind )
 {
    if (lua_isvector(L,ind))
-      return (Vector2d*) lua_touserdata(L,ind);
+      return (vec2*) lua_touserdata(L,ind);
    luaL_typerror(L, ind, VECTOR_METATABLE);
    return NULL;
 }
@@ -129,10 +129,10 @@ Vector2d* luaL_checkvector( lua_State *L, int ind )
  *    @param vec Vector to push.
  *    @return Vector just pushed.
  */
-Vector2d* lua_pushvector( lua_State *L, Vector2d vec )
+vec2* lua_pushvector( lua_State *L, vec2 vec )
 {
-   Vector2d *v;
-   v = (Vector2d*) lua_newuserdata(L, sizeof(Vector2d));
+   vec2 *v;
+   v = (vec2*) lua_newuserdata(L, sizeof(vec2));
    *v = vec;
    luaL_getmetatable(L, VECTOR_METATABLE);
    lua_setmetatable(L, -2);
@@ -175,7 +175,7 @@ int lua_isvector( lua_State *L, int ind )
  */
 static int vectorL_new( lua_State *L )
 {
-   Vector2d v;
+   vec2 v;
    double x, y;
 
    if ((lua_gettop(L) > 1) && lua_isnumber(L,1) && lua_isnumber(L,2)) {
@@ -205,7 +205,7 @@ static int vectorL_new( lua_State *L )
  */
 static int vectorL_newP( lua_State *L )
 {
-   Vector2d v;
+   vec2 v;
    double m, a;
 
    if ((lua_gettop(L) > 1) && lua_isnumber(L,1) && lua_isnumber(L,2)) {
@@ -232,7 +232,7 @@ static int vectorL_newP( lua_State *L )
 static int vectorL_tostring( lua_State *L )
 {
    char buf[STRMAX_SHORT];
-   Vector2d *v = luaL_checkvector(L,1);
+   vec2 *v = luaL_checkvector(L,1);
    snprintf( buf, sizeof(buf), "vec2( %g, %g )", v->x, v->y );
    lua_pushstring(L, buf);
    return 1;
@@ -256,7 +256,7 @@ static int vectorL_tostring( lua_State *L )
  */
 static int vectorL_add( lua_State *L )
 {
-   Vector2d vout, *v1, *v2;
+   vec2 vout, *v1, *v2;
    double x, y;
 
    /* Get self. */
@@ -286,7 +286,7 @@ static int vectorL_add( lua_State *L )
 }
 static int vectorL_add__( lua_State *L )
 {
-   Vector2d *v1, *v2;
+   vec2 *v1, *v2;
    double x, y;
 
    /* Get self. */
@@ -333,7 +333,7 @@ static int vectorL_add__( lua_State *L )
  */
 static int vectorL_sub( lua_State *L )
 {
-   Vector2d vout, *v1, *v2;
+   vec2 vout, *v1, *v2;
    double x, y;
 
    /* Get self. */
@@ -362,7 +362,7 @@ static int vectorL_sub( lua_State *L )
 }
 static int vectorL_sub__( lua_State *L )
 {
-   Vector2d *v1, *v2;
+   vec2 *v1, *v2;
    double x, y;
 
    /* Get self. */
@@ -403,7 +403,7 @@ static int vectorL_sub__( lua_State *L )
  */
 static int vectorL_mul( lua_State *L )
 {
-   Vector2d vout, *v1;
+   vec2 vout, *v1;
    double mod;
 
    /* Get parameters. */
@@ -417,7 +417,7 @@ static int vectorL_mul( lua_State *L )
 }
 static int vectorL_mul__( lua_State *L )
 {
-   Vector2d *v1;
+   vec2 *v1;
    double mod;
 
    /* Get parameters. */
@@ -443,7 +443,7 @@ static int vectorL_mul__( lua_State *L )
  */
 static int vectorL_div( lua_State *L )
 {
-   Vector2d vout, *v1;
+   vec2 vout, *v1;
    double mod;
 
    /* Get parameters. */
@@ -457,7 +457,7 @@ static int vectorL_div( lua_State *L )
 }
 static int vectorL_div__( lua_State *L )
 {
-   Vector2d *v1;
+   vec2 *v1;
    double mod;
 
    /* Get parameters. */
@@ -480,8 +480,8 @@ static int vectorL_div__( lua_State *L )
  */
 static int vectorL_dot( lua_State *L )
 {
-   Vector2d *a = luaL_checkvector(L,1);
-   Vector2d *b = luaL_checkvector(L,2);
+   vec2 *a = luaL_checkvector(L,1);
+   vec2 *b = luaL_checkvector(L,2);
    lua_pushnumber( L, a->x*b->x + a->y*b->y );
    return 1;
 }
@@ -498,7 +498,7 @@ static int vectorL_dot( lua_State *L )
  */
 static int vectorL_get( lua_State *L )
 {
-   Vector2d *v1 = luaL_checkvector(L,1);
+   vec2 *v1 = luaL_checkvector(L,1);
 
    /* Push the vector. */
    lua_pushnumber(L, v1->x);
@@ -520,7 +520,7 @@ static int vectorL_get( lua_State *L )
  */
 static int vectorL_polar( lua_State *L )
 {
-   Vector2d *v1 = luaL_checkvector(L,1);
+   vec2 *v1 = luaL_checkvector(L,1);
    lua_pushnumber(L, VMOD(*v1));
    lua_pushnumber(L, VANGLE(*v1));
    return 2;
@@ -538,7 +538,7 @@ static int vectorL_polar( lua_State *L )
  */
 static int vectorL_set( lua_State *L )
 {
-   Vector2d *v1;
+   vec2 *v1;
    double x, y;
 
    /* Get parameters. */
@@ -562,7 +562,7 @@ static int vectorL_set( lua_State *L )
  */
 static int vectorL_setP( lua_State *L )
 {
-   Vector2d *v1;
+   vec2 *v1;
    double m, a;
 
    /* Get parameters. */
@@ -587,7 +587,7 @@ static int vectorL_setP( lua_State *L )
  */
 static int vectorL_distance( lua_State *L )
 {
-   Vector2d *v1, *v2;
+   vec2 *v1, *v2;
    double dist;
 
    /* Get self. */
@@ -623,7 +623,7 @@ static int vectorL_distance( lua_State *L )
  */
 static int vectorL_distance2( lua_State *L )
 {
-   Vector2d *v1, *v2;
+   vec2 *v1, *v2;
    double dist2;
 
    /* Get self. */
@@ -654,7 +654,7 @@ static int vectorL_distance2( lua_State *L )
  */
 static int vectorL_mod( lua_State *L )
 {
-   Vector2d *v = luaL_checkvector(L,1);
+   vec2 *v = luaL_checkvector(L,1);
    lua_pushnumber(L, VMOD(*v));
    return 1;
 }
@@ -667,7 +667,7 @@ static int vectorL_mod( lua_State *L )
  */
 static int vectorL_normalize( lua_State *L )
 {
-   Vector2d *v = luaL_checkvector(L,1);
+   vec2 *v = luaL_checkvector(L,1);
    double m = VMOD(*v);
    v->x /= m;
    v->y /= m;
