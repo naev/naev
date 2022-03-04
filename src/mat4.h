@@ -16,7 +16,7 @@ typedef struct mat4_ {
 } mat4;
 
 /* Basic operations. */
-void mat4_print( mat4 m );
+void mat4_print( const mat4 *m );
 void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 );
 
 /* Affine transformations. */
