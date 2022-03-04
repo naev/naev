@@ -44,7 +44,7 @@ function create()
    -- Calculate the route, distance, jumps and cargo to take
    local _risk, tier
    mem.dest_planet, mem.dest_sys, mem.num_jumps, mem.travel_dist, mem.cargo, _risk, tier = car.calculateRoute()
-   if mem.dest_planet == nil or mem.dest_sys == system.cur() then
+   if mem.dest_planet == nil or mem.dest_sys == system.cur() or mem.cargo == nil then
       misn.finish(false)
    end
 
@@ -115,7 +115,6 @@ function land()
          tk.msg(_("Deliver the Goods… late"), _([[Landing at the spaceport you see the Traders Guild depot surrounded by a fraught hum of activity. The cargo inspector looks at you with surprise and then anger, "What the hell is this?! This shipment was supposed to be here ages ago! We've been shifting stuff around to make up for it and then you come waltzing in here… where the hell is the employee who was supposed to deliver this stuff?" A group of workers rushes along with you and the inspector and you as you try to explain what happened. "That fool has been causing us all sorts of problems, and passing on the job to someone as incompetent as you is the last straw! I swear!"
     You wait to one side as the cargo is hauled off your ship at breakneck speed and wonder if you should have just dumped the stuff in space. Just as the last of the cargo is taken off your ship, the inspector, who has clearly cooled off a bit, comes up to you and says "Look, I know you were trying to do us a favour but next time don't bother if you can't make it on time. I'm glad you didn't just dump it all into space like some people have done, but I can't pay you for this." He shakes his head and walks away. "That pilot is so fired…"]]))
       end
-      misn.cargoRm(mem.cargo_ID)
       misn.finish(true)
    end
 end
@@ -133,6 +132,5 @@ function tick()
 end
 
 function abort ()
-   faction.modPlayerSingle("Traders Guild", -3)
    misn.finish(false)
 end
