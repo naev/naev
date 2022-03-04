@@ -413,7 +413,7 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   mat4 Hview = mat4_identity();
+   mat4 Hview = *H;
    const vec3 up        = { .v = {0., 0., 1.} };
    const vec3 light_pos = { .v = {4., 2., -20.} };
    const vec3 center    = { .v = {0., 0., 0.} };
@@ -426,7 +426,7 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
    mat4_lookat( &Hview, &light_pos, &center, &up );
    glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
    glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hview.ptr );
-   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
+   //glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
 
