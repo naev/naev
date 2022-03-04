@@ -22,5 +22,6 @@ const mat4 view = mat4(
 
 void main (void)
 {
-   gl_Position = projection * view * model * vec4( vertex, 1.0 );
+   mat4 H      = view * model;
+   gl_Position = projection * H * vec4( vertex, 1.0 );
 }
