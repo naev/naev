@@ -120,6 +120,7 @@ source = files(
    'unidiff.c',
    'union_find.c',
    'utf8.c',
+   'vec2.c',
    'weapon.c',
    'tk/widget/input.c',
    'tk/widget/image.c',
@@ -371,5 +372,6 @@ headers = files(
    'unidiff.h',
    'union_find.h',
    'utf8.h',
+   'vec2.h',
    'weapon.h'
 )
