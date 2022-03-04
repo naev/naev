@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Nexus Drill Lance">
  <general>
-  <typename>Mining Tool</typename>
+  <typename>Mining System</typename>
   <slot>weapon</slot>
   <size>medium</size>
   <mass>100</mass>

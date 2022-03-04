@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spob name="Holly I">
- <pos x="0.000000" y="5000.000000"/>
+<spob name="Holly III">
+ <pos x="4330.000000" y="-2500.000000"/>
  <GFX>
-  <space>G01.webp</space>
-  <exterior>lava.webp</exterior>
+  <space>H01.webp</space>
+  <exterior>desertic.webp</exterior>
  </GFX>
  <presence>
   <faction>Trader</faction>
@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>F</class>
-  <population>6e+06</population>
+  <population>3e+06</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -23,7 +23,7 @@
    <outfits/>
   </services>
   <commodities/>
-  <description>Holly I</description>
+  <description>Holly III</description>
   <bar> TODO </bar>
  </general>
  <tech>

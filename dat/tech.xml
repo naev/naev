@@ -402,6 +402,15 @@
   <item>Grave Beam</item>
   <item>Ragnarok Beam</item>
  </tech>
+ <tech name="Mining 1">
+  <item>Mining Lance MK1</item>
+  <item>S&amp;K Plasma Drill</item>
+ </tech>
+ <tech name="Mining 2">
+  <item>Mining Lance MK2</item>
+  <item>Nexus Drill Lance</item>
+  <item>S&amp;K Heavy Plasma Drill</item>
+ </tech>
 
  <!-- Generic Outfits -->
  <tech name="Crappy Core Systems">
@@ -634,6 +643,11 @@
  <tech name="Criminal Outfits">
   <item>Camouflage Burster</item>
  </tech>
+ <tech name="Mining Outfits">
+  <item>Asteroid Scanner</item>
+  <item>Medium Weapon License</item>
+  <item>Milspec Impacto-Plastic Coating</item>
+ </tech>
  <tech name="Star Maps">
   <item>Map: Nebula Edge</item>
   <item>Map: Dvaered-Soromid trade route</item>
@@ -727,6 +741,16 @@
   <item>Pirate Hyena Bay</item>
   <item>Counterfeit Heavy Weapon License</item>
   <item>Counterfeit Heavy Combat Vessel License</item>
+ </tech>
+ <tech name="Cargo Trader Outfits">
+  <item>Small Cargo Pod</item>
+  <item>Medium Cargo Pod</item>
+  <item>Large Cargo Pod</item>
+  <item>Engines Cargo</item>
+  <item>S&amp;K Small Cargo Hull</item>
+  <item>S&amp;K Medium Cargo Hull</item>
+  <item>S&amp;K Large Cargo Hull</item>
+  <item>Large Civilian Vessel License</item>
  </tech>
 
  <!-- outfits -->

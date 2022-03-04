@@ -13,10 +13,10 @@
  <pos x="42.000000" y="-256.000000"/>
  <spobs>
   <spob>Ivy I</spob>
+  <spob>Ivy Primary Hub</spob>
   <spob>Ivy II</spob>
   <spob>Ivy III</spob>
   <spob>Ivy IV</spob>
-  <spob>Ivy V</spob>
   <spob>Ivy V</spob>
   <spob_virtual>Trade Lane</spob_virtual>
  </spobs>

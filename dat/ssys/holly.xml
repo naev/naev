@@ -28,19 +28,19 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <group>typeA-poor</group>
+   <group>typeC-poor</group>
    <radius>7500.000000</radius>
    <pos x="0.000000" y="0.000000"/>
    <density>0.222222</density>
   </asteroid>
   <asteroid>
-   <group>typeB-standard</group>
+   <group>typeB-poor</group>
    <radius>7250.000000</radius>
    <pos x="0.000000" y="0.000000"/>
    <density>0.222222</density>
   </asteroid>
   <asteroid>
-   <group>typeC-rich</group>
+   <group>typeA-standard</group>
    <radius>7000.000000</radius>
    <pos x="0.000000" y="0.000000"/>
    <density>0.222222</density>
