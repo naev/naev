@@ -438,7 +438,7 @@ static void object_renderMesh( const Object *object, int part, GLfloat alpha )
 
 void object_renderSolidPart( const Object *object, const Solid *solid, const char *part_name, GLfloat alpha, double scale )
 {
-   mat4 projection, model;
+   mat4 view, projection, model, ortho;
    const GLfloat od = NAEV_ORTHO_DIST;
    const GLfloat os = NAEV_ORTHO_SCALE / scale;
    double x, y; //, r;
@@ -458,12 +458,13 @@ void object_renderSolidPart( const Object *object, const Solid *solid, const cha
 
    projection = gl_gameToScreenMatrix(gl_view_matrix);
    projection = mat4_translate(projection, x, y, 0.);
-   projection = mat4_mul(projection, mat4_ortho(-os, os, -os, os, od, -od));
+   ortho = mat4_ortho(-os, os, -os, os, od, -od);
+   mat4_mul( &view, &projection, &ortho );
    //projection = mat4_rotate(projection, M_PI/4., 1., 0., 0.);
 
    model = mat4_rotate(mat4_identity(), M_PI/2. + solid->dir, 0., 1., 0.);
 
-   mat4_uniform(shaders.material.projection, projection);
+   mat4_uniform(shaders.material.projection, view);
    mat4_uniform(shaders.material.model, model);
 
    /* Actually need depth testing now. */

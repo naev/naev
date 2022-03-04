@@ -171,7 +171,8 @@ static int transformL_mul( lua_State *L )
 {
    mat4 *A = luaL_checktransform(L, 1);
    mat4 *B = luaL_checktransform(L, 2);
-   mat4 C = mat4_mul( *A, *B );
+   mat4 C;
+   mat4_mul( &C, A, B );
    lua_pushtransform(L, C);
    return 1;
 }

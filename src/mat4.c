@@ -15,36 +15,43 @@
 
 void mat4_print( mat4 m )
 {
-   for (int i = 0; i < 4; i++) {
-      for (int j = 0; j < 4; j++) {
+   for (int i=0; i<4; i++) {
+      for (int j=0; j<4; j++) {
          printf("%6.1f ", m.m[j][i]);
       }
       printf("\n");
    }
 }
 
-mat4 mat4_mul( mat4 m1, mat4 m2 )
+/**
+ * @brief Multiplies two matrices (out = m1 * m2).
+ *
+ * Note that out should not be neither m1 nor m2.
+ *
+ *    @param[out] out Output matrix.
+ *    @param m1 First matrix to mulitply.
+ *    @param m2 Second matrix to multiply.
+ */
+void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 )
 {
-   mat4 m = {{{0}}};
-
-   for (int i = 0; i < 4; i++) {
-      for (int j = 0; j < 4; j++) {
-         for (int k = 0; k < 4; k++) {
-            m.m[j][i] += m1.m[k][i] * m2.m[j][k];
-         }
+   for (int i=0; i<4; i++) {
+      for (int j=0; j<4; j++) {
+         GLfloat v = 0.;
+         for (int k=0; k<4; k++)
+            v += m1->m[k][i] * m2->m[j][k];
+         out->m[j][i] = v;
       }
    }
-
-   return m;
 }
 
-mat4 mat4_identity( void )
+mat4 mat4_identity (void)
 {
-   mat4 m = {{{0}}};
-   m.m[0][0] = 1.;
-   m.m[1][1] = 1.;
-   m.m[2][2] = 1.;
-   m.m[3][3] = 1.;
+   const mat4 m = { .m = {
+      { 1., 0., 0., 0. },
+      { 0., 1., 0., 0. },
+      { 0., 0., 1., 0. },
+      { 0., 0., 0., 1. }
+   } };
    return m;
 }
 
@@ -151,7 +158,7 @@ mat4 mat4_rotate2dv( mat4 m, double c, double s )
 mat4 mat4_rotate( mat4 m, double angle, double x, double y, double z )
 {
    double norm, c, s;
-   mat4 rot;
+   mat4 rot, out;
 
    norm = sqrt( pow2(x) + pow2(y) + pow2(z) );
    c = cos(angle);
@@ -176,7 +183,8 @@ mat4 mat4_rotate( mat4 m, double angle, double x, double y, double z )
    rot.m[3][2] = 0.;
    rot.m[3][3] = 1.;
 
-   return mat4_mul( m, rot );
+   mat4_mul( &out, &m, &rot );
+   return out;
 }
 
 GLfloat *mat4_ptr( mat4 *m )

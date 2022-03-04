@@ -11,7 +11,7 @@ typedef struct mat4_ {
 } mat4;
 
 void mat4_print( mat4 m );
-__attribute__((const)) mat4 mat4_mul( mat4 m1, mat4 m2 );
+void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 );
 __attribute__((const)) mat4 mat4_identity( void );
 __attribute__((const)) mat4 mat4_ortho( double left, double right,
                            double bottom, double top, double nearVal, double farVal );
