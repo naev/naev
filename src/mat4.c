@@ -275,3 +275,42 @@ mat4 mat4_lookat( const vec3 *eye, const vec3 *center, const vec3 *up )
 
    return H;
 }
+
+/**
+ * @brief Creates a matrix with a perspective transformation.
+ *
+ *    @param fov Field of view.
+ *    @param aspect Aspect ratio.
+ *    @param near Near plane.
+ *    @param far Far plane.
+ *    @return The newly created matrix.
+ */
+mat4 mat4_perspective( double fov, double aspect, double near, double far )
+{
+   mat4 H;
+   double c = 1. / tan( fov * 0.5 );
+   double d = far - near;
+
+   /* First column. */
+   H.m[0][0] = c / aspect;
+   H.m[0][1] = 0.;
+   H.m[0][2] = 0.;
+   H.m[0][3] = 0.;
+   /* Second column. */
+   H.m[1][0] = 0.;
+   H.m[1][1] = c;
+   H.m[1][2] = 0.;
+   H.m[1][3] = 0.;
+   /* Third column. */
+   H.m[2][0] = 0.;
+   H.m[2][1] = 0.;
+   H.m[2][2] = -(far+near) / d;
+   H.m[2][3] = -1.;
+   /* Fourth column. */
+   H.m[3][0] = 0.;
+   H.m[3][1] = 0.;
+   H.m[3][2] = -2.*far*near / d;
+   H.m[3][3] = 0.;
+
+   return H;
+}
