@@ -1,8 +1,16 @@
-#include "vec3.h"
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+/** @cond */
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "naev.h"
+/** @endcond */
 
 #include <math.h>
 
-#include "common.h"
+#include "vec3.h"
 
 void vec3_add( vec3 *out, const vec3 *a, const vec3 *b )
 {

@@ -121,6 +121,7 @@ source = files(
    'union_find.c',
    'utf8.c',
    'vec2.c',
+   'vec3.c',
    'weapon.c',
    'tk/widget/input.c',
    'tk/widget/image.c',
@@ -373,5 +374,6 @@ headers = files(
    'union_find.h',
    'utf8.h',
    'vec2.h',
+   'vec3.h',
    'weapon.h'
 )

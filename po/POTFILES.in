@@ -3105,6 +3105,8 @@ src/utf8.c
 src/utf8.h
 src/vec2.c
 src/vec2.h
+src/vec3.c
+src/vec3.h
 src/weapon.c
 src/weapon.h
 dat/outfits/bioship/generate.py
