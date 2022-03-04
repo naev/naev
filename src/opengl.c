@@ -453,7 +453,6 @@ int gl_init (void)
    gl_checkErr();
 
    /* Initialize subsystems.*/
-   gl_initMatrix();
    gl_initTextures();
    gl_initVBO();
    gl_initRender();
@@ -646,7 +645,6 @@ void gl_exit (void)
    gl_exitRender();
    gl_exitVBO();
    gl_exitTextures();
-   gl_exitMatrix();
 
    shaders_unload();
 

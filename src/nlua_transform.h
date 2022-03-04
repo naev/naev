@@ -5,7 +5,7 @@
 
 #include "nlua.h"
 #include "opengl.h"
-#include "opengl_matrix.h"
+#include "mat4.h"
 
 #define TRANSFORM_METATABLE      "transform" /**< Transform metatable identifier. */
 

@@ -2,7 +2,7 @@
  * See Licensing and Copyright notice in naev.h
  */
 /**
- * @file opengl_matrix.c
+ * @file mat4.c
  *
  * @brief Handles OpenGL matrix stuff.
  */
@@ -12,23 +12,6 @@
 
 #include "log.h"
 #include "opengl.h"
-
-/**
- * @brief Initializes the OpenGL matrix subsystem.
- *
- *    @return 0 on success.
- */
-int gl_initMatrix (void)
-{
-   return 0;
-}
-
-/**
- * @brief Exits the OpenGL matrix subsystem.
- */
-void gl_exitMatrix (void)
-{
-}
 
 void mat4_Print( mat4 m )
 {

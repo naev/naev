@@ -14,12 +14,11 @@
 
 #include "colour.h"
 /* We put all the other opengl stuff here to only have to include one header.  */
-#include "opengl_matrix.h"
 #include "opengl_render.h"
 #include "opengl_shader.h"
 #include "opengl_tex.h"
 #include "opengl_vbo.h"
-#include "physics.h"
+#include "mat4.h"
 #include "shaders.gen.h"
 
 #define OPENGL_NUM_FBOS    3 /**< Number of FBOs to allocate and deal with. */

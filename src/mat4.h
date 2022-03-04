@@ -3,14 +3,6 @@
  */
 #pragma once
 
-#include "opengl.h"
-
-/*
- * Init/cleanup.
- */
-int gl_initMatrix (void);
-void gl_exitMatrix (void);
-
 typedef struct mat4_ {
    /* Column-major; m[x][y] */
    GLfloat m[4][4];

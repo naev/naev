@@ -2867,6 +2867,8 @@ src/map_overlay.c
 src/map_overlay.h
 src/map_system.c
 src/map_system.h
+src/mat4.c
+src/mat4.h
 src/md5.c
 src/md5.h
 src/menu.c
@@ -2992,8 +2994,6 @@ src/object.c
 src/object.h
 src/opengl.c
 src/opengl.h
-src/opengl_matrix.c
-src/opengl_matrix.h
 src/opengl_render.c
 src/opengl_render.h
 src/opengl_shader.c

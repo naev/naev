@@ -7,6 +7,7 @@
 #include "opengl_tex.h"
 #include "opengl_vbo.h"
 #include "shaders.gen.h"
+#include "mat4.h"
 
 /*
  * Init/cleanup.
