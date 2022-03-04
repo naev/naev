@@ -10,8 +10,9 @@
 #include "naev.h"
 /** @endcond */
 
-#include "log.h"
-#include "opengl.h"
+#include <stdio.h>
+
+#include "mat4.h"
 
 void mat4_print( mat4 m )
 {
@@ -83,6 +84,32 @@ mat4 mat4_ortho( double left, double right,
    mat.m[3][2] = tz;
 
    return mat;
+}
+
+/**
+ * @brief Applies a transformation to another, storing the result in the left hand side.
+ *
+ *    @param[in, out] lhs Left hand side matrix.
+ *    @param[in] rhs Right hand side matrix.
+ */
+void mat4_apply( mat4 *lhs, const mat4 *rhs )
+{
+   for (int i=0; i<4; i++) {
+      float l0 = lhs->m[i][0];
+      float l1 = lhs->m[i][1];
+      float l2 = lhs->m[i][2];
+
+      float r0 = l0 * rhs->m[0][0] + l1 * rhs->m[1][0] + l2 * rhs->m[2][0];
+      float r1 = l0 * rhs->m[0][1] + l1 * rhs->m[1][1] + l2 * rhs->m[2][1];
+      float r2 = l0 * rhs->m[0][2] + l1 * rhs->m[1][2] + l2 * rhs->m[2][2];
+
+      lhs->m[i][0] = r0;
+      lhs->m[i][1] = r1;
+      lhs->m[i][2] = r2;
+   }
+   lhs->m[3][0] += rhs->m[3][0];
+   lhs->m[3][1] += rhs->m[3][1];
+   lhs->m[3][2] += rhs->m[3][2];
 }
 
 /**
@@ -205,9 +232,4 @@ void mat4_rotate( mat4 *m, double angle, double x, double y, double z )
 GLfloat *mat4_ptr( mat4 *m )
 {
    return (GLfloat*)m->m;
-}
-
-void mat4_uniform( GLint location, mat4 m )
-{
-   glUniformMatrix4fv(location, 1, GL_FALSE, mat4_ptr(&m));
 }

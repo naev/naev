@@ -809,7 +809,7 @@ void gui_render( double dt )
       mat4_scale( &projection, gl_screen.nw, gl_screen.nh, 1. );
 
       /* Pass stuff over. */
-      mat4_uniform( shaders.jump.projection, projection );
+      gl_uniformMat4( shaders.jump.projection, projection );
       glUniform1f( shaders.jump.progress, fade );
       glUniform1f( shaders.jump.direction, direction );
       glUniform2f( shaders.jump.dimensions, gl_screen.nw, gl_screen.nh );
