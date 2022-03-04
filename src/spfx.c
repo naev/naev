@@ -833,10 +833,11 @@ void spfx_trail_draw( const Trail_spfx* trail )
       spp = &styles[tpp->mode];
 
       /* Set vertex. */
-      projection = mat4_translate(gl_view_matrix, x1, y1, 0);
+      projection = gl_view_matrix;
+      mat4_translate( &projection, x1, y1, 0. );
       projection = mat4_rotate2dv(projection, (x2-x1)/s, (y2-y1)/s);
-      projection = mat4_scale(projection, s, z*(sp->thick+spp->thick), 1);
-      projection = mat4_translate(projection, 0., -.5, 0);
+      mat4_scale( &projection, s, z*(sp->thick+spp->thick), 1. );
+      mat4_translate( &projection, 0., -0.5, 0. );
 
       /* Set uniforms. */
       mat4_uniform(shaders.trail.projection, projection);
@@ -1046,8 +1047,8 @@ void spfx_render( int layer )
 
          /* Set up the vertex. */
          projection = gl_view_matrix;
-         projection = mat4_translate(projection, x, y, 0);
-         projection = mat4_scale(projection, w, h, 1);
+         mat4_translate( &projection, x, y, 0. );
+         mat4_scale( &projection, w, h, 1. );
          glEnableVertexAttribArray( effect->vertex );
          gl_vboActivateAttribOffset( gl_squareVBO, effect->vertex,
                0, 2, GL_FLOAT, 0 );

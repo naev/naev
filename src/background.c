@@ -159,8 +159,9 @@ void background_renderDust( const double dt )
    /* Do some scaling for now. */
    z = cam_getZoom();
    z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
-   projection = mat4_translate( gl_view_matrix, SCREEN_W/2., SCREEN_H/2., 0 );
-   projection = mat4_scale( projection, z, z, 1 );
+   projection = gl_view_matrix;
+   mat4_translate( &projection, SCREEN_W/2., SCREEN_H/2., 0 );
+   mat4_scale( &projection, z, z, 1 );
 
    /* Decide on shade mode. */
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&

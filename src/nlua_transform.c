@@ -215,7 +215,9 @@ static int transformL_scale( lua_State *L )
    double x = luaL_checknumber(L,2);
    double y = luaL_checknumber(L,3);
    double z = luaL_optnumber(L,4,1.);
-   lua_pushtransform(L, mat4_scale( *M, x, y, z ) );
+   mat4 out = *M;
+   mat4_scale( &out, x, y, z );
+   lua_pushtransform(L, out);
    return 1;
 }
 
@@ -235,7 +237,9 @@ static int transformL_translate( lua_State *L )
    double x = luaL_checknumber(L,2);
    double y = luaL_checknumber(L,3);
    double z = luaL_optnumber(L,4,0.);
-   lua_pushtransform(L, mat4_translate( *M, x, y, z ) );
+   mat4 out = *M;
+   mat4_translate( &out, x, y, z );
+   lua_pushtransform(L, out);
    return 1;
 }
 

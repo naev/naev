@@ -742,10 +742,11 @@ static void weapon_renderBeam( Weapon* w, const double dt )
    /* Position. */
    gl_gameToScreenCoords( &x, &y, w->solid->pos.x, w->solid->pos.y );
 
-   projection = mat4_translate( gl_view_matrix, x, y, 0. );
+   projection = gl_view_matrix;
+   mat4_translate( &projection, x, y, 0. );
    projection = mat4_rotate2d( projection, w->solid->dir );
-   projection = mat4_scale( projection, w->outfit->u.bem.range*z,w->outfit->u.bem.width * z, 1 );
-   projection = mat4_translate( projection, 0., -0.5, 0. );
+   mat4_scale( &projection, w->outfit->u.bem.range*z,w->outfit->u.bem.width * z, 1. );
+   mat4_translate( &projection, 0., -0.5, 0. );
 
    /* Set the vertex. */
    glEnableVertexAttribArray( shaders.beam.vertex );

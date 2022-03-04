@@ -515,7 +515,7 @@ void gl_viewport( int x, int y, int w, int h )
    /* Take into account possible translation. */
    gl_screen.x = x;
    gl_screen.y = y;
-   proj = mat4_translate(proj, x, y, 0);
+   mat4_translate( &proj, x, y, 0. );
 
    /* Set screen size. */
    gl_screen.w = w;
@@ -523,7 +523,7 @@ void gl_viewport( int x, int y, int w, int h )
 
    /* Take into account possible scaling. */
    if (gl_screen.scale != 1.)
-      proj = mat4_scale(proj, gl_screen.wscale, gl_screen.hscale, 1);
+      mat4_scale( &proj, gl_screen.wscale, gl_screen.hscale, 1. );
 
    gl_view_matrix = proj;
 }

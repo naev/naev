@@ -806,7 +806,7 @@ void gui_render( double dt )
       gl_vboActivateAttribOffset( gl_squareVBO, shaders.jump.vertex, 0, 2, GL_FLOAT, 0 );
 
       /* Set up the projection. */
-      projection = mat4_scale(projection, gl_screen.nw, gl_screen.nh, 1. );
+      mat4_scale( &projection, gl_screen.nw, gl_screen.nh, 1. );
 
       /* Pass stuff over. */
       mat4_uniform( shaders.jump.projection, projection );
@@ -887,11 +887,11 @@ void gui_radarRender( double x, double y )
    view_matrix_prev = gl_view_matrix;
    if (radar->shape==RADAR_RECT) {
       gl_clipRect( x, y, radar->w, radar->h );
-      gl_view_matrix = mat4_translate(gl_view_matrix,
+      mat4_translate( &gl_view_matrix,
             x + radar->w/2., y + radar->h/2., 0 );
    }
    else if (radar->shape==RADAR_CIRCLE)
-      gl_view_matrix = mat4_translate(gl_view_matrix,
+      mat4_translate( &gl_view_matrix,
             x, y, 0 );
 
    /*
@@ -943,6 +943,7 @@ void gui_radarRender( double x, double y )
    /* Render the player. */
    gui_renderPlayer( radar->res, 0 );
 
+   /* Undo the horrible hack. */
    gl_view_matrix = view_matrix_prev;
    if (radar->shape==RADAR_RECT)
       gl_unclipRect();

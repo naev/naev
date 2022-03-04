@@ -44,6 +44,11 @@ void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 )
    }
 }
 
+/**
+ * @brief Creates an identity matrix.
+ *
+ *    @return A new identity matrix.
+ */
 mat4 mat4_identity (void)
 {
    const mat4 m = { .m = {
@@ -55,6 +60,9 @@ mat4 mat4_identity (void)
    return m;
 }
 
+/**
+ * @brief Creates an orthographic projection matrix.
+ */
 mat4 mat4_ortho( double left, double right,
       double bottom, double top, double nearVal, double farVal )
 {
@@ -77,21 +85,33 @@ mat4 mat4_ortho( double left, double right,
    return mat;
 }
 
-mat4 mat4_scale( mat4 m, double x, double y, double z )
+/**
+ * @brief Scales a homogeneous transformation matrix.
+ *
+ *    @param[in, out] m Matrix to apply scaling to.
+ *    @param x Scaling on X axis.
+ *    @param y Scaling on Y axis.
+ *    @param z Scaling on Z axis.
+ */
+void mat4_scale( mat4 *m, double x, double y, double z )
 {
-   for (int i = 0; i < 4; i++) {
-      m.m[0][i] *= x;
-      m.m[1][i] *= y;
-      m.m[2][i] *= z;
+   for (int i=0; i<4; i++) {
+      m->m[0][i] *= x;
+      m->m[1][i] *= y;
+      m->m[2][i] *= z;
    }
-   return m;
 }
 
-mat4 mat4_translate( mat4 m, double x, double y, double z )
+/**
+ * @brief Translates a homogenous transformation matrix.
+ *
+ *    @param[in, out] m Matrix to apply scaling to.
+ *
+ */
+void mat4_translate( mat4 *m, double x, double y, double z )
 {
-   for (int i = 0; i < 4; i++)
-      m.m[3][i] += m.m[0][i] * x + m.m[1][i] * y + m.m[2][i] * z;
-   return m;
+   for (int i=0; i<4; i++)
+      m->m[3][i] += m->m[0][i] * x + m->m[1][i] * y + m->m[2][i] * z;
 }
 
 /**
