@@ -118,7 +118,7 @@ typedef struct Mesh_ {
 struct Node_;
 typedef struct Node_ {
    char *name;       /**< Name information. */
-   GLfloat H[16];    /**< Homogeneous transform. */
+   mat4 H;           /**< Homogeneous transform. */
    Mesh *mesh;       /**< Meshes. */
    size_t nmesh;     /**< Number of meshes. */
    struct Node_ *children; /**< Children mesh. */
@@ -327,8 +327,8 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
 {
    cgltf_mesh *cmesh = cnode->mesh;
    /* Get transform for node. */
-   cgltf_node_transform_local( cnode, node->H );
-   //cgltf_node_transform_world( cnode, node->H );
+   cgltf_node_transform_local( cnode, node->H.ptr );
+   //cgltf_node_transform_world( cnode, node->H.ptr );
 
    if (cmesh == NULL) {
       node->nmesh = 0;
@@ -403,7 +403,7 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
 /**
  * @brief Renders a mesh shadow with a transform.
  */
-static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const GLfloat H[16] )
+static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const mat4 *H )
 {
    (void) obj;
    const Shader *shd = &shadow_shader;
@@ -437,7 +437,7 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
    //matmul( Hview, H );
    glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
    glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hview );
-   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H );
+   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
 
@@ -456,7 +456,7 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
 /**
  * @brief Renders a mesh with a transform.
  */
-static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloat H[16] )
+static void object_renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
 {
    const Material *mat;
    const Shader *shd = &object_shader;
@@ -505,7 +505,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    lookat( Hshadow, &light_pos, &center, &up );
    glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
    glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow );
-   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H );
+   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
    glUniform1f( shd->metallicFactor, mat->metallicFactor );
    glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
    glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
@@ -624,22 +624,21 @@ static void lookat( GLfloat H[16], const vec3 *eye, const vec3 *center, const ve
 /**
  * @brief Recursive rendering to the shadow buffer.
  */
-static void object_renderNodeShadow( const Object *obj, const Node *node, const GLfloat H[16] )
+static void object_renderNodeShadow( const Object *obj, const Node *node, const mat4 *H )
 {
    /* Multiply matrices, can be animated so not caching. */
    /* TODO cache when not animated. */
    //matmul( H, node->H );
-   GLfloat HH[16];
-   memcpy( HH, node->H, sizeof(GLfloat)*16 );
-   matmul( HH, H );
+   mat4 HH = node->H;
+   mat4_apply( &HH, H );
 
    /* Draw meshes. */
    for (size_t i=0; i<node->nmesh; i++)
-      object_renderMeshShadow( obj, &node->mesh[i], HH );
+      object_renderMeshShadow( obj, &node->mesh[i], &HH );
 
    /* Draw children. */
    for (size_t i=0; i<node->nchildren; i++)
-      object_renderNodeShadow( obj, &node->children[i], HH );
+      object_renderNodeShadow( obj, &node->children[i], &HH );
 
    gl_checkErr();
 }
@@ -647,27 +646,26 @@ static void object_renderNodeShadow( const Object *obj, const Node *node, const 
 /**
  * @brief Recursive rendering of a mesh.
  */
-void object_renderNodeMesh( const Object *obj, const Node *node, const GLfloat H[16] )
+void object_renderNodeMesh( const Object *obj, const Node *node, const mat4 *H )
 {
    /* Multiply matrices, can be animated so not caching. */
    /* TODO cache when not animated. */
    //matmul( H, node->H );
-   GLfloat HH[16];
-   memcpy( HH, node->H, sizeof(GLfloat)*16 );
-   matmul( HH, H );
+   mat4 HH = node->H;
+   mat4_apply( &HH, H );
 
    /* Draw meshes. */
    for (size_t i=0; i<node->nmesh; i++)
-      object_renderMesh( obj, &node->mesh[i], HH );
+      object_renderMesh( obj, &node->mesh[i], &HH );
 
    /* Draw children. */
    for (size_t i=0; i<node->nchildren; i++)
-      object_renderNodeMesh( obj, &node->children[i], HH );
+      object_renderNodeMesh( obj, &node->children[i], &HH );
 
    gl_checkErr();
 }
 
-void object_renderNode( const Object *obj, const Node *node, const GLfloat H[16] )
+void object_renderNode( const Object *obj, const Node *node, const mat4 *H )
 {
    object_renderNodeShadow( obj, node, H );
    object_renderNodeMesh( obj, node, H );
@@ -679,12 +677,10 @@ void object_renderNode( const Object *obj, const Node *node, const GLfloat H[16]
  *    @param obj Object to render.
  *    @param H Transformation to apply (or NULL to use identity).
  */
-void object_render( const Object *obj, const GLfloat *H )
+void object_render( const Object *obj, const mat4 *H )
 {
-   const GLfloat I[16] = { 1.0, 0.0, 0.0, 0.0,
-                           0.0, 1.0, 0.0, 0.0,
-                           0.0, 0.0, 1.0, 0.0,
-                           0.0, 0.0, 0.0, 1.0 };
+   const mat4 I = mat4_identity();
+
    /* Depth testing. */
    glEnable( GL_DEPTH_TEST );
    glDepthFunc( GL_LESS );
@@ -694,7 +690,7 @@ void object_render( const Object *obj, const GLfloat *H )
    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
    for (size_t i=0; i<obj->nnodes; i++)
-      object_renderNode( obj, &obj->nodes[i], (H!=NULL) ? H : I );
+      object_renderNode( obj, &obj->nodes[i], (H!=NULL) ? H : &I );
 
    glDisable( GL_DEPTH_TEST );
 }

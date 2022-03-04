@@ -10,6 +10,7 @@
 
 #include "gltf.h"
 #include "shader_min.h"
+#include "mat4.h"
 
 static void matmul( GLfloat H[16], const GLfloat R[16] )
 {
@@ -151,7 +152,9 @@ int main( int argc, char *argv[] )
       };
       matmul( Hy, Hx );
 
-      object_render( obj, Hy );
+      mat4 H;
+      memcpy( &H, Hy, sizeof(mat4) );
+      object_render( obj, &H );
 
       if (rendermode) {
          glClear( GL_COLOR_BUFFER_BIT );
