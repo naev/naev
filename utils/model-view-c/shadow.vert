@@ -1,13 +1,11 @@
-uniform mat4 projection = mat4(
+const mat4 I = mat4(
    1.0, 0.0, 0.0, 0.0,
    0.0, 1.0, 0.0, 0.0,
    0.0, 0.0, 1.0, 0.0,
    0.0, 0.0, 0.0, 1.0 );
-uniform mat4 model = mat4(
-   1.0, 0.0, 0.0, 0.0,
-   0.0, 1.0, 0.0, 0.0,
-   0.0, 0.0, 1.0, 0.0,
-   0.0, 0.0, 0.0, 1.0 );
+
+uniform mat4 projection = I;
+uniform mat4 model = I;
 
 in vec3 vertex;
 

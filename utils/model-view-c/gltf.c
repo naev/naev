@@ -418,13 +418,13 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
    const vec3 light_pos = { .v = {4., 2., -20.} };
    const vec3 center    = { .v = {0., 0., 0.} };
    const GLfloat sca = 0.1;
-   const GLfloat Hprojection[16] = {
-      sca, 0.0, 0.0, 0.0,
-      0.0, sca, 0.0, 0.0,
-      0.0, 0.0, sca, 0.0,
-      0.0, 0.0, 0.0, 1.0 };
+   const mat4 Hprojection = { .m = {
+      { sca, 0.0, 0.0, 0.0 },
+      { 0.0, sca, 0.0, 0.0 },
+      { 0.0, 0.0, sca, 0.0 },
+      { 0.0, 0.0, 0.0, 1.0 } } };
    mat4_lookat( &Hview, &light_pos, &center, &up );
-   glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
+   glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection.ptr );
    glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hview.ptr );
    //glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
 
@@ -482,17 +482,17 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const mat4 *
    /* Set up shader. */
    glUseProgram( shd->program );
    mat4 Hshadow = mat4_identity();
-   const vec3 up = { .v = {0., 0., 1.} };
+   const vec3 up        = { .v = {0., 0., 1.} };
    const vec3 light_pos = { .v = {4., 2., -20.} };
-   const vec3 center = { .v = {0., 0., 0.} };
+   const vec3 center    = { .v = {0., 0., 0.} };
    const GLfloat sca = 0.1;
-   const GLfloat Hprojection[16] = {
-      sca, 0.0, 0.0, 0.0,
-      0.0, sca, 0.0, 0.0,
-      0.0, 0.0, sca, 0.0,
-      0.0, 0.0, 0.0, 1.0 };
+   const mat4 Hprojection = { .m = {
+      { sca, 0.0, 0.0, 0.0 },
+      { 0.0, sca, 0.0, 0.0 },
+      { 0.0, 0.0, sca, 0.0 },
+      { 0.0, 0.0, 0.0, 1.0 } } };
    mat4_lookat( &Hshadow, &light_pos, &center, &up );
-   glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
+   glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection.ptr );
    glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow.ptr );
    glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
    glUniform1f( shd->metallicFactor, mat->metallicFactor );
