@@ -1878,13 +1878,13 @@ void pilot_render( Pilot* p, const double dt )
       gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
 
       projection = gl_view_matrix;
-      projection = mat4_Translate(projection, x + (1.-scale)*z*w/2., y + (1.-scale)*z*h/2., 0);
-      projection = mat4_Scale(projection, scale*z*w, scale*z*h, 1);
-      mat4_Uniform(ed->projection, projection);
+      projection = mat4_translate(projection, x + (1.-scale)*z*w/2., y + (1.-scale)*z*h/2., 0);
+      projection = mat4_scale(projection, scale*z*w, scale*z*h, 1);
+      mat4_uniform(ed->projection, projection);
 
-      tex_mat = mat4_Identity();
-      tex_mat = mat4_Scale(tex_mat, w/SCREEN_W, h/SCREEN_H, 1);
-      mat4_Uniform(ed->tex_mat, tex_mat);
+      tex_mat = mat4_identity();
+      tex_mat = mat4_scale(tex_mat, w/SCREEN_W, h/SCREEN_H, 1);
+      mat4_uniform(ed->tex_mat, tex_mat);
 
       glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
       glUniform1f( ed->u_timer, e->timer );

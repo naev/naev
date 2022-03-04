@@ -833,13 +833,13 @@ void spfx_trail_draw( const Trail_spfx* trail )
       spp = &styles[tpp->mode];
 
       /* Set vertex. */
-      projection = mat4_Translate(gl_view_matrix, x1, y1, 0);
-      projection = mat4_Rotate2dv(projection, (x2-x1)/s, (y2-y1)/s);
-      projection = mat4_Scale(projection, s, z*(sp->thick+spp->thick), 1);
-      projection = mat4_Translate(projection, 0., -.5, 0);
+      projection = mat4_translate(gl_view_matrix, x1, y1, 0);
+      projection = mat4_rotate2dv(projection, (x2-x1)/s, (y2-y1)/s);
+      projection = mat4_scale(projection, s, z*(sp->thick+spp->thick), 1);
+      projection = mat4_translate(projection, 0., -.5, 0);
 
       /* Set uniforms. */
-      mat4_Uniform(shaders.trail.projection, projection);
+      mat4_uniform(shaders.trail.projection, projection);
       gl_uniformColor(shaders.trail.c1, &sp->col);
       gl_uniformColor(shaders.trail.c2, &spp->col);
       glUniform1f(shaders.trail.t1, tp->t);
@@ -1046,14 +1046,14 @@ void spfx_render( int layer )
 
          /* Set up the vertex. */
          projection = gl_view_matrix;
-         projection = mat4_Translate(projection, x, y, 0);
-         projection = mat4_Scale(projection, w, h, 1);
+         projection = mat4_translate(projection, x, y, 0);
+         projection = mat4_scale(projection, w, h, 1);
          glEnableVertexAttribArray( effect->vertex );
          gl_vboActivateAttribOffset( gl_squareVBO, effect->vertex,
                0, 2, GL_FLOAT, 0 );
 
          /* Set shader uniforms. */
-         mat4_Uniform(effect->projection, projection);
+         mat4_uniform(effect->projection, projection);
          glUniform1f(effect->u_time, spfx->time);
          glUniform1f(effect->u_r, spfx->unique);
          glUniform1f(effect->u_size, effect->size);

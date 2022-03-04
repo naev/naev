@@ -13,7 +13,7 @@
 #include "log.h"
 #include "opengl.h"
 
-void mat4_Print( mat4 m )
+void mat4_print( mat4 m )
 {
    for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 4; j++) {
@@ -23,7 +23,7 @@ void mat4_Print( mat4 m )
    }
 }
 
-mat4 mat4_Mult( mat4 m1, mat4 m2 )
+mat4 mat4_mul( mat4 m1, mat4 m2 )
 {
    mat4 m = {{{0}}};
 
@@ -38,7 +38,7 @@ mat4 mat4_Mult( mat4 m1, mat4 m2 )
    return m;
 }
 
-mat4 mat4_Identity( void )
+mat4 mat4_identity( void )
 {
    mat4 m = {{{0}}};
    m.m[0][0] = 1.;
@@ -48,7 +48,7 @@ mat4 mat4_Identity( void )
    return m;
 }
 
-mat4 mat4_Ortho( double left, double right,
+mat4 mat4_ortho( double left, double right,
       double bottom, double top, double nearVal, double farVal )
 {
    mat4 mat = {{{0}}};
@@ -70,7 +70,7 @@ mat4 mat4_Ortho( double left, double right,
    return mat;
 }
 
-mat4 mat4_Scale( mat4 m, double x, double y, double z )
+mat4 mat4_scale( mat4 m, double x, double y, double z )
 {
    for (int i = 0; i < 4; i++) {
       m.m[0][i] *= x;
@@ -80,7 +80,7 @@ mat4 mat4_Scale( mat4 m, double x, double y, double z )
    return m;
 }
 
-mat4 mat4_Translate( mat4 m, double x, double y, double z )
+mat4 mat4_translate( mat4 m, double x, double y, double z )
 {
    for (int i = 0; i < 4; i++)
       m.m[3][i] += m.m[0][i] * x + m.m[1][i] * y + m.m[2][i] * z;
@@ -94,7 +94,7 @@ mat4 mat4_Translate( mat4 m, double x, double y, double z )
  *    @param angle Angle in radians.
  *    @return New projection matrix.
  */
-mat4 mat4_Rotate2d( mat4 m, double angle )
+mat4 mat4_rotate2d( mat4 m, double angle )
 {
    double c, s, x, y;
 
@@ -121,7 +121,7 @@ mat4 mat4_Rotate2d( mat4 m, double angle )
  *    @param s Angle sine (or y coordinate of the vector).
  *    @return New projection matrix.
  */
-mat4 mat4_Rotate2dv( mat4 m, double c, double s )
+mat4 mat4_rotate2dv( mat4 m, double c, double s )
 {
    double x, y;
 
@@ -148,7 +148,7 @@ mat4 mat4_Rotate2dv( mat4 m, double c, double s )
  *    @param z Z component of the axis of rotation.
  *    @return New projection matrix.
  */
-mat4 mat4_Rotate( mat4 m, double angle, double x, double y, double z )
+mat4 mat4_rotate( mat4 m, double angle, double x, double y, double z )
 {
    double norm, c, s;
    mat4 rot;
@@ -176,15 +176,15 @@ mat4 mat4_Rotate( mat4 m, double angle, double x, double y, double z )
    rot.m[3][2] = 0.;
    rot.m[3][3] = 1.;
 
-   return mat4_Mult( m, rot );
+   return mat4_mul( m, rot );
 }
 
-GLfloat *mat4_Ptr( mat4 *m )
+GLfloat *mat4_ptr( mat4 *m )
 {
    return (GLfloat*)m->m;
 }
 
-void mat4_Uniform( GLint location, mat4 m )
+void mat4_uniform( GLint location, mat4 m )
 {
-   glUniformMatrix4fv(location, 1, GL_FALSE, mat4_Ptr(&m));
+   glUniformMatrix4fv(location, 1, GL_FALSE, mat4_ptr(&m));
 }

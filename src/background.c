@@ -159,8 +159,8 @@ void background_renderDust( const double dt )
    /* Do some scaling for now. */
    z = cam_getZoom();
    z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
-   projection = mat4_Translate( gl_view_matrix, SCREEN_W/2., SCREEN_H/2., 0 );
-   projection = mat4_Scale( projection, z, z, 1 );
+   projection = mat4_translate( gl_view_matrix, SCREEN_W/2., SCREEN_H/2., 0 );
+   projection = mat4_scale( projection, z, z, 1 );
 
    /* Decide on shade mode. */
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
@@ -198,7 +198,7 @@ void background_renderDust( const double dt )
 
    /* Common shader stuff. */
    glUseProgram(shaders.stars.program);
-   mat4_Uniform(shaders.stars.projection, projection);
+   mat4_uniform(shaders.stars.projection, projection);
    glUniform2f(shaders.stars.star_xy, star_x, star_y);
    glUniform3f(shaders.stars.dims, w, h, 1. / gl_screen.scale);
    glUniform1i(shaders.stars.use_lines, !points);

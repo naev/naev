@@ -282,7 +282,7 @@ void weapon_minimap( const double res, const double w,
       glUseProgram(shaders.points.program);
       glEnableVertexAttribArray(shaders.points.vertex);
       glEnableVertexAttribArray(shaders.points.vertex_color);
-      mat4_Uniform(shaders.points.projection, gl_view_matrix);
+      mat4_uniform(shaders.points.projection, gl_view_matrix);
       gl_vboActivateAttribOffset( weapon_vbo, shaders.points.vertex, 0, 2, GL_FLOAT, 0 );
       gl_vboActivateAttribOffset( weapon_vbo, shaders.points.vertex_color, offset * sizeof(GLfloat), 4, GL_FLOAT, 0 );
       glDrawArrays( GL_POINTS, 0, p );
@@ -742,10 +742,10 @@ static void weapon_renderBeam( Weapon* w, const double dt )
    /* Position. */
    gl_gameToScreenCoords( &x, &y, w->solid->pos.x, w->solid->pos.y );
 
-   projection = mat4_Translate( gl_view_matrix, x, y, 0. );
-   projection = mat4_Rotate2d( projection, w->solid->dir );
-   projection = mat4_Scale( projection, w->outfit->u.bem.range*z,w->outfit->u.bem.width * z, 1 );
-   projection = mat4_Translate( projection, 0., -0.5, 0. );
+   projection = mat4_translate( gl_view_matrix, x, y, 0. );
+   projection = mat4_rotate2d( projection, w->solid->dir );
+   projection = mat4_scale( projection, w->outfit->u.bem.range*z,w->outfit->u.bem.width * z, 1 );
+   projection = mat4_translate( projection, 0., -0.5, 0. );
 
    /* Set the vertex. */
    glEnableVertexAttribArray( shaders.beam.vertex );
@@ -753,7 +753,7 @@ static void weapon_renderBeam( Weapon* w, const double dt )
          0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
-   mat4_Uniform(shaders.beam.projection, projection);
+   mat4_uniform(shaders.beam.projection, projection);
    gl_uniformColor(shaders.beam.color, &w->outfit->u.bem.colour);
    glUniform2f(shaders.beam.dimensions, w->outfit->u.bem.range, w->outfit->u.bem.width);
    glUniform1f(shaders.beam.dt, w->anim);

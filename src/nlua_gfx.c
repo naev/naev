@@ -370,7 +370,7 @@ static int gfxL_renderTexH( lua_State *L )
    LuaShader_t *shader;
    mat4 *H, *TH, ID;
 
-   ID = mat4_Identity();
+   ID = mat4_identity();
 
 
    /* Parameters. */
@@ -389,7 +389,7 @@ static int gfxL_renderTexH( lua_State *L )
 
    /* Set up texture vertices if necessary. */
    if (shader->VertexTexCoord >= 0) {
-      mat4_Uniform( shader->ViewSpaceFromLocal, *TH );
+      mat4_uniform( shader->ViewSpaceFromLocal, *TH );
       glEnableVertexAttribArray( shader->VertexTexCoord );
       gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexTexCoord,
             0, 2, GL_FLOAT, 0 );
@@ -408,7 +408,7 @@ static int gfxL_renderTexH( lua_State *L )
 
    /* Set shader uniforms. */
    gl_uniformColor( shader->ConstantColor, col );
-   mat4_Uniform( shader->ClipSpaceFromLocal, *H );
+   mat4_uniform( shader->ClipSpaceFromLocal, *H );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );

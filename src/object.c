@@ -457,14 +457,14 @@ void object_renderSolidPart( const Object *object, const Solid *solid, const cha
    glUseProgram(shaders.material.program);
 
    projection = gl_gameToScreenMatrix(gl_view_matrix);
-   projection = mat4_Translate(projection, x, y, 0.);
-   projection = mat4_Mult(projection, mat4_Ortho(-os, os, -os, os, od, -od));
-   //projection = mat4_Rotate(projection, M_PI/4., 1., 0., 0.);
+   projection = mat4_translate(projection, x, y, 0.);
+   projection = mat4_mul(projection, mat4_ortho(-os, os, -os, os, od, -od));
+   //projection = mat4_rotate(projection, M_PI/4., 1., 0., 0.);
 
-   model = mat4_Rotate(mat4_Identity(), M_PI/2. + solid->dir, 0., 1., 0.);
+   model = mat4_rotate(mat4_identity(), M_PI/2. + solid->dir, 0., 1., 0.);
 
-   mat4_Uniform(shaders.material.projection, projection);
-   mat4_Uniform(shaders.material.model, model);
+   mat4_uniform(shaders.material.projection, projection);
+   mat4_uniform(shaders.material.model, model);
 
    /* Actually need depth testing now. */
    glEnable(GL_DEPTH_TEST);

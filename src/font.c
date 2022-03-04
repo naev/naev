@@ -1214,7 +1214,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
 static void gl_fontRenderStart( const glFontStash* stsh, double x, double y, const glColour *c, double outlineR )
 {
    /* OpenGL has pixel centers at 0.5 offset. */
-   mat4 H = mat4_Translate(gl_view_matrix, x+0.5*gl_screen.wscale, y+0.5*gl_screen.hscale, 0);
+   mat4 H = mat4_translate(gl_view_matrix, x+0.5*gl_screen.wscale, y+0.5*gl_screen.hscale, 0);
    gl_fontRenderStartH( stsh, &H, c, outlineR );
 }
 static void gl_fontRenderStartH( const glFontStash* stsh, const mat4 *H, const glColour *c, double outlineR )
@@ -1241,7 +1241,7 @@ static void gl_fontRenderStartH( const glFontStash* stsh, const mat4 *H, const g
       gl_uniformAColor(shaders.font.outline_color, &cGrey10, a);
 
    scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
-   font_projection_mat = mat4_Scale(*H, scale, scale, 1 );
+   font_projection_mat = mat4_scale(*H, scale, scale, 1 );
 
    font_restoreLast = 0;
    gl_fontKernStart();
@@ -1439,7 +1439,7 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
    kern_adv_x = gl_fontKernGlyph( stsh, ch, glyph );
    if (kern_adv_x) {
-      font_projection_mat = mat4_Translate( font_projection_mat,
+      font_projection_mat = mat4_translate( font_projection_mat,
             kern_adv_x/scale, 0, 0 );
    }
 
@@ -1447,13 +1447,13 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    glBindTexture(GL_TEXTURE_2D, stsh->tex[glyph->tex_index].id);
 
    glUniform1f(shaders.font.m, glyph->m);
-   mat4_Uniform(shaders.font.projection, font_projection_mat);
+   mat4_uniform(shaders.font.projection, font_projection_mat);
 
    /* Draw the element. */
    glDrawArrays( GL_TRIANGLE_STRIP, glyph->vbo_id, 4 );
 
    /* Translate matrix. */
-   font_projection_mat = mat4_Translate( font_projection_mat,
+   font_projection_mat = mat4_translate( font_projection_mat,
          glyph->adv_x/scale, 0, 0 );
 
    return 0;

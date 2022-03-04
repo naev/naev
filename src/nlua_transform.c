@@ -155,7 +155,7 @@ static int transformL_new( lua_State *L )
       lua_pushtransform( L, *M );
    }
    else
-      lua_pushtransform( L, mat4_Identity() );
+      lua_pushtransform( L, mat4_identity() );
    return 1;
 }
 
@@ -171,7 +171,7 @@ static int transformL_mul( lua_State *L )
 {
    mat4 *A = luaL_checktransform(L, 1);
    mat4 *B = luaL_checktransform(L, 2);
-   mat4 C = mat4_Mult( *A, *B );
+   mat4 C = mat4_mul( *A, *B );
    lua_pushtransform(L, C);
    return 1;
 }
@@ -214,7 +214,7 @@ static int transformL_scale( lua_State *L )
    double x = luaL_checknumber(L,2);
    double y = luaL_checknumber(L,3);
    double z = luaL_optnumber(L,4,1.);
-   lua_pushtransform(L, mat4_Scale( *M, x, y, z ) );
+   lua_pushtransform(L, mat4_scale( *M, x, y, z ) );
    return 1;
 }
 
@@ -234,7 +234,7 @@ static int transformL_translate( lua_State *L )
    double x = luaL_checknumber(L,2);
    double y = luaL_checknumber(L,3);
    double z = luaL_optnumber(L,4,0.);
-   lua_pushtransform(L, mat4_Translate( *M, x, y, z ) );
+   lua_pushtransform(L, mat4_translate( *M, x, y, z ) );
    return 1;
 }
 
@@ -249,7 +249,7 @@ static int transformL_rotate2d( lua_State *L )
 {
    mat4 *M = luaL_checktransform(L, 1);
    double a = luaL_checknumber(L,2);
-   lua_pushtransform(L, mat4_Rotate2d( *M, a ) );
+   lua_pushtransform(L, mat4_rotate2d( *M, a ) );
    return 1;
 }
 
@@ -273,7 +273,7 @@ static int transformL_ortho( lua_State *L )
    double top     = luaL_checknumber(L,4);
    double nearVal = luaL_checknumber(L,5);
    double farVal  = luaL_checknumber(L,6);
-   lua_pushtransform(L, mat4_Ortho(left, right, bottom, top, nearVal, farVal) );
+   lua_pushtransform(L, mat4_ortho(left, right, bottom, top, nearVal, farVal) );
    return 1;
 }
 

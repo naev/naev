@@ -1168,8 +1168,8 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
 
          /* Set the vertex. */
          projection = gl_view_matrix;
-         projection = mat4_Translate(projection, tx-sw/2., ty-sh/2., 0);
-         projection = mat4_Scale(projection, sw, sh, 1);
+         projection = mat4_translate(projection, tx-sw/2., ty-sh/2., 0);
+         projection = mat4_scale(projection, sw, sh, 1);
 
          /* Start the program. */
          glUseProgram(shaders.nebula_map.program);
@@ -1177,7 +1177,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
          /* Set shader uniforms. */
          glUniform1f(shaders.nebula_map.hue, sys->nebu_hue);
          glUniform1f(shaders.nebula_map.alpha, alpha);
-         mat4_Uniform(shaders.nebula_map.projection, projection);
+         mat4_uniform(shaders.nebula_map.projection, projection);
          glUniform1f(shaders.nebula_map.time, map_dt / 10.0);
          glUniform2f(shaders.nebula_map.globalpos, sys->pos.x, sys->pos.y );
          glUniform1f(shaders.nebula_map.volatility, sys->nebu_volatility );
@@ -1200,14 +1200,14 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
 
          /* Set the vertex. */
          projection = gl_view_matrix;
-         projection = mat4_Translate(projection, tx-sw/2., ty-sh/2., 0);
-         projection = mat4_Scale(projection, sw, sh, 1);
+         projection = mat4_translate(projection, tx-sw/2., ty-sh/2., 0);
+         projection = mat4_scale(projection, sw, sh, 1);
 
          /* Start the program. */
          glUseProgram( sys->ms->program );
 
          /* Set shader uniforms. */
-         mat4_Uniform(sys->ms->projection, projection);
+         mat4_uniform(sys->ms->projection, projection);
          glUniform1f(sys->ms->time, map_dt);
          glUniform2f(sys->ms->globalpos, sys->pos.x, sys->pos.y );
          glUniform1f(sys->ms->alpha, alpha);

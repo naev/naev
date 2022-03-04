@@ -106,13 +106,13 @@ int nebu_resize (void)
       gl_fboCreate( &nebu_fbo, &nebu_tex, nebu_render_w, nebu_render_h );
 
    /* Set up the matrices. */
-   nebu_render_P = mat4_Identity();
-   nebu_render_P = mat4_Translate(nebu_render_P, -nebu_render_w/2., -nebu_render_h/2., 0. );
-   nebu_render_P = mat4_Scale(nebu_render_P, nebu_render_w, nebu_render_h, 1);
+   nebu_render_P = mat4_identity();
+   nebu_render_P = mat4_translate(nebu_render_P, -nebu_render_w/2., -nebu_render_h/2., 0. );
+   nebu_render_P = mat4_scale(nebu_render_P, nebu_render_w, nebu_render_h, 1);
    glUseProgram(shaders.nebula_background.program);
-   mat4_Uniform(shaders.nebula_background.projection, nebu_render_P);
+   mat4_uniform(shaders.nebula_background.projection, nebu_render_P);
    glUseProgram(shaders.nebula.program);
-   mat4_Uniform(shaders.nebula.projection, nebu_render_P);
+   mat4_uniform(shaders.nebula.projection, nebu_render_P);
    glUseProgram(0);
 
    return 0;
@@ -205,8 +205,8 @@ static void nebu_blitFBO (void)
 
    /* Set shader uniforms. */
    gl_uniformColor(shaders.texture.color, &cWhite);
-   mat4_Uniform(shaders.texture.projection, mat4_Ortho(0, 1, 0, 1, 1, -1));
-   mat4_Uniform(shaders.texture.tex_mat, mat4_Identity());
+   mat4_uniform(shaders.texture.projection, mat4_ortho(0, 1, 0, 1, 1, -1));
+   mat4_uniform(shaders.texture.tex_mat, mat4_identity());
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -332,13 +332,13 @@ static void nebu_renderPuffs( int below_player )
       glUseProgram( shaders.nebula_puff.program );
 
       projection = gl_view_matrix;
-      projection = mat4_Translate(projection, x, y, 0.);
-      projection = mat4_Scale(projection, s, s, 1.);
+      projection = mat4_translate(projection, x, y, 0.);
+      projection = mat4_scale(projection, s, s, 1.);
       glEnableVertexAttribArray(shaders.nebula_puff.vertex);
       gl_vboActivateAttribOffset( gl_circleVBO, shaders.nebula_puff.vertex, 0, 2, GL_FLOAT, 0 );
 
       /* Uniforms. */
-      mat4_Uniform( shaders.nebula_puff.projection, projection );
+      mat4_uniform( shaders.nebula_puff.projection, projection );
       glUniform1f( shaders.nebula_puff.time, nebu_time / 1.5 );
       glUniform2f( shaders.nebula_puff.r, puff->rx, puff->ry );
 

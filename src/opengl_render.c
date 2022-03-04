@@ -53,7 +53,7 @@ void gl_beginSolidProgram(mat4 projection, const glColour *c)
    glUseProgram(shaders.solid.program);
    glEnableVertexAttribArray(shaders.solid.vertex);
    gl_uniformColor(shaders.solid.color, c);
-   mat4_Uniform(shaders.solid.projection, projection);
+   mat4_uniform(shaders.solid.projection, projection);
 }
 
 void gl_endSolidProgram (void)
@@ -68,7 +68,7 @@ void gl_beginSmoothProgram(mat4 projection)
    glUseProgram(shaders.smooth.program);
    glEnableVertexAttribArray(shaders.smooth.vertex);
    glEnableVertexAttribArray(shaders.smooth.vertex_color);
-   mat4_Uniform(shaders.smooth.projection, projection);
+   mat4_uniform(shaders.smooth.projection, projection);
 }
 
 void gl_endSmoothProgram() {
@@ -91,8 +91,8 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 {
    /* Set the vertex. */
    mat4 projection = gl_view_matrix;
-   projection = mat4_Translate(projection, x, y, 0);
-   projection = mat4_Scale(projection, w, h, 1);
+   projection = mat4_translate(projection, x, y, 0);
+   projection = mat4_scale(projection, w, h, 1);
 
    gl_renderRectH( &projection, c, 1 );
 }
@@ -109,8 +109,8 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 void gl_renderRectEmpty( double x, double y, double w, double h, const glColour *c )
 {
    mat4 projection = gl_view_matrix;
-   projection = mat4_Translate(projection, x, y, 0);
-   projection = mat4_Scale(projection, w, h, 1);
+   projection = mat4_translate(projection, x, y, 0);
+   projection = mat4_scale(projection, w, h, 1);
 
    gl_renderRectH( &projection, c, 0 );
 }
@@ -163,10 +163,10 @@ void gl_renderCross( double x, double y, double r, const glColour *c )
  */
 void gl_renderTriangleEmpty( double x, double y, double a, double s, double length, const glColour *c )
 {
-   mat4 projection = mat4_Translate(gl_view_matrix, x, y, 0);
+   mat4 projection = mat4_translate(gl_view_matrix, x, y, 0);
    if (a != 0.)
-      projection = mat4_Rotate2d(projection, a);
-   projection = mat4_Scale(projection, s*length, s, 1.);
+      projection = mat4_rotate2d(projection, a);
+   projection = mat4_scale(projection, s*length, s, 1.);
 
    gl_beginSolidProgram(projection, c);
    gl_vboActivateAttribOffset( gl_triangleVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
@@ -214,28 +214,28 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags,
    /* Set the vertex. */
    projection = gl_view_matrix;
    if (angle==0.) {
-     projection = mat4_Translate(projection, x, y, 0);
-     projection = mat4_Scale(projection, w, h, 1);
+     projection = mat4_translate(projection, x, y, 0);
+     projection = mat4_scale(projection, w, h, 1);
    }
    else {
-     projection = mat4_Translate(projection, x+hw, y+hh, 0);
-     projection = mat4_Rotate2d(projection, angle);
-     projection = mat4_Translate(projection, -hw, -hh, 0);
-     projection = mat4_Scale(projection, w, h, 1);
+     projection = mat4_translate(projection, x+hw, y+hh, 0);
+     projection = mat4_rotate2d(projection, angle);
+     projection = mat4_translate(projection, -hw, -hh, 0);
+     projection = mat4_scale(projection, w, h, 1);
    }
    glEnableVertexAttribArray( shaders.texture.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
          0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
-   tex_mat = (flags & OPENGL_TEX_VFLIP) ? mat4_Ortho(-1, 1, 2, 0, 1, -1) : mat4_Identity();
-   tex_mat = mat4_Translate(tex_mat, tx, ty, 0);
-   tex_mat = mat4_Scale(tex_mat, tw, th, 1);
+   tex_mat = (flags & OPENGL_TEX_VFLIP) ? mat4_ortho(-1, 1, 2, 0, 1, -1) : mat4_identity();
+   tex_mat = mat4_translate(tex_mat, tx, ty, 0);
+   tex_mat = mat4_scale(tex_mat, tw, th, 1);
 
    /* Set shader uniforms. */
    gl_uniformColor(shaders.texture.color, c);
-   mat4_Uniform(shaders.texture.projection, projection);
-   mat4_Uniform(shaders.texture.tex_mat, tex_mat);
+   mat4_uniform(shaders.texture.projection, projection);
+   mat4_uniform(shaders.texture.tex_mat, tex_mat);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -328,23 +328,23 @@ void gl_renderTextureInterpolate(  const glTexture* ta,
 
    /* Set the vertex. */
    projection = gl_view_matrix;
-   projection = mat4_Translate(projection, x, y, 0);
-   projection = mat4_Scale(projection, w, h, 1);
+   projection = mat4_translate(projection, x, y, 0);
+   projection = mat4_scale(projection, w, h, 1);
    glEnableVertexAttribArray( shaders.texture_interpolate.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_interpolate.vertex, 0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
-   tex_mat = (ta->flags & OPENGL_TEX_VFLIP) ? mat4_Ortho(-1, 1, 2, 0, 1, -1) : mat4_Identity();
-   tex_mat = mat4_Translate(tex_mat, tx, ty, 0);
-   tex_mat = mat4_Scale(tex_mat, tw, th, 1);
+   tex_mat = (ta->flags & OPENGL_TEX_VFLIP) ? mat4_ortho(-1, 1, 2, 0, 1, -1) : mat4_identity();
+   tex_mat = mat4_translate(tex_mat, tx, ty, 0);
+   tex_mat = mat4_scale(tex_mat, tw, th, 1);
 
    /* Set shader uniforms. */
    glUniform1i(shaders.texture_interpolate.sampler1, 0);
    glUniform1i(shaders.texture_interpolate.sampler2, 1);
    gl_uniformColor(shaders.texture_interpolate.color, c);
    glUniform1f(shaders.texture_interpolate.inter, inter);
-   mat4_Uniform(shaders.texture_interpolate.projection, projection);
-   mat4_Uniform(shaders.texture_interpolate.tex_mat, tex_mat);
+   mat4_uniform(shaders.texture_interpolate.projection, projection);
+   mat4_uniform(shaders.texture_interpolate.tex_mat, tex_mat);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -394,9 +394,9 @@ mat4 gl_gameToScreenMatrix( mat4 lhs )
    z = cam_getZoom();
    gui_getOffset( &gx, &gy );
 
-   return mat4_Translate(
-         mat4_Scale(
-            mat4_Translate(
+   return mat4_translate(
+         mat4_scale(
+            mat4_translate(
                lhs,
                gx + SCREEN_W/2., gy + SCREEN_H/2., 0.),
             z, z, 1.),
@@ -799,10 +799,10 @@ void gl_renderStatic( const glTexture* texture,
 void gl_renderShader( double x, double y, double w, double h, double r, const SimpleShader *shd, const glColour *c, int center )
 {
    mat4 projection = gl_view_matrix;
-   projection = mat4_Translate(projection, x, y, 0);
+   projection = mat4_translate(projection, x, y, 0);
    if (r != 0.)
-      projection = mat4_Rotate2d(projection, r);
-   projection = mat4_Scale(projection, w, h, 1);
+      projection = mat4_rotate2d(projection, r);
+   projection = mat4_scale(projection, w, h, 1);
    glUniform2f( shd->dimensions, w, h );
    gl_renderShaderH( shd, &projection, c, center );
 }
@@ -823,7 +823,7 @@ void gl_renderShaderH( const SimpleShader *shd, const mat4 *H, const glColour *c
    if (c != NULL)
       gl_uniformColor(shd->color, c);
 
-   mat4_Uniform(shd->projection, *H);
+   mat4_uniform(shd->projection, *H);
 
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
@@ -846,8 +846,8 @@ void gl_renderCircle( double cx, double cy,
 {
    /* Set the vertex. */
    mat4 projection = gl_view_matrix;
-   projection = mat4_Translate(projection, cx, cy, 0);
-   projection = mat4_Scale(projection, r, r, 1);
+   projection = mat4_translate(projection, cx, cy, 0);
+   projection = mat4_scale(projection, r, r, 1);
 
    /* Draw! */
    gl_renderCircleH( &projection, c, filled );
