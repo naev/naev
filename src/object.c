@@ -462,7 +462,8 @@ void object_renderSolidPart( const Object *object, const Solid *solid, const cha
    mat4_mul( &view, &projection, &ortho );
    //projection = mat4_rotate(projection, M_PI/4., 1., 0., 0.);
 
-   model = mat4_rotate(mat4_identity(), M_PI/2. + solid->dir, 0., 1., 0.);
+   model = mat4_identity();
+   mat4_rotate( &model, M_PI/2. + solid->dir, 0., 1., 0.);
 
    mat4_uniform(shaders.material.projection, view);
    mat4_uniform(shaders.material.model, model);

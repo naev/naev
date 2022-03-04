@@ -835,7 +835,7 @@ void spfx_trail_draw( const Trail_spfx* trail )
       /* Set vertex. */
       projection = gl_view_matrix;
       mat4_translate( &projection, x1, y1, 0. );
-      projection = mat4_rotate2dv(projection, (x2-x1)/s, (y2-y1)/s);
+      mat4_rotate2dv( &projection, (x2-x1)/s, (y2-y1)/s );
       mat4_scale( &projection, s, z*(sp->thick+spp->thick), 1. );
       mat4_translate( &projection, 0., -0.5, 0. );
 

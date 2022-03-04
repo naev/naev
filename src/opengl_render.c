@@ -166,7 +166,7 @@ void gl_renderTriangleEmpty( double x, double y, double a, double s, double leng
    mat4 projection = gl_view_matrix;
    mat4_translate( &projection, x, y, 0. );
    if (a != 0.)
-      projection = mat4_rotate2d(projection, a);
+      mat4_rotate2d( &projection, a );
    mat4_scale( &projection, s*length, s, 1. );
 
    gl_beginSolidProgram(projection, c);
@@ -220,7 +220,7 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags,
    }
    else {
      mat4_translate( &projection, x+hw, y+hh, 0. );
-     projection = mat4_rotate2d(projection, angle);
+     mat4_rotate2d( &projection, angle );
      mat4_translate( &projection, -hw, -hh, 0. );
      mat4_scale( &projection, w, h, 1. );
    }
@@ -800,7 +800,7 @@ void gl_renderShader( double x, double y, double w, double h, double r, const Si
    mat4 projection = gl_view_matrix;
    mat4_translate( &projection, x, y, 0. );
    if (r != 0.)
-      projection = mat4_rotate2d(projection, r);
+      mat4_rotate2d( &projection, r );
    mat4_scale( &projection, w, h, 1. );
    glUniform2f( shd->dimensions, w, h );
    gl_renderShaderH( shd, &projection, c, center );

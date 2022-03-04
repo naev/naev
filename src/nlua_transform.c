@@ -254,7 +254,9 @@ static int transformL_rotate2d( lua_State *L )
 {
    mat4 *M = luaL_checktransform(L, 1);
    double a = luaL_checknumber(L,2);
-   lua_pushtransform(L, mat4_rotate2d( *M, a ) );
+   mat4 out = *M;
+   mat4_rotate2d( &out, a );
+   lua_pushtransform(L, out);
    return 1;
 }
 

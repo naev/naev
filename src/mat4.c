@@ -106,7 +106,9 @@ void mat4_scale( mat4 *m, double x, double y, double z )
  * @brief Translates a homogenous transformation matrix.
  *
  *    @param[in, out] m Matrix to apply scaling to.
- *
+ *    @param x Translation on X axis.
+ *    @param y Translation on Y axis.
+ *    @param z Translation on Z axis.
  */
 void mat4_translate( mat4 *m, double x, double y, double z )
 {
@@ -117,69 +119,63 @@ void mat4_translate( mat4 *m, double x, double y, double z )
 /**
  * @brief Rotates an angle, in radians, around the z axis.
  *
- *    @param m Matrix to multiply with.
+ *    @param[in, out] m Matrix to multiply with.
  *    @param angle Angle in radians.
- *    @return New projection matrix.
  */
-mat4 mat4_rotate2d( mat4 m, double angle )
+void mat4_rotate2d( mat4 *m, double angle )
 {
    double c, s, x, y;
 
    c = cos(angle);
    s = sin(angle);
-   x = m.m[0][0];
-   y = m.m[1][0];
-   m.m[0][0] =  c*x + s*y;
-   m.m[1][0] = -s*x + c*y;
+   x = m->m[0][0];
+   y = m->m[1][0];
+   m->m[0][0] =  c*x + s*y;
+   m->m[1][0] = -s*x + c*y;
 
-   x = m.m[0][1];
-   y = m.m[1][1];
-   m.m[0][1] =  c*x + s*y;
-   m.m[1][1] = -s*x + c*y;
-
-   return m;
+   x = m->m[0][1];
+   y = m->m[1][1];
+   m->m[0][1] =  c*x + s*y;
+   m->m[1][1] = -s*x + c*y;
 }
 
 /**
  * @brief Rotates the +x axis to the given vector.
  *
- *    @param m Matrix to multiply with.
+ *    @param[in, out] m Matrix to multiply with.
  *    @param c Angle cosine (or x coordinate of the vector).
  *    @param s Angle sine (or y coordinate of the vector).
- *    @return New projection matrix.
  */
-mat4 mat4_rotate2dv( mat4 m, double c, double s )
+void mat4_rotate2dv( mat4 *m, double c, double s )
 {
    double x, y;
 
-   x = m.m[0][0];
-   y = m.m[1][0];
-   m.m[0][0] =  c*x + s*y;
-   m.m[1][0] = -s*x + c*y;
+   x = m->m[0][0];
+   y = m->m[1][0];
+   m->m[0][0] =  c*x + s*y;
+   m->m[1][0] = -s*x + c*y;
 
-   x = m.m[0][1];
-   y = m.m[1][1];
-   m.m[0][1] =  c*x + s*y;
-   m.m[1][1] = -s*x + c*y;
-
-   return m;
+   x = m->m[0][1];
+   y = m->m[1][1];
+   m->m[0][1] =  c*x + s*y;
+   m->m[1][1] = -s*x + c*y;
 }
 
 /**
  * @brief Multiplies the given matrix by a rotation. (Follows the right-hand rule.)
  *
- *    @param m Matrix to multiply with.
+ *    @param[in, out] m Matrix to multiply with.
  *    @param angle Angle in radians.
  *    @param x X component of the axis of rotation.
  *    @param y Y component of the axis of rotation.
  *    @param z Z component of the axis of rotation.
- *    @return New projection matrix.
  */
-mat4 mat4_rotate( mat4 m, double angle, double x, double y, double z )
+void mat4_rotate( mat4 *m, double angle, double x, double y, double z )
 {
    double norm, c, s;
-   mat4 rot, out;
+   mat4 rot, in;
 
+   in = *m;
    norm = sqrt( pow2(x) + pow2(y) + pow2(z) );
    c = cos(angle);
    s = sin(angle);
@@ -203,8 +199,7 @@ mat4 mat4_rotate( mat4 m, double angle, double x, double y, double z )
    rot.m[3][2] = 0.;
    rot.m[3][3] = 1.;
 
-   mat4_mul( &out, &m, &rot );
-   return out;
+   mat4_mul( m, &in, &rot );
 }
 
 GLfloat *mat4_ptr( mat4 *m )

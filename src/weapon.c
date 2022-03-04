@@ -744,7 +744,7 @@ static void weapon_renderBeam( Weapon* w, const double dt )
 
    projection = gl_view_matrix;
    mat4_translate( &projection, x, y, 0. );
-   projection = mat4_rotate2d( projection, w->solid->dir );
+   mat4_rotate2d( &projection, w->solid->dir );
    mat4_scale( &projection, w->outfit->u.bem.range*z,w->outfit->u.bem.width * z, 1. );
    mat4_translate( &projection, 0., -0.5, 0. );
 
