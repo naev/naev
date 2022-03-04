@@ -142,12 +142,6 @@ struct Object_ {
    vec3 aabb_max;       /**< Maximum value of AABB wrapping around it. */
 };
 
-/*
- * Prototypes.
- */
-static void matmul( GLfloat H[16], const GLfloat R[16] );
-static void lookat( GLfloat H[16], const vec3 *eye, const vec3 *center, const vec3 *up );
-
 /**
  * @brief Loads a texture if applicable, uses default value otherwise.
  *
@@ -419,11 +413,7 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   GLfloat Hview[16] = {
-      1.0, 0.0, 0.0, 0.0,
-      0.0, 1.0, 0.0, 0.0,
-      0.0, 0.0, 1.0, 0.0,
-      0.0, 0.0, 0.0, 1.0 };
+   mat4 Hview = mat4_identity();
    const vec3 up        = { .v = {0., 0., 1.} };
    const vec3 light_pos = { .v = {4., 2., -20.} };
    const vec3 center    = { .v = {0., 0., 0.} };
@@ -433,10 +423,9 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
       0.0, sca, 0.0, 0.0,
       0.0, 0.0, sca, 0.0,
       0.0, 0.0, 0.0, 1.0 };
-   lookat( Hview, &light_pos, &center, &up );
-   //matmul( Hview, H );
+   mat4_lookat( &Hview, &light_pos, &center, &up );
    glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
-   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hview );
+   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hview.ptr );
    glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
@@ -492,7 +481,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const mat4 *
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   GLfloat Hshadow[16];
+   mat4 Hshadow = mat4_identity();
    const vec3 up = { .v = {0., 0., 1.} };
    const vec3 light_pos = { .v = {4., 2., -20.} };
    const vec3 center = { .v = {0., 0., 0.} };
@@ -502,9 +491,9 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const mat4 *
       0.0, sca, 0.0, 0.0,
       0.0, 0.0, sca, 0.0,
       0.0, 0.0, 0.0, 1.0 };
-   lookat( Hshadow, &light_pos, &center, &up );
+   mat4_lookat( &Hshadow, &light_pos, &center, &up );
    glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
-   glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow );
+   glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow.ptr );
    glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
    glUniform1f( shd->metallicFactor, mat->metallicFactor );
    glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
@@ -554,73 +543,6 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const mat4 *
    gl_checkErr();
 }
 
-static void matmul( GLfloat H[16], const GLfloat R[16] )
-{
-   for (int i=0; i<4; i++) {
-      float l0 = H[i * 4 + 0];
-      float l1 = H[i * 4 + 1];
-      float l2 = H[i * 4 + 2];
-
-      float r0 = l0 * R[0] + l1 * R[4] + l2 * R[8];
-      float r1 = l0 * R[1] + l1 * R[5] + l2 * R[9];
-      float r2 = l0 * R[2] + l1 * R[6] + l2 * R[10];
-
-      H[i * 4 + 0] = r0;
-      H[i * 4 + 1] = r1;
-      H[i * 4 + 2] = r2;
-   }
-   H[12] += R[12];
-   H[13] += R[13];
-   H[14] += R[14];
-}
-
-/**
- * @brief Fills a matrix with a transformation to look at a center point from an eye with an up vector.
- */
-static void lookat( GLfloat H[16], const vec3 *eye, const vec3 *center, const vec3 *up )
-{
-   vec3 forward, side, upc;
-   GLfloat H2[16];
-
-   vec3_sub( &forward, center, eye );
-   vec3_normalize( &forward );
-
-   /* side = forward x up */
-   vec3_cross( &side, &forward, up );
-   vec3_normalize( &side );
-
-   /* upc = side x forward */
-   vec3_cross( &upc, &side, &forward );
-
-   /* First column. */
-   H2[0]  = side.v[0];
-   H2[4]  = side.v[1];
-   H2[8]  = side.v[2];
-   H2[12] = 0.;
-   /* Second column. */
-   H2[1]  = upc.v[0];
-   H2[5]  = upc.v[1];
-   H2[9]  = upc.v[2];
-   H2[13] = 0.;
-   /* Third column. */
-   H2[2]  = -forward.v[0];
-   H2[6]  = -forward.v[1];
-   H2[10] = -forward.v[2];
-   H2[14] = 0.;
-   /* Fourth column. */
-   H2[3]  = 0.;
-   H2[7]  = 0.;
-   H2[11] = 0.;
-   H2[15] = 1.;
-
-   /* Multiply. */
-   matmul( H, H2 );
-   /* Translate to eye. */
-   H[3]  -= eye->v[0];
-   H[7]  -= eye->v[1];
-   H[11] -= eye->v[2];
-}
-
 /**
  * @brief Recursive rendering to the shadow buffer.
  */
@@ -628,7 +550,6 @@ static void object_renderNodeShadow( const Object *obj, const Node *node, const 
 {
    /* Multiply matrices, can be animated so not caching. */
    /* TODO cache when not animated. */
-   //matmul( H, node->H );
    mat4 HH = node->H;
    mat4_apply( &HH, H );
 
@@ -650,7 +571,6 @@ void object_renderNodeMesh( const Object *obj, const Node *node, const mat4 *H )
 {
    /* Multiply matrices, can be animated so not caching. */
    /* TODO cache when not animated. */
-   //matmul( H, node->H );
    mat4 HH = node->H;
    mat4_apply( &HH, H );
 
