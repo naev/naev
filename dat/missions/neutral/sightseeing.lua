@@ -126,7 +126,7 @@ function accept ()
          mem.nolux_known = true
          misn.setReward( fmt.credits( mem.credits_nolux ) )
       else
-         misn.finish()
+         return
       end
    end
 

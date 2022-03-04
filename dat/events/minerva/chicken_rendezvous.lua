@@ -93,7 +93,7 @@ function create()
    vn.na(_([[You once again wonder about what the entire point of swimming with a chicken is, even if it is a cyborg one.]]))
    cc(_([[They still are staring at you with a creepy fixation.]]))
    cc(_([[Finally, after what seems like an eternity of being stared down by a chicken, you hear a small faint sound come out of it. However, you can't make out what the sound was.]]))
-   vn.me(([["Pardon me?"]]))
+   vn.me(_([["Pardon me?"]]))
    cc:rename(_("Cyborg Duck?"))
    cc(_([[
 They look at you straight in the eyes and begin to speak, slowly getting louder.

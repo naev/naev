@@ -53,7 +53,7 @@ function accept()
    local msg = fmt.f(_([[Shaman coughs out an "excuse me" and looks at you, embarrassed. "It is wrong for me to get so caught up in such things. I suppose you'll want to know about the mission now.
     "The mission is simple. Our main base operates on {pnt} in the {sys} system. I need a message delivered there. Of course, we will pay you for this service. How does {credits} sound? Will you do it?"]]), {pnt=mem.targetasset, sys=mem.targetsystem, credits=fmt.credits(mem.reward)} )
    if not tk.yesno(_("The Return"), msg) then
-      misn.finish()
+      return
    end
 
    tk.msg(_("The Return"), _([["Fantastic!" He hands you the message. "They will take care of your payment there. Thank you for aiding the true followers of Sirichana."]]))

@@ -166,7 +166,6 @@ static int varL_peek( lua_State *L )
  */
 static int varL_pop( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    const char* str = luaL_checkstring(L,1);
    lvar *mv = var_get( str );
    if (mv == NULL)
@@ -188,7 +187,6 @@ static int varL_pop( lua_State *L )
  */
 static int varL_push( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    const char *str = luaL_checkstring(L,1);
    lvar var = lvar_tovar( L, str, 2 );
    var_add( &var, 1 );

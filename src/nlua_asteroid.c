@@ -194,7 +194,7 @@ static int asteroidL_get( lua_State *L )
 {
    LuaAsteroid_t la;
    int field = -1;
-   const Vector2d *pos = NULL;
+   const vec2 *pos = NULL;
 
    /* No asteroids, so everything just returns nil. */
    if (array_size(cur_system->asteroids) <= 0)
@@ -259,7 +259,7 @@ static int asteroidL_get( lua_State *L )
          if (a->state != ASTEROID_FG)
             continue;
 
-         d2 = vect_dist2( pos, &a->pos );
+         d2 = vec2_dist2( pos, &a->pos );
          if (d2 > dist2)
             continue;
 

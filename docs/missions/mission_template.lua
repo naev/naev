@@ -174,11 +174,9 @@ function accept ()
       -- response to an event. In this case, we use a hook for when the
       -- player lands on a planet.
       hook.land( "land" )
-   else
-      -- Call misn.finish() to end the conversation with the NPC without
-      -- getting rid of him.
-      misn.finish()
    end
+   -- If misn.accept() isn't run, the mission doesn't change and the player can
+   -- interact with the NPC and try to start it again.
 end
 
 -- luacheck: globals land (Hook functions passed by name)

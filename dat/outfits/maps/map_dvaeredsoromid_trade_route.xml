@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<outfit name="Map: Dvaered-Soromid trade route">
+<outfit name="Map: Dvaered-Soromid Trade Route">
  <general>
   <rarity>0</rarity>
   <mass>0</mass>
   <price>30000</price>
-  <description>This map contains the main route between Dvaered and Soromid controlled space.</description>
+  <description>This map contains the main trade route between Dvaered and Soromid controlled space.</description>
   <gfx_store>map.webp</gfx_store>
  </general>
  <specific type="map">

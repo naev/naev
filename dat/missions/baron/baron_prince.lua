@@ -69,8 +69,8 @@ function accept()
 
       mem.enterhook = hook.enter("enter")
    else
-      tk.msg(_("Sorry, not today"), _([["Okay, fair enough," the man says with a disappointed look on his face. "I'll try to find someone else. But maybe we'll run into each other again, so if you change your mind..."]]))
-      abort()
+      tk.msg(_("Sorry, not today"), _([["Okay, fair enough," the man says with a disappointed look on his face. "I'll try to find someone else. But maybe we'll run into each other again, so if you change your mind…"]]))
+      return
    end
 end
 
@@ -178,7 +178,7 @@ function flintley()
          bingo = true
       else
          tk.msg(_("This is not the artefact you're looking for"), fmt.f(_([[Flintley studies the object on the table for a while, checking the online database a number of times in the process. Then, finally, he turns to you. "I hate to say this, but it seems you've bought a counterfeit. It's a good one, though! That seller on {pnt} must have known his stuff. You see, this is very similar to a number plate used by hovercars on Mars at the time of the Second Growth. However, it's missing a number of vital characteristics, and some details betray its recent manufacture. Close, {player}, close. But no cigar."
-    You dispose of the counterfeit artefact. Hopefully the next one will be what Sauterfeldt is looking for...]]), {pnt=artefactplanetC, player=player.name()}))
+    You dispose of the counterfeit artefact. Hopefully the next one will be what Sauterfeldt is looking for…]]), {pnt=artefactplanetC, player=player.name()}))
          mem.artifactsfound = mem.artifactsfound + 1
       end
       misn.cargoRm(mem.artifactC)

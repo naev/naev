@@ -132,9 +132,9 @@ static void safelanes_updateConductivity ( int ei_activated );
 static void safelanes_initQtQ (void);
 static void safelanes_initFTilde (void);
 static void safelanes_initPPl (void);
-static int safelanes_triangleTooFlat( const Vector2d* m, const Vector2d* n, const Vector2d* p, double lmn );
+static int safelanes_triangleTooFlat( const vec2* m, const vec2* n, const vec2* p, double lmn );
 static int vertex_faction( int vi );
-static const Vector2d* vertex_pos( int vi );
+static const vec2* vertex_pos( int vi );
 static inline int FACTION_ID_TO_INDEX( int id );
 static inline FactionMask MASK_ANY_FACTION();
 static inline FactionMask MASK_ONE_FACTION( int id );
@@ -406,10 +406,10 @@ static void safelanes_initStacks_edge (void)
    tmp_edge_conduct = array_create( double );
    for (int system=0; system<array_size(systems_stack); system++) {
       for (int i=sys_to_first_vertex[system]; i < sys_to_first_vertex[1+system]; i++) {
-         const Vector2d *pi = vertex_pos( i );
+         const vec2 *pi = vertex_pos( i );
          for (int j=sys_to_first_vertex[system]; j < i; j++) {
-            const Vector2d *pj = vertex_pos( j );
-            double lij = vect_dist( pi, pj );
+            const vec2 *pj = vertex_pos( j );
+            double lij = vec2_dist( pi, pj );
             int has_approx_midpoint = 0;
             for (int k=sys_to_first_vertex[system]; k < sys_to_first_vertex[1+system]; k++)
                if (k!=i && k!=j && safelanes_triangleTooFlat( pi, pj, vertex_pos( k ), lij )) {
@@ -834,11 +834,11 @@ static int cmp_key( const void* p1, const void* p2 )
 /**
  * @brief Return true if this triangle is so flat that lanes from point m to point n aren't allowed.
  */
-static int safelanes_triangleTooFlat( const Vector2d* m, const Vector2d* n, const Vector2d* p, double lmn )
+static int safelanes_triangleTooFlat( const vec2* m, const vec2* n, const vec2* p, double lmn )
 {
    const double MAX_COSINE = cos(MIN_ANGLE);
-   double lnp = vect_dist( n, p );
-   double lmp = vect_dist( m, p );
+   double lnp = vec2_dist( n, p );
+   double lmp = vec2_dist( m, p );
    double dpn = ((n->x-m->x)*(n->x-p->x) + (n->y-m->y)*(n->y-p->y)) / ( lmn * lnp );
    double dpm = ((m->x-n->x)*(m->x-p->x) + (m->y-n->y)*(m->y-p->y)) / ( lmn * lmp );
    return (dpn > MAX_COSINE && lnp < lmn) || (dpm > MAX_COSINE && lmp < lmn);
@@ -863,7 +863,7 @@ static int vertex_faction( int vi )
 /**
  * @brief Return the vertex's coordinates within its system (by reference since our vec2's are fat).
  */
-static const Vector2d* vertex_pos( int vi )
+static const vec2* vertex_pos( int vi )
 {
    const StarSystem *sys = system_getIndex(vertex_stack[vi].system);
    switch (vertex_stack[vi].type) {

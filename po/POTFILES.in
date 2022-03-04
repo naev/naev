@@ -216,9 +216,9 @@ dat/outfits/maps/map_empire_core.xml
 dat/outfits/maps/map_flf.xml
 dat/outfits/maps/map_flf_pirate_route.xml
 dat/outfits/maps/map_inner_nebula_secret_jump.xml
-dat/outfits/maps/map_kretogg_hidden_jumps.xml
+dat/outfits/maps/map_kretogg_secrets.xml
 dat/outfits/maps/map_nebula_edge.xml
-dat/outfits/maps/map_new_haven_hidden_jumps.xml
+dat/outfits/maps/map_new_haven_secrets.xml
 dat/outfits/maps/map_pirate_strongholds.xml
 dat/outfits/maps/map_qorel.xml
 dat/outfits/maps/map_sirian_border_systems.xml
@@ -2178,6 +2178,7 @@ dat/unidiff/flf_pirate_ally.xml
 dat/unidiff/flf_vs_empire.xml
 dat/unidiff/heavy_combat_vessel_license.xml
 dat/unidiff/heavy_weapons_license.xml
+dat/unidiff/hypergates_1.xml
 dat/unidiff/raelid_outpost_death.xml
 dat/unidiff/raglan_outpost_death.xml
 dat/unidiff/sigma13_fixed1.xml
@@ -2292,6 +2293,7 @@ dat/events/dvaered/warlords_battle.lua
 dat/events/flf/derelict.lua
 dat/events/flf/flf_catastrophe.lua
 dat/events/hired_escorts.lua
+dat/events/hypergate_construction.lua
 dat/events/minerva/altercation1.lua
 dat/events/minerva/altercation2.lua
 dat/events/minerva/chicken_rendezvous.lua
@@ -2476,6 +2478,12 @@ dat/missions/neutral/antlejos/ant_supplies.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
 dat/missions/neutral/cargo_rush.lua
+dat/missions/neutral/comingout/srm_comingout.lua
+dat/missions/neutral/comingout/srm_comingout2.lua
+dat/missions/neutral/comingout/srm_comingout3.lua
+dat/missions/neutral/comingout/srm_comingout4.lua
+dat/missions/neutral/comingout/srm_comingout5.lua
+dat/missions/neutral/comingout/srm_comingout6.lua
 dat/missions/neutral/commodity_run.lua
 dat/missions/neutral/crimelord.lua
 dat/missions/neutral/derelict_rescue.lua
@@ -2539,12 +2547,6 @@ dat/missions/sirius/heretic/heretic3.lua
 dat/missions/sirius/heretic/heretic4.lua
 dat/missions/sirius/srs_ferry.lua
 dat/missions/sirius/srs_rehab.lua
-dat/missions/soromid/comingout/srm_comingout.lua
-dat/missions/soromid/comingout/srm_comingout2.lua
-dat/missions/soromid/comingout/srm_comingout3.lua
-dat/missions/soromid/comingout/srm_comingout4.lua
-dat/missions/soromid/comingout/srm_comingout5.lua
-dat/missions/soromid/comingout/srm_comingout6.lua
 dat/missions/soromid/srm_rehab.lua
 dat/missions/trader/anxiousmerchant.lua
 dat/missions/trader/trader_escort.lua
@@ -2871,6 +2873,8 @@ src/map_overlay.c
 src/map_overlay.h
 src/map_system.c
 src/map_system.h
+src/mat4.c
+src/mat4.h
 src/md5.c
 src/md5.h
 src/menu.c
@@ -2996,8 +3000,6 @@ src/object.c
 src/object.h
 src/opengl.c
 src/opengl.h
-src/opengl_matrix.c
-src/opengl_matrix.h
 src/opengl_render.c
 src/opengl_render.h
 src/opengl_shader.c
@@ -3107,6 +3109,10 @@ src/union_find.c
 src/union_find.h
 src/utf8.c
 src/utf8.h
+src/vec2.c
+src/vec2.h
+src/vec3.c
+src/vec3.h
 src/weapon.c
 src/weapon.h
 dat/outfits/bioship/generate.py

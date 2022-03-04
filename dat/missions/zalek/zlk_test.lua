@@ -91,10 +91,9 @@ function create()
 end
 
 function accept()
-
    if player.misnActive("Za'lek Test") then
        tk.msg(_("You cannot accept this mission"), _("You are already testing another engine."))
-       misn.finish(false)
+       return
    end
 
    if misn.accept() then -- able to accept the mission
@@ -108,7 +107,7 @@ function accept()
       mem.enterhook = hook.enter("enter")
    else
       tk.msg( _("Too many missions"), _("You have too many active missions.") )
-      misn.finish(false)
+      return
    end
 
    mem.isSlow = false     --Flag to know if the pilot has limited speed

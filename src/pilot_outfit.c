@@ -143,7 +143,7 @@ void pilot_lockClear( Pilot *p )
  *    @param[out] v Position of the mount.
  *    @return 0 on success.
  */
-int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
+int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, vec2 *v )
 {
    double a, x, y;
    double cm, sm;
@@ -172,7 +172,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
    y += m->h;
 
    /* Get the mount and add the player.p offset. */
-   vect_cset( v, x, y );
+   vec2_cset( v, x, y );
 
    return 0;
 }
@@ -199,12 +199,12 @@ int pilot_dock( Pilot *p, Pilot *target )
       return -1;
 
    /* Must be close. */
-   if (vect_dist(&p->solid->pos, &target->solid->pos) >
+   if (vec2_dist(&p->solid->pos, &target->solid->pos) >
          target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
       return -1;
 
    /* Cannot be going much faster. */
-   if (vect_dist2( &p->solid->vel, &target->solid->vel ) > pow2(MAX_HYPERSPACE_VEL))
+   if (vec2_dist2( &p->solid->vel, &target->solid->vel ) > pow2(MAX_HYPERSPACE_VEL))
       return -1;
 
    /* Grab dock ammo */
@@ -1146,6 +1146,9 @@ int pilot_slotIsActive( const PilotOutfitSlot *o )
  */
 static void pilot_outfitLRun( Pilot *p, void (*const func)( const Pilot *p, PilotOutfitSlot *po, const void *data ), const void *data )
 {
+   if (pilot_isFlag(p, PILOT_INACTIVE))
+      return;
+
    pilotoutfit_modified = 0;
    for (int i=0; i<array_size(p->outfits); i++) {
       PilotOutfitSlot *po = p->outfits[i];
@@ -1210,6 +1213,8 @@ int pilot_outfitLAdd( Pilot *pilot, PilotOutfitSlot *po )
       return 0;
    if (po->outfit->lua_onadd == LUA_NOREF)
       return 0;
+   if (pilot_isFlag(pilot, PILOT_INACTIVE))
+      return 0;
 
    /* Create the memory if necessary and initialize stats. */
    pilot_outfitLmem( po, po->outfit->lua_env );
@@ -1234,6 +1239,8 @@ int pilot_outfitLRemove( Pilot *pilot, PilotOutfitSlot *po )
    if (po->outfit==NULL)
       return 0;
    if (po->outfit->lua_onremove == LUA_NOREF)
+      return 0;
+   if (pilot_isFlag(pilot, PILOT_INACTIVE))
       return 0;
 
    /* Create the memory if necessary and initialize stats. */
@@ -1276,6 +1283,8 @@ int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
    pilot_outfitLmem( po, lua_env );
 
    if (lua_init == LUA_NOREF)
+      return 0;
+   if (pilot_isFlag(pilot, PILOT_INACTIVE))
       return 0;
 
    /* Set up the function: init( p, po ) */
@@ -1741,6 +1750,8 @@ void pilot_outfitLCleanup( Pilot *pilot )
       /* Pilot could be created and then erased without getting properly
        * initialized. */
       if (po->lua_mem == LUA_NOREF)
+         continue;
+      if (pilot_isFlag(pilot, PILOT_INACTIVE))
          continue;
 
       nlua_env env = po->outfit->lua_env;

@@ -418,7 +418,7 @@ void pilot_updateDisable( Pilot* p, unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
 int pilot_brake( Pilot* p );
-double pilot_brakeDist( Pilot *p, Vector2d *pos );
+double pilot_brakeDist( Pilot *p, vec2 *pos );
 int pilot_interceptPos( Pilot *p, double x, double y );
 void pilot_cooldown( Pilot *p, int dochecks );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
@@ -452,12 +452,12 @@ PilotOutfitSlot* pilot_getDockSlot( Pilot* p );
  * Creation.
  */
 unsigned int pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
-      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot );
 Pilot* pilot_createEmpty( const Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags );
 Pilot* pilot_replacePlayer( Pilot* after );
-void pilot_choosePoint( Vector2d *vp, Spob **spob, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
+void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
 void pilot_delete( Pilot *p );
 
 /*

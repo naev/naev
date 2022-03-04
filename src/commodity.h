@@ -47,7 +47,7 @@ typedef struct Commodity_ {
 
    /* Prices. */
    char *price_ref;     /**< Name of the commodity to which this one is referenced to. */
-   char price_mod;      /**< Modifier on price_ref. */
+   double price_mod;    /**< Modifier on price_ref. */
    double raw_price;    /**< Raw price of the commodity. */
    double price;        /**< Base price of the commodity. */
    glTexture* gfx_store;/**< Store graphic. */
@@ -66,16 +66,16 @@ typedef struct Commodity_ {
 } Commodity;
 
 typedef struct CommodityPrice_ {
-  double price;   /**< Average price of a commodity on a particular spob */
-  double spobPeriod; /**< Minor time period (days) over which commidity price varies */
-  double sysPeriod; /** Major time period */
-  double spobVariation; /**< Mmount by which a commodity price varies */
-  double sysVariation; /**< System level commodity price variation.  At a given time, commodity price is equal to price + sysVariation*sin(2pi t/sysPeriod) + spobVariation*sin(2pi t/spobPeriod) */
-  int64_t updateTime; /**< used for averaging and to hold the time last average was calculated. */
-  char *name;     /**< used for keeping tabs during averaging */
-  double sum;     /**< used when averaging over jump points during setup, and then for capturing the moving average when the player visits a spob. */
-  double sum2;    /**< sum of (squared prices seen), used for calc of standard deviation. */
-  int cnt;        /**< used for calc of mean and standard deviation - number of records in the data. */
+   double price;   /**< Average price of a commodity on a particular spob */
+   double spobPeriod; /**< Minor time period (days) over which commidity price varies */
+   double sysPeriod; /** Major time period */
+   double spobVariation; /**< Mmount by which a commodity price varies */
+   double sysVariation; /**< System level commodity price variation.  At a given time, commodity price is equal to price + sysVariation*sin(2pi t/sysPeriod) + spobVariation*sin(2pi t/spobPeriod) */
+   int64_t updateTime; /**< used for averaging and to hold the time last average was calculated. */
+   char *name;     /**< used for keeping tabs during averaging */
+   double sum;     /**< used when averaging over jump points during setup, and then for capturing the moving average when the player visits a spob. */
+   double sum2;    /**< sum of (squared prices seen), used for calc of standard deviation. */
+   int cnt;        /**< used for calc of mean and standard deviation - number of records in the data. */
 } CommodityPrice;
 
 /**
@@ -85,8 +85,8 @@ typedef struct CommodityPrice_ {
  */
 typedef struct Gatherable_ {
    const Commodity *type; /**< Type of commodity. */
-   Vector2d pos; /**< Position. */
-   Vector2d vel; /**< Velocity. */
+   vec2 pos; /**< Position. */
+   vec2 vel; /**< Velocity. */
    double timer; /**< Timer to de-spawn the gatherable. */
    double lifeleng; /**< nb of seconds before de-spawn. */
    int quantity; /**< Quantity of material. */
@@ -115,10 +115,10 @@ int commodity_tempIllegalto( Commodity *com, int faction );
 /*
  * Gatherable objects
  */
-int gatherable_init( const Commodity* com, Vector2d pos, Vector2d vel, double lifeleng, int qtt );
+int gatherable_init( const Commodity* com, vec2 pos, vec2 vel, double lifeleng, int qtt );
 void gatherable_render( void );
-int gatherable_getClosest( Vector2d pos, double rad );
-int gatherable_getPos( Vector2d* pos, Vector2d* vel, int id );
+int gatherable_getClosest( vec2 pos, double rad );
+int gatherable_getPos( vec2* pos, vec2* vel, int id );
 void gatherable_free( void );
 void gatherable_update( double dt );
 void gatherable_gather( int pilot );

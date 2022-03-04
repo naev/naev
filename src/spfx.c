@@ -54,8 +54,8 @@ static Trail_spfx** trail_spfx_stack; /**< Active trail effects. */
 /* shake aka rumble */
 static unsigned int shake_shader_pp_id = 0; /**< ID of the post-processing shader for the shake. */
 static LuaShader_t shake_shader; /**< Shader to use for shake effects. */
-static Vector2d shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. */
-static Vector2d shake_vel = { .x = 0., .y = 0. }; /**< Current shake velocity. */
+static vec2 shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. */
+static vec2 shake_vel = { .x = 0., .y = 0. }; /**< Current shake velocity. */
 static double shake_force_mod = 0.; /**< Shake force modifier. */
 static double shake_force_mean = 0.; /**< Running mean of the force. */
 static float shake_force_ang = 0.; /**< Shake force angle. */
@@ -116,8 +116,8 @@ static SPFX_Base *spfx_effects = NULL; /**< Total special effects. */
  * @brief An actual in-game active special effect.
  */
 typedef struct SPFX_ {
-   Vector2d pos; /**< Current position. */
-   Vector2d vel; /**< Current velocity. */
+   vec2 pos; /**< Current position. */
+   vec2 vel; /**< Current velocity. */
 
    int lastframe; /**< Needed when paused */
    int effect; /**< The real effect */
@@ -483,8 +483,8 @@ void spfx_add( int effect,
 
    /* The actual adding of the spfx */
    cur_spfx->effect = effect;
-   vect_csetmin( &cur_spfx->pos, px, py );
-   vect_csetmin( &cur_spfx->vel, vx, vy );
+   vec2_csetmin( &cur_spfx->pos, px, py );
+   vec2_csetmin( &cur_spfx->vel, vx, vy );
    /* Timer magic if ttl != anim */
    ttl = spfx_effects[effect].ttl;
    anim = spfx_effects[effect].anim;
@@ -564,7 +564,7 @@ static void spfx_update_layer( SPFX *layer, const double dt )
       layer[i].time  += dt; /* Shader timer. */
 
       /* actually update it */
-      vect_cadd( &layer[i].pos, dt*VX(layer[i].vel), dt*VY(layer[i].vel) );
+      vec2_cadd( &layer[i].pos, dt*VX(layer[i].vel), dt*VY(layer[i].vel) );
    }
 }
 
@@ -618,10 +618,10 @@ static void spfx_updateShake( double dt )
    }
 
    /* Update velocity. */
-   vect_cadd( &shake_vel, (1./SHAKE_MASS) * force_x * dt, (1./SHAKE_MASS) * force_y * dt );
+   vec2_cadd( &shake_vel, (1./SHAKE_MASS) * force_x * dt, (1./SHAKE_MASS) * force_y * dt );
 
    /* Update position. */
-   vect_cadd( &shake_pos, shake_vel.x * dt, shake_vel.y * dt );
+   vec2_cadd( &shake_pos, shake_vel.x * dt, shake_vel.y * dt );
 
    /* Set the uniform. */
    glUseProgram( shaders.shake.program );
@@ -790,7 +790,7 @@ void spfx_trail_draw( const Trail_spfx* trail )
    const TrailStyle *sp, *spp, *styles;
    size_t n;
    GLfloat len;
-   gl_Matrix4 projection;
+   mat4 projection;
    double s;
 
    n = trail_size(trail);
@@ -833,13 +833,14 @@ void spfx_trail_draw( const Trail_spfx* trail )
       spp = &styles[tpp->mode];
 
       /* Set vertex. */
-      projection = gl_Matrix4_Translate(gl_view_matrix, x1, y1, 0);
-      projection = gl_Matrix4_Rotate2dv(projection, (x2-x1)/s, (y2-y1)/s);
-      projection = gl_Matrix4_Scale(projection, s, z*(sp->thick+spp->thick), 1);
-      projection = gl_Matrix4_Translate(projection, 0., -.5, 0);
+      projection = gl_view_matrix;
+      mat4_translate( &projection, x1, y1, 0. );
+      mat4_rotate2dv( &projection, (x2-x1)/s, (y2-y1)/s );
+      mat4_scale( &projection, s, z*(sp->thick+spp->thick), 1. );
+      mat4_translate( &projection, 0., -0.5, 0. );
 
       /* Set uniforms. */
-      gl_Matrix4_Uniform(shaders.trail.projection, projection);
+      gl_uniformMat4(shaders.trail.projection, &projection);
       gl_uniformColor(shaders.trail.c1, &sp->col);
       gl_uniformColor(shaders.trail.c2, &spp->col);
       glUniform1f(shaders.trail.t1, tp->t);
@@ -1028,7 +1029,7 @@ void spfx_render( int layer )
       if (effect->shader >= 0) {
          double x, y, z, s2;
          double w, h;
-         gl_Matrix4 projection;
+         mat4 projection;
 
          /* Translate coords. */
          s2 = effect->size/2.;
@@ -1046,14 +1047,14 @@ void spfx_render( int layer )
 
          /* Set up the vertex. */
          projection = gl_view_matrix;
-         projection = gl_Matrix4_Translate(projection, x, y, 0);
-         projection = gl_Matrix4_Scale(projection, w, h, 1);
+         mat4_translate( &projection, x, y, 0. );
+         mat4_scale( &projection, w, h, 1. );
          glEnableVertexAttribArray( effect->vertex );
          gl_vboActivateAttribOffset( gl_squareVBO, effect->vertex,
                0, 2, GL_FLOAT, 0 );
 
          /* Set shader uniforms. */
-         gl_Matrix4_Uniform(effect->projection, projection);
+         gl_uniformMat4(effect->projection, &projection);
          glUniform1f(effect->u_time, spfx->time);
          glUniform1f(effect->u_r, spfx->unique);
          glUniform1f(effect->u_size, effect->size);

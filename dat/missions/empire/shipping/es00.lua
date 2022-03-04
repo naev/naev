@@ -49,7 +49,7 @@ function accept ()
    -- Intro text
    if not tk.yesno( _("Spaceport Bar"), fmt.f( _([[You approach the Empire Commander.
     "Hello, you must be {player}. I've heard about you. I'm Commander Soldner. We've got some harder missions for someone like you in the Empire Shipping division. There would be some real danger involved in these missions, unlike the ones you've recently completed for the division. Would you be up for the challenge?"]]), {player=player.name()} ) ) then
-      misn.finish()
+      return
    end
 
    -- Accept mission

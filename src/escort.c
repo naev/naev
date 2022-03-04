@@ -109,7 +109,7 @@ void escort_rmList( Pilot *p, unsigned int id )
  *    @return The ID of the escort on success.
  */
 unsigned int escort_create( Pilot *p, const char *ship,
-      const Vector2d *pos, const Vector2d *vel, double dir,
+      const vec2 *pos, const vec2 *vel, double dir,
       EscortType_t type, int add, int dockslot )
 {
    const Ship *s;
@@ -178,8 +178,8 @@ int escort_clearDeployed( Pilot *p )
       if (pe==NULL)
          continue;
       /* Hack so it can dock. */
-      memcpy( &pe->solid->pos, &p->solid->pos, sizeof(Vector2d) );
-      memcpy( &pe->solid->vel, &p->solid->vel, sizeof(Vector2d) );
+      memcpy( &pe->solid->pos, &p->solid->pos, sizeof(vec2) );
+      memcpy( &pe->solid->vel, &p->solid->vel, sizeof(vec2) );
       if (pilot_dock( pe, p ))
          WARN(_("Pilot '%s' has escort '%s' docking error!"), p->name, pe->name);
       else

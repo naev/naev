@@ -173,7 +173,6 @@ static int dataL_new( lua_State *L )
    LuaData_t ld;
    size_t size = luaL_checklong(L,1);
    const char *type = luaL_checkstring(L,2);
-   NLUA_CHECKRW(L);
    if (strcmp(type,"number")==0) {
       ld.type = LUADATA_NUMBER;
       ld.elem = sizeof(float);

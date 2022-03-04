@@ -9,13 +9,20 @@
 #define CGLTF_IMPLEMENTATION
 #include "cgltf.h"
 
+#include "vec3.h"
 #include "shader_min.h"
 
+/* Horrible hack that turns a variable name into a string. */
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
 
-#define MAX_LIGHTS 4
+#define MAX_LIGHTS 4    /**< Maximum amount of lights. TODO deferred rendering. */
 
+#define SHADOWMAP_SIZE  512   /**< Size of the shadow map. */
+
+/**
+ * @brief Simple point light model.
+ */
 typedef struct ShaderLight_ {
    GLuint position;  /* vec3 */
    GLuint range;     /* float */
@@ -23,6 +30,9 @@ typedef struct ShaderLight_ {
    GLuint intensity; /* float */
 } ShaderLight;
 
+/**
+ * @brief Shader to use witha material.
+ */
 typedef struct Shader_ {
    GLuint program;
    /* Attriutes. */
@@ -32,6 +42,7 @@ typedef struct Shader_ {
    /* Vertex Uniforms. */
    GLuint Hmodel;
    GLuint Hprojection;
+   GLuint Hshadow_projection;
    /* Fragment uniforms. */
    GLuint baseColour_tex;
    GLuint metallic_tex;
@@ -47,20 +58,27 @@ typedef struct Shader_ {
    ShaderLight lights[MAX_LIGHTS];
    GLuint nlights;
    GLuint blend;
+   GLuint shadowmap;
 } Shader;
 static Shader object_shader;
-static GLuint tex_zero = -1;
-static GLuint tex_ones = -1;
+static Shader shadow_shader;
+static GLuint fbo_shadow;
+static GLuint tex_shadow;
+static GLuint tex_zero;
+static GLuint tex_ones;
 
+/**
+ * @brief PBR Material of an object.
+ */
 typedef struct Material_ {
    char *name; /**< Name of the material if applicable. */
    int blend;  /**< Whether or not to blend it. */
    /* pbr_metallic_roughness */
-   GLuint baseColour_tex;
-   GLuint metallic_tex;
-   GLfloat metallicFactor;
-   GLfloat roughnessFactor;
-   GLfloat baseColour[4];
+   GLuint baseColour_tex;  /**< Base colour of the material. */
+   GLuint metallic_tex;    /**< Metallic/roughness map of the material. Metallic is stored in G channel, hile roughness is in the B channel. */
+   GLfloat metallicFactor; /**< Metallic factor (single value). Multplies the map if available. */
+   GLfloat roughnessFactor;/**< Roughness factor (single value). Multiplies the map if available. */
+   GLfloat baseColour[4];  /**< Base colour of the material. Multiplies the texture if available. */
    /* pbr_specular_glossiness */
    /* TODO */
    /* clearcoat */
@@ -78,6 +96,9 @@ typedef struct Material_ {
 } Material;
 static Material material_default;
 
+/**
+ * @brief Represents an underlying 3D mesh.
+ */
 typedef struct Mesh_ {
    size_t nidx;      /**< Number of indices. */
    GLuint vbo_idx;   /**< Index VBO. */
@@ -85,26 +106,55 @@ typedef struct Mesh_ {
    GLuint vbo_nor;   /**< Normal VBO. */
    GLuint vbo_tex;   /**< Texture coordinate VBO. */
    int material;     /**< ID of material to use. */
+
+   GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
+   vec3 aabb_min;    /**< Minimum value of AABB wrapping around it. */
+   vec3 aabb_max;    /**< Maximum value of AABB wrapping around it. */
 } Mesh;
 
+/**
+ * @brief Represents a node of an object. Each node can have multiple meshes and children nodes with an associated transformation.
+ */
 struct Node_;
 typedef struct Node_ {
    char *name;       /**< Name information. */
-   GLfloat H[16];    /**< Homogeneous transform. */
+   mat4 H;           /**< Homogeneous transform. */
    Mesh *mesh;       /**< Meshes. */
    size_t nmesh;     /**< Number of meshes. */
    struct Node_ *children; /**< Children mesh. */
    size_t nchildren; /**< Number of children mesh. */
+
+   GLfloat radius;   /**< Sphere fit on the model centered at 0,0. */
+   vec3 aabb_min;    /**< Minimum value of AABB wrapping around it. */
+   vec3 aabb_max;    /**< Maximum value of AABB wrapping around it. */
 } Node;
 
+/**
+ * @brief Defines a complete object.
+ */
 struct Object_ {
    Node *nodes;         /**< Nodes the object has. */
    size_t nnodes;       /**< Number of nodes. */
    Material *materials; /**< Available materials. */
    size_t nmaterials;   /**< Number of materials. */
    GLfloat radius;      /**< Sphere fit on the model centered at 0,0. */
+   vec3 aabb_min;       /**< Minimum value of AABB wrapping around it. */
+   vec3 aabb_max;       /**< Maximum value of AABB wrapping around it. */
 };
 
+/*
+ * Prototypes.
+ */
+static void matmul( GLfloat H[16], const GLfloat R[16] );
+static void lookat( GLfloat H[16], const vec3 *eye, const vec3 *center, const vec3 *up );
+
+/**
+ * @brief Loads a texture if applicable, uses default value otherwise.
+ *
+ *    @param ctex Texture to load.
+ *    @param def Default texture to use if not defined.
+ *    @return OpenGL ID of the new texture.
+ */
 static GLuint object_loadTexture( const cgltf_texture_view *ctex, GLint def )
 {
    GLuint tex;
@@ -232,8 +282,11 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
 
 /**
  * @brief Loads a VBO from an accessor.
+ *
+ *    @param acc Accessor to load from.
+ *    @return OpenGL ID of the new VBO.
  */
-static GLuint object_loadVBO( cgltf_accessor *acc )
+static GLuint object_loadVBO( const cgltf_accessor *acc, GLfloat *radius, vec3 *aabb_min, vec3 *aabb_max )
 {
    GLuint vid;
    cgltf_size num = cgltf_accessor_unpack_floats( acc, NULL, 0 );
@@ -245,6 +298,22 @@ static GLuint object_loadVBO( cgltf_accessor *acc )
    glBindBuffer( GL_ARRAY_BUFFER, vid );
    glBufferData( GL_ARRAY_BUFFER, sizeof(cgltf_float) * num, dat, GL_STATIC_DRAW );
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
+
+   /* If applicable, store some useful stuff. */
+   if (radius != NULL) {
+      *radius = 0.;
+      memset( aabb_min, 0, sizeof(vec3) );
+      memset( aabb_max, 0, sizeof(vec3) );
+      for (unsigned int i=0; i<num; i+=3) {
+         vec3 v;
+         for (unsigned int j=0; j<3; j++) {
+            aabb_min->v[j] = MIN( dat[i+j], aabb_min->v[j] );
+            aabb_max->v[j] = MAX( dat[i+j], aabb_max->v[j] );
+            v.v[j] = dat[i+j];
+         }
+         *radius = vec3_length( &v );
+      }
+   }
 
    gl_checkErr();
    free( dat );
@@ -258,8 +327,8 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
 {
    cgltf_mesh *cmesh = cnode->mesh;
    /* Get transform for node. */
-   cgltf_node_transform_local( cnode, node->H );
-   //cgltf_node_transform_world( cnode, node->H );
+   cgltf_node_transform_local( cnode, node->H.ptr );
+   //cgltf_node_transform_world( cnode, node->H.ptr );
 
    if (cmesh == NULL) {
       node->nmesh = 0;
@@ -295,15 +364,18 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
             cgltf_attribute *attr = &prim->attributes[j];
             switch (attr->type) {
                case cgltf_attribute_type_position:
-                  mesh->vbo_pos = object_loadVBO( attr->data );
+                  mesh->vbo_pos = object_loadVBO( attr->data, &mesh->radius, &mesh->aabb_min, &mesh->aabb_max );
+                  node->radius = MAX( node->radius, mesh->radius );
+                  vec3_max( &node->aabb_max, &node->aabb_max, &mesh->aabb_max );
+                  vec3_min( &node->aabb_min, &node->aabb_min, &mesh->aabb_min );
                   break;
 
                case cgltf_attribute_type_normal:
-                  mesh->vbo_nor = object_loadVBO( attr->data );
+                  mesh->vbo_nor = object_loadVBO( attr->data, NULL, NULL, NULL );
                   break;
 
                case cgltf_attribute_type_texcoord:
-                  mesh->vbo_tex = object_loadVBO( attr->data );
+                  mesh->vbo_tex = object_loadVBO( attr->data, NULL, NULL, NULL );
                   break;
 
                case cgltf_attribute_type_color:
@@ -318,12 +390,73 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
    /* Iterate over children. */
    node->children = calloc( cnode->children_count, sizeof(Node) );
    node->nchildren = cnode->children_count;
-   for (size_t i=0; i<cnode->children_count; i++)
-      object_loadNodeRecursive( data, &node->children[i], cnode->children[i] );
+   for (size_t i=0; i<cnode->children_count; i++) {
+      Node *child = &node->children[i];
+      object_loadNodeRecursive( data, child, cnode->children[i] );
+      node->radius = MAX( node->radius, child->radius );
+      vec3_max( &node->aabb_max, &node->aabb_max, &child->aabb_max );
+      vec3_min( &node->aabb_min, &node->aabb_min, &child->aabb_min );
+   }
    return 0;
 }
 
-static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloat H[16] )
+/**
+ * @brief Renders a mesh shadow with a transform.
+ */
+static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const mat4 *H )
+{
+   (void) obj;
+   const Shader *shd = &shadow_shader;
+
+   glBindFramebuffer(GL_FRAMEBUFFER, fbo_shadow);
+   glViewport(0, 0, SHADOWMAP_SIZE, SHADOWMAP_SIZE);
+   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
+
+   /* TODO put everything in a single VBO */
+   glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_pos );
+   glVertexAttribPointer( shd->vertex, 3, GL_FLOAT, GL_FALSE, 0, NULL );
+   glEnableVertexAttribArray( shd->vertex );
+
+   /* Set up shader. */
+   glUseProgram( shd->program );
+   GLfloat Hview[16] = {
+      1.0, 0.0, 0.0, 0.0,
+      0.0, 1.0, 0.0, 0.0,
+      0.0, 0.0, 1.0, 0.0,
+      0.0, 0.0, 0.0, 1.0 };
+   const vec3 up        = { .v = {0., 0., 1.} };
+   const vec3 light_pos = { .v = {4., 2., -20.} };
+   const vec3 center    = { .v = {0., 0., 0.} };
+   const GLfloat sca = 0.1;
+   const GLfloat Hprojection[16] = {
+      sca, 0.0, 0.0, 0.0,
+      0.0, sca, 0.0, 0.0,
+      0.0, 0.0, sca, 0.0,
+      0.0, 0.0, 0.0, 1.0 };
+   lookat( Hview, &light_pos, &center, &up );
+   //matmul( Hview, H );
+   glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
+   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hview );
+   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
+
+   glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
+
+   glUseProgram( 0 );
+
+   glBindTexture( GL_TEXTURE_2D, 0 );
+
+   glBindBuffer( GL_ARRAY_BUFFER, 0 );
+   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+   gl_checkErr();
+}
+
+/**
+ * @brief Renders a mesh with a transform.
+ */
+static void object_renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
 {
    const Material *mat;
    const Shader *shd = &object_shader;
@@ -333,12 +466,10 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    else
       mat = &obj->materials[ mesh->material ];
 
-   /* Depth testing. */
-   glEnable( GL_DEPTH_TEST );
-   glDepthFunc( GL_LESS );
-
    glEnable(GL_BLEND);
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+
+   glViewport(0, 0, SCREEN_W, SCREEN_H );
 
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
 
@@ -361,14 +492,20 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    /* Set up shader. */
    glUseProgram( shd->program );
+   GLfloat Hshadow[16];
+   const vec3 up = { .v = {0., 0., 1.} };
+   const vec3 light_pos = { .v = {4., 2., -20.} };
+   const vec3 center = { .v = {0., 0., 0.} };
    const GLfloat sca = 0.1;
    const GLfloat Hprojection[16] = {
       sca, 0.0, 0.0, 0.0,
       0.0, sca, 0.0, 0.0,
       0.0, 0.0, sca, 0.0,
       0.0, 0.0, 0.0, 1.0 };
+   lookat( Hshadow, &light_pos, &center, &up );
    glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
-   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H );
+   glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow );
+   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
    glUniform1f( shd->metallicFactor, mat->metallicFactor );
    glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
    glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
@@ -385,6 +522,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    glUniform1f( sl->range, -1. );
    glUniform3f( sl->colour, 1.0, 1.0, 1.0 );
    glUniform1f( sl->intensity, 500. );
+   glUniform1i( shd->shadowmap, tex_shadow );
 
    /* Texture. */
    glActiveTexture( GL_TEXTURE0 );
@@ -413,8 +551,6 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
-   glDisable(GL_DEPTH_TEST);
-
    gl_checkErr();
 }
 
@@ -438,37 +574,133 @@ static void matmul( GLfloat H[16], const GLfloat R[16] )
    H[14] += R[14];
 }
 
-void object_renderNode( const Object *obj, const Node *node, const GLfloat H[16] )
+/**
+ * @brief Fills a matrix with a transformation to look at a center point from an eye with an up vector.
+ */
+static void lookat( GLfloat H[16], const vec3 *eye, const vec3 *center, const vec3 *up )
+{
+   vec3 forward, side, upc;
+   GLfloat H2[16];
+
+   vec3_sub( &forward, center, eye );
+   vec3_normalize( &forward );
+
+   /* side = forward x up */
+   vec3_cross( &side, &forward, up );
+   vec3_normalize( &side );
+
+   /* upc = side x forward */
+   vec3_cross( &upc, &side, &forward );
+
+   /* First column. */
+   H2[0]  = side.v[0];
+   H2[4]  = side.v[1];
+   H2[8]  = side.v[2];
+   H2[12] = 0.;
+   /* Second column. */
+   H2[1]  = upc.v[0];
+   H2[5]  = upc.v[1];
+   H2[9]  = upc.v[2];
+   H2[13] = 0.;
+   /* Third column. */
+   H2[2]  = -forward.v[0];
+   H2[6]  = -forward.v[1];
+   H2[10] = -forward.v[2];
+   H2[14] = 0.;
+   /* Fourth column. */
+   H2[3]  = 0.;
+   H2[7]  = 0.;
+   H2[11] = 0.;
+   H2[15] = 1.;
+
+   /* Multiply. */
+   matmul( H, H2 );
+   /* Translate to eye. */
+   H[3]  -= eye->v[0];
+   H[7]  -= eye->v[1];
+   H[11] -= eye->v[2];
+}
+
+/**
+ * @brief Recursive rendering to the shadow buffer.
+ */
+static void object_renderNodeShadow( const Object *obj, const Node *node, const mat4 *H )
 {
    /* Multiply matrices, can be animated so not caching. */
    /* TODO cache when not animated. */
    //matmul( H, node->H );
-   GLfloat HH[16];
-   memcpy( HH, node->H, sizeof(GLfloat)*16 );
-   matmul( HH, H );
+   mat4 HH = node->H;
+   mat4_apply( &HH, H );
 
    /* Draw meshes. */
    for (size_t i=0; i<node->nmesh; i++)
-      object_renderMesh( obj, &node->mesh[i], HH );
+      object_renderMeshShadow( obj, &node->mesh[i], &HH );
 
    /* Draw children. */
    for (size_t i=0; i<node->nchildren; i++)
-      object_renderNode( obj, &node->children[i], HH );
+      object_renderNodeShadow( obj, &node->children[i], &HH );
 
    gl_checkErr();
 }
 
-void object_render( const Object *obj, const GLfloat *H )
+/**
+ * @brief Recursive rendering of a mesh.
+ */
+void object_renderNodeMesh( const Object *obj, const Node *node, const mat4 *H )
 {
-   const GLfloat I[16] = { 1.0, 0.0, 0.0, 0.0,
-                           0.0, 1.0, 0.0, 0.0,
-                           0.0, 0.0, 1.0, 0.0,
-                           0.0, 0.0, 0.0, 1.0 };
+   /* Multiply matrices, can be animated so not caching. */
+   /* TODO cache when not animated. */
+   //matmul( H, node->H );
+   mat4 HH = node->H;
+   mat4_apply( &HH, H );
 
-   for (size_t i=0; i<obj->nnodes; i++)
-      object_renderNode( obj, &obj->nodes[i], (H!=NULL) ? H : I );
+   /* Draw meshes. */
+   for (size_t i=0; i<node->nmesh; i++)
+      object_renderMesh( obj, &node->mesh[i], &HH );
+
+   /* Draw children. */
+   for (size_t i=0; i<node->nchildren; i++)
+      object_renderNodeMesh( obj, &node->children[i], &HH );
+
+   gl_checkErr();
 }
 
+void object_renderNode( const Object *obj, const Node *node, const mat4 *H )
+{
+   object_renderNodeShadow( obj, node, H );
+   object_renderNodeMesh( obj, node, H );
+}
+
+/**
+ * @brief Renders an object (with a transformation).
+ *
+ *    @param obj Object to render.
+ *    @param H Transformation to apply (or NULL to use identity).
+ */
+void object_render( const Object *obj, const mat4 *H )
+{
+   const mat4 I = mat4_identity();
+
+   /* Depth testing. */
+   glEnable( GL_DEPTH_TEST );
+   glDepthFunc( GL_LESS );
+
+   glBindFramebuffer(GL_FRAMEBUFFER, fbo_shadow);
+   glClear(GL_DEPTH_BUFFER_BIT);
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+   for (size_t i=0; i<obj->nnodes; i++)
+      object_renderNode( obj, &obj->nodes[i], (H!=NULL) ? H : &I );
+
+   glDisable( GL_DEPTH_TEST );
+}
+
+/**
+ * @brief Loads an object from a file.
+ *
+ *    @param filename Name of the file to load from.
+ *    @return Newly loaded object file.
+ */
 Object *object_loadFromFile( const char *filename )
 {
    Object *obj;
@@ -477,18 +709,18 @@ Object *object_loadFromFile( const char *filename )
    cgltf_options opts;
    memset( &opts, 0, sizeof(opts) );
 
+   /* Initialize object. */
    obj = calloc( sizeof(Object), 1 );
 
+   /* Start loading the file. */
    res = cgltf_parse_file( &opts, filename, &data );
    assert( res == cgltf_result_success );
 
 #if DEBUGGING
+   /* Validate just in case. */
    res = cgltf_validate( data );
    assert( res == cgltf_result_success );
 #endif /* DEBUGGING */
-
-   res = cgltf_validate( data );
-   assert( res == cgltf_result_success );
 
    /* TODO load buffers properly from physfs. */
    res = cgltf_load_buffers( &opts, data, "./" );
@@ -504,8 +736,13 @@ Object *object_loadFromFile( const char *filename )
    cgltf_scene *scene = &data->scenes[0]; /* data->scene may be NULL */
    obj->nodes = calloc( scene->nodes_count, sizeof(Node) );
    obj->nnodes = scene->nodes_count;
-   for (size_t i=0; i<scene->nodes_count; i++)
-      object_loadNodeRecursive( data, &obj->nodes[i], scene->nodes[i] );
+   for (size_t i=0; i<scene->nodes_count; i++) {
+      Node *n = &obj->nodes[i];
+      object_loadNodeRecursive( data, n, scene->nodes[i] );
+      obj->radius = MAX( obj->radius, n->radius );
+      vec3_max( &obj->aabb_max, &obj->aabb_max, &n->aabb_max );
+      vec3_min( &obj->aabb_min, &obj->aabb_min, &n->aabb_min );
+   }
 
    cgltf_free(data);
 
@@ -567,7 +804,9 @@ int object_init (void)
 {
    const GLubyte data_zero[4] = { 0, 0, 0, 0 };
    const GLubyte data_ones[4] = { 255, 255, 255, 255 };
-   Shader *shd = &object_shader;
+   const GLfloat b[4] = { 1., 1., 1., 1. };
+   GLenum status;
+   Shader *shd;
 
    /* Load textures. */
    glGenTextures( 1, &tex_zero );
@@ -582,11 +821,46 @@ int object_init (void)
    /* Set up default material. */
    object_loadMaterial( &material_default, NULL );
 
+   /* Set up shadow buffer depth tex. */
+   glGenTextures(1, &tex_shadow);
+   glBindTexture(GL_TEXTURE_2D, tex_shadow);
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOWMAP_SIZE, SHADOWMAP_SIZE, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+   glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, b);
+   glBindTexture(GL_TEXTURE_2D, 0);
+   /* Set up shadow buffer FBO. */
+   glGenFramebuffers( 1, &fbo_shadow );
+   glBindFramebuffer(GL_FRAMEBUFFER, fbo_shadow);
+   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, tex_shadow, 0);
+   glDrawBuffer(GL_NONE);
+   glReadBuffer(GL_NONE);
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
+   status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+   if (status != GL_FRAMEBUFFER_COMPLETE)
+      WARN(_("Error setting up framebuffer!"));
+
+   /* Compile the shadow shader. */
+   shd = &shadow_shader;
+   shd->program = gl_program_vert_frag( "shadow.vert", "shadow.frag", "" );
+   if (shd->program==0)
+      return -1;
+   glUseProgram( shd->program );
+   /** Attributes. */
+   shd->vertex          = glGetAttribLocation( shd->program, "vertex" );
+   /* Vertex uniforms. */
+   shd->Hprojection     = glGetUniformLocation( shd->program, "projection");
+   shd->Hmodel          = glGetUniformLocation( shd->program, "model");
+
    /* Compile the shader. */
+   shd = &object_shader;
    shd->program = gl_program_vert_frag( "gltf.vert", "gltf_pbr.frag", "#define MAX_LIGHTS "STR(MAX_LIGHTS)"\n" );
    if (shd->program==0)
       return -1;
-
    glUseProgram( shd->program );
    /** Attributes. */
    shd->vertex          = glGetAttribLocation( shd->program, "vertex" );
@@ -594,6 +868,7 @@ int object_init (void)
    shd->vertex_tex0     = glGetAttribLocation( shd->program, "vertex_tex0" );
    /* Vertex uniforms. */
    shd->Hprojection     = glGetUniformLocation( shd->program, "projection");
+   shd->Hshadow_projection = glGetUniformLocation( shd->program, "shadow_projection");
    shd->Hmodel          = glGetUniformLocation( shd->program, "model");
    /* Fragment uniforms. */
    shd->blend           = glGetUniformLocation( shd->program, "u_blend" );
@@ -621,6 +896,7 @@ int object_init (void)
       sl->intensity     = glGetUniformLocation( shd->program, buf );
    }
    shd->nlights         = glGetUniformLocation( shd->program, "u_nlights" );
+   shd->shadowmap       = glGetUniformLocation( shd->program, "shadowmap" );
    glUseProgram(0);
    gl_checkErr();
 
@@ -644,6 +920,15 @@ int object_init (void)
 
 void object_exit (void)
 {
+   glDeleteTextures( 1, &tex_shadow );
+   glDeleteFramebuffers( 1, &fbo_shadow );
    glDeleteTextures( 1, &tex_zero );
    glDeleteTextures( 1, &tex_ones );
+   glDeleteProgram( object_shader.program );
+   glDeleteProgram( shadow_shader.program );
+}
+
+GLuint object_shadowmap (void)
+{
+   return tex_shadow;
 }

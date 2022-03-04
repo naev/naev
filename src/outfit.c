@@ -2466,7 +2466,7 @@ int outfit_load (void)
          continue;
       }
 
-      env = nlua_newEnv(1);
+      env = nlua_newEnv();
       o->lua_env = env;
       /* TODO limit libraries here. */
       nlua_loadStandard( env );

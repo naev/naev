@@ -614,24 +614,24 @@ void sysedit_sysScale( StarSystem *sys, double factor )
    /* Scale spobs. */
    for (int i=0; i<array_size(sys->spobs); i++) {
       Spob *p = sys->spobs[i];
-      vect_cset( &p->pos, p->pos.x*factor, p->pos.y*factor );
+      vec2_cset( &p->pos, p->pos.x*factor, p->pos.y*factor );
    }
 
    /* Scale jumps. */
    for (int i=0; i<array_size(sys->jumps); i++) {
       JumpPoint *jp = &sys->jumps[i];
-      vect_cset( &jp->pos, jp->pos.x*factor, jp->pos.y*factor );
+      vec2_cset( &jp->pos, jp->pos.x*factor, jp->pos.y*factor );
    }
 
    /* Scale asteroids. */
    for (int i=0; i<array_size(sys->asteroids); i++) {
       AsteroidAnchor *ast = &sys->asteroids[i];
-      vect_cset( &ast->pos, ast->pos.x*factor, ast->pos.y*factor );
+      vec2_cset( &ast->pos, ast->pos.x*factor, ast->pos.y*factor );
       ast->radius *= factor;
    }
    for (int i=0; i<array_size(sys->astexclude); i++) {
       AsteroidExclusion *exc = &sys->astexclude[i];
-      vect_cset( &exc->pos, exc->pos.x*factor, exc->pos.y*factor );
+      vec2_cset( &exc->pos, exc->pos.x*factor, exc->pos.y*factor );
       exc->radius *= factor;
    }
 
@@ -724,7 +724,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    /* Render safe lanes. */
    SafeLane* safelanes = safelanes_get( -1, 0, sys );
    for (int i=0; i<array_size(safelanes); i++) {
-      Vector2d *posns[2];
+      vec2 *posns[2];
       Spob *pnt;
       JumpPoint *njp;
       glColour col;

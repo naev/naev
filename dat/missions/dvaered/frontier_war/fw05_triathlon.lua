@@ -75,6 +75,7 @@ function create()
    "I am Private Helmut Strafer and this is my death announcement." A strange smile appears on his face as he continues: "Yep, this is happening. It is my utmost privilege to have been killed in service to the Dvaered Nation, Great House of the Glorious Galactic Empire. You received this recording because you are on the list of people I considered to be my friends. You are invited to my funeral ceremony, which I sincerely hope you will enjoy. As I obviously don't know yet either the circumstances of my death, or the details about the ceremony, all I can do is invite you to find more information in the attached data. Now that I have merged with the void, I would be honoured if my memory helps you remain right, loyal, and strong for the rest of your own lifetime."]]), ("portraits/" .. fw.portrait_strafer) )
    if not tk.yesno( _("An invitation"), _([[You browse the attached data and find out the ceremony will take place around Dvaer Prime. As a pilot, you are invited to take part in a Mace Rocket Ballet in memory of Lieutenant Strafer, and are strongly advised to show up with a fighter and mace launchers.
    Are you going to go there?]]) ) then
+      -- TODO should probably add a timer or something or the player will get spammed every time they try to land with this
       misn.finish(false)
    end
 

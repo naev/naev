@@ -153,14 +153,15 @@ void background_renderDust( const double dt )
    (void) dt;
    GLfloat x, y, h, w;
    double z;
-   gl_Matrix4 projection;
+   mat4 projection;
    int points = 1;
 
    /* Do some scaling for now. */
    z = cam_getZoom();
    z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
-   projection = gl_Matrix4_Translate( gl_view_matrix, SCREEN_W/2., SCREEN_H/2., 0 );
-   projection = gl_Matrix4_Scale( projection, z, z, 1 );
+   projection = gl_view_matrix;
+   mat4_translate( &projection, SCREEN_W/2., SCREEN_H/2., 0 );
+   mat4_scale( &projection, z, z, 1 );
 
    /* Decide on shade mode. */
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
@@ -198,7 +199,7 @@ void background_renderDust( const double dt )
 
    /* Common shader stuff. */
    glUseProgram(shaders.stars.program);
-   gl_Matrix4_Uniform(shaders.stars.projection, projection);
+   gl_uniformMat4(shaders.stars.projection, &projection);
    glUniform2f(shaders.stars.star_xy, star_x, star_y);
    glUniform3f(shaders.stars.dims, w, h, 1. / gl_screen.scale);
    glUniform1i(shaders.stars.use_lines, !points);
@@ -394,7 +395,7 @@ static nlua_env background_create( const char *name )
    snprintf( path, sizeof(path), BACKGROUND_PATH"%s.lua", name );
 
    /* Create the Lua env. */
-   env = nlua_newEnv(1);
+   env = nlua_newEnv();
    nlua_loadStandard(env);
    nlua_loadTex(env);
    nlua_loadCol(env);

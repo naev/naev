@@ -77,11 +77,10 @@ int nlua_loadCamera( nlua_env env )
 static int camL_set( lua_State *L )
 {
    Pilot *p;
-   Vector2d *vec;
+   vec2 *vec;
    double x, y, d;
    int hard_over, speed;
 
-   NLUA_CHECKRW(L);
 
    /* Handle arguments. */
    p = NULL;
@@ -127,7 +126,7 @@ static int camL_set( lua_State *L )
  */
 static int camL_get( lua_State *L )
 {
-   Vector2d v;
+   vec2 v;
    cam_getPos( &v.x, &v.y );
    lua_pushvector( L, v );
    return 1;
@@ -146,7 +145,6 @@ static int camL_get( lua_State *L )
  */
 static int camL_setZoom( lua_State *L )
 {
-   NLUA_CHECKRW(L);
 
    double zoom = luaL_optnumber(L,1,-1.0);
    int hard_over = lua_toboolean(L,2);
@@ -194,7 +192,6 @@ static int camL_getZoom( lua_State *L )
  */
 static int camL_shake( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    double amplitude = luaL_optnumber(L,1,1.);
    spfx_shake( amplitude );
    return 0;

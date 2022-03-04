@@ -270,7 +270,7 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *di
    StarSystem **slist;
    double d;
    int i;
-   Vector2d *vs, *ve;
+   vec2 *vs, *ve;
 
    /* Defaults. */
    ve = NULL;
@@ -279,7 +279,7 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *di
    if (sys == cur_system) {
       *jumps = 0;
       if (spob != NULL)
-         *distance = vect_dist( &player.p->solid->pos, &spob->pos );
+         *distance = vec2_dist( &player.p->solid->pos, &spob->pos );
       else
          *distance = 0.;
 
@@ -306,7 +306,7 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *di
       d = 0.;
    }
    else
-      d = vect_dist( vs, ve );
+      d = vec2_dist( vs, ve );
 
    /* Calculate distance. */
    for (i=0; i<(*jumps-1); i++) {
@@ -344,7 +344,7 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *di
 #endif /* DEBUGGING */
 
       /* Calculate. */
-      d += vect_dist( vs, ve );
+      d += vec2_dist( vs, ve );
    }
 
    /* Account final travel to spob for spob targets. */
@@ -364,7 +364,7 @@ static int map_findDistance( StarSystem *sys, Spob *spob, int *jumps, double *di
       assert( vs != NULL );
       assert( ve != NULL );
 
-      d += vect_dist( vs, ve );
+      d += vec2_dist( vs, ve );
    }
 
    /* Cleanup. */

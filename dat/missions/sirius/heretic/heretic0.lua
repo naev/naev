@@ -47,7 +47,7 @@ function accept()
    if not tk.yesno( _("The Gauntlet"), fmt.f( _([[You walk up to a scrappy little man leaning against the bar. You sit next to him, and he eyes you up and down. You return the stare coolly and he half-heartedly tries to strikes up a conversation. "Nice drinks they have here." You feign interest so as not to be impolite.
     He continues impatiently. "You look like you're in need of a couple spare credits," he finally says. "I have, uh, a shipment that needs getting to {pnt}. Are you interested? Just has to be kept under wraps if you know what I mean. Pay is good though. {credits}. That's all you need to know." He pauses for a moment. "How about it?"]]), {pnt=mem.targetasset, credits=fmt.credits(mem.reward)} ) ) then
       tk.msg(_("The Gauntlet"),_([["Well, that's your choice. Be on your way now. I'm busy."]]))
-      misn.finish(false)
+      return
    end
    tk.msg(_("The Gauntlet"), fmt.f(_([[You feel a very large hand slap you on the back. "I knew you would do it! A great choice!" he says. "I'll have my boys load up the cargo. Remember, all you gotta do is fly to {pnt}, and avoid the Sirius military. You know, don't let them scan you. I'll let my contacts know to expect you. They'll pay you when you land."
     You shake his sticky hand and walk off, content that you've made an easy buck.]]), {pnt=mem.targetasset}))
@@ -61,7 +61,7 @@ function accept()
    local freecargo = player.pilot():cargoFree() --checks to make sure the player has 5 tons available
    if freecargo < 5 then
       tk.msg(_("The Gauntlet"),_([["You say you want this job, but you don't have enough cargo space! Stop wasting my time!"]])) --and if they don't, the mission finishes.
-      misn.finish(false)
+      return
    end
    local c = commodity.new( N_("Small Arms"), N_("An assortment of weapons that are not legal in Sirius space.") )
    c:illegalto( {"Sirius"} )

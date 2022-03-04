@@ -19,9 +19,11 @@ uniform sampler2D emissive_tex; /**< Emission texture. */
 /* misc */
 uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
 uniform int u_blend = 0;
+uniform sampler2DShadow shadowmap; /**< Shadow map. */
 
 in vec2 tex_coord0;
 in vec3 position;
+in vec4 shadow;
 in vec3 normal;
 in mat3 normalH;
 out vec4 colour_out;
@@ -252,6 +254,10 @@ void main (void)
    float ao = texture(occlusion_tex, tex_coord0).r;
    f_diffuse *= ao;
 
+   /* Set up shadows. */
+   //float shadowFactor = textureProj(shadowmap, shadow);
+   float shadowFactor = 1.0;
+
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, 1.0) );
    for (int i=0; i<u_nlights; i++) {
@@ -274,7 +280,7 @@ void main (void)
          vec3 NoLintensity = NoL * intensity;
 
          //f_diffuse  += intensity * BRDF_lambertian( M.f0, M.f90, M.c_diff, M.specularWeight, VdotH );
-         f_diffuse += NoLintensity * BRDF_diffuse( M.c_diff, M.roughness, NoV, NoL, LoH );
+         f_diffuse  += NoLintensity * BRDF_diffuse( M.c_diff, M.roughness, NoV, NoL, LoH );
          f_specular += NoLintensity * BRDF_specularGGX( M.f0, M.f90, M.roughness, VoH, NoL, NoV, NoH );
 
          /* Clear coat lobe. */
@@ -287,7 +293,7 @@ void main (void)
 
    /* Combine diffuse, emissive, and specular.. */
    float alpha = (u_blend==1) ? M.albedo.a : 1.0;
-   colour_out = vec4( f_emissive + f_diffuse + f_specular, alpha );
+   colour_out = vec4( f_emissive + shadowFactor*(f_diffuse + f_specular), alpha );
 
    /* Apply clearcoat. */
    vec3 clearcoatFresnel = F_Schlick( M.f0, M.f90, clampedDot(n, v));

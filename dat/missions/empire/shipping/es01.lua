@@ -47,11 +47,10 @@ function create ()
 end
 
 function accept ()
-
    -- See if accept mission
    if not tk.yesno( _("Commander Soldner"), _([[You approach Commander Soldner, who seems to be waiting for you.
 "Ready for your next mission?"]]) ) then
-      misn.finish()
+      return
    end
 
    misn.accept()

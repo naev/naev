@@ -67,9 +67,9 @@ int nlua_loadTransform( nlua_env env )
  *    @param ind Index position to find the transform.
  *    @return Transform found at the index in the state.
  */
-gl_Matrix4* lua_totransform( lua_State *L, int ind )
+mat4* lua_totransform( lua_State *L, int ind )
 {
-   return (gl_Matrix4*) lua_touserdata(L,ind);
+   return (mat4*) lua_touserdata(L,ind);
 }
 /**
  * @brief Gets transform at index or raises error if there is no transform at index.
@@ -78,7 +78,7 @@ gl_Matrix4* lua_totransform( lua_State *L, int ind )
  *    @param ind Index position to find transform.
  *    @return Transform found at the index in the state.
  */
-gl_Matrix4* luaL_checktransform( lua_State *L, int ind )
+mat4* luaL_checktransform( lua_State *L, int ind )
 {
    if (lua_istransform(L,ind))
       return lua_totransform(L,ind);
@@ -92,10 +92,10 @@ gl_Matrix4* luaL_checktransform( lua_State *L, int ind )
  *    @param transform Transform to push.
  *    @return Newly pushed transform.
  */
-gl_Matrix4* lua_pushtransform( lua_State *L, gl_Matrix4 transform )
+mat4* lua_pushtransform( lua_State *L, mat4 transform )
 {
-   gl_Matrix4 *t;
-   t = (gl_Matrix4*) lua_newuserdata(L, sizeof(gl_Matrix4));
+   mat4 *t;
+   t = (mat4*) lua_newuserdata(L, sizeof(mat4));
    *t = transform;
    luaL_getmetatable(L, TRANSFORM_METATABLE);
    lua_setmetatable(L, -2);
@@ -134,10 +134,10 @@ int lua_istransform( lua_State *L, int ind )
  */
 static int transformL_eq( lua_State *L )
 {
-   gl_Matrix4 *t1, *t2;
+   mat4 *t1, *t2;
    t1 = luaL_checktransform(L,1);
    t2 = luaL_checktransform(L,2);
-   lua_pushboolean( L, (memcmp( t1, t2, sizeof(gl_Matrix4) )==0) );
+   lua_pushboolean( L, (memcmp( t1, t2, sizeof(mat4) )==0) );
    return 1;
 }
 
@@ -149,13 +149,13 @@ static int transformL_eq( lua_State *L )
  */
 static int transformL_new( lua_State *L )
 {
-   gl_Matrix4 *M;
+   mat4 *M;
    if (lua_istransform(L,1)) {
       M = lua_totransform(L,1);
       lua_pushtransform( L, *M );
    }
    else
-      lua_pushtransform( L, gl_Matrix4_Identity() );
+      lua_pushtransform( L, mat4_identity() );
    return 1;
 }
 
@@ -169,9 +169,10 @@ static int transformL_new( lua_State *L )
  */
 static int transformL_mul( lua_State *L )
 {
-   gl_Matrix4 *A = luaL_checktransform(L, 1);
-   gl_Matrix4 *B = luaL_checktransform(L, 2);
-   gl_Matrix4 C = gl_Matrix4_Mult( *A, *B );
+   mat4 *A = luaL_checktransform(L, 1);
+   mat4 *B = luaL_checktransform(L, 2);
+   mat4 C;
+   mat4_mul( &C, A, B );
    lua_pushtransform(L, C);
    return 1;
 }
@@ -185,7 +186,7 @@ static int transformL_mul( lua_State *L )
  */
 static int transformL_get( lua_State *L )
 {
-   gl_Matrix4 *M = luaL_checktransform(L, 1);
+   mat4 *M = luaL_checktransform(L, 1);
    lua_newtable(L);              /* t */
    for (int i=0; i<4; i++) {
       lua_newtable(L);           /* t, t */
@@ -210,11 +211,13 @@ static int transformL_get( lua_State *L )
  */
 static int transformL_scale( lua_State *L )
 {
-   gl_Matrix4 *M = luaL_checktransform(L, 1);
+   mat4 *M = luaL_checktransform(L, 1);
    double x = luaL_checknumber(L,2);
    double y = luaL_checknumber(L,3);
    double z = luaL_optnumber(L,4,1.);
-   lua_pushtransform(L, gl_Matrix4_Scale( *M, x, y, z ) );
+   mat4 out = *M;
+   mat4_scale( &out, x, y, z );
+   lua_pushtransform(L, out);
    return 1;
 }
 
@@ -230,11 +233,13 @@ static int transformL_scale( lua_State *L )
  */
 static int transformL_translate( lua_State *L )
 {
-   gl_Matrix4 *M = luaL_checktransform(L, 1);
+   mat4 *M = luaL_checktransform(L, 1);
    double x = luaL_checknumber(L,2);
    double y = luaL_checknumber(L,3);
    double z = luaL_optnumber(L,4,0.);
-   lua_pushtransform(L, gl_Matrix4_Translate( *M, x, y, z ) );
+   mat4 out = *M;
+   mat4_translate( &out, x, y, z );
+   lua_pushtransform(L, out);
    return 1;
 }
 
@@ -247,9 +252,11 @@ static int transformL_translate( lua_State *L )
  */
 static int transformL_rotate2d( lua_State *L )
 {
-   gl_Matrix4 *M = luaL_checktransform(L, 1);
+   mat4 *M = luaL_checktransform(L, 1);
    double a = luaL_checknumber(L,2);
-   lua_pushtransform(L, gl_Matrix4_Rotate2d( *M, a ) );
+   mat4 out = *M;
+   mat4_rotate2d( &out, a );
+   lua_pushtransform(L, out);
    return 1;
 }
 
@@ -273,7 +280,7 @@ static int transformL_ortho( lua_State *L )
    double top     = luaL_checknumber(L,4);
    double nearVal = luaL_checknumber(L,5);
    double farVal  = luaL_checknumber(L,6);
-   lua_pushtransform(L, gl_Matrix4_Ortho(left, right, bottom, top, nearVal, farVal) );
+   lua_pushtransform(L, mat4_ortho(left, right, bottom, top, nearVal, farVal) );
    return 1;
 }
 
@@ -292,7 +299,7 @@ static int transformL_ortho( lua_State *L )
 static int transformL_applyPoint( lua_State *L )
 {
    double gp[3], p[3];
-   gl_Matrix4 *M = luaL_checktransform(L, 1);
+   mat4 *M = luaL_checktransform(L, 1);
    gp[0] = luaL_checknumber(L,2);
    gp[1] = luaL_checknumber(L,3);
    gp[2] = luaL_checknumber(L,4);
@@ -323,7 +330,7 @@ static int transformL_applyPoint( lua_State *L )
 static int transformL_applyDim( lua_State *L )
 {
    double gp[3], p[3];
-   gl_Matrix4 *M = luaL_checktransform(L, 1);
+   mat4 *M = luaL_checktransform(L, 1);
    gp[0] = luaL_checknumber(L,2);
    gp[1] = luaL_checknumber(L,3);
    gp[2] = luaL_checknumber(L,4);

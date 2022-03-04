@@ -41,9 +41,9 @@ static int target_known = 0; /**< Is the target known? */
  */
 static int player_autonavSetup (void);
 static void player_autonav (void);
-static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target );
-static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow, double *dist2 );
-static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel, double *dist2, double sw );
+static int player_autonavApproach( const vec2 *pos, double *dist2, int count_target );
+static void player_autonavFollow( const vec2 *pos, const vec2 *vel, const int follow, double *dist2 );
+static int player_autonavApproachBoard( const vec2 *pos, const vec2 *vel, double *dist2, double sw );
 static int player_autonavBrake (void);
 
 /**
@@ -176,7 +176,7 @@ void player_autonavPos( double x, double y )
    player.autonav    = AUTONAV_POS_APPROACH;
    player.autonavmsg = strdup( _("position" ));
    player.autonavcol = '0';
-   vect_cset( &player.autonav_pos, x, y );
+   vec2_cset( &player.autonav_pos, x, y );
 }
 
 /**
@@ -191,7 +191,7 @@ void player_autonavSpob( const char *name, int tryland )
    p = spob_get( name );
    player.autonavmsg = strdup( spob_name(p) );
    player.autonavcol = spob_getColourChar( p );
-   vect_cset( &player.autonav_pos, p->pos.x, p->pos.y );
+   vec2_cset( &player.autonav_pos, p->pos.x, p->pos.y );
 
    if (tryland) {
       player.autonav = AUTONAV_SPOB_LAND_APPROACH;
@@ -497,12 +497,12 @@ static void player_autonav (void)
  *    @param count_target If 1 it subtracts the braking distance from dist2. Otherwise it returns the full distance.
  *    @return 1 on completion.
  */
-static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target )
+static int player_autonavApproach( const vec2 *pos, double *dist2, int count_target )
 {
    double d, t, vel, dist;
 
    /* Only accelerate if facing move dir. */
-   d = pilot_face( player.p, vect_angle( &player.p->solid->pos, pos ) );
+   d = pilot_face( player.p, vec2_angle( &player.p->solid->pos, pos ) );
    if (FABS(d) < MIN_DIR_ERR) {
       if (player_acc < 1.)
          player_accel( 1. );
@@ -522,7 +522,7 @@ static int player_autonavApproach( const Vector2d *pos, double *dist2, int count
       0.5*(player.p->thrust/player.p->solid->mass)*t*t;
 
    /* Output distance^2 */
-   d        = vect_dist( pos, &player.p->solid->pos );
+   d        = vec2_dist( pos, &player.p->solid->pos );
    dist     = d - dist;
    if (count_target)
       *dist2   = dist;
@@ -545,10 +545,10 @@ static int player_autonavApproach( const Vector2d *pos, double *dist2, int count
  *    @param[in] follow Whether to follow, or arrive at
  *    @param[out] dist2 Distance left to target.
  */
-static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow, double *dist2 )
+static void player_autonavFollow( const vec2 *pos, const vec2 *vel, const int follow, double *dist2 )
 {
    double angle, radius, d, timeFactor;
-   Vector2d dir, point;
+   vec2 dir, point;
 
    /* timeFactor is a time constant of the ship, used to heuristically determine the ratio Kd/Kp. */
    timeFactor = M_PI/player.p->turn + player.p->speed/player.p->thrust*player.p->solid->mass;
@@ -563,10 +563,10 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, cons
    if (!follow || (vel->x == 0 && vel->y == 0))
       radius = 0.;
    angle = M_PI + vel->angle;
-   vect_cset( &point, pos->x + radius * cos(angle),
+   vec2_cset( &point, pos->x + radius * cos(angle),
               pos->y + radius * sin(angle) );
 
-   vect_cset( &dir, (point.x - player.p->solid->pos.x) * Kp +
+   vec2_cset( &dir, (point.x - player.p->solid->pos.x) * Kp +
          (vel->x - player.p->solid->vel.x) *Kd,
          (point.y - player.p->solid->pos.y) * Kp +
          (vel->y - player.p->solid->vel.y) *Kd );
@@ -580,13 +580,13 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, cons
 
    /* If aiming exactly at the point, should say when approaching. */
    if (!follow)
-      *dist2 = vect_dist( pos, &player.p->solid->pos );
+      *dist2 = vec2_dist( pos, &player.p->solid->pos );
 }
 
-static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel, double *dist2, double sw )
+static int player_autonavApproachBoard( const vec2 *pos, const vec2 *vel, double *dist2, double sw )
 {
    double d, timeFactor;
-   Vector2d dir;
+   vec2 dir;
 
    /* timeFactor is a time constant of the ship, used to heuristically determine the ratio Kd/Kp. */
    timeFactor = M_PI/player.p->turn + player.p->speed/player.p->thrust*player.p->solid->mass;
@@ -595,7 +595,7 @@ static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel
    const double Kp = 10.;
    const double Kd = MAX( 5., 10.84*timeFactor-10.82 );
 
-   vect_cset( &dir, (pos->x - player.p->solid->pos.x) * Kp +
+   vec2_cset( &dir, (pos->x - player.p->solid->pos.x) * Kp +
          (vel->x - player.p->solid->vel.x) *Kd,
          (pos->y - player.p->solid->pos.y) * Kp +
          (vel->y - player.p->solid->vel.y) *Kd );
@@ -608,12 +608,12 @@ static int player_autonavApproachBoard( const Vector2d *pos, const Vector2d *vel
       player_accel( 0. );
 
    /* Distance for TC-rampdown. */
-   *dist2 = vect_dist( pos, &player.p->solid->pos );
+   *dist2 = vec2_dist( pos, &player.p->solid->pos );
 
    /* Check if velocity and position allow to board. */
    if (*dist2 > sw * PILOT_SIZE_APPROX)
       return 0;
-   if (vect_dist2( &player.p->solid->vel, vel ) > pow2(MAX_HYPERSPACE_VEL))
+   if (vec2_dist2( &player.p->solid->vel, vel ) > pow2(MAX_HYPERSPACE_VEL))
       return 0;
    return 1;
 }
@@ -627,11 +627,11 @@ static int player_autonavBrake (void)
 {
    int ret;
    if ((player.autonav == AUTONAV_JUMP_BRAKE) && (player.p->nav_hyperspace != -1)) {
-      Vector2d pos;
+      vec2 pos;
       JumpPoint *jp  = &cur_system->jumps[ player.p->nav_hyperspace ];
 
       pilot_brakeDist( player.p, &pos );
-      if (vect_dist2( &pos, &jp->pos ) > pow2(jp->radius))
+      if (vec2_dist2( &pos, &jp->pos ) > pow2(jp->radius))
          ret = pilot_interceptPos( player.p, jp->pos.x, jp->pos.y );
       else
          ret = pilot_brake( player.p );

@@ -79,7 +79,6 @@ function accept ()
       local c = commodity.new( N_("Reynir"), N_("A old man who wants to see space.") )
       mem.cargoID = misn.cargoAdd( c, 0 )
    end
-
 end
 
 

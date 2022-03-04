@@ -215,10 +215,8 @@ int nlua_dofileenv( nlua_env env, const char *filename )
  * @brief Create an new environment in global Lua state.
  *
  * An "environment" is a table used with setfenv for sandboxing.
- *
- *    @param rw Load libraries in read/write mode.
  */
-nlua_env nlua_newEnv( int rw )
+nlua_env nlua_newEnv (void)
 {
    nlua_env ref;
    lua_newtable(naevL);
@@ -256,10 +254,6 @@ nlua_env nlua_newEnv( int rw )
    /* The global table _G should refer back to the environment. */
    lua_pushvalue(naevL, -1);
    lua_setfield(naevL, -2, "_G");
-
-   /* Push whether or not the read/write functionality is used for the different libraries. */
-   lua_pushboolean(naevL, rw);
-   lua_setfield(naevL, -2, "__RW");
 
    /* Push if naev is built with debugging. */
 #if DEBUGGING

@@ -85,20 +85,22 @@ void commodity_exchange_open( unsigned int wid )
    window_addText( wid, 40 + iw, -40, dw, titleHeight, 0,
          "txtName", &gl_defFont, NULL, _("None") );
 
-   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0", _("You have:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Purchased for:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Market Price:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Free Space:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Money:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Average price here:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s#0", _("Average price all:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("You have:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Purchased for:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Market Price:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Free Space:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Money:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Average price here:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Average price all:") );
    infoHeight = gl_printHeightRaw( &gl_smallFont, LAND_BUTTON_WIDTH+80, buf );
    window_addText( wid, 40 + iw, -60 - titleHeight, 200, infoHeight, 0,
-         "txtSInfo", &gl_smallFont, NULL, buf );
+         "txtSInfo", &gl_smallFont, &cFontGrey, buf );
    window_addText( wid, 40 + iw + 224, -60 - titleHeight,
          dw - (200 + 20+192), infoHeight, 0,
          "txtDInfo", &gl_smallFont, NULL, NULL );
 
+   window_addText( wid, 40 + iw, -80-titleHeight-infoHeight,
+         dw, 100, 0, "txtDRef", &gl_smallFont, NULL, NULL );
    window_addText( wid, 40 + iw, MIN(-80-titleHeight-infoHeight, -192-60),
          dw, h - (80+titleHeight+infoHeight) - (40+LAND_BUTTON_HEIGHT), 0,
          "txtDesc", &gl_smallFont, NULL, NULL );
@@ -179,7 +181,7 @@ void commodity_exchange_cleanup (void)
  */
 void commodity_update( unsigned int wid, const char *str )
 {
-   (void)str;
+   (void) str;
    char buf[STRMAX];
    char buf_purchase_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN];
    size_t l = 0;
@@ -242,6 +244,24 @@ void commodity_update( unsigned int wid, const char *str )
    window_modifyText( wid, "txtName", _(com->name) );
    window_modifyText( wid, "txtDesc", _(com->description) );
 
+   /* Add relative price. */
+   l = 0;
+   if (commodity_isFlag(com, COMMODITY_FLAG_PRICE_CONSTANT)) {
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("Price is constant.") );
+      window_modifyText( wid, "txtDRef", buf );
+   }
+   else if (com->price_ref != NULL) {
+      char c = '0';
+      if (com->price_mod > 1.)
+         c = 'g';
+      else if (com->price_mod < 1.)
+         c = 'r';
+      l += scnprintf( &buf[l], sizeof(buf)-l, _("Price is based on #%c%.0f%%#0 of the price of #o%s#0."), c, com->price_mod*100., _(com->price_ref) );
+      window_modifyText( wid, "txtDRef", buf );
+   }
+   else
+      window_modifyText( wid, "txtDRef", NULL );
+
    /* Button enabling/disabling */
    if (commodity_canBuy( com ))
       window_enableButton( wid, "btnCommodityBuy" );
@@ -254,6 +274,9 @@ void commodity_update( unsigned int wid, const char *str )
       window_disableButtonSoft( wid, "btnCommoditySell" );
 }
 
+/**
+ * @brief Checks to see if the player can buy a commodity.
+ */
 int commodity_canBuy( const Commodity* com )
 {
    int failure, incommodities;
@@ -289,6 +312,9 @@ int commodity_canBuy( const Commodity* com )
    return !failure;
 }
 
+/**
+ * @brief Checks to see if a player can sell a commodity.
+ */
 int commodity_canSell( const Commodity* com )
 {
    int failure = 0;
@@ -348,7 +374,7 @@ void commodity_buy( unsigned int wid, const char *str )
  */
 void commodity_sell( unsigned int wid, const char *str )
 {
-   (void)str;
+   (void) str;
    int i;
    Commodity *com;
    unsigned int q;
@@ -420,6 +446,6 @@ void commodity_renderMod( double bx, double by, double w, double h, void *data )
       commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
       commodity_mod = q;
    }
-   snprintf( buf, 8, "%dx", q );
+   snprintf( buf, sizeof(buf), "%dx", q );
    gl_printMidRaw( &gl_smallFont, w, bx, by, &cFontWhite, -1, buf );
 }

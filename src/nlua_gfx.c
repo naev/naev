@@ -155,8 +155,8 @@ static int gfxL_dim( lua_State *L )
  */
 static int gfxL_screencoords( lua_State *L )
 {
-   Vector2d screen;
-   Vector2d *game = luaL_checkvector( L, 1 );
+   vec2 screen;
+   vec2 *game = luaL_checkvector( L, 1 );
    int invert = lua_toboolean( L, 2 );
    gl_gameToScreenCoords( &screen.x, &screen.y, game->x, game->y );
    if (invert)
@@ -190,7 +190,6 @@ static int gfxL_renderTex( lua_State *L )
    double x, y;
    int sx, sy;
 
-   NLUA_CHECKRW(L);
 
    /* Parameters. */
    col = NULL;
@@ -246,7 +245,6 @@ static int gfxL_renderTexScale( lua_State *L )
    double x, y, bw, bh;
    int sx, sy;
 
-   NLUA_CHECKRW(L);
 
    /* Parameters. */
    col = NULL;
@@ -316,7 +314,6 @@ static int gfxL_renderTexRaw( lua_State *L )
    double angle;
    int sx, sy;
 
-   NLUA_CHECKRW(L);
 
    /* Parameters. */
    t  = luaL_checktex( L, 1 );
@@ -371,11 +368,10 @@ static int gfxL_renderTexH( lua_State *L )
    glTexture *t;
    const glColour *col;
    LuaShader_t *shader;
-   gl_Matrix4 *H, *TH, ID;
+   mat4 *H, *TH, ID;
 
-   ID = gl_Matrix4_Identity();
+   ID = mat4_identity();
 
-   NLUA_CHECKRW(L);
 
    /* Parameters. */
    t     = luaL_checktex( L,1 );
@@ -393,7 +389,7 @@ static int gfxL_renderTexH( lua_State *L )
 
    /* Set up texture vertices if necessary. */
    if (shader->VertexTexCoord >= 0) {
-      gl_Matrix4_Uniform( shader->ViewSpaceFromLocal, *TH );
+      gl_uniformMat4( shader->ViewSpaceFromLocal, TH );
       glEnableVertexAttribArray( shader->VertexTexCoord );
       gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexTexCoord,
             0, 2, GL_FLOAT, 0 );
@@ -412,7 +408,7 @@ static int gfxL_renderTexH( lua_State *L )
 
    /* Set shader uniforms. */
    gl_uniformColor( shader->ConstantColor, col );
-   gl_Matrix4_Uniform( shader->ClipSpaceFromLocal, *H );
+   gl_uniformMat4( shader->ClipSpaceFromLocal, H );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -450,7 +446,6 @@ static int gfxL_renderRect( lua_State *L )
    double x,y, w,h;
    int empty;
 
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    x     = luaL_checknumber( L, 1 );
@@ -479,10 +474,9 @@ static int gfxL_renderRect( lua_State *L )
  */
 static int gfxL_renderRectH( lua_State *L )
 {
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
-   const gl_Matrix4 *H = luaL_checktransform(L,1);
+   const mat4 *H = luaL_checktransform(L,1);
    const glColour *col = luaL_optcolour(L,2,&cWhite);
    int empty = lua_toboolean(L,3);
 
@@ -508,7 +502,6 @@ static int gfxL_renderCircle( lua_State *L )
    double x,y, r;
    int empty;
 
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    x     = luaL_checknumber( L, 1 );
@@ -533,10 +526,9 @@ static int gfxL_renderCircle( lua_State *L )
  */
 static int gfxL_renderCircleH( lua_State *L )
 {
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
-   const gl_Matrix4 *H = luaL_checktransform(L,1);
+   const mat4 *H = luaL_checktransform(L,1);
    const glColour *col = luaL_optcolour(L,2,&cWhite);
    int empty = lua_toboolean(L,3);
 
@@ -719,7 +711,6 @@ static int gfxL_printf( lua_State *L )
    glColour *col;
    int max, mid;
 
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    font  = luaL_checkfont(L,1);
@@ -752,13 +743,12 @@ static int gfxL_printf( lua_State *L )
  */
 static int gfxL_printH( lua_State *L )
 {
-   const gl_Matrix4 *H;
+   const mat4 *H;
    glFont *font;
    const char *str;
    const glColour *col;
    double outline;
 
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    H     = luaL_checktransform(L,1);
@@ -796,7 +786,6 @@ static int gfxL_print( lua_State *L )
    glColour *col;
    int max, mid;
 
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;
@@ -840,7 +829,6 @@ static int gfxL_printText( lua_State *L )
    double x, y;
    glColour *col;
 
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;

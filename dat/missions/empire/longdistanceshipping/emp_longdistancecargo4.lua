@@ -43,7 +43,7 @@ function accept ()
    misn.markerAdd( targetworld, "low" )
    ---Intro Text
    if not tk.yesno( _("Spaceport Bar"), _([["We have to stop running into each other like this." Lieutenant Czesc laughs at his joke. "Just kidding, you know I owe you for helping set up these contracts. So far, everything has been moving smoothly on our end. We're hoping to extend our relations to the Frontier Alliance. You know the drill by this point. Ready to help?"]]) ) then
-      misn.finish()
+      return
    end
    -- Flavour text and mini-briefing
    tk.msg( _("Frontier Alliance Long Distance Recruitment"), fmt.f( _([["I applaud your commitment," Lieutenant Czesc says, "and I know these aren't the most exciting missions, but they're most useful. The frontier can be a bit dangerous, so make sure you're prepared. You need to drop the bureaucrat off at {pnt} in the {sys} system. After this, there should only be one more faction to bring into the fold. I expect to see you again soon."]]), {pnt=targetworld, sys=targetworld_sys} ) )

@@ -19,7 +19,7 @@ int nlua_loadVector( nlua_env env );
 /*
  * Vector operations.
  */
-Vector2d* lua_tovector( lua_State *L, int ind );
-Vector2d* luaL_checkvector( lua_State *L, int ind );
-Vector2d* lua_pushvector( lua_State *L, Vector2d vec );
+vec2* lua_tovector( lua_State *L, int ind );
+vec2* luaL_checkvector( lua_State *L, int ind );
+vec2* lua_pushvector( lua_State *L, vec2 vec );
 int lua_isvector( lua_State *L, int ind );

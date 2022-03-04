@@ -155,7 +155,7 @@ static int mission_init( Mission* mission, const MissionData* misn, int genid, i
    }
 
    /* init Lua */
-   mission->env = nlua_newEnv(1);
+   mission->env = nlua_newEnv();
 
    misn_loadLibs( mission->env ); /* load our custom libraries */
 
@@ -189,8 +189,8 @@ static int mission_init( Mission* mission, const MissionData* misn, int genid, i
  * @brief Small wrapper for misn_run.
  *
  *    @param mission Mission to accept.
- *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
- *            and 0 normally.
+ *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted,
+ *          3 if the mission got accepted, and 0 normally.
  *
  * @sa misn_run
  */
@@ -245,6 +245,7 @@ static int mission_meetReq( int mission, int faction,
    if (misn->avail.chapter_re != NULL) {
       pcre2_match_data *match_data = pcre2_match_data_create_from_pattern( misn->avail.chapter_re, NULL );
       int rc = pcre2_match( misn->avail.chapter_re, (PCRE2_SPTR)player.chapter, strlen(player.chapter), 0, 0, match_data, NULL );
+      pcre2_match_data_free( match_data );
       if (rc < 0) {
          switch (rc) {
             case PCRE2_ERROR_NOMATCH:
@@ -253,9 +254,9 @@ static int mission_meetReq( int mission, int faction,
                WARN(_("Matching error %d"), rc );
                break;
          }
-         pcre2_match_data_free( match_data );
       }
-      return 0;
+      else if (rc == 0)
+         return 0;
    }
 
    /* Match faction. */
@@ -752,6 +753,7 @@ static void mission_freeData( MissionData* mission )
    free(mission->avail.spob);
    free(mission->avail.system);
    free(mission->avail.chapter);
+   pcre2_code_free( mission->avail.chapter_re );
    array_free(mission->avail.factions);
    free(mission->avail.cond);
    free(mission->avail.done);
@@ -1011,7 +1013,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
       WARN(_("Unknown node '%s' in mission '%s'"),node->name,temp->name);
    } while (xml_nextNode(node));
 
-   if (temp->avail.chapter_re != NULL) {
+   if (temp->avail.chapter != NULL) {
       int errornumber;
       PCRE2_SIZE erroroffset;
       temp->avail.chapter_re = pcre2_compile( (PCRE2_SPTR)temp->avail.chapter, PCRE2_ZERO_TERMINATED, 0, &errornumber, &erroroffset, NULL );

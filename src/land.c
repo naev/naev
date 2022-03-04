@@ -95,6 +95,7 @@ static glTexture *mission_portrait = NULL; /**< Mission portrait. */
  * player stuff
  */
 static int last_window = 0; /**< Default window. */
+static int land_taboverride = 0; /**< Whether or not tab got overwritten. */
 
 /*
  * Error handling.
@@ -666,29 +667,27 @@ static void misn_accept( unsigned int wid, const char *str )
 
    if (dialogue_YesNo( _("Accept Mission"),
          _("Are you sure you want to accept this mission?"))) {
+      int changed = 0;
       pos = toolkit_getListPos( wid, "lstMission" );
       misn = &mission_computer[pos];
       ret = mission_accept( misn );
-      if ((ret==0) || (ret==3) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
-         int changed = 0;
-         if (ret==-1) {
-            mission_cleanup( &mission_computer[pos] );
-            changed = 1;
-         }
-         if (misn->accepted)
-            changed = 1;
+      if (ret==-1) { /* Errored out. */
+         mission_cleanup( &mission_computer[pos] );
+         changed = 1;
+      }
+      if ((ret==2) || (ret==3)) /* Deleted or accepted. */
+         changed = 1;
 
-         if (changed) {
-            memmove( &mission_computer[pos], &mission_computer[pos+1],
-                  sizeof(Mission) * (mission_ncomputer-pos-1) );
-            mission_ncomputer--;
+      if (changed) {
+         memmove( &mission_computer[pos], &mission_computer[pos+1],
+               sizeof(Mission) * (mission_ncomputer-pos-1) );
+         mission_ncomputer--;
 
-            /* Regenerate list. */
-            misn_genList(wid, 0);
-            /* Add position persistancey after a mission has been accepted */
-            /* NOTE: toolkit_setListPos protects us from a bad position by clamping */
-            toolkit_setListPos( wid, "lstMission", pos-1 ); /*looks better without the -1, makes more sense with*/
-         }
+         /* Regenerate list. */
+         misn_genList(wid, 0);
+         /* Add position persistancey after a mission has been accepted */
+         /* NOTE: toolkit_setListPos protects us from a bad position by clamping */
+         toolkit_setListPos( wid, "lstMission", pos-1 ); /*looks better without the -1, makes more sense with*/
       }
 
       /* Reset markers. */
@@ -1024,6 +1023,7 @@ void land_genWindows( int load, int changetab )
       land_generated = 0;
    }
    land_loaded = 0;
+   land_taboverride = 0; /* Can get overwritten later. */
 
    /* Get spob. */
    p     = land_spob;
@@ -1130,7 +1130,7 @@ void land_genWindows( int load, int changetab )
 
    /* Go to last open tab. */
    window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
-   if (changetab && land_windowsMap[ last_window ] != -1)
+   if ((land_taboverride || changetab) && land_windowsMap[ last_window ] != -1)
       window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
 
    /* Refresh the map button in case the player couldn't afford it prior to
@@ -1158,6 +1158,8 @@ int land_setWindow( int window )
 {
    if (land_windowsMap[ window ] < 0)
       return -1;
+   last_window = window;
+   land_taboverride = 1;
    window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[window] );
    return 0;
 }
@@ -1468,7 +1470,7 @@ void takeoff( int delay )
 
    /* set player to another position with random facing direction and no vel */
    player_warp( land_spob->pos.x + r * cos(a), land_spob->pos.y + r * sin(a) );
-   vect_pset( &player.p->solid->vel, 0., 0. );
+   vec2_pset( &player.p->solid->vel, 0., 0. );
    player.p->solid->dir = RNGF() * 2. * M_PI;
    cam_setTargetPilot( player.p->id, 0 );
 
@@ -1557,7 +1559,7 @@ static void land_stranded (void)
       char *buf;
       size_t bufsize;
 
-      rescue_env = nlua_newEnv(1);
+      rescue_env = nlua_newEnv();
       nlua_loadStandard( rescue_env );
       nlua_loadTk( rescue_env );
 
@@ -1626,6 +1628,9 @@ void land_cleanup (void)
    /* Clean up rescue Lua. */
    nlua_freeEnv(rescue_env);
    rescue_env = LUA_NOREF;
+
+   /* Deselect stuff. */
+   equipment_slotDeselect( NULL );
 }
 
 /**

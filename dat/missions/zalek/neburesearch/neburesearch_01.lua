@@ -96,7 +96,6 @@ function accept()
     vn.run()
 
     if not accepted then
-    misn.finish()
         return
     end
 

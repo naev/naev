@@ -161,7 +161,7 @@ static int safelanesL_get( lua_State *L )
  */
 static int safelanesL_intersect( lua_State *L )
 {
-   Vector2d *center, *p1, *p2, crash[2];
+   vec2 *center, *p1, *p2, crash[2];
    double radius;
 
    center = luaL_checkvector( L, 1 );

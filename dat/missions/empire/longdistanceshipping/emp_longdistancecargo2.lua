@@ -43,7 +43,7 @@ function accept ()
    misn.markerAdd( targetworld, "low" )
    ---Intro Text
    if not tk.yesno( _("Spaceport Bar"), _([[Lieutenant Czesc waves you over when he notices you enter the bar. "I knew we would run into each other soon enough. Great job delivering that bureaucrat. We should be up and running in Soromid space in no time!" He presses a button on his wrist computer. "We're hoping to expand to Dvaered territory next. Can I count on your help?"]]) ) then
-      misn.finish()
+      return
    end
    -- Flavour text and mini-briefing
    tk.msg( _("Dvaered Long Distance Recruitment"), fmt.f( _([["Great!" says Lieutenant Czesc. "I'll send a message to the bureaucrat to meet you at the hanger. The Dvaered are, of course, allies of the Empire. Still, they offend easily, so try not to talk too much. Your mission is to drop the bureaucrat off on {pnt} in the {sys} system. He will take it from there and report back to me when the shipping contract has been established. Afterwards, keep an eye out for me in Empire space and we can continue the operation."]]), {pnt=targetworld, sys=targetworld_sys} ) )

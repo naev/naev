@@ -58,7 +58,7 @@ function accept ()
    -- Intro text
    if not tk.yesno( _("Spaceport Bar"), _([[You approach the Empire Lieutenant.
     "Hello, I'm Lieutenant Czesc from the Empire Armada Shipping Division. We're having another recruitment operation and would be interested in having another pilot among us. Would you be interested in working for the Empire?"]]) ) then
-      misn.finish()
+      return
    end
 
    misn.markerAdd( mem.dest, "low" )

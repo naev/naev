@@ -502,15 +502,13 @@ glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
  */
 static glTexture* gl_texExists( const char* path, int sx, int sy )
 {
-   glTexList *cur;
-
    /* Null does never exist. */
    if (path==NULL)
       return NULL;
 
    /* check to see if it already exists */
    if (texture_list != NULL) {
-      for (cur=texture_list; cur!=NULL; cur=cur->next) {
+      for (glTexList *cur=texture_list; cur!=NULL; cur=cur->next) {
          if ((strcmp(path,cur->tex->name)==0) &&
                (cur->sx==sx) && (cur->sy==sy)) {
             cur->used += 1;
@@ -799,15 +797,13 @@ void gl_freeTexture( glTexture* texture )
  */
 glTexture* gl_dupTexture( const glTexture *texture )
 {
-   glTexList *cur;
-
    /* No segfaults kthxbye. */
    if (texture == NULL)
       return NULL;
 
    /* check to see if it already exists */
    if (texture_list != NULL) {
-      for (cur=texture_list; cur!=NULL; cur=cur->next) {
+      for (glTexList *cur=texture_list; cur!=NULL; cur=cur->next) {
          if (texture == cur->tex) {
             cur->used += 1;
             return cur->tex;
@@ -855,6 +851,7 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 #ifdef DEBUGGING
    if ((dir > 2.*M_PI) || (dir < 0.)) {
       WARN(_("Angle not between 0 and 2.*M_PI [%f]."), dir);
+      *x = *y = 0;
       return;
    }
 #endif /* DEBUGGING */

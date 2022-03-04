@@ -318,6 +318,11 @@ void gl_uniformAColor(GLint location, const glColour *c, GLfloat a)
    glUniform4f(location, c->r, c->g, c->b, a);
 }
 
+void gl_uniformMat4( GLint location, const mat4 *m )
+{
+   glUniformMatrix4fv(location, 1, GL_FALSE, m->ptr );
+}
+
 static int gl_log_says_anything( const char* log )
 {
    for (size_t i=0; log[i]; i++)

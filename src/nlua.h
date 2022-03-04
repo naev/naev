@@ -22,9 +22,9 @@ extern nlua_env __NLUA_CURENV;
 /*
  * standard Lua stuff wrappers
  */
-void lua_init(void);
-void lua_exit(void);
-nlua_env nlua_newEnv(int rw);
+void lua_init (void);
+void lua_exit (void);
+nlua_env nlua_newEnv (void);
 void nlua_freeEnv(nlua_env env);
 void nlua_pushenv(lua_State* L, nlua_env env);
 void nlua_setenv(lua_State* L, nlua_env env, const char *name);

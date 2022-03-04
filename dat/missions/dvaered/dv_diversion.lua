@@ -75,7 +75,7 @@ function accept()
       hook.land("land")
    else
       tk.msg(_("Nuts"), _([["I see. In that case, I'm going to have to ask you to leave. My job is to recruit a civilian, but you're clearly not the pilot I'm looking for. You may excuse yourself, citizen."]]))
-      misn.finish()
+      return
    end
 end
 

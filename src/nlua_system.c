@@ -679,7 +679,7 @@ static int systemL_addGatherable( lua_State *L )
 {
    int nb;
    Commodity *commodity;
-   Vector2d *pos, *vel;
+   vec2 *pos, *vel;
    double lifelength;
 
    /* Handle parameters. */
@@ -870,7 +870,6 @@ static int systemL_setknown( lua_State *L )
    int b, r;
    StarSystem *sys;
 
-   NLUA_CHECKRW(L);
 
    r   = 0;
    sys = luaL_validsystem(L, 1);
@@ -952,7 +951,6 @@ static int systemL_setHidden( lua_State *L )
 static int systemL_mrkClear( lua_State *L )
 {
    (void) L;
-   NLUA_CHECKRW(L);
    ovr_mrkClear();
    return 0;
 }
@@ -970,10 +968,9 @@ static int systemL_mrkClear( lua_State *L )
 static int systemL_mrkAdd( lua_State *L )
 {
    const char *str;
-   Vector2d *vec;
+   vec2 *vec;
    unsigned int id;
 
-   NLUA_CHECKRW(L);
 
    /* Handle parameters. */
    vec = luaL_checkvector( L, 1 );
@@ -995,7 +992,6 @@ static int systemL_mrkAdd( lua_State *L )
  */
 static int systemL_mrkRm( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    unsigned int id = luaL_checklong( L, 1 );
    ovr_mrkRm( id );
    return 0;

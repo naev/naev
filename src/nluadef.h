@@ -53,17 +53,3 @@ NORETURN extern int luaL_typerror( lua_State *L, int narg, const char *tname );
  * Error stuff.
  */
 #define NLUA_ERROR(L,str, args...)  (luaL_error(L,str, ## args))
-
-#define NLUA_CHECKRW(L) \
-{ \
-   (void) L; \
-   /* TODO: If we refactor loads of stuff, can this still work using LUA_ENVIRONINDEX? \
-   nlua_getenv(L, __NLUA_CURENV, "__RW"); \
-   if (!lua_toboolean(L, -1)) { \
-      DEBUG( "Cannot call %s in read-only environment.", __func__ ); \
-      luaL_error( L, "Cannot call %s in read-only environment.", __func__ ); \
-      return 0; \
-   } \
-   lua_pop(L, 1); \
-   */ \
-}

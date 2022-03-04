@@ -26,7 +26,7 @@ int cond_init (void)
    if (cond_env != LUA_NOREF)
       return 0;
 
-   cond_env = nlua_newEnv(0);
+   cond_env = nlua_newEnv();
    if (nlua_loadStandard(cond_env)) {
       WARN(_("Failed to load standard Lua libraries."));
       return -1;

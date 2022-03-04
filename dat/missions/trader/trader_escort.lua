@@ -98,7 +98,7 @@ end
 function accept()
    if player.jumps() < mem.numjumps then
       if not vntk.yesno( _("Not enough fuel"), fmt.f( _([[The destination is {1} away, but you only have enough fuel for {2}. You cannot stop to refuel. Accept the mission anyway?]]), {fmt.jumps(mem.numjumps), fmt.jumps(player.jumps())} ) ) then
-         misn.finish()
+         return
       end
    end
 

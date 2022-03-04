@@ -24,24 +24,24 @@ typedef struct CollPoly_ {
 void LoadPolygon( CollPoly* polygon, xmlNodePtr node );
 
 /* Returns 1 if collision is detected */
-int CollideSprite( const glTexture* at, const int asx, const int asy, const Vector2d* ap,
-      const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp,
-      Vector2d* crash);
+int CollideSprite( const glTexture* at, const int asx, const int asy, const vec2* ap,
+      const glTexture* bt, const int bsx, const int bsy, const vec2* bp,
+      vec2* crash);
 int CollideLineLine( double s1x, double s1y, double e1x, double e1y,
-      double s2x, double s2y, double e2x, double e2y, Vector2d* crash );
-int CollideLineSprite( const Vector2d* ap, double ad, double al,
-      const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp,
-      Vector2d crash[2]);
-int CollideLinePolygon( const Vector2d* ap, double ad, double al,
-      const CollPoly* bt, const Vector2d* bp, Vector2d crash[2] );
-int CollideSpritePolygon( const CollPoly* at, const Vector2d* ap,
-      const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp,
-      Vector2d* crash );
-int CollidePolygon( const CollPoly* at, const Vector2d* ap,
-      const CollPoly* bt, const Vector2d* bp, Vector2d* crash );
-int CollideLineCircle( const Vector2d* p1, const Vector2d* p2,
-      const Vector2d *cc, double cr, Vector2d crash[2] );
+      double s2x, double s2y, double e2x, double e2y, vec2* crash );
+int CollideLineSprite( const vec2* ap, double ad, double al,
+      const glTexture* bt, const int bsx, const int bsy, const vec2* bp,
+      vec2 crash[2]);
+int CollideLinePolygon( const vec2* ap, double ad, double al,
+      const CollPoly* bt, const vec2* bp, vec2 crash[2] );
+int CollideSpritePolygon( const CollPoly* at, const vec2* ap,
+      const glTexture* bt, const int bsx, const int bsy, const vec2* bp,
+      vec2* crash );
+int CollidePolygon( const CollPoly* at, const vec2* ap,
+      const CollPoly* bt, const vec2* bp, vec2* crash );
+int CollideLineCircle( const vec2* p1, const vec2* p2,
+      const vec2 *cc, double cr, vec2 crash[2] );
 
 /* Intersection area. */
-double CollideCircleIntersection( const Vector2d *p1, double r1,
-      const Vector2d *p2, double r2 );
+double CollideCircleIntersection( const vec2 *p1, double r1,
+      const vec2 *p2, double r2 );

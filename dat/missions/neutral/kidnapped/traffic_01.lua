@@ -67,7 +67,7 @@ function accept ()
    -- Mission details:
    if not tk.yesno( _("In the Bar"), _([["I must find my dear brother! Please help me. I think he is in danger! I don't have a ship and he is the only family I have left. Could you please help me?"]]) ) then
       tk.msg(_("Sorry, I can't"), _([["How can you be such a heartless person? What has this universe become?..."]]))
-      misn.finish()
+      return
    end
    misn.accept()
 

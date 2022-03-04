@@ -1161,15 +1161,15 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
       /* Draw background. */
       /* TODO draw asteroids too! */
       if (sys->nebu_density > 0.) {
-         gl_Matrix4 projection;
+         mat4 projection;
          double sw, sh;
          sw = (50. + sys->nebu_density * 50. / 1000.) * zoom;
          sh = sw;
 
          /* Set the vertex. */
          projection = gl_view_matrix;
-         projection = gl_Matrix4_Translate(projection, tx-sw/2., ty-sh/2., 0);
-         projection = gl_Matrix4_Scale(projection, sw, sh, 1);
+         mat4_translate( &projection, tx-sw/2., ty-sh/2., 0. );
+         mat4_scale( &projection, sw, sh, 1. );
 
          /* Start the program. */
          glUseProgram(shaders.nebula_map.program);
@@ -1177,7 +1177,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
          /* Set shader uniforms. */
          glUniform1f(shaders.nebula_map.hue, sys->nebu_hue);
          glUniform1f(shaders.nebula_map.alpha, alpha);
-         gl_Matrix4_Uniform(shaders.nebula_map.projection, projection);
+         gl_uniformMat4(shaders.nebula_map.projection, &projection);
          glUniform1f(shaders.nebula_map.time, map_dt / 10.0);
          glUniform2f(shaders.nebula_map.globalpos, sys->pos.x, sys->pos.y );
          glUniform1f(shaders.nebula_map.volatility, sys->nebu_volatility );
@@ -1193,21 +1193,21 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
          gl_checkErr();
       }
       else if (sys->map_shader != NULL) {
-         gl_Matrix4 projection;
+         mat4 projection;
          double sw, sh;
          sw = 100. * zoom;
          sh = sw;
 
          /* Set the vertex. */
          projection = gl_view_matrix;
-         projection = gl_Matrix4_Translate(projection, tx-sw/2., ty-sh/2., 0);
-         projection = gl_Matrix4_Scale(projection, sw, sh, 1);
+         mat4_translate( &projection, tx-sw/2., ty-sh/2., 0. );
+         mat4_scale( &projection, sw, sh, 1. );
 
          /* Start the program. */
          glUseProgram( sys->ms->program );
 
          /* Set shader uniforms. */
-         gl_Matrix4_Uniform(sys->ms->projection, projection);
+         gl_uniformMat4(sys->ms->projection, &projection);
          glUniform1f(sys->ms->time, map_dt);
          glUniform2f(sys->ms->globalpos, sys->pos.x, sys->pos.y );
          glUniform1f(sys->ms->alpha, alpha);

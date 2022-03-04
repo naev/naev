@@ -1,27 +1,27 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="DIY Nerds">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>2</chance>
-   <location>Bar</location>
-  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </mission>
- --]]
-   --[[
-      MISSION: diy-nerds
-      DESCRIPTION: Cart some nerds and their hardware to some DIY
-      contest on a neighbouring planet. Wait until the contest is
-      over, then cart them back. Receive either your payment or
-      their hardware. The player can fail in multiple ways.
-      AUTHOR: thilo <thilo@thiloernst.de>
-   --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>2</chance>
+  <location>Bar</location>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
+--]]
+--[[
+   MISSION: diy-nerds
+   DESCRIPTION: Cart some nerds and their hardware to some DIY
+   contest on a neighbouring planet. Wait until the contest is
+   over, then cart them back. Receive either your payment or
+   their hardware. The player can fail in multiple ways.
+   AUTHOR: thilo <thilo@thiloernst.de>
+--]]
 local pir = require "common.pirate"
 local fmt = require "format"
 
@@ -67,11 +67,11 @@ function accept ()
     You reply that for a deal to be worked out, they better provide some details.
     "Listen," she says, "there's this Homebrew Processing Box Masters on {pnt}. Right over there, this system. I'm sure our box will get us the first prize. You take us there, you take us back, you get 20,000."
     You just start to marvel at the self-assurance of one so young when she signals her impatience. "Answer me now! Will you do it?"]]), {pnt=mem.destPlanet} )) then
-      misn.finish(false)
+      return
    else
       if player.pilot():cargoFree() < 4 then
          tk.msg(_("Not enough cargo space"), _([["Aw, I forgot" she adds. "We would of course need 4 tonnes of free cargo space for our box."]]))
-         misn.finish(false)
+         return
       end
 
       misn.accept()
@@ -180,7 +180,7 @@ function nerds_land2()
       end
       cleanup()
 
-         if player.pilot():cargoFree() >= 4 then
+      if player.pilot():cargoFree() >= 4 then
       -- player has enough free cargo
          nerds_return()
       else

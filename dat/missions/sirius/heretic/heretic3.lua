@@ -70,7 +70,6 @@ function accept()
       hook.land("return_to_base")
    else
       tk.msg( _("The Assault"), _([["Do you not understand the seriousness of this situation?! I thought you were better than this!" He grumbles and shoos you away.]]) )
-      misn.finish( false )
    end
 end
 

@@ -42,14 +42,14 @@ function accept ()
     "H..H..Hi", she stutters. "My name is Cynthia. Could you give me a lift? I really need to get out of here.
     I can't pay you much, just what I have on me, {credits}." You wonder who she must be to have this many credits on her person. "I need you to take me to {pnt}."
     You wonder who she is, but you dare not ask. Do you accept?]]), {credits=fmt.credits(reward), pnt=targetworld} ) ) then
-      misn.finish()
+      return
    end
 
    --Our *cargo* weighs nothing
    --This will probably cause a mess if this fails
    if player.pilot():cargoFree() < 0 then
       tk.msg( _("The Runaway"), _("Your cargo hold doesn't have enough free space.") )
-      misn.finish()
+      return
    end
 
    misn.accept()

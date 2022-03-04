@@ -195,7 +195,7 @@ function accept()
       end
    else
       -- Why would we care?
-      misn.finish()
+      return
    end
 end
 

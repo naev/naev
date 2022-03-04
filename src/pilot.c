@@ -63,7 +63,7 @@ static const double pilot_commFade     = 5.; /**< Time for text above pilot to f
  */
 /* Create. */
 static void pilot_init( Pilot* dest, const Ship* ship, const char* name, int faction, const char *ai,
-      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot );
 /* Update. */
 static void pilot_hyperspace( Pilot* pilot, double dt );
@@ -314,7 +314,7 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
          continue;
 
       /* Check distance. */
-      td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
+      td = vec2_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
       if (!tp || (td < d)) {
          d  = td;
          tp = pilot_stack[i]->id;
@@ -346,7 +346,7 @@ unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, 
          continue;
 
       /* Check distance. */
-      td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
+      td = vec2_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
       if (!tp || (td < d)) {
          d = td;
          tp = pilot_stack[i]->id;
@@ -382,7 +382,7 @@ unsigned int pilot_getNearestEnemy_heuristic( const Pilot* p,
 
       /* Check distance. */
       temp = range_factor *
-               vect_dist2( &target->solid->pos, &p->solid->pos )
+               vec2_dist2( &target->solid->pos, &p->solid->pos )
             + FABS( pilot_relsize( p, target ) - mass_factor )
             + FABS( pilot_relhp(   p, target ) - health_factor )
             + FABS( pilot_reldps(  p, target ) - damage_factor );
@@ -823,7 +823,7 @@ int pilot_brake( Pilot *p )
  *    @param[out] pos Estimated final position once braked.
  *    @return Estimated Braking distance based on current speed.
  */
-double pilot_brakeDist( Pilot *p, Vector2d *pos )
+double pilot_brakeDist( Pilot *p, vec2 *pos )
 {
    double fdiff, bdiff, ftime, btime;
    double vang, speed, dist;
@@ -857,7 +857,7 @@ double pilot_brakeDist( Pilot *p, Vector2d *pos )
    }
 
    if (pos != NULL)
-      vect_cset( pos,
+      vec2_cset( pos,
             p->solid->pos.x + cos(vang) * dist,
             p->solid->pos.y + sin(vang) * dist);
 
@@ -1032,14 +1032,14 @@ double pilot_aimAngle( Pilot *p, const Pilot *target )
 {
    double x, y;
    double t;
-   Vector2d tv, approach_vector, relative_location, orthoradial_vector;
+   vec2 tv, approach_vector, relative_location, orthoradial_vector;
    double dist;
    double speed;
    double radial_speed;
    double orthoradial_speed;
 
    /* Get the distance */
-   dist = vect_dist( &p->solid->pos, &target->solid->pos );
+   dist = vec2_dist( &p->solid->pos, &target->solid->pos );
 
    /* Check if should recalculate weapon speed with secondary weapon. */
    speed = pilot_weapSetSpeed( p, p->active_set, -1 );
@@ -1054,14 +1054,14 @@ double pilot_aimAngle( Pilot *p, const Pilot *target )
     *
     *Va dot Vr + ShotSpeed is the net closing velocity for the shot, and is used to compute the time of flight for the shot.
     */
-   vect_cset(&approach_vector, VX(p->solid->vel) - VX(target->solid->vel), VY(p->solid->vel) - VY(target->solid->vel) );
-   vect_cset(&relative_location, VX(target->solid->pos) -  VX(p->solid->pos),  VY(target->solid->pos) - VY(p->solid->pos) );
-   vect_cset(&orthoradial_vector, VY(p->solid->pos) - VY(target->solid->pos), VX(target->solid->pos) -  VX(p->solid->pos) );
+   vec2_cset(&approach_vector, VX(p->solid->vel) - VX(target->solid->vel), VY(p->solid->vel) - VY(target->solid->vel) );
+   vec2_cset(&relative_location, VX(target->solid->pos) -  VX(p->solid->pos),  VY(target->solid->pos) - VY(p->solid->pos) );
+   vec2_cset(&orthoradial_vector, VY(p->solid->pos) - VY(target->solid->pos), VX(target->solid->pos) -  VX(p->solid->pos) );
 
-   radial_speed = vect_dot(&approach_vector, &relative_location);
+   radial_speed = vec2_dot(&approach_vector, &relative_location);
    radial_speed = radial_speed / VMOD(relative_location);
 
-   orthoradial_speed = vect_dot(&approach_vector, &orthoradial_vector);
+   orthoradial_speed = vec2_dot(&approach_vector, &orthoradial_vector);
    orthoradial_speed = orthoradial_speed / VMOD(relative_location);
 
    /* Time for shots to reach that distance */
@@ -1087,7 +1087,7 @@ double pilot_aimAngle( Pilot *p, const Pilot *target )
       - (p->solid->pos.x + p->solid->vel.x*t);
    y = target->solid->pos.y + target->solid->vel.y*t
       - (p->solid->pos.y + p->solid->vel.y*t);
-   vect_cset( &tv, x, y );
+   vec2_cset( &tv, x, y );
 
    return VANGLE(tv);
 }
@@ -1254,7 +1254,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
              * If the pilots are within sensor range of each other, send the
              * distress signal, regardless of electronic warfare hide values.
              */
-            d = vect_dist2( &p->solid->pos, &pilot_stack[i]->solid->pos );
+            d = vec2_dist2( &p->solid->pos, &pilot_stack[i]->solid->pos );
             if (d > pilot_sensorRange())
                continue;
          }
@@ -1580,7 +1580,7 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
    if (w != NULL)
       /* knock back effect is dependent on both damage and mass of the weapon
        * should probably get turned into a partial conservative collision */
-      vect_cadd( &p->solid->vel,
+      vec2_cadd( &p->solid->vel,
             knockback * (w->vel.x * (dam_mod/9. + w->mass/p->solid->mass/6.)),
             knockback * (w->vel.y * (dam_mod/9. + w->mass/p->solid->mass/6.)) );
 
@@ -1853,7 +1853,7 @@ void pilot_render( Pilot* p, const double dt )
    }
    /* Render effect single effect. */
    else {
-      gl_Matrix4 projection, tex_mat;
+      mat4 projection, tex_mat;
       const EffectData *ed = e->data;
 
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
@@ -1878,13 +1878,13 @@ void pilot_render( Pilot* p, const double dt )
       gl_vboActivateAttribOffset( gl_squareVBO, ed->vertex, 0, 2, GL_FLOAT, 0 );
 
       projection = gl_view_matrix;
-      projection = gl_Matrix4_Translate(projection, x + (1.-scale)*z*w/2., y + (1.-scale)*z*h/2., 0);
-      projection = gl_Matrix4_Scale(projection, scale*z*w, scale*z*h, 1);
-      gl_Matrix4_Uniform(ed->projection, projection);
+      mat4_translate( &projection, x + (1.-scale)*z*w/2., y + (1.-scale)*z*h/2., 0. );
+      mat4_scale( &projection, scale*z*w, scale*z*h, 1. );
+      gl_uniformMat4(ed->projection, &projection);
 
-      tex_mat = gl_Matrix4_Identity();
-      tex_mat = gl_Matrix4_Scale(tex_mat, w/SCREEN_W, h/SCREEN_H, 1);
-      gl_Matrix4_Uniform(ed->tex_mat, tex_mat);
+      tex_mat = mat4_identity();
+      mat4_scale( &tex_mat, w/SCREEN_W, h/SCREEN_H, 1. );
+      gl_uniformMat4(ed->tex_mat, &tex_mat);
 
       glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
       glUniform1f( ed->u_timer, e->timer );
@@ -1901,7 +1901,7 @@ void pilot_render( Pilot* p, const double dt )
 #ifdef DEBUGGING
    double dircos, dirsin;
    int debug_mark_emitter = debug_isFlag(DEBUG_MARK_EMITTER);
-   Vector2d v;
+   vec2 v;
    if (debug_mark_emitter) {
       dircos = cos(p->solid->dir);
       dirsin = sin(p->solid->dir);
@@ -2717,10 +2717,10 @@ int pilot_refuelStart( Pilot *p )
    }
 
    /* Conditions are the same as boarding, except disabled. */
-   if (vect_dist(&p->solid->pos, &target->solid->pos) >
+   if (vec2_dist(&p->solid->pos, &target->solid->pos) >
          target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
       return 0;
-   else if (vect_dist2( &p->solid->vel, &target->solid->vel ) > pow2(MAX_HYPERSPACE_VEL))
+   else if (vec2_dist2( &p->solid->vel, &target->solid->vel ) > pow2(MAX_HYPERSPACE_VEL))
       return 0;
 
    /* Now start the boarding to refuel. */
@@ -2867,7 +2867,7 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  *    @param dockslot The outfit slot which launched this pilot (-1 if N/A).
  */
 static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int faction, const char *ai,
-      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
    PilotOutfitSlot *dslot;
@@ -2973,7 +2973,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
       pilot->update           = player_update; /* Players get special update. */
       pilot->render           = NULL; /* render will get called from player_think */
       pilot->render_overlay   = NULL;
-      if (!pilot_isFlagRaw( flags, PILOT_EMPTY )) { /* Sort of a hack. */
+      if (!pilot_isFlagRaw( flags, PILOT_INACTIVE )) { /* Sort of a hack. */
          player.p = pilot;
          player.ps.p = pilot;
       }
@@ -3048,7 +3048,7 @@ static void pilot_init_trails( Pilot* p )
  * @sa pilot_init
  */
 unsigned int pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
-      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
    Pilot *dyn, **p;
@@ -3083,7 +3083,7 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
  *    @param name Name of the pilot ship (NULL uses ship name).
  *    @param faction Faction of the ship.
  *    @param ai AI to use, or NULL to use the faction's.
- *    @param flags Flags for tweaking, PILOT_EMPTY is added.
+ *    @param flags Flags for tweaking, PILOT_INACTIVE is added.
  *    @return Pointer to the new pilot (not added to stack).
  */
 Pilot* pilot_createEmpty( const Ship* ship, const char* name,
@@ -3094,7 +3094,7 @@ Pilot* pilot_createEmpty( const Ship* ship, const char* name,
       WARN(_("Unable to allocate memory"));
       return 0;
    }
-   pilot_setFlagRaw( flags, PILOT_EMPTY );
+   pilot_setFlagRaw( flags, PILOT_INACTIVE );
    pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags, 0, 0 );
    return dyn;
 }
@@ -3138,7 +3138,7 @@ Pilot* pilot_replacePlayer( Pilot* after )
  *    @param ignore_rules Whether or not to ignore all rules.
  *    @param guerilla Whether or not to spawn in deep space.
  */
-void pilot_choosePoint( Vector2d *vp, Spob **spob, JumpPoint **jump, int lf, int ignore_rules, int guerilla )
+void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ignore_rules, int guerilla )
 {
    int *ind;
    JumpPoint **validJumpPoints;
@@ -3184,7 +3184,7 @@ void pilot_choosePoint( Vector2d *vp, Spob **spob, JumpPoint **jump, int lf, int
    /* Unusual case no landable nor presence, we'll just jump in randomly. */
    if (array_size(ind)==0 && array_size(validJumpPoints)==0) {
       if (guerilla) /* Guerilla ships are created far away in deep space. */
-         vect_pset ( vp, 1.5*cur_system->radius, RNGF()*2*M_PI );
+         vec2_pset ( vp, 1.5*cur_system->radius, RNGF()*2*M_PI );
       else if (array_size(cur_system->jumps) > 0) {
          for (int i=0; i<array_size(cur_system->jumps); i++)
             array_push_back(&validJumpPoints, cur_system->jumps[i].returnJump);

@@ -70,8 +70,6 @@ function accept()
         student(_([["Unfortunately it looks like your ship does not has enough free cargo space."
 He leaves the bar. It appears he has given up finding a pilot, at least for now.]]))
         vn.done()
-        misn.finish()
-        return
     end
     student(fmt.f(_([[He pauses for a moment.
 "As this is the point where any other pilots I asked backed out, I should start by mentioning that due to some unfortunate circumstances the payment for this mission will be only {credits}."]]), {credits=fmt.credits(50e3)}))
@@ -103,7 +101,6 @@ With that said he hurries and leaves the bar.]]))
     vn.run()
 
     if not accepted then
-        misn.finish()
         return
     end
 

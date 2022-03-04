@@ -107,14 +107,14 @@ static unsigned int beam_idgen = 0; /**< Beam identifier generator. */
  */
 /* Creation. */
 static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
-      const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,
+      const Pilot *pilot_target, const vec2 *pos, const vec2 *vel, double dir,
       double swivel, double time );
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time );
+      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time );
 static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time );
+      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time );
 static Weapon* weapon_create( PilotOutfitSlot* po, double T,
-      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, const unsigned int target, double time );
 static double weapon_computeTimes( double rdir, double rx, double ry, double dvx, double dvy, double pxv,
       double vmin, double acc, double *tt );
@@ -132,12 +132,12 @@ static void weapon_explodeLayer( WeaponLayer layer,
 static void weapons_purgeLayer( Weapon** layer );
 /* Hitting. */
 static int weapon_checkCanHit( const Weapon* w, const Pilot *p );
-static void weapon_hit( Weapon* w, Pilot* p, Vector2d* pos );
-static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* pos );
+static void weapon_hit( Weapon* w, Pilot* p, vec2* pos );
+static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, vec2* pos );
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
-      Vector2d pos[2], const double dt );
+      vec2 pos[2], const double dt );
 static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
-      Vector2d pos[2], const double dt );
+      vec2 pos[2], const double dt );
 /* think */
 static void think_seeker( Weapon* w, const double dt );
 static void think_beam( Weapon* w, const double dt );
@@ -282,7 +282,7 @@ void weapon_minimap( const double res, const double w,
       glUseProgram(shaders.points.program);
       glEnableVertexAttribArray(shaders.points.vertex);
       glEnableVertexAttribArray(shaders.points.vertex_color);
-      gl_Matrix4_Uniform(shaders.points.projection, gl_view_matrix);
+      gl_uniformMat4(shaders.points.projection, &gl_view_matrix);
       gl_vboActivateAttribOffset( weapon_vbo, shaders.points.vertex, 0, 2, GL_FLOAT, 0 );
       gl_vboActivateAttribOffset( weapon_vbo, shaders.points.vertex_color, offset * sizeof(GLfloat), 4, GL_FLOAT, 0 );
       glDrawArrays( GL_POINTS, 0, p );
@@ -319,7 +319,7 @@ static void think_seeker( Weapon* w, const double dt )
 {
    double diff;
    Pilot *p;
-   Vector2d v;
+   vec2 v;
    double t, turn_max, d, r, jc, speed_mod;
 
    if (w->target == w->parent)
@@ -349,7 +349,7 @@ static void think_seeker( Weapon* w, const double dt )
          jc = p->stats.jam_chance - w->outfit->u.lau.resist;
          if (jc > 0.) {
             /* Roll based on distance. */
-            d = vect_dist( &p->solid->pos, &w->solid->pos );
+            d = vec2_dist( &p->solid->pos, &w->solid->pos );
             if (d / p->ew_evasion < w->r) {
                if (jc < RNGF()) {
                   r = RNGF();
@@ -379,12 +379,12 @@ static void think_seeker( Weapon* w, const double dt )
          if (w->outfit->u.lau.ai == AMMO_AI_SMART) {
 
             /* Calculate time to reach target. */
-            vect_cset( &v, p->solid->pos.x - w->solid->pos.x,
+            vec2_cset( &v, p->solid->pos.x - w->solid->pos.x,
                   p->solid->pos.y - w->solid->pos.y );
-            t = vect_odist( &v ) / w->outfit->u.lau.speed_max;
+            t = vec2_odist( &v ) / w->outfit->u.lau.speed_max;
 
             /* Calculate target's movement. */
-            vect_cset( &v, v.x + t*(p->solid->vel.x - w->solid->vel.x),
+            vec2_cset( &v, v.x + t*(p->solid->vel.x - w->solid->vel.x),
                   v.y + t*(p->solid->vel.y - w->solid->vel.y) );
 
             /* Get the angle now. */
@@ -393,7 +393,7 @@ static void think_seeker( Weapon* w, const double dt )
          /* Other seekers are simplistic. */
          else {
             diff = angle_diff(w->solid->dir, /* Get angle to target pos */
-                  vect_angle(&w->solid->pos, &p->solid->pos));
+                  vec2_angle(&w->solid->pos, &p->solid->pos));
          }
 
          /* Set turn. */
@@ -416,7 +416,7 @@ static void think_seeker( Weapon* w, const double dt )
 
    /* Limit speed here */
    w->real_vel = MIN( speed_mod * w->outfit->u.lau.speed_max, w->real_vel + w->outfit->u.lau.thrust*dt );
-   vect_pset( &w->solid->vel, /* ewtrack * */ w->real_vel, w->solid->dir );
+   vec2_pset( &w->solid->vel, /* ewtrack * */ w->real_vel, w->solid->dir );
 
    /* Modulate max speed. */
    //w->solid->speed_max = w->outfit->u.lau.speed * ewtrack;
@@ -434,7 +434,7 @@ static void think_beam( Weapon* w, const double dt )
    AsteroidAnchor *field;
    Asteroid *ast;
    double diff, mod;
-   Vector2d v;
+   vec2 v;
    PilotOutfitSlot *slot;
    unsigned int turn_off;
 
@@ -470,11 +470,11 @@ static void think_beam( Weapon* w, const double dt )
    if (slot->inrange) {
       turn_off = 1;
       if (t != NULL) {
-         if (vect_dist( &p->solid->pos, &t->solid->pos ) <= slot->outfit->u.bem.range)
+         if (vec2_dist( &p->solid->pos, &t->solid->pos ) <= slot->outfit->u.bem.range)
             turn_off = 0;
       }
       if (ast != NULL) {
-         if (vect_dist( &p->solid->pos, &ast->pos ) <= slot->outfit->u.bem.range)
+         if (vec2_dist( &p->solid->pos, &ast->pos ) <= slot->outfit->u.bem.range)
             turn_off = 0;
       }
 
@@ -514,14 +514,14 @@ static void think_beam( Weapon* w, const double dt )
          if (t == NULL) {
             if (ast != NULL) {
                diff = angle_diff(w->solid->dir, /* Get angle to target pos */
-                     vect_angle(&w->solid->pos, &ast->pos));
+                     vec2_angle(&w->solid->pos, &ast->pos));
             }
             else
                diff = angle_diff(w->solid->dir, p->solid->dir);
          }
          else
             diff = angle_diff(w->solid->dir, /* Get angle to target pos */
-                  vect_angle(&w->solid->pos, &t->solid->pos));
+                  vec2_angle(&w->solid->pos, &t->solid->pos));
 
          weapon_setTurn( w, CLAMP( -w->outfit->u.bem.turn, w->outfit->u.bem.turn,
                   10 * diff *  w->outfit->u.bem.turn ));
@@ -728,7 +728,7 @@ void weapons_render( const WeaponLayer layer, const double dt )
 static void weapon_renderBeam( Weapon* w, const double dt )
 {
    double x, y, z;
-   gl_Matrix4 projection;
+   mat4 projection;
 
    /* Animation. */
    w->anim += dt;
@@ -742,10 +742,11 @@ static void weapon_renderBeam( Weapon* w, const double dt )
    /* Position. */
    gl_gameToScreenCoords( &x, &y, w->solid->pos.x, w->solid->pos.y );
 
-   projection = gl_Matrix4_Translate( gl_view_matrix, x, y, 0. );
-   projection = gl_Matrix4_Rotate2d( projection, w->solid->dir );
-   projection = gl_Matrix4_Scale( projection, w->outfit->u.bem.range*z,w->outfit->u.bem.width * z, 1 );
-   projection = gl_Matrix4_Translate( projection, 0., -0.5, 0. );
+   projection = gl_view_matrix;
+   mat4_translate( &projection, x, y, 0. );
+   mat4_rotate2d( &projection, w->solid->dir );
+   mat4_scale( &projection, w->outfit->u.bem.range*z,w->outfit->u.bem.width * z, 1. );
+   mat4_translate( &projection, 0., -0.5, 0. );
 
    /* Set the vertex. */
    glEnableVertexAttribArray( shaders.beam.vertex );
@@ -753,7 +754,7 @@ static void weapon_renderBeam( Weapon* w, const double dt )
          0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
-   gl_Matrix4_Uniform(shaders.beam.projection, projection);
+   gl_uniformMat4(shaders.beam.projection, &projection);
    gl_uniformColor(shaders.beam.color, &w->outfit->u.bem.colour);
    glUniform2f(shaders.beam.dimensions, w->outfit->u.bem.range, w->outfit->u.bem.width);
    glUniform1f(shaders.beam.dt, w->anim);
@@ -945,7 +946,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    unsigned int coll, usePoly=1;
    const glTexture *gfx;
    const CollPoly *plg, *polygon;
-   Vector2d crash[2];
+   vec2 crash[2];
    Pilot *const* pilot_stack;
    int isjammed;
 
@@ -1070,7 +1071,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          AsteroidAnchor *ast = &cur_system->asteroids[i];
 
          /* Early in-range check. */
-         if (vect_dist2( &w->solid->pos, &ast->pos ) >
+         if (vec2_dist2( &w->solid->pos, &ast->pos ) >
             pow2( ast->radius + ast->margin + gfx->sw/2. ))
             continue;
 
@@ -1092,7 +1093,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          AsteroidAnchor *ast = &cur_system->asteroids[i];
 
          /* Early in-range check. */
-         if (vect_dist2( &w->solid->pos, &ast->pos ) >
+         if (vec2_dist2( &w->solid->pos, &ast->pos ) >
             pow2( ast->radius + ast->margin + gfx->sw/2. ))
             continue;
 
@@ -1114,7 +1115,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          AsteroidAnchor *ast = &cur_system->asteroids[i];
 
          /* Early in-range check. */
-         if (vect_dist2( &w->solid->pos, &ast->pos ) >
+         if (vec2_dist2( &w->solid->pos, &ast->pos ) >
             pow2( ast->radius + ast->margin + w->outfit->u.bem.range ))
             continue;
 
@@ -1221,7 +1222,7 @@ void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg )
  *    @param p Pilot that got hit.
  *    @param pos Position of the hit.
  */
-static void weapon_hit( Weapon* w, Pilot* p, Vector2d* pos )
+static void weapon_hit( Weapon* w, Pilot* p, vec2* pos )
 {
    Pilot *parent;
    int s, spfx;
@@ -1277,7 +1278,7 @@ static void weapon_hit( Weapon* w, Pilot* p, Vector2d* pos )
  *    @param layer Layer to which the weapon belongs.
  *    @param pos Position of the hit.
  */
-static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* pos )
+static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, vec2* pos )
 {
    int s, spfx;
    Damage dmg;
@@ -1322,7 +1323,7 @@ static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* 
  *    @param dt Current delta tick.
  */
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
-      Vector2d pos[2], const double dt )
+      vec2 pos[2], const double dt )
 {
    (void) layer;
    Pilot *parent;
@@ -1377,7 +1378,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
  *    @param dt Current delta tick.
  */
 static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
-      Vector2d pos[2], const double dt )
+      vec2 pos[2], const double dt )
 {
    (void) layer;
    Damage dmg;
@@ -1422,10 +1423,10 @@ static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
  *    @param swivel Maximum angle between weapon and straight ahead.
  */
 static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
-      const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,
+      const Pilot *pilot_target, const vec2 *pos, const vec2 *vel, double dir,
       double swivel, double time )
 {
-   Vector2d *target_pos, *target_vel;
+   vec2 *target_pos, *target_vel;
    double rx, ry, x, y, t, lead, rdir, off;
 
    if (pilot_target != NULL) {
@@ -1574,9 +1575,9 @@ static double weapon_computeTimes( double rdir, double rx, double ry, double dvx
  *    @param time Expected flight time.
  */
 static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time )
+      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time )
 {
-   Vector2d v;
+   vec2 v;
    double mass, rdir, acc, m;
    Pilot *pilot_target;
    const glTexture *gfx;
@@ -1622,7 +1623,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    m = outfit->u.blt.speed;
    if (outfit->u.blt.speed_dispersion > 0.)
       m += RNG_1SIGMA() * outfit->u.blt.speed_dispersion;
-   vect_cadd( &v, m*cos(rdir), m*sin(rdir));
+   vec2_cadd( &v, m*cos(rdir), m*sin(rdir));
    w->timer = outfit->u.blt.range / outfit->u.blt.speed;
    w->falloff = w->timer - outfit->u.blt.falloff / outfit->u.blt.speed;
    w->solid = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_EULER );
@@ -1650,10 +1651,10 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
  *    @param time Expected flight time.
  */
 static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent, double time )
+      const double dir, const vec2* pos, const vec2* vel, const Pilot* parent, double time )
 {
    (void) T;
-   Vector2d v;
+   vec2 v;
    double mass, rdir, m;
    Pilot *pilot_target;
    const glTexture *gfx;
@@ -1688,7 +1689,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    m = outfit->u.lau.speed;
    if (outfit->u.lau.speed_dispersion > 0.)
       m += RNG_1SIGMA() * outfit->u.lau.speed_dispersion;
-   vect_cadd( &v, m * cos(rdir), m * sin(rdir) );
+   vec2_cadd( &v, m * cos(rdir), m * sin(rdir) );
    w->real_vel = VMOD(v);
 
    /* Set up ammo details. */
@@ -1751,7 +1752,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
  *    @return A pointer to the newly created weapon.
  */
 static Weapon* weapon_create( PilotOutfitSlot *po, double T,
-      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const double dir, const vec2* pos, const vec2* vel,
       const Pilot* parent, const unsigned int target, double time )
 {
    double mass, rdir;
@@ -1799,11 +1800,11 @@ static Weapon* weapon_create( PilotOutfitSlot *po, double T,
          if (outfit->type == OUTFIT_TYPE_TURRET_BEAM) {
             pilot_target = pilot_get(target);
             if ((w->parent != w->target) && (pilot_target != NULL))
-               rdir = vect_angle(pos, &pilot_target->solid->pos);
+               rdir = vec2_angle(pos, &pilot_target->solid->pos);
             else if (parent->nav_asteroid >= 0) {
                field = &cur_system->asteroids[parent->nav_anchor];
                ast = &field->asteroids[parent->nav_asteroid];
-               rdir = vect_angle(pos, &ast->pos);
+               rdir = vec2_angle(pos, &ast->pos);
             }
          }
 
@@ -1867,7 +1868,7 @@ static Weapon* weapon_create( PilotOutfitSlot *po, double T,
  *    @param time Expected flight time.
  */
 void weapon_add( PilotOutfitSlot *po, const double T, const double dir,
-      const Vector2d* pos, const Vector2d* vel,
+      const vec2* pos, const vec2* vel,
       const Pilot *parent, unsigned int target, double time )
 {
    WeaponLayer layer;
@@ -1925,7 +1926,7 @@ void weapon_add( PilotOutfitSlot *po, const double T, const double dir,
  * @sa beam_end
  */
 unsigned int beam_start( PilotOutfitSlot *po,
-      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const double dir, const vec2* pos, const vec2* vel,
       const Pilot *parent, const unsigned int target )
 {
    WeaponLayer layer;

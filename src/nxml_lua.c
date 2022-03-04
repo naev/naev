@@ -329,7 +329,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
             break;
          }
          else if (lua_isvector(L,-1)) {
-            Vector2d *vec = lua_tovector( L, -1 );
+            vec2 *vec = lua_tovector( L, -1 );
             xmlw_startElem( writer, "data" );
             xmlw_attr( writer, "type", VECTOR_METATABLE );
             nxml_saveNameAttribute( writer, name, name_len );
@@ -480,7 +480,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
          else if (strcmp(type,OUTFIT_METATABLE)==0)
             lua_pushoutfit(L,outfit_get(xml_get(node)));
          else if (strcmp(type, VECTOR_METATABLE)==0) {
-            Vector2d vec;
+            vec2 vec;
             xmlr_attr_float( node, "x", vec.x );
             xmlr_attr_float( node, "y", vec.y );
             xmlr_attr_float( node, "mod", vec.mod );

@@ -48,11 +48,11 @@ end
 
 function accept ()
    if not tk.yesno( _("Spaceport Bar"), _([[You sit next to the drunk man at the bar and listen to him almost sob into his drink. "I was so close! I almost had it! I could feel it in my grasp! And then I messed it all up! Why did I do it? Hey, wait! You! You can help me!" The man grabs your collar. "How'd you like to make a bit of money and help me out? You can help me! It'll be good for you. It'll be good for me. It'll be good for everyone! Will you help me?"]]) ) then
-      misn.finish()
+      return
 
    elseif player.pilot():cargoFree() < 45 then
       tk.msg( _("No Room"), _([[You don't have enough cargo space to accept this mission.]]) )  -- Not enough space
-      misn.finish()
+      return
 
    else
       misn.accept()

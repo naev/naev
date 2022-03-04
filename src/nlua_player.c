@@ -231,7 +231,6 @@ static int playerL_pay( lua_State *L )
    int nohooks;
    const char *reason;
 
-   NLUA_CHECKRW(L);
    PLAYER_CHECK();
 
    money = CLAMP( CREDITS_MIN, CREDITS_MAX, (credits_t)round(luaL_checknumber(L,1)) );
@@ -297,7 +296,6 @@ static int playerL_credits( lua_State *L )
  */
 static int playerL_msg( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    PLAYER_CHECK();
 
    const char *str = luaL_checkstring(L,1);
@@ -315,7 +313,7 @@ static int playerL_msg( lua_State *L )
  */
 static int playerL_msgClear( lua_State *L )
 {
-   NLUA_CHECKRW(L);
+   (void) L;
    PLAYER_CHECK();
    gui_clearMessages();
    return 0;
@@ -339,7 +337,6 @@ static int playerL_omsgAdd( lua_State *L )
    int fontsize;
    const glColour *col;
 
-   NLUA_CHECKRW(L);
    PLAYER_CHECK();
 
    /* Input. */
@@ -374,7 +371,6 @@ static int playerL_omsgChange( lua_State *L )
    unsigned int id;
    int ret;
 
-   NLUA_CHECKRW(L);
    PLAYER_CHECK();
 
    /* Input. */
@@ -400,7 +396,6 @@ static int playerL_omsgChange( lua_State *L )
  */
 static int playerL_omsgRm( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    PLAYER_CHECK();
    unsigned int id = luaL_checklong(L,1);
    omsg_rm( id );
@@ -416,7 +411,6 @@ static int playerL_omsgRm( lua_State *L )
 static int playerL_allowSave( lua_State *L )
 {
    unsigned int b;
-   NLUA_CHECKRW(L);
    PLAYER_CHECK();
    if (lua_gettop(L)==0)
       b = 1;
@@ -501,7 +495,6 @@ static int playerL_fuel( lua_State *L )
  */
 static int playerL_refuel( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    PLAYER_CHECK();
 
    if (lua_gettop(L) > 0) {
@@ -612,8 +605,6 @@ static int playerL_cinematics( lua_State *L )
    const char *abort_msg;
    int f_gui, f_2x;
 
-   NLUA_CHECKRW(L);
-
    /* Defaults. */
    abort_msg = NULL;
    f_gui     = 0;
@@ -713,7 +704,6 @@ static int playerL_screenshot( lua_State *L )
 static int playerL_unboard( lua_State *L )
 {
    (void) L;
-   NLUA_CHECKRW(L);
    board_unboard();
    return 0;
 }
@@ -740,8 +730,6 @@ static int playerL_isLanded( lua_State *L )
  */
 static int playerL_takeoff( lua_State *L )
 {
-   NLUA_CHECKRW(L);
-
    if (!landed) {
       NLUA_ERROR(L,_("Player must be landed to force takeoff."));
       return 0;
@@ -762,7 +750,6 @@ static int playerL_takeoff( lua_State *L )
  */
 static int playerL_land( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    PLAYER_CHECK();
 
    Spob *pnt = luaL_validspob(L,1);
@@ -809,7 +796,6 @@ static int playerL_land( lua_State *L )
  */
 static int playerL_allowLand( lua_State *L )
 {
-   NLUA_CHECKRW(L);
 
    int b;
    const char *str = NULL;
@@ -854,8 +840,6 @@ static int playerL_landWindow( lua_State *L )
    const char *str;
    int win;
 
-   NLUA_CHECKRW(L);
-
    if (!landed) {
       NLUA_ERROR(L, _("Must be landed to set the active land window."));
       return 0;
@@ -894,7 +878,6 @@ static int playerL_landWindow( lua_State *L )
 static int playerL_commclose( lua_State *L )
 {
    (void) L;
-   NLUA_CHECKRW(L);
    comm_queueClose();
    return 0;
 }
@@ -1186,7 +1169,6 @@ static int playerL_numOutfit( lua_State *L )
  */
 static int playerL_addOutfit( lua_State *L  )
 {
-   NLUA_CHECKRW(L);
 
    /* Handle parameters. */
    const Outfit *o = luaL_validoutfit(L, 1);
@@ -1213,7 +1195,6 @@ static int playerL_addOutfit( lua_State *L  )
  */
 static int playerL_rmOutfit( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    NLUA_MIN_ARGS(1);
 
    const Outfit *o;
@@ -1269,7 +1250,6 @@ static int playerL_rmOutfit( lua_State *L )
  */
 static int playerL_addShip( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    Pilot *new_ship;
    /* Handle parameters. */
    const Ship *s     = luaL_validship(L, 1);
@@ -1298,7 +1278,6 @@ static int playerL_addShip( lua_State *L )
  */
 static int playerL_swapShip( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    PLAYER_CHECK();
 
    const char *str = luaL_checkstring(L,1);
@@ -1455,7 +1434,6 @@ static int playerL_teleport( lua_State *L )
    const char *name, *pntname;
    int no_simulate;
 
-   NLUA_CHECKRW(L);
    PLAYER_CHECK();
 
    /* Must not be landed. */
@@ -1563,8 +1541,8 @@ static int playerL_teleport( lua_State *L )
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
       if (p->parent == PLAYER_ID) {
-         memcpy( &p->solid->pos, &player.p->solid->pos, sizeof(Vector2d) );
-         vect_padd( &p->solid->pos, 200.+200.*RNGF(), 2.*M_PI*RNGF() );
+         memcpy( &p->solid->pos, &player.p->solid->pos, sizeof(vec2) );
+         vec2_padd( &p->solid->pos, 200.+200.*RNGF(), 2.*M_PI*RNGF() );
 
          /* Clean up trails. */
          pilot_clearTrails( p );

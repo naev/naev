@@ -294,13 +294,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
  */
 void equipment_open( unsigned int wid )
 {
-   int w, h;
-   int sw, sh;
-   int ow, oh;
-   int bw, bh;
-   int ew, eh;
-   int cw, ch;
-   int x, y;
+   int w,h, sw,sh, ow,oh, bw,bh, ew,eh, cw,ch, x,y;
 
    /* Load the outfit mode. */
    equipment_outfitMode = player.eq_outfitMode;
@@ -354,7 +348,6 @@ void equipment_open( unsigned int wid )
    /* Safe defaults. */
    equipment_lastick = SDL_GetTicks();
    equipment_dir     = 0.;
-   memset( &eq_wgt, 0, sizeof(CstSlotWidget) );
 
    /* Add ammo. */
    equipment_addAmmo();
@@ -390,6 +383,7 @@ void equipment_open( unsigned int wid )
 
    /* Slot widget. Designed so that 10 slots barely fit. */
    equipment_slotWidget( wid, 20+sw+15, -40-5, ew, eh, &eq_wgt );
+   equipment_slotDeselect( &eq_wgt );
    eq_wgt.canmodify = 1;
 
    /* Separator. */
@@ -425,10 +419,7 @@ void equipment_slotWidget( unsigned int wid,
       CstSlotWidget *data )
 {
    /* Initialize data. */
-   memset( data, 0, sizeof(CstSlotWidget) );
-   data->slot        = -1;
-   data->mouseover   = -1;
-   data->weapons     = -1;
+   equipment_slotDeselect( data );
 
    /* Create the widget. */
    window_addCust( wid, x, y, w, h, "cstEquipment", 0,
@@ -887,13 +878,13 @@ static void equipment_renderShip( double bx, double by,
    double dt;
    double px, py;
    double pw, ph;
-   Vector2d v;
-
-   /* Must have selected ship. */
-   if (eq_wgt.selected == NULL)
-      return;
+   vec2 v;
 
    p = eq_wgt.selected;
+
+   /* Must have selected ship. */
+   if (p == NULL)
+      return;
 
    tick = SDL_GetTicks();
    dt   = (double)(tick - equipment_lastick)/1000.;
@@ -2145,7 +2136,7 @@ static void equipment_autoequipShip( unsigned int wid, const char* str )
          return;
       }
       /* New env. */
-      autoequip_env = nlua_newEnv(1);
+      autoequip_env = nlua_newEnv();
       nlua_loadStandard( autoequip_env );
       nlua_loadTk( autoequip_env );
       if (nlua_dobufenv(autoequip_env, buf, bufsize, file) != 0) {
@@ -2316,6 +2307,19 @@ void equipment_cleanup (void)
       iar_outfits = NULL;
    }
 
+   equipment_slotDeselect( &eq_wgt );
+}
+
+/**
+ * @brief Deselects equipment stuff.
+ */
+void equipment_slotDeselect( CstSlotWidget *wgt )
+{
+   if (wgt==NULL)
+      wgt = &eq_wgt;
    /* Safe defaults. */
-   eq_wgt.selected      = NULL;
+   memset( wgt, 0, sizeof(CstSlotWidget) );
+   wgt->slot      = -1;
+   wgt->mouseover = -1;
+   wgt->weapons   = -1;
 }

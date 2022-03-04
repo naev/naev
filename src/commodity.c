@@ -404,7 +404,7 @@ void commodity_Jettison( int pilot, const Commodity* com, int quantity )
  *    @param lifeleng Duration in seconds.
  *    @param qtt Quantity to add.
  */
-int gatherable_init( const Commodity* com, Vector2d pos, Vector2d vel, double lifeleng, int qtt )
+int gatherable_init( const Commodity* com, vec2 pos, vec2 vel, double lifeleng, int qtt )
 {
    Gatherable *g = &array_grow( &gatherable_stack );
    g->type = com;
@@ -471,14 +471,14 @@ void gatherable_render( void )
  *    @param rad radius.
  *    @return The id of the closest gatherable, or -1 if none is found.
  */
-int gatherable_getClosest( Vector2d pos, double rad )
+int gatherable_getClosest( vec2 pos, double rad )
 {
    int curg = -1;
    double mindist = INFINITY;
 
    for (int i=0; i < array_size(gatherable_stack); i++) {
       Gatherable *gat = &gatherable_stack[i];
-      double curdist = vect_dist(&pos, &gat->pos);
+      double curdist = vec2_dist(&pos, &gat->pos);
       if ( (curdist<mindist) && (curdist<rad) ) {
          curg = i;
          mindist = curdist;
@@ -495,7 +495,7 @@ int gatherable_getClosest( Vector2d pos, double rad )
  *    @param id Id of the gatherable in the stack.
  *    @return flag 1->there exists a gatherable 0->elsewere.
  */
-int gatherable_getPos( Vector2d* pos, Vector2d* vel, int id )
+int gatherable_getPos( vec2* pos, vec2* vel, int id )
 {
    Gatherable *gat;
 
@@ -523,7 +523,7 @@ void gatherable_gather( int pilot )
    for (int i=0; i < array_size(gatherable_stack); i++) {
       Gatherable *gat = &gatherable_stack[i];
 
-      if (vect_dist( &p->solid->pos, &gat->pos ) < GATHER_DIST ) {
+      if (vec2_dist( &p->solid->pos, &gat->pos ) < GATHER_DIST ) {
          /* Add cargo to pilot. */
          int q = pilot_cargoAdd( p, gat->type, gat->quantity, 0 );
 

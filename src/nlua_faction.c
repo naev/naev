@@ -343,7 +343,6 @@ static int factionL_areallies( lua_State *L )
  */
 static int factionL_modplayer( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    int f    = luaL_validfaction(L,1);
    double n = luaL_checknumber(L,2);
    faction_modPlayer( f, n, "script" );
@@ -363,7 +362,6 @@ static int factionL_modplayer( lua_State *L )
  */
 static int factionL_modplayersingle( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    int f    = luaL_validfaction(L,1);
    double n = luaL_checknumber(L,2);
    faction_modPlayerSingle( f, n, "script" );
@@ -384,7 +382,6 @@ static int factionL_modplayersingle( lua_State *L )
  */
 static int factionL_modplayerraw( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    int f    = luaL_validfaction(L,1);
    double n = luaL_checknumber(L,2);
    faction_modPlayerRaw( f, n );
@@ -402,7 +399,6 @@ static int factionL_modplayerraw( lua_State *L )
  */
 static int factionL_setplayerstanding( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    int f    = luaL_validfaction( L, 1 );
    double n = luaL_checknumber( L, 2 );
    faction_setPlayer( f, n );
@@ -553,7 +549,6 @@ static int factionL_isknown( lua_State *L )
  */
 static int factionL_setknown( lua_State *L )
 {
-   NLUA_CHECKRW(L);
    int fac = luaL_validfaction(L, 1);
    int b   = lua_toboolean(L, 2);
    faction_setKnown( fac, b );
@@ -577,7 +572,6 @@ static int factionL_dynAdd( lua_State *L )
    const char *name, *display, *ai;
    int clear_allies, clear_enemies;
 
-   NLUA_CHECKRW(L);
 
    if (!lua_isnoneornil(L, 1))
       fac   = luaL_validfaction(L,1);
@@ -635,7 +629,6 @@ static int factionL_dynAlly( lua_State *L )
 {
    LuaFaction fac, ally;
    int remove;
-   NLUA_CHECKRW(L);
    fac      = luaL_validfaction(L,1);
    if (!faction_isDynamic(fac))
       NLUA_ERROR(L,_("Can only add allies to dynamic factions"));
@@ -660,7 +653,6 @@ static int factionL_dynEnemy( lua_State *L )
 {
    LuaFaction fac, enemy;
    int remove;
-   NLUA_CHECKRW(L);
    fac      = luaL_validfaction(L,1);
    if (!faction_isDynamic(fac))
       NLUA_ERROR(L,_("Can only add allies to dynamic factions"));

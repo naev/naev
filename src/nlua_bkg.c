@@ -57,7 +57,7 @@ int nlua_loadBackground( nlua_env env )
  */
 static int bkgL_clear( lua_State *L )
 {
-   NLUA_CHECKRW(L);
+   (void) L;
    background_clear();
    return 0;
 }
@@ -91,7 +91,6 @@ static int bkgL_image( lua_State *L )
    unsigned int id;
    int foreground;
 
-   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    tex   = luaL_checktex(L,1);
