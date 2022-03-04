@@ -26,9 +26,9 @@ void mat4_translate( mat4 *m, double x, double y, double z );
 void mat4_rotate( mat4 *m, double angle, double x, double y, double z );
 void mat4_rotate2d( mat4 *m, double angle );
 void mat4_rotate2dv( mat4 *m, double x, double y );
-void mat4_lookat( mat4 *m, const vec3 *eye, const vec3 *center, const vec3 *up );
 
 /* Creation functions. */
 __attribute__((const)) mat4 mat4_identity( void );
 __attribute__((const)) mat4 mat4_ortho( double left, double right,
       double bottom, double top, double nearVal, double farVal );
+mat4 mat4_lookat( const vec3 *eye, const vec3 *center, const vec3 *up );

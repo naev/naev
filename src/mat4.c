@@ -46,47 +46,6 @@ void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 )
 }
 
 /**
- * @brief Creates an identity matrix.
- *
- *    @return A new identity matrix.
- */
-mat4 mat4_identity (void)
-{
-   const mat4 m = { .m = {
-      { 1., 0., 0., 0. },
-      { 0., 1., 0., 0. },
-      { 0., 0., 1., 0. },
-      { 0., 0., 0., 1. }
-   } };
-   return m;
-}
-
-/**
- * @brief Creates an orthographic projection matrix.
- */
-mat4 mat4_ortho( double left, double right,
-      double bottom, double top, double nearVal, double farVal )
-{
-   mat4 mat = {{{{0}}}};
-   double tx, ty, tz;
-
-   /* https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glOrtho.xml */
-   tx = -(right + left) / (right - left);
-   ty = -(top + bottom) / (top - bottom);
-   tz = -(farVal + nearVal) / (farVal - nearVal);
-
-   mat.m[0][0] = 2. / (right - left);
-   mat.m[1][1] = 2. / (top - bottom);
-   mat.m[2][2] = -2. / (farVal - nearVal);
-   mat.m[3][3] = 1.;
-   mat.m[3][0] = tx;
-   mat.m[3][1] = ty;
-   mat.m[3][2] = tz;
-
-   return mat;
-}
-
-/**
  * @brief Applies a transformation to another, storing the result in the left hand side.
  *
  *    @param[in, out] lhs Left hand side matrix.
@@ -229,14 +188,55 @@ void mat4_rotate( mat4 *m, double angle, double x, double y, double z )
 }
 
 /**
- * @brief Fills a matrix with a transformation to look at a center point from an eye with an up vector.
+ * @brief Creates an identity matrix.
  *
- *    @param[in, out] m Matrix to apply transformation to.
+ *    @return A new identity matrix.
+ */
+mat4 mat4_identity (void)
+{
+   const mat4 m = { .m = {
+      { 1., 0., 0., 0. },
+      { 0., 1., 0., 0. },
+      { 0., 0., 1., 0. },
+      { 0., 0., 0., 1. }
+   } };
+   return m;
+}
+
+/**
+ * @brief Creates an orthographic projection matrix.
+ */
+mat4 mat4_ortho( double left, double right,
+      double bottom, double top, double nearVal, double farVal )
+{
+   mat4 mat = {{{{0}}}};
+   double tx, ty, tz;
+
+   /* https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glOrtho.xml */
+   tx = -(right + left) / (right - left);
+   ty = -(top + bottom) / (top - bottom);
+   tz = -(farVal + nearVal) / (farVal - nearVal);
+
+   mat.m[0][0] = 2. / (right - left);
+   mat.m[1][1] = 2. / (top - bottom);
+   mat.m[2][2] = -2. / (farVal - nearVal);
+   mat.m[3][3] = 1.;
+   mat.m[3][0] = tx;
+   mat.m[3][1] = ty;
+   mat.m[3][2] = tz;
+
+   return mat;
+}
+
+/**
+ * @brief Creates a matrix with a transformation to look at a center point from an eye with an up vector.
+ *
  *    @param[in] eye Vector representing the eye position that is looking at something.
  *    @param[in] center Vector representing the position that is being looked at.
  *    @param[in] up Vector representing the "upward" direction. Has to be a unitary vector.
+ *    @return The newly created matrix.
  */
-void mat4_lookat( mat4 *m, const vec3 *eye, const vec3 *center, const vec3 *up )
+mat4 mat4_lookat( const vec3 *eye, const vec3 *center, const vec3 *up )
 {
    vec3 forward, side, upc;
    mat4 H;
@@ -268,15 +268,10 @@ void mat4_lookat( mat4 *m, const vec3 *eye, const vec3 *center, const vec3 *up )
    H.m[2][2] = -forward.v[2];
    H.m[3][2] = 0.;
    /* Fourth column. */
-   H.m[0][3] = 0.;
-   H.m[1][3] = 0.;
-   H.m[2][3] = 0.;
+   H.m[0][3] = -eye->v[0];
+   H.m[1][3] = -eye->v[1];
+   H.m[2][3] = -eye->v[2];
    H.m[3][3] = 1.;
 
-   /* Multiply. */
-   mat4_apply( m, &H );
-   /* Translate to eye. */
-   m->m[0][3] -= eye->v[0];
-   m->m[1][3] -= eye->v[1];
-   m->m[2][3] -= eye->v[2];
+   return H;
 }
