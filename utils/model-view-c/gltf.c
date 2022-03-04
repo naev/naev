@@ -422,13 +422,14 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
       { 0.0, sca, 0.0, 0.0 },
       { 0.0, 0.0, sca, 0.0 },
       { 0.0, 0.0, 0.0, 1.0 } } };
-   mat4 Hview = mat4_lookat( &light_pos, &center, &up );
-   mat4_apply( &Hview, H );
-   glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection.ptr );
-   //glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hview.ptr );
-   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
+   //mat4 Hview = mat4_lookat( &light_pos, &center, &up );
+   mat4 Hlook = mat4_lookat( &center, &light_pos, &up );
+   mat4 Hview;
+   mat4_mul( &Hview, H, &Hlook );
 
-   mat4_print( &Hview );
+   glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection.ptr );
+   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hview.ptr );
+   //glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
 
@@ -492,7 +493,8 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const mat4 *
       { 0.0, sca, 0.0, 0.0 },
       { 0.0, 0.0, sca, 0.0 },
       { 0.0, 0.0, 0.0, 1.0 } } };
-   mat4 Hshadow = mat4_lookat( &light_pos, &center, &up );
+   //mat4 Hshadow = mat4_lookat( &light_pos, &center, &up );
+   mat4 Hshadow = mat4_lookat( &center, &light_pos, &up );
    glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection.ptr );
    glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow.ptr );
    glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );

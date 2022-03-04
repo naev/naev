@@ -86,7 +86,7 @@ int main( int argc, char *argv[] )
    glUniform1i( shadowtex, 0 );
    glUseProgram( 0 );
 
-   int rendermode = 1;
+   int rendermode = 0;
    int quit = 0;
    float rotx = 0.;
    float roty = M_PI_2;
@@ -105,11 +105,15 @@ int main( int argc, char *argv[] )
                   quit = 1;
                   break;
 
-               case SDLK_0:
-                  rendermode = 0;
+               case SDLK_m:
+                  rendermode = !rendermode;
                   break;
 
                case SDLK_1:
+                  rendermode = 0;
+                  break;
+
+               case SDLK_2:
                   rendermode = 1;
                   break;
 

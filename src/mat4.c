@@ -16,10 +16,9 @@
 
 void mat4_print( const mat4 *m )
 {
-   for (int j=0; j<4; j++) {
-      for (int i=0; i<4; i++) {
+   for (int i=0; i<4; i++) {
+      for (int j=0; j<4; j++)
          printf("%6.1f ", m->m[j][i]);
-      }
       printf("\n");
    }
 }
@@ -39,8 +38,8 @@ void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 )
       for (int j=0; j<4; j++) {
          GLfloat v = 0.;
          for (int k=0; k<4; k++)
-            v += m1->m[k][i] * m2->m[j][k];
-         out->m[j][i] = v;
+            v += m1->m[i][k] * m2->m[k][j];
+         out->m[i][j] = v;
       }
    }
 }
@@ -53,6 +52,7 @@ void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 )
  */
 void mat4_apply( mat4 *lhs, const mat4 *rhs )
 {
+   /* Process by rows. */
    for (int i=0; i<4; i++) {
       float l0 = lhs->m[i][0];
       float l1 = lhs->m[i][1];
@@ -254,23 +254,23 @@ mat4 mat4_lookat( const vec3 *eye, const vec3 *center, const vec3 *up )
 
    /* First column. */
    H.m[0][0] = side.v[0];
-   H.m[1][0] = side.v[1];
-   H.m[2][0] = side.v[2];
-   H.m[3][0] = 0.;
+   H.m[0][1] = side.v[1];
+   H.m[0][2] = side.v[2];
+   H.m[0][3] = 0.;
    /* Second column. */
-   H.m[0][1] = upc.v[0];
+   H.m[1][0] = upc.v[0];
    H.m[1][1] = upc.v[1];
-   H.m[2][1] = upc.v[2];
-   H.m[3][1] = 0.;
+   H.m[1][2] = upc.v[2];
+   H.m[1][3] = 0.;
    /* Third column. */
-   H.m[0][2] = -forward.v[0];
-   H.m[1][2] = -forward.v[1];
+   H.m[2][0] = -forward.v[0];
+   H.m[2][1] = -forward.v[1];
    H.m[2][2] = -forward.v[2];
-   H.m[3][2] = 0.;
+   H.m[2][3] = 0.;
    /* Fourth column. */
-   H.m[0][3] = -eye->v[0];
-   H.m[1][3] = -eye->v[1];
-   H.m[2][3] = -eye->v[2];
+   H.m[3][0] = -eye->v[0];
+   H.m[3][1] = -eye->v[1];
+   H.m[3][2] = -eye->v[2];
    H.m[3][3] = 1.;
 
    return H;
