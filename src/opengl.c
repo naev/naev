@@ -59,7 +59,7 @@ static int gl_view_x = 0; /* X viewport offset. */
 static int gl_view_y = 0; /* Y viewport offset. */
 static int gl_view_w = 0; /* Viewport width. */
 static int gl_view_h = 0; /* Viewport height. */
-gl_Matrix4 gl_view_matrix = {{{0}}};
+mat4 gl_view_matrix = {{{0}}};
 
 /*
  * prototypes
@@ -506,7 +506,7 @@ void gl_resize (void)
  */
 void gl_viewport( int x, int y, int w, int h )
 {
-   gl_Matrix4 proj = gl_Matrix4_Ortho( 0., /* Left edge. */
+   mat4 proj = mat4_Ortho( 0., /* Left edge. */
             gl_screen.nw, /* Right edge. */
             0., /* Bottom edge. */
             gl_screen.nh, /* Top edge. */
@@ -516,7 +516,7 @@ void gl_viewport( int x, int y, int w, int h )
    /* Take into account possible translation. */
    gl_screen.x = x;
    gl_screen.y = y;
-   proj = gl_Matrix4_Translate(proj, x, y, 0);
+   proj = mat4_Translate(proj, x, y, 0);
 
    /* Set screen size. */
    gl_screen.w = w;
@@ -524,7 +524,7 @@ void gl_viewport( int x, int y, int w, int h )
 
    /* Take into account possible scaling. */
    if (gl_screen.scale != 1.)
-      proj = gl_Matrix4_Scale(proj, gl_screen.wscale, gl_screen.hscale, 1);
+      proj = mat4_Scale(proj, gl_screen.wscale, gl_screen.hscale, 1);
 
    gl_view_matrix = proj;
 }

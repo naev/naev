@@ -19,7 +19,7 @@ int nlua_loadTransform( nlua_env env );
 /*
  * Transform operations
  */
-gl_Matrix4* lua_totransform( lua_State *L, int ind );
-gl_Matrix4* luaL_checktransform( lua_State *L, int ind );
-gl_Matrix4* lua_pushtransform( lua_State *L, gl_Matrix4 Transform );
+mat4* lua_totransform( lua_State *L, int ind );
+mat4* luaL_checktransform( lua_State *L, int ind );
+mat4* lua_pushtransform( lua_State *L, mat4 Transform );
 int lua_istransform( lua_State *L, int ind );

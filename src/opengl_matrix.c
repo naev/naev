@@ -30,7 +30,7 @@ void gl_exitMatrix (void)
 {
 }
 
-void gl_Matrix4_Print( gl_Matrix4 m )
+void mat4_Print( mat4 m )
 {
    for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 4; j++) {
@@ -40,9 +40,9 @@ void gl_Matrix4_Print( gl_Matrix4 m )
    }
 }
 
-gl_Matrix4 gl_Matrix4_Mult( gl_Matrix4 m1, gl_Matrix4 m2 )
+mat4 mat4_Mult( mat4 m1, mat4 m2 )
 {
-   gl_Matrix4 m = {{{0}}};
+   mat4 m = {{{0}}};
 
    for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 4; j++) {
@@ -55,9 +55,9 @@ gl_Matrix4 gl_Matrix4_Mult( gl_Matrix4 m1, gl_Matrix4 m2 )
    return m;
 }
 
-gl_Matrix4 gl_Matrix4_Identity( void )
+mat4 mat4_Identity( void )
 {
-   gl_Matrix4 m = {{{0}}};
+   mat4 m = {{{0}}};
    m.m[0][0] = 1.;
    m.m[1][1] = 1.;
    m.m[2][2] = 1.;
@@ -65,10 +65,10 @@ gl_Matrix4 gl_Matrix4_Identity( void )
    return m;
 }
 
-gl_Matrix4 gl_Matrix4_Ortho( double left, double right,
+mat4 mat4_Ortho( double left, double right,
       double bottom, double top, double nearVal, double farVal )
 {
-   gl_Matrix4 mat = {{{0}}};
+   mat4 mat = {{{0}}};
    double tx, ty, tz;
 
    /* https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glOrtho.xml */
@@ -87,7 +87,7 @@ gl_Matrix4 gl_Matrix4_Ortho( double left, double right,
    return mat;
 }
 
-gl_Matrix4 gl_Matrix4_Scale( gl_Matrix4 m, double x, double y, double z )
+mat4 mat4_Scale( mat4 m, double x, double y, double z )
 {
    for (int i = 0; i < 4; i++) {
       m.m[0][i] *= x;
@@ -97,7 +97,7 @@ gl_Matrix4 gl_Matrix4_Scale( gl_Matrix4 m, double x, double y, double z )
    return m;
 }
 
-gl_Matrix4 gl_Matrix4_Translate( gl_Matrix4 m, double x, double y, double z )
+mat4 mat4_Translate( mat4 m, double x, double y, double z )
 {
    for (int i = 0; i < 4; i++)
       m.m[3][i] += m.m[0][i] * x + m.m[1][i] * y + m.m[2][i] * z;
@@ -111,7 +111,7 @@ gl_Matrix4 gl_Matrix4_Translate( gl_Matrix4 m, double x, double y, double z )
  *    @param angle Angle in radians.
  *    @return New projection matrix.
  */
-gl_Matrix4 gl_Matrix4_Rotate2d( gl_Matrix4 m, double angle )
+mat4 mat4_Rotate2d( mat4 m, double angle )
 {
    double c, s, x, y;
 
@@ -138,7 +138,7 @@ gl_Matrix4 gl_Matrix4_Rotate2d( gl_Matrix4 m, double angle )
  *    @param s Angle sine (or y coordinate of the vector).
  *    @return New projection matrix.
  */
-gl_Matrix4 gl_Matrix4_Rotate2dv( gl_Matrix4 m, double c, double s )
+mat4 mat4_Rotate2dv( mat4 m, double c, double s )
 {
    double x, y;
 
@@ -165,10 +165,10 @@ gl_Matrix4 gl_Matrix4_Rotate2dv( gl_Matrix4 m, double c, double s )
  *    @param z Z component of the axis of rotation.
  *    @return New projection matrix.
  */
-gl_Matrix4 gl_Matrix4_Rotate( gl_Matrix4 m, double angle, double x, double y, double z )
+mat4 mat4_Rotate( mat4 m, double angle, double x, double y, double z )
 {
    double norm, c, s;
-   gl_Matrix4 rot;
+   mat4 rot;
 
    norm = sqrt( pow2(x) + pow2(y) + pow2(z) );
    c = cos(angle);
@@ -193,15 +193,15 @@ gl_Matrix4 gl_Matrix4_Rotate( gl_Matrix4 m, double angle, double x, double y, do
    rot.m[3][2] = 0.;
    rot.m[3][3] = 1.;
 
-   return gl_Matrix4_Mult( m, rot );
+   return mat4_Mult( m, rot );
 }
 
-GLfloat *gl_Matrix4_Ptr( gl_Matrix4 *m )
+GLfloat *mat4_Ptr( mat4 *m )
 {
    return (GLfloat*)m->m;
 }
 
-void gl_Matrix4_Uniform( GLint location, gl_Matrix4 m )
+void mat4_Uniform( GLint location, mat4 m )
 {
-   glUniformMatrix4fv(location, 1, GL_FALSE, gl_Matrix4_Ptr(&m));
+   glUniformMatrix4fv(location, 1, GL_FALSE, mat4_Ptr(&m));
 }

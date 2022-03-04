@@ -18,7 +18,7 @@ void gl_exitRender (void);
  * Coordinate translation.
  */
 void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by );
-__attribute__((const)) gl_Matrix4 gl_gameToScreenMatrix( gl_Matrix4 lhs );
+__attribute__((const)) mat4 gl_gameToScreenMatrix( mat4 lhs );
 void gl_screenToGameCoords( double *nx, double *ny, int bx, int by );
 
 /*
@@ -83,19 +83,19 @@ void gl_renderStatic( const glTexture* texture,
 
 extern gl_vbo *gl_squareVBO;
 extern gl_vbo *gl_circleVBO;
-void gl_beginSolidProgram(gl_Matrix4 projection, const glColour *c);
+void gl_beginSolidProgram(mat4 projection, const glColour *c);
 void gl_endSolidProgram (void);
-void gl_beginSmoothProgram(gl_Matrix4 projection);
+void gl_beginSmoothProgram(mat4 projection);
 void gl_endSmoothProgram (void);
 
 /* Simple Shaders. */
 void gl_renderShader( double x, double y, double w, double h, double r, const SimpleShader *shd, const glColour *c, int center );
-void gl_renderShaderH( const SimpleShader *shd, const gl_Matrix4 *H, const glColour *c, int center );
+void gl_renderShaderH( const SimpleShader *shd, const mat4 *H, const glColour *c, int center );
 
 /* Circles. */
 void gl_renderCircle( double x, double y,
       double r, const glColour *c, int filled );
-void gl_renderCircleH( const gl_Matrix4 *H, const glColour *c, int filled );
+void gl_renderCircleH( const mat4 *H, const glColour *c, int filled );
 
 /* Lines. */
 void gl_renderLine( double x1, double y1,
@@ -104,7 +104,7 @@ void gl_renderLine( double x1, double y1,
 /* Rectangles. */
 void gl_renderRect( double x, double y, double w, double h, const glColour *c );
 void gl_renderRectEmpty( double x, double y, double w, double h, const glColour *c );
-void gl_renderRectH( const gl_Matrix4 *H, const glColour *c, int filled );
+void gl_renderRectH( const mat4 *H, const glColour *c, int filled );
 
 /* Cross. */
 void gl_renderCross( double x, double y, double r, const glColour *c );

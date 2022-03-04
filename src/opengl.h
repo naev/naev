@@ -70,7 +70,7 @@ typedef struct glInfo_ {
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 
-extern gl_Matrix4 gl_view_matrix;
+extern mat4 gl_view_matrix;
 
 #define  SCREEN_X gl_screen.x /**< Screen X offset. */
 #define  SCREEN_Y gl_screen.y /**< Screen Y offset. */

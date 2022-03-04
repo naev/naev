@@ -1648,8 +1648,8 @@ void toolkit_render( double dt )
 
       /* Set shader uniforms. */
       gl_uniformColor(shaders.texture.color, &col);
-      gl_Matrix4_Uniform(shaders.texture.projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));
-      gl_Matrix4_Uniform(shaders.texture.tex_mat, gl_Matrix4_Identity() );
+      mat4_Uniform(shaders.texture.projection, mat4_Ortho(0, 1, 0, 1, 1, -1));
+      mat4_Uniform(shaders.texture.tex_mat, mat4_Identity() );
 
       /* Draw. */
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );

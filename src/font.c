@@ -43,7 +43,7 @@
  * OpenGL rendering stuff. Since we can't actually render with multiple threads
  * we can be lazy and use global variables.
  */
-static gl_Matrix4 font_projection_mat; /**< Projection matrix. */
+static mat4 font_projection_mat; /**< Projection matrix. */
 static FT_Library font_library = NULL; /**< Global, reference-counted FreeType library. */
 static int        font_library_refs = 0; /**< Our refcount for font_library, because FreeType inexplicably hides its own. */
 static FT_UInt    prev_glyph_index; /**< Index of last character drawn (for kerning). */
@@ -174,7 +174,7 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch );
  * when gl_fontRenderEnd() is called, saving lots of opengl calls.
  */
 static void gl_fontRenderStart( const glFontStash *stsh, double x, double y, const glColour *c, double outlineR );
-static void gl_fontRenderStartH( const glFontStash* stsh, const gl_Matrix4 *H, const glColour *c, double outlineR );
+static void gl_fontRenderStartH( const glFontStash* stsh, const mat4 *H, const glColour *c, double outlineR );
 static int gl_fontRenderGlyph( glFontStash *stsh, uint32_t ch, const glColour *c, int state );
 static void gl_fontRenderEnd (void);
 /* Fussy layout concerns. */
@@ -639,7 +639,7 @@ void gl_printRaw( const glFont *ft_font, double x, double y, const glColour* c,
  *    @param outlineR Radius in px of outline (-1 for default, 0 for none)
  *    @param text String to display.
  */
-void gl_printRawH( const glFont *ft_font, const gl_Matrix4 *H,
+void gl_printRawH( const glFont *ft_font, const mat4 *H,
       const glColour* c, const double outlineR , const char *text )
 {
    int s;
@@ -1214,10 +1214,10 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
 static void gl_fontRenderStart( const glFontStash* stsh, double x, double y, const glColour *c, double outlineR )
 {
    /* OpenGL has pixel centers at 0.5 offset. */
-   gl_Matrix4 H = gl_Matrix4_Translate(gl_view_matrix, x+0.5*gl_screen.wscale, y+0.5*gl_screen.hscale, 0);
+   mat4 H = mat4_Translate(gl_view_matrix, x+0.5*gl_screen.wscale, y+0.5*gl_screen.hscale, 0);
    gl_fontRenderStartH( stsh, &H, c, outlineR );
 }
-static void gl_fontRenderStartH( const glFontStash* stsh, const gl_Matrix4 *H, const glColour *c, double outlineR )
+static void gl_fontRenderStartH( const glFontStash* stsh, const mat4 *H, const glColour *c, double outlineR )
 {
    double a, scale;
    const glColour *col;
@@ -1241,7 +1241,7 @@ static void gl_fontRenderStartH( const glFontStash* stsh, const gl_Matrix4 *H, c
       gl_uniformAColor(shaders.font.outline_color, &cGrey10, a);
 
    scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
-   font_projection_mat = gl_Matrix4_Scale(*H, scale, scale, 1 );
+   font_projection_mat = mat4_Scale(*H, scale, scale, 1 );
 
    font_restoreLast = 0;
    gl_fontKernStart();
@@ -1439,7 +1439,7 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
    kern_adv_x = gl_fontKernGlyph( stsh, ch, glyph );
    if (kern_adv_x) {
-      font_projection_mat = gl_Matrix4_Translate( font_projection_mat,
+      font_projection_mat = mat4_Translate( font_projection_mat,
             kern_adv_x/scale, 0, 0 );
    }
 
@@ -1447,13 +1447,13 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    glBindTexture(GL_TEXTURE_2D, stsh->tex[glyph->tex_index].id);
 
    glUniform1f(shaders.font.m, glyph->m);
-   gl_Matrix4_Uniform(shaders.font.projection, font_projection_mat);
+   mat4_Uniform(shaders.font.projection, font_projection_mat);
 
    /* Draw the element. */
    glDrawArrays( GL_TRIANGLE_STRIP, glyph->vbo_id, 4 );
 
    /* Translate matrix. */
-   font_projection_mat = gl_Matrix4_Translate( font_projection_mat,
+   font_projection_mat = mat4_Translate( font_projection_mat,
          glyph->adv_x/scale, 0, 0 );
 
    return 0;

@@ -368,9 +368,9 @@ static int gfxL_renderTexH( lua_State *L )
    glTexture *t;
    const glColour *col;
    LuaShader_t *shader;
-   gl_Matrix4 *H, *TH, ID;
+   mat4 *H, *TH, ID;
 
-   ID = gl_Matrix4_Identity();
+   ID = mat4_Identity();
 
 
    /* Parameters. */
@@ -389,7 +389,7 @@ static int gfxL_renderTexH( lua_State *L )
 
    /* Set up texture vertices if necessary. */
    if (shader->VertexTexCoord >= 0) {
-      gl_Matrix4_Uniform( shader->ViewSpaceFromLocal, *TH );
+      mat4_Uniform( shader->ViewSpaceFromLocal, *TH );
       glEnableVertexAttribArray( shader->VertexTexCoord );
       gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexTexCoord,
             0, 2, GL_FLOAT, 0 );
@@ -408,7 +408,7 @@ static int gfxL_renderTexH( lua_State *L )
 
    /* Set shader uniforms. */
    gl_uniformColor( shader->ConstantColor, col );
-   gl_Matrix4_Uniform( shader->ClipSpaceFromLocal, *H );
+   mat4_Uniform( shader->ClipSpaceFromLocal, *H );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -476,7 +476,7 @@ static int gfxL_renderRectH( lua_State *L )
 {
 
    /* Parse parameters. */
-   const gl_Matrix4 *H = luaL_checktransform(L,1);
+   const mat4 *H = luaL_checktransform(L,1);
    const glColour *col = luaL_optcolour(L,2,&cWhite);
    int empty = lua_toboolean(L,3);
 
@@ -528,7 +528,7 @@ static int gfxL_renderCircleH( lua_State *L )
 {
 
    /* Parse parameters. */
-   const gl_Matrix4 *H = luaL_checktransform(L,1);
+   const mat4 *H = luaL_checktransform(L,1);
    const glColour *col = luaL_optcolour(L,2,&cWhite);
    int empty = lua_toboolean(L,3);
 
@@ -743,7 +743,7 @@ static int gfxL_printf( lua_State *L )
  */
 static int gfxL_printH( lua_State *L )
 {
-   const gl_Matrix4 *H;
+   const mat4 *H;
    glFont *font;
    const char *str;
    const glColour *col;
