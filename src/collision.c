@@ -852,7 +852,7 @@ int CollideLineCircle( const vec2* p1, const vec2* p2,
 double CollideCircleIntersection( const vec2 *p1, double r1,
       const vec2 *p2, double r2 )
 {
-   double dist2 = vect_dist2( p1, p2 );
+   double dist2 = vec2_dist2( p1, p2 );
 
    /* No intersection. */
    if (dist2 > pow2(r1+r2))

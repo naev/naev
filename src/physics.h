@@ -15,10 +15,10 @@
 #define MOD(x,y)  (hypot((x),(y))) /**< Gets the modulus of a vector by cartesian coordinates. */
 #define ANGLE(x,y) (atan2(y,x)) /**< Gets the angle of two cartesian coordinates. */
 
-#define vect_dist(v,u)  MOD((v)->x-(u)->x,(v)->y-(u)->y) /**< Gets the distance between two vectors. */
-#define vect_dist2(v,u) (((v)->x-(u)->x)*((v)->x-(u)->x)+((v)->y-(u)->y)*((v)->y-(u)->y))
-#define vect_odist(v)   MOD((v)->x,(v)->y) /**< Gets the distance of a vector from the origin. */
-#define vect_odist2(v)  ((v)->x*(v)->x+(v)->y*(v)->y) /**< Gets the squared distance of a vector from the origin. */
+#define vec2_dist(v,u)  MOD((v)->x-(u)->x,(v)->y-(u)->y) /**< Gets the distance between two vectors. */
+#define vec2_dist2(v,u) (((v)->x-(u)->x)*((v)->x-(u)->x)+((v)->y-(u)->y)*((v)->y-(u)->y))
+#define vec2_odist(v)   MOD((v)->x,(v)->y) /**< Gets the distance of a vector from the origin. */
+#define vec2_odist2(v)  ((v)->x*(v)->x+(v)->y*(v)->y) /**< Gets the squared distance of a vector from the origin. */
 
 /*
  * Update options.
@@ -44,17 +44,17 @@ double angle_diff( double ref, double a );
 /*
  * vector manipulation
  */
-void vect_cset( vec2* v, double x, double y );
-void vect_csetmin( vec2* v, double x, double y ); /* does not set mod nor angle */
-void vect_pset( vec2* v, double mod, double angle );
+void vec2_cset( vec2* v, double x, double y );
+void vec2_csetmin( vec2* v, double x, double y ); /* does not set mod nor angle */
+void vec2_pset( vec2* v, double mod, double angle );
 void vectnull( vec2* v );
-double vect_angle( const vec2* ref, const vec2* v );
-void vect_cadd( vec2* v, double x, double y );
-void vect_padd( vec2* v, double m, double a );
-void vect_reflect( vec2* r, const vec2* v, const vec2* n );
-double vect_dot( const vec2* a, const vec2* b );
-void vect_uv( double* u, double *v, const vec2* source, const vec2* reference );
-void vect_uv_decomp( vec2* u, vec2* v, const vec2* reference );
+double vec2_angle( const vec2* ref, const vec2* v );
+void vec2_cadd( vec2* v, double x, double y );
+void vec2_padd( vec2* v, double m, double a );
+void vec2_reflect( vec2* r, const vec2* v, const vec2* n );
+double vec2_dot( const vec2* a, const vec2* b );
+void vec2_uv( double* u, double *v, const vec2* source, const vec2* reference );
+void vec2_uv_decomp( vec2* u, vec2* v, const vec2* reference );
 
 /**
  * @brief Represents a solid in the game.

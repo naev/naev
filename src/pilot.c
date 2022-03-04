@@ -314,7 +314,7 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
          continue;
 
       /* Check distance. */
-      td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
+      td = vec2_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
       if (!tp || (td < d)) {
          d  = td;
          tp = pilot_stack[i]->id;
@@ -346,7 +346,7 @@ unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, 
          continue;
 
       /* Check distance. */
-      td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
+      td = vec2_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
       if (!tp || (td < d)) {
          d = td;
          tp = pilot_stack[i]->id;
@@ -382,7 +382,7 @@ unsigned int pilot_getNearestEnemy_heuristic( const Pilot* p,
 
       /* Check distance. */
       temp = range_factor *
-               vect_dist2( &target->solid->pos, &p->solid->pos )
+               vec2_dist2( &target->solid->pos, &p->solid->pos )
             + FABS( pilot_relsize( p, target ) - mass_factor )
             + FABS( pilot_relhp(   p, target ) - health_factor )
             + FABS( pilot_reldps(  p, target ) - damage_factor );
@@ -857,7 +857,7 @@ double pilot_brakeDist( Pilot *p, vec2 *pos )
    }
 
    if (pos != NULL)
-      vect_cset( pos,
+      vec2_cset( pos,
             p->solid->pos.x + cos(vang) * dist,
             p->solid->pos.y + sin(vang) * dist);
 
@@ -1039,7 +1039,7 @@ double pilot_aimAngle( Pilot *p, const Pilot *target )
    double orthoradial_speed;
 
    /* Get the distance */
-   dist = vect_dist( &p->solid->pos, &target->solid->pos );
+   dist = vec2_dist( &p->solid->pos, &target->solid->pos );
 
    /* Check if should recalculate weapon speed with secondary weapon. */
    speed = pilot_weapSetSpeed( p, p->active_set, -1 );
@@ -1054,14 +1054,14 @@ double pilot_aimAngle( Pilot *p, const Pilot *target )
     *
     *Va dot Vr + ShotSpeed is the net closing velocity for the shot, and is used to compute the time of flight for the shot.
     */
-   vect_cset(&approach_vector, VX(p->solid->vel) - VX(target->solid->vel), VY(p->solid->vel) - VY(target->solid->vel) );
-   vect_cset(&relative_location, VX(target->solid->pos) -  VX(p->solid->pos),  VY(target->solid->pos) - VY(p->solid->pos) );
-   vect_cset(&orthoradial_vector, VY(p->solid->pos) - VY(target->solid->pos), VX(target->solid->pos) -  VX(p->solid->pos) );
+   vec2_cset(&approach_vector, VX(p->solid->vel) - VX(target->solid->vel), VY(p->solid->vel) - VY(target->solid->vel) );
+   vec2_cset(&relative_location, VX(target->solid->pos) -  VX(p->solid->pos),  VY(target->solid->pos) - VY(p->solid->pos) );
+   vec2_cset(&orthoradial_vector, VY(p->solid->pos) - VY(target->solid->pos), VX(target->solid->pos) -  VX(p->solid->pos) );
 
-   radial_speed = vect_dot(&approach_vector, &relative_location);
+   radial_speed = vec2_dot(&approach_vector, &relative_location);
    radial_speed = radial_speed / VMOD(relative_location);
 
-   orthoradial_speed = vect_dot(&approach_vector, &orthoradial_vector);
+   orthoradial_speed = vec2_dot(&approach_vector, &orthoradial_vector);
    orthoradial_speed = orthoradial_speed / VMOD(relative_location);
 
    /* Time for shots to reach that distance */
@@ -1087,7 +1087,7 @@ double pilot_aimAngle( Pilot *p, const Pilot *target )
       - (p->solid->pos.x + p->solid->vel.x*t);
    y = target->solid->pos.y + target->solid->vel.y*t
       - (p->solid->pos.y + p->solid->vel.y*t);
-   vect_cset( &tv, x, y );
+   vec2_cset( &tv, x, y );
 
    return VANGLE(tv);
 }
@@ -1254,7 +1254,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
              * If the pilots are within sensor range of each other, send the
              * distress signal, regardless of electronic warfare hide values.
              */
-            d = vect_dist2( &p->solid->pos, &pilot_stack[i]->solid->pos );
+            d = vec2_dist2( &p->solid->pos, &pilot_stack[i]->solid->pos );
             if (d > pilot_sensorRange())
                continue;
          }
@@ -1580,7 +1580,7 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
    if (w != NULL)
       /* knock back effect is dependent on both damage and mass of the weapon
        * should probably get turned into a partial conservative collision */
-      vect_cadd( &p->solid->vel,
+      vec2_cadd( &p->solid->vel,
             knockback * (w->vel.x * (dam_mod/9. + w->mass/p->solid->mass/6.)),
             knockback * (w->vel.y * (dam_mod/9. + w->mass/p->solid->mass/6.)) );
 
@@ -2717,10 +2717,10 @@ int pilot_refuelStart( Pilot *p )
    }
 
    /* Conditions are the same as boarding, except disabled. */
-   if (vect_dist(&p->solid->pos, &target->solid->pos) >
+   if (vec2_dist(&p->solid->pos, &target->solid->pos) >
          target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
       return 0;
-   else if (vect_dist2( &p->solid->vel, &target->solid->vel ) > pow2(MAX_HYPERSPACE_VEL))
+   else if (vec2_dist2( &p->solid->vel, &target->solid->vel ) > pow2(MAX_HYPERSPACE_VEL))
       return 0;
 
    /* Now start the boarding to refuel. */
@@ -3184,7 +3184,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
    /* Unusual case no landable nor presence, we'll just jump in randomly. */
    if (array_size(ind)==0 && array_size(validJumpPoints)==0) {
       if (guerilla) /* Guerilla ships are created far away in deep space. */
-         vect_pset ( vp, 1.5*cur_system->radius, RNGF()*2*M_PI );
+         vec2_pset ( vp, 1.5*cur_system->radius, RNGF()*2*M_PI );
       else if (array_size(cur_system->jumps) > 0) {
          for (int i=0; i<array_size(cur_system->jumps); i++)
             array_push_back(&validJumpPoints, cur_system->jumps[i].returnJump);

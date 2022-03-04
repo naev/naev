@@ -590,7 +590,7 @@ static int pilotL_add( lua_State *L )
       pilot_setFlagRaw( flags, PILOT_TAKEOFF );
       a = RNGF() * 2. * M_PI;
       r = RNGF() * spob->radius;
-      vect_cset( &vp,
+      vec2_cset( &vp,
             spob->pos.x + r * cos(a),
             spob->pos.y + r * sin(a) );
       a = RNGF() * 2.*M_PI;
@@ -610,7 +610,7 @@ static int pilotL_add( lua_State *L )
          pilot_setFlagRaw( flags, PILOT_TAKEOFF );
          a = RNGF() * 2. * M_PI;
          r = RNGF() * spob->radius;
-         vect_cset( &vp,
+         vec2_cset( &vp,
                spob->pos.x + r * cos(a),
                spob->pos.y + r * sin(a) );
          a = RNGF() * 2.*M_PI;
@@ -955,7 +955,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
 
       /* Check distance if necessary. */
       if ((dist >= 0.) &&
-            vect_dist2(&plt->solid->pos, v) > dd)
+            vec2_dist2(&plt->solid->pos, v) > dd)
          continue;
 
       /* Check if disabled. */
@@ -5121,28 +5121,28 @@ static int pilotL_knockback( lua_State *L )
    if (e==0.) {
       double vx = (m1*v1->x + m2*v2->x) / (m1+m2);
       double vy = (m1*v1->y + m2*v2->y) / (m1+m2);
-      vect_cset( &p1->solid->vel, vx, vy );
+      vec2_cset( &p1->solid->vel, vx, vy );
       if (p1 != NULL)
-         vect_cset( &p2->solid->vel, vx, vy );
+         vec2_cset( &p2->solid->vel, vx, vy );
       return 0.;
    }
 
    /* Pure elastic. */
    double norm    = pow2(x1->x-x2->x) + pow2(x1->y-x2->y);
    double a1      = -e * (2.*m2)/(m1+m2) * ((v1->x-v2->x)*(x1->x-x2->x) + (v1->y-v2->y)*(x1->y-x2->y)) / norm;
-   vect_cadd( &p1->solid->vel, a1*(x1->x-x2->x), a1*(x1->y-x2->y) );
+   vec2_cadd( &p1->solid->vel, a1*(x1->x-x2->x), a1*(x1->y-x2->y) );
    if (p2 != NULL) {
       double a2   = -e * (2.*m1)/(m2+m1) * ((v2->x-v1->x)*(x2->x-x1->x) + (v2->y-v1->y)*(x2->y-x1->y)) / norm;
-      vect_cadd( &p2->solid->vel, a2*(x2->x-x1->x), a2*(x2->y-x1->y) );
+      vec2_cadd( &p2->solid->vel, a2*(x2->x-x1->x), a2*(x2->y-x1->y) );
    }
 
    /* Modulate. TODO this is probably totally wrong and needs fixing to be physicaly correct. */
    if (e != 1.) {
       double vx = (m1*v1->x + m2*v2->x) / (m1+m2);
       double vy = (m1*v1->y + m2*v2->y) / (m1+m2);
-      vect_cset( &p1->solid->vel, e*v1->x + (1.-e)*vx, e*v1->y + (1.-e)*vy );
+      vec2_cset( &p1->solid->vel, e*v1->x + (1.-e)*vx, e*v1->y + (1.-e)*vy );
       if (p2 != NULL)
-         vect_cset( &p2->solid->vel, e*v2->x + (1.-e)*vx, e*v2->y + (1.-e)*vy );
+         vec2_cset( &p2->solid->vel, e*v2->x + (1.-e)*vx, e*v2->y + (1.-e)*vy );
    }
 
    return 0;

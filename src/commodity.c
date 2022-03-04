@@ -478,7 +478,7 @@ int gatherable_getClosest( vec2 pos, double rad )
 
    for (int i=0; i < array_size(gatherable_stack); i++) {
       Gatherable *gat = &gatherable_stack[i];
-      double curdist = vect_dist(&pos, &gat->pos);
+      double curdist = vec2_dist(&pos, &gat->pos);
       if ( (curdist<mindist) && (curdist<rad) ) {
          curg = i;
          mindist = curdist;
@@ -523,7 +523,7 @@ void gatherable_gather( int pilot )
    for (int i=0; i < array_size(gatherable_stack); i++) {
       Gatherable *gat = &gatherable_stack[i];
 
-      if (vect_dist( &p->solid->pos, &gat->pos ) < GATHER_DIST ) {
+      if (vec2_dist( &p->solid->pos, &gat->pos ) < GATHER_DIST ) {
          /* Add cargo to pilot. */
          int q = pilot_cargoAdd( p, gat->type, gat->quantity, 0 );
 

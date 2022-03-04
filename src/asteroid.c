@@ -78,7 +78,7 @@ void asteroids_update( double dt )
 
       for (int k=0; k<array_size(cur_system->astexclude); k++) {
          AsteroidExclusion *exc = &cur_system->astexclude[k];
-         if (vect_dist2( &ast->pos, &exc->pos ) < pow2(ast->radius+exc->radius)) {
+         if (vec2_dist2( &ast->pos, &exc->pos ) < pow2(ast->radius+exc->radius)) {
             exc->affects = 1;
             has_exclusion = 1;
          }
@@ -303,7 +303,7 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
 
       /* If this is the first time and it's spawned outside the field,
        * we get rid of it so that density remains roughly consistent. */
-      if (asteroid_creating && outfield && (vect_dist2( &ast->pos, &field->pos ) < r2)) {
+      if (asteroid_creating && outfield && (vec2_dist2( &ast->pos, &field->pos ) < r2)) {
          ast->state = ASTEROID_XX;
          ast->timer_max = ast->timer = HUGE_VAL; /* Don't reappear. */
          /* TODO probably do a more proper solution removing total number of asteroids. */
@@ -340,7 +340,7 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
    /* And a random velocity */
    theta = RNGF()*2.*M_PI;
    mod   = RNGF()*field->maxspeed;
-   vect_pset( &ast->vel, mod, theta );
+   vec2_pset( &ast->vel, mod, theta );
 
    /* Fade in stuff. */
    ast->state = ASTEROID_XX;
@@ -363,7 +363,7 @@ static void debris_init( Debris *deb )
    /* And a random velocity */
    theta = RNGF()*2.*M_PI;
    mod = RNGF() * 20.;
-   vect_pset( &deb->vel, mod, theta );
+   vec2_pset( &deb->vel, mod, theta );
 
    /* Randomly init the gfx ID */
    deb->gfx = asteroid_gfx[ RNG(0,(int)array_size(asteroid_gfx)-1) ];
@@ -430,7 +430,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
          xmlr_attr_float( cur, "y", y );
 
          /* Set position. */
-         vect_cset( &a->pos, x, y );
+         vec2_cset( &a->pos, x, y );
          continue;
       }
 
@@ -505,7 +505,7 @@ static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys
          xmlr_attr_float( cur, "y", y );
 
          /* Set position. */
-         vect_cset( &a->pos, x, y );
+         vec2_cset( &a->pos, x, y );
          continue;
       }
       WARN(_("Asteroid Exclusion Zone in Star System '%s' has unknown node '%s'"), sys->name, node->name);
@@ -1017,14 +1017,14 @@ int asteroids_inField( const vec2 *p )
    /* Always return -1 if in an exclusion zone */
    for (int i=0; i<array_size(cur_system->astexclude); i++) {
       AsteroidExclusion *e = &cur_system->astexclude[i];
-      if (vect_dist2( p, &e->pos ) <= pow2(e->radius))
+      if (vec2_dist2( p, &e->pos ) <= pow2(e->radius))
          return -1;
    }
 
    /* Check if in asteroid field */
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *a = &cur_system->asteroids[i];
-      if (vect_dist2( p, &a->pos ) <= pow2(a->radius))
+      if (vec2_dist2( p, &a->pos ) <= pow2(a->radius))
          return i;
    }
 
@@ -1137,7 +1137,7 @@ void asteroid_explode( Asteroid *a, int max_rarity, double mining_bonus )
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
 
-      if (vect_dist2( &p->solid->pos, &a->pos ) > rad2)
+      if (vec2_dist2( &p->solid->pos, &a->pos ) > rad2)
          continue;
 
       pilot_msg( NULL, p, "asteroid", -1 );

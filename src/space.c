@@ -415,7 +415,7 @@ int space_canHyperspace( const Pilot* p )
    r = jp->radius * p->stats.jump_distance;
    if (pilot_isFlag( p, PILOT_STEALTH )) /* Stealth gives a jump distance bonus. */
       r *= 3.;
-   d = vect_dist2( &p->solid->pos, &jp->pos );
+   d = vec2_dist2( &p->solid->pos, &jp->pos );
    if (d > pow2(r))
       return 0;
    return 1;
@@ -495,11 +495,11 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, vec2 *pos,
    y += ed*sin(ea);
 
    /* Set new position. */
-   vect_cset( pos, x, y );
+   vec2_cset( pos, x, y );
 
    /* Set new velocity. */
    a += M_PI;
-   vect_cset( vel, HYPERSPACE_VEL*cos(a), HYPERSPACE_VEL*sin(a) );
+   vec2_cset( vel, HYPERSPACE_VEL*cos(a), HYPERSPACE_VEL*sin(a) );
 
    /* Set direction. */
    *dir = a;
@@ -2609,7 +2609,7 @@ void system_reconstructJumps (StarSystem *sys)
 
       /* Update position if needed.. */
       if (jp->flags & JP_AUTOPOS)
-         vect_pset( &jp->pos, sys->radius, a );
+         vec2_pset( &jp->pos, sys->radius, a );
 
       /* Update jump specific data. */
       gl_getSpriteFromDir( &jp->sx, &jp->sy, jumppoint_gfx, a );
@@ -2896,7 +2896,7 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
    j->radius = 200.;
 
    if (x < HUGE_VAL && y < HUGE_VAL)
-      vect_cset( &j->pos, x, y );
+      vec2_cset( &j->pos, x, y );
    else
       jp_setFlag(j,JP_AUTOPOS);
 
@@ -2969,7 +2969,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
          xmlr_attr_float( cur, "y", y );
 
          /* Set position. */
-         vect_cset( &j->pos, x, y );
+         vec2_cset( &j->pos, x, y );
       }
       else if (xml_isNode(cur,"autopos"))
          jp_setFlag(j,JP_AUTOPOS);

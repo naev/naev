@@ -187,7 +187,7 @@ static int vectorL_new( lua_State *L )
       y = 0.;
    }
 
-   vect_cset( &v, x, y );
+   vec2_cset( &v, x, y );
    lua_pushvector(L, v);
    return 1;
 }
@@ -217,7 +217,7 @@ static int vectorL_newP( lua_State *L )
       a = 0.;
    }
 
-   vect_pset( &v, m, a );
+   vec2_pset( &v, m, a );
    lua_pushvector(L, v);
    return 1;
 }
@@ -279,7 +279,7 @@ static int vectorL_add( lua_State *L )
    }
 
    /* Actually add it */
-   vect_cset( &vout, v1->x + x, v1->y + y );
+   vec2_cset( &vout, v1->x + x, v1->y + y );
    lua_pushvector( L, vout );
 
    return 1;
@@ -309,7 +309,7 @@ static int vectorL_add__( lua_State *L )
    }
 
    /* Actually add it */
-   vect_cset( v1, v1->x + x, v1->y + y );
+   vec2_cset( v1, v1->x + x, v1->y + y );
    lua_pushvector( L, *v1 );
 
    return 1;
@@ -356,7 +356,7 @@ static int vectorL_sub( lua_State *L )
    }
 
    /* Actually add it */
-   vect_cset( &vout, v1->x - x, v1->y - y );
+   vec2_cset( &vout, v1->x - x, v1->y - y );
    lua_pushvector( L, vout );
    return 1;
 }
@@ -385,7 +385,7 @@ static int vectorL_sub__( lua_State *L )
    }
 
    /* Actually add it */
-   vect_cset( v1, v1->x - x, v1->y - y );
+   vec2_cset( v1, v1->x - x, v1->y - y );
    lua_pushvector( L, *v1 );
    return 1;
 }
@@ -411,7 +411,7 @@ static int vectorL_mul( lua_State *L )
    mod   = luaL_checknumber(L,2);
 
    /* Actually add it */
-   vect_cset( &vout, v1->x * mod, v1->y * mod );
+   vec2_cset( &vout, v1->x * mod, v1->y * mod );
    lua_pushvector( L, vout );
    return 1;
 }
@@ -425,7 +425,7 @@ static int vectorL_mul__( lua_State *L )
    mod   = luaL_checknumber(L,2);
 
    /* Actually add it */
-   vect_cset( v1, v1->x * mod, v1->y * mod );
+   vec2_cset( v1, v1->x * mod, v1->y * mod );
    lua_pushvector( L, *v1 );
    return 1;
 }
@@ -451,7 +451,7 @@ static int vectorL_div( lua_State *L )
    mod   = luaL_checknumber(L,2);
 
    /* Actually add it */
-   vect_cset( &vout, v1->x / mod, v1->y / mod );
+   vec2_cset( &vout, v1->x / mod, v1->y / mod );
    lua_pushvector( L, vout );
    return 1;
 }
@@ -465,7 +465,7 @@ static int vectorL_div__( lua_State *L )
    mod   = luaL_checknumber(L,2);
 
    /* Actually add it */
-   vect_cset( v1, v1->x / mod, v1->y / mod );
+   vec2_cset( v1, v1->x / mod, v1->y / mod );
    lua_pushvector( L, *v1 );
    return 1;
 }
@@ -546,7 +546,7 @@ static int vectorL_set( lua_State *L )
    x  = luaL_checknumber(L,2);
    y  = luaL_checknumber(L,3);
 
-   vect_cset( v1, x, y );
+   vec2_cset( v1, x, y );
    return 0;
 }
 
@@ -570,7 +570,7 @@ static int vectorL_setP( lua_State *L )
    m  = luaL_checknumber(L,2);
    a  = luaL_checknumber(L,3);
 
-   vect_pset( v1, m, a );
+   vec2_pset( v1, m, a );
    return 0;
 }
 
@@ -601,9 +601,9 @@ static int vectorL_distance( lua_State *L )
 
    /* Get distance. */
    if (v2 == NULL)
-      dist = vect_odist(v1);
+      dist = vec2_odist(v1);
    else
-      dist = vect_dist(v1, v2);
+      dist = vec2_dist(v1, v2);
 
    /* Return the distance. */
    lua_pushnumber(L, dist);
@@ -637,9 +637,9 @@ static int vectorL_distance2( lua_State *L )
 
    /* Get distance. */
    if (v2 == NULL)
-      dist2 = vect_odist2(v1);
+      dist2 = vec2_odist2(v1);
    else
-      dist2 = vect_dist2(v1, v2);
+      dist2 = vec2_dist2(v1, v2);
 
    /* Return the distance. */
    lua_pushnumber(L, dist2);

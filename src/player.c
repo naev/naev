@@ -354,7 +354,7 @@ static int player_newMake (void)
       return -1;
    }
    start_position( &x, &y );
-   vect_cset( &player.p->solid->pos, x, y );
+   vec2_cset( &player.p->solid->pos, x, y );
    vectnull( &player.p->solid->vel );
    player.p->solid->dir = RNGF() * 2.*M_PI;
    space_init( start_system(), 1 );
@@ -497,8 +497,8 @@ static PlayerShip_t *player_newShipMake( const char *name )
          py    = 0.;
          dir   = 0.;
       }
-      vect_cset( &vp, px, py );
-      vect_cset( &vv, 0., 0. );
+      vec2_cset( &vp, px, py );
+      vec2_cset( &vv, 0., 0. );
 
       /* Create the player. */
       id = pilot_create( player_ship, name, faction_get("Player"), "player",
@@ -900,7 +900,7 @@ void player_soundResume (void)
  */
 void player_warp( double x, double y )
 {
-   vect_cset( &player.p->solid->pos, x, y );
+   vec2_cset( &player.p->solid->pos, x, y );
 }
 
 /**
@@ -1174,7 +1174,7 @@ void player_think( Pilot* pplayer, const double dt )
          target = pilot_getTarget( player.p );
          if (target != NULL) {
             pilot_face( pplayer,
-                  vect_angle( &player.p->solid->pos, &target->solid->pos ));
+                  vec2_angle( &player.p->solid->pos, &target->solid->pos ));
 
             /* Disable turning. */
             facing = 1;
@@ -1185,21 +1185,21 @@ void player_think( Pilot* pplayer, const double dt )
          AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
          Asteroid *ast = &field->asteroids[player.p->nav_asteroid];
          pilot_face( pplayer,
-               vect_angle( &player.p->solid->pos, &ast->pos ));
+               vec2_angle( &player.p->solid->pos, &ast->pos ));
          /* Disable turning. */
          facing = 1;
       }
       /* If not try to face spob target. */
       else if ((player.p->nav_spob != -1) && ((preemption == 0) || (player.p->nav_hyperspace == -1))) {
          pilot_face( pplayer,
-               vect_angle( &player.p->solid->pos,
+               vec2_angle( &player.p->solid->pos,
                   &cur_system->spobs[ player.p->nav_spob ]->pos ));
          /* Disable turning. */
          facing = 1;
       }
       else if (player.p->nav_hyperspace != -1) {
          pilot_face( pplayer,
-               vect_angle( &player.p->solid->pos,
+               vec2_angle( &player.p->solid->pos,
                   &cur_system->jumps[ player.p->nav_hyperspace ].pos ));
          /* Disable turning. */
          facing = 1;
@@ -1357,14 +1357,14 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
          AsteroidAnchor *ast = &cur_system->asteroids[i];
 
          /* Field out of range. */
-         if (vect_dist2( &ast->pos, &player.p->solid->pos ) > pow2(range+ast->radius+ast->margin))
+         if (vec2_dist2( &ast->pos, &player.p->solid->pos ) > pow2(range+ast->radius+ast->margin))
             continue;
 
          r2 = pow2(range);
          for (int j=0; j<ast->nb; j++) {
             Asteroid *a = &ast->asteroids[j];
 
-            if (vect_dist2( &a->pos, &player.p->solid->pos ) > r2)
+            if (vec2_dist2( &a->pos, &player.p->solid->pos ) > r2)
                continue;
 
             a->scanned = 1;
@@ -1566,7 +1566,7 @@ int player_land( int loud )
       int tp = -1; /* temporary spob */
       for (int i=0; i<array_size(cur_system->spobs); i++) {
          spob = cur_system->spobs[i];
-         double d = vect_dist(&player.p->solid->pos,&spob->pos);
+         double d = vec2_dist(&player.p->solid->pos,&spob->pos);
          if (pilot_inRangeSpob( player.p, i ) &&
                spob_hasService(spob,SPOB_SERVICE_LAND) &&
                ((tp==-1) || ((td == -1) || (td > d)))) {
@@ -1627,12 +1627,12 @@ int player_land( int loud )
 
       return player_land(loud);
    }
-   else if (vect_dist2(&player.p->solid->pos,&spob->pos) > pow2(spob->radius)) {
+   else if (vec2_dist2(&player.p->solid->pos,&spob->pos) > pow2(spob->radius)) {
       if (loud)
          player_message(_("#rYou are too far away to land on %s."), spob_name(spob));
       return PLAYER_LAND_AGAIN;
    }
-   else if (vect_odist2( &player.p->solid->vel ) > pow2(MAX_HYPERSPACE_VEL)) {
+   else if (vec2_odist2( &player.p->solid->vel ) > pow2(MAX_HYPERSPACE_VEL)) {
       if (loud)
          player_message(_("#rYou are going too fast to land on %s."), spob_name(spob));
       return PLAYER_LAND_AGAIN;
@@ -1899,7 +1899,7 @@ int player_jump (void)
       int j    = -1;
       mindist  = INFINITY;
       for (int i=0; i<array_size(cur_system->jumps); i++) {
-         double dist = vect_dist2( &player.p->solid->pos, &cur_system->jumps[i].pos );
+         double dist = vec2_dist2( &player.p->solid->pos, &cur_system->jumps[i].pos );
          if (dist < mindist && jp_isUsable(&cur_system->jumps[i])) {
             mindist  = dist;
             j        = i;
@@ -3051,7 +3051,7 @@ int player_addEscorts (void)
       }
 
       a = RNGF() * 2. * M_PI;
-      vect_cset( &v, player.p->solid->pos.x + 50.*cos(a),
+      vec2_cset( &v, player.p->solid->pos.x + 50.*cos(a),
             player.p->solid->pos.y + 50.*sin(a) );
 
       /* Update outfit if needed. */

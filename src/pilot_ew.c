@@ -126,7 +126,7 @@ void pilot_ewUpdateDynamic( Pilot *p, double dt )
       return;
 
    /* Must be in evasion range. */
-   if (vect_dist2( &p->solid->pos, &t->solid->pos ) < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * t->ew_evasion ) )) {
+   if (vec2_dist2( &p->solid->pos, &t->solid->pos ) < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * t->ew_evasion ) )) {
       p->scantimer -= dt;
 
       if (p->scantimer < 0.) {
@@ -189,7 +189,7 @@ static double pilot_ewJumpPoint( const Pilot *p )
       JumpPoint *jp = &cur_system->jumps[i];
       if (jp_isFlag(jp,JP_EXITONLY) || jp_isFlag(jp,JP_HIDDEN))
          continue;
-      double d2 = vect_dist2( &jp->pos, &p->solid->pos );
+      double d2 = vec2_dist2( &jp->pos, &p->solid->pos );
       if (d2 <= pow2(EW_JUMP_BONUS_RANGE))
          return MAX( 0.5, sqrt(d2) / EW_JUMP_BONUS_RANGE);
    }
@@ -245,7 +245,7 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
 
    /* Get distance if needed. */
    if (dist2 != NULL)
-      *dist2 = vect_dist2( &p->solid->pos, &target->solid->pos );
+      *dist2 = vec2_dist2( &p->solid->pos, &target->solid->pos );
 
    /* Special case player or omni-visible. */
    if ((pilot_isPlayer(p) && pilot_isFlag(target, PILOT_VISPLAYER)) ||
@@ -258,7 +258,7 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
       return 0;
 
    /* No stealth so normal detection. */
-   d = (dist2!=NULL ? *dist2 : vect_dist2( &p->solid->pos, &target->solid->pos ) );
+   d = (dist2!=NULL ? *dist2 : vec2_dist2( &p->solid->pos, &target->solid->pos ) );
    if (d < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * target->ew_evasion )))
       return 1;
    else if  (d < pow2( MAX( 0., p->stats.ew_detect * target->ew_detection )))
@@ -289,7 +289,7 @@ int pilot_inRangeSpob( const Pilot *p, int target )
    sense = EW_SPOBDETECT_DIST;
 
    /* Get distance. */
-   d = vect_dist2( &p->solid->pos, &pnt->pos );
+   d = vec2_dist2( &p->solid->pos, &pnt->pos );
    if (d < pow2( MAX( 0., sense * p->stats.ew_detect * pnt->hide) ) )
       return 1;
 
@@ -323,7 +323,7 @@ int pilot_inRangeAsteroid( const Pilot *p, int ast, int fie )
    sense = EW_ASTEROID_DIST;
 
    /* Get distance. */
-   d = vect_dist2( &p->solid->pos, &as->pos );
+   d = vec2_dist2( &p->solid->pos, &as->pos );
 
    /* By default, asteroid's hide score is 1. It could be made changeable via xml.*/
    if (d < pow2( MAX( 0., sense * p->stats.ew_detect ) ) )
@@ -368,7 +368,7 @@ int pilot_inRangeJump( const Pilot *p, int i )
       sense *= p->stats.misc_hidden_jump_detect;
 
    /* Get distance. */
-   d = vect_dist2( &p->solid->pos, &jp->pos );
+   d = vec2_dist2( &p->solid->pos, &jp->pos );
    if (d < pow2( MAX( 0., sense * hide )))
       return 1;
 
@@ -439,7 +439,7 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
       //   continue;
 
       /* Compute distance. */
-      dist = vect_dist2( &p->solid->pos, &t->solid->pos );
+      dist = vec2_dist2( &p->solid->pos, &t->solid->pos );
       /* TODO maybe not hardcode the close value. */
       if ((close != NULL) && !pilot_isFlag(t,PILOT_STEALTH) &&
             (dist < pow2( MAX( 0., p->ew_stealth * t->stats.ew_detect * 1.5 ))))

@@ -1542,7 +1542,7 @@ static int playerL_teleport( lua_State *L )
       Pilot *p = pilot_stack[i];
       if (p->parent == PLAYER_ID) {
          memcpy( &p->solid->pos, &player.p->solid->pos, sizeof(vec2) );
-         vect_padd( &p->solid->pos, 200.+200.*RNGF(), 2.*M_PI*RNGF() );
+         vec2_padd( &p->solid->pos, 200.+200.*RNGF(), 2.*M_PI*RNGF() );
 
          /* Clean up trails. */
          pilot_clearTrails( p );

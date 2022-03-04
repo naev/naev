@@ -1470,7 +1470,7 @@ void takeoff( int delay )
 
    /* set player to another position with random facing direction and no vel */
    player_warp( land_spob->pos.x + r * cos(a), land_spob->pos.y + r * sin(a) );
-   vect_pset( &player.p->solid->vel, 0., 0. );
+   vec2_pset( &player.p->solid->vel, 0., 0. );
    player.p->solid->dir = RNGF() * 2. * M_PI;
    cam_setTargetPilot( player.p->id, 0 );
 

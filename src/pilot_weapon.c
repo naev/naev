@@ -842,7 +842,7 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
    vec2 approach_vector, relative_location, orthoradial_vector;
    double speed, radial_speed, orthoradial_speed, dist, t;
 
-   dist = vect_dist( &parent->solid->pos, pos );
+   dist = vec2_dist( &parent->solid->pos, pos );
 
    /* Beam weapons */
    if (outfit_isBeam(o)) {
@@ -857,25 +857,25 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const vec2 *pos,
 
    /* Missiles use absolute velocity while bolts and unguided rockets use relative vel */
    if (outfit_isLauncher(o) && o->u.lau.ai != AMMO_AI_UNGUIDED)
-      vect_cset( &approach_vector, - vel->x, - vel->y );
+      vec2_cset( &approach_vector, - vel->x, - vel->y );
    else
-      vect_cset( &approach_vector, VX(parent->solid->vel) - vel->x,
+      vec2_cset( &approach_vector, VX(parent->solid->vel) - vel->x,
             VY(parent->solid->vel) - vel->y );
 
    speed = outfit_speed(o);
 
    /* Get the vector : shooter -> target */
-   vect_cset( &relative_location, pos->x - VX(parent->solid->pos),
+   vec2_cset( &relative_location, pos->x - VX(parent->solid->pos),
          pos->y - VY(parent->solid->pos) );
 
    /* Get the orthogonal vector */
-   vect_cset(&orthoradial_vector, VY(parent->solid->pos) - pos->y,
+   vec2_cset(&orthoradial_vector, VY(parent->solid->pos) - pos->y,
          pos->x -  VX(parent->solid->pos) );
 
-   radial_speed = vect_dot( &approach_vector, &relative_location );
+   radial_speed = vec2_dot( &approach_vector, &relative_location );
    radial_speed = radial_speed / VMOD(relative_location);
 
-   orthoradial_speed = vect_dot(&approach_vector, &orthoradial_vector);
+   orthoradial_speed = vec2_dot(&approach_vector, &orthoradial_vector);
    orthoradial_speed = orthoradial_speed / VMOD(relative_location);
 
    if ( ((speed*speed - VMOD(approach_vector)*VMOD(approach_vector)) != 0) && (speed*speed - orthoradial_speed*orthoradial_speed) > 0)
@@ -1017,7 +1017,7 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
    pilot_getMount( p, w, &vp );
 
    /* Modify velocity to take into account the rotation. */
-   vect_cset( &vv, p->solid->vel.x - vp.y*p->solid->dir_vel,
+   vec2_cset( &vv, p->solid->vel.x - vp.y*p->solid->dir_vel,
          p->solid->vel.y + vp.x*p->solid->dir_vel );
 
    /* Get absolute weapon mount position. */

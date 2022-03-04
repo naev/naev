@@ -259,7 +259,7 @@ static int asteroidL_get( lua_State *L )
          if (a->state != ASTEROID_FG)
             continue;
 
-         d2 = vect_dist2( pos, &a->pos );
+         d2 = vec2_dist2( pos, &a->pos );
          if (d2 > dist2)
             continue;
 

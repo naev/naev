@@ -409,7 +409,7 @@ static void safelanes_initStacks_edge (void)
          const vec2 *pi = vertex_pos( i );
          for (int j=sys_to_first_vertex[system]; j < i; j++) {
             const vec2 *pj = vertex_pos( j );
-            double lij = vect_dist( pi, pj );
+            double lij = vec2_dist( pi, pj );
             int has_approx_midpoint = 0;
             for (int k=sys_to_first_vertex[system]; k < sys_to_first_vertex[1+system]; k++)
                if (k!=i && k!=j && safelanes_triangleTooFlat( pi, pj, vertex_pos( k ), lij )) {
@@ -837,8 +837,8 @@ static int cmp_key( const void* p1, const void* p2 )
 static int safelanes_triangleTooFlat( const vec2* m, const vec2* n, const vec2* p, double lmn )
 {
    const double MAX_COSINE = cos(MIN_ANGLE);
-   double lnp = vect_dist( n, p );
-   double lmp = vect_dist( m, p );
+   double lnp = vec2_dist( n, p );
+   double lmp = vec2_dist( m, p );
    double dpn = ((n->x-m->x)*(n->x-p->x) + (n->y-m->y)*(n->y-p->y)) / ( lmn * lnp );
    double dpm = ((m->x-n->x)*(m->x-p->x) + (m->y-n->y)*(m->y-p->y)) / ( lmn * lmp );
    return (dpn > MAX_COSINE && lnp < lmn) || (dpm > MAX_COSINE && lmp < lmn);

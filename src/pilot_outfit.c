@@ -172,7 +172,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, vec2 *v )
    y += m->h;
 
    /* Get the mount and add the player.p offset. */
-   vect_cset( v, x, y );
+   vec2_cset( v, x, y );
 
    return 0;
 }
@@ -199,12 +199,12 @@ int pilot_dock( Pilot *p, Pilot *target )
       return -1;
 
    /* Must be close. */
-   if (vect_dist(&p->solid->pos, &target->solid->pos) >
+   if (vec2_dist(&p->solid->pos, &target->solid->pos) >
          target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
       return -1;
 
    /* Cannot be going much faster. */
-   if (vect_dist2( &p->solid->vel, &target->solid->vel ) > pow2(MAX_HYPERSPACE_VEL))
+   if (vec2_dist2( &p->solid->vel, &target->solid->vel ) > pow2(MAX_HYPERSPACE_VEL))
       return -1;
 
    /* Grab dock ammo */

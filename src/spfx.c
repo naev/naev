@@ -483,8 +483,8 @@ void spfx_add( int effect,
 
    /* The actual adding of the spfx */
    cur_spfx->effect = effect;
-   vect_csetmin( &cur_spfx->pos, px, py );
-   vect_csetmin( &cur_spfx->vel, vx, vy );
+   vec2_csetmin( &cur_spfx->pos, px, py );
+   vec2_csetmin( &cur_spfx->vel, vx, vy );
    /* Timer magic if ttl != anim */
    ttl = spfx_effects[effect].ttl;
    anim = spfx_effects[effect].anim;
@@ -564,7 +564,7 @@ static void spfx_update_layer( SPFX *layer, const double dt )
       layer[i].time  += dt; /* Shader timer. */
 
       /* actually update it */
-      vect_cadd( &layer[i].pos, dt*VX(layer[i].vel), dt*VY(layer[i].vel) );
+      vec2_cadd( &layer[i].pos, dt*VX(layer[i].vel), dt*VY(layer[i].vel) );
    }
 }
 
@@ -618,10 +618,10 @@ static void spfx_updateShake( double dt )
    }
 
    /* Update velocity. */
-   vect_cadd( &shake_vel, (1./SHAKE_MASS) * force_x * dt, (1./SHAKE_MASS) * force_y * dt );
+   vec2_cadd( &shake_vel, (1./SHAKE_MASS) * force_x * dt, (1./SHAKE_MASS) * force_y * dt );
 
    /* Update position. */
-   vect_cadd( &shake_pos, shake_vel.x * dt, shake_vel.y * dt );
+   vec2_cadd( &shake_pos, shake_vel.x * dt, shake_vel.y * dt );
 
    /* Set the uniform. */
    glUseProgram( shaders.shake.program );

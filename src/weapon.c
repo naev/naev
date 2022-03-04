@@ -349,7 +349,7 @@ static void think_seeker( Weapon* w, const double dt )
          jc = p->stats.jam_chance - w->outfit->u.lau.resist;
          if (jc > 0.) {
             /* Roll based on distance. */
-            d = vect_dist( &p->solid->pos, &w->solid->pos );
+            d = vec2_dist( &p->solid->pos, &w->solid->pos );
             if (d / p->ew_evasion < w->r) {
                if (jc < RNGF()) {
                   r = RNGF();
@@ -379,12 +379,12 @@ static void think_seeker( Weapon* w, const double dt )
          if (w->outfit->u.lau.ai == AMMO_AI_SMART) {
 
             /* Calculate time to reach target. */
-            vect_cset( &v, p->solid->pos.x - w->solid->pos.x,
+            vec2_cset( &v, p->solid->pos.x - w->solid->pos.x,
                   p->solid->pos.y - w->solid->pos.y );
-            t = vect_odist( &v ) / w->outfit->u.lau.speed_max;
+            t = vec2_odist( &v ) / w->outfit->u.lau.speed_max;
 
             /* Calculate target's movement. */
-            vect_cset( &v, v.x + t*(p->solid->vel.x - w->solid->vel.x),
+            vec2_cset( &v, v.x + t*(p->solid->vel.x - w->solid->vel.x),
                   v.y + t*(p->solid->vel.y - w->solid->vel.y) );
 
             /* Get the angle now. */
@@ -393,7 +393,7 @@ static void think_seeker( Weapon* w, const double dt )
          /* Other seekers are simplistic. */
          else {
             diff = angle_diff(w->solid->dir, /* Get angle to target pos */
-                  vect_angle(&w->solid->pos, &p->solid->pos));
+                  vec2_angle(&w->solid->pos, &p->solid->pos));
          }
 
          /* Set turn. */
@@ -416,7 +416,7 @@ static void think_seeker( Weapon* w, const double dt )
 
    /* Limit speed here */
    w->real_vel = MIN( speed_mod * w->outfit->u.lau.speed_max, w->real_vel + w->outfit->u.lau.thrust*dt );
-   vect_pset( &w->solid->vel, /* ewtrack * */ w->real_vel, w->solid->dir );
+   vec2_pset( &w->solid->vel, /* ewtrack * */ w->real_vel, w->solid->dir );
 
    /* Modulate max speed. */
    //w->solid->speed_max = w->outfit->u.lau.speed * ewtrack;
@@ -470,11 +470,11 @@ static void think_beam( Weapon* w, const double dt )
    if (slot->inrange) {
       turn_off = 1;
       if (t != NULL) {
-         if (vect_dist( &p->solid->pos, &t->solid->pos ) <= slot->outfit->u.bem.range)
+         if (vec2_dist( &p->solid->pos, &t->solid->pos ) <= slot->outfit->u.bem.range)
             turn_off = 0;
       }
       if (ast != NULL) {
-         if (vect_dist( &p->solid->pos, &ast->pos ) <= slot->outfit->u.bem.range)
+         if (vec2_dist( &p->solid->pos, &ast->pos ) <= slot->outfit->u.bem.range)
             turn_off = 0;
       }
 
@@ -514,14 +514,14 @@ static void think_beam( Weapon* w, const double dt )
          if (t == NULL) {
             if (ast != NULL) {
                diff = angle_diff(w->solid->dir, /* Get angle to target pos */
-                     vect_angle(&w->solid->pos, &ast->pos));
+                     vec2_angle(&w->solid->pos, &ast->pos));
             }
             else
                diff = angle_diff(w->solid->dir, p->solid->dir);
          }
          else
             diff = angle_diff(w->solid->dir, /* Get angle to target pos */
-                  vect_angle(&w->solid->pos, &t->solid->pos));
+                  vec2_angle(&w->solid->pos, &t->solid->pos));
 
          weapon_setTurn( w, CLAMP( -w->outfit->u.bem.turn, w->outfit->u.bem.turn,
                   10 * diff *  w->outfit->u.bem.turn ));
@@ -1070,7 +1070,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          AsteroidAnchor *ast = &cur_system->asteroids[i];
 
          /* Early in-range check. */
-         if (vect_dist2( &w->solid->pos, &ast->pos ) >
+         if (vec2_dist2( &w->solid->pos, &ast->pos ) >
             pow2( ast->radius + ast->margin + gfx->sw/2. ))
             continue;
 
@@ -1092,7 +1092,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          AsteroidAnchor *ast = &cur_system->asteroids[i];
 
          /* Early in-range check. */
-         if (vect_dist2( &w->solid->pos, &ast->pos ) >
+         if (vec2_dist2( &w->solid->pos, &ast->pos ) >
             pow2( ast->radius + ast->margin + gfx->sw/2. ))
             continue;
 
@@ -1114,7 +1114,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          AsteroidAnchor *ast = &cur_system->asteroids[i];
 
          /* Early in-range check. */
-         if (vect_dist2( &w->solid->pos, &ast->pos ) >
+         if (vec2_dist2( &w->solid->pos, &ast->pos ) >
             pow2( ast->radius + ast->margin + w->outfit->u.bem.range ))
             continue;
 
@@ -1622,7 +1622,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    m = outfit->u.blt.speed;
    if (outfit->u.blt.speed_dispersion > 0.)
       m += RNG_1SIGMA() * outfit->u.blt.speed_dispersion;
-   vect_cadd( &v, m*cos(rdir), m*sin(rdir));
+   vec2_cadd( &v, m*cos(rdir), m*sin(rdir));
    w->timer = outfit->u.blt.range / outfit->u.blt.speed;
    w->falloff = w->timer - outfit->u.blt.falloff / outfit->u.blt.speed;
    w->solid = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_EULER );
@@ -1688,7 +1688,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    m = outfit->u.lau.speed;
    if (outfit->u.lau.speed_dispersion > 0.)
       m += RNG_1SIGMA() * outfit->u.lau.speed_dispersion;
-   vect_cadd( &v, m * cos(rdir), m * sin(rdir) );
+   vec2_cadd( &v, m * cos(rdir), m * sin(rdir) );
    w->real_vel = VMOD(v);
 
    /* Set up ammo details. */
@@ -1799,11 +1799,11 @@ static Weapon* weapon_create( PilotOutfitSlot *po, double T,
          if (outfit->type == OUTFIT_TYPE_TURRET_BEAM) {
             pilot_target = pilot_get(target);
             if ((w->parent != w->target) && (pilot_target != NULL))
-               rdir = vect_angle(pos, &pilot_target->solid->pos);
+               rdir = vec2_angle(pos, &pilot_target->solid->pos);
             else if (parent->nav_asteroid >= 0) {
                field = &cur_system->asteroids[parent->nav_anchor];
                ast = &field->asteroids[parent->nav_asteroid];
-               rdir = vect_angle(pos, &ast->pos);
+               rdir = vec2_angle(pos, &ast->pos);
             }
          }
 

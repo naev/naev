@@ -56,7 +56,7 @@ double angle_diff( double ref, double a )
  *    @param x X value for vector.
  *    @param y Y value for vector.
  */
-void vect_cset( vec2* v, double x, double y )
+void vec2_cset( vec2* v, double x, double y )
 {
    v->x     = x;
    v->y     = y;
@@ -71,7 +71,7 @@ void vect_cset( vec2* v, double x, double y )
  *    @param x X value for vector.
  *    @param y Y value for vector.
  */
-void vect_csetmin( vec2* v, double x, double y )
+void vec2_csetmin( vec2* v, double x, double y )
 {
    v->x = x;
    v->y = y;
@@ -84,7 +84,7 @@ void vect_csetmin( vec2* v, double x, double y )
  *    @param mod Modulus of the vector.
  *    @param angle Angle of the vector.
  */
-void vect_pset( vec2* v, double mod, double angle )
+void vec2_pset( vec2* v, double mod, double angle )
 {
    v->mod   = mod;
    v->angle = angle;
@@ -112,7 +112,7 @@ void vectnull( vec2* v )
  *    @param v Vector to get angle from reference vector.
  *    @return Angle between ref and v.
  */
-double vect_angle( const vec2* ref, const vec2* v )
+double vec2_angle( const vec2* ref, const vec2* v )
 {
    double x = v->x - ref->x;
    double y = v->y - ref->y;
@@ -126,7 +126,7 @@ double vect_angle( const vec2* ref, const vec2* v )
  *    @param x X value to add to vector.
  *    @param y Y value to add to vector.
  */
-void vect_cadd( vec2* v, double x, double y )
+void vec2_cadd( vec2* v, double x, double y )
 {
    v->x    += x;
    v->y    += y;
@@ -141,7 +141,7 @@ void vect_cadd( vec2* v, double x, double y )
  *    @param m Module of vector to add.
  *    @param a Angle of vector to add.
  */
-void vect_padd( vec2* v, double m, double a )
+void vec2_padd( vec2* v, double m, double a )
 {
    v->x    += m*cos(a);
    v->y    += m*sin(a);
@@ -156,9 +156,9 @@ void vect_padd( vec2* v, double m, double a )
  *    @param v Vector to reflect.
  *    @param n Normal to reflect off of.
  */
-void vect_reflect( vec2* r, const vec2* v, const vec2* n )
+void vec2_reflect( vec2* r, const vec2* v, const vec2* n )
 {
-   double dot = vect_dot( v, n );
+   double dot = vec2_dot( v, n );
    r->x     = v->x - ((2. * dot) * n->x);
    r->y     = v->y - ((2. * dot) * n->y);
    r->mod   = MOD(r->x,r->y);
@@ -172,7 +172,7 @@ void vect_reflect( vec2* r, const vec2* v, const vec2* n )
  *    @param b Vector 2 for dot product.
  *    @return Dot product of vectors.
  */
-double vect_dot( const vec2* a, const vec2* b )
+double vec2_dot( const vec2* a, const vec2* b )
 {
    return a->x * b->x + a->y * b->y;
 }
@@ -185,14 +185,14 @@ double vect_dot( const vec2* a, const vec2* b )
  *    @param source Source vector.
  *    @param reference_vector Reference vector.
  */
-void vect_uv( double* u, double* v, const vec2* source, const vec2* reference_vector )
+void vec2_uv( double* u, double* v, const vec2* source, const vec2* reference_vector )
 {
    vec2 unit_parallel, unit_perpendicular;
 
-   vect_uv_decomp( &unit_parallel, &unit_perpendicular, reference_vector );
+   vec2_uv_decomp( &unit_parallel, &unit_perpendicular, reference_vector );
 
-   *u = vect_dot(source, &unit_parallel);
-   *v = vect_dot(source, &unit_perpendicular);
+   *u = vec2_dot(source, &unit_parallel);
+   *v = vec2_dot(source, &unit_perpendicular);
 }
 
 /**
@@ -202,10 +202,10 @@ void vect_uv( double* u, double* v, const vec2* source, const vec2* reference_ve
  *    @param[out] v Perpendicular component of the reference vector.
  *    @param reference_vector The reference vector to decompose.
  */
-void vect_uv_decomp( vec2* u, vec2* v, const vec2* reference_vector )
+void vec2_uv_decomp( vec2* u, vec2* v, const vec2* reference_vector )
 {
-   vect_pset(u, 1, VANGLE(*reference_vector));
-   vect_pset(v, 1, VANGLE(*reference_vector)+M_PI_2);
+   vec2_pset(u, 1, VANGLE(*reference_vector));
+   vec2_pset(v, 1, VANGLE(*reference_vector)+M_PI_2);
 }
 
 /*
@@ -262,8 +262,8 @@ static void solid_update_euler( Solid *obj, double dt )
    vy += ay*dt;
 
    /* Update position and velocity. */
-   vect_cset( &obj->vel, vx, vy );
-   vect_cset( &obj->pos, px, py );
+   vec2_cset( &obj->vel, vx, vy );
+   vec2_cset( &obj->pos, px, py );
 }
 
 /**
@@ -362,8 +362,8 @@ static void solid_update_rk4( Solid *obj, double dt )
       /* rotation. */
       obj->dir += obj->dir_vel*h;
    }
-   vect_cset( &obj->vel, vx, vy );
-   vect_cset( &obj->pos, px, py );
+   vec2_cset( &obj->vel, vx, vy );
+   vec2_cset( &obj->pos, px, py );
 
    /* Validity check. */
    if (obj->dir >= 2.*M_PI)
