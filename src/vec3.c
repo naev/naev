@@ -12,63 +12,132 @@
 
 #include "vec3.h"
 
+/**
+ * @brief Adds two vectors together (out = a + b).
+ *
+ *    @param[out] out Output vector.
+ *    @param[in] a First vector to add.
+ *    @param[in] b Second vector to add.
+ */
 void vec3_add( vec3 *out, const vec3 *a, const vec3 *b )
 {
    for (int i=0; i<3; i++)
       out->v[i] = a->v[i] + b->v[i];
 }
+
+/**
+ * @brief Subtracts two vectors (out = a - b).
+ *
+ *    @param[out] out Output vector.
+ *    @param[in] a Vector to subtract from.
+ *    @param[in] b Vector being subtracted.
+ */
 void vec3_sub( vec3 *out, const vec3 *a, const vec3 *b )
 {
    for (int i=0; i<3; i++)
       out->v[i] = a->v[i] - b->v[i];
 }
+
+/**
+ * @brief Weighted addition of two vectors (out = wa*a + wb*b).
+ *
+ *    @param[out] out Output vector.
+ *    @param[in] a First vector to add.
+ *    @param[in] b Second vector to add.
+ *    @param wa Weight of the first vector.
+ *    @param wb Weight of the second vector.
+ */
 void vec3_wadd( vec3 *out, const vec3 *a, const vec3 *b, double wa, double wb )
 {
    for (int i=0; i<3; i++)
       out->v[i] = wa*a->v[i] + wb*b->v[i];
 }
+
+/**
+ * @brief Element-wise maximum of two vectors.
+ *
+ *    @param[out] out Output vector.
+ *    @param[in] a First vector.
+ *    @param[in] b Second vector.
+ */
 void vec3_max( vec3 *out, const vec3 *a, const vec3 *b )
 {
    for (int i=0; i<3; i++)
       out->v[i] = MAX( a->v[i], b->v[i] );
 }
+
+/**
+ * @brief Element-wise minimum of two vectors.
+ *
+ *    @param[out] out Output vector.
+ *    @param[in] a First vector.
+ *    @param[in] b Second vector.
+ */
 void vec3_min( vec3 *out, const vec3 *a, const vec3 *b )
 {
    for (int i=0; i<3; i++)
       out->v[i] = MIN( a->v[i], b->v[i] );
 }
+
+/**
+ * @brief Dot product between two vectors.
+ *
+ *    @param[out] out Output vector.
+ *    @param[in] a First vector.
+ *    @param[in] b Second vector.
+ */
 double vec3_dot( const vec3 *a, const vec3 *b )
 {
-   double o = 0.;
-   for (int i=0; i<3; i++)
-      o += a->v[i] * b->v[i];
-   return o;
+   return a->v[0]*b->v[0] + a->v[1]*b->v[1] + a->v[2]*b->v[2];
 }
+
+/**
+ * @brief Cross product between two vectors.
+ *
+ *    @param[out] out Output vector.
+ *    @param[in] a First vector.
+ *    @param[in] b Second vector.
+ */
 void vec3_cross( vec3 *out, const vec3 *a, const vec3 *b )
 {
    out->v[0] =  a->v[1]*b->v[2] - a->v[2]*b->v[1];
    out->v[1] = -a->v[0]*b->v[2] + a->v[2]*b->v[0];
    out->v[2] =  a->v[0]*b->v[1] - a->v[1]*b->v[0];
 }
+
+/**
+ * @brief Normalizes a vector.
+ *
+ *    @param[in, out] a Vector to normalize.
+ */
 void vec3_normalize( vec3 *a )
 {
-   double n = sqrt( vec3_dot( a, a ) );
+   double n = vec3_length(a);
    for (int i=0; i<3; i++)
       a->v[i] /= n;
 }
+
+/**
+ * @brief Computes the Euclidean distance between two vectors.
+ *
+ *    @param[in] a First vector.
+ *    @param[in] b Second vector.
+ *    @return Euclidean distance from a to b.
+ */
 double vec3_dist( const vec3 *a, const vec3 *b )
 {
-   double o = 0.;
-   for (int i=0; i<3; i++)
-      o += pow( a->v[i]-b->v[i], 2. );
-   return sqrt(o);
+   return sqrt( pow2(a->v[0]-b->v[0]) + pow2(a->v[1]-b->v[1]) + pow2(a->v[2]-b->v[2]) );
 }
+
+/**
+ * @brief Computes the length of a vector.
+ *
+ *    @param[in] a Vector to get the length of.
+ *    @return Length of the vector.
+ */
 double vec3_length( const vec3 *a )
 {
-   double o = 0.;
-   for (int i=0; i<3; i++)
-      o += pow( a->v[i], 2. );
-   return sqrt(o);
+   return sqrt( vec3_dot( a, a ) );
 }
 
 /**
