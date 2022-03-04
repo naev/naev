@@ -18,7 +18,7 @@ void mat4_print( const mat4 *m )
 {
    for (int j=0; j<4; j++) {
       for (int i=0; i<4; i++) {
-         printf("%6.1f ", m.m[j][i]);
+         printf("%6.1f ", m->m[j][i]);
       }
       printf("\n");
    }
