@@ -6,8 +6,11 @@
 #include "glad.h"
 
 typedef struct mat4_ {
-   /* Column-major; m[x][y] */
-   GLfloat m[4][4];
+   union {
+      /* Column-major; m[x][y] */
+      GLfloat m[4][4];
+      GLfloat ptr[16];
+   };
 } mat4;
 
 /* Basic operations. */
@@ -21,7 +24,6 @@ void mat4_translate( mat4 *m, double x, double y, double z );
 void mat4_rotate( mat4 *m, double angle, double x, double y, double z );
 void mat4_rotate2d( mat4 *m, double angle );
 void mat4_rotate2dv( mat4 *m, double x, double y );
-GLfloat *mat4_ptr( mat4 *m );
 
 /* Creation functions. */
 __attribute__((const)) mat4 mat4_identity( void );

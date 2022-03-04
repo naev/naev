@@ -199,7 +199,7 @@ void background_renderDust( const double dt )
 
    /* Common shader stuff. */
    glUseProgram(shaders.stars.program);
-   gl_uniformMat4(shaders.stars.projection, projection);
+   gl_uniformMat4(shaders.stars.projection, &projection);
    glUniform2f(shaders.stars.star_xy, star_x, star_y);
    glUniform3f(shaders.stars.dims, w, h, 1. / gl_screen.scale);
    glUniform1i(shaders.stars.use_lines, !points);

@@ -1880,11 +1880,11 @@ void pilot_render( Pilot* p, const double dt )
       projection = gl_view_matrix;
       mat4_translate( &projection, x + (1.-scale)*z*w/2., y + (1.-scale)*z*h/2., 0. );
       mat4_scale( &projection, scale*z*w, scale*z*h, 1. );
-      gl_uniformMat4(ed->projection, projection);
+      gl_uniformMat4(ed->projection, &projection);
 
       tex_mat = mat4_identity();
       mat4_scale( &tex_mat, w/SCREEN_W, h/SCREEN_H, 1. );
-      gl_uniformMat4(ed->tex_mat, tex_mat);
+      gl_uniformMat4(ed->tex_mat, &tex_mat);
 
       glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
       glUniform1f( ed->u_timer, e->timer );

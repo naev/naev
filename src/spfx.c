@@ -840,7 +840,7 @@ void spfx_trail_draw( const Trail_spfx* trail )
       mat4_translate( &projection, 0., -0.5, 0. );
 
       /* Set uniforms. */
-      gl_uniformMat4(shaders.trail.projection, projection);
+      gl_uniformMat4(shaders.trail.projection, &projection);
       gl_uniformColor(shaders.trail.c1, &sp->col);
       gl_uniformColor(shaders.trail.c2, &spp->col);
       glUniform1f(shaders.trail.t1, tp->t);
@@ -1054,7 +1054,7 @@ void spfx_render( int layer )
                0, 2, GL_FLOAT, 0 );
 
          /* Set shader uniforms. */
-         gl_uniformMat4(effect->projection, projection);
+         gl_uniformMat4(effect->projection, &projection);
          glUniform1f(effect->u_time, spfx->time);
          glUniform1f(effect->u_r, spfx->unique);
          glUniform1f(effect->u_size, effect->size);

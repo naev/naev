@@ -53,7 +53,7 @@ void gl_beginSolidProgram(mat4 projection, const glColour *c)
    glUseProgram(shaders.solid.program);
    glEnableVertexAttribArray(shaders.solid.vertex);
    gl_uniformColor(shaders.solid.color, c);
-   gl_uniformMat4(shaders.solid.projection, projection);
+   gl_uniformMat4(shaders.solid.projection, &projection);
 }
 
 void gl_endSolidProgram (void)
@@ -68,7 +68,7 @@ void gl_beginSmoothProgram(mat4 projection)
    glUseProgram(shaders.smooth.program);
    glEnableVertexAttribArray(shaders.smooth.vertex);
    glEnableVertexAttribArray(shaders.smooth.vertex_color);
-   gl_uniformMat4(shaders.smooth.projection, projection);
+   gl_uniformMat4(shaders.smooth.projection, &projection);
 }
 
 void gl_endSmoothProgram() {
@@ -235,8 +235,8 @@ void gl_renderTextureRaw( GLuint texture, uint8_t flags,
 
    /* Set shader uniforms. */
    gl_uniformColor(shaders.texture.color, c);
-   gl_uniformMat4(shaders.texture.projection, projection);
-   gl_uniformMat4(shaders.texture.tex_mat, tex_mat);
+   gl_uniformMat4(shaders.texture.projection, &projection);
+   gl_uniformMat4(shaders.texture.tex_mat, &tex_mat);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -344,8 +344,8 @@ void gl_renderTextureInterpolate(  const glTexture* ta,
    glUniform1i(shaders.texture_interpolate.sampler2, 1);
    gl_uniformColor(shaders.texture_interpolate.color, c);
    glUniform1f(shaders.texture_interpolate.inter, inter);
-   gl_uniformMat4(shaders.texture_interpolate.projection, projection);
-   gl_uniformMat4(shaders.texture_interpolate.tex_mat, tex_mat);
+   gl_uniformMat4(shaders.texture_interpolate.projection, &projection);
+   gl_uniformMat4(shaders.texture_interpolate.tex_mat, &tex_mat);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -822,7 +822,7 @@ void gl_renderShaderH( const SimpleShader *shd, const mat4 *H, const glColour *c
    if (c != NULL)
       gl_uniformColor(shd->color, c);
 
-   gl_uniformMat4(shd->projection, *H);
+   gl_uniformMat4(shd->projection, H);
 
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 

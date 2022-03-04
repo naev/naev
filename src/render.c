@@ -92,7 +92,8 @@ static void render_fbo( double dt, GLuint fbo, GLuint tex, PPShader *shader )
    glActiveTexture( GL_TEXTURE0 );
 
    /* Set shader uniforms. */
-   gl_uniformMat4(shader->ClipSpaceFromLocal, mat4_ortho(0, 1, 1, 0, 1, -1));
+   const mat4 ortho = mat4_ortho(0., 1., 1., 0., 1., -1.);
+   gl_uniformMat4(shader->ClipSpaceFromLocal, &ortho);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );

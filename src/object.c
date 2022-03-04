@@ -465,8 +465,8 @@ void object_renderSolidPart( const Object *object, const Solid *solid, const cha
    model = mat4_identity();
    mat4_rotate( &model, M_PI/2. + solid->dir, 0., 1., 0.);
 
-   gl_uniformMat4(shaders.material.projection, view);
-   gl_uniformMat4(shaders.material.model, model);
+   gl_uniformMat4(shaders.material.projection, &view);
+   gl_uniformMat4(shaders.material.model, &model);
 
    /* Actually need depth testing now. */
    glEnable(GL_DEPTH_TEST);

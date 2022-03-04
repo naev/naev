@@ -67,7 +67,7 @@ mat4 mat4_identity (void)
 mat4 mat4_ortho( double left, double right,
       double bottom, double top, double nearVal, double farVal )
 {
-   mat4 mat = {{{0}}};
+   mat4 mat = {{{{0}}}};
    double tx, ty, tz;
 
    /* https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glOrtho.xml */
@@ -227,9 +227,4 @@ void mat4_rotate( mat4 *m, double angle, double x, double y, double z )
    rot.m[3][3] = 1.;
 
    mat4_mul( m, &in, &rot );
-}
-
-GLfloat *mat4_ptr( mat4 *m )
-{
-   return (GLfloat*)m->m;
 }

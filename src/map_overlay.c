@@ -823,8 +823,10 @@ void ovr_render( double dt )
 
       /* Set shader uniforms. */
       gl_uniformColor(shaders.stealthoverlay.color, &cWhite);
-      gl_uniformMat4(shaders.stealthoverlay.projection, mat4_ortho(0, 1, 0, 1, 1, -1));
-      gl_uniformMat4(shaders.stealthoverlay.tex_mat, mat4_identity());
+      const mat4 ortho = mat4_ortho( 0., 1., 0., 1., 1., -1. );
+      const mat4 I     = mat4_identity();
+      gl_uniformMat4(shaders.stealthoverlay.projection, &ortho );
+      gl_uniformMat4(shaders.stealthoverlay.tex_mat, &I );
 
       /* Draw. */
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );

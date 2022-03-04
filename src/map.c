@@ -1177,7 +1177,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
          /* Set shader uniforms. */
          glUniform1f(shaders.nebula_map.hue, sys->nebu_hue);
          glUniform1f(shaders.nebula_map.alpha, alpha);
-         gl_uniformMat4(shaders.nebula_map.projection, projection);
+         gl_uniformMat4(shaders.nebula_map.projection, &projection);
          glUniform1f(shaders.nebula_map.time, map_dt / 10.0);
          glUniform2f(shaders.nebula_map.globalpos, sys->pos.x, sys->pos.y );
          glUniform1f(shaders.nebula_map.volatility, sys->nebu_volatility );
@@ -1207,7 +1207,7 @@ void map_renderSystemEnvironment( double x, double y, double zoom, int editor, d
          glUseProgram( sys->ms->program );
 
          /* Set shader uniforms. */
-         gl_uniformMat4(sys->ms->projection, projection);
+         gl_uniformMat4(sys->ms->projection, &projection);
          glUniform1f(sys->ms->time, map_dt);
          glUniform2f(sys->ms->globalpos, sys->pos.x, sys->pos.y );
          glUniform1f(sys->ms->alpha, alpha);

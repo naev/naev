@@ -1449,7 +1449,7 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    glBindTexture(GL_TEXTURE_2D, stsh->tex[glyph->tex_index].id);
 
    glUniform1f(shaders.font.m, glyph->m);
-   gl_uniformMat4(shaders.font.projection, font_projection_mat);
+   gl_uniformMat4(shaders.font.projection, &font_projection_mat);
 
    /* Draw the element. */
    glDrawArrays( GL_TRIANGLE_STRIP, glyph->vbo_id, 4 );
