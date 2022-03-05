@@ -407,13 +407,11 @@ static void shadow_matrix( mat4 *m )
 /**
  * @brief Renders a mesh shadow with a transform.
  */
-static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const mat4 *H )
+static void renderMeshShadow( const Object *obj, const Mesh *mesh, const mat4 *H )
 {
    (void) obj;
    const Shader *shd = &shadow_shader;
 
-   glBindFramebuffer(GL_FRAMEBUFFER, fbo_shadow);
-   glViewport(0, 0, SHADOWMAP_SIZE, SHADOWMAP_SIZE);
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
 
    /* TODO put everything in a single VBO */
@@ -421,32 +419,14 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
    glVertexAttribPointer( shd->vertex, 3, GL_FLOAT, GL_FALSE, 0, NULL );
    glEnableVertexAttribArray( shd->vertex );
 
-   /* Set up shader. */
-   glUseProgram( shd->program );
-   mat4 Hshadow;
-   shadow_matrix( &Hshadow );
-
-   glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow.ptr );
    glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
-
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
-
-   glUseProgram( 0 );
-
-   glBindTexture( GL_TEXTURE_2D, 0 );
-
-   glBindBuffer( GL_ARRAY_BUFFER, 0 );
-   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
-
-   glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-   gl_checkErr();
 }
 
 /**
  * @brief Renders a mesh with a transform.
  */
-static void object_renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
+static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
 {
    const Material *mat;
    const Shader *shd = &object_shader;
@@ -455,11 +435,6 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const mat4 *
       mat = &material_default;
    else
       mat = &obj->materials[ mesh->material ];
-
-   glEnable(GL_BLEND);
-   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-
-   glViewport(0, 0, SCREEN_W, SCREEN_H );
 
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
 
@@ -525,15 +500,6 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const mat4 *
    gl_checkErr();
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
-
-   glUseProgram( 0 );
-
-   glBindTexture( GL_TEXTURE_2D, 0 );
-
-   glBindBuffer( GL_ARRAY_BUFFER, 0 );
-   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
-
-   gl_checkErr();
 }
 
 /**
@@ -548,7 +514,7 @@ static void object_renderNodeShadow( const Object *obj, const Node *node, const 
 
    /* Draw meshes. */
    for (size_t i=0; i<node->nmesh; i++)
-      object_renderMeshShadow( obj, &node->mesh[i], &HH );
+      renderMeshShadow( obj, &node->mesh[i], &HH );
 
    /* Draw children. */
    for (size_t i=0; i<node->nchildren; i++)
@@ -560,7 +526,7 @@ static void object_renderNodeShadow( const Object *obj, const Node *node, const 
 /**
  * @brief Recursive rendering of a mesh.
  */
-void object_renderNodeMesh( const Object *obj, const Node *node, const mat4 *H )
+static void object_renderNodeMesh( const Object *obj, const Node *node, const mat4 *H )
 {
    /* Multiply matrices, can be animated so not caching. */
    /* TODO cache when not animated. */
@@ -569,7 +535,7 @@ void object_renderNodeMesh( const Object *obj, const Node *node, const mat4 *H )
 
    /* Draw meshes. */
    for (size_t i=0; i<node->nmesh; i++)
-      object_renderMesh( obj, &node->mesh[i], &HH );
+      renderMesh( obj, &node->mesh[i], &HH );
 
    /* Draw children. */
    for (size_t i=0; i<node->nchildren; i++)
@@ -578,10 +544,53 @@ void object_renderNodeMesh( const Object *obj, const Node *node, const mat4 *H )
    gl_checkErr();
 }
 
-void object_renderNode( const Object *obj, const Node *node, const mat4 *H )
+static void object_renderShadow( const Object *obj, const mat4 *H )
 {
-   object_renderNodeShadow( obj, node, H );
-   object_renderNodeMesh( obj, node, H );
+   const Shader *shd = &shadow_shader;
+
+   /* Set up the shadow map and render. */
+   glBindFramebuffer(GL_FRAMEBUFFER, fbo_shadow);
+   glClear(GL_DEPTH_BUFFER_BIT);
+   glViewport(0, 0, SHADOWMAP_SIZE, SHADOWMAP_SIZE);
+
+   /* Set up shader. */
+   glUseProgram( shd->program );
+   mat4 Hshadow;
+   shadow_matrix( &Hshadow );
+   glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow.ptr );
+
+   for (size_t i=0; i<obj->nnodes; i++)
+      object_renderNodeShadow( obj, &obj->nodes[i], H );
+
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+   glUseProgram( 0 );
+
+   glBindTexture( GL_TEXTURE_2D, 0 );
+
+   glBindBuffer( GL_ARRAY_BUFFER, 0 );
+   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+   gl_checkErr();
+}
+
+static void object_renderMesh( const Object *obj, const mat4 *H )
+{
+   glEnable(GL_BLEND);
+   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+   glViewport(0, 0, SCREEN_W, SCREEN_H );
+
+   for (size_t i=0; i<obj->nnodes; i++)
+      object_renderNodeMesh( obj, &obj->nodes[i], H );
+
+   glUseProgram( 0 );
+
+   glBindTexture( GL_TEXTURE_2D, 0 );
+
+   glBindBuffer( GL_ARRAY_BUFFER, 0 );
+   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+   gl_checkErr();
 }
 
 /**
@@ -593,18 +602,14 @@ void object_renderNode( const Object *obj, const Node *node, const mat4 *H )
 void object_render( const Object *obj, const mat4 *H )
 {
    const mat4 I = mat4_identity();
+   const mat4 *Hptr = (H!=NULL) ? H : &I;
 
    /* Depth testing. */
    glEnable( GL_DEPTH_TEST );
    glDepthFunc( GL_LESS );
 
-   /* Clear the shadow map. */
-   glBindFramebuffer(GL_FRAMEBUFFER, fbo_shadow);
-   glClear(GL_DEPTH_BUFFER_BIT);
-   glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-   for (size_t i=0; i<obj->nnodes; i++)
-      object_renderNode( obj, &obj->nodes[i], (H!=NULL) ? H : &I );
+   object_renderShadow( obj, Hptr );
+   object_renderMesh( obj, Hptr );
 
    glDisable( GL_DEPTH_TEST );
 }
