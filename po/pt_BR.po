@@ -8,9 +8,8 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-02-19 12:52-0500\n"
-"PO-Revision-Date: 2021-09-02 06:35+0000\n"
-"Last-Translator: Anthony Gregory Souza dos Santos "
-"<antonigregorysouza123@gmail.com>\n"
+"PO-Revision-Date: 2022-03-05 05:58+0000\n"
+"Last-Translator: Thiago Oliveira <thiagodaqui@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -18,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: dat/intro:2
 msgid ""
@@ -1191,7 +1190,7 @@ msgstr ""
 
 #: dat/faction.xml:118
 msgid "Wild Ones"
-msgstr ""
+msgstr "Os Selvagens"
 
 #: dat/faction.xml:121
 msgid "Wild Ones Pirate Clan"
@@ -1205,7 +1204,7 @@ msgstr ""
 
 #: dat/faction.xml:153
 msgid "Black Lotus"
-msgstr ""
+msgstr "Lótus Preto"
 
 #: dat/faction.xml:156
 msgid "Black Lotus Pirate Clan"
@@ -4849,7 +4848,7 @@ msgstr ""
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:2
 msgid "Low Radiation Sensor Modulator"
-msgstr ""
+msgstr "Modulador de Sensor de Baixa Radiação"
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:10
 msgid ""
@@ -4983,7 +4982,7 @@ msgstr ""
 
 #: dat/outfits/utility/targeting_conduit.xml:2
 msgid "Targeting Conduit"
-msgstr ""
+msgstr "tubo de destino"
 
 #: dat/outfits/utility/targeting_conduit.xml:10
 msgid ""
@@ -6041,7 +6040,7 @@ msgstr ""
 #: dat/ships/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168
 msgid "Llama"
-msgstr ""
+msgstr "Llama"
 
 #: dat/ships/llama.xml:17
 msgid ""
@@ -6565,7 +6564,7 @@ msgstr ""
 
 #: dat/ships/starbridge.xml:2
 msgid "Starbridge"
-msgstr ""
+msgstr "Ponte Estelar"
 
 #: dat/ships/starbridge.xml:17
 msgid ""
@@ -22542,7 +22541,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:171
 #: dat/scripts/common/frontier_war.lua:20
 msgid "Lady Bitterfly"
-msgstr ""
+msgstr "Lady Bitterfly"
 
 #: dat/ai/advertiser.lua:110 dat/scripts/common/frontier_war.lua:21
 msgid "Lady Pointblank"
@@ -22562,11 +22561,11 @@ msgstr ""
 
 #: dat/ai/advertiser.lua:114 dat/scripts/common/frontier_war.lua:25
 msgid "Lady Blackswan"
-msgstr ""
+msgstr "Senhora Cisne Negro"
 
 #: dat/ai/advertiser.lua:115 dat/scripts/common/frontier_war.lua:26
 msgid "Lady Killington"
-msgstr ""
+msgstr "Lady Killington"
 
 #: dat/ai/advertiser.lua:116 dat/scripts/common/frontier_war.lua:27
 msgid "Lord Richthofen"
@@ -22607,7 +22606,7 @@ msgstr ""
 #: dat/ai/advertiser.lua:119 dat/missions/dvaered/gauntlet/tables.lua:80
 #: dat/scripts/common/frontier_war.lua:30
 msgid "Lady Sainte-Beuverie"
-msgstr ""
+msgstr "Lady Sainte-Beuverie"
 
 #: dat/ai/advertiser.lua:120 dat/scripts/common/frontier_war.lua:31
 msgid "Lord Louverture"
@@ -22619,7 +22618,7 @@ msgstr ""
 
 #: dat/ai/advertiser.lua:122 dat/scripts/common/frontier_war.lua:33
 msgid "Lady Proserpina"
-msgstr ""
+msgstr "Lady Perséfone"
 
 #: dat/ai/advertiser.lua:128
 msgid "I hereby declare {butthead} is a {badword}. -{sponsor}"
@@ -25653,7 +25652,7 @@ msgstr ""
 
 #: dat/events/discovery.lua:75
 msgid "Crater City"
-msgstr ""
+msgstr "Cidade da Cratera"
 
 #: dat/events/discovery.lua:76
 msgid "Touching the Universe"
@@ -43990,7 +43989,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:41
 msgid "Lieutenant"
-msgstr ""
+msgstr "Tenente"
 
 #: dat/missions/empire/emp_cargo00.lua:53
 msgid "You see an Empire Lieutenant who seems to be looking at you."
@@ -79783,6 +79782,10 @@ msgid ""
 "flesh? Let the machines starve, you fools! Let them die! Kill them the "
 "machines! …Wait, what was that?\""
 msgstr ""
+"\"Quem é o alimento vivo para as máquinas em Metropolis? Quem lubrifica as "
+"juntas das máquinas com seu próprio sangue? Quem alimenta as máquinas com "
+"sua própria carne? Deixem as máquinas morrer de fome, seus tolos! Deixem-nas "
+"morrer! Fim para as máquinas! ...Esperem, o que foi isso?\""
 
 #. Metropolis
 #: dat/scripts/common/tutorial.lua:27
@@ -79790,6 +79793,8 @@ msgid ""
 "\"Please Michael, I'm the Knight Industries 2000, not a tomato on wheels!” …"
 "Wait, what was that?\""
 msgstr ""
+"\"Por favor Michael, eu sou o Knight Industries 2000, não um tomate sobre "
+"rodas\"! ...Espere, o que foi isso?\""
 
 #. Capsule function for naev.keyGet() that adds a color code to the return string.
 #. Disables tutorial
@@ -79819,7 +79824,7 @@ msgstr ""
 #: dat/scripts/common/zalek_blackhole.lua:65
 #: dat/scripts/pilotname/generic.lua:12 dat/scripts/pilotname/pirate.lua:246
 msgid "Black Hole"
-msgstr ""
+msgstr "Buraco Negro"
 
 #.
 #. Evil Principal Investigator (PI) Faction
@@ -79921,30 +79926,30 @@ msgstr ""
 #. TODO: displaying budget_row could be useful.
 #: dat/scripts/equipopt/optimize.lua:184
 msgid "Trying to equip:"
-msgstr ""
+msgstr "Tentando equipar:"
 
 #: dat/scripts/equipopt/optimize.lua:188
 msgid "Parameters:"
-msgstr ""
+msgstr "Parâmetros:"
 
 #: dat/scripts/equipopt/optimize.lua:199
 msgid "Equipment:"
-msgstr ""
+msgstr "Equipamento:"
 
 #: dat/scripts/equipopt/optimize.lua:205
 #, lua-format
 msgid "CPU: %d / %d [%d < %d]"
-msgstr ""
+msgstr "CPU: %d / %d [%d < %d]"
 
 #: dat/scripts/equipopt/optimize.lua:206
 #, lua-format
 msgid "Energy Regen: %.3f [%.3f < %.3f (%.1f)]"
-msgstr ""
+msgstr "Regeneração Energética: %.3f [%.3f < %.3f (%.1f)]"
 
 #: dat/scripts/equipopt/optimize.lua:207
 #, lua-format
 msgid "Mass: %.3f / %.3f [%.3f < %.3f (%.1f)]"
-msgstr ""
+msgstr "Massa: %.3f [%.3f < %.3f (%.1f)]"
 
 #: dat/scripts/equipopt/optimize.lua:210
 #, lua-format
@@ -79978,7 +79983,7 @@ msgstr ""
 #: dat/scripts/equipopt/optimize.lua:263
 #, lua-format
 msgid "Unable to equip core '%s' on '%s'!"
-msgstr ""
+msgstr "Impossível equipar núcleo '%s' em '%s'!"
 
 #. Global ship stuff
 #. Should include cores!!
@@ -80063,7 +80068,7 @@ msgstr ""
 #: dat/scripts/equipopt/optimize.lua:663
 #, lua-format
 msgid "Unable to equip outfit '%s' on '%s'!"
-msgstr ""
+msgstr "Incapaz de equipar o equipamento '%s' em '%s'!"
 
 #. Due to the approximation, sometimes they end up with not enough
 #. energy, we'll try again with larger energy constraints
@@ -81802,7 +81807,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/generic.lua:65 dat/scripts/pilotname/pirate.lua:422
 msgid "Raven"
-msgstr ""
+msgstr "Corvo"
 
 #: dat/scripts/pilotname/generic.lua:66
 msgid "Rebirth"
@@ -83018,7 +83023,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:303
 msgid "Emperor"
-msgstr ""
+msgstr "Imperador"
 
 #: dat/scripts/pilotname/pirate.lua:304
 msgid "Energy-Volt"
