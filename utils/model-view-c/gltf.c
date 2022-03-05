@@ -553,6 +553,10 @@ static void object_renderShadow( const Object *obj, const mat4 *H )
    glClear(GL_DEPTH_BUFFER_BIT);
    glViewport(0, 0, SHADOWMAP_SIZE, SHADOWMAP_SIZE);
 
+   /* Cull faces. */
+   glEnable(GL_CULL_FACE);
+   glCullFace(GL_FRONT);
+
    /* Set up shader. */
    glUseProgram( shd->program );
    mat4 Hshadow;
@@ -571,6 +575,8 @@ static void object_renderShadow( const Object *obj, const mat4 *H )
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
+   glDisable(GL_CULL_FACE);
+
    gl_checkErr();
 }
 
@@ -579,6 +585,10 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
    glEnable(GL_BLEND);
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
    glViewport(0, 0, SCREEN_W, SCREEN_H );
+
+   /* Cull faces. */
+   glEnable(GL_CULL_FACE);
+   glCullFace(GL_BACK);
 
    for (size_t i=0; i<obj->nnodes; i++)
       object_renderNodeMesh( obj, &obj->nodes[i], H );
@@ -589,6 +599,8 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
 
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+   glDisable(GL_CULL_FACE);
 
    gl_checkErr();
 }
