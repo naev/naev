@@ -261,7 +261,7 @@ void main (void)
    if ((shadow.w < 0.0) || (sc.x < 0.0 || sc.y < 0.0) || (sc.x > 1.0 || sc.y > 1.0))
       shadowFactor = 1.0;
    else
-      shadowFactor = textureProj(shadowmap, shadow);
+      shadowFactor = 0.1 + 0.9 * textureProj(shadowmap, shadow);
    //shadowFactor = 1.0;
    //colour_out = vec4( vec3(shadowFactor), 1.0 );
    //return;

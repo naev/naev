@@ -19,17 +19,7 @@
 
 #define MAX_LIGHTS 4    /**< Maximum amount of lights. TODO deferred rendering. */
 
-#define SHADOWMAP_SIZE  2048   /**< Size of the shadow map. */
-
-/* For an angle of -M_PI / 4. */
-const GLfloat PROJ_SIN   = -M_SQRT1_2;
-const GLfloat PROJ_COS   =  M_SQRT1_2;
-const mat4 HPROJECTION = { .m = {
-   { 1.0,       0.0,      0.0, 0.0 },
-   { 0.0,  PROJ_COS, PROJ_SIN, 0.0 },
-   { 0.0, -PROJ_SIN, PROJ_COS, 0.0 },
-   { 0.0,       0.0,      0.0, 1.0 }
-} };
+#define SHADOWMAP_SIZE  512   /**< Size of the shadow map. */
 
 /**
  * @brief Simple point light model.
@@ -427,19 +417,11 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
    const vec3 up        = { .v = {0., 1., 0.} };
    const vec3 light_pos = { .v = {4., 2., -20.} };
    const vec3 center    = { .v = {0., 0., 0.} };
-   const GLfloat sca = 0.1;
-   const mat4 Hscale = { .m = {
-      { sca, 0.0, 0.0, 0.0 },
-      { 0.0, sca, 0.0, 0.0 },
-      { 0.0, 0.0, sca, 0.0 },
-      { 0.0, 0.0, 0.0, 1.0 } } };
-   mat4 Hmodel;
-   mat4_mul( &Hmodel, H, &Hscale );
    mat4 Hshadow = mat4_lookat( &center, &light_pos, &up );
    //mat4 Hshadow = mat4_lookat( &light_pos, &center, &up );
 
    glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow.ptr );
-   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hmodel.ptr );
+   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
 
@@ -497,19 +479,11 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const mat4 *
    const vec3 up        = { .v = {0., 1., 0.} };
    const vec3 light_pos = { .v = {4., 2., -20.} };
    const vec3 center    = { .v = {0., 0., 0.} };
-   const GLfloat sca = 0.1;
-   const mat4 Hscale = { .m = {
-      { sca, 0.0, 0.0, 0.0 },
-      { 0.0, sca, 0.0, 0.0 },
-      { 0.0, 0.0, sca, 0.0 },
-      { 0.0, 0.0, 0.0, 1.0 } } };
-   mat4 Hmodel;
-   mat4_mul( &Hmodel, H, &Hscale );
    mat4 Hshadow = mat4_lookat( &center, &light_pos, &up );
 
    //glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, HPROJECTION.ptr ); /**< TODO not update per frame. */
    glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow.ptr );
-   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hmodel.ptr );
+   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
    glUniform1f( shd->metallicFactor, mat->metallicFactor );
    glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
    glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
