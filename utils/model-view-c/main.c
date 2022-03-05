@@ -145,10 +145,12 @@ int main( int argc, char *argv[] )
       mat4_mul( &H, &Hy, &Hx );
       mat4_apply( &H, &Hscale );
 
+      /* Draw the object. */
       object_render( obj, &H );
 
+      /* Draw the shadowmap to see what's going on (clear the shadowmap). */
       if (rendermode) {
-         glClear( GL_COLOR_BUFFER_BIT );
+         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
          glUseProgram( shadowshader );
 
          glBindBuffer( GL_ARRAY_BUFFER, shadowvbo );

@@ -395,6 +395,15 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
    return 0;
 }
 
+static void shadow_matrix( mat4 *m )
+{
+   const vec3 up        = { .v = {0., 1., 0.} };
+   const vec3 light_pos = { .v = {4., 2., -20.} };
+   const vec3 center    = { .v = {0., 0., 0.} };
+   *m = mat4_lookat( &center, &light_pos, &up );
+   //*m = mat4_lookat( &light_pos, &center, &up );
+}
+
 /**
  * @brief Renders a mesh shadow with a transform.
  */
@@ -414,11 +423,8 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   const vec3 up        = { .v = {0., 1., 0.} };
-   const vec3 light_pos = { .v = {4., 2., -20.} };
-   const vec3 center    = { .v = {0., 0., 0.} };
-   mat4 Hshadow = mat4_lookat( &center, &light_pos, &up );
-   //mat4 Hshadow = mat4_lookat( &light_pos, &center, &up );
+   mat4 Hshadow;
+   shadow_matrix( &Hshadow );
 
    glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow.ptr );
    glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
@@ -476,12 +482,10 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const mat4 *
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   const vec3 up        = { .v = {0., 1., 0.} };
-   const vec3 light_pos = { .v = {4., 2., -20.} };
-   const vec3 center    = { .v = {0., 0., 0.} };
-   mat4 Hshadow = mat4_lookat( &center, &light_pos, &up );
+   mat4 Hshadow;
+   shadow_matrix( &Hshadow );
 
-   //glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, HPROJECTION.ptr ); /**< TODO not update per frame. */
+   //glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, HPROJECTION.ptr );
    glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow.ptr );
    glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
    glUniform1f( shd->metallicFactor, mat->metallicFactor );
