@@ -255,8 +255,16 @@ void main (void)
    f_diffuse *= ao;
 
    /* Set up shadows. */
-   //float shadowFactor = textureProj(shadowmap, shadow);
-   float shadowFactor = 1.0;
+   float shadowFactor;
+   vec4 sc = shadow / shadow.w;
+   /* Check to see if in the shadowmap frustrum. */
+   if ((shadow.w < 0.0) || (sc.x < 0.0 || sc.y < 0.0) || (sc.x > 1.0 || sc.y > 1.0))
+      shadowFactor = 1.0;
+   else
+      shadowFactor = textureProj(shadowmap, shadow);
+   //shadowFactor = 1.0;
+   //colour_out = vec4( vec3(shadowFactor), 1.0 );
+   //return;
 
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, 1.0) );

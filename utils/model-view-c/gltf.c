@@ -5,6 +5,7 @@
 #include "glad.h"
 #include "SDL_image.h"
 #include <assert.h>
+#include <math.h>
 
 #define CGLTF_IMPLEMENTATION
 #include "cgltf.h"
@@ -18,7 +19,17 @@
 
 #define MAX_LIGHTS 4    /**< Maximum amount of lights. TODO deferred rendering. */
 
-#define SHADOWMAP_SIZE  512   /**< Size of the shadow map. */
+#define SHADOWMAP_SIZE  2048   /**< Size of the shadow map. */
+
+/* For an angle of -M_PI / 4. */
+const GLfloat PROJ_SIN   = -M_SQRT1_2;
+const GLfloat PROJ_COS   =  M_SQRT1_2;
+const mat4 HPROJECTION = { .m = {
+   { 1.0,       0.0,      0.0, 0.0 },
+   { 0.0,  PROJ_COS, PROJ_SIN, 0.0 },
+   { 0.0, -PROJ_SIN, PROJ_COS, 0.0 },
+   { 0.0,       0.0,      0.0, 1.0 }
+} };
 
 /**
  * @brief Simple point light model.
@@ -413,23 +424,22 @@ static void object_renderMeshShadow( const Object *obj, const Mesh *mesh, const 
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   const vec3 up        = { .v = {0., 0., 1.} };
+   const vec3 up        = { .v = {0., 1., 0.} };
    const vec3 light_pos = { .v = {4., 2., -20.} };
    const vec3 center    = { .v = {0., 0., 0.} };
    const GLfloat sca = 0.1;
-   const mat4 Hprojection = { .m = {
+   const mat4 Hscale = { .m = {
       { sca, 0.0, 0.0, 0.0 },
       { 0.0, sca, 0.0, 0.0 },
       { 0.0, 0.0, sca, 0.0 },
       { 0.0, 0.0, 0.0, 1.0 } } };
-   //mat4 Hview = mat4_lookat( &light_pos, &center, &up );
-   mat4 Hlook = mat4_lookat( &center, &light_pos, &up );
-   mat4 Hview;
-   mat4_mul( &Hview, H, &Hlook );
+   mat4 Hmodel;
+   mat4_mul( &Hmodel, H, &Hscale );
+   mat4 Hshadow = mat4_lookat( &center, &light_pos, &up );
+   //mat4 Hshadow = mat4_lookat( &light_pos, &center, &up );
 
-   glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection.ptr );
-   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hview.ptr );
-   //glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
+   glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow.ptr );
+   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hmodel.ptr );
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
 
@@ -484,20 +494,22 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const mat4 *
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   const vec3 up        = { .v = {0., 0., 1.} };
+   const vec3 up        = { .v = {0., 1., 0.} };
    const vec3 light_pos = { .v = {4., 2., -20.} };
    const vec3 center    = { .v = {0., 0., 0.} };
    const GLfloat sca = 0.1;
-   const mat4 Hprojection = { .m = {
+   const mat4 Hscale = { .m = {
       { sca, 0.0, 0.0, 0.0 },
       { 0.0, sca, 0.0, 0.0 },
       { 0.0, 0.0, sca, 0.0 },
       { 0.0, 0.0, 0.0, 1.0 } } };
-   //mat4 Hshadow = mat4_lookat( &light_pos, &center, &up );
+   mat4 Hmodel;
+   mat4_mul( &Hmodel, H, &Hscale );
    mat4 Hshadow = mat4_lookat( &center, &light_pos, &up );
-   glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection.ptr );
+
+   //glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, HPROJECTION.ptr ); /**< TODO not update per frame. */
    glUniformMatrix4fv( shd->Hshadow_projection, 1, GL_FALSE, Hshadow.ptr );
-   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, H->ptr );
+   glUniformMatrix4fv( shd->Hmodel,      1, GL_FALSE, Hmodel.ptr );
    glUniform1f( shd->metallicFactor, mat->metallicFactor );
    glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
    glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
@@ -608,6 +620,7 @@ void object_render( const Object *obj, const mat4 *H )
    glEnable( GL_DEPTH_TEST );
    glDepthFunc( GL_LESS );
 
+   /* Clear the shadow map. */
    glBindFramebuffer(GL_FRAMEBUFFER, fbo_shadow);
    glClear(GL_DEPTH_BUFFER_BIT);
    glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -765,7 +778,7 @@ int object_init (void)
    glBindFramebuffer(GL_FRAMEBUFFER, 0);
    status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
    if (status != GL_FRAMEBUFFER_COMPLETE)
-      WARN(_("Error setting up framebuffer!"));
+      WARN(_("Error setting up shadowmap framebuffer!"));
 
    /* Compile the shadow shader. */
    shd = &shadow_shader;
@@ -777,6 +790,7 @@ int object_init (void)
    shd->vertex          = glGetAttribLocation( shd->program, "vertex" );
    /* Vertex uniforms. */
    shd->Hprojection     = glGetUniformLocation( shd->program, "projection");
+   shd->Hshadow_projection = glGetUniformLocation( shd->program, "shadow_projection");
    shd->Hmodel          = glGetUniformLocation( shd->program, "model");
 
    /* Compile the shader. */
@@ -822,21 +836,6 @@ int object_init (void)
    shd->shadowmap       = glGetUniformLocation( shd->program, "shadowmap" );
    glUseProgram(0);
    gl_checkErr();
-
-#if 0
-   GLint count;
-   glGetProgramiv( shd->program, GL_ACTIVE_UNIFORMS, &count );
-   DEBUG("Active Uniforms: %d", count);
-   for (GLint i=0; i < count; i++) {
-      GLint size; // size of the variable
-      GLenum type; // type of the variable (float, vec3 or mat4, etc)
-      const GLsizei bufSize = 16; // maximum name length
-      GLchar name[bufSize]; // variable name in GLSL
-      GLsizei length; // name length
-      glGetActiveUniform(shd->program, i, bufSize, &length, &size, &type, name);
-      DEBUG("Uniform #%d Type: %u Name: %s", i, type, name);
-   }
-#endif
 
    return 0;
 }
