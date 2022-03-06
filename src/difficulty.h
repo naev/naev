@@ -18,5 +18,6 @@ void difficulty_free (void);
 const Difficulty *difficulty_list (void);
 const Difficulty *difficulty_get( const char *name );
 void difficulty_set( const Difficulty *d );
+void difficulty_setGlobal( const Difficulty *d );
 
 int difficulty_apply( ShipStats *s );

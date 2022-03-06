@@ -127,7 +127,7 @@ static const Difficulty *difficulty_getDefault (void)
    if (difficulty_global != NULL)
       return difficulty_global;
    else
-      return  difficulty_default;
+      return difficulty_default;
 }
 
 /**
@@ -155,6 +155,14 @@ void difficulty_set( const Difficulty *d )
       difficulty_current = difficulty_getDefault();
    else
       difficulty_current = d;
+}
+
+/**
+ * @brief Sets the global difficulty.
+ */
+void difficulty_setGlobal( const Difficulty *d )
+{
+   difficulty_global = d;
 }
 
 /**
