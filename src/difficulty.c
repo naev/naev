@@ -87,6 +87,10 @@ int difficulty_load (void)
          difficulty_default = dd;
       }
    }
+   if (difficulty_default==NULL) {
+      WARN(_("No default difficulty set!"));
+      difficulty_default = difficulty_stack;
+   }
    difficulty_current = difficulty_default; /* Load default. */
 
    /* Load the global difficulty. */
