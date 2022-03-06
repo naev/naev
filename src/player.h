@@ -98,7 +98,6 @@ typedef struct Player_s {
    Pilot *p;         /**< Player's pilot. */
    PlayerShip_t ps;  /**< Player's ship with extra information. */
    char *name;       /**< Player's name. */
-   double dt_mod;    /**< Static modifier of dt applied to the game as a whole. */
 
    /* Player data. */
    PlayerFlags flags;/**< Player's flags. */
