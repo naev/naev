@@ -66,7 +66,7 @@ int main( int argc, char *argv[] )
    glUniform1i( shadowtex, 0 );
    glUseProgram( 0 );
 
-   int rendermode = 0;
+   int rendermode = 1;
    int quit = 0;
    float rotx = 0.;
    float roty = M_PI_2;
@@ -150,7 +150,6 @@ int main( int argc, char *argv[] )
 
       /* Draw the shadowmap to see what's going on (clear the shadowmap). */
       if (rendermode) {
-         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
          glUseProgram( shadowshader );
 
          glBindBuffer( GL_ARRAY_BUFFER, shadowvbo );

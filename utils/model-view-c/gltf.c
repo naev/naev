@@ -60,6 +60,7 @@ typedef struct Shader_ {
    GLuint nlights;
    GLuint blend;
    GLuint shadowmap;
+   GLuint shadowmap_tex;
 } Shader;
 static Shader object_shader;
 static Shader shadow_shader;
@@ -480,6 +481,7 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
    glUniform3f( sl->colour, 1.0, 1.0, 1.0 );
    glUniform1f( sl->intensity, 500. );
    glUniform1i( shd->shadowmap, tex_shadow );
+   glUniform1i( shd->shadowmap_tex, tex_shadow );
 
    /* Texture. */
    glActiveTexture( GL_TEXTURE0 );
@@ -554,8 +556,8 @@ static void object_renderShadow( const Object *obj, const mat4 *H )
    glViewport(0, 0, SHADOWMAP_SIZE, SHADOWMAP_SIZE);
 
    /* Cull faces. */
-   glEnable(GL_CULL_FACE);
-   glCullFace(GL_FRONT);
+   //glEnable(GL_CULL_FACE);
+   //glCullFace(GL_FRONT);
 
    /* Set up shader. */
    glUseProgram( shd->program );
@@ -575,7 +577,7 @@ static void object_renderShadow( const Object *obj, const mat4 *H )
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
-   glDisable(GL_CULL_FACE);
+   //glDisable(GL_CULL_FACE);
 
    gl_checkErr();
 }
@@ -587,8 +589,8 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
    glViewport(0, 0, SCREEN_W, SCREEN_H );
 
    /* Cull faces. */
-   glEnable(GL_CULL_FACE);
-   glCullFace(GL_BACK);
+   //glEnable(GL_CULL_FACE);
+   //glCullFace(GL_BACK);
 
    for (size_t i=0; i<obj->nnodes; i++)
       object_renderNodeMesh( obj, &obj->nodes[i], H );
@@ -600,7 +602,7 @@ static void object_renderMesh( const Object *obj, const mat4 *H )
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
-   glDisable(GL_CULL_FACE);
+   //glDisable(GL_CULL_FACE);
 
    gl_checkErr();
 }
@@ -829,6 +831,7 @@ int object_init (void)
    }
    shd->nlights         = glGetUniformLocation( shd->program, "u_nlights" );
    shd->shadowmap       = glGetUniformLocation( shd->program, "shadowmap" );
+   shd->shadowmap_tex   = glGetUniformLocation( shd->program, "shadowmap_tex" );
    glUseProgram(0);
    gl_checkErr();
 
