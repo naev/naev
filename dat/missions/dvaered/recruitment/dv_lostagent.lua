@@ -16,11 +16,11 @@
 </mission>
 --]]
 --[[
--- Dvaered Delivery
--- This is the mission of the Dvaered Recruitment arc when the player starts to commit with Dvaered.
--- The player has to transmit a parcel to an other private pilot on Zhiru. The destination of the parcel is the Empire.
--- But the other pilot is missing and the player has to do a series of tasks.
--- At some point, the FLF is suspected to have abducted the agent (pretext to get the player enemy with them)
+   Dvaered Delivery
+   This is the mission of the Dvaered Recruitment arc when the player starts to commit with Dvaered.
+   The player has to transmit a parcel to an other private pilot on Zhiru. The destination of the parcel is the Empire.
+   But the other pilot is missing and the player has to do a series of tasks.
+   At some point, the FLF is suspected to have abducted the agent (pretext to get the player enemy with them)
 
    Stages :
    0) Way to Zhiru to meet Dvaered contact agent
@@ -427,11 +427,12 @@ Then you would have to bare that monstrous responsability on your shoulders. Jus
 end
 
 -- Spawn the Shaky Swan for the player to disable them
+local dhook
 function spawnSwan()
    mem.swan = pilot.add("Lancelot", "FLF", mem.flfoys, _("Shaky Swan"), {ai="mercenary"})
    mem.swan:setHilight()
    mem.swan:setVisible() -- Not very elegant...
-   dhook = hook.pilot(swan,"disable","swanDisabled")
+   dhook = hook.pilot(mem.swan,"disable","swanDisabled")
    hook.pilot(mem.swan,"exploded","swanExploded")
    hook.pilot(mem.swan,"board","swanBoarded")
    hook.pilot(mem.swan,"land","swanEscaped")
