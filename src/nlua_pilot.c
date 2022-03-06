@@ -178,6 +178,7 @@ static int pilotL_face( lua_State *L );
 static int pilotL_brake( lua_State *L );
 static int pilotL_follow( lua_State *L );
 static int pilotL_attack( lua_State *L );
+static int pilotL_board( lua_State *L );
 static int pilotL_runaway( lua_State *L );
 static int pilotL_gather( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
@@ -326,6 +327,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "brake", pilotL_brake },
    { "follow", pilotL_follow },
    { "attack", pilotL_attack },
+   { "board", pilotL_board },
    { "runaway", pilotL_runaway },
    { "gather", pilotL_gather },
    { "hyperspace", pilotL_hyperspace },
@@ -4562,6 +4564,36 @@ static int pilotL_attack( lua_State *L )
    /* Set the task. */
    t        = pilotL_newtask( L, p, "attack_forced" );
    lua_pushpilot(L, pid);
+   t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+
+   return 0;
+}
+
+/**
+ * @brief Makes the pilot board another pilot.
+ *
+ * Pilot must be under manual control for this to work.
+ *
+ * @usage p:board( another_pilot ) -- Attack another pilot
+ *
+ *    @luatparam Pilot p Pilot to tell to board another pilot.
+ *    @luatparam Pilot pt Target pilot to board
+ * @luasee control
+ * @luafunc board
+ */
+static int pilotL_board( lua_State *L )
+{
+   Pilot *p, *pt;
+   Task *t;
+
+
+   /* Get parameters. */
+   p  = luaL_validpilot(L,1);
+   pt = luaL_validpilot(L,2);
+
+   /* Set the task. */
+   t        = pilotL_newtask( L, p, "board" );
+   lua_pushpilot(L, pt->id);
    t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
 
    return 0;
