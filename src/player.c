@@ -21,6 +21,7 @@
 #include "comm.h"
 #include "conf.h"
 #include "dialogue.h"
+#include "difficulty.h"
 #include "economy.h"
 #include "equipment.h"
 #include "escort.h"
@@ -757,6 +758,8 @@ void player_cleanup (void)
    player.gui = NULL;
    free( player.chapter );
    player.chapter = NULL;
+   free( player.difficulty );
+   player.difficulty = NULL;
 
    /* Clear omsg. */
    omsg_cleanup();
@@ -3100,6 +3103,8 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_attr(writer,"name","%s",player.name);
    xmlw_elem(writer,"credits","%"CREDITS_PRI,player.p->credits);
    xmlw_elem(writer,"chapter","%s",player.chapter);
+   if (player.difficulty != NULL)
+      xmlw_elem(writer,"difficulty","%s",player.difficulty);
    if (player.gui != NULL)
       xmlw_elem(writer,"gui","%s",player.gui);
    xmlw_elem(writer,"guiOverride","%d",player.guiOverride);
@@ -3438,6 +3443,8 @@ Spob* player_load( xmlNodePtr parent )
    /* Defaults as necessary. */
    if (player.chapter==NULL)
       player.chapter = strdup( start_chapter() );
+   if (player.difficulty!=NULL)
+      difficulty_set( difficulty_get(player.difficulty) );
 
    return pnt;
 }

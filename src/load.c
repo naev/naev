@@ -159,6 +159,7 @@ static int load_load( nsave_t *save, const char *path )
             xmlr_strd(node, "location", save->spob);
             xmlr_ulong(node, "credits", save->credits);
             xmlr_strd(node, "chapter", save->chapter);
+            xmlr_strd(node, "difficulty", save->difficulty);
 
             /* Time. */
             if (xml_isNode(node, "time")) {
@@ -390,6 +391,7 @@ void load_free (void)
       free(ns->data);
       free(ns->spob);
       free(ns->chapter);
+      free(ns->difficulty);
       free(ns->shipname);
       free(ns->shipmodel);
    }
