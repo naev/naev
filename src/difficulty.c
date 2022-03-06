@@ -119,7 +119,13 @@ const Difficulty *difficulty_get( const char *name )
 {
    if (name==NULL)
       return difficulty_default;
-   return NULL;
+   for (int i=0; i<array_size(difficulty_stack); i++) {
+      const Difficulty *d = &difficulty_stack[i];
+      if (strcmp(name, d->name)==0)
+         return d;
+   }
+   WARN(_("Uknown difficulty setting '%s'"), name);
+   return difficulty_default;
 }
 
 /**
@@ -127,7 +133,7 @@ const Difficulty *difficulty_get( const char *name )
  */
 void difficulty_set( const Difficulty *d )
 {
-   difficulty_current = d;
+   difficulty_current = (d!=NULL) ? d : difficulty_default;
 }
 
 /**
