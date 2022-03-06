@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-02-19 12:48-0500\n"
-"PO-Revision-Date: 2022-02-27 17:57+0000\n"
+"PO-Revision-Date: 2022-03-06 18:00+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "ja/>\n"
@@ -41,7 +41,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.11.1-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: dat/intro:2
 msgid ""
@@ -26880,31 +26880,31 @@ msgstr "ガントレットのファン"
 
 #: dat/events/dvaered/totoran.lua:31
 msgid "A person enjoying their time at the station."
-msgstr ""
+msgstr "ステーションにいる時間を楽しんでいる人。"
 
 #: dat/events/dvaered/totoran.lua:32
 msgid "An individual taking a break from viewing the action."
-msgstr ""
+msgstr "戦いを見てからひと息入れている人。"
 
 #: dat/events/dvaered/totoran.lua:33
 msgid "A spectator that looks strangely out of place."
-msgstr ""
+msgstr "奇妙にも場違いに見える観客。"
 
 #: dat/events/dvaered/totoran.lua:34
 msgid "A person enjoying some drinks."
-msgstr ""
+msgstr "飲み物を楽しんでいる人。"
 
 #: dat/events/dvaered/totoran.lua:37
 msgid ""
 "\"Sometimes when watching some of the competitions, I forget it is all just "
 "virtual reality.\""
-msgstr ""
+msgstr "｢ときどき競技をいくつか見ていると、ただの仮想現実でしかないことを忘れるね｣"
 
 #: dat/events/dvaered/totoran.lua:38
 msgid ""
 "\"The realism of virtual reality here is impressive! It almost feels like "
 "it's real!\""
-msgstr ""
+msgstr "｢ここの仮想現実の写実主義は感動的だね！　本物みたいに感じそうになるよ｣"
 
 #: dat/events/dvaered/totoran.lua:40 dat/events/minerva/station.lua:72
 msgid ""
@@ -26918,7 +26918,8 @@ msgstr ""
 msgid ""
 "\"The Dvaered sure know how to put on a good show. I love seeing it rain "
 "Mace Rockets!\""
-msgstr ""
+msgstr "｢ドベーレッドはよい見世物をやる方法をたしかに知ってるね。メイスロケットの雨を"
+"みるのが大好きなんだよ！｣"
 
 #: dat/events/dvaered/totoran.lua:44
 msgid ""
@@ -26926,60 +26927,67 @@ msgid ""
 "enter the virtual reality competitions. I would love to try fly one of those "
 "majestic Dvaered Goddards.\""
 msgstr ""
+"｢仮想現実の競技に参加するのに使おうとする船は、自分自身の船であることを要求さ"
+"れるのは残念だね。あの堂々としたドベーレッドのゴダードを飛ばせたらほんとうに"
+"楽しいだろうに｣"
 
 #: dat/events/dvaered/totoran.lua:45
 msgid ""
 "\"I like watching the competitions between fighters, it's incredible all the "
 "moves they can pull off.\""
-msgstr ""
+msgstr "｢戦闘機どうしの競技を見るのが好きなんだ。競技者がやってのける機動はみんな途方"
+"もないよ｣"
 
 #: dat/events/dvaered/totoran.lua:46
 msgid ""
 "\"I tried to compete in my Llama, but it doesn't stand a chance against even "
 "a single Hyena.\""
-msgstr ""
+msgstr "｢自分のラマで参加しようとしてみたんだけど、たった 1 "
+"機のハイエナにも勝てる見こみはないね｣"
 
 #: dat/events/dvaered/totoran.lua:47
 msgid ""
 "\"I was always told that Dvaered technology was primitive, but the virtual "
 "reality of the Crimson Gauntlet is incredible!\""
-msgstr ""
+msgstr "｢ドベーレッドの技術は原始的だといつもいってたんだけど、クリムゾン・ガントレッ"
+"トの仮想現実は驚きだね！｣"
 
 #: dat/events/dvaered/totoran.lua:48
 msgid ""
 "\"There's nothing quite like seeing two capital ships duke it out. I love "
 "watching railguns blasting away.\""
-msgstr ""
+msgstr "｢2 隻の主力艦が殴りあうのを見られるのはあまりありそうじゃないよね。レールガン"
+"が撃ちつづけられるのを見るのは大好きだよ｣"
 
 #: dat/events/dvaered/totoran.lua:49
 msgid ""
 "\"I used to think the Za'lek virtual games were great, but this is so much "
 "better!\""
-msgstr ""
+msgstr "｢ザレクの仮想ゲームはすごいと思ってたんだけど、これはずっといいね！｣"
 
 #: dat/events/dvaered/totoran.lua:52
 msgid "Gauntlet Pilot"
-msgstr ""
+msgstr "ガントレットのパイロット"
 
 #: dat/events/dvaered/totoran.lua:53
 msgid "Resting Pilot"
-msgstr ""
+msgstr "休憩しているパイロット"
 
 #: dat/events/dvaered/totoran.lua:54
 msgid "Tired Pilot"
-msgstr ""
+msgstr "くたびれているパイロット"
 
 #: dat/events/dvaered/totoran.lua:57
 msgid "A pilot enjoying some downtime between competitions."
-msgstr ""
+msgstr "競技の休止時間を楽しんでいるパイロット。"
 
 #: dat/events/dvaered/totoran.lua:58
 msgid "A tired pilot taking a break."
-msgstr ""
+msgstr "休憩中のくたびれたパイロット。"
 
 #: dat/events/dvaered/totoran.lua:59
 msgid "A pilot lounging around."
-msgstr ""
+msgstr "のんびりしているパイロット。"
 
 #: dat/events/dvaered/totoran.lua:62
 msgid ""
@@ -26987,55 +26995,67 @@ msgid ""
 "violence, but I've been destroying ships long before I started participating "
 "in the Crimson Gauntlet!\""
 msgstr ""
+"｢クリムゾン・ガントレットが暴力を助長して奨励しているという人もいるね。でもわ"
+"たしはクリムゾン・ガントレットに参加しはじめるずっとまえから船を破壊してたよ"
+"！｣"
 
 #: dat/events/dvaered/totoran.lua:64
 msgid ""
 "\"Hey, didn't I see you flying a {ship} in the Crimson Gauntlet? Nice flying."
 "\""
-msgstr ""
+msgstr "｢ちょっと、あなたがクリムゾン・ガントレットで{ship}を飛ばしているのを見かけな"
+"かかったかな？　うまく飛ばしてたね｣"
 
 #: dat/events/dvaered/totoran.lua:67
 msgid ""
 "\"I was doing so well in my Hyena, but it just lacks the firepower to take "
 "on larger ships. Maybe I should upgrade to a Vendetta.\""
-msgstr ""
+msgstr "｢ハイエナでとてもうまくやっていたんだけど、大きな船に与える火力がちょっと不足"
+"してるね。たぶんベンデッタに格上げすべきなんだな｣"
 
 #: dat/events/dvaered/totoran.lua:68
 msgid ""
 "\"The Crimson Gauntlet has really taught me to appreciate the small things "
 "in life, you know, blowing up your enemies with mace rockets and such.\""
 msgstr ""
+"｢クリムゾン・ガントレットは人生における小さなものごとに感謝するってことをほん"
+"とうに教えてくれたよ。ほら、メイスロケットとかで敵を吹き飛ばしながらね｣"
 
 #: dat/events/dvaered/totoran.lua:69
 msgid ""
 "\"I used to be a pretty sloppy pilot before participating in the Crimson "
 "Gauntlet. I still am, but I used to be too.\""
-msgstr ""
+msgstr "｢かつてはかなりぐちっぽいパイロットだったんだけど、それからクリムゾン・ガント"
+"レットに参加したんだよ。まだそうだけど、まえもだったってこと｣"
 
 #: dat/events/dvaered/totoran.lua:70
 msgid ""
 "\"Sometimes I get motion sickness from the virtual reality. What's more "
 "troublesome is it also happens when I fly my real ship!\""
-msgstr ""
+msgstr "｢ときどき仮想現実で乗り物酔いをすることがある。もっとやっかいなのは、現実の船"
+"で飛んでるときにもおきることだよ！｣"
 
 #: dat/events/dvaered/totoran.lua:71
 msgid ""
 "\"Sometimes when I get blown up in Crimson Gauntlet, it takes me a while to "
 "realize I haven't actually been blown up to smithereens.\""
 msgstr ""
+"｢ときどきクリムゾン・ガントレットで吹き飛ばされたとき、ほんとうに自分がばらば"
+"らに吹き飛ばされたんじゃないって理解するのにしばらくかかるんだよ｣"
 
 #. Create random noise NPCs while avoiding duplicate messages
 #. Custom NPCs
 #. Just do random noise
 #: dat/events/dvaered/totoran.lua:121
 msgid "You approach the Crimson Gauntlet guide."
-msgstr ""
+msgstr "あなたはクリムゾン・ガントレットの案内人に近づいた。"
 
 #: dat/events/dvaered/totoran.lua:123
 msgid ""
 "\"Hello and welcome to the Crimson Gauntlet! You have {emblems}. What would "
 "you like to do?\""
-msgstr ""
+msgstr "｢こんにちは、そしてクリムゾン・ガントレットにようこそ！　あなたは "
+"{emblems}を持っています。どういたしましょうか？｣"
 
 #: dat/events/dvaered/totoran.lua:125 dat/events/minerva/station.lua:217
 msgid "Information"
@@ -27043,7 +27063,7 @@ msgstr "情報"
 
 #: dat/events/dvaered/totoran.lua:126
 msgid "Trade Emblems"
-msgstr ""
+msgstr "記章を交換する"
 
 #. TODO add some other more info text
 #: dat/events/dvaered/totoran.lua:127 dat/events/minerva/station.lua:219
@@ -27061,23 +27081,23 @@ msgstr "離れる"
 
 #: dat/events/dvaered/totoran.lua:131
 msgid "What would you like to know about?"
-msgstr ""
+msgstr "なにについて知りたいですか？"
 
 #: dat/events/dvaered/totoran.lua:135
 msgid "Gauntlet History"
-msgstr ""
+msgstr "ガントレットの歴史"
 
 #: dat/events/dvaered/totoran.lua:136
 msgid "Crimson Challenge"
-msgstr ""
+msgstr "クリムゾンの挑戦"
 
 #: dat/events/dvaered/totoran.lua:137
 msgid "Totoran Emblems"
-msgstr ""
+msgstr "トトーランの記章"
 
 #: dat/events/dvaered/totoran.lua:138
 msgid "Nothing."
-msgstr ""
+msgstr "なにも"
 
 #: dat/events/dvaered/totoran.lua:142
 msgid ""
@@ -27086,6 +27106,9 @@ msgid ""
 "is scan your ship and its outfits, and you will be ready to participate in "
 "all the challenges."
 msgstr ""
+"クリムゾン・ガントレットは自分の船を使った仮想現実内での戦いを経験させてくれ"
+"ます。本物の損害については心配する必要がありません。あなたの船と艤装品をスキ"
+"ャンするだけで、すべての挑戦に参加する準備が整います。"
 
 #. incident is 593:3726.4663
 #: dat/events/dvaered/totoran.lua:147
@@ -27097,6 +27120,12 @@ msgid ""
 "to virtual reality, and now the Crimson Gauntlet boasts some of the best "
 "full immersion virtual reality experiences in the Universe."
 msgstr ""
+"もともとクリムゾン・ガントレットは UST 568 の中頃に、ドベーレッド軍の訓練のた"
+"めに創設されました。もちろん、その当時はこのようにすぐれた仮想現実技術をもっ"
+"ていなかったので、じっさいの戦いをかわりに使っていました。しかし、事故や負傷"
+"者の数が増えていったので、けっきょく仮想現実への移行を開始することになりまし"
+"た。そして今、クリムゾン・ガントレットは宇宙で屈指の完全没入型仮想現実環境で"
+"あることを誇っています。"
 
 #: dat/events/dvaered/totoran.lua:148
 msgid ""
@@ -27107,6 +27136,11 @@ msgid ""
 "having a fear of dying. If your ship is destroyed, you are only dropped out "
 "of the virtual reality environment."
 msgstr ""
+"最終的には、戦士としての気質を一般人のなかにも奨励しようとして、"
+"これが作られてから 20 周期あとの UST 588 に、クリムゾン・ガントレットは仮想環"
+"境の実験として一般大衆に公開されました。ここは厳しい宇宙の戦いを死の恐怖なし"
+"に経験できる宇宙でも数少ない場所のひとつです。船が破壊されても、仮想現実環境"
+"から脱落するだけなのです。"
 
 #: dat/events/dvaered/totoran.lua:149
 msgid ""
@@ -27114,6 +27148,9 @@ msgid ""
 "by scouting agencies from across the Universe to find good pilots. Not to "
 "mention all the prizes that can be won from competing in the tournaments."
 msgstr ""
+"有名なパイロットの多くがここに自分の編隊を持っています。そのうえ宇宙じゅうか"
+"ら人材斡旋業者がすぐれたパイロットをさがしによく来ています。そしてまったくい"
+"うまでもないですが、勝ち抜き戦では賞金を勝ちとることができます。"
 
 #: dat/events/dvaered/totoran.lua:153
 msgid ""
@@ -27123,6 +27160,11 @@ msgid ""
 "as cruisers or carriers. Once you enter a specific challenge, you will face "
 "waves of increasingly hard opponents which you must defeat."
 msgstr ""
+"クリムゾン・ガントレットの挑戦は、3 種類に分けられた一連の挑戦です。小競りあ"
+"いは戦闘機や爆撃機のような小型の船むきのもので、戦士はコルベットや駆逐艦のよ"
+"うな船むきのもので、軍閥領袖は巡洋艦や母艦のような大型の船むきのものです。特"
+"定の挑戦に参加すると、倒さなければならない敵のどんどん厳しくなっていく波状攻"
+"撃に直面することになります。"
 
 #: dat/events/dvaered/totoran.lua:154
 msgid ""
@@ -27133,56 +27175,64 @@ msgid ""
 "in virtual reality, you don't have to worry about any damage to your real "
 "ships!"
 msgstr ""
+"この区分においては船種によって割増得点が得られます。一般的には、小さな船を使"
+"うと割増が与えられます。波状攻撃をすばやく一掃しても割増が得られます。倒され"
+"ると、負けるまでの合計得点によって報奨が計算されます。これはすべて仮想現実内"
+"でおこなわれるだけなので、本物の自分の船が損傷する心配をする必要はありません"
+"！"
 
 #: dat/events/dvaered/totoran.lua:162
 msgid "Is there anything else you would like to know about?"
-msgstr ""
+msgstr "ほかになにか知りたいことはありますか？"
 
 #: dat/events/dvaered/totoran.lua:166
 msgid "\"You have {emblems}. What would you like to trade for?\""
-msgstr ""
+msgstr "｢あなたは {emblems}を持っています。なにと交換したいですか？｣"
 
 #: dat/events/dvaered/totoran.lua:168
 msgid "Unlock Warrior Challenge"
-msgstr ""
+msgstr "戦士の挑戦に参加できるようにする"
 
 #: dat/events/dvaered/totoran.lua:169
 msgid ""
 "Unlocks participation in the difficult Warrior Challenge meant for Corvette "
 "and Destroyer-class ships."
-msgstr ""
+msgstr "コルベットや駆逐艦級の船を使う、困難な戦士の挑戦に参加できるようにする"
 
 #: dat/events/dvaered/totoran.lua:170
 msgid "Unlock Warlord Challenge"
-msgstr ""
+msgstr "軍閥領袖の挑戦に参加できるようにする"
 
 #: dat/events/dvaered/totoran.lua:171
 msgid ""
 "Unlocks participation in the most difficult Warlord Challenge meant for "
 "Cruiser, Carrier, and Battleship-class ships."
-msgstr ""
+msgstr "巡洋艦、母艦、戦艦級の船を使う、もっとも困難な軍閥領袖の挑戦に参加できるよう"
+"にする"
 
 #: dat/events/dvaered/totoran.lua:173
 msgid "Unlock Double Damage Enemies Perk"
-msgstr ""
+msgstr "敵への二倍打撃付与を可能にする"
 
 #: dat/events/dvaered/totoran.lua:174
 msgid ""
 "Unlocks the Double Damage Enemies Perk, which causes all enemies to double "
 "the amount of damage. While this increases the challenge difficulty, it also "
 "immensely increases the rewards."
-msgstr ""
+msgstr "敵への二倍打撃付与を可能にする。これはすべての敵が二倍の損害を与えられるよう"
+"になるものだ。挑戦の難易度が増加するが、報奨もかなり増加する"
 
 #: dat/events/dvaered/totoran.lua:175
 msgid "Unlock No Healing Perk"
-msgstr ""
+msgstr "修復なし付与を可能にする"
 
 #: dat/events/dvaered/totoran.lua:176
 msgid ""
 "Unlocks the No Healing Perk, which makes it so you don't get healed between "
 "waves. While this increases the challenge difficulty, it also increases the "
 "rewards."
-msgstr ""
+msgstr "修復なし付与をを可能にする。これは波状攻撃のあいだに修復されなくなるものだ。"
+"挑戦の難易度が増加するが、報奨も増加する"
 
 #. Jump in case of 'Back'
 #. Not enough money.
@@ -27212,6 +27262,9 @@ msgid ""
 "the '{item}'.\n"
 "Is there anything else you would like to purchase?\""
 msgstr ""
+"｢あなたは {emblems}しか持っていません。{item}を購入するにはさらに "
+"{emblems_more}が必要です。\n"
+"｢ほかになにか購入したいものはありますか？｣"
 
 #: dat/events/dvaered/totoran.lua:232
 msgid ""
@@ -27219,6 +27272,8 @@ msgid ""
 "as follows:\"\n"
 "#w{description}#0\""
 msgstr ""
+"｢ほんとうに#w{name}#0と交換したいですか？　これの説明は次のとおりです。\n"
+"｢#w{description}#0｣"
 
 #: dat/events/dvaered/totoran.lua:237 dat/events/minerva/station.lua:344
 #: dat/events/minerva/station.lua:371
@@ -27235,7 +27290,7 @@ msgstr "取り消し"
 
 #: dat/events/dvaered/totoran.lua:252
 msgid "\"Hope you enjoy your purchase!\""
-msgstr ""
+msgstr "｢購入したもので楽しんでください｣"
 
 #: dat/events/dvaered/totoran.lua:256 dat/events/minerva/station.lua:635
 #: dat/missions/minerva/kex1.lua:229 dat/missions/minerva/kex2.lua:208
@@ -27702,7 +27757,7 @@ msgstr ""
 "船の名前 : {name}\n"
 "船 : {ship}\n"
 "頭金 : {deposit}\n"
-"料金 : 任務の売上の {royalty:.1f}%"
+"料金 : 任務売上の {royalty_percent:.1f}%"
 
 #: dat/events/hired_escorts.lua:153
 msgid ""
@@ -27710,7 +27765,7 @@ msgid ""
 "Current total royalties: {total:.1f}% of mission earnings"
 msgstr ""
 "あなたの所持金 : {credits}\n"
-"現在の合計料金 : 任務の売上の {total:.1f}%"
+"現在の合計料金 : 任務売上の {total:.1f}%"
 
 #. Clean up dead escorts so it doesn't build up, and create NPCs for
 #. existing escorts.
@@ -28411,10 +28466,11 @@ msgid ""
 "for a living? Oh wait, I'm a damn male.\"\n"
 "They continue rambling furiously."
 msgstr ""
-"｢とんでもないアヒルだ！　くそみたいにできないサイバネティックインプラントとは"
+"｢とんでもないアヒルだ！　くそみたいに使えないサイバネティックインプラントとは"
 "名ばかりのこのくだらないものもついている。いったいおれがアヒルとしてなにをや"
-"ることになっているのか？　床にくそをするのか？　鳥の餌を食うのか？　そいつは"
-"どんな一生なんだ？　たぶん卵をひりだして生活のために売ることができるな？　"
+"ることになっているのか？　床にくそをするのか？　鳥の餌を食うのか？　"
+"そいつはどんな一生なんだ？　"
+"たぶん卵をひりだして生活のために売ることができるな？　"
 "おっと待った、おれはくそったれのオスだった｣\n"
 "アヒルは怒り狂ってとりとめもなくしゃべりつづけた。"
 
@@ -28581,9 +28637,9 @@ msgid ""
 msgstr ""
 "｢ある日、なにか思いだせないことがおきた。ただどうも事故かなにかに巻きこまれた"
 "ようだな。すべてが暗くなって、目が覚めたときには、あのむかつく野郎の研究室の"
-"中にいて、切り刻まれて改造されていた。あの心に傷を残す経験すべての記憶はじつ"
-"はあまり残っていない。まじりけない苦痛で意識を失ってたら、ほんとうに多くを覚"
-"えているなんて期待できないものなんだ｣"
+"中にいて、切り刻まれて改造されていた。じっさい、あの心に傷を残す経験をぜんぶ"
+"よく記憶しているわけじゃないんだ。まじりけない苦痛で意識を失ってたら、ほんと"
+"うに多くを覚えているなんて期待できないものなんだ｣"
 
 #: dat/events/minerva/chicken_rendezvous.lua:144
 msgid ""
@@ -28773,8 +28829,8 @@ msgid ""
 "THE FAVOURITE OF THE EMPEROR'S THIRD PET IGUANA'S CARETAKER.\""
 msgstr ""
 "｢伝統的なミネルバのやりかたで、くじ引きをおこなうつもりです。くじを買った人な"
-"らだれでも、皇帝の 3 番めのペットのイグアナの世話役が愛好する、温泉ですごす忘"
-"れられない夜に応募できます｣"
+"らだれでも、皇帝の 3 番めのペットのイグアナの世話役が愛好する、この温泉ですご"
+"す忘れられない夜に応募できます｣"
 
 #: dat/events/minerva/spa_propaganda.lua:35
 msgid ""
@@ -29308,7 +29364,7 @@ msgstr "{item} ({tokens})"
 #. Add special ticket
 #: dat/events/minerva/station.lua:330
 msgid "Special Spa Ticket ({tokens})"
-msgstr "特別温泉チケット ({tokens})"
+msgstr "特別温泉くじ ({tokens})"
 
 #. Buying stuff
 #: dat/events/minerva/station.lua:340
@@ -29336,10 +29392,10 @@ msgid ""
 "\"THIS TICKET WILL ALLOW YOU TO ENTER A LOTTERY TO WIN AN EXCLUSIVE RELAXING "
 "TIME AT THE MINERVA STATION ALL NATURAL SPA WITH CYBORG CHICKEN.\""
 msgstr ""
-"｢ほんとうに高級限定品の特別温泉チケットと交換したいですか？\n"
-"｢このチケットで、あなたはくじ引きに参加できるようになります。そのくじに勝つ"
-"と、サイボーグチキンといっしょのミネルバ・ステーション 100% 天然温泉での専用"
-"リラックスタイムが獲得できます｣"
+"｢ほんとうに高級限定品の特別温泉くじと交換したいですか？\n"
+"｢このくじで、あなたはくじ引きに参加できるようになります。そのくじに勝つと、サ"
+"イボーグチキンといっしょのミネルバ・ステーション 100% "
+"天然温泉での専用リラックスタイムが獲得できます｣"
 
 #. Handle random bar events if necessary
 #. Not adding to queue first
@@ -49900,7 +49956,7 @@ msgstr ""
 #: dat/missions/minerva/kex1.lua:128 dat/missions/minerva/kex2.lua:150
 #: dat/missions/minerva/kex3.lua:190 dat/missions/minerva/kex4.lua:187
 msgid "\"What's up kid?\""
-msgstr "｢どうした、若者？｣"
+msgstr "｢どうかな、若者？｣"
 
 #: dat/missions/minerva/kex1.lua:131
 msgid "Ask about the station"
@@ -49945,7 +50001,7 @@ msgid ""
 msgstr ""
 "｢道理を聞くわけもなかったから、ついには貯金をぜんぶなくしてしまった。そいつは"
 "けっきょくステーションの警備員とけんかになって、背骨を折って担架で連れていか"
-"れたよ。たいしてひどくはなかったな｣"
+"れたよ。あまり感じがいいものじゃなかったな｣"
 
 #: dat/missions/minerva/kex1.lua:147
 msgid ""
@@ -50484,10 +50540,10 @@ msgid ""
 "to access their main database, however, I'm going to need you to upload it "
 "by hand.\""
 msgstr ""
-"｢枠箱にあったほかの文書から、さらに情報を得られた。細かい保安のいくつかでは、"
-"かなりいいかげんだったみたいだからな。おれはどうにか小さなプログラムをまとめ"
-"ることができた。うまくいけば男爵の主要データベースにアクセスできるはずだ。そ"
-"うはいっても、手先としてそれをアップロードするのにあんたが必要になる｣"
+"｢枠箱にあったほかの文書から、さらに情報を得られた。細かい保安のいくつかは、か"
+"なりいいかげんだったみたいだからな。おれはどうにか小さなプログラムをまとめる"
+"ことができた。うまくいけば男爵の主要データベースにアクセスできるはずだ。そう"
+"はいっても、手先としてそれをアップロードするのにあんたが必要になる｣"
 
 #: dat/missions/minerva/kex2.lua:169
 msgid ""
@@ -50497,9 +50553,9 @@ msgid ""
 "able to handle this easily. Would you be up for the challenge?\""
 msgstr ""
 "｢今回の仕事は、おそらくこのまえのやつよりずっと手ぎわが必要になるだろう。文書"
-"にはいくらか保安上の問題があったにせよ、{pnt}に行ってしまえば物事が異なってく"
-"ることになりそうだ。それでもあんたなら容易に対処できるはずだと思っている。挑"
-"戦してみるつもりはあるか？｣"
+"ではいくらか保安上の問題があることになっていたが、{pnt}に行ってしまえば物事が"
+"異なってくることになりそうだ。それでもあんたなら容易に対処できるはずだと思っ"
+"ている。挑戦してみるつもりはあるか？｣"
 
 #: dat/missions/minerva/kex2.lua:171 dat/missions/minerva/kex3.lua:170
 #: dat/missions/minerva/kex3.lua:318 dat/missions/minerva/kex4.lua:168
@@ -50677,8 +50733,8 @@ msgid ""
 "quickly locate his office and head down there."
 msgstr ""
 "あなたは着陸して、さっそくマリク少佐を見つけて仕事を片づけようとしに行った。"
-"軍事施設の地図をいちべつして、あなたはすばやく少佐の事務所がある場所を見つけ"
-"て、そこへ向かった。"
+"軍事施設の地図をいちべつし、あなたはすばやく少佐の事務所がある場所を見つけて"
+"、そこへ向かった。"
 
 #: dat/missions/minerva/kex3.lua:100
 msgid ""
@@ -50827,8 +50883,8 @@ msgid ""
 msgstr ""
 "ケクスが麻痺から目を覚まし、またあなたの方を見た。\n"
 "｢予想よりずっとたくさん手に入れてくれたようだ。これをよく調べるにはしばらくか"
-"かるだろう。1時限かそこらしたらここで会ってくれ。それまでにこの情報をすべて調"
-"査しておく｣"
+"かるだろう。1 "
+"時限かそこらしたらここで会ってくれ。それまでにこの情報をすべて調査しておく｣"
 
 #: dat/missions/minerva/kex3.lua:153
 msgid ""
@@ -50873,8 +50929,9 @@ msgid ""
 "Would you be up for paying him a visit and seeing what you can get out of "
 "him?\""
 msgstr ""
-"｢別の共謀加担者の手がかりがあるんだ。今回はドベーレッド宙域だな。マリク少佐という名のある人物も、資金洗浄に関係しているらしい。少佐のところへ行って、なに"
-"か聞きだせないか確認してもらえないか？｣"
+"｢別の共謀加担者の手がかりがあるんだ。今回はドベーレッド宙域だな。マリク少佐と"
+"いう名の人物も、資金洗浄に関係しているらしい。少佐のところへ行って、なにか聞"
+"きだせないか確認してもらえないか？｣"
 
 #: dat/missions/minerva/kex3.lua:179
 msgid ""
@@ -51008,10 +51065,10 @@ msgid ""
 "your retina.\""
 msgstr ""
 "｢おれたちは何世代にも思えるほども、そのようなことをつづけた。あそこではセンサ"
-"ーがちょっとぼやけてくるが、約 1 デカピリオドほどスキャンして、おれたちはあれ"
-"を見つけたんだ。そいつはとても大きいなにかの一部だった。ほぼ金属の骸骨のよう"
-"なものだったな。おれたちはそいつに用心しながら近づいた。なぜなら放射が基準を"
-"上まわっていたからだ。見れば見るほど、網膜の奥に焼きつくような感じがした｣"
+"ーがちょっとぼやけてくるが、約 1 デカ時限ほどスキャンして、おれたちはあれを見"
+"つけたんだ。そいつはとても大きいなにかの一部だった。ほぼ金属の骸骨のようなも"
+"のだったな。おれたちはそいつに用心しながら近づいた。なぜなら放射が基準を上ま"
+"わっていたからだ。見れば見るほど、網膜の奥に焼きつくような感じがした｣"
 
 #: dat/missions/minerva/kex3.lua:219
 msgid ""
@@ -51777,7 +51834,7 @@ msgid ""
 "They cough and you can see some blood drip from the side of their mouth."
 msgstr ""
 "｢自分が犬であることに誇りを感じていますか？　"
-"主人からほうびをもらえると考えてしっぽを振ってるんですか？｣\n"
+"主人からほうびをもらえると考えてしっぽを振っているんですか？｣\n"
 "ジーがせきをした。口の横から血がしたたるのがあなたにも見えた。"
 
 #. blaring alarm
@@ -51927,7 +51984,8 @@ msgstr "{sys}星系へストレンジラブ博士を見つけに行け。"
 msgid ""
 "You approach Kex who is sort of slumping at his usual spot. He doesn't seem "
 "much better than last time you met him."
-msgstr ""
+msgstr "あなたはケクスに近づいた。ケクスはいつもの場所にいて、いくぶん落ちこんでいる"
+"。前回会ったときよりあまりよくなっていないようだ。"
 
 #: dat/missions/minerva/kex5.lua:146
 msgid ""
@@ -51935,6 +51993,9 @@ msgid ""
 "He seems a bit nervious and speaks softer than usual.\n"
 "\"Did you do what I asked?\""
 msgstr ""
+"｢やあ、若者｣\n"
+"ケクスはちょっと神経質なように見えた。そしていつもより優しく話している。\n"
+"｢頼んだことはやってくれたか？｣"
 
 #: dat/missions/minerva/kex5.lua:151
 msgid ""
@@ -51942,6 +52003,9 @@ msgid ""
 "the laboratory, and explain how you comforted the dying Dr. Strangelove as "
 "he passed away from his mysterious illness in front of your eyes."
 msgstr ""
+"あなたはあの任務がどう進んだのかケクスに説明して、研究室で見つけたドローンを"
+"ケクスに渡した。それから、あなたの目の前でストレンジラブ博士が謎の病気によっ"
+"て亡くなるときに、死にかけていた博士をなぐさめたことも説明した。"
 
 #: dat/missions/minerva/kex5.lua:152
 msgid ""
@@ -51949,6 +52013,9 @@ msgid ""
 "\"I can't believe you comforted him. Do you know all the shit he's done! The "
 "shit he's put me through!\""
 msgstr ""
+"説明すると、ケクスはあなたを見つめ、すこし眉にしわを寄せた。\n"
+"｢なぐさめたなんて信じられない。やつのしたくそったれなことをみんな知ってるんじ"
+"ゃないのか！　そのくそをおれにやったんだぞ！｣"
 
 #: dat/missions/minerva/kex5.lua:154
 msgid ""
@@ -51956,24 +52023,34 @@ msgid ""
 "at you.\"\n"
 "He looks down sadly at the floor for a while before looking at you again."
 msgstr ""
+"｢ちくしょう、なんの安らぎも感じないだけじゃなく、あんたに怒ることもできないじ"
+"ゃないか｣\n"
+"ケクスは悲しげに床を見おろしていたが、しばらくしてからまたあなたの方を見た。"
 
 #: dat/missions/minerva/kex5.lua:159
 msgid ""
 "You explain to him how the mission went and go into graphic detail of how "
 "you finished Dr. Strangelove off by shooting at him point-blank as Kex asked."
 msgstr ""
+"あなたはケクスにあの任務がどう進んだのか説明し、ケクスが頼んだとおりにストレ"
+"ンジラブ博士を至近距離から撃って殺した状況を、生き生きと詳細に描写することま"
+"でした。"
 
 #: dat/missions/minerva/kex5.lua:160 dat/missions/minerva/kex5.lua:163
 msgid ""
 "You also hand him the droid you recovered. Kex looks at it briefly before "
 "pocketing it somewhere inside his mat of feathers."
-msgstr ""
+msgstr "そしてあなたは回収したドロイドをケクスに手渡した。ケクスはそれをちょっと見て"
+"から、もつれた羽毛の内側のどこかにしまいこんだ。"
 
 #: dat/missions/minerva/kex5.lua:162
 msgid ""
 "You explain to him how the mission went and go into details of how you "
 "finished Dr. Strangelove off by unplugging him as Kex asked."
 msgstr ""
+"あなたはケクスにあの任務がどう進んだのか説明し、ケクスが頼んだとおりにストレ"
+"ンジラブ博士を生命維持装置からはずして殺した状況を、詳しく描写することまでし"
+"た。"
 
 #: dat/missions/minerva/kex5.lua:165
 msgid ""
@@ -51981,6 +52058,9 @@ msgid ""
 "the laboratory, and explain how Dr. Strangelove died of his mysterious "
 "illness in front of your eyes."
 msgstr ""
+"あなたはあの任務がどう進んだのかケクスに説明して、研究室で見つけたドローンを"
+"ケクスに渡した。それから、あなたの目の前でストレンジラブ博士が謎の病気によっ"
+"て亡くなったことも説明した。"
 
 #: dat/missions/minerva/kex5.lua:167
 msgid ""
@@ -51989,24 +52069,29 @@ msgid ""
 "all I ever wanted since I escaped from the laboratory. All I ever dreamed "
 "of, and when I finally get it… nothing?\""
 msgstr ""
+"説明すると、ケクスはあなたを見つめ、すこし眉にしわを寄せた。\n"
+"｢おれは安らぎのようなものを期待していた。ほら、ストレンジラブを死なせてやると"
+"いうのは、おれが研究室から逃げたあと、ずっとそれだけを望んでいたことだっただ"
+"ろ。ずっとそれだけを夢見ていたんだ。そしてついにそれを手にすると……無か？｣"
 
 #: dat/missions/minerva/kex5.lua:172
 msgid ""
 "\"He's dead. He's completely toasted! Why aren't we celebrating?! Why aren't "
 "we happy!?\""
-msgstr ""
+msgstr "｢あいつは死んだ。完全に焼かれたんだ！　祝おうじゃないか ?!　喜ぼうじゃないか "
+"!?｣"
 
 #: dat/missions/minerva/kex5.lua:176
 msgid "\"We should be dancing!\""
-msgstr ""
+msgstr "｢おれたちは踊ってやるべきだ！｣"
 
 #: dat/missions/minerva/kex5.lua:183
 msgid "\"We should be partying!\""
-msgstr ""
+msgstr "｢おれたちはパーティーをやるべきだ！｣"
 
 #: dat/missions/minerva/kex5.lua:185
 msgid "\"We should…\""
-msgstr ""
+msgstr "｢おれたちは……｣"
 
 #: dat/missions/minerva/kex5.lua:189
 msgid ""
@@ -52014,18 +52099,24 @@ msgid ""
 "He looks as glum as ever.\n"
 "\"You can't kill your way out of depression…\""
 msgstr ""
+"｢くそっ、おれは自分をいつわっていたんだ｣\n"
+"ケクスはいつものようにふさぎこんで見えた。\n"
+"｢憂うつから抜けでる道を切り開くことはできない……｣"
 
 #: dat/missions/minerva/kex5.lua:192
 msgid ""
 "\"Hey, kid, I'm really grateful for all you've done, but I don't think I can "
 "go on. I just need some time alone to gather my thoughts.\""
 msgstr ""
+"｢なあ、若者。ほんとうにあんたがやってくれたことはみんな感謝している。しかしお"
+"れはつづけられるとは思わない。とにかくひとりで集中して考える時間が必要だ｣"
 
 #: dat/missions/minerva/kex5.lua:193
 msgid ""
 "\"I've scrounged up some cash, I don't think I'll be needing it. Here take "
 "it.\""
-msgstr ""
+msgstr "｢現金をいくらか捻出しておいた。おれが必要とすることはないと思う。これをもらっ"
+"てくれ｣"
 
 #: dat/missions/minerva/kex5.lua:201
 msgid ""
@@ -52033,16 +52124,22 @@ msgid ""
 "doesn't seem like he'll recover soon. Maybe there is another way to help him "
 "without getting him directly involved?"
 msgstr ""
+"それ以外はなにもいわずに、ケクスはゆっくりと陰の中に姿を消した。ケクスはすぐ"
+"に回復しそうには見えなかった。たぶん、ケクスを直接巻きこまずにケクスを助ける"
+"別の方法があるのでは？"
 
 #: dat/missions/minerva/kex5.lua:205
 msgid ""
 "You reported back to Kex, who gave up on working for his freedom due to his "
 "crippling depression. Maybe there is another way to help him indirectly?"
 msgstr ""
+"あなたはケクスのところへ報告に戻った。ケクスは無力になるほど憂うつになり、自"
+"身の自由のために働くことをあきらめた。たぶん、間接的にケクスを助ける別の方法"
+"があるのでは？"
 
 #: dat/missions/minerva/kex5.lua:214
 msgid "You never met up with Dr. Strangelove."
-msgstr ""
+msgstr "あなたはストレンジラブ博士とまったく出会わなかった。"
 
 #. Try to make sure they meet up the player
 #. No spawns nor anything in Westhaven
@@ -52406,8 +52503,8 @@ msgid ""
 "\"It failed. Like always. It failed.\""
 msgstr ""
 "｢……しかしそれはうまくいかなかった。まるで科学自体をあざわらって、わたしの顔に"
-"つばを吐いているかのようだった。まるで宇宙自体がその秘密を与えたがっていない"
-"かのようだった｣\n"
+"つばを吐きかけているかのようだった。まるで宇宙自体がその秘密を与えたがってい"
+"ないかのようだった｣\n"
 "博士は猛烈にせきをした。\n"
 "｢失敗した。いつもと同じように。失敗だった｣"
 
@@ -52482,7 +52579,7 @@ msgid ""
 "\"Why did you have to kill yourself?\"\n"
 "His sightless eyes look vacantly while tears flow down his face."
 msgstr ""
-"｢どうしてきみは自殺しなければならなかったんだ？｣\n"
+"｢どうしてきみはみずから死ぬようなことをしなければならなかったんだ？｣\n"
 "博士のなにも見えていない目がぼんやりしたように見え、同時にその顔を涙が流れお"
 "ちる。"
 
@@ -52621,11 +52718,11 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:605
 msgid "\"You are dying.\""
-msgstr "｢あなたは死にかけています｣"
+msgstr "｢あなたは死にかけているんです｣"
 
 #: dat/missions/minerva/kex5.lua:606
 msgid "\"It is over.\""
-msgstr "｢これで終わりです｣"
+msgstr "｢もう終わりです｣"
 
 #: dat/missions/minerva/kex5.lua:622
 msgid ""
@@ -52801,6 +52898,9 @@ msgid ""
 "away. His lips begin moving and you can hear some sort of rasping sound "
 "coming out, however, you can no longer make out what he is saying."
 msgstr ""
+"あなたは博士の生命維持装置をはずし、博士の顔に残ったわずかな血色が消えていく"
+"のを見ていた。博士のくちびるが動きはじめ、あなたはきしるような音がするのを聞"
+"くことができた。とはいえ、もういっていることは理解できなかった。"
 
 #: dat/missions/minerva/kex5.lua:671
 msgid ""
@@ -52809,12 +52909,18 @@ msgid ""
 "judge. You get close to him and hold his hand. It feels very cold to the "
 "touch."
 msgstr ""
+"博士の最期を見ていて、あなたの同情心が引きだされた。ストレンジラブ博士は怪物"
+"であるにしろそうでないにしろ、あなたが裁かなければならないということにはなら"
+"ない。あなたは博士に近づいて、手を握った。その手は触るととても冷たく感じられ"
+"た。"
 
 #: dat/missions/minerva/kex5.lua:672
 msgid ""
 "\"I can feel it… getting close…\"\n"
 "He seems to be looking at something in the distance."
 msgstr ""
+"｢感じられる……近づいている……｣\n"
+"博士は遠くのなにかを見ているらしかった。"
 
 #: dat/missions/minerva/kex5.lua:674
 msgid ""
@@ -52822,6 +52928,9 @@ msgid ""
 "more of curiosity and awe.\n"
 "\"It's more beautiful… than I… thought.\""
 msgstr ""
+"とつぜん、博士は目を大きく開いたが、表情は恐怖というより、好奇心や畏怖のよう"
+"だった。\n"
+"｢思っていたより……もっと……美しい｣"
 
 #: dat/missions/minerva/kex5.lua:676
 msgid ""
@@ -52829,6 +52938,9 @@ msgid ""
 "see the nebula in all its fury and glory reflected in them. You look around "
 "the room but nothing has changed."
 msgstr ""
+"あなたは博士のほぼ光沢のない目をのぞきこみ、1 秒ほどその中に映しだされるすべ"
+"ての激怒や栄光の中に星雲が見えたと思った。あなたは部屋を見まわしたが、なにも"
+"変わっていなかった。"
 
 #: dat/missions/minerva/kex5.lua:681
 msgid ""
@@ -52836,6 +52948,9 @@ msgid ""
 "doesn't seem to flinch when the cold barrel makes contact with his skin. In "
 "fact, he seems very oblivious to everything around him."
 msgstr ""
+"あなたは武器を抜き、ストレンジラブ博士のひたいに押しつけた。冷たい銃身が皮膚"
+"に接触したときも、博士はひるんだようには見えなかった。それどころか、博士は身"
+"のまわりのことすべてにまったく気づいていないようだった。"
 
 #: dat/missions/minerva/kex5.lua:682
 msgid ""
@@ -52844,10 +52959,14 @@ msgid ""
 "someone who doesn't look like they will survive the next period? Dr. "
 "Strangelove seems unresponsive to your actions."
 msgstr ""
+"あなたは自分を見つめて、しようとしていることについて考えた。ケクスは自分が望"
+"むことはこれだと考えているのだが、あと 1 時限も生きられそうもない人の命を暴力"
+"的に終わらせることになんの意味があるのか？　"
+"ストレンジラブ博士はあなたの行動に反応していないように見える。"
 
 #: dat/missions/minerva/kex5.lua:684
 msgid "Pull the trigger."
-msgstr ""
+msgstr "引き金を引く。"
 
 #. played backwards so should be down
 #: dat/missions/minerva/kex5.lua:693
@@ -52857,33 +52976,41 @@ msgid ""
 "confirming his death. You did the task and you can only hope this will bring "
 "Kex peace of mind, although you somehow doubt it."
 msgstr ""
+"あなたは引き金を引き、ストレンジラブ博士の体は完全に力が抜けて命がなくなった"
+"。生命反応監視装置は警報音を鳴らしてから静かになって、博士の死を確認した。あ"
+"なたは務めを果たしたので、これがケクスの心に安らぎをもたらすことを望む以外に"
+"できることはなかった。もっとも、あなたはなぜかそれを疑っていた。"
 
 #. Remove station
 #. Advance mission
 #: dat/missions/minerva/kex5.lua:708
 msgid "You shot a dying Dr. Strangelove in cold blood, fulfilling Kex's wish."
-msgstr ""
+msgstr "あなたは冷酷にも死にかけていたストレンジラブ博士を撃ち、ケクスの願いを果たし"
+"た。"
 
 #: dat/missions/minerva/kex5.lua:710
 msgid ""
 "You unplugged the life support system of Dr. Strangelove who quickly passed "
 "away."
-msgstr ""
+msgstr "あなたはストレンジラブ博士の生命維持システムの電源を切り、博士はすぐに亡くな"
+"った。"
 
 #: dat/missions/minerva/kex5.lua:712
 msgid "You comforted a dying Dr. Strangelove before he passed away."
-msgstr ""
+msgstr "あなたは死にかけていたストレンジラブ博士をなぐさめて、それから博士は亡くなっ"
+"た。"
 
 #: dat/missions/minerva/kex5.lua:714
 msgid "You watched Dr. Strangelove die before your eyes."
-msgstr ""
+msgstr "あなたは目の前でストレンジラブ博士が死ぬのを見守っていた。"
 
 #. And that's all folks
 #: dat/missions/minerva/kex5.lua:726
 msgid ""
 "The explosions clear and the system is once again silent except for your "
 "heavy breathing from running back to the ship."
-msgstr ""
+msgstr "爆発が消え去って、星系はまた静かになった。船に走りもどったあなたの荒い息の音"
+"を除けば。"
 
 #: dat/missions/minerva/kex5.lua:727
 msgid ""
@@ -52893,6 +53020,10 @@ msgid ""
 "inert asteroids. It is possible that the self-destruct sequence didn't "
 "affect only the ship…"
 msgstr ""
+"また星系を概観していると、あなたはストレンジラブ博士の研究室がもう検出できな"
+"くなっていることに気がついた。あるはずの場所にセンサーを向けても、惰性で動く"
+"小惑星以外はなにも見つからなかった。あの自爆処理が船以外にも作用したのはあり"
+"える話だ……"
 
 #: dat/missions/minerva/kex5.lua:728
 msgid ""
@@ -52900,6 +53031,10 @@ msgid ""
 "should get back to Kex to report what happened. Is this what Kex wanted? You "
 "feel like not even he will know the answer to that question."
 msgstr ""
+"あなたの心はちょうどいま経験したことをとりとめもなく考えつづけた。そうしなが"
+"らも、ケクスのところへ戻っておきたことを報告すべきだとあなたは理解していた。"
+"これがケクスの望んだことなのか？　"
+"その質問の答えはケクスにもわかることはないだろうとあなたは感じた。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -52983,7 +53118,7 @@ msgstr "メイッキーの父親の発見"
 
 #: dat/missions/minerva/maikki1.lua:78
 msgid "Maikki wants you to help her find her father."
-msgstr "メイッキーがあなたに助けてもらって父親を見つけたがっている。"
+msgstr "メイッキーはあなたに、父親を見つけるのを助けてもらいたがっている。"
 
 #. If not accepted, mem.misn_state will still be nil
 #. Clear just in case
@@ -52996,8 +53131,7 @@ msgstr "老人"
 
 #: dat/missions/minerva/maikki1.lua:104
 msgid "You see a nonchalant old man sipping on his drink with a carefree aura."
-msgstr ""
-"あなはた、くったくない雰囲気で飲み物をすこしずつ飲んでいる、平然とした老人に"
+msgstr "あなたは、くったくない雰囲気で飲み物をすこしずつ飲んでいる、平然とした老人に"
 "気がついた。"
 
 #. Start mission
@@ -53764,7 +53898,7 @@ msgstr "心配するな。ここじゃほかにだれもいそうにないし"
 
 #: dat/missions/minerva/maikki1.lua:584
 msgid "Let's just get this over with."
-msgstr "ちょっと片づけさせてくれ"
+msgstr "ちょっと切らせてくれ"
 
 #. Back to player
 #: dat/missions/minerva/maikki1.lua:599
@@ -54458,8 +54592,8 @@ msgid ""
 msgstr ""
 "メイッキーの目がまた輝いた。\n"
 "｢そうはいっても、あれは異常な時代たったから。宇宙とわたしたちの人類としての歴"
-"史がほとんど失われてしまった！　父とまた会えて、いろいろなことを聞けたらほん"
-"とうにうれしいでしょうね｣"
+"史がほとんど失われてしまったんですよ！　"
+"父とまた会えて、いろいろなことを聞けたらほんとうにうれしいでしょうね｣"
 
 #: dat/missions/minerva/maikki2.lua:260
 msgid ""
@@ -54469,10 +54603,10 @@ msgid ""
 "have to find out what happened and set things right!\"\n"
 "Her eyes sparkle with determination."
 msgstr ""
-"｢星雲で父の船を見つけたんだし、おきたことの真相をつきとめなければならない"
-"の！　事故だったはずはないし、ザレクがこれに関係しているのはたしかです。あな"
-"たは亡骸を見なかったんだから、父は生きてるにちがいないです！　なにがおきたの"
-"か見つけだして、きちんと片をつけないと！｣\n"
+"｢星雲で父の船を見つけたんだし、おきたことの真相はつきとめなければならないの！"
+"　事故だったはずはないし、ザレクがこれに関係しているのはたしかです。あなたは"
+"亡骸を見なかったんだから、父は生きてるにちがいないです！　"
+"なにがおきたのか見つけだして、きちんと片をつけないと！｣\n"
 "メイッキーの目は決意できらめいていた。"
 
 #: dat/missions/minerva/maikki2.lua:265
@@ -54493,7 +54627,7 @@ msgid ""
 "still all very weird though.\""
 msgstr ""
 "｢ザレクたちは思ったとおりくそったれですね。でもわたしが思っていたことを見つけ"
-"てくれてうれしいです。父はここにどこかにいて、捕虜かなにかになっていると……。"
+"てくれてうれしいです。父はここのどこかにいて、捕虜かなにかになっていると……。"
 "それでもこれはやっぱり全体的にとても妙ですけどね｣"
 
 #: dat/missions/minerva/maikki2.lua:267
@@ -54648,9 +54782,9 @@ msgid ""
 "cycles ago. It was really a mess of a project. The project leader was "
 "pushing us very hard due to the other competition.\""
 msgstr ""
-"｢とても興味があります。でも数周期まえにその線での研究に取りくむのはやめまし"
-"た。それがほんとうにめちゃくちゃな計画で。ほかに競争相手がいるというんで、研"
-"究計画の主任がわれわれにとてもきつい圧力をかけていたんです｣"
+"｢とても興味があります。でも数周期まえにその線での研究に取り組むのはやめました"
+"。それがほんとうにめちゃくちゃな計画で。ほかに競争相手がいるというんで、研究"
+"計画の主任がわれわれにとてもきつい圧力をかけていたんです｣"
 
 #: dat/missions/minerva/maikki2.lua:373
 msgid ""
@@ -54692,7 +54826,7 @@ msgstr ""
 "｢わたしが無限メタ再帰ハイパーテーブルにかんする仕事を始めたって説明しましたっ"
 "け？　これは自己参照グラスマンマニフォールド準投射をもとにした、魅力的なデー"
 "タ構造の型なんですよ。どんなメタヒューリスティックもなく暗黙的に非凸楕円反射"
-"を扱いもするんです！｣\n"
+"を扱うことさえするんです！｣\n"
 "教授は興奮している。"
 
 #: dat/missions/minerva/maikki2.lua:378
@@ -54768,7 +54902,7 @@ msgid ""
 "\""
 msgstr ""
 "｢星雲の研究はみんなそのような終わりを運命づけられています。まだ成功したものは"
-"ひとつも見ていません。どの計画でもその問題にはまじめに取りもうとしていると"
+"ひとつも見ていません。どの計画でもその問題にはまじめに取り組もうとしていると"
 "いってるのにね｣"
 
 #: dat/missions/minerva/maikki2.lua:409
@@ -54809,12 +54943,12 @@ msgid ""
 "able to solve it in no time. By the way, since the accident with my last "
 "assistant, I'm looking for a new one. Would you be interested?\""
 msgstr ""
-"｢これはわたしたちが知る材料科学を変えるかもしれません！　望みどおりほぼどのよ"
-"うな特性がある材料でも作れると想像してみてください！　わたちたちはまだ亜原子"
-"微結晶内破の問題をほんとうに解決しなければなりませんが、わたしのこのまえの研"
-"究所が残したクレーターから記録を復元しおわわれば、すぐに解決できるはずです。"
-"ついでですが、このまえの助手に事故があったので、新しい人をさがしています。興"
-"味はありませんか？｣"
+"｢これはわたしたちが知る材料科学を変えるかもしれません！　"
+"望みどおりほぼどのような特性がある材料でも作れると想像してみてください！　わ"
+"たちたちはまだ亜原子微結晶内破の問題をほんとうに解決しなければなりませんが、"
+"わたしのこのまえの研究所が残したクレーターから記録を復元しおわれば、すぐに解"
+"決できるはずです。ついでですが、このまえの助手に事故があったので、新しい人を"
+"さがしています。興味はありませんか？｣"
 
 #: dat/missions/minerva/maikki2.lua:413
 msgid "You get away as fast as you can from them as they keep on rambling."
@@ -54843,9 +54977,9 @@ msgid ""
 msgstr ""
 "｢とても心が奪われる題材です。絶対的な現実性が存在することを証明する方法はない"
 "のだから、実用的観点からすると、相対的な現実性は無限にあります。だれもが自身"
-"でもつものですね。ほかのすべてはわれわれの理解力と、ほかのものがもつ現実性に"
-"もとづくわれわれの現実性から投影されるわれわれに由来する幻影です。それはわれ"
-"われの不完全な精神によって解釈できる形でゆがめられています｣"
+"でもつものですね。ほかのすべては、ほかのものがもつ現実性にもとづくわれわれの"
+"理解力と現実性から投影されるわれわれに由来する幻影です。それはわれわれの不完"
+"全な精神によって解釈できる形でゆがめられています｣"
 
 #: dat/missions/minerva/maikki2.lua:437
 msgid ""
@@ -54900,9 +55034,9 @@ msgstr ""
 "｢そのうえさらなる疑問をもたなければならないのは、われわれの感覚器官や星雲人工"
 "遺物の存在だけでなく、われわれ自身の存在もです。われわれはあきらかに考えるこ"
 "とができるらしいし、これによってそれを示す者もいるでしょう。われわれが証明で"
-"きる唯一のことは、不完全な感覚情報からして、われわれ自身の存在です。しかしわ"
-"たしはこれも幻影だと主張します。それにわれわれの存在そのものは、われわれが証"
-"明できないことであると｣"
+"きる唯一のことは、感覚情報は不完全なので、われわれ自身の存在だけです。しかし"
+"わたしはこれも幻影だと主張します。それにわれわれの存在そのものは、われわれが"
+"証明できないことであると｣"
 
 #: dat/missions/minerva/maikki2.lua:442
 msgid ""
@@ -54920,7 +55054,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:443
 msgid "You thank them and run away while they keeps on talking to themselves."
-msgstr "あなたは教授が話つづけているあいだに礼をいい、逃げだした。"
+msgstr "あなたは教授が話つづけているあいだに礼をいい、逃げることにした。"
 
 #: dat/missions/minerva/maikki2.lua:453 dat/missions/minerva/maikki2.lua:483
 msgid "Dr. Shrimp"
@@ -55026,9 +55160,8 @@ msgstr ""
 msgid ""
 "\"I don't think most of the people remember me, but I was the one stuck "
 "doing most of the work. If you can call it that.\""
-msgstr ""
-"｢大部分のひとはわたしのことを覚えていないと思っていましたが、ほとんどの仕事を"
-"我慢してやったのはわたしですよ。あれを仕事といえるならね｣"
+msgstr "｢大部分の人はわたしのことを覚えていないと思っていましたが、ほとんどの仕事を我"
+"慢してやったのはわたしですよ。あれを仕事といえるならね｣"
 
 #: dat/missions/minerva/maikki2.lua:484
 msgid ""
@@ -55095,8 +55228,8 @@ msgid ""
 msgstr ""
 "｢ほら、小エビはうっとりするような生き物なんですよ。繁殖周期はほんとうに速いで"
 "すし、大量に繁殖するので、単純な遺伝子操作が可能です。たいていは色や身体上の"
-"性質を改良しているんですが、一部は精神面での性質もしこんでもいます。このカリ"
-"オペは、きわめて知的能力のある小エビの例ですよ｣\n"
+"性質を改良しているんですが、一部は精神面での性質もしこんでいます。このカリオ"
+"ペは、きわめて知的能力のある小エビの例ですよ｣\n"
 "小エビ博士は、隣で浮いている小エビの水槽を軽くたたいた。"
 
 #: dat/missions/minerva/maikki2.lua:513
@@ -55207,7 +55340,7 @@ msgid ""
 msgstr ""
 "｢ほら、星雲は特定の種類の放射を発しているでしょう。われわれはあまりそのことを"
 "知りませんでしたが、ほぼ気づかれないような方法で宇宙にあった破片の亜原子粒子"
-"はたしかに変わっているんです。われわれの工具はその変化を簡単に検出できました｣"
+"はたしかに変わっているんです。われわれの道具はその変化を簡単に検出できました｣"
 
 #: dat/missions/minerva/maikki2.lua:534
 msgid ""
@@ -55295,7 +55428,7 @@ msgid ""
 "out. Nobody really did much as we were all busy dealing with all the "
 "paperwork of the project cancellation.\""
 msgstr ""
-"｢研究計画が中止になると、あいつはほんとうに心配していました。とても腹をたてた"
+"｢研究計画が中止になると、あいつはほんとうに心配していました。とても腹を立てた"
 "りもしてましたよ。何日か研究室に閉じこもったりしてましたが、みんなでどうにか"
 "なだめて誘いだしたんです。じっさいのところ、だれもたいしたことはしませんでし"
 "た。計画が中止になったせいでできた書類仕事に対処してて、われわれはずっといそ"
@@ -55869,7 +56002,7 @@ msgstr ""
 "超越できる！　わたしはそれをしなければならない。やりとげなければならない！　"
 "そしてそれはうまくいった。ああきみ、たしかにうまくいったよ。肉体の不適合性に"
 "はいくらか困難があったが、適切な代替物を使って解決できた｣\n"
-"老人が躁病患者のように笑った。"
+"老人がそう病患者のように笑った。"
 
 #: dat/missions/minerva/maikki2.lua:854
 msgid ""
@@ -55914,7 +56047,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:860
 msgid "You ask what happened to the 'individuals' in the experiments."
-msgstr "あなたは実験で ｢個人たち｣ はどうなったのかたずねた。"
+msgstr "あなたは実験で ｢その人たち｣ はどうなったのかたずねた。"
 
 #: dat/missions/minerva/maikki2.lua:861
 msgid ""
@@ -57366,7 +57499,7 @@ msgid ""
 msgstr ""
 "｢心配してた。ここに無事に来てくれてうれしいよ！｣\n"
 "数人の乗員たちが、ドベーレッドのモグラを船のもっと内部の方へと連れていった。"
-"乗員たちはかなり荒っぽくてたくましい姿をしていた。"
+"乗員たちはかなり荒っぽくてたくましい姿をしている。"
 
 #: dat/missions/minerva/pirate4.lua:232
 msgid ""
@@ -57378,7 +57511,7 @@ msgstr ""
 "｢モグラのことは心配しないでくれ。これからはこっちで面倒を見るつもりだ｣\n"
 "女があなたにほほえみかけた。\n"
 "｢すべてがうまくいったら、あと二、三時限で求めている情報が手に入るだろう。そし"
-"てらもう行ける｣"
+"たらもう行ける｣"
 
 #: dat/missions/minerva/pirate4.lua:235
 msgid ""
@@ -82999,7 +83132,7 @@ msgstr "キャンセル"
 #. --
 #: dat/scripts/common/gauntlet.lua:11
 msgid "Crimson Gauntlet Guide"
-msgstr "クリムゾン・ガントレットの手引き"
+msgstr "クリムゾン・ガントレットの案内人"
 
 #: dat/scripts/common/gauntlet.lua:14
 msgid "Information on the Crimson Gauntlet."
@@ -91583,7 +91716,7 @@ msgstr "その他"
 
 #: src/land_outfits.c:554
 msgid "#oUnique#0\n"
-msgstr "#o装備しない#0\n"
+msgstr "#o無二のもの#0\n"
 
 #: src/land_outfits.c:556
 msgid "#rOnly 1 of type per ship#0\n"
