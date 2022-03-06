@@ -98,7 +98,7 @@ Red-painted ships, mace rockets and big nose drawings... This mission might be t
 
    vn.label("accept")
    sol(_([[Good choice, citizen!]]))
-   sol(fmt.f(_([[So, as said, go to {pnt} in {sys}. There, you will meet our contact agent named Boudica who will take the cargo in charge. I'll give you a datapad containing informations to identify her.
+   sol(fmt.f(_([[So, as said, go to {pnt} in {sys}. There, you will meet our contact agent named Bony Boudica who will take the cargo in charge. I'll give you a datapad containing informations to identify her.
 Oh, I almost forgot! There is one thing you are authorized to know: this cargo is transferred to the Empire as a part of the Dvaered-Empire collaboration program.]]), {pnt=mem.spob1:name(), sys=sys}))
    vn.func( function () doaccept = true end )
    vn.done()
@@ -165,7 +165,7 @@ function land()
       local agent = vn.newCharacter( _("Agent"), { image=portrait.getFullPath(agentPort) } )
       vn.transition( )
       vn.na(_([[When you step out from your ship, you remark a woman that was waiting for you on the dock. She matches the description that was made to you.]]))
-      agent(fmt.f(_([[Glad to see that you made it to our rendezvous point, {player}. My name is Boudica... I mean, it's my codename, of course.]]), {player=player.name()}))
+      agent(fmt.f(_([[Glad to see that you made it to our rendezvous point, {player}. My name is Bony Boudica... I mean, it's my codename, of course.]]), {player=player.name()}))
       agent(fmt.f(_([[I am afraid we might have an issue to deal with, you and me. The other pilot, who was supposed to take your cargo did not show up.
 But it is too risky to wait for them here. This means that we have to take the cargo to a safer destination, where the Imperials will be able to store it. I'll embark with you next time you take off, and you will go to {pnt} in {sys}.]]), {pnt=mem.spob2, sys=mem.sys2}))
 
@@ -223,7 +223,7 @@ A seemingly-unarmed man steps forward. He must be the imperial agent in charge o
       vn.done()
       vn.run()
 
-      misn.npcAdd("discussWithAg", _("Boudica"), agentPort, _("This agent is an intermediate between the Empire and Dvaered.")) -- Add boudica at the bar
+      misn.npcAdd("discussWithAg", _("Bony Boudica"), agentPort, _("This agent is an intermediate between the Empire and Dvaered.")) -- Add boudica at the bar
       misn.cargoRm( mem.cid ) -- Done with the cargo
       misn.markerRm( mem.misn_marker )
       mem.misn_state = 2
@@ -233,7 +233,7 @@ A seemingly-unarmed man steps forward. He must be the imperial agent in charge o
       vn.clear()
       vn.scene()
       local agent = vn.newCharacter( _("Intermediate"), { image=portrait.getFullPath(agentPort) } )
-      vn.na(_([[Boudica was waiting for you at the dock.]]))
+      vn.na(_([[Bony Boudica was waiting for you at the dock.]]))
       agent(fmt.f(_([[Hi, {name}. Did you have fun out there with the Imperial pilots?
 Meanwhile, our boy Ak-Ak did make his investigation. He got his cyborgs to break a few knees and now we know what happened to the lost pilot.]]),{name=player.name()}))
       agent(_([[Actually, Shaky Swan has nothing to do with that. Nor the FLF. The Empire pilot just accepted a random bounty hunt mission on their way to the rendezvous planet. And they miserably failed.]]))
@@ -263,7 +263,7 @@ And again, be ensured that your initial reward will be dramatically increased fr
       vn.clear()
       vn.scene()
       local agent = vn.newCharacter( _("Intermediate"), { image=portrait.getFullPath(agentPort) } )
-      vn.na(_([[After landing, you once again meet Boudica. And hopefully now, she has a nice reward for you.]]))
+      vn.na(_([[After landing, you once again meet Bony Boudica. And hopefully now, she has a nice reward for you.]]))
       agent(fmt.f(_([[Hi, {name}. How do you do?]]),{name=player.name()}))
       vn.menu{
          {_("Very well for someone who met a guy named 'The Death Dealer'."), "well"},
@@ -280,7 +280,7 @@ And again, be ensured that your initial reward will be dramatically increased fr
       vn.jump("well")
 
       vn.label("well")
-      agent(fmt.f(_([[Now that Chilperic Duchmol aka The Death Dealer is dead, your mission is over and it is my ultmost privilege to reward you the sum of {credits} in name of the Dvaered High Command.]]),{credits=fmt.credits(reward)}))
+      agent(fmt.f(_([[Now that Chilperic Duchmol aka The Death Dealer is no more, your mission is over and it is my ultmost privilege to reward you the sum of {credits} in name of the Dvaered High Command.]]),{credits=fmt.credits(reward)}))
       agent(_([[The fact that this mission did not go as planned is actually a rather good thing for you, you know: now you have proven to the Dvaered High Command that you are a reliable pilot. I don't know if you intend to continue working for them, but I have informations that suggest that they might offer you more work in the future.]]))
 
       vn.done()
@@ -318,7 +318,7 @@ end
 
 function loading()
    if mem.misn_state == 2 and spob.cur() == mem.spob2 then
-      misn.npcAdd("discussWithAg", _("Boudica"), agentPort, _("This agent is an intermediate between the Empire and Dvaered.")) -- Add boudica at the bar
+      misn.npcAdd("discussWithAg", _("Bony Boudica"), agentPort, _("This agent is an intermediate between the Empire and Dvaered.")) -- Add boudica at the bar
    end
 end
 
@@ -326,7 +326,7 @@ end
 function discussWithAg()
    vn.clear()
    vn.scene()
-   local agent = vn.newCharacter( _("Boudica"), { image=portrait.getFullPath(agentPort) } )
+   local agent = vn.newCharacter( _("Bony Boudica"), { image=portrait.getFullPath(agentPort) } )
 
    agent(fmt.f(_([[I don't know how much you did inderstand of our conversation on the spaceport, but we need you now to disable the ship of a pilot surnamed 'Shaky Swan'. He is supposed to be hanging around {sys} in the near future.]]),{sys=mem.flfsys}))
 
@@ -455,7 +455,7 @@ Your mission is a pitiful failure.]])
    misn.finish(false)
 end
 function swanBoarded( )
-   vntk.msg("", [[Once the boarding maneuver is over, you remember that it Boudica had explicitely requested you NOT to board the ship yourself.
+   vntk.msg("", [[Once the boarding maneuver is over, you remember that Bony Boudica had explicitely requested you NOT to board the ship yourself.
 Your mission is a failure.]])
    misn.finish(false)
 end
@@ -521,7 +521,7 @@ function duchAttacked()
    mem.duchmol:runaway( player.pilot() )
 end
 function duchExploded()
-   vntk.msg("", [[The final explosion of an hostile ship is always a pleasant sight, isn't it? It is now time to report back to Boudica.]])
+   vntk.msg("", [[The final explosion of an hostile ship is always a pleasant sight, isn't it? It is now time to report back to Bony Boudica.]])
    misn.osdActive(2)
    mem.misn_state = 8
    misn.markerRm( mem.misn_marker )
