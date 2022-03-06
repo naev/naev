@@ -15,6 +15,7 @@
 
 #include "difficulty.h"
 
+#include "conf.h"
 #include "array.h"
 #include "ndata.h"
 #include "nxml.h"
@@ -24,6 +25,7 @@
 
 static Difficulty *difficulty_stack = NULL;
 static const Difficulty *difficulty_default = NULL;
+static const Difficulty *difficulty_global  = NULL;
 static const Difficulty *difficulty_current = NULL;
 
 /**
@@ -87,6 +89,10 @@ int difficulty_load (void)
    }
    difficulty_current = difficulty_default; /* Load default. */
 
+   /* Load the global difficulty. */
+   if (conf.difficulty != NULL)
+      difficulty_global = difficulty_get( conf.difficulty );
+
    return 0;
 }
 
@@ -112,13 +118,21 @@ const Difficulty *difficulty_list (void)
    return difficulty_stack;
 }
 
+static const Difficulty *difficulty_getDefault (void)
+{
+   if (difficulty_global != NULL)
+      return difficulty_global;
+   else
+      return  difficulty_default;
+}
+
 /**
  * @brief Gets a difficulty.
  */
 const Difficulty *difficulty_get( const char *name )
 {
    if (name==NULL)
-      return difficulty_default;
+      return difficulty_getDefault();
    for (int i=0; i<array_size(difficulty_stack); i++) {
       const Difficulty *d = &difficulty_stack[i];
       if (strcmp(name, d->name)==0)
@@ -133,7 +147,10 @@ const Difficulty *difficulty_get( const char *name )
  */
 void difficulty_set( const Difficulty *d )
 {
-   difficulty_current = (d!=NULL) ? d : difficulty_default;
+   if (d==NULL)
+      difficulty_current = difficulty_getDefault();
+   else
+      difficulty_current = d;
 }
 
 /**

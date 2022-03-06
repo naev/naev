@@ -177,6 +177,7 @@ void conf_setDefaults (void)
  */
 void conf_setGameplayDefaults (void)
 {
+   conf.difficulty            = DIFFICULTY_DEFAULT;
    conf.doubletap_sens        = DOUBLETAP_SENSITIVITY_DEFAULT;
    conf.compression_velocity  = TIME_COMPRESSION_DEFAULT_MAX;
    conf.compression_mult      = TIME_COMPRESSION_DEFAULT_MULT;
@@ -387,6 +388,7 @@ int conf_loadConfig ( const char* file )
       conf_loadInt( lEnv, "font_size_small", conf.font_size_small );
 
       /* Misc. */
+      conf_loadString( lEnv, "difficulty", conf.difficulty );
       conf_loadFloat( lEnv, "compression_velocity", conf.compression_velocity );
       conf_loadFloat( lEnv, "compression_mult", conf.compression_mult );
       conf_loadBool( lEnv, "redirect_file", conf.redirect_file );
@@ -813,6 +815,16 @@ int conf_saveConfig ( const char* file )
    /* Language. */
    conf_saveComment(_("Language to use. Set to the two character identifier to the language (e.g., \"en\" for English), and nil for autodetect."));
    conf_saveString("language",conf.language);
+   conf_saveEmptyLine();
+
+   /* Difficulty. */
+   conf_saveComment(_("Global difficulty to set the game to. Can be overwritten by saved game settings. Has to match one of the difficulties defined in \"difficulty.xml\" in the data files."));
+   if (conf.difficulty==NULL) {
+      conf_saveComment("difficulty = nil");
+   }
+   else {
+      conf_saveString("difficulty",conf.difficulty);
+   }
    conf_saveEmptyLine();
 
    /* OpenGL. */
