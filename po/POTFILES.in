@@ -44,6 +44,7 @@ dat/commodities/vixilium.xml
 dat/commodities/water.xml
 dat/commodities/yttrium.xml
 dat/damagetype.xml
+dat/difficulty.xml
 dat/effects/ambush_hunter.xml
 dat/effects/antimatter_taint.xml
 dat/effects/bloodlust.xml
@@ -2798,6 +2799,8 @@ src/dev_uniedit.c
 src/dev_uniedit.h
 src/dialogue.c
 src/dialogue.h
+src/difficulty.c
+src/difficulty.h
 src/distance_field.c
 src/distance_field.h
 src/economy.c
