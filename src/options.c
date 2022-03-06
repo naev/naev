@@ -21,6 +21,7 @@
 #include "background.h"
 #include "colour.h"
 #include "dialogue.h"
+#include "difficulty.h"
 #include "input.h"
 #include "log.h"
 #include "music.h"
@@ -252,7 +253,8 @@ static void opt_gameplay( unsigned int wid )
    int cw;
    int w, h, y, x, by, l, n, i;
    const char *s;
-   char **ls;
+   char **ls, **diff_text;
+   const Difficulty *difficulty;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -291,7 +293,7 @@ static void opt_gameplay( unsigned int wid )
    y -= 40;
    by = y;
 
-   /* Compiletime stuff. */
+   /* Language support. */
    cw = (w-60)/2 - 40;
    y  = by;
    x  = 20;
@@ -310,6 +312,23 @@ static void opt_gameplay( unsigned int wid )
    }
    window_addList( wid, x+l+20, y, cw-l-50, 100, "lstLanguage", ls, n, i, NULL, NULL );
    y -= 120;
+
+   /* Game difficulty. */
+   difficulty = difficulty_getAll();
+   n = array_size(difficulty);
+   diff_text = malloc( sizeof(char*) * n );
+   for (i=0; i<n; i++)
+      diff_text[i] = strdup( difficulty[i].name );
+   if (player.p != NULL)
+      s = _("Difficulty (this save):");
+   else
+      s = _("Difficulty (global):");
+   window_addText( wid, x, y, cw, 20, 0, "txtDifficulty", NULL, NULL, s );
+   y -= 20;
+   window_addList( wid, x, y, cw, 100, "lstDifficulty", diff_text, n, 0, NULL, NULL );
+   y -= 110;
+
+   /* Compilation flags. */
    window_addText( wid, x, y, cw, 20, 0, "txtCompile",
          NULL, cHeader, _("Compilation Flags:") );
    y -= 30;
@@ -342,7 +361,6 @@ static void opt_gameplay( unsigned int wid )
    y -= window_getTextHeight(wid, "txtFlags") + 10;
 
    /* Options. */
-
    x = 20 + cw + 20;
    y  = by;
    cw += 80;

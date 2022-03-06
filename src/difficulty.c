@@ -117,7 +117,7 @@ void difficulty_free (void)
 /**
  * @brief Returns the list of difficulty modes.
  */
-const Difficulty *difficulty_list (void)
+const Difficulty *difficulty_getAll (void)
 {
    return difficulty_stack;
 }

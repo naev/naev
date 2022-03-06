@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <difficulties>
+ <difficulty name="Default" default="1">
+ </difficulty>
  <difficulty name="Story Mode">
   <armour_mod>100</armour_mod>
   <shield_mod>100</shield_mod>
@@ -27,8 +29,6 @@
   <thrust_mod>15</thrust_mod>
   <speed_mod>15</speed_mod>
   <turn_mod>15</turn_mod>
- </difficulty>
- <difficulty name="Normal Mode" default="1">
  </difficulty>
  <difficulty name="Hard Mode">
   <armour_mod>-25</armour_mod>
