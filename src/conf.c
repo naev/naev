@@ -1160,6 +1160,8 @@ void conf_copy( PlayerConf_t *dest, const PlayerConf_t *src )
    STRDUP(dev_save_sys);
    STRDUP(dev_save_map);
    STRDUP(dev_save_spob);
+   if (src->difficulty != NULL)
+      STRDUP(difficulty);
 #undef STRDUP
 }
 
@@ -1176,6 +1178,7 @@ void conf_free( PlayerConf_t *config )
    free(config->dev_save_sys);
    free(config->dev_save_map);
    free(config->dev_save_spob);
+   free(config->difficulty);
 
    /* Clear memory. */
    memset( config, 0, sizeof(PlayerConf_t) );
