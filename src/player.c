@@ -3444,9 +3444,9 @@ Spob* player_load( xmlNodePtr parent )
    if (player.chapter==NULL)
       player.chapter = strdup( start_chapter() );
    if (player.difficulty!=NULL)
-      difficulty_set( difficulty_get(player.difficulty) );
+      difficulty_setLocal( difficulty_get(player.difficulty) );
    else
-      difficulty_set( NULL ); /* Sets the default. */
+      difficulty_setLocal( NULL ); /* Sets the default. */
 
    return pnt;
 }

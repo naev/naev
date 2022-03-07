@@ -322,6 +322,7 @@ static void opt_gameplay( unsigned int wid )
    for (i=0; i<n; i++) {
       const Difficulty *d = &difficulty[i];
       diff_text[i] = strdup( _(d->name) );
+      DEBUG("d = %s, cur = %s", d->name, cur_difficulty->name);
       if (strcmp(d->name,cur_difficulty->name)==0)
          p = i;
    }
@@ -476,11 +477,11 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
       free(player.difficulty);
       if (difficulty == difficulty_get(NULL)) {
          player.difficulty = NULL;
-         difficulty_set( NULL );
+         difficulty_setLocal( NULL );
       }
       else {
          player.difficulty = strdup( difficulty->name );
-         difficulty_set( difficulty );
+         difficulty_setLocal( difficulty );
       }
    }
 

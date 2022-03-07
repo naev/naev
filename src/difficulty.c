@@ -26,6 +26,7 @@
 static Difficulty *difficulty_stack = NULL;
 static const Difficulty *difficulty_default = NULL;
 static const Difficulty *difficulty_global  = NULL;
+static const Difficulty *difficulty_local   = NULL;
 static const Difficulty *difficulty_current = NULL;
 
 /**
@@ -95,7 +96,7 @@ int difficulty_load (void)
 
    /* Load the global difficulty. */
    if (conf.difficulty != NULL)
-      difficulty_global = difficulty_get( conf.difficulty );
+      difficulty_setGlobal( difficulty_get( conf.difficulty ) );
 
    return 0;
 }
@@ -154,15 +155,14 @@ const Difficulty *difficulty_get( const char *name )
    return difficulty_default;
 }
 
-/**
- * @brief Sets the difficulty mode.
- */
-void difficulty_set( const Difficulty *d )
+static void difficulty_update (void)
 {
-   if (d==NULL)
-      difficulty_current = difficulty_getDefault();
+   if (difficulty_local != NULL)
+      difficulty_current = difficulty_local;
+   else if (difficulty_global != NULL)
+      difficulty_current = difficulty_global;
    else
-      difficulty_current = d;
+      difficulty_current = difficulty_default;
 }
 
 /**
@@ -171,6 +171,16 @@ void difficulty_set( const Difficulty *d )
 void difficulty_setGlobal( const Difficulty *d )
 {
    difficulty_global = d;
+   difficulty_update();
+}
+
+/**
+ * @brief Sets the local difficulty.
+ */
+void difficulty_setLocal( const Difficulty *d )
+{
+   difficulty_local = d;
+   difficulty_update();
 }
 
 /**
