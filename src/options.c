@@ -322,7 +322,6 @@ static void opt_gameplay( unsigned int wid )
    for (i=0; i<n; i++) {
       const Difficulty *d = &difficulty[i];
       diff_text[i] = strdup( _(d->name) );
-      DEBUG("d = %s, cur = %s", d->name, cur_difficulty->name);
       if (strcmp(d->name,cur_difficulty->name)==0)
          p = i;
    }
