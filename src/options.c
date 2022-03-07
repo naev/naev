@@ -251,10 +251,10 @@ static void opt_gameplay( unsigned int wid )
    char buf[STRMAX];
    char **paths;
    int cw;
-   int w, h, y, x, by, l, n, i;
+   int w, h, y, x, by, l, n, i, p;
    const char *s;
    char **ls, **diff_text;
-   const Difficulty *difficulty;
+   const Difficulty *difficulty, *cur_difficulty;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -317,15 +317,20 @@ static void opt_gameplay( unsigned int wid )
    difficulty = difficulty_getAll();
    n = array_size(difficulty);
    diff_text = malloc( sizeof(char*) * n );
-   for (i=0; i<n; i++)
-      diff_text[i] = strdup( difficulty[i].name );
+   p = 0;
+   cur_difficulty = difficulty_cur();
+   for (i=0; i<n; i++) {
+      diff_text[i] = strdup( _(difficulty[i].name) );
+      if (strcmp(difficulty[i].name,difficulty[i].current)==0)
+         p = i;
+   }
    if (player.p != NULL)
       s = _("Difficulty (this save):");
    else
       s = _("Difficulty (global):");
    window_addText( wid, x, y, cw, 20, 0, "txtDifficulty", NULL, NULL, s );
    y -= 20;
-   window_addList( wid, x, y, cw, 100, "lstDifficulty", diff_text, n, 0, NULL, NULL );
+   window_addList( wid, x, y, cw, 100, "lstDifficulty", diff_text, n, p, NULL, NULL );
    y -= 110;
 
    /* Compilation flags. */

@@ -115,6 +115,14 @@ void difficulty_free (void)
 }
 
 /**
+ * @brief Gets the current difficulty.
+ */
+const Difficulty *difficulty_cur (void)
+{
+   return difficulty_current;
+}
+
+/**
  * @brief Returns the list of difficulty modes.
  */
 const Difficulty *difficulty_getAll (void)
