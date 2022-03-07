@@ -320,8 +320,9 @@ static void opt_gameplay( unsigned int wid )
    p = 0;
    cur_difficulty = difficulty_cur();
    for (i=0; i<n; i++) {
-      diff_text[i] = strdup( _(difficulty[i].name) );
-      if (strcmp(difficulty[i].name,difficulty[i].current)==0)
+      const Difficulty *d = &difficulty[i];
+      diff_text[i] = strdup( _(d->name) );
+      if (strcmp(d->name,cur_difficulty->name)==0)
          p = i;
    }
    if (player.p != NULL)
