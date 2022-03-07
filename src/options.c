@@ -433,6 +433,7 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
    const char *vmsg, *tmax;
    const char *s;
    double reset;
+   const Difficulty *difficulty;
 
    /* List. */
    p = toolkit_getListPos( wid, "lstLanguage" );
@@ -454,6 +455,33 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
       gl_fontInit( &gl_defFont, _(FONT_DEFAULT_PATH), conf.font_size_def, FONT_PATH_PREFIX, 0 ); /* initializes default font to size */
       gl_fontInit( &gl_smallFont, _(FONT_DEFAULT_PATH), conf.font_size_small, FONT_PATH_PREFIX, 0 ); /* small font */
       gl_fontInit( &gl_defFontMono, _(FONT_MONOSPACE_PATH), conf.font_size_def, FONT_PATH_PREFIX, 0 );
+   }
+
+   /* Save the difficulty mode. */
+   difficulty = difficulty_getAll();
+   p = toolkit_getListPos( wid, "lstDifficulty" );
+   difficulty = &difficulty[p];
+   if (player.p == NULL) { /* Setting global difficulty. */
+      free(conf.difficulty);
+      if (difficulty->def) {
+         conf.difficulty = NULL; /* Don't save default. */
+         difficulty_setGlobal( NULL );
+      }
+      else {
+         conf.difficulty = strdup( difficulty->name );
+         difficulty_setGlobal( difficulty );
+      }
+   }
+   else { /* Local difficulty. */
+      free(player.difficulty);
+      if (difficulty == difficulty_get(NULL)) {
+         player.difficulty = NULL;
+         difficulty_set( NULL );
+      }
+      else {
+         player.difficulty = strdup( difficulty->name );
+         difficulty_set( difficulty );
+      }
    }
 
    /* Checkboxes. */
