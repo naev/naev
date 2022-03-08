@@ -318,6 +318,8 @@ static void opt_gameplay( unsigned int wid )
    n = array_size(difficulty);
    diff_text = malloc( sizeof(char*) * n );
    p = 0;
+   if (player.p == NULL)
+      difficulty_setLocal( NULL );
    cur_difficulty = difficulty_cur();
    for (i=0; i<n; i++) {
       const Difficulty *d = &difficulty[i];

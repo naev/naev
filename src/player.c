@@ -767,6 +767,9 @@ void player_cleanup (void)
    /* Stop the sounds. */
    sound_stopAll();
 
+   /* Clean up local difficulty. */
+   difficulty_setLocal( NULL );
+
    /* Reset time compression. */
    pause_setSpeed( 1. );
    sound_setSpeed( 1. );
