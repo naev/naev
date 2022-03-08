@@ -75,6 +75,7 @@ void window_addList( unsigned int wid,
    wgt->mdoubleclickevent  = lst_mdoubleclick;
    wgt->mwheelevent        = lst_mwheel;
    wgt->mmoveevent         = lst_mmove;
+   wgt_setFlag(wgt, WGT_FLAG_ALWAYSMMOVE);
    wgt->dat.lst.options    = items;
    wgt->dat.lst.noptions   = nitems;
    wgt->dat.lst.selected   = defitem; /* -1 would be none */
