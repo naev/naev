@@ -488,6 +488,9 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
          difficulty_setLocal( difficulty );
       }
    }
+   /* Apply difficulty to player ship. */
+   if (player.p != NULL)
+      pilot_calcStats( player.p ); /* TODO apply to all player's ships. */
 
    /* Checkboxes. */
    f = window_checkboxState( wid, "chkDoubletap" );
