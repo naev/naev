@@ -753,6 +753,10 @@ void naev_resize (void)
    toolkit_reposition();
    menu_main_resize();
    nebu_resize();
+
+   /* Finally do a render pass to avoid half-rendered stuff. */
+   render_all( 0., 0. );
+   SDL_GL_SwapWindow( gl_screen.window );
 }
 
 /*
