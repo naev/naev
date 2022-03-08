@@ -1470,10 +1470,13 @@ static int opt_videoSave( unsigned int wid, const char *str )
    /* Fullscreen. */
    fullscreen = window_checkboxState( wid, "chkFullscreen" );
 
-   ret = opt_setVideoMode( w, h, fullscreen, 1 );
-   window_checkboxSet( wid, "chkFullscreen", conf.fullscreen );
-   if (ret != 0)
-      return ret;
+   /* Only change if necessary or it causes some flicker. */
+   if ((conf.width != w) || (conf.height != h) || (fullscreen != conf.fullscreen)) {
+      ret = opt_setVideoMode( w, h, fullscreen, 1 );
+      window_checkboxSet( wid, "chkFullscreen", conf.fullscreen );
+      if (ret != 0)
+         return ret;
+   }
 
    /* FPS. */
    conf.fps_show = window_checkboxState( wid, "chkFPS" );
