@@ -37,4 +37,9 @@
   <item>Basic Civilian Ships</item>
   <item>Heavy Civilian Combat Ships</item>
  </tech>
+ <tags>
+  <tag>poor</tag>
+  <tag>mining</tag>
+  <tag>prison</tag>
+ </tags>
 </spob>
