@@ -1601,14 +1601,16 @@ void toolkit_render( double dt )
             w->timer -= dt;
          window_rmFlag( w, WINDOW_FADEDELAY );
          if (w->timer > 0.) {
-            use_fb = 1;
-            glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
-            glClearColor( 0., 0., 0., 0. );
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
             alpha = ease_QuadraticInOut( w->timer / w->timer_max );
             if (window_isFlag(w, WINDOW_FADEIN))
                alpha = 1. - alpha;
+
+            if (alpha < 1.) {
+               use_fb = 1;
+               glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
+               glClearColor( 0., 0., 0., 0. );
+               glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            }
          }
          else {
             if (window_isFlag(w, WINDOW_FADEOUT)) {
