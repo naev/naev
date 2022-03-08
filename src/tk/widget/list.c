@@ -575,7 +575,7 @@ int toolkit_setListOffset( unsigned int wid, const char* name, int off )
 /**
  * @brief Sets alt text for when mouse is over.
  */
-int toolkit_setAltText( unsigned int wid, const char *name, char **alttext )
+int toolkit_setListAltText( unsigned int wid, const char *name, char **alttext )
 {
    Widget *wgt = lst_getWgt( wid, name );
    if (wgt == NULL)

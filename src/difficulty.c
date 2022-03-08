@@ -54,8 +54,6 @@ int difficulty_load (void)
    node = node->xmlChildrenNode;
    do {
       xmlNodePtr cur;
-      int l;
-
       xml_onlyNodes(node);
 
       /* Initialize. */
@@ -82,14 +80,6 @@ int difficulty_load (void)
          }
          WARN(_("Difficulty '%s' has unknown node '%s'"), d.name, cur->name);
       } while (xml_nextNode(cur));
-
-      /* Create the full description. */
-      if (d.description != NULL)
-         l = scnprintf( d.display, STRMAX, "%s\n", d.description );
-      else
-         l = 0;
-      l += scnprintf( &d.display[l], STRMAX-l, _("This difficulty applies the following effect to the player ships:") );
-      ss_statsListDesc(d.stats, &d.display[l], STRMAX-l, 1 );
 
       array_push_back( &difficulty_stack, d );
    } while (xml_nextNode(node));
@@ -196,6 +186,24 @@ void difficulty_setLocal( const Difficulty *d )
 {
    difficulty_local = d;
    difficulty_update();
+}
+
+/**
+ * @brief Generates a translated display text for the difficulty.
+ *
+ * Note: must be manually freed.
+ */
+char *difficulty_display( const Difficulty *d )
+{
+   int l;
+   char *display = malloc( STRMAX );
+   l = scnprintf( display, STRMAX, _("Difficulty %s"), _(d->name) );
+   l += scnprintf( &display[l], STRMAX-l, "\n" );
+   if (d->description != NULL)
+      l += scnprintf( &display[l], STRMAX-l, "%s\n", d->description );
+   l += scnprintf( &display[l], STRMAX-l, _("This difficulty applies the following effect to the player ships:") );
+   ss_statsListDesc( d->stats, &display[l], STRMAX-l, 1 );
+   return display;
 }
 
 /**

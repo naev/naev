@@ -36,4 +36,4 @@ const char* toolkit_setList( unsigned int wid, const char *name, const char *val
 const char* toolkit_setListPos( unsigned int wid, const char *name, int pos );
 int toolkit_getListOffset( unsigned int wid, const char *name );
 int toolkit_setListOffset( unsigned int wid, const char *name, int off );
-int toolkit_setAltText( unsigned int wid, const char *name, char **alttext );
+int toolkit_setListAltText( unsigned int wid, const char *name, char **alttext );

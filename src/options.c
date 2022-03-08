@@ -253,7 +253,7 @@ static void opt_gameplay( unsigned int wid )
    int cw;
    int w, h, y, x, by, l, n, i, p;
    const char *s;
-   char **ls, **diff_text;
+   char **ls, **diff_text, **diff_alt;
    const Difficulty *difficulty, *cur_difficulty;
 
    /* Get size. */
@@ -317,6 +317,7 @@ static void opt_gameplay( unsigned int wid )
    difficulty = difficulty_getAll();
    n = array_size(difficulty);
    diff_text = malloc( sizeof(char*) * n );
+   diff_alt = malloc( sizeof(char*) * n );
    p = 0;
    if (player.p == NULL)
       difficulty_setLocal( NULL );
@@ -324,6 +325,7 @@ static void opt_gameplay( unsigned int wid )
    for (i=0; i<n; i++) {
       const Difficulty *d = &difficulty[i];
       diff_text[i] = strdup( _(d->name) );
+      diff_alt[i] = difficulty_display(d);
       if (strcmp(d->name,cur_difficulty->name)==0)
          p = i;
    }
@@ -334,6 +336,7 @@ static void opt_gameplay( unsigned int wid )
    window_addText( wid, x, y, cw, 20, 0, "txtDifficulty", NULL, NULL, s );
    y -= 20;
    window_addList( wid, x, y, cw, 100, "lstDifficulty", diff_text, n, p, NULL, NULL );
+   toolkit_setListAltText( wid, "lstDifficulty", diff_alt );
    y -= 110;
 
    /* Compilation flags. */
