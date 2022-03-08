@@ -109,7 +109,6 @@ static void lst_render( Widget* lst, double bx, double by )
 {
    double x,y, tx,ty, miny;
    double w, scroll_pos;
-   const glColour *col;
 
    w = lst->w;
    x = bx + lst->x;
@@ -145,6 +144,7 @@ static void lst_render( Widget* lst, double bx, double by )
    ty = y + lst->h - CELLPADV/2 - gl_smallFont.h;
    miny = y;
    for (int i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
+      const glColour *col;
       if (lst->dat.lst.selected==i)
          col = &cWhite;
       else
