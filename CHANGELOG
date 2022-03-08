@@ -7,6 +7,7 @@
       * Bioships go rawr (new skill system)
       * Plasma has a burning effect
       * Scripting support for space objects (spob)
+      * Support for different difficulty settings
    * Gameplay Changes
       * Weapon types are more differentiated
       * Removed nearly redundant launchers

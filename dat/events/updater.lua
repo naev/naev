@@ -20,7 +20,8 @@ local function updater0100 ()
    --[[
    Important new features we should probably introduce:
    1. Notes in the star map
-   1. New asteroids
+   2. New asteroids
+   3. Difficulties
    --]]
 end
 
