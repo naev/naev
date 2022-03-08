@@ -20,6 +20,7 @@
 #include "economy.h"
 #include "event.h"
 #include "faction.h"
+#include "difficulty.h"
 #include "gui.h"
 #include "hook.h"
 #include "land.h"
@@ -636,8 +637,15 @@ static void load_snapshot_menu_close( unsigned int wdw, const char *str )
 */
 static void display_save_info( unsigned int wid, const nsave_t *ns )
 {
-   char buf[STRMAX_SHORT], credits[ECON_CRED_STRLEN], date[64];
+   char buf[STRMAX_SHORT], credits[ECON_CRED_STRLEN], date[64], difficulty[STRMAX_SHORT];
    size_t l = 0;
+
+   if (ns->difficulty == NULL) {
+      const Difficulty *d = difficulty_cur();
+      snprintf( difficulty, sizeof(difficulty), _("%s (options)"), _(d->name) );
+   }
+   else
+      snprintf( difficulty, sizeof(difficulty), _("%s (this save)"), _(ns->difficulty) );
 
    credits2str( credits, ns->credits, 2 );
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
@@ -645,6 +653,8 @@ static void display_save_info( unsigned int wid, const nsave_t *ns )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->name );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Version:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->version );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Difficulty:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", difficulty );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Date:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", date );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Chapter:") );
