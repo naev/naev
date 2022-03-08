@@ -54,6 +54,8 @@ int difficulty_load (void)
    node = node->xmlChildrenNode;
    do {
       xmlNodePtr cur;
+      int l;
+
       xml_onlyNodes(node);
 
       /* Initialize. */
@@ -67,6 +69,11 @@ int difficulty_load (void)
       cur = node->xmlChildrenNode;
       do {
          xml_onlyNodes(cur);
+
+         /* Load the description. */
+         xmlr_strd( cur, "description", d.description );
+
+         /* Rest should be ship stats. */
          ShipStatList *ll = ss_listFromXML( cur );
          if (ll != NULL) {
             ll->next = d.stats;
@@ -75,6 +82,14 @@ int difficulty_load (void)
          }
          WARN(_("Difficulty '%s' has unknown node '%s'"), d.name, cur->name);
       } while (xml_nextNode(cur));
+
+      /* Create the full description. */
+      if (d.description != NULL)
+         l = scnprintf( d.display, STRMAX, "%s\n", d.description );
+      else
+         l = 0;
+      l += scnprintf( &d.display[l], STRMAX-l, _("This difficulty applies the following effect to the player ships:") );
+      ss_statsListDesc(d.stats, &d.display[l], STRMAX-l, 1 );
 
       array_push_back( &difficulty_stack, d );
    } while (xml_nextNode(node));

@@ -3,11 +3,13 @@
  */
 #pragma once
 
+#include "naev.h"
 #include "shipstats.h"
 
 typedef struct Difficulty_ {
    char *name; /**< Name of the difficulty. */
    char *description; /**< Description of the difficulty. */
+   char display[STRMAX]; /**< Description to display about the difficulty. */
    ShipStatList *stats; /**< Modifications done to the player on the difficulty. */
    int def;    /**< Whether or not the default difficulty. */
 } Difficulty;
