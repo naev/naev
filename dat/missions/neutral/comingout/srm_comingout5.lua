@@ -22,7 +22,7 @@
 
 --]]
 local fmt = require "format"
-require "missions.soromid.comingout.srm_comingout3"
+require "missions.neutral.comingout.srm_comingout3"
 local srm = require "common.soromid"
 
 -- luacheck: globals chelsea chelsea_attacked chelsea_death chelsea_jump chelsea_land fass fthug jumpin jumpNext jumpout land spawnChelseaShip spawnThug takeoff thug_removed thug_timer (from base mission srm_comingout3)
