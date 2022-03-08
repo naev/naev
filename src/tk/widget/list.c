@@ -296,7 +296,7 @@ static int lst_focusElement( Widget *lst, double bx, double by )
 
    if (bx > w)
       return -1;
-   return lst->dat.lst.pos + (lst->h - by) / CELLHEIGHT;
+   return CLAMP( 0, lst->dat.lst.noptions-1, lst->dat.lst.pos + (lst->h - by) / CELLHEIGHT );
 }
 
 /**
