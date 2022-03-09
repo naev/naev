@@ -1725,14 +1725,16 @@ void equipment_updateShips( unsigned int wid, const char* str )
 
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("Name:") );
    for (int i=0; i<hname-1; i++)
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Model:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Class:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Acquired Date:") );
    for (int i=0; i<hacquired+1; i++)
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
    if (ship_mode==0) {
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Value:") );
+      if (player.fleet_capacity > 0)
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fleet Capacity:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Crew:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Mass:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Jump Time:") );
@@ -1743,14 +1745,14 @@ void equipment_updateShips( unsigned int wid, const char* str )
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Detected at:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Evasion:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Stealth:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Absorption:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Shield:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Armour:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Energy:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Cargo Space:") );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Fuel:") );
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Ship Status:") );
    }
    else {
@@ -1785,6 +1787,8 @@ void equipment_updateShips( unsigned int wid, const char* str )
    if (ship_mode==0) {
       /* Some core stats. */
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_price );
+      if (player.fleet_capacity > 0)
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%d", ship->ship->points );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%s%.0f#0", EQ_COMP( ship->crew, ship->ship->crew, 0 ) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s#0 %s", smass, n_( "tonne", "tonnes", ship->solid->mass ) );
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
