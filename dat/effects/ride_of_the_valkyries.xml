@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Ride of the Valkyries">
+ <description>The Valkyrie beam is draining your shields!</description>
+ <duration>1</duration>
+ <overwrite>valkyrie_beam</overwrite>
+ <icon>/gfx/misc/icons/viking-helmet.webp</icon>
+ <stats>
+  <shield_regen_malus>80</shield_regen_malus>
+ </stats>
+</effect>
