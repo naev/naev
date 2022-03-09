@@ -179,7 +179,7 @@ static int transformL_mul( lua_State *L )
 /**
  * @brief Gets all the values of the transform.
  *
- * Note, this returns in row-major.
+ * Note, this returns in column-major.
  *
  *    @luatparam Transform T Transform te get parameters of.
  *    @luatreturn table 2D table containing all the values of the transform.
@@ -192,7 +192,7 @@ static int transformL_get( lua_State *L )
    for (int i=0; i<4; i++) {
       lua_newtable(L);           /* t, t */
       for (int j=0; j<4; j++) {
-         lua_pushnumber(L,M->m[i][j]); /* t, t, n */
+         lua_pushnumber(L,M->m[j][i]); /* t, t, n */
          lua_rawseti(L,-2,j+1);       /* t, t */
       }
       lua_rawseti(L,-2,i+1);          /* t */
