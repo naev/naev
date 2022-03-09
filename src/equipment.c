@@ -280,7 +280,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
    if (cw != NULL)
       *cw = 120;
    if (ch != NULL)
-      *ch = 140;
+      *ch = 140 + ((player.fleet_capacity > 0) ? 30 : 0);
 
    /* Calculate button dimensions. */
    if (bw != NULL)
@@ -624,14 +624,28 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
 
    p = eq_wgt.selected;
 
-   /* Render CPU and energy bars. */
+   /* Base bar properties. */
    w = bw;
    h = 20;
    x = bx;
    y = by + bh - 30 - h;
 
-   gl_printMidRaw( &gl_smallFont, w,
-      x, y + h + 10., &cFontWhite, -1, _("CPU Free") );
+   /* Fleet capacity. */
+   if (player.fleet_capacity > 0) {
+      gl_printMidRaw( &gl_smallFont, w, x, y + h + 7, &cFontWhite, -1., _("Fleet Capacity") );
+
+      percent = CLAMP(0., 1., 1.-player.fleet_used / player.fleet_capacity );
+      toolkit_drawRect( x, y - 2, w * percent, h + 4, &cBlue, NULL );
+      toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cRed, NULL );
+      gl_printMid( &gl_smallFont, w,
+         x, y + h / 2. - gl_smallFont.h / 2.,
+         &cFontWhite, "%d / %d", player.fleet_capacity-player.fleet_used, player.fleet_capacity );
+
+      y -= gl_smallFont.h + 2*h;
+   }
+
+   /* Render CPU. */
+   gl_printMidRaw( &gl_smallFont, w, x, y + h + 7, &cFontWhite, -1, _("CPU Free") );
 
    percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
    toolkit_drawRect( x, y - 2, w * percent, h + 4, &cGreen, NULL );
@@ -642,9 +656,8 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
 
    y -= h;
 
-   gl_printMidRaw( &gl_smallFont, w,
-      x, y, &cFontWhite, -1., _("Mass Limit Left") );
-
+   /* Render mass limit. */
+   gl_printMidRaw( &gl_smallFont, w, x, y-3, &cFontWhite, -1., _("Mass Limit Left") );
    y -= gl_smallFont.h + h;
 
    percent = (p->stats.engine_limit > 0) ? CLAMP(0., 1.,
@@ -655,16 +668,11 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
       x, y + h / 2. - gl_smallFont.h / 2.,
       &cFontWhite, "%.0f / %.0f", p->stats.engine_limit - p->solid->mass, p->stats.engine_limit );
 
+   y -= h;
    if (p->stats.engine_limit > 0. && p->solid->mass > p->stats.engine_limit) {
-      y -= h;
       gl_printMid( &gl_smallFont, w,
          x, y, &cFontRed, _("!! %.0f%% Slower !!"),
          (1. - p->speed / p->speed_base) * 100);
-   }
-
-   /* Fleet capacity. */
-   if (player.p->fleet_capacity > 0) {
-      y -= gl_smallFont.h + h;
    }
 }
 
