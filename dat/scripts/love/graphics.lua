@@ -36,7 +36,7 @@ local function _H( x, y, r, sx, sy )
       -- Rendering to screen
       H = graphics._O
    end
-   H = H * graphics._T[1].T
+   H = graphics._T[1].T * H
    if r == 0 then
       H = H:translate(x,y)
            :scale( sx, -sy )
