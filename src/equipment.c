@@ -635,7 +635,6 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
       gl_printMidRaw( &gl_smallFont, w, x, y + h + 7, &cFontWhite, -1., _("Fleet Capacity") );
 
       percent = CLAMP(0., 1., 1.-(double)player.fleet_used / (double)player.fleet_capacity );
-      DEBUG("percent = %f",percent);
       toolkit_drawRect( x, y - 2, w * percent, h + 4, &cBlue, NULL );
       toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cBlack, NULL );
       gl_printMid( &gl_smallFont, w,
