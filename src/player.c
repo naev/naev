@@ -427,6 +427,7 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
    }
 
    free(ship_name);
+   player_fleetUpdate();
 
    /* Update ship list if landed. */
    if (landed) {
@@ -592,6 +593,7 @@ void player_swapShip( const char *shipname, int move_cargo )
    /* Recompute stuff if necessary. */
    pilot_calcStats( player.p );
    player_resetSpeed();
+   player_fleetUpdate();
 
    /* Run hook. */
    hparam[0].type    = HOOK_PARAM_STRING;
@@ -3452,6 +3454,9 @@ Spob* player_load( xmlNodePtr parent )
    else
       difficulty_setLocal( NULL ); /* Sets the default. */
 
+   /* Updates the fleet internals. */
+   player_fleetUpdate();
+
    return pnt;
 }
 
@@ -4382,6 +4387,9 @@ void player_stealth (void)
    }
 }
 
+/**
+ * @brief Updates the used fleet capacity of the player.
+ */
 void player_fleetUpdate (void)
 {
    player.fleet_used = player.p->ship->points;

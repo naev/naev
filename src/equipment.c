@@ -634,9 +634,10 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    if (player.fleet_capacity > 0) {
       gl_printMidRaw( &gl_smallFont, w, x, y + h + 7, &cFontWhite, -1., _("Fleet Capacity") );
 
-      percent = CLAMP(0., 1., 1.-player.fleet_used / player.fleet_capacity );
+      percent = CLAMP(0., 1., 1.-(double)player.fleet_used / (double)player.fleet_capacity );
+      DEBUG("percent = %f",percent);
       toolkit_drawRect( x, y - 2, w * percent, h + 4, &cBlue, NULL );
-      toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cRed, NULL );
+      toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cBlack, NULL );
       gl_printMid( &gl_smallFont, w,
          x, y + h / 2. - gl_smallFont.h / 2.,
          &cFontWhite, "%d / %d", player.fleet_capacity-player.fleet_used, player.fleet_capacity );
@@ -647,12 +648,10 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    /* Render CPU. */
    gl_printMidRaw( &gl_smallFont, w, x, y + h + 7, &cFontWhite, -1, _("CPU Free") );
 
-   percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
+   percent = (p->cpu_max > 0) ? CLAMP(0., 1., (double)p->cpu / (double)p->cpu_max) : 0.;
    toolkit_drawRect( x, y - 2, w * percent, h + 4, &cGreen, NULL );
    toolkit_drawRect( x + w * percent, y - 2, w * (1.-percent), h + 4, &cRed, NULL );
-   gl_printMid( &gl_smallFont, w,
-      x, y + h / 2. - gl_smallFont.h / 2.,
-      &cFontWhite, "%d / %d", p->cpu, p->cpu_max );
+   gl_printMid( &gl_smallFont, w, x, y + h / 2. - gl_smallFont.h / 2., &cFontWhite, "%d / %d", p->cpu, p->cpu_max );
 
    y -= h;
 
