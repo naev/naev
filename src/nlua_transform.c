@@ -210,9 +210,19 @@ static int transformL_get( lua_State *L )
 static int transformL_set( lua_State *L )
 {
    mat4 *M  = luaL_checktransform(L, 1);
-   int i    = luaL_checkinteger(L, 2);
-   int j    = luaL_checkinteger(L, 3);
+   int i    = luaL_checkinteger(L, 2)-1;
+   int j    = luaL_checkinteger(L, 3)-1;
    double v = luaL_checknumber(L, 4);
+#if DEBUGGING
+   if (i < 0 || i > 3) {
+      WARN(_("Matrix column value not in range: %d"),i);
+      i = CLAMP(0,3,i);
+   }
+   if (j < 0 || j > 3) {
+      WARN(_("Matrix row value not in range: %d"),j);
+      j = CLAMP(0,3,j);
+   }
+#endif /* DEBUGGING */
    M->m[i][j] = v;
    return 0;
 }
