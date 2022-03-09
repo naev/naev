@@ -76,6 +76,9 @@ typedef struct PlayerShip_s {
    int favourite; /**< Whether or not it is favourited. */
    lvar *shipvar; /**< Per-ship version of lua mission variables. */
 
+   /* Fleet data. */
+   int deployed;  /**< Whether or not the ship is deployed. */
+
    /* Some meta-data. */
    double time_played;        /**< Total time the player has used ship. */
    char *acquired;            /**< How it got acquired. */
@@ -118,12 +121,16 @@ typedef struct Player_s {
    /* Loaded game version. */
    char *loaded_version;/**< Version of the loaded save game. */
 
-   /* Stuff we save. */
+   /* Options that we save. */
    char *gui;        /**< Player's GUI. */
    int guiOverride;  /**< GUI is overridden (not default). */
    double radar_res; /**< Player's radar resolution. */
    int eq_outfitMode;/**< Equipment outfit mode. */
    int map_minimal;  /**< Map is set in minimal mode. */
+
+   /* Player fleets. */
+   int fleet_used; /**< Currently used fleet capacity. */
+   int fleet_capacity; /**< Total player fleet capacity. */
 
    /* Meta-data. */
    time_t last_played; /**< Date the save was last played. */
@@ -188,6 +195,11 @@ NONNULL( 1 ) PRINTF_FORMAT( 1, 2 ) void player_message( const char *fmt, ... );
 NONNULL( 1 ) void player_messageRaw ( const char *str );
 
 /*
+ * Fleets.
+ */
+void player_fleetUpdate (void);
+
+/*
  * Misc.
  */
 void player_resetSpeed (void);
@@ -214,12 +226,12 @@ int player_ships( char** sships, glTexture** tships );
 void player_shipsSort (void);
 const PlayerShip_t* player_getShipStack (void);
 int player_nships (void);
-int        player_hasShip( const char *shipname );
-Pilot *    player_getShip( const char *shipname );
+int player_hasShip( const char *shipname );
+Pilot *player_getShip( const char *shipname );
 PlayerShip_t* player_getPlayerShip( const char *shipname );
-void       player_swapShip( const char *shipname, int move_cargo );
-credits_t  player_shipPrice( const char *shipname );
-void       player_rmShip( const char *shipname );
+void player_swapShip( const char *shipname, int move_cargo );
+credits_t player_shipPrice( const char *shipname );
+void player_rmShip( const char *shipname );
 
 /*
  * Player outfits.

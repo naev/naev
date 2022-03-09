@@ -68,7 +68,7 @@
  * Player stuff
  */
 Player_t player; /**< Local player. */
-static const Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
+static const Ship* player_ship = NULL; /**< Temporary ship to hold when naming it */
 static credits_t player_creds = 0; /**< Temporary hack for when creating. */
 static credits_t player_payback = 0; /**< Temporary hack for when creating. */
 static int player_ran_updater = 0; /**< Temporary hack for when creating. */
@@ -3116,6 +3116,7 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_elem(writer,"radar_res","%f",player.radar_res);
    xmlw_elem(writer,"eq_outfitMode","%d",player.eq_outfitMode);
    xmlw_elem(writer,"map_minimal","%d",player.map_minimal);
+   xmlw_elem(writer,"fleet_capacity","%d",player.fleet_capacity);
 
    /* Time. */
    xmlw_startElem(writer,"time");
@@ -3600,6 +3601,7 @@ static Spob* player_parse( xmlNodePtr parent )
       xmlr_float(node, "radar_res", player.radar_res);
       xmlr_int(node, "eq_outfitMode", player.eq_outfitMode);
       xmlr_int(node, "map_minimal", player.map_minimal);
+      xmlr_int(node, "fleet_capacity", player.fleet_capacity);
 
       /* Time. */
       if (xml_isNode(node,"time")) {
@@ -4377,5 +4379,15 @@ void player_stealth (void)
          player_message( "#r%s", _("Unable to stealth: missiles locked on!") );
       else
          player_message( "#r%s", _("Unable to stealth: other pilots nearby!") );
+   }
+}
+
+void player_fleetUpdate (void)
+{
+   player.fleet_used = player.p->ship->points;
+   for (int i=0; i<array_size(player_stack); i++) {
+      const PlayerShip_t *ps = &player_stack[i];
+      if (ps->deployed)
+         player.fleet_used += ps->p->ship->points;
    }
 }

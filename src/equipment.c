@@ -661,6 +661,11 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
          x, y, &cFontRed, _("!! %.0f%% Slower !!"),
          (1. - p->speed / p->speed_base) * 100);
    }
+
+   /* Fleet capacity. */
+   if (player.p->fleet_capacity > 0) {
+      y -= gl_smallFont.h + h;
+   }
 }
 
 /**
