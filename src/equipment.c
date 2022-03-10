@@ -99,6 +99,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 static void equipment_sellShip( unsigned int wid, const char* str );
 static void equipment_renameShip( unsigned int wid, const char *str );
 static void equipment_shipMode( unsigned int wid, const char *str );
+static void equipment_rightClickShips( unsigned int wid, const char* str );
 static void equipment_transChangeShip( unsigned int wid, const char* str );
 static void equipment_changeShip( unsigned int wid );
 static void equipment_unequipShip( unsigned int wid, const char* str );
@@ -1438,6 +1439,10 @@ static void equipment_genShipList( unsigned int wid )
             t = gl_newImage( OVERLAY_GFX_PATH"favourite.webp", 0 );
             cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
          }
+         if (ps[i-1].deployed) {
+            t = gl_newImage( OVERLAY_GFX_PATH"fleet.webp", 0 );
+            cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
+         }
          if (ps[i-1].p->ship->rarity > 0) {
             snprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.webp", ps[i-1].p->ship->rarity );
             t = gl_newImage( r, 0 );
@@ -1467,7 +1472,7 @@ static void equipment_genShipList( unsigned int wid )
    }
    window_addImageArray( wid, 20, -40,
          sw, sh, EQUIPMENT_SHIPS, iconsize, iconsize,
-         cships, nships, equipment_updateShips, NULL, equipment_transChangeShip );
+         cships, nships, equipment_updateShips, equipment_rightClickShips, equipment_transChangeShip );
    toolkit_setImageArrayAccept( wid, EQUIPMENT_SHIPS, equipment_transChangeShip );
 }
 
@@ -1984,6 +1989,21 @@ static void equipment_changeTab( unsigned int wid, const char *wgt, int old, int
 
    /* Focus the outfit image array. */
    window_setFocus( wid, EQUIPMENT_OUTFITS );
+}
+
+/**
+ * @brief Toggles deployed status.
+ */
+static void equipment_rightClickShips( unsigned int wid, const char *str )
+{
+   const char *shipname = toolkit_getImageArray( wid, str );
+   PlayerShip_t *ps = player_getPlayerShip( shipname );
+
+   if (ps != NULL) {
+      ps->deployed = !ps->deployed;
+      player_fleetUpdate();
+      equipment_regenLists( wid, 0, 1 );
+   }
 }
 
 /**
