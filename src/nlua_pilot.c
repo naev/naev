@@ -59,6 +59,7 @@ static int pilot_outfitAddSlot( Pilot *p, const Outfit *o, PilotOutfitSlot *s, i
 
 /* Pilot metatable methods. */
 static int pilotL_add( lua_State *L );
+static int pilotL_clone( lua_State *L );
 static int pilotL_remove( lua_State *L );
 static int pilotL_clear( lua_State *L );
 static int pilotL_clearSelect( lua_State *L );
@@ -199,7 +200,8 @@ static int pilotL_calcStats( lua_State *L );
 static int pilotL_showEmitters( lua_State *L );
 static const luaL_Reg pilotL_methods[] = {
    /* General. */
-   { "add", pilotL_add},
+   { "add", pilotL_add },
+   { "clone", pilotL_clone },
    { "rm", pilotL_remove },
    { "get", pilotL_getPilots },
    { "getAllies", pilotL_getAllies },
@@ -561,7 +563,6 @@ static int pilotL_add( lua_State *L )
    int ignore_rules;
    Pilot *pplt;
 
-
    /* Default values. */
    pilot_clearFlagsRaw( flags );
    vectnull(&vn); /* Need to determine angle. */
@@ -711,6 +712,21 @@ static int pilotL_add( lua_State *L )
    if ((jump != NULL) && pilot_isFlagRaw( flags, PILOT_STEALTH )) {
       space_calcJumpInPos( cur_system, jump->from, &pplt->solid->pos, &pplt->solid->vel, &pplt->solid->dir, pplt );
    }
+   return 1;
+}
+
+/**
+ * @brief Clones a pilot. It will share nearly all properties including outfits.
+ *
+ *    @luatparam Pilot p Pilot to clone.
+ *    @luatreturn Pilot A new clone of the pilot.
+ * @luafunc clone
+ */
+static int pilotL_clone( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   LuaPilot lp = pilot_clone( p );
+   lua_pushpilot( L, lp );
    return 1;
 }
 
