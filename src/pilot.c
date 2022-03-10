@@ -3100,6 +3100,55 @@ Pilot* pilot_createEmpty( const Ship* ship, const char* name,
 }
 
 /**
+ * @brief Clones an existing pilot.
+ *
+ *    @param ref Reference pilot to be cloned.
+ *    @return ID of the newly created clone.
+ */
+unsigned int pilot_clone( Pilot *ref )
+{
+   Pilot *dyn, **p;
+   PilotFlags pf;
+
+   pilot_clearFlagsRaw( &pf );
+   pilot_setFlagRaw( pf, PILOT_NO_OUTFITS );
+
+   /* Allocate pilot memory. */
+   dyn = malloc(sizeof(Pilot));
+   if (dyn == NULL) {
+      WARN(_("Unable to allocate memory"));
+      return 0;
+   }
+
+   /* Set the pilot in the stack -- must be there before initializing */
+   p = &array_grow( &pilot_stack );
+   *p = dyn;
+
+   /* Initialize the pilot. */
+   pilot_init( dyn, ref->ship, ref->name, ref->faction,
+      ((ref->ai != NULL) ? ref->ai->name : NULL), ref->solid->dir, &ref->solid->pos, &ref->solid->vel, pf, 0, 0 );
+
+   /* Add outfits over. */
+   for (int i=0; i<array_size(ref->outfits); i++)
+      if (ref->outfits[i]->outfit != NULL)
+         pilot_addOutfitRaw( dyn, ref->outfits[i]->outfit, dyn->outfits[i] );
+   for (int i=0; i<array_size(ref->outfit_intrinsic); i++)
+      pilot_addOutfitIntrinsic( dyn, ref->outfit_intrinsic[i].outfit );
+
+   /* Update internals. */
+   pilot_calcStats( dyn );
+   pilot_fillAmmo( dyn );
+
+   /* Animated trail. */
+   pilot_init_trails( dyn );
+
+   /* Run Lua stuff. */
+   pilot_outfitLInitAll( dyn );
+
+   return dyn->id;
+}
+
+/**
  * @brief Resets the trails for a pilot.
  */
 void pilot_clearTrails( Pilot *p )
