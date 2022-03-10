@@ -441,6 +441,7 @@ function board_lootOne( wgt, nomsg )
             if board_plt:outfitRm( o ) ~= 1 then
                warn(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o, plt=board_plt}))
             end
+            player.pay( -l.price )
             player.outfitAdd( o )
             player.msg(fmt.f(_("You looted a {outfit} from {plt}."),{outfit=o, plt=board_plt}))
             wgt.selected = false
