@@ -3225,6 +3225,7 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
    xmlw_attr(writer,"name","%s",ship->name);
    xmlw_attr(writer,"model","%s",ship->ship->name);
    xmlw_attr(writer,"favourite", "%d",pship->favourite);
+   xmlw_attr(writer,"deployed", "%d",pship->deployed);
 
    /* Metadata. */
    if (pship->acquired)
@@ -4028,6 +4029,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    xmlr_attr_strd( parent, "name", name );
    xmlr_attr_strd( parent, "model", model );
    xmlr_attr_int_def( parent, "favourite", ps.favourite, 0 );
+   xmlr_attr_int_def( parent, "deployed", ps.deployed, 0 );
 
    /* Safe defaults. */
    pilot_clearFlagsRaw( flags );
@@ -4053,6 +4055,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    if (is_player != 0) {
       pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
       ship = player.p;
+      ps.deployed = 0; /* Current ship can't be deployed. */
       pilot_rmFlag( ship, PILOT_INACTIVE );
    }
    else {
