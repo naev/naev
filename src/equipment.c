@@ -2027,9 +2027,16 @@ static void equipment_transChangeShip( unsigned int wid, const char* str )
 static void equipment_changeShip( unsigned int wid )
 {
    const char *shipname, *filtertext;
+   PlayerShip_t *ps;
    int i;
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
+   ps = player_getPlayerShip( shipname );
+   if (ps != NULL) {
+      /* Swap deployed status. */
+      if (ps->deployed)
+         player.ps.deployed = 1;
+   }
 
    if (land_errDialogue( shipname, "swapEquipment" ))
       return;
@@ -2045,6 +2052,8 @@ static void equipment_changeShip( unsigned int wid )
    /* Swap ship. */
    player_swapShip( shipname, 1 );
    pilot_healLanded( player.p );
+   /* Remove deployer status. */
+   player.ps.deployed = 0;
 
    /* What happens here is the gui gets recreated when the player swaps ship.
     * This causes all the windows to be destroyed and the 'wid' we have here
