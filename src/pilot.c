@@ -3138,6 +3138,7 @@ unsigned int pilot_clone( Pilot *ref )
    /* Update internals. */
    pilot_calcStats( dyn );
    pilot_fillAmmo( dyn );
+   pilot_weaponAuto( dyn );
 
    /* Animated trail. */
    pilot_init_trails( dyn );
