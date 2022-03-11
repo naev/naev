@@ -168,6 +168,60 @@ unsigned int escort_create( Pilot *p, const char *ship,
 }
 
 /**
+ * @brief Creates an escort from a reference.
+ *
+ *    @param p Parent of the escort (who he's guarding).
+ *    @param ref Reference for the escort.
+ *    @param pos Position to create escort at.
+ *    @param vel Velocity to create escort with.
+ *    @param dir Direction to face.
+ *    @param type Type of escort.
+ *    @param add Whether or not to add it to the escort list.
+ *    @param dockslot The outfit slot which launched the escort (-1 if N/A)
+ *    @return The ID of the escort on success.
+ */
+unsigned int escort_createRef( Pilot *p, const Pilot *ref,
+      const vec2 *pos, const vec2 *vel, double dir,
+      EscortType_t type, int add, int dockslot )
+{
+   Pilot *pe;
+   unsigned int e;
+   unsigned int parent;
+
+   /* Get important stuff. */
+   parent = p->id;
+
+   /* Create the pilot. */
+   e = pilot_clone( ref );
+   pe = pilot_get(e);
+   pe->parent = parent;
+
+   /* Copy stuff over if necessary. */
+   if (pos != NULL)
+      memcpy( &pe->solid->pos, pos, sizeof(vec2) );
+   if (vel != NULL)
+      memcpy( &pe->solid->vel, vel, sizeof(vec2) );
+   pe->solid->dir = dir;
+
+   /* Set some flags for consistent behaviour. */
+   if (p->faction == FACTION_PLAYER) {
+      pilot_setFlag( pe, PILOT_PERSIST );
+      pilot_setFlag( pe, PILOT_NOCLEAR );
+   }
+   if (pilot_isFlag(p, PILOT_HOSTILE))
+      pilot_setFlag( pe, PILOT_HOSTILE );
+   if (pilot_isFlag(p, PILOT_FRIENDLY))
+      pilot_setFlag( pe, PILOT_FRIENDLY );
+
+   /* Add to escort list. */
+   if (add != 0)
+      escort_addList( p, ref->ship->name, type, e, 1 );
+   pe->dockslot = dockslot;
+
+   return e;
+}
+
+/**
  * @brief Clears deployed escorts of a pilot.
  */
 int escort_clearDeployed( Pilot *p )
