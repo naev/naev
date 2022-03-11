@@ -3105,7 +3105,7 @@ Pilot* pilot_createEmpty( const Ship* ship, const char* name,
  *    @param ref Reference pilot to be cloned.
  *    @return ID of the newly created clone.
  */
-unsigned int pilot_clone( Pilot *ref )
+unsigned int pilot_clone( const Pilot *ref )
 {
    Pilot *dyn, **p;
    PilotFlags pf;
@@ -3135,10 +3135,14 @@ unsigned int pilot_clone( Pilot *ref )
    for (int i=0; i<array_size(ref->outfit_intrinsic); i++)
       pilot_addOutfitIntrinsic( dyn, ref->outfit_intrinsic[i].outfit );
 
-   /* Update internals. */
+   /* Update internals and heal up. */
    pilot_calcStats( dyn );
    pilot_fillAmmo( dyn );
    pilot_weaponAuto( dyn );
+   dyn->armour = ref->armour;
+   dyn->shield = ref->shield;
+   dyn->energy = ref->energy;
+   dyn->stress = ref->stress;
 
    /* Animated trail. */
    pilot_init_trails( dyn );
