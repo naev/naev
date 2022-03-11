@@ -10,9 +10,9 @@ You can either create spobs manually by copying and pasting existing spobs and e
 
 There are a few special features a spob can have including:
 
-- Be not landable (the services section should be empty - <services/> )
+- Be not landable (the services section should be empty - `<services/>` )
 - Special Tags (see below)
-- Altered landing requirements - <land>**requirement**</land>
+- Altered landing requirements - `<land>**requirement**</land>`
 **requirement** should be one of:
 - land_lowclass (poor, easier to bribe),
 - land_hiclass (rich, not bribable),
