@@ -97,7 +97,7 @@ function create ()
 
    -- Set Mission Details
    misn.setTitle( fmt.f( mem.misn_title, {cargo=comm} ) )
-   misn.markerAdd( system.cur(), "computer" )
+   misn.markerAdd( mem.misplanet, "computer" )
    misn.setDesc( fmt.f( mem.misn_desc, {pnt=mem.misplanet, cargo=comm} ) )
    misn.setReward( fmt.f(_("{credits} per tonne"), {credits=fmt.credits(mem.price)} ) )
 end

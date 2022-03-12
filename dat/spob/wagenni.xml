@@ -3,7 +3,7 @@
  <pos x="-5791.124494" y="-1722.738390"/>
  <GFX>
   <space>moon-G00.webp</space>
-  <exterior>mining.webp</exterior>
+  <exterior>mining4.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
@@ -33,4 +33,8 @@
   <item>Star Maps</item>
   <item>Missiles 1</item>
  </tech>
+ <tags>
+  <tag>poor</tag>
+  <tag>rural</tag>
+ </tags>
 </spob>

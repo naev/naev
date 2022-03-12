@@ -65,7 +65,7 @@ function accept ()
       mem.pickedup = false
       mem.droppedoff = false
 
-      mem.marker = misn.markerAdd( mem.pickupSys, "low" )  -- pickup
+      mem.marker = misn.markerAdd( mem.pickupWorld, "low" )  -- pickup
       -- OSD
       misn.osdCreate( _("Help the Drunkard"), {
          fmt.f(_("Go pick up some goods at {pnt} in the {sys} system"), {pnt=mem.pickupWorld, sys=mem.pickupSys}),
@@ -93,7 +93,7 @@ function land ()
          mem.cargoID = misn.cargoAdd( c, 45 )  -- adds cargo
          mem.pickedup = true
 
-         misn.markerMove( mem.marker, mem.delivSys )  -- destination
+         misn.markerMove( mem.marker, mem.delivWorld )  -- destination
 
          misn.osdActive(2)  --OSD
       end

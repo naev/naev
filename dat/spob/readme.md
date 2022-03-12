@@ -45,7 +45,8 @@ Below are a set of tags that change the behaviour of some core mechanics.
 
 Below is the complete list of dominantly used descriptive tags. It should be noted that tagging is incomplete at present and it is possible that none of these tags will apply to many spobs (e.g. uninhabited, average, uninteresting or deserted spobs). Most others will only have one or two tags - they are supposed to represent important facets of the spob in its own estimation, not minor elements e.g. while the (temporary) Imperial Homeworld has many criminals and military personnel neither tag applies since its defining tags would be rich, urban and maybe tourism or trade.
 
-* **station**: the spob is a space station
+* **station**: the spob is a space station or gas giant spaceport
+* **wormhole**: the spob is a wormhole
 * **new**: recently colonised worlds / recently built stations (definitely post-Incident)
 * **old**: long-time colonised worlds / old stations (definitely pre-Incident)
 * **rich**: the population living on the spob is rich by the standards of the faction
@@ -59,6 +60,7 @@ Below is the complete list of dominantly used descriptive tags. It should be not
 * **trade**: trade is an important part of the spob economy
 * **research**: the spob has a strong focus in research (special research laboratories, etc...)
 * **immigration**: the spob draws in a large number of immigrants or is being colonised
+* **refuel**: the spobs reason for existance is as a fueling point
 * **military**: the spob has an important factional military presence
 * **prison**: the spob has important prison installations
 * **criminal**: the spob has a large criminal element such as important pirate or mafia presence

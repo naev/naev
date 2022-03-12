@@ -12,7 +12,7 @@
   <range>0</range>
  </presence>
  <general>
-  <class>A</class>
+  <class>C</class>
   <population>30000</population>
   <hide>2.000000</hide>
   <services>
@@ -39,6 +39,9 @@
   <item>Ion 1</item>
  </tech>
  <tags>
+  <tag>poor</tag>
+  <tag>rural</tag>
   <tag>mining</tag>
+  <tag>refuel</tag>
  </tags>
 </spob>

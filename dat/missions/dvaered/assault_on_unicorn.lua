@@ -25,7 +25,7 @@ local dv  = require "common.dvaered"
 
 -- Mission constants
 local misn_target_sys = system.get("Unicorn")
-local misn_return_sys = system.get("Amaroq")
+-- local misn_return_sys = system.get("Amaroq")
 
 -- luacheck: globals death jumpin land (Hook functions passed by name)
 
@@ -50,7 +50,6 @@ function create ()
    misn.setDesc(fmt.f(_("It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is {credits}."), {credits=fmt.credits(mem.max_payment)} ))
 
    mem.marker = misn.markerAdd( misn_target_sys, "computer" )
-   mem.marker2 = misn.markerAdd( misn_return_sys, "low" )
 end
 
 function accept ()
@@ -60,6 +59,7 @@ function accept ()
       -- Makes sure only one copy of the mission can run.
       var.push( "assault_on_unicorn_check", true)
       mem.planet_start = spob.cur()
+      mem.marker2 = misn.markerAdd( mem.planet_start, "low" )
       mem.pirates_killed = 0
       mem.bounty_earned = 0
       mem.misn_stage = 0

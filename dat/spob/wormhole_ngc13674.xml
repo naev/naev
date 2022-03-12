@@ -14,4 +14,7 @@
    <uninhabited/>
   </services>
  </general>
+ <tags>
+  <tag>wormhole</tag>
+ </tags>
 </spob>
