@@ -3083,6 +3083,10 @@ int player_addEscorts (void)
       if (!ps->deployed)
          continue;
 
+      /* Only deploy spaceworthy escorts. */
+      if (!!pilot_checkSpaceworthy(ps->p))
+         continue;
+
       /* Get the position. */
       a = RNGF() * 2. * M_PI;
       vec2_cset( &v, player.p->solid->pos.x + 50.*cos(a),
