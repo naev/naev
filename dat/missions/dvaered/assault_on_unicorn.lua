@@ -25,7 +25,7 @@ local dv  = require "common.dvaered"
 
 -- Mission constants
 local misn_target_sys = system.get("Unicorn")
-local misn_return_sys = system.get("Amaroq")
+-- local misn_return_sys = system.get("Amaroq")
 
 -- luacheck: globals death jumpin land (Hook functions passed by name)
 
