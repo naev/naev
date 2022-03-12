@@ -10,13 +10,13 @@
 /* Creation. */
 int escort_addList( Pilot *p, const char *ship,
       EscortType_t type, unsigned int id, int persist );
-unsigned int escort_createRef( Pilot *p, const Pilot *ref,
-      const vec2 *pos, const vec2 *vel, double dir,
-      EscortType_t type, int add, int dockslot );
 void escort_freeList( Pilot *p );
 void escort_rmList( Pilot *p, unsigned int id );
 void escort_rmListIndex( Pilot *p, int i );
 unsigned int escort_create( Pilot *p, const char *ship,
+      const vec2 *pos, const vec2 *vel, double dir,
+      EscortType_t type, int add, int dockslot );
+unsigned int escort_createRef( Pilot *p, const Pilot *ref,
       const vec2 *pos, const vec2 *vel, double dir,
       EscortType_t type, int add, int dockslot );
 int escort_clearDeployed( Pilot *p );

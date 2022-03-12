@@ -187,7 +187,7 @@ typedef enum EscortType_e {
    ESCORT_TYPE_NULL,       /**< Invalid escort type. */
    ESCORT_TYPE_BAY,        /**< Escort is from a fighter bay, controllable by it's parent and can dock. */
    ESCORT_TYPE_MERCENARY,  /**< Escort is a mercenary, controllable by it's parent. */
-   ESCORT_TYPE_ALLY        /**< Escort is an ally, uncontrollable. */
+   ESCORT_TYPE_FLEET,      /**< Escort is part of the player's fleet. */
 } EscortType_t;
 
 /**

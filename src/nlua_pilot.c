@@ -4961,7 +4961,7 @@ static int pilotL_setLeader( lua_State *L )
       }
 
       /* TODO: Figure out escort type */
-      escort_addList(leader, p->ship->name, ESCORT_TYPE_MERCENARY, p->id, 0);
+      escort_addList( leader, p->ship->name, ESCORT_TYPE_MERCENARY, p->id, 0 );
    }
 
    /* Remove from previous leader's follower list */

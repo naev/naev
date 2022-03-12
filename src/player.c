@@ -3017,6 +3017,7 @@ int player_addEscorts (void)
    /* Clear escorts first. */
    player_clearEscorts();
 
+   /* Go over escorts. */
    for (int i=0; i<array_size(player.p->escorts); i++) {
       double a;
       vec2 v;
@@ -3029,13 +3030,14 @@ int player_addEscorts (void)
          continue;
       }
 
-      a = RNGF() * 2. * M_PI;
-      vec2_cset( &v, player.p->solid->pos.x + 50.*cos(a),
-            player.p->solid->pos.y + 50.*sin(a) );
-
       /* Update outfit if needed. */
       if (player.p->escorts[i].type != ESCORT_TYPE_BAY)
          continue;
+
+      /* Set up the positions. */
+      a = RNGF() * 2. * M_PI;
+      vec2_cset( &v, player.p->solid->pos.x + 50.*cos(a),
+            player.p->solid->pos.y + 50.*sin(a) );
 
       for (int j=0; j<array_size(player.p->outfits); j++) {
          int q;
@@ -3068,6 +3070,25 @@ int player_addEscorts (void)
             &v, &player.p->solid->vel, player.p->solid->dir,
             player.p->escorts[i].type, 0, dockslot );
       player.p->escorts[i].id = e; /* Important to update ID. */
+   }
+
+   /* Add the player fleets. */
+   for (int i=0; i<array_size(player_stack); i++) {
+      PlayerShip_t *ps = &player_stack[i];
+      double a;
+      vec2 v;
+
+      /* Only deploy escorts that are deployed. */
+      if (!ps->deployed)
+         continue;
+
+      /* Get the position. */
+      a = RNGF() * 2. * M_PI;
+      vec2_cset( &v, player.p->solid->pos.x + 50.*cos(a),
+            player.p->solid->pos.y + 50.*sin(a) );
+
+      /* Add the escort to the fleet. */
+      escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, 0 );
    }
 
    return 0;
