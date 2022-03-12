@@ -1076,6 +1076,15 @@ void pilot_healLanded( Pilot *pilot )
    pilot->stress = 0.;
    pilot->stimer = 0.;
    pilot->sbonus = 0.;
+
+   pilot_fillAmmo( pilot );
+
+   for (int i=0; i<array_size(pilot->escorts); i++) {
+      Escort_t *e = &pilot->escorts[i];
+      Pilot *pe = pilot_get( e->id );
+      if (pe != NULL)
+         pilot_healLanded( pe );
+   }
 }
 
 /**

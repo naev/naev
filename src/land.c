@@ -1499,12 +1499,6 @@ void takeoff( int delay )
    player.p->solid->dir = RNGF() * 2. * M_PI;
    cam_setTargetPilot( player.p->id, 0 );
 
-   /* heal the player */
-   pilot_healLanded( player.p );
-
-   /* Refill ammo */
-   pilot_fillAmmo( player.p );
-
    /* Clear spob target. Allows for easier autonav out of the system. */
    player_targetSpobSet( -1 );
 
@@ -1539,7 +1533,11 @@ void takeoff( int delay )
                             missions to think we are landed. */
    if (menu_isOpen(MENU_MAIN))
       return;
+
+   /* Add escorts and heal up. */
    player_addEscorts();
+   pilot_healLanded( player.p );
+
    hooks_run("enter");
    if (menu_isOpen(MENU_MAIN))
       return;
