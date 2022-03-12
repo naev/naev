@@ -1535,7 +1535,7 @@ void takeoff( int delay )
       return;
 
    /* Add escorts and heal up. */
-   player_addEscorts();
+   player_addEscorts(); /* TODO only regenerate fleet if planet has a shipyard */
    pilot_healLanded( player.p );
 
    hooks_run("enter");
