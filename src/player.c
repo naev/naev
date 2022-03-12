@@ -3021,17 +3021,18 @@ int player_addEscorts (void)
    for (int i=0; i<array_size(player.p->escorts); i++) {
       double a;
       vec2 v;
-      unsigned int e;
+      unsigned int pe;
+      Escort_t *e = &player.p->escorts[i];
       int dockslot = -1;
 
-      if (!player.p->escorts[i].persist) {
+      if (!e->persist) {
          escort_rmListIndex(player.p, i);
          i--;
          continue;
       }
 
       /* Update outfit if needed. */
-      if (player.p->escorts[i].type != ESCORT_TYPE_BAY)
+      if (e->type != ESCORT_TYPE_BAY)
          continue;
 
       /* Set up the positions. */
@@ -3066,10 +3067,10 @@ int player_addEscorts (void)
       }
 
       /* Create escort. */
-      e = escort_create( player.p, player.p->escorts[i].ship,
+      pe = escort_create( player.p, e->ship,
             &v, &player.p->solid->vel, player.p->solid->dir,
-            player.p->escorts[i].type, 0, dockslot );
-      player.p->escorts[i].id = e; /* Important to update ID. */
+            e->type, 0, dockslot );
+      e->id = pe; /* Important to update ID. */
    }
 
    /* Add the player fleets. */
@@ -3088,7 +3089,7 @@ int player_addEscorts (void)
             player.p->solid->pos.y + 50.*sin(a) );
 
       /* Add the escort to the fleet. */
-      escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, 0 );
+      escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
    }
 
    return 0;
@@ -3100,11 +3101,14 @@ int player_addEscorts (void)
 static int player_saveEscorts( xmlTextWriterPtr writer )
 {
    for (int i=0; i<array_size(player.p->escorts); i++) {
-      if (!player.p->escorts[i].persist)
+      Escort_t *e = &player.p->escorts[i];
+      if (!e->persist)
+         continue;
+      if (e->type != ESCORT_TYPE_BAY)
          continue;
       xmlw_startElem(writer, "escort");
-      xmlw_attr(writer,"type","bay"); /**< @todo other types. */
-      xmlw_str(writer, "%s", player.p->escorts[i].ship);
+      xmlw_attr(writer,"type","bay");
+      xmlw_str(writer, "%s", e->ship);
       xmlw_endElem(writer); /* "escort" */
    }
 
@@ -3898,6 +3902,8 @@ static int player_parseEscorts( xmlNodePtr parent )
          xmlr_attr_strd( node, "type", buf );
          if (strcmp(buf,"bay")==0)
             type = ESCORT_TYPE_BAY;
+         else if (strcmp(buf,"fleet")==0)
+            type = ESCORT_TYPE_FLEET;
          else {
             WARN(_("Escort has invalid type '%s'."), buf);
             type = ESCORT_TYPE_NULL;

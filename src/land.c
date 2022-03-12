@@ -1436,6 +1436,13 @@ void takeoff( int delay )
    if (!landed)
       return;
 
+   /* Check to see if player fleet is ok. */
+   player_fleetUpdate();
+   if (player.fleet_used > player.fleet_capacity) {
+      dialogue_msgRaw( _("Fleet not fit for flight"), _("You lack the fleet capacity to take off with all selected ships.") );
+      return;
+   }
+
    /* Player's ship is not able to fly. */
    if (!player_canTakeoff()) {
       char message[STRMAX_SHORT];
