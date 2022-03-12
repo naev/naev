@@ -3,7 +3,7 @@
  <pos x="-5089.422980" y="-1733.131108"/>
  <GFX>
   <space>moon-G00.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <exterior>desertic3.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
@@ -12,7 +12,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>A</class>
+  <class>G</class>
   <population>50000</population>
   <hide>2.000000</hide>
   <services>
@@ -27,6 +27,9 @@
   <bar>Waterhole's Moon wouldn't be Waterhole's Moon if its bar wasn't called The Waterhole. Though the place is open to visitors from all origins and walks of life, the majority of the clientele is Imperial in nature. It seems that nothing creates a longing for home like being away from it for prolonged periods of time.</bar>
  </general>
  <tags>
+  <tag>old</tag>
+  <tag>poor</tag>
   <tag>rural</tag>
+  <tag>refuel</tag>
  </tags>
 </spob>
