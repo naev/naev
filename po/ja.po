@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-02-19 12:48-0500\n"
-"PO-Revision-Date: 2022-03-06 18:00+0000\n"
+"PO-Revision-Date: 2022-03-13 17:59+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "ja/>\n"
@@ -17896,7 +17896,7 @@ msgstr ""
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:2
 msgid "Nebular Shielding Prototype"
-msgstr "星雲シールド試作機"
+msgstr "星雲防護試作機"
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:4
 #: dat/outfits/structure/shield_capacitor_i.xml:4
@@ -22853,11 +22853,11 @@ msgstr ""
 
 #: dat/ai/advertiser.lua:11
 msgid "Fly safe, fly Milspec."
-msgstr "安全に飛ぼう。ミルスペックで飛ぼう"
+msgstr "安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/ai/advertiser.lua:12
 msgid "Reynir's Hot Dogs: enjoy the authentic taste of tradition."
-msgstr "レイニーのホットドッグ : 本物の伝統の味を楽しもう"
+msgstr "レイニーのホットドッグ : 本物の伝統の味を楽しもう。"
 
 #: dat/ai/advertiser.lua:13
 msgid ""
@@ -22872,15 +22872,13 @@ msgstr "卓越に挑め！　テラコムロケットに挑め！"
 #: dat/ai/advertiser.lua:15
 msgid ""
 "Most people are ordinary. For the others, Nexus designed the Shark fighter."
-msgstr ""
-"ほとんどの人は平凡である。それ以外の人たちのために、ネクサスはシャーク戦闘機"
-"を設計しました"
+msgstr "ほとんどの人は平凡である。それ以外の人たちのために、ネクサスはシャーク戦闘機"
+"を設計しました。"
 
 #: dat/ai/advertiser.lua:16
 msgid ""
 "Never take off without your courage. Never take off without your Vendetta."
-msgstr ""
-"勇気がなければ離陸してはならない。ベンデッタがなければ離陸してはならない"
+msgstr "勇気がなければ離陸してはならない。ベンデッタがなければ離陸してはならない。"
 
 #: dat/ai/advertiser.lua:17
 msgid "Unicorp: low price and high quality!"
@@ -22892,9 +22890,8 @@ msgstr "人生は短い。リンボ星系のミネルバ・ステーションで
 
 #: dat/ai/advertiser.lua:19
 msgid "Insuperable Sleekness. Introducing the Krain Industries Starbridge."
-msgstr ""
-"打ち勝ちがたいなめらかさ。クレインインダストリーズのスターブリッジを紹介しま"
-"す"
+msgstr "打ち勝ちがたいなめらかさ。クレインインダストリーズのスターブリッジを紹介しま"
+"す。"
 
 #: dat/ai/advertiser.lua:20
 msgid ""
@@ -22917,9 +22914,8 @@ msgstr ""
 msgid ""
 "Made money hauling cargo? Remember to file your EW-59831 every cycle or face "
 "the consequences."
-msgstr ""
-"貨物を運んでかねを作った？　周期ごとに EW-59831 を送付するのを忘れずに。さも"
-"ないとその責任をとることになる"
+msgstr "貨物を運んでかねを作った？　周期ごとに EW-59831 "
+"を送付するのを忘れずに。さもないとその責任をとることになる。"
 
 #: dat/ai/advertiser.lua:26
 msgid ""
@@ -22932,9 +22928,8 @@ msgstr ""
 msgid ""
 "Not filing your EE-91726 for unauthorized pet iguanas is a crime. Report to "
 "your Empire Animal Bureau now."
-msgstr ""
-"認定されていないペットのイグアナについて EE-91726 を送付しないのは犯罪です。"
-"帝国動物局にいま報告しよう"
+msgstr "認定されていないペットのイグアナについて EE-91726 "
+"を送付しないのは犯罪です。帝国動物局にいま報告しよう。"
 
 #: dat/ai/advertiser.lua:28
 msgid "Keep your documents properly filed. Unicorp Filing Cabinets."
@@ -22973,11 +22968,11 @@ msgstr ""
 msgid ""
 "A Dvaered Success Story: Buy the outstanding autobiography by Lady "
 "Bitterfly. "
-msgstr "あるドベーレッドの立志伝 : レディービタフライの傑出した自伝を買おう"
+msgstr "あるドベーレッドの立志伝 : レディービタフライの傑出した自伝を買おう。"
 
 #: dat/ai/advertiser.lua:39
 msgid "Remember Sorom."
-msgstr "ソロムを忘れるな"
+msgstr "ソロムを忘れるな。"
 
 #: dat/ai/advertiser.lua:40
 msgid "Special offer on Crow: buy one IR-eye, and the second comes for free!"
@@ -22997,9 +22992,8 @@ msgstr ""
 msgid ""
 "Endogenous DNA damage hampering your Gene Drive? Drop by your local "
 "Chromosomal Rearrangement Laboratory for a check-up."
-msgstr ""
-"内因性の DNA 損傷があなたのジーンドライブの動きを妨げている？　お近くの染色体"
-"再配列研究所に降ろして診断を"
+msgstr "内因性の DNA 損傷があなたのジーンドライブの動きを妨げている？　"
+"お近くの染色体再配列研究所に降ろして診断を。"
 
 #: dat/ai/advertiser.lua:43
 msgid ""
@@ -23292,8 +23286,7 @@ msgstr "{butthead}が{badword}であることを広めよう。—{sponsor}"
 msgid ""
 "Remember to fill in your EX-29528-B form if returning to the Empire from "
 "Soromid territory."
-msgstr ""
-"ソロミド領域から帝国へ戻るなら、忘れずに EX-29528-B 書式を送付してください"
+msgstr "ソロミド領域から帝国へ戻るなら、忘れずに EX-29528-B 書式を送付してください。"
 
 #. Za'lek messages
 #. Note that when running in the main menu background, player.name() might not exist (==nil), so
@@ -24451,7 +24444,7 @@ msgstr "メイデイ！　{fct}の{cls}が襲撃をうけた！"
 #. Send a message if applicable
 #: dat/ai/core/misc/scans.lua:62
 msgid "Prepare to be scanned."
-msgstr "スキャンをうける用意をせよ"
+msgstr "スキャンをうける用意をせよ。"
 
 #.
 #. -- Tries to get close to scan the enemy
@@ -24469,7 +24462,7 @@ msgstr "違法な品物を発見した！　抵抗はやめろ！"
 #. Small faction hit
 #: dat/ai/core/misc/scans.lua:107
 msgid "Thank you for your cooperation."
-msgstr "協力に感謝する"
+msgstr "協力に感謝する。"
 
 #. Default task to run when idle
 #. luacheck: globals idle (AI Task functions passed by name)
@@ -24642,11 +24635,11 @@ msgstr "致命的な誤りだったな！"
 #. Lines to annoy the player. Shouldn't be too common or Gamma Polaris and such get inundated.
 #: dat/ai/empire.lua:44
 msgid "The Empire is watching you."
-msgstr "帝国があなたを見守っている"
+msgstr "帝国があなたを見守っている。"
 
 #: dat/ai/empire.lua:46
 msgid "The Emperor sees all."
-msgstr "皇帝はすべてを見ている"
+msgstr "皇帝はすべてを見ている。"
 
 #. Set how far they attack
 #. Finish up creation
@@ -24696,7 +24689,7 @@ msgstr "帝国燃料補給船が攻撃をうけている！"
 #. Doesn't make sense to bribe
 #: dat/ai/empire_refuel.lua:20
 msgid "I'm out of here."
-msgstr "わたしは場違いだな"
+msgstr "わたしは場違いだな。"
 
 #. Override refuel chance
 #: dat/ai/empire_refuel.lua:24
@@ -24736,7 +24729,7 @@ msgstr "おまえでは FLF の相手にならない。"
 
 #: dat/ai/flf.lua:21
 msgid "I've killed scum far more dangerous than you."
-msgstr "わたしはおまえよりもはるかに危険なくずを殺してきた"
+msgstr "わたしはおまえよりもはるかに危険なくずを殺してきた。"
 
 #: dat/ai/flf.lua:23
 msgid "Death to the enemies of the Frontier!"
@@ -24835,15 +24828,15 @@ msgstr "｢おまえにその価値はないと思う｣"
 
 #: dat/ai/mercenary.lua:15
 msgid "Don't take this personally."
-msgstr "悪く思わないでくれ"
+msgstr "悪く思わないでくれ。"
 
 #: dat/ai/mercenary.lua:16
 msgid "It's just business."
-msgstr "ただの仕事なんだよ"
+msgstr "ただの仕事なんだよ。"
 
 #: dat/ai/mercenary.lua:19
 msgid "Your skull will make a great hood ornament."
-msgstr "おまえの頭蓋骨はすばらしい船首像になるな"
+msgstr "おまえの頭蓋骨はすばらしい船首像になるな。"
 
 #: dat/ai/mercenary.lua:20
 msgid "I've destroyed ships twice the size of yours!"
@@ -25077,11 +25070,11 @@ msgstr "オーホーホー、ここにはなにがあるかな？"
 
 #: dat/ai/pirate.lua:76
 msgid "You may want to send that distress signal now."
-msgstr "いま遭難信号を送ったほうがいいかもしれないね"
+msgstr "いま遭難信号を送ったほうがいいかもしれないね。"
 
 #: dat/ai/pirate.lua:77
 msgid "It's time to die."
-msgstr "死ぬ時が来た"
+msgstr "死ぬ時が来た。"
 
 #: dat/ai/pirate.lua:78
 msgid "Back so soon?"
@@ -25093,23 +25086,23 @@ msgstr "なんだ？　かっこいい王子さまを期待してたのか？"
 
 #: dat/ai/pirate.lua:80
 msgid "Long time no see."
-msgstr "ひさしぶりだな"
+msgstr "ひさしぶりだな。"
 
 #: dat/ai/pirate.lua:81
 msgid "Nothing personal, just business."
-msgstr "悪く思うなよ。ただの仕事なんだ"
+msgstr "悪く思うなよ。ただの仕事なんだ。"
 
 #: dat/ai/pirate.lua:82
 msgid "Nothing personal."
-msgstr "悪く思うなよ"
+msgstr "悪く思うなよ。"
 
 #: dat/ai/pirate.lua:83
 msgid "Just business."
-msgstr "ただの仕事だ"
+msgstr "ただの仕事だ。"
 
 #: dat/ai/pirate.lua:84
 msgid "I can already taste the rum."
-msgstr "もうラムの味見はできるぞ"
+msgstr "もうラムの味見はできるぞ。"
 
 #: dat/ai/pirate.lua:85
 msgid "How else am I going to pay off my tab?"
@@ -25117,7 +25110,7 @@ msgstr "ほかにどうやって請求書の支払いをするんだよ？"
 
 #: dat/ai/pirate.lua:86
 msgid "Seems you're being shot at."
-msgstr "あんた、撃たれているみたいだな"
+msgstr "あんた、撃たれているみたいだな。"
 
 #: dat/ai/pirate.lua:87
 msgid "I'm trying to kill you. Is it working?"
@@ -25125,11 +25118,11 @@ msgstr "あんたを殺そうとしているんだよ。それが仕事をする
 
 #: dat/ai/pirate.lua:88
 msgid "I'm sorry, I just don't like you."
-msgstr "申しわけないが、あんたはちょっと好きじゃないな"
+msgstr "申しわけないが、あんたはちょっと好きじゃないな。"
 
 #: dat/ai/pirate.lua:89
 msgid "Sorry, but I'm a private tracker."
-msgstr "申しわけないが、おれは私営の追跡者なんだ"
+msgstr "申しわけないが、おれは私営の追跡者なんだ。"
 
 #: dat/ai/pirate.lua:93
 msgid "You think that you can take me on?"
@@ -25145,8 +25138,7 @@ msgstr "後悔するぞ！"
 
 #: dat/ai/pirate.lua:96
 msgid "You can either pray now or sit in hell later."
-msgstr ""
-"いま懇願しても、あとから地獄で抗議の座りこみをするのでもどちらでもいいぞ"
+msgstr "いま懇願しても、あとから地獄で抗議の座りこみをするのでもどちらでもいいぞ。"
 
 #: dat/ai/pirate.lua:97
 msgid "Game over, you're dead!"
@@ -25154,7 +25146,7 @@ msgstr "ゲームオーバー、あなたは死にました！"
 
 #: dat/ai/pirate.lua:98
 msgid "I'm sorry things couldn't work out between us."
-msgstr "おれたちのあいだがうまくいかなかったのは、残念だな"
+msgstr "おれたちのあいだがうまくいかなかったのは、残念だな。"
 
 #: dat/ai/pirate.lua:99
 msgid "Knock it off!"
@@ -25174,7 +25166,7 @@ msgstr "新しいペンキを塗る仕事の勘定はおまえが払うんだぞ
 
 #: dat/ai/pirate.lua:103
 msgid "Fred here said to shoot the red blip."
-msgstr "ここにいるフレッドが、赤い点を撃てといってる"
+msgstr "ここにいるフレッドが、赤い点を撃てといってる。"
 
 #: dat/ai/pirate.lua:104
 msgid "Now you're in for it!"
@@ -25190,19 +25182,19 @@ msgstr "こいつは塗ったばかりだったんだ！"
 
 #: dat/ai/pirate.lua:107
 msgid "Rot."
-msgstr "ばかめ"
+msgstr "ばかめ。"
 
 #: dat/ai/pirate.lua:108
 msgid "Burn."
-msgstr "燃えてしまえ"
+msgstr "燃えてしまえ。"
 
 #: dat/ai/pirate.lua:109
 msgid "I can't wait to see you burn."
-msgstr "燃えているあんたを見るのが待ちきれないな"
+msgstr "燃えているあんたを見るのが待ちきれないな。"
 
 #: dat/ai/pirate.lua:110
 msgid "Just. Stop. Moving."
-msgstr "ちょっと。止まれ。動いているぞ"
+msgstr "ちょっと。止まれ。動いているぞ。"
 
 #: dat/ai/pirate.lua:111
 msgid "Die already!"
@@ -25211,7 +25203,7 @@ msgstr "もう死んだも同然だ！"
 #: dat/ai/pirate.lua:112
 msgid ""
 "Tell you what, if you can keep dodging for 20 hectoseconds I'll let you live."
-msgstr "あのなあ、20 ヘクト秒避けつづけられたら、生かしておいてやろう"
+msgstr "あのなあ、20 ヘクト秒避けつづけられたら、生かしておいてやろう。"
 
 #: dat/ai/pirate.lua:113
 msgid "Stop dodging!"
@@ -25299,7 +25291,7 @@ msgstr "古き帝国とともに死ね！"
 #. Lines to annoy the player.
 #: dat/ai/proteron.lua:46
 msgid "The Proteron are watching you."
-msgstr "プロテロンがあなたを見守っている"
+msgstr "プロテロンがあなたを見守っている。"
 
 #. Finish up creation
 #. Remove randomness from future calls
@@ -25398,7 +25390,7 @@ msgstr "｢われわれをだれだと思っているのか？　帝国か？｣
 
 #: dat/ai/soromid.lua:21
 msgid "Culling you will be doing humanity a service."
-msgstr "おまえをとうたするのは、人類への奉仕となるだろう"
+msgstr "おまえをとうたするのは、人類への奉仕となるだろう。"
 
 #: dat/ai/soromid.lua:22
 msgid "Enjoy your last moments, worm!"
@@ -25418,7 +25410,7 @@ msgstr "弱さを受けいれろ！"
 
 #: dat/ai/soromid.lua:28
 msgid "Cunning, but foolish."
-msgstr "こうかつだが、愚かだ"
+msgstr "こうかつだが、愚かだ。"
 
 #: dat/ai/soromid.lua:29
 msgid "Ambush! Defend yourselves!"
@@ -25547,23 +25539,23 @@ msgstr "われわれの技術がおまえの態度を修正することだろう
 
 #: dat/ai/zalek.lua:41
 msgid "You wanna do this? Have it your way."
-msgstr "やりたいのか？　好きにしろ"
+msgstr "やりたいのか？　好きにしろ。"
 
 #: dat/ai/zalek.lua:44
 msgid "ENGAGING OFFENSIVE PROTOCOLS."
-msgstr "攻撃プロトコルを起動中"
+msgstr "攻撃プロトコルを起動中。"
 
 #: dat/ai/zalek.lua:45
 msgid "EXTERMINATING HOSTILES."
-msgstr "敵を根絶中"
+msgstr "敵を根絶中。"
 
 #: dat/ai/zalek.lua:46
 msgid "COMBAT PROTOCOLS INITIATED."
-msgstr "戦闘プロトコルを起動"
+msgstr "戦闘プロトコルを起動。"
 
 #: dat/ai/zalek.lua:49
 msgid "ENGAGING DEFENSIVE PROTOCOLS."
-msgstr "防衛プロトコルを起動中"
+msgstr "防衛プロトコルを起動中。"
 
 #. See if a drone
 #: dat/ai/zalek.lua:59
@@ -26299,7 +26291,7 @@ msgstr "星雲"
 
 #: dat/events/discovery.lua:218
 msgid "Grim Reminder of Our Fragility"
-msgstr "われわれのもろさにたいする残忍な注意"
+msgstr "われわれのはかなさを残忍に思いださせる"
 
 #: dat/events/discovery.lua:235
 msgid "Northern Stellar Winds"
@@ -27212,14 +27204,14 @@ msgstr "巡洋艦、母艦、戦艦級の船を使う、もっとも困難な軍
 
 #: dat/events/dvaered/totoran.lua:173
 msgid "Unlock Double Damage Enemies Perk"
-msgstr "敵への二倍打撃付与を可能にする"
+msgstr "二倍打撃の敵の付与を可能にする"
 
 #: dat/events/dvaered/totoran.lua:174
 msgid ""
 "Unlocks the Double Damage Enemies Perk, which causes all enemies to double "
 "the amount of damage. While this increases the challenge difficulty, it also "
 "immensely increases the rewards."
-msgstr "敵への二倍打撃付与を可能にする。これはすべての敵が二倍の損害を与えられるよう"
+msgstr "二倍打撃の敵の付与を可能にする。これはすべての敵が二倍の損害を与えられるよう"
 "になるものだ。挑戦の難易度が増加するが、報奨もかなり増加する"
 
 #: dat/events/dvaered/totoran.lua:175
@@ -28018,7 +28010,7 @@ msgstr "ブルータス、おまえもか？"
 
 #: dat/events/minerva/altercation1.lua:201
 msgid "Dust to dust."
-msgstr "ごみがごみに"
+msgstr "ごみがごみに。"
 
 #: dat/events/minerva/altercation1.lua:214
 msgid ""
@@ -28037,7 +28029,7 @@ msgstr ""
 
 #: dat/events/minerva/altercation1.lua:239
 msgid "Good riddance."
-msgstr "いいやっかい払いだ"
+msgstr "いいやっかい払いだ。"
 
 #: dat/events/minerva/altercation1.lua:252
 msgid ""
@@ -53878,36 +53870,35 @@ msgstr "あなたはアランドンでごみあさりを助けた。"
 #. Start the cinematics
 #: dat/missions/minerva/maikki1.lua:572
 msgid "Damnit! I thought I told you to fix the sensors."
-msgstr "ちくしょう！　センサーをなおせといったと思ったがな"
+msgstr "ちくしょう！　センサーをなおせといったと思ったがな。"
 
 #: dat/missions/minerva/maikki1.lua:575
 msgid ""
 "Hey! I fixed them, it's this damn nebula that must have broken them again."
-msgstr "おい！　なおしたよ。このくそ星雲でまた壊れたにちがいないな"
+msgstr "おい！　なおしたよ。このくそ星雲でまた壊れたにちがいないな。"
 
 #: dat/missions/minerva/maikki1.lua:578
 msgid ""
 "Damnit. I really dislike broadcasting, but my encryption also seems damaged "
 "now."
-msgstr ""
-"ちくしょう。一斉送信はほんとうにやなんだよ。でも暗号装置ももう壊れたらしい"
+msgstr "ちくしょう。一斉送信はほんとうにやなんだよ。でも暗号装置ももう壊れたらしい。"
 
 #: dat/missions/minerva/maikki1.lua:581
 msgid "Don't worry, it's not like there's anybody else here."
-msgstr "心配するな。ここじゃほかにだれもいそうにないし"
+msgstr "心配するな。ここじゃほかにだれもいそうにないし。"
 
 #: dat/missions/minerva/maikki1.lua:584
 msgid "Let's just get this over with."
-msgstr "ちょっと切らせてくれ"
+msgstr "ちょっと切らせてくれ。"
 
 #. Back to player
 #: dat/missions/minerva/maikki1.lua:599
 msgid "This place always gives me the creeps."
-msgstr "この場所はいつもぞっとするな"
+msgstr "この場所はいつもぞっとするな。"
 
 #: dat/missions/minerva/maikki1.lua:600
 msgid "C'mon, the guy said that this was a great wreck."
-msgstr "おいおい、あいつはこれがすごい難破船だっていってた"
+msgstr "おいおい、あいつはこれがすごい難破船だっていってた。"
 
 #: dat/missions/minerva/maikki1.lua:601
 msgid "You know the Za'lek pay premium for this sort of shit, right?"
@@ -53915,7 +53906,7 @@ msgstr "ザレクがこの手のくそに割増を払うんだってわかって
 
 #: dat/missions/minerva/maikki1.lua:602
 msgid "Yeah, yeah…  just hope we don't see any ghosts."
-msgstr "ああ、ああ……。亡霊を見ないことだけを祈ってるよ"
+msgstr "ああ、ああ……。亡霊を見ないことだけを祈ってるよ。"
 
 #: dat/missions/minerva/maikki1.lua:603
 msgid "You don't really believe in them do you?"
@@ -53923,20 +53914,20 @@ msgstr "ほんとうは亡霊がいるなんて信じてないんだろ？"
 
 #: dat/missions/minerva/maikki1.lua:604
 msgid "Dude, there's really freaky shit out there."
-msgstr "だて男さんよ、むこうはほんとうにとっぴなことがあるんだよ"
+msgstr "だて男さんよ、むこうはほんとうにとっぴなことがあるんだよ。"
 
 #: dat/missions/minerva/maikki1.lua:605
 msgid "Yeah, but most of that freaky shit are Soromid bioengineered crap."
-msgstr "ああ、だがとっぴなくそのほとんどは、ソロミドの生物工学的くずだ"
+msgstr "ああ、だがとっぴなくそのほとんどは、ソロミドの生物工学的くずだ。"
 
 #: dat/missions/minerva/maikki1.lua:606
 msgid "Ugh, Soromids give me the creeps."
-msgstr "ううっ、ソロミドにはぞっとするな"
+msgstr "ううっ、ソロミドにはぞっとするな。"
 
 #: dat/missions/minerva/maikki1.lua:607
 msgid ""
 "I'd take them over Za'leks any day. I have no idea what Za'leks are thinking."
-msgstr "いつでもザレクにあれを渡すよ。ザレクの考えてることはわからんな"
+msgstr "いつでもザレクにあれを渡すよ。ザレクの考えてることはわからんな。"
 
 #. 37 seconds
 #: dat/missions/minerva/maikki1.lua:609
@@ -53954,7 +53945,7 @@ msgstr "すまんっていっただろ！"
 
 #: dat/missions/minerva/maikki1.lua:612
 msgid "This is coming out of your cut."
-msgstr "これはおまえの分け前から出してもらう"
+msgstr "これはおまえの分け前から出してもらう。"
 
 #. 53 seconds
 #: dat/missions/minerva/maikki1.lua:614
@@ -53964,7 +53955,7 @@ msgstr "おい！"
 #. Cut off point here, restarts at heading to waypoint[4]
 #: dat/missions/minerva/maikki1.lua:616
 msgid "We should be there soon."
-msgstr "すぐに着くはずだ"
+msgstr "すぐに着くはずだ。"
 
 #: dat/missions/minerva/maikki1.lua:617
 msgid "I swear I'll never come to the nebula again after this…"
@@ -54002,7 +53993,7 @@ msgstr "#rあなたはごみあさりを見失った！　隠れて追跡する�
 #. Starting out
 #: dat/missions/minerva/maikki1.lua:677
 msgid "Let's get going."
-msgstr "行こうか"
+msgstr "行こうか。"
 
 #. Check if made it to next target
 #. Finished current target, go to next
@@ -54015,7 +54006,7 @@ msgstr "なにか見たか？"
 #. Should trigger another catch
 #: dat/missions/minerva/maikki1.lua:717
 msgid "It's your imagination. Let's get this over with."
-msgstr "想像の産物だろ。片づけてしまおう"
+msgstr "想像の産物だろ。片づけてしまおう。"
 
 #. Spawn the wreck
 #: dat/missions/minerva/maikki1.lua:731
@@ -54033,9 +54024,8 @@ msgstr "ずっと来たのはこの難破船のためか？　その価値があ
 
 #: dat/missions/minerva/maikki1.lua:751
 msgid "They said it was whatshisname… Xex? Vex? Some famous guy's wreck."
-msgstr ""
-"あいつらはこれがなんとかいうやつ……ゼクス？　ベクス？　有名なやつの難破船だと"
-"いってた"
+msgstr "あいつらはこれがなんとかいうやつ……ゼクス？　ベクス？　"
+"有名なやつの難破船だといってた。"
 
 #: dat/missions/minerva/maikki1.lua:753
 msgid "Wait, someone is there!"
@@ -54523,9 +54513,9 @@ msgid ""
 msgstr ""
 "｢どうもその計画は理由かなにかがあって解散させられたようです。それに行方不明に"
 "なった参加者もいます。ですが、そのなかの二、三人は追うことができました。それ"
-"でも簡単ではありませんでしたけど。あの人たちにはテニュアと呼ばれるだれも理解"
-"してない妙な制度があって、たえまなく研究所から研究所へと渡り歩いてるんです。"
-"ほんとうにおかしいですよね！｣"
+"でも簡単ではありませんでしたけど。あの人たちには終身在職権と呼ばれるだれも理"
+"解してない妙な制度があって、たえまなく研究所から研究所へと渡り歩いてるんです"
+"。ほんとうにおかしいですよね！｣"
 
 #: dat/missions/minerva/maikki2.lua:246
 msgid ""
@@ -55493,7 +55483,7 @@ msgstr "敵を発見！"
 
 #: dat/missions/minerva/maikki2.lua:642
 msgid "UNAUTHORIZED VESSEL DETECTED. ELIMINATING."
-msgstr "無許可の船を検出。排除中"
+msgstr "無許可の船を検出。排除中。"
 
 #. All dead
 #: dat/missions/minerva/maikki2.lua:669
@@ -55568,7 +55558,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:707
 msgid "Just destroy me and put me out of my misery."
-msgstr "とにかくわたしを破壊して、悲惨な境遇から解放してくれ"
+msgstr "とにかくわたしを破壊して、悲惨な境遇から解放してくれ。"
 
 #: dat/missions/minerva/maikki2.lua:708
 msgid "Why am I still alive?"
@@ -55576,7 +55566,7 @@ msgstr "どうしてまだわたしは生きているんだ？"
 
 #: dat/missions/minerva/maikki2.lua:709
 msgid "I can't deal with this anymore."
-msgstr "もうこれ以上やってられない"
+msgstr "もうこれ以上やってられない。"
 
 #: dat/missions/minerva/maikki2.lua:710
 msgid "Please end me!"
@@ -55584,11 +55574,11 @@ msgstr "どうか終わりにしてくれ！"
 
 #: dat/missions/minerva/maikki2.lua:711
 msgid "Living is suffering."
-msgstr "生きているのは苦しみだ"
+msgstr "生きているのは苦しみだ。"
 
 #: dat/missions/minerva/maikki2.lua:712
 msgid "It all hurts."
-msgstr "すべてが痛む"
+msgstr "すべてが痛む。"
 
 #: dat/missions/minerva/maikki2.lua:713
 msgid "Please kill me!"
@@ -58072,13 +58062,12 @@ msgstr "ハッキング拠点"
 msgid ""
 "Due to military exercises, {sys} is under lockdown. Please evacuate the area "
 "immediately."
-msgstr ""
-"軍事演習のため、{sys}星系は封鎖されています。どうかこの領域から即座に立ち退い"
-"てください"
+msgstr "軍事演習のため、{sys}星系は封鎖されています。どうかこの領域から即座に立ち退い"
+"てください。"
 
 #: dat/missions/minerva/pirate5.lua:407
 msgid "Unwelcome ships will be terminated. You have been warned."
-msgstr "歓迎されていない船は消滅させられます。あなたは警告されました"
+msgstr "歓迎されていない船は消滅させられます。あなたは警告されました。"
 
 #. Drone controllers disable their respective drones
 #: dat/missions/minerva/pirate5.lua:419
@@ -59985,7 +59974,7 @@ msgstr "支援する。敵を攻撃中。"
 #. TODO Modern optimized equipping, or at least a manual equip from "naked"
 #: dat/missions/neutral/crimelord.lua:141
 msgid "Surrender now and we'll let you live."
-msgstr "もう降伏しろ。そうすれば生かしておいてやる"
+msgstr "もう降伏しろ。そうすれば生かしておいてやる。"
 
 #: dat/missions/neutral/crimelord.lua:142
 msgid "You're dead!"
@@ -60799,28 +60788,28 @@ msgid ""
 "on him, and the bottle sucks you in."
 msgstr ""
 "｢ああ、ご先祖さま、ありがとう！　助けてくれると思ってたよ！｣。男はかなり気を"
-"楽にして、腕をあなたのまわりにまわした。｢飲んでくれ。そのあいだに説明するか"
-"ら｣。男はバーテンに飲みものを二つ持ってくるように合図した。｢ほら、おれはその"
-"女伯爵を知っててな。伯爵はまるで……むー……意味わかるよな？｣ と、男はあなたをひ"
-"じでつついた。｢だが伯爵は金持ちだ。自分用の護衛艦隊があるような金持ちで、金の"
-"シャトルやダイアモンドのレーザー砲塔があるような金持ちだ。\n"
+"楽にして、腕をあなたのまわりにまわした。｢飲んでくれ。そのあいだに説明するから"
+"｣。男はバーテンに飲みものを二つ持ってくるように合図した。｢ほら、おれはその女"
+"伯爵を知っててな。伯爵はまるで……むー……わかるだろ？｣ と、男はあなたをひじでつ"
+"ついた。｢だが伯爵は金持ちだ。自分用の護衛艦隊があるような金持ちで、金のシャト"
+"ルやダイアモンドのレーザー砲塔があるような金持ちだ。\n"
 "    ｢ええと、ときおり伯爵はあるものを輸送する必要があって、自分の運転手に取っ"
-"てこいとはちょっといえないんだ。だからおれにその包みを取ってこいというんだ"
-"な。おれはそれがなんなのかは知らないし、たずねない。伯爵もおれに教えない。そ"
-"ういうやりかたが伯爵は好きなんだ。でも海賊が横行する宙域を抜けてちょうど 72 "
-"時間たって、ジャンプの出口もないのにイナゴどもがみんな飛びこんできたんだ。だ"
-"からおれは一、二杯飲んで寝ることにしたんだよ。けっきょくその、あー、二杯が"
-"ちょっと進んでしまってな、三杯だか十二杯だかになったんだよ。もしかすると二十"
-"杯かな。知らんけど、あいつらはおれが賭けるのはあまり好きじゃなかったみたいだ"
-"な。次に気がついたら、顔に水をぶっかけられて目を覚ましたところだった。知りゃ"
-"されたのはおれが質入れして、船をとられちゃったってこと、わかる？　でもほら、"
-"みんなあんたがするのは、伯爵が{pickup_sys}星系の{pickup_pnt}で欲しがってるの"
-"をなんでも取りにいくってことだよ。激しすぎるのはないと思うが、子ネコや虹みた"
-"いに気楽ってこともなさそうだな。おれがもらうのは 25% だけだ。だからちょっと"
-"行って取ってきて、{dropoff_sys}星系の{dropoff_pnt}まで運んでくれ。とにかく伯"
-"爵にはあんたが運ぶっていっておく。それからあんまりじろじろ伯爵を見んなよ。さ"
-"もないと、うーむ、あー、意味わかるよな｣。男がこれ以上飲み物にのめりこんだり、"
-"あなたがボトルに取りつかれるまえに、離陸したほうがよいとわかった。"
+"てこいとはちょっといえないんだ。だからおれにその包みを取ってこいというんだな"
+"。おれはそれがなんなのかは知らないし、たずねない。伯爵もおれに教えない。そう"
+"いうやりかたが伯爵は好きなんだ。でも海賊が横行する宙域を抜けてちょうど 72 時"
+"間たって、ジャンプの出口もないのにイナゴどもがみんな飛びこんできたんだ。だか"
+"らおれは一、二杯飲んで寝ることにしたんだよ。けっきょくその、あー、二杯がちょ"
+"っと進んでしまってな、三杯だか十二杯だかになったんだよ。もしかすると二十杯か"
+"な。知らんけど、あいつらはおれが賭けるのはあまり好きじゃなかったみたいだな。"
+"次に気がついたら、顔に水をぶっかけられて目を覚ましたところだった。知りゃされ"
+"たのはおれが質入れして、船をとられちゃったってこと、わかる？　でもほら、みん"
+"なあんたがするのは、伯爵が{pickup_sys}星系の{pickup_pnt}で欲しがってるのをな"
+"んでも取りにいくってことだよ。激しすぎるのはないと思うが、子ネコや虹みたいに"
+"気楽ってこともなさそうだな。おれがもらうのは 25% だけだ。だからちょっと行って"
+"取ってきて、{dropoff_sys}星系の{dropoff_pnt}まで運んでくれ。とにかく伯爵には"
+"あんたが運ぶっていっておく。それからあんまりじろじろ伯爵を見んなよ。さもない"
+"と、うーむ、あー、わかるよな｣。男がこれ以上飲み物にのめりこんだり、あなたがボ"
+"トルに取りつかれるまえに、離陸したほうがよいとわかった。"
 
 #. Not enough space
 #: dat/missions/neutral/drunkard.lua:91
@@ -61307,7 +61296,7 @@ msgstr ""
 #: dat/missions/neutral/dts_00.lua:202 dat/missions/neutral/dts_01.lua:205
 #: dat/missions/neutral/dts_02.lua:258
 msgid "Not done yet."
-msgstr "まだ終わってない"
+msgstr "まだ終わってない。"
 
 #: dat/missions/neutral/dts_00.lua:202 dat/missions/neutral/dts_01.lua:205
 #: dat/missions/neutral/dts_02.lua:258
@@ -65236,9 +65225,9 @@ msgid ""
 "Yacht class ship after all. They refuse to pay, leaving you with much less "
 "overall payment."
 msgstr ""
-"あなたがけっきょく豪華なヨット型の船に乗せなかったことに、数人の乗客が怒り"
-"狂っている。その乗客たちが支払いを拒否したので、あなたの手元の支払総額はずっ"
-"とすくなくなった。"
+"あなたがけっきょく豪華なヨット型の船に乗せなかったことに、数人の乗客が怒り狂"
+"っている。その乗客たちが支払いを拒否したので、あなたの手元の支払総額はずっと"
+"少なくなった。"
 
 #: dat/missions/neutral/sightseeing.lua:54
 msgid ""
@@ -70252,16 +70241,16 @@ msgid ""
 msgstr ""
 "｢うれしいですね、{player}｣。レビナがあなたにほほえみかける。｢部下の乗員に、あ"
 "なたの船のコンピューターに必要な航法情報を提供するようにいっておきます。それ"
-"から注意しておきますが、勝手ながらあなたの船にとくべつな IFF 応答機を設置させ"
-"てもらいました。気づかいは無用です。あなたを護衛の 1 隻とみなされるようにする"
-"だけです。いろいろな理由から、ほかの護衛とはできるだけ通信を控えるのがいちば"
-"んです。あなたなら理由についてはうすうす感づいているかもしれないと思っていま"
-"す｣\n"
+"から注意しておきますが、勝手ながらあなたの船にとくべつな IFF "
+"応答機を設置させてもらいました。気づかいは無用です。あなたを護衛の 1 隻とみな"
+"されるようにするだけです。いろいろな理由から、ほかの護衛とはできるだけ通信を"
+"控えるのがいちばんです。あなたなら理由についてはうすうす感づいているかもしれ"
+"ないと思っています｣\n"
 "    レビナが背筋を伸ばす。｢いまのところは、これでぜんぶです、{player}｣ と、レ"
 "ビナが船長らしく、もっと堅苦しくいった。｢あなたには任務を割りあてました。しっ"
 "かりとお願いします｣\n"
-"    あなたはていねいだが手際よくセイリュウの船橋から連れだされた。すぐにあな"
-"たは自分の操縦席に落ちついて、依頼されたことをやる用意ができた。"
+"    あなたはていねいだが手ぎわよくセイリュウの船橋から連れだされた。すぐにあ"
+"なたは自分の操縦席に落ちついて、依頼されたことをやる用意ができた。"
 
 #: dat/missions/shadow/shadowvigil.lua:120
 msgid ""
@@ -70419,11 +70408,11 @@ msgstr ""
 
 #: dat/missions/shadow/shadowvigil.lua:282
 msgid "Two, copy."
-msgstr "2 番機、了解"
+msgstr "2 番機、了解。"
 
 #: dat/missions/shadow/shadowvigil.lua:283
 msgid "Three, copy."
-msgstr "3 番機、了解"
+msgstr "3 番機、了解。"
 
 #. case rendezvous with Dvaered diplomat
 #. Follow the diplomat.
@@ -70439,21 +70428,19 @@ msgstr "それでみんな、どんな問題がおきると思ってるんだ？
 msgid ""
 "Not if we all follow the plan. I didn't hear of any trouble coming our way "
 "from any of the others."
-msgstr ""
-"全員計画に従っていればないな。ほかのだれからもここへ来る途中で問題があったと"
-"は聞いていない"
+msgstr "全員計画に従っていればないな。ほかのだれからもここへ来る途中で問題があったと"
+"は聞いていない。"
 
 #: dat/missions/shadow/shadowvigil.lua:313
 msgid "I just hope Z. knows what he's doing."
-msgstr "Z. が自分のやっていることを知っていることだけを願うよ"
+msgstr "Z. が自分のやっていることを知っていることだけを願うよ。"
 
 #: dat/missions/shadow/shadowvigil.lua:314
 msgid ""
 "Cut the chatter, two, three. This is a low-profile operation. Act the part, "
 "please."
-msgstr ""
-"くだらないおしゃべりはやめろ、2 番機、3 番機。これは目立たずにやる作戦だ。ど"
-"うか役割を果たしてくれ"
+msgstr "くだらないおしゃべりはやめろ、2 番機、3 "
+"番機。これは目立たずにやる作戦だ。どうか役割を果たしてくれ。"
 
 #. Encounter
 #: dat/missions/shadow/shadowvigil.lua:323
@@ -70479,7 +70466,7 @@ msgstr ""
 #. Hyperspace toward the next destination system.
 #: dat/missions/shadow/shadowvigil.lua:407
 msgid "All hostiles eliminated, resume standing orders."
-msgstr "すべての敵を除去した。戻って隊形を維持しろ"
+msgstr "すべての敵を除去した。戻って隊形を維持しろ。"
 
 #. safety flag to prevent the escorts from being released twice.
 #. Puts the escorts under AI control again, and makes them fight.
@@ -70531,13 +70518,13 @@ msgstr "外交官の船が砲火にさらされている！"
 #. This is the final cutscene.
 #: dat/missions/shadow/shadowvigil.lua:505
 msgid "This is Empire zero-zero-four. Transmitting clearance code now."
-msgstr "こちらは帝国ゼロ—ゼロ—フォー。今から認可コードを送信する"
+msgstr "こちらは帝国ゼロ—ゼロ—フォー。今から認可コードを送信する。"
 
 #: dat/missions/shadow/shadowvigil.lua:506
 msgid ""
 "Empire zero-zero-four, your code checks out. Commence boarding maneuvers."
-msgstr ""
-"帝国ゼロ—ゼロ—フォー、そちらのコードは確認できた。接舷にむけた操縦を開始せよ"
+msgstr "帝国ゼロ—ゼロ—フォー、そちらのコードは確認できた。接舷にむけた操縦を開始せよ"
+"。"
 
 #: dat/missions/shadow/shadowvigil.lua:508
 msgid "This is your leader, you're all clear. Execute, execute, execute!"
@@ -77424,19 +77411,19 @@ msgstr ""
 
 #: dat/missions/tutorial/nelly02.lua:508
 msgid "I know you're out there Nelly. Please come forward voluntarily."
-msgstr "そこにネリーがいるのは知っています。自分から出てきてもらいたい"
+msgstr "そこにネリーがいるのは知っています。自分から出てきてもらいたい。"
 
 #: dat/missions/tutorial/nelly02.lua:509
 msgid "Stop hiding Nelly, you know this is futile."
-msgstr "ネリーをかくまうのはやめなさい。無駄だとわかっているはずです"
+msgstr "ネリーをかくまうのはやめなさい。無駄だとわかっているはずです。"
 
 #: dat/missions/tutorial/nelly02.lua:510
 msgid "Let us face this like adults, Nelly."
-msgstr "おたがい大人になって対処しましょう、ネリー"
+msgstr "おたがい大人になって対処しましょう、ネリー。"
 
 #: dat/missions/tutorial/nelly02.lua:511
 msgid "Nelly, if you come out now I would hold this against you."
-msgstr "ネリー、いま出てこないなら、これをつづけるから"
+msgstr "ネリー、いま出てこないなら、これをつづけるから。"
 
 #: dat/missions/tutorial/nelly02.lua:512
 msgid ""
@@ -77446,7 +77433,7 @@ msgstr "ネリー、あなたをさがすために本気で宇宙全体をスキ
 
 #: dat/missions/tutorial/nelly02.lua:513
 msgid "Just come on out and let's get this over with, Nelly."
-msgstr "とにかく出てきなさい。これを片づけましょう、ネリー"
+msgstr "とにかく出てきなさい。これを片づけましょう、ネリー。"
 
 #: dat/missions/tutorial/nelly02.lua:531
 msgid ""
@@ -78076,7 +78063,7 @@ msgid ""
 "require licenses before you can buy them.\""
 msgstr ""
 "｢今は新しい船を買えるほどのクレジットがないでしょうが、今後じゅうぶんなお金を"
-"ためたら、船をずっといいものに更新したくなるはずです。どんな船かはやっている"
+"ためたら、船をずっといいものに変更したくなるはずです。どんな船かはやっている"
 "仕事の種類によるでしょう。それぞれの船にはそれぞれの強みと弱みがあって、それ"
 "に装備できるそれぞれの艤装品も影響しあいます。船によっては、買えるようになる"
 "まえに免許が必要なことに注意してください｣"
@@ -78264,7 +78251,7 @@ msgid ""
 "repair technology. But even then, armour regeneration is usually much slower "
 "than shield regeneration.\""
 msgstr ""
-"｢すばらしい手際であのドローンを破壊しましたね！　気づいたかもしれませんが、"
+"｢すばらしい手ぎわであのドローンを破壊しましたね！　気づいたかもしれませんが、"
 "シールドは時間とともに再生しますが、装甲はしません。これはもちろん、例外がな"
 "いわけではありません。一部の船には、とくに大型の船ですが、先進の装甲修理技術"
 "を目玉にしているものがあります。しかしそういうものでさえ、装甲の再生は一般的"
@@ -79875,7 +79862,7 @@ msgstr "｢よかった！　最初の目的地は{sys}星系の{pnt}です｣"
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:59
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:71
 msgid "Shielding Prototype Funding"
-msgstr "シールド試作機の資金調達"
+msgstr "防護試作機の資金調達"
 
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:55
 msgid "Help Dr. Mensing to get funding for constructing a shielding prototype."
@@ -80063,9 +80050,8 @@ msgstr ""
 msgid ""
 "You helped Dr. Mensing to acquire funding for a shielding prototype that "
 "will enable to explore the Sol nebula."
-msgstr ""
-"あなたは、ソル星雲を探検できるようにするシールド試作機のための資金をメンシン"
-"グ博士が獲得しようとするのを助けた。"
+msgstr "あなたは、ソル星雲を探検できるようにする防護試作機のための資金をメンシング博"
+"士が獲得しようとするのを助けた。"
 
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:147
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:152
@@ -80831,7 +80817,7 @@ msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:177
 msgid "Watch out!"
-msgstr "注意して！"
+msgstr "気をつけて！"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:182
 msgid "Haywire Drone"
@@ -81234,7 +81220,7 @@ msgstr "実験場に近づいて！"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:235
 msgid "Carefully push the crystals into the beam."
-msgstr "注意しながら結晶をビームに押しこんでください"
+msgstr "注意しながら結晶をビームに押しこんでください。"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:238
 msgid ""
@@ -81248,15 +81234,15 @@ msgstr "もうすべて問題ないようです"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:249
 msgid "Now push the crystals into the beam."
-msgstr "もう結晶をビームに押しこんでいいですよ"
+msgstr "もう結晶をビームに押しこんでいいですよ。"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:321
 msgid "Are you alright? Communication cut off for a bit."
-msgstr "だいじょうぶですか？　通信がちょっと切れました"
+msgstr "だいじょうぶですか？　通信がちょっと切れました。"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:325
 msgid "Come back to Katar I."
-msgstr "カタール I に戻ってください"
+msgstr "カタール I に戻ってください。"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:45
 msgid "You meet Noona who seems to be a bit more calm than usually."
