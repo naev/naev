@@ -118,8 +118,8 @@ static int equipment_playerRmOutfit( const Outfit *o, int quantity );
  */
 void equipment_rightClickOutfits( unsigned int wid, const char* str )
 {
-   (void)str;
-   Outfit* o;
+   (void) str;
+   Outfit *o;
    int id, active, minimal, n, nfits;
    PilotOutfitSlot* slots;
    Pilot *p;
@@ -1999,6 +1999,11 @@ static void equipment_rightClickShips( unsigned int wid, const char *str )
    const char *shipname = toolkit_getImageArray( wid, str );
    PlayerShip_t *ps = player_getPlayerShip( shipname );
 
+   /* Must have fleet capacity. */
+   if (player.fleet_capacity <= 0)
+      return;
+
+   /* Deploy the ship if applicable. */
    if (ps != NULL) {
       ps->deployed = !ps->deployed;
       player_fleetUpdate();
