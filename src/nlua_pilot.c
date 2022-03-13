@@ -748,7 +748,6 @@ static int pilotL_remove( lua_State *L )
  */
 static int pilotL_clearSelect( lua_State *L )
 {
-
    int f = luaL_validfaction(L,1);
    Pilot *const* pilot_stack = pilot_getAll();
 
@@ -797,7 +796,6 @@ static int pilotL_clear( lua_State *L )
  */
 static int pilotL_toggleSpawn( lua_State *L )
 {
-
    /* Setting it directly. */
    if (lua_gettop(L) > 0) {
       if (lua_isfaction(L,1) || lua_isstring(L,1)) {
@@ -1932,7 +1930,6 @@ static int pilotL_outfits( lua_State *L )
    if (normal) {
       int j = 1;
       for (int i=0; i<array_size(p->outfits); i++) {
-
          /* Get outfit. */
          if (p->outfits[i]->outfit == NULL)
             continue;
@@ -2150,7 +2147,6 @@ static int pilotL_spaceworthy( lua_State *L )
  */
 static int pilotL_setPosition( lua_State *L )
 {
-
    /* Parse parameters */
    Pilot *p       = luaL_validpilot(L,1);
    vec2 *vec  = luaL_checkvector(L,2);
@@ -3426,7 +3422,6 @@ static int pilotL_addHealth( lua_State *L )
  */
 static int pilotL_setEnergy( lua_State *L )
 {
-
    /* Handle parameters. */
    Pilot *p     = luaL_validpilot(L,1);
    double e     = luaL_checknumber(L,2);
@@ -4629,7 +4624,6 @@ static int pilotL_runaway( lua_State *L )
       t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
    }
    else {
-
       if (lua_isboolean(L,3)) {
          int nojump = lua_toboolean(L,3);
          Task *t = pilotL_newtask( L, p, (nojump) ? "runaway_nojump" : "runaway" );
@@ -4758,7 +4752,6 @@ static int pilotL_hyperspace( lua_State *L )
  */
 static int pilotL_stealth( lua_State *L )
 {
-
    /* Get parameters. */
    Pilot *p = luaL_validpilot(L,1);
 
