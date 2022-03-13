@@ -2050,7 +2050,7 @@ void gui_targetPilotGFX( glTexture *gfx )
  */
 static void gui_eventToScreenPos( int* sx, int* sy, int ex, int ey )
 {
-   gl_windowToScreenPos( sx, sy, ex - gui_viewport_x, ey - gui_viewport_y );
+   gl_windowToScreenPos( sx, sy, ex, ey );
 }
 
 /**
