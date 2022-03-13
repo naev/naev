@@ -80,6 +80,7 @@ static void equipment_genOutfitList( unsigned int wid );
 /* Widget. */
 static void equipment_genLists( unsigned int wid );
 static void equipment_toggleFav( unsigned int wid, const char *wgt );
+static void equipment_toggleDeploy( unsigned int wid, const char *wgt );
 static void equipment_renderColumn( double x, double y, double w, double h,
       PilotOutfitSlot *lst, const char *txt,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt );
@@ -371,12 +372,17 @@ void equipment_open( unsigned int wid )
          ow, gl_defFont.h, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
 
    /* Favourite checkbox, run before genLists. */
-   window_addCheckbox( wid, -20-(128-cw)/2, -20-150-ch, cw, 30, "chkFav", _("Favourite"), equipment_toggleFav, 0 );
-   window_addButtonKey( wid, -16, -20-150-ch-bh,
-         128+8, bh, "btnRenameShip",
+   x = -20-(128-cw)/2;
+   y = -20-150-ch;
+   window_addCheckbox( wid, x, y, cw, 30, "chkFav", _("Favourite"), equipment_toggleFav, 0 );
+   y -= 23;
+   window_addCheckbox( wid, x, y, cw, 30, "chkDeploy", _("Deployed"), equipment_toggleDeploy, 0 );
+   x = -16;
+   y -= 23 + 10;
+   window_addButtonKey( wid, x, y, 128+8, bh, "btnRenameShip",
          _("Rename"), equipment_renameShip, SDLK_r );
-   window_addButtonKey( wid, -16, -20-150-ch-2*bh-10,
-         128+8, bh, "btnShipMode",
+   y -= bh + 10;
+   window_addButtonKey( wid, x, y, 128+8, bh, "btnShipMode",
          _("Toggle Display"), equipment_shipMode, SDLK_d );
 
    /* Generate lists. */
@@ -1365,6 +1371,23 @@ static void equipment_toggleFav( unsigned int wid, const char *wgt )
    equipment_regenLists( wid, 0, 1 );
 }
 
+static void equipment_toggleDeploy( unsigned int wid, const char *wgt )
+{
+   int state = window_checkboxState( wid, wgt );
+   const char *shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
+
+   /* Only if current ship isn't selected try to deploy. */
+   if (strcmp(shipname,player.p->name)!=0) {
+      PlayerShip_t *ps = player_getPlayerShip( shipname );
+      ps->deployed = state;
+   }
+   else
+      window_checkboxSet( wid, wgt, 1 ); /* Player is always deployed. */
+
+   /* Update ship to reflect changes. */
+   equipment_regenLists( wid, 0, 1 );
+}
+
 /**
  * @brief Generates a new ship/outfit lists if needed.
  *
@@ -1676,7 +1699,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
    Pilot *ship, *prevship;
    PlayerShip_t *ps;
    char *nt;
-   int onboard, cargo, jumps, favourite, x, h;
+   int onboard, cargo, jumps, favourite, deployed, x, h;
    int ww, wh, sw, sh, hacquired, hname;
    int wgtw, wgth;
    size_t l = 0;
@@ -1693,10 +1716,12 @@ void equipment_updateShips( unsigned int wid, const char* str )
    if (strcmp(shipname,player.p->name)==0) { /* no ships */
       ps      = &player.ps;
       onboard = 1;
+      deployed = 1;
    }
    else {
       ps      = player_getPlayerShip( shipname );
       onboard = 0;
+      deployed = ps->deployed;
    }
    favourite = ps->favourite;
    ship      = ps->p;
@@ -1853,8 +1878,9 @@ void equipment_updateShips( unsigned int wid, const char* str )
    /* Clean up. */
    free( nt );
 
-   /* Set favourite checkbox. */
+   /* Set checkboxes. */
    window_checkboxSet( wid, "chkFav", favourite );
+   window_checkboxSet( wid, "chkDeploy", deployed );
 
    /* button disabling */
    if (onboard) {
@@ -2004,11 +2030,19 @@ static void equipment_rightClickShips( unsigned int wid, const char *str )
       return;
 
    /* Deploy the ship if applicable. */
-   if (ps != NULL) {
-      ps->deployed = !ps->deployed;
-      player_fleetUpdate();
-      equipment_regenLists( wid, 0, 1 );
-   }
+   if (ps == NULL)
+      return;
+
+   /* Don't do anything for player ship. */
+   if (strcmp(shipname,player.p->name)==0)
+      return;
+
+   ps->deployed = !ps->deployed;
+   window_checkboxSet( wid, "chkDeploy", ps->deployed );
+
+   player_fleetUpdate();
+
+   equipment_regenLists( wid, 0, 1 );
 }
 
 /**
