@@ -104,9 +104,9 @@ local function clear_pilots ()
    local pp = player.pilot()
    pilot.clear()
    for k,p in ipairs(pp:followers()) do
-      if p:flags("carried") then
+      --if p:flags("carried") then
          p:rm()
-      end
+      --end
    end
 end
 
