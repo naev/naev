@@ -320,6 +320,7 @@
   <item>Thurion Taciturnity</item>
   <item>Kestrel</item>
   <item>Pirate Kestrel</item>
+  <item>Drone Carrier</item>
   <item>Proteron Archimedes</item>
   <item>Soromid Ira</item>
   <item>Za'lek Mephisto</item>
@@ -887,6 +888,7 @@
  <tech name="__Collective Ships">
   <item>Drone</item>
   <item>Heavy Drone</item>
+  <item>Drone Carrier</item>
  </tech>
 
  <tech name="Systems Low">
