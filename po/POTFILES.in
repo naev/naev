@@ -377,6 +377,7 @@ dat/outfits/weapons/vulcan_gun.xml
 dat/ships/admonisher.xml
 dat/ships/ancestor.xml
 dat/ships/drone.xml
+dat/ships/drone_carrier.xml
 dat/ships/drone_heavy.xml
 dat/ships/drone_hyena.xml
 dat/ships/dvaered_ancestor.xml

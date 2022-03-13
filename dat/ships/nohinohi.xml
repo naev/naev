@@ -2,7 +2,7 @@
 <ship name="Nohinohi">
  <points>40</points>
  <base_type>Reaver</base_type>
- <GFX size="68">reaver</GFX>
+ <GFX size="68">reaver_feral</GFX>
  <rarity>5</rarity>
  <GUI>brushed</GUI>
  <sound>engine_soromid</sound>
