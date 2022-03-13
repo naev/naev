@@ -777,10 +777,10 @@ static int pilotL_clearSelect( lua_State *L )
    return 0;
 }
 /**
- * @brief Clears the current system of pilots.  Used for epic battles and such.
+ * @brief Clears the current system of pilots. Used for epic battles and such.
  *
  * Be careful with this command especially in big systems. It will most likely
- *  cause issues if multiple missions are in the same system.
+ * cause issues if multiple missions are in the same system.
  *
  * @note Clears all global pilot hooks too.
  *
