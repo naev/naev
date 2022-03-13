@@ -2083,6 +2083,64 @@ int gui_radarClickEvent( SDL_Event* event )
 }
 
 /**
+ * @brief Handles clicks on the GUI border icons.
+ *
+ *    @brief event The click event.
+ *    @return Whether the click was used to trigger an action.
+ */
+int gui_borderClickEvent( SDL_Event *event )
+{
+   unsigned int pid;
+   double ang, angp, mouseang;
+   int mx, my;
+   int pntid, jpid, astid, fieid;
+   double x, y;
+   int autonav = (event->button.button == SDL_BUTTON_RIGHT) ? 1 : 0;
+   double px = player.p->solid->pos.x;
+   double py = player.p->solid->pos.y;
+   gui_eventToScreenPos( &mx, &my, event->button.x, event->button.y );
+   mx -= gui_viewport_x;
+   my -= gui_viewport_y;
+
+   /* No intersection with border. */
+   if (!((mx <= 15 || my <= 15 ) || (my >= gl_screen.h-15 || mx >= gl_screen.w-15)))
+      return 0;
+
+   /* Border targeting is handled as a special case, as it uses angles,
+      * not coordinates. */
+   x = (mx - (gl_screen.w / 2.)) + px;
+   y = (my - (gl_screen.h / 2.)) + py;
+   mouseang = atan2(py - y, px -  x);
+   angp = pilot_getNearestAng( player.p, &pid, mouseang, 1 );
+   ang  = system_getClosestAng( cur_system, &pntid, &jpid, &astid, &fieid, x, y, mouseang );
+
+   if  ((ABS(angle_diff(mouseang, angp)) > M_PI / 64) ||
+         ABS(angle_diff(mouseang, ang)) < ABS(angle_diff(mouseang, angp)))
+      pid = PLAYER_ID; /* Pilot angle is too great, or spob/jump is closer. */
+   if  (ABS(angle_diff(mouseang, ang)) > M_PI / 64 )
+      jpid = pntid = astid = fieid = -1; /* Spob angle difference is too great. */
+
+   if (pid != PLAYER_ID) {
+      if (input_clickedPilot(pid, autonav))
+         return 1;
+   }
+   else if (pntid >= 0) { /* Spob is closest. */
+      if (input_clickedSpob(pntid, autonav))
+         return 1;
+   }
+   else if (jpid >= 0) { /* Jump point is closest. */
+      if (input_clickedJump(jpid, autonav))
+         return 1;
+   }
+   else if (astid >= 0) { /* Asteroid is closest. */
+      if (input_clickedAsteroid(fieid, astid))
+         return 1;
+   }
+
+   return 0;
+}
+
+/**
  * @brief Handles GUI events.
  */
 int gui_handleEvent( SDL_Event *evt )
