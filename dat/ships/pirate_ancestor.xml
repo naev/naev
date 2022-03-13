@@ -15,7 +15,7 @@
  <fabricator>Skull and Bones</fabricator>
  <description>Ancestors were one of the first ships to be fancied by pirates. The big intimidating wings and good top speeds would usually get ships to surrender without firing a shot. As better ships came out in the market, their use has fallen due to their archaic electronics and targeting systems.</description>
  <health>
-  <armour>65</armour>
+  <armour>45</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
@@ -39,9 +39,10 @@
  </slots>
  <stats>
   <cpu_mod>-25</cpu_mod>
-  <speed_mod>-10</speed_mod>
+  <speed_mod>5</speed_mod>
   <cargo_mod>15</cargo_mod>
   <ew_hide>10</ew_hide>
+  <shield_mod>-10</shield_mod>
   <launch_rate>15</launch_rate>
   <launch_range>10</launch_range>
   <ammo_capacity>25</ammo_capacity>

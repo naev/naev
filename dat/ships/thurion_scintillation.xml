@@ -20,12 +20,12 @@
  <condstr>You need at least 30 reputation with the Thurion.</condstr>
  <description>The Thurion Scintillation is a bomber designed to attack from a large distance. It is better armed than any other Thurion ship of comparable size, but still not as well as other non-Thurion bombers.</description>
  <health>
-  <armour>125</armour>
+  <armour>60</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>4</crew>
-  <mass>95</mass>
+  <mass>70</mass>
   <fuel>200</fuel>
   <fuel_consumption>100</fuel_consumption>
   <cargo>20</cargo>
@@ -46,11 +46,7 @@
   <structure size="small" />
  </slots>
  <stats>
-  <speed_mod>-20</speed_mod>
-  <turn_mod>-10</turn_mod>
-  <thrust_mod>-10</thrust_mod>
-  <armour_mod>10</armour_mod>
-  <shield_mod>10</shield_mod>
+  <armour_mod>-5</armour_mod>
   <launch_rate>10</launch_rate>
   <launch_range>15</launch_range>
   <ammo_capacity>50</ammo_capacity>
