@@ -1429,36 +1429,45 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab 
  */
 void takeoff( int delay )
 {
-   int h, stu, badfleet, l;
-   char *nt, badfleet_ships[STRMAX_SHORT];
+   int h, stu;
+   char *nt;
    double a, r;
-   const PlayerShip_t *pships;
 
    if (!landed)
       return;
 
    /* Check to see if player fleet is ok. */
-   player_fleetUpdate();
-   if (player.fleet_used > player.fleet_capacity) {
-      dialogue_msgRaw( _("Fleet not fit for flight"), _("You lack the fleet capacity to take off with all selected ships.") );
-      return;
-   }
-   badfleet = 0;
-   badfleet_ships[0] = '\0';
-   l = 0;
-   pships = player_getShipStack();
-   for (int i=0; i<array_size(pships); i++) {
-      const PlayerShip_t *pe = &pships[i];
-      if (!pe->deployed)
-         continue;
-      if (!!pilot_checkSpaceworthy(pe->p)) {
-         badfleet = 1;
-         l += scnprintf( &badfleet_ships[l], sizeof(badfleet_ships)-l, "\n%s", pe->p->name );
+   if (player.fleet_capacity > 0) {
+      char badfleet_ships[STRMAX_SHORT];
+      int l = 0;
+      int badfleet = 0;
+      int nships = 0;
+      const PlayerShip_t *pships = player_getShipStack();
+
+      /* Check to see if player's fleet is OK and count ships. */
+      player_fleetUpdate();
+      badfleet_ships[0] = '\0';
+      for (int i=0; i<array_size(pships); i++) {
+         const PlayerShip_t *pe = &pships[i];
+         if (!pe->deployed)
+            continue;
+         if (!!pilot_checkSpaceworthy(pe->p)) {
+            badfleet = 1;
+            l += scnprintf( &badfleet_ships[l], sizeof(badfleet_ships)-l, "\n%s", pe->p->name );
+         }
+         nships++;
       }
-   }
-   if (badfleet) {
-      if (!dialogue_YesNo( _("Fleet not fit for flight"), "%s\n%s", _("The following ships in your fleet are not space worthy, are you sure you want to take off without them?"), badfleet_ships ))
-         return;
+      /* Only care if the player has a fleet deployed. */
+      if (nships > 0) {
+         if (player.fleet_used > player.fleet_capacity) {
+            dialogue_msgRaw( _("Fleet not fit for flight"), _("You lack the fleet capacity to take off with all selected ships.") );
+            return;
+         }
+         if (badfleet) {
+            if (!dialogue_YesNo( _("Fleet not fit for flight"), "%s\n%s", _("The following ships in your fleet are not space worthy, are you sure you want to take off without them?"), badfleet_ships ))
+               return;
+         }
+      }
    }
 
    /* Player's ship is not able to fly. */
