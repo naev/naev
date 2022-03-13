@@ -2069,7 +2069,8 @@ int gui_radarClickEvent( SDL_Event* event )
       cx = gui_radar.x + gui_radar.w / 2.;
       cy = gui_radar.y + gui_radar.h / 2.;
       in_bounds = (2*ABS( mxr-cx ) <= gui_radar.w && 2*ABS( myr-cy ) <= gui_radar.h);
-   } else {
+   }
+   else {
       cx = gui_radar.x;
       cy = gui_radar.y;
       in_bounds = (pow2( mxr-cx ) + pow2( myr-cy ) <= pow2( gui_radar.w ));
