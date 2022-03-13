@@ -281,7 +281,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
    if (cw != NULL)
       *cw = 120;
    if (ch != NULL)
-      *ch = 140 + ((player.fleet_capacity > 0) ? 30 : 0);
+      *ch = 140 + ((player.fleet_capacity > 0) ? 40 : 0);
 
    /* Calculate button dimensions. */
    if (bw != NULL)
