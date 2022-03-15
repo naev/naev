@@ -3403,7 +3403,7 @@ void pilots_free (void)
  */
 void pilots_clean( int persist )
 {
-   int persist_count=0;
+   int persist_count = 0;
 
    /* First pass to stop outfits without clearing stuff - this can call all
     * sorts of Lua stuff. */

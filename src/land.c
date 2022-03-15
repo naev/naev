@@ -1512,7 +1512,7 @@ void takeoff( int delay )
    player_targetSpobSet( -1 );
 
    /* Clear pilots other than player. */
-   pilots_clean(0);
+   pilots_clean(1);
 
    /* Clear omsg. */
    omsg_cleanup();

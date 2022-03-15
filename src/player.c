@@ -3019,26 +3019,26 @@ int player_addEscorts (void)
 
    /* Go over escorts. */
    for (int i=0; i<array_size(player.p->escorts); i++) {
-      double a;
-      vec2 v;
-      unsigned int pe;
       Escort_t *e = &player.p->escorts[i];
+      Pilot *pe = pilot_get( e->id );
       int dockslot = -1;
 
-      if (!e->persist) {
+      /* Non-persistent pilots should have been wiped already. */
+      if (pe == NULL) {
          escort_rmListIndex(player.p, i);
          i--;
          continue;
       }
 
+      /* Update to random position. */
+      pe->solid->dir = RNGF() * 2. * M_PI;
+      vec2_cset( &pe->solid->pos, player.p->solid->pos.x + 50.*cos(pe->solid->dir),
+            player.p->solid->pos.y + 50.*sin(pe->solid->dir) );
+      vec2_cset( &pe->solid->vel, 0., 0. );
+
       /* Update outfit if needed. */
       if (e->type != ESCORT_TYPE_BAY)
          continue;
-
-      /* Set up the positions. */
-      a = RNGF() * 2. * M_PI;
-      vec2_cset( &v, player.p->solid->pos.x + 50.*cos(a),
-            player.p->solid->pos.y + 50.*sin(a) );
 
       for (int j=0; j<array_size(player.p->outfits); j++) {
          int q;
@@ -3065,12 +3065,6 @@ int player_addEscorts (void)
          WARN(_("Escort is undeployed, removing."));
          continue;
       }
-
-      /* Create escort. */
-      pe = escort_create( player.p, e->ship,
-            &v, &player.p->solid->vel, player.p->solid->dir,
-            e->type, 0, dockslot );
-      e->id = pe; /* Important to update ID. */
    }
 
    /* Add the player fleets. */
@@ -3078,6 +3072,10 @@ int player_addEscorts (void)
       PlayerShip_t *ps = &player_stack[i];
       double a;
       vec2 v;
+
+      /* Already exists. */
+      if ((ps->id > 0) && (pilot_get(ps->id)!=NULL))
+         continue;
 
       /* Only deploy escorts that are deployed. */
       if (!ps->deployed)
@@ -3093,7 +3091,7 @@ int player_addEscorts (void)
             player.p->solid->pos.y + 50.*sin(a) );
 
       /* Add the escort to the fleet. */
-      escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
+      ps->id = escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
    }
 
    return 0;

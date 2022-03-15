@@ -1549,8 +1549,15 @@ void space_init( const char* sysname, int do_simulate )
    space_simulating = 1;
    space_simulating_effects = 0;
    asteroids_init(); /* Set up asteroids. */
-   if (player.p != NULL)
+   if (player.p != NULL) {
+      Pilot *const* pilot_stack = pilot_getAll();
       pilot_setFlag( player.p, PILOT_HIDE );
+      for (int i=0; i<array_size(pilot_stack); i++) {
+         Pilot *p = pilot_stack[i];
+         if (p->parent == PLAYER_ID)
+            pilot_setFlag( p, PILOT_HIDE );
+      }
+   }
    player_messageToggle( 0 );
    if (do_simulate) {
       /* Uint32 time = SDL_GetTicks(); */

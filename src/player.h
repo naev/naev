@@ -78,6 +78,7 @@ typedef struct PlayerShip_s {
 
    /* Fleet data. */
    int deployed;  /**< Whether or not the ship is deployed. */
+   int id;        /**< ID of deployed ship. */
 
    /* Some meta-data. */
    double time_played;        /**< Total time the player has used ship. */
