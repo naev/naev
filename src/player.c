@@ -533,8 +533,11 @@ void player_swapShip( const char *shipname, int move_cargo )
    for (int j=0; j<array_size(player.p->outfits); j++)
       pilot_outfitLRemove( player.p, player.p->outfits[j] );
 
-   /* Get rid of deployed escorts. */
+   /* Get rid of deployed escorts and swap existing escorts. */
    escort_clearDeployed( player.p );
+   ps->p->escorts = player.p->escorts;
+   free( player.p->escorts );
+   player.p->escorts = NULL;
 
    /* Swap information over. */
    ptemp = player.ps;

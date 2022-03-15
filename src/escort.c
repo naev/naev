@@ -227,8 +227,16 @@ unsigned int escort_createRef( Pilot *p, const Pilot *ref,
 int escort_clearDeployed( Pilot *p )
 {
    int q = 0;
+   /* Iterate backwards so we don't have to care about indices. */
    for (int j=array_size(p->escorts)-1; j>=0; j--) {
-      Pilot *pe = pilot_get( p->escorts[j].id );
+      Pilot *pe;
+      Escort_t *e = &p->escorts[j];
+
+      /* Only try to dock fighters. */
+      if (e->type != ESCORT_TYPE_BAY)
+         continue;
+
+      pe = pilot_get( e->id );
       if (pe==NULL)
          continue;
       /* Hack so it can dock. */
