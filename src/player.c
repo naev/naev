@@ -4498,9 +4498,10 @@ int player_fleetCargoAdd( const Commodity *com, int q )
 
 int player_fleetCargoRm( const Commodity *com, int q )
 {
-   int removed = pilot_cargoRm( player.p, com, q );
+   int removed;
    if (player.fleet_capacity <= 0)
-      return removed;
+      return pilot_cargoRm( player.p, com, q );
+   removed = 0;
    for (int i=0; i<array_size(player.p->escorts); i++) {
       Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
@@ -4510,5 +4511,7 @@ int player_fleetCargoRm( const Commodity *com, int q )
       if (q-removed <= 0)
          break;
    }
+   if (q-removed > 0)
+      removed += pilot_cargoRm( player.p, com, q );
    return removed;
 }
