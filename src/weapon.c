@@ -1676,9 +1676,10 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    if (outfit->u.blt.dispersion > 0.)
       rdir += RNG_1SIGMA() * outfit->u.lau.dispersion;
 
-   if (rdir < 0.)
+   /* Make sure angle is in range. */
+   while (rdir < 0.)
       rdir += 2.*M_PI;
-   else if (rdir >= 2.*M_PI)
+   while (rdir >= 2.*M_PI)
       rdir -= 2.*M_PI;
 
    /* Launcher damage. */
