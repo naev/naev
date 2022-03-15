@@ -167,7 +167,7 @@ typedef struct PilotWeaponSet_ {
  * @brief Stores a pilot commodity.
  */
 typedef struct PilotCommodity_ {
-   const Commodity* commodity;/**< Associated commodity. */
+   const Commodity *commodity;/**< Associated commodity. */
    int quantity;           /**< Amount player has. */
    unsigned int id;        /**< Special mission id for cargo, 0 means none. */
 } PilotCommodity;

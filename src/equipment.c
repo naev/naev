@@ -1379,7 +1379,9 @@ static void equipment_toggleDeploy( unsigned int wid, const char *wgt )
    /* Only if current ship isn't selected try to deploy. */
    if (strcmp(shipname,player.p->name)!=0) {
       PlayerShip_t *ps = player_getPlayerShip( shipname );
-      ps->deployed = state;
+      if (player_fleetDeploy( ps, state ))
+         return;
+      player_fleetUpdate();
    }
    else
       window_checkboxSet( wid, wgt, 1 ); /* Player is always deployed. */
@@ -2037,7 +2039,10 @@ static void equipment_rightClickShips( unsigned int wid, const char *str )
    if (strcmp(shipname,player.p->name)==0)
       return;
 
-   ps->deployed = !ps->deployed;
+   /* Try to deploy. */
+   if (player_fleetDeploy( ps, !ps->deployed ))
+      return;
+
    window_checkboxSet( wid, "chkDeploy", ps->deployed );
 
    player_fleetUpdate();
@@ -2093,6 +2098,8 @@ static void equipment_changeShip( unsigned int wid )
    pilot_healLanded( player.p );
    /* Remove deployer status. */
    player.ps.deployed = 0;
+   /* Update cargo. */
+   player_fleetUpdate();
 
    /* What happens here is the gui gets recreated when the player swaps ship.
     * This causes all the windows to be destroyed and the 'wid' we have here
