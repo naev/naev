@@ -420,7 +420,7 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
    /* Player is trading ship in. */
    if (trade) {
       if (player.p == NULL)
-         ERR(_("Player ship isn't valid... This shouldn't happen!"));
+         ERR(_("Player ship isn't valid… This shouldn't happen!"));
       old_name = player.p->name;
       player_swapShip( ship_name, 1 ); /* Move to the new ship. */
       player_rmShip( old_name );
@@ -549,10 +549,10 @@ void player_swapShip( const char *shipname, int move_cargo )
    pilot_rmFlag( ship, PILOT_INACTIVE );
    pilot_setFlag( ps->p, PILOT_INACTIVE );
 
-   /* move credits over */
+   /* Move credits over */
    ship->credits = player.p->credits;
 
-   /* move cargo over */
+   /* Move cargo over. */
    if (move_cargo)
       pilot_cargoMove( ship, player.p );
 
