@@ -1466,9 +1466,14 @@ void space_init( const char* sysname, int do_simulate )
    background_clear(); /* Get rid of the background. */
    factions_clearDynamic(); /* get rid of dynamic factions. */
    space_spawn = 1; /* spawn is enabled by default. */
+   /* Clear persistent pilot stuff. */
    if (player.p != NULL) {
-      pilot_lockClear( player.p );
-      pilot_clearTimers( player.p ); /* Clear timers. */
+      Pilot *const* pilot_stack = pilot_getAll();
+      for (int i=0; i<array_size(pilot_stack); i++) {
+         Pilot *p = pilot_stack[i];
+         pilot_lockClear( p );
+         pilot_clearTimers( p ); /* Clear timers. */
+      }
    }
 
    if ((sysname==NULL) && (cur_system==NULL))
