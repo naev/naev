@@ -4439,10 +4439,12 @@ int player_fleetCargoUsed (void)
    int cargo_used = pilot_cargoUsed( player.p );
    if (player.fleet_capacity <= 0)
       return cargo_used;
-   for (int i=0; i<array_size(player_stack); i++) {
-      const PlayerShip_t *ps = &player_stack[i];
-      if (ps->deployed)
-         cargo_used += pilot_cargoUsed( ps->p );
+   for (int i=0; i<array_size(player.p->escorts); i++) {
+      const Escort_t *e = &player.p->escorts[i];
+      const Pilot *pe = pilot_get( e->id );
+      if (pe == NULL)
+         continue;
+      cargo_used += pilot_cargoUsed( pe );
    }
    return cargo_used;
 }
@@ -4452,10 +4454,12 @@ int player_fleetCargoFree (void)
    int cargo_free = pilot_cargoFree( player.p );
    if (player.fleet_capacity <= 0)
       return cargo_free;
-   for (int i=0; i<array_size(player_stack); i++) {
-      const PlayerShip_t *ps = &player_stack[i];
-      if (ps->deployed)
-         cargo_free += pilot_cargoFree( ps->p );
+   for (int i=0; i<array_size(player.p->escorts); i++) {
+      const Escort_t *e = &player.p->escorts[i];
+      const Pilot *pe = pilot_get( e->id );
+      if (pe == NULL)
+         continue;
+      cargo_free += pilot_cargoFree( pe );
    }
    return cargo_free;
 }
@@ -4465,10 +4469,46 @@ int player_fleetCargoOwned( const Commodity *com )
    int amount = pilot_cargoOwned( player.p, com );
    if (player.fleet_capacity <= 0)
       return amount;
-   for (int i=0; i<array_size(player_stack); i++) {
-      const PlayerShip_t *ps = &player_stack[i];
-      if (ps->deployed)
-         amount += pilot_cargoOwned( ps->p, com );
+   for (int i=0; i<array_size(player.p->escorts); i++) {
+      const Escort_t *e = &player.p->escorts[i];
+      const Pilot *pe = pilot_get( e->id );
+      if (pe == NULL)
+         continue;
+      amount += pilot_cargoOwned( pe, com );
    }
    return amount;
+}
+
+int player_fleetCargoAdd( const Commodity *com, int q )
+{
+   int added = pilot_cargoAdd( player.p, com, q, 0 );
+   if (player.fleet_capacity <= 0)
+      return added;
+   for (int i=0; i<array_size(player.p->escorts); i++) {
+      Escort_t *e = &player.p->escorts[i];
+      Pilot *pe = pilot_get( e->id );
+      if (pe == NULL)
+         continue;
+      added += pilot_cargoAdd( pe, com, q-added, 0 );
+      if (q-added <= 0)
+         break;
+   }
+   return added;
+}
+
+int player_fleetCargoRm( const Commodity *com, int q )
+{
+   int removed = pilot_cargoRm( player.p, com, q );
+   if (player.fleet_capacity <= 0)
+      return removed;
+   for (int i=0; i<array_size(player.p->escorts); i++) {
+      Escort_t *e = &player.p->escorts[i];
+      Pilot *pe = pilot_get( e->id );
+      if (pe == NULL)
+         continue;
+      removed += pilot_cargoRm( pe, com, q-removed );
+      if (q-removed <= 0)
+         break;
+   }
+   return removed;
 }

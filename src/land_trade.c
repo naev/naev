@@ -293,7 +293,7 @@ int commodity_canBuy( const Commodity* com )
       land_errDialogueBuild(_("You need %s more."), buf );
       failure = 1;
    }
-   if (pilot_cargoFree(player.p) <= 0) {
+   if (player_fleetCargoFree() <= 0) {
       land_errDialogueBuild(_("No cargo space available!"));
       failure = 1;
    }
@@ -319,7 +319,7 @@ int commodity_canBuy( const Commodity* com )
 int commodity_canSell( const Commodity* com )
 {
    int failure = 0;
-   if (pilot_cargoOwned( player.p, com ) == 0) {
+   if (player_fleetCargoOwned( com ) ==0) {
       land_errDialogueBuild(_("You can't sell something you don't have!"));
       failure = 1;
    }
@@ -351,7 +351,7 @@ void commodity_buy( unsigned int wid, const char *str )
       return;
 
    /* Make the buy. */
-   q = pilot_cargoAdd( player.p, com, q, 0 );
+   q = player_fleetCargoAdd( com, q );
    com->lastPurchasePrice = price; /* To show the player how much they paid for it */
    price *= q;
    player_modCredits( -price );
@@ -393,10 +393,10 @@ void commodity_sell( unsigned int wid, const char *str )
       return;
 
    /* Remove commodity. */
-   q = pilot_cargoRm( player.p, com, q );
+   q = player_fleetCargoRm( com, q );
    price = price * (credits_t)q;
    player_modCredits( price );
-   if (pilot_cargoOwned( player.p, com ) == 0) /* None left, set purchase price to zero, in case missions add cargo. */
+   if (player_fleetCargoOwned( com ) == 0) /* None left, set purchase price to zero, in case missions add cargo. */
      com->lastPurchasePrice = 0;
    commodity_update(wid, NULL);
 
