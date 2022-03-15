@@ -1719,14 +1719,17 @@ void equipment_updateShips( unsigned int wid, const char* str )
       ps      = &player.ps;
       onboard = 1;
       deployed = 1;
+      ship    = ps->p;
    }
    else {
-      ps      = player_getPlayerShip( shipname );
-      onboard = 0;
+      Pilot *p;
+      ps       = player_getPlayerShip( shipname );
+      onboard  = 0;
       deployed = ps->deployed;
+      p        = pilot_get( ps->id );
+      ship     = (p!=NULL) ? p : ps->p;
    }
    favourite = ps->favourite;
-   ship      = ps->p;
    prevship = eq_wgt.selected;
    eq_wgt.selected = ship;
 
@@ -2139,7 +2142,7 @@ static void equipment_unequipShip( unsigned int wid, const char* str )
     * unequip if it's carrying more cargo than the ship normally fits, i.e.
     * by equipping cargo pods.
     */
-   if (pilot_cargoUsed( ship ) > ship->ship->cap_cargo) {
+   if (pilot_cargoUsed(ship) > ship->ship->cap_cargo) {
       dialogue_alert( _("You can't unequip your ship when you have more cargo than it can hold without modifications!") );
       return;
    }
