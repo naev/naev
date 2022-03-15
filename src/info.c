@@ -349,7 +349,7 @@ static void info_openMain( unsigned int wid )
    char **licenses;
    int nlicenses;
    char *nt;
-   int w, h;
+   int w, h, cargo_used, cargo_total;
    unsigned int destroyed;
    size_t k = 0, l = 0;
 
@@ -368,6 +368,7 @@ static void info_openMain( unsigned int wid )
    k += scnprintf( &str[k], sizeof(str)-k, "\n\n%s", _("Money:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Current Ship:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Fuel:") );
+   k += scnprintf( &str[k], sizeof(str)-k, "\n%s", (player.fleet_capacity > 0) ? _("Cargo (fleet):") : _("Cargo:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n\n%s", _("Time played:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Times died:") );
    k += scnprintf( &str[k], sizeof(str)-k, "\n%s", _("Times jumped:") );
@@ -384,6 +385,15 @@ static void info_openMain( unsigned int wid )
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", player.p->name );
    l += scnprintf( &str[l], sizeof(str)-l, "\n%.0f (%d %s)",
          player.p->fuel, pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ) );
+   if (player.fleet_capacity > 0) {
+      cargo_used = player_fleetCargoUsed();
+      cargo_total = cargo_used + player_fleetCargoFree();
+   }
+   else {
+      cargo_used = pilot_cargoUsed( player.p );
+      cargo_total = cargo_used + pilot_cargoFree( player.p );
+   }
+   l += scnprintf( &str[l], sizeof(str)-l, "\n%d / %d %s", cargo_used, cargo_total, n_( "tonne", "tonnes", cargo_total ) );
    l += scnprintf( &str[l], sizeof(str)-l, "%s", "\n\n" );
    l += scnprintf( &str[l], sizeof(str)-l, _("%.1f hours"), player.time_played / 3600. );
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", num2strU((double)player.death_counter,0) );

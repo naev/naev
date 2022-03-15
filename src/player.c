@@ -4433,3 +4433,25 @@ void player_fleetUpdate (void)
          player.fleet_used += ps->p->ship->points;
    }
 }
+
+int player_fleetCargoUsed (void)
+{
+   int cargo_used = pilot_cargoUsed( player.p );
+   for (int i=0; i<array_size(player_stack); i++) {
+      const PlayerShip_t *ps = &player_stack[i];
+      if (ps->deployed)
+         cargo_used += pilot_cargoUsed( ps->p );
+   }
+   return cargo_used;
+}
+
+int player_fleetCargoFree (void)
+{
+   int cargo_free = pilot_cargoFree( player.p );
+   for (int i=0; i<array_size(player_stack); i++) {
+      const PlayerShip_t *ps = &player_stack[i];
+      if (ps->deployed)
+         cargo_free += pilot_cargoFree( ps->p );
+   }
+   return cargo_free;
+}
