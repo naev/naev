@@ -85,13 +85,10 @@ void commodity_exchange_open( unsigned int wid )
    window_addText( wid, 40 + iw, -40, dw, titleHeight, 0,
          "txtName", &gl_defFont, NULL, _("None") );
 
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("You have:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", (player.fleet_capacity > 0) ? _("You have:") : _("Your fleet has:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Purchased for:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Market Price:") );
-   if (player.fleet_capacity > 0)
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Free Space (fleet):") );
-   else
-      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Free Space:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", (player.fleet_capacity > 0) ? _("Free Space (fleet):") : _("Free Space:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Money:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Average price here:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Average price all:") );
@@ -198,10 +195,7 @@ void commodity_update( unsigned int wid, const char *str )
    int owned, cargo_free;
    int i = toolkit_getImageArrayPos( wid, "iarTrade" );
    credits2str( buf_credits, player.p->credits, 2 );
-   if (player.fleet_capacity > 0)
-      cargo_free = player_fleetCargoFree();
-   else
-      cargo_free = pilot_cargoFree(player.p);
+   cargo_free = player_fleetCargoFree();
    tonnes2str( buf_tonnes_free, cargo_free );
 
    if (i < 0 || array_size(land_spob->commodities) == 0) {
@@ -231,8 +225,8 @@ void commodity_update( unsigned int wid, const char *str )
    snprintf( buf_globalstd, sizeof(buf_globalstd), _("%.1f ¤"), globalstd ); /* TODO credit2str could learn to do this... */
    /* modify text */
    buf_purchase_price[0]='\0';
-   owned=pilot_cargoOwned( player.p, com );
-   if ( owned > 0 )
+   owned = player_fleetCargoOwned( com );
+   if (owned > 0)
       credits2str( buf_purchase_price, com->lastPurchasePrice, -1 );
    credits2str( buf_local_price, spob_commodityPrice( land_spob, com ), -1 );
    tonnes2str( buf_tonnes_owned, owned );

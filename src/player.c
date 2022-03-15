@@ -4437,6 +4437,8 @@ void player_fleetUpdate (void)
 int player_fleetCargoUsed (void)
 {
    int cargo_used = pilot_cargoUsed( player.p );
+   if (player.fleet_capacity <= 0)
+      return cargo_used;
    for (int i=0; i<array_size(player_stack); i++) {
       const PlayerShip_t *ps = &player_stack[i];
       if (ps->deployed)
@@ -4448,10 +4450,25 @@ int player_fleetCargoUsed (void)
 int player_fleetCargoFree (void)
 {
    int cargo_free = pilot_cargoFree( player.p );
+   if (player.fleet_capacity <= 0)
+      return cargo_free;
    for (int i=0; i<array_size(player_stack); i++) {
       const PlayerShip_t *ps = &player_stack[i];
       if (ps->deployed)
          cargo_free += pilot_cargoFree( ps->p );
    }
    return cargo_free;
+}
+
+int player_fleetCargoOwned( const Commodity *com )
+{
+   int amount = pilot_cargoOwned( player.p, com );
+   if (player.fleet_capacity <= 0)
+      return amount;
+   for (int i=0; i<array_size(player_stack); i++) {
+      const PlayerShip_t *ps = &player_stack[i];
+      if (ps->deployed)
+         amount += pilot_cargoOwned( ps->p, com );
+   }
+   return amount;
 }

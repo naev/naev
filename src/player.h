@@ -200,6 +200,7 @@ NONNULL( 1 ) void player_messageRaw ( const char *str );
 void player_fleetUpdate (void);
 int player_fleetCargoUsed (void);
 int player_fleetCargoFree (void);
+int player_fleetCargoOwned( const Commodity *com );
 
 /*
  * Misc.
