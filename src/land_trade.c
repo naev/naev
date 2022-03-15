@@ -88,7 +88,10 @@ void commodity_exchange_open( unsigned int wid )
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("You have:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Purchased for:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Market Price:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Free Space:") );
+   if (player.fleet_capacity > 0)
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Free Space (fleet):") );
+   else
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Free Space:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Money:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Average price here:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Average price all:") );
@@ -192,10 +195,14 @@ void commodity_update( unsigned int wid, const char *str )
    char buf_std[ECON_CRED_STRLEN], buf_globalstd[ECON_CRED_STRLEN];
    char buf_local_price[ECON_CRED_STRLEN];
    char buf_tonnes_owned[ECON_MASS_STRLEN], buf_tonnes_free[ECON_MASS_STRLEN];
-   int owned;
+   int owned, cargo_free;
    int i = toolkit_getImageArrayPos( wid, "iarTrade" );
    credits2str( buf_credits, player.p->credits, 2 );
-   tonnes2str( buf_tonnes_free, pilot_cargoFree(player.p) );
+   if (player.fleet_capacity > 0)
+      cargo_free = player_fleetCargoFree();
+   else
+      cargo_free = pilot_cargoFree(player.p);
+   tonnes2str( buf_tonnes_free, cargo_free );
 
    if (i < 0 || array_size(land_spob->commodities) == 0) {
       l += scnprintf( &buf[l], sizeof(buf)-l, "%s", _("N/A") );
