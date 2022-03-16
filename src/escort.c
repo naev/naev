@@ -137,6 +137,10 @@ unsigned int escort_create( Pilot *p, const char *ship,
    pe = pilot_get(e);
    pe->parent = parent;
 
+   /* Make invincible to player. */
+   if (pe->parent == PLAYER_ID)
+      pilot_setFlag( pe, PILOT_INVINC_PLAYER );
+
    /* Set some flags for consistent behaviour. */
    if (pilot_isFlag(p, PILOT_HOSTILE))
       pilot_setFlag( pe, PILOT_HOSTILE );
@@ -195,6 +199,10 @@ unsigned int escort_createRef( Pilot *p, const Pilot *ref,
    e = pilot_clone( ref );
    pe = pilot_get(e);
    pe->parent = parent;
+
+   /* Make invincible to player. */
+   if (pe->parent == PLAYER_ID)
+      pilot_setFlag( pe, PILOT_INVINC_PLAYER );
 
    /* Copy stuff over if necessary. */
    if (pos != NULL)
