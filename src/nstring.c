@@ -202,14 +202,14 @@ int num2str( char dest[NUM2STRLEN], double n, int decimals )
       return snprintf( dest, NUM2STRLEN, "%.*f", decimals, n );
    else if (n >= 1e9)
       return snprintf( dest, NUM2STRLEN,
-            _("%.0f,%.0f,%.0f,%03.*f"),
+            _("%.0f,%03.0f,%03.0f,%03.*f"),
             floor(n/1e9),
             floor(fmod(floor(fabs(n/1e6)),1e3)),
             floor(fmod(floor(fabs(n/1e3)),1e3)),
             decimals, fmod(floor(fabs(n)),1e3) );
    else if (n >= 1e6)
       return snprintf( dest, NUM2STRLEN,
-            _("%.0f,%.0f,%03.*f"),
+            _("%.0f,%03.0f,%03.*f"),
             floor(n/1e6),
             floor(fmod(floor(fabs(n/1e3)),1e3)),
             decimals, fmod(floor(fabs(n)),1e3) );
