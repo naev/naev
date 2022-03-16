@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Point Defense Turret MK1">
+ <general>
+  <slot>weapon</slot>
+  <size>small</size>
+  <mass>8</mass>
+  <price>20000</price>
+  <description>Two pairs of laser repeaters mounted on a rotating turret, providing excellent point-defence capabilities. With a full 360 degrees of rotation, point-defense turrets provide affordable, energy-efficient firepower to trader vessels.</description>
+  <gfx_store>laserturret.webp</gfx_store>
+  <cpu>-48</cpu>
+ </general>
+ <specific type="turret bolt">
+  <gfx>laser1M.png</gfx>
+  <sound>laser</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.3</delay>
+  <speed>1200</speed>
+  <range>300</range>
+  <falloff>275</falloff>
+  <energy>2</energy>
+  <heatup>35</heatup>
+  <trackmin>0</trackmin>
+  <trackmax>1200</trackmax>
+  <damage>
+   <type>normal</type>
+   <penetrate>16</penetrate>
+   <physical>12</physical>
+  </damage>
+ </specific>
+</outfit>

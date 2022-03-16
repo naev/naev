@@ -6,7 +6,7 @@
   <license>Medium Weapon</license>
   <mass>18</mass>
   <price>40000</price>
-  <description>A pair of laser cannons mounted on a rotating turret, providing excellent point-defence capabilities. With a full 360 degrees of rotation, laser turrets provide affordable, energy-efficient firepower to courier vessels.</description>
+  <description>A pair of laser cannons mounted on a rotating turret, providing excellent fighter defence capabilities. With a full 360 degrees of rotation, laser turrets provide affordable, energy-efficient defensive firepower to courier vessels.</description>
   <gfx_store>laserturret.webp</gfx_store>
   <cpu>-24</cpu>
  </general>
