@@ -224,7 +224,7 @@ Before you have a chance to respond, Zach leaves to do the final preparations.]]
       {_([["You could have killed Icarus!"]]), "cont01d"},
    }
 
-   vn.label("cont01b")
+   vn.label("cont01a")
    z(_([["Nothing like a plan well executed!"
 He grins happily.]]))
    vn.jump("cont01")
@@ -239,7 +239,7 @@ The way he says plan B makes you feel glad plan A worked.]]))
 Zach's words are unsurprisingly non-reassuring.]]))
    vn.jump("cont01")
 
-   vn.label("cont01c")
+   vn.label("cont01d")
    z(_([["It's impossible, I had computed and simulated all the possible outcomes even considering a 100% error in all parameters! There was no way anything… wait a second…"
 He busts out his cyberdeck and starts running some computations. You see the colour flush out of his face.
 "Well, damn. All's well that ends well?"]]))
