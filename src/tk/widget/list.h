@@ -14,6 +14,11 @@ typedef struct WidgetListData_ {
    void (*onSelect) (unsigned int,const char*); /**< Modify callback - triggered on selection. */
    void (*onActivate) (unsigned int,const char*); /**< Activate callback - triggered on double-click. */
    int height; /**< Real height. */
+   /* Alt text stuff. */
+   int alt; /**< Alt text. */
+   int altx; /**< X position of alt text. */
+   int alty; /**< Y position of alt text. */
+   char **alttext; /**< Alt text to display when hovering over options. */
 } WidgetListData;
 
 /* Required functions. */
@@ -25,9 +30,10 @@ void window_addList( unsigned int wid,
       void (*onActivate) (unsigned int, const char*) );
 
 /* Misc functions. */
-const char* toolkit_getList( unsigned int wid, const char* name );
-int toolkit_getListPos( unsigned int wid, const char* name );
-const char* toolkit_setList( unsigned int wid, const char* name, const char* value );
-const char* toolkit_setListPos( unsigned int wid, const char* name, int pos );
-int toolkit_getListOffset( unsigned int wid, const char* name );
-int toolkit_setListOffset( unsigned int wid, const char* name, int off );
+const char* toolkit_getList( unsigned int wid, const char *name );
+int toolkit_getListPos( unsigned int wid, const char *name );
+const char* toolkit_setList( unsigned int wid, const char *name, const char *value );
+const char* toolkit_setListPos( unsigned int wid, const char *name, int pos );
+int toolkit_getListOffset( unsigned int wid, const char *name );
+int toolkit_setListOffset( unsigned int wid, const char *name, int off );
+int toolkit_setListAltText( unsigned int wid, const char *name, char **alttext );

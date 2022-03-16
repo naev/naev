@@ -35,6 +35,7 @@
 #include "damagetype.h"
 #include "debug.h"
 #include "dialogue.h"
+#include "difficulty.h"
 #include "economy.h"
 #include "env.h"
 #include "event.h"
@@ -469,6 +470,7 @@ int main( int argc, char** argv )
    gl_exit(); /* Kills video output */
    sound_exit(); /* Kills the sound */
    news_exit(); /* Destroys the news. */
+   difficulty_free(); /* Clean up difficulties. */
 
    /* Has to be run last or it will mess up sound settings. */
    conf_cleanup(); /* Free some memory the configuration allocated. */
@@ -626,6 +628,7 @@ void load_all (void)
    safelanes_init();
 
    loadscreen_render( ++stage/LOADING_STAGES, _("Initializing Details..") );
+   difficulty_load();
    background_init();
    map_load();
    map_system_load();
@@ -750,6 +753,10 @@ void naev_resize (void)
    toolkit_reposition();
    menu_main_resize();
    nebu_resize();
+
+   /* Finally do a render pass to avoid half-rendered stuff. */
+   render_all( 0., 0. );
+   SDL_GL_SwapWindow( gl_screen.window );
 }
 
 /*

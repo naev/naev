@@ -37,7 +37,9 @@ local function button_list( wdw, captions, bx, by, bw, bh, w, _h, handler )
          x = bx + offx
          y = y + bh + 10
       end
-      btns[#btns+1] = luatk.newButton( wdw, x, y, bw, bh, v, handler )
+      local b = luatk.newButton( wdw, x, y, bw, bh, _(v), handler )
+      b.gauntlet = v
+      btns[#btns+1] = b
    end
 
    return btns, y-by+bh
@@ -56,7 +58,7 @@ local function gauntlet_setmodifier( wgt )
       state = true
    end
    for k,v in ipairs(gauntlet_modifiers) do
-      if v.str == wgt.text then
+      if v.id == wgt.gauntlet then
          v.enabled = state
       end
    end
@@ -64,7 +66,7 @@ end
 
 
 local function gauntlet_setoption( wgt )
-   local newoption = wgt.text
+   local newoption = wgt.gauntlet
    if gauntlet_option == newoption then
       return
    end
@@ -96,6 +98,7 @@ local function gauntlet_setoption( wgt )
    btn_modifiers = button_list( wdw, strlist,
          0, headerh+160, 240, 60, w, 100, gauntlet_setmodifier )
    for k,v in ipairs(gauntlet_modifiers) do
+      btn_modifiers[k].gauntlet = v.id -- Overwrite and use id instead of string
       if v.var and not var.peek(v.var) then
          btn_modifiers[k]:disable()
       end
@@ -104,7 +107,7 @@ end
 
 
 local function gauntlet_settype( wgt )
-   local newtype = wgt.text
+   local newtype = wgt.gauntlet
    if gauntlet_type == newtype then
       return
    end
@@ -131,7 +134,7 @@ local function gauntlet_settype( wgt )
    local w = wdw.w
    if newtype == "Challenge" then
       btn_options = button_list( wdw,
-            {_("Skirmisher"), _("Warrior"), _("Warlord")},
+            {N_("Skirmisher"), N_("Warrior"), N_("Warlord")},
             0, headerh+90, 160, 40, w, 100, gauntlet_setoption )
       if not var.peek("gauntlet_unlock_warrior") then
          btn_options[2]:disable()
@@ -187,7 +190,7 @@ local function gauntlet_gui ()
 
    -- Tournament Types
    btn_types = button_list( wdw,
-         {_("Tournament"), _("Challenge"), _("Infinity Arena"), _("Special")},
+         {N_("Tournament"), N_("Challenge"), N_("Infinity Arena"), N_("Special")},
          0, headerh+20, 160, 40, w, h, gauntlet_settype )
    if not var.peek( "gauntlet_unlock_tournament" ) then
       btn_types[1]:disable()
@@ -215,21 +218,21 @@ local function gauntlet_gui ()
    -- Load defaults
    if gauntlet_type then
       for k,wgt in ipairs(btn_types) do
-         if wgt.text == gauntlet_type then
+         if wgt.gauntlet == gauntlet_type then
             gauntlet_type = nil
             gauntlet_settype( wgt )
          end
       end
       if gauntlet_option then
          for k,wgt in ipairs(btn_options) do
-            if wgt.text == gauntlet_option then
+            if wgt.gauntlet == gauntlet_option then
                gauntlet_option = nil
                gauntlet_setoption( wgt )
             end
          end
          for mk,mv in ipairs(gauntlet_modifiers) do
             for k,wgt in ipairs(btn_modifiers) do
-               if wgt.text == gauntlet_modifiers[mk].str then
+               if wgt.gauntlet == gauntlet_modifiers[mk].id then
                   local gm = gauntlet_modifiers[mk]
                   if gm.enabled then
                      gm.enabled = false

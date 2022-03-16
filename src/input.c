@@ -1169,11 +1169,9 @@ static void input_mouseMove( SDL_Event* event )
  */
 static void input_clickevent( SDL_Event* event )
 {
-   unsigned int pid;
-   int mx, my, pntid, jpid, astid, fieid;
+   int mx, my;
    int res;
-   int autonav;
-   double x, y, zoom, px, py;
+   double x, y, zoom;
    HookParam hparam[3];
 
    /* Generate hook. */
@@ -1203,51 +1201,14 @@ static void input_clickevent( SDL_Event* event )
             event->button.button != SDL_BUTTON_RIGHT)
       return;
 
-   autonav = (event->button.button == SDL_BUTTON_RIGHT) ? 1 : 0;
-
-   px = player.p->solid->pos.x;
-   py = player.p->solid->pos.y;
-   gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
-   if ((mx <= 15 || my <= 15 ) || (my >= gl_screen.h - 15 || mx >= gl_screen.w - 15)) {
-      double ang, angp, mouseang;
-      /* Border targeting is handled as a special case, as it uses angles,
-       * not coordinates. */
-      x = (mx - (gl_screen.w / 2.)) + px;
-      y = (my - (gl_screen.h / 2.)) + py;
-      mouseang = atan2(py - y, px -  x);
-      angp = pilot_getNearestAng( player.p, &pid, mouseang, 1 );
-      ang  = system_getClosestAng( cur_system, &pntid, &jpid, &astid, &fieid, x, y, mouseang );
-
-      if  ((ABS(angle_diff(mouseang, angp)) > M_PI / 64) ||
-            ABS(angle_diff(mouseang, ang)) < ABS(angle_diff(mouseang, angp)))
-         pid = PLAYER_ID; /* Pilot angle is too great, or spob/jump is closer. */
-      if  (ABS(angle_diff(mouseang, ang)) > M_PI / 64 )
-         jpid = pntid = astid = fieid = -1; /* Spob angle difference is too great. */
-
-      if (pid != PLAYER_ID) {
-         if (input_clickedPilot(pid, autonav))
-            return;
-      }
-      else if (pntid >= 0) { /* Spob is closest. */
-         if (input_clickedSpob(pntid, autonav))
-            return;
-      }
-      else if (jpid >= 0) { /* Jump point is closest. */
-         if (input_clickedJump(jpid, autonav))
-            return;
-      }
-      else if (astid >= 0) { /* Asteroid is closest. */
-         if (input_clickedAsteroid(fieid, astid))
-            return;
-      }
-
-      /* Fall-through and handle as a normal click. */
-   }
+   if (gui_borderClickEvent( event ))
+      return;
 
    if (gui_radarClickEvent( event ))
       return;
 
    /* Visual (on-screen) */
+   gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
    gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
    zoom = res = 1. / cam_getZoom();
    input_clickPos( event, x, y, zoom, 10. * res, 15. * res );

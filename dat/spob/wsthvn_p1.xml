@@ -3,7 +3,7 @@
  <pos x="-2939.659716" y="-3642.219900"/>
  <GFX>
   <space>P02.webp</space>
-  <exterior>lava.webp</exterior>
+  <exterior>snow.webp</exterior>
  </GFX>
  <general>
   <class>P</class>

@@ -22,6 +22,7 @@
 #define ZOOM_NEAR_DEFAULT              1.0   /**< Close zoom distance (bigger is larger) */
 #define MAP_OVERLAY_OPACITY_DEFAULT    0.3   /**< Opacity fraction (0-1) for the overlay map. */
 #define INPUT_MESSAGES_DEFAULT         5     /**< Amount of messages to display. */
+#define DIFFICULTY_DEFAULT             NULL  /**< Default difficulty. */
 /* Video options */
 #define RESOLUTION_W_MIN               1280  /**< Minimum screen width (below which graphics are downscaled). */
 #define RESOLUTION_H_MIN               720   /**< Minimum screen height (below which graphics are downscaled). */
@@ -135,6 +136,7 @@ typedef struct PlayerConf_s {
    int font_size_small;   /**< Default small font size. */
 
    /* Misc. */
+   char *difficulty; /**< Global difficulty setting. */
    double compression_velocity; /**< Velocity to compress to. */
    double compression_mult; /**< Maximum time multiplier. */
    int redirect_file; /**< Redirect output to files. */

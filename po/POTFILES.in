@@ -44,6 +44,7 @@ dat/commodities/vixilium.xml
 dat/commodities/water.xml
 dat/commodities/yttrium.xml
 dat/damagetype.xml
+dat/difficulty.xml
 dat/effects/ambush_hunter.xml
 dat/effects/antimatter_taint.xml
 dat/effects/bloodlust.xml
@@ -52,6 +53,7 @@ dat/effects/feral_rage_i.xml
 dat/effects/paralyzing_plasma.xml
 dat/effects/plasma_burn.xml
 dat/effects/plasma_burn_ii.xml
+dat/effects/ride_of_the_valkyries.xml
 dat/faction.xml
 dat/map.xml
 dat/outfits/accessory/air_freshener.xml
@@ -375,6 +377,7 @@ dat/outfits/weapons/vulcan_gun.xml
 dat/ships/admonisher.xml
 dat/ships/ancestor.xml
 dat/ships/drone.xml
+dat/ships/drone_carrier.xml
 dat/ships/drone_heavy.xml
 dat/ships/drone_hyena.xml
 dat/ships/dvaered_ancestor.xml
@@ -2419,6 +2422,7 @@ dat/missions/dvaered/gauntlet/tables.lua
 dat/missions/dvaered/recruitment/dv_census.lua
 dat/missions/dvaered/recruitment/dv_census_00.lua
 dat/missions/dvaered/recruitment/dv_intelligence.lua
+dat/missions/dvaered/recruitment/dv_lostagent.lua
 dat/missions/dvaered/recruitment/dv_propaganda.lua
 dat/missions/empire/collective/ec00.lua
 dat/missions/empire/collective/ec01.lua
@@ -2601,6 +2605,7 @@ dat/outfits/bioship/skills/tunnelling_organ.lua
 dat/outfits/lua_outfit_example.lua
 dat/outfits/structure/nebular_shielding_prototype.lua
 dat/outfits/unique/fake_transponder.lua
+dat/outfits/unique/valkyrie_beam.lua
 dat/outfits/utility/berserk_chip.lua
 dat/outfits/utility/blink_drive.lua
 dat/outfits/utility/camouflage_burster.lua
@@ -2809,6 +2814,8 @@ src/dev_uniedit.c
 src/dev_uniedit.h
 src/dialogue.c
 src/dialogue.h
+src/difficulty.c
+src/difficulty.h
 src/distance_field.c
 src/distance_field.h
 src/economy.c

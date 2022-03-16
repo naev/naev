@@ -3,7 +3,7 @@
  <pos x="-989.152184" y="-1058.162801"/>
  <GFX>
   <space>moon-A00.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <exterior>lava.webp</exterior>
  </GFX>
  <general>
   <class>A</class>

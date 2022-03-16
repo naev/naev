@@ -14,6 +14,7 @@
 #include "escort.h"
 #include "gui.h"
 #include "log.h"
+#include "difficulty.h"
 #include "nstring.h"
 #include "nxml.h"
 #include "outfit.h"
@@ -946,6 +947,10 @@ void pilot_calcStats( Pilot* pilot )
    s = &pilot->stats;
    tm = s->time_mod;
    *s = pilot->ship->stats_array;
+
+   /* Player gets difficulty applied. */
+   if (pilot_isPlayer(pilot))
+      difficulty_apply( s );
 
    /* Now add outfit changes */
    pilot->mass_outfit   = 0.;

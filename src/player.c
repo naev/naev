@@ -21,6 +21,7 @@
 #include "comm.h"
 #include "conf.h"
 #include "dialogue.h"
+#include "difficulty.h"
 #include "economy.h"
 #include "equipment.h"
 #include "escort.h"
@@ -231,14 +232,6 @@ static void player_newSetup()
  */
 void player_new (void)
 {
-   const char *title, *caption;
-   char *ret;
-
-   const char *speed_opts[] = {
-      _("Normal Speed"),
-      _("Slow Speed")
-   };
-
    /* Set up new player. */
    player_newSetup();
 
@@ -263,26 +256,6 @@ void player_new (void)
          player_new();
          return;
       }
-   }
-
-   /* Set game speed. */
-   title = _("Game Speed");
-   caption = _("Your game can be set to normal speed or slow speed. Slow speed"
-         " causes time in space to pass at half the rate it would in normal"
-         " speed, which may be helpful if you have difficulty playing the game"
-         " at normal speed. Would you like to use normal speed or slow speed"
-         " for this profile? (If unsure, normal speed is probably what you"
-         " want.)");
-
-   dialogue_makeChoice( title, caption, 2 );
-   dialogue_addChoice( title, caption, speed_opts[0] );
-   dialogue_addChoice( title, caption, speed_opts[1] );
-   ret = dialogue_runChoice();
-   player.dt_mod = 1.;
-   if (ret != NULL) {
-      if (strcmp(ret, speed_opts[1]) == 0)
-         player.dt_mod = 0.5;
-      free( ret );
    }
 
    if (player_newMake())
@@ -362,7 +335,7 @@ static int player_newMake (void)
    /* Set player speed to default 1 */
    player.speed = 1.;
 
-   /* Reset speed (to make sure player.dt_mod is accounted for). */
+   /* Reset speed (to make sure time dilation stuff is accounted for). */
    player_autonavResetSpeed();
 
    /* Monies. */
@@ -785,12 +758,17 @@ void player_cleanup (void)
    player.gui = NULL;
    free( player.chapter );
    player.chapter = NULL;
+   free( player.difficulty );
+   player.difficulty = NULL;
 
    /* Clear omsg. */
    omsg_cleanup();
 
    /* Stop the sounds. */
    sound_stopAll();
+
+   /* Clean up local difficulty. */
+   difficulty_setLocal( NULL );
 
    /* Reset time compression. */
    pause_setSpeed( 1. );
@@ -1846,16 +1824,15 @@ int player_getHypPreempt(void)
 }
 
 /**
- * @brief Returns the player's total default time delta based on dt_mod and ship's dt_default.
+ * @brief Returns the player's total default time delta based on time dilation stuff.
  *
  *    @return The default/minimum time delta
  */
 double player_dt_default (void)
 {
    if (player.p != NULL && player.p->ship != NULL)
-      return player.p->stats.time_mod * player.p->ship->dt_default * player.dt_mod;
-
-   return player.dt_mod;
+      return player.p->stats.time_mod * player.p->ship->dt_default;
+   return 1.;
 }
 
 /**
@@ -3127,9 +3104,10 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Standard player details. */
    xmlw_attr(writer,"name","%s",player.name);
-   xmlw_elem(writer,"dt_mod","%f",player.dt_mod);
    xmlw_elem(writer,"credits","%"CREDITS_PRI,player.p->credits);
    xmlw_elem(writer,"chapter","%s",player.chapter);
+   if (player.difficulty != NULL)
+      xmlw_elem(writer,"difficulty","%s",player.difficulty);
    if (player.gui != NULL)
       xmlw_elem(writer,"gui","%s",player.gui);
    xmlw_elem(writer,"guiOverride","%d",player.guiOverride);
@@ -3468,6 +3446,10 @@ Spob* player_load( xmlNodePtr parent )
    /* Defaults as necessary. */
    if (player.chapter==NULL)
       player.chapter = strdup( start_chapter() );
+   if (player.difficulty!=NULL)
+      difficulty_setLocal( difficulty_get(player.difficulty) );
+   else
+      difficulty_setLocal( NULL ); /* Sets the default. */
 
    return pnt;
 }
@@ -3599,7 +3581,6 @@ static Spob* player_parse( xmlNodePtr parent )
    map_overlay_enabled = 0;
    player_ran_updater = 0;
 
-   player.dt_mod = 1.; /* For old saves. */
    player.radar_res = RADAR_RES_DEFAULT;
 
    /* Must get spob first. */
@@ -3612,7 +3593,6 @@ static Spob* player_parse( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do {
       /* global stuff */
-      xmlr_float(node, "dt_mod", player.dt_mod);
       xmlr_ulong(node, "credits", player_creds);
       xmlr_strd(node, "gui", player.gui);
       xmlr_int(node, "guiOverride", player.guiOverride);

@@ -12,7 +12,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>1000</population>
   <hide>2.000000</hide>
   <services>
@@ -25,6 +25,7 @@
   <bar>Most of the people in this bar are Soromid soldiers. There are few officers, since they have their own facility elsewhere on the station.</bar>
  </general>
  <tags>
+  <tag>station</tag>
   <tag>restricted</tag>
   <tag>military</tag>
  </tags>

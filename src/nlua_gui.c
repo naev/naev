@@ -101,7 +101,6 @@ int nlua_loadGUI( nlua_env env )
  */
 static int guiL_viewport( lua_State *L )
 {
-
    /* Parameters. */
    double x = luaL_checknumber(L,1);
    double y = luaL_checknumber(L,2);
@@ -141,7 +140,6 @@ static int guiL_fpsPos( lua_State *L )
  */
 static int guiL_osdInit( lua_State *L )
 {
-
    /* Parameters. */
    int x = luaL_checkinteger(L,1);
    int y = luaL_checkinteger(L,2);
@@ -163,7 +161,6 @@ static int guiL_osdInit( lua_State *L )
  */
 static int guiL_mesgInit( lua_State *L )
 {
-
    /* Parse parameters. */
    int w = luaL_checkinteger( L, 1 );
    int x = luaL_checkinteger( L, 2 );
@@ -184,7 +181,6 @@ static int guiL_mesgInit( lua_State *L )
  */
 static int guiL_omsgInit( lua_State *L )
 {
-
    /* Parse parameters. */
    double w = luaL_checkinteger( L, 1 );
    double x = luaL_checkinteger( L, 2 );
@@ -235,7 +231,6 @@ static int guiL_radarInit( lua_State *L )
  */
 static int guiL_radarRender( lua_State *L )
 {
-
    /* Parse parameters. */
    double x = luaL_checknumber( L, 1 );
    double y = luaL_checknumber( L, 2 );
@@ -395,7 +390,6 @@ static int guiL_menuSmall( lua_State *L )
  */
 static int guiL_setMapOverlayBounds( lua_State *L )
 {
-
    int top    = luaL_checkinteger(L,1);
    int right  = luaL_checkinteger(L,2);
    int bottom = luaL_checkinteger(L,3);

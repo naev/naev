@@ -410,6 +410,7 @@ static int naevL_conf( lua_State *L )
    lua_newtable(L);
    PUSH_STRING( L, "data", conf.ndata );
    PUSH_STRING( L, "language", conf.language );
+   PUSH_STRING( L, "difficulty", conf.difficulty );
    PUSH_INT( L, "fsaa", conf.fsaa );
    PUSH_BOOL( L, "vsync", conf.vsync );
    PUSH_INT( L, "width", conf.width );

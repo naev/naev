@@ -20,6 +20,7 @@ uniform sampler2D emissive_tex; /**< Emission texture. */
 uniform sampler2D occlusion_tex; /**< Ambient occlusion. */
 uniform int u_blend = 0;
 uniform sampler2DShadow shadowmap; /**< Shadow map. */
+uniform sampler2D shadowmap_tex; /**< Shadow map. */
 
 in vec2 tex_coord0;
 in vec3 position;
@@ -255,8 +256,19 @@ void main (void)
    f_diffuse *= ao;
 
    /* Set up shadows. */
-   //float shadowFactor = textureProj(shadowmap, shadow);
-   float shadowFactor = 1.0;
+   float shadowFactor;
+   vec4 sc = shadow / shadow.w;
+   /* Check to see if in the shadowmap frustrum. */
+   //if ((shadow.w < 0.0) || (sc.x < 0.0 || sc.y < 0.0) || (sc.x > 1.0 || sc.y > 1.0))
+   if (texture( shadowmap_tex, sc.xy ).z  <  sc.z)
+      shadowFactor = 0.1;
+   else
+      shadowFactor = 1.0;
+   //else
+   //   shadowFactor = 0.1 + 0.9 * textureProj(shadowmap, sc);
+   //shadowFactor = 1.0;
+   //colour_out = vec4( vec3(shadowFactor), 1.0 );
+   //return;
 
    /* Point light for now. */
    const vec3 v = normalize( vec3(0.0, 0.0, 1.0) );

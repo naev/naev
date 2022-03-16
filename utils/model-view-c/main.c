@@ -12,26 +12,6 @@
 #include "shader_min.h"
 #include "mat4.h"
 
-static void matmul( GLfloat H[16], const GLfloat R[16] )
-{
-   for (int i=0; i<4; i++) {
-      float l0 = H[i * 4 + 0];
-      float l1 = H[i * 4 + 1];
-      float l2 = H[i * 4 + 2];
-
-      float r0 = l0 * R[0] + l1 * R[4] + l2 * R[8];
-      float r1 = l0 * R[1] + l1 * R[5] + l2 * R[9];
-      float r2 = l0 * R[2] + l1 * R[6] + l2 * R[10];
-
-      H[i * 4 + 0] = r0;
-      H[i * 4 + 1] = r1;
-      H[i * 4 + 2] = r2;
-   }
-   H[12] += R[12];
-   H[13] += R[13];
-   H[14] += R[14];
-}
-
 int main( int argc, char *argv[] )
 {
    (void) argc;
@@ -105,11 +85,15 @@ int main( int argc, char *argv[] )
                   quit = 1;
                   break;
 
-               case SDLK_0:
-                  rendermode = 0;
+               case SDLK_m:
+                  rendermode = !rendermode;
                   break;
 
                case SDLK_1:
+                  rendermode = 0;
+                  break;
+
+               case SDLK_2:
                   rendermode = 1;
                   break;
 
@@ -136,28 +120,36 @@ int main( int argc, char *argv[] )
       roty += rotyspeed * dt;
       GLfloat c = cos(rotx);
       GLfloat s = sin(rotx);
-      GLfloat Hx[16] = {
-         1.0, 0.0, 0.0, 0.0,
-         0.0,  c,   s,  0.0,
-         0.0, -s,   c,  0.0,
-         0.0, 0.0, 0.0, 1.0
-      };
+      mat4 Hx = { .m = {
+         { 1.0, 0.0, 0.0, 0.0 },
+         { 0.0,  c,   s,  0.0 },
+         { 0.0, -s,   c,  0.0 },
+         { 0.0, 0.0, 0.0, 1.0 }
+      } };
       c = cos(roty);
       s = sin(roty);
-      GLfloat Hy[16] = {
-          c,  0.0, -s,  0.0,
-         0.0, 1.0, 0.0, 0.0,
-          s,  0.0,  c,  0.0,
-         0.0, 0.0, 0.0, 1.0
-      };
-      matmul( Hy, Hx );
+      mat4 Hy = { .m = {
+         {  c,  0.0, -s,  0.0 },
+         { 0.0, 1.0, 0.0, 0.0 },
+         {  s,  0.0,  c,  0.0 },
+         { 0.0, 0.0, 0.0, 1.0 }
+      } };
+      const GLfloat sca = 0.1;
+      const mat4 Hscale = { .m = {
+         { sca, 0.0, 0.0, 0.0 },
+         { 0.0, sca, 0.0, 0.0 },
+         { 0.0, 0.0, sca, 0.0 },
+         { 0.0, 0.0, 0.0, 1.0 } } };
 
       mat4 H;
-      memcpy( &H, Hy, sizeof(mat4) );
+      mat4_mul( &H, &Hy, &Hx );
+      mat4_apply( &H, &Hscale );
+
+      /* Draw the object. */
       object_render( obj, &H );
 
+      /* Draw the shadowmap to see what's going on (clear the shadowmap). */
       if (rendermode) {
-         glClear( GL_COLOR_BUFFER_BIT );
          glUseProgram( shadowshader );
 
          glBindBuffer( GL_ARRAY_BUFFER, shadowvbo );

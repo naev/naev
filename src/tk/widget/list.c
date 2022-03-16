@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file list.c
  *
  * @brief List widget.
  */
-
-
 /** @cond */
 #include <stdlib.h>
 /** @endcond */
@@ -19,19 +16,19 @@
 #define CELLPADV 8
 #define CELLHEIGHT (gl_smallFont.h + CELLPADV)
 
-
 static void lst_render( Widget* lst, double bx, double by );
+static void lst_renderOverlay( Widget* lst, double bx, double by );
 static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod );
 static int lst_mclick( Widget* lst, int button, int x, int y );
 static int lst_mdoubleclick( Widget* lst, int button, int x, int y );
 static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event );
 static int lst_mmove( Widget* lst, int x, int y, int rx, int ry );
 static void lst_cleanup( Widget* lst );
+static void lst_setAltTextPos( Widget *lst, double bx, double by );
 
 static Widget *lst_getWgt( unsigned int wid, const char* name );
 static int lst_focus( Widget* lst, double bx, double by );
 static void lst_scroll( Widget* lst, int direction );
-
 
 /**
  * @brief Adds a list widget to a window.
@@ -70,6 +67,7 @@ void window_addList( unsigned int wid,
 
    /* specific */
    wgt->render             = lst_render;
+   wgt->renderOverlay      = lst_renderOverlay;
    wgt->cleanup            = lst_cleanup;
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->keyevent           = lst_key;
@@ -77,12 +75,16 @@ void window_addList( unsigned int wid,
    wgt->mdoubleclickevent  = lst_mdoubleclick;
    wgt->mwheelevent        = lst_mwheel;
    wgt->mmoveevent         = lst_mmove;
+   wgt_setFlag(wgt, WGT_FLAG_ALWAYSMMOVE);
    wgt->dat.lst.options    = items;
    wgt->dat.lst.noptions   = nitems;
    wgt->dat.lst.selected   = defitem; /* -1 would be none */
    wgt->dat.lst.pos        = 0;
    wgt->dat.lst.onSelect   = onSelect;
    wgt->dat.lst.onActivate = onActivate;
+   wgt->dat.lst.alt        = -1;
+   wgt->dat.lst.altx       = -1;
+   wgt->dat.lst.alty       = -1;
 
    /* position/size */
    wgt->w = (double) w;
@@ -103,7 +105,6 @@ void window_addList( unsigned int wid,
       onSelect(wid, name);
 }
 
-
 /**
  * @brief Renders a list widget.
  *
@@ -113,10 +114,8 @@ void window_addList( unsigned int wid,
  */
 static void lst_render( Widget* lst, double bx, double by )
 {
-   int i;
    double x,y, tx,ty, miny;
    double w, scroll_pos;
-   const glColour *col;
 
    w = lst->w;
    x = bx + lst->x;
@@ -151,7 +150,8 @@ static void lst_render( Widget* lst, double bx, double by )
    w -= 4;
    ty = y + lst->h - CELLPADV/2 - gl_smallFont.h;
    miny = y;
-   for (i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
+   for (int i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
+      const glColour *col;
       if (lst->dat.lst.selected==i)
          col = &cWhite;
       else
@@ -165,6 +165,31 @@ static void lst_render( Widget* lst, double bx, double by )
    }
 }
 
+/**
+ * @brief Renders a list widget overlay.
+ *
+ *    @param lst List widget to render overlay.
+ *    @param bx Base X position.
+ *    @param by Base Y position.
+ */
+static void lst_renderOverlay( Widget* lst, double bx, double by )
+{
+   double x,y;
+   const char *alt;
+
+   /* Nothing to do here. */
+   if (lst->dat.lst.alttext == NULL)
+      return;
+   if (lst->dat.lst.alt < 0)
+      return;
+
+   x = bx + lst->x + lst->dat.lst.altx;
+   y = by + lst->y + lst->dat.lst.alty;
+
+   alt = lst->dat.lst.alttext[ lst->dat.lst.alt ];
+   if (alt != NULL)
+      toolkit_drawAltText( x, y, alt );
+}
 
 /**
  * @brief Handles input for a list widget.
@@ -205,7 +230,6 @@ static int lst_key( Widget* lst, SDL_Keycode key, SDL_Keymod mod )
    return 0;
 }
 
-
 /**
  * @brief Handler for mouse single-click events for the list widget.
  *
@@ -226,7 +250,6 @@ static int lst_mclick( Widget* lst, int button, int x, int y )
    return 0;
 }
 
-
 /**
  * @brief Handler for mouse double-click events for the list widget.
  *
@@ -236,8 +259,7 @@ static int lst_mclick( Widget* lst, int button, int x, int y )
  */
 static int lst_mdoubleclick( Widget* lst, int button, int x, int y )
 {
-   int prev_selected;
-   prev_selected = lst->dat.lst.selected;
+   int prev_selected = lst->dat.lst.selected;
    if (lst_mclick( lst, button, x, y ) == 0)
       return 0;
    if (lst->dat.lst.selected != prev_selected)
@@ -247,7 +269,6 @@ static int lst_mdoubleclick( Widget* lst, int button, int x, int y )
       lst->dat.lst.onActivate( lst->wdw, lst->name );
    return 1;
 }
-
 
 /**
  * @brief Handler for mouse wheel events for the list widget.
@@ -266,6 +287,17 @@ static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event )
    return 1;
 }
 
+static int lst_focusElement( Widget *lst, double bx, double by )
+{
+   /* Get the actual width. */
+   int w = lst->w;
+   if (lst->dat.lst.height > 0)
+      w -= 10.;
+
+   if (bx > w)
+      return -1;
+   return CLAMP( 0, lst->dat.lst.noptions-1, lst->dat.lst.pos + (lst->h - by) / CELLHEIGHT );
+}
 
 /**
  * @brief Handles a mouse click focusing on widget.
@@ -277,7 +309,6 @@ static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event )
  */
 static int lst_focus( Widget* lst, double bx, double by )
 {
-   int i;
    double y, w;
    double scroll_pos;
 
@@ -287,7 +318,7 @@ static int lst_focus( Widget* lst, double bx, double by )
       w -= 10.;
 
    if (bx < w) {
-      i = lst->dat.lst.pos + (lst->h - by) / CELLHEIGHT;
+      int i = lst_focusElement( lst, bx, by );
       if (i < lst->dat.lst.noptions) { /* shouldn't be out of boundaries */
          lst->dat.lst.selected = i;
          lst_scroll( lst, 0 ); /* checks boundaries and triggers callback */
@@ -312,6 +343,15 @@ static int lst_focus( Widget* lst, double bx, double by )
    return 1;
 }
 
+/**
+ * @brief Sets the alt text position.
+ */
+static void lst_setAltTextPos( Widget *lst, double bx, double by )
+{
+   lst->dat.lst.alt = lst_focusElement( lst, bx, by );
+   lst->dat.lst.altx = bx;
+   lst->dat.lst.alty = by;
+}
 
 /**
  * @brief Handles List movement.
@@ -339,10 +379,15 @@ static int lst_mmove( Widget* lst, int x, int y, int rx, int ry )
 
       return 1;
    }
+   else {
+      if ((x < 0) || (x >= lst->w) || (y < 0) || (y >= lst->h))
+         lst->dat.lst.alt  = -1;
+      else
+         lst_setAltTextPos( lst, x, y );
+   }
 
    return 0;
 }
-
 
 /**
  * @brief Clean up function for the list widget.
@@ -351,16 +396,16 @@ static int lst_mmove( Widget* lst, int x, int y, int rx, int ry )
  */
 static void lst_cleanup( Widget* lst )
 {
-   int i;
-
    if (lst->dat.lst.options) {
-      for (i=0; i<lst->dat.lst.noptions; i++)
-         if (lst->dat.lst.options[i])
-            free(lst->dat.lst.options[i]);
+      for (int i=0; i<lst->dat.lst.noptions; i++) {
+         free(lst->dat.lst.options[i]);
+         if (lst->dat.lst.alttext != NULL)
+            free(lst->dat.lst.alttext[i]);
+      }
       free( lst->dat.lst.options );
+      free( lst->dat.lst.alttext );
    }
 }
-
 
 /**
  * @brief Scrolls a list widget up/down.
@@ -395,7 +440,6 @@ static void lst_scroll( Widget* lst, int direction )
       lst->dat.lst.onSelect( lst->wdw, lst->name );
 }
 
-
 /**
  * @brief Gets the list widget.
  */
@@ -417,7 +461,6 @@ static Widget *lst_getWgt( unsigned int wid, const char* name )
 
    return wgt;
 }
-
 
 /**
  * @brief Gets what is selected currently in a list.
@@ -449,7 +492,6 @@ const char* toolkit_getList( unsigned int wid, const char* name )
    return wgt->dat.lst.options[ wgt->dat.lst.selected ];
 }
 
-
 /**
  * @brief Sets the list value by name.
  *
@@ -460,22 +502,20 @@ const char* toolkit_getList( unsigned int wid, const char* name )
  */
 const char* toolkit_setList( unsigned int wid, const char* name, const char* value )
 {
-   int i;
    Widget *wgt = lst_getWgt( wid, name );
    if ((wgt == NULL) || (value==NULL))
       return NULL;
 
-   for (i=0; i<wgt->dat.lst.noptions; i++) {
-      if (strcmp(wgt->dat.lst.options[i],value)==0) {
-         wgt->dat.lst.selected = i;
-         lst_scroll( wgt, 0 ); /* checks boundaries and triggers callback */
-         return value;
-      }
+   for (int i=0; i<wgt->dat.lst.noptions; i++) {
+      if (strcmp(wgt->dat.lst.options[i],value)!=0)
+         continue;
+      wgt->dat.lst.selected = i;
+      lst_scroll( wgt, 0 ); /* checks boundaries and triggers callback */
+      return value;
    }
 
    return NULL;
 }
-
 
 /**
  * @brief Sets the list value by position.
@@ -491,7 +531,6 @@ const char* toolkit_setListPos( unsigned int wid, const char* name, int pos )
    lst_scroll( wgt, 0 ); /* checks boundaries and triggers callback */
    return wgt->dat.lst.options[ wgt->dat.lst.selected ];
 }
-
 
 /**
  * @brief Get the position of current item in the list.
@@ -509,7 +548,6 @@ int toolkit_getListPos( unsigned int wid, const char* name )
    return wgt->dat.lst.selected;
 }
 
-
 /**
  * @brief Gets the offset of a list.
  */
@@ -522,7 +560,6 @@ int toolkit_getListOffset( unsigned int wid, const char* name )
    return wgt->dat.lst.pos;
 }
 
-
 /**
  * @brief Sets the offset of a list.
  */
@@ -533,5 +570,26 @@ int toolkit_setListOffset( unsigned int wid, const char* name, int off )
       return -1;
 
    wgt->dat.lst.pos = off;
+   return 0;
+}
+
+/**
+ * @brief Sets alt text for when mouse is over.
+ */
+int toolkit_setListAltText( unsigned int wid, const char *name, char **alttext )
+{
+   Widget *wgt = lst_getWgt( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   /* Clean up. */
+   if (wgt->dat.lst.alttext != NULL) {
+      for (int i=0; i<wgt->dat.lst.noptions; i++)
+         free(wgt->dat.lst.alttext[i]);
+   }
+   free( wgt->dat.lst.alttext );
+
+   /* Set. */
+   wgt->dat.lst.alttext = alttext;
    return 0;
 }

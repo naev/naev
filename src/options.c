@@ -21,6 +21,7 @@
 #include "background.h"
 #include "colour.h"
 #include "dialogue.h"
+#include "difficulty.h"
 #include "input.h"
 #include "log.h"
 #include "music.h"
@@ -250,9 +251,10 @@ static void opt_gameplay( unsigned int wid )
    char buf[STRMAX];
    char **paths;
    int cw;
-   int w, h, y, x, by, l, n, i;
+   int w, h, y, x, by, l, n, i, p;
    const char *s;
-   char **ls;
+   char **ls, **diff_text, **diff_alt;
+   const Difficulty *difficulty, *cur_difficulty;
 
    /* Get size. */
    window_dimWindow( wid, &w, &h );
@@ -291,7 +293,7 @@ static void opt_gameplay( unsigned int wid )
    y -= 40;
    by = y;
 
-   /* Compiletime stuff. */
+   /* Language support. */
    cw = (w-60)/2 - 40;
    y  = by;
    x  = 20;
@@ -310,6 +312,34 @@ static void opt_gameplay( unsigned int wid )
    }
    window_addList( wid, x+l+20, y, cw-l-50, 100, "lstLanguage", ls, n, i, NULL, NULL );
    y -= 120;
+
+   /* Game difficulty. */
+   difficulty = difficulty_getAll();
+   n = array_size(difficulty);
+   diff_text = malloc( sizeof(char*) * n );
+   diff_alt = malloc( sizeof(char*) * n );
+   p = 0;
+   if (player.p == NULL)
+      difficulty_setLocal( NULL );
+   cur_difficulty = difficulty_cur();
+   for (i=0; i<n; i++) {
+      const Difficulty *d = &difficulty[i];
+      diff_text[i] = strdup( _(d->name) );
+      diff_alt[i] = difficulty_display(d);
+      if (strcmp(d->name,cur_difficulty->name)==0)
+         p = i;
+   }
+   if (player.p != NULL)
+      s = _("Difficulty (this save):");
+   else
+      s = _("Difficulty (global):");
+   window_addText( wid, x, y, cw, 20, 0, "txtDifficulty", NULL, NULL, s );
+   y -= 20;
+   window_addList( wid, x, y, cw, 100, "lstDifficulty", diff_text, n, p, NULL, NULL );
+   toolkit_setListAltText( wid, "lstDifficulty", diff_alt );
+   y -= 110;
+
+   /* Compilation flags. */
    window_addText( wid, x, y, cw, 20, 0, "txtCompile",
          NULL, cHeader, _("Compilation Flags:") );
    y -= 30;
@@ -342,7 +372,6 @@ static void opt_gameplay( unsigned int wid )
    y -= window_getTextHeight(wid, "txtFlags") + 10;
 
    /* Options. */
-
    x = 20 + cw + 20;
    y  = by;
    cw += 80;
@@ -409,6 +438,7 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
    const char *vmsg, *tmax;
    const char *s;
    double reset;
+   const Difficulty *difficulty;
 
    /* List. */
    p = toolkit_getListPos( wid, "lstLanguage" );
@@ -431,6 +461,36 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
       gl_fontInit( &gl_smallFont, _(FONT_DEFAULT_PATH), conf.font_size_small, FONT_PATH_PREFIX, 0 ); /* small font */
       gl_fontInit( &gl_defFontMono, _(FONT_MONOSPACE_PATH), conf.font_size_def, FONT_PATH_PREFIX, 0 );
    }
+
+   /* Save the difficulty mode. */
+   difficulty = difficulty_getAll();
+   p = toolkit_getListPos( wid, "lstDifficulty" );
+   difficulty = &difficulty[p];
+   if (player.p == NULL) { /* Setting global difficulty. */
+      free(conf.difficulty);
+      if (difficulty->def) {
+         conf.difficulty = NULL; /* Don't save default. */
+         difficulty_setGlobal( NULL );
+      }
+      else {
+         conf.difficulty = strdup( difficulty->name );
+         difficulty_setGlobal( difficulty );
+      }
+   }
+   else { /* Local difficulty. */
+      free(player.difficulty);
+      if (difficulty == difficulty_get(NULL)) {
+         player.difficulty = NULL;
+         difficulty_setLocal( NULL );
+      }
+      else {
+         player.difficulty = strdup( difficulty->name );
+         difficulty_setLocal( difficulty );
+      }
+   }
+   /* Apply difficulty to player ship. */
+   if (player.p != NULL)
+      pilot_calcStats( player.p ); /* TODO apply to all player's ships. */
 
    /* Checkboxes. */
    f = window_checkboxState( wid, "chkDoubletap" );
@@ -1418,10 +1478,13 @@ static int opt_videoSave( unsigned int wid, const char *str )
    /* Fullscreen. */
    fullscreen = window_checkboxState( wid, "chkFullscreen" );
 
-   ret = opt_setVideoMode( w, h, fullscreen, 1 );
-   window_checkboxSet( wid, "chkFullscreen", conf.fullscreen );
-   if (ret != 0)
-      return ret;
+   /* Only change if necessary or it causes some flicker. */
+   if ((conf.width != w) || (conf.height != h) || (fullscreen != conf.fullscreen)) {
+      ret = opt_setVideoMode( w, h, fullscreen, 1 );
+      window_checkboxSet( wid, "chkFullscreen", conf.fullscreen );
+      if (ret != 0)
+         return ret;
+   }
 
    /* FPS. */
    conf.fps_show = window_checkboxState( wid, "chkFPS" );

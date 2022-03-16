@@ -5,6 +5,8 @@
 
 #include "glad.h"
 
+#include "vec3.h"
+
 typedef struct mat4_ {
    union {
       /* Column-major; m[x][y] */
@@ -14,7 +16,7 @@ typedef struct mat4_ {
 } mat4;
 
 /* Basic operations. */
-void mat4_print( mat4 m );
+void mat4_print( const mat4 *m );
 void mat4_mul( mat4 *out, const mat4 *m1, const mat4 *m2 );
 
 /* Affine transformations. */
@@ -29,3 +31,5 @@ void mat4_rotate2dv( mat4 *m, double x, double y );
 __attribute__((const)) mat4 mat4_identity( void );
 __attribute__((const)) mat4 mat4_ortho( double left, double right,
       double bottom, double top, double nearVal, double farVal );
+mat4 mat4_lookat( const vec3 *eye, const vec3 *center, const vec3 *up );
+mat4 mat4_perspective( double fov, double aspect, double near, double far );

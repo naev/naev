@@ -98,7 +98,6 @@ typedef struct Player_s {
    Pilot *p;         /**< Player's pilot. */
    PlayerShip_t ps;  /**< Player's ship with extra information. */
    char *name;       /**< Player's name. */
-   double dt_mod;    /**< Static modifier of dt applied to the game as a whole. */
 
    /* Player data. */
    PlayerFlags flags;/**< Player's flags. */
@@ -114,6 +113,7 @@ typedef struct Player_s {
    double mousey;    /**< Mouse Y position (for mouse flying). */
    double speed;     /**< Gameplay speed modifier, multiplies the ship base speed. */
    char *chapter;    /**< Chapter information. */
+   char *difficulty; /**< Player-specific difficulty. */
 
    /* Loaded game version. */
    char *loaded_version;/**< Version of the loaded save game. */

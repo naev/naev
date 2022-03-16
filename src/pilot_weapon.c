@@ -812,11 +812,16 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
    if (w->u.beamid == 0)
       return;
 
-  /* Safeguard against a nasty race condition. */
-  if (w->outfit == NULL) {
+   /* Safeguard against a nasty race condition. */
+   if (w->outfit == NULL) {
       w->u.beamid = 0;
-     return;
-  }
+      return;
+   }
+
+   /* Lua test to stop beam. */
+   if ((w->outfit->lua_ontoggle != LUA_NOREF) &&
+         !pilot_outfitLOntoggle( p, w, 0 ))
+      return;
 
    /* Calculate rate modifier. */
    pilot_getRateMod( &rate_mod, &energy_mod, p, w->outfit );

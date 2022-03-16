@@ -28,6 +28,7 @@ typedef struct nsave_s {
    ntime_t date; /**< Date. */
    uint64_t credits; /**< Credits player has. */
    char *chapter; /**< Player's current chapter. */
+   char *difficulty; /**< Difficulty setting of the player. */
 
    /* Ship info. */
    char *shipname; /**< Name of the ship. */

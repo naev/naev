@@ -23,6 +23,7 @@ static int transformL_eq( lua_State *L );
 static int transformL_new( lua_State *L );
 static int transformL_mul( lua_State *L );
 static int transformL_get( lua_State *L );
+static int transformL_set( lua_State *L );
 static int transformL_scale( lua_State *L );
 static int transformL_translate( lua_State *L );
 static int transformL_rotate2d( lua_State *L );
@@ -33,6 +34,7 @@ static const luaL_Reg transformL_methods[] = {
    { "__eq", transformL_eq },
    { "__mul", transformL_mul },
    { "get", transformL_get },
+   { "set", transformL_set },
    { "new", transformL_new },
    { "scale", transformL_scale },
    { "translate", transformL_translate },
@@ -94,8 +96,7 @@ mat4* luaL_checktransform( lua_State *L, int ind )
  */
 mat4* lua_pushtransform( lua_State *L, mat4 transform )
 {
-   mat4 *t;
-   t = (mat4*) lua_newuserdata(L, sizeof(mat4));
+   mat4 *t = (mat4*) lua_newuserdata(L, sizeof(mat4));
    *t = transform;
    luaL_getmetatable(L, TRANSFORM_METATABLE);
    lua_setmetatable(L, -2);
@@ -134,9 +135,8 @@ int lua_istransform( lua_State *L, int ind )
  */
 static int transformL_eq( lua_State *L )
 {
-   mat4 *t1, *t2;
-   t1 = luaL_checktransform(L,1);
-   t2 = luaL_checktransform(L,2);
+   mat4 *t1 = luaL_checktransform(L,1);
+   mat4 *t2 = luaL_checktransform(L,2);
    lua_pushboolean( L, (memcmp( t1, t2, sizeof(mat4) )==0) );
    return 1;
 }
@@ -149,9 +149,8 @@ static int transformL_eq( lua_State *L )
  */
 static int transformL_new( lua_State *L )
 {
-   mat4 *M;
    if (lua_istransform(L,1)) {
-      M = lua_totransform(L,1);
+      mat4 *M = lua_totransform(L,1);
       lua_pushtransform( L, *M );
    }
    else
@@ -180,6 +179,8 @@ static int transformL_mul( lua_State *L )
 /**
  * @brief Gets all the values of the transform.
  *
+ * Note, this returns in column-major.
+ *
  *    @luatparam Transform T Transform te get parameters of.
  *    @luatreturn table 2D table containing all the values of the transform.
  * @luafunc get
@@ -191,12 +192,41 @@ static int transformL_get( lua_State *L )
    for (int i=0; i<4; i++) {
       lua_newtable(L);           /* t, t */
       for (int j=0; j<4; j++) {
-         lua_pushnumber(L,M->m[i][j]); /* t, t, n */
+         lua_pushnumber(L,M->m[j][i]); /* t, t, n */
          lua_rawseti(L,-2,j+1);       /* t, t */
       }
       lua_rawseti(L,-2,i+1);          /* t */
    }
    return 1;
+}
+
+/**
+ * @brief Sets an element of a transform.
+ *
+ *    @luatparam Transform T Transform to set element of.
+ *    @luatparam number i Column to set.
+ *    @luatparam number j Row to set.
+ *    @luatparam number v Value to set to.
+ * @luafunc set
+ */
+static int transformL_set( lua_State *L )
+{
+   mat4 *M  = luaL_checktransform(L, 1);
+   int i    = luaL_checkinteger(L, 2)-1;
+   int j    = luaL_checkinteger(L, 3)-1;
+   double v = luaL_checknumber(L, 4);
+#if DEBUGGING
+   if (i < 0 || i > 3) {
+      WARN(_("Matrix column value not in range: %d"),i);
+      i = CLAMP(0,3,i);
+   }
+   if (j < 0 || j > 3) {
+      WARN(_("Matrix row value not in range: %d"),j);
+      j = CLAMP(0,3,j);
+   }
+#endif /* DEBUGGING */
+   M->m[i][j] = v;
+   return 0;
 }
 
 /**
