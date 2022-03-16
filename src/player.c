@@ -3107,14 +3107,31 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
 {
    for (int i=0; i<array_size(player.p->escorts); i++) {
       Escort_t *e = &player.p->escorts[i];
+      Pilot *pe;
       if (!e->persist)
          continue;
-      if (e->type != ESCORT_TYPE_BAY)
-         continue;
-      xmlw_startElem(writer, "escort");
-      xmlw_attr(writer,"type","bay");
-      xmlw_str(writer, "%s", e->ship);
-      xmlw_endElem(writer); /* "escort" */
+      switch (e->type) {
+         case ESCORT_TYPE_BAY:
+            xmlw_startElem(writer, "escort");
+            xmlw_attr(writer,"type","bay");
+            xmlw_str(writer, "%s", e->ship);
+            xmlw_endElem(writer); /* "escort" */
+            break;
+
+         case ESCORT_TYPE_FLEET:
+            pe = pilot_get( e->id );
+            if (pe != NULL) {
+               xmlw_startElem(writer, "escort");
+               xmlw_attr(writer,"type","fleet");
+               xmlw_str(writer, "%s", pe->name);
+               /* TODO add cargo. */
+               xmlw_endElem(writer); /* "escort" */
+            }
+            break;
+
+         default:
+            break;
+      }
    }
 
    return 0;
@@ -3901,24 +3918,19 @@ static int player_parseEscorts( xmlNodePtr parent )
    xmlNodePtr node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"escort")) {
-         char *buf, *ship;
-         EscortType_t type;
+         char *buf;
 
          xmlr_attr_strd( node, "type", buf );
-         if (strcmp(buf,"bay")==0)
-            type = ESCORT_TYPE_BAY;
-         else if (strcmp(buf,"fleet")==0)
-            type = ESCORT_TYPE_FLEET;
-         else {
-            WARN(_("Escort has invalid type '%s'."), buf);
-            type = ESCORT_TYPE_NULL;
+         if (strcmp(buf,"bay")==0) {
+            char *ship = xml_get(node);
+            escort_addList( player.p, ship, ESCORT_TYPE_BAY, 0, 1 );
          }
+         else if (strcmp(buf,"fleet")==0) {
+            /* TODO load fleet and parse cargo. */
+         }
+         else
+            WARN(_("Escort has invalid type '%s'."), buf);
          free(buf);
-
-         ship = xml_get(node);
-
-         /* Add escort to the list. */
-         escort_addList( player.p, ship, type, 0, 1 );
       }
    } while (xml_nextNode(node));
    return 0;
