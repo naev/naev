@@ -7,14 +7,18 @@
   <priority>7</priority>
   <mass>550</mass>
   <price>1100000</price>
-  <description>This cargo hull from Schafer &amp; Kane Industries makes use of state-of-the-art defensive alloys, which allows it to free up even more space for cargo without sacrificing too much durability.</description>
+  <description>This cargo hull from Schafer &amp; Kane Industries makes use of state-of-the-art defensive alloys, which allows it to free up even more space for cargo without sacrificing too much durability. Along with the increased space their (in)famous electromagnetic shockwve absorbtion generator comes built in, turning CPU power and a little more obviousness into missile james, tracking zero-points and reduced secondary splash damage, turtling has never been safer.</description>
   <gfx_store>cargo_hull_l.webp</gfx_store>
+  <cpu>-160</cpu>
  </general>
  <specific type="modification">
   <cargo>400</cargo>
-  <absorb>42</absorb>
+  <absorb>58</absorb>
   <armour>1100</armour>
   <cargo_inertia>-25</cargo_inertia>
   <cargo_mod>25</cargo_mod>
+  <ew_hide>-20</ew_hide>
+  <ew_evade>10</ew_evade>
+  <jam_chance>50</jam_chance>
  </specific>
 </outfit>

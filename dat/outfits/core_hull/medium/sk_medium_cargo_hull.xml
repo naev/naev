@@ -7,14 +7,18 @@
   <priority>7</priority>
   <mass>140</mass>
   <price>320000</price>
-  <description>Schafer &amp; Kane Industries have developed a hull modification that provides both ample cargo space and protection.</description>
+  <description>Schafer &amp; Kane Industries have developed a hull modification that provides both ample cargo space and protection. Also deciding "in for a penny, in for a pound", an electromagnetic shockwave absorbtion generator was added, typically this increases greatly but since the hull is already rather lumpy due to the cargo pods... on the other hand, for the price of some CPU power, missile jams, tracking zero-points and reduced secondary splash damage are all achieved making this hull rather more resiliant.</description>
   <gfx_store>cargo_hull_m.webp</gfx_store>
+  <cpu>-64</cpu>
  </general>
  <specific type="modification">
   <cargo>120</cargo>
-  <absorb>12</absorb>
+  <absorb>20</absorb>
   <armour>180</armour>
   <cargo_inertia>-25</cargo_inertia>
   <cargo_mod>25</cargo_mod>
+  <ew_hide>-20</ew_hide>
+  <ew_evade>10</ew_evade>
+  <jam_chance>50</jam_chance>
  </specific>
 </outfit>

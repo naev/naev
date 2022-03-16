@@ -7,14 +7,18 @@
   <priority>7</priority>
   <mass>40</mass>
   <price>120000</price>
-  <description>Though a pricey investment for small couriers, this hull modification from Schafer &amp; Kane Industries provides an impressive amount of cargo space without compromising the hull's integrity.</description>
+  <description>Though a pricey investment for small couriers, this hull modification from Schafer &amp; Kane Industries provides an impressive amount of cargo space without compromising the hull's integrity. Since the extra bulk and protrusions from the hull make it easier to detect anyway, S&amp;K went ahead and added an eletromagnetic shockwave absorbtion generator that, though also increasing the hull signature and CPU usage also causes missile jams, reduces the hulls tracability and reduces splash damage from weapon strikes.</description>
   <gfx_store>cargo_hull_s.webp</gfx_store>
+  <cpu>-24</cpu>
  </general>
  <specific type="modification">
   <cargo>30</cargo>
-  <absorb>2</absorb>
-  <armour>55</armour>
+  <absorb>6</absorb>
+  <armour>60</armour>
   <cargo_inertia>-25</cargo_inertia>
   <cargo_mod>25</cargo_mod>
+  <ew_hide>-20</ew_hide>
+  <ew_evade>10</ew_evade>
+  <jam_chance>50</jam_chance>
  </specific>
 </outfit>
