@@ -536,7 +536,7 @@ void player_swapShip( const char *shipname, int move_cargo )
    /* Get rid of deployed escorts and swap existing escorts. */
    escort_clearDeployed( player.p );
    ps->p->escorts = player.p->escorts;
-   free( player.p->escorts );
+   array_free( player.p->escorts );
    player.p->escorts = NULL;
 
    /* Swap information over. */
