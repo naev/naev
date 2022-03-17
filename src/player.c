@@ -3120,7 +3120,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
          case ESCORT_TYPE_BAY:
             xmlw_startElem(writer, "escort");
             xmlw_attr(writer,"type","bay");
-            xmlw_str(writer, "%s", e->ship);
+            xmlw_attr(writer, "name", e->ship);
             xmlw_endElem(writer); /* "escort" */
             break;
 
@@ -3129,7 +3129,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
             if (pe != NULL) {
                xmlw_startElem(writer, "escort");
                xmlw_attr(writer,"type","fleet");
-               xmlw_str(writer, "%s", pe->name);
+               xmlw_attr(writer,"name",pe->name);
                xmlw_startElem(writer,"commodities");
                for (int j=0; j<array_size(pe->commodities); j++) {
                   PilotCommodity *pc = &pe->commodities[j];
@@ -3934,19 +3934,70 @@ static int player_parseEscorts( xmlNodePtr parent )
    xmlNodePtr node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"escort")) {
-         char *buf;
+         char *buf, *name;
 
          xmlr_attr_strd( node, "type", buf );
-         if (strcmp(buf,"bay")==0) {
-            char *ship = xml_get(node);
-            escort_addList( player.p, ship, ESCORT_TYPE_BAY, 0, 1 );
+         xmlr_attr_strd( node, "name", name );
+         if (name==NULL) { /* Workaround for old saves, TODO remove around 0.11 */
+            char *n = xml_get(node);
+            name = (n!=NULL) ? n : NULL;
          }
+         if (strcmp(buf,"bay")==0)
+            escort_addList( player.p, name, ESCORT_TYPE_BAY, 0, 1 );
+
          else if (strcmp(buf,"fleet")==0) {
-            /* TODO load fleet and parse cargo. */
+            xmlNodePtr cur;
+            double a;
+            vec2 v;
+            Pilot *pe;
+            PlayerShip_t *ps = player_getPlayerShip( name );
+
+            /* Only deploy escorts that are deployed. */
+            if (!ps->deployed)
+               WARN(_("Fleet ship '%s' is deployed despite not being marked for deployal!"), ps->p->name);
+
+            /* Only deploy spaceworthy escorts. */
+            if (!!pilot_checkSpaceworthy(ps->p))
+               WARN(_("Fleet ship '%s' is deployed despite not being space worthy!"), ps->p->name);
+
+            /* Get the position. */
+            a = RNGF() * 2. * M_PI;
+            vec2_cset( &v, player.p->solid->pos.x + 50.*cos(a),
+                  player.p->solid->pos.y + 50.*sin(a) );
+
+            /* Add the escort to the fleet. */
+            ps->id = escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
+
+            /* Add commodities as necessary. */
+            pe = pilot_get( ps->id ); /* Should not be NULL or everything is broken. */
+            cur = node->xmlChildrenNode;
+            do {
+               xml_onlyNodes(cur);
+               if (xml_isNode(node, "commodities")) {
+                  xmlNodePtr ccur = cur->xmlChildrenNode;
+                  do {
+                     xml_onlyNodes(ccur);
+                     if (xml_isNode(ccur,"commodity")) {
+                        int q;
+                        const Commodity *com;
+                        xmlr_attr_int(ccur,"quantity",q);
+                        com = commodity_get( xml_get(ccur) );
+                        if (com == NULL) {
+                           WARN(_("Unknown commodity '%s' detected, removing."), xml_get(cur));
+                           continue;
+                        }
+                        pilot_cargoAddRaw( pe, com, q, 0 );
+                        continue;
+                     }
+                  } while(xml_nextNode(ccur));
+                  continue;
+               }
+            } while (xml_nextNode(cur));
          }
          else
             WARN(_("Escort has invalid type '%s'."), buf);
          free(buf);
+         free(name);
       }
    } while (xml_nextNode(node));
    return 0;
@@ -4077,7 +4128,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    const Ship *ship_parsed;
    Pilot* ship;
    xmlNodePtr node;
-   int quantity;
    Commodity *com;
    PilotFlags flags;
    int autoweap, level, weapid, active_set, aim_lines, in_range, weap_type;
@@ -4255,7 +4305,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          xmlNodePtr cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur, "commodity")) {
-               int cid;
+               int cid, quantity;
 
                xmlr_attr_int( cur, "quantity", quantity );
                xmlr_attr_int( cur, "id", cid );
