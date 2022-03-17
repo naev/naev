@@ -226,7 +226,7 @@ int land_errDialogue( const char *name, const char *type )
 {
    errorlist_ptr = NULL;
    if (strcmp(type,"tradeShip")==0)
-      shipyard_canTrade( name );
+      shipyard_canTrade( name, land_spob );
    else if (strcmp(type,"buyShip")==0)
       shipyard_canBuy( name, land_spob );
    else if (strcmp(type,"swapEquipment")==0)
