@@ -537,7 +537,7 @@ void player_swapShip( const char *shipname, int move_cargo )
    escort_clearDeployed( player.p );
    array_free( ps->p->escorts );
    ps->p->escorts = array_create( Escort_t );
-   /* Have to remove self from existing escorts. */
+   /* Just copying the array over has unforeseen consequences, so recreate. */
    for (int i=0; i<array_size(player.p->escorts); i++) {
       Escort_t *e = &player.p->escorts[i];
       Escort_t ne = *e;
