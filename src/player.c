@@ -3973,7 +3973,7 @@ static int player_parseEscorts( xmlNodePtr parent )
             cur = node->xmlChildrenNode;
             do {
                xml_onlyNodes(cur);
-               if (xml_isNode(node, "commodities")) {
+               if (xml_isNode(cur, "commodities")) {
                   xmlNodePtr ccur = cur->xmlChildrenNode;
                   do {
                      xml_onlyNodes(ccur);
@@ -3987,11 +3987,14 @@ static int player_parseEscorts( xmlNodePtr parent )
                            continue;
                         }
                         pilot_cargoAddRaw( pe, com, q, 0 );
+                        DEBUG("Adding cargo to %s", pe->name);
                         continue;
                      }
+                     WARN(_("Player escort has unknown node '%s'"),ccur->name);
                   } while(xml_nextNode(ccur));
                   continue;
                }
+               WARN(_("Player escort has unknown node '%s'"),cur->name);
             } while (xml_nextNode(cur));
          }
          else
