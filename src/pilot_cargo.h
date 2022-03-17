@@ -9,6 +9,7 @@
  * Normal Cargo.
  */
 int pilot_cargoUsed( const Pilot* pilot ); /* gets how much cargo it has onboard */
+int pilot_cargoUsedMission( const Pilot* pilot ); /* For mission cargo. */
 int pilot_cargoFree( const Pilot* p ); /* cargo space */
 int pilot_cargoOwned( const Pilot* pilot, const Commodity* cargo );
 int pilot_cargoAdd( Pilot* pilot, const Commodity* cargo,

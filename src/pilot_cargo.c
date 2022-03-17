@@ -178,6 +178,24 @@ int pilot_cargoUsed( const Pilot* pilot )
 }
 
 /**
+ * @brief Gets how much mission cargo ship has on board.
+ *
+ *    @param pilot Pilot to get used cargo space of.
+ *    @return The used cargo space by pilot.
+ */
+int pilot_cargoUsedMission( const Pilot* pilot )
+{
+   int q = 0;
+   for (int i=0; i<array_size(pilot->commodities); i++) {
+      PilotCommodity *pc = &pilot->commodities[i];
+      if (pc->id > 0)
+         q += pc->quantity;
+   }
+
+   return q;
+}
+
+/**
  * @brief Calculates how much cargo ship has left and such.
  *
  *    @param pilot Pilot to calculate free cargo space of.
