@@ -1082,6 +1082,7 @@ void pilot_healLanded( Pilot *pilot )
    for (int i=0; i<array_size(pilot->escorts); i++) {
       Escort_t *e = &pilot->escorts[i];
       Pilot *pe = pilot_get( e->id );
+
       if (pe != NULL)
          pilot_healLanded( pe );
    }

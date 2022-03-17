@@ -2081,8 +2081,7 @@ static void equipment_changeShip( unsigned int wid )
    ps = player_getPlayerShip( shipname );
    if (ps != NULL) {
       /* Swap deployed status. */
-      if (ps->deployed)
-         player.ps.deployed = 1;
+      player.ps.deployed = ps->deployed;
    }
 
    if (land_errDialogue( shipname, "swapEquipment" ))

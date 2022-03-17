@@ -530,14 +530,20 @@ void player_swapShip( const char *shipname, int move_cargo )
    }
 
    /* Run onremove hook for all old outfits. */
-   for (int j=0; j<array_size(player.p->outfits); j++)
-      pilot_outfitLRemove( player.p, player.p->outfits[j] );
+   for (int i=0; i<array_size(player.p->outfits); i++)
+      pilot_outfitLRemove( player.p, player.p->outfits[i] );
 
    /* Get rid of deployed escorts and swap existing escorts. */
    escort_clearDeployed( player.p );
-   ps->p->escorts = player.p->escorts;
-   array_free( player.p->escorts );
-   player.p->escorts = NULL;
+   array_free( ps->p->escorts );
+   ps->p->escorts = array_create( Escort_t );
+   /* Have to remove self from existing escorts. */
+   for (int i=0; i<array_size(player.p->escorts); i++) {
+      Escort_t *e = &player.p->escorts[i];
+      Escort_t ne = *e;
+      ne.ship = strdup(e->ship); /* Might be worth having an escort_copy function. */
+      array_push_back( &ps->p->escorts, ne );
+   }
 
    /* Swap information over. */
    ptemp = player.ps;
