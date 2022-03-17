@@ -129,6 +129,7 @@ dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml
 dat/outfits/core_engine/small/zalek_test_engine.xml
 dat/outfits/core_hull/dummy_plating.xml
 dat/outfits/core_hull/large/patchwork_heavy_plating.xml
+dat/outfits/core_hull/large/rs_large_cargo_hull.xml
 dat/outfits/core_hull/large/sk_heavy_combat_plating.xml
 dat/outfits/core_hull/large/sk_large_cargo_hull.xml
 dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml
@@ -136,6 +137,7 @@ dat/outfits/core_hull/large/unicorp_d48_heavy_plating.xml
 dat/outfits/core_hull/large/unicorp_d68_heavy_plating.xml
 dat/outfits/core_hull/medium/nexus_medium_stealth_plating.xml
 dat/outfits/core_hull/medium/patchwork_medium_plating.xml
+dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml
 dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml
 dat/outfits/core_hull/medium/sk_medium_combat_plating.xml
 dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml
@@ -143,6 +145,7 @@ dat/outfits/core_hull/medium/unicorp_d12_medium_plating.xml
 dat/outfits/core_hull/medium/unicorp_d24_medium_plating.xml
 dat/outfits/core_hull/small/nexus_light_stealth_plating.xml
 dat/outfits/core_hull/small/patchwork_light_plating.xml
+dat/outfits/core_hull/small/rs_small_cargo_hull.xml
 dat/outfits/core_hull/small/sk_light_combat_plating.xml
 dat/outfits/core_hull/small/sk_small_cargo_hull.xml
 dat/outfits/core_hull/small/sk_ultralight_combat_plating.xml

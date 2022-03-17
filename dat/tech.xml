@@ -208,17 +208,20 @@
   <item>S&amp;K Ultralight Combat Plating</item>
   <item>S&amp;K Light Combat Plating</item>
   <item>Nexus Light Stealth Plating</item>
+  <item>Red Star Small Cargo Hull</item>
   <item>S&amp;K Small Cargo Hull</item>
   <item>Patchwork Medium Plating</item>
   <item>Unicorp D-12 Medium Plating</item>
   <item>Unicorp D-24 Medium Plating</item>
   <item>S&amp;K Medium Combat Plating</item>
   <item>Nexus Medium Stealth Plating</item>
+  <item>Red Star Medium Cargo Hull</item>
   <item>S&amp;K Medium Cargo Hull</item>
   <item>S&amp;K Medium-Heavy Combat Plating</item>
   <item>Patchwork Heavy Plating</item>
   <item>Unicorp D-48 Heavy Plating</item>
   <item>Unicorp D-68 Heavy Plating</item>
+  <item>Red Star Large Cargo Hull</item>
   <item>S&amp;K Large Cargo Hull</item>
   <item>S&amp;K Heavy Combat Plating</item>
   <item>S&amp;K Superheavy Combat Plating</item>
@@ -402,6 +405,15 @@
   <item>Grave Lance</item>
   <item>Grave Beam</item>
   <item>Ragnarok Beam</item>
+ </tech>
+ <tech name="Mining 1">
+  <item>Mining Lance MK1</item>
+  <item>S&amp;K Plasma Drill</item>
+ </tech>
+ <tech name="Mining 2">
+  <item>Mining Lance MK2</item>
+  <item>Nexus Drill Lance</item>
+  <item>S&amp;K Heavy Plasma Drill</item>
  </tech>
 
  <!-- Generic Outfits -->
@@ -635,6 +647,11 @@
  <tech name="Criminal Outfits">
   <item>Camouflage Burster</item>
  </tech>
+ <tech name="Mining Outfits">
+  <item>Asteroid Scanner</item>
+  <item>Medium Weapon License</item>
+  <item>Milspec Impacto-Plastic Coating</item>
+ </tech>
  <tech name="Star Maps">
   <item>Map: Nebula Edge</item>
   <item>Map: Dvaered-Soromid Trade Route</item>
@@ -728,6 +745,14 @@
   <item>Pirate Hyena Bay</item>
   <item>Counterfeit Heavy Weapon License</item>
   <item>Counterfeit Heavy Combat Vessel License</item>
+ </tech>
+ <tech name="Cargo Trader Outfits">
+  <item>Small Cargo Pod</item>
+  <item>Medium Cargo Pod</item>
+  <item>Large Cargo Pod</item>
+  <item>Engines Cargo</item>
+  <item>Hulls Cargo</item>
+  <item>Large Civilian Vessel License</item>
  </tech>
 
  <!-- outfits -->
@@ -968,6 +993,14 @@
   <item>Unicorp D-48 Heavy Plating</item>
   <item>Unicorp D-68 Heavy Plating</item>
  </tech>
+ <tech name="Hulls Cargo">
+  <item>Red Star Small Cargo Hull</item>
+  <item>Red Star Medium Cargo Hull</item>
+  <item>Red Star Large Cargo Hull</item>
+  <item>S&amp;K Small Cargo Hull</item>
+  <item>S&amp;K Medium Cargo Hull</item>
+  <item>S&amp;K Large Cargo Hull</item>
+ </tech>
  <tech name="Hulls Medium">
   <item>Unicorp D-2 Light Plating</item>
   <item>Unicorp D-4 Light Plating</item>
@@ -975,9 +1008,7 @@
   <item>Unicorp D-24 Medium Plating</item>
   <item>Unicorp D-48 Heavy Plating</item>
   <item>Unicorp D-68 Heavy Plating</item>
-  <item>S&amp;K Small Cargo Hull</item>
-  <item>S&amp;K Medium Cargo Hull</item>
-  <item>S&amp;K Large Cargo Hull</item>
+  <item>Hulls Cargo</item>
  </tech>
  <tech name="Hulls High">
   <item>S&amp;K Ultralight Combat Plating</item>
