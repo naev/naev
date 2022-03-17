@@ -56,6 +56,7 @@ function create()
    player.outfitAdd( "GUI - Slim" )
    player.outfitAdd( "GUI - Slimv2" )
    player.outfitAdd( "GUI - Legacy" )
+   player.outfitAdd( "GUI - SlimPlus" )
 
    hook.timer(3, "timer_tutorial")
 end
