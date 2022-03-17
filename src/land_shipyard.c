@@ -43,6 +43,7 @@ static glTexture *shipyard_comm = NULL; /**< Current comm image. */
 /*
  * Helper functions.
  */
+static int shipyard_canAcquire( const Ship *ship, const Spob *spob, credits_t price );
 static void shipyard_buy( unsigned int wid, const char* str );
 static void shipyard_trade( unsigned int wid, const char* str );
 static void shipyard_rmouse( unsigned int wid, const char* widget_name );
@@ -334,7 +335,7 @@ void shipyard_update( unsigned int wid, const char* str )
    else
       window_enableButton( wid, "btnBuyShip");
 
-   if (!shipyard_canTrade( ship->name ))
+   if (!shipyard_canTrade( ship->name, land_spob ))
       window_disableButtonSoft( wid, "btnTradeShip");
    else
       window_enableButton( wid, "btnTradeShip");
@@ -422,16 +423,9 @@ static void shipyard_buy( unsigned int wid, const char* str )
       takeoff(1);
 }
 
-/**
- * @brief Makes sure it's valid to buy a ship.
- *    @param shipname Ship being bought.
- *    @param spob Where the player is shopping.
- */
-int shipyard_canBuy( const char *shipname, const Spob *spob )
+static int shipyard_canAcquire( const Ship *ship, const Spob *spob, credits_t price )
 {
-   const Ship *ship = ship_get( shipname );
    int failure = 0;
-   credits_t price = ship_buyPrice(ship);
    int blackmarket = ((spob != NULL) && spob_hasService(spob, SPOB_SERVICE_BLACKMARKET));
 
    /* Must have the necessary license. */
@@ -454,6 +448,18 @@ int shipyard_canBuy( const char *shipname, const Spob *spob )
       failure = 1;
    }
    return !failure;
+}
+
+/**
+ * @brief Makes sure it's valid to buy a ship.
+ *    @param shipname Ship being bought.
+ *    @param spob Where the player is shopping.
+ */
+int shipyard_canBuy( const char *shipname, const Spob *spob )
+{
+   const Ship *ship = ship_get( shipname );
+   credits_t price = ship_buyPrice(ship);
+   return shipyard_canAcquire( ship, spob, price );
 }
 
 /**
@@ -499,31 +505,13 @@ int can_swap( const char *shipname )
 /**
  * @brief Makes sure it's valid to buy a ship, trading the old one in simultaneously.
  *    @param shipname Ship being bought.
+ *    @param spob Where the player is shopping.
  */
-int shipyard_canTrade( const char *shipname )
+int shipyard_canTrade( const char *shipname, const Spob *spob )
 {
-   int failure = 0;
-   const Ship* ship = ship_get( shipname );
-   credits_t price;
-
-   price = ship_buyPrice( ship );
-
-   /* Must have the necessary license, enough credits, and be able to swap ships. */
-   if ((!player_hasLicense(ship->license)) &&
-         ((land_spob == NULL) || (!spob_hasService( land_spob, SPOB_SERVICE_BLACKMARKET )))) {
-      land_errDialogueBuild( _("You need the '%s' license to buy this ship."), _(ship->license) );
-      failure = 1;
-   }
-   if (!player_hasCredits( price - player_shipPrice(player.p->name))) {
-      credits_t creditdifference = price - (player_shipPrice(player.p->name) + player.p->credits);
-      char buf[ECON_CRED_STRLEN];
-      credits2str( buf, creditdifference, 2 );
-      land_errDialogueBuild( _("You need %s more."), buf);
-      failure = 1;
-   }
-   if (!can_swap( shipname ))
-      failure = 1;
-   return !failure;
+   const Ship *ship = ship_get( shipname );
+   credits_t price = ship_buyPrice(ship) - player_shipPrice(player.p->name);
+   return shipyard_canAcquire( ship, spob, price );
 }
 
 /**

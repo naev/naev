@@ -16,4 +16,4 @@ void shipyard_cleanup (void);
  * Helper functions.
  */
 int shipyard_canBuy( const char *shipname, const Spob *spob );
-int shipyard_canTrade( const char *shipname );
+int shipyard_canTrade( const char *shipname, const Spob *spob );
