@@ -3347,8 +3347,9 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
    /* save the commodities */
    xmlw_startElem(writer,"commodities");
    for (int i=0; i<array_size(ship->commodities); i++) {
+      PilotCommodity *pc = &ship->commodities[i];
       /* Remove cargo with id and no mission. */
-      if (ship->commodities[i].id > 0) {
+      if (pc->id > 0) {
          int found = 0;
          for (int j=0; j<MISSION_MAX; j++) {
             /* Only check active missions. */
@@ -3356,7 +3357,7 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
                /* Now check if it's in the cargo list. */
                for (int k=0; k<array_size(player_missions[j]->cargo); k++) {
                   /* See if it matches a cargo. */
-                  if (player_missions[j]->cargo[k] == ship->commodities[i].id) {
+                  if (player_missions[j]->cargo[k] == pc->id) {
                      found = 1;
                      break;
                   }
@@ -3375,10 +3376,10 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
 
       xmlw_startElem(writer,"commodity");
 
-      xmlw_attr(writer,"quantity","%d",ship->commodities[i].quantity);
-      if (ship->commodities[i].id > 0)
-         xmlw_attr(writer,"id","%d",ship->commodities[i].id);
-      xmlw_str(writer,"%s",ship->commodities[i].commodity->name);
+      xmlw_attr(writer,"quantity","%d",pc->quantity);
+      if (pc->id > 0)
+         xmlw_attr(writer,"id","%d",pc->id);
+      xmlw_str(writer,"%s",pc->commodity->name);
 
       xmlw_endElem(writer); /* commodity */
    }
