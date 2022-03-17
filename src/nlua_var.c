@@ -199,5 +199,5 @@ static int varL_push( lua_State *L )
 void var_cleanup (void)
 {
    lvar_freeArray( var_stack );
-   var_stack   = NULL;
+   var_stack = NULL;
 }
