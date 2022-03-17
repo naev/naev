@@ -3987,7 +3987,6 @@ static int player_parseEscorts( xmlNodePtr parent )
                            continue;
                         }
                         pilot_cargoAddRaw( pe, com, q, 0 );
-                        DEBUG("Adding cargo to %s", pe->name);
                         continue;
                      }
                      WARN(_("Player escort has unknown node '%s'"),ccur->name);
