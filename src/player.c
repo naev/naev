@@ -3130,7 +3130,16 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
                xmlw_startElem(writer, "escort");
                xmlw_attr(writer,"type","fleet");
                xmlw_str(writer, "%s", pe->name);
-               /* TODO add cargo. */
+               xmlw_startElem(writer,"commodities");
+               for (int j=0; j<array_size(pe->commodities); j++) {
+                  PilotCommodity *pc = &pe->commodities[j];
+                  xmlw_startElem(writer,"commodity");
+                  xmlw_attr(writer,"quantity","%d",pc->quantity);
+                  /* No need for mission cargos. */
+                  xmlw_str(writer,"%s",pc->commodity->name);
+                  xmlw_endElem(writer); /* commodity */
+               }
+               xmlw_endElem(writer); /* "commodities" */
                xmlw_endElem(writer); /* "escort" */
             }
             break;
