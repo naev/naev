@@ -28,6 +28,7 @@
 #include "ndata.h"
 #include "nstring.h"
 #include "player.h"
+#include "player_fleet.h"
 #include "space.h"
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"

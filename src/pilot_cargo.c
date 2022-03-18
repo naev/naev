@@ -18,7 +18,7 @@
 #include "log.h"
 
 /* Private common implementation */
-static int pilot_cargoAddNeglectingStats( Pilot* pilot, const Commodity* cargo,
+static int pilot_cargoAddInternal( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id );
 
 /* ID Generators. */
@@ -72,7 +72,7 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
 
    /* Copy over. */
    for (int i=0; i<array_size(src->commodities); i++)
-      pilot_cargoAddNeglectingStats( dest, src->commodities[i].commodity,
+      pilot_cargoAddRaw( dest, src->commodities[i].commodity,
             src->commodities[i].quantity, src->commodities[i].id );
 
    /* Clean src. */
@@ -90,13 +90,11 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
  *    @param quantity Quantity to add.
  *    @param id Mission ID to add (0 is none).
  */
-static int pilot_cargoAddNeglectingStats( Pilot* pilot, const Commodity* cargo,
+static int pilot_cargoAddInternal( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id )
 {
-   int q;
    PilotCommodity *pc;
-
-   q = quantity;
+   int q = quantity;
 
    /* If not mission cargo check to see if already exists. */
    if (id == 0) {
@@ -132,7 +130,7 @@ static int pilot_cargoAddNeglectingStats( Pilot* pilot, const Commodity* cargo,
 int pilot_cargoAddRaw( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id )
 {
-   int q = pilot_cargoAddNeglectingStats( pilot, cargo, quantity, id );
+   int q = pilot_cargoAddInternal( pilot, cargo, quantity, id );
    pilot->cargo_free    -= q;
    pilot->mass_cargo    += q;
    pilot->solid->mass   += pilot->stats.cargo_inertia * q;

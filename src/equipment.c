@@ -35,6 +35,7 @@
 #include "nlua_tk.h"
 #include "ntime.h"
 #include "player.h"
+#include "player_fleet.h"
 #include "pilot_outfit.h"
 #include "shipstats.h"
 #include "slots.h"

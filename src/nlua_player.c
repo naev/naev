@@ -44,6 +44,7 @@
 #include "nstring.h"
 #include "pause.h"
 #include "player.h"
+#include "player_fleet.h"
 
 #define PLAYER_CHECK() if (player.p == NULL) return 0
 

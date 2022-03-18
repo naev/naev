@@ -3034,6 +3034,8 @@ src/player.c
 src/player.h
 src/player_autonav.c
 src/player_autonav.h
+src/player_fleet.c
+src/player_fleet.h
 src/player_gui.c
 src/player_gui.h
 src/queue.c
