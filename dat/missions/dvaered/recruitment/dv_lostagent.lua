@@ -397,16 +397,16 @@ We have always suspected that the Imperials are protecting the swan. Anyways, no
    }
 
    vn.label("war")
-   agent(([[You obviously have no idea what you are talking about.
+   agent(_([[You obviously have no idea what you are talking about.
 Shall you see the death squadrons taking off from Halir, loaded with all the kinds of deadly viruses only human madness can breed. Shall you see the fleet of the united Warlords silentely flying towards humanity's doom before an helpless sky of horrified stars. Shall you see them hide the sun of Doranthex as would the black wings of death.
 Shall you hear the frenetic lament of sirens while the sky of Antica gets torn apart by the trails of hypersonic bombs. Shall you hear the roaring of space stations, wounded to death by torpedoes, disseminating into the void the helpless bodies of their inhabitants.]]))
-   agent(([[Maybe you think that as a pilot, you won't endure starvation, contrary to the billions of poor souls who will struggle to survive the nuclear winter on their sterilized planets. Maybe you think you won't have to endure the gaze of the slowly dying victims of incendary bombs, bio-weapons, climatic and sismeic bombs...]]))
-   agent(([[But this won't be the worst! Because I've got my informations. And the Empire has weapons even more powerful. Even more abominable. Even more unmentionable and unimaginable. Some say the Incident was provoked by a such weapon. Imagine if they decide to make a new incident happend!
+   agent(_([[Maybe you think that as a pilot, you won't endure starvation, contrary to the billions of poor souls who will struggle to survive the nuclear winter on their sterilized planets. Maybe you think you won't have to endure the gaze of the slowly dying victims of incendary bombs, bio-weapons, climatic and sismeic bombs...]]))
+   agent(_([[But this won't be the worst! Because I've got my informations. And the Empire has weapons even more powerful. Even more abominable. Even more unmentionable and unimaginable. Some say the Incident was provoked by a such weapon. Imagine if they decide to make a new incident happend!
 Then you would have to bare that monstrous responsability on your shoulders. Just because you refused to catch that shaky bastard!]])) -- Clearly, she is not well informed about the Incident.
    vn.jump("peace")
 
    vn.label("peace")
-   agent(([[Because war is not that far away, you know. Galactopolitics has not been that unstable since the end of the Faction's war. Our work is to do our best to have the Empire and House Dvaered barely tolerate each other. If there were not, they would soon start a war, and House Sirius, Za'lek and Soromids would follow.
+   agent(_([[Because war is not that far away, you know. Galactopolitics has not been that unstable since the end of the Faction's war. Our work is to do our best to have the Empire and House Dvaered barely tolerate each other. If there were not, they would soon start a war, and House Sirius, Za'lek and Soromids would follow.
    I know you were only asked to transport a random parcel, but this pilot who disappears is serious business. We have to find who is behind that disappearance. And by the way, you can be ensured that you will be paid more than whatever initial reward was promised to you.]]))
    vn.jump("menu")
 
@@ -442,7 +442,7 @@ end
 -- Player Has disabled Shaky Swan
 function swanDisabled()
    mem.swan:disable() -- To be sure it won't recover.
-   mem.swan:comm("What the? Damn!")
+   mem.swan:comm(_("What the? Damn!"))
    faction.modPlayerRaw(faction.get("FLF"), -5) -- Faction loss with the FLF.
    hook.rm(dhook)
    hook.timer(1.0,"spawnSquad")
@@ -450,24 +450,24 @@ end
 
 -- All ways to get Shaky Swan's interception to fail
 function swanExploded()
-   vntk.msg("", [[Good work, pilot! You can be proud for how well you managed to make short work of the Swan!
+   vntk.msg("", _([[Good work, pilot! You can be proud for how well you managed to make short work of the Swan!
 Wait a second... You were actually supposed to catch this pilot alive, weren't you?
-Your mission is a pitiful failure.]])
+Your mission is a pitiful failure.]]))
    misn.finish(false)
 end
 function swanBoarded( )
-   vntk.msg("", [[Once the boarding maneuver is over, you remember that Bony Boudica had explicitely requested you NOT to board the ship yourself.
-Your mission is a failure.]])
+   vntk.msg("", _([[Once the boarding maneuver is over, you remember that Bony Boudica had explicitely requested you NOT to board the ship yourself.
+Your mission is a failure.]]))
    misn.finish(false)
 end
 function swanEscaped()
-   vntk.msg("", [[It appears Shaky Swan has managed to escape the system. Your mission is a failure!]])
+   vntk.msg("", _([[It appears Shaky Swan has managed to escape the system. Your mission is a failure!]]))
    misn.finish(false)
 end
 
 -- Squadron 138 Boards Shaky Swan
 function assetBoardsSwan( )
-   mem.asset:broadcast("Hi, Swanie, we have to talk, you and me!")
+   mem.asset:broadcast(_("Hi, Swanie, we have to talk, you and me!"))
    mem.swan:rm()
    mem.asset:hyperspace()
    mem.misn_state = 5
@@ -522,14 +522,14 @@ function duchAttacked()
    mem.duchmol:runaway( player.pilot() )
 end
 function duchExploded()
-   vntk.msg("", [[The final explosion of an hostile ship is always a pleasant sight, isn't it? It is now time to report back to Bony Boudica.]])
+   vntk.msg("", _([[The final explosion of an hostile ship is always a pleasant sight, isn't it? It is now time to report back to Bony Boudica.]]))
    misn.osdActive(2)
    mem.misn_state = 8
    misn.markerRm( mem.misn_marker )
    mem.misn_marker = misn.markerAdd( mem.spob2 )
 end
 function duchEscaped()
-   vntk.msg("", [[It appears Chilperic Duchmol has managed to escape the system. Your mission is a failure!]])
+   vntk.msg("", _([[It appears Chilperic Duchmol has managed to escape the system. Your mission is a failure!]]))
    misn.finish(false)
 end
 
