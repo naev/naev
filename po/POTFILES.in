@@ -2476,12 +2476,6 @@ dat/missions/neutral/antlejos/ant_supplies.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
 dat/missions/neutral/cargo_rush.lua
-dat/missions/neutral/comingout/srm_comingout.lua
-dat/missions/neutral/comingout/srm_comingout2.lua
-dat/missions/neutral/comingout/srm_comingout3.lua
-dat/missions/neutral/comingout/srm_comingout4.lua
-dat/missions/neutral/comingout/srm_comingout5.lua
-dat/missions/neutral/comingout/srm_comingout6.lua
 dat/missions/neutral/commodity_run.lua
 dat/missions/neutral/crimelord.lua
 dat/missions/neutral/derelict_rescue.lua
