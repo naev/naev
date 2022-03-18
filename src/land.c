@@ -190,14 +190,16 @@ int land_doneLoading (void)
  */
 int can_swapEquipment( const char *shipname )
 {
+   int diff;
    Pilot *newship = player_getShip(shipname);
 
    if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
       land_errDialogueBuild( _("You're already onboard the %s."), shipname );
       return 0;
    }
-   if (pilot_cargoUsed(player.p) > (pilot_cargoFree(newship) + pilot_cargoUsed(newship))) { /* Current ship has too much cargo. */
-      int diff = pilot_cargoUsed(player.p) - pilot_cargoFree(newship);
+   diff = pilot_cargoUsed(player.p) - (player_fleetCargoFree() - pilot_cargoFree(player.p) + pilot_cargoFree(newship));
+   diff = MAX( diff, pilot_cargoUsedMission(player.p) - pilot_cargoFree(newship) ); /* Has to fit all mission cargo. */
+   if (diff > 0) { /* Current ship has too much cargo. */
       land_errDialogueBuild( n_(
                "You have %d tonne more cargo than the new ship can hold.",
                "You have %d tonnes more cargo than the new ship can hold.",
