@@ -5,10 +5,10 @@
 
 #include "player.h"
 
-void player_fleetUpdate (void);
-int player_fleetDeploy( PlayerShip_t *ps, int deploy );
-int player_fleetCargoUsed (void);
-int player_fleetCargoFree (void);
-int player_fleetCargoOwned( const Commodity *com );
-int player_fleetCargoAdd( const Commodity *com, int q );
-int player_fleetCargoRm( const Commodity *com, int q );
+void pfleet_update (void);
+int pfleet_deploy( PlayerShip_t *ps, int deploy );
+int pfleet_cargoUsed (void);
+int pfleet_cargoFree (void);
+int pfleet_cargoOwned( const Commodity *com );
+int pfleet_cargoAdd( const Commodity *com, int q );
+int pfleet_cargoRm( const Commodity *com, int q );

@@ -29,6 +29,7 @@
 #include "ntime.h"
 #include "pilot.h"
 #include "player.h"
+#include "player_fleet.h"
 #include "player_gui.h"
 #include "shiplog.h"
 #include "space.h"
@@ -385,8 +386,8 @@ static void info_openMain( unsigned int wid )
    l += scnprintf( &str[l], sizeof(str)-l, "\n%s", player.p->name );
    l += scnprintf( &str[l], sizeof(str)-l, "\n%.0f (%d %s)",
          player.p->fuel, pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ) );
-   cargo_used = player_fleetCargoUsed();
-   cargo_total = cargo_used + player_fleetCargoFree();
+   cargo_used = pfleet_cargoUsed();
+   cargo_total = cargo_used + pfleet_cargoFree();
    l += scnprintf( &str[l], sizeof(str)-l, "\n%d / %d %s", cargo_used, cargo_total, n_( "tonne", "tonnes", cargo_total ) );
    l += scnprintf( &str[l], sizeof(str)-l, "%s", "\n\n" );
    l += scnprintf( &str[l], sizeof(str)-l, _("%.1f hours"), player.time_played / 3600. );

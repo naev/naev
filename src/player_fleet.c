@@ -19,7 +19,7 @@
 /**
  * @brief Updates the used fleet capacity of the player.
  */
-void player_fleetUpdate (void)
+void pfleet_update (void)
 {
    const PlayerShip_t *player_ships = player_getShipStack();
    player.fleet_used = player.p->ship->points;
@@ -32,7 +32,7 @@ void player_fleetUpdate (void)
    /* TODO update cargo too! */
 }
 
-int player_fleetDeploy( PlayerShip_t *ps, int deploy )
+int pfleet_deploy( PlayerShip_t *ps, int deploy )
 {
    /* When undeploying we want to make sure cargo fits. */
    if (ps->deployed && !deploy) {
@@ -40,7 +40,7 @@ int player_fleetDeploy( PlayerShip_t *ps, int deploy )
       if (p != NULL) {
          int idx;
          int q = pilot_cargoUsed( p ); /* Amount we have to allocate. */
-         int f = player_fleetCargoFree() - pilot_cargoFree( p ); /* Real free amount. */
+         int f = pfleet_cargoFree() - pilot_cargoFree( p ); /* Real free amount. */
          if (f < q) {
             char buf_amount[ECON_MASS_STRLEN], buf_free[ECON_MASS_STRLEN], buf_needed[ECON_MASS_STRLEN];
             tonnes2str( buf_amount, q );
@@ -69,7 +69,7 @@ int player_fleetDeploy( PlayerShip_t *ps, int deploy )
          /* Try to add the cargo. */
          for (int i=0; i<array_size(p->commodities); i++) {
             PilotCommodity *pc = &p->commodities[i];
-            player_fleetCargoAdd( pc->commodity, pc->quantity );
+            pfleet_cargoAdd( pc->commodity, pc->quantity );
          }
       }
    }
@@ -81,11 +81,11 @@ int player_fleetDeploy( PlayerShip_t *ps, int deploy )
    }
    else
       player_addEscorts();
-   player_fleetUpdate();
+   pfleet_update();
    return 0;
 }
 
-int player_fleetCargoUsed (void)
+int pfleet_cargoUsed (void)
 {
    int cargo_used = pilot_cargoUsed( player.p );
    if (player.fleet_capacity <= 0)
@@ -100,7 +100,7 @@ int player_fleetCargoUsed (void)
    return cargo_used;
 }
 
-int player_fleetCargoFree (void)
+int pfleet_cargoFree (void)
 {
    int cargo_free = pilot_cargoFree( player.p );
    if (player.fleet_capacity <= 0)
@@ -115,7 +115,7 @@ int player_fleetCargoFree (void)
    return cargo_free;
 }
 
-int player_fleetCargoOwned( const Commodity *com )
+int pfleet_cargoOwned( const Commodity *com )
 {
    int amount = pilot_cargoOwned( player.p, com );
    if (player.fleet_capacity <= 0)
@@ -130,7 +130,7 @@ int player_fleetCargoOwned( const Commodity *com )
    return amount;
 }
 
-int player_fleetCargoAdd( const Commodity *com, int q )
+int pfleet_cargoAdd( const Commodity *com, int q )
 {
    int added = pilot_cargoAdd( player.p, com, q, 0 );
    if (player.fleet_capacity <= 0)
@@ -147,7 +147,7 @@ int player_fleetCargoAdd( const Commodity *com, int q )
    return added;
 }
 
-int player_fleetCargoRm( const Commodity *com, int q )
+int pfleet_cargoRm( const Commodity *com, int q )
 {
    int removed;
    if (player.fleet_capacity <= 0)

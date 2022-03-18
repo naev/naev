@@ -45,6 +45,7 @@
 #include "nstring.h"
 #include "ntime.h"
 #include "player.h"
+#include "player_fleet.h"
 #include "rng.h"
 #include "save.h"
 #include "shiplog.h"
@@ -197,7 +198,7 @@ int can_swapEquipment( const char *shipname )
       land_errDialogueBuild( _("You're already onboard the %s."), shipname );
       return 0;
    }
-   diff = pilot_cargoUsed(player.p) - (player_fleetCargoFree() - pilot_cargoFree(player.p) + pilot_cargoFree(newship));
+   diff = pilot_cargoUsed(player.p) - (pfleet_cargoFree() - pilot_cargoFree(player.p) + pilot_cargoFree(newship));
    diff = MAX( diff, pilot_cargoUsedMission(player.p) - pilot_cargoFree(newship) ); /* Has to fit all mission cargo. */
    if (diff > 0) { /* Current ship has too much cargo. */
       land_errDialogueBuild( n_(
@@ -1447,7 +1448,7 @@ void takeoff( int delay )
       const PlayerShip_t *pships = player_getShipStack();
 
       /* Check to see if player's fleet is OK and count ships. */
-      player_fleetUpdate();
+      pfleet_update();
       badfleet_ships[0] = '\0';
       for (int i=0; i<array_size(pships); i++) {
          const PlayerShip_t *pe = &pships[i];

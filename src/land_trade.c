@@ -196,7 +196,7 @@ void commodity_update( unsigned int wid, const char *str )
    int owned, cargo_free;
    int i = toolkit_getImageArrayPos( wid, "iarTrade" );
    credits2str( buf_credits, player.p->credits, 2 );
-   cargo_free = player_fleetCargoFree();
+   cargo_free = pfleet_cargoFree();
    tonnes2str( buf_tonnes_free, cargo_free );
 
    if (i < 0 || array_size(land_spob->commodities) == 0) {
@@ -226,7 +226,7 @@ void commodity_update( unsigned int wid, const char *str )
    snprintf( buf_globalstd, sizeof(buf_globalstd), _("%.1f ¤"), globalstd ); /* TODO credit2str could learn to do this... */
    /* modify text */
    buf_purchase_price[0]='\0';
-   owned = player_fleetCargoOwned( com );
+   owned = pfleet_cargoOwned( com );
    if (owned > 0)
       credits2str( buf_purchase_price, com->lastPurchasePrice, -1 );
    credits2str( buf_local_price, spob_commodityPrice( land_spob, com ), -1 );
@@ -294,7 +294,7 @@ int commodity_canBuy( const Commodity* com )
       land_errDialogueBuild(_("You need %s more."), buf );
       failure = 1;
    }
-   if (player_fleetCargoFree() <= 0) {
+   if (pfleet_cargoFree() <= 0) {
       land_errDialogueBuild(_("No cargo space available!"));
       failure = 1;
    }
@@ -320,7 +320,7 @@ int commodity_canBuy( const Commodity* com )
 int commodity_canSell( const Commodity* com )
 {
    int failure = 0;
-   if (player_fleetCargoOwned( com ) ==0) {
+   if (pfleet_cargoOwned( com ) ==0) {
       land_errDialogueBuild(_("You can't sell something you don't have!"));
       failure = 1;
    }
@@ -352,7 +352,7 @@ void commodity_buy( unsigned int wid, const char *str )
       return;
 
    /* Make the buy. */
-   q = player_fleetCargoAdd( com, q );
+   q = pfleet_cargoAdd( com, q );
    com->lastPurchasePrice = price; /* To show the player how much they paid for it */
    price *= q;
    player_modCredits( -price );
@@ -394,10 +394,10 @@ void commodity_sell( unsigned int wid, const char *str )
       return;
 
    /* Remove commodity. */
-   q = player_fleetCargoRm( com, q );
+   q = pfleet_cargoRm( com, q );
    price = price * (credits_t)q;
    player_modCredits( price );
-   if (player_fleetCargoOwned( com ) == 0) /* None left, set purchase price to zero, in case missions add cargo. */
+   if (pfleet_cargoOwned( com ) == 0) /* None left, set purchase price to zero, in case missions add cargo. */
      com->lastPurchasePrice = 0;
    commodity_update(wid, NULL);
 

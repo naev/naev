@@ -428,7 +428,7 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
    }
 
    free(ship_name);
-   player_fleetUpdate();
+   pfleet_update();
 
    /* Update ship list if landed. */
    if (landed) {
@@ -603,7 +603,7 @@ void player_swapShip( const char *shipname, int move_cargo )
    /* Recompute stuff if necessary. */
    pilot_calcStats( player.p );
    player_resetSpeed();
-   player_fleetUpdate();
+   pfleet_update();
 
    /* Run hook. */
    hparam[0].type    = HOOK_PARAM_STRING;
@@ -3520,7 +3520,7 @@ Spob* player_load( xmlNodePtr parent )
       difficulty_setLocal( NULL ); /* Sets the default. */
 
    /* Updates the fleet internals. */
-   player_fleetUpdate();
+   pfleet_update();
 
    return pnt;
 }

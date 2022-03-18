@@ -1578,7 +1578,7 @@ static int playerL_dt_mod( lua_State *L )
  */
 static int playerL_fleetCapacity( lua_State *L )
 {
-   player_fleetUpdate();
+   pfleet_update();
    lua_pushnumber(L,player.fleet_capacity);
    lua_pushnumber(L,player.fleet_used);
    return 2;
