@@ -85,6 +85,21 @@ int pfleet_deploy( PlayerShip_t *ps, int deploy )
    return 0;
 }
 
+/**
+ * @brief Redistributes the cargo in the player's fleet.
+ *
+ *    @param ignore Player ship to ignore, or NULL to not ignore any.
+ */
+void pfleet_cargoRedistribute( PlayerShip_t *ignore )
+{
+   (void) ignore;
+}
+
+/**
+ * @brief Gets the total cargo space used by the player's fleet.
+ *
+ *    @return Total amount of used cargo.
+ */
 int pfleet_cargoUsed (void)
 {
    int cargo_used = pilot_cargoUsed( player.p );
@@ -100,6 +115,11 @@ int pfleet_cargoUsed (void)
    return cargo_used;
 }
 
+/**
+ * @brief Gets the total amount of free cargo space in the player's fleet.
+ *
+ *    @return Total amount of free cargo space.
+ */
 int pfleet_cargoFree (void)
 {
    int cargo_free = pilot_cargoFree( player.p );
@@ -115,6 +135,12 @@ int pfleet_cargoFree (void)
    return cargo_free;
 }
 
+/**
+ * @brief Gets the total amount of a commodity type owned by the player's fleet.
+ *
+ *    @param com Commodity to add.
+ *    @return Total amount of a cargo owned.
+ */
 int pfleet_cargoOwned( const Commodity *com )
 {
    int amount = pilot_cargoOwned( player.p, com );
@@ -130,6 +156,13 @@ int pfleet_cargoOwned( const Commodity *com )
    return amount;
 }
 
+/**
+ * @brief Adds some cargo to the player's fleet.
+ *
+ *    @param com Commodity to add.
+ *    @param q Quantity to add.
+ *    @return Total amount of cargo added (less than q if it doesn't fit).
+ */
 int pfleet_cargoAdd( const Commodity *com, int q )
 {
    int added = pilot_cargoAdd( player.p, com, q, 0 );
@@ -147,6 +180,13 @@ int pfleet_cargoAdd( const Commodity *com, int q )
    return added;
 }
 
+/**
+ * @brief Removes some cargo from the player's fleet.
+ *
+ *    @param com Commodity to remove.
+ *    @param q Quantity to remove.
+ *    @return Total amount of cargo removed (can be less than q).
+ */
 int pfleet_cargoRm( const Commodity *com, int q )
 {
    int removed;
