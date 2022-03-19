@@ -562,7 +562,7 @@ void player_swapShip( const char *shipname, int move_cargo )
    /* Move cargo over. */
    if (move_cargo) {
       pilot_cargoMoveRaw( ship, player.p );
-      pfleet_cargoRedistribute( NULL );
+      pfleet_cargoRedistribute();
    }
 
    /* Copy target info */

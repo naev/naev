@@ -16,8 +16,6 @@
 #include "dialogue.h"
 #include "escort.h"
 
-static int pfleet_cargoAddExclude( const Commodity *com, int q, PlayerShip_t *exclude );
-
 /**
  * @brief Updates the used fleet capacity of the player.
  */
@@ -31,7 +29,8 @@ void pfleet_update (void)
          player.fleet_used += ps->p->ship->points;
    }
 
-   pfleet_cargoRedistribute( NULL );
+   /* Redistribute the cargo. */
+   pfleet_cargoRedistribute();
 }
 
 int pfleet_deploy( PlayerShip_t *ps, int deploy )
@@ -115,10 +114,8 @@ static void shipCargo( PilotCommodity **pclist, Pilot *p )
 
 /**
  * @brief Redistributes the cargo in the player's fleet.
- *
- *    @param exclude Player ship to exclude, or NULL to not exclude any.
  */
-void pfleet_cargoRedistribute( PlayerShip_t *exclude )
+void pfleet_cargoRedistribute (void)
 {
    PilotCommodity *pclist = array_create( PilotCommodity );
 
@@ -137,7 +134,7 @@ void pfleet_cargoRedistribute( PlayerShip_t *exclude )
    /* Re-add the cargo. */
    for (int i=0; i<array_size(pclist); i++) {
       PilotCommodity *pc = &pclist[i];
-      int q = pfleet_cargoAddExclude( pc->commodity, pc->quantity, exclude );
+      int q = pfleet_cargoAdd( pc->commodity, pc->quantity );
 #ifdef DEBUGGING
       if (q != pc->quantity)
          WARN(_("Failure to add cargo '%s' to player fleeet. Only %d of %d added."), pc->commodity->name, q, pc->quantity );
@@ -213,14 +210,11 @@ int pfleet_cargoOwned( const Commodity *com )
  *
  *    @param com Commodity to add.
  *    @param q Quantity to add.
- *    @param exclude Player ship to exclude, or NULL to not exclude any.
  *    @return Total amount of cargo added (less than q if it doesn't fit).
  */
-static int pfleet_cargoAddExclude( const Commodity *com, int q, PlayerShip_t *exclude )
+int pfleet_cargoAdd( const Commodity *com, int q )
 {
-   (void) exclude;
-   int added = 0;
-   pilot_cargoAdd( player.p, com, q, 0 );
+   int added = pilot_cargoAdd( player.p, com, q, 0 );
    if (player.fleet_capacity <= 0)
       return added;
    for (int i=0; i<array_size(player.p->escorts); i++) {
@@ -233,18 +227,6 @@ static int pfleet_cargoAddExclude( const Commodity *com, int q, PlayerShip_t *ex
          break;
    }
    return added;
-}
-
-/**
- * @brief Adds some cargo to the player's fleet.
- *
- *    @param com Commodity to add.
- *    @param q Quantity to add.
- *    @return Total amount of cargo added (less than q if it doesn't fit).
- */
-int pfleet_cargoAdd( const Commodity *com, int q )
-{
-   return pfleet_cargoAddExclude( com, q, NULL );
 }
 
 /**

@@ -6,8 +6,8 @@
 #include "player.h"
 
 void pfleet_update (void);
+void pfleet_cargoRedistribute (void);
 int pfleet_deploy( PlayerShip_t *ps, int deploy );
-void pfleet_cargoRedistribute( PlayerShip_t *ignore );
 int pfleet_cargoUsed (void);
 int pfleet_cargoFree (void);
 int pfleet_cargoOwned( const Commodity *com );
