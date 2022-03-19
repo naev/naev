@@ -88,7 +88,7 @@ int pfleet_deploy( PlayerShip_t *ps, int deploy )
 
 static void shipCargo( PilotCommodity **pclist, Pilot *p )
 {
-   for (int i=0; i<array_size(p->commodities); i++) {
+   for (int i=array_size(p->commodities)-1; i>=0; i--) {
       const PilotCommodity *pc = &p->commodities[i];
       int added = 0;
 
@@ -97,7 +97,7 @@ static void shipCargo( PilotCommodity **pclist, Pilot *p )
          continue;
 
       /* See if it can be added. */
-      for (int j=array_size(*pclist); j >= 0; j--) {
+      for (int j=array_size(*pclist)-1; j >= 0; j--) {
          PilotCommodity *lc = &(*pclist)[j];
 
          if (pc->commodity != lc->commodity)
