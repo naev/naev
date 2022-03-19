@@ -16,6 +16,7 @@ int pilot_cargoAdd( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id );
 int pilot_cargoRm( Pilot* pilot, const Commodity* cargo, int quantity );
 int pilot_cargoMove( Pilot* dest, Pilot* src );
+int pilot_cargoMoveRaw( Pilot* dest, Pilot* src );
 void pilot_cargoCalc( Pilot* pilot );
 
 /*

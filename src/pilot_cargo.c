@@ -54,6 +54,27 @@ int pilot_cargoFree( const Pilot* p )
 }
 
 /**
+ * @brief Moves cargo from one pilot to another without any checks.
+ *
+ * At the end has dest have exactly the same cargo as src and leaves src with none.
+ *
+ *    @param dest Destination pilot.
+ *    @param src Source pilot.
+ *    @return 0 on success.
+ */
+int pilot_cargoMoveRaw( Pilot* dest, Pilot* src )
+{
+   /* Copy over. */
+   for (int i=0; i<array_size(src->commodities); i++)
+      pilot_cargoAddRaw( dest, src->commodities[i].commodity,
+            src->commodities[i].quantity, src->commodities[i].id );
+   /* Clean src. */
+   array_free(src->commodities);
+   src->commodities  = NULL;
+   return 0;
+}
+
+/**
  * @brief Moves cargo from one pilot to another.
  *
  * At the end has dest have exactly the same cargo as src and leaves src with none.
@@ -70,16 +91,7 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
       return -1;
    }
 
-   /* Copy over. */
-   for (int i=0; i<array_size(src->commodities); i++)
-      pilot_cargoAddRaw( dest, src->commodities[i].commodity,
-            src->commodities[i].quantity, src->commodities[i].id );
-
-   /* Clean src. */
-   array_free(src->commodities);
-   src->commodities  = NULL;
-
-   return 0;
+   return pilot_cargoMoveRaw( dest, src );
 }
 
 /**

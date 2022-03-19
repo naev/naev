@@ -560,8 +560,10 @@ void player_swapShip( const char *shipname, int move_cargo )
    ship->credits = player.p->credits;
 
    /* Move cargo over. */
-   if (move_cargo)
-      pilot_cargoMove( ship, player.p );
+   if (move_cargo) {
+      pilot_cargoMoveRaw( ship, player.p );
+      pfleet_cargoRedistribute( NULL );
+   }
 
    /* Copy target info */
    ship->target      = player.p->target;
