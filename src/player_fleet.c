@@ -91,18 +91,21 @@ static void shipCargo( PilotCommodity **pclist, Pilot *p )
    for (int i=0; i<array_size(p->commodities); i++) {
       const PilotCommodity *pc = &p->commodities[i];
       int added = 0;
+
+      /* Ignore mission cargo. */
+      if (pc->id > 0)
+         continue;
+
+      /* See if it can be added. */
       for (int j=array_size(*pclist); j >= 0; j--) {
          PilotCommodity *lc = &(*pclist)[j];
-
-         /* Ignore mission cargo. */
-         if (lc->id > 0)
-            continue;
 
          if (pc->commodity != lc->commodity)
             continue;
 
          lc->quantity += pc->quantity;
          added = 1;
+         break;
       }
       if (!added)
          array_push_back( pclist, *pc );
