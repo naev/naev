@@ -90,28 +90,34 @@ static void shipCargo( PilotCommodity **pclist, Pilot *p )
 {
    for (int i=array_size(p->commodities)-1; i>=0; i--) {
       const PilotCommodity *pc = &p->commodities[i];
-      int added = 0;
+      int q = pc->quantity;
+      int added;
 
       /* Ignore mission cargo. */
       if (pc->id > 0)
          continue;
 
       /* See if it can be added. */
+      added = 0;
       for (int j=array_size(*pclist)-1; j >= 0; j--) {
          PilotCommodity *lc = &(*pclist)[j];
 
          if (pc->commodity != lc->commodity)
             continue;
 
-         lc->quantity += pc->quantity;
+         lc->quantity += q;
          added = 1;
          break;
       }
       if (!added)
          array_push_back( pclist, *pc );
 
-      /* Remove the cargo. */
-      array_erase( &p->commodities, &pc[0], &pc[1] );
+      /* Remove the cargo. TODO use pilot_cargoRm somehow.  */
+      array_erase( &p->commodities, &p->commodities[i], &p->commodities[i+1] );
+      p->cargo_free  += q;
+      p->mass_cargo  -= q;
+      p->solid->mass -= p->stats.cargo_inertia * q;
+      pilot_updateMass( p );
    }
 }
 
