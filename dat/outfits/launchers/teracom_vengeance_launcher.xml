@@ -11,8 +11,8 @@
   <cpu>-8</cpu>
  </general>
  <specific type="launcher" secondary="1">
-  <delay>12</delay>
-  <reload_time>60</reload_time>
+  <delay>14</delay>
+  <reload_time>100</reload_time>
   <amount>5</amount>
   <lockon>4</lockon>
   <iflockon>1.5</iflockon>

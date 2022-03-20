@@ -11,8 +11,8 @@
   <cpu>-12</cpu>
  </general>
  <specific type="turret launcher" secondary="1">
-  <delay>4</delay>
-  <reload_time>60</reload_time>
+  <delay>6</delay>
+  <reload_time>100</reload_time>
   <amount>25</amount>
   <lockon>1.5</lockon>
   <iflockon>1.0</iflockon>
