@@ -553,6 +553,16 @@ void player_swapShip( const char *shipname, int move_cargo )
 
    /* Swap player and ship */
    ship = player.ps.p;
+   array_free( ship->commodities );
+   ship->commodities = NULL;
+   if (player.ps.deployed) {
+      Pilot *pd = pilot_get( player.ps.id );
+      if (pd != NULL) {
+         pilot_cargoMoveRaw( ship, pd ); /* Have to move the cargo from deployed ship over. */
+         pilot_delete( pd );
+         player.ps.id = 0;
+      }
+   }
    pilot_rmFlag( ship, PILOT_INACTIVE );
    pilot_setFlag( ps->p, PILOT_INACTIVE );
 
