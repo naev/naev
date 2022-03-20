@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-02-19 12:48-0500\n"
-"PO-Revision-Date: 2022-03-13 17:59+0000\n"
+"PO-Revision-Date: 2022-03-20 17:59+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "ja/>\n"
@@ -26457,7 +26457,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:87
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:108
 msgid "Too bad"
-msgstr ""
+msgstr "残念"
 
 #: dat/events/dvaered/fwA_treason.lua:95
 msgid "\"I see. Stay tuned, then, maybe we will see each other again!\""
@@ -26487,7 +26487,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:256
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:521
 msgid "Dvaered Military Coordination"
-msgstr ""
+msgstr "ドベーレッド軍事調整"
 
 #: dat/events/dvaered/fwA_treason.lua:118
 msgid ""
@@ -26579,7 +26579,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:165
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:265
 msgid "Frontier War"
-msgstr ""
+msgstr "辺境戦争"
 
 #: dat/events/dvaered/fwA_treason.lua:139
 msgid ""
@@ -26666,7 +26666,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:139
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:208
 msgid "Major Tam"
-msgstr ""
+msgstr "タム少佐"
 
 #. Nice outfits for Colonel Hamelsen (the Hellburner is her life insurance)
 #. We can't afford to loose our main baddie
@@ -26683,7 +26683,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:140
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:293
 msgid "Captain Leblanc"
-msgstr ""
+msgstr "ルブラン大尉"
 
 #. The death of Tronk
 #. When entering Empire Space, contact with Captain HewHew
@@ -26713,7 +26713,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:272
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:569
 msgid "Lieutenant Strafer"
-msgstr ""
+msgstr "ストレイファー中尉"
 
 #: dat/events/dvaered/fwB_repay.lua:26
 msgid ""
@@ -38291,12 +38291,12 @@ msgstr ""
 #: dat/missions/dvaered/championship.lua:61
 #: dat/missions/dvaered/championship.lua:355
 msgid "An official"
-msgstr ""
+msgstr "士官"
 
 #: dat/missions/dvaered/championship.lua:61
 #: dat/missions/dvaered/championship.lua:355
 msgid "This person seems to be looking for suitable combat pilots."
-msgstr ""
+msgstr "この人は戦いにむいたパイロットをさがしているらしい。"
 
 #. add some random npcs
 #: dat/missions/dvaered/championship.lua:66
@@ -38306,42 +38306,43 @@ msgstr "パイロット"
 
 #: dat/missions/dvaered/championship.lua:66
 msgid "This pilot looks very self-confident"
-msgstr ""
+msgstr "このパイロットはとても自信があるように見える。"
 
 #: dat/missions/dvaered/championship.lua:69
 msgid "This pilot seems to work as a private combat pilot"
-msgstr ""
+msgstr "このパイロットは民間で戦闘機のパイロットをして働いているらしい。"
 
 #: dat/missions/dvaered/championship.lua:72
 msgid "Imperial pilot"
-msgstr ""
+msgstr "帝国のパイロット"
 
 #: dat/missions/dvaered/championship.lua:72
 msgid "This pilot is is clearly from the Empire."
-msgstr ""
+msgstr "このパイロットは疑いもなく帝国の人だ。"
 
 #: dat/missions/dvaered/championship.lua:75
 msgid "Dvaered pilot"
-msgstr ""
+msgstr "ドベーレッドのパイロット"
 
 #: dat/missions/dvaered/championship.lua:75
 msgid "This pilot surely works as a Vendetta pilot."
-msgstr ""
+msgstr "このパイロットがベンデッタのパイロットとして働いているのは確実だ。"
 
 #: dat/missions/dvaered/championship.lua:78
 msgid "Strange pilot"
-msgstr ""
+msgstr "妙なパイロット"
 
 #: dat/missions/dvaered/championship.lua:78
 msgid ""
 "This pilot looks like a pirate, but strangely enough, the authorities don't "
 "seem worried."
-msgstr ""
+msgstr "このパイロットは海賊のように見える。なんとも不思議だが、当局は心配していない"
+"らしい。"
 
 #: dat/missions/dvaered/championship.lua:84
 #: dat/missions/dvaered/championship.lua:87
 msgid "I am here to win the championship"
-msgstr ""
+msgstr "優勝を勝ち取るためにここへ来た"
 
 #: dat/missions/dvaered/championship.lua:84
 msgid ""
@@ -38353,6 +38354,13 @@ msgid ""
 "lots of FLF fighters with my ship! I will tell you my adventures some other "
 "time, but for now, I need to concentrate.\""
 msgstr ""
+"｢わたしはこの周期の優勝者としての地位を要求するためにここへ来たんだ！　船を操"
+"縦した最初の日から用意はできていたんだよ。信じろ。わたしはほぼ無敵だし、わた"
+"しのベンデッタは不死身なんだ。\n"
+"    ｢わたしのことを知ってるか？　有名な独立パイロットで、"
+"ドベーレッド最高司令部が星雲の中にあった FLF 基地を破壊するのを助けた者だ！　"
+"自分の船うまく使って FLF の戦闘機をたくさん倒してやったんだよな！　"
+"またいつか、わたしの冒険を教えてやるよ。だが今は集中する必要があるんだ｣"
 
 #: dat/missions/dvaered/championship.lua:87
 msgid ""
@@ -38363,10 +38371,15 @@ msgid ""
 "galaxy? It's the reason why every pilot who's won this championship had one."
 "\""
 msgstr ""
+"｢こんにちは！　"
+"わたしはこの周期の優勝者としての地位を要求するためにここへ来たんだ！　"
+"信じろ。わたしはほぼ無敵だし、わたしのベンデッタは不死身なんだ。\n"
+"    ｢銀河のこのあたりではベンデッタが最高の戦闘機だってことを知ってたか？　"
+"この選手権大会で勝ったパイロットはみんな使ってたっていうのがその理由だ｣"
 
 #: dat/missions/dvaered/championship.lua:92
 msgid "Hello"
-msgstr ""
+msgstr "こんにちは"
 
 #: dat/missions/dvaered/championship.lua:92
 msgid ""
@@ -38378,10 +38391,17 @@ msgid ""
 "guided missiles and stealth ships. Dvaered pilots, on the other hand, only "
 "understand basic dogfighting.\""
 msgstr ""
+"｢ドベーレッドの格闘戦選手権大会のために来たんですか？　わたしは競争相手ですよ"
+"。わたしはシャークで飛んでますから、たくさん試合に勝つことは望めないですね……"
+"。しかしそれでも戦いを楽しんでいます。どの周期でも、ドベーレッドのパイロット"
+"が勝つんですよ。理由を知っていますか？　大会の規則は重装甲で重武装したベンデ"
+"ッタのような戦闘機に有利になっているんです。帝国のパイロットは誘導ミサイルと"
+"ステルス船を使った電子戦に慣れています。それにたいしてドベーレッドのパイロッ"
+"トは、基本的な格闘戦しか理解してないんですよ｣"
 
 #: dat/missions/dvaered/championship.lua:95
 msgid "Imperial Pilot"
-msgstr ""
+msgstr "帝国のパイロット"
 
 #: dat/missions/dvaered/championship.lua:95
 msgid ""
@@ -38390,10 +38410,14 @@ msgid ""
 "Lancelot on their radar. But in this championship, only armour and firepower "
 "are useful.\""
 msgstr ""
+"｢なんとも残念だな。わたしは自分の飛行隊でいちばんなんだ。あの哀れなベンデッタ"
+"がわたしのランスロットをレーダーで捉えるよりも早くこちらがミサイルで撃墜でき"
+"るように何周期も訓練してきた。しかしこの選手権大会では、装甲と火力だけが役に"
+"立つ｣"
 
 #: dat/missions/dvaered/championship.lua:98
 msgid "Dvaered Pilot"
-msgstr ""
+msgstr "ドベーレッドのパイロット"
 
 #: dat/missions/dvaered/championship.lua:98
 msgid ""
@@ -38402,10 +38426,15 @@ msgid ""
 "which makes you closer to Dvaered High Command! Who knows? Maybe one day I "
 "will become a Warlord.\""
 msgstr ""
+"｢お会いできてうれしいです。わたしはベンデッタのパイロットをしています。今回は"
+"勝てるといいと思っていますよ！　われわれにとって、ここで優勝するということは"
+"、上級幕僚の一員になれるという意味なんです。ドベーレッド最高司令部にもっと近"
+"づくことになるんですよ！　"
+"ひょっとして、もしかしていつの日か、わたしが軍閥領袖になるかもしれないんです｣"
 
 #: dat/missions/dvaered/championship.lua:101
 msgid "Obvious Pirate"
-msgstr ""
+msgstr "あきらかに海賊"
 
 #: dat/missions/dvaered/championship.lua:101
 msgid ""
@@ -38413,10 +38442,13 @@ msgid ""
 "challenge and see the best Dvaered Vendetta pilots in action. It helps to "
 "know how they fly in my job.\""
 msgstr ""
+"｢やあ、わたしは……えー……独立したパイロットです。ここへ来たのは対戦に参加するた"
+"めと、戦いで最高のドベーレッド・ベンデッタパイロットを見るためです。わたしの"
+"仕事ではドベーレッドの飛ばしかたを知るのが役に立つんですよ｣"
 
 #: dat/missions/dvaered/championship.lua:108
 msgid "Do you want to take part to a challenge?"
-msgstr ""
+msgstr "対戦に参加したいか？"
 
 #: dat/missions/dvaered/championship.lua:108
 msgid ""
@@ -38430,27 +38462,35 @@ msgid ""
 "during the championship.\n"
 "    We are looking for pilots. Are you in?\""
 msgstr ""
+"｢こんにちは、わたしはドベーレッド格闘対戦の職員なんです。その規則はこういうも"
+"のになっています。あなたは戦闘機級の船で離陸して、開始の標識のところに接する"
+"必要があります。そしてそのあとに、相手を無力化するように努力することになりま"
+"す。殺してはいけません。保安係がそれを許しません。ミサイルの使用は禁止なので"
+"、離陸するときに装備することはできません。相手の船に移乗することも、合図があ"
+"るまえに攻撃することも許されていません。選手権大会のあいだに惑星に着陸したり"
+"、ジャンプして出ていくこともできません。\n"
+"    ｢われわれはパイロットをさがしています。参加しますか？｣"
 
 #: dat/missions/dvaered/championship.lua:113
 #: dat/missions/dvaered/championship.lua:116
 msgid "The Dvaered Championship"
-msgstr ""
+msgstr "ドベーレッドの選手権大会"
 
 #: dat/missions/dvaered/championship.lua:114
 msgid "From 50k to 1.6m credits, depending on your rank"
-msgstr ""
+msgstr "50k から 1.6M クレジット。あなたの順位による"
 
 #: dat/missions/dvaered/championship.lua:115
 msgid "You are taking part in a fight contest. Try to do your best!"
-msgstr ""
+msgstr "あなたは戦闘競技に参加した。最善をつくせ！"
 
 #: dat/missions/dvaered/championship.lua:117
 msgid "Go to the starting point"
-msgstr ""
+msgstr "開始位置へ行け。"
 
 #: dat/missions/dvaered/championship.lua:118
 msgid "Disable your opponent; DO NOT KILL"
-msgstr ""
+msgstr "相手を無力化せよ。殺すな。"
 
 #: dat/missions/dvaered/championship.lua:119
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:82
@@ -38484,49 +38524,49 @@ msgstr "残念ですが、興味ありません"
 
 #: dat/missions/dvaered/championship.lua:125
 msgid "\"That's your choice. Goodbye, then.\""
-msgstr ""
+msgstr "｢それがあなたの選択ですね。では、さようなら｣"
 
 #. Everyone lands in case the player aborts
 #. Give a name to the competitor
 #: dat/missions/dvaered/championship.lua:138
 msgid "The Nice Killer"
-msgstr ""
+msgstr "すばらしい殺し屋"
 
 #: dat/missions/dvaered/championship.lua:139
 msgid "Longship Victory"
-msgstr ""
+msgstr "ロングシップの勝利"
 
 #: dat/missions/dvaered/championship.lua:140
 msgid "The Victim"
-msgstr ""
+msgstr "えじき"
 
 #: dat/missions/dvaered/championship.lua:141
 msgid "Old Fellow"
-msgstr ""
+msgstr "なじみのやつ"
 
 #: dat/missions/dvaered/championship.lua:142
 msgid "Angel of Grace"
-msgstr ""
+msgstr "恩寵の天使"
 
 #: dat/missions/dvaered/championship.lua:143
 msgid "Easy Killer"
-msgstr ""
+msgstr "気楽な殺し屋"
 
 #: dat/missions/dvaered/championship.lua:144
 msgid "The Unicorn"
-msgstr ""
+msgstr "ユニコーン"
 
 #: dat/missions/dvaered/championship.lua:145
 msgid "The White Knight"
-msgstr ""
+msgstr "白騎士"
 
 #: dat/missions/dvaered/championship.lua:146
 msgid "Spirit of St Jean"
-msgstr ""
+msgstr "セント・ジーンの魂"
 
 #: dat/missions/dvaered/championship.lua:147
 msgid "Nec Mergitur"
-msgstr ""
+msgstr "ネク・メルギトゥル"
 
 #. Re-pick a name while it is in the usedNames list
 #: dat/missions/dvaered/championship.lua:162
@@ -38539,6 +38579,8 @@ msgid ""
 "For this round, your opponent is {plt}. Remember: use a fighter with no "
 "launchers. You still have to defeat {n} opponents to win."
 msgstr ""
+"この試合では、あなたの相手は{plt}です。忘れないでください。ミサイル発射機のな"
+"い戦闘機を使うこと。勝つためにはまだ {n} 人の相手を倒さなければなりません。"
 
 #. Launchers are forbidden
 #. The player took off for the battle
@@ -38552,14 +38594,14 @@ msgstr ""
 #: dat/missions/dvaered/championship.lua:245
 #: dat/missions/dvaered/championship.lua:246
 msgid "Holovision"
-msgstr ""
+msgstr "ホロビジョン"
 
 #: dat/missions/dvaered/championship.lua:247
 #: dat/missions/dvaered/championship.lua:248
 #: dat/missions/dvaered/championship.lua:249
 #: dat/missions/dvaered/championship.lua:250
 msgid "Security"
-msgstr ""
+msgstr "保安係"
 
 #. Set the radius for the follow function
 #. Set the angle for the follow function
@@ -38568,7 +38610,7 @@ msgstr ""
 #. Adding the starting mark
 #: dat/missions/dvaered/championship.lua:305
 msgid "START"
-msgstr ""
+msgstr "開始"
 
 #. The player tries to cheat by attacking before the signal
 #. The player is never allowed to go away
@@ -38578,60 +38620,61 @@ msgstr ""
 #: dat/missions/dvaered/championship.lua:335
 #: dat/missions/dvaered/championship.lua:371
 msgid "You are dismissed"
-msgstr ""
+msgstr "失格になった"
 
 #: dat/missions/dvaered/championship.lua:309
 msgid "You weren't allowed to use missiles"
-msgstr ""
+msgstr "ミサイルの使用は許可されていなかった"
 
 #: dat/missions/dvaered/championship.lua:312
 msgid "You had to use a fighter"
-msgstr ""
+msgstr "戦闘機を使用しなければならなかった"
 
 #: dat/missions/dvaered/championship.lua:328
 msgid "You weren't supposed to attack before the signal."
-msgstr ""
+msgstr "合図のまえに攻撃はしないことになっていた。"
 
 #: dat/missions/dvaered/championship.lua:335
 #: dat/missions/dvaered/championship.lua:371
 msgid "You weren't supposed to go away."
-msgstr ""
+msgstr "逃げないことになっていた。"
 
 #. Probably fine to just attack player
 #. player goes to next round
 #. Manage the player's progress
 #: dat/missions/dvaered/championship.lua:352
 msgid "You won this round"
-msgstr ""
+msgstr "この試合に勝った"
 
 #: dat/missions/dvaered/championship.lua:352
 msgid ""
 "\"Congratulations,\" the staff says to you. \"Come back when you are ready "
 "for the next round!\""
-msgstr ""
+msgstr "｢おめでとう｣ "
+"と、職員があなたにいう。｢次の試合の用意ができたら戻ってきてください！｣"
 
 #. player will be payed
 #. you are the champion
 #: dat/missions/dvaered/championship.lua:360
 msgid "You are the new champion"
-msgstr ""
+msgstr "あなたが新しい優勝者だ"
 
 #: dat/missions/dvaered/championship.lua:360
 #: dat/missions/dvaered/championship.lua:362
 msgid "Congratulations! The staff pays you {credits}."
-msgstr ""
+msgstr "おめでとう！　職員があなたに {credits} 支給した。"
 
 #: dat/missions/dvaered/championship.lua:362
 msgid "You are the vice-champion"
-msgstr ""
+msgstr "あなたは準優勝者だ"
 
 #: dat/missions/dvaered/championship.lua:364
 msgid "Thanks for playing"
-msgstr ""
+msgstr "試合をしてくれてありがとう"
 
 #: dat/missions/dvaered/championship.lua:364
 msgid "The staff pays you {credits}."
-msgstr ""
+msgstr "職員があなたに {credits} 支給した。"
 
 #. Remove some hooks and begin a new battle
 #. The player killed his opponent
@@ -39738,25 +39781,25 @@ msgstr "こちらはオブスティネイト。われわれは砲火をあびて
 #. luacheck: globals abort complete enter fleetdv_attacked hawk_attacked hawk_dead hawk_jump hawk_land jump_fleet_cap_dead jumpout land spawn_fleet undo_invuln (Hook functions passed by name)
 #: dat/missions/dvaered/dv_diversion.lua:39
 msgid "Khan is dead! Who will be our warlord now?"
-msgstr ""
+msgstr "カーンが死んだ！　今のわれわれの領袖はだれになるんだ？"
 
 #: dat/missions/dvaered/dv_diversion.lua:40
 msgid "Obviously the one who killed him!"
-msgstr ""
+msgstr "あきらかにカーンを殺したのはあいつだ！"
 
 #: dat/missions/dvaered/dv_diversion.lua:41
 msgid "I will never serve a different warlord than Khan! Die, you traitors!"
-msgstr ""
+msgstr "カーン以外の軍閥領袖に仕えるつもりはない！　死ね、裏切り者！"
 
 #: dat/missions/dvaered/dv_diversion.lua:49
 msgid ""
 "A high ranking Dvaered officer. It looks like he might have a job offer for "
 "you."
-msgstr ""
+msgstr "階級の高いドベーレッド士官。あなたに提供する仕事があるように見える。"
 
 #: dat/missions/dvaered/dv_diversion.lua:53
 msgid "The job offer"
-msgstr ""
+msgstr "仕事の申し出"
 
 #: dat/missions/dvaered/dv_diversion.lua:53
 msgid ""
@@ -39764,12 +39807,15 @@ msgid ""
 "looking for a pilot like yourself.\n"
 "\"I am looking for a skilled pilot to do a simple job for me, interested?\""
 msgstr ""
+"あなたはテーブルにいるドベーレッドの役人のところへ歩いていった。その役人はあ"
+"なたのようなパイロットをさがしているという。\n"
+"｢単純な仕事をするのに腕の立つパイロットをさがしています。興味はありますか？｣"
 
 #: dat/missions/dvaered/dv_diversion.lua:55
 #: dat/missions/dvaered/dv_diversion.lua:58
 #: dat/missions/dvaered/dv_diversion.lua:59
 msgid "A small distraction"
-msgstr ""
+msgstr "ちょっとした目くらまし"
 
 #: dat/missions/dvaered/dv_diversion.lua:55
 msgid ""
@@ -39794,6 +39840,12 @@ msgid ""
 "Then we will jump into the system and destroy the Hawk before the fighters "
 "can return.\""
 msgstr ""
+"｢ここがあなたの出番です。あなたは{sys}星系にジャンプして入って、ホークと護衛"
+"を見つけます。ホークが超空間に入れるようになるまえに、あなたはホークに発砲し"
+"ます。そうすると戦闘機があなたを攻撃することになります。そうなったら、あなた"
+"はホークとジャンプポイントから逃げるべきです。それで戦闘機は追いかけることに"
+"なるでしょう。それからわれわれが星系にジャンプして入って、戦闘機が戻ってこら"
+"れるようになるまえにホークを破壊します｣"
 
 #: dat/missions/dvaered/dv_diversion.lua:59
 msgid ""
@@ -39801,17 +39853,21 @@ msgid ""
 "so the fighters must be far enough away by then not to come back and attack "
 "us.\""
 msgstr ""
+"｢われわれはあなたが{sys}星系にジャンプして入ってから、約 80 ヘクト秒後にジャ"
+"ンプします。だからそれまでに戦闘機が戻ってきてわれわれを攻撃することができな"
+"いほど遠ざけておかなければなりません｣"
 
 #: dat/missions/dvaered/dv_diversion.lua:62
 #: dat/missions/dvaered/dv_diversion.lua:67
 msgid "A Small Distraction"
-msgstr ""
+msgstr "ちょっとした目くらまし"
 
 #: dat/missions/dvaered/dv_diversion.lua:64
 msgid ""
 "Fire on the Hawk and flee from the fighter escorts until the Dvaered fleet "
 "jumps in and destroys the Hawk"
-msgstr ""
+msgstr "ホークに発砲して、ドベーレッド艦隊がジャンプしてきてホークを破壊するまで護衛"
+"の戦闘機から逃げろ。"
 
 #: dat/missions/dvaered/dv_diversion.lua:66
 msgid ""
@@ -39821,60 +39877,65 @@ msgid ""
 "can return. The mission will fail if the Hawk survives or the Dvaered task "
 "force is eliminated."
 msgstr ""
+"あなたはドベーレッドの護衛戦闘機の注意をそらして、ジャンプゲートと主力艦ホー"
+"クから引き離す仕事に勧誘された。ドベーレッド任務部隊は、護衛船が戻ってこられ"
+"るまえにジャンプして入り、ホークを破壊しようと試みる。この任務は、ホークが生"
+"きのびるか、ドベーレッド任務部隊が排除されると失敗となる。"
 
 #: dat/missions/dvaered/dv_diversion.lua:77
 msgid "Nuts"
-msgstr ""
+msgstr "ばかめ"
 
 #. Create the custom factions
 #: dat/missions/dvaered/dv_diversion.lua:97
 msgid "The Hawk"
-msgstr ""
+msgstr "ホーク"
 
 #: dat/missions/dvaered/dv_diversion.lua:98
 msgid "Attackers"
-msgstr ""
+msgstr "攻撃者"
 
 #. Spawn people
 #: dat/missions/dvaered/dv_diversion.lua:108
 #: dat/scripts/pilotname/generic.lua:41
 msgid "Hawk"
-msgstr ""
+msgstr "ホーク"
 
 #. Half finished installing weapons. :)
 #: dat/missions/dvaered/dv_diversion.lua:119
 msgid ""
 "Alright folks, this will be Hawk's maiden jump. Continue on course to the "
 "{sys} jump gate."
-msgstr ""
+msgstr "よろしい、諸君。これはホークの処女ジャンプだ。{sys}星系ジャンプゲートへの航路"
+"を維持してくれ。"
 
 #. Got away
 #: dat/missions/dvaered/dv_diversion.lua:145
 #: dat/missions/dvaered/dv_diversion.lua:151
 msgid "The Hawk got away!"
-msgstr ""
+msgstr "ホークが逃げた！"
 
 #: dat/missions/dvaered/dv_diversion.lua:145
 msgid "The Hawk jumped out of the system. You have failed your mission."
-msgstr ""
+msgstr "ホークが星系からジャンプして出た。あなたは任務に失敗した。"
 
 #: dat/missions/dvaered/dv_diversion.lua:151
 msgid "The Hawk landed back on {pnt}. You have failed your mission."
-msgstr ""
+msgstr "ホークが{pnt}に戻って着陸した。あなたは任務に失敗した。"
 
 #. chased
 #: dat/missions/dvaered/dv_diversion.lua:158
 msgid "How dare they attack me! Get them!"
-msgstr ""
+msgstr "あえて攻撃するのか！　あいつをやれ！"
 
 #: dat/missions/dvaered/dv_diversion.lua:161
 msgid "You heard Warlord Khan, blow them to pieces!"
-msgstr ""
+msgstr "カーン領袖のいうことを聞いたな。あいつをばらばらに吹き飛ばせ！"
 
 #. chased
 #: dat/missions/dvaered/dv_diversion.lua:171
 msgid "They're attacking us, blow them to pieces!"
-msgstr ""
+msgstr "あいつがわれわれを攻撃している。ばらばらに吹き飛ばせ！"
 
 #. Find the first alive ship and broadcast a message
 #. mission accomplished
@@ -39883,7 +39944,7 @@ msgstr ""
 #: dat/missions/dvaered/dv_diversion.lua:190
 #: dat/missions/dvaered/dv_diversion.lua:292
 msgid "Arrgh!"
-msgstr ""
+msgstr "あー！"
 
 #. Wrangles the fleet defending the Hawk
 #. Nothing to do if we're already in the final phase of the mission
@@ -39891,40 +39952,43 @@ msgstr ""
 #. Cancel autonav.
 #: dat/missions/dvaered/dv_diversion.lua:256
 msgid "{pnt} will be ours! Khan, prepare to die!"
-msgstr ""
+msgstr "{pnt}はわれわれのものだ！　カーン、死ぬ用意をしろ！"
 
 #: dat/missions/dvaered/dv_diversion.lua:265
 #: dat/missions/dvaered/dv_diversion.lua:266
 msgid "All units, defend Hawk, we are under attack!"
-msgstr ""
+msgstr "全部隊、ホークを守れ。われわれは攻撃をうけている！"
 
 #: dat/missions/dvaered/dv_diversion.lua:294
 msgid "Pathetic, can't even take down an unarmed ship."
-msgstr ""
+msgstr "哀れな、非武装の船を破壊することもできないなんて。"
 
 #: dat/missions/dvaered/dv_diversion.lua:296
 msgid "The Hawk is safe."
-msgstr ""
+msgstr "ホークは無事だ。"
 
 #: dat/missions/dvaered/dv_diversion.lua:296
 msgid ""
 "The Hawk was able to fend off the attackers and destroy their flagship. You "
 "have failed your mission."
-msgstr ""
+msgstr "ホークは攻撃を避けて、相手の旗艦を破壊することができた。あなたは任務に失敗し"
+"た。"
 
 #: dat/missions/dvaered/dv_diversion.lua:344
 msgid "The Dvaered official sent you a message."
-msgstr ""
+msgstr "あのドベーレッドの役人があなたに通信を送ってきた。"
 
 #: dat/missions/dvaered/dv_diversion.lua:344
 msgid ""
 "\"Thanks for the distraction. I've sent you a picture of all the medals I "
 "was awarded. Oh, and I also deposited 800,000 credits in your account.\""
 msgstr ""
+"｢注意をそらしてくれてありがとう。わたしがうけた勲章をぜんぶ写真にとって送りま"
+"したよ。ああ、それからあなたの口座に 800,000 クレジットを送金しました｣"
 
 #: dat/missions/dvaered/dv_diversion.lua:347
 msgid "I declare myself the Warlord of {pnt}!"
-msgstr ""
+msgstr "わたしは自身が{pnt}の軍閥領主だと宣言する！"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -39988,22 +40052,26 @@ msgid ""
 "\"Everything is right, we will now land on {pnt} in order to refuel and rest "
 "for some time.\""
 msgstr ""
+"タムがゴダードに乗船してから、あなたはタムの船が軍閥領袖の巡洋艦から離舷する"
+"までだいたい半時限待った。あなたはそのあとタムからの連絡を受けとった。｢万事順"
+"調です。これから燃料を補給してしばらく休息するために{pnt}に着陸しましょう｣"
 
 #. The mission should not appear just after the FLF destruction
 #. We need the first target to be at least 1 jump ahead
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:69
 msgid "Dvaered officer"
-msgstr ""
+msgstr "ドベーレッド士官"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:69
 msgid ""
 "This Dvaered senior officer could be looking for a pilot for hire. Why else "
 "would he stay at this bar?"
-msgstr ""
+msgstr "このドベーレッド上級士官は雇用できるパイロットをさがしているのかもしれない。"
+"ほかにどうしてこのバーにいる理由がある？"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:75
 msgid "In need of a pilot"
-msgstr ""
+msgstr "パイロットが必要"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:75
 msgid ""
@@ -40016,16 +40084,26 @@ msgid ""
 "simple escort mission. All that you need is a fast combat ship that can keep "
 "up with my Vendetta. What do you say?\""
 msgstr ""
+"あなたが士官に近づくと、士官はあなたにあいさつをした。｢こんにちは、{player}。"
+"あなたをさがしていました。もちろん、あなたの名前は知っています。"
+"シグールにあったあのくそったれ FLF 基地を破壊したパイロットのひとりですからね"
+"。自己紹介させてください。わたしは少佐のタムです。ドベーレッド最高司令部に所"
+"属しています。そしてもっと正確にいうと、宇宙軍本部です。あなたは信頼できるパ"
+"イロットであって、最高司令部はあなたの奉仕をもっと活用できたはずだと感じてい"
+"ます。わたしが今から単純な護衛任務を提案するのはこれが理由です。あなたに必要"
+"なのは、わたしのベンデッタについてこられる高速な戦闘艦だけです。どうしますか"
+"？｣"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:76
 msgid ""
 "Tam seems disappointed by your answer. \"Well, then, maybe we will meet "
 "again later, who knows?\""
-msgstr ""
+msgstr "タムはあなたの答えに失望したようだ。｢ええ、まあ、たぶんまた今度会えますよね、"
+"ひょっとすると｣"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:79
 msgid "Instructions"
-msgstr ""
+msgstr "指示"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:79
 msgid ""
@@ -40035,6 +40113,11 @@ msgid ""
 "you to stick to my Vendetta and engage any hostile who might try to "
 "intercept me.\""
 msgstr ""
+"タムはあなたの答えに満足したようだ。｢わたしは 3 "
+"人の軍閥領袖のところを訪問する予定ですが、軍事調整的な理由によるものです。3 "
+"人はそれぞれ{sys1}、{sys2}、{sys3}星系にいる自分のゴダードでわたしを待ってい"
+"ます。あなたはわたしのベンデッタにはりついて、わたしを迎撃しようとする敵がい"
+"たらすべて攻撃してもらう必要があります｣"
 
 #. Fleeing to flee planet
 #. Explain what happened
@@ -40047,29 +40130,30 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:252
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:315
 msgid "Dvaered Escort"
-msgstr ""
+msgstr "ドベーレッドの護衛"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:82
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:136
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:246
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:252
 msgid "Escort Major Tam"
-msgstr ""
+msgstr "タム少佐の護衛"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:83
 msgid ""
 "You agreed to escort a senior officer of the Dvaered High Command who is "
 "visiting three warlords."
-msgstr ""
+msgstr "あなたは 3 人の軍閥領袖を訪問するドベーレッド最高司令部の上級士官を護衛するの"
+"に同意した。"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:84
 msgid "Dvaered never talk about money."
-msgstr ""
+msgstr "ドベーレッドはけっしてかねの話はしない。"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:98
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:266
 msgid "You were supposed to escort Major Tam, weren't you?"
-msgstr ""
+msgstr "あなたはタム少佐を護衛することになっていたんじゃないか？"
 
 #. Travel to second rendezvous
 #. Spawn the Baddies
@@ -40083,19 +40167,19 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:200
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:460
 msgid "Lord Battleaddict"
-msgstr ""
+msgstr "バトラディクト卿"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:159
 msgid "Your ship is too slow"
-msgstr ""
+msgstr "あなたの船は遅すぎる"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:159
 msgid "Did you really expect to keep up with Major Tam with your current ship?"
-msgstr ""
+msgstr "今の船でタム少佐についていけるとほんとうに思っているのか？"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:165
 msgid "That was really close!"
-msgstr ""
+msgstr "ほんとうに危なかった！"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:165
 msgid ""
@@ -40111,19 +40195,31 @@ msgid ""
 "with a warlord. Dvaered know that it is better not to be involved in "
 "warlord's affairs.\""
 msgstr ""
+"あなたはタム少佐にもう安全なのかたずねる通信を送った。｢そう考えています｣ と、"
+"タムがこたえる。｢バトラディクト卿の部隊は、われわれがすぐに{pnt}へ向かうなら"
+"ついてこないでしょう。あの惑星は卿の最大の仇敵であるレディーポイントブランク"
+"のものなので｣。なにがおきたのかあなたがたずねると、タムはこたえた。｢いいです"
+"か、バトラディクト卿の反応を見て誤解しないようにしてください。卿は悪い人じゃ"
+"ないんですよ。ただ……えへん……保守的なんです。ドベーレッド最高司令部の新しい世"
+"代の将軍たちの意見には反対してましてね、論旨をあきらかにすることを望んでいま"
+"した｣\n"
+"   あなたはタムに、どうしてドベーレッドの巡視船はあなたたちを助けなかったのか"
+"とたずねた。そしてタムがこたえる。｢軍閥領袖ともめたときに、ふつうの警察や軍隊"
+"があなたを助けるとは思わないでください。ドベーレッドは軍閥領袖の問題には関係"
+"しないほうがいいと知っているんです｣"
 
 #. Messages when encountering warlords
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:171
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:174
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:177
 msgid "{plt} should be waiting for us in orbit around {pnt}."
-msgstr ""
+msgstr "{plt}は{pnt}をまわる軌道でわれわれを待っているはずです。"
 
 #. majorTam:outfitAdd("Solar Panel")
 #. Make sure Pirates don't get on the way
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:231
 msgid "Major Tam has jumped for the {sys} system."
-msgstr ""
+msgstr "タム少佐が{sys}星系にジャンプした。"
 
 #. Because she is immortal and could kill the player
 #. increase faction
@@ -40141,6 +40237,10 @@ msgid ""
 "career. \"Meh\", you finally think, \"I'm sure I will have another chance "
 "sooner or later.\""
 msgstr ""
+"タム少佐の船の最期の爆発で、かつては誇るべきベンデッタだったもののばらばらな"
+"残骸が星系の遠い隅へと吹き飛ばされると、あなたは自分の職歴においてもとくにつ"
+"らい失敗だったとほんとうに深く考えていることに気がついた。｢あーあ｣ "
+"と、あなたはやっと考えた。｢遅かれ早かれ別の機会があるのは確かだろうね｣"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:257
 msgid ""
@@ -40150,10 +40250,15 @@ msgid ""
 "kill him twice, with help of his second in command, Colonel Hamelsen. It "
 "looks like trying to coordinate Dvaered warlords is a really dangerous job."
 msgstr ""
+"ドベーレッド最高司令部 (DHC) の宇宙軍本部に所属するタム少佐が、軍事調整機構に"
+"かんする業務にあなたを従事させた。少佐が訪問しようとした軍閥領袖のひとりであ"
+"るバトラディクト卿が、その副司令官であるハメルセン大佐の協力により、少佐を二"
+"度殺そうとした。ドベーレッド軍閥領袖の調整をしようとするのはほんとうに危険な"
+"仕事のようだ。"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:258
 msgid "Thank you, citizen"
-msgstr ""
+msgstr "ありがとう、市民"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:258
 msgid ""
@@ -40167,12 +40272,22 @@ msgid ""
 "to do? I will give you a set of Gauss Guns worth {credits}! One always needs "
 "Gauss Guns, no?\""
 msgstr ""
+"着陸すると、タム少佐があなたを宇宙港で出迎えた。｢今日こうむった損害からすると"
+"、あの傭兵たちがまたすぐわたしを追いかけてくるとは思いません。わたしはドベー"
+"ア星系にあるドベーア最高司令部ステーションへ報告に戻る必要がありますが、もう"
+"護衛は必要ありません。ああ、それから、えー……支払いについてですが、残念ながら"
+"ちょっと妨害があって……｣。あなたは少佐が支払いをせずにすませようとするのではな"
+"いかと心配になりはじめたが、少佐はつづけた。｢どうしてかはわからないのですが、"
+"最高司令部はまだ支払い口座に入れていないんです……。えー、どうすればいいのかわ"
+"かりますか？　{credits} の価値があるガウスガンなら渡せますよ！　"
+"みんないつもガウスガンを必要としていますよね、ちがいますか？｣"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:272
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:276
 msgid ""
 "Major Tam is a very friendly man. At least by Dvaered military standards."
-msgstr ""
+msgstr "タム少佐はとても人なつっこい男だ。すくなくともドベーレッド軍の基準からすると"
+"。"
 
 #. Delay the triggering of the meeting
 #. Make sure to remove the autonav
@@ -40180,11 +40295,11 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:293
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:318
 msgid "Everything is right"
-msgstr ""
+msgstr "万事順調"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:302
 msgid "They're after me!"
-msgstr ""
+msgstr "追跡されている！"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:302
 msgid ""
@@ -40192,10 +40307,14 @@ msgid ""
 "nearby fighters start to shoot at him. You receive a message \"That old fool "
 "tried to kill me! Quick, we must head to {sys}! Let me jump first!\""
 msgstr ""
+"タムがゴダードに乗船した。二、三秒後にタムがいそいで離舷すると同時に、近くの"
+"戦闘機がタムを撃ちはじめる。あなたは連絡を受けとった。｢あの年よりのばか者がわ"
+"たしを殺そうとしているんだ！　いそげ、{sys}星系に向かわなければ！　"
+"わたしが先にジャンプする！｣"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:315
 msgid "Ensure Major Tam safely jumps to {sys} and follow him"
-msgstr ""
+msgstr "タム少佐が{sys}星系へ無事にジャンプするのを確認してから、それにつづけ。"
 
 #. Makes Battleaddict's team actually attack the player
 #. Change the enemies to Warlords in order to make them attack
@@ -40209,11 +40328,11 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:220
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:592
 msgid "Colonel Hamelsen"
-msgstr ""
+msgstr "ハメルセン大佐"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:412
 msgid "Say hello to my mace rockets"
-msgstr ""
+msgstr "わたしのメイスロケットにあいさつをしろ"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:412
 msgid ""
@@ -40222,10 +40341,14 @@ msgid ""
 "message: \"Tam, you small, fearful weakling, did you believe Lord "
 "Battleaddict would really let you live? You're doomed!\""
 msgstr ""
+"ジャンプしたあと、あなたの船をふつうの速度へ減速していると、敵船に囲まれてい"
+"ることに気がついた。敵のシャークが次の内容の一斉送信をしてきた。｢タム、おまえ"
+"はつまらんやつで、ひどい弱虫だ。バトラディクト卿がほんとうにおまえを生かして"
+"おくと信じていたのか？　おまえの運命は決まっているんだ！｣"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:413
 msgid "You wanted to meet Lord Jim? How about you meet your doom instead?"
-msgstr ""
+msgstr "おまえはジム卿に会いたかったんだな？　かわりに自分の運命と会うのはどうだ？"
 
 #. To avoid triggering by mistake
 #. Hook to make Hamelsen run away
@@ -40236,7 +40359,7 @@ msgstr ""
 #. The end of the Ambush: a message that explains what happened
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:448
 msgid "Hostiles eliminated"
-msgstr ""
+msgstr "敵の除去"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:448
 msgid ""
@@ -40257,10 +40380,25 @@ msgid ""
 "glad there are civilians like you who do their duty and serve the Dvaered "
 "Nation.\""
 msgstr ""
+"残った攻撃者が逃げていくなか、あなたはドベーレッドの巡視船があなたたちを助け"
+"たことに気がついた。タムが以前説明したのとは逆だ。それからあなたはタム少佐と"
+"ドベーレッド飛行隊のあいだでかわされる通信を受けとった。｢ほんとうに今回はきみ"
+"のおかげだよ、大尉｣ と、タムがいう。｢お安いご用ですよ、少佐｣ と、もうひとりが"
+"こたえた。｢しかしいちばん危険なやつが逃げました。ほら、あのシャークですが、あ"
+"れはハメルセンで、バトラディクトの副司令官です。あの卑劣な老人があなたにした"
+"ことを聞いてから、われわれは卿を監視下において、ハメルセンがシャークであなた"
+"を追跡していることを見ぬいたんです。だからわれわれはただの警察の飛行隊のふり"
+"をしてハメルセンについてきました。そのあとはおわかりですね｣\n"
+"   タムがこたえた。｢ところで、{player}、ルブラン大尉を紹介させてくれ。"
+"大尉は特殊作戦軍 (SOF) に所属している。これはドベーレッド最高司令部 (DHC) の"
+"一部だ。いわなかったが、大尉と部下のパイロットたちは、わたしが軍閥領袖たちと"
+"会う必要があるときは、いつも遠くからわたしに気を配っていた。{player}は大尉に"
+"いってあった民間パイロットだ｣。ルブランがこたえる。｢こんにちは、市民。あなた"
+"のように義務を果たしてドベーレッドの国家に奉仕する市民がいてうれしいですよ｣"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:450
 msgid "Two attacks are one too many"
-msgstr ""
+msgstr "攻撃が二回はひとつ多すぎる"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:450
 msgid ""
@@ -40272,21 +40410,29 @@ msgid ""
 "matter to the chief. Meanwhile, I still have an appointment with Lord Jim. I "
 "just hope he will not try to make us dance as well...\""
 msgstr ""
+"｢それはともかく｣ と、タムがいった。｢この待ち伏せは容認できないと思う｣。ルブラ"
+"ンがこたえる。｢そのとおりです、少佐。自分の星系でだれかを攻撃するのは標準的な"
+"軍閥領袖の表現手段ですが、ここで待ち伏せをしかけるのはほんとうに尊敬に欠ける"
+"ことのしるしです｣\n"
+"   ｢卿はこの責任をおうだろう。任せてくれ｣ と、タムがこたえた。｢このことは長官"
+"にいうつもりだ。話は変わるが、まだジム卿との約束がある。とにかくジム卿もわれ"
+"われと踊ってみようなんてことがないのを望むよ……｣"
 
 #. Major Tam is not senile: he says different things at the different stops
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:457
 msgid "Major Tam is ready"
-msgstr ""
+msgstr "タム少佐は準備完了"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:457
 msgid ""
 "How do you do, citizen? Did you enjoy the trip so far? I'm ready for the "
 "next stop. I'll follow you when you take off."
-msgstr ""
+msgstr "｢調子はどうですが、市民？　ここまでの旅は楽しみましたか？　次の目的地までのわ"
+"たしの用意はできています。あなたが離陸したらついていきますよ｣"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:459
 msgid "Major Tam is talkative today"
-msgstr ""
+msgstr "今日のタム少佐は話好き"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:459
 msgid ""
@@ -40294,10 +40440,14 @@ msgid ""
 "trick? It reminded me of my youth, when I used to belong to a fighter "
 "squadron in Amaroq...\" Do you want to encourage Tam to talk about his past?"
 msgstr ""
+"｢こんにちは、市民。もうこのまえのバトラディクト卿のたくらみから立ちなおってま"
+"すか？　わたしが若かったころを思いだしましたね。かつてアマロクで戦闘機隊に所"
+"属していたときのことなんですが……｣。過去について話すようにタムをたきつけたいか"
+"？"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:460
 msgid "Major Tam before he was at the Headquarters"
-msgstr ""
+msgstr "本部に来るまえのタム少佐"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:460
 msgid ""
@@ -40318,14 +40468,32 @@ msgid ""
 "   \"Hey, but am I deviating from our original subject? What was it already? "
 "Oh I don't remember. Anyway, citizen, if you want to take off, I'm ready.\""
 msgstr ""
+"｢ほら、わたしはずっと本部で働いていたんじゃないんですよ。初めはラーナの DHC "
+"基地でパイロットをしてたんです。おっと、失礼、DHC とはドベーレッド最高司令部"
+"のことです。知っていると思いますが、ドベーレッドの兵士には二種類いるんです。"
+"わたしのように直接 DHC の指揮下にあるものと、変人たちです。われわれはかれらを"
+"そう呼んでいるんですよ。本人たちは戦士と呼んでますけどね。その兵士たちはその"
+"土地の軍閥領袖の指揮下にあります。\n"
+"   ｢軍閥領袖の軍隊は DHC が徴用できます。しかしドベーレッド国家全体への脅威と"
+"なる勢力と戦うためだけです。だから実際問題として、軍閥領袖たちはたいていした"
+"いようにしていて、おたがいに戦争をします。ほら、よそ者たちはときどき軍閥領袖"
+"のあいだで争って殺しあうのは無意味だと考えてるでしょう。いちど『愚か』という"
+"言葉を聞いたこともありますよ。しかしじつは、軍閥領袖たちがドベーレッド哲学の"
+"鍵なんです。あの戦争がなければ、ドベーレッド国家はもうわれわれの知る形では存"
+"在しません。われわれは全体主義に依存しなければならなくなったことでしょう。帝"
+"国のようです。理想化した過去への追憶に依存する辺境のように、過酷な技術主義に"
+"依存するザレクのように、などなどですよ……\n"
+"   ｢おっと、しかしもともとの話題から脱線してませんかね？　"
+"さてなんでしたっけ？　あー、思いだせない。とにかく市民、離陸したかったら、わ"
+"たしの用意はできています｣"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:71
 msgid "Major Tam may be in need of a pilot."
-msgstr ""
+msgstr "タム少佐はたぶんパイロットを必要としている。"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:75
 msgid "Ready for another mission?"
-msgstr ""
+msgstr "次の任務の用意は？"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:75
 msgid ""
@@ -40335,15 +40503,20 @@ msgid ""
 "a way to make him regret what he did, and we need a civilian pilot, like "
 "you. Are you in?\""
 msgstr ""
+"あなたはタムのテーブルに座り、タムが話すのを待った。｢こんにちは、市民{player}"
+"。バトラディクト卿を覚えていますか？　われわれを二回殺そうとした年よりの軍閥"
+"領袖ですよ。いい知らせがあります。宇宙軍のほかの二、三人といっしょに、卿がし"
+"たことを遺憾に思わせる方法を考えだしました。それからわれわれはあなたのような"
+"民間パイロットをひとり必要としています。話に乗りますか？｣"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:76
 msgid "\"Alight, citizen, see you later, then.\""
-msgstr ""
+msgstr "｢承知しました、市民。ではまた会いましょう｣"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:79
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:81
 msgid "The plan"
-msgstr ""
+msgstr "計画"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:79
 msgid ""
@@ -40356,6 +40529,14 @@ msgid ""
 "are going to have a Goddard duel, which is usually how two important Dvaered "
 "generals settle deep disagreements.\""
 msgstr ""
+"｢うけてくれるのはわかっていましたよ！｣ "
+"と、タム少佐がいった。｢状況はこんな感じです。\n"
+"   ｢わたしが仕えている将軍であるクランク将軍が担当しているのは……えへん……担当"
+"しているのは、最高司令部が達成を望む重大作戦です。この作戦は最高司令部の部隊"
+"がかかわることになりますが、軍閥領袖たち、たとえばバトラディクト卿もかかわり"
+"ます。問題はクランク将軍とバトラディクト卿がこの計画のすべてについて意見があ"
+"わないことなんです。それゆえ、二人はゴダードで決闘することになります。これは"
+"二人の重要なドベーレッド将軍が深刻な意見の相違を解決する一般的な方法です｣"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:81
 msgid ""
@@ -40379,37 +40560,58 @@ msgid ""
 "very important that you use a civilian ship that can transport at least "
 "{tonnes} of cargo.\""
 msgstr ""
+"｢問題はあのバトラディクト卿の計画があまりに愚かすぎることです。ドベーレッド国"
+"家は長期にわたって弱体化するでしょうし、われわれのまわりにある他のすべての国"
+"のなすがままになってしまいます。われわれには弱体化のきざしを見せる余裕はあり"
+"ません。さもないとわれわれは攻撃をうけ、むこうの邪悪で旧式な政治システムをわ"
+"れわれの一般市民に押しつけられてしまいます｣。タムは深く息をついて、あなたの目"
+"を見つめた。｢あなたにはわからないでしょう、市民。陰の中に待っている恐ろしい敵"
+"がすべて、その心をドベーレッド荘への憎しみでいっぱいにしていることを。ときど"
+"きわたしは星でいっぱいの夜空を見て不思議に思うんです。どうしてドベーレッド国"
+"家はこの……この暗やみの海の中で正義と同情心の小島を脅かされるだけでいなければ"
+"ならないのかって。\n"
+"   ｢おっと、市民！　しかしよい知らせがあります！　われわれは野蛮人の大群に倒"
+"されるつもりはありません。なぜならわたし自身、アーチボルト・タム少佐が、計画"
+"を立てているからです。われわれはバトラディクト卿が確実に決闘で負けるようにす"
+"るつもりです。とはいえ、どうかよく聞いておいてください。ドベーレッド荘のまさ"
+"に存在そのものが脅かされているのでなければ、二人のりっぱな紳士たちのあいだの"
+"名誉ある決闘をわれわれがじゃますることは許されていません。{sys}星系の{pnt}に"
+"行って、ハンフレッサー大尉と会ってください。写真は渡す情報に含まれています。"
+"大尉が詳細を説明します。とても重要なことは、あなたがすくなくとも "
+"{tonnes}の積み荷を輸送できる民間船を使うことです｣"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:85
 msgid ""
 "You have to sabotage Lord Battleaddict's cruiser in order to ensure General "
 "Klank's victory at a duel."
-msgstr ""
+msgstr "あなたはクランク将軍を決闘で確実に勝利させるため、バトラディクト卿の巡洋艦に"
+"たいして破壊活動をしなければならない。"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:86
 msgid "Focus on the mission, pilot."
-msgstr ""
+msgstr "任務に集中しろ、パイロット。"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:90
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:179
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:293
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:395
 msgid "Dvaered Sabotage"
-msgstr ""
+msgstr "ドベーレッドの破壊活動"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:91
 msgid ""
 "Pick up Hamfresser in {pnt} in {sys}. Use a civilian ship with at least "
 "{tonnes} of free cargo"
-msgstr ""
+msgstr "{sys}星系の{pnt}でハンフレッサーを拾え。すくなくとも "
+"{tonnes}ぶんの船倉が空いている民間船を使うこと。"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:92
 msgid "Meet Battleaddict around {pnt} in {sys}"
-msgstr ""
+msgstr "{sys}星系の{pnt}付近でバトラディクトと会え。"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:93
 msgid "Deposit Hamfresser on {pnt} in {sys}"
-msgstr ""
+msgstr "{sys}星系の{pnt}でハンフレッサーを降ろせ。"
 
 #. Meet Captain Hamfresser
 #. You land at the commando's planet
@@ -40428,7 +40630,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:215
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:296
 msgid "Captain Hamfresser"
-msgstr ""
+msgstr "ハンフレッサー大尉"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:100
 msgid ""
@@ -40440,12 +40642,19 @@ msgid ""
 "description of your contact, which means you will have to overcome your fear "
 "and talk to him."
 msgstr ""
+"背の高い、とても大きなサイボーグ兵士が壁に向かって座っていた。すぐ隣には非常"
+"口があった。その男はオレンジジュースをピンクのストローを使って派手に飲んで、"
+"ほかの客たちを疑わしげに吟味している。そのにらみによる力で、男はまわりの広い"
+"空間を一掃していた。人びとは半ロボットの凝視に出会うよりは離れるほうを好むら"
+"しい。残念なことに、その男はあなたの連絡員の人相と一致していた。それは恐れに"
+"うち勝ち、男と話さなければならないという意味になる。"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:103
 msgid ""
 "This planet belongs to Lord Battleaddict. You will be captured if you land "
 "here. The mission failed."
-msgstr ""
+msgstr "この惑星はバトラディクト卿に所属している。ここに着陸したら逮捕されることにな"
+"る。任務は失敗だ。"
 
 #. Report back
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:107
@@ -40475,7 +40684,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:121
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:123
 msgid "New passengers"
-msgstr ""
+msgstr "新しい乗客たち"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:119
 msgid ""
@@ -40495,6 +40704,20 @@ msgid ""
 "mate, this is not a death machine, It's just a bomb. Or even just a bomblet."
 "\""
 msgstr ""
+"｢こ……こんにちは｣ と、あなたはいった。恐るおそる手を振りながら。｢あなたがハン"
+"フレッサー大尉ですか？｣。兵士がこたえる。｢もちろんだ。わたしの名札に書いてあ"
+"るとおり｣。大尉の記章とドベーレッド宇宙歩兵隊の意匠 (翼のついたつちほこ) "
+"の隣の、胸にある小さな札を兵士は指差した。それには ｢ハンフレッサー｣ と書いて"
+"ある。ハンフレッサーはあなたを上から下まで見つめた。｢あんたは民間のパイロット"
+"だよな？　あんたの船の接舷所の番号を教えてくれ。そこで会おう。おっと、"
+"それから船倉を {tonnes}あけておいてくれ｣\n"
+"   それから大尉は立ちあがり、繊細に空になったグラスを隅に置いてから立ち去った"
+"。大尉の髪が天井をこするのを見ながら、あなたは {tonnes}で大尉を載せるのにじゅ"
+"うぶんだろうかと疑問に思う。あなたが接舷所に到着すると、ハンフレッサーが見え"
+"た。ほかに 5 人の兵士と 2 機のアンドロイドがいて、巨大で奇妙な機械をあなたの"
+"船に積みこんでいる。｢ちょっと｣ と、あなたはいった。｢それでどうするんですか？"
+"　その……死の機械？｣。ハンフレッサーが近づいてきて、低い声でこたえる。｢しかし"
+"相棒、これは死の機械じゃない。ただの爆弾だ。というかただの小爆弾でしかない｣"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:121
 msgid ""
@@ -40515,6 +40738,22 @@ msgid ""
 "is a Goddard-plumber, so she will lead us.\" A young and smiling soldier "
 "raises her hand, and says \"Hi\"."
 msgstr ""
+"｢けっこうです｣ と、あなたは文句もいわずに従った。｢すべきことをしてください｣。"
+"貨物が積みこまれると、チームが決められた船室に乗りこんだ。あなたは大尉と話を"
+"始める。｢それで、あの子爆弾はバトラディクトのゴダードへ行くんだと思っています"
+"。どうやってそこへ設置することになっているんですか？　最高司令部から孫娘さん"
+"への贈り物に見せかけるつもりですか？｣。ハンフレッサーがあなたを驚いて見つめた"
+"。｢いや……それは少佐が……それでうまくいくと思ってるのか？｣。"
+"皮肉な意見だったと説明するには (この男が皮肉がなんだか知っていたと仮定しても)"
+" 時間がかかりすぎるだろうとあなたは悟った。だからあなたは少佐の計画を説明する"
+"ように頼むだけにした。\n"
+"   ｢まえの時限に、われわれはバトラディクトから配管業者への連絡を傍受した。バ"
+"トラディクトの巡洋艦は下水処理に問題があり、介入を要請したんだ。それでわれわ"
+"れは配管業者を誘拐して、電磁バルス爆弾を置き換え用の下水処理施設に偽装した。"
+"われわれはバトラディクトの船に接舷して、爆弾を設置する。そして疑われないよう"
+"に故障を修理してから、離れることになる。このリング兵卒はゴダード配管工だ。だ"
+"から兵卒がわれわれを率いることになる｣。若くてほほえんでいる兵士が手を上げてか"
+"らいった。｢こんにちは｣"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:123
 msgid ""
@@ -40528,36 +40767,46 @@ msgid ""
 "   \"As usual, Lord Battleaddict's cruiser should be in orbit around {pnt} "
 "in {sys}\"."
 msgstr ""
+"この計画はばかにみごとなのか死ぬほど愚かなのか、そのどちらだろうとあなたが思"
+"っていると、ハンフレッサーが紹介を始めた。｢こちらがニコロフ軍曹で、わたしの副"
+"指揮官だ。こちらはトゥロンク兵卒で、わたしの分隊から来た。それからサーラス伍"
+"長で、医療支援をする。おっと、それからむこうの隅にいるあいつは、ストレイファ"
+"ー中尉。中尉は特殊作戦部のパイロットだ。プラン B "
+"に切り替える必要がでた万一の場合のためにここにいる｣。プラン B "
+"とはなんなのかあなたがたずねると、ハンフレッサーは簡単にこたえた。｢"
+"あんたはプラン B に切り替わることを望んでいない。\n"
+"   ｢いつものように、バトラディクト卿の巡洋艦は{sys}星系の{pnt}をまわる軌道に"
+"いるはずだ｣"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:127
 msgid "Bomb"
-msgstr ""
+msgstr "爆弾"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:127
 msgid "A gift from the High Command to Lord Battleaddict."
-msgstr ""
+msgstr "最高司令部からバトラディクト卿への贈り物。"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:135
 msgid "Not enough free space"
-msgstr ""
+msgstr "空き容量がじゅうぶんにない"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:135
 msgid ""
 "Your ship does not have enough free space. Come back with {tonnes} free."
-msgstr ""
+msgstr "あなたの船にはじゅうぶんな空き容量がない。{tonnes}空いた状態で戻れ。"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:180
 msgid "Go to {sys}, approach {pnt}, and wait for the Phalanx"
-msgstr ""
+msgstr "{sys}星系に行き、{pnt}へ近づき、ファランクスを待て。"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:181
 msgid "Disable and board the Phalanx"
-msgstr ""
+msgstr "ファランクスを無力化して移乗せよ。"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:182
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:108
 msgid "Report back on {pnt} in {sys}"
-msgstr ""
+msgstr "{sys}星系の{pnt}に報告にもどれ。"
 
 #. Fighter duel
 #. Entering (Dvaer)
@@ -40568,7 +40817,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:133
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:294
 msgid "General Klank"
-msgstr ""
+msgstr "クランク将軍"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:208
 msgid "Colonel Urnus"
@@ -40578,7 +40827,7 @@ msgstr "アーナス大佐"
 #. Equips a Goddard for a duel, with or without repeating railguns
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:263
 msgid "Not far from the goal"
-msgstr ""
+msgstr "目的地は遠くない"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:263
 msgid ""
@@ -40590,10 +40839,16 @@ msgid ""
 "plumber suits on. Nikolov, switch the decoder on so that we can monitor the "
 "transmissions of the escort ships. It could tell us if we're detected.\""
 msgstr ""
+"ジャンプを終えると、ストレイファー中尉があなたのレーダー画面に近よってきた。｢"
+"バトラディクトのゴダードは{pnt}の周囲にいるはずだ。いまごろはナノボンド装甲と"
+"連発レールガンをできるだけそこらじゅうに追加しているはずだと思う。まわりに巡"
+"視船がすこしして、われわれの保安許可を監督することになるだろう｣。ハンフレッサ"
+"ーがチームに指示を与える。｢全員配管工の服を着ろ。ニコロフ、復号器の電源を入れ"
+"て、護衛船の通信を監視できるようにしろ。それでばれたらわかる｣"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:267
 msgid "We're safe now"
-msgstr ""
+msgstr "もう安全だ"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:267
 msgid ""
@@ -40612,10 +40867,23 @@ msgid ""
 "\"Good old Tamtam,\" Hamfresser says smiling, \"he always worries too much "
 "about us.\""
 msgstr ""
+"あなたの船がジャンプしたあとのふつうの速度に戻ると、ハンフレッサーがいった。｢"
+"妙だな、生きのびられるとは思ってなかった。どうだ、ストレイファー？｣。中尉がこ"
+"たえる。｢同じです、大尉。いいパイロットを手に入れたってことでしょうね｣。それ"
+"からあなたがどうして怖がらなかったのか聞くと、ハンフレッサーがこたえた。｢もち"
+"ろん怖かった！　そうじゃないやつがいるのか？　しかしわれわれは恐れを見せない"
+"ように訓練されているんだ。パイロットを取り乱させることになりがちだしな｣\n"
+"   二、三秒後にあなたはタム少佐から星系間暗号通信を受けとった。｢プラン A "
+"は漏洩した。プラン C に切り替えてくれ。{sys}星系にはなにがあってもジャンプす"
+"るな。参考までに、漏洩は統制下にあり、漏洩源には対処した｣。声がいったんとぎれ"
+"て、それからつづいた。｢{sys}星系に入るまえにこの連絡が届けばほんとうにいいん"
+"だが。そうでなければ、どうかドベーリウスさま、メイスロケットの守護聖人さま、"
+"願わくはあなたの魂に慈悲がありますように……｣。｢タムタムのやつ｣ と、ほほえみな"
+"がらハンフレッサーはいう。｢いつもおれたちのことを心配しすぎなんだ｣"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:269
 msgid "Plan C"
-msgstr ""
+msgstr "プラン C"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:269
 msgid ""
@@ -40628,11 +40896,18 @@ msgid ""
 "Major on {duel_pnt} and the rest of the team will execute the remainder of "
 "the plan. I, or Sergeant Nikolov, will brief you once we're in the Phalanx.\""
 msgstr ""
+"｢よし、みんな、われわれはこれから{sys}星系の{pnt}へ向かう。情報によれば、バト"
+"ラディクトの艦隊のファランクスがそこですぐに離陸するはずだ。そいつの名前は『"
+"ゴードン』で、輸送任務から戻る途中にある。分析によれば、この船にはわれわれの"
+"爆弾を載せられるだけの空きがあるはずだ。われわれはその船を無力化して、パイロ"
+"ットを制圧してから、われわれの資材を積みこむ。そのあと{player}が{duel_pnt}に"
+"いる少佐に報告に戻り、残ったチームは計画の残りを実行する。わたし、またはニコ"
+"ロフ軍曹が、ファランクスに乗りこんだらあんたに概況説明をする｣"
 
 #. Battleaddict agrees for the player to approach
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:275
 msgid "You're controlled"
-msgstr ""
+msgstr "あなたは管制下にある"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:275
 msgid ""
@@ -40647,10 +40922,19 @@ msgid ""
 "closed, \"This cruiser probably has no turreted weapons, in anticipation of "
 "the duel, so I would recommend to approach it from the back, just in case.\""
 msgstr ""
+"巡洋艦を守る小型の船にあなたが近づくと、ベンデッタがあなたにあいさつしてきた"
+"。ハンフレッサーがこたえる。｢わたしたちはジョンソン・アンド・ジホンソン、提携"
+"配管業者です。バトラディクトさんとは約束があります。下水処理問題の件です｣。戦"
+"闘機パイロットがこたえた。｢了解した、市民。そちらの応答コードにまちがいはない"
+"。通っていいぞ｣。あなたはゆっくりと船を前進させ、そのあいだにハンフレッサーが"
+"むこうのパイロットにこびへつらったあいさつをした。｢ありがとう、士官どの｣\n"
+"   ｢ところで｣ と、通信が切れるとストレイファー中尉がいう。｢この巡洋艦にはおそ"
+"らく砲塔型の武器がない。決闘を見こしているからな。だからうしろから近づくこと"
+"を勧める。ねんのためだ｣"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:278
 msgid "We told you not to use a combat ship!"
-msgstr ""
+msgstr "戦闘艦を使うなといったよな！"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:278
 msgid ""
@@ -40659,11 +40943,15 @@ msgid ""
 "attack us! Why did you have to use a combat ship? We'll have to abort the "
 "mission now. All because of your bloody combat ship!\""
 msgstr ""
+"あなたが近づくと、ストレイファー中尉があなたのレーダー画面を見た。｢われわれは"
+"戦闘艦に乗っている。戦闘艦は使うなといったよな。ほら、むこうはわれわれを攻撃"
+"しようとしている！　どうして戦闘艦を使わなきゃならなかったんだ？　"
+"もう任務を中止しなければならないな。みんなあんたの血まみれの戦闘艦のせいだ！｣"
 
 #. Battleaddict sees that the player is not a plumber
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:286
 msgid "That could have worked"
-msgstr ""
+msgstr "うまくいかなかった"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:286
 msgid ""
@@ -40686,16 +40974,32 @@ msgid ""
 "out of this system, {player}!\" Strangely enough, none of the soldiers seem "
 "to show any sign of panic."
 msgstr ""
+"近づくあいだに、巡洋艦の表面がもっとよく見えるようになった。あなたはに十機ほ"
+"どの往復船が惑星から船へと資材や工具を運んでいるのが見えた。もっと近づくと、"
+"巡洋艦は巨大な建設現場のように見え、そこでは宇宙服を着た労働者たちがナノボン"
+"ドで船体装甲を強化しているのに気づいた。あなたの背後で、護衛船のおしゃべりが"
+"聞こえた。ハンフレッサーとチームが心配しながら聞いているのだ。｢おい、ゾグ。娘"
+"のことが心配になってきたんだ。先生が娘は同級生と暴力沙汰をおこさないといった"
+"んだよ。専門医に会うべきだと思うか？｣。｢さあ、正直わからんよ。あの新しいホロ"
+"映画は非難すべきだな。いつも暴力がすくなくて恋愛が多いんだ。政府は対応すべき"
+"だ｣\n"
+"   とつぜん、ある通信が全員の動きを止めた。｢で、大佐、あの配管業者の偽物を破"
+"壊するのはいつなんですか？　シュレッダーを使うのがちょっと楽しみなんですよ！｣"
+"。｢黙れ、伍長！｣。｢おっ、なんだ、暗号通信を使ってますよ。配管業者にわれわれの"
+"暗号は破れませんよ｣。｢しかしあいつらは配管業者じゃないんだ、ばかめ！｣\n"
+"   ハンフレッサーはあなたを見て宣言した。｢任務は中止だ。この星系から出ろ、{pl"
+"ayer}！｣。いかにも不思議なことに、兵士たちはだれもうろたえたようすを見せてい"
+"ないようだ。"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:293
 msgid "Jump out. Do NOT land in this system"
-msgstr ""
+msgstr "ジャンプして出ろ。この星系では着陸するな。"
 
 #. Test civilian ships
 #. Spawn the Phalanx to disable
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:313
 msgid "Gorgon"
-msgstr ""
+msgstr "ゴードン"
 
 #. Go towards Battleaddict's place
 #. TODO: not possible to jump out nor land
@@ -40709,12 +41013,12 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:351
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:442
 msgid "Just try to catch me, you pirate!"
-msgstr ""
+msgstr "とにかく捕まえてみろよ、海賊！"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:355
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:446
 msgid "You made a very big mistake!"
-msgstr ""
+msgstr "おまえはとても大きなまちがいをおかした！"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:361
 msgid "Boarding"
@@ -40739,6 +41043,21 @@ msgid ""
 "operation so far, you start your engines and respond \"Good luck, folks!\" "
 "The lieutenant answers \"Thanks, citizen, I'm glad to have met you.\""
 msgstr ""
+"奇襲隊の全員が戦闘服を身に着けた。ハンフレッサーが最後の指示をする。｢ニコロフ"
+"、トゥロンク、それからわたしが最初に入って区画を掃除する。忘れるな、いつもの"
+"ダドリー戦闘アンドロイドはいない。われわれに押しつけられたのは 2 機の役に立た"
+"ない配管ボットと{player}の船の少数の保安ドロイドだから、われわれが手を汚さな"
+"ければならない。コルベットは一般的に二、三機の 629 スピットファイアとたまに "
+"711 グリルマイスター 1 機で守れられている。あまり多くないが、それでも不注意な"
+"兵士を祖先のもとへ送るのにはじゅうぶんだ｣\n"
+"   コルベットのエアロックがニコロフの回転ノコギリのもとに屈すると、大尉は合図"
+"をして小さなチームが船に入った。敵船からあなたに聞こえる射撃と爆発の音が、ど"
+"んどん遠くほうへいく。やっとあなたは無力化されたコルベットから簡潔な通信が送"
+"られてきたのを聞いた。｢来てくれ、ストレイファー。みんなうまくいった。今から積"
+"み荷をファランクスへ移動させる……。もう操縦は終わったから、あんたは行っていい｣"
+"。ここまでの作戦で生きのびたのに喜びながら、あなたはエンジンを始動してからこ"
+"たえた。｢幸運を、みなさん！｣。中尉がこたえる。｢ありがとう、市民。会えてうれし"
+"かったよ｣"
 
 #. Prevent the player form actually boarding the ship
 #. Mission failed: phalanx died
@@ -40746,25 +41065,27 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:379
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:464
 msgid "Mission Failed: target destroyed"
-msgstr ""
+msgstr "任務に失敗 : 目標を破壊した"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:379
 msgid ""
 "You were supposed to disable that ship, not to destroy it. How are you "
 "supposed to transport the bomb now?"
-msgstr ""
+msgstr "あなたはあの船を無力化することになっていた。破壊ではない。これからどうやって"
+"爆弾を輸送しようとしているんだ？"
 
 #. Mission failed: phalanx escaped
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:385
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:468
 msgid "Mission Failed: target escaped"
-msgstr ""
+msgstr "任務に失敗 : 目標が逃げた"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:385
 msgid ""
 "You were supposed to disable that ship, not to let it escape. How are you "
 "supposed to transport the bomb now?"
-msgstr ""
+msgstr "あなたはあの船を無力化することになっていた。逃がすのではなく。これからどうや"
+"って爆弾を輸送しようとしているんだ？"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:390
 msgid "Ready to attend to the show?"
@@ -41144,27 +41465,27 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:218
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:295
 msgid "Sergeant Nikolov"
-msgstr ""
+msgstr "ニコロフ軍曹"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:119
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:203
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:221
 msgid "Private Tronk"
-msgstr ""
+msgstr "トゥロンク兵卒"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:120
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:204
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:225
 msgid "Corporal Therus"
-msgstr ""
+msgstr "サーラス伍長"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:123
 msgid "Commando"
-msgstr ""
+msgstr "奇襲隊"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:123
 msgid "A commando unit."
-msgstr ""
+msgstr "奇襲部隊。"
 
 #. TODO: see if it gets auto-removed at the end of mission
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:126
@@ -44174,7 +44495,7 @@ msgstr ""
 #: dat/missions/empire/collective/ec00.lua:69
 #: dat/missions/empire/collective/ec00.lua:81
 msgid "Collective Scout"
-msgstr "集合体・偵察"
+msgstr "集合体の偵察"
 
 #: dat/missions/empire/collective/ec00.lua:71
 msgid "Find a scout last seen in the {sys} system"
@@ -45825,7 +46146,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:38
 msgid "Lieutenant"
-msgstr "大尉"
+msgstr ""
 
 #: dat/missions/empire/emp_cargo00.lua:53
 msgid "You see an Empire Lieutenant who seems to be looking at you."
@@ -50701,7 +51022,7 @@ msgstr ""
 #. Main stuff starts
 #: dat/missions/minerva/kex2.lua:218
 msgid "Baroness Eve"
-msgstr "イブ男爵"
+msgstr ""
 
 #: dat/missions/minerva/kex3.lua:60
 msgid ""
@@ -65446,8 +65767,8 @@ msgstr ""
 "は宇宙港の着岸施設の状態にハラスが満足するかもしれないと思っていた。そこはす"
 "ばらしい状態を保っていたからだ。それが変わったのは、ハラスが見あげてすぐだっ"
 "た。\n"
-"    ｢あれはか・ん・ぜ・ん・に、まちがった色だ！　｣ と、ハラスはいきまいた。"
-"｢あれは生きるうえでのわれわれのしきたりをあざわらっている。それがまさに頭上に"
+"    ｢あれはか・ん・ぜ・ん・に、まちがった色だ！　｣ と、ハラスはいきまいた。｢"
+"あれは生きるうえでのわれわれのしきたりをあざわらっている。それがまさに頭上に"
 "あるんだぞ！　あんたはおれの子どもたちが空というのは……空というのは……あんなふ"
 "うに見えるものだと信じるように育てたいのか？｣。ハラスはそこまで怒らせた天をま"
 "た見あげた。｢だめだ、船長。忍耐もこれまでだ。あんたにはおれと家族を{sys}星系"
@@ -65455,8 +65776,8 @@ msgstr ""
 "親類がいるんだ。もうこの無益な努力で時間を無駄にするつもりはない！｣\n"
 "    あなたがすばやく訴えるひまもないうちに、ハラスは自分の (あなたの) 船室に"
 "突進して戻った。あなたは残され、自分の怒りを近くをさまよっていたハラスの妻に"
-"ぶちまけるか、自分の胸に収めておくかのどちらかにせざるをえなくなった。あわれ"
-"な女はなにも悪いことをしていないので、あなたは険しい顔で船橋に戻った。"
+"ぶちまけるか、自分の胸に収めておくかのどちらかにせざるをえなくなった。哀れな"
+"女はなにも悪いことをしていないので、あなたは険しい顔で船橋に戻った。"
 
 #. Note: this mission does not make any system claims.
 #. You boarded their ship, now you're stuck with them.
