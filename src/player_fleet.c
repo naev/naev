@@ -37,49 +37,44 @@ int pfleet_deploy( PlayerShip_t *ps, int deploy )
 {
    /* When undeploying we want to make sure cargo fits. */
    if (ps->deployed && !deploy) {
-      Pilot *p = pilot_get( ps->id );
-      if (p != NULL) {
-         int idx;
-         int q = pilot_cargoUsed( p ); /* Amount we have to allocate. */
-         int f = pfleet_cargoFree() - pilot_cargoFree( p ); /* Real free amount. */
-         if (f < q) {
-            char buf_amount[ECON_MASS_STRLEN], buf_free[ECON_MASS_STRLEN], buf_needed[ECON_MASS_STRLEN];
-            tonnes2str( buf_amount, q );
-            tonnes2str( buf_free, -f );
-            tonnes2str( buf_needed, q-f );
-            if (!dialogue_YesNo( _("Not Enough Cargo Space"), _("Your ship '%s' has %s of cargo but there is only %s of free space in the rest of the fleet. Get rid of %s of cargo to shrink your fleet?"), p->name, buf_amount, buf_free, buf_needed ))
-               return -1;
+      int idx;
+      Pilot *p = ps->p;
+      int q = pilot_cargoUsed( p ); /* Amount we have to allocate. */
+      int f = pfleet_cargoFree() - pilot_cargoFree( p ); /* Real free amount. */
+      if (f < q) {
+         char buf_amount[ECON_MASS_STRLEN], buf_free[ECON_MASS_STRLEN], buf_needed[ECON_MASS_STRLEN];
+         tonnes2str( buf_amount, q );
+         tonnes2str( buf_free, -f );
+         tonnes2str( buf_needed, q-f );
+         if (!dialogue_YesNo( _("Not Enough Cargo Space"), _("Your ship '%s' has %s of cargo but there is only %s of free space in the rest of the fleet. Get rid of %s of cargo to shrink your fleet?"), p->name, buf_amount, buf_free, buf_needed ))
+            return -1;
+      }
+      /* Try to make room for the commodities. */
+      idx = -1;
+      for (int i=0; i<array_size(player.p->escorts); i++) {
+         Escort_t *e = &player.p->escorts[i];
+         Pilot *pe = pilot_get( e->id );
+         if (pe == NULL)
+            continue;
+         if (strcmp( pe->name, p->name )==0) {
+            idx = i;
+            break;
          }
-         /* Try to make room for the commodities. */
-         idx = -1;
-         for (int i=0; i<array_size(player.p->escorts); i++) {
-            Escort_t *e = &player.p->escorts[i];
-            Pilot *pe = pilot_get( e->id );
-            if (pe == NULL)
-               continue;
-            if (strcmp( pe->name, p->name )==0) {
-               idx = i;
-               break;
-            }
-         }
-         if (idx < 0)
-            WARN(_("Player deployed ship '%s' not found in escort list!"), p->name);
-         else
-            escort_rmListIndex( player.p, idx );
+      }
+      if (idx < 0)
+         WARN(_("Player deployed ship '%s' not found in escort list!"), p->name);
+      else
+         escort_rmListIndex( player.p, idx );
 
-         /* Try to add the cargo. */
-         for (int i=0; i<array_size(p->commodities); i++) {
-            PilotCommodity *pc = &p->commodities[i];
-            pfleet_cargoAdd( pc->commodity, pc->quantity );
-         }
+      /* Try to add the cargo. */
+      for (int i=0; i<array_size(p->commodities); i++) {
+         PilotCommodity *pc = &p->commodities[i];
+         pfleet_cargoAdd( pc->commodity, pc->quantity );
       }
    }
    ps->deployed = deploy;
-   if (!ps->deployed) {
-      Pilot *p = pilot_get( ps->id );
-      if (p != NULL)
-         pilot_delete( p );
-   }
+   if (!ps->deployed)
+      pilot_delete( ps->p );
    else
       player_addEscorts();
    pfleet_update();
@@ -145,8 +140,9 @@ void pfleet_cargoRedistribute (void)
       PilotCommodity *pc = &pclist[i];
       int q = pfleet_cargoAdd( pc->commodity, pc->quantity );
 #ifdef DEBUGGING
-      if (q != pc->quantity)
+      if (q != pc->quantity) {
          WARN(_("Failure to add cargo '%s' to player fleeet. Only %d of %d added."), pc->commodity->name, q, pc->quantity );
+      }
 #endif /* DEBUGGING */
    }
 

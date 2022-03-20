@@ -175,7 +175,7 @@ unsigned int escort_create( Pilot *p, const char *ship,
  * @brief Creates an escort from a reference.
  *
  *    @param p Parent of the escort (who he's guarding).
- *    @param ref Reference for the escort.
+ *    @param pe Reference for the escort.
  *    @param pos Position to create escort at.
  *    @param vel Velocity to create escort with.
  *    @param dir Direction to face.
@@ -184,21 +184,14 @@ unsigned int escort_create( Pilot *p, const char *ship,
  *    @param dockslot The outfit slot which launched the escort (-1 if N/A)
  *    @return The ID of the escort on success.
  */
-unsigned int escort_createRef( Pilot *p, const Pilot *ref,
+unsigned int escort_createRef( Pilot *p, Pilot *pe,
       const vec2 *pos, const vec2 *vel, double dir,
       EscortType_t type, int add, int dockslot )
 {
-   Pilot *pe;
-   unsigned int e;
-   unsigned int parent;
-
-   /* Get important stuff. */
-   parent = p->id;
-
-   /* Create the pilot. */
-   e = pilot_clone( ref );
-   pe = pilot_get(e);
-   pe->parent = parent;
+   /* Reset internals. */
+   pilot_reset( pe );
+   pilot_addStack( pe );
+   pe->parent = p->id;
 
    /* Make invincible to player. */
    if (pe->parent == PLAYER_ID)
@@ -223,10 +216,10 @@ unsigned int escort_createRef( Pilot *p, const Pilot *ref,
 
    /* Add to escort list. */
    if (add != 0)
-      escort_addList( p, ref->ship->name, type, e, 1 );
+      escort_addList( p, pe->ship->name, type, pe->id, 1 );
    pe->dockslot = dockslot;
 
-   return e;
+   return pe->id;
 }
 
 /**

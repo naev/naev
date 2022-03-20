@@ -200,14 +200,11 @@ int can_swapEquipment( const char *shipname )
       return 0;
    }
 
-   if (ps->deployed) {
-      newship = pilot_get( ps->id );
+   newship = ps->p;
+   if (ps->deployed)
       diff = 0;
-   }
-   else {
-      newship = ps->p;
+   else
       diff = pilot_cargoUsed(player.p) - pilot_cargoFree(newship); /* Has to fit all the cargo. */
-   }
    diff = MAX( diff, pilot_cargoUsedMission(player.p) - pilot_cargoFree(newship) ); /* Has to fit all mission cargo. */
    if (diff > 0) { /* Current ship has too much cargo. */
       land_errDialogueBuild( n_(

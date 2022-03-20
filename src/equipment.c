@@ -1720,16 +1720,13 @@ void equipment_updateShips( unsigned int wid, const char* str )
       ps      = &player.ps;
       onboard = 1;
       deployed = 1;
-      ship    = ps->p;
    }
    else {
-      Pilot *p;
       ps       = player_getPlayerShip( shipname );
       onboard  = 0;
       deployed = ps->deployed;
-      p        = pilot_get( ps->id );
-      ship     = (p!=NULL) ? p : ps->p;
    }
+   ship     = ps->p;
    favourite = ps->favourite;
    prevship = eq_wgt.selected;
    eq_wgt.selected = ship;

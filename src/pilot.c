@@ -3024,6 +3024,43 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
 }
 
 /**
+ * @brief Resets a pilot.
+ *
+ *    @param pilot Pilot to reset.
+ */
+void pilot_reset( Pilot* pilot )
+{
+   /* Initialize heat. */
+   pilot_heatReset( pilot );
+
+   /* Set the pilot stats based on their ship and outfits */
+   pilot_calcStats( pilot );
+
+   /* Update dynamic electronic warfare (static should have already been done). */
+   pilot_ewUpdateDynamic( pilot, 0. );
+
+   /* Clear timers. */
+   pilot_clearTimers(pilot);
+
+   /* Update the x and y sprite positions. */
+   gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
+         pilot->ship->gfx_space, pilot->solid->dir );
+
+   /* Heal up. */
+   pilot_healLanded( pilot );
+
+   /* Targets. */
+   pilot_setTarget( pilot, pilot->id ); /* No target. */
+   pilot->nav_spob         = -1;
+   pilot->nav_hyperspace   = -1;
+   pilot->nav_anchor       = -1;
+   pilot->nav_asteroid     = -1;
+
+   /* AI */
+   pilot->shoot_indicator = 0;
+}
+
+/**
  * @brief Initialize pilot's trails according to the ship type and current system characteristics.
  */
 static void pilot_init_trails( Pilot* p )
@@ -3151,6 +3188,17 @@ unsigned int pilot_clone( const Pilot *ref )
    pilot_outfitLInitAll( dyn );
 
    return dyn->id;
+}
+
+/**
+ * @brief Adds a pilot to the stack.
+ */
+unsigned int pilot_addStack( Pilot *p )
+{
+   p->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
+   pilot_setFlag( p, PILOT_NOFREE );
+   array_push_back( &pilot_stack, p );
+   return p->id;
 }
 
 /**
@@ -3362,6 +3410,8 @@ void pilot_destroy(Pilot* p)
    /* pilot is eliminated */
    if (!pilot_isFlag( p, PILOT_NOFREE ))
       pilot_free(p);
+   else
+      p->id = 0; /* Invalidate ID. */
    array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] );
 }
 

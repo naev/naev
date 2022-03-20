@@ -550,19 +550,9 @@ void player_swapShip( const char *shipname, int move_cargo )
    ptemp = player.ps;
    player.ps = *ps;
    *ps = ptemp;
+   ship = player.ps.p;
 
    /* Swap player and ship */
-   ship = player.ps.p;
-   array_free( ship->commodities );
-   ship->commodities = NULL;
-   if (player.ps.deployed) {
-      Pilot *pd = pilot_get( player.ps.id );
-      if (pd != NULL) {
-         pilot_cargoMoveRaw( ship, pd ); /* Have to move the cargo from deployed ship over. */
-         pilot_delete( pd );
-         player.ps.id = 0;
-      }
-   }
    pilot_rmFlag( ship, PILOT_INACTIVE );
    pilot_setFlag( ps->p, PILOT_INACTIVE );
 
@@ -3096,7 +3086,7 @@ int player_addEscorts (void)
       vec2 v;
 
       /* Already exists. */
-      if ((ps->id > 0) && (pilot_get(ps->id)!=NULL))
+      if (ps->p->id)
          continue;
 
       /* Only deploy escorts that are deployed. */
@@ -3113,7 +3103,7 @@ int player_addEscorts (void)
             player.p->solid->pos.y + 50.*sin(a) );
 
       /* Add the escort to the fleet. */
-      ps->id = escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
+      escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
    }
 
    return 0;
@@ -3979,10 +3969,10 @@ static int player_parseEscorts( xmlNodePtr parent )
                   player.p->solid->pos.y + 50.*sin(a) );
 
             /* Add the escort to the fleet. */
-            ps->id = escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
+            escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
 
             /* Add commodities as necessary. */
-            pe = pilot_get( ps->id ); /* Should not be NULL or everything is broken. */
+            pe = ps->p;
             cur = node->xmlChildrenNode;
             do {
                xml_onlyNodes(cur);
