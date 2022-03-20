@@ -26,6 +26,7 @@
 #include "ndata.h"
 #include "nstring.h"
 #include "player.h"
+#include "player_fleet.h"
 #include "space.h"
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
@@ -485,12 +486,14 @@ int can_swap( const char *shipname )
 {
    int failure = 0;
    const Ship* ship = ship_get( shipname );
+   int diff;
 
-   if (pilot_cargoUsed(player.p) > ship->cap_cargo) { /* Current ship has too much cargo. */
-      double diff = pilot_cargoUsed(player.p) - ship->cap_cargo;
+   diff = pilot_cargoUsed(player.p) - (pfleet_cargoFree() - pilot_cargoFree(player.p) + ship->cap_cargo);
+   diff = MAX( diff, pilot_cargoUsedMission(player.p) - ship->cap_cargo ); /* Has to fit all mission cargo. */
+   if (diff > 0) { /* Current ship has too much cargo. */
       land_errDialogueBuild( n_(
-               "You have %g tonne more cargo than the new ship can hold.",
-               "You have %g tonnes more cargo than the new ship can hold.",
+               "You have %d tonne more cargo than the new ship can hold.",
+               "You have %d tonnes more cargo than the new ship can hold.",
                diff ),
             diff );
       failure = 1;
