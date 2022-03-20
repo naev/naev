@@ -3360,7 +3360,8 @@ void pilot_destroy(Pilot* p)
    }
 
    /* pilot is eliminated */
-   pilot_free(p);
+   if (!pilot_isFlag( p, PILOT_NOFREE ))
+      pilot_free(p);
    array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] );
 }
 

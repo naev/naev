@@ -81,6 +81,7 @@ enum {
    PILOT_BRAKING,       /**< Pilot is braking. */
    PILOT_PERSIST,       /**< Persist pilot on jump. */
    PILOT_NOCLEAR,       /**< Pilot isn't removed by pilots_clear(). */
+   PILOT_NOFREE,        /**< Don't free the pilot memory (but erase from stack). */
    /* Sentinal. */
    PILOT_FLAGS_MAX      /**< Maximum number of flags. */
 };
