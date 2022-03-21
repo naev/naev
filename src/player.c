@@ -3870,14 +3870,17 @@ static int player_parseDoneMissions( xmlNodePtr parent )
 {
    xmlNodePtr node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"done")) {
-         int id = mission_getID( xml_get(node) );
-         if (id < 0)
-            DEBUG(_("Mission '%s' doesn't seem to exist anymore, removing from save."),
-                  xml_get(node));
-         else
-            player_missionFinished( id );
-      }
+      xml_onlyNodes(node);
+
+      if (!xml_isNode(node,"done"))
+         continue;
+
+      int id = mission_getID( xml_get(node) );
+      if (id < 0)
+         DEBUG(_("Mission '%s' doesn't seem to exist anymore, removing from save."),
+               xml_get(node));
+      else
+         player_missionFinished( id );
    } while (xml_nextNode(node));
    return 0;
 }
@@ -3892,14 +3895,17 @@ static int player_parseDoneEvents( xmlNodePtr parent )
 {
    xmlNodePtr node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"done")) {
-         int id = event_dataID( xml_get(node) );
-         if (id < 0)
-            DEBUG(_("Event '%s' doesn't seem to exist anymore, removing from save."),
-                  xml_get(node));
-         else
-            player_eventFinished( id );
-      }
+      xml_onlyNodes(node);
+
+      if (!xml_isNode(node,"done"))
+         continue;
+
+      int id = event_dataID( xml_get(node) );
+      if (id < 0)
+         DEBUG(_("Event '%s' doesn't seem to exist anymore, removing from save."),
+               xml_get(node));
+      else
+         player_eventFinished( id );
    } while (xml_nextNode(node));
    return 0;
 }
@@ -3914,14 +3920,17 @@ static int player_parseLicenses( xmlNodePtr parent )
 {
    xmlNodePtr node = parent->xmlChildrenNode;
    do {
-      if ( xml_isNode( node, "license" ) ) {
-         char *name = xml_get( node );
-         if (name == NULL) {
-            WARN( _( "License node is missing name attribute." ) );
-            continue;
-         }
-         player_tryAddLicense( name );
+      xml_onlyNodes(node);
+
+      if (!xml_isNode( node, "license" ))
+         continue;
+
+      char *name = xml_get( node );
+      if (name == NULL) {
+         WARN( _( "License node is missing name attribute." ) );
+         continue;
       }
+      player_tryAddLicense( name );
    } while (xml_nextNode(node));
    return 0;
 }
@@ -3936,74 +3945,76 @@ static int player_parseEscorts( xmlNodePtr parent )
 {
    xmlNodePtr node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"escort")) {
-         char *buf, *name;
+      char *buf, *name;
 
-         xmlr_attr_strd( node, "type", buf );
-         xmlr_attr_strd( node, "name", name );
-         if (name==NULL) { /* Workaround for old saves, TODO remove around 0.11 */
-            char *n = xml_get(node);
-            name = (n!=NULL) ? n : NULL;
-         }
-         if (strcmp(buf,"bay")==0)
-            escort_addList( player.p, name, ESCORT_TYPE_BAY, 0, 1 );
+      /* Skip non-escorts. */
+      if (!xml_isNode(node,"escort"))
+         continue;
 
-         else if (strcmp(buf,"fleet")==0) {
-            xmlNodePtr cur;
-            double a;
-            vec2 v;
-            Pilot *pe;
-            PlayerShip_t *ps = player_getPlayerShip( name );
+      xmlr_attr_strd( node, "type", buf );
+      xmlr_attr_strd( node, "name", name );
+      if (name==NULL) { /* Workaround for old saves, TODO remove around 0.11 */
+         char *n = xml_get(node);
+         name = (n!=NULL) ? n : NULL;
+      }
+      if (strcmp(buf,"bay")==0)
+         escort_addList( player.p, name, ESCORT_TYPE_BAY, 0, 1 );
 
-            /* Only deploy escorts that are deployed. */
-            if (!ps->deployed)
-               WARN(_("Fleet ship '%s' is deployed despite not being marked for deployal!"), ps->p->name);
+      else if (strcmp(buf,"fleet")==0) {
+         xmlNodePtr cur;
+         double a;
+         vec2 v;
+         Pilot *pe;
+         PlayerShip_t *ps = player_getPlayerShip( name );
 
-            /* Only deploy spaceworthy escorts. */
-            if (!!pilot_checkSpaceworthy(ps->p))
-               WARN(_("Fleet ship '%s' is deployed despite not being space worthy!"), ps->p->name);
+         /* Only deploy escorts that are deployed. */
+         if (!ps->deployed)
+            WARN(_("Fleet ship '%s' is deployed despite not being marked for deployal!"), ps->p->name);
 
-            /* Get the position. */
-            a = RNGF() * 2. * M_PI;
-            vec2_cset( &v, player.p->solid->pos.x + 50.*cos(a),
-                  player.p->solid->pos.y + 50.*sin(a) );
+         /* Only deploy spaceworthy escorts. */
+         if (!!pilot_checkSpaceworthy(ps->p))
+            WARN(_("Fleet ship '%s' is deployed despite not being space worthy!"), ps->p->name);
 
-            /* Add the escort to the fleet. */
-            escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
+         /* Get the position. */
+         a = RNGF() * 2. * M_PI;
+         vec2_cset( &v, player.p->solid->pos.x + 50.*cos(a),
+               player.p->solid->pos.y + 50.*sin(a) );
 
-            /* Add commodities as necessary. */
-            pe = ps->p;
-            cur = node->xmlChildrenNode;
-            do {
-               xml_onlyNodes(cur);
-               if (xml_isNode(cur, "commodities")) {
-                  xmlNodePtr ccur = cur->xmlChildrenNode;
-                  do {
-                     xml_onlyNodes(ccur);
-                     if (xml_isNode(ccur,"commodity")) {
-                        int q;
-                        const Commodity *com;
-                        xmlr_attr_int(ccur,"quantity",q);
-                        com = commodity_get( xml_get(ccur) );
-                        if (com == NULL) {
-                           WARN(_("Unknown commodity '%s' detected, removing."), xml_get(cur));
-                           continue;
-                        }
-                        pilot_cargoAddRaw( pe, com, q, 0 );
+         /* Add the escort to the fleet. */
+         escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
+
+         /* Add commodities as necessary. */
+         pe = ps->p;
+         cur = node->xmlChildrenNode;
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur, "commodities")) {
+               xmlNodePtr ccur = cur->xmlChildrenNode;
+               do {
+                  xml_onlyNodes(ccur);
+                  if (xml_isNode(ccur,"commodity")) {
+                     int q;
+                     const Commodity *com;
+                     xmlr_attr_int(ccur,"quantity",q);
+                     com = commodity_get( xml_get(ccur) );
+                     if (com == NULL) {
+                        WARN(_("Unknown commodity '%s' detected, removing."), xml_get(cur));
                         continue;
                      }
-                     WARN(_("Player escort has unknown node '%s'"),ccur->name);
-                  } while(xml_nextNode(ccur));
-                  continue;
-               }
-               WARN(_("Player escort has unknown node '%s'"),cur->name);
-            } while (xml_nextNode(cur));
-         }
-         else
-            WARN(_("Escort has invalid type '%s'."), buf);
-         free(buf);
-         free(name);
+                     pilot_cargoAddRaw( pe, com, q, 0 );
+                     continue;
+                  }
+                  WARN(_("Player escort has unknown node '%s'"),ccur->name);
+               } while(xml_nextNode(ccur));
+               continue;
+            }
+            WARN(_("Player escort has unknown node '%s'"),cur->name);
+         } while (xml_nextNode(cur));
       }
+      else
+         WARN(_("Escort has invalid type '%s'."), buf);
+      free(buf);
+      free(name);
    } while (xml_nextNode(node));
    return 0;
 }
