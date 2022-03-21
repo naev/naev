@@ -449,7 +449,7 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
       const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot );
 Pilot* pilot_createEmpty( const Ship* ship, const char* name,
-      int faction, const char *ai, PilotFlags flags );
+      int faction, PilotFlags flags );
 unsigned int pilot_clone( const Pilot *p );
 unsigned int pilot_addStack( Pilot *p );
 void pilot_reset( Pilot* pilot );

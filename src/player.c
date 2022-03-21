@@ -460,7 +460,7 @@ static PlayerShip_t *player_newShipMake( const char *name )
    memset( ps, 0, sizeof(PlayerShip_t) );
    pilot_setFlagRaw( flags, PILOT_PLAYER_FLEET );
    /* Create the ship. */
-   ps->p = pilot_createEmpty( player_ship, name, faction_get("Player"), "player", flags );
+   ps->p = pilot_createEmpty( player_ship, name, faction_get("Player"), flags );
    if (player.p == NULL) {
       pilot_reset( ps->p );
       pilot_replacePlayer( ps->p );
@@ -3081,6 +3081,11 @@ int player_addEscorts (void)
 
       /* Add the escort to the fleet. */
       escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
+
+      /* Initialize. */
+      ai_pinit( ps->p, "player" );
+      pilot_reset( ps->p );
+      pilot_rmFlag( ps->p, PILOT_PLAYER );
    }
 
    return 0;
@@ -4098,7 +4103,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    /* Safe defaults. */
    pilot_clearFlagsRaw( flags );
-   pilot_setFlagRaw( flags, PILOT_PLAYER );
+   if (is_player)
+      pilot_setFlagRaw( flags, PILOT_PLAYER );
    pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
 
    /* Get the ship. */
@@ -4117,12 +4123,13 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    player_guiAdd( ship_parsed->gui );
 
    /* Create the ship. */
-   ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), "player", flags );
+   ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), flags );
    /* Player is currently on this ship */
    if (is_player) {
       ps.deployed = 0; /* Current ship can't be deployed. */
       pilot_replacePlayer( ship );
       player.p = ship;
+      ai_pinit( ship, "player" );
    }
    ps.p = ship;
 

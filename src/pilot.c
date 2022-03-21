@@ -3106,14 +3106,12 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
  *    @param ship Ship for the pilot to use.
  *    @param name Name of the pilot ship (NULL uses ship name).
  *    @param faction Faction of the ship.
- *    @param ai AI to use, or NULL to use the faction's.
  *    @param flags Flags for tweaking.
  *    @return Pointer to the new pilot (not added to stack).
  */
 Pilot* pilot_createEmpty( const Ship* ship, const char* name,
-      int faction, const char *ai, PilotFlags flags )
+      int faction, PilotFlags flags )
 {
-   (void) ai;
    Pilot *dyn = malloc(sizeof(Pilot));
    if (dyn == NULL) {
       WARN(_("Unable to allocate memory"));
