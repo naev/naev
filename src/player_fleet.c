@@ -110,23 +110,25 @@ static void shipCargo( PilotCommodity **pclist, Pilot *p )
       int added;
 
       /* Ignore mission cargo. */
-      if (pc->id > 0)
-         continue;
-
-      /* See if it can be added. */
-      added = 0;
-      for (int j=0; j<array_size(*pclist); j++) {
-         PilotCommodity *lc = &(*pclist)[j];
-
-         if (pc->commodity != lc->commodity)
-            continue;
-
-         lc->quantity += q;
-         added = 1;
-         break;
-      }
-      if (!added)
+      if (pc->id > 0) {
          array_push_back( pclist, *pc );
+      }
+      else {
+         /* See if it can be added. */
+         added = 0;
+         for (int j=0; j<array_size(*pclist); j++) {
+            PilotCommodity *lc = &(*pclist)[j];
+
+            if (pc->commodity != lc->commodity)
+               continue;
+
+            lc->quantity += q;
+            added = 1;
+            break;
+         }
+         if (!added)
+            array_push_back( pclist, *pc );
+      }
 
       /* Remove the cargo. TODO use pilot_cargoRm somehow.  */
       array_erase( &p->commodities, &pc[0], &pc[1] );
@@ -158,8 +160,13 @@ void pfleet_cargoRedistribute (void)
 
    /* Re-add the cargo. */
    for (int i=0; i<array_size(pclist); i++) {
+      int q;
       PilotCommodity *pc = &pclist[i];
-      int q = pfleet_cargoAdd( pc->commodity, pc->quantity );
+
+      if (pc->id > 0)
+         q = pilot_cargoAdd( player.p, pc->commodity, pc->quantity, pc->id );
+      else
+         q = pfleet_cargoAdd( pc->commodity, pc->quantity );
 #ifdef DEBUGGING
       if (q != pc->quantity) {
          WARN(_("Failure to add cargo '%s' to player fleeet. Only %d of %d added."), pc->commodity->name, q, pc->quantity );
