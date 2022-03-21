@@ -3110,16 +3110,6 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
                xmlw_startElem(writer, "escort");
                xmlw_attr(writer,"type","fleet");
                xmlw_attr(writer,"name",pe->name);
-               xmlw_startElem(writer,"commodities");
-               for (int j=0; j<array_size(pe->commodities); j++) {
-                  PilotCommodity *pc = &pe->commodities[j];
-                  xmlw_startElem(writer,"commodity");
-                  xmlw_attr(writer,"quantity","%d",pc->quantity);
-                  /* No need for mission cargos. */
-                  xmlw_str(writer,"%s",pc->commodity->name);
-                  xmlw_endElem(writer); /* commodity */
-               }
-               xmlw_endElem(writer); /* "commodities" */
                xmlw_endElem(writer); /* "escort" */
             }
             break;
@@ -3940,10 +3930,8 @@ static int player_parseEscorts( xmlNodePtr parent )
          escort_addList( player.p, name, ESCORT_TYPE_BAY, 0, 1 );
 
       else if (strcmp(buf,"fleet")==0) {
-         xmlNodePtr cur;
          double a;
          vec2 v;
-         Pilot *pe;
          PlayerShip_t *ps = player_getPlayerShip( name );
 
          /* Only deploy escorts that are deployed. */
@@ -3961,34 +3949,6 @@ static int player_parseEscorts( xmlNodePtr parent )
 
          /* Add the escort to the fleet. */
          escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
-
-         /* Add commodities as necessary. */
-         pe = ps->p;
-         cur = node->xmlChildrenNode;
-         do {
-            xml_onlyNodes(cur);
-            if (xml_isNode(cur, "commodities")) {
-               xmlNodePtr ccur = cur->xmlChildrenNode;
-               do {
-                  xml_onlyNodes(ccur);
-                  if (xml_isNode(ccur,"commodity")) {
-                     int q;
-                     const Commodity *com;
-                     xmlr_attr_int(ccur,"quantity",q);
-                     com = commodity_get( xml_get(ccur) );
-                     if (com == NULL) {
-                        WARN(_("Unknown commodity '%s' detected, removing."), xml_get(cur));
-                        continue;
-                     }
-                     pilot_cargoAddRaw( pe, com, q, 0 );
-                     continue;
-                  }
-                  WARN(_("Player escort has unknown node '%s'"),ccur->name);
-               } while(xml_nextNode(ccur));
-               continue;
-            }
-            WARN(_("Player escort has unknown node '%s'"),cur->name);
-         } while (xml_nextNode(cur));
       }
       else
          WARN(_("Escort has invalid type '%s'."), buf);
@@ -4310,8 +4270,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                }
 
                /* actually add the cargo with id hack
-                * Note that the player's cargo_free is ignored here.
-                */
+                * Note that the player's cargo_free is ignored here. */
                pilot_cargoAddRaw( ship, com, quantity, 0 );
                if (cid != 0)
                   array_back(ship->commodities).id = cid;

@@ -94,7 +94,7 @@ static void shipCargo( PilotCommodity **pclist, Pilot *p )
 
       /* See if it can be added. */
       added = 0;
-      for (int j=array_size(*pclist)-1; j >= 0; j--) {
+      for (int j=0; j<array_size(*pclist); j++) {
          PilotCommodity *lc = &(*pclist)[j];
 
          if (pc->commodity != lc->commodity)
@@ -108,12 +108,12 @@ static void shipCargo( PilotCommodity **pclist, Pilot *p )
          array_push_back( pclist, *pc );
 
       /* Remove the cargo. TODO use pilot_cargoRm somehow.  */
-      array_erase( &p->commodities, &p->commodities[i], &p->commodities[i+1] );
+      array_erase( &p->commodities, &pc[0], &pc[1] );
       p->cargo_free  += q;
       p->mass_cargo  -= q;
       p->solid->mass -= p->stats.cargo_inertia * q;
-      pilot_updateMass( p );
    }
+   pilot_updateMass( p );
 }
 
 /**
