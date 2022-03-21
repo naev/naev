@@ -664,13 +664,13 @@ static void spfx_updateDamage( double dt )
 Trail_spfx* spfx_trail_create( const TrailSpec* spec )
 {
    Trail_spfx *trail = calloc( 1, sizeof(Trail_spfx) );
-   trail->spec = spec;
-   trail->capacity = 1;
-   trail->iread = trail->iwrite = 0;
+   trail->spec       = spec;
+   trail->capacity   = 1;
+   trail->iread      = trail->iwrite = 0;
    trail->point_ringbuf = calloc( trail->capacity, sizeof(TrailPoint) );
-   trail->refcount = 1;
-   trail->r = RNGF();
-   trail->ontop = 0;
+   trail->refcount   = 1;
+   trail->r          = RNGF();
+   trail->ontop      = 0;
 
    if ( trail_spfx_stack == NULL )
       trail_spfx_stack = array_create( Trail_spfx* );

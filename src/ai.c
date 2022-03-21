@@ -1009,8 +1009,7 @@ static void ai_create( Pilot* pilot )
       aiL_status = AI_STATUS_CREATE;
 
    /* Create equipment first - only if creating for the first time. */
-   if (!pilot_isFlag(pilot,PILOT_NO_OUTFITS) && (aiL_status==AI_STATUS_CREATE) &&
-            !pilot_isFlag(pilot, PILOT_INACTIVE)) {
+   if (!pilot_isFlag(pilot,PILOT_NO_OUTFITS) && (aiL_status==AI_STATUS_CREATE)) {
       if  (faction_getEquipper( pilot->faction ) != LUA_NOREF) {
          env = faction_getEquipper( pilot->faction );
          func = "equip";

@@ -62,7 +62,7 @@ static const double pilot_commFade     = 5.; /**< Time for text above pilot to f
  * Prototypes
  */
 /* Create. */
-static void pilot_init( Pilot* dest, const Ship* ship, const char* name, int faction, const char *ai,
+static void pilot_init( Pilot* dest, const Ship* ship, const char* name, int faction,
       const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot );
 /* Update. */
@@ -2858,7 +2858,6 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  *    @param ship Ship pilot will be flying.
  *    @param name Pilot's name, if NULL ship's name will be used.
  *    @param faction Faction of the pilot.
- *    @param ai Name of the AI profile to use for the pilot, or NULL to use the faction's.
  *    @param dir Initial direction to face (radians).
  *    @param pos Initial position.
  *    @param vel Initial velocity.
@@ -2866,7 +2865,7 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  *    @param dockpilot The pilot which launched this pilot (0 if N/A).
  *    @param dockslot The outfit slot which launched this pilot (-1 if N/A).
  */
-static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int faction, const char *ai,
+static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int faction,
       const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
@@ -2876,11 +2875,6 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
 
    /* Clear memory. */
    memset(pilot, 0, sizeof(Pilot));
-
-   if (pilot_isFlagRaw(flags, PILOT_PLAYER)) /* Set player ID. TODO should probably be fixed to something better someday. */
-      pilot->id = PLAYER_ID;
-   else
-      pilot->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
 
    /* Defaults. */
    pilot->autoweap = 1;
@@ -2969,14 +2963,10 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
 
    /* set flags and functions */
    if (pilot_isFlagRaw(flags, PILOT_PLAYER)) {
-      pilot->think            = player_think; /* players don't need to think! :P */
+      pilot->think            = player_think; /* Players don't need to think! :P */
       pilot->update           = player_update; /* Players get special update. */
       pilot->render           = NULL; /* render will get called from player_think */
       pilot->render_overlay   = NULL;
-      if (!pilot_isFlagRaw( flags, PILOT_INACTIVE )) { /* Sort of a hack. */
-         player.p = pilot;
-         player.ps.p = pilot;
-      }
    }
    else {
       pilot->think            = ai_think;
@@ -3015,11 +3005,6 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    lua_newtable(naevL);
    pilot->messages = luaL_ref(naevL, LUA_REGISTRYINDEX);
 
-   /* AI */
-   if (ai == NULL)
-      ai = faction_default_ai( faction );
-   if (ai != NULL)
-      ai_pinit( pilot, ai ); /* Must run before ai_create */
    pilot->shoot_indicator = 0;
 }
 
@@ -3058,6 +3043,9 @@ void pilot_reset( Pilot* pilot )
 
    /* AI */
    pilot->shoot_indicator = 0;
+
+   /* Run Lua stuff. */
+   pilot_outfitLInitAll( pilot );
 }
 
 /**
@@ -3102,7 +3090,19 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
    *p = dyn;
 
    /* Initialize the pilot. */
-   pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags, dockpilot, dockslot );
+   pilot_init( dyn, ship, name, faction, dir, pos, vel, flags, dockpilot, dockslot );
+
+   /* Set the ID. */
+   if (pilot_isFlagRaw(flags, PILOT_PLAYER)) /* Set player ID. TODO should probably be fixed to something better someday. */
+      dyn->id = PLAYER_ID;
+   else
+      dyn->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
+
+   /* Initialize AI if applicable. */
+   if (ai == NULL)
+      ai = faction_default_ai( faction );
+   if (ai != NULL)
+      ai_pinit( dyn, ai ); /* Must run before ai_create */
 
    /* Animated trail. */
    pilot_init_trails( dyn );
@@ -3120,19 +3120,19 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
  *    @param name Name of the pilot ship (NULL uses ship name).
  *    @param faction Faction of the ship.
  *    @param ai AI to use, or NULL to use the faction's.
- *    @param flags Flags for tweaking, PILOT_INACTIVE is added.
+ *    @param flags Flags for tweaking.
  *    @return Pointer to the new pilot (not added to stack).
  */
 Pilot* pilot_createEmpty( const Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags )
 {
+   (void) ai;
    Pilot *dyn = malloc(sizeof(Pilot));
    if (dyn == NULL) {
       WARN(_("Unable to allocate memory"));
       return 0;
    }
-   pilot_setFlagRaw( flags, PILOT_INACTIVE );
-   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags, 0, 0 );
+   pilot_init( dyn, ship, name, faction, 0., NULL, NULL, flags, 0, 0 );
    return dyn;
 }
 
@@ -3163,7 +3163,7 @@ unsigned int pilot_clone( const Pilot *ref )
 
    /* Initialize the pilot. */
    pilot_init( dyn, ref->ship, ref->name, ref->faction,
-      ((ref->ai != NULL) ? ref->ai->name : NULL), ref->solid->dir, &ref->solid->pos, &ref->solid->vel, pf, 0, 0 );
+         ref->solid->dir, &ref->solid->pos, &ref->solid->vel, pf, 0, 0 );
 
    /* Add outfits over. */
    for (int i=0; i<array_size(ref->outfits); i++)
@@ -3172,20 +3172,8 @@ unsigned int pilot_clone( const Pilot *ref )
    for (int i=0; i<array_size(ref->outfit_intrinsic); i++)
       pilot_addOutfitIntrinsic( dyn, ref->outfit_intrinsic[i].outfit );
 
-   /* Update internals and heal up. */
-   pilot_calcStats( dyn );
-   pilot_fillAmmo( dyn );
-   pilot_weaponAuto( dyn );
-   dyn->armour = ref->armour;
-   dyn->shield = ref->shield;
-   dyn->energy = ref->energy;
-   dyn->stress = ref->stress;
-
-   /* Animated trail. */
-   pilot_init_trails( dyn );
-
-   /* Run Lua stuff. */
-   pilot_outfitLInitAll( dyn );
+   /* Reset the pilot. */
+   pilot_reset( dyn );
 
    return dyn->id;
 }
@@ -3197,6 +3185,11 @@ unsigned int pilot_addStack( Pilot *p )
 {
    p->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
    pilot_setFlag( p, PILOT_NOFREE );
+   pilot_reset( p );
+
+   /* Animated trail. */
+   pilot_init_trails( p );
+
    array_push_back( &pilot_stack, p );
    return p->id;
 }
@@ -3212,6 +3205,14 @@ void pilot_clearTrails( Pilot *p )
    pilot_init_trails( p );
 }
 
+static int pilot_cmp( const void *ptr1, const void *ptr2 )
+{
+   const Pilot *p1, *p2;
+   p1 = (const Pilot*) ptr1;
+   p2 = (const Pilot*) ptr2;
+   return p1->id - p2->id;
+}
+
 /**
  * @brief Replaces the player's pilot with an alternate ship with the same ID.
  *
@@ -3220,13 +3221,26 @@ void pilot_clearTrails( Pilot *p )
 Pilot* pilot_replacePlayer( Pilot* after )
 {
    int i = pilot_getStackPos( PLAYER_ID );
-   for (int j=0; j<array_size(pilot_stack[i]->trail); j++)
-      spfx_trail_remove( pilot_stack[i]->trail[j] );
-   array_erase( &pilot_stack[i]->trail, array_begin(pilot_stack[i]->trail), array_end(pilot_stack[i]->trail) );
+   Pilot *p = pilot_stack[i];
+
+   /* Create new if invalid. */
+   if (i <= 0) {
+      after->id = PLAYER_ID;
+      array_push_back( &pilot_stack, after );
+      qsort( pilot_stack, array_size(pilot_stack), sizeof(Pilot*), pilot_cmp );
+      i = pilot_getStackPos( PLAYER_ID );
+      p = pilot_stack[i];
+   }
+
+   for (int j=0; j<array_size(p->trail); j++)
+      spfx_trail_remove( p->trail[j] );
+   array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) );
    pilot_stack[i] = after;
    pilot_init_trails( after );
+
    /* Run Lua stuff. */
    pilot_outfitLInitAll( after );
+
    return after;
 }
 
@@ -3322,16 +3336,27 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
  */
 void pilot_free( Pilot* p )
 {
+   /* Clear some useful things. */
+   pilot_clearHooks(p);
+   effect_cleanup( p->effects );
+   pilot_cargoRmAll( p, 1 );
+   escort_freeList(p);
+
+   /* If hostile, must remove counter. */
+   pilot_rmHostile(p);
+
+   /* Free animated trail. */
+   for (int i=0; i<array_size(p->trail); i++) {
+      p->trail[i]->ontop = 0;
+      spfx_trail_remove( p->trail[i] );
+   }
+   array_free(p->trail);
+
+   /* We don't actually free internals of the pilot once we cleaned up stuff. */
    if (pilot_isFlag( p, PILOT_NOFREE )) {
       p->id = 0; /* Invalidate ID. */
       return;
    }
-
-   /* Clear up pilot hooks. */
-   pilot_clearHooks(p);
-
-   /* If hostile, must remove counter. */
-   pilot_rmHostile(p);
 
    pilot_weapSetFree(p);
 
@@ -3340,10 +3365,6 @@ void pilot_free( Pilot* p )
    array_free(p->outfit_utility);
    array_free(p->outfit_weapon);
    array_free(p->outfit_intrinsic);
-
-   effect_cleanup( p->effects );
-
-   pilot_cargoRmAll( p, 1 );
 
    /* Clean up data. */
    if (p->ai != NULL)
@@ -3364,13 +3385,6 @@ void pilot_free( Pilot* p )
 
    /* Free messages. */
    luaL_unref(naevL, p->messages, LUA_REGISTRYINDEX);
-
-   /* Free animated trail. */
-   for (int i=0; i<array_size(p->trail); i++) {
-      p->trail[i]->ontop = 0;
-      spfx_trail_remove( p->trail[i] );
-   }
-   array_free(p->trail);
 
 #ifdef DEBUGGING
    memset( p, 0, sizeof(Pilot) );

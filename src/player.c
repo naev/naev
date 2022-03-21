@@ -455,38 +455,15 @@ static PlayerShip_t *player_newShipMake( const char *name )
    /* in case we're respawning */
    player_rmFlag( PLAYER_CREATING );
 
-   /* create the player */
+   /* Grow memory. */
+   ps = &array_grow( &player_stack );
+   memset( ps, 0, sizeof(PlayerShip_t) );
+   pilot_setFlagRaw( flags, PILOT_PLAYER_FLEET );
+   /* Create the ship. */
+   ps->p = pilot_createEmpty( player_ship, name, faction_get("Player"), "player", flags );
    if (player.p == NULL) {
-      double px, py, dir;
-      unsigned int id;
-      vec2 vp, vv;
-
-      /* Set position to defaults. */
-      if (player.p != NULL) {
-         px    = player.p->solid->pos.x;
-         py    = player.p->solid->pos.y;
-         dir   = player.p->solid->dir;
-      }
-      else {
-         px    = 0.;
-         py    = 0.;
-         dir   = 0.;
-      }
-      vec2_cset( &vp, px, py );
-      vec2_cset( &vv, 0., 0. );
-
-      /* Create the player. */
-      id = pilot_create( player_ship, name, faction_get("Player"), "player",
-            dir, &vp, &vv, flags, 0, 0 );
-      cam_setTargetPilot( id, 0 );
-      ps = &player.ps;
-   }
-   else {
-      /* Grow memory. */
-      ps = &array_grow( &player_stack );
-      memset( ps, 0, sizeof(PlayerShip_t) );
-      /* Create the ship. */
-      ps->p = pilot_createEmpty( player_ship, name, faction_get("Player"), "player", flags );
+      pilot_reset( ps->p );
+      pilot_replacePlayer( ps->p );
    }
 
    if (player.p == NULL)
@@ -547,14 +524,20 @@ void player_swapShip( const char *shipname, int move_cargo )
    }
 
    /* Swap information over. */
-   ptemp = player.ps;
-   player.ps = *ps;
-   *ps = ptemp;
-   ship = player.ps.p;
+   ptemp    = player.ps;
+   player.ps= *ps;
+   *ps      = ptemp;
+   ship     = player.ps.p;
 
-   /* Swap player and ship */
-   pilot_rmFlag( ship, PILOT_INACTIVE );
-   pilot_setFlag( ps->p, PILOT_INACTIVE );
+   /* Swap the AI. */
+   player.p->think  = player_think;
+   player.p->update = player_update;
+   player.p->render = NULL;
+   player.p->render_overlay = NULL;
+   ps->p->think = ai_think;
+   ps->p->update = pilot_update;
+   ps->p->render = pilot_render;
+   ps->p->render_overlay = pilot_renderOverlay;
 
    /* Move credits over */
    ship->credits = player.p->credits;
@@ -3831,6 +3814,8 @@ static Spob* player_parse( xmlNodePtr parent )
       }
       pnt = spob_get( found );
    }
+
+   /* Initialize system. */
    sys = system_get( spob_getSystem( pnt->name ) );
    space_gfxLoad( sys );
    a = RNGF() * 2.*M_PI;
@@ -4177,16 +4162,13 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    /* Add GUI if applicable. */
    player_guiAdd( ship_parsed->gui );
 
+   /* Create the ship. */
+   ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), "player", flags );
    /* Player is currently on this ship */
-   if (is_player != 0) {
-      pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
-      ship = player.p;
+   if (is_player) {
       ps.deployed = 0; /* Current ship can't be deployed. */
-      pilot_rmFlag( ship, PILOT_INACTIVE );
-   }
-   else {
-      ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), "player", flags );
-      pilot_setFlag( ship, PILOT_INACTIVE );
+      pilot_replacePlayer( ship );
+      player.p = ship;
    }
    ps.p = ship;
 
