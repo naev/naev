@@ -3326,6 +3326,7 @@ void pilot_free( Pilot* p )
    /* Clear some useful things. */
    pilot_clearHooks(p);
    effect_cleanup( p->effects );
+   p->effects = NULL;
    pilot_cargoRmAll( p, 1 );
    escort_freeList(p);
 
@@ -3338,6 +3339,7 @@ void pilot_free( Pilot* p )
       spfx_trail_remove( p->trail[i] );
    }
    array_free(p->trail);
+   p->trail = NULL;
 
    /* We don't actually free internals of the pilot once we cleaned up stuff. */
    if (pilot_isFlag( p, PILOT_NOFREE )) {
