@@ -530,14 +530,8 @@ void player_swapShip( const char *shipname, int move_cargo )
    ship     = player.ps.p;
 
    /* Swap the AI. */
-   player.p->think  = player_think;
-   player.p->update = player_update;
-   player.p->render = NULL;
-   player.p->render_overlay = NULL;
-   ps->p->think = ai_think;
-   ps->p->update = pilot_update;
-   ps->p->render = pilot_render;
-   ps->p->render_overlay = pilot_renderOverlay;
+   pilot_rmFlag( ps->p, PILOT_PLAYER );
+   pilot_setFlag( player.p, PILOT_PLAYER );
 
    /* Move credits over */
    ship->credits = player.p->credits;

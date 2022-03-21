@@ -285,12 +285,6 @@ typedef struct Pilot_ {
    /* Ship effects. */
    Effect *effects; /**< Pilot's current activated effects. */
 
-   /* Associated functions */
-   void (*think)(struct Pilot_*, const double); /**< AI thinking for the pilot */
-   void (*update)(struct Pilot_*, const double); /**< Updates the pilot. */
-   void (*render)(struct Pilot_*, const double); /**< For rendering the pilot. */
-   void (*render_overlay)(struct Pilot_*, const double); /**< For rendering the pilot overlay. */
-
    /* Outfit management */
    PilotOutfitSlot **outfits;        /**< Array (array.h): Pointers to all outfits. */
    PilotOutfitSlot *outfit_structure;/**< Array (array.h): The structure slots. */

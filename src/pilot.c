@@ -2347,6 +2347,7 @@ void pilot_update( Pilot* pilot, double dt )
 
       /* update the solid */
       pilot->solid->update( pilot->solid, dt );
+
       gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
             pilot->ship->gfx_space, pilot->solid->dir );
 
@@ -2961,20 +2962,6 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    }
 #endif /* DEBUGGING */
 
-   /* set flags and functions */
-   if (pilot_isFlagRaw(flags, PILOT_PLAYER)) {
-      pilot->think            = player_think; /* Players don't need to think! :P */
-      pilot->update           = player_update; /* Players get special update. */
-      pilot->render           = NULL; /* render will get called from player_think */
-      pilot->render_overlay   = NULL;
-   }
-   else {
-      pilot->think            = ai_think;
-      pilot->update           = pilot_update;
-      pilot->render           = pilot_render;
-      pilot->render_overlay   = pilot_renderOverlay;
-   }
-
    /* Copy pilot flags. */
    pilot_copyFlagsRaw(pilot->flags, flags);
 
@@ -3579,8 +3566,6 @@ void pilots_update( double dt )
          continue;
 
       /* See if should think. */
-      if ((p->think==NULL) || (p->ai==NULL))
-         continue;
       if (pilot_isDisabled(p))
          continue;
       if (pilot_isFlag(p,PILOT_DEAD))
@@ -3605,8 +3590,12 @@ void pilots_update( double dt )
             !pilot_isFlag(p, PILOT_LANDING) &&
             !pilot_isFlag(p, PILOT_TAKEOFF) &&
             /* Must not be jumping in. */
-            !pilot_isFlag(p, PILOT_HYP_END))
-         p->think(p, dt);
+            !pilot_isFlag(p, PILOT_HYP_END)) {
+         if (pilot_isFlag(p, PILOT_PLAYER))
+            player_think( p, dt );
+         else
+            ai_think( p, dt );
+      }
    }
 
    /* Now update all the pilots. */
@@ -3622,8 +3611,10 @@ void pilots_update( double dt )
          continue;
 
       /* Just update the pilot. */
-      if (p->update) /* update */
-         p->update( p, dt );
+      if (pilot_isFlag( p, PILOT_PLAYER ))
+         player_update( p, dt );
+      else
+         pilot_update( p, dt );
    }
 }
 
@@ -3635,13 +3626,14 @@ void pilots_update( double dt )
 void pilots_render( double dt )
 {
    for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *p = pilot_stack[i];
 
       /* Invisible, not doing anything. */
-      if (pilot_isFlag(pilot_stack[i], PILOT_HIDE))
+      if (pilot_isFlag(p, PILOT_HIDE))
          continue;
 
-      if (pilot_stack[i]->render != NULL) /* render */
-         pilot_stack[i]->render(pilot_stack[i], dt);
+      if (!pilot_isFlag( p, PILOT_PLAYER ))
+         pilot_render( p, dt );
    }
 }
 
@@ -3653,13 +3645,14 @@ void pilots_render( double dt )
 void pilots_renderOverlay( double dt )
 {
    for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *p = pilot_stack[i];
 
       /* Invisible, not doing anything. */
-      if (pilot_isFlag(pilot_stack[i], PILOT_HIDE))
+      if (pilot_isFlag(p, PILOT_HIDE))
          continue;
 
-      if (pilot_stack[i]->render_overlay != NULL) /* render */
-         pilot_stack[i]->render_overlay(pilot_stack[i], dt);
+      if (!pilot_isFlag( p, PILOT_PLAYER ))
+         pilot_renderOverlay( p, dt );
    }
 }
 
