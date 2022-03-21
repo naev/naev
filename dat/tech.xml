@@ -762,10 +762,12 @@
  <!-- Ships -->
  <tech name="Basic Civilian Ships">
   <item>Ancestor</item>
-  <item>Gawain</item>
   <item>Hyena</item>
-  <item>Llama</item>
   <item>Schroedinger</item>
+ </tech>
+ <tech name="Yachts">
+  <item>Gawain</item>
+  <item>Llama</item>
  </tech>
  <tech name="Basic Trade Ships">
   <item>Koala</item>
@@ -1007,7 +1009,12 @@
   <item>Unicorp D-24 Medium Plating</item>
   <item>Unicorp D-48 Heavy Plating</item>
   <item>Unicorp D-68 Heavy Plating</item>
-  <item>Hulls Cargo</item>
+  <item>Red Star Small Cargo Hull</item>
+  <item>Red Star Medium Cargo Hull</item>
+  <item>Red Star Large Cargo Hull</item>
+  <item>S&amp;K Small Cargo Hull</item>
+  <item>S&amp;K Medium Cargo Hull</item>
+  <item>S&amp;K Large Cargo Hull</item>
  </tech>
  <tech name="Hulls High">
   <item>S&amp;K Ultralight Combat Plating</item>
