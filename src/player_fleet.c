@@ -33,7 +33,7 @@ void pfleet_update (void)
    pfleet_cargoRedistribute();
 }
 
-int pfleet_deploy( PlayerShip_t *ps, int deploy )
+int pfleet_toggleDeploy( PlayerShip_t *ps, int deploy )
 {
    /* When undeploying we want to make sure cargo fits. */
    if (ps->deployed && !deploy) {
@@ -78,6 +78,27 @@ int pfleet_deploy( PlayerShip_t *ps, int deploy )
    else
       player_addEscorts();
    pfleet_update();
+   return 0;
+}
+
+int pfleet_deploy( PlayerShip_t *ps )
+{
+   double a;
+   vec2 v;
+
+   /* Get the position. */
+   a = RNGF() * 2. * M_PI;
+   vec2_cset( &v, player.p->solid->pos.x + 50.*cos(a),
+         player.p->solid->pos.y + 50.*sin(a) );
+
+   /* Add the escort to the fleet. */
+   escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
+
+   /* Initialize. */
+   ai_pinit( ps->p, "player" );
+   pilot_reset( ps->p );
+   pilot_rmFlag( ps->p, PILOT_PLAYER );
+
    return 0;
 }
 

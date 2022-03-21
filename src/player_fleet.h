@@ -7,7 +7,8 @@
 
 void pfleet_update (void);
 void pfleet_cargoRedistribute (void);
-int pfleet_deploy( PlayerShip_t *ps, int deploy );
+int pfleet_toggleDeploy( PlayerShip_t *ps, int deploy );
+int pfleet_deploy( PlayerShip_t *ps );
 int pfleet_cargoUsed (void);
 int pfleet_cargoFree (void);
 int pfleet_cargoOwned( const Commodity *com );

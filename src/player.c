@@ -3074,18 +3074,7 @@ int player_addEscorts (void)
       if (!!pilot_checkSpaceworthy(ps->p))
          continue;
 
-      /* Get the position. */
-      a = RNGF() * 2. * M_PI;
-      vec2_cset( &v, player.p->solid->pos.x + 50.*cos(a),
-            player.p->solid->pos.y + 50.*sin(a) );
-
-      /* Add the escort to the fleet. */
-      escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
-
-      /* Initialize. */
-      ai_pinit( ps->p, "player" );
-      pilot_reset( ps->p );
-      pilot_rmFlag( ps->p, PILOT_PLAYER );
+      pfleet_deploy( ps );
    }
 
    return 0;
@@ -3947,13 +3936,7 @@ static int player_parseEscorts( xmlNodePtr parent )
          if (!!pilot_checkSpaceworthy(ps->p))
             WARN(_("Fleet ship '%s' is deployed despite not being space worthy!"), ps->p->name);
 
-         /* Get the position. */
-         a = RNGF() * 2. * M_PI;
-         vec2_cset( &v, player.p->solid->pos.x + 50.*cos(a),
-               player.p->solid->pos.y + 50.*sin(a) );
-
-         /* Add the escort to the fleet. */
-         escort_createRef( player.p, ps->p, &v, NULL, a, ESCORT_TYPE_FLEET, 1, -1 );
+         pfleet_deploy( ps );
       }
       else
          WARN(_("Escort has invalid type '%s'."), buf);

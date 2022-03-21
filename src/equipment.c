@@ -1380,7 +1380,7 @@ static void equipment_toggleDeploy( unsigned int wid, const char *wgt )
    /* Only if current ship isn't selected try to deploy. */
    if (strcmp(shipname,player.p->name)!=0) {
       PlayerShip_t *ps = player_getPlayerShip( shipname );
-      if (pfleet_deploy( ps, state ))
+      if (pfleet_toggleDeploy( ps, state ))
          return;
       pfleet_update();
    }
@@ -2041,7 +2041,7 @@ static void equipment_rightClickShips( unsigned int wid, const char *str )
       return;
 
    /* Try to deploy. */
-   if (pfleet_deploy( ps, !ps->deployed ))
+   if (pfleet_toggleDeploy( ps, !ps->deployed ))
       return;
 
    window_checkboxSet( wid, "chkDeploy", ps->deployed );
