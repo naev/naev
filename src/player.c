@@ -491,6 +491,7 @@ void player_swapShip( const char *shipname, int move_cargo )
    HookParam hparam[5];
    Pilot *ship;
    vec2 v;
+   int idtemp;
    double dir;
    PlayerShip_t *ps = NULL;
    PlayerShip_t ptemp;
@@ -528,6 +529,11 @@ void player_swapShip( const char *shipname, int move_cargo )
    player.ps= *ps;
    *ps      = ptemp;
    ship     = player.ps.p;
+
+   /* Swap ids around. */
+   idtemp = player.p->id;
+   player.p->id = ps->p->id;
+   ps->p->id = idtemp;
 
    /* Swap the AI. */
    pilot_rmFlag( ps->p, PILOT_PLAYER );
@@ -3059,8 +3065,6 @@ int player_addEscorts (void)
    /* Add the player fleets. */
    for (int i=0; i<array_size(player_stack); i++) {
       PlayerShip_t *ps = &player_stack[i];
-      double a;
-      vec2 v;
 
       /* Already exists. */
       if (ps->p->id)
@@ -3924,8 +3928,6 @@ static int player_parseEscorts( xmlNodePtr parent )
          escort_addList( player.p, name, ESCORT_TYPE_BAY, 0, 1 );
 
       else if (strcmp(buf,"fleet")==0) {
-         double a;
-         vec2 v;
          PlayerShip_t *ps = player_getPlayerShip( name );
 
          /* Only deploy escorts that are deployed. */
