@@ -3322,6 +3322,11 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
  */
 void pilot_free( Pilot* p )
 {
+   if (pilot_isFlag( p, PILOT_NOFREE )) {
+      p->id = 0; /* Invalidate ID. */
+      return;
+   }
+
    /* Clear up pilot hooks. */
    pilot_clearHooks(p);
 
@@ -3408,10 +3413,7 @@ void pilot_destroy(Pilot* p)
    }
 
    /* pilot is eliminated */
-   if (!pilot_isFlag( p, PILOT_NOFREE ))
-      pilot_free(p);
-   else
-      p->id = 0; /* Invalidate ID. */
+   pilot_free(p);
    array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] );
 }
 
