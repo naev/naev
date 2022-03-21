@@ -530,23 +530,12 @@ void player_swapShip( const char *shipname, int move_cargo )
    *ps      = ptemp;
    ship     = player.ps.p;
 
-   /* Swap ids around. */
-   idtemp = player.p->id;
-   player.p->id = ps->p->id;
-   ps->p->id = idtemp;
-
    /* Swap the AI. */
    pilot_rmFlag( ps->p, PILOT_PLAYER );
    pilot_setFlag( player.p, PILOT_PLAYER );
 
    /* Move credits over */
    ship->credits = player.p->credits;
-
-   /* Move cargo over. */
-   if (move_cargo) {
-      pilot_cargoMoveRaw( ship, player.p );
-      pfleet_cargoRedistribute();
-   }
 
    /* Copy target info */
    ship->target      = player.p->target;
@@ -567,9 +556,20 @@ void player_swapShip( const char *shipname, int move_cargo )
    for (int j=0; j<array_size(ship->outfits); j++)
       pilot_outfitLAdd( ship, ship->outfits[j] );
 
+   /* Swap ids around. */
+   idtemp = player.p->id;
+   player.p->id = ps->p->id;
+   ps->p->id = idtemp;
+
    /* now swap the players */
    player.p    = pilot_replacePlayer( ship );
    player.ps.p = player.p;
+
+   /* Move cargo over. */
+   if (move_cargo) {
+      pilot_cargoMoveRaw( ps->p, player.p );
+      pfleet_cargoRedistribute();
+   }
 
    /* Copy position back. */
    player.p->solid->pos = v;

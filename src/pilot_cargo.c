@@ -111,12 +111,13 @@ static int pilot_cargoAddInternal( Pilot* pilot, const Commodity* cargo,
 
    /* If not mission cargo check to see if already exists. */
    if (id == 0) {
-      for (int i=0; i<array_size(pilot->commodities); i++)
-         if (!pilot->commodities[i].id &&
-               (pilot->commodities[i].commodity == cargo)) {
-            pilot->commodities[i].quantity += q;
+      for (int i=0; i<array_size(pilot->commodities); i++) {
+         pc = &pilot->commodities[i];
+         if (!pc->id && (pc->commodity == cargo)) {
+            pc->quantity += q;
             return q;
          }
+      }
    }
 
    /* Create the memory space. */
