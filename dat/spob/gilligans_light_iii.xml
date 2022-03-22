@@ -3,10 +3,10 @@
  <pos x="-7036.538612" y="-6116.121552"/>
  <GFX>
   <space>I05.webp</space>
-  <exterior>station00.webp</exterior>
+  <exterior>uninhabited-rocky-blue-00.webp </exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>I</class>
   <population>0</population>
   <hide>1.000000</hide>
   <services/>
