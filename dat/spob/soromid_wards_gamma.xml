@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>0</class>
-  <population>100</population>
+  <population>1e+02</population>
   <hide>2.000000</hide>
   <services>
    <land>land_hiclass</land>
@@ -26,7 +26,10 @@
   <bar>Unlike Alpha and Beta, the spacedock bar on Gamma does not offer much information on what goes on in the facility. The Soromid learn about their genes and the modifications in youth education. They know what they're coming for.</bar>
  </general>
  <tags>
+  <tag>restricted</tag>
+  <tag>station</tag>
   <tag>rich</tag>
   <tag>research</tag>
+  <tag>medical</tag>
  </tags>
 </spob>
