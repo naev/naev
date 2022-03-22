@@ -992,6 +992,11 @@
   <item>Unicorp D-48 Heavy Plating</item>
   <item>Unicorp D-68 Heavy Plating</item>
  </tech>
+ <tech name="Hulls Cargo">
+  <item>S&amp;K Small Cargo Hull</item>
+  <item>S&amp;K Medium Cargo Hull</item>
+  <item>S&amp;K Large Cargo Hull</item>
+ </tech>
  <tech name="Hulls Medium">
   <item>Unicorp D-2 Light Plating</item>
   <item>Unicorp D-4 Light Plating</item>
