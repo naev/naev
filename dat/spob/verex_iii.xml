@@ -3,7 +3,7 @@
  <pos x="-2100.000000" y="5175.000000"/>
  <GFX>
   <space>H01.webp</space>
-  <exterior>desertic2.webp</exterior>
+  <exterior>uninhabited-rocky-yellow-03.webp</exterior>
  </GFX>
  <general>
   <class>H</class>

@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>X</class>
-  <population>100000</population>
+  <population>1e+05</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -38,4 +38,9 @@
   <item>Low Tech Upgrades</item>
   <item>Missiles 1</item>
  </tech>
+ <tags>
+  <tag>poor</tag>
+  <tag>mining</tag>
+  <tag>prison</tag>
+ </tags>
 </spob>
