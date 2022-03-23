@@ -3,7 +3,7 @@
  <pos x="6662.805531" y="-3676.348154"/>
  <GFX>
   <space>A02.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <exterior>lava.webp</exterior>
  </GFX>
  <general>
   <class>A</class>

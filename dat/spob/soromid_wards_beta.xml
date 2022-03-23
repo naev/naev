@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>0</class>
-  <population>70000</population>
+  <population>7e+04</population>
   <hide>2.000000</hide>
   <services>
    <land/>
@@ -26,7 +26,11 @@
   <bar>The spacedock bar, which doubles as a waiting room for clients, provides its visitors with information on the services that are rendered on Beta, such as ocular augmentation, bone and muscle reinforcement, disease immunities and reproductive facility expansion.</bar>
  </general>
  <tags>
-  <tag>research</tag>
+  <tag>restricted</tag>
+  <tag>nonpc</tag>
+  <tag>station</tag>
+  <tag>medical</tag>
   <tag>rich</tag>
+  <tag>research</tag>
  </tags>
 </spob>
