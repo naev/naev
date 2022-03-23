@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Red Star Medium Cargo Hull">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull">structure</slot>
+  <size>medium</size>
+  <priority>7</priority>
+  <mass>140</mass>
+  <price>360000</price>
+  <description>The Red Star Organisation have developed a hull modification that provides both ample cargo space and protection for their own work and have now started selling it to others. Deciding "in for a penny, in for a pound", an electromagnetic shockwave absorbtion generator was added, typically this makes the hull rather pointy and scanner obvious but since the hull is already rather lumpy due to the cargo pods... on the other hand, for the price of some CPU power, missile jams, tracking zero-points and reduced secondary splash damage are all achieved making this hull rather more resiliant.</description>
+  <gfx_store>cargo_hull_m.webp</gfx_store>
+  <cpu>-64</cpu>
+ </general>
+ <specific type="modification">
+  <cargo>80</cargo>
+  <absorb>20</absorb>
+  <armour>180</armour>
+  <cargo_inertia>-10</cargo_inertia>
+  <cargo_mod>10</cargo_mod>
+  <ew_hide>-20</ew_hide>
+  <ew_evade>10</ew_evade>
+  <jam_chance>42</jam_chance>
+ </specific>
+</outfit>

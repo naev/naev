@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Red Star Large Cargo Hull">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull">structure</slot>
+  <size>large</size>
+  <priority>7</priority>
+  <mass>550</mass>
+  <price>1200000</price>
+  <description>This cargo hull from the Red Star Organisation makes use of state-of-the-art defensive alloys, which allows it to free up even more space for cargo without sacrificing too much durability. Along with the increased space, their (in)famous electromagnetic shockwave absorbtion generator comes built in, turning CPU power and a little more obviousness into missile james, tracking zero-points and reduced secondary splash damage, turtling has never been safer.</description>
+  <gfx_store>cargo_hull_l.webp</gfx_store>
+  <cpu>-160</cpu>
+ </general>
+ <specific type="modification">
+  <cargo>600</cargo>
+  <absorb>58</absorb>
+  <armour>1100</armour>
+  <cargo_inertia>-10</cargo_inertia>
+  <cargo_mod>10</cargo_mod>
+  <ew_hide>-20</ew_hide>
+  <ew_evade>10</ew_evade>
+  <jam_chance>42</jam_chance>
+ </specific>
+</outfit>
