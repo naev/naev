@@ -12,7 +12,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
+  <class>1</class>
   <population>2000</population>
   <hide>2.000000</hide>
   <services>
@@ -23,6 +23,8 @@
   <description>Violin Station is one of the more important Sirian military outposts. With so much traffic coming through Churchill, extra security is called for. Violin Station also responds to disturbances in Eiderdown, when the Wringer is causing trouble again.</description>
  </general>
  <tags>
+  <tag>station</tag>
   <tag>restricted</tag>
+  <tag>military</tag>
  </tags>
 </spob>

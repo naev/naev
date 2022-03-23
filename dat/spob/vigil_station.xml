@@ -12,8 +12,8 @@
   <range>3</range>
  </presence>
  <general>
-  <class>0</class>
-  <population>5000</population>
+  <class>1</class>
+  <population>5e+03</population>
   <hide>2.000000</hide>
   <services>
    <land>srm_mil_restricted</land>
@@ -24,6 +24,8 @@
  </general>
  <tags>
   <tag>restricted</tag>
+  <tag>station</tag>
   <tag>military</tag>
+  <tag>refuel</tag>
  </tags>
 </spob>

@@ -3,7 +3,7 @@
  <pos x="4053.695496" y="17341.104186"/>
  <GFX>
   <space>C01.webp</space>
-  <exterior>oceanic2.webp</exterior>
+  <exterior>hangar1.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
@@ -28,5 +28,8 @@
  </general>
  <tags>
   <tag>poor</tag>
+  <tag>urban</tag>
+  <tag>immigration</tag>
+  <tag>government</tag>
  </tags>
 </spob>
