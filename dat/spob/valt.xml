@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>K</class>
-  <population>15000</population>
+  <population>1.5e+04</population>
   <hide>1.000000</hide>
   <services>
    <land/>
@@ -26,4 +26,8 @@
   <description>Valt is recent home to a Dvaered mining colony. An utterly inhospitable world, the extremely thin atmosphere makes the surface highly dangerous due to its perpetual bombardment by asteroids and solar radiation. The colony is situated nearly a kilometre below the planet's surface, in an immense, resource-rich cavern.</description>
   <bar>The Valt spaceport bar is nothing special. It's rather clean for a Dvaered bar, though that may speak more about the small size of the settlement than the pride the proprietor takes in keeping his establishment clean.</bar>
  </general>
+ <tags>
+  <tag>new</tag>
+  <tag>mining</tag>
+ </tags>
 </spob>

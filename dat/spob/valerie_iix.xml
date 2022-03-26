@@ -3,7 +3,7 @@
  <pos x="23216.212204" y="-12094.980310"/>
  <GFX>
   <space>A03.webp</space>
-  <exterior>mining4.webp</exterior>
+  <exterior>lava.webp</exterior>
  </GFX>
  <general>
   <class>A</class>

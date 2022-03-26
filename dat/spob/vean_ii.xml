@@ -3,10 +3,10 @@
  <pos x="5251.831478" y="-4763.956423"/>
  <GFX>
   <space>K02.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <exterior>uninhabited-rocky-airless-04.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>K</class>
   <population>0</population>
   <hide>0.100000</hide>
   <services/>
