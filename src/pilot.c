@@ -3202,35 +3202,27 @@ void pilot_clearTrails( Pilot *p )
  */
 Pilot* pilot_setPlayer( Pilot* after )
 {
-   Pilot *p;
-   int i = pilot_getStackPos( after->id );
+   int i = pilot_getStackPos( PLAYER_ID);
+   int l = pilot_getStackPos( after->id );
 
-   if (i > 0) {
-      after->id = PLAYER_ID;
-      qsort( pilot_stack, array_size(pilot_stack), sizeof(Pilot*), pilot_cmp );
-      i = pilot_getStackPos( PLAYER_ID );
-      p = pilot_stack[i];
+   if (i <= 0) { /* No existing player ID. */
+      if (l <= 0) /* No existing pilot, have to create. */
+         array_push_back( &pilot_stack, after );
    }
    else {
-      /* Create new if invalid. */
-      i = pilot_getStackPos( PLAYER_ID );
-      after->id = PLAYER_ID;
-      if (i <= 0) {
-         array_push_back( &pilot_stack, after );
-         qsort( pilot_stack, array_size(pilot_stack), sizeof(Pilot*), pilot_cmp );
-         i = pilot_getStackPos( PLAYER_ID );
-         p = pilot_stack[i];
-      }
+      if (l > 0)
+         pilot_delete( pilot_stack[i] ); /* Both player and after are on stack. Romove player. */
       else
-         p = pilot_stack[i];
+         pilot_stack[i] = after; /* After overwrites player. */
    }
+   after->id = PLAYER_ID;
+   qsort( pilot_stack, array_size(pilot_stack), sizeof(Pilot*), pilot_cmp );
 
    /* Set up stuff. */
-   after->id = PLAYER_ID;
    player.p = after;
-   for (int j=0; j<array_size(p->trail); j++)
-      spfx_trail_remove( p->trail[j] );
-   array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) );
+   for (int j=0; j<array_size(after->trail); j++)
+      spfx_trail_remove( after->trail[j] );
+   array_erase( &after->trail, array_begin(after->trail), array_end(after->trail) );
    pilot_init_trails( after );
 
    /* Initialize AI as necessary. */
