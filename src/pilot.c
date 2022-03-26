@@ -3181,6 +3181,13 @@ unsigned int pilot_addStack( Pilot *p )
    pilot_init_trails( p );
 
    array_push_back( &pilot_stack, p );
+
+#if DEBUGGING
+   for (int i=1; i<array_size(pilot_stack); i++)
+      if (pilot_stack[i]==pilot_stack[i-1])
+         WARN(_("Duplicate pilots on stack!"));
+#endif /* DEBUGGING */
+
    return p->id;
 }
 
@@ -3205,15 +3212,15 @@ Pilot* pilot_setPlayer( Pilot* after )
    int i = pilot_getStackPos( PLAYER_ID);
    int l = pilot_getStackPos( after->id );
 
-   if (i <= 0) { /* No existing player ID. */
-      if (l <= 0) /* No existing pilot, have to create. */
+   if (i < 0) { /* No existing player ID. */
+      if (l < 0) /* No existing pilot, have to create. */
          array_push_back( &pilot_stack, after );
    }
-   else {
-      if (l > 0)
-         pilot_delete( pilot_stack[i] ); /* Both player and after are on stack. Romove player. */
+   else { /* Player pilot already exists. */
+      if (l >= 0)
+         pilot_delete( pilot_stack[i] ); /* Both player and after are on stack. Remove player. */
       else
-         pilot_stack[i] = after; /* After overwrites player. */
+         pilot_stack[i] = after; /* after overwrites player. */
    }
    after->id = PLAYER_ID;
    qsort( pilot_stack, array_size(pilot_stack), sizeof(Pilot*), pilot_cmp );
