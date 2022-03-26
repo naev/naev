@@ -3224,7 +3224,7 @@ Pilot* pilot_replacePlayer( Pilot* after )
    pilot_init_trails( after );
 
    /* Set player flag. */
-   pilot_setFlag( player.p, PILOT_PLAYER );
+   pilot_setFlag( after, PILOT_PLAYER );
 
    /* Run Lua stuff. */
    pilot_outfitLInitAll( after );
