@@ -3,7 +3,7 @@
  <pos x="-263.363789" y="1256.621507"/>
  <GFX>
   <space>moon-C01.webp</space>
-  <exterior>mining2.webp</exterior>
+  <exterior>uninhabited-rocky-airless-04.webp</exterior>
  </GFX>
  <general>
   <class>C</class>

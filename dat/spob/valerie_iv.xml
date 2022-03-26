@@ -3,10 +3,10 @@
  <pos x="-19183.128492" y="11210.919249"/>
  <GFX>
   <space>D01.webp</space>
-  <exterior>mining3.webp</exterior>
+  <exterior>uninhabited-rocky-airless-01.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>D</class>
   <population>0</population>
   <hide>1.000000</hide>
   <services/>

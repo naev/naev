@@ -12,7 +12,7 @@
   <range>3</range>
  </presence>
  <general>
-  <class>A</class>
+  <class>N</class>
   <population>99654</population>
   <hide>2.000000</hide>
   <services>
@@ -42,5 +42,6 @@
  <tags>
   <tag>poor</tag>
   <tag>urban</tag>
+  <tag>industrial</tag>
  </tags>
 </spob>
