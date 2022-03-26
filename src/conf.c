@@ -297,15 +297,15 @@ int conf_loadConfig ( const char* file )
    int w,h;
    SDL_Keymod m;
 
-   conf.loaded = 1;
-
    /* Check to see if file exists. */
-   if (!nfile_fileExists(file))
+   if (!nfile_fileExists(file)) {
+      conf.loaded = 1;
       return nfile_touch(file);
+   }
 
    /* Load the configuration. */
    nlua_env lEnv = nlua_newEnv();
-   if ( nlua_dofileenv( lEnv, file ) == 0 ) {
+   if (nlua_dofileenv( lEnv, file ) == 0) {
 
       /* ndata. */
       conf_loadString( lEnv, "data", conf.ndata );
@@ -527,6 +527,7 @@ int conf_loadConfig ( const char* file )
       return 1;
    }
 
+   conf.loaded = 1;
    nlua_freeEnv( lEnv );
    return 0;
 }
