@@ -2096,10 +2096,6 @@ static void equipment_changeShip( unsigned int wid )
    /* Swap ship. */
    player_swapShip( shipname, 1 );
    pilot_healLanded( player.p );
-   /* Remove deployer status. */
-   player.ps.deployed = 0;
-   /* Update cargo. */
-   pfleet_update();
 
    /* What happens here is the gui gets recreated when the player swaps ship.
     * This causes all the windows to be destroyed and the 'wid' we have here

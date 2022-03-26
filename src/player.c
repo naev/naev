@@ -491,7 +491,6 @@ void player_swapShip( const char *shipname, int move_cargo )
    HookParam hparam[5];
    Pilot *ship;
    vec2 v;
-   int idtemp;
    double dir;
    PlayerShip_t *ps = NULL;
    PlayerShip_t ptemp;
@@ -530,10 +529,6 @@ void player_swapShip( const char *shipname, int move_cargo )
    *ps      = ptemp;
    ship     = player.ps.p;
 
-   /* Swap the AI. */
-   pilot_rmFlag( ps->p, PILOT_PLAYER );
-   pilot_setFlag( player.p, PILOT_PLAYER );
-
    /* Move credits over */
    ship->credits = player.p->credits;
 
@@ -552,23 +547,21 @@ void player_swapShip( const char *shipname, int move_cargo )
    pilot_calcStats( ship );
    pilot_calcStats( player.p );
 
+   /* If the pilot is deployed, we must redeploy. */
+   pilot_replacePlayer( ps->p );
+   if (ps->deployed) {
+      pfleet_deploy( ps );
+   }
+   player.ps.deployed = 0; /* Player themselves can't be deployed. */
+
    /* Run onadd hook for all new outfits. */
    for (int j=0; j<array_size(ship->outfits); j++)
       pilot_outfitLAdd( ship, ship->outfits[j] );
 
-   /* Swap ids around. */
-   idtemp = player.p->id;
-   player.p->id = ps->p->id;
-   ps->p->id = idtemp;
-
-   /* now swap the players */
-   player.p    = pilot_replacePlayer( ship );
-   player.ps.p = player.p;
-
    /* Move cargo over. */
    if (move_cargo) {
       pilot_cargoMoveRaw( ps->p, player.p );
-      pfleet_cargoRedistribute();
+      pfleet_update(); /* Update fleet and move cargo. */
    }
 
    /* Copy position back. */
@@ -588,7 +581,6 @@ void player_swapShip( const char *shipname, int move_cargo )
    /* Recompute stuff if necessary. */
    pilot_calcStats( player.p );
    player_resetSpeed();
-   pfleet_update();
 
    /* Run hook. */
    hparam[0].type    = HOOK_PARAM_STRING;

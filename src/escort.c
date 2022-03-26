@@ -190,7 +190,7 @@ unsigned int escort_createRef( Pilot *p, Pilot *pe,
 {
    /* Reset internals. */
    pilot_reset( pe );
-   pilot_addStack( pe );
+   pilot_addStack( pe ); /* Sets the ID. */
    pe->parent = p->id;
 
    /* Make invincible to player. */
