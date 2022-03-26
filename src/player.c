@@ -513,15 +513,21 @@ void player_swapShip( const char *shipname, int move_cargo )
 
    /* Get rid of deployed escorts and swap existing escorts. */
    escort_clearDeployed( player.p );
-   array_free( ps->p->escorts );
+   escort_freeList( ps->p );
    ps->p->escorts = array_create( Escort_t );
    /* Just copying the array over has unforeseen consequences, so recreate. */
    for (int i=0; i<array_size(player.p->escorts); i++) {
       Escort_t *e = &player.p->escorts[i];
       Escort_t ne = *e;
+
+      /* Must not be new ship. */
+      if (e->id == ps->p->id )
+         continue;
+
       ne.ship = strdup(e->ship); /* Might be worth having an escort_copy function. */
       array_push_back( &ps->p->escorts, ne );
    }
+   escort_freeList( player.p );
 
    /* Swap information over. */
    ptemp    = player.ps;
@@ -549,9 +555,8 @@ void player_swapShip( const char *shipname, int move_cargo )
 
    /* If the pilot is deployed, we must redeploy. */
    pilot_replacePlayer( ps->p );
-   if (ps->deployed) {
+   if (ps->deployed)
       pfleet_deploy( ps );
-   }
    player.ps.deployed = 0; /* Player themselves can't be deployed. */
 
    /* Run onadd hook for all new outfits. */
