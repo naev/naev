@@ -3202,19 +3202,28 @@ void pilot_clearTrails( Pilot *p )
  */
 Pilot* pilot_setPlayer( Pilot* after )
 {
-   int i = pilot_getStackPos( PLAYER_ID );
    Pilot *p;
+   int i = pilot_getStackPos( after->id );
 
-   /* Create new if invalid. */
-   after->id = PLAYER_ID;
-   if (i <= 0) {
-      array_push_back( &pilot_stack, after );
+   if (i > 0) {
+      after->id = PLAYER_ID;
       qsort( pilot_stack, array_size(pilot_stack), sizeof(Pilot*), pilot_cmp );
       i = pilot_getStackPos( PLAYER_ID );
       p = pilot_stack[i];
    }
-   else
-      p = pilot_stack[i];
+   else {
+      /* Create new if invalid. */
+      i = pilot_getStackPos( PLAYER_ID );
+      after->id = PLAYER_ID;
+      if (i <= 0) {
+         array_push_back( &pilot_stack, after );
+         qsort( pilot_stack, array_size(pilot_stack), sizeof(Pilot*), pilot_cmp );
+         i = pilot_getStackPos( PLAYER_ID );
+         p = pilot_stack[i];
+      }
+      else
+         p = pilot_stack[i];
+   }
 
    /* Set up stuff. */
    after->id = PLAYER_ID;
@@ -3229,6 +3238,7 @@ Pilot* pilot_setPlayer( Pilot* after )
 
    /* Set player flag. */
    pilot_setFlag( after, PILOT_PLAYER );
+   pilot_setFlag( after, PILOT_NOFREE );
 
    /* Run Lua stuff. */
    pilot_outfitLInitAll( after );
@@ -3392,13 +3402,10 @@ void pilot_free( Pilot* p )
  *
  *    @param p Pilot to destroy.
  */
-void pilot_destroy(Pilot* p)
+void pilot_destroy( Pilot *p )
 {
-   int i;
    PilotOutfitSlot* dockslot;
-
-   /* find the pilot */
-   i = pilot_getStackPos( p->id );
+   int i = pilot_getStackPos( p->id );
 
    /* Stop all outfits. */
    pilot_outfitOffAll(p);

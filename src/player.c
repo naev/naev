@@ -554,8 +554,8 @@ void player_swapShip( const char *shipname, int move_cargo )
    pilot_calcStats( player.p );
 
    /* If the pilot is deployed, we must redeploy. */
-   if (player.ps.deployed)
-      ps->p->id = ship->id;
+   if (ps->p->id > 0)
+      pilot_destroy( ps->p );
    pilot_setPlayer( ship );
    player.ps.deployed = 0; /* Player themselves can't be deployed. */
    if (ps->deployed)
