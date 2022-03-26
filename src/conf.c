@@ -297,6 +297,8 @@ int conf_loadConfig ( const char* file )
    int w,h;
    SDL_Keymod m;
 
+   conf.loaded = 1;
+
    /* Check to see if file exists. */
    if (!nfile_fileExists(file))
       return nfile_touch(file);
@@ -526,7 +528,6 @@ int conf_loadConfig ( const char* file )
    }
 
    nlua_freeEnv( lEnv );
-   conf.loaded = 1;
    return 0;
 }
 
