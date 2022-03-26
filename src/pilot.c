@@ -3218,6 +3218,7 @@ Pilot* pilot_setPlayer( Pilot* after )
 
    /* Set up stuff. */
    after->id = PLAYER_ID;
+   player.p = after;
    for (int j=0; j<array_size(p->trail); j++)
       spfx_trail_remove( p->trail[j] );
    array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) );

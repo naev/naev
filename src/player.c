@@ -4112,7 +4112,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    if (is_player) {
       ps.deployed = 0; /* Current ship can't be deployed. */
       pilot_setPlayer( ship );
-      player.p = ship;
    }
    ps.p = ship;
 
