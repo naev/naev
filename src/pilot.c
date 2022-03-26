@@ -86,9 +86,12 @@ Pilot*const* pilot_getAll (void)
 /**
  * @brief Compare id (for use with bsearch)
  */
-static int compid(const void *id, const void *p)
+static int pilot_cmp( const void *ptr1, const void *ptr2 )
 {
-    return *((const unsigned int*)id) - (*((Pilot**)p))->id;
+   const Pilot *p1, *p2;
+   p1 = *((const Pilot**) ptr1);
+   p2 = *((const Pilot**) ptr2);
+   return p1->id - p2->id;
 }
 
 /**
@@ -99,8 +102,10 @@ static int compid(const void *id, const void *p)
  */
 static int pilot_getStackPos( unsigned int id )
 {
+   const Pilot pid = { .id = id };
+   const Pilot *pidptr = &pid;
    /* binary search */
-   Pilot **pp = bsearch(&id, pilot_stack, array_size(pilot_stack), sizeof(Pilot*), compid);
+   Pilot **pp = bsearch(&pidptr, pilot_stack, array_size(pilot_stack), sizeof(Pilot*), pilot_cmp);
    if (pp == NULL)
       return -1;
    else
@@ -3190,38 +3195,36 @@ void pilot_clearTrails( Pilot *p )
    pilot_init_trails( p );
 }
 
-static int pilot_cmp( const void *ptr1, const void *ptr2 )
-{
-   const Pilot *p1, *p2;
-   p1 = (const Pilot*) ptr1;
-   p2 = (const Pilot*) ptr2;
-   return p1->id - p2->id;
-}
-
 /**
  * @brief Replaces the player's pilot with an alternate ship with the same ID.
  *
  *    @return The new pilot.
  */
-Pilot* pilot_replacePlayer( Pilot* after )
+Pilot* pilot_setPlayer( Pilot* after )
 {
    int i = pilot_getStackPos( PLAYER_ID );
-   Pilot *p = pilot_stack[i];
+   Pilot *p;
 
    /* Create new if invalid. */
+   after->id = PLAYER_ID;
    if (i <= 0) {
-      after->id = PLAYER_ID;
       array_push_back( &pilot_stack, after );
       qsort( pilot_stack, array_size(pilot_stack), sizeof(Pilot*), pilot_cmp );
       i = pilot_getStackPos( PLAYER_ID );
       p = pilot_stack[i];
    }
+   else
+      p = pilot_stack[i];
 
+   /* Set up stuff. */
+   after->id = PLAYER_ID;
    for (int j=0; j<array_size(p->trail); j++)
       spfx_trail_remove( p->trail[j] );
    array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) );
-   pilot_stack[i] = after;
    pilot_init_trails( after );
+
+   /* Initialize AI as necessary. */
+   ai_pinit( after, "player" );
 
    /* Set player flag. */
    pilot_setFlag( after, PILOT_PLAYER );

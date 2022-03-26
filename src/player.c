@@ -463,7 +463,7 @@ static PlayerShip_t *player_newShipMake( const char *name )
    ps->p = pilot_createEmpty( player_ship, name, faction_get("Player"), flags );
    if (player.p == NULL) {
       pilot_reset( ps->p );
-      pilot_replacePlayer( ps->p );
+      pilot_setPlayer( ps->p );
    }
 
    if (player.p == NULL)
@@ -554,10 +554,12 @@ void player_swapShip( const char *shipname, int move_cargo )
    pilot_calcStats( player.p );
 
    /* If the pilot is deployed, we must redeploy. */
-   pilot_replacePlayer( ps->p );
+   if (player.ps.deployed)
+      ps->p->id = ship->id;
+   pilot_setPlayer( ship );
+   player.ps.deployed = 0; /* Player themselves can't be deployed. */
    if (ps->deployed)
       pfleet_deploy( ps );
-   player.ps.deployed = 0; /* Player themselves can't be deployed. */
 
    /* Run onadd hook for all new outfits. */
    for (int j=0; j<array_size(ship->outfits); j++)
@@ -4109,9 +4111,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    /* Player is currently on this ship */
    if (is_player) {
       ps.deployed = 0; /* Current ship can't be deployed. */
-      pilot_replacePlayer( ship );
+      pilot_setPlayer( ship );
       player.p = ship;
-      ai_pinit( ship, "player" );
    }
    ps.p = ship;
 

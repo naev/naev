@@ -453,7 +453,7 @@ Pilot* pilot_createEmpty( const Ship* ship, const char* name,
 unsigned int pilot_clone( const Pilot *p );
 unsigned int pilot_addStack( Pilot *p );
 void pilot_reset( Pilot* pilot );
-Pilot* pilot_replacePlayer( Pilot* after );
+Pilot* pilot_setPlayer( Pilot* after );
 void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
 void pilot_delete( Pilot *p );
 
