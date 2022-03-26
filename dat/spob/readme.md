@@ -57,10 +57,14 @@ Below is the complete list of dominantly used descriptive tags. It should be not
 * **mining**: mining is an important part of the spob economy
 * **agriculture**: agriculture is an important part of the spob economy
 * **industrial**: industry is an important part of the spob economy
+* **medical**: medicine is an important part of the spob economy
 * **trade**: trade is an important part of the spob economy
+* **shipbuilding**: shipbuilding is an important part of the spob economy
 * **research**: the spob has a strong focus in research (special research laboratories, etc...)
 * **immigration**: the spob draws in a large number of immigrants or is being colonised
 * **refuel**: the spobs reason for existance is as a fueling point
+* **government**: the spob has important government functions or hosts the central government
 * **military**: the spob has an important factional military presence
+* **religious**: the spob has an important religious significance or presence
 * **prison**: the spob has important prison installations
 * **criminal**: the spob has a large criminal element such as important pirate or mafia presence

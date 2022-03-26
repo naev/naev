@@ -12,8 +12,8 @@
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
-  <population>100</population>
+  <class>1</class>
+  <population>1e+02</population>
   <hide>2.000000</hide>
   <services>
    <land>srm_mil_restricted</land>
@@ -26,6 +26,10 @@
  </general>
  <tags>
   <tag>restricted</tag>
+  <tag>nonpc</tag>
+  <tag>station</tag>
+  <tag>medical</tag>
+  <tag>government</tag>
   <tag>research</tag>
   <tag>military</tag>
  </tags>

@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>A</class>
-  <population>600000</population>
+  <population>6e+05</population>
   <hide>1.000000</hide>
   <services>
    <land>land_lowclass</land>
@@ -23,4 +23,10 @@
   <commodities/>
   <description>Avoss was originally a mediocre but habitable world. When the fourteenth colony ship, Petrovsk, arrived, its colonists considered themselves fairly fortunate to have found a place they could call home. However, some fifty years after the expedition had touched down, the world began to change. Seismic activity everywhere began escalating off the charts causing earthquakes and volcanic eruptions the world over. The world is now devastated, a mere shadow of its former self. The colonists have managed to survive, however, and the hardy remain even today.</description>
  </general>
+ <tags>
+  <tag>old</tag>
+  <tag>poor</tag>
+  <tag>rural</tag>
+  <tag>mining</tag>
+ </tags>
 </spob>

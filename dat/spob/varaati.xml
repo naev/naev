@@ -30,6 +30,7 @@
  </general>
  <tech>
   <item>Engines Cargo</item>
+  <item>Hulls Cargo</item>
   <item>Systems Medium</item>
   <item>Engines Medium</item>
   <item>Basic Outfits 2</item>
@@ -38,4 +39,10 @@
   <item>Basic Trade Ships</item>
   <item>Bulk Trade Ships</item>
  </tech>
+ <tags>
+  <tag>old</tag>
+  <tag>rich</tag>
+  <tag>urban</tag>
+  <tag>trade</tag>
+</tags>
 </spob>
