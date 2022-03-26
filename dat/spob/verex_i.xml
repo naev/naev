@@ -2,8 +2,8 @@
 <spob name="Verex I">
  <pos x="-8578.407922" y="-15276.183128"/>
  <GFX>
-  <space>moon-A00.webp</space>
-  <exterior>forest.webp</exterior>
+  <space>moon-A01.webp</space>
+  <exterior>uninhabited-rocky-red-03.webp</exterior>
  </GFX>
  <general>
   <class>A</class>

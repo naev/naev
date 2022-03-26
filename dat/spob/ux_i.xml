@@ -2,11 +2,11 @@
 <spob name="UX I">
  <pos x="684.117311" y="-1134.496612"/>
  <GFX>
-  <space>moon-K00.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <space>moon-D00.webp</space>
+  <exterior>uninhabited-rocky-airless-03.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>K</class>
   <population>0</population>
   <hide>2.000000</hide>
   <services/>

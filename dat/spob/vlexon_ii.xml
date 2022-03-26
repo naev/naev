@@ -3,7 +3,7 @@
  <pos x="2560.000000" y="19360.000000"/>
  <GFX>
   <space>moon-A00.webp</space>
-  <exterior>aquatic2.webp</exterior>
+  <exterior>uninhabited-rocky-red-04.webp</exterior>
  </GFX>
  <general>
   <class>A</class>

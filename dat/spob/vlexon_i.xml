@@ -3,10 +3,10 @@
  <pos x="12880.000000" y="-17680.000000"/>
  <GFX>
   <space>H02.webp</space>
-  <exterior>methane.webp</exterior>
+  <exterior>uninhabited-rocky-yellow-04.webp</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>H</class>
   <population>0</population>
   <hide>1.000000</hide>
   <services/>

@@ -12,7 +12,7 @@
   <range>0</range>
  </presence>
  <general>
-  <class>A</class>
+  <class>1</class>
   <population>3000</population>
   <hide>1.000000</hide>
   <services>
@@ -54,6 +54,7 @@
  </tech>
  <tags>
   <tag>restricted</tag>
+  <tag>station</tag>
   <tag>military</tag>
  </tags>
 </spob>
