@@ -12,7 +12,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>A</class>
+  <class>M</class>
   <population>1e+09</population>
   <hide>1.000000</hide>
   <services>
@@ -34,8 +34,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <item>Systems Medium</item>
   <item>Engines Medium</item>
   <item>Engines Cargo</item>
+  <item>Hulls Cargo</item>
   <item>Basic Outfits 2</item>
   <item>Star Maps</item>
   <item>Bulk Trade Ships</item>
  </tech>
+ <tags>
+  <tag>old</tag>
+  <tag>poor</tag>
+  <tag>rural</tag>
+ </tags>
 </spob>

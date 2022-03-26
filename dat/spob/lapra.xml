@@ -31,6 +31,7 @@
  <tech>
   <item>Systems Low</item>
   <item>Hulls Low</item>
+  <item>Hulls Cargo</item>
   <item>Hulls Medium</item>
   <item>Engines Low</item>
   <item>Engines Medium</item>
@@ -41,4 +42,9 @@
   <item>Light Civilian Combat Ships</item>
   <item>Bulk Trade Ships</item>
  </tech>
+ <tags>
+  <tag>old</tag>
+  <tag>mining</tag>
+  <tag>trade</tag>
+ </tags>
 </spob>
