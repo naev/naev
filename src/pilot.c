@@ -3085,8 +3085,10 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
    pilot_init( dyn, ship, name, faction, dir, pos, vel, flags, dockpilot, dockslot );
 
    /* Set the ID. */
-   if (pilot_isFlagRaw(flags, PILOT_PLAYER)) /* Set player ID. TODO should probably be fixed to something better someday. */
+   if (pilot_isFlagRaw(flags, PILOT_PLAYER)) { /* Set player ID. TODO should probably be fixed to something better someday. */
       dyn->id = PLAYER_ID;
+      qsort( pilot_stack, array_size(pilot_stack), sizeof(Pilot*), pilot_cmp );
+   }
    else
       dyn->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
 
