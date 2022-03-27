@@ -83,8 +83,10 @@ int pfleet_toggleDeploy( PlayerShip_t *ps, int deploy )
       }
    }
    ps->deployed = deploy;
-   if (!ps->deployed)
+   if (!ps->deployed) {
       pilot_stackRemove( ps->p );
+      pilot_free( ps->p );
+   }
    else
       pfleet_deploy( ps );
    pfleet_update();

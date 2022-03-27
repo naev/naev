@@ -550,8 +550,10 @@ void player_swapShip( const char *shipname, int move_cargo )
    dir   = player.p->solid->dir;
 
    /* If the pilot is deployed, we must redeploy. */
-   if (ps->p->id > 0)
+   if (ps->p->id > 0) {
       pilot_stackRemove( ps->p );
+      pilot_free( ps->p );
+   }
    pilot_setPlayer( ship );
    player.ps.deployed = 0; /* Player themselves can't be deployed. */
    if (ps->deployed)

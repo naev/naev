@@ -3337,7 +3337,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
  *
  *    @param p Pilot to free.
  */
-void pilot_free( Pilot* p )
+void pilot_free( Pilot *p )
 {
    /* Clear some useful things. */
    pilot_clearHooks(p);
