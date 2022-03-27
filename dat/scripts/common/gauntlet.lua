@@ -4,6 +4,8 @@
 local vn = require 'vn'
 local fmt = require "format"
 
+local gauntletsys = system.get("Crimson Gauntlet")
+
 local totoran = {
    guide = {
       name = _("Crimson Gauntlet Guide"),
@@ -45,6 +47,54 @@ function totoran.emblems_str( amount )
       "#r%s Crimson Emblems#0",
       "#r%s Crimson Emblems#0", amount ):format(
          fmt.number(amount) )
+end
+
+function totoran.clear_pilots ()
+   local pp = player.pilot()
+   pilot.clear()
+   for k,p in ipairs(pp:followers()) do
+      if p:flags("carried") then
+         p:rm()
+      else
+         p:setHide( true ) -- Don't remove or it'll mess cargo
+      end
+   end
+end
+
+function totoran.enter_the_ring ()
+   -- Teleport the player to the Crimson Gauntlet and hide the rest of the universe
+   for k,s in ipairs(system.getAll()) do
+      s:setHidden(true)
+   end
+   gauntletsys:setHidden(false)
+
+   -- Set up player stuff
+   player.pilot():setPos( vec2.new( 0, 0 ) )
+   -- Disable escorts if they exist
+   var.push("hired_escorts_disabled",true)
+   player.teleport( gauntletsys )
+   var.pop("hired_escorts_disabled")
+end
+
+function totoran.leave_the_ring ()
+   local pp = player.pilot()
+   -- Clear pilots so escorts get docked
+   totoran.clear_pilots()
+   -- Fix the map up
+   gauntletsys:setKnown(false)
+   for k,s in ipairs(system.getAll()) do
+      s:setHidden(false)
+   end
+   -- Undo player invincibility stuff and land
+   hook.land("land")
+   pp:setHide( true ) -- clear hidden flag
+   pp:setInvincible( false )
+   pp:setInvisible( false )
+   player.cinematics( false )
+   -- Restore the escorts
+   for k,p in ipairs(pp:followers()) do
+      p:setHide( false ) -- Don't remove or it'll mess cargo
+   end
 end
 
 return totoran

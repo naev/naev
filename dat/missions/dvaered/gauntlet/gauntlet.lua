@@ -101,15 +101,7 @@ end
 
 -- Clears pilots include the player's escorts
 local function clear_pilots ()
-   local pp = player.pilot()
-   pilot.clear()
-   for k,p in ipairs(pp:followers()) do
-      if p:flags("carried") then
-         p:rm()
-      else
-         p:setHide( true ) -- Don't remove or it'll mess cargo
-      end
-   end
+   gauntlet.clear_pilots()
 end
 
 --[[
@@ -118,19 +110,8 @@ end
 -- Enters Crimson Gauntlet
 function enter_the_ring ()
    -- Teleport the player to the Crimson Gauntlet and hide the rest of the universe
-   local sys = gauntletsys
    hook.enter( mem.gauntlet_enter )
-   for k,s in ipairs(system.getAll()) do
-      s:setHidden(true)
-   end
-   sys:setHidden(false)
-
-   -- Set up player stuff
-   player.pilot():setPos( vec2.new( 0, 0 ) )
-   -- Disable escorts if they exist
-   var.push("hired_escorts_disabled",true)
-   player.teleport(sys)
-   var.pop("hired_escorts_disabled")
+   gauntlet.enter_the_ring()
 
    -- Player lost info
    local pp = player.pilot()
@@ -139,26 +120,8 @@ function enter_the_ring ()
 end
 -- Goes back to Totoran (landed)
 function leave_the_ring ()
-   local pp = player.pilot()
-   -- Clear pilots so escorts get docked
-   clear_pilots()
-   -- Fix the map up
-   local sys = gauntletsys
-   sys:setKnown(false)
-   for k,s in ipairs(system.getAll()) do
-      s:setHidden(false)
-   end
-   -- Undo player invincibility stuff and land
-   hook.land("land")
-   pp:setHide( true ) -- clear hidden flag
-   pp:setInvincible( false )
-   pp:setInvisible( false )
-   player.cinematics( false )
+   gauntlet.leave_the_ring()
    player.land( spob.get("Totoran") )
-   -- Restore the escorts
-   for k,p in ipairs(pp:followers()) do
-      p:setHide( false ) -- Don't remove or it'll mess cargo
-   end
 end
 
 --[[
