@@ -21,11 +21,12 @@
    Go to planet A, get ambushed twice, and then duel in the Crimson Gauntlet.
 --]]
 local minerva  = require "common.minerva"
+local gauntlet = require "common.gauntlet"
 local pp_shaders = require 'pp_shaders'
 local vn       = require 'vn'
 local equipopt = require 'equipopt'
 local luaspfx  = require 'luaspfx'
-local fmt = require "format"
+local fmt      = require "format"
 
 -- Mission states:
 --  nil: mission not accepted yet
@@ -362,21 +363,8 @@ function enter_the_ring ()
    -- and error out because it can't teleport
    if player.isLanded() then return end
 
-   -- Teleport the player to the Crimson Gauntlet and hide the rest of the universe
-   for k,s in ipairs(system.getAll()) do
-      s:setHidden(true)
-   end
-   gauntletsys:setHidden(false)
-
-   -- Set up player stuff
-   player.pilot():setPos( vec2.new( 0, 0 ) )
-   -- Disable escorts if they exist
-   var.push("hired_escorts_disabled",true)
-   player.teleport(gauntletsys)
-   var.pop("hired_escorts_disabled")
-
-   -- Clean up
-   pilot.clear() -- Want no escorts and the likes
+   -- Enter the ring!
+   gauntlet.enter_the_ring()
 
    -- Set up Player
    local player_vendetta = player.addShip( "Vendetta", _("Ketchup"), _("It's virtual reality!"), true )
@@ -403,18 +391,10 @@ function enter_the_ring ()
 end
 -- Goes back to Totoran (landed)
 function leave_the_ring ()
-   -- Stop spfx stuff
-   luaspfx.exit()
+   gauntlet.leave_the_ring ()
 
-   -- Clear pilots so escorts get docked
-   pilot.clear()
    -- Give the player back their old ship
    player.swapShip( mem.player_prevship, true, true )
-   -- Fix the map up
-   gauntletsys:setKnown(false)
-   for k,s in ipairs(system.getAll()) do
-      s:setHidden(false)
-   end
    player.land( spob.get("Totoran") )
 end
 

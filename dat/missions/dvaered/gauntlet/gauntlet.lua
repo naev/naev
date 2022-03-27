@@ -121,6 +121,7 @@ end
 -- Goes back to Totoran (landed)
 function leave_the_ring ()
    gauntlet.leave_the_ring()
+   hook.land("land")
    player.land( spob.get("Totoran") )
 end
 

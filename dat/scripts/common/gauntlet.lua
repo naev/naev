@@ -74,6 +74,9 @@ function totoran.enter_the_ring ()
    var.push("hired_escorts_disabled",true)
    player.teleport( gauntletsys )
    var.pop("hired_escorts_disabled")
+
+   -- Clean up pilots
+   totoran.clear_pilots()
 end
 
 function totoran.leave_the_ring ()
@@ -86,7 +89,6 @@ function totoran.leave_the_ring ()
       s:setHidden(false)
    end
    -- Undo player invincibility stuff and land
-   hook.land("land")
    pp:setHide( true ) -- clear hidden flag
    pp:setInvincible( false )
    pp:setInvisible( false )
