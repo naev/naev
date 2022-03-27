@@ -492,6 +492,7 @@ void player_swapShip( const char *shipname, int move_cargo )
    Pilot *ship;
    vec2 v;
    double dir;
+   int removed;
    PlayerShip_t *ps = NULL;
    PlayerShip_t ptemp;
 
@@ -550,9 +551,10 @@ void player_swapShip( const char *shipname, int move_cargo )
    dir   = player.p->solid->dir;
 
    /* If the pilot is deployed, we must redeploy. */
+   removed = 0;
    if (ps->p->id > 0) {
       pilot_stackRemove( ps->p );
-      pilot_free( ps->p );
+      removed = 1;
    }
    pilot_setPlayer( ship );
    player.ps.deployed = 0; /* Player themselves can't be deployed. */
@@ -572,6 +574,10 @@ void player_swapShip( const char *shipname, int move_cargo )
       pilot_cargoMoveRaw( player.p, ps->p );
       pfleet_update(); /* Update fleet and move cargo. */
    }
+
+   /* Clean up, AFTER cargo is updated. */
+   if (removed)
+      pilot_free( ps->p );
 
    /* Copy position back. */
    player.p->solid->pos = v;
