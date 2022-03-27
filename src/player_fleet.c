@@ -15,6 +15,8 @@
 #include "array.h"
 #include "dialogue.h"
 #include "escort.h"
+#include "land.h"
+#include "equipment.h"
 
 /**
  * @brief Updates the used fleet capacity of the player.
@@ -77,14 +79,18 @@ int pfleet_toggleDeploy( PlayerShip_t *ps, int deploy )
       for (int i=0; i<array_size(p->commodities); i++) {
          PilotCommodity *pc = &p->commodities[i];
          pfleet_cargoAdd( pc->commodity, pc->quantity );
+         pilot_cargoRm( p, pc->commodity, pc->quantity );
       }
    }
    ps->deployed = deploy;
    if (!ps->deployed)
       pilot_delete( ps->p );
    else
-      player_addEscorts();
+      pfleet_deploy( ps );
    pfleet_update();
+
+   /* Have to update GUI. */
+   equipment_updateShips( land_getWid( LAND_WINDOW_EQUIPMENT ), NULL );
    return 0;
 }
 

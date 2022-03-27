@@ -292,7 +292,7 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
 }
 
 /**
- * @brief Tries to get rid of quantity cargo from pilot.  Can remove mission cargo.
+ * @brief Tries to get rid of quantity cargo from pilot. Can remove mission cargo.
  *
  *    @param pilot Pilot to get rid of cargo.
  *    @param cargo Cargo to get rid of.
