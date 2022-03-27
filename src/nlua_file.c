@@ -108,8 +108,7 @@ LuaFile_t* luaL_checkfile( lua_State *L, int ind )
  */
 LuaFile_t* lua_pushfile( lua_State *L, LuaFile_t file )
 {
-   LuaFile_t *c;
-   c = (LuaFile_t*) lua_newuserdata(L, sizeof(LuaFile_t));
+   LuaFile_t *c = (LuaFile_t*) lua_newuserdata(L, sizeof(LuaFile_t));
    *c = file;
    luaL_getmetatable(L, FILE_METATABLE);
    lua_setmetatable(L, -2);
@@ -266,7 +265,7 @@ static int fileL_read( lua_State *L )
    buf = malloc( readlen );
    len = SDL_RWread( lf->rw, buf, 1, readlen );
 
-   lua_pushlstring(L,buf,len);
+   lua_pushlstring(L, buf, len);
    lua_pushinteger(L,len);
    free( buf );
    return 2;
