@@ -17,7 +17,7 @@
  <condstr>You need at least 30 reputation with the Soromid.</condstr>
  <description>The Marauder was developed from the same base as the Brigand, but the two ships are quite different. The Marauder was developed to fill a bomber role, which calls for increased durability and ammunition chambers. This makes it quite a bit slower than its distant cousin.</description>
  <health>
-  <armour>80</armour>
+  <armour>45</armour>
  </health>
  <characteristics>
   <crew>6</crew>
@@ -41,10 +41,8 @@
   <structure size="small" />
  </slots>
  <stats>
-  <speed_mod>-10</speed_mod>
-  <turn_mod>-10</turn_mod>
-  <thrust_mod>-10</thrust_mod>
-  <armour_mod>5</armour_mod>
+  <armour_mod>-15</armour_mod>
+  <shield_mod>-10</shield_mod>
   <launch_rate>10</launch_rate>
   <launch_range>15</launch_range>
   <ammo_capacity>50</ammo_capacity>

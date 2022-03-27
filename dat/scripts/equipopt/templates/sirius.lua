@@ -5,7 +5,7 @@ local eparams = require 'equipopt.params'
 
 local sirius_outfits = eoutfits.merge{{
    -- Heavy Weapons
-   "Fidelity Bay",
+   "Fidelity Bay", "Sirius Shaman Bay",
    "Heavy Razor Turret", "Ragnarok Beam",
    "Heavy Ion Turret", "Grave Beam",
    -- Medium Weapons
