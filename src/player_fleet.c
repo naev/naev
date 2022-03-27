@@ -33,6 +33,13 @@ void pfleet_update (void)
    pfleet_cargoRedistribute();
 }
 
+/**
+ * @brief Toggles a player ship as deployed.
+ *
+ *    @param ps Player ship to toggle.
+ *    @param deploy Whether or not to set status as deployed.
+ *    @return 0 on success
+ */
 int pfleet_toggleDeploy( PlayerShip_t *ps, int deploy )
 {
    /* When undeploying we want to make sure cargo fits. */
@@ -81,6 +88,14 @@ int pfleet_toggleDeploy( PlayerShip_t *ps, int deploy )
    return 0;
 }
 
+/**
+ * @brief Deploys a player's pilot.
+ *
+ * Will not deploy duplicates.
+ *
+ *    @param ps Player ship to deploy.
+ *    @return 0 on success
+ */
 int pfleet_deploy( PlayerShip_t *ps )
 {
    double a;
