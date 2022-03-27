@@ -182,6 +182,7 @@ dat/outfits/fighter_bays/lancelot_bay.xml
 dat/outfits/fighter_bays/pirate_hyena_bay.xml
 dat/outfits/fighter_bays/pirate_hyena_dock.xml
 dat/outfits/fighter_bays/proteron_derivative_bay.xml
+dat/outfits/fighter_bays/sirius_shaman_bay.xml
 dat/outfits/fighter_bays/soromid_brigand_bay.xml
 dat/outfits/fighter_bays/thurion_perspicacity_bay.xml
 dat/outfits/fighter_bays/thurion_perspicacity_dock.xml
@@ -211,6 +212,7 @@ dat/outfits/launchers/teracom_medusa_launcher.xml
 dat/outfits/launchers/teracom_vengeance_launcher.xml
 dat/outfits/launchers/turreted_convulsion_launcher.xml
 dat/outfits/launchers/unicorp_caesar_iv_launcher.xml
+dat/outfits/launchers/unicorp_storm_launcher.xml
 dat/outfits/launchers/zalek_hunter_launcher.xml
 dat/outfits/launchers/zalek_reaper_launcher.xml
 dat/outfits/maps/localmap.xml
