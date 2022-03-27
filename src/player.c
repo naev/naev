@@ -549,17 +549,17 @@ void player_swapShip( const char *shipname, int move_cargo )
    v     = player.p->solid->pos;
    dir   = player.p->solid->dir;
 
-   /* extra pass to calculate stats */
-   pilot_calcStats( ship );
-   pilot_calcStats( player.p );
-
    /* If the pilot is deployed, we must redeploy. */
    if (ps->p->id > 0)
-      pilot_destroy( ps->p );
+      pilot_stackRemove( ps->p );
    pilot_setPlayer( ship );
    player.ps.deployed = 0; /* Player themselves can't be deployed. */
    if (ps->deployed)
       pfleet_deploy( ps );
+
+   /* Extra pass to calculate stats */
+   pilot_calcStats( player.p );
+   pilot_calcStats( ps->p );
 
    /* Run onadd hook for all new outfits. */
    for (int j=0; j<array_size(ship->outfits); j++)

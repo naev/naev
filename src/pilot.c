@@ -3432,6 +3432,20 @@ void pilot_destroy( Pilot *p )
 }
 
 /**
+ * @brief Tries to remove a pilot from the stack.
+ */
+void pilot_stackRemove( Pilot *p )
+{
+   int i = pilot_getStackPos( p->id );
+#ifdef DEBUGGING
+   if (i < 0)
+      WARN(_("Trying to remove non-existent pilot '%s' from stack!"), p->name);
+#endif /* DEBUGGING */
+   p->id = 0;
+   array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] );
+}
+
+/**
  * @brief Initializes pilot stuff.
  */
 void pilots_init (void)

@@ -147,11 +147,10 @@ static void shipCargo( PilotCommodity **pclist, Pilot *p )
 
       /* Remove the cargo. TODO use pilot_cargoRm somehow.  */
       array_erase( &p->commodities, &pc[0], &pc[1] );
-      p->cargo_free  += q;
-      p->mass_cargo  -= q;
-      p->solid->mass -= p->stats.cargo_inertia * q;
    }
-   pilot_updateMass( p );
+
+   /* Update cargo. */
+   pilot_cargoCalc( p );
 }
 
 /**

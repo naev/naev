@@ -460,7 +460,8 @@ void pilot_delete( Pilot *p );
 /*
  * Init and cleanup.
  */
-void pilot_destroy( Pilot* p );
+void pilot_destroy( Pilot *p );
+void pilot_stackRemove( Pilot *p );
 void pilots_init (void);
 void pilots_free (void);
 void pilots_clean( int persist );
