@@ -104,9 +104,11 @@ local function clear_pilots ()
    local pp = player.pilot()
    pilot.clear()
    for k,p in ipairs(pp:followers()) do
-      --if p:flags("carried") then
+      if p:flags("carried") then
          p:rm()
-      --end
+      else
+         p:setHide( true ) -- Don't remove or it'll mess cargo
+      end
    end
 end
 
@@ -153,6 +155,10 @@ function leave_the_ring ()
    pp:setInvisible( false )
    player.cinematics( false )
    player.land( spob.get("Totoran") )
+   -- Restore the escorts
+   for k,p in ipairs(pp:followers()) do
+      p:setHide( false ) -- Don't remove or it'll mess cargo
+   end
 end
 
 --[[
