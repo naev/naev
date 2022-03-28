@@ -576,7 +576,7 @@ void player_swapShip( const char *shipname, int move_cargo )
    }
 
    /* Clean up, AFTER cargo is updated. */
-   if (removed)
+   if (!ps->deployed && removed)
       pilot_free( ps->p );
 
    /* Copy position back. */
