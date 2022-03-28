@@ -8,7 +8,7 @@
   <mass>40</mass>
   <price>140000</price>
   <description>Expensive though they are the Red Star Organisation started producing these hulls to provide more cargo space but also provide better protection to their ships involved in relief efforts during wars and working in less savoury parts of the galaxy. Since the extra bulk and protrusions from the cargo sections make it easier to detect anyway, the Organisation went ahead and added an eletromagnetic shockwave absorbtion generator that, though also increasing the hull signature and CPU usage also causes missile jams, reduces the hulls tracability and reduces splash damage from weapon strikes.</description>
-  <gfx_store>cargo_hull_s.webp</gfx_store>
+  <gfx_store>rs_hull_s.webp</gfx_store>
   <cpu>-24</cpu>
  </general>
  <specific type="modification">
