@@ -28,6 +28,7 @@
 #include "nxml.h"
 #include "safelanes.h"
 #include "space.h"
+#include "player.h"
 
 /**
  * @brief Universe diff filepath list.
@@ -1582,14 +1583,29 @@ int diff_load( xmlNodePtr parent )
  */
 static int diff_checkUpdateUniverse (void)
 {
+   Pilot *const* pilots;
+
    if (!diff_universe_changed || diff_universe_defer)
       return 0;
+
    space_reconstructPresences();
    safelanes_recalculate();
 
    /* Re-compute the economy. */
    economy_execQueued();
    economy_initialiseCommodityPrices();
+
+   /* Have to pilot targetting just in case. */
+   pilots = pilot_getAll();
+   for (int i=0; i<array_size(pilots); i++) {
+      Pilot *p = pilots[i];
+      p->nav_spob       = -1;
+      p->nav_hyperspace = -1;
+   }
+
+   /* Player has to update the GUI so we send again. */
+   player_targetSpobSet( -1 );
+   player_targetHyperspaceSet( -1, 0 );
 
    diff_universe_changed = 0;
    return 1;

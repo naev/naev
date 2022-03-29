@@ -1424,6 +1424,10 @@ void player_targetSpobSet( int id )
 {
    int old;
 
+   /* Player must exist. */
+   if (player.p == NULL)
+      return;
+
    if (id >= array_size(cur_system->spobs)) {
       WARN(_("Trying to set player's spob target to invalid ID '%d'"), id);
       return;
@@ -1742,6 +1746,10 @@ void player_board (void)
 void player_targetHyperspaceSet( int id, int nomsg )
 {
    int old;
+
+   /* Player must exist. */
+   if (player.p == NULL)
+      return;
 
    if (id >= array_size(cur_system->jumps)) {
       WARN(_("Trying to set player's hyperspace target to invalid ID '%d'"), id);
