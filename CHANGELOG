@@ -4,6 +4,7 @@
    * Fix bug in "Waste Collector" mission
    * Fixed a bug that allowed the player to get infinite escorts
    * Work around bugs in at least one OpenGL driver
+   * Fix crash when unidiff changes assets that the player has targetted
 
 * 0.9.2
    * Fix reward messages in the Particle Physics campaign
