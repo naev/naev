@@ -1368,6 +1368,10 @@ void player_targetPlanetSet( int id )
 {
    int old;
 
+   /* Player must exist. */
+   if (player.p == NULL)
+      return;
+
    if (id >= array_size(cur_system->planets)) {
       WARN(_("Trying to set player's planet target to invalid ID '%d'"), id);
       return;
@@ -1688,6 +1692,10 @@ void player_board (void)
 void player_targetHyperspaceSet( int id, int autonavcont )
 {
    int old;
+
+   /* Player must exist. */
+   if (player.p == NULL)
+      return;
 
    if (id >= array_size(cur_system->jumps)) {
       WARN(_("Trying to set player's hyperspace target to invalid ID '%d'"), id);
