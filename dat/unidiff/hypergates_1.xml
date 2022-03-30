@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Hypergates in progress. Just advances their construction state. -->
 <unidiff name="hypergates_1">
  <spob name="Hypergate Dvaer">
   <gfx_space>hypergate_under_construction.webp</gfx_space>

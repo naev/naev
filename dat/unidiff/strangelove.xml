@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Dr. STrangelove's laboratory for the Minerva campaign. -->
 <unidiff name="strangelove">
  <system name="Westhaven">
   <spob name="Strangelove Lab">add</spob>
