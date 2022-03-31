@@ -320,8 +320,17 @@ void gl_uniformAColor(GLint location, const glColour *c, GLfloat a)
 
 static int gl_log_says_anything( const char* log )
 {
-   for (size_t i=0; log[i]; i++)
-      if (!isspace(log[i]))
-         return 1;
-   return 0;
+   const char *junk[] = {
+      "No errors.",     /* Renderer: Intel(R) HD Graphics 3000; Version: 3.1.0 - Build 9.17.10.4229 */
+   };
+   while (*log) {
+      if (isspace(*log))
+         log++;
+      for (size_t i = 0; i*sizeof(junk[0]) < sizeof(junk); i++)
+         if (!strncmp(log, junk[i], strlen(junk[i]))) {
+            log += strlen(junk[i]);
+            continue;
+         }
+   }
+   return (*log != 0);
 }
