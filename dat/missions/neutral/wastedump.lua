@@ -3,7 +3,7 @@
 <mission name="Waste Dump">
  <avail>
   <priority>9</priority>
-  <chance>100</chance>
+  <chance>10</chance>
   <location>Computer</location>
   <faction>Dvaered</faction>
   <faction>Empire</faction>
