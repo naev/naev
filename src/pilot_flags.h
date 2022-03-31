@@ -15,7 +15,7 @@ enum {
     * Creation-time flags
     */
    PILOT_PLAYER,        /**< Pilot is a player. */
-   PILOT_PLAYER_FLEET,  /**< Pilot is part fo the player's fleet. */
+   PILOT_PLAYER_FLEET,  /**< Pilot is part of the player's fleet. */
    PILOT_CARRIED,       /**< Pilot usually resides in a fighter bay. */
    PILOT_CREATED_AI,    /**< Pilot has already created AI. */
    PILOT_NO_OUTFITS,    /**< Do not create the pilot with outfits. */
