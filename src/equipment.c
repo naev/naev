@@ -1726,9 +1726,9 @@ void equipment_updateShips( unsigned int wid, const char* str )
       onboard  = 0;
       deployed = ps->deployed;
    }
-   ship     = ps->p;
-   favourite = ps->favourite;
-   prevship = eq_wgt.selected;
+   ship        = ps->p;
+   favourite   = ps->favourite;
+   prevship    = eq_wgt.selected;
    eq_wgt.selected = ship;
 
    /* update text */

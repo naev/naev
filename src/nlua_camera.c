@@ -81,7 +81,6 @@ static int camL_set( lua_State *L )
    double x, y, d;
    int hard_over, speed;
 
-
    /* Handle arguments. */
    p = NULL;
    vec = NULL;
@@ -145,7 +144,6 @@ static int camL_get( lua_State *L )
  */
 static int camL_setZoom( lua_State *L )
 {
-
    double zoom = luaL_optnumber(L,1,-1.0);
    int hard_over = lua_toboolean(L,2);
 
