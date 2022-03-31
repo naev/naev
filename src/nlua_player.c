@@ -1255,7 +1255,7 @@ static int playerL_rmOutfit( lua_State *L )
  */
 static int playerL_addShip( lua_State *L )
 {
-   Pilot *new_ship;
+   PlayerShip_t *new_ship;
    /* Handle parameters. */
    const Ship *s     = luaL_validship(L, 1);
    const char *name  = luaL_optstring(L, 2, _(s->name));
@@ -1266,7 +1266,7 @@ static int playerL_addShip( lua_State *L )
       new_ship = player_newShip( s, name, 0, acquired, noname );
    } while (new_ship == NULL);
    /* Return the new name. */
-   lua_pushstring( L, new_ship->name );
+   lua_pushstring( L, new_ship->p->name );
    return 1;
 }
 

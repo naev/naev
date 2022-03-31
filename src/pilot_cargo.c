@@ -178,29 +178,28 @@ int pilot_cargoAdd( Pilot* pilot, const Commodity* cargo,
 /**
  * @brief Gets how much cargo ship has on board.
  *
- *    @param pilot Pilot to get used cargo space of.
+ *    @param p Pilot to get used cargo space of.
  *    @return The used cargo space by pilot.
  */
-int pilot_cargoUsed( const Pilot* pilot )
+int pilot_cargoUsed( const Pilot* p )
 {
    int q = 0;
-   for (int i=0; i<array_size(pilot->commodities); i++)
-      q += pilot->commodities[i].quantity;
-
+   for (int i=0; i<array_size(p->commodities); i++)
+      q += p->commodities[i].quantity;
    return q;
 }
 
 /**
  * @brief Gets how much mission cargo ship has on board.
  *
- *    @param pilot Pilot to get used cargo space of.
+ *    @param p Pilot to get used cargo space of.
  *    @return The used cargo space by pilot.
  */
-int pilot_cargoUsedMission( const Pilot* pilot )
+int pilot_cargoUsedMission( const Pilot* p )
 {
    int q = 0;
-   for (int i=0; i<array_size(pilot->commodities); i++) {
-      PilotCommodity *pc = &pilot->commodities[i];
+   for (int i=0; i<array_size(p->commodities); i++) {
+      PilotCommodity *pc = &p->commodities[i];
       if (pc->id > 0)
          q += pc->quantity;
    }

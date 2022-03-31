@@ -300,6 +300,7 @@ static int player_newMake (void)
    const Ship *ship;
    const char *shipname, *acquired;
    double x,y;
+   PlayerShip_t *ps;
 
    if (player_stack==NULL)
       player_stack = array_create( PlayerShip_t );
@@ -323,10 +324,12 @@ static int player_newMake (void)
    }
    acquired = start_acquired();
    /* Setting a default name in the XML prevents naming prompt. */
-   if (player_newShip( ship, shipname, 0, acquired, (shipname==NULL) ? 0 : 1 ) == NULL) {
+   ps = player_newShip( ship, shipname, 0, acquired, (shipname==NULL) ? 0 : 1 );
+   if (ps == NULL) {
       player_new();
       return -1;
    }
+   player.ps = *ps;
    start_position( &x, &y );
    vec2_cset( &player.p->solid->pos, x, y );
    vectnull( &player.p->solid->vel );
@@ -372,7 +375,7 @@ static int player_newMake (void)
  *
  * @sa player_newShipMake
  */
-Pilot* player_newShip( const Ship* ship, const char *def_name,
+PlayerShip_t* player_newShip( const Ship* ship, const char *def_name,
       int trade, const char *acquired, int noname )
 {
    char *ship_name, *old_name;
@@ -439,7 +442,7 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
       equipment_regenLists( w, 0, 1 );
    }
 
-   return ps->p;
+   return ps;
 }
 
 /**
