@@ -333,6 +333,9 @@ static int player_newMake (void)
    player.p->solid->dir = RNGF() * 2.*M_PI;
    space_init( start_system(), 1 );
 
+   /* Bind camera. */
+   cam_setTargetPilot( player.p->id, 0 );
+
    /* Set player speed to default 1 */
    player.speed = 1.;
 
