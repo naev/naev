@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-03-18 14:10+0900\n"
+"POT-Creation-Date: 2022-03-31 13:59-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1282,7 +1282,6 @@ msgstr ""
 #: dat/ships/soromid_marauder.xml:14 dat/ships/soromid_nyx.xml:14
 #: dat/ships/soromid_odium.xml:15 dat/ships/soromid_reaver.xml:13
 #: dat/ships/soromid_vox.xml:17 dat/ships/taitamariki.xml:15
-#: dat/scripts/common/soromid.lua:11
 msgid "Soromid"
 msgstr ""
 
@@ -2475,6 +2474,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/dummy_plating.xml:4
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:4
+#: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:4
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:4
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:4
 #: dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml:4
@@ -2482,6 +2482,7 @@ msgstr ""
 #: dat/outfits/core_hull/large/unicorp_d68_heavy_plating.xml:4
 #: dat/outfits/core_hull/medium/nexus_medium_stealth_plating.xml:4
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:4
+#: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:4
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:4
 #: dat/outfits/core_hull/medium/sk_medium_combat_plating.xml:4
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:4
@@ -2489,6 +2490,7 @@ msgstr ""
 #: dat/outfits/core_hull/medium/unicorp_d24_medium_plating.xml:4
 #: dat/outfits/core_hull/small/nexus_light_stealth_plating.xml:4
 #: dat/outfits/core_hull/small/patchwork_light_plating.xml:4
+#: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:4
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:4
 #: dat/outfits/core_hull/small/sk_small_cargo_hull.xml:4
 #: dat/outfits/core_hull/small/sk_ultralight_combat_plating.xml:4
@@ -2513,6 +2515,21 @@ msgstr ""
 msgid ""
 "On the plus side, it keeps air from venting into space. But that's about it. "
 "This kind of hull maintenance is simply unacceptable."
+msgstr ""
+
+#: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:2
+msgid "Red Star Large Cargo Hull"
+msgstr ""
+
+#: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:10
+msgid ""
+"This cargo hull from the Red Star Organisation makes use of state-of-the-art "
+"defensive alloys, which allows it to free up even more space for cargo "
+"without sacrificing too much durability. Along with the increased space, "
+"their (in)famous electromagnetic shockwave absorbtion generator comes built "
+"in, turning CPU power and a little more obviousness into missile james, "
+"tracking zero-points and reduced secondary splash damage, turtling has never "
+"been safer."
 msgstr ""
 
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:2
@@ -2585,6 +2602,23 @@ msgstr ""
 msgid "Patchwork Medium Plating"
 msgstr ""
 
+#: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:2
+msgid "Red Star Medium Cargo Hull"
+msgstr ""
+
+#: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:10
+msgid ""
+"The Red Star Organisation have developed a hull modification that provides "
+"both ample cargo space and protection for their own work and have now "
+"started selling it to others. Deciding \"in for a penny, in for a pound\", "
+"an electromagnetic shockwave absorbtion generator was added, typically this "
+"makes the hull rather pointy and scanner obvious but since the hull is "
+"already rather lumpy due to the cargo pods... on the other hand, for the "
+"price of some CPU power, missile jams, tracking zero-points and reduced "
+"secondary splash damage are all achieved making this hull rather more "
+"resiliant."
+msgstr ""
+
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:2
 msgid "S&K Medium Cargo Hull"
 msgstr ""
@@ -2651,6 +2685,22 @@ msgstr ""
 
 #: dat/outfits/core_hull/small/patchwork_light_plating.xml:2
 msgid "Patchwork Light Plating"
+msgstr ""
+
+#: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:2
+msgid "Red Star Small Cargo Hull"
+msgstr ""
+
+#: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:10
+msgid ""
+"Expensive though they are the Red Star Organisation started producing these "
+"hulls to provide more cargo space but also provide better protection to "
+"their ships involved in relief efforts during wars and working in less "
+"savoury parts of the galaxy. Since the extra bulk and protrusions from the "
+"cargo sections make it easier to detect anyway, the Organisation went ahead "
+"and added an eletromagnetic shockwave absorbtion generator that, though also "
+"increasing the hull signature and CPU usage also causes missile jams, "
+"reduces the hulls tracability and reduces splash damage from weapon strikes."
 msgstr ""
 
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:2
@@ -3086,6 +3136,21 @@ msgid ""
 "and flight of the fighters."
 msgstr ""
 
+#: dat/outfits/fighter_bays/sirius_shaman_bay.xml:2
+msgid "Sirius Shaman Bay"
+msgstr ""
+
+#: dat/outfits/fighter_bays/sirius_shaman_bay.xml:8
+msgid "You need at least 50 reputation with the Sirius."
+msgstr ""
+
+#: dat/outfits/fighter_bays/sirius_shaman_bay.xml:13
+msgid ""
+"This fighter bay allows your ship to carry a pair of Sirius Shaman class "
+"bombers. It comes with all the devices required for the maintenance and "
+"flight of the bombers."
+msgstr ""
+
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:2
 msgid "Soromid Brigand Bay"
 msgstr ""
@@ -3486,6 +3551,19 @@ msgid ""
 "Caesar IV class torpedoes are among the most common torpedo weapons "
 "available. Though much slower than missiles and useless against mobile "
 "targets, they remain manoeuvrable enough to chase down cruisers."
+msgstr ""
+
+#: dat/outfits/launchers/unicorp_storm_launcher.xml:2
+msgid "Unicorp Storm Launcher"
+msgstr ""
+
+#: dat/outfits/launchers/unicorp_storm_launcher.xml:9
+msgid ""
+"Storm missiles and launchers were designed by Unicorp in order to be the "
+"guided equivalent to a Mace rocket. However, despite the undeniable ability "
+"of Unicorp to design functionnal and cheap outfits, the result turned out to "
+"be way too costly to mass-equip the Navy. This is the reason why only the "
+"Imperial elite squadrons use this very deadly weapon."
 msgstr ""
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:2
@@ -6925,17 +7003,17 @@ msgstr ""
 #: dat/spob/fulcrum_i.xml:9 dat/spob/gamma.xml:9 dat/spob/gammacron_iv.xml:9
 #: dat/spob/gammacron_v.xml:9 dat/spob/gammacron_va.xml:9
 #: dat/spob/gammacron_vb.xml:9 dat/spob/gastan.xml:15 dat/spob/gem.xml:9
-#: dat/spob/gennus.xml:15 dat/spob/gilligans_light_iii.xml:9
-#: dat/spob/gilligans_tomb.xml:9 dat/spob/ginger_ii.xml:9
-#: dat/spob/ginger_iii.xml:9 dat/spob/goddard_iii.xml:9
-#: dat/spob/goddard_iv.xml:9 dat/spob/green_eye.xml:9 dat/spob/greenberg.xml:15
-#: dat/spob/griffin_i.xml:9 dat/spob/griffin_ii.xml:9 dat/spob/gruz_i.xml:9
-#: dat/spob/gruz_ii.xml:9 dat/spob/gruz_iii.xml:9 dat/spob/gutter_i.xml:9
-#: dat/spob/gutter_iii.xml:9 dat/spob/gyrios_ii.xml:9 dat/spob/gyrios_iv.xml:9
-#: dat/spob/gyrios_v.xml:9 dat/spob/hadosh_ia.xml:9 dat/spob/hadosh_ii.xml:9
-#: dat/spob/hadosh_iii.xml:9 dat/spob/hadosh_iv.xml:9 dat/spob/hasselt_ii.xml:9
-#: dat/spob/hasselt_iv.xml:9 dat/spob/hatter_i.xml:9 dat/spob/hatter_ii.xml:9
-#: dat/spob/haven.xml:9 dat/spob/hekaras_iii.xml:9 dat/spob/hekaras_iv.xml:9
+#: dat/spob/gennus.xml:15 dat/spob/gilligans_tomb.xml:9
+#: dat/spob/ginger_ii.xml:9 dat/spob/ginger_iii.xml:9
+#: dat/spob/goddard_iii.xml:9 dat/spob/goddard_iv.xml:9
+#: dat/spob/green_eye.xml:9 dat/spob/greenberg.xml:15 dat/spob/griffin_i.xml:9
+#: dat/spob/griffin_ii.xml:9 dat/spob/gruz_i.xml:9 dat/spob/gruz_ii.xml:9
+#: dat/spob/gruz_iii.xml:9 dat/spob/gutter_i.xml:9 dat/spob/gutter_iii.xml:9
+#: dat/spob/gyrios_ii.xml:9 dat/spob/gyrios_iv.xml:9 dat/spob/gyrios_v.xml:9
+#: dat/spob/hadosh_ia.xml:9 dat/spob/hadosh_ii.xml:9 dat/spob/hadosh_iii.xml:9
+#: dat/spob/hadosh_iv.xml:9 dat/spob/hasselt_ii.xml:9 dat/spob/hasselt_iv.xml:9
+#: dat/spob/hatter_i.xml:9 dat/spob/hatter_ii.xml:9 dat/spob/haven.xml:9
+#: dat/spob/hekaras_iii.xml:9 dat/spob/hekaras_iv.xml:9
 #: dat/spob/humdrum_i.xml:9 dat/spob/humdrum_ii.xml:9
 #: dat/spob/humdrum_iii.xml:9 dat/spob/hzmm01.xml:15 dat/spob/hznss3.xml:15
 #: dat/spob/icarus.xml:15 dat/spob/imk.xml:9 dat/spob/inca.xml:9
@@ -6978,11 +7056,10 @@ msgstr ""
 #: dat/spob/nartur_iii.xml:9 dat/spob/nartur_iv.xml:9 dat/spob/nartur_iva.xml:9
 #: dat/spob/nasano.xml:9 dat/spob/nava_i.xml:9 dat/spob/neexi_i.xml:9
 #: dat/spob/neexi_ii.xml:9 dat/spob/neon_iii.xml:9 dat/spob/new_deimos.xml:9
-#: dat/spob/new_dortmund.xml:15 dat/spob/new_konnor.xml:9
-#: dat/spob/new_phobos.xml:9 dat/spob/new_pluto.xml:9 dat/spob/new_thomas.xml:9
-#: dat/spob/newmarch_a1.xml:9 dat/spob/niger_i.xml:9 dat/spob/niger_ii.xml:9
-#: dat/spob/nixon_i.xml:9 dat/spob/nixon_ii.xml:9 dat/spob/nixon_iii.xml:9
-#: dat/spob/nixon_iv.xml:9 dat/spob/nixon_v.xml:9 dat/spob/nonuri.xml:15
+#: dat/spob/new_konnor.xml:9 dat/spob/new_phobos.xml:9 dat/spob/new_pluto.xml:9
+#: dat/spob/new_thomas.xml:9 dat/spob/newmarch_a1.xml:9 dat/spob/niger_i.xml:9
+#: dat/spob/niger_ii.xml:9 dat/spob/nixon_i.xml:9 dat/spob/nixon_ii.xml:9
+#: dat/spob/nixon_iii.xml:9 dat/spob/nixon_iv.xml:9 dat/spob/nixon_v.xml:9
 #: dat/spob/norpin_iv.xml:9 dat/spob/nougat_i.xml:9 dat/spob/nougat_ii.xml:9
 #: dat/spob/oberon_i.xml:9 dat/spob/oberon_iii.xml:9 dat/spob/oberon_iv.xml:9
 #: dat/spob/ocata.xml:9 dat/spob/odonga.xml:9 dat/spob/old_man_jack.xml:9
@@ -7043,15 +7120,9 @@ msgstr ""
 #: dat/spob/unicorn_ii.xml:9 dat/spob/urbanus_ii.xml:9
 #: dat/spob/urbanus_iii.xml:9 dat/spob/uridhrion_i.xml:9
 #: dat/spob/uridhrion_ii.xml:9 dat/spob/uridhrion_iii.xml:9
-#: dat/spob/uuries.xml:9 dat/spob/ux_i.xml:9 dat/spob/valerie_ii.xml:9
-#: dat/spob/valerie_iix.xml:9 dat/spob/valerie_iv.xml:9
-#: dat/spob/valur_gem_i.xml:9 dat/spob/vanir_i.xml:9 dat/spob/vanir_ia.xml:9
-#: dat/spob/vanir_ii.xml:9 dat/spob/vao_vos.xml:15 dat/spob/vargos_flint.xml:9
-#: dat/spob/varona.xml:9 dat/spob/vault.xml:15 dat/spob/vean_i.xml:9
-#: dat/spob/vean_ii.xml:9 dat/spob/verex_i.xml:9 dat/spob/verex_ii.xml:9
-#: dat/spob/vert.xml:9 dat/spob/vigilance_station.xml:15
-#: dat/spob/vlexon_i.xml:9 dat/spob/vlexon_ii.xml:9 dat/spob/wellen.xml:15
-#: dat/spob/wolf_i.xml:9 dat/spob/zeroeleven.xml:9 dat/spob/zesta.xml:15
+#: dat/spob/uuries.xml:9 dat/spob/valerie_iix.xml:9 dat/spob/vao_vos.xml:15
+#: dat/spob/verex_i.xml:9 dat/spob/vlexon_ii.xml:9 dat/spob/wolf_i.xml:9
+#: dat/spob/zeroeleven.xml:9 dat/spob/zesta.xml:15
 msgid "A"
 msgstr ""
 
@@ -7133,7 +7204,8 @@ msgstr ""
 #: dat/spob/delta_pavonis_iia.xml:9 dat/spob/doranthex_secundus.xml:9
 #: dat/spob/duros_i.xml:9 dat/spob/ekta_ii.xml:9 dat/spob/euler_ii.xml:9
 #: dat/spob/euler_iii.xml:9 dat/spob/fae.xml:9 dat/spob/feye_i.xml:9
-#: dat/spob/fried_iii.xml:9 dat/spob/garten_iv.xml:9 dat/spob/haleb_iv.xml:9
+#: dat/spob/fried_iii.xml:9 dat/spob/garten_iv.xml:9
+#: dat/spob/gilligans_light_iii.xml:9 dat/spob/haleb_iv.xml:9
 #: dat/spob/hystera_i.xml:9 dat/spob/jade_iii.xml:9 dat/spob/kobopos_ii.xml:9
 #: dat/spob/korifa_iii.xml:9 dat/spob/mgg003.xml:9 dat/spob/mgg007.xml:9
 #: dat/spob/mizar_vi.xml:9 dat/spob/nor.xml:15 dat/spob/old_king_cole.xml:9
@@ -7142,7 +7214,7 @@ msgstr ""
 #: dat/spob/qulam_primus.xml:9 dat/spob/seiben_iv.xml:9
 #: dat/spob/stelman_i3.xml:9 dat/spob/stormy.xml:15 dat/spob/sultan_vi.xml:9
 #: dat/spob/tesla_station.xml:15 dat/spob/unseelie.xml:9 dat/spob/ux_iix.xml:9
-#: dat/spob/ux_vii.xml:9 dat/spob/vauban_i1.xml:9 dat/spob/wahri_iv.xml:9
+#: dat/spob/ux_vii.xml:9 dat/spob/vanir_ii.xml:9 dat/spob/vauban_i1.xml:9
 #: dat/spob/zethus.xml:9 dat/spob/zintar_v.xml:9
 msgid "I"
 msgstr ""
@@ -7178,7 +7250,8 @@ msgstr ""
 #: dat/spob/janko.xml:15 dat/spob/jaxheen.xml:15 dat/spob/kayel.xml:15
 #: dat/spob/lanze.xml:15 dat/spob/loramor.xml:15 dat/spob/lorelei.xml:15
 #: dat/spob/madria.xml:15 dat/spob/manis.xml:15 dat/spob/mannannan.xml:15
-#: dat/spob/mk.xml:15 dat/spob/neo_pomerania.xml:15 dat/spob/nixa.xml:15
+#: dat/spob/mk.xml:15 dat/spob/neo_pomerania.xml:15
+#: dat/spob/new_dortmund.xml:15 dat/spob/nixa.xml:15 dat/spob/nonuri.xml:15
 #: dat/spob/nova_shakar.xml:15 dat/spob/odonga_m1.xml:15 dat/spob/ohon.xml:15
 #: dat/spob/pauldur.xml:15 dat/spob/percola.xml:15 dat/spob/phosarrus.xml:15
 #: dat/spob/praxis.xml:15 dat/spob/protera_sigma.xml:15 dat/spob/rei_ii.xml:9
@@ -7192,10 +7265,11 @@ msgstr ""
 #: dat/spob/trincea.xml:15 dat/spob/tulla.xml:15 dat/spob/tummalin.xml:15
 #: dat/spob/turawee.xml:15 dat/spob/ulios.xml:15 dat/spob/ummula.xml:15
 #: dat/spob/urail.xml:15 dat/spob/ururis.xml:15 dat/spob/varaati.xml:15
-#: dat/spob/varia.xml:15 dat/spob/vino.xml:15 dat/spob/waldar.xml:15
-#: dat/spob/wikon.xml:15 dat/spob/wonclock.xml:15 dat/spob/worscha.xml:15
-#: dat/spob/zalebus.xml:15 dat/spob/zembla_shakar.xml:15 dat/spob/zeo.xml:15
-#: dat/spob/zhiru.xml:15 dat/spob/zuner.xml:15
+#: dat/spob/varia.xml:15 dat/spob/varona.xml:9 dat/spob/vino.xml:15
+#: dat/spob/waldar.xml:15 dat/spob/wikon.xml:15 dat/spob/wonclock.xml:15
+#: dat/spob/worscha.xml:15 dat/spob/zalebus.xml:15
+#: dat/spob/zembla_shakar.xml:15 dat/spob/zeo.xml:15 dat/spob/zhiru.xml:15
+#: dat/spob/zuner.xml:15
 msgid "M"
 msgstr ""
 
@@ -7232,7 +7306,7 @@ msgstr ""
 #: dat/spob/nanek.xml:15 dat/spob/nappi.xml:15 dat/spob/norpin_ii.xml:15
 #: dat/spob/oma.xml:15 dat/spob/palin_i.xml:9 dat/spob/rionna.xml:15
 #: dat/spob/rogan.xml:15 dat/spob/sroolu.xml:15 dat/spob/tartarus.xml:15
-#: dat/spob/verex_iii.xml:9 dat/spob/zemur_iii.xml:9
+#: dat/spob/verex_iii.xml:9 dat/spob/vlexon_i.xml:9 dat/spob/zemur_iii.xml:9
 msgid "H"
 msgstr ""
 
@@ -7320,7 +7394,6 @@ msgstr ""
 #: dat/spob/sirius_ordnance.xml:15 dat/spob/sirius_shipyards.xml:15
 #: dat/spob/sirou_alpha.xml:15 dat/spob/slofeldt.xml:15
 #: dat/spob/socrates_military_academy.xml:15 dat/spob/solvac_crops.xml:15
-#: dat/spob/soromid_customs_central.xml:15 dat/spob/soromid_databank.xml:15
 #: dat/spob/soromid_wards_alpha.xml:15 dat/spob/soromid_wards_beta.xml:15
 #: dat/spob/soromid_wards_gamma.xml:15 dat/spob/soros_station.xml:15
 #: dat/spob/steiner.xml:15 dat/spob/strangelove_lab.xml:15
@@ -7332,7 +7405,6 @@ msgstr ""
 #: dat/spob/torg_crops.xml:15 dat/spob/trevis_station.xml:15
 #: dat/spob/triton_station.xml:15 dat/spob/turnpike_station.xml:15
 #: dat/spob/umbrella_station.xml:15 dat/spob/urbanus_crops.xml:15
-#: dat/spob/vigil_station.xml:15 dat/spob/violin_station.xml:15
 #: dat/spob/westeros_station.xml:15 dat/spob/yaroslav_farming_station.xml:15
 #: dat/spob/zabween.xml:15
 msgid "0"
@@ -7376,7 +7448,7 @@ msgstr ""
 #: dat/spob/akra_v.xml:9 dat/spob/aldous.xml:15 dat/spob/brock.xml:15
 #: dat/spob/dohriabi_prime.xml:9 dat/spob/fried_ii.xml:9
 #: dat/spob/hikatalat.xml:15 dat/spob/megala.xml:9 dat/spob/petaat.xml:15
-#: dat/spob/qoral.xml:15
+#: dat/spob/qoral.xml:15 dat/spob/vanir_i.xml:9
 msgid "S"
 msgstr ""
 
@@ -7406,7 +7478,8 @@ msgstr ""
 #: dat/spob/rodney.xml:15 dat/spob/ruadan_j1.xml:9 dat/spob/ruadan_j2.xml:9
 #: dat/spob/sirou_i.xml:9 dat/spob/sollav_vi.xml:9 dat/spob/taxumi_iii.xml:9
 #: dat/spob/telika_ii.xml:9 dat/spob/tomas_j1.xml:9 dat/spob/uhp1001.xml:9
-#: dat/spob/uhp1002.xml:9 dat/spob/uhriabi17.xml:9 dat/spob/warnecke.xml:15
+#: dat/spob/uhp1002.xml:9 dat/spob/uhriabi17.xml:9 dat/spob/valerie_ii.xml:9
+#: dat/spob/vean_i.xml:9 dat/spob/wahri_iv.xml:9 dat/spob/warnecke.xml:15
 #: dat/spob/warnecke_ii.xml:9 dat/spob/wolf_vii.xml:9
 msgid "J"
 msgstr ""
@@ -7428,8 +7501,10 @@ msgstr ""
 #: dat/spob/new_mars.xml:15 dat/spob/nocalin.xml:15 dat/spob/omar.xml:15
 #: dat/spob/palin_iii.xml:9 dat/spob/paradox_ii.xml:9 dat/spob/phee.xml:15
 #: dat/spob/skater.xml:15 dat/spob/skona.xml:15 dat/spob/stella.xml:15
-#: dat/spob/timu.xml:15 dat/spob/utsuwa.xml:15 dat/spob/vaal.xml:9
-#: dat/spob/valt.xml:15 dat/spob/voproid_prime.xml:9 dat/spob/wakan.xml:15
+#: dat/spob/timu.xml:15 dat/spob/utsuwa.xml:15 dat/spob/ux_i.xml:9
+#: dat/spob/vaal.xml:9 dat/spob/valt.xml:15 dat/spob/valur_gem_i.xml:9
+#: dat/spob/vanir_ia.xml:9 dat/spob/vean_ii.xml:9 dat/spob/voproid_prime.xml:9
+#: dat/spob/wakan.xml:15
 msgid "K"
 msgstr ""
 
@@ -7656,8 +7731,8 @@ msgstr ""
 #: dat/spob/neurri.xml:15 dat/spob/olljan.xml:15 dat/spob/onar.xml:15
 #: dat/spob/passir.xml:15 dat/spob/racheka.xml:15 dat/spob/stein.xml:15
 #: dat/spob/thosson.xml:15 dat/spob/tuhalar.xml:9 dat/spob/umw1231d.xml:9
-#: dat/spob/waterhole.xml:9 dat/spob/wigheta.xml:15 dat/spob/zepei.xml:15
-#: dat/spob/ziz.xml:9
+#: dat/spob/vault.xml:15 dat/spob/waterhole.xml:9 dat/spob/wigheta.xml:15
+#: dat/spob/zepei.xml:15 dat/spob/ziz.xml:9
 msgid "O"
 msgstr ""
 
@@ -7730,9 +7805,11 @@ msgstr ""
 #: dat/spob/newmarch_d3.xml:9 dat/spob/rhaana.xml:15 dat/spob/senara_i.xml:9
 #: dat/spob/sirou_vi.xml:9 dat/spob/sollav_ii.xml:9 dat/spob/sultan_iii.xml:9
 #: dat/spob/taxumi_ii.xml:9 dat/spob/thymo.xml:15 dat/spob/trinel.xml:15
-#: dat/spob/umw1345a.xml:9 dat/spob/vargos_rock.xml:15 dat/spob/vertigo.xml:15
-#: dat/spob/vracha.xml:15 dat/spob/warnecke_i.xml:9 dat/spob/werlen.xml:15
-#: dat/spob/worgen.xml:9 dat/spob/wsthvn_d1.xml:9 dat/spob/zintar_iv.xml:9
+#: dat/spob/umw1345a.xml:9 dat/spob/valerie_iv.xml:9
+#: dat/spob/vargos_flint.xml:9 dat/spob/vargos_rock.xml:15
+#: dat/spob/verex_ii.xml:9 dat/spob/vertigo.xml:15 dat/spob/vracha.xml:15
+#: dat/spob/warnecke_i.xml:9 dat/spob/werlen.xml:15 dat/spob/worgen.xml:9
+#: dat/spob/wsthvn_d1.xml:9 dat/spob/zintar_iv.xml:9
 msgid "D"
 msgstr ""
 
@@ -7988,8 +8065,8 @@ msgstr ""
 #: dat/spob/fried_i.xml:9 dat/spob/karvua.xml:15 dat/spob/kataka.xml:15
 #: dat/spob/khelim.xml:15 dat/spob/myonei.xml:15 dat/spob/pso_1324.xml:9
 #: dat/spob/qoman.xml:15 dat/spob/sheik_hall.xml:15 dat/spob/ullnorn.xml:15
-#: dat/spob/vorca.xml:15 dat/spob/zalek_ii.xml:9 dat/spob/zaren.xml:15
-#: dat/spob/zhang_lu.xml:15
+#: dat/spob/vert.xml:9 dat/spob/vorca.xml:15 dat/spob/zalek_ii.xml:9
+#: dat/spob/zaren.xml:15 dat/spob/zhang_lu.xml:15
 msgid "Y"
 msgstr ""
 
@@ -8019,7 +8096,7 @@ msgstr ""
 msgid "Anya"
 msgstr ""
 
-#: dat/spob/anya.xml:15 dat/spob/sevlow.xml:15
+#: dat/spob/anya.xml:15 dat/spob/sevlow.xml:15 dat/spob/wellen.xml:15
 msgid "N"
 msgstr ""
 
@@ -8182,11 +8259,14 @@ msgstr ""
 #: dat/spob/ns42.xml:15 dat/spob/ns63.xml:15 dat/spob/outbound_station.xml:15
 #: dat/spob/polaris_prime.xml:15 dat/spob/raglan_outpost.xml:15
 #: dat/spob/rikaina.xml:15 dat/spob/ruadan_bastion.xml:15 dat/spob/savoy.xml:15
-#: dat/spob/sigma_station.xml:15 dat/spob/sy1025.xml:15 dat/spob/sy1206.xml:15
-#: dat/spob/sy159.xml:15 dat/spob/sy19.xml:15 dat/spob/sy237.xml:15
-#: dat/spob/sy256.xml:15 dat/spob/sy314.xml:15 dat/spob/sy413.xml:15
-#: dat/spob/sy612.xml:15 dat/spob/sy894.xml:15 dat/spob/sy920.xml:15
-#: dat/spob/taxumi_iiia.xml:15 dat/spob/wildwood_station.xml:15
+#: dat/spob/sigma_station.xml:15 dat/spob/soromid_customs_central.xml:15
+#: dat/spob/soromid_databank.xml:15 dat/spob/sy1025.xml:15
+#: dat/spob/sy1206.xml:15 dat/spob/sy159.xml:15 dat/spob/sy19.xml:15
+#: dat/spob/sy237.xml:15 dat/spob/sy256.xml:15 dat/spob/sy314.xml:15
+#: dat/spob/sy413.xml:15 dat/spob/sy612.xml:15 dat/spob/sy894.xml:15
+#: dat/spob/sy920.xml:15 dat/spob/taxumi_iiia.xml:15
+#: dat/spob/vigil_station.xml:15 dat/spob/vigilance_station.xml:15
+#: dat/spob/violin_station.xml:15 dat/spob/wildwood_station.xml:15
 #: dat/spob/yak_station.xml:15
 msgid "1"
 msgstr ""
@@ -16902,12 +16982,12 @@ msgstr ""
 msgid ""
 "The Soromid and the rest of the galaxy have enjoyed a tense kind of "
 "friendship ever since the first bioships launched from Sorom. The rest of "
-"humanity is keenly interested in the Soromid genetic treatments, and the "
-"Soromid in turn are happy to turn a profit on their expertise, but there's "
-"still some degree of caution on both sides. Soromid Customs Central is a "
-"visible sign of that caution. It houses a full division of Soromid ships, "
-"and is responsible for maintaining order as well as inspecting the traffic "
-"that passes through Oberon."
+"humanity is keenly interested in Soromid genetic treatments and the Soromid, "
+"in turn, are happy to turn a profit on their expertise, but there's still "
+"some degree of caution on both sides. Soromid Customs Central is a visible "
+"sign of that caution. It houses a full division of Soromid ships and is "
+"responsible for maintaining order as well as inspecting the traffic that "
+"passes through Oberon."
 msgstr ""
 
 #: dat/spob/soromid_databank.xml:2
@@ -17955,7 +18035,7 @@ msgid ""
 "The spaceport bar is more than just functional. Since most new arrivals on "
 "the planet come here first, the authorities have taken pains to make the bar "
 "appealing and comfortable. Of course, the fact that Tori is a tourist "
-"attraction also means drinks are quite expensive in this bar..."
+"attraction also means drinks are quite expensive in this bar…"
 msgstr ""
 
 #: dat/spob/torloth.xml:2
@@ -18510,10 +18590,10 @@ msgstr ""
 #: dat/spob/vaal.xml:15
 msgid ""
 "This mysterious, stormy world has a rich amount of minerals and noble gasses "
-"in its atmosphere, but seems abandoned of life. It seems that a Za'lek "
-"survey once investigated this world, explaining the small landing pad, but "
-"no other sign of their presence or indeed any human presence here at all. "
-"Just the sound of the wind and distant thunder as your only companion"
+"in its atmosphere but seems devoid of life. It seems that a Za'lek survey "
+"once investigated this world, explaining the small landing pad, but no other "
+"sign of their presence, or indeed any human presence, here at all. There is "
+"just the sound of the wind and distant thunder as your only companions."
 msgstr ""
 
 #: dat/spob/valerie_ii.xml:2
@@ -18622,11 +18702,11 @@ msgstr ""
 msgid ""
 "This cold, dead, rocky world was named after the man who settled the colony "
 "here, an entrepreneur by the name of Shaan Vargo. Vargo was convinced that "
-"this planet harbored untold wealth in precious metals and minerals deep "
+"this planet harboured untold wealth in precious metals and minerals deep "
 "underneath its surface. He persisted in his belief right up until his death "
-"in the Incident, but the miners here never found anything like that. "
-"Instead, they found fairly common materials, which at least sell well enough "
-"to keep the colony marginally profitable."
+"in the Incident but the miners here never found anything. What they did find "
+"was fairly average, which at least sell well enough to keep the colony "
+"marginally profitable."
 msgstr ""
 
 #: dat/spob/vargos_rock.xml:26
@@ -18673,18 +18753,19 @@ msgstr ""
 msgid "Vault"
 msgstr ""
 
-#: dat/spob/vault.xml:27
+#: dat/spob/vault.xml:26
 msgid ""
-"Vault is a small world, with little in the way of industry to recommend it. "
-"It has respectable facilities, but is otherwise too poor for anyone to "
-"bother with the place."
+"Vault is a small world with little in the way of industry to recommend it. "
+"It has respectable facilities but is otherwise too poor for anyone to bother "
+"with the place."
 msgstr ""
 
-#: dat/spob/vault.xml:28
+#: dat/spob/vault.xml:27
 msgid ""
-"The bar is a small and dingy place, and the beer can only be called "
-"technically drinkable. The inhabitants are rather dirty, and several of them "
-"look dangerous."
+"The bar is a small and dingy place, the beer can only be called technically "
+"drinkable, the inhabitants are rather dirty and several of them look "
+"dangerous. There might be worse places to spend an evening but none "
+"immediately come to mind!"
 msgstr ""
 
 #: dat/spob/vean_i.xml:2
@@ -18706,8 +18787,8 @@ msgid ""
 "that of old Earth. It would be a highly suitable planet to live on, were it "
 "not for the highly acidic atmosphere. House Sirius has settled a dome colony "
 "here, with the intent of eventually terraforming the planet to a high class "
-"residential world. It will be many cycles before this ideal will be "
-"realized, but the inhabitants of Vennis persevere."
+"residential world. It will be many cycles before this ideal is be realized "
+"but the inhabitants of Vennis persevere."
 msgstr ""
 
 #: dat/spob/vennis.xml:29
@@ -18810,13 +18891,13 @@ msgstr ""
 
 #: dat/spob/vilati_vilata.xml:27
 msgid ""
-"Frozen worlds are usually not colonized unless there is very good reason. "
-"Vilati Vilata is no exception. The world offers a wealth of valuable natural "
+"Frozen worlds are usually not colonized unless there is good reason. Vilati "
+"Vilata is no exception. The world offers a wealth of valuable natural "
 "resources, as well as expansive subglacial cavern systems that lend "
-"themselves quite well to human habitation. The Dvaered have based what would "
-"become one of their most successful industrial franchises on this planet, so "
-"although nobody likes living here, the place is home to a sizeable amount of "
-"workers."
+"themselves quite well to human habitation. The Dvaered based, what would "
+"become, one of their most successful industrial franchises on this planet, "
+"so although nobody likes living here, the place is home to a sizeable number "
+"of workers."
 msgstr ""
 
 #: dat/spob/vilati_vilata.xml:28
@@ -18838,7 +18919,7 @@ msgid ""
 "Though Vino is a good world for civilian habitation by most standards, the "
 "local government is rather distrustful of offworlders. It has made "
 "immigration procedures so arduous that the vast majority of potential "
-"newcomers gives up when they see the requirements. On the flip side, Vinoan "
+"newcomers give up when they see the requirements. On the flip side, Vinoan "
 "citizens are loath to leave their world, be it temporarily or permanently. "
 "This makes Vino an isolated enclave, although trade is still at a decent "
 "level despite everything."
@@ -18847,10 +18928,10 @@ msgstr ""
 #: dat/spob/vino.xml:28
 msgid ""
 "Vino has a spaceport bar, but only because the government couldn't close it "
-"down without running into Empire-wide spaceport regulations. So although the "
-"place is open and functional, no effort has been spared to make the place as "
-"inhospitable and unpleasant as possible. Real seasoned traders have learned "
-"to ignore it, though."
+"down without running foul of Empire-wide spaceport regulations. So, although "
+"the place is open and functional, no effort has been spared to make the "
+"place as inhospitable and unpleasant as possible. Real, seasoned traders "
+"have learned to ignore this though."
 msgstr ""
 
 #: dat/spob/vinooso.xml:2
@@ -18925,7 +19006,7 @@ msgstr ""
 #: dat/spob/vorca.xml:29
 msgid ""
 "Vorca has long been the main base of operations of small time gangsters and "
-"crooks, but it didn't grow into a serious Pirate clan until the Dvaered "
+"crooks, but it didn't grow into a serious Pirate Clan until the Dvaered "
 "Revolts. In that time of tension and discord, many decided to turn their "
 "backs on the Empire entirely and eke out a new life and accrue wealth by "
 "taking it from others. Those who survived in that line of work flocked to "
@@ -18938,10 +19019,10 @@ msgid ""
 "The average space pilot would, when walking into a Pirate bar, expect utter "
 "chaos, fraught with boozing, gambling, violence and narcotic substances. "
 "This is an expectation the bar on Vorca does not live up to. As a matter of "
-"fact the establishment is quite tightly policed by henchmen of the clan "
-"leaders and as such is one of the most orderly places within several jumps. "
-"The bar serves as neutral ground among the Pirates themselves and a meeting "
-"place for those who, for whatever reason, want to solicit their aid."
+"fact the establishment is quite tightly policed by henchmen of the Clan "
+"leaders and, as such, is one of the most orderly places within several "
+"jumps. The bar serves as neutral ground among the Pirates themselves and a "
+"meeting place for those who, for whatever reason, want to solicit their aid."
 msgstr ""
 
 #: dat/spob/vracha.xml:2
@@ -19743,7 +19824,7 @@ msgstr ""
 msgid ""
 "Many spacers think of agricultural worlds as backwater places that lag way "
 "behind the rest of the galaxy. Sometimes, they are right, but not in the "
-"case of Zuner. The spaceport is as modern as can be and the bar wouldn't be "
+"case of Zuner. The spaceport is as modern as can be and its bar wouldn't be "
 "out of place even in the Sirius core."
 msgstr ""
 
@@ -25580,7 +25661,7 @@ msgstr ""
 #: dat/scripts/common/comm.lua:35 src/equipment.c:1763 src/gui.c:1523
 #: src/map.c:561 src/map.c:567 src/map.c:573 src/map.c:579 src/map.c:585
 #: src/map.c:591 src/map.c:1903 src/map_overlay.c:221 src/map_system.c:479
-#: src/outfit.c:294 src/outfit.c:313 src/outfit.c:899 src/player.c:2015
+#: src/outfit.c:294 src/outfit.c:313 src/outfit.c:899 src/player.c:2023
 #: src/player_autonav.c:92 src/player_autonav.c:217 src/player_autonav.c:460
 #: src/ship.c:212
 #, c-format
@@ -35659,6 +35740,7 @@ msgstr ""
 #. Military planet landing logic.
 #. Expects the planet, the lowest standing at which landing is allowed, and four strings:
 #. Landing granted string, standing too low string, landing denied string, message upon bribe attempt.
+#. Remove trailing whitespace. TODO why do we have to do this? :/
 #. Draw starfield background
 #. Dimenions
 #. Draw ship
@@ -43162,7 +43244,53 @@ msgstr ""
 msgid "I couldn't care less"
 msgstr ""
 
+#: dat/missions/dvaered/recruitment/dv_lostagent.lua:400
+msgid ""
+"You obviously have no idea what you are talking about.\n"
+"Shall you see the death squadrons taking off from Halir, loaded with all the "
+"kinds of deadly viruses only human madness can breed. Shall you see the "
+"fleet of the united Warlords silentely flying towards humanity's doom before "
+"an helpless sky of horrified stars. Shall you see them hide the sun of "
+"Doranthex as would the black wings of death.\n"
+"Shall you hear the frenetic lament of sirens while the sky of Antica gets "
+"torn apart by the trails of hypersonic bombs. Shall you hear the roaring of "
+"space stations, wounded to death by torpedoes, disseminating into the void "
+"the helpless bodies of their inhabitants."
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_lostagent.lua:403
+msgid ""
+"Maybe you think that as a pilot, you won't endure starvation, contrary to "
+"the billions of poor souls who will struggle to survive the nuclear winter "
+"on their sterilized planets. Maybe you think you won't have to endure the "
+"gaze of the slowly dying victims of incendary bombs, bio-weapons, climatic "
+"and sismeic bombs..."
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_lostagent.lua:404
+msgid ""
+"But this won't be the worst! Because I've got my informations. And the "
+"Empire has weapons even more powerful. Even more abominable. Even more "
+"unmentionable and unimaginable. Some say the Incident was provoked by a such "
+"weapon. Imagine if they decide to make a new incident happend!\n"
+"Then you would have to bare that monstrous responsability on your shoulders. "
+"Just because you refused to catch that shaky bastard!"
+msgstr ""
+
 #. Clearly, she is not well informed about the Incident.
+#: dat/missions/dvaered/recruitment/dv_lostagent.lua:409
+msgid ""
+"Because war is not that far away, you know. Galactopolitics has not been "
+"that unstable since the end of the Faction's war. Our work is to do our best "
+"to have the Empire and House Dvaered barely tolerate each other. If there "
+"were not, they would soon start a war, and House Sirius, Za'lek and Soromids "
+"would follow.\n"
+"   I know you were only asked to transport a random parcel, but this pilot "
+"who disappears is serious business. We have to find who is behind that "
+"disappearance. And by the way, you can be ensured that you will be paid more "
+"than whatever initial reward was promised to you."
+msgstr ""
+
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:420
 msgid "Dvaered Delivery (not going as expected)"
 msgstr ""
@@ -43200,9 +43328,39 @@ msgstr ""
 #. Not very elegant...
 #. Player Has disabled Shaky Swan
 #. To be sure it won't recover.
+#: dat/missions/dvaered/recruitment/dv_lostagent.lua:445
+msgid "What the? Damn!"
+msgstr ""
+
 #. Faction loss with the FLF.
 #. All ways to get Shaky Swan's interception to fail
+#: dat/missions/dvaered/recruitment/dv_lostagent.lua:453
+msgid ""
+"Good work, pilot! You can be proud for how well you managed to make short "
+"work of the Swan!\n"
+"Wait a second... You were actually supposed to catch this pilot alive, "
+"weren't you?\n"
+"Your mission is a pitiful failure."
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_lostagent.lua:459
+msgid ""
+"Once the boarding maneuver is over, you remember that Bony Boudica had "
+"explicitely requested you NOT to board the ship yourself.\n"
+"Your mission is a failure."
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_lostagent.lua:464
+msgid ""
+"It appears Shaky Swan has managed to escape the system. Your mission is a "
+"failure!"
+msgstr ""
+
 #. Squadron 138 Boards Shaky Swan
+#: dat/missions/dvaered/recruitment/dv_lostagent.lua:470
+msgid "Hi, Swanie, we have to talk, you and me!"
+msgstr ""
+
 #. Spawn Squadron 138 to capture the swan
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:481
 msgid "138-Asset"
@@ -43262,6 +43420,18 @@ msgstr ""
 
 #. Poor Chilperic Duchmol: he chose the system the player comes from!
 #. Manage target running away if attacked
+#: dat/missions/dvaered/recruitment/dv_lostagent.lua:525
+msgid ""
+"The final explosion of an hostile ship is always a pleasant sight, isn't it? "
+"It is now time to report back to Bony Boudica."
+msgstr ""
+
+#: dat/missions/dvaered/recruitment/dv_lostagent.lua:532
+msgid ""
+"It appears Chilperic Duchmol has managed to escape the system. Your mission "
+"is a failure!"
+msgstr ""
+
 #. Gets someone to make a message (useful for hook.timer)
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -57138,7 +57308,7 @@ msgstr ""
 #. Note: this mission does not make any system claims.
 #. Set Mission Details
 #: dat/missions/neutral/commodity_run.lua:102
-#: dat/missions/neutral/wastedump.lua:76
+#: dat/missions/neutral/wastedump.lua:75
 msgid "{credits} per tonne"
 msgstr ""
 
@@ -62064,8 +62234,7 @@ msgstr ""
 #. <mission name="Waste Dump">
 #. <avail>
 #. <priority>9</priority>
-#. <done>Garbage Person</done>
-#. <chance>100</chance>
+#. <chance>10</chance>
 #. <location>Computer</location>
 #. <faction>Dvaered</faction>
 #. <faction>Empire</faction>
@@ -62086,20 +62255,20 @@ msgstr ""
 #.
 #. --
 #. luacheck: globals land takeoff (Hook functions passed by name)
-#: dat/missions/neutral/wastedump.lua:34
+#: dat/missions/neutral/wastedump.lua:33
 msgid ""
 "The waste containers are loaded onto your ship and you are paid {credits}. "
 "You begin to wonder if accepting this job was really a good idea."
 msgstr ""
 
-#: dat/missions/neutral/wastedump.lua:35
+#: dat/missions/neutral/wastedump.lua:34
 msgid ""
 "Workers pack your cargo hold full of as much garbage as it can carry, then "
 "hastily hand you a credit chip containing {credits}. Smelling the garbage, "
 "you immediately regret taking the job."
 msgstr ""
 
-#: dat/missions/neutral/wastedump.lua:36
+#: dat/missions/neutral/wastedump.lua:35
 msgid ""
 "Your hold is crammed full with garbage and you are summarily paid {credits}. "
 "By the time the overpowering stench emanating from your cargo hold reaches "
@@ -62107,40 +62276,40 @@ msgid ""
 "can find some place to get rid of it."
 msgstr ""
 
-#: dat/missions/neutral/wastedump.lua:39
+#: dat/missions/neutral/wastedump.lua:38
 msgid "You drop the garbage off, relieved to have it out of your ship."
 msgstr ""
 
-#: dat/missions/neutral/wastedump.lua:40
+#: dat/missions/neutral/wastedump.lua:39
 msgid ""
 "You finally drop off the garbage and proceed to disinfect yourself and your "
 "cargo hold to the best of your ability."
 msgstr ""
 
-#: dat/missions/neutral/wastedump.lua:41
+#: dat/missions/neutral/wastedump.lua:40
 msgid "Finally, the garbage leaves your ship and you breathe a sigh of relief."
 msgstr ""
 
-#: dat/missions/neutral/wastedump.lua:42
+#: dat/missions/neutral/wastedump.lua:41
 msgid ""
 "Wrinkling your nose in disgust, you finally rid yourself of the waste "
 "containers you have been charged with disposing of."
 msgstr ""
 
-#: dat/missions/neutral/wastedump.lua:45
+#: dat/missions/neutral/wastedump.lua:44
 msgid ""
 "Sick and tired of smelling garbage, you illegally jettison the waste "
 "containers into space, hoping that no one notices."
 msgstr ""
 
-#: dat/missions/neutral/wastedump.lua:46
+#: dat/missions/neutral/wastedump.lua:45
 msgid ""
 "You decide that the nearest waste dump location is too far away for you to "
 "bother to go to and simply jettison the containers of waste. You hope you "
 "don't get caught."
 msgstr ""
 
-#: dat/missions/neutral/wastedump.lua:47
+#: dat/missions/neutral/wastedump.lua:46
 msgid ""
 "You dump the waste containers into space illegally, noting that you should "
 "make sure not to get caught by authorities."
@@ -62149,11 +62318,11 @@ msgstr ""
 #. List of possible waste dump planets.
 #. Note: this mission makes no system claims
 #. Set mission details
-#: dat/missions/neutral/wastedump.lua:74 dat/missions/neutral/wastedump.lua:93
+#: dat/missions/neutral/wastedump.lua:73 dat/missions/neutral/wastedump.lua:92
 msgid "Waste Dump"
 msgstr ""
 
-#: dat/missions/neutral/wastedump.lua:75
+#: dat/missions/neutral/wastedump.lua:74
 msgid ""
 "Take as many waste containers as your ship can hold and drop them off at any "
 "authorized garbage collection facility. You will be paid immediately, but "
@@ -62161,21 +62330,21 @@ msgid ""
 "punished if you are caught."
 msgstr ""
 
-#: dat/missions/neutral/wastedump.lua:89
+#: dat/missions/neutral/wastedump.lua:88
 msgid "Waste Containers"
 msgstr ""
 
-#: dat/missions/neutral/wastedump.lua:89
+#: dat/missions/neutral/wastedump.lua:88
 msgid "A bunch of waste containers leaking all sorts of indescribable liquids."
 msgstr ""
 
-#: dat/missions/neutral/wastedump.lua:93
+#: dat/missions/neutral/wastedump.lua:92
 msgid ""
 "Land on any garbage collection facility (indicated on your map) to drop off "
 "the Waste Containers"
 msgstr ""
 
-#: dat/missions/neutral/wastedump.lua:123
+#: dat/missions/neutral/wastedump.lua:122
 msgid ""
 "In your desperation to rid yourself of the garbage, you clumsily eject it "
 "from your cargo pod while you are still landed. Garbage spills all over the "
@@ -62187,7 +62356,7 @@ msgstr ""
 #. Make everyone angry
 #. Add some police!
 #. No landing, filthy waste dumper!
-#: dat/missions/neutral/wastedump.lua:188
+#: dat/missions/neutral/wastedump.lua:187
 msgid "Get lost, waste dumping scum! We don't want you here!"
 msgstr ""
 
@@ -79742,10 +79911,6 @@ msgstr ""
 msgid "SOROMID: "
 msgstr ""
 
-#: dat/scripts/common/soromid.lua:11
-msgid "Coming Out"
-msgstr ""
-
 #. Helpers to create main characters
 #.
 #.
@@ -84485,7 +84650,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/ai.c:601 src/board.c:77 src/comm.c:172 src/land.c:1572 src/naev.c:523
-#: src/player.c:3477
+#: src/player.c:3485
 #, c-format
 msgid ""
 "Error loading file: %s\n"
@@ -84732,7 +84897,7 @@ msgid "unknown error"
 msgstr ""
 
 #. error has occurred
-#: src/board.c:92 src/player.c:3491
+#: src/board.c:92 src/player.c:3499
 #, c-format
 msgid "Board: '%s'"
 msgstr ""
@@ -85061,79 +85226,79 @@ msgstr ""
 msgid "   -v, --version         print the version and exit"
 msgstr ""
 
-#: src/conf.c:437
+#: src/conf.c:439
 msgid "Found keybind with no type field!"
 msgstr ""
 
-#: src/conf.c:441
+#: src/conf.c:443
 msgid "Found keybind with invalid type field!"
 msgstr ""
 
-#: src/conf.c:455
+#: src/conf.c:457
 msgid "Found keybind with no key field!"
 msgstr ""
 
-#: src/conf.c:459
+#: src/conf.c:461
 msgid "Found keybind with invalid key field!"
 msgstr ""
 
-#: src/conf.c:485
+#: src/conf.c:487
 #, c-format
 msgid "Unknown keybinding of type %s"
 msgstr ""
 
-#: src/conf.c:491
+#: src/conf.c:493
 #, c-format
 msgid "Keybind for '%s' is invalid"
 msgstr ""
 
-#: src/conf.c:504
+#: src/conf.c:506
 #, c-format
 msgid "Unknown keybinding mod of type %s"
 msgstr ""
 
-#: src/conf.c:515
+#: src/conf.c:517
 #, c-format
 msgid "Malformed keybind for '%s' in '%s'."
 msgstr ""
 
 #. failed to load the config file
-#: src/conf.c:522
+#: src/conf.c:524
 #, c-format
 msgid "Config file '%s' has invalid syntax:"
 msgstr ""
 
-#: src/conf.c:618
+#: src/conf.c:620
 msgid "Enabling developer mode."
 msgstr ""
 
 #. Write a nice header for new configuration files
-#: src/conf.c:795
+#: src/conf.c:797
 msgid "Naev configuration file"
 msgstr ""
 
-#: src/conf.c:801
+#: src/conf.c:803
 msgid "Not saving configuration."
 msgstr ""
 
-#: src/conf.c:807
+#: src/conf.c:809
 msgid "The contents of this section will be rewritten by Naev!"
 msgstr ""
 
 #. ndata.
-#: src/conf.c:811
+#: src/conf.c:813
 msgid "The location of Naev's data pack, usually called 'ndata'"
 msgstr ""
 
 #. Language.
-#: src/conf.c:816
+#: src/conf.c:818
 msgid ""
 "Language to use. Set to the two character identifier to the language (e.g., "
 "\"en\" for English), and nil for autodetect."
 msgstr ""
 
 #. Difficulty.
-#: src/conf.c:821
+#: src/conf.c:823
 msgid ""
 "Global difficulty to set the game to. Can be overwritten by saved game "
 "settings. Has to match one of the difficulties defined in \"difficulty.xml\" "
@@ -85141,283 +85306,283 @@ msgid ""
 msgstr ""
 
 #. OpenGL.
-#: src/conf.c:831
+#: src/conf.c:833
 msgid "The factor to use in Full-Scene Anti-Aliasing"
 msgstr ""
 
-#: src/conf.c:832
+#: src/conf.c:834
 msgid "Anything lower than 2 will simply disable FSAA"
 msgstr ""
 
-#: src/conf.c:836
+#: src/conf.c:838
 msgid "Synchronize framebuffer updates with the vertical blanking interval"
 msgstr ""
 
 #. Window.
-#: src/conf.c:841
+#: src/conf.c:843
 msgid "The window size or screen resolution"
 msgstr ""
 
-#: src/conf.c:842
+#: src/conf.c:844
 msgid "Set both of these to 0 to make Naev try the desktop resolution"
 msgstr ""
 
-#: src/conf.c:852
+#: src/conf.c:854
 msgid "Factor used to divide the above resolution with"
 msgstr ""
 
-#: src/conf.c:853
+#: src/conf.c:855
 msgid "This is used to lower the rendering resolution, and scale to the above"
 msgstr ""
 
-#: src/conf.c:857
+#: src/conf.c:859
 msgid "Scale factor for rendered nebula backgrounds."
 msgstr ""
 
-#: src/conf.c:858
+#: src/conf.c:860
 msgid "Larger values can save time but lead to a blurrier appearance."
 msgstr ""
 
-#: src/conf.c:862
+#: src/conf.c:864
 msgid "Run Naev in full-screen mode"
 msgstr ""
 
-#: src/conf.c:866
+#: src/conf.c:868
 msgid "Use video modesetting when fullscreen is enabled"
 msgstr ""
 
-#: src/conf.c:870
+#: src/conf.c:872
 msgid "Disable allowing resizing the window."
 msgstr ""
 
-#: src/conf.c:874
+#: src/conf.c:876
 msgid ""
 "Disable window decorations. Use with care and know the keyboard controls to "
 "quit and toggle fullscreen."
 msgstr ""
 
-#: src/conf.c:878 src/options.c:1391
+#: src/conf.c:880 src/options.c:1391
 msgid "Minimize on focus loss"
 msgstr ""
 
-#: src/conf.c:882 src/options.c:1394
+#: src/conf.c:884 src/options.c:1394
 msgid "Colorblind mode"
 msgstr ""
 
-#: src/conf.c:886
+#: src/conf.c:888
 msgid ""
 "Background brightness. 1 is normal brightness while setting it to 0 would "
 "make the backgrounds pitch black."
 msgstr ""
 
-#: src/conf.c:890
+#: src/conf.c:892
 msgid ""
 "Nebula brightness. 1 is normal brightness while setting it to 0 would make "
 "the nebula pitch black."
 msgstr ""
 
-#: src/conf.c:894
+#: src/conf.c:896
 msgid "Gamma correction parameter. A value of 1 disables it (no curve)."
 msgstr ""
 
-#: src/conf.c:898
+#: src/conf.c:900
 msgid "Expensive high quality shaders for the background. Defaults to false."
 msgstr ""
 
 #. FPS
-#: src/conf.c:903
+#: src/conf.c:905
 msgid "Display a frame rate counter"
 msgstr ""
 
-#: src/conf.c:907
+#: src/conf.c:909
 msgid "Limit the rendering frame rate"
 msgstr ""
 
 #. Pause
-#: src/conf.c:912
+#: src/conf.c:914
 msgid "Show 'PAUSED' on screen while paused"
 msgstr ""
 
 #. Sound.
-#: src/conf.c:917
+#: src/conf.c:919
 msgid "Enables EFX extension for OpenAL backend."
 msgstr ""
 
-#: src/conf.c:921
+#: src/conf.c:923
 msgid "Disable all sound"
 msgstr ""
 
-#: src/conf.c:925
+#: src/conf.c:927
 msgid "Volume of sound effects and music, between 0.0 and 1.0"
 msgstr ""
 
-#: src/conf.c:928
+#: src/conf.c:930
 msgid "Relative engine sound volume. Should be between 0.0 and 1.0"
 msgstr ""
 
 #. Joystick.
-#: src/conf.c:933
+#: src/conf.c:935
 msgid "The name or numeric index of the joystick to use"
 msgstr ""
 
-#: src/conf.c:934
+#: src/conf.c:936
 msgid "Setting this to nil disables the joystick support"
 msgstr ""
 
 #. GUI.
-#: src/conf.c:947
+#: src/conf.c:949
 msgid "Number of lines visible in the comm window."
 msgstr ""
 
-#: src/conf.c:949
+#: src/conf.c:951
 msgid "Opacity fraction (0-1) for the overlay map."
 msgstr ""
 
 #. Key repeat.
-#: src/conf.c:955
+#: src/conf.c:957
 msgid "Delay in ms before starting to repeat (0 disables)"
 msgstr ""
 
-#: src/conf.c:957
+#: src/conf.c:959
 msgid "Delay in ms between repeats once it starts to repeat"
 msgstr ""
 
 #. Zoom.
-#: src/conf.c:962
+#: src/conf.c:964
 msgid "Minimum and maximum zoom factor to use in-game"
 msgstr ""
 
-#: src/conf.c:963
+#: src/conf.c:965
 msgid "At 1.0, no sprites are scaled"
 msgstr ""
 
-#: src/conf.c:964
+#: src/conf.c:966
 msgid "zoom_far should be less then zoom_near"
 msgstr ""
 
-#: src/conf.c:970
+#: src/conf.c:972
 msgid "Zooming speed in factor increments per second"
 msgstr ""
 
-#: src/conf.c:974
+#: src/conf.c:976
 msgid "Zooming modulation factor for the starry background"
 msgstr ""
 
 #. Fonts.
-#: src/conf.c:979
+#: src/conf.c:981
 msgid "Font sizes (in pixels) for Naev"
 msgstr ""
 
-#: src/conf.c:980
+#: src/conf.c:982
 msgid "Warning, setting to other than the default can cause visual glitches!"
-msgstr ""
-
-#: src/conf.c:981
-#, c-format
-msgid "-- Console default: %d\n"
 msgstr ""
 
 #: src/conf.c:983
 #, c-format
-msgid "-- Intro default: %d\n"
+msgid "-- Console default: %d\n"
 msgstr ""
 
 #: src/conf.c:985
 #, c-format
-msgid "-- Default size: %d\n"
+msgid "-- Intro default: %d\n"
 msgstr ""
 
 #: src/conf.c:987
+#, c-format
+msgid "-- Default size: %d\n"
+msgstr ""
+
+#: src/conf.c:989
 #, c-format
 msgid "-- Small size: %d\n"
 msgstr ""
 
 #. Misc.
-#: src/conf.c:991
+#: src/conf.c:993
 msgid ""
 "Sets the velocity (px/s) to compress up to when time compression is enabled."
 msgstr ""
 
-#: src/conf.c:995
+#: src/conf.c:997
 msgid "Sets the multiplier to compress up to when time compression is enabled."
 msgstr ""
 
-#: src/conf.c:999
+#: src/conf.c:1001
 msgid "Redirects log and error output to files"
 msgstr ""
 
-#: src/conf.c:1003
+#: src/conf.c:1005
 msgid "Enables compression on saved games"
 msgstr ""
 
-#: src/conf.c:1007
+#: src/conf.c:1009
 msgid ""
 "Doubletap sensitivity (used for double tap accel for afterburner or double "
 "tap reverse for cooldown)"
 msgstr ""
 
-#: src/conf.c:1011
+#: src/conf.c:1013
 msgid ""
 "Whether or not clicking the middle mouse button toggles mouse flying mode."
 msgstr ""
 
-#: src/conf.c:1015
+#: src/conf.c:1017
 msgid "Mouse-flying thrust control"
 msgstr ""
 
-#: src/conf.c:1019
+#: src/conf.c:1021
 msgid "Maximum interval to count as a double-click (0 disables)."
 msgstr ""
 
-#: src/conf.c:1023
+#: src/conf.c:1025
 msgid "Enemy distance at which autonav speed resets."
 msgstr ""
 
-#: src/conf.c:1027
+#: src/conf.c:1029
 msgid "Shield value at which autonav speed resets."
 msgstr ""
 
-#: src/conf.c:1031
+#: src/conf.c:1033
 msgid "Enables developer mode (universe editor and the likes)"
 msgstr ""
 
-#: src/conf.c:1035
+#: src/conf.c:1037
 msgid ""
 "Automatic saving for when using the universe editor whenever an edit is done"
 msgstr ""
 
-#: src/conf.c:1039
+#: src/conf.c:1041
 msgid "Enable the experimental CLI based on lua-repl."
 msgstr ""
 
-#: src/conf.c:1043
+#: src/conf.c:1045
 msgid "Save the config every time game exits (rewriting this bit)"
 msgstr ""
 
-#: src/conf.c:1047
+#: src/conf.c:1049
 msgid "Indicates the last version the game has run in before"
 msgstr ""
 
-#: src/conf.c:1051
+#: src/conf.c:1053
 msgid ""
 "Indicates whether we've already warned about incomplete game translations."
 msgstr ""
 
 #. Debugging.
-#: src/conf.c:1056
+#: src/conf.c:1058
 msgid "Enables FPU exceptions - only works on DEBUG builds"
 msgstr ""
 
 #. Editor.
-#: src/conf.c:1061
+#: src/conf.c:1063
 msgid "Paths for saving different files from the editor"
 msgstr ""
 
-#: src/conf.c:1071
+#: src/conf.c:1073
 msgid "Keybindings"
 msgstr ""
 
-#: src/conf.c:1140
+#: src/conf.c:1142
 msgid ""
 "Failed to write configuration!  You'll most likely have to restore it by "
 "copying your backup configuration over your current configuration."
@@ -90187,11 +90352,11 @@ msgstr ""
 msgid "Can only add allies to dynamic factions"
 msgstr ""
 
-#: src/nlua_file.c:260 src/nlua_file.c:291
+#: src/nlua_file.c:259 src/nlua_file.c:290
 msgid "file not open!"
 msgstr ""
 
-#: src/nlua_file.c:444
+#: src/nlua_file.c:443
 #, c-format
 msgid "Directory '%s' enumerate error: %s"
 msgstr ""
@@ -90828,7 +90993,7 @@ msgstr ""
 msgid "No such material %s"
 msgstr ""
 
-#: src/opengl.c:109 src/player.c:2256
+#: src/opengl.c:109 src/player.c:2264
 msgid "Aborting screenshot"
 msgstr ""
 
@@ -92334,40 +92499,40 @@ msgstr ""
 msgid "Unable to find price for player's ship '%s': ship does not exist!"
 msgstr ""
 
-#: src/player.c:1428
+#: src/player.c:1432
 #, c-format
 msgid "Trying to set player's spob target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1537
+#: src/player.c:1541
 msgid "There are no spobs to land on."
 msgstr ""
 
-#: src/player.c:1575
+#: src/player.c:1579
 msgid "Docking stabilizers malfunctioning, cannot land."
 msgstr ""
 
-#: src/player.c:1582
+#: src/player.c:1586
 msgid "You can't land here."
 msgstr ""
 
 #. No shoes, no shirt, no lifeforms, no service.
-#: src/player.c:1600
+#: src/player.c:1604
 #, c-format
 msgid "#oReady to land on %s."
 msgstr ""
 
-#: src/player.c:1610
+#: src/player.c:1614
 #, c-format
 msgid "#rYou are too far away to land on %s."
 msgstr ""
 
-#: src/player.c:1615
+#: src/player.c:1619
 #, c-format
 msgid "#rYou are going too fast to land on %s."
 msgstr ""
 
-#: src/player.c:1638 src/space.c:1871 src/space.c:1981 src/space.c:2027
+#: src/player.c:1642 src/space.c:1871 src/space.c:1981 src/space.c:2027
 #: src/space.c:3305 src/space.c:3325
 #, c-format
 msgid ""
@@ -92375,59 +92540,59 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/player.c:1669
+#: src/player.c:1673
 msgid "Player has landing permission, but no valid spob targeted."
 msgstr ""
 
-#: src/player.c:1680
+#: src/player.c:1684
 #, c-format
 msgid "#%c%s>#0 Landing permission revoked."
 msgstr ""
 
-#: src/player.c:1705
+#: src/player.c:1709
 msgid "You are not allowed to land at this moment."
 msgstr ""
 
-#: src/player.c:1728
+#: src/player.c:1732
 msgid "You need a target to board first!"
 msgstr ""
 
-#: src/player.c:1747
+#: src/player.c:1755
 #, c-format
 msgid "Trying to set player's hyperspace target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1848
+#: src/player.c:1856
 #, c-format
 msgid "#rReceiving hail! Press #b%s#0 to respond."
 msgstr ""
 
-#: src/player.c:1901
+#: src/player.c:1909
 msgid "Aborting hyperspace sequence."
 msgstr ""
 
-#: src/player.c:1908
+#: src/player.c:1916
 msgid "You are too far from a jump point to initiate hyperspace."
 msgstr ""
 
-#: src/player.c:1910
+#: src/player.c:1918
 msgid "Hyperspace drive is offline."
 msgstr ""
 
-#: src/player.c:1912
+#: src/player.c:1920
 msgid "You do not have enough fuel to hyperspace jump."
 msgstr ""
 
-#: src/player.c:1914
+#: src/player.c:1922
 msgid "Preparing for hyperspace."
 msgstr ""
 
-#: src/player.c:2006
+#: src/player.c:2014
 #, c-format
 msgid "#oAutonav arrived at the %s system."
 msgstr ""
 
-#: src/player.c:2012
+#: src/player.c:2020
 #, c-format
 msgid "#oAutonav continuing until %s (%d jump left)."
 msgid_plural "#oAutonav continuing until %s (%d jumps left)."
@@ -92435,108 +92600,108 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. in case the crap system breaks :)
-#: src/player.c:2268
+#: src/player.c:2276
 msgid "You have reached the maximum amount of screenshots [999]"
 msgstr ""
 
 #. now proceed to take the screenshot
-#: src/player.c:2273
+#: src/player.c:2281
 #, c-format
 msgid "Taking screenshot [%03d]..."
 msgstr ""
 
-#: src/player.c:2304
+#: src/player.c:2312
 #, c-format
 msgid "#r%s is out of comm range, unable to contact."
 msgstr ""
 
-#: src/player.c:2322
+#: src/player.c:2330
 #, c-format
 msgid "#r%s does not respond."
 msgstr ""
 
-#: src/player.c:2329 src/player.c:2351
+#: src/player.c:2337 src/player.c:2359
 msgid "No target selected to hail."
 msgstr ""
 
-#: src/player.c:2384
+#: src/player.c:2392
 msgid "You haven't been hailed by any pilots."
 msgstr ""
 
-#: src/player.c:2397
+#: src/player.c:2405
 msgid "Mouse flying enabled."
 msgstr ""
 
-#: src/player.c:2403
+#: src/player.c:2411
 msgid "Mouse flying disabled."
 msgstr ""
 
-#: src/player.c:2619 src/player.c:2638
+#: src/player.c:2627 src/player.c:2646
 #, c-format
 msgid "Player ship '%s' not found in stack"
 msgstr ""
 
-#: src/player.c:3060
+#: src/player.c:3068
 msgid "Escort is undeployed, removing."
 msgstr ""
 
-#: src/player.c:3304
+#: src/player.c:3312
 msgid "Found mission cargo without associated mission."
 msgstr ""
 
-#: src/player.c:3305
+#: src/player.c:3313
 msgid "Please reload save game to remove the dead cargo."
 msgstr ""
 
-#: src/player.c:3524
+#: src/player.c:3532
 #, c-format
 msgid "Outfit '%s' in player save not found!"
 msgstr ""
 
-#: src/player.c:3549
+#: src/player.c:3557
 #, c-format
 msgid "Saved license does not exist and could not be found or updated: '%s'!"
 msgstr ""
 
-#: src/player.c:3616
+#: src/player.c:3624
 msgid "Malformed time in save game!"
 msgstr ""
 
-#: src/player.c:3653
+#: src/player.c:3661
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
 
-#: src/player.c:3677
+#: src/player.c:3685
 msgid "Player ship does not exist!"
 msgstr ""
 
-#: src/player.c:3680
+#: src/player.c:3688
 msgid "Player has no other ships, giving starting ship."
 msgstr ""
 
-#: src/player.c:3691
+#: src/player.c:3699
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr ""
 
-#: src/player.c:3697
+#: src/player.c:3705
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 
-#: src/player.c:3707
+#: src/player.c:3715
 msgid "Save has no time information, setting to start information."
 msgstr ""
 
-#: src/player.c:3713
+#: src/player.c:3721
 msgid "Player save was updated!"
 msgstr ""
 
-#: src/player.c:3714
+#: src/player.c:3722
 msgid "Save Game Updated"
 msgstr ""
 
-#: src/player.c:3714
+#: src/player.c:3722
 msgid ""
 "The loaded save games has had outfits and ships updated to the current Naev "
 "version. You will find that some outfits and ships you have had have been "
@@ -92544,143 +92709,143 @@ msgid ""
 "refunded the cost in credits."
 msgstr ""
 
-#: src/player.c:3722
+#: src/player.c:3730
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid spob '%s',trying to find a "
 "suitable one instead."
 msgstr ""
 
-#: src/player.c:3751
+#: src/player.c:3759
 #, c-format
 msgid "Could not find a spob satisfying criteria %d."
 msgstr ""
 
-#: src/player.c:3755
+#: src/player.c:3763
 msgid "Could not find a suitable spob. Choosing a random spob."
 msgstr ""
 
-#: src/player.c:3802
+#: src/player.c:3810
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3824
+#: src/player.c:3832
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3846
+#: src/player.c:3854
 msgid "License node is missing name attribute."
 msgstr ""
 
-#: src/player.c:3873
+#: src/player.c:3881
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:3931 src/player.c:4104
+#: src/player.c:3939 src/player.c:4112
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
 
-#: src/player.c:3950
+#: src/player.c:3958
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:3958
+#: src/player.c:3966
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:3978
+#: src/player.c:3986
 msgid "Empty ship slot node found, skipping."
 msgstr ""
 
-#: src/player.c:4033
+#: src/player.c:4041
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr ""
 
-#: src/player.c:4122 src/player.c:4140 src/player.c:4158 src/player.c:4175
+#: src/player.c:4130 src/player.c:4148 src/player.c:4166 src/player.c:4183
 #, c-format
 msgid "Save has unknown '%s' tag!"
 msgstr ""
 
-#: src/player.c:4127
+#: src/player.c:4135
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 
-#: src/player.c:4145 src/player.c:4163
+#: src/player.c:4153 src/player.c:4171
 msgid "Outfit slot out of range, not adding."
 msgstr ""
 
-#: src/player.c:4196
+#: src/player.c:4204
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr ""
 
-#: src/player.c:4222
+#: src/player.c:4230
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
 
-#: src/player.c:4267
+#: src/player.c:4275
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
 
-#: src/player.c:4275
+#: src/player.c:4283
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4279
+#: src/player.c:4287
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
 
-#: src/player.c:4295
+#: src/player.c:4303
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4308
+#: src/player.c:4316
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 
-#: src/player.c:4316
+#: src/player.c:4324
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
 
-#: src/player.c:4321
+#: src/player.c:4329
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
-#: src/player.c:4366
+#: src/player.c:4374
 msgid "You have destealthed."
 msgstr ""
 
-#: src/player.c:4372
+#: src/player.c:4380
 msgid "You have entered stealth mode."
 msgstr ""
 
-#: src/player.c:4377
+#: src/player.c:4385
 msgid "Unable to stealth: missiles locked on!"
 msgstr ""
 
-#: src/player.c:4379
+#: src/player.c:4387
 msgid "Unable to stealth: other pilots nearby!"
 msgstr ""
 
@@ -94251,253 +94416,253 @@ msgstr ""
 msgid "Toolkit: Button '%s' of Window '%s' doesn't have a function trigger"
 msgstr ""
 
-#: src/unidiff.c:196
+#: src/unidiff.c:197
 #, c-format
 msgid "Malformed XML header for '%s' UniDiff: missing root element '%s'"
 msgstr ""
 
-#: src/unidiff.c:210
+#: src/unidiff.c:211
 #, c-format
 msgid "Loaded %d UniDiff in %.3f s"
 msgid_plural "Loaded %d UniDiffs in %.3f s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/unidiff.c:213
+#: src/unidiff.c:214
 #, c-format
 msgid "Loaded %d UniDiff"
 msgid_plural "Loaded %d UniDiffs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/unidiff.c:285
+#: src/unidiff.c:286
 #, c-format
 msgid "UniDiff '%s' not found in %s!"
 msgstr ""
 
-#: src/unidiff.c:293
+#: src/unidiff.c:294
 msgid "Malformed unidiff file: missing root element 'unidiff'"
 msgstr ""
 
-#: src/unidiff.c:327
+#: src/unidiff.c:328
 #, c-format
 msgid "Unidiff '%s' has a system node without a 'name' tag, not applying."
 msgstr ""
 
-#: src/unidiff.c:338 src/unidiff.c:366 src/unidiff.c:394 src/unidiff.c:758
+#: src/unidiff.c:339 src/unidiff.c:367 src/unidiff.c:395 src/unidiff.c:759
 #, c-format
 msgid "Unidiff '%s': Null hunk type."
 msgstr ""
 
-#: src/unidiff.c:354
+#: src/unidiff.c:355
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for spob '%s'."
 msgstr ""
 
-#: src/unidiff.c:382
+#: src/unidiff.c:383
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for virtual spob '%s'."
 msgstr ""
 
-#: src/unidiff.c:410
+#: src/unidiff.c:411
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for jump '%s'."
 msgstr ""
 
-#: src/unidiff.c:447 src/unidiff.c:516 src/unidiff.c:685 src/unidiff.c:785
-#: src/unidiff.c:830
+#: src/unidiff.c:448 src/unidiff.c:517 src/unidiff.c:686 src/unidiff.c:786
+#: src/unidiff.c:831
 #, c-format
 msgid "Unidiff '%s' has unknown node '%s'."
 msgstr ""
 
-#: src/unidiff.c:474 src/unidiff.c:543 src/unidiff.c:713
+#: src/unidiff.c:475 src/unidiff.c:544 src/unidiff.c:714
 #, c-format
 msgid "Unidiff '%s' has an target node without a 'name' tag"
 msgstr ""
 
-#: src/unidiff.c:776
+#: src/unidiff.c:777
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for faction '%s'."
 msgstr ""
 
-#: src/unidiff.c:836
+#: src/unidiff.c:837
 #, c-format
 msgid "Unidiff '%s' failed to apply %d hunk."
 msgid_plural "Unidiff '%s' failed to apply %d hunks."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/unidiff.c:843
+#: src/unidiff.c:844
 #, c-format
 msgid "   [%s] spob add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:846
+#: src/unidiff.c:847
 #, c-format
 msgid "   [%s] spob remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:849
+#: src/unidiff.c:850
 #, c-format
 msgid "   [%s] virtual spob add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:852
+#: src/unidiff.c:853
 #, c-format
 msgid "   [%s] virtual spob remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:855
+#: src/unidiff.c:856
 #, c-format
 msgid "   [%s] jump add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:858
+#: src/unidiff.c:859
 #, c-format
 msgid "   [%s] jump remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:861
+#: src/unidiff.c:862
 #, c-format
 msgid "   [%s] tech add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:865
+#: src/unidiff.c:866
 #, c-format
 msgid "   [%s] tech remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:869
+#: src/unidiff.c:870
 #, c-format
 msgid "   [%s] spob faction: '%s'"
 msgstr ""
 
-#: src/unidiff.c:873
+#: src/unidiff.c:874
 #, c-format
 msgid "   [%s] spob faction removal: '%s'"
 msgstr ""
 
-#: src/unidiff.c:877
+#: src/unidiff.c:878
 #, c-format
 msgid "   [%s] spob population: '%s'"
 msgstr ""
 
-#: src/unidiff.c:881
+#: src/unidiff.c:882
 #, c-format
 msgid "   [%s] spob population removal: '%s'"
 msgstr ""
 
-#: src/unidiff.c:885
+#: src/unidiff.c:886
 #, c-format
 msgid "   [%s] spob description: '%s'"
 msgstr ""
 
-#: src/unidiff.c:889
+#: src/unidiff.c:890
 #, c-format
 msgid "   [%s] spob description revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:893
+#: src/unidiff.c:894
 #, c-format
 msgid "   [%s] spob bar: '%s'"
 msgstr ""
 
-#: src/unidiff.c:897
+#: src/unidiff.c:898
 #, c-format
 msgid "   [%s] spob bar revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:901
+#: src/unidiff.c:902
 #, c-format
 msgid "   [%s] spob space: '%s'"
 msgstr ""
 
-#: src/unidiff.c:905
+#: src/unidiff.c:906
 #, c-format
 msgid "   [%s] spob sipace revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:909
+#: src/unidiff.c:910
 #, c-format
 msgid "   [%s] spob exterior: '%s'"
 msgstr ""
 
-#: src/unidiff.c:913
+#: src/unidiff.c:914
 #, c-format
 msgid "   [%s] spob exterior revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:917
+#: src/unidiff.c:918
 #, c-format
 msgid "   [%s] spob service add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:921
+#: src/unidiff.c:922
 #, c-format
 msgid "   [%s] spob service remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:925
+#: src/unidiff.c:926
 #, c-format
 msgid "   [%s] spob tech add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:929
+#: src/unidiff.c:930
 #, c-format
 msgid "   [%s] spob tech remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:933
+#: src/unidiff.c:934
 #, c-format
 msgid "   [%s] faction visible: '%s'"
 msgstr ""
 
-#: src/unidiff.c:937
+#: src/unidiff.c:938
 #, c-format
 msgid "   [%s] faction invisible: '%s'"
 msgstr ""
 
-#: src/unidiff.c:941
+#: src/unidiff.c:942
 #, c-format
 msgid "   [%s] faction set ally: '%s'"
 msgstr ""
 
-#: src/unidiff.c:945
+#: src/unidiff.c:946
 #, c-format
 msgid "   [%s] faction set enemy: '%s'"
 msgstr ""
 
-#: src/unidiff.c:949
+#: src/unidiff.c:950
 #, c-format
 msgid "   [%s] faction set neutral: '%s'"
 msgstr ""
 
-#: src/unidiff.c:953
+#: src/unidiff.c:954
 #, c-format
 msgid "   [%s] faction alignment reset: '%s'"
 msgstr ""
 
-#: src/unidiff.c:958
+#: src/unidiff.c:959
 #, c-format
 msgid "   unknown hunk '%d'"
 msgstr ""
 
-#: src/unidiff.c:1245
+#: src/unidiff.c:1246
 #, c-format
 msgid "Unknown hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1440
+#: src/unidiff.c:1441
 #, c-format
 msgid "Unknown Hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1445
+#: src/unidiff.c:1446
 #, c-format
 msgid "Failed to remove hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1565
+#: src/unidiff.c:1566
 msgid "Expected node \"diff\" to contain the name of a unidiff. Was empty."
 msgstr ""
 
