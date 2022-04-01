@@ -58,6 +58,7 @@ static int hookL_safe( lua_State *L );
 static int hookL_update( lua_State *L );
 static int hookL_renderbg( lua_State *L );
 static int hookL_renderfg( lua_State *L );
+static int hookL_rendertop( lua_State *L );
 static int hookL_mission_done( lua_State *L );
 static int hookL_standing( lua_State *L );
 static int hookL_discover( lua_State *L );
@@ -94,6 +95,7 @@ static const luaL_Reg hookL_methods[] = {
    { "update", hookL_update },
    { "renderbg", hookL_renderbg },
    { "renderfg", hookL_renderfg },
+   { "rendertop", hookL_rendertop },
    { "mission_done", hookL_mission_done },
    { "standing", hookL_standing },
    { "discover", hookL_discover },
@@ -870,6 +872,21 @@ static int hookL_renderbg( lua_State *L )
 static int hookL_renderfg( lua_State *L )
 {
    unsigned int h = hookL_generic( L, "renderfg", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+
+/**
+ * @brief Hook that runs during rendering aove everything. Meant to be as an alternative to doing post-processing shader effects.
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc rendertop
+ */
+static int hookL_rendertop( lua_State *L )
+{
+   unsigned int h = hookL_generic( L, "rendertop", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }

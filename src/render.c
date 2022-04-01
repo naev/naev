@@ -240,6 +240,7 @@ void render_all( double game_dt, double real_dt )
    ovr_render( real_dt ); /* Using real_dt is sort of a hack for now. */
    display_fps( real_dt ); /* Exception using real_dt. */
    toolkit_render( real_dt );
+   hooks_run( "rendertop" );
 
    /* Final post-processing. */
    if (pp_final)
