@@ -18,9 +18,9 @@ local vn  = require 'vn'
 local lg = require 'love.graphics'
 
 local diff_progress1 = "hypergates_1"
---local diff_progress2 = "hypergates_2"
+local diff_progress2 = "hypergates_2"
 
--- luacheck: globals land foreground update cutscene00 cutscene01 cutscene02 cutscene03 cutscene04 cutscene05 cutscene06 cutscene07 cutscene08 cutscene09 cutscene10 cutscene99 (Hook functions passed by name)
+-- luacheck: globals land fadein fadeout foreground update cutscene00 cutscene01 cutscene02 cutscene03 cutscene04 cutscene05 cutscene06 cutscene07 cutscene08 cutscene09 cutscene10 cutscene99 (Hook functions passed by name)
 
 function create ()
    evt.finish(false) -- disabled for now
@@ -44,6 +44,7 @@ function create ()
       if not evt.claim( system.cur(), true ) then evt.finish(false) end
 
       hook.safe( "cutscene00" )
+      return -- Don't finish
 
    elseif progress >= 50 then
       if not diff.isApplied( diff_progress1 ) then
@@ -64,33 +65,57 @@ local function setHide( state )
    end
 end
 
-local fg
+local fg, nw, nh
 local function fg_setup( text )
    if not fg then
       fg = {}
       fg.font = lg.newFont( 40 )
       fg.font:setOutline(3)
-      fg.hook = hook.renderfg( "foreground" )
+      fg.hook = hook.rendertop( "foreground" )
       fg.update = hook.update( "update" )
+
+      fg.alpha = 1
+      fg.alpha_dir = 1
+
+      nw, nh = gfx.dim()
    end
 
    fg.text = text
-   fg.time = 0
+   if fg.text then
+      fg.w = fg.font:getWidth( fg.text )
+      fg.h = 40
 
-   fg.w = fg.font:getWidth( fg.text )
-   fg.h = 40
+      fg.x = (nw-fg.w)/2
+      fg.y = (nh-fg.h)/2
+   end
+end
 
-   local nw, nh = gfx.dim()
-   fg.x = (nw-fg.w)/2
-   fg.y = (nh-fg.h)/2 - 0.2 * nh
+-- Fades out to black
+function fadeout ()
+   fg.alpha_dir = 1
+   fg.alpha = math.max( 0, fg.alpha )
+end
+
+-- Fades in from black
+function fadein ()
+   fg.alpha_dir = -1
+   fg.alpha = math.min( 1, fg.alpha )
 end
 
 function foreground ()
-   lg.print( fg.text, fg.font, fg.x, fg.y )
+   if fg.alpha > 0 then
+      lg.setColor( 0, 0, 0, fg.alpha )
+      lg.rectangle( "fill", 0, 0, nw, nh )
+
+      if fg.text then
+         lg.setColor( 1, 1, 1, fg.alpha )
+         lg.print( fg.text, fg.font, fg.x, fg.y )
+      end
+   end
 end
 
 function update( _dt, real_dt )
-   fg.time = fg.time + real_dt
+   fg.alpha = fg.alpha + fg.alpha_dir * 2 * real_dt
 end
 
 -- Set up the cutscene stuff
@@ -108,27 +133,48 @@ function cutscene00 ()
 
    -- Get the Empire hypergate
    local hyp, hyps = spob.getS( "Hypergate Gamma Polaris" )
-   origsys = system.get()
+   origsys = system.cur()
    player.teleport( hyps )
    camera.set( hyp:pos(), true )
 
    fg_setup( _("And they built bridges across the stars…") )
+   --hook.timer( 5, "cutscene01" )
+   hook.timer( 5, "cutscene04" )
 end
 
 function cutscene01 ()
    -- Show system
+   hook.timer( 10, "chapter02" )
+   fadein()
 end
 
 function cutscene02 ()
    -- Activate hypergate
+   hook.timer( 5, "chapter03" )
 end
 
 function cutscene03 ()
    -- Ship jumps
+   hook.timer( 9.3, "fadeout" )
+   hook.timer( 10, "chapter04" )
 end
 
 function cutscene04 ()
    -- Show Za'lek
+   diff.apply( diff_progress2 )
+
+   -- Go to the hypergate and pan camera
+   local hyp, hyps = spob.getS( "Hypergate Ruadan" )
+   player.teleport( hyps )
+   local dir = vec2.newP( 1, rnd.angle() )
+   local pos = hyp:pos()
+   camera.set( pos - 500*dir, true )
+   camera.set( pos + 500*dir, false, 5 / 1000 )
+
+   fg_setup()
+   fadein()
+   hook.timer( 4.3, "fadeout" )
+   hook.timer( 5, "cutscene99" )
 end
 
 function cutscene05 ()
@@ -177,7 +223,8 @@ function cutscene99 ()
 
    -- Return to system and restore camera
    player.teleport( origsys )
-   camera.set()
+   camera.set( nil, true )
+   fadein()
 
    -- Initialize fleet capacity
    player.setFleetCapacity( 100 )
