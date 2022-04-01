@@ -20,7 +20,7 @@ local lg = require 'love.graphics'
 local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
 
--- luacheck: globals land fadein fadeout foreground update cutscene00 cutscene01 cutscene02 cutscene03 cutscene04 cutscene05 cutscene06 cutscene07 cutscene08 cutscene09 cutscene10 cutscene99 (Hook functions passed by name)
+-- luacheck: globals land fadein fadeout foreground update cutscene00 cutscene01 cutscene02 cutscene03 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene08 cutscene09 cutscene10 cutscene11 cutscene_cleanup (Hook functions passed by name)
 
 function create ()
    evt.finish(false) -- disabled for now
@@ -60,16 +60,20 @@ end
 local function setHide( state )
    local pp = player.pilot()
    pp:setHide( state )
+   pp:setInvincible( state )
    for k,p in ipairs(pp:followers()) do
       p:setHide( state )
+      p:setInvincible( state )
    end
 end
 
 local fg, nw, nh
 local function fg_setup( text )
+   local fontsize = 32
+
    if not fg then
       fg = {}
-      fg.font = lg.newFont( 40 )
+      fg.font = lg.newFont( fontsize )
       fg.font:setOutline(3)
       fg.hook = hook.rendertop( "foreground" )
       fg.update = hook.update( "update" )
@@ -83,7 +87,7 @@ local function fg_setup( text )
    fg.text = text
    if fg.text then
       fg.w = fg.font:getWidth( fg.text )
-      fg.h = 40
+      fg.h = fontsize
 
       fg.x = (nw-fg.w)/2
       fg.y = (nh-fg.h)/2
@@ -139,11 +143,12 @@ function cutscene00 ()
 
    fg_setup( _("And they built bridges across the stars…") )
    --hook.timer( 5, "cutscene01" )
-   hook.timer( 5, "cutscene04" )
+   hook.timer( 5, "cutscene_zlk" )
 end
 
 function cutscene01 ()
    -- Show system
+   fg_setup()
    hook.timer( 10, "chapter02" )
    fadein()
 end
@@ -156,7 +161,7 @@ end
 function cutscene03 ()
    -- Ship jumps
    hook.timer( 9.3, "fadeout" )
-   hook.timer( 10, "chapter04" )
+   hook.timer( 10, "chapter_zlk" )
 end
 
 local function pangate( gatename )
@@ -169,8 +174,7 @@ local function pangate( gatename )
    camera.set( pos + 500*dir, false, 1000 / 5 )
 end
 
-function cutscene04 ()
-   -- Show Za'lek
+function cutscene_zlk () -- Za'lek
    diff.apply( diff_progress2 )
 
    pangate( "Hypergate Ruadan" )
@@ -178,63 +182,73 @@ function cutscene04 ()
    fadein()
 
    hook.timer( 4.3, "fadeout" )
-   hook.timer( 5, "cutscene05" )
+   hook.timer( 5, "cutscene_srm" )
 end
 
-function cutscene05 ()
+function cutscene_srm () -- Soromid
    pangate( "Hypergate Feye" )
    fadein()
 
    hook.timer( 4.3, "fadeout" )
-   hook.timer( 5, "cutscene99" )
+   hook.timer( 5, "cutscene_srs" )
 end
 
-function cutscene06 ()
-   -- Show Sirius
-   -- Hypergate Kiwi
+function cutscene_srs () -- Sirius
+   pangate( "Hypergate Kiwi" )
+   fadein()
+
+   hook.timer( 4.3, "fadeout" )
+   hook.timer( 5, "cutscene_dvr" )
 end
 
-function cutscene07 ()
-   -- Show Dvaered
-   -- Hypergate Dvaer
+function cutscene_dvr ()
+   pangate( "Hypergate Dvaer" )
+   fadein()
+
+   hook.timer( 4.3, "fadeout" )
+   hook.timer( 5, "cutscene08" )
 end
 
---[[
-_("CHAPTER 1")
-_("The Hypergates Awaken")
---]]
 function cutscene08 ()
    -- Final text
    fg_setup( _("…unwittingly closing the distance to that which could destroy them…") )
+
+   -- TODO something more omnious
+   pangate( "Hypergate Polaris" )
+
+   hook.timer( 4.3, "fadein" )
+   hook.timer( 5, "cutscene09" )
 end
 
 function cutscene09 ()
-   -- Nebula teaser
+   fadein()
+
+   hook.timer( 4.3, "fadeout" )
+   hook.timer( 5, "cutscene10" )
 end
 
 function cutscene10 ()
-   -- Back to player
---[[
-_("CHAPTER 1")
-_("The Hypergates Awaken")
---]]
-end
-
-function cutscene10 ()
-   -- Chapter 1 message
-end
-
--- Cleans up the cutscene stuf
-function cutscene99 ()
-   local pp = player.pilot()
-   pp:setNoJump(false)
-   pp:setNoLand(false)
-   setHide( false )
-
    -- Return to system and restore camera
    player.teleport( origsys )
    camera.set( nil, true )
    fadein()
+   hook.timer( 2, "cutscene_cleanup" )
+end
+
+function cutscene11 ()
+   -- Chapter 1 message
+--[[
+_("CHAPTER 1")
+_("The Hypergates Awaken")
+--]]
+end
+
+-- Cleans up the cutscene stuf
+function cutscene_cleanup ()
+   local pp = player.pilot()
+   pp:setNoJump(false)
+   pp:setNoLand(false)
+   setHide( false )
 
    -- Initialize fleet capacity
    player.setFleetCapacity( 100 )
