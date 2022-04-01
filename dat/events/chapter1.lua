@@ -126,6 +126,7 @@ end
 local origsys
 function cutscene00 ()
    setHide( true )
+   player.cinematics( true )
    local pp = player.pilot()
    pp:setNoJump(true)
    pp:setNoLand(true)
@@ -221,7 +222,7 @@ function cutscene08 ()
 end
 
 function cutscene09 ()
-   fadein()
+   fg_setup() -- Remove text
 
    hook.timer( 4.3, "fadeout" )
    hook.timer( 5, "cutscene10" )
@@ -231,6 +232,7 @@ function cutscene10 ()
    -- Return to system and restore camera
    player.teleport( origsys )
    camera.set( nil, true )
+   player.cinematics( false )
    fadein()
    hook.timer( 2, "cutscene_cleanup" )
 end
