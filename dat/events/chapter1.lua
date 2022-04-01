@@ -159,34 +159,44 @@ function cutscene03 ()
    hook.timer( 10, "chapter04" )
 end
 
+local function pangate( gatename )
+   -- Go to the hypergate and pan camera
+   local hyp, hyps = spob.getS( gatename )
+   player.teleport( hyps, true )
+   local dir = vec2.newP( 1, rnd.angle() )
+   local pos = hyp:pos()
+   camera.set( pos - 500*dir, true )
+   camera.set( pos + 500*dir, false, 1000 / 5 )
+end
+
 function cutscene04 ()
    -- Show Za'lek
    diff.apply( diff_progress2 )
 
-   -- Go to the hypergate and pan camera
-   local hyp, hyps = spob.getS( "Hypergate Ruadan" )
-   player.teleport( hyps )
-   local dir = vec2.newP( 1, rnd.angle() )
-   local pos = hyp:pos()
-   camera.set( pos - 500*dir, true )
-   camera.set( pos + 500*dir, false, 5 / 1000 )
-
+   pangate( "Hypergate Ruadan" )
    fg_setup()
    fadein()
+
+   hook.timer( 4.3, "fadeout" )
+   hook.timer( 5, "cutscene05" )
+end
+
+function cutscene05 ()
+   pangate( "Hypergate Feye" )
+   fadein()
+
    hook.timer( 4.3, "fadeout" )
    hook.timer( 5, "cutscene99" )
 end
 
-function cutscene05 ()
-   -- Show Soromid
-end
-
 function cutscene06 ()
    -- Show Sirius
+   -- Hypergate Kiwi
 end
 
 function cutscene07 ()
    -- Show Dvaered
+   -- Hypergate Dvaer
 end
 
 --[[
