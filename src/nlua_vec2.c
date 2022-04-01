@@ -403,15 +403,27 @@ static int vectorL_sub__( lua_State *L )
  */
 static int vectorL_mul( lua_State *L )
 {
-   vec2 vout, *v1;
-   double mod;
+   vec2 vout;
 
-   /* Get parameters. */
-   v1    = luaL_checkvector(L,1);
-   mod   = luaL_checknumber(L,2);
+   if (lua_isnumber(L,1)) {
+      double d = lua_tonumber(L,1);
+      vec2 *v  = luaL_checkvector(L,2);
+      vec2_cset( &vout, v->x * d, v->y * d );
+   }
+   else {
+      if (lua_isnumber(L,2)) {
+         vec2 *v  = luaL_checkvector(L,1);
+         double d = lua_tonumber(L,2);
+         vec2_cset( &vout, v->x * d, v->y * d );
+      }
+      else {
+         vec2 *v1 = luaL_checkvector(L,1);
+         vec2 *v2 = luaL_checkvector(L,2);
+         vec2_cset( &vout, v1->x * v2->x, v1->y * v2->y );
+      }
+   }
 
    /* Actually add it */
-   vec2_cset( &vout, v1->x * mod, v1->y * mod );
    lua_pushvector( L, vout );
    return 1;
 }
