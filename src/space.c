@@ -1451,7 +1451,6 @@ int space_isSimulationEffects (void)
  */
 void space_init( const char* sysname, int do_simulate )
 {
-   char *nt;
    int n, s;
    const double fps_min_simulation = fps_min * 2.;
    StarSystem *oldsys = cur_system;
@@ -1479,6 +1478,7 @@ void space_init( const char* sysname, int do_simulate )
    if ((sysname==NULL) && (cur_system==NULL))
       ERR(_("Cannot reinit system if there is no system previously loaded"));
    else if (sysname!=NULL) {
+      char *nt;
       cur_system = system_get( sysname );
 
       nt = ntime_pretty(0, 2);

@@ -2405,7 +2405,7 @@ void player_autohail (void)
 /**
  * @brief Toggles mouse flying.
  */
-void player_toggleMouseFly(void)
+void player_toggleMouseFly (void)
 {
    if (!conf.mouse_fly)
       return;
@@ -2454,7 +2454,7 @@ void player_brake(void)
  *
  *    @return 1 if cursor is outside the dead zone, 0 if it isn't.
  */
-static int player_thinkMouseFly(void)
+static int player_thinkMouseFly (void)
 {
    double px, py, r, x, y;
 

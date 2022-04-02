@@ -1430,6 +1430,7 @@ static int playerL_evtDone( lua_State *L )
  *
  *    @luatparam System|Spob|string dest System or name of a system or spob or name of a spob to teleport the player to.
  *    @luatparam[opt=false] boolean no_simulate Don't simulate the when teleporting if true.
+ *    @luatparam[opt=false] boolean silent Doesn't display any entering system messages.
  * @luafunc teleport
  */
 static int playerL_teleport( lua_State *L )
@@ -1437,7 +1438,7 @@ static int playerL_teleport( lua_State *L )
    Spob *pnt;
    StarSystem *sys;
    const char *name, *pntname;
-   int no_simulate;
+   int no_simulate, silent;
 
    PLAYER_CHECK();
 
@@ -1491,6 +1492,7 @@ static int playerL_teleport( lua_State *L )
       NLUA_INVALID_PARAMETER(L);
 
    no_simulate = lua_toboolean(L,2);
+   silent = lua_toboolean(L,3);
 
    /* Check if system exists. */
    if (system_get( name ) == NULL) {
@@ -1517,9 +1519,12 @@ static int playerL_teleport( lua_State *L )
     * Both of these functions invoke gui_setNav(), which updates jump and
     * spob targets simultaneously. Thus, invalid reads may arise and the
     * target reset must be done prior to calling space_init and destroying
-    * the old system.
-    */
+    * the old system. */
    player_targetClearAll();
+
+   /* Hide messages if not needed. */
+   if (!silent)
+      player_messageToggle(0); /* space_init will reset it, so no need to. */
 
    /* Go to the new system. */
    space_init( name, !no_simulate );
