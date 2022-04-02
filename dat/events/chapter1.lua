@@ -176,6 +176,9 @@ local function pangate( gatename )
 end
 
 function cutscene_zlk () -- Za'lek
+   if diff.isApplied( diff_progress1 ) then
+      diff.remove( diff_progress1 )
+   end
    diff.apply( diff_progress2 )
 
    pangate( "Hypergate Ruadan" )
