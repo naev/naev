@@ -144,11 +144,11 @@ static int camL_get( lua_State *L )
  */
 static int camL_setZoom( lua_State *L )
 {
-   double zoom = luaL_optnumber(L,1,-1.0);
+   double zoom = luaL_optnumber(L,1,-1.);
    int hard_over = lua_toboolean(L,2);
 
    /* Handle arguments. */
-   if (zoom > 0) {
+   if (zoom > 0.) {
       zoom = 1.0 / zoom;
       cam_zoomOverride( 1 );
       if (hard_over)

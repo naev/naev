@@ -139,7 +139,7 @@ function cutscene_start ()
    -- Get the Empire hypergate
    local hyp, hyps = spob.getS( "Hypergate Gamma Polaris" )
    origsys = system.cur()
-   player.teleport( hyps )
+   player.teleport( hyps, false, true )
    camera.set( hyp:pos(), true )
 
    fg_setup( _("And they built bridges across the stars…") )
@@ -168,7 +168,7 @@ end
 local function pangate( gatename )
    -- Go to the hypergate and pan camera
    local hyp, hyps = spob.getS( gatename )
-   player.teleport( hyps, true )
+   player.teleport( hyps, true, false, true )
    local dir = vec2.newP( 1, rnd.angle() )
    local pos = hyp:pos()
    camera.set( pos - 500*dir, true )
@@ -218,7 +218,12 @@ function cutscene_posttext ()
    player.pilot():intrinsicSet( "nebu_visibility", 1000 )
 
    -- TODO something more omnious
-   pangate( "Hypergate Polaris" )
+   local gatename = "Hypergate Polaris"
+   pangate( gatename )
+   local hyp = spob.get( gatename )
+   camera.set( hyp:pos(), true )
+   camera.setZoom( 1, true )
+   camera.setZoom( 3, false )
 
    hook.timer( 4.3, "fadein" )
    hook.timer( 5, "cutscene_nebu" )
@@ -226,6 +231,9 @@ end
 
 function cutscene_nebu ()
    fg_setup() -- Remove text
+   camera.setZoom() -- Reset zoom
+
+   -- TODO omnious music
 
    hook.timer( 4.3, "fadeout" )
    hook.timer( 5, "cutscene_nebu_fade" )
@@ -236,7 +244,7 @@ function cutscene_nebu_fade ()
    player.pilot():intrinsicSet( "nebu_visibility", -1000 )
 
    -- Return to system and restore camera
-   player.teleport( origsys )
+   player.teleport( origsys, false, true )
    camera.set( nil, true )
    player.cinematics( false )
    fadein()
