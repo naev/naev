@@ -1575,12 +1575,12 @@ static int diff_checkUpdateUniverse (void)
    pilots = pilot_getAll();
    for (int i=0; i<array_size(pilots); i++) {
       Pilot *p = pilots[i];
-      p->nav_spob       = -1;
+      p->nav_planet     = -1;
       p->nav_hyperspace = -1;
    }
 
    /* Player has to update the GUI so we send again. */
-   player_targetSpobSet( -1 );
+   player_targetPlanetSet( -1 );
    player_targetHyperspaceSet( -1, 0 );
 
    diff_universe_changed = 0;
