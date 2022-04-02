@@ -683,7 +683,7 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
-      WARN(_("Unidiff '%s' has unknown node '%s'."), diff->name, node->name);
+      WARN(_("Unidiff '%s' has unknown node '%s'."), diff->name, cur->name);
    } while (xml_nextNode(cur));
 
    /* Clean up some stuff. */
