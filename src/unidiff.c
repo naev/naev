@@ -102,6 +102,8 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_SPOB_SPACE_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_EXTERIOR,
    HUNK_TYPE_SPOB_EXTERIOR_REVERT, /* For internal usage. */
+   HUNK_TYPE_SPOB_LUA,
+   HUNK_TYPE_SPOB_LUA_REVERT, /* For internal usage. */
    /* Target should be faction. */
    HUNK_TYPE_FACTION_VISIBLE,
    HUNK_TYPE_FACTION_INVISIBLE,
@@ -683,6 +685,24 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
+      else if (xml_isNode(cur,"lua")) {
+         char *str;
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_SPOB_LUA;
+         str = xml_get(cur);
+         if (str != NULL)
+            hunk.u.name = strdup( str );
+         else
+            hunk.u.name = NULL;
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
       WARN(_("Unidiff '%s' has unknown node '%s'."), diff->name, cur->name);
    } while (xml_nextNode(cur));
 
@@ -912,6 +932,14 @@ static int diff_patch( xmlNodePtr parent )
                break;
             case HUNK_TYPE_SPOB_EXTERIOR_REVERT:
                WARN(_("   [%s] spob exterior revert: '%s'"), target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_SPOB_LUA:
+               WARN(_("   [%s] spob lua: '%s'"), target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_SPOB_LUA_REVERT:
+               WARN(_("   [%s] spob lua revert: '%s'"), target,
                      fail->u.name );
                break;
             case HUNK_TYPE_SPOB_SERVICE_ADD:
@@ -1171,6 +1199,23 @@ static int diff_patchHunk( UniHunk_t *hunk )
          p->gfx_exterior = (char*)hunk->o.name;
          return 0;
 
+      /* Change Lua stuff. */
+      case HUNK_TYPE_SPOB_LUA:
+         p = spob_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         hunk->o.name = p->lua_file;
+         p->lua_file = hunk->u.name;
+         spob_updateLand( p );
+         return 0;
+      case HUNK_TYPE_SPOB_LUA_REVERT:
+         p = spob_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         p->lua_file = (char*)hunk->o.name;
+         spob_updateLand( p );
+         return 0;
+
       /* Making a faction visible. */
       case HUNK_TYPE_FACTION_VISIBLE:
          return faction_setInvisible( faction_get(hunk->target.u.name), 0 );
@@ -1420,6 +1465,10 @@ static int diff_removeDiff( UniDiff_t *diff )
             hunk.type = HUNK_TYPE_SPOB_EXTERIOR_REVERT;
             break;
 
+         case HUNK_TYPE_SPOB_LUA:
+            hunk.type = HUNK_TYPE_SPOB_LUA_REVERT;
+            break;
+
          case HUNK_TYPE_FACTION_VISIBLE:
             hunk.type = HUNK_TYPE_FACTION_INVISIBLE;
             break;
@@ -1501,6 +1550,8 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       case HUNK_TYPE_SPOB_SPACE_REVERT:
       case HUNK_TYPE_SPOB_EXTERIOR:
       case HUNK_TYPE_SPOB_EXTERIOR_REVERT:
+      case HUNK_TYPE_SPOB_LUA:
+      case HUNK_TYPE_SPOB_LUA_REVERT:
       case HUNK_TYPE_FACTION_VISIBLE:
       case HUNK_TYPE_FACTION_INVISIBLE:
       case HUNK_TYPE_FACTION_ALLY:
@@ -1594,6 +1645,12 @@ static int diff_checkUpdateUniverse (void)
    /* Re-compute the economy. */
    economy_execQueued();
    economy_initialiseCommodityPrices();
+
+   /* Have to update planet graphics if necessary. */
+   if (cur_system != NULL) {
+      space_gfxUnload( cur_system );
+      space_gfxLoad( cur_system );
+   }
 
    /* Have to pilot targetting just in case. */
    pilots = pilot_getAll();

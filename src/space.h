@@ -307,6 +307,7 @@ void space_exit (void);
  */
 Spob *spob_new (void);
 const char *spob_name( const Spob *p );
+void spob_updateLua( Spob *spob );
 void spob_gfxLoad( Spob *p );
 int spob_hasSystem( const char* spobname );
 char* spob_getSystem( const char* spobname );
