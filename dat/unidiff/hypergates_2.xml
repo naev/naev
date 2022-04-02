@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="hypergates_2">
  <spob name="Hypergate Dvaer">
-  <gfx_space>hypergate_under_construction.webp</gfx_space>
+  <lua>spob/lua/hypergate.lua</lua>
  </spob>
  <spob name="Hypergate Feye">
-  <gfx_space>hypergate_under_construction.webp</gfx_space>
+  <lua>spob/lua/hypergate.lua</lua>
  </spob>
  <spob name="Hypergate Gamma Polaris">
-  <gfx_space>hypergate_under_construction.webp</gfx_space>
+  <lua>spob/lua/hypergate.lua</lua>
  </spob>
  <spob name="Hypergate Kiwi">
-  <gfx_space>hypergate_under_construction.webp</gfx_space>
+  <lua>spob/lua/hypergate.lua</lua>
  </spob>
  <spob name="Hypergate Ruadan">
-  <gfx_space>hypergate_under_construction.webp</gfx_space>
+  <lua>spob/lua/hypergate.lua</lua>
  </spob>
  <spob name="Hypergate NGC-14549">
-  <gfx_space>hypergate_under_construction.webp</gfx_space>
+  <lua>spob/lua/hypergate.lua</lua>
  </spob>
 </unidiff>
