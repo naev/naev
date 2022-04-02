@@ -24,13 +24,13 @@
 #include "unidiff.h"
 
 /* diffs */
-static int diff_applyL( lua_State *L );
-static int diff_removeL( lua_State *L );
-static int diff_isappliedL( lua_State *L );
-static const luaL_Reg diff_methods[] = {
-   { "apply", diff_applyL },
-   { "remove", diff_removeL },
-   { "isApplied", diff_isappliedL },
+static int diffL_apply( lua_State *L );
+static int diffL_remove( lua_State *L );
+static int diffL_isapplied( lua_State *L );
+static const luaL_Reg diffL_methods[] = {
+   { "apply", diffL_apply },
+   { "remove", diffL_remove },
+   { "isApplied", diffL_isapplied },
    {0,0}
 }; /**< Unidiff Lua methods. */
 
@@ -41,7 +41,7 @@ static const luaL_Reg diff_methods[] = {
  */
 int nlua_loadDiff( nlua_env env )
 {
-   nlua_register(env, "diff", diff_methods, 0);
+   nlua_register(env, "diff", diffL_methods, 0);
    return 0;
 }
 
@@ -68,7 +68,7 @@ int nlua_loadDiff( nlua_env env )
  *    @luatparam string name Name of the diff to apply.
  * @luafunc apply
  */
-static int diff_applyL( lua_State *L )
+static int diffL_apply( lua_State *L )
 {
    const char *name = luaL_checkstring(L,1);
    diff_apply( name );
@@ -81,7 +81,7 @@ static int diff_applyL( lua_State *L )
  *    @luatparam string name Name of the diff to remove.
  * @luafunc remove
  */
-static int diff_removeL( lua_State *L )
+static int diffL_remove( lua_State *L )
 {
    const char *name = luaL_checkstring(L,1);
    diff_remove( name );
@@ -95,7 +95,7 @@ static int diff_removeL( lua_State *L )
  *    @luatreturn boolean true if diff is applied, false if it isn't.
  * @luafunc isApplied
  */
-static int diff_isappliedL( lua_State *L )
+static int diffL_isapplied( lua_State *L )
 {
    const char *name = luaL_checkstring(L,1);
    lua_pushboolean(L,diff_isApplied(name));
