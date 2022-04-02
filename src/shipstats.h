@@ -121,6 +121,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_A_ENGINE_LIMIT,    /**< Engine's mass limit. */
    SS_TYPE_A_FUEL_REGEN,      /**< Fuel regeneration. */
    SS_TYPE_A_ASTEROID_SCAN,   /**< DIstance at which ship can gather informations from asteroids. */
+   SS_TYPE_A_NEBULA_VISIBILITY,/**< Bonus distance to nebula visibility. */
 
    /*
     * P: Absolute percent type datas. Should be continuous.
@@ -291,6 +292,7 @@ typedef struct ShipStats_ {
 
    /* Misc. */
    double nebu_absorb;     /**< Shield nebula resistance. */
+   double nebu_visibility; /**< Nebula visibility. */
    int misc_instant_jump;  /**< Do not require brake or chargeup to jump. */
    int misc_reverse_thrust;/**< Slows down the ship instead of turning it around. */
    double asteroid_scan;   /**< Distance at which asteroids can be scanned. */

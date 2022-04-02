@@ -168,6 +168,7 @@ static const ShipStatsLookup ss_lookup[] = {
    A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        N_("Engine Mass Limit") ),
    A__ELEM( SS_TYPE_A_FUEL_REGEN,         fuel_regen,          N_("Fuel Regeneration") ),
    A__ELEM( SS_TYPE_A_ASTEROID_SCAN,      asteroid_scan,       N_("Asteroid Scanner Range") ),
+   A__ELEM( SS_TYPE_A_NEBULA_VISIBILITY,  nebu_visibility,     N_("Nebula Visibility") ),
 
    P__ELEM( SS_TYPE_P_ABSORB,             absorb,              N_("Damage Absorption") ),
 

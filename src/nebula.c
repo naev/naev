@@ -225,12 +225,15 @@ void nebu_update( double dt )
 {
    (void) dt;
    double mod = 1.;
+   double bonus = 0.;
 
-   if (player.p != NULL)
+   if (player.p != NULL) {
       mod = player.p->stats.ew_detect;
+      bonus = player.p->stats.nebu_visibility;
+   }
 
    /* At density 1000 you have zero visibility. */
-   nebu_view = (1000. - nebu_density) * mod;
+   nebu_view = (1000. - nebu_density) * mod + bonus;
 }
 
 /**
