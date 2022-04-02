@@ -1,4 +1,4 @@
-* 0.9.3 (unreleased)
+* 0.9.3
    * Bug fix: if the German translation was active, casino minigames' explanation (Erklärung) didn't work
    * Fix errors/slowdown in Diversion from (...) missions
    * Fix bug in "Waste Collector" mission
