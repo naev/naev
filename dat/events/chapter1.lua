@@ -20,7 +20,7 @@ local lg = require 'love.graphics'
 local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
 
--- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_text2 cutscene_nebu cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
+-- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
 
 function create ()
    evt.finish(false) -- disabled for now
@@ -207,12 +207,15 @@ function cutscene_dvr ()
    fadein()
 
    hook.timer( 4.3, "fadeout" )
-   hook.timer( 5, "cutscene_text2" )
+   hook.timer( 5, "cutscene_posttext" )
 end
 
-function cutscene_text2 ()
+function cutscene_posttext ()
    -- Final text
    fg_setup( _("…unwittingly closing the distance to that which could destroy them…") )
+
+   -- Increase visibility
+   player.pilot():intrinsicSet( "nebu_visibility", 1000 )
 
    -- TODO something more omnious
    pangate( "Hypergate Polaris" )
@@ -229,6 +232,9 @@ function cutscene_nebu ()
 end
 
 function cutscene_nebu_fade ()
+   -- Rsetore visibility
+   player.pilot():intrinsicSet( "nebu_visibility", -1000 )
+
    -- Return to system and restore camera
    player.teleport( origsys )
    camera.set( nil, true )
