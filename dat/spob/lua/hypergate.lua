@@ -11,37 +11,38 @@ local pixelcode = [[
 #include "lib/simplex.glsl"
 
 uniform float u_time = 0.0;
-uniform sampler2D u_mask;
 const vec3 basecol = vec3( 0.2, 0.8, 0.8 );
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    vec2 centered = texture_coords*2.0-1.0;
    vec2 polar = vec2( length(centered), atan( centered.y, centered.x ) );
+   polar.x -= u_time * 0.01;
 
-   vec4 col = vec3( basecol, 1.0 );
-   col.a *= 0.3 + 0.7*snoise( vec3( polar, u_time )*10. );
-   return col * texture( u_mask, texture_coords );
+   vec4 mask = texture( tex, texture_coords );
+   vec4 col = vec4( basecol, 1.0 );
+   col.a *= (0.6 + 0.4*snoise( polar * 3.0 )) * mask.r;
+   return col;
 }
 ]]
 
 local function update_canvas ()
    local oldcanvas = lg.getCanvas()
-   local oldshader = lg.getShader()
    lg.setCanvas( cvs )
    lg.clear( 0, 0, 0, 0 )
    lg.setColor( 1, 1, 1, 1 )
-   lg.setBlendMode( "alpha", "premultiplied" )
+   --lg.setBlendMode( "alpha", "premultiplied" )
 
    -- Draw base hypergate
    tex:draw( 0, 0 )
 
    -- Draw active overlay shader
+   local oldshader = lg.getShader()
    lg.setShader( shader )
-   love_shaders.img:draw( 0, 0, 0, tw, th )
+   mask:draw( 0, 0 )
    lg.setShader( oldshader )
 
-   lg.setBlendMode( "alpha" )
+   --lg.setBlendMode( "alpha" )
    lg.setCanvas( oldcanvas )
 end
 
@@ -67,7 +68,6 @@ function load( p )
          self._dt = self._dt + dt
          self:send( "u_time", self._dt )
       end
-      shader:send( "u_mask", mask )
 
       update_canvas()
    end
@@ -89,6 +89,10 @@ function render ()
    local x, y = gfx.screencoords( pos, true ):get()
    z = 1/z
    cvs:draw( x, y, 0, z, z )
+end
+
+function update( dt )
+   shader:update( dt )
 end
 
 function can_land ()
