@@ -58,7 +58,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
                           snoise( noisexy + vec2(100.0,-100.0) ) );
 
    /* Putting it together. */
-   col.a *= (0.6 + 0.4 * noise);
+   col.a = (0.7 + 0.3 * noise);
    col.a *= mask.r;
    return col;
 }
