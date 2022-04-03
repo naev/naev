@@ -16,10 +16,12 @@ const vec3 basecol = vec3( 0.2, 0.8, 0.8 );
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec4 col = texture( u_mask, texture_coords );
-   col.rgb *= basecol;
-   col.a *= 0.3 + 0.7*snoise( vec3(texture_coords, u_time)*10. );
-   return col;
+   vec2 centered = texture_coords*2.0-1.0;
+   vec2 polar = vec2( length(centered), atan( centered.y, centered.x ) );
+
+   vec4 col = vec3( basecol, 1.0 );
+   col.a *= 0.3 + 0.7*snoise( vec3( polar, u_time )*10. );
+   return col * texture( u_mask, texture_coords );
 }
 ]]
 
