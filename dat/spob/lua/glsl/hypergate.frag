@@ -38,7 +38,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 	float r = 0.0025*u_time + 0.5;
 	float c = cos(r);
 	float s = sin(r);
-   mat2 R = mat2( c, s, -s, c );
+   mat2 R = mat2( c, s, -1.3*s, 1.3*c ); // Do some cheap perspective correction
    centered = R * centered;
 
    /* Periodic polar coordinates. */
