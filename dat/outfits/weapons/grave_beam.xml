@@ -8,7 +8,7 @@
   <mass>40</mass>
   <price>390000</price>
   <description>The Grave Beam is a lighter, faster version of the Ragnarok Beam. It does not deal as much damage, but its lighter size and more forgiving CPU requirements makes it a competitive contender.</description>
-  <gfx_store>ragnarok.webp</gfx_store>
+  <gfx_store>grave_beam.webp</gfx_store>
   <cpu>-75</cpu>
  </general>
  <specific type="turret beam">

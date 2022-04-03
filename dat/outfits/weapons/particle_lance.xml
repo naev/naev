@@ -7,7 +7,7 @@
   <mass>4</mass>
   <price>25000</price>
   <description>This is the smallest direct beam weapon built, purpose-built by the Za'lek for their drones.</description>
-  <gfx_store>orion.webp</gfx_store>
+  <gfx_store>particle_lance.webp</gfx_store>
   <cpu>-5</cpu>
  </general>
  <specific type="beam">
