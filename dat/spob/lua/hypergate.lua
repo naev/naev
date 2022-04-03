@@ -2,47 +2,13 @@
    Active hypergate
 --]]
 local lg = require "love.graphics"
+local lf = require "love.filesystem"
 local love_shaders = require "love_shaders"
 
 local pos, tex, mask, cvs, shader
 local tw, th
 
-local pixelcode = [[
-#include "lib/simplex.glsl"
-
-uniform float u_time = 0.0;
-const vec3 basecol = vec3( 0.2, 0.8, 0.8 );
-
-float fbm3( vec2 x )
-{
-   float v = 0.0;
-   float a = 0.5;
-   const vec2 shift = vec2(100.0);
-   for (int i=0; i<3; i++) {
-      v += a * snoise(x);
-      x  = x * 2.0 + shift;
-      a *= 0.5;
-   }
-   return v;
-}
-
-vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
-{
-   vec2 centered = texture_coords*2.0-1.0;
-   vec2 polar = vec2( length(centered), atan( centered.y, centered.x ) );
-   polar.x -= u_time * 0.01;
-
-   vec4 mask = texture( tex, texture_coords );
-   vec4 col = vec4( basecol, 1.0 );
-
-   float noise = fbm3( vec2( fbm3( centered ), fbm3( polar ) ) );
-
-   //col.a *= (0.6 + 0.4*snoise( polar * 3.0 ));
-   col.a *= (0.6 + 0.4 * noise);
-   col.a *= mask.r;
-   return col;
-}
-]]
+local pixelcode = lf.read( "spob/lua/glsl/hypergate.frag" )
 
 local function update_canvas ()
    local oldcanvas = lg.getCanvas()
