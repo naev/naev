@@ -90,6 +90,8 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_SPOB_FACTION_REMOVE, /* For internal usage. */
    HUNK_TYPE_SPOB_POPULATION,
    HUNK_TYPE_SPOB_POPULATION_REMOVE, /* For internal usage. */
+   HUNK_TYPE_SPOB_DISPLAYNAME,
+   HUNK_TYPE_SPOB_DISPLAYNAME_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_DESCRIPTION,
    HUNK_TYPE_SPOB_DESCRIPTION_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_BAR,
@@ -577,6 +579,19 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
+      else if (xml_isNode(cur,"displayname")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_SPOB_DISPLAYNAME;
+         hunk.u.name = xml_getStrd(cur);
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
       else if (xml_isNode(cur,"description")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
@@ -902,6 +917,14 @@ static int diff_patch( xmlNodePtr parent )
                WARN(_("   [%s] spob population removal: '%s'"), target,
                      fail->u.name );
                break;
+            case HUNK_TYPE_SPOB_DISPLAYNAME:
+               WARN(_("   [%s] spob displayname: '%s'"), target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_SPOB_DISPLAYNAME_REVERT:
+               WARN(_("   [%s] spob displayname revert: '%s'"), target,
+                     fail->u.name );
+               break;
             case HUNK_TYPE_SPOB_DESCRIPTION:
                WARN(_("   [%s] spob description: '%s'"), target,
                      fail->u.name );
@@ -1101,6 +1124,21 @@ static int diff_patchHunk( UniHunk_t *hunk )
          if (p==NULL)
             return -1;
          p->population = hunk->o.data;
+         return 0;
+
+      /* Changing spob displayname. */
+      case HUNK_TYPE_SPOB_DISPLAYNAME:
+         p = spob_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         hunk->o.name = p->display;
+         p->display = hunk->u.name;
+         return 0;
+      case HUNK_TYPE_SPOB_DISPLAYNAME_REVERT:
+         p = spob_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         p->display = (char*)hunk->o.name;
          return 0;
 
       /* Changing spob description. */
@@ -1435,6 +1473,10 @@ static int diff_removeDiff( UniDiff_t *diff )
             hunk.type = HUNK_TYPE_SPOB_POPULATION_REMOVE;
             break;
 
+         case HUNK_TYPE_SPOB_DISPLAYNAME:
+            hunk.type = HUNK_TYPE_SPOB_DISPLAYNAME_REVERT;
+            break;
+
          case HUNK_TYPE_SPOB_DESCRIPTION:
             hunk.type = HUNK_TYPE_SPOB_DESCRIPTION_REVERT;
             break;
@@ -1540,6 +1582,8 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       case HUNK_TYPE_TECH_REMOVE:
       case HUNK_TYPE_SPOB_FACTION:
       case HUNK_TYPE_SPOB_FACTION_REMOVE:
+      case HUNK_TYPE_SPOB_DISPLAYNAME:
+      case HUNK_TYPE_SPOB_DISPLAYNAME_REVERT:
       case HUNK_TYPE_SPOB_DESCRIPTION:
       case HUNK_TYPE_SPOB_DESCRIPTION_REVERT:
       case HUNK_TYPE_SPOB_TECH_ADD:
