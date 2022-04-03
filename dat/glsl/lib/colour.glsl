@@ -10,7 +10,7 @@ float rgb2lum( vec3 color ) {
 // Taken from lolengine.net/blog/2013/07/27/rgb-to-hsv-in-glsl (WTFPL)
 
 // All components are in the range [0…1], including hue.
-vec3 rgb2hsv(vec3 c)
+vec3 rgb2hsv( vec3 c )
 {
    c = linearToGamma( c );
 
@@ -24,7 +24,7 @@ vec3 rgb2hsv(vec3 c)
 }
 
 // All components are in the range [0…1], including hue.
-vec3 hsv2rgb(vec3 c)
+vec3 hsv2rgb( vec3 c )
 {
    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
