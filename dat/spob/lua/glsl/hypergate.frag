@@ -2,7 +2,7 @@
 #include "lib/perlin.glsl"
 
 uniform float u_time = 0.0;
-const vec3 basecol = vec3( 0.2, 0.8, 0.8 );
+const vec3 basecol = vec3( %f, %f, %F );
 
 float fbm3( vec2 x )
 {

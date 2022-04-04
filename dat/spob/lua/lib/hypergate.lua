@@ -10,6 +10,8 @@ local tw, th
 
 local pixelcode = lf.read( "spob/lua/glsl/hypergate.frag" )
 
+local hypergate = {}
+
 local function update_canvas ()
    local oldcanvas = lg.getCanvas()
    lg.setCanvas( cvs )
@@ -30,8 +32,13 @@ local function update_canvas ()
    lg.setCanvas( oldcanvas )
 end
 
-function load( p )
+function hypergate.load( p, opts )
+   opts = opts or {}
+
    if tex==nil then
+      -- Handle some options
+      local basecol = opts.basecol or { 0.2, 0.8, 0.8 }
+
       -- Set up texture stuff
       local prefix = "gfx/spob/space/"
       tex  = lg.newImage( prefix.."hypergate_neutral_activated.webp" )
@@ -46,7 +53,8 @@ function load( p )
       cvs  = lg.newCanvas( tw, th, {dpiscale=1} )
 
       -- Set up shader
-      shader = lg.newShader( pixelcode, love_shaders.vertexcode )
+      local fragcode = string.format( pixelcode, basecol[1], basecol[1], basecol[2] )
+      shader = lg.newShader( fragcode, love_shaders.vertexcode )
       shader._dt = -1000 * rnd.rnd()
       shader.update = function( self, dt )
          self._dt = self._dt + dt
@@ -59,7 +67,7 @@ function load( p )
    return cvs.t.tex, tw/2
 end
 
-function unload ()
+function hypergate.unload ()
    shader= nil
    tex   = nil
    mask  = nil
@@ -67,7 +75,7 @@ function unload ()
    --sfx   = nil
 end
 
-function render ()
+function hypergate.render ()
    update_canvas() -- We want to do this here or it gets slow in autonav
    local z = camera.getZoom()
    local x, y = gfx.screencoords( pos, true ):get()
@@ -75,10 +83,12 @@ function render ()
    cvs:draw( x, y, 0, z, z )
 end
 
-function update( dt )
+function hypergate.update( dt )
    shader:update( dt )
 end
 
-function can_land ()
+function hypergate.can_land ()
    return false
 end
+
+return hypergate
