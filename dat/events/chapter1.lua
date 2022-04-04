@@ -20,7 +20,7 @@ local lg = require 'love.graphics'
 local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
 
--- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
+-- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_fade cutscene_cleanup cutscene_shipai (Hook functions passed by name)
 
 function create ()
    evt.finish(false) -- disabled for now
@@ -256,9 +256,6 @@ end
 
 -- Cleans up the cutscene stuf
 function cutscene_cleanup ()
-   local pp = player.pilot()
-   pp:setNoJump(false)
-   pp:setNoLand(false)
    setHide( false )
 
    -- Chapter 1 message
@@ -269,6 +266,23 @@ _("The Hypergates Awaken")
 
    -- Initialize fleet capacity
    player.setFleetCapacity( 100 )
+
+   hook.timer( 7, "cutscene_shipai" )
+end
+
+function cutscene_shipai ()
+   vn.clear()
+   vn.scene()
+   local sai = vn.newCharacter( tut.vn_shipai() )
+   vn.transition( tut.shipai.transition )
+   vn.na(_([[Your ship AI suddenly materializes infront of you.]]))
+   sai(_([[""]]))
+   vn.done( tut.shipai.transition )
+   vn.run()
+
+   local pp = player.pilot()
+   pp:setNoJump(false)
+   pp:setNoLand(false)
 
    -- Have ship ai talk when landed
    hook.land("land")
