@@ -16,6 +16,7 @@ local tut = require 'common.tutorial'
 local vn  = require 'vn'
 --local fmt = require 'format'
 local lg = require 'love.graphics'
+local textoverlay = require "textoverlay"
 
 local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
@@ -260,17 +261,14 @@ function cutscene_cleanup ()
    setHide( false )
 
    -- Chapter 1 message
---[[
-_("CHAPTER 1")
-_("The Hypergates Awaken")
---]]
+   textoverlay.init( _("CHAPTER 1"), _("The Hypergates Awaken") )
 
    -- Initialize fleet capacity
    player.setFleetCapacity( 100 )
    player.chapterSet( "1" )
    player.canDiscover( true )
 
-   hook.timer( 7, "cutscene_shipai" )
+   hook.timer( 10, "cutscene_shipai" )
 end
 
 function cutscene_shipai ()
