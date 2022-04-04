@@ -2,7 +2,7 @@ local hypergate = require "spob.lua.lib.hypergate"
 
 function load( p )
    return hypergate.load( p, {
-         basecol = { 0.2, 0.8, 0.2 }, -- Empire
+         basecol = { 0.8, 0.8, 0.2 }, -- Sirius
       } )
 end
 

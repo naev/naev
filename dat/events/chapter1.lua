@@ -23,7 +23,7 @@ local diff_progress2 = "hypergates_2"
 -- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
 
 function create ()
-   evt.finish(false) -- disabled for now
+   --evt.finish(false) -- disabled for now
 
    -- Set up some variables
    local has_license = diff.isApplied("heavy_combat_vessel_license") or (player.numOutfit("Heavy Combat Vessel License") > 0)
