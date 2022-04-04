@@ -86,8 +86,8 @@ local function fg_setup( text )
 
    fg.text = text
    if fg.text then
-      fg.w = fg.font:getWidth( fg.text )
-      fg.h = fontsize
+      fg.w, fg.wrapped = fg.font:getWrap( fg.text, 0.6 * nw )
+      fg.h = fg.font:getLineHeight() * #fg.wrapped
 
       fg.x = (nw-fg.w)/2
       fg.y = (nh-fg.h)/2
@@ -113,7 +113,7 @@ function foreground ()
 
       if fg.text then
          lg.setColor( 1, 1, 1, fg.alpha )
-         lg.print( fg.text, fg.font, fg.x, fg.y )
+         lg.printf( fg.text, fg.font, fg.x, fg.y, 0.6*nw, "center" )
       end
    end
 end
