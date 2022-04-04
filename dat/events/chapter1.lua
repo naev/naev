@@ -14,14 +14,14 @@
 --]]
 local tut = require 'common.tutorial'
 local vn  = require 'vn'
---local fmt = require 'format'
+local fmt = require 'format'
 local lg = require 'love.graphics'
 local textoverlay = require "textoverlay"
 
 local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
 
--- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_fade cutscene_cleanup cutscene_shipai (Hook functions passed by name)
+-- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp3 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_fade cutscene_cleanup cutscene_shipai (Hook functions passed by name)
 
 function create ()
    evt.finish(false) -- disabled for now
@@ -124,7 +124,7 @@ function update( _dt, real_dt )
 end
 
 -- Set up the cutscene stuff
-local origsys
+local origsys, empboss, emptester
 function cutscene_start ()
    player.canDiscover( false )
    setHide( true )
@@ -144,27 +144,69 @@ function cutscene_start ()
    player.teleport( hyps, false, true )
    camera.set( hyp:pos(), true )
 
+   -- Add some guys
+   local pos = hyp:pos()
+   local function addship( shipname )
+      local p = pilot.add( shipname, "Empire", pos + vec2.newP( 200+100*rnd.rnd(), rnd.angle() ) )
+      p:control()
+      p:face( pos )
+      return p
+   end
+   empboss = addship( "Empire Peacemaker" )
+   addship( "Empire Hawking" )
+   addship( "Empire Hawking" )
+   emptester = addship( "Empire Pacifier" )
+   addship( "Empire Pacifier" )
+
    fg_setup( _("And they built bridges across the stars…") )
-   --hook.timer( 5, "cutscene_emp1" )
-   hook.timer( 5, "cutscene_zlk" )
+   hook.timer( 5, "cutscene_emp1" )
+   --hook.timer( 5, "cutscene_zlk" )
 end
 
 function cutscene_emp1 ()
    -- Show system
    fg_setup()
-   hook.timer( 10, "chapter_emp2" )
+   hook.timer( 3, "cutscene_emp2" )
    fadein()
 end
 
+local countdown
 function cutscene_emp2 ()
-   -- Activate hypergate
-   hook.timer( 5, "chapter_emp3" )
+   empboss:broadcast( _("Beginning activation countdown!") )
+   countdown = 5
+   hook.timer( 7, "cutscene_emp3" )
 end
 
+-- Countdown
 function cutscene_emp3 ()
+   empboss:broadcast( fmt.f(_("{countdown}…"), {countdown=countdown}) )
+   if countdown > 1 then
+      countdown = countdown-1
+      hook.timer( 1, "cutscene_emp3" )
+   else
+      hook.timer( 1, "cutscene_emp4" )
+   end
+end
+
+function cutscene_emp4 ()
+   -- Activate hypergate with big flash
+
+   -- TODO post-process flash shader
+   hook.timer( 5, "cutscene_emp5" )
+end
+
+function cutscene_emp5 ()
+   hook.timer( 5, "cutscene_emp6" )
+   -- TODO ship goes through jump
+   emptester:taskClear()
+   local hyp = spob.get( "Hypergate Gamma Polaris" )
+   emptester:land( hyp )
+end
+
+function cutscene_emp6 ()
    -- Ship jumps
    hook.timer( 9.3, "fadeout" )
-   hook.timer( 10, "chapter_zlk" )
+   hook.timer( 10, "cutscene_zlk" )
 end
 
 local function pangate( gatename )
