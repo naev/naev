@@ -1373,6 +1373,10 @@ void space_update( double dt, double real_dt )
          /* Must update in some cases. */
          space_updateSpob( pnt, dt, real_dt );
 
+         /* Discovering is disabled. */
+         if (player.discover_off)
+            continue;
+
          /* Handle discoveries. */
          if (spob_isKnown( pnt ) || !pilot_inRangeSpob( player.p, i ))
             continue;
@@ -1395,6 +1399,10 @@ void space_update( double dt, double real_dt )
       for (int i=0; i<array_size(cur_system->jumps); i++) {
          HookParam hparam[3];
          JumpPoint *jp = &cur_system->jumps[i];
+
+         /* Discovering is disabled. */
+         if (player.discover_off)
+            continue;
 
          if (jp_isKnown(jp))
             continue;

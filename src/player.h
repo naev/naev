@@ -117,6 +117,7 @@ typedef struct Player_s {
    double speed;     /**< Gameplay speed modifier, multiplies the ship base speed. */
    char *chapter;    /**< Chapter information. */
    char *difficulty; /**< Player-specific difficulty. */
+   int discover_off; /**< Player is unable to discover anything. */
 
    /* Loaded game version. */
    char *loaded_version;/**< Version of the loaded save game. */

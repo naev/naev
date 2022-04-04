@@ -114,6 +114,7 @@ static int playerL_chapter( lua_State *L );
 static int playerL_chapterSet( lua_State *L );
 static int playerL_infoButtonRegister( lua_State *L );
 static int playerL_infoButtonUnregister( lua_State *L );
+static int playerL_canDiscover( lua_State *L );
 static const luaL_Reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
@@ -170,6 +171,7 @@ static const luaL_Reg playerL_methods[] = {
    { "chapterSet", playerL_chapterSet },
    { "infoButtonRegister", playerL_infoButtonRegister },
    { "infoButtonUnregister", playerL_infoButtonUnregister },
+   { "canDiscover", playerL_canDiscover },
    {0,0}
 }; /**< Player Lua methods. */
 
@@ -1659,5 +1661,17 @@ static int playerL_infoButtonUnregister( lua_State *L )
    int ret = info_buttonUnregister( id );
    if (ret != 0)
       WARN(_("Failed to unregister info button with id '%d'!"), id);
+   return 0;
+}
+
+/**
+ * @brief Global toggle to whether or not the player can discover space objects and jumps. Meant to be used with cutscenes that use player.teleport().
+ *
+ *    @luatparam[opt=false] Whether or not the player can discover objects.
+ * @luafunc canDiscover
+ */
+static int playerL_canDiscover( lua_State *L )
+{
+   player.discover_off = !lua_toboolean(L,1);
    return 0;
 }

@@ -125,6 +125,7 @@ end
 -- Set up the cutscene stuff
 local origsys
 function cutscene_start ()
+   player.canDiscover( false )
    setHide( true )
    player.cinematics( true )
    local pp = player.pilot()
@@ -266,6 +267,8 @@ _("The Hypergates Awaken")
 
    -- Initialize fleet capacity
    player.setFleetCapacity( 100 )
+   player.chapterSet( "1" )
+   player.canDiscover( true )
 
    hook.timer( 7, "cutscene_shipai" )
 end
