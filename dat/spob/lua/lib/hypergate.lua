@@ -53,7 +53,7 @@ function hypergate.load( p, opts )
       cvs  = lg.newCanvas( tw, th, {dpiscale=1} )
 
       -- Set up shader
-      local fragcode = string.format( pixelcode, basecol[1], basecol[1], basecol[2] )
+      local fragcode = string.format( pixelcode, basecol[1], basecol[2], basecol[3] )
       shader = lg.newShader( fragcode, love_shaders.vertexcode )
       shader._dt = -1000 * rnd.rnd()
       shader.update = function( self, dt )
