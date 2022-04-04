@@ -7,7 +7,7 @@
   <mass>14</mass>
   <price>47000</price>
   <description>A turret-mounted particle beam. The smallest possible turreted beam weapon, used as a last-ditch weapon against light enemies.</description>
-  <gfx_store>ragnarok.webp</gfx_store>
+  <gfx_store>particle_beam.webp</gfx_store>
   <cpu>-24</cpu>
  </general>
  <specific type="turret beam">
