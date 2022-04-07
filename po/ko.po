@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-03-31 13:59-0400\n"
-"PO-Revision-Date: 2020-12-02 18:35+0900\n"
-"Last-Translator: \n"
-"Language-Team: Korean\n"
-"Language: ko_KR\n"
+"PO-Revision-Date: 2022-04-07 22:11+0000\n"
+"Last-Translator: 이정희 <daemul72@gmail.com>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Weblate 4.12-dev\n"
 "X-Crowdin-Project: ofenthource\n"
 "X-Crowdin-Project-ID: 430038\n"
 "X-Crowdin-Language: ko\n"
@@ -23,6 +23,8 @@ msgid ""
 "The night sky always draws our eyes. People look up with a question, or in "
 "wonder, and sometimes with a dream: to venture forth among the stars."
 msgstr ""
+"밤하늘은 항상 우리의 눈을 끌어당깁니다. 사람들은 질문을 하거나, 의아해 하며, "
+"때로는 꿈을 가지고 올려다봅니다: 별들 사이에서 모험을 하는 것입니다."
 
 #: dat/intro:4
 msgid ""
@@ -30,6 +32,9 @@ msgid ""
 "of distant suns, far away but so clear. To reach out and grasp one would "
 "only cost a lifetime. Cheap at the price."
 msgstr ""
+"지구로부터, 최초의 우주 비행사들은 멀리 떨어져 있지만 매우 깨끗한, 먼 태양의 "
+"빛으로 빛나는 작은 보석들을 보았습니다. 손을 뻗어 한 사람을 잡는 것은 평생에 "
+"불과할 것입니다. 가격이 저렴합니다."
 
 #: dat/intro:7
 msgid ""
@@ -37,6 +42,9 @@ msgid ""
 "hurled themselves out into the void. On arrival, they decanted and woke to "
 "find new stars staring coldly down from stranger skies."
 msgstr ""
+"그래서 남자와 여자는 그들의 잠든 몸을 거대한 금속 상자에 가두었습니다. "
+"그들은 공허 속으로 몸을 던졌습니다. 도착하자마자, 그들은 소리를 질렀고, "
+"새로운 별들이 낯선 하늘에서 차갑게 내려다보고 있는 것을 발견했습니다."
 
 #: dat/intro:10
 msgid ""
@@ -45,6 +53,10 @@ msgid ""
 "civilisation spread, as it always has, with exponential enthusiasm -- "
 "ripples in the dark sea of space."
 msgstr ""
+"탐험가의 첫 번째 물결은 초경량 속도로 별에서 별로 기어 들어갔고, 하이퍼 "
+"스페이스 드라이브의 발명으로 두 번째 성장이 촉진되었습니다. 그런 다음 문명은 "
+"항상 그랬듯이 기하 급수적 인 열정으로 확산되었습니다 -- 우주의 어두운 "
+"바다에서 파문."
 
 #: dat/intro:12
 msgid ""
@@ -53,12 +65,17 @@ msgid ""
 "food, and distrust sowed the seeds of discord. Once begun, the fever of war "
 "spread from world to world and became a holocaust."
 msgstr ""
+"하지만, 인간의 호기심이 욕심을 능가하는 한 영웅적인 발견의 시대는 "
+"지속되었습니다. 너무 빨리, 식민지에서 분쟁이 일어났습니다. 토지, 연료, 식량, "
+"그리고 불신이 불화의 씨앗을 뿌렸습니다. 한번 시작된 전쟁의 열기는 전 "
+"세계에서 세계로 퍼져나가 홀로코스트가 되었습니다."
 
 #: dat/intro:15
 msgid ""
 "After a hundred years of interstellar conflict, on the ashes that remained, "
 "at last a new order built its foundations."
-msgstr ""
+msgstr "100년간의 성간 갈등 끝에 남은 잿더미 위에 마침내 새로운 질서가 그 기초를 "
+"쌓았습니다."
 
 #: dat/intro:17
 msgid ""
@@ -67,6 +84,10 @@ msgid ""
 "military, relations between planets resumed; abandoned trade routes saw "
 "traffic for the first time in living memory."
 msgstr ""
+"대드리스라는 사람은 고갈된 세계를 지배할 것이라고 주장했습니다. 그는 은하 "
+"제국을 세우고 스스로를 통치자라고 명명했습니다. 그의 군대의 철권 아래 행성 "
+"간의 관계가 재개되었습니다. 버려진 무역로에서 처음으로 교통체증을 "
+"목격했습니다."
 
 #: dat/intro:19
 msgid ""
@@ -74,6 +95,9 @@ msgid ""
 "irradiated rock was cleansed and dead planets brought back to life. Peace "
 "reigned in an imperial golden age."
 msgstr ""
+"학자들은 그것을 절정이라고 부릅니다: 기술이 발전하고, 문화가 번성하고, "
+"조사된 바위가 정화되고, 죽은 행성이 다시 살아났습니다. 황제의 황금시대에 "
+"평화가 지배했습니다."
 
 #: dat/intro:21
 msgid ""
@@ -82,19 +106,23 @@ msgid ""
 "the imperium went awry. In some regions, administration fell into the hands "
 "of other powers. The Great Houses now policed the space lanes."
 msgstr ""
+"대드리스 이후, 그의 후계자들 아래에서 제국의 빛이 약해졌습니다. 내전과 "
+"종교적 분열은 사회적 유대를 약화시켰다. 제국의 위대한 프로젝트는 "
+"실패했습니다. 일부 지역에서는 행정부가 다른 세력의 손에 넘어갔습니다. "
+"그레이트 하우스에서는 이제 우주 선로를 감시했습니다."
 
 #: dat/intro:23
 msgid "Rise and fall, the rhythm of history."
-msgstr ""
+msgstr "흥망성쇠, 역사의 박동."
 
 #: dat/intro:25
 msgid "But the march of history stumbled over the unknown, over the Incident."
-msgstr ""
+msgstr "그러나 역사의 진행은 미지의 세계를 넘어선 그 사건에 대해 우연히 "
+"마주치게되었습니다."
 
 #: dat/intro:27
-#, fuzzy
 msgid "It tore the heart out of the Empire."
-msgstr "\"내 연료는 제국의 재산이다.\""
+msgstr "그것은 제국의 심장을 찢었습니다."
 
 #: dat/intro:29
 msgid ""
@@ -103,10 +131,14 @@ msgid ""
 "the mysterious nebula left behind. Now the great, galaxy-spanning "
 "civilisation survives as a shadow of its former glory."
 msgstr ""
+"지구에서 대격변이 일어나 우주 공간을 휩쓸고 별들을 파괴하고 세계를 "
+"증발시켰습니다. 수십억 명이 사망했습니다. 수십 개의 시스템이 남겨진 신비한 "
+"성운 속으로 사라졌습니다. 이제 은하계에 걸친 위대한 문명은 이전의 영광의 "
+"그림자로 남아 있습니다."
 
 #: dat/intro:32
 msgid "What else remains? Questions."
-msgstr ""
+msgstr "그 밖에 무엇이 남아 있을까? 질문합니다."
 
 #: dat/intro:34
 msgid ""
@@ -114,188 +146,189 @@ msgid ""
 "decaying empire. After the Incident, corruption and piracy run rampant, but "
 "where there is chaos, there is also opportunity."
 msgstr ""
+"쇠퇴하는 제국의 파편이 지배하는 우주에서 10개의 표준 주기가 지났습니다. 사건 "
+"이후, 부패와 해적 행위가 만연하지만, 혼란이 있는 곳에는 기회도 있습니다."
 
 #: dat/intro:36
-#, fuzzy
 msgid "Welcome to the universe of Naev..."
-msgstr "엠파이어 뉴스 센터에 오신 것을 환영합니다."
+msgstr "Naev의 우주에 오신 것을 환영합니다..."
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
-msgstr ""
+msgstr "현재 핵심 개발팀"
 
 #: dat/AUTHORS:2 dat/AUTHORS:26 dat/AUTHORS:38 dat/AUTHORS:63 dat/AUTHORS:173
 #: dat/AUTHORS:181
 msgid "---------------------------------------"
-msgstr ""
+msgstr "---------------------------------------"
 
 #: dat/AUTHORS:4
 msgid "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
-msgstr ""
+msgstr "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
 
 #: dat/AUTHORS:5
 msgid "   * Lead Developer"
-msgstr ""
+msgstr "   * 수석 개발자"
 
 #: dat/AUTHORS:7
 msgid "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
-msgstr ""
+msgstr "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
 
 #: dat/AUTHORS:8
 msgid "   * Story Writer and Misc. Development"
-msgstr ""
+msgstr "   * 스토리 작가 및 기타. 개발"
 
 #: dat/AUTHORS:10
 msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
-msgstr ""
+msgstr "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 
 #: dat/AUTHORS:11
 msgid "   * Misc. Development and Lua unifier"
-msgstr ""
+msgstr "   * 기타. 개발 및 Lua 통합자"
 
 #: dat/AUTHORS:13
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
-msgstr ""
+msgstr "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
 
 #: dat/AUTHORS:14
 msgid "   * Code Carnage and Bug Beating"
-msgstr ""
+msgstr "   * 코드 대학살 및 버그 제거"
 
 #: dat/AUTHORS:16
 msgid "nenau"
-msgstr ""
+msgstr "nenau"
 
 #: dat/AUTHORS:17
 msgid "   * Misc. Development and Dvaered aficionado"
-msgstr ""
+msgstr "   * 기타. 개발 및 Dvaered aficionado"
 
 #: dat/AUTHORS:19
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
-msgstr ""
+msgstr "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 
 #: dat/AUTHORS:20
 msgid "   * CI dude and Bringer of automated releases"
-msgstr ""
+msgstr "   * 자동화된 릴리스의 CI dude 및 가져오기도구"
 
 #: dat/AUTHORS:22
 msgid "Viktor Hahn <viktor.hahn@web.de>"
-msgstr ""
+msgstr "Viktor Hahn <viktor.hahn@web.de>"
 
 #: dat/AUTHORS:23
 msgid "   * 3D modelling"
-msgstr ""
+msgstr "   * 3D 모델링"
 
 #: dat/AUTHORS:25
 msgid "Past Development Team"
-msgstr ""
+msgstr "과거 개발팀"
 
 #: dat/AUTHORS:28
 msgid "Nikola Whallon <6.saturn.6@gmail.com>"
-msgstr ""
+msgstr "Nikola Whallon <6.saturn.6@gmail.com>"
 
 #: dat/AUTHORS:29
 msgid "   * Bringer of Sound"
-msgstr ""
+msgstr "   * 사운드 가져오기도구"
 
 #: dat/AUTHORS:31
 msgid "Deiz"
-msgstr ""
+msgstr "Deiz"
 
 #: dat/AUTHORS:32 dat/AUTHORS:35
 msgid "   * Misc. Development"
-msgstr ""
+msgstr "   * 기타. 개발"
 
 #: dat/AUTHORS:34
 msgid "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
-msgstr ""
+msgstr "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
 
 #: dat/AUTHORS:37
 msgid "Major Contributors"
-msgstr ""
+msgstr "주요 기여자"
 
 #: dat/AUTHORS:40
 msgid "Josiah Schwartfeger"
-msgstr ""
+msgstr "Josiah Schwartfeger"
 
 #: dat/AUTHORS:41
 msgid "   * Graphic Designer and Modeller"
-msgstr ""
+msgstr "   * 그래픽 디자이너 및 모델러"
 
 #: dat/AUTHORS:43
 msgid "Elderman"
-msgstr ""
+msgstr "Elderman"
 
 #: dat/AUTHORS:44
 msgid "   * Mission Development"
-msgstr ""
+msgstr "   * 미션 개발"
 
 #: dat/AUTHORS:45
 msgid "   The first non-bobbens mission developer!"
-msgstr ""
+msgstr "   첫번째 non-bobbens 미션 개발자!"
 
 #: dat/AUTHORS:47
 msgid "Ingo Ruhnke <grumbel@gmx.de>"
-msgstr ""
+msgstr "Ingo Ruhnke <grumbel@gmx.de>"
 
 #: dat/AUTHORS:48
 msgid "   * NPC Portrait Artist"
-msgstr ""
+msgstr "   * NPC 진영 아티스트"
 
 #: dat/AUTHORS:50
 msgid "Enigmatic"
-msgstr ""
+msgstr "Enigmatic"
 
 #: dat/AUTHORS:51
 msgid "   * Ships for the Sirius, many other models and faction logos"
-msgstr ""
+msgstr "   * 시리우스로 향하는 우주선, 다른 많은 모델 및 파벌 로고"
 
 #: dat/AUTHORS:53
 msgid "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
-msgstr ""
+msgstr "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
 
 #: dat/AUTHORS:54
 msgid "   * Naev logo, Lua GUI development"
-msgstr ""
+msgstr "   * Naev 로고, Lua GUI 개발"
 
 #: dat/AUTHORS:56
 msgid "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
-msgstr ""
+msgstr "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
 
 #: dat/AUTHORS:57
 msgid "   * Ships for the Soromid and the Za'lek"
-msgstr ""
+msgstr "   * 소로미드와 잘렉을 향하는 우주선"
 
 #: dat/AUTHORS:59
 msgid "Askyel"
-msgstr ""
+msgstr "Askyel"
 
 #: dat/AUTHORS:60
 msgid "   * Composer of nearly an hour of Naev-exclusive music."
-msgstr ""
+msgstr "   * 1시간 가까이 Naev 전용 음악을 작곡한 작곡가."
 
 #: dat/AUTHORS:62
 msgid "Contributions"
-msgstr ""
+msgstr "기여"
 
 #: dat/AUTHORS:65
 msgid "Vega Strike <http://vegastrike.sf.net>"
-msgstr ""
+msgstr "Vega Strike <http://vegastrike.sf.net>"
 
 #: dat/AUTHORS:66
 msgid "   * Ship Models"
-msgstr ""
+msgstr "   * 우주선 모델"
 
 #: dat/AUTHORS:67
 msgid "   * Music"
-msgstr ""
+msgstr "   * 음악"
 
 #: dat/AUTHORS:68
 msgid "   * Sounds"
-msgstr ""
+msgstr "   * 사운드"
 
 #: dat/AUTHORS:69
 msgid "   * Planet images"
-msgstr ""
+msgstr "   * 행성 이미지"
 
 #: dat/AUTHORS:70
 msgid ""
@@ -310,19 +343,19 @@ msgstr ""
 
 #: dat/AUTHORS:73
 msgid "   * Planet Graphics"
-msgstr ""
+msgstr "   * 행성 그래픽"
 
 #: dat/AUTHORS:74
 msgid "   * Render Script"
-msgstr ""
+msgstr "   * 렌더 스크립트"
 
 #: dat/AUTHORS:75
 msgid "   Helped out when the project was starting. Great morale booster."
-msgstr ""
+msgstr "   프로젝트가 시작될 때 도움이 되었습니다. 사기를 북돋아 주셨습니다."
 
 #: dat/AUTHORS:77
 msgid "Amir Taaki <genjix@gmail.com>"
-msgstr ""
+msgstr "Amir Taaki <genjix@gmail.com>"
 
 #: dat/AUTHORS:78
 msgid "Rob Loach <http://robloach.net>"
@@ -356,33 +389,34 @@ msgstr ""
 
 #: dat/AUTHORS:87
 msgid "   * Planet gimp script"
-msgstr ""
+msgstr "   * 행성 gimp 스크립트"
 
 #: dat/AUTHORS:88
 msgid ""
 "   Saved a lot of trouble by allowing us to quickly create space planet "
 "graphics."
-msgstr ""
+msgstr "   우주 행성 그래픽을 빠르게 만들 수 있어 많은 수고를 덜 수 있습니다."
 
 #: dat/AUTHORS:90
 msgid "Andrew Mustun"
-msgstr ""
+msgstr "Andrew Mustun"
 
 #: dat/AUTHORS:91
 msgid "   * Sprite gimp script"
-msgstr ""
+msgstr "   * 스프라이트 gimp 스크립트"
 
 #: dat/AUTHORS:92
 msgid "   Although not used directly, it helped create our own sprite script."
-msgstr ""
+msgstr "   스프라이트 gimp 스크립트 직접 사용하지는 않았지만, 자신만의 스프라이트 "
+"스크립트를 만드는 데 도움이 되었습니다."
 
 #: dat/AUTHORS:94
 msgid "J.C. Wilk"
-msgstr ""
+msgstr "J.C. Wilk"
 
 #: dat/AUTHORS:95
 msgid "   * Turbulence noise"
-msgstr ""
+msgstr "   * 난기류 소음"
 
 #: dat/AUTHORS:96
 msgid ""
@@ -1175,10 +1209,8 @@ msgid ""
 msgstr ""
 
 #: dat/faction.xml:153
-#, fuzzy
-#| msgid "Back so soon?"
 msgid "Black Lotus"
-msgstr "그렇게 일찍 돌아왔나요?"
+msgstr "검은 연꽃"
 
 #: dat/faction.xml:156
 msgid "Black Lotus Pirate Clan"
@@ -6289,9 +6321,9 @@ msgid ""
 "heat dissipation. The military-grade materials used also result in the ship "
 "being slightly lighter than its generic counterpart."
 msgstr ""
-"상어의 제국 군사 등급 버전은 기능면에서 표준 상어와 거의 동일하지만 갑옷, 방"
-"패 및 열 분산이 약간 더 좋습니다. 군용 등급의 ​​재료를 사용하여 일반 군함보다 "
-"약간 가볍습니다."
+"제국 군용 버전의 샤크는 기능면에서 표준 샤크와 거의 동일하지만 장갑, 보호막 "
+"및 열 방출이 약간 더 우수합니다. 군용 등급 재료를 사용하여 일반 우주선보다 "
+"약간 더 가볍습니다."
 
 #: dat/ships/gawain.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168
@@ -6762,11 +6794,11 @@ msgid ""
 "carrier group unleashing several squadrons has been known to turn the tide "
 "of battle on many occasions."
 msgstr ""
-"Proteron 무기고에서 더 큰 형제보다 작고 덜 위협적이지만, 파생 상품 팩은 여전"
-"히 ​​계산해야 할 적입니다. 이름 그대로, 대부분의 항공 모함 기반 전투기의 최신 "
-"모델입니다. 상대적으로 화력이 적기 때문에 결투에는 부적합하지만, 여러 편대를 "
-"발사하는 항공 모함 그룹은 여러 차례 전투의 흐름을 바꾸는 것으로 알려져 있습니"
-"다."
+"프로테론 무기고에 있는 그것의 큰 형제들보다 작고 덜 위협적이지만, 파생형 "
+"무리는 여전히 무시할 수 없는 적입니다. 파생형을 의미하는 이 이름대로, 이것은 "
+"역대 대형 함상 전투기의 최신형입니다. 상대적으로 화력이 적기 때문에 결투에는 "
+"부적합하지만, 여러 편대를 발사하는 항공 모함 그룹은 여러 차례 전투의 흐름을 "
+"바꾸는 것으로 알려져 있습니다."
 
 #: dat/ships/proteron_kahan.xml:2
 msgid "Proteron Kahan"
@@ -12351,6 +12383,9 @@ msgid ""
 "forms on the surface and perhaps even pick one to take back to their own "
 "world."
 msgstr ""
+"헤이이 스페이스포트 바를 방문하는 사람들은 특별한 콘솔을 사용하여 주란 "
+"전역에 배치된 측량 위성들의 비디오 피드에 액세스하고, 지표면의 생명체를 "
+"관찰하고, 심지어 자신의 세계로 가져갈 수 있습니다."
 
 #: dat/spob/hekaras_iii.xml:2
 msgid "Hekaras III"
@@ -27079,9 +27114,8 @@ msgstr ""
 #. luacheck: globals pay (NPC functions passed by name)
 #. Each time the player lands, he meets a member of the team who proposes to pay
 #: dat/events/dvaered/fwB_repay.lua:41 dat/events/dvaered/fwB_repay.lua:49
-#, fuzzy
 msgid "Do you want to repay DHC?"
-msgstr "\"원하는게 뭐야!?\""
+msgstr "DHC를 상환하시겠습니까?"
 
 #: dat/events/dvaered/fwB_repay.lua:41
 msgid "You still owe {credits} to the High Command. Do you want to repay now?"
@@ -27649,16 +27683,12 @@ msgid "I'm not interested"
 msgstr "\"난 너의 피묻은 돈에는 관심없어!\""
 
 #: dat/events/dvaered/warlord_propaganda.lua:50
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "What is it about?"
-msgstr "\"원하는게 뭐야!?\""
+msgstr "그것은 무엇에 관한 것입니까?"
 
 #: dat/events/dvaered/warlord_propaganda.lua:51
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "What happened to your face?"
-msgstr "\"원하는게 뭐야!?\""
+msgstr "당신의 얼굴에 무슨 일이 일어 났습니까?"
 
 #: dat/events/dvaered/warlord_propaganda.lua:55
 msgid ""
@@ -28362,9 +28392,8 @@ msgid "Do nothing"
 msgstr ""
 
 #: dat/events/hired_escorts.lua:353
-#, fuzzy
 msgid "Are you sure you want to fire {name}? This cannot be undone."
-msgstr "Naev를 나가겠습니까?"
+msgstr "{name} 님을 내쫓으시겠습니까? 이 작업은 실행 취소할 수 없습니다."
 
 #: dat/events/hired_escorts.lua:359
 msgid "You fired '{name}' ({ship})."
@@ -28508,10 +28537,8 @@ msgid "{mineral}: {price}"
 msgstr ""
 
 #: dat/events/hypergate_construction.lua:171
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "What do you want to do?"
-msgstr "\"원하는게 뭐야!?\""
+msgstr "무엇을 하고 싶습니까?"
 
 #: dat/events/hypergate_construction.lua:174
 #, fuzzy
@@ -32063,7 +32090,7 @@ msgstr ""
 
 #: dat/events/neutral/npc.lua:64
 msgid "A civilian wearing a shirt saying: \"Ask me about Jaegnhild\""
-msgstr "시민은 \"재그닐드에 대해 물어봐\"라고 말하는 셔츠를 입고있다."
+msgstr "셔츠를 입은 시민은 이렇게 말합니다: \"재그넬드에 대해 물어봐\""
 
 #: dat/events/neutral/npc.lua:65
 msgid "There is a civilian sitting in the corner."
@@ -33952,10 +33979,8 @@ msgid "Get Advice"
 msgstr ""
 
 #: dat/events/shipai.lua:35
-#, fuzzy
-#| msgid "Ready for a physics lesson, punk?"
 msgid "Get Information"
-msgstr "물리학 수업을 받을 준비가 되었나요?"
+msgstr "정보 얻기"
 
 #: dat/events/shipai.lua:36
 msgid "Tutorial/Ship AI Options"
@@ -34827,10 +34852,8 @@ msgid "You have noticed something strange…"
 msgstr ""
 
 #: dat/events/taiomi/find.lua:148
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "What was that?"
-msgstr "\"원하는게 뭐야!?\""
+msgstr "그게 뭐였니요?"
 
 #: dat/events/taiomi/find.lua:153
 msgid "There is nothing of worth left on the ship."
@@ -38174,9 +38197,8 @@ msgstr ""
 #: dat/missions/baron/baron_prince.lua:220
 #: dat/missions/baron/baron_prince.lua:232
 #: dat/missions/baron/baron_prince.lua:244
-#, fuzzy
 msgid "An ancient artefact?"
-msgstr "네뷸라에 온것을 환영합니다"
+msgstr "고대 유물?"
 
 #: dat/missions/baron/baron_prince.lua:224
 #: dat/missions/baron/baron_prince.lua:236
@@ -41958,9 +41980,8 @@ msgstr ""
 #. Instructions
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:126
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:332
-#, fuzzy
 msgid "What do you want to ask Major Tam?"
-msgstr "\"원하는게 뭐야!?\""
+msgstr "당신은 무엇을 탐 소령에게 묻고 싶습니까?"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:126
 #, fuzzy
@@ -42629,9 +42650,8 @@ msgid "You were supposed to secure the meeting, not to run away like that!"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:226
-#, fuzzy
 msgid "What do you want to ask to the lieutenant before taking off?"
-msgstr "\"원하는게 뭐야!?\""
+msgstr "이륙하기 전에 경위에게 묻고 싶은 것은 무엇입니까?"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:226
 msgid "Ask for a briefing"
@@ -44203,10 +44223,8 @@ msgid "Accept the mission"
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:94
-#, fuzzy
-#| msgid "Ready for a physics lesson, punk?"
 msgid "Refuse the mission"
-msgstr "물리학 수업을 받을 준비가 되었나요?"
+msgstr "임무 거부"
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:99
 msgid "\"Good luck with that mission, then!\""
@@ -44788,10 +44806,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:267
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "Hi, {name}. How do you do?"
-msgstr "\"원하는게 뭐야!?\""
+msgstr "안녕하세요, {name}님. 처음 뵙겠습니다?"
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:269
 msgid "Very well for someone who met a guy named 'The Death Dealer'."
@@ -47142,12 +47158,12 @@ msgstr ""
 #: dat/missions/neutral/cargo_rush.lua:183
 #: dat/missions/pirate/contraband.lua:206
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:320
-#, fuzzy
-#| msgid "Frontier systems"
 msgid ""
 "Fly to {pnt} in the {sys} system before {time_limit}\n"
 "({time} remaining)"
-msgstr "프론티어 시스템"
+msgstr ""
+"{time_limit} 전에 {sys} 시스템의 {pnt}로 비행\n"
+"({time} 남음)"
 
 #. Repeatable Empire mission prefix
 #: dat/missions/empire/es_cargo.lua:150 dat/scripts/common/empire.lua:12
@@ -51549,10 +51565,8 @@ msgid "You interrupt my leisure with blackmail…"
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:612
-#, fuzzy
-#| msgid "Did you really think you would get away with that?"
 msgid "You really think you would be getting out of here alive?…"
-msgstr "정말 그렇게 될 줄 알았는가?"
+msgstr "정말 살아서 이곳을 나갈 거라고 생각하는 겁니까?…"
 
 #: dat/missions/minerva/kex3.lua:613
 msgid "You are in my realm now, kid!"
@@ -53512,9 +53526,8 @@ msgid "Is anybody out there? Sensors damaged, requesting assistance."
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:466
-#, fuzzy
 msgid "Mayday! Requesting assistance. Wait, what was that?"
-msgstr "지원을 요청한다. 공격 받고 있다!"
+msgstr "메이데이! 도움을 요청합니다. 무슨 소리죠? 들려요?"
 
 #. Get rid of the timeout hook
 #: dat/missions/minerva/maikki1.lua:499
@@ -54935,9 +54948,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:699
-#, fuzzy
 msgid "Nebula Artefact?"
-msgstr "네뷸라에 온것을 환영합니다"
+msgstr "성운 유물?"
 
 #: dat/missions/minerva/maikki2.lua:699
 msgid ""
@@ -56616,10 +56628,8 @@ msgid "Just a bit more and reinforcements should arrive!"
 msgstr ""
 
 #: dat/missions/minerva/pirate4.lua:341
-#, fuzzy
-#| msgid "Dvaered Goddard"
 msgid "Shit, is that a Dvaered Goddard?"
-msgstr "드 베어드 고다드"
+msgstr "젠장, 드베어드 고다드인가?"
 
 #: dat/missions/minerva/pirate4.lua:421
 msgid ""
@@ -58358,10 +58368,8 @@ msgid "Chug the drink."
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant09.lua:117
-#, fuzzy
-#| msgid "Ready for a physics lesson, punk?"
 msgid "Refuse the drink."
-msgstr "물리학 수업을 받을 준비가 되었나요?"
+msgstr "술을 마시지 마세요."
 
 #: dat/missions/neutral/antlejos/ant09.lua:122
 msgid ""
@@ -64529,10 +64537,8 @@ msgstr ""
 #: dat/missions/pirate/blackcat.lua:50 dat/missions/pirate/blackcat.lua:97
 #: dat/missions/pirate/blackcat.lua:101 dat/missions/pirate/blackcat.lua:104
 #: dat/missions/pirate/blackcat.lua:299
-#, fuzzy
-#| msgid "Back so soon?"
 msgid "Black Cat"
-msgstr "그렇게 일찍 돌아왔나요?"
+msgstr "검은 고양이"
 
 #: dat/missions/pirate/blackcat.lua:52
 msgid ""
@@ -65597,6 +65603,9 @@ msgid ""
 "trying to discreetly motion you to join him, but is only managing to make "
 "himself look suspicious. Perhaps he's watched too many holovideos."
 msgstr ""
+"당신은 바의 어두운 구석에 앉아 있는 변덕스러워 보이는 남자를 봅니다. 그는 "
+"당신에게 그와 합류하도록 조심스럽게 손짓을 시도하지만 자신을 의심스럽게 "
+"보이게 할 뿐입니다. 아마도 그는 홀로그램 영상을 너무 많이 보았을 것입니다."
 
 #: dat/missions/pirate/hitman.lua:47
 msgid ""
@@ -71304,17 +71313,15 @@ msgid "Refugees"
 msgstr ""
 
 #: dat/missions/sirius/heretic/heretic4.lua:71
-#, fuzzy
 msgid "Nasin refugees."
-msgstr "메인 메뉴"
+msgstr "나신의 피난민입니다."
 
 #. get the hooks.
 #. left over fleets from the prior mission.
 #: dat/missions/sirius/heretic/heretic4.lua:98
 #: dat/missions/sirius/heretic/heretic4.lua:131
-#, fuzzy
 msgid "Nasin Mule"
-msgstr "메인 메뉴"
+msgstr "나신 마약 운반책"
 
 #: dat/missions/sirius/heretic/heretic4.lua:98
 #: dat/missions/sirius/heretic/heretic4.lua:131
@@ -72330,6 +72337,9 @@ msgid ""
 "to the #oMissions#0 tab. Feel free to click the other tabs for more "
 "information.\""
 msgstr ""
+"\"아, 모든 것의 정보 메뉴는 영광입니다. 기본 창에서 게임플레이 및 라이선스 "
+"정보의 전체 통계를 볼 수 있습니다. #o미션#0 탭으로 이동합니다. 자세한 내용을 "
+"보려면 다른 탭을 클릭하십시오.\""
 
 #. TODO not sure we need more message annoyances here
 #: dat/missions/tutorial/nelly01.lua:410
@@ -73829,10 +73839,8 @@ msgid "Surrender or face destruction!"
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:409
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "That all you got?"
-msgstr "\"원하는게 뭐야!?\""
+msgstr "그게 전부에요?"
 
 #: dat/missions/tutorial/tutorial.lua:410
 msgid "I am Iron Man!"
@@ -73881,10 +73889,8 @@ msgid "You don't scare me!"
 msgstr "넌 나를 매수할 수 없어!"
 
 #: dat/missions/tutorial/tutorial.lua:421
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "What do you think this is, knitting hour?"
-msgstr "\"원하는게 뭐야!?\""
+msgstr "지금 뭐 하는 짓 이예요?"
 
 #: dat/missions/tutorial/tutorial.lua:422
 msgid "I mean, good lord, man."
@@ -73971,10 +73977,8 @@ msgid "Leave me alone!"
 msgstr "\"날 내버려둬!\""
 
 #: dat/missions/tutorial/tutorial.lua:443
-#, fuzzy
-#| msgid "\"I can't spare fuel for you.\""
 msgid "What did I ever do to you?"
-msgstr "\"난 너에게 연료를 나눠줄 수 없어.\""
+msgstr "내가 당신에게 무슨 짓을 한 적이 있습니까?"
 
 #: dat/missions/tutorial/tutorial.lua:444
 #, fuzzy
@@ -76003,9 +76007,8 @@ msgid "Hot damn, that was weird. Ugh, I feel sick."
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh09.lua:255
-#, fuzzy
 msgid "I'm getting some ship readings. Wait, what is that?"
-msgstr "지원을 요청한다. 공격 받고 있다!"
+msgstr "우주선 수치가 좀 나왔어. 잠깐, 저게 뭐야?"
 
 #: dat/missions/zalek/blackhole/zbh09.lua:259
 msgid "It's a bit quiet without Icarus around anymore…"
@@ -82072,10 +82075,8 @@ msgid "Instructions to escort"
 msgstr ""
 
 #: dat/scripts/common/frontier_war.lua:49
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "What do you want the escort to do?"
-msgstr "\"원하는게 뭐야!?\""
+msgstr "에스코트가 무엇을 하기를 원하십니까?"
 
 #: dat/scripts/common/frontier_war.lua:49
 msgid "Attack nearby enemies"
@@ -86950,9 +86951,9 @@ msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 #. @tparam func updatefunc Update function to run every frame.
 #. --
 #: dat/scripts/vn/core.lua:1588
-#, fuzzy, lua-format
+#, lua-format
 msgid "vn: unable to find label '%s'"
-msgstr "'%s' 파일을 접근 할 수 없습니다. %s"
+msgstr "vn: '%s' 레이블을 찾을 수 없습니다"
 
 #: dat/scripts/vn/core.lua:1598
 #, fuzzy, lua-format
@@ -87023,9 +87024,9 @@ msgstr ""
 #. --
 #. Sane defaults
 #: dat/scripts/vn/transitions.lua:487
-#, fuzzy, lua-format
+#, lua-format
 msgid "vn: unknown transition type'%s'"
-msgstr "알 수없는 Lua 데이터 유형!"
+msgstr "vn: 알 수 없는 전환 유형 '%s'"
 
 #.
 #. -- music will get called with a string parameter indicating status
@@ -87382,12 +87383,13 @@ msgid ""
 msgstr ""
 
 #: src/background.c:261
-#, fuzzy, c-format
-#| msgid "Music '%s' not found."
+#, c-format
 msgid ""
 "Background script 'rendermg' error:\n"
 "%s"
-msgstr "'%s' 음악을 찾을 수 없습니다."
+msgstr ""
+"백그라운드 스크립트 'rendermg' 오류:\n"
+"%s"
 
 #: src/background.c:273
 #, c-format
@@ -87397,12 +87399,13 @@ msgid ""
 msgstr ""
 
 #: src/background.c:288
-#, fuzzy, c-format
-#| msgid "Music '%s' not found."
+#, c-format
 msgid ""
 "Background script 'renderov' error:\n"
 "%s"
-msgstr "'%s' 음악을 찾을 수 없습니다."
+msgstr ""
+"백그라운드 스크립트 'renderov' 오류:\n"
+"%s"
 
 #: src/background.c:410
 #, fuzzy, c-format
@@ -87883,7 +87886,7 @@ msgstr ""
 
 #: src/conf.c:868
 msgid "Use video modesetting when fullscreen is enabled"
-msgstr ""
+msgstr "전체 화면이 활성화된 경우 비디오 모드 설정 사용"
 
 #: src/conf.c:872
 msgid "Disable allowing resizing the window."
@@ -88130,12 +88133,13 @@ msgid ""
 msgstr ""
 
 #: src/console.c:232
-#, fuzzy, c-format
-#| msgid "Error renaming %s to %s"
+#, c-format
 msgid ""
 "Error running 'script':\n"
 "%s"
-msgstr "%s의 이름을 %s로 바꾸는 동안 오류가 발생했습니다"
+msgstr ""
+"'스크립트' 실행 오류:\n"
+"%s"
 
 #: src/console.c:468 src/console.c:475
 #, fuzzy
@@ -88345,9 +88349,8 @@ msgid "New Spob Creation"
 msgstr ""
 
 #: src/dev_sysedit.c:376
-#, fuzzy
 msgid "What do you want to name the new spob?"
-msgstr "\"원하는게 뭐야!?\""
+msgstr "새 spob의 이름을 무엇으로 지정하시겠습니까?"
 
 #: src/dev_sysedit.c:382 src/dev_sysedit.c:485
 #, c-format
@@ -88374,9 +88377,9 @@ msgid ""
 msgstr ""
 
 #: src/dev_sysedit.c:479
-#, fuzzy, c-format
+#, c-format
 msgid "What do you want to rename the spob #r%s#0?"
-msgstr "\"원하는게 뭐야!?\""
+msgstr "spob #r%s#0의 이름을 무엇으로 바꾸시겠습니까?"
 
 #: src/dev_sysedit.c:522
 msgid "Remove selected objects (excluding jumps)?"
@@ -88584,10 +88587,9 @@ msgstr "Naev를 나가겠습니까?"
 
 #. Create the window.
 #: src/dev_sysedit.c:1856
-#, fuzzy, c-format
-#| msgid "Ready for a physics lesson, punk?"
+#, c-format
 msgid "Spob Information - %s"
-msgstr "물리학 수업을 받을 준비가 되었나요?"
+msgstr "Spob 정보 - %s"
 
 #: src/dev_sysedit.c:1869
 msgid "Properties"
@@ -88747,9 +88749,9 @@ msgid "Rename Star System"
 msgstr ""
 
 #: src/dev_uniedit.c:1209
-#, fuzzy, c-format
+#, c-format
 msgid "What do you want to rename #r%s#0?"
-msgstr "\"원하는게 뭐야!?\""
+msgstr "#r%s#0 이름을 무엇으로 바꾸시겠습니까?"
 
 #. Get name.
 #: src/dev_uniedit.c:1255
@@ -89928,9 +89930,8 @@ msgid "Save has unsupported hook type."
 msgstr ""
 
 #: src/info.c:57
-#, fuzzy
 msgid "Main"
-msgstr "메인 메뉴"
+msgstr "기본"
 
 #: src/info.c:58 src/map_find.c:965
 msgid "Ship"
@@ -91655,11 +91656,13 @@ msgid "Autonav: "
 msgstr "자동nav"
 
 #: src/map.c:1855
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No price info for\n"
 "%s here"
-msgstr "가격 정보 없음"
+msgstr ""
+"여기에 %s에 대한 \n"
+"가격 정보가 없습니다"
 
 #: src/map.c:2117
 msgid "Travel (Default)"
@@ -91821,9 +91824,9 @@ msgid "Obscured by the nebula"
 msgstr ""
 
 #: src/map_system.c:396
-#, fuzzy, c-format
+#, c-format
 msgid "System: %s\n"
-msgstr "시스템"
+msgstr "시스템: %s\n"
 
 #. display sun information
 #: src/map_system.c:398
@@ -92067,12 +92070,12 @@ msgstr ""
 
 #: src/menu.c:176
 msgid "Menu main is already open."
-msgstr "메인 메뉴가 이미 열려 있습니다."
+msgstr "기본 메뉴가 이미 열려 있습니다."
 
 #. create menu window
 #: src/menu.c:225 src/menu.c:608
 msgid "Main Menu"
-msgstr "메인 메뉴"
+msgstr "기본 메뉴"
 
 #: src/menu.c:234
 msgid "Load Game"
@@ -92102,7 +92105,7 @@ msgstr "게임 나가기"
 
 #: src/menu.c:338
 msgid "Main menu does not exist."
-msgstr "메인 메뉴가 존재하지 않습니다."
+msgstr "기본 메뉴가 존재하지 않습니다."
 
 #: src/menu.c:436
 msgid "Menu"
@@ -92119,16 +92122,12 @@ msgid "Load / Save"
 msgstr "게임 불러오기"
 
 #: src/menu.c:457
-#, fuzzy
-#| msgid "Exit to Main Menu"
 msgid "Exit to Title"
-msgstr "메인 메뉴에서 나가기"
+msgstr "타이틀로 나가기"
 
 #: src/menu.c:494
-#, fuzzy
-#| msgid "Main menu does not exist."
 msgid "Small menu does not exist."
-msgstr "메인 메뉴가 존재하지 않습니다."
+msgstr "작은 메뉴가 존재하지 않습니다."
 
 #. Stop player sounds because sometimes they hang.
 #: src/menu.c:535
@@ -92161,7 +92160,7 @@ msgstr "맵 의상"
 
 #: src/menu.c:707
 msgid "Exit to Main Menu"
-msgstr "메인 메뉴에서 나가기"
+msgstr "기본 메뉴로 나가기"
 
 #: src/mission.c:103 src/nlua_player.c:1326 src/nlua_player.c:1348
 #, c-format
@@ -92221,7 +92220,7 @@ msgstr "존재하지 않는 화물 %d의 연결을 해제하려는 '%s' 임무."
 #: src/mission.c:687
 #, c-format
 msgid "Failed to remove mission cargo '%d' for mission '%s'."
-msgstr "임무 '%2$s'에 대한 임무화물 '%1$d'을 제거하지 못했습니다."
+msgstr "미션 '%s'에 대한 미션 화물 '%d'를 제거하지 못했습니다."
 
 #: src/mission.c:949
 #, c-format
@@ -92288,7 +92287,7 @@ msgstr "임무 파일 '%s'에 XML 헤더가 없습니다!"
 #: src/mission.c:1132
 #, c-format
 msgid "Unable to parse document XML header for Mission '%s'"
-msgstr "임무 '%s' 에 대한 문서 XML 헤더를 구문 분석 할 수 없습니다."
+msgstr "미션 '%s'에 대한 문서 XML 헤더를 구문 분석할 수 없습니다"
 
 #: src/mission.c:1138
 #, c-format
@@ -92416,7 +92415,7 @@ msgstr ""
 #: src/naev.c:222 src/opengl.c:424
 #, c-format
 msgid "Unable to initialize SDL Video: %s"
-msgstr ""
+msgstr "SDL 비디오를 초기화할 수 없음: %s"
 
 #: src/naev.c:246
 #, c-format
@@ -92454,7 +92453,7 @@ msgstr ""
 #. initializes video output
 #: src/naev.c:290
 msgid "Initializing video output failed, exiting…"
-msgstr ""
+msgstr "비디오 출력 초기화 실패, 종료 중…"
 
 #: src/naev.c:307
 msgid "Initializing subsystems…"
@@ -92829,20 +92828,22 @@ msgid "Unable to load common script '%s'!"
 msgstr "Nebula 이미지를 로드 할 수 없습니다. %s"
 
 #: src/nlua.c:277
-#, fuzzy, c-format
-#| msgid "Failure to copy '%s' to '%s': %s"
+#, c-format
 msgid ""
 "Failed to run '%s':\n"
 "%s"
-msgstr "'%s'을 (를) '%s'에 복사하지 못했습니다. %s"
+msgstr ""
+"'%s' 실행 실패:\n"
+"%s"
 
 #: src/nlua.c:282
-#, fuzzy, c-format
-#| msgid "Failure to copy '%s' to '%s': %s"
+#, c-format
 msgid ""
 "Failed to load '%s':\n"
 "%s"
-msgstr "'%s'을 (를) '%s'에 복사하지 못했습니다. %s"
+msgstr ""
+"'%s' 불러오기 실패:\n"
+"%s"
 
 #: src/nlua.c:376
 msgid "Failed to create new Lua state."
@@ -92854,11 +92855,13 @@ msgstr ""
 
 #. Didn't get to load it.
 #: src/nlua.c:511
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "   no ndata path '%s'"
-msgstr "알 수없는 Lua 데이터 유형!"
+msgstr ""
+"\n"
+"   ndata 경로 '%s'가 없습니다"
 
 #: src/nlua.c:591 src/nlua.c:597
 msgid "package.loaders must be a table"
@@ -92895,12 +92898,12 @@ msgstr ""
 #: src/nlua_audio.c:1081
 #, c-format
 msgid "Usupported audio effect type '%s'!"
-msgstr ""
+msgstr "지원되지 않는 오디오 효과 유형 '%s'!"
 
 #: src/nlua_audio.c:1118
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown audio effect '%s'!"
-msgstr "알 수없는 Lua 데이터 유형!"
+msgstr "알 수 없는 오디오 효과 '%s'!"
 
 #: src/nlua_canvas.c:207 src/opengl_tex.c:227
 msgid "Error setting up framebuffer!"
@@ -93610,12 +93613,12 @@ msgstr "존재하지 않는 시스템 '%s'을 (를) 로드하지 못했습니다
 #: src/nxml_lua.c:456
 #, c-format
 msgid "Failed to load nonexistent system '%s'"
-msgstr "존재하지 않는 시스템 '%s'을 (를) 로드하지 못했습니다."
+msgstr "존재하지 않는 시스템 '%s'를 불러오지 못했습니다"
 
 #: src/nxml_lua.c:475
 #, c-format
 msgid "Failed to load nonexistent jump from '%s' to '%s'"
-msgstr "존재하지 않는 점프를 '%s'에서 '%s'(으) 로 로드하지 못했습니다."
+msgstr "존재하지 않는 점프를 '%s'에서 '%s'로 불러오지 못했습니다"
 
 #. There are a few types knowingly left out above. Quoting the lua_{to,push} methods, as of 2021-11-13, they are:
 #. * article, audio, canvas, colour, data, file, font, linopt, pilot, pilotoutfit, shader, tex, transform.
@@ -93760,7 +93763,7 @@ msgstr "텍스처 단위 누락 (%d필요, %d 개 발견)"
 #: src/opengl.c:338
 #, c-format
 msgid "Unable to get requested FSAA level (%d requested, got %d)"
-msgstr "요청 된 FSAA 수준을 가져올 수 없습니다 (요청한 %d, %d 가져옴)."
+msgstr "요청한 FSAA 수준을 가져올 수 없습니다(%d개 요청됨, %d개 가져옴)"
 
 #: src/opengl.c:388
 msgid "Screen size too small, upscaling..."
@@ -93839,15 +93842,15 @@ msgstr[0] "   '%s'이 (가) %d 번 열렸습니다"
 
 #: src/options.c:50
 msgid "Gameplay"
-msgstr ""
+msgstr "게임플레이"
 
 #: src/options.c:51
 msgid "Video"
-msgstr ""
+msgstr "비디오"
 
 #: src/options.c:52
 msgid "Audio"
-msgstr ""
+msgstr "오디오"
 
 #: src/options.c:53
 msgid "Input"
@@ -93871,9 +93874,8 @@ msgid "ndata: %s"
 msgstr "ndata: %s"
 
 #: src/options.c:300
-#, fuzzy
 msgid "Language:"
-msgstr "언어"
+msgstr "언어:"
 
 #: src/options.c:333
 msgid "Difficulty (this save):"
@@ -94127,7 +94129,7 @@ msgstr ""
 
 #: src/options.c:1577
 msgid "Keep Video Settings"
-msgstr ""
+msgstr "비디오 설정 유지"
 
 #: src/options.c:1578
 #, c-format
@@ -94144,7 +94146,7 @@ msgstr ""
 
 #: src/options.c:1583
 msgid "Video Settings Restored"
-msgstr ""
+msgstr "비디오 설정 복원됨"
 
 #: src/options.c:1584
 #, c-format
@@ -94526,12 +94528,12 @@ msgid ""
 msgstr ""
 
 #: src/outfit.c:1678
-#, fuzzy
-#| msgid "Hawking"
 msgid ""
 "\n"
 "No Seeking"
-msgstr "호킹"
+msgstr ""
+"\n"
+"찾기 없음"
 
 #: src/outfit.c:1686
 #, c-format
@@ -94583,11 +94585,13 @@ msgid ""
 msgstr ""
 
 #: src/outfit.c:1706
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "%.0f%% Jam Resistance"
-msgstr "%s (%d 점프, %.0fk 거리)"
+msgstr ""
+"\n"
+"%.0f%% 방해 막기"
 
 #: src/outfit.c:1710
 #, c-format
@@ -94645,11 +94649,13 @@ msgid ""
 msgstr ""
 
 #: src/outfit.c:1857
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "%.0f%% Maximum Speed"
-msgstr "%s (%d 점프, %.0fk 거리)"
+msgstr ""
+"\n"
+"%.0f%% 최대 속도"
 
 #: src/outfit.c:1859
 #, c-format
@@ -94795,11 +94801,11 @@ msgid ""
 msgstr ""
 
 #: src/outfit.c:2579
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Outfit '%s' lua load error -> 'load':\n"
 "%s"
-msgstr "존재하지 않는 행성 '%s'을 (를) 로드하지 못했습니다."
+msgstr ""
 
 #: src/outfit.c:2587
 #, fuzzy, c-format
@@ -94874,12 +94880,11 @@ msgstr ""
 #. f, p, p
 #.
 #: src/pilot.c:1597 src/pilot_outfit.c:1176
-#, fuzzy, c-format
-#| msgid "Mission Lua '%s' syntax error: %s"
+#, c-format
 msgid ""
 "Pilot '%s''s outfit '%s' -> '%s':\n"
 "%s"
-msgstr "Mission Lua '%s'구문 오류: %s"
+msgstr ""
 
 #: src/pilot.c:2614 src/pilot.c:2641
 msgid "Strayed too far from jump point: jump aborted."
@@ -95233,12 +95238,11 @@ msgstr ""
 
 #: src/player.c:1642 src/space.c:1871 src/space.c:1981 src/space.c:2027
 #: src/space.c:3305 src/space.c:3325
-#, fuzzy, c-format
-#| msgid "Failure to copy '%s' to '%s': %s"
+#, c-format
 msgid ""
 "Spob '%s' failed to run '%s':\n"
 "%s"
-msgstr "'%s'을 (를) '%s'에 복사하지 못했습니다. %s"
+msgstr ""
 
 #: src/player.c:1673
 msgid "Player has landing permission, but no valid spob targeted."
@@ -96697,12 +96701,11 @@ msgid "%s: %s (%s) -> return parameter 3 is not a number or string or nil!"
 msgstr ""
 
 #: src/space.c:1959
-#, fuzzy, c-format
-#| msgid "Mission Lua '%s' syntax error: %s"
+#, c-format
 msgid ""
 "Spob '%s' Lua error:\n"
 "%s"
-msgstr "Mission Lua '%s'구문 오류: %s"
+msgstr ""
 
 #: src/space.c:1989
 #, c-format
