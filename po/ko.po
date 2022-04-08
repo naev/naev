@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-03-31 13:59-0400\n"
-"PO-Revision-Date: 2022-04-07 22:11+0000\n"
+"PO-Revision-Date: 2022-04-08 09:11+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
 "Language: ko\n"
@@ -803,6 +803,9 @@ msgid ""
 "shielding material or construction. Depending on the precedence of the clay "
 "it can have many different compositions and material properties."
 msgstr ""
+"소행성에서 채굴된 점토는 행성에서 발견되는 점토와는 다른 성질을 가지고 "
+"있으며 차폐 물질이나 건축과 같은 매우 다양한 용도를 가지고 있습니다. 점토의 "
+"우선순위에 따라 다양한 성분과 재료 특성을 가질 수 있습니다."
 
 #: dat/commodities/diamond.xml:3 dat/scripts/pilotname/generic.lua:29
 msgid "Diamond"
@@ -861,6 +864,8 @@ msgid ""
 "production processes. Despite the wide availability in asteroids, there is "
 "always significant demand for more."
 msgstr ""
+"철은 다양한 화학 및 재료 생산 공정에서 기본적인 역할을 합니다. 소행성의 "
+"광범위한 가용성에도 불구하고 항상 더 많은 것에 대한 상당한 수요가 있습니다."
 
 #: dat/commodities/kermite.xml:3
 msgid "Kermite"
@@ -875,6 +880,10 @@ msgid ""
 "generators, practically ensuring their widespread demand throughout the "
 "universe."
 msgstr ""
+"Kermite는 소행성에서 발견되는 더 희귀한 물질 중 하나이지만 압력과 방사선의 "
+"특정한 조합에 의해 시공간 굴곡 효과로 인해 많은 기술 응용에 대한 근본적인 "
+"핵심을 확보했습니다. 그것은 일반적으로 특정 유형의 쉴드 생성기에 사용되며 "
+"실제로 우주 전체에 걸쳐 광범위한 수요를 보장합니다."
 
 #: dat/commodities/luxury_goods.xml:3
 msgid "Luxury Goods"
@@ -1311,9 +1320,8 @@ msgid "Frontier"
 msgstr ""
 
 #: dat/faction.xml:346
-#, fuzzy
 msgid "Frontier Alliance"
-msgstr "프론티어 얼라이언스의 소식입니다."
+msgstr "프론티어 얼라이언스"
 
 #: dat/faction.xml:351
 msgid ""
@@ -1759,7 +1767,7 @@ msgstr "드바에레드 순찰대"
 
 #: dat/faction.xml:761
 msgid "Strangelove"
-msgstr ""
+msgstr "Strangelove"
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
@@ -3883,9 +3891,8 @@ msgid ""
 msgstr ""
 
 #: dat/outfits/maps/map_the_frontier.xml:2
-#, fuzzy
 msgid "Map: The Frontier"
-msgstr "국경을 위해!"
+msgstr "지도: 개척지 변경"
 
 #: dat/outfits/maps/map_the_frontier.xml:6
 msgid ""
@@ -4524,7 +4531,7 @@ msgstr ""
 
 #: dat/outfits/utility/asteroid_scanner.xml:2
 msgid "Asteroid Scanner"
-msgstr ""
+msgstr "소행성 스캐너"
 
 #: dat/outfits/utility/asteroid_scanner.xml:8
 msgid ""
@@ -9621,9 +9628,8 @@ msgid ""
 msgstr ""
 
 #: dat/spob/burnan.xml:2
-#, fuzzy
 msgid "Burnan"
-msgstr "불타라."
+msgstr "버난"
 
 #: dat/spob/burnan.xml:28
 msgid ""
@@ -14322,9 +14328,8 @@ msgid ""
 msgstr ""
 
 #: dat/spob/mendez.xml:2
-#, fuzzy
 msgid "Mendez"
-msgstr "메렌데즈 회사."
+msgstr "멘데즈"
 
 #: dat/spob/mendez.xml:26
 msgid ""
@@ -17087,9 +17092,8 @@ msgid ""
 msgstr ""
 
 #: dat/spob/seanich.xml:2
-#, fuzzy
 msgid "Seanich"
-msgstr "패닉!"
+msgstr "세이니치"
 
 #: dat/spob/seanich.xml:26
 msgid ""
@@ -18040,7 +18044,7 @@ msgstr ""
 
 #: dat/spob/strangelove_lab.xml:2
 msgid "Strangelove Lab"
-msgstr ""
+msgstr "Strangelove 연구실"
 
 #: dat/spob/strangelove_lab.xml:25
 msgid ""
@@ -20664,9 +20668,8 @@ msgid "Frontier Small"
 msgstr "프론티어 순찰대"
 
 #: dat/spob_virtual/frontier_unpresence.xml:2
-#, fuzzy
 msgid "Frontier Unpresence"
-msgstr "프론티어 얼라이언스의 소식입니다."
+msgstr "프론티어 부재 중"
 
 #: dat/spob_virtual/independent_all_unpresence.xml:2
 #, fuzzy
@@ -21044,9 +21047,8 @@ msgid "Basel"
 msgstr ""
 
 #: dat/ssys/bastion.xml:2
-#, fuzzy
 msgid "Bastion"
-msgstr "팩션:"
+msgstr "요새"
 
 #: dat/ssys/bedimann.xml:2
 msgid "Bedimann"
@@ -21542,9 +21544,8 @@ msgid "Jade"
 msgstr ""
 
 #: dat/ssys/jervis.xml:2
-#, fuzzy
 msgid "Jervis"
-msgstr "제공:"
+msgstr "저비스"
 
 #: dat/ssys/jommel.xml:2
 msgid "Jommel"
@@ -24084,10 +24085,8 @@ msgstr ""
 #. Capital ships
 #. Generic AI
 #: dat/ai/core/control/generic.lua:237
-#, fuzzy
-#| msgid "Formation '%s' not found"
 msgid "Pilot '{plt}': formation '{formation}' not found!"
-msgstr "'%s' 대형은 발견되지 않았다"
+msgstr "파일럿 '{plt}': '{formation}' 대형을 찾을 수 없습니다!"
 
 #. Run instead of "control" when under manual control; use should be limited
 #. This is the case that the message is being sent from the environment, such as asteroids
@@ -24525,10 +24524,8 @@ msgstr "메이데이! {fct} {cls} 가 공격받고 있다!"
 #. future position if they go in the same direction with the same velocity
 #. Send a message if applicable
 #: dat/ai/core/misc/scans.lua:52
-#, fuzzy
-#| msgid "Prepare to be boarded!"
 msgid "Prepare to be scanned."
-msgstr "탑승 준비!"
+msgstr "스캔할 준비를 합니다."
 
 #.
 #. -- Tries to get close to scan the enemy
@@ -24943,9 +24940,8 @@ msgstr "이건 내가 등록한게 아니야!"
 
 #. Set up bribes
 #: dat/ai/mercenary.lua:72
-#, fuzzy
 msgid "\"Your life is worth {credits} to me.\""
-msgstr "\"너의 목숨의 가치가 내게는 %d 크레딧이다."
+msgstr "\"너의 목숨의 가치는 내게 %d 크레딧이다.\""
 
 #: dat/ai/mercenary.lua:73
 msgid "\"Beat it.\""
@@ -26551,9 +26547,8 @@ msgid "We Shall All Become One"
 msgstr ""
 
 #: dat/events/discovery.lua:169
-#, fuzzy
 msgid "The Frontier"
-msgstr "국경을 위해!"
+msgstr "개척지 변경"
 
 #: dat/events/discovery.lua:170
 msgid "Leading to a New Future"
@@ -26700,10 +26695,8 @@ msgid "Dark Hand of the Black Market"
 msgstr ""
 
 #: dat/events/discovery.lua:279
-#, fuzzy
-#| msgid "Piracy has never been better."
 msgid "Piracy has never been Snazzier"
-msgstr "불법 복제는 그 어느 때보다 도왔습니다."
+msgstr "해적질은 절대 세련되지 않았습니다"
 
 #: dat/events/discovery.lua:280
 msgid "Piracy to Rebel against Reality"
@@ -27398,10 +27391,8 @@ msgstr ""
 #. Custom NPCs
 #. Just do random noise
 #: dat/events/dvaered/totoran.lua:130
-#, fuzzy
-#| msgid "You are no match for the Empire!"
 msgid "You approach the Crimson Gauntlet guide."
-msgstr "너는 제국에 걸맞지 않아!"
+msgstr "크림슨 건틀렛 가이드에게 다가갑니다."
 
 #: dat/events/dvaered/totoran.lua:132
 msgid ""
@@ -27566,9 +27557,8 @@ msgstr ""
 #. Not enough money.
 #: dat/events/dvaered/totoran.lua:210 dat/events/dvaered/totoran.lua:265
 #: dat/events/minerva/station.lua:312 dat/events/minerva/station.lua:356
-#, fuzzy
 msgid "unknown tradein type"
-msgstr "알 수없는 Lua 데이터 유형!"
+msgstr "알 수 없는 보상판매 유형"
 
 #: dat/events/dvaered/totoran.lua:229
 #: dat/missions/empire/collective/ec03.lua:56 src/map_find.c:410
@@ -28418,9 +28408,8 @@ msgstr ""
 #. Approaching unhired pilot at the bar
 #. Player rejected offer
 #: dat/events/hired_escorts.lua:426
-#, fuzzy
 msgid "You don't have enough credits to pay for this pilot's deposit."
-msgstr "\"나는 여분의 연료가 없다.\""
+msgstr "이 파일럿의 예금을 지불할 수 있는 크레딧이 없습니다."
 
 #: dat/events/hired_escorts.lua:430
 msgid ""
@@ -28467,10 +28456,8 @@ msgstr ""
 #. We assume dominant faction is the one we want here
 #: dat/events/hypergate_construction.lua:42
 #: dat/events/hypergate_construction.lua:84
-#, fuzzy
-#| msgid "Services:"
 msgid "Supervisor"
-msgstr "제공:"
+msgstr "감독관"
 
 #: dat/events/hypergate_construction.lua:43
 msgid "Boss"
@@ -28541,19 +28528,16 @@ msgid "What do you want to do?"
 msgstr "무엇을 하고 싶습니까?"
 
 #: dat/events/hypergate_construction.lua:174
-#, fuzzy
-#| msgid "\"Just leave me alone!\""
 msgid "Leave."
-msgstr "\"날 내버려둬!\""
+msgstr "떠난다."
 
 #: dat/events/hypergate_construction.lua:180
 msgid "Trade {mineral} for {value} (You have {amount})"
 msgstr ""
 
 #: dat/events/hypergate_construction.lua:184
-#, fuzzy
 msgid "Ask about the construction."
-msgstr "네뷸라에 온것을 환영합니다"
+msgstr "건설에 대해 물어보십시오."
 
 #: dat/events/hypergate_construction.lua:189
 msgid ""
@@ -28608,9 +28592,8 @@ msgid "Your head will make a fine trophy on my ships!"
 msgstr "당신의 머리는 훌륭한 트로피가 될거야!"
 
 #: dat/events/minerva/altercation1.lua:43
-#, fuzzy
 msgid "Za'lek trash!"
-msgstr "잘렉의 제작사"
+msgstr "Za'lek 인간쓰레기!"
 
 #: dat/events/minerva/altercation1.lua:46
 msgid "My defence protocols will make short work of you!"
@@ -28735,9 +28718,8 @@ msgid ""
 msgstr ""
 
 #: dat/events/minerva/altercation1.lua:239
-#, fuzzy
 msgid "Good riddance."
-msgstr "랜슬롯"
+msgstr "좋은 탈출이다."
 
 #: dat/events/minerva/altercation1.lua:252
 msgid ""
@@ -29124,7 +29106,7 @@ msgstr ""
 
 #: dat/events/minerva/chicken_rendezvous.lua:124
 msgid "\"Kex…!\""
-msgstr ""
+msgstr "\"Kex…!\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:125
 msgid "\"Intrepid explorer…?\""
@@ -29134,7 +29116,7 @@ msgstr ""
 #: dat/events/minerva/chicken_rendezvous.lua:131
 #: dat/scripts/common/minerva.lua:17 dat/scripts/common/minerva.lua:100
 msgid "Kex"
-msgstr ""
+msgstr "Kex"
 
 #: dat/events/minerva/chicken_rendezvous.lua:132
 msgid ""
@@ -29213,6 +29195,10 @@ msgid ""
 "monstrosity. I'm a bloody fusion of hell knows what poultry and horrible "
 "Za'lek technology.\""
 msgstr ""
+"\"하지만, 나는 그의 피비린내 나는 이름을 결코 잊지 않을 것이다. 나에게 이런 "
+"짓을 한 놈, Strangelove, 그는 나를 실험하고, 나를 고문했고, 나를 이 괴물로 "
+"만들었다. 나는 핏덩이의 끔찍한 잘렉 기술이 무엇인지 알고있는 지옥의 피비린내 "
+"나는 융합체다.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:145
 msgid ""
@@ -30927,14 +30913,6 @@ msgid ""
 msgstr ""
 
 #: dat/events/neutral/derelict.lua:374
-#, fuzzy
-#| msgid ""
-#| "You affix your boarding clamp and walk aboard the derelict ship. You've "
-#| "only spent a couple of hectoseconds searching the interior when there is "
-#| "a proximity alarm from your ship! Pirates are closing on your position! "
-#| "Clearly this derelict was a trap! You run back onto your ship and prepare "
-#| "to unboard, but you've lost precious time. The pirates are already in "
-#| "firing range..."
 msgid ""
 "You affix your boarding clamp and walk aboard the derelict ship. You've only "
 "spent a little time searching the interior when {shipai}, your ship AI "
@@ -30943,10 +30921,11 @@ msgid ""
 "prepare to undock, but you've lost precious time. The pirates are already in "
 "firing range…"
 msgstr ""
-"당신은 탑승 클램프를 부착하고 버려진 배에 올라간다. 배에서 근접경보기가 울릴 "
-"때 내륙을 수색하는 데 겨우 몇 헥토초밖에 안 걸렸다! 해적들이 당신의 위치를 봉"
-"쇄하고 있다! 분명히 이 버려진 배는 함정이었다! 배에 다시 뛰어올라 탈선을 준비"
-"하지만 귀중한 시간을 허비했다. 해적들은 이미 사거리에 있다..."
+"탑승 클램프를 고정하고 버려진 배에 탑승합니다. {shipai}, 우주선 AI가 "
+"우주선에서 근접 경보를 울릴 때 내부를 검색하는 데 약간의 시간을 "
+"할애했습니다! 해적들이 접근하고 있습니다! 분명히 이 부랑자는 함정이었습니다! "
+"다시 배에 올라 도킹 해제를 준비하지만 귀중한 시간을 잃었습니다. 해적들은 "
+"이미 발포 범위안에 있습니다…"
 
 #: dat/events/neutral/derelict.lua:374
 msgid ""
@@ -31023,10 +31002,8 @@ msgid "Welcome to Goddard News Centre."
 msgstr "엠파이어 뉴스 센터에 오신 것을 환영합니다."
 
 #: dat/events/neutral/news.lua:35
-#, fuzzy
-#| msgid "Pirate Ancestor"
 msgid "Pirate News Network."
-msgstr "해적 조상"
+msgstr "해적 뉴스 네트워크입니다."
 
 #: dat/events/neutral/news.lua:36
 msgid "Sirius News Reel. Words of the Sirichana for all."
@@ -33616,10 +33593,8 @@ msgstr ""
 
 #. Met, didn't play quiz and came back
 #: dat/events/neutral/shiplover.lua:341
-#, fuzzy
-#| msgid "You are no match for the Empire!"
 msgid "You once again approach the ship enthusiast."
-msgstr "너는 제국에 걸맞지 않아!"
+msgstr "당신은 다시 그 우주선 마니아에게 접근합니다."
 
 #: dat/events/neutral/shiplover.lua:342
 msgid ""
@@ -35130,9 +35105,8 @@ msgstr ""
 #. Run enter stuff
 #. Only care about Taiomi
 #: dat/events/taiomi/intro.lua:50
-#, fuzzy
 msgid "You have entered Taiomi for the first time."
-msgstr "너는 제국에 걸맞지 않아!"
+msgstr "당신은 타이오미에 처음 들어왔습니다."
 
 #. Not disable as they move
 #. fewer drones
@@ -36916,9 +36890,8 @@ msgstr ""
 #. gfx.renderRect( 0, 0, screen_w/2, 20, col_white )
 #. Renders the navigation computer
 #: dat/gui/legacy.lua:196
-#, fuzzy
 msgid "Landing"
-msgstr "조판됨:"
+msgstr "착륙 중"
 
 #: dat/gui/legacy.lua:202 dat/gui/legacy.lua:217 dat/gui/legacy.lua:225
 #: src/map.c:868
@@ -36984,9 +36957,8 @@ msgstr ""
 #. Render faction logo.
 #. Renders the miscellaneous stuff
 #: dat/gui/legacy.lua:356
-#, fuzzy
 msgid "Creds:"
-msgstr "크레딧"
+msgstr "평판:"
 
 #: dat/gui/legacy.lua:360
 msgid "Cargo Free:"
@@ -37130,15 +37102,12 @@ msgid "Pilot:"
 msgstr ""
 
 #: dat/gui/slim.lua:1084
-#, fuzzy
-#| msgid "System"
 msgid "System:"
-msgstr "시스템"
+msgstr "시스템:"
 
 #: dat/gui/slim.lua:1084
-#, fuzzy
 msgid "Time:"
-msgstr "%s (%d 점프, %.0fk 거리)"
+msgstr "시간:"
 
 #: dat/gui/slim.lua:1084 src/load.c:664
 msgid "Credits:"
@@ -37360,9 +37329,8 @@ msgid "I'm sorry, we can't trust you to land here just yet."
 msgstr ""
 
 #: dat/landing.lua:169
-#, fuzzy
 msgid "We have no need for your credits."
-msgstr "\"나는 너의 돈을 쓸 필요가 없다.\""
+msgstr "우리는 당신의 크레딧이 필요하지 않습니다."
 
 #. luacheck: globals pir_clanworld (Pirate clanworld.)
 #: dat/landing.lua:180
@@ -38075,10 +38043,8 @@ msgstr ""
 #: dat/missions/baron/baron_prince.lua:158
 #: dat/missions/baron/baron_prince.lua:169
 #: dat/missions/baron/baron_prince.lua:180
-#, fuzzy
-#| msgid "The Proteron are watching you."
 msgid "This is not the artefact you're looking for"
-msgstr "프로테론이 당신을 지켜보고 있다."
+msgstr "이것은 당신이 찾고 있는 유물이 아닙니다"
 
 #: dat/missions/baron/baron_prince.lua:158
 msgid ""
@@ -38162,15 +38128,12 @@ msgid "Ancient Artefact"
 msgstr "네뷸라에 온것을 환영합니다"
 
 #: dat/missions/baron/baron_prince.lua:201
-#, fuzzy
 msgid "A seemingly ancient artefact."
-msgstr "네뷸라에 온것을 환영합니다"
+msgstr "보아하니 고대 유물인 것 같습니다."
 
 #: dat/missions/baron/baron_prince.lua:213
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "Buy the artefact ({credits})"
-msgstr "나한테 20 크레딧 빚졌잖아!"
+msgstr "유물 구매 ({credits})"
 
 #: dat/missions/baron/baron_prince.lua:214
 #, fuzzy
@@ -38714,9 +38677,8 @@ msgid "Thanks for playing"
 msgstr ""
 
 #: dat/missions/dvaered/championship.lua:360
-#, fuzzy
 msgid "The staff pays you {credits}."
-msgstr "\"유료 도로이다. %d 크레딧을 내지않으면 죽는다 \""
+msgstr "직원이 {credits} 크래딧을 지불합니다."
 
 #. Remove some hooks and begin a new battle
 #. The player killed his opponent
@@ -39947,10 +39909,8 @@ msgstr ""
 #. majorTam:outfitAdd("Solar Panel")
 #. Make sure Pirates don't get on the way
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:231
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "Major Tam has jumped for the {sys} system."
-msgstr "프론티어 시스템"
+msgstr "탐 소령은 {sys} 시스템에 뛰어 들었습니다."
 
 #. Because she is immortal and could kill the player
 #. increase faction
@@ -40040,10 +40000,8 @@ msgid "Colonel Hamelsen"
 msgstr "네뷸라에 온것을 환영합니다"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:412
-#, fuzzy
-#| msgid "Say hello to my little friends!"
 msgid "Say hello to my mace rockets"
-msgstr "내 작은 친구들에게 인사하세요!"
+msgstr "내 곤봉모양 로켓에게 인사해"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:412
 msgid ""
@@ -41126,10 +41084,8 @@ msgstr ""
 
 #. Empire solution
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:164
-#, fuzzy
-#| msgid "Die along with the old Empire!"
 msgid "A problem with the Empire"
-msgstr "옛 제국과 함께 죽어라!"
+msgstr "제국과의 문제"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:164
 msgid ""
@@ -41564,10 +41520,8 @@ msgstr ""
 #. Player gathers fuel
 #. Only care about fuel
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:645
-#, fuzzy
-#| msgid "You will pay for your treason!"
 msgid "You filled your fuel tanks."
-msgstr "반역에 대한 대가를 치르게 될 것이다!"
+msgstr "연료 탱크를 채웠습니다."
 
 #. Remove scan hooks
 #. Spawns the odd imperial pilot
@@ -41668,10 +41622,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:710
-#, fuzzy
-#| msgid "Die along with the old Empire!"
 msgid "Deal with the Empire"
-msgstr "옛 제국과 함께 죽어라!"
+msgstr "제국과의 거래"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:710
 msgid ""
@@ -41728,10 +41680,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:727
-#, fuzzy
-#| msgid "On top of the world."
 msgid "Shock of two worlds"
-msgstr "세상 꼭대기에서."
+msgstr "두 세계의 충격"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:727
 msgid ""
@@ -42389,10 +42339,8 @@ msgid "Worship my strength, or burn by my railguns."
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:73
-#, fuzzy
-#| msgid "Here comes your reward"
 msgid "Here comes Daddy!"
-msgstr "보상이 온다"
+msgstr "여기로 아빠가 온다!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:74
 msgid ""
@@ -43382,10 +43330,8 @@ msgstr ""
 
 #. All the cases where the player is not authorized to land nor jump
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:276
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "You left the system."
-msgstr "프론티어 시스템"
+msgstr "시스템을 떠났습니다."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:276
 msgid ""
@@ -43742,9 +43688,8 @@ msgid "Time Over"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:744
-#, fuzzy
 msgid "Land on Dvaer Prime."
-msgstr "드바에레드 순찰대"
+msgstr "드베어 프라임에 착륙합니다."
 
 #. Free the player
 #. One of the competitors (or the player) is hit (Mace Pankration)
@@ -43976,9 +43921,8 @@ msgstr ""
 
 #. Tournament Types
 #: dat/missions/dvaered/gauntlet/gui.lua:193
-#, fuzzy
 msgid "Tournament"
-msgstr "불타라."
+msgstr "토너먼트"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:193
 msgid "Challenge"
@@ -44778,10 +44722,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:248
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "Hopefully much more than {credits}"
-msgstr "나한테 20 크레딧 빚졌잖아!"
+msgstr "{credits} 크레딧보다 훨씬 더 많길 바랍니다"
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:249
 msgid "When will it end?"
@@ -45042,10 +44984,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:396
-#, fuzzy
-#| msgid "You can't bribe me!"
 msgid "I couldn't care less"
-msgstr "넌 나를 매수할 수 없어!"
+msgstr "난 신경쓸 필요도 없다고 봅니다"
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:400
 msgid ""
@@ -45110,16 +45050,12 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:423
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "Go back to {sys} to get your reward."
-msgstr "프론티어 시스템"
+msgstr "보상을 받으려면 {sys}(으)로 돌아가십시오."
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:425
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "Hopefully more than {credits}"
-msgstr "나한테 20 크레딧 빚졌잖아!"
+msgstr "{credits} 크레딧 이상 필요합니다"
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:426
 msgid ""
@@ -46907,10 +46843,8 @@ msgstr ""
 
 #: dat/missions/empire/emp_cargo00.lua:72
 #: dat/missions/empire/emp_cargo00.lua:77
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "Deliver some parcels for the Empire to {pnt} in {sys}."
-msgstr "프론티어 시스템"
+msgstr "제국으로 보낼 일부 소포를 {sys}의 {pnt}에 배달하십시오."
 
 #: dat/missions/empire/emp_cargo00.lua:75
 msgid ""
@@ -47057,10 +46991,8 @@ msgid "Cargo transport to {pnt} in {sys} ({tonnes})"
 msgstr "프론티어 시스템"
 
 #: dat/missions/empire/es_cargo.lua:90
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "Official Empire cargo transport to {pnt} in the {sys} system."
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템에서 {pnt}(으)로 공식 제국 화물 운송입니다."
 
 #. Mission is accepted
 #. Set up passenger details so player cannot keep trying to get a better outcome
@@ -47512,11 +47444,9 @@ msgid "Long distance cargo transport ({tonnes} of {cargo})"
 msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:91
-#, fuzzy
-#| msgid "Frontier systems"
 msgid ""
 "Official Empire long distance cargo transport to {pnt} in the {sys} system."
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템에서 {pnt}(으)로의 공식 제국 장거리 화물 운송입니다."
 
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:151
 msgid "Long Distance Empire Shipping"
@@ -48354,12 +48284,10 @@ msgid "Pirate Alliance"
 msgstr ""
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:72
-#, fuzzy
-#| msgid "Frontier systems"
 msgid ""
 "You are to seek out pirates in the {sys} system and try to convince them to "
 "become trading partners with the FLF."
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템에서 해적을 찾아 FLF와 거래 파트너가 되도록 설득해야 합니다."
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:74
 msgid "Supplies for the FLF"
@@ -51597,12 +51525,11 @@ msgid "What the hell?!"
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:58
-#, fuzzy
-#| msgid "Frontier systems"
 msgid ""
 "You have been tasked with obtaining information from Jie de Luca at {pnt} in "
 "the {sys} system."
-msgstr "프론티어 시스템"
+msgstr "당신은 {sys} 시스템의 {pnt}에 있는 '지 데 루카'로부터 정보를 얻는 임무를 "
+"받았습니다."
 
 #. If not accepted, mem.misn_state will still be nil
 #: dat/missions/minerva/kex4.lua:72
@@ -51939,10 +51866,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:267
-#, fuzzy
-#| msgid "Die along with the old Empire!"
 msgid "Deal with Jie de Luca"
-msgstr "옛 제국과 함께 죽어라!"
+msgstr "지 데 루카와의 거래"
 
 #. Henchmen
 #. Start the attack, should be close enough to aggro naturally
@@ -52021,10 +51946,8 @@ msgid "Might be best to head back to Kex for now and see what can be done."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:63
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "Kex wants you to kill Dr. Strangelove at {pnt} in the {sys} system."
-msgstr "프론티어 시스템"
+msgstr "Kex가 {sys} 시스템의 {pnt}에서 Strangelove 박사를 죽이길 원합니다."
 
 #: dat/missions/minerva/kex5.lua:77
 msgid ""
@@ -52056,7 +51979,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:83
 msgid "Without blinking Kex states \"I need you to kill Strangelove.\""
-msgstr ""
+msgstr "눈을 깜빡이지 않고 Kex는 \"Strangelove를 죽여줘\"라고 말합니다"
 
 #: dat/missions/minerva/kex5.lua:89
 msgid ""
@@ -52071,6 +51994,9 @@ msgid ""
 "name when reviewing some of the documents you gave me, then it was all clear."
 "\""
 msgstr ""
+"\"더 일찍 깨달았어야 했어요. 처음부터 Strangelove가 우주 기지의 이 역설적인 "
+"일에 연루될 것은 처음부터 분명했습니다. 당신이 준 서류들 중 일부를 검토할 때 "
+"그의 이름을 발견했고, 그 때 모든 것이 명확해졌습니다.\""
 
 #: dat/missions/minerva/kex5.lua:95
 msgid ""
@@ -52096,17 +52022,18 @@ msgid ""
 "the station. You feel like it is best to leave him alone right now and "
 "decide to go see Strangelove. He should be in the {sys} system."
 msgstr ""
+"아무 말도 하지 않고, Kex는 역의 어둠 속으로 비틀거리며 걸어갑니다. 당신은 "
+"지금 당장 그를 내버려두고 Strangelove를 보러 가기로 결정하는 것이 최선이라고 "
+"생각합니다. {sys} 시스템에 있어야 합니다."
 
 #. If not accepted, mem.misn_state will still be nil
 #: dat/missions/minerva/kex5.lua:112
 msgid "You have agreed to help Kex deal with Dr. Strangelove."
-msgstr ""
+msgstr "당신은 Kex가 Strangelove 박사를 상대하는 것을 돕기로 동의했습니다."
 
 #: dat/missions/minerva/kex5.lua:115
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "Go find Dr. Strangelove in the {sys} system"
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템에서 Strangelove 박사를 찾습니다"
 
 #. Can't use spob.get() here for when the diff is removed
 #: dat/missions/minerva/kex5.lua:145
@@ -52128,6 +52055,9 @@ msgid ""
 "the laboratory, and explain how you comforted the dying Dr. Strangelove as "
 "he passed away from his mysterious illness in front of your eyes."
 msgstr ""
+"당신은 그에게 연구실에서 발견한 드론을 건네며 임무가 어떻게 되었는지 "
+"설명하고, 눈앞에서 미스터리한 병으로 죽어가는 Strangelove 박사를 어떻게 "
+"위로했는지 설명합니다."
 
 #: dat/missions/minerva/kex5.lua:152
 msgid ""
@@ -52148,6 +52078,8 @@ msgid ""
 "You explain to him how the mission went and go into graphic detail of how "
 "you finished Dr. Strangelove off by shooting at him point-blank as Kex asked."
 msgstr ""
+"당신은 임무가 어떻게 진행되었는지 그에게 설명하고 Kex가 요청한 대로 그에게 "
+"총을 쏘아 Strangelove 박사를 어떻게 끝냈는지 그래픽으로 자세히 설명합니다."
 
 #: dat/missions/minerva/kex5.lua:160 dat/missions/minerva/kex5.lua:163
 msgid ""
@@ -52159,7 +52091,8 @@ msgstr ""
 msgid ""
 "You explain to him how the mission went and go into details of how you "
 "finished Dr. Strangelove off by unplugging him as Kex asked."
-msgstr ""
+msgstr "임무가 어떻게 진행되었는지 그에게 설명하고 Kex가 부탁한대로 Strangelove "
+"박사를 어떻게 끝냈는지 자세히 설명합니다."
 
 #: dat/missions/minerva/kex5.lua:165
 msgid ""
@@ -52167,6 +52100,9 @@ msgid ""
 "the laboratory, and explain how Dr. Strangelove died of his mysterious "
 "illness in front of your eyes."
 msgstr ""
+"당신은 그에게 연구실에서 발견한 드론을 건네면서 임무가 어떻게 진행되었는지 "
+"설명하고 Strangelove 박사가 당신의 눈앞에서 그의 불가사의한 질병으로 어떻게 "
+"사망했는지 설명합니다."
 
 #: dat/missions/minerva/kex5.lua:167
 msgid ""
@@ -52175,6 +52111,10 @@ msgid ""
 "all I ever wanted since I escaped from the laboratory. All I ever dreamed "
 "of, and when I finally get it… nothing?\""
 msgstr ""
+"당신의 설명에 그는 당신을 바라보며 눈썹을 살짝 찌푸립니다.\n"
+"\"저는 일종의 안도감을 기대했습니다. Strangelove가 죽는게 제가 연구실에서 "
+"탈출한 이후로 원했던 전부에요 제가 꿈꿨던 모든 것이, 그리고 마침내 그것을 "
+"얻었을 때, 아무것도 없었나요?\""
 
 #: dat/missions/minerva/kex5.lua:172
 msgid ""
@@ -52228,7 +52168,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:214
 msgid "You never met up with Dr. Strangelove."
-msgstr ""
+msgstr "당신은 Strangelove 박사를 만난 적이 없습니다."
 
 #. Try to make sure they meet up the player
 #. No spawns nor anything in Westhaven
@@ -52252,6 +52192,8 @@ msgid ""
 "should be able to safely land and search for Dr. Strangelove at his "
 "laboratory now."
 msgstr ""
+"현상금 사냥꾼에게 남은 것은 떠다니는 잔해뿐입니다. 이제 무사히 착륙하여 그의 "
+"연구실에서 Strangelove 박사를 찾을 수 있을 것 같습니다."
 
 #: dat/missions/minerva/kex5.lua:402
 msgid ""
@@ -52259,6 +52201,9 @@ msgid ""
 "pressurized and without an atmosphere, so you don your space suit before "
 "entering."
 msgstr ""
+"당신의 우주선 감지기는 Strangelove의 연구실이 더 이상 압력을 받지 않고 "
+"대기권도 없다는 것을 나타냅니다. 그래서 당신은 들어가기 전에 우주복을 "
+"입습니다."
 
 #: dat/missions/minerva/kex5.lua:403
 msgid ""
@@ -52311,6 +52256,9 @@ msgid ""
 "unsurprisingly, completely wrecked. It doesn't seem like you'll be able to "
 "use it to get in touch with Dr. Strangelove anymore."
 msgstr ""
+"주위를 둘러보면 지난번에 사용했던 홀로그램 프로젝터가 당연히 완전히 망가진 "
+"것을 알 수 있습니다. 더 이상 Strangelove 박사와 연락하는 데 사용할 수 없을 "
+"것 같습니다."
 
 #: dat/missions/minerva/kex5.lua:435
 msgid "Try as you might, you are unable to find anything of interest."
@@ -52367,7 +52315,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:449
 msgid "You collected a small robot in Dr. Strangelove's laboratory."
-msgstr ""
+msgstr "Strangelove's 박사의 연구실에서 작은 로봇을 수집했습니다."
 
 #: dat/missions/minerva/kex5.lua:454
 msgid ""
@@ -52375,12 +52323,16 @@ msgid ""
 "up being mostly in vain: Dr. Strangelove is nowhere to be found. At least "
 "you found a droid that might be useful."
 msgstr ""
+"우주 기지 전체를 조심스럽게 돌아다니며 시간을 보내지만 대부분 헛된 것으로 "
+"끝납니다. Strangelove 박사는 어디에도 없습니다. 적어도 쓸만한 드로이드를 "
+"찾았습니다."
 
 #: dat/missions/minerva/kex5.lua:455
 msgid ""
 "You let out a sigh as you head outside. Maybe Dr. Strangelove escaped "
 "somewhere else?"
-msgstr ""
+msgstr "당신은 밖으로 나가면서 한숨을 내쉬었습니다. Strangelove 박사가 다른 곳으로 "
+"탈출한 것은 아닐까요?"
 
 #. Take off
 #. Disable landing, will get disabled on entering new system
@@ -52402,6 +52354,10 @@ msgid ""
 "vaguely look in your direction, although his eyes seem unnaturally clouded.\n"
 "\"Is that you?\""
 msgstr ""
+"당신 앞에 Strangelove 박사의 홀로그램이 나타납니다. 그는 누워 있고 그의 몸은 "
+"모든 에너지가 고갈된 것 같습니다. 그의 눈은 부자연스럽게 흐린 것처럼 "
+"보이지만 그는 당신의 방향을 막연히 보기 위해 에너지를 모으는 것 같습니다.\n"
+"\"그게 너야?\""
 
 #: dat/missions/minerva/kex5.lua:476
 msgid ""
@@ -52447,6 +52403,10 @@ msgid ""
 "that everything is fairly rundown and dirty, you would think you were in a "
 "planetary hospital instead of a space ship at the edge of the universe."
 msgstr ""
+"당신은 방에 들어가 처음으로 Strangelove 박사를 대면하게 됩니다. Strangelove "
+"박사는 의료 드로이드와 함께 여러 기이한 기계와 연결된 의료용 침대에 누워 "
+"있습니다. 모든 것이 상당히 낡고 더러웠다는 사실이 아니라면, 당신은 당신이 "
+"우주 끝에 있는 우주선이 아니라 행성 병원에 있다고 생각할 것입니다."
 
 #: dat/missions/minerva/kex5.lua:502
 msgid ""
@@ -52455,6 +52415,10 @@ msgid ""
 "his laboratory coat seems to be a few sizes too large on his frail body. His "
 "vitals monitor also confirms your suspicion that he is more dead than alive."
 msgstr ""
+"Strangelove 박사를 자세히 보면 그는 한때 남자였을 법한 껍데기처럼 보입니다. "
+"창백한 얼굴에서 광대뼈가 튀어나왔고, 허약한 몸에 비해 연구실 코트는 약간 큰 "
+"것 같습니다. 그의 바이탈 모니터는 또한 그가 살아있는 것이 아니라 죽었다는 "
+"당신의 의심을 확인시켜줍니다."
 
 #: dat/missions/minerva/kex5.lua:503
 msgid ""
@@ -52724,6 +52688,9 @@ msgid ""
 "console and you make a dash for your ship. As the airlock closes behind you "
 "you can hear explosions starting to rip Dr. Strangelove's ship apart."
 msgstr ""
+"스스로를 저주하면서 콘솔을 무시할 시간이 충분하지 않다는 것을 깨닫고 "
+"우주선을 향해 질주합니다. 뒤에서 에어록이 닫히면서 Strangelove's 박사의 "
+"우주선을 갈기갈기 찢는 폭발음이 들립니다."
 
 #. Player insists and goes to kex arc
 #: dat/missions/minerva/kex5.lua:639
@@ -52813,6 +52780,9 @@ msgid ""
 "judge. You get close to him and hold his hand. It feels very cold to the "
 "touch."
 msgstr ""
+"그가 마지막 단계에 있는 것을 보면 동정심이 생깁니다. Strangelove 박사가 "
+"괴물인지 아닌지는 당신이 판단할 일이 아닙니다. 당신은 그에게 가까이 가서 "
+"그의 손을 잡습니다. 그것은 만졌을 때 매우 차갑게 느껴집니다."
 
 #: dat/missions/minerva/kex5.lua:672
 msgid ""
@@ -52840,6 +52810,9 @@ msgid ""
 "doesn't seem to flinch when the cold barrel makes contact with his skin. In "
 "fact, he seems very oblivious to everything around him."
 msgstr ""
+"당신은 무기를 꺼내 Strangelove 박사의 이마에 대고 누릅니다. 그는 차가운 "
+"몸통이 피부에 닿아도 움찔하지 않는 것 같습니다. 사실, 그는 주변의 모든 것을 "
+"망각하고 있는 것처럼 보입니다."
 
 #: dat/missions/minerva/kex5.lua:682
 msgid ""
@@ -52848,6 +52821,10 @@ msgid ""
 "someone who doesn't look like they will survive the next period? Dr. "
 "Strangelove seems unresponsive to your actions."
 msgstr ""
+"당신은 자신을보고 당신이 무엇을하려고하는지 생각합니다. 이것이 Kex가 원하는 "
+"것이라고 생각할지라도, 그들이 다음 시기에 살아남을 것처럼 보이지 않는 "
+"누군가의 삶을 폭력적으로 끝내는 것이 의미가 있을까요? Strangelove 박사는 "
+"당신의 행동에 반응하지 않는 것 같습니다."
 
 #: dat/missions/minerva/kex5.lua:684
 msgid "Pull the trigger."
@@ -52861,26 +52838,31 @@ msgid ""
 "confirming his death. You did the task and you can only hope this will bring "
 "Kex peace of mind, although you somehow doubt it."
 msgstr ""
+"방아쇠를 당기면 Strangelove 박사의 몸이 완전히 축 늘어지고 생기가 "
+"없어집니다. 바이탈 모니터는 경보를 울리며 그의 죽음을 확인합니다. 당신은 그 "
+"일을 해냈고 이것이 Kex에 마음의 평화를 가져다주길 뿐입니다. 비록 당신이 "
+"의심스럽기는 하지만 말입니다."
 
 #. Remove station
 #. Advance mission
 #: dat/missions/minerva/kex5.lua:708
 msgid "You shot a dying Dr. Strangelove in cold blood, fulfilling Kex's wish."
-msgstr ""
+msgstr "당신은 죽어가는 Strangelove 박사를 냉혈하게 쏴서, Kex의 소원을 "
+"들어주었습니다."
 
 #: dat/missions/minerva/kex5.lua:710
 msgid ""
 "You unplugged the life support system of Dr. Strangelove who quickly passed "
 "away."
-msgstr ""
+msgstr "당신은 빨리 세상을 떠난 Strangelove 박사의 생명 유지 시스템을 뽑았습니다."
 
 #: dat/missions/minerva/kex5.lua:712
 msgid "You comforted a dying Dr. Strangelove before he passed away."
-msgstr ""
+msgstr "당신은 죽어가는 Strangelove 박사가 죽기 전에 위로했습니다."
 
 #: dat/missions/minerva/kex5.lua:714
 msgid "You watched Dr. Strangelove die before your eyes."
-msgstr ""
+msgstr "당신은 Strangelove 박사가 당신의 눈앞에서 죽는 것을 보았습니다."
 
 #. And that's all folks
 #: dat/missions/minerva/kex5.lua:726
@@ -52897,6 +52879,10 @@ msgid ""
 "inert asteroids. It is possible that the self-destruct sequence didn't "
 "affect only the ship…"
 msgstr ""
+"시스템을 다시 조사하면 Strangelove 박사의 연구실을 더 이상 찾을 수 없다는 "
+"것을 알 수 있습니다. 센서가 있어야 할 위치를 가리켜도, 여러분은 불활성 "
+"소행성 외에는 다른 어떤 것도 찾을 수 없습니다. 자폭 순서는 우주선에만 영향을 "
+"미치지 않았을 가능성이 있습니다…"
 
 #: dat/missions/minerva/kex5.lua:728
 msgid ""
@@ -53088,9 +53074,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:175
-#, fuzzy
 msgid "You do not have enough Minerva Tokens to buy her a drink."
-msgstr "\"나는 여분의 연료가 없다.\""
+msgstr "미네르바 토큰이 부족하여 그녀에게 음료를 사줄 수 없습니다."
 
 #: dat/missions/minerva/maikki1.lua:182
 msgid ""
@@ -53828,10 +53813,8 @@ msgid "You found a wreck and bribed scavengers so that they left."
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:822
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "You wire them {credits}."
-msgstr "나한테 20 크레딧 빚졌잖아!"
+msgstr "당신은 그들에게 {credits} 크레딧을 송금합니다."
 
 #: dat/missions/minerva/maikki1.lua:823
 msgid ""
@@ -53882,9 +53865,8 @@ msgid "You found a wreck and were attacked by scavengers."
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:860
-#, fuzzy
 msgid "Scavenger attacked."
-msgstr "드 베어드 벤데타"
+msgstr "스캐빈저가 공격했습니다."
 
 #: dat/missions/minerva/maikki1.lua:870
 msgid ""
@@ -54243,6 +54225,9 @@ msgid ""
 "Strangelove, in particular. This includes the good news that Kex should be "
 "at Minerva Station, taken into custody by some thugs."
 msgstr ""
+"당신은 Za'lek 연구원들, 특히 Strangelove 박사와의 곤경에 대해 이야기합니다. "
+"여기에는 Kex가 폭력배들에 의해 감금된, 미네르바 우주 기지에 있어야한다는 "
+"희소식이 포함됩니다."
 
 #: dat/missions/minerva/maikki2.lua:266
 msgid ""
@@ -54258,6 +54243,10 @@ msgid ""
 "nor what they want with my father. Instead of answering questions we keep on "
 "finding new questions. I suppose that this is progress?…\""
 msgstr ""
+"\"저는 Strangelove 박사가 조금 걱정돼요. 정확히 무슨 말을 하는 건가요? 그는 "
+"진짜 의사인가요? 우리는 여전히 성운에서 무슨 일이 일어났는지, 그들이 우리 "
+"아버지에게 무엇을 원하는지조차 몰라요. 질문에 답하는 대신 계속해서 새로운 "
+"질문을 찾고 있어요. 이 정도면 진전이 있는 것 같은데요?…\""
 
 #: dat/missions/minerva/maikki2.lua:268
 msgid ""
@@ -54266,6 +54255,10 @@ msgid ""
 "tend to lie, they only bend the truth. All we have to do is find my father "
 "now and everything should fall in place.\""
 msgstr ""
+"\"어쨌든, 우리가 Strangelove 박사를 믿을 수 있다면, 우리 아버지는 살아계시고 "
+"여기 어딘가에 있어요! 우리가 그를 의심할 이유가 없다고 생각해요. Za'lek들은 "
+"거짓말을 안 해요. 진실을 왜곡할 뿐이죠. 우리가 해야 할 일은 지금 아버지를 "
+"찾는 것이고 모든 것이 제자리에 있어야 해요.\""
 
 #: dat/missions/minerva/maikki2.lua:269
 msgid ""
@@ -54297,6 +54290,9 @@ msgid ""
 "doesn't have any leads at the moment, but it does seem like he is at Minerva "
 "Station."
 msgstr ""
+"당신은 Strangelove 박사가 그녀의 아버지에 대해 말한 것을 Maikki에게 "
+"보고했습니다. 그녀는 현재 어떤 단서도 없지만 그가 미네르바 우주 기지에 있는 "
+"것처럼 보입니다."
 
 #: dat/missions/minerva/maikki2.lua:281
 #, fuzzy
@@ -54350,10 +54346,8 @@ msgstr ""
 #. The mission state will be updated afterwards
 #: dat/missions/minerva/maikki2.lua:369 dat/missions/minerva/maikki2.lua:399
 #: dat/missions/minerva/maikki2.lua:432
-#, fuzzy
-#| msgid "You are no match for the Empire!"
 msgid "You approach the professor."
-msgstr "너는 제국에 걸맞지 않아!"
+msgstr "당신은 교수에게 다가갑니다."
 
 #: dat/missions/minerva/maikki2.lua:370
 msgid "\"Hello, how can I help you?\""
@@ -54669,9 +54663,8 @@ msgid "Ask about nebula artefacts"
 msgstr "네뷸라에 온것을 환영합니다"
 
 #: dat/missions/minerva/maikki2.lua:496
-#, fuzzy
 msgid "Ask about other members."
-msgstr "네뷸라에 온것을 환영합니다"
+msgstr "다른 구성원들에 대해 물어보십시오."
 
 #: dat/missions/minerva/maikki2.lua:500
 msgid "Ask about Calliope"
@@ -54679,7 +54672,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:503
 msgid "Ask about Dr. Strangelove"
-msgstr ""
+msgstr "Strangelove 박사에 대해 묻기"
 
 #: dat/missions/minerva/maikki2.lua:505
 msgid "Anything else?…"
@@ -54946,6 +54939,9 @@ msgid ""
 "this is what Dr. Strangelove was referring to as a nebula artefact. "
 "Strangely, your ship sensors identify it as mainly biological material…"
 msgstr ""
+"우주선의 잔해에서 아주 손상된 것을 찾을 수 있습니다. 이것이 Strangelove "
+"박사가 성운 유물이라고 말한 것이라고 추측할 수 있습니다. 이상하게도, 당신의 "
+"우주선 센서는 그것을 주로 생물학적 물질로 인식합니다…"
 
 #: dat/missions/minerva/maikki2.lua:699
 msgid "Nebula Artefact?"
@@ -54959,13 +54955,13 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:702
 msgid "Go back to Dr. Strangelove"
-msgstr ""
+msgstr "Strangelove 박사에게 돌아가기"
 
 #: dat/missions/minerva/maikki2.lua:703
 msgid ""
 "You recovered a nebula artefact that Dr. Strangelove wanted from feral "
 "drones."
-msgstr ""
+msgstr "당신은 Strangelove 박사가 음산한 드론에서 원했던 성운 유물을 회수했습니다."
 
 #: dat/missions/minerva/maikki2.lua:707
 msgid "Just destroy me and put me out of my misery."
@@ -55039,13 +55035,15 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:755
 msgid "You met an eccentric researcher named Dr. Strangelove in Westhaven."
-msgstr ""
+msgstr "당신은 Westhaven에서 Strangelove 박사라는 괴짜 연구원을 만났습니다."
 
 #: dat/missions/minerva/maikki2.lua:757
 msgid ""
 "The hologram projector flickers and Dr. Strangelove comes into view. He "
 "doesn't look very happy to see you again."
 msgstr ""
+"홀로그램 프로젝터가 깜박이고 Strangelove 박사가 보입니다. 그는 당신을 다시 "
+"보는 것을 별로 좋아하지 않는 것 같습니다."
 
 #: dat/missions/minerva/maikki2.lua:764
 #, fuzzy
@@ -55158,7 +55156,8 @@ msgstr ""
 msgid ""
 "You accepted Dr. Strangelove's request to recover nebula artefacts from "
 "feral drones in Westhaven."
-msgstr ""
+msgstr "당신은 Westhaven의 음산한 드론에서 성운 유물을 회수해 달라는 Strangelove "
+"박사의 요청을 수락했습니다."
 
 #: dat/missions/minerva/maikki2.lua:815
 msgid ""
@@ -55361,18 +55360,22 @@ msgid ""
 "individual from a wreck in the nebula. Kex appears to have run away and is "
 "likely held by thugs at Minerva station."
 msgstr ""
+"당신은 Strangelove 박사가 Kex와 성운의 난파선에서 다른 사람을 구했다는 "
+"사실을 알게 되었습니다. Kex는 도망친 것으로 보이며 미네르바 우주 기지에서 "
+"깡패들에 의해 붙잡혀있을 가능성이 큽니다."
 
 #: dat/missions/minerva/maikki2.lua:875
 msgid ""
 "You leave behind the hologram projection and hope you won't have to deal "
 "with Dr. Strangelove in the future."
-msgstr ""
+msgstr "홀로그램 투영을 남겨두고 앞으로 Strangelove 박사를 상대할 필요가 없기를 "
+"바라시는군요."
 
 #: dat/missions/minerva/maikki2.lua:879
 msgid ""
 "You turn off the hologram projector and Dr. Strangelove's image flickers and "
 "disappears."
-msgstr ""
+msgstr "홀로그램 프로젝터를 끄면 Strangelove 박사의 이미지가 깜박거리고 사라집니다."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -55560,10 +55563,8 @@ msgid "You were supposed to harass the thugs with the drone."
 msgstr ""
 
 #: dat/missions/minerva/pirate1.lua:149
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "You were supposed to jump to the {sys} system!"
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템으로 건너뛰어야 했습니다!"
 
 #: dat/missions/minerva/pirate1.lua:180 dat/missions/minerva/pirate2.lua:188
 #: dat/missions/minerva/pirate2.lua:203
@@ -55586,14 +55587,12 @@ msgid "You were supposed to harass the thugs, not kill them!"
 msgstr ""
 
 #: dat/missions/minerva/pirate1.lua:233
-#, fuzzy
 msgid "#rYou are moving too far away from the harassment point!"
-msgstr "너는 FLF와 어울리지 않아."
+msgstr "#r당신은 애먹는 지점에서 너무 멀리 움직이고 있습니다!"
 
 #: dat/missions/minerva/pirate1.lua:239
-#, fuzzy
 msgid "You moved too far away from the harassment location!"
-msgstr "너는 FLF와 어울리지 않아."
+msgstr "당신은 애먹는 장소에서 너무 멀리 이동했습니다!"
 
 #: dat/missions/minerva/pirate1.lua:246
 msgid "#gThe thugs seem to be sufficiently riled up."
@@ -56197,10 +56196,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:468
-#, fuzzy
-#| msgid "\"Get away from me!\""
 msgid "Get away from me!"
-msgstr "\"내게서 도망쳐!\""
+msgstr "내게서 도망쳐!"
 
 #: dat/missions/minerva/pirate3.lua:478
 msgid "An impatient man appears into view."
@@ -56730,10 +56727,8 @@ msgid "Go to the {sys} system"
 msgstr "프론티어 시스템"
 
 #: dat/missions/minerva/pirate5.lua:71
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "Destroy the hacking centre"
-msgstr "나한테 20 크레딧 빚졌잖아!"
+msgstr "해킹 센터 파괴하기"
 
 #: dat/missions/minerva/pirate5.lua:72
 #, fuzzy
@@ -56865,10 +56860,8 @@ msgstr ""
 
 #. Accepted.
 #: dat/missions/minerva/pirate5.lua:141
-#, fuzzy
-#| msgid "You are no match for the Empire!"
 msgid "You approach Zuri."
-msgstr "너는 제국에 걸맞지 않아!"
+msgstr "당신은 Zuri에게 접근합니다."
 
 #: dat/missions/minerva/pirate5.lua:149
 msgid "Are you pirates?"
@@ -57309,10 +57302,8 @@ msgid "Verner's Request"
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant01.lua:85
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "Verner asked you to take him to {pnt} in the {sys} system."
-msgstr "프론티어 시스템"
+msgstr "Verner는 그를 {sys} 시스템의 {pnt}로 데려가달라고 요청했습니다."
 
 #: dat/missions/neutral/antlejos/ant01.lua:88
 #, fuzzy
@@ -57433,11 +57424,9 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant02.lua:82
 #: dat/missions/neutral/antlejos/ant03.lua:80
 #: dat/missions/neutral/antlejos/ant04.lua:86
-#, fuzzy
-#| msgid "Frontier systems"
 msgid ""
 "Pick up the {cargo} at {pnt} in the {sys} system and deliver it to {retpnt}."
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템의 {pnt}에서 {cargo}를 픽업하여 {retpnt}에 전달합니다."
 
 #: dat/missions/neutral/antlejos/ant02.lua:85
 #: dat/missions/neutral/antlejos/ant03.lua:83
@@ -58056,12 +58045,11 @@ msgid "Antlejos V Trade Deal"
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant07.lua:74
-#, fuzzy
-#| msgid "Frontier systems"
 msgid ""
 "Go to {pnt} in the {sys} system to try to forge an alliance with the "
 "government at {pnt} to support {retpnt}."
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템의 {pnt}로 이동하여 {retpnt}를 지원하기 위해 {pnt}에서 정부와 "
+"동맹을 맺으십시오."
 
 #: dat/missions/neutral/antlejos/ant07.lua:77
 #: dat/missions/neutral/antlejos/ant08.lua:84
@@ -58502,10 +58490,8 @@ msgstr "랜슬롯"
 #. route0 and route1 can't be random or it might spawn directly on the player
 #. route0 in reverse
 #: dat/missions/neutral/antlejos/ant09.lua:322
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "You eliminated the mothership!"
-msgstr "프론티어 시스템"
+msgstr "당신은 모선을 제거했습니다!"
 
 #: dat/missions/neutral/antlejos/ant09.lua:329
 #, fuzzy
@@ -59035,18 +59021,14 @@ msgid "Find the Drink"
 msgstr ""
 
 #: dat/missions/neutral/aristodrink.lua:192
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "Return the drink to the Aristocrat at {pnt} in the {sys} system."
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템의 {pnt}에 있는 귀족에게 술을 반환합니다."
 
 #: dat/missions/neutral/aristodrink.lua:196
-#, fuzzy
-#| msgid "Frontier systems"
 msgid ""
 "Go to {pnt} in the {sys} system and look for the special drink that the "
 "Aristocrat wants"
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템의 {pnt}(으)로 이동하여 귀족이 원하는 특별한 술을 찾습니다"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -59079,34 +59061,24 @@ msgstr "프론티어 시스템"
 #. luacheck: globals land (Hook functions passed by name)
 #. Note: indexed from 0 to match mission tiers.
 #: dat/missions/neutral/cargo.lua:39
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "Small shipment to {pnt} in the {sys} system."
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템에서 {pnt}(으)로 소량 발송되었습니다."
 
 #: dat/missions/neutral/cargo.lua:40
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "Medium shipment to {pnt} in the {sys} system."
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템에서 {pnt}(으)로 중간 발송됩니다."
 
 #: dat/missions/neutral/cargo.lua:41
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "Sizable cargo delivery to {pnt} in the {sys} system."
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템에서 {pnt}(으)로 상당한 크기의 화물이 배달되었습니다."
 
 #: dat/missions/neutral/cargo.lua:42
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "Large cargo delivery to {pnt} in the {sys} system."
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템에서 {pnt}(으)로 대규모 화물이 배달되었습니다."
 
 #: dat/missions/neutral/cargo.lua:43
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "Bulk freight delivery to {pnt} in the {sys} system."
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템에서 {pnt}(으)로 대량 화물이 배달되었습니다."
 
 #. =Landing=--
 #: dat/missions/neutral/cargo.lua:53 dat/missions/neutral/cargo_rush.lua:62
@@ -59228,16 +59200,12 @@ msgstr "프론티어 시스템"
 
 #. Note: indexed from 0, to match mission tiers.
 #: dat/missions/neutral/cargo_rush.lua:47
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "Courier transport to {pnt} in the {sys} system."
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템에서 {pnt}(으)로의 특사 수송입니다."
 
 #: dat/missions/neutral/cargo_rush.lua:48
-#, fuzzy
-#| msgid "Frontier systems"
 msgid "Priority shipment to {pnt} in the {sys} system."
-msgstr "프론티어 시스템"
+msgstr "{sys} 시스템의 {pnt}(으)로 우선 발송됩니다."
 
 #: dat/missions/neutral/cargo_rush.lua:49
 #, fuzzy
@@ -82159,7 +82127,7 @@ msgstr "프로테론이 당신을 지켜보고 있다."
 #. Secondary characters
 #: dat/scripts/common/minerva.lua:60
 msgid "Dr. Strangelove"
-msgstr ""
+msgstr "Strangelove 박사"
 
 #. Purplish (close to nebula?)
 #: dat/scripts/common/minerva.lua:66
@@ -87130,10 +87098,9 @@ msgstr ""
 
 #. error has occurred
 #: src/ai.c:427
-#, fuzzy, c-format
-#| msgid "Mission Lua '%s' syntax error: %s"
+#, c-format
 msgid "Pilot '%s' ai '%s' error: %s"
-msgstr "Mission Lua '%s'구문 오류: %s"
+msgstr "파일럿 '%s' ai '%s' 오류: %s"
 
 #: src/ai.c:452
 #, c-format
@@ -87197,22 +87164,19 @@ msgid "AI Profile '%s' not found in AI stack"
 msgstr ""
 
 #: src/ai.c:859
-#, fuzzy, c-format
-#| msgid "Mission Lua '%s' syntax error: %s"
+#, c-format
 msgid "Pilot '%s' ai '%s' -> 'attacked': %s"
-msgstr "Mission Lua '%s'구문 오류: %s"
+msgstr "파일럿 '%s' ai '%s' -> '공격당함': %s"
 
 #: src/ai.c:890
-#, fuzzy, c-format
-#| msgid "Mission Lua '%s' syntax error: %s"
+#, c-format
 msgid "Pilot '%s' ai '%s' -> 'discovered': %s"
-msgstr "Mission Lua '%s'구문 오류: %s"
+msgstr "파일럿 '%s' ai '%s' -> '발견됨': %s"
 
 #: src/ai.c:920
-#, fuzzy, c-format
-#| msgid "Mission Lua '%s' syntax error: %s"
+#, c-format
 msgid "Pilot '%s' ai '%s' -> 'hail': %s"
-msgstr "Mission Lua '%s'구문 오류: %s"
+msgstr "파일럿 '%s' ai '%s' -> '우박': %s"
 
 #: src/ai.c:936
 #, c-format
@@ -87222,25 +87186,22 @@ msgid ""
 msgstr ""
 
 #: src/ai.c:990
-#, fuzzy, c-format
-#| msgid "Mission Lua '%s' syntax error: %s"
+#, c-format
 msgid "Pilot '%s' ai '%s' -> 'distress': %s"
-msgstr "Mission Lua '%s'구문 오류: %s"
+msgstr "파일럿 '%s' ai '%s' -> '조난': %s"
 
 #. Error has occurred.
 #: src/ai.c:1023
-#, fuzzy, c-format
-#| msgid "Mission Lua '%s' syntax error: %s"
+#, c-format
 msgid "Pilot '%s' equip '%s' -> '%s': %s"
-msgstr "Mission Lua '%s'구문 오류: %s"
+msgstr "파일럿 '%s' 장비 '%s' -> '%s': %s"
 
 #. Run function.
 #. error has occurred
 #: src/ai.c:1043
-#, fuzzy, c-format
-#| msgid "Mission Lua '%s' syntax error: %s"
+#, c-format
 msgid "Pilot '%s' ai '%s' -> '%s': %s"
-msgstr "Mission Lua '%s'구문 오류: %s"
+msgstr "파일럿 '%s' ai '%s' -> '%s': %s"
 
 #: src/ai.c:1060
 #, c-format
@@ -87262,9 +87223,9 @@ msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
 #: src/ai.c:2310 src/nlua_pilot.c:4821
-#, fuzzy, c-format
+#, c-format
 msgid "Spob '%s' not found in system '%s'"
-msgstr "스택에서 '%s' 미션을 찾지 못했습니다"
+msgstr "시스템 '%s'에서 Spob '%s'을(를) 찾을 수 없습니다"
 
 #: src/ai.c:2318
 #, c-format
@@ -87319,9 +87280,9 @@ msgid "Asteroid Type Groups with same name '%s'"
 msgstr ""
 
 #: src/asteroid.c:685
-#, fuzzy, c-format
+#, c-format
 msgid "Malformed '%s' file: missing root element 'asteroid'"
-msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
+msgstr "잘못된 형식의 '%s' 파일: 루트 요소 'asteroid' 누락"
 
 #: src/asteroid.c:700 src/asteroid.c:808
 #, fuzzy, c-format
@@ -87356,9 +87317,9 @@ msgid "Asteroid Type '%s' missing/invalid '%s' element"
 msgstr "임무 '%s'누락 / 잘못된 '%s'요소"
 
 #: src/asteroid.c:797
-#, fuzzy, c-format
+#, c-format
 msgid "Malformed '%s' file: missing root element 'asteroid_group'"
-msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
+msgstr "잘못된 형식의 '%s' 파일: 루트 요소 'asteroid_group' 누락"
 
 #: src/asteroid.c:824
 #, fuzzy, c-format
@@ -87366,9 +87327,9 @@ msgid "Asteroid Type Group '%s' has unknown node '%s'"
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
 #: src/asteroid.c:1055
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown Asteroid Type '%s'"
-msgstr "알 수없는 Lua 데이터 유형!"
+msgstr "알 수 없는 소행성 유형 '%s'"
 
 #: src/asteroid.c:1080
 #, fuzzy, c-format
@@ -92543,15 +92504,13 @@ msgstr ""
 
 #. dep for space
 #: src/naev.c:585
-#, fuzzy
 msgid "Loading Special Effects…"
-msgstr "%d개의 성운 레이어로드"
+msgstr "특수 효과 불러오는 중…"
 
 #. no dep
 #: src/naev.c:588
-#, fuzzy
 msgid "Loading Effects…"
-msgstr "%d개의 성운 레이어로드"
+msgstr "효과 불러오는 중…"
 
 #. no dep
 #: src/naev.c:591
@@ -92560,10 +92519,8 @@ msgstr ""
 
 #. dep for outfits
 #: src/naev.c:594
-#, fuzzy
-#| msgid "Map Outfits"
 msgid "Loading Outfits…"
-msgstr "맵 의상"
+msgstr "장비 불러오는 중…"
 
 #. dep for ships, factions
 #: src/naev.c:597
@@ -92576,15 +92533,13 @@ msgid "Loading Factions…"
 msgstr ""
 
 #: src/naev.c:606
-#, fuzzy
 msgid "Loading AI…"
-msgstr "조판됨:"
+msgstr "인공지능 불러오는 중…"
 
 #. dep for fleets
 #: src/naev.c:609
-#, fuzzy
 msgid "Loading Techs…"
-msgstr "조판됨:"
+msgstr "기술 불러오는 중…"
 
 #. dep for space
 #: src/naev.c:612
@@ -92597,20 +92552,16 @@ msgid "Loading Events…"
 msgstr ""
 
 #: src/naev.c:618
-#, fuzzy
-#| msgid "Loaded %d Mission"
-#| msgid_plural "Loaded %d Missions"
 msgid "Loading Missions…"
-msgstr "%d개의 임무를 불러왔습니다"
+msgstr "임무 불러오는 중…"
 
 #: src/naev.c:621
 msgid "Loading the UniDiffs…"
 msgstr ""
 
 #: src/naev.c:624
-#, fuzzy
 msgid "Populating Maps…"
-msgstr "옵션"
+msgstr "지도 채우는 중…"
 
 #: src/naev.c:627
 msgid "Calculating Patrols…"
@@ -96540,10 +96491,8 @@ msgid "Spob '%s' is not placed in a system"
 msgstr "행성 '%s'은 (는) 시스템에 속하지 않습니다."
 
 #: src/space.c:968
-#, fuzzy
-#| msgid "Trying to load image from NULL path."
 msgid "Trying to find NULL spob…"
-msgstr "NULL 경로에서 이미지를 로드하려고합니다."
+msgstr "NULL spob을 찾는 중…"
 
 #: src/space.c:977 src/space.c:987
 #, fuzzy, c-format
