@@ -1244,14 +1244,14 @@ static int diff_patchHunk( UniHunk_t *hunk )
             return -1;
          hunk->o.name = p->lua_file;
          p->lua_file = hunk->u.name;
-         spob_updateLand( p );
+         spob_updateLua( p );
          return 0;
       case HUNK_TYPE_SPOB_LUA_REVERT:
          p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          p->lua_file = (char*)hunk->o.name;
-         spob_updateLand( p );
+         spob_updateLua( p );
          return 0;
 
       /* Making a faction visible. */

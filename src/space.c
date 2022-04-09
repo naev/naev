@@ -1963,11 +1963,9 @@ void spob_updateLand( Spob *p )
  */
 void spob_updateLua( Spob *spob )
 {
-   if (spob->lua_file) {
-      free(spob->lua_file);
-      spob->lua_file = NULL;
+   /* Should get lazy loaded later, so jsut clear everything. */
+   if (spob->lua_env != LUA_NOREF)
       nlua_freeEnv( spob->lua_env );
-   }
 
    spob->lua_env     = LUA_NOREF;
    spob->lua_load    = LUA_NOREF;
@@ -1976,6 +1974,8 @@ void spob_updateLua( Spob *spob )
    spob->lua_can_land= LUA_NOREF;
    spob->lua_render  = LUA_NOREF;
    spob->lua_update  = LUA_NOREF;
+
+
 }
 
 /**
