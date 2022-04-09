@@ -17,11 +17,12 @@ local vn  = require 'vn'
 local fmt = require 'format'
 local lg = require 'love.graphics'
 local textoverlay = require "textoverlay"
+local pp_shaders = require "pp_shaders"
 
 local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
 
--- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp3 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_fade cutscene_cleanup cutscene_shipai (Hook functions passed by name)
+-- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp7 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_fade cutscene_cleanup cutscene_shipai (Hook functions passed by name)
 
 function create ()
    evt.finish(false) -- disabled for now
@@ -119,8 +120,15 @@ function foreground ()
    end
 end
 
-function update( _dt, real_dt )
+local shader_fadein, shader_fadeout
+function update( dt, real_dt )
    fg.alpha = fg.alpha + fg.alpha_dir * 2 * real_dt
+   if shader_fadein and shader_fadein._update then
+      shader_fadein:_update( dt )
+   end
+   if shader_fadeout and shader_fadeout._update then
+      shader_fadeout:_update( dt )
+   end
 end
 
 -- Set up the cutscene stuff
@@ -132,6 +140,13 @@ function cutscene_start ()
    local pp = player.pilot()
    pp:setNoJump(true)
    pp:setNoLand(true)
+
+   if diff.isApplied( diff_progress2 ) then
+      diff.remove( diff_progress2 )
+   end
+   if not diff.isApplied( diff_progress1 ) then
+      diff.apply( diff_progress1 )
+   end
 
    pilot.clear()
    pilot.toggleSpawn(false)
@@ -188,22 +203,83 @@ function cutscene_emp3 ()
    end
 end
 
+local function shader_init( shd, speed )
+   shd._dt = 0
+   shd._update = function( self, dt )
+      self._dt = self._dt + dt * speed
+      self.shader:send( "u_progress", math.min( 1, self._dt ) )
+   end
+   shd.shader:addPPShader("game", 99)
+end
+
 function cutscene_emp4 ()
    -- Activate hypergate with big flash
+   local pixelcode_fadein = [[
+#include "lib/sdf.glsl"
+
+uniform float u_progress = 0.0;
+
+vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
+{
+   vec2 p = texture_coords*2.0-1.0;
+
+   float d = sdSmoothUnion(
+      sdCircle( p, u_progress * 2.0 ),
+      sdBox( p, vec2(2.0, u_progress) ),
+      0.5 ) + 0.2;
+
+   float alpha = smoothstep( -0.1,  0.0, -d);
+   float beta  = smoothstep( -0.2, -0.1, -d);
+   return mix( texture( tex, texture_coords ), vec4(vec3(alpha),1.0), beta );
+}
+]]
+   local pixelcode_fadeout = [[
+#include "lib/blur.glsl"
+
+const float INTENSITY = 10.0;
+
+uniform float u_progress = 0.0;
+
+vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
+{
+   float disp = INTENSITY*(0.5-distance(0.5, u_progress));
+   vec4 c1 = vec4(1.0);
+   vec4 c2 = blur9( tex, texture_coords, love_ScreenSize.xy, disp );
+   return mix( c1, c2, u_progress );
+}
+]]
+   shader_fadein = { shader=pp_shaders.newShader( pixelcode_fadein ) }
+   shader_fadeout = { shader=pp_shaders.newShader( pixelcode_fadeout ) }
+
+   shader_init( shader_fadein, 2 )
 
    -- TODO post-process flash shader
-   hook.timer( 5, "cutscene_emp5" )
+   hook.timer( 1/2, "cutscene_emp5" )
 end
 
 function cutscene_emp5 ()
+   shader_fadein.shader:rmPPShader()
+   shader_fadein = nil
+   shader_init( shader_fadeout, 1/3 )
+
+   diff.remove( diff_progress1 )
+   diff.apply( diff_progress2 )
+
    hook.timer( 5, "cutscene_emp6" )
+end
+
+function cutscene_emp6 ()
+   shader_fadeout.shader:rmPPShader()
+   shader_fadeout = nil
+
+   hook.timer( 5, "cutscene_emp7" )
    -- TODO ship goes through jump
    emptester:taskClear()
    local hyp = spob.get( "Hypergate Gamma Polaris" )
    emptester:land( hyp )
 end
 
-function cutscene_emp6 ()
+function cutscene_emp7 ()
    -- Ship jumps
    hook.timer( 9.3, "fadeout" )
    hook.timer( 10, "cutscene_zlk" )
@@ -220,11 +296,6 @@ local function pangate( gatename )
 end
 
 function cutscene_zlk () -- Za'lek
-   if diff.isApplied( diff_progress1 ) then
-      diff.remove( diff_progress1 )
-   end
-   diff.apply( diff_progress2 )
-
    pangate( "Hypergate Ruadan" )
    fg_setup()
    fadein()
@@ -319,7 +390,7 @@ function cutscene_shipai ()
    local sai = vn.newCharacter( tut.vn_shipai() )
    vn.transition( tut.shipai.transition )
    vn.na(_([[Your ship AI suddenly materializes infront of you.]]))
-   sai(_([[""]]))
+   sai(_([["Did you hear the news, {playername}?"]]),{playername=player.name()})
    vn.done( tut.shipai.transition )
    vn.run()
 
