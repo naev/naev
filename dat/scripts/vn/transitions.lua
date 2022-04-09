@@ -35,7 +35,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    float disp = INTENSITY*(0.5-distance(0.5, progress));
    vec4 c1 = blur9( texprev, uv, love_ScreenSize.xy, disp );
-   vec4 c2 = blur9( MainTex, uv, love_ScreenSize.xy, disp );
+   vec4 c2 = blur9( tex, uv, love_ScreenSize.xy, disp );
    return mix(c1, c2, progress);
 }
 ]]
@@ -54,7 +54,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
    float x = progress;
    float m = smoothstep(-SMOOTHNESS, 0.0, M_SQRT2*distance(CENTER, uv) - x*(1.+SMOOTHNESS));
    vec4 c1 = Texel( texprev, uv );
-   vec4 c2 = Texel( MainTex, uv );
+   vec4 c2 = Texel( tex, uv );
    return mix( c1, c2, 1.0-m );
 }
 ]]
@@ -73,7 +73,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
    float x = 1.0-progress;
    float m = smoothstep(-SMOOTHNESS, 0.0, M_SQRT2*distance(CENTER, uv) - x*(1.+SMOOTHNESS));
    vec4 c1 = Texel( texprev, uv );
-   vec4 c2 = Texel( MainTex, uv );
+   vec4 c2 = Texel( tex, uv );
    return mix( c1, c2, m );
 }
 ]]
@@ -95,7 +95,7 @@ vec2 offset( float progress, float x, float theta )
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    vec4 c1 = Texel( texprev, uv + offset( progress, uv.x, 0.0 ) );
-   vec4 c2 = Texel( MainTex, uv + offset( 1.0-progress, uv.x, M_PI ) );
+   vec4 c2 = Texel( tex, uv + offset( 1.0-progress, uv.x, M_PI ) );
    return mix( c1, c2, progress);
 }
 ]]
@@ -114,7 +114,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
    float dist = length(dir);
    vec2 offset = dir * (sin(progress * dist * amplitude - progress * speed) + 0.5) / 30.0;
    vec4 c1 = Texel( texprev, uv + offset );
-   vec4 c2 = Texel( MainTex, uv );
+   vec4 c2 = Texel( tex, uv );
    return mix( c1, c2, smoothstep(0.2, 1.0, progress) );
 }
 ]]
@@ -134,7 +134,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
    float q = smoothstep(lower, higher, n);
 
    vec4 c1 = Texel( texprev, uv );
-   vec4 c2 = Texel( MainTex, uv );
+   vec4 c2 = Texel( tex, uv );
    return mix(c2, c1, q);
 }
 ]]
@@ -166,7 +166,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
    vec2 dir = p - vec2(0.5);
    float dist = length(dir);
    float disp = compute(p, progress, vec2(0.5)) ;
-   vec4 texTo = Texel( MainTex, p + inv*disp );
+   vec4 texTo = Texel( tex, p + inv*disp );
 
    float pdisp = progress*disp;
    vec4 texFromCenter = Texel( texprev, p + pdisp );
@@ -187,7 +187,7 @@ const float smoothness = 1.0;
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    vec2 rp = uv*2.0-1.0;
-   vec4 c1 = Texel( MainTex, uv );
+   vec4 c1 = Texel( tex, uv );
    vec4 c2 = Texel( texprev, uv );
    return mix( c1, c2,
          smoothstep(0.0, smoothness, atan(rp.y,rp.x) - (progress-0.5) * M_PI * 2.5)
@@ -213,7 +213,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
    vec2 p = (dist>0.0) ? (floor(uv / squareSize) + 0.5) * squareSize : uv;
 
    vec4 c1 = Texel( texprev, p );
-   vec4 c2 = Texel( MainTex, p )
+   vec4 c2 = Texel( tex, p )
    return mix( c1, c2, progress);
 }
 ]]
@@ -288,7 +288,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
    vec2 point = (dist > 0.0) ? pointFromHexagon(hexagonFromPoint(uv, size), size) : uv;
 
    vec4 c1 = Texel( texprev, point );
-   vec4 c2 = Texel( MainTex, point );
+   vec4 c2 = Texel( tex, point );
    return mix( c1, c2, progress );
 }
 ]]
@@ -305,7 +305,7 @@ const float FADE_EDGE   = 0.1;
 
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
    vec4 c1 = Texel( texprev, uv );
-   vec4 c2 = Texel( MainTex, uv );
+   vec4 c2 = Texel( tex, uv );
 
    float dist = distance(vec2(0.5), uv) / THRESHOLD;
    float r = progress - min(random(vec2(uv.y, 0.0)), random(vec2(0.0, uv.x)));
@@ -343,7 +343,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
    float higher = p + smoothness;
    float q = smoothstep(lower, higher, n);
 
-   vec4 color = (q <= 0.0) ? Texel( MainTex, uv ) : burncolor( Texel( texprev, uv ), q );
+   vec4 color = (q <= 0.0) ? Texel( tex, uv ) : burncolor( Texel( texprev, uv ), q );
 
    return color;
 }
@@ -406,13 +406,13 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 
    // Reference alpha value
    vec2 uvr = vec2( uv.x, p );
-   vec4 c1 = Texel( MainTex, uvr );
+   vec4 c1 = Texel( tex, uvr );
    vec4 c2 = Texel( texprev, uvr );
 
    // Sample texture
    vec4 colour;
    if (ybase < px.y)
-      colour = Texel( MainTex, uv );
+      colour = Texel( tex, uv );
    else
       colour = Texel( texprev, uv );
    colour = mix( colour, arcs, v * max( c1.a, c2.a ));
@@ -427,7 +427,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
    uv -= vec2( 1.0-progress, 0.0 );
    return (uv.x < 0.0) ?
          Texel( texprev, uv + vec2(1.0, 0.0) ) :
-         Texel( MainTex, uv );
+         Texel( tex, uv );
 }
 ]]
 
@@ -437,7 +437,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
    uv += vec2( 1.0-progress, 0.0 );
    return (uv.x > 1.0) ?
          Texel( texprev, uv - vec2(1.0, 0.0) ) :
-         Texel( MainTex, uv );
+         Texel( tex, uv );
 }
 ]]
 
@@ -447,7 +447,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
    uv += vec2( 0.0, 1.0-progress );
    return (uv.y > 1.0) ?
          Texel( texprev, uv - vec2(0.0, 1.0) ) :
-         Texel( MainTex, uv );
+         Texel( tex, uv );
 }
 ]]
 
@@ -457,7 +457,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
    uv -= vec2( 0.0, 1.0-progress );
    return (uv.y < 0.0) ?
          Texel( texprev, uv - vec2(0.0, 1.0) ) :
-         Texel( MainTex, uv );
+         Texel( tex, uv );
 }
 ]]
 
