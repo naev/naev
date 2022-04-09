@@ -189,7 +189,7 @@ local countdown
 function cutscene_emp2 ()
    empboss:broadcast( _("Beginning activation countdown!") )
    countdown = 5
-   hook.timer( 7, "cutscene_emp3" )
+   hook.timer( 4, "cutscene_emp3" )
 end
 
 -- Countdown
@@ -265,14 +265,14 @@ function cutscene_emp5 ()
    diff.remove( diff_progress1 )
    diff.apply( diff_progress2 )
 
-   hook.timer( 5, "cutscene_emp6" )
+   hook.timer( 3, "cutscene_emp6" )
 end
 
 function cutscene_emp6 ()
    shader_fadeout.shader:rmPPShader()
    shader_fadeout = nil
 
-   hook.timer( 5, "cutscene_emp7" )
+   hook.timer( 2, "cutscene_emp7" )
    -- TODO ship goes through jump
    emptester:taskClear()
    local hyp = spob.get( "Hypergate Gamma Polaris" )
@@ -281,8 +281,8 @@ end
 
 function cutscene_emp7 ()
    -- Ship jumps
-   hook.timer( 9.3, "fadeout" )
-   hook.timer( 10, "cutscene_zlk" )
+   hook.timer( 7.3, "fadeout" )
+   hook.timer( 8, "cutscene_zlk" )
 end
 
 local function pangate( gatename )
