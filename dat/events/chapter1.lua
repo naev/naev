@@ -251,10 +251,12 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
    shader_fadein = { shader=pp_shaders.newShader( pixelcode_fadein ) }
    shader_fadeout = { shader=pp_shaders.newShader( pixelcode_fadeout ) }
 
-   shader_init( shader_fadein, 2 )
+   local scene_len = 2
 
-   -- TODO post-process flash shader
-   hook.timer( 1/2, "cutscene_emp5" )
+   -- TODO sound effect
+   shader_init( shader_fadein, scene_len )
+
+   hook.timer( 1/scene_len, "cutscene_emp5" )
 end
 
 function cutscene_emp5 ()
@@ -264,6 +266,7 @@ function cutscene_emp5 ()
    shader_fadein = nil
    shader_init( shader_fadeout, 1/scene_len )
 
+   -- Diffs should be set up so this should always go through
    diff.remove( diff_progress1 )
    diff.apply( diff_progress2 )
 
@@ -294,7 +297,7 @@ local function pangate( gatename )
    local dir = vec2.newP( 1, rnd.angle() )
    local pos = hyp:pos()
    camera.set( pos - 500*dir, true )
-   camera.set( pos + 500*dir, false, 1000 / 5 )
+   camera.set( pos + 500*dir, false, 1000/5 )
 end
 
 function cutscene_zlk () -- Za'lek
@@ -353,14 +356,14 @@ function cutscene_nebu ()
    fg_setup() -- Remove text
    camera.setZoom() -- Reset zoom
 
-   -- TODO omnious music
+   -- TODO omnious music and "ghost" ships
 
    hook.timer( 4.3, "fadeout" )
    hook.timer( 5, "cutscene_nebu_fade" )
 end
 
 function cutscene_nebu_fade ()
-   -- Rsetore visibility
+   -- Rsetore visibility, should match the value set above
    player.pilot():intrinsicSet( "nebu_visibility", -1000 )
 
    -- Return to system and restore camera
@@ -374,6 +377,8 @@ end
 -- Cleans up the cutscene stuf
 function cutscene_cleanup ()
    setHide( false )
+
+   -- TODO add sound
 
    -- Chapter 1 message
    textoverlay.init( _("CHAPTER 1"), _("The Hypergates Awaken") )
