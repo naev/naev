@@ -441,6 +441,7 @@ static int nlua_loadBasic( lua_State* L )
    lua_register(L, "_", nlua_gettext);
    lua_register(L, "N_", nlua_gettext_noop);
    lua_register(L, "n_", nlua_ngettext);
+   lua_register(L, "p_", nlua_pgettext);
    luaL_register(L, "gettext", gettext_methods);
 
    /* Sandbox "io" and "os". */
