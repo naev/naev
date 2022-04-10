@@ -121,7 +121,7 @@ static int nlua_pgettext( lua_State *L )
    const char *msgid = luaL_checkstring(L, 2);
    char *lookup = NULL;
    asprintf( &lookup, "%s" GETTEXT_CONTEXT_GLUE "%s", msgctxt, msgid );
-   lua_pushstring(L, gettext_pgettext( lookup, msgid ) );
+   lua_pushstring(L, gettext_pgettext_impl( lookup, msgid ) );
    free( lookup );
    return 1;
 }
