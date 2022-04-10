@@ -238,13 +238,15 @@ void render_all( double game_dt, double real_dt )
 
    /* Top stuff. */
    ovr_render( real_dt ); /* Using real_dt is sort of a hack for now. */
-   display_fps( real_dt ); /* Exception using real_dt. */
    toolkit_render( real_dt );
    hooks_run( "rendertop" );
 
    /* Final post-processing. */
    if (pp_final)
       render_fbo_list( dt, pp_shaders_list[PP_LAYER_FINAL], &cur, 1 );
+
+   /* Show on top. */
+   display_fps( real_dt ); /* Exception using real_dt. */
 
    /* check error every loop */
    gl_checkErr();
