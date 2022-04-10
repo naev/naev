@@ -30,7 +30,7 @@ stds.Basic={
       "trepeat",
       "treverse",
    },
-   read_globals={"N_", "_", "__debugging", "gettext", "n_", "warn"},
+   read_globals={"N_", "_", "__debugging", "gettext", "n_", "p_", "warn"},
 }
 stds.AI = {read_globals={"ai"}} -- the C function is ai_loadProfile() in this case
 stds.Audio = {read_globals={"audio"}}
