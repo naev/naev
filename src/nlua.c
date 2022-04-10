@@ -62,10 +62,12 @@ static int luaB_loadstring( lua_State *L );
 /* gettext */
 static int nlua_gettext( lua_State *L );
 static int nlua_ngettext( lua_State *L );
+static int nlua_pgettext( lua_State *L );
 static int nlua_gettext_noop( lua_State *L );
 static const luaL_Reg gettext_methods[] = {
    { "gettext",  nlua_gettext },
    { "ngettext", nlua_ngettext },
+   { "pgettext", nlua_pgettext },
    { "gettext_noop", nlua_gettext_noop },
    {0,0}
 }; /**< Vector metatable methods. */
@@ -88,7 +90,7 @@ static int nlua_gettext( lua_State *L )
 /**
  * @brief gettext support for singular and plurals.
  *
- * @usage ngettext( str )
+ * @usage ngettext( msgid1, msgid2, n )
  *    @luatparam msgid1 Singular form.
  *    @luatparam msgid2 Plural form.
  *    @luatparam n Number of elements.
@@ -101,6 +103,23 @@ static int nlua_ngettext( lua_State *L )
    const char *strb = luaL_checkstring(L, 2);
    int n            = luaL_checkinteger(L,3);
    lua_pushstring(L, n_( stra, strb, n ) );
+   return 1;
+}
+
+/**
+ * @brief gettext support with context.
+ *
+ * @usage pgettext( context, msg )
+ *    @luatparam context Context of the message.
+ *    @luatparam msg Message to translate.
+ *    @luatreturn The string converted to gettext.
+ * @luafunc pgettext
+ */
+static int nlua_pgettext( lua_State *L )
+{
+   const char *stra = luaL_checkstring(L, 1);
+   const char *strb = luaL_checkstring(L, 2);
+   lua_pushstring(L, gettext_pgettext( stra, strb ) );
    return 1;
 }
 
