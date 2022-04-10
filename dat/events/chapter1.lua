@@ -258,14 +258,16 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 end
 
 function cutscene_emp5 ()
+   local scene_len = 3
+
    shader_fadein.shader:rmPPShader()
    shader_fadein = nil
-   shader_init( shader_fadeout, 1/3 )
+   shader_init( shader_fadeout, 1/scene_len )
 
    diff.remove( diff_progress1 )
    diff.apply( diff_progress2 )
 
-   hook.timer( 3, "cutscene_emp6" )
+   hook.timer( scene_len, "cutscene_emp6" )
 end
 
 function cutscene_emp6 ()
@@ -390,7 +392,8 @@ function cutscene_shipai ()
    local sai = vn.newCharacter( tut.vn_shipai() )
    vn.transition( tut.shipai.transition )
    vn.na(_([[Your ship AI suddenly materializes infront of you.]]))
-   sai(_([["Did you hear the news, {playername}?"]]),{playername=player.name()})
+   sai(_([["Did you hear the news, {playername}? It seems like a new method of interstellar travel is now possible."]]),{playername=player.name()})
+   sai(_([["The Great Houses have "]]))
    vn.done( tut.shipai.transition )
    vn.run()
 
