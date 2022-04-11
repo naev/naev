@@ -32,7 +32,7 @@ local function name()
       _("Sky Cutter"),
       _("Terminal Velocity"),
       _("Titanic MLXVII"),
-      _("Vagabond"),
+      p_("ship name", "Vagabond"),
       _("Vindicator"),
       _("Windjammer"),
       _("Tuna Can"),

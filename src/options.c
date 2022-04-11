@@ -718,7 +718,7 @@ static void menuKeybinds_genList( unsigned int wid )
             if (key < 0x100 && isalpha(key))
                snprintf(str[j], l, "%s <%s%c>", keybind_info[j][1], mod_text, toupper(key) );
             else
-               snprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, _(SDL_GetKeyName(key)) );
+               snprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, SDL_GetKeyName(key) );
             break;
          case KEYBIND_JAXISPOS:
             snprintf(str[j], l, "%s <ja+%d>", keybind_info[j][1], key);
@@ -808,7 +808,7 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
             snprintf(binding, sizeof(binding), _("keyboard:   %s%s%s"),
                   (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
-                  _(SDL_GetKeyName(key)));
+                  SDL_GetKeyName(key));
          break;
       case KEYBIND_JAXISPOS:
          snprintf(binding, sizeof(binding), _("joy axis pos:   <%d>"), key );

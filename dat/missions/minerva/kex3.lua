@@ -310,7 +310,7 @@ function approach_malik ()
    local malik = vn.newCharacter( _("Major Malik"), {image=malik_image} )
    vn.transition()
    vn.na(_("You approach Major Malik who seems to be enjoying a drink."))
-   malik(_([["What do you want?"]]))
+   malik(p_("Malik", [["What do you want?"]]))
    vn.na(_("You hand him the note you got from Kex. He reads it and furrows his brows a bit."))
    malik(_([["I see. You think at my age I worry about what happens to me? I've had a good career with no regrets. Your threats don't sway me."]]))
    malik(_([["However, I'm in a good mood today. How about we play a game? I have a private Crimson Gauntlet server here, let us duel in classic Dvaered fashion. If you win, I'll give you the information you want."]]))
@@ -332,7 +332,7 @@ DUEL TO THE DEATH MODE ENABLED.#0]]))
    vn.done()
 
    vn.label("decline")
-   malik(_([["OK. I'll be here if you change your mind."]]))
+   malik(p_("Malik", [["OK. I'll be here if you change your mind."]]))
    vn.run()
 
    if dogauntlet then

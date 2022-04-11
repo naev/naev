@@ -103,7 +103,7 @@ She smiles at you.]]))
    end
 
    misn.accept()
-   misn.osdCreate( _("Za'lek Scout Drone"),
+   misn.osdCreate( p_("OSD Title", "Za'lek Scout Drone"),
          {_("Destroy the scout drone with Dvaered weapons"),
           _("Go back to Minerva Station") } )
    misn.osdActive(1)

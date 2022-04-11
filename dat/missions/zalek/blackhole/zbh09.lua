@@ -63,7 +63,7 @@ function accept ()
    }
 
    vn.label("decline")
-   z(_([["OK. I'll be here if you change your mind."]]))
+   z(p_("Zach", [["OK. I'll be here if you change your mind."]]))
    vn.done( zbh.zach.transition )
 
    vn.label("accept")
@@ -404,7 +404,7 @@ function heartbeat_ferals ()
       camera.set()
       camera.setZoom()
 
-      zach_say( _("Watch out!") )
+      zach_say( p_("Zach", "Watch out!") )
       l:control(false)
       pp:control(false)
 

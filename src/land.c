@@ -999,7 +999,7 @@ static void land_setupTabs (void)
    if (spob_hasService(land_spob, SPOB_SERVICE_OUTFITS) ||
          spob_hasService(land_spob, SPOB_SERVICE_SHIPYARD)) {
       land_windowsMap[LAND_WINDOW_EQUIPMENT] = j;
-      names[j++] = _("Equipment");
+      names[j++] = p_("service", "Equipment");
    }
    /* Commodity. */
    if (spob_hasService(land_spob, SPOB_SERVICE_COMMODITY)) {

@@ -431,7 +431,7 @@ function disableDuel()
    hook.timer( 2.0, "message", {pilot = tam, msg = _("Damn!")} )
    hook.timer( 4.0, "message", {pilot = leblanc, msg = _("Oooooo...")} )
    hook.timer( 6.0, "message", {pilot = hamelsen, msg = _("What the?")} )
-   hook.timer( 8.0, "message", {pilot = randguy, msg = _("Come on!")} )
+   hook.timer( 8.0, "message", {pilot = randguy, msg = p_("fw01", "Come on!")} )
 
    hook.timer( 11.0, "message", {pilot = tam, msg = _("Hey, they have put a bomb in the general's ship as well!")} )
    hook.timer( 15.0, "message", {pilot = leblanc, msg = _("The electricians! We've called electricians recently! They planted the bomb!")} )
