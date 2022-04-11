@@ -476,7 +476,7 @@ function approach_hint4 ()
       shrimp:rename(_("Calliope"))
       shrimp(_([[A pellet of shrimp food is released into the floating aquarium. The shrimp wastes no time in scarfing it down.
    "HAPPY. GOOD."]]))
-      drshrimp(_([["What do you want?"]]))
+      drshrimp(p_("Dr. Shrimp", [["What do you want?"]]))
       vn.na(_("You explain to him that you are looking for information related to nebula artefacts."))
       drshrimp(_([["Ah, that hellish project. Was doomed from the start, you know. The full-time professors and researchers let their egos get to their heads and it derailed spectacularly. I'm glad it ended as it did, or I would be still stuck in that purgatory."]]))
       drshrimp(_([["I don't think most of the people remember me, but I was the one stuck doing most of the work. If you can call it that."]]))
@@ -757,7 +757,7 @@ You glance at a crate labelled 'NEBULA ARTEFACTS #082' in the corner of the room
       vn.na(_("The hologram projector flickers and Dr. Strangelove comes into view. He doesn't look very happy to see you again."))
    end
    vn.label("menu_msg")
-   dr(_([["What do you want?"]]))
+   dr(p_("Dr. Strangelove", [["What do you want?"]]))
    vn.label("menu")
    vn.menu( function ()
       local opts = {

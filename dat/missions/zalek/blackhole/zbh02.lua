@@ -67,7 +67,7 @@ function accept ()
    }
 
    vn.label("decline")
-   z(_([["OK. I'll be here if you change your mind."]]))
+   z(p_("Zach", [["OK. I'll be here if you change your mind."]]))
    vn.done( zbh.zach.transition )
 
    vn.label("accept")
@@ -118,8 +118,8 @@ function land ()
       pd(_([[They have an odd grin on their face and you can't help but to get a bad feeling about them.
 "Say, you wouldn't be headed to the Anubis Black Hole? Lots of scary stuff there."]]))
       vn.menu{
-         {_([["Yes."]]), "01yes"},
-         {_([["No." (Lie)]]), "01no"},
+         {p_("to Evil PI 1", [["Yes."]]), "01yes"},
+         {p_("to Evil PI 1", [["No." (Lie)]]), "01no"},
       }
 
       vn.label("01yes")
@@ -135,8 +135,8 @@ You say a random Za'lek planet but it doesn't seem like they are very interested
       vn.label("02")
       pd(_([["You wouldn't happen to be interested in research. You know, helping unravel the secrets of the universe, one step at a time."]]))
       vn.menu{
-         {_([["Yes."]]), "02cont"},
-         {_([["No."]]), "02no"},
+         {p_("to Evil PI 2", [["Yes."]]), "02cont"},
+         {p_("to Evil PI 2", [["No."]]), "02no"},
       }
 
       vn.label("02no")

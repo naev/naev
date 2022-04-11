@@ -59,11 +59,11 @@ function create ()
    mem.amount = 50 * math.pow(mem.tier,2)
    mem.reward = (50e3 + mem.tier * 25e3 + mem.numjumps * 10e3 + mem.traveldist * 0.2) * ((mem.tier-1)/5 + 1 + 0.05*rnd.twosigma())
 
-   local adj = _("Small")
+   local adj = p_("adj delivery", "Small")
    if mem.tier==2 then
-      adj = _("Medium")
+      adj = p_("adj delivery", "Medium")
    elseif mem.tier==3 then
-      adj = _("Large")
+      adj = p_("adj delivery", "Large")
    end
    misn.setTitle( fmt.f(_("#oANTLEJOS:#0 {adj} delivery of supplies from {pnt} ({sys} system)"),
          {adj=adj, pnt=mem.destpnt, sys=mem.destsys}) )

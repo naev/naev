@@ -867,7 +867,7 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh, vo
    double y;
 
    y = by+bh-20;
-   gl_print( &gl_defFont, bx, y, &cFontWhite, _("Legend") );
+   gl_print( &gl_defFont, bx, y, &cFontWhite, p_("info", "Legend") );
 
    y -= 20.;
    toolkit_drawRect( bx, y, 10, 10, &cFontBlue, NULL );

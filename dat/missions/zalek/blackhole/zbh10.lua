@@ -215,7 +215,7 @@ function heartbeat ()
       z(_([["Why the hell are you doing this? Did you kill them all? This is just a research post!"]]))
       pi(_([[He suddenly furrows his brows.
 "You either are playing a fool or a lot more obtuse than I originally thought."]]))
-      z(_([["What?"]]))
+      z(p_("Zach to Evil PI", [["What?"]]))
       pi(_([["Even if you don't know anything, it is too late now. Prepare to be eviscerated. For science!"]]))
       vn.disappear(pi, "electric")
       vn.na(_([[After the individual disappears, the transmission switches to read-write mode.]]))
