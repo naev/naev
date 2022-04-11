@@ -398,7 +398,7 @@ function cutscene_shipai ()
    vn.transition( tut.shipai.transition )
    vn.na(_([[Your ship AI suddenly materializes infront of you.]]))
    sai(_([["Did you hear the news, {playername}? It seems like a new method of interstellar travel is now possible."]]),{playername=player.name()})
-   sai(_([["The Great Houses have "]]))
+   sai(_([["It appears that the Great Houses have completed a hypergate network. The details are fairly scarce, but it seems like it should be possible to jump across large distance of space with them."]]))
    vn.done( tut.shipai.transition )
    vn.run()
 
