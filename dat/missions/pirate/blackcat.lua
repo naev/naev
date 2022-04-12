@@ -266,8 +266,8 @@ function owner_hail ()
    vn.na(fmt.f(_("You open a communication channel with the {plt} and a hologram of a nervous-looking individual materializes in front of you."),{plt=owner}))
    o(_([["H-h-hello there. You w-w-wouldn't happen to have a c-cat onboard?"]]))
    vn.menu{
-      {_([["Yes."]]), "catyes"},
-      {_([["No (lie)."]]), "catno"},
+      {p_("blackcat", [["Yes."]]), "catyes"},
+      {p_("blackcat", [["No (lie)."]]), "catno"},
    }
 
    vn.label("catno")

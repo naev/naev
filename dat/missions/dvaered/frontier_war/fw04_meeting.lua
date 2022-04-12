@@ -203,7 +203,7 @@ function takeoff()
       hook.timer( 1.4, "message", {pilot = alpha[2], msg = _("A-NightClaws Second to Leader: I'm on it!")} )
       hook.timer( 2.1, "message", {pilot = spy, msg = _("Bye, suckers!")} )
       hook.timer( 2.8, "message", {pilot = alpha[2], msg = _("Just wait for my shredders to...")} )
-      hook.timer( 5.0, "message", {pilot = alpha[2], msg = _("Come on!")} )
+      hook.timer( 5.0, "message", {pilot = alpha[2], msg = p_("fw04", "Come on!")} )
 
       hook.timer( 4.0, "deathOfStrafer" )
 

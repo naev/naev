@@ -68,7 +68,7 @@ function accept ()
    }
 
    vn.label("decline")
-   z(_([["OK. I'll be here if you change your mind."]]))
+   z(p_("Zach", [["OK. I'll be here if you change your mind."]]))
    vn.done( zbh.zach.transition )
 
    vn.label("accept")

@@ -131,7 +131,7 @@ local function clicked ()
 
    vn.label("tut_ewarfare")
    sai(_([["Ship sensors are based on detecting gravitational anomalies, and thus the mass of a ship plays a critical role in being detected. Smaller ships like yachts or interceptors are inherently much harder to detect than carriers or battleship."]]))
-   sai(_([["Each ship has three important electronic warfare statistics:
+   sai(p_("Ship AI", [["Each ship has three important electronic warfare statistics:
 - #oDetection#0 determines the distance at which a ship appears on the radar.
 - #oEvasion#0 determines the distance at which a ship is fully detected, that is, ship type and faction are visible. It also plays a role in how missiles and weapons track the ship.
 - #oStealth#0 determines the distance at which the ship is undetected when in stealth mode"]]))

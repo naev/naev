@@ -154,7 +154,7 @@ He gives a sort of half-hearted grin and disappears into the shadows.]]))
 He seems at a loss of words.
 "You know…"]]))
       vn.menu{
-         { _([["What?"]]), "intro2" },
+         { p_("you to Kex", [["What?"]]), "intro2" },
          { _("…"), "intro2" },
       }
       vn.label("intro2")

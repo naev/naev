@@ -174,7 +174,7 @@ function heartbeat ()
    elseif stage==2 then
       stage = 3
    elseif stage==3 then
-      pilot.comm(_("Noona"), _("Watch out!"))
+      pilot.comm(_("Noona"), p_("Noona", "Watch out!"))
       phost:control(false)
       phost:setInvincible(false)
       phost:setNoDisable(true)
