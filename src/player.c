@@ -943,7 +943,7 @@ void player_render( double dt )
    }
 
    /* Skip rendering. */
-   if ((player.p == NULL) || player_isFlag(PLAYER_CREATING) ||
+   if ((player.p == NULL) || (player.p->id == 0) || player_isFlag(PLAYER_CREATING) ||
          pilot_isFlag( player.p, PILOT_HIDE))
       return;
 
