@@ -1136,7 +1136,7 @@ void player_think( Pilot* pplayer, const double dt )
    ai_think( pplayer, dt );
 
    /* Under manual control is special. */
-   if (pilot_isFlag( pplayer, PILOT_MANUAL_CONTROL )) {
+   if (pilot_isFlag( pplayer, PILOT_MANUAL_CONTROL ) || pilot_isFlag( pplayer, PILOT_HIDE )) {
       return;
    }
 

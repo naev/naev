@@ -32,6 +32,8 @@ static double camera_X     = 0.; /**< X position of camera. */
 static double camera_Y     = 0.; /**< Y position of camera. */
 static double camera_DX    = 0.; /**< Derivative of X position (velocity) of the camera. */
 static double camera_DY    = 0.; /**< Derivative of Y position (velocity) of the camera. */
+static double camera_VX    = 0.;
+static double camera_VY    = 0.;
 /* Old is used to compensate pilot movement. */
 static double old_X        = 0.; /**< Old X positiion. */
 static double old_Y        = 0.; /**< Old Y position. */
@@ -126,6 +128,15 @@ void cam_getDPos( double *dx, double *dy )
 }
 
 /**
+ * @brief Gets the camera velocity.
+ */
+void cam_getVel( double *vx, double *vy )
+{
+   *vx = camera_VX;
+   *vy = camera_VY;
+}
+
+/**
  * @brief Sets the target to follow.
  */
 void cam_setTargetPilot( unsigned int follow, int soft_over )
@@ -207,13 +218,13 @@ int cam_getTarget( void )
 void cam_update( double dt )
 {
    Pilot *p;
-   double dx, dy;
+   double ox, oy;
 
    /* Calculate differential. */
    camera_DX = camera_X;
    camera_DY = camera_Y;
-   dx    = old_X;
-   dy    = old_Y;
+   ox    = old_X;
+   oy    = old_Y;
 
    /* Going to position. */
    p   = NULL;
@@ -249,8 +260,8 @@ void cam_update( double dt )
 
    /* Set the sound. */
    if ((p==NULL) || !SOUND_PILOT_RELATIVE) {
-      dx = dt*(dx-camera_X);
-      dy = dt*(dy-camera_Y);
+      double dx = dt*(ox-camera_X);
+      double dy = dt*(oy-camera_Y);
       sound_updateListener( CAMERA_DIR, camera_X, camera_Y, dx, dy );
    }
    else {
@@ -262,6 +273,10 @@ void cam_update( double dt )
    /* Compute the position differential. */
    camera_DX = (camera_X - camera_DX);
    camera_DY = (camera_Y - camera_DY);
+
+   /* Compute velocity. */
+   camera_VX = camera_DX / dt;
+   camera_VY = camera_DY / dt;
 }
 
 /**

@@ -166,6 +166,11 @@ void background_renderDust( const double dt )
    /* Decide on shade mode. */
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
          !player_isFlag(PLAYER_CREATING)) {
+      double dx, dy, vmod;
+
+      /* Get camera movement. */
+      cam_getVel( &dx, &dy );
+      vmod = hypot( dx, dy );
 
       if (pilot_isFlag(player.p,PILOT_HYPERSPACE)) { /* hyperspace fancy effects */
          /* lines get longer the closer we are to finishing the jump */
@@ -173,21 +178,22 @@ void background_renderDust( const double dt )
          m /= HYPERSPACE_STARS_BLUR;
          m *= HYPERSPACE_STARS_LENGTH;
          if (m > 1.) {
-            x = m*cos(VANGLE(player.p->solid->vel));
-            y = m*sin(VANGLE(player.p->solid->vel));
+            double angle = atan2( dy, dx );
+            x = m * cos( angle );
+            y = m * sin( angle );
             points = 0;
          }
       }
-      else if (dt_mod * VMOD(player.p->solid->vel) > 500. ) {
+      else if (dt_mod * vmod > 500. ) {
          /* Very short lines tend to flicker horribly. A stock Llama at 2x
           * speed just so happens to make very short lines. A 5px minimum
           * is long enough to (mostly) alleviate the flickering. */
-         GLfloat m = MAX( 5., dt_mod*VMOD(player.p->solid->vel)/25. - 20 );
-         if (m > 1.) {
-            x = m*cos(VANGLE(player.p->solid->vel));
-            y = m*sin(VANGLE(player.p->solid->vel));
-            points = 0;
-         }
+         /* TODO don't use GL_LINES. */
+         GLfloat m = MAX( 5., dt_mod * vmod/25. - 20 );
+         double angle = atan2( dy, dx );
+         x = m * cos( angle );
+         y = m * sin( angle );
+         points = 0;
       }
    }
 

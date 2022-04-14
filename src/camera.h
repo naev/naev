@@ -12,6 +12,7 @@ double cam_getZoom (void);
 double cam_getZoomTarget (void);
 void cam_getPos( double *x, double *y );
 void cam_getDPos( double *dx, double *dy );
+void cam_getVel( double *vx, double *vy );
 int cam_getTarget( void );
 
 /*
