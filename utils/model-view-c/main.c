@@ -38,7 +38,7 @@ int main( int argc, char *argv[] )
    glBindVertexArray(VaoId);
 
    glEnable( GL_FRAMEBUFFER_SRGB );
-   glClearColor( 0., 0., 0., 1. );
+   glClearColor( 0.2, 0.2, 0.2, 1.0 );
 
    if (object_init())
       return -1;
@@ -102,7 +102,6 @@ int main( int argc, char *argv[] )
             }
          }
       }
-      //glClearColor( 0.2, 0.2, 0.2, 1.0 );
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       const Uint8 *state = SDL_GetKeyboardState(NULL);

@@ -1,7 +1,6 @@
 /*
  * Physically Based Rendering Shader (WIP)
  */
-
 const float M_PI        = 3.14159265358979323846;  /* pi */
 
 /* pbr_metallic_roughness */
@@ -227,16 +226,16 @@ void main (void)
 
    /* Material values. */
    Material M;
-   //M.albedo       = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
-   M.albedo       = baseColour * texture(baseColour_tex, tex_coord0);
+   //M.albedo    = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
+   M.albedo    = baseColour * texture(baseColour_tex, tex_coord0);
    vec4 metallicroughness = texture(metallic_tex, tex_coord0);
    M.perceptualRoughness = metallicroughness.g;
-   M.roughness    = M.perceptualRoughness * M.perceptualRoughness; /* Convert from perceptual roughness. */
-   M.metallic     = metallicFactor * metallicroughness.b;
-   M.f0           = mix( vec3(0.04), M.albedo.rgb, M.metallic );
-   M.f90          = vec3(1.0);
-   M.c_diff       = mix( M.albedo.rgb * (vec3(1.0) - M.f0), vec3(0), M.metallic);
-   M.clearcoat    = clearcoat;
+   M.roughness = M.perceptualRoughness * M.perceptualRoughness; /* Convert from perceptual roughness. */
+   M.metallic  = metallicFactor * metallicroughness.b;
+   M.f0        = mix( vec3(0.04), M.albedo.rgb, M.metallic );
+   M.f90       = vec3(1.0);
+   M.c_diff    = mix( M.albedo.rgb * (vec3(1.0) - M.f0), vec3(0), M.metallic);
+   M.clearcoat = clearcoat;
    M.clearcoat_roughness = clearcoat_roughness * clearcoat_roughness;
    //M.specularWeight = 1.0;
 
@@ -249,7 +248,7 @@ void main (void)
    //f_specular += getIBLRadianceGGX(n, v, materialInfo.perceptualRoughness, materialInfo.f0, materialInfo.specularWeight);
    //f_diffuse += getIBLRadianceLambertian(n, v, materialInfo.perceptualRoughness, materialInfo.c_diff, materialInfo.f0, materialInfo.specularWeight);
    //f_clearcoat += getIBLRadianceGGX(materialInfo.clearcoatNormal, v, materialInfo.clearcoatRoughness, materialInfo.clearcoatF0, 1.0);
-   f_diffuse += 0.5*M.c_diff; /* Just use ambience for now. */
+   f_diffuse += 0.5 * M.c_diff; /* Just use ambience for now. */
 
    /* Ambient occlusion. */
    float ao = texture(occlusion_tex, tex_coord0).r;
@@ -260,14 +259,19 @@ void main (void)
    vec4 sc = shadow / shadow.w;
    /* Check to see if in the shadowmap frustrum. */
    //if ((shadow.w < 0.0) || (sc.x < 0.0 || sc.y < 0.0) || (sc.x > 1.0 || sc.y > 1.0))
-   if (texture( shadowmap_tex, sc.xy ).z  <  sc.z)
+   //if (sc.y < 0.5 )
+   if (texture( shadowmap_tex, sc.xy ).r < sc.z)
       shadowFactor = 0.1;
    else
       shadowFactor = 1.0;
    //else
    //   shadowFactor = 0.1 + 0.9 * textureProj(shadowmap, sc);
    //shadowFactor = 1.0;
+   //shadowFactor = texture( shadowmap_tex, shadow.xy ).r;
+   //shadowFactor = textureProj(shadowmap, sc);
    //colour_out = vec4( vec3(shadowFactor), 1.0 );
+   //colour_out = vec4( shadow.rgb, 1.0 );
+   //colour_out = vec4( vec3(sc.z), 1.0 );
    //return;
 
    /* Point light for now. */
