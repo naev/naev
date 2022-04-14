@@ -198,6 +198,9 @@ static int pilotL_damage( lua_State *L );
 static int pilotL_knockback( lua_State *L );
 static int pilotL_calcStats( lua_State *L );
 static int pilotL_showEmitters( lua_State *L );
+static int pilotL_shipvarPeek( lua_State *L );
+static int pilotL_shipvarPush( lua_State *L );
+static int pilotL_shipvarPop( lua_State *L );
 static const luaL_Reg pilotL_methods[] = {
    /* General. */
    { "add", pilotL_add },
@@ -349,6 +352,9 @@ static const luaL_Reg pilotL_methods[] = {
    { "knockback", pilotL_knockback },
    { "calcStats", pilotL_calcStats },
    { "showEmitters", pilotL_showEmitters },
+   { "shipvarPeek", pilotL_shipvarPeek },
+   { "shipvarPush", pilotL_shipvarPush },
+   { "shipvarPop", pilotL_shipvarPop },
    {0,0},
 }; /**< Pilot metatable methods. */
 
@@ -5197,5 +5203,60 @@ static int pilotL_showEmitters( lua_State *L )
    NLUA_ERROR(L, _("Requires a debug build."));
 #endif /* DEBUGGING */
 
+   return 0;
+}
+
+/**
+ * @brief Peeks at a ship variable.
+ *
+ * @usage local exp = p:shipvarPeek( "exp" ) -- Checks the value of the "exp" ship var on the player's current ship
+ *
+ *    @luatparam string varname Name of the variable to check value of.
+ *    @luatparam[opt] string shipname Name of the ship to check variable of. Defaults to pilot's current ship.
+ * @luafunc shipvarPeek
+ */
+static int pilotL_shipvarPeek( lua_State *L )
+{
+   Pilot *p         = luaL_validpilot(L,1);
+   const char *str  = luaL_checkstring(L,2);
+   lvar *var        = lvar_get( p->shipvar, str );
+   if (var != NULL)
+      return lvar_push( L, var );
+   return 0;
+}
+
+/**
+ * @brief Pushes a ship variable.
+ *
+ *    @luatparam string varname Name of the variable to set value of.
+ *    @luaparam val Value to push.
+ *    @luatparam[opt] string shipname Name of the ship to push variable to. Defaults to pilot's current ship.
+ * @luafunc shipvarPush
+ */
+static int pilotL_shipvarPush( lua_State *L )
+{
+   Pilot *p         = luaL_validpilot(L,1);
+   const char *str  = luaL_checkstring(L,2);
+   lvar var         = lvar_tovar( L, str, 3 );
+   if (p->shipvar==NULL)
+      p->shipvar = array_create( lvar );
+   lvar_addArray( &p->shipvar, &var, 1 );
+   return 0;
+}
+
+/**
+ * @brief Pops a ship variable.
+ *
+ *    @luatparam string varname Name of the variable to pop.
+ *    @luatparam[opt] string shipname Name of the ship to pop variable from. Defaults to pilot's current ship.
+ * @luafunc shipvarPop
+ */
+static int pilotL_shipvarPop( lua_State *L )
+{
+   Pilot *p         = luaL_validpilot(L,1);
+   const char *str  = luaL_checkstring(L,2);
+   lvar *var        = lvar_get( p->shipvar, str );
+   if (var != NULL)
+      lvar_rmArray( &p->shipvar, var );
    return 0;
 }
