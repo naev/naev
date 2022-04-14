@@ -22,10 +22,10 @@ local pp_shaders = require "pp_shaders"
 local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
 
--- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp7 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_fade cutscene_cleanup cutscene_shipai (Hook functions passed by name)
+-- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp7 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
 
 function create ()
-   evt.finish(false) -- disabled for now
+   --evt.finish(false) -- disabled for now
 
    -- Set up some variables
    local has_license = diff.isApplied("heavy_combat_vessel_license") or (player.numOutfit("Heavy Combat Vessel License") > 0)
@@ -385,22 +385,9 @@ function cutscene_cleanup ()
 
    -- Initialize fleet capacity
    player.setFleetCapacity( 100 )
-   player.chapterSet( "1" )
+   player.chapterSet("1")
    player.canDiscover( true )
 
-   hook.timer( 10, "cutscene_shipai" )
-end
-
-function cutscene_shipai ()
-   vn.clear()
-   vn.scene()
-   local sai = vn.newCharacter( tut.vn_shipai() )
-   vn.transition( tut.shipai.transition )
-   vn.na(_([[Your ship AI suddenly materializes infront of you.]]))
-   sai(_([["Did you hear the news, {playername}? It seems like a new method of interstellar travel is now possible."]]),{playername=player.name()})
-   sai(_([["It appears that the Great Houses have completed a hypergate network. The details are fairly scarce, but it seems like it should be possible to jump across large distance of space with them."]]))
-   vn.done( tut.shipai.transition )
-   vn.run()
 
    local pp = player.pilot()
    pp:setNoJump(false)
@@ -418,4 +405,6 @@ function land ()
    sai(_([[""]]))
    vn.done( tut.shipai.transition )
    vn.run()
+
+   evt.finish(true) -- Properly finish
 end
