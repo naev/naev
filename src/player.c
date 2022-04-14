@@ -420,7 +420,7 @@ PlayerShip_t* player_newShip( const Ship* ship, const char *def_name,
    ps = player_newShipMake( ship_name );
    ps->autoweap  = 1;
    ps->favourite = 0;
-   ps->shipvar   = array_create( lvar );
+   ps->p->shipvar= array_create( lvar );
    ps->acquired  = (acquired!=NULL) ? strdup( acquired ) : NULL;
    ps->acquired_date = ntime_get();
 
@@ -664,8 +664,8 @@ void player_rmShip( const char *shipname )
          continue;
 
       /* Free player ship. */
+      pilot_rmFlag( ps->p, PILOT_NOFREE );
       pilot_free( ps->p );
-      lvar_freeArray( ps->shipvar );
       free( ps->acquired );
 
       array_erase( &player_stack, ps, ps+1 );
@@ -717,7 +717,6 @@ void player_cleanup (void)
    /* Free stuff. */
    free(player.name);
    player.name = NULL;
-   lvar_freeArray( player.ps.shipvar );
    memset( &player.ps, 0, sizeof(PlayerShip_t) );
 
    free(player_message_noland);
@@ -733,8 +732,8 @@ void player_cleanup (void)
 
    /* clean up the stack */
    for (int i=0; i<array_size(player_stack); i++) {
-      lvar_freeArray( player_stack[i].shipvar );
-      pilot_free(player_stack[i].p);
+      pilot_rmFlag( player_stack[i].p, PILOT_NOFREE );
+      pilot_free( player_stack[i].p );
    }
    array_free(player_stack);
    player_stack = NULL;
@@ -3402,7 +3401,7 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
 
    /* Ship variables. */
    xmlw_startElem(writer, "vars");
-   lvar_save( pship->shipvar, writer );
+   lvar_save( pship->p->shipvar, writer );
    xmlw_endElem(writer); /* "vars" */
 
    xmlw_endElem(writer); /* "ship" */
@@ -4322,7 +4321,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       xmlNodePtr cur;
 
       if (xml_isNode(node,"vars")) {
-         ps.shipvar = lvar_load( node );
+         ps.p->shipvar = lvar_load( node );
          continue;
       }
       else if (!xml_isNode(node,"weaponsets"))

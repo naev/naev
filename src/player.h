@@ -7,7 +7,6 @@
 
 #include "nstring.h"
 #include "pilot.h"
-#include "lvar.h"
 
 /** Player flag enum. */
 enum {
@@ -74,7 +73,6 @@ typedef struct PlayerShip_s {
    Pilot *p;      /**< Pilot. */
    int autoweap;  /**< Automatically update weapon sets. */
    int favourite; /**< Whether or not it is favourited. */
-   lvar *shipvar; /**< Per-ship version of lua mission variables. */
 
    /* Fleet data. */
    int deployed;  /**< Whether or not the ship is deployed. */

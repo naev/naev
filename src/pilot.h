@@ -16,6 +16,7 @@
 #include "sound.h"
 #include "space.h"
 #include "spfx.h"
+#include "lvar.h"
 
 #define PLAYER_ID       1 /**< Player pilot ID. */
 
@@ -366,6 +367,7 @@ typedef struct Pilot_ {
                              In per one of max shield + armour. */
    double engine_glow;/**< Amount of engine glow to display. */
    int messages;     /**< Queued messages (Lua ref). */
+   lvar *shipvar;    /**< Per-ship version of lua mission variables. */
 } Pilot;
 
 /* These depend on Pilot being defined first. */

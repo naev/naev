@@ -88,7 +88,11 @@ function hypergate.update( dt )
 end
 
 function hypergate.can_land ()
+   --return true, "The hypergate is active."
    return false
+end
+
+function hypergate.land ()
 end
 
 return hypergate

@@ -909,7 +909,7 @@ static int playerL_shipvarPeek( lua_State *L )
 {
    const char *str  = luaL_checkstring(L,1);
    PlayerShip_t *ps = playerL_shipvarShip(L,2);
-   lvar *var        = lvar_get( ps->shipvar, str );
+   lvar *var        = lvar_get( ps->p->shipvar, str );
    if (var != NULL)
       return lvar_push( L, var );
    return 0;
@@ -928,9 +928,9 @@ static int playerL_shipvarPush( lua_State *L )
    const char *str  = luaL_checkstring(L,1);
    lvar var         = lvar_tovar( L, str, 2 );
    PlayerShip_t *ps = playerL_shipvarShip(L,3);
-   if (ps->shipvar==NULL)
-      ps->shipvar = array_create( lvar );
-   lvar_addArray( &ps->shipvar, &var, 1 );
+   if (ps->p->shipvar==NULL)
+      ps->p->shipvar = array_create( lvar );
+   lvar_addArray( &ps->p->shipvar, &var, 1 );
    return 0;
 }
 
@@ -945,9 +945,9 @@ static int playerL_shipvarPop( lua_State *L )
 {
    const char *str  = luaL_checkstring(L,1);
    PlayerShip_t *ps = playerL_shipvarShip(L,2);
-   lvar *var        = lvar_get( ps->shipvar, str );
+   lvar *var        = lvar_get( ps->p->shipvar, str );
    if (var != NULL)
-      lvar_rmArray( &ps->shipvar, var );
+      lvar_rmArray( &ps->p->shipvar, var );
    return 0;
 }
 
