@@ -13,6 +13,9 @@
 #include "vec3.h"
 #include "shader_min.h"
 
+const vec3 primary_light = { .v = {4., 2., -20.} };
+//const vec3 primary_light = { .v = {20., 0., 0.} };
+
 /* Horrible hack that turns a variable name into a string. */
 #define STR_HELPER(x) #x
 #define STR(x) STR_HELPER(x)
@@ -399,7 +402,7 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
 static void shadow_matrix( mat4 *m )
 {
    const vec3 up        = { .v = {0., 1., 0.} };
-   const vec3 light_pos = { .v = {4., 2., -20.} };
+   const vec3 light_pos = primary_light; //{ .v = {4., 2., -20.} };
    const vec3 center    = { .v = {0., 0., 0.} };
    *m = mat4_lookat( &center, &light_pos, &up );
    //*m = mat4_lookat( &light_pos, &center, &up );
@@ -476,7 +479,8 @@ static void renderMesh( const Object *obj, const Mesh *mesh, const mat4 *H )
    /* Lighting. */
    glUniform1i( shd->nlights, 1 );
    const ShaderLight *sl = &shd->lights[0];
-   glUniform3f( sl->position, 4., 2., -20. );
+   //glUniform3f( sl->position, 4., 2., -20. );
+   glUniform3f( sl->position, primary_light.v[0], primary_light.v[1], primary_light.v[2] );
    glUniform1f( sl->range, -1. );
    glUniform3f( sl->colour, 1.0, 1.0, 1.0 );
    glUniform1f( sl->intensity, 500. );
