@@ -175,7 +175,6 @@ function cutscene_start ()
 
    fg_setup( _("And they built bridges across the stars…") )
    hook.timer( 5, "cutscene_emp1" )
-   --hook.timer( 5, "cutscene_zlk" )
 end
 
 function cutscene_emp1 ()
@@ -290,14 +289,17 @@ function cutscene_emp7 ()
    hook.timer( 8, "cutscene_zlk" )
 end
 
+local pantime = 3.7
+local panradius = 300
+local panfadeout = pantime - 0.7
 local function pangate( gatename )
    -- Go to the hypergate and pan camera
    local hyp, hyps = spob.getS( gatename )
    player.teleport( hyps, true, false, true )
    local dir = vec2.newP( 1, rnd.angle() )
    local pos = hyp:pos()
-   camera.set( pos - 500*dir, true )
-   camera.set( pos + 500*dir, false, 1000/5 )
+   camera.set( pos - panradius*dir, true )
+   camera.set( pos + panradius*dir, false, 2*panradius/pantime )
 end
 
 function cutscene_zlk () -- Za'lek
@@ -305,32 +307,32 @@ function cutscene_zlk () -- Za'lek
    fg_setup()
    fadein()
 
-   hook.timer( 4.3, "fadeout" )
-   hook.timer( 5, "cutscene_srm" )
+   hook.timer( panfadeout, "fadeout" )
+   hook.timer( pantime, "cutscene_srm" )
 end
 
 function cutscene_srm () -- Soromid
    pangate( "Hypergate Feye" )
    fadein()
 
-   hook.timer( 4.3, "fadeout" )
-   hook.timer( 5, "cutscene_srs" )
+   hook.timer( panfadeout, "fadeout" )
+   hook.timer( pantime, "cutscene_srs" )
 end
 
 function cutscene_srs () -- Sirius
    pangate( "Hypergate Kiwi" )
    fadein()
 
-   hook.timer( 4.3, "fadeout" )
-   hook.timer( 5, "cutscene_dvr" )
+   hook.timer( panfadeout, "fadeout" )
+   hook.timer( pantime, "cutscene_dvr" )
 end
 
 function cutscene_dvr ()
    pangate( "Hypergate Dvaer" )
    fadein()
 
-   hook.timer( 4.3, "fadeout" )
-   hook.timer( 5, "cutscene_posttext" )
+   hook.timer( panfadeout, "fadeout" )
+   hook.timer( pantime, "cutscene_posttext" )
 end
 
 function cutscene_posttext ()
