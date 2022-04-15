@@ -86,7 +86,7 @@ function wormhole.land( _s, p )
 
    -- Not player, just play animation and remove
    if p ~= player.pilot() then
-      p:effectAdd("Wormhole")
+      p:effectAdd("Wormhole Enter")
       return
    end
 
