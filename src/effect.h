@@ -40,6 +40,7 @@ typedef struct EffectData_ {
  */
 typedef struct Effect_ {
    const EffectData *data;/**< Base data of the effect. */
+   unsigned int parent; /**< Pilot it is being applied to. */
    double timer;        /**< Time left on the effect. */
    double duration;     /**< Duration of this effect. */
    double scale;        /**< Scales the effect. */
@@ -59,7 +60,7 @@ const EffectData *effect_get( const char *name );
  */
 Effect *effect_init (void);
 int effect_update( Effect **efxlist, double dt );
-int effect_add( Effect **efxlist, const EffectData *efx, double duration, double scale );
+int effect_add( Effect **efxlist, const EffectData *efx, double duration, double scale, unsigned int parent );
 void effect_clear( Effect **efxlist );
 void effect_compute( ShipStats *s, const Effect *efxlist );
 void effect_cleanup( Effect *efxlist );

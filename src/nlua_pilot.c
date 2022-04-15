@@ -3219,7 +3219,7 @@ static int pilotL_effectAdd( lua_State *L )
    double scale = luaL_optnumber(L,4,1.);
    const EffectData *efx = effect_get( effectname );
    if (efx != NULL) {
-      if (!effect_add( &p->effects, efx, duration, scale ))
+      if (!effect_add( &p->effects, efx, duration, scale, p->id ))
          pilot_calcStats( p );
       lua_pushboolean(L,1);
    }

@@ -18,6 +18,7 @@
 #include "nxml.h"
 #include "ndata.h"
 #include "gui.h"
+#include "nlua_pilot.h"
 
 static EffectData *effect_list = NULL; /* List of all available effects. */
 
@@ -247,6 +248,16 @@ int effect_update( Effect **efxlist, double dt )
       if (e->timer > 0.)
          continue;
 
+      /* Run Lua if necessary. */
+      if (e->data->lua_remove != LUA_NOREF) {
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_remove); /* f */
+         lua_pushpilot(naevL, e->parent);
+         if (nlua_pcall( e->data->lua_env, 1, 0 )) {
+            WARN(_("Effect '%s' failed to run '%s':\n%s"), e->data->name, "remove", lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+         }
+      }
+
       /* Get rid of it. */
       array_erase( efxlist, e, e+1 );
       n++;
@@ -263,11 +274,13 @@ int effect_update( Effect **efxlist, double dt )
  *    @param efx Effect to add.
  *    @param duration Duration of the effect or set to negative for default.
  *    @param scale Scaling effect.
+ *    @param parent Pilot the effect is being added to.
  *    @return 0 on success.
  */
-int effect_add( Effect **efxlist, const EffectData *efx, double duration, double scale )
+int effect_add( Effect **efxlist, const EffectData *efx, double duration, double scale, unsigned int parent )
 {
    Effect *e = NULL;
+   int overwrite = 0;
 
    /* See if we should overwrite. */
    if (efx->overwrite != NULL) {
@@ -277,6 +290,7 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
                (efx->priority <= el->data->priority) &&
                (strcmp(efx->overwrite, el->data->overwrite)==0)) {
             e = el;
+            overwrite = 1;
             break;
          }
       }
@@ -292,6 +306,31 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
    e->duration = (duration > 0.) ? duration : efx->duration;
    e->timer = e->duration;
    e->scale = scale;
+   e->parent = parent;
+
+   /* Run Lua if necessary. */
+   if (overwrite) {
+      if (efx->lua_extend != LUA_NOREF) {
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_extend); /* f */
+         lua_pushpilot(naevL, e->parent);
+         if (nlua_pcall( e->data->lua_env, 1, 0 )) {
+            WARN(_("Effect '%s' failed to run '%s':\n%s"), e->data->name, "extend", lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+         }
+      }
+   }
+   else {
+      if (efx->lua_add != LUA_NOREF) {
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_add); /* f */
+         lua_pushpilot(naevL, e->parent);
+         if (nlua_pcall( e->data->lua_env, 1, 0 )) {
+            WARN(_("Effect '%s' failed to run '%s':\n%s"), e->data->name, "add", lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+         }
+      }
+   }
+
+   /* Sort and update. */
    qsort( efxlist, array_size(efxlist), sizeof(Effect), effect_cmpTimer );
    gui_updateEffects();
    return 0;
