@@ -88,11 +88,19 @@ function hypergate.update( dt )
 end
 
 function hypergate.can_land ()
-   --return true, "The hypergate is active."
-   return false
+   return true, "The hypergate is active."
 end
 
-function hypergate.land ()
+function hypergate.land( _s, p )
+   -- Avoid double landing
+   if p:shipvarPeek( "hypergate" ) then return end
+   p:shipvarPush( "hypergate", true )
+
+   -- Not player, just play animation and remove
+   if p ~= player.pilot() then
+      p:effectAdd("Hypergate Enter")
+      return
+   end
 end
 
 return hypergate
