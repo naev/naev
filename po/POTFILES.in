@@ -50,6 +50,7 @@ dat/effects/antimatter_taint.xml
 dat/effects/bloodlust.xml
 dat/effects/crippling_plasma.xml
 dat/effects/feral_rage_i.xml
+dat/effects/hypergate_enter.xml
 dat/effects/paralyzing_plasma.xml
 dat/effects/plasma_burn.xml
 dat/effects/plasma_burn_ii.xml
@@ -2282,6 +2283,7 @@ dat/bkg/taiomi.lua
 dat/board.lua
 dat/comm.lua
 dat/common.lua
+dat/effects/lua/hypergate_enter.lua
 dat/effects/lua/wormhole_enter.lua
 dat/events/bioship.lua
 dat/events/chapter1.lua

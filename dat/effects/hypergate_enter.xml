@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Hypergate Enter">
+ <description>Entering a hypergate!</description>
+ <duration>3</duration>
+ <overwrite>wormhole_enter</overwrite>
+ <icon>/gfx/misc/icons/viking-helmet.webp</icon>
+ <lua>effects/lua/hypergate_enter.lua</lua>
+ <shader>effects/antimatter_taint.frag</shader>
+</effect>
