@@ -79,9 +79,15 @@ function wormhole.can_land ()
    return true, "The wormhole seems to be active."
 end
 
-function wormhole.land ()
+function wormhole.land( _s, p )
    -- Avoid double landing
-   if player.evtActive("Wormhole") then return end
+   if p:shipvarPeek( "wormhole" ) then return end
+   p:shipvarPush( "wormhole", true )
+
+   -- Not player, just play animation and remove
+   if p ~= player.pilot() then
+      return
+   end
 
    var.push( "wormhole_target", target )
    naev.eventStart("Wormhole")

@@ -112,4 +112,5 @@ function wormhole ()
    player.teleport( target )
    local pp = player.pilot()
    pp:setPos( pp:pos() + vec2.newP( 100+100*rnd.rnd(), rnd.angle() ) )
+   pp:shipvarPop( "wormhole" ) -- Clear wormhole
 end
