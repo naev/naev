@@ -17,7 +17,7 @@ out vec4 colour_out;
 void main(void) {
    colour_out = texture( u_tex, tex_coord );
    if (colour_out.a <= 0.0)
-      return;
+      discard;
 
    float alpha = 1.0 - blur5( u_tex, tex_coord, dimensions.xy, 5.0 ).a;
    alpha *= smoothstep( 0.0, FADE, u_timer );
