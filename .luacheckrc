@@ -152,6 +152,11 @@ stds.API_spob = {globals={
    "render",   -- C function: space_renderSpob
    "update",   -- C function: space_updateSpob
 }}
+stds.API_effects = {globals={
+   "add",      -- C function: effect_add
+   "extend",   -- C function: effect_add
+   "remove",   -- C function: effect_update
+}}
 stds.Background.globals={"background", "renderbg", "rendermg", "renderfg", "renderov"}
 stds.Evt.globals={"create", "mem"}
 stds.GUI.globals = {
@@ -215,6 +220,7 @@ files["dat/save_updater.lua"].std = "API_save_updater"
 files["dat/shipai.lua"].std = STANDARD .. TK .. "+API_shipai"
 files["dat/snd/music.lua"].std = STANDARD .. "+Music"
 files["dat/spob/**/*.lua"].std = STANDARD .. GFX .."+Camera+API_spob"
+files["dat/effects/**/*.lua"].std = STANDARD .. "+API_effects"
 
 -- No way to be sure what type of environment will load these.
 files["dat/scripts/**/*.lua"].std = STANDARD .. TK .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK

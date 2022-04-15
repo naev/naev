@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Wormhole">
+ <description>Entering a wormhole!</description>
+ <duration>3</duration>
+ <overwrite>wormhole</overwrite>
+ <icon>/gfx/misc/icons/viking-helmet.webp</icon>
+ <lua>effects/lua/wormhole.lua</lua>
+ <shader>effects/antimatter_taint.frag</shader>
+</effect>

@@ -54,6 +54,7 @@ dat/effects/paralyzing_plasma.xml
 dat/effects/plasma_burn.xml
 dat/effects/plasma_burn_ii.xml
 dat/effects/ride_of_the_valkyries.xml
+dat/effects/wormhole.xml
 dat/faction.xml
 dat/map.xml
 dat/outfits/accessory/air_freshener.xml
@@ -2281,6 +2282,7 @@ dat/bkg/taiomi.lua
 dat/board.lua
 dat/comm.lua
 dat/common.lua
+dat/effects/lua/wormhole.lua
 dat/events/bioship.lua
 dat/events/chapter1.lua
 dat/events/cinematic/DvdFLFbattle.lua
