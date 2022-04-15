@@ -5,7 +5,7 @@ function add( p )
 end
 
 function remove( p )
-   if p ~= pilot.player() then
+   if p ~= player.pilot() then
       p:rm() -- Remove the pilot
    else
       p:control(false)
