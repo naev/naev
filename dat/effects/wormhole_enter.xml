@@ -5,5 +5,5 @@
  <overwrite>wormhole_enter</overwrite>
  <icon>/gfx/misc/icons/viking-helmet.webp</icon>
  <lua>effects/lua/wormhole_enter.lua</lua>
- <shader>effects/antimatter_taint.frag</shader>
+ <shader vertex="texture2x.vert">effects/antimatter_taint.frag</shader>
 </effect>
