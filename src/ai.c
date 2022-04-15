@@ -2322,9 +2322,11 @@ static int aiL_land( lua_State *L )
    spob = cur_system->spobs[ cur_pilot->nav_spob ];
 
    /* Check landability. */
-   if (!spob_hasService(spob,SPOB_SERVICE_LAND) ||
-         (!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) &&
-            !spob_hasService(spob,SPOB_SERVICE_INHABITED))) {
+   if ((spob->lua_can_land==LUA_NOREF) && !spob_hasService(spob,SPOB_SERVICE_INHABITED)) { /* Basic services */
+      lua_pushboolean(L,0);
+      return 1;
+   }
+   if ((!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) && !spob->can_land)) {
       lua_pushboolean(L,0);
       return 1;
    }
@@ -2347,9 +2349,20 @@ static int aiL_land( lua_State *L )
       return 1;
    }
 
-   cur_pilot->landing_delay = PILOT_LANDING_DELAY * cur_pilot->ship->dt_default;
-   cur_pilot->ptimer = cur_pilot->landing_delay;
-   pilot_setFlag( cur_pilot, PILOT_LANDING );
+   if (spob->lua_land == LUA_NOREF) {
+      cur_pilot->landing_delay = PILOT_LANDING_DELAY * cur_pilot->ship->dt_default;
+      cur_pilot->ptimer = cur_pilot->landing_delay;
+      pilot_setFlag( cur_pilot, PILOT_LANDING );
+   }
+   else {
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_land); /* f */
+      lua_pushspob( naevL, spob_index(spob) );
+      lua_pushpilot( naevL, cur_pilot->id );
+      if (nlua_pcall( spob->lua_env, 2, 0 )) {
+         WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "land", lua_tostring(naevL,-1));
+         lua_pop(naevL,1);
+      }
+   }
 
    hparam.type    = HOOK_PARAM_SPOB;
    hparam.u.la    = spob->id;
