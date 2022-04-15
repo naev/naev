@@ -16,7 +16,7 @@ out vec4 colour_out;
 void main(void) {
    colour_out = texture( u_tex, tex_coord );
    if (colour_out.a <= 0.0)
-      return;
+      discard;
 
    /* Smooth transitions from on/off. */
    float alpha = 0.75;
