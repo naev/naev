@@ -21,6 +21,9 @@
 
 static EffectData *effect_list = NULL; /* List of all available effects. */
 
+/**
+ * @brief Compares effects based on name.
+ */
 static int effect_cmp( const void *p1, const void *p2 )
 {
    const EffectData *e1 = p1;
@@ -28,6 +31,9 @@ static int effect_cmp( const void *p1, const void *p2 )
    return strcmp( e1->name, e2->name );
 }
 
+/**
+ * @brief Compares effects based on timer.
+ */
 static int effect_cmpTimer( const void *p1, const void *p2 )
 {
    const Effect *e1 = p1;
@@ -35,6 +41,9 @@ static int effect_cmpTimer( const void *p1, const void *p2 )
    return e1->timer - e2->timer;
 }
 
+/**
+ * @brief Parsess an effect.
+ */
 static int effect_parse( EffectData *efx, const char *file )
 {
    xmlNodePtr node, parent;
@@ -50,8 +59,12 @@ static int effect_parse( EffectData *efx, const char *file )
 
    /* Clear data. */
    memset( efx, 0, sizeof(EffectData) );
-   efx->duration = -1.;
-   efx->priority = 5;
+   efx->duration  = -1.;
+   efx->priority  = 5;
+   efx->lua_env   = LUA_NOREF;
+   efx->lua_add   = LUA_NOREF;
+   efx->lua_extend= LUA_NOREF;
+   efx->lua_remove= LUA_NOREF;
 
    xmlr_attr_strd(parent,"name",efx->name);
    if (efx->name == NULL)
@@ -80,6 +93,31 @@ static int effect_parse( EffectData *efx, const char *file )
          efx->u_tex     = glGetUniformLocation( efx->program, "u_tex" );
          efx->u_timer   = glGetUniformLocation( efx->program, "u_timer" );
          efx->u_elapsed = glGetUniformLocation( efx->program, "u_elapsed" );
+         continue;
+      }
+      if (xml_isNode(node,"lua")) {
+         nlua_env env;
+         size_t sz;
+         const char *filename = xml_get(node);
+         char *dat = ndata_read( filename, &sz );
+         if (dat==NULL) {
+            WARN(_("Effect '%s' failed to read Lua '%s'!"), efx->name, filename );
+            continue;
+         }
+
+         env = nlua_newEnv();
+         nlua_loadStandard( env );
+         if (nlua_dobufenv( env, dat, sz, filename ) != 0) {
+            WARN(_("Effect '%s' Lua error:\n%s"), efx->name, lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+            nlua_freeEnv( env );
+            free( dat );
+            continue;
+         }
+         efx->lua_env   = env;
+         efx->lua_add   = nlua_refenvtype( env, "add",   LUA_TFUNCTION );
+         efx->lua_extend= nlua_refenvtype( env, "extend",LUA_TFUNCTION );
+         efx->lua_remove= nlua_refenvtype( env, "remove",LUA_TFUNCTION );
          continue;
       }
 
@@ -159,6 +197,7 @@ void effect_exit (void)
 {
    for (int i=0; i<array_size(effect_list); i++) {
       EffectData *e = &effect_list[i];
+      nlua_freeEnv( e->lua_env );
       free( e->name );
       free( e->desc );
       free( e->overwrite );

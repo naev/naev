@@ -1989,7 +1989,7 @@ void spob_gfxLoad( Spob *spob )
          size_t sz;
          char *dat = ndata_read( spob->lua_file, &sz );
          if (dat==NULL) {
-            WARN(_("Outfit '%s' failed to read Lua '%s'!"), spob->name, spob->lua_file );
+            WARN(_("Spob '%s' failed to read Lua '%s'!"), spob->name, spob->lua_file );
             return;
          }
 
