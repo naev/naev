@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Wormhole Exit">
+ <description>Exiting a wormhole!</description>
+ <duration>3</duration>
+ <overwrite>wormhole_exit</overwrite>
+ <icon>/gfx/misc/icons/galaxy.webp</icon>
+ <lua>effects/lua/wormhole_exit.lua</lua>
+ <shader vertex="texture2x.vert">effects/wormhole_exit.frag</shader>
+</effect>

@@ -56,6 +56,7 @@ dat/effects/plasma_burn.xml
 dat/effects/plasma_burn_ii.xml
 dat/effects/ride_of_the_valkyries.xml
 dat/effects/wormhole_enter.xml
+dat/effects/wormhole_exit.xml
 dat/faction.xml
 dat/map.xml
 dat/outfits/accessory/air_freshener.xml
@@ -2285,6 +2286,7 @@ dat/comm.lua
 dat/common.lua
 dat/effects/lua/hypergate_enter.lua
 dat/effects/lua/wormhole_enter.lua
+dat/effects/lua/wormhole_exit.lua
 dat/events/bioship.lua
 dat/events/chapter1.lua
 dat/events/cinematic/DvdFLFbattle.lua
