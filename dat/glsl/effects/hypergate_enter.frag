@@ -9,35 +9,28 @@ uniform float u_r       = 0.0;
 uniform float u_timer   = 0.0;
 uniform float u_elapsed = 0.0;
 
-const float TIME_GLOW   = 1.1;
 const float TIME_TOTAL  = 3.0;
-const vec3 GLOW_COL     = vec3( 0.2, 0.8, 0.8 );
+const float AMPLITUDE   = 30.0;
+const float SPEED       = 30.0;
+const float STRENGTH    = 0.2;
+const vec3 GLOW_COL     = vec3(1.0);
 
 in vec2 tex_coord;
+in vec2 tex_scale;
 out vec4 colour_out;
 
 void main(void) {
-   vec2 uv = tex_coord;
-   float blur = 3.0;
+   vec2 uv = tex_coord / tex_scale;
+   vec2 dir = uv - vec2(0.5);
+   float dist = length(dir) * dimensions.z;
+   float progress = u_elapsed / TIME_TOTAL;
 
-   colour_out = texture( u_tex, uv );
-
-   if (u_elapsed > TIME_GLOW)
-      blur *= 1.0 + (u_elapsed-TIME_GLOW) * 3.0;
-
-   float glow = blur13( u_tex, uv, dimensions.xy, blur ).a;
-   glow = 3.0*glow;
-
-   if (u_elapsed < 1.0 )
-      glow *= u_elapsed;
-
-   colour_out.a  += glow;
-   colour_out.rgb += min(colour_out.a, glow) * GLOW_COL;
-
-   if (u_elapsed > TIME_GLOW) {
-      vec2 coord = 0.05 * uv * dimensions.xy / dimensions.z + u_r;
-      float n = 0.5 + 0.5 * snoise( coord );
-
-      colour_out.a *= min( 1.0, 1.0 + (TIME_TOTAL-TIME_GLOW) * (n - (u_elapsed-TIME_GLOW))  );
-   }
+   vec2 off = progress * dir * sin( dist * AMPLITUDE - progress * SPEED );
+   colour_out = texture( u_tex, (uv + STRENGTH*off) * tex_scale );
+   colour_out.rgb += progress * GLOW_COL;
+   if (progress > 0.5)
+      colour_out.a   *= 2.0*(1.0-progress);
+   //colour_out = texture( u_tex, uv * tex_scale );
+   //if (dist < 0.25 )
+   //   colour_out += vec4(0.5);
 }

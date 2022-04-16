@@ -88,7 +88,7 @@ static int effect_parse( EffectData *efx, const char *file )
          char *vertex;
          xmlr_attr_strd(node,"vertex",vertex);
          if (vertex == NULL)
-            vertex = strdup("texture.vert");
+            vertex = strdup("effect.vert");
          efx->program   = gl_program_vert_frag( vertex, xml_get(node) );
          free( vertex );
          efx->vertex    = glGetAttribLocation( efx->program, "vertex" );
