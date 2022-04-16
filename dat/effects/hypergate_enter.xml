@@ -5,5 +5,5 @@
  <overwrite>wormhole_enter</overwrite>
  <icon>/gfx/misc/icons/viking-helmet.webp</icon>
  <lua>effects/lua/hypergate_enter.lua</lua>
- <shader>effects/hypergate_enter.frag</shader>
+ <shader vertex="texture2x.vert">effects/hypergate_enter.frag</shader>
 </effect>

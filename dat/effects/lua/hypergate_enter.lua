@@ -11,5 +11,6 @@ function remove( p )
       p:control(false)
       p:setInvincible(false)
       p:setInvisible(false)
+      p:shipvarPop( "hypergate" )
    end
 end

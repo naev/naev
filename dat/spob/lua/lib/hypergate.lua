@@ -96,11 +96,7 @@ function hypergate.land( _s, p )
    if p:shipvarPeek( "hypergate" ) then return end
    p:shipvarPush( "hypergate", true )
 
-   -- Not player, just play animation and remove
-   if p ~= player.pilot() then
-      p:effectAdd("Hypergate Enter")
-      return
-   end
+   p:effectAdd("Hypergate Enter")
 end
 
 return hypergate
