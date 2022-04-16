@@ -14,7 +14,7 @@ uniform float u_elapsed = 0.0;
 
 const float TIME_GLOW   = 1.1;
 const float TIME_TOTAL  = 3.0;
-const vec3 GLOW_COL     = vec3( 0.2, 0.8, 0.8 );
+const vec3 GLOW_COL     = vec3( 0.1, 0.8, 1.0 );
 
 in vec2 tex_coord;
 out vec4 colour_out;
