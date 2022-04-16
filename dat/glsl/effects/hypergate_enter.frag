@@ -31,9 +31,8 @@ void main(void) {
    if (u_elapsed < 1.0 )
       glow *= u_elapsed;
 
-   colour_out += vec4( GLOW_COL, glow );
-   //colour_out.rgb = blendGlow( colour_out.rgb, GLOW_COL, glow );
-   //colour_out.a  += glow;
+   colour_out.a  += glow;
+   colour_out.rgb += min(colour_out.a, glow) * GLOW_COL;
 
    if (u_elapsed > TIME_GLOW) {
       vec2 coord = 0.05 * uv * dimensions.xy / dimensions.z + u_r;
