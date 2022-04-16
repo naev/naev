@@ -295,7 +295,18 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
                (efx->priority <= el->data->priority) &&
                (strcmp(efx->overwrite, el->data->overwrite)==0)) {
             e = el;
-            overwrite = 1;
+            if (e->data == efx)
+               overwrite = 1;
+            else  {
+               if (e->data->lua_remove != LUA_NOREF) {
+                  lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_remove); /* f */
+                  lua_pushpilot(naevL, e->parent);
+                  if (nlua_pcall( e->data->lua_env, 1, 0 )) {
+                     WARN(_("Effect '%s' failed to run '%s':\n%s"), e->data->name, "remove", lua_tostring(naevL,-1));
+                     lua_pop(naevL,1);
+                  }
+               }
+            }
             break;
          }
       }
