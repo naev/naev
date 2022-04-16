@@ -40,10 +40,10 @@ if host_machine.system() == 'darwin'
     lj_defines += '-DLUAJIT_UNWIND_EXTERNAL'
 elif cc.get_define('LJ_NO_UNWIND', args: ['-include', 'lj_arch.h'], include_directories: luajit_source_dir) != '1'
     # Browbeat Meson into compiling something at configure time and lettng us look at the resulting binary.
-    run_command(cc.cmd_array() + ['-c', '-o', 'tmpunwind.o', files('lj_external_unwind_test.c')])
+    run_command(cc.cmd_array() + ['-c', '-o', 'tmpunwind.o', files('lj_external_unwind_test.c')], check: true)
     # Grepping a binary file may require -a or -U depending on the grep. (BSD and busybox are picky in opposite directions.)
     foreach bloody_option : ['-a', '-U']
-        if run_command('grep', '-q', bloody_option, '-e', 'eh_frame', '-e', '__unwind_info', 'tmpunwind.o').returncode() == 0
+        if run_command('grep', '-q', bloody_option, '-e', 'eh_frame', '-e', '__unwind_info', 'tmpunwind.o', check: false).returncode() == 0
             lj_defines += '-DLUAJIT_UNWIND_EXTERNAL'
         endif
     endforeach

@@ -16,7 +16,7 @@ summary('System OpenGL Version', build_gl_version, section: 'Tests')
 if build_gl_version.version_compare('<3.1')
     message('Could not detect OpenGL >= 3.1. Attempting to find software renderer for tests.')
     if build_machine.system() in ['cygwin', 'windows']
-        run_command('ln', '-f', '-s', '/mingw64/bin/opengl32.dll', meson.build_root())
+        run_command('ln', '-f', '-s', '/mingw64/bin/opengl32.dll', meson.build_root(), check: true)
         test_renderer = 'Mesa'
         note = 'Found Mesa available as a software renderer.'
     elif build_machine.system() != 'darwin'
