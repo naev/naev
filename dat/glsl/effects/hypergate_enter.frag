@@ -30,7 +30,4 @@ void main(void) {
    colour_out.rgb += progress * GLOW_COL;
    if (progress > 0.5)
       colour_out.a   *= 2.0*(1.0-progress);
-   //colour_out = texture( u_tex, uv * tex_scale );
-   //if (dist < 0.25 )
-   //   colour_out += vec4(0.5);
 }

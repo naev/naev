@@ -5,5 +5,5 @@
  <overwrite>wormhole_enter</overwrite>
  <icon>/gfx/misc/icons/galaxy.webp</icon>
  <lua>effects/lua/hypergate_enter.lua</lua>
- <shader vertex="effect2x.vert">effects/hypergate_enter.frag</shader>
+ <shader vertex="effect15x.vert">effects/hypergate_enter.frag</shader>
 </effect>
