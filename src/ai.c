@@ -2326,10 +2326,12 @@ static int aiL_land( lua_State *L )
       lua_pushboolean(L,0);
       return 1;
    }
+   /* TODO can_land is player-specific, we need to implement this on a pilot level...
    if ((!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) && !spob->can_land)) {
       lua_pushboolean(L,0);
       return 1;
    }
+   */
 
    /* Check landing functionality. */
    if (pilot_isFlag(cur_pilot, PILOT_NOLAND)) {
