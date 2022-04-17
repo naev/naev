@@ -89,11 +89,13 @@ function create ()
    traded_amount = "hypconst_"..sysfct:nameRaw().."_traded"
 
    -- Add the head guy
-   boss = pilot.add( shiptype, sysfct, pos, shipname )
-   boss:setHilight(true)
-   boss:control()
-   boss:brake()
-   boss:setDir( rnd.angle() )
+   boss = pilot.add( shiptype, sysfct, pos, shipname, {ai="guard"} )
+   local pmem = boss:memory()
+   pmem.aggressive = false
+   if not boss:hostile() then
+      boss:setHilight(true)
+   end
+
    hook.pilot( boss, "hail", "boss_hail" )
    if var.peek( talked_check ) then
       boss:setActiveBoard(true)
@@ -119,7 +121,9 @@ function boss_first ()
    local msg = boss_message_list[ id ] or _("TODO")
 
    boss:broadcast( msg )
-   boss:hailPlayer()
+   if not boss:hostile() then
+      boss:hailPlayer()
+   end
 end
 
 function boss_hail ()
@@ -128,15 +132,19 @@ function boss_hail ()
    local b = ccomm.newCharacter( vn, boss )
    vn.transition()
 
-   if not var.peek( talked_check ) then
-      b(fmt.f(_([["We are looking for miners to obtain valuable minerals such as {minerals}. Given the difficulty of acquiring them, we are willing to pay {markup}% of the market price. If you are interested, please bring the minerals and board to do the transaction."]]),{minerals=fmt.list(mineral_list),markup=markup*100}))
-      vn.func( function ()
-         boss:setActiveBoard(true)
-         hook.pilot( boss, "board", "boss_board" )
-         var.push( talked_check, true )
-      end )
+   if boss:hostile() then
+      b(_([["We don't deal with the likes of you!"]]))
    else
-      b(_([["Do you have minerals available? If so, please board for the transaction."]]))
+      if not var.peek( talked_check ) then
+         b(fmt.f(_([["We are looking for miners to obtain valuable minerals such as {minerals}. Given the difficulty of acquiring them, we are willing to pay {markup}% of the market price. If you are interested, please bring the minerals and board to do the transaction."]]),{minerals=fmt.list(mineral_list),markup=markup*100}))
+         vn.func( function ()
+            boss:setActiveBoard(true)
+            hook.pilot( boss, "board", "boss_board" )
+            var.push( talked_check, true )
+         end )
+      else
+         b(_([["Do you have minerals available? If so, please board for the transaction."]]))
+      end
    end
 
    vn.run()
@@ -146,6 +154,17 @@ end
 
 function boss_board ()
    local pp = player.pilot()
+
+   if boss:hostile() then
+      local _a, _s, _str, disabled = boss:health()
+      if disabled then
+         return -- Should allow the player to ransack the ship
+      end
+      player.unboard()
+      player.msg(_("You are not allowed to board the ship!"))
+      return
+   end
+
    local minerals = {}
    for i,m in ipairs(mineral_list) do
       minerals[i] = commodity.get(m)
