@@ -495,6 +495,8 @@ glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
 /**
  * @brief Check to see if a texture matching a path already exists.
  *
+ * Note this increments the used counter if it exists.
+ *
  *    @param path Path to the texture.
  *    @param sx X sprites.
  *    @param sy Y sprites.
@@ -511,7 +513,7 @@ static glTexture* gl_texExists( const char* path, int sx, int sy )
       for (glTexList *cur=texture_list; cur!=NULL; cur=cur->next) {
          if ((strcmp(path,cur->tex->name)==0) &&
                (cur->sx==sx) && (cur->sy==sy)) {
-            cur->used += 1;
+            cur->used++;
             return cur->tex;
          }
       }
@@ -805,7 +807,7 @@ glTexture* gl_dupTexture( const glTexture *texture )
    if (texture_list != NULL) {
       for (glTexList *cur=texture_list; cur!=NULL; cur=cur->next) {
          if (texture == cur->tex) {
-            cur->used += 1;
+            cur->used++;
             return cur->tex;
          }
       }
