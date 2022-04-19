@@ -110,7 +110,7 @@ end
 -- Enters Crimson Gauntlet
 function enter_the_ring ()
    -- Teleport the player to the Crimson Gauntlet and hide the rest of the universe
-   hook.enter( mem.gauntlet_enter )
+   hook.safe( mem.gauntlet_enter ) -- Will defer one frame, hook.enter triggers in the middle of enter_the_ring which is undesirable
    gauntlet.enter_the_ring()
 
    -- Player lost info
