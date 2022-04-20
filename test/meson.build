@@ -32,11 +32,11 @@ if (luacheck.found())
 # https://luacheck.readthedocs.io/en/stable/cli.html#command-line-options
 
     # This wrapper will return a non-zero value for luacheck exit codes 2-4 as these would be considered critical failures.
-    luacheck_wrapper = find_program(meson.source_root() + '/utils/luacheck.sh')
+    exitcode_wrapper = find_program(meson.source_root() + '/utils/exitcode_wrapper.sh')
 
     test('luacheck',
-        luacheck_wrapper,
-        args: ['dat', 'docs', 'extras', 'utils', '--no-color'],
+        exitcode_wrapper,
+        args: [luacheck.full_path(), 'dat', 'docs', 'extras', 'utils', '--no-color'],
         workdir: meson.source_root(),
         )
 endif
