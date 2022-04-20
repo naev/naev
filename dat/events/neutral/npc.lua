@@ -421,12 +421,7 @@ end
 local function spawnNPC()
    -- Select a faction for the NPC. NPCs may not have a specific faction.
    local npcname = _("Civilian")
-   local factions = {}
    local func = nil
-   for i, _ in pairs(msg_lore) do
-      factions[#factions + 1] = i
-   end
-
    local nongeneric = false
 
    -- Choose faction, overriding if necessary

@@ -174,7 +174,7 @@ function comm( plt )
             bribe_group = bribe_fleet( plt )
             bribeable = nearby_bribeable( plt ) -- global
             bribeable_all = nearby_bribeable( plt, true ) -- global
-            if #bribeable_all > 1 and not (#bribeable_all==#bribeable) then
+            if #bribeable_all > 1 and #bribeable_all ~= #bribeable then
                table.insert( opts, 1, {
                   fmt.f(
                      n_("Bribe {n} nearby {fct_list} pilot",
