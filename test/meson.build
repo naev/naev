@@ -27,16 +27,9 @@ if (ascli_exe.found())
 endif
 
 if (luacheck.found())
-
-# If Meson is to be believed Luacheck will fail if any warnings are present due to a non-zero return value. See luacheck return values at:
-# https://luacheck.readthedocs.io/en/stable/cli.html#command-line-options
-
-    # This wrapper will return a non-zero value for luacheck exit codes 2-4 as these would be considered critical failures.
-    exitcode_wrapper = find_program(meson.source_root() + '/utils/exitcode_wrapper.sh')
-
     test('luacheck',
-        exitcode_wrapper,
-        args: [luacheck.full_path(), 'dat', 'docs', 'extras', 'utils', '--no-color'],
+        luacheck,
+        args: ['dat', 'docs', 'extras', 'utils', '--no-color'],
         workdir: meson.source_root(),
         )
 endif
