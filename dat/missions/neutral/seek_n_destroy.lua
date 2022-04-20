@@ -453,7 +453,7 @@ function space_clue( target )
       elseif choice == 3 then -- Threaten the pilot
 
          -- Everybody except the pirates takes offence if you threaten them
-         if not target:faction() == faction.get("Pirate") then
+         if target:faction() ~= faction.get("Pirate") then
             faction.modPlayerSingle( target:faction(), -1 )
          end
 

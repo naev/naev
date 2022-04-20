@@ -164,7 +164,7 @@ function timer ()
    mem.timer_hook = hook.timer( 1.0, "timer" )
 
    -- Have to be in the mission system
-   if not system.cur() == missys then return end
+   if system.cur() ~= missys then return end
 
    if mem.stage==1 and player.pos():dist( start_planet:pos() ) <= start_planet_r then
       mem.stage = 2
