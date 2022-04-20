@@ -504,7 +504,7 @@ end
 function checkMace()
    local weap = player.pilot():outfits("weapon")
    for i, w in ipairs(weap) do
-      if not (w == outfit.get("TeraCom Mace Launcher")) then
+      if w ~= outfit.get("TeraCom Mace Launcher") then
          return false
       end
    end
