@@ -717,6 +717,7 @@ void player_cleanup (void)
    /* Free stuff. */
    free(player.name);
    player.name = NULL;
+   free( player.ps.acquired );
    memset( &player.ps, 0, sizeof(PlayerShip_t) );
 
    free(player_message_noland);

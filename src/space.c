@@ -367,6 +367,7 @@ int spob_addService( Spob *p, int service )
       p->commodityPrice = array_create( CommodityPrice );
       for (int i=0; i<array_size(stdList); i++)
          spob_addCommodity( p, stdList[i] );
+      array_free( stdList );
    }
 
    return 0;

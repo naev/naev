@@ -124,6 +124,7 @@ static int effect_parse( EffectData *efx, const char *file )
          efx->lua_add   = nlua_refenvtype( env, "add",   LUA_TFUNCTION );
          efx->lua_extend= nlua_refenvtype( env, "extend",LUA_TFUNCTION );
          efx->lua_remove= nlua_refenvtype( env, "remove",LUA_TFUNCTION );
+         free( dat );
          continue;
       }
 

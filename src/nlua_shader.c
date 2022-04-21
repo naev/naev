@@ -140,6 +140,7 @@ static int shaderL_gc( lua_State *L )
    if (shader->pp_id > 0)
       render_postprocessRm( shader->pp_id );
    glDeleteProgram( shader->program );
+   array_free( shader->tex );
    free(shader->uniforms);
    return 0;
 }
