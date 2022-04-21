@@ -752,17 +752,17 @@ static int playerL_takeoff( lua_State *L )
  *
  * Note that this will teleport the player to the system in question as necessary.
  *
- *    @luatparam Spob pnt Spob to land the player on.
+ *    @luatparam Spob spb Spob to land the player on.
  * @luafunc land
  */
 static int playerL_land( lua_State *L )
 {
    PLAYER_CHECK();
 
-   Spob *pnt = luaL_validspob(L,1);
-   const char *sysname = spob_getSystem( pnt->name );
+   Spob *spob = luaL_validspob(L,1);
+   const char *sysname = spob_getSystem( spob->name );
    if (sysname == NULL)
-      NLUA_ERROR(L,_("Spob '%s' is not in a system!"), pnt->name);
+      NLUA_ERROR(L,_("Spob '%s' is not in a system!"), spob->name);
 
    if (strcmp(sysname,cur_system->name) != 0) {
       /* Refer to playerL_teleport for the voodoo that happens here. */
@@ -780,10 +780,23 @@ static int playerL_land( lua_State *L )
       space_init( sysname, 0 );
 
       ovr_initAlpha();
-
-      player.p->solid->pos = pnt->pos;
    }
-   space_queueLand( pnt );
+   player.p->solid->pos = spob->pos; /* Set position to target. */
+
+   /* Do whatever the spob wants to do. */
+   if (spob->lua_land != LUA_NOREF) {
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_land); /* f */
+      lua_pushspob( naevL, spob_index(spob) );
+      lua_pushpilot( naevL, player.p->id );
+      if (nlua_pcall( spob->lua_env, 2, 0 )) {
+         WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "land", lua_tostring(naevL,-1));
+         lua_pop(naevL,1);
+      }
+
+      return 0;
+   }
+
+   space_queueLand( spob );
    return 0;
 }
 
