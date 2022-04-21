@@ -1700,7 +1700,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
    char sdet[NUM2STRLEN], seva[NUM2STRLEN], sste[NUM2STRLEN];
    char smass[NUM2STRLEN], sfuel[NUM2STRLEN];
    Pilot *ship, *prevship;
-   PlayerShip_t *ps;
+   const PlayerShip_t *ps;
    char *nt;
    int onboard, cargo, jumps, favourite, deployed, x, h;
    int ww, wh, sw, sh, hacquired, hname;
