@@ -227,6 +227,8 @@ static int osd_free( OSD_t *osd )
    }
    array_free(osd->msg);
    array_free(osd->items);
+   for (int i=0; i<array_size(osd->titlew); i++)
+      free(osd->titlew[i]);
    array_free(osd->titlew);
 
    return 0;
