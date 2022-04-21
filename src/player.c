@@ -735,6 +735,7 @@ void player_cleanup (void)
    for (int i=0; i<array_size(player_stack); i++) {
       pilot_rmFlag( player_stack[i].p, PILOT_NOFREE );
       pilot_free( player_stack[i].p );
+      free( player_stack[i].acquired );
    }
    array_free(player_stack);
    player_stack = NULL;
