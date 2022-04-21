@@ -192,7 +192,7 @@ int land_doneLoading (void)
 int can_swapEquipment( const char *shipname )
 {
    int diff;
-   PlayerShip_t *ps = player_getPlayerShip( shipname );
+   const PlayerShip_t *ps = player_getPlayerShip( shipname );
    Pilot *newship;
 
    if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */

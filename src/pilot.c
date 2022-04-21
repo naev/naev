@@ -3478,6 +3478,7 @@ void pilots_free (void)
    array_free(pilot_stack);
    pilot_stack = NULL;
    player.p = NULL;
+   free( player.ps.acquired );
    memset( &player.ps, 0, sizeof(PlayerShip_t) );
 }
 
@@ -3563,6 +3564,7 @@ void pilots_cleanAll (void)
    if (player.p != NULL) {
       pilot_free(player.p);
       player.p = NULL;
+      free( player.ps.acquired );
       memset( &player.ps, 0, sizeof(PlayerShip_t) );
    }
    array_erase( &pilot_stack, array_begin(pilot_stack), array_end(pilot_stack) );

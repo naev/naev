@@ -717,6 +717,7 @@ void player_cleanup (void)
    /* Free stuff. */
    free(player.name);
    player.name = NULL;
+   free( player.ps.acquired );
    memset( &player.ps, 0, sizeof(PlayerShip_t) );
 
    free(player_message_noland);
@@ -734,6 +735,7 @@ void player_cleanup (void)
    for (int i=0; i<array_size(player_stack); i++) {
       pilot_rmFlag( player_stack[i].p, PILOT_NOFREE );
       pilot_free( player_stack[i].p );
+      free( player_stack[i].acquired );
    }
    array_free(player_stack);
    player_stack = NULL;
