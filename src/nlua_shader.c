@@ -225,6 +225,8 @@ static int shaderL_new( lua_State *L )
    ATTRIB( VertexPosition );
    ATTRIB( VertexTexCoord );
    ATTRIB( VertexColor );
+#undef ATTRIB
+#undef UNIFORM
 
    /* Do other uniforms. */
    glGetProgramiv( shader.program, GL_ACTIVE_UNIFORMS, &shader.nuniforms );
