@@ -571,6 +571,7 @@ int asteroids_load (void)
       array_push_back( &asteroid_gfx, gl_newImage( file, OPENGL_TEX_MIPMAPS ) );
    }
 
+   PHYSFS_freeList( asteroid_files );
    return 0;
 }
 
