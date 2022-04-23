@@ -48,6 +48,7 @@ int difficulty_load (void)
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,DIFFICULTY_XML_ID)) {
       ERR( _("Malformed '%s' file: missing root element '%s'"), DIFFICULTY_PATH, DIFFICULTY_XML_ID);
+      xmlFreeDoc( doc );
       return -1;
    }
 
@@ -103,6 +104,7 @@ int difficulty_load (void)
    if (conf.difficulty != NULL)
       difficulty_setGlobal( difficulty_get( conf.difficulty ) );
 
+   xmlFreeDoc( doc );
    return 0;
 }
 

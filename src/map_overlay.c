@@ -883,6 +883,8 @@ void ovr_mrkFree (void)
    /* Free array. */
    array_free( ovr_markers );
    ovr_markers = NULL;
+   array_free( ovr_render_safelanes );
+   ovr_render_safelanes = NULL;
 }
 
 /**
