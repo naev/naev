@@ -151,8 +151,10 @@ static int camL_setZoom( lua_State *L )
    if (zoom > 0.) {
       zoom = 1.0 / zoom;
       cam_zoomOverride( 1 );
-      if (hard_over)
+      if (hard_over) {
          cam_setZoom( zoom );
+         cam_setZoomTarget( zoom );
+      }
       else
          cam_setZoomTarget( zoom );
    }

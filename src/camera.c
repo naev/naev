@@ -400,7 +400,7 @@ static void cam_updateManualZoom( double dt )
    /* Gradually zoom in/out. */
    d  = CLAMP( -conf.zoom_speed, conf.zoom_speed, target_Z - camera_Z);
    d *= dt / dt_mod; /* Remove dt dependence. */
-   if (d < 0) /** Speed up if needed. */
+   if (d < 0.) /** Speed up if needed. */
       d *= 2.;
    camera_Z =  CLAMP( conf.zoom_far, conf.zoom_near, camera_Z + d );
 }
