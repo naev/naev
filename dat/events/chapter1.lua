@@ -22,7 +22,7 @@ local pp_shaders = require "pp_shaders"
 local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
 
--- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp7 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
+-- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp7 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_zoom cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
 
 function create ()
    evt.finish(false) -- disabled for now
@@ -347,15 +347,19 @@ function cutscene_posttext ()
    pangate( gatename )
    local hyp = spob.get( gatename )
    camera.set( hyp:pos(), true )
-   camera.setZoom( 1, true )
 
-   hook.timer( 4.3, "fadein" )
+   hook.timer( 4.3, "cutscene_nebu_zoom" )
    hook.timer( 5, "cutscene_nebu" )
+end
+
+function cutscene_nebu_zoom ()
+   fadein()
+   camera.setZoom( 1, true )
+   camera.setZoom( 3, false, 0.05 ) -- Slowly zoom out
 end
 
 function cutscene_nebu ()
    fg_setup() -- Remove text
-   camera.setZoom( 3, false ) -- Slowly zoo
 
    -- TODO omnious music and "ghost" ships
 
