@@ -348,7 +348,6 @@ function cutscene_posttext ()
    local hyp = spob.get( gatename )
    camera.set( hyp:pos(), true )
    camera.setZoom( 1, true )
-   camera.setZoom( 3, false )
 
    hook.timer( 4.3, "fadein" )
    hook.timer( 5, "cutscene_nebu" )
@@ -356,7 +355,7 @@ end
 
 function cutscene_nebu ()
    fg_setup() -- Remove text
-   camera.setZoom() -- Reset zoom
+   camera.setZoom( 3, false ) -- Slowly zoo
 
    -- TODO omnious music and "ghost" ships
 
@@ -371,6 +370,7 @@ function cutscene_nebu_fade ()
    -- Return to system and restore camera
    player.teleport( origsys, false, true )
    camera.set( nil, true )
+   camera.setZoom() -- Reset zoom
    player.cinematics( false )
    fadein()
    hook.timer( 2, "cutscene_cleanup" )
