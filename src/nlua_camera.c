@@ -140,12 +140,14 @@ static int camL_get( lua_State *L )
  *
  *    @luatparam number zoom Level of zoom to use (1 would indicate 1 unit = 1 pixel while 2 would be 1 unit = 2 pixels)
  *    @luatparam[opt=false] boolean hard_over Indicates that the camera should change the zoom gradually instead of instantly.
+ *    @luatparam[opt=naev.conf().zoom_speed]  number speed Rate of change to use.
  * @luafunc setZoom
  */
 static int camL_setZoom( lua_State *L )
 {
    double zoom = luaL_optnumber(L,1,-1.);
    int hard_over = lua_toboolean(L,2);
+   double speed = luaL_optnumber(L,3,conf.zoom_speed);
 
    /* Handle arguments. */
    if (zoom > 0.) {
@@ -153,14 +155,14 @@ static int camL_setZoom( lua_State *L )
       cam_zoomOverride( 1 );
       if (hard_over) {
          cam_setZoom( zoom );
-         cam_setZoomTarget( zoom );
+         cam_setZoomTarget( zoom, speed );
       }
       else
-         cam_setZoomTarget( zoom );
+         cam_setZoomTarget( zoom, speed );
    }
    else {
       cam_zoomOverride( 0 );
-      cam_setZoomTarget( 1. );
+      cam_setZoomTarget( 1., speed );
    }
    return 0;
 }

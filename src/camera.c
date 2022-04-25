@@ -43,6 +43,7 @@ static double target_X     = 0.; /**< Target X position. */
 static double target_Y     = 0.; /**< Target Y position. */
 static int camera_fly      = 0; /**< Camera is flying to target. */
 static double camera_flyspeed = 0.; /**< Speed when flying. */
+static double camera_zoomspeed = 0.; /**< Speed when zooming. */
 
 /*
  * Prototypes.
@@ -80,10 +81,12 @@ void cam_setZoom( double zoom )
  * This should be used in conjunction with manual zoom.
  *
  *    @param zoom Zoom to try to set camera to.
+ *    @param speed Speed of change to use.
  */
-void cam_setZoomTarget( double zoom )
+void cam_setZoomTarget( double zoom, double speed )
 {
    target_Z = CLAMP( conf.zoom_far, conf.zoom_near, zoom );
+   camera_zoomspeed = speed;
 }
 
 /**
@@ -398,7 +401,7 @@ static void cam_updateManualZoom( double dt )
       return;
 
    /* Gradually zoom in/out. */
-   d  = CLAMP( -conf.zoom_speed, conf.zoom_speed, target_Z - camera_Z);
+   d  = CLAMP( -camera_zoomspeed, camera_zoomspeed, target_Z - camera_Z);
    d *= dt / dt_mod; /* Remove dt dependence. */
    if (d < 0.) /** Speed up if needed. */
       d *= 2.;

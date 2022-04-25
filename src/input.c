@@ -1150,7 +1150,7 @@ static void input_keyevent( const int event, SDL_Keycode key, const SDL_Keymod m
 static void input_clickZoom( double modifier )
 {
    if (player.p != NULL)
-      cam_setZoomTarget( cam_getZoomTarget() * modifier );
+      cam_setZoomTarget( cam_getZoomTarget() * modifier, conf.zoom_speed );
 }
 
 /**
