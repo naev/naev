@@ -3665,7 +3665,7 @@ void pilots_render( double dt )
       Pilot *p = pilot_stack[i];
 
       /* Invisible, not doing anything. */
-      if (pilot_isFlag(p, PILOT_HIDE))
+      if (pilot_isFlag(p, PILOT_HIDE) || pilot_isFlag(p, PILOT_DELETE))
          continue;
 
       if (!pilot_isFlag( p, PILOT_PLAYER ))
@@ -3684,7 +3684,7 @@ void pilots_renderOverlay( double dt )
       Pilot *p = pilot_stack[i];
 
       /* Invisible, not doing anything. */
-      if (pilot_isFlag(p, PILOT_HIDE))
+      if (pilot_isFlag(p, PILOT_HIDE) || pilot_isFlag(p, PILOT_DELETE))
          continue;
 
       if (!pilot_isFlag( p, PILOT_PLAYER ))
