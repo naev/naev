@@ -20,6 +20,7 @@
 #define MANUAL_ZOOM_DEFAULT            0     /**< Whether or not to enable manual zoom controls. */
 #define ZOOM_FAR_DEFAULT               0.5   /**< Far zoom distance (smaller is further) */
 #define ZOOM_NEAR_DEFAULT              1.0   /**< Close zoom distance (bigger is larger) */
+#define ZOOM_SPEED_DEFAULT             0.25 /**< Rate of change of zoom (bigger is faster). */
 #define MAP_OVERLAY_OPACITY_DEFAULT    0.3   /**< Opacity fraction (0-1) for the overlay map. */
 #define INPUT_MESSAGES_DEFAULT         5     /**< Amount of messages to display. */
 #define DIFFICULTY_DEFAULT             NULL  /**< Default difficulty. */
