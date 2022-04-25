@@ -329,7 +329,7 @@ static void nebu_renderPuffs( int below_player )
       return;
 
    for (int i=0; i<nebu_npuffs; i++) {
-      double x, s;
+      double x, y, s;
       mat4 projection;
       NebulaPuff *puff = &nebu_puffs[i];
 
