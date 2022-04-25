@@ -2338,6 +2338,8 @@ void pilot_update( Pilot* pilot, double dt )
 
    /* Update effects. */
    nchg += effect_update( &pilot->effects, dt );
+   if (pilot_isFlag( pilot, PILOT_DELETE ))
+      return; /* It's possible for effects to remove the pilot causing future Lua to be unhappy. */
 
    /* Must recalculate stats because something changed state. */
    if (nchg > 0)
@@ -2459,6 +2461,8 @@ void pilot_update( Pilot* pilot, double dt )
    pilot->otimer += dt;
    while (pilot->otimer > PILOT_OUTFIT_LUA_UPDATE_DT) {
       pilot_outfitLUpdate( pilot, PILOT_OUTFIT_LUA_UPDATE_DT );
+      if (pilot_isFlag( pilot, PILOT_DELETE ))
+         return; /* Same as with the effects, it is theoretically possible for the outfit to remove the pilot. */
       pilot->otimer -= PILOT_OUTFIT_LUA_UPDATE_DT;
    }
 }
