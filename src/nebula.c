@@ -339,6 +339,7 @@ static void nebu_renderPuffs( int below_player )
          continue;
 
       /* Set up variables and do quick visibility check. */
+      /* TODO this is weird in the sense that size gets scaled, but position doesn't with zoom... Probably should be harmonized... */
       s = puff->s * cam_getZoom();
       x = puff->pos.x - NEBULA_PUFF_BUFFER - s;
       y = puff->pos.y - NEBULA_PUFF_BUFFER - s;
