@@ -21,6 +21,7 @@
 #include "player.h"
 #include "rng.h"
 #include "spfx.h"
+#include "vec2.h"
 
 #define NEBULA_PUFF_BUFFER   300 /**< Nebula buffer */
 
@@ -47,8 +48,7 @@ static mat4 nebu_render_P;
  * @brief Represents a nebula puff.
  */
 typedef struct NebulaPuff_ {
-   double x;   /**< X position. */
-   double y;   /**< Y position */
+   vec2 pos;   /**< Position. */
    double height;/**< Height vs player (1.0==player) */
    double s;   /**< Size of the puff (radius). */
    double rx;  /**< Random seed. */
@@ -234,6 +234,33 @@ void nebu_update( double dt )
 
    /* At density 1000 you have zero visibility. */
    nebu_view = (1000. - nebu_density) * mod + bonus;
+
+   /* Below only care if not simulating. */
+   if (space_isSimulation())
+      return;
+
+   /* Update puffs. */
+   for (int i=0; i<nebu_npuffs; i++) {
+      double dx, dy;
+      NebulaPuff *puff = &nebu_puffs[i];
+
+      /* Get camera stuff. */
+      cam_getDPos( &dx, &dy );
+
+      /* Calculate new position */
+      puff->pos.x -= dx * puff->height;
+      puff->pos.y -= dy * puff->height;
+
+      /* Check boundaries */
+      if (puff->pos.x > SCREEN_W + NEBULA_PUFF_BUFFER)
+         puff->pos.x -= SCREEN_W + 2.*NEBULA_PUFF_BUFFER;
+      else if (puff->pos.y > SCREEN_H + NEBULA_PUFF_BUFFER)
+         puff->pos.y -= SCREEN_H + 2.*NEBULA_PUFF_BUFFER;
+      else if (puff->pos.x < -NEBULA_PUFF_BUFFER)
+         puff->pos.x += SCREEN_W + 2.*NEBULA_PUFF_BUFFER;
+      else if (puff->pos.y < -NEBULA_PUFF_BUFFER)
+         puff->pos.y += SCREEN_H + 2.*NEBULA_PUFF_BUFFER;
+   }
 }
 
 /**
@@ -244,8 +271,7 @@ void nebu_update( double dt )
 void nebu_renderOverlay( const double dt )
 {
    (void) dt;
-   double gx, gy;
-   double z;
+   double gx, gy, z;
 
    /* Get GUI offsets. */
    gui_getOffset( &gx, &gy );
@@ -303,7 +329,7 @@ static void nebu_renderPuffs( int below_player )
       return;
 
    for (int i=0; i<nebu_npuffs; i++) {
-      double x, y, z, s;
+      double x, s;
       mat4 projection;
       NebulaPuff *puff = &nebu_puffs[i];
 
@@ -312,24 +338,10 @@ static void nebu_renderPuffs( int below_player )
             (below_player && (puff->height > 1.)))
          continue;
 
-      /* calculate new position */
-      puff->x += puff_x * puff->height;
-      puff->y += puff_y * puff->height;
-
-      /* Check boundaries */
-      puff->x = fmod( puff->x, SCREEN_W + 2.*NEBULA_PUFF_BUFFER );
-      puff->y = fmod( puff->y, SCREEN_H + 2.*NEBULA_PUFF_BUFFER );
-
-      if (puff->x < 0.)
-         puff->x += SCREEN_W + 2.*NEBULA_PUFF_BUFFER;
-      if (puff->y < 0.)
-         puff->y += SCREEN_H + 2.*NEBULA_PUFF_BUFFER;
-
       /* Set up variables and do quick visibility check. */
-      z = cam_getZoom();
-      s = puff->s * z;
-      x = puff->x - NEBULA_PUFF_BUFFER - s;
-      y = puff->y - NEBULA_PUFF_BUFFER - s;
+      s = puff->s * cam_getZoom();
+      x = puff->pos.x - NEBULA_PUFF_BUFFER - s;
+      y = puff->pos.y - NEBULA_PUFF_BUFFER - s;
       if ((x < -s) || (x > SCREEN_W+s) ||
             (y < -s) || (y > SCREEN_H+s))
          continue;
@@ -354,15 +366,6 @@ static void nebu_renderPuffs( int below_player )
       glUseProgram(0);
       gl_checkErr();
    }
-}
-
-/**
- * @brief Moves the nebula puffs.
- */
-void nebu_movePuffs( double x, double y )
-{
-   puff_x += x;
-   puff_y += y;
 }
 
 /**
@@ -410,8 +413,8 @@ void nebu_prep( double density, double volatility, double hue )
       NebulaPuff *np = &nebu_puffs[i];
 
       /* Position */
-      np->x = (SCREEN_W+2.*NEBULA_PUFF_BUFFER)*RNGF();
-      np->y = (SCREEN_H+2.*NEBULA_PUFF_BUFFER)*RNGF();
+      np->pos.x = (SCREEN_W+2.*NEBULA_PUFF_BUFFER)*RNGF();
+      np->pos.y = (SCREEN_H+2.*NEBULA_PUFF_BUFFER)*RNGF();
 
       /* Maybe make size related? */
       np->s = RNG(10,32);

@@ -138,9 +138,6 @@ void background_moveDust( double x, double y )
 {
    star_x += (GLfloat) x;
    star_y += (GLfloat) y;
-
-   /* Puffs also need moving. */
-   nebu_movePuffs( x, y );
 }
 
 /**
