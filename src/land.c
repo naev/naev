@@ -192,11 +192,23 @@ int land_doneLoading (void)
 int can_swapEquipment( const char *shipname )
 {
    int diff;
-   const PlayerShip_t *ps = player_getPlayerShip( shipname );
    Pilot *newship;
+   const PlayerShip_t *ps = player_getPlayerShip( shipname );
 
    if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
       land_errDialogueBuild( _("You're already onboard the %s."), shipname );
+      return 0;
+   }
+
+   /* Ship can't be piloted by player. */
+   if (ship_isFlag( ps->p->ship, SHIP_NOPLAYER )) {
+      land_errDialogueBuild( _("You can not pilot the %s! The ship can only be used as an escort."), shipname );
+      return 0;
+   }
+
+   /* Ship can't be set as an escort. */
+   if (ship_isFlag( player.p->ship, SHIP_NOESCORT )) {
+      land_errDialogueBuild( _("You can not swap ships and set %s as an escort!"), player.p->name );
       return 0;
    }
 

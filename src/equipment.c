@@ -1380,6 +1380,10 @@ static void equipment_toggleDeploy( unsigned int wid, const char *wgt )
    /* Only if current ship isn't selected try to deploy. */
    if (strcmp(shipname,player.p->name)!=0) {
       PlayerShip_t *ps = player_getPlayerShip( shipname );
+      if (state && ship_isFlag( ps->p->ship, SHIP_NOESCORT )) {
+         dialogue_msg( _("Invalid Escort"), _("You can not set your ship '%s' as an escort!"), ps->p->name );
+         return;
+      }
       if (pfleet_toggleDeploy( ps, state ))
          return;
       pfleet_update();
@@ -2039,6 +2043,11 @@ static void equipment_rightClickShips( unsigned int wid, const char *str )
    /* Don't do anything for player ship. */
    if (strcmp(shipname,player.p->name)==0)
       return;
+
+   if (!ps->deployed && ship_isFlag( ps->p->ship, SHIP_NOESCORT )) {
+      dialogue_msg( _("Invalid Escort"), _("You can not set your ship '%s' as an escort!"), ps->p->name );
+      return;
+   }
 
    /* Try to deploy. */
    if (pfleet_toggleDeploy( ps, !ps->deployed ))

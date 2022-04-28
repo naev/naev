@@ -796,6 +796,19 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       xmlr_int(node,"points",temp->points);
       xmlr_int(node,"rarity",temp->rarity);
 
+      if (xml_isNode(node,"flags")) {
+         xmlNodePtr cur = node->children;
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"noplayer"))
+               ship_setFlag( temp, SHIP_NOPLAYER );
+            if (xml_isNode(cur,"noescort"))
+               ship_setFlag( temp, SHIP_NOESCORT );
+            WARN(_("Ship '%s' has unknown flags node '%s'."), temp->name, cur->name);
+         } while (xml_nextNode(cur));
+         continue;
+      }
+
       if (xml_isNode(node,"trail_generator")) {
          char *buf;
          xmlr_attr_float( node, "x", trail.x_engine );

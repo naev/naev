@@ -12,9 +12,17 @@
 #include "sound.h"
 #include "spfx.h"
 
-/* target gfx dimensions */
+/* Target gfx dimensions */
+/* TODO remove this and handle it all in the GUIs */
 #define SHIP_TARGET_W   128 /**< Ship target graphic width. */
 #define SHIP_TARGET_H   128 /**< Ship target graphic height. */
+
+/* Ship Flags. */
+#define SHIP_NOPLAYER   (1<<0)   /**< Player is not allowed to fly the ship. */
+#define SHIP_NOESCORT   (1<<1)   /**< Player is not allowed to set the ship as an escort. */
+#define ship_isFlag(s,f)   ((s)->flags & (f)) /**< Checks ship flag. */
+#define ship_setFlag(s,f)  ((s)->flags |= (f)) /**< Sets ship flag. */
+#define ship_rmFlag(s,f)   ((s)->flags &= ~(f)) /**< Removes ship flag. */
 
 /**
  * @brief Contains the different types of ships.
@@ -89,6 +97,7 @@ typedef struct Ship_ {
    char *class_display;/**< Custom ship class, overrides class when displaying. */
    int points;       /**< Number of points the ship costs (used for presence et al.) */
    int rarity;       /**< Rarity. */
+   int flags;        /**< Ship flags. */
 
    /* store stuff */
    credits_t price;  /**< Cost to buy. */
