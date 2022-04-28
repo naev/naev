@@ -609,7 +609,7 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
    SPACEWORTHY_CHECK( p->cargo_free < 0,       _("!! Insufficient Free Cargo Space") );
    SPACEWORTHY_CHECK( p->crew < 0,             _("!! Insufficient Crew") );
 
-   /*buffer is full, lets write that there is more then what's copied */
+   /* Buffer is full, lets write that there is more then what's copied */
    if (pos > bufSize-1) {
       buf[bufSize-4]='.';
       buf[bufSize-3]='.';
@@ -617,9 +617,14 @@ int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
       /* buf[bufSize-1]='\0'; already done for us */
    }
    else {
-      if (pos == 0)
-         /*string is empty so no errors encountered */
+      if (pos == 0) {
+         /* String is empty so no errors encountered */
          snprintf( buf, bufSize, _("Spaceworthy"));
+         if (ship_isFlag(p->ship, SHIP_NOPLAYER))
+            pos += snprintf( &buf[pos], bufSize-pos, "\n#o%s#0", _("Escort only") );
+         if (ship_isFlag(p->ship, SHIP_NOESCORT))
+            pos += snprintf( &buf[pos], bufSize-pos, "\n#o%s#0", _("Lead ship only") );
+      }
    }
 
    return ret;
