@@ -5,6 +5,9 @@
  <GFX size="124" sx="12" sy="12">arx</GFX>
  <rarity>5</rarity>
  <GUI>brushed</GUI>
+ <flags>
+  <noplayer/>
+ </flags>
  <sound pitch="0.5">engine_soromid</sound>
  <class display="Elder Feral Bioship">Battleship</class>
  <price>8900000</price>

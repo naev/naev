@@ -5,6 +5,9 @@
  <GFX size="68">reaver_feral</GFX>
  <rarity>5</rarity>
  <GUI>brushed</GUI>
+ <flags>
+  <noplayer/>
+ </flags>
  <sound>engine_soromid</sound>
  <class display="Bio-Fighter">Fighter</class>
  <price>570000</price>

@@ -4,6 +4,9 @@
  <base_type>Drone</base_type>
  <GFX size="70">drone_hyena</GFX>
  <GUI>brushed</GUI>
+ <flags>
+  <noplayer/>
+ </flags>
  <rarity>3</rarity>
  <sound>engine</sound>
  <class display="Robotic Interceptor">Interceptor</class>
