@@ -800,10 +800,14 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
-            if (xml_isNode(cur,"noplayer"))
+            if (xml_isNode(cur,"noplayer")) {
                ship_setFlag( temp, SHIP_NOPLAYER );
-            if (xml_isNode(cur,"noescort"))
+               continue;
+            }
+            if (xml_isNode(cur,"noescort")) {
                ship_setFlag( temp, SHIP_NOESCORT );
+               continue;
+            }
             WARN(_("Ship '%s' has unknown flags node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
