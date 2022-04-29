@@ -1000,47 +1000,38 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 int ships_load (void)
 {
    char **ship_files;
-   size_t nfiles;
+   int nfiles;
    Uint32 time = SDL_GetTicks();
 
    /* Validity. */
    ss_check();
 
-   ship_files = PHYSFS_enumerateFiles( SHIP_DATA_PATH );
-   for (nfiles=0; ship_files[nfiles]!=NULL; nfiles++) {}
+   ship_files = ndata_listRecursive( SHIP_DATA_PATH );
+   nfiles = array_size( ship_files );
 
    /* Initialize stack if needed. */
    if (ship_stack == NULL)
       ship_stack = array_create_size(Ship, nfiles);
 
-   for (int i=0; ship_files[i]!=NULL; i++) {
-      char *file;
+   for (int i=0; i<nfiles; i++) {
       xmlNodePtr node;
       xmlDocPtr doc;
 
       if (!ndata_matchExt( ship_files[i], "xml" ))
          continue;
 
-      /* Get the file name .*/
-      asprintf( &file, "%s%s", SHIP_DATA_PATH, ship_files[i] );
-
       /* Load the XML. */
-      doc  = xml_parsePhysFS( file );
+      doc  = xml_parsePhysFS( ship_files[i] );
 
-      if (doc == NULL) {
-         free(file);
+      if (doc == NULL)
          continue;
-      }
 
       node = doc->xmlChildrenNode; /* First ship node */
       if (node == NULL) {
          xmlFreeDoc(doc);
-         WARN(_("Malformed %s file: does not contain elements"), file);
-         free(file);
+         WARN(_("Malformed %s file: does not contain elements"), ship_files[i]);
          continue;
       }
-
-      free(file);
 
       if (xml_isNode(node, XML_SHIP))
          /* Load the ship. */
@@ -1061,7 +1052,7 @@ int ships_load (void)
       DEBUG( n_( "Loaded %d Ship", "Loaded %d Ships", array_size(ship_stack) ), array_size(ship_stack) );
 
    /* Clean up. */
-   PHYSFS_freeList( ship_files );
+   array_free( ship_files );
 
    return 0;
 }
