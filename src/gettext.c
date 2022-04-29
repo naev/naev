@@ -211,6 +211,7 @@ static void gettext_readStats (void)
       char *text = ndata_read( paths[i], &size );
       if (text != NULL)
          gettext_nstrings += strtoul( text, NULL, 10 );
+      free( text );
       free( paths[i] );
    }
    array_free( paths );

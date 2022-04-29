@@ -2761,4 +2761,5 @@ void outfit_free (void)
    }
 
    array_free(outfit_stack);
+   array_free(license_stack);
 }
