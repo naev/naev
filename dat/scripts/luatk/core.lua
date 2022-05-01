@@ -472,20 +472,11 @@ function luatk.List:draw( bx, by )
       lg.printf( v, font, xoff, yoff, woff )
       yoff = yoff + self.cellh
    end
-
-   --[[
-   local font = luatk._deffont or lg.getFont()
-   lg.setColor( fc )
-   if self.text then
-      lg.printf( self.text, font, x, y+(h-self.th)/2, w, 'center' )
-   else
-      self.render( x, y, w, h )
-   end
-   --]]
 end
 function luatk.List:pressed( _mx, my )
    self.selected = math.ceil( (my-4) / self.cellh )
    self.selected = math.max( 0, math.min( self.selected, #self.items ) )
+   self.onselect( self:get() )
 end
 function luatk.List:mmoved( mx, my )
    if self._pressed then
