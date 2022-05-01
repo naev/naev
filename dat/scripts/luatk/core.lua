@@ -435,7 +435,7 @@ function luatk.newList( parent, x, y, w, h, items, onselect, defitem )
    wgt.onselet = onselect or function () end
    wgt.selected= defitem or 1
    wgt.height  = 0
-   wgt.cellpad = 8
+   wgt.cellpad = 0
    local font  = luatk._deffont or lg.getFont()
    wgt.cellh   = font:getLineHeight() + wgt.cellpad
    return wgt
@@ -458,18 +458,19 @@ function luatk.List:draw( bx, by )
    --end
 
    -- Draw selected item background
-   --local ty = y - 1 + self.h - (1 + self.selected)
+   local ty = y + 4 + (self.selected-1) * self.cellh
+   lg.setColor( {0.3, 0.3, 0.3} )
+   lg.rectangle( "fill", x+1, ty, w-2, self.cellh )
 
    -- Draw content
    local font = luatk._deffont or lg.getFont()
-   local fonth = 16
    local xoff = x+6
    local yoff = y+4
    local woff = w-4
    for k,v in ipairs( self.items ) do
       lg.setColor( {0.95, 0.95, 0.95} )
       lg.printf( v, font, xoff, yoff, woff )
-      yoff = yoff + fonth
+      yoff = yoff + self.cellh
    end
 
    --[[
@@ -482,8 +483,9 @@ function luatk.List:draw( bx, by )
    end
    --]]
 end
-function luatk.List:pressed( mx, _my )
-   self:set( self.min + (mx / self.w) * self.max )
+function luatk.List:pressed( _mx, my )
+   self.selected = math.ceil( (my-4) / self.cellh )
+   self.selected = math.max( 0, math.min( self.selected, #self.items ) )
 end
 function luatk.List:mmoved( mx, my )
    if self._pressed then
@@ -491,11 +493,10 @@ function luatk.List:mmoved( mx, my )
    end
 end
 function luatk.List:get()
-   return self.val
+   return self.items[ self.selected ], self.selected
 end
-function luatk.List:set( val )
-   self.val = math.max( self.min, math.min( self.max, val ) )
-   self.handler( self, self.val )
+function luatk.List:set( idx )
+   self.selected = math.max( 0, math.min( idx, #self.items ) )
 end
 
 --[[
