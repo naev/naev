@@ -423,6 +423,82 @@ function luatk.Fader:set( val )
 end
 
 --[[
+-- List widget
+--]]
+luatk.List = {}
+setmetatable( luatk.List, { __index = luatk.Widget } )
+luatk.List_mt = { __index = luatk.List }
+function luatk.newList( parent, x, y, w, h, items, onselect, defitem )
+   local wgt   = luatk.newWidget( parent, x, y, w, h )
+   setmetatable( wgt, luatk.List_mt )
+   wgt.items   = items
+   wgt.onselet = onselect or function () end
+   wgt.selected= defitem or 1
+   wgt.height  = 0
+   wgt.cellpad = 8
+   local font  = luatk._deffont or lg.getFont()
+   wgt.cellh   = font:getLineHeight() + wgt.cellpad
+   return wgt
+end
+function luatk.List:draw( bx, by )
+   local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
+
+   local colLight = { 0.5, 0.5, 0.5 }
+   --local col      = { 0.2, 0.2, 0.2 }
+   local colDark  = { 0.05, 0.05, 0.05 }
+
+   -- Background
+   lg.setColor( colLight )
+   lg.rectangle( "fill", x-2, y-2, w+4, h+4 )
+   lg.setColor( colDark )
+   lg.rectangle( "fill", x, y, w, h )
+
+   -- Draw scrollbar
+   --if self.height > 0 then
+   --end
+
+   -- Draw selected item background
+   --local ty = y - 1 + self.h - (1 + self.selected)
+
+   -- Draw content
+   local font = luatk._deffont or lg.getFont()
+   local fonth = 16
+   local xoff = x+6
+   local yoff = y+4
+   local woff = w-4
+   for k,v in ipairs( self.items ) do
+      lg.setColor( {0.95, 0.95, 0.95} )
+      lg.printf( v, font, xoff, yoff, woff )
+      yoff = yoff + fonth
+   end
+
+   --[[
+   local font = luatk._deffont or lg.getFont()
+   lg.setColor( fc )
+   if self.text then
+      lg.printf( self.text, font, x, y+(h-self.th)/2, w, 'center' )
+   else
+      self.render( x, y, w, h )
+   end
+   --]]
+end
+function luatk.List:pressed( mx, _my )
+   self:set( self.min + (mx / self.w) * self.max )
+end
+function luatk.List:mmoved( mx, my )
+   if self._pressed then
+      self:pressed( mx, my )
+   end
+end
+function luatk.List:get()
+   return self.val
+end
+function luatk.List:set( val )
+   self.val = math.max( self.min, math.min( self.max, val ) )
+   self.handler( self, self.val )
+end
+
+--[[
    High Level dialogue stuff
 --]]
 local function msgbox_size( title, msg )
