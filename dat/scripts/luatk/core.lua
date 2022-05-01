@@ -443,19 +443,16 @@ end
 function luatk.List:draw( bx, by )
    local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
 
-   local colLight = { 0.5, 0.5, 0.5 }
-   --local col      = { 0.2, 0.2, 0.2 }
-   local colDark  = { 0.05, 0.05, 0.05 }
-
    -- Background
-   lg.setColor( colLight )
+   lg.setColor( luatk.colour.outline )
    lg.rectangle( "fill", x-2, y-2, w+4, h+4 )
-   lg.setColor( colDark )
+   lg.setColor( luatk.colour.dark )
    lg.rectangle( "fill", x, y, w, h )
 
    -- Draw scrollbar
-   --if self.height > 0 then
-   --end
+   if self.height > 0 then
+      w = w - 11
+   end
 
    -- Draw selected item background
    local ty = y + 4 + (self.selected-1) * self.cellh
@@ -468,7 +465,7 @@ function luatk.List:draw( bx, by )
    local yoff = y+4
    local woff = w-4
    for k,v in ipairs( self.items ) do
-      lg.setColor( {0.95, 0.95, 0.95} )
+      lg.setColor( luatk.colour.text )
       lg.printf( v, font, xoff, yoff, woff )
       yoff = yoff + self.cellh
    end
