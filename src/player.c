@@ -108,7 +108,7 @@ static double player_hailTimer = 0.; /**< Timer for hailing. */
 /*
  * Player pilot stack (ships they have) and outfit (outfits they have) stacks (array.h)
  */
-static PlayerShip_t* player_stack      = NULL;  /**< Stack of ships player has. */
+static PlayerShip_t* player_stack      = NULL;  /**< Stack of ships player has, excluding their current one (player.ps). */
 static PlayerOutfit_t *player_outfits  = NULL;  /**< Outfits player has. */
 
 /*
@@ -329,7 +329,7 @@ static int player_newMake (void)
       player_new();
       return -1;
    }
-   player.ps = *ps;
+   assert( &player.ps == ps );
    start_position( &x, &y );
    vec2_cset( &player.p->solid->pos, x, y );
    vectnull( &player.p->solid->vel );
@@ -416,6 +416,8 @@ PlayerShip_t* player_newShip( const Ship* ship, const char *def_name,
       free( ship_name );
       return NULL;
    }
+   if (trade && player.p == NULL)
+      ERR(_("Player ship isn't valid… This shouldn't happen!"));
 
    ps = player_newShipMake( ship_name );
    ps->autoweap  = 1;
@@ -426,8 +428,6 @@ PlayerShip_t* player_newShip( const Ship* ship, const char *def_name,
 
    /* Player is trading ship in. */
    if (trade) {
-      if (player.p == NULL)
-         ERR(_("Player ship isn't valid… This shouldn't happen!"));
       old_name = player.p->name;
       player_swapShip( ship_name, 1 ); /* Move to the new ship. */
       player_rmShip( old_name );
@@ -462,7 +462,7 @@ static PlayerShip_t *player_newShipMake( const char *name )
    player_rmFlag( PLAYER_CREATING );
 
    /* Grow memory. */
-   ps = &array_grow( &player_stack );
+   ps = (player.p == NULL) ? &player.ps : &array_grow( &player_stack );
    memset( ps, 0, sizeof(PlayerShip_t) );
    pilot_setFlagRaw( flags, PILOT_PLAYER_FLEET );
    /* Create the ship. */
@@ -759,8 +759,13 @@ void player_cleanup (void)
    /* Clear claims. */
    claim_clear();
 
-   /* just in case purge the pilot stack */
+   /* Purge the pilot stack, and only afterward dispose of player.p. */
    pilots_cleanAll();
+   if (player.p != NULL) {
+      pilot_rmFlag( player.p, PILOT_NOFREE );
+      pilot_free( player.p );
+   }
+   player.p = NULL;
 
    /* Reset some player stuff. */
    player_creds   = 0;
@@ -3619,27 +3624,19 @@ static void player_tryAddLicense( const char *name )
  */
 static Spob* player_parse( xmlNodePtr parent )
 {
-   const char *spob;
+   const char *spob = NULL;
    unsigned int services;
-   Spob *pnt;
+   Spob *pnt = NULL;
    xmlNodePtr node, cur;
-   int map_overlay_enabled;
+   int map_overlay_enabled = 0;
    StarSystem *sys;
    double a, r;
    Pilot *old_ship;
    PilotFlags flags;
-   int time_set;
+   int time_set = 0;
 
    xmlr_attr_strd(parent, "name", player.name);
-
-   /* Make sure player.p is NULL. */
-   player.p = NULL;
-   pnt = NULL;
-
-   /* Safe defaults. */
-   spob        = NULL;
-   time_set    = 0;
-   map_overlay_enabled = 0;
+   assert( player.p == NULL );
    player_ran_updater = 0;
 
    player.radar_res = RADAR_RES_DEFAULT;
@@ -4112,6 +4109,14 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    if (is_player)
       pilot_setFlagRaw( flags, PILOT_PLAYER );
    pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
+
+   /* Handle certain 0.10.0-alpha saves where it's possible that... */
+   if (!is_player && strcmp( name, player.p->name ) == 0) {
+      DEBUG( _("Ignoring player-owned ship '%s': duplicate of player's current ship."), name );
+      free(name);
+      free(model);
+      return 0;
+   }
 
    /* Get the ship. */
    ship_parsed = ship_get(model);
