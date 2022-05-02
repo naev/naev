@@ -12,6 +12,7 @@ local luatk = {
       outline  = { 0.5,  0.5,  0.5  },
       dark     = { 0.05, 0.05, 0.05 },
       text     = { 0.95, 0.95, 0.95 },
+      selected = { 0.3,  0.3,  0.3  },
    },
    button = {
       colour = {
@@ -22,6 +23,13 @@ local luatk = {
          bg                = { 0.25, 0.25, 0.25 },
          disabled_outline  = { 0.2,  0.2,  0.2  },
          disabled_bg       = { 0.2,  0.2,  0.2  },
+      },
+   },
+   scrollbar = {
+      colour = {
+         bg       = { 0.1,  0.1,  0.1  },
+         fg       = { 0.2,  0.2,  0.2  },
+         outline  = { 0.05, 0.05, 0.05 },
       },
    },
    _deffont = nil,
@@ -123,6 +131,22 @@ function luatk.keypressed( key )
    end
 
    return false
+end
+
+--[[
+-- Helper functions
+--]]
+local function drawScrollbar( x, y, w, h, pos )
+   lg.setColor( luatk.scrollbar.colour.bg )
+   lg.rectangle( "fill", x, y, w, h )
+
+   -- Scrollbar
+   local bh = 30 -- bar height
+   local sy = y + (h-bh) * (1-pos)
+   lg.setColor( luatk.scrollbar.colour.fg )
+   lg.rectangle( "fill", x, sy, w, bh )
+   lg.setColor( luatk.scrollbar.colour.outline )
+   lg.rectangle( "fill", x+1, sy, w-2, bh-2 )
 end
 
 --[[
@@ -432,7 +456,7 @@ function luatk.newList( parent, x, y, w, h, items, onselect, defitem )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.List_mt )
    wgt.items   = items
-   wgt.onselet = onselect or function () end
+   wgt.onselect= onselect or function () end
    wgt.selected= defitem or 1
    wgt.height  = 0
    wgt.cellpad = 0
@@ -451,12 +475,14 @@ function luatk.List:draw( bx, by )
 
    -- Draw scrollbar
    if self.height > 0 then
+      local scroll_pos = self.pos * self.cellh / (h +2)
       w = w - 11
+      drawScrollbar( x, y, 12, h, scroll_pos )
    end
 
    -- Draw selected item background
-   local ty = y + 4 + (self.selected-1) * self.cellh
-   lg.setColor( {0.3, 0.3, 0.3} )
+   local ty = y + 2 + (self.selected-1) * self.cellh
+   lg.setColor( luatk.colour.selected )
    lg.rectangle( "fill", x+1, ty, w-2, self.cellh )
 
    -- Draw content
