@@ -193,13 +193,17 @@ int diff_loadAvailable (void)
 
       /* Parse the header. */
       doc = xml_parsePhysFS( diff_files[i] );
-      if (doc == NULL)
-         return -1;
+      if (doc == NULL) {
+         free( diff_files[i] );
+         continue;
+      }
 
       node = doc->xmlChildrenNode;
       if (!xml_isNode(node,"unidiff")) {
-         ERR( _("Malformed XML header for '%s' UniDiff: missing root element '%s'"), diff_files[i], "unidiff" );
-         return -1;
+         WARN( _("Malformed XML header for '%s' UniDiff: missing root element '%s'"), diff_files[i], "unidiff" );
+         xmlFreeDoc( doc );
+         free( diff_files[i] );
+         continue;
       }
 
       diff = &array_grow(&diff_available);
