@@ -145,7 +145,7 @@ static void map_buttonCommodity( unsigned int wid, const char* str );
 static void map_selectCur (void);
 static void map_genModeList(void);
 static void map_update_commod_av_price();
-static void map_window_close( unsigned int wid, const char *str );
+static void map_onClose( unsigned int wid, const char *str );
 
 /**
  * @brief Initializes the map subsystem.
@@ -275,7 +275,8 @@ void map_open (void)
 
    /* create the window. */
    wid = window_create( MAP_WDWNAME, title, -1, -1, -1, -1 );
-   window_setCancel( wid, map_window_close );
+   window_setCancel( wid, window_close );
+   window_onClose( wid, map_onClose );
    window_handleKeys( wid, map_keyHandler );
    window_dimWindow( wid, &w, &h );
    window_setBorder( wid, 0 );
@@ -371,7 +372,7 @@ void map_open (void)
    /* Close button */
    y = 15;
    window_addButton( wid, -20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnClose", _("Close"), map_window_close );
+            "btnClose", _("Close"), window_close );
    /* Commodity button */
    window_addButton( wid, -20 - (BUTTON_WIDTH+20), y, BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommod", _("Mode"), map_buttonCommodity );
    /* Find button */
@@ -2087,9 +2088,8 @@ static void map_genModeList(void)
    int totGot = 0;
    const char *odd_template, *even_template;
 
-   if (commod_known == NULL)
-      commod_known = malloc(sizeof(Commodity*) * commodity_getN());
-   memset(commod_known,0,sizeof(Commodity*)*commodity_getN());
+   map_onClose( 0, NULL );  /* so commod_known, map_modes are freed */
+   commod_known = calloc( commodity_getN(), sizeof(Commodity*) );
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = system_getIndex( i );
       for (int j=0 ; j<array_size(sys->spobs); j++) {
@@ -2110,9 +2110,6 @@ static void map_genModeList(void)
          }
       }
    }
-   for (int i=0; i<array_size(map_modes); i++)
-      free( map_modes[i] );
-   array_free ( map_modes );
    map_modes = array_create_size( char*, 2*totGot + 1 );
    array_push_back( &map_modes, strdup(_("Travel (Default)")) );
    array_push_back( &map_modes, strdup(_("Discovery")) );
@@ -2292,15 +2289,16 @@ static void map_buttonCommodity( unsigned int wid, const char* str )
 /**
  * @brief Cleans up the map stuff.
  */
-static void map_window_close( unsigned int wid, const char *str )
+static void map_onClose( unsigned int wid, const char *str )
 {
+   (void) wid;
+   (void) str;
    free( commod_known );
    commod_known = NULL;
    for (int i=0; i<array_size(map_modes); i++)
       free( map_modes[i] );
    array_free( map_modes );
    map_modes = NULL;
-   window_close(wid,str);
 }
 
 void map_cleanup (void)

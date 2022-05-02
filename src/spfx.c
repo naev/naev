@@ -354,13 +354,12 @@ int spfx_load (void)
 
    spfx_files = ndata_listRecursive( SPFX_DATA_PATH );
    for (int i=0; i<array_size(spfx_files); i++) {
-      if (!ndata_matchExt( spfx_files[i], "xml" ))
-         continue;
-
-      ret = spfx_base_parse( &array_grow(&spfx_effects), spfx_files[i] );
-      if (ret < 0) {
-         n = array_size(spfx_effects);
-         array_erase( &spfx_effects, &spfx_effects[n-1], &spfx_effects[n] );
+      if (ndata_matchExt( spfx_files[i], "xml" )) {
+         ret = spfx_base_parse( &array_grow(&spfx_effects), spfx_files[i] );
+         if (ret < 0) {
+            n = array_size(spfx_effects);
+            array_erase( &spfx_effects, &spfx_effects[n-1], &spfx_effects[n] );
+         }
       }
       free( spfx_files[i] );
    }

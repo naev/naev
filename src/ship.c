@@ -1021,18 +1021,23 @@ int ships_load (void)
       xmlNodePtr node;
       xmlDocPtr doc;
 
-      if (!ndata_matchExt( ship_files[i], "xml" ))
+      if (!ndata_matchExt( ship_files[i], "xml" )) {
+         free( ship_files[i] );
          continue;
+      }
 
       /* Load the XML. */
       doc  = xml_parsePhysFS( ship_files[i] );
 
-      if (doc == NULL)
+      if (doc == NULL) {
+         free( ship_files[i] );
          continue;
+      }
 
       node = doc->xmlChildrenNode; /* First ship node */
       if (node == NULL) {
          xmlFreeDoc(doc);
+         free( ship_files[i] );
          WARN(_("Malformed %s file: does not contain elements"), ship_files[i]);
          continue;
       }
@@ -1042,6 +1047,7 @@ int ships_load (void)
          ship_parse( &array_grow(&ship_stack), node );
 
       /* Clean up. */
+      free( ship_files[i] );
       xmlFreeDoc(doc);
    }
    qsort( ship_stack, array_size(ship_stack), sizeof(Ship), ship_cmp );

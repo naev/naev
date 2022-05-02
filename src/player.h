@@ -96,7 +96,7 @@ typedef struct PlayerShip_s {
  */
 typedef struct Player_s {
    /* Player intrinsics. */
-   Pilot *p;         /**< Player's pilot. */
+   Pilot *p;         /**< Player's pilot. Same as ps.p. */
    PlayerShip_t ps;  /**< Player's ship with extra information. */
    char *name;       /**< Player's name. */
 

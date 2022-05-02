@@ -46,7 +46,7 @@ static void map_knownClean (void);
 /* Toolkit-related. */
 static void map_addOutfitDetailFields(unsigned int wid_results, int x, int y, int w, int h);
 static void map_findCheckUpdate( unsigned int wid_map_find, const char *str );
-static void map_findClose( unsigned int wid_map_find, const char* str );
+static void map_findOnClose( unsigned int wid_map_find, const char* str );
 static void map_findDisplayMark( unsigned int wid_results, const char* str );
 static void map_findDisplayResult( unsigned int wid_map_find, map_find_t *found, int n );
 static int map_findSearchSystems( unsigned int wid_map_find, const char *name );
@@ -73,14 +73,11 @@ static char **map_shipsMatch( const char *name );
  */
 static int map_knownInit (void)
 {
-   Spob **spobs;
-   StarSystem *sys;
-   tech_group_t **t;
+   const StarSystem *sys = system_getAll();
 
-   /* Allocate techs. */
-   t     = array_create( tech_group_t* );
-   spobs = array_create( Spob* );
-   sys   = system_getAll();
+   map_knownClean();
+   map_known_techs = array_create( tech_group_t* );
+   map_known_spobs = array_create( Spob* );
 
    /* Get techs. */
    for (int i=0; i<array_size(sys); i++) {
@@ -90,21 +87,12 @@ static int map_knownInit (void)
       for (int j=0; j<array_size(sys[i].spobs); j++) {
          Spob *spob = sys[i].spobs[j];
 
-         /* Must be known. */
-         if (!spob_isKnown( spob ))
-            continue;
-
-         /* Must have techs. */
-         if (spob->tech != NULL) {
-            array_push_back( &spobs, spob );
-            array_push_back( &t, spob->tech );
+         if (spob_isKnown( spob ) && spob->tech != NULL) {
+            array_push_back( &map_known_spobs, spob );
+            array_push_back( &map_known_techs, spob->tech );
          }
       }
    }
-
-   /* Pointer voodoo. */
-   map_known_techs = t;
-   map_known_spobs = spobs;
 
    return 0;
 }
@@ -162,17 +150,15 @@ void map_inputFindType( unsigned int parent, const char *type )
 }
 
 /**
- * @brief Closes the find window.
+ * @brief Cleans up resources used by the find window.
  */
-static void map_findClose( unsigned int wid_map_find, const char* str )
+static void map_findOnClose( unsigned int wid, const char* str )
 {
-   window_close( wid_map_find, str );
+   (void) wid;
+   (void) str;
 
-   /* Clean up if necessary. */
    free( map_found_cur );
    map_found_cur = NULL;
-
-   /* Clean up. */
    map_knownClean();
 }
 
@@ -974,7 +960,7 @@ static void map_findSearch( unsigned int wid_map_find, const char* str )
    window_enableButton( wid_map_find, "btnSearch" );
 
    if (ret > 0)
-      map_findClose( wid_map_find, str );
+      window_close( wid_map_find, str );
 }
 
 /**
@@ -994,8 +980,9 @@ void map_inputFind( unsigned int parent, const char* str )
    h = 220;
    wid_map_find = window_create( "wdwFind", _("Find…"), -1, -1, w, h );
    window_setAccept( wid_map_find, map_findSearch );
-   window_setCancel( wid_map_find, map_findClose );
+   window_setCancel( wid_map_find, window_close );
    window_setParent( wid_map_find, parent );
+   window_onClose( wid_map_find, map_findOnClose );
 
    /* Text. */
    y = -40;
@@ -1013,7 +1000,7 @@ void map_inputFind( unsigned int parent, const char* str )
    window_addButton( wid_map_find, -30, 20+BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSearch", _("Find"), map_findSearch );
    window_addButton( wid_map_find, -30, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", _("Close"), map_findClose );
+         "btnClose", _("Close"), window_close );
 
    /* Create check boxes. */
    x = 40;
