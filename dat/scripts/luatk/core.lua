@@ -27,8 +27,8 @@ local luatk = {
    },
    scrollbar = {
       colour = {
-         bg       = { 0.1,  0.1,  0.1  },
-         fg       = { 0.2,  0.2,  0.2  },
+         bg       = { 0.0,  0.0,  0.0  },
+         fg       = { 0.5,  0.5,  0.5  },
          outline  = { 0.05, 0.05, 0.05 },
       },
    },
@@ -142,10 +142,10 @@ local function drawScrollbar( x, y, w, h, pos )
 
    -- Scrollbar
    local bh = 30 -- bar height
-   local sy = y + (h-bh) * (1-pos)
-   lg.setColor( luatk.scrollbar.colour.fg )
-   lg.rectangle( "fill", x, sy, w, bh )
+   local sy = y + (h-bh) * pos
    lg.setColor( luatk.scrollbar.colour.outline )
+   lg.rectangle( "fill", x, sy, w, bh )
+   lg.setColor( luatk.scrollbar.colour.fg )
    lg.rectangle( "fill", x+1, sy, w-2, bh-2 )
 end
 
@@ -458,7 +458,6 @@ function luatk.newList( parent, x, y, w, h, items, onselect, defitem )
    wgt.items   = items
    wgt.onselect= onselect or function () end
    wgt.selected= defitem or 1
-   wgt.height  = 0
    wgt.cellpad = 0
    local font  = luatk._deffont or lg.getFont()
    wgt.cellh   = font:getLineHeight() + wgt.cellpad
@@ -474,10 +473,17 @@ function luatk.List:draw( bx, by )
    lg.rectangle( "fill", x, y, w, h )
 
    -- Draw scrollbar
-   if self.height > 0 then
-      local scroll_pos = self.pos * self.cellh / (h +2)
-      w = w - 11
-      drawScrollbar( x, y, 12, h, scroll_pos )
+   local scs
+   local doscroll = true
+   if doscroll then
+      --local scroll_pos = self.pos * self.cellh / (h +2)
+      local scroll_pos = 0.5
+      w = w - 12
+      drawScrollbar( x+w, y, 12, h, scroll_pos )
+
+      -- Have to scissors here
+      scs = lg.getScissor()
+      lg.setScissor( x, y, w, h )
    end
 
    -- Draw selected item background
@@ -490,10 +496,19 @@ function luatk.List:draw( bx, by )
    local xoff = x+6
    local yoff = y+4
    local woff = w-4
+   local hlim = by+self.y+self.h
    for k,v in ipairs( self.items ) do
       lg.setColor( luatk.colour.text )
       lg.printf( v, font, xoff, yoff, woff )
       yoff = yoff + self.cellh
+
+      -- Stop
+      if yoff > hlim then break end
+   end
+
+   -- Undo scissors
+   if doscroll then
+      lg.setScissor( scs )
    end
 end
 function luatk.List:pressed( _mx, my )
