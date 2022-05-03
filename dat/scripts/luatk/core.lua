@@ -491,19 +491,21 @@ function luatk.List:draw( bx, by )
    end
 
    -- Draw selected item background
-   local ty = y + self.cellpad*0.5 + (self.selected-1) * self.cellh
+   local ty = y - self.pos + self.cellpad*0.5 + (self.selected-1) * self.cellh
    lg.setColor( luatk.colour.selected )
    lg.rectangle( "fill", x+1, ty, w-2, self.cellh )
 
    -- Draw content
    local font = luatk._deffont or lg.getFont()
    local xoff = x+6
-   local yoff = y+4
+   local yoff = y+4-self.pos
    local woff = w-4
    local hlim = by+self.y+self.h
    for k,v in ipairs( self.items ) do
-      lg.setColor( luatk.colour.text )
-      lg.printf( v, font, xoff, yoff, woff )
+      if yoff > -self.cellh then
+         lg.setColor( luatk.colour.text )
+         lg.printf( v, font, xoff, yoff, woff )
+      end
       yoff = yoff + self.cellh
 
       -- Stop
@@ -521,7 +523,7 @@ function luatk.List:pressed( mx, my )
       self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
       return
    end
-   self.selected = math.ceil( (my-self.cellpad*0.5) / self.cellh )
+   self.selected = math.ceil( (my+self.pos-self.cellpad*0.5) / self.cellh )
    self.selected = math.max( 0, math.min( self.selected, #self.items ) )
    self.onselect( self:get() )
 end
