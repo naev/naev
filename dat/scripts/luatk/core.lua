@@ -136,17 +136,17 @@ end
 --[[
 -- Helper functions
 --]]
+local scrollbar_h = 30 -- bar height
 local function drawScrollbar( x, y, w, h, pos )
    lg.setColor( luatk.scrollbar.colour.bg )
    lg.rectangle( "fill", x, y, w, h )
 
    -- Scrollbar
-   local bh = 30 -- bar height
-   local sy = y + (h-bh) * pos
+   local sy = y + (h-scrollbar_h) * pos
    lg.setColor( luatk.scrollbar.colour.outline )
-   lg.rectangle( "fill", x, sy, w, bh )
+   lg.rectangle( "fill", x, sy, w, scrollbar_h )
    lg.setColor( luatk.scrollbar.colour.fg )
-   lg.rectangle( "fill", x+1, sy, w-2, bh-2 )
+   lg.rectangle( "fill", x+1, sy, w-2, scrollbar_h-2 )
 end
 
 --[[
@@ -458,9 +458,15 @@ function luatk.newList( parent, x, y, w, h, items, onselect, defitem )
    wgt.items   = items
    wgt.onselect= onselect or function () end
    wgt.selected= defitem or 1
-   wgt.cellpad = 0
    local font  = luatk._deffont or lg.getFont()
-   wgt.cellh   = font:getLineHeight() + wgt.cellpad
+   wgt.cellh   = font:getLineHeight()
+   wgt.cellpad = wgt.cellh - font:getHeight()
+   wgt.maxh    = wgt.cellh * #items
+   wgt.pos     = 0
+   wgt.scrolls = wgt.maxh > wgt.h
+   if wgt.scrolls then
+      wgt.scrollh = wgt.maxh - wgt.h
+   end
    return wgt
 end
 function luatk.List:draw( bx, by )
@@ -474,10 +480,8 @@ function luatk.List:draw( bx, by )
 
    -- Draw scrollbar
    local scs
-   local doscroll = true
-   if doscroll then
-      --local scroll_pos = self.pos * self.cellh / (h +2)
-      local scroll_pos = 0.5
+   if self.scrolls then
+      local scroll_pos = self.pos / self.scrollh
       w = w - 12
       drawScrollbar( x+w, y, 12, h, scroll_pos )
 
@@ -487,7 +491,7 @@ function luatk.List:draw( bx, by )
    end
 
    -- Draw selected item background
-   local ty = y + 2 + (self.selected-1) * self.cellh
+   local ty = y + self.cellpad*0.5 + (self.selected-1) * self.cellh
    lg.setColor( luatk.colour.selected )
    lg.rectangle( "fill", x+1, ty, w-2, self.cellh )
 
@@ -507,12 +511,17 @@ function luatk.List:draw( bx, by )
    end
 
    -- Undo scissors
-   if doscroll then
+   if self.scrolls then
       lg.setScissor( scs )
    end
 end
-function luatk.List:pressed( _mx, my )
-   self.selected = math.ceil( (my-4) / self.cellh )
+function luatk.List:pressed( mx, my )
+   if self.scrolls and mx > self.w-12 then
+      self.pos = (my-scrollbar_h*0.5) / (self.h-scrollbar_h) * self.scrollh
+      self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
+      return
+   end
+   self.selected = math.ceil( (my-self.cellpad*0.5) / self.cellh )
    self.selected = math.max( 0, math.min( self.selected, #self.items ) )
    self.onselect( self:get() )
 end
