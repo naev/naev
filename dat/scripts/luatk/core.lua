@@ -531,7 +531,7 @@ function luatk.List:pressed( mx, my )
       return
    end
    self.selected = math.ceil( (my+self.pos-self.cellpad*0.5) / self.cellh )
-   self.selected = math.max( 0, math.min( self.selected, #self.items ) )
+   self.selected = math.max( 1, math.min( self.selected, #self.items ) )
    self.onselect( self:get() )
 end
 function luatk.List:mmoved( mx, my )
@@ -543,7 +543,8 @@ function luatk.List:get()
    return self.items[ self.selected ], self.selected
 end
 function luatk.List:set( idx )
-   self.selected = math.max( 0, math.min( idx, #self.items ) )
+   self.selected = math.max( 1, math.min( idx, #self.items ) )
+   self.onselect( self:get() )
 end
 function luatk.List:setPos( pos )
    self.pos = pos * self.scrollh
