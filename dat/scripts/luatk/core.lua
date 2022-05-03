@@ -120,6 +120,11 @@ function luatk.keypressed( key )
    local wdw = luatk._windows[ #luatk._windows ]
    if not wdw then return false end
 
+   -- Custom keypress events
+   if wdw.keypressed and wdw.keypressed( key ) then
+      return true
+   end
+
    if key=="return" then
       if wdw.accept and wdw:accept() then
          return true
@@ -223,6 +228,9 @@ function luatk.Window:setAccept( func )
 end
 function luatk.Window:setCancel( func )
    self.cancel = func
+end
+function luatk.Window:setKeypress( func )
+   self.keypressed = func
 end
 
 --[[
@@ -519,8 +527,7 @@ function luatk.List:draw( bx, by )
 end
 function luatk.List:pressed( mx, my )
    if self.scrolls and mx > self.w-12 then
-      self.pos = (my-scrollbar_h*0.5) / (self.h-scrollbar_h) * self.scrollh
-      self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
+      self:setPos( (my-scrollbar_h*0.5) / (self.h-scrollbar_h) )
       return
    end
    self.selected = math.ceil( (my+self.pos-self.cellpad*0.5) / self.cellh )
@@ -537,6 +544,10 @@ function luatk.List:get()
 end
 function luatk.List:set( idx )
    self.selected = math.max( 0, math.min( idx, #self.items ) )
+end
+function luatk.List:setPos( pos )
+   self.pos = pos * self.scrollh
+   self.pos = math.max( 0, math.min( self.scrollh, self.pos ) )
 end
 
 --[[
