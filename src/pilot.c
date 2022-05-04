@@ -3566,6 +3566,7 @@ void pilots_cleanAll (void)
 {
    pilots_clean(0);
    if (player.p != NULL) {
+      pilot_rmFlag( player.p, PILOT_NOFREE );
       pilot_free(player.p);
       player.p = NULL;
       free( player.ps.acquired );

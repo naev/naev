@@ -759,13 +759,8 @@ void player_cleanup (void)
    /* Clear claims. */
    claim_clear();
 
-   /* Purge the pilot stack, and only afterward dispose of player.p. */
+   /* Purge the pilot stack, and player.p. */
    pilots_cleanAll();
-   if (player.p != NULL) {
-      pilot_rmFlag( player.p, PILOT_NOFREE );
-      pilot_free( player.p );
-   }
-   player.p = NULL;
 
    /* Reset some player stuff. */
    player_creds   = 0;
