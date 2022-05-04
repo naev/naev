@@ -2,7 +2,7 @@
 <spob name="Rulk'ar">
  <pos x="7590.844785" y="5152.573430"/>
  <GFX>
-  <space>K05.webp</space>
+  <space>K03.webp</space>
   <exterior>mining.webp</exterior>
  </GFX>
  <presence>
