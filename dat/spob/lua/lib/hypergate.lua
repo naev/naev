@@ -129,7 +129,7 @@ function hypergate_window ()
       if s ~= csys then
          for j,sp in ipairs(s:spobs()) do
             local t = sp:tags()
-            if t.hypergate and not t.ruined then
+            if t.hypergate and t.active then
                table.insert( destinations, sp )
             end
          end
@@ -139,9 +139,9 @@ function hypergate_window ()
    local destnames = {}
    for i,d in ipairs(destinations) do
       if d:known() then
-         table.insert( destnames, _("Unknown Signature") ) -- TODO convert name into symbol or hash
-      else
          table.insert( destnames, d:system():nameRaw() )
+      else
+         table.insert( destnames, _("Unknown Signature") ) -- TODO convert name into symbol or hash
       end
    end
 
@@ -168,8 +168,8 @@ function hypergate_window ()
          end
       end,
    } )
-   local function map_center( sys )
-      local s = system.get( sys )
+   local function map_center( _sys, idx )
+      local s = destinations[ idx ]:system()
       targetknown = s:known()
       if targetknown then
          local p = (cpos + s:pos())*0.5
@@ -178,10 +178,11 @@ function hypergate_window ()
          map:center( p )
       else
          jumpx, jumpy = 0, 0
+         jumpl, jumpa = 0, 0
          map.center( cpos )
       end
    end
-   map_center( destinations[1] ) -- Center on first item in the list
+   map_center( nil, 1 ) -- Center on first item in the list
 
    local lst = luatk.newList( wdw, w-260-20, 40, 260, h-40-20-40-20, destnames, map_center )
 
