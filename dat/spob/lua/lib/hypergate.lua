@@ -179,7 +179,7 @@ function hypergate_window ()
    end
    map_center( destinations[1] ) -- Center on first item in the list
 
-   local lst = luatk.newList( wdw, w-260-20, 40, 260, h-180, destnames, map_center )
+   local lst = luatk.newList( wdw, w-260-20, 40, 260, h-40-20-40-20, destnames, map_center )
 
    local target_gate
    luatk.newButton( wdw, w-(120+20)*2, h-40-20, 120, 40, _("Jump!"), function ()
