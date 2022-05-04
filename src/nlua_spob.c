@@ -747,9 +747,8 @@ static int spobL_position( lua_State *L )
  */
 static int spobL_gfxSpace( lua_State *L )
 {
-   Spob *p;
    glTexture *tex;
-   p        = luaL_validspob(L,1);
+   Spob *p = luaL_validspob(L,1);
    if (p->gfx_space == NULL) { /* Not loaded. */
       /* If the spob has no texture, just return nothing. */
       if (p->gfx_spaceName == NULL)
@@ -913,7 +912,6 @@ static int spobL_setKnown( lua_State *L )
 {
    int b, changed;
    Spob *p;
-
 
    p = luaL_validspob(L,1);
    b = lua_toboolean(L, 2);
