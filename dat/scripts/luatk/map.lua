@@ -3,6 +3,11 @@ local lg = require 'love.graphics'
 
 local luatk_map = {}
 
+local scale      = 1/3
+local sys_radius = 5
+--local sys_inner  = 3
+local edge_width = 3
+
 local Map = {}
 setmetatable( Map, { __index = luatk.Widget } )
 local Map_mt = { __index = Map }
@@ -58,28 +63,28 @@ function Map:draw( bx, by )
    -- Set scissors
    local scs = lg.getScissor()
    lg.setScissor( x, y, w, h )
-
-   local scale = 0.5
+   local c = vec2.new( w, h )*0.5
 
    -- Display edges
    lg.setColor( {0.5, 0.5, 0.5} )
    for i,e in ipairs(self.edges) do
-      local px, py = ((e.c-self.pos)*scale):get()
-      local l2 = e.l*0.5*scale
+      local px, py = ((e.c-self.pos)*scale + c):get()
+      local l = (e.l-sys_radius*2)*scale
+      local l2 = l*0.5
       if not (px < -l2 or px > w+l2 or py < -l2 or py > h+l2) then
          lg.push()
          lg.translate( x+px, y+py )
          lg.rotate( e.a )
-         lg.rectangle("fill", -l2, -2.5*scale, e.l*scale, 5*scale )
+         lg.rectangle("fill", -l2, -edge_width*0.5*scale, l, edge_width*scale )
          lg.pop()
       end
    end
 
    -- Display systems
-   local r = 5
+   local r = sys_radius
    lg.setColor( {0.8, 0.8, 0.8} )
    for i,s in ipairs(self.sys) do
-      local p = (s:pos()-self.pos)*scale
+      local p = (s:pos()-self.pos)*scale + c
       local px, py = p:get()
       if not (px < -r or px > w+r or py < -r or py > h+r) then
          lg.circle( "line", x+px, y+py, r )
