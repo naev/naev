@@ -230,6 +230,7 @@ static int colL_alpha( lua_State *L )
  * @usage r,g,b = col:rgb()
  *
  *    @luatparam Colour col Colour to get RGB values of.
+ *    @luatparam[opt=false] boolean gamma Whether or not to get the gamma-corrected value or not.
  *    @luatreturn number The red value of the colour.
  *    @luatreturn number The green value of the colour.
  *    @luatreturn number The blue value of the colour.
@@ -238,9 +239,16 @@ static int colL_alpha( lua_State *L )
 static int colL_rgb( lua_State *L )
 {
    glColour *col = luaL_checkcolour(L,1);
-   lua_pushnumber( L, col->r );
-   lua_pushnumber( L, col->g );
-   lua_pushnumber( L, col->b );
+   if (lua_toboolean(L,2)) {
+      lua_pushnumber( L, linearToGamma( col->r ) );
+      lua_pushnumber( L, linearToGamma( col->g ) );
+      lua_pushnumber( L, linearToGamma( col->b ) );
+   }
+   else {
+      lua_pushnumber( L, col->r );
+      lua_pushnumber( L, col->g );
+      lua_pushnumber( L, col->b );
+   }
    return 3;
 }
 
