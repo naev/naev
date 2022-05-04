@@ -17,12 +17,20 @@ function luatk_map.newMap( parent, x, y, w, h )
 
    local sysname = {} -- To do quick look ups
    wgt.sys = {}
+   --local inv = vec2.new(1,-1)
    local function addsys( s )
-      table.insert( wgt.sys, s )
+      local sys = { s=s, p=s:pos() }
+      local f = s:faction()
+      if f then
+         sys.c = { f:colour():rgb(true) }
+      else
+         sys.c = { 221/255, 221/255, 221/255 }
+      end
+      table.insert( wgt.sys, sys )
       sysname[ s:nameRaw() ] = #wgt.sys
    end
-   local sys = system.getAll()
-   for i,s in ipairs(sys) do
+   local allsys = system.getAll()
+   for i,s in ipairs(allsys) do
       if s:known() then
          addsys( s )
       else
@@ -37,12 +45,13 @@ function luatk_map.newMap( parent, x, y, w, h )
    end
 
    wgt.edges = {}
-   for ids,s in ipairs(sys) do
-      local ps = s:pos()
+   for ids,sys in ipairs(wgt.sys) do
+      local s = sys.s
+      local ps = sys.p
       for j,a in ipairs(s:adjacentSystems()) do
          local ida = sysname[ a:nameRaw() ]
          if ida and ida < ids then
-            local pa = wgt.sys[ ida ]:pos()
+            local pa = wgt.sys[ ida ].p
             local len, ang = (pa-ps):polar()
             local e = { v0=ps, v1=pa, c=(ps+pa)*0.5, a=ang, l=len }
             table.insert( wgt.edges, e )
@@ -82,11 +91,12 @@ function Map:draw( bx, by )
 
    -- Display systems
    local r = sys_radius
-   lg.setColor( {0.8, 0.8, 0.8} )
-   for i,s in ipairs(self.sys) do
+   for i,sys in ipairs(self.sys) do
+      local s = sys.s
       local p = (s:pos()-self.pos)*scale + c
       local px, py = p:get()
       if not (px < -r or px > w+r or py < -r or py > h+r) then
+         lg.setColor( sys.c )
          lg.circle( "line", x+px, y+py, r )
       end
    end
