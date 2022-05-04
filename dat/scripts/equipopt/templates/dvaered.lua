@@ -47,6 +47,11 @@ local dvaered_params = {
             ["Launcher"] = { max = rnd.rnd(0,1) },
          }
       } end,
+   ["Dvaered Retribution"] = function () return {
+         type_range = {
+            ["Launcher"] = { max = rnd.rnd(0,2) },
+         }
+      } end,
    ["Dvaered Goddard"] = function () return {
          type_range = {
             ["Launcher"] = { max = rnd.rnd(0,2) },
@@ -66,6 +71,9 @@ local dvaered_cores = { -- Basically elite hulls excluding stealth
       } end,
    ["Dvaered Vigilance"] = function () return {
          "S&K Medium-Heavy Combat Plating",
+      } end,
+   ["Dvaered Retribution"] = function () return {
+         "S&K Heavy Combat Plating",
       } end,
    ["Dvaered Goddard"] = function () return {
          "S&K Superheavy Combat Plating",

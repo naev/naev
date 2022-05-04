@@ -4,6 +4,7 @@ local svendetta   = ship.get("Dvaered Vendetta")
 local sancestor   = ship.get("Dvaered Ancestor")
 local sphalanx    = ship.get("Dvaered Phalanx")
 local svigilance  = ship.get("Dvaered Vigilance")
+local sretribution= ship.get("Dvaered Retribution")
 local sgoddard    = ship.get("Dvaered Goddard")
 local sarsenal    = ship.get("Dvaered Arsenal")
 
@@ -59,14 +60,17 @@ local function spawn_capship ()
    local pilots = {}
 
    -- Generate the capship
-   if rnd.rnd() < 0.1 then
+   local r = rnd.rnd()
+   if r < 0.1 then
       scom.addPilot( pilots, sarsenal )
+   elseif r < 0.4 then
+      scom.addPilot( pilots, sretribution )
    else
       scom.addPilot( pilots, sgoddard )
    end
 
    -- Generate the escorts
-   local r = rnd.rnd()
+   r = rnd.rnd()
    if r < 0.5 then
       scom.addPilot( pilots, svendetta )
       scom.addPilot( pilots, svendetta )
