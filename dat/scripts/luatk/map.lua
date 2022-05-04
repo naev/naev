@@ -66,8 +66,11 @@ end
 function Map:draw( bx, by )
    local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
 
+   lg.push()
+   lg.translate( x, y )
+
    lg.setColor( {0, 0, 0} )
-   lg.rectangle( "fill", x, y, w, h )
+   lg.rectangle( "fill", 0, 0, w, h )
 
    -- Set scissors
    local scs = lg.getScissor()
@@ -82,7 +85,7 @@ function Map:draw( bx, by )
       local l2 = l*0.5
       if not (px < -l2 or px > w+l2 or py < -l2 or py > h+l2) then
          lg.push()
-         lg.translate( x+px, y+py )
+         lg.translate( px, py )
          lg.rotate( e.a )
          lg.rectangle("fill", -l2, -edge_width*0.5*scale, l, edge_width*scale )
          lg.pop()
@@ -97,12 +100,13 @@ function Map:draw( bx, by )
       local px, py = p:get()
       if not (px < -r or px > w+r or py < -r or py > h+r) then
          lg.setColor( sys.c )
-         lg.circle( "line", x+px, y+py, r )
+         lg.circle( "line", px, py, r )
       end
    end
 
    -- Restore scissors
    lg.setScissor( scs )
+   lg.pop()
 end
 function Map:center( pos )
    self.pos = pos or vec2.new()
