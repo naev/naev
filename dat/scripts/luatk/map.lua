@@ -17,9 +17,9 @@ function luatk_map.newMap( parent, x, y, w, h )
 
    local sysname = {} -- To do quick look ups
    wgt.sys = {}
-   --local inv = vec2.new(1,-1)
+   local inv = vec2.new(1,-1)
    local function addsys( s )
-      local sys = { s=s, p=s:pos() }
+      local sys = { s=s, p=s:pos()*inv }
       local f = s:faction()
       if f then
          sys.c = { f:colour():rgb(true) }
@@ -94,9 +94,10 @@ function Map:draw( bx, by )
 
    -- Display systems
    local r = sys_radius
+   local inv = vec2.new(1,-1)
    for i,sys in ipairs(self.sys) do
       local s = sys.s
-      local p = (s:pos()-self.pos)*scale + c
+      local p = (s:pos()*inv-self.pos)*scale + c
       local px, py = p:get()
       if not (px < -r or px > w+r or py < -r or py > h+r) then
          lg.setColor( sys.c )
@@ -110,6 +111,7 @@ function Map:draw( bx, by )
 end
 function Map:center( pos )
    self.pos = pos or vec2.new()
+   self.pos = self.pos * vec2.new(1,-1)
 end
 
 return luatk_map

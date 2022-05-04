@@ -4,6 +4,7 @@
 local lg = require "love.graphics"
 local lf = require "love.filesystem"
 local love_shaders = require "love_shaders"
+local luatk = require "luatk"
 
 local pos, tex, mask, cvs, shader
 local tw, th
@@ -97,6 +98,19 @@ function hypergate.land( _s, p )
    p:shipvarPush( "hypergate", true )
 
    p:effectAdd("Hypergate Enter")
+
+   if player.pilot() == p then
+      local w = 800
+      local h = 600
+      local wdw = luatk.newWindow( nil, nil, w, h )
+
+      luatk.newList( wdw, w-120-20, 40, 120, h-180, function ()
+      end )
+
+      luatk.newButton( wdw, w-120-20, h-40-20, 120, 40, _("Close"), luatk.close )
+
+      luatk.run()
+   end
 end
 
 return hypergate
