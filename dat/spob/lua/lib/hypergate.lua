@@ -138,7 +138,11 @@ function hypergate_window ()
    table.sort( destinations, function( a, b ) return a:nameRaw() < b:nameRaw() end )
    local destnames = {}
    for i,d in ipairs(destinations) do
-      table.insert( destnames, d:system():nameRaw() )
+      if d:system():known() then -- TODO should it check for system or spob itself?
+         table.insert( destnames, _("Unknown Signature") ) -- TODO convert name into symbol or hash
+      else
+         table.insert( destnames, d:system():nameRaw() )
+      end
    end
 
    local inv = vec2.new(1,-1)
