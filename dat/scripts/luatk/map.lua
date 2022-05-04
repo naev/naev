@@ -9,9 +9,9 @@ local sys_radius = 5
 local edge_width = 3
 
 -- For access from the outside
-luatk.scale = scale
-luatk.sys_radius = sys_radius
-luatk.edge_width = edge_width
+luatk_map.scale = scale
+luatk_map.sys_radius = sys_radius
+luatk_map.edge_width = edge_width
 
 local Map = {}
 setmetatable( Map, { __index = luatk.Widget } )
