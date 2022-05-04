@@ -8,10 +8,16 @@ local sys_radius = 5
 --local sys_inner  = 3
 local edge_width = 3
 
+-- For access from the outside
+luatk.scale = scale
+luatk.sys_radius = sys_radius
+luatk.edge_width = edge_width
+
 local Map = {}
 setmetatable( Map, { __index = luatk.Widget } )
 local Map_mt = { __index = Map }
-function luatk_map.newMap( parent, x, y, w, h )
+function luatk_map.newMap( parent, x, y, w, h, options )
+   options = options or {}
    local wgt = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, Map_mt )
 
@@ -24,7 +30,7 @@ function luatk_map.newMap( parent, x, y, w, h )
       if f then
          sys.c = { f:colour():rgb(true) }
       else
-         sys.c = { 221/255, 221/255, 221/255 }
+         sys.c = { 221/255, 221/255, 221/255 } -- cInert
       end
       table.insert( wgt.sys, sys )
       sysname[ s:nameRaw() ] = #wgt.sys
@@ -59,7 +65,9 @@ function luatk_map.newMap( parent, x, y, w, h )
       end
    end
 
-   wgt.pos = vec2.new()
+   -- Set up custom options and the likes
+   wgt.pos = options.pos or vec2.new()
+   wgt.custrender = options.render
 
    return wgt
 end
@@ -103,6 +111,11 @@ function Map:draw( bx, by )
          lg.setColor( sys.c )
          lg.circle( "line", px, py, r )
       end
+   end
+
+   -- Allow for custom rendering
+   if self.custrender then
+      self.custrender( self )
    end
 
    -- Restore scissors
