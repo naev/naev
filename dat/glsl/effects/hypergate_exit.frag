@@ -1,2 +1,2 @@
-#define TIMER  u_elapsed
+#define TIMER  u_timer
 #include "effects/hypergate.frag"

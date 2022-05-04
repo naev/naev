@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Hypergate Exit">
+ <description>Exitting a hypergate!</description>
+ <duration>3</duration>
+ <overwrite>wormhole_enter</overwrite>
+ <icon>/gfx/misc/icons/galaxy.webp</icon>
+ <shader vertex="effect15x.vert">effects/hypergate_exit.frag</shader>
+</effect>

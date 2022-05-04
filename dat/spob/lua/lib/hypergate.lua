@@ -102,7 +102,13 @@ function hypergate.land( _s, p )
    p:effectAdd("Hypergate Enter")
 
    if player.pilot() == p then
-      hypergate_window()
+      local target = hypergate_window()
+      -- TODO animation and stuff, probably similar to wormholes
+      if target then
+         player.teleport( target )
+         p:effectClear()
+         p:effectAdd("Hypergate Exit")
+      end
    end
 end
 
@@ -171,6 +177,11 @@ function hypergate_window ()
 
    local lst = luatk.newList( wdw, w-200-20, 40, 200, h-180, destnames, map_center )
 
+   local target_gate
+   luatk.newButton( wdw, w-120-20, h-40-20, 120, 40, _("Jump!"), function ()
+      local _sel, idx = lst:get()
+      target_gate = destinations[ idx ]
+   end )
    luatk.newButton( wdw, w-120-20, h-40-20, 120, 40, _("Close"), luatk.close )
 
    wdw:setCancel( luatk.close )
@@ -188,6 +199,8 @@ function hypergate_window ()
    end )
 
    luatk.run()
+
+   return target_gate
 end
 
 return hypergate

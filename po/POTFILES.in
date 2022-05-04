@@ -51,6 +51,7 @@ dat/effects/bloodlust.xml
 dat/effects/crippling_plasma.xml
 dat/effects/feral_rage_i.xml
 dat/effects/hypergate_enter.xml
+dat/effects/hypergate_exit.xml
 dat/effects/paralyzing_plasma.xml
 dat/effects/plasma_burn.xml
 dat/effects/plasma_burn_ii.xml
