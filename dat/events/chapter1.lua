@@ -394,7 +394,6 @@ function cutscene_cleanup ()
    player.chapterSet("1")
    player.canDiscover( true )
 
-
    local pp = player.pilot()
    pp:setNoJump(false)
    pp:setNoLand(false)
@@ -411,6 +410,18 @@ function land ()
    sai(_([[""]]))
    vn.done( tut.shipai.transition )
    vn.run()
+
+   -- Set the hypergates as known, should make them appear by name on selection menu
+   local hgates = {
+      "Hypergate Gamma Polaris",
+      "Hypergate Ruadan",
+      "Hypergate Feye",
+      "Hypergate Kiwi",
+      "Hypergate Dvaer"
+   }
+   for k,v in ipairs(hgates) do
+      spob.get(v):setKnown(true)
+   end
 
    evt.finish(true) -- Properly finish
 end
