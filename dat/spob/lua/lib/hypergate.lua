@@ -125,6 +125,7 @@ function hypergate_window ()
          end
       end
    end
+   table.sort( destinations, function( a, b ) return a:nameRaw() < b:nameRaw() end )
    local destnames = {}
    for i,d in ipairs(destinations) do
       table.insert( destnames, d:system():nameRaw() )
@@ -166,6 +167,7 @@ function hypergate_window ()
          map.center( cpos )
       end
    end
+   map_center( destinations[1] ) -- Center on first item in the list
 
    local lst = luatk.newList( wdw, w-200-20, 40, 200, h-180, destnames, map_center )
 
