@@ -97,9 +97,6 @@ local hypergate_window
 function hypergate.land( _s, p )
    -- Avoid double landing
    if p:shipvarPeek( "hypergate" ) then return end
-   p:shipvarPush( "hypergate", true )
-
-   p:effectAdd("Hypergate Enter")
 
    if player.pilot() == p then
       local target = hypergate_window()
@@ -109,6 +106,9 @@ function hypergate.land( _s, p )
          p:effectClear()
          p:effectAdd("Hypergate Exit")
       end
+   else
+      p:shipvarPush( "hypergate", true )
+      p:effectAdd("Hypergate Enter")
    end
 end
 
@@ -139,7 +139,7 @@ function hypergate_window ()
 
    local inv = vec2.new(1,-1)
    local targetknown = false
-   local mapw, maph = w-260, h-60
+   local mapw, maph = w-300, h-60
    --local mapfont = lg.newFont(32)
    local jumpx, jumpy, jumpl, jumpa = 0, 0, 0, 0
    local map = luatk_map.newMap( wdw, 20, 40, mapw, maph, {
@@ -175,12 +175,13 @@ function hypergate_window ()
    end
    map_center( destinations[1] ) -- Center on first item in the list
 
-   local lst = luatk.newList( wdw, w-200-20, 40, 200, h-180, destnames, map_center )
+   local lst = luatk.newList( wdw, w-240-20, 40, 240, h-180, destnames, map_center )
 
    local target_gate
-   luatk.newButton( wdw, w-120-20, h-40-20, 120, 40, _("Jump!"), function ()
+   luatk.newButton( wdw, w-(120+20)*2, h-40-20, 120, 40, _("Jump!"), function ()
       local _sel, idx = lst:get()
       target_gate = destinations[ idx ]
+      luatk.close()
    end )
    luatk.newButton( wdw, w-120-20, h-40-20, 120, 40, _("Close"), luatk.close )
 
