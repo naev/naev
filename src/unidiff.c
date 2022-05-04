@@ -100,6 +100,8 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_SPOB_SERVICE_REMOVE,
    HUNK_TYPE_SPOB_TECH_ADD,
    HUNK_TYPE_SPOB_TECH_REMOVE,
+   HUNK_TYPE_SPOB_TAG_ADD,
+   HUNK_TYPE_SPOB_TAG_REMOVE,
    HUNK_TYPE_SPOB_SPACE,
    HUNK_TYPE_SPOB_SPACE_REVERT, /* For internal usage. */
    HUNK_TYPE_SPOB_EXTERIOR,
@@ -674,6 +676,32 @@ static int diff_patchSpob( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
+      else if (xml_isNode(cur,"tag_add")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_SPOB_TAG_ADD;
+         hunk.u.name = xml_getStrd(cur);
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      else if (xml_isNode(cur,"tag_remove")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_SPOB_TAG_REMOVE;
+         hunk.u.name = xml_getStrd(cur);
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
       else if (xml_isNode(cur,"gfx_space")) {
          char str[PATH_MAX];
          hunk.target.type = base.target.type;
@@ -985,6 +1013,14 @@ static int diff_patch( xmlNodePtr parent )
                WARN(_("   [%s] spob tech remove: '%s'"), target,
                      spob_getServiceName(fail->u.data) );
                break;
+            case HUNK_TYPE_SPOB_TAG_ADD:
+               WARN(_("   [%s] spob tech add: '%s'"), target,
+                     spob_getServiceName(fail->u.data) );
+               break;
+            case HUNK_TYPE_SPOB_TAG_REMOVE:
+               WARN(_("   [%s] spob tech remove: '%s'"), target,
+                     spob_getServiceName(fail->u.data) );
+               break;
             case HUNK_TYPE_FACTION_VISIBLE:
                WARN(_("   [%s] faction visible: '%s'"), target,
                      fail->u.name );
@@ -1209,6 +1245,33 @@ static int diff_patchHunk( UniHunk_t *hunk )
          if (p==NULL)
             return -1;
          tech_rmItemTech( p->tech, hunk->u.name );
+         return 0;
+
+      /* Modifying tag stuff. */
+      case HUNK_TYPE_SPOB_TAG_ADD:
+         p = spob_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         if (p->tech == NULL)
+            p->tech = tech_groupCreate();
+         if (p->tags==NULL)
+            p->tags = array_create( char* );
+         array_push_back( &p->tags, strdup( hunk->u.name ) );
+         return 0;
+      case HUNK_TYPE_SPOB_TAG_REMOVE:
+         p = spob_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         a = -1;
+         for (int i=0; i<array_size(p->tags); i++) {
+            if (strcmp(p->tags[i], hunk->u.name )==0) {
+               a = i;
+               break;
+            }
+         }
+         if (a<0)
+            return -1; /* Didn't find tag! */
+         array_erase( &p->tags, &p->tags[a], &p->tags[a+1] );
          return 0;
 
       /* Changing spob space graphics. */
@@ -1503,6 +1566,13 @@ static int diff_removeDiff( UniDiff_t *diff )
             hunk.type = HUNK_TYPE_SPOB_TECH_ADD;
             break;
 
+         case HUNK_TYPE_SPOB_TAG_ADD:
+            hunk.type = HUNK_TYPE_SPOB_TAG_REMOVE;
+            break;
+         case HUNK_TYPE_SPOB_TAG_REMOVE:
+            hunk.type = HUNK_TYPE_SPOB_TAG_ADD;
+            break;
+
          case HUNK_TYPE_SPOB_SPACE:
             hunk.type = HUNK_TYPE_SPOB_SPACE_REVERT;
             break;
@@ -1592,6 +1662,8 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       case HUNK_TYPE_SPOB_DESCRIPTION_REVERT:
       case HUNK_TYPE_SPOB_TECH_ADD:
       case HUNK_TYPE_SPOB_TECH_REMOVE:
+      case HUNK_TYPE_SPOB_TAG_ADD:
+      case HUNK_TYPE_SPOB_TAG_REMOVE:
       case HUNK_TYPE_SPOB_BAR:
       case HUNK_TYPE_SPOB_BAR_REVERT:
       case HUNK_TYPE_SPOB_SPACE:

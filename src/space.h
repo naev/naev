@@ -122,14 +122,14 @@ typedef struct Spob_ {
    tech_group_t *tech;     /**< Spob tech. */
 
    /* Graphics. */
-   glTexture *gfx_space;   /**< graphic in space */
+   glTexture *gfx_space;   /**< Graphic in space */
    char *gfx_spaceName;    /**< Name to load texture quickly with. */
    char *gfx_spacePath;    /**< Name of the gfx_space for saving purposes. */
    char *gfx_exterior;     /**< Don't actually load the texture */
    char *gfx_exteriorPath; /**< Name of the gfx_exterior for saving purposes. */
 
    /* Misc. */
-   char **tags;         /**< Spob tagsg. */
+   char **tags;         /**< Spob tags. */
    unsigned int flags;  /**< flags for spob properties */
    MapOverlayPos mo;    /**< Overlay layout data. */
    double map_alpha;    /**< Alpha to display on the map. */
