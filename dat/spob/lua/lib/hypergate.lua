@@ -1,6 +1,7 @@
 --[[
    Active hypergate
 --]]
+local fmt = require "format"
 local lg = require "love.graphics"
 local lf = require "love.filesystem"
 local love_shaders = require "love_shaders"
@@ -13,6 +14,7 @@ local tw, th
 local pixelcode = lf.read( "spob/lua/glsl/hypergate.frag" )
 
 local hypergate = {}
+local hypergate_spob
 
 local function update_canvas ()
    local oldcanvas = lg.getCanvas()
@@ -36,6 +38,7 @@ end
 
 function hypergate.load( p, opts )
    opts = opts or {}
+   hypergate_spob = p
 
    if tex==nil then
       -- Handle some options
@@ -113,9 +116,10 @@ function hypergate.land( _s, p )
 end
 
 function hypergate_window ()
-   local w = 800
+   local w = 900
    local h = 600
    local wdw = luatk.newWindow( nil, nil, w, h )
+   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Hypergate ({sysname})"), {sysname=hypergate_spob:system()}), nil, "center" )
 
    local csys = system.cur()
    local cpos = csys:pos()
@@ -139,7 +143,7 @@ function hypergate_window ()
 
    local inv = vec2.new(1,-1)
    local targetknown = false
-   local mapw, maph = w-300, h-60
+   local mapw, maph = w-330, h-60
    --local mapfont = lg.newFont(32)
    local jumpx, jumpy, jumpl, jumpa = 0, 0, 0, 0
    local map = luatk_map.newMap( wdw, 20, 40, mapw, maph, {
@@ -175,7 +179,7 @@ function hypergate_window ()
    end
    map_center( destinations[1] ) -- Center on first item in the list
 
-   local lst = luatk.newList( wdw, w-240-20, 40, 240, h-180, destnames, map_center )
+   local lst = luatk.newList( wdw, w-260-20, 40, 260, h-180, destnames, map_center )
 
    local target_gate
    luatk.newButton( wdw, w-(120+20)*2, h-40-20, 120, 40, _("Jump!"), function ()
