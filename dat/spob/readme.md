@@ -22,7 +22,7 @@ There are a few special features a spob can have including:
 - srm_mil_restricted (Soromid military spob),
 - zlk_mil_restricted (Za'lek's military spob),
 - pir_clanworld (Pirate clanworld),
-- something else you have programmed in dat/landing.lua !
+- something else you have programmed in `dat/landing.lua` !
 
 ### Tags
 
@@ -47,6 +47,9 @@ Below is the complete list of dominantly used descriptive tags. It should be not
 
 * **station**: the spob is a space station or gas giant spaceport
 * **wormhole**: the spob is a wormhole
+* **hypergate**: the spob is a hypergate
+* **active**: the spob is active (only matters for hypergates)
+* **ruined**: the spob is ruined (currently only matters for hypergates)
 * **new**: recently colonised worlds / recently built stations (definitely post-Incident)
 * **old**: long-time colonised worlds / old stations (definitely pre-Incident)
 * **rich**: the population living on the spob is rich by the standards of the faction
