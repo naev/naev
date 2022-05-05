@@ -365,7 +365,6 @@ function luatk.Text:set( text )
 end
 function luatk.Text:height ()
    local _maxw, wrap = self.font:getWrap( self.text, self.w )
-   print( #wrap, self.font:getHeight(), self.font:getLineHeight() )
    return self.font:getLineHeight() * #wrap
 end
 
