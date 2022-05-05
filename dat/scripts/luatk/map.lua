@@ -138,5 +138,15 @@ function Map:update( dt )
       self.pos = self.pos + vec2.newP( math.min(mod,self.speed*dt), dir )
    end
 end
+function Map:pressed( mx, my )
+   self._mouse = vec2.new( mx, my )
+end
+function Map:mmoved( mx, my )
+   if self._pressed then
+      self.pos = self.pos + (self._mouse - vec2.new( mx, my )) / scale
+      self.target = self.pos
+      self._mouse = vec2.new( mx, my )
+   end
+end
 
 return luatk_map
