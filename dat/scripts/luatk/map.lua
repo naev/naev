@@ -122,9 +122,21 @@ function Map:draw( bx, by )
    lg.setScissor( scs )
    lg.pop()
 end
-function Map:center( pos )
-   self.pos = pos or vec2.new()
-   self.pos = self.pos * vec2.new(1,-1)
+function Map:center( pos, hardset )
+   self.target = pos or vec2.new()
+   self.target = self.target * vec2.new(1,-1)
+
+   if hardset then
+      self.pos = self.target
+   else
+      self.speed = (self.pos-self.target):dist() * 3
+   end
+end
+function Map:update( dt )
+   if (self.pos - self.target):dist2() > 1e-3 then
+      local mod, dir = (self.target - self.pos):polar()
+      self.pos = self.pos + vec2.newP( math.min(mod,self.speed*dt), dir )
+   end
 end
 
 return luatk_map
