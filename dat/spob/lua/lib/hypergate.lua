@@ -181,7 +181,7 @@ function hypergate_window ()
          end
       end,
    } )
-   local function map_center( _sys, idx )
+   local function map_center( _sys, idx, hardset )
       local s = destinations[ idx ]:system()
       targetknown = s:known()
       if targetknown then
@@ -189,14 +189,14 @@ function hypergate_window ()
          jumpx, jumpy = (p*inv):get()
          jumpl, jumpa = ((s:pos()-cpos)*inv):polar()
          shd_jumpgoto:send( "dimensions", {jumpl*luatk_map.scale,jumpw} )
-         map:center( p )
+         map:center( p, hardset )
       else
          jumpx, jumpy = 0, 0
          jumpl, jumpa = 0, 0
-         map.center( cpos )
+         map.center( cpos, hardset )
       end
    end
-   map_center( nil, 1 ) -- Center on first item in the list
+   map_center( nil, 1, true ) -- Center on first item in the list
 
    local lst = luatk.newList( wdw, w-260-20, 40, 260, h-40-20-40-20, destnames, map_center )
 
