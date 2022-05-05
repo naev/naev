@@ -1,2 +1,2 @@
 #define TIMER  u_timer
-#include "effects/hypergate.frag"
+#include "effects/shared/hypergate.frag"

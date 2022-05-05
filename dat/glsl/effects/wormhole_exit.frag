@@ -1,2 +1,2 @@
 #define TIMER  u_timer
-#include "effects/wormhole.frag"
+#include "effects/shared/wormhole.frag"
