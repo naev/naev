@@ -208,6 +208,12 @@ function luatk.Window:update(dt)
          wgt:update(dt)
       end
    end
+   if self.custupdate then
+      self.custupdate( dt )
+   end
+end
+function luatk.Window:setUpdate( f )
+   self.custupdate = f
 end
 function luatk.Window:destroy()
    for k,w in ipairs(luatk._windows) do

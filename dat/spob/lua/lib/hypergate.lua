@@ -121,9 +121,18 @@ function hypergate_window ()
    local wdw = luatk.newWindow( nil, nil, w, h )
    luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Hypergate ({sysname})"), {sysname=hypergate_spob:system()}), nil, "center" )
 
+   -- Load shaders
+   local path = "spob/lua/glsl/"
+   local function load_shader( filename )
+      local src = lf.read( path..filename )
+      return lg.newShader( src )
+   end
+   local shd_jumpgoto = load_shader( "jumpgoto.frag" )
+   shd_jumpgoto.dt = 0
+
+   -- Get potential destinations from tags
    local csys = system.cur()
    local cpos = csys:pos()
-
    local destinations = {}
    for i,s in ipairs(system.getAll()) do
       if s ~= csys then
@@ -150,6 +159,7 @@ function hypergate_window ()
    local mapw, maph = w-330, h-60
    --local mapfont = lg.newFont(32)
    local jumpx, jumpy, jumpl, jumpa = 0, 0, 0, 0
+   local jumpw = 10
    local map = luatk_map.newMap( wdw, 20, 40, mapw, maph, {
       render = function ( m )
          if not targetknown then
@@ -163,7 +173,10 @@ function hypergate_window ()
             lg.push()
             lg.translate( (jumpx-mx)*s + mapw*0.5, (jumpy-my)*s + maph*0.5 )
             lg.rotate( jumpa )
-            lg.rectangle("fill", -jumpl*0.5*s, -5*s, jumpl*s, 10*s )
+            --lg.rectangle("fill", -jumpl*0.5*s, -5*s, jumpl*s, 10*s )
+            lg.setShader( shd_jumpgoto )
+            love_shaders.img:draw( -jumpl*0.5*s, -jumpw*0.5, 0, jumpl*s, jumpw )
+            lg.setShader()
             lg.pop()
          end
       end,
@@ -175,6 +188,7 @@ function hypergate_window ()
          local p = (cpos + s:pos())*0.5
          jumpx, jumpy = (p*inv):get()
          jumpl, jumpa = ((s:pos()-cpos)*inv):polar()
+         shd_jumpgoto:send( "dimensions", {jumpl*luatk_map.scale,jumpw} )
          map:center( p )
       else
          jumpx, jumpy = 0, 0
@@ -195,6 +209,10 @@ function hypergate_window ()
    luatk.newButton( wdw, w-(120+20)*2, h-40-20, 120, 40, _("Jump!"), btn_jump )
    luatk.newButton( wdw, w-120-20, h-40-20, 120, 40, _("Close"), luatk.close )
 
+   wdw:setUpdate( function ( dt )
+      shd_jumpgoto.dt = shd_jumpgoto.dt + dt
+      shd_jumpgoto:send( "dt", shd_jumpgoto.dt )
+   end )
    wdw:setAccept( btn_jump )
    wdw:setCancel( luatk.close )
    wdw:setKeypress( function ( key )
