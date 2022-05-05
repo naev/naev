@@ -198,7 +198,14 @@ function hypergate_window ()
    end
    map_center( nil, 1, true ) -- Center on first item in the list
 
-   local lst = luatk.newList( wdw, w-260-20, 40, 260, h-40-20-40-20, destnames, map_center )
+   local txtfont = lg.newFont(12)
+   local txt = luatk.newText( wdw, w-260-20, 40, 260, 200, fmt.f(_(
+[[#nCurrent System:#0 {cursys}
+#nHypergate Faction:#0 {fact}
+
+#nAvailable Jump Target:#0]]), {cursys=csys, fact=hypergate_spob:faction()}), nil, nil, txtfont )
+   local txth = txt:height()
+   local lst = luatk.newList( wdw, w-260-20, 40+txth+10, 260, h-40-20-40-20-txth-10, destnames, map_center )
 
    local target_gate
    local function btn_jump ()
