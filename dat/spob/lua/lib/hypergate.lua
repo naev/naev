@@ -48,6 +48,16 @@ function hypergate.load( p, opts )
       cost_flat = opts.cost_flat or 10e3
       cost_mass = opts.cost_mass or 50
       cost_mod = opts.cost_mod or 1
+      if type(opts.cost_mod)=="table" then
+         cost_mod = 1
+         local standing = p:faction():playerStanding()
+         for k,v in ipairs(opts.cost_mod) do
+            if standing >= k then
+               cost_mod = v
+               break
+            end
+         end
+      end
 
       -- Set up texture stuff
       local prefix = "gfx/spob/space/"
@@ -107,6 +117,8 @@ function hypergate.land( _s, p )
    if p:shipvarPeek( "hypergate" ) then return end
 
    if player.pilot() == p then
+      -- TODO check if hostile to disallow
+
       local target = hypergate_window()
       -- TODO animation and stuff, probably similar to wormholes
       if target then
@@ -213,9 +225,9 @@ function hypergate_window ()
    local standing_value, standing = hgfact:playerStanding()
    local cost_mod_str = tostring(cost_mod*100)
    if cost_mod < 1 then
-      cost_mod_str = "#g"..cost_mod_str.."#0"
+      cost_mod_str = "#g"..cost_mod_str
    elseif cost_mod > 1 then
-      cost_mod_str = "#r"..cost_mod_str.."#0"
+      cost_mod_str = "#r"..cost_mod_str
    end
    local standing_col = "#N"
    if hgfact:areAllies(ppf) then
@@ -227,7 +239,7 @@ function hypergate_window ()
 [[#nCurrent System:#0 {cursys}
 #nHypergate Faction:#0 {fact}
 #nFaction Standing:#0 {standing} ({standing_value})
-#nStanding Modifier:#0 {costmod}%
+#nStanding Modifier:#0 {costmod}%#0
 #nFleet Mass:#0 {totalmass}
 #nUsage Cost:#0 {totalcost} ({flatcost} + {masscost} per tonne)
 
