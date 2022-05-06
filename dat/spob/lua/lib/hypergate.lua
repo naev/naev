@@ -118,8 +118,9 @@ end
 function hypergate_window ()
    local w = 900
    local h = 600
+   luatk.setDefaultFont( lg.newFont(12) )
    local wdw = luatk.newWindow( nil, nil, w, h )
-   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Hypergate ({sysname})"), {sysname=hypergate_spob:system()}), nil, "center" )
+   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Hypergate ({sysname})"), {sysname=hypergate_spob:system()}), nil, "center", lg.newFont(14) )
 
    -- Load shaders
    local path = "spob/lua/glsl/"
@@ -157,7 +158,6 @@ function hypergate_window ()
    local inv = vec2.new(1,-1)
    local targetknown = false
    local mapw, maph = w-330, h-60
-   --local mapfont = lg.newFont(32)
    local jumpx, jumpy, jumpl, jumpa = 0, 0, 0, 0
    local jumpw = 10
    local map = luatk_map.newMap( wdw, 20, 40, mapw, maph, {
@@ -173,7 +173,6 @@ function hypergate_window ()
             lg.push()
             lg.translate( (jumpx-mx)*s + mapw*0.5, (jumpy-my)*s + maph*0.5 )
             lg.rotate( jumpa )
-            --lg.rectangle("fill", -jumpl*0.5*s, -5*s, jumpl*s, 10*s )
             lg.setShader( shd_jumpgoto )
             love_shaders.img:draw( -jumpl*0.5*s, -jumpw*0.5, 0, jumpl*s, jumpw )
             lg.setShader()
@@ -198,12 +197,11 @@ function hypergate_window ()
    end
    map_center( nil, 1, true ) -- Center on first item in the list
 
-   local txtfont = lg.newFont(12)
    local txt = luatk.newText( wdw, w-260-20, 40, 260, 200, fmt.f(_(
 [[#nCurrent System:#0 {cursys}
 #nHypergate Faction:#0 {fact}
 
-#nAvailable Jump Target:#0]]), {cursys=csys, fact=hypergate_spob:faction()}), nil, nil, txtfont )
+#nAvailable Jump Target:#0]]), {cursys=csys, fact=hypergate_spob:faction()}) )
    local txth = txt:height()
    local lst = luatk.newList( wdw, w-260-20, 40+txth+10, 260, h-40-20-40-20-txth-10, destnames, map_center )
 
@@ -211,9 +209,10 @@ function hypergate_window ()
    local function btn_jump ()
       local _sel, idx = lst:get()
       local d = destinations[ idx ]
-      local price = 0
-      luatk.yesno( fmt.f(_("Jump to {sysname}?"),{sysname=d}),
-         fmt.f(_("Are you sure you want to jump to {sysname} for {credits}?"),{sysname=d,credits=fmt.credits(price)}), function ()
+      local s = d:system()
+      local cost = 0
+      luatk.yesno( fmt.f(_("Jump to {sysname}?"),{sysname=s}),
+         fmt.f(_("Are you sure you want to jump to {sysname} for {credits}?"),{sysname=s,credits=fmt.credits(cost)}), function ()
             target_gate = d
             luatk.close()
          end, nil )
