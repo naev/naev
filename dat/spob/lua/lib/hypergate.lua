@@ -271,8 +271,12 @@ function hypergate_window ()
       local _sel, idx = lst:get()
       local d = destinations[ idx ]
       local s = d:system()
+      local extramsg = ""
+      if s:faction():areEnemies(ppf) then
+         extramsg = "#r"..fmt.f(_("\nYou are enemies with the {fctname}!"),{fctname=s:faction()}).."#0"
+      end
       luatk.yesno( fmt.f(_("Jump to {sysname}?"),{sysname=s}),
-         fmt.f(_("Are you sure you want to jump to {sysname} for {credits}?"),{sysname=s,credits=fmt.credits(totalcost)}), function ()
+         fmt.f(_("Are you sure you want to jump to {sysname} for {credits}?{extramsg}"),{sysname=s,credits=fmt.credits(totalcost),extramsg=extramsg}), function ()
             if player.credits() > totalcost then
                player.pay(-totalcost)
                target_gate = d
