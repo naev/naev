@@ -1,5 +1,6 @@
 * 0.10.0 (unreleased)
    * New Mechanics
+      * Hypergates that allow for long distance travel
       * Mining has been completely redone with a new mining mini-game and rarity mechanics
       * Support for restrictions for outfits and ships
       * Significantly improved how faction reputation caps are handled
@@ -26,7 +27,7 @@
          * Continuation of the Za'lek story
          * Help the Dvaered do some tasks
          * Tutorial for new mechanics
-      * 3 New ships
+      * 4 New ships
       * Lots of new outfits
       * New commodities that are only available from mining
    * Quality of Life
