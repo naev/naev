@@ -210,8 +210,13 @@ function hypergate_window ()
    local target_gate
    local function btn_jump ()
       local _sel, idx = lst:get()
-      target_gate = destinations[ idx ]
-      luatk.close()
+      local d = destinations[ idx ]
+      local price = 0
+      luatk.yesno( fmt.f(_("Jump to {sysname}?"),{sysname=d}),
+         fmt.f(_("Are you sure you want to jump to {sysname} for {credits}?"),{sysname=d,credits=fmt.credits(price)}), function ()
+            target_gate = d
+            luatk.close()
+         end, nil )
    end
    luatk.newButton( wdw, w-(120+20)*2, h-40-20, 120, 40, _("Jump!"), btn_jump )
    luatk.newButton( wdw, w-120-20, h-40-20, 120, 40, _("Close"), luatk.close )
