@@ -165,8 +165,17 @@ function hypergate_window ()
    table.sort( destinations, function( a, b ) return a:nameRaw() < b:nameRaw() end )
    local destnames = {}
    for i,d in ipairs(destinations) do
+      local ppf = player.pilot():faction()
       if d:known() then
-         table.insert( destnames, d:system():nameRaw() )
+         local s = d:system()
+         local f = s:faction()
+         local str = fmt.f(_("{sysname} ({factname})"), {sysname=s,factname=f})
+         if f:areEnemies(ppf) then
+            str = "#H"..str.."#0"
+         elseif f:areAllies(ppf) then
+            str = "#F"..str.."#0"
+         end
+         table.insert( destnames, str )
       else
          table.insert( destnames, _("Unknown Signature") ) -- TODO convert name into symbol or hash
       end
