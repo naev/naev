@@ -147,9 +147,9 @@ function hypergate_window ()
    end
    local shd_jumpgoto = load_shader( "jumpgoto.frag" )
    shd_jumpgoto.dt = 0
-   local shd_sysmarker = load_shader( "sysmarker.frag" )
-   shd_sysmarker.dt = 0
-   shd_sysmarker:send( "dimensions", {2*luatk_map.sys_radius, 2*luatk_map.sys_radius} )
+   local shd_selectsys = load_shader( "selectsys.frag" )
+   shd_selectsys.dt = 0
+   shd_selectsys:send( "dimensions", {2*luatk_map.sys_radius, 2*luatk_map.sys_radius} )
 
    -- Get potential destinations from tags
    local csys = system.cur()
@@ -210,7 +210,7 @@ function hypergate_window ()
 
             local r = luatk_map.sys_radius
             lg.setColor( {1, 1, 1, 0.8} )
-            lg.setShader( shd_sysmarker )
+            lg.setShader( shd_selectsys )
             love_shaders.img:draw( (targetx-mx)*s + mapw*0.5 - 2*r, (targety-my)*s + maph*0.5 - 2*r, 0, 4*r, 4*r )
             lg.setShader()
          end
@@ -303,8 +303,8 @@ function hypergate_window ()
    wdw:setUpdate( function ( dt )
       shd_jumpgoto.dt = shd_jumpgoto.dt + dt
       shd_jumpgoto:send( "dt", shd_jumpgoto.dt )
-      shd_sysmarker.dt = shd_sysmarker.dt + dt
-      shd_sysmarker:send( "dt", shd_sysmarker.dt )
+      shd_selectsys.dt = shd_selectsys.dt + dt
+      shd_selectsys:send( "dt", shd_selectsys.dt )
    end )
    wdw:setAccept( btn_jump )
    wdw:setCancel( luatk.close )

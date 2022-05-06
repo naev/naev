@@ -1,6 +1,8 @@
 #include "lib/math.glsl"
 #include "lib/sdf.glsl"
 
+/* Based on dat/glsl/selectspob.frag */
+
 uniform vec2 dimensions;
 uniform float dt;
 
