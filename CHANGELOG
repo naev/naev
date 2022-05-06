@@ -48,6 +48,9 @@
       * Asteroids redone to be more flexible and easy to add using groups
       * Asteroid field support in the editor
 
+* 0.9.4 (unreleased)
+   * Fixed "No error." log spam with certain video card drivers
+
 * 0.9.3
    * Bug fix: if the German translation was active, casino minigames' explanation (Erklärung) didn't work
    * Fix errors/slowdown in Diversion from (...) missions
