@@ -36,7 +36,7 @@ local function update_canvas ()
    lg.setCanvas( oldcanvas )
 end
 
-local cost_flat, cost_mass
+local cost_flat, cost_mass, cost_mod
 
 function hypergate.load( p, opts )
    opts = opts or {}
@@ -47,6 +47,7 @@ function hypergate.load( p, opts )
       local basecol = opts.basecol or { 0.2, 0.8, 0.8 }
       cost_flat = opts.cost_flat or 10e3
       cost_mass = opts.cost_mass or 50
+      cost_mod = opts.cost_mod or 1
 
       -- Set up texture stuff
       local prefix = "gfx/spob/space/"
@@ -202,20 +203,40 @@ function hypergate_window ()
    map_center( nil, 1, true ) -- Center on first item in the list
 
    local pp = player.pilot()
+   local ppf = pp:faction()
    local totalmass = pp:mass()
    for k,v in ipairs(pp:followers()) do
       totalmass = totalmass + v:mass()
    end
-   local totalcost = cost_flat + cost_mass * totalmass
+   local totalcost = (cost_flat + cost_mass * totalmass) * cost_mod
+   local hgfact = hypergate_spob:faction()
+   local standing_value, standing = hgfact:playerStanding()
+   local cost_mod_str = tostring(cost_mod*100)
+   if cost_mod < 1 then
+      cost_mod_str = "#g"..cost_mod_str.."#0"
+   elseif cost_mod > 1 then
+      cost_mod_str = "#r"..cost_mod_str.."#0"
+   end
+   local standing_col = "#N"
+   if hgfact:areAllies(ppf) then
+      standing_col = "#F"
+   elseif hgfact:areEnemies(ppf) then
+      standing_col = "#H"
+   end
    local txt = luatk.newText( wdw, w-260-20, 40, 260, 200, fmt.f(_(
 [[#nCurrent System:#0 {cursys}
 #nHypergate Faction:#0 {fact}
+#nFaction Standing:#0 {standing} ({standing_value})
+#nStanding Modifier:#0 {costmod}%
 #nFleet Mass:#0 {totalmass}
 #nUsage Cost:#0 {totalcost} ({flatcost} + {masscost} per tonne)
 
 #nAvailable Jump Target:#0]]), {
       cursys = csys,
-      fact = hypergate_spob:faction(),
+      fact = hgfact,
+      standing = standing_col..standing.."#0",
+      standing_value = standing_col..tostring(standing_value).."#0",
+      costmod = cost_mod_str,
       totalmass = fmt.tonnes(totalmass),
       totalcost = fmt.credits(totalcost),
       flatcost = fmt.credits(cost_flat),
