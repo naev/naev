@@ -1,5 +1,3 @@
-#pragma language glsl3
-
 #include "lib/sdf.glsl"
 
 uniform vec2 dimensions;

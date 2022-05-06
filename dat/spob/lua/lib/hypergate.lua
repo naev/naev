@@ -147,6 +147,9 @@ function hypergate_window ()
    end
    local shd_jumpgoto = load_shader( "jumpgoto.frag" )
    shd_jumpgoto.dt = 0
+   local shd_sysmarker = load_shader( "sysmarker.frag" )
+   shd_sysmarker.dt = 0
+   shd_sysmarker:send( "dimensions", {2*luatk_map.sys_radius, 2*luatk_map.sys_radius} )
 
    -- Get potential destinations from tags
    local csys = system.cur()
@@ -185,6 +188,7 @@ function hypergate_window ()
    local targetknown = false
    local mapw, maph = w-330, h-60
    local jumpx, jumpy, jumpl, jumpa = 0, 0, 0, 0
+   local targetx, targety = 0, 0
    local jumpw = 10
    local map = luatk_map.newMap( wdw, 20, 40, mapw, maph, {
       render = function ( m )
@@ -203,6 +207,12 @@ function hypergate_window ()
             love_shaders.img:draw( -jumpl*0.5*s, -jumpw*0.5, 0, jumpl*s, jumpw )
             lg.setShader()
             lg.pop()
+
+            local r = luatk_map.sys_radius
+            lg.setColor( {1, 1, 1, 0.8} )
+            lg.setShader( shd_sysmarker )
+            love_shaders.img:draw( (targetx-mx)*s + mapw*0.5 - 2*r, (targety-my)*s + maph*0.5 - 2*r, 0, 4*r, 4*r )
+            lg.setShader()
          end
       end,
    } )
@@ -212,6 +222,7 @@ function hypergate_window ()
       if targetknown then
          local p = (cpos + s:pos())*0.5
          jumpx, jumpy = (p*inv):get()
+         targetx, targety = (s:pos()*inv):get()
          jumpl, jumpa = ((s:pos()-cpos)*inv):polar()
          shd_jumpgoto:send( "dimensions", {jumpl*luatk_map.scale,jumpw} )
          map:center( p, hardset )
@@ -292,6 +303,8 @@ function hypergate_window ()
    wdw:setUpdate( function ( dt )
       shd_jumpgoto.dt = shd_jumpgoto.dt + dt
       shd_jumpgoto:send( "dt", shd_jumpgoto.dt )
+      shd_sysmarker.dt = shd_sysmarker.dt + dt
+      shd_sysmarker:send( "dt", shd_sysmarker.dt )
    end )
    wdw:setAccept( btn_jump )
    wdw:setCancel( luatk.close )
