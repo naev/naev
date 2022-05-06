@@ -36,6 +36,8 @@ local function update_canvas ()
    lg.setCanvas( oldcanvas )
 end
 
+local cost_flat, cost_mass
+
 function hypergate.load( p, opts )
    opts = opts or {}
    hypergate_spob = p
@@ -43,6 +45,8 @@ function hypergate.load( p, opts )
    if tex==nil then
       -- Handle some options
       local basecol = opts.basecol or { 0.2, 0.8, 0.8 }
+      cost_flat = opts.cost_flat or 10e3
+      cost_mass = opts.cost_mass or 50
 
       -- Set up texture stuff
       local prefix = "gfx/spob/space/"
@@ -197,11 +201,26 @@ function hypergate_window ()
    end
    map_center( nil, 1, true ) -- Center on first item in the list
 
+   local pp = player.pilot()
+   local totalmass = pp:mass()
+   for k,v in ipairs(pp:followers()) do
+      totalmass = totalmass + v:mass()
+   end
+   local totalcost = cost_flat + cost_mass * totalmass
    local txt = luatk.newText( wdw, w-260-20, 40, 260, 200, fmt.f(_(
 [[#nCurrent System:#0 {cursys}
 #nHypergate Faction:#0 {fact}
+#nFleet Mass:#0 {totalmass}
+#nUsage Cost:#0 {totalcost} ({flatcost} + {masscost} per tonne)
 
-#nAvailable Jump Target:#0]]), {cursys=csys, fact=hypergate_spob:faction()}) )
+#nAvailable Jump Target:#0]]), {
+      cursys = csys,
+      fact = hypergate_spob:faction(),
+      totalmass = fmt.tonnes(totalmass),
+      totalcost = fmt.credits(totalcost),
+      flatcost = fmt.credits(cost_flat),
+      masscost = fmt.credits(cost_mass),
+   }) )
    local txth = txt:height()
    local lst = luatk.newList( wdw, w-260-20, 40+txth+10, 260, h-40-20-40-20-txth-10, destnames, map_center )
 
@@ -210,11 +229,15 @@ function hypergate_window ()
       local _sel, idx = lst:get()
       local d = destinations[ idx ]
       local s = d:system()
-      local cost = 0
       luatk.yesno( fmt.f(_("Jump to {sysname}?"),{sysname=s}),
-         fmt.f(_("Are you sure you want to jump to {sysname} for {credits}?"),{sysname=s,credits=fmt.credits(cost)}), function ()
-            target_gate = d
-            luatk.close()
+         fmt.f(_("Are you sure you want to jump to {sysname} for {credits}?"),{sysname=s,credits=fmt.credits(totalcost)}), function ()
+            if player.credits() > totalcost then
+               player.pay(-totalcost)
+               target_gate = d
+               luatk.close()
+            else
+               luatk.msg(_("Insufficient Credits"),fmt.f(_("You have insufficient credits to use the hypergate. You are missing #r{difference}#0."),{difference=fmt.credits(totalcost-player.credits())}))
+            end
          end, nil )
    end
    luatk.newButton( wdw, w-(120+20)*2, h-40-20, 120, 40, _("Jump!"), btn_jump )
