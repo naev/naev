@@ -1888,7 +1888,7 @@ void pilot_render( Pilot* p, const double dt )
       gl_uniformMat4(ed->projection, &projection);
 
       tex_mat = mat4_identity();
-      mat4_scale( &tex_mat, w/(double)SCREEN_W, h/(double)SCREEN_H, 1. );
+      mat4_scale( &tex_mat, w/(double)gl_screen.nw, h/(double)gl_screen.nh, 1. );
       gl_uniformMat4(ed->tex_mat, &tex_mat);
 
       glUniform3f( ed->dimensions, SCREEN_W, SCREEN_H, cam_getZoom() );
