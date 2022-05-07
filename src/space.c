@@ -2025,8 +2025,9 @@ void spob_gfxLoad( Spob *spob )
             lua_pop(naevL,1);
          }
          if (lua_istex(naevL,-2)) {
-            spob->gfx_space = lua_totex(naevL,-2);
-            spob_setFlag( spob, SPOB_LUATEX );
+            if (spob->gfx_space)
+               gl_freeTexture( spob->gfx_space );
+            spob->gfx_space = gl_dupTexture( lua_totex(naevL,-2) );
          }
          else
             WARN(_("Spob '%s' ran '%s' but got non-texture return value!"), spob->name, "load" );
@@ -2072,8 +2073,7 @@ void space_gfxUnload( StarSystem *sys )
          }
       }
 
-      if (!spob_isFlag(spob, SPOB_LUATEX))
-         gl_freeTexture( spob->gfx_space );
+      gl_freeTexture( spob->gfx_space );
       spob->gfx_space = NULL;
    }
 }
@@ -3387,46 +3387,46 @@ void space_exit (void)
 
    /* Free the spobs. */
    for (int i=0; i < array_size(spob_stack); i++) {
-      Spob *pnt = &spob_stack[i];
+      Spob *spb = &spob_stack[i];
 
-      free(pnt->name);
-      free(pnt->display);
-      free(pnt->feature);
-      free(pnt->lua_file);
-      free(pnt->class);
-      free(pnt->description);
-      free(pnt->bar_description);
-      for (int j=0; j<array_size(pnt->tags); j++)
-         free( pnt->tags[j] );
-      array_free(pnt->tags);
+      free(spb->name);
+      free(spb->display);
+      free(spb->feature);
+      free(spb->lua_file);
+      free(spb->class);
+      free(spb->description);
+      free(spb->bar_description);
+      for (int j=0; j<array_size(spb->tags); j++)
+         free( spb->tags[j] );
+      array_free(spb->tags);
 
       /* graphics */
-      if (pnt->gfx_spaceName != NULL) {
-         gl_freeTexture( pnt->gfx_space );
-         free(pnt->gfx_spaceName);
-         free(pnt->gfx_spacePath);
+      if (spb->gfx_spaceName != NULL) {
+         gl_freeTexture( spb->gfx_space );
+         free(spb->gfx_spaceName);
+         free(spb->gfx_spacePath);
       }
-      if (pnt->gfx_exterior != NULL) {
-         free(pnt->gfx_exterior);
-         free(pnt->gfx_exteriorPath);
+      if (spb->gfx_exterior != NULL) {
+         free(spb->gfx_exterior);
+         free(spb->gfx_exteriorPath);
       }
 
       /* Landing. */
-      free(pnt->land_func);
-      free(pnt->land_msg);
-      free(pnt->bribe_msg);
-      free(pnt->bribe_ack_msg);
+      free(spb->land_func);
+      free(spb->land_msg);
+      free(spb->bribe_msg);
+      free(spb->bribe_ack_msg);
 
       /* tech */
-      if (pnt->tech != NULL)
-         tech_groupDestroy( pnt->tech );
+      if (spb->tech != NULL)
+         tech_groupDestroy( spb->tech );
 
       /* commodities */
-      array_free(pnt->commodities);
-      array_free(pnt->commodityPrice);
+      array_free(spb->commodities);
+      array_free(spb->commodityPrice);
 
       /* Lua. */
-      nlua_freeEnv( pnt->lua_env );
+      nlua_freeEnv( spb->lua_env );
    }
    array_free(spob_stack);
 

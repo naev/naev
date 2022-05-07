@@ -43,7 +43,6 @@
 #define SPOB_UNINHABITED (1<<3) /**< Force spob to be uninhabited. */
 #define SPOB_MARKED      (1<<4) /**< Spob is marked. */
 #define SPOB_RADIUS      (1<<10) /**< Spob has radius defined. */
-#define SPOB_LUATEX      (1<<11) /**< Texture is loaded from Lua. */
 #define spob_isFlag(p,f)    ((p)->flags & (f)) /**< Checks spob flag. */
 #define spob_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a spob flag. */
 #define spob_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a spob flag. */

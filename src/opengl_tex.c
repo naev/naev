@@ -743,7 +743,7 @@ glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
  *
  *    @param texture Texture to free. (If NULL, function does nothing.)
  */
-void gl_freeTexture( glTexture* texture )
+void gl_freeTexture( glTexture *texture )
 {
    glTexList *last;
 
