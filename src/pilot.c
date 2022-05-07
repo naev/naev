@@ -2892,7 +2892,6 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    pilot->dockpilot = dockpilot;
    pilot->dockslot = dockslot;
    ss_statsInit( &pilot->intrinsic_stats );
-   pilot->effects = effect_init();
 
    /* Basic information. */
    pilot->ship = ship;

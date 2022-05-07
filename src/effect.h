@@ -58,7 +58,6 @@ const EffectData *effect_get( const char *name );
 /*
  * Effect list stuff.
  */
-Effect *effect_init (void);
 int effect_update( Effect **efxlist, double dt );
 int effect_add( Effect **efxlist, const EffectData *efx, double duration, double scale, unsigned int parent );
 void effect_clear( Effect **efxlist );

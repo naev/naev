@@ -230,14 +230,6 @@ const EffectData *effect_get( const char *name )
 }
 
 /**
- * @brief Initializes an effect list.
- */
-Effect *effect_init (void)
-{
-   return array_create( Effect );
-}
-
-/**
  * @brief Updates an effect list.
  *
  *    @param efxlist The effect list.
@@ -287,6 +279,9 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
 {
    Effect *e = NULL;
    int overwrite = 0;
+
+   if (*efxlist == NULL)
+      *efxlist = array_create( Effect );
 
    /* See if we should overwrite. */
    if (efx->overwrite != NULL) {
