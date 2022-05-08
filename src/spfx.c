@@ -877,7 +877,7 @@ void spfx_shake( double mod )
 
    /* Create the shake. */
    if (shake_shader_pp_id==0)
-      shake_shader_pp_id = render_postprocessAdd( &shake_shader, PP_LAYER_GAME, 99 );
+      shake_shader_pp_id = render_postprocessAdd( &shake_shader, PP_LAYER_GAME, 99, 0 );
 }
 
 /**
@@ -893,7 +893,7 @@ void spfx_damage( double mod )
 
    /* Create the damage. */
    if (damage_shader_pp_id==0)
-      damage_shader_pp_id = render_postprocessAdd( &damage_shader, PP_LAYER_GUI, 98 );
+      damage_shader_pp_id = render_postprocessAdd( &damage_shader, PP_LAYER_GUI, 98, 0 );
 }
 
 /**

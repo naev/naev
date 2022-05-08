@@ -28,6 +28,7 @@
 typedef struct PPShader_s {
    unsigned int id; /*< Global id (greater than 0). */
    int priority; /**< Used when sorting, lower is more important. */
+   unsigned int flags; /**< Flags to use. */
    double dt; /**< Used when computing u_time. */
    GLuint program; /**< Main shader program. */
    /* Shared uniforms. */
@@ -271,10 +272,12 @@ static int ppshader_compare( const void *a, const void *b )
  * @brief Adds a new post-processing shader.
  *
  *    @param shader Shader to add.
+ *    @param layer Which layer to apply the shader to.
  *    @param priority When it should be run (lower is sooner).
+ *    @param flags Properties of the shader.
  *    @return The shader ID.
  */
-unsigned int render_postprocessAdd( LuaShader_t *shader, int layer, int priority )
+unsigned int render_postprocessAdd( LuaShader_t *shader, int layer, int priority, unsigned int flags )
 {
    PPShader *pp, **pp_shaders;
    unsigned int id;
@@ -292,6 +295,7 @@ unsigned int render_postprocessAdd( LuaShader_t *shader, int layer, int priority
    id = ++pp_shaders_id;
    pp->id               = id;
    pp->priority         = priority;
+   pp->flags            = flags;
    pp->program          = shader->program;
    pp->ClipSpaceFromLocal = shader->ClipSpaceFromLocal;
    pp->MainTex          = shader->MainTex;
@@ -337,13 +341,31 @@ int render_postprocessRm( unsigned int id )
          break;
    }
    if (found==-1) {
-      WARN(_("Trying to remove non-existant post-processing shader with id '%d'!"), id);
+      /* Don't warn since they can get cleaned up twice: once from postprocessCleanup, once from Lua gc. */
+      //WARN(_("Trying to remove non-existant post-processing shader with id '%d'!"), id);
       return -1;
    }
 
    /* No need to resort. */
    array_erase( &pp_shaders_list[j], &pp_shaders_list[j][found], &pp_shaders_list[j][found+1] );
    return 0;
+}
+
+/**
+ * @brief Cleans up the post-processing shaders.
+ */
+void render_postprocessCleanup (void)
+{
+   for (int j=0; j<PP_LAYER_MAX; j++) {
+      PPShader *pp_shaders = pp_shaders_list[j];
+      for (int i=array_size(pp_shaders)-1; i>=0; i--) {
+         PPShader *pp = &pp_shaders[i];
+         if (pp->flags & PP_SHADER_PERMANENT)
+            continue;
+         array_erase( &pp_shaders_list[j], &pp_shaders_list[j][i], &pp_shaders_list[j][i+1] );
+      }
+   }
+   /* No need to resort. */
 }
 
 /**
@@ -391,5 +413,5 @@ void render_setGamma( double gamma )
    glUseProgram( shaders.gamma_correction.program );
    glUniform1f( shaders.gamma_correction.gamma, gamma );
    glUseProgram( 0 );
-   pp_gamma_correction = render_postprocessAdd( &gamma_correction_shader, PP_LAYER_FINAL, 98 );
+   pp_gamma_correction = render_postprocessAdd( &gamma_correction_shader, PP_LAYER_FINAL, 98, PP_SHADER_PERMANENT );
 }

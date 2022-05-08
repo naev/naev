@@ -39,6 +39,7 @@
 #include "pause.h"
 #include "pilot.h"
 #include "player.h"
+#include "render.h"
 #include "rng.h"
 #include "save.h"
 #include "space.h"
@@ -184,6 +185,7 @@ void menu_main (void)
    gui_cleanup();
    player_soundStop(); /* Stop sound. */
    player_resetSpeed();
+   render_postprocessCleanup();
 
    /* Play load music. */
    music_choose("load");

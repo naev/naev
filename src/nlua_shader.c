@@ -445,7 +445,7 @@ static int shaderL_addPostProcess( lua_State *L )
       NLUA_ERROR(L,_("Layer was '%s', but must be one of 'final' or 'game'"), str);
 
    if (ls->pp_id == 0)
-      ls->pp_id = render_postprocessAdd( ls, layer, priority );
+      ls->pp_id = render_postprocessAdd( ls, layer, priority, 0 );
    lua_pushboolean(L, ls->pp_id>0);
    return 1;
 }
