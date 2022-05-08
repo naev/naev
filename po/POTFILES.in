@@ -2305,6 +2305,7 @@ dat/events/dvaered/warlords_battle.lua
 dat/events/flf/derelict.lua
 dat/events/flf/flf_catastrophe.lua
 dat/events/hired_escorts.lua
+dat/events/hypergate.lua
 dat/events/hypergate_construction.lua
 dat/events/minerva/altercation1.lua
 dat/events/minerva/altercation2.lua

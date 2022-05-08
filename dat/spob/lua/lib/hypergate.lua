@@ -122,9 +122,8 @@ function hypergate.land( _s, p )
       local target = hypergate_window()
       -- TODO animation and stuff, probably similar to wormholes
       if target then
-         player.teleport( target )
-         p:effectClear()
-         p:effectAdd("Hypergate Exit")
+         var.push( "hypergate_target", target:nameRaw() )
+         naev.eventStart("Hypergate")
       end
    else
       p:shipvarPush( "hypergate", true )
