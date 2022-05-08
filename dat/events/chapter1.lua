@@ -277,7 +277,6 @@ function cutscene_emp6 ()
    shader_fadeout = nil
 
    hook.timer( 2, "cutscene_emp7" )
-   -- TODO ship goes through jump
    emptester:taskClear()
    local hyp = spob.get( "Hypergate Gamma Polaris" )
    emptester:land( hyp )
