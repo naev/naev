@@ -77,7 +77,7 @@ local function fg_setup( text )
       fg = {}
       fg.font = lg.newFont( fontsize )
       fg.font:setOutline(3)
-      fg.hook = hook.rendertop( "foreground" )
+      fg.hook = hook.renderfg( "foreground" )
       fg.update = hook.update( "update" )
 
       fg.alpha = 1
