@@ -61,6 +61,8 @@ function create()
       mem.armour_run = 0 -- Drones don't run
       -- Drones can get indirectly bribed as part of fleets
       mem.bribe = math.sqrt( p:stats().mass ) * (500 * rnd.rnd() + 1750)
+      -- Smaller faction hits than normal ships
+      mem.distress_hit = mem.distress_hit * 0.5
       create_post()
       return
    end
