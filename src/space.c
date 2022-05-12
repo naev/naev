@@ -1519,7 +1519,7 @@ void space_init( const char* sysname, int do_simulate )
       for (int i=0; i<array_size(pilot_stack); i++) {
          Pilot *p = pilot_stack[i];
          pilot_calcStats( p );
-         if (p->parent == PLAYER_ID)
+         if (pilot_isWithPlayer(p))
             pilot_setFlag( p, PILOT_HIDE );
       }
    }
@@ -1568,7 +1568,7 @@ void space_init( const char* sysname, int do_simulate )
       pilot_setFlag( player.p, PILOT_HIDE );
       for (int i=0; i<array_size(pilot_stack); i++) {
          Pilot *p = pilot_stack[i];
-         if (p->parent == PLAYER_ID)
+         if (pilot_isWithPlayer(p))
             pilot_setFlag( p, PILOT_HIDE );
       }
    }
@@ -1598,7 +1598,7 @@ void space_init( const char* sysname, int do_simulate )
       pilot_rmFlag( player.p, PILOT_HIDE );
       for (int i=0; i<array_size(pilot_stack); i++) {
          Pilot *p = pilot_stack[i];
-         if (p->parent == PLAYER_ID)
+         if (pilot_isWithPlayer(p))
             pilot_rmFlag( p, PILOT_HIDE );
       }
    }
