@@ -24,6 +24,8 @@ local taunt_list = {
 
 -- Create function
 function create ()
+   create_pre()
+
    local p = ai.pilot()
    local ps = p:ship()
    local price = ps:price()

@@ -6,6 +6,8 @@ local fmt = require "format"
 mem.lanes_useneutral = true
 
 function create ()
+   create_pre()
+
    local price = ai.pilot():ship():price()
    ai.setcredits( rnd.rnd(price/150, price/40) )
 

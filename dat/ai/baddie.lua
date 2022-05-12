@@ -16,6 +16,7 @@ mem.bribe_no       = _("You can't bribe me!")
 mem.refuel_no      = _("I won't give you fuel!")
 
 function create ()
+   create_pre()
    local p = ai.pilot()
    local ps = p:ship()
    local pt = ps:tags()

@@ -22,6 +22,8 @@ mem.armour_run    = -1
 mem.norun         = true
 
 function create ()
+   create_pre()
+
    local p = ai.pilot()
    local ps = p:ship()
 

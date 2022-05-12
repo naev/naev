@@ -6,6 +6,8 @@ mem.defensive  = false
 mem.distressmsg = _("Empire refuel ship under attack!")
 
 function create ()
+   create_pre()
+
    -- Broke
    ai.setcredits( 0 )
 

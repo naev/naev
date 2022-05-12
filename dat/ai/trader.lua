@@ -11,6 +11,8 @@ mem.lanes_useneutral = true
 mem.simplecombat  = true -- Don't do fancy dodging
 
 function create ()
+   create_pre()
+
    local p = ai.pilot()
    local ps = p:ship()
    -- Probably the ones with the most money

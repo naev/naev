@@ -123,6 +123,8 @@ local pir_formations = {
 }
 
 function create ()
+   create_pre()
+
    local p = ai.pilot()
    local ps = ai.pilot():ship()
 

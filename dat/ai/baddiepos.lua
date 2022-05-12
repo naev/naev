@@ -16,6 +16,7 @@ mem.guarddodist   = math.huge
 mem.guardreturndist = math.huge
 
 function create ()
+   create_pre()
    local p = ai.pilot()
 
    -- Default range stuff

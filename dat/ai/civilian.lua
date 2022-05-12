@@ -12,6 +12,7 @@ local bribe_no_list = {
 }
 
 function create ()
+   create_pre()
    -- Credits.
    ai.setcredits( rnd.rnd(ai.pilot():ship():price()/500, ai.pilot():ship():price()/200) )
 

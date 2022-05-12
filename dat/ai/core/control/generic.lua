@@ -868,7 +868,15 @@ end
 
 -- Default create function just runs create_post
 function create ()
+   create_pre()
    create_post()
+end
+
+-- Sets up some per-pilot defaults that can be overriden afterwards
+function create_pre ()
+   local p        = ai.pilot()
+   -- Should be roughly 1 for a 20 point llama and 4.38 for a 150 point hawking
+   mem.distress_hit = math.max( 0, math.pow( p:ship():points(), 0.37 )-2)
 end
 
 -- Finishes create stuff like choose attack and prepare plans

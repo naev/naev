@@ -62,6 +62,8 @@ local ads_cyber = {
 }
 
 function create ()
+   create_pre()
+
    -- Credits.
    local price = ai.pilot():ship():price()
    ai.setcredits( rnd.rnd(price/180, price/40) )

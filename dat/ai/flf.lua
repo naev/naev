@@ -24,6 +24,8 @@ local taunt_list_defensive= {
 }
 
 function create ()
+   create_pre()
+
    local p = ai.pilot()
    local ps = ai.pilot():ship()
 

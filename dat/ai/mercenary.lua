@@ -31,6 +31,8 @@ local merc_formations = {
 }
 
 function create ()
+   create_pre()
+
    local price = ai.pilot():ship():price()
    ai.setcredits( rnd.rnd(price/80, price/30) )
 

@@ -43,6 +43,7 @@ local taunt_list_defensive_drone = {
 }
 
 function create()
+   create_pre()
    local p  = ai.pilot()
    local ps = p:ship()
    local pt = ps:tags()

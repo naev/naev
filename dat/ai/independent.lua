@@ -13,6 +13,8 @@ local bribe_msg_list = {
 }
 
 function create ()
+   create_pre()
+
    -- Credits.
    local price = ai.pilot():ship():price()
    ai.setcredits( rnd.rnd(price/150, price/50) ) -- Target for crime

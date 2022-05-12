@@ -116,6 +116,7 @@ stds.AI.globals = {
    "stealth",                   -- pilotL_stealth
    -- FIXME: Internal APIs formed by dat/ai code that are very difficult to untangle...
    "control_funcs",             -- a shared dispatch table...
+   "create_pre",                -- the standardized initial step of every create()
    "create_post",               -- the standardized final step of every create()
    "idle",                      -- a task, commonly called and overridden
    "should_attack",             -- discretion may or may not be the better part of valor. Everyone gets an opinion.

@@ -35,6 +35,8 @@ local taunt_list_defensive = {
 }
 
 function create ()
+   create_pre()
+
    -- Not too many credits.
    local p = ai.pilot()
    local ps = p:ship()
