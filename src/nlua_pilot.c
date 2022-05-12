@@ -4158,12 +4158,12 @@ static int pilotL_memory( lua_State *L )
 
    /* Set the pilot's memory. */
    if (p->ai == NULL) {
-      NLUA_ERROR(L,_("Pilot does not have AI."));
+      NLUA_ERROR(L,_("Pilot '%s' does not have an AI!"),p->name);
       return 0;
    }
 
    nlua_getenv( L, p->ai->env, AI_MEM );    /* pilotmem */
-   lua_rawgeti( L, -1, p-> id );            /* pilotmem, table */
+   lua_rawgeti( L, -1, p->id );             /* pilotmem, table */
    lua_remove( L, -2 );                     /* table */
 
    return 1;
