@@ -1,12 +1,13 @@
 * 0.10.0 (unreleased)
    * New Mechanics
+      * Support for setting ships as escorts
       * Hypergates that allow for long distance travel
       * Mining has been completely redone with a new mining mini-game and rarity mechanics
       * Support for restrictions for outfits and ships
       * Significantly improved how faction reputation caps are handled
       * Pilots can have intrinsic outfits
       * Bioships go rawr (new skill system)
-      * Plasma has a burning effect
+      * Weapons and outfits cause effects on ships
       * Scripting support for space objects (spob)
       * Support for different difficulty settings
    * Gameplay Changes
@@ -17,6 +18,7 @@
       * Asteroids no longer randomly explode with redone visuals
       * Asteroid scanning is no longer binary, but distance-based
       * Schroedinger uses less fuel instead of getting a large bonus
+      * Plasma has a burning effect
    * New Content
       * Added a gigantic black hole
       * Added new space anomalies such as plasma storms
