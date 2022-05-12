@@ -1232,7 +1232,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg )
    /* Consider not in range at first. */
    r = 0;
 
-   if ((attacker == player.p) && !pilot_isFlag(p, PILOT_DISTRESSED)) {
+   if (!pilot_isFlag(p, PILOT_DISTRESSED)) {
       /* Check if spob is in range. */
       for (int i=0; i<array_size(cur_system->spobs); i++) {
          if (spob_hasService(cur_system->spobs[i], SPOB_SERVICE_INHABITED) &&
@@ -1268,7 +1268,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg )
       ai_getDistress( pi, p, attacker );
 
       /* Check if should take faction hit. */
-      if ((attacker == player.p) && !pilot_isFlag(p, PILOT_DISTRESSED) &&
+      if (!pilot_isFlag(p, PILOT_DISTRESSED) &&
             !areEnemies(p->faction, pi->faction))
          r = 1;
    }
@@ -1277,7 +1277,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg )
    if (!pilot_isFlag(p, PILOT_DISTRESSED)) {
 
       /* Modify faction, about 1 for a llama, 4.2 for a hawking */
-      if ((attacker != NULL) && pilot_isWithPlayer(attacker) && r)
+      if (r && (attacker != NULL) && (pilot_isWithPlayer(attacker)))
          faction_modPlayer( p->faction, -(pow(p->base_mass, 0.2) - 1.), "distress" );
 
       /* Set flag to avoid a second faction hit. */
