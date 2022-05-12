@@ -903,13 +903,18 @@ end
 
 -- Finishes create stuff like choose attack and prepare plans
 function create_post ()
-   --local p        = ai.pilot()
+   local p        = ai.pilot()
    mem.scanned    = {} -- must create for each pilot
 
    -- Give a small delay... except for escorts?
    if mem.jumpedin and not mem.carrier then
       ai.settimer( 0, rnd.uniform(5.0, 6.0) )
       ai.pushtask("jumpin_wait")
+   end
+
+   -- Fighters give much smaller faction hits
+   if p:flags("carried") then
+      mem.distress_hit = mem.distress_hit * 0.1
    end
 end
 
