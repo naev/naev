@@ -875,23 +875,12 @@ end
 -- Sets up some per-pilot defaults that can be overriden afterwards
 function create_pre ()
    local p        = ai.pilot()
-   -- Should be roughly 1 for a 20 point llama and 4.38 for a 150 point hawking
-   mem.distress_hit = math.max( 0, math.pow( p:ship():points(), 0.37 )-2)
-end
-
--- Finishes create stuff like choose attack and prepare plans
-function create_post ()
-   local p        = ai.pilot()
    mem.tookoff    = p:flags("takingoff")
    mem.jumpedin   = p:flags("jumpingin")
-   mem.scanned    = {} -- must create for each pilot
-   attack_choose()
 
-   -- Give a small delay... except for escorts?
-   if mem.jumpedin and not mem.carrier then
-      ai.settimer( 0, rnd.uniform(5.0, 6.0) )
-      ai.pushtask("jumpin_wait")
-   end
+   -- Amount of faction lost when the pilot distresses at the player
+   -- Should be roughly 1 for a 20 point llama and 4.38 for a 150 point hawking
+   mem.distress_hit = math.max( 0, math.pow( p:ship():points(), 0.37 )-2)
 
    -- Tune PD parameter (with a nice heuristic formula)
    local ps = p:stats()
@@ -906,6 +895,21 @@ function create_post ()
          f = f + ps.fuel_consumption
          p:setFuel( f )
       end
+   end
+
+   -- Choose attack algorithm
+   attack_choose()
+end
+
+-- Finishes create stuff like choose attack and prepare plans
+function create_post ()
+   --local p        = ai.pilot()
+   mem.scanned    = {} -- must create for each pilot
+
+   -- Give a small delay... except for escorts?
+   if mem.jumpedin and not mem.carrier then
+      ai.settimer( 0, rnd.uniform(5.0, 6.0) )
+      ai.pushtask("jumpin_wait")
    end
 end
 
