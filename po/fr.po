@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-04-21 00:38-0400\n"
+"POT-Creation-Date: 2022-05-12 10:59+0900\n"
 "PO-Revision-Date: 2022-01-01 22:53+0000\n"
 "Last-Translator: Étienne Girard <etienne.g.girard@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
@@ -1241,6 +1241,14 @@ msgstr ""
 msgid "Entering a hypergate!"
 msgstr ""
 
+#: dat/effects/hypergate_exit.xml:2
+msgid "Hypergate Exit"
+msgstr ""
+
+#: dat/effects/hypergate_exit.xml:3
+msgid "Exitting a hypergate!"
+msgstr ""
+
 #: dat/effects/paralyzing_plasma.xml:2
 #: dat/outfits/bioship/skills/paralyzing_plasma.xml:2
 #: dat/scripts/bioship/skills.lua:255
@@ -1413,9 +1421,10 @@ msgid ""
 "and cohesion, when possible."
 msgstr ""
 
-#: dat/faction.xml:318 dat/ships/proteron_archimedes.xml:20
-#: dat/ships/proteron_derivative.xml:16 dat/ships/proteron_kahan.xml:16
-#: dat/ships/proteron_watson.xml:16
+#: dat/faction.xml:318 dat/ships/proteron/proteron_archimedes.xml:20
+#: dat/ships/proteron/proteron_derivative.xml:16
+#: dat/ships/proteron/proteron_kahan.xml:16
+#: dat/ships/proteron/proteron_watson.xml:16
 msgid "Proteron"
 msgstr "Protéron"
 
@@ -1458,12 +1467,15 @@ msgstr "Guilde des Commerçants de l’Espace"
 msgid "TODO we have to make these guys more interesting."
 msgstr ""
 
-#: dat/faction.xml:390 dat/ships/kauweke.xml:20 dat/ships/nohinohi.xml:13
-#: dat/ships/soromid_arx.xml:20 dat/ships/soromid_brigand.xml:13
-#: dat/ships/soromid_copia.xml:20 dat/ships/soromid_ira.xml:18
-#: dat/ships/soromid_marauder.xml:14 dat/ships/soromid_nyx.xml:14
-#: dat/ships/soromid_odium.xml:15 dat/ships/soromid_reaver.xml:13
-#: dat/ships/soromid_vox.xml:17 dat/ships/taitamariki.xml:15
+#: dat/faction.xml:390 dat/ships/feral_bioship/kauweke.xml:23
+#: dat/ships/feral_bioship/nohinohi.xml:16
+#: dat/ships/feral_bioship/taitamariki.xml:18
+#: dat/ships/soromid/soromid_arx.xml:20
+#: dat/ships/soromid/soromid_brigand.xml:13
+#: dat/ships/soromid/soromid_copia.xml:20 dat/ships/soromid/soromid_ira.xml:18
+#: dat/ships/soromid/soromid_marauder.xml:14
+#: dat/ships/soromid/soromid_nyx.xml:14 dat/ships/soromid/soromid_odium.xml:15
+#: dat/ships/soromid/soromid_reaver.xml:13 dat/ships/soromid/soromid_vox.xml:17
 msgid "Soromid"
 msgstr "Soromid"
 
@@ -1542,11 +1554,14 @@ msgstr ""
 msgid "Dvaered"
 msgstr "Dvaered"
 
-#: dat/faction.xml:477 dat/ships/ancestor.xml:14
-#: dat/ships/dvaered_ancestor.xml:15 dat/ships/dvaered_arsenal.xml:18
-#: dat/ships/dvaered_phalanx.xml:16 dat/ships/dvaered_vendetta.xml:16
-#: dat/ships/dvaered_vigilance.xml:15 dat/ships/phalanx.xml:15
-#: dat/ships/vendetta.xml:15 dat/ships/vigilance.xml:14
+#: dat/faction.xml:477 dat/ships/dvaered/dvaered_ancestor.xml:15
+#: dat/ships/dvaered/dvaered_arsenal.xml:18
+#: dat/ships/dvaered/dvaered_phalanx.xml:16
+#: dat/ships/dvaered/dvaered_retribution.xml:16
+#: dat/ships/dvaered/dvaered_vendetta.xml:16
+#: dat/ships/dvaered/dvaered_vigilance.xml:15 dat/ships/neutral/ancestor.xml:14
+#: dat/ships/neutral/phalanx.xml:15 dat/ships/neutral/vendetta.xml:15
+#: dat/ships/neutral/vigilance.xml:14
 msgid "House Dvaered"
 msgstr "Maison Dvaered"
 
@@ -1611,12 +1626,12 @@ msgstr ""
 "La Maison Sirius est avant tout définie par sa religion d'État, vouée au "
 "culte d'une divinité nommée Sirichana."
 
-#: dat/faction.xml:555 dat/ships/goddard.xml:2 dat/ssys/goddard.xml:2
+#: dat/faction.xml:555 dat/ships/neutral/goddard.xml:2 dat/ssys/goddard.xml:2
 msgid "Goddard"
 msgstr "Goddard"
 
-#: dat/faction.xml:560 dat/ships/dvaered_goddard.xml:18
-#: dat/ships/goddard.xml:17
+#: dat/faction.xml:560 dat/ships/dvaered/dvaered_goddard.xml:18
+#: dat/ships/neutral/goddard.xml:17
 msgid "House Goddard"
 msgstr "Maison Goddard"
 
@@ -1909,8 +1924,7 @@ msgstr ""
 #: dat/outfits/accessory/trading_card_rare.xml:5
 #: dat/outfits/accessory/trading_card_uncommon.xml:5
 #: dat/outfits/accessory/ugly_statue.xml:5
-#: dat/outfits/accessory/vacuum_cleaner.xml:5
-#: dat/outfits/intrinsic/gauntlet_deluxe.xml:4 dat/slots.xml:4
+#: dat/outfits/accessory/vacuum_cleaner.xml:5 dat/slots.xml:4
 msgid "Accessory"
 msgstr ""
 
@@ -3238,7 +3252,7 @@ msgid "Empire Lancelot Bay"
 msgstr ""
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:8
-#: dat/ships/empire_pacifier.xml:19
+#: dat/ships/empire/empire_pacifier.xml:19
 msgid "You need at least 50 reputation with the Empire."
 msgstr ""
 
@@ -3362,7 +3376,7 @@ msgid "Soromid Brigand Bay"
 msgstr "Soromid"
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:8
-#: dat/ships/soromid_nyx.xml:17
+#: dat/ships/soromid/soromid_nyx.xml:17
 msgid "You need at least 50 reputation with the Soromid."
 msgstr ""
 
@@ -3378,7 +3392,8 @@ msgid "Thurion Perspicacity Bay"
 msgstr ""
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:8
-#: dat/ships/thurion_apprehension.xml:20 dat/ships/thurion_taciturnity.xml:19
+#: dat/ships/thurion/thurion_apprehension.xml:20
+#: dat/ships/thurion/thurion_taciturnity.xml:19
 msgid "You need at least 50 reputation with the Thurion."
 msgstr ""
 
@@ -3394,7 +3409,8 @@ msgid "Thurion Perspicacity Dock"
 msgstr ""
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:8
-#: dat/ships/thurion_ingenuity.xml:19 dat/ships/thurion_scintillation.xml:20
+#: dat/ships/thurion/thurion_ingenuity.xml:19
+#: dat/ships/thurion/thurion_scintillation.xml:20
 msgid "You need at least 30 reputation with the Thurion."
 msgstr ""
 
@@ -3411,7 +3427,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:8
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:8
-#: dat/ships/zalek_demon.xml:19
+#: dat/ships/zalek/zalek_demon.xml:19
 msgid "You need at least 50 reputation with House Za'lek."
 msgstr ""
 
@@ -3446,7 +3462,7 @@ msgid "Za'lek Heavy Drone Bay"
 msgstr ""
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:8
-#: dat/ships/zalek_mammon.xml:23
+#: dat/ships/zalek/zalek_mammon.xml:23
 msgid "You need at least 60 reputation with House Za'lek."
 msgstr ""
 
@@ -3463,7 +3479,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:8
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:8
-#: dat/ships/zalek_sting.xml:19
+#: dat/ships/zalek/zalek_sting.xml:19
 msgid "You need at least 40 reputation with House Za'lek."
 msgstr ""
 
@@ -3502,7 +3518,7 @@ msgstr ""
 msgid "Gauntlet Deluxe"
 msgstr ""
 
-#: dat/outfits/intrinsic/gauntlet_deluxe.xml:8
+#: dat/outfits/intrinsic/gauntlet_deluxe.xml:7
 msgid ""
 "The \"Gauntlet Deluxe\" service provides a full retweak and overhaul of the "
 "systems forward weapon circuitry. The optimizations are able to slightly "
@@ -5908,59 +5924,27 @@ msgid ""
 "installed on their ship."
 msgstr ""
 
-#: dat/ships/admonisher.xml:2
-msgid "Admonisher"
-msgstr ""
-
-#: dat/ships/admonisher.xml:17 dat/ships/empire_admonisher.xml:18
-#: dat/ships/empire_hawking.xml:19 dat/ships/empire_lancelot.xml:16
-#: dat/ships/empire_pacifier.xml:16 dat/ships/empire_peacemaker.xml:18
-#: dat/ships/empire_rainmaker.xml:20 dat/ships/empire_shark.xml:17
-#: dat/ships/gawain.xml:14 dat/ships/hawking.xml:18 dat/ships/lancelot.xml:15
-#: dat/ships/pacifier.xml:15 dat/ships/shark.xml:16
-#: dat/scripts/common/shark.lua:14
-msgid "Nexus Shipyards"
-msgstr ""
-
-#: dat/ships/admonisher.xml:19
-msgid ""
-"A very versatile combat ship. Nexus defines the Admonisher as a compromise "
-"between the ruggedness of the Pacifier and the agility of the Lancelot. "
-"Overall a very solid combat ship."
-msgstr ""
-
-#: dat/ships/ancestor.xml:2
-msgid "Ancestor"
-msgstr ""
-
-#: dat/ships/ancestor.xml:16
-msgid ""
-"Commonly referred to as the \"Little Goddard\", the Ancestor also has its "
-"roots in the primitive flying machines used by men many ages ago. Unlike the "
-"Goddard though, the electronics are manufactured by House Dvaered, making it "
-"considerably inferior in that area."
-msgstr ""
-
-#: dat/ships/drone.xml:2 dat/missions/minerva/pirate1.lua:175
+#: dat/ships/collective/drone.xml:2 dat/missions/minerva/pirate1.lua:175
 msgid "Drone"
 msgstr ""
 
-#: dat/ships/drone.xml:13 dat/ships/drone_carrier.xml:16
-#: dat/ships/drone_heavy.xml:13 dat/ships/drone_hyena.xml:15
+#: dat/ships/collective/drone.xml:13 dat/ships/collective/drone_carrier.xml:16
+#: dat/ships/collective/drone_heavy.xml:13
+#: dat/ships/collective/drone_hyena.xml:18
 msgid "Robosys"
 msgstr ""
 
-#: dat/ships/drone.xml:14
+#: dat/ships/collective/drone.xml:14
 msgid ""
 "This is a modified version of the Collective Drone that now includes a life "
 "support system for humans."
 msgstr ""
 
-#: dat/ships/drone_carrier.xml:2
+#: dat/ships/collective/drone_carrier.xml:2
 msgid "Drone Carrier"
 msgstr ""
 
-#: dat/ships/drone_carrier.xml:18
+#: dat/ships/collective/drone_carrier.xml:18
 msgid ""
 "This carrier is highly automated and is designed to command fleets of "
 "Collective Drones. It can be operated by a skeleton crew although most "
@@ -5969,52 +5953,54 @@ msgid ""
 "and heavy armor the Drone Carrier is an unusual lightweight and fast carrier."
 msgstr ""
 
-#: dat/ships/drone_heavy.xml:2
+#: dat/ships/collective/drone_heavy.xml:2
 msgid "Heavy Drone"
 msgstr ""
 
-#: dat/ships/drone_heavy.xml:14
+#: dat/ships/collective/drone_heavy.xml:14
 msgid ""
 "This Collective Heavy Drone has been modified by engineers to support a "
 "human pilot."
 msgstr ""
 
-#: dat/ships/drone_hyena.xml:2
+#: dat/ships/collective/drone_hyena.xml:2
 msgid "Drone (Hyena)"
 msgstr ""
 
-#: dat/ships/drone_hyena.xml:16
+#: dat/ships/collective/drone_hyena.xml:19
 msgid ""
 "This is a modified version of the Collective Drone that now includes a life "
 "support system for humans and is also disguised as a Hyena."
 msgstr ""
 
-#: dat/ships/dvaered_ancestor.xml:2
+#: dat/ships/dvaered/dvaered_ancestor.xml:2
 msgid "Dvaered Ancestor"
 msgstr ""
 
-#: dat/ships/dvaered_ancestor.xml:18 dat/ships/dvaered_vendetta.xml:19
+#: dat/ships/dvaered/dvaered_ancestor.xml:18
+#: dat/ships/dvaered/dvaered_vendetta.xml:19
 msgid "You need at least 30 reputation with House Dvaered."
 msgstr ""
 
-#: dat/ships/dvaered_ancestor.xml:19
+#: dat/ships/dvaered/dvaered_ancestor.xml:19
 msgid ""
 "On this military grade version of the Ancestor, the distribution of the "
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
 
-#: dat/ships/dvaered_arsenal.xml:2
+#: dat/ships/dvaered/dvaered_arsenal.xml:2
 #, fuzzy
 #| msgid "Dvaered ship crew"
 msgid "Dvaered Arsenal"
 msgstr "Équipage du vaisseau Dvaered"
 
-#: dat/ships/dvaered_arsenal.xml:21
+#: dat/ships/dvaered/dvaered_arsenal.xml:21
+#: dat/ships/dvaered/dvaered_retribution.xml:19
 msgid "You need at least 60 reputation with House Dvaered."
 msgstr ""
 
-#: dat/ships/dvaered_arsenal.xml:22
+#: dat/ships/dvaered/dvaered_arsenal.xml:22
 msgid ""
 "The Arsenal is a heavily armed bulk freighter used by House Dvaered to "
 "transport large amount of supplies and troops whenever such a task would be "
@@ -6025,15 +6011,15 @@ msgid ""
 "called \"Dvaered Gunboxes\"."
 msgstr ""
 
-#: dat/ships/dvaered_goddard.xml:2
+#: dat/ships/dvaered/dvaered_goddard.xml:2
 msgid "Dvaered Goddard"
 msgstr ""
 
-#: dat/ships/dvaered_goddard.xml:21
+#: dat/ships/dvaered/dvaered_goddard.xml:21
 msgid "You need at least 70 reputation with House Dvaered."
 msgstr ""
 
-#: dat/ships/dvaered_goddard.xml:22
+#: dat/ships/dvaered/dvaered_goddard.xml:22
 msgid ""
 "Once upon a time, the Goddard Battlecruiser was commissioned by the Empire "
 "for military service. However, during the Dvaered Revolts most Goddard "
@@ -6044,112 +6030,142 @@ msgid ""
 "means better armour and forwards weapon damage at the cost of increased mass."
 msgstr ""
 
-#: dat/ships/dvaered_phalanx.xml:2
+#: dat/ships/dvaered/dvaered_phalanx.xml:2
 msgid "Dvaered Phalanx"
 msgstr ""
 
-#: dat/ships/dvaered_phalanx.xml:19
+#: dat/ships/dvaered/dvaered_phalanx.xml:19
 msgid "You need at least 40 reputation with House Dvaered."
 msgstr ""
 
-#: dat/ships/dvaered_phalanx.xml:20
+#: dat/ships/dvaered/dvaered_phalanx.xml:20
 msgid ""
 "On this military grade version of the Phalanx, the distribution of the "
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
 
-#: dat/ships/dvaered_vendetta.xml:2
+#: dat/ships/dvaered/dvaered_retribution.xml:2
+#, fuzzy
+#| msgid "Dvaered Patrol"
+msgid "Dvaered Retribution"
+msgstr "Patrouille Dvaered"
+
+#: dat/ships/dvaered/dvaered_retribution.xml:20
+msgid ""
+"When the Empire replaced their aging cruisers with the new Hawking class "
+"House Dvaered seized the opportunity to acquire the license for the cruiser "
+"and most of the remaining ships. Dvaered engineers reinforced the armor and "
+"redesigned the ship's structure while also attaching additional weapon hard "
+"points. Afterwards, the ship was renamed to Retribution. However, the "
+"electronics remained outdated."
+msgstr ""
+
+#: dat/ships/dvaered/dvaered_vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:220
 msgid "Dvaered Vendetta"
 msgstr ""
 
-#: dat/ships/dvaered_vendetta.xml:20
+#: dat/ships/dvaered/dvaered_vendetta.xml:20
 msgid ""
 "On this military grade version of the Vendetta, the distribution of the "
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
 
-#: dat/ships/dvaered_vigilance.xml:2
+#: dat/ships/dvaered/dvaered_vigilance.xml:2
 msgid "Dvaered Vigilance"
 msgstr ""
 
-#: dat/ships/dvaered_vigilance.xml:18
+#: dat/ships/dvaered/dvaered_vigilance.xml:18
 msgid "You need at least 50 reputation with House Dvaered."
 msgstr ""
 
-#: dat/ships/dvaered_vigilance.xml:19
+#: dat/ships/dvaered/dvaered_vigilance.xml:19
 msgid ""
 "This military grade version of the Vigilance has an optimized weight "
 "distribution allowing it to carry more payload."
 msgstr ""
 
-#: dat/ships/empire_admonisher.xml:2
+#: dat/ships/empire/empire_admonisher.xml:2
 msgid "Empire Admonisher"
 msgstr ""
 
-#: dat/ships/empire_admonisher.xml:21
+#: dat/ships/empire/empire_admonisher.xml:18
+#: dat/ships/empire/empire_hawking.xml:19
+#: dat/ships/empire/empire_lancelot.xml:16
+#: dat/ships/empire/empire_pacifier.xml:16
+#: dat/ships/empire/empire_peacemaker.xml:18
+#: dat/ships/empire/empire_rainmaker.xml:20
+#: dat/ships/empire/empire_shark.xml:17 dat/ships/neutral/admonisher.xml:17
+#: dat/ships/neutral/gawain.xml:14 dat/ships/neutral/hawking.xml:18
+#: dat/ships/neutral/lancelot.xml:15 dat/ships/neutral/pacifier.xml:15
+#: dat/ships/neutral/shark.xml:16 dat/scripts/common/shark.lua:14
+msgid "Nexus Shipyards"
+msgstr ""
+
+#: dat/ships/empire/empire_admonisher.xml:21
 msgid "You need at least 40 reputation with the Empire."
 msgstr ""
 
-#: dat/ships/empire_admonisher.xml:22
+#: dat/ships/empire/empire_admonisher.xml:22
 msgid ""
 "This military grade version of the Admonisher is mostly identical in "
 "function to a standard Admonisher, but with slightly better armour, shields, "
 "and heat dissipation."
 msgstr ""
 
-#: dat/ships/empire_hawking.xml:2
+#: dat/ships/empire/empire_hawking.xml:2
 msgid "Empire Hawking"
 msgstr ""
 
-#: dat/ships/empire_hawking.xml:22 dat/ships/empire_rainmaker.xml:23
+#: dat/ships/empire/empire_hawking.xml:22
+#: dat/ships/empire/empire_rainmaker.xml:23
 msgid "You need at least 60 reputation with the Empire."
 msgstr ""
 
-#: dat/ships/empire_hawking.xml:23
+#: dat/ships/empire/empire_hawking.xml:23
 msgid ""
 "This military grade version of the Hawking is mostly identical in function "
 "to a standard Hawking, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
 
-#: dat/ships/empire_lancelot.xml:2
+#: dat/ships/empire/empire_lancelot.xml:2
 msgid "Empire Lancelot"
 msgstr ""
 
-#: dat/ships/empire_lancelot.xml:19
+#: dat/ships/empire/empire_lancelot.xml:19
 msgid "You need at least 30 reputation with the Empire."
 msgstr ""
 
-#: dat/ships/empire_lancelot.xml:20
+#: dat/ships/empire/empire_lancelot.xml:20
 msgid ""
 "This military grade version of the Lancelot is mostly identical in function "
 "to a standard Lancelot, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
 
-#: dat/ships/empire_pacifier.xml:2
+#: dat/ships/empire/empire_pacifier.xml:2
 msgid "Empire Pacifier"
 msgstr ""
 
-#: dat/ships/empire_pacifier.xml:20
+#: dat/ships/empire/empire_pacifier.xml:20
 msgid ""
 "This military grade version of the Pacifier is mostly identical in function "
 "to a standard Pacifier, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
 
-#: dat/ships/empire_peacemaker.xml:2
+#: dat/ships/empire/empire_peacemaker.xml:2
 msgid "Empire Peacemaker"
 msgstr ""
 
-#: dat/ships/empire_peacemaker.xml:21
+#: dat/ships/empire/empire_peacemaker.xml:21
 msgid "You need at least 70 reputation with the Empire."
 msgstr ""
 
-#: dat/ships/empire_peacemaker.xml:22
+#: dat/ships/empire/empire_peacemaker.xml:22
 msgid ""
 "Built under contract for the Empire by Nexus Shipyards, the Peacemaker is "
 "one of the grandest vessels in the galaxy, dwarfing even the mighty Goddard. "
@@ -6158,13 +6174,13 @@ msgid ""
 "most capital ships, however, it is vulnerable to attack from enemy bombers."
 msgstr ""
 
-#: dat/ships/empire_rainmaker.xml:2
+#: dat/ships/empire/empire_rainmaker.xml:2
 #, fuzzy
 #| msgid "Empire"
 msgid "Empire Rainmaker"
 msgstr "Empire"
 
-#: dat/ships/empire_rainmaker.xml:24
+#: dat/ships/empire/empire_rainmaker.xml:24
 msgid ""
 "The Rainmaker is the largest freighter used by the Empire. It is capable of "
 "transporting extensive amounts of material through dangerous territory as "
@@ -6176,15 +6192,15 @@ msgid ""
 "approved and Rainmaker became the ship's official name."
 msgstr ""
 
-#: dat/ships/empire_shark.xml:2
+#: dat/ships/empire/empire_shark.xml:2
 msgid "Empire Shark"
 msgstr ""
 
-#: dat/ships/empire_shark.xml:20
+#: dat/ships/empire/empire_shark.xml:20
 msgid "You need at least 20 reputation with the Empire."
 msgstr ""
 
-#: dat/ships/empire_shark.xml:21
+#: dat/ships/empire/empire_shark.xml:21
 msgid ""
 "The Empire military grade version of the Shark is mostly identical in "
 "function to a standard Shark, but with slightly better armour, shields, and "
@@ -6192,12 +6208,89 @@ msgid ""
 "being slightly lighter than its generic counterpart."
 msgstr ""
 
-#: dat/ships/gawain.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:185
+#: dat/ships/feral_bioship/kauweke.xml:2
+msgid "Kauweke"
+msgstr ""
+
+#: dat/ships/feral_bioship/kauweke.xml:24
+#: dat/ships/feral_bioship/taitamariki.xml:19
+msgid "Still to do..."
+msgstr ""
+
+#: dat/ships/feral_bioship/nohinohi.xml:2
+msgid "Nohinohi"
+msgstr ""
+
+#: dat/ships/feral_bioship/nohinohi.xml:17
+msgid ""
+"Nohinohi were originally created as Soromid Reaver Bio-Fighters. However, "
+"although the process is not entirely clear, when the original Soromid Reaver "
+"is abandoned or lost through misfortune it can undergo a remarkable "
+"transformation where the biological components of the ship end up dominating "
+"the synthetic parts. These ships are commonly referred to as \"Feral Bioships"
+"\" and not much is known about them."
+msgstr ""
+
+#: dat/ships/feral_bioship/taitamariki.xml:2
+msgid "Taitamariki"
+msgstr ""
+
+#: dat/ships/misc/raelid_outpost.xml:2 dat/spob/raelid_outpost.xml:2
+msgid "Raelid Outpost"
+msgstr ""
+
+#: dat/ships/misc/raelid_outpost.xml:12 dat/ships/misc/raglan_outpost.xml:12
+#: dat/ships/misc/sindbad.xml:12 src/dev_uniedit.c:255 src/dev_uniedit.c:261
+#: src/dev_uniedit.c:1382 src/dev_uniedit.c:1383 src/land_outfits.c:435
+#: src/land_outfits.c:436 src/land_outfits.c:437 src/land_outfits.c:438
+#: src/land_trade.c:203 src/land_trade.c:205 src/land_trade.c:208
+#: src/land_trade.c:209 src/map.c:625 src/map.c:626 src/outfit.c:286
+#: src/outfit.c:305
+msgid "N/A"
+msgstr ""
+
+#: dat/ships/misc/raelid_outpost.xml:13 dat/ships/misc/raglan_outpost.xml:13
+#: dat/ships/misc/sindbad.xml:13
+msgid "This is a base. It's for AI use only. Don't buy it. Seriously."
+msgstr ""
+
+#: dat/ships/misc/raglan_outpost.xml:2 dat/spob/raglan_outpost.xml:2
+msgid "Raglan Outpost"
+msgstr ""
+
+#: dat/ships/misc/sindbad.xml:2 dat/spob/sindbad.xml:2
+msgid "Sindbad"
+msgstr ""
+
+#: dat/ships/neutral/admonisher.xml:2
+msgid "Admonisher"
+msgstr ""
+
+#: dat/ships/neutral/admonisher.xml:19
+msgid ""
+"A very versatile combat ship. Nexus defines the Admonisher as a compromise "
+"between the ruggedness of the Pacifier and the agility of the Lancelot. "
+"Overall a very solid combat ship."
+msgstr ""
+
+#: dat/ships/neutral/ancestor.xml:2
+msgid "Ancestor"
+msgstr ""
+
+#: dat/ships/neutral/ancestor.xml:16
+msgid ""
+"Commonly referred to as the \"Little Goddard\", the Ancestor also has its "
+"roots in the primitive flying machines used by men many ages ago. Unlike the "
+"Goddard though, the electronics are manufactured by House Dvaered, making it "
+"considerably inferior in that area."
+msgstr ""
+
+#: dat/ships/neutral/gawain.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168
 msgid "Gawain"
 msgstr ""
 
-#: dat/ships/gawain.xml:15
+#: dat/ships/neutral/gawain.xml:15
 msgid ""
 "The Gawain is a very high-end ship, outpacing nearly all other production "
 "vessels. It relies heavily on technology first implemented on the Lancelot "
@@ -6206,20 +6299,20 @@ msgid ""
 "relative fragility."
 msgstr ""
 
-#: dat/ships/goddard.xml:19
+#: dat/ships/neutral/goddard.xml:19
 msgid ""
-"Designed by eccentric genius Eduard Manuel Goddard, the Goddard "
-"Battlecruiser is what skyrocketed House Goddard to fame and fortune. "
-"Production is entirely done on Zhiru in the Goddard system by House Goddard. "
-"Over time, specialization and improvements on the original design have kept "
-"it very competitive in the market. It's a classic of space."
+"Designed by eccentric genius Eduard Manuel Goddard, the Goddard Battleship "
+"is what skyrocketed House Goddard to fame and fortune. Production is "
+"entirely done on Zhiru in the Goddard system by House Goddard. Over time, "
+"specialization and improvements on the original design have kept it very "
+"competitive in the market. It's a classic of space."
 msgstr ""
 
-#: dat/ships/hawking.xml:2
+#: dat/ships/neutral/hawking.xml:2
 msgid "Hawking"
 msgstr ""
 
-#: dat/ships/hawking.xml:20
+#: dat/ships/neutral/hawking.xml:20
 msgid ""
 "The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser "
 "designed for extended engagements, it is widely used by the Empire to exert "
@@ -6228,15 +6321,15 @@ msgid ""
 "allows it to present a smaller target to the enemy."
 msgstr ""
 
-#: dat/ships/hyena.xml:2
+#: dat/ships/neutral/hyena.xml:2
 msgid "Hyena"
 msgstr ""
 
-#: dat/ships/hyena.xml:15
+#: dat/ships/neutral/hyena.xml:15
 msgid "Aerosys"
 msgstr ""
 
-#: dat/ships/hyena.xml:16
+#: dat/ships/neutral/hyena.xml:16
 msgid ""
 "The star product of Aerosys, the Hyena quickly has also become a favourite "
 "of guerrilla and paramilitary groups far and wide. Their top-notch thrust "
@@ -6247,23 +6340,15 @@ msgid ""
 "and unruly pilots."
 msgstr ""
 
-#: dat/ships/kauweke.xml:2
-msgid "Kauweke"
-msgstr ""
-
-#: dat/ships/kauweke.xml:21 dat/ships/taitamariki.xml:16
-msgid "Still to do..."
-msgstr ""
-
-#: dat/ships/kestrel.xml:2
+#: dat/ships/neutral/kestrel.xml:2
 msgid "Kestrel"
 msgstr ""
 
-#: dat/ships/kestrel.xml:15 dat/ships/starbridge.xml:15
+#: dat/ships/neutral/kestrel.xml:15 dat/ships/neutral/starbridge.xml:15
 msgid "Krain Industries"
 msgstr ""
 
-#: dat/ships/kestrel.xml:17
+#: dat/ships/neutral/kestrel.xml:17
 msgid ""
 "The ship that single-handedly put Krain Industries on the map, the Kestrel "
 "was designed to be a sleek heavy assault cruiser. Generally more fragile "
@@ -6272,27 +6357,28 @@ msgid ""
 "ship in the hands of an able captain."
 msgstr ""
 
-#: dat/ships/koala.xml:2
+#: dat/ships/neutral/koala.xml:2
 msgid "Koala"
 msgstr ""
 
-#: dat/ships/koala.xml:14 dat/ships/llama.xml:16 dat/ships/mule.xml:15
-#: dat/ships/quicksilver.xml:15 dat/ships/rhino.xml:16 dat/ships/zebra.xml:19
+#: dat/ships/neutral/koala.xml:14 dat/ships/neutral/llama.xml:16
+#: dat/ships/neutral/mule.xml:15 dat/ships/neutral/quicksilver.xml:15
+#: dat/ships/neutral/rhino.xml:16 dat/ships/neutral/zebra.xml:19
 msgid "Melendez Corp."
 msgstr ""
 
-#: dat/ships/koala.xml:15
+#: dat/ships/neutral/koala.xml:15
 msgid ""
 "The Koala is your standard cargo vessel. It's a small ship with little "
 "weapon space but a decent amount of cargo space. Good for the entrepreneur "
 "working looking to turn a profit while making their way across the stars."
 msgstr ""
 
-#: dat/ships/lancelot.xml:2
+#: dat/ships/neutral/lancelot.xml:2
 msgid "Lancelot"
 msgstr ""
 
-#: dat/ships/lancelot.xml:17
+#: dat/ships/neutral/lancelot.xml:17
 msgid ""
 "One of the prized heavy fighters of Nexus Shipyards. The Lancelot was "
 "originally a classified design for the Empire military but its existence was "
@@ -6302,12 +6388,12 @@ msgid ""
 "availability."
 msgstr ""
 
-#: dat/ships/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:185
+#: dat/ships/neutral/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168
 msgid "Llama"
 msgstr ""
 
-#: dat/ships/llama.xml:17
+#: dat/ships/neutral/llama.xml:17
 msgid ""
 "One of the most widely used ships in the galaxy. Renowned for its stability "
 "and stubbornness. The design hasn't been modified much since its creation "
@@ -6315,11 +6401,11 @@ msgid ""
 "first used by aristocracy and now used by everyone who cannot afford better."
 msgstr ""
 
-#: dat/ships/mule.xml:2
+#: dat/ships/neutral/mule.xml:2
 msgid "Mule"
 msgstr ""
 
-#: dat/ships/mule.xml:17
+#: dat/ships/neutral/mule.xml:17
 msgid ""
 "A heavy freighter specialized in transporting cargo throughout the galaxy. "
 "Also has sufficient accommodation for passengers, depending on the model, "
@@ -6327,25 +6413,11 @@ msgid ""
 "so avoiding dangerous systems is strongly advised."
 msgstr ""
 
-#: dat/ships/nohinohi.xml:2
-msgid "Nohinohi"
-msgstr ""
-
-#: dat/ships/nohinohi.xml:14
-msgid ""
-"Nohinohi were originally created as Soromid Reaver Bio-Fighters. However, "
-"although the process is not entirely clear, when the original Soromid Reaver "
-"is abandoned or lost through misfortune it can undergo a remarkable "
-"transformation where the biological components of the ship end up dominating "
-"the synthetic parts. These ships are commonly referred to as \"Feral Bioships"
-"\" and not much is known about them."
-msgstr ""
-
-#: dat/ships/pacifier.xml:2
+#: dat/ships/neutral/pacifier.xml:2
 msgid "Pacifier"
 msgstr ""
 
-#: dat/ships/pacifier.xml:17
+#: dat/ships/neutral/pacifier.xml:17
 msgid ""
 "The Pacifier is one of the older and trustier designs of Nexus Shipyards. It "
 "was designed primarily as a border-patrol vessel and, as such, it is able to "
@@ -6353,11 +6425,11 @@ msgid ""
 "fuel capacity to facilitate lengthy patrol routes."
 msgstr ""
 
-#: dat/ships/phalanx.xml:2
+#: dat/ships/neutral/phalanx.xml:2
 msgid "Phalanx"
 msgstr ""
 
-#: dat/ships/phalanx.xml:17
+#: dat/ships/neutral/phalanx.xml:17
 msgid ""
 "The Phalanx is, by Dvaered standards, a fast corvette that can be used as a "
 "missile platform, that it also maneuvers poorly is standard Dvaered "
@@ -6365,213 +6437,22 @@ msgid ""
 "it with turrets."
 msgstr ""
 
-#: dat/ships/pirate_admonisher.xml:2
-msgid "Pirate Admonisher"
-msgstr ""
-
-#: dat/ships/pirate_admonisher.xml:18 dat/ships/pirate_ancestor.xml:15
-#: dat/ships/pirate_hyena.xml:16 dat/ships/pirate_kestrel.xml:16
-#: dat/ships/pirate_phalanx.xml:16 dat/ships/pirate_rhino.xml:17
-#: dat/ships/pirate_shark.xml:17 dat/ships/pirate_starbridge.xml:16
-#: dat/ships/pirate_vendetta.xml:16
-msgid "Skull and Bones"
-msgstr ""
-
-#: dat/ships/pirate_admonisher.xml:19
-msgid ""
-"The stock Admonisher is a powerful vessel, especially for its size. Through "
-"the usual Skull and Bones refit the Pirate Admonisher features improved "
-"manoeuvrability, more weapons space and slightly improved defences, at a "
-"cost of cargo capacity and armour regeneration rates."
-msgstr ""
-
-#: dat/ships/pirate_ancestor.xml:2
-msgid "Pirate Ancestor"
-msgstr ""
-
-#: dat/ships/pirate_ancestor.xml:16
-msgid ""
-"Ancestors were one of the first ships to be fancied by pirates. The big "
-"intimidating wings and good top speeds would usually get ships to surrender "
-"without firing a shot. As better ships came out in the market, their use has "
-"fallen due to their archaic electronics and targeting systems."
-msgstr ""
-
-#: dat/ships/pirate_hyena.xml:2
-msgid "Pirate Hyena"
-msgstr ""
-
-#: dat/ships/pirate_hyena.xml:17
-msgid ""
-"The Pirate Hyena has quickly become a favourite of pirates far and wide. Not "
-"much of a fighter, nor does it pack too much of a punch, but in groups they "
-"can overcome nearly any vessel and it's so simple to pilot that reaction "
-"times are vastly improved. Skull and Bones has added modifications to make "
-"them even more efficient as scavengers and harder to hit than their Aerosys "
-"counterparts."
-msgstr ""
-
-#: dat/ships/pirate_kestrel.xml:2
-msgid "Pirate Kestrel"
-msgstr ""
-
-#: dat/ships/pirate_kestrel.xml:17
-msgid ""
-"The Kestrel is the best ship offered by Skull and Bones. It is extremely "
-"agile for a cruiser yet doesn't lack the firepower necessary to question the "
-"authority of the Empire. A very strong ship for those pirates who can afford "
-"it."
-msgstr ""
-
-#: dat/ships/pirate_phalanx.xml:2
-msgid "Pirate Phalanx"
-msgstr ""
-
-#: dat/ships/pirate_phalanx.xml:17
-msgid ""
-"Building upon the already-capable Phalanx chassis, the Skull and Bones "
-"engineers have substantially improved the ship's performance, while only "
-"minorly sacrificing protection."
-msgstr ""
-
-#: dat/ships/pirate_rhino.xml:2
-msgid "Pirate Rhino"
-msgstr ""
-
-#: dat/ships/pirate_rhino.xml:18
-msgid ""
-"The traditional Skull and Bones refit has left the Rhino substantially more "
-"manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay "
-"and durability, the Rhino has become an excellent scavenger ship."
-msgstr ""
-
-#: dat/ships/pirate_shark.xml:2
-msgid "Pirate Shark"
-msgstr ""
-
-#: dat/ships/pirate_shark.xml:18
-msgid ""
-"The nimble Nexus Shipyards Shark has proved an excellent canvas for the "
-"Skull and Bones technicians. Fitted with an additional weapon mount, its "
-"handling suffers minimally while it's able to bring substantially more "
-"firepower to bear."
-msgstr ""
-
-#: dat/ships/pirate_starbridge.xml:2
-#, fuzzy
-#| msgid "Akra Station"
-msgid "Pirate Starbridge"
-msgstr "Station Akra"
-
-#: dat/ships/pirate_starbridge.xml:17
-msgid ""
-"Even though the Starbridge is already a light and fast destroyer, Skull and "
-"Bones engineers managed to further improve its speed. Due to its large "
-"firepower and relatively high speed, for its ship class, the Starbridge is "
-"truly a fearsome sight."
-msgstr ""
-
-#: dat/ships/pirate_vendetta.xml:2
-msgid "Pirate Vendetta"
-msgstr ""
-
-#: dat/ships/pirate_vendetta.xml:17
-msgid ""
-"The Pirate Vendetta is even more intimidating than its regular counterpart. "
-"It's been heavily tweaked to be more adjusted to the pirate style of flying. "
-"Some of the armour has been removed to make more room for loot, while the "
-"reactor has been jacked up by some dubious navel technician. The ship ends "
-"up being substantially better than the original but every so often the "
-"reactor goes nova, destroying the ship. You hope it won't happen to you if "
-"you get in one."
-msgstr ""
-
-#: dat/ships/proteron_archimedes.xml:2
-msgid "Proteron Archimedes"
-msgstr ""
-
-#: dat/ships/proteron_archimedes.xml:22
-msgid ""
-"The Archimedes is the backbone of the Proteron fleet. Offering heavy "
-"firepower and high durability, it can always be found in the heat of battle."
-msgstr ""
-
-#: dat/ships/proteron_derivative.xml:2
-msgid "Proteron Derivative"
-msgstr ""
-
-#: dat/ships/proteron_derivative.xml:18
-msgid ""
-"While smaller and less intimidating than its bigger siblings in the Proteron "
-"arsenal, a pack of Derivatives is still a foe to be reckoned with. True to "
-"its name, it's the latest in a long line of largely carrier-based fighters. "
-"Packing relatively little firepower, they're ill-suited to duelling, but a "
-"carrier group unleashing several squadrons has been known to turn the tide "
-"of battle on many occasions."
-msgstr ""
-
-#: dat/ships/proteron_kahan.xml:2
-msgid "Proteron Kahan"
-msgstr ""
-
-#: dat/ships/proteron_kahan.xml:18
-msgid ""
-"The Kahan is a cutting-edge vessel. Its design was completed shortly before "
-"the Incident, and it was on track to become the Proteron military's primary "
-"combat vessel. While possessing fewer weapon mounts than the Pacifier, it "
-"makes up for it with its lower mass and expanded structural space."
-msgstr ""
-
-#: dat/ships/proteron_watson.xml:2
-msgid "Proteron Watson"
-msgstr ""
-
-#: dat/ships/proteron_watson.xml:18
-msgid ""
-"The heart of the Proteron battle fleet is formed by the Watson. Acting as a "
-"mobile launch base as well as a command and control unit, this vessel co-"
-"ordinates the rest of the fleet in the fight for dominance over the galaxy."
-msgstr ""
-
-#: dat/ships/quicksilver.xml:2
+#: dat/ships/neutral/quicksilver.xml:2
 msgid "Quicksilver"
 msgstr ""
 
-#: dat/ships/quicksilver.xml:16
+#: dat/ships/neutral/quicksilver.xml:16
 msgid ""
 "While still a cargo hauler, the Quicksilver is quite different from "
 "Melendez's other offerings. Featuring a streamlined frame and oversized "
 "engines, it's the prime choice for expedient shipping."
 msgstr ""
 
-#: dat/ships/raelid_outpost.xml:2 dat/spob/raelid_outpost.xml:2
-msgid "Raelid Outpost"
-msgstr ""
-
-#: dat/ships/raelid_outpost.xml:12 dat/ships/raglan_outpost.xml:12
-#: dat/ships/sindbad.xml:12 src/dev_uniedit.c:255 src/dev_uniedit.c:261
-#: src/dev_uniedit.c:1382 src/dev_uniedit.c:1383 src/land_outfits.c:435
-#: src/land_outfits.c:436 src/land_outfits.c:437 src/land_outfits.c:438
-#: src/land_trade.c:203 src/land_trade.c:205 src/land_trade.c:208
-#: src/land_trade.c:209 src/map.c:624 src/map.c:625 src/outfit.c:286
-#: src/outfit.c:305
-msgid "N/A"
-msgstr ""
-
-#: dat/ships/raelid_outpost.xml:13 dat/ships/raglan_outpost.xml:13
-#: dat/ships/sindbad.xml:13
-msgid "This is a base. It's for AI use only. Don't buy it. Seriously."
-msgstr ""
-
-#: dat/ships/raglan_outpost.xml:2 dat/spob/raglan_outpost.xml:2
-msgid "Raglan Outpost"
-msgstr ""
-
-#: dat/ships/rhino.xml:2
+#: dat/ships/neutral/rhino.xml:2
 msgid "Rhino"
 msgstr ""
 
-#: dat/ships/rhino.xml:18
+#: dat/ships/neutral/rhino.xml:18
 msgid ""
 "A particularly durable Melendez design, the Rhino is well-suited to "
 "transporting high-value, high-risk freight. While it has much lower cargo "
@@ -6580,18 +6461,20 @@ msgid ""
 "lost on modern militaries."
 msgstr ""
 
-#: dat/ships/schroedinger.xml:2
+#: dat/ships/neutral/schroedinger.xml:2
 msgid "Schroedinger"
 msgstr ""
 
-#: dat/ships/schroedinger.xml:15 dat/ships/sirius_divinity.xml:14
-#: dat/ships/sirius_dogma.xml:14 dat/ships/sirius_fidelity.xml:14
-#: dat/ships/sirius_preacher.xml:13 dat/ships/sirius_providence.xml:18
-#: dat/ships/sirius_shaman.xml:13
+#: dat/ships/neutral/schroedinger.xml:15
+#: dat/ships/sirius/sirius_divinity.xml:14 dat/ships/sirius/sirius_dogma.xml:14
+#: dat/ships/sirius/sirius_fidelity.xml:14
+#: dat/ships/sirius/sirius_preacher.xml:13
+#: dat/ships/sirius/sirius_providence.xml:18
+#: dat/ships/sirius/sirius_shaman.xml:13
 msgid "Sirius Systems"
 msgstr ""
 
-#: dat/ships/schroedinger.xml:16
+#: dat/ships/neutral/schroedinger.xml:16
 msgid ""
 "The Schroedinger is primarily used as a reconnaissance vessel. It requires a "
 "skeleton crew due to its advanced automation subsystems, and its proprietary "
@@ -6601,241 +6484,22 @@ msgid ""
 "engines, making it highly manoeuvrable."
 msgstr ""
 
-#: dat/ships/shark.xml:2 dat/scripts/pilotname/generic.lua:77
+#: dat/ships/neutral/shark.xml:2 dat/scripts/pilotname/generic.lua:77
 msgid "Shark"
 msgstr ""
 
-#: dat/ships/shark.xml:18
+#: dat/ships/neutral/shark.xml:18
 msgid ""
 "A newer Nexus Shipyards design, the Shark is an agile, light fighter "
 "designed for in-system patrolling. While it's not as capable as its larger "
 "relative, the Lancelot, it's still an effective addition to any fleet."
 msgstr ""
 
-#: dat/ships/sindbad.xml:2 dat/spob/sindbad.xml:2
-msgid "Sindbad"
-msgstr ""
-
-#: dat/ships/sirius_divinity.xml:2
-msgid "Sirius Divinity"
-msgstr ""
-
-#: dat/ships/sirius_divinity.xml:17 dat/ships/sirius_dogma.xml:17
-msgid "You need at least 70 reputation with House Sirius."
-msgstr ""
-
-#: dat/ships/sirius_divinity.xml:18
-msgid ""
-"Whilst the Dogma is said to form the core of any Sirian fleet, few combat "
-"pilots would dismiss the significance of the Divinity. Though not "
-"exceptionally formidable in direct combat, the Divinity's ability to field a "
-"multitude of fighters gives it unparalleled flexibility in combat, serving "
-"as a key logistical vessel in any sizable fleet."
-msgstr ""
-
-#: dat/ships/sirius_dogma.xml:2
-msgid "Sirius Dogma"
-msgstr ""
-
-#: dat/ships/sirius_dogma.xml:18
-msgid ""
-"The backbone of the House Sirius fleet, the Dogma is a sight to behold. "
-"Trimmed in gold and silver and fielding a large array of weapons, the Dogma "
-"is seldom surpassed in either prestige or military might."
-msgstr ""
-
-#: dat/ships/sirius_fidelity.xml:2
-msgid "Sirius Fidelity"
-msgstr ""
-
-#: dat/ships/sirius_fidelity.xml:16
-msgid "You need at least 20 reputation with House Sirius."
-msgstr ""
-
-#: dat/ships/sirius_fidelity.xml:17
-msgid ""
-"The Fidelity is the interceptor of House Sirius. While not particularly "
-"competent alone, it's often employed as a forward scout, bringing with it "
-"far deadlier allies."
-msgstr ""
-
-#: dat/ships/sirius_preacher.xml:2
-msgid "Sirius Preacher"
-msgstr ""
-
-#: dat/ships/sirius_preacher.xml:16
-msgid "You need at least 40 reputation with House Sirius."
-msgstr ""
-
-#: dat/ships/sirius_preacher.xml:17
-msgid ""
-"The Preacher, as its name implies, is the primary vessel by which House "
-"Sirius projects its message and will. Fielding a large array of weaponry, "
-"the Preacher is adept at making converts out of unbelievers."
-msgstr ""
-
-#: dat/ships/sirius_providence.xml:2
-msgid "Sirius Providence"
-msgstr ""
-
-#: dat/ships/sirius_providence.xml:21
-msgid "You need at least 60 reputation with House Sirius."
-msgstr ""
-
-#: dat/ships/sirius_providence.xml:22
-msgid ""
-"The Providence is the bulk freighter of House Sirius and is mainly used to "
-"transport large amounts of supplies. Some of them are also being used to "
-"transport pilgrims, even though most Sirii dislike these overcrowded mass "
-"transports."
-msgstr ""
-
-#: dat/ships/sirius_shaman.xml:2
-msgid "Sirius Shaman"
-msgstr ""
-
-#: dat/ships/sirius_shaman.xml:16
-msgid "You need at least 30 reputation with House Sirius."
-msgstr ""
-
-#: dat/ships/sirius_shaman.xml:17
-msgid ""
-"Though its relatively sleek form may cause it to be mistaken for a light "
-"fighter from a distance, the Shaman is anything but. A purpose-built light "
-"missile platform, few enemies escape the reach of the Shaman."
-msgstr ""
-
-#: dat/ships/soromid_arx.xml:2
-msgid "Soromid Arx"
-msgstr ""
-
-#: dat/ships/soromid_arx.xml:23 dat/ships/soromid_vox.xml:20
-msgid "You need at least 70 reputation with the Soromid."
-msgstr ""
-
-#: dat/ships/soromid_arx.xml:24
-msgid ""
-"The Soromid Arx usually features in Soromid fleets as a command vessel and "
-"fighter carrier. Its unique properties allow it amply the strentgh of its "
-"carried ships, which easily makes up for its reduced number of slots. The "
-"Arx tends to be a more lightweight carrier than is typically found in non-"
-"Soromid fleets, without sacrificing carrying capacity."
-msgstr ""
-
-#: dat/ships/soromid_brigand.xml:2
-msgid "Soromid Brigand"
-msgstr ""
-
-#: dat/ships/soromid_brigand.xml:16
-msgid "You need at least 20 reputation with the Soromid."
-msgstr ""
-
-#: dat/ships/soromid_brigand.xml:17
-msgid ""
-"The Brigand is a fast, maneuverable bioship that the Soromid use for system "
-"patrols and police duties. The ship is lightly armoured and fairly fragile, "
-"but it makes up for this by being fast to grow and therefore relatively "
-"expendable."
-msgstr ""
-
-#: dat/ships/soromid_copia.xml:2
-#, fuzzy
-#| msgid "Soromid"
-msgid "Soromid Copia"
-msgstr "Soromid"
-
-#: dat/ships/soromid_copia.xml:23 dat/ships/soromid_ira.xml:21
-msgid "You need at least 60 reputation with the Soromid."
-msgstr ""
-
-#: dat/ships/soromid_copia.xml:24
-msgid ""
-"The Copia bio-freighter is the backbone of Soromid convoys and is frequently "
-"used to supply Soromid fleets or military installations with critical "
-"supplies. Unlike most cargo ships, the Copia is designed to not shy away "
-"from combat, and can be a very deadly ship in the right hands."
-msgstr ""
-
-#: dat/ships/soromid_ira.xml:2
-msgid "Soromid Ira"
-msgstr ""
-
-#: dat/ships/soromid_ira.xml:22
-msgid ""
-"The Ira is a purpose-grown cruiser commonly found leading Soromid forces. "
-"While its armour is somewhat weak, this rarely saves those met with its "
-"devastating barrage."
-msgstr ""
-
-#: dat/ships/soromid_marauder.xml:2
-msgid "Soromid Marauder"
-msgstr ""
-
-#: dat/ships/soromid_marauder.xml:17 dat/ships/soromid_reaver.xml:16
-msgid "You need at least 30 reputation with the Soromid."
-msgstr ""
-
-#: dat/ships/soromid_marauder.xml:18
-msgid ""
-"The Marauder was developed from the same base as the Brigand, but the two "
-"ships are quite different. The Marauder was developed to fill a bomber role, "
-"which calls for increased durability and ammunition chambers. This makes it "
-"quite a bit slower than its distant cousin."
-msgstr ""
-
-#: dat/ships/soromid_nyx.xml:2
-msgid "Soromid Nyx"
-msgstr ""
-
-#: dat/ships/soromid_nyx.xml:18
-msgid ""
-"The Nyx is the symbol of the Soromid's military might. Able to provide heavy "
-"firepower in heated battles and agile enough to withdraw when needed, this "
-"ship usually forms the backbone of any sizable Soromid fleet."
-msgstr ""
-
-#: dat/ships/soromid_odium.xml:2
-msgid "Soromid Odium"
-msgstr ""
-
-#: dat/ships/soromid_odium.xml:18
-msgid "You need at least 40 reputation with the Soromid."
-msgstr ""
-
-#: dat/ships/soromid_odium.xml:19
-msgid ""
-"The Odium offers a good balance between shields and armour, as well as an "
-"impressive amount of system hardpoints for a ship its size. It can often be "
-"found dominating smaller military engagements."
-msgstr ""
-
-#: dat/ships/soromid_reaver.xml:2
-msgid "Soromid Reaver"
-msgstr ""
-
-#: dat/ships/soromid_reaver.xml:17
-msgid ""
-"Reavers are often found at the forefront of Soromid military engagements. "
-"Their good speed and maneuverability are compounded by their durability, "
-"making the Reaver one of the most effective heavy fighters in the galaxy."
-msgstr ""
-
-#: dat/ships/soromid_vox.xml:2
-msgid "Soromid Vox"
-msgstr ""
-
-#: dat/ships/soromid_vox.xml:21
-msgid ""
-"The Vox is the biggest vessel the Soromid field, hands down. This battleship "
-"serves as the core of any given Soromid war fleet and is only called upon in "
-"notable engagements."
-msgstr ""
-
-#: dat/ships/starbridge.xml:2
+#: dat/ships/neutral/starbridge.xml:2
 msgid "Starbridge"
 msgstr ""
 
-#: dat/ships/starbridge.xml:17
+#: dat/ships/neutral/starbridge.xml:17
 msgid ""
 "The Starbridge is the latest ship designed by Krain Industries. It is a "
 "lightweight destroyer reaching the same manoeuvrability as a corvette and "
@@ -6843,104 +6507,12 @@ msgid ""
 "structural space."
 msgstr ""
 
-#: dat/ships/taitamariki.xml:2
-msgid "Taitamariki"
-msgstr ""
-
-#: dat/ships/thurion_apprehension.xml:2
-msgid "Thurion Apprehension"
-msgstr ""
-
-#: dat/ships/thurion_apprehension.xml:17 dat/ships/thurion_certitude.xml:18
-#: dat/ships/thurion_ingenuity.xml:16 dat/ships/thurion_perspicacity.xml:18
-#: dat/ships/thurion_scintillation.xml:17 dat/ships/thurion_taciturnity.xml:16
-#: dat/ships/thurion_virtuosity.xml:18
-msgid "Thurion shipyards"
-msgstr ""
-
-#: dat/ships/thurion_apprehension.xml:21 dat/ships/thurion_certitude.xml:22
-msgid "..."
-msgstr ""
-
-#: dat/ships/thurion_certitude.xml:2
-msgid "Thurion Certitude"
-msgstr ""
-
-#: dat/ships/thurion_certitude.xml:21
-msgid "You need at least 70 reputation with the Thurion."
-msgstr ""
-
-#: dat/ships/thurion_ingenuity.xml:2
-msgid "Thurion Ingenuity"
-msgstr ""
-
-#: dat/ships/thurion_ingenuity.xml:20
-msgid ""
-"The Thurion Ingenuity is a fighter built for survival. Like all Thurian "
-"ships, it puts defensive capabilities first and offensive capabilities "
-"second. However, by no means is the Ingenuity a poor combat craft. It is "
-"capable of staying in combat and slugging it out, and when things get too "
-"hot, it can quickly retreat to recharge and regenerate. Also, like every "
-"Thurian ship, the electronics are well above average."
-msgstr ""
-
-#: dat/ships/thurion_perspicacity.xml:2
-msgid "Thurion Perspicacity"
-msgstr ""
-
-#: dat/ships/thurion_perspicacity.xml:21
-msgid "You need at least 20 reputation with the Thurion."
-msgstr ""
-
-#: dat/ships/thurion_perspicacity.xml:22
-msgid ""
-"The Thurion Perspicacity is a fast, light fighter typically used for "
-"scouting or attacking in swarms."
-msgstr ""
-
-#: dat/ships/thurion_scintillation.xml:2
-msgid "Thurion Scintillation"
-msgstr ""
-
-#: dat/ships/thurion_scintillation.xml:21
-msgid ""
-"The Thurion Scintillation is a bomber designed to attack from a large "
-"distance. It is better armed than any other Thurion ship of comparable size, "
-"but still not as well as other non-Thurion bombers."
-msgstr ""
-
-#: dat/ships/thurion_taciturnity.xml:2
-msgid "Thurion Taciturnity"
-msgstr ""
-
-#: dat/ships/thurion_taciturnity.xml:20
-msgid ""
-"The Thurion Taciturnity is an armoured and stealthy transport capable both "
-"of surviving the harsh nebula and defending itself from attack."
-msgstr ""
-
-#: dat/ships/thurion_virtuosity.xml:2
-msgid "Thurion Virtuosity"
-msgstr ""
-
-#: dat/ships/thurion_virtuosity.xml:21
-msgid "You need at least 40 reputation with the Thurion."
-msgstr ""
-
-#: dat/ships/thurion_virtuosity.xml:22
-msgid ""
-"The Thurion Virtuosity is a medium-sized ship used by the Thurion for "
-"frontal assaults. While weapon space is less than stellar, the vessel's "
-"superior electronics and resistance to the harsh nebula more than make up "
-"for it."
-msgstr ""
-
-#: dat/ships/vendetta.xml:2
+#: dat/ships/neutral/vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:223
 msgid "Vendetta"
 msgstr ""
 
-#: dat/ships/vendetta.xml:17
+#: dat/ships/neutral/vendetta.xml:17
 msgid ""
 "The Vendetta displays the House Dvaered philosophy very well. Give a ship "
 "many intimidating guns, layer it with heavy armour and neglect the "
@@ -6951,11 +6523,11 @@ msgid ""
 "precisely the power to transform extended battles into short fights."
 msgstr ""
 
-#: dat/ships/vigilance.xml:2
+#: dat/ships/neutral/vigilance.xml:2
 msgid "Vigilance"
 msgstr ""
 
-#: dat/ships/vigilance.xml:16
+#: dat/ships/neutral/vigilance.xml:16
 msgid ""
 "The Vigilance is the embodiment of Dvaered philosophy. Featuring immense "
 "energy reserves and six weapon hardpoints, it's designed to hit as hard as "
@@ -6963,17 +6535,507 @@ msgid ""
 "inferior technology relative to its counterparts."
 msgstr ""
 
-#: dat/ships/zalek_demon.xml:2
+#: dat/ships/neutral/zebra.xml:2
+msgid "Zebra"
+msgstr ""
+
+#: dat/ships/neutral/zebra.xml:21
+msgid ""
+"The Zebra bulk freighter is the largest of all of the freighters produced by "
+"Melendez, and one of the most desired ships by all independent civilian "
+"traders. The Zebra offers an unmatched cargo density with reasonable "
+"protection."
+msgstr ""
+
+#: dat/ships/pirate/pirate_admonisher.xml:2
+msgid "Pirate Admonisher"
+msgstr ""
+
+#: dat/ships/pirate/pirate_admonisher.xml:18
+#: dat/ships/pirate/pirate_ancestor.xml:15 dat/ships/pirate/pirate_hyena.xml:16
+#: dat/ships/pirate/pirate_kestrel.xml:16
+#: dat/ships/pirate/pirate_phalanx.xml:16 dat/ships/pirate/pirate_rhino.xml:17
+#: dat/ships/pirate/pirate_shark.xml:17
+#: dat/ships/pirate/pirate_starbridge.xml:16
+#: dat/ships/pirate/pirate_vendetta.xml:16
+msgid "Skull and Bones"
+msgstr ""
+
+#: dat/ships/pirate/pirate_admonisher.xml:19
+msgid ""
+"The stock Admonisher is a powerful vessel, especially for its size. Through "
+"the usual Skull and Bones refit the Pirate Admonisher features improved "
+"manoeuvrability, more weapons space and slightly improved defences, at a "
+"cost of cargo capacity and armour regeneration rates."
+msgstr ""
+
+#: dat/ships/pirate/pirate_ancestor.xml:2
+msgid "Pirate Ancestor"
+msgstr ""
+
+#: dat/ships/pirate/pirate_ancestor.xml:16
+msgid ""
+"Ancestors were one of the first ships to be fancied by pirates. The big "
+"intimidating wings and good top speeds would usually get ships to surrender "
+"without firing a shot. As better ships came out in the market, their use has "
+"fallen due to their archaic electronics and targeting systems."
+msgstr ""
+
+#: dat/ships/pirate/pirate_hyena.xml:2
+msgid "Pirate Hyena"
+msgstr ""
+
+#: dat/ships/pirate/pirate_hyena.xml:17
+msgid ""
+"The Pirate Hyena has quickly become a favourite of pirates far and wide. Not "
+"much of a fighter, nor does it pack too much of a punch, but in groups they "
+"can overcome nearly any vessel and it's so simple to pilot that reaction "
+"times are vastly improved. Skull and Bones has added modifications to make "
+"them even more efficient as scavengers and harder to hit than their Aerosys "
+"counterparts."
+msgstr ""
+
+#: dat/ships/pirate/pirate_kestrel.xml:2
+msgid "Pirate Kestrel"
+msgstr ""
+
+#: dat/ships/pirate/pirate_kestrel.xml:17
+msgid ""
+"The Kestrel is the best ship offered by Skull and Bones. It is extremely "
+"agile for a cruiser yet doesn't lack the firepower necessary to question the "
+"authority of the Empire. A very strong ship for those pirates who can afford "
+"it."
+msgstr ""
+
+#: dat/ships/pirate/pirate_phalanx.xml:2
+msgid "Pirate Phalanx"
+msgstr ""
+
+#: dat/ships/pirate/pirate_phalanx.xml:17
+msgid ""
+"Building upon the already-capable Phalanx chassis, the Skull and Bones "
+"engineers have substantially improved the ship's performance, while only "
+"minorly sacrificing protection."
+msgstr ""
+
+#: dat/ships/pirate/pirate_rhino.xml:2
+msgid "Pirate Rhino"
+msgstr ""
+
+#: dat/ships/pirate/pirate_rhino.xml:18
+msgid ""
+"The traditional Skull and Bones refit has left the Rhino substantially more "
+"manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay "
+"and durability, the Rhino has become an excellent scavenger ship."
+msgstr ""
+
+#: dat/ships/pirate/pirate_shark.xml:2
+msgid "Pirate Shark"
+msgstr ""
+
+#: dat/ships/pirate/pirate_shark.xml:18
+msgid ""
+"The nimble Nexus Shipyards Shark has proved an excellent canvas for the "
+"Skull and Bones technicians. Fitted with an additional weapon mount, its "
+"handling suffers minimally while it's able to bring substantially more "
+"firepower to bear."
+msgstr ""
+
+#: dat/ships/pirate/pirate_starbridge.xml:2
+#, fuzzy
+#| msgid "Akra Station"
+msgid "Pirate Starbridge"
+msgstr "Station Akra"
+
+#: dat/ships/pirate/pirate_starbridge.xml:17
+msgid ""
+"Even though the Starbridge is already a light and fast destroyer, Skull and "
+"Bones engineers managed to further improve its speed. Due to its large "
+"firepower and relatively high speed, for its ship class, the Starbridge is "
+"truly a fearsome sight."
+msgstr ""
+
+#: dat/ships/pirate/pirate_vendetta.xml:2
+msgid "Pirate Vendetta"
+msgstr ""
+
+#: dat/ships/pirate/pirate_vendetta.xml:17
+msgid ""
+"The Pirate Vendetta is even more intimidating than its regular counterpart. "
+"It's been heavily tweaked to be more adjusted to the pirate style of flying. "
+"Some of the armour has been removed to make more room for loot, while the "
+"reactor has been jacked up by some dubious navel technician. The ship ends "
+"up being substantially better than the original but every so often the "
+"reactor goes nova, destroying the ship. You hope it won't happen to you if "
+"you get in one."
+msgstr ""
+
+#: dat/ships/proteron/proteron_archimedes.xml:2
+msgid "Proteron Archimedes"
+msgstr ""
+
+#: dat/ships/proteron/proteron_archimedes.xml:22
+msgid ""
+"The Archimedes is the backbone of the Proteron fleet. Offering heavy "
+"firepower and high durability, it can always be found in the heat of battle."
+msgstr ""
+
+#: dat/ships/proteron/proteron_derivative.xml:2
+msgid "Proteron Derivative"
+msgstr ""
+
+#: dat/ships/proteron/proteron_derivative.xml:18
+msgid ""
+"While smaller and less intimidating than its bigger siblings in the Proteron "
+"arsenal, a pack of Derivatives is still a foe to be reckoned with. True to "
+"its name, it's the latest in a long line of largely carrier-based fighters. "
+"Packing relatively little firepower, they're ill-suited to duelling, but a "
+"carrier group unleashing several squadrons has been known to turn the tide "
+"of battle on many occasions."
+msgstr ""
+
+#: dat/ships/proteron/proteron_kahan.xml:2
+msgid "Proteron Kahan"
+msgstr ""
+
+#: dat/ships/proteron/proteron_kahan.xml:18
+msgid ""
+"The Kahan is a cutting-edge vessel. Its design was completed shortly before "
+"the Incident, and it was on track to become the Proteron military's primary "
+"combat vessel. While possessing fewer weapon mounts than the Pacifier, it "
+"makes up for it with its lower mass and expanded structural space."
+msgstr ""
+
+#: dat/ships/proteron/proteron_watson.xml:2
+msgid "Proteron Watson"
+msgstr ""
+
+#: dat/ships/proteron/proteron_watson.xml:18
+msgid ""
+"The heart of the Proteron battle fleet is formed by the Watson. Acting as a "
+"mobile launch base as well as a command and control unit, this vessel co-"
+"ordinates the rest of the fleet in the fight for dominance over the galaxy."
+msgstr ""
+
+#: dat/ships/sirius/sirius_divinity.xml:2
+msgid "Sirius Divinity"
+msgstr ""
+
+#: dat/ships/sirius/sirius_divinity.xml:17 dat/ships/sirius/sirius_dogma.xml:17
+msgid "You need at least 70 reputation with House Sirius."
+msgstr ""
+
+#: dat/ships/sirius/sirius_divinity.xml:18
+msgid ""
+"Whilst the Dogma is said to form the core of any Sirian fleet, few combat "
+"pilots would dismiss the significance of the Divinity. Though not "
+"exceptionally formidable in direct combat, the Divinity's ability to field a "
+"multitude of fighters gives it unparalleled flexibility in combat, serving "
+"as a key logistical vessel in any sizable fleet."
+msgstr ""
+
+#: dat/ships/sirius/sirius_dogma.xml:2
+msgid "Sirius Dogma"
+msgstr ""
+
+#: dat/ships/sirius/sirius_dogma.xml:18
+msgid ""
+"The backbone of the House Sirius fleet, the Dogma is a sight to behold. "
+"Trimmed in gold and silver and fielding a large array of weapons, the Dogma "
+"is seldom surpassed in either prestige or military might."
+msgstr ""
+
+#: dat/ships/sirius/sirius_fidelity.xml:2
+msgid "Sirius Fidelity"
+msgstr ""
+
+#: dat/ships/sirius/sirius_fidelity.xml:16
+msgid "You need at least 20 reputation with House Sirius."
+msgstr ""
+
+#: dat/ships/sirius/sirius_fidelity.xml:17
+msgid ""
+"The Fidelity is the interceptor of House Sirius. While not particularly "
+"competent alone, it's often employed as a forward scout, bringing with it "
+"far deadlier allies."
+msgstr ""
+
+#: dat/ships/sirius/sirius_preacher.xml:2
+msgid "Sirius Preacher"
+msgstr ""
+
+#: dat/ships/sirius/sirius_preacher.xml:16
+msgid "You need at least 40 reputation with House Sirius."
+msgstr ""
+
+#: dat/ships/sirius/sirius_preacher.xml:17
+msgid ""
+"The Preacher, as its name implies, is the primary vessel by which House "
+"Sirius projects its message and will. Fielding a large array of weaponry, "
+"the Preacher is adept at making converts out of unbelievers."
+msgstr ""
+
+#: dat/ships/sirius/sirius_providence.xml:2
+msgid "Sirius Providence"
+msgstr ""
+
+#: dat/ships/sirius/sirius_providence.xml:21
+msgid "You need at least 60 reputation with House Sirius."
+msgstr ""
+
+#: dat/ships/sirius/sirius_providence.xml:22
+msgid ""
+"The Providence is the bulk freighter of House Sirius and is mainly used to "
+"transport large amounts of supplies. Some of them are also being used to "
+"transport pilgrims, even though most Sirii dislike these overcrowded mass "
+"transports."
+msgstr ""
+
+#: dat/ships/sirius/sirius_shaman.xml:2
+msgid "Sirius Shaman"
+msgstr ""
+
+#: dat/ships/sirius/sirius_shaman.xml:16
+msgid "You need at least 30 reputation with House Sirius."
+msgstr ""
+
+#: dat/ships/sirius/sirius_shaman.xml:17
+msgid ""
+"Though its relatively sleek form may cause it to be mistaken for a light "
+"fighter from a distance, the Shaman is anything but. A purpose-built light "
+"missile platform, few enemies escape the reach of the Shaman."
+msgstr ""
+
+#: dat/ships/soromid/soromid_arx.xml:2
+msgid "Soromid Arx"
+msgstr ""
+
+#: dat/ships/soromid/soromid_arx.xml:23 dat/ships/soromid/soromid_vox.xml:20
+msgid "You need at least 70 reputation with the Soromid."
+msgstr ""
+
+#: dat/ships/soromid/soromid_arx.xml:24
+msgid ""
+"The Soromid Arx usually features in Soromid fleets as a command vessel and "
+"fighter carrier. Its unique properties allow it amply the strentgh of its "
+"carried ships, which easily makes up for its reduced number of slots. The "
+"Arx tends to be a more lightweight carrier than is typically found in non-"
+"Soromid fleets, without sacrificing carrying capacity."
+msgstr ""
+
+#: dat/ships/soromid/soromid_brigand.xml:2
+msgid "Soromid Brigand"
+msgstr ""
+
+#: dat/ships/soromid/soromid_brigand.xml:16
+msgid "You need at least 20 reputation with the Soromid."
+msgstr ""
+
+#: dat/ships/soromid/soromid_brigand.xml:17
+msgid ""
+"The Brigand is a fast, maneuverable bioship that the Soromid use for system "
+"patrols and police duties. The ship is lightly armoured and fairly fragile, "
+"but it makes up for this by being fast to grow and therefore relatively "
+"expendable."
+msgstr ""
+
+#: dat/ships/soromid/soromid_copia.xml:2
+#, fuzzy
+#| msgid "Soromid"
+msgid "Soromid Copia"
+msgstr "Soromid"
+
+#: dat/ships/soromid/soromid_copia.xml:23 dat/ships/soromid/soromid_ira.xml:21
+msgid "You need at least 60 reputation with the Soromid."
+msgstr ""
+
+#: dat/ships/soromid/soromid_copia.xml:24
+msgid ""
+"The Copia bio-freighter is the backbone of Soromid convoys and is frequently "
+"used to supply Soromid fleets or military installations with critical "
+"supplies. Unlike most cargo ships, the Copia is designed to not shy away "
+"from combat, and can be a very deadly ship in the right hands."
+msgstr ""
+
+#: dat/ships/soromid/soromid_ira.xml:2
+msgid "Soromid Ira"
+msgstr ""
+
+#: dat/ships/soromid/soromid_ira.xml:22
+msgid ""
+"The Ira is a purpose-grown cruiser commonly found leading Soromid forces. "
+"While its armour is somewhat weak, this rarely saves those met with its "
+"devastating barrage."
+msgstr ""
+
+#: dat/ships/soromid/soromid_marauder.xml:2
+msgid "Soromid Marauder"
+msgstr ""
+
+#: dat/ships/soromid/soromid_marauder.xml:17
+#: dat/ships/soromid/soromid_reaver.xml:16
+msgid "You need at least 30 reputation with the Soromid."
+msgstr ""
+
+#: dat/ships/soromid/soromid_marauder.xml:18
+msgid ""
+"The Marauder was developed from the same base as the Brigand, but the two "
+"ships are quite different. The Marauder was developed to fill a bomber role, "
+"which calls for increased durability and ammunition chambers. This makes it "
+"quite a bit slower than its distant cousin."
+msgstr ""
+
+#: dat/ships/soromid/soromid_nyx.xml:2
+msgid "Soromid Nyx"
+msgstr ""
+
+#: dat/ships/soromid/soromid_nyx.xml:18
+msgid ""
+"The Nyx is the symbol of the Soromid's military might. Able to provide heavy "
+"firepower in heated battles and agile enough to withdraw when needed, this "
+"ship usually forms the backbone of any sizable Soromid fleet."
+msgstr ""
+
+#: dat/ships/soromid/soromid_odium.xml:2
+msgid "Soromid Odium"
+msgstr ""
+
+#: dat/ships/soromid/soromid_odium.xml:18
+msgid "You need at least 40 reputation with the Soromid."
+msgstr ""
+
+#: dat/ships/soromid/soromid_odium.xml:19
+msgid ""
+"The Odium offers a good balance between shields and armour, as well as an "
+"impressive amount of system hardpoints for a ship its size. It can often be "
+"found dominating smaller military engagements."
+msgstr ""
+
+#: dat/ships/soromid/soromid_reaver.xml:2
+msgid "Soromid Reaver"
+msgstr ""
+
+#: dat/ships/soromid/soromid_reaver.xml:17
+msgid ""
+"Reavers are often found at the forefront of Soromid military engagements. "
+"Their good speed and maneuverability are compounded by their durability, "
+"making the Reaver one of the most effective heavy fighters in the galaxy."
+msgstr ""
+
+#: dat/ships/soromid/soromid_vox.xml:2
+msgid "Soromid Vox"
+msgstr ""
+
+#: dat/ships/soromid/soromid_vox.xml:21
+msgid ""
+"The Vox is the biggest vessel the Soromid field, hands down. This battleship "
+"serves as the core of any given Soromid war fleet and is only called upon in "
+"notable engagements."
+msgstr ""
+
+#: dat/ships/thurion/thurion_apprehension.xml:2
+msgid "Thurion Apprehension"
+msgstr ""
+
+#: dat/ships/thurion/thurion_apprehension.xml:17
+#: dat/ships/thurion/thurion_certitude.xml:18
+#: dat/ships/thurion/thurion_ingenuity.xml:16
+#: dat/ships/thurion/thurion_perspicacity.xml:18
+#: dat/ships/thurion/thurion_scintillation.xml:17
+#: dat/ships/thurion/thurion_taciturnity.xml:16
+#: dat/ships/thurion/thurion_virtuosity.xml:18
+msgid "Thurion shipyards"
+msgstr ""
+
+#: dat/ships/thurion/thurion_apprehension.xml:21
+#: dat/ships/thurion/thurion_certitude.xml:22
+msgid "..."
+msgstr ""
+
+#: dat/ships/thurion/thurion_certitude.xml:2
+msgid "Thurion Certitude"
+msgstr ""
+
+#: dat/ships/thurion/thurion_certitude.xml:21
+msgid "You need at least 70 reputation with the Thurion."
+msgstr ""
+
+#: dat/ships/thurion/thurion_ingenuity.xml:2
+msgid "Thurion Ingenuity"
+msgstr ""
+
+#: dat/ships/thurion/thurion_ingenuity.xml:20
+msgid ""
+"The Thurion Ingenuity is a fighter built for survival. Like all Thurian "
+"ships, it puts defensive capabilities first and offensive capabilities "
+"second. However, by no means is the Ingenuity a poor combat craft. It is "
+"capable of staying in combat and slugging it out, and when things get too "
+"hot, it can quickly retreat to recharge and regenerate. Also, like every "
+"Thurian ship, the electronics are well above average."
+msgstr ""
+
+#: dat/ships/thurion/thurion_perspicacity.xml:2
+msgid "Thurion Perspicacity"
+msgstr ""
+
+#: dat/ships/thurion/thurion_perspicacity.xml:21
+msgid "You need at least 20 reputation with the Thurion."
+msgstr ""
+
+#: dat/ships/thurion/thurion_perspicacity.xml:22
+msgid ""
+"The Thurion Perspicacity is a fast, light fighter typically used for "
+"scouting or attacking in swarms."
+msgstr ""
+
+#: dat/ships/thurion/thurion_scintillation.xml:2
+msgid "Thurion Scintillation"
+msgstr ""
+
+#: dat/ships/thurion/thurion_scintillation.xml:21
+msgid ""
+"The Thurion Scintillation is a bomber designed to attack from a large "
+"distance. It is better armed than any other Thurion ship of comparable size, "
+"but still not as well as other non-Thurion bombers."
+msgstr ""
+
+#: dat/ships/thurion/thurion_taciturnity.xml:2
+msgid "Thurion Taciturnity"
+msgstr ""
+
+#: dat/ships/thurion/thurion_taciturnity.xml:20
+msgid ""
+"The Thurion Taciturnity is an armoured and stealthy transport capable both "
+"of surviving the harsh nebula and defending itself from attack."
+msgstr ""
+
+#: dat/ships/thurion/thurion_virtuosity.xml:2
+msgid "Thurion Virtuosity"
+msgstr ""
+
+#: dat/ships/thurion/thurion_virtuosity.xml:21
+msgid "You need at least 40 reputation with the Thurion."
+msgstr ""
+
+#: dat/ships/thurion/thurion_virtuosity.xml:22
+msgid ""
+"The Thurion Virtuosity is a medium-sized ship used by the Thurion for "
+"frontal assaults. While weapon space is less than stellar, the vessel's "
+"superior electronics and resistance to the harsh nebula more than make up "
+"for it."
+msgstr ""
+
+#: dat/ships/zalek/zalek_demon.xml:2
 msgid "Za'lek Demon"
 msgstr ""
 
-#: dat/ships/zalek_demon.xml:16 dat/ships/zalek_diablo.xml:16
-#: dat/ships/zalek_hephaestus.xml:16 dat/ships/zalek_mammon.xml:20
-#: dat/ships/zalek_mephisto.xml:14 dat/ships/zalek_sting.xml:16
+#: dat/ships/zalek/zalek_demon.xml:16 dat/ships/zalek/zalek_diablo.xml:16
+#: dat/ships/zalek/zalek_hephaestus.xml:16 dat/ships/zalek/zalek_mammon.xml:20
+#: dat/ships/zalek/zalek_mephisto.xml:14 dat/ships/zalek/zalek_sting.xml:16
 msgid "Za'lek Fabricators"
 msgstr ""
 
-#: dat/ships/zalek_demon.xml:20
+#: dat/ships/zalek/zalek_demon.xml:20
 msgid ""
 "House Za'lek's ferociously-named destroyer has earned the moniker with "
 "disproportionately powerful shields and energy management, as well as size. "
@@ -6981,71 +7043,73 @@ msgid ""
 "comes as little consolation to the Za'lek's enemies."
 msgstr ""
 
-#: dat/ships/zalek_diablo.xml:2
+#: dat/ships/zalek/zalek_diablo.xml:2
 msgid "Za'lek Diablo"
 msgstr ""
 
-#: dat/ships/zalek_diablo.xml:19 dat/ships/zalek_mephisto.xml:17
+#: dat/ships/zalek/zalek_diablo.xml:19 dat/ships/zalek/zalek_mephisto.xml:17
 msgid "You need at least 70 reputation with House Za'lek."
 msgstr ""
 
-#: dat/ships/zalek_diablo.xml:20
+#: dat/ships/zalek/zalek_diablo.xml:20
 msgid ""
 "This carrier is the archetypical Za'lek warship. Virtually unarmoured and "
 "equipped with heavy shields, they are, however, meant to serve as a platform "
 "for devastating drone swarms, not frontline combat."
 msgstr ""
 
-#: dat/ships/zalek_drone_bomber.xml:2
+#: dat/ships/zalek/zalek_drone_bomber.xml:2
 msgid "Za'lek Bomber Drone"
 msgstr ""
 
-#: dat/ships/zalek_drone_bomber.xml:13 dat/ships/zalek_drone_heavy.xml:13
-#: dat/ships/zalek_drone_light.xml:13 dat/ships/zalek_drone_scout.xml:13
+#: dat/ships/zalek/zalek_drone_bomber.xml:13
+#: dat/ships/zalek/zalek_drone_heavy.xml:13
+#: dat/ships/zalek/zalek_drone_light.xml:13
+#: dat/ships/zalek/zalek_drone_scout.xml:13
 msgid "Za'lek Robotics"
 msgstr ""
 
-#: dat/ships/zalek_drone_bomber.xml:14
+#: dat/ships/zalek/zalek_drone_bomber.xml:14
 msgid ""
 "This is the Za'lek Bomber Drone. Built for attacking heavy ships. Not to be "
 "flown by the player."
 msgstr ""
 
-#: dat/ships/zalek_drone_heavy.xml:2
+#: dat/ships/zalek/zalek_drone_heavy.xml:2
 msgid "Za'lek Heavy Drone"
 msgstr ""
 
-#: dat/ships/zalek_drone_heavy.xml:14
+#: dat/ships/zalek/zalek_drone_heavy.xml:14
 msgid ""
 "This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by "
 "the player."
 msgstr ""
 
-#: dat/ships/zalek_drone_light.xml:2
+#: dat/ships/zalek/zalek_drone_light.xml:2
 msgid "Za'lek Light Drone"
 msgstr ""
 
-#: dat/ships/zalek_drone_light.xml:14
+#: dat/ships/zalek/zalek_drone_light.xml:14
 msgid ""
 "This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be "
 "flown by the player."
 msgstr ""
 
-#: dat/ships/zalek_drone_scout.xml:2
+#: dat/ships/zalek/zalek_drone_scout.xml:2
 msgid "Za'lek Scout Drone"
 msgstr ""
 
-#: dat/ships/zalek_drone_scout.xml:14
+#: dat/ships/zalek/zalek_drone_scout.xml:14
 msgid ""
 "This is the Za'lek Scout Drone. Built for scouting, not for battle. Not to "
 "be flown by the player."
 msgstr ""
 
-#: dat/ships/zalek_hephaestus.xml:2
+#: dat/ships/zalek/zalek_hephaestus.xml:2
 msgid "Za'lek Hephaestus"
 msgstr ""
 
-#: dat/ships/zalek_hephaestus.xml:18
+#: dat/ships/zalek/zalek_hephaestus.xml:18
 msgid ""
 "The crown of the House Za'lek Defence Fleet, these proud buttresses of the "
 "Za'lek's ideals frequently serve as the nerve centre of a Za'lek battle "
@@ -7053,13 +7117,13 @@ msgid ""
 "but commands respect."
 msgstr ""
 
-#: dat/ships/zalek_mammon.xml:2
+#: dat/ships/zalek/zalek_mammon.xml:2
 #, fuzzy
 #| msgid "Za'lek"
 msgid "Za'lek Mammon"
 msgstr "Za'lek"
 
-#: dat/ships/zalek_mammon.xml:24
+#: dat/ships/zalek/zalek_mammon.xml:24
 msgid ""
 "While House Za'lek relies on drones for most everything, their limited fuel "
 "make them inadequate for performing long-distance transportation. To "
@@ -7071,40 +7135,28 @@ msgid ""
 "making a getaway."
 msgstr ""
 
-#: dat/ships/zalek_mephisto.xml:2
+#: dat/ships/zalek/zalek_mephisto.xml:2
 msgid "Za'lek Mephisto"
 msgstr ""
 
-#: dat/ships/zalek_mephisto.xml:18
+#: dat/ships/zalek/zalek_mephisto.xml:18
 msgid ""
 "A mighty ship, the Mephisto has grand energy and shielding management, and "
 "its shields allow it to shrug off a lot of abuse. A core of these ships can "
 "reduce even powerful fleets to slag in short order."
 msgstr ""
 
-#: dat/ships/zalek_sting.xml:2
+#: dat/ships/zalek/zalek_sting.xml:2
 msgid "Za'lek Sting"
 msgstr ""
 
-#: dat/ships/zalek_sting.xml:20
+#: dat/ships/zalek/zalek_sting.xml:20
 msgid ""
 "The Sting Corvette is rather large for its class, but its advanced sensor "
 "suite, impressive weapons loadout, tough shields, and overall flexibility "
 "makes it a core part of the House Za'lek fleets. Its low fuel consumption "
 "and high autonomy, due to the embedded carrier functionality, make it also "
 "an ideal ship for reconnaissance missions."
-msgstr ""
-
-#: dat/ships/zebra.xml:2
-msgid "Zebra"
-msgstr ""
-
-#: dat/ships/zebra.xml:21
-msgid ""
-"The Zebra bulk freighter is the largest of all of the freighters produced by "
-"Melendez, and one of the most desired ships by all independent civilian "
-"traders. The Zebra offers an unmatched cargo density with reasonable "
-"protection."
 msgstr ""
 
 #: dat/slots.xml:5
@@ -20500,7 +20552,7 @@ msgstr ""
 msgid "Thurion Local"
 msgstr "Thurion"
 
-#: dat/spob_virtual/tradelane.xml:2 src/map.c:782
+#: dat/spob_virtual/tradelane.xml:2 src/map.c:783
 #, fuzzy
 #| msgid "Trader"
 msgid "Trade Lane"
@@ -25657,14 +25709,15 @@ msgstr ""
 
 #. Destroy if exists
 #: dat/board.lua:378 dat/comm.lua:166 dat/events/shipai.lua:37
-#: dat/events/shipai.lua:50 src/comm.c:344 src/console.c:691
-#: src/dev_sysedit.c:1459 src/dev_sysedit.c:1567 src/dev_sysedit.c:1664
-#: src/dev_sysedit.c:1807 src/dev_sysedit.c:1872 src/dev_sysedit.c:2064
-#: src/dev_sysedit.c:2251 src/dev_sysedit.c:2336 src/dev_uniedit.c:410
-#: src/dev_uniedit.c:1510 src/dev_uniedit.c:1709 src/dev_uniedit.c:1945
-#: src/info.c:409 src/info.c:494 src/info.c:576 src/info.c:712 src/info.c:904
-#: src/info.c:1124 src/info.c:1221 src/info.c:1566 src/land_outfits.c:165
-#: src/map.c:374 src/map_find.c:1016 src/map_system.c:202
+#: dat/events/shipai.lua:50 dat/spob/lua/lib/hypergate.lua:300 src/comm.c:344
+#: src/console.c:691 src/dev_sysedit.c:1459 src/dev_sysedit.c:1567
+#: src/dev_sysedit.c:1664 src/dev_sysedit.c:1807 src/dev_sysedit.c:1872
+#: src/dev_sysedit.c:2064 src/dev_sysedit.c:2251 src/dev_sysedit.c:2336
+#: src/dev_uniedit.c:410 src/dev_uniedit.c:1510 src/dev_uniedit.c:1709
+#: src/dev_uniedit.c:1945 src/info.c:409 src/info.c:494 src/info.c:576
+#: src/info.c:712 src/info.c:904 src/info.c:1124 src/info.c:1221
+#: src/info.c:1566 src/land_outfits.c:165 src/map.c:375 src/map_find.c:1003
+#: src/map_system.c:202
 msgid "Close"
 msgstr ""
 
@@ -25714,7 +25767,7 @@ msgid ""
 "You have {playercreds}. Extract the {outfit}?"
 msgstr ""
 
-#: dat/board.lua:453 src/map_system.c:1037
+#: dat/board.lua:453 dat/spob/lua/lib/hypergate.lua:295 src/map_system.c:1037
 msgid "Insufficient Credits"
 msgstr ""
 
@@ -26005,7 +26058,7 @@ msgstr ""
 #.
 #. Event that triggrs a cutscene and the chapter 1 transitions.
 #. --
-#. luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp7 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
+#. luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp7 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_zoom cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
 #. disabled for now
 #. Set up some variables
 #. Compute some sort of progress value
@@ -26037,41 +26090,42 @@ msgstr ""
 #. Activate hypergate with big flash
 #. TODO sound effect
 #. Diffs should be set up so this should always go through
-#. TODO ship goes through jump
 #. Ship jumps
 #. Go to the hypergate and pan camera
 #. Za'lek
 #. Soromid
 #. Sirius
 #. Final text
-#: dat/events/chapter1.lua:340
+#: dat/events/chapter1.lua:339
 msgid "…unwittingly closing the distance to that which could destroy them…"
 msgstr ""
 
 #. Increase visibility
 #. TODO something more omnious
+#. Slowly zoom out
 #. Remove text
-#. Reset zoom
 #. TODO omnious music and "ghost" ships
 #. Rsetore visibility, should match the value set above
 #. Return to system and restore camera
+#. Reset zoom
 #. Cleans up the cutscene stuf
 #. TODO add sound
 #. Chapter 1 message
-#: dat/events/chapter1.lua:386
+#: dat/events/chapter1.lua:389
 msgid "CHAPTER 1"
 msgstr ""
 
-#: dat/events/chapter1.lua:386
+#: dat/events/chapter1.lua:389
 msgid "The Hypergates Awaken"
 msgstr ""
 
 #. Initialize fleet capacity
 #. Have ship ai talk when landed
-#: dat/events/chapter1.lua:407
+#: dat/events/chapter1.lua:409
 msgid "\"\""
 msgstr ""
 
+#. Set the hypergates as known, should make them appear by name on selection menu
 #. Properly finish
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -26365,9 +26419,9 @@ msgstr ""
 #: dat/missions/pirate/blackcat.lua:99 dat/missions/shadow/darkshadow.lua:62
 #: dat/missions/shadow/shadowvigil.lua:63
 #: dat/missions/zalek/blackhole/zbh11.lua:113 dat/scripts/common/comm.lua:30
-#: dat/scripts/common/comm.lua:35 src/equipment.c:1809 src/gui.c:1523
-#: src/map.c:561 src/map.c:567 src/map.c:573 src/map.c:579 src/map.c:585
-#: src/map.c:591 src/map.c:1903 src/map_overlay.c:221 src/map_system.c:479
+#: dat/scripts/common/comm.lua:35 src/equipment.c:1813 src/gui.c:1523
+#: src/map.c:562 src/map.c:568 src/map.c:574 src/map.c:580 src/map.c:586
+#: src/map.c:592 src/map.c:1904 src/map_overlay.c:221 src/map_system.c:479
 #: src/outfit.c:294 src/outfit.c:313 src/outfit.c:899 src/player.c:2035
 #: src/player_autonav.c:92 src/player_autonav.c:217 src/player_autonav.c:460
 #: src/ship.c:212
@@ -26444,7 +26498,7 @@ msgid "You found #o{title}#0!"
 msgstr "Vous avez viré '%s' (%s)."
 
 #. Log and message
-#: dat/events/discovery.lua:354 src/map.c:2118
+#: dat/events/discovery.lua:354 src/map.c:2115
 msgid "Discovery"
 msgstr ""
 
@@ -27271,7 +27325,7 @@ msgid "unknown tradein type"
 msgstr ""
 
 #: dat/events/dvaered/totoran.lua:229
-#: dat/missions/empire/collective/ec03.lua:56 src/map_find.c:410
+#: dat/missions/empire/collective/ec03.lua:56 src/map_find.c:396
 #, c-format, lua-format
 msgid "%s (%s)"
 msgstr ""
@@ -27303,7 +27357,7 @@ msgstr ""
 #: dat/events/dvaered/totoran.lua:253 dat/events/minerva/station.lua:345
 #: dat/events/minerva/station.lua:372 dat/missions/dvaered/gauntlet/gui.lua:216
 #: dat/rescue.lua:304 dat/rescue.lua:315 src/dialogue.c:723 src/escort.c:367
-#: src/map_find.c:227 src/options.c:268 src/options.c:854 src/options.c:964
+#: src/map_find.c:213 src/options.c:268 src/options.c:854 src/options.c:964
 #: src/options.c:1227 src/options.c:1278
 msgid "Cancel"
 msgstr "Annuler"
@@ -27989,6 +28043,20 @@ msgid ""
 "{royalty_percent:.1f}% of mission earnings."
 msgstr ""
 
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <event name="Hypergate">
+#. <trigger>none</trigger>
+#. <chance>0</chance>
+#. </event>
+#. --
+#. luacheck: globals update hypergate (Hook functions passed by name)
+#: dat/events/hypergate.lua:22
+msgid "Hypergate event run with no target!"
+msgstr ""
+
+#. avoids visual artefact
+#. Clear hypergate
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Hypergate Construction">
@@ -35291,7 +35359,7 @@ msgstr ""
 #. </event>
 #. --
 #. luacheck: globals update wormhole (Hook functions passed by name)
-#: dat/events/wormhole.lua:77
+#: dat/events/wormhole.lua:22
 msgid "Wormhole event run with no target!"
 msgstr ""
 
@@ -36107,11 +36175,11 @@ msgstr ""
 #: src/dev_sysedit.c:2189 src/dev_sysedit.c:2226 src/dev_sysedit.c:2284
 #: src/dev_uniedit.c:1452 src/dev_uniedit.c:1615 src/dev_uniedit.c:1831
 #: src/dev_uniedit.c:1896 src/info.c:427 src/info.c:520 src/info.c:938
-#: src/info.c:1269 src/input.c:524 src/land.c:864 src/land_outfits.c:441
+#: src/info.c:1269 src/input.c:524 src/land.c:876 src/land_outfits.c:441
 #: src/land_outfits.c:662 src/land_shipyard.c:129 src/land_shipyard.c:218
 #: src/land_trade.c:85 src/land_trade.c:87 src/land_trade.c:153 src/load.c:468
 #: src/load.c:534 src/load.c:578 src/load.c:716 src/load.c:743 src/load.c:768
-#: src/load.c:812 src/map.c:691 src/map.c:744 src/map.c:1942 src/map_find.c:702
+#: src/load.c:812 src/map.c:692 src/map.c:745 src/map.c:1943 src/map_find.c:688
 #: src/map_system.c:649
 #, c-format
 msgid "None"
@@ -36247,7 +36315,7 @@ msgid "Landing"
 msgstr ""
 
 #: dat/gui/legacy.lua:202 dat/gui/legacy.lua:217 dat/gui/legacy.lua:225
-#: src/map.c:868
+#: src/map.c:869
 msgid "Off"
 msgstr ""
 
@@ -36478,7 +36546,7 @@ msgstr "Crédits : "
 msgid "Nav:"
 msgstr ""
 
-#: dat/gui/slim.lua:1085 src/equipment.c:1787 src/info.c:371 src/info.c:596
+#: dat/gui/slim.lua:1085 src/equipment.c:1791 src/info.c:371 src/info.c:596
 #: src/land_shipyard.c:293 src/map_system.c:681
 #, fuzzy
 #| msgid "Fuel: "
@@ -43467,13 +43535,13 @@ msgstr ""
 #. buttons
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:75
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:394
-#: dat/scripts/luatk/core.lua:474 dat/scripts/vntk.lua:74 src/dialogue.c:381
+#: dat/scripts/luatk/core.lua:613 dat/scripts/vntk.lua:74 src/dialogue.c:381
 msgid "Yes"
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:76
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:395
-#: dat/scripts/luatk/core.lua:480 dat/scripts/vntk.lua:75 src/dialogue.c:383
+#: dat/scripts/luatk/core.lua:619 dat/scripts/vntk.lua:75 src/dialogue.c:383
 msgid "No"
 msgstr ""
 
@@ -46187,7 +46255,7 @@ msgstr ""
 #: dat/missions/pirate/pir_clan_cargo.lua:77
 #: dat/missions/pirate/pir_clan_cargo.lua:78
 #: dat/missions/trader/anxiousmerchant.lua:71
-#: dat/missions/zalek/zlk_cargorun.lua:51 src/land.c:981
+#: dat/missions/zalek/zlk_cargorun.lua:51 src/land.c:993
 msgid "Spaceport Bar"
 msgstr ""
 
@@ -49928,7 +49996,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:199 dat/missions/zalek/zlk_test.lua:109
-#: src/land.c:673 src/npc.c:586
+#: src/land.c:685 src/npc.c:586
 msgid "You have too many active missions."
 msgstr ""
 
@@ -80948,6 +81016,12 @@ msgstr ""
 #.
 #. -- Important functions
 #. --
+#. Custom keypress events
+#.
+#. -- Helper functions
+#. --
+#. bar height
+#. Scrollbar
 #.
 #. -- Window class
 #. --
@@ -80980,10 +81054,20 @@ msgstr ""
 #. Track
 #. Knob
 #.
+#. -- List widget
+#. --
+#. Background
+#. Draw scrollbar
+#. Have to scissors here
+#. Draw selected item background
+#. Draw content
+#. Stop
+#. Undo scissors
+#.
 #. High Level dialogue stuff
 #. --
 #. Add the OK button
-#: dat/scripts/bioship.lua:577 dat/scripts/luatk/core.lua:464
+#: dat/scripts/bioship.lua:577 dat/scripts/luatk/core.lua:603
 #: src/dialogue.c:152 src/dialogue.c:274 src/dialogue.c:330 src/dialogue.c:721
 #: src/options.c:265 src/options.c:652 src/options.c:961 src/options.c:1275
 msgid "OK"
@@ -83260,6 +83344,17 @@ msgid "failed to set fallback font"
 msgstr ""
 
 #. Transparent background in Naev
+#. local sys_inner  = 3
+#. For access from the outside
+#. To do quick look ups
+#. cInert
+#. Could still be near a known system
+#. Set up custom options and the likes
+#. Set scissors
+#. Display edges
+#. Display systems
+#. Allow for custom rendering
+#. Restore scissors
 #. too lazy to write blackjack over and over
 #. Compute position stuff
 #: dat/scripts/minigames/blackjack.lua:26
@@ -86540,6 +86635,102 @@ msgstr ""
 msgid "Go ahead."
 msgstr ""
 
+#.
+#. @brief Triggers when a pilot lands (assuming they can from can_land()).
+#.
+#. @luatparam Pilot p Pilot that is landing.
+#. --
+#. Do something
+#.
+#. @brief Will be used to render the planet instead of the graphic provided by
+#. load().
+#. --
+#.
+#. @brief Runs updates.
+#.
+#. @luatparam number dt Time increment since last update.
+#. @luatparam number real_dt Real time increment (in real world seconds).
+#. --
+#. Dvaered
+#. Soromid
+#. Empire
+#. Sirius
+#. Pirate
+#. Za'lek
+#.
+#. Active hypergate
+#. --
+#. lg.setBlendMode( "alpha", "premultiplied" )
+#. Draw base hypergate
+#. Draw active overlay shader
+#. lg.setBlendMode( "alpha" )
+#. Handle some options
+#. Set up texture stuff
+#. Position stuff
+#. The canvas
+#. Set up shader
+#. sfx   = nil
+#. We want to do this here or it gets slow in autonav
+#. Avoid double landing
+#. TODO check if hostile to disallow
+#. TODO animation and stuff, probably similar to wormholes
+#: dat/spob/lua/lib/hypergate.lua:139
+msgid "Hypergate ({sysname})"
+msgstr ""
+
+#. Load shaders
+#. Get potential destinations from tags
+#: dat/spob/lua/lib/hypergate.lua:174
+msgid "{sysname} ({factname})"
+msgstr ""
+
+#: dat/spob/lua/lib/hypergate.lua:182
+msgid "Unknown Signature"
+msgstr ""
+
+#. TODO convert name into symbol or hash
+#. Show big question mark or something
+#. Center on first item in the list
+#: dat/spob/lua/lib/hypergate.lua:258
+msgid ""
+"#nCurrent System:#0 {cursys}\n"
+"#nHypergate Faction:#0 {fact}\n"
+"#nFaction Standing:#0 {standing} ({standing_value})\n"
+"#nStanding Modifier:#0 {costmod}%#0\n"
+"#nFleet Mass:#0 {totalmass}\n"
+"#nUsage Cost:#0 {totalcost} ({flatcost} + {masscost} per tonne)\n"
+"\n"
+"#nAvailable Jump Target:#0"
+msgstr ""
+
+#: dat/spob/lua/lib/hypergate.lua:286
+msgid ""
+"\n"
+"You are enemies with the {fctname}!"
+msgstr ""
+
+#: dat/spob/lua/lib/hypergate.lua:288
+#, fuzzy
+#| msgid "Akra Station"
+msgid "Jump to {sysname}?"
+msgstr "Station Akra"
+
+#: dat/spob/lua/lib/hypergate.lua:289
+#, fuzzy
+#| msgid "Are you sure you want to sell your ship %s for %s?"
+msgid "Are you sure you want to jump to {sysname} for {credits}?{extramsg}"
+msgstr "Êtes-vous sûr de vouloir vendre votre vaisseau %s pour %s ?"
+
+#: dat/spob/lua/lib/hypergate.lua:295
+msgid ""
+"You have insufficient credits to use the hypergate. You are missing "
+"#r{difference}#0."
+msgstr ""
+
+#: dat/spob/lua/lib/hypergate.lua:299
+msgid "Jump!"
+msgstr ""
+
 #. error has occurred
 #: src/ai.c:427
 #, c-format
@@ -86582,7 +86773,7 @@ msgid_plural "Loaded %d AI Profiles"
 msgstr[0] "Loaded %d AI Profile"
 msgstr[1] "Loaded %d AI Profiles"
 
-#: src/ai.c:601 src/board.c:77 src/comm.c:172 src/land.c:1613 src/naev.c:523
+#: src/ai.c:601 src/board.c:77 src/comm.c:172 src/land.c:1625 src/naev.c:523
 #: src/player.c:3538
 #, c-format
 msgid ""
@@ -86679,8 +86870,8 @@ msgstr ""
 msgid "Pilot '%s' (ai '%s') has no land target"
 msgstr ""
 
-#: src/ai.c:2364 src/player.c:1654 src/space.c:1892 src/space.c:2024
-#: src/space.c:2070 src/space.c:3348 src/space.c:3368
+#: src/ai.c:2364 src/nlua_player.c:792 src/player.c:1654 src/space.c:1892
+#: src/space.c:2024 src/space.c:2071 src/space.c:3348 src/space.c:3368
 #, c-format
 msgid ""
 "Spob '%s' failed to run '%s':\n"
@@ -86721,107 +86912,107 @@ msgid ""
 "Asteroid Exclusion Zone in Star System '%s' has missing/invalid '%s' element"
 msgstr ""
 
-#: src/asteroid.c:626
+#: src/asteroid.c:627
 #, c-format
 msgid "Asteroid Types with same name '%s'"
 msgstr ""
 
-#: src/asteroid.c:661
+#: src/asteroid.c:662
 #, c-format
 msgid "Asteroid Type Groups with same name '%s'"
 msgstr ""
 
-#: src/asteroid.c:685
+#: src/asteroid.c:686
 #, c-format
 msgid "Malformed '%s' file: missing root element 'asteroid'"
 msgstr ""
 
-#: src/asteroid.c:700 src/asteroid.c:808
+#: src/asteroid.c:701 src/asteroid.c:809
 #, c-format
 msgid "Asteroid '%s' has invalid or no name"
 msgstr ""
 
-#: src/asteroid.c:738
+#: src/asteroid.c:739
 #, c-format
 msgid "Asteroid Type '%s' has Commodity '%s' with no 'gfx_space'."
 msgstr ""
 
-#: src/asteroid.c:743 src/asteroid.c:752
+#: src/asteroid.c:744 src/asteroid.c:753
 #, c-format
 msgid "Asteroid Type '%s' has unknown node '%s'"
 msgstr ""
 
-#: src/asteroid.c:747
+#: src/asteroid.c:748
 #, c-format
 msgid "Asteroid Type '%s' has commodity that lacks name or quantity."
 msgstr ""
 
-#: src/asteroid.c:764
+#: src/asteroid.c:765
 #, c-format
 msgid "Asteroid Type '%s' has armour_max below armour_min"
 msgstr ""
 
-#: src/asteroid.c:767
+#: src/asteroid.c:768
 #, c-format
 msgid "Asteroid Type '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/asteroid.c:797
+#: src/asteroid.c:798
 #, c-format
 msgid "Malformed '%s' file: missing root element 'asteroid_group'"
 msgstr ""
 
-#: src/asteroid.c:824
+#: src/asteroid.c:825
 #, c-format
 msgid "Asteroid Type Group '%s' has unknown node '%s'"
 msgstr ""
 
-#: src/asteroid.c:1055
+#: src/asteroid.c:1056
 #, fuzzy, c-format
 #| msgid "Unknown weapon status for '%s'"
 msgid "Unknown Asteroid Type '%s'"
 msgstr "Type de statut de vaisseau inconnu '%s' !"
 
-#: src/asteroid.c:1080
+#: src/asteroid.c:1081
 #, fuzzy, c-format
 #| msgid "Unknown weapon status for '%s'"
 msgid "Unknown Asteroid Type Group '%s'"
 msgstr "Type de statut de vaisseau inconnu '%s' !"
 
-#: src/background.c:256
+#: src/background.c:253
 #, c-format
 msgid ""
 "Background script 'renderbg' error:\n"
 "%s"
 msgstr ""
 
-#: src/background.c:267
+#: src/background.c:264
 #, c-format
 msgid ""
 "Background script 'rendermg' error:\n"
 "%s"
 msgstr ""
 
-#: src/background.c:279
+#: src/background.c:276
 #, c-format
 msgid ""
 "Background script 'renderfg' error:\n"
 "%s"
 msgstr ""
 
-#: src/background.c:294
+#: src/background.c:291
 #, c-format
 msgid ""
 "Background script 'renderov' error:\n"
 "%s"
 msgstr ""
 
-#: src/background.c:416
+#: src/background.c:413
 #, c-format
 msgid "Background script '%s' not found."
 msgstr ""
 
-#: src/background.c:423
+#: src/background.c:420
 #, c-format
 msgid ""
 "Error loading background file: %s\n"
@@ -86829,12 +87020,12 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/background.c:474
+#: src/background.c:471
 #, c-format
 msgid "Background -> 'background' : %s"
 msgstr ""
 
-#: src/background.c:475 src/gui.c:1714 src/nlua_evt.c:146 src/nlua_misn.c:243
+#: src/background.c:472 src/gui.c:1714 src/nlua_evt.c:146 src/nlua_misn.c:243
 #: src/nopenal.c:72
 msgid "unknown error"
 msgstr ""
@@ -87826,7 +88017,7 @@ msgstr ""
 #. Update text.
 #. Text.
 #: src/dev_sysedit.c:1358 src/dev_uniedit.c:1713 src/dev_uniedit.c:1997
-#: src/equipment.c:1759 src/info.c:579 src/load.c:652
+#: src/equipment.c:1763 src/info.c:579 src/load.c:652
 #, fuzzy
 #| msgid "Name: "
 msgid "Name:"
@@ -87836,7 +88027,7 @@ msgstr "Nom : "
 msgid "Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1370 src/land.c:1305 src/map.c:339
+#: src/dev_sysedit.c:1370 src/land.c:1317 src/map.c:340
 msgid "Faction:"
 msgstr "Faction :"
 
@@ -87872,7 +88063,7 @@ msgstr ""
 msgid "hide"
 msgstr ""
 
-#: src/dev_sysedit.c:1440 src/land.c:1310
+#: src/dev_sysedit.c:1440 src/land.c:1322
 msgid "Tags:"
 msgstr ""
 
@@ -87947,7 +88138,7 @@ msgstr ""
 msgid "Thrust: "
 msgstr ""
 
-#: src/dev_sysedit.c:1652 src/dev_uniedit.c:394 src/map.c:852
+#: src/dev_sysedit.c:1652 src/dev_uniedit.c:394 src/map.c:853
 #, fuzzy
 #| msgid "Testers"
 msgid "Asteroids"
@@ -88081,7 +88272,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/dev_uniedit.c:244 src/map.c:379 src/map_find.c:1014
+#: src/dev_uniedit.c:244 src/map.c:380 src/map_find.c:1001
 msgid "Find"
 msgstr ""
 
@@ -88089,7 +88280,7 @@ msgstr ""
 msgid "Nebula:"
 msgstr ""
 
-#: src/dev_uniedit.c:259 src/map.c:353
+#: src/dev_uniedit.c:259 src/map.c:354
 msgid "Presence:"
 msgstr "Présence :"
 
@@ -88210,7 +88401,7 @@ msgstr ""
 msgid "Find Systems and Spobs"
 msgstr ""
 
-#: src/dev_uniedit.c:1573 src/land.c:860
+#: src/dev_uniedit.c:1573 src/land.c:872
 #, c-format
 msgid "%s (%s system)"
 msgstr ""
@@ -88305,31 +88496,31 @@ msgstr ""
 msgid "Malformed '%s' file: missing root element '%s'"
 msgstr ""
 
-#: src/difficulty.c:81
+#: src/difficulty.c:82
 #, c-format
 msgid "Difficulty '%s' has unknown node '%s'"
 msgstr ""
 
-#: src/difficulty.c:92
+#: src/difficulty.c:93
 msgid "More than one difficulty with default flag set!"
 msgstr ""
 
-#: src/difficulty.c:97
+#: src/difficulty.c:98
 msgid "No default difficulty set!"
 msgstr ""
 
-#: src/difficulty.c:159
+#: src/difficulty.c:161
 #, fuzzy, c-format
 #| msgid "Unknown PilotOutfit state '%s'!"
 msgid "Uknown difficulty setting '%s'"
 msgstr "État PilotOutfit inconnu pour '%s' !"
 
-#: src/difficulty.c:200
+#: src/difficulty.c:202
 #, c-format
 msgid "Difficulty %s"
 msgstr ""
 
-#: src/difficulty.c:204
+#: src/difficulty.c:206
 msgid "This difficulty applies the following effect to the player ships:"
 msgstr ""
 
@@ -88380,7 +88571,7 @@ msgid "Spob '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
 #: src/effect.c:57 src/outfit.c:2161 src/outfit.c:2618 src/slots.c:66
-#: src/spfx.c:1169 src/start.c:71
+#: src/spfx.c:1168 src/start.c:71
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr ""
@@ -88437,21 +88628,21 @@ msgstr[1] "Loaded %d Events"
 msgid "Trying to get unknown effect data '%s'!"
 msgstr ""
 
-#: src/effect.c:262 src/effect.c:306 src/effect.c:334 src/effect.c:344
-#: src/effect.c:370
+#: src/effect.c:254 src/effect.c:301 src/effect.c:329 src/effect.c:339
+#: src/effect.c:365
 #, c-format
 msgid ""
 "Effect '%s' failed to run '%s':\n"
 "%s"
 msgstr ""
 
-#: src/equipment.c:320 src/land.c:327 src/land.c:594 src/land.c:1323
+#: src/equipment.c:320 src/land.c:339 src/land.c:606 src/land.c:1335
 #: src/land_outfits.c:160 src/land_shipyard.c:94 src/land_trade.c:73
 msgid "Take Off"
 msgstr ""
 
 #. Check if player really wants to sell.
-#: src/equipment.c:324 src/equipment.c:2286
+#: src/equipment.c:324 src/equipment.c:2295
 msgid "Sell Ship"
 msgstr "Vendre le vaisseau"
 
@@ -88552,178 +88743,187 @@ msgstr ""
 msgid "%.2f DPS [%.2f EPS]"
 msgstr ""
 
-#: src/equipment.c:1483
+#: src/equipment.c:1384 src/equipment.c:2048
+msgid "Invalid Escort"
+msgstr ""
+
+#: src/equipment.c:1384 src/equipment.c:2048
+#, c-format
+msgid "You can not set your ship '%s' as an escort!"
+msgstr ""
+
+#: src/equipment.c:1487
 #, c-format
 msgid "Ship Stats\n"
 msgstr ""
 
-#: src/equipment.c:1573 src/land_outfits.c:323 src/shiplog.c:489
+#: src/equipment.c:1577 src/land_outfits.c:323 src/shiplog.c:489
 #: src/shiplog.c:534
 msgid "All"
 msgstr ""
 
-#: src/equipment.c:1606
+#: src/equipment.c:1610
 msgid "Very little space on equipment outfit tabs!"
 msgstr ""
 
-#: src/equipment.c:1616 src/land_outfits.c:359
+#: src/equipment.c:1620 src/land_outfits.c:359
 msgid "Filter…"
 msgstr ""
 
-#: src/equipment.c:1746
+#: src/equipment.c:1750
 msgid "You do not remember how you acquired this ship."
 msgstr ""
 
-#: src/equipment.c:1762 src/info.c:580 src/land_shipyard.c:225
+#: src/equipment.c:1766 src/info.c:580 src/land_shipyard.c:225
 #: src/map_system.c:656
 msgid "Model:"
 msgstr ""
 
-#: src/equipment.c:1763 src/info.c:581 src/land.c:1304 src/land_shipyard.c:227
+#: src/equipment.c:1767 src/info.c:581 src/land.c:1316 src/land_shipyard.c:227
 #: src/map_system.c:657
 msgid "Class:"
 msgstr ""
 
-#: src/equipment.c:1764
+#: src/equipment.c:1768
 msgid "Acquired Date:"
 msgstr ""
 
-#: src/equipment.c:1768
+#: src/equipment.c:1772
 msgid "Value:"
 msgstr ""
 
-#: src/equipment.c:1770
+#: src/equipment.c:1774
 msgid "Fleet Capacity:"
 msgstr ""
 
-#: src/equipment.c:1771 src/info.c:582 src/land_shipyard.c:231
+#: src/equipment.c:1775 src/info.c:582 src/land_shipyard.c:231
 #: src/map_system.c:660
 msgid "Crew:"
 msgstr ""
 
-#: src/equipment.c:1772 src/info.c:584 src/land_outfits.c:193
-#: src/land_outfits.c:424 src/land_shipyard.c:243 src/map_find.c:642
+#: src/equipment.c:1776 src/info.c:584 src/land_outfits.c:193
+#: src/land_outfits.c:424 src/land_shipyard.c:243 src/map_find.c:628
 #: src/map_system.c:636 src/map_system.c:663
 msgid "Mass:"
 msgstr ""
 
-#: src/equipment.c:1773 src/info.c:585
+#: src/equipment.c:1777 src/info.c:585
 #, fuzzy
 #| msgid "Time: "
 msgid "Jump Time:"
 msgstr "Heure : "
 
-#: src/equipment.c:1774 src/info.c:586 src/land_shipyard.c:247
+#: src/equipment.c:1778 src/info.c:586 src/land_shipyard.c:247
 #: src/map_system.c:664
 msgid "Thrust:"
 msgstr ""
 
-#: src/equipment.c:1775 src/info.c:587 src/land_shipyard.c:252
+#: src/equipment.c:1779 src/info.c:587 src/land_shipyard.c:252
 #: src/map_system.c:666
 msgid "Speed:"
 msgstr ""
 
-#: src/equipment.c:1776 src/info.c:588 src/land_shipyard.c:257
+#: src/equipment.c:1780 src/info.c:588 src/land_shipyard.c:257
 #: src/map_system.c:668
 msgid "Turn:"
 msgstr ""
 
-#: src/equipment.c:1777 src/info.c:589 src/land_shipyard.c:262
+#: src/equipment.c:1781 src/info.c:589 src/land_shipyard.c:262
 #: src/map_system.c:670
 msgid "Time Constant:"
 msgstr ""
 
-#: src/equipment.c:1778
+#: src/equipment.c:1782
 msgid "Detected at:"
 msgstr ""
 
-#: src/equipment.c:1779
+#: src/equipment.c:1783
 #, fuzzy
 #| msgid "Faction:"
 msgid "Evasion:"
 msgstr "Faction :"
 
-#: src/equipment.c:1780
+#: src/equipment.c:1784
 msgid "Stealth:"
 msgstr ""
 
 #. Misc
-#: src/equipment.c:1782 src/info.c:591 src/land_shipyard.c:267
+#: src/equipment.c:1786 src/info.c:591 src/land_shipyard.c:267
 #: src/map_system.c:672
 msgid "Absorption:"
 msgstr ""
 
-#: src/equipment.c:1783 src/info.c:592 src/land_shipyard.c:272
+#: src/equipment.c:1787 src/info.c:592 src/land_shipyard.c:272
 #: src/map_system.c:674
 msgid "Shield:"
 msgstr ""
 
-#: src/equipment.c:1784 src/info.c:593 src/land_shipyard.c:277
+#: src/equipment.c:1788 src/info.c:593 src/land_shipyard.c:277
 #: src/map_system.c:676
 msgid "Armour:"
 msgstr ""
 
-#: src/equipment.c:1785 src/info.c:594 src/land_shipyard.c:282
+#: src/equipment.c:1789 src/info.c:594 src/land_shipyard.c:282
 #: src/map_system.c:678
 msgid "Energy:"
 msgstr ""
 
-#: src/equipment.c:1786 src/info.c:595 src/land_shipyard.c:289
+#: src/equipment.c:1790 src/info.c:595 src/land_shipyard.c:289
 #: src/map_system.c:680
 #, fuzzy
 #| msgid "Spaceworthy"
 msgid "Cargo Space:"
 msgstr "Capable d'aller dans l'espace"
 
-#: src/equipment.c:1789
+#: src/equipment.c:1793
 msgid "Ship Status:"
 msgstr ""
 
-#: src/equipment.c:1792
+#: src/equipment.c:1796
 #, fuzzy
 #| msgid "Time: "
 msgid "Time Flown:"
 msgstr "Heure : "
 
-#: src/equipment.c:1793
+#: src/equipment.c:1797
 #, fuzzy
 #| msgid "Time: "
 msgid "Jumped Times:"
 msgstr "Heure : "
 
-#: src/equipment.c:1794
+#: src/equipment.c:1798
 msgid "Landed Times:"
 msgstr ""
 
-#: src/equipment.c:1795
+#: src/equipment.c:1799
 msgid "Damage Done:"
 msgstr ""
 
-#: src/equipment.c:1796
+#: src/equipment.c:1800
 msgid "Damage Taken:"
 msgstr ""
 
-#: src/equipment.c:1797
+#: src/equipment.c:1801
 msgid "Ships Destroyed:"
 msgstr ""
 
-#: src/equipment.c:1798
+#: src/equipment.c:1802
 msgid "Intrinsic Outfits:"
 msgstr ""
 
-#: src/equipment.c:1826 src/equipment.c:1855 src/info.c:391 src/info.c:629
+#: src/equipment.c:1830 src/equipment.c:1859 src/info.c:391 src/info.c:629
 #: src/info.c:649
 msgid "tonne"
 msgid_plural "tonnes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1828 src/info.c:631
+#: src/equipment.c:1832 src/info.c:631
 #, c-format
 msgid "%s average"
 msgstr ""
 
-#: src/equipment.c:1830
+#: src/equipment.c:1834
 #, fuzzy, c-format
 #| msgid ""
 #| "\n"
@@ -88736,14 +88936,14 @@ msgstr ""
 "\n"
 "%.0f Tonne"
 
-#: src/equipment.c:1832
+#: src/equipment.c:1836
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"
 msgstr ""
 
-#: src/equipment.c:1835
+#: src/equipment.c:1839
 #, fuzzy, c-format
 #| msgid ""
 #| "\n"
@@ -88758,77 +88958,77 @@ msgstr ""
 "\n"
 "%.0f Tonne"
 
-#: src/equipment.c:1839
+#: src/equipment.c:1843
 #, c-format
 msgid "%s (%.1f secs for scan)"
 msgstr ""
 
-#: src/equipment.c:1844 src/equipment.c:1847 src/equipment.c:1850
+#: src/equipment.c:1848 src/equipment.c:1851 src/equipment.c:1854
 #, c-format
 msgid "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
 msgstr ""
 
 #. Misc.
-#: src/equipment.c:1854
+#: src/equipment.c:1858
 #, c-format
 msgid "%d / #%c%s%d#0 %s"
 msgstr ""
 
-#: src/equipment.c:1857
+#: src/equipment.c:1861
 #, c-format
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1858 src/info.c:651 src/land_shipyard.c:294
+#: src/equipment.c:1862 src/info.c:651 src/land_shipyard.c:294
 #: src/land_shipyard.c:298 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1858 src/info.c:388 src/info.c:652
+#: src/equipment.c:1862 src/info.c:388 src/info.c:652
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1867 src/info.c:393
+#: src/equipment.c:1871 src/info.c:393
 #, c-format
 msgid "%.1f hours"
 msgstr ""
 
-#: src/equipment.c:1871 src/equipment.c:1873 src/info.c:397 src/info.c:399
+#: src/equipment.c:1875 src/equipment.c:1877 src/info.c:397 src/info.c:399
 #, c-format
 msgid "%s MJ"
 msgstr ""
 
-#: src/equipment.c:1960 src/land_outfits.c:734
+#: src/equipment.c:1964 src/land_outfits.c:734
 #, fuzzy
 #| msgid "Available Outfits"
 msgid "Show all outfits"
 msgstr "Tenues disponibles"
 
-#: src/equipment.c:1961 src/land_outfits.c:735
+#: src/equipment.c:1965 src/land_outfits.c:735
 msgid "Show only outfits equipable on any of your ships"
 msgstr ""
 
-#: src/equipment.c:1962 src/land_outfits.c:736
+#: src/equipment.c:1966 src/land_outfits.c:736
 msgid "Show only outfits equipable on current ship"
 msgstr ""
 
-#: src/equipment.c:1963 src/land_outfits.c:737
+#: src/equipment.c:1967 src/land_outfits.c:737
 msgid "Show only light outfits"
 msgstr ""
 
-#: src/equipment.c:1964 src/land_outfits.c:738
+#: src/equipment.c:1968 src/land_outfits.c:738
 msgid "Show only medium outfits"
 msgstr ""
 
-#: src/equipment.c:1965 src/land_outfits.c:739
+#: src/equipment.c:1969 src/land_outfits.c:739
 msgid "Show only heavy outfits"
 msgstr ""
 
-#: src/equipment.c:2139
+#: src/equipment.c:2148
 #, fuzzy
 #| msgid ""
 #| "You can not unequip your ship when you have more cargo than it can hold "
@@ -88840,72 +89040,72 @@ msgstr ""
 "Vous ne pouvez pas déséquiper votre vaisseau lorsque vous avez plus de "
 "cargaison qu'il ne peut en contenir sans subir de modifications !"
 
-#: src/equipment.c:2142
+#: src/equipment.c:2151
 msgid "Unequip Ship"
 msgstr "Déséquiper le vaisseau"
 
 #. confirm
-#: src/equipment.c:2143
+#: src/equipment.c:2152
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:2146 src/land.c:218
+#: src/equipment.c:2155 src/land.c:230
 msgid "Recall Fighters"
 msgstr ""
 
-#: src/equipment.c:2146 src/land.c:218
+#: src/equipment.c:2155 src/land.c:230
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:2221 src/land.c:1609
+#: src/equipment.c:2230 src/land.c:1621
 #, c-format
 msgid "File '%s' not found!"
 msgstr ""
 
-#: src/equipment.c:2229
+#: src/equipment.c:2238
 #, c-format
 msgid "Failed to run '%s': %s"
 msgstr ""
 
-#: src/equipment.c:2241
+#: src/equipment.c:2250
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
 msgstr ""
 
-#: src/equipment.c:2247
+#: src/equipment.c:2256
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
 msgstr ""
 
-#: src/equipment.c:2287
+#: src/equipment.c:2296
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr "Êtes-vous sûr de vouloir vendre votre vaisseau %s pour %s ?"
 
 #. Display widget.
-#: src/equipment.c:2304
+#: src/equipment.c:2313
 msgid "Ship Sold"
 msgstr ""
 
-#: src/equipment.c:2305
+#: src/equipment.c:2314
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr ""
 
-#: src/equipment.c:2330 src/player.c:388
+#: src/equipment.c:2339 src/player.c:388
 msgid "Ship Name"
 msgstr ""
 
-#: src/equipment.c:2331
+#: src/equipment.c:2340
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr ""
 
-#: src/equipment.c:2339
+#: src/equipment.c:2348
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:2340 src/player.c:415
+#: src/equipment.c:2349 src/player.c:415
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
@@ -89227,8 +89427,8 @@ msgstr ""
 msgid "Faction '%s' has no Lua and isn't static!"
 msgstr ""
 
-#: src/faction.c:1532 src/map.c:3096 src/outfit.c:1128 src/ship.c:532
-#: src/ship.c:1025 src/space.c:1710 src/space.c:1768 src/space.c:3184
+#: src/faction.c:1532 src/map.c:3094 src/outfit.c:1128 src/ship.c:532
+#: src/ship.c:1041 src/space.c:1710 src/space.c:1768 src/space.c:3184
 #: src/tech.c:113
 #, c-format
 msgid "Malformed %s file: does not contain elements"
@@ -89425,7 +89625,7 @@ msgstr ""
 msgid "Main"
 msgstr ""
 
-#: src/info.c:59 src/map_find.c:965
+#: src/info.c:59 src/map_find.c:951
 msgid "Ship"
 msgstr ""
 
@@ -89437,7 +89637,7 @@ msgstr "Armes"
 msgid "Cargo"
 msgstr ""
 
-#: src/info.c:62 src/land.c:986 src/space.c:157
+#: src/info.c:62 src/land.c:998 src/space.c:157
 msgid "Missions"
 msgstr ""
 
@@ -89457,7 +89657,7 @@ msgid ""
 msgstr ""
 
 #. Create the window.
-#: src/info.c:287 src/menu.c:446
+#: src/info.c:287 src/menu.c:448
 msgid "Info"
 msgstr ""
 
@@ -89465,8 +89665,8 @@ msgstr ""
 msgid "Date:"
 msgstr ""
 
-#: src/info.c:369 src/land.c:1308 src/land_outfits.c:195 src/land_outfits.c:426
-#: src/land_shipyard.c:303 src/land_trade.c:93 src/map_find.c:644
+#: src/info.c:369 src/land.c:1320 src/land_outfits.c:195 src/land_outfits.c:426
+#: src/land_shipyard.c:303 src/land_trade.c:93 src/map_find.c:630
 msgid "Money:"
 msgstr ""
 
@@ -89538,7 +89738,7 @@ msgstr ""
 msgid "Select GUI"
 msgstr ""
 
-#: src/info.c:496 src/load.c:486 src/load.c:552 src/menu.c:450
+#: src/info.c:496 src/load.c:486 src/load.c:552 src/menu.c:452
 msgid "Load"
 msgstr ""
 
@@ -89694,7 +89894,7 @@ msgstr ""
 
 #. no missions
 #. Make sure you have missions.
-#: src/info.c:1268 src/land.c:666 src/land.c:736 src/land.c:771
+#: src/info.c:1268 src/land.c:678 src/land.c:748 src/land.c:783
 msgid "No Missions"
 msgstr ""
 
@@ -90436,50 +90636,60 @@ msgstr ""
 msgid "You're already onboard the %s."
 msgstr ""
 
-#: src/land.c:211 src/land_shipyard.c:495
+#: src/land.c:205
+#, c-format
+msgid "You can not pilot the %s! The ship can only be used as an escort."
+msgstr ""
+
+#: src/land.c:211
+#, c-format
+msgid "You can not swap ships and set %s as an escort!"
+msgstr ""
+
+#: src/land.c:223 src/land_shipyard.c:495
 #, c-format
 msgid "You have %d tonne more cargo than the new ship can hold."
 msgid_plural "You have %d tonnes more cargo than the new ship can hold."
 msgstr[0] "You have %d tonne more cargo than the new ship can hold."
 msgstr[1] "You have %d tonnes more cargo than the new ship can hold."
 
-#: src/land.c:219
+#: src/land.c:231
 #, fuzzy
 #| msgid "You discovered #%c%s#0."
 msgid "You have deployed fighters."
 msgstr "Vous avez découvert #%c%s#0."
 
-#: src/land.c:330
+#: src/land.c:342
 msgid "Approach"
 msgstr ""
 
-#: src/land.c:391 src/land.c:397
+#: src/land.c:403 src/land.c:409
 msgid "News"
 msgstr ""
 
-#: src/land.c:597 src/land.c:677
+#: src/land.c:609 src/land.c:689
 msgid "Accept Mission"
 msgstr ""
 
-#: src/land.c:600 src/map.c:382
+#: src/land.c:612 src/map.c:383
 msgid "Autonav"
 msgstr "Pilote automatique"
 
-#: src/land.c:607
+#: src/land.c:619
 msgid ""
 "Date:\n"
 "Free Space:"
 msgstr ""
 
-#: src/land.c:615 src/land.c:772
+#: src/land.c:627 src/land.c:784
 msgid "#nReward:#0 None"
 msgstr ""
 
-#: src/land.c:678
+#: src/land.c:690
 msgid "Are you sure you want to accept this mission?"
 msgstr ""
 
-#: src/land.c:765
+#: src/land.c:777
 #, c-format
 msgid ""
 "%s\n"
@@ -90494,121 +90704,121 @@ msgstr[1] ""
 "%s\n"
 "%d Tonnes"
 
-#: src/land.c:774
+#: src/land.c:786
 msgid "There are no missions available here."
 msgstr ""
 
-#: src/land.c:784
+#: src/land.c:796
 #, c-format
 msgid "#nReward:#0 %s"
 msgstr ""
 
-#: src/land.c:829 src/land.c:884
+#: src/land.c:841 src/land.c:896
 #, c-format
 msgid "Outfit '%s' does not exist!"
 msgstr ""
 
-#: src/land.c:862
+#: src/land.c:874
 #, c-format
 msgid "%s (%s-class)"
 msgstr ""
 
-#: src/land.c:866
+#: src/land.c:878
 #, c-format
 msgid "roughly %s"
 msgstr ""
 
-#: src/land.c:873 src/map.c:767 src/map.c:781 src/map.c:788 src/map.c:819
-#: src/map.c:841
+#: src/land.c:885 src/map.c:768 src/map.c:782 src/map.c:789 src/map.c:820
+#: src/map.c:842
 msgid ", "
 msgstr ""
 
-#: src/land.c:895
+#: src/land.c:907
 #, c-format
 msgid "Buy Local Map (%s)"
 msgstr ""
 
-#: src/land.c:977
+#: src/land.c:989
 msgid "Landing Main"
 msgstr ""
 
-#: src/land.c:991 src/map_find.c:1027 src/space.c:159
+#: src/land.c:1003 src/map_find.c:1014 src/space.c:159
 msgid "Outfits"
 msgstr ""
 
-#: src/land.c:996 src/space.c:160
+#: src/land.c:1008 src/space.c:160
 msgid "Shipyard"
 msgstr ""
 
-#: src/land.c:1002
+#: src/land.c:1014
 #, fuzzy
 #| msgid "Equipment"
 msgctxt "service"
 msgid "Equipment"
 msgstr "Équipement"
 
-#: src/land.c:1007 src/space.c:158
+#: src/land.c:1019 src/space.c:158
 msgid "Commodity"
 msgstr ""
 
 #. Player stats.
-#: src/land.c:1303
+#: src/land.c:1315
 msgid "Stationed at:"
 msgstr ""
 
-#: src/land.c:1306
+#: src/land.c:1318
 #, fuzzy
 #| msgid "Faction:"
 msgid "Population:"
 msgstr "Faction :"
 
-#: src/land.c:1307 src/land_trade.c:92
+#: src/land.c:1319 src/land_trade.c:92
 #, fuzzy
 #| msgid "Spaceworthy"
 msgid "Free Space:"
 msgstr "Capable d'aller dans l'espace"
 
-#: src/land.c:1333
+#: src/land.c:1345
 msgid "No refueling services."
 msgstr ""
 
-#: src/land.c:1337
+#: src/land.c:1349
 msgid "Game will not be saved."
 msgstr ""
 
-#: src/land.c:1472 src/land.c:1476
+#: src/land.c:1484 src/land.c:1488
 msgid "Fleet not fit for flight"
 msgstr ""
 
-#: src/land.c:1472
+#: src/land.c:1484
 msgid "You lack the fleet capacity to take off with all selected ships."
 msgstr ""
 
-#: src/land.c:1476
+#: src/land.c:1488
 msgid ""
 "The following ships in your fleet are not space worthy, are you sure you "
 "want to take off without them?"
 msgstr ""
 
-#: src/land.c:1486
+#: src/land.c:1498
 msgid "Ship not fit for flight"
 msgstr ""
 
 #. Only save when the player shouldn't get stranded.
 #. must be before cleaning up spob
-#: src/land.c:1536
+#: src/land.c:1548
 msgid ""
 "Failed to save game! You should exit and check the log to see what happened "
 "and then file a bug report!"
 msgstr ""
 
-#: src/land.c:1545
+#: src/land.c:1557
 #, c-format
 msgid "#oTaking off from %s on %s."
 msgstr ""
 
 #. error has occurred
-#: src/land.c:1626
+#: src/land.c:1638
 #, c-format
 msgid "Rescue: 'rescue' : '%s'"
 msgstr ""
@@ -90626,18 +90836,18 @@ msgid "Find Outfits"
 msgstr ""
 
 #. Set up keys.
-#: src/land_outfits.c:192 src/land_outfits.c:423 src/map_find.c:641
+#: src/land_outfits.c:192 src/land_outfits.c:423 src/map_find.c:627
 #: src/map_system.c:635
 msgid "Owned:"
 msgstr ""
 
 #: src/land_outfits.c:194 src/land_outfits.c:425 src/land_shipyard.c:301
-#: src/map_find.c:643 src/map_system.c:637 src/map_system.c:684
+#: src/map_find.c:629 src/map_system.c:637 src/map_system.c:684
 msgid "Price:"
 msgstr ""
 
 #: src/land_outfits.c:196 src/land_outfits.c:489 src/land_shipyard.c:305
-#: src/map_find.c:645 src/map_system.c:685
+#: src/map_find.c:631 src/map_system.c:685
 msgid "License:"
 msgstr ""
 
@@ -90858,7 +91068,7 @@ msgstr ""
 msgid "No commodities available."
 msgstr ""
 
-#: src/land_trade.c:223 src/land_trade.c:226 src/map.c:1758 src/map.c:1829
+#: src/land_trade.c:223 src/land_trade.c:226 src/map.c:1759 src/map.c:1830
 #, c-format
 msgid "%.1f ¤"
 msgstr ""
@@ -91092,37 +91302,37 @@ msgstr ""
 msgid "Unknown var type '%s'"
 msgstr ""
 
-#: src/map.c:346
+#: src/map.c:347
 msgid "Standing:"
 msgstr ""
 
-#: src/map.c:360
+#: src/map.c:361
 msgid "Space Objects:"
 msgstr ""
 
-#: src/map.c:367
+#: src/map.c:368
 msgid "Services:"
 msgstr "Services :"
 
 #. Commodity button
-#: src/map.c:376
+#: src/map.c:377
 msgid "Mode"
 msgstr ""
 
 #. create the window.
-#: src/map.c:389 src/map_system.c:193
+#: src/map.c:390 src/map_system.c:193
 #, fuzzy
 #| msgid "System: "
 msgid "System Info"
 msgstr "Système : "
 
-#: src/map.c:392
+#: src/map.c:393
 #, fuzzy
 #| msgid "Toggle Speed"
 msgid "Toggle Note"
 msgstr "Vitesse de jeu"
 
-#: src/map.c:534
+#: src/map.c:535
 #, c-format
 msgid ""
 "Showing %s prices relative to %s:\n"
@@ -91130,78 +91340,78 @@ msgid ""
 "when sold at the corresponding system."
 msgstr ""
 
-#: src/map.c:540
+#: src/map.c:541
 #, c-format
 msgid ""
 "Showing known %s prices.\n"
 "Galaxy-wide average: %.2f"
 msgstr ""
 
-#: src/map.c:617
+#: src/map.c:618
 #, c-format
 msgid "Multiple"
 msgstr ""
 
-#: src/map.c:792
+#: src/map.c:793
 msgid "Dense "
 msgstr ""
 
-#: src/map.c:794
+#: src/map.c:795
 msgid "Light "
 msgstr ""
 
-#: src/map.c:802
+#: src/map.c:803
 #, c-format
 msgid "Volatile %sNebula (%.1f MW)"
 msgstr ""
 
-#: src/map.c:806
+#: src/map.c:807
 #, c-format
 msgid "Dangerous %sNebula (%.1f MW)"
 msgstr ""
 
-#: src/map.c:810
+#: src/map.c:811
 #, c-format
 msgid "Unstable %sNebula (%.1f MW)"
 msgstr ""
 
-#: src/map.c:813
+#: src/map.c:814
 #, c-format
 msgid "%sNebula"
 msgstr ""
 
-#: src/map.c:824
+#: src/map.c:825
 #, c-format
 msgid "Dense Interference (%.0f%%)"
 msgstr ""
 
-#: src/map.c:828
+#: src/map.c:829
 #, c-format
 msgid "Light Interference (%.0f%%)"
 msgstr ""
 
-#: src/map.c:832
+#: src/map.c:833
 #, c-format
 msgid "Interference (%.0f%%)"
 msgstr ""
 
-#: src/map.c:845
+#: src/map.c:846
 #, fuzzy
 #| msgid " Asteroid Field density %g\n"
 msgid "Dense Asteroids"
 msgstr "Densité du champ d'astéroïdes %g\n"
 
-#: src/map.c:849
+#: src/map.c:850
 #, fuzzy
 #| msgid " Asteroid Field density %g\n"
 msgid "Light Asteroids"
 msgstr "Densité du champ d'astéroïdes %g\n"
 
-#: src/map.c:863
+#: src/map.c:864
 msgid "Fuel: "
 msgstr "Carburant : "
 
-#: src/map.c:864 src/map.c:872
+#: src/map.c:865 src/map.c:873
 #, fuzzy, c-format
 #| msgid "%s jump"
 #| msgid_plural "%s jumps"
@@ -91210,63 +91420,63 @@ msgid_plural "%d jumps"
 msgstr[0] "%s jump"
 msgstr[1] "%s jumps"
 
-#: src/map.c:866
+#: src/map.c:867
 #, fuzzy
 #| msgid "Autonav"
 msgid "Autonav: "
 msgstr "Pilote automatique"
 
-#: src/map.c:1855
+#: src/map.c:1856
 #, c-format
 msgid ""
 "No price info for\n"
 "%s here"
 msgstr ""
 
-#: src/map.c:2117
+#: src/map.c:2114
 msgid "Travel (Default)"
 msgstr ""
 
-#: src/map.c:2120
+#: src/map.c:2117
 #, c-format
 msgid "%s: Cost"
 msgstr ""
 
-#: src/map.c:2121
+#: src/map.c:2118
 #, c-format
 msgid "%s: Trade"
 msgstr ""
 
-#: src/map.c:2177
+#: src/map.c:2174
 msgid "Normal View"
 msgstr ""
 
-#: src/map.c:2177
+#: src/map.c:2174
 msgid "Minimal View"
 msgstr ""
 
-#: src/map.c:2201
+#: src/map.c:2198
 #, c-format
 msgid "Write a note about the #o%s#0 system:"
 msgstr ""
 
-#: src/map.c:2202
+#: src/map.c:2199
 #, fuzzy
 #| msgid "System: "
 msgid "Add System Note"
 msgstr "Système : "
 
-#: src/map.c:3090
+#: src/map.c:3088
 #, c-format
 msgid "Malformed %s file: missing root element 'map'"
 msgstr ""
 
-#: src/map.c:3107 src/slots.c:78 src/start.c:125 src/tech.c:127
+#: src/map.c:3105 src/slots.c:78 src/start.c:125 src/tech.c:127
 #, c-format
 msgid "'%s' has unknown node '%s'."
 msgstr ""
 
-#: src/map.c:3114
+#: src/map.c:3112
 #, fuzzy, c-format
 #| msgid "Loaded %d map decorator"
 #| msgid_plural "Loaded %d map decorators"
@@ -91275,99 +91485,99 @@ msgid_plural "Loaded %d map decorators in %.3f s"
 msgstr[0] "Loaded %d map decorator"
 msgstr[1] "Loaded %d map decorators"
 
-#: src/map.c:3117
+#: src/map.c:3115
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
 msgstr[0] "Loaded %d map decorator"
 msgstr[1] "Loaded %d map decorators"
 
-#: src/map.c:3143
+#: src/map.c:3141
 #, c-format
 msgid "Could not load map decorator texture '%s'."
 msgstr ""
 
-#: src/map.c:3147
+#: src/map.c:3145
 #, c-format
 msgid "Map decorator has unknown node '%s'."
 msgstr ""
 
 #. Create window.
-#: src/map_find.c:211 src/map_find.c:747 src/map_find.c:868
+#: src/map_find.c:197 src/map_find.c:733 src/map_find.c:854
 msgid "Search Results"
 msgstr ""
 
-#: src/map_find.c:225
+#: src/map_find.c:211
 msgid "Select"
 msgstr ""
 
-#: src/map_find.c:305
+#: src/map_find.c:291
 msgid "Jump to first system not found!"
 msgstr ""
 
-#: src/map_find.c:341
+#: src/map_find.c:327
 msgid "Matching jumps not found, something is up..."
 msgstr ""
 
-#: src/map_find.c:400
+#: src/map_find.c:386
 msgid "unknown route"
 msgstr ""
 
-#: src/map_find.c:404
+#: src/map_find.c:390
 #, c-format
 msgid "%d jump, %.0fk distance"
 msgid_plural "%d jumps, %.0fk distance"
 msgstr[0] "%d jump, %.0fk distance"
 msgstr[1] "%d jumps, %.0fk distance"
 
-#: src/map_find.c:413
+#: src/map_find.c:399
 #, c-format
 msgid "#%c%s%s (%s, %s)"
 msgstr ""
 
-#: src/map_find.c:749
+#: src/map_find.c:735
 #, c-format
 msgid "Search results for outfits matching '%s':"
 msgstr ""
 
-#: src/map_find.c:869
+#: src/map_find.c:855
 #, c-format
 msgid "Search results for ships matching '%s':"
 msgstr ""
 
-#: src/map_find.c:953
+#: src/map_find.c:939
 msgid "System"
 msgstr ""
 
-#: src/map_find.c:957 src/map_find.c:1024
+#: src/map_find.c:943 src/map_find.c:1011
 #, fuzzy
 #| msgid "       with %d Planet"
 #| msgid_plural "       with %d Planets"
 msgid "Space Objects"
 msgstr "       with %d Planet"
 
-#: src/map_find.c:961
+#: src/map_find.c:947
 msgid "Outfit"
 msgstr ""
 
-#: src/map_find.c:971
+#: src/map_find.c:957
 #, c-format
 msgid "%s matching '%s' not found!"
 msgstr ""
 
-#: src/map_find.c:995
+#: src/map_find.c:981
 msgid "Find…"
 msgstr ""
 
-#: src/map_find.c:1004
+#: src/map_find.c:991
 msgid "Enter keyword to search for:"
 msgstr ""
 
-#: src/map_find.c:1021
+#: src/map_find.c:1008
 msgid "Systems"
 msgstr ""
 
-#: src/map_find.c:1030
+#: src/map_find.c:1017
 msgid "Ships"
 msgstr ""
 
@@ -91636,106 +91846,106 @@ msgstr ""
 msgid "Purchase %g period old pricing information for %s for %s?"
 msgstr ""
 
-#: src/menu.c:176
+#: src/menu.c:177
 msgid "Menu main is already open."
 msgstr ""
 
 #. create menu window
-#: src/menu.c:225 src/menu.c:608
+#: src/menu.c:227 src/menu.c:610
 msgid "Main Menu"
 msgstr ""
 
-#: src/menu.c:234
+#: src/menu.c:236
 msgid "Load Game"
 msgstr ""
 
-#: src/menu.c:237
+#: src/menu.c:239
 msgid "New Game"
 msgstr ""
 
-#: src/menu.c:241 src/menu.c:696
+#: src/menu.c:243 src/menu.c:698
 msgid "Editors"
 msgstr ""
 
 #. Create window and tabs.
-#: src/menu.c:245 src/menu.c:454 src/naev.c:398 src/options.c:132
+#: src/menu.c:247 src/menu.c:456 src/naev.c:398 src/options.c:132
 msgid "Options"
 msgstr ""
 
-#: src/menu.c:248
+#: src/menu.c:250
 msgctxt "Menu|"
 msgid "Credits"
 msgstr ""
 
-#: src/menu.c:251 src/menu.c:610
+#: src/menu.c:253 src/menu.c:612
 msgid "Exit Game"
 msgstr ""
 
-#: src/menu.c:338
+#: src/menu.c:340
 msgid "Main menu does not exist."
 msgstr ""
 
-#: src/menu.c:436
+#: src/menu.c:438
 msgid "Menu"
 msgstr ""
 
-#: src/menu.c:442
+#: src/menu.c:444
 msgid "Resume"
 msgstr ""
 
-#: src/menu.c:450
+#: src/menu.c:452
 #, fuzzy
 #| msgid "Loaded %d Event"
 #| msgid_plural "Loaded %d Events"
 msgid "Load / Save"
 msgstr "Loaded %d Event"
 
-#: src/menu.c:457
+#: src/menu.c:459
 msgid "Exit to Title"
 msgstr ""
 
-#: src/menu.c:494
+#: src/menu.c:496
 msgid "Small menu does not exist."
 msgstr ""
 
 #. Stop player sounds because sometimes they hang.
-#: src/menu.c:535
+#: src/menu.c:537
 msgid "Exited game."
 msgstr ""
 
-#: src/menu.c:594
+#: src/menu.c:596
 msgid "Death"
 msgstr ""
 
-#: src/menu.c:601
+#: src/menu.c:603
 msgid "Continue"
 msgstr ""
 
-#: src/menu.c:604
+#: src/menu.c:606
 msgid "Restart"
 msgstr ""
 
-#: src/menu.c:663
+#: src/menu.c:665
 msgid "Quit Naev"
 msgstr ""
 
-#: src/menu.c:663
+#: src/menu.c:665
 msgid "Are you sure you want to quit Naev?"
 msgstr "Êtes-vous sûr de vouloir quitter Naev ?"
 
-#: src/menu.c:701
+#: src/menu.c:703
 msgid "Universe Map"
 msgstr ""
 
-#: src/menu.c:704
+#: src/menu.c:706
 msgid "Map Outfits"
 msgstr ""
 
-#: src/menu.c:707
+#: src/menu.c:709
 msgid "Exit to Main Menu"
 msgstr ""
 
-#: src/mission.c:103 src/nlua_player.c:1333 src/nlua_player.c:1355
+#: src/mission.c:103 src/nlua_player.c:1346 src/nlua_player.c:1368
 #, c-format
 msgid "Mission '%s' not found in stack"
 msgstr ""
@@ -92479,8 +92689,8 @@ msgstr ""
 msgid "Commodity '%s' not found!"
 msgstr ""
 
-#: src/nlua_commodity.c:324 src/nlua_commodity.c:360 src/nlua_player.c:1466
-#: src/nlua_player.c:1486
+#: src/nlua_commodity.c:324 src/nlua_commodity.c:360 src/nlua_player.c:1479
+#: src/nlua_player.c:1499
 #, c-format
 msgid "Spob '%s' does not belong to a system."
 msgstr ""
@@ -92851,43 +93061,43 @@ msgstr ""
 msgid "Spob '%s' is not in a system!"
 msgstr ""
 
-#: src/nlua_player.c:851
+#: src/nlua_player.c:864
 msgid "Must be landed to set the active land window."
 msgstr ""
 
-#: src/nlua_player.c:1020 src/nlua_player.c:1064
+#: src/nlua_player.c:1033 src/nlua_player.c:1077
 #, c-format
 msgid "Player does not own a ship named '%s'"
 msgstr ""
 
-#: src/nlua_player.c:1393 src/nlua_player.c:1415
+#: src/nlua_player.c:1406 src/nlua_player.c:1428
 #, c-format
 msgid "Event '%s' not found in stack"
 msgstr ""
 
-#: src/nlua_player.c:1449
+#: src/nlua_player.c:1462
 msgid "Can not teleport the player while landed!"
 msgstr ""
 
-#: src/nlua_player.c:1451
+#: src/nlua_player.c:1464
 msgid "Can not teleport the player while the comm is open!"
 msgstr ""
 
-#: src/nlua_player.c:1453
+#: src/nlua_player.c:1466
 msgid "Can not teleport the player while they are boarded!"
 msgstr ""
 
-#: src/nlua_player.c:1481
+#: src/nlua_player.c:1494
 #, c-format
 msgid "'%s' is not a valid teleportation target."
 msgstr ""
 
-#: src/nlua_player.c:1501
+#: src/nlua_player.c:1514
 #, c-format
 msgid "System '%s' does not exist."
 msgstr ""
 
-#: src/nlua_player.c:1663
+#: src/nlua_player.c:1676
 #, c-format
 msgid "Failed to unregister info button with id '%d'!"
 msgstr ""
@@ -92911,17 +93121,17 @@ msgstr ""
 msgid "shader failed to compile!"
 msgstr ""
 
-#: src/nlua_shader.c:344
+#: src/nlua_shader.c:346
 #, c-format
 msgid "Shader does not have uniform '%s'!"
 msgstr ""
 
-#: src/nlua_shader.c:392
+#: src/nlua_shader.c:394
 #, c-format
 msgid "Unsupported shader uniform type '%d' for uniform '%s'. Ignoring."
 msgstr ""
 
-#: src/nlua_shader.c:443
+#: src/nlua_shader.c:445
 #, c-format
 msgid "Layer was '%s', but must be one of 'final' or 'game'"
 msgstr ""
@@ -94405,49 +94615,49 @@ msgstr ""
 #. f, p
 #. f, p, p
 #.
-#: src/pilot.c:1602 src/pilot_outfit.c:1183
+#: src/pilot.c:1602 src/pilot_outfit.c:1188
 #, c-format
 msgid ""
 "Pilot '%s''s outfit '%s' -> '%s':\n"
 "%s"
 msgstr ""
 
-#: src/pilot.c:2620 src/pilot.c:2647
+#: src/pilot.c:2624 src/pilot.c:2651
 msgid "Strayed too far from jump point: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2627
+#: src/pilot.c:2631
 msgid "Afterburner active: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2667
+#: src/pilot.c:2671
 #, c-format
 msgid "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
 msgstr ""
 
-#: src/pilot.c:2962
+#: src/pilot.c:2965
 #, c-format
 msgid "Pilot '%s' failed safety check: %s"
 msgstr ""
 
-#: src/pilot.c:2965
+#: src/pilot.c:2968
 #, c-format
 msgid "   [%d] %s"
 msgstr ""
 
-#: src/pilot.c:3076 src/pilot.c:3124 src/pilot.c:3148
+#: src/pilot.c:3079 src/pilot.c:3127 src/pilot.c:3151
 msgid "Unable to allocate memory"
 msgstr ""
 
-#: src/pilot.c:3190
+#: src/pilot.c:3193
 msgid "Duplicate pilots on stack!"
 msgstr ""
 
-#: src/pilot.c:3312
+#: src/pilot.c:3315
 msgid "Creating pilot in system with no jumps nor spobs to take off from!"
 msgstr ""
 
-#: src/pilot.c:3446
+#: src/pilot.c:3449
 #, c-format
 msgid "Trying to remove non-existent pilot '%s' from stack!"
 msgstr ""
@@ -94624,38 +94834,46 @@ msgstr ""
 msgid "!! Insufficient Crew"
 msgstr ""
 
-#. string is empty so no errors encountered
+#. String is empty so no errors encountered
 #: src/pilot_outfit.c:622
 #, c-format
 msgid "Spaceworthy"
 msgstr "Capable d'aller dans l'espace"
 
-#: src/pilot_outfit.c:660
-msgid "Nothing selected."
+#: src/pilot_outfit.c:624
+msgid "Escort only"
+msgstr ""
+
+#: src/pilot_outfit.c:626
+msgid "Lead ship only"
 msgstr ""
 
 #: src/pilot_outfit.c:665
+msgid "Nothing selected."
+msgstr ""
+
+#: src/pilot_outfit.c:670
 msgid "Does not fit slot."
 msgstr ""
 
-#: src/pilot_outfit.c:668
+#: src/pilot_outfit.c:673
 msgid "Already have an outfit of this type installed"
 msgstr ""
 
-#: src/pilot_outfit.c:671
+#: src/pilot_outfit.c:676
 msgid "Can only install unique outfit once."
 msgstr ""
 
-#: src/pilot_outfit.c:676
+#: src/pilot_outfit.c:681
 msgid "Recall the fighters first"
 msgstr ""
 
-#: src/pilot_outfit.c:696
+#: src/pilot_outfit.c:701
 #, c-format
 msgid "Pilot '%s': Trying to add ammo to unequipped slot."
 msgstr ""
 
-#: src/pilot_outfit.c:730
+#: src/pilot_outfit.c:735
 #, c-format
 msgid "Pilot '%s': Trying to remove ammo from unequipped slot."
 msgstr ""
@@ -94719,7 +94937,7 @@ msgstr ""
 msgid "Name collision"
 msgstr ""
 
-#: src/player.c:430
+#: src/player.c:420
 msgid "Player ship isn't valid… This shouldn't happen!"
 msgstr ""
 
@@ -94903,45 +95121,45 @@ msgstr ""
 msgid "Saved license does not exist and could not be found or updated: '%s'!"
 msgstr ""
 
-#: src/player.c:3678
+#: src/player.c:3670
 msgid "Malformed time in save game!"
 msgstr ""
 
-#: src/player.c:3715
+#: src/player.c:3707
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
 
-#: src/player.c:3739
+#: src/player.c:3731
 msgid "Player ship does not exist!"
 msgstr ""
 
-#: src/player.c:3742
+#: src/player.c:3734
 msgid "Player has no other ships, giving starting ship."
 msgstr ""
 
-#: src/player.c:3753
+#: src/player.c:3745
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr ""
 
-#: src/player.c:3759
+#: src/player.c:3751
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 
-#: src/player.c:3769
+#: src/player.c:3761
 msgid "Save has no time information, setting to start information."
 msgstr ""
 
-#: src/player.c:3775
+#: src/player.c:3767
 msgid "Player save was updated!"
 msgstr ""
 
-#: src/player.c:3776
+#: src/player.c:3768
 msgid "Save Game Updated"
 msgstr ""
 
-#: src/player.c:3776
+#: src/player.c:3768
 msgid ""
 "The loaded save games has had outfits and ships updated to the current Naev "
 "version. You will find that some outfits and ships you have had have been "
@@ -94949,70 +95167,75 @@ msgid ""
 "refunded the cost in credits."
 msgstr ""
 
-#: src/player.c:3784
+#: src/player.c:3776
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid spob '%s',trying to find a "
 "suitable one instead."
 msgstr ""
 
-#: src/player.c:3813
+#: src/player.c:3805
 #, c-format
 msgid "Could not find a spob satisfying criteria %d."
 msgstr ""
 
-#: src/player.c:3817
+#: src/player.c:3809
 msgid "Could not find a suitable spob. Choosing a random spob."
 msgstr ""
 
-#: src/player.c:3870
+#: src/player.c:3862
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3895
+#: src/player.c:3887
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3920
+#: src/player.c:3912
 msgid "License node is missing name attribute."
 msgstr ""
 
-#: src/player.c:3956
+#: src/player.c:3948
 #, c-format
 msgid "Fleet ship '%s' is deployed despite not being marked for deployal!"
 msgstr ""
 
-#: src/player.c:3960
+#: src/player.c:3952
 #, c-format
 msgid "Fleet ship '%s' is deployed despite not being space worthy!"
 msgstr ""
 
-#: src/player.c:3965
+#: src/player.c:3957
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:4016 src/player.c:4187
+#: src/player.c:4008 src/player.c:4187
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
 
-#: src/player.c:4035
+#: src/player.c:4027
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:4043
+#: src/player.c:4035
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:4063
+#: src/player.c:4055
 msgid "Empty ship slot node found, skipping."
+msgstr ""
+
+#: src/player.c:4110
+#, c-format
+msgid "Ignoring player-owned ship '%s': duplicate of player's current ship."
 msgstr ""
 
 #: src/player.c:4119
@@ -95208,14 +95431,9 @@ msgstr ""
 msgid "GUI '%s' does not exist as a file: '%s' not found."
 msgstr ""
 
-#: src/render.c:284
+#: src/render.c:287
 #, c-format
 msgid "Unknown post-processing shader layer '%d'!"
-msgstr ""
-
-#: src/render.c:340
-#, c-format
-msgid "Trying to remove non-existant post-processing shader with id '%d'!"
 msgstr ""
 
 #: src/safelanes.c:265
@@ -95372,56 +95590,61 @@ msgstr ""
 msgid "Ship '%s': gfx_comm element is NULL"
 msgstr ""
 
+#: src/ship.c:811
+#, c-format
+msgid "Ship '%s' has unknown flags node '%s'."
+msgstr ""
+
 #. All the xmlr_ stuff have continue cases.
-#: src/ship.c:825
+#: src/ship.c:842
 #, c-format
 msgid "Ship '%s' has unknown movement node '%s'."
 msgstr ""
 
 #. All the xmlr_ stuff have continue cases.
-#: src/ship.c:841
+#: src/ship.c:858
 #, c-format
 msgid "Ship '%s' has unknown health node '%s'."
 msgstr ""
 
 #. All the xmlr_ stuff have continue cases.
-#: src/ship.c:856
+#: src/ship.c:873
 #, c-format
 msgid "Ship '%s' has unknown characteristic node '%s'."
 msgstr ""
 
-#: src/ship.c:877
+#: src/ship.c:894
 #, c-format
 msgid "Ship '%s' has unknown slot node '%s'."
 msgstr ""
 
-#: src/ship.c:896
+#: src/ship.c:913
 #, c-format
 msgid "Ship '%s' has unknown stat '%s'."
 msgstr ""
 
-#: src/ship.c:929
+#: src/ship.c:946
 #, c-format
 msgid "Ship '%s' has unknown node in tags '%s'."
 msgstr ""
 
-#: src/ship.c:938
+#: src/ship.c:955
 #, c-format
 msgid "Ship '%s' has unknown node '%s'."
 msgstr ""
 
-#: src/ship.c:947
+#: src/ship.c:964
 #, c-format
 msgid "Ship '%s' has inexistent license requirement '%s'!"
 msgstr ""
 
 #. ship validator
-#: src/ship.c:950
+#: src/ship.c:967
 #, c-format
 msgid "Ship '%s' missing '%s' element"
 msgstr ""
 
-#: src/ship.c:1045
+#: src/ship.c:1059
 #, fuzzy, c-format
 #| msgid "Loaded %d Ship"
 #| msgid_plural "Loaded %d Ships"
@@ -95430,7 +95653,7 @@ msgid_plural "Loaded %d Ships in %.3f s"
 msgstr[0] "Loaded %d Ship"
 msgstr[1] "Loaded %d Ships"
 
-#: src/ship.c:1048
+#: src/ship.c:1062
 #, c-format
 msgid "Loaded %d Ship"
 msgid_plural "Loaded %d Ships"
@@ -96281,7 +96504,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/space.c:2032
+#: src/space.c:2033
 #, c-format
 msgid "Spob '%s' ran '%s' but got non-texture return value!"
 msgstr ""
@@ -96473,7 +96696,7 @@ msgstr ""
 msgid "SPFX '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/spfx.c:402
+#: src/spfx.c:401
 #, fuzzy, c-format
 #| msgid "Loading Special Effects..."
 msgid "Loaded %d Special Effect in %.3f s"
@@ -96481,56 +96704,56 @@ msgid_plural "Loaded %d Special Effects in %.3f s"
 msgstr[0] "Chargement des effets spéciaux..."
 msgstr[1] "Chargement des effets spéciaux..."
 
-#: src/spfx.c:405
+#: src/spfx.c:404
 #, c-format
 msgid "Loaded %d Special Effect"
 msgid_plural "Loaded %d Special Effects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/spfx.c:466
+#: src/spfx.c:465
 msgid "Trying to add spfx with invalid effect!"
 msgstr ""
 
-#: src/spfx.c:480
+#: src/spfx.c:479
 msgid "Invalid SPFX layer."
 msgstr ""
 
-#: src/spfx.c:925
+#: src/spfx.c:924
 #, c-format
 msgid "Unable to upload haptic effect: %s."
 msgstr ""
 
-#: src/spfx.c:963
+#: src/spfx.c:962
 #, c-format
 msgid "Failed to update haptic effect: %s."
 msgstr ""
 
-#: src/spfx.c:1011
+#: src/spfx.c:1010
 msgid "Rendering invalid SPFX layer."
 msgstr ""
 
-#: src/spfx.c:1133
+#: src/spfx.c:1132
 #, c-format
 msgid "Trail '%s' has unknown node '%s'."
 msgstr ""
 
-#: src/spfx.c:1137
+#: src/spfx.c:1136
 #, c-format
 msgid "Trail '%s' missing '%s' element"
 msgstr ""
 
-#: src/spfx.c:1162
+#: src/spfx.c:1161
 #, c-format
 msgid "Malformed '%s' file: missing root element 'Trail_types'"
 msgstr ""
 
-#: src/spfx.c:1214
+#: src/spfx.c:1213
 #, c-format
 msgid "Trail '%s' that inherits from '%s' has missing reference!"
 msgstr ""
 
-#: src/spfx.c:1250
+#: src/spfx.c:1249
 #, c-format
 msgid "Trail type '%s' not found in stack"
 msgstr ""
@@ -96724,12 +96947,12 @@ msgstr ""
 msgid "Toolkit: Button '%s' of Window '%s' doesn't have a function trigger"
 msgstr ""
 
-#: src/unidiff.c:201
+#: src/unidiff.c:205
 #, c-format
 msgid "Malformed XML header for '%s' UniDiff: missing root element '%s'"
 msgstr ""
 
-#: src/unidiff.c:215
+#: src/unidiff.c:221
 #, fuzzy, c-format
 #| msgid "Loaded %d UniDiff"
 #| msgid_plural "Loaded %d UniDiffs"
@@ -96738,262 +96961,262 @@ msgid_plural "Loaded %d UniDiffs in %.3f s"
 msgstr[0] "Loaded %d UniDiff"
 msgstr[1] "Loaded %d UniDiffs"
 
-#: src/unidiff.c:218
+#: src/unidiff.c:224
 #, c-format
 msgid "Loaded %d UniDiff"
 msgid_plural "Loaded %d UniDiffs"
 msgstr[0] "Loaded %d UniDiff"
 msgstr[1] "Loaded %d UniDiffs"
 
-#: src/unidiff.c:290
+#: src/unidiff.c:296
 #, c-format
 msgid "UniDiff '%s' not found in %s!"
 msgstr ""
 
-#: src/unidiff.c:298
+#: src/unidiff.c:304
 msgid "Malformed unidiff file: missing root element 'unidiff'"
 msgstr ""
 
-#: src/unidiff.c:332
+#: src/unidiff.c:338
 #, c-format
 msgid "Unidiff '%s' has a system node without a 'name' tag, not applying."
 msgstr ""
 
-#: src/unidiff.c:343 src/unidiff.c:371 src/unidiff.c:399 src/unidiff.c:794
+#: src/unidiff.c:349 src/unidiff.c:377 src/unidiff.c:405 src/unidiff.c:826
 #, c-format
 msgid "Unidiff '%s': Null hunk type."
 msgstr ""
 
-#: src/unidiff.c:359
+#: src/unidiff.c:365
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for spob '%s'."
 msgstr ""
 
-#: src/unidiff.c:387
+#: src/unidiff.c:393
 #, fuzzy, c-format
 #| msgid "Unknown weapon status for '%s'"
 msgid "Unidiff '%s': Unknown hunk type '%s' for virtual spob '%s'."
 msgstr "Type de statut de vaisseau inconnu '%s' !"
 
-#: src/unidiff.c:415
+#: src/unidiff.c:421
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for jump '%s'."
 msgstr ""
 
-#: src/unidiff.c:452 src/unidiff.c:521 src/unidiff.c:721 src/unidiff.c:821
-#: src/unidiff.c:866
+#: src/unidiff.c:458 src/unidiff.c:527 src/unidiff.c:753 src/unidiff.c:853
+#: src/unidiff.c:898
 #, c-format
 msgid "Unidiff '%s' has unknown node '%s'."
 msgstr ""
 
-#: src/unidiff.c:479 src/unidiff.c:548 src/unidiff.c:749
+#: src/unidiff.c:485 src/unidiff.c:554 src/unidiff.c:781
 #, c-format
 msgid "Unidiff '%s' has an target node without a 'name' tag"
 msgstr ""
 
-#: src/unidiff.c:812
+#: src/unidiff.c:844
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for faction '%s'."
 msgstr ""
 
-#: src/unidiff.c:872
+#: src/unidiff.c:904
 #, c-format
 msgid "Unidiff '%s' failed to apply %d hunk."
 msgid_plural "Unidiff '%s' failed to apply %d hunks."
 msgstr[0] "Unidiff '%s' failed to apply %d hunk."
 msgstr[1] "Unidiff '%s' failed to apply %d hunks."
 
-#: src/unidiff.c:879
+#: src/unidiff.c:911
 #, c-format
 msgid "   [%s] spob add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:882
+#: src/unidiff.c:914
 #, c-format
 msgid "   [%s] spob remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:885
+#: src/unidiff.c:917
 #, c-format
 msgid "   [%s] virtual spob add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:888
+#: src/unidiff.c:920
 #, c-format
 msgid "   [%s] virtual spob remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:891
+#: src/unidiff.c:923
 #, c-format
 msgid "   [%s] jump add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:894
+#: src/unidiff.c:926
 #, c-format
 msgid "   [%s] jump remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:897
+#: src/unidiff.c:929
 #, c-format
 msgid "   [%s] tech add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:901
+#: src/unidiff.c:933
 #, c-format
 msgid "   [%s] tech remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:905
+#: src/unidiff.c:937
 #, c-format
 msgid "   [%s] spob faction: '%s'"
 msgstr ""
 
-#: src/unidiff.c:909
+#: src/unidiff.c:941
 #, c-format
 msgid "   [%s] spob faction removal: '%s'"
 msgstr ""
 
-#: src/unidiff.c:913
+#: src/unidiff.c:945
 #, c-format
 msgid "   [%s] spob population: '%s'"
 msgstr ""
 
-#: src/unidiff.c:917
+#: src/unidiff.c:949
 #, c-format
 msgid "   [%s] spob population removal: '%s'"
 msgstr ""
 
-#: src/unidiff.c:921
+#: src/unidiff.c:953
 #, c-format
 msgid "   [%s] spob displayname: '%s'"
 msgstr ""
 
-#: src/unidiff.c:925
+#: src/unidiff.c:957
 #, c-format
 msgid "   [%s] spob displayname revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:929
+#: src/unidiff.c:961
 #, c-format
 msgid "   [%s] spob description: '%s'"
 msgstr ""
 
-#: src/unidiff.c:933
+#: src/unidiff.c:965
 #, c-format
 msgid "   [%s] spob description revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:937
+#: src/unidiff.c:969
 #, c-format
 msgid "   [%s] spob bar: '%s'"
 msgstr ""
 
-#: src/unidiff.c:941
+#: src/unidiff.c:973
 #, c-format
 msgid "   [%s] spob bar revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:945
+#: src/unidiff.c:977
 #, c-format
 msgid "   [%s] spob space: '%s'"
 msgstr ""
 
-#: src/unidiff.c:949
+#: src/unidiff.c:981
 #, c-format
 msgid "   [%s] spob sipace revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:953
+#: src/unidiff.c:985
 #, c-format
 msgid "   [%s] spob exterior: '%s'"
 msgstr ""
 
-#: src/unidiff.c:957
+#: src/unidiff.c:989
 #, c-format
 msgid "   [%s] spob exterior revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:961
+#: src/unidiff.c:993
 #, c-format
 msgid "   [%s] spob lua: '%s'"
 msgstr ""
 
-#: src/unidiff.c:965
+#: src/unidiff.c:997
 #, c-format
 msgid "   [%s] spob lua revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:969
+#: src/unidiff.c:1001
 #, c-format
 msgid "   [%s] spob service add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:973
+#: src/unidiff.c:1005
 #, c-format
 msgid "   [%s] spob service remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:977
+#: src/unidiff.c:1009 src/unidiff.c:1017
 #, c-format
 msgid "   [%s] spob tech add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:981
+#: src/unidiff.c:1013 src/unidiff.c:1021
 #, c-format
 msgid "   [%s] spob tech remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:985
+#: src/unidiff.c:1025
 #, c-format
 msgid "   [%s] faction visible: '%s'"
 msgstr ""
 
-#: src/unidiff.c:989
+#: src/unidiff.c:1029
 #, c-format
 msgid "   [%s] faction invisible: '%s'"
 msgstr ""
 
-#: src/unidiff.c:993
+#: src/unidiff.c:1033
 #, c-format
 msgid "   [%s] faction set ally: '%s'"
 msgstr ""
 
-#: src/unidiff.c:997
+#: src/unidiff.c:1037
 #, c-format
 msgid "   [%s] faction set enemy: '%s'"
 msgstr ""
 
-#: src/unidiff.c:1001
+#: src/unidiff.c:1041
 #, c-format
 msgid "   [%s] faction set neutral: '%s'"
 msgstr ""
 
-#: src/unidiff.c:1005
+#: src/unidiff.c:1045
 #, c-format
 msgid "   [%s] faction alignment reset: '%s'"
 msgstr ""
 
-#: src/unidiff.c:1010
+#: src/unidiff.c:1050
 #, c-format
 msgid "   unknown hunk '%d'"
 msgstr ""
 
-#: src/unidiff.c:1329
+#: src/unidiff.c:1396
 #, c-format
 msgid "Unknown hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1532
+#: src/unidiff.c:1606
 #, c-format
 msgid "Unknown Hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1537
+#: src/unidiff.c:1611
 #, c-format
 msgid "Failed to remove hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1661
+#: src/unidiff.c:1737
 msgid "Expected node \"diff\" to contain the name of a unidiff. Was empty."
 msgstr ""
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-04-21 00:38-0400\n"
+"POT-Creation-Date: 2022-05-12 10:59+0900\n"
 "PO-Revision-Date: 2022-04-08 09:11+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -1148,6 +1148,14 @@ msgstr ""
 msgid "Entering a hypergate!"
 msgstr ""
 
+#: dat/effects/hypergate_exit.xml:2
+msgid "Hypergate Exit"
+msgstr ""
+
+#: dat/effects/hypergate_exit.xml:3
+msgid "Exitting a hypergate!"
+msgstr ""
+
 #: dat/effects/paralyzing_plasma.xml:2
 #: dat/outfits/bioship/skills/paralyzing_plasma.xml:2
 #: dat/scripts/bioship/skills.lua:255
@@ -1323,9 +1331,10 @@ msgid ""
 "and cohesion, when possible."
 msgstr ""
 
-#: dat/faction.xml:318 dat/ships/proteron_archimedes.xml:20
-#: dat/ships/proteron_derivative.xml:16 dat/ships/proteron_kahan.xml:16
-#: dat/ships/proteron_watson.xml:16
+#: dat/faction.xml:318 dat/ships/proteron/proteron_archimedes.xml:20
+#: dat/ships/proteron/proteron_derivative.xml:16
+#: dat/ships/proteron/proteron_kahan.xml:16
+#: dat/ships/proteron/proteron_watson.xml:16
 #, fuzzy
 msgid "Proteron"
 msgstr "프로 테론 카한"
@@ -1367,12 +1376,15 @@ msgstr ""
 msgid "TODO we have to make these guys more interesting."
 msgstr ""
 
-#: dat/faction.xml:390 dat/ships/kauweke.xml:20 dat/ships/nohinohi.xml:13
-#: dat/ships/soromid_arx.xml:20 dat/ships/soromid_brigand.xml:13
-#: dat/ships/soromid_copia.xml:20 dat/ships/soromid_ira.xml:18
-#: dat/ships/soromid_marauder.xml:14 dat/ships/soromid_nyx.xml:14
-#: dat/ships/soromid_odium.xml:15 dat/ships/soromid_reaver.xml:13
-#: dat/ships/soromid_vox.xml:17 dat/ships/taitamariki.xml:15
+#: dat/faction.xml:390 dat/ships/feral_bioship/kauweke.xml:23
+#: dat/ships/feral_bioship/nohinohi.xml:16
+#: dat/ships/feral_bioship/taitamariki.xml:18
+#: dat/ships/soromid/soromid_arx.xml:20
+#: dat/ships/soromid/soromid_brigand.xml:13
+#: dat/ships/soromid/soromid_copia.xml:20 dat/ships/soromid/soromid_ira.xml:18
+#: dat/ships/soromid/soromid_marauder.xml:14
+#: dat/ships/soromid/soromid_nyx.xml:14 dat/ships/soromid/soromid_odium.xml:15
+#: dat/ships/soromid/soromid_reaver.xml:13 dat/ships/soromid/soromid_vox.xml:17
 msgid "Soromid"
 msgstr ""
 
@@ -1449,11 +1461,14 @@ msgstr ""
 msgid "Dvaered"
 msgstr ""
 
-#: dat/faction.xml:477 dat/ships/ancestor.xml:14
-#: dat/ships/dvaered_ancestor.xml:15 dat/ships/dvaered_arsenal.xml:18
-#: dat/ships/dvaered_phalanx.xml:16 dat/ships/dvaered_vendetta.xml:16
-#: dat/ships/dvaered_vigilance.xml:15 dat/ships/phalanx.xml:15
-#: dat/ships/vendetta.xml:15 dat/ships/vigilance.xml:14
+#: dat/faction.xml:477 dat/ships/dvaered/dvaered_ancestor.xml:15
+#: dat/ships/dvaered/dvaered_arsenal.xml:18
+#: dat/ships/dvaered/dvaered_phalanx.xml:16
+#: dat/ships/dvaered/dvaered_retribution.xml:16
+#: dat/ships/dvaered/dvaered_vendetta.xml:16
+#: dat/ships/dvaered/dvaered_vigilance.xml:15 dat/ships/neutral/ancestor.xml:14
+#: dat/ships/neutral/phalanx.xml:15 dat/ships/neutral/vendetta.xml:15
+#: dat/ships/neutral/vigilance.xml:14
 msgid "House Dvaered"
 msgstr ""
 
@@ -1514,13 +1529,13 @@ msgid ""
 "Sirichana as the focus of worship."
 msgstr ""
 
-#: dat/faction.xml:555 dat/ships/goddard.xml:2 dat/ssys/goddard.xml:2
+#: dat/faction.xml:555 dat/ships/neutral/goddard.xml:2 dat/ssys/goddard.xml:2
 #, fuzzy
 msgid "Goddard"
 msgstr "드 베어드 고다드"
 
-#: dat/faction.xml:560 dat/ships/dvaered_goddard.xml:18
-#: dat/ships/goddard.xml:17
+#: dat/faction.xml:560 dat/ships/dvaered/dvaered_goddard.xml:18
+#: dat/ships/neutral/goddard.xml:17
 #, fuzzy
 msgid "House Goddard"
 msgstr "드 베어드 고다드"
@@ -1817,8 +1832,7 @@ msgstr ""
 #: dat/outfits/accessory/trading_card_rare.xml:5
 #: dat/outfits/accessory/trading_card_uncommon.xml:5
 #: dat/outfits/accessory/ugly_statue.xml:5
-#: dat/outfits/accessory/vacuum_cleaner.xml:5
-#: dat/outfits/intrinsic/gauntlet_deluxe.xml:4 dat/slots.xml:4
+#: dat/outfits/accessory/vacuum_cleaner.xml:5 dat/slots.xml:4
 msgid "Accessory"
 msgstr "엑세서리"
 
@@ -3158,7 +3172,7 @@ msgid "Empire Lancelot Bay"
 msgstr "랜슬롯"
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:8
-#: dat/ships/empire_pacifier.xml:19
+#: dat/ships/empire/empire_pacifier.xml:19
 msgid "You need at least 50 reputation with the Empire."
 msgstr ""
 
@@ -3286,7 +3300,7 @@ msgid "Soromid Brigand Bay"
 msgstr "소로 미드 브 리간드"
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:8
-#: dat/ships/soromid_nyx.xml:17
+#: dat/ships/soromid/soromid_nyx.xml:17
 msgid "You need at least 50 reputation with the Soromid."
 msgstr ""
 
@@ -3304,7 +3318,8 @@ msgid "Thurion Perspicacity Bay"
 msgstr "투리온의 통찰력"
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:8
-#: dat/ships/thurion_apprehension.xml:20 dat/ships/thurion_taciturnity.xml:19
+#: dat/ships/thurion/thurion_apprehension.xml:20
+#: dat/ships/thurion/thurion_taciturnity.xml:19
 msgid "You need at least 50 reputation with the Thurion."
 msgstr ""
 
@@ -3322,7 +3337,8 @@ msgid "Thurion Perspicacity Dock"
 msgstr "투리온의 통찰력"
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:8
-#: dat/ships/thurion_ingenuity.xml:19 dat/ships/thurion_scintillation.xml:20
+#: dat/ships/thurion/thurion_ingenuity.xml:19
+#: dat/ships/thurion/thurion_scintillation.xml:20
 msgid "You need at least 30 reputation with the Thurion."
 msgstr ""
 
@@ -3341,7 +3357,7 @@ msgstr "잘렉의 폭격 드로"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:8
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:8
-#: dat/ships/zalek_demon.xml:19
+#: dat/ships/zalek/zalek_demon.xml:19
 msgid "You need at least 50 reputation with House Za'lek."
 msgstr ""
 
@@ -3379,7 +3395,7 @@ msgid "Za'lek Heavy Drone Bay"
 msgstr "잘렉 헤비 드론"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:8
-#: dat/ships/zalek_mammon.xml:23
+#: dat/ships/zalek/zalek_mammon.xml:23
 msgid "You need at least 60 reputation with House Za'lek."
 msgstr ""
 
@@ -3397,7 +3413,7 @@ msgstr "잘렉 헤비 드론"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:8
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:8
-#: dat/ships/zalek_sting.xml:19
+#: dat/ships/zalek/zalek_sting.xml:19
 msgid "You need at least 40 reputation with House Za'lek."
 msgstr ""
 
@@ -3439,7 +3455,7 @@ msgstr ""
 msgid "Gauntlet Deluxe"
 msgstr ""
 
-#: dat/outfits/intrinsic/gauntlet_deluxe.xml:8
+#: dat/outfits/intrinsic/gauntlet_deluxe.xml:7
 msgid ""
 "The \"Gauntlet Deluxe\" service provides a full retweak and overhaul of the "
 "systems forward weapon circuitry. The optimizations are able to slightly "
@@ -6008,65 +6024,17 @@ msgstr ""
 "보다 향상됩니다. 숙련 된 조종사는 배에 설치된 벌칸 건 한 쌍으로 심각한 혼란"
 "을 일으킬 수 있습니다."
 
-#: dat/ships/admonisher.xml:2
-msgid "Admonisher"
-msgstr "옹호자"
-
-#: dat/ships/admonisher.xml:17 dat/ships/empire_admonisher.xml:18
-#: dat/ships/empire_hawking.xml:19 dat/ships/empire_lancelot.xml:16
-#: dat/ships/empire_pacifier.xml:16 dat/ships/empire_peacemaker.xml:18
-#: dat/ships/empire_rainmaker.xml:20 dat/ships/empire_shark.xml:17
-#: dat/ships/gawain.xml:14 dat/ships/hawking.xml:18 dat/ships/lancelot.xml:15
-#: dat/ships/pacifier.xml:15 dat/ships/shark.xml:16
-#: dat/scripts/common/shark.lua:14
-msgid "Nexus Shipyards"
-msgstr ""
-
-#: dat/ships/admonisher.xml:19
-#, fuzzy
-#| msgid ""
-#| "A very versatile combat ship. Nexus defines the Admonisher as a "
-#| "compromise between the ruggedness of the Pacifier and the agility of the "
-#| "Lancelot. Overall a very solid fighter."
-msgid ""
-"A very versatile combat ship. Nexus defines the Admonisher as a compromise "
-"between the ruggedness of the Pacifier and the agility of the Lancelot. "
-"Overall a very solid combat ship."
-msgstr ""
-"매우 다재다능한 전투함. Nexus는 Admonisher를 Pacifier의 견고 함과 Lancelot의 "
-"민첩성 사이의 절충안으로 정의합니다. 전반적으로 매우 견고한 전투기입니다."
-
-#: dat/ships/ancestor.xml:2
-msgid "Ancestor"
-msgstr "조상"
-
-#: dat/ships/ancestor.xml:16
-#, fuzzy
-#| msgid ""
-#| "Commonly referred to as the little Goddard, the Ancestor also has its "
-#| "roots in the primitive flying machines used by men many ages ago. Unlike "
-#| "the Goddard though, the electronics are done by House Dvaered, making it "
-#| "considerably inferior in that area."
-msgid ""
-"Commonly referred to as the \"Little Goddard\", the Ancestor also has its "
-"roots in the primitive flying machines used by men many ages ago. Unlike the "
-"Goddard though, the electronics are manufactured by House Dvaered, making it "
-"considerably inferior in that area."
-msgstr ""
-"일반적으로 작은 고다드라고 불리는 조상은 또한 오래 전에 인간이 사용했던 원시 "
-"비행 기계에 뿌리를두고 있습니다. 그러나 Goddard와 달리 전자 제품은 House "
-"Dvaered에서 수행하므로 해당 영역에서 상당히 열등합니다."
-
-#: dat/ships/drone.xml:2 dat/missions/minerva/pirate1.lua:175
+#: dat/ships/collective/drone.xml:2 dat/missions/minerva/pirate1.lua:175
 msgid "Drone"
 msgstr ""
 
-#: dat/ships/drone.xml:13 dat/ships/drone_carrier.xml:16
-#: dat/ships/drone_heavy.xml:13 dat/ships/drone_hyena.xml:15
+#: dat/ships/collective/drone.xml:13 dat/ships/collective/drone_carrier.xml:16
+#: dat/ships/collective/drone_heavy.xml:13
+#: dat/ships/collective/drone_hyena.xml:18
 msgid "Robosys"
 msgstr ""
 
-#: dat/ships/drone.xml:14
+#: dat/ships/collective/drone.xml:14
 #, fuzzy
 #| msgid ""
 #| "This is a modified version of the robotic drone that includes a life "
@@ -6077,12 +6045,12 @@ msgid ""
 msgstr ""
 "이것은 인간을위한 생명 유지 시스템을 포함하는 로봇 드론의 수정 된 버전입니다."
 
-#: dat/ships/drone_carrier.xml:2
+#: dat/ships/collective/drone_carrier.xml:2
 #, fuzzy
 msgid "Drone Carrier"
 msgstr "프론티어 시스템"
 
-#: dat/ships/drone_carrier.xml:18
+#: dat/ships/collective/drone_carrier.xml:18
 msgid ""
 "This carrier is highly automated and is designed to command fleets of "
 "Collective Drones. It can be operated by a skeleton crew although most "
@@ -6091,11 +6059,11 @@ msgid ""
 "and heavy armor the Drone Carrier is an unusual lightweight and fast carrier."
 msgstr ""
 
-#: dat/ships/drone_heavy.xml:2
+#: dat/ships/collective/drone_heavy.xml:2
 msgid "Heavy Drone"
 msgstr ""
 
-#: dat/ships/drone_heavy.xml:14
+#: dat/ships/collective/drone_heavy.xml:14
 #, fuzzy
 #| msgid ""
 #| "This Collective heavy drone has been modified by engineers to support a "
@@ -6107,12 +6075,12 @@ msgstr ""
 "이 집단 무거운 드론은 인간 조종사를 지원하기 위해 엔지니어에 의해 수정되었습"
 "니다."
 
-#: dat/ships/drone_hyena.xml:2
+#: dat/ships/collective/drone_hyena.xml:2
 #, fuzzy
 msgid "Drone (Hyena)"
 msgstr "프론티어 시스템"
 
-#: dat/ships/drone_hyena.xml:16
+#: dat/ships/collective/drone_hyena.xml:19
 #, fuzzy
 #| msgid ""
 #| "This is a modified version of the robotic drone that includes a life "
@@ -6123,31 +6091,33 @@ msgid ""
 msgstr ""
 "이것은 인간을위한 생명 유지 시스템을 포함하는 로봇 드론의 수정 된 버전입니다."
 
-#: dat/ships/dvaered_ancestor.xml:2
+#: dat/ships/dvaered/dvaered_ancestor.xml:2
 msgid "Dvaered Ancestor"
 msgstr "드 베어드 조상"
 
-#: dat/ships/dvaered_ancestor.xml:18 dat/ships/dvaered_vendetta.xml:19
+#: dat/ships/dvaered/dvaered_ancestor.xml:18
+#: dat/ships/dvaered/dvaered_vendetta.xml:19
 msgid "You need at least 30 reputation with House Dvaered."
 msgstr ""
 
-#: dat/ships/dvaered_ancestor.xml:19
+#: dat/ships/dvaered/dvaered_ancestor.xml:19
 msgid ""
 "On this military grade version of the Ancestor, the distribution of the "
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
 
-#: dat/ships/dvaered_arsenal.xml:2
+#: dat/ships/dvaered/dvaered_arsenal.xml:2
 #, fuzzy
 msgid "Dvaered Arsenal"
 msgstr "드 베어드 경계"
 
-#: dat/ships/dvaered_arsenal.xml:21
+#: dat/ships/dvaered/dvaered_arsenal.xml:21
+#: dat/ships/dvaered/dvaered_retribution.xml:19
 msgid "You need at least 60 reputation with House Dvaered."
 msgstr ""
 
-#: dat/ships/dvaered_arsenal.xml:22
+#: dat/ships/dvaered/dvaered_arsenal.xml:22
 msgid ""
 "The Arsenal is a heavily armed bulk freighter used by House Dvaered to "
 "transport large amount of supplies and troops whenever such a task would be "
@@ -6158,15 +6128,15 @@ msgid ""
 "called \"Dvaered Gunboxes\"."
 msgstr ""
 
-#: dat/ships/dvaered_goddard.xml:2
+#: dat/ships/dvaered/dvaered_goddard.xml:2
 msgid "Dvaered Goddard"
 msgstr "드 베어드 고다드"
 
-#: dat/ships/dvaered_goddard.xml:21
+#: dat/ships/dvaered/dvaered_goddard.xml:21
 msgid "You need at least 70 reputation with House Dvaered."
 msgstr ""
 
-#: dat/ships/dvaered_goddard.xml:22
+#: dat/ships/dvaered/dvaered_goddard.xml:22
 #, fuzzy
 #| msgid ""
 #| "Once, the Goddard Battlecruiser was commissioned by the Empire for "
@@ -6191,57 +6161,85 @@ msgstr ""
 "House Dvaered는 House Goddard의 가장 큰 고객이며,이 군용 등급 버전은 질량과 "
 "에너지 소비를 증가시키면서 더 나은 갑옷과 무기 손상을 특징으로합니다."
 
-#: dat/ships/dvaered_phalanx.xml:2
+#: dat/ships/dvaered/dvaered_phalanx.xml:2
 msgid "Dvaered Phalanx"
 msgstr "드 베어드 팔랑스"
 
-#: dat/ships/dvaered_phalanx.xml:19
+#: dat/ships/dvaered/dvaered_phalanx.xml:19
 msgid "You need at least 40 reputation with House Dvaered."
 msgstr ""
 
-#: dat/ships/dvaered_phalanx.xml:20
+#: dat/ships/dvaered/dvaered_phalanx.xml:20
 msgid ""
 "On this military grade version of the Phalanx, the distribution of the "
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
 
-#: dat/ships/dvaered_vendetta.xml:2
+#: dat/ships/dvaered/dvaered_retribution.xml:2
+#, fuzzy
+msgid "Dvaered Retribution"
+msgstr "드 베어드 경계"
+
+#: dat/ships/dvaered/dvaered_retribution.xml:20
+msgid ""
+"When the Empire replaced their aging cruisers with the new Hawking class "
+"House Dvaered seized the opportunity to acquire the license for the cruiser "
+"and most of the remaining ships. Dvaered engineers reinforced the armor and "
+"redesigned the ship's structure while also attaching additional weapon hard "
+"points. Afterwards, the ship was renamed to Retribution. However, the "
+"electronics remained outdated."
+msgstr ""
+
+#: dat/ships/dvaered/dvaered_vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:220
 msgid "Dvaered Vendetta"
 msgstr "드 베어드 벤데타"
 
-#: dat/ships/dvaered_vendetta.xml:20
+#: dat/ships/dvaered/dvaered_vendetta.xml:20
 msgid ""
 "On this military grade version of the Vendetta, the distribution of the "
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
 
-#: dat/ships/dvaered_vigilance.xml:2
+#: dat/ships/dvaered/dvaered_vigilance.xml:2
 msgid "Dvaered Vigilance"
 msgstr "드 베어드 경계"
 
-#: dat/ships/dvaered_vigilance.xml:18
+#: dat/ships/dvaered/dvaered_vigilance.xml:18
 msgid "You need at least 50 reputation with House Dvaered."
 msgstr ""
 
-#: dat/ships/dvaered_vigilance.xml:19
+#: dat/ships/dvaered/dvaered_vigilance.xml:19
 msgid ""
 "This military grade version of the Vigilance has an optimized weight "
 "distribution allowing it to carry more payload."
 msgstr ""
 
-#: dat/ships/empire_admonisher.xml:2
+#: dat/ships/empire/empire_admonisher.xml:2
 #, fuzzy
 msgid "Empire Admonisher"
 msgstr "옹호자"
 
-#: dat/ships/empire_admonisher.xml:21
+#: dat/ships/empire/empire_admonisher.xml:18
+#: dat/ships/empire/empire_hawking.xml:19
+#: dat/ships/empire/empire_lancelot.xml:16
+#: dat/ships/empire/empire_pacifier.xml:16
+#: dat/ships/empire/empire_peacemaker.xml:18
+#: dat/ships/empire/empire_rainmaker.xml:20
+#: dat/ships/empire/empire_shark.xml:17 dat/ships/neutral/admonisher.xml:17
+#: dat/ships/neutral/gawain.xml:14 dat/ships/neutral/hawking.xml:18
+#: dat/ships/neutral/lancelot.xml:15 dat/ships/neutral/pacifier.xml:15
+#: dat/ships/neutral/shark.xml:16 dat/scripts/common/shark.lua:14
+msgid "Nexus Shipyards"
+msgstr ""
+
+#: dat/ships/empire/empire_admonisher.xml:21
 msgid "You need at least 40 reputation with the Empire."
 msgstr ""
 
-#: dat/ships/empire_admonisher.xml:22
+#: dat/ships/empire/empire_admonisher.xml:22
 msgid ""
 "This military grade version of the Admonisher is mostly identical in "
 "function to a standard Admonisher, but with slightly better armour, shields, "
@@ -6250,16 +6248,17 @@ msgstr ""
 "이 군사 등급 버전의 Admonisher는 기능면에서 표준 Admonisher와 거의 동일하지"
 "만 갑옷, 방패 및 열 분산이 약간 더 좋습니다."
 
-#: dat/ships/empire_hawking.xml:2
+#: dat/ships/empire/empire_hawking.xml:2
 #, fuzzy
 msgid "Empire Hawking"
 msgstr "제국 상어"
 
-#: dat/ships/empire_hawking.xml:22 dat/ships/empire_rainmaker.xml:23
+#: dat/ships/empire/empire_hawking.xml:22
+#: dat/ships/empire/empire_rainmaker.xml:23
 msgid "You need at least 60 reputation with the Empire."
 msgstr ""
 
-#: dat/ships/empire_hawking.xml:23
+#: dat/ships/empire/empire_hawking.xml:23
 msgid ""
 "This military grade version of the Hawking is mostly identical in function "
 "to a standard Hawking, but with slightly better armour, shields, and heat "
@@ -6268,16 +6267,16 @@ msgstr ""
 "이 군용 버전의 Hawking은 기능면에서 표준 Hawking과 거의 동일하지만 약간 더 나"
 "은 장갑, 방패 및 열 방출을 제공합니다."
 
-#: dat/ships/empire_lancelot.xml:2
+#: dat/ships/empire/empire_lancelot.xml:2
 #, fuzzy
 msgid "Empire Lancelot"
 msgstr "랜슬롯"
 
-#: dat/ships/empire_lancelot.xml:19
+#: dat/ships/empire/empire_lancelot.xml:19
 msgid "You need at least 30 reputation with the Empire."
 msgstr ""
 
-#: dat/ships/empire_lancelot.xml:20
+#: dat/ships/empire/empire_lancelot.xml:20
 msgid ""
 "This military grade version of the Lancelot is mostly identical in function "
 "to a standard Lancelot, but with slightly better armour, shields, and heat "
@@ -6286,12 +6285,12 @@ msgstr ""
 "이 군사 등급 버전의 랜슬롯은 기능면에서 표준 랜슬롯과 거의 동일하지만 약간 "
 "더 나은 갑옷, 방패 및 열 방출을 제공합니다."
 
-#: dat/ships/empire_pacifier.xml:2
+#: dat/ships/empire/empire_pacifier.xml:2
 #, fuzzy
 msgid "Empire Pacifier"
 msgstr "엠파이어 피스 메이커"
 
-#: dat/ships/empire_pacifier.xml:20
+#: dat/ships/empire/empire_pacifier.xml:20
 msgid ""
 "This military grade version of the Pacifier is mostly identical in function "
 "to a standard Pacifier, but with slightly better armour, shields, and heat "
@@ -6300,15 +6299,15 @@ msgstr ""
 "이 군용 Pacifier 버전은 기능면에서 표준 Pacifier와 거의 동일하지만 갑옷, 방"
 "패 및 열 방출이 약간 더 좋습니다."
 
-#: dat/ships/empire_peacemaker.xml:2
+#: dat/ships/empire/empire_peacemaker.xml:2
 msgid "Empire Peacemaker"
 msgstr "엠파이어 피스 메이커"
 
-#: dat/ships/empire_peacemaker.xml:21
+#: dat/ships/empire/empire_peacemaker.xml:21
 msgid "You need at least 70 reputation with the Empire."
 msgstr ""
 
-#: dat/ships/empire_peacemaker.xml:22
+#: dat/ships/empire/empire_peacemaker.xml:22
 msgid ""
 "Built under contract for the Empire by Nexus Shipyards, the Peacemaker is "
 "one of the grandest vessels in the galaxy, dwarfing even the mighty Goddard. "
@@ -6321,13 +6320,13 @@ msgstr ""
 "국 함대의 기함 역할을하며 전투기와 폭격기 편대에 필요한 재 보급을 제공 할 수 "
 "있습니다. 그러나 대부분의 주력함과 마찬가지로 적 폭격기의 공격에 취약합니다."
 
-#: dat/ships/empire_rainmaker.xml:2
+#: dat/ships/empire/empire_rainmaker.xml:2
 #, fuzzy
 #| msgid "Empire Peacemaker"
 msgid "Empire Rainmaker"
 msgstr "엠파이어 피스 메이커"
 
-#: dat/ships/empire_rainmaker.xml:24
+#: dat/ships/empire/empire_rainmaker.xml:24
 msgid ""
 "The Rainmaker is the largest freighter used by the Empire. It is capable of "
 "transporting extensive amounts of material through dangerous territory as "
@@ -6339,15 +6338,15 @@ msgid ""
 "approved and Rainmaker became the ship's official name."
 msgstr ""
 
-#: dat/ships/empire_shark.xml:2
+#: dat/ships/empire/empire_shark.xml:2
 msgid "Empire Shark"
 msgstr "제국 상어"
 
-#: dat/ships/empire_shark.xml:20
+#: dat/ships/empire/empire_shark.xml:20
 msgid "You need at least 20 reputation with the Empire."
 msgstr ""
 
-#: dat/ships/empire_shark.xml:21
+#: dat/ships/empire/empire_shark.xml:21
 msgid ""
 "The Empire military grade version of the Shark is mostly identical in "
 "function to a standard Shark, but with slightly better armour, shields, and "
@@ -6358,12 +6357,107 @@ msgstr ""
 "및 열 방출이 약간 더 우수합니다. 군용 등급 재료를 사용하여 일반 우주선보다 약"
 "간 더 가볍습니다."
 
-#: dat/ships/gawain.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:185
+#: dat/ships/feral_bioship/kauweke.xml:2
+msgid "Kauweke"
+msgstr ""
+
+#: dat/ships/feral_bioship/kauweke.xml:24
+#: dat/ships/feral_bioship/taitamariki.xml:19
+msgid "Still to do..."
+msgstr ""
+
+#: dat/ships/feral_bioship/nohinohi.xml:2
+#, fuzzy
+#| msgid "Rhino"
+msgid "Nohinohi"
+msgstr "코뿔소"
+
+#: dat/ships/feral_bioship/nohinohi.xml:17
+msgid ""
+"Nohinohi were originally created as Soromid Reaver Bio-Fighters. However, "
+"although the process is not entirely clear, when the original Soromid Reaver "
+"is abandoned or lost through misfortune it can undergo a remarkable "
+"transformation where the biological components of the ship end up dominating "
+"the synthetic parts. These ships are commonly referred to as \"Feral Bioships"
+"\" and not much is known about them."
+msgstr ""
+
+#: dat/ships/feral_bioship/taitamariki.xml:2
+msgid "Taitamariki"
+msgstr ""
+
+#: dat/ships/misc/raelid_outpost.xml:2 dat/spob/raelid_outpost.xml:2
+msgid "Raelid Outpost"
+msgstr ""
+
+#: dat/ships/misc/raelid_outpost.xml:12 dat/ships/misc/raglan_outpost.xml:12
+#: dat/ships/misc/sindbad.xml:12 src/dev_uniedit.c:255 src/dev_uniedit.c:261
+#: src/dev_uniedit.c:1382 src/dev_uniedit.c:1383 src/land_outfits.c:435
+#: src/land_outfits.c:436 src/land_outfits.c:437 src/land_outfits.c:438
+#: src/land_trade.c:203 src/land_trade.c:205 src/land_trade.c:208
+#: src/land_trade.c:209 src/map.c:625 src/map.c:626 src/outfit.c:286
+#: src/outfit.c:305
+msgid "N/A"
+msgstr ""
+
+#: dat/ships/misc/raelid_outpost.xml:13 dat/ships/misc/raglan_outpost.xml:13
+#: dat/ships/misc/sindbad.xml:13
+msgid "This is a base. It's for AI use only. Don't buy it. Seriously."
+msgstr "이것은 기본입니다. AI 전용입니다. 그것을 사지 마십시오. 진지하게."
+
+#: dat/ships/misc/raglan_outpost.xml:2 dat/spob/raglan_outpost.xml:2
+msgid "Raglan Outpost"
+msgstr ""
+
+#: dat/ships/misc/sindbad.xml:2 dat/spob/sindbad.xml:2
+msgid "Sindbad"
+msgstr ""
+
+#: dat/ships/neutral/admonisher.xml:2
+msgid "Admonisher"
+msgstr "옹호자"
+
+#: dat/ships/neutral/admonisher.xml:19
+#, fuzzy
+#| msgid ""
+#| "A very versatile combat ship. Nexus defines the Admonisher as a "
+#| "compromise between the ruggedness of the Pacifier and the agility of the "
+#| "Lancelot. Overall a very solid fighter."
+msgid ""
+"A very versatile combat ship. Nexus defines the Admonisher as a compromise "
+"between the ruggedness of the Pacifier and the agility of the Lancelot. "
+"Overall a very solid combat ship."
+msgstr ""
+"매우 다재다능한 전투함. Nexus는 Admonisher를 Pacifier의 견고 함과 Lancelot의 "
+"민첩성 사이의 절충안으로 정의합니다. 전반적으로 매우 견고한 전투기입니다."
+
+#: dat/ships/neutral/ancestor.xml:2
+msgid "Ancestor"
+msgstr "조상"
+
+#: dat/ships/neutral/ancestor.xml:16
+#, fuzzy
+#| msgid ""
+#| "Commonly referred to as the little Goddard, the Ancestor also has its "
+#| "roots in the primitive flying machines used by men many ages ago. Unlike "
+#| "the Goddard though, the electronics are done by House Dvaered, making it "
+#| "considerably inferior in that area."
+msgid ""
+"Commonly referred to as the \"Little Goddard\", the Ancestor also has its "
+"roots in the primitive flying machines used by men many ages ago. Unlike the "
+"Goddard though, the electronics are manufactured by House Dvaered, making it "
+"considerably inferior in that area."
+msgstr ""
+"일반적으로 작은 고다드라고 불리는 조상은 또한 오래 전에 인간이 사용했던 원시 "
+"비행 기계에 뿌리를두고 있습니다. 그러나 Goddard와 달리 전자 제품은 House "
+"Dvaered에서 수행하므로 해당 영역에서 상당히 열등합니다."
+
+#: dat/ships/neutral/gawain.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168
 msgid "Gawain"
 msgstr "가와 인"
 
-#: dat/ships/gawain.xml:15
+#: dat/ships/neutral/gawain.xml:15
 #, fuzzy
 #| msgid ""
 #| "The Gawain is a very high-end ship, outpacing nearly all other production "
@@ -6383,24 +6477,32 @@ msgstr ""
 "약하기 때문에 전투를 거의 보지 못하지만 매우 기동성이 뛰어나 스포츠 선박으로 "
 "널리 사용됩니다."
 
-#: dat/ships/goddard.xml:19
+#: dat/ships/neutral/goddard.xml:19
+#, fuzzy
+#| msgid ""
+#| "Designed by eccentric genius Eduard Manuel Goddard, the Goddard "
+#| "Battlecruiser is what skyrocketed House Goddard to fame and fortune. "
+#| "Production is entirely done on Zhiru in the Goddard system by House "
+#| "Goddard. Over time, specialization and improvements on the original "
+#| "design have kept it very competitive in the market. It's a classic of "
+#| "space."
 msgid ""
-"Designed by eccentric genius Eduard Manuel Goddard, the Goddard "
-"Battlecruiser is what skyrocketed House Goddard to fame and fortune. "
-"Production is entirely done on Zhiru in the Goddard system by House Goddard. "
-"Over time, specialization and improvements on the original design have kept "
-"it very competitive in the market. It's a classic of space."
+"Designed by eccentric genius Eduard Manuel Goddard, the Goddard Battleship "
+"is what skyrocketed House Goddard to fame and fortune. Production is "
+"entirely done on Zhiru in the Goddard system by House Goddard. Over time, "
+"specialization and improvements on the original design have kept it very "
+"competitive in the market. It's a classic of space."
 msgstr ""
 "괴상한 천재 인 Eduard Manuel Goddard가 디자인 한 Goddard Battlecruiser는 "
 "House Goddard가 명성과 부를 얻었습니다. 생산은 House Goddard의 Goddard 시스템"
 "에서 Zhiru에서 전적으로 수행됩니다. 시간이 지남에 따라 원래 디자인에 대한 전"
 "문화와 개선으로 시장에서 매우 경쟁력이 유지되었습니다. 공간의 고전입니다."
 
-#: dat/ships/hawking.xml:2
+#: dat/ships/neutral/hawking.xml:2
 msgid "Hawking"
 msgstr "호킹"
 
-#: dat/ships/hawking.xml:20
+#: dat/ships/neutral/hawking.xml:20
 msgid ""
 "The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser "
 "designed for extended engagements, it is widely used by the Empire to exert "
@@ -6413,15 +6515,15 @@ msgstr ""
 "Hawking은 House Goddard의 기함에 이어 두 번째로 좁지 만 프레임이 좁아 적에게 "
 "더 작은 목표를 제시 할 수 있습니다."
 
-#: dat/ships/hyena.xml:2
+#: dat/ships/neutral/hyena.xml:2
 msgid "Hyena"
 msgstr "하이에나"
 
-#: dat/ships/hyena.xml:15
+#: dat/ships/neutral/hyena.xml:15
 msgid "Aerosys"
 msgstr ""
 
-#: dat/ships/hyena.xml:16
+#: dat/ships/neutral/hyena.xml:16
 #, fuzzy
 #| msgid ""
 #| "The star product of Aerosys, the Hyena quickly has become a favourite of "
@@ -6447,23 +6549,15 @@ msgstr ""
 "급 사이에 수많은 하이에나가있는 것처럼 보이기 때문에 기꺼이 지불하려는 사람에"
 "게만 판매하는 것으로 의심됩니다."
 
-#: dat/ships/kauweke.xml:2
-msgid "Kauweke"
-msgstr ""
-
-#: dat/ships/kauweke.xml:21 dat/ships/taitamariki.xml:16
-msgid "Still to do..."
-msgstr ""
-
-#: dat/ships/kestrel.xml:2
+#: dat/ships/neutral/kestrel.xml:2
 msgid "Kestrel"
 msgstr "황조롱이"
 
-#: dat/ships/kestrel.xml:15 dat/ships/starbridge.xml:15
+#: dat/ships/neutral/kestrel.xml:15 dat/ships/neutral/starbridge.xml:15
 msgid "Krain Industries"
 msgstr "Krain 산업"
 
-#: dat/ships/kestrel.xml:17
+#: dat/ships/neutral/kestrel.xml:17
 msgid ""
 "The ship that single-handedly put Krain Industries on the map, the Kestrel "
 "was designed to be a sleek heavy assault cruiser. Generally more fragile "
@@ -6476,16 +6570,17 @@ msgstr ""
 "화력을 최첨단 전자 장치와 결합하여 유능한 선장의 손에 진정으로 무시 무시한 함"
 "선을 만듭니다."
 
-#: dat/ships/koala.xml:2
+#: dat/ships/neutral/koala.xml:2
 msgid "Koala"
 msgstr "코알라"
 
-#: dat/ships/koala.xml:14 dat/ships/llama.xml:16 dat/ships/mule.xml:15
-#: dat/ships/quicksilver.xml:15 dat/ships/rhino.xml:16 dat/ships/zebra.xml:19
+#: dat/ships/neutral/koala.xml:14 dat/ships/neutral/llama.xml:16
+#: dat/ships/neutral/mule.xml:15 dat/ships/neutral/quicksilver.xml:15
+#: dat/ships/neutral/rhino.xml:16 dat/ships/neutral/zebra.xml:19
 msgid "Melendez Corp."
 msgstr "메렌데즈 회사."
 
-#: dat/ships/koala.xml:15
+#: dat/ships/neutral/koala.xml:15
 #, fuzzy
 #| msgid ""
 #| "The Koala is your standard cargo vessel. It's a small ship with little "
@@ -6499,11 +6594,11 @@ msgstr ""
 "코알라는 표준 화물선입니다. 무기 공간은 적지 만화물 공간은 적당한 작은 배입니"
 "다. 광대 한 우주 무역 제국으로 일하는 기업가에게 좋습니다."
 
-#: dat/ships/lancelot.xml:2
+#: dat/ships/neutral/lancelot.xml:2
 msgid "Lancelot"
 msgstr "랜슬롯"
 
-#: dat/ships/lancelot.xml:17
+#: dat/ships/neutral/lancelot.xml:17
 #, fuzzy
 #| msgid ""
 #| "One of the prize heavy fighters of Nexus Shipyards. The Lancelot was "
@@ -6525,12 +6620,12 @@ msgstr ""
 "된 버전이 민간인에게 제공되지만 원래 사양과 완전히 일치하지는 않습니다. 신뢰"
 "성과 가용성을 위해 우주 전역의 보안 기관에서 사용합니다."
 
-#: dat/ships/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:185
+#: dat/ships/neutral/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168
 msgid "Llama"
 msgstr "야마"
 
-#: dat/ships/llama.xml:17
+#: dat/ships/neutral/llama.xml:17
 #, fuzzy
 #| msgid ""
 #| "One of the most widely used ships in the galaxy. Renowned for its "
@@ -6549,11 +6644,11 @@ msgstr ""
 "초의 민간용 우주선 중 하나였으며, 처음에는 귀족들이 사용했고 이제는 더 나은 "
 "것을 감당할 수없는 모든 사람들이 사용합니다."
 
-#: dat/ships/mule.xml:2
+#: dat/ships/neutral/mule.xml:2
 msgid "Mule"
 msgstr "노새"
 
-#: dat/ships/mule.xml:17
+#: dat/ships/neutral/mule.xml:17
 #, fuzzy
 #| msgid ""
 #| "A heavy freighter specialized in transporting cargo throughout the "
@@ -6570,27 +6665,11 @@ msgstr ""
 "객을위한 충분한 숙박 시설이있어 즐거운 크루즈를 즐길 수 있습니다. 노새는 해적"
 "들이 가장 좋아하는 표적이므로 위험한 시스템을 피하는 것이 좋습니다."
 
-#: dat/ships/nohinohi.xml:2
-#, fuzzy
-#| msgid "Rhino"
-msgid "Nohinohi"
-msgstr "코뿔소"
-
-#: dat/ships/nohinohi.xml:14
-msgid ""
-"Nohinohi were originally created as Soromid Reaver Bio-Fighters. However, "
-"although the process is not entirely clear, when the original Soromid Reaver "
-"is abandoned or lost through misfortune it can undergo a remarkable "
-"transformation where the biological components of the ship end up dominating "
-"the synthetic parts. These ships are commonly referred to as \"Feral Bioships"
-"\" and not much is known about them."
-msgstr ""
-
-#: dat/ships/pacifier.xml:2
+#: dat/ships/neutral/pacifier.xml:2
 msgid "Pacifier"
 msgstr "고무 젖꼭지"
 
-#: dat/ships/pacifier.xml:17
+#: dat/ships/neutral/pacifier.xml:17
 #, fuzzy
 #| msgid ""
 #| "The Pacifier is one of the older and trustier designs of Nexus Shipyards. "
@@ -6608,11 +6687,11 @@ msgstr ""
 "니다. Pacifier는 긴 순찰 경로를 용이하게하기 위해 높은 연료 용량을 특징으로합"
 "니다."
 
-#: dat/ships/phalanx.xml:2
+#: dat/ships/neutral/phalanx.xml:2
 msgid "Phalanx"
 msgstr "지골"
 
-#: dat/ships/phalanx.xml:17
+#: dat/ships/neutral/phalanx.xml:17
 msgid ""
 "The Phalanx is, by Dvaered standards, a fast corvette that can be used as a "
 "missile platform, that it also maneuvers poorly is standard Dvaered "
@@ -6620,20 +6699,175 @@ msgid ""
 "it with turrets."
 msgstr ""
 
-#: dat/ships/pirate_admonisher.xml:2
+#: dat/ships/neutral/quicksilver.xml:2
+msgid "Quicksilver"
+msgstr "수은"
+
+#: dat/ships/neutral/quicksilver.xml:16
+msgid ""
+"While still a cargo hauler, the Quicksilver is quite different from "
+"Melendez's other offerings. Featuring a streamlined frame and oversized "
+"engines, it's the prime choice for expedient shipping."
+msgstr ""
+"여전히화물 운송 업체이지만 Quicksilver는 Melendez의 다른 제품과는 상당히 다릅"
+"니다. 유선형 프레임과 특 대형 엔진이 특징 인이 제품은 편리한 배송을위한 최고"
+"의 선택입니다."
+
+#: dat/ships/neutral/rhino.xml:2
+msgid "Rhino"
+msgstr "코뿔소"
+
+#: dat/ships/neutral/rhino.xml:18
+msgid ""
+"A particularly durable Melendez design, the Rhino is well-suited to "
+"transporting high-value, high-risk freight. While it has much lower cargo "
+"density than dedicated freighters, it protects itself extremely effectively. "
+"Its modular bays allow it to function as a personnel transport, a fact not "
+"lost on modern militaries."
+msgstr ""
+"슈뢰딩거는 주로 정찰선으로 사용됩니다. 고급 자동화 하위 시스템으로 인해 골격 "
+"승무원이 필요하며 독점 연료 탱크를 사용하면 대부분의 선박보다 더 넓은 범위를 "
+"확보 할 수 있습니다. 단점은 장갑이 가볍고 무기 공간이 적기 때문에 공격에 매"
+"우 취약합니다. 또한 한 쌍의 Eraedon 엔진이 장착되어 기동성이 뛰어납니다."
+
+#: dat/ships/neutral/schroedinger.xml:2
+msgid "Schroedinger"
+msgstr "슈뢰딩거"
+
+#: dat/ships/neutral/schroedinger.xml:15
+#: dat/ships/sirius/sirius_divinity.xml:14 dat/ships/sirius/sirius_dogma.xml:14
+#: dat/ships/sirius/sirius_fidelity.xml:14
+#: dat/ships/sirius/sirius_preacher.xml:13
+#: dat/ships/sirius/sirius_providence.xml:18
+#: dat/ships/sirius/sirius_shaman.xml:13
+msgid "Sirius Systems"
+msgstr "시리우스 시스템"
+
+#: dat/ships/neutral/schroedinger.xml:16
+msgid ""
+"The Schroedinger is primarily used as a reconnaissance vessel. It requires a "
+"skeleton crew due to its advanced automation subsystems, and its proprietary "
+"fuel tanks allow it to have range much greater than most ships. The downside "
+"is that the ship is extremely vulnerable to attack due to its light armour "
+"and low amount of weapons space. It is also equipped with a pair of Eraedon "
+"engines, making it highly manoeuvrable."
+msgstr ""
+"슈뢰딩거는 주로 정찰선으로 사용됩니다. 고급 자동화 하위 시스템으로 인해 골격 "
+"승무원이 필요하며 독점 연료 탱크를 사용하면 대부분의 선박보다 훨씬 더 넓은 범"
+"위를 가질 수 있습니다. 단점은 장갑이 가볍고 무기 공간이 적기 때문에 공격에 매"
+"우 취약하다는 것입니다. 또한 한 쌍의 Eraedon 엔진이 장착되어 기동성이 뛰어납"
+"니다."
+
+#: dat/ships/neutral/shark.xml:2 dat/scripts/pilotname/generic.lua:77
+msgid "Shark"
+msgstr "상어"
+
+#: dat/ships/neutral/shark.xml:18
+#, fuzzy
+#| msgid ""
+#| "A newer Nexus Shipyards design, the Shark is an agile light fighter "
+#| "designed for in-system patrolling. While it's not as capable as its "
+#| "larger relative, the Lancelot, it's still an effective addition to any "
+#| "fleet."
+msgid ""
+"A newer Nexus Shipyards design, the Shark is an agile, light fighter "
+"designed for in-system patrolling. While it's not as capable as its larger "
+"relative, the Lancelot, it's still an effective addition to any fleet."
+msgstr ""
+"최신 Nexus Shipyards 디자인 인 Shark는 시스템 내 순찰 용으로 설계된 민첩한 라"
+"이트 파이터입니다. 더 큰 친척 인 Lancelot만큼 능력은 없지만 여전히 모든 함대"
+"에 효과적인 추가 기능입니다."
+
+#: dat/ships/neutral/starbridge.xml:2
+msgid "Starbridge"
+msgstr ""
+
+#: dat/ships/neutral/starbridge.xml:17
+msgid ""
+"The Starbridge is the latest ship designed by Krain Industries. It is a "
+"lightweight destroyer reaching the same manoeuvrability as a corvette and "
+"comparable maximum speed. It's low mass comes at the cost of reduced "
+"structural space."
+msgstr ""
+
+#: dat/ships/neutral/vendetta.xml:2
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:223
+msgid "Vendetta"
+msgstr "상호 복수"
+
+#: dat/ships/neutral/vendetta.xml:17
+#, fuzzy
+#| msgid ""
+#| "The Vendetta displays the House Dvaered philosophy very well. Give a ship "
+#| "many intimidating guns, layer it with heavy armour, and neglect the "
+#| "electronics. Due to the obsolete electronics used in the Vendetta, it is "
+#| "better suited to skirmishes than extended battles, as it possesses "
+#| "inferior shield and energy regeneration compared to other ships of its "
+#| "class, though it can unleash a truly fearsome barrage."
+msgid ""
+"The Vendetta displays the House Dvaered philosophy very well. Give a ship "
+"many intimidating guns, layer it with heavy armour and neglect the "
+"electronics. Due to the obsolete electronics used in the Vendetta, it is "
+"better suited to short fights than extended battles, as it possesses "
+"inferior energy regeneration compared to other ships of its class. On the "
+"other hand it has a  truly fearsome barrage it can unleash that has "
+"precisely the power to transform extended battles into short fights."
+msgstr ""
+"Vendetta는 House Dvaered 철학을 아주 잘 보여줍니다. 함선에 위협적인 총을 많이"
+"주고 무거운 갑옷을 입히고 전자 장치를 무시하십시오. Vendetta에 사용되는 구식 "
+"전자 장치로 인해, 다른 동급 군함에 비해 열등한 방패와 에너지 재생 능력을 가지"
+"고 있기 때문에 확장 된 전투보다 전투에 더 적합하지만, 정말 무시 무시한 포격"
+"을 일으킬 수 있습니다."
+
+#: dat/ships/neutral/vigilance.xml:2
+msgid "Vigilance"
+msgstr "각서"
+
+#: dat/ships/neutral/vigilance.xml:16
+#, fuzzy
+#| msgid ""
+#| "The Vigilance is the embodiment of Dvaered philosophy. Featuring immense "
+#| "energy reserves and six weapon hardpoints, it's designed to hit as hard "
+#| "as possible. Given its Dvaered origins, it possesses inferior technology "
+#| "relative to its counterparts."
+msgid ""
+"The Vigilance is the embodiment of Dvaered philosophy. Featuring immense "
+"energy reserves and six weapon hardpoints, it's designed to hit as hard as "
+"possible with forward weapons. Given its Dvaered origins, it possesses "
+"inferior technology relative to its counterparts."
+msgstr ""
+"Vigilance는 Dvaered 철학의 구체화입니다. 엄청난 에너지 보유량과 6 개의 무기 "
+"하드 포인트를 특징으로하는이 제품은 최대한 세게 타격하도록 설계되었습니다. "
+"Dvaered 기원을 감안할 때 상대 제품에 비해 열등한 기술을 보유하고 있습니다."
+
+#: dat/ships/neutral/zebra.xml:2
+msgid "Zebra"
+msgstr ""
+
+#: dat/ships/neutral/zebra.xml:21
+msgid ""
+"The Zebra bulk freighter is the largest of all of the freighters produced by "
+"Melendez, and one of the most desired ships by all independent civilian "
+"traders. The Zebra offers an unmatched cargo density with reasonable "
+"protection."
+msgstr ""
+
+#: dat/ships/pirate/pirate_admonisher.xml:2
 #, fuzzy
 msgid "Pirate Admonisher"
 msgstr "해적 옹호자"
 
-#: dat/ships/pirate_admonisher.xml:18 dat/ships/pirate_ancestor.xml:15
-#: dat/ships/pirate_hyena.xml:16 dat/ships/pirate_kestrel.xml:16
-#: dat/ships/pirate_phalanx.xml:16 dat/ships/pirate_rhino.xml:17
-#: dat/ships/pirate_shark.xml:17 dat/ships/pirate_starbridge.xml:16
-#: dat/ships/pirate_vendetta.xml:16
+#: dat/ships/pirate/pirate_admonisher.xml:18
+#: dat/ships/pirate/pirate_ancestor.xml:15 dat/ships/pirate/pirate_hyena.xml:16
+#: dat/ships/pirate/pirate_kestrel.xml:16
+#: dat/ships/pirate/pirate_phalanx.xml:16 dat/ships/pirate/pirate_rhino.xml:17
+#: dat/ships/pirate/pirate_shark.xml:17
+#: dat/ships/pirate/pirate_starbridge.xml:16
+#: dat/ships/pirate/pirate_vendetta.xml:16
 msgid "Skull and Bones"
 msgstr "두개골과 뼈"
 
-#: dat/ships/pirate_admonisher.xml:19
+#: dat/ships/pirate/pirate_admonisher.xml:19
 #, fuzzy
 #| msgid ""
 #| "The stock Admonisher is a powerful vessel, especially for its size. "
@@ -6650,11 +6884,11 @@ msgstr ""
 "Bones를 통해 Pirate Admonisher는 향상된 기동성, 더 많은 무기 공간 및 약간 향"
 "상된 방어력을 제공하며화물 용량과 갑옷 재생률을 희생합니다."
 
-#: dat/ships/pirate_ancestor.xml:2
+#: dat/ships/pirate/pirate_ancestor.xml:2
 msgid "Pirate Ancestor"
 msgstr "해적 조상"
 
-#: dat/ships/pirate_ancestor.xml:16
+#: dat/ships/pirate/pirate_ancestor.xml:16
 msgid ""
 "Ancestors were one of the first ships to be fancied by pirates. The big "
 "intimidating wings and good top speeds would usually get ships to surrender "
@@ -6666,12 +6900,12 @@ msgstr ""
 "박이 시장에 나옴에 따라 구식 전자 장치 및 표적 시스템으로 인해 사용이 감소했"
 "습니다."
 
-#: dat/ships/pirate_hyena.xml:2
+#: dat/ships/pirate/pirate_hyena.xml:2
 #, fuzzy
 msgid "Pirate Hyena"
 msgstr "해적 벤데타"
 
-#: dat/ships/pirate_hyena.xml:17
+#: dat/ships/pirate/pirate_hyena.xml:17
 #, fuzzy
 #| msgid ""
 #| "The star product of Aerosys, the Hyena quickly has become a favourite of "
@@ -6696,12 +6930,12 @@ msgstr ""
 "급 사이에 수많은 하이에나가있는 것처럼 보이기 때문에 기꺼이 지불하려는 사람에"
 "게만 판매하는 것으로 의심됩니다."
 
-#: dat/ships/pirate_kestrel.xml:2
+#: dat/ships/pirate/pirate_kestrel.xml:2
 #, fuzzy
 msgid "Pirate Kestrel"
 msgstr "해적 황조롱이"
 
-#: dat/ships/pirate_kestrel.xml:17
+#: dat/ships/pirate/pirate_kestrel.xml:17
 #, fuzzy
 #| msgid ""
 #| "The Kestrel is the best ship offered by the Skull and Bones. It is "
@@ -6718,11 +6952,11 @@ msgstr ""
 "첩하지만 제국의 권위에 의문을 제기하는 데 필요한 화력이 부족하지 않습니다. 그"
 "것을 감당할 수있는 해적들에게 매우 강한 배입니다."
 
-#: dat/ships/pirate_phalanx.xml:2
+#: dat/ships/pirate/pirate_phalanx.xml:2
 msgid "Pirate Phalanx"
 msgstr "해적 지골"
 
-#: dat/ships/pirate_phalanx.xml:17
+#: dat/ships/pirate/pirate_phalanx.xml:17
 msgid ""
 "Building upon the already-capable Phalanx chassis, the Skull and Bones "
 "engineers have substantially improved the ship's performance, while only "
@@ -6731,11 +6965,11 @@ msgstr ""
 "이미 사용 가능한 Phalanx 섀시를 기반으로 Skull and Bones 엔지니어는 함선의 성"
 "능을 크게 향상시키면서 보호 기능을 약간만 희생했습니다."
 
-#: dat/ships/pirate_rhino.xml:2
+#: dat/ships/pirate/pirate_rhino.xml:2
 msgid "Pirate Rhino"
 msgstr "해적 코뿔소"
 
-#: dat/ships/pirate_rhino.xml:18
+#: dat/ships/pirate/pirate_rhino.xml:18
 msgid ""
 "The traditional Skull and Bones refit has left the Rhino substantially more "
 "manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay "
@@ -6745,11 +6979,11 @@ msgstr ""
 "갑은 다소 적습니다. 대형 화물칸과 내구성을 활용 한 Rhino는 뛰어난 청소 함이되"
 "었습니다."
 
-#: dat/ships/pirate_shark.xml:2
+#: dat/ships/pirate/pirate_shark.xml:2
 msgid "Pirate Shark"
 msgstr "해적 상어"
 
-#: dat/ships/pirate_shark.xml:18
+#: dat/ships/pirate/pirate_shark.xml:18
 msgid ""
 "The nimble Nexus Shipyards Shark has proved an excellent canvas for the "
 "Skull and Bones technicians. Fitted with an additional weapon mount, its "
@@ -6760,12 +6994,12 @@ msgstr ""
 "입증했습니다. 추가 무기 마운트가 장착되어있어 핸들링에 최소한의 영향을 주지"
 "만 훨씬 더 많은 화력을 견딜 수 있습니다."
 
-#: dat/ships/pirate_starbridge.xml:2
+#: dat/ships/pirate/pirate_starbridge.xml:2
 #, fuzzy
 msgid "Pirate Starbridge"
 msgstr "투리온의 불꽃"
 
-#: dat/ships/pirate_starbridge.xml:17
+#: dat/ships/pirate/pirate_starbridge.xml:17
 msgid ""
 "Even though the Starbridge is already a light and fast destroyer, Skull and "
 "Bones engineers managed to further improve its speed. Due to its large "
@@ -6773,11 +7007,11 @@ msgid ""
 "truly a fearsome sight."
 msgstr ""
 
-#: dat/ships/pirate_vendetta.xml:2
+#: dat/ships/pirate/pirate_vendetta.xml:2
 msgid "Pirate Vendetta"
 msgstr "해적 벤데타"
 
-#: dat/ships/pirate_vendetta.xml:17
+#: dat/ships/pirate/pirate_vendetta.xml:17
 #, fuzzy
 #| msgid ""
 #| "The Pirate Vendetta is even more intimidating than its regular "
@@ -6802,11 +7036,11 @@ msgstr ""
 "원래보다 훨씬 낫지 만 원자로가 우주선을 파괴하는 경우가 많습니다. 당신은 하나"
 "에 들어가면 당신에게 일어나지 않기를 바랍니다."
 
-#: dat/ships/proteron_archimedes.xml:2
+#: dat/ships/proteron/proteron_archimedes.xml:2
 msgid "Proteron Archimedes"
 msgstr "프로 테론 아르키메데스"
 
-#: dat/ships/proteron_archimedes.xml:22
+#: dat/ships/proteron/proteron_archimedes.xml:22
 msgid ""
 "The Archimedes is the backbone of the Proteron fleet. Offering heavy "
 "firepower and high durability, it can always be found in the heat of battle."
@@ -6814,11 +7048,11 @@ msgstr ""
 "아르키메데스는 Proteron 함대의 중추입니다. 강력한 화력과 높은 내구성을 제공하"
 "는이 무기는 전투의 열기 속에서 항상 찾을 수 있습니다."
 
-#: dat/ships/proteron_derivative.xml:2
+#: dat/ships/proteron/proteron_derivative.xml:2
 msgid "Proteron Derivative"
 msgstr "프로 테론 유도체"
 
-#: dat/ships/proteron_derivative.xml:18
+#: dat/ships/proteron/proteron_derivative.xml:18
 msgid ""
 "While smaller and less intimidating than its bigger siblings in the Proteron "
 "arsenal, a pack of Derivatives is still a foe to be reckoned with. True to "
@@ -6833,11 +7067,11 @@ msgstr ""
 "적합하지만, 여러 편대를 발사하는 항공 모함 그룹은 여러 차례 전투의 흐름을 바"
 "꾸는 것으로 알려져 있습니다."
 
-#: dat/ships/proteron_kahan.xml:2
+#: dat/ships/proteron/proteron_kahan.xml:2
 msgid "Proteron Kahan"
 msgstr "프로 테론 카한"
 
-#: dat/ships/proteron_kahan.xml:18
+#: dat/ships/proteron/proteron_kahan.xml:18
 #, fuzzy
 #| msgid ""
 #| "The Kahan is a cutting-edge vessel. Its design was completed shortly "
@@ -6855,11 +7089,11 @@ msgstr ""
 "주 전투함이 될 궤도에 올랐습니다. Pacifier보다 무기 마운트가 적지 만 질량과 "
 "구조적 공간이 더 적습니다."
 
-#: dat/ships/proteron_watson.xml:2
+#: dat/ships/proteron/proteron_watson.xml:2
 msgid "Proteron Watson"
 msgstr "프로 테론 왓슨"
 
-#: dat/ships/proteron_watson.xml:18
+#: dat/ships/proteron/proteron_watson.xml:18
 #, fuzzy
 #| msgid ""
 #| "The heart of the Proteron battle fleet is formed by the Watsons. Acting "
@@ -6874,119 +7108,15 @@ msgstr ""
 "명령 및 제어 장치 역할을하는이 함선은 은하계를 지배하기 위해 다른 함선을 조정"
 "합니다."
 
-#: dat/ships/quicksilver.xml:2
-msgid "Quicksilver"
-msgstr "수은"
-
-#: dat/ships/quicksilver.xml:16
-msgid ""
-"While still a cargo hauler, the Quicksilver is quite different from "
-"Melendez's other offerings. Featuring a streamlined frame and oversized "
-"engines, it's the prime choice for expedient shipping."
-msgstr ""
-"여전히화물 운송 업체이지만 Quicksilver는 Melendez의 다른 제품과는 상당히 다릅"
-"니다. 유선형 프레임과 특 대형 엔진이 특징 인이 제품은 편리한 배송을위한 최고"
-"의 선택입니다."
-
-#: dat/ships/raelid_outpost.xml:2 dat/spob/raelid_outpost.xml:2
-msgid "Raelid Outpost"
-msgstr ""
-
-#: dat/ships/raelid_outpost.xml:12 dat/ships/raglan_outpost.xml:12
-#: dat/ships/sindbad.xml:12 src/dev_uniedit.c:255 src/dev_uniedit.c:261
-#: src/dev_uniedit.c:1382 src/dev_uniedit.c:1383 src/land_outfits.c:435
-#: src/land_outfits.c:436 src/land_outfits.c:437 src/land_outfits.c:438
-#: src/land_trade.c:203 src/land_trade.c:205 src/land_trade.c:208
-#: src/land_trade.c:209 src/map.c:624 src/map.c:625 src/outfit.c:286
-#: src/outfit.c:305
-msgid "N/A"
-msgstr ""
-
-#: dat/ships/raelid_outpost.xml:13 dat/ships/raglan_outpost.xml:13
-#: dat/ships/sindbad.xml:13
-msgid "This is a base. It's for AI use only. Don't buy it. Seriously."
-msgstr "이것은 기본입니다. AI 전용입니다. 그것을 사지 마십시오. 진지하게."
-
-#: dat/ships/raglan_outpost.xml:2 dat/spob/raglan_outpost.xml:2
-msgid "Raglan Outpost"
-msgstr ""
-
-#: dat/ships/rhino.xml:2
-msgid "Rhino"
-msgstr "코뿔소"
-
-#: dat/ships/rhino.xml:18
-msgid ""
-"A particularly durable Melendez design, the Rhino is well-suited to "
-"transporting high-value, high-risk freight. While it has much lower cargo "
-"density than dedicated freighters, it protects itself extremely effectively. "
-"Its modular bays allow it to function as a personnel transport, a fact not "
-"lost on modern militaries."
-msgstr ""
-"슈뢰딩거는 주로 정찰선으로 사용됩니다. 고급 자동화 하위 시스템으로 인해 골격 "
-"승무원이 필요하며 독점 연료 탱크를 사용하면 대부분의 선박보다 더 넓은 범위를 "
-"확보 할 수 있습니다. 단점은 장갑이 가볍고 무기 공간이 적기 때문에 공격에 매"
-"우 취약합니다. 또한 한 쌍의 Eraedon 엔진이 장착되어 기동성이 뛰어납니다."
-
-#: dat/ships/schroedinger.xml:2
-msgid "Schroedinger"
-msgstr "슈뢰딩거"
-
-#: dat/ships/schroedinger.xml:15 dat/ships/sirius_divinity.xml:14
-#: dat/ships/sirius_dogma.xml:14 dat/ships/sirius_fidelity.xml:14
-#: dat/ships/sirius_preacher.xml:13 dat/ships/sirius_providence.xml:18
-#: dat/ships/sirius_shaman.xml:13
-msgid "Sirius Systems"
-msgstr "시리우스 시스템"
-
-#: dat/ships/schroedinger.xml:16
-msgid ""
-"The Schroedinger is primarily used as a reconnaissance vessel. It requires a "
-"skeleton crew due to its advanced automation subsystems, and its proprietary "
-"fuel tanks allow it to have range much greater than most ships. The downside "
-"is that the ship is extremely vulnerable to attack due to its light armour "
-"and low amount of weapons space. It is also equipped with a pair of Eraedon "
-"engines, making it highly manoeuvrable."
-msgstr ""
-"슈뢰딩거는 주로 정찰선으로 사용됩니다. 고급 자동화 하위 시스템으로 인해 골격 "
-"승무원이 필요하며 독점 연료 탱크를 사용하면 대부분의 선박보다 훨씬 더 넓은 범"
-"위를 가질 수 있습니다. 단점은 장갑이 가볍고 무기 공간이 적기 때문에 공격에 매"
-"우 취약하다는 것입니다. 또한 한 쌍의 Eraedon 엔진이 장착되어 기동성이 뛰어납"
-"니다."
-
-#: dat/ships/shark.xml:2 dat/scripts/pilotname/generic.lua:77
-msgid "Shark"
-msgstr "상어"
-
-#: dat/ships/shark.xml:18
-#, fuzzy
-#| msgid ""
-#| "A newer Nexus Shipyards design, the Shark is an agile light fighter "
-#| "designed for in-system patrolling. While it's not as capable as its "
-#| "larger relative, the Lancelot, it's still an effective addition to any "
-#| "fleet."
-msgid ""
-"A newer Nexus Shipyards design, the Shark is an agile, light fighter "
-"designed for in-system patrolling. While it's not as capable as its larger "
-"relative, the Lancelot, it's still an effective addition to any fleet."
-msgstr ""
-"최신 Nexus Shipyards 디자인 인 Shark는 시스템 내 순찰 용으로 설계된 민첩한 라"
-"이트 파이터입니다. 더 큰 친척 인 Lancelot만큼 능력은 없지만 여전히 모든 함대"
-"에 효과적인 추가 기능입니다."
-
-#: dat/ships/sindbad.xml:2 dat/spob/sindbad.xml:2
-msgid "Sindbad"
-msgstr ""
-
-#: dat/ships/sirius_divinity.xml:2
+#: dat/ships/sirius/sirius_divinity.xml:2
 msgid "Sirius Divinity"
 msgstr "시리우스 신성"
 
-#: dat/ships/sirius_divinity.xml:17 dat/ships/sirius_dogma.xml:17
+#: dat/ships/sirius/sirius_divinity.xml:17 dat/ships/sirius/sirius_dogma.xml:17
 msgid "You need at least 70 reputation with House Sirius."
 msgstr ""
 
-#: dat/ships/sirius_divinity.xml:18
+#: dat/ships/sirius/sirius_divinity.xml:18
 msgid ""
 "Whilst the Dogma is said to form the core of any Sirian fleet, few combat "
 "pilots would dismiss the significance of the Divinity. Though not "
@@ -6999,11 +7129,11 @@ msgstr ""
 "의 전투기를 배치 할 수있는 신성의 능력은 전투에서 비할 데없는 유연성을 제공하"
 "며, 규모가 큰 함대에서 주요 물류 선박 역할을합니다."
 
-#: dat/ships/sirius_dogma.xml:2
+#: dat/ships/sirius/sirius_dogma.xml:2
 msgid "Sirius Dogma"
 msgstr "시리우스 도그마"
 
-#: dat/ships/sirius_dogma.xml:18
+#: dat/ships/sirius/sirius_dogma.xml:18
 msgid ""
 "The backbone of the House Sirius fleet, the Dogma is a sight to behold. "
 "Trimmed in gold and silver and fielding a large array of weapons, the Dogma "
@@ -7013,15 +7143,15 @@ msgstr ""
 "지고 다양한 무기를 배치 한 도그마는 명성이나 군사력에서 거의 능가하지 않습니"
 "다."
 
-#: dat/ships/sirius_fidelity.xml:2
+#: dat/ships/sirius/sirius_fidelity.xml:2
 msgid "Sirius Fidelity"
 msgstr "시리우스 피델리티"
 
-#: dat/ships/sirius_fidelity.xml:16
+#: dat/ships/sirius/sirius_fidelity.xml:16
 msgid "You need at least 20 reputation with House Sirius."
 msgstr ""
 
-#: dat/ships/sirius_fidelity.xml:17
+#: dat/ships/sirius/sirius_fidelity.xml:17
 #, fuzzy
 #| msgid ""
 #| "The Fidelity is the light fighter of House Sirius. While not particularly "
@@ -7035,15 +7165,15 @@ msgstr ""
 "Fidelity는 House Sirius의 라이트 파이터입니다. 혼자서 특별히 유능하지는 않지"
 "만, 종종 전방 정찰병으로 사용되어 훨씬 더 치명적인 동맹을 데려옵니다."
 
-#: dat/ships/sirius_preacher.xml:2
+#: dat/ships/sirius/sirius_preacher.xml:2
 msgid "Sirius Preacher"
 msgstr "시리우스 설교자"
 
-#: dat/ships/sirius_preacher.xml:16
+#: dat/ships/sirius/sirius_preacher.xml:16
 msgid "You need at least 40 reputation with House Sirius."
 msgstr ""
 
-#: dat/ships/sirius_preacher.xml:17
+#: dat/ships/sirius/sirius_preacher.xml:17
 msgid ""
 "The Preacher, as its name implies, is the primary vessel by which House "
 "Sirius projects its message and will. Fielding a large array of weaponry, "
@@ -7053,17 +7183,17 @@ msgstr ""
 "요 용기입니다. 다양한 무기를 보유한 설교자는 믿지 않는 사람들을 개종자로 만드"
 "는 데 능숙합니다."
 
-#: dat/ships/sirius_providence.xml:2
+#: dat/ships/sirius/sirius_providence.xml:2
 #, fuzzy
 #| msgid "Sirius Preacher"
 msgid "Sirius Providence"
 msgstr "시리우스 설교자"
 
-#: dat/ships/sirius_providence.xml:21
+#: dat/ships/sirius/sirius_providence.xml:21
 msgid "You need at least 60 reputation with House Sirius."
 msgstr ""
 
-#: dat/ships/sirius_providence.xml:22
+#: dat/ships/sirius/sirius_providence.xml:22
 msgid ""
 "The Providence is the bulk freighter of House Sirius and is mainly used to "
 "transport large amounts of supplies. Some of them are also being used to "
@@ -7071,15 +7201,15 @@ msgid ""
 "transports."
 msgstr ""
 
-#: dat/ships/sirius_shaman.xml:2
+#: dat/ships/sirius/sirius_shaman.xml:2
 msgid "Sirius Shaman"
 msgstr "시리우스 주술사"
 
-#: dat/ships/sirius_shaman.xml:16
+#: dat/ships/sirius/sirius_shaman.xml:16
 msgid "You need at least 30 reputation with House Sirius."
 msgstr ""
 
-#: dat/ships/sirius_shaman.xml:17
+#: dat/ships/sirius/sirius_shaman.xml:17
 msgid ""
 "Though its relatively sleek form may cause it to be mistaken for a light "
 "fighter from a distance, the Shaman is anything but. A purpose-built light "
@@ -7089,15 +7219,15 @@ msgstr ""
 "사는 그 어떤 것도 아닙니다. 특수 제작 된 경량 미사일 플랫폼으로, 주술사의 손"
 "이 닿지 않는 적은 거의 없습니다."
 
-#: dat/ships/soromid_arx.xml:2
+#: dat/ships/soromid/soromid_arx.xml:2
 msgid "Soromid Arx"
 msgstr "소로미드 알스"
 
-#: dat/ships/soromid_arx.xml:23 dat/ships/soromid_vox.xml:20
+#: dat/ships/soromid/soromid_arx.xml:23 dat/ships/soromid/soromid_vox.xml:20
 msgid "You need at least 70 reputation with the Soromid."
 msgstr ""
 
-#: dat/ships/soromid_arx.xml:24
+#: dat/ships/soromid/soromid_arx.xml:24
 msgid ""
 "The Soromid Arx usually features in Soromid fleets as a command vessel and "
 "fighter carrier. Its unique properties allow it amply the strentgh of its "
@@ -7106,15 +7236,15 @@ msgid ""
 "Soromid fleets, without sacrificing carrying capacity."
 msgstr ""
 
-#: dat/ships/soromid_brigand.xml:2
+#: dat/ships/soromid/soromid_brigand.xml:2
 msgid "Soromid Brigand"
 msgstr "소로 미드 브 리간드"
 
-#: dat/ships/soromid_brigand.xml:16
+#: dat/ships/soromid/soromid_brigand.xml:16
 msgid "You need at least 20 reputation with the Soromid."
 msgstr ""
 
-#: dat/ships/soromid_brigand.xml:17
+#: dat/ships/soromid/soromid_brigand.xml:17
 msgid ""
 "The Brigand is a fast, maneuverable bioship that the Soromid use for system "
 "patrols and police duties. The ship is lightly armoured and fairly fragile, "
@@ -7125,17 +7255,17 @@ msgstr ""
 "난 바이오 쉽입니다. 군함은 장갑이 가볍고 연약하지만 빠르게 성장하고 따라서 상"
 "대적으로 소모성이 높아이를 보완합니다."
 
-#: dat/ships/soromid_copia.xml:2
+#: dat/ships/soromid/soromid_copia.xml:2
 #, fuzzy
 #| msgid "Soromid Ira"
 msgid "Soromid Copia"
 msgstr "소로미드 이라"
 
-#: dat/ships/soromid_copia.xml:23 dat/ships/soromid_ira.xml:21
+#: dat/ships/soromid/soromid_copia.xml:23 dat/ships/soromid/soromid_ira.xml:21
 msgid "You need at least 60 reputation with the Soromid."
 msgstr ""
 
-#: dat/ships/soromid_copia.xml:24
+#: dat/ships/soromid/soromid_copia.xml:24
 msgid ""
 "The Copia bio-freighter is the backbone of Soromid convoys and is frequently "
 "used to supply Soromid fleets or military installations with critical "
@@ -7143,26 +7273,27 @@ msgid ""
 "from combat, and can be a very deadly ship in the right hands."
 msgstr ""
 
-#: dat/ships/soromid_ira.xml:2
+#: dat/ships/soromid/soromid_ira.xml:2
 msgid "Soromid Ira"
 msgstr "소로미드 이라"
 
-#: dat/ships/soromid_ira.xml:22
+#: dat/ships/soromid/soromid_ira.xml:22
 msgid ""
 "The Ira is a purpose-grown cruiser commonly found leading Soromid forces. "
 "While its armour is somewhat weak, this rarely saves those met with its "
 "devastating barrage."
 msgstr ""
 
-#: dat/ships/soromid_marauder.xml:2
+#: dat/ships/soromid/soromid_marauder.xml:2
 msgid "Soromid Marauder"
 msgstr "소로미드 약탈자"
 
-#: dat/ships/soromid_marauder.xml:17 dat/ships/soromid_reaver.xml:16
+#: dat/ships/soromid/soromid_marauder.xml:17
+#: dat/ships/soromid/soromid_reaver.xml:16
 msgid "You need at least 30 reputation with the Soromid."
 msgstr ""
 
-#: dat/ships/soromid_marauder.xml:18
+#: dat/ships/soromid/soromid_marauder.xml:18
 msgid ""
 "The Marauder was developed from the same base as the Brigand, but the two "
 "ships are quite different. The Marauder was developed to fill a bomber role, "
@@ -7173,11 +7304,11 @@ msgstr ""
 "Marauder는 내구도와 탄약 실을 증가시키는 폭격기 역할을 수행하기 위해 개발되었"
 "습니다. 이것은 멀리 떨어진 사촌보다 상당히 느리게 만듭니다."
 
-#: dat/ships/soromid_nyx.xml:2
+#: dat/ships/soromid/soromid_nyx.xml:2
 msgid "Soromid Nyx"
 msgstr "소로미드 닉스"
 
-#: dat/ships/soromid_nyx.xml:18
+#: dat/ships/soromid/soromid_nyx.xml:18
 msgid ""
 "The Nyx is the symbol of the Soromid's military might. Able to provide heavy "
 "firepower in heated battles and agile enough to withdraw when needed, this "
@@ -7187,15 +7318,15 @@ msgstr ""
 "수 있고 필요할 때 철수 할 수있을만큼 민첩한이 배는 일반적으로 규모가 큰 "
 "Soromid 함대의 중추를 형성합니다."
 
-#: dat/ships/soromid_odium.xml:2
+#: dat/ships/soromid/soromid_odium.xml:2
 msgid "Soromid Odium"
 msgstr "소로미드 오듐"
 
-#: dat/ships/soromid_odium.xml:18
+#: dat/ships/soromid/soromid_odium.xml:18
 msgid "You need at least 40 reputation with the Soromid."
 msgstr ""
 
-#: dat/ships/soromid_odium.xml:19
+#: dat/ships/soromid/soromid_odium.xml:19
 msgid ""
 "The Odium offers a good balance between shields and armour, as well as an "
 "impressive amount of system hardpoints for a ship its size. It can often be "
@@ -7205,11 +7336,11 @@ msgstr ""
 "상적인 양의 시스템 하드 포인트를 제공합니다. 소규모 군사 교전을 지배하는 경우"
 "가 종종 있습니다."
 
-#: dat/ships/soromid_reaver.xml:2
+#: dat/ships/soromid/soromid_reaver.xml:2
 msgid "Soromid Reaver"
 msgstr "소로미드 강"
 
-#: dat/ships/soromid_reaver.xml:17
+#: dat/ships/soromid/soromid_reaver.xml:17
 msgid ""
 "Reavers are often found at the forefront of Soromid military engagements. "
 "Their good speed and maneuverability are compounded by their durability, "
@@ -7219,11 +7350,11 @@ msgstr ""
 "동성은 내구성에 의해 더욱 강화되어 Reaver는 은하계에서 가장 효과적인 중전 투"
 "기 중 하나입니다."
 
-#: dat/ships/soromid_vox.xml:2
+#: dat/ships/soromid/soromid_vox.xml:2
 msgid "Soromid Vox"
 msgstr "소로미드 복스"
 
-#: dat/ships/soromid_vox.xml:21
+#: dat/ships/soromid/soromid_vox.xml:21
 #, fuzzy
 #| msgid ""
 #| "The Vox is the biggest vessel the Soromid field hands down. This "
@@ -7237,50 +7368,38 @@ msgstr ""
 "Vox는 Soromid 필드가 물려받은 가장 큰 선박입니다. 이 드레드 노트는 주어진 "
 "Soromid 전쟁 함대의 핵심 역할을하며 주목할만한 교전에서만 요청되었습니다."
 
-#: dat/ships/starbridge.xml:2
-msgid "Starbridge"
-msgstr ""
-
-#: dat/ships/starbridge.xml:17
-msgid ""
-"The Starbridge is the latest ship designed by Krain Industries. It is a "
-"lightweight destroyer reaching the same manoeuvrability as a corvette and "
-"comparable maximum speed. It's low mass comes at the cost of reduced "
-"structural space."
-msgstr ""
-
-#: dat/ships/taitamariki.xml:2
-msgid "Taitamariki"
-msgstr ""
-
-#: dat/ships/thurion_apprehension.xml:2
+#: dat/ships/thurion/thurion_apprehension.xml:2
 msgid "Thurion Apprehension"
 msgstr "투리온 체포"
 
-#: dat/ships/thurion_apprehension.xml:17 dat/ships/thurion_certitude.xml:18
-#: dat/ships/thurion_ingenuity.xml:16 dat/ships/thurion_perspicacity.xml:18
-#: dat/ships/thurion_scintillation.xml:17 dat/ships/thurion_taciturnity.xml:16
-#: dat/ships/thurion_virtuosity.xml:18
+#: dat/ships/thurion/thurion_apprehension.xml:17
+#: dat/ships/thurion/thurion_certitude.xml:18
+#: dat/ships/thurion/thurion_ingenuity.xml:16
+#: dat/ships/thurion/thurion_perspicacity.xml:18
+#: dat/ships/thurion/thurion_scintillation.xml:17
+#: dat/ships/thurion/thurion_taciturnity.xml:16
+#: dat/ships/thurion/thurion_virtuosity.xml:18
 msgid "Thurion shipyards"
 msgstr "투리온 조선소"
 
-#: dat/ships/thurion_apprehension.xml:21 dat/ships/thurion_certitude.xml:22
+#: dat/ships/thurion/thurion_apprehension.xml:21
+#: dat/ships/thurion/thurion_certitude.xml:22
 msgid "..."
 msgstr ""
 
-#: dat/ships/thurion_certitude.xml:2
+#: dat/ships/thurion/thurion_certitude.xml:2
 msgid "Thurion Certitude"
 msgstr "투리온의 확신"
 
-#: dat/ships/thurion_certitude.xml:21
+#: dat/ships/thurion/thurion_certitude.xml:21
 msgid "You need at least 70 reputation with the Thurion."
 msgstr ""
 
-#: dat/ships/thurion_ingenuity.xml:2
+#: dat/ships/thurion/thurion_ingenuity.xml:2
 msgid "Thurion Ingenuity"
 msgstr "투리온의 독창성"
 
-#: dat/ships/thurion_ingenuity.xml:20
+#: dat/ships/thurion/thurion_ingenuity.xml:20
 #, fuzzy
 #| msgid ""
 #| "The Thurion Ingenuity is a fighter built for survival. Like all Thurian "
@@ -7303,15 +7422,15 @@ msgstr ""
 "너무 뜨거워지면 재충전과 재생을 위해 빠르게 후퇴 할 수 있습니다. 또한 모든 "
 "Thurian 선박과 마찬가지로 전자 제품은 평균 이상입니다."
 
-#: dat/ships/thurion_perspicacity.xml:2
+#: dat/ships/thurion/thurion_perspicacity.xml:2
 msgid "Thurion Perspicacity"
 msgstr "투리온의 통찰력"
 
-#: dat/ships/thurion_perspicacity.xml:21
+#: dat/ships/thurion/thurion_perspicacity.xml:21
 msgid "You need at least 20 reputation with the Thurion."
 msgstr ""
 
-#: dat/ships/thurion_perspicacity.xml:22
+#: dat/ships/thurion/thurion_perspicacity.xml:22
 msgid ""
 "The Thurion Perspicacity is a fast, light fighter typically used for "
 "scouting or attacking in swarms."
@@ -7319,11 +7438,11 @@ msgstr ""
 "Thurion Perspicacity는 일반적으로 떼를 정찰하거나 공격하는 데 사용되는 빠르"
 "고 가벼운 전투기입니다."
 
-#: dat/ships/thurion_scintillation.xml:2
+#: dat/ships/thurion/thurion_scintillation.xml:2
 msgid "Thurion Scintillation"
 msgstr "투리온의 불꽃"
 
-#: dat/ships/thurion_scintillation.xml:21
+#: dat/ships/thurion/thurion_scintillation.xml:21
 #, fuzzy
 #| msgid ""
 #| "The Thurion Scintillation is a bomber designed to attack from a large "
@@ -7337,12 +7456,12 @@ msgstr ""
 "Thurion Scintillation은 먼 거리에서 공격하도록 설계된 폭격기입니다. 비슷한 크"
 "기의 다른 Thurion 함선보다 무장하지만 다른 폭격기 만큼은 아닙니다."
 
-#: dat/ships/thurion_taciturnity.xml:2
+#: dat/ships/thurion/thurion_taciturnity.xml:2
 #, fuzzy
 msgid "Thurion Taciturnity"
 msgstr "투리온 미술 애호가"
 
-#: dat/ships/thurion_taciturnity.xml:20
+#: dat/ships/thurion/thurion_taciturnity.xml:20
 msgid ""
 "The Thurion Taciturnity is an armoured and stealthy transport capable both "
 "of surviving the harsh nebula and defending itself from attack."
@@ -7350,15 +7469,15 @@ msgstr ""
 "Thurion Taciturnity는 거친 성운에서 살아남고 공격으로부터 자신을 방어 할 수있"
 "는 무장하고 은밀한 수송기입니다."
 
-#: dat/ships/thurion_virtuosity.xml:2
+#: dat/ships/thurion/thurion_virtuosity.xml:2
 msgid "Thurion Virtuosity"
 msgstr "투리온 미술 애호가"
 
-#: dat/ships/thurion_virtuosity.xml:21
+#: dat/ships/thurion/thurion_virtuosity.xml:21
 msgid "You need at least 40 reputation with the Thurion."
 msgstr ""
 
-#: dat/ships/thurion_virtuosity.xml:22
+#: dat/ships/thurion/thurion_virtuosity.xml:22
 #, fuzzy
 #| msgid ""
 #| "The Thurion Virtuosity is a medium-size ship used by the Thurion for "
@@ -7375,67 +7494,17 @@ msgstr ""
 "무기 공간은 별보다 작지만 우주선의 우수한 전자 장치와 거친 성운에 대한 저항력"
 "은 그것을 보완하는 것보다 더 많습니다."
 
-#: dat/ships/vendetta.xml:2
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:223
-msgid "Vendetta"
-msgstr "상호 복수"
-
-#: dat/ships/vendetta.xml:17
-#, fuzzy
-#| msgid ""
-#| "The Vendetta displays the House Dvaered philosophy very well. Give a ship "
-#| "many intimidating guns, layer it with heavy armour, and neglect the "
-#| "electronics. Due to the obsolete electronics used in the Vendetta, it is "
-#| "better suited to skirmishes than extended battles, as it possesses "
-#| "inferior shield and energy regeneration compared to other ships of its "
-#| "class, though it can unleash a truly fearsome barrage."
-msgid ""
-"The Vendetta displays the House Dvaered philosophy very well. Give a ship "
-"many intimidating guns, layer it with heavy armour and neglect the "
-"electronics. Due to the obsolete electronics used in the Vendetta, it is "
-"better suited to short fights than extended battles, as it possesses "
-"inferior energy regeneration compared to other ships of its class. On the "
-"other hand it has a  truly fearsome barrage it can unleash that has "
-"precisely the power to transform extended battles into short fights."
-msgstr ""
-"Vendetta는 House Dvaered 철학을 아주 잘 보여줍니다. 함선에 위협적인 총을 많이"
-"주고 무거운 갑옷을 입히고 전자 장치를 무시하십시오. Vendetta에 사용되는 구식 "
-"전자 장치로 인해, 다른 동급 군함에 비해 열등한 방패와 에너지 재생 능력을 가지"
-"고 있기 때문에 확장 된 전투보다 전투에 더 적합하지만, 정말 무시 무시한 포격"
-"을 일으킬 수 있습니다."
-
-#: dat/ships/vigilance.xml:2
-msgid "Vigilance"
-msgstr "각서"
-
-#: dat/ships/vigilance.xml:16
-#, fuzzy
-#| msgid ""
-#| "The Vigilance is the embodiment of Dvaered philosophy. Featuring immense "
-#| "energy reserves and six weapon hardpoints, it's designed to hit as hard "
-#| "as possible. Given its Dvaered origins, it possesses inferior technology "
-#| "relative to its counterparts."
-msgid ""
-"The Vigilance is the embodiment of Dvaered philosophy. Featuring immense "
-"energy reserves and six weapon hardpoints, it's designed to hit as hard as "
-"possible with forward weapons. Given its Dvaered origins, it possesses "
-"inferior technology relative to its counterparts."
-msgstr ""
-"Vigilance는 Dvaered 철학의 구체화입니다. 엄청난 에너지 보유량과 6 개의 무기 "
-"하드 포인트를 특징으로하는이 제품은 최대한 세게 타격하도록 설계되었습니다. "
-"Dvaered 기원을 감안할 때 상대 제품에 비해 열등한 기술을 보유하고 있습니다."
-
-#: dat/ships/zalek_demon.xml:2
+#: dat/ships/zalek/zalek_demon.xml:2
 msgid "Za'lek Demon"
 msgstr "잘렉 악마"
 
-#: dat/ships/zalek_demon.xml:16 dat/ships/zalek_diablo.xml:16
-#: dat/ships/zalek_hephaestus.xml:16 dat/ships/zalek_mammon.xml:20
-#: dat/ships/zalek_mephisto.xml:14 dat/ships/zalek_sting.xml:16
+#: dat/ships/zalek/zalek_demon.xml:16 dat/ships/zalek/zalek_diablo.xml:16
+#: dat/ships/zalek/zalek_hephaestus.xml:16 dat/ships/zalek/zalek_mammon.xml:20
+#: dat/ships/zalek/zalek_mephisto.xml:14 dat/ships/zalek/zalek_sting.xml:16
 msgid "Za'lek Fabricators"
 msgstr "잘렉의 제작사"
 
-#: dat/ships/zalek_demon.xml:20
+#: dat/ships/zalek/zalek_demon.xml:20
 #, fuzzy
 #| msgid ""
 #| "House Za'lek's ferociously-named destroyer has earned the moniker with "
@@ -7452,15 +7521,15 @@ msgstr ""
 "리 및 크기로 별명을 얻었습니다. 핸들링이 어렵고 모든 Za'lek 선박처럼 장갑이 "
 "좋지 않지만 Za'lek의 적들에게 좋지 않은 위로가됩니다."
 
-#: dat/ships/zalek_diablo.xml:2
+#: dat/ships/zalek/zalek_diablo.xml:2
 msgid "Za'lek Diablo"
 msgstr "잘렉의 디아블ㄹ"
 
-#: dat/ships/zalek_diablo.xml:19 dat/ships/zalek_mephisto.xml:17
+#: dat/ships/zalek/zalek_diablo.xml:19 dat/ships/zalek/zalek_mephisto.xml:17
 msgid "You need at least 70 reputation with House Za'lek."
 msgstr ""
 
-#: dat/ships/zalek_diablo.xml:20
+#: dat/ships/zalek/zalek_diablo.xml:20
 #, fuzzy
 #| msgid ""
 #| "This carrier is the archetypical Za'lek warship. Virtually unarmoured and "
@@ -7475,16 +7544,18 @@ msgstr ""
 "착 한 이들은 최전선 전투가 아니라 파괴적인 드론 무리를위한 플랫폼 역할을합니"
 "다."
 
-#: dat/ships/zalek_drone_bomber.xml:2
+#: dat/ships/zalek/zalek_drone_bomber.xml:2
 msgid "Za'lek Bomber Drone"
 msgstr "잘렉의 폭격 드로"
 
-#: dat/ships/zalek_drone_bomber.xml:13 dat/ships/zalek_drone_heavy.xml:13
-#: dat/ships/zalek_drone_light.xml:13 dat/ships/zalek_drone_scout.xml:13
+#: dat/ships/zalek/zalek_drone_bomber.xml:13
+#: dat/ships/zalek/zalek_drone_heavy.xml:13
+#: dat/ships/zalek/zalek_drone_light.xml:13
+#: dat/ships/zalek/zalek_drone_scout.xml:13
 msgid "Za'lek Robotics"
 msgstr "잘렉의 로봇공"
 
-#: dat/ships/zalek_drone_bomber.xml:14
+#: dat/ships/zalek/zalek_drone_bomber.xml:14
 msgid ""
 "This is the Za'lek Bomber Drone. Built for attacking heavy ships. Not to be "
 "flown by the player."
@@ -7492,11 +7563,11 @@ msgstr ""
 "이것은 Za'lek Bomber Drone입니다. 무거운 선박을 공격하기 위해 제작되었습니"
 "다. 플레이어가 비행해서는 안됩니다."
 
-#: dat/ships/zalek_drone_heavy.xml:2
+#: dat/ships/zalek/zalek_drone_heavy.xml:2
 msgid "Za'lek Heavy Drone"
 msgstr "잘렉 헤비 드론"
 
-#: dat/ships/zalek_drone_heavy.xml:14
+#: dat/ships/zalek/zalek_drone_heavy.xml:14
 msgid ""
 "This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by "
 "the player."
@@ -7504,11 +7575,11 @@ msgstr ""
 "이것은 Za'lek Heavy Drone입니다. 더 적고 쓰레기가 아닙니다. 플레이어가 비행해"
 "서는 안됩니다."
 
-#: dat/ships/zalek_drone_light.xml:2
+#: dat/ships/zalek/zalek_drone_light.xml:2
 msgid "Za'lek Light Drone"
 msgstr "잘렉의 경량 드로"
 
-#: dat/ships/zalek_drone_light.xml:14
+#: dat/ships/zalek/zalek_drone_light.xml:14
 msgid ""
 "This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be "
 "flown by the player."
@@ -7516,11 +7587,11 @@ msgstr ""
 "이것은 Za'lek Light Drone입니다. 매우 약하고 저렴하며 수많은. 플레이어가 비행"
 "해서는 안됩니다."
 
-#: dat/ships/zalek_drone_scout.xml:2
+#: dat/ships/zalek/zalek_drone_scout.xml:2
 msgid "Za'lek Scout Drone"
 msgstr "Za'lek 정찰 드로"
 
-#: dat/ships/zalek_drone_scout.xml:14
+#: dat/ships/zalek/zalek_drone_scout.xml:14
 msgid ""
 "This is the Za'lek Scout Drone. Built for scouting, not for battle. Not to "
 "be flown by the player."
@@ -7528,11 +7599,11 @@ msgstr ""
 "이것은 Za'lek Scout Drone입니다. 전투 용이 아닌 정찰 용으로 제작되었습니다. "
 "플레이어가 비행해서는 안됩니다."
 
-#: dat/ships/zalek_hephaestus.xml:2
+#: dat/ships/zalek/zalek_hephaestus.xml:2
 msgid "Za'lek Hephaestus"
 msgstr "잘렉 헤파이스토스"
 
-#: dat/ships/zalek_hephaestus.xml:18
+#: dat/ships/zalek/zalek_hephaestus.xml:18
 msgid ""
 "The crown of the House Za'lek Defence Fleet, these proud buttresses of the "
 "Za'lek's ideals frequently serve as the nerve centre of a Za'lek battle "
@@ -7542,13 +7613,13 @@ msgstr ""
 "Za'lek Imp는 대부분의 다른 Za'lek 선박에 비해 최첨단 센서 제품군을 포함합니"
 "다. 더 무거운 코르벳의 화력은 부족하지만 함대에주는 정보 이점은 무시합니다."
 
-#: dat/ships/zalek_mammon.xml:2
+#: dat/ships/zalek/zalek_mammon.xml:2
 #, fuzzy
 #| msgid "Za'lek Demon"
 msgid "Za'lek Mammon"
 msgstr "잘렉 악마"
 
-#: dat/ships/zalek_mammon.xml:24
+#: dat/ships/zalek/zalek_mammon.xml:24
 msgid ""
 "While House Za'lek relies on drones for most everything, their limited fuel "
 "make them inadequate for performing long-distance transportation. To "
@@ -7560,11 +7631,11 @@ msgid ""
 "making a getaway."
 msgstr ""
 
-#: dat/ships/zalek_mephisto.xml:2
+#: dat/ships/zalek/zalek_mephisto.xml:2
 msgid "Za'lek Mephisto"
 msgstr "자레크의 메피스토"
 
-#: dat/ships/zalek_mephisto.xml:18
+#: dat/ships/zalek/zalek_mephisto.xml:18
 msgid ""
 "A mighty ship, the Mephisto has grand energy and shielding management, and "
 "its shields allow it to shrug off a lot of abuse. A core of these ships can "
@@ -7574,11 +7645,11 @@ msgstr ""
 "방어막 덕분에 많은 학대를 피할 수 있습니다. 이 배의 핵심은 강력한 함대조차도 "
 "짧은 시간에 슬래그로 줄일 수 있습니다."
 
-#: dat/ships/zalek_sting.xml:2
+#: dat/ships/zalek/zalek_sting.xml:2
 msgid "Za'lek Sting"
 msgstr "자레크의 찌르기"
 
-#: dat/ships/zalek_sting.xml:20
+#: dat/ships/zalek/zalek_sting.xml:20
 #, fuzzy
 #| msgid ""
 #| "The Sting Corvette is rather large for its size, but its advanced sensor "
@@ -7593,18 +7664,6 @@ msgid ""
 msgstr ""
 "Sting Corvette는 크기에 비해 다소 크지 만 고급 센서 제품군, 인상적인 무기로"
 "드 아웃 및 견고한 실드로 인해 House Za'lek 함대의 좋은 백본이됩니다."
-
-#: dat/ships/zebra.xml:2
-msgid "Zebra"
-msgstr ""
-
-#: dat/ships/zebra.xml:21
-msgid ""
-"The Zebra bulk freighter is the largest of all of the freighters produced by "
-"Melendez, and one of the most desired ships by all independent civilian "
-"traders. The Zebra offers an unmatched cargo density with reasonable "
-"protection."
-msgstr ""
 
 #: dat/slots.xml:5
 #, fuzzy
@@ -20801,7 +20860,7 @@ msgstr "소로미드 강"
 msgid "Thurion Local"
 msgstr "투리온의 통찰력"
 
-#: dat/spob_virtual/tradelane.xml:2 src/map.c:782
+#: dat/spob_virtual/tradelane.xml:2 src/map.c:783
 #, fuzzy
 msgid "Trade Lane"
 msgstr "랜슬롯"
@@ -25997,14 +26056,15 @@ msgstr ""
 
 #. Destroy if exists
 #: dat/board.lua:378 dat/comm.lua:166 dat/events/shipai.lua:37
-#: dat/events/shipai.lua:50 src/comm.c:344 src/console.c:691
-#: src/dev_sysedit.c:1459 src/dev_sysedit.c:1567 src/dev_sysedit.c:1664
-#: src/dev_sysedit.c:1807 src/dev_sysedit.c:1872 src/dev_sysedit.c:2064
-#: src/dev_sysedit.c:2251 src/dev_sysedit.c:2336 src/dev_uniedit.c:410
-#: src/dev_uniedit.c:1510 src/dev_uniedit.c:1709 src/dev_uniedit.c:1945
-#: src/info.c:409 src/info.c:494 src/info.c:576 src/info.c:712 src/info.c:904
-#: src/info.c:1124 src/info.c:1221 src/info.c:1566 src/land_outfits.c:165
-#: src/map.c:374 src/map_find.c:1016 src/map_system.c:202
+#: dat/events/shipai.lua:50 dat/spob/lua/lib/hypergate.lua:300 src/comm.c:344
+#: src/console.c:691 src/dev_sysedit.c:1459 src/dev_sysedit.c:1567
+#: src/dev_sysedit.c:1664 src/dev_sysedit.c:1807 src/dev_sysedit.c:1872
+#: src/dev_sysedit.c:2064 src/dev_sysedit.c:2251 src/dev_sysedit.c:2336
+#: src/dev_uniedit.c:410 src/dev_uniedit.c:1510 src/dev_uniedit.c:1709
+#: src/dev_uniedit.c:1945 src/info.c:409 src/info.c:494 src/info.c:576
+#: src/info.c:712 src/info.c:904 src/info.c:1124 src/info.c:1221
+#: src/info.c:1566 src/land_outfits.c:165 src/map.c:375 src/map_find.c:1003
+#: src/map_system.c:202
 msgid "Close"
 msgstr ""
 
@@ -26054,7 +26114,7 @@ msgid ""
 "You have {playercreds}. Extract the {outfit}?"
 msgstr ""
 
-#: dat/board.lua:453 src/map_system.c:1037
+#: dat/board.lua:453 dat/spob/lua/lib/hypergate.lua:295 src/map_system.c:1037
 msgid "Insufficient Credits"
 msgstr ""
 
@@ -26339,7 +26399,7 @@ msgstr ""
 #.
 #. Event that triggrs a cutscene and the chapter 1 transitions.
 #. --
-#. luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp7 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
+#. luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp7 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_zoom cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
 #. disabled for now
 #. Set up some variables
 #. Compute some sort of progress value
@@ -26371,41 +26431,42 @@ msgstr ""
 #. Activate hypergate with big flash
 #. TODO sound effect
 #. Diffs should be set up so this should always go through
-#. TODO ship goes through jump
 #. Ship jumps
 #. Go to the hypergate and pan camera
 #. Za'lek
 #. Soromid
 #. Sirius
 #. Final text
-#: dat/events/chapter1.lua:340
+#: dat/events/chapter1.lua:339
 msgid "…unwittingly closing the distance to that which could destroy them…"
 msgstr ""
 
 #. Increase visibility
 #. TODO something more omnious
+#. Slowly zoom out
 #. Remove text
-#. Reset zoom
 #. TODO omnious music and "ghost" ships
 #. Rsetore visibility, should match the value set above
 #. Return to system and restore camera
+#. Reset zoom
 #. Cleans up the cutscene stuf
 #. TODO add sound
 #. Chapter 1 message
-#: dat/events/chapter1.lua:386
+#: dat/events/chapter1.lua:389
 msgid "CHAPTER 1"
 msgstr ""
 
-#: dat/events/chapter1.lua:386
+#: dat/events/chapter1.lua:389
 msgid "The Hypergates Awaken"
 msgstr ""
 
 #. Initialize fleet capacity
 #. Have ship ai talk when landed
-#: dat/events/chapter1.lua:407
+#: dat/events/chapter1.lua:409
 msgid "\"\""
 msgstr ""
 
+#. Set the hypergates as known, should make them appear by name on selection menu
 #. Properly finish
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -26755,9 +26816,9 @@ msgstr ""
 #: dat/missions/pirate/blackcat.lua:99 dat/missions/shadow/darkshadow.lua:62
 #: dat/missions/shadow/shadowvigil.lua:63
 #: dat/missions/zalek/blackhole/zbh11.lua:113 dat/scripts/common/comm.lua:30
-#: dat/scripts/common/comm.lua:35 src/equipment.c:1809 src/gui.c:1523
-#: src/map.c:561 src/map.c:567 src/map.c:573 src/map.c:579 src/map.c:585
-#: src/map.c:591 src/map.c:1903 src/map_overlay.c:221 src/map_system.c:479
+#: dat/scripts/common/comm.lua:35 src/equipment.c:1813 src/gui.c:1523
+#: src/map.c:562 src/map.c:568 src/map.c:574 src/map.c:580 src/map.c:586
+#: src/map.c:592 src/map.c:1904 src/map_overlay.c:221 src/map_system.c:479
 #: src/outfit.c:294 src/outfit.c:313 src/outfit.c:899 src/player.c:2035
 #: src/player_autonav.c:92 src/player_autonav.c:217 src/player_autonav.c:460
 #: src/ship.c:212
@@ -26826,7 +26887,7 @@ msgid "You found #o{title}#0!"
 msgstr ""
 
 #. Log and message
-#: dat/events/discovery.lua:354 src/map.c:2118
+#: dat/events/discovery.lua:354 src/map.c:2115
 msgid "Discovery"
 msgstr ""
 
@@ -27658,7 +27719,7 @@ msgid "unknown tradein type"
 msgstr "알 수 없는 보상판매 유형"
 
 #: dat/events/dvaered/totoran.lua:229
-#: dat/missions/empire/collective/ec03.lua:56 src/map_find.c:410
+#: dat/missions/empire/collective/ec03.lua:56 src/map_find.c:396
 #, c-format, lua-format
 msgid "%s (%s)"
 msgstr ""
@@ -27690,7 +27751,7 @@ msgstr ""
 #: dat/events/dvaered/totoran.lua:253 dat/events/minerva/station.lua:345
 #: dat/events/minerva/station.lua:372 dat/missions/dvaered/gauntlet/gui.lua:216
 #: dat/rescue.lua:304 dat/rescue.lua:315 src/dialogue.c:723 src/escort.c:367
-#: src/map_find.c:227 src/options.c:268 src/options.c:854 src/options.c:964
+#: src/map_find.c:213 src/options.c:268 src/options.c:854 src/options.c:964
 #: src/options.c:1227 src/options.c:1278
 msgid "Cancel"
 msgstr ""
@@ -28527,6 +28588,20 @@ msgid ""
 "{royalty_percent:.1f}% of mission earnings."
 msgstr ""
 
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <event name="Hypergate">
+#. <trigger>none</trigger>
+#. <chance>0</chance>
+#. </event>
+#. --
+#. luacheck: globals update hypergate (Hook functions passed by name)
+#: dat/events/hypergate.lua:22
+msgid "Hypergate event run with no target!"
+msgstr ""
+
+#. avoids visual artefact
+#. Clear hypergate
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Hypergate Construction">
@@ -36057,7 +36132,7 @@ msgstr ""
 #. </event>
 #. --
 #. luacheck: globals update wormhole (Hook functions passed by name)
-#: dat/events/wormhole.lua:77
+#: dat/events/wormhole.lua:22
 msgid "Wormhole event run with no target!"
 msgstr ""
 
@@ -36876,11 +36951,11 @@ msgstr ""
 #: src/dev_sysedit.c:2189 src/dev_sysedit.c:2226 src/dev_sysedit.c:2284
 #: src/dev_uniedit.c:1452 src/dev_uniedit.c:1615 src/dev_uniedit.c:1831
 #: src/dev_uniedit.c:1896 src/info.c:427 src/info.c:520 src/info.c:938
-#: src/info.c:1269 src/input.c:524 src/land.c:864 src/land_outfits.c:441
+#: src/info.c:1269 src/input.c:524 src/land.c:876 src/land_outfits.c:441
 #: src/land_outfits.c:662 src/land_shipyard.c:129 src/land_shipyard.c:218
 #: src/land_trade.c:85 src/land_trade.c:87 src/land_trade.c:153 src/load.c:468
 #: src/load.c:534 src/load.c:578 src/load.c:716 src/load.c:743 src/load.c:768
-#: src/load.c:812 src/map.c:691 src/map.c:744 src/map.c:1942 src/map_find.c:702
+#: src/load.c:812 src/map.c:692 src/map.c:745 src/map.c:1943 src/map_find.c:688
 #: src/map_system.c:649
 #, c-format
 msgid "None"
@@ -37016,7 +37091,7 @@ msgid "Landing"
 msgstr "착륙 중"
 
 #: dat/gui/legacy.lua:202 dat/gui/legacy.lua:217 dat/gui/legacy.lua:225
-#: src/map.c:868
+#: src/map.c:869
 msgid "Off"
 msgstr ""
 
@@ -37239,7 +37314,7 @@ msgstr "크레딧:"
 msgid "Nav:"
 msgstr ""
 
-#: dat/gui/slim.lua:1085 src/equipment.c:1787 src/info.c:371 src/info.c:596
+#: dat/gui/slim.lua:1085 src/equipment.c:1791 src/info.c:371 src/info.c:596
 #: src/land_shipyard.c:293 src/map_system.c:681
 msgid "Fuel:"
 msgstr ""
@@ -44234,13 +44309,13 @@ msgstr ""
 #. buttons
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:75
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:394
-#: dat/scripts/luatk/core.lua:474 dat/scripts/vntk.lua:74 src/dialogue.c:381
+#: dat/scripts/luatk/core.lua:613 dat/scripts/vntk.lua:74 src/dialogue.c:381
 msgid "Yes"
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_census_00.lua:76
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:395
-#: dat/scripts/luatk/core.lua:480 dat/scripts/vntk.lua:75 src/dialogue.c:383
+#: dat/scripts/luatk/core.lua:619 dat/scripts/vntk.lua:75 src/dialogue.c:383
 msgid "No"
 msgstr ""
 
@@ -46939,7 +47014,7 @@ msgstr ""
 #: dat/missions/pirate/pir_clan_cargo.lua:77
 #: dat/missions/pirate/pir_clan_cargo.lua:78
 #: dat/missions/trader/anxiousmerchant.lua:71
-#: dat/missions/zalek/zlk_cargorun.lua:51 src/land.c:981
+#: dat/missions/zalek/zlk_cargorun.lua:51 src/land.c:993
 msgid "Spaceport Bar"
 msgstr ""
 
@@ -50653,7 +50728,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:199 dat/missions/zalek/zlk_test.lua:109
-#: src/land.c:673 src/npc.c:586
+#: src/land.c:685 src/npc.c:586
 msgid "You have too many active missions."
 msgstr ""
 
@@ -81762,6 +81837,12 @@ msgstr ""
 #.
 #. -- Important functions
 #. --
+#. Custom keypress events
+#.
+#. -- Helper functions
+#. --
+#. bar height
+#. Scrollbar
 #.
 #. -- Window class
 #. --
@@ -81794,10 +81875,20 @@ msgstr ""
 #. Track
 #. Knob
 #.
+#. -- List widget
+#. --
+#. Background
+#. Draw scrollbar
+#. Have to scissors here
+#. Draw selected item background
+#. Draw content
+#. Stop
+#. Undo scissors
+#.
 #. High Level dialogue stuff
 #. --
 #. Add the OK button
-#: dat/scripts/bioship.lua:577 dat/scripts/luatk/core.lua:464
+#: dat/scripts/bioship.lua:577 dat/scripts/luatk/core.lua:603
 #: src/dialogue.c:152 src/dialogue.c:274 src/dialogue.c:330 src/dialogue.c:721
 #: src/options.c:265 src/options.c:652 src/options.c:961 src/options.c:1275
 msgid "OK"
@@ -84068,6 +84159,17 @@ msgid "failed to set fallback font"
 msgstr "존재하지 않는 행성 '%s'을 (를) 로드하지 못했습니다."
 
 #. Transparent background in Naev
+#. local sys_inner  = 3
+#. For access from the outside
+#. To do quick look ups
+#. cInert
+#. Could still be near a known system
+#. Set up custom options and the likes
+#. Set scissors
+#. Display edges
+#. Display systems
+#. Allow for custom rendering
+#. Restore scissors
 #. too lazy to write blackjack over and over
 #. Compute position stuff
 #: dat/scripts/minigames/blackjack.lua:26
@@ -87339,6 +87441,101 @@ msgstr "vn: 알 수 없는 전환 유형 '%s'"
 msgid "Go ahead."
 msgstr ""
 
+#.
+#. @brief Triggers when a pilot lands (assuming they can from can_land()).
+#.
+#. @luatparam Pilot p Pilot that is landing.
+#. --
+#. Do something
+#.
+#. @brief Will be used to render the planet instead of the graphic provided by
+#. load().
+#. --
+#.
+#. @brief Runs updates.
+#.
+#. @luatparam number dt Time increment since last update.
+#. @luatparam number real_dt Real time increment (in real world seconds).
+#. --
+#. Dvaered
+#. Soromid
+#. Empire
+#. Sirius
+#. Pirate
+#. Za'lek
+#.
+#. Active hypergate
+#. --
+#. lg.setBlendMode( "alpha", "premultiplied" )
+#. Draw base hypergate
+#. Draw active overlay shader
+#. lg.setBlendMode( "alpha" )
+#. Handle some options
+#. Set up texture stuff
+#. Position stuff
+#. The canvas
+#. Set up shader
+#. sfx   = nil
+#. We want to do this here or it gets slow in autonav
+#. Avoid double landing
+#. TODO check if hostile to disallow
+#. TODO animation and stuff, probably similar to wormholes
+#: dat/spob/lua/lib/hypergate.lua:139
+msgid "Hypergate ({sysname})"
+msgstr ""
+
+#. Load shaders
+#. Get potential destinations from tags
+#: dat/spob/lua/lib/hypergate.lua:174
+msgid "{sysname} ({factname})"
+msgstr ""
+
+#: dat/spob/lua/lib/hypergate.lua:182
+#, fuzzy
+msgid "Unknown Signature"
+msgstr "%s (알수없는 경로)"
+
+#. TODO convert name into symbol or hash
+#. Show big question mark or something
+#. Center on first item in the list
+#: dat/spob/lua/lib/hypergate.lua:258
+msgid ""
+"#nCurrent System:#0 {cursys}\n"
+"#nHypergate Faction:#0 {fact}\n"
+"#nFaction Standing:#0 {standing} ({standing_value})\n"
+"#nStanding Modifier:#0 {costmod}%#0\n"
+"#nFleet Mass:#0 {totalmass}\n"
+"#nUsage Cost:#0 {totalcost} ({flatcost} + {masscost} per tonne)\n"
+"\n"
+"#nAvailable Jump Target:#0"
+msgstr ""
+
+#: dat/spob/lua/lib/hypergate.lua:286
+msgid ""
+"\n"
+"You are enemies with the {fctname}!"
+msgstr ""
+
+#: dat/spob/lua/lib/hypergate.lua:288
+#, fuzzy
+msgid "Jump to {sysname}?"
+msgstr "투리온의 불꽃"
+
+#: dat/spob/lua/lib/hypergate.lua:289
+#, fuzzy
+msgid "Are you sure you want to jump to {sysname} for {credits}?{extramsg}"
+msgstr "Naev를 나가겠습니까?"
+
+#: dat/spob/lua/lib/hypergate.lua:295
+msgid ""
+"You have insufficient credits to use the hypergate. You are missing "
+"#r{difference}#0."
+msgstr ""
+
+#: dat/spob/lua/lib/hypergate.lua:299
+msgid "Jump!"
+msgstr ""
+
 #. error has occurred
 #: src/ai.c:427
 #, c-format
@@ -87377,7 +87574,7 @@ msgid "Loaded %d AI Profile"
 msgid_plural "Loaded %d AI Profiles"
 msgstr[0] ""
 
-#: src/ai.c:601 src/board.c:77 src/comm.c:172 src/land.c:1613 src/naev.c:523
+#: src/ai.c:601 src/board.c:77 src/comm.c:172 src/land.c:1625 src/naev.c:523
 #: src/player.c:3538
 #, c-format
 msgid ""
@@ -87475,8 +87672,8 @@ msgstr "시스템 '%s'에서 Spob '%s'을(를) 찾을 수 없습니다"
 msgid "Pilot '%s' (ai '%s') has no land target"
 msgstr ""
 
-#: src/ai.c:2364 src/player.c:1654 src/space.c:1892 src/space.c:2024
-#: src/space.c:2070 src/space.c:3348 src/space.c:3368
+#: src/ai.c:2364 src/nlua_player.c:792 src/player.c:1654 src/space.c:1892
+#: src/space.c:2024 src/space.c:2071 src/space.c:3348 src/space.c:3368
 #, c-format
 msgid ""
 "Spob '%s' failed to run '%s':\n"
@@ -87520,81 +87717,81 @@ msgid ""
 "Asteroid Exclusion Zone in Star System '%s' has missing/invalid '%s' element"
 msgstr "임무 '%s'누락 / 잘못된 '%s'요소"
 
-#: src/asteroid.c:626
+#: src/asteroid.c:627
 #, c-format
 msgid "Asteroid Types with same name '%s'"
 msgstr ""
 
-#: src/asteroid.c:661
+#: src/asteroid.c:662
 #, c-format
 msgid "Asteroid Type Groups with same name '%s'"
 msgstr ""
 
-#: src/asteroid.c:685
+#: src/asteroid.c:686
 #, c-format
 msgid "Malformed '%s' file: missing root element 'asteroid'"
 msgstr "잘못된 형식의 '%s' 파일: 루트 요소 'asteroid' 누락"
 
-#: src/asteroid.c:700 src/asteroid.c:808
+#: src/asteroid.c:701 src/asteroid.c:809
 #, fuzzy, c-format
 #| msgid "Mission in %s has invalid or no name"
 msgid "Asteroid '%s' has invalid or no name"
 msgstr "%s의 임무에 유효하지 않거나 이름이 없습니다"
 
-#: src/asteroid.c:738
+#: src/asteroid.c:739
 #, c-format
 msgid "Asteroid Type '%s' has Commodity '%s' with no 'gfx_space'."
 msgstr ""
 
-#: src/asteroid.c:743 src/asteroid.c:752
+#: src/asteroid.c:744 src/asteroid.c:753
 #, fuzzy, c-format
 msgid "Asteroid Type '%s' has unknown node '%s'"
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
-#: src/asteroid.c:747
+#: src/asteroid.c:748
 #, c-format
 msgid "Asteroid Type '%s' has commodity that lacks name or quantity."
 msgstr ""
 
-#: src/asteroid.c:764
+#: src/asteroid.c:765
 #, c-format
 msgid "Asteroid Type '%s' has armour_max below armour_min"
 msgstr ""
 
-#: src/asteroid.c:767
+#: src/asteroid.c:768
 #, fuzzy, c-format
 #| msgid "Mission '%s' missing/invalid '%s' element"
 msgid "Asteroid Type '%s' missing/invalid '%s' element"
 msgstr "임무 '%s'누락 / 잘못된 '%s'요소"
 
-#: src/asteroid.c:797
+#: src/asteroid.c:798
 #, c-format
 msgid "Malformed '%s' file: missing root element 'asteroid_group'"
 msgstr "잘못된 형식의 '%s' 파일: 루트 요소 'asteroid_group' 누락"
 
-#: src/asteroid.c:824
+#: src/asteroid.c:825
 #, fuzzy, c-format
 msgid "Asteroid Type Group '%s' has unknown node '%s'"
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
-#: src/asteroid.c:1055
+#: src/asteroid.c:1056
 #, c-format
 msgid "Unknown Asteroid Type '%s'"
 msgstr "알 수 없는 소행성 유형 '%s'"
 
-#: src/asteroid.c:1080
+#: src/asteroid.c:1081
 #, fuzzy, c-format
 msgid "Unknown Asteroid Type Group '%s'"
 msgstr "알 수없는 Lua 데이터 유형!"
 
-#: src/background.c:256
+#: src/background.c:253
 #, c-format
 msgid ""
 "Background script 'renderbg' error:\n"
 "%s"
 msgstr ""
 
-#: src/background.c:267
+#: src/background.c:264
 #, c-format
 msgid ""
 "Background script 'rendermg' error:\n"
@@ -87603,14 +87800,14 @@ msgstr ""
 "백그라운드 스크립트 'rendermg' 오류:\n"
 "%s"
 
-#: src/background.c:279
+#: src/background.c:276
 #, c-format
 msgid ""
 "Background script 'renderfg' error:\n"
 "%s"
 msgstr ""
 
-#: src/background.c:294
+#: src/background.c:291
 #, c-format
 msgid ""
 "Background script 'renderov' error:\n"
@@ -87619,13 +87816,13 @@ msgstr ""
 "백그라운드 스크립트 'renderov' 오류:\n"
 "%s"
 
-#: src/background.c:416
+#: src/background.c:413
 #, fuzzy, c-format
 #| msgid "Music '%s' not found."
 msgid "Background script '%s' not found."
 msgstr "'%s' 음악을 찾을 수 없습니다."
 
-#: src/background.c:423
+#: src/background.c:420
 #, c-format
 msgid ""
 "Error loading background file: %s\n"
@@ -87633,12 +87830,12 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/background.c:474
+#: src/background.c:471
 #, c-format
 msgid "Background -> 'background' : %s"
 msgstr ""
 
-#: src/background.c:475 src/gui.c:1714 src/nlua_evt.c:146 src/nlua_misn.c:243
+#: src/background.c:472 src/gui.c:1714 src/nlua_evt.c:146 src/nlua_misn.c:243
 #: src/nopenal.c:72
 msgid "unknown error"
 msgstr ""
@@ -88633,7 +88830,7 @@ msgstr ""
 #. Update text.
 #. Text.
 #: src/dev_sysedit.c:1358 src/dev_uniedit.c:1713 src/dev_uniedit.c:1997
-#: src/equipment.c:1759 src/info.c:579 src/load.c:652
+#: src/equipment.c:1763 src/info.c:579 src/load.c:652
 msgid "Name:"
 msgstr "이름:"
 
@@ -88641,7 +88838,7 @@ msgstr "이름:"
 msgid "Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1370 src/land.c:1305 src/map.c:339
+#: src/dev_sysedit.c:1370 src/land.c:1317 src/map.c:340
 msgid "Faction:"
 msgstr "팩션:"
 
@@ -88673,7 +88870,7 @@ msgstr ""
 msgid "hide"
 msgstr ""
 
-#: src/dev_sysedit.c:1440 src/land.c:1310
+#: src/dev_sysedit.c:1440 src/land.c:1322
 msgid "Tags:"
 msgstr ""
 
@@ -88749,7 +88946,7 @@ msgstr ""
 msgid "Thrust: "
 msgstr ""
 
-#: src/dev_sysedit.c:1652 src/dev_uniedit.c:394 src/map.c:852
+#: src/dev_sysedit.c:1652 src/dev_uniedit.c:394 src/map.c:853
 msgid "Asteroids"
 msgstr ""
 
@@ -88881,7 +89078,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/dev_uniedit.c:244 src/map.c:379 src/map_find.c:1014
+#: src/dev_uniedit.c:244 src/map.c:380 src/map_find.c:1001
 msgid "Find"
 msgstr ""
 
@@ -88890,7 +89087,7 @@ msgstr ""
 msgid "Nebula:"
 msgstr "%s성운"
 
-#: src/dev_uniedit.c:259 src/map.c:353
+#: src/dev_uniedit.c:259 src/map.c:354
 msgid "Presence:"
 msgstr ""
 
@@ -89008,7 +89205,7 @@ msgstr ""
 msgid "Find Systems and Spobs"
 msgstr ""
 
-#: src/dev_uniedit.c:1573 src/land.c:860
+#: src/dev_uniedit.c:1573 src/land.c:872
 #, c-format
 msgid "%s (%s system)"
 msgstr ""
@@ -89102,30 +89299,30 @@ msgstr ""
 msgid "Malformed '%s' file: missing root element '%s'"
 msgstr ""
 
-#: src/difficulty.c:81
+#: src/difficulty.c:82
 #, fuzzy, c-format
 msgid "Difficulty '%s' has unknown node '%s'"
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
-#: src/difficulty.c:92
+#: src/difficulty.c:93
 msgid "More than one difficulty with default flag set!"
 msgstr ""
 
-#: src/difficulty.c:97
+#: src/difficulty.c:98
 msgid "No default difficulty set!"
 msgstr ""
 
-#: src/difficulty.c:159
+#: src/difficulty.c:161
 #, fuzzy, c-format
 msgid "Uknown difficulty setting '%s'"
 msgstr "알 수없는 Lua 데이터 유형!"
 
-#: src/difficulty.c:200
+#: src/difficulty.c:202
 #, c-format
 msgid "Difficulty %s"
 msgstr ""
 
-#: src/difficulty.c:204
+#: src/difficulty.c:206
 msgid "This difficulty applies the following effect to the player ships:"
 msgstr ""
 
@@ -89176,7 +89373,7 @@ msgid "Spob '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
 #: src/effect.c:57 src/outfit.c:2161 src/outfit.c:2618 src/slots.c:66
-#: src/spfx.c:1169 src/start.c:71
+#: src/spfx.c:1168 src/start.c:71
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr ""
@@ -89228,8 +89425,8 @@ msgstr[0] "%d개의 성운 레이어로드"
 msgid "Trying to get unknown effect data '%s'!"
 msgstr "존재하지 않는 시스템 '%s'을 (를) 로드하지 못했습니다."
 
-#: src/effect.c:262 src/effect.c:306 src/effect.c:334 src/effect.c:344
-#: src/effect.c:370
+#: src/effect.c:254 src/effect.c:301 src/effect.c:329 src/effect.c:339
+#: src/effect.c:365
 #, fuzzy, c-format
 #| msgid ""
 #| "Failed to run '%s':\n"
@@ -89241,13 +89438,13 @@ msgstr ""
 "'%s' 실행 실패:\n"
 "%s"
 
-#: src/equipment.c:320 src/land.c:327 src/land.c:594 src/land.c:1323
+#: src/equipment.c:320 src/land.c:339 src/land.c:606 src/land.c:1335
 #: src/land_outfits.c:160 src/land_shipyard.c:94 src/land_trade.c:73
 msgid "Take Off"
 msgstr ""
 
 #. Check if player really wants to sell.
-#: src/equipment.c:324 src/equipment.c:2286
+#: src/equipment.c:324 src/equipment.c:2295
 msgid "Sell Ship"
 msgstr ""
 
@@ -89344,333 +89541,344 @@ msgstr ""
 msgid "%.2f DPS [%.2f EPS]"
 msgstr ""
 
-#: src/equipment.c:1483
+#: src/equipment.c:1384 src/equipment.c:2048
+#, fuzzy
+#| msgid "Dvaered Ancestor"
+msgid "Invalid Escort"
+msgstr "드 베어드 조상"
+
+#: src/equipment.c:1384 src/equipment.c:2048
+#, c-format
+msgid "You can not set your ship '%s' as an escort!"
+msgstr ""
+
+#: src/equipment.c:1487
 #, c-format
 msgid "Ship Stats\n"
 msgstr ""
 
-#: src/equipment.c:1573 src/land_outfits.c:323 src/shiplog.c:489
+#: src/equipment.c:1577 src/land_outfits.c:323 src/shiplog.c:489
 #: src/shiplog.c:534
 msgid "All"
 msgstr ""
 
-#: src/equipment.c:1606
+#: src/equipment.c:1610
 msgid "Very little space on equipment outfit tabs!"
 msgstr ""
 
-#: src/equipment.c:1616 src/land_outfits.c:359
+#: src/equipment.c:1620 src/land_outfits.c:359
 msgid "Filter…"
 msgstr ""
 
-#: src/equipment.c:1746
+#: src/equipment.c:1750
 msgid "You do not remember how you acquired this ship."
 msgstr ""
 
-#: src/equipment.c:1762 src/info.c:580 src/land_shipyard.c:225
+#: src/equipment.c:1766 src/info.c:580 src/land_shipyard.c:225
 #: src/map_system.c:656
 #, fuzzy
 #| msgid "Mode"
 msgid "Model:"
 msgstr "모드"
 
-#: src/equipment.c:1763 src/info.c:581 src/land.c:1304 src/land_shipyard.c:227
+#: src/equipment.c:1767 src/info.c:581 src/land.c:1316 src/land_shipyard.c:227
 #: src/map_system.c:657
 msgid "Class:"
 msgstr ""
 
-#: src/equipment.c:1764
+#: src/equipment.c:1768
 msgid "Acquired Date:"
 msgstr ""
 
-#: src/equipment.c:1768
+#: src/equipment.c:1772
 msgid "Value:"
 msgstr ""
 
-#: src/equipment.c:1770
+#: src/equipment.c:1774
 msgid "Fleet Capacity:"
 msgstr ""
 
-#: src/equipment.c:1771 src/info.c:582 src/land_shipyard.c:231
+#: src/equipment.c:1775 src/info.c:582 src/land_shipyard.c:231
 #: src/map_system.c:660
 msgid "Crew:"
 msgstr ""
 
-#: src/equipment.c:1772 src/info.c:584 src/land_outfits.c:193
-#: src/land_outfits.c:424 src/land_shipyard.c:243 src/map_find.c:642
+#: src/equipment.c:1776 src/info.c:584 src/land_outfits.c:193
+#: src/land_outfits.c:424 src/land_shipyard.c:243 src/map_find.c:628
 #: src/map_system.c:636 src/map_system.c:663
 msgid "Mass:"
 msgstr ""
 
-#: src/equipment.c:1773 src/info.c:585
+#: src/equipment.c:1777 src/info.c:585
 #, fuzzy
 msgid "Jump Time:"
 msgstr "%s (%d 점프, %.0fk 거리)"
 
-#: src/equipment.c:1774 src/info.c:586 src/land_shipyard.c:247
+#: src/equipment.c:1778 src/info.c:586 src/land_shipyard.c:247
 #: src/map_system.c:664
 msgid "Thrust:"
 msgstr ""
 
-#: src/equipment.c:1775 src/info.c:587 src/land_shipyard.c:252
+#: src/equipment.c:1779 src/info.c:587 src/land_shipyard.c:252
 #: src/map_system.c:666
 msgid "Speed:"
 msgstr ""
 
-#: src/equipment.c:1776 src/info.c:588 src/land_shipyard.c:257
+#: src/equipment.c:1780 src/info.c:588 src/land_shipyard.c:257
 #: src/map_system.c:668
 msgid "Turn:"
 msgstr ""
 
-#: src/equipment.c:1777 src/info.c:589 src/land_shipyard.c:262
+#: src/equipment.c:1781 src/info.c:589 src/land_shipyard.c:262
 #: src/map_system.c:670
 msgid "Time Constant:"
 msgstr ""
 
-#: src/equipment.c:1778
+#: src/equipment.c:1782
 msgid "Detected at:"
 msgstr ""
 
-#: src/equipment.c:1779
+#: src/equipment.c:1783
 #, fuzzy
 #| msgid "Faction:"
 msgid "Evasion:"
 msgstr "팩션:"
 
-#: src/equipment.c:1780
+#: src/equipment.c:1784
 msgid "Stealth:"
 msgstr ""
 
 #. Misc
-#: src/equipment.c:1782 src/info.c:591 src/land_shipyard.c:267
+#: src/equipment.c:1786 src/info.c:591 src/land_shipyard.c:267
 #: src/map_system.c:672
 msgid "Absorption:"
 msgstr ""
 
-#: src/equipment.c:1783 src/info.c:592 src/land_shipyard.c:272
+#: src/equipment.c:1787 src/info.c:592 src/land_shipyard.c:272
 #: src/map_system.c:674
 msgid "Shield:"
 msgstr ""
 
-#: src/equipment.c:1784 src/info.c:593 src/land_shipyard.c:277
+#: src/equipment.c:1788 src/info.c:593 src/land_shipyard.c:277
 #: src/map_system.c:676
 msgid "Armour:"
 msgstr ""
 
-#: src/equipment.c:1785 src/info.c:594 src/land_shipyard.c:282
+#: src/equipment.c:1789 src/info.c:594 src/land_shipyard.c:282
 #: src/map_system.c:678
 msgid "Energy:"
 msgstr ""
 
-#: src/equipment.c:1786 src/info.c:595 src/land_shipyard.c:289
+#: src/equipment.c:1790 src/info.c:595 src/land_shipyard.c:289
 #: src/map_system.c:680
 msgid "Cargo Space:"
 msgstr ""
 
-#: src/equipment.c:1789
+#: src/equipment.c:1793
 msgid "Ship Status:"
 msgstr ""
 
-#: src/equipment.c:1792
+#: src/equipment.c:1796
 #, fuzzy
 msgid "Time Flown:"
 msgstr "%s (%d 점프, %.0fk 거리)"
 
-#: src/equipment.c:1793
+#: src/equipment.c:1797
 #, fuzzy
 msgid "Jumped Times:"
 msgstr "%s (%d 점프, %.0fk 거리)"
 
-#: src/equipment.c:1794
+#: src/equipment.c:1798
 #, fuzzy
 msgid "Landed Times:"
 msgstr "조판됨:"
 
-#: src/equipment.c:1795
+#: src/equipment.c:1799
 msgid "Damage Done:"
 msgstr ""
 
-#: src/equipment.c:1796
+#: src/equipment.c:1800
 msgid "Damage Taken:"
 msgstr ""
 
-#: src/equipment.c:1797
+#: src/equipment.c:1801
 msgid "Ships Destroyed:"
 msgstr ""
 
-#: src/equipment.c:1798
+#: src/equipment.c:1802
 msgid "Intrinsic Outfits:"
 msgstr ""
 
-#: src/equipment.c:1826 src/equipment.c:1855 src/info.c:391 src/info.c:629
+#: src/equipment.c:1830 src/equipment.c:1859 src/info.c:391 src/info.c:629
 #: src/info.c:649
 msgid "tonne"
 msgid_plural "tonnes"
 msgstr[0] ""
 
-#: src/equipment.c:1828 src/info.c:631
+#: src/equipment.c:1832 src/info.c:631
 #, c-format
 msgid "%s average"
 msgstr ""
 
-#: src/equipment.c:1830
+#: src/equipment.c:1834
 #, c-format
 msgid "#%c%s%.0f#0 kN/tonne"
 msgstr ""
 
-#: src/equipment.c:1832
+#: src/equipment.c:1836
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"
 msgstr ""
 
-#: src/equipment.c:1835
+#: src/equipment.c:1839
 #, c-format
 msgid ""
 "\n"
 "#%c%s%.0f#0 deg/s"
 msgstr ""
 
-#: src/equipment.c:1839
+#: src/equipment.c:1843
 #, c-format
 msgid "%s (%.1f secs for scan)"
 msgstr ""
 
-#: src/equipment.c:1844 src/equipment.c:1847 src/equipment.c:1850
+#: src/equipment.c:1848 src/equipment.c:1851 src/equipment.c:1854
 #, c-format
 msgid "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
 msgstr ""
 
 #. Misc.
-#: src/equipment.c:1854
+#: src/equipment.c:1858
 #, c-format
 msgid "%d / #%c%s%d#0 %s"
 msgstr ""
 
-#: src/equipment.c:1857
+#: src/equipment.c:1861
 #, c-format
 msgid "%s %s (%d %s)"
 msgstr ""
 
-#: src/equipment.c:1858 src/info.c:651 src/land_shipyard.c:294
+#: src/equipment.c:1862 src/info.c:651 src/land_shipyard.c:294
 #: src/land_shipyard.c:298 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
 
-#: src/equipment.c:1858 src/info.c:388 src/info.c:652
+#: src/equipment.c:1862 src/info.c:388 src/info.c:652
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] ""
 
-#: src/equipment.c:1867 src/info.c:393
+#: src/equipment.c:1871 src/info.c:393
 #, c-format
 msgid "%.1f hours"
 msgstr ""
 
-#: src/equipment.c:1871 src/equipment.c:1873 src/info.c:397 src/info.c:399
+#: src/equipment.c:1875 src/equipment.c:1877 src/info.c:397 src/info.c:399
 #, c-format
 msgid "%s MJ"
 msgstr ""
 
-#: src/equipment.c:1960 src/land_outfits.c:734
+#: src/equipment.c:1964 src/land_outfits.c:734
 msgid "Show all outfits"
 msgstr ""
 
-#: src/equipment.c:1961 src/land_outfits.c:735
+#: src/equipment.c:1965 src/land_outfits.c:735
 msgid "Show only outfits equipable on any of your ships"
 msgstr ""
 
-#: src/equipment.c:1962 src/land_outfits.c:736
+#: src/equipment.c:1966 src/land_outfits.c:736
 msgid "Show only outfits equipable on current ship"
 msgstr ""
 
-#: src/equipment.c:1963 src/land_outfits.c:737
+#: src/equipment.c:1967 src/land_outfits.c:737
 msgid "Show only light outfits"
 msgstr ""
 
-#: src/equipment.c:1964 src/land_outfits.c:738
+#: src/equipment.c:1968 src/land_outfits.c:738
 msgid "Show only medium outfits"
 msgstr ""
 
-#: src/equipment.c:1965 src/land_outfits.c:739
+#: src/equipment.c:1969 src/land_outfits.c:739
 msgid "Show only heavy outfits"
 msgstr ""
 
-#: src/equipment.c:2139
+#: src/equipment.c:2148
 msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
 
-#: src/equipment.c:2142
+#: src/equipment.c:2151
 msgid "Unequip Ship"
 msgstr ""
 
 #. confirm
-#: src/equipment.c:2143
+#: src/equipment.c:2152
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:2146 src/land.c:218
+#: src/equipment.c:2155 src/land.c:230
 #, fuzzy
 msgid "Recall Fighters"
 msgstr "랜슬롯"
 
-#: src/equipment.c:2146 src/land.c:218
+#: src/equipment.c:2155 src/land.c:230
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
-#: src/equipment.c:2221 src/land.c:1609
+#: src/equipment.c:2230 src/land.c:1621
 #, fuzzy, c-format
 msgid "File '%s' not found!"
 msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 
-#: src/equipment.c:2229
+#: src/equipment.c:2238
 #, fuzzy, c-format
 #| msgid "Failure to copy '%s' to '%s': %s"
 msgid "Failed to run '%s': %s"
 msgstr "'%s'을 (를) '%s'에 복사하지 못했습니다. %s"
 
-#: src/equipment.c:2241
+#: src/equipment.c:2250
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
 msgstr ""
 
-#: src/equipment.c:2247
+#: src/equipment.c:2256
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
 msgstr ""
 
-#: src/equipment.c:2287
+#: src/equipment.c:2296
 #, fuzzy, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr "Naev를 나가겠습니까?"
 
 #. Display widget.
-#: src/equipment.c:2304
+#: src/equipment.c:2313
 msgid "Ship Sold"
 msgstr ""
 
-#: src/equipment.c:2305
+#: src/equipment.c:2314
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr ""
 
-#: src/equipment.c:2330 src/player.c:388
+#: src/equipment.c:2339 src/player.c:388
 msgid "Ship Name"
 msgstr ""
 
-#: src/equipment.c:2331
+#: src/equipment.c:2340
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr ""
 
-#: src/equipment.c:2339
+#: src/equipment.c:2348
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:2340 src/player.c:415
+#: src/equipment.c:2349 src/player.c:415
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
@@ -89990,8 +90198,8 @@ msgstr ""
 msgid "Faction '%s' has no Lua and isn't static!"
 msgstr ""
 
-#: src/faction.c:1532 src/map.c:3096 src/outfit.c:1128 src/ship.c:532
-#: src/ship.c:1025 src/space.c:1710 src/space.c:1768 src/space.c:3184
+#: src/faction.c:1532 src/map.c:3094 src/outfit.c:1128 src/ship.c:532
+#: src/ship.c:1041 src/space.c:1710 src/space.c:1768 src/space.c:3184
 #: src/tech.c:113
 #, c-format
 msgid "Malformed %s file: does not contain elements"
@@ -90185,7 +90393,7 @@ msgstr ""
 msgid "Main"
 msgstr "기본"
 
-#: src/info.c:59 src/map_find.c:965
+#: src/info.c:59 src/map_find.c:951
 msgid "Ship"
 msgstr "선박"
 
@@ -90197,7 +90405,7 @@ msgstr ""
 msgid "Cargo"
 msgstr ""
 
-#: src/info.c:62 src/land.c:986 src/space.c:157
+#: src/info.c:62 src/land.c:998 src/space.c:157
 msgid "Missions"
 msgstr ""
 
@@ -90219,7 +90427,7 @@ msgid ""
 msgstr ""
 
 #. Create the window.
-#: src/info.c:287 src/menu.c:446
+#: src/info.c:287 src/menu.c:448
 msgid "Info"
 msgstr ""
 
@@ -90227,8 +90435,8 @@ msgstr ""
 msgid "Date:"
 msgstr "날짜:"
 
-#: src/info.c:369 src/land.c:1308 src/land_outfits.c:195 src/land_outfits.c:426
-#: src/land_shipyard.c:303 src/land_trade.c:93 src/map_find.c:644
+#: src/info.c:369 src/land.c:1320 src/land_outfits.c:195 src/land_outfits.c:426
+#: src/land_shipyard.c:303 src/land_trade.c:93 src/map_find.c:630
 msgid "Money:"
 msgstr ""
 
@@ -90291,7 +90499,7 @@ msgstr ""
 msgid "Select GUI"
 msgstr ""
 
-#: src/info.c:496 src/load.c:486 src/load.c:552 src/menu.c:450
+#: src/info.c:496 src/load.c:486 src/load.c:552 src/menu.c:452
 msgid "Load"
 msgstr ""
 
@@ -90440,7 +90648,7 @@ msgstr ""
 
 #. no missions
 #. Make sure you have missions.
-#: src/info.c:1268 src/land.c:666 src/land.c:736 src/land.c:771
+#: src/info.c:1268 src/land.c:678 src/land.c:748 src/land.c:783
 msgid "No Missions"
 msgstr ""
 
@@ -91176,48 +91384,58 @@ msgstr ""
 msgid "You're already onboard the %s."
 msgstr ""
 
-#: src/land.c:211 src/land_shipyard.c:495
+#: src/land.c:205
+#, c-format
+msgid "You can not pilot the %s! The ship can only be used as an escort."
+msgstr ""
+
+#: src/land.c:211
+#, c-format
+msgid "You can not swap ships and set %s as an escort!"
+msgstr ""
+
+#: src/land.c:223 src/land_shipyard.c:495
 #, c-format
 msgid "You have %d tonne more cargo than the new ship can hold."
 msgid_plural "You have %d tonnes more cargo than the new ship can hold."
 msgstr[0] ""
 
-#: src/land.c:219
+#: src/land.c:231
 #, fuzzy
 msgid "You have deployed fighters."
 msgstr "너는 제국에 걸맞지 않아!"
 
-#: src/land.c:330
+#: src/land.c:342
 msgid "Approach"
 msgstr ""
 
-#: src/land.c:391 src/land.c:397
+#: src/land.c:403 src/land.c:409
 msgid "News"
 msgstr ""
 
-#: src/land.c:597 src/land.c:677
+#: src/land.c:609 src/land.c:689
 msgid "Accept Mission"
 msgstr ""
 
-#: src/land.c:600 src/map.c:382
+#: src/land.c:612 src/map.c:383
 msgid "Autonav"
 msgstr "자동nav"
 
-#: src/land.c:607
+#: src/land.c:619
 msgid ""
 "Date:\n"
 "Free Space:"
 msgstr ""
 
-#: src/land.c:615 src/land.c:772
+#: src/land.c:627 src/land.c:784
 msgid "#nReward:#0 None"
 msgstr ""
 
-#: src/land.c:678
+#: src/land.c:690
 msgid "Are you sure you want to accept this mission?"
 msgstr ""
 
-#: src/land.c:765
+#: src/land.c:777
 #, c-format
 msgid ""
 "%s\n"
@@ -91227,117 +91445,117 @@ msgid_plural ""
 "%d Tonnes"
 msgstr[0] ""
 
-#: src/land.c:774
+#: src/land.c:786
 msgid "There are no missions available here."
 msgstr ""
 
-#: src/land.c:784
+#: src/land.c:796
 #, c-format
 msgid "#nReward:#0 %s"
 msgstr ""
 
-#: src/land.c:829 src/land.c:884
+#: src/land.c:841 src/land.c:896
 #, c-format
 msgid "Outfit '%s' does not exist!"
 msgstr ""
 
-#: src/land.c:862
+#: src/land.c:874
 #, c-format
 msgid "%s (%s-class)"
 msgstr ""
 
-#: src/land.c:866
+#: src/land.c:878
 #, c-format
 msgid "roughly %s"
 msgstr ""
 
-#: src/land.c:873 src/map.c:767 src/map.c:781 src/map.c:788 src/map.c:819
-#: src/map.c:841
+#: src/land.c:885 src/map.c:768 src/map.c:782 src/map.c:789 src/map.c:820
+#: src/map.c:842
 msgid ", "
 msgstr ", "
 
-#: src/land.c:895
+#: src/land.c:907
 #, c-format
 msgid "Buy Local Map (%s)"
 msgstr ""
 
-#: src/land.c:977
+#: src/land.c:989
 msgid "Landing Main"
 msgstr ""
 
-#: src/land.c:991 src/map_find.c:1027 src/space.c:159
+#: src/land.c:1003 src/map_find.c:1014 src/space.c:159
 msgid "Outfits"
 msgstr ""
 
-#: src/land.c:996 src/space.c:160
+#: src/land.c:1008 src/space.c:160
 msgid "Shipyard"
 msgstr ""
 
-#: src/land.c:1002
+#: src/land.c:1014
 msgctxt "service"
 msgid "Equipment"
 msgstr ""
 
-#: src/land.c:1007 src/space.c:158
+#: src/land.c:1019 src/space.c:158
 msgid "Commodity"
 msgstr ""
 
 #. Player stats.
-#: src/land.c:1303
+#: src/land.c:1315
 #, fuzzy
 msgid "Stationed at:"
 msgstr "투리온의 불꽃"
 
-#: src/land.c:1306
+#: src/land.c:1318
 #, fuzzy
 msgid "Population:"
 msgstr "옵션"
 
-#: src/land.c:1307 src/land_trade.c:92
+#: src/land.c:1319 src/land_trade.c:92
 msgid "Free Space:"
 msgstr ""
 
-#: src/land.c:1333
+#: src/land.c:1345
 msgid "No refueling services."
 msgstr ""
 
-#: src/land.c:1337
+#: src/land.c:1349
 msgid "Game will not be saved."
 msgstr ""
 
-#: src/land.c:1472 src/land.c:1476
+#: src/land.c:1484 src/land.c:1488
 msgid "Fleet not fit for flight"
 msgstr ""
 
-#: src/land.c:1472
+#: src/land.c:1484
 msgid "You lack the fleet capacity to take off with all selected ships."
 msgstr ""
 
-#: src/land.c:1476
+#: src/land.c:1488
 msgid ""
 "The following ships in your fleet are not space worthy, are you sure you "
 "want to take off without them?"
 msgstr ""
 
-#: src/land.c:1486
+#: src/land.c:1498
 msgid "Ship not fit for flight"
 msgstr ""
 
 #. Only save when the player shouldn't get stranded.
 #. must be before cleaning up spob
-#: src/land.c:1536
+#: src/land.c:1548
 msgid ""
 "Failed to save game! You should exit and check the log to see what happened "
 "and then file a bug report!"
 msgstr ""
 
-#: src/land.c:1545
+#: src/land.c:1557
 #, c-format
 msgid "#oTaking off from %s on %s."
 msgstr ""
 
 #. error has occurred
-#: src/land.c:1626
+#: src/land.c:1638
 #, c-format
 msgid "Rescue: 'rescue' : '%s'"
 msgstr ""
@@ -91355,18 +91573,18 @@ msgid "Find Outfits"
 msgstr ""
 
 #. Set up keys.
-#: src/land_outfits.c:192 src/land_outfits.c:423 src/map_find.c:641
+#: src/land_outfits.c:192 src/land_outfits.c:423 src/map_find.c:627
 #: src/map_system.c:635
 msgid "Owned:"
 msgstr ""
 
 #: src/land_outfits.c:194 src/land_outfits.c:425 src/land_shipyard.c:301
-#: src/map_find.c:643 src/map_system.c:637 src/map_system.c:684
+#: src/map_find.c:629 src/map_system.c:637 src/map_system.c:684
 msgid "Price:"
 msgstr ""
 
 #: src/land_outfits.c:196 src/land_outfits.c:489 src/land_shipyard.c:305
-#: src/map_find.c:645 src/map_system.c:685
+#: src/map_find.c:631 src/map_system.c:685
 #, fuzzy
 #| msgid "License"
 msgid "License:"
@@ -91582,7 +91800,7 @@ msgstr ""
 msgid "No commodities available."
 msgstr ""
 
-#: src/land_trade.c:223 src/land_trade.c:226 src/map.c:1758 src/map.c:1829
+#: src/land_trade.c:223 src/land_trade.c:226 src/map.c:1759 src/map.c:1830
 #, c-format
 msgid "%.1f ¤"
 msgstr ""
@@ -91812,35 +92030,35 @@ msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다.
 msgid "Unknown var type '%s'"
 msgstr ""
 
-#: src/map.c:346
+#: src/map.c:347
 msgid "Standing:"
 msgstr "조판됨:"
 
-#: src/map.c:360
+#: src/map.c:361
 msgid "Space Objects:"
 msgstr ""
 
-#: src/map.c:367
+#: src/map.c:368
 msgid "Services:"
 msgstr "제공:"
 
 #. Commodity button
-#: src/map.c:376
+#: src/map.c:377
 msgid "Mode"
 msgstr "모드"
 
 #. create the window.
-#: src/map.c:389 src/map_system.c:193
+#: src/map.c:390 src/map_system.c:193
 #, fuzzy
 #| msgid "System"
 msgid "System Info"
 msgstr "시스템"
 
-#: src/map.c:392
+#: src/map.c:393
 msgid "Toggle Note"
 msgstr ""
 
-#: src/map.c:534
+#: src/map.c:535
 #, c-format
 msgid ""
 "Showing %s prices relative to %s:\n"
@@ -91848,96 +92066,96 @@ msgid ""
 "when sold at the corresponding system."
 msgstr ""
 
-#: src/map.c:540
+#: src/map.c:541
 #, c-format
 msgid ""
 "Showing known %s prices.\n"
 "Galaxy-wide average: %.2f"
 msgstr ""
 
-#: src/map.c:617
+#: src/map.c:618
 #, c-format
 msgid "Multiple"
 msgstr "여러개의"
 
-#: src/map.c:792
+#: src/map.c:793
 msgid "Dense "
 msgstr "밀집된 "
 
-#: src/map.c:794
+#: src/map.c:795
 msgid "Light "
 msgstr "빛 "
 
-#: src/map.c:802
+#: src/map.c:803
 #, fuzzy, c-format
 #| msgid "Volatile %sNebula"
 msgid "Volatile %sNebula (%.1f MW)"
 msgstr "휘발성 %s 성운"
 
-#: src/map.c:806
+#: src/map.c:807
 #, fuzzy, c-format
 #| msgid "Dangerous %sNebula"
 msgid "Dangerous %sNebula (%.1f MW)"
 msgstr "위험한 %s성운"
 
-#: src/map.c:810
+#: src/map.c:811
 #, fuzzy, c-format
 #| msgid "Unstable %sNebula"
 msgid "Unstable %sNebula (%.1f MW)"
 msgstr "비안정된 %s성운"
 
-#: src/map.c:813
+#: src/map.c:814
 #, c-format
 msgid "%sNebula"
 msgstr "%s성운"
 
-#: src/map.c:824
+#: src/map.c:825
 #, fuzzy, c-format
 #| msgid "Dense Interference"
 msgid "Dense Interference (%.0f%%)"
 msgstr "밀집된 간섭"
 
-#: src/map.c:828
+#: src/map.c:829
 #, fuzzy, c-format
 #| msgid "Light Interference"
 msgid "Light Interference (%.0f%%)"
 msgstr "빛 간섭"
 
-#: src/map.c:832
+#: src/map.c:833
 #, fuzzy, c-format
 #| msgid "Dense Interference"
 msgid "Interference (%.0f%%)"
 msgstr "밀집된 간섭"
 
-#: src/map.c:845
+#: src/map.c:846
 #, fuzzy
 #| msgid "Dense Asteroid Field"
 msgid "Dense Asteroids"
 msgstr "밀집된 소행성 필드"
 
-#: src/map.c:849
+#: src/map.c:850
 #, fuzzy
 #| msgid "Light Asteroid Field"
 msgid "Light Asteroids"
 msgstr "빛 소행성 필드"
 
-#: src/map.c:863
+#: src/map.c:864
 msgid "Fuel: "
 msgstr ""
 
-#: src/map.c:864 src/map.c:872
+#: src/map.c:865 src/map.c:873
 #, c-format
 msgid "%d jump"
 msgid_plural "%d jumps"
 msgstr[0] ""
 
-#: src/map.c:866
+#: src/map.c:867
 #, fuzzy
 #| msgid "Autonav"
 msgid "Autonav: "
 msgstr "자동nav"
 
-#: src/map.c:1855
+#: src/map.c:1856
 #, c-format
 msgid ""
 "No price info for\n"
@@ -91946,144 +92164,144 @@ msgstr ""
 "여기에 %s에 대한 \n"
 "가격 정보가 없습니다"
 
-#: src/map.c:2117
+#: src/map.c:2114
 msgid "Travel (Default)"
 msgstr ""
 
-#: src/map.c:2120
+#: src/map.c:2117
 #, c-format
 msgid "%s: Cost"
 msgstr ""
 
-#: src/map.c:2121
+#: src/map.c:2118
 #, c-format
 msgid "%s: Trade"
 msgstr ""
 
-#: src/map.c:2177
+#: src/map.c:2174
 msgid "Normal View"
 msgstr ""
 
-#: src/map.c:2177
+#: src/map.c:2174
 msgid "Minimal View"
 msgstr ""
 
-#: src/map.c:2201
+#: src/map.c:2198
 #, c-format
 msgid "Write a note about the #o%s#0 system:"
 msgstr ""
 
-#: src/map.c:2202
+#: src/map.c:2199
 #, fuzzy
 #| msgid "System"
 msgid "Add System Note"
 msgstr "시스템"
 
-#: src/map.c:3090
+#: src/map.c:3088
 #, fuzzy, c-format
 msgid "Malformed %s file: missing root element 'map'"
 msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
 
-#: src/map.c:3107 src/slots.c:78 src/start.c:125 src/tech.c:127
+#: src/map.c:3105 src/slots.c:78 src/start.c:125 src/tech.c:127
 #, c-format
 msgid "'%s' has unknown node '%s'."
 msgstr ""
 
-#: src/map.c:3114
+#: src/map.c:3112
 #, c-format
 msgid "Loaded %d map decorator in %.3f s"
 msgid_plural "Loaded %d map decorators in %.3f s"
 msgstr[0] ""
 
-#: src/map.c:3117
+#: src/map.c:3115
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
 msgstr[0] ""
 
-#: src/map.c:3143
+#: src/map.c:3141
 #, fuzzy, c-format
 msgid "Could not load map decorator texture '%s'."
 msgstr "텍스처 '%s'을 (를) 복제 할 수 없습니다."
 
-#: src/map.c:3147
+#: src/map.c:3145
 #, fuzzy, c-format
 msgid "Map decorator has unknown node '%s'."
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
 #. Create window.
-#: src/map_find.c:211 src/map_find.c:747 src/map_find.c:868
+#: src/map_find.c:197 src/map_find.c:733 src/map_find.c:854
 msgid "Search Results"
 msgstr "검색 결과"
 
-#: src/map_find.c:225
+#: src/map_find.c:211
 msgid "Select"
 msgstr "선택"
 
-#: src/map_find.c:305
+#: src/map_find.c:291
 msgid "Jump to first system not found!"
 msgstr "이동 할 첫 번째 시스템을 찾지 못했습니다!"
 
-#: src/map_find.c:341
+#: src/map_find.c:327
 msgid "Matching jumps not found, something is up..."
 msgstr "일치하는 점프를 찾을 수 없습니다. 문제가 발생했습니다..."
 
-#: src/map_find.c:400
+#: src/map_find.c:386
 #, fuzzy
 msgid "unknown route"
 msgstr "%s (알수없는 경로)"
 
-#: src/map_find.c:404
+#: src/map_find.c:390
 #, fuzzy, c-format
 msgid "%d jump, %.0fk distance"
 msgid_plural "%d jumps, %.0fk distance"
 msgstr[0] "%s (%d 점프, %.0fk 거리)"
 
-#: src/map_find.c:413
+#: src/map_find.c:399
 #, c-format
 msgid "#%c%s%s (%s, %s)"
 msgstr ""
 
-#: src/map_find.c:749
+#: src/map_find.c:735
 #, c-format
 msgid "Search results for outfits matching '%s':"
 msgstr "'%s'와 일치하는 의상에 대한 검색 결과:"
 
-#: src/map_find.c:869
+#: src/map_find.c:855
 #, c-format
 msgid "Search results for ships matching '%s':"
 msgstr "'%s'와 일치하는 선박에 대한 검색 결과:"
 
-#: src/map_find.c:953
+#: src/map_find.c:939
 msgid "System"
 msgstr "시스템"
 
-#: src/map_find.c:957 src/map_find.c:1024
+#: src/map_find.c:943 src/map_find.c:1011
 msgid "Space Objects"
 msgstr ""
 
-#: src/map_find.c:961
+#: src/map_find.c:947
 msgid "Outfit"
 msgstr "의상"
 
-#: src/map_find.c:971
+#: src/map_find.c:957
 #, c-format
 msgid "%s matching '%s' not found!"
 msgstr "%s 에 해당하는 '%s'을 찾지 못했습니다!"
 
-#: src/map_find.c:995
+#: src/map_find.c:981
 msgid "Find…"
 msgstr ""
 
-#: src/map_find.c:1004
+#: src/map_find.c:991
 msgid "Enter keyword to search for:"
 msgstr ""
 
-#: src/map_find.c:1021
+#: src/map_find.c:1008
 msgid "Systems"
 msgstr ""
 
-#: src/map_find.c:1030
+#: src/map_find.c:1017
 msgid "Ships"
 msgstr ""
 
@@ -92350,105 +92568,105 @@ msgstr ""
 msgid "Purchase %g period old pricing information for %s for %s?"
 msgstr ""
 
-#: src/menu.c:176
+#: src/menu.c:177
 msgid "Menu main is already open."
 msgstr "기본 메뉴가 이미 열려 있습니다."
 
 #. create menu window
-#: src/menu.c:225 src/menu.c:608
+#: src/menu.c:227 src/menu.c:610
 msgid "Main Menu"
 msgstr "기본 메뉴"
 
-#: src/menu.c:234
+#: src/menu.c:236
 msgid "Load Game"
 msgstr "게임 불러오기"
 
-#: src/menu.c:237
+#: src/menu.c:239
 msgid "New Game"
 msgstr "새로운 게임"
 
-#: src/menu.c:241 src/menu.c:696
+#: src/menu.c:243 src/menu.c:698
 msgid "Editors"
 msgstr "편집자"
 
 #. Create window and tabs.
-#: src/menu.c:245 src/menu.c:454 src/naev.c:398 src/options.c:132
+#: src/menu.c:247 src/menu.c:456 src/naev.c:398 src/options.c:132
 msgid "Options"
 msgstr "옵션"
 
-#: src/menu.c:248
+#: src/menu.c:250
 msgctxt "Menu|"
 msgid "Credits"
 msgstr "크레딧"
 
-#: src/menu.c:251 src/menu.c:610
+#: src/menu.c:253 src/menu.c:612
 msgid "Exit Game"
 msgstr "게임 나가기"
 
-#: src/menu.c:338
+#: src/menu.c:340
 msgid "Main menu does not exist."
 msgstr "기본 메뉴가 존재하지 않습니다."
 
-#: src/menu.c:436
+#: src/menu.c:438
 msgid "Menu"
 msgstr "메뉴"
 
-#: src/menu.c:442
+#: src/menu.c:444
 msgid "Resume"
 msgstr "다시시작"
 
-#: src/menu.c:450
+#: src/menu.c:452
 #, fuzzy
 #| msgid "Load Game"
 msgid "Load / Save"
 msgstr "게임 불러오기"
 
-#: src/menu.c:457
+#: src/menu.c:459
 msgid "Exit to Title"
 msgstr "타이틀로 나가기"
 
-#: src/menu.c:494
+#: src/menu.c:496
 msgid "Small menu does not exist."
 msgstr "작은 메뉴가 존재하지 않습니다."
 
 #. Stop player sounds because sometimes they hang.
-#: src/menu.c:535
+#: src/menu.c:537
 msgid "Exited game."
 msgstr "게임 나가기."
 
-#: src/menu.c:594
+#: src/menu.c:596
 msgid "Death"
 msgstr ""
 
-#: src/menu.c:601
+#: src/menu.c:603
 msgid "Continue"
 msgstr "계속"
 
-#: src/menu.c:604
+#: src/menu.c:606
 msgid "Restart"
 msgstr "다시시작"
 
-#: src/menu.c:663
+#: src/menu.c:665
 msgid "Quit Naev"
 msgstr "Naev 나가기"
 
-#: src/menu.c:663
+#: src/menu.c:665
 msgid "Are you sure you want to quit Naev?"
 msgstr "Naev를 나가겠습니까?"
 
-#: src/menu.c:701
+#: src/menu.c:703
 msgid "Universe Map"
 msgstr "우주 맵"
 
-#: src/menu.c:704
+#: src/menu.c:706
 msgid "Map Outfits"
 msgstr "맵 의상"
 
-#: src/menu.c:707
+#: src/menu.c:709
 msgid "Exit to Main Menu"
 msgstr "기본 메뉴로 나가기"
 
-#: src/mission.c:103 src/nlua_player.c:1333 src/nlua_player.c:1355
+#: src/mission.c:103 src/nlua_player.c:1346 src/nlua_player.c:1368
 #, c-format
 msgid "Mission '%s' not found in stack"
 msgstr "스택에서 '%s' 미션을 찾지 못했습니다"
@@ -93203,8 +93421,8 @@ msgstr "상품이 유효하지 않습니다."
 msgid "Commodity '%s' not found!"
 msgstr "상품 '%s'을 (를) 찾을 수 없습니다!"
 
-#: src/nlua_commodity.c:324 src/nlua_commodity.c:360 src/nlua_player.c:1466
-#: src/nlua_player.c:1486
+#: src/nlua_commodity.c:324 src/nlua_commodity.c:360 src/nlua_player.c:1479
+#: src/nlua_player.c:1499
 #, fuzzy, c-format
 #| msgid "Planet '%s' does not belong to a system."
 msgid "Spob '%s' does not belong to a system."
@@ -93588,43 +93806,43 @@ msgstr ""
 msgid "Spob '%s' is not in a system!"
 msgstr "행성 '%s'은 (는) 시스템에 속하지 않습니다."
 
-#: src/nlua_player.c:851
+#: src/nlua_player.c:864
 msgid "Must be landed to set the active land window."
 msgstr ""
 
-#: src/nlua_player.c:1020 src/nlua_player.c:1064
+#: src/nlua_player.c:1033 src/nlua_player.c:1077
 #, c-format
 msgid "Player does not own a ship named '%s'"
 msgstr ""
 
-#: src/nlua_player.c:1393 src/nlua_player.c:1415
+#: src/nlua_player.c:1406 src/nlua_player.c:1428
 #, c-format
 msgid "Event '%s' not found in stack"
 msgstr ""
 
-#: src/nlua_player.c:1449
+#: src/nlua_player.c:1462
 msgid "Can not teleport the player while landed!"
 msgstr ""
 
-#: src/nlua_player.c:1451
+#: src/nlua_player.c:1464
 msgid "Can not teleport the player while the comm is open!"
 msgstr ""
 
-#: src/nlua_player.c:1453
+#: src/nlua_player.c:1466
 msgid "Can not teleport the player while they are boarded!"
 msgstr ""
 
-#: src/nlua_player.c:1481
+#: src/nlua_player.c:1494
 #, c-format
 msgid "'%s' is not a valid teleportation target."
 msgstr ""
 
-#: src/nlua_player.c:1501
+#: src/nlua_player.c:1514
 #, c-format
 msgid "System '%s' does not exist."
 msgstr ""
 
-#: src/nlua_player.c:1663
+#: src/nlua_player.c:1676
 #, c-format
 msgid "Failed to unregister info button with id '%d'!"
 msgstr ""
@@ -93650,17 +93868,17 @@ msgstr "저장된 게임 '%s'이 잘못되었습니다!"
 msgid "shader failed to compile!"
 msgstr ""
 
-#: src/nlua_shader.c:344
+#: src/nlua_shader.c:346
 #, c-format
 msgid "Shader does not have uniform '%s'!"
 msgstr ""
 
-#: src/nlua_shader.c:392
+#: src/nlua_shader.c:394
 #, c-format
 msgid "Unsupported shader uniform type '%d' for uniform '%s'. Ignoring."
 msgstr ""
 
-#: src/nlua_shader.c:443
+#: src/nlua_shader.c:445
 #, c-format
 msgid "Layer was '%s', but must be one of 'final' or 'game'"
 msgstr ""
@@ -95167,49 +95385,49 @@ msgstr ""
 #. f, p
 #. f, p, p
 #.
-#: src/pilot.c:1602 src/pilot_outfit.c:1183
+#: src/pilot.c:1602 src/pilot_outfit.c:1188
 #, c-format
 msgid ""
 "Pilot '%s''s outfit '%s' -> '%s':\n"
 "%s"
 msgstr ""
 
-#: src/pilot.c:2620 src/pilot.c:2647
+#: src/pilot.c:2624 src/pilot.c:2651
 msgid "Strayed too far from jump point: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2627
+#: src/pilot.c:2631
 msgid "Afterburner active: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2667
+#: src/pilot.c:2671
 #, c-format
 msgid "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
 msgstr ""
 
-#: src/pilot.c:2962
+#: src/pilot.c:2965
 #, c-format
 msgid "Pilot '%s' failed safety check: %s"
 msgstr ""
 
-#: src/pilot.c:2965
+#: src/pilot.c:2968
 #, c-format
 msgid "   [%d] %s"
 msgstr ""
 
-#: src/pilot.c:3076 src/pilot.c:3124 src/pilot.c:3148
+#: src/pilot.c:3079 src/pilot.c:3127 src/pilot.c:3151
 msgid "Unable to allocate memory"
 msgstr ""
 
-#: src/pilot.c:3190
+#: src/pilot.c:3193
 msgid "Duplicate pilots on stack!"
 msgstr ""
 
-#: src/pilot.c:3312
+#: src/pilot.c:3315
 msgid "Creating pilot in system with no jumps nor spobs to take off from!"
 msgstr ""
 
-#: src/pilot.c:3446
+#: src/pilot.c:3449
 #, fuzzy, c-format
 msgid "Trying to remove non-existent pilot '%s' from stack!"
 msgstr "존재하지 않는 시스템 '%s'을 (를) 로드하지 못했습니다."
@@ -95383,38 +95601,46 @@ msgstr ""
 msgid "!! Insufficient Crew"
 msgstr ""
 
-#. string is empty so no errors encountered
+#. String is empty so no errors encountered
 #: src/pilot_outfit.c:622
 #, c-format
 msgid "Spaceworthy"
 msgstr ""
 
-#: src/pilot_outfit.c:660
-msgid "Nothing selected."
+#: src/pilot_outfit.c:624
+msgid "Escort only"
+msgstr ""
+
+#: src/pilot_outfit.c:626
+msgid "Lead ship only"
 msgstr ""
 
 #: src/pilot_outfit.c:665
+msgid "Nothing selected."
+msgstr ""
+
+#: src/pilot_outfit.c:670
 msgid "Does not fit slot."
 msgstr ""
 
-#: src/pilot_outfit.c:668
+#: src/pilot_outfit.c:673
 msgid "Already have an outfit of this type installed"
 msgstr ""
 
-#: src/pilot_outfit.c:671
+#: src/pilot_outfit.c:676
 msgid "Can only install unique outfit once."
 msgstr ""
 
-#: src/pilot_outfit.c:676
+#: src/pilot_outfit.c:681
 msgid "Recall the fighters first"
 msgstr ""
 
-#: src/pilot_outfit.c:696
+#: src/pilot_outfit.c:701
 #, c-format
 msgid "Pilot '%s': Trying to add ammo to unequipped slot."
 msgstr ""
 
-#: src/pilot_outfit.c:730
+#: src/pilot_outfit.c:735
 #, c-format
 msgid "Pilot '%s': Trying to remove ammo from unequipped slot."
 msgstr ""
@@ -95478,7 +95704,7 @@ msgstr ""
 msgid "Name collision"
 msgstr ""
 
-#: src/player.c:430
+#: src/player.c:420
 msgid "Player ship isn't valid… This shouldn't happen!"
 msgstr ""
 
@@ -95660,45 +95886,45 @@ msgstr "의상 '%s'은 탄약 의상이 아닙니다"
 msgid "Saved license does not exist and could not be found or updated: '%s'!"
 msgstr "디렉터리 '%s'이 (가) 존재하지 않아 만들 수 없습니다: %s"
 
-#: src/player.c:3678
+#: src/player.c:3670
 msgid "Malformed time in save game!"
 msgstr ""
 
-#: src/player.c:3715
+#: src/player.c:3707
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
 
-#: src/player.c:3739
+#: src/player.c:3731
 msgid "Player ship does not exist!"
 msgstr ""
 
-#: src/player.c:3742
+#: src/player.c:3734
 msgid "Player has no other ships, giving starting ship."
 msgstr ""
 
-#: src/player.c:3753
+#: src/player.c:3745
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr ""
 
-#: src/player.c:3759
+#: src/player.c:3751
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 
-#: src/player.c:3769
+#: src/player.c:3761
 msgid "Save has no time information, setting to start information."
 msgstr ""
 
-#: src/player.c:3775
+#: src/player.c:3767
 msgid "Player save was updated!"
 msgstr ""
 
-#: src/player.c:3776
+#: src/player.c:3768
 msgid "Save Game Updated"
 msgstr ""
 
-#: src/player.c:3776
+#: src/player.c:3768
 msgid ""
 "The loaded save games has had outfits and ships updated to the current Naev "
 "version. You will find that some outfits and ships you have had have been "
@@ -95706,70 +95932,75 @@ msgid ""
 "refunded the cost in credits."
 msgstr ""
 
-#: src/player.c:3784
+#: src/player.c:3776
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid spob '%s',trying to find a "
 "suitable one instead."
 msgstr ""
 
-#: src/player.c:3813
+#: src/player.c:3805
 #, c-format
 msgid "Could not find a spob satisfying criteria %d."
 msgstr ""
 
-#: src/player.c:3817
+#: src/player.c:3809
 msgid "Could not find a suitable spob. Choosing a random spob."
 msgstr ""
 
-#: src/player.c:3870
+#: src/player.c:3862
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3895
+#: src/player.c:3887
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3920
+#: src/player.c:3912
 msgid "License node is missing name attribute."
 msgstr ""
 
-#: src/player.c:3956
+#: src/player.c:3948
 #, c-format
 msgid "Fleet ship '%s' is deployed despite not being marked for deployal!"
 msgstr ""
 
-#: src/player.c:3960
+#: src/player.c:3952
 #, c-format
 msgid "Fleet ship '%s' is deployed despite not being space worthy!"
 msgstr ""
 
-#: src/player.c:3965
+#: src/player.c:3957
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:4016 src/player.c:4187
+#: src/player.c:4008 src/player.c:4187
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
 
-#: src/player.c:4035
+#: src/player.c:4027
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:4043
+#: src/player.c:4035
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:4063
+#: src/player.c:4055
 msgid "Empty ship slot node found, skipping."
+msgstr ""
+
+#: src/player.c:4110
+#, c-format
+msgid "Ignoring player-owned ship '%s': duplicate of player's current ship."
 msgstr ""
 
 #: src/player.c:4119
@@ -95962,14 +96193,9 @@ msgstr ""
 msgid "GUI '%s' does not exist as a file: '%s' not found."
 msgstr ""
 
-#: src/render.c:284
+#: src/render.c:287
 #, c-format
 msgid "Unknown post-processing shader layer '%d'!"
-msgstr ""
-
-#: src/render.c:340
-#, c-format
-msgid "Trying to remove non-existant post-processing shader with id '%d'!"
 msgstr ""
 
 #: src/safelanes.c:265
@@ -96127,56 +96353,62 @@ msgstr ""
 msgid "Ship '%s': gfx_comm element is NULL"
 msgstr ""
 
+#: src/ship.c:811
+#, fuzzy, c-format
+#| msgid "Mission '%s' has unknown flag node '%s'."
+msgid "Ship '%s' has unknown flags node '%s'."
+msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
+
 #. All the xmlr_ stuff have continue cases.
-#: src/ship.c:825
+#: src/ship.c:842
 #, c-format
 msgid "Ship '%s' has unknown movement node '%s'."
 msgstr ""
 
 #. All the xmlr_ stuff have continue cases.
-#: src/ship.c:841
+#: src/ship.c:858
 #, c-format
 msgid "Ship '%s' has unknown health node '%s'."
 msgstr ""
 
 #. All the xmlr_ stuff have continue cases.
-#: src/ship.c:856
+#: src/ship.c:873
 #, c-format
 msgid "Ship '%s' has unknown characteristic node '%s'."
 msgstr ""
 
-#: src/ship.c:877
+#: src/ship.c:894
 #, c-format
 msgid "Ship '%s' has unknown slot node '%s'."
 msgstr ""
 
-#: src/ship.c:896
+#: src/ship.c:913
 #, c-format
 msgid "Ship '%s' has unknown stat '%s'."
 msgstr ""
 
-#: src/ship.c:929
+#: src/ship.c:946
 #, fuzzy, c-format
 msgid "Ship '%s' has unknown node in tags '%s'."
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
-#: src/ship.c:938
+#: src/ship.c:955
 #, c-format
 msgid "Ship '%s' has unknown node '%s'."
 msgstr ""
 
-#: src/ship.c:947
+#: src/ship.c:964
 #, c-format
 msgid "Ship '%s' has inexistent license requirement '%s'!"
 msgstr ""
 
 #. ship validator
-#: src/ship.c:950
+#: src/ship.c:967
 #, c-format
 msgid "Ship '%s' missing '%s' element"
 msgstr ""
 
-#: src/ship.c:1045
+#: src/ship.c:1059
 #, fuzzy, c-format
 #| msgid "Loaded %d Mission"
 #| msgid_plural "Loaded %d Missions"
@@ -96184,7 +96416,7 @@ msgid "Loaded %d Ship in %.3f s"
 msgid_plural "Loaded %d Ships in %.3f s"
 msgstr[0] "%d개의 임무를 불러왔습니다"
 
-#: src/ship.c:1048
+#: src/ship.c:1062
 #, c-format
 msgid "Loaded %d Ship"
 msgid_plural "Loaded %d Ships"
@@ -97034,7 +97266,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/space.c:2032
+#: src/space.c:2033
 #, c-format
 msgid "Spob '%s' ran '%s' but got non-texture return value!"
 msgstr ""
@@ -97224,62 +97456,62 @@ msgstr ""
 msgid "SPFX '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/spfx.c:402
+#: src/spfx.c:401
 #, fuzzy, c-format
 msgid "Loaded %d Special Effect in %.3f s"
 msgid_plural "Loaded %d Special Effects in %.3f s"
 msgstr[0] "%d개의 성운 레이어로드"
 
-#: src/spfx.c:405
+#: src/spfx.c:404
 #, fuzzy, c-format
 msgid "Loaded %d Special Effect"
 msgid_plural "Loaded %d Special Effects"
 msgstr[0] "%d개의 성운 레이어로드"
 
-#: src/spfx.c:466
+#: src/spfx.c:465
 msgid "Trying to add spfx with invalid effect!"
 msgstr ""
 
-#: src/spfx.c:480
+#: src/spfx.c:479
 msgid "Invalid SPFX layer."
 msgstr ""
 
-#: src/spfx.c:925
+#: src/spfx.c:924
 #, c-format
 msgid "Unable to upload haptic effect: %s."
 msgstr ""
 
-#: src/spfx.c:963
+#: src/spfx.c:962
 #, c-format
 msgid "Failed to update haptic effect: %s."
 msgstr ""
 
-#: src/spfx.c:1011
+#: src/spfx.c:1010
 msgid "Rendering invalid SPFX layer."
 msgstr ""
 
-#: src/spfx.c:1133
+#: src/spfx.c:1132
 #, fuzzy, c-format
 msgid "Trail '%s' has unknown node '%s'."
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
-#: src/spfx.c:1137
+#: src/spfx.c:1136
 #, fuzzy, c-format
 #| msgid "Mission '%s' missing/invalid '%s' element"
 msgid "Trail '%s' missing '%s' element"
 msgstr "임무 '%s'누락 / 잘못된 '%s'요소"
 
-#: src/spfx.c:1162
+#: src/spfx.c:1161
 #, fuzzy, c-format
 msgid "Malformed '%s' file: missing root element 'Trail_types'"
 msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
 
-#: src/spfx.c:1214
+#: src/spfx.c:1213
 #, c-format
 msgid "Trail '%s' that inherits from '%s' has missing reference!"
 msgstr ""
 
-#: src/spfx.c:1250
+#: src/spfx.c:1249
 #, fuzzy, c-format
 msgid "Trail type '%s' not found in stack"
 msgstr "스택에서 '%s' 미션을 찾지 못했습니다"
@@ -97469,271 +97701,271 @@ msgstr ""
 msgid "Toolkit: Button '%s' of Window '%s' doesn't have a function trigger"
 msgstr ""
 
-#: src/unidiff.c:201
+#: src/unidiff.c:205
 #, c-format
 msgid "Malformed XML header for '%s' UniDiff: missing root element '%s'"
 msgstr ""
 
-#: src/unidiff.c:215
+#: src/unidiff.c:221
 #, c-format
 msgid "Loaded %d UniDiff in %.3f s"
 msgid_plural "Loaded %d UniDiffs in %.3f s"
 msgstr[0] ""
 
-#: src/unidiff.c:218
+#: src/unidiff.c:224
 #, c-format
 msgid "Loaded %d UniDiff"
 msgid_plural "Loaded %d UniDiffs"
 msgstr[0] ""
 
-#: src/unidiff.c:290
+#: src/unidiff.c:296
 #, c-format
 msgid "UniDiff '%s' not found in %s!"
 msgstr ""
 
-#: src/unidiff.c:298
+#: src/unidiff.c:304
 msgid "Malformed unidiff file: missing root element 'unidiff'"
 msgstr ""
 
-#: src/unidiff.c:332
+#: src/unidiff.c:338
 #, c-format
 msgid "Unidiff '%s' has a system node without a 'name' tag, not applying."
 msgstr ""
 
-#: src/unidiff.c:343 src/unidiff.c:371 src/unidiff.c:399 src/unidiff.c:794
+#: src/unidiff.c:349 src/unidiff.c:377 src/unidiff.c:405 src/unidiff.c:826
 #, c-format
 msgid "Unidiff '%s': Null hunk type."
 msgstr ""
 
-#: src/unidiff.c:359
+#: src/unidiff.c:365
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for spob '%s'."
 msgstr ""
 
-#: src/unidiff.c:387
+#: src/unidiff.c:393
 #, fuzzy, c-format
 #| msgid "Unknown node '%s' in mission '%s'"
 msgid "Unidiff '%s': Unknown hunk type '%s' for virtual spob '%s'."
 msgstr "임무 '%s' 의 알 수 없는 노드 '%s'"
 
-#: src/unidiff.c:415
+#: src/unidiff.c:421
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for jump '%s'."
 msgstr ""
 
-#: src/unidiff.c:452 src/unidiff.c:521 src/unidiff.c:721 src/unidiff.c:821
-#: src/unidiff.c:866
+#: src/unidiff.c:458 src/unidiff.c:527 src/unidiff.c:753 src/unidiff.c:853
+#: src/unidiff.c:898
 #, c-format
 msgid "Unidiff '%s' has unknown node '%s'."
 msgstr ""
 
-#: src/unidiff.c:479 src/unidiff.c:548 src/unidiff.c:749
+#: src/unidiff.c:485 src/unidiff.c:554 src/unidiff.c:781
 #, c-format
 msgid "Unidiff '%s' has an target node without a 'name' tag"
 msgstr ""
 
-#: src/unidiff.c:812
+#: src/unidiff.c:844
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for faction '%s'."
 msgstr ""
 
-#: src/unidiff.c:872
+#: src/unidiff.c:904
 #, c-format
 msgid "Unidiff '%s' failed to apply %d hunk."
 msgid_plural "Unidiff '%s' failed to apply %d hunks."
 msgstr[0] ""
 
-#: src/unidiff.c:879
+#: src/unidiff.c:911
 #, c-format
 msgid "   [%s] spob add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:882
+#: src/unidiff.c:914
 #, c-format
 msgid "   [%s] spob remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:885
+#: src/unidiff.c:917
 #, c-format
 msgid "   [%s] virtual spob add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:888
+#: src/unidiff.c:920
 #, c-format
 msgid "   [%s] virtual spob remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:891
+#: src/unidiff.c:923
 #, c-format
 msgid "   [%s] jump add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:894
+#: src/unidiff.c:926
 #, c-format
 msgid "   [%s] jump remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:897
+#: src/unidiff.c:929
 #, c-format
 msgid "   [%s] tech add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:901
+#: src/unidiff.c:933
 #, c-format
 msgid "   [%s] tech remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:905
+#: src/unidiff.c:937
 #, c-format
 msgid "   [%s] spob faction: '%s'"
 msgstr ""
 
-#: src/unidiff.c:909
+#: src/unidiff.c:941
 #, c-format
 msgid "   [%s] spob faction removal: '%s'"
 msgstr ""
 
-#: src/unidiff.c:913
+#: src/unidiff.c:945
 #, c-format
 msgid "   [%s] spob population: '%s'"
 msgstr ""
 
-#: src/unidiff.c:917
+#: src/unidiff.c:949
 #, c-format
 msgid "   [%s] spob population removal: '%s'"
 msgstr ""
 
-#: src/unidiff.c:921
+#: src/unidiff.c:953
 #, c-format
 msgid "   [%s] spob displayname: '%s'"
 msgstr ""
 
-#: src/unidiff.c:925
+#: src/unidiff.c:957
 #, c-format
 msgid "   [%s] spob displayname revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:929
+#: src/unidiff.c:961
 #, c-format
 msgid "   [%s] spob description: '%s'"
 msgstr ""
 
-#: src/unidiff.c:933
+#: src/unidiff.c:965
 #, c-format
 msgid "   [%s] spob description revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:937
+#: src/unidiff.c:969
 #, c-format
 msgid "   [%s] spob bar: '%s'"
 msgstr ""
 
-#: src/unidiff.c:941
+#: src/unidiff.c:973
 #, c-format
 msgid "   [%s] spob bar revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:945
+#: src/unidiff.c:977
 #, c-format
 msgid "   [%s] spob space: '%s'"
 msgstr ""
 
-#: src/unidiff.c:949
+#: src/unidiff.c:981
 #, c-format
 msgid "   [%s] spob sipace revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:953
+#: src/unidiff.c:985
 #, c-format
 msgid "   [%s] spob exterior: '%s'"
 msgstr ""
 
-#: src/unidiff.c:957
+#: src/unidiff.c:989
 #, c-format
 msgid "   [%s] spob exterior revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:961
+#: src/unidiff.c:993
 #, c-format
 msgid "   [%s] spob lua: '%s'"
 msgstr ""
 
-#: src/unidiff.c:965
+#: src/unidiff.c:997
 #, c-format
 msgid "   [%s] spob lua revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:969
+#: src/unidiff.c:1001
 #, c-format
 msgid "   [%s] spob service add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:973
+#: src/unidiff.c:1005
 #, c-format
 msgid "   [%s] spob service remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:977
+#: src/unidiff.c:1009 src/unidiff.c:1017
 #, c-format
 msgid "   [%s] spob tech add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:981
+#: src/unidiff.c:1013 src/unidiff.c:1021
 #, c-format
 msgid "   [%s] spob tech remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:985
+#: src/unidiff.c:1025
 #, c-format
 msgid "   [%s] faction visible: '%s'"
 msgstr ""
 
-#: src/unidiff.c:989
+#: src/unidiff.c:1029
 #, c-format
 msgid "   [%s] faction invisible: '%s'"
 msgstr ""
 
-#: src/unidiff.c:993
+#: src/unidiff.c:1033
 #, c-format
 msgid "   [%s] faction set ally: '%s'"
 msgstr ""
 
-#: src/unidiff.c:997
+#: src/unidiff.c:1037
 #, c-format
 msgid "   [%s] faction set enemy: '%s'"
 msgstr ""
 
-#: src/unidiff.c:1001
+#: src/unidiff.c:1041
 #, c-format
 msgid "   [%s] faction set neutral: '%s'"
 msgstr ""
 
-#: src/unidiff.c:1005
+#: src/unidiff.c:1045
 #, c-format
 msgid "   [%s] faction alignment reset: '%s'"
 msgstr ""
 
-#: src/unidiff.c:1010
+#: src/unidiff.c:1050
 #, c-format
 msgid "   unknown hunk '%d'"
 msgstr ""
 
-#: src/unidiff.c:1329
+#: src/unidiff.c:1396
 #, c-format
 msgid "Unknown hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1532
+#: src/unidiff.c:1606
 #, c-format
 msgid "Unknown Hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1537
+#: src/unidiff.c:1611
 #, c-format
 msgid "Failed to remove hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1661
+#: src/unidiff.c:1737
 msgid "Expected node \"diff\" to contain the name of a unidiff. Was empty."
 msgstr ""
 
