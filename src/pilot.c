@@ -1212,16 +1212,15 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
  *    @param p Pilot sending the distress signal.
  *    @param attacker Attacking pilot.
  *    @param msg Message in distress signal.
- *    @param ignore_int Whether or not should ignore interference.
  */
-void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int )
+void pilot_distress( Pilot *p, Pilot *attacker, const char *msg )
 {
    int r;
    double d;
 
    /* Broadcast the message. */
    if (msg[0] != '\0')
-      pilot_broadcast( p, msg, ignore_int );
+      pilot_broadcast( p, msg, 0 );
 
    /* Use the victim's target if the attacker is unknown. */
    if (attacker == NULL)
@@ -1237,7 +1236,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
       /* Check if spob is in range. */
       for (int i=0; i<array_size(cur_system->spobs); i++) {
          if (spob_hasService(cur_system->spobs[i], SPOB_SERVICE_INHABITED) &&
-               (!ignore_int && pilot_inRangeSpob(p, i)) &&
+               pilot_inRangeSpob(p, i) &&
                !areEnemies(p->faction, cur_system->spobs[i]->presence.faction)) {
             r = 1;
             break;
@@ -1247,31 +1246,31 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
 
    /* Now we must check to see if a pilot is in range. */
    for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *pi = pilot_stack[i];
+
       /* Skip if unsuitable. */
-      if ((pilot_stack[i]->ai == NULL) || (pilot_stack[i]->id == p->id) ||
-            (pilot_isFlag(pilot_stack[i], PILOT_DEAD)) ||
-            (pilot_isFlag(pilot_stack[i], PILOT_DELETE)))
+      if ((pi->ai == NULL) || (pi->id == p->id) ||
+            (pilot_isFlag(pi, PILOT_DEAD)) ||
+            (pilot_isFlag(pi, PILOT_DELETE)))
          continue;
 
-      if (!ignore_int) {
-         if (!pilot_inRangePilot(p, pilot_stack[i], NULL)) {
-            /*
-             * If the pilots are within sensor range of each other, send the
-             * distress signal, regardless of electronic warfare hide values.
-             */
-            d = vec2_dist2( &p->solid->pos, &pilot_stack[i]->solid->pos );
-            if (d > pilot_sensorRange())
-               continue;
-         }
-
-         /* Send AI the distress signal. */
-         ai_getDistress( pilot_stack[i], p, attacker );
-
-         /* Check if should take faction hit. */
-         if ((attacker == player.p) && !pilot_isFlag(p, PILOT_DISTRESSED) &&
-               !areEnemies(p->faction, pilot_stack[i]->faction))
-            r = 1;
+      if (!pilot_inRangePilot(p, pi, NULL)) {
+         /*
+            * If the pilots are within sensor range of each other, send the
+            * distress signal, regardless of electronic warfare hide values.
+            */
+         d = vec2_dist2( &p->solid->pos, &pi->solid->pos );
+         if (d > pilot_sensorRange())
+            continue;
       }
+
+      /* Send AI the distress signal. */
+      ai_getDistress( pi, p, attacker );
+
+      /* Check if should take faction hit. */
+      if ((attacker == player.p) && !pilot_isFlag(p, PILOT_DISTRESSED) &&
+            !areEnemies(p->faction, pi->faction))
+         r = 1;
    }
 
    /* Player only gets one faction hit per pilot. */

@@ -818,7 +818,7 @@ void ai_think( Pilot* pilot, const double dt )
 
    /* other behaviours. */
    if (ai_isFlag(AI_DISTRESS))
-      pilot_distress(cur_pilot, NULL, aiL_distressmsg, 0);
+      pilot_distress(cur_pilot, NULL, aiL_distressmsg);
 
    /* Clean up if necessary. */
    ai_taskGC( cur_pilot );
