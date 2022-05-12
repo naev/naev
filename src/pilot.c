@@ -1277,8 +1277,25 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg )
    if (!pilot_isFlag(p, PILOT_DISTRESSED)) {
 
       /* Modify faction, about 1 for a llama, 4.2 for a hawking */
-      if (r && (attacker != NULL) && (pilot_isWithPlayer(attacker)))
-         faction_modPlayer( p->faction, -(pow(p->base_mass, 0.2) - 1.), "distress" );
+      if (r && (attacker != NULL) && (pilot_isWithPlayer(attacker))) {
+         if (p->ai == NULL)
+            WARN(_("Pilot '%s' does not have an AI!"), p->name);
+         else {
+            double hit;
+            nlua_getenv( naevL, p->ai->env, AI_MEM ); /* pilotmem */
+            lua_rawgeti( naevL, -1, p->id );          /* pilotmem, table */
+            lua_getfield( naevL, -1, "distress_hit" );/* pilotmem, table, value */
+            if (lua_isnil(naevL,-1))
+               hit = (pow(p->base_mass, 0.2) - 1.);
+            else if (lua_isnumber(naevL,-1))
+               hit = lua_tonumber(naevL,-1);
+            else {
+               WARN(_("Pilot '%s' has non-number mem.distress_hit!"),p->name);
+               hit = 0.;
+            }
+            faction_modPlayer( p->faction, -hit, "distress" );
+         }
+      }
 
       /* Set flag to avoid a second faction hit. */
       pilot_setFlag(p, PILOT_DISTRESSED);
