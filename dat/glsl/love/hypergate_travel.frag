@@ -2,6 +2,7 @@
 
 uniform float u_progress = 0.0;
 uniform sampler2D u_prevtex;
+uniform vec3 u_colour = vec3( 0.0, 0.8, 0.6 );
 
 vec2 off( float progress, float x, float theta )
 {
@@ -17,8 +18,10 @@ vec4 oldtex( vec2 p )
 vec4 effect( sampler2D tex, vec2 p, vec2 screen_coords )
 {
    float v = smoothstep( 0.0, 1.0, u_progress );
-	return mix(
+	vec4 col = mix(
 		oldtex(       p + off( v,     p.x, 0.0  ) ),
       texture( tex, p + off( 1.0-v, p.x, M_PI ) ),
-      u_progress);
+      u_progress );
+   col.rgb = mix( col.rgb, u_colour, 0.5-length(u_progress-0.5) );
+   return col;
 }
