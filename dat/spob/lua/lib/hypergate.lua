@@ -36,7 +36,7 @@ local function update_canvas ()
    lg.setCanvas( oldcanvas )
 end
 
-local cost_flat, cost_mass, cost_mod
+local cost_flat, cost_mass, cost_mod, basecol
 
 function hypergate.load( p, opts )
    opts = opts or {}
@@ -44,7 +44,7 @@ function hypergate.load( p, opts )
 
    if tex==nil then
       -- Handle some options
-      local basecol = opts.basecol or { 0.2, 0.8, 0.8 }
+      basecol = opts.basecol or { 0.2, 0.8, 0.8 }
       cost_flat = opts.cost_flat or 10e3
       cost_mass = opts.cost_mass or 50
       cost_mod = opts.cost_mod or 1
@@ -123,6 +123,7 @@ function hypergate.land( _s, p )
       -- TODO animation and stuff, probably similar to wormholes
       if target then
          var.push( "hypergate_target", target:nameRaw() )
+         naev.cache().hypergate_colour = basecol
          naev.eventStart("Hypergate")
       end
    else

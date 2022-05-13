@@ -36,9 +36,13 @@ function hypergate ()
    hook.update( "update" )
    sfx:play()
 
+   -- Get colour
+   local col = naev.cache().hypergate_colour or { 0, 0.8, 0.6 }
+
    prevtex = gfx.screenshot():getTex()
    shader = pp_shaders.newShader( pixelcode )
    shader:send( "u_prevtex", prevtex )
+   shader:send( "u_colour", col )
    shader.addPPShader( shader, "final" )
 end
 
