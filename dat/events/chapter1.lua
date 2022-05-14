@@ -16,13 +16,14 @@ local tut = require 'common.tutorial'
 local vn  = require 'vn'
 local fmt = require 'format'
 local lg = require 'love.graphics'
+local audio = require "love.audio"
 local textoverlay = require "textoverlay"
 local pp_shaders = require "pp_shaders"
 
 local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
 
--- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp7 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_zoom cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
+-- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp_sfx cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp7 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_zoom cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
 
 function create ()
    evt.finish(false) -- disabled for now
@@ -152,6 +153,8 @@ function cutscene_start ()
    pilot.toggleSpawn(false)
 
    -- TODO music
+   music.stop()
+   var.push( "music_off", true )
 
    -- Get the Empire hypergate
    local hyp, hyps = spob.getS( "Hypergate Gamma Polaris" )
@@ -184,11 +187,19 @@ function cutscene_emp1 ()
    fadein()
 end
 
-local countdown
+local countdown, countdown_sfx
 function cutscene_emp2 ()
    empboss:broadcast( _("Beginning activation countdown!") )
    countdown = 5
+   countdown_sfx = audio.newSource( "snd/sounds/hypergate_turnon.ogg" )
    hook.timer( 4, "cutscene_emp3" )
+   hook.timer( 5+4-6.5, "cutscene_emp_sfx" )
+end
+
+function cutscene_emp_sfx ()
+   -- TODO handle play pitch and such
+   countdown_sfx:setVolume(0.8)
+   countdown_sfx:play()
 end
 
 -- Countdown
@@ -384,6 +395,8 @@ function cutscene_cleanup ()
    setHide( false )
 
    -- TODO add sound
+   var.pop( "music_off" )
+   music.play()
 
    -- Chapter 1 message
    textoverlay.init( _("CHAPTER 1"), _("The Hypergates Awaken") )
