@@ -7,13 +7,13 @@ uniform vec3 u_colour = vec3( 0.0, 0.8, 0.6 );
 
 vec2 off( float progress, float x, float theta )
 {
-	float shifty = 0.03 * progress * cos(15.0*(progress+x));
+	float shifty = 0.03 * progress * cos( 15.0*(progress+x) );
 	return vec2( 0, shifty );
 }
 
 vec4 oldtex( vec2 p )
 {
-   return texture( u_prevtex, p * vec2(1.0,-1.0) + vec2(0.0,1.0));
+   return texture( u_prevtex, p * vec2(1.0,-1.0) + vec2(0.0,1.0) );
 }
 
 vec4 effect( sampler2D tex, vec2 p, vec2 screen_coords )
