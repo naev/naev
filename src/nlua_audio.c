@@ -27,12 +27,18 @@
 #include "sound.h"
 #include "sound_openal.h"
 
+/**
+ * @brief Handles the OpenAL effects that have been set up Lua side.
+ */
 typedef struct LuaAudioEfx_s {
-   char *name;
-   ALuint effect;
-   ALuint slot;
+   char *name;       /**< Effect name for look ups. */
+   ALuint effect;    /**< Effect ID. */
+   ALuint slot;      /**< Effect slot. */
 } LuaAudioEfx_t;
 
+/**
+ * @brief List of effects handled by Lua. These are persistent throughout game runtime.
+ */
 static LuaAudioEfx_t *lua_efx = NULL;
 
 /* Audio methods. */
