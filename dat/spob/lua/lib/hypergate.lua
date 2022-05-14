@@ -4,6 +4,7 @@
 local fmt = require "format"
 local lg = require "love.graphics"
 local lf = require "love.filesystem"
+local audio = require "love.audio"
 local love_shaders = require "love_shaders"
 local luatk = require "luatk"
 local luatk_map = require "luatk.map"
@@ -12,6 +13,7 @@ local pos, tex, mask, cvs, shader
 local tw, th
 
 local pixelcode = lf.read( "spob/lua/glsl/hypergate.frag" )
+local sfx = audio.newSource( 'snd/sounds/hypergate.ogg' )
 
 local hypergate = {}
 local hypergate_spob
@@ -120,7 +122,6 @@ function hypergate.land( _s, p )
       -- TODO check if hostile to disallow
 
       local target = hypergate_window()
-      -- TODO animation and stuff, probably similar to wormholes
       if target then
          var.push( "hypergate_target", target:nameRaw() )
          naev.cache().hypergate_colour = basecol
@@ -129,6 +130,9 @@ function hypergate.land( _s, p )
    else
       p:shipvarPush( "hypergate", true )
       p:effectAdd("Hypergate Enter")
+      -- TODO make this use effects or something so it's more robust to multiple ships jumping
+      sfx:setPosition( p:pos() )
+      sfx:play()
    end
 end
 
