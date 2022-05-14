@@ -133,7 +133,8 @@ function hypergate.land( _s, p )
       p:effectAdd("Hypergate Enter")
       -- TODO make this use effects or something so it's more robust to multiple ships jumping
       jumpsfx:setRelative(false)
-      jumpsfx:setPosition( p:pos() )
+      jumpsfx:setAttenuationDistances( 500, 25e3 )
+      jumpsfx:setPosition( p:pos():get() )
       jumpsfx:play()
    end
 end
