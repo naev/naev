@@ -400,6 +400,7 @@ function cutscene_nebu_fade ()
 end
 
 -- Cleans up the cutscene stuf
+local sfx
 function cutscene_cleanup ()
    setHide( false )
 
@@ -409,6 +410,10 @@ function cutscene_cleanup ()
 
    -- Chapter 1 message
    textoverlay.init( _("CHAPTER 1"), _("The Hypergates Awaken") )
+
+   -- TODO different sound than just discovery?
+   sfx = audio.newSource( 'snd/sounds/jingles/victory.ogg' )
+   sfx:play()
 
    -- Initialize fleet capacity
    player.setFleetCapacity( 100 )
