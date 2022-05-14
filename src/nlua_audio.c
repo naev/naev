@@ -531,7 +531,7 @@ static int audioL_tell( lua_State *L )
  * @brief Sets the volume of a source.
  *
  *    @luatparam Audio source Source to set volume of.
- *    @luatparam number vol Volume to set the source to.
+ *    @luatparam number vol Volume to set the source to with 0.0 being silent and 1.0 being full volume.
  *    @luatparam boolean ignorevol Don't modify volume based on master.
  * @luafunc setVolume
  */
