@@ -19,6 +19,7 @@ local lg = require 'love.graphics'
 local audio = require "love.audio"
 local textoverlay = require "textoverlay"
 local pp_shaders = require "pp_shaders"
+local lmusic = require "lmusic"
 
 local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
@@ -123,6 +124,7 @@ end
 
 local shader_fadein, shader_fadeout
 function update( dt, real_dt )
+   lmusic.update( dt )
    fg.alpha = fg.alpha + fg.alpha_dir * 2 * real_dt
    if shader_fadein and shader_fadein._update then
       shader_fadein:_update( dt )
@@ -155,6 +157,7 @@ function cutscene_start ()
    -- TODO music
    music.stop()
    var.push( "music_off", true )
+   lmusic.play( "snd/music/empire2.ogg" )
 
    -- Get the Empire hypergate
    local hyp, hyps = spob.getS( "Hypergate Gamma Polaris" )
@@ -353,6 +356,8 @@ function cutscene_posttext ()
    player.pilot():intrinsicSet( "nebu_visibility", 1000 )
 
    -- TODO something more omnious
+   lmusic.stop()
+
    local gatename = "Hypergate Polaris"
    pangate( gatename )
    local hyp = spob.get( gatename )
@@ -380,6 +385,9 @@ end
 function cutscene_nebu_fade ()
    -- Rsetore visibility, should match the value set above
    player.pilot():intrinsicSet( "nebu_visibility", -1000 )
+
+   -- Stop music
+   lmusic.stop()
 
    -- Return to system and restore camera
    player.teleport( origsys, false, true )
