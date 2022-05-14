@@ -5,6 +5,7 @@ local love_shaders = require "love_shaders"
 local starfield = require "bkg.lib.starfield"
 
 local pixelcode = lf.read( "spob/lua/glsl/wormhole.frag" )
+local jumpsfx = audio.newSource( 'snd/sounds/wormhole.ogg' )
 
 local cvs, shader, pos, target, sfx
 local s = 256
@@ -87,6 +88,10 @@ function wormhole.land( _s, p )
    -- Not player, just play animation and remove
    if p ~= player.pilot() then
       p:effectAdd("Wormhole Enter")
+      -- TODO make this use effects or something so it's more robust to multiple ships jumping
+      jumpsfx:setRelative(false)
+      jumpsfx:setPosition( p:pos() )
+      jumpsfx:play()
       return
    end
 

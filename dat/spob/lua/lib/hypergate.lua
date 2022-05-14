@@ -13,7 +13,7 @@ local pos, tex, mask, cvs, shader
 local tw, th
 
 local pixelcode = lf.read( "spob/lua/glsl/hypergate.frag" )
-local sfx = audio.newSource( 'snd/sounds/hypergate.ogg' )
+local jumpsfx = audio.newSource( 'snd/sounds/hypergate.ogg' )
 
 local hypergate = {}
 local hypergate_spob
@@ -131,8 +131,9 @@ function hypergate.land( _s, p )
       p:shipvarPush( "hypergate", true )
       p:effectAdd("Hypergate Enter")
       -- TODO make this use effects or something so it's more robust to multiple ships jumping
-      sfx:setPosition( p:pos() )
-      sfx:play()
+      jumpsfx:setRelative(false)
+      jumpsfx:setPosition( p:pos() )
+      jumpsfx:play()
    end
 end
 
