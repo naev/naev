@@ -14,7 +14,7 @@ local pixelcode = lf.read( "glsl/love/hypergate_travel.frag" )
 -- luacheck: globals update hypergate (Hook functions passed by name)
 
 local target, shader, prevtex
-local sfx = audio.newSource( 'snd/sounds/wormhole.ogg' )
+local sfx = audio.newSource( 'snd/sounds/hypergate.ogg' )
 function create ()
 
    target = var.peek("hypergate_target")
