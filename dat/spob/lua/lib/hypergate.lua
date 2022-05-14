@@ -8,6 +8,7 @@ local audio = require "love.audio"
 local love_shaders = require "love_shaders"
 local luatk = require "luatk"
 local luatk_map = require "luatk.map"
+local prng = require "prng"
 
 local pos, tex, mask, cvs, shader
 local tw, th
@@ -185,7 +186,9 @@ function hypergate_window ()
          end
          table.insert( destnames, str )
       else
-         table.insert( destnames, _("Unknown Signature") ) -- TODO convert name into symbol or hash
+         local rng = prng.new( d:nameRaw() )
+         local hash = string.format( "%05X", rng:random(0, math.pow(16,5) ) )
+         table.insert( destnames, fmt.f(_("Unknown Signature {hash}"),{hash=hash}) )
       end
    end
 
