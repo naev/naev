@@ -1,4 +1,5 @@
 #include "lib/math.glsl"
+#include "lib/blend.glsl"
 
 uniform float u_progress = 0.0;
 uniform sampler2D u_prevtex;
@@ -22,6 +23,6 @@ vec4 effect( sampler2D tex, vec2 p, vec2 screen_coords )
 		oldtex(       p + off( v,     p.x, 0.0  ) ),
       texture( tex, p + off( 1.0-v, p.x, M_PI ) ),
       u_progress );
-   col.rgb = mix( col.rgb, u_colour, 0.5-length(u_progress-0.5) );
+   col.rgb = blendGlow( col.rgb, u_colour, 0.5-length(u_progress-0.5) );
    return col;
 }
