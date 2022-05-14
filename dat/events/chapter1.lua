@@ -377,6 +377,7 @@ function cutscene_nebu ()
    fg_setup() -- Remove text
 
    -- TODO omnious music and "ghost" ships
+   lmusic.play( "snd/sounds/loops/alienplanet.ogg" )
 
    hook.timer( 4.3, "fadeout" )
    hook.timer( 5, "cutscene_nebu_fade" )
