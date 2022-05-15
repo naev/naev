@@ -7,8 +7,7 @@
 
 #define SPFX_METATABLE      "spfx" /**< SPFX metatable identifier. */
 
-struct LuaSpfx_s;
-typedef struct LuaSpfx_s LuaSpfx_t;
+typedef int LuaSpfx_t;
 
 /*
  * Library loading

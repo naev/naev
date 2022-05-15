@@ -36,7 +36,7 @@
  *
  * It has the advantage of automatically updating the position and audio, while Lua gives flexibility elsewhere.
  */
-typedef struct LuaSpfx_s {
+typedef struct LuaSpfxData_s {
    int id;        /**< Unique ID. */
    unsigned int flags; /**< Flags. */
    double ttl;    /**< Time to live. */
@@ -48,12 +48,12 @@ typedef struct LuaSpfx_s {
    int render_fg; /**< Reference to foreground render function. */
    int update;    /**< Reference to update function. */
    LuaAudio_t sfx;/**< Sound effect. */
-} LuaSpfx_t;
+} LuaSpfxData_t;
 
 /**
  * @brief List of special effects being handled.
  */
-static LuaSpfx_t **lua_spfx = NULL;
+static LuaSpfxData_t *lua_spfx = NULL;
 static int lua_spfx_idgen = 0;
 
 /* Spfx methods. */
@@ -75,9 +75,9 @@ static const luaL_Reg spfxL_methods[] = {
 
 static int spfx_cmp( const void *p1, const void *p2 )
 {
-   const LuaSpfx_t *s1, *s2;
-   s1 = *((const LuaSpfx_t**) p1);
-   s2 = *((const LuaSpfx_t**) p2);
+   const LuaSpfxData_t *s1, *s2;
+   s1 = (const LuaSpfxData_t*) p1;
+   s2 = (const LuaSpfxData_t*) p2;
    return s1->id - s2->id;
 }
 
@@ -102,12 +102,7 @@ int nlua_loadSpfx( nlua_env env )
  */
 LuaSpfx_t* lua_tospfx( lua_State *L, int ind )
 {
-   LuaSpfx_t *ls = (LuaSpfx_t*) lua_touserdata(L,ind);
-   /* TODO is this bsearch necessary? */
-   LuaSpfx_t **f = bsearch( &ls, lua_spfx, array_size(lua_spfx), sizeof(LuaSpfx_t*), spfx_cmp );
-   if (f == NULL)
-      NLUA_ERROR( L, _("Spfx does not exist.") );
-   return *f;
+   return (LuaSpfx_t*) lua_touserdata(L,ind);
 }
 /**
  * @brief Gets spfx at index or raises error if there is no spfx at index.
@@ -122,6 +117,15 @@ LuaSpfx_t* luaL_checkspfx( lua_State *L, int ind )
       return lua_tospfx(L,ind);
    luaL_typerror(L, ind, SPFX_METATABLE);
    return NULL;
+}
+static LuaSpfxData_t* luaL_checkspfxdata( lua_State *L, int ind )
+{
+   LuaSpfx_t *ls = luaL_checkspfx( L , ind );
+   const LuaSpfxData_t key = { .id = *ls };
+   LuaSpfxData_t *f = bsearch( &key, lua_spfx, array_size(lua_spfx), sizeof(LuaSpfxData_t), spfx_cmp );
+   if (f == NULL)
+      NLUA_ERROR( L, _("Spfx does not exist.") );
+   return f;
 }
 /**
  * @brief Pushes a spfx on the stack.
@@ -166,7 +170,7 @@ int lua_isspfx( lua_State *L, int ind )
  *
  *    @param ls Special effect to clean up.
  */
-static void spfx_cleanup( LuaSpfx_t *ls )
+static void spfx_cleanup( LuaSpfxData_t *ls )
 {
    /* Unreference stuff so it can get gc'd. */
    nlua_unref( naevL, ls->data );
@@ -241,9 +245,9 @@ static int spfxL_eq( lua_State *L )
  */
 static int spfxL_new( lua_State *L )
 {
-   LuaSpfx_t ls;
+   LuaSpfxData_t ls;
 
-   memset( &ls, 0, sizeof(LuaSpfx_t) );
+   memset( &ls, 0, sizeof(LuaSpfxData_t) );
 
    ls.id       = ++lua_spfx_idgen;
    ls.ttl      = luaL_checknumber(L,1);
@@ -314,9 +318,10 @@ static int spfxL_new( lua_State *L )
 
    /* Add to Lua and stack. */
    if (lua_spfx == NULL)
-      lua_spfx = array_create( LuaSpfx_t* );
-   array_push_back( &lua_spfx, lua_pushspfx(L, ls) );
+      lua_spfx = array_create( LuaSpfxData_t );
+   array_push_back( &lua_spfx, ls );
 
+   lua_pushspfx( L, ls.id );
    return 1;
 }
 
@@ -329,7 +334,7 @@ static int spfxL_new( lua_State *L )
  */
 static int spfxL_pos( lua_State *L )
 {
-   LuaSpfx_t *ls = luaL_checkspfx(L,1);
+   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
    lua_pushvector( L, ls->pos );
    return 1;
 }
@@ -343,7 +348,7 @@ static int spfxL_pos( lua_State *L )
  */
 static int spfxL_vel( lua_State *L )
 {
-   LuaSpfx_t *ls = luaL_checkspfx(L,1);
+   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
    lua_pushvector( L, ls->pos );
    return 1;
 }
@@ -359,7 +364,7 @@ static int spfxL_vel( lua_State *L )
  */
 static int spfxL_data( lua_State *L )
 {
-   LuaSpfx_t *ls = luaL_checkspfx(L,1);
+   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
    lua_rawgeti( L, LUA_REGISTRYINDEX, ls->data );
    return 1;
 }
@@ -374,7 +379,7 @@ void spfxL_setSpeed( double s )
 
    soundLock();
    for (int i=0; i<array_size(lua_spfx); i++) {
-      LuaSpfx_t *ls = lua_spfx[i];
+      LuaSpfxData_t *ls = &lua_spfx[i];
 
       if (!(ls->flags & SPFX_AUDIO))
          continue;
@@ -395,7 +400,7 @@ void spfxL_setSpeed( double s )
 void spfxL_update( double dt )
 {
    for (int i=array_size(lua_spfx)-1; i>=0; i--) {
-      LuaSpfx_t *ls = lua_spfx[i];
+      LuaSpfxData_t *ls = &lua_spfx[i];
 
       /* Count down. */
       ls->ttl -= dt;
@@ -428,7 +433,7 @@ void spfxL_update( double dt )
 
       /* Run update. */
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->update );
-      lua_pushspfx( naevL, *ls );
+      lua_pushspfx( naevL, ls->id );
       lua_pushnumber( naevL, dt );
       if (lua_pcall( naevL, 2, 0, 0) != 0) {
          WARN(_("Spfx failed to run 'update':\n%s"), lua_tostring( naevL, -1 ));
@@ -445,7 +450,7 @@ void spfxL_renderbg (void)
    double z = cam_getZoom();
    for (int i=0; i<array_size(lua_spfx); i++) {
       vec2 pos;
-      LuaSpfx_t *ls = lua_spfx[i];
+      LuaSpfxData_t *ls = &lua_spfx[i];
 
       /* Skip no rendering. */
       if (ls->render_bg == LUA_NOREF)
@@ -457,7 +462,7 @@ void spfxL_renderbg (void)
 
       /* Render. */
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->render_bg );
-      lua_pushspfx( naevL, *ls );
+      lua_pushspfx( naevL, ls->id );
       lua_pushnumber( naevL, pos.x );
       lua_pushnumber( naevL, pos.y );
       lua_pushnumber( naevL, z );
@@ -476,7 +481,7 @@ void spfxL_rendermg (void)
    double z = cam_getZoom();
    for (int i=0; i<array_size(lua_spfx); i++) {
       vec2 pos;
-      LuaSpfx_t *ls = lua_spfx[i];
+      LuaSpfxData_t *ls = &lua_spfx[i];
 
       /* Skip no rendering. */
       if (ls->render_mg == LUA_NOREF)
@@ -488,7 +493,7 @@ void spfxL_rendermg (void)
 
       /* Render. */
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->render_mg );
-      lua_pushspfx( naevL, *ls );
+      lua_pushspfx( naevL, ls->id );
       lua_pushnumber( naevL, pos.x );
       lua_pushnumber( naevL, pos.y );
       lua_pushnumber( naevL, z );
@@ -507,7 +512,7 @@ void spfxL_renderfg (void)
    double z = cam_getZoom();
    for (int i=0; i<array_size(lua_spfx); i++) {
       vec2 pos;
-      LuaSpfx_t *ls = lua_spfx[i];
+      LuaSpfxData_t *ls = &lua_spfx[i];
 
       /* Skip no rendering. */
       if (ls->render_fg == LUA_NOREF)
@@ -519,7 +524,7 @@ void spfxL_renderfg (void)
 
       /* Render. */
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->render_fg );
-      lua_pushspfx( naevL, *ls );
+      lua_pushspfx( naevL, ls->id );
       lua_pushnumber( naevL, pos.x );
       lua_pushnumber( naevL, pos.y );
       lua_pushnumber( naevL, z );
