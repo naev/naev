@@ -203,10 +203,16 @@ static int spfxL_eq( lua_State *L )
 }
 
 /**
- * @brief Creates a new spfx source.
+ * @brief Creates a new special effect.
  *
- *    @luatparam string|File data Data to load the spfx from.
- *    @luatreturn Spfx New spfx corresponding to the data.
+ *    @luatparam Number ttl Time to live of the effect.
+ *    @luatparam Function|nil update Update function to use if applicable.
+ *    @luatparam Function|nil render_bg Background render function to use if applicable (behind ships).
+ *    @luatparam Function|nil render_mg Middle render function to use if applicable (infront of NPC ships, behind player).
+ *    @luatparam Function|nil render_fg Foregroundrender function to use if applicable (infront of player).
+ *    @luatparam vec2 pos Position of the effect.
+ *    @luatparam vec2 vel Velocity of the effect.
+ *    @luatreturn spfx New spfx corresponding to the data.
  * @luafunc new
  */
 static int spfxL_new( lua_State *L )
