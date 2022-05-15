@@ -54,6 +54,7 @@ static int audioL_isStopped( lua_State *L );
 static int audioL_rewind( lua_State *L );
 static int audioL_seek( lua_State *L );
 static int audioL_tell( lua_State *L );
+static int audioL_getDuration( lua_State *L );
 static int audioL_setVolume( lua_State *L );
 static int audioL_getVolume( lua_State *L );
 static int audioL_setRelative( lua_State *L );
@@ -87,6 +88,7 @@ static const luaL_Reg audioL_methods[] = {
    { "rewind", audioL_rewind },
    { "seek", audioL_seek },
    { "tell", audioL_tell },
+   { "getDuration", audioL_getDuration },
    { "setVolume", audioL_setVolume },
    { "getVolume", audioL_getVolume },
    { "setRelative", audioL_setRelative },
@@ -539,6 +541,56 @@ static int audioL_tell( lua_State *L )
       soundUnlock();
    }
    lua_pushnumber(L, offset);
+   return 1;
+}
+
+/**
+ * @brief Gets the length of a source.
+ *
+ *    @luatparam Audio source Source to get duration of.
+ *    @luatparam[opt="seconds"] string unit Either "seconds" or "samples" indicating the type to report.
+ *    @luatreturn number Duration of the source or -1 on error.
+ * @luafunc getDuration
+ */
+static int audioL_getDuration( lua_State *L )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   const char *unit = luaL_optstring(L,2,"seconds");
+   float duration = -1.0;
+
+   if (sound_disabled) {
+      lua_pushnumber(L, 0.);
+      return 1;
+   }
+
+   if (!sound_disabled) {
+      soundLock();
+
+      ALint bytes, channels, bits, samples;
+      ALuint buffer = la->buf->buffer;
+
+      alGetBufferi( buffer, AL_SIZE, &bytes );
+      alGetBufferi( buffer, AL_CHANNELS, &channels );
+      alGetBufferi( buffer, AL_BITS, &bits );
+
+      samples = bytes * 8 / (channels * bits);
+
+      if (strcmp(unit,"seconds")==0) {
+         ALint freq;
+
+         alGetBufferi( buffer, AL_FREQUENCY, &freq );
+
+         duration = (float) samples / (float) freq;
+      }
+      else if (strcmp(unit,"samples")==0) {
+         duration = samples;
+      }
+      else
+         NLUA_ERROR(L, _("Unknown duration source '%s'! Should be either 'seconds' or 'samples'!"), unit );
+      al_checkErr();
+      soundUnlock();
+   }
+   lua_pushnumber(L, duration);
    return 1;
 }
 
