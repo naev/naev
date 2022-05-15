@@ -19,13 +19,13 @@
 #include "array.h"
 #include "nlua_vec2.h"
 #include "nluadef.h"
-#include "nlua_file.h"
 #include "nstring.h"
 
 /**
  * @brief Handles the special effects Lua-side.
  */
 typedef struct LuaSpfx_s {
+   int id;        /**< Unique ID. */
    double ttl;    /**< Time to live. */
    vec2 pos;      /**< Position. */
    vec2 vel;      /**< Velocity. */
@@ -38,16 +38,23 @@ typedef struct LuaSpfx_s {
 /**
  * @brief List of special effects being handled.
  */
-static LuaSpfx_t *lua_spfx = NULL;
+static LuaSpfx_t **lua_spfx = NULL;
+static int lua_spfx_idgen = 0;
 
 /* Spfx methods. */
 static int spfxL_gc( lua_State *L );
 static int spfxL_eq( lua_State *L );
 static int spfxL_new( lua_State *L );
+static int spfxL_pos( lua_State *L );
+static int spfxL_vel( lua_State *L );
+static int spfxL_data( lua_State *L );
 static const luaL_Reg spfxL_methods[] = {
    { "__gc", spfxL_gc },
    { "__eq", spfxL_eq },
    { "new", spfxL_new },
+   { "pos", spfxL_pos },
+   { "vel", spfxL_vel },
+   { "data", spfxL_data },
    {0,0}
 }; /**< SpfxLua methods. */
 
@@ -126,6 +133,28 @@ int lua_isspfx( lua_State *L, int ind )
    return ret;
 }
 
+static int spfx_cmp( const void *p1, const void *p2 )
+{
+   const LuaSpfx_t *s1, *s2;
+   s1 = *((const LuaSpfx_t**) p1);
+   s2 = *((const LuaSpfx_t**) p2);
+   return s1->id - s2->id;
+}
+
+static void spfx_cleanup( LuaSpfx_t *ls )
+{
+   /* Unreference stuff. */
+   nlua_unref( naevL, ls->data );
+   nlua_unref( naevL, ls->render_bg );
+   nlua_unref( naevL, ls->render_fg );
+   nlua_unref( naevL, ls->update );
+
+   ls->data       = LUA_NOREF;
+   ls->render_bg  = LUA_NOREF;
+   ls->render_fg  = LUA_NOREF;
+   ls->update     = LUA_NOREF;
+}
+
 /**
  * @brief Lua bindings to interact with spfx.
  *
@@ -141,6 +170,15 @@ int lua_isspfx( lua_State *L, int ind )
 static int spfxL_gc( lua_State *L )
 {
    LuaSpfx_t *ls = luaL_checkspfx(L,1);
+
+   /* Clean up the stack. */
+   LuaSpfx_t **f = bsearch( &ls, lua_spfx, array_size(lua_spfx), sizeof(LuaSpfx_t*), spfx_cmp );
+   if (f == NULL)
+      WARN(_("Spfx not found in stack during garbage collection!"));
+   else
+      array_erase( &lua_spfx, &f[0], &f[1] );
+
+   spfx_cleanup( ls );
    return 0;
 }
 
@@ -173,7 +211,86 @@ static int spfxL_new( lua_State *L )
    LuaSpfx_t ls;
 
    memset( &ls, 0, sizeof(LuaSpfx_t) );
-   lua_pushspfx(L, ls);
+
+   ls.id = ++lua_spfx_idgen;
+   ls.ttl = luaL_checknumber(L,1);
+
+   /* Functions. */
+   if (!lua_isnoneornil(L,2))
+      ls.render_bg = nlua_ref( L, 2 );
+   if (!lua_isnoneornil(L,3))
+      ls.render_fg = nlua_ref( L, 3 );
+   if (!lua_isnoneornil(L,4))
+      ls.update = nlua_ref( L, 4 );
+
+   /* Position information. */
+   if (!lua_isnoneornil(L,5))
+      ls.pos = *luaL_checkvector( L, 5 );
+   if (!lua_isnoneornil(L,6))
+      ls.vel = *luaL_checkvector( L, 6 );
+
+   /* Set up new data. */
+   lua_newtable(L);
+   ls.data = luaL_ref( L, LUA_REGISTRYINDEX );
+
+   /* Add to Lua and stack. */
+   if (lua_spfx == NULL)
+      lua_spfx = array_create( LuaSpfx_t* );
+   array_push_back( &lua_spfx, lua_pushspfx(L, ls) );
 
    return 1;
+}
+
+static int spfxL_pos( lua_State *L )
+{
+   LuaSpfx_t *ls = luaL_checkspfx(L,1);
+   lua_pushvector( L, ls->pos );
+   return 1;
+}
+
+static int spfxL_vel( lua_State *L )
+{
+   LuaSpfx_t *ls = luaL_checkspfx(L,1);
+   lua_pushvector( L, ls->pos );
+   return 1;
+}
+
+static int spfxL_data( lua_State *L )
+{
+   LuaSpfx_t *ls = luaL_checkspfx(L,1);
+   lua_rawgeti( L, LUA_REGISTRYINDEX, ls->data );
+   return 1;
+}
+
+
+void spfxL_update( double dt )
+{
+   for (int i=array_size(lua_spfx)-1; i>=0; i--) {
+      LuaSpfx_t *ls = lua_spfx[i];
+
+      /* Count down. */
+      ls->ttl -= dt;
+      if (ls->ttl < 0.) {
+         spfx_cleanup( ls );
+         array_erase( &lua_spfx, &ls[0], &ls[1] );
+         continue;
+      }
+
+      /* Normal update. */
+      ls->pos.x += ls->vel.x * dt;
+      ls->pos.y += ls->vel.y * dt;
+
+      /* Update if necessary. */
+      if (ls->update == LUA_NOREF)
+         continue;
+
+      /* Run update. */
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->update );
+      lua_pushspfx( naevL, *ls );
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->data );
+      if (lua_pcall( naevL, 1, 0, 0) != 0) {
+         WARN(_("Spfx failed to run 'update':\n%s"), lua_tostring( naevL, -1 ));
+         lua_pop( naevL, 1 );
+      }
+   }
 }

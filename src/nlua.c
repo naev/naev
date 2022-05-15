@@ -833,3 +833,21 @@ int nlua_reffield( int objref, const char *name )
    lua_pop(naevL, 1);
    return LUA_NOREF;
 }
+
+/**
+ * @brief Creates a new reference to a Lua structure at a position.
+ */
+int nlua_ref( lua_State *L, int idx )
+{
+   lua_pushvalue( L, idx );
+   return luaL_ref( L, LUA_REGISTRYINDEX );
+}
+
+/**
+ * @brief Removes a reference set with nlua_ref.
+ */
+void nlua_unref( lua_State *L, int idx )
+{
+   if (idx != LUA_NOREF)
+      luaL_unref( L, LUA_REGISTRYINDEX, idx );
+}
