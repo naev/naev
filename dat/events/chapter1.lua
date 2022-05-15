@@ -154,7 +154,7 @@ function cutscene_start ()
    pilot.clear()
    pilot.toggleSpawn(false)
 
-   -- TODO music
+   -- TODO better music
    music.stop()
    var.push( "music_off", true )
    lmusic.play( "snd/music/empire2.ogg" )
@@ -404,7 +404,6 @@ local sfx
 function cutscene_cleanup ()
    setHide( false )
 
-   -- TODO add sound
    var.pop( "music_off" )
    music.play()
 
