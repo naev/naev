@@ -9,6 +9,7 @@ local love_shaders = require "love_shaders"
 local luatk = require "luatk"
 local luatk_map = require "luatk.map"
 local prng = require "prng"
+local luaspfx = require "luaspfx"
 
 local pos, tex, mask, cvs, shader
 local tw, th
@@ -131,11 +132,7 @@ function hypergate.land( _s, p )
    else
       p:shipvarPush( "hypergate", true )
       p:effectAdd("Hypergate Enter")
-      -- TODO make this use effects or something so it's more robust to multiple ships jumping
-      jumpsfx:setRelative(false)
-      jumpsfx:setAttenuationDistances( 500, 25e3 )
-      jumpsfx:setPosition( p:pos():get() )
-      jumpsfx:play()
+      luaspfx.sfx( 10, p:pos(), jumpsfx )
    end
 end
 
