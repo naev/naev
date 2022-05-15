@@ -2984,6 +2984,8 @@ src/nlua_ship.c
 src/nlua_ship.h
 src/nlua_shiplog.c
 src/nlua_shiplog.h
+src/nlua_spfx.c
+src/nlua_spfx.h
 src/nlua_spob.c
 src/nlua_spob.h
 src/nlua_system.c

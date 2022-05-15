@@ -30,6 +30,7 @@
 #include "physics.h"
 #include "player.h"
 #include "sound_openal.h"
+#include "nlua_spfx.h"
 
 #define SOUND_SUFFIX_WAV   ".wav" /**< Suffix of sounds. */
 #define SOUND_SUFFIX_OGG   ".ogg" /**< Suffix of sounds. */
@@ -521,6 +522,9 @@ void sound_setSpeed( double s )
       sound_al_setSpeedVolume( 1. ); /* Restore volume. */
    }
    snd_compression_gain = v;
+
+   /* Set spfx speed. */
+   spfxL_setSpeed( s );
 
    return sound_al_setSpeed( s );
 }
