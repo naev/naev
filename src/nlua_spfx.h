@@ -13,7 +13,7 @@ typedef struct LuaSpfx_s LuaSpfx_t;
 /*
  * Library loading
  */
-int nlua_loadSPFX( nlua_env env );
+int nlua_loadSpfx( nlua_env env );
 
 /* Basic operations. */
 LuaSpfx_t* lua_tospfx( lua_State *L, int ind );

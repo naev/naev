@@ -31,6 +31,7 @@
 #include "rng.h"
 #include "space.h"
 #include "nlua_shader.h"
+#include "nlua_spfx.h"
 
 #define SPFX_XML_ID    "spfx" /**< SPFX XML node tag. */
 
@@ -541,6 +542,9 @@ void spfx_update( const double dt, const double real_dt )
 
    /* Damage. */
    spfx_updateDamage( dt );
+
+   /* Update Lua ones. */
+   spfxL_update( dt );
 }
 
 /**
@@ -996,14 +1000,17 @@ void spfx_render( int layer )
    switch (layer) {
       case SPFX_LAYER_FRONT:
          spfx_stack = spfx_stack_front;
+         spfxL_renderbg();
          break;
 
       case SPFX_LAYER_MIDDLE:
          spfx_stack = spfx_stack_middle;
+         spfxL_rendermg();
          break;
 
       case SPFX_LAYER_BACK:
          spfx_stack = spfx_stack_back;
+         spfxL_renderfg();
          break;
 
       default:

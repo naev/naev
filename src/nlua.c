@@ -36,6 +36,7 @@
 #include "nlua_player.h"
 #include "nlua_rnd.h"
 #include "nlua_safelanes.h"
+#include "nlua_spfx.h"
 #include "nlua_shiplog.h"
 #include "nlua_system.h"
 #include "nlua_time.h"
@@ -717,6 +718,7 @@ int nlua_loadStandard( nlua_env env )
    r |= nlua_loadData(env);
    r |= nlua_loadLinOpt(env);
    r |= nlua_loadSafelanes(env);
+   r |= nlua_loadSpfx(env);
 
    return r;
 }
