@@ -32,3 +32,7 @@ LuaAudio_t* lua_toaudio( lua_State *L, int ind );
 LuaAudio_t* luaL_checkaudio( lua_State *L, int ind );
 LuaAudio_t* lua_pushaudio( lua_State *L, LuaAudio_t audio );
 int lua_isaudio( lua_State *L, int ind );
+
+/* Useful stuff. */
+void audio_clone( LuaAudio_t *la, const LuaAudio_t *source );
+void audio_cleanup( LuaAudio_t *la );

@@ -18,15 +18,26 @@
 #include "conf.h"
 #include "camera.h"
 #include "array.h"
+#include "nlua_audio.h"
 #include "nlua_vec2.h"
 #include "nluadef.h"
+#include "sound.h"
 #include "opengl.h"
+#include "nopenal.h"
+#include "player.h"
+
+#define SPFX_GLOBAL     (1<<1) /**< Spfx is not localized. */
+#define SPFX_MOVING     (1<<2) /**< Spfx is moving. */
+#define SPFX_AUDIO      (1<<3) /**< Spfx has audio. */
 
 /**
  * @brief Handles the special effects Lua-side.
+ *
+ * It has the advantage of automatically updating the position and audio, while Lua gives flexibility elsewhere.
  */
 typedef struct LuaSpfx_s {
    int id;        /**< Unique ID. */
+   unsigned int flags; /**< Flags. */
    double ttl;    /**< Time to live. */
    vec2 pos;      /**< Position. */
    vec2 vel;      /**< Velocity. */
@@ -35,6 +46,7 @@ typedef struct LuaSpfx_s {
    int render_mg; /**< Reference to middle render function. */
    int render_fg; /**< Reference to foreground render function. */
    int update;    /**< Reference to update function. */
+   LuaAudio_t sfx;/**< Sound effect. */
 } LuaSpfx_t;
 
 /**
@@ -148,22 +160,32 @@ int lua_isspfx( lua_State *L, int ind )
    return ret;
 }
 
+/**
+ * @brief Cleans up a special effect.
+ *
+ *    @param ls Special effect to clean up.
+ */
 static void spfx_cleanup( LuaSpfx_t *ls )
 {
-   /* Unreference stuff. */
+   /* Unreference stuff so it can get gc'd. */
    nlua_unref( naevL, ls->data );
    nlua_unref( naevL, ls->render_bg );
    nlua_unref( naevL, ls->render_mg );
    nlua_unref( naevL, ls->render_fg );
    nlua_unref( naevL, ls->update );
 
+   /* Make sure stuff doesn't get run. */
    ls->data       = LUA_NOREF;
    ls->render_bg  = LUA_NOREF;
    ls->render_mg  = LUA_NOREF;
    ls->render_fg  = LUA_NOREF;
    ls->update     = LUA_NOREF;
 
-   ls->id = -1; /* Set as cleaned up. */
+   /* Clean up audio. */
+   audio_cleanup( &ls->sfx );
+
+   /* Set as cleaned up. */
+   ls->id = -1;
 }
 
 /**
@@ -237,8 +259,44 @@ static int spfxL_new( lua_State *L )
    /* Position information. */
    if (!lua_isnoneornil(L,6))
       ls.pos = *luaL_checkvector( L, 6 );
-   if (!lua_isnoneornil(L,7))
+   else
+      ls.flags |= SPFX_GLOBAL;
+   if (!lua_isnoneornil(L,7)) {
       ls.vel = *luaL_checkvector( L, 7 );
+      ls.flags |= SPFX_MOVING;
+   }
+
+   /* Special effect. */
+   if (!lua_isnoneornil(L,8)) {
+      LuaAudio_t *la = luaL_checkaudio( L, 8 );
+      ls.flags |= SPFX_AUDIO;
+      audio_clone( &ls.sfx, la );
+
+      /* Set up parameters. */
+      soundLock();
+      alSourcei( ls.sfx.source, AL_LOOPING, AL_FALSE );
+      if (ls.flags & SPFX_GLOBAL) {
+         alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_FALSE );
+         alSourcef( ls.sfx.source, AL_PITCH, 1. );
+      }
+      else {
+         ALfloat alf[3];
+         alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_TRUE );
+         alSourcef( ls.sfx.source, AL_REFERENCE_DISTANCE, 500. );
+         alSourcef( ls.sfx.source, AL_MAX_DISTANCE, 25e3 );
+         alSourcef( ls.sfx.source, AL_PITCH, player_dt_default() * player.speed );
+         alf[0] = ls.pos.x;
+         alf[1] = ls.pos.y;
+         alf[2] = 0.;
+         alSourcefv( ls.sfx.source, AL_POSITION, alf );
+         alf[0] = ls.vel.x;
+         alf[1] = ls.vel.y;
+         alf[2] = 0.;
+         alSourcefv( ls.sfx.source, AL_VELOCITY, alf );
+      }
+      al_checkErr();
+      soundUnlock();
+   }
 
    /* Set up new data. */
    lua_newtable(L);
@@ -296,6 +354,29 @@ static int spfxL_data( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Sets the speed of the playing spfx sounds.
+ */
+void spfxL_setSpeed( double s )
+{
+   for (int i=0; i<array_size(lua_spfx); i++) {
+      LuaSpfx_t *ls = lua_spfx[i];
+
+      if (!(ls->flags & SPFX_AUDIO))
+         continue;
+
+      if (ls->flags & SPFX_GLOBAL)
+         continue;
+
+      alSourcef( ls->sfx.source, AL_PITCH, s );
+   }
+}
+
+/**
+ * @brief Updates the spfx.
+ *
+ *    @luatparam dt Delta tick to use for the update.
+ */
 void spfxL_update( double dt )
 {
    for (int i=array_size(lua_spfx)-1; i>=0; i--) {
@@ -310,8 +391,21 @@ void spfxL_update( double dt )
       }
 
       /* Normal update. */
-      ls->pos.x += ls->vel.x * dt;
-      ls->pos.y += ls->vel.y * dt;
+      if (ls->flags & SPFX_MOVING) {
+         ls->pos.x += ls->vel.x * dt;
+         ls->pos.y += ls->vel.y * dt;
+
+         /* Check sound. */
+         if ((ls->flags & SPFX_AUDIO) && !(ls->flags & SPFX_GLOBAL)) {
+            soundLock();
+            ALfloat alf[3];
+            alf[0] = ls->pos.x;
+            alf[1] = ls->pos.y;
+            alf[2] = 0.;
+            alSourcefv( ls->sfx.source, AL_POSITION, alf );
+            soundUnlock();
+         }
+      }
 
       /* Update if necessary. */
       if (ls->update == LUA_NOREF)
@@ -328,6 +422,9 @@ void spfxL_update( double dt )
    }
 }
 
+/**
+ * @brief Renders the Lua SPFX on the background.
+ */
 void spfxL_renderbg (void)
 {
    double z = cam_getZoom();
@@ -356,6 +453,9 @@ void spfxL_renderbg (void)
    }
 }
 
+/**
+ * @brief Renders the Lua SPFX in the midground.
+ */
 void spfxL_rendermg (void)
 {
    double z = cam_getZoom();
@@ -384,6 +484,9 @@ void spfxL_rendermg (void)
    }
 }
 
+/**
+ * @brief Renders the Lua SPFX in the foreground.
+ */
 void spfxL_renderfg (void)
 {
    double z = cam_getZoom();

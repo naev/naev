@@ -219,6 +219,23 @@ int lua_isaudio( lua_State *L, int ind )
    return ret;
 }
 
+void audio_cleanup( LuaAudio_t *la )
+{
+   if ((la==NULL) || sound_disabled)
+      return 0;
+   soundLock();
+   alDeleteSources( 1, &la->source );
+   /* Check if buffers need freeing. */
+   la->buf->refcount--;
+   if (la->buf->refcount <= 0) {
+      alDeleteBuffers( 1, &la->buf->buffer );
+      free( la->buf );
+   }
+   /* Clean up. */
+   al_checkErr();
+   soundUnlock();
+}
+
 /**
  * @brief Lua bindings to interact with audio.
  *
@@ -234,19 +251,7 @@ int lua_isaudio( lua_State *L, int ind )
 static int audioL_gc( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (sound_disabled)
-      return 0;
-   soundLock();
-   alDeleteSources( 1, &la->source );
-   /* Check if buffers need freeing. */
-   la->buf->refcount--;
-   if (la->buf->refcount <= 0) {
-      alDeleteBuffers( 1, &la->buf->buffer );
-      free( la->buf );
-   }
-   /* Clean up. */
-   al_checkErr();
-   soundUnlock();
+   audio_cleanup( la );
    return 0;
 }
 
@@ -334,6 +339,36 @@ static int audioL_new( lua_State *L )
    return 1;
 }
 
+void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
+{
+   double master;
+
+   memset( la, 0, sizeof(LuaAudio_t) );
+   if (sound_disabled)
+      return;
+
+   soundLock();
+   alGenSources( 1, &la->source );
+
+   /* Attach source buffer. */
+   la->buf = source->buf;
+   la->buf->refcount++;
+
+   /* Attach buffer. */
+   alSourcei( la->source, AL_BUFFER, la->buf->buffer );
+
+   /* TODO this should probably set the same parameters as the original source
+    * being cloned to be truly compatible with Love2D. */
+   /* Defaults. */
+   master = sound_getVolumeLog();
+   alSourcef( la->source, AL_GAIN, master );
+   /* See note in audioL_new */
+   alSourcei( la->source, AL_SOURCE_RELATIVE, AL_TRUE );
+   alSource3f( la->source, AL_POSITION, 0., 0., 0. );
+   al_checkErr();
+   soundUnlock();
+}
+
 /**
  * @brief Clones an existing audio source.
  *
@@ -347,32 +382,7 @@ static int audioL_clone( lua_State *L )
    LuaAudio_t *source = luaL_checkaudio(L,1);
    double master;
 
-   memset( &la, 0, sizeof(LuaAudio_t) );
-   if (sound_disabled) {
-      lua_pushaudio(L, la);
-      return 1;
-   }
-
-   soundLock();
-   alGenSources( 1, &la.source );
-
-   /* Attach source buffer. */
-   la.buf = source->buf;
-   la.buf->refcount++;
-
-   /* Attach buffer. */
-   alSourcei( la.source, AL_BUFFER, la.buf->buffer );
-
-   /* TODO this should probably set the same parameters as the original source
-    * being cloned to be truly compatible with Love2D. */
-   /* Defaults. */
-   master = sound_getVolumeLog();
-   alSourcef( la.source, AL_GAIN, master );
-   /* See note in audioL_new */
-   alSourcei( la.source, AL_SOURCE_RELATIVE, AL_TRUE );
-   alSource3f( la.source, AL_POSITION, 0., 0., 0. );
-   al_checkErr();
-   soundUnlock();
+   audio_clone( &la, source );
 
    lua_pushaudio(L, la);
    return 1;
