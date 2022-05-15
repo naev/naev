@@ -287,7 +287,6 @@ void spfxL_update( double dt )
       /* Run update. */
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->update );
       lua_pushspfx( naevL, *ls );
-      lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->data );
       if (lua_pcall( naevL, 1, 0, 0) != 0) {
          WARN(_("Spfx failed to run 'update':\n%s"), lua_tostring( naevL, -1 ));
          lua_pop( naevL, 1 );
