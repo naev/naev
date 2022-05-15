@@ -62,6 +62,7 @@ static int spfxL_eq( lua_State *L );
 static int spfxL_new( lua_State *L );
 static int spfxL_pos( lua_State *L );
 static int spfxL_vel( lua_State *L );
+static int spfxL_sfx( lua_State *L );
 static int spfxL_data( lua_State *L );
 static const luaL_Reg spfxL_methods[] = {
    { "__gc", spfxL_gc },
@@ -69,6 +70,7 @@ static const luaL_Reg spfxL_methods[] = {
    { "new", spfxL_new },
    { "pos", spfxL_pos },
    { "vel", spfxL_vel },
+   { "sfx", spfxL_sfx },
    { "data", spfxL_data },
    {0,0}
 }; /**< SpfxLua methods. */
@@ -350,6 +352,20 @@ static int spfxL_vel( lua_State *L )
 {
    LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
    lua_pushvector( L, ls->pos );
+   return 1;
+}
+
+/**
+ * @brief Gets the sound effect of a spfx.
+ *
+ *    @luatparam spfx s Spfx to get sound effect of.
+ *    @luatreturn audio Sound effect of the spfx.
+ * @luafunc vel( s )
+ */
+static int spfxL_sfx( lua_State *L )
+{
+   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
+   lua_pushaudio( L, ls->sfx );
    return 1;
 }
 
