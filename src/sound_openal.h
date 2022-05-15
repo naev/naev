@@ -11,6 +11,9 @@
 #include "nopenal.h"
 #include "sound.h"
 
+#define SOUND_REFERENCE_DISTANCE    500.  /**< OpenAL reference distance. */
+#define SOUND_MAX_DISTANCE          25e3  /**< OpenAL max distance. */
+
 /**
  * @struct alSound
  *

@@ -22,6 +22,7 @@
 #include "nlua_vec2.h"
 #include "nluadef.h"
 #include "sound.h"
+#include "sound_openal.h"
 #include "opengl.h"
 #include "nopenal.h"
 #include "player.h"
@@ -282,8 +283,8 @@ static int spfxL_new( lua_State *L )
       else {
          ALfloat alf[3];
          alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_TRUE );
-         alSourcef( ls.sfx.source, AL_REFERENCE_DISTANCE, 500. );
-         alSourcef( ls.sfx.source, AL_MAX_DISTANCE, 25e3 );
+         alSourcef( ls.sfx.source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DISTANCE );
+         alSourcef( ls.sfx.source, AL_MAX_DISTANCE, SOUND_MAX_DISTANCE );
          alSourcef( ls.sfx.source, AL_PITCH, player_dt_default() * player.speed );
          alf[0] = ls.pos.x;
          alf[1] = ls.pos.y;

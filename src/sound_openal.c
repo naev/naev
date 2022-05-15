@@ -287,8 +287,8 @@ int sound_al_init (void)
        *  inverse    2        500      1.000   0.333   0.052   0.026
        *  exponent   2        500      1.000   0.250   0.010   0.003
        */
-      alSourcef( s, AL_REFERENCE_DISTANCE, 500. ); /* Close distance to clamp at (doesn't get louder). */
-      alSourcef( s, AL_MAX_DISTANCE,       25e3 ); /* Max distance to clamp at (doesn't get quieter). */
+      alSourcef( s, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DISTANCE ); /* Close distance to clamp at (doesn't get louder). */
+      alSourcef( s, AL_MAX_DISTANCE,       SOUND_MAX_DISTANCE ); /* Max distance to clamp at (doesn't get quieter). */
       alSourcef( s, AL_ROLLOFF_FACTOR,     1. ); /* Determines how it drops off. */
 
       /* Set the filter. */
