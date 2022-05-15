@@ -1000,7 +1000,7 @@ void spfx_render( int layer )
    switch (layer) {
       case SPFX_LAYER_FRONT:
          spfx_stack = spfx_stack_front;
-         spfxL_renderbg();
+         spfxL_renderfg();
          break;
 
       case SPFX_LAYER_MIDDLE:
@@ -1010,7 +1010,7 @@ void spfx_render( int layer )
 
       case SPFX_LAYER_BACK:
          spfx_stack = spfx_stack_back;
-         spfxL_renderfg();
+         spfxL_renderbg();
          break;
 
       default:
