@@ -235,6 +235,7 @@ static int spfxL_eq( lua_State *L )
  *    @luatparam Function|nil render_fg Foregroundrender function to use if applicable (infront of player).
  *    @luatparam vec2 pos Position of the effect.
  *    @luatparam vec2 vel Velocity of the effect.
+ *    @luatparam audio sfx Sound effect associated with the spfx.
  *    @luatreturn spfx New spfx corresponding to the data.
  * @luafunc new
  */
@@ -244,8 +245,12 @@ static int spfxL_new( lua_State *L )
 
    memset( &ls, 0, sizeof(LuaSpfx_t) );
 
-   ls.id = ++lua_spfx_idgen;
-   ls.ttl = luaL_checknumber(L,1);
+   ls.id       = ++lua_spfx_idgen;
+   ls.ttl      = luaL_checknumber(L,1);
+   ls.update   = LUA_NOREF;
+   ls.render_bg = LUA_NOREF;
+   ls.render_mg = LUA_NOREF;
+   ls.render_fg = LUA_NOREF;
 
    /* Functions. */
    if (!lua_isnoneornil(L,2))
@@ -277,12 +282,12 @@ static int spfxL_new( lua_State *L )
       soundLock();
       alSourcei( ls.sfx.source, AL_LOOPING, AL_FALSE );
       if (ls.flags & SPFX_GLOBAL) {
-         alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_FALSE );
+         alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_TRUE );
          alSourcef( ls.sfx.source, AL_PITCH, 1. );
       }
       else {
          ALfloat alf[3];
-         alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_TRUE );
+         alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_FALSE );
          alSourcef( ls.sfx.source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DISTANCE );
          alSourcef( ls.sfx.source, AL_MAX_DISTANCE, SOUND_MAX_DISTANCE );
          alSourcef( ls.sfx.source, AL_PITCH, player_dt_default() * player.speed );
@@ -301,7 +306,7 @@ static int spfxL_new( lua_State *L )
 
    /* Set up new data. */
    lua_newtable(L);
-   ls.data = luaL_ref( L, LUA_REGISTRYINDEX );
+   ls.data = luaL_ref( L, LUA_REGISTRYINDEX ); /* Pops result. */
 
    /* Add to Lua and stack. */
    if (lua_spfx == NULL)
@@ -360,6 +365,7 @@ static int spfxL_data( lua_State *L )
  */
 void spfxL_setSpeed( double s )
 {
+   soundLock();
    for (int i=0; i<array_size(lua_spfx); i++) {
       LuaSpfx_t *ls = lua_spfx[i];
 
@@ -371,6 +377,7 @@ void spfxL_setSpeed( double s )
 
       alSourcef( ls->sfx.source, AL_PITCH, s );
    }
+   soundUnlock();
 }
 
 /**
