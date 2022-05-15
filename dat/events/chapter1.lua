@@ -20,6 +20,7 @@ local audio = require "love.audio"
 local textoverlay = require "textoverlay"
 local pp_shaders = require "pp_shaders"
 local lmusic = require "lmusic"
+local luaspfx = require "luaspfx"
 
 local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
@@ -200,9 +201,7 @@ function cutscene_emp2 ()
 end
 
 function cutscene_emp_sfx ()
-   -- TODO handle play pitch and such
-   countdown_sfx:setVolume(0.8)
-   countdown_sfx:play()
+   luaspfx.sfx( nil, countdown_sfx, {volume=0.8} )
 end
 
 -- Countdown
