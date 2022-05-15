@@ -1811,11 +1811,9 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
  * @brief Renders the pilot.
  *
  *    @param p Pilot to render.
- *    @param dt Current deltatick.
  */
-void pilot_render( Pilot* p, const double dt )
+void pilot_render( Pilot* p )
 {
-   (void) dt;
    double scale, x,y, w,h, z;
    Effect *e = NULL;
    glColour c = {.r=1., .g=1., .b=1., .a=1.};
@@ -1961,9 +1959,8 @@ void pilot_render( Pilot* p, const double dt )
  * @brief Renders the pilot overlay.
  *
  *    @param p Pilot to render.
- *    @param dt Current deltatick.
  */
-void pilot_renderOverlay( Pilot* p, const double dt )
+void pilot_renderOverlay( Pilot* p )
 {
    /* Don't render the pilot. */
    if (pilot_isFlag( p, PILOT_NORENDER ))
@@ -1973,17 +1970,8 @@ void pilot_renderOverlay( Pilot* p, const double dt )
    if (pilot_isFlag( p, PILOT_HAILING )) {
       glTexture *ico_hail = gui_hailIcon();
       if (ico_hail != NULL) {
-         int sx, sy;
+         int sx = (int)ico_hail->sx;
 
-         /* Handle animation. */
-         p->htimer -= dt;
-         sx = (int)ico_hail->sx;
-         sy = (int)ico_hail->sy;
-         if (p->htimer < 0.) {
-            p->htimer = .1;
-            p->hail_pos++;
-            p->hail_pos %= sx*sy;
-         }
          /* Render. */
          gl_renderSprite( ico_hail,
                p->solid->pos.x + PILOT_SIZE_APPROX*p->ship->gfx_space->sw/2. + ico_hail->sw/4.,
@@ -2000,29 +1988,22 @@ void pilot_renderOverlay( Pilot* p, const double dt )
       gl_gameToScreenCoords( &x, &y, p->solid->pos.x, p->solid->pos.y );
 
       /* Display the text. */
-      p->comm_msgTimer -= dt;
-      if (p->comm_msgTimer < 0.) {
-         free(p->comm_msg);
-         p->comm_msg = NULL;
-      }
-      else {
-         double dx, dy;
-         glColour c = {1., 1., 1., 1.};
+      double dx, dy;
+      glColour c = {1., 1., 1., 1.};
 
-         /* Colour. */
-         if (p->comm_msgTimer - pilot_commFade < 0.)
-            c.a = p->comm_msgTimer / pilot_commFade;
+      /* Colour. */
+      if (p->comm_msgTimer - pilot_commFade < 0.)
+         c.a = p->comm_msgTimer / pilot_commFade;
 
-         /* Position to render at. */
-         dx = x - p->comm_msgWidth/2.;
-         dy = y + PILOT_SIZE_APPROX*p->ship->gfx_space->sh/2.;
+      /* Position to render at. */
+      dx = x - p->comm_msgWidth/2.;
+      dy = y + PILOT_SIZE_APPROX*p->ship->gfx_space->sh/2.;
 
-         /* Background. */
-         gl_renderRect( dx-2., dy-2., p->comm_msgWidth+4., gl_defFont.h+4., &cBlackHilight );
+      /* Background. */
+      gl_renderRect( dx-2., dy-2., p->comm_msgWidth+4., gl_defFont.h+4., &cBlackHilight );
 
-         /* Display text. */
-         gl_printRaw( NULL, dx, dy, &c, -1., p->comm_msg );
-      }
+      /* Display text. */
+      gl_printRaw( NULL, dx, dy, &c, -1., p->comm_msg );
    }
 }
 
@@ -2072,6 +2053,27 @@ void pilot_update( Pilot* pilot, double dt )
    for (int i=0; i<MAX_AI_TIMERS; i++)
       if (pilot->timer[i] > 0.)
          pilot->timer[i] -= dt;
+   if (pilot->comm_msg != NULL) {
+      pilot->comm_msgTimer -= dt;
+      if (pilot->comm_msgTimer < 0.) {
+         free(pilot->comm_msg);
+         pilot->comm_msg = NULL;
+      }
+   }
+   if (pilot_isFlag( pilot, PILOT_HAILING )) {
+      glTexture *ico_hail = gui_hailIcon();
+      if (ico_hail != NULL) {
+         int sx, sy;
+         pilot->htimer -= dt;
+         sx = (int)ico_hail->sx;
+         sy = (int)ico_hail->sy;
+         if (pilot->htimer < 0.) {
+            pilot->htimer = 0.1;
+            pilot->hail_pos++;
+            pilot->hail_pos %= sx*sy;
+         }
+      }
+   }
    /* Update heat. */
    a = -1.;
    Q = 0.;
@@ -3672,10 +3674,8 @@ void pilots_update( double dt )
 
 /**
  * @brief Renders all the pilots.
- *
- *    @param dt Current delta tick.
  */
-void pilots_render( double dt )
+void pilots_render (void)
 {
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
@@ -3685,16 +3685,14 @@ void pilots_render( double dt )
          continue;
 
       if (!pilot_isFlag( p, PILOT_PLAYER ))
-         pilot_render( p, dt );
+         pilot_render( p );
    }
 }
 
 /**
  * @brief Renders all the pilots overlays.
- *
- *    @param dt Current delta tick.
  */
-void pilots_renderOverlay( double dt )
+void pilots_renderOverlay (void)
 {
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
@@ -3704,7 +3702,7 @@ void pilots_renderOverlay( double dt )
          continue;
 
       if (!pilot_isFlag( p, PILOT_PLAYER ))
-         pilot_renderOverlay( p, dt );
+         pilot_renderOverlay( p );
    }
 }
 

@@ -483,10 +483,10 @@ void pilot_setTurn( Pilot *p, double turn );
  */
 void pilot_update( Pilot* pilot, double dt );
 void pilots_update( double dt );
-void pilots_render( double dt );
-void pilots_renderOverlay( double dt );
-void pilot_render( Pilot* pilot, const double dt );
-void pilot_renderOverlay( Pilot* p, const double dt );
+void pilots_render (void);
+void pilots_renderOverlay (void);
+void pilot_render( Pilot* pilot );
+void pilot_renderOverlay( Pilot* p );
 
 /*
  * communication
