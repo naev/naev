@@ -2712,8 +2712,9 @@ dat/scripts/love/video.lua
 dat/scripts/love/window.lua
 dat/scripts/love_shaders.lua
 dat/scripts/luaspfx.lua
+dat/scripts/luaspfx/alert.lua
 dat/scripts/luaspfx/core.lua
-dat/scripts/luaspfx/effects.lua
+dat/scripts/luaspfx/sfx.lua
 dat/scripts/luatk.lua
 dat/scripts/luatk/conf.lua
 dat/scripts/luatk/core.lua

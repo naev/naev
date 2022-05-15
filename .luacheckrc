@@ -66,6 +66,7 @@ stds.Safelanes = {read_globals={"safelanes"}}
 stds.Shader = {read_globals={"shader"}}
 stds.Ship = {read_globals={"ship"}}
 stds.Shiplog = {read_globals={"shiplog"}}
+stds.Spfx = {read_globals={"spfx"}}
 stds.System = {read_globals={"system"}}
 stds.Tex = {read_globals={"tex"}}
 stds.Time = {read_globals={"time"}}
@@ -75,7 +76,7 @@ stds.Var = {read_globals={"var"}}
 stds.Vector = {read_globals={"vec2"}}
 
 PILOT = "+_Pilot+Ship+Asteroid"
-STANDARD = "+Naev+Var+Spob+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+LinOpt+Safelanes"
+STANDARD = "+Naev+Var+Spob+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+LinOpt+Safelanes+Spfx"
 GFX = "+_GFX+Col+Tex+Font+Transform+Shader+Canvas"
 TK = "+_Tk+Col" .. GFX
 

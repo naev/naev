@@ -191,8 +191,6 @@ function enter ()
    hook.pilot( feral, "discovered", "feral_discovered" )
    hook.pilot( feral, "idle", "feral_idle" )
 
-   luaspfx.init()
-
    hook.timer(  5, "spacewhale" )
    hook.timer(  7, "zach_msg", _("Zach: What the hell was that noise?") )
    hook.timer( 15, "zach_msg", _("Zach: One second, let me calibrate the instruments.") )
@@ -210,7 +208,7 @@ local sfx_spacewhale = {
 }
 function spacewhale ()
    local sfx = sfx_spacewhale[ rnd.rnd(1,#sfx_spacewhale) ]
-   luaspfx.addfg( luaspfx.effects.sfx{ sfx=sfx, dist_ref=2500, dist_max=25e3 }, 10, feral:pos() )
+   luaspfx.sfx( 10, feral:pos(), sfx, { dist_ref=2500, dist_max=25e3 } )
    player.autonavReset(5)
 end
 

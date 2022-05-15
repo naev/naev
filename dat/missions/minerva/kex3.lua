@@ -447,12 +447,10 @@ function malik_death ()
 end
 
 local function malik_respawn ()
-   luaspfx.init()
-
    enemies = {}
    enemies_weak = {}
    local pos = player.pos()
-   luaspfx.addfg( luaspfx.effects.alert{size=200}, 2.2, pos )
+   luaspfx.alert( pos, {size=200} )
    hook.timer( 2, "malik_respawn_real", pos )
 end
 function malik_respawn_real( pos )
@@ -492,7 +490,7 @@ end
 
 function malik_spawn_more ()
    local pos = player.pos() + vec2.new( 200*rnd.rnd(), 360*rnd.rnd() )
-   luaspfx.addfg( luaspfx.effects.alert{size=100}, 2.2, pos )
+   luaspfx.alert( pos, {size=100} )
    hook.timer( 2, "malik_spawn_more_real", pos )
 end
 function malik_spawn_more_real( pos )
@@ -521,7 +519,7 @@ local function maikki_arrives ()
    local pos = player.pos()
    local mc = minerva.maikkiP.colour
    local col = {mc[1], mc[2], mc[3], 0.3}
-   luaspfx.addfg( luaspfx.effects.alert{size=200, col=col}, 2.2, pos )
+   luaspfx.alert( pos, {size=200, col=col} )
    hook.timer( 2, "maikki_arrives_real", pos )
    -- Add more extras
    for i=1,4 do
@@ -566,7 +564,7 @@ function maikki_arrives_extra ()
    local mc = minerva.maikkiP.colour
    local col = {mc[1], mc[2], mc[3], 0.3}
    local pos = player.pos() + vec2.new( 200*rnd.rnd(), 360*rnd.rnd() )
-   luaspfx.addfg( luaspfx.effects.alert{size=100, col=col}, 2.2, pos )
+   luaspfx.alert( pos, {size=100, col=col} )
    hook.timer( 2, "maikki_arrives_extra_real", pos )
 end
 function maikki_arrives_extra_real( pos )
