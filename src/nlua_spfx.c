@@ -283,6 +283,8 @@ static int spfxL_new( lua_State *L )
          /* Set up parameters. */
          soundLock();
          alSourcei( ls.sfx.source, AL_LOOPING, AL_FALSE );
+         alSourcef( ls.sfx.source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DISTANCE );
+         alSourcef( ls.sfx.source, AL_MAX_DISTANCE, SOUND_MAX_DISTANCE );
          if (ls.flags & SPFX_GLOBAL) {
             alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_TRUE );
             alSourcef( ls.sfx.source, AL_PITCH, 1. );
@@ -290,8 +292,6 @@ static int spfxL_new( lua_State *L )
          else {
             ALfloat alf[3];
             alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_FALSE );
-            alSourcef( ls.sfx.source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DISTANCE );
-            alSourcef( ls.sfx.source, AL_MAX_DISTANCE, SOUND_MAX_DISTANCE );
             alSourcef( ls.sfx.source, AL_PITCH, player_dt_default() * player.speed );
             alf[0] = ls.pos.x;
             alf[1] = ls.pos.y;
