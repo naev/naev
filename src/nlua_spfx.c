@@ -16,10 +16,11 @@
 #include "nlua_spfx.h"
 
 #include "conf.h"
+#include "camera.h"
 #include "array.h"
 #include "nlua_vec2.h"
 #include "nluadef.h"
-#include "nstring.h"
+#include "opengl.h"
 
 /**
  * @brief Handles the special effects Lua-side.
@@ -31,6 +32,7 @@ typedef struct LuaSpfx_s {
    vec2 vel;      /**< Velocity. */
    int data;      /**< Reference to table of data. */
    int render_bg; /**< Reference to background render function. */
+   int render_mg; /**< Reference to middle render function. */
    int render_fg; /**< Reference to foreground render function. */
    int update;    /**< Reference to update function. */
 } LuaSpfx_t;
@@ -146,11 +148,13 @@ static void spfx_cleanup( LuaSpfx_t *ls )
    /* Unreference stuff. */
    nlua_unref( naevL, ls->data );
    nlua_unref( naevL, ls->render_bg );
+   nlua_unref( naevL, ls->render_mg );
    nlua_unref( naevL, ls->render_fg );
    nlua_unref( naevL, ls->update );
 
    ls->data       = LUA_NOREF;
    ls->render_bg  = LUA_NOREF;
+   ls->render_mg  = LUA_NOREF;
    ls->render_fg  = LUA_NOREF;
    ls->update     = LUA_NOREF;
 }
@@ -219,15 +223,17 @@ static int spfxL_new( lua_State *L )
    if (!lua_isnoneornil(L,2))
       ls.render_bg = nlua_ref( L, 2 );
    if (!lua_isnoneornil(L,3))
-      ls.render_fg = nlua_ref( L, 3 );
+      ls.render_mg = nlua_ref( L, 3 );
    if (!lua_isnoneornil(L,4))
-      ls.update = nlua_ref( L, 4 );
+      ls.render_fg = nlua_ref( L, 4 );
+   if (!lua_isnoneornil(L,5))
+      ls.update = nlua_ref( L, 5 );
 
    /* Position information. */
-   if (!lua_isnoneornil(L,5))
-      ls.pos = *luaL_checkvector( L, 5 );
    if (!lua_isnoneornil(L,6))
-      ls.vel = *luaL_checkvector( L, 6 );
+      ls.pos = *luaL_checkvector( L, 6 );
+   if (!lua_isnoneornil(L,7))
+      ls.vel = *luaL_checkvector( L, 7 );
 
    /* Set up new data. */
    lua_newtable(L);
@@ -262,7 +268,6 @@ static int spfxL_data( lua_State *L )
    return 1;
 }
 
-
 void spfxL_update( double dt )
 {
    for (int i=array_size(lua_spfx)-1; i>=0; i--) {
@@ -292,4 +297,40 @@ void spfxL_update( double dt )
          lua_pop( naevL, 1 );
       }
    }
+}
+
+void spfxL_renderbg (void)
+{
+   double z = cam_getZoom();
+   for (int i=0; i<array_size(lua_spfx); i++) {
+      vec2 pos;
+      LuaSpfx_t *ls = lua_spfx[i];
+
+      /* Skip no rendering. */
+      if (ls->render_bg == LUA_NOREF)
+         continue;
+
+      /* Convert coordinates. */
+      gl_gameToScreenCoords( &pos.x, &pos.y, ls->pos.x, ls->pos.y );
+      pos.y = SCREEN_H-pos.y;
+
+      /* Render. */
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->render_bg );
+      lua_pushspfx( naevL, *ls );
+      lua_pushnumber( naevL, pos.x );
+      lua_pushnumber( naevL, pos.y );
+      lua_pushnumber( naevL, z );
+      if (lua_pcall( naevL, 1, 0, 0) != 0) {
+         WARN(_("Spfx failed to run 'renderbg':\n%s"), lua_tostring( naevL, -1 ));
+         lua_pop( naevL, 1 );
+      }
+   }
+}
+
+void spfxL_rendermg (void)
+{
+}
+
+void spfxL_renderfg (void)
+{
 }
