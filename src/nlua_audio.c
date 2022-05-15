@@ -222,7 +222,7 @@ int lua_isaudio( lua_State *L, int ind )
 void audio_cleanup( LuaAudio_t *la )
 {
    if ((la==NULL) || sound_disabled)
-      return 0;
+      return;
    soundLock();
    alDeleteSources( 1, &la->source );
    /* Check if buffers need freeing. */
@@ -380,7 +380,6 @@ static int audioL_clone( lua_State *L )
 {
    LuaAudio_t la;
    LuaAudio_t *source = luaL_checkaudio(L,1);
-   double master;
 
    audio_clone( &la, source );
 
