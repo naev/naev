@@ -60,6 +60,14 @@ static const luaL_Reg spfxL_methods[] = {
    {0,0}
 }; /**< SpfxLua methods. */
 
+static int spfx_cmp( const void *p1, const void *p2 )
+{
+   const LuaSpfx_t *s1, *s2;
+   s1 = *((const LuaSpfx_t**) p1);
+   s2 = *((const LuaSpfx_t**) p2);
+   return s1->id - s2->id;
+}
+
 /**
  * @brief Loads the spfx library.
  *
@@ -81,7 +89,12 @@ int nlua_loadSpfx( nlua_env env )
  */
 LuaSpfx_t* lua_tospfx( lua_State *L, int ind )
 {
-   return (LuaSpfx_t*) lua_touserdata(L,ind);
+   LuaSpfx_t *ls = (LuaSpfx_t*) lua_touserdata(L,ind);
+   /* TODO is this bsearch necessary? */
+   LuaSpfx_t **f = bsearch( &ls, lua_spfx, array_size(lua_spfx), sizeof(LuaSpfx_t*), spfx_cmp );
+   if (f == NULL)
+      NLUA_ERROR( L, _("Spfx does not exist.") );
+   return *f;
 }
 /**
  * @brief Gets spfx at index or raises error if there is no spfx at index.
@@ -135,14 +148,6 @@ int lua_isspfx( lua_State *L, int ind )
    return ret;
 }
 
-static int spfx_cmp( const void *p1, const void *p2 )
-{
-   const LuaSpfx_t *s1, *s2;
-   s1 = *((const LuaSpfx_t**) p1);
-   s2 = *((const LuaSpfx_t**) p2);
-   return s1->id - s2->id;
-}
-
 static void spfx_cleanup( LuaSpfx_t *ls )
 {
    /* Unreference stuff. */
@@ -157,6 +162,8 @@ static void spfx_cleanup( LuaSpfx_t *ls )
    ls->render_mg  = LUA_NOREF;
    ls->render_fg  = LUA_NOREF;
    ls->update     = LUA_NOREF;
+
+   ls->id = -1; /* Set as cleaned up. */
 }
 
 /**
@@ -174,15 +181,7 @@ static void spfx_cleanup( LuaSpfx_t *ls )
 static int spfxL_gc( lua_State *L )
 {
    LuaSpfx_t *ls = luaL_checkspfx(L,1);
-
-   /* Clean up the stack. */
-   LuaSpfx_t **f = bsearch( &ls, lua_spfx, array_size(lua_spfx), sizeof(LuaSpfx_t*), spfx_cmp );
-   if (f == NULL)
-      WARN(_("Spfx not found in stack during garbage collection!"));
-   else
-      array_erase( &lua_spfx, &f[0], &f[1] );
-
-   spfx_cleanup( ls );
+   (void) ls;
    return 0;
 }
 
@@ -221,13 +220,13 @@ static int spfxL_new( lua_State *L )
 
    /* Functions. */
    if (!lua_isnoneornil(L,2))
-      ls.render_bg = nlua_ref( L, 2 );
+      ls.update = nlua_ref( L, 2 );
    if (!lua_isnoneornil(L,3))
-      ls.render_mg = nlua_ref( L, 3 );
+      ls.render_bg = nlua_ref( L, 3 );
    if (!lua_isnoneornil(L,4))
-      ls.render_fg = nlua_ref( L, 4 );
+      ls.render_mg = nlua_ref( L, 4 );
    if (!lua_isnoneornil(L,5))
-      ls.update = nlua_ref( L, 5 );
+      ls.render_fg = nlua_ref( L, 5 );
 
    /* Position information. */
    if (!lua_isnoneornil(L,6))
@@ -275,9 +274,9 @@ void spfxL_update( double dt )
 
       /* Count down. */
       ls->ttl -= dt;
-      if (ls->ttl < 0.) {
+      if (ls->ttl <= 0.) {
          spfx_cleanup( ls );
-         array_erase( &lua_spfx, &ls[0], &ls[1] );
+         array_erase( &lua_spfx, &lua_spfx[i], &lua_spfx[i+1] );
          continue;
       }
 
@@ -292,7 +291,8 @@ void spfxL_update( double dt )
       /* Run update. */
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->update );
       lua_pushspfx( naevL, *ls );
-      if (lua_pcall( naevL, 1, 0, 0) != 0) {
+      lua_pushnumber( naevL, dt );
+      if (lua_pcall( naevL, 2, 0, 0) != 0) {
          WARN(_("Spfx failed to run 'update':\n%s"), lua_tostring( naevL, -1 ));
          lua_pop( naevL, 1 );
       }
@@ -320,7 +320,7 @@ void spfxL_renderbg (void)
       lua_pushnumber( naevL, pos.x );
       lua_pushnumber( naevL, pos.y );
       lua_pushnumber( naevL, z );
-      if (lua_pcall( naevL, 1, 0, 0) != 0) {
+      if (lua_pcall( naevL, 4, 0, 0) != 0) {
          WARN(_("Spfx failed to run 'renderbg':\n%s"), lua_tostring( naevL, -1 ));
          lua_pop( naevL, 1 );
       }
