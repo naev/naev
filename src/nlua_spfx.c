@@ -308,6 +308,10 @@ static int spfxL_new( lua_State *L )
             alf[1] = ls.vel.y;
             alf[2] = 0.;
             alSourcefv( ls.sfx.source, AL_VELOCITY, alf );
+
+            /* Set the global filter. */
+            if (al_info.efx == AL_TRUE)
+               alSource3i( ls.sfx.source, AL_AUXILIARY_SEND_FILTER, sound_efx_directSlot, 0, AL_FILTER_NULL );
          }
          alSourcePlay( ls.sfx.source );
          al_checkErr();
