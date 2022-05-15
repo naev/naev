@@ -246,6 +246,13 @@ static int spfxL_new( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Gets the position of a spfx.
+ *
+ *    @luatparam spfx s Spfx to get position of.
+ *    @luatreturn vec2 Position of the spfx.
+ * @luafunc pos( s )
+ */
 static int spfxL_pos( lua_State *L )
 {
    LuaSpfx_t *ls = luaL_checkspfx(L,1);
@@ -253,6 +260,13 @@ static int spfxL_pos( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Gets the velocity of a spfx.
+ *
+ *    @luatparam spfx s Spfx to get velocity of.
+ *    @luatreturn vec2 Velocity of the spfx.
+ * @luafunc vel( s )
+ */
 static int spfxL_vel( lua_State *L )
 {
    LuaSpfx_t *ls = luaL_checkspfx(L,1);
@@ -260,6 +274,15 @@ static int spfxL_vel( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Gets the data table of a spfx.
+ *
+ * This table is unique to each instance.
+ *
+ *    @luatparam spfx s Spfx to get data table of.
+ *    @luatreturn table Data table of the spfx.
+ * @luafunc data( s )
+ */
 static int spfxL_data( lua_State *L )
 {
    LuaSpfx_t *ls = luaL_checkspfx(L,1);
@@ -329,8 +352,56 @@ void spfxL_renderbg (void)
 
 void spfxL_rendermg (void)
 {
+   double z = cam_getZoom();
+   for (int i=0; i<array_size(lua_spfx); i++) {
+      vec2 pos;
+      LuaSpfx_t *ls = lua_spfx[i];
+
+      /* Skip no rendering. */
+      if (ls->render_mg == LUA_NOREF)
+         continue;
+
+      /* Convert coordinates. */
+      gl_gameToScreenCoords( &pos.x, &pos.y, ls->pos.x, ls->pos.y );
+      pos.y = SCREEN_H-pos.y;
+
+      /* Render. */
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->render_mg );
+      lua_pushspfx( naevL, *ls );
+      lua_pushnumber( naevL, pos.x );
+      lua_pushnumber( naevL, pos.y );
+      lua_pushnumber( naevL, z );
+      if (lua_pcall( naevL, 4, 0, 0) != 0) {
+         WARN(_("Spfx failed to run 'rendermg':\n%s"), lua_tostring( naevL, -1 ));
+         lua_pop( naevL, 1 );
+      }
+   }
 }
 
 void spfxL_renderfg (void)
 {
+   double z = cam_getZoom();
+   for (int i=0; i<array_size(lua_spfx); i++) {
+      vec2 pos;
+      LuaSpfx_t *ls = lua_spfx[i];
+
+      /* Skip no rendering. */
+      if (ls->render_fg == LUA_NOREF)
+         continue;
+
+      /* Convert coordinates. */
+      gl_gameToScreenCoords( &pos.x, &pos.y, ls->pos.x, ls->pos.y );
+      pos.y = SCREEN_H-pos.y;
+
+      /* Render. */
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, ls->render_fg );
+      lua_pushspfx( naevL, *ls );
+      lua_pushnumber( naevL, pos.x );
+      lua_pushnumber( naevL, pos.y );
+      lua_pushnumber( naevL, z );
+      if (lua_pcall( naevL, 4, 0, 0) != 0) {
+         WARN(_("Spfx failed to run 'renderfg':\n%s"), lua_tostring( naevL, -1 ));
+         lua_pop( naevL, 1 );
+      }
+   }
 }
