@@ -17,6 +17,7 @@ typedef struct LuaBuffer_s {
 } LuaBuffer_t;
 
 typedef struct LuaAudio_s {
+   int nocleanup;    /**< No need to clean up this source. */
    ALuint source;    /**< Source to use. */
    LuaBuffer_t *buf; /**< Shared buffer. */
    ALuint slot;      /**< Effects. */

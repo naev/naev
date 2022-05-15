@@ -285,6 +285,7 @@ static int spfxL_new( lua_State *L )
       if (!sound_disabled) {
          ls.flags |= SPFX_AUDIO;
          audio_clone( &ls.sfx, la );
+         ls.sfx.nocleanup = 1;
 
          /* Set up parameters. */
          soundLock();
