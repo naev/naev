@@ -31,9 +31,9 @@
  * @brief Handles the OpenAL effects that have been set up Lua side.
  */
 typedef struct LuaAudioEfx_s {
-   char *name;       /**< Effect name for look ups. */
-   ALuint effect;    /**< Effect ID. */
-   ALuint slot;      /**< Effect slot. */
+   char *name;    /**< Effect name for look ups. */
+   ALuint effect; /**< Effect ID. */
+   ALuint slot;   /**< Effect slot. */
 } LuaAudioEfx_t;
 
 /**
