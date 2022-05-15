@@ -1060,7 +1060,7 @@ int sound_al_updateListener( double dir, double px, double py,
    alListenerfv( AL_ORIENTATION, ori );
    pos[0] = px;
    pos[1] = py;
-   pos[2] = 0.;
+   pos[2] = 100.;
    alListenerfv( AL_POSITION, pos );
    vel[0] = vx;
    vel[1] = vy;
