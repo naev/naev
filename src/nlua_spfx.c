@@ -275,33 +275,37 @@ static int spfxL_new( lua_State *L )
    /* Special effect. */
    if (!lua_isnoneornil(L,8)) {
       LuaAudio_t *la = luaL_checkaudio( L, 8 );
-      ls.flags |= SPFX_AUDIO;
-      audio_clone( &ls.sfx, la );
 
-      /* Set up parameters. */
-      soundLock();
-      alSourcei( ls.sfx.source, AL_LOOPING, AL_FALSE );
-      if (ls.flags & SPFX_GLOBAL) {
-         alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_TRUE );
-         alSourcef( ls.sfx.source, AL_PITCH, 1. );
+      if (!sound_disabled) {
+         ls.flags |= SPFX_AUDIO;
+         audio_clone( &ls.sfx, la );
+
+         /* Set up parameters. */
+         soundLock();
+         alSourcei( ls.sfx.source, AL_LOOPING, AL_FALSE );
+         if (ls.flags & SPFX_GLOBAL) {
+            alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_TRUE );
+            alSourcef( ls.sfx.source, AL_PITCH, 1. );
+         }
+         else {
+            ALfloat alf[3];
+            alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_FALSE );
+            alSourcef( ls.sfx.source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DISTANCE );
+            alSourcef( ls.sfx.source, AL_MAX_DISTANCE, SOUND_MAX_DISTANCE );
+            alSourcef( ls.sfx.source, AL_PITCH, player_dt_default() * player.speed );
+            alf[0] = ls.pos.x;
+            alf[1] = ls.pos.y;
+            alf[2] = 0.;
+            alSourcefv( ls.sfx.source, AL_POSITION, alf );
+            alf[0] = ls.vel.x;
+            alf[1] = ls.vel.y;
+            alf[2] = 0.;
+            alSourcefv( ls.sfx.source, AL_VELOCITY, alf );
+         }
+         alSourcePlay( ls.sfx.source );
+         al_checkErr();
+         soundUnlock();
       }
-      else {
-         ALfloat alf[3];
-         alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_FALSE );
-         alSourcef( ls.sfx.source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DISTANCE );
-         alSourcef( ls.sfx.source, AL_MAX_DISTANCE, SOUND_MAX_DISTANCE );
-         alSourcef( ls.sfx.source, AL_PITCH, player_dt_default() * player.speed );
-         alf[0] = ls.pos.x;
-         alf[1] = ls.pos.y;
-         alf[2] = 0.;
-         alSourcefv( ls.sfx.source, AL_POSITION, alf );
-         alf[0] = ls.vel.x;
-         alf[1] = ls.vel.y;
-         alf[2] = 0.;
-         alSourcefv( ls.sfx.source, AL_VELOCITY, alf );
-      }
-      al_checkErr();
-      soundUnlock();
    }
 
    /* Set up new data. */
@@ -365,6 +369,9 @@ static int spfxL_data( lua_State *L )
  */
 void spfxL_setSpeed( double s )
 {
+   if (sound_disabled)
+      return;
+
    soundLock();
    for (int i=0; i<array_size(lua_spfx); i++) {
       LuaSpfx_t *ls = lua_spfx[i];
