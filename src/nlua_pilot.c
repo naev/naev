@@ -5287,14 +5287,15 @@ static int pilotL_render( lua_State *L )
       LuaCanvas_t *lcp = luaL_checkcanvas(L,2);
       w = lcp->tex->w;
       h = lcp->tex->h;
-      ret = lcp;
       fbo = lcp->fbo;
+      ret = lcp;
    }
    else {
       /* TODO handle when effects make the ship render larger than it really is. */
       w = p->ship->gfx_space->sw;
       h = p->ship->gfx_space->sh;
-      canvas_new( &lc, w, h );
+      if (canvas_new( &lc, w, h ))
+         NLUA_ERROR( L, _("Error setting up framebuffer!"));
       fbo = lc.fbo;
       ret = &lc;
    }
