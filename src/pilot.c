@@ -1823,33 +1823,22 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
       /* TODO fix 3D rendering. */
    }
    else {
-      double x,y, w,h, tx,ty, inter;
+      double tx,ty;
       const glTexture *sa, *sb;
-      int sx, sy;
       mat4 tmpm;
 
       sa = p->ship->gfx_space;
       sb = p->ship->gfx_engine;
 
-      sx = p->tsx;
-      sy = p->tsy;
-
-      x = 0.;
-      y = 0.;
-
-      w = sa->sw;
-      h = sa->sh;
-
-      inter = 1.-p->engine_glow;
-
       /* texture coords */
-      tx = sa->sw*(double)(sx)/sa->w;
-      ty = sa->sh*(sa->sy-(double)sy-1)/sa->h;
+      tx = sa->sw*(double)(p->tsx)/sa->w;
+      ty = sa->sh*(sa->sy-(double)p->tsy-1)/sa->h;
 
       tmpm = gl_view_matrix;
       gl_view_matrix = mat4_ortho( 0., fw, 0, fh, -1., 1. );
 
-      gl_renderTextureInterpolate( sa, sb, inter, x, y, w, h,
+      gl_renderTextureInterpolate( sa, sb,
+            1.-p->engine_glow, 0., 0., sa->sw, sa->sh,
             tx, ty, sa->srw, sa->srh, &c );
 
       gl_view_matrix = tmpm;
