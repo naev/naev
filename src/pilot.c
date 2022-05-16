@@ -1825,15 +1825,17 @@ void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
 
    glBindFramebuffer( GL_FRAMEBUFFER, fbo );
    glClearColor( 0., 0., 0., 0. );
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    if (p->ship->gfx_3d != NULL) {
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       /* TODO fix 3D rendering. */
    }
    else {
       double tx,ty;
       const glTexture *sa, *sb;
       mat4 tmpm;
+
+      glClear( GL_COLOR_BUFFER_BIT );
 
       sa = p->ship->gfx_space;
       sb = p->ship->gfx_engine;
