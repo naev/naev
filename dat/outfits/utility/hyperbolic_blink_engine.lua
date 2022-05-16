@@ -1,4 +1,5 @@
 local audio = require 'love.audio'
+local luaspfx = require 'luaspfx'
 
 local masslimit = 6000^2 -- squared
 local jumpdist = 2000
@@ -29,9 +30,9 @@ function update( p, po, dt )
          if m > masslimit then
             dist = dist * masslimit / m
          end
+         luaspfx.blink( p:pos(), p:vel() ) -- Blink effect
          -- Direction is random
          p:setPos( p:pos() + vec2.newP( dist, p:dir()+(2*rnd.rnd()-1)*math.pi/6 ) )
-         -- TODO Add blink effect
          if mem.isp then
             -- TODO play for other pilots
             sfx:setPitch( player.dt_mod() )

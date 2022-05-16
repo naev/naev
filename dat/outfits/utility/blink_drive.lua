@@ -1,4 +1,5 @@
 local audio = require 'love.audio'
+local luaspfx = require 'luaspfx'
 
 local masslimit = 800^2 -- squared
 local jumpdist = 500
@@ -35,6 +36,7 @@ function ontoggle( p, po, on )
    if m > masslimit then
       dist = dist * masslimit / m
    end
+   luaspfx.blink( p:pos(), p:vel() ) -- Blink effect
    p:setPos( p:pos() + vec2.newP( dist, p:dir() ) )
    mem.timer = cooldown
    po:state("cooldown")
@@ -42,7 +44,6 @@ function ontoggle( p, po, on )
 
    -- TODO play for other pilots
    if mem.isp then
-      -- TODO Add blink effect
       sfx:setPitch( player.dt_mod() )
       sfx:play()
    end

@@ -31,10 +31,7 @@ local function alert( pos, params )
       alert_sound = audio.newSource('snd/sounds/alarm_warning.ogg')
    end
    if not alert_shader then
-      alert_shader = lg.newShader(
-         alert_bg_shader_frag,
-         love_shaders.vertexcode
-      )
+      alert_shader = lg.newShader( alert_bg_shader_frag )
    end
 
    local s = spfx.new( 2.2, update, nil, nil, render, pos, nil, alert_sound )
