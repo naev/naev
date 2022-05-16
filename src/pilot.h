@@ -483,6 +483,7 @@ void pilot_setTurn( Pilot *p, double turn );
  */
 void pilot_update( Pilot* pilot, double dt );
 void pilots_update( double dt );
+void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh );
 void pilots_render (void);
 void pilots_renderOverlay (void);
 void pilot_render( Pilot* pilot );

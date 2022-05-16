@@ -1807,6 +1807,14 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
    }
 }
 
+/**
+ * @brief Renders a pilot to a framebuffer.
+ *
+ *    @param p Pilot to render.
+ *    @param fbo Framebuffer to render to.
+ *    @param fw Framebuffer width.
+ *    @param fh Framebuffer height.
+ */
 void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
 {
    glColour c = { 1., 1., 1., 1. };
