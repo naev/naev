@@ -29,6 +29,7 @@ static int canvasL_gc( lua_State *L );
 static int canvasL_eq( lua_State *L );
 static int canvasL_new( lua_State *L );
 static int canvasL_set( lua_State *L );
+static int canvasL_dims( lua_State *L );
 static int canvasL_getTex( lua_State *L );
 static int canvasL_clear( lua_State *L );
 static const luaL_Reg canvasL_methods[] = {
@@ -36,6 +37,7 @@ static const luaL_Reg canvasL_methods[] = {
    { "__eq", canvasL_eq },
    { "new", canvasL_new },
    { "set", canvasL_set },
+   { "dims", canvasL_dims },
    { "getTex", canvasL_getTex },
    { "clear", canvasL_clear },
    {0,0}
@@ -252,6 +254,21 @@ static int canvasL_set( lua_State *L )
       NLUA_ERROR(L,_("Unexpected parameter"));
 
    return 0;
+}
+
+/**
+ * @brief Gets the size of the canvas.
+ *
+ *    @luatreturn number Width of the canvas.
+ *    @luatreturn number Height of the canvas.
+ * @luafunc dims
+ */
+static int canvasL_dims( lua_State *L )
+{
+   LuaCanvas_t *lc = luaL_checkcanvas(L,1);
+   lua_pushnumber( L, lc->tex->w );
+   lua_pushnumber( L, lc->tex->h );
+   return 2;
 }
 
 /**
