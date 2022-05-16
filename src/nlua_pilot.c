@@ -5291,6 +5291,7 @@ static int pilotL_render( lua_State *L )
       fbo = lcp->fbo;
    }
    else {
+      /* TODO handle when effects make the ship render larger than it really is. */
       w = p->ship->gfx_space->sw;
       h = p->ship->gfx_space->sh;
       canvas_new( &lc, w, h );
