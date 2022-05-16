@@ -1807,12 +1807,64 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
    }
 }
 
+void pilot_renderFramebuffer( Pilot *p, GLuint fbo, double fw, double fh )
+{
+   glColour c = { 1., 1., 1., 1. };
+
+   /* Add some transparency if stealthed. TODO better effect */
+   if (pilot_isFlag(p, PILOT_STEALTH))
+      c.a = 0.5;
+
+   glBindFramebuffer( GL_FRAMEBUFFER, fbo );
+   glClearColor( 0., 0., 0., 0. );
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+   if (p->ship->gfx_3d != NULL) {
+      /* TODO fix 3D rendering. */
+   }
+   else {
+      double x,y, w,h, tx,ty, inter;
+      const glTexture *sa, *sb;
+      int sx, sy;
+      mat4 tmpm;
+
+      sa = p->ship->gfx_space;
+      sb = p->ship->gfx_engine;
+
+      sx = p->tsx;
+      sy = p->tsy;
+
+      x = 0.;
+      y = 0.;
+
+      w = sa->sw;
+      h = sa->sh;
+
+      inter = 1.-p->engine_glow;
+
+      /* texture coords */
+      tx = sa->sw*(double)(sx)/sa->w;
+      ty = sa->sh*(sa->sy-(double)sy-1)/sa->h;
+
+      tmpm = gl_view_matrix;
+      gl_view_matrix = mat4_ortho( 0., fw, 0, fh, -1., 1. );
+
+      gl_renderTextureInterpolate( sa, sb, inter, x, y, w, h,
+            tx, ty, sa->srw, sa->srh, &c );
+
+      gl_view_matrix = tmpm;
+   }
+
+   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+   glClearColor( 0., 0., 0., 1. );
+}
+
 /**
  * @brief Renders the pilot.
  *
  *    @param p Pilot to render.
  */
-void pilot_render( Pilot* p )
+void pilot_render( Pilot *p )
 {
    double scale, x,y, w,h, z;
    Effect *e = NULL;
@@ -1875,17 +1927,8 @@ void pilot_render( Pilot* p )
       mat4 projection, tex_mat;
       const EffectData *ed = e->data;
 
-      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
-      glClearColor( 0., 0., 0., 0. );
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-      /* TODO fix 3D rendering. */
-      gl_renderStaticSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
-            1.-p->engine_glow, -gl_screen.x, -gl_screen.y, 1., 1.,
-            p->tsx, p->tsy, &c );
-
-      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-      glClearColor( 0., 0., 0., 1. );
+      /* Render onto framebuffer. */
+      pilot_renderFramebuffer( p, gl_screen.fbo[2], gl_screen.nw, gl_screen.nh );
 
       glUseProgram( ed->program );
 
