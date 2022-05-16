@@ -5287,6 +5287,8 @@ static int pilotL_render( lua_State *L )
       LuaCanvas_t *lcp = luaL_checkcanvas(L,2);
       w = lcp->tex->w;
       h = lcp->tex->h;
+      if ((w < p->ship->gfx_space->sw) || (h < p->ship->gfx_space->sh))
+         WARN(_("Canvas is too small for rendering pilot!"));
       fbo = lcp->fbo;
       ret = lcp;
    }
