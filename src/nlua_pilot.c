@@ -5272,38 +5272,23 @@ static int pilotL_shipvarPop( lua_State *L )
  * @brief Renders the pilot to a canvas
  *
  *    @luatparam Pilot p Pilot whose ship is being rendered.
- *    @luatparam[opt] Canvas c Canvas to render to. A new one is created if not set.
  *    @luatreturn Canvas The canvas with the pilot drawn on it.
  * @luafunc render
  */
 static int pilotL_render( lua_State *L )
 {
-   LuaCanvas_t lc, *ret;
+   LuaCanvas_t lc;
    int w, h;
-   GLuint fbo;
    Pilot *p = luaL_validpilot(L,1);
 
-   if (!lua_isnoneornil(L,2)) {
-      LuaCanvas_t *lcp = luaL_checkcanvas(L,2);
-      w = lcp->tex->w;
-      h = lcp->tex->h;
-      if ((w < p->ship->gfx_space->sw) || (h < p->ship->gfx_space->sh))
-         WARN(_("Canvas is too small for rendering pilot!"));
-      fbo = lcp->fbo;
-      ret = lcp;
-   }
-   else {
-      /* TODO handle when effects make the ship render larger than it really is. */
-      w = p->ship->gfx_space->sw;
-      h = p->ship->gfx_space->sh;
-      if (canvas_new( &lc, w, h ))
-         NLUA_ERROR( L, _("Error setting up framebuffer!"));
-      fbo = lc.fbo;
-      ret = &lc;
-   }
+   /* TODO handle when effects make the ship render larger than it really is. */
+   w = p->ship->gfx_space->sw;
+   h = p->ship->gfx_space->sh;
+   if (canvas_new( &lc, w, h ))
+      NLUA_ERROR( L, _("Error setting up framebuffer!"));
 
-   pilot_renderFramebuffer( p, fbo, w, h );
+   pilot_renderFramebuffer( p, lc.fbo, w, h );
 
-   lua_pushcanvas( L, *ret );
+   lua_pushcanvas( L, lc );
    return 1;
 }

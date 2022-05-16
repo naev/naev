@@ -169,6 +169,8 @@ int canvas_new( LuaCanvas_t *lc, int w, int h )
    GLenum status;
    char *name;
 
+   memset( lc, 0, sizeof(LuaCanvas_t) );
+
    /* Create the texture. */
    asprintf( &name, "nlua_canvas_%03d", ++nlua_canvas_counter );
    lc->tex = gl_loadImageData( NULL, w, h, 1, 1, name );
@@ -212,7 +214,6 @@ static int canvasL_new( lua_State *L )
    int w = luaL_checkint(L,1);
    int h = luaL_checkint(L,2);
 
-   memset( &lc, 0, sizeof(LuaCanvas_t) );
    if (canvas_new( &lc, w, h ))
       NLUA_ERROR( L, _("Error setting up framebuffer!"));
    lua_pushcanvas( L, lc );
