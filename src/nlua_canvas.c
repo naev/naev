@@ -155,6 +155,13 @@ static int canvasL_eq( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Initializes a new canvas.
+ *
+ *    @param lc Canvas to initialize.
+ *    @param w Width to use.
+ *    @param h Height to use.
+ */
 int canvas_new( LuaCanvas_t *lc, int w, int h )
 {
    GLenum status;

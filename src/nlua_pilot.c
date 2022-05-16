@@ -25,7 +25,9 @@
 #include "log.h"
 #include "nlua.h"
 #include "nlua_asteroid.h"
+#include "nlua_canvas.h"
 #include "nlua_col.h"
+#include "nlua_gfx.h"
 #include "nlua_commodity.h"
 #include "nlua_faction.h"
 #include "nlua_jump.h"
@@ -201,6 +203,7 @@ static int pilotL_showEmitters( lua_State *L );
 static int pilotL_shipvarPeek( lua_State *L );
 static int pilotL_shipvarPush( lua_State *L );
 static int pilotL_shipvarPop( lua_State *L );
+static int pilotL_render( lua_State *L );
 static const luaL_Reg pilotL_methods[] = {
    /* General. */
    { "add", pilotL_add },
@@ -355,6 +358,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "shipvarPeek", pilotL_shipvarPeek },
    { "shipvarPush", pilotL_shipvarPush },
    { "shipvarPop", pilotL_shipvarPop },
+   { "render", pilotL_render },
    {0,0},
 }; /**< Pilot metatable methods. */
 
@@ -5096,7 +5100,7 @@ static int pilotL_damage( lua_State *L )
 /**
  * @brief Knocks back a pilot. It can either accept two pilots, or a pilot and an element represented by mass, velocity, and position.
  *
- *    @luatparam Pilot p Pilot being knockeb back.
+ *    @luatparam Pilot p Pilot being knocked back.
  *    @luatparam number m Mass of object knocking back pilot.
  *    @luatparam Vec2 v Velocity of object knocking back pilot.
  *    @luatparam[opt=p:pos()] Vec2 p Position of the object knocking back the pilot.
@@ -5211,6 +5215,7 @@ static int pilotL_showEmitters( lua_State *L )
  *
  * @usage local exp = p:shipvarPeek( "exp" ) -- Checks the value of the "exp" ship var on the player's current ship
  *
+ *    @luatparam Pilot p Pilot whose ship variable is being manipulated.
  *    @luatparam string varname Name of the variable to check value of.
  *    @luatparam[opt] string shipname Name of the ship to check variable of. Defaults to pilot's current ship.
  * @luafunc shipvarPeek
@@ -5228,6 +5233,7 @@ static int pilotL_shipvarPeek( lua_State *L )
 /**
  * @brief Pushes a ship variable.
  *
+ *    @luatparam Pilot p Pilot whose ship variable is being manipulated.
  *    @luatparam string varname Name of the variable to set value of.
  *    @luaparam val Value to push.
  *    @luatparam[opt] string shipname Name of the ship to push variable to. Defaults to pilot's current ship.
@@ -5247,6 +5253,7 @@ static int pilotL_shipvarPush( lua_State *L )
 /**
  * @brief Pops a ship variable.
  *
+ *    @luatparam Pilot p Pilot whose ship variable is being manipulated.
  *    @luatparam string varname Name of the variable to pop.
  *    @luatparam[opt] string shipname Name of the ship to pop variable from. Defaults to pilot's current ship.
  * @luafunc shipvarPop
@@ -5259,4 +5266,40 @@ static int pilotL_shipvarPop( lua_State *L )
    if (var != NULL)
       lvar_rmArray( &p->shipvar, var );
    return 0;
+}
+
+/**
+ * @brief Renders the pilot to a canvas
+ *
+ *    @luatparam Pilot p Pilot whose ship is being rendered.
+ *    @luatparam[opt] Canvas c Canvas to render to. A new one is created if not set.
+ *    @luatreturn Canvas The canvas with the pilot drawn on it.
+ * @luafunc render
+ */
+static int pilotL_render( lua_State *L )
+{
+   LuaCanvas_t lc, *ret;
+   int w, h;
+   GLuint fbo;
+   Pilot *p = luaL_validpilot(L,1);
+
+   if (!lua_isnoneornil(L,2)) {
+      LuaCanvas_t *lcp = luaL_checkcanvas(L,2);
+      w = lcp->tex->w;
+      h = lcp->tex->h;
+      ret = lcp;
+      fbo = lcp->fbo;
+   }
+   else {
+      w = p->ship->gfx_space->sw;
+      h = p->ship->gfx_space->sh;
+      canvas_new( &lc, w, h );
+      fbo = lc.fbo;
+      ret = &lc;
+   }
+
+   pilot_renderFramebuffer( p, fbo, w, h );
+
+   lua_pushcanvas( L, *ret );
+   return 1;
 }
