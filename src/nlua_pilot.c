@@ -5287,7 +5287,8 @@ static int pilotL_render( lua_State *L )
    if (canvas_new( &lc, w, h ))
       NLUA_ERROR( L, _("Error setting up framebuffer!"));
 
-   pilot_renderFramebuffer( p, lc.fbo, w, h );
+   /* I'me really stumped at why we need to pass gl_screen here for it to work... */
+   pilot_renderFramebuffer( p, lc.fbo, gl_screen.rw, gl_screen.rh );
 
    lua_pushcanvas( L, lc );
    return 1;
