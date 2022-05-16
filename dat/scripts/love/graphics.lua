@@ -632,14 +632,20 @@ graphics.Canvas._type = "Canvas"
 function graphics.newCanvas( width, height, settings )
    settings = settings or {}
    local c = graphics.Canvas.new()
-   local nw, nh = naev.gfx.dim()
-   width  = width or nw
-   height = height or nh
-   local dpiscale = settings.dpiscale or graphics.getDPIScale()
-   c.canvas = naev.canvas.new( width*dpiscale, height*dpiscale )
+   if type(width)=='userdata' then -- assume Naev canvas
+      c.canvas = width
+      width, height = width:dims()
+      c.s = 1
+   else
+      local nw, nh = naev.gfx.dim()
+      width  = width or nw
+      height = height or nh
+      local dpiscale = settings.dpiscale or graphics.getDPIScale()
+      c.canvas = naev.canvas.new( width*dpiscale, height*dpiscale )
+      c.s = 1/dpiscale
+   end
    c.w = width
    c.h = height
-   c.s = 1/dpiscale
    -- Set texture
    local t = graphics.Image.new()
    t.tex = c.canvas:getTex()
