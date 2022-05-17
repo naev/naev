@@ -30,6 +30,7 @@
 #define SPFX_GLOBAL     (1<<1) /**< Spfx is not localized. */
 #define SPFX_MOVING     (1<<2) /**< Spfx is moving. */
 #define SPFX_AUDIO      (1<<3) /**< Spfx has audio. */
+#define SPFX_CLEANUP    (1<<4) /**< Spfx has to be cleaned up. */
 
 /**
  * @brief Handles the special effects Lua-side.
@@ -60,6 +61,7 @@ static int lua_spfx_idgen = 0;
 static int spfxL_gc( lua_State *L );
 static int spfxL_eq( lua_State *L );
 static int spfxL_new( lua_State *L );
+static int spfxL_rm( lua_State *L );
 static int spfxL_pos( lua_State *L );
 static int spfxL_vel( lua_State *L );
 static int spfxL_sfx( lua_State *L );
@@ -68,6 +70,7 @@ static const luaL_Reg spfxL_methods[] = {
    { "__gc", spfxL_gc },
    { "__eq", spfxL_eq },
    { "new", spfxL_new },
+   { "rm", spfxL_rm },
    { "pos", spfxL_pos },
    { "vel", spfxL_vel },
    { "sfx", spfxL_sfx },
@@ -333,6 +336,19 @@ static int spfxL_new( lua_State *L )
 }
 
 /**
+ * @brief Removes a special effect.
+ *
+ *    @luatparam spfx s Spfx to remove.
+ * @luafunc rm
+ */
+static int spfxL_rm( lua_State *L )
+{
+   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
+   ls->flags &= SPFX_CLEANUP;
+   return 0;
+}
+
+/**
  * @brief Gets the position of a spfx.
  *
  *    @luatparam spfx s Spfx to get position of.
@@ -351,7 +367,7 @@ static int spfxL_pos( lua_State *L )
  *
  *    @luatparam spfx s Spfx to get velocity of.
  *    @luatreturn vec2 Velocity of the spfx.
- * @luafunc vel( s )
+ * @luafunc vel
  */
 static int spfxL_vel( lua_State *L )
 {
@@ -365,7 +381,7 @@ static int spfxL_vel( lua_State *L )
  *
  *    @luatparam spfx s Spfx to get sound effect of.
  *    @luatreturn audio Sound effect of the spfx.
- * @luafunc vel( s )
+ * @luafunc vel
  */
 static int spfxL_sfx( lua_State *L )
 {
@@ -381,7 +397,7 @@ static int spfxL_sfx( lua_State *L )
  *
  *    @luatparam spfx s Spfx to get data table of.
  *    @luatreturn table Data table of the spfx.
- * @luafunc data( s )
+ * @luafunc data
  */
 static int spfxL_data( lua_State *L )
 {
@@ -405,7 +421,7 @@ void spfxL_setSpeed( double s )
       if (!(ls->flags & SPFX_AUDIO))
          continue;
 
-      if (ls->flags & SPFX_GLOBAL)
+      if (ls->flags & (SPFX_GLOBAL | SPFX_CLEANUP))
          continue;
 
       alSourcef( ls->sfx.source, AL_PITCH, s );
@@ -425,7 +441,7 @@ void spfxL_update( double dt )
 
       /* Count down. */
       ls->ttl -= dt;
-      if (ls->ttl <= 0.) {
+      if ((ls->ttl <= 0.) || (ls->flags & SPFX_CLEANUP)) {
          spfx_cleanup( ls );
          array_erase( &lua_spfx, &lua_spfx[i], &lua_spfx[i+1] );
          continue;
@@ -474,7 +490,7 @@ void spfxL_renderbg (void)
       LuaSpfxData_t *ls = &lua_spfx[i];
 
       /* Skip no rendering. */
-      if (ls->render_bg == LUA_NOREF)
+      if ((ls->render_bg == LUA_NOREF) || (ls->flags & SPFX_CLEANUP))
          continue;
 
       /* Convert coordinates. */
@@ -505,7 +521,7 @@ void spfxL_rendermg (void)
       LuaSpfxData_t *ls = &lua_spfx[i];
 
       /* Skip no rendering. */
-      if (ls->render_mg == LUA_NOREF)
+      if ((ls->render_mg == LUA_NOREF) || (ls->flags & SPFX_CLEANUP))
          continue;
 
       /* Convert coordinates. */
@@ -536,7 +552,7 @@ void spfxL_renderfg (void)
       LuaSpfxData_t *ls = &lua_spfx[i];
 
       /* Skip no rendering. */
-      if (ls->render_fg == LUA_NOREF)
+      if ((ls->render_fg == LUA_NOREF) || (ls->flags & SPFX_CLEANUP))
          continue;
 
       /* Convert coordinates. */
