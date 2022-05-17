@@ -19,6 +19,7 @@
 #include "music_openal.h"
 //#include "ndata.h"
 #include "sound.h"
+#include "nlua_spfx.h"
 
 /*
  * SOUND OVERVIEW
@@ -768,6 +769,9 @@ static void sound_al_volumeUpdate (void)
    }
    al_checkErr();
    soundUnlock();
+
+   /* Do special effects. */
+   spfxL_setSpeedVolume( svolume_speed );
 }
 
 /**

@@ -430,6 +430,31 @@ void spfxL_setSpeed( double s )
 }
 
 /**
+ * @brief Sets the speed volume due to autonav and the likes.
+ *
+ *    @param v Speed volume to use.
+ */
+void spfxL_setSpeedVolume( double v )
+{
+   if (sound_disabled)
+      return;
+
+   soundLock();
+   for (int i=0; i<array_size(lua_spfx); i++) {
+      LuaSpfxData_t *ls = &lua_spfx[i];
+
+      if (!(ls->flags & SPFX_AUDIO))
+         continue;
+
+      if (ls->flags & (SPFX_GLOBAL | SPFX_CLEANUP))
+         continue;
+
+      alSourcef( ls->sfx.source, AL_GAIN, ls->sfx.volume * v );
+   }
+   soundUnlock();
+}
+
+/**
  * @brief Updates the spfx.
  *
  *    @luatparam dt Delta tick to use for the update.
