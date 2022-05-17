@@ -40,7 +40,7 @@ local function turnon( p, po )
    p:setInvisible( true )
    if mem.isp then
       oshader:on()
-      luaspfx.sfx( nil, nil, sfx )
+      luaspfx.sfx( true, nil, sfx )
    else
       luaspfx.sfx( p:pos(), p:vel(), sfx );
       p:setNoRender( true )

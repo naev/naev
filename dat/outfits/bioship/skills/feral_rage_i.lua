@@ -65,7 +65,7 @@ function onhit( p, po, armour, _shield )
       -- Visual effect
       if mem.isp then
          --oshader:on()
-         luaspfx.sfx( nil, nil, sfx )
+         luaspfx.sfx( true, nil, sfx )
       else
          luaspfx.sfx( p:pos(), p:vel(), sfx )
       end

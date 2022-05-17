@@ -46,7 +46,7 @@ local function turnon( p, po )
    -- Visual effect
    if mem.isp then
       oshader:on()
-      mem.spfx_start = luaspfx.sfx( nil, nil, sfx_start )
+      mem.spfx_start = luaspfx.sfx( true, nil, sfx_start )
    else
       mem.spfx_start = luaspfx.sfx( p:pos(), p:vel(), sfx_start )
    end
@@ -126,7 +126,7 @@ function update( p, po, dt )
             -- Player effects
             mem.spfx_start:rm()
             if mem.isp then
-               luaspfx.sfx( nil, nil, sfx_bite )
+               luaspfx.sfx( true, nil, sfx_bite )
                camera.shake( 0.8 )
             else
                luaspfx.sfx( p:pos(), p:vel(), sfx_bite )

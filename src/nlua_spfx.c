@@ -247,7 +247,7 @@ static int spfxL_eq( lua_State *L )
  *    @luatparam Function|nil render_bg Background render function to use if applicable (behind ships).
  *    @luatparam Function|nil render_mg Middle render function to use if applicable (infront of NPC ships, behind player).
  *    @luatparam Function|nil render_fg Foregroundrender function to use if applicable (infront of player).
- *    @luatparam vec2 pos Position of the effect.
+ *    @luatparam vec2|boolean pos Position of the effect, or a boolean to indicate whether or not the effect is local.
  *    @luatparam vec2 vel Velocity of the effect.
  *    @luatparam audio sfx Sound effect associated with the spfx.
  *    @luatreturn spfx New spfx corresponding to the data.
@@ -277,8 +277,13 @@ static int spfxL_new( lua_State *L )
       ls.render_fg = nlua_ref( L, 5 );
 
    /* Position information. */
-   if (!lua_isnoneornil(L,6))
-      ls.pos = *luaL_checkvector( L, 6 );
+   if (!lua_isnoneornil(L,6)) {
+      if (lua_isboolean( L, 6 ))
+         if (!lua_toboolean( L, 6 ))
+            ls.flags |= SPFX_GLOBAL;
+      else
+         ls.pos = *luaL_checkvector( L, 6 );
+   }
    else
       ls.flags |= SPFX_GLOBAL;
    if (!lua_isnoneornil(L,7)) {

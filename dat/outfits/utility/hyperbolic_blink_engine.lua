@@ -36,7 +36,7 @@ function update( p, po, dt )
 
          -- Play the sound
          if mem.isp then
-            luaspfx.sfx( nil, nil, sfx )
+            luaspfx.sfx( true, nil, sfx )
          else
             luaspfx.sfx( p:pos(), p:vel(), sfx )
          end
@@ -80,7 +80,7 @@ function ontoggle( p, po, on )
    po:state("on")
    po:progress(1)
    if mem.isp then
-      luaspfx.sfx( nil, nil, sfx_warmup )
+      luaspfx.sfx( true, nil, sfx_warmup )
    else
       luaspfx.sfx( p:pos(), p:vel(), sfx_warmup )
    end
