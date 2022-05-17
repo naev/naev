@@ -21,6 +21,8 @@ LuaSpfx_t* lua_pushspfx( lua_State *L, LuaSpfx_t spfx );
 int lua_isspfx( lua_State *L, int ind );
 
 /* Global stuff. */
+void spfxL_clear (void);
+void spfxL_exit (void);
 void spfxL_setSpeed( double s );
 void spfxL_setSpeedVolume( double v );
 void spfxL_update( double dt );

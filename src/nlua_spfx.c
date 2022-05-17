@@ -130,8 +130,11 @@ static LuaSpfxData_t* luaL_checkspfxdata( lua_State *L, int ind )
    LuaSpfx_t *ls = luaL_checkspfx( L , ind );
    const LuaSpfxData_t key = { .id = *ls };
    LuaSpfxData_t *f = bsearch( &key, lua_spfx, array_size(lua_spfx), sizeof(LuaSpfxData_t), spfx_cmp );
-   if (f == NULL)
-      NLUA_ERROR( L, _("Spfx does not exist.") );
+   if (f == NULL) {
+      f = bsearch( &key, lua_spfx_queue, array_size(lua_spfx_queue), sizeof(LuaSpfxData_t), spfx_cmp );
+      if (f == NULL)
+         NLUA_ERROR( L, _("Spfx does not exist.") );
+   }
    return f;
 }
 /**
@@ -478,6 +481,23 @@ static void spfx_unlock (void)
    for (int i=0; i<array_size(lua_spfx_queue); i++)
       array_push_back( &lua_spfx, lua_spfx_queue[i] );
    array_erase( &lua_spfx_queue, array_begin(lua_spfx_queue), array_end(lua_spfx_queue) );
+}
+
+/**
+ * @brief Clears the Lua spfx.
+ */
+void spfxL_clear (void)
+{
+   for (int i=0; i<array_size(lua_spfx); i++)
+      spfx_cleanup( &lua_spfx[i] );
+   array_erase( &lua_spfx, array_begin(lua_spfx), array_end(lua_spfx) );
+   for (int i=0; i<array_size(lua_spfx_queue); i++)
+      spfx_cleanup( &lua_spfx_queue[i] );
+   array_erase( &lua_spfx_queue, array_begin(lua_spfx_queue), array_end(lua_spfx_queue) );
+}
+
+void spfxL_exit (void)
+{
 }
 
 /**

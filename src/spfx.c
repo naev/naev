@@ -442,6 +442,9 @@ void spfx_free (void)
    for (int i=0; i<array_size(trail_spec_stack); i++)
       free( trail_spec_stack[i].name );
    array_free( trail_spec_stack );
+
+   /* Get rid of Lua effects. */
+   spfxL_exit();
 }
 
 /**
@@ -518,6 +521,9 @@ void spfx_clear (void)
    for (int i=0; i<array_size(trail_spfx_stack); i++)
       spfx_trail_free( trail_spfx_stack[i] );
    array_erase( &trail_spfx_stack, array_begin(trail_spfx_stack), array_end(trail_spfx_stack) );
+
+   /* Clear the Lua spfx. */
+   spfxL_clear();
 }
 
 /**
