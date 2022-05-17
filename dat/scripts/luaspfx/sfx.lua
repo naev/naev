@@ -1,8 +1,8 @@
 
-local function sfx( pos, source, params )
+local function sfx( pos, vel, source, params )
    params = params or {}
    local ttl = source:getDuration()*1.1
-   local s = spfx.new( ttl, nil, nil, nil, nil, pos, nil, source )
+   local s = spfx.new( ttl, nil, nil, nil, nil, pos, vel, source )
    local ss = s:sfx()
    if params.dist_ref or params.dist_max then
       local dist_ref = params.dist_ref or 500
