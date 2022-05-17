@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Ethereal">
+ <description>Antimatter is tainting your ship!</description>
+ <duration>INF</duration>
+ <overwrite>ethereal</overwrite>
+ <icon>/gfx/misc/icons/star-cycle.webp</icon>
+ <shader vertex="effect2x.vert">effects/ethereal.frag</shader>
+</effect>
