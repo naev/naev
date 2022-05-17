@@ -33,11 +33,9 @@ function update( p, po, dt )
          luaspfx.blink( p:pos(), p:vel() ) -- Blink effect
          -- Direction is random
          p:setPos( p:pos() + vec2.newP( dist, p:dir()+(2*rnd.rnd()-1)*math.pi/6 ) )
-         if mem.isp then
-            -- TODO play for other pilots
-            sfx:setPitch( player.dt_mod() )
-            sfx:play()
-         end
+
+         -- Play the sound
+         luaspfx.sfx( p:pos(), sfx )
 
          -- Set cooldown and maluses
          po:state("cooldown")
@@ -78,9 +76,8 @@ function ontoggle( _p, po, on )
    po:state("on")
    po:progress(1)
    if mem.isp then
+      luaspfx.sfx( nil, sfx_warmup )
       -- TODO play for other pilots
-      sfx_warmup:setPitch( player.dt_mod() )
-      sfx_warmup:play()
    end
    return true
 end

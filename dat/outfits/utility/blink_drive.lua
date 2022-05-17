@@ -42,10 +42,8 @@ function ontoggle( p, po, on )
    po:state("cooldown")
    po:progress(1)
 
-   -- TODO play for other pilots
-   if mem.isp then
-      sfx:setPitch( player.dt_mod() )
-      sfx:play()
-   end
+   -- Play the sound
+   luaspfx.sfx( p:pos(), sfx )
+
    return true
 end

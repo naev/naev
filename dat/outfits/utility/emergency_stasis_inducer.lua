@@ -1,5 +1,6 @@
 local osh = require 'outfits.shaders'
 local audio = require 'love.audio'
+local luaspfx = require 'luaspfx'
 
 -- Global constant variables for the outfit
 local cooldown = 8 -- cooldown period in seconds
@@ -74,8 +75,8 @@ function onhit( _p, po, armour, _shield )
       -- Visual effect
       if mem.isp then
          oshader:on()
-         sfx:setPitch( player.dt_mod() )
-         sfx:play()
+         luaspfx.sfx( nil, sfx )
+         -- TODO play sound for other pilots
       end
    end
 end
