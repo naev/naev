@@ -319,6 +319,7 @@ static int audioL_new( lua_State *L )
       alSourcei( la.source, AL_BUFFER, la.buf->buffer );
 
       /* Defaults. */
+      la.volume = 1.;
       master = sound_getVolumeLog();
       alSourcef( la.source, AL_GAIN, master );
       /* The behaviour of sources depends on whether or not they are mono or
@@ -364,6 +365,7 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
    /* Defaults. */
    master = sound_getVolumeLog();
    alSourcef( la->source, AL_GAIN, master );
+   la->volume = 1.;
    /* See note in audioL_new */
    alSourcei( la->source, AL_SOURCE_RELATIVE, AL_TRUE );
    alSource3f( la->source, AL_POSITION, 0., 0., 0. );
@@ -619,6 +621,7 @@ static int audioL_setVolume( lua_State *L )
    }
    al_checkErr();
    soundUnlock();
+   la->volume = volume;
    return 0;
 }
 
@@ -632,23 +635,11 @@ static int audioL_setVolume( lua_State *L )
 static int audioL_getVolume( lua_State *L )
 {
    LuaAudio_t *la;
-   double volume, master;
-   ALfloat alvol;
+   double volume;
    if (sound_disabled)
       volume = 0.;
-   else {
-      soundLock();
-      if (lua_gettop(L)>0) {
-         la = luaL_checkaudio(L,1);
-         alGetSourcef( la->source, AL_GAIN, &alvol );
-         master = sound_getVolumeLog();
-         volume = alvol / master;
-      }
-      else
-         volume = sound_getVolume();
-      al_checkErr();
-      soundUnlock();
-   }
+   else
+      volume = la->volume;
    lua_pushnumber(L, volume);
    return 1;
 }

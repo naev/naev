@@ -21,6 +21,7 @@ typedef struct LuaAudio_s {
    ALuint source;    /**< Source to use. */
    LuaBuffer_t *buf; /**< Shared buffer. */
    ALuint slot;      /**< Effects. */
+   double volume;    /**< Volume setting. */
 } LuaAudio_t;
 
 /*
