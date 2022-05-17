@@ -8,20 +8,24 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-05-12 10:59+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-05-17 21:14+0000\n"
+"Last-Translator: paco <pacosoftfree@protonmail.com>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.13-dev\n"
 
 #: dat/intro:2
 msgid ""
 "The night sky always draws our eyes. People look up with a question, or in "
 "wonder, and sometimes with a dream: to venture forth among the stars."
 msgstr ""
+"El cielo nocturno siempre atrae nuestras miradas. La gente mira hacia arriba "
+"con preguntas, asombrados, y a veces con sueños: aventurarse entre las "
+"estrellas."
 
 #: dat/intro:4
 msgid ""
@@ -29,6 +33,9 @@ msgid ""
 "of distant suns, far away but so clear. To reach out and grasp one would "
 "only cost a lifetime. Cheap at the price."
 msgstr ""
+"Desde la Tierra, los primeros viajeros espaciales divisaron pequeñas joyas "
+"que brillaban con la luz de soles distantes, muy alejados pero tan nítidos. "
+"Alcanzar una y aferrarla sólo costaría una vida. Barato para su precio."
 
 #: dat/intro:7
 msgid ""
@@ -36,6 +43,10 @@ msgid ""
 "hurled themselves out into the void. On arrival, they decanted and woke to "
 "find new stars staring coldly down from stranger skies."
 msgstr ""
+"Por ello, hombres y mujeres encerraron sus cuerpos dormidos en enormes cajas "
+"de metal. Se lanzaron al vacío. Y al llegar, se decantaron y se despertaron "
+"para encontrar nuevas estrellas mirándoles fríamente desde cielos más "
+"extraños."
 
 #: dat/intro:10
 msgid ""
@@ -44,6 +55,11 @@ msgid ""
 "civilisation spread, as it always has, with exponential enthusiasm -- "
 "ripples in the dark sea of space."
 msgstr ""
+"La primera oleada de exploradores se arrastró de estrella en estrella a "
+"velocidades sublumínicas, hasta que la invención del motor hiperespacial "
+"impulsó un segundo crecimiento. En ese momento la civilización se extendió, "
+"como siempre lo ha hecho, con un entusiasmo exponencial, ondas a través del "
+"oscuro mar del espacio."
 
 #: dat/intro:12
 msgid ""
@@ -52,12 +68,19 @@ msgid ""
 "food, and distrust sowed the seeds of discord. Once begun, the fever of war "
 "spread from world to world and became a holocaust."
 msgstr ""
+"Sin embargo, la época heroica de los descubrimientos sólo duró el tiempo que "
+"la curiosidad humana superó a la codicia. Rápidamente estalló el conflicto "
+"en las colonias. La tierra, el combustible, los alimentos y la desconfianza "
+"sembraron las semillas de la discordia. Una vez comenzada, la fiebre de la "
+"guerra se expandió de mundo en mundo y se convirtió en un holocausto."
 
 #: dat/intro:15
 msgid ""
 "After a hundred years of interstellar conflict, on the ashes that remained, "
 "at last a new order built its foundations."
 msgstr ""
+"Tras cien años de conflicto interestelar, sobre las cenizas que "
+"permanecieron, finalmente una nueva orden construyó sus cimientos."
 
 #: dat/intro:17
 msgid ""
@@ -66,6 +89,11 @@ msgid ""
 "military, relations between planets resumed; abandoned trade routes saw "
 "traffic for the first time in living memory."
 msgstr ""
+"Un hombre llamado Daedris afirmó su dominio sobre los mundos exhaustos. "
+"Fundó un Imperio Galáctico y se nombró a sí mismo su soberano. Bajo el puño "
+"de hierro de su ejército, se reanudaron las relaciones entre los planetas; "
+"las rutas comerciales abandonadas retornaron desde tiempos que ya no se "
+"recuerdan."
 
 #: dat/intro:19
 msgid ""
@@ -73,6 +101,10 @@ msgid ""
 "irradiated rock was cleansed and dead planets brought back to life. Peace "
 "reigned in an imperial golden age."
 msgstr ""
+"Los académicos lo llamaron el cenit: la tecnología avanzó a pasos "
+"agigantados, la cultura floreció, las rocas irradiadas fueron limpiadas y "
+"los planetas muertos volvieron a la vida. La paz reinó en una edad de oro "
+"imperial."
 
 #: dat/intro:21
 msgid ""
@@ -81,18 +113,25 @@ msgid ""
 "the imperium went awry. In some regions, administration fell into the hands "
 "of other powers. The Great Houses now policed the space lanes."
 msgstr ""
+"Después de Daedris, bajo sus sucesores, la luz del imperio se desvaneció. "
+"Las disputas civiles y la división religiosa debilitaron los vínculos "
+"sociales. Los grandes proyectos del imperio se torcieron. En algunas "
+"regiones, la administración cayó en manos de otras fuerzas. Las Grandes "
+"Casas ahora vigilaban las rutas espaciales."
 
 #: dat/intro:23
 msgid "Rise and fall, the rhythm of history."
-msgstr ""
+msgstr "Ascenso y caída, el ritmo de la historia."
 
 #: dat/intro:25
 msgid "But the march of history stumbled over the unknown, over the Incident."
 msgstr ""
+"Pero la marcha de la historia se tropezó con lo desconocido, con el "
+"Incidente."
 
 #: dat/intro:27
 msgid "It tore the heart out of the Empire."
-msgstr ""
+msgstr "Destrozó el corazón del Imperio."
 
 #: dat/intro:29
 msgid ""
@@ -101,10 +140,15 @@ msgid ""
 "the mysterious nebula left behind. Now the great, galaxy-spanning "
 "civilisation survives as a shadow of its former glory."
 msgstr ""
+"Desde la Tierra, una explosión cataclísmica rasgó el espacio, aniquilando "
+"estrellas, vaporizando mundos. Miles de millones de personas murieron. "
+"Decenas de sistemas desaparecieron en la misteriosa nebulosa que quedó tras "
+"de sí. Ahora, la gran, civilización que abarca toda la galaxia sobrevive "
+"como una sombra de su antigua gloria."
 
 #: dat/intro:32
 msgid "What else remains? Questions."
-msgstr ""
+msgstr "¿Qué otra cosa nos queda? Preguntas."
 
 #: dat/intro:34
 msgid ""
@@ -112,14 +156,17 @@ msgid ""
 "decaying empire. After the Incident, corruption and piracy run rampant, but "
 "where there is chaos, there is also opportunity."
 msgstr ""
+"Han pasado Diez Ciclos Estándar en un universo gobernado por los fragmentos "
+"de un imperio en decadencia. Tras el Incidente, la corrupción y la piratería "
+"campan a sus anchas, pero donde hay caos, también hay oportunidades."
 
 #: dat/intro:36
 msgid "Welcome to the universe of Naev..."
-msgstr ""
+msgstr "Bienvenido al universo de Naev..."
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
-msgstr ""
+msgstr "Equipo Actual de Desarrollo del Núcleo"
 
 #: dat/AUTHORS:2 dat/AUTHORS:26 dat/AUTHORS:38 dat/AUTHORS:63 dat/AUTHORS:173
 #: dat/AUTHORS:181
@@ -128,11 +175,11 @@ msgstr ""
 
 #: dat/AUTHORS:4
 msgid "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
-msgstr ""
+msgstr "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
 
 #: dat/AUTHORS:5
 msgid "   * Lead Developer"
-msgstr ""
+msgstr "   * Jefe de Desarrollo"
 
 #: dat/AUTHORS:7
 msgid "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
@@ -140,7 +187,7 @@ msgstr ""
 
 #: dat/AUTHORS:8
 msgid "   * Story Writer and Misc. Development"
-msgstr ""
+msgstr "   * Desarrollo de Historia y Otros Desarrollos"
 
 #: dat/AUTHORS:10
 msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
@@ -148,7 +195,7 @@ msgstr ""
 
 #: dat/AUTHORS:11
 msgid "   * Misc. Development and Lua unifier"
-msgstr ""
+msgstr "   * Otros Desarrollos y unificador Lua"
 
 #: dat/AUTHORS:13
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
@@ -156,7 +203,7 @@ msgstr ""
 
 #: dat/AUTHORS:14
 msgid "   * Code Carnage and Bug Beating"
-msgstr ""
+msgstr "   * Picador de Código y Eliminador de Bugs"
 
 #: dat/AUTHORS:16
 msgid "nenau"
@@ -164,7 +211,7 @@ msgstr ""
 
 #: dat/AUTHORS:17
 msgid "   * Misc. Development and Dvaered aficionado"
-msgstr ""
+msgstr "   * Otros Desarrollos y aficionado Dvaered"
 
 #: dat/AUTHORS:19
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
@@ -172,7 +219,7 @@ msgstr ""
 
 #: dat/AUTHORS:20
 msgid "   * CI dude and Bringer of automated releases"
-msgstr ""
+msgstr "   * El tío del CI y el Portador de las versiones automatizadas"
 
 #: dat/AUTHORS:22
 msgid "Viktor Hahn <viktor.hahn@web.de>"
@@ -180,11 +227,11 @@ msgstr ""
 
 #: dat/AUTHORS:23
 msgid "   * 3D modelling"
-msgstr ""
+msgstr "   * Modelado 3D"
 
 #: dat/AUTHORS:25
 msgid "Past Development Team"
-msgstr ""
+msgstr "Equipo de Desarrollo Pasado"
 
 #: dat/AUTHORS:28
 msgid "Nikola Whallon <6.saturn.6@gmail.com>"
@@ -192,7 +239,7 @@ msgstr ""
 
 #: dat/AUTHORS:29
 msgid "   * Bringer of Sound"
-msgstr ""
+msgstr "   * Portador del Sonido"
 
 #: dat/AUTHORS:31
 msgid "Deiz"
@@ -200,7 +247,7 @@ msgstr ""
 
 #: dat/AUTHORS:32 dat/AUTHORS:35
 msgid "   * Misc. Development"
-msgstr ""
+msgstr "   * Otros Desarrollos"
 
 #: dat/AUTHORS:34
 msgid "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
@@ -208,7 +255,7 @@ msgstr ""
 
 #: dat/AUTHORS:37
 msgid "Major Contributors"
-msgstr ""
+msgstr "Principales Colaboradores"
 
 #: dat/AUTHORS:40
 msgid "Josiah Schwartfeger"
@@ -216,7 +263,7 @@ msgstr ""
 
 #: dat/AUTHORS:41
 msgid "   * Graphic Designer and Modeller"
-msgstr ""
+msgstr "   * Diseñador Gráfico y Modelador"
 
 #: dat/AUTHORS:43
 msgid "Elderman"
@@ -224,11 +271,11 @@ msgstr ""
 
 #: dat/AUTHORS:44
 msgid "   * Mission Development"
-msgstr ""
+msgstr "   * Desarrollo de Misiones"
 
 #: dat/AUTHORS:45
 msgid "   The first non-bobbens mission developer!"
-msgstr ""
+msgstr "   ¡El primer desarrollador de misiones que no es Bobbens!"
 
 #: dat/AUTHORS:47
 msgid "Ingo Ruhnke <grumbel@gmx.de>"
@@ -236,7 +283,7 @@ msgstr ""
 
 #: dat/AUTHORS:48
 msgid "   * NPC Portrait Artist"
-msgstr ""
+msgstr "   * Retratista de NPCs"
 
 #: dat/AUTHORS:50
 msgid "Enigmatic"
@@ -244,7 +291,7 @@ msgstr ""
 
 #: dat/AUTHORS:51
 msgid "   * Ships for the Sirius, many other models and faction logos"
-msgstr ""
+msgstr "   * Naves para Sirius, muchos otros modelos y logotipos de facciones"
 
 #: dat/AUTHORS:53
 msgid "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
@@ -253,6 +300,7 @@ msgstr ""
 #: dat/AUTHORS:54
 msgid "   * Naev logo, Lua GUI development"
 msgstr ""
+"   * Logotipo de Naev, desarrollo de Interfaz Gráfica de Usuario (GUI) en Lua"
 
 #: dat/AUTHORS:56
 msgid "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
@@ -260,7 +308,7 @@ msgstr ""
 
 #: dat/AUTHORS:57
 msgid "   * Ships for the Soromid and the Za'lek"
-msgstr ""
+msgstr "   * Naves para los Soromid y los Za'lek"
 
 #: dat/AUTHORS:59
 msgid "Askyel"
@@ -268,11 +316,11 @@ msgstr ""
 
 #: dat/AUTHORS:60
 msgid "   * Composer of nearly an hour of Naev-exclusive music."
-msgstr ""
+msgstr "   * Compositor de casi una hora de música exclusiva de Naev."
 
 #: dat/AUTHORS:62
 msgid "Contributions"
-msgstr ""
+msgstr "Contribuidores"
 
 #: dat/AUTHORS:65
 msgid "Vega Strike <http://vegastrike.sf.net>"
@@ -280,19 +328,19 @@ msgstr ""
 
 #: dat/AUTHORS:66
 msgid "   * Ship Models"
-msgstr ""
+msgstr "   * Modelado de Naves"
 
 #: dat/AUTHORS:67
 msgid "   * Music"
-msgstr ""
+msgstr "   * Música"
 
 #: dat/AUTHORS:68
 msgid "   * Sounds"
-msgstr ""
+msgstr "   * Sonidos"
 
 #: dat/AUTHORS:69
 msgid "   * Planet images"
-msgstr ""
+msgstr "   * Imágenes de Planetas"
 
 #: dat/AUTHORS:70
 msgid ""
@@ -300,6 +348,9 @@ msgid ""
 "didn't actively participate, by allowing me to use their data they did me a "
 "great favour and let me concentrate on the coding."
 msgstr ""
+"   No habría sido posible sin el equipo de Vega Strike porque aunque no "
+"participaron activamente al permitirme utilizar sus datos, me hicieron un "
+"gran favor y me permitieron concentrarme en el código."
 
 #: dat/AUTHORS:72
 msgid "Joel Hans <wolorf@gmail.com>"
@@ -307,15 +358,17 @@ msgstr ""
 
 #: dat/AUTHORS:73
 msgid "   * Planet Graphics"
-msgstr ""
+msgstr "   * Gráficos de Planeta"
 
 #: dat/AUTHORS:74
 msgid "   * Render Script"
-msgstr ""
+msgstr "   * Scripts de Renderizados"
 
 #: dat/AUTHORS:75
 msgid "   Helped out when the project was starting. Great morale booster."
 msgstr ""
+"   Ayudó cuando el proyecto estaba en sus inicios. Una gran inyección de "
+"moral."
 
 #: dat/AUTHORS:77
 msgid "Amir Taaki <genjix@gmail.com>"
@@ -327,13 +380,15 @@ msgstr ""
 
 #: dat/AUTHORS:79
 msgid "   * SDL_collide"
-msgstr ""
+msgstr "   * SDL_collide"
 
 #: dat/AUTHORS:80
 msgid ""
 "   Although we don't use the SDL_collide library itself, it was "
 "inspirational for Naev's own collision routines."
 msgstr ""
+"   Aunque no utilizamos la biblioteca SDL_collide en sí, fue inspiradora "
+"para las propias rutinas de colisión de Naev."
 
 #: dat/AUTHORS:82
 msgid "Pete Shinners <pete@shinners.org>"
@@ -346,6 +401,7 @@ msgstr ""
 #: dat/AUTHORS:84
 msgid "   Great function ripped straight out of pygame. Works marvelously!"
 msgstr ""
+"   Gran función arrancada directamente de pygame. ¡Funciona maravillosamente!"
 
 #: dat/AUTHORS:86
 msgid "Aurore D. \"Rore\" <aurore.d@gmail.com>"
@@ -353,13 +409,15 @@ msgstr ""
 
 #: dat/AUTHORS:87
 msgid "   * Planet gimp script"
-msgstr ""
+msgstr "   * Script de planeta gimp"
 
 #: dat/AUTHORS:88
 msgid ""
 "   Saved a lot of trouble by allowing us to quickly create space planet "
 "graphics."
 msgstr ""
+"   Nos ahorró muchos problemas al permitirnos crear rápidamente gráficos de "
+"planetas espaciales."
 
 #: dat/AUTHORS:90
 msgid "Andrew Mustun"
@@ -367,11 +425,13 @@ msgstr ""
 
 #: dat/AUTHORS:91
 msgid "   * Sprite gimp script"
-msgstr ""
+msgstr "   * Script de Sprites gimp"
 
 #: dat/AUTHORS:92
 msgid "   Although not used directly, it helped create our own sprite script."
 msgstr ""
+"   Aunque no se utiliza directamente, ayudó a crear nuestro propio script de "
+"sprites."
 
 #: dat/AUTHORS:94
 msgid "J.C. Wilk"
@@ -379,7 +439,7 @@ msgstr ""
 
 #: dat/AUTHORS:95
 msgid "   * Turbulence noise"
-msgstr ""
+msgstr "   * Ruido de turbulencia"
 
 #: dat/AUTHORS:96
 msgid ""
@@ -387,6 +447,10 @@ msgid ""
 "turbulence noise seemed to do everything perfectly where we screwed up. With "
 "heavy optimization the code was introduced to Naev."
 msgstr ""
+"   Tras el horrible fracaso de nuestro propio intento de fractal de plasma, "
+"el ruido de turbulencia de TCOD parecía hacerlo todo a la perfección allí "
+"donde lo habíamos fastidiado. Con una fuerte optimización se introdujo el "
+"código en Naev."
 
 #: dat/AUTHORS:98
 msgid "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
@@ -394,7 +458,7 @@ msgstr ""
 
 #: dat/AUTHORS:99
 msgid "   * Mace Rocket model"
-msgstr ""
+msgstr "   * Modelo de Cohete Maza"
 
 #: dat/AUTHORS:101
 msgid "Brian J. Cameron"
@@ -402,11 +466,13 @@ msgstr ""
 
 #: dat/AUTHORS:102
 msgid "   * Much artwork"
-msgstr ""
+msgstr "   * Mucho trabajo artístico"
 
 #: dat/AUTHORS:103
 msgid "   Talented artist, one of the first in creating custom Naev content."
 msgstr ""
+"   Artista de talento, uno de los primeros en crear contenidos "
+"personalizados de Naev."
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
@@ -414,12 +480,14 @@ msgstr ""
 
 #: dat/AUTHORS:106
 msgid "   * Art and code"
-msgstr ""
+msgstr "   * Arte y código"
 
 #: dat/AUTHORS:107
 msgid ""
 "   Great to see someone else working on Naev code and Lua documentation."
 msgstr ""
+"   Es genial ver a alguien más trabajando en el código de Naev y en la "
+"documentación con Lua."
 
 #: dat/AUTHORS:109
 msgid "Dimitry Marakasov"
@@ -427,11 +495,11 @@ msgstr ""
 
 #: dat/AUTHORS:110
 msgid "   * FreeBSD port and CMake"
-msgstr ""
+msgstr "   * Portabilidad a FreeBSD y CMake"
 
 #: dat/AUTHORS:111
 msgid "   Talented coder who did the first official port of Naev."
-msgstr ""
+msgstr "   Talentoso codificador que hizo el primer port oficial de Naev."
 
 #: dat/AUTHORS:113
 msgid "Alexandru Mosoi <brtzsnr@gmail.com>"
@@ -439,13 +507,16 @@ msgstr ""
 
 #: dat/AUTHORS:114
 msgid "   * Coded cool features"
-msgstr ""
+msgstr "   * Características geniales codificadas"
 
 #: dat/AUTHORS:115
 msgid ""
 "   First non-bobbens coder to make serious commits! Like the reason the maps "
 "are all over or the faction in the maps."
 msgstr ""
+"   ¡El primer codificador que no es Bobbens que hace commits grandes!. Como "
+"la razón por la que los mapas están por todas partes o las facciones en los "
+"mapas."
 
 #: dat/AUTHORS:117
 msgid "Peter Johnson <zid@zid.yggdrasil.sk>"
@@ -453,7 +524,7 @@ msgstr ""
 
 #: dat/AUTHORS:118
 msgid "   * Sped up nebula generation by a lot"
-msgstr ""
+msgstr "   * Aceleró mucho la generación de nebulosas"
 
 #: dat/AUTHORS:120
 msgid "Unavowed <unavowed@vexillium.org>"
@@ -461,11 +532,12 @@ msgstr ""
 
 #: dat/AUTHORS:121
 msgid "   * Ported Naev's build system to autotools."
-msgstr ""
+msgstr "   * Adaptó el sistema de build de Naev a autotools."
 
 #: dat/AUTHORS:122
 msgid "   Probably the cleanest autotools implementation I've ever seen."
 msgstr ""
+"   Probablemente la implementación de autotools más limpia que he visto."
 
 #: dat/AUTHORS:124
 msgid "Cypher3c <cypher3c@gmail.com>"
@@ -473,7 +545,7 @@ msgstr ""
 
 #: dat/AUTHORS:125
 msgid "   * Spiced up the boring generic cargo missions."
-msgstr ""
+msgstr "   * Ha amenizado las aburridas misiones de carga genéricas."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
@@ -481,11 +553,11 @@ msgstr ""
 
 #: dat/AUTHORS:128
 msgid "   * Missions"
-msgstr ""
+msgstr "   * Misiones"
 
 #: dat/AUTHORS:129
 msgid "   * Misc coding support"
-msgstr ""
+msgstr "   * Soporte de otros códigos"
 
 #: dat/AUTHORS:131
 msgid "Fisherman"
@@ -496,10 +568,12 @@ msgid ""
 "   * Threading code to speed up nebula generation (and in the future who "
 "knows?)"
 msgstr ""
+"   * Código de hilos para acelerar la generación de nebulosas (y en el "
+"futuro ¿quién sabe?)"
 
 #: dat/AUTHORS:133
 msgid "   * Hot dog mission"
-msgstr ""
+msgstr "   * Misión del perro caliente"
 
 #: dat/AUTHORS:135
 msgid "Ludovic Bellière \"xrogaan\""
@@ -507,11 +581,11 @@ msgstr ""
 
 #: dat/AUTHORS:136
 msgid "   * Python programmer extraordinaire"
-msgstr ""
+msgstr "   * Extraordinario programador de Python"
 
 #: dat/AUTHORS:137
 msgid "His utilities save gray hairs for everyone."
-msgstr ""
+msgstr "Sus herramientas ahorran canas a todo el mundo."
 
 #: dat/AUTHORS:139
 msgid "Josh Combs"
@@ -519,7 +593,7 @@ msgstr ""
 
 #: dat/AUTHORS:140
 msgid "   * Artist of most of the nebulae."
-msgstr ""
+msgstr "   * Artista de la mayoría de las nebulosas."
 
 #: dat/AUTHORS:142
 msgid "Galileus"
@@ -527,7 +601,7 @@ msgstr ""
 
 #: dat/AUTHORS:143
 msgid "   * Modeller of the Shark and Rhino"
-msgstr ""
+msgstr "   * Modelador de Shark y Rhino"
 
 #: dat/AUTHORS:145
 msgid "Devin Khan"
@@ -535,7 +609,7 @@ msgstr ""
 
 #: dat/AUTHORS:146
 msgid "   * Modeller of the Phalanx"
-msgstr ""
+msgstr "   * Modelador de Phalanx"
 
 #: dat/AUTHORS:148
 msgid "Areze"
@@ -543,7 +617,7 @@ msgstr ""
 
 #: dat/AUTHORS:149
 msgid "   * Junior assistant galaxy creator"
-msgstr ""
+msgstr "   * Asistente junior de creación de galaxias"
 
 #: dat/AUTHORS:151
 msgid "Old Man <oldtopman@gmail.com>"
@@ -551,7 +625,7 @@ msgstr ""
 
 #: dat/AUTHORS:152
 msgid "   * Desura Maintainer"
-msgstr ""
+msgstr "   * Mantenedor Desura"
 
 #: dat/AUTHORS:154
 msgid "NeD"
@@ -559,7 +633,7 @@ msgstr ""
 
 #: dat/AUTHORS:155 dat/AUTHORS:161
 msgid "   * Mission contributor"
-msgstr ""
+msgstr "   * Contribuyente de misiones"
 
 #: dat/AUTHORS:157
 msgid "Sudarshan S"
@@ -567,7 +641,7 @@ msgstr ""
 
 #: dat/AUTHORS:158
 msgid "   * Event contributor"
-msgstr ""
+msgstr "   * Contribuidor de eventos"
 
 #: dat/AUTHORS:160 dat/AUTHORS:178
 msgid "PhoenixRiver"
@@ -575,7 +649,7 @@ msgstr ""
 
 #: dat/AUTHORS:162
 msgid "   * Misc fixes and typos"
-msgstr ""
+msgstr "   * Correcciones varias y errores tipográficos"
 
 #: dat/AUTHORS:164
 msgid "Alastair Basden"
@@ -583,19 +657,19 @@ msgstr ""
 
 #: dat/AUTHORS:165
 msgid "   * Economy development"
-msgstr ""
+msgstr "   * Desarrollo de Economía"
 
 #: dat/AUTHORS:166
 msgid "   * Ship log"
-msgstr ""
+msgstr "   * Registro de naves"
 
 #: dat/AUTHORS:167
 msgid "   * Solar system information screen"
-msgstr ""
+msgstr "   * Pantalla de información del sistema solar"
 
 #: dat/AUTHORS:169
 msgid "Music by Matthew Pablo"
-msgstr ""
+msgstr "Música de Matthew Pablo"
 
 #: dat/AUTHORS:170
 msgid "http://www.matthewpablo.com"
@@ -603,7 +677,7 @@ msgstr ""
 
 #: dat/AUTHORS:172
 msgid "Testers"
-msgstr ""
+msgstr "Testers"
 
 #: dat/AUTHORS:175
 msgid "John Schwartfeger"
@@ -619,23 +693,23 @@ msgstr ""
 
 #: dat/AUTHORS:180
 msgid "Artwork Contributors"
-msgstr ""
+msgstr "Contribuidores Artísticos"
 
 #: artwork/gfx/loading/admonisher.webp.txt:1
 msgid "ADMONISHER"
-msgstr ""
+msgstr "AMONESTADOR"
 
 #: artwork/gfx/loading/admonisher_pirate.webp.txt:1
 msgid "PIRATE ADMONISHER"
-msgstr ""
+msgstr "AMONESTADOR PIRATA"
 
 #: artwork/gfx/loading/ancestor.webp.txt:1
 msgid "ANCESTOR"
-msgstr ""
+msgstr "ANCESTRO"
 
 #: artwork/gfx/loading/ancestor_pirate.webp.txt:1
 msgid "PIRATE ANCESTOR"
-msgstr ""
+msgstr "ANCESTRO PIRATA"
 
 #: artwork/gfx/loading/archimedes.webp.txt:1
 msgid "ARCHIMEDES"
@@ -643,19 +717,19 @@ msgstr ""
 
 #: artwork/gfx/loading/derivative.webp.txt:1
 msgid "DERIVATIVE"
-msgstr ""
+msgstr "DERIVATIVO"
 
 #: artwork/gfx/loading/diablo.webp.txt:1
 msgid "ZA'LEK DIABLO"
-msgstr ""
+msgstr "DIABLO ZA'LEK"
 
 #: artwork/gfx/loading/drone.webp.txt:1
 msgid "DRONE"
-msgstr ""
+msgstr "DRON"
 
 #: artwork/gfx/loading/fidelity.webp.txt:1
 msgid "SIRIUS FIDELITY"
-msgstr ""
+msgstr "FIDELIDAD DE SIRIO"
 
 #: artwork/gfx/loading/gawain.webp.txt:1
 msgid "GAWAIN"
@@ -675,7 +749,7 @@ msgstr ""
 
 #: artwork/gfx/loading/kestrel_pirate.webp.txt:1
 msgid "PIRATE KESTREL"
-msgstr ""
+msgstr "KESTREL PIRATA"
 
 #: artwork/gfx/loading/koala.webp.txt:1
 msgid "KOALA"
@@ -691,31 +765,31 @@ msgstr ""
 
 #: artwork/gfx/loading/mule.webp.txt:1
 msgid "MULE"
-msgstr ""
+msgstr "MULA"
 
 #: artwork/gfx/loading/pacifier.webp.txt:1
 msgid "PACIFIER"
-msgstr ""
+msgstr "PACIFICADOR"
 
 #: artwork/gfx/loading/peacemaker.webp.txt:1
 msgid "EMPIRE PEACEMAKER"
-msgstr ""
+msgstr "IMPERIO PACIFICADOR"
 
 #: artwork/gfx/loading/preacher.webp.txt:1
 msgid "SIRIUS PREACHER"
-msgstr ""
+msgstr "PREDICADOR DE SIRIO"
 
 #: artwork/gfx/loading/quicksilver.webp.txt:1
 msgid "QUICKSILVER"
-msgstr ""
+msgstr "AZOGUE"
 
 #: artwork/gfx/loading/rhino.webp.txt:1
 msgid "RHINO"
-msgstr ""
+msgstr "RINO"
 
 #: artwork/gfx/loading/rhino_pirate.webp.txt:1
 msgid "PIRATE RHINO"
-msgstr ""
+msgstr "RINO PIRATA"
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
 msgid "SCHROEDINGER"
@@ -723,23 +797,23 @@ msgstr ""
 
 #: artwork/gfx/loading/shaman.webp.txt:1
 msgid "SIRIUS SHAMAN"
-msgstr ""
+msgstr "CHAMÁN DE SIRIUS"
 
 #: artwork/gfx/loading/shark.webp.txt:1
 msgid "SHARK"
-msgstr ""
+msgstr "TIBURÓN"
 
 #: artwork/gfx/loading/shark_empire.webp.txt:1
 msgid "EMPIRE SHARK"
-msgstr ""
+msgstr "TIBURÓN DEL IMPERIO"
 
 #: artwork/gfx/loading/shark_pirate.webp.txt:1
 msgid "PIRATE SHARK"
-msgstr ""
+msgstr "TIBURÓN PIRATA"
 
 #: artwork/gfx/loading/sting.webp.txt:1
 msgid "ZA'LEK STING"
-msgstr ""
+msgstr "AGUIJÓN ZA'LEK"
 
 #: artwork/gfx/loading/vendetta.webp.txt:1
 msgid "VENDETTA"
@@ -747,15 +821,15 @@ msgstr ""
 
 #: artwork/gfx/loading/vendetta_pirate.webp.txt:1
 msgid "PIRATE VENDETTA"
-msgstr ""
+msgstr "PIRATA VENDETTA"
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
 msgid "VIGILANCE"
-msgstr ""
+msgstr "VIGILANCIA"
 
 #: dat/commodities/clay.xml:3
 msgid "Clay"
-msgstr ""
+msgstr "Arcilla"
 
 #: dat/commodities/clay.xml:4
 msgid ""
@@ -764,10 +838,15 @@ msgid ""
 "shielding material or construction. Depending on the precedence of the clay "
 "it can have many different compositions and material properties."
 msgstr ""
+"La arcilla extraída de los asteroides suele tener propiedades diferentes de "
+"las que se encuentran en los cuerpos planetarios y tiene una gran diversidad "
+"de usos, como material de blindaje o de construcción. Dependiendo de la "
+"procedencia de la arcilla, ésta puede tener muchas composiciones y "
+"propiedades materiales diferentes."
 
 #: dat/commodities/diamond.xml:3 dat/scripts/pilotname/generic.lua:29
 msgid "Diamond"
-msgstr ""
+msgstr "Diamante"
 
 #: dat/commodities/diamond.xml:4
 msgid ""
@@ -778,10 +857,16 @@ msgid ""
 "enough to produce synthetically that it is not as sought after as much as it "
 "once was."
 msgstr ""
+"El diamante es otra forma de grafito que se ha cristalizado debido a la "
+"intensa presión y el calor en las profundidades de la superficie de algunos "
+"tipos de planetas. El material es útil en algunas aplicaciones de corte "
+"debido a su dureza, y se utiliza comúnmente en aplicaciones decorativas, "
+"pero el diamante es ahora lo suficientemente fácil de producir "
+"sintéticamente con lo que ya no esta tan solicitado como antes."
 
 #: dat/commodities/food.xml:3
 msgid "Food"
-msgstr ""
+msgstr "Alimentos"
 
 #: dat/commodities/food.xml:4
 msgid ""
@@ -789,10 +874,13 @@ msgid ""
 "meals are rich in nutrients and able to last many cycles in their vacuum-"
 "sealed packaging."
 msgstr ""
+"Evolucionando desde las raciones militares del pasado, las comidas envasadas "
+"modernas son ricas en nutrientes y capaces de durar muchos ciclos en su "
+"envase sellado al vacío."
 
 #: dat/commodities/gold.xml:3 dat/ssys/gold.xml:2
 msgid "Gold"
-msgstr ""
+msgstr "Oro"
 
 #: dat/commodities/gold.xml:4
 msgid ""
@@ -801,20 +889,26 @@ msgid ""
 "its most demanding application is as a component in decorative articles, "
 "such as jewelry."
 msgstr ""
+"El oro es apreciado por su combinación de resistencia a la corrosión y "
+"conductividad, el cual se utiliza para aumentar la vida útil de los aparatos "
+"electrónicos, aunque su aplicación más exigente es como componente de "
+"artículos decorativos, tales como joyas."
 
 #: dat/commodities/industrial_goods.xml:3
 msgid "Industrial Goods"
-msgstr ""
+msgstr "Bienes Industriales"
 
 #: dat/commodities/industrial_goods.xml:4
 msgid ""
 "An assortment of industrial goods, ranging from cutting lasers to processed "
 "metals."
 msgstr ""
+"Un surtido de productos industriales, que van desde los láseres de corte "
+"hasta metales procesados."
 
 #: dat/commodities/iron.xml:3
 msgid "Iron"
-msgstr ""
+msgstr "Hierro"
 
 #: dat/commodities/iron.xml:4
 msgid ""
@@ -822,10 +916,13 @@ msgid ""
 "production processes. Despite the wide availability in asteroids, there is "
 "always significant demand for more."
 msgstr ""
+"El hierro desempeña un papel fundamental en muchos procesos químicos y de "
+"producción de materiales. A pesar de su amplia disponibilidad en asteroides, "
+"siempre hay una importante demanda de mayor cantidad."
 
 #: dat/commodities/kermite.xml:3
 msgid "Kermite"
-msgstr ""
+msgstr "Kermita"
 
 #: dat/commodities/kermite.xml:4
 msgid ""
@@ -836,26 +933,33 @@ msgid ""
 "generators, practically ensuring their widespread demand throughout the "
 "universe."
 msgstr ""
+"Aunque es uno de los materiales más raros que se encuentran en los "
+"asteroides, la kermita se ha asegurado un papel fundamental en muchas "
+"aplicaciones tecnológicas distintas debido a los efectos de flexión del "
+"espacio-tiempo cuando se somete a combinaciones particulares de presión y "
+"radiación. Se utiliza habitualmente en ciertos tipos de generadores de "
+"escudos, lo que prácticamente garantiza su demanda generalizada en todo el "
+"universo."
 
 #: dat/commodities/luxury_goods.xml:3
 msgid "Luxury Goods"
-msgstr ""
+msgstr "Artículos de Lujo"
 
 #: dat/commodities/luxury_goods.xml:4
 msgid "All sorts of high quality luxury goods."
-msgstr ""
+msgstr "Todo tipo de artículos de lujo de alta calidad."
 
 #: dat/commodities/medicine.xml:3
 msgid "Medicine"
-msgstr ""
+msgstr "Medicinas"
 
 #: dat/commodities/medicine.xml:4
 msgid "An assortment of medicines suitable for curing all sorts of ailments."
-msgstr ""
+msgstr "Un abanico de medicamentos idóneos para curar todo tipo de dolencias."
 
 #: dat/commodities/neodymium.xml:3
 msgid "Neodymium"
-msgstr ""
+msgstr "Neodimio"
 
 #: dat/commodities/neodymium.xml:4
 msgid ""
@@ -865,10 +969,16 @@ msgid ""
 "technologies, the demand for Neodymium remains relatively high and constant "
 "throughout the galaxy."
 msgstr ""
+"El neodimio es muy útil por sus propiedades magnéticas y de capacidad "
+"calorífica, desempeñando un papel fundamental en las aplicaciones de "
+"criorefrigeración y en las cámaras de estasis. Dado el crecimiento "
+"demográfico posterior al Incidente y el uso generalizado de las nuevas "
+"tecnologías, la demanda de neodimio sigue siendo relativamente alta y "
+"constante en toda la galaxia."
 
 #: dat/commodities/nickel.xml:3
 msgid "Nickel"
-msgstr ""
+msgstr "Níquel"
 
 #: dat/commodities/nickel.xml:4
 msgid ""
@@ -876,10 +986,14 @@ msgid ""
 "quite common among asteroids like Iron, the wide applicability makes it so "
 "there is a constant and steady demand throughout the galaxy."
 msgstr ""
+"El níquel se emplea habitualmente en aleaciones y para crear campos "
+"magnéticos. Aunque es bastante común entre los asteroides como el hierro, su "
+"amplia aplicabilidad hace que haya una demanda constante y sostenida en toda "
+"la galaxia."
 
 #: dat/commodities/olivine.xml:3
 msgid "Olivine"
-msgstr ""
+msgstr "Olivina"
 
 #: dat/commodities/olivine.xml:4
 msgid ""
@@ -887,20 +1001,27 @@ msgid ""
 "is steadly increasing for it's usefulness in enhanced weathering and "
 "terraforming, for which immense amounts are needed."
 msgstr ""
+"Aunque en la historia antigua se utilizaba sobre todo para decorar, la "
+"demanda de olivino aumenta constantemente por su utilidad para mejorar la "
+"climatología y la terraformación, para lo cual se necesitan inmensas "
+"cantidades."
 
 #: dat/commodities/ore.xml:3
 msgid "Ore"
-msgstr ""
+msgstr "Mineral"
 
 #: dat/commodities/ore.xml:4
 msgid ""
 "Ore is a key material in many industries. Smelted into metals, without ore, "
 "the ship-building industry and many others would grind to a halt."
 msgstr ""
+"El mineral es un material clave en muchas industrias. Fundido en metales, "
+"sin el mineral, la industria de la construcción naval y muchas otras se "
+"paralizarían."
 
 #: dat/commodities/platinum.xml:3
 msgid "Platinum"
-msgstr ""
+msgstr "Platino"
 
 #: dat/commodities/platinum.xml:4
 msgid ""
@@ -908,10 +1029,13 @@ msgid ""
 "equipment. Although there is high demand for it, it is rather uncommonly "
 "found throughout space."
 msgstr ""
+"El platino es un metal precioso muy poco reactivo, que se utiliza "
+"habitualmente en equipos de alta gama. Aunque tiene una gran demanda, es "
+"bastante infrecuente encontrarlo a lo largo del espacio."
 
 #: dat/commodities/rhodium.xml:3
 msgid "Rhodium"
-msgstr ""
+msgstr "Rodio"
 
 #: dat/commodities/rhodium.xml:4
 msgid ""
@@ -921,10 +1045,16 @@ msgid ""
 "older technologies still require Rhodium and are the backbone of the market "
 "demand."
 msgstr ""
+"Aunque la resistencia a la corrosión del rodio ha sido tradicionalmente muy "
+"importante en muchas aleaciones, la amplia disponibilidad de nuevos "
+"materiales cerámicos y endurecidos por radiación ha provocado una "
+"disminución de la demanda. Sin embargo, las tecnologías más antiguas y de "
+"gama baja siguen necesitando rodio y son la columna vertebral de la demanda "
+"del mercado."
 
 #: dat/commodities/silicate.xml:3
 msgid "Silicate"
-msgstr ""
+msgstr "Silicato"
 
 #: dat/commodities/silicate.xml:4
 msgid ""
@@ -1177,7 +1307,7 @@ msgstr ""
 
 #: dat/faction.xml:118
 msgid "Wild Ones"
-msgstr ""
+msgstr "Salvajes"
 
 #: dat/faction.xml:121
 msgid "Wild Ones Pirate Clan"
@@ -1191,7 +1321,7 @@ msgstr ""
 
 #: dat/faction.xml:153
 msgid "Black Lotus"
-msgstr ""
+msgstr "Loto Negro"
 
 #: dat/faction.xml:156
 msgid "Black Lotus Pirate Clan"
@@ -4917,7 +5047,7 @@ msgstr ""
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:2
 msgid "Low Radiation Sensor Modulator"
-msgstr ""
+msgstr "Modulador de Sensor de Baja Radiación"
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:10
 msgid ""
@@ -5494,7 +5624,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_cannon.xml:2
 msgid "Plasma Cannon"
-msgstr ""
+msgstr "Cañón de Plasma"
 
 #: dat/outfits/weapons/plasma_cannon.xml:9
 msgid ""
@@ -6190,7 +6320,7 @@ msgstr ""
 #: dat/ships/neutral/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168
 msgid "Llama"
-msgstr ""
+msgstr "Llama"
 
 #: dat/ships/neutral/llama.xml:17
 msgid ""
@@ -20395,7 +20525,7 @@ msgstr ""
 #: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:143
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:82
 msgid "Crimson Gauntlet"
-msgstr ""
+msgstr "Guantelete Carmesí"
 
 #: dat/ssys/cygnus.xml:2
 msgid "Cygnus"
@@ -22427,7 +22557,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:171
 #: dat/scripts/common/frontier_war.lua:20
 msgid "Lady Bitterfly"
-msgstr ""
+msgstr "Dama Bitterfly"
 
 #: dat/ai/advertiser.lua:110 dat/scripts/common/frontier_war.lua:21
 msgid "Lady Pointblank"
@@ -22447,11 +22577,11 @@ msgstr ""
 
 #: dat/ai/advertiser.lua:114 dat/scripts/common/frontier_war.lua:25
 msgid "Lady Blackswan"
-msgstr ""
+msgstr "Dama Blackswan"
 
 #: dat/ai/advertiser.lua:115 dat/scripts/common/frontier_war.lua:26
 msgid "Lady Killington"
-msgstr ""
+msgstr "Dama Killington"
 
 #: dat/ai/advertiser.lua:116 dat/scripts/common/frontier_war.lua:27
 msgid "Lord Richthofen"
@@ -22492,7 +22622,7 @@ msgstr ""
 #: dat/ai/advertiser.lua:119 dat/missions/dvaered/gauntlet/tables.lua:80
 #: dat/scripts/common/frontier_war.lua:30
 msgid "Lady Sainte-Beuverie"
-msgstr ""
+msgstr "Dama Sainte-Beuverie"
 
 #: dat/ai/advertiser.lua:120 dat/scripts/common/frontier_war.lua:31
 msgid "Lord Louverture"
@@ -22504,7 +22634,7 @@ msgstr ""
 
 #: dat/ai/advertiser.lua:122 dat/scripts/common/frontier_war.lua:33
 msgid "Lady Proserpina"
-msgstr ""
+msgstr "Dama Proserpina"
 
 #: dat/ai/advertiser.lua:128
 msgid "I hereby declare {butthead} is a {badword}. -{sponsor}"
@@ -25633,7 +25763,7 @@ msgstr ""
 
 #: dat/events/discovery.lua:72
 msgid "Crater City"
-msgstr ""
+msgstr "Ciudad Crater"
 
 #: dat/events/discovery.lua:73
 msgid "Touching the Universe"
@@ -45182,7 +45312,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:41
 msgid "Lieutenant"
-msgstr ""
+msgstr "Teniente"
 
 #: dat/missions/empire/emp_cargo00.lua:53
 msgid "You see an Empire Lieutenant who seems to be looking at you."
@@ -49357,7 +49487,7 @@ msgstr ""
 #. Main stuff starts
 #: dat/missions/minerva/kex2.lua:218
 msgid "Baroness Eve"
-msgstr ""
+msgstr "Baronesa Eve"
 
 #: dat/missions/minerva/kex3.lua:61
 msgid ""
@@ -49397,7 +49527,7 @@ msgstr ""
 #: dat/missions/minerva/kex3.lua:113 dat/missions/minerva/kex3.lua:310
 #: dat/missions/minerva/kex3.lua:379 dat/missions/minerva/kex3.lua:459
 msgid "Major Malik"
-msgstr ""
+msgstr "Mayor Malik"
 
 #: dat/missions/minerva/kex3.lua:113
 msgid ""
@@ -82252,7 +82382,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/generic.lua:65 dat/scripts/pilotname/pirate.lua:422
 msgid "Raven"
-msgstr ""
+msgstr "Cuervo"
 
 #: dat/scripts/pilotname/generic.lua:66
 msgid "Rebirth"
@@ -83484,7 +83614,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:303
 msgid "Emperor"
-msgstr ""
+msgstr "Emperador"
 
 #: dat/scripts/pilotname/pirate.lua:304
 msgid "Energy-Volt"
