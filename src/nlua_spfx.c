@@ -498,6 +498,11 @@ void spfxL_clear (void)
 
 void spfxL_exit (void)
 {
+   spfxL_clear();
+   array_free( lua_spfx );
+   lua_spfx = NULL;
+   array_free( lua_spfx_queue );
+   lua_spfx_queue = NULL;
 }
 
 /**
