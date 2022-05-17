@@ -35,7 +35,11 @@ function update( p, po, dt )
          p:setPos( p:pos() + vec2.newP( dist, p:dir()+(2*rnd.rnd()-1)*math.pi/6 ) )
 
          -- Play the sound
-         luaspfx.sfx( p:pos(), sfx )
+         if mem.isp then
+            luaspfx.sfx( nil, nil, sfx )
+         else
+            luaspfx.sfx( p:pos(), p:vel(), sfx )
+         end
 
          -- Set cooldown and maluses
          po:state("cooldown")
@@ -63,7 +67,7 @@ function update( p, po, dt )
    end
 end
 
-function ontoggle( _p, po, on )
+function ontoggle( p, po, on )
    -- Only care about turning on (outfit never has the "on" state)
    if not on then return false end
 
@@ -76,8 +80,9 @@ function ontoggle( _p, po, on )
    po:state("on")
    po:progress(1)
    if mem.isp then
-      luaspfx.sfx( nil, sfx_warmup )
-      -- TODO play for other pilots
+      luaspfx.sfx( nil, nil, sfx_warmup )
+   else
+      luaspfx.sfx( p:pos(), p:vel(), sfx_warmup )
    end
    return true
 end

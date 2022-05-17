@@ -89,7 +89,7 @@ function wormhole.land( _s, p )
    -- Not player, just play animation and remove
    if p ~= player.pilot() then
       p:effectAdd("Wormhole Enter")
-      luaspfx.sfx( p:pos(), jumpsfx )
+      luaspfx.sfx( p:pos(), p:vel(), jumpsfx )
       return
    end
 

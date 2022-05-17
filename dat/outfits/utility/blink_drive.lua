@@ -43,7 +43,7 @@ function ontoggle( p, po, on )
    po:progress(1)
 
    -- Play the sound
-   luaspfx.sfx( p:pos(), sfx )
+   luaspfx.sfx( p:pos(), p:vel(), sfx )
 
    return true
 end

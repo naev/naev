@@ -208,7 +208,8 @@ local sfx_spacewhale = {
 }
 function spacewhale ()
    local sfx = sfx_spacewhale[ rnd.rnd(1,#sfx_spacewhale) ]
-   luaspfx.sfx( feral:pos(), sfx, { dist_ref=2500, dist_max=25e3 } )
+   -- Don't use velocity to avoid sound deformations
+   luaspfx.sfx( feral:pos(), nil, sfx, { dist_ref=2500, dist_max=25e3 } )
    player.autonavReset(5)
 end
 

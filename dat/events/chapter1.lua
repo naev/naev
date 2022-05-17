@@ -201,7 +201,7 @@ function cutscene_emp2 ()
 end
 
 function cutscene_emp_sfx ()
-   luaspfx.sfx( nil, countdown_sfx, {volume=0.8} )
+   luaspfx.sfx( nil, nil, countdown_sfx, {volume=0.8} )
 end
 
 -- Countdown

@@ -63,7 +63,7 @@ function update( _p, po, dt )
    end
 end
 
-function onhit( _p, po, armour, _shield )
+function onhit( p, po, armour, _shield )
    if not mem.active and armour > 0 then
       -- Don't run while cooling off
       if mem.timer and mem.timer > 0 then return end
@@ -75,8 +75,9 @@ function onhit( _p, po, armour, _shield )
       -- Visual effect
       if mem.isp then
          oshader:on()
-         luaspfx.sfx( nil, sfx )
-         -- TODO play sound for other pilots
+         luaspfx.sfx( nil, nil, sfx )
+      else
+         luaspfx.sfx( p:pos(), p:vel(), sfx )
       end
    end
 end

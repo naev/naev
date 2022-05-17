@@ -132,7 +132,7 @@ function hypergate.land( _s, p )
    else
       p:shipvarPush( "hypergate", true )
       p:effectAdd("Hypergate Enter")
-      luaspfx.sfx( p:pos(), jumpsfx )
+      luaspfx.sfx( p:pos(), p:vel(), jumpsfx )
    end
 end
 
