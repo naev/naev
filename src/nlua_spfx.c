@@ -242,6 +242,10 @@ static int spfxL_eq( lua_State *L )
 /**
  * @brief Creates a new special effect.
  *
+ * @usage spfx.new( 5, update, nil, nil, render, player.pos(), player.pilot():vel(), sfx ) -- Play effect with update and render functions at player position/velocity
+ * @usage spfx.new( 10, nil, nil, nil, nil, true, nil, sfx ) -- Play an effect locally (affected by time compression and autonav stuff)
+ * @usage spfx.new( 10, nil, nil, nil, nil, nil, nil, sfx ) -- Play a global effect (not affected by time stuff )
+ *
  *    @luatparam Number ttl Time to live of the effect.
  *    @luatparam Function|nil update Update function to use if applicable.
  *    @luatparam Function|nil render_bg Background render function to use if applicable (behind ships).
