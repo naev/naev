@@ -1,5 +1,6 @@
 --local osh = require 'outfits.shaders'
 local audio = require 'love.audio'
+local luaspfx = require 'luaspfx'
 
 -- Global constant variables for the outfit
 local ontime = 7 -- ontime period
@@ -63,7 +64,7 @@ function update( _p, po, dt )
    end
 end
 
-local function turnon( _p, po )
+local function turnon( p, po )
    mem.active = true
    mem.timer = ontime
    po:state( "on" )
@@ -72,8 +73,9 @@ local function turnon( _p, po )
    -- Visual effect
    if mem.isp then
       --oshader:on()
-      sfx:setPitch( player.dt_mod() )
-      sfx:play()
+      luaspfx.sfx( nil, nil, sfx )
+   else
+      luaspfx.sfx( p:pos(), p:vel(), sfx )
    end
 end
 

@@ -1,5 +1,6 @@
 --local osh = require 'outfits.shaders'
 local audio = require 'love.audio'
+local luaspfx = require 'luaspfx'
 
 -- Global constant variables for the outfit
 local ontime = 5 -- ontime period
@@ -49,7 +50,7 @@ function update( _p, po, dt )
    end
 end
 
-function onhit( _p, po, armour, _shield )
+function onhit( p, po, armour, _shield )
    if not mem.active and armour > 0 then
       -- Already running, so just reset timer
       if mem.timer and mem.timer > 0 then
@@ -64,8 +65,9 @@ function onhit( _p, po, armour, _shield )
       -- Visual effect
       if mem.isp then
          --oshader:on()
-         sfx:setPitch( player.dt_mod() )
-         sfx:play()
+         luaspfx.sfx( nil, nil, sfx )
+      else
+         luaspfx.sfx( p:pos(), p:vel(), sfx )
       end
    end
 end

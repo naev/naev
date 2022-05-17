@@ -1,5 +1,6 @@
 local osh   = require 'outfits.shaders'
 local audio = require 'love.audio'
+local luaspfx = require 'luaspfx'
 
 local cooldown = 15 -- cooldown time in seconds
 local oshader = osh.new([[
@@ -44,9 +45,10 @@ local function turnon( p, po )
 
    -- Visual effect
    if mem.isp then
-      sfx_start:setPitch( player.dt_mod() )
-      sfx_start:play()
       oshader:on()
+      mem.spfx_start = luaspfx.sfx( nil, nil, sfx_start )
+   else
+      mem.spfx_start = luaspfx.sfx( p:pos(), p:vel(), sfx_start )
    end
 
    return true
@@ -122,11 +124,12 @@ function update( p, po, dt )
                p:addHealth( heal )
             end
             -- Player effects
+            mem.spfx_start:rm()
             if mem.isp then
-               sfx_start:stop()
-               sfx_bite:setPitch( player.dt_mod() )
-               sfx_bite:play()
+               luaspfx.sfx( nil, nil, sfx_bite )
                camera.shake( 0.8 )
+            else
+               luaspfx.sfx( p:pos(), p:vel(), sfx_bite )
             end
             return turnoff( p, po )
          end
