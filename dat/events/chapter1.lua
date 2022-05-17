@@ -362,6 +362,35 @@ function cutscene_posttext ()
    local hyp = spob.get( gatename )
    camera.set( hyp:pos(), true )
 
+   -- Add some ethereal ships
+   local f = faction.get("Independent")
+   local function ethereal( shipname, mindist, maxdist )
+      mindist = mindist or 1000
+      maxdist = maxdist or 4000
+      local a = rnd.angle()
+      local pos = hyp:pos() + vec2.newP( mindist + (maxdist-mindist)*rnd.rnd(), a )
+      local p = pilot.add( shipname, f, pos, nil, { naked=true } )
+      p:effectAdd( "Ethereal" )
+      p:setInvincible(true)
+      p:control()
+      p:moveto( hyp:pos() + vec2.newP(  300+300*rnd.rnd(), a ) )
+      p:face( hyp:pos() )
+   end
+
+   for i=1,4 do
+      ethereal( "Goddard", 600, 1200 )
+   end
+   for i=1,8 do
+      ethereal( "Vigilance", 700, 2000 )
+   end
+   for i=1,30 do
+      if rnd.rnd() < 0.6 then
+         ethereal( "Ancestor" )
+      else
+         ethereal( "Vendetta" )
+      end
+   end
+
    hook.timer( 4.3, "cutscene_nebu_zoom" )
    hook.timer( 5, "cutscene_nebu" )
 end
