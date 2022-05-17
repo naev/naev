@@ -55,7 +55,9 @@ typedef struct LuaSpfxData_s {
  * @brief List of special effects being handled.
  */
 static LuaSpfxData_t *lua_spfx = NULL;
+static LuaSpfxData_t *lua_spfx_queue = NULL;
 static int lua_spfx_idgen = 0;
+static int lua_spfx_lock = 0;
 
 /* Spfx methods. */
 static int spfxL_gc( lua_State *L );
@@ -326,10 +328,17 @@ static int spfxL_new( lua_State *L )
    lua_newtable(L);
    ls.data = luaL_ref( L, LUA_REGISTRYINDEX ); /* Pops result. */
 
-   /* Add to Lua and stack. */
-   if (lua_spfx == NULL)
-      lua_spfx = array_create( LuaSpfxData_t );
-   array_push_back( &lua_spfx, ls );
+   /* Add to Lua and stack, depending on if locked or not. */
+   if (lua_spfx_lock) {
+      if (lua_spfx_queue == NULL)
+         lua_spfx_queue = array_create( LuaSpfxData_t );
+      array_push_back( &lua_spfx_queue, ls );
+   }
+   else {
+      if (lua_spfx == NULL)
+         lua_spfx = array_create( LuaSpfxData_t );
+      array_push_back( &lua_spfx, ls );
+   }
 
    lua_pushspfx( L, ls.id );
    return 1;
@@ -454,6 +463,23 @@ void spfxL_setSpeedVolume( double v )
    soundUnlock();
 }
 
+static void spfx_lock (void)
+{
+   lua_spfx_lock = 1;
+}
+
+static void spfx_unlock (void)
+{
+   lua_spfx_lock = 0;
+
+   if (lua_spfx_queue==NULL)
+      return;
+
+   for (int i=0; i<array_size(lua_spfx_queue); i++)
+      array_push_back( &lua_spfx, lua_spfx_queue[i] );
+   array_erase( &lua_spfx_queue, array_begin(lua_spfx_queue), array_end(lua_spfx_queue) );
+}
+
 /**
  * @brief Updates the spfx.
  *
@@ -461,6 +487,7 @@ void spfxL_setSpeedVolume( double v )
  */
 void spfxL_update( double dt )
 {
+   spfx_lock();
    for (int i=array_size(lua_spfx)-1; i>=0; i--) {
       LuaSpfxData_t *ls = &lua_spfx[i];
 
@@ -502,6 +529,7 @@ void spfxL_update( double dt )
          lua_pop( naevL, 1 );
       }
    }
+   spfx_unlock();
 }
 
 /**
@@ -510,6 +538,7 @@ void spfxL_update( double dt )
 void spfxL_renderbg (void)
 {
    double z = cam_getZoom();
+   spfx_lock();
    for (int i=0; i<array_size(lua_spfx); i++) {
       vec2 pos;
       LuaSpfxData_t *ls = &lua_spfx[i];
@@ -533,6 +562,7 @@ void spfxL_renderbg (void)
          lua_pop( naevL, 1 );
       }
    }
+   spfx_unlock();
 }
 
 /**
@@ -541,6 +571,7 @@ void spfxL_renderbg (void)
 void spfxL_rendermg (void)
 {
    double z = cam_getZoom();
+   spfx_lock();
    for (int i=0; i<array_size(lua_spfx); i++) {
       vec2 pos;
       LuaSpfxData_t *ls = &lua_spfx[i];
@@ -564,6 +595,7 @@ void spfxL_rendermg (void)
          lua_pop( naevL, 1 );
       }
    }
+   spfx_unlock();
 }
 
 /**
@@ -572,6 +604,7 @@ void spfxL_rendermg (void)
 void spfxL_renderfg (void)
 {
    double z = cam_getZoom();
+   spfx_lock();
    for (int i=0; i<array_size(lua_spfx); i++) {
       vec2 pos;
       LuaSpfxData_t *ls = &lua_spfx[i];
@@ -595,4 +628,5 @@ void spfxL_renderfg (void)
          lua_pop( naevL, 1 );
       }
    }
+   spfx_unlock();
 }
