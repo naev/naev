@@ -47,6 +47,7 @@ dat/damagetype.xml
 dat/difficulty.xml
 dat/effects/ambush_hunter.xml
 dat/effects/antimatter_taint.xml
+dat/effects/blink.xml
 dat/effects/bloodlust.xml
 dat/effects/crippling_plasma.xml
 dat/effects/feral_rage_i.xml
