@@ -204,6 +204,7 @@ static int pilotL_shipvarPeek( lua_State *L );
 static int pilotL_shipvarPush( lua_State *L );
 static int pilotL_shipvarPop( lua_State *L );
 static int pilotL_render( lua_State *L );
+static int pilotL_renderTo( lua_State *L );
 static const luaL_Reg pilotL_methods[] = {
    /* General. */
    { "add", pilotL_add },
@@ -359,6 +360,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "shipvarPush", pilotL_shipvarPush },
    { "shipvarPop", pilotL_shipvarPop },
    { "render", pilotL_render },
+   { "renderTo", pilotL_renderTo },
    {0,0},
 }; /**< Pilot metatable methods. */
 
@@ -5292,4 +5294,32 @@ static int pilotL_render( lua_State *L )
 
    lua_pushcanvas( L, lc );
    return 1;
+}
+
+/**
+ * @brief Renders the pilot to a canvas
+ *
+ *    @luatparam Pilot p Pilot whose ship is being rendered.
+ *    @luatparam Canvas The canvas to draw to (uses bottom-left corner).
+ *    @luatreturn number Width drawn.
+ *    @luatreturn number Height drawn.
+ * @luafunc renderTo
+ */
+static int pilotL_renderTo( lua_State *L )
+{
+   Pilot *p = luaL_validpilot( L, 1 );
+   LuaCanvas_t *lc = luaL_checkcanvas( L, 2 );
+
+   /* TODO handle when effects make the ship render larger than it really is. */
+   if ((lc->tex->w < p->ship->gfx_space->sw) || (lc->tex->h < p->ship->gfx_space->sh))
+      WARN(_("Canvas is too small to fully render '%s': %.0f x %.0f < %.0f x %.0f"),
+            p->name, lc->tex->w, lc->tex->h,
+            p->ship->gfx_space->sw, p->ship->gfx_space->sh );
+
+   /* I'me really stumped at why we need to pass gl_screen here for it to work... */
+   pilot_renderFramebuffer( p, lc->fbo, gl_screen.rw, gl_screen.rh );
+
+   lua_pushnumber( L, p->ship->gfx_space->sw );
+   lua_pushnumber( L, p->ship->gfx_space->sh );
+   return 2;
 }
