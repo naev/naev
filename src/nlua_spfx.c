@@ -27,10 +27,11 @@
 #include "nopenal.h"
 #include "player.h"
 
-#define SPFX_GLOBAL     (1<<1) /**< Spfx is not localized. */
-#define SPFX_MOVING     (1<<2) /**< Spfx is moving. */
-#define SPFX_AUDIO      (1<<3) /**< Spfx has audio. */
-#define SPFX_CLEANUP    (1<<4) /**< Spfx has to be cleaned up. */
+#define SPFX_GLOBAL     (1<<1) /**< Spfx sound ignores pitch changes. */
+#define SPFX_RELATIVE   (1<<2) /**< Spfx is relative. */
+#define SPFX_MOVING     (1<<3) /**< Spfx is moving. */
+#define SPFX_AUDIO      (1<<4) /**< Spfx has audio. */
+#define SPFX_CLEANUP    (1<<5) /**< Spfx has to be cleaned up. */
 
 /**
  * @brief Handles the special effects Lua-side.
@@ -283,13 +284,14 @@ static int spfxL_new( lua_State *L )
    /* Position information. */
    if (!lua_isnoneornil(L,6)) {
       if (lua_isboolean( L, 6 ))
+         ls.flags |= SPFX_RELATIVE;
          if (!lua_toboolean( L, 6 ))
             ls.flags |= SPFX_GLOBAL;
       else
          ls.pos = *luaL_checkvector( L, 6 );
    }
    else
-      ls.flags |= SPFX_GLOBAL;
+      ls.flags |= SPFX_GLOBAL | SPFX_RELATIVE;
    if (!lua_isnoneornil(L,7)) {
       ls.vel = *luaL_checkvector( L, 7 );
       ls.flags |= SPFX_MOVING;
@@ -309,9 +311,12 @@ static int spfxL_new( lua_State *L )
          alSourcei( ls.sfx.source, AL_LOOPING, AL_FALSE );
          alSourcef( ls.sfx.source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DISTANCE );
          alSourcef( ls.sfx.source, AL_MAX_DISTANCE, SOUND_MAX_DISTANCE );
-         if (ls.flags & SPFX_GLOBAL) {
+         if (ls.flags & SPFX_RELATIVE) {
             alSourcei( ls.sfx.source, AL_SOURCE_RELATIVE, AL_TRUE );
-            alSourcef( ls.sfx.source, AL_PITCH, 1. );
+            if (ls.flags & SPFX_GLOBAL)
+               alSourcef( ls.sfx.source, AL_PITCH, 1. );
+            else
+               alSourcef( ls.sfx.source, AL_PITCH, player_dt_default() * player.speed );
          }
          else {
             ALfloat alf[3];
@@ -539,7 +544,7 @@ void spfxL_update( double dt )
          ls->pos.y += ls->vel.y * dt;
 
          /* Check sound. */
-         if ((ls->flags & SPFX_AUDIO) && !(ls->flags & SPFX_GLOBAL)) {
+         if ((ls->flags & SPFX_AUDIO) && !(ls->flags & SPFX_RELATIVE)) {
             soundLock();
             ALfloat alf[3];
             alf[0] = ls->pos.x;
