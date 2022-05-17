@@ -16,11 +16,14 @@ local function render( sp, x, y, z )
 
    blink_shader:send( "u_progress", 1-d.timer )
 
+   -- Get slightly bigger over time
+   local s = z * (1+0.3*d.timer)
+
    lg.setColor( 1, 1, 1 )
    local old_shader = lg.getShader()
    lg.setShader( blink_shader )
    -- We have to flip the y axis
-   c:draw( x-c.w*z*0.5, y+c.h*z*0.5, 0, z, -z )
+   c:draw( x-c.w*s*0.5, y+c.h*s*0.5, 0, s, -s )
    lg.setShader( old_shader )
 end
 
