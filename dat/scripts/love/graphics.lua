@@ -641,7 +641,7 @@ function graphics.newCanvas( width, height, settings )
       c.w = width or nw
       c.h = height or nh
       local dpiscale = settings.dpiscale or graphics.getDPIScale()
-      c.canvas = naev.canvas.new( width*dpiscale, height*dpiscale )
+      c.canvas = naev.canvas.new( c.w*dpiscale, c.h*dpiscale )
       c.s = 1/dpiscale
    end
    -- Set texture
