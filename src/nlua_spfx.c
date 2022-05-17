@@ -283,10 +283,11 @@ static int spfxL_new( lua_State *L )
 
    /* Position information. */
    if (!lua_isnoneornil(L,6)) {
-      if (lua_isboolean( L, 6 ))
+      if (lua_isboolean( L, 6 )) {
          ls.flags |= SPFX_RELATIVE;
          if (!lua_toboolean( L, 6 ))
             ls.flags |= SPFX_GLOBAL;
+      }
       else
          ls.pos = *luaL_checkvector( L, 6 );
    }
