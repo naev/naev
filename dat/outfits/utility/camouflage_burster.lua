@@ -1,4 +1,5 @@
 local audio = require 'love.audio'
+local luaspfx = require 'luaspfx'
 
 local active = 8 -- active time in seconds
 local cooldown = 30 -- cooldown time in seconds
@@ -23,8 +24,9 @@ local function turnon( p, po )
 
    -- Visual effect
    if mem.isp then
-      sfx:setPitch( player.dt_mod() )
-      sfx:play()
+      luaspfx.sfx( nil, nil, sfx )
+   else
+      luaspfx.sfx( p:pos(), p:vel(), sfx )
    end
    return true
 end

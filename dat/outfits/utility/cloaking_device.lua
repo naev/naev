@@ -1,5 +1,6 @@
 local osh = require 'outfits.shaders'
 local audio = require 'love.audio'
+local luaspfx = require 'luaspfx'
 
 local active = 10 -- active time in seconds
 local cooldown = 15 -- cooldown time in seconds
@@ -39,9 +40,9 @@ local function turnon( p, po )
    p:setInvisible( true )
    if mem.isp then
       oshader:on()
-      sfx:setPitch( player.dt_mod() )
-      sfx:play()
+      luaspfx.sfx( nil, nil, sfx )
    else
+      luaspfx.sfx( p:pos(), p:vel(), sfx );
       p:setNoRender( true )
    end
 
