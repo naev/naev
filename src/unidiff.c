@@ -1156,7 +1156,6 @@ static int diff_patchHunk( UniHunk_t *hunk )
          if (p==NULL)
             return -1;
          hunk->o.data = p->population;
-         diff_universe_changed = 1;
          p->population = hunk->u.data;
          return 0;
       case HUNK_TYPE_SPOB_POPULATION_REMOVE:
@@ -1281,12 +1280,14 @@ static int diff_patchHunk( UniHunk_t *hunk )
             return -1;
          hunk->o.name = p->gfx_spaceName;
          p->gfx_spaceName = hunk->u.name;
+         diff_universe_changed = 1;
          return 0;
       case HUNK_TYPE_SPOB_SPACE_REVERT:
          p = spob_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
          p->gfx_spaceName = (char*)hunk->o.name;
+         diff_universe_changed = 1;
          return 0;
 
       /* Changing spob exterior graphics. */
@@ -1312,6 +1313,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
          hunk->o.name = p->lua_file;
          p->lua_file = hunk->u.name;
          spob_updateLua( p );
+         diff_universe_changed = 1;
          return 0;
       case HUNK_TYPE_SPOB_LUA_REVERT:
          p = spob_get( hunk->target.u.name );
@@ -1319,6 +1321,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
             return -1;
          p->lua_file = (char*)hunk->o.name;
          spob_updateLua( p );
+         diff_universe_changed = 1;
          return 0;
 
       /* Making a faction visible. */
