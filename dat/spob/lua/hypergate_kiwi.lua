@@ -12,6 +12,7 @@ function load( p )
             [30]  = 0.75,
             [10]  = 0.9,
          },
+         tex = "hypergate_sirius_activated.webp",
       } )
 end
 

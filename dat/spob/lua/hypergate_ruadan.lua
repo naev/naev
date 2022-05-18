@@ -12,6 +12,7 @@ function load( p )
             [30]  = 0.8,
             [10]  = 0.9,
          },
+         tex = "hypergate_zalek_activated.webp",
       } )
 end
 

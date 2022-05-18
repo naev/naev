@@ -65,8 +65,10 @@ function hypergate.load( p, opts )
 
       -- Set up texture stuff
       local prefix = "gfx/spob/space/"
-      tex  = lg.newImage( prefix.."hypergate_neutral_activated.webp" )
-      mask = lg.newImage( prefix.."hypergate_mask.webp" )
+      local tex_filename = opts.tex or "hypergate_neutral_activated.webp"
+      local mask_filename = opts.tex_mask or "hypergate_mask.webp"
+      tex  = lg.newImage( prefix..tex_filename )
+      mask = lg.newImage( prefix..mask_filename )
 
       -- Position stuff
       pos = p:pos()

@@ -10,7 +10,8 @@ function load( p )
             [50]  = 0.5,
             [30]  = 0.8,
             [10]  = 0.9,
-         }
+         },
+         tex = "hypergate_empire_activated.webp",
       } )
 end
 

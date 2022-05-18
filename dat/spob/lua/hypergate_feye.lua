@@ -9,6 +9,7 @@ function load( p )
             [50]  = 0.4,
             [30]  = 0.8,
          },
+         tex = "hypergate_soromid_activated.webp",
       } )
 end
 
