@@ -267,11 +267,12 @@ function cutscene_start ()
    var.push( "music_off", true )
    lmusic.play( "snd/music/empire2.ogg" )
 
-   -- Get the Empire hypergate
+   -- Get the first hypergate
    local hyp, hyps = spob.getS( hypergate_list[1] )
    origsys = system.cur()
    player.teleport( hyps, true, true )
    camera.set( hyp:pos(), true )
+   player.msgToggle(false) -- Disable messages
 
    -- Empty system
    pilot.clear()
@@ -424,6 +425,7 @@ local function pangate( gatename )
    -- Go to the hypergate and pan camera
    local hyp, hyps = spob.getS( gatename )
    player.teleport( hyps, true, true )
+   player.msgToggle(false) -- Disable messages
    pilot.clear()
    pilot.toggleSpawn(false)
    local a = rnd.angle()
