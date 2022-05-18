@@ -24,6 +24,7 @@ local luaspfx = require "luaspfx"
 
 local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
+local diff_progress3 = "hypergates_3"
 
 -- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp_sfx cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp7 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_zoom cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
 
@@ -145,11 +146,14 @@ function cutscene_start ()
    pp:setNoJump(true)
    pp:setNoLand(true)
 
-   if diff.isApplied( diff_progress2 ) then
-      diff.remove( diff_progress2 )
+   if diff.isApplied( diff_progress3 ) then
+      diff.remove( diff_progress3 )
    end
-   if not diff.isApplied( diff_progress1 ) then
-      diff.apply( diff_progress1 )
+   if diff.isApplied( diff_progress1 ) then
+      diff.remove( diff_progress1 )
+   end
+   if not diff.isApplied( diff_progress2 ) then
+      diff.apply( diff_progress2 )
    end
 
    pilot.clear()
@@ -265,7 +269,6 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 
    local scene_len = 2
 
-   -- TODO sound effect
    shader_init( shader_fadein, scene_len )
 
    hook.timer( 1/scene_len, "cutscene_emp5" )
@@ -279,8 +282,10 @@ function cutscene_emp5 ()
    shader_init( shader_fadeout, 1/scene_len )
 
    -- Diffs should be set up so this should always go through
-   diff.remove( diff_progress1 )
-   diff.apply( diff_progress2 )
+   diff.remove( diff_progress2 )
+   diff.apply( diff_progress3 )
+
+   empboss:broadcast( _("Start test.") )
 
    hook.timer( scene_len, "cutscene_emp6" )
 end
@@ -460,7 +465,8 @@ function land ()
    vn.scene()
    local sai = vn.newCharacter( tut.vn_shipai() )
    vn.transition( tut.shipai.transition )
-   sai(_([[""]]))
+   vn.na(fmt.f(_("As soon as your ship lands, your ship AI {shipai} materializes infront of you."),{shipai=tut.ainame()}))
+   sai(fmt.f(_([["Did you hear the news, {playername}?"]]), {playername=player.name()}))
    vn.done( tut.shipai.transition )
    vn.run()
 
