@@ -55,6 +55,7 @@ static int playerL_pay( lua_State *L );
 static int playerL_credits( lua_State *L );
 static int playerL_msg( lua_State *L );
 static int playerL_msgClear( lua_State *L );
+static int playerL_msgToggle( lua_State *L );
 static int playerL_omsgAdd( lua_State *L );
 static int playerL_omsgChange( lua_State *L );
 static int playerL_omsgRm( lua_State *L );
@@ -122,6 +123,7 @@ static const luaL_Reg playerL_methods[] = {
    { "credits", playerL_credits },
    { "msg", playerL_msg },
    { "msgClear", playerL_msgClear },
+   { "msgToggle", playerL_msgToggle },
    { "omsgAdd", playerL_omsgAdd },
    { "omsgChange", playerL_omsgChange },
    { "omsgRm", playerL_omsgRm },
@@ -323,6 +325,18 @@ static int playerL_msgClear( lua_State *L )
    (void) L;
    PLAYER_CHECK();
    gui_clearMessages();
+   return 0;
+}
+/**
+ * @brief Clears the player's message buffer.
+ *
+ *    @luatparam( boolean enable Whether or not to enable the player receiving messages.
+ * @luafunc msgToggle
+ */
+static int playerL_msgToggle( lua_State *L )
+{
+   PLAYER_CHECK();
+   player_messageToggle( lua_toboolean(L,1) );
    return 0;
 }
 /**
@@ -1538,7 +1552,7 @@ static int playerL_teleport( lua_State *L )
    player_targetClearAll();
 
    /* Hide messages if not needed. */
-   if (!silent)
+   if (silent)
       player_messageToggle(0); /* space_init will reset it, so no need to. */
 
    /* Go to the new system. */
