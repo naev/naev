@@ -16,15 +16,14 @@ const vec3 COLOUR    = vec3( 1.0, 0.6, 1.0 );
 
 void main(void)
 {
-   colour_out = texture( u_tex, tex_coord );
    vec4 blur = blur5( u_tex, tex_coord, dimensions.xy, 2.5 );
-   vec3 coord = vec3( 0.03 * tex_coord * dimensions.xy / dimensions.z, u_elapsed*0.7 + u_r );
-   float alpha = max( colour_out.a, blur.a );
-   if (alpha <= 0.0)
+   if (blur.a <= 0.0) /* assume u_tex will also have .a <= 0.0 */
       discard;
 
+   colour_out = texture( u_tex, tex_coord );
+   vec3 coord = vec3( 0.03 * tex_coord * dimensions.xy / dimensions.z, u_elapsed*0.7 + u_r );
    blur.rgb = blendGlow( blur.rgb, COLOUR, 0.3+0.2*snoise(coord) );
    colour_out.rgb = blendGlow( colour_out.rgb, COLOUR, 0.5 );
    colour_out.rgb = mix( blur.rgb, colour_out.rgb, min( 0.3, colour_out.a) ) + 0.1;
-   colour_out.a = alpha;
+   colour_out.a = max( colour_out.a, blur.a );
 }
