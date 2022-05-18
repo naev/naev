@@ -153,6 +153,95 @@ function update( dt, real_dt )
    end
 end
 
+local function getFactionStuff( fct )
+   local bossship, testership, extraships, tester_broadcast, boss_broadcast
+   if fct == "Empire" then
+      bossship = "Empire Peacemaker"
+      testership = "Empire Pacifier"
+      extraships = function ()
+         local r = rnd.rnd()
+         if r < 0.4 then
+            return "Empire Hawking"
+         elseif r < 0.5 then
+            return "Empire Rainmaker"
+         elseif r < 0.7 then
+            return "Empire Pacifier"
+         else
+            return "Empire Admonisher"
+         end
+      end
+      tester_broadcast = _("For the Empire!")
+      boss_broadcast = _("Beginning activation countdown!")
+   elseif fct == "Dvaered" then
+      bossship = "Dvaered Goddard"
+      testership = "Dvaered Vigilance"
+      extraships = function ()
+         local r = rnd.rnd()
+         if r < 0.4 then
+            return "Dvaered Retribution"
+         elseif r < 0.5 then
+            return "Dvaered Arsenal"
+         elseif r < 0.7 then
+            return "Dvaered Vigilance"
+         else
+            return "Dvaered Phalanx"
+         end
+      end
+      tester_broadcast = _("For glory!")
+      boss_broadcast = _("Counting down!")
+   elseif fct == "Za'lek" then
+      bossship = "Za'lek Diablo"
+      testership = "Za'lek Sting"
+      extraships = function ()
+         local r = rnd.rnd()
+         if r < 0.4 then
+            return "Za'lek Mephisto"
+         elseif r < 0.5 then
+            return "Za'lek Mammon"
+         elseif r < 0.7 then
+            return "Za'lek Demon"
+         else
+            return "Za'lek Sting"
+         end
+      end
+      tester_broadcast = _("For science!")
+      boss_broadcast = _("Comencing procedure!")
+   elseif fct == "Sirius" then
+      bossship = "Sirius Divinity"
+      testership = "Sirius Preacher"
+      extraships = function ()
+         local r = rnd.rnd()
+         if r < 0.4 then
+            return "Sirius Dogma"
+         elseif r < 0.5 then
+            return "Sirius Providence"
+         else
+            return "Sirius Preacher"
+         end
+      end
+      tester_broadcast = _("For Sirichana!")
+      boss_broadcast = _("Starting ritual!")
+   elseif fct == "Soromid" then
+      bossship = "Soromid Arx"
+      testership = "Soromid Vox"
+      extraships = function ()
+         local r = rnd.rnd()
+         if r < 0.4 then
+            return "Soromid Vox"
+         elseif r < 0.5 then
+            return "Soromid Copia"
+         elseif r < 0.7 then
+            return "Soromid Ira"
+         else
+            return "Soromid Nyx"
+         end
+      end
+      tester_broadcast = _("Enter the maw!")
+      boss_broadcast = _("Time has come!")
+   end
+   return bossship, testership, extraships, tester_broadcast, boss_broadcast
+end
+
 -- Set up the cutscene stuff
 local origsys, boss, tester, tester_broadcast, boss_broadcast
 function cutscene_start ()
@@ -190,96 +279,13 @@ function cutscene_start ()
 
    local testfct = hypergate_list[1]:faction():nameRaw()
    local bossship, testership, extraships
-   if testfct == "Empire" then
-      bossship = "Empire Peacemaker"
-      testership = "Empire Pacifier"
-      extraships = function ()
-         local r = rnd.rnd()
-         if r < 0.4 then
-            return "Empire Hawking"
-         elseif r < 0.5 then
-            return "Empire Rainmaker"
-         elseif r < 0.7 then
-            return "Empire Pacifier"
-         else
-            return "Empire Admonisher"
-         end
-      end
-      tester_broadcast = _("For the Empire!")
-      boss_broadcast = _("Beginning activation countdown!")
-   elseif testfct == "Dvaered" then
-      bossship = "Dvaered Goddard"
-      testership = "Dvaered Vigilance"
-      extraships = function ()
-         local r = rnd.rnd()
-         if r < 0.4 then
-            return "Dvaered Retribution"
-         elseif r < 0.5 then
-            return "Dvaered Arsenal"
-         elseif r < 0.7 then
-            return "Dvaered Vigilance"
-         else
-            return "Dvaered Phalanx"
-         end
-      end
-      tester_broadcast = _("For glory!")
-      boss_broadcast = _("Counting down!")
-   elseif testfct == "Za'lek" then
-      bossship = "Za'lek Diablo"
-      testership = "Za'lek Sting"
-      extraships = function ()
-         local r = rnd.rnd()
-         if r < 0.4 then
-            return "Za'lek Mephisto"
-         elseif r < 0.5 then
-            return "Za'lek Mammon"
-         elseif r < 0.7 then
-            return "Za'lek Demon"
-         else
-            return "Za'lek Sting"
-         end
-      end
-      tester_broadcast = _("For science!")
-      boss_broadcast = _("Comencing procedure!")
-   elseif testfct == "Sirius" then
-      bossship = "Sirius Divinity"
-      testership = "Sirius Preacher"
-      extraships = function ()
-         local r = rnd.rnd()
-         if r < 0.4 then
-            return "Sirius Dogma"
-         elseif r < 0.5 then
-            return "Sirius Providence"
-         else
-            return "Sirus Preacher"
-         end
-      end
-      tester_broadcast = _("For Sirichana!")
-      boss_broadcast = _("Starting ritual!")
-   elseif testfct == "Soromid" then
-      bossship = "Soromid Arx"
-      testership = "Soromid Vox"
-      extraships = function ()
-         local r = rnd.rnd()
-         if r < 0.4 then
-            return "Soromid Vox"
-         elseif r < 0.5 then
-            return "Soromid Copia"
-         elseif r < 0.7 then
-            return "Soromid Ira"
-         else
-            return "Soromid Nyx"
-         end
-      end
-      tester_broadcast = _("Enter the maw!")
-      boss_broadcast = _("Time has come!")
-   end
+   bossship, testership, extraships, tester_broadcast, boss_broadcast = getFactionStuff( testfct )
 
    -- Add some guys
    local pos = hyp:pos()
    local function addship( shipname )
       local ppos = pos + vec2.newP( 250+150*rnd.rnd(), rnd.angle() )
-      local p = pilot.add( shipname, testfct, ppos, nil, {ai="dummy"} )
+      local p = pilot.add( shipname, testfct, ppos, nil, {ai="dummy", naked=true} )
       p:control()
       p:face( pos )
       return p
@@ -420,17 +426,41 @@ local function pangate( gatename )
    player.teleport( hyps, true, true )
    pilot.clear()
    pilot.toggleSpawn(false)
-   local dir = vec2.newP( 1, rnd.angle() )
+   local a = rnd.angle()
+   local dir = vec2.newP( 1, a )
    local pos = hyp:pos()
    camera.set( pos - panradius*dir, true )
    camera.set( pos + panradius*dir, false, 2*panradius/pantime )
+   return a
 end
 
 local pan_idx = 2
 function cutscene_pan ()
-   pangate( hypergate_list[ pan_idx ] )
+   local hyp = hypergate_list[ pan_idx ]
+   local dir = pangate( hyp )
    fg_setup()
    fadein()
+
+   local testfct = hyp:faction():nameRaw()
+   local bossship, testership, extraships = getFactionStuff( testfct )
+
+   -- Add some guys
+   local pos = hyp:pos()
+   local facepos = pos + vec2.newP( 50e3, dir )
+   local function addship( shipname )
+      local ppos = pos + vec2.newP( 250+150*rnd.rnd(), rnd.angle() )
+      local p = pilot.add( shipname, testfct, ppos, nil, {ai="dummy", naked=true} )
+      p:setDir( dir )
+      p:control()
+      p:face( facepos )
+      return p
+   end
+
+   addship( bossship )
+   addship( testership )
+   for i = 1,4 do
+      addship( extraships() )
+   end
 
    pan_idx = pan_idx+1
    hook.timer( panfadeout, "fadeout" )
