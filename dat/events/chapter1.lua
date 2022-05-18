@@ -156,9 +156,6 @@ function cutscene_start ()
       diff.apply( diff_progress2 )
    end
 
-   pilot.clear()
-   pilot.toggleSpawn(false)
-
    -- TODO better music
    music.stop()
    var.push( "music_off", true )
@@ -167,13 +164,17 @@ function cutscene_start ()
    -- Get the Empire hypergate
    local hyp, hyps = spob.getS( "Hypergate Gamma Polaris" )
    origsys = system.cur()
-   player.teleport( hyps, false, true )
+   player.teleport( hyps, true, true )
    camera.set( hyp:pos(), true )
+
+   -- Empty system
+   pilot.clear()
+   pilot.toggleSpawn(false)
 
    -- Add some guys
    local pos = hyp:pos()
    local function addship( shipname )
-      local p = pilot.add( shipname, "Empire", pos + vec2.newP( 200+100*rnd.rnd(), rnd.angle() ) )
+      local p = pilot.add( shipname, "Empire", pos + vec2.newP( 200+100*rnd.rnd(), rnd.angle() ), nil, {ai="dummy"} )
       p:control()
       p:face( pos )
       return p
@@ -312,7 +313,9 @@ local panfadeout = pantime - 0.7
 local function pangate( gatename )
    -- Go to the hypergate and pan camera
    local hyp, hyps = spob.getS( gatename )
-   player.teleport( hyps, true, false, true )
+   player.teleport( hyps, true, true )
+   pilot.clear()
+   pilot.toggleSpawn(false)
    local dir = vec2.newP( 1, rnd.angle() )
    local pos = hyp:pos()
    camera.set( pos - panradius*dir, true )
