@@ -154,7 +154,7 @@ function update( dt, real_dt )
 end
 
 -- Set up the cutscene stuff
-local origsys, boss, tester
+local origsys, boss, tester, tester_broadcast, boss_broadcast
 function cutscene_start ()
    player.canDiscover( false )
    setHide( true )
@@ -179,7 +179,7 @@ function cutscene_start ()
    lmusic.play( "snd/music/empire2.ogg" )
 
    -- Get the Empire hypergate
-   local hyp, hyps = spob.getS( "Hypergate Gamma Polaris" )
+   local hyp, hyps = spob.getS( hypergate_list[1] )
    origsys = system.cur()
    player.teleport( hyps, true, true )
    camera.set( hyp:pos(), true )
@@ -188,20 +188,91 @@ function cutscene_start ()
    pilot.clear()
    pilot.toggleSpawn(false)
 
-   local testfct = "Empire"
+   local testfct = hypergate_list[1]:faction():nameRaw()
    local bossship, testership, extraships
    if testfct == "Empire" then
       bossship = "Empire Peacemaker"
       testership = "Empire Pacifier"
-      extraships = {
-         "Empire Hawking",
-         "Empire Hawking",
-         "Empire Pacifier",
-         "Empire Pacifier",
-         "Empire Admonisher",
-         "Empire Admonisher",
-         "Empire Rainmaker",
-      }
+      extraships = function ()
+         local r = rnd.rnd()
+         if r < 0.4 then
+            return "Empire Hawking"
+         elseif r < 0.5 then
+            return "Empire Rainmaker"
+         elseif r < 0.7 then
+            return "Empire Pacifier"
+         else
+            return "Empire Admonisher"
+         end
+      end
+      tester_broadcast = _("For the Empire!")
+      boss_broadcast = _("Beginning activation countdown!")
+   elseif testfct == "Dvaered" then
+      bossship = "Dvaered Goddard"
+      testership = "Dvaered Vigilance"
+      extraships = function ()
+         local r = rnd.rnd()
+         if r < 0.4 then
+            return "Dvaered Retribution"
+         elseif r < 0.5 then
+            return "Dvaered Arsenal"
+         elseif r < 0.7 then
+            return "Dvaered Vigilance"
+         else
+            return "Dvaered Phalanx"
+         end
+      end
+      tester_broadcast = _("For glory!")
+      boss_broadcast = _("Counting down!")
+   elseif testfct == "Za'lek" then
+      bossship = "Za'lek Diablo"
+      testership = "Za'lek Sting"
+      extraships = function ()
+         local r = rnd.rnd()
+         if r < 0.4 then
+            return "Za'lek Mephisto"
+         elseif r < 0.5 then
+            return "Za'lek Mammon"
+         elseif r < 0.7 then
+            return "Za'lek Demon"
+         else
+            return "Za'lek Sting"
+         end
+      end
+      tester_broadcast = _("For science!")
+      boss_broadcast = _("Comencing procedure!")
+   elseif testfct == "Sirius" then
+      bossship = "Sirius Divinity"
+      testership = "Sirius Preacher"
+      extraships = function ()
+         local r = rnd.rnd()
+         if r < 0.4 then
+            return "Sirius Dogma"
+         elseif r < 0.5 then
+            return "Sirius Providence"
+         else
+            return "Sirus Preacher"
+         end
+      end
+      tester_broadcast = _("For Sirichana!")
+      boss_broadcast = _("Starting ritual!")
+   elseif testfct == "Soromid" then
+      bossship = "Soromid Arx"
+      testership = "Soromid Vox"
+      extraships = function ()
+         local r = rnd.rnd()
+         if r < 0.4 then
+            return "Soromid Vox"
+         elseif r < 0.5 then
+            return "Soromid Copia"
+         elseif r < 0.7 then
+            return "Soromid Ira"
+         else
+            return "Soromid Nyx"
+         end
+      end
+      tester_broadcast = _("Enter the maw!")
+      boss_broadcast = _("Time has come!")
    end
 
    -- Add some guys
@@ -215,7 +286,9 @@ function cutscene_start ()
    end
    boss = addship( bossship )
    tester = addship( testership )
-   for k,s in ipairs(extraships) do addship( s ) end
+   for i = 1,7 do
+      addship( extraships() )
+   end
 
    fg_setup( _("And they built bridges across the stars…") )
    hook.timer( 5, "cutscene_emp1" )
@@ -230,7 +303,7 @@ end
 
 local countdown, countdown_sfx
 function cutscene_emp2 ()
-   boss:broadcast( _("Beginning activation countdown!") )
+   boss:broadcast( boss_broadcast )
    countdown = 5
    countdown_sfx = audio.newSource( "snd/sounds/hypergate_turnon.ogg" )
    hook.timer( 4, "cutscene_emp3" )
@@ -318,7 +391,7 @@ function cutscene_emp5 ()
    diff.remove( diff_progress2 )
    diff.apply( diff_progress3 )
 
-   boss:broadcast( _("Start test.") )
+   boss:broadcast( tester_broadcast )
 
    hook.timer( scene_len, "cutscene_emp6" )
 end
@@ -329,8 +402,7 @@ function cutscene_emp6 ()
 
    hook.timer( 2, "cutscene_emp7" )
    tester:taskClear()
-   local hyp = spob.get( "Hypergate Gamma Polaris" )
-   tester:land( hyp )
+   tester:land( hypergate_list[1] )
 end
 
 function cutscene_emp7 ()
