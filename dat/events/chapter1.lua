@@ -27,10 +27,19 @@ local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
 local diff_progress3 = "hypergates_3"
 
--- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp_sfx cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp7 cutscene_zlk cutscene_srm cutscene_srs cutscene_dvr cutscene_posttext cutscene_nebu cutscene_nebu_zoom cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
+-- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp_sfx cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp7 cutscene_pan cutscene_posttext cutscene_nebu cutscene_nebu_zoom cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
+
+-- Purposely exclude other hypergates
+local hypergate_list = {
+   spob.get("Hypergate Gamma Polaris"),
+   spob.get("Hypergate Ruadan"),
+   spob.get("Hypergate Feye"),
+   spob.get("Hypergate Kiwi"),
+   spob.get("Hypergate Dvaer"),
+}
 
 function create ()
-   evt.finish(false) -- disabled for now
+   --evt.finish(false) -- disabled for now
 
    -- Set up some variables
    local has_license = diff.isApplied("heavy_combat_vessel_license") or (player.numOutfit("Heavy Combat Vessel License") > 0)
@@ -49,6 +58,13 @@ function create ()
    if progress >= 100 then
       -- Make sure system isn't claimed, but we don't claim it
       if not evt.claim( system.cur(), true ) then evt.finish(false) end
+
+      -- Sort the hypergates by player standing
+      table.sort( hypergate_list, function ( a, b )
+         local sa = a:faction():playerStanding()
+         local sb = b:faction():playerStanding()
+         return sa > sb
+      end )
 
       hook.safe( "cutscene_start" )
       return -- Don't finish
@@ -320,7 +336,7 @@ end
 function cutscene_emp7 ()
    -- Ship jumps
    hook.timer( 7.3, "fadeout" )
-   hook.timer( 8, "cutscene_zlk" )
+   hook.timer( 8, "cutscene_pan" )
 end
 
 local pantime = 3.7
@@ -338,37 +354,19 @@ local function pangate( gatename )
    camera.set( pos + panradius*dir, false, 2*panradius/pantime )
 end
 
-function cutscene_zlk () -- Za'lek
-   pangate( "Hypergate Ruadan" )
+local pan_idx = 2
+function cutscene_pan ()
+   pangate( hypergate_list[ pan_idx ] )
    fg_setup()
    fadein()
 
+   pan_idx = pan_idx+1
    hook.timer( panfadeout, "fadeout" )
-   hook.timer( pantime, "cutscene_srm" )
-end
-
-function cutscene_srm () -- Soromid
-   pangate( "Hypergate Feye" )
-   fadein()
-
-   hook.timer( panfadeout, "fadeout" )
-   hook.timer( pantime, "cutscene_srs" )
-end
-
-function cutscene_srs () -- Sirius
-   pangate( "Hypergate Kiwi" )
-   fadein()
-
-   hook.timer( panfadeout, "fadeout" )
-   hook.timer( pantime, "cutscene_dvr" )
-end
-
-function cutscene_dvr ()
-   pangate( "Hypergate Dvaer" )
-   fadein()
-
-   hook.timer( panfadeout, "fadeout" )
-   hook.timer( pantime, "cutscene_posttext" )
+   if pan_idx > #hypergate_list then
+      hook.timer( pantime, "cutscene_posttext" )
+   else
+      hook.timer( pantime, "cutscene_pan" )
+   end
 end
 
 function cutscene_posttext ()
@@ -490,15 +488,8 @@ function land ()
    vn.run()
 
    -- Set the hypergates as known, should make them appear by name on selection menu
-   local hgates = {
-      "Hypergate Gamma Polaris",
-      "Hypergate Ruadan",
-      "Hypergate Feye",
-      "Hypergate Kiwi",
-      "Hypergate Dvaer"
-   }
-   for k,v in ipairs(hgates) do
-      spob.get(v):setKnown(true)
+   for k,v in ipairs(hypergate_list) do
+      v:setKnown(true)
    end
 
    evt.finish(true) -- Properly finish
