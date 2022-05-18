@@ -39,7 +39,7 @@ local hypergate_list = {
 }
 
 function create ()
-   --evt.finish(false) -- disabled for now
+   evt.finish(false) -- disabled for now
 
    -- Set up some variables
    local has_license = diff.isApplied("heavy_combat_vessel_license") or (player.numOutfit("Heavy Combat Vessel License") > 0)
