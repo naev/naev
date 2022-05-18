@@ -4,5 +4,5 @@
  <duration>INF</duration>
  <overwrite>ethereal</overwrite>
  <icon>/gfx/misc/icons/star-cycle.webp</icon>
- <shader vertex="effect2x.vert">effects/ethereal.frag</shader>
+ <shader vertex="effect15x.vert">effects/ethereal.frag</shader>
 </effect>
