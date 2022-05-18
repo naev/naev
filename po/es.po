@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-02-19 12:48-0500\n"
-"PO-Revision-Date: 2022-05-17 21:15+0000\n"
+"PO-Revision-Date: 2022-05-18 22:17+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -131,8 +131,9 @@ msgstr ""
 
 #: dat/AUTHORS:2 dat/AUTHORS:26 dat/AUTHORS:38 dat/AUTHORS:63 dat/AUTHORS:173
 #: dat/AUTHORS:181
+#, fuzzy
 msgid "---------------------------------------"
-msgstr ""
+msgstr "---------------------------------------"
 
 #: dat/AUTHORS:4
 msgid "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
@@ -143,48 +144,54 @@ msgid "   * Lead Developer"
 msgstr ""
 
 #: dat/AUTHORS:7
+#, fuzzy
 msgid "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
-msgstr ""
+msgstr "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
 
 #: dat/AUTHORS:8
 msgid "   * Story Writer and Misc. Development"
 msgstr ""
 
 #: dat/AUTHORS:10
+#, fuzzy
 msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
-msgstr ""
+msgstr "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 
 #: dat/AUTHORS:11
 msgid "   * Misc. Development and Lua unifier"
 msgstr ""
 
 #: dat/AUTHORS:13
+#, fuzzy
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
-msgstr ""
+msgstr "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
 
 #: dat/AUTHORS:14
 msgid "   * Code Carnage and Bug Beating"
 msgstr ""
 
 #: dat/AUTHORS:16
+#, fuzzy
 msgid "nenau"
-msgstr ""
+msgstr "nenau"
 
 #: dat/AUTHORS:17
 msgid "   * Misc. Development and Dvaered aficionado"
 msgstr ""
 
 #: dat/AUTHORS:19
+#, fuzzy
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
-msgstr ""
+msgstr "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 
 #: dat/AUTHORS:20
 msgid "   * CI dude and Bringer of automated releases"
 msgstr ""
 
 #: dat/AUTHORS:22
+#, fuzzy
 msgid "Viktor Hahn <viktor.hahn@web.de>"
-msgstr ""
+msgstr "Viktor Hahn <viktor.hahn@web.de>"
 
 #: dat/AUTHORS:23
 msgid "   * 3D modelling"
@@ -195,40 +202,45 @@ msgid "Past Development Team"
 msgstr ""
 
 #: dat/AUTHORS:28
+#, fuzzy
 msgid "Nikola Whallon <6.saturn.6@gmail.com>"
-msgstr ""
+msgstr "Nikola Whallon <6.saturn.6@gmail.com>"
 
 #: dat/AUTHORS:29
 msgid "   * Bringer of Sound"
 msgstr ""
 
 #: dat/AUTHORS:31
+#, fuzzy
 msgid "Deiz"
-msgstr ""
+msgstr "Deiz"
 
 #: dat/AUTHORS:32 dat/AUTHORS:35
 msgid "   * Misc. Development"
 msgstr ""
 
 #: dat/AUTHORS:34
+#, fuzzy
 msgid "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
-msgstr ""
+msgstr "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
 
 #: dat/AUTHORS:37
 msgid "Major Contributors"
 msgstr ""
 
 #: dat/AUTHORS:40
+#, fuzzy
 msgid "Josiah Schwartfeger"
-msgstr ""
+msgstr "Josiah Schwartfeger"
 
 #: dat/AUTHORS:41
 msgid "   * Graphic Designer and Modeller"
 msgstr ""
 
 #: dat/AUTHORS:43
+#, fuzzy
 msgid "Elderman"
-msgstr ""
+msgstr "Elderman"
 
 #: dat/AUTHORS:44
 msgid "   * Mission Development"
@@ -239,40 +251,45 @@ msgid "   The first non-bobbens mission developer!"
 msgstr ""
 
 #: dat/AUTHORS:47
+#, fuzzy
 msgid "Ingo Ruhnke <grumbel@gmx.de>"
-msgstr ""
+msgstr "Ingo Ruhnke <grumbel@gmx.de>"
 
 #: dat/AUTHORS:48
 msgid "   * NPC Portrait Artist"
 msgstr ""
 
 #: dat/AUTHORS:50
+#, fuzzy
 msgid "Enigmatic"
-msgstr ""
+msgstr "Enigmatic"
 
 #: dat/AUTHORS:51
 msgid "   * Ships for the Sirius, many other models and faction logos"
 msgstr ""
 
 #: dat/AUTHORS:53
+#, fuzzy
 msgid "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
-msgstr ""
+msgstr "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
 
 #: dat/AUTHORS:54
 msgid "   * Naev logo, Lua GUI development"
 msgstr ""
 
 #: dat/AUTHORS:56
+#, fuzzy
 msgid "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
-msgstr ""
+msgstr "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
 
 #: dat/AUTHORS:57
 msgid "   * Ships for the Soromid and the Za'lek"
 msgstr ""
 
 #: dat/AUTHORS:59
+#, fuzzy
 msgid "Askyel"
-msgstr ""
+msgstr "Askyel"
 
 #: dat/AUTHORS:60
 msgid "   * Composer of nearly an hour of Naev-exclusive music."
@@ -283,8 +300,9 @@ msgid "Contributions"
 msgstr ""
 
 #: dat/AUTHORS:65
+#, fuzzy
 msgid "Vega Strike <http://vegastrike.sf.net>"
-msgstr ""
+msgstr "Vega Strike <http://vegastrike.sf.net>"
 
 #: dat/AUTHORS:66
 msgid "   * Ship Models"
@@ -310,8 +328,9 @@ msgid ""
 msgstr ""
 
 #: dat/AUTHORS:72
+#, fuzzy
 msgid "Joel Hans <wolorf@gmail.com>"
-msgstr ""
+msgstr "Joel Hans <wolorf@gmail.com>"
 
 #: dat/AUTHORS:73
 msgid "   * Planet Graphics"
@@ -326,12 +345,14 @@ msgid "   Helped out when the project was starting. Great morale booster."
 msgstr ""
 
 #: dat/AUTHORS:77
+#, fuzzy
 msgid "Amir Taaki <genjix@gmail.com>"
-msgstr ""
+msgstr "Amir Taaki <genjix@gmail.com>"
 
 #: dat/AUTHORS:78
+#, fuzzy
 msgid "Rob Loach <http://robloach.net>"
-msgstr ""
+msgstr "Rob Loach <http://robloach.net>"
 
 #: dat/AUTHORS:79
 msgid "   * SDL_collide"
@@ -344,20 +365,23 @@ msgid ""
 msgstr ""
 
 #: dat/AUTHORS:82
+#, fuzzy
 msgid "Pete Shinners <pete@shinners.org>"
-msgstr ""
+msgstr "Pete Shinners <pete@shinners.org>"
 
 #: dat/AUTHORS:83
+#, fuzzy
 msgid "   * SavePNG"
-msgstr ""
+msgstr "   * SavePNG"
 
 #: dat/AUTHORS:84
 msgid "   Great function ripped straight out of pygame. Works marvelously!"
 msgstr ""
 
 #: dat/AUTHORS:86
+#, fuzzy
 msgid "Aurore D. \"Rore\" <aurore.d@gmail.com>"
-msgstr ""
+msgstr "Aurore D. \"Rore\" <aurore.d@gmail.com>"
 
 #: dat/AUTHORS:87
 msgid "   * Planet gimp script"
@@ -370,8 +394,9 @@ msgid ""
 msgstr ""
 
 #: dat/AUTHORS:90
+#, fuzzy
 msgid "Andrew Mustun"
-msgstr ""
+msgstr "Andrew Mustun"
 
 #: dat/AUTHORS:91
 msgid "   * Sprite gimp script"
@@ -382,8 +407,9 @@ msgid "   Although not used directly, it helped create our own sprite script."
 msgstr ""
 
 #: dat/AUTHORS:94
+#, fuzzy
 msgid "J.C. Wilk"
-msgstr ""
+msgstr "J.C. Wilk"
 
 #: dat/AUTHORS:95
 msgid "   * Turbulence noise"
@@ -397,16 +423,18 @@ msgid ""
 msgstr ""
 
 #: dat/AUTHORS:98
+#, fuzzy
 msgid "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
-msgstr ""
+msgstr "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
 
 #: dat/AUTHORS:99
 msgid "   * Mace Rocket model"
 msgstr ""
 
 #: dat/AUTHORS:101
+#, fuzzy
 msgid "Brian J. Cameron"
-msgstr ""
+msgstr "Brian J. Cameron"
 
 #: dat/AUTHORS:102
 msgid "   * Much artwork"
@@ -417,8 +445,9 @@ msgid "   Talented artist, one of the first in creating custom Naev content."
 msgstr ""
 
 #: dat/AUTHORS:105
+#, fuzzy
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
-msgstr ""
+msgstr "Camilo Polymeris <cpolymeris@gmx.net>"
 
 #: dat/AUTHORS:106
 msgid "   * Art and code"
@@ -430,8 +459,9 @@ msgid ""
 msgstr ""
 
 #: dat/AUTHORS:109
+#, fuzzy
 msgid "Dimitry Marakasov"
-msgstr ""
+msgstr "Dimitry Marakasov"
 
 #: dat/AUTHORS:110
 msgid "   * FreeBSD port and CMake"
@@ -442,8 +472,9 @@ msgid "   Talented coder who did the first official port of Naev."
 msgstr ""
 
 #: dat/AUTHORS:113
+#, fuzzy
 msgid "Alexandru Mosoi <brtzsnr@gmail.com>"
-msgstr ""
+msgstr "Alexandru Mosoi <brtzsnr@gmail.com>"
 
 #: dat/AUTHORS:114
 msgid "   * Coded cool features"
@@ -456,16 +487,18 @@ msgid ""
 msgstr ""
 
 #: dat/AUTHORS:117
+#, fuzzy
 msgid "Peter Johnson <zid@zid.yggdrasil.sk>"
-msgstr ""
+msgstr "Peter Johnson <zid@zid.yggdrasil.sk>"
 
 #: dat/AUTHORS:118
 msgid "   * Sped up nebula generation by a lot"
 msgstr ""
 
 #: dat/AUTHORS:120
+#, fuzzy
 msgid "Unavowed <unavowed@vexillium.org>"
-msgstr ""
+msgstr "Unavowed <unavowed@vexillium.org>"
 
 #: dat/AUTHORS:121
 msgid "   * Ported Naev's build system to autotools."
@@ -476,16 +509,18 @@ msgid "   Probably the cleanest autotools implementation I've ever seen."
 msgstr ""
 
 #: dat/AUTHORS:124
+#, fuzzy
 msgid "Cypher3c <cypher3c@gmail.com>"
-msgstr ""
+msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
 msgid "   * Spiced up the boring generic cargo missions."
 msgstr ""
 
 #: dat/AUTHORS:127
+#, fuzzy
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
-msgstr ""
+msgstr "Nathan Loewen <loewen.nathan@gmail.com>"
 
 #: dat/AUTHORS:128
 msgid "   * Missions"
@@ -496,8 +531,9 @@ msgid "   * Misc coding support"
 msgstr ""
 
 #: dat/AUTHORS:131
+#, fuzzy
 msgid "Fisherman"
-msgstr ""
+msgstr "Fisherman"
 
 #: dat/AUTHORS:132
 msgid ""
@@ -510,8 +546,9 @@ msgid "   * Hot dog mission"
 msgstr ""
 
 #: dat/AUTHORS:135
+#, fuzzy
 msgid "Ludovic Bellière \"xrogaan\""
-msgstr ""
+msgstr "Ludovic Bellière \"xrogaan\""
 
 #: dat/AUTHORS:136
 msgid "   * Python programmer extraordinaire"
@@ -522,72 +559,81 @@ msgid "His utilities save gray hairs for everyone."
 msgstr ""
 
 #: dat/AUTHORS:139
+#, fuzzy
 msgid "Josh Combs"
-msgstr ""
+msgstr "Josh Combs"
 
 #: dat/AUTHORS:140
 msgid "   * Artist of most of the nebulae."
 msgstr ""
 
 #: dat/AUTHORS:142
+#, fuzzy
 msgid "Galileus"
-msgstr ""
+msgstr "Galileus"
 
 #: dat/AUTHORS:143
 msgid "   * Modeller of the Shark and Rhino"
 msgstr ""
 
 #: dat/AUTHORS:145
+#, fuzzy
 msgid "Devin Khan"
-msgstr ""
+msgstr "Devin Khan"
 
 #: dat/AUTHORS:146
 msgid "   * Modeller of the Phalanx"
 msgstr ""
 
 #: dat/AUTHORS:148
+#, fuzzy
 msgid "Areze"
-msgstr ""
+msgstr "Areze"
 
 #: dat/AUTHORS:149
 msgid "   * Junior assistant galaxy creator"
 msgstr ""
 
 #: dat/AUTHORS:151
+#, fuzzy
 msgid "Old Man <oldtopman@gmail.com>"
-msgstr ""
+msgstr "Old Man <oldtopman@gmail.com>"
 
 #: dat/AUTHORS:152
 msgid "   * Desura Maintainer"
 msgstr ""
 
 #: dat/AUTHORS:154
+#, fuzzy
 msgid "NeD"
-msgstr ""
+msgstr "NeD"
 
 #: dat/AUTHORS:155 dat/AUTHORS:161
 msgid "   * Mission contributor"
 msgstr ""
 
 #: dat/AUTHORS:157
+#, fuzzy
 msgid "Sudarshan S"
-msgstr ""
+msgstr "Sudarshan S"
 
 #: dat/AUTHORS:158
 msgid "   * Event contributor"
 msgstr ""
 
 #: dat/AUTHORS:160 dat/AUTHORS:178
+#, fuzzy
 msgid "PhoenixRiver"
-msgstr ""
+msgstr "PhoenixRiver"
 
 #: dat/AUTHORS:162
 msgid "   * Misc fixes and typos"
 msgstr ""
 
 #: dat/AUTHORS:164
+#, fuzzy
 msgid "Alastair Basden"
-msgstr ""
+msgstr "Alastair Basden"
 
 #: dat/AUTHORS:165
 msgid "   * Economy development"
@@ -606,24 +652,28 @@ msgid "Music by Matthew Pablo"
 msgstr ""
 
 #: dat/AUTHORS:170
+#, fuzzy
 msgid "http://www.matthewpablo.com"
-msgstr ""
+msgstr "http://www.matthewpablo.com"
 
 #: dat/AUTHORS:172
 msgid "Testers"
 msgstr ""
 
 #: dat/AUTHORS:175
+#, fuzzy
 msgid "John Schwartfeger"
-msgstr ""
+msgstr "John Schwartfeger"
 
 #: dat/AUTHORS:176
+#, fuzzy
 msgid "Leonardo Valeri Manera"
-msgstr ""
+msgstr "Leonardo Valeri Manera"
 
 #: dat/AUTHORS:177
+#, fuzzy
 msgid "EvanR"
-msgstr ""
+msgstr "EvanR"
 
 #: dat/AUTHORS:180
 msgid "Artwork Contributors"
@@ -647,7 +697,7 @@ msgstr ""
 
 #: artwork/gfx/loading/archimedes.webp.txt:1
 msgid "ARCHIMEDES"
-msgstr ""
+msgstr "ARQUÍMEDES"
 
 #: artwork/gfx/loading/derivative.webp.txt:1
 msgid "DERIVATIVE"
@@ -666,36 +716,43 @@ msgid "SIRIUS FIDELITY"
 msgstr "FIDELIDAD DE SIRIO"
 
 #: artwork/gfx/loading/gawain.webp.txt:1
+#, fuzzy
 msgid "GAWAIN"
-msgstr ""
+msgstr "GAWAIN"
 
 #: artwork/gfx/loading/goddard.webp.txt:1
+#, fuzzy
 msgid "GODDARD"
-msgstr ""
+msgstr "GODDARD"
 
 #: artwork/gfx/loading/hawking.webp.txt:1
+#, fuzzy
 msgid "HAWKING"
-msgstr ""
+msgstr "HAWKING"
 
 #: artwork/gfx/loading/kahan.webp.txt:1
+#, fuzzy
 msgid "KAHAN"
-msgstr ""
+msgstr "KAHAN"
 
 #: artwork/gfx/loading/kestrel_pirate.webp.txt:1
 msgid "PIRATE KESTREL"
 msgstr ""
 
 #: artwork/gfx/loading/koala.webp.txt:1
+#, fuzzy
 msgid "KOALA"
-msgstr ""
+msgstr "KOALA"
 
 #: artwork/gfx/loading/lancelot.webp.txt:1
+#, fuzzy
 msgid "LANCELOT"
-msgstr ""
+msgstr "LANCELOT"
 
 #: artwork/gfx/loading/llama.webp.txt:1
+#, fuzzy
 msgid "LLAMA"
-msgstr ""
+msgstr "LLAMA"
 
 #: artwork/gfx/loading/mule.webp.txt:1
 msgid "MULE"
@@ -726,8 +783,9 @@ msgid "PIRATE RHINO"
 msgstr ""
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
+#, fuzzy
 msgid "SCHROEDINGER"
-msgstr ""
+msgstr "SCHROEDINGER"
 
 #: artwork/gfx/loading/shaman.webp.txt:1
 msgid "SIRIUS SHAMAN"
@@ -750,8 +808,9 @@ msgid "ZA'LEK STING"
 msgstr ""
 
 #: artwork/gfx/loading/vendetta.webp.txt:1
+#, fuzzy
 msgid "VENDETTA"
-msgstr ""
+msgstr "VENDETTA"
 
 #: artwork/gfx/loading/vendetta_pirate.webp.txt:1
 msgid "PIRATE VENDETTA"
@@ -3280,7 +3339,7 @@ msgstr ""
 #: dat/assets/dvaered_high_command.xml:2 dat/faction.xml:731
 #: dat/events/discovery.lua:71
 msgid "Dvaered High Command"
-msgstr ""
+msgstr "Alto Mando Dvaered"
 
 #: dat/assets/dvaered_high_command.xml:28
 msgid ""
@@ -13163,7 +13222,7 @@ msgstr ""
 
 #: dat/commodities/water.xml:3
 msgid "Water"
-msgstr ""
+msgstr "Agua"
 
 #: dat/commodities/water.xml:4
 msgid ""
@@ -13173,37 +13232,45 @@ msgid ""
 "leading to heavy concentrations in some areas and a complete absence of "
 "water in other areas."
 msgstr ""
+"El agua, una sustancia química inusual que los humanos damos por descontada, "
+"es necesaria para mantener la vida humana y útil en muchas industrias debido "
+"a sus propiedades únicas. Aunque es común, no se encuentra dispersa de "
+"manera uniforme en la galaxia, lo que hace que haya fuertes concentraciones "
+"en algunas zonas y una ausencia total de ella en otras."
 
 #: dat/faction.xml:4
+#, fuzzy
 msgid "Dummy"
-msgstr ""
+msgstr "Títere"
 
 #: dat/faction.xml:14 dat/faction.xml:38 dat/faction.xml:61 dat/faction.xml:763
 msgid "Independent"
-msgstr ""
+msgstr "Independiente"
 
 #: dat/faction.xml:37 dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:78
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:80
 msgid "Trader"
-msgstr ""
+msgstr "Comerciante"
 
 #: dat/faction.xml:60
 msgid "Miner"
-msgstr ""
+msgstr "Minero"
 
 #: dat/faction.xml:83
 msgid "Raven Clan"
-msgstr ""
+msgstr "Clan Cuervo"
 
 #: dat/faction.xml:86
 msgid "Raven Pirate Clan"
-msgstr ""
+msgstr "Clan de Piratas Cuervo"
 
 #: dat/faction.xml:93
 msgid ""
 "The Raven Pirate Clan is a band of pirates that lead over the widespread "
 "Qorel sector between the Empire and Dvaered systems."
 msgstr ""
+"El Clan Pirata Cuervo es una banda de piratas que lidera el extenso sector "
+"de Qorel, entre los sistemas del Imperio y Dvaered."
 
 #: dat/faction.xml:118
 msgid "Wild Ones"
@@ -13211,13 +13278,16 @@ msgstr "Salvajes"
 
 #: dat/faction.xml:121
 msgid "Wild Ones Pirate Clan"
-msgstr ""
+msgstr "Clan Pirata Salvajes"
 
 #: dat/faction.xml:128
 msgid ""
 "The Wild Ones Pirate Clan is a violent and loosely organized band of pirates "
 "that control the Haven sector between Empire and Soromid territories."
 msgstr ""
+"El Clan Pirata Salvajes es una banda violenta y poco organizada de piratas "
+"que controla el sector de Haven entre los territorios del Imperio y de los "
+"Soromid."
 
 #: dat/faction.xml:153
 msgid "Black Lotus"
@@ -13225,27 +13295,33 @@ msgstr ""
 
 #: dat/faction.xml:156
 msgid "Black Lotus Pirate Clan"
-msgstr ""
+msgstr "Clan Pirata Loto Negro"
 
 #: dat/faction.xml:163
 msgid ""
 "The Black Lotus Pirate Clan is a fiercely organized pirate clan located "
 "between the Za'lek and Sirius space. Organized crime at its finest."
 msgstr ""
+"El Clan Pirata del Loto Negro es un clan pirata ferozmente organizado "
+"situado entre el espacio de Za'lek y Sirio. El crimen organizado en su más "
+"pura expresión."
 
 #: dat/faction.xml:188
 msgid "Dreamer Clan"
-msgstr ""
+msgstr "Clan Soñador"
 
 #: dat/faction.xml:191
 msgid "Dreamer Pirate Clan"
-msgstr ""
+msgstr "Clan Pirata Soñador"
 
 #: dat/faction.xml:198
 msgid ""
 "The Dreamer Pirate Clan consists largely of disgruntled pirates from the "
 "Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny."
 msgstr ""
+"El Clan Pirata Soñador está formado en gran parte por piratas descontentos "
+"de la Frontera, hartos del terrorismo de FLF, Dvaered y de la tiranía del "
+"Imperio."
 
 #. hook.pilot( rampant, "idle", "idle" )
 #: dat/faction.xml:223 dat/faction.xml:258 dat/faction.xml:633
@@ -13255,11 +13331,11 @@ msgstr ""
 #: dat/missions/neutral/kidnapped/traffic_00.lua:95
 #: dat/missions/tutorial/nelly02.lua:265 dat/scripts/common/pirate.lua:42
 msgid "Pirate"
-msgstr ""
+msgstr "Pirata"
 
 #: dat/faction.xml:227
 msgid "Galactic Space Pirates"
-msgstr ""
+msgstr "Piratas Espaciales Galácticos"
 
 #: dat/faction.xml:234
 msgid ""
@@ -13267,14 +13343,18 @@ msgid ""
 "affiliated with any particular clan. Due to their disorganized nature, they "
 "tend to respect the clans they operate near."
 msgstr ""
+"Los Piratas Espaciales Galácticos consisten en naves piratas independientes "
+"no afiliadas a ningún clan en particular. Debido a su naturaleza "
+"desorganizada, tienden a respetar a los clanes con los que operan en sus "
+"proximidades."
 
 #: dat/faction.xml:257
 msgid "Marauder"
-msgstr ""
+msgstr "Merodeador"
 
 #: dat/faction.xml:259
 msgid "Pirate Marauders"
-msgstr ""
+msgstr "Piratas Merodeadores"
 
 #: dat/faction.xml:269
 msgid ""
@@ -13282,27 +13362,34 @@ msgid ""
 "aggressive and will attack most vessels unprovoked. Even the pirate clans "
 "have difficulty in dealing with them."
 msgstr ""
+"Los Piratas Merodeadores son los más bajos y viles de los piratas. Son "
+"extremadamente agresivos y atacan la mayoría de las naves sin ser "
+"provocados. Incluso los clanes de piratas tienen dificultades para tratar "
+"con ellos."
 
 #: dat/faction.xml:291 dat/scripts/common/empire.lua:18
 #: dat/scripts/common/empire.lua:23
 msgid "Empire"
-msgstr ""
+msgstr "Imperio"
 
 #: dat/faction.xml:300
 msgid ""
 "The Empire is the bureaucratic heart of the universe that provides stability "
 "and cohesion, when possible."
 msgstr ""
+"El Imperio es el corazón burocrático del universo que proporciona "
+"estabilidad y cohesión, cuando es posible."
 
 #: dat/faction.xml:318 dat/ships/proteron_archimedes.xml:20
 #: dat/ships/proteron_derivative.xml:16 dat/ships/proteron_kahan.xml:16
 #: dat/ships/proteron_watson.xml:16
+#, fuzzy
 msgid "Proteron"
-msgstr ""
+msgstr "Proteron"
 
 #: dat/faction.xml:321
 msgid "Fallen House Proteron"
-msgstr ""
+msgstr "Casa Caída de Proteron"
 
 #: dat/faction.xml:327
 msgid ""
@@ -13313,29 +13400,31 @@ msgstr ""
 
 #: dat/faction.xml:342 dat/missions/flf/flf_common.lua:71
 msgid "Frontier"
-msgstr ""
+msgstr "Frontera"
 
 #: dat/faction.xml:346
 msgid "Frontier Alliance"
-msgstr ""
+msgstr "Alianza de la Frontera"
 
 #: dat/faction.xml:351
 msgid ""
 "The Frontier Alliance is formed by the survivors of the initial attempts of "
 "Human expansion into space."
 msgstr ""
+"La Alianza de la Frontera está formada por los supervivientes de los "
+"primeros intentos de expansión humana en el espacio."
 
 #: dat/faction.xml:368
 msgid "Traders Guild"
-msgstr ""
+msgstr "Cofradía de Comerciantes"
 
 #: dat/faction.xml:371
 msgid "Space Traders Guild"
-msgstr ""
+msgstr "Cofradía de Comerciantes Espacial"
 
 #: dat/faction.xml:376
 msgid "TODO we have to make these guys more interesting."
-msgstr ""
+msgstr "TODO tenemos que hacer que estos tipos sean más interesantes."
 
 #: dat/faction.xml:390 dat/ships/soromid_arx.xml:20
 #: dat/ships/soromid_brigand.xml:13 dat/ships/soromid_ira.xml:18
@@ -13343,7 +13432,7 @@ msgstr ""
 #: dat/ships/soromid_odium.xml:15 dat/ships/soromid_reaver.xml:13
 #: dat/ships/soromid_vox.xml:17 dat/scripts/common/soromid.lua:9
 msgid "Soromid"
-msgstr ""
+msgstr "Soromida"
 
 #: dat/faction.xml:399
 msgid ""
@@ -13351,26 +13440,34 @@ msgid ""
 "themselves in order to survive a pandemic. They now openly embrace their "
 "human transcendence as a sign of strength."
 msgstr ""
+"Los Soromida están formados por individuos que se vieron obligados a "
+"modificarse genéticamente para sobrevivir a una pandemia. Ahora abrazan "
+"abiertamente su trascendencia humana como signo de fortaleza."
 
 #: dat/faction.xml:415
 msgid "Thurion"
-msgstr ""
+msgstr "Turion"
 
 #: dat/faction.xml:423
 msgid ""
 "The Thurion are a mysterious faction located deep in the Nebula. They seem "
 "to be out of touch with the external world."
 msgstr ""
+"Los Turion son una misteriosa facción situada en las profundidades de la "
+"Nebulosa. Parecen estar desconectados del mundo exterior."
 
 #: dat/faction.xml:434
 msgid "Collective"
-msgstr ""
+msgstr "Colectivo"
 
 #: dat/faction.xml:441
 msgid ""
 "The Collective are a hivemind of AI ships gone rogue. They seem to attack "
 "and destroy all humans on sight."
 msgstr ""
+"El Colectivo son un grupo de naves de inteligencia artificial colmena que se "
+"rebelaron. Parecen, atacar y destruir a todos los humanos en cuanto los "
+"detectan."
 
 #. FLF are not a natural enemy of the Empire, we have to enforce that
 #.
@@ -13388,17 +13485,19 @@ msgstr ""
 #: dat/faction.xml:456 dat/events/flf/flf_catastrophe.lua:100
 #: dat/missions/flf/flf_common.lua:71
 msgid "FLF"
-msgstr ""
+msgstr "FLF"
 
 #: dat/faction.xml:459
 msgid "Frontier Liberation Front"
-msgstr ""
+msgstr "Frente de Liberación Frontera"
 
 #: dat/faction.xml:465
 msgid ""
 "The Frontier Liberation Front is a group of terrorists advocating for the "
 "independence of the Frontier from Imperial tyranny."
 msgstr ""
+"El Frente de Liberación Frontera es un grupo de terroristas que aboga por la "
+"independencia de la frontera de la tiranía del Imperio."
 
 #. Ship to go back to
 #. Set up Major Malik
@@ -13411,8 +13510,9 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:165
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:265
 #: dat/missions/minerva/kex3.lua:389 dat/scripts/common/dvaered.lua:12
+#, fuzzy
 msgid "Dvaered"
-msgstr ""
+msgstr "Dvaered"
 
 #: dat/faction.xml:477 dat/ships/ancestor.xml:14
 #: dat/ships/dvaered_ancestor.xml:15 dat/ships/dvaered_arsenal.xml:18
@@ -13420,13 +13520,15 @@ msgstr ""
 #: dat/ships/dvaered_vigilance.xml:15 dat/ships/phalanx.xml:15
 #: dat/ships/vendetta.xml:15 dat/ships/vigilance.xml:14
 msgid "House Dvaered"
-msgstr ""
+msgstr "Casa Dvaered"
 
 #: dat/faction.xml:482
 msgid ""
 "House Dvaered is one of the oldest Great Houses in the Empire. They are "
 "proud and formed by a coalition of many powerful warlords."
 msgstr ""
+"La Casa Dvaered es una de las Casas Grandes más longevas del Imperio. "
+"Orgullosa y formada por una gran coalición de poderosos señores de la guerra."
 
 #. Gets reset on enter system
 #. Must be goal system
@@ -13448,47 +13550,54 @@ msgstr ""
 #: dat/scripts/common/sciencegonewrong.lua:6 dat/scripts/common/zalek.lua:9
 #: dat/scripts/common/zalek.lua:15 dat/scripts/common/zalek_physics.lua:34
 msgid "Za'lek"
-msgstr ""
+msgstr "Za'lek"
 
 #: dat/faction.xml:505
 msgid "House Za'lek"
-msgstr ""
+msgstr "Casa Za'lek"
 
 #: dat/faction.xml:510
 msgid ""
 "House Za'lek is the scientific heart of the Empire. Until recently they were "
 "a secretive Great House, but they have recently become much more open."
 msgstr ""
+"La Casa Za'lek es el corazón científico del Imperio. Hasta hace poco era una "
+"Gran Casa muy reservada, pero recientemente se ha tornado mucho más abierta."
 
 #: dat/faction.xml:527 dat/faction.xml:689 dat/scripts/common/sirius.lua:9
 #: dat/scripts/common/sirius.lua:15
 msgid "Sirius"
-msgstr ""
+msgstr "Sirio"
 
 #: dat/faction.xml:532
 msgid "House Sirius"
-msgstr ""
+msgstr "Casa Sirio"
 
 #: dat/faction.xml:537
 msgid ""
 "House Sirius is defined by its state religion more than anything else, with "
 "Sirichana as the focus of worship."
 msgstr ""
+"La Casa Sirio se define por su religión estatal más que por cualquier otra "
+"cosa, con Sirichana como centro de culto."
 
 #: dat/faction.xml:555 dat/ships/goddard.xml:2 dat/ssys/goddard.xml:2
+#, fuzzy
 msgid "Goddard"
-msgstr ""
+msgstr "Goddard"
 
 #: dat/faction.xml:560 dat/ships/dvaered_goddard.xml:18
 #: dat/ships/goddard.xml:17
 msgid "House Goddard"
-msgstr ""
+msgstr "Casa Goddard"
 
 #: dat/faction.xml:565
 msgid ""
 "House Goddard is a minor house wedged between the Empire and Dvaered. They "
 "are one of the main fabricators of ships for the Dvaered."
 msgstr ""
+"La Casa Goddard es una casa menor ubicada entre el Imperio y Dvaered. Uno de "
+"los principales fabricantes de naves para los Dvaered."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -13580,7 +13689,7 @@ msgstr ""
 #: dat/missions/soromid/comingout/srm_comingout5.lua:84
 #: dat/missions/soromid/comingout/srm_comingout6.lua:110
 msgid "Mercenary"
-msgstr ""
+msgstr "Mercenario"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -13669,11 +13778,11 @@ msgstr ""
 #: dat/events/taiomi/find.lua:52 dat/events/taiomi/find.lua:64
 #: dat/missions/tutorial/nelly01.lua:322 dat/scripts/common/derelict.lua:19
 msgid "Derelict"
-msgstr ""
+msgstr "Derelicto"
 
 #: dat/faction.xml:603 dat/faction.xml:619
 msgid "Four Winds"
-msgstr ""
+msgstr "Cuatro Vientos"
 
 #: dat/faction.xml:617
 msgid "Rogue Four Winds"
@@ -13681,15 +13790,15 @@ msgstr ""
 
 #: dat/faction.xml:631
 msgid "Shadow_pirates"
-msgstr ""
+msgstr "Piratas_sombra"
 
 #: dat/faction.xml:647
 msgid "Diplomatic"
-msgstr ""
+msgstr "Diplomático"
 
 #: dat/faction.xml:661
 msgid "Associates"
-msgstr ""
+msgstr "Asociados"
 
 #. Time for !!FUN!!
 #: dat/faction.xml:674 dat/faction.xml:703
@@ -13698,7 +13807,7 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp04.lua:183
 #: dat/missions/zalek/particlephysics/zpp04.lua:186
 msgid "Thugs"
-msgstr ""
+msgstr "Matones"
 
 #: dat/faction.xml:687
 msgid "Achack_sirius"
@@ -13709,12 +13818,13 @@ msgid "Achack_thugs"
 msgstr ""
 
 #: dat/faction.xml:715
+#, fuzzy
 msgid "Nasin"
-msgstr ""
+msgstr "Nasin"
 
 #: dat/faction.xml:727
 msgid "DHC"
-msgstr ""
+msgstr "AMD"
 
 #.
 #. -- Event is over when player takes off.
@@ -13742,11 +13852,11 @@ msgstr ""
 #: dat/faction.xml:745 dat/events/dvaered/warlords_battle.lua:69
 #: dat/events/dvaered/warlords_battle.lua:70
 msgid "Warlords"
-msgstr ""
+msgstr "Señores de la Guerra"
 
 #: dat/faction.xml:749
 msgid "Dvaered Warlords"
-msgstr ""
+msgstr "Señores de la Guerra Dvaered"
 
 #: dat/faction.xml:761
 msgid "Strangelove"
@@ -13754,7 +13864,7 @@ msgstr ""
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
-msgstr ""
+msgstr "Ambientador"
 
 #: dat/outfits/accessory/air_freshener.xml:5
 #: dat/outfits/accessory/black_cat_doll.xml:5
@@ -13774,7 +13884,7 @@ msgstr ""
 #: dat/outfits/accessory/ugly_statue.xml:5
 #: dat/outfits/accessory/vacuum_cleaner.xml:5 dat/slots.xml:4
 msgid "Accessory"
-msgstr ""
+msgstr "Accesorio"
 
 #: dat/outfits/accessory/air_freshener.xml:11
 msgid ""
@@ -13786,7 +13896,7 @@ msgstr ""
 
 #: dat/outfits/accessory/black_cat_doll.xml:2
 msgid "Black Cat Doll"
-msgstr ""
+msgstr "Muñeco de Gato Negro"
 
 #: dat/outfits/accessory/black_cat_doll.xml:11
 msgid ""
@@ -13797,11 +13907,11 @@ msgstr ""
 #: dat/outfits/accessory/black_cat_doll.xml:13
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
 msgid "#pOnly active when in stealth.#0"
-msgstr ""
+msgstr "#pSolo activo en modo sigilo.#0"
 
 #: dat/outfits/accessory/dv_handbook.xml:2
 msgid "Handbook for Dvaered Good Manners"
-msgstr ""
+msgstr "Manual de Buenos Modales Dvaered"
 
 #: dat/outfits/accessory/dv_handbook.xml:11
 msgid ""
@@ -13816,7 +13926,7 @@ msgstr ""
 
 #: dat/outfits/accessory/fuzzy_dice.xml:2
 msgid "Fuzzy Dice"
-msgstr ""
+msgstr "Dados Peludos"
 
 #: dat/outfits/accessory/fuzzy_dice.xml:11
 msgid ""
@@ -13828,11 +13938,11 @@ msgstr ""
 
 #: dat/outfits/accessory/fuzzy_dice.xml:12
 msgid "#pImproves luck!#0"
-msgstr ""
+msgstr "#p¡Mejora la suerta!#0"
 
 #: dat/outfits/accessory/left_boot.xml:2
 msgid "Left Boot"
-msgstr ""
+msgstr "Bota Izquierda"
 
 #: dat/outfits/accessory/left_boot.xml:11
 msgid ""
@@ -13840,6 +13950,9 @@ msgid ""
 "and is full of confetti. You're not sure what to do with it, but it might "
 "liven up the ship."
 msgstr ""
+"La bota izquierda de un alto funcionario del Imperio. Parece que no te queda "
+"bien y está llena de confeti. No estás seguro de qué hacer con ella, pero "
+"podría ambientar la nave."
 
 #: dat/outfits/accessory/left_boot.xml:13
 msgid "#gSmells funky.#0"
@@ -13847,41 +13960,50 @@ msgstr ""
 
 #: dat/outfits/accessory/love_letter.xml:2
 msgid "Love Letter"
-msgstr ""
+msgstr "Carta de Amor"
 
 #: dat/outfits/accessory/love_letter.xml:11
+#, fuzzy
 msgid ""
 "A misplaced love letter that you were supposed to deliver, reading the first "
 "line \"My tootlepumps, how frompscious are thein pluckerpumps...\" you are "
 "fairly certain that you did a favour in not delivering it. At least it makes "
 "your ship look cuter."
 msgstr ""
+"Una carta de amor extraviada que se suponía que ibas a entregar, al leer la "
+"primera línea \"Mis tootlepumps, que frompscious are thein pluckerpumps...\" "
+"estás bastante seguro de que hiciste un favor al no entregarla. Al menos "
+"hace que tu barco parezca más bonito."
 
 #: dat/outfits/accessory/love_letter.xml:13
 msgid "#rLove is in the air.#0"
-msgstr ""
+msgstr "#rEl amor esta en el aire.#0"
 
 #: dat/outfits/accessory/pentagram_of_valor.xml:2
 msgid "Pentagram of Valor"
-msgstr ""
+msgstr "Pentagrama de Valor"
 
 #: dat/outfits/accessory/pentagram_of_valor.xml:11
 msgid "A token of commitment to the FLF cause. It smells oddly of fish."
 msgstr ""
+"Una muestra de compromiso con la causa de la FLF. Huele extrañamente a "
+"pescado."
 
 #: dat/outfits/accessory/racing_trophy.xml:2
 msgid "Racing Trophy"
-msgstr ""
+msgstr "Trofeo de Carreras"
 
 #: dat/outfits/accessory/racing_trophy.xml:11
 msgid ""
 "Racing trophy you won with your excellent piloting skills. Looks great on "
 "the wall!"
 msgstr ""
+"Trofeo de carreras que ganaste con tus excelentes habilidades de pilotaje. ¡"
+"Queda muy bien en la pared!"
 
 #: dat/outfits/accessory/sandwich_holder.xml:2
 msgid "Sandwich Holder"
-msgstr ""
+msgstr "Porta-sandwiches"
 
 #: dat/outfits/accessory/sandwich_holder.xml:11
 msgid ""
@@ -13889,10 +14011,13 @@ msgid ""
 "useful for hands-free eating of sandwiches in zero gravity. Apparently the "
 "CEO really loves his sandwiches."
 msgstr ""
+"Parece ser un portasandwiches de edición limitada de los Astilleros Nexus. "
+"Muy útil para comer sandwiches con las manos libres en gravedad cero. Al "
+"parecer, al CEO le encantan sus sándwiches."
 
 #: dat/outfits/accessory/satellite_mockup.xml:2
 msgid "Satellite Mock-up"
-msgstr ""
+msgstr "Maqueta del Satélite"
 
 #: dat/outfits/accessory/satellite_mockup.xml:11
 msgid ""
@@ -13902,27 +14027,31 @@ msgstr ""
 
 #: dat/outfits/accessory/star_of_valor.xml:2
 msgid "Star of Valor"
-msgstr ""
+msgstr "Estrella de Valor"
 
 #: dat/outfits/accessory/star_of_valor.xml:11
 msgid ""
 "A shiny medal for your contribution to the Dvaered cause. On the back it "
 "says \"not for rectal use\". Wait, what?"
 msgstr ""
+"Una brillante medalla por tu contribución a la causa de Dvaered. En el "
+"reverso dice \"no para uso rectal\". Espera, ¿qué?"
 
 #: dat/outfits/accessory/swamp_bombing.xml:2
 msgid "Swamp Bombing"
-msgstr ""
+msgstr "Bomba de Pantano"
 
 #: dat/outfits/accessory/swamp_bombing.xml:11
 msgid ""
 "A fairly mediocre cocktail that you don't intend to drink. At least it looks "
 "good as an accessory."
 msgstr ""
+"Un cóctel bastante mediocre que no tienes intención de beber. Al menos queda "
+"bien como accesorio."
 
 #: dat/outfits/accessory/toy_drone.xml:2
 msgid "Toy Drone"
-msgstr ""
+msgstr "Dron de Juguete"
 
 #: dat/outfits/accessory/toy_drone.xml:11
 msgid ""
@@ -13930,10 +14059,13 @@ msgid ""
 "too well and it has a habit of bumping into the walls and beeping all the "
 "time, but it is rather cute."
 msgstr ""
+"Un pequeño dron de juguete que puede volar alrededor de la nave. La IA no "
+"parece funcionar demasiado bien y tiene la costumbre de chocar con las "
+"paredes y pitar todo el tiempo, pero es bastante bonito."
 
 #: dat/outfits/accessory/trading_card_common.xml:2
 msgid "Trading Card (Common)"
-msgstr ""
+msgstr "Carta Coleccionable (Común)"
 
 #: dat/outfits/accessory/trading_card_common.xml:11
 msgid ""
@@ -13945,7 +14077,7 @@ msgstr ""
 
 #: dat/outfits/accessory/trading_card_rare.xml:2
 msgid "Trading Card (Rare)"
-msgstr ""
+msgstr "Carta Coleccionable (Rara)"
 
 #: dat/outfits/accessory/trading_card_rare.xml:11
 msgid ""
@@ -13953,10 +14085,14 @@ msgid ""
 "going into the important details of the ship, it just shows a high "
 "definition holographic rendition of the supposed Golden Llama."
 msgstr ""
+"Una tarjeta del juego de cartas coleccionables #oGolden Llama#0 de rareza "
+"#prare#0. En lugar de entrar en los detalles importantes de la nave, solo "
+"muestra una representación holográfica de alta definición de la supuesta "
+"Llama Dorada."
 
 #: dat/outfits/accessory/trading_card_uncommon.xml:2
 msgid "Trading Card (Uncommon)"
-msgstr ""
+msgstr "Carta Coleccionable (No Común)"
 
 #: dat/outfits/accessory/trading_card_uncommon.xml:11
 msgid ""
@@ -13969,7 +14105,7 @@ msgstr ""
 
 #: dat/outfits/accessory/ugly_statue.xml:2
 msgid "Ugly Statue"
-msgstr ""
+msgstr "Estatua Fea"
 
 #: dat/outfits/accessory/ugly_statue.xml:11
 msgid ""
@@ -13979,10 +14115,15 @@ msgid ""
 "ukulele and its head bobbles around with the ship acceleration. How "
 "tasteful..."
 msgstr ""
+"Una estatua que le regaló el Barón Sauterfeldt por tu buen trabajo. Te "
+"sentirías más agradecido si no hubiera mencionado que su amante le obligaba "
+"a deshacerse de ella. La estatua parece representar a un camarón con "
+"pajarita tocando un ukelele y su cabeza se balancea con la aceleración de la "
+"nave. Qué buen gusto..."
 
 #: dat/outfits/accessory/vacuum_cleaner.xml:2
 msgid "Vacuum Cleaner?"
-msgstr ""
+msgstr "¿Aspiradora?"
 
 #: dat/outfits/accessory/vacuum_cleaner.xml:11
 msgid ""
@@ -13991,6 +14132,10 @@ msgid ""
 "most certainly not an actual vacuum cleaner, but you don't know this "
 "outfit's real name."
 msgstr ""
+"Encontrado en un caza Cuatro Vientos que llevaba un rayo Ragnarok. Parece "
+"aumentar el rendimiento de tu motor cuando la masa de la nave es elevada. "
+"Seguramente no es una aspiradora real, pero no se sabe el nombre real de "
+"este complemento."
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_1.xml:2
 msgid "BioPlasma Claw Stage 1"
@@ -72010,7 +72155,7 @@ msgstr ""
 
 #: dat/scripts/common/minerva.lua:33
 msgid "TODO"
-msgstr ""
+msgstr "TODO"
 
 #: dat/scripts/common/minerva.lua:40
 msgid ""
@@ -78145,7 +78290,7 @@ msgstr ""
 
 #: src/dev_uniedit.c:386
 msgid "Default"
-msgstr ""
+msgstr "Por Defecto"
 
 #: src/dev_uniedit.c:387
 msgid "Virtual Assets"
