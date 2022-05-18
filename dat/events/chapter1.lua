@@ -377,7 +377,7 @@ function cutscene_posttext ()
       maxdist = maxdist or 4000
       local a = rnd.angle()
       local pos = hyp:pos() + vec2.newP( mindist + (maxdist-mindist)*rnd.rnd(), a )
-      local p = pilot.add( shipname, f, pos, nil, { naked=true } )
+      local p = pilot.add( shipname, f, pos, nil, { naked=true, ai="dummy" } )
       p:effectAdd( "Ethereal" )
       p:setInvincible(true)
       p:control()
