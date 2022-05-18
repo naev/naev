@@ -7,6 +7,7 @@
  <trigger>enter</trigger>
  <chance>100</chance>
  <chapter>0</chapter>
+ <priority>0</priority>
 </event>
 --]]
 --[[
@@ -137,7 +138,7 @@ function update( dt, real_dt )
 end
 
 -- Set up the cutscene stuff
-local origsys, empboss, emptester
+local origsys, boss, tester
 function cutscene_start ()
    player.canDiscover( false )
    setHide( true )
@@ -171,19 +172,34 @@ function cutscene_start ()
    pilot.clear()
    pilot.toggleSpawn(false)
 
+   local testfct = "Empire"
+   local bossship, testership, extraships
+   if testfct == "Empire" then
+      bossship = "Empire Peacemaker"
+      testership = "Empire Pacifier"
+      extraships = {
+         "Empire Hawking",
+         "Empire Hawking",
+         "Empire Pacifier",
+         "Empire Pacifier",
+         "Empire Admonisher",
+         "Empire Admonisher",
+         "Empire Rainmaker",
+      }
+   end
+
    -- Add some guys
    local pos = hyp:pos()
    local function addship( shipname )
-      local p = pilot.add( shipname, "Empire", pos + vec2.newP( 200+100*rnd.rnd(), rnd.angle() ), nil, {ai="dummy"} )
+      local ppos = pos + vec2.newP( 250+150*rnd.rnd(), rnd.angle() )
+      local p = pilot.add( shipname, testfct, ppos, nil, {ai="dummy"} )
       p:control()
       p:face( pos )
       return p
    end
-   empboss = addship( "Empire Peacemaker" )
-   addship( "Empire Hawking" )
-   addship( "Empire Hawking" )
-   emptester = addship( "Empire Pacifier" )
-   addship( "Empire Pacifier" )
+   boss = addship( bossship )
+   tester = addship( testership )
+   for k,s in ipairs(extraships) do addship( s ) end
 
    fg_setup( _("And they built bridges across the stars…") )
    hook.timer( 5, "cutscene_emp1" )
@@ -198,7 +214,7 @@ end
 
 local countdown, countdown_sfx
 function cutscene_emp2 ()
-   empboss:broadcast( _("Beginning activation countdown!") )
+   boss:broadcast( _("Beginning activation countdown!") )
    countdown = 5
    countdown_sfx = audio.newSource( "snd/sounds/hypergate_turnon.ogg" )
    hook.timer( 4, "cutscene_emp3" )
@@ -211,7 +227,7 @@ end
 
 -- Countdown
 function cutscene_emp3 ()
-   empboss:broadcast( fmt.f(_("{countdown}…"), {countdown=countdown}) )
+   boss:broadcast( fmt.f(_("{countdown}…"), {countdown=countdown}) )
    if countdown > 1 then
       countdown = countdown-1
       hook.timer( 1, "cutscene_emp3" )
@@ -286,7 +302,7 @@ function cutscene_emp5 ()
    diff.remove( diff_progress2 )
    diff.apply( diff_progress3 )
 
-   empboss:broadcast( _("Start test.") )
+   boss:broadcast( _("Start test.") )
 
    hook.timer( scene_len, "cutscene_emp6" )
 end
@@ -296,9 +312,9 @@ function cutscene_emp6 ()
    shader_fadeout = nil
 
    hook.timer( 2, "cutscene_emp7" )
-   emptester:taskClear()
+   tester:taskClear()
    local hyp = spob.get( "Hypergate Gamma Polaris" )
-   emptester:land( hyp )
+   tester:land( hyp )
 end
 
 function cutscene_emp7 ()
