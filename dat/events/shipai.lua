@@ -117,6 +117,9 @@ local function clicked ()
       if var.peek( "tut_bioship" ) then
          table.insert( opts, #opts, {_("Bioships"), "tut_bioship"} )
       end
+      if player.fleetCapacity() > 0 then
+         table.insert( opts, #opts, {_("Fleets"), "tut_fleets"} )
+      end
       return opts
    end )
 
@@ -160,11 +163,20 @@ local function clicked ()
    vn.jump("tutorials")
 
    vn.label("tut_illegal")
-   sai(_([["As you explore, you'll find different commodities, oufits, and even ships themselves, can be outright banned and made illegal by different factions. Although you are able to transport, equip, or use them normally, if a pilot from a faction that considers them illegal scans you, you will be in hot water. Although sometimes you can bribe them right away to continue on your travels, it is better to not have this problem in the first place."]]))
+   sai(_([["As you explore, you'll find different commodities, outfits, and even ships themselves, can be outright banned and made illegal by different factions. Although you are able to transport, equip, or use them normally, if a pilot from a faction that considers them illegal scans you, you will be in hot water. Although sometimes you can bribe them right away to continue on your travels, it is better to not have this problem in the first place."]]))
    sai(fmt.f(_([["The best way to avoid detection is to use stealth which you can enable with {stealthkey}. By staying away from patrol routes and using stealth as much as possible, you can minimize the amount of encounters with patrols. The most tricky parts then become jumping and landing, where lots of ships can converge in tight spaces. Other than using stealth increasing outfits, using a smaller ship will lower the overall visibility of your ship."]]),
       {stealthkey=tut.getKey("stealth")}))
    sai(fmt.f(_([["You can check to see if your commodities or outfits are illegal from the #bInfo Menu#0 which you can open with {infokey}, and then looking at your ship outfits or commodities. Note that illegality is determined on a per-faction basis instead of globally."]]),
       {infokey=tut.getKey("info")}))
+   vn.jump("tutorials")
+
+   vn.label("tut_fleets")
+   sai(_([["With my overriding of the disable routine on the fleet procedure, you can now deploy additional ships you own. You have a maximum amount of fleet capacity, indicated in the equipment tab when landed, and each ship consumes a fixed amount of fleet capacity."]]))
+   sai(fmt.f(_([["For example, you have a total fleet capacity of {fleetcap} points, and your current ship takes {shipcap} points. Note that if you are flying a single ship with no additional deployed ships, you can go over the fleet capacity. However, if you deploy additional ships, you have to stay below the total fleet capacity."]]),
+      {fleetcap=player.fleetCapacity(), shipcap=player.pilot():ship():points()}))
+   sai(_([["It is important to note that fleet capacity depends exclusively on the ship, and is not affected by normal outfits. Make sure to equip your ships as best as possible!"]]))
+   sai(_([["Your additional ships will behave as escorts and you can give them commands to perform actions just like deployed fighters. Furthermore, they are all insured so even if you lose any ships, they will respawn when you land."]]))
+   sai(_([["Finally, you can toggle ships' deployment by #bright-clicking#0 on their icon. Try it out!"]]))
    vn.jump("tutorials")
 
    vn.label("close")
