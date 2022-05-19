@@ -453,13 +453,12 @@ local function pangate( gatename )
    local pos = hyp:pos()
    camera.set( pos - panradius*dir, true )
    camera.set( pos + panradius*dir, false, 2*panradius/pantime )
-   return a
 end
 
 local pan_idx = 2
 function cutscene_pan ()
    local hyp = hypergate_list[ pan_idx ]
-   local dir = pangate( hyp )
+   pangate( hyp )
    fg_setup()
    fadein()
 
@@ -468,13 +467,13 @@ function cutscene_pan ()
 
    -- Add some guys
    local pos = hyp:pos()
-   local facepos = pos + vec2.newP( 50e3, dir )
    local function addship( shipname )
       local ppos = pos + vec2.newP( 250+150*rnd.rnd(), rnd.angle() )
       local p = pilot.add( shipname, testfct, ppos, nil, {ai="dummy", naked=true} )
-      p:setDir( dir )
+      local _m, a = pos:polar()
+      p:setDir( a )
       p:control()
-      p:face( facepos )
+      p:face( pos )
       return p
    end
 
