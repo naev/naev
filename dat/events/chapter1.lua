@@ -27,7 +27,7 @@ local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
 local diff_progress3 = "hypergates_3"
 
--- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_emp_sfx cutscene_emp1 cutscene_emp2 cutscene_emp3 cutscene_emp4 cutscene_emp5 cutscene_emp6 cutscene_emp7 cutscene_pan cutscene_posttext cutscene_nebu cutscene_nebu_zoom cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
+-- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_main_sfx cutscene_main0 cutscene_main1 cutscene_main2 cutscene_main3 cutscene_main4 cutscene_main5 cutscene_main6 cutscene_main7 cutscene_pan cutscene_posttext cutscene_nebu cutscene_nebu_zoom cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
 
 -- Purposely exclude other hypergates
 local hypergate_list = {
@@ -101,8 +101,9 @@ local function fg_setup( text )
       fg.hook = hook.renderfg( "foreground" )
       fg.update = hook.update( "update" )
 
-      fg.alpha = 1
+      fg.alpha = 0
       fg.alpha_dir = 1
+      fg.alpha_vel = 2
 
       nw, nh = gfx.dim()
    end
@@ -144,7 +145,7 @@ end
 local shader_fadein, shader_fadeout
 function update( dt, real_dt )
    lmusic.update( dt )
-   fg.alpha = fg.alpha + fg.alpha_dir * 2 * real_dt
+   fg.alpha = fg.alpha + fg.alpha_dir * fg.alpha_vel * real_dt
    if shader_fadein and shader_fadein._update then
       shader_fadein:_update( dt )
    end
@@ -242,15 +243,27 @@ local function getFactionStuff( fct )
    return bossship, testership, extraships, tester_broadcast, boss_broadcast
 end
 
--- Set up the cutscene stuff
-local origsys, boss, tester, tester_broadcast, boss_broadcast
 function cutscene_start ()
-   player.canDiscover( false )
-   setHide( true )
+   local fadetime = 3
+   fg_setup()
+   fadeout()
+   fg.alpha_vel = 1/fadetime -- slow transition
+   hook.timer( fadetime, "cutscene_main0" )
+
+   -- Disable landing/jumping
    player.cinematics( true )
    local pp = player.pilot()
    pp:setNoJump(true)
    pp:setNoLand(true)
+end
+
+-- Set up the cutscene stuff
+local origsys, boss, tester, tester_broadcast, boss_broadcast
+function cutscene_main0 ()
+   fg.alpha_vel = 2 -- Back to fast transitions
+
+   player.canDiscover( false )
+   setHide( true )
 
    if diff.isApplied( diff_progress3 ) then
       diff.remove( diff_progress3 )
@@ -298,37 +311,37 @@ function cutscene_start ()
    end
 
    fg_setup( _("And they built bridges across the stars…") )
-   hook.timer( 5, "cutscene_emp1" )
+   hook.timer( 5, "cutscene_main1" )
 end
 
-function cutscene_emp1 ()
+function cutscene_main1 ()
    -- Show system
    fg_setup()
-   hook.timer( 3, "cutscene_emp2" )
+   hook.timer( 3, "cutscene_main2" )
    fadein()
 end
 
 local countdown, countdown_sfx
-function cutscene_emp2 ()
+function cutscene_main2 ()
    boss:broadcast( boss_broadcast )
    countdown = 5
    countdown_sfx = audio.newSource( "snd/sounds/hypergate_turnon.ogg" )
-   hook.timer( 4, "cutscene_emp3" )
-   hook.timer( 5+4-6.5, "cutscene_emp_sfx" )
+   hook.timer( 4, "cutscene_main3" )
+   hook.timer( 5+4-6.5, "cutscene_main_sfx" )
 end
 
-function cutscene_emp_sfx ()
+function cutscene_main_sfx ()
    luaspfx.sfx( nil, nil, countdown_sfx, {volume=0.8} )
 end
 
 -- Countdown
-function cutscene_emp3 ()
+function cutscene_main3 ()
    boss:broadcast( fmt.f(_("{countdown}…"), {countdown=countdown}) )
    if countdown > 1 then
       countdown = countdown-1
-      hook.timer( 1, "cutscene_emp3" )
+      hook.timer( 1, "cutscene_main3" )
    else
-      hook.timer( 1, "cutscene_emp4" )
+      hook.timer( 1, "cutscene_main4" )
    end
 end
 
@@ -341,7 +354,7 @@ local function shader_init( shd, speed )
    shd.shader:addPPShader("game", 99)
 end
 
-function cutscene_emp4 ()
+function cutscene_main4 ()
    -- Activate hypergate with big flash
    local pixelcode_fadein = [[
 #include "lib/sdf.glsl"
@@ -384,10 +397,10 @@ vec4 effect( sampler2D tex, vec2 texture_coords, vec2 screen_coords )
 
    shader_init( shader_fadein, scene_len )
 
-   hook.timer( 1/scene_len, "cutscene_emp5" )
+   hook.timer( 1/scene_len, "cutscene_main5" )
 end
 
-function cutscene_emp5 ()
+function cutscene_main5 ()
    local scene_len = 3
 
    shader_fadein.shader:rmPPShader()
@@ -400,19 +413,19 @@ function cutscene_emp5 ()
 
    boss:broadcast( tester_broadcast )
 
-   hook.timer( scene_len, "cutscene_emp6" )
+   hook.timer( scene_len, "cutscene_main6" )
 end
 
-function cutscene_emp6 ()
+function cutscene_main6 ()
    shader_fadeout.shader:rmPPShader()
    shader_fadeout = nil
 
-   hook.timer( 2, "cutscene_emp7" )
+   hook.timer( 2, "cutscene_main7" )
    tester:taskClear()
    tester:land( hypergate_list[1] )
 end
 
-function cutscene_emp7 ()
+function cutscene_main7 ()
    -- Ship jumps
    hook.timer( 7.3, "fadeout" )
    hook.timer( 8, "cutscene_pan" )
