@@ -338,7 +338,7 @@ function cutscene_main2 ()
 end
 
 function cutscene_main_sfx ()
-   luaspfx.sfx( nil, nil, countdown_sfx, {volume=0.8} )
+   luaspfx.sfx( true, nil, countdown_sfx, {volume=0.8} )
 end
 
 -- Countdown
