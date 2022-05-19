@@ -329,7 +329,7 @@ void events_trigger( EventTrigger_t trigger )
       if ((ed->system != NULL) && (strcmp(ed->system,cur_system->name)!=0))
          continue;
 
-      /* If chapter, must match chapter. TODO make this regex. */
+      /* If chapter, must match chapter regex. */
       if (ed->chapter_re != NULL) {
          pcre2_match_data *match_data = pcre2_match_data_create_from_pattern( ed->chapter_re, NULL );
          int rc = pcre2_match( ed->chapter_re, (PCRE2_SPTR)player.chapter, strlen(player.chapter), 0, 0, match_data, NULL );
@@ -337,7 +337,7 @@ void events_trigger( EventTrigger_t trigger )
          if (rc < 0) {
             switch (rc) {
                case PCRE2_ERROR_NOMATCH:
-                  break;
+                  continue;
                default:
                   WARN(_("Matching error %d"), rc );
                   break;
