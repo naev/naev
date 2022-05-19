@@ -261,6 +261,11 @@ function cutscene_start ()
    local pp = player.pilot()
    pp:setNoJump(true)
    pp:setNoLand(true)
+
+   -- TODO better music
+   music.stop()
+   var.push( "music_off", true )
+   lmusic.play( "snd/music/empire2.ogg" )
 end
 
 -- Set up the cutscene stuff
@@ -281,11 +286,6 @@ function cutscene_main0 ()
    if not diff.isApplied( diff_progress2 ) then
       diff.apply( diff_progress2 )
    end
-
-   -- TODO better music
-   music.stop()
-   var.push( "music_off", true )
-   lmusic.play( "snd/music/empire2.ogg" )
 
    -- Get the first hypergate
    local hyp, hyps = spob.getS( hypergate_list[1] )
