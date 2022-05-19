@@ -27,7 +27,7 @@ local diff_progress1 = "hypergates_1"
 local diff_progress2 = "hypergates_2"
 local diff_progress3 = "hypergates_3"
 
--- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_main_sfx cutscene_main0 cutscene_main1 cutscene_main2 cutscene_main3 cutscene_main4 cutscene_main5 cutscene_main6 cutscene_main7 cutscene_pan cutscene_posttext cutscene_nebu cutscene_nebu_zoom cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
+-- luacheck: globals land fadein fadeout foreground update cutscene_start cutscene_main_sfx cutscene_main0 cutscene_main1 cutscene_main2 cutscene_main3 cutscene_main4 cutscene_main5 cutscene_main6 cutscene_main7 cutscene_pan cutscene_jumpin cutscene_posttext cutscene_nebu cutscene_nebu_zoom cutscene_nebu_fade cutscene_cleanup (Hook functions passed by name)
 
 -- Purposely exclude other hypergates
 local hypergate_list = {
@@ -307,6 +307,8 @@ function cutscene_main0 ()
    local function addship( shipname )
       local ppos = pos + vec2.newP( 250+150*rnd.rnd(), rnd.angle() )
       local p = pilot.add( shipname, testfct, ppos, nil, {ai="dummy", naked=true} )
+      local _m, a = (ppos-pos):polar()
+      p:setDir( a )
       p:control()
       p:face( pos )
       return p
@@ -429,6 +431,7 @@ function cutscene_main6 ()
 
    hook.timer( 2, "cutscene_main7" )
    tester:taskClear()
+   --tester:moveto( hypergate_list[1]:pos() )
    tester:land( hypergate_list[1] )
 end
 
@@ -470,8 +473,8 @@ function cutscene_pan ()
    local function addship( shipname )
       local ppos = pos + vec2.newP( 300+250*rnd.rnd(), rnd.angle() )
       local p = pilot.add( shipname, testfct, ppos, nil, {ai="dummy", naked=true} )
-      local _m, a = pos:polar()
-      p:setDir( a )
+      local _m, a = (ppos-pos):polar()
+      p:setDir( a + math.pi )
       p:control()
       p:face( pos )
       return p
@@ -483,6 +486,10 @@ function cutscene_pan ()
       addship( extraships() )
    end
 
+   if pan_idx == 2 then
+      hook.timer( 1, "cutscene_jumpin" )
+   end
+
    pan_idx = pan_idx+1
    hook.timer( panfadeout, "fadeout" )
    if pan_idx > #hypergate_list then
@@ -490,6 +497,15 @@ function cutscene_pan ()
    else
       hook.timer( pantime, "cutscene_pan" )
    end
+end
+
+function cutscene_jumpin ()
+   local testfct = hypergate_list[1]:faction():nameRaw()
+   local hyp = hypergate_list[2]
+   local _bs, shipname = getFactionStuff( testfct )
+   local p = pilot.add( shipname, testfct, hyp:pos(), nil, {ai="dummy", naked=true} )
+   p:effectAdd( "Hypergate Exit" )
+   p:control()
 end
 
 function cutscene_posttext ()
