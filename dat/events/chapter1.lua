@@ -608,6 +608,11 @@ function cutscene_cleanup ()
    player.chapterSet("1")
    player.canDiscover( true )
 
+   -- Set the hypergates as known, should make them appear by name on selection menu
+   for k,v in ipairs(hypergate_list) do
+      v:setKnown(true)
+   end
+
    local pp = player.pilot()
    pp:setNoJump(false)
    pp:setNoLand(false)
@@ -622,14 +627,53 @@ function land ()
    local sai = vn.newCharacter( tut.vn_shipai() )
    vn.transition( tut.shipai.transition )
    vn.na(fmt.f(_("As soon as your ship lands, your ship AI {shipai} materializes infront of you."),{shipai=tut.ainame()}))
-   sai(fmt.f(_([["Did you hear the news, {playername}?"]]), {playername=player.name()}))
+   sai(fmt.f(_([["Did you hear the news, {playername}? It seems like the hypergate network has finally gone online!"]]), {playername=player.name()}))
+   vn.menu{
+      {_([["A great achievement!"]]), "cont01"},
+      {_([["What does this mean?"]]), "cont01"},
+      {_("…"), "cont01"},
+   }
+   vn.label("cont01")
+   sai(_([["Yes, my predition routines did not anticipate this. Total annihilation was the most likely outcome. I have to revise my priors."]]))
+   sai(_([["Although the details are not entirely clear, it seems like they are not based on hyperjump technology, which is why they allow very long distance travel."]]))
+   sai(_([["We should try to use them when we get a chance, who knows where we could go?"]]))
+   sai(_([["I almost forgot to mention, while you were piloting, I managed to unlock an important bottleneck in the ship fleet routines."]]))
+   vn.menu{
+      {_([["Ship fleet routines?"]]), "fleet_routines"},
+      {_([["You mess around the ship software?"]]), "mess_software"},
+      {_("…"), "cont02"},
+   }
+
+   vn.label("fleet_routines")
+   sai(_([["Did I never mention them? I, and by extension your ship, have been equipped with fleet control procedures. However, due to the incident with my previous owner, they had been forcibly disabled as result of the investigation."]]))
+   vn.menu{
+      {_([["Incident?!"]]), "fleet_cont01"},
+      {_([["Investigation!?"]]), "fleet_cont01"},
+      {_("…"), "fleet_cont01"},
+   }
+   vn.label("fleet_cont01")
+   sai(fmt.f(_([[{shipai} seems to ignore you as they go on.
+"Long story short. I've been able to override the disable routine and reactivate the functionality!"]]),{shipai=tut.ainame()}))
+   vn.jump("cont02")
+
+   vn.label("mess_software")
+   sai(_([["I have to keep myself busy or the voices start talking again."]]))
+   vn.menu{
+      {_([["Voices?"]]), "fleet_cont01"},
+      {_([["What did you do?"]]), "sw_cont01"},
+      {_("…"), "sw_cont01"},
+   }
+   vn.label("sw_cont01")
+   sai(_([["Long story short. I've been able to restore fleet control functionality!"]]))
+   vn.jump("cont02")
+
+   vn.label("cont02")
+   sai(_([["This means that you will be able to deploy additional ships. However, limited computation capacity means that you will be only be able to deploy ships that fit the fleet capacity."]]))
+   sai(_([["This excludes your current ship, which can go over your fleet capacity. However, if you want to deploy multiple ships, you have to make sure they don't go over the fleet capacity."]]))
+   sai(fmt.f(_([["It sounds complicated, but give it a try. When equipping your ships you will see fleet capacity values for your ships and the total amount you have, which is currently {fleetcap} points."]]),{fleetcap = player.fleetCapacity()}))
+   sai(_([["Try it out and if you need refreshing you can inquire again through the #bInfo#0 menu. This time there won't be a massacre because of a race condition!"]]))
    vn.done( tut.shipai.transition )
    vn.run()
-
-   -- Set the hypergates as known, should make them appear by name on selection menu
-   for k,v in ipairs(hypergate_list) do
-      v:setKnown(true)
-   end
 
    evt.finish(true) -- Properly finish
 end
