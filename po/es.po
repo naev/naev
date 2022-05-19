@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-05-12 10:59+0900\n"
-"PO-Revision-Date: 2022-05-18 22:16+0000\n"
+"PO-Revision-Date: 2022-05-19 16:36+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
@@ -1920,7 +1920,7 @@ msgstr "Cuatro Vientos"
 
 #: dat/faction.xml:617
 msgid "Rogue Four Winds"
-msgstr ""
+msgstr "Cuatro Vientos Canalla"
 
 #: dat/faction.xml:631
 msgid "Shadow_pirates"
@@ -2270,7 +2270,7 @@ msgid ""
 "the Hyena put so much strain on the pilots that it could crush them during "
 "high acceleration?"
 msgstr ""
-"Una carta del juego de cartas coleccionables #oHiena#0 de rareza común. "
+"Una carta del juego de cartas coleccionables #oHyena#0 de rareza común. "
 "Describe con detalle todas las estadísticas importantes del Hiena. ¿Sabías "
 "que los primeros modelos del Hiena sometían a los pilotos a tanta tensión "
 "que podían aplastarlos durante la alta aceleración?"
@@ -2302,6 +2302,11 @@ msgid ""
 "allowing the crew to man it past damage that would usually incapacitate "
 "normal ships?"
 msgstr ""
+"Una carta del juego de cartas coleccionables #oDvaered Vigilance#0 de rareza "
+"#buncommon#0. Describe con detalle todas las estadísticas importantes de la "
+"Vigilancia Dvaered. ¿Sabías que la Vigilancia tiene sistemas de soporte "
+"vital triplemente redundantes, lo que permite a la tripulación superar daños "
+"que normalmente incapacitarían a naves normales?"
 
 #: dat/outfits/accessory/ugly_statue.xml:2
 msgid "Ugly Statue"
@@ -2577,7 +2582,7 @@ msgstr ""
 
 #: dat/outfits/bioship/skills/the_bite_improved.xml:2
 msgid "The Bite - Improved"
-msgstr ""
+msgstr "La Mordida - Mejorada"
 
 #: dat/outfits/bioship/skills/the_bite_improved.xml:11
 msgid ""
@@ -2585,23 +2590,27 @@ msgid ""
 "on ship's mass. On bite all weapon damage output is increased by 25% for 10 "
 "seconds, and 25% of armour damage is restored as armour."
 msgstr ""
+"Hace que la nave arremeta contra el objetivo para darle un mordisco. El daño "
+"se basa en la masa de la nave. Al morder, toda la producción de daño de las "
+"armas aumenta un 25% durante 10 segundos, y el 25% del daño del blindaje se "
+"recupera como blindaje."
 
 #: dat/outfits/bioship/skills/tracking_antennae.xml:2
 msgid "Tracking Antennae"
-msgstr ""
+msgstr "Antenas de Rastreo"
 
 #: dat/outfits/bioship/skills/tunnelling_organ.xml:2
 #: dat/scripts/bioship/skills.lua:324
 msgid "Tunnelling Organ"
-msgstr ""
+msgstr "Órgano de Tunelado"
 
 #: dat/outfits/bioship/skills/wanderer.xml:2 dat/scripts/bioship/skills.lua:94
 msgid "Wanderer"
-msgstr ""
+msgstr "Errante"
 
 #: dat/outfits/core_engine/dummy_engine.xml:2
 msgid "Dummy Engine"
-msgstr ""
+msgstr "Motor Falso"
 
 #: dat/outfits/core_engine/dummy_engine.xml:4
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:4
@@ -2626,17 +2635,19 @@ msgstr ""
 #: dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml:4
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:4
 msgid "Core Systems (Engine)"
-msgstr ""
+msgstr "Sistemas del Núcleo (Motor)"
 
 #: dat/outfits/core_engine/dummy_engine.xml:9
 msgid ""
 "This is a dummy engine for use in missions only, which does nothing. DO NOT "
 "BUY."
 msgstr ""
+"Este es un motor falso para usar en misiones solamente, que no hace nada. NO "
+"COMPRAR."
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:2
 msgid "Beat Up Large Engine"
-msgstr ""
+msgstr "Motor Grande Maltrecho"
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:9
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:9
@@ -2645,10 +2656,13 @@ msgid ""
 "Clogged, corroded and cracked in every way possible while still remaining in "
 "functional condition, this engine really belongs on the scrap heap."
 msgstr ""
+"Obstruido, corroído y agrietado de todas las maneras posibles mientras sigue "
+"en condiciones funcionales, este motor realmente pertenece a un montón de "
+"chatarra."
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:2
 msgid "Krain Remige Engine"
-msgstr ""
+msgstr "Motor Remige Krain"
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:9
 msgid ""
@@ -2657,10 +2671,15 @@ msgid ""
 "performance exceeding most other cruiser engines in every respect, though "
 "its tuning renders it ill-suited to heavier vessels."
 msgstr ""
+"El Remige fue desarrollado por Industrias Krain exclusivamente para su buque "
+"insignia, el Kestrel. Optimizado para las necesidades del Kestrel, el Remige "
+"ofrece un rendimiento que supera a la mayoría de los motores de crucero en "
+"todos los aspectos, aunque su puesta a punto lo hace poco adecuado para "
+"naves más pesadas."
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:2
 msgid "Melendez Mammoth XL Engine"
-msgstr ""
+msgstr "Motor XL Mamut Melendez"
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:10
 msgid ""
@@ -2669,10 +2688,14 @@ msgid ""
 "the galaxy, whether in the form of bulk freight or as the primary engine of "
 "a fully-equipped battlecruiser."
 msgstr ""
+"El motor más grande que produce Melendez, el Mamut XL tiene muy poca "
+"competencia cuando se trata de mover grandes cantidades de masa por la "
+"galaxia, ya sea en forma de carga a granel o como motor principal de un "
+"crucero de batalla totalmente equipado."
 
 #: dat/outfits/core_engine/large/nexus_bolt_3500_engine.xml:2
 msgid "Nexus Bolt 3500 Engine"
-msgstr ""
+msgstr "Motor Bolt 3500 Nexus"
 
 #: dat/outfits/core_engine/large/nexus_bolt_3500_engine.xml:9
 msgid ""
@@ -2680,10 +2703,13 @@ msgid ""
 "Like most Nexus engines, it doesn't excel in speed, but its low power "
 "consumption makes it an attractive option for some pilots."
 msgstr ""
+"El Bolt 3500 es un motor de uso poco común diseñado para cruceros. Como la "
+"mayoría de los motores Nexus, no destaca por su velocidad, pero su bajo "
+"consumo lo convierte en una opción atractiva para algunos pilotos."
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:2
 msgid "Tricon Typhoon Engine"
-msgstr ""
+msgstr "Motor Tifón Tricon"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:9
 msgid ""
@@ -2692,10 +2718,14 @@ msgid ""
 "of many captains, though its high power consumption limits it to ships with "
 "powerful reactors."
 msgstr ""
+"El desarrollo del motor Tifón fue una especie de proyecto de prestigio para "
+"Tricon. Proporciona a los cruceros un manejo y una velocidad excelentes, y "
+"es el favorito de muchos capitanes, aunque su elevado consumo de energía lo "
+"limita a las naves con poderosos reactores."
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:2
 msgid "Tricon Typhoon II Engine"
-msgstr ""
+msgstr "Motor Tifón Tricon II"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:10
 msgid ""
@@ -2704,10 +2734,15 @@ msgid ""
 "markedly higher than anything in its class, but most captains are willing to "
 "make the trade for superior manoeuvrability"
 msgstr ""
+"El motor Tricon más grande de la producción, el Tifón II tiene un "
+"rendimiento sorprendentemente alto para un motor de nave capital. Su consumo "
+"de energía es notablemente mayor que el de cualquier otra nave de su clase, "
+"pero la mayoría de los capitanes están dispuestos a cambiar a cambio de su "
+"mayor maniobrabilidad"
 
 #: dat/outfits/core_engine/large/unicorp_eagle_7000_engine.xml:2
 msgid "Unicorp Eagle 7000 Engine"
-msgstr ""
+msgstr "Motor Águila 7000 Unicorp"
 
 #: dat/outfits/core_engine/large/unicorp_eagle_7000_engine.xml:10
 msgid ""
@@ -2717,14 +2752,20 @@ msgid ""
 "and its efficiency makes it an attractive option for heavy cruisers that "
 "need as much battery power for their weapons as possible."
 msgstr ""
+"El Aguila 7000 es el motor más grande y de mayor capacidad de Unicorp, "
+"aunque quizás no sea un modelo emblemático. Su precio relativamente bajo lo "
+"hace atractivo para los capitanes con un presupuesto ajustado si sus "
+"exigencias de rendimiento no son demasiado grandes, y su eficiencia lo "
+"convierte en una opción atractiva para los cruceros pesados que necesitan la "
+"mayor cantidad posible de carga de batería para sus armas."
 
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:2
 msgid "Beat Up Medium Engine"
-msgstr ""
+msgstr "Motor Media Maltrecho"
 
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:2
 msgid "Krain Patagium Engine"
-msgstr ""
+msgstr "Motor Patagio Krain"
 
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:10
 msgid ""
@@ -2733,10 +2774,15 @@ msgid ""
 "terms of maximum speed and manouverability, the engine is not adequate for "
 "most other destroyers due to their higher mass."
 msgstr ""
+"El Patagio es un motor destructor desarrollado por Industrias Krain para ser "
+"utilizado en el Starbridge. Aunque sus prestaciones superan a las de otros "
+"motores de destructor en términos de velocidad máxima y maniobrabilidad, el "
+"motor no es apropiado para la mayoría de los otros destructores debido a su "
+"gran peso."
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:2
 msgid "Melendez Buffalo XL Engine"
-msgstr ""
+msgstr "Motor XL Búfalo Melendez"
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:10
 msgid ""
@@ -2745,10 +2791,14 @@ msgid ""
 "in its size class, and more than a few combat vessels rely on it to move "
 "them and their arsenals into battle."
 msgstr ""
+"El Búfalo XL es un elemento básico entre los cargueros de tamaño medio, "
+"especialmente los que transportan cargas densas. Su considerable potencia "
+"hace que tenga pocos competidores de su tamaño, y más de una nave de combate "
+"confía en él para trasladar sus arsenales a la batalla."
 
 #: dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml:2
 msgid "Nexus Arrow 700 Engine"
-msgstr ""
+msgstr "Motor Flecha 700 Nexus"
 
 #: dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml:9
 msgid ""
@@ -2756,10 +2806,13 @@ msgid ""
 "giving captains decent manouverability without leeching too much off of the "
 "ship's reactors."
 msgstr ""
+"El Flecha 700 es un motor de Corbeta respetable por un precio respetable, "
+"que ofrece a los capitanes una maniobrabilidad decente sin que los reactores "
+"de la nave se resientan demasiado."
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_engine.xml:2
 msgid "Tricon Cyclone Engine"
-msgstr ""
+msgstr "Motor Ciclón Tricon"
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_engine.xml:9
 msgid ""
@@ -2767,10 +2820,13 @@ msgid ""
 "engines with superb performance. Many large navies and wealthier mercenaries "
 "employ the Cyclone in their corvettes."
 msgstr ""
+"El motor Ciclón de Tricon mantiene la reputación de la corporación en cuanto "
+"a motores de primera calidad con un rendimiento soberbio. Muchas grandes "
+"armadas y los mercenarios más ricos emplean el Ciclón en sus corbetas."
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_ii_engine.xml:2
 msgid "Tricon Cyclone II Engine"
-msgstr ""
+msgstr "Motor Ciclón Tricon II"
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_ii_engine.xml:10
 msgid ""
@@ -2779,10 +2835,15 @@ msgid ""
 "than doubling the engine's mass capacity. Its high power consumption is "
 "typically gladly written off given its exemplary performance."
 msgstr ""
+"El motor preferido de los capitanes de destructores y cargueros centrados en "
+"el tiempo, el Ciclón II conserva la mayor parte de las prestaciones del "
+"Ciclón original al tiempo que duplica la capacidad de masa del motor. Su "
+"elevado consumo de energía se suele descartar de buen grado dado su ejemplar "
+"rendimiento."
 
 #: dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml:2
 msgid "Unicorp Falcon 1300 Engine"
-msgstr ""
+msgstr "Motor Halcón 1300 Unicorp"
 
 #: dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml:10
 msgid ""
@@ -2791,14 +2852,18 @@ msgid ""
 "Destroyer pilots who prefer a more efficient engine over the fastest engine "
 "available."
 msgstr ""
+"El Falcon 1300 es un motor estándar de baja potencia y medio-pesado. Lo "
+"utilizan habitualmente los pilotos de cargueros civiles que no pueden "
+"permitirse algo mejor, así como los pilotos de Destructores que prefieren un "
+"motor más eficiente que el más rápido disponible."
 
 #: dat/outfits/core_engine/small/beat_up_small_engine.xml:2
 msgid "Beat Up Small Engine"
-msgstr ""
+msgstr "Motor Pequeño Maltrecho"
 
 #: dat/outfits/core_engine/small/melendez_ox_xl_engine.xml:2
 msgid "Melendez Ox XL Engine"
-msgstr ""
+msgstr "Motor XL Asno Melendez"
 
 #: dat/outfits/core_engine/small/melendez_ox_xl_engine.xml:10
 msgid ""
@@ -2806,10 +2871,13 @@ msgid ""
 "excels at enabling merchants to haul moderate amounts of cargo from system "
 "to system with minimal refuelling stops."
 msgstr ""
+"Entre los motores más potentes disponibles para las embarcaciones pequeñas, "
+"el Asno XL destaca por permitir a los comerciantes transportar cantidades "
+"moderadas de carga de un sistema a otro con mínimas paradas para repostar."
 
 #: dat/outfits/core_engine/small/nexus_dart_150_engine.xml:2
 msgid "Nexus Dart 150 Engine"
-msgstr ""
+msgstr "Motor Dardo 150 Nexus"
 
 #: dat/outfits/core_engine/small/nexus_dart_150_engine.xml:9
 msgid ""
@@ -2818,10 +2886,14 @@ msgid ""
 "reasonable price. A very popular engine among civilian and military users "
 "alike."
 msgstr ""
+"El Dardo 150 es un motor muy completo para naves ligeras. Aunque no destaca "
+"por su velocidad, ofrece una buena manejabilidad y eficiencia de potencia "
+"por un precio razonable. Un motor muy popular entre los usuarios civiles y "
+"militares por igual."
 
 #: dat/outfits/core_engine/small/tricon_zephyr_engine.xml:2
 msgid "Tricon Zephyr Engine"
-msgstr ""
+msgstr "Motor Céfiro Tricon"
 
 #: dat/outfits/core_engine/small/tricon_zephyr_engine.xml:9
 msgid ""
@@ -2830,11 +2902,16 @@ msgid ""
 "caveat of markedly increased power consumption, but those flying with Tricon "
 "engines can usually afford the requisite reactor upgrades."
 msgstr ""
+"Para los pilotos de embarcaciones ligeras que exigen un rendimiento sin "
+"igual, el Céfiro de Tricon es el motor elegido. Su manejo, el mejor de su "
+"clase, conlleva la advertencia de que el consumo de energía es notablemente "
+"superior, pero los que vuelan con motores Tricon suelen poder permitirse las "
+"mejoras necesarias en el reactor."
 
 #: dat/outfits/core_engine/small/tricon_zephyr_ii_engine.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:226
 msgid "Tricon Zephyr II Engine"
-msgstr ""
+msgstr "Motor Céfiro Tricon II"
 
 #: dat/outfits/core_engine/small/tricon_zephyr_ii_engine.xml:10
 msgid ""
@@ -2843,10 +2920,15 @@ msgid ""
 "Its performance has not gone unnoticed by merchants either, resulting in its "
 "use for lightweight, time-critical shipping."
 msgstr ""
+"El Céfiro II, una versión más grande del Céfiro original de Tricon destinada "
+"a los cazas pesados, permite a los cazas y bombarderos más pesados moverse "
+"como naves de exploración. Su rendimiento tampoco ha pasado desapercibido "
+"por los comerciantes, lo que ha hecho que se utilice para el transporte "
+"marítimo ligero y contrarreloj."
 
 #: dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml:2
 msgid "Unicorp Hawk 350 Engine"
-msgstr ""
+msgstr "Motor Halcón 350 Unicorp"
 
 #: dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml:10
 msgid ""
@@ -2854,10 +2936,13 @@ msgid ""
 "modest energy consumption allows it to be equipped on most vessels without "
 "requiring reactor upgrades."
 msgstr ""
+"El Halcón 350 está destinado a cazas pesados y buques de carga ligeros. Su "
+"modesto consumo de energía permite equiparlo en la mayoría de las naves sin "
+"necesidad de actualizar el reactor."
 
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:2
 msgid "Za'lek Test Engine"
-msgstr ""
+msgstr "Motor de Pruebas Za'lek"
 
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:10
 msgid ""
@@ -2866,10 +2951,15 @@ msgid ""
 "scientists to test new refrigeration and propulsion systems. These engines "
 "are very often modded by students, which makes them unreliable."
 msgstr ""
+"Construido por Fabricantes Za'lek, este motor no pretende ser un motor "
+"eficiente. Su objetivo es ser fácilmente modificable para que los "
+"científicos Za'lek puedan probar nuevos sistemas de refrigeración y "
+"propulsión. Estos motores suelen ser modificados por estudiantes, lo que los "
+"hace poco fiables."
 
 #: dat/outfits/core_hull/dummy_plating.xml:2
 msgid "Dummy Plating"
-msgstr ""
+msgstr "Revestimiento Falso"
 
 #: dat/outfits/core_hull/dummy_plating.xml:4
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:4
@@ -2896,17 +2986,19 @@ msgstr ""
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:4
 #: dat/outfits/core_hull/small/unicorp_d4_light_plating.xml:4
 msgid "Core Systems (Hull)"
-msgstr ""
+msgstr "Sistemas de Núcleo (Casco)"
 
 #: dat/outfits/core_hull/dummy_plating.xml:9
 msgid ""
 "This is a dummy hull for use in missions only, which does nothing. DO NOT "
 "BUY."
 msgstr ""
+"Este es de un casco ficticio para usar en misiones solamente, el cual no "
+"hace nada. NO COMPRAR."
 
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:2
 msgid "Patchwork Heavy Plating"
-msgstr ""
+msgstr "Revestimiento Pesado de Parches"
 
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:10
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:10
@@ -2915,10 +3007,12 @@ msgid ""
 "On the plus side, it keeps air from venting into space. But that's about it. "
 "This kind of hull maintenance is simply unacceptable."
 msgstr ""
+"Por el lado positivo, evita que el aire se ventile en el espacio. Pero eso "
+"es todo. Este tipo de casco sin mantenimiento es simplemente inaceptable."
 
 #: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:2
 msgid "Red Star Large Cargo Hull"
-msgstr ""
+msgstr "Casco de Carga Grande Estrella Roja"
 
 #: dat/outfits/core_hull/large/rs_large_cargo_hull.xml:10
 msgid ""
@@ -2930,10 +3024,18 @@ msgid ""
 "tracking zero-points and reduced secondary splash damage, turtling has never "
 "been safer."
 msgstr ""
+"Este casco de carga de la Organización Estrella Roja hace uso de aleaciones "
+"defensivas de última generación, lo que le permite liberar aún más espacio "
+"para la carga sin sacrificar demasiada la durabilidad. Junto con el aumento "
+"de espacio, su (tristemente) famoso generador de absorción de ondas de "
+"choque electromagnéticas viene incorporado, convirtiendo la potencia de la "
+"CPU y un poco más de visibilidad en misiles james, rastreando puntos cero y "
+"reduciendo el daño por salpicaduras secundarias, el aterrizaje nunca ha sido "
+"más seguro."
 
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:2
 msgid "S&K Heavy Combat Plating"
-msgstr ""
+msgstr "Revestimiento de Combate Pesado S&K"
 
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:10
 msgid ""
@@ -2941,10 +3043,13 @@ msgid ""
 "prolonged battle. Quite a few captains and their crews owe their lives to "
 "this armour configuration."
 msgstr ""
+"Este pesado blindaje desarrollado por Industrias Schafer & Kane puede "
+"soportar combates prolongados. Bastantes capitanes y sus tripulaciones deben "
+"su vida a esta configuración de blindaje."
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:2
 msgid "S&K Large Cargo Hull"
-msgstr ""
+msgstr "Casco de Carga Grande S&K"
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:10
 msgid ""
@@ -2952,10 +3057,13 @@ msgid ""
 "defensive alloys, which allows it to free up even more space for cargo "
 "without sacrificing too much durability."
 msgstr ""
+"Este casco de carga de Industrias Schafer & Kane hace uso de aleaciones "
+"defensivas de última generación, lo que le permite liberar aún más espacio "
+"para la carga sin sacrificar demasiada durabilidad."
 
 #: dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml:2
 msgid "S&K Superheavy Combat Plating"
-msgstr ""
+msgstr "Revestimiento de Combate Superpesado S&K"
 
 #: dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml:10
 msgid ""
@@ -2963,10 +3071,13 @@ msgid ""
 "modification from Schafer & Kane Industries is generally found only on "
 "important capital ships."
 msgstr ""
+"Considerada la mejor configuración de revestimiento estándar del mercado, "
+"esta modificación del casco de Industrias Schafer & Kane se encuentra "
+"generalmente sólo en las naves capitales importantes."
 
 #: dat/outfits/core_hull/large/unicorp_d48_heavy_plating.xml:2
 msgid "Unicorp D-48 Heavy Plating"
-msgstr ""
+msgstr "Revestimiento Pesado D-48 Unicorp"
 
 #: dat/outfits/core_hull/large/unicorp_d48_heavy_plating.xml:9
 msgid ""
@@ -2974,10 +3085,13 @@ msgid ""
 "weapons, with most seasoned captains opting for a heavier, more advanced "
 "plating."
 msgstr ""
+"Aunque es un diseño respetable, el revestimiento D-48 se ve superado por las "
+"armas pesadas modernas, y la mayoría de los capitanes experimentados optan "
+"por un revestimiento más pesado y avanzado."
 
 #: dat/outfits/core_hull/large/unicorp_d68_heavy_plating.xml:2
 msgid "Unicorp D-68 Heavy Plating"
-msgstr ""
+msgstr "Revestimiento Pesado D-68 Unicorp"
 
 #: dat/outfits/core_hull/large/unicorp_d68_heavy_plating.xml:10
 msgid ""
@@ -2985,10 +3099,13 @@ msgid ""
 "weapons, with most seasoned captains opting for a heavier, more advanced "
 "plating."
 msgstr ""
+"Aunque es un diseño respetable, el revestimiento D-68 se ve superado por las "
+"armas pesadas modernas, y la mayoría de los capitanes experimentados optan "
+"por un revestimiento más pesado y avanzado."
 
 #: dat/outfits/core_hull/medium/nexus_medium_stealth_plating.xml:2
 msgid "Nexus Medium Stealth Plating"
-msgstr ""
+msgstr "Revestimiento de Sigilo Medio Nexus"
 
 #: dat/outfits/core_hull/medium/nexus_medium_stealth_plating.xml:9
 msgid ""
@@ -2996,14 +3113,17 @@ msgid ""
 "but Nexus Shipyards have nevertheless developed a hull modification that "
 "helps in this area"
 msgstr ""
+"Las naves de tamaño medio no suelen dedicarse al negocio de pasar "
+"inadvertidas, pero los astilleros Nexus han desarrollado, no obstante, una "
+"modificación del casco que ayuda en este aspecto"
 
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:2
 msgid "Patchwork Medium Plating"
-msgstr ""
+msgstr "Revestimiento Medio de Parches"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:2
 msgid "Red Star Medium Cargo Hull"
-msgstr ""
+msgstr "Casco de Carga Media Estrella Roja"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:10
 msgid ""
@@ -3017,20 +3137,32 @@ msgid ""
 "secondary splash damage are all achieved making this hull rather more "
 "resiliant."
 msgstr ""
+"La Organización Estrella Roja ha desarrollado una modificación del casco que "
+"proporciona un amplio espacio de carga y protección para su propio trabajo y "
+"ahora ha empezado a venderlo a otros. Decidiendo que \"por un centavo, por "
+"una libra\", se añadió un generador de absorción de ondas de choque "
+"electromagnéticas, lo que normalmente hace que el casco sea más bien "
+"puntiagudo y que el escáner sea obvio, aunque el casco ya es bastante "
+"abultado debido a las cápsulas de carga... por otro lado, por el precio de "
+"un poco de potencia de la CPU, se consiguen interferencias de misiles, "
+"puntos cero de rastreo y una reducción del daño secundario por salpicaduras, "
+"lo que hace que este casco sea bastante más resistente."
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:2
 msgid "S&K Medium Cargo Hull"
-msgstr ""
+msgstr "Casco de Cargo Medio S&K"
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:10
 msgid ""
 "Schafer & Kane Industries have developed a hull modification that provides "
 "both ample cargo space and protection."
 msgstr ""
+"Industrias Schafer & Kane ha desarrollado una modificación del casco que "
+"proporciona un amplio espacio de carga y protección."
 
 #: dat/outfits/core_hull/medium/sk_medium_combat_plating.xml:2
 msgid "S&K Medium Combat Plating"
-msgstr ""
+msgstr "Revestimiento de Combate Medio S&K"
 
 #: dat/outfits/core_hull/medium/sk_medium_combat_plating.xml:9
 msgid ""
@@ -3038,10 +3170,13 @@ msgid ""
 "combat plating provides ample protection utilizing the latest in defensive "
 "materials."
 msgstr ""
+"Diseñado para corbetas y buques de tamaño similar, el revestimiento de "
+"combate medio de Schafer & Kane proporciona una amplia protección utilizando "
+"lo último en materiales defensivos."
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:2
 msgid "S&K Medium-Heavy Combat Plating"
-msgstr ""
+msgstr "Revestimiento de Combate Pesado-Medio S&K"
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:10
 msgid ""
@@ -3049,20 +3184,25 @@ msgid ""
 "heavy combat plating provides excellent protection from everything save "
 "capital-class threats."
 msgstr ""
+"Diseñado para destructores y buques de tamaño similar, el revestimiento de "
+"combate medio-pesado de Schafer & Kane proporciona una excelente protección "
+"contra todo, excepto las amenazas de clase capital."
 
 #: dat/outfits/core_hull/medium/unicorp_d12_medium_plating.xml:2
 msgid "Unicorp D-12 Medium Plating"
-msgstr ""
+msgstr "Revestimiento Medio D-12 Unicorp"
 
 #: dat/outfits/core_hull/medium/unicorp_d12_medium_plating.xml:9
 msgid ""
 "D-12 plating provides a serviceable layer of armour to medium ships, and "
 "doesn't weigh too much."
 msgstr ""
+"El revestimiento D-12 proporciona una capa de blindaje útil a las naves "
+"medianas, y no pesa demasiado."
 
 #: dat/outfits/core_hull/medium/unicorp_d24_medium_plating.xml:2
 msgid "Unicorp D-24 Medium Plating"
-msgstr ""
+msgstr "Revestimiento Medio D-24 Unicorp"
 
 #: dat/outfits/core_hull/medium/unicorp_d24_medium_plating.xml:10
 msgid ""
@@ -3070,10 +3210,14 @@ msgid ""
 "thicker and built atop an enlarged superstructure, increasing mass, armour, "
 "and cargo capacity."
 msgstr ""
+"El revestimiento D-24 de Unicorp es similar al revestimiento D-12, pero las "
+"placas de blindaje son más gruesas y están construidas sobre una "
+"superestructura ampliada, lo que aumenta la masa, el blindaje y la capacidad "
+"de carga."
 
 #: dat/outfits/core_hull/small/nexus_light_stealth_plating.xml:2
 msgid "Nexus Light Stealth Plating"
-msgstr ""
+msgstr "Revestimiento de Sigilo Ligero Nexus"
 
 #: dat/outfits/core_hull/small/nexus_light_stealth_plating.xml:10
 msgid ""
@@ -3081,14 +3225,17 @@ msgid ""
 "Plating configuration features the latest in sensor-absorbing materials and "
 "geometry."
 msgstr ""
+"Diseñada para naves militares de exploración y patrulla, la configuración "
+"del revestimiento ligero de sigilo de Nexus cuenta con lo último en "
+"materiales y geometría de absorción de sensores."
 
 #: dat/outfits/core_hull/small/patchwork_light_plating.xml:2
 msgid "Patchwork Light Plating"
-msgstr ""
+msgstr "Revestimiento Ligero de Parches"
 
 #: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:2
 msgid "Red Star Small Cargo Hull"
-msgstr ""
+msgstr "Casco de Carga Pequeña Estrella Roja"
 
 #: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:10
 msgid ""
@@ -3101,11 +3248,22 @@ msgid ""
 "increasing the hull signature and CPU usage also causes missile jams, "
 "reduces the hulls tracability and reduces splash damage from weapon strikes."
 msgstr ""
+"Aunque son caros, la Organización de la Estrella Roja empezó a fabricar "
+"estos cascos para proporcionar más espacio de carga, pero también para "
+"ofrecer una mejor protección a sus naves que participaban en las tareas de "
+"ayuda durante las guerras y que trabajaban en las zonas menos recomendables "
+"de la galaxia. Dado que el volumen adicional y los salientes de las "
+"secciones de carga hacen que sea más fácil de detectar, la Organización se "
+"adelantó y añadió un generador de absorción de ondas de choque "
+"electromagnéticas que, aunque también aumenta la firma del casco y el uso de "
+"la CPU, también provoca interferencias con los misiles, reduce la "
+"trazabilidad de los cascos y reduce el daño por salpicaduras de los impactos "
+"de armas."
 
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:234
 msgid "S&K Light Combat Plating"
-msgstr ""
+msgstr "Revestimiento de Combate Ligero S&K"
 
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:10
 msgid ""
@@ -3113,10 +3271,13 @@ msgid ""
 "Combat Plating configuration is a product made for fighters and bombers, "
 "providing optimum protection."
 msgstr ""
+"Industrias Schafer & Kane desarrolla sobre todo para las naves más grandes, "
+"pero la configuración Revestimiento de Combate Ligero es un producto hecho "
+"para cazas y bombarderos, que proporciona una protección óptima."
 
 #: dat/outfits/core_hull/small/sk_small_cargo_hull.xml:2
 msgid "S&K Small Cargo Hull"
-msgstr ""
+msgstr "Casco de Carga Pequeño S&K"
 
 #: dat/outfits/core_hull/small/sk_small_cargo_hull.xml:10
 msgid ""
@@ -3124,10 +3285,13 @@ msgid ""
 "Schafer & Kane Industries provides an impressive amount of cargo space "
 "without compromising the hull's integrity."
 msgstr ""
+"Aunque es una inversión costosa para los pequeños transportistas, esta "
+"modificación del casco de Industrias Schafer & Kane proporciona una cantidad "
+"impresionante de espacio de carga sin comprometer la integridad del casco."
 
 #: dat/outfits/core_hull/small/sk_ultralight_combat_plating.xml:2
 msgid "S&K Ultralight Combat Plating"
-msgstr ""
+msgstr "Revestimiento de Combate Ultraligero S&K"
 
 #: dat/outfits/core_hull/small/sk_ultralight_combat_plating.xml:9
 msgid ""
@@ -3135,30 +3299,40 @@ msgid ""
 "Ultralight Combat Plating configuration is a product made for light fighters "
 "and in-system patrol craft, providing optimum protection."
 msgstr ""
+"Industrias Schafer & Kane desarrollan sobre todo para las naves más grandes, "
+"pero la configuración del Revestimiento de Combate Ultraligero es un "
+"producto hecho para los cazas ligeros y las naves de patrulla de sistema, "
+"proporcionando una protección óptima."
 
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:2
 msgid "Unicorp D-2 Light Plating"
-msgstr ""
+msgstr "Revestimiento Ligero D-2 Unicorp"
 
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:9
 msgid ""
 "Commonly found on civilian vessels, the D-2 plating is popular with ship "
 "manufacturers due to its low cost and adequate, if uninspiring performance."
 msgstr ""
+"El revestimiento D-2, que se encuentra habitualmente en las naves civiles, "
+"es muy popular entre los fabricantes de naves debido a su bajo coste y a su "
+"rendimiento adecuado, aunque sin grandes alicientes."
 
 #: dat/outfits/core_hull/small/unicorp_d4_light_plating.xml:2
 msgid "Unicorp D-4 Light Plating"
-msgstr ""
+msgstr "Revestimiento Ligero D-4 Unicorp"
 
 #: dat/outfits/core_hull/small/unicorp_d4_light_plating.xml:10
 msgid ""
 "Commonly found on civilian vessels, the D-4 plating is popular with ship "
 "manufacturers due to its low cost and adequate, if uninspiring performance."
 msgstr ""
+"El revestimiento D-4, que se encuentra habitualmente en las naves civiles, "
+"es muy popular entre los fabricantes de naves debido a su bajo coste y a su "
+"rendimiento adecuado, aunque sin grandes alicientes."
 
 #: dat/outfits/core_system/dummy_systems.xml:2
 msgid "Dummy Systems"
-msgstr ""
+msgstr "Sistemas Falsos"
 
 #: dat/outfits/core_system/dummy_systems.xml:4
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:4
@@ -3183,17 +3357,19 @@ msgstr ""
 #: dat/outfits/core_system/small/unicorp_pt16_core_system.xml:4
 #: dat/outfits/core_system/small/unicorp_pt68_core_system.xml:4
 msgid "Core Systems (System)"
-msgstr ""
+msgstr "Sistemas de Núcleo (Sistema)"
 
 #: dat/outfits/core_system/dummy_systems.xml:9
 msgid ""
 "This is a dummy core system for use in missions only, which does nothing. DO "
 "NOT BUY."
 msgstr ""
+"Este es un sistema de núcleo falso para uso en misiones solamente, el cual "
+"no hace nada. NO COMPRAR."
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:2
 msgid "Milspec Orion 8601 Core System"
-msgstr ""
+msgstr "Sistema de Núcleo Orion 8601 Milspec"
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:9
 msgid ""
