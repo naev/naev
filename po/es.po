@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-05-12 10:59+0900\n"
-"PO-Revision-Date: 2022-05-19 16:36+0000\n"
+"PO-Revision-Date: 2022-05-19 23:15+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
@@ -830,7 +830,7 @@ msgstr "PACIFICADOR"
 
 #: artwork/gfx/loading/peacemaker.webp.txt:1
 msgid "EMPIRE PEACEMAKER"
-msgstr "IMPERIO PACIFICADOR"
+msgstr "PACIFICADOR DEL IMPERIO"
 
 #: artwork/gfx/loading/preacher.webp.txt:1
 msgid "SIRIUS PREACHER"
@@ -925,7 +925,7 @@ msgstr ""
 
 #: dat/commodities/food.xml:3
 msgid "Food"
-msgstr "Alimentos"
+msgstr "Comida"
 
 #: dat/commodities/food.xml:4
 msgid ""
@@ -1067,7 +1067,7 @@ msgstr ""
 
 #: dat/commodities/ore.xml:3
 msgid "Ore"
-msgstr "Mineral"
+msgstr "Minerales"
 
 #: dat/commodities/ore.xml:4
 msgid ""
@@ -1215,7 +1215,7 @@ msgstr "Modo Lento"
 
 #: dat/difficulty.xml:25
 msgid "Easy Mode"
-msgstr "Modo Fácil "
+msgstr "Modo Fácil"
 
 #: dat/difficulty.xml:38
 msgid "Masochist Mode"
@@ -1349,7 +1349,7 @@ msgstr "Entrar en Agujero de Gusano"
 
 #: dat/effects/wormhole_enter.xml:3
 msgid "Entering a wormhole!"
-msgstr "¡Entrando en un agujero de gusano!"
+msgstr "¡Entrando en agujero de gusano!"
 
 #: dat/effects/wormhole_exit.xml:2
 msgid "Wormhole Exit"
@@ -1357,10 +1357,9 @@ msgstr "Salir de Agujero de Gusano"
 
 #: dat/effects/wormhole_exit.xml:3
 msgid "Exiting a wormhole!"
-msgstr "¡Saliendo de un agujero de gusano!"
+msgstr "¡Saliendo de agujero de gusano!"
 
 #: dat/faction.xml:4
-#, fuzzy
 msgid "Dummy"
 msgstr "Títere"
 
@@ -1390,8 +1389,8 @@ msgid ""
 "The Raven Pirate Clan is a band of pirates that lead over the widespread "
 "Qorel sector between the Empire and Dvaered systems."
 msgstr ""
-"El Clan Pirata Cuervo es una banda de piratas que lidera el extenso sector "
-"de Qorel, entre los sistemas del Imperio y Dvaered."
+"El Clan Pirata Cuervo es una banda de piratas que lidera el amplio sector de "
+"Qorel, entre los sistemas del Imperio y Dvaered."
 
 #: dat/faction.xml:118
 msgid "Wild Ones"
@@ -1505,7 +1504,6 @@ msgstr ""
 #: dat/ships/proteron/proteron_derivative.xml:16
 #: dat/ships/proteron/proteron_kahan.xml:16
 #: dat/ships/proteron/proteron_watson.xml:16
-#, fuzzy
 msgid "Proteron"
 msgstr "Proteron"
 
@@ -1618,15 +1616,15 @@ msgstr "FLF"
 
 #: dat/faction.xml:459
 msgid "Frontier Liberation Front"
-msgstr "Frente de Liberación Frontera"
+msgstr "Frente de Liberación de la Frontera"
 
 #: dat/faction.xml:465
 msgid ""
 "The Frontier Liberation Front is a group of terrorists advocating for the "
 "independence of the Frontier from Imperial tyranny."
 msgstr ""
-"El Frente de Liberación Frontera es un grupo de terroristas que aboga por la "
-"independencia de la frontera de la tiranía del Imperio."
+"El Frente de Liberación de la Frontera es un grupo de terroristas que aboga "
+"por la independencia de la frontera de la tiranía del Imperio."
 
 #. Add the Cargo
 #. Ship to go back to
@@ -1642,7 +1640,6 @@ msgstr ""
 #: dat/missions/dvaered/recruitment/dv_propaganda.lua:98
 #: dat/missions/minerva/kex3.lua:377 dat/scripts/common/dvaered.lua:14
 #: dat/scripts/common/dvaered.lua:19
-#, fuzzy
 msgid "Dvaered"
 msgstr "Dvaered"
 
@@ -1943,11 +1940,11 @@ msgstr "Matones"
 
 #: dat/faction.xml:687
 msgid "Achack_sirius"
-msgstr ""
+msgstr "Sirio_achack"
 
 #: dat/faction.xml:701
 msgid "Achack_thugs"
-msgstr ""
+msgstr "Matones-achack"
 
 #: dat/faction.xml:715
 #, fuzzy
@@ -2049,8 +2046,9 @@ msgstr ""
 
 #: dat/outfits/accessory/black_cat_doll.xml:13
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
+#, fuzzy
 msgid "#pOnly active when in stealth.#0"
-msgstr "#pSolo activo en modo sigilo.#0"
+msgstr "#pOnly active when in stealth.#0"
 
 #: dat/outfits/accessory/broken_nebular_shielding_prototype.xml:2
 msgid "Broken Nebular Shielding Prototype"
@@ -2131,8 +2129,9 @@ msgstr ""
 "la Nebulosa antes de desaparecer misteriosamente."
 
 #: dat/outfits/accessory/fuzzy_dice.xml:12
+#, fuzzy
 msgid "#pImproves luck!#0"
-msgstr "#p¡Mejora la suerta!#0"
+msgstr "#pImproves luck!#0"
 
 #: dat/outfits/accessory/left_boot.xml:2
 msgid "Left Boot"
@@ -2149,8 +2148,9 @@ msgstr ""
 "podría ambientar la nave."
 
 #: dat/outfits/accessory/left_boot.xml:13
+#, fuzzy
 msgid "#pSmells funky.#0"
-msgstr "#pHuele raro.#0"
+msgstr "#pSmells funky.#0"
 
 #: dat/outfits/accessory/love_letter.xml:2
 msgid "Love Letter"
@@ -2170,8 +2170,9 @@ msgstr ""
 "hace que tu barco parezca más bonito."
 
 #: dat/outfits/accessory/love_letter.xml:13
+#, fuzzy
 msgid "#rLove is in the air.#0"
-msgstr "#rEl amor esta en el aire.#0"
+msgstr "#rLove is in the air.#0"
 
 #: dat/outfits/accessory/pentagram_of_valor.xml:2
 msgid "Pentagram of Valor"
@@ -2556,7 +2557,7 @@ msgstr "Silencio"
 
 #: dat/outfits/bioship/skills/the_bite.xml:2 dat/scripts/bioship/skills.lua:30
 msgid "The Bite"
-msgstr "La Mordida"
+msgstr "El Mordisco"
 
 #: dat/outfits/bioship/skills/the_bite.xml:11
 msgid ""
@@ -2568,7 +2569,7 @@ msgstr ""
 
 #: dat/outfits/bioship/skills/the_bite_blood_lust.xml:2
 msgid "The Bite - Blood Lust"
-msgstr "La Mordida - Sed de Sangre"
+msgstr "El Mordisco - Sed de Sangre"
 
 #: dat/outfits/bioship/skills/the_bite_blood_lust.xml:11
 msgid ""
@@ -2582,7 +2583,7 @@ msgstr ""
 
 #: dat/outfits/bioship/skills/the_bite_improved.xml:2
 msgid "The Bite - Improved"
-msgstr "La Mordida - Mejorada"
+msgstr "El Mordisco - Mejorado"
 
 #: dat/outfits/bioship/skills/the_bite_improved.xml:11
 msgid ""
@@ -2635,7 +2636,7 @@ msgstr "Motor Falso"
 #: dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml:4
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:4
 msgid "Core Systems (Engine)"
-msgstr "Sistemas del Núcleo (Motor)"
+msgstr "Sistema Base (Motor)"
 
 #: dat/outfits/core_engine/dummy_engine.xml:9
 msgid ""
@@ -2647,7 +2648,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:2
 msgid "Beat Up Large Engine"
-msgstr "Motor Grande Maltrecho"
+msgstr "Motor Grande Destartalado"
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:9
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:9
@@ -2662,7 +2663,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:2
 msgid "Krain Remige Engine"
-msgstr "Motor Remige Krain"
+msgstr "Remige Krain Motor"
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:9
 msgid ""
@@ -2679,7 +2680,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:2
 msgid "Melendez Mammoth XL Engine"
-msgstr "Motor XL Mamut Melendez"
+msgstr "XL Mamut Melendez Motor"
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:10
 msgid ""
@@ -2695,7 +2696,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/large/nexus_bolt_3500_engine.xml:2
 msgid "Nexus Bolt 3500 Engine"
-msgstr "Motor Bolt 3500 Nexus"
+msgstr "Bolt 3500 Nexus Motor"
 
 #: dat/outfits/core_engine/large/nexus_bolt_3500_engine.xml:9
 msgid ""
@@ -2709,7 +2710,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:2
 msgid "Tricon Typhoon Engine"
-msgstr "Motor Tifón Tricon"
+msgstr "Tifón Tricon Motor"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:9
 msgid ""
@@ -2725,7 +2726,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:2
 msgid "Tricon Typhoon II Engine"
-msgstr "Motor Tifón Tricon II"
+msgstr "Tifón II Tricon Motor"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:10
 msgid ""
@@ -2742,7 +2743,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/large/unicorp_eagle_7000_engine.xml:2
 msgid "Unicorp Eagle 7000 Engine"
-msgstr "Motor Águila 7000 Unicorp"
+msgstr "Águila 7000 Unicorp Motor"
 
 #: dat/outfits/core_engine/large/unicorp_eagle_7000_engine.xml:10
 msgid ""
@@ -2761,11 +2762,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:2
 msgid "Beat Up Medium Engine"
-msgstr "Motor Media Maltrecho"
+msgstr "Motor Medio Destartalado"
 
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:2
 msgid "Krain Patagium Engine"
-msgstr "Motor Patagio Krain"
+msgstr "Patagio Krain Motor"
 
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:10
 msgid ""
@@ -2782,7 +2783,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:2
 msgid "Melendez Buffalo XL Engine"
-msgstr "Motor XL Búfalo Melendez"
+msgstr "XL Búfalo Melendez Motor"
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:10
 msgid ""
@@ -2798,7 +2799,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml:2
 msgid "Nexus Arrow 700 Engine"
-msgstr "Motor Flecha 700 Nexus"
+msgstr "Flecha 700 Nexus Motor"
 
 #: dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml:9
 msgid ""
@@ -2812,7 +2813,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_engine.xml:2
 msgid "Tricon Cyclone Engine"
-msgstr "Motor Ciclón Tricon"
+msgstr "Ciclón Tricon Motor"
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_engine.xml:9
 msgid ""
@@ -2826,7 +2827,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_ii_engine.xml:2
 msgid "Tricon Cyclone II Engine"
-msgstr "Motor Ciclón Tricon II"
+msgstr "Ciclón II Tricon Motor"
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_ii_engine.xml:10
 msgid ""
@@ -2843,7 +2844,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml:2
 msgid "Unicorp Falcon 1300 Engine"
-msgstr "Motor Halcón 1300 Unicorp"
+msgstr "Halcón 1300 Unicorp Motor"
 
 #: dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml:10
 msgid ""
@@ -2859,11 +2860,11 @@ msgstr ""
 
 #: dat/outfits/core_engine/small/beat_up_small_engine.xml:2
 msgid "Beat Up Small Engine"
-msgstr "Motor Pequeño Maltrecho"
+msgstr "Motor Pequeño Destartalado"
 
 #: dat/outfits/core_engine/small/melendez_ox_xl_engine.xml:2
 msgid "Melendez Ox XL Engine"
-msgstr "Motor XL Asno Melendez"
+msgstr "XL Asno Melendez Motor"
 
 #: dat/outfits/core_engine/small/melendez_ox_xl_engine.xml:10
 msgid ""
@@ -2877,7 +2878,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/small/nexus_dart_150_engine.xml:2
 msgid "Nexus Dart 150 Engine"
-msgstr "Motor Dardo 150 Nexus"
+msgstr "Dardo 150 Nexus Motor"
 
 #: dat/outfits/core_engine/small/nexus_dart_150_engine.xml:9
 msgid ""
@@ -2893,7 +2894,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/small/tricon_zephyr_engine.xml:2
 msgid "Tricon Zephyr Engine"
-msgstr "Motor Céfiro Tricon"
+msgstr "Céfiro Tricon Motor"
 
 #: dat/outfits/core_engine/small/tricon_zephyr_engine.xml:9
 msgid ""
@@ -2911,7 +2912,7 @@ msgstr ""
 #: dat/outfits/core_engine/small/tricon_zephyr_ii_engine.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:226
 msgid "Tricon Zephyr II Engine"
-msgstr "Motor Céfiro Tricon II"
+msgstr "Céfiro II Tricon Motor"
 
 #: dat/outfits/core_engine/small/tricon_zephyr_ii_engine.xml:10
 msgid ""
@@ -2928,7 +2929,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml:2
 msgid "Unicorp Hawk 350 Engine"
-msgstr "Motor Halcón 350 Unicorp"
+msgstr "Halcón 350 Unicorp Motor"
 
 #: dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml:10
 msgid ""
@@ -2986,7 +2987,7 @@ msgstr "Revestimiento Falso"
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:4
 #: dat/outfits/core_hull/small/unicorp_d4_light_plating.xml:4
 msgid "Core Systems (Hull)"
-msgstr "Sistemas de Núcleo (Casco)"
+msgstr "Sistema Base (Casco)"
 
 #: dat/outfits/core_hull/dummy_plating.xml:9
 msgid ""
@@ -3035,7 +3036,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:2
 msgid "S&K Heavy Combat Plating"
-msgstr "Revestimiento de Combate Pesado S&K"
+msgstr "Combate Pesado S&K Revestimiento"
 
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:10
 msgid ""
@@ -3049,7 +3050,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:2
 msgid "S&K Large Cargo Hull"
-msgstr "Casco de Carga Grande S&K"
+msgstr "Carga Grande S&K Casco"
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:10
 msgid ""
@@ -3063,7 +3064,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml:2
 msgid "S&K Superheavy Combat Plating"
-msgstr "Revestimiento de Combate Superpesado S&K"
+msgstr "Combate Superpesado S&K Revestimiento"
 
 #: dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml:10
 msgid ""
@@ -3077,7 +3078,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/unicorp_d48_heavy_plating.xml:2
 msgid "Unicorp D-48 Heavy Plating"
-msgstr "Revestimiento Pesado D-48 Unicorp"
+msgstr "Pesado D-48 Unicorp Revestimiento"
 
 #: dat/outfits/core_hull/large/unicorp_d48_heavy_plating.xml:9
 msgid ""
@@ -3091,7 +3092,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/unicorp_d68_heavy_plating.xml:2
 msgid "Unicorp D-68 Heavy Plating"
-msgstr "Revestimiento Pesado D-68 Unicorp"
+msgstr "Pesado D-68 Unicorp Revestimiento"
 
 #: dat/outfits/core_hull/large/unicorp_d68_heavy_plating.xml:10
 msgid ""
@@ -3105,7 +3106,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/nexus_medium_stealth_plating.xml:2
 msgid "Nexus Medium Stealth Plating"
-msgstr "Revestimiento de Sigilo Medio Nexus"
+msgstr "Sigilo Medio Nexus Revestimiento"
 
 #: dat/outfits/core_hull/medium/nexus_medium_stealth_plating.xml:9
 msgid ""
@@ -3119,11 +3120,11 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:2
 msgid "Patchwork Medium Plating"
-msgstr "Revestimiento Medio de Parches"
+msgstr "Parcheado Medio Revestimiento"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:2
 msgid "Red Star Medium Cargo Hull"
-msgstr "Casco de Carga Media Estrella Roja"
+msgstr "Carga Media Estrella Roja Casco"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:10
 msgid ""
@@ -3150,7 +3151,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:2
 msgid "S&K Medium Cargo Hull"
-msgstr "Casco de Cargo Medio S&K"
+msgstr "Cargo Medio S&K Casco"
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:10
 msgid ""
@@ -3162,7 +3163,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/sk_medium_combat_plating.xml:2
 msgid "S&K Medium Combat Plating"
-msgstr "Revestimiento de Combate Medio S&K"
+msgstr "Combate Medio S&K Revestimiento"
 
 #: dat/outfits/core_hull/medium/sk_medium_combat_plating.xml:9
 msgid ""
@@ -3176,7 +3177,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:2
 msgid "S&K Medium-Heavy Combat Plating"
-msgstr "Revestimiento de Combate Pesado-Medio S&K"
+msgstr "Combate Pesado-Medio S&K Revestimiento"
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:10
 msgid ""
@@ -3202,7 +3203,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/unicorp_d24_medium_plating.xml:2
 msgid "Unicorp D-24 Medium Plating"
-msgstr "Revestimiento Medio D-24 Unicorp"
+msgstr "Medio D-24 Unicorp Revestimiento"
 
 #: dat/outfits/core_hull/medium/unicorp_d24_medium_plating.xml:10
 msgid ""
@@ -3217,7 +3218,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/small/nexus_light_stealth_plating.xml:2
 msgid "Nexus Light Stealth Plating"
-msgstr "Revestimiento de Sigilo Ligero Nexus"
+msgstr "Sigilo Ligero Nexus Revestimiento"
 
 #: dat/outfits/core_hull/small/nexus_light_stealth_plating.xml:10
 msgid ""
@@ -3235,7 +3236,7 @@ msgstr "Revestimiento Ligero de Parches"
 
 #: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:2
 msgid "Red Star Small Cargo Hull"
-msgstr "Casco de Carga Pequeña Estrella Roja"
+msgstr "Carga Pequeña Estrella Roja Casco"
 
 #: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:10
 msgid ""
@@ -3263,7 +3264,7 @@ msgstr ""
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:234
 msgid "S&K Light Combat Plating"
-msgstr "Revestimiento de Combate Ligero S&K"
+msgstr "Combate Ligero S&K Revestimiento"
 
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:10
 msgid ""
@@ -3277,7 +3278,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/small/sk_small_cargo_hull.xml:2
 msgid "S&K Small Cargo Hull"
-msgstr "Casco de Carga Pequeño S&K"
+msgstr "Carga Pequeño S&K Casco"
 
 #: dat/outfits/core_hull/small/sk_small_cargo_hull.xml:10
 msgid ""
@@ -3291,7 +3292,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/small/sk_ultralight_combat_plating.xml:2
 msgid "S&K Ultralight Combat Plating"
-msgstr "Revestimiento de Combate Ultraligero S&K"
+msgstr "Combate Ultraligero S&K Revestimiento"
 
 #: dat/outfits/core_hull/small/sk_ultralight_combat_plating.xml:9
 msgid ""
@@ -3306,7 +3307,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:2
 msgid "Unicorp D-2 Light Plating"
-msgstr "Revestimiento Ligero D-2 Unicorp"
+msgstr "Ligero D-2 Unicorp Revestimiento"
 
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:9
 msgid ""
@@ -3319,7 +3320,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/small/unicorp_d4_light_plating.xml:2
 msgid "Unicorp D-4 Light Plating"
-msgstr "Revestimiento Ligero D-4 Unicorp"
+msgstr "Ligero D-4 Unicorp Revestimiento"
 
 #: dat/outfits/core_hull/small/unicorp_d4_light_plating.xml:10
 msgid ""
@@ -3357,7 +3358,7 @@ msgstr "Sistemas Falsos"
 #: dat/outfits/core_system/small/unicorp_pt16_core_system.xml:4
 #: dat/outfits/core_system/small/unicorp_pt68_core_system.xml:4
 msgid "Core Systems (System)"
-msgstr "Sistemas de Núcleo (Sistema)"
+msgstr "Sistema Base (Sistema)"
 
 #: dat/outfits/core_system/dummy_systems.xml:9
 msgid ""
@@ -3369,7 +3370,7 @@ msgstr ""
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:2
 msgid "Milspec Orion 8601 Core System"
-msgstr "Sistema de Núcleo Orion 8601 Milspec"
+msgstr "Orion 8601 Milspec Sistema Base"
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:9
 msgid ""
@@ -3379,10 +3380,15 @@ msgid ""
 "capital ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"Milspec desarrolla hardware de alto rendimiento para tu nave, para "
+"asegurarse de que siempre esté óptimamente preparado para los peligros que "
+"el universo pueda arrojarte en tus viajes. El sistema base Orion 8601 es una "
+"solución de alta gama para naves capitales, que ofrece un rendimiento "
+"superior en todos los campos. Vuele seguro, vuele Milspec."
 
 #: dat/outfits/core_system/large/milspec_orion_9901_core_system.xml:2
 msgid "Milspec Orion 9901 Core System"
-msgstr ""
+msgstr "Orion 9901 Milspec Sistema Base"
 
 #: dat/outfits/core_system/large/milspec_orion_9901_core_system.xml:10
 msgid ""
@@ -3392,10 +3398,15 @@ msgid ""
 "capital ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"Milspec desarrolla hardware de alto rendimiento para tu nave, para "
+"asegurarse de que siempre esté óptimamente preparado para los peligros que "
+"el universo pueda arrojarte en tus viajes. El sistema base Orion 9901 es una "
+"solución de alta gama para naves capitales, que ofrece un rendimiento "
+"superior en todos los campos. Vuele seguro, vuele Milspec."
 
 #: dat/outfits/core_system/large/milspec_thalos_8502_core_system.xml:2
 msgid "Milspec Thalos 8502 Core System"
-msgstr ""
+msgstr "Thalos 8502 Milspec Sistema Base"
 
 #: dat/outfits/core_system/large/milspec_thalos_8502_core_system.xml:9
 msgid ""
@@ -3404,10 +3415,15 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Milspec sabe que una nave es simplemente la suma de sus partes, y eso "
+"significa que cuantas más partes, mejor es la nave. El Thalos 8502 "
+"proporciona un gran control de los subsistemas, al tiempo que mantiene el "
+"alto nivel de energía y escudos del que se enorgullece Milspec. Vuele "
+"seguro, vuele Milspec."
 
 #: dat/outfits/core_system/large/milspec_thalos_9802_core_system.xml:2
 msgid "Milspec Thalos 9802 Core System"
-msgstr ""
+msgstr "Thalos 9802 Milspec Sistema Base"
 
 #: dat/outfits/core_system/large/milspec_thalos_9802_core_system.xml:10
 msgid ""
@@ -3416,10 +3432,15 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Milspec sabe que una nave es simplemente la suma de sus partes, y eso "
+"significa que cuantas más partes, mejor es la nave. El Thalos 9802 "
+"proporciona un gran control de los subsistemas al tiempo que mantiene el "
+"alto nivel de energía y escudos del que Milspec se enorgullece. Vuele "
+"seguro, vuele Milspec."
 
 #: dat/outfits/core_system/large/previous_generation_large_systems.xml:2
 msgid "Previous Generation Large Systems"
-msgstr ""
+msgstr "Sistemas Grandes de Generación Previa"
 
 #: dat/outfits/core_system/large/previous_generation_large_systems.xml:9
 #: dat/outfits/core_system/medium/previous_generation_medium_systems.xml:9
@@ -3428,10 +3449,12 @@ msgid ""
 "A jury-rigged mess of processors and generators that most captains wouldn't "
 "be seen dead having installed on their ship."
 msgstr ""
+"Un lío de procesadores y generadores que la mayoría de los capitanes no "
+"verían ni muerto instalados en su nave."
 
 #: dat/outfits/core_system/large/unicorp_pt2200_core_system.xml:2
 msgid "Unicorp PT-2200 Core System"
-msgstr ""
+msgstr "PT-2200 Unicorp Sistema Base"
 
 #: dat/outfits/core_system/large/unicorp_pt2200_core_system.xml:10
 msgid ""
@@ -3439,10 +3462,13 @@ msgid ""
 "PT-2200 nevertheless offers acceptable performance for capital ships at a "
 "fraction of its competitors' prices."
 msgstr ""
+"Criticado por algunos como nada más que un conjunto de sistemas PT-400, el "
+"PT-2200 ofrece, sin embargo, un rendimiento aceptable para naves de capital "
+"a una fracción del precio de sus competidores."
 
 #: dat/outfits/core_system/large/unicorp_pt500_core_system.xml:2
 msgid "Unicorp PT-500 Core System"
-msgstr ""
+msgstr "PT-500 Unicorp Sistema Base"
 
 #: dat/outfits/core_system/large/unicorp_pt500_core_system.xml:9
 msgid ""
@@ -3450,10 +3476,13 @@ msgid ""
 "PT-500 nevertheless offers acceptable performance for light cruisers at a "
 "fraction of its competitors' prices."
 msgstr ""
+"Criticado por algunos como nada más que un conjunto de sistemas PT-310, el "
+"PT-500 ofrece sin embargo un rendimiento aceptable para los cruceros ligeros "
+"a una fracción de los precios de sus competidores."
 
 #: dat/outfits/core_system/medium/milspec_orion_4801_core_system.xml:2
 msgid "Milspec Orion 4801 Core System"
-msgstr ""
+msgstr "Orion 4801 Milspec Sistema Base"
 
 #: dat/outfits/core_system/medium/milspec_orion_4801_core_system.xml:9
 msgid ""
@@ -3462,10 +3491,15 @@ msgid ""
 "you on your travels. The Orion 4801 core system is affordable yet capable, "
 "recommended for the discerning captain. Fly safe, fly Milspec."
 msgstr ""
+"Milspec desarrolla hardware de alto rendimiento para tu nave, para "
+"asegurarse de que siempre esté óptimamente preparado para los peligros que "
+"el universo pueda lanzarte en sus viajes. El sistema base Orion 4801 es "
+"asequible y a la vez capaz, y está recomendado para el capitán más exigente. "
+"Vuele seguro, vuele Milspec."
 
 #: dat/outfits/core_system/medium/milspec_orion_5501_core_system.xml:2
 msgid "Milspec Orion 5501 Core System"
-msgstr ""
+msgstr "Orion 5501 Milspec Sistema Base"
 
 #: dat/outfits/core_system/medium/milspec_orion_5501_core_system.xml:10
 msgid ""
@@ -3475,10 +3509,15 @@ msgid ""
 "medium ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"Milspec desarrolla hardware de alto rendimiento para tu nave, para "
+"asegurarse de que siempre esté óptimamente preparada para los peligros que "
+"el universo pueda lanzarle en sus viajes. El sistema base Orion 5501 es una "
+"solución de alta gama para naves medianas, que ofrece un rendimiento "
+"superior en todos los campos. Vuele seguro, vuele Milspec."
 
 #: dat/outfits/core_system/medium/milspec_thalos_4702_core_system.xml:2
 msgid "Milspec Thalos 4702 Core System"
-msgstr ""
+msgstr "Thalos 4702 Milspec Sistema Base"
 
 #: dat/outfits/core_system/medium/milspec_thalos_4702_core_system.xml:9
 msgid ""
@@ -3487,10 +3526,15 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Milspec sabe que una nave es simplemente la suma de sus partes, y eso "
+"significa que cuantas más partes, mejor es la nave. El Thalos 4702 "
+"proporciona un gran control de los subsistemas, al tiempo que mantiene el "
+"alto nivel de energía y escudos del que se enorgullece Milspec. Vuele "
+"seguro, vuele Milspec."
 
 #: dat/outfits/core_system/medium/milspec_thalos_5402_core_system.xml:2
 msgid "Milspec Thalos 5402 Core System"
-msgstr ""
+msgstr "Thalos 5402 Milspec Sistema Base"
 
 #: dat/outfits/core_system/medium/milspec_thalos_5402_core_system.xml:10
 msgid ""
@@ -3499,24 +3543,32 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Milspec sabe que una nave es simplemente la suma de sus partes, y eso "
+"significa que cuantas más partes, mejor es la nave. El Thalos 5402 "
+"proporciona un gran control de los subsistemas al tiempo que mantiene el "
+"alto nivel de energía y escudos del que se enorgullece Milspec. Vuele "
+"seguro, vuele Milspec."
 
 #: dat/outfits/core_system/medium/previous_generation_medium_systems.xml:2
 msgid "Previous Generation Medium Systems"
-msgstr ""
+msgstr "Sistema Medio de Generación Previa"
 
 #: dat/outfits/core_system/medium/unicorp_pt200_core_system.xml:2
 msgid "Unicorp PT-200 Core System"
-msgstr ""
+msgstr "PT-200 Unicorp Sistema Base"
 
 #: dat/outfits/core_system/medium/unicorp_pt200_core_system.xml:9
 msgid ""
 "Continuing Unicorp's PT series of core systems in the medium ship category, "
 "the PT-200 gives acceptable performance for an acceptable price."
 msgstr ""
+"Continuando con la serie PT de Unicorp de sistemas bases en la categoría de "
+"naves medianas, el PT-200 ofrece un rendimiento aceptable por un precio "
+"aceptable."
 
 #: dat/outfits/core_system/medium/unicorp_pt310_core_system.xml:2
 msgid "Unicorp PT-310 Core System"
-msgstr ""
+msgstr "PT-310 Unicorp Sistema Base"
 
 #: dat/outfits/core_system/medium/unicorp_pt310_core_system.xml:10
 msgid ""
@@ -3524,10 +3576,13 @@ msgid ""
 "all respects. Its considerably higher mass restricts its use to larger "
 "medium vessels such as destroyers."
 msgstr ""
+"El PT-310, una variante pesada del PT-200, supera a su predecesor en todos "
+"los aspectos. Su masa considerablemente mayor restringe su uso a naves "
+"medianas de mayor tamaño, como los destructores."
 
 #: dat/outfits/core_system/small/milspec_orion_2301_core_system.xml:2
 msgid "Milspec Orion 2301 Core System"
-msgstr ""
+msgstr "Orion 2301 Milspec Sistema Base"
 
 #: dat/outfits/core_system/small/milspec_orion_2301_core_system.xml:9
 msgid ""
@@ -3536,11 +3591,16 @@ msgid ""
 "you on your travels. The Orion 2301 core system is affordable yet capable, "
 "recommended for the beginning captain. Fly safe, fly Milspec."
 msgstr ""
+"Milspec desarrolla hardware de alto rendimiento para tu nave, para "
+"asegurarse de que siempre esté óptimamente preparado para los peligros que "
+"el universo pueda lanzarle en sus viajes. El sistema central de la Orion "
+"2301 es asequible pero capaz, recomendado para el capitán principiante. "
+"Vuele seguro, vuele Milspec."
 
 #: dat/outfits/core_system/small/milspec_orion_3701_core_system.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:230
 msgid "Milspec Orion 3701 Core System"
-msgstr ""
+msgstr "Orion 3701 Milspec Sistema Base"
 
 #: dat/outfits/core_system/small/milspec_orion_3701_core_system.xml:10
 msgid ""
@@ -3550,10 +3610,15 @@ msgid ""
 "small ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"Milspec desarrolla hardware de alto rendimiento para tu nave, para "
+"asegurarse de que siempre esté óptimamente preparado para los peligros que "
+"el universo pueda lanzarte en tus viajes. El sistema base Orion 3701 es una "
+"solución de alta gama para naves pequeñas, que ofrece un rendimiento "
+"superior en todos los campos. Vuele seguro, vuele Milspec."
 
 #: dat/outfits/core_system/small/milspec_thalos_2202_core_system.xml:2
 msgid "Milspec Thalos 2202 Core System"
-msgstr ""
+msgstr "Thalos 2202 Milspec Sistema Base"
 
 #: dat/outfits/core_system/small/milspec_thalos_2202_core_system.xml:9
 msgid ""
@@ -3562,10 +3627,15 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Milspec sabe que una nave es simplemente la suma de sus partes, y eso "
+"significa que cuantas más partes, mejor es la nave. El Thalos 2202 "
+"proporciona un gran control de los subsistemas al tiempo que mantiene el "
+"alto nivel de energía y escudos del que se enorgullece Milspec. Vuele "
+"seguro, vuele Milspec."
 
 #: dat/outfits/core_system/small/milspec_thalos_3602_core_system.xml:2
 msgid "Milspec Thalos 3602 Core System"
-msgstr ""
+msgstr "Thalos 3602 Milspec Sistema Base"
 
 #: dat/outfits/core_system/small/milspec_thalos_3602_core_system.xml:10
 msgid ""
@@ -3574,34 +3644,43 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"Milspec sabe que una nave es simplemente la suma de sus partes, y eso "
+"significa que cuantas más partes, mejor es la nave. El Thalos 3602 "
+"proporciona un gran control de los subsistemas al tiempo que mantiene el "
+"alto nivel de energía y escudos del que se enorgullece Milspec. Vuele "
+"seguro, vuele Milspec."
 
 #: dat/outfits/core_system/small/previous_generation_small_systems.xml:2
 msgid "Previous Generation Small Systems"
-msgstr ""
+msgstr "Sistema Pequeño de Generación Previa"
 
 #: dat/outfits/core_system/small/unicorp_pt16_core_system.xml:2
 msgid "Unicorp PT-16 Core System"
-msgstr ""
+msgstr "PT-16 Unicorp Sistema Base"
 
 #: dat/outfits/core_system/small/unicorp_pt16_core_system.xml:9
 msgid ""
 "The PT-16 is a modest but to-spec core system offering reasonable, all-round "
 "performance for small vessels."
 msgstr ""
+"El PT-16 es un sistema básico modesto pero con buenas especificaciones que "
+"ofrece un rendimiento razonable y completo para las naves pequeñas."
 
 #: dat/outfits/core_system/small/unicorp_pt68_core_system.xml:2
 msgid "Unicorp PT-68 Core System"
-msgstr ""
+msgstr "PT-68 Unicorp Sistema Base"
 
 #: dat/outfits/core_system/small/unicorp_pt68_core_system.xml:10
 msgid ""
 "The PT-68 is an economical core system providing decent performance to small-"
 "to-medium vessels."
 msgstr ""
+"El PT-68 es un sistema base económico que proporciona un rendimiento decente "
+"a las embarcaciones pequeñas y medianas."
 
 #: dat/outfits/fighter_bays/drone_bay.xml:2
 msgid "Drone Bay"
-msgstr ""
+msgstr "Bahía de Drones"
 
 #: dat/outfits/fighter_bays/drone_bay.xml:11
 msgid ""
@@ -7499,7 +7578,7 @@ msgstr ""
 
 #: dat/slots.xml:9
 msgid "Core Systems"
-msgstr ""
+msgstr "Sistema Base"
 
 #: dat/slots.xml:10
 msgid ""
