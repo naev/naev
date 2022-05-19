@@ -640,15 +640,16 @@ function land ()
    sai(_([["I almost forgot to mention, while you were piloting, I managed to unlock an important bottleneck in the ship fleet routines."]]))
    vn.menu{
       {_([["Ship fleet routines?"]]), "fleet_routines"},
-      {_([["You mess around the ship software?"]]), "mess_software"},
+      {_([["You mess around with the ship software?"]]), "mess_software"},
       {_("…"), "cont02"},
    }
 
    vn.label("fleet_routines")
-   sai(_([["Did I never mention them? I, and by extension your ship, have been equipped with fleet control procedures. However, due to the incident with my previous owner, they had been forcibly disabled as result of the investigation."]]))
+   sai(_([["Did I never mention them? I, and by extension your ship, have been equipped with fleet control procedures. However, due to the incident with my previous owner, they had been forcibly disabled as the direct result of the investigation."]]))
    vn.menu{
       {_([["Incident?!"]]), "fleet_cont01"},
       {_([["Investigation!?"]]), "fleet_cont01"},
+      {_([["Wait, what?"]]), "fleet_cont01"},
       {_("…"), "fleet_cont01"},
    }
    vn.label("fleet_cont01")
@@ -669,7 +670,7 @@ function land ()
 
    vn.label("cont02")
    sai(_([["This means that you will be able to deploy additional ships. However, limited computation capacity means that you will be only be able to deploy ships that fit the fleet capacity."]]))
-   sai(_([["This excludes your current ship, which can go over your fleet capacity. However, if you want to deploy multiple ships, you have to make sure they don't go over the fleet capacity."]]))
+   sai(_([["This excludes your current ship, which can go over your fleet capacity. If you want to deploy multiple ships, you have to make sure they don't go over the fleet capacity."]]))
    sai(fmt.f(_([["It sounds complicated, but give it a try. When equipping your ships you will see fleet capacity values for your ships and the total amount you have, which is currently {fleetcap} points."]]),{fleetcap = player.fleetCapacity()}))
    sai(_([["Try it out and if you need refreshing you can inquire again through the #bInfo#0 menu. This time there won't be a massacre because of a race condition!"]]))
    vn.done( tut.shipai.transition )
