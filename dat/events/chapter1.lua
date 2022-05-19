@@ -468,7 +468,7 @@ function cutscene_pan ()
    -- Add some guys
    local pos = hyp:pos()
    local function addship( shipname )
-      local ppos = pos + vec2.newP( 250+150*rnd.rnd(), rnd.angle() )
+      local ppos = pos + vec2.newP( 300+250*rnd.rnd(), rnd.angle() )
       local p = pilot.add( shipname, testfct, ppos, nil, {ai="dummy", naked=true} )
       local _m, a = pos:polar()
       p:setDir( a )
@@ -479,7 +479,7 @@ function cutscene_pan ()
 
    addship( bossship )
    addship( testership )
-   for i = 1,4 do
+   for i = 1,5 do
       addship( extraships() )
    end
 
