@@ -441,7 +441,7 @@ function cutscene_main7 ()
    hook.timer( 8, "cutscene_pan" )
 end
 
-local pantime = 3.7
+local pantime = 4.7
 local panradius = 300
 local panfadeout = pantime - 0.7
 local function pangate( gatename )
