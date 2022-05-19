@@ -3648,6 +3648,7 @@ static Spob* player_parse( xmlNodePtr parent )
       /* global stuff */
       xmlr_ulong(node, "credits", player_creds);
       xmlr_strd(node, "gui", player.gui);
+      xmlr_strd(node, "chapter", player.chapter);
       xmlr_int(node, "guiOverride", player.guiOverride);
       xmlr_int(node, "mapOverlay", map_overlay_enabled);
       xmlr_float(node, "radar_res", player.radar_res);
