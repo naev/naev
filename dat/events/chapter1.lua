@@ -58,7 +58,7 @@ function create ()
    if progress >= 100 then
       -- Make event happen when player is not in any system with a hypergate
       for k,v in ipairs(system.cur():spobs()) do
-         if v.tags().hypergate then
+         if v:tags().hypergate then
             evt.finish(false)
          end
       end
@@ -105,7 +105,7 @@ local function fg_setup( text )
       fg = {}
       fg.font = lg.newFont( fontsize )
       fg.font:setOutline(3)
-      fg.hook = hook.renderfg( "foreground" )
+      fg.hook = hook.rendertop( "foreground" )
       fg.update = hook.update( "update" )
 
       fg.alpha = 0
@@ -258,7 +258,6 @@ function cutscene_start ()
    hook.timer( fadetime, "cutscene_main0" )
 
    -- Disable landing/jumping
-   player.cinematics( true )
    local pp = player.pilot()
    pp:setNoJump(true)
    pp:setNoLand(true)
@@ -269,6 +268,7 @@ local origsys, boss, tester, tester_broadcast, boss_broadcast
 function cutscene_main0 ()
    fg.alpha_vel = 2 -- Back to fast transitions
 
+   player.cinematics( true )
    player.canDiscover( false )
    setHide( true )
 
