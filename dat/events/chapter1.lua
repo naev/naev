@@ -313,11 +313,11 @@ function cutscene_main0 ()
       p:face( pos )
       return p
    end
-   boss = addship( bossship )
-   tester = addship( testership )
    for i = 1,7 do
       addship( extraships() )
    end
+   tester = addship( testership )
+   boss = addship( bossship ) -- Make sure boss is last so renders on top
 
    fg_setup( _("And they built bridges across the stars…") )
    hook.timer( 5, "cutscene_main1" )
