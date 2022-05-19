@@ -237,13 +237,11 @@ void render_all( double game_dt, double real_dt )
    /* We set the to fullscreen, ignoring the GUI modifications. */
    gl_viewport( 0, 0, gl_screen.nw, gl_screen.nh );
 
-   /* Show on top. */
-   display_fps( real_dt ); /* Exception using real_dt. */
-
    /* Top stuff. */
    ovr_render( real_dt ); /* Using real_dt is sort of a hack for now. */
-   toolkit_render( real_dt );
    hooks_run( "rendertop" );
+   display_fps( real_dt ); /* Exception using real_dt. */
+   toolkit_render( real_dt );
 
    /* Final post-processing. */
    if (pp_final)
