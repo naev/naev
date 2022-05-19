@@ -56,6 +56,13 @@ function create ()
 
    -- Determine what to do
    if progress >= 100 then
+      -- Make event happen when player is not in any system with a hypergate
+      for k,v in ipairs(system.cur():spobs()) do
+         if v.tags().hypergate then
+            evt.finish(false)
+         end
+      end
+
       -- Make sure system isn't claimed, but we don't claim it
       if not evt.claim( system.cur(), true ) then evt.finish(false) end
 
