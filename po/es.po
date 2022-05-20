@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-05-12 10:59+0900\n"
-"PO-Revision-Date: 2022-05-19 23:15+0000\n"
+"PO-Revision-Date: 2022-05-20 16:49+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
@@ -1991,8 +1991,9 @@ msgid "Dvaered Warlords"
 msgstr "Señores de la Guerra Dvaered"
 
 #: dat/faction.xml:761
+#, fuzzy
 msgid "Strangelove"
-msgstr ""
+msgstr "Strangelove"
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
@@ -3690,15 +3691,20 @@ msgid ""
 "maintenance. All the tools needed to take care of them are provided with the "
 "bay."
 msgstr ""
+"La bahía de Cazas Drones utiliza las tecnologías colectivas avanzadas para "
+"sostener un grupo de tres Cazas Drones. Los Caza Drones no necesitan piloto, "
+"lo que los convierte en un enfoque más seguro en situaciones de peligro. Sin "
+"embargo, necesitan un mantenimiento cuidadoso. Todas las herramientas "
+"necesarias para cuidar de ellos se proporcionan con la bahía."
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:2
 msgid "Empire Lancelot Bay"
-msgstr ""
+msgstr "Bahía Lancelot Imperio"
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:8
 #: dat/ships/empire/empire_pacifier.xml:19
 msgid "You need at least 50 reputation with the Empire."
-msgstr ""
+msgstr "Necesitas al menos una reputación de 50 con el Imperio."
 
 #: dat/outfits/fighter_bays/empire_lancelot_bay.xml:13
 msgid ""
@@ -3706,14 +3712,17 @@ msgid ""
 "fighters. It comes with all the devices required for the maintenance and "
 "flight of the fighters."
 msgstr ""
+"Esta bahía de cazas permite a tu nave llevar un par de cazas de la clase "
+"Lancelot del Imperio. Viene con todos los dispositivos requeridos para el "
+"mantenimiento y el vuelo de los cazas."
 
 #: dat/outfits/fighter_bays/fidelity_bay.xml:2
 msgid "Fidelity Bay"
-msgstr ""
+msgstr "Bahía Fidelidad"
 
 #: dat/outfits/fighter_bays/fidelity_bay.xml:8
 msgid "You need at least 50 reputation with House Sirius."
-msgstr ""
+msgstr "Necesitas al menos una reputación de 50 con la Casa Sirio."
 
 #: dat/outfits/fighter_bays/fidelity_bay.xml:13
 msgid ""
@@ -3721,10 +3730,13 @@ msgid ""
 "are stronger when working together in groups. Quite apropos, given Sirian "
 "society."
 msgstr ""
+"Esta bahía lanza tres cazas Fidelidad Sirio. Débiles individualmente, son "
+"más fuertes cuando trabajan juntos en grupo. Bastante apropiado, dada la "
+"sociedad de Sirio."
 
 #: dat/outfits/fighter_bays/hyena_bay.xml:2
 msgid "Hyena Bay"
-msgstr ""
+msgstr "Bahía Hiena"
 
 #: dat/outfits/fighter_bays/hyena_bay.xml:10
 msgid ""
@@ -3732,10 +3744,14 @@ msgid ""
 "interceptors that can be operated. It comes with all the amenities necessary "
 "for the maintenance and operation of the interceptors."
 msgstr ""
+"Esta bahía amplía el popular muelle Hyena, doblando la cantidad de "
+"interceptores Hiena que pueden ser operados. Viene con todas las "
+"instalaciones necesarias para el mantenimiento y el funcionamiento de los "
+"interceptores."
 
 #: dat/outfits/fighter_bays/hyena_dock.xml:2
 msgid "Hyena Dock"
-msgstr ""
+msgstr "Muelle Hiena"
 
 #: dat/outfits/fighter_bays/hyena_dock.xml:10
 msgid ""
@@ -3743,10 +3759,13 @@ msgid ""
 "all the amenities necessary for the maintenance and operation of the "
 "interceptors."
 msgstr ""
+"Este muelle permite que tu nave lleve dos interceptores Hiena. Viene con "
+"todas las instalaciones necesarias para el mantenimiento y el funcionamiento "
+"de los interceptores."
 
 #: dat/outfits/fighter_bays/lancelot_bay.xml:2
 msgid "Lancelot Bay"
-msgstr ""
+msgstr "Bahía Lancelot"
 
 #: dat/outfits/fighter_bays/lancelot_bay.xml:10
 msgid ""
@@ -3754,10 +3773,13 @@ msgid ""
 "fighters. It comes with all the devices required for the maintenance and "
 "flight of the fighters."
 msgstr ""
+"Esta bahía de cazas permite a tu nave llevar un par de cazas de clase "
+"Lancelot. Viene con todos los dispositivos requeridos para el mantenimiento "
+"y el vuelo de los cazas."
 
 #: dat/outfits/fighter_bays/pirate_hyena_bay.xml:2
 msgid "Pirate Hyena Bay"
-msgstr ""
+msgstr "Bahía Hiena Pirata"
 
 #: dat/outfits/fighter_bays/pirate_hyena_bay.xml:10
 msgid ""
@@ -3766,10 +3788,14 @@ msgid ""
 "for the maintenance and operation of the interceptors. The Pirate Hyenas can "
 "also assist in ship scavenging and looting."
 msgstr ""
+"Esta bahía expande el popular Muelle Hiena Pirata, duplicando la cantidad de "
+"interceptores que pueden ser operados. Viene con todas las instalaciones "
+"necesarias para el mantenimiento y el funcionamiento de los interceptores. "
+"Las Hienas Piratas también pueden ayudar en la limpieza y el saqueo de naves."
 
 #: dat/outfits/fighter_bays/pirate_hyena_dock.xml:2
 msgid "Pirate Hyena Dock"
-msgstr ""
+msgstr "Muelle Hiena Pirata"
 
 #: dat/outfits/fighter_bays/pirate_hyena_dock.xml:10
 msgid ""
@@ -3778,10 +3804,14 @@ msgid ""
 "the interceptors. The Pirate Hyenas can assist in ship scavenging and "
 "looting."
 msgstr ""
+"Este muelle permite a tu nave llevar un par de interceptores Hiena Pirata. "
+"Viene con todas las instalaciones necesarias para el mantenimiento y el "
+"funcionamiento de los interceptores. Las Hienas Piratas pueden ayudar en la "
+"limpieza y saqueo de naves."
 
 #: dat/outfits/fighter_bays/proteron_derivative_bay.xml:2
 msgid "Proteron Derivative Bay"
-msgstr ""
+msgstr "Bahia Derivativa Proteron"
 
 #: dat/outfits/fighter_bays/proteron_derivative_bay.xml:11
 msgid ""
@@ -3789,14 +3819,17 @@ msgid ""
 "class fighters. It comes with all the devices required for the maintenance "
 "and flight of the fighters."
 msgstr ""
+"Esta bahía de cazas permite a tu nave llevar un trío de cazas de la clase "
+"Derivada Proteron. Viene con todos los dispositivos requeridos para el "
+"mantenimiento y el vuelo de los cazas."
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:2
 msgid "Sirius Shaman Bay"
-msgstr ""
+msgstr "Bahia Chamán Sirio"
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:8
 msgid "You need at least 50 reputation with the Sirius."
-msgstr ""
+msgstr "Necesitas al menos una reputación de 50 con Sirio."
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:13
 msgid ""
@@ -3804,15 +3837,18 @@ msgid ""
 "bombers. It comes with all the devices required for the maintenance and "
 "flight of the bombers."
 msgstr ""
+"Esta bahía de combate permite a tu nave llevar un par de bombarderos de la "
+"clase Chamán Sirio. Viene con todos los dispositivos requeridos para el "
+"mantenimiento y el vuelo de los bombarderos."
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:2
 msgid "Soromid Brigand Bay"
-msgstr ""
+msgstr "Bahia Forajido Soromida"
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:8
 #: dat/ships/soromid/soromid_nyx.xml:17
 msgid "You need at least 50 reputation with the Soromid."
-msgstr ""
+msgstr "Necesitas al menos una reputación de 50 con Soromida."
 
 #: dat/outfits/fighter_bays/soromid_brigand_bay.xml:13
 msgid ""
@@ -3820,16 +3856,19 @@ msgid ""
 "class fighters. It comes with all the devices required for the maintenance "
 "and flight of the fighters."
 msgstr ""
+"Esta bahía de cazas permite a tu nave llevar un trio de cazas de la clase "
+"Forajido Soromida. Viene con todos los dispositivos requeridos para el "
+"mantenimiento y el vuelo de los cazas."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:2
 msgid "Thurion Perspicacity Bay"
-msgstr ""
+msgstr "Bahía Perpicaz Turion"
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:8
 #: dat/ships/thurion/thurion_apprehension.xml:20
 #: dat/ships/thurion/thurion_taciturnity.xml:19
 msgid "You need at least 50 reputation with the Thurion."
-msgstr ""
+msgstr "Necesitas al menos una reputación de 50 con Turion."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_bay.xml:13
 msgid ""
@@ -3837,16 +3876,19 @@ msgid ""
 "comes with all the devices required for the maintenance and flight of the "
 "fighters."
 msgstr ""
+"Esta bahía permite a tu nave llevar cuatro cazas Perpicaz Turion. Viene con "
+"todos los dispositivos requeridos para el mantenimiento y el vuelo de los "
+"cazas."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:2
 msgid "Thurion Perspicacity Dock"
-msgstr ""
+msgstr "Muelle Perpicaz Turion"
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:8
 #: dat/ships/thurion/thurion_ingenuity.xml:19
 #: dat/ships/thurion/thurion_scintillation.xml:20
 msgid "You need at least 30 reputation with the Thurion."
-msgstr ""
+msgstr "Necesitas al menos una reputación de 30 con Turion."
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_dock.xml:13
 msgid ""
@@ -3854,16 +3896,19 @@ msgid ""
 "comes with all the devices required for the maintenance and flight of the "
 "fighters."
 msgstr ""
+"Este muelle permite a tu nave transportar dos cazas Perpicaz Turion. Viene "
+"con todos los dispositivos requeridos para el mantenimiento y el vuelo de "
+"los cazas."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:2
 msgid "Za'lek Bomber Drone Bay"
-msgstr ""
+msgstr "Bahía de Drones Bombarderos Za'lek"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:8
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:8
 #: dat/ships/zalek/zalek_demon.xml:19
 msgid "You need at least 50 reputation with House Za'lek."
-msgstr ""
+msgstr "Necesitas al menos una reputación de 50 con la Casa Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_bay.xml:13
 msgid ""
@@ -3872,16 +3917,20 @@ msgid ""
 "danger. It comes with all the devices required for the maintenance and "
 "flight of the drones."
 msgstr ""
+"Esta bahía puede lanzar dos ramas de drones bombarderos capaces de "
+"bombardear las naves capitales enemigas hasta la rendición sin que la nave "
+"nodriza llegue a estar en peligro. Viene con todos los dispositivos "
+"requeridos para el mantenimiento y el vuelo de los drones."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:2
 msgid "Za'lek Bomber Drone Mini Bay"
-msgstr ""
+msgstr "Minibahía de Drones Bormbarderos Za'lek"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:8
 #: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:8
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:8
 msgid "You need at least 30 reputation with House Za'lek."
-msgstr ""
+msgstr "Necesitas al menos una reputación de 30 con la Casa Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_mini_bay.xml:13
 msgid ""
@@ -3890,15 +3939,19 @@ msgid ""
 "danger. It comes with all the devices required for the maintenance and "
 "flight of the drones."
 msgstr ""
+"Esta bahía puede lanzar un rama de drones bombarderos capaces de bombardear "
+"las naves capitales enemigas hasta la rendición sin que la nave nodriza "
+"llegue a estar en peligro. Viene con todos los dispositivos requeridos para "
+"el mantenimiento y el vuelo de los drones."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:2
 msgid "Za'lek Heavy Drone Bay"
-msgstr ""
+msgstr "Bahía de Drones Pesados Za'lek"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:8
 #: dat/ships/zalek/zalek_mammon.xml:23
 msgid "You need at least 60 reputation with House Za'lek."
-msgstr ""
+msgstr "Necesitas al menos una reputación de 60 con la Casa Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_bay.xml:13
 msgid ""
@@ -3906,16 +3959,19 @@ msgid ""
 "the biggest ships in packs. It comes with all the devices required for the "
 "maintenance and flight of the drones."
 msgstr ""
+"Esta bahía puede lanzar un escuadrón entero de drones capaz de luchar contra "
+"todas las naves, excepto las más grandes, en grupos. Viene con todos los "
+"dispositivos requeridos para el mantenimiento y el vuelo de los drones."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:2
 msgid "Za'lek Heavy Drone Mini Bay"
-msgstr ""
+msgstr "Minibahía de Drones Pesados Za'lek"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:8
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:8
 #: dat/ships/zalek/zalek_sting.xml:19
 msgid "You need at least 40 reputation with House Za'lek."
-msgstr ""
+msgstr "Necesitas al menos una reputación de 40 con la Casa Za'lek."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml:13
 msgid ""
@@ -3923,10 +3979,13 @@ msgid ""
 "punch. It comes with all the devices required for the maintenance and flight "
 "of the drones."
 msgstr ""
+"Esta bahía puede lanzar tres drones pesados, lo que da a la nave nodriza una "
+"buena dosis de potencia. Viene con todos los dispositivos requeridos para el "
+"mantenimiento y el vuelo de los drones."
 
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:2
 msgid "Za'lek Light Drone Bay"
-msgstr ""
+msgstr "Bahía de Drones Ligeros Za'lek"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_bay.xml:13
 msgid ""
@@ -3935,10 +3994,14 @@ msgid ""
 "comes with all the devices required for the maintenance and flight of the "
 "drones."
 msgstr ""
+"Esta bahía está construida para lanzar un enjambre de drones ligeros Za'lek. "
+"Los drones son descartables, pero en número sobresalen en la limpieza de las "
+"naves ligeras enemigas. Viene con todos los dispositivos requeridos para el "
+"mantenimiento y el vuelo de los drones."
 
 #: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:2
 msgid "Za'lek Light Drone Mini Bay"
-msgstr ""
+msgstr "Minibahía de Drones Ligeros Za'lek"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml:13
 msgid ""
@@ -3947,10 +4010,14 @@ msgid ""
 "comes with all the devices required for the maintenance and flight of the "
 "drones."
 msgstr ""
+"Esta bahía está construida para lanzar un cuarteto de drones ligeros Za'lek. "
+"Los drones son descartables, pero en número sobresalen en la limpieza de las "
+"naves ligeras enemigas. Viene con todos los dispositivos necesarios para el "
+"mantenimiento y el vuelo de los drones."
 
 #: dat/outfits/intrinsic/gauntlet_deluxe.xml:2
 msgid "Gauntlet Deluxe"
-msgstr ""
+msgstr "Guantelete de Lujo"
 
 #: dat/outfits/intrinsic/gauntlet_deluxe.xml:7
 msgid ""
@@ -3960,10 +4027,15 @@ msgid ""
 "of the service itself. Due to the nature of the service, only one can be "
 "applied to each ship."
 msgstr ""
+"El servicio \"Guantelete de Lujo\" proporciona una revisión completa de los "
+"circuitos de las armas delanteras del sistema. Las optimizaciones consiguen "
+"aumentar ligeramente la potencia sin más inconvenientes que el elevado coste "
+"del propio servicio. Debido a la naturaleza del servicio, sólo se puede "
+"aplicar una vez a cada nave."
 
 #: dat/outfits/launchers/convulsion_launcher.xml:2
 msgid "Convulsion Launcher"
-msgstr ""
+msgstr "Lanzador Convulsor"
 
 #: dat/outfits/launchers/convulsion_launcher.xml:10
 msgid ""
@@ -3971,10 +4043,13 @@ msgid ""
 "destructive power. While it does little damage to physical objects it is "
 "quite effective at disrupting shields."
 msgstr ""
+"El misil de clase interceptora Turion se centra en la alta agilidad más que "
+"en la potencia destructiva. Aunque hace poco daño a los objetos físicos, es "
+"bastante eficaz a la hora de interrumpir los escudos."
 
 #: dat/outfits/launchers/electron_burst_cannon.xml:2
 msgid "Electron Burst Cannon"
-msgstr ""
+msgstr "Cañón de Ráfagas de Electrones"
 
 #: dat/outfits/launchers/electron_burst_cannon.xml:10
 msgid ""
@@ -3984,10 +4059,15 @@ msgid ""
 "developed by the Za'lek to be used by their heavier droness to supplement "
 "the short range and high damage of their beams."
 msgstr ""
+"Esta poderosa arma de energía está diseñada para bombardear un objetivo a "
+"gran distancia con ráfagas de iones, causando daño debilitante a los escudos "
+"y sistemas eléctricos del objetivo, lo que puede dejar una nave indefensa. "
+"Fue desarrollada por los Za'lek para ser utilizada por sus drones más "
+"pesados para compensar el corto alcance y el alto daño de sus rayos."
 
 #: dat/outfits/launchers/emp_grenade_launcher.xml:2
 msgid "EMP Grenade Launcher"
-msgstr ""
+msgstr "Lanzador de Granadas PEM"
 
 #: dat/outfits/launchers/emp_grenade_launcher.xml:9
 msgid ""
@@ -3997,10 +4077,16 @@ msgid ""
 "EM pulses rarely destroy the ship, leaving it floating disabled in space. "
 "These are favoured by traders for keeping pirates at bay."
 msgstr ""
+"Este lanzador puede disparar granadas PEM en cualquier dirección utilizando "
+"un sistema de guía interno único. Las granadas desatan un pulso "
+"electromagnético que deshabilita rápidamente la electrónica de las naves "
+"enemigas. Es útil para capturar naves con vida; los pulsos electromagnéticos "
+"rara vez destruyen la nave, y la deja flotando incapacitada en el espacio. "
+"Los comerciantes las prefieren para mantener a raya a los piratas."
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:2
 msgid "Enygma Systems Huntsman Launcher"
-msgstr ""
+msgstr "Lanzador Cazahombres de Sistemas Enigma"
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:10
 msgid ""
@@ -4009,10 +4095,15 @@ msgid ""
 "insufficient, they redisgned Unicorp's Caesar IV torpedo as a heavy EMP "
 "weapon, capable of rapidly frying the systems of even the largest warships."
 msgstr ""
+"Sistemas Enigma descubrió que había un nicho sin explotar en las armas de "
+"inutilización dirigidas a las naves de guerra más grandes. Al considerar "
+"insuficientes los misiles Medusa y el armamento iónico, rediseñaron el "
+"torpedo Cesar IV de Unicorp como un arma PEM pesada, capaz de freír "
+"rápidamente los sistemas de incluso las naves de guerra más grandes."
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:2
 msgid "Enygma Systems Spearhead Launcher"
-msgstr ""
+msgstr "Lanzador Punta de Lanza de Sistemas Enigma"
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:9
 msgid ""
@@ -4023,10 +4114,17 @@ msgid ""
 "The Spearhead's limited agility make it primarily suited to fighting "
 "corvette class ships or heavier."
 msgstr ""
+"El misil rompeescudos de clase Punta de Lanza es una de las piezas más "
+"especializadas de Sistemas Enigma. Su única función es causar un daño masivo "
+"a los escudos. Utiliza una ojiva especial de descarga de energía que es "
+"bastante eficaz para interrumpir los escudos, pero tiene poco efecto sobre "
+"los objetos físicos. La agilidad limitada del Punta de Lanza lo hace "
+"adecuado principalmente para luchar contra naves de clase corbeta o más "
+"pesadas."
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:2
 msgid "Enygma Systems Turreted Fury Launcher"
-msgstr ""
+msgstr "Torreta Lanzador Furia de Sistemas Enigma"
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:9
 msgid ""
@@ -4034,10 +4132,14 @@ msgid ""
 "steep price, but Fury missiles can be a powerful means of discouraging "
 "pirate fighters and an effective means of defending against hostile bombers."
 msgstr ""
+"Sistemas Enigma ha desarrollado un lanzador Furia montado en una torreta. "
+"Tiene un precio elevado, pero los misiles Furia pueden ser un poderoso medio "
+"para amedrentar a los cazas piratas y un medio eficaz para defenderse de "
+"bombarderos hostiles."
 
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:2
 msgid "Enygma Systems Turreted Headhunter Launcher"
-msgstr ""
+msgstr "Torreta Lanzador Cazacabezas de Sistemas Enigma"
 
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:9
 msgid ""
@@ -4046,10 +4148,15 @@ msgid ""
 "bombers. The punch of the Headhunter missile combined with Enygma Systems' "
 "swivel mounted launcher can effectively compensate for any blind spots."
 msgstr ""
+"Estas torretas lanzadoras son empleadas a veces por los capitanes de "
+"cruceros cuyas naves no son lo suficientemente maniobrables como para "
+"combatir eficazmente a cazas y bombarderos enemigos. La potencia del misil "
+"Cazacabezas, combinada con el lanzador giratorio de Sistemas Enigma, puede "
+"compensar eficazmente cualquier punto ciego."
 
 #: dat/outfits/launchers/repeating_banshee_launcher.xml:2
 msgid "Repeating Banshee Launcher"
-msgstr ""
+msgstr "Lanzador Banshee Repetidor"
 
 #: dat/outfits/launchers/repeating_banshee_launcher.xml:11
 msgid ""
@@ -4058,10 +4165,15 @@ msgid ""
 "fire rate. The ammo storage is short, but it can be anticipated that either "
 "the bomber or its target will have been destroyed before it is empty."
 msgstr ""
+"Diseñado por la Casa Dvaered para equipar a sus Ancestros, este lanzador "
+"cuenta con un sistema de recarga avanzado, pero muy pesado, que permite una "
+"cadencia de fuego sin igual. El depósito de munición es corto, pero se puede "
+"anticipar que el bombardero o su objetivo habrán sido destruidos antes de "
+"que se vacíe."
 
 #: dat/outfits/launchers/shatterer_launcher.xml:2
 msgid "Shatterer Launcher"
-msgstr ""
+msgstr "Lanzador Trizas"
 
 #: dat/outfits/launchers/shatterer_launcher.xml:10
 msgid ""
@@ -4070,10 +4182,14 @@ msgid ""
 "sheer numbers that the Collective could bring to bear makes this weapon "
 "dangerous."
 msgstr ""
+"Esta arma, basada en un misil Furia, es utilizada por los drones pesados del "
+"Colectivo como herramienta de bombardeo contra grandes objetivos. Aunque es "
+"débil individualmente, el gran número que el Colectivo puede emplear hace "
+"que esta arma sea peligrosa."
 
 #: dat/outfits/launchers/superfast_collider_launcher.xml:2
 msgid "Super-Fast Collider Launcher"
-msgstr ""
+msgstr "Lanzador Colisionador Super-Rápido"
 
 #: dat/outfits/launchers/superfast_collider_launcher.xml:10
 msgid ""
@@ -4081,10 +4197,13 @@ msgid ""
 "giant Mace rocket used by Dvaered Capships in order to strike distant "
 "enemies."
 msgstr ""
+"El Colisionador SuperRápido, más conocido por sus siglas CSR, es básicamente "
+"un cohete Maza gigante utilizado por las naves Dvaered para golpear a los "
+"enemigos distantes."
 
 #: dat/outfits/launchers/teracom_banshee_launcher.xml:2
 msgid "TeraCom Banshee Launcher"
-msgstr ""
+msgstr "Lanzador Banshee TeraCom"
 
 #: dat/outfits/launchers/teracom_banshee_launcher.xml:10
 msgid ""
@@ -4093,10 +4212,14 @@ msgid ""
 "unguided rockets, while slow, can do quite respectable damage even to fairly "
 "large ships."
 msgstr ""
+"TeraCom ha equipado su modelo de lanzador Banshee con sistemas de recarga y "
+"refrigeración de válvulas de alto grado, lo que da un impulso significativo "
+"a la velocidad de disparo. Estos cohetes no guiados, aunque son lentos, "
+"pueden causar un daño bastante respetable incluso a naves bastante grandes."
 
 #: dat/outfits/launchers/teracom_fury_launcher.xml:2
 msgid "TeraCom Fury Launcher"
-msgstr ""
+msgstr "Lanzador Furia TeraCom"
 
 #: dat/outfits/launchers/teracom_fury_launcher.xml:9
 msgid ""
@@ -4106,10 +4229,16 @@ msgid ""
 "power, the Fury missiles launched are nimble enough to easily strike even "
 "some of the fastest ships in the galaxy."
 msgstr ""
+"El lanzador Furia de TeraCom es un lanzador de misiles de alto rendimiento "
+"equipado con una tecnología patentada de seguimiento de objetivos y armado "
+"de misiles, que permite a los pilotos fijar los objetivos de forma rápida y "
+"sencilla. Aunque carecen del poder destructivo, los misiles Furia lanzados "
+"son lo suficientemente ágiles como para golpear fácilmente incluso a algunas "
+"de las naves más rápidas de la galaxia."
 
 #: dat/outfits/launchers/teracom_headhunter_launcher.xml:2
 msgid "TeraCom Headhunter Launcher"
-msgstr ""
+msgstr "Lanzador Cazacabezas Teracom"
 
 #: dat/outfits/launchers/teracom_headhunter_launcher.xml:9
 msgid ""
@@ -4122,10 +4251,18 @@ msgid ""
 "demanding on the ship's resources, the patented tracking and missile arming "
 "technology allows pilots to fire their missiles before the competition does."
 msgstr ""
+"El lanzador Furia de TeraCom es un lanzador de misiles de alto rendimiento "
+"equipado con una tecnología patentada de seguimiento de objetivos y armado "
+"de misiles, que permite a los pilotos fijar los objetivos de forma rápida y "
+"sencilla.\n"
+"\n"
+" Aunque carece de poder destructivo, los misiles Furia lanzados son lo "
+"suficientemente ágiles como para golpear fácilmente incluso a algunas de las "
+"naves más rápidas de la galaxia."
 
 #: dat/outfits/launchers/teracom_imperator_launcher.xml:2
 msgid "TeraCom Imperator Launcher"
-msgstr ""
+msgstr "Lanzador Emperador TeraCom"
 
 #: dat/outfits/launchers/teracom_imperator_launcher.xml:10
 msgid ""
@@ -4136,10 +4273,16 @@ msgid ""
 "take a while for it to reach its target. Faster cruisers may be able to "
 "outrun it completely."
 msgstr ""
+"TeraCom decidió no desarrollar un lanzador para el Cesar IV, porque no "
+"cumplía los requisitos de rendimiento de la empresa. En su lugar, la "
+"compañía lanzó una especificación de torpedo completamente nueva. En la "
+"actualidad, el torpedo pesado de la clase Emperador proporciona un poder "
+"destructivo devastador, aunque tarda en alcanzar su objetivo. Los cruceros "
+"más rápidos podrían superarlo por completo."
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:2
 msgid "TeraCom Mace Launcher"
-msgstr ""
+msgstr "Lanzador Maza TeraCom"
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:9
 msgid ""
@@ -4151,10 +4294,18 @@ msgid ""
 "TeraCom's Mace launcher uses an advanced reload mechanism that allows the "
 "launcher to fire more rockets in less time."
 msgstr ""
+"El cohete no guiado de la clase Maza es un arma barata y prescindible que se "
+"utiliza para aumentar la potencia de fuego máxima en situaciones difíciles. "
+"Es mucho mejor infligiendo daño a objetivos ligeros que la mayoría de los "
+"cañones de energía del tamaño de un caza, pero tiene la desventaja de que se "
+"queda sin munición después de un corto tiempo de fuego.\n"
+"\n"
+"El lanzador Maza de TeraCom utiliza un avanzado mecanismo de recarga que "
+"permite al lanzador disparar más cohetes en menos tiempo."
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:2
 msgid "TeraCom Medusa Launcher"
-msgstr ""
+msgstr "Lanzador Medusa TeraCom"
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:9
 msgid ""
@@ -4168,10 +4319,19 @@ msgid ""
 "and firing faster than the standard specification, and holding a greater "
 "amount in the magazine as well."
 msgstr ""
+"El misil de crucero PEM de la clase Medusa es un arma no letal diseñada para "
+"inutilizar los sistemas internos de una nave, dejándola inofensiva y lista "
+"para el abordaje. La ojiva sólo causa daños limitados, por lo que incluso "
+"los objetivos poco blindados pueden ser inutilizados eficazmente con esta "
+"arma. Sin embargo, el Medusa no es el misil más ágil del mercado.\n"
+"\n"
+"TeraCom ha construido un lanzador Medusa muy eficiente, capaz de fijarse y "
+"disparar más rápido que la especificación estándar, y de mantener una mayor "
+"cantidad en el cargador también."
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:2
 msgid "TeraCom Vengeance Launcher"
-msgstr ""
+msgstr "Lanzador Venganza TeraCom"
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:9
 msgid ""
@@ -4183,10 +4343,18 @@ msgid ""
 "considerably reduces the time it takes to achieve a lock. Sometimes, those "
 "few seconds can make all the difference."
 msgstr ""
+"Los misiles interceptores de la clase Venganza son los más pesados que se "
+"fabrican actualmente. Casi la mitad del casco del misil se utiliza para la "
+"carga útil, lo que disminuye su capacidad para alcanzar objetivos veloces. "
+"Está diseñado para matar a los objetivos blindados a costa de ser débil "
+"contra escudos. Es mejor emparejarlo con armas antiescudo. El hardware del "
+"lanzador, patentado por TeraCom, reduce considerablemente el tiempo que se "
+"tarda en alcanzar un objetivo. A veces, esos pocos segundos pueden marcar la "
+"diferencia."
 
 #: dat/outfits/launchers/turreted_convulsion_launcher.xml:2
 msgid "Turreted Convulsion Launcher"
-msgstr ""
+msgstr "Torreta Lanzador Convulsor"
 
 #: dat/outfits/launchers/turreted_convulsion_launcher.xml:10
 msgid ""
@@ -4197,10 +4365,16 @@ msgid ""
 "This launcher is mounted on a turret and has more ammo capacity than the "
 "standard launcher."
 msgstr ""
+"El misil de clase interceptora Turion se centra en la alta agilidad más que "
+"en la potencia destructiva. Aunque hace poco daño a los objetos físicos, es "
+"bastante eficaz a la hora de interrumpir los escudos.\n"
+"\n"
+"Este lanzador está montado en una torreta y tiene más capacidad de munición "
+"que el lanzador estándar."
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:2
 msgid "Unicorp Caesar IV Launcher"
-msgstr ""
+msgstr "Lanzador Cesar IV Unicorp"
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:10
 msgid ""
@@ -4208,10 +4382,14 @@ msgid ""
 "available. Though much slower than missiles and useless against mobile "
 "targets, they remain manoeuvrable enough to chase down cruisers."
 msgstr ""
+"Los torpedos de la clase Cesar IV están entre las armas de torpedo más "
+"comunes disponibles. Aunque son mucho más lentos que los misiles y resultan "
+"inútiles contra objetivos móviles, siguen siendo lo suficientemente "
+"maniobrables como para perseguir cruceros."
 
 #: dat/outfits/launchers/unicorp_storm_launcher.xml:2
 msgid "Unicorp Storm Launcher"
-msgstr ""
+msgstr "Lanzador Tormenta Unicorp"
 
 #: dat/outfits/launchers/unicorp_storm_launcher.xml:9
 msgid ""
@@ -4221,10 +4399,16 @@ msgid ""
 "be way too costly to mass-equip the Navy. This is the reason why only the "
 "Imperial elite squadrons use this very deadly weapon."
 msgstr ""
+"Los misiles y lanzadores Tormenta fueron diseñados por Unicorp para ser el "
+"equivalente guiado de un cohete Maza. Sin embargo, a pesar de la innegable "
+"capacidad de Unicorp para diseñar conjuntos funcionales y baratos, el "
+"resultado resultó ser demasiado costoso para equipar en masa a la Marina "
+"Espacial. Esta es la razón por la que sólo los escuadrones de élite "
+"imperiales utilizan esta arma tan mortífera."
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:2
 msgid "Za'lek Hunter Launcher"
-msgstr ""
+msgstr "Lanzador Cazador Za'lek"
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:12
 msgid ""
