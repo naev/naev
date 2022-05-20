@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-05-12 10:59+0900\n"
-"PO-Revision-Date: 2022-05-20 16:49+0000\n"
+"PO-Revision-Date: 2022-05-20 17:08+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
@@ -2649,7 +2649,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:2
 msgid "Beat Up Large Engine"
-msgstr "Motor Grande Destartalado"
+msgstr "Grande Destartalado Motor"
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:9
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:9
@@ -2763,7 +2763,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:2
 msgid "Beat Up Medium Engine"
-msgstr "Motor Medio Destartalado"
+msgstr "Medio Destartalado Motor"
 
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:2
 msgid "Krain Patagium Engine"
@@ -2861,7 +2861,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/small/beat_up_small_engine.xml:2
 msgid "Beat Up Small Engine"
-msgstr "Motor Pequeño Destartalado"
+msgstr "Pequeño Destartalado Motor"
 
 #: dat/outfits/core_engine/small/melendez_ox_xl_engine.xml:2
 msgid "Melendez Ox XL Engine"
@@ -2904,9 +2904,9 @@ msgid ""
 "caveat of markedly increased power consumption, but those flying with Tricon "
 "engines can usually afford the requisite reactor upgrades."
 msgstr ""
-"Para los pilotos de embarcaciones ligeras que exigen un rendimiento sin "
-"igual, el Céfiro de Tricon es el motor elegido. Su manejo, el mejor de su "
-"clase, conlleva la advertencia de que el consumo de energía es notablemente "
+"Para los pilotos de naves ligeras que exigen un rendimiento sin igual, el "
+"Céfiro de Tricon es el motor elegido. Su manejo, el mejor de su clase, "
+"conlleva la advertencia de que el consumo de energía es notablemente "
 "superior, pero los que vuelan con motores Tricon suelen poder permitirse las "
 "mejoras necesarias en el reactor."
 
@@ -3000,7 +3000,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:2
 msgid "Patchwork Heavy Plating"
-msgstr "Revestimiento Pesado de Parches"
+msgstr "Pesado de Parches Revestimiento"
 
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:10
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:10
@@ -3121,7 +3121,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:2
 msgid "Patchwork Medium Plating"
-msgstr "Parcheado Medio Revestimiento"
+msgstr "Medio de Parches Revestimiento"
 
 #: dat/outfits/core_hull/medium/rs_medium_cargo_hull.xml:2
 msgid "Red Star Medium Cargo Hull"
@@ -3192,7 +3192,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/unicorp_d12_medium_plating.xml:2
 msgid "Unicorp D-12 Medium Plating"
-msgstr "Revestimiento Medio D-12 Unicorp"
+msgstr "Medio D-12 Unicorp Revestimiento"
 
 #: dat/outfits/core_hull/medium/unicorp_d12_medium_plating.xml:9
 msgid ""
@@ -3233,7 +3233,7 @@ msgstr ""
 
 #: dat/outfits/core_hull/small/patchwork_light_plating.xml:2
 msgid "Patchwork Light Plating"
-msgstr "Revestimiento Ligero de Parches"
+msgstr "Ligero de Parches Revestimiento"
 
 #: dat/outfits/core_hull/small/rs_small_cargo_hull.xml:2
 msgid "Red Star Small Cargo Hull"
