@@ -132,7 +132,7 @@ typedef struct UniHunk_ {
       int data;
    } u; /**< Actual data to patch. */
    union {
-      const char *name;
+      const char *name; /* We just save the pointer, so keep as const. */
       int data;
    } o; /** Old data to possibly replace. */
 } UniHunk_t;
@@ -143,9 +143,9 @@ typedef struct UniHunk_ {
  * @brief Represents each Universe Diff.
  */
 typedef struct UniDiff_ {
-   char *name; /**< Name of the diff. */
-   UniHunk_t *applied; /**< Applied hunks. */
-   UniHunk_t *failed; /**< Failed hunks. */
+   char *name;          /**< Name of the diff. */
+   UniHunk_t *applied;  /**< Applied hunks. */
+   UniHunk_t *failed;   /**< Failed hunks. */
 } UniDiff_t;
 
 /*
@@ -178,6 +178,9 @@ static int diff_checkUpdateUniverse (void);
 int diff_save( xmlTextWriterPtr writer ); /**< Used in save.c */
 int diff_load( xmlNodePtr parent ); /**< Used in save.c */
 
+/**
+ * @brief Simple comparison for UniDiffData_t based on name.
+ */
 static int diff_cmp( const void *p1, const void *p2 )
 {
    const UniDiffData_t *d1, *d2;
@@ -224,7 +227,7 @@ int diff_loadAvailable (void)
    array_free( diff_files );
    array_shrink(&diff_available);
 
-   /* Sort. */
+   /* Sort and warn about duplicates. */
    qsort( diff_available, array_size(diff_available), sizeof(UniDiffData_t), diff_cmp );
    for (int i=0; i<array_size(diff_available)-1; i++) {
       UniDiffData_t *d = &diff_available[i];
