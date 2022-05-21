@@ -3357,19 +3357,22 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
          }
 
          if (!jp_isFlag( target, JP_EXITONLY ) && (ignore_rules ||
-               ( (!jp_isFlag( &cur_system->jumps[i], JP_HIDDEN ) || guerilla ) &&
+               ((!jp_isFlag( &cur_system->jumps[i], JP_HIDDEN ) || guerilla) &&
                (system_getPresence( cur_system->jumps[i].target, lf ) > limit))))
             array_push_back(&validJumpPoints, target);
       }
    }
 
-   /* Unusual case no landable nor presence, we'll just jump in randomly. */
+   /* Unusual case no landable nor presence, we'll just jump in randomly if possible. */
    if (array_size(ind)==0 && array_size(validJumpPoints)==0) {
       if (guerilla) /* Guerilla ships are created far away in deep space. */
          vec2_pset ( vp, 1.5*cur_system->radius, RNGF()*2*M_PI );
       else if (array_size(cur_system->jumps) > 0) {
-         for (int i=0; i<array_size(cur_system->jumps); i++)
-            array_push_back(&validJumpPoints, cur_system->jumps[i].returnJump);
+         for (int i=0; i<array_size(cur_system->jumps); i++) {
+            JumpPoint *jp = &cur_system->jumps[i];
+            if (!jp_isFlag( jp->returnJump, JP_EXITONLY ))
+               array_push_back(&validJumpPoints, jp->returnJump);
+         }
       }
       else {
          WARN(_("Creating pilot in system with no jumps nor spobs to take off from!"));
