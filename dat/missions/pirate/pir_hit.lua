@@ -334,7 +334,11 @@ function bounty_setup ()
          credits = 850e3 + rnd.sigma() * 100e3
          reputation = 6
       elseif mem.level == 5 then
-         pship = "Empire Hawking"
+         if rnd.rnd() < 0.5 then
+            pship = "Empire Rainmaker"
+         else
+            pship = "Empire Hawking"
+         end
          credits = 1500e3 + rnd.sigma() * 200e3
          reputation = 10
       elseif mem.level == 6 then
@@ -359,10 +363,18 @@ function bounty_setup ()
          pship = "Dvaered Vigilance"
          credits = 900e3 + rnd.sigma() * 120e3
          reputation = 6
-      elseif mem.level >= 5 then
-         pship = "Dvaered Goddard"
-         credits = 1.9e6 + rnd.sigma() * 200e3
+      elseif mem.level == 5 then
+         if rnd.rnd() < 0.5 then
+            pship = "Dvaered Arsenal"
+         else
+            pship = "Dvaered Retribution"
+         end
+         credits = 1.8e6 + rnd.sigma() * 200e3
          reputation = 10
+      elseif mem.level >= 6 then
+         pship = "Dvaered Goddard"
+         credits = 2.3e6 + rnd.sigma() * 300e3
+         reputation = 20
       end
    elseif mem.target_faction == "Soromid" then
       if mem.level == 1 then
@@ -386,7 +398,11 @@ function bounty_setup ()
          credits = 900e3 + rnd.sigma() * 120e3
          reputation = 6
       elseif mem.level == 5 then
-         pship = "Soromid Ira"
+         if rnd.rnd() < 0.5 then
+            pship = "Soromid Copia"
+         else
+            pship = "Soromid Ira"
+         end
          credits = 1.8e6 + rnd.sigma() * 200e3
          reputation = 10
       elseif mem.level == 6 then
@@ -430,11 +446,15 @@ function bounty_setup ()
          credits = 600e3 + rnd.sigma() * 80e3
          reputation = 3
       elseif mem.level == 5 then
-         pship = "Sirius Dogma"
+         pship = "Sirius Providence"
          credits = 1.5e6 + rnd.sigma() * 200e3
          reputation = 10
       elseif mem.level == 6 then
-         pship = "Sirius Divinity"
+         if rnd.rnd() < 0.5 then
+            pship = "Sirius Divinity"
+         else
+            pship = "Sirius Dogma"
+         end
          credits = 2.2e6 + rnd.sigma() * 300e3
          reputation = 20
       end
@@ -448,16 +468,16 @@ function bounty_setup ()
          credits = 900e3 + rnd.sigma() * 120e3
          reputation = 6
       elseif mem.level == 5 then
+         pship = "Za'lek Mammon"
+         credits = 1.7e6 + rnd.sigma() * 200e3
+         reputation = 10
+      elseif mem.level == 6 then
          if rnd.rnd() < 0.5 then
             pship = "Za'lek Diablo"
          else
             pship = "Za'lek Mephisto"
          end
-         credits = 1.9e6 + rnd.sigma() * 200e3
-         reputation = 10
-      elseif mem.level == 6 then
-         pship = "Za'lek Hephaestus"
-         credits = 3e6 + rnd.sigma() * 300e3
+         credits = 2e6 + rnd.sigma() * 300e3
          reputation = 20
       end
    elseif mem.target_faction == "Trader" then
@@ -477,15 +497,18 @@ function bounty_setup ()
          end
          credits = 300e3 + rnd.sigma() * 50e3
          reputation = 2
-      elseif mem.level >= 3 then
-         if rnd.rnd() < 0.5 then
-            pship = "Rhino"
-            credits = 700e3 + rnd.sigma() * 80e3
-         else
-            pship = "Mule"
-            credits = 600e3 + rnd.sigma() * 80e3
-         end
+      elseif mem.level == 3 then
+         pship = "Mule"
+         credits = 600e3 + rnd.sigma() * 80e3
          reputation = 3
+      elseif mem.level == 4 then
+         pship = "Rhino"
+         credits = 700e3 + rnd.sigma() * 80e3
+         reputation = 5
+      elseif mem.level >= 5 then
+         pship = "Zebra"
+         credits = 1e6 + rnd.sigma() * 100e3
+         reputation = 8
       end
    elseif mem.target_faction == "Traders Guild" then
       if mem.level == 1 then
@@ -504,15 +527,18 @@ function bounty_setup ()
          end
          credits = 300e3 + rnd.sigma() * 50e3
          reputation = 2
-      elseif mem.level >= 3 then
-         if rnd.rnd() < 0.5 then
-            pship = "Rhino"
-            credits = 700e3 + rnd.sigma() * 80e3
-         else
-            pship = "Mule"
-            credits = 600e3 + rnd.sigma() * 80e3
-         end
+      elseif mem.level == 3 then
+         pship = "Mule"
+         credits = 600e3 + rnd.sigma() * 80e3
          reputation = 3
+      elseif mem.level == 4 then
+         pship = "Rhino"
+         credits = 700e3 + rnd.sigma() * 80e3
+         reputation = 5
+      elseif mem.level >= 5 then
+         pship = "Zebra"
+         credits = 1e6 + rnd.sigma() * 100e3
+         reputation = 8
       end
    elseif mem.target_faction == "Independent" then
       local choices = {}
