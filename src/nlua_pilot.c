@@ -580,7 +580,7 @@ static int pilotL_add( lua_State *L )
    vectnull(&vn); /* Need to determine angle. */
    ss    = NULL;
    jump  = NULL;
-   spob= NULL;
+   spob  = NULL;
    a     = 0.;
 
    /* Parse first argument - Ship Name */
