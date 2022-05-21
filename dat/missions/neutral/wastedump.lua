@@ -156,7 +156,7 @@ function abort ()
       elseif f == faction.get( "Soromid" ) then
          choices = { "Soromid Arx", "Soromid Vox", "Soromid Nyx", "Soromid Odium" }
       elseif f == faction.get( "Za'lek" ) then
-         choices = { "Za'lek Hephaestus", "Za'lek Mephisto", "Za'lek Diablo", "Za'lek Demon" }
+         choices = { "Za'lek Mephisto", "Za'lek Diablo", "Za'lek Demon" }
       elseif f == faction.get( "Sirius" ) then
          choices = { "Sirius Preacher", "Sirius Divinity", "Sirius Dogma" }
       elseif f == faction.get( "Frontier" ) then
