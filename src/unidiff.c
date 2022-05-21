@@ -178,6 +178,14 @@ static int diff_checkUpdateUniverse (void);
 int diff_save( xmlTextWriterPtr writer ); /**< Used in save.c */
 int diff_load( xmlNodePtr parent ); /**< Used in save.c */
 
+static int diff_cmp( const void *p1, const void *p2 )
+{
+   const UniDiffData_t *d1, *d2;
+   d1 = (const UniDiffData_t*) p1;
+   d2 = (const UniDiffData_t*) p2;
+   return strcmp( d1->name, d2->name );
+}
+
 /**
  * @brief Loads available universe diffs.
  *
@@ -215,6 +223,15 @@ int diff_loadAvailable (void)
    }
    array_free( diff_files );
    array_shrink(&diff_available);
+
+   /* Sort. */
+   qsort( diff_available, array_size(diff_available), sizeof(UniDiffData_t), diff_cmp );
+   for (int i=0; i<array_size(diff_available)-1; i++) {
+      UniDiffData_t *d = &diff_available[i];
+      UniDiffData_t *dn = &diff_available[i+1];
+      if (strcmp( d->name, dn->name )==0)
+         WARN(_("Two unidiff have the same name '%s'!"), d->name );
+   }
 
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
