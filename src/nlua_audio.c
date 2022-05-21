@@ -628,18 +628,19 @@ static int audioL_setVolume( lua_State *L )
 /**
  * @brief Gets the volume of a source.
  *
- *    @luatparam Audio source Source to get volume of.
+ *    @luatparam[opt] Audio source Source to get volume of.
  *    @luatreturn number Volume the source is set to.
  * @luafunc getVolume
  */
 static int audioL_getVolume( lua_State *L )
 {
-   LuaAudio_t *la;
    double volume;
    if (sound_disabled)
       volume = 0.;
+   else if (lua_gettop(L) > 0)
+      volume = luaL_checkaudio(L,1)->volume;
    else
-      volume = la->volume;
+      volume = sound_getVolume();
    lua_pushnumber(L, volume);
    return 1;
 }
