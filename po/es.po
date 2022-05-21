@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-02-19 12:48-0500\n"
-"PO-Revision-Date: 2022-05-20 21:16+0000\n"
+"PO-Revision-Date: 2022-05-21 21:19+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -13976,9 +13976,8 @@ msgstr ""
 "hace que tu barco parezca más bonito."
 
 #: dat/outfits/accessory/love_letter.xml:13
-#, fuzzy
 msgid "#rLove is in the air.#0"
-msgstr "#rLove is in the air.#0"
+msgstr "#rEl amor esta en el aire.#0"
 
 #: dat/outfits/accessory/pentagram_of_valor.xml:2
 msgid "Pentagram of Valor"
@@ -16937,7 +16936,7 @@ msgstr ""
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:2
 msgid "Za'lek Reaper Launcher"
-msgstr ""
+msgstr "Lanzador Segador Za'lek"
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:10
 msgid ""
@@ -16953,15 +16952,15 @@ msgstr ""
 
 #: dat/outfits/maps/localmap.xml:2
 msgid "Local System Map"
-msgstr ""
+msgstr "Mapa Sistema Local"
 
 #: dat/outfits/maps/localmap.xml:6
 msgid "This map contains information about the local system."
-msgstr ""
+msgstr "Este mapa contiene información sobre el sistema local."
 
 #: dat/outfits/maps/map_collective_space.xml:2
 msgid "Map: Collective Space"
-msgstr ""
+msgstr "Mapa: Espacio Colectivo"
 
 #: dat/outfits/maps/map_collective_space.xml:7
 msgid ""
@@ -16969,16 +16968,21 @@ msgid ""
 "Collective. Sadly, the Empire has no accurate intel about Collective assets "
 "in the area."
 msgstr ""
+"Este mapa traza los saltos conocidos que conectan los sistemas ocupados por "
+"el Colectivo. Lamentablemente, el Imperio no dispone de información precisa "
+"sobre los recursos del Colectivo en la zona."
 
 #: dat/outfits/maps/map_dvaered_core.xml:2
 msgid "Map: Dvaered Core"
-msgstr ""
+msgstr "Mapa: Núcleo Dvaered"
 
 #: dat/outfits/maps/map_dvaered_core.xml:6
 msgid ""
 "This map lists the locations of all Dvaered worlds and stations close to the "
 "Dvaered capital."
 msgstr ""
+"Este mapa recoge la ubicación de todos los mundos de Dvaered y las "
+"estaciones cercanas a la capital Dvaered."
 
 #: dat/outfits/maps/map_dvaeredsoromid_trade_route.xml:2
 msgid "Map: Dvaered-Soromid trade route"
@@ -16992,43 +16996,51 @@ msgstr ""
 
 #: dat/outfits/maps/map_empire_core.xml:2
 msgid "Map: Empire Core"
-msgstr ""
+msgstr "Mapa: Núcleo Imperio"
 
 #: dat/outfits/maps/map_empire_core.xml:6
 msgid ""
 "This map lists the locations of all Imperial worlds and stations close to "
 "the Imperial capital."
 msgstr ""
+"Este mapa recoge la ubicación de todos los mundos imperiales y las "
+"estaciones cercanas a la capital Imperial."
 
 #: dat/outfits/maps/map_flf.xml:2
 msgid "Map: FLF Hidden Jumps"
-msgstr ""
+msgstr "Mapa: Saltos Ocultos del FLF"
 
 #: dat/outfits/maps/map_flf.xml:7
 msgid ""
 "This map contains the location of hidden jump points between the FLF base "
 "and Frontier space."
 msgstr ""
+"Este mapa contiene la ubicación de los puntos de salto ocultos entre la base "
+"FLF y el espacio Frontera."
 
 #: dat/outfits/maps/map_flf_pirate_route.xml:2
 msgid "Map: FLF-Pirate Route"
-msgstr ""
+msgstr "Mapa: Ruta FLF-Pirata"
 
 #: dat/outfits/maps/map_flf_pirate_route.xml:7
 msgid ""
 "This map contains the location of the two-way hidden jump point between the "
 "FLF base and the nearest Pirate stronghold."
 msgstr ""
+"Este mapa contiene la ubicación del punto de salto oculto bidireccional "
+"entre la base FLF y la fortaleza Pirata más cercana."
 
 #: dat/outfits/maps/map_inner_nebula_secret_jump.xml:2
 msgid "Map: Inner Nebula Secret Jump"
-msgstr ""
+msgstr "Mapa: Salto Secreto de la Nebulosa Interior"
 
 #: dat/outfits/maps/map_inner_nebula_secret_jump.xml:7
 msgid ""
 "This map contains the location of a hidden jump point leading to the inner "
 "nebula."
 msgstr ""
+"Este mapa contiene la ubicación de un punto de salto oculto que lleva a la "
+"nebulosa interior."
 
 #: dat/outfits/maps/map_kretogg_hidden_jumps.xml:2
 msgid "Map: Kretogg's hidden jump points"
@@ -17039,16 +17051,21 @@ msgid ""
 "This map contains the position of hidden jump points leading straight into "
 "Za'lek space."
 msgstr ""
+"Este mapa contiene la posición de los puntos de salto ocultos que llevan "
+"directamente al espacio Za'lek."
 
 #: dat/outfits/maps/map_nebula_edge.xml:2
 msgid "Map: Nebula Edge"
-msgstr ""
+msgstr "Mapa: Borde de la Nebulosa"
 
 #: dat/outfits/maps/map_nebula_edge.xml:6
 msgid ""
 "This map contains the route leading from Dvaered/Imperial space to the edge "
 "of the Nebula. It also lists the two Imperial stations along the route."
 msgstr ""
+"Este mapa contiene la ruta que va desde el espacio Dvaered/Imperial hasta el "
+"borde de la Nebulosa. También contiene una lista de las dos estaciones "
+"Imperiales a lo largo de la ruta."
 
 #: dat/outfits/maps/map_new_haven_hidden_jumps.xml:2
 msgid "Map: New Haven's hidden jump points"
@@ -17069,10 +17086,13 @@ msgid ""
 "This map contains the locations of the pirate clan worlds, and a few "
 "stations that are known to offer opportunities for pirates in the vicinity."
 msgstr ""
+"Este mapa contiene las ubicaciones de los mundos de los clanes piratas, y "
+"algunas estaciones que se sabe que ofrecen oportunidades para los piratas en "
+"los alrededores."
 
 #: dat/outfits/maps/map_qorel.xml:2
 msgid "Map: Qorel Expanse"
-msgstr ""
+msgstr "Mapa: Expansión de Qorel"
 
 #: dat/outfits/maps/map_qorel.xml:7
 msgid ""
@@ -17081,6 +17101,11 @@ msgid ""
 "Getting the location of these very special jump points is usually very "
 "costly to reduce the number of people having access to it."
 msgstr ""
+"Este mapa contiene la ubicación de los puntos de salto dentro y fuera de la "
+"expansión de Qorel, un conjunto de sistemas a los que no se puede acceder a "
+"través de los puntos de salto estándar. Conseguir la ubicación de estos "
+"puntos de salto tan especiales suele ser muy costoso para reducir el número "
+"de personas que tienen acceso a ellos."
 
 #: dat/outfits/maps/map_sirian_border_systems.xml:2
 msgid "Map: Sirian border systems"
@@ -17089,20 +17114,23 @@ msgstr ""
 #: dat/outfits/maps/map_sirian_border_systems.xml:6
 msgid "This map contains the systems that lead to Sirius controlled space."
 msgstr ""
+"Este mapa contiene los sistemas que conducen al espacio controlado por Sirio."
 
 #: dat/outfits/maps/map_sirius_core.xml:2
 msgid "Map: Sirius Core"
-msgstr ""
+msgstr "Mapa: Núcleo Sirio"
 
 #: dat/outfits/maps/map_sirius_core.xml:7
 msgid ""
 "This map contains the location of Mutris, home of Sirichana and capital to "
 "the Sirians, as well as the surrounding systems."
 msgstr ""
+"Este mapa contiene la ubicación de Mutris, hogar de Sirichana y capital de "
+"Sirio, así como los sistemas colindantes."
 
 #: dat/outfits/maps/map_sol.xml:2
 msgid "Map: Sol"
-msgstr ""
+msgstr "Mapa: Sol"
 
 #: dat/outfits/maps/map_sol.xml:6
 msgid ""
@@ -17111,20 +17139,26 @@ msgid ""
 "which no known ship in the galaxy can safely pass through. What lies beyond "
 "Sol, if anything, is unknown."
 msgstr ""
+"Este mapa contiene la ubicación del sistema Sol, el origen de la humanidad. "
+"Declarado muerto por el Incidente, ahora está cubierto por una nebulosa muy "
+"inestable que ninguna nave conocida en la galaxia puede atravesar con "
+"seguridad. Lo que hay más allá de Sol, si es que hay algo, es desconocido."
 
 #: dat/outfits/maps/map_the_frontier.xml:2
 msgid "Map: The Frontier"
-msgstr ""
+msgstr "Mapa: La Frontera"
 
 #: dat/outfits/maps/map_the_frontier.xml:6
 msgid ""
 "This map contains an east-west route through Frontier space, as well as the "
 "location of the Frontier Council."
 msgstr ""
+"Este mapa contiene una ruta este-oeste a través del espacio Frontera, así "
+"como la ubicación del Consejo Frontera."
 
 #: dat/outfits/maps/map_thurion.xml:2
 msgid "Map: Thurion Core"
-msgstr ""
+msgstr "Mapa: Núcleo Turion"
 
 #: dat/outfits/maps/map_thurion.xml:7
 msgid ""
@@ -17134,25 +17168,27 @@ msgstr ""
 
 #: dat/outfits/maps/map_zalek_core.xml:2
 msgid "Map: Za'lek Core"
-msgstr ""
+msgstr "Mapa: Núcleo Za'lek"
 
 #: dat/outfits/maps/map_zalek_core.xml:6
 msgid ""
 "This map contains the heart of Za'lek space, including its capital Ruadan "
 "and central hub, Za'lek."
 msgstr ""
+"Este mapa contiene el corazón del espacio Za'lek, incluyendo su capital "
+"Ruadan y el eje central, Za'lek."
 
 #: dat/outfits/maps/ultra_map.xml:2
 msgid "Ultra Map"
-msgstr ""
+msgstr "UltraMapa"
 
 #: dat/outfits/maps/ultra_map.xml:6
 msgid "For cheating."
-msgstr ""
+msgstr "Para hacer trampas."
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:2
 msgid "Counterfeit Heavy Combat Vessel License"
-msgstr ""
+msgstr "Falsificación de Licencia de Buque de Combate Pesado"
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:8
 msgid ""
@@ -17166,11 +17202,11 @@ msgstr ""
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:11
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:12
 msgid "Heavy Combat Vessel"
-msgstr ""
+msgstr "Nave de Combate Pesado"
 
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:2
 msgid "Counterfeit Heavy Weapon License"
-msgstr ""
+msgstr "Falsificación de Licencia de Armas Pesadas"
 
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:8
 msgid ""
@@ -17184,112 +17220,118 @@ msgstr ""
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:11
 #: dat/outfits/misc/heavy_weapon_license.xml:12
 msgid "Heavy Weapon"
-msgstr ""
+msgstr "Arma Pesada"
 
 #: dat/outfits/misc/gui_brushed.xml:2
 msgid "GUI - Brushed"
-msgstr ""
+msgstr "GUI - Pulida"
 
 #: dat/outfits/misc/gui_brushed.xml:6
 msgid "Outfit corresponding with the \"Brushed\" GUI."
-msgstr ""
+msgstr "Modelo correspondiente a la GUI \"Pulida\"."
 
 #: dat/outfits/misc/gui_legacy.xml:2
 msgid "GUI - Legacy"
-msgstr ""
+msgstr "GUI - Legado"
 
 #: dat/outfits/misc/gui_legacy.xml:6
 msgid "Outfit corresponding with the \"Legacy\" GUI."
-msgstr ""
+msgstr "Modelo correspondiente a la GUI \"Legado\"."
 
 #: dat/outfits/misc/gui_slim.xml:2
 msgid "GUI - Slim"
-msgstr ""
+msgstr "GUI - Recortada"
 
 #: dat/outfits/misc/gui_slim.xml:6
 msgid "Outfit corresponding with the \"Slim\" GUI."
-msgstr ""
+msgstr "Modelo correspondiente con la GUI \"Recortada\"."
 
 #: dat/outfits/misc/gui_slimv2.xml:2
 msgid "GUI - Slimv2"
-msgstr ""
+msgstr "GUI - Recortadav2"
 
 #: dat/outfits/misc/gui_slimv2.xml:6
 msgid "Outfit corresponding with the \"Slimv2\" GUI."
-msgstr ""
+msgstr "Modelo correspondiente con la GUI \"Recortadav2."
 
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:2
 msgid "Heavy Combat Vessel License"
-msgstr ""
+msgstr "Licencia de Naves de Combate Pesadas"
 
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:9
 msgid "This license will authorize you to buy cruiser and carrier-class ships."
 msgstr ""
+"Esta licencia te autorizará a comprar naves de clase crucero y portanaves."
 
 #: dat/outfits/misc/heavy_weapon_license.xml:2
 msgid "Heavy Weapon License"
-msgstr ""
+msgstr "Licencia de Armas Pesadas"
 
 #: dat/outfits/misc/heavy_weapon_license.xml:9
 msgid ""
 "This license will authorize you to buy and use heavy weapons like the heavy "
 "ion turret."
 msgstr ""
+"Esta licencia te autorizará a comprar y utilizar armas pesadas como la "
+"torreta de iones pesada."
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:2
 msgid "Large Civilian Vessel License"
-msgstr ""
+msgstr "Licencia para Grandes Naves Civiles"
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:7
 msgid "This license will authorize you to buy freighter-class ships."
-msgstr ""
+msgstr "Esta licencia te autoriza a comprar naves de clase carguero."
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:10
 msgid "Large Civilian Vessel"
-msgstr ""
+msgstr "Gran Nave Civil"
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:2
 msgid "Light Combat Vessel License"
-msgstr ""
+msgstr "Licencia de Nave de Combate Ligera"
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:7
 msgid "This license will authorize you to buy fighter and bomber class ships."
-msgstr ""
+msgstr "Esta licencia te autorizará a comprar naves de clase caza y bombardero."
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:10
 msgid "Light Combat Vessel"
-msgstr ""
+msgstr "Nave de Combate Ligera"
 
 #: dat/outfits/misc/medium_combat_vessel_license.xml:2
 msgid "Medium Combat Vessel License"
-msgstr ""
+msgstr "Licencia de Nave de Combate Media"
 
 #: dat/outfits/misc/medium_combat_vessel_license.xml:8
 msgid ""
 "This license will authorize you to buy destroyer and corvette-class ships."
 msgstr ""
+"Esta licencia te autorizará a comprar naves de clase destructor y corbeta."
 
 #: dat/outfits/misc/medium_combat_vessel_license.xml:11
 msgid "Medium Combat Vessel"
-msgstr ""
+msgstr "Nave de Combate Media"
 
 #: dat/outfits/misc/medium_weapon_license.xml:2
 msgid "Medium Weapon License"
-msgstr ""
+msgstr "Licencia de Armas Medias"
 
 #: dat/outfits/misc/medium_weapon_license.xml:7
 msgid ""
 "This license will authorize you to buy and use medium weapons like the "
 "ripper cannon."
 msgstr ""
+"Esta licencia te autorizará a comprar y utilizar armas medias como el cañón "
+"destripador."
 
 #: dat/outfits/misc/medium_weapon_license.xml:10
 msgid "Medium Weapon"
-msgstr ""
+msgstr "Arma Media"
 
 #: dat/outfits/misc/mercenary_license.xml:2
 msgid "Mercenary License"
-msgstr ""
+msgstr "Licencia de Mercenario"
 
 #: dat/outfits/misc/mercenary_license.xml:7
 msgid ""
@@ -17428,7 +17470,7 @@ msgstr ""
 
 #: dat/outfits/structure/active_plating.xml:2
 msgid "Active Plating"
-msgstr ""
+msgstr "Activo Revestimiento"
 
 #: dat/outfits/structure/active_plating.xml:4
 #: dat/outfits/structure/adaptive_stealth_plating.xml:4
@@ -17436,7 +17478,7 @@ msgstr ""
 #: dat/outfits/structure/nanobond_plating.xml:4
 #: dat/outfits/structure/plasteel_plating.xml:4
 msgid "Armour Modifier"
-msgstr ""
+msgstr "Modificador de Blindaje"
 
 #: dat/outfits/structure/active_plating.xml:11
 msgid ""
@@ -17446,10 +17488,16 @@ msgid ""
 "strength is substantially increased at the cost of dramatically increased "
 "energy usage."
 msgstr ""
+"Este revestimiento, desarrollado por la Casa Dvaered, adopta un enfoque "
+"único, aunque algo brusco, para aumentar la resistencia del blindaje. "
+"Mediante el bombeo constante de energía a través de bobinas de blindaje "
+"electromagnético repartidas por todo el casco, la resistencia del blindaje "
+"se incrementa sustancialmente a costa de un aumento drástico del consumo de "
+"energía."
 
 #: dat/outfits/structure/adaptive_stealth_plating.xml:2
 msgid "Adaptive Stealth Plating"
-msgstr ""
+msgstr "Sigilo Adaptativo Revestimiento"
 
 #: dat/outfits/structure/adaptive_stealth_plating.xml:11
 msgid ""
@@ -17458,56 +17506,68 @@ msgid ""
 "radiation around the ship and is able to emit space-resolved the right "
 "amount of radiation to appear invisible for passive sensors."
 msgstr ""
+"Este blindaje no proporciona ninguna protección, sino que hace que la nave "
+"sea más difícil de detectar. Lleva integrados unos sensores que miden la "
+"radiación ambiental que rodea a la nave y es capaz de emitir la cantidad de "
+"radiación adecuada para parecer invisible a los sensores pasivos."
 
 #: dat/outfits/structure/battery_i.xml:2
 msgid "Battery I"
-msgstr ""
+msgstr "Batería I"
 
 #: dat/outfits/structure/battery_i.xml:4 dat/outfits/structure/battery_ii.xml:4
 #: dat/outfits/structure/battery_iii.xml:4
 #: dat/outfits/structure/battery_iv.xml:4
 msgid "Energy Modifier"
-msgstr ""
+msgstr "Modificador de Energía"
 
 #: dat/outfits/structure/battery_i.xml:9
 msgid ""
 "A large battery unit designed to hold 250 MJ of energy. Small enough to "
 "mount on many light vessels."
 msgstr ""
+"Una gran unidad de batería diseñada para contener 250 MJ de energía. Lo "
+"suficientemente pequeña como para montarla en muchas naves ligeras."
 
 #: dat/outfits/structure/battery_ii.xml:2
 msgid "Battery II"
-msgstr ""
+msgstr "Batería II"
 
 #: dat/outfits/structure/battery_ii.xml:9
 msgid ""
 "A large battery unit designed to hold 500 MJ of energy. Ideally mounted on "
 "medium-to-large vessels."
 msgstr ""
+"Una gran unidad de batería diseñada para contener 500 MJ de energía. Ideal "
+"para montarla en naves de tamaño medio-grande."
 
 #: dat/outfits/structure/battery_iii.xml:2
 msgid "Battery III"
-msgstr ""
+msgstr "Batería III"
 
 #: dat/outfits/structure/battery_iii.xml:9
 msgid ""
 "A very large battery unit designed to hold 1200 MJ of energy. It can only be "
 "mounted on very large ships."
 msgstr ""
+"Una unidad de batería muy grande diseñada para contener 1200 MJ de energía. "
+"Solo puede montarse en naves muy grandes."
 
 #: dat/outfits/structure/battery_iv.xml:2
 msgid "Battery IV"
-msgstr ""
+msgstr "Batería IV"
 
 #: dat/outfits/structure/battery_iv.xml:9
 msgid ""
 "A massive battery unit designed to hold 2000 MJ of energy. Given the mass of "
 "this battery, it's advisable to only mount it on capital ships."
 msgstr ""
+"Una enorme unidad de batería diseñada para contener 2000 MJ de energía. Dada "
+"la masa de esta batería, es aconsejable montarla solo en naves capitales."
 
 #: dat/outfits/structure/biometal_armour.xml:2
 msgid "Biometal Armour"
-msgstr ""
+msgstr "Blindaje Biometal"
 
 #: dat/outfits/structure/biometal_armour.xml:10
 msgid ""
@@ -17516,15 +17576,20 @@ msgid ""
 "life, and the difficulty of cultivating the bacteria, Biometal has greater "
 "mass than alternatives, and is the most expensive hull plating."
 msgstr ""
+"El Biometal es un blindaje que se regenera por sí mismo gracias a las "
+"bacterias creadas genéticamente en su interior. Debido a la "
+"compartimentación para permitir la vida bacteriana, y a la dificultad de "
+"cultivar las bacterias, elBiometal tiene mayor masa que las alternativas, y "
+"es el blindaje más caro."
 
 #: dat/outfits/structure/engine_reroute.xml:2
 msgid "Engine Reroute"
-msgstr ""
+msgstr "Reenrutado del Motor"
 
 #: dat/outfits/structure/engine_reroute.xml:4
 #: dat/outfits/structure/improved_stabilizer.xml:4
 msgid "Manoeuvrability Modifier"
-msgstr ""
+msgstr "Modificador de Maniobrabilidad"
 
 #: dat/outfits/structure/engine_reroute.xml:9
 msgid ""
@@ -17537,7 +17602,7 @@ msgstr ""
 
 #: dat/outfits/structure/improved_stabilizer.xml:2
 msgid "Improved Stabilizer"
-msgstr ""
+msgstr "Estabilizador Mejorado"
 
 #: dat/outfits/structure/improved_stabilizer.xml:9
 msgid ""
@@ -17549,13 +17614,13 @@ msgstr ""
 
 #: dat/outfits/structure/large_cargo_pod.xml:2
 msgid "Large Cargo Pod"
-msgstr ""
+msgstr "Cápsula de Carga Grande"
 
 #: dat/outfits/structure/large_cargo_pod.xml:4
 #: dat/outfits/structure/medium_cargo_pod.xml:4
 #: dat/outfits/structure/small_cargo_pod.xml:4
 msgid "Cargo Expansion"
-msgstr ""
+msgstr "Expansión de Carga"
 
 #: dat/outfits/structure/large_cargo_pod.xml:9
 #: dat/outfits/structure/medium_cargo_pod.xml:9
@@ -17565,32 +17630,37 @@ msgid ""
 "to being externally added to the ship's hull, it has the side effect of "
 "slightly increasing the cargo inertia."
 msgstr ""
+"Las cápsulas de carga son grandes contenedores que aumentan la capacidad de "
+"carga de una nave. Al ser añadidos externamente al casco de la nave, tienen "
+"el efecto secundario de aumentar ligeramente la inercia de la carga."
 
 #: dat/outfits/structure/large_fuel_pod.xml:2
 msgid "Large Fuel Pod"
-msgstr ""
+msgstr "Depósito de Combustible Grande"
 
 #: dat/outfits/structure/large_fuel_pod.xml:4
 #: dat/outfits/structure/medium_fuel_pod.xml:4
 #: dat/outfits/structure/small_fuel_pod.xml:4
 msgid "Fuel Modifier"
-msgstr ""
+msgstr "Modificador de Combustible"
 
 #: dat/outfits/structure/large_fuel_pod.xml:9
 #: dat/outfits/structure/medium_fuel_pod.xml:9
 #: dat/outfits/structure/small_fuel_pod.xml:9
 msgid "The fuel pod allows a ship to store more fuel for hyperspace jumps."
 msgstr ""
+"La cápsula de combustible permite a la nave almacenar más combustible para "
+"los saltos hiperespaciales."
 
 #: dat/outfits/structure/large_shield_booster.xml:2
 msgid "Large Shield Booster"
-msgstr ""
+msgstr "Potenciador de Escudo Grande"
 
 #: dat/outfits/structure/large_shield_booster.xml:4
 #: dat/outfits/structure/medium_shield_booster.xml:4
 #: dat/outfits/structure/small_shield_booster.xml:4
 msgid "Shield Booster"
-msgstr ""
+msgstr "Potenciador de Escudo"
 
 #: dat/outfits/structure/large_shield_booster.xml:9
 #: dat/outfits/structure/medium_shield_booster.xml:9
@@ -17600,22 +17670,26 @@ msgid ""
 "you to regenerate your shield faster and give you a small shield capacity "
 "boost, at the expense of draining some of the ship's energy."
 msgstr ""
+"Un generador de escudos que se alimenta de la línea de energía principal de "
+"la nave. Te permitirá regenerar tu escudo más rápido y te dará un pequeño "
+"aumento a la capacidad de los escudos, a costa de drenar parte de la energía "
+"de la nave."
 
 #: dat/outfits/structure/medium_cargo_pod.xml:2
 msgid "Medium Cargo Pod"
-msgstr ""
+msgstr "Cápsula de Carga Media"
 
 #: dat/outfits/structure/medium_fuel_pod.xml:2
 msgid "Medium Fuel Pod"
-msgstr ""
+msgstr "Cápsula de Combustible Media"
 
 #: dat/outfits/structure/medium_shield_booster.xml:2
 msgid "Medium Shield Booster"
-msgstr ""
+msgstr "Potenciador de Escudo Medio"
 
 #: dat/outfits/structure/nanobond_plating.xml:2
 msgid "Nanobond Plating"
-msgstr ""
+msgstr "Microvínculo Revestimiento"
 
 #: dat/outfits/structure/nanobond_plating.xml:10
 msgid ""
@@ -17624,10 +17698,14 @@ msgid ""
 "The result is a much more robust material, although it is substantially more "
 "expensive."
 msgstr ""
+"Nanovínculo es el sucesor del Plastiacero. Sigue el mismo planteamiento, "
+"pero tiene un proceso de fabricación muy perfeccionado, que proporciona una "
+"mayor densidad de partículas. El resultado es un material mucho más robusto, "
+"aunque sustancialmente más caro."
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:2
 msgid "Nebular Shielding Prototype"
-msgstr ""
+msgstr "Prototipo de Escudo Nebular"
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:4
 #: dat/outfits/structure/shield_capacitor_i.xml:4
@@ -17635,23 +17713,27 @@ msgstr ""
 #: dat/outfits/structure/shield_capacitor_iii.xml:4
 #: dat/outfits/structure/shield_capacitor_iv.xml:4
 msgid "Shield Modifier"
-msgstr ""
+msgstr "Modificador Escudo"
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:11
 msgid ""
 "A modification to the ship's shields that allows them to resist nebular "
 "volatility."
 msgstr ""
+"Una modificación de los escudos de la nave que les permite resistir la "
+"volatilidad nebular."
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:12
 msgid ""
 "Able to compensate up to 30 MW of nebula volatility. Uses 1 MW of energy per "
 "MW of damage prevented."
 msgstr ""
+"Capaz de compensar hasta 30 MW de volatilidad de la nebulosa. Utiliza 1 MW "
+"de energía por cada MW de daño evitado."
 
 #: dat/outfits/structure/plasteel_plating.xml:2
 msgid "Plasteel Plating"
-msgstr ""
+msgstr "Plastiacero Revestimiento"
 
 #: dat/outfits/structure/plasteel_plating.xml:10
 msgid ""
@@ -17661,17 +17743,22 @@ msgid ""
 "only possible with this material. Although it is no longer cutting-edge, its "
 "low price point attracts many buyers."
 msgstr ""
+"El plastiacero fue uno de los mayores logros del hombre en materiales. Una "
+"blindaje barato y fuerte que parece tomar lo mejor del plástico y del acero, "
+"doblándose fácilmente pero manteniendo su increíble fuerza. El Segundo "
+"Crecimiento sólo fue posible con este material. Aunque ya no es puntero, su "
+"bajo precio atrae a muchos compradores."
 
 #: dat/outfits/structure/reactor_class_i.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:243
 msgid "Reactor Class I"
-msgstr ""
+msgstr "Reactor Clase I"
 
 #: dat/outfits/structure/reactor_class_i.xml:4
 #: dat/outfits/structure/reactor_class_ii.xml:4
 #: dat/outfits/structure/reactor_class_iii.xml:4
 msgid "Power Modifier"
-msgstr ""
+msgstr "Modificador de Energía"
 
 #: dat/outfits/structure/reactor_class_i.xml:10
 msgid ""
@@ -17679,10 +17766,14 @@ msgid ""
 "energy boost you need. This does not replace the existing reactor but works "
 "alongside it and hooks up directly to the energy flux."
 msgstr ""
+"Añadir un reactor complementario a tu nave es una buena manera de conseguir "
+"ese impulso de energía extra que necesitas. No sustituye al reactor "
+"existente, sino que funciona junto a él y se conecta directamente al flujo "
+"de energía."
 
 #: dat/outfits/structure/reactor_class_ii.xml:2
 msgid "Reactor Class II"
-msgstr ""
+msgstr "Reactor Clase II"
 
 #: dat/outfits/structure/reactor_class_ii.xml:10
 msgid ""
@@ -17690,10 +17781,14 @@ msgid ""
 "permitting it to have greater energy density. The result is a mid-sized "
 "reactor that is best used on ships with moderate energy demands."
 msgstr ""
+"El reactor de clase II utiliza una tecnología de fusión más reciente que la "
+"de clase I, lo que le permite tener una mayor densidad energética. El "
+"resultado es un reactor de tamaño medio que se utiliza mejor en naves con "
+"una demanda de energía moderada."
 
 #: dat/outfits/structure/reactor_class_iii.xml:2
 msgid "Reactor Class III"
-msgstr ""
+msgstr "Reactor Clase III"
 
 #: dat/outfits/structure/reactor_class_iii.xml:10
 msgid ""
@@ -17703,41 +17798,52 @@ msgid ""
 "III results in it only fitting comfortably on large vessels, though its "
 "energy output would be excessive for anything less."
 msgstr ""
+"El inmenso reactor de clase III proporciona suficiente energía para casi "
+"todo. La tecnología utilizada en este reactor es particularmente innovadora, "
+"con la mejor densidad energética de las tres clases de reactores. El enorme "
+"tamaño de la clase III hace que sólo quepa cómodamente en las naves grandes, "
+"aunque su producción de energía sería excesiva para algo menos."
 
 #: dat/outfits/structure/shield_capacitor_i.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:230
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:249
 msgid "Shield Capacitor I"
-msgstr ""
+msgstr "Condensador de Escudo I"
 
 #: dat/outfits/structure/shield_capacitor_i.xml:9
 msgid ""
 "An enhancement for the shield power system, giving small ships a better "
 "chance of escaping attackers."
 msgstr ""
+"Una mejora para el sistema de energía de los escudos, que da más "
+"posibilidades a las naves pequeñas de escapar de atacantes."
 
 #: dat/outfits/structure/shield_capacitor_ii.xml:2
 msgid "Shield Capacitor II"
-msgstr ""
+msgstr "Condensador de Escudo II"
 
 #: dat/outfits/structure/shield_capacitor_ii.xml:9
 msgid ""
 "A more powerful shield enhancer, providing better protection during "
 "skirmishes."
 msgstr ""
+"Un potenciador de escudo más potente, que proporciona una mejor protección "
+"durante las escaramuzas."
 
 #: dat/outfits/structure/shield_capacitor_iii.xml:2
 msgid "Shield Capacitor III"
-msgstr ""
+msgstr "Condensador de Escudo III"
 
 #: dat/outfits/structure/shield_capacitor_iii.xml:9
 msgid ""
 "A heavy duty shield enhancer for ships that face combat on a regular basis."
 msgstr ""
+"Un potenciador de escudos de alta potencia para las naves que se enfrentan "
+"al combate de forma habitual."
 
 #: dat/outfits/structure/shield_capacitor_iv.xml:2
 msgid "Shield Capacitor IV"
-msgstr ""
+msgstr "Condensador de Escudo IV"
 
 #: dat/outfits/structure/shield_capacitor_iv.xml:9
 msgid ""
@@ -17747,21 +17853,21 @@ msgstr ""
 
 #: dat/outfits/structure/small_cargo_pod.xml:2
 msgid "Small Cargo Pod"
-msgstr ""
+msgstr "Cápsula de Carga Pequeña"
 
 #: dat/outfits/structure/small_fuel_pod.xml:2
 msgid "Small Fuel Pod"
-msgstr ""
+msgstr "Cápsula de Combustible Pequeña"
 
 #: dat/outfits/structure/small_shield_booster.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:246
 msgid "Small Shield Booster"
-msgstr ""
+msgstr "Potenciador de Escudo Pequeño"
 
 #: dat/outfits/unique/fake_transponder.xml:2
 #: dat/outfits/unique/fake_transponder.xml:6
 msgid "Fake Transponder"
-msgstr ""
+msgstr "Transpondedor Falso"
 
 #: dat/outfits/unique/fake_transponder.xml:11
 msgid ""
@@ -17774,10 +17880,12 @@ msgid ""
 "Makes the ship appear as independent to other ships. Becomes temporarily "
 "void when discovered."
 msgstr ""
+"Hace que la nave aparezca como independiente ante otras naves. Se anula "
+"temporalmente cuando se descubre."
 
 #: dat/outfits/unique/hades_torch.xml:2
 msgid "Hades Torch"
-msgstr ""
+msgstr "Antorcha de Hades"
 
 #: dat/outfits/unique/hades_torch.xml:10
 msgid ""
@@ -17785,14 +17893,17 @@ msgid ""
 "detail that to obtain maximum performance it has a tendency to burn the hull "
 "of the ship it is attached too."
 msgstr ""
+"La Antorcha de Hades sería un postquemador excepcional si no fuera por el "
+"pequeño detalle de que, para obtener el máximo rendimiento, tiene tendencia "
+"a quemar el casco de la nave a la que se acopla."
 
 #: dat/outfits/unique/hades_torch.xml:14
 msgid "#rHot hot hot!#0"
-msgstr ""
+msgstr "#r¡Quema Quema Quemat!#0"
 
 #: dat/outfits/unique/valkyrie_beam.xml:2
 msgid "Valkyrie Beam"
-msgstr ""
+msgstr "Rayo Valquiría"
 
 #: dat/outfits/unique/valkyrie_beam.xml:10
 msgid ""
@@ -17805,7 +17916,7 @@ msgstr ""
 
 #: dat/outfits/utility/asteroid_scanner.xml:2 src/shipstats.c:177
 msgid "Asteroid Scanner"
-msgstr ""
+msgstr "Escaner de Asteroides"
 
 #: dat/outfits/utility/asteroid_scanner.xml:8
 msgid ""
@@ -17816,16 +17927,23 @@ msgid ""
 "composition via inverse electrical impedance. Of course, that comes at a "
 "price that not just any miner can pay."
 msgstr ""
+"Cualquier escáner puede dar la masa, la posición y la velocidad de un "
+"asteroide. Pero los mineros prefieren conocer el valor del asteroide. Para "
+"ello, Milspec diseñó un conjunto de escáneres capaces de deducir la "
+"composición de la superficie a partir de la espectroscopia y, lo que es más "
+"impresionante, de inferir la composición interna mediante la impedancia "
+"eléctrica inversa. Por supuesto, eso tiene un precio que no puede pagar "
+"cualquier minero."
 
 #: dat/outfits/utility/berserk_chip.xml:2
 msgid "Berserk Chip"
-msgstr ""
+msgstr "Chip Frenético"
 
 #: dat/outfits/utility/berserk_chip.xml:4
 #: dat/outfits/utility/emergency_stasis_inducer.xml:4
 #: dat/outfits/utility/neural_accelerator_interface.xml:4
 msgid "Speed Modifier"
-msgstr ""
+msgstr "Modificador de Velocidad"
 
 #: dat/outfits/utility/berserk_chip.xml:9
 msgid ""
@@ -17836,6 +17954,14 @@ msgid ""
 "used for a short time. Newer versions have a safety shutoff which "
 "automatically turn off the chip before hull integrity collapses."
 msgstr ""
+"El Chip Frenético es algo peligroso, que sólo utilizan los pilotos más "
+"temerarios. Puede integrarse completamente en una nave para anular la mayor "
+"parte de la funcionalidad básica y redirigirla hacia las capacidades de "
+"combate. Esto tiene un coste muy elevado para la integridad del casco y los "
+"sistemas de la nave y sólo puede utilizarse durante un corto periodo de "
+"tiempo. Las versiones más recientes cuentan con una desconexión de seguridad "
+"que apaga automáticamente el chip antes de que la integridad del casco se "
+"colapse."
 
 #: dat/outfits/utility/berserk_chip.xml:10
 msgid ""
@@ -17844,11 +17970,15 @@ msgid ""
 "second cooldown period during which movement and damage output is decreased "
 "by 20%."
 msgstr ""
+"Causa una gran cantidad de daño de escudo y armadura a lo largo del tiempo, "
+"y se apaga automáticamente cuando la integridad del casco está por debajo "
+"del 30%. Después de usarlo, hay un periodo de enfriamiento de 8 segundos "
+"durante el cual el movimiento y la cantidad de daño se reducen en un 20%."
 
 #: dat/outfits/utility/blink_drive.xml:2 dat/outfits/utility/blink_drive.xml:4
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:4
 msgid "Blink Drive"
-msgstr ""
+msgstr "Motor de Parpadeo"
 
 #: dat/outfits/utility/blink_drive.xml:10
 msgid ""
@@ -17857,21 +17987,29 @@ msgid ""
 "often use such devices tend to have a higher amount of strong headaches than "
 "usual, but it must be safe, right?"
 msgstr ""
+"El motor de parpadeo utiliza tecnología de hiperpropulsión modificada para "
+"crear un pequeño pliegue espacio-temporal que permite a las naves cruzar "
+"instantáneamente distancias cortas. Los pilotos que utilizan a menudo este "
+"tipo de dispositivos suelen tener una cantidad de fuertes dolores de cabeza "
+"superior a la habitual, pero debe ser seguro, ¿no?"
 
 #: dat/outfits/utility/blink_drive.xml:11
 msgid ""
 "Blinks you 500 units in the direction you are facing. Can only be run once "
 "every 8 seconds. Performance degrades over 800 tonnes of mass."
 msgstr ""
+"Te hace saltar 500 unidades en la dirección a la que te diriges. Sólo se "
+"puede ejecutar una vez cada 8 segundos. El rendimiento se degrada por encima "
+"de las 800 toneladas de masa."
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:2
 msgid "Boarding Androids MK1"
-msgstr ""
+msgstr "Androides MK1 de Abordaje"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:4
 #: dat/outfits/utility/boarding_androids_mk2.xml:4
 msgid "Boarding Androids"
-msgstr ""
+msgstr "Androides de Abordaje"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:9
 msgid ""
@@ -17880,10 +18018,14 @@ msgid ""
 "torch/can opener/spatula, the Boarding Android is ready for any situation, "
 "be it tactical or culinary."
 msgstr ""
+"El Androide de Abordaje de Asimov Destructicorp es lo último en tecnología "
+"robótica de toma de control hostil. Equipado con un blaster de plasma "
+"multifunción/antorcha cortante/abridor de latas/espátula, el Androide de "
+"abordaje está preparado para cualquier situación, ya sea táctica o culinaria."
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:2
 msgid "Boarding Androids MK2"
-msgstr ""
+msgstr "Androides de Abordaje MK2"
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:9
 msgid ""
@@ -17891,24 +18033,27 @@ msgid ""
 "sported by its predecessor, additionally including scissor-hands and a "
 "sewing needle."
 msgstr ""
+"El Androide Mark 2 de Abordaje mejora la gran variedad de accesorios que "
+"lucía su predecesor, incluyendo además unas tijeras y una aguja de coser."
 
 #: dat/outfits/utility/cloaking_device.xml:2
 #: dat/outfits/utility/cloaking_device.xml:4
 #: dat/outfits/utility/cloaking_device.xml:9
 msgid "Cloaking Device"
-msgstr ""
+msgstr "Dispositivo de Ocultación"
 
 #: dat/outfits/utility/cloaking_device.xml:10
 msgid "Uses 1 MJ of energy per 10 mass and drains shield in 0.5 seconds."
 msgstr ""
+"Utiliza 1 MJ de energía por cada 10 masas y drena el escudo en 0,5 segundos."
 
 #: dat/outfits/utility/combat_hologram_projector.xml:2
 msgid "Combat Hologram Projector"
-msgstr ""
+msgstr "Proyector de Hologramas de Combate"
 
 #: dat/outfits/utility/combat_hologram_projector.xml:4
 msgid "Holograph Projector"
-msgstr ""
+msgstr "Proyector de Hologramas"
 
 #: dat/outfits/utility/combat_hologram_projector.xml:12
 msgid ""
@@ -17918,15 +18063,22 @@ msgid ""
 "confusion, however, when engaged in actual combat the cover is usually "
 "quickly blown away."
 msgstr ""
+"El proyector de hologramas de combate utiliza tecnología punta para crear un "
+"holograma de una nave casi indistinguible de las reales. Estas pantallas "
+"holográficas son muy eficaces para alejar el fuego enemigo y crear confusión;"
+" sin embargo, cuando entran en combate real, la cobertura suele desaparecer "
+"rápidamente."
 
 #: dat/outfits/utility/combat_hologram_projector.xml:13
 msgid ""
 "Creates a hologram of the current ship to distract the enemy ship target."
 msgstr ""
+"Crea un holograma de la nave actual para distraer al objetivo de la nave "
+"enemiga."
 
 #: dat/outfits/utility/combatai/agility_combat_ai.xml:2
 msgid "Agility Combat AI"
-msgstr ""
+msgstr "IA de Combate Ágil"
 
 #: dat/outfits/utility/combatai/agility_combat_ai.xml:4
 #: dat/outfits/utility/combatai/bioneural_combat_ai.xml:4
@@ -17936,7 +18088,7 @@ msgstr ""
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:4
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:4
 msgid "Combat AI"
-msgstr ""
+msgstr "IA de Combate"
 
 #: dat/outfits/utility/combatai/agility_combat_ai.xml:11
 msgid ""
@@ -17945,10 +18097,14 @@ msgid ""
 "to increase both the overall thrust and turn of the ship without actually "
 "modifying the hardware nor increasing the energy consumption."
 msgstr ""
+"Esta IA de Combate aumenta la funcionalidad normal de la nave centrándose en "
+"la agilidad. Mediante una cuidadosa regulación de los propulsores de la "
+"nave, la IA es capaz de aumentar tanto el empuje general como el giro de la "
+"nave sin modificar realmente el hardware ni aumentar el consumo de energía."
 
 #: dat/outfits/utility/combatai/bioneural_combat_ai.xml:2
 msgid "Bio-Neural Combat AI"
-msgstr ""
+msgstr "IA de Combate Bio-Neural"
 
 #: dat/outfits/utility/combatai/bioneural_combat_ai.xml:11
 msgid ""
@@ -17958,10 +18114,16 @@ msgid ""
 "process all ship sensory data to predict future events, allowing the ship to "
 "seemingly gain an edge over other ships in reaction time."
 msgstr ""
+"A diferencia de la IA de Combate, que consiste en puro software, esta IA "
+"consiste en un coprocesador casi orgánico hecho con tejido vivo y material "
+"inorgánico. Actuando como un pequeño lóbulo temporal, el coprocesador es "
+"capaz de procesar todos los datos sensoriales de la nave para predecir "
+"eventos futuros, lo que permite a la nave ganar aparentemente una ventaja "
+"sobre otras naves en el tiempo de reacción."
 
 #: dat/outfits/utility/combatai/cyclic_combat_ai.xml:2
 msgid "Cyclic Combat AI"
-msgstr ""
+msgstr "IA de Combate Cíclica"
 
 #: dat/outfits/utility/combatai/cyclic_combat_ai.xml:11
 msgid ""
@@ -17970,10 +18132,15 @@ msgid ""
 "weapons, the AI is able to perform seemingly trivial modifications of "
 "parameters that lead to an overall increase in fire rate."
 msgstr ""
+"Esta IA de Combate se centra en la optimización del ritmo de disparo de las "
+"armas de montaje frontal. Mediante un cuidadoso análisis del ciclo de "
+"disparo de las armas, la IA es capaz de realizar modificaciones "
+"aparentemente triviales de los parámetros que conducen a un aumento general "
+"de la cadencia de fuego."
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:2
 msgid "Hive Combat AI"
-msgstr ""
+msgstr "IA de Combate Enjambre"
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:11
 msgid ""
@@ -17983,10 +18150,15 @@ msgid ""
 "in more efficient movement of the fighters, and a better ability to respond "
 "to mishaps such as lost fighters."
 msgstr ""
+"Muy inspirada en las colonias de abejas y otros insectos, la IA de combate "
+"enjambre aumenta el intercambio de datos y parámetros entre un portanaves y "
+"sus cazas, lo que permite una mayor eficacia en la comunicación. Esto se "
+"traduce en un movimiento más eficiente de los cazas y en una mayor capacidad "
+"de respuesta ante percances como la pérdida de cazas."
 
 #: dat/outfits/utility/combatai/hunting_combat_ai.xml:2
 msgid "Hunting Combat AI"
-msgstr ""
+msgstr "IA de Combate Cazador"
 
 #: dat/outfits/utility/combatai/hunting_combat_ai.xml:11
 msgid ""
@@ -17995,10 +18167,15 @@ msgid ""
 "resulting in a significant increase in damage for turret weapons, albeit "
 "with a reduced fire rate."
 msgstr ""
+"De forma similar a la emboscada de un cazador, la IA de Combate Cazador es "
+"capaz de centrarse en explotar el elemento sorpresa y los puntos débiles de "
+"los cascos de las naves enemigas, lo que se traduce en un aumento "
+"significativo del daño de las armas de torreta, aunque con una cadencia de "
+"fuego reducida."
 
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:2
 msgid "Pinpoint Combat AI"
-msgstr ""
+msgstr "IA de Combate Localizador"
 
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:11
 msgid ""
@@ -18011,7 +18188,7 @@ msgstr ""
 
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:2
 msgid "Scanning Combat AI"
-msgstr ""
+msgstr "IA de Combate Escaneador"
 
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:11
 msgid ""
@@ -18019,15 +18196,18 @@ msgid ""
 "infrastructure. By making small tweaks online, it is able to effectively "
 "increase the range at which other ships are detected."
 msgstr ""
+"Esta IA de combate se centra en la optimización de la infraestructura de "
+"sensores de la nave. Haciendo pequeños ajustes en línea, es capaz de "
+"aumentar eficazmente el alcance al que se detectan otras naves."
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:2
 msgid "Cryogenic Repair Nanobots"
-msgstr ""
+msgstr "Nanobots de Reparación Criogénicos"
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:4
 #: dat/outfits/utility/droid_repair_crew.xml:4
 msgid "Armour Repair"
-msgstr ""
+msgstr "Reparador de Blindaje"
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:10
 msgid ""
@@ -18039,14 +18219,21 @@ msgid ""
 "fully capable of, however when the ship is in motion they go into "
 "hibernation."
 msgstr ""
+"Los nanobots reparadores son capaces de realizar lo que parece poco menos "
+"que un milagro, restaurando el casco y el blindaje de las naves hasta "
+"dejarlo en perfectas condiciones. Aunque muestran un comportamiento notable "
+"en condiciones de laboratorio, en la práctica necesitan un entorno bastante "
+"tranquilo para trabajar. La fase de refrigeración activa de una nave ofrece "
+"una excelente oportunidad para que los nanobots demuestren de lo que son "
+"capaces, pero cuando la nave está en movimiento entran en hibernación."
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:11
 msgid "Restores armour to full when performing an active cooldown."
-msgstr ""
+msgstr "Restaura el blindaje al máximo cuando realiza un enfriamiento activo."
 
 #: dat/outfits/utility/droid_repair_crew.xml:2
 msgid "Droid Repair Crew"
-msgstr ""
+msgstr "Equipo Droide de Reparación"
 
 #: dat/outfits/utility/droid_repair_crew.xml:10
 msgid ""
@@ -18057,19 +18244,28 @@ msgid ""
 "having a robotic repair crew. Due to the simplicity of the droid tools, they "
 "are unable to restore armour beyond 50%."
 msgstr ""
+"Esta tripulación de droides de bajo mantenimiento recorrerá tu nave para "
+"reparar cualquier daño causado por los peligros espaciales. Son muy pequeños "
+"y pueden trabajar tanto en el interior como en el exterior de la nave. La "
+"energía se extrae de la nave para alimentar a los robots, aunque la carga es "
+"generalmente muy baja en comparación con los beneficios de tener una "
+"tripulación de reparación robótica. Debido a la simplicidad de las "
+"herramientas de los droides, no pueden restaurar el blindaje más allá del "
+"50%."
 
 #: dat/outfits/utility/droid_repair_crew.xml:11
 msgid "Can only restore armour when below 50%."
 msgstr ""
+"Sólo puede restaurar blindaje cuando este se encuentra por debajo del 50%."
 
 #: dat/outfits/utility/emergency_shield_booster.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:226
 msgid "Emergency Shield Booster"
-msgstr ""
+msgstr "Potenciador de Escudo de Emergencia"
 
 #: dat/outfits/utility/emergency_shield_booster.xml:4
 msgid "Shield Modification"
-msgstr ""
+msgstr "Modificador de Escudo"
 
 #: dat/outfits/utility/emergency_shield_booster.xml:9
 msgid ""
@@ -18080,16 +18276,27 @@ msgid ""
 "disproportionally high and the outfit can't be active for more than a "
 "certain period of time before needing entering a cooldown cycle."
 msgstr ""
+"Esta pieza de hardware proporciona una derivación de energía auxiliar entre "
+"el reactor de la nave y el sistema de escudos. Cuando se activa, este "
+"dispositivo aumenta drásticamente la regeneración de los escudos de la nave "
+"vertiendo energía bruta directamente en los condensadores de los escudos. El "
+"proceso es muy ineficiente, por lo que el uso de energía es "
+"desproporcionadamente alto y el equipo no puede estar activo durante más de "
+"un determinado periodo de tiempo antes de tener que entrar en un ciclo de "
+"enfriamiento."
 
 #: dat/outfits/utility/emergency_shield_booster.xml:10
 msgid ""
 "Increases shield regeneration by 500%. Active for 4 seconds with a cooldown "
 "of 8 seconds. Uses 3 MJ of energy for each MJ of shield recovered."
 msgstr ""
+"Aumenta la regeneración de escudos en un 500%. Activo durante 4 segundos con "
+"un enfriamiento de 8 segundos. Utiliza 3 MJ de energía por cada MJ de escudo "
+"recuperado."
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:2
 msgid "Emergency Stasis Inducer"
-msgstr ""
+msgstr "Inductor de Estasis de Emergencia"
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:9
 msgid ""
@@ -18103,6 +18310,8 @@ msgstr ""
 #: dat/outfits/utility/emergency_stasis_inducer.xml:10
 msgid "Triggered on armour damage. Lasts 3 seconds with 8 seconds cooldown."
 msgstr ""
+"Se activa con el daño al blindaje. Dura 3 segundos con 8 segundos de "
+"enfriamiento."
 
 #: dat/outfits/utility/hellburner.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:240
@@ -18261,7 +18470,7 @@ msgstr ""
 #: dat/outfits/utility/targeting_conduit.xml:4
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:4
 msgid "System Improvement"
-msgstr ""
+msgstr "Mejora del Sistema"
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:10
 msgid ""
