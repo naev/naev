@@ -292,7 +292,7 @@ static int diff_applyInternal( const char *name, int oneshot )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
-   char *filename;
+   UniDiffData_t *d;
 
    /* Check if already applied. */
    if (diff_isApplied(name))
@@ -302,19 +302,14 @@ static int diff_applyInternal( const char *name, int oneshot )
    if (oneshot && !diff_universe_defer)
       diff_universe_changed = 0;
 
-   filename = NULL;
-   for (int i=0; i<array_size(diff_available); i++) {
-      if (strcmp(diff_available[i].name,name)==0) {
-         filename = diff_available[i].filename;
-         break;
-      }
-   }
-   if (filename == NULL) {
+   const UniDiffData_t q = { .name = (char*)name };
+   d = bsearch( &q, diff_available, array_size(diff_available), sizeof(UniDiffData_t), diff_cmp );
+   if (d == NULL) {
       WARN(_("UniDiff '%s' not found in %s!"), name, UNIDIFF_DATA_PATH);
       return -1;
    }
 
-   doc = xml_parsePhysFS( filename );
+   doc = xml_parsePhysFS( d->filename );
 
    node = doc->xmlChildrenNode;
    if (strcmp((char*)node->name,"unidiff")) {
@@ -1485,8 +1480,9 @@ void diff_free (void)
 {
    diff_clear();
    for (int i = 0; i < array_size(diff_available); i++) {
-      free(diff_available[i].name);
-      free(diff_available[i].filename);
+      UniDiffData_t *d = &diff_available[i];
+      free( d->name );
+      free( d->filename );
    }
    array_free(diff_available);
    diff_available = NULL;
