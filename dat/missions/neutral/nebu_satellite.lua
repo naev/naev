@@ -34,7 +34,7 @@ local credits = 750e3
 local launchSatellite -- Forward-declared functions
 -- luacheck: globals beginCountdown beginLaunch countLaunch jumpin land (Hook functions passed by name)
 
-local articles={
+local articles = {
    {
       "Generic",
       _("Scientists Launch Research Probe Into Nebula"),
@@ -142,8 +142,8 @@ function countLaunch ()
    end
 end
 function launchSatellite ()
-   articles[1][4]=time.get()+time.create(0,3,0)
-   news.add(articles)
+   articles[1][4] = time.get()+time.create(0,3,0)
+   news.add( articles )
 
    mem.misn_stage = 1
    player.msg( _("Space probe launch successful!") )
