@@ -6,12 +6,12 @@
 #include "news.h"
 #include "nlua.h"
 
-#define ARTICLE_METATABLE   "news" /**< System metatable identifier. */
+#define NEWS_METATABLE   "news" /**< System metatable identifier. */
 
 /**
- * @brief Lua article Wrapper.
+ * @brief Lua news Wrapper.
  */
-typedef int LuaArticle;
+typedef int LuaNews_t;
 
 /*
  * Load the system library.
