@@ -3,14 +3,18 @@
  */
 #pragma once
 
+#include <stdint.H>
+
 #include "nlua.h"
 #include "ntime.h"
+
+#define NEWS_FOREVER    INT64_MAX /* For news that should never get removed. */
 
 /**
  * @brief Represents a news article.
  */
 typedef struct news_s {
-   int id;
+   int id;  /**< ID of the news. */
 
    char *title; /**< Title of the news article. */
    char *desc; /**< Content of the news article. */

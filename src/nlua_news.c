@@ -152,14 +152,13 @@ int newsL_add( lua_State *L )
    char *title, *content, *faction;
    ntime_t date, date_to_rm;
 
-
    n_article = NULL;
    title   = NULL;
    content = NULL;
    faction = NULL;
 
    date = ntime_get();
-   date_to_rm = 50000000000000;
+   date_to_rm = NEWS_FOREVER;
 
    /* If a table is passed in. ugly hack */
    if (lua_istable(L, 1)) {
@@ -208,7 +207,7 @@ int newsL_add( lua_State *L )
             content = NULL;
 
             date = ntime_get();
-            date_to_rm = 50000000000000;
+            date_to_rm = NEWS_FOREVER;
          }
          lua_pop(L, 1);
       }
