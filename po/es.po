@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-02-19 12:48-0500\n"
-"PO-Revision-Date: 2022-05-21 21:19+0000\n"
+"PO-Revision-Date: 2022-05-22 21:16+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -18316,7 +18316,7 @@ msgstr ""
 #: dat/outfits/utility/hellburner.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:240
 msgid "Hellburner"
-msgstr ""
+msgstr "Quemador Infernal"
 
 #: dat/outfits/utility/hellburner.xml:8
 msgid ""
@@ -18326,10 +18326,16 @@ msgid ""
 "efficiency is significantly lower than common models, so it consumes energy "
 "more rapidly and overheats much more quickly."
 msgstr ""
+"El Quemador Infernal es uno de los mejores postquemadores ligeros del "
+"mercado. A través de conductos de presurización propios, es capaz de generar "
+"mucho más empuje que las alternativas genéricas. Lamentablemente, su "
+"eficiencia de conversión de energía es significativamente menor que la de "
+"los modelos comunes, por lo que consume energía más rápidamente y se "
+"sobrecalienta mucho más rápido."
 
 #: dat/outfits/utility/hidden_jump_scanner.xml:2
 msgid "Hidden Jump Scanner"
-msgstr ""
+msgstr "Escáner de Salto Oculto"
 
 #: dat/outfits/utility/hidden_jump_scanner.xml:9
 msgid ""
@@ -18342,7 +18348,7 @@ msgstr ""
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:2
 msgid "Faraday Tempest Coating"
-msgstr ""
+msgstr "Recubrimiento Tempestad Faraday"
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:4
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:4
@@ -18351,7 +18357,7 @@ msgstr ""
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:4
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:4
 msgid "Hull Coating"
-msgstr ""
+msgstr "Recubrimiento de Casco"
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:9
 msgid ""
@@ -18361,10 +18367,15 @@ msgid ""
 "harmless evanescent fields, greatly speeding up the recovery from system "
 "damage."
 msgstr ""
+"El armamento iónico moderno ha encontrado formas de superar el blindaje de "
+"la nave y atacar directamente los sistemas electrónicos vulnerables. El "
+"revestimiento Tempestad Faraday es capaz de contrarrestar el armamento "
+"incapacitante disipándolo mediante campos evanescentes inofensivos, lo que "
+"acelera enormemente la recuperación de los daños en el sistema."
 
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:2
 msgid "Lattice Thermal Coating"
-msgstr ""
+msgstr "Recubrimiento Térmico Reticular"
 
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:9
 msgid ""
@@ -18374,10 +18385,15 @@ msgid ""
 "a special nano-material that is able to radiate through itself, allowing for "
 "increased heat dissipation."
 msgstr ""
+"Dado que no hay atmósfera en el espacio, las naves dependen de la radiación "
+"para deshacerse pasivamente del exceso de calor. Esta radiación suele estar "
+"limitada por el tamaño de la nave. El revestimiento térmico reticular supera "
+"esta limitación utilizando un nanomaterial especial que es capaz de irradiar "
+"a través de sí mismo, lo que permite una mayor disipación del calor."
 
 #: dat/outfits/utility/hullcoating/milspec_impactoplastic_coating.xml:2
 msgid "Milspec Impacto-Plastic Coating"
-msgstr ""
+msgstr "Recubrimiento Impacto-Plástico Milspec"
 
 #: dat/outfits/utility/hullcoating/milspec_impactoplastic_coating.xml:9
 msgid ""
@@ -18385,10 +18401,13 @@ msgid ""
 "resist both impact and damage, quickly restoring the protected surface to "
 "its original state."
 msgstr ""
+"El Recubrimiento Impacto-Plástico Milspec se basa en nano-aleaciones con "
+"memoria que resisten tanto el impacto como el daño, restaurando rápidamente "
+"la superficie protegida a su estado original."
 
 #: dat/outfits/utility/hullcoating/nebula_resistant_coating.xml:2
 msgid "Nebula Resistant Coating"
-msgstr ""
+msgstr "Recubrimiento Resistente a Nebulosa"
 
 #: dat/outfits/utility/hullcoating/nebula_resistant_coating.xml:10
 msgid ""
@@ -18401,7 +18420,7 @@ msgstr ""
 
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:2
 msgid "Nexus Stealth Coating"
-msgstr ""
+msgstr "Recubrimiento Sigilo Nexus"
 
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:9
 msgid ""
@@ -18413,7 +18432,7 @@ msgstr ""
 
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:2
 msgid "Photo-Voltaic Nanobot Coating"
-msgstr ""
+msgstr "Recubrimiento Nanobot Fotovoltaico"
 
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:9
 msgid ""
@@ -18422,10 +18441,14 @@ msgid ""
 "ship. The nanobots are self-regulating and self-repairing, requiring no "
 "maintenance once a colony has been established."
 msgstr ""
+"Un recubrimiento de pintura fotovoltaica de nanobots cubre todo el casco de "
+"la nave y es capaz de aprovechar la energía solar y redirigirla al sistema "
+"de energía de la nave. Los nanobots se autorregulan y autorreparan, por lo "
+"que no necesitan mantenimiento una vez la colonia se ha establecido."
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:2
 msgid "Hyperbolic Blink Engine"
-msgstr ""
+msgstr "Motor Parpadeo Hiperbólico"
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:10
 msgid ""
@@ -18437,6 +18460,13 @@ msgid ""
 "each space-time fold or \"blink\", it takes a while for the ship to be fully "
 "responsive again."
 msgstr ""
+"El motor de parpadeo hiperbólico parece estar diseñado como respuesta a la "
+"pregunta \"¿Cuánta masa es posible mover a través de un pliegue espacio-"
+"temporal?\". Parece que no tiene en cuenta el mantenimiento de un control "
+"cuidadoso del pliegue espacio-temporal, sino que se centra en el máximo "
+"rendimiento posible. Debido a la gran cantidad de trastornos que sufren los "
+"sistemas y el personal de la nave, después de cada pliegue espacio-temporal "
+"o \"parpadeo\", la nave tarda un tiempo en volver a ser totalmente receptiva."
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:11
 msgid ""
@@ -18445,10 +18475,15 @@ msgid ""
 "and turn penalty during cooldown. Performance degrades over 6000 tonnes of "
 "mass."
 msgstr ""
+"Se calienta durante 2 segundos y luego te hace parpadear 2000 unidades en la "
+"dirección aproximada a la que estás mirando. Sólo puede ejecutarse una vez "
+"cada 8 segundos e incurre en una penalización de empuje y giro del 20% "
+"durante el enfriamiento. El rendimiento se reduce a partir de las 6000 "
+"toneladas de masa."
 
 #: dat/outfits/utility/jump_scanner.xml:2
 msgid "Jump Scanner"
-msgstr ""
+msgstr "Escáner de Salto"
 
 #: dat/outfits/utility/jump_scanner.xml:8
 msgid ""
@@ -18461,6 +18496,14 @@ msgid ""
 "scanner will not detect jump points whose signature differs from the "
 "standard type."
 msgstr ""
+"Este dispositivo instala una matriz de escaneo secundaria en la nave. La "
+"matriz está programada con las características conocidas de las anomalías "
+"espaciales asociadas con los saltos al hiperespacio. Dado que el escáner "
+"detecta un tipo de firma muy específico, su alcance puede aumentarse "
+"fácilmente sin sacrificar la precisión. En efecto, esto significa que una "
+"nave con uno o más de estos escáneres instalados puede detectar puntos de "
+"salto a mayor distancia. El escáner no detectará los puntos de salto cuya "
+"firma difiera del tipo estándar."
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:2
 msgid "Low Radiation Sensor Modulator"
@@ -18479,15 +18522,20 @@ msgid ""
 "ships while also giving more sensitivity to jump point signatures when "
 "stealthed."
 msgstr ""
+"Mediante el uso de una modulación especial altamente sintonizada para "
+"entornos de baja radiación, el Modulador de Sensor de Baja Radiación es "
+"capaz de aumentar la detección de las naves cercanas, a la vez que "
+"proporciona más sensibilidad a las firmas de los puntos de salto cuando se "
+"está en sigilo."
 
 #: dat/outfits/utility/milspec_jammer.xml:2
 msgid "Milspec Jammer"
-msgstr ""
+msgstr "Inhibidor Milspec"
 
 #: dat/outfits/utility/milspec_jammer.xml:4
 #: dat/outfits/utility/unicorp_jammer.xml:4
 msgid "Electronic Warfare Jammer"
-msgstr ""
+msgstr "Inhibidor de Guerra Electrónica"
 
 #: dat/outfits/utility/milspec_jammer.xml:9
 msgid ""
@@ -18498,15 +18546,21 @@ msgid ""
 "garbage they're getting on their sensors, you will have already made your "
 "escape! Fly safe, fly Milspec."
 msgstr ""
+"¿Tu trabajo te exige aventurarse en territorio peligroso? ¿Se enfrenta a una "
+"oposición que sus escudos no pueden manejar? El inhibidor Milspec U-9 \"Magus"
+"\" es lo que necesita. Despiste a los sabuesos con solo pulsar un boton. "
+"Mientras tus enemigos aún intentan encontrarle sentido a la basura que "
+"reciben en sus sensores, ¡tú ya habrás emprendido la huida! Vuele seguro, "
+"vuele Milspec."
 
 #: dat/outfits/utility/milspec_scrambler.xml:2
 msgid "Milspec Scrambler"
-msgstr ""
+msgstr "Distorsionador Milspec"
 
 #: dat/outfits/utility/milspec_scrambler.xml:4
 #: dat/outfits/utility/unicorp_scrambler.xml:4
 msgid "Electronic Warfare Scrambler"
-msgstr ""
+msgstr "Distorsionador de Guerra Electrónica"
 
 #: dat/outfits/utility/milspec_scrambler.xml:9
 msgid ""
@@ -18515,10 +18569,15 @@ msgid ""
 "Milspec RX 500-C scrambler will put the wool over your enemies' sensors, at "
 "a minimal cost to you or your ship's reactor! Fly safe, fly Milspec."
 msgstr ""
+"Milspec sabe lo que es importante ahí fuera. Es que no te disparen. Y la "
+"mejor manera de que no te disparen es que no te apunten en primer lugar. El "
+"distorsionador RX 500-C de Milspec cubrirá los sensores de tus enemigos, ¡"
+"con un coste mínimo para ti o para el reactor de tu nave! Vuele seguro, "
+"vuele Milspec."
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:2
 msgid "Neural Accelerator Interface"
-msgstr ""
+msgstr "Interfaz Neural Aceleradora"
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:11
 msgid ""
@@ -18528,18 +18587,23 @@ msgid ""
 "large amounts of ship energy to change the perception of time and accelerate "
 "the piloted ship."
 msgstr ""
+"En general, el flujo del tiempo no se percibe como un valor constante, sino "
+"que fluctúa mucho según las circunstancias. Utilizando lo último en "
+"tecnología de neurointerfaz, la Interfaz Neural Aceleradora es capaz de "
+"aprovechar grandes cantidades de energía de la nave para cambiar la "
+"percepción del tiempo y acelerar la nave pilotada."
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:12
 msgid "Active for 5 seconds with a cooldown of 20 seconds."
-msgstr ""
+msgstr "Activo durante 5 segundos con un enfriamiento de 20 segundos."
 
 #: dat/outfits/utility/sensor_array.xml:2
 msgid "Sensor Array"
-msgstr ""
+msgstr "Matriz de Sensores"
 
 #: dat/outfits/utility/sensor_array.xml:4 dat/shipai.lua:97
 msgid "Electronic Warfare"
-msgstr ""
+msgstr "Guerra Electrónica"
 
 #: dat/outfits/utility/sensor_array.xml:9
 msgid ""
@@ -18550,14 +18614,21 @@ msgid ""
 "increases the accuracy of short-range tracking information used by your "
 "ship's weapons system."
 msgstr ""
+"Este conjunto de sensores utiliza una modulación de fotones ampliada por "
+"cuadralentes para detectar con mayor facilidad las débiles señales emitidas "
+"por una nave lejana, lo que aumenta la capacidad normal de tu nave para ver "
+"e identificar otras naves en el espacio. Esto puede ser útil para "
+"contrarrestar el efecto de los instrumentos de camuflaje y también aumenta "
+"la precisión de la información de rastreo de corto alcance utilizada por el "
+"sistema de armas de tu nave."
 
 #: dat/outfits/utility/targeting_array.xml:2
 msgid "Targeting Array"
-msgstr ""
+msgstr "Matriz de Objetivos"
 
 #: dat/outfits/utility/targeting_array.xml:4
 msgid "Weapon Modifier (Turret)"
-msgstr ""
+msgstr "Modificador de Arma (Torreta)"
 
 #: dat/outfits/utility/targeting_array.xml:9
 msgid ""
@@ -18565,10 +18636,14 @@ msgid ""
 "targets, and minimizes accuracy losses at range. It requires a short period "
 "to compute an ideal vector, slightly slowing firing rates."
 msgstr ""
+"Una matriz de objetivos mejorada permite que tus torretas adquieran más "
+"rápidamente los objetivos y minimice las pérdidas de precisión a distancia. "
+"Requiere un breve periodo para calcular un vector ideal, lo que ralentiza "
+"ligeramente la cadencia de tiro."
 
 #: dat/outfits/utility/targeting_conduit.xml:2
 msgid "Targeting Conduit"
-msgstr ""
+msgstr "Conducto de Objetivos"
 
 #: dat/outfits/utility/targeting_conduit.xml:10
 msgid ""
@@ -18577,14 +18652,19 @@ msgid ""
 "the cost of reduced range due to the inherent instability caused by "
 "overloading the systems."
 msgstr ""
+"El conducto de puntería redirige el excedente de energía de los escudos "
+"hacia los sistemas de objetivo de una nave, lo que permite un tiempo de "
+"fijación del objetivo mucho más rápido, aunque a costa de una reducción del "
+"alcance debido a la inestabilidad inherente causada por la sobrecarga de "
+"sistemas."
 
 #: dat/outfits/utility/targeting_conduit.xml:11
 msgid "Only active when shield is above 70%."
-msgstr ""
+msgstr "Sólo se activa cuando el escudo está por encima del 70%."
 
 #: dat/outfits/utility/unicorp_jammer.xml:2
 msgid "Unicorp Jammer"
-msgstr ""
+msgstr "Inhibidor Unicorp"
 
 #: dat/outfits/utility/unicorp_jammer.xml:9
 msgid ""
@@ -18595,10 +18675,18 @@ msgid ""
 "effective, but it also uses a lot more power. For this reason, jammer "
 "systems are inactive until needed, and must be activated manually."
 msgstr ""
+"A diferencia de los sistemas distorsionadores de uso general, los "
+"inhibidores son piezas de hardware de alta resistencia que se utilizan para "
+"la guerra electrónica seria en el espacio. Un inhibidor funciona "
+"interfiriendo activamente con los sistemas de sensores de las naves "
+"cercanas, en lugar de modular la firma de la nave en la que está instalado. "
+"Esto es mucho más eficaz, pero también consume mucha más energía. Por esta "
+"razón, los sistemas de interferencia están inactivos hasta que se necesitan, "
+"y deben ser activados manualmente."
 
 #: dat/outfits/utility/unicorp_light_afterburner.xml:2
 msgid "Unicorp Light Afterburner"
-msgstr ""
+msgstr "Ligero Unicorp Postquemador"
 
 #: dat/outfits/utility/unicorp_light_afterburner.xml:8
 #: dat/outfits/utility/unicorp_medium_afterburner.xml:8
@@ -18608,14 +18696,19 @@ msgid ""
 "drain the ship's energy and also generate heat. If the afterburner gets too "
 "hot its effect will diminish, and eventually it will shut off entirely."
 msgstr ""
+"Los postquemadores proporcionan a tu nave un impulso inmediato de empuje y "
+"velocidad cuando se activan. Sin embargo, mientras la postcombustión está "
+"activa, drena constantemente la energía de la nave y también genera calor. "
+"Si la postcombustión se calienta demasiado, su efecto disminuirá y "
+"finalmente se apagará por completo."
 
 #: dat/outfits/utility/unicorp_medium_afterburner.xml:2
 msgid "Unicorp Medium Afterburner"
-msgstr ""
+msgstr "Medio Unicorp Postquemador"
 
 #: dat/outfits/utility/unicorp_scrambler.xml:2
 msgid "Unicorp Scrambler"
-msgstr ""
+msgstr "Distorsionador Unicorp"
 
 #: dat/outfits/utility/unicorp_scrambler.xml:9
 msgid ""
@@ -18626,10 +18719,16 @@ msgid ""
 "scramblers put a minimal strain on the ship's resources, and are always "
 "active."
 msgstr ""
+"Los distorsionadores alteran la firma electromagnética de una nave, "
+"dificultando su captación por parte de diversos sensores. En efecto, un "
+"distorsionador aumenta la distancia a la que la nave puede ser detectada y "
+"escaneada, y hace más difícil que los misiles se fijen en ella. El efecto es "
+"bastante limitado, pero, por otro lado, los distorsionadores suponen una "
+"carga mínima para los recursos de la nave y siempre están activos."
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:2
 msgid "Weakness Harmonizer AI"
-msgstr ""
+msgstr "IA Armonizadora de Debilidades"
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:11
 msgid ""
@@ -18645,14 +18744,16 @@ msgid ""
 "10% additional damage for each hostile ship of same class or higher within "
 "2000 distance."
 msgstr ""
+"10% de daño adicional por cada nave hostil de la misma clase o superior en "
+"un radio de 2000."
 
 #: dat/outfits/utility/weapons_ionizer.xml:2
 msgid "Weapons Ionizer"
-msgstr ""
+msgstr "Ionizador de Armas"
 
 #: dat/outfits/utility/weapons_ionizer.xml:4
 msgid "Weapon Modification"
-msgstr ""
+msgstr "Modificador de Armas"
 
 #: dat/outfits/utility/weapons_ionizer.xml:9
 msgid ""
@@ -18663,32 +18764,42 @@ msgid ""
 "automatically activate when the target's armour is below 50%, but can also "
 "be triggered manually."
 msgstr ""
+"El ionizador de armas funciona según el principio de desviar cantidades "
+"masivas de energía de las armas a un generador de campo de iones. Aunque el "
+"uso de energía aumenta y la producción de daño disminuye significativamente, "
+"el campo de iones permite que las armas convencionales hagan daño ionizante "
+"mientras el equipo está activo. Está diseñado para activarse automáticamente "
+"cuando el blindaje del objetivo es inferior al 50%, pero también puede "
+"activarse manualmente."
 
 #: dat/outfits/utility/weapons_ionizer.xml:12
 msgid "Automatically triggers when target armour is below 50%."
 msgstr ""
+"Se activa automáticamente cuando el blindaje del objetivo es inferior al 50%."
 
 #: dat/outfits/weapons/base_ripper_mk2.xml:2
 msgid "Base Ripper MK2"
-msgstr ""
+msgstr "Destrozador Base MK2"
 
 #: dat/outfits/weapons/base_ripper_mk2.xml:9
 #: dat/outfits/weapons/cheaters_laser_cannon.xml:8
 #: dat/outfits/weapons/cheaters_ragnarok_beam.xml:8
 msgid "This weapon is a cheat. It is not meant to be used by players."
 msgstr ""
+"Esta arma es una arma tramposa. No está pensada para ser utilizada por los "
+"jugadores."
 
 #: dat/outfits/weapons/cheaters_laser_cannon.xml:2
 msgid "Cheater's Laser Cannon"
-msgstr ""
+msgstr "Cañón Láser Tramposo"
 
 #: dat/outfits/weapons/cheaters_ragnarok_beam.xml:2
 msgid "Cheater's Ragnarok Beam"
-msgstr ""
+msgstr "Rayo Ragnarok del Tramposo"
 
 #: dat/outfits/weapons/gauss_gun.xml:2
 msgid "Gauss Gun"
-msgstr ""
+msgstr "Cañon Gauss"
 
 #: dat/outfits/weapons/gauss_gun.xml:8
 msgid ""
@@ -18698,10 +18809,15 @@ msgid ""
 "impact. Gauss Guns are popular among small time pirates for being an easy to "
 "use, reliable weapon."
 msgstr ""
+"El Cañón Gauss es uno de los diseños de armas más antiguos de la galaxia, "
+"que se remonta a los tiempos de la Federación. Dispara un chorro rápido de "
+"proyectiles de alta velocidad contra un objetivo, causando daños por puro "
+"impacto cinético. Los Cañones Gauss son populares entre los piratas de poca "
+"monta por ser un arma fiable y fácil de usar."
 
 #: dat/outfits/weapons/grave_beam.xml:2
 msgid "Grave Beam"
-msgstr ""
+msgstr "Rayo de la Tumba"
 
 #: dat/outfits/weapons/grave_beam.xml:10
 msgid ""
@@ -18709,10 +18825,13 @@ msgid ""
 "not deal as much damage, but its lighter size and more forgiving CPU "
 "requirements makes it a competitive contender."
 msgstr ""
+"El Rayo de la Tumba es una versión más ligera y rápida del Rayo de Ragnarok. "
+"No inflige tanto daño, pero su menor tamaño y sus requisitos de CPU más "
+"permisivos lo convierten en un competidor."
 
 #: dat/outfits/weapons/grave_lance.xml:2
 msgid "Grave Lance"
-msgstr ""
+msgstr "Lanza Tumba"
 
 #: dat/outfits/weapons/grave_lance.xml:10
 msgid ""
@@ -18720,10 +18839,13 @@ msgid ""
 "technology behind it is poorly understood by everyone except the Za'lek, who "
 "use it as a standard weapon."
 msgstr ""
+"La Lanza de Tumba es una de las armas de lanza más poderosas que existen. La "
+"tecnología que la sustenta es poco conocida por todos, excepto por los "
+"Za'lek, que la utilizan como arma estándar."
 
 #: dat/outfits/weapons/heavy_ion_cannon.xml:2
 msgid "Heavy Ion Cannon"
-msgstr ""
+msgstr "Cañón de Iones Pesados"
 
 #: dat/outfits/weapons/heavy_ion_cannon.xml:9
 msgid ""
@@ -18732,10 +18854,14 @@ msgid ""
 "weapons on specialized capture teams, but the design is licensed for public "
 "use as well."
 msgstr ""
+"El Cañón de Iones Pesado hace un trabajo mucho mejor a la hora de inutilizar "
+"naves que el modelo estándar, pero requiere una montura media. La mayoría de "
+"los ejércitos emplean estas armas en equipos de captura especializados, pero "
+"el diseño tiene licencia para su uso público también."
 
 #: dat/outfits/weapons/heavy_ion_turret.xml:2
 msgid "Heavy Ion Turret"
-msgstr ""
+msgstr "Torreta de Iones Pesada"
 
 #: dat/outfits/weapons/heavy_ion_turret.xml:10
 msgid ""
@@ -18743,10 +18869,14 @@ msgid ""
 "its target's internal systems. When coupled with Razor weaponry, it is "
 "terribly efficient at reducing enemy warships to tumbling hunks of junk."
 msgstr ""
+"La Torreta de Iones Pesada es un diseño militar de Sirio que aplica la "
+"fuerza bruta a los sistemas internos de su objetivo. Cuando se combina con "
+"el armamento Razor, es terriblemente eficaz para reducir las naves de guerra "
+"enemigas a trozos de chatarra."
 
 #: dat/outfits/weapons/heavy_laser_turret.xml:2
 msgid "Heavy Laser Turret"
-msgstr ""
+msgstr "Torreta Laser Pesada"
 
 #: dat/outfits/weapons/heavy_laser_turret.xml:10
 msgid ""
@@ -18754,10 +18884,13 @@ msgid ""
 "Turret, though some fundamental mechanisms had to be redesigned to adapt to "
 "the increased energy throughput found in this weapon."
 msgstr ""
+"La Torreta Láser Pesada es más o menos una versión mejorada de la Torreta "
+"Láser, aunque algunos mecanismos fundamentales tuvieron que ser rediseñados "
+"para adaptarse al mayor rendimiento energético de esta arma."
 
 #: dat/outfits/weapons/heavy_razor_turret.xml:2
 msgid "Heavy Razor Turret"
-msgstr ""
+msgstr "Torreta Cuchilla Pesada"
 
 #: dat/outfits/weapons/heavy_razor_turret.xml:10
 msgid ""
@@ -18765,10 +18898,14 @@ msgid ""
 "Where the standard razor turrets are ineffective, the heavy razor turret "
 "provides the necessary firepower to batter down virtually any shielding."
 msgstr ""
+"Casa Sirio suele equipar sus naves más pesadas con Torretas de Cuchilla "
+"Pesada. Donde las torretas de cuchillas estándar son ineficaces, la torreta "
+"de cuchillas pesada proporciona la potencia de fuego necesaria para derribar "
+"prácticamente cualquier escudo."
 
 #: dat/outfits/weapons/heavy_ripper_cannon.xml:2
 msgid "Heavy Ripper Cannon"
-msgstr ""
+msgstr "Cañón Destripador Pesado"
 
 #: dat/outfits/weapons/heavy_ripper_cannon.xml:10
 msgid ""
@@ -18778,10 +18915,15 @@ msgid ""
 "Cannon. The main drawback to this model is its increased bulk, which makes "
 "it unsuitable for smaller ships."
 msgstr ""
+"Al modular la frecuencia del Cañón Destripador básico, los militares del "
+"Imperio aumentaron su alcance, precisión y poder destructivo. Tras modificar "
+"los conductos de energía, sus esfuerzos culminaron en el devastador Cañón "
+"Destripador Pesado. El principal inconveniente de este modelo es su mayor "
+"volumen, que lo hace inadecuado para las naves más pequeñas."
 
 #: dat/outfits/weapons/heavy_ripper_turret.xml:2
 msgid "Heavy Ripper Turret"
-msgstr ""
+msgstr "Torreta Destripadora Pesada"
 
 #: dat/outfits/weapons/heavy_ripper_turret.xml:10
 msgid ""
@@ -18789,10 +18931,14 @@ msgid ""
 "conventionally available to civilians. It's bulk, high energy requirements, "
 "and high damage make it unsuitable for non-capital ships."
 msgstr ""
+"Construida a partir del cañón pesado destripador, la torreta destripadora es "
+"la torreta más pesada disponible convencionalmente para los civiles. Su "
+"volumen, sus elevados requisitos de energía y su elevado daño la hacen "
+"inadecuada para las naves no capitales."
 
 #: dat/outfits/weapons/ion_cannon.xml:2
 msgid "Ion Cannon"
-msgstr ""
+msgstr "Cañón de Iones"
 
 #: dat/outfits/weapons/ion_cannon.xml:8
 msgid ""
@@ -18802,10 +18948,16 @@ msgid ""
 "allows it to be mounted on small craft. This makes the Ion Cannon one of the "
 "most popular weapons for weaker pirates."
 msgstr ""
+"Los cañones de iones son principalmente armas no letales diseñadas para "
+"cortocircuitar los sistemas internos de la nave y dejarla inutilizada sin "
+"matar a la tripulación en el proceso. El Cañón de Iones estándar es el "
+"diseño más básico y compacto, lo que permite montarlo en naves pequeñas. "
+"Esto hace que el cañón de iones sea una de las armas más populares entre los "
+"piratas más débiles."
 
 #: dat/outfits/weapons/laser_cannon_mk1.xml:2
 msgid "Laser Cannon MK1"
-msgstr ""
+msgstr "Cañón Laser MK1"
 
 #: dat/outfits/weapons/laser_cannon_mk1.xml:8
 msgid ""
@@ -18813,10 +18965,14 @@ msgid ""
 "energy beams that do a decent amount of damage to both shield and armour, "
 "while remaining efficient enough to mount several even on small ships."
 msgstr ""
+"El Cañón Láser es un arma estándar en muchas naves. Dispara rayos de energía "
+"cargados que causan una cantidad decente de daño tanto al escudo como al "
+"blindaje, siendo lo suficientemente eficiente como para montar varios "
+"incluso en naves pequeñas."
 
 #: dat/outfits/weapons/laser_cannon_mk2.xml:2
 msgid "Laser Cannon MK2"
-msgstr ""
+msgstr "Cañón Laser MK2"
 
 #: dat/outfits/weapons/laser_cannon_mk2.xml:9
 msgid ""
@@ -18825,10 +18981,14 @@ msgid ""
 "keep order among the civilian populace, and it is capable of dealing with "
 "larger Corvette vessels with some effort."
 msgstr ""
+"El MK2, una versión de alta potencia del Cañón Láser, suele encontrarse en "
+"las naves militares y de las fuerzas del orden imperiales. Su potencia de "
+"fuego superior ayuda a mantener el orden entre la población civil, y es "
+"capaz de enfrentarse a naves de Corbeta grandes con cierto esfuerzo."
 
 #: dat/outfits/weapons/laser_turret_mk1.xml:2
 msgid "Laser Turret MK1"
-msgstr ""
+msgstr "Torreta Laser MK1"
 
 #: dat/outfits/weapons/laser_turret_mk1.xml:9
 msgid ""
@@ -18839,7 +18999,7 @@ msgstr ""
 
 #: dat/outfits/weapons/laser_turret_mk2.xml:2
 msgid "Laser Turret MK2"
-msgstr ""
+msgstr "Torreta Laser MK2"
 
 #: dat/outfits/weapons/laser_turret_mk2.xml:9
 msgid ""
@@ -18847,10 +19007,13 @@ msgid ""
 "use against fleets of small to medium ships. This weapon is one of the "
 "mainstays in the Imperial space forces."
 msgstr ""
+"La Torreta Láser MK2 se encuentra a menudo en las flotas imperiales de "
+"respuesta rápida, para su uso contra flotas de naves pequeñas y medianas. "
+"Esta arma es uno de los pilares de las fuerzas espaciales Imperiales."
 
 #: dat/outfits/weapons/mass_driver.xml:2
 msgid "Mass Driver"
-msgstr ""
+msgstr "Impulsor de Masas"
 
 #: dat/outfits/weapons/mass_driver.xml:9
 msgid ""
@@ -18858,10 +19021,13 @@ msgid ""
 "through kinetic impact and knocking the target back. One of the most "
 "economical heavy weapons in the galaxy."
 msgstr ""
+"Los Impulsores de Masa disparan enormes proyectiles de materia a las naves "
+"enemigas, causando daños por impacto cinético y haciendo retroceder al "
+"objetivo. Una de las armas pesadas más económicas de la galaxia."
 
 #: dat/outfits/weapons/neutron_disruptor.xml:2
 msgid "Neutron Disruptor"
-msgstr ""
+msgstr "Disruptor de Neutrones"
 
 #: dat/outfits/weapons/neutron_disruptor.xml:10
 msgid ""
@@ -18870,20 +19036,26 @@ msgid ""
 "popular with the Collective, whose drones were immune to early versions' "
 "lethal backscatter radiation."
 msgstr ""
+"El Disruptor de Neutrones utiliza pulsos de alta energía que alteran la "
+"composición básica de las moléculas, causando graves daños. Esta arma fue "
+"muy popular entre el Colectivo, cuyos drones eran inmunes a la letal "
+"radiación de retrodispersión de las primeras versiones."
 
 #: dat/outfits/weapons/neutron_disruptor_heavy.xml:2
 msgid "Heavy Neutron Disruptor"
-msgstr ""
+msgstr "Disruptor de Neutrones Pesados"
 
 #: dat/outfits/weapons/neutron_disruptor_heavy.xml:10
 msgid ""
 "The Heavy Neutron Disruptor improves upon the processes behind the smaller "
 "Neutron Disruptor, giving this weapon greater damage and range."
 msgstr ""
+"El Disruptor de Neutrones Pesado mejora los procesos del Disruptor de "
+"Neutrones más pequeño, dando a esta arma mayor daño y alcance."
 
 #: dat/outfits/weapons/orion_beam.xml:2
 msgid "Orion Beam"
-msgstr ""
+msgstr "Rayo Orion"
 
 #: dat/outfits/weapons/orion_beam.xml:9
 msgid ""
@@ -18891,10 +19063,13 @@ msgid ""
 "exceptional short-duration firepower, a potent deterrent against lighter "
 "vessels."
 msgstr ""
+"La edición con torreta del diseño Orion ofrece a las naves de tamaño medio "
+"una excepcional potencia de fuego de corta duración, un potente elemento "
+"disuasorio contra las naves más ligeras."
 
 #: dat/outfits/weapons/orion_lance.xml:2
 msgid "Orion Lance"
-msgstr ""
+msgstr "Lanza Orion"
 
 #: dat/outfits/weapons/orion_lance.xml:9
 msgid ""
@@ -18902,30 +19077,38 @@ msgid ""
 "and up. Based on a heavily-modified, liquid-cooled laser, it's capable of "
 "bursts of continuous fire, resulting in a destructive beam."
 msgstr ""
+"La Lanza Orión es un arma de montaje fijo diseñada para ser montada de cazas "
+"en adelante. Basada en un láser fuertemente modificado y refrigerado por "
+"líquido, es capaz de realizar ráfagas de fuego continuo, dando lugar a un "
+"rayo destructivo."
 
 #: dat/outfits/weapons/particle_beam.xml:2
 msgid "Particle Beam"
-msgstr ""
+msgstr "Rayo de Particulas"
 
 #: dat/outfits/weapons/particle_beam.xml:9
 msgid ""
 "A turret-mounted particle beam. The smallest possible turreted beam weapon, "
 "used as a last-ditch weapon against light enemies."
 msgstr ""
+"Una torreta de rayo de partículas. El arma de rayo más pequeña posible "
+"montada en torreta, utilizada como última arma contra enemigos ligeros."
 
 #: dat/outfits/weapons/particle_lance.xml:2
 msgid "Particle Lance"
-msgstr ""
+msgstr "Lanza de Partículas"
 
 #: dat/outfits/weapons/particle_lance.xml:9
 msgid ""
 "This is the smallest direct beam weapon built, purpose-built by the Za'lek "
 "for their drones."
 msgstr ""
+"Esta es el arma de rayo directo más pequeña que se ha construido, construida "
+"a propósito por los Za'lek para sus drones."
 
 #: dat/outfits/weapons/plasma_blaster_mk1.xml:2
 msgid "Plasma Blaster MK1"
-msgstr ""
+msgstr "Blaster de Plasma MK1"
 
 #: dat/outfits/weapons/plasma_blaster_mk1.xml:8
 msgid ""
@@ -18933,10 +19116,14 @@ msgid ""
 "damaging armour, but less effective against shields. This weapon is often "
 "used by bounty hunters and mercenaries for its high killing potential."
 msgstr ""
+"El Blaster de Plasma dispara plasma sobrecalentado que es muy eficaz para "
+"dañar el blindaje, pero menos eficaz contra los escudos. Esta arma es "
+"utilizada a menudo por los cazarrecompensas y los mercenarios por su alto "
+"potencial asesino."
 
 #: dat/outfits/weapons/plasma_blaster_mk2.xml:2
 msgid "Plasma Blaster MK2"
-msgstr ""
+msgstr "Blaster de Plasma MK2"
 
 #: dat/outfits/weapons/plasma_blaster_mk2.xml:9
 msgid ""
@@ -18945,6 +19132,11 @@ msgid ""
 "Its power is substantial enough that it even gets used by some militaries, "
 "typically in combination with anti-shield weaponry."
 msgstr ""
+"El Blaster de Plasma MK2 es una versión de alta potencia del Blaster de "
+"Plasma, lo suficientemente potente como para hacer volar todas las naves "
+"piratas, excepto las más pesadas. Su potencia es lo suficientemente "
+"importante como para que incluso sea utilizado por algunos militares, "
+"normalmente en combinación con armamento antiescudo."
 
 #: dat/outfits/weapons/plasma_cannon.xml:2
 msgid "Plasma Cannon"
@@ -18957,10 +19149,15 @@ msgid ""
 "engineering complexities of fitting such a powerful weapon into a small slot "
 "lead to much higher dependence on guidance from the ship's central computer."
 msgstr ""
+"El Cañón de Plasma es una versión ampliada del diseño del Blaster de Plasma "
+"para su uso en Corbetas. Consigue un impacto mucho más fuerte, pero la "
+"complejidad de la ingeniería para encajar un arma tan poderosa en una ranura "
+"pequeña hace que dependa mucho más de la guía del ordenador central de la "
+"nave."
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:2
 msgid "Plasma Cluster Cannon"
-msgstr ""
+msgstr "Cañón Cúmulo de Plasma"
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:9
 msgid ""
@@ -18972,10 +19169,18 @@ msgid ""
 "medium mounts, but this also means biological Soromid ships are able to "
 "handle its computational load despite being a synthetic construct."
 msgstr ""
+"El Cañón Cúmulo de Plasma es un refinamiento Sorómida del diseño estándar "
+"del Cañón de Plasma. Al confinar un enorme cúmulo de plasma sobrecalentado "
+"en un pequeño espacio dentro de un \"escudo de membrana\" especializado, el "
+"impacto crea grandes explosiones que atraviesan incluso los cascos más "
+"resistentes. El inconveniente de este diseño es que requiere mucho espacio, "
+"lo que limita su uso a montajes medianos, pero esto también significa que "
+"las naves biológicas Soromida son capaces de manejar su carga computacional "
+"a pesar de ser una construcción sintética."
 
 #: dat/outfits/weapons/plasma_turret_mk1.xml:2
 msgid "Plasma Turret MK1"
-msgstr ""
+msgstr "Torreta Plasma MK1"
 
 #: dat/outfits/weapons/plasma_turret_mk1.xml:9
 msgid ""
@@ -18988,7 +19193,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_turret_mk2.xml:2
 msgid "Plasma Turret MK2"
-msgstr ""
+msgstr "Torreta Plasma MK2"
 
 #: dat/outfits/weapons/plasma_turret_mk2.xml:9
 msgid ""
@@ -18996,10 +19201,14 @@ msgid ""
 "medium-size turrets, but it is sometimes favoured by corvettes for its "
 "unusually low weight compared to its range and damage output."
 msgstr ""
+"La torreta de plasma grado 2 no es especialmente impresionante en "
+"comparación con otras torretas de tamaño medio, pero a veces se ve "
+"favorecida por las corbetas por su peso inusualmente bajo en comparación con "
+"su alcance y producción de daños."
 
 #: dat/outfits/weapons/ragnarok_beam.xml:2
 msgid "Ragnarok Beam"
-msgstr ""
+msgstr "Rayo Ragnarok"
 
 #: dat/outfits/weapons/ragnarok_beam.xml:10
 msgid ""
@@ -19007,10 +19216,13 @@ msgid ""
 "market. It's designed for capital ship combat, although its extremely large "
 "payload makes it somewhat useful for clearing enemy fighters."
 msgstr ""
+"El Rayo Ragnarok es una de las armas de clase rayo más potentes del mercado. "
+"Está diseñado para el combate de naves capitales, aunque su carga útil "
+"extremadamente grande lo hace algo útil para eliminar cazas enemigos."
 
 #: dat/outfits/weapons/railgun.xml:2
 msgid "Railgun"
-msgstr ""
+msgstr "Cañón de Riel"
 
 #: dat/outfits/weapons/railgun.xml:10
 msgid ""
@@ -19018,10 +19230,14 @@ msgid ""
 "of debris to extremely high velocities. The impact caused by the pieces of "
 "debris can tear apart even the strongest ship hulls."
 msgstr ""
+"El cañón de riel es un cañón que utiliza fuertes impulsos magnéticos para "
+"acelerar trozos de escombros a velocidades extremadamente altas. El impacto "
+"causado por los trozos de escombros puede destrozar incluso los cascos de "
+"las naves más resistentes."
 
 #: dat/outfits/weapons/railgun_turret.xml:2
 msgid "Railgun Turret"
-msgstr ""
+msgstr "Torreta de Cañón de Riel"
 
 #: dat/outfits/weapons/railgun_turret.xml:10
 msgid ""
@@ -19030,10 +19246,15 @@ msgid ""
 "a specialized turret housing, it manages to mitigate the recoil normally "
 "associated with railguns at a slight velocity cost."
 msgstr ""
+"Aunque un cañón de riel de 150 mm es un arma formidable, lo último en "
+"armamento de fuerza bruta para naves capitales es la torreta de cañones de "
+"riel de 150 mm. Al montar dos cañones de riel en una carcasa de torreta "
+"especializada, se consigue mitigar el retroceso normalmente asociado a los "
+"cañones de riel con un ligero coste de velocidad."
 
 #: dat/outfits/weapons/razor_mk1.xml:2
 msgid "Razor MK1"
-msgstr ""
+msgstr "Cuchilla MK1"
 
 #: dat/outfits/weapons/razor_mk1.xml:8
 msgid ""
@@ -19042,10 +19263,15 @@ msgid ""
 "such, Razors are best used in the initial phase of an engagement, and "
 "swapped out for other weapons once the target's shields come down."
 msgstr ""
+"Las cuchillas disparan bolsas concentradas de iones de alta energía que son "
+"muy eficaces para drenar los escudos, pero sólo tienen un efecto limitado en "
+"el blindaje de la nave. Por lo tanto, las cuchillas se utilizan mejor en la "
+"fase inicial de un combate y se cambian por otras armas una vez que los "
+"escudos del objetivo se han reducido."
 
 #: dat/outfits/weapons/razor_mk2.xml:2
 msgid "Razor MK2"
-msgstr ""
+msgstr "Cuchilla MK2"
 
 #: dat/outfits/weapons/razor_mk2.xml:8
 msgid ""
@@ -19055,10 +19281,15 @@ msgid ""
 "drain a target's shields, paving the way for other weapons to deliver the "
 "finishing blow."
 msgstr ""
+"El modelo civil mejorado de Cuchilla es más eficaz que su predecesor y tiene "
+"menos dificultades para sobrecargar los escudos de las naves capitales. Al "
+"igual que el modelo básico, la Cuchilla MK2 se utiliza mejor para drenar los "
+"escudos de un objetivo, preparando el camino para que otras armas den el "
+"golpe final."
 
 #: dat/outfits/weapons/razor_turret_mk1.xml:2
 msgid "Razor Turret MK1"
-msgstr ""
+msgstr "Torreta Cuchilla MK1"
 
 #: dat/outfits/weapons/razor_turret_mk1.xml:9
 msgid ""
@@ -19066,10 +19297,14 @@ msgid ""
 "is a great deterrent against attackers because nothing puts a space pilot on "
 "edge like their shields rapidly coming down."
 msgstr ""
+"Las Torretas Cuchilla son populares entre los comerciantes. Su elevado daño "
+"contra los escudos es un gran elemento disuasorio contra los atacantes, ya "
+"que nada pone a un piloto espacial al límite como que sus escudos caigan "
+"rápidamente."
 
 #: dat/outfits/weapons/razor_turret_mk2.xml:2
 msgid "Razor Turret MK2"
-msgstr ""
+msgstr "Torreta Cuchilla MK2"
 
 #: dat/outfits/weapons/razor_turret_mk2.xml:9
 msgid ""
@@ -19077,10 +19312,14 @@ msgid ""
 "escort ships. They are often mounted alongside laser or gauss turrets to "
 "assist in de-shielding incoming attackers before they are ripped to shreds."
 msgstr ""
+"La versión con torreta MK2 Cuchilla se utiliza a menudo en las naves de "
+"escolta medianas. Suelen montarse junto a las torretas láser o gauss para "
+"ayudar a retirar los escudos de los atacantes que llegan antes de que los "
+"hagan pedazos."
 
 #: dat/outfits/weapons/repeating_railgun.xml:2
 msgid "Repeating Railgun"
-msgstr ""
+msgstr "Cañón de Rail Repetitivo"
 
 #: dat/outfits/weapons/repeating_railgun.xml:10
 msgid ""
@@ -19089,10 +19328,15 @@ msgid ""
 "enhance the weapon into a heavier, faster firing variant that isn't so much "
 "a gun as it is a miniature meteor shower generator."
 msgstr ""
+"Aunque el Cañón de rRel era devastador en sus efectos, no era lo "
+"suficientemente devastador para el Alto Mando Dvaered. Hicieron que sus "
+"ingenieros mejoraran el arma para convertirla en una variante más pesada y "
+"de disparo más rápido que no es tanto un arma como un generador de lluvia de "
+"meteoritos en miniatura."
 
 #: dat/outfits/weapons/ripper_cannon.xml:2
 msgid "Ripper Cannon"
-msgstr ""
+msgstr "Cañón Destripador"
 
 #: dat/outfits/weapons/ripper_cannon.xml:9
 msgid ""
@@ -19102,10 +19346,16 @@ msgid ""
 "Ripper Cannon is mostly used by Corvettes which possess small weapon mounts, "
 "but need heavy firepower so they can take on heavier ships effectively."
 msgstr ""
+"El Cañón Destripador es una variante del Cañón Láser que tiene condensadores "
+"más potentes y boquillas gemelas y sincronizadas. El resultado es un aumento "
+"del daño por impacto a costa de un tremendo aumento de los requisitos de la "
+"CPU. El Cañón Destripador es utilizado sobre todo por las Corbetas, que "
+"poseen pequeños montajes de armas, pero necesitan una gran potencia de fuego "
+"para poder enfrentarse con eficacia a naves más pesadas."
 
 #: dat/outfits/weapons/shredder.xml:2
 msgid "Shredder"
-msgstr ""
+msgstr "Trituradora"
 
 #: dat/outfits/weapons/shredder.xml:9
 msgid ""
@@ -19113,10 +19363,13 @@ msgid ""
 "The sheer damage dealing capacity of this weapon makes Dvaered Corvettes "
 "dangerous to engage by ships that aren't substantially larger than they are."
 msgstr ""
+"La Trituradora hace honor al nombre que le dieron sus fabricantes Dvaered. "
+"La gran capacidad de daño de esta arma hace que las corbetas Dvaered sean "
+"peligrosas para las naves que no son mucho más grandes que ellas."
 
 #: dat/outfits/weapons/slicer.xml:2
 msgid "Slicer"
-msgstr ""
+msgstr "Rebanadora"
 
 #: dat/outfits/weapons/slicer.xml:9
 msgid ""
@@ -19124,10 +19377,13 @@ msgid ""
 "the shields from those who would stand against House Sirius. It is commonly "
 "found on Sirius Preachers and other Corvettes."
 msgstr ""
+"La Rebanadora es una versión de alta potencia de la Cuchilla, excelente para "
+"despojar de escudos a aquellos que se oponen a la Casa Sirio. Es habitual "
+"encontrarla en los Predicadores Sirio y otras Corbetas."
 
 #: dat/outfits/weapons/tesla_cannon.xml:2
 msgid "Tesla Cannon"
-msgstr ""
+msgstr "Cañón Tesla"
 
 #: dat/outfits/weapons/tesla_cannon.xml:10
 msgid ""
@@ -19137,10 +19393,16 @@ msgid ""
 "does poor damage for its size, in extended engagements this weapon can leave "
 "enemy combatants functionally helpless."
 msgstr ""
+"El arma más grande del espacio de Sirio, el poderoso cañón Tesla utiliza "
+"principios similares a los de los cañones de iones más comunes, pero apunta "
+"más específicamente a los sistemas eléctricos de una nave, en particular a "
+"sus reactores. Aunque hace poco daño para su tamaño, en enfrentamientos "
+"prolongados esta arma puede dejar a los combatientes enemigos funcionalmente "
+"indefensos."
 
 #: dat/outfits/weapons/turbolaser.xml:2
 msgid "Turbolaser"
-msgstr ""
+msgstr "Turboláser"
 
 #: dat/outfits/weapons/turbolaser.xml:10
 msgid ""
@@ -19148,10 +19410,13 @@ msgid ""
 "found in the galaxy. Imperial Capital ships use it to lay down devastating "
 "barrages against enemy vessels."
 msgstr ""
+"Este modelo especial de la Torreta Láser Pesada es una de las armas más "
+"pesadas de la galaxia. Las naves capitales imperiales la utilizan para "
+"lanzar descargas devastadoras contra las naves enemigas."
 
 #: dat/outfits/weapons/turreted_gauss_gun.xml:2
 msgid "Turreted Gauss Gun"
-msgstr ""
+msgstr "Torreta Cañón Gauss"
 
 #: dat/outfits/weapons/turreted_gauss_gun.xml:9
 msgid ""
@@ -19162,7 +19427,7 @@ msgstr ""
 
 #: dat/outfits/weapons/turreted_vulcan_gun.xml:2
 msgid "Turreted Vulcan Gun"
-msgstr ""
+msgstr "Torreta Cañón Volcan"
 
 #: dat/outfits/weapons/turreted_vulcan_gun.xml:10
 msgid ""
@@ -19170,10 +19435,14 @@ msgid ""
 "brethren. Ships not nimble enough to evade its relentless stream of "
 "projectiles might find themselves riddled with hull punctures before long."
 msgstr ""
+"La Torreta Cañón Volcan lleva el mismo calibre de munición que sus hermanos "
+"de montura fija. Las naves que no sean lo suficientemente ágiles como para "
+"evadir su implacable flujo de proyectiles podrían verse acribilladas con "
+"agujeros en el casco en poco tiempo."
 
 #: dat/outfits/weapons/vulcan_gun.xml:2
 msgid "Vulcan Gun"
-msgstr ""
+msgstr "Cañón Volcan"
 
 #: dat/outfits/weapons/vulcan_gun.xml:9
 msgid ""
@@ -19182,6 +19451,10 @@ msgid ""
 "some serious havoc even to medium-sized vessels with a pair of Vulcan Guns "
 "installed on their ship."
 msgstr ""
+"El Cañón Volcan mejora al Cañón Gauss con un mayor alcance y daño, "
+"conseguido mediante el uso de una munición de mayor calibre. Un piloto hábil "
+"puede causar serios estragos incluso en naves de tamaño medio con un par de "
+"cañones Vulcan instalados en su nave."
 
 #: dat/ships/admonisher.xml:2
 msgid "Admonisher"
@@ -19218,12 +19491,13 @@ msgstr ""
 
 #: dat/ships/drone.xml:2 dat/missions/minerva/pirate1.lua:175
 msgid "Drone"
-msgstr ""
+msgstr "Dron"
 
 #: dat/ships/drone.xml:13 dat/ships/drone_heavy.xml:13
 #: dat/ships/drone_hyena.xml:15
+#, fuzzy
 msgid "Robosys"
-msgstr ""
+msgstr "Robosys"
 
 #: dat/ships/drone.xml:14
 msgid ""
@@ -19233,7 +19507,7 @@ msgstr ""
 
 #: dat/ships/drone_heavy.xml:2
 msgid "Heavy Drone"
-msgstr ""
+msgstr "Dron Pesado"
 
 #: dat/ships/drone_heavy.xml:14
 msgid ""
@@ -19243,7 +19517,7 @@ msgstr ""
 
 #: dat/ships/drone_hyena.xml:2
 msgid "Drone (Hyena)"
-msgstr ""
+msgstr "Dron (Hiena)"
 
 #: dat/ships/drone_hyena.xml:16
 msgid ""
@@ -19253,7 +19527,7 @@ msgstr ""
 
 #: dat/ships/dvaered_ancestor.xml:2
 msgid "Dvaered Ancestor"
-msgstr ""
+msgstr "Ancestro Dvaered"
 
 #: dat/ships/dvaered_ancestor.xml:17
 msgid ""
@@ -19264,7 +19538,7 @@ msgstr ""
 
 #: dat/ships/dvaered_arsenal.xml:2
 msgid "Dvaered Arsenal"
-msgstr ""
+msgstr "Arsenal Dvaered"
 
 #: dat/ships/dvaered_arsenal.xml:20
 msgid ""
