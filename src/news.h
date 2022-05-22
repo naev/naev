@@ -15,6 +15,7 @@
  */
 typedef struct news_s {
    int id;  /**< ID of the news. */
+   int priority; /**< Priority of the news. 5 is default, lower is more important (appears higher). */
 
    char *title; /**< Title of the news article. */
    char *desc; /**< Content of the news article. */
@@ -42,7 +43,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h );
 /*
  * News interactions
  */
-news_t* new_article( const char* title, const char* content, const char* faction, ntime_t date,
-      ntime_t date_to_rm );
+news_t* new_article( const char* title, const char* content, const char*
+      faction, ntime_t date, ntime_t date_to_rm, int priority );
 int free_article( int id );
 news_t* news_get( int id );

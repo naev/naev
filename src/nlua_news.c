@@ -143,19 +143,22 @@ int lua_isarticle( lua_State *L, int ind )
  *    @luatparam string body What's in the article
  *    @luatparam[opt] number|Time date_to_rm date to remove the article
  *    @luatparam[opt] number|Time date What time to put, defaults to current date, use 0 to not use a date
+ *    @luatparam[opt=5] number Priority to use. Lower is more important and will appear first.
  *    @luatreturn Article The article matching name or nil if error.
  * @luafunc add
  */
 int newsL_add( lua_State *L )
 {
    news_t *n_article;
-   char *title, *content, *faction;
+   const char *title, *content, *faction;
    ntime_t date, date_to_rm;
+   int priority;
 
    n_article = NULL;
    title   = NULL;
    content = NULL;
    faction = NULL;
+   priority = 5;
 
    date = ntime_get();
    date_to_rm = NEWS_FOREVER;
@@ -184,24 +187,21 @@ int newsL_add( lua_State *L )
                }
                else if (lua_isstring(L, -1)) {
                   if (!faction)
-                     faction = strdup(lua_tostring(L, -1));
+                     faction = luaL_checkstring(L, -1);
                   else if (!title)
-                     title = strdup(lua_tostring(L, -1));
+                     title = luaL_checkstring(L, -1);
                   else if (!content)
-                     content = strdup(lua_tostring(L, -1));
+                     content = luaL_checkstring(L, -1);
                }
 
                lua_pop(L, 1);
             }
 
             if (title && content && faction)
-               new_article(title, content, faction, date, date_to_rm);
+               new_article( title, content, faction, date, date_to_rm, priority );
             else
                WARN(_("Bad arguments"));
 
-            free(faction);
-            free(title);
-            free(content);
             faction = NULL;
             title = NULL;
             content = NULL;
@@ -215,7 +215,7 @@ int newsL_add( lua_State *L )
 
       /* If we're landed, we should regenerate the news buffer. */
       if (landed) {
-         generate_news(land_spob->presence.faction);
+         generate_news( land_spob->presence.faction );
          if (land_loaded)
             bar_regen();
       }
@@ -229,35 +229,31 @@ int newsL_add( lua_State *L )
       return 0;
    }
 
-   faction = strdup(lua_tostring(L, 1));
-   title   = strdup(lua_tostring(L, 2));
-   content = strdup(lua_tostring(L, 3));
+   faction = luaL_checkstring(L, 1);
+   title   = luaL_checkstring(L, 2);
+   content = luaL_checkstring(L, 3);
+   priority = luaL_optinteger(L, 6, 5);
 
-   /* get date and date to remove, or leave at defaults*/
-   if (lua_isnumber(L, 4) || lua_istime(L, 4)) {
+   /* Get date and date to remove, or leave at defaults. */
+   if (!lua_isnoneornil(L,4)) {
       if (lua_istime(L, 4))
          date_to_rm = luaL_validtime(L, 4);
       else
-         date_to_rm = lua_tonumber(L, 4);
+         date_to_rm = luaL_checklong(L, 4);
    }
-
-   if (lua_isnumber(L, 5) || lua_istime(L, 5)) {
+   if (!lua_isnoneornil(L,5)) {
       if (lua_istime(L, 5))
          date = luaL_validtime(L, 5);
       else
-         date = lua_tonumber(L, 5);
+         date = luaL_checklong(L, 5);
    }
 
    if (title && content && faction)
-      n_article = new_article(title, content, faction, date, date_to_rm);
+      n_article = new_article( title, content, faction, date, date_to_rm, priority );
    else
       NLUA_ERROR(L,_("Bad arguments"));
 
    lua_pusharticle(L, n_article->id);
-
-   free(title);
-   free(content);
-   free(faction);
 
    /* If we're landed, we should regenerate the news buffer. */
    if (landed) {

@@ -79,11 +79,13 @@ static void clear_newslines (void);
  *    @param faction the article faction
  *    @param date date to put
  *    @param date_to_rm date to remove the article
+ *    @param priority Priority to use.
  * @return pointer to new article
  */
 news_t* new_article( const char* title, const char* content,
-      const char* faction, ntime_t date, ntime_t date_to_rm )
+      const char* faction, ntime_t date, ntime_t date_to_rm, int priority )
 {
+   (void) priority;
    news_t *article_ptr, *n_article;
 
    /* make new article */
@@ -493,6 +495,7 @@ int news_saveArticles( xmlTextWriterPtr writer )
          xmlw_attr(writer, "date", "%"PRIi64, article_ptr->date);
          xmlw_attr(writer, "date_to_rm", "%"PRIi64, article_ptr->date_to_rm);
          xmlw_attr(writer, "id", "%i", article_ptr->id);
+         xmlw_attr(writer, "priority", "%i", article_ptr->priority);
 
          if (article_ptr->tag != NULL)
             xmlw_attr(writer, "tag", "%s", article_ptr->tag);
@@ -546,6 +549,7 @@ static int news_parseArticle( xmlNodePtr parent )
 {
    char *title, *desc, *faction;
    char *buff;
+   int priority;
    ntime_t date, date_to_rm;
    xmlNodePtr node;
 
@@ -583,10 +587,15 @@ if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup
       next_id = atoi(buff);
       free(buff);
 
+      /* Older versions won't have priority. */
+      xmlr_attr_strd( node, "priority", buff );
+      priority = (buff==NULL) ? 5 : atoi(buff);
+      free(buff);
+
       largestID = MAX(largestID, next_id + 1);
 
       /* make the article*/
-      n_article = new_article(title, desc, faction, date, date_to_rm);
+      n_article = new_article( title, desc, faction, date, date_to_rm, priority );
       /* Read optional tag. */
       xmlr_attr_strd(node, "tag", n_article->tag);
 
