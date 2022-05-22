@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#include <stdint.H>
+#include <stdint.h>
 
 #include "nlua.h"
 #include "ntime.h"
