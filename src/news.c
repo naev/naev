@@ -94,14 +94,10 @@ news_t* new_article( const char* title, const char* content,
    n_article->id = next_id++;
 
    /* allocate it */
-   if ( !( (n_article->title = strdup(title)) &&
-         (n_article->desc = strdup(content)) &&
-         (n_article->faction = strdup(faction)))) {
-      ERR(_("Out of Memory"));
-      return NULL;
-   }
-
-   n_article->date = date;
+   n_article->title  = strdup( title );
+   n_article->desc   = strdup( content );
+   n_article->faction = strdup( faction );
+   n_article->date   = date;
    n_article->date_to_rm = date_to_rm;
 
    /* If it belongs first*/

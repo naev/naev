@@ -324,7 +324,7 @@ int newsL_get( lua_State *L )
    char *characteristic;
    int k, print_all;
 
-   date = -1;
+   date  = -1;
    article_ptr = news_list;
    characteristic = NULL;
    print_all = 0;
