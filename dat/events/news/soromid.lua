@@ -34,7 +34,7 @@ local articles = {
    },
    {
       head = N_([[A Voice for Unionization]]),
-      body = _([[Several Soromid delivery services report a large movement for unionization among their workers. Some living ships are rumoured to have already signed up as well. "What's next," laments a manager who requested anonymity, "do they want to unionize my pet as well?"]]),
+      body = _([[Several Soromid delivery services report a large movement for unionization among their workers. Some intelligent bioengineered pets are rumoured to have already signed up as well. "What's next," laments a manager who requested anonymity, "do they want to unionize my bioship as well?"]]),
    },
    --[[
       Human interest.
