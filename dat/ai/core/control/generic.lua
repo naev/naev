@@ -35,6 +35,7 @@ mem.safe_jump_distance = 300 -- Safe distance from enemies to jump
 mem.land_planet   = true -- Should land on planets?
 mem.land_friendly = false -- Only land on friendly planets?
 mem.distress      = true -- AI distresses
+mem.distress_hit  = 0 -- Amount of faction lost on distress
 mem.distressrate  = 3 -- Number of ticks before calling for help
 mem.distressmsg   = nil -- Message when calling for help
 mem.distressmsgfunc = nil -- Function to call when distressing
