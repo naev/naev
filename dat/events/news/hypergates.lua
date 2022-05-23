@@ -9,13 +9,13 @@ local articles = {
    {
       priority = 5,
       test = test_hypergates_construction,
-      tag = N_([[Large Orbital Constructions Spike Curiosity]]),
-      desc = _([[Throughout the Empire, large orbital constructions have spiked curiosity of passersby, citing difference with standard space station designs. Great Houses have stated they are routine constructions without need of alarm.]]),
+      header = N_([[Large Orbital Constructions Spike Curiosity]]),
+      body = _([[Throughout the Empire, large orbital constructions have spiked curiosity of passersby, citing difference with standard space station designs. Great Houses have stated they are routine constructions without need of alarm.]]),
    },
    {
       test = test_hypergates_done,
-      tag = N_([[Hypergate Nausea Syndrome Officially Recognized]]),
-      desc = _([[The intergalactic association of medical practitioners has officially recognized Hypergate Nausea Syndrome as a separate condition from Hyperspace Nausea Syndrome due to the major differences.]]),
+      header = N_([[Hypergate Nausea Syndrome Officially Recognized]]),
+      body = _([[The intergalactic association of medical practitioners has officially recognized Hypergate Nausea Syndrome as a separate condition from Hyperspace Nausea Syndrome due to the major differences.]]),
    },
 }
 
