@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-05-12 10:59+0900\n"
-"PO-Revision-Date: 2022-05-23 17:47+0000\n"
+"PO-Revision-Date: 2022-05-23 23:17+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
@@ -8274,14 +8274,17 @@ msgid ""
 "competent alone, it's often employed as a forward scout, bringing with it "
 "far deadlier allies."
 msgstr ""
+"La Fidelidad es el interceptor de la Casa Sirio. Aunque no es especialmente "
+"competente en solitario, a menudo se emplea como explorador de avanzada, "
+"trayendo consigo aliados mucho más mortíferos."
 
 #: dat/ships/sirius/sirius_preacher.xml:2
 msgid "Sirius Preacher"
-msgstr ""
+msgstr "Predicador Sirio"
 
 #: dat/ships/sirius/sirius_preacher.xml:16
 msgid "You need at least 40 reputation with House Sirius."
-msgstr ""
+msgstr "Necesitas al menos 40 de reputación con la Casa Sirio."
 
 #: dat/ships/sirius/sirius_preacher.xml:17
 msgid ""
@@ -8289,14 +8292,18 @@ msgid ""
 "Sirius projects its message and will. Fielding a large array of weaponry, "
 "the Preacher is adept at making converts out of unbelievers."
 msgstr ""
+"El Predicador, como su nombre indica, es el principal vehículo mediante el "
+"cual la Casa Sirio proyecta su mensaje y su voluntad. El Predicador, que "
+"dispone de un amplio arsenal de armas, es experto en convertir a los "
+"incrédulos en adeptos."
 
 #: dat/ships/sirius/sirius_providence.xml:2
 msgid "Sirius Providence"
-msgstr ""
+msgstr "Providencia Sirio"
 
 #: dat/ships/sirius/sirius_providence.xml:21
 msgid "You need at least 60 reputation with House Sirius."
-msgstr ""
+msgstr "Necesitas al menos 60 de reputación con la Casa Sirio."
 
 #: dat/ships/sirius/sirius_providence.xml:22
 msgid ""
@@ -8305,14 +8312,18 @@ msgid ""
 "transport pilgrims, even though most Sirii dislike these overcrowded mass "
 "transports."
 msgstr ""
+"El Providencia es el carguero de la Casa Sirio y se utiliza principalmente "
+"para transportar grandes cantidades de suministros. Algunos de ellos también "
+"se utilizan para transportar peregrinos, aunque a la mayoría de los Sirios "
+"les disgustan estos transportes masivos sobrecargados."
 
 #: dat/ships/sirius/sirius_shaman.xml:2
 msgid "Sirius Shaman"
-msgstr ""
+msgstr "Chamán Sirio"
 
 #: dat/ships/sirius/sirius_shaman.xml:16
 msgid "You need at least 30 reputation with House Sirius."
-msgstr ""
+msgstr "Necesitas al menos 30 de reputación con la Casa Sirio."
 
 #: dat/ships/sirius/sirius_shaman.xml:17
 msgid ""
