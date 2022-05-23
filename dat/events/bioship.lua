@@ -10,6 +10,7 @@
 --]]
 local fmt = require "format"
 local bioship = require "bioship"
+local textoverlay = require "textoverlay"
 
 -- luacheck: globals update_bioship bioship_pay bioship_land (Hook functions passed by name)
 
@@ -18,7 +19,7 @@ local function bioship_click ()
    update_bioship()
 end
 
-local infobtn
+local infobtn, canrankup
 function update_bioship ()
    local is_bioship = bioship.playerisbioship()
 
@@ -71,6 +72,8 @@ end
 function bioship_land ()
    if not bioship.playerisbioship() then return end
 
+   canrankup = nil
+
    -- Check for stage up!
    local exp = player.shipvarPeek("bioshipexp") or 0
    local stage = player.shipvarPeek("biostage")
@@ -81,6 +84,7 @@ function bioship_land ()
    end
 end
 
+local sfx
 function bioship_pay( amount, _reason )
    if amount < 0 then return end
    if not bioship.playerisbioship() then return end
@@ -102,9 +106,15 @@ function bioship_pay( amount, _reason )
    player.shipvarPush("bioshipexp",exp)
 
    -- Stage up!
-   if exp >= bioship.exptostage( stage+1 ) then
+   if exp >= bioship.exptostage( stage+1 ) and not canrankup then
       -- TODO sound and effect?
-      player.msg(_("#gYour bioship has enough experience to advance a stage!#0"))
+      canrankup = true
+      player.msg("#g".._("Your bioship has enough experience to advance a stage!").."#0")
+      textoverlay.init(_("Bioship Rank Up"), nil, { fadein = 1, fadeout = 1, length = 5 })
+      if not sfx then
+         sfx = audio.newSource( 'snd/sounds/jingles/victory.ogg' )
+      end
+      sfx:play()
       if player.isLanded() then
          bioship.setstage( bioship.curstage( exp, maxstage ) )
       end
