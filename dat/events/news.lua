@@ -8,7 +8,6 @@
 --[[
    Event for creating news
 --]]
-local pir = require "common.pirate"
 local fmt = require "format"
 local lmisn = require "lmisn"
 local lf = require "love.filesystem"
@@ -131,7 +130,9 @@ function land ()
 
    add_header( my_faction )
    add_article( my_faction )
-   add_article( "Generic" )
+   if faction.get(my_faction):tags().generic then
+      add_article( "Generic" )
+   end
    add_econ_article()
 end
 
@@ -210,9 +211,7 @@ function add_econ_article ()
       local planets = {}
       for i, s in ipairs( lmisn.getSysAtDistance( system.cur(), 2, 4 ) ) do
          for j, p in ipairs( s:spobs() ) do
-            if not pir.factionIsPirate( p:faction() )
-                  and p:faction() ~= faction.get("FLF")
-                  and #(p:commoditiesSold()) > 0 then
+            if p:faction():tags().generic and #(p:commoditiesSold()) > 0 then
                planets[ #planets + 1 ] = p
             end
          end
