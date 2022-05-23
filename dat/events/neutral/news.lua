@@ -284,7 +284,7 @@ articles["Sirius"] = {
       Politics
    --]]
    {
-      tag = N_([[Dvaered extorting pilgrims]]),
+      tag = N_([[Dvaered Extorting Pilgrims]]),
       desc = _([[Recent pilgrims headed to Mutris have been telling stories of extortion and violations by Dvaered operators. Dvaered Warlord Kra'tok claims that these are "figments of the touched's imagination". Official complaints have been made to the Emperor.]])
    },
    --[[
