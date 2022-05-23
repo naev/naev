@@ -621,7 +621,7 @@ function cutscene_cleanup ()
    news.add{
    {
       faction = "Generic",
-      title = _("Hypergate Network Goes Live"),
+      head = _("Hypergate Network Goes Live"),
       body = _([[In separate press releases, the Great Houses and Soromid have announced the activation of a hypergate network allowing for intersystem long-range travel. Many people flocked to try the new system, causing congestions with one altercation leading to the arrest of dozens of people.]]),
       date_to_rm = time.get() + time.creat(0, 30, 0),
    },
