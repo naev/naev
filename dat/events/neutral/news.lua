@@ -410,11 +410,71 @@ articles["Frontier"] = {
       Human interest.
    --]]
 }
+articles["Za'lek"] = {
+   --[[
+      Science and technology
+   --]]
+   {
+      tag = N_([[Drone Malfunctions at Record High]]),
+      desc = _([[Recent production models of drones have reached a new high of malfunctions per cycle. Za'lek fabrication leader points a finger to inconsistent Riemann metrics as a likely cause.]]),
+   },
+   {
+      tag = N_([[New Funding Call for Antimatter Research]]),
+      desc = _([[The Ruadan Research Bureau has issued a new call for antimatter research funding. The highly sought funding had a 0.2% acceptance rate last cycle and is expected to become even more competitive due to new research quality metrics.]]),
+   },
+   {
+      tag = N_([[Breakthrough in Spectral Lattice Crystal Amplifiers]]),
+      desc = _([[The PRP-3 Advanced Materials Laboratory presented an important advance in crystal amplifiers which has large potential in beam stabilization and active capacitors.]]),
+   },
+   --[[
+      Business
+   --]]
+   --[[
+      Politics
+   --]]
+   {
+      tag = N_([[Za'lek Leadership Committee Breaks Record Length]]),
+      desc = _([[Surpassing the previous record of 3.198 periods of uninterrupted deliberations, the Za'lek Leadership Committee was called to a stop when too many research leaders had to be taken to hospitals due to sleep deprivation and starvation.]]),
+   },
+   --[[
+      Human interest.
+   --]]
+   {
+      tag = N_([[Altercation at Conference on Philosophy and Ethics]]),
+      desc = _([[A large fight broke out when Prof. Li was presenting her new theory on quantum dualism. Dualists and materialists used chairs as improvised weapons until riot police were able to disperse the scene. General Chair Picazzo boasted it was the least violent conference up to date with only 17 hospitalized.]]),
+   },
+}
+
+articles["Frontier"] = {
+   --[[
+      Science and technology
+   --]]
+   --[[
+      Business
+   --]]
+   --[[
+      Politics
+   --]]
+   {
+      tag = N_([[Election on Caladan Marred by Fraud]]),
+      desc = _([[As many as two of every hundred votes counted after the recent polling decaperiod may be falsified, an ombudsman reports. The opposition party demanded the election be annulled.]])
+   },
+   {
+      tag = N_([[Empire Relies on Prison Labour]]),
+      desc = _([[A recent report by the Soromid House Ways and Means Committee suggests infrastructure may be too dependent the on the incarcerated population.]])
+   },
+   {
+      tag = N_([[Imperial Oversight Scandal]]),
+      desc = _([[Sources close to the Imperial Chancellor say they see the failure at the Department of Oversight, whose inspectors overlooked serious failings in other supervisory bodies, as a serious oversight.]])
+   },
+   --[[
+      Human interest.
+   --]]
+}
 
 articles["Independent"] = {}
 articles["FLF"] = {}
 articles["Proteron"] = {}
-articles["Za'lek"] = {}
 articles["Thurion"] = {}
 
 -- Return an economy article based on the given commodity, planet object, and number of credits.
