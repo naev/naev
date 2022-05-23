@@ -154,6 +154,7 @@ news_t* luaL_validnews( lua_State *L, int ind )
  * @usage news.add(faction,title,body,[date_to_rm, [date]])
  *
  * @usage s = news.add( "Empire", "Hello world!", "The Empire wishes to say hello!", 0 ) -- Adds an Empire specific article, with date 0.
+ * @usage s = news.add( { { faction = "Empire", title = "Hello World!", body = "The Empire wishes to say hello!" } } ) -- Can also be passed as tables
  *
  *    @luatparam Faction|string faction of the article, "Generic" for non-factional
  *    @luatparam string title Title of the article
@@ -167,13 +168,13 @@ news_t* luaL_validnews( lua_State *L, int ind )
 int newsL_add( lua_State *L )
 {
    news_t *n_article;
-   const char *title, *content, *faction;
+   const char *title, *body, *faction;
    ntime_t date, date_to_rm;
    int priority;
 
    n_article = NULL;
    title   = NULL;
-   content = NULL;
+   body = NULL;
    faction = NULL;
    priority = 5;
 
@@ -188,7 +189,7 @@ int newsL_add( lua_State *L )
       while (lua_next(L, -2)) {
          /* traverse sub table */
          if (lua_istable(L, -1)) {
-            faction  = title = content = NULL;
+            faction  = title = body = NULL;
             priority    = 5;
             date        = ntime_get();
             date_to_rm  = NEWS_FOREVER;
@@ -203,9 +204,9 @@ int newsL_add( lua_State *L )
                title = luaL_checkstring(L,-1);
             lua_pop(L,1);
 
-            lua_getfield( L, -1, "content" );
+            lua_getfield( L, -1, "body" );
             if (!lua_isnil(L,-1))
-               content = luaL_checkstring(L,-1);
+               body = luaL_checkstring(L,-1);
             lua_pop(L,1);
 
             lua_getfield( L, -1, "date" );
@@ -231,14 +232,14 @@ int newsL_add( lua_State *L )
                priority = luaL_checkinteger(L,-1);
             lua_pop(L,1);
 
-            if (title && content && faction)
-               news_add( title, content, faction, date, date_to_rm, priority );
+            if (title && body && faction)
+               news_add( title, body, faction, date, date_to_rm, priority );
             else
                WARN(_("Bad arguments"));
 
             faction = NULL;
             title = NULL;
-            content = NULL;
+            body = NULL;
 
             date = ntime_get();
             date_to_rm = NEWS_FOREVER;
@@ -265,7 +266,7 @@ int newsL_add( lua_State *L )
 
    faction = luaL_checkstring(L, 1);
    title   = luaL_checkstring(L, 2);
-   content = luaL_checkstring(L, 3);
+   body = luaL_checkstring(L, 3);
    priority = luaL_optinteger(L, 6, 5);
 
    /* Get date and date to remove, or leave at defaults. */
@@ -282,8 +283,8 @@ int newsL_add( lua_State *L )
          date = luaL_checklong(L, 5);
    }
 
-   if (title && content && faction)
-      n_article = news_add( title, content, faction, date, date_to_rm, priority );
+   if (title && body && faction)
+      n_article = news_add( title, body, faction, date, date_to_rm, priority );
    else
       NLUA_ERROR(L,_("Bad arguments"));
 
