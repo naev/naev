@@ -11,6 +11,7 @@
 local pir = require "common.pirate"
 local fmt = require "format"
 local lmisn = require "lmisn"
+local lf = require "love.filesystem"
 
 -- luacheck: globals land (Hook funtions passed by name)
 
@@ -28,6 +29,7 @@ local override_list = {
 }
 
 local header_table = {}
+local greeting_table = {}
 
 header_table["Generic"]    = _("We bring you the latest news in the universe.")
 header_table["Independent"]= _("Welcome to Universal News Feed.")
@@ -39,57 +41,49 @@ header_table["Sirius"]     = _("Sirius News Reel. Words of the Sirichana for all
 header_table["FLF"]        = _("The word of the Free Resistance.")
 header_table["Frontier"]   = _("News from the Frontier Alliance.")
 header_table["Proteron"]   = _("Word from the Proteron state.")
-header_table["Za'lek"]     = _("Scientific, Socioeconomic, and Sundry Events")
 header_table["Soromid"]    = _("The voice of the future.")
 header_table["Thurion"]    = _("Data Relay Network")
 
-local greet_table = {}
-
-greet_table["Generic"] =  {""}
-greet_table["Independent"] = {
+greeting_table["Generic"] =  {""}
+greeting_table["Independent"] = {
    _("Interesting events from around the universe."),
    _("Fair and unbiased news."),
    _("All the headlines all the time."),
 }
-greet_table["Empire"] = {
+greeting_table["Empire"] = {
    _("Fresh news from around the Empire."),
    _("Remembering the Incident."),
    _("Keeping you informed."),
 }
-greet_table["Dvaered"] = {
+greeting_table["Dvaered"] = {
    _("Short and to the point news."),
    _("All that happens. In simple words. So you can understand."),
    _("Simple news for busy people."),
 }
-greet_table["Goddard"] = {
+greeting_table["Goddard"] = {
    _("We bring you the news from around the Empire."),
 }
-greet_table["Pirate"] = {
+greeting_table["Pirate"] = {
    _("News that matters."),
    _("Adopt a cat today!"),
    _("Laughing at the Emperor."),
    _("On top of the world."),
    _("Piracy has never been better."),
 }
-greet_table["FLF"] = {""}
-greet_table["Frontier"] = {
+greeting_table["FLF"] = {""}
+greeting_table["Frontier"] = {
    _("News you can trust."),
 }
-greet_table["Sirius"] = {
+greeting_table["Sirius"] = {
    _("Stay faithful."),
    _("Sirichana watches and guides you."),
 }
-greet_table["Proteron"] = {""}
-greet_table["Za'lek"] = {
-   _("Information by optimization."),
-   _("Statistically significant news."),
-   _("Peer reviewed news."),
-}
-greet_table["Soromid"] = {
+greeting_table["Proteron"] = {""}
+greeting_table["Soromid"] = {
    _("Genetically tailoured for you."),
    _("Naturally selected news."),
 }
-greet_table["Thurion"] = {""}
+greeting_table["Thurion"] = {""}
 
 
 local articles = {}
@@ -385,52 +379,6 @@ articles["Empire"] = {
       desc = _([[The Emperor has scheduled a new monument to be constructed on Emperor's Fist in honour of all those dead in the Incident.]])
    },
 }
-articles["Za'lek"] = {
-   --[[
-      Science and technology
-   --]]
-   {
-      tag = N_([[Drone Malfunctions at Record High]]),
-      desc = _([[Recent production models of drones have reached a new high of malfunctions per cycle. Za'lek fabrication leader points a finger to inconsistent Riemann metrics as a likely cause.]]),
-   },
-   {
-      tag = N_([[New Funding Call for Antimatter Research]]),
-      desc = _([[The Ruadan Research Bureau has issued a new call for antimatter research funding. The highly sought funding had a 0.2% acceptance rate last cycle and is expected to become even more competitive due to new research quality metrics.]]),
-   },
-   {
-      tag = N_([[Breakthrough in Spectral Lattice Crystal Amplifiers]]),
-      desc = _([[The PRP-3 Advanced Materials Laboratory presented an important advance in crystal amplifiers which has large potential in beam stabilization and active capacitors.]]),
-   },
-   {
-      tag = N_([[P versus NP Proof Proven False]]),
-      desc = _([[The highly anticipated 5,928 page P versus NP proof of Prof. Picazzo was proven false when a typo was found in Theorem 238.87 by a team of post-doctoral researchers.]]),
-   },
-   --[[
-      Business
-   --]]
-   {
-      tag = N_([[New Startup to Harness Power of Nebula]]),
-      desc = _([[A new local startup at Stein has claimed they have found a way to stabilizer power generators in volatile nebula. They are seeking to secure funding to begin experiments this cycle. Skeptics point out that this contradicts Yang-Mills theory.]]),
-   },
-   --[[
-      Politics
-   --]]
-   {
-      tag = N_([[Za'lek Leadership Committee Breaks Record Length]]),
-      desc = _([[Surpassing the previous record of 3.198 periods of uninterrupted deliberations, the Za'lek Leadership Committee was called to a stop when too many research leaders had to be taken to hospitals due to sleep deprivation and starvation.]]),
-   },
-   --[[
-      Human interest.
-   --]]
-   {
-      tag = N_([[Altercation at Conference on Philosophy and Ethics]]),
-      desc = _([[A large fight broke out when Prof. Li was presenting her new theory on quantum dualism. Dualists and materialists used chairs as improvised weapons until riot police were able to disperse the scene. General Chair Picazzo boasted it was the least violent conference up to date with only 17 hospitalized.]]),
-   },
-   {
-      tag = N_([[Za'lek Citizen Arrested]]),
-      desc = _([[Long renowned scientist arrested for using an unauthorized nuclear device to make breakfast toast. A three headed cat attained from perpetrator's apartment and sent for further studies.]]),
-   },
-}
 
 articles["Frontier"] = {
    --[[
@@ -502,6 +450,29 @@ local econ_articles = {
       desc = _([[A child no more than five cycles old has started commodity trading early, buying 1 tonne of {cargo}. A native of {pnt}, she explained that she has a keen interest in the economy and wishes to be a space trader some day. "I bought it for {credits}, but it goes up and down, so if you time it right, you can make more money! My mom is a trader too and I want to be just like her."]])
    },
 }
+
+-- Appends a table to a destination table
+local function merger( dest, src, key )
+   if not src then return end
+
+   if not dest[key] then
+      dest[key] = {}
+   end
+
+   local destt = dest[key]
+   for k,v in ipairs(src) do
+      table.insert( destt, v )
+   end
+end
+
+-- Try to load all the modular news files
+for k,v in ipairs(lf.enumerate("events/news")) do
+   local key, head, greet, art = require( "events.news."..string.gsub(v,".lua","") )()
+   merger( header_table, head, key )
+   merger( greeting_table, greet, key )
+   merger( articles, art, key )
+end
+
 -- Return an economy article based on the given commodity, planet object, and number of credits.
 local function get_econ_article( cargo, pnt, credits )
 
@@ -552,7 +523,8 @@ function add_header( my_faction )
 
    local cur_t = time.get()
    local header = header_table[my_faction]
-   local desc = greet_table[my_faction][ rnd.rnd( 1, #greet_table[my_faction] ) ]
+   if type(header)=="table" then header = header[ rnd.rnd(1,#header) ] end
+   local desc = greeting_table[my_faction][ rnd.rnd( 1, #greeting_table[my_faction] ) ]
    local a = news.add( my_faction, header, desc, cur_t + time.create( 0, 0, 1 ), 0, -1 ) -- Highest priority
    a:bind( "header" )
 end
