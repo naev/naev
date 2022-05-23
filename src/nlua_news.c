@@ -167,12 +167,11 @@ news_t* luaL_validnews( lua_State *L, int ind )
  */
 int newsL_add( lua_State *L )
 {
-   news_t *n_article;
+   LuaNews_t n_article;
    const char *title, *body, *faction;
    ntime_t date, date_to_rm;
    int priority;
 
-   n_article = NULL;
    title   = NULL;
    body = NULL;
    faction = NULL;
@@ -233,7 +232,7 @@ int newsL_add( lua_State *L )
             lua_pop(L,1);
 
             if (title && body && faction)
-               news_add( title, body, faction, date, date_to_rm, priority );
+               news_add( title, body, faction, NULL, date, date_to_rm, priority );
             else
                WARN(_("Bad arguments"));
 
@@ -284,11 +283,11 @@ int newsL_add( lua_State *L )
    }
 
    if (title && body && faction)
-      n_article = news_add( title, body, faction, date, date_to_rm, priority );
+      n_article = news_add( title, body, faction, NULL, date, date_to_rm, priority );
    else
       NLUA_ERROR(L,_("Bad arguments"));
 
-   lua_pushnews( L, n_article->id );
+   lua_pushnews( L, n_article );
 
    /* If we're landed, we should regenerate the news buffer. */
    if (landed) {
@@ -465,43 +464,32 @@ int newsL_date( lua_State *L )
  */
 int newsL_bind( lua_State *L )
 {
-   LuaNews_t *a;
    news_t *article_ptr;
-   char *tag;
-
-   a = NULL;
-   tag = NULL;
+   LuaNews_t *a = NULL;
 
    if (lua_istable(L, 1)) {
-      if (!lua_isstring(L, 2)) {
-         WARN(_("\n2nd argument is invalid, use a string"));
-         return 1;
-      }
-
-      tag = strdup(lua_tostring(L, 2));
+      const char *tag = luaL_checkstring(L, 2);
       lua_pop(L, 1);
       lua_pushnil(L);
 
       /* traverse table */
       while (lua_next(L, -2)) {
          if (!(a = luaL_checknews(L, -1))) {
-            free( tag );
             WARN(_("Bad argument to news.date(), must be article or a table of "
                  "articles"));
             return 0;
          }
          article_ptr = news_get( *a );
          if (article_ptr == NULL) {
-            free( tag );
-            WARN(_("\nArticle not valid"));
+            WARN(_("Article not valid"));
             return 0;
          }
          article_ptr->tag = strdup(tag);
          lua_pop(L, 1);
       }
-      free( tag );
    }
    else {
+      const char *tag;
       if (!(a = luaL_checknews(L, 1))) {
          WARN(_("Bad argument to news.date(), must be article or a table of "
               "articles"));
@@ -509,17 +497,12 @@ int newsL_bind( lua_State *L )
       }
       article_ptr = news_get(*a);
       if (article_ptr == NULL) {
-         WARN(_("\nArticle not valid"));
+         WARN(_("Article not valid"));
          return 0;
       }
-      if (!lua_isstring(L, 2)) {
-         WARN(_("\n2nd argument is invalid, use a string"));
-         return 1;
-      }
 
-      tag = strdup(lua_tostring(L, 2));
-
-      article_ptr->tag = tag;
+      tag = luaL_checkstring(L, 2);
+      article_ptr->tag = strdup( tag );
    }
    return 1;
 }

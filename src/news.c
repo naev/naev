@@ -91,13 +91,15 @@ static int news_cmp( const void *p1, const void *p2 )
  *    @param title   the article title
  *    @param content the article content
  *    @param faction the article faction
+ *    @param tag Tag to set.
  *    @param date date to put
  *    @param date_to_rm date to remove the article
  *    @param priority Priority to use.
- * @return pointer to new article
+ * @return ID of newly added news.
  */
-news_t* news_add( const char* title, const char* content,
-      const char* faction, ntime_t date, ntime_t date_to_rm, int priority )
+int news_add( const char *title, const char *content,
+      const char *faction, const char *tag,
+      ntime_t date, ntime_t date_to_rm, int priority )
 {
    news_t *n;
    int id = ++next_id;
@@ -110,6 +112,8 @@ news_t* news_add( const char* title, const char* content,
    n->title   = strdup( title );
    n->desc    = strdup( content );
    n->faction = strdup( faction );
+   if (tag != NULL)
+      n->tag = strdup( tag );
    n->date    = date;
    n->date_to_rm = date_to_rm;
    n->priority = priority;
@@ -117,7 +121,7 @@ news_t* news_add( const char* title, const char* content,
    /* Sort it! */
    qsort( news_list, array_size(news_list), sizeof(news_t), news_cmp );
 
-   return news_get( id );
+   return id;
 }
 
 /**
@@ -506,8 +510,7 @@ xmlr_attr_strd(node, s, elem); \
 if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup; }
 
    do {
-      news_t *n_article;
-      char *title, *desc, *faction, *buff;
+      char *title, *desc, *faction, *tag, *buff;
       int priority;
       ntime_t date, date_to_rm;
 
@@ -540,12 +543,15 @@ if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup
       priority = (buff==NULL) ? 5 : atoi(buff);
       free(buff);
 
+      /* Read optional tag. */
+      tag = NULL;
+      xmlr_attr_strd( node, "tag", tag );
+
       largestID = MAX(largestID, next_id + 1);
 
       /* make the article*/
-      n_article = news_add( title, desc, faction, date, date_to_rm, priority );
-      /* Read optional tag. */
-      xmlr_attr_strd( node, "tag", n_article->tag );
+      news_add( title, desc, faction, tag, date, date_to_rm, priority );
+      free( tag );
 
 cleanup:
       free(title);
