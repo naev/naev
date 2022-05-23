@@ -536,7 +536,7 @@ function add_article( my_faction )
    end
 
    local exp = time.get() + time.create( 0, 10, 5000 * rnd.sigma() )
-   local a = news.add( my_faction, title, desc, exp )
+   local a = news.add( my_faction, title, desc, exp, 6 ) -- Slightly lower priority than default
    a:bind( tag )
    var.push( "news_last_article", time.get():tonumber() )
 end
@@ -567,7 +567,7 @@ function add_econ_article ()
          local commod = commchoices[ rnd.rnd( 1, #commchoices ) ]
          local price = commod:priceAtTime( p, pd )
          local title, desc = get_econ_article( commod, p, price )
-         news.add( "Generic", title, desc, exp, pd )
+         news.add( "Generic", title, desc, exp, pd, 6 ) -- Slightly lower priority
          p:recordCommodityPriceAtTime( pd )
          var.push( "news_last_econ_article", time.get():tonumber() )
       end
