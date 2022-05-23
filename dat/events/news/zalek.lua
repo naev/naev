@@ -57,11 +57,11 @@ local articles = {
    --]]
    {
       head = N_([[Altercation at Conference on Philosophy and Ethics]]),
-      body = _([[A large fight broke out when Prof. Li was presenting her new theory on quantum dualism. Dualists and materialists used chairs as improvised weapons until riot police were able to disperse the scene. General Chair Picazzo boasted it was the least violent conference up to date with only 17 hospitalized.]]),
+      body = _([[A large fight broke out when Prof. Li was presenting her new theory on quantum dualism. Dualists and materialists used chairs as improvised weapons until riot police were able to disperse the scene. General Chair de la Figueira boasted it was the least violent conference up to date with only 17 hospitalized.]]),
    },
    {
       head = N_([[Za'lek Citizen Arrested]]),
-      body = _([[A Long renowned scientist arrested for using an unauthorized nuclear device to make toast. A three headed cat attained from perpetrator's appartment and sent for further studies.]]),
+      body = _([[A long renowned scientist arrested for using an unauthorized nuclear device to make toast. A three headed cat attained from perpetrator's apartment and sent for further studies.]]),
    },
 }
 
