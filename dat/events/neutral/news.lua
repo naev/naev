@@ -426,9 +426,17 @@ articles["Za'lek"] = {
       tag = N_([[Breakthrough in Spectral Lattice Crystal Amplifiers]]),
       desc = _([[The PRP-3 Advanced Materials Laboratory presented an important advance in crystal amplifiers which has large potential in beam stabilization and active capacitors.]]),
    },
+   {
+      tag = N_([[P versus NP Proof Proven False]]),
+      desc = _([[The highly anticipated 5,928 page P versus NP proof of Prof. Picazzo was proven false when a typo was found in Theorem 238.87 by a team of post-doctoral researchers.]]),
+   },
    --[[
       Business
    --]]
+   {
+      tag = N_([[New Startup to Harness Power of Nebula]]),
+      desc = _([[A new local startup at Stein has claimed they have found a way to stabilizer power generators in volatile nebula. They are seeking to secure funding to begin experiments this cycle. Skeptics point out that this contradicts Yang-Mills theory.]]),
+   },
    --[[
       Politics
    --]]
