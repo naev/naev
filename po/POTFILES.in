@@ -2332,10 +2332,16 @@ dat/events/neutral/travelling_merchant.lua
 dat/events/news.lua
 dat/events/news/dvaered.lua
 dat/events/news/empire.lua
+dat/events/news/flf.lua
+dat/events/news/frontier.lua
 dat/events/news/generic.lua
 dat/events/news/goddard.lua
 dat/events/news/independent.lua
 dat/events/news/pirate.lua
+dat/events/news/proteron.lua
+dat/events/news/sirius.lua
+dat/events/news/soromid.lua
+dat/events/news/thurion.lua
 dat/events/news/zalek.lua
 dat/events/pirate/fake_transponder.lua
 dat/events/pirate/shipcheck.lua
