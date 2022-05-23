@@ -2344,6 +2344,7 @@ dat/events/news/sirius.lua
 dat/events/news/soromid.lua
 dat/events/news/thurion.lua
 dat/events/news/zalek.lua
+dat/events/news/zalek_campaign.lua
 dat/events/pirate/fake_transponder.lua
 dat/events/pirate/shipcheck.lua
 dat/events/proteron/blockade.lua
