@@ -323,9 +323,8 @@ int newsL_rm( lua_State *L )
    /* If we're landed, we should regenerate the news buffer. */
    if (landed) {
       generate_news(land_spob->presence.faction);
-      if (land_loaded) {
+      if (land_loaded)
          bar_regen();
-      }
    }
 
    return 1;
@@ -352,46 +351,37 @@ int newsL_rm( lua_State *L )
  */
 int newsL_get( lua_State *L )
 {
-   LuaNews_t Larticle;
-   ntime_t date;
-   char *characteristic;
-   int print_all;
-
-   date  = -1;
-   characteristic = NULL;
-   print_all = 0;
+   ntime_t date  = -1;
+   const char *characteristic = NULL;
+   int print_all = 0;
 
    if (lua_isnoneornil(L, 1)) /* Case no argument */
       print_all = 1;
    else if (lua_isnumber(L, 1))
       date = (ntime_t)lua_tonumber(L, 1);
    else if (lua_isstring(L, 1))
-      characteristic = strdup(lua_tostring(L, 1));
+      characteristic = lua_tostring(L, 1);
    else
       NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
 
    /* Now put all the matching articles in a table. */
    lua_newtable(L);
    for (int i=0; i<array_size(news_list); i++) {
-      news_t *n = &news_list[i];;
+      news_t *n = &news_list[i];
 
-      if ((n->title == NULL) || (n->desc == NULL)
-            || (n->faction == NULL))
+      if ((n->title == NULL) || (n->desc == NULL) || (n->faction == NULL))
          continue;
 
       if (print_all || date == n->date
            || (characteristic
-                && ( strcmp( n->title, characteristic ) == 0
-                     || strcmp( n->desc, characteristic ) == 0
-                     || strcmp( n->faction, characteristic ) == 0
-                     || ( n->tag != NULL && strcmp( n->tag, characteristic ) == 0 ) ) ) ) {
-         Larticle = n->id;
-         lua_pushnews(L, Larticle); /* value */
+                && ((strcmp( n->title, characteristic ) == 0)
+                     || (strcmp( n->desc, characteristic ) == 0)
+                     || (strcmp( n->faction, characteristic ) == 0)
+                     || (n->tag != NULL && strcmp( n->tag, characteristic ) == 0 )))) {
+         lua_pushnews(L, n->id); /* value */
          lua_rawseti(L, -2, i+1);
       }
    }
-
-   free(characteristic);
 
    return 1;
 }
