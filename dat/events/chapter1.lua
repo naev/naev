@@ -48,7 +48,7 @@ function create ()
    -- Compute some sort of progress value
    local progress = traded_total * 100 / 2000 -- Would need 2000 to trigger the change by this itself
    for k,m in ipairs(player.misnDoneList()) do
-      progress = progress + 100 / 25
+      progress = progress + 100 / 25 -- Needs 25 missions to complete by itself
    end
    if has_license then
       progress = progress + 50
@@ -616,6 +616,16 @@ function cutscene_cleanup ()
    local pp = player.pilot()
    pp:setNoJump(false)
    pp:setNoLand(false)
+
+   -- Add news
+   news.add{
+   {
+      faction = "Generic",
+      title = _("Hypergate Network Goes Live"),
+      body = _([[In separate press releases, the Great Houses and Soromid have announced the activation of a hypergate network allowing for intersystem long-range travel. Many people flocked to try the new system, causing congestions with one altercation leading to the arrest of dozens of people.]]),
+      date_to_rm = time.get() + time.creat(0, 30, 0),
+   },
+   }
 
    -- Have ship ai talk when landed
    hook.land("land")
