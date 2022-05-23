@@ -98,6 +98,9 @@ typedef struct Faction_ {
    /* Flags. */
    unsigned int flags; /**< Flags affecting the faction. */
    unsigned int oflags; /**< Original flags (for when new game is started). */
+
+   /* Tags. */
+   char **tags; /**< array.h: List of tags the faction has. */
 } Faction;
 
 static Faction* faction_stack = NULL; /**< Faction stack. */
@@ -391,6 +394,21 @@ const char* faction_default_ai( int f )
       return NULL;
    }
    return faction_stack[f].ai;
+}
+
+/**
+ * @brief Gets the tags the faction has.
+ *
+ *    @param f Faction ID.
+ *    @return The tagss the faction has (array.h).
+ */
+const char** faction_tags( int f )
+{
+   if (!faction_isFaction(f)) {
+      WARN(_("Faction id '%d' is invalid."), f);
+      return NULL;
+   }
+   return (const char**) faction_stack[f].tags;
 }
 
 /**
@@ -1307,6 +1325,25 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
          continue;
       }
 
+      if (xml_isNode(node, "tags")) {
+         xmlNodePtr cur = node->children;
+         if (temp->tags != NULL)
+            WARN(_("Faction '%s' has duplicate '%s' node!"), temp->name, "tags");
+         else
+            temp->tags = array_create( char* );
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur, "tag")) {
+               char *tmp = xml_get(cur);
+               if (tmp != NULL)
+                  array_push_back( &temp->tags, strdup(tmp) );
+               continue;
+            }
+            WARN(_("Faction '%s' has unknown node in tags '%s'."), temp->name, cur->name );
+         } while (xml_nextNode(cur));
+         continue;
+      }
+
 #if DEBUGGING
       /* Avoid warnings. */
       if (xml_isNode(node,"allies") || xml_isNode(node,"enemies") ||
@@ -1633,6 +1670,9 @@ static void faction_freeOne( Faction *f )
    nlua_freeEnv( f->env );
    if (!faction_isFlag(f, FACTION_DYNAMIC))
       nlua_freeEnv( f->equip_env );
+   for (int i=0; i<array_size(f->tags); i++)
+      free(f->tags[i]);
+   array_free(f->tags);
 }
 
 /**
