@@ -173,12 +173,21 @@ function add_article( my_faction )
       return
    end
 
-   local i = rnd.rnd( 1, #alst )
-   local tag   = alst[i]["tag"]
-   local title = alst[i]["title"] or _(tag)
-   local desc  = alst[i]["desc"]
+   local elem  = alst[ rnd.rnd( 1, #alst ) ]
+   if elem.test and not elem.test() then
+      -- TODO test all candidates and build a table to random sample from
+      -- or just randomly sample n times
+      return -- Skip for now
+   end
+   local tag   = elem.tag
+   local title = elem.title or _(tag)
+   local desc  = elem.desc
+   local priority = elem.priority or 6 -- Slightly lower priority than default
    if type(desc)=="function" then
       desc = desc()
+      if desc == nil then
+         return -- Skip
+      end
    end
 
    if #news.get( tag ) > 0 then
@@ -186,7 +195,7 @@ function add_article( my_faction )
    end
 
    local exp = time.get() + time.create( 0, 10, 5000 * rnd.sigma() )
-   local a = news.add( my_faction, title, desc, exp, nil, 6 ) -- Slightly lower priority than default
+   local a = news.add( my_faction, title, desc, exp, nil, priority )
    a:bind( tag )
    var.push( "news_last_article", time.get():tonumber() )
 end

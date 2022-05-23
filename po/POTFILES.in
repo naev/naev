@@ -2336,6 +2336,7 @@ dat/events/news/flf.lua
 dat/events/news/frontier.lua
 dat/events/news/generic.lua
 dat/events/news/goddard.lua
+dat/events/news/hypergates.lua
 dat/events/news/independent.lua
 dat/events/news/pirate.lua
 dat/events/news/proteron.lua
