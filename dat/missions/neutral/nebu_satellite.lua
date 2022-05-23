@@ -36,9 +36,10 @@ local launchSatellite -- Forward-declared functions
 
 local articles = {
    {
-      "Generic",
-      _("Scientists Launch Research Probe Into Nebula"),
-      _("A group of scientists successfully launched a science probe into the Nebula. The probe was specifically designed to be resistant to the corrosive environment of the Nebula and is supposed to find new clues about the nature of the gas and where it's from."),
+      faction = "Generic",
+      title = _("Scientists Launch Research Probe Into Nebula"),
+      content = _("A group of scientists successfully launched a science probe into the Nebula. The probe was specifically designed to be resistant to the corrosive environment of the Nebula and is supposed to find new clues about the nature of the gas and where it's from."),
+      priority = 4,
    }
 }
 
@@ -123,13 +124,13 @@ end
    Launch process
 --]]
 function beginLaunch ()
-   player.msg( _("Preparing to launch space probe...") )
+   player.msg( _("Preparing to launch space probe…") )
    misn.osdDestroy()
    hook.timer( 3.0, "beginCountdown" )
 end
 function beginCountdown ()
    mem.countdown = 5
-   player.msg( _("Launch in 5...") )
+   player.msg( _("Launch in 5…") )
    hook.timer( 1.0, "countLaunch" )
 end
 function countLaunch ()
@@ -137,12 +138,12 @@ function countLaunch ()
    if mem.countdown <= 0 then
       launchSatellite()
    else
-      player.msg( string.format(_("%d..."), mem.countdown) )
+      player.msg( string.format(_("%d…"), mem.countdown) )
       hook.timer( 1.0, "countLaunch" )
    end
 end
 function launchSatellite ()
-   articles[1][4] = time.get()+time.create(0,3,0)
+   articles[1].date_to_rm = time.get()+time.create(0,3,0)
    news.add( articles )
 
    mem.misn_stage = 1
