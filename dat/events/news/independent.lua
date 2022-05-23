@@ -1,4 +1,4 @@
-local header = {
+local head = {
    _("Welcome to Universal News Feed.")
 }
 local greeting = {
@@ -11,5 +11,5 @@ local articles = {
 }
 
 return function ()
-   return "Independent", header, greeting, articles
+   return "Independent", head, greeting, articles
 end

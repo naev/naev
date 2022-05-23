@@ -1,4 +1,4 @@
-local header = {
+local head = {
    _("The voice of the future."),
 }
 local greeting = {
@@ -50,5 +50,5 @@ local articles = {
 }
 
 return function ()
-   return "Soromid", header, greeting, articles
+   return "Soromid", head, greeting, articles
 end

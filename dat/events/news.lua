@@ -8,7 +8,6 @@
 --[[
    Event for creating news
 --]]
-local pir = require "common.pirate"
 local fmt = require "format"
 local lmisn = require "lmisn"
 local lf = require "love.filesystem"
@@ -34,40 +33,40 @@ local articles = {}
 
 local econ_articles = {
    {
-      title = _("Unfortunate Merchant Goes Bankrupt"),
-      desc = _([[A merchant was forced into bankruptcy due to a badly timed trade of {cargo} on {pnt}. "I thought {credits} per tonne was a good deal, but it turns out I should have waited," the merchant said.]])
+      head = _("Unfortunate Merchant Goes Bankrupt"),
+      body = _([[A merchant was forced into bankruptcy due to a badly timed trade of {cargo} on {pnt}. "I thought {credits} per tonne was a good deal, but it turns out I should have waited," the merchant said.]])
    },
    {
-      title = _("Shipping Company Goes Out of Business"),
-      desc = _([[A small shipping business failed just this decaperiod. While it was already failing, what finally put the company under was a poorly-timed trade of {cargo} on {pnt} for {credits} per tonne. "It was poor executive decision," one analyst asserts. "Patience is key when trading, and it's clear that the owner of this company didn't have enough of that."]])
+      head = _("Shipping Company Goes Out of Business"),
+      body = _([[A small shipping business failed just this decaperiod. While it was already failing, what finally put the company under was a poorly-timed trade of {cargo} on {pnt} for {credits} per tonne. "It was poor executive decision," one analyst asserts. "Patience is key when trading, and it's clear that the owner of this company didn't have enough of that."]])
    },
    {
-      title = _("Interview with an Economist"),
-      desc = _([[One of the galaxy's foremost experts on economics gives an interview explaining our modern economy. "We actually have a pretty good understanding of how the economy works. For example, we were able to predict what the price of {cargo} on {pnt} would reach very accurately; the actual price reached was {credits} per tonne, which we were only off by about 15%. Over time, we hope to lower that margin of error to as little as 2%."]])
+      head = _("Interview with an Economist"),
+      body = _([[One of the galaxy's foremost experts on economics gives an interview explaining our modern economy. "We actually have a pretty good understanding of how the economy works. For example, we were able to predict what the price of {cargo} on {pnt} would reach very accurately; the actual price reached was {credits} per tonne, which we were only off by about 15%. Over time, we hope to lower that margin of error to as little as 2%."]])
    },
    {
-      title = _("Economist Describes Sinusoidal Economic Theory"),
-      desc = _([[A little-known economist discusses a controversial economic theory. "When you look at the trends, it resembles a sine wave. For instance, the price of {cargo} on {pnt} is now {credits} per tonne, and it seems to return to that price with some regularity. We are working on developing a model to predict these curves more accurately." Other economists disagree, however, attributing these economists' results to chance.]])
+      head = _("Economist Describes Sinusoidal Economic Theory"),
+      body = _([[A little-known economist discusses a controversial economic theory. "When you look at the trends, it resembles a sine wave. For instance, the price of {cargo} on {pnt} is now {credits} per tonne, and it seems to return to that price with some regularity. We are working on developing a model to predict these curves more accurately." Other economists disagree, however, attributing these economists' results to chance.]])
    },
    {
-      title = _("Young Pilot Buys Their First Commodity"),
-      desc = _([[A young pilot has bought some {cargo} as a way of breaking into the freelance piloting business. Born and raised on {pnt}, where they bought their first commodity, they spoke with enthusiasm for the new career. "You know, it's real exciting! Even on my home planet the price of {credits} per tonne isn't static, but when you look all around, there's so much price variation, so much potential for profit! I'm excited to finally get started."]])
+      head = _("Young Pilot Buys Their First Commodity"),
+      body = _([[A young pilot has bought some {cargo} as a way of breaking into the freelance piloting business. Born and raised on {pnt}, where they bought their first commodity, they spoke with enthusiasm for the new career. "You know, it's real exciting! Even on my home planet the price of {credits} per tonne isn't static, but when you look all around, there's so much price variation, so much potential for profit! I'm excited to finally get started."]])
    },
    {
-      title = _("Corporate Scandal Rips Through the Galaxy"),
-      desc = _([[Economists are attributing the price of {cargo} on {pnt} to a scandal involving WarpTron Industries. Debates have ensued regarding whether or not the price, seen to be {credits} per tonne, will go up, down, or remain the same this time.]])
+      head = _("Corporate Scandal Rips Through the Galaxy"),
+      body = _([[Economists are attributing the price of {cargo} on {pnt} to a scandal involving WarpTron Industries. Debates have ensued regarding whether or not the price, seen to be {credits} per tonne, will go up, down, or remain the same this time.]])
    },
    {
-      title = _("Commodity Trading Likened to Gambling"),
-      desc = _([[In a controversial statement, one activist has likened commodity trading to gambling. "It's legalized gambling, plain and simple! Right now the price of {cargo} on {pnt} is {credits} per tonne, for example, but everyone knows the price fluctuates. Tomorrow it could be lower, or it could be higher. Who knows? Frankly, it is my firm opinion that this 'commodity trading' is self-destructive and needs to stop."]])
+      head = _("Commodity Trading Likened to Gambling"),
+      body = _([[In a controversial statement, one activist has likened commodity trading to gambling. "It's legalized gambling, plain and simple! Right now the price of {cargo} on {pnt} is {credits} per tonne, for example, but everyone knows the price fluctuates. Tomorrow it could be lower, or it could be higher. Who knows? Frankly, it is my firm opinion that this 'commodity trading' is self-destructive and needs to stop."]])
    },
    {
-      title = _("Leadership Decision Disrupts Prices"),
-      desc = _([[The price of {cargo} was jeopardized on {pnt} today when the local government passed a controversial law, bringing it to {credits} per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.]])
+      head = _("Leadership Decision Disrupts Prices"),
+      body = _([[The price of {cargo} was jeopardized on {pnt} today when the local government passed a controversial law, bringing it to {credits} per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.]])
    },
    {
-      title = _("Five Cycle Old Child Starts Commodity Trading"),
-      desc = _([[A child no more than five cycles old has started commodity trading early, buying 1 tonne of {cargo}. A native of {pnt}, she explained that she has a keen interest in the economy and wishes to be a space trader some day. "I bought it for {credits}, but it goes up and down, so if you time it right, you can make more money! My mom is a trader too and I want to be just like her."]])
+      head = _("Five Cycle Old Child Starts Commodity Trading"),
+      body = _([[A child no more than five cycles old has started commodity trading early, buying 1 tonne of {cargo}. A native of {pnt}, she explained that she has a keen interest in the economy and wishes to be a space trader some day. "I bought it for {credits}, but it goes up and down, so if you time it right, you can make more money! My mom is a trader too and I want to be just like her."]])
    },
 }
 
@@ -103,10 +102,10 @@ end
 local function get_econ_article( cargo, pnt, credits )
 
    local i = rnd.rnd( 1, #econ_articles )
-   local title = econ_articles[i]["title"]
-   local desc = fmt.f( econ_articles[i]["desc"], {cargo=cargo, pnt=pnt, credits=fmt.credits(credits)} )
+   local head = econ_articles[i].head
+   local body = fmt.f( econ_articles[i].body, {cargo=cargo, pnt=pnt, credits=fmt.credits(credits)} )
 
-   return title, desc
+   return head, body
 end
 
 function create()
@@ -131,7 +130,9 @@ function land ()
 
    add_header( my_faction )
    add_article( my_faction )
-   add_article( "Generic" )
+   if faction.get(my_faction):tags().generic then
+      add_article( "Generic" )
+   end
    add_econ_article()
 end
 
@@ -148,10 +149,10 @@ function add_header( my_faction )
    end
 
    local cur_t = time.get()
-   local header = header_table[my_faction]
-   if type(header)=="table" then header = header[ rnd.rnd(1,#header) ] end
-   local desc = greeting_table[my_faction][ rnd.rnd( 1, #greeting_table[my_faction] ) ]
-   local a = news.add( my_faction, header, desc, cur_t + time.create( 0, 0, 1 ), 0, -1 ) -- Highest priority
+   local head = header_table[my_faction]
+   if type(head)=="table" then head = head[ rnd.rnd(1,#head) ] end
+   local body = greeting_table[my_faction][ rnd.rnd( 1, #greeting_table[my_faction] ) ]
+   local a = news.add( my_faction, head, body, cur_t + time.create( 0, 0, 1 ), 0, -1 ) -- Highest priority
    a:bind( "header" )
 end
 
@@ -180,12 +181,12 @@ function add_article( my_faction )
       return -- Skip for now
    end
    local tag   = elem.tag
-   local title = elem.title or _(tag)
-   local desc  = elem.desc
+   local head = elem.head or _(tag)
+   local body  = elem.body
    local priority = elem.priority or 6 -- Slightly lower priority than default
-   if type(desc)=="function" then
-      desc = desc()
-      if desc == nil then
+   if type(body)=="function" then
+      body = body()
+      if body == nil then
          return -- Skip
       end
    end
@@ -195,7 +196,7 @@ function add_article( my_faction )
    end
 
    local exp = time.get() + time.create( 0, 10, 5000 * rnd.sigma() )
-   local a = news.add( my_faction, title, desc, exp, nil, priority )
+   local a = news.add( my_faction, head, body, exp, nil, priority )
    a:bind( tag )
    var.push( "news_last_article", time.get():tonumber() )
 end
@@ -210,9 +211,7 @@ function add_econ_article ()
       local planets = {}
       for i, s in ipairs( lmisn.getSysAtDistance( system.cur(), 2, 4 ) ) do
          for j, p in ipairs( s:spobs() ) do
-            if not pir.factionIsPirate( p:faction() )
-                  and p:faction() ~= faction.get("FLF")
-                  and #(p:commoditiesSold()) > 0 then
+            if p:faction():tags().generic and #(p:commoditiesSold()) > 0 then
                planets[ #planets + 1 ] = p
             end
          end
@@ -225,8 +224,8 @@ function add_econ_article ()
          local commchoices = p:commoditiesSold()
          local commod = commchoices[ rnd.rnd( 1, #commchoices ) ]
          local price = commod:priceAtTime( p, pd )
-         local title, desc = get_econ_article( commod, p, price )
-         news.add( "Generic", title, desc, exp, pd, 6 ) -- Slightly lower priority
+         local head, body = get_econ_article( commod, p, price )
+         news.add( "Generic", head, body, exp, pd, 6 ) -- Slightly lower priority
          p:recordCommodityPriceAtTime( pd )
          var.push( "news_last_econ_article", time.get():tonumber() )
       end

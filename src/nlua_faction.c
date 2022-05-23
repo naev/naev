@@ -43,7 +43,8 @@ static int factionL_allies( lua_State *L );
 static int factionL_logo( lua_State *L );
 static int factionL_colour( lua_State *L );
 static int factionL_isknown( lua_State *L );
-static int factionL_setknown( lua_State *L );
+static int factionL_setKnown( lua_State *L );
+static int factionL_tags( lua_State *L );
 static int factionL_dynAdd( lua_State *L );
 static int factionL_dynAlly( lua_State *L );
 static int factionL_dynEnemy( lua_State *L );
@@ -68,7 +69,8 @@ static const luaL_Reg faction_methods[] = {
    { "logo", factionL_logo },
    { "colour", factionL_colour },
    { "known", factionL_isknown },
-   { "setKnown", factionL_setknown },
+   { "setKnown", factionL_setKnown },
+   { "tags", factionL_tags },
    { "dynAdd", factionL_dynAdd },
    { "dynAlly", factionL_dynAlly },
    { "dynEnemy", factionL_dynEnemy },
@@ -547,12 +549,33 @@ static int factionL_isknown( lua_State *L )
  *    @luatparam[opt=false] boolean b Whether or not to set as known.
  * @luafunc setKnown
  */
-static int factionL_setknown( lua_State *L )
+static int factionL_setKnown( lua_State *L )
 {
    int fac = luaL_validfaction(L, 1);
    int b   = lua_toboolean(L, 2);
    faction_setKnown( fac, b );
    return 0;
+}
+
+/**
+ * @brief Gets the tags a faction has.
+ *
+ * @usage for k,v in ipairs(f:tags()) do ... end
+ * @usage if f:tags().likes_cheese then ... end
+ *    @luatparam Faction f Faction to get tags of.
+ *    @luatreturn table A table containing all the tags of the faction.
+ * @luafunc tags
+ */
+static int factionL_tags( lua_State *L )
+{
+   int fac = luaL_validfaction(L, 1);
+   const char **tags = faction_tags( fac );
+   lua_newtable(L);
+   for (int i=0; i<array_size(tags); i++) {
+      lua_pushstring(L, tags[i]);
+      lua_rawseti(L,-2,i+1);
+   }
+   return 1;
 }
 
 /**

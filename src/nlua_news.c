@@ -198,7 +198,7 @@ int newsL_add( lua_State *L )
                faction = luaL_checkstring(L,-1);
             lua_pop(L,1);
 
-            lua_getfield( L, -1, "title" );
+            lua_getfield( L, -1, "head" );
             if (!lua_isnil(L,-1))
                title = luaL_checkstring(L,-1);
             lua_pop(L,1);

@@ -37,7 +37,7 @@ local launchSatellite -- Forward-declared functions
 local articles = {
    {
       faction = "Generic",
-      title = _("Scientists Launch Research Probe Into Nebula"),
+      head = _("Scientists Launch Research Probe Into Nebula"),
       body = _("A group of scientists successfully launched a science probe into the Nebula. The probe was specifically designed to be resistant to the corrosive environment of the Nebula and is supposed to find new clues about the nature of the gas and where it's from."),
       priority = 4,
    }

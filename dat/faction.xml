@@ -55,6 +55,9 @@
    <enemy>Black Lotus</enemy>
    <enemy>Collective</enemy>
   </enemies>
+  <tags>
+   <tag>generic</tag>
+  </tags>
  </faction>
  <faction>
   <name>Miner</name>
@@ -78,6 +81,9 @@
    <enemy>Raven Clan</enemy>
    <enemy>Black Lotus</enemy>
   </enemies>
+  <tags>
+   <tag>generic</tag>
+  </tags>
  </faction>
  <faction>
   <name>Raven Clan</name>
@@ -113,6 +119,9 @@
    <enemy>Traders Guild</enemy>
    <enemy>Za'lek</enemy>
   </enemies>
+  <tags>
+   <tag>pirate</tag>
+  </tags>
  </faction>
  <faction>
   <name>Wild Ones</name>
@@ -148,6 +157,9 @@
    <enemy>Traders Guild</enemy>
    <enemy>Za'lek</enemy>
   </enemies>
+  <tags>
+   <tag>pirate</tag>
+  </tags>
  </faction>
  <faction>
   <name>Black Lotus</name>
@@ -183,6 +195,9 @@
    <enemy>Traders Guild</enemy>
    <enemy>Za'lek</enemy>
   </enemies>
+  <tags>
+   <tag>pirate</tag>
+  </tags>
  </faction>
  <faction>
   <name>Dreamer Clan</name>
@@ -218,6 +233,9 @@
    <enemy>Traders Guild</enemy>
    <enemy>Za'lek</enemy>
   </enemies>
+  <tags>
+   <tag>pirate</tag>
+  </tags>
  </faction>
  <faction>
   <name>Pirate</name>
@@ -252,6 +270,9 @@
    <enemy>Traders Guild</enemy>
    <enemy>Za'lek</enemy>
   </enemies>
+  <tags>
+   <tag>pirate</tag>
+  </tags>
  </faction>
  <faction>
   <name>Marauder</name>
@@ -286,6 +307,9 @@
    <enemy>Traders Guild</enemy>
    <enemy>Za'lek</enemy>
   </enemies>
+  <tags>
+   <tag>pirate</tag>
+  </tags>
  </faction>
  <faction>
   <name>Empire</name>
@@ -313,6 +337,10 @@
   </enemies>
   <lane_length_per_presence>300</lane_length_per_presence>
   <lane_base_cost>50</lane_base_cost>
+  <tags>
+   <tag>greathouse</tag>
+   <tag>generic</tag>
+  </tags>
  </faction>
  <faction>
   <name>Proteron</name>
@@ -363,6 +391,9 @@
   </enemies>
   <lane_length_per_presence>400</lane_length_per_presence>
   <lane_base_cost>50</lane_base_cost>
+  <tags>
+   <tag>generic</tag>
+  </tags>
  </faction>
  <faction>
   <name>Traders Guild</name>
@@ -385,6 +416,9 @@
    <enemy>Black Lotus</enemy>
    <enemy>Collective</enemy>
   </enemies>
+  <tags>
+   <tag>generic</tag>
+  </tags>
  </faction>
  <faction>
   <name>Soromid</name>
@@ -410,6 +444,9 @@
   </enemies>
   <lane_length_per_presence>250</lane_length_per_presence>
   <lane_base_cost>40</lane_base_cost>
+  <tags>
+   <tag>generic</tag>
+  </tags>
  </faction>
  <faction>
   <name>Thurion</name>
@@ -495,6 +532,10 @@
   </enemies>
   <lane_length_per_presence>250</lane_length_per_presence>
   <lane_base_cost>40</lane_base_cost>
+  <tags>
+   <tag>greathouse</tag>
+   <tag>generic</tag>
+  </tags>
  </faction>
  <faction>
   <name>Za'lek</name>
@@ -522,6 +563,10 @@
   </enemies>
   <lane_length_per_presence>250</lane_length_per_presence>
   <lane_base_cost>40</lane_base_cost>
+  <tags>
+   <tag>greathouse</tag>
+   <tag>generic</tag>
+  </tags>
  </faction>
  <faction>
   <name>Sirius</name>
@@ -550,6 +595,10 @@
   </enemies>
   <lane_length_per_presence>200</lane_length_per_presence>
   <lane_base_cost>35</lane_base_cost>
+  <tags>
+   <tag>greathouse</tag>
+   <tag>generic</tag>
+  </tags>
  </faction>
  <faction>
   <name>Goddard</name>
@@ -577,6 +626,9 @@
   </enemies>
   <lane_length_per_presence>143</lane_length_per_presence>
   <lane_base_cost>0</lane_base_cost>
+  <tags>
+   <tag>generic</tag>
+  </tags>
  </faction>
  <faction>
   <name>Mercenary</name>
@@ -612,6 +664,9 @@
    <enemy>Shadow_pirates</enemy>
    <enemy>Rogue Four Winds</enemy>
   </enemies>
+  <tags>
+   <tag>generic</tag>
+  </tags>
  </faction>
  <faction>
   <name>Rogue Four Winds</name>
