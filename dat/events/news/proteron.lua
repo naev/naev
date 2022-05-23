@@ -1,4 +1,4 @@
-local header = {
+local head = {
    _("Word from the Proteron state."),
 }
 local greeting = {
@@ -8,5 +8,5 @@ local articles = {
 }
 
 return function ()
-   return "Proteron", header, greeting, articles
+   return "Proteron", head, greeting, articles
 end

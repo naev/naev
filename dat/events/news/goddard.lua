@@ -1,4 +1,4 @@
-local header = {
+local head = {
    _("Welcome to Goddard News Centre."),
 }
 local greeting = {
@@ -9,38 +9,38 @@ local articles = {
       Science and technology
    --]]
    {
-      header = N_([[Goddard: Raising the Bar]]),
+      head = N_([[Goddard: Raising the Bar]]),
       body = _([[Many new scientists are being contracted by House Goddard to investigate possible improvements. This new strategy will increase the gap with the competing ship fabricators.]])
    },
    --[[
       Business
    --]]
    {
-      header = N_([[Goddard Earnings on the Rise]]),
+      head = N_([[Goddard Earnings on the Rise]]),
       body = _([[House Goddard has once again increased its earnings. "Our investment in technology and quality has paid off," said Kari Baker of House Goddard's marketing bureau.]])
    },
    {
-      header = N_([[Goddard Awarded Best Ship]]),
+      head = N_([[Goddard Awarded Best Ship]]),
       body = _([[Once again the Goddard Battlecruiser was awarded the Best Overall Ship prize by the Dvaered Armada's annual Ship Awards. "Very few ships have reliability like the Goddard," said Lord Warthon upon receiving the award on behalf of House Goddard.]])
    },
    {
-      header = N_([[Aerosys Earnings Drop]]),
+      head = N_([[Aerosys Earnings Drop]]),
       body = _([[The spaceways may swarm with Hyena-model craft, but today Aerosys recorded another quarterly loss. The company is investigating the discrepancy between the popularity of the craft and its sales figures.]])
    },
    {
-      header = N_([[Aerosys Victim of Pirate Manufacturing]]),
+      head = N_([[Aerosys Victim of Pirate Manufacturing]]),
       body = _([[The ship manufacturer has released a study indicating its signature Hyena model is being produced by a hidden system of unlicensed manufacturers.]])
    },
    {
-      header = N_([[Melendez CEO on Strategy]]),
+      head = N_([[Melendez CEO on Strategy]]),
       body = _([[The Chief Executive Officer of ship maker Melendez Corp. thinks manufacturers should follow his company's lead in keeping costs down and producing for the mass market.]])
    },
    {
-      header = N_([[The Goddard Exception]]),
+      head = N_([[The Goddard Exception]]),
       body = _([[Why has a community with more expertise sailing than flying produced the Empire's elite civilian spacecraft?  Lord Warthon says the secret lies in his family's hands-on tradition of leadership.]])
    },
    {
-      header = N_([[Sneak Peek: the Kestrel]]),
+      head = N_([[Sneak Peek: the Kestrel]]),
       body = _([[Our reporter took a tour through Krain's mysterious space craft. He says it poses a challenge to the Goddard.]])
    },
    --[[
@@ -52,5 +52,5 @@ local articles = {
 }
 
 return function ()
-   return "Goddard", header, greeting, articles
+   return "Goddard", head, greeting, articles
 end
