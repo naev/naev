@@ -115,7 +115,7 @@ news_t* news_add( const char* title, const char* content,
    n->priority = priority;
 
    /* Sort it! */
-   //qsort( news_list, array_size(news_list), sizeof(news_t), news_cmp );
+   qsort( news_list, array_size(news_list), sizeof(news_t), news_cmp );
 
    return news_get( id );
 }
@@ -227,7 +227,7 @@ int *generate_news( int faction )
       if ((strcmp(n->faction, "Generic") == 0)
             || ((fname != NULL)
                && (strcmp(n->faction, fname) == 0))) {
-         if (n->date && (n->date < NEWS_FOREVER)) {
+         if (n->date && (n->date != 0)) {
             char *article_time = ntime_pretty( n->date, 1 );
             p += scnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"

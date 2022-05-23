@@ -460,8 +460,7 @@ local function get_econ_article( cargo, pnt, credits )
 
    local i = rnd.rnd( 1, #econ_articles )
    local title = econ_articles[i]["title"]
-   local desc = fmt.f( econ_articles[i]["desc"],
-      {cargo=cargo, pnt=pnt, credits=fmt.credits(credits)} )
+   local desc = fmt.f( econ_articles[i]["desc"], {cargo=cargo, pnt=pnt, credits=fmt.credits(credits)} )
 
    return title, desc
 end
@@ -504,9 +503,7 @@ function add_header( my_faction )
    local cur_t = time.get()
    local header = header_table[my_faction]
    local desc = greet_table[my_faction][ rnd.rnd( 1, #greet_table[my_faction] ) ]
-   local a = news.add(
-         my_faction, header, desc, cur_t + time.create( 0, 0, 1 ),
-            cur_t + time.create( 5000, 0, 0 ) )
+   local a = news.add( my_faction, header, desc, cur_t + time.create( 0, 0, 1 ), 0, -1 ) -- Highest priority
    a:bind( "header" )
 end
 
@@ -599,8 +596,8 @@ function add_econ_article ()
    if body ~= "" then
       -- Create news, expires immediately when time advances (i.e.
       -- when you take off from the planet).
-      local a = news.add( "Generic", _("Current Market Prices"), body,
-            cur_t + time.create( 0, 0, 1 ) )
+      -- Lowest priority
+      local a = news.add( "Generic", _("Current Market Prices"), body, cur_t + time.create( 0, 0, 1 ), nil, 11 )
       a:bind( "econ" )
    end
 end
