@@ -105,8 +105,10 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    end
    lg.setCanvas()
 
-   hookfg = hook.renderfg( "_textoverlay_fg" )
-   hookupdate = hook.update( "_textoverlay_update" )
+   if not hookfg then
+      hookfg = hook.renderfg( "_textoverlay_fg" )
+      hookupdate = hook.update( "_textoverlay_update" )
+   end
 end
 
 function _textoverlay_fg ()
@@ -142,6 +144,10 @@ function _textoverlay_update( dt, _real_dt )
    if texttimer > text_length then
       hook.rm( hookfg )
       hook.rm( hookupdate )
+      hookfg = nil
+      hookupdate = nil
+      textshader = nil
+      textcanvas = nil
    end
 end
 
