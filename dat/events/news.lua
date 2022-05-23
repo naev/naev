@@ -30,13 +30,8 @@ local override_list = {
 
 local header_table = {}
 local greeting_table = {}
+local articles = {}
 
-header_table["Generic"]    = _("We bring you the latest news in the universe.")
-header_table["Independent"]= _("Welcome to Universal News Feed.")
-header_table["Empire"]     = _("Welcome to the Empire News Centre.")
-header_table["Dvaered"]    = _("Welcome to the Dvaered News Centre.")
-header_table["Goddard"]    = _("Welcome to Goddard News Centre.")
-header_table["Pirate"]     = _("Pirate News Network.")
 header_table["Sirius"]     = _("Sirius News Reel. Words of the Sirichana for all.")
 header_table["FLF"]        = _("The word of the Free Resistance.")
 header_table["Frontier"]   = _("News from the Frontier Alliance.")
@@ -44,32 +39,6 @@ header_table["Proteron"]   = _("Word from the Proteron state.")
 header_table["Soromid"]    = _("The voice of the future.")
 header_table["Thurion"]    = _("Data Relay Network")
 
-greeting_table["Generic"] =  {""}
-greeting_table["Independent"] = {
-   _("Interesting events from around the universe."),
-   _("Fair and unbiased news."),
-   _("All the headlines all the time."),
-}
-greeting_table["Empire"] = {
-   _("Fresh news from around the Empire."),
-   _("Remembering the Incident."),
-   _("Keeping you informed."),
-}
-greeting_table["Dvaered"] = {
-   _("Short and to the point news."),
-   _("All that happens. In simple words. So you can understand."),
-   _("Simple news for busy people."),
-}
-greeting_table["Goddard"] = {
-   _("We bring you the news from around the Empire."),
-}
-greeting_table["Pirate"] = {
-   _("News that matters."),
-   _("Adopt a cat today!"),
-   _("Laughing at the Emperor."),
-   _("On top of the world."),
-   _("Piracy has never been better."),
-}
 greeting_table["FLF"] = {""}
 greeting_table["Frontier"] = {
    _("News you can trust."),
@@ -84,184 +53,6 @@ greeting_table["Soromid"] = {
    _("Naturally selected news."),
 }
 greeting_table["Thurion"] = {""}
-
-
-local articles = {}
-
-articles["Generic"] = {
-   --[[
-      Science and technology
-   --]]
-   {
-      tag = N_([[Techs Probe for Sol]]),
-      desc = _([[Technicians recently returned from a new effort to understand the Sol Incident. They expect the first data to arrive in 50 decaperiods' time.]])
-   },
-   {
-      tag = N_([[Sand Monster Caught On Tape]]),
-      desc = _([[Local residents claim footage from a security camera shows elusive beast walking through a desert storm. Exobiologists suspect a hoax.]])
-   },
-   {
-      tag = N_([[New Handheld AI Debuts]]),
-      desc = _([[Braeburn, the home division of Wellington, yesterday demonstrated their new PDAI. Developer Isaac Asimov assured us the new model is guaranteed not to develop a personality of its own.]])
-   },
-   {
-      tag = N_([[Experiment Produces Cold Fusion]]),
-      desc = _([[In an interview with Bleeding Edge anchor McKenzie Kruft, a researcher at Eureka labs says he has produced a tabletop atomic reaction. He hopes to publish his results in a science journal later this cycle.]])
-   },
-   {
-      tag = N_([[The Case for Sex]]),
-      desc = _([[Though cloning rates continue to rise, Vlad Taneev believes we can still benefit from genetic recombination. "Lady chance is more creative than we," says the famous gene splicer.]])
-   },
-   {
-      tag = N_([[Hyperspace is Hot]]),
-      desc = _([[Researchers have found traces of matter moving very quickly in hyperspace. They are not yet sure whether the minute particles originated there, or are human contaminants.]])
-   },
-   {
-      tag = N_([[A Family Freezer]]),
-      desc = _([[Looking for a cryotube for your parents?  Our expert panel finds Glass Box Mark II will keep your family alive for nearly as long as the previous model.]])
-   },
-   --[[
-      Business
-   --]]
-   {
-      tag = N_([[Fullerton Reports Quarterly Loss]]),
-      desc = _([[Engine maker Fullerton Industries has posted a c47B loss over the past 25 decaperiods. A company spokeswoman attributed the loss to the high cost of deuterium fuel and falling sales.]])
-   },
-   {
-      tag = N_([[Genetric Board Meets]]),
-      desc = _([[In the wake of the Yavi Bartolo's departure as CSO of Genetric Technologies, the board of directors will meet today. The group is expected to appoint a new chief science officer.]])
-   },
-   --[[
-      Politics
-   --]]
-   --[[
-      Human interest.
-   --]]
-   {
-      tag = N_([[Eyeteeth Back in Fashion]]),
-      desc = _([[Despite the advice of dentists, eyetooth caps have come into vogue again. Young people throughout the inhabited worlds use home kits to strip a layer of enamel from their teeth in favour of a binding of quartz, granite, or even flint.]])
-   },
-   {
-      tag = N_([[Everyone Loves a SuperChimp]]),
-      desc = _([[For dozens of cycles used only as menial labourers, now SuperChimps are being widely adopted as domestic companions. Enhanced primates make an affectionate, intelligent pet, or a low-cost servant.]])
-   },
-   {
-      tag = N_([[Admiral's Ball a Triumph]]),
-      desc = _([[The glamorous season drew to a close with an underwater themed ball held in air bubbles deep under the oceans of Anecu. All the season's debutantes attended.]])
-   },
-   {
-      tag = N_([[Amazing Survival Story]]),
-      desc = _([[An Xing Long was rescued after two decaperiods floating in space. "I used meditation to slow my breathing," Xing Long told us. "It was hard because I was scared."]])
-   },
-   {
-      tag = N_([[The Best Spaceport Bars]]),
-      desc = _([[Where can you get the best gargle blaster?  The famous exotic drinks list at the Doranthex Lava Room charmed our reviewer, but if you care for ambiance, don't miss the Goddard Bar.]])
-   },
-   {
-      tag = N_([[RIP: The Floating Vagabond]]),
-      desc = _([[Only two cycles after the mysterious disappearance of its owner, the galaxy's only deep space bar shut down the generators and cycled the airlock one last time.]])
-   },
-   {
-      tag = N_([[Games for Young Pilots]]),
-      desc = _([[Want your child to have a chance at a career as a space pilot?  Games like Super Julio Omniverse and SpaceFox help your child develop twitch muscles.]])
-   },
-   {
-      tag = N_([[Former Pirate Writes Target Management Self-Help Book]]),
-      desc = fmt.f(
-         _([[A former pirate shares her story on how she steered herself away from piracy, which she wrote about in an award-winning self-help book. "I used to spend my whole life pressing {target_nearest} to target enemies, but my life changed when I had a dream about a cat munching on some grass. 'Are you using the {target_hostile} key?' it asked. 'I find that it is very useful.' I have been doing as the strange cat in my dream said ever since, and I no longer have to lose money or alienate friends. If the universe followed this simple advice, I suspect we would live in a much safer society."]]),
-	 {target_nearest=naev.keyGet("target_nearest"), target_hostile=naev.keyGet("target_hostile")} )
-   },
-}
-
-articles["Dvaered"] = {
-   --[[
-      Science and technology
-   --]]
-   {
-      tag = N_([[New Mace Rockets]]),
-      desc = _([[Dvaered Engineers are proud to present the new improved version of the Dvaered Mace rocket. "We have proven the new rocket to be nearly twice as destructive as the previous versions," says Chief Dvaered Engineer Nordstrom.]])
-   },
-   --[[
-      Business
-   --]]
-   --[[
-      Politics
-   --]]
-   {
-      tag = N_([[FLF Responsible for Piracy]]),
-      desc = _([[Law enforcement expert Paet Dohmer's upcoming essay describes the group as "more criminal gang than independence movement", according to his publicist.]])
-   },
-   {
-      tag = N_([[Front Responsible for Shipping Woes]]),
-      desc = _([[A spokeswoman for the separatist group says they were behind the recent series of attacks on cargo ships operating between Dakron and Theras. Dvaered officials condemned the actions.]])
-   },
-   {
-      tag = N_([[Jouvanin Tapped as Interim Chief]]),
-      desc = _([[Following the arrest of Rex Helmer, former Anecu deputy governor Elene Jouvanin will be sworn in today. She will serve out the term as governor.]])
-   },
-   {
-      tag = N_([[FLF Terrorist Trial Ends]]),
-      desc = _([[FLF Terrorist Trial ended this cycle with an unsurprising death sentence for all five members of the Nor spaceport bombing. Execution is scheduled in 10 periods.]])
-   },
-   {
-      tag = N_([[New Challenges for New Times]]),
-      desc = _([[The Dvaered council after a unanimous ruling decided to increase patrols in Dvaered space due to the recent uprising in FLF terrorism. The new measure is expected to start within the next cycle.]])
-   },
-   --[[
-      Human interest.
-   --]]
-   {
-      tag = N_([[Sirius Weaker Than Ever]]),
-      desc = _([[This cycle breaks the negative record for fewest pilgrims to Mutris since the formation of House Sirius. This weakness is yet another sign that House Dvaered must increase patrols on the border and into Sirius space.]])
-   }
-}
-
-articles["Goddard"] = {
-   --[[
-      Science and technology
-   --]]
-   {
-      tag = N_([[Goddard: Raising the Bar]]),
-      desc = _([[Many new scientists are being contracted by House Goddard to investigate possible improvements. This new strategy will increase the gap with the competing ship fabricators.]])
-   },
-   --[[
-      Business
-   --]]
-   {
-      tag = N_([[Goddard Earnings on the Rise]]),
-      desc = _([[House Goddard has once again increased its earnings. "Our investment in technology and quality has paid off," said Kari Baker of House Goddard's marketing bureau.]])
-   },
-   {
-      tag = N_([[Goddard Awarded Best Ship]]),
-      desc = _([[Once again the Goddard Battlecruiser was awarded the Best Overall Ship prize by the Dvaered Armada's annual Ship Awards. "Very few ships have reliability like the Goddard," said Lord Warthon upon receiving the award on behalf of House Goddard.]])
-   },
-   {
-      tag = N_([[Aerosys Earnings Drop]]),
-      desc = _([[The spaceways may swarm with Hyena-model craft, but today Aerosys recorded another quarterly loss. The company is investigating the discrepancy between the popularity of the craft and its sales figures.]])
-   },
-   {
-      tag = N_([[Aerosys Victim of Pirate Manufacturing]]),
-      desc = _([[The ship manufacturer has released a study indicating its signature Hyena model is being produced by a hidden system of unlicensed manufacturers.]])
-   },
-   {
-      tag = N_([[Melendez CEO on Strategy]]),
-      desc = _([[The Chief Executive Officer of ship maker Melendez Corp. thinks manufacturers should follow his company's lead in keeping costs down and producing for the mass market.]])
-   },
-   {
-      tag = N_([[The Goddard Exception]]),
-      desc = _([[Why has a community with more expertise sailing than flying produced the Empire's elite civilian spacecraft?  Lord Warthon says the secret lies in his family's hands-on tradition of leadership.]])
-   },
-   {
-      tag = N_([[Sneak Peek: the Kestrel]]),
-      desc = _([[Our reporter took a tour through Krain's mysterious space craft. He says it poses a challenge to the Goddard.]])
-   },
-   --[[
-      Politics
-   --]]
-   --[[
-      Human interest.
-   --]]
-}
 
 articles["Sirius"] = {
    --[[
@@ -291,93 +82,6 @@ articles["Sirius"] = {
 }
 
 articles["Pirate"] = {
-   --[[
-      Science and technology
-   --]]
-   {
-      tag = N_([[Skull and Bones Improving]]),
-      desc = _([[The technology behind Skull and Bones is advancing. Not only do they steal ships, but they improve on the original design. "This gives us pirates an edge against the injustice of the Empire," says Millicent Felecia Black, lead Skull and Bones engineer.]])
-   },
-   --[[
-      Business
-   --]]
-   {
-      tag = N_([[Draconis Favourite Plundering Space]]),
-      desc = _([[Draconis has recently passed Delta Pavonis in the pirate polls as the most favoured plundering space. The abundance of traders and high interference make it an excellent place to get some fast credits.]])
-   },
-   {
-      tag = N_([[New Ships for Skull and Bones]]),
-      desc = _([[The Skull and Bones was able to extract a few dozen high quality vessels from Caladan warehouses under the nose of the Empire. These ships will help keep production high and booming.]])
-   },
-   --[[
-      Politics
-   --]]
-   {
-      tag = N_([[Emperor Weaker Than Ever]]),
-      desc = _([[Recent actions demonstrate the inefficiency and weakness of the Emperor. One of the last irrational decisions left Eridani without a defence fleet to protect the traders. It's a great time to be a pirate.]])
-   },
-   --[[
-      Human interest.
-   --]]
-   {
-      tag = N_([[Cats in New Haven]]),
-      desc = _([[An explosion in the cat population of New Haven has created an adoption campaign with the slogan, "Pirate Cats, for those lonely space trips.". Is your space vessel full of vermin? Adopt a cat today!]])
-   },
-}
-
-articles["Empire"] = {
-   --[[
-      Science and technology
-   --]]
-   {
-      tag = N_([[Terraforming Emperor's Fist]]),
-      desc = _([[New bleeding-edge terraforming techniques to be tried on Emperor's Fist. Studies show that these techniques could speed up the terraforming process by as much as 40%.]])
-   },
-   {
-      tag = N_([[Bees Introduced to Emperor's Fist]]),
-      desc = _([[As they prepare the gardens of the future Imperial compound, entomologists have established the first colony of the Earth insects on the planet formerly known as G Scorpeii 5.]])
-   },
-   --[[
-      Business
-   --]]
-   {
-      tag = N_([[Empire Keeping Traders Safe]]),
-      desc = _([[Recent studies show that reports of piracy on Trader vessels have gone down by up to 40% in some sectors. This is a demonstration of the Empire's commitment to eradicating piracy.]])
-   },
-   {
-      tag = N_([[Nexus Contract Finalised]]),
-      desc = _([[The Empire agreed to terms with shipbuilder Nexus for a new generation of military craft. The deal extends the partnership with the government for another 10 cycles.]])
-   },
-   --[[
-      Politics
-   --]]
-   {
-      tag = N_([[New Empire Recruits]]),
-      desc = _([[Emperor's recruiting strategy a success. Many new soldiers joining the Empire Armada. "We haven't had such a successful campaign in ages!" - Raid Steele, spokesman for recruiting campaign.]])
-   },
-   {
-      tag = N_([[Governor Helmer Jailed]]),
-      desc = _([[Imperial Auditors arrested governor Rex Helmer of Anecu on charges of corruption. He has been removed from office and transported to a holding facility awaiting trial.]])
-   },
-   {
-      tag = N_([[Imperial Council Opens Doors]]),
-      desc = _([[The supreme advisory body invited undergraduates from six top schools to sit in on a day's deliberations. Topics required biodiversity strategy.]])
-   },
-   --[[
-      Human interest.
-   --]]
-   {
-      tag = N_([[New Cat in the Imperial Family]]),
-      desc = _([[The Emperor's daughter was recently gifted a cat. Cat could be named "Snuggles" and seems to be all white.]])
-   },
-   {
-      tag = N_([[Emperor's Aid Gets Hitched]]),
-      desc = _([[Imperial secretary Karil Lorenze married long time fiancee Rachid Baouda in the future palace gardens on Emperor's Fist. His Eminence the Bishop of Bao performed the ceremony.]])
-   },
-   {
-      tag = N_([[Remembering the Past]]),
-      desc = _([[The Emperor has scheduled a new monument to be constructed on Emperor's Fist in honour of all those dead in the Incident.]])
-   },
 }
 
 articles["Frontier"] = {
@@ -407,7 +111,6 @@ articles["Frontier"] = {
    --]]
 }
 
-articles["Independent"] = {}
 articles["FLF"] = {}
 articles["Proteron"] = {}
 articles["Thurion"] = {}
@@ -459,9 +162,15 @@ local function merger( dest, src, key )
       dest[key] = {}
    end
 
-   local destt = dest[key]
-   for k,v in ipairs(src) do
-      table.insert( destt, v )
+   for i,v in ipairs(src) do
+      local k = key
+      if type(v) == "table" and v.key then -- allow overwriting keys
+         k = v.key
+         if not dest[k] then
+            dest[k] = {}
+         end
+      end
+      table.insert( dest[k], v )
    end
 end
 
@@ -551,6 +260,9 @@ function add_article( my_faction )
    local tag   = alst[i]["tag"]
    local title = alst[i]["title"] or _(tag)
    local desc  = alst[i]["desc"]
+   if type(desc)=="function" then
+      desc = desc()
+   end
 
    if #news.get( tag ) > 0 then
       return
