@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-02-19 12:48-0500\n"
-"PO-Revision-Date: 2022-05-22 21:16+0000\n"
+"PO-Revision-Date: 2022-05-23 23:19+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -760,7 +760,7 @@ msgstr ""
 
 #: artwork/gfx/loading/pacifier.webp.txt:1
 msgid "PACIFIER"
-msgstr ""
+msgstr "CALMA"
 
 #: artwork/gfx/loading/peacemaker.webp.txt:1
 msgid "EMPIRE PEACEMAKER"
@@ -8818,7 +8818,7 @@ msgstr ""
 
 #: dat/assets/raelid_outpost.xml:2 dat/ships/raelid_outpost.xml:2
 msgid "Raelid Outpost"
-msgstr ""
+msgstr "Puesto de Avanzada Raelid"
 
 #: dat/assets/raelid_outpost.xml:29
 msgid ""
@@ -8847,7 +8847,7 @@ msgstr ""
 
 #: dat/assets/raglan_outpost.xml:2 dat/ships/raglan_outpost.xml:2
 msgid "Raglan Outpost"
-msgstr ""
+msgstr "Puesto de Avanzada Raglan"
 
 #: dat/assets/raglan_outpost.xml:28
 msgid ""
@@ -9886,8 +9886,9 @@ msgid ""
 msgstr ""
 
 #: dat/assets/sindbad.xml:2 dat/ships/sindbad.xml:2
+#, fuzzy
 msgid "Sindbad"
-msgstr ""
+msgstr "Sindbad"
 
 #: dat/assets/sindbad.xml:31
 msgid ""
@@ -16532,7 +16533,7 @@ msgstr ""
 
 #: dat/outfits/launchers/convulsion_launcher.xml:2
 msgid "Convulsion Launcher"
-msgstr "Lanzador Convulsor"
+msgstr "Convulsor, Lanzador"
 
 #: dat/outfits/launchers/convulsion_launcher.xml:10
 #: dat/outfits/rockets/convulsion_missile.xml:6
@@ -16547,7 +16548,7 @@ msgstr ""
 
 #: dat/outfits/launchers/electron_burst_cannon.xml:2
 msgid "Electron Burst Cannon"
-msgstr "Cañón de Ráfagas de Electrones"
+msgstr "Ráfagas de Electrones, Cañón"
 
 #: dat/outfits/launchers/electron_burst_cannon.xml:10
 msgid ""
@@ -16560,7 +16561,7 @@ msgstr ""
 
 #: dat/outfits/launchers/emp_grenade_launcher.xml:2
 msgid "EMP Grenade Launcher"
-msgstr "Lanzador de Granadas PEM"
+msgstr "Granadas PEM, Lanzador"
 
 #: dat/outfits/launchers/emp_grenade_launcher.xml:9
 msgid ""
@@ -16579,7 +16580,7 @@ msgstr ""
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:2
 msgid "Enygma Systems Huntsman Launcher"
-msgstr "Lanzador Cazahombres de Sistemas Enigma"
+msgstr "Cazahombres de Sistemas Enigma, Lanzador"
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:10
 msgid ""
@@ -16596,7 +16597,7 @@ msgstr ""
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:2
 msgid "Enygma Systems Spearhead Launcher"
-msgstr "Lanzador Punta de Lanza de Sistemas Enigma"
+msgstr "Punta de Lanza de Sistemas Enigma, Lanzador"
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:9
 #: dat/outfits/rockets/spearhead_missile.xml:7
@@ -16618,7 +16619,7 @@ msgstr ""
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:2
 msgid "Enygma Systems Turreted Fury Launcher"
-msgstr "Torreta Lanzador Furia de Sistemas Enigma"
+msgstr "Furia de Sistemas Enigma, Torreta Lanzador"
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:9
 msgid ""
@@ -16633,7 +16634,7 @@ msgstr ""
 
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:2
 msgid "Enygma Systems Turreted Headhunter Launcher"
-msgstr "Torreta Lanzador Cazacabezas de Sistemas Enigma"
+msgstr "Cazacabezas de Sistemas Enigma, Torreta Lanzador"
 
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:9
 msgid ""
@@ -16650,7 +16651,7 @@ msgstr ""
 
 #: dat/outfits/launchers/shatterer_launcher.xml:2
 msgid "Shatterer Launcher"
-msgstr "Lanzador Trizas"
+msgstr "Trizas, Lanzador"
 
 #: dat/outfits/launchers/shatterer_launcher.xml:10
 msgid ""
@@ -16666,7 +16667,7 @@ msgstr ""
 
 #: dat/outfits/launchers/teracom_banshee_launcher.xml:2
 msgid "TeraCom Banshee Launcher"
-msgstr "Lanzador Banshee TeraCom"
+msgstr "Banshee TeraCom, Lanzador"
 
 #: dat/outfits/launchers/teracom_banshee_launcher.xml:10
 msgid ""
@@ -16682,7 +16683,7 @@ msgstr ""
 
 #: dat/outfits/launchers/teracom_fury_launcher.xml:2
 msgid "TeraCom Fury Launcher"
-msgstr "Lanzador Furia TeraCom"
+msgstr "Furia TeraCom, Lanzador"
 
 #: dat/outfits/launchers/teracom_fury_launcher.xml:9
 msgid ""
@@ -16701,7 +16702,7 @@ msgstr ""
 
 #: dat/outfits/launchers/teracom_headhunter_launcher.xml:2
 msgid "TeraCom Headhunter Launcher"
-msgstr "Lanzador Cazacabezas Teracom"
+msgstr "Cazacabezas Teracom, Lanzador"
 
 #: dat/outfits/launchers/teracom_headhunter_launcher.xml:9
 msgid ""
@@ -16725,7 +16726,7 @@ msgstr ""
 
 #: dat/outfits/launchers/teracom_imperator_launcher.xml:2
 msgid "TeraCom Imperator Launcher"
-msgstr "Lanzador Emperador TeraCom"
+msgstr "Emperador TeraCom, Lanzador"
 
 #: dat/outfits/launchers/teracom_imperator_launcher.xml:10
 #: dat/outfits/rockets/imperator_torpedo.xml:7
@@ -16746,7 +16747,7 @@ msgstr ""
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:2
 msgid "TeraCom Mace Launcher"
-msgstr "Lanzador Maza TeraCom"
+msgstr "Maza TeraCom, Lanzador"
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:9
 msgid ""
@@ -16769,7 +16770,7 @@ msgstr ""
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:2
 msgid "TeraCom Medusa Launcher"
-msgstr "Lanzador Medusa TeraCom"
+msgstr "Medusa TeraCom, Lanzador"
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:9
 msgid ""
@@ -16795,7 +16796,7 @@ msgstr ""
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:2
 msgid "TeraCom Vengeance Launcher"
-msgstr "Lanzador Venganza TeraCom"
+msgstr "Venganza TeraCom, Lanzador"
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:9
 msgid ""
@@ -16811,7 +16812,7 @@ msgstr ""
 
 #: dat/outfits/launchers/turreted_convulsion_launcher.xml:2
 msgid "Turreted Convulsion Launcher"
-msgstr "Torreta Lanzador Convulsor"
+msgstr "Convulsor, Torreta Lanzador"
 
 #: dat/outfits/launchers/turreted_convulsion_launcher.xml:10
 msgid ""
@@ -16843,7 +16844,7 @@ msgstr ""
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:2
 msgid "Unicorp Caesar IV Launcher"
-msgstr "Lanzador Cesar IV Unicorp"
+msgstr "Cesar IV Unicorp, Lanzador "
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:10
 #: dat/outfits/rockets/caesar_iv_torpedo.xml:7
@@ -16920,7 +16921,7 @@ msgstr ""
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:2
 msgid "Za'lek Hunter Launcher"
-msgstr "Lanzador Cazador Za'lek"
+msgstr "Cazador Za'lek, Lanzador "
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:10
 msgid ""
@@ -16936,7 +16937,7 @@ msgstr ""
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:2
 msgid "Za'lek Reaper Launcher"
-msgstr "Lanzador Segador Za'lek"
+msgstr "Segador Za'lek, Lanzador "
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:10
 msgid ""
@@ -16952,7 +16953,7 @@ msgstr ""
 
 #: dat/outfits/maps/localmap.xml:2
 msgid "Local System Map"
-msgstr "Mapa Sistema Local"
+msgstr "Mapa de Sistema Local"
 
 #: dat/outfits/maps/localmap.xml:6
 msgid "This map contains information about the local system."
@@ -16960,7 +16961,7 @@ msgstr "Este mapa contiene información sobre el sistema local."
 
 #: dat/outfits/maps/map_collective_space.xml:2
 msgid "Map: Collective Space"
-msgstr "Mapa: Espacio Colectivo"
+msgstr "Espacio Colectivo, Mapa"
 
 #: dat/outfits/maps/map_collective_space.xml:7
 msgid ""
@@ -16974,7 +16975,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_dvaered_core.xml:2
 msgid "Map: Dvaered Core"
-msgstr "Mapa: Núcleo Dvaered"
+msgstr "Núcleo Dvaered, Mapa"
 
 #: dat/outfits/maps/map_dvaered_core.xml:6
 msgid ""
@@ -16996,7 +16997,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_empire_core.xml:2
 msgid "Map: Empire Core"
-msgstr "Mapa: Núcleo Imperio"
+msgstr "Núcleo Imperio, Mapa"
 
 #: dat/outfits/maps/map_empire_core.xml:6
 msgid ""
@@ -17008,7 +17009,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_flf.xml:2
 msgid "Map: FLF Hidden Jumps"
-msgstr "Mapa: Saltos Ocultos del FLF"
+msgstr "Saltos Ocultos del FLF, Mapa"
 
 #: dat/outfits/maps/map_flf.xml:7
 msgid ""
@@ -17020,7 +17021,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_flf_pirate_route.xml:2
 msgid "Map: FLF-Pirate Route"
-msgstr "Mapa: Ruta FLF-Pirata"
+msgstr "Ruta FLF-Pirata, Mapa"
 
 #: dat/outfits/maps/map_flf_pirate_route.xml:7
 msgid ""
@@ -17032,7 +17033,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_inner_nebula_secret_jump.xml:2
 msgid "Map: Inner Nebula Secret Jump"
-msgstr "Mapa: Salto Secreto de la Nebulosa Interior"
+msgstr "Salto Secreto de la Nebulosa Interior, Mapa"
 
 #: dat/outfits/maps/map_inner_nebula_secret_jump.xml:7
 msgid ""
@@ -17056,7 +17057,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_nebula_edge.xml:2
 msgid "Map: Nebula Edge"
-msgstr "Mapa: Borde de la Nebulosa"
+msgstr "Borde de la Nebulosa, Mapa"
 
 #: dat/outfits/maps/map_nebula_edge.xml:6
 msgid ""
@@ -17092,7 +17093,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_qorel.xml:2
 msgid "Map: Qorel Expanse"
-msgstr "Mapa: Expansión de Qorel"
+msgstr "Expansión de Qorel, Mapa"
 
 #: dat/outfits/maps/map_qorel.xml:7
 msgid ""
@@ -17118,7 +17119,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_sirius_core.xml:2
 msgid "Map: Sirius Core"
-msgstr "Mapa: Núcleo Sirio"
+msgstr "Núcleo Sirio, Mapa"
 
 #: dat/outfits/maps/map_sirius_core.xml:7
 msgid ""
@@ -17130,7 +17131,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_sol.xml:2
 msgid "Map: Sol"
-msgstr "Mapa: Sol"
+msgstr "Sol, Mapa"
 
 #: dat/outfits/maps/map_sol.xml:6
 msgid ""
@@ -17146,7 +17147,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_the_frontier.xml:2
 msgid "Map: The Frontier"
-msgstr "Mapa: La Frontera"
+msgstr "La Frontera, Mapa"
 
 #: dat/outfits/maps/map_the_frontier.xml:6
 msgid ""
@@ -17158,7 +17159,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_thurion.xml:2
 msgid "Map: Thurion Core"
-msgstr "Mapa: Núcleo Turion"
+msgstr "Núcleo Turion, Mapa"
 
 #: dat/outfits/maps/map_thurion.xml:7
 msgid ""
@@ -17168,7 +17169,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_zalek_core.xml:2
 msgid "Map: Za'lek Core"
-msgstr "Mapa: Núcleo Za'lek"
+msgstr "Núcleo Za'lek, Mapa"
 
 #: dat/outfits/maps/map_zalek_core.xml:6
 msgid ""
@@ -19458,7 +19459,7 @@ msgstr ""
 
 #: dat/ships/admonisher.xml:2
 msgid "Admonisher"
-msgstr ""
+msgstr "Amonestador"
 
 #: dat/ships/admonisher.xml:17 dat/ships/empire_admonisher.xml:18
 #: dat/ships/empire_hawking.xml:19 dat/ships/empire_lancelot.xml:16
@@ -19468,7 +19469,7 @@ msgstr ""
 #: dat/ships/pacifier.xml:15 dat/ships/shark.xml:16
 #: dat/scripts/common/shark.lua:14
 msgid "Nexus Shipyards"
-msgstr ""
+msgstr "Astilleros Nexus"
 
 #: dat/ships/admonisher.xml:19
 msgid ""
@@ -19479,7 +19480,7 @@ msgstr ""
 
 #: dat/ships/ancestor.xml:2
 msgid "Ancestor"
-msgstr ""
+msgstr "Ancestro"
 
 #: dat/ships/ancestor.xml:16
 msgid ""
@@ -19552,8 +19553,9 @@ msgid ""
 msgstr ""
 
 #: dat/ships/dvaered_goddard.xml:2
+#, fuzzy
 msgid "Dvaered Goddard"
-msgstr ""
+msgstr "Dvaered Goddard"
 
 #: dat/ships/dvaered_goddard.xml:20
 msgid ""
@@ -19568,7 +19570,7 @@ msgstr ""
 
 #: dat/ships/dvaered_phalanx.xml:2
 msgid "Dvaered Phalanx"
-msgstr ""
+msgstr "Falange Dvaered"
 
 #: dat/ships/dvaered_phalanx.xml:18
 msgid ""
@@ -19581,7 +19583,7 @@ msgstr ""
 #: dat/ships/dvaered_vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:220
 msgid "Dvaered Vendetta"
-msgstr ""
+msgstr "Vendetta Dvaered"
 
 #: dat/ships/dvaered_vendetta.xml:18
 msgid ""
@@ -19594,7 +19596,7 @@ msgstr ""
 
 #: dat/ships/dvaered_vigilance.xml:2
 msgid "Dvaered Vigilance"
-msgstr ""
+msgstr "Vigilancia Dvaered"
 
 #: dat/ships/dvaered_vigilance.xml:17
 msgid ""
@@ -19606,7 +19608,7 @@ msgstr ""
 
 #: dat/ships/empire_admonisher.xml:2
 msgid "Empire Admonisher"
-msgstr ""
+msgstr "Amonestador del Imperio"
 
 #: dat/ships/empire_admonisher.xml:20
 msgid ""
@@ -19614,10 +19616,13 @@ msgid ""
 "function to a standard Admonisher, but with slightly better armour, shields, "
 "and heat dissipation."
 msgstr ""
+"Esta versión de grado militar del Amonestador es parcialmente idéntica a un "
+"Amonestador estándar, pero con un blindaje, unos escudos y una disipación "
+"del calor ligeramente mejores."
 
 #: dat/ships/empire_hawking.xml:2
 msgid "Empire Hawking"
-msgstr ""
+msgstr "Halcón del Imperio"
 
 #: dat/ships/empire_hawking.xml:21
 msgid ""
@@ -19625,10 +19630,13 @@ msgid ""
 "to a standard Hawking, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
+"Esta versión de grado militar del Halcón es en su mayor parte idéntica en "
+"funcionamiento a un Halcón estándar, pero con un blindaje, escudos y "
+"disipación de calor ligeramente mejores."
 
 #: dat/ships/empire_lancelot.xml:2
 msgid "Empire Lancelot"
-msgstr ""
+msgstr "Lancelot del Imperio"
 
 #: dat/ships/empire_lancelot.xml:18
 msgid ""
@@ -19636,10 +19644,13 @@ msgid ""
 "to a standard Lancelot, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
+"Esta versión de grado militar del Lancelot es en su mayor parte idéntica en "
+"funcionamiento a un Lancelot estándar, pero con un blindaje, escudos y "
+"disipación de calor ligeramente mejores."
 
 #: dat/ships/empire_pacifier.xml:2
 msgid "Empire Pacifier"
-msgstr ""
+msgstr "Calma del Imperio"
 
 #: dat/ships/empire_pacifier.xml:18
 msgid ""
@@ -19647,10 +19658,13 @@ msgid ""
 "to a standard Pacifier, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
+"Esta versión de grado militar del Calma es parcialmente idéntica a un Calma "
+"estándar, pero con un blindaje, escudos y disipación de calor ligeramente "
+"mejores."
 
 #: dat/ships/empire_peacemaker.xml:2
 msgid "Empire Peacemaker"
-msgstr ""
+msgstr "Pacificador del Imperio"
 
 #: dat/ships/empire_peacemaker.xml:20
 msgid ""
@@ -19660,10 +19674,17 @@ msgid ""
 "provide the fighter and bomber squadrons with much needed resupplies. Like "
 "most capital ships, however, it is vulnerable to attack from enemy bombers."
 msgstr ""
+"Construido por encargo del Imperio por los Astilleros Nexus, el Pacificador "
+"es una de las naves más grandes de la galaxia, empequeñeciendo incluso al "
+"poderoso Goddard. Los Pacificadores suelen funcionar como naves de bandera "
+"en las flotas imperiales, y pueden proporcionar a los escuadrones de cazas y "
+"bombarderos los tan necesarios reabastecimientos. Sin embargo, como la "
+"mayoría de las naves capitales, es vulnerable a los ataques de los "
+"bombarderos enemigos."
 
 #: dat/ships/empire_rainmaker.xml:2
 msgid "Empire Rainmaker"
-msgstr ""
+msgstr "Hacedor de Lluvia del Imperio"
 
 #: dat/ships/empire_rainmaker.xml:22
 msgid ""
@@ -19679,7 +19700,7 @@ msgstr ""
 
 #: dat/ships/empire_shark.xml:2
 msgid "Empire Shark"
-msgstr ""
+msgstr "Tiburón del Imperio"
 
 #: dat/ships/empire_shark.xml:19
 msgid ""
@@ -19688,11 +19709,17 @@ msgid ""
 "heat dissipation. The military-grade materials used also result in the ship "
 "being slightly lighter than its generic counterpart."
 msgstr ""
+"La versión de grado militar del Tiburón del Imperio es parcialmente idéntica "
+"a la de un Tiburón estándar, pero con un blindaje, unos escudos y una "
+"disipación del calor ligeramente mejores. Los materiales de grado militar "
+"utilizados también hacen que la nave sea ligeramente más ligera que su "
+"homóloga genérica."
 
 #: dat/ships/gawain.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168
+#, fuzzy
 msgid "Gawain"
-msgstr ""
+msgstr "Gawain"
 
 #: dat/ships/gawain.xml:15
 msgid ""
@@ -19713,8 +19740,9 @@ msgid ""
 msgstr ""
 
 #: dat/ships/hawking.xml:2
+#, fuzzy
 msgid "Hawking"
-msgstr ""
+msgstr "Hawking"
 
 #: dat/ships/hawking.xml:20
 msgid ""
@@ -19724,14 +19752,21 @@ msgid ""
 "second only to the flagship of House Goddard, though its narrower frame "
 "allows it to present a smaller target to the enemy."
 msgstr ""
+"El Hawking es la nave insignia de los Astilleros Nexus. Se trata de un gran "
+"crucero diseñado para enfrentamientos prolongados, muy utilizado por el "
+"Imperio para ejercer el control sobre sus territorios. En términos de "
+"potencia de fuego bruta, el Hawking sólo es superado por el buque insignia "
+"de la Casa Goddard, aunque su estructura más estrecha le permite ser un "
+"objetivo más pequeño para el enemigo."
 
 #: dat/ships/hyena.xml:2
 msgid "Hyena"
-msgstr ""
+msgstr "Hiena"
 
 #: dat/ships/hyena.xml:15
+#, fuzzy
 msgid "Aerosys"
-msgstr ""
+msgstr "Aerosys"
 
 #: dat/ships/hyena.xml:16
 msgid ""
@@ -19745,12 +19780,13 @@ msgid ""
 msgstr ""
 
 #: dat/ships/kestrel.xml:2
+#, fuzzy
 msgid "Kestrel"
-msgstr ""
+msgstr "Kestrel"
 
 #: dat/ships/kestrel.xml:15 dat/ships/starbridge.xml:15
 msgid "Krain Industries"
-msgstr ""
+msgstr "Industrias Krain"
 
 #: dat/ships/kestrel.xml:17
 msgid ""
@@ -19760,15 +19796,22 @@ msgid ""
 "firepower with state-of-the-art electronics, making for a truly fearsome "
 "ship in the hands of an able captain."
 msgstr ""
+"El Kestrel, la nave que puso por sí sola a Industrias Krain en el mapa, fue "
+"diseñado para ser un elegante crucero de asalto pesado. Generalmente más "
+"frágil que otros cruceros, consigue combinar una excelente maniobrabilidad y "
+"potencia de fuego con una electrónica de última generación, lo que la "
+"convierte en una nave realmente temible en manos de un capitán competente."
 
 #: dat/ships/koala.xml:2
+#, fuzzy
 msgid "Koala"
-msgstr ""
+msgstr "Koala"
 
 #: dat/ships/koala.xml:14 dat/ships/llama.xml:16 dat/ships/mule.xml:15
 #: dat/ships/quicksilver.xml:15 dat/ships/rhino.xml:16
+#, fuzzy
 msgid "Melendez Corp."
-msgstr ""
+msgstr "Melendez Corp."
 
 #: dat/ships/koala.xml:15
 msgid ""
@@ -19778,8 +19821,9 @@ msgid ""
 msgstr ""
 
 #: dat/ships/lancelot.xml:2
+#, fuzzy
 msgid "Lancelot"
-msgstr ""
+msgstr "Lancelot"
 
 #: dat/ships/lancelot.xml:17
 msgid ""
@@ -19794,7 +19838,7 @@ msgstr ""
 #: dat/ships/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168
 msgid "Llama"
-msgstr ""
+msgstr "Llama"
 
 #: dat/ships/llama.xml:17
 msgid ""
@@ -19806,7 +19850,7 @@ msgstr ""
 
 #: dat/ships/mule.xml:2
 msgid "Mule"
-msgstr ""
+msgstr "Mula"
 
 #: dat/ships/mule.xml:17
 msgid ""
@@ -19818,7 +19862,7 @@ msgstr ""
 
 #: dat/ships/pacifier.xml:2
 msgid "Pacifier"
-msgstr ""
+msgstr "Calma"
 
 #: dat/ships/pacifier.xml:17
 msgid ""
@@ -19830,7 +19874,7 @@ msgstr ""
 
 #: dat/ships/phalanx.xml:2
 msgid "Phalanx"
-msgstr ""
+msgstr "Falange"
 
 #: dat/ships/phalanx.xml:17
 msgid ""
@@ -19840,7 +19884,7 @@ msgstr ""
 
 #: dat/ships/pirate_admonisher.xml:2
 msgid "Pirate Admonisher"
-msgstr ""
+msgstr "Amonestador Pirata"
 
 #: dat/ships/pirate_admonisher.xml:18 dat/ships/pirate_ancestor.xml:15
 #: dat/ships/pirate_hyena.xml:16 dat/ships/pirate_kestrel.xml:16
@@ -19848,7 +19892,7 @@ msgstr ""
 #: dat/ships/pirate_shark.xml:17 dat/ships/pirate_starbridge.xml:16
 #: dat/ships/pirate_vendetta.xml:16
 msgid "Skull and Bones"
-msgstr ""
+msgstr "Cráneo y Huesos"
 
 #: dat/ships/pirate_admonisher.xml:19
 msgid ""
@@ -19860,7 +19904,7 @@ msgstr ""
 
 #: dat/ships/pirate_ancestor.xml:2
 msgid "Pirate Ancestor"
-msgstr ""
+msgstr "Ancestro Pirata"
 
 #: dat/ships/pirate_ancestor.xml:16
 msgid ""
@@ -19869,10 +19913,15 @@ msgid ""
 "without firing a shot. As better ships came out in the market, their use has "
 "fallen due to their archaic electronics and targeting systems."
 msgstr ""
+"Los Ancestros fueron una de los primeras naves a los que se aficionaron los "
+"piratas. Sus grandes e intimidantes alas y sus buenas velocidades máximas "
+"solían conseguir que las naves se rindieran sin disparar un tiro. A medida "
+"que fueron apareciendo en el mercado mejores naves, su uso ha disminuido "
+"debido a su arcaica electrónica y sistemas de puntería."
 
 #: dat/ships/pirate_hyena.xml:2
 msgid "Pirate Hyena"
-msgstr ""
+msgstr "Hiena Pirata"
 
 #: dat/ships/pirate_hyena.xml:17
 msgid ""
@@ -19886,7 +19935,7 @@ msgstr ""
 
 #: dat/ships/pirate_kestrel.xml:2
 msgid "Pirate Kestrel"
-msgstr ""
+msgstr "Kestrel Pirata"
 
 #: dat/ships/pirate_kestrel.xml:17
 msgid ""
@@ -19898,7 +19947,7 @@ msgstr ""
 
 #: dat/ships/pirate_phalanx.xml:2
 msgid "Pirate Phalanx"
-msgstr ""
+msgstr "Falange Pirata"
 
 #: dat/ships/pirate_phalanx.xml:17
 msgid ""
@@ -19906,10 +19955,13 @@ msgid ""
 "engineers have substantially improved the ship's performance, while only "
 "minorly sacrificing protection."
 msgstr ""
+"Sobre la base del chasis de la Falange, los ingenieros de Cráneo y Huesos "
+"han mejorado sustancialmente el rendimiento de la nave, sacrificando sólo un "
+"poco de protección."
 
 #: dat/ships/pirate_rhino.xml:2
 msgid "Pirate Rhino"
-msgstr ""
+msgstr "Rino Pirata"
 
 #: dat/ships/pirate_rhino.xml:18
 msgid ""
@@ -19917,10 +19969,14 @@ msgid ""
 "manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay "
 "and durability, the Rhino has become an excellent scavenger ship."
 msgstr ""
+"El tradicional reacondicionamiento de Cráneo y Huesos ha dejado al Rino "
+"sustancialmente más maniobrable, aunque algo menos blindado. Aprovechando su "
+"gran bahía de carga y su durabilidad, el Rino se ha convertido en una "
+"excelente nave carroñera."
 
 #: dat/ships/pirate_shark.xml:2
 msgid "Pirate Shark"
-msgstr ""
+msgstr "Tiburón Pirata"
 
 #: dat/ships/pirate_shark.xml:18
 msgid ""
@@ -19929,10 +19985,14 @@ msgid ""
 "handling suffers minimally while it's able to bring substantially more "
 "firepower to bear."
 msgstr ""
+"El veloz Tiburón de los Astilleros Nexus ha demostrado ser un excelente "
+"lienzo para los técnicos de Cráneo y Huesos. Equipado con una montura de "
+"armas adicional, su manejo se resiente mínimamente mientras que es capaz de "
+"aportar una potencia de fuego sustancialmente mayor."
 
 #: dat/ships/pirate_starbridge.xml:2
 msgid "Pirate Starbridge"
-msgstr ""
+msgstr "Starbridge Pirata"
 
 #: dat/ships/pirate_starbridge.xml:17
 msgid ""
@@ -19944,7 +20004,7 @@ msgstr ""
 
 #: dat/ships/pirate_vendetta.xml:2
 msgid "Pirate Vendetta"
-msgstr ""
+msgstr "Vendetta Pirata"
 
 #: dat/ships/pirate_vendetta.xml:17
 msgid ""
@@ -19958,17 +20018,20 @@ msgstr ""
 
 #: dat/ships/proteron_archimedes.xml:2
 msgid "Proteron Archimedes"
-msgstr ""
+msgstr "Arquímedes Proteron"
 
 #: dat/ships/proteron_archimedes.xml:22
 msgid ""
 "The Archimedes is the backbone of the Proteron fleet. Offering heavy "
 "firepower and high durability, it can always be found in the heat of battle."
 msgstr ""
+"El Arquímedes es la columna vertebral de la flota Proteron. Con una gran "
+"potencia de fuego y una gran durabilidad, siempre se encuentra en el fragor "
+"de la batalla."
 
 #: dat/ships/proteron_derivative.xml:2
 msgid "Proteron Derivative"
-msgstr ""
+msgstr "Derivativo Proteron"
 
 #: dat/ships/proteron_derivative.xml:18
 msgid ""
@@ -19979,10 +20042,17 @@ msgid ""
 "carrier group unleashing several squadrons has been known to turn the tide "
 "of battle on many occasions."
 msgstr ""
+"Aunque es más pequeño y menos intimidante que sus hermanos mayores del "
+"arsenal de Proteron, un grupo de Derivados sigue siendo un enemigo a tener "
+"en cuenta. Haciendo honor a su nombre, es el más reciente de una larga serie "
+"de cazas basados principalmente en portanaves. Al tener relativamente poca "
+"potencia de fuego, no son adecuados para los duelos, pero se sabe que un "
+"grupo de portanaves que despliega varios escuadrones puede cambiar el rumbo "
+"de la batalla en muchas ocasiones."
 
 #: dat/ships/proteron_kahan.xml:2
 msgid "Proteron Kahan"
-msgstr ""
+msgstr "Kahan Proteron"
 
 #: dat/ships/proteron_kahan.xml:18
 msgid ""
@@ -19991,10 +20061,14 @@ msgid ""
 "combat vessel. While possessing fewer weapon mounts than the Pacifier, it "
 "makes up for it with its lower mass and expanded structural space."
 msgstr ""
+"La Kahan es una nave de vanguardia. Su diseño se completó poco antes del "
+"Incidente, y estaba en camino de convertirse en la principal nave de combate "
+"del ejército Proteron. Aunque posee menos soportes de armas que el Calma, lo "
+"compensa con su menor masa y su mayor espacio estructural."
 
 #: dat/ships/proteron_watson.xml:2
 msgid "Proteron Watson"
-msgstr ""
+msgstr "Watson Proteron"
 
 #: dat/ships/proteron_watson.xml:18
 msgid ""
@@ -20005,7 +20079,7 @@ msgstr ""
 
 #: dat/ships/quicksilver.xml:2
 msgid "Quicksilver"
-msgstr ""
+msgstr "Azogue"
 
 #: dat/ships/quicksilver.xml:16
 msgid ""
@@ -20013,6 +20087,9 @@ msgid ""
 "Melendez's other offerings. Featuring a streamlined frame and oversized "
 "engines, it's the prime choice for expedient shipping."
 msgstr ""
+"Aunque sigue siendo un transportador de carga, el Azogue es bastante "
+"diferente de las otras ofertas de Melendez. Con un chasis aerodinámico y "
+"motores de gran tamaño, es la mejor opción para el transporte rápido."
 
 #: dat/ships/raelid_outpost.xml:12 dat/ships/raglan_outpost.xml:12
 #: dat/ships/sindbad.xml:12 src/dev_uniedit.c:245 src/dev_uniedit.c:251
@@ -20022,16 +20099,16 @@ msgstr ""
 #: src/land_trade.c:165 src/land_trade.c:166 src/map.c:566 src/map.c:567
 #: src/outfit.c:287 src/outfit.c:306
 msgid "N/A"
-msgstr ""
+msgstr "N/D"
 
 #: dat/ships/raelid_outpost.xml:13 dat/ships/raglan_outpost.xml:13
 #: dat/ships/sindbad.xml:13
 msgid "This is a base. It's for AI use only. Don't buy it. Seriously."
-msgstr ""
+msgstr "Esto es una base. Es sólo para uso de la IA. No comprar. En serio."
 
 #: dat/ships/rhino.xml:2
 msgid "Rhino"
-msgstr ""
+msgstr "Rino"
 
 #: dat/ships/rhino.xml:18
 msgid ""
@@ -20041,16 +20118,23 @@ msgid ""
 "Its modular bays allow it to function as a personnel transport, a fact not "
 "lost on modern militaries."
 msgstr ""
+"El Rino, un diseño de Melendez especialmente duradero, es idóneo para el "
+"transporte de carga de alto valor y alto riesgo. Aunque tiene una densidad "
+"de carga mucho menor que la de los cargueros dedicados, se protege de forma "
+"extremadamente eficaz. Sus bahías modulares le permiten funcionar como "
+"transporte de personal, un hecho que no pasa desapercibido para los "
+"ejércitos modernos."
 
 #: dat/ships/schroedinger.xml:2
+#, fuzzy
 msgid "Schroedinger"
-msgstr ""
+msgstr "Schroedinger"
 
 #: dat/ships/schroedinger.xml:15 dat/ships/sirius_divinity.xml:14
 #: dat/ships/sirius_dogma.xml:14 dat/ships/sirius_fidelity.xml:14
 #: dat/ships/sirius_preacher.xml:13 dat/ships/sirius_shaman.xml:13
 msgid "Sirius Systems"
-msgstr ""
+msgstr "Sistema Sirio"
 
 #: dat/ships/schroedinger.xml:16
 msgid ""
@@ -20061,10 +20145,17 @@ msgid ""
 "and low amount of weapons space. It is also equipped with a pair of Eraedon "
 "engines, making it highly manoeuvrable."
 msgstr ""
+"El Schroedinger se utiliza principalmente como nave de reconocimiento. "
+"Requiere una tripulación mínima debido a sus avanzados subsistemas de "
+"automatización, y sus tanques de combustible propios le permiten tener un "
+"alcance mucho mayor que el de la mayoría de las naves. El inconveniente es "
+"que la nave es extremadamente vulnerable a los ataques debido a su ligero "
+"blindaje y a su escaso espacio para armas. También está equipada con un par "
+"de motores Eraedon, lo que la hace muy maniobrable."
 
 #: dat/ships/shark.xml:2 dat/scripts/pilotname/generic.lua:77
 msgid "Shark"
-msgstr ""
+msgstr "Tiburón"
 
 #: dat/ships/shark.xml:18
 msgid ""
@@ -20075,7 +20166,7 @@ msgstr ""
 
 #: dat/ships/sirius_divinity.xml:2
 msgid "Sirius Divinity"
-msgstr ""
+msgstr "Divinidad Sirio"
 
 #: dat/ships/sirius_divinity.xml:16
 msgid ""
@@ -20085,10 +20176,16 @@ msgid ""
 "multitude of fighters gives it unparalleled flexibility in combat, serving "
 "as a key logistical vessel in any sizable fleet."
 msgstr ""
+"Aunque se dice que el Dogma forma el núcleo de cualquier flota Sirio, pocos "
+"pilotos de combate descartarían la importancia de la Divinidad. Aunque no es "
+"excepcionalmente formidable en el combate directo, la capacidad de la "
+"Divinidad para desplegar una multitud de cazas le da una flexibilidad sin "
+"igual en el combate, sirviendo como nave logística clave en cualquier flota "
+"de tamaño considerable."
 
 #: dat/ships/sirius_dogma.xml:2
 msgid "Sirius Dogma"
-msgstr ""
+msgstr "Dogma Sirio"
 
 #: dat/ships/sirius_dogma.xml:16
 msgid ""
@@ -20096,10 +20193,13 @@ msgid ""
 "Trimmed in gold and silver and fielding a large array of weapons, the Dogma "
 "is seldom surpassed in either prestige or military might."
 msgstr ""
+"La columna vertebral de la flota de la Casa Sirio, el Dogma es un "
+"espectáculo para la vista. Adornado con oro y plata y con un gran arsenal de "
+"armas, el Dogma rara vez es superado ni en prestigio ni en poderío militar."
 
 #: dat/ships/sirius_fidelity.xml:2
 msgid "Sirius Fidelity"
-msgstr ""
+msgstr "Fidelidad Sirio"
 
 #: dat/ships/sirius_fidelity.xml:15
 msgid ""
@@ -20110,7 +20210,7 @@ msgstr ""
 
 #: dat/ships/sirius_preacher.xml:2
 msgid "Sirius Preacher"
-msgstr ""
+msgstr "Predicador Sirio"
 
 #: dat/ships/sirius_preacher.xml:15
 msgid ""
@@ -20118,10 +20218,14 @@ msgid ""
 "Sirius projects its message and will. Fielding a large array of weaponry, "
 "the Preacher is adept at making converts out of unbelievers."
 msgstr ""
+"El Predicador, como su nombre indica, es el principal vehículo mediante el "
+"cual la Casa Sirio proyecta su mensaje y su voluntad. El Predicador, que "
+"dispone de un amplio arsenal de armas, es experto en convertir a los "
+"incrédulos en adeptos."
 
 #: dat/ships/sirius_shaman.xml:2
 msgid "Sirius Shaman"
-msgstr ""
+msgstr "Chamán Sirio"
 
 #: dat/ships/sirius_shaman.xml:15
 msgid ""
@@ -20223,8 +20327,9 @@ msgid ""
 msgstr ""
 
 #: dat/ships/starbridge.xml:2
+#, fuzzy
 msgid "Starbridge"
-msgstr ""
+msgstr "Starbridge"
 
 #: dat/ships/starbridge.xml:17
 msgid ""
@@ -20233,6 +20338,10 @@ msgid ""
 "comparable maximum speed. It's low mass comes at the cost of reduced "
 "structural space."
 msgstr ""
+"El Starbridge es la última nave diseñada por Industrias Krain. Es un "
+"destructor ligero que alcanza la misma maniobrabilidad que una corbeta y una "
+"velocidad máxima comparable. Su baja masa tiene como contrapartida una "
+"reducción del espacio estructural."
 
 #: dat/ships/thurion_apprehension.xml:2
 msgid "Thurion Apprehension"
@@ -20312,7 +20421,7 @@ msgstr ""
 #: dat/ships/vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:223
 msgid "Vendetta"
-msgstr ""
+msgstr "Vendetta"
 
 #: dat/ships/vendetta.xml:17
 msgid ""
@@ -20326,7 +20435,7 @@ msgstr ""
 
 #: dat/ships/vigilance.xml:2
 msgid "Vigilance"
-msgstr ""
+msgstr "Vigilancia"
 
 #: dat/ships/vigilance.xml:16
 msgid ""
