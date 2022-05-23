@@ -536,7 +536,7 @@ function add_article( my_faction )
    end
 
    local exp = time.get() + time.create( 0, 10, 5000 * rnd.sigma() )
-   local a = news.add( my_faction, title, desc, exp, 6 ) -- Slightly lower priority than default
+   local a = news.add( my_faction, title, desc, exp, nil, 6 ) -- Slightly lower priority than default
    a:bind( tag )
    var.push( "news_last_article", time.get():tonumber() )
 end
@@ -574,7 +574,7 @@ function add_econ_article ()
    end
 
    -- Remove old econ articles (we only want one at a time)
-   for i, article in ipairs( news.get( "econ" ) ) do
+   for i, article in ipairs(news.get("econ")) do
       article:rm()
    end
 
