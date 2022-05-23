@@ -24,8 +24,6 @@ typedef struct news_s {
 
    ntime_t date; /**< Date added ascribed to the article, NULL if none */
    ntime_t date_to_rm; /**< Date after which the article will be removed */
-
-   struct news_s* next; /**< pointer to next article in the list */
 } news_t;
 
 /*
@@ -43,7 +41,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h );
 /*
  * News interactions
  */
-news_t* new_article( const char* title, const char* content, const char*
+news_t* news_add( const char* title, const char* content, const char*
       faction, ntime_t date, ntime_t date_to_rm, int priority );
-int free_article( int id );
 news_t* news_get( int id );
+void news_rm( int id );

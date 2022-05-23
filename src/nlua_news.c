@@ -14,6 +14,7 @@
 
 #include "nlua_news.h"
 
+#include "array.h"
 #include "land.h"
 #include "nlua_time.h"
 #include "nluadef.h"
@@ -214,7 +215,7 @@ int newsL_add( lua_State *L )
             }
 
             if (title && content && faction)
-               new_article( title, content, faction, date, date_to_rm, priority );
+               news_add( title, content, faction, date, date_to_rm, priority );
             else
                WARN(_("Bad arguments"));
 
@@ -265,7 +266,7 @@ int newsL_add( lua_State *L )
    }
 
    if (title && content && faction)
-      n_article = new_article( title, content, faction, date, date_to_rm, priority );
+      n_article = news_add( title, content, faction, date, date_to_rm, priority );
    else
       NLUA_ERROR(L,_("Bad arguments"));
 
@@ -292,13 +293,13 @@ int newsL_rm( lua_State *L )
       lua_pushnil(L);
       while (lua_next(L, -2)) {
          LuaNews_t *Larticle = luaL_checknews(L, -1);
-         free_article( *Larticle );
+         news_rm( *Larticle );
          lua_pop(L, 1);
       }
    }
    else {
       LuaNews_t *Larticle = luaL_checknews(L, 1);
-      free_article(*Larticle);
+      news_rm( *Larticle );
    }
 
    /* If we're landed, we should regenerate the news buffer. */
@@ -335,12 +336,10 @@ int newsL_get( lua_State *L )
 {
    LuaNews_t Larticle;
    ntime_t date;
-   news_t *article_ptr;
    char *characteristic;
-   int k, print_all;
+   int print_all;
 
    date  = -1;
-   article_ptr = news_list;
    characteristic = NULL;
    print_all = 0;
 
@@ -355,24 +354,24 @@ int newsL_get( lua_State *L )
 
    /* Now put all the matching articles in a table. */
    lua_newtable(L);
-   k = 1;
-   do {
-      if ((article_ptr->title == NULL) || (article_ptr->desc == NULL)
-            || (article_ptr->faction == NULL))
+   for (int i=0; i<array_size(news_list); i++) {
+      news_t *n = &news_list[i];;
+
+      if ((n->title == NULL) || (n->desc == NULL)
+            || (n->faction == NULL))
          continue;
 
-      if ( print_all || date == article_ptr->date
-           || ( characteristic
-                && ( strcmp( article_ptr->title, characteristic ) == 0
-                     || strcmp( article_ptr->desc, characteristic ) == 0
-                     || strcmp( article_ptr->faction, characteristic ) == 0
-                     || ( article_ptr->tag != NULL && strcmp( article_ptr->tag, characteristic ) == 0 ) ) ) ) {
-         Larticle = article_ptr->id;
+      if (print_all || date == n->date
+           || (characteristic
+                && ( strcmp( n->title, characteristic ) == 0
+                     || strcmp( n->desc, characteristic ) == 0
+                     || strcmp( n->faction, characteristic ) == 0
+                     || ( n->tag != NULL && strcmp( n->tag, characteristic ) == 0 ) ) ) ) {
+         Larticle = n->id;
          lua_pushnews(L, Larticle); /* value */
-         lua_rawseti(L, -2, k++);
+         lua_rawseti(L, -2, i+1);
       }
-
-   } while ((article_ptr = article_ptr->next) != NULL);
+   }
 
    free(characteristic);
 
@@ -406,7 +405,7 @@ int newsL_eq( lua_State *L )
  */
 int newsL_title( lua_State *L )
 {
-   news_t *article_ptr = luaL_validnews(L, 1);;
+   news_t *article_ptr = luaL_validnews(L, 1);
    lua_pushstring(L, article_ptr->title);
    return 1;
 }
@@ -419,7 +418,7 @@ int newsL_title( lua_State *L )
  */
 int newsL_desc( lua_State *L )
 {
-   news_t *article_ptr = luaL_validnews(L, 1);;
+   news_t *article_ptr = luaL_validnews(L, 1);
    lua_pushstring(L, article_ptr->desc);
    return 1;
 }
@@ -432,7 +431,7 @@ int newsL_desc( lua_State *L )
  */
 int newsL_faction( lua_State *L )
 {
-   news_t *article_ptr = luaL_validnews(L, 1);;
+   news_t *article_ptr = luaL_validnews(L, 1);
    lua_pushstring(L, article_ptr->faction);
    return 1;
 }
@@ -445,7 +444,7 @@ int newsL_faction( lua_State *L )
  */
 int newsL_date( lua_State *L )
 {
-   news_t *article_ptr = luaL_validnews(L, 1);;
+   news_t *article_ptr = luaL_validnews(L, 1);
    lua_pushinteger(L, (lua_Integer)article_ptr->date);
    return 1;
 }

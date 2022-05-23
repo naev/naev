@@ -31,20 +31,18 @@
 #include "space.h"
 #include "toolkit.h"
 
-#define NEWS_MAX_LENGTH       8192
+#define NEWS_MAX_LENGTH       8192  /**< Maximum length to print. */
 
 /*
  * News stack.
  */
-news_t* news_list             = NULL;  /**< Linked list containing all articles */
-
-static int next_id            = 1; /**< next number to use as ID */
+news_t *news_list    = NULL;  /**< Linked list containing all articles */
+static int next_id   = 0; /**< next number to use as ID */
 
 /**
  * News line buffer.
  */
 static char buf[NEWS_MAX_LENGTH];
-
 static int len;
 
 static unsigned int news_tick = 0; /**< Last news tick. */
@@ -72,6 +70,22 @@ int news_saveArticles( xmlTextWriterPtr writer ); /* externed in save.c */
 int news_loadArticles( xmlNodePtr parent ); /* externed in load.c */
 static void clear_newslines (void);
 
+static int news_cmp( const void *p1, const void *p2 )
+{
+   const news_t *n1, *n2;
+   int diff;
+   n1 = (const news_t*) p1;
+   n2 = (const news_t*) p2;
+   diff = n1->priority - n2->priority;
+   if (diff != 0)
+      return diff;
+   if (n1->date < n2->date)
+      return +1;
+   else if (n1->date > n2->date)
+      return -1;
+   return n1->id - n2->id;
+}
+
 /**
  * @brief makes a new article and puts it into the list
  *    @param title   the article title
@@ -82,85 +96,28 @@ static void clear_newslines (void);
  *    @param priority Priority to use.
  * @return pointer to new article
  */
-news_t* new_article( const char* title, const char* content,
+news_t* news_add( const char* title, const char* content,
       const char* faction, ntime_t date, ntime_t date_to_rm, int priority )
 {
-   (void) priority;
-   news_t *article_ptr, *n_article;
+   news_t *n;
+   int id = ++next_id;
 
-   /* make new article */
-   n_article = calloc(sizeof(news_t), 1);
+   if (news_list==NULL)
+      news_list = array_create( news_t );
+   n = &array_grow( &news_list );
+   memset( n, 0, sizeof(news_t) );
+   n->id      = id;
+   n->title   = strdup( title );
+   n->desc    = strdup( content );
+   n->faction = strdup( faction );
+   n->date    = date;
+   n->date_to_rm = date_to_rm;
+   n->priority = priority;
 
-   n_article->id = next_id++;
+   /* Sort it! */
+   //qsort( news_list, array_size(news_list), sizeof(news_t), news_cmp );
 
-   /* allocate it */
-   n_article->title  = strdup( title );
-   n_article->desc   = strdup( content );
-   n_article->faction = strdup( faction );
-   n_article->date   = date;
-   n_article->date_to_rm = date_to_rm;
-
-   /* If it belongs first*/
-   if (news_list->date <= date) {
-      n_article->next = news_list;
-      news_list = n_article;
-   }
-   /* article_ptr is the one BEFORE the one we want*/
-   else {
-      article_ptr = news_list;
-
-      while ((article_ptr->next != NULL) && (article_ptr->next->date > date))
-         article_ptr = article_ptr->next;
-
-      n_article->next = article_ptr->next;
-
-      article_ptr->next = n_article;
-   }
-
-   return n_article;
-}
-
-/**
- * @brief frees an article in the news list
- *    @param id the id of the article to remove
- */
-int free_article(int id)
-{
-   news_t *article_ptr, *article_to_rm;
-
-   article_ptr = news_list;
-
-   /* if the first article is the one we're looking for */
-   if (news_list->id == id) {
-      article_to_rm = news_list;
-      news_list = news_list->next;
-
-      if (article_to_rm->next == NULL) {
-         WARN(_("\nLast article, do not remove"));
-         return -1;
-      }
-   }
-   else {
-      /* get the article before the one we're looking for */
-      while ((article_ptr->next != NULL) && (article_ptr->next->id != id))
-         article_ptr = article_ptr->next;
-
-      if (article_ptr->next == NULL) {
-         WARN(_("\nArticle to remove not found"));
-         return -1;
-      }
-
-      article_to_rm = article_ptr->next;
-      article_ptr->next = article_to_rm->next;
-   }
-
-   free(article_to_rm->title);
-   free(article_to_rm->desc);
-   free(article_to_rm->faction);
-   free(article_to_rm->tag);
-   free(article_to_rm);
-
-   return 0;
+   return news_get( id );
 }
 
 /**
@@ -184,24 +141,19 @@ int news_init (void)
  */
 void news_exit (void)
 {
-   news_t *article_ptr, *temp;
-
    if (news_list == NULL)
       return;
 
-   article_ptr = news_list;
+   for (int i=0; i<array_size(news_list); i++) {
+      news_t *n = &news_list[i];
 
-   while (article_ptr != NULL) {
-      temp = article_ptr;
-      article_ptr = article_ptr->next;
-
-      free(temp->faction);
-      free(temp->title);
-      free(temp->desc);
-      free(temp->tag);
-
-      free(temp);
+      free(n->faction);
+      free(n->title);
+      free(n->desc);
+      free(n->tag);
    }
+   array_free(news_list);
+   news_list = NULL;
 
    for (int i=0; i<array_size(news_lines); i++)
       free(news_lines[i]);
@@ -217,17 +169,31 @@ void news_exit (void)
 /**
  * @brief gets the article with id ID, else NULL
  */
-news_t* news_get(int id)
+news_t* news_get( int id )
 {
-   news_t *article_ptr = news_list;
+   for (int i=0; i<array_size(news_list); i++) {
+      news_t *n = &news_list[i];
+      if (n->id == id)
+         return n;
+   }
+   return NULL;
+}
 
-   while ((article_ptr != NULL) && (article_ptr->id != id))
-      article_ptr = article_ptr->next;
+void news_free( news_t *n )
+{
+   free( n->title );
+   free( n->desc );
+   free( n->faction );
+   free( n->tag );
+}
 
-   if (article_ptr == NULL)
-      return NULL;
-
-   return article_ptr;
+void news_rm( int id )
+{
+   news_t *n = news_get( id );
+   if (n==NULL)
+      return;
+   news_free( n );
+   array_erase( &news_list, &n[0], &n[1] );
 }
 
 /**
@@ -238,53 +204,44 @@ news_t* news_get(int id)
  */
 int *generate_news( int faction )
 {
-   news_t *temp, *article_ptr;
-   int p;
-   char *article_time;
    const char* fname;
+   ntime_t curtime = ntime_get();
+   int p = 0;
 
-   p = 0;
-   article_ptr = news_list;
    fname = (faction >= 0) ? faction_name( faction ) : NULL;
 
-   /* Put all acceptable news into buf */
-   do {
-      /* If we've reached the end of the list */
-      if (article_ptr->faction == NULL)
-         break;
+   /* First pass to remove old articles. */
+   for (int i=array_size(news_list)-1; i>=0; i--) {
+      DEBUG("i = %d / %d", i, array_size(news_list));
+      news_t *n = &news_list[i];
 
       /* if the article is due for removal */
-      if (article_ptr->date_to_rm <= ntime_get()) {
-         temp = article_ptr->next;
-         free_article(article_ptr->id);
-         article_ptr = temp;
-         continue;
-      }
+      if (n->date_to_rm <= curtime)
+         news_rm( n->id );
+   }
+
+   /* Put all acceptable news into buf */
+   for (int i=0; i<array_size(news_list); i++) {
+      news_t *n = &news_list[i];
 
       /* if article is okay */
-      if ( (strcmp(article_ptr->faction, "Generic") == 0)
-            || ( (fname != NULL)
-               && (strcmp(article_ptr->faction, fname) == 0) ) ) {
-         /* XXX: magic number */
-         if (article_ptr->date && (article_ptr->date < 40000000000000)) {
-            article_time = ntime_pretty(article_ptr->date, 1);
+      if ((strcmp(n->faction, "Generic") == 0)
+            || ((fname != NULL)
+               && (strcmp(n->faction, fname) == 0))) {
+         if (n->date && (n->date < NEWS_FOREVER)) {
+            char *article_time = ntime_pretty( n->date, 1 );
             p += scnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
-               "%s: %s#0\n\n"
-               , article_ptr->title, article_time, article_ptr->desc );
+               "%s: %s#0\n\n", n->title, article_time, n->desc );
             free( article_time );
          }
          else {
             p += scnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
-               "%s#0\n\n"
-               , article_ptr->title, article_ptr->desc );
+               "%s#0\n\n", n->title, n->desc );
          }
       }
-
-      article_ptr = article_ptr->next;
-
-   } while (article_ptr != NULL && p < NEWS_MAX_LENGTH);
+   }
 
    if (p == 0)
       p = scnprintf(buf, NEWS_MAX_LENGTH, _("\n\nSorry, no news today\n\n\n"));
@@ -470,36 +427,33 @@ static void news_render( double bx, double by, double w, double h, void *data )
  */
 int news_saveArticles( xmlTextWriterPtr writer )
 {
-   news_t *article_ptr;
-   char *ntitle, *ndesc;
-
-   article_ptr = news_list;
-
    xmlw_startElem(writer, "news");
-   do {
 
-      if ( article_ptr->title != NULL && article_ptr->desc!=NULL &&
-            article_ptr->faction != NULL ) {
-         xmlw_startElem(writer, "article");
+   for (int i=0; i<array_size(news_list); i++) {
+      const char *ntitle, *ndesc;
+      news_t *n = &news_list[i];
 
-         ntitle = article_ptr->title;
-         ndesc  = article_ptr->desc;
+      if (n->title == NULL || n->desc==NULL || n->faction == NULL)
+         continue;
 
-         xmlw_attr(writer, "title", "%s", ntitle);
-         xmlw_attr(writer, "desc", "%s", ndesc);
-         xmlw_attr(writer, "faction", "%s", article_ptr->faction);
-         xmlw_attr(writer, "date", "%"PRIi64, article_ptr->date);
-         xmlw_attr(writer, "date_to_rm", "%"PRIi64, article_ptr->date_to_rm);
-         xmlw_attr(writer, "id", "%i", article_ptr->id);
-         xmlw_attr(writer, "priority", "%i", article_ptr->priority);
+      xmlw_startElem(writer, "article");
 
-         if (article_ptr->tag != NULL)
-            xmlw_attr(writer, "tag", "%s", article_ptr->tag);
+      ntitle = n->title;
+      ndesc  = n->desc;
 
-         xmlw_endElem(writer); /* "article" */
-      }
+      xmlw_attr(writer, "title", "%s", ntitle);
+      xmlw_attr(writer, "desc", "%s", ndesc);
+      xmlw_attr(writer, "faction", "%s", n->faction);
+      xmlw_attr(writer, "date", "%"PRIi64, n->date);
+      xmlw_attr(writer, "date_to_rm", "%"PRIi64, n->date_to_rm);
+      xmlw_attr(writer, "id", "%i", n->id);
+      xmlw_attr(writer, "priority", "%i", n->priority);
 
-   } while ((article_ptr = article_ptr->next) != NULL);
+      if (n->tag != NULL)
+         xmlw_attr(writer, "tag", "%s", n->tag);
+
+      xmlw_endElem(writer); /* "article" */
+   }
 
    xmlw_endElem(writer); /* "news" */
 
@@ -518,7 +472,7 @@ int news_loadArticles( xmlNodePtr parent )
 
    xmlNodePtr node;
 
-   largestID = 1;
+   largestID = 0;
 
    news_exit();
    news_init();
@@ -527,7 +481,8 @@ int news_loadArticles( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node, "news"))
-         if (news_parseArticle( node ) < 0) return -1;
+         if (news_parseArticle( node ) < 0)
+            return -1;
    } while (xml_nextNode(node));
 
    next_id = largestID;
@@ -591,9 +546,9 @@ if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup
       largestID = MAX(largestID, next_id + 1);
 
       /* make the article*/
-      n_article = new_article( title, desc, faction, date, date_to_rm, priority );
+      n_article = news_add( title, desc, faction, date, date_to_rm, priority );
       /* Read optional tag. */
-      xmlr_attr_strd(node, "tag", n_article->tag);
+      xmlr_attr_strd( node, "tag", n_article->tag );
 
 cleanup:
       free(title);
