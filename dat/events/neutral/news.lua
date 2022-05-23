@@ -432,12 +432,20 @@ articles["Za'lek"] = {
       tag = N_([[P versus NP Proof Proven False]]),
       desc = _([[The highly anticipated 5,928 page P versus NP proof of Prof. Picazzo was proven false when a typo was found in Theorem 238.87 by a team of post-doctoral researchers.]]),
    },
+   {
+      tag = N_([[Tessellated Singularity Observed]]),
+      desc = _([[New paper published in Estimation Weekly provides proof of naturally occurring tessellated singularity. Future applications may include a fountain pen configuration and a new color pigment between pink and magenta.]]),
+   },
    --[[
       Business
    --]]
    {
       tag = N_([[New Startup to Harness Power of Nebula]]),
       desc = _([[A new local startup at Stein has claimed they have found a way to stabilizer power generators in volatile nebula. They are seeking to secure funding to begin experiments this cycle. Skeptics point out that this contradicts Yang-Mills theory.]]),
+   },
+   {
+      tag = N_([[Company Selling Prisms Surprisingly a Pyramid Scheme]]),
+      desc = _([[Investors appalled as PointMe Inc. found to be an elaborate Pyramid scheme by special investigation. One investor is quoted as saying; "I can't believe what I'm seeing. This shattered my outlook completely!"]]),
    },
    --[[
       Politics
@@ -452,6 +460,10 @@ articles["Za'lek"] = {
    {
       tag = N_([[Altercation at Conference on Philosophy and Ethics]]),
       desc = _([[A large fight broke out when Prof. Li was presenting her new theory on quantum dualism. Dualists and materialists used chairs as improvised weapons until riot police were able to disperse the scene. General Chair Picazzo boasted it was the least violent conference up to date with only 17 hospitalized.]]),
+   },
+   {
+      tag = N_([[Za'lek Citizen Arrested]]),
+      desc = _([[A long renowned scientist arrested for using an unauthorized nuclear device to make toast. A three headed cat was attained from perpetrator's appartment and sent fur further studies.]]),
    },
 }
 
