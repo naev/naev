@@ -27,8 +27,8 @@ local articles = {
       body = _([[The highly anticipated 5,928 page P versus NP proof of Prof. Picazzo was proven false when a typo was found in Theorem 238.87 by a team of post-doctoral researchers.]]),
    },
    {
-      tag = N_([[Tessellated Singularity Observed]]),
-      desc = _([[New paper published in Estimation Weekly provides proof of naturally occurring tessellated singularity. Future applications may include a fountain pen configuration and a new color somewhere between pink and magenta.]]),
+      head = N_([[Tessellated Singularity Observed]]),
+      body = _([[New paper published in Estimation Weekly provides proof of naturally occurring tessellated singularity. Future applications may include a fountain pen configuration and a new color somewhere between pink and magenta.]]),
    },
    --[[
       Business
@@ -38,8 +38,8 @@ local articles = {
       body = _([[A new local startup at Stein has claimed they have found a way to stabilizer power generators in volatile nebula. They are seeking to secure funding to begin experiments this cycle. Skeptics point out that this contradicts Yang-Mills theory.]]),
    },
    {
-      tag = N_([[Company Selling Prisms Surprisingly a Pyramid Scheme]]),
-      desc = _([[Investors appalled as PointMe Inc. found by special investigation to be an elaborate Pyramid scheme. One investor is quoted as saying; "I can't believe what I'm seeing. This shattered my outlook completely!"]]),
+      head = N_([[Company Selling Prisms Surprisingly a Pyramid Scheme]]),
+      body = _([[Investors appalled as PointMe Inc. found by special investigation to be an elaborate Pyramid scheme. One investor is quoted as saying; "I can't believe what I'm seeing. This shattered my outlook completely!"]]),
    },
    --[[
       Politics
@@ -49,8 +49,8 @@ local articles = {
       body = _([[Surpassing the previous record of 3.198 periods of uninterrupted deliberations, the Za'lek Leadership Committee was called to a stop when too many research leaders had to be taken to hospitals due to sleep deprivation and starvation.]]),
    },
    {
-      tag = N_([[Monument Desecrated]]),
-      desc = _([[The "On the Shoulder of Giants" monument was desecrated with the controversial phrase "1+1=3" repeated in red. Authorities are investigating and request anyone having knowledge about the issue contact them immediately.]]),
+      head = N_([[Monument Desecrated]]),
+      body = _([[The "On the Shoulder of Giants" monument was desecrated with the controversial phrase "1+1=3" repeated in red. Authorities are investigating and request anyone having knowledge about the issue contact them immediately.]]),
    },
    --[[
       Human interest.
