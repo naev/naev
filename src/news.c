@@ -129,7 +129,7 @@ int news_init (void)
    if (news_list != NULL)
       news_exit();
 
-   news_list = calloc(sizeof(news_t), 1);
+   news_list = array_create( news_t );
    news_lines = array_create( char* );
    news_restores = array_create( glFontRestore );
 
@@ -212,7 +212,6 @@ int *generate_news( int faction )
 
    /* First pass to remove old articles. */
    for (int i=array_size(news_list)-1; i>=0; i--) {
-      DEBUG("i = %d / %d", i, array_size(news_list));
       news_t *n = &news_list[i];
 
       /* if the article is due for removal */
@@ -498,13 +497,7 @@ int news_loadArticles( xmlNodePtr parent )
  */
 static int news_parseArticle( xmlNodePtr parent )
 {
-   char *title, *desc, *faction;
-   char *buff;
-   int priority;
-   ntime_t date, date_to_rm;
    xmlNodePtr node;
-
-   news_t *n_article;
 
    node = parent->xmlChildrenNode;
 
@@ -513,6 +506,10 @@ xmlr_attr_strd(node, s, elem); \
 if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup; }
 
    do {
+      news_t *n_article;
+      char *title, *desc, *faction, *buff;
+      int priority;
+      ntime_t date, date_to_rm;
 
       if (!xml_isNode(node, "article"))
          continue;
