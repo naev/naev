@@ -426,6 +426,10 @@ articles["Za'lek"] = {
       tag = N_([[Altercation at Conference on Philosophy and Ethics]]),
       desc = _([[A large fight broke out when Prof. Li was presenting her new theory on quantum dualism. Dualists and materialists used chairs as improvised weapons until riot police were able to disperse the scene. General Chair Picazzo boasted it was the least violent conference up to date with only 17 hospitalized.]]),
    },
+   {
+      tag = N_([[Za'lek Citizen Arrested]]),
+      desc = _([[Long renowned scientist arrested for using an unauthorized nuclear device to make breakfast toast. A three headed cat attained from perpetrator's apartment and sent for further studies.]]),
+   },
 }
 
 articles["Frontier"] = {
