@@ -11,16 +11,16 @@ local articles = {
       Science and technology
    --]]
    {
-      head = N_([[On the Usefullness of Tails]]),
-      body = _([[A paper published by the journal Unatural Observations on the usefulness of tails caused a great debate among the proponents and opponents of heavy planet colonization endeavors. Moderator quoted as saying "we can't seem to reach an agreement. I'm splitting my tails!"]]),
+      head = N_([[On the Usefulness of Tails]]),
+      body = _([[A paper published by the journal Unnatural Observations on the usefulness of tails caused a great debate among the proponents and opponents of heavy planet colonization endeavors. Moderator quoted as saying "we can't seem to reach an agreement. I'm splitting my tails!"]]),
    },
    {
-      head = N_([[Unusual recessivness]]),
+      head = N_([[Unusual Recessiveness]]),
       body = _([[Several dark planets report the natural re-emergence of daylight eyes, prompting leaders to declare planetary emergency.]]),
    },
    {
       head = N_([[Colorful Outlook on Life]]),
-      body = _([[New eye color serum releast for general conosumption. The new color changes, and can appear to be either blue, green, purple or yellow, depending on the direction it is viewed from. Renowned socialite Sharmante Givotake has already signed a 6 month deal to promote the new color.]]),
+      body = _([[New eye color serum released for general consumption. The new color changes, and can appear to be either blue, green, purple or yellow, depending on the direction it is viewed from. Renowned socialite Sharmante Givotake has already signed a 6 month deal to promote the new color.]]),
    },
    --[[
       Business
@@ -41,8 +41,8 @@ local articles = {
       body = _([[Several Soromid delivery services report a large movement for unionization among their workers. Some intelligent bioengineered pets are rumoured to have already signed up as well. "What's next," laments a manager who requested anonymity, "do they want to unionize my bioship as well?"]]),
    },
    {
-      head = N_([[Shamefull display]]),
-      body = _([[Sorom Rememberance Day ceremony marred by incident of public drunkedness and overall inconsiderate displays. Several delinquents arrested.]]),
+      head = N_([[Shameful display]]),
+      body = _([[Sorom Remembrance Day ceremony marred by incident of public drunkedness and overall inconsiderate displays. Several delinquents arrested.]]),
    },
    --[[
       Human interest.
