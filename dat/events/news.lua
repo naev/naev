@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Generic News">
- <trigger>load</trigger>
+ <trigger>land</trigger>
  <chance>100</chance>
 </event>
 --]]
@@ -110,6 +110,7 @@ end
 
 function create()
    hook.land( "land" )
+   land()
 end
 
 -- create news
@@ -146,7 +147,7 @@ function add_header( my_faction )
    end
 
    local function sample_one( t )
-      if t == "table" then
+      if type(t) == "table" then
          return t[ rnd.rnd(1,#t) ]
       end
       return t
@@ -226,7 +227,8 @@ function add_econ_article ()
       local planets = {}
       for i, s in ipairs( lmisn.getSysAtDistance( system.cur(), 2, 4 ) ) do
          for j, p in ipairs( s:spobs() ) do
-            if p:faction():tags().generic and #(p:commoditiesSold()) > 0 then
+            local f = p:faction()
+            if f and f:tags().generic and #(p:commoditiesSold()) > 0 then
                planets[ #planets + 1 ] = p
             end
          end
