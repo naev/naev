@@ -18,6 +18,10 @@ local articles = {
       head = N_([[Unusual recessivness]]),
       body = _([[Several dark planets report the natural re-emergence of daylight eyes, prompting leaders to declare planetary emergency.]]),
    },
+   {
+      head = N_([[Colorful Outlook on Life]]),
+      body = _([[New eye color serum releast for general conosumption. The new color changes, and can appear to be either blue, green, purple or yellow, depending on the direction it is viewed from. Renowned socialite Sharmante Givotake has already signed a 6 month deal to promote the new color.]]),
+   },
    --[[
       Business
    --]]
@@ -35,6 +39,10 @@ local articles = {
    {
       head = N_([[A Voice for Unionization]]),
       body = _([[Several Soromid delivery services report a large movement for unionization among their workers. Some intelligent bioengineered pets are rumoured to have already signed up as well. "What's next," laments a manager who requested anonymity, "do they want to unionize my bioship as well?"]]),
+   },
+   {
+      head = N_([[Shamefull display]]),
+      body = _([[Sorom Rememberance Day ceremony marred by incident of public drunkedness and overall inconsiderate displays. Several delinquents arrested.]]),
    },
    --[[
       Human interest.
