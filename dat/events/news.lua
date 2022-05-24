@@ -148,10 +148,16 @@ function add_header( my_faction )
       my_faction = 'Generic'
    end
 
+   local function sample_one( t )
+      if t == "table" then
+         return t[ rnd.rnd(1,#t) ]
+      end
+      return t
+   end
+
    local cur_t = time.get()
-   local head = header_table[my_faction]
-   if type(head)=="table" then head = head[ rnd.rnd(1,#head) ] end
-   local body = greeting_table[my_faction][ rnd.rnd( 1, #greeting_table[my_faction] ) ]
+   local head = sample_one( header_table[my_faction] )
+   local body = sample_one( greeting_table[my_faction] )
    local a = news.add( my_faction, head, body, cur_t + time.create( 0, 0, 1 ), 0, -1 ) -- Highest priority
    a:bind( "header" )
 end
@@ -181,7 +187,7 @@ function add_article( my_faction )
       return -- Skip for now
    end
    local tag   = elem.tag
-   local head = elem.head or _(tag)
+   local head  = elem.head or _(tag)
    local body  = elem.body
    local priority = elem.priority or 6 -- Slightly lower priority than default
    if type(body)=="function" then
