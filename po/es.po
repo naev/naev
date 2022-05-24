@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-05-12 10:59+0900\n"
-"PO-Revision-Date: 2022-05-24 16:42+0000\n"
+"PO-Revision-Date: 2022-05-24 23:17+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
@@ -9978,6 +9978,13 @@ msgid ""
 "but the climate makes Ammu dependent on nearby planets such as Reidd for "
 "food supplies."
 msgstr ""
+"Ammu es un planeta generalmente tranquilo, una vez que uno se acostumbra al "
+"constante estruendo de las corrientes de lava. Las erupciones de lava se "
+"sienten a menudo en el puerto espacial subterráneo, pero la forma en que no "
+"parece perturbar a los lugareños te tranquiliza. La lava tiene un aspecto "
+"más positivo al atraer industrias que necesitan alta presión y temperatura "
+"para funcionar eficazmente, pero el clima hace que Ammu dependa de planetas "
+"cercanos como Reidd para el suministro de alimentos."
 
 #: dat/spob/ammu.xml:28
 msgid ""
@@ -9987,10 +9994,16 @@ msgid ""
 "temperature, that's not to say you can't get a mean Pan-Galactic Gargle "
 "Blaster."
 msgstr ""
+"El Bar del Puerto Espacial de Ammu, conocido como \"El Disipador\" debido a "
+"sus gélidas temperaturas, contrasta con el resto de la estación, aunque en "
+"la mayoría de los planetas se consideraría bastante cálido. Aunque es "
+"conocido sobre todo por su temperatura, eso no quiere decir que no se pueda "
+"conseguir un buen Blaster Gárgola Pan-Galáctico."
 
 #: dat/spob/amphion.xml:2
+#, fuzzy
 msgid "Amphion"
-msgstr ""
+msgstr "Amphion"
 
 #: dat/spob/amphion.xml:25
 msgid ""
@@ -10000,6 +10013,12 @@ msgid ""
 "calm and the many underwater cities are famous all over the Empire for their "
 "grandeur and opulence."
 msgstr ""
+"Amphion es un lugar de retiro popular para los oficiales del Imperio. Está "
+"lo suficientemente cerca del núcleo del Imperio como para provocar recuerdos "
+"agradecidos del servicio, pero lo suficientemente lejos como para que haya "
+"paz. Los océanos que dominan la superficie del planeta son tranquilos y las "
+"numerosas ciudades submarinas son famosas en todo el Imperio por su grandeza "
+"y opulencia."
 
 #: dat/spob/amphion.xml:26
 msgid ""
@@ -10008,26 +10027,34 @@ msgid ""
 "cheery. You wind up making easy friends in the amiable and relaxing "
 "atmosphere."
 msgstr ""
+"La edad media de los clientes parece ser de mediana edad. El bar en sí está "
+"decorado como una taberna del viejo mundo, baja, oscura, acogedora y alegre. "
+"Se acaban haciendo amigos fácilmente en el ambiente amable y relajado."
 
 #: dat/spob/anarbalis_ii.xml:2
+#, fuzzy
 msgid "Anarbalis II"
-msgstr ""
+msgstr "Anarbalis II"
 
 #: dat/spob/anarbalis_iii.xml:2
+#, fuzzy
 msgid "Anarbalis III"
-msgstr ""
+msgstr "Anarbalis III"
 
 #: dat/spob/andee_ii.xml:2
+#, fuzzy
 msgid "Andee II"
-msgstr ""
+msgstr "Andee II"
 
 #: dat/spob/andee_iia.xml:2
+#, fuzzy
 msgid "Andee IIa"
-msgstr ""
+msgstr "Andee IIa"
 
 #: dat/spob/andee_iii.xml:2
+#, fuzzy
 msgid "Andee III"
-msgstr ""
+msgstr "Andee III"
 
 #: dat/spob/andee_iii.xml:9 dat/spob/blackwell_i.xml:9 dat/spob/botarn_i.xml:9
 #: dat/spob/coran.xml:9 dat/spob/delta_polaris_i.xml:9 dat/spob/haldr.xml:15
@@ -10038,16 +10065,19 @@ msgstr ""
 #: dat/spob/tandar_iix.xml:9 dat/spob/the_stinker.xml:15
 #: dat/spob/tomas_x1.xml:9 dat/spob/vennis.xml:15 dat/spob/vercingetorix.xml:15
 #: dat/spob/xavier.xml:9
+#, fuzzy
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: dat/spob/andee_iiia.xml:2
+#, fuzzy
 msgid "Andee IIIa"
-msgstr ""
+msgstr "Andee IIIa"
 
 #: dat/spob/andors.xml:2
+#, fuzzy
 msgid "Andors"
-msgstr ""
+msgstr "Andors"
 
 #: dat/spob/andors.xml:28
 msgid ""
@@ -10056,6 +10086,10 @@ msgid ""
 "resources. Unlike more developed Za'lek settlements, there is little in the "
 "way of scholarly presence here."
 msgstr ""
+"Este mundo estéril tiene una gran riqueza de minerales enterrados bajo "
+"kilómetros de hielo, y los Za'lek han desplegado considerables recursos para "
+"aprovechar sus recursos. A diferencia de los asentamientos Za'lek más "
+"desarrollados, aquí hay poca presencia de estudiosos."
 
 #: dat/spob/andors.xml:29
 msgid ""
@@ -10064,10 +10098,14 @@ msgid ""
 "beverages and hearty food, and the patrons are almost exclusively off-duty "
 "Za'lek workers."
 msgstr ""
+"Este bar sirve como un bienvenido respiro de los vientos cortantes y las "
+"gélidas temperaturas que invaden el planeta. El menú consiste en gran parte "
+"en bebidas calientes y comida abundante, y los clientes son casi "
+"exclusivamente trabajadores Za'lek fuera de servicio."
 
 #: dat/spob/andors_refining.xml:2
 msgid "Andors Refining"
-msgstr ""
+msgstr "Refinería Andors"
 
 #: dat/spob/andors_refining.xml:24
 msgid ""
@@ -10075,10 +10113,14 @@ msgid ""
 "into a more useful form and shipped out to other worlds to be turned into "
 "whatever is needed."
 msgstr ""
+"Esta sencilla planta de refinado es donde el mineral recogido en Andors se "
+"convierte en una forma más útil y se envía a otros mundos para convertirlo "
+"en lo que sea necesario."
 
 #: dat/spob/anecu.xml:2
+#, fuzzy
 msgid "Anecu"
-msgstr ""
+msgstr "Anecu"
 
 #: dat/spob/anecu.xml:28
 msgid ""
@@ -10089,6 +10131,12 @@ msgid ""
 "which use the high pressure of the water as a benchmark against which ships "
 "can be measured."
 msgstr ""
+"Anecu es un planeta completamente acuático. Su superficie está cubierta "
+"completamente por agua, pero en las zonas poco profundas se construyen "
+"grandes ciudades submarinas. El clima sobre el agua puede ser muy duro; se "
+"han registrado olas de hasta dos kilómetros de altura. El planeta cuenta con "
+"amplias instalaciones de diseño de naves que utilizan la alta presión del "
+"agua como baremo para medirlas."
 
 #: dat/spob/anecu.xml:29
 msgid ""
@@ -10098,14 +10146,19 @@ msgid ""
 "gelatinous creatures sliding around, barely illuminated by the bar's "
 "lighting."
 msgstr ""
+"La barra del puerto espacial está a unos tres kilómetros por debajo de la "
+"superficie del planeta. Las paredes están construidas con un polímero "
+"endurecido y transparente que permite ver en la oscuridad del agua. De vez "
+"en cuando se pueden ver criaturas gelatinosas deslizándose, apenas "
+"iluminadas por la iluminación del bar."
 
 #: dat/spob/anger_i.xml:2
 msgid "Anger I"
-msgstr ""
+msgstr "Cólera I"
 
 #: dat/spob/anger_ii.xml:2
 msgid "Anger II"
-msgstr ""
+msgstr "Cólera II"
 
 #: dat/spob/anger_ii.xml:9 dat/spob/anku_ii.xml:9 dat/spob/apez_v.xml:9
 #: dat/spob/baf_iv.xml:9 dat/spob/doormat.xml:15 dat/spob/draygar_iii.xml:9
@@ -10113,32 +10166,39 @@ msgstr ""
 #: dat/spob/mutris.xml:15 dat/spob/rudderfern.xml:15 dat/spob/sharak.xml:15
 #: dat/spob/silverstone.xml:15 dat/spob/sternguard.xml:15
 #: dat/spob/tanulwa.xml:15 dat/spob/thar.xml:15
+#, fuzzy
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #: dat/spob/anifta.xml:2
+#, fuzzy
 msgid "Anifta"
-msgstr ""
+msgstr "Anifta"
 
 #: dat/spob/anker.xml:2
+#, fuzzy
 msgid "Anker"
-msgstr ""
+msgstr "Anker"
 
 #: dat/spob/anku_i.xml:2
+#, fuzzy
 msgid "An'ku I"
-msgstr ""
+msgstr "An'ku I"
 
 #: dat/spob/anku_ii.xml:2
+#, fuzzy
 msgid "An'ku II"
-msgstr ""
+msgstr "An'ku II"
 
 #: dat/spob/anku_iii.xml:2
+#, fuzzy
 msgid "An'ku III"
-msgstr ""
+msgstr "An'ku III"
 
 #: dat/spob/antica.xml:2
+#, fuzzy
 msgid "Antica"
-msgstr ""
+msgstr "Antica"
 
 #: dat/spob/antica.xml:28
 msgid ""
@@ -10147,6 +10207,10 @@ msgid ""
 "transports stop at Antica to sell their wares before venturing deeper into "
 "Empire space."
 msgstr ""
+"Aunque la instalación militar en órbita es todo comercio, Antica mezcla con "
+"bastante facilidad los negocios y el placer. Dada su ubicación, un gran "
+"número de transportes se detienen en Antica para vender sus productos antes "
+"de aventurarse en el espacio del Imperio."
 
 #: dat/spob/antica.xml:29
 msgid ""
@@ -10155,36 +10219,46 @@ msgid ""
 "finest food and drink, this Arcturian bar is often a traveller's "
 "introduction to Empire cuisine."
 msgstr ""
+"El bar Antican es un lugar bastante lujoso, que contrasta con el austero "
+"exterior de la estación militar en órbita. Este bar Arcturiano, que sirve "
+"algunas de las mejores comidas y bebidas del Imperio, suele ser la "
+"introducción de los viajeros a la cocina del Imperio."
 
 #: dat/spob/antlejos_iii.xml:2
+#, fuzzy
 msgid "Antlejos III"
-msgstr ""
+msgstr "Antlejos III"
 
 #: dat/spob/antlejos_iii.xml:9
+#, fuzzy
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: dat/spob/antlejos_iv.xml:2
+#, fuzzy
 msgid "Antlejos IV"
-msgstr ""
+msgstr "Antlejos IV"
 
 #: dat/spob/antlejos_prime.xml:2
+#, fuzzy
 msgid "Antlejos Prime"
-msgstr ""
+msgstr "Antlejos Prime"
 
 #. Use default
 #. Function for adding log entries for miscellaneous one-off missions.
 #: dat/spob/antlejos_v.xml:2 dat/scripts/common/antlejos.lua:29
+#, fuzzy
 msgid "Antlejos V"
-msgstr ""
+msgstr "Antlejos V"
 
 #: dat/spob/antlejos_v.xml:15
 msgid "A cold and barren inhospitable moon devoid of all life."
-msgstr ""
+msgstr "Una luna inhóspita, fría y estéril, desprovista de toda vida."
 
 #: dat/spob/anubis.xml:2
+#, fuzzy
 msgid "Anubis"
-msgstr ""
+msgstr "Anubis"
 
 #: dat/spob/anubis.xml:15 dat/spob/arrentil.xml:15 dat/spob/flach.xml:15
 #: dat/spob/fried_i.xml:9 dat/spob/karvua.xml:15 dat/spob/kataka.xml:15
@@ -10192,8 +10266,9 @@ msgstr ""
 #: dat/spob/qoman.xml:15 dat/spob/sheik_hall.xml:15 dat/spob/ullnorn.xml:15
 #: dat/spob/vert.xml:9 dat/spob/vorca.xml:15 dat/spob/zalek_ii.xml:9
 #: dat/spob/zaren.xml:15 dat/spob/zhang_lu.xml:15
+#, fuzzy
 msgid "Y"
-msgstr ""
+msgstr "Y"
 
 #: dat/spob/anubis.xml:28
 msgid ""
@@ -10206,6 +10281,15 @@ msgid ""
 "House Dvaered. Today, the Dvaered use Anubis to produce ammunition and light "
 "combat ships to supply Raelid Outpost."
 msgstr ""
+"Nombrado en honor al dios Egipcio de la muerte, Anubis fue establecido como "
+"base minera por una facción minera incluso antes de las Guerras de Facción. "
+"La abundancia de elementos radiactivos y pesados hacía del planeta un buen "
+"lugar para producir armas, un negocio lucrativo dada su proximidad a Sol. "
+"Durante las Guerras de las Facciones, Anubis fue anexionado por el Imperio, "
+"pero la población local se unió posteriormente al movimiento de protesta que "
+"finalmente condujo a la creación de la Casa Dvaered. En la actualidad, los "
+"Dvaered utilizan Anubis para producir munición y naves de combate ligeras "
+"para abastecer al Puesto de Avanzada Raelid."
 
 #: dat/spob/anubis.xml:29
 msgid ""
@@ -10216,14 +10300,22 @@ msgid ""
 "the locals know how unpleasant it is to have to work in such raging, "
 "radioactive conditions."
 msgstr ""
+"Lo que es bello suele ser peligroso, pero a veces también ocurre lo "
+"contrario. El bar del puerto espacial de Anubis tiene vistas a un barranco "
+"en la superficie del planeta y las tormentas radiactivas que a menudo lo "
+"atraviesan son un espectáculo digno de ver. Sin embargo, sólo los "
+"extranjeros lo aprecian, ya que la mayoría de los lugareños saben lo "
+"desagradable que es tener que trabajar en esas condiciones radiactivas."
 
 #: dat/spob/anya.xml:2
+#, fuzzy
 msgid "Anya"
-msgstr ""
+msgstr "Anya"
 
 #: dat/spob/anya.xml:15 dat/spob/sevlow.xml:15 dat/spob/wellen.xml:15
+#, fuzzy
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: dat/spob/anya.xml:26
 msgid ""
@@ -10235,6 +10327,13 @@ msgid ""
 "capital world. This is due, at least in part, to the geological "
 "instabilities of the planet."
 msgstr ""
+"Anya es el planeta gemelo de Sabe, que orbita alrededor de su centro de "
+"gravedad compartido en tándem. Sin embargo, Anya está envuelta en una capa "
+"permanente de ceniza y nieve, como resultado de la actividad geológica. En "
+"la superficie de Anya vive un pequeño número de Turiones, pero todavía no se "
+"ha iniciado ningún esfuerzo de colonización a gran escala, a pesar de la "
+"proximidad del planeta a Sabe, el mundo capital de los Turianos. Esto se "
+"debe, al menos en parte, a las inestabilidades geológicas del planeta."
 
 #: dat/spob/anya.xml:27
 msgid ""
@@ -10242,26 +10341,33 @@ msgid ""
 "is usual for Thurion bars, no alcohol or other substances deemed to be "
 "damaging to the brain are served."
 msgstr ""
+"El bar de Anya es pequeño y pintoresco, poblado por los lugareños que viven "
+"aquí. Como es habitual en los bares de Turión, no se sirve alcohol ni otras "
+"sustancias consideradas perjudiciales para el cerebro."
 
 #: dat/spob/apez_ii.xml:2
+#, fuzzy
 msgid "Apez II"
-msgstr ""
+msgstr "Apez II"
 
 #: dat/spob/apez_v.xml:2
+#, fuzzy
 msgid "Apez V"
-msgstr ""
+msgstr "Apez V"
 
 #: dat/spob/apik_i.xml:2
+#, fuzzy
 msgid "Apik I"
-msgstr ""
+msgstr "Apik I"
 
 #: dat/spob/apik_ii.xml:2
+#, fuzzy
 msgid "Apik II"
-msgstr ""
+msgstr "Apik II"
 
 #: dat/spob/apik_shipyard.xml:2
 msgid "Apik Shipyard"
-msgstr ""
+msgstr "Astillero Apik"
 
 #: dat/spob/apik_shipyard.xml:25
 msgid ""
@@ -10269,18 +10375,24 @@ msgid ""
 "needs of the general population. It efficiently churns out and services "
 "civilian vessels on an as-needed basis."
 msgstr ""
+"A diferencia de la Estación Sigma de Protera, el Astillero Apik está "
+"diseñado para atender las necesidades de la población en general. Produce y "
+"atiende eficazmente a las naves civiles en función de las necesidades."
 
 #: dat/spob/aquilia.xml:2
+#, fuzzy
 msgid "Aquilia"
-msgstr ""
+msgstr "Aquilia"
 
 #: dat/spob/arai.xml:2
+#, fuzzy
 msgid "Arai"
-msgstr ""
+msgstr "Arai"
 
 #: dat/spob/arashu.xml:2
+#, fuzzy
 msgid "Arashu"
-msgstr ""
+msgstr "Arashu"
 
 #: dat/spob/arashu.xml:28
 msgid ""
@@ -10292,6 +10404,13 @@ msgid ""
 "platforms so the workers and equipment are safe from the constant seismic "
 "activity."
 msgstr ""
+"Arashu es un planeta peculiar, es a la vez oceánico y altamente volcánico. "
+"La corteza oceánica del planeta es propensa a los terremotos, lo que hace "
+"que los maremotos arrasen las pocas zonas de tierra firme. Una corporación "
+"siria ha invertido en el aprovechamiento de las energías liberadas por este "
+"proceso, convirtiendo el planeta en una rentable planta de producción de "
+"armas. Toda la fabricación se realiza en plataformas flotantes para que los "
+"trabajadores y el equipo estén a salvo de la constante actividad sísmica."
 
 #: dat/spob/arashu.xml:29
 msgid ""
@@ -10301,10 +10420,17 @@ msgid ""
 "at the moment, so it is actually quite fascinating interesting to watch, "
 "especially once you can place the spaceport and bar!"
 msgstr ""
+"El bar cuenta con una gran pantalla que muestra un mapa geológico del "
+"planeta que, debido a que la mayor parte del mundo está cubierta de océanos, "
+"resulta un mapa poco interesante. La pantalla también muestra toda la "
+"actividad volcánica que se está produciendo en ese momento, por lo que "
+"resulta bastante fascinante de ver, ¡especialmente una vez que puedes "
+"colocar el puerto espacial y el bar!"
 
 #: dat/spob/arcadia.xml:2
+#, fuzzy
 msgid "Arcadia"
-msgstr ""
+msgstr "Arcadia"
 
 #: dat/spob/arcadia.xml:26
 msgid ""
@@ -10315,6 +10441,13 @@ msgid ""
 "technology and procedures. The project was in fact so successful that "
 "Arcadia became a hub for food distribution throughout localized Za'lek space."
 msgstr ""
+"De forma bastante irónica, pero con un nombre muy apropiado, Arcadia es un "
+"mundo bombardeado por lluvias ácidas y otros patrones climáticos igualmente "
+"desagradables. Como tal, fue el mundo central de un exitoso experimento para "
+"ver si un entorno así podía soportar una campaña de cultivo masivo con la "
+"tecnología y los procedimientos de aislamiento adecuados. De hecho, el "
+"proyecto tuvo tanto éxito que Arcadia se convirtió en un centro de "
+"distribución de alimentos en todo el espacio Za'lek localizado."
 
 #: dat/spob/arcadia.xml:27
 msgid ""
@@ -10322,10 +10455,14 @@ msgid ""
 "discussing new and better ways to improve farming technology and get more "
 "and better food for less cost."
 msgstr ""
+"Muchos capitanes de carga, agricultores y científicos se mezclan "
+"pacíficamente aquí, discutiendo nuevas y mejores formas de mejorar la "
+"tecnología agrícola y obtener más y mejores alimentos por menor coste."
 
 #: dat/spob/arch_arai.xml:2
+#, fuzzy
 msgid "Arch Arai"
-msgstr ""
+msgstr "Arch Arai"
 
 #: dat/spob/arch_arai.xml:28
 msgid ""
@@ -10334,6 +10471,11 @@ msgid ""
 "fairly law-abiding Sirius world, earning its existence through trade and "
 "industry like almost every other planet."
 msgstr ""
+"Arch Arai, que en su día fue un mundo independiente, hogar de piratas y "
+"comerciantes del mercado negro, hace tiempo que cayó bajo el hechizo de los "
+"Tocados. Ahora es un mundo Sirio bastante respetuoso con la ley, que se gana "
+"su existencia mediante el comercio y la industria, como casi cualquier otro "
+"planeta."
 
 #: dat/spob/arch_arai.xml:29
 msgid ""
@@ -10342,10 +10484,15 @@ msgid ""
 "effect is contagious making newcomers follow the example of those who are "
 "already there, almost instinctively."
 msgstr ""
+"Este bar es un lugar tranquilo. Aunque no le falta clientela, la gente que "
+"viene aquí no parece estar dispuesta a hacer un escándalo por nada. El "
+"efecto es contagioso haciendo que los recién llegados sigan el ejemplo de "
+"los que ya están allí, casi instintivamente."
 
 #: dat/spob/arck.xml:2
+#, fuzzy
 msgid "Arck"
-msgstr ""
+msgstr "Arck"
 
 #: dat/spob/arck.xml:26
 msgid ""
@@ -10356,6 +10503,13 @@ msgid ""
 "doing here is a form of reverse terraforming - an attempt to turn Arck into "
 "an X class planet."
 msgstr ""
+"Con nueve mil millones de habitantes, Arck es uno de los mundos más "
+"densamente poblados de la galaxia. La mayor parte de la superficie del "
+"planeta está cubierta por una gigantesca ciudad en expansión. Naturalmente, "
+"con tanta población viene la contaminación ambiental masiva, muchos "
+"escépticos creen que lo que los Dvaered están haciendo aquí es una forma de "
+"terraformación inversa - un intento de convertir Arck en un planeta de clase "
+"X."
 
 #: dat/spob/arck.xml:27
 msgid ""
@@ -10365,10 +10519,16 @@ msgid ""
 "often irritates traders who come here to do business, only to find "
 "themselves in the middle of a Dvaered Turborave party."
 msgstr ""
+"El puerto espacial de Arck está situado justo en el centro de un núcleo "
+"urbano especialmente densamente poblado. El bar asociado ha sido ampliado y "
+"convertido en un lugar de ocio general para los habitantes locales, algo que "
+"a menudo irrita a los comerciantes que vienen aquí a hacer negocios, sólo "
+"para encontrarse en medio de una fiesta Turborave de Dvaered."
 
 #: dat/spob/arcturus_gamma.xml:2
+#, fuzzy
 msgid "Arcturus Gamma"
-msgstr ""
+msgstr "Arcturus Gamma"
 
 #: dat/spob/arcturus_gamma.xml:15 dat/spob/belltower_station.xml:15
 #: dat/spob/brandt_station.xml:15 dat/spob/cerberus.xml:15
@@ -10393,8 +10553,9 @@ msgstr ""
 #: dat/spob/vigil_station.xml:15 dat/spob/vigilance_station.xml:15
 #: dat/spob/violin_station.xml:15 dat/spob/wildwood_station.xml:15
 #: dat/spob/yak_station.xml:15
+#, fuzzy
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: dat/spob/arcturus_gamma.xml:28
 msgid ""
@@ -10403,6 +10564,10 @@ msgid ""
 "constant routine patrols tries to make sure no undesirable ships make it "
 "into Empire space."
 msgstr ""
+"Arcturus Gamma es la primera línea de defensa del Imperio cuando se trata de "
+"sus sistemas centrales desde el este. Una imponente fuerza estacionada aquí "
+"con constantes patrullas de rutina intenta asegurarse de que ninguna nave "
+"indeseable llegue al espacio del Imperio."
 
 #: dat/spob/arcturus_gamma.xml:29
 msgid ""
@@ -10410,50 +10575,64 @@ msgid ""
 "meticulously maintained and full of off-duty Empire soldiers - not a place "
 "to get into a fight."
 msgstr ""
+"El bar Arcturus Gamma es un lugar verdaderamente utilitario, de color gris "
+"metálico, meticulosamente mantenido y lleno de soldados del Imperio fuera de "
+"servicio: no es un lugar para meterse en una pelea."
 
 #: dat/spob/arcturus_i.xml:2
+#, fuzzy
 msgid "Arcturus I"
-msgstr ""
+msgstr "Arcturus I"
 
 #: dat/spob/arcturus_ii.xml:2
+#, fuzzy
 msgid "Arcturus II"
-msgstr ""
+msgstr "Arcturus II"
 
 #: dat/spob/ariadus_ii.xml:2
+#, fuzzy
 msgid "Ariadus II"
-msgstr ""
+msgstr "Ariadus II"
 
 #: dat/spob/ariadus_iv.xml:2
+#, fuzzy
 msgid "Ariadus IV"
-msgstr ""
+msgstr "Ariadus IV"
 
 #: dat/spob/ariadus_vi.xml:2
+#, fuzzy
 msgid "Ariadus VI"
-msgstr ""
+msgstr "Ariadus VI"
 
 #: dat/spob/ariadus_via.xml:2
+#, fuzzy
 msgid "Ariadus VIa"
-msgstr ""
+msgstr "Ariadus VIa"
 
 #: dat/spob/ariadus_vib.xml:2
+#, fuzzy
 msgid "Ariadus VIb"
-msgstr ""
+msgstr "Ariadus VIb"
 
 #: dat/spob/ariak.xml:2
+#, fuzzy
 msgid "Ariak"
-msgstr ""
+msgstr "Ariak"
 
 #: dat/spob/armorhead_i1.xml:2
+#, fuzzy
 msgid "Armorhead I-1"
-msgstr ""
+msgstr "Armorhead I-1"
 
 #: dat/spob/armorhead_i1_b.xml:2
+#, fuzzy
 msgid "Armorhead I-1 b"
-msgstr ""
+msgstr "Armorhead I-1 b"
 
 #: dat/spob/arrakis.xml:2
+#, fuzzy
 msgid "Arrakis"
-msgstr ""
+msgstr "Arrakis"
 
 #: dat/spob/arrakis.xml:26
 msgid ""
@@ -10463,6 +10642,12 @@ msgid ""
 "buildings are almost completely hermetic. The locals are continuously "
 "discussing sandworms, though you're not sure what to make of it."
 msgstr ""
+"Arrakis es un planeta desértico, sin precipitaciones naturales, y las "
+"tormentas de polvo pueden durar muchos periodos seguidos. Debido al gasto "
+"que supone importar constantemente agua, se tiene mucho cuidado en minimizar "
+"la evaporación y la mayoría de los edificios son casi completamente "
+"herméticos. Los lugareños hablan continuamente de los gusanos de arena, "
+"aunque no está seguro de qué pensar."
 
 #: dat/spob/arrakis.xml:27
 msgid ""
@@ -10471,10 +10656,15 @@ msgid ""
 "mercenaries can be found plying their trade. \"The spice must flow\", they "
 "say, it may not, but at least the rum does."
 msgstr ""
+"La cantina Arrakeen es uno de los bares más sombríos del espacio del "
+"Imperio. Situado en la frontera del Imperio, pasan pocas patrullas y se "
+"pueden encontrar muchos sinvergüenzas y mercenarios ejerciendo su oficio. "
+"\"La especia debe fluir\", dicen, puede que no, pero al menos el ron sí."
 
 #: dat/spob/arrentil.xml:2
+#, fuzzy
 msgid "Arrentil"
-msgstr ""
+msgstr "Arrentil"
 
 #: dat/spob/arrentil.xml:26
 msgid ""
@@ -10485,6 +10675,12 @@ msgid ""
 "population is thriving and the industry-focused economy is stable. By all "
 "means, Arrentil is an example of Soromid persistence."
 msgstr ""
+"Como es típico de los mundos Soromida, Arrentil sería considerado totalmente "
+"inhóspito por el resto de la humanidad. La atmósfera es tóxica y la "
+"superficie inestable, pero Soromida ha conseguido domesticar este mundo. Por "
+"supuesto, incluso ellos necesitan vivir en hábitats protegidos, pero a pesar "
+"de ello la población es próspera y la economía centrada en la industria es "
+"estable. A todas luces, Arrentil es un ejemplo de persistencia Soromida."
 
 #: dat/spob/arrentil.xml:27
 msgid ""
@@ -10495,10 +10691,17 @@ msgid ""
 "but here in Soromid space it has given it a more organic feel, so much so "
 "that it almost feels like it is growing."
 msgstr ""
+"Cuando se construyeron los hábitats de este mundo inhóspito se pensó poco en "
+"las comodidades menos esenciales. Este bar se añadió injertándolo en el "
+"lateral del puerto espacial. En cualquier otro lugar de la galaxia, el hecho "
+"de ser una idea tardía probablemente habría dado lugar a un bar bastante "
+"estrecho y destartalado, pero aquí, en el espacio Soromida, le ha dado una "
+"sensación más orgánica, tanto que casi parece que está creciendo."
 
 #: dat/spob/astana.xml:2 dat/ssys/astana.xml:2
+#, fuzzy
 msgid "Astana"
-msgstr ""
+msgstr "Astana"
 
 #: dat/spob/astana.xml:25
 msgid ""
@@ -10508,6 +10711,12 @@ msgid ""
 "active service. This planet is an ideal spot for this as, besides the "
 "scientists who work here, no one else wants to land on the planet."
 msgstr ""
+"Astana es la sede de la Instalación Imperial de Pruebas de Armas "
+"Experimentales, comúnmente abreviada como IIPAE. Es aquí donde se prueban la "
+"mayoría de las nuevas armas y conjuntos equipados por el ejército del "
+"Imperio y se califican para el servicio activo. Este planeta es un lugar "
+"ideal para ello ya que, aparte de los científicos que trabajan aquí, nadie "
+"más quiere aterrizar en el planeta."
 
 #: dat/spob/astana.xml:26
 msgid ""
@@ -10516,14 +10725,20 @@ msgid ""
 "than the IEWTF there is little reason to remain on the world for very long "
 "apart from the bar."
 msgstr ""
+"El bar es el lugar donde muchos de los trabajadores del IIPAE se toman un "
+"momento para relajarse, varios de ellos hablan de un proyecto que le deja "
+"desconcertado. Aparte del IIPAE hay pocas razones para permanecer en el "
+"mundo por mucho tiempo aparte del bar."
 
 #: dat/spob/astana_iiv.xml:2
+#, fuzzy
 msgid "Astana IIV"
-msgstr ""
+msgstr "Astana IIV"
 
 #: dat/spob/atalanta.xml:2
+#, fuzzy
 msgid "Atalanta"
-msgstr ""
+msgstr "Atalanta"
 
 #: dat/spob/atalanta.xml:27
 msgid ""
@@ -10532,6 +10747,10 @@ msgid ""
 "making a decent enough living thanks to the caches of heavy elements trapped "
 "under the ice."
 msgstr ""
+"Atalanta recibe su nombre directamente de la nave colonial que lo colonizó, "
+"Atalanta. Aunque el planeta es demasiado frío para tener un valor real, la "
+"población se gana la vida de forma bastante decente gracias a los alijos de "
+"elementos pesados atrapados bajo el hielo."
 
 #: dat/spob/atalanta.xml:28
 msgid ""
@@ -10541,14 +10760,22 @@ msgid ""
 "Atalanta's orbit makes this a rare occurrence but the bar's profits soar "
 "every cycle."
 msgstr ""
+"Como todas las estructuras del planeta, el bar de Atalanta está construido "
+"bajo el hielo, pero está bastante cerca de la superficie. Esto se debe a que "
+"se puede observar un espectacular efecto de iluminación en la superficie "
+"cuando el sol brilla directamente sobre el hielo. La órbita de Atalanta hace "
+"que esto ocurra raramente, pero los beneficios del bar se disparan cada "
+"ciclo."
 
 #: dat/spob/atlantis_i.xml:2
+#, fuzzy
 msgid "Atlantis I"
-msgstr ""
+msgstr "Atlantis I"
 
 #: dat/spob/atryssa.xml:2
+#, fuzzy
 msgid "Atryssa"
-msgstr ""
+msgstr "Atryssa"
 
 #: dat/spob/atryssa.xml:28
 msgid ""
@@ -10557,6 +10784,10 @@ msgid ""
 "Ruadan. Beyond these two things there is little to recommend it (though one "
 "of these may, at least, be plenty enough)."
 msgstr ""
+"Atryssa es un mundo económicamente rico gracias a la tecnología Za'lek. "
+"También es el planeta Za'lek más cercano a Ruadan, donde los forasteros "
+"pueden aterrizar. Más allá de estas dos cosas hay poco que recomendar ("
+"aunque una de ellas puede ser, al menos, suficiente)."
 
 #: dat/spob/atryssa.xml:29
 msgid ""
@@ -10565,6 +10796,10 @@ msgid ""
 "There are also one or two people wandering about with notepads, though "
 "everyone goes quiet when they approach."
 msgstr ""
+"El arquetipo de un bar Za'lek, aunque muy concurrido. La multitud parece "
+"estar dividida en grupos de personas que discuten en voz baja. También hay "
+"una o dos personas que deambulan con libretas, aunque todos se callan cuando "
+"se acercan."
 
 #. Finish event (removes npc)
 #.
@@ -10592,7 +10827,7 @@ msgstr ""
 #: dat/spob/august.xml:2 dat/events/neutral/shipwreck.lua:26
 #: dat/missions/neutral/spacefamily.lua:57
 msgid "August"
-msgstr ""
+msgstr "Agosto"
 
 #: dat/spob/august.xml:26
 msgid ""
@@ -10601,16 +10836,25 @@ msgid ""
 "residential world, primarily for the scientists working on Warnecke who, "
 "after a hard week's work, don't want to see another lab for a while."
 msgstr ""
+"August es un mundo bastante estándar, aunque frío. Raramente para un planeta "
+"Za'lek, no tiene muchas estaciones de investigación en él. Es un mundo casi "
+"puramente residencial, principalmente para los científicos que trabajan en "
+"Warnecke y que, tras una dura semana de trabajo, no quieren ver otro "
+"laboratorio durante un tiempo."
 
 #: dat/spob/august.xml:27
 msgid ""
 "This bar has the feel of an old-world pub, with plenty of wood furnishing on "
 "display, good food and better beer. A great place to relax and unwind."
 msgstr ""
+"Este bar tiene la sensación de un pub del viejo mundo, con mucho mobiliario "
+"de madera a la vista, buena comida y mejor cerveza. Un gran lugar para "
+"relajarse y desconectar."
 
 #: dat/spob/avoss.xml:2
+#, fuzzy
 msgid "Avoss"
-msgstr ""
+msgstr "Avoss"
 
 #: dat/spob/avoss.xml:24
 msgid ""
