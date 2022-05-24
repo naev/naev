@@ -573,7 +573,8 @@ static int factionL_tags( lua_State *L )
    lua_newtable(L);
    for (int i=0; i<array_size(tags); i++) {
       lua_pushstring(L, tags[i]);
-      lua_rawseti(L,-2,i+1);
+      lua_pushboolean(L,1);
+      lua_rawset(L,-3);
    }
    return 1;
 }
