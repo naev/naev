@@ -186,9 +186,9 @@ function add_article( my_faction )
       -- or just randomly sample n times
       return -- Skip for now
    end
-   local tag   = elem.tag
-   local head  = elem.head or _(tag)
+   local head  = elem.head
    local body  = elem.body
+   local tag   = elem.tag or head
    local priority = elem.priority or 6 -- Slightly lower priority than default
    if type(body)=="function" then
       body = body()
@@ -202,7 +202,7 @@ function add_article( my_faction )
    end
 
    local exp = time.get() + time.create( 0, 10, 5000 * rnd.sigma() )
-   local a = news.add( my_faction, head, body, exp, nil, priority )
+   local a = news.add( my_faction, _(head), body, exp, nil, priority )
    a:bind( tag )
    var.push( "news_last_article", time.get():tonumber() )
 end
