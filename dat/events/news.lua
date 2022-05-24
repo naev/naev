@@ -130,9 +130,6 @@ function land ()
 
    add_header( my_faction )
    add_article( my_faction )
-   if faction.get(my_faction):tags().generic then
-      add_article( "Generic" )
-   end
    add_econ_article()
 end
 
@@ -175,17 +172,27 @@ function add_article( my_faction )
       return
    end
 
-   local alst = articles[my_faction]
+   local function jointest( dest, src )
+      for k,v in ipairs(src) do
+         if not v.test or v.test() then
+            table.insert( dest, v )
+         end
+      end
+   end
+
+   -- Find potential article list
+   -- TODO add weighting?
+   local alst = {}
+   jointest( alst, articles[ my_faction ] )
+   if my_faction ~= "Generic" and faction.get(my_faction):tags().generic then
+      jointest( alst, articles[ "Generic" ] )
+   end
    if alst == nil or #alst <= 0 then
       return
    end
 
+   -- Get the elemnt
    local elem  = alst[ rnd.rnd( 1, #alst ) ]
-   if elem.test and not elem.test() then
-      -- TODO test all candidates and build a table to random sample from
-      -- or just randomly sample n times
-      return -- Skip for now
-   end
    local head  = elem.head
    local body  = elem.body
    local tag   = elem.tag or head
@@ -197,10 +204,12 @@ function add_article( my_faction )
       end
    end
 
+   -- Skip if already exists
    if #news.get( tag ) > 0 then
       return
    end
 
+   -- Add the news for roughly 10 periods
    local exp = time.get() + time.create( 0, 10, 5000 * rnd.sigma() )
    local a = news.add( my_faction, _(head), body, exp, nil, priority )
    a:bind( tag )
