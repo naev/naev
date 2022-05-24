@@ -36,7 +36,7 @@ local articles = {
    },
    {
       head = N_([[Pretender or Contender?]]),
-      body = _([[Our sources report there's a child some consider to be the hair to the Emperor's throne. Daughter of an alleged concubine, she was said to be captured by captain Addom Rojo, who learned of her special status and suggests using her as leverage against the Empire.]])
+      body = _([[Our sources report there's a child some consider to be the heir to the Emperor's throne. Daughter of an alleged concubine, she was said to be captured by captain Addom Rojo, who learned of her special status and suggests using her as leverage against the Empire.]])
    },
    --[[
       Human interest.
