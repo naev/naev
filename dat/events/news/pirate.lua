@@ -34,12 +34,20 @@ local articles = {
       head = N_([[Emperor Weaker Than Ever]]),
       body = _([[Recent actions demonstrate the inefficiency and weakness of the Emperor. One of the last irrational decisions left Eridani without a defence fleet to protect the traders. It's a great time to be a pirate.]])
    },
+   {
+      head = N_([[Pretender or Contender?]]),
+      body = _([[Our sources report there's a child some consider to be the hair to the Emperor's throne. Daughter of an alleged concubine, she was said to be captured by captain Addom Rojo, who learned of her special status and suggests using her as leverage against the Empire.]])
+   },
    --[[
       Human interest.
    --]]
    {
       head = N_([[Cats in New Haven]]),
       body = _([[An explosion in the cat population of New Haven has created an adoption campaign with the slogan, "Pirate Cats, for those lonely space trips.". Is your space vessel full of vermin? Adopt a cat today!]])
+   },
+   {
+      head = N_([[Rumours and Whispers]]),
+      body = _([[A large Za'lek derelict ship is rumored to have been found. Several maps have been circulated among the most prominent treasure seekers, but none has yet to be verified.]])
    },
 }
 
