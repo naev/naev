@@ -261,7 +261,7 @@ jobs:
       matrix:
         include:
           - releasetype: github
-          - releasetype: steam
+          #- releasetype: steam
           - releasetype: itch
 
     runs-on: ubuntu-latest
