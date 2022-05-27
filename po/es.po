@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-05-12 10:59+0900\n"
-"PO-Revision-Date: 2022-05-26 23:18+0000\n"
+"PO-Revision-Date: 2022-05-27 15:14+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
@@ -18200,7 +18200,7 @@ msgstr "MGG-1294"
 #: dat/scripts/common/minerva.lua:100 dat/scripts/common/minerva.lua:104
 #: dat/scripts/common/minerva.lua:108 dat/scripts/common/minerva.lua:112
 msgid "Minerva Station"
-msgstr ""
+msgstr "Estación Minerva"
 
 #: dat/spob/minerva_station.xml:28
 msgid ""
