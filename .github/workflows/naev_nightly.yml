@@ -171,7 +171,7 @@ jobs:
               --cross-file='source/utils/build/macos_cross_osxcross.ini' \
               --buildtype=debug \
               -Dnightly=true \
-              -Db_lto=true \
+              -Db_lto=false \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
               -Ddocs_lua=disabled
