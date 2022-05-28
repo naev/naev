@@ -3121,7 +3121,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
          case ESCORT_TYPE_BAY:
             xmlw_startElem(writer, "escort");
             xmlw_attr(writer,"type","bay");
-            xmlw_attr(writer, "name", e->ship);
+            xmlw_attr(writer, "name", "%s", e->ship);
             xmlw_endElem(writer); /* "escort" */
             break;
 
@@ -3130,7 +3130,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
             if (pe != NULL) {
                xmlw_startElem(writer, "escort");
                xmlw_attr(writer,"type","fleet");
-               xmlw_attr(writer,"name",pe->name);
+               xmlw_attr(writer, "name", "%s", pe->name);
                xmlw_endElem(writer); /* "escort" */
             }
             break;

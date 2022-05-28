@@ -2,6 +2,7 @@ project('glpk', 'c', version: '5.0')
 
 cc = meson.get_compiler('c')
 foreach arg: [
+              '-Wno-array-compare',
               '-Wno-clobbered', '-Wno-implicit-fallthrough', '-Wno-misleading-indentation', '-Wno-macro-redefined',
               '-Wno-parentheses', '-Wno-return-type', '-Wno-self-assign', '-Wno-sign-compare', '-Wno-sometimes-uninitialized',
               '-Wno-strict-aliasing', '-Wno-stringop-overflow',  # No way these will come back to bite us!
