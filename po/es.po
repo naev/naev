@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-02-19 12:48-0500\n"
-"PO-Revision-Date: 2022-05-27 23:14+0000\n"
+"PO-Revision-Date: 2022-05-28 21:18+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -12494,26 +12494,35 @@ msgid ""
 "Like Ruadan Prime, very few people are allowed to land here, and those that "
 "are allowed face intense security scrutiny."
 msgstr ""
+"El Bastión de Ruadan alberga a los militares Za'lek concentrados en torno a "
+"Ruadan Prime. Al igual que en Ruadan Prime, muy pocas personas pueden "
+"aterrizar aquí, y las que lo hacen se enfrentan a un intenso escrutinio de "
+"seguridad."
 
 #: dat/assets/ruadan_gamma.xml:2
+#, fuzzy
 msgid "Ruadan Gamma"
-msgstr ""
+msgstr "Ruadan Gamma"
 
 #: dat/assets/ruadan_ii.xml:2
+#, fuzzy
 msgid "Ruadan II"
-msgstr ""
+msgstr "Ruadan II"
 
 #: dat/assets/ruadan_j1.xml:2
+#, fuzzy
 msgid "Ruadan J-1"
-msgstr ""
+msgstr "Ruadan J-1"
 
 #: dat/assets/ruadan_j2.xml:2
+#, fuzzy
 msgid "Ruadan J-2"
-msgstr ""
+msgstr "Ruadan J-2"
 
 #: dat/assets/ruadan_prime.xml:2 dat/events/discovery.lua:63
+#, fuzzy
 msgid "Ruadan Prime"
-msgstr ""
+msgstr "Ruadan Prime"
 
 #: dat/assets/ruadan_prime.xml:30
 msgid ""
@@ -12522,6 +12531,10 @@ msgid ""
 "highest level captains to land here. Even being allowed to be here is "
 "considered a great honor."
 msgstr ""
+"Ruadan se ha convertido recientemente en el centro neurálgico de los Za'lek. "
+"La mayor parte de la fuerza del Za'lek se concentra aquí, y no permiten que "
+"nadie, excepto los capitanes de más alto nivel, aterrice aquí. Incluso que "
+"se les permita estar aquí se considera un gran honor."
 
 #: dat/assets/ruadan_prime.xml:31
 msgid ""
@@ -12529,14 +12542,18 @@ msgid ""
 "very to-the-point and focused. Everyone here has a reason to be here, and "
 "not much time to spare."
 msgstr ""
+"Dado el carácter exclusivo de Ruadan Prime, el ambiente del bar es muy "
+"directo y concentrado. Todo el mundo tiene una razón para estar aquí, y no "
+"mucho tiempo que compartir."
 
 #: dat/assets/ruadan_secundus.xml:2
+#, fuzzy
 msgid "Ruadan Secundus"
-msgstr ""
+msgstr "Ruadan Secundus"
 
 #: dat/assets/ruadan_station.xml:2
 msgid "Ruadan Station"
-msgstr ""
+msgstr "Estación Ruadan"
 
 #: dat/assets/ruadan_station.xml:26
 msgid ""
@@ -12544,10 +12561,14 @@ msgid ""
 "have security clearance to land on Ruadan Prime or Ruadan Bastion. There is "
 "precious little else of interest here."
 msgstr ""
+"Esta sencilla estación sirve como depósito de combustible para aquellas "
+"naves que no tienen autorización de seguridad para aterrizar en Ruadan Prime "
+"o Bastión Ruadan. Hay muy poco más de interés aquí."
 
 #: dat/assets/rudderfern.xml:2
+#, fuzzy
 msgid "Rudderfern"
-msgstr ""
+msgstr "Rudderfern"
 
 #: dat/assets/rudderfern.xml:29
 msgid ""
@@ -12557,6 +12578,12 @@ msgid ""
 "Soromid have settled here, enjoying the pleasant environment and the high "
 "level of security offered in Father's Pride."
 msgstr ""
+"Rudderfern es una pequeña pero rica colonia Soromida. Su principal, Orgullo "
+"de Padre III, es demasiado hostil incluso para los Soromida, pero su luna "
+"tiene propiedades muy parecidas a las de la Tierra, aparte de su baja "
+"gravedad. Muchos Soromida adinerados se han establecido aquí, disfrutando "
+"del agradable entorno y del alto nivel de seguridad que ofrece Orgullo de "
+"Padre."
 
 #: dat/assets/rudderfern.xml:30
 msgid ""
@@ -12565,14 +12592,20 @@ msgid ""
 "actual Soromid serving personnel. Rudderfern rather takes pride in "
 "officially having the highest class spaceport bar in the known galaxy."
 msgstr ""
+"La mayoría de los planetas tienen bares en los puertos espaciales. "
+"Rudderfern no. Tiene un salón en el puerto espacial. Tiene muebles de clase, "
+"paredes y techos ricamente decorados, e incluso personal de servicio "
+"Soromida. Rudderfern se enorgullece de tener oficialmente el bar de puerto "
+"espacial de mayor clase de la galaxia conocida."
 
 #: dat/assets/ruid.xml:2
+#, fuzzy
 msgid "Ruid"
-msgstr ""
+msgstr "Ruid"
 
 #: dat/assets/ruin.xml:2
 msgid "Ruin"
-msgstr ""
+msgstr "Ruina"
 
 #: dat/assets/ruin.xml:29
 msgid ""
@@ -12590,10 +12623,16 @@ msgid ""
 "styled on what was commonplace several dozen cycles ago. Some like it, some "
 "don't."
 msgstr ""
+"El bar del puerto espacial de Ruina es de aspecto deliberadamente retro. "
+"Aunque cuenta con todas las instalaciones estándar de los puertos "
+"espaciales, se han encerrado en carcasas de terminales anticuadas. El "
+"mobiliario y el diseño general también se han inspirado en lo que era "
+"habitual hace varias docenas de ciclos. A algunos les gusta, a otros no."
 
 #: dat/assets/rulkar.xml:2
+#, fuzzy
 msgid "Rulk'ar"
-msgstr ""
+msgstr "Rulk'ar"
 
 #: dat/assets/rulkar.xml:29
 msgid ""
@@ -12604,6 +12643,13 @@ msgid ""
 "touch with nature and get away from the intense research schedules they have "
 "back at their research centres, and quite a few never return."
 msgstr ""
+"Rulk'ar es un mundo minero con una fuerte presencia de universidades Za'lek "
+"gracias a su visión estética de naturaleza bastante aislada. Es un centro de "
+"investigación de terraformación, que convierte un planeta ya habitable en un "
+"mundo de clase M. Muchos investigadores Za'lek agotados vienen aquí para "
+"estar más en contacto con la naturaleza y alejarse de las intensas agendas "
+"de investigación que tienen en sus centros de investigación, y bastantes "
+"nunca regresan."
 
 #: dat/assets/rulkar.xml:30
 msgid ""
@@ -12611,78 +12657,99 @@ msgid ""
 "mountains, and skyline, as well as the progress on the world's terraforming. "
 "The laid-back and casual ambience is also very fitting."
 msgstr ""
+"Este bar tiene holopinturas de algunos de los impresionantes cañones, "
+"montañas y horizonte de Rulk'ar, así como el progreso de la terraformación "
+"del mundo. El ambiente relajado e informal también es muy adecuado."
 
 #: dat/assets/ruttwi_i.xml:2
+#, fuzzy
 msgid "Ruttwi I"
-msgstr ""
+msgstr "Ruttwi I"
 
 #: dat/assets/ruttwi_ii.xml:2
+#, fuzzy
 msgid "Ruttwi II"
-msgstr ""
+msgstr "Ruttwi II"
 
 #: dat/assets/s00000.xml:2
+#, fuzzy
 msgid "S00000"
-msgstr ""
+msgstr "S00000"
 
 #: dat/assets/s00018.xml:2
+#, fuzzy
 msgid "S00018"
-msgstr ""
+msgstr "S00018"
 
 #: dat/assets/s00522.xml:2
+#, fuzzy
 msgid "S00522"
-msgstr ""
+msgstr "S00522"
 
 #: dat/assets/s00653.xml:2
+#, fuzzy
 msgid "S00653"
-msgstr ""
+msgstr "S00653"
 
 #: dat/assets/s13024.xml:2
+#, fuzzy
 msgid "S13024"
-msgstr ""
+msgstr "S13024"
 
 #: dat/assets/s23001.xml:2
+#, fuzzy
 msgid "S23001"
-msgstr ""
+msgstr "S23001"
 
 #: dat/assets/s23491.xml:2
+#, fuzzy
 msgid "S23491"
-msgstr ""
+msgstr "S23491"
 
 #: dat/assets/s38729.xml:2
+#, fuzzy
 msgid "S38729"
-msgstr ""
+msgstr "S38729"
 
 #: dat/assets/s49281.xml:2
+#, fuzzy
 msgid "S49281"
-msgstr ""
+msgstr "S49281"
 
 #: dat/assets/s49335.xml:2
+#, fuzzy
 msgid "S49335"
-msgstr ""
+msgstr "S49335"
 
 #: dat/assets/s49588.xml:2
+#, fuzzy
 msgid "S49588"
-msgstr ""
+msgstr "S49588"
 
 #: dat/assets/s58309.xml:2
+#, fuzzy
 msgid "S58309"
-msgstr ""
+msgstr "S58309"
 
 #: dat/assets/s72288.xml:2
+#, fuzzy
 msgid "S72288"
-msgstr ""
+msgstr "S72288"
 
 #: dat/assets/s72839.xml:2
+#, fuzzy
 msgid "S72839"
-msgstr ""
+msgstr "S72839"
 
 #: dat/assets/s91456.xml:2
+#, fuzzy
 msgid "S91456"
-msgstr ""
+msgstr "S91456"
 
 #: dat/assets/sabe.xml:2
+#, fuzzy
 msgid "Sabe"
-msgstr ""
+msgstr "Sabe"
 
 #: dat/assets/sabe.xml:31
 msgid ""
@@ -12693,6 +12760,12 @@ msgid ""
 "surface is untouched, as virtually all its inhabitants reside in the "
 "multitude of arcologies spread across its surface."
 msgstr ""
+"Sabe y Anya son un par de planetas unidos por la marea, que giran alrededor "
+"de su centro de gravedad común. Sabe es el centro del gobierno Turion, y "
+"alberga la mayor población de Turion tanto subidos como biológicos, actuando "
+"como capital de facto. La mayor parte de la superficie del planeta está "
+"intacta, ya que prácticamente todos sus habitantes residen en la multitud de "
+"arcologías repartidas por su superficie."
 
 #: dat/assets/sabe.xml:32
 msgid ""
@@ -12701,10 +12774,14 @@ msgid ""
 "any substances that could harm the brain, meaning that the bar doesn't even "
 "offer alcoholic drinks on the menu."
 msgstr ""
+"El bar aquí es extremadamente activo, con muchos Turions biológicos y "
+"subidos por igual. Por supuesto, como es costumbre, los Turions biológicos "
+"no comen ni beben ninguna sustancia que pueda dañar el cerebro, lo que "
+"significa que el bar ni siquiera ofrece bebidas alcohólicas en el menú."
 
 #: dat/assets/salsax_station.xml:2
 msgid "Salsax Station"
-msgstr ""
+msgstr "Estación Salsax"
 
 #: dat/assets/salsax_station.xml:29
 msgid ""
@@ -12713,6 +12790,11 @@ msgid ""
 "home away from home for many regular freighter captains because they can "
 "meet kindred spirits here."
 msgstr ""
+"La Estación Salsax es una estación comercial muy parecida a las estaciones "
+"que se encuentran en toda la galaxia. Actúa como centro local para el "
+"comercio de productos básicos y se considera un hogar lejos de casa para "
+"muchos capitanes de cargueros habituales, ya que aquí pueden encontrar "
+"espíritus afines."
 
 #: dat/assets/salsax_station.xml:30
 msgid ""
@@ -12721,10 +12803,16 @@ msgid ""
 "information even in this day and age, as the news channels only report on so "
 "much that goes on in the galaxy."
 msgstr ""
+"Los bares espaciales con muchos comerciantes, como éste, suelen ser un buen "
+"lugar para escuchar historias de toda la galaxia. El boca a boca sigue "
+"siendo una potente fuente de información incluso en esta época, ya que los "
+"canales de noticias sólo informan de una parte de lo que ocurre en la "
+"galaxia."
 
 #: dat/assets/samell.xml:2
+#, fuzzy
 msgid "Samell"
-msgstr ""
+msgstr "Samell"
 
 #: dat/assets/samell.xml:31
 msgid ""
@@ -12732,6 +12820,10 @@ msgid ""
 "welcome on densely populated M class planets, so it tends to settle on "
 "planets with hostile environments. Samell is no exception to that trend."
 msgstr ""
+"Samell es un mundo predominantemente industrial. La industria pesada no "
+"suele ser bienvenida en los planetas de clase M densamente poblados, por lo "
+"que tiende a instalarse en planetas con entornos hostiles. Samell no es una "
+"excepción a esta tendencia."
 
 #: dat/assets/samell.xml:32
 msgid ""
@@ -12740,10 +12832,15 @@ msgid ""
 "didn't realize that the windows would soon become frozen over themselves, "
 "making them completely useless."
 msgstr ""
+"Quien diseñó el puerto espacial colocó el bar del mismo en el exterior, "
+"añadiendo ventanas para que los visitantes pudieran contemplar el paisaje "
+"helado. No se dio cuenta de que las ventanas pronto se congelarían sobre sí "
+"mismas, haciéndolas completamente inútiles."
 
 #: dat/assets/sanchez.xml:2
+#, fuzzy
 msgid "Sanchez"
-msgstr ""
+msgstr "Sanchez"
 
 #: dat/assets/sanchez.xml:31
 msgid ""
@@ -12755,6 +12852,14 @@ msgid ""
 "obtaining things by piracy, the local pirates resort to exploiting other "
 "planets in the systems."
 msgstr ""
+"La luna Sánchez del Viejo Rey Cole es un lugar bastante sucio debido al "
+"estilo de construcción desordenado que permite que se cuele el horrible "
+"polvo planetario. La base pirata fue construida originalmente por algunos "
+"fugitivos de la frontera, pero desde entonces se ha ampliado y se ha "
+"convertido en el centro de poder del Clan Pirata Soñador. Debido a los "
+"escasos recursos de la luna, aparte de obtener cosas mediante la piratería, "
+"los piratas locales recurren a la explotación de otros planetas de los "
+"sistemas."
 
 #: dat/assets/sanchez.xml:32
 msgid ""
@@ -12762,10 +12867,14 @@ msgid ""
 "booths, nice food and only the occasional drunken brawl. The lord of "
 "Shanchez doesn't appreciate louts, it seems."
 msgstr ""
+"El bar es tranquilo y ordenado, con algunos tratos en cabinas cerradas, "
+"buena comida y sólo alguna pelea de borrachos. Parece que el señor de "
+"Sanchez no aprecia a los groseros."
 
 #: dat/assets/sander.xml:2
+#, fuzzy
 msgid "Sander"
-msgstr ""
+msgstr "Sander"
 
 #: dat/assets/sander.xml:29
 msgid ""
@@ -12774,6 +12883,11 @@ msgid ""
 "provide food to many nearby planets, and Imperial mining operations are able "
 "to harvest many valuable materials from the sea floor."
 msgstr ""
+"El mundo hermano de Grifo III es Sander. Debido a su superficie "
+"mayoritariamente acuática, su población es significativamente menor que la "
+"de Grifo III, pero sus océanos proporcionan alimento a muchos planetas "
+"cercanos, y las operaciones mineras Imperiales son capaces de recoger muchos "
+"materiales valiosos del fondo marino."
 
 #: dat/assets/sander.xml:30
 msgid ""
@@ -12781,10 +12895,14 @@ msgid ""
 "the windows, and the main lobby is designed to enhance the aesthetic. A "
 "little overdone, but pleasant overall."
 msgstr ""
+"Este bar submarino es todo un espectáculo. Grandes criaturas marinas nadan "
+"junto a las ventanas, y el vestíbulo principal está diseñado para realzar la "
+"estética. Un poco exagerado, pero agradable en general."
 
 #: dat/assets/saraab.xml:2
+#, fuzzy
 msgid "Saraab"
-msgstr ""
+msgstr "Saraab"
 
 #: dat/assets/saraab.xml:29
 msgid ""
@@ -12795,6 +12913,13 @@ msgid ""
 "first settled around the end of the Imperial Golden Age, its gravity has "
 "decreased by 17%."
 msgstr ""
+"Saraab es una pequeña colonia minera. El núcleo del planeta está compuesto "
+"por metales valiosos y se ha enfriado casi por completo, lo que convierte a "
+"este mundo en una gigantesca mina a cielo abierto. El planeta está siendo "
+"desmantelado lentamente y llevado a varias plantas de fabricación en otros "
+"lugares de la galaxia. De hecho, desde que el planeta fue colonizado por "
+"primera vez a finales de la Edad de Oro Imperial, su gravedad ha disminuido "
+"en un 17%."
 
 #: dat/assets/saraab.xml:30
 msgid ""
@@ -12804,26 +12929,32 @@ msgid ""
 "serious discomfort for the patrons. The workers don't seem to mind however - "
 "they are used to gravitational shifts."
 msgstr ""
+"Como en muchos mundos de baja gravedad, el bar del puerto espacial de Saraab "
+"tiene generadores de gravedad artificial instalados en varios lugares. El "
+"bar no es una excepción. Sin embargo, los generadores son viejos y a veces "
+"se estropean, lo que puede causar graves incomodidades a los clientes. Sin "
+"embargo, a los trabajadores no parece importarles, ya que están "
+"acostumbrados a los cambios de gravedad."
 
 #: dat/assets/sarcophagus_i.xml:2
 msgid "Sarcophagus I"
-msgstr ""
+msgstr "Sarcófago I"
 
 #: dat/assets/sarcophagus_ii.xml:2
 msgid "Sarcophagus II"
-msgstr ""
+msgstr "Sarcófago II"
 
 #: dat/assets/sarcophagus_iib.xml:2
 msgid "Sarcophagus IIb"
-msgstr ""
+msgstr "Sarcófago IIb"
 
 #: dat/assets/sarcophagus_v.xml:2
 msgid "Sarcophagus V"
-msgstr ""
+msgstr "Sarcófago V"
 
 #: dat/assets/sarrii_station.xml:2
 msgid "Sarrii Station"
-msgstr ""
+msgstr "Estación Sarrii"
 
 #: dat/assets/sarrii_station.xml:28
 msgid ""
@@ -12831,10 +12962,14 @@ msgid ""
 "Wayline. The Dvaered garrison don't want to have to be on the planet at all, "
 "so they had this station built."
 msgstr ""
+"La Estación Sarrii sirve como punto de guarnición para el planeta cercano de "
+"Wayline. La guarnición Dvaered no quiere tener que estar en el planeta en lo "
+"más mínimo, así que mandaron construir esta estación."
 
 #: dat/assets/savoy.xml:2
+#, fuzzy
 msgid "Savoy"
-msgstr ""
+msgstr "Savoy"
 
 #: dat/assets/savoy.xml:28
 msgid ""
@@ -12843,26 +12978,32 @@ msgid ""
 "curious visitors. There are few people wandering the halls, and most of them "
 "are militia or scientists."
 msgstr ""
+"Una estación envejecida que sirve como simple puesto de guardia contra la "
+"posible piratería en el sur. Hay poco que caliente o recomiende el lugar a "
+"los visitantes curiosos. Hay poca gente deambulando por los pasillos, y la "
+"mayoría son milicianos o científicos."
 
 #: dat/assets/scarlet_ii.xml:2
 msgid "Scarlet II"
-msgstr ""
+msgstr "Escarlata II"
 
 #: dat/assets/scarlett_iii.xml:2
 msgid "Scarlett III"
-msgstr ""
+msgstr "Escarlata III"
 
 #: dat/assets/scinfaxi.xml:2
+#, fuzzy
 msgid "Scinfaxi"
-msgstr ""
+msgstr "Scinfaxi"
 
 #: dat/assets/scipio.xml:2
+#, fuzzy
 msgid "Scipio"
-msgstr ""
+msgstr "Scipio"
 
 #: dat/assets/scorch.xml:2
 msgid "Scorch"
-msgstr ""
+msgstr "Chamuscado"
 
 #: dat/assets/scorch.xml:29
 msgid ""
@@ -12872,6 +13013,12 @@ msgid ""
 "of scientists and geologists who find it to be a treasure trove. The Za'lek "
 "authorities use it as a hostile environment training centre as well."
 msgstr ""
+"Este mundo está repleto de volcanes y ríos de lava, salpicado de frecuentes "
+"terremotos y lluvias ácidas. Es posiblemente uno de los entornos más "
+"hostiles que se pueden encontrar en el espacio. Así que, naturalmente, hay "
+"una considerable presencia de científicos y geólogos que lo consideran un "
+"tesoro. Las autoridades de Za'lek lo utilizan también como centro de "
+"entrenamiento en entornos hostiles."
 
 #: dat/assets/scorch.xml:30
 msgid ""
@@ -12879,26 +13026,35 @@ msgid ""
 "thick. The patrons to not seem to mind the visible havoc going on outside, "
 "tending to their drinks and conversations with reassuring casualness."
 msgstr ""
+"El bar tiene vistas al animado clima de Chamuscado. Los cristales tienen al "
+"menos un metro de grosor. A los clientes no parece importarles los visibles "
+"estragos que se producen en el exterior, y atienden a sus bebidas y "
+"conversaciones con una tranquilizadora despreocupación."
 
 #: dat/assets/scorpion_station.xml:2
 msgid "Scorpion Station"
-msgstr ""
+msgstr "Estación Escorpión"
 
 #: dat/assets/scorpion_station.xml:28
 msgid ""
 "Scorpion is hardly the most prestigious post for a Soromid captain to be "
 "assigned to, but the peace needs to be kept everywhere, even in Hadosh."
 msgstr ""
+"Escorpión no es el puesto más prestigioso para un capitán Soromida, pero hay "
+"que mantener la paz en todas partes, incluso en Hadosh."
 
 #: dat/assets/scorpion_station.xml:29
 msgid ""
 "The spacedock bar is a place to meet officers and make formal inquiries. "
 "It's not of much use for anything else."
 msgstr ""
+"El bar de la nave espacial es un lugar para reunirse con los oficiales y "
+"hacer consultas formales. No sirve para mucho más."
 
 #: dat/assets/seanich.xml:2
+#, fuzzy
 msgid "Seanich"
-msgstr ""
+msgstr "Seanich"
 
 #: dat/assets/seanich.xml:29
 msgid ""
@@ -12909,6 +13065,13 @@ msgid ""
 "the local administration has stopped paying taxes to the central Imperial "
 "government in protest. The Imperial government hasn't noticed."
 msgstr ""
+"En el borde del sistema Delta Pavonis, desapercibido para todos excepto para "
+"unos pocos, orbita el pequeño mundo de Seanich. Aunque técnicamente es una "
+"colonia Imperial registrada, este planeta aislado no recibe la atención que "
+"debería tener su estatus. La población está decididamente molesta por ello, "
+"hasta el punto de que la administración local ha dejado de pagar impuestos "
+"al gobierno Imperial central en señal de protesta. El gobierno imperial no "
+"se ha dado cuenta."
 
 #: dat/assets/seanich.xml:30
 msgid ""
@@ -12917,18 +13080,25 @@ msgid ""
 "helped to make the unfortunate colony more conspicuous in the galaxy. Most "
 "of the tables are empty."
 msgstr ""
+"Seanich tiene un bar en el puerto espacial bastante bien equipado. Tiene "
+"todas las instalaciones que un espacial podría necesitar, y muchas están "
+"bastante actualizadas. Lamentablemente, esto no ha ayudado a que la "
+"desafortunada colonia sea más llamativa en la galaxia. La mayoría de las "
+"mesas están vacías."
 
 #: dat/assets/secundus_alpha.xml:2
+#, fuzzy
 msgid "Secundus Alpha"
-msgstr ""
+msgstr "Secundus Alpha"
 
 #: dat/assets/secundus_beta.xml:2
+#, fuzzy
 msgid "Secundus Beta"
-msgstr ""
+msgstr "Secundus Beta"
 
 #: dat/assets/secundus_station.xml:2
 msgid "Secundus Station"
-msgstr ""
+msgstr "Estación Secundus"
 
 #: dat/assets/secundus_station.xml:26
 msgid ""
@@ -12938,18 +13108,26 @@ msgid ""
 "connection has been proven and the local Dvaered officials don't seem to "
 "care anyway."
 msgstr ""
+"Esta vieja y oxidada estación ha sido abandonada en su mayor parte, pero un "
+"puñado de personas dedicadas sigue manteniéndola en funcionamiento. Se ha "
+"rumoreado que los encargados del mantenimiento de la estación tienen "
+"conexiones con los piratas, pero no se ha demostrado tal conexión y, de "
+"todos modos, a los funcionarios locales Dvaered no parece importarles."
 
 #: dat/assets/seiben_iv.xml:2
+#, fuzzy
 msgid "Seiben IV"
-msgstr ""
+msgstr "Seiben IV"
 
 #: dat/assets/seiben_xi.xml:2
+#, fuzzy
 msgid "Seiben XI"
-msgstr ""
+msgstr "Seiben XI"
 
 #: dat/assets/selphod.xml:2
+#, fuzzy
 msgid "Selphod"
-msgstr ""
+msgstr "Selphod"
 
 #: dat/assets/selphod.xml:29
 msgid ""
@@ -12959,6 +13137,12 @@ msgid ""
 "succumbing to hypothermia. Many have met a swift, excruciatingly painful end "
 "by venturing out in ill-sealed thermal suits."
 msgstr ""
+"Selphod es un planeta de hielo duro y estéril. La mayoría de los habitantes "
+"nunca se han aventurado fuera de las bases establecidas. Los viajes al aire "
+"libre requieren una fuerte protección térmica con un generador personal para "
+"evitar que el usuario sucumba a la hipotermia. Muchos han tenido un final "
+"rápido y terriblemente doloroso por aventurarse con trajes térmicos mal "
+"cerrados."
 
 #: dat/assets/selphod.xml:30
 msgid ""
@@ -12966,10 +13150,14 @@ msgid ""
 "infusions of all kinds of spices. They are meant to bring warmth and energy "
 "in the cold corridors of the base."
 msgstr ""
+"La mayoría de las bebidas que se sirven en el bar están muy calientes, con "
+"fuertes infusiones de todo tipo de especias. Están pensadas para aportar "
+"calor y energía en los fríos pasillos de la base."
 
 #: dat/assets/semper.xml:2
+#, fuzzy
 msgid "Semper"
-msgstr ""
+msgstr "Semper"
 
 #: dat/assets/semper.xml:31
 msgid ""
@@ -12978,6 +13166,11 @@ msgid ""
 "reason, it is quite popular among immigrants into the Empire, who usually "
 "don't have the means to settle on the richer civilian worlds."
 msgstr ""
+"Aunque Semper es un poco pobre para los estándares Imperiales, la gente que "
+"vive aquí tiene al menos la comodidad de una estricta seguridad Imperial. "
+"Por esa razón, es bastante popular entre los inmigrantes del Imperio, que "
+"normalmente no tienen los medios para establecerse en los mundos civiles más "
+"ricos."
 
 #: dat/assets/semper.xml:32
 msgid ""
@@ -12986,30 +13179,40 @@ msgid ""
 "Dvaered cruiser, a Sirius crest on some of the furniture and even some "
 "Soromid-oriented drinks."
 msgstr ""
+"Semper es un mundo de inmigrantes, lo que se refleja en su bar del puerto "
+"espacial. El diseño delata influencias de toda la galaxia, como un holograma "
+"de un crucero Dvaered, un escudo Sirio en algunos muebles e incluso algunas "
+"bebidas orientadas a los Soromida."
 
 #: dat/assets/senara_i.xml:2
+#, fuzzy
 msgid "Senara I"
-msgstr ""
+msgstr "Senara I"
 
 #: dat/assets/sergio_vix_i.xml:2
+#, fuzzy
 msgid "Sergio Vix I"
-msgstr ""
+msgstr "Sergio Vix I"
 
 #: dat/assets/sergio_vix_iii.xml:2
+#, fuzzy
 msgid "Sergio Vix III"
-msgstr ""
+msgstr "Sergio Vix III"
 
 #: dat/assets/serria.xml:2
+#, fuzzy
 msgid "Serria"
-msgstr ""
+msgstr "Serria"
 
 #: dat/assets/servax.xml:2
+#, fuzzy
 msgid "Servax"
-msgstr ""
+msgstr "Servax"
 
 #: dat/assets/sevlow.xml:2
+#, fuzzy
 msgid "Sevlow"
-msgstr ""
+msgstr "Sevlow"
 
 #: dat/assets/sevlow.xml:29
 msgid ""
@@ -13017,6 +13220,9 @@ msgid ""
 "uneventful planet, as it serves primarily as an agricultural world producing "
 "algae, and as a living place for biological Thurions."
 msgstr ""
+"Sevlow es uno de los pocos mundos Turion realmente habitados. Sevlow es un "
+"planeta sin incidentes, ya que sirve principalmente como mundo agrícola "
+"productor de algas, y como lugar de vida para los Turiones biológicos."
 
 #: dat/assets/sevlow.xml:30
 msgid ""
@@ -13024,10 +13230,13 @@ msgid ""
 "alcoholic beverages. Just like every other Thurion bar, no alcohol is sold "
 "as that is believed to damage the brain."
 msgstr ""
+"Este bar está repleto de Turion biológicos que socializan y toman bebidas no "
+"alcohólicas. Como en cualquier otro bar de Turion, no se vende alcohol, ya "
+"que se cree que daña el cerebro."
 
 #: dat/assets/shade__sunshine_station.xml:2
 msgid "Shade & Sunshine Station"
-msgstr ""
+msgstr "Estación Sombra & Sol"
 
 #: dat/assets/shade__sunshine_station.xml:28
 msgid ""
@@ -13037,6 +13246,11 @@ msgid ""
 "sun and the Soromid's skill with genetic manipulation, crops here are among "
 "the most bountiful in the entire galaxy."
 msgstr ""
+"Cuando Soromida hacen algo relacionado con la biología, se puede suponer que "
+"lo hacen muy bien. Sombra & Sol es una estación de cultivo con una "
+"producción sorprendente. Entre el día eterno que otorga la alineación de la "
+"estación con el sol y la habilidad Soromida con la manipulación genética, "
+"las cosechas aquí son de las más abundantes de toda la galaxia."
 
 #: dat/assets/shade__sunshine_station.xml:29
 msgid ""
@@ -13044,18 +13258,24 @@ msgid ""
 "spacedock bar is themed on the currently cultivated crops, using subtle "
 "lighting and holopaintings along the walls."
 msgstr ""
+"Sombra & Sol rota regularmente los cultivos que realiza. El bar de la nave "
+"espacial está ambientado en los cultivos actuales, con una sutil iluminación "
+"y holopinturas en las paredes."
 
 #: dat/assets/shakar_i.xml:2
+#, fuzzy
 msgid "Shakar I"
-msgstr ""
+msgstr "Shakar I"
 
 #: dat/assets/shakar_iii.xml:2
+#, fuzzy
 msgid "Shakar III"
-msgstr ""
+msgstr "Shakar III"
 
 #: dat/assets/sharak.xml:2
+#, fuzzy
 msgid "Sharak"
-msgstr ""
+msgstr "Sharak"
 
 #: dat/assets/sharak.xml:30
 msgid ""
@@ -13063,6 +13283,9 @@ msgid ""
 "the same air as the commoners on Edorn below, the people on this moon elect "
 "to form their own elite society here on Sharak."
 msgstr ""
+"Sharak es un lugar donde los ricos tienen su hogar. En lugar de respirar el "
+"mismo aire que los plebeyos de Edorn, los habitantes de esta luna eligen "
+"formar su propia sociedad de élite en Sharak."
 
 #: dat/assets/sharak.xml:31
 msgid ""
@@ -13071,10 +13294,15 @@ msgid ""
 "private property. The spaceport bar is the only public recreational facility "
 "on the face of Sharak."
 msgstr ""
+"Hay una pequeña ciudad pública construida alrededor del puerto espacial para "
+"dar servicio a las naves y la logística planetaria habitual, pero la mayor "
+"parte de la superficie de Sharak es propiedad privada. El bar del puerto "
+"espacial es la única instalación recreativa pública en la superficie de "
+"Sharak."
 
 #: dat/assets/shariff_station.xml:2
 msgid "Shariff Station"
-msgstr ""
+msgstr "Estación Shariff"
 
 #: dat/assets/shariff_station.xml:26
 msgid ""
@@ -13083,10 +13311,15 @@ msgid ""
 "despite the many extra security measures that have been implemented in the "
 "past cycles, the losses continue to pile up."
 msgstr ""
+"Para ser una base militar Dvaered, la estación Shariff lo tiene difícil. Al "
+"estar tan cerca del espacio Frontera, la estación es un objetivo popular "
+"para las incursiones de la FLF y, a pesar de las numerosas medidas de "
+"seguridad adicionales que se han aplicado en los últimos ciclos, las "
+"pérdidas siguen acumulándose."
 
 #: dat/assets/sheik_hall.xml:2
 msgid "Sheik Hall"
-msgstr ""
+msgstr "Sala Sheik"
 
 #: dat/assets/sheik_hall.xml:28
 msgid ""
@@ -13097,6 +13330,12 @@ msgid ""
 "standard, the amount of money involved is on par with a medium-sized mining "
 "colony."
 msgstr ""
+"Desde mucho antes del ascenso de la Casa Dvaered, Sala Sheik ha sido un "
+"importante exportador de metales finos y minerales valiosos. Los habitantes "
+"de este planeta se ganan la vida extrayendo esos recursos y fabricando joyas "
+"con ellos. Aunque la producción bruta del planeta no es muy elevada, la "
+"cantidad de dinero que se maneja está a la altura de una colonia minera de "
+"tamaño medio."
 
 #: dat/assets/sheik_hall.xml:29
 msgid ""
@@ -13105,10 +13344,15 @@ msgid ""
 "shipped offworld. Nevertheless, it's attractive to pretend that you're "
 "surrounded by riches for a moment."
 msgstr ""
+"El bar está decorado con todo lo que brilla y reluce. Por supuesto, todo lo "
+"que se ve aquí es una réplica, ya que los verdaderos objetos de valor se "
+"envían fuera del mundo. Sin embargo, es atractivo fingir que se está rodeado "
+"de riquezas por un momento."
 
 #: dat/assets/shiarta.xml:2
+#, fuzzy
 msgid "Shiarta"
-msgstr ""
+msgstr "Shiarta"
 
 #: dat/assets/shiarta.xml:29
 msgid ""
@@ -13122,34 +13366,43 @@ msgid ""
 "worlds, there is not much in the way of luxury to be found on Shiarta. There "
 "is, however, one small piece of good news: ice cubes are free of charge."
 msgstr ""
+"El bar del puerto espacial sólo vende un número selecto de bebidas. Como en "
+"la mayoría de los mundos mineros, en Shiarta no hay mucho lujo. Sin embargo, "
+"hay una pequeña buena noticia: los cubitos de hielo son gratuitos."
 
 #: dat/assets/shickhaw_i.xml:2
+#, fuzzy
 msgid "Shickhaw I"
-msgstr ""
+msgstr "Shickhaw I"
 
 #: dat/assets/shickhaw_ii.xml:2
+#, fuzzy
 msgid "Shickhaw II"
-msgstr ""
+msgstr "Shickhaw II"
 
 #: dat/assets/shickhaw_iv.xml:2
+#, fuzzy
 msgid "Shickhaw IV"
-msgstr ""
+msgstr "Shickhaw IV"
 
 #: dat/assets/shikima_ii.xml:2
+#, fuzzy
 msgid "Shikima II"
-msgstr ""
+msgstr "Shikima II"
 
 #: dat/assets/shion.xml:2
+#, fuzzy
 msgid "Shion"
-msgstr ""
+msgstr "Shion"
 
 #: dat/assets/sidhe.xml:2
+#, fuzzy
 msgid "Sidhe"
-msgstr ""
+msgstr "Sidhe"
 
 #: dat/assets/sigma_station.xml:2
 msgid "Sigma Station"
-msgstr ""
+msgstr "Estación Sigma"
 
 #: dat/assets/sigma_station.xml:30
 msgid ""
@@ -13157,16 +13410,21 @@ msgid ""
 "ships. Regular Proteron civilians typically aren't allowed access to this "
 "facility."
 msgstr ""
+"El único trabajo de esta estación es fabricar las poderosas naves militares "
+"Proteron. Los civiles normales Proteron no suelen tener acceso a estas "
+"instalaciones."
 
 #: dat/assets/sigma_station.xml:31
 msgid ""
 "Even for a Proteron bar, this one is heavily business-oriented. Most patrons "
 "seem to be here for a specific purpose."
 msgstr ""
+"Incluso para un bar Proteron, éste está muy orientado a los negocios. La "
+"mayoría de los clientes parecen estar aquí con un propósito específico."
 
 #: dat/assets/silverstone.xml:2
 msgid "Silverstone"
-msgstr ""
+msgstr "Piedraplateada"
 
 #: dat/assets/silverstone.xml:31
 msgid ""
@@ -13174,6 +13432,9 @@ msgid ""
 "Growing bioships is only useful if those ships can be equipped with guns, as "
 "the local governor argues."
 msgstr ""
+"Piedraplateada es uno de los mayores productores de naves y armas Soromida. "
+"Cultivar bionaves solo es útil si esas naves pueden equiparse con armas, "
+"como argumenta el gobernador local."
 
 #: dat/assets/silverstone.xml:32
 msgid ""
@@ -13181,10 +13442,15 @@ msgid ""
 "seriously. All visitors to the spaceport bar must relinquish any weapons on "
 "their persons, and submit to a scan upon entry."
 msgstr ""
+"Como Piedraplateada es un mundo de negocios semimilitar, los lugareños se "
+"toman la seguridad muy en serio. Todos los visitantes del bar del puerto "
+"espacial deben renunciar a cualquier arma que lleven encima y someterse a un "
+"escáner al entrar."
 
 #: dat/assets/simoen.xml:2
+#, fuzzy
 msgid "Simoen"
-msgstr ""
+msgstr "Simoen"
 
 #: dat/assets/simoen.xml:30
 msgid ""
@@ -13194,6 +13460,12 @@ msgid ""
 "of space for solar power, which makes energy prices here very low. This "
 "makes the world interesting for all kinds of manufacturing operations."
 msgstr ""
+"Simoen es el único planeta habitable del sistema Kraft, a duras penas. Los "
+"cultivos no crecen bien aquí y la vida no es muy lujosa, pero de todos modos "
+"hay razones para que los humanos vivan aquí. Como muchos planetas "
+"desérticos, Simoen tiene mucho espacio para la energía solar, lo que hace "
+"que los precios de la energía sean muy bajos. Esto hace que el mundo sea "
+"interesante para todo tipo de operaciones de fabricación."
 
 #: dat/assets/simoen.xml:31
 msgid ""
@@ -13202,16 +13474,25 @@ msgid ""
 "Fortunately all of the facilities here are in working order, and the drinks "
 "available at the bar are decent enough, if a bit modest in selection."
 msgstr ""
+"Este bar del puerto espacial es bastante arenoso y mugriento. No es que no "
+"se mantenga limpio, sino que es una de esas cosas que se ven en la mayoría "
+"de los mundos de clase G. Afortunadamente, todas las instalaciones están en "
+"funcionamiento y las bebidas disponibles en el bar son bastante decentes, "
+"aunque la selección es un poco modesta."
 
 #: dat/assets/sinass.xml:2
+#, fuzzy
 msgid "Sinass"
-msgstr ""
+msgstr "Sinass"
 
 #: dat/assets/sinass.xml:31
 msgid ""
 "Sinass is a fairly typical civilian Sirius world. Sirii of all echelons make "
 "their home here. Sinass provides most of the supplies needed by Fort Sirius."
 msgstr ""
+"Sinass es un mundo civil Sirio bastante típico. Sirios de todos los niveles "
+"tienen aquí su hogar. Sinass proporciona la mayor parte de los suministros "
+"que necesita Fuerte Sirio."
 
 #: dat/assets/sinass.xml:32
 msgid ""
@@ -13220,10 +13501,15 @@ msgid ""
 "know exactly what it is. The locals get very upset when you're sitting in "
 "the wrong section, though."
 msgstr ""
+"Este bar está dividido en tres secciones. Una es azul, otra verde y la otra "
+"morada. Parece tener algún significado, pero nadie parece saber exactamente "
+"cuál es. Sin embargo, los lugareños se molestan mucho cuando te sientas en "
+"la sección equivocada."
 
 #: dat/assets/sinclair.xml:2
+#, fuzzy
 msgid "Sinclair"
-msgstr ""
+msgstr "Sinclair"
 
 #: dat/assets/sinclair.xml:31
 msgid ""
@@ -13235,6 +13521,13 @@ msgid ""
 "his final resting place. The tomb is a popular destination for Dvaered "
 "pilgrims."
 msgstr ""
+"Sinclair lleva el nombre de uno de los nobles más reconocidos de la Casa "
+"Dvaered, Godfried Sinclair. Como todos los nobles de Dvaered, era un señor "
+"de la guerra, y sus victorias en la batalla, así como la forma en que las "
+"obtuvo, le valieron el respeto de su Casa y del resto del Imperio. El "
+"planeta que llegó a llevar su nombre fue la última de sus conquistas, y "
+"finalmente se convirtió en su lugar de descanso final. La tumba es un "
+"destino popular para los peregrinos Dvaered."
 
 #: dat/assets/sinclair.xml:32
 msgid ""
@@ -13244,6 +13537,11 @@ msgid ""
 "of Godfried Sinclair hanging over the bar, and his family's weapon can be "
 "seen on various decorative fixtures."
 msgstr ""
+"El bar del puerto espacial de Sinclair está dirigido por empresarios, no por "
+"guerreros. Pero al ser empresarios, reconocen el valor de atender a los "
+"lugareños y a los que pasan por allí, y así es como este bar tiene un gran "
+"holoretrato de Godfried Sinclair colgado sobre la barra, y el arma de su "
+"familia puede verse en varios accesorios decorativos."
 
 #: dat/assets/sindbad.xml:2 dat/ships/sindbad.xml:2
 #, fuzzy
@@ -13263,6 +13561,17 @@ msgid ""
 "remains the FLF's best protection from their Dvaered oppressors, Sindbad can "
 "defend itself if need be."
 msgstr ""
+"Desde el exterior, la estación FLF Sindbad parece un trozo de chatarra. Esto "
+"le viene bien a la FLF, ya que su base no está pensada para destacar. Cuanto "
+"más crean los viajeros que la estación no es más que otra carcasa flotando "
+"en el espacio, mejor. Sin embargo, por dentro, Sindbad parece, bueno, sigue "
+"pareciendo un trozo de chatarra. Los recursos de la FLF son limitados, y el "
+"hecho de que tengan un puesto de avanzada secreto y autónomo debe "
+"considerarse un logro. Aun así, Sindbad es más que una resistencia "
+"simbólica. La base cuenta con todas las instalaciones y capacidades "
+"defensivas que corresponden a una estructura de su tamaño, y aunque el "
+"sigilo sigue siendo la mejor protección de la FLF frente a sus opresores "
+"Dvaered, Sindbad puede defenderse por sí misma si es necesario."
 
 #: dat/assets/sindbad.xml:32
 msgid ""
@@ -13273,10 +13582,16 @@ msgid ""
 "faced men, and the topics of conversation are limited to the Dvaered and the "
 "FLF's cause."
 msgstr ""
+"Los FLF no tienen mucho uso de pasatiempos, así que es discutible si este "
+"lugar puede llamarse bar. Aun así, ofrece un espacio para sentarse y hablar, "
+"y sirve un líquido que parece diferente del ácido industrial, en el sentido "
+"de que no te hace un agujero en el estómago. La gente aquí es en su mayoría "
+"hombres de cara dura, y los temas de conversación se limitan a los Dvaered y "
+"a la causa del FLF."
 
 #: dat/assets/sirius_ordnance.xml:2
 msgid "Sirius Ordnance"
-msgstr ""
+msgstr "Ordenanza Sirio"
 
 #: dat/assets/sirius_ordnance.xml:28
 msgid ""
@@ -13284,10 +13599,13 @@ msgid ""
 "produced right here at Aesir. As a general rule, no finished ship leaves the "
 "system without being fully equipped first."
 msgstr ""
+" Al igual que la mayor parte de la flota Sirio, el equipo instalado en las "
+"naves se produce aquí mismo, en Aesir. Por regla general, ninguna nave "
+"terminada sale del sistema sin haber sido equipada completamente antes."
 
 #: dat/assets/sirius_shipyards.xml:2
 msgid "Sirius Shipyards"
-msgstr ""
+msgstr "Astilleros Sirio"
 
 #: dat/assets/sirius_shipyards.xml:28
 msgid ""
@@ -13297,10 +13615,17 @@ msgid ""
 "building ships in proximity to Mutris will endow some small portion of "
 "Sirichana's power on the ships produced."
 msgstr ""
+"En los astilleros Sirio se construye la mayor parte de la flota de Sirio, "
+"aunque algunas de las naves de apoyo más pequeñas se construyen en otro "
+"lugar. Aunque Aesir no es un lugar ideal para la producción masiva de naves "
+"de guerra, los Sirio creen que la construcción de naves en las proximidades "
+"de Mutris dotará de una pequeña parte del poder de Sirichana a las naves "
+"producidas."
 
 #: dat/assets/sirou_alpha.xml:2
+#, fuzzy
 msgid "Sirou Alpha"
-msgstr ""
+msgstr "Sirou Alpha"
 
 #: dat/assets/sirou_alpha.xml:30
 msgid ""
@@ -13317,22 +13642,29 @@ msgid ""
 "Imperial officers here can throw at it. It's a popular stopping point for "
 "traders and Imperial soldiers alike."
 msgstr ""
+"El bar sigue oliendo a desinfectante y a equipo industrial. Los enormes y "
+"silenciosos depuradores de aire mantienen el aire limpio, por mucho humo de "
+"cigarro que lancen los oficiales Imperiales. Es un punto de parada popular "
+"para comerciantes y soldados Imperiales por igual."
 
 #: dat/assets/sirou_i.xml:2
+#, fuzzy
 msgid "Sirou I"
-msgstr ""
+msgstr "Sirou I"
 
 #: dat/assets/sirou_ii.xml:2
+#, fuzzy
 msgid "Sirou II"
-msgstr ""
+msgstr "Sirou II"
 
 #: dat/assets/sirou_vi.xml:2
+#, fuzzy
 msgid "Sirou VI"
-msgstr ""
+msgstr "Sirou VI"
 
 #: dat/assets/sixbat_station.xml:2
 msgid "Sixbat Station"
-msgstr ""
+msgstr "Estación Sixbat"
 
 #: dat/assets/sixbat_station.xml:30
 msgid ""
@@ -13342,6 +13674,12 @@ msgid ""
 "origin. Some believe it to be alien, but there is no proof of this. So far, "
 "mankind has yet to design a ship too big for Sixbat to handle."
 msgstr ""
+"La Estación Sixbat es una maravilla de la tecnología. No es tanto una "
+"estación como un gigantesco replicador masivo, capaz de replicar naves "
+"espaciales enteras si se le dan planos de diseño y suficientes materias "
+"primas. La instalación es de origen desconocido. Algunos creen que es "
+"alienígena, pero no hay pruebas de ello. Hasta ahora, la humanidad no ha "
+"diseñado una nave demasiado grande para que Sixbat no pueda manejarla."
 
 #: dat/assets/sixbat_station.xml:31
 msgid ""
@@ -13349,10 +13687,14 @@ msgid ""
 "conversation while they select which ship they want and in what colour, and "
 "then wait for it to finish replicating."
 msgstr ""
+"El bar es el lugar al que acuden los clientes para disfrutar de unas copas y "
+"una agradable conversación mientras seleccionan qué nave quieren y de qué "
+"color, y esperan a que termine de replicarse."
 
 #: dat/assets/skater.xml:2
+#, fuzzy
 msgid "Skater"
-msgstr ""
+msgstr "Skater"
 
 #: dat/assets/skater.xml:29
 msgid ""
@@ -13363,6 +13705,13 @@ msgid ""
 "resupply base. But the colony is still there. The people who live here "
 "consider this their home now."
 msgstr ""
+"Originalmente, Skater se asentó como base de abastecimiento para el tráfico "
+"entre Feye y los sistemas de más allá. Esto ocurría en una época en la que "
+"los Soromida todavía se estaban expandiendo hacia lo que es el actual "
+"territorio Soromida. Por supuesto, la infraestructura se ha desarrollado "
+"considerablemente desde entonces, y Skater ya no es necesaria como base de "
+"reabastecimiento. Pero la colonia sigue ahí. La gente que vive aquí la "
+"considera ahora su hogar."
 
 #: dat/assets/skater.xml:30
 msgid ""
@@ -13372,10 +13721,17 @@ msgid ""
 "colony and its environment. The local authorities hope to attract more "
 "people to the planet in order to grow the local economy."
 msgstr ""
+"Skater nunca fue de mucho interés para los visitantes, pero puede ser un "
+"lugar sorprendentemente bueno para vivir, si eres un Soromida. El bar del "
+"puerto espacial actúa como una especie de centro turístico de bajo perfil, "
+"proporcionando a los visitantes información sobre la colonia y su entorno. "
+"Las autoridades locales esperan atraer a más gente al planeta para hacer "
+"crecer la economía local."
 
 #: dat/assets/skona.xml:2
+#, fuzzy
 msgid "Skona"
-msgstr ""
+msgstr "Skona"
 
 #: dat/assets/skona.xml:31
 msgid ""
@@ -13383,20 +13739,28 @@ msgid ""
 "terraformed this planet into a respectable, though not altogether that "
 "impressive planet. It is mainly engaged in the production of goods."
 msgstr ""
+"Este planeta, que originalmente tenía muy poca atmósfera, fue transformado "
+"por los Proteron en un planeta respetable, aunque no tan impresionante. Se "
+"dedica principalmente a la producción de bienes."
 
 #: dat/assets/skona.xml:32
 msgid ""
 "The bar is decorated with various trinkets and artwork dedicated to Proteron "
 "nationalism, with some of its drinks named after famous Proteron leaders."
 msgstr ""
+"El bar está decorado con diversas baratijas y obras de arte dedicadas al "
+"nacionalismo Proteron, y algunas de sus bebidas llevan el nombre de famosos "
+"líderes Proteron."
 
 #: dat/assets/sleuth_ii.xml:2
+#, fuzzy
 msgid "Sleuth II"
-msgstr ""
+msgstr "Sleuth II"
 
 #: dat/assets/slofeldt.xml:2
+#, fuzzy
 msgid "Slofeldt"
-msgstr ""
+msgstr "Slofeldt"
 
 #: dat/assets/slofeldt.xml:27
 msgid ""
@@ -13405,6 +13769,10 @@ msgid ""
 "sterilized it. It is a monument to last and remind people of days gone by. A "
 "place for quiet contemplation."
 msgstr ""
+"Slofeldt es un museo flotante y un memorial del Incidente. Contiene "
+"reliquias de la Vieja Tierra, así como holos de Sol antes de que el "
+"Incidente la esterilizara. Es un monumento para durar y recordar los días "
+"pasados. Un lugar para la contemplación tranquila."
 
 #: dat/assets/slofeldt.xml:28
 msgid ""
@@ -13412,10 +13780,14 @@ msgid ""
 "both alcoholic and otherwise. The beer is brewed on site, and has a "
 "surprising kick to it."
 msgstr ""
+"El bar es más bien un restaurante, con comida y bebidas, tanto alcohólicas "
+"como de otro tipo, excesivamente caras pero sabrosas. La cerveza se elabora "
+"allí mismo y tiene un sabor sorprendente."
 
 #: dat/assets/smaal.xml:2
+#, fuzzy
 msgid "Smaal"
-msgstr ""
+msgstr "Smaal"
 
 #: dat/assets/smaal.xml:30
 msgid ""
@@ -13426,6 +13798,13 @@ msgid ""
 "themselves to the low gravity. These Soromid can't ever set foot on another "
 "world - their bodies are no longer capable of withstanding higher gees."
 msgstr ""
+"Smaal se encuentra justo en el punto dulce de Malebolge: la distancia "
+"orbital ideal para el desarrollo de la vida. El planeta está cubierto de "
+"vida vegetal e incluso tiene algunas especies autóctonas de insectos. Sin "
+"embargo, Smaal es un mundo muy pequeño, por lo que la colonia aquí está "
+"habitada por Soromidas que se han adaptado a la baja gravedad. Estos "
+"Soromidas no pueden pisar nunca otro mundo, ya que sus cuerpos no son "
+"capaces de soportar una gravedad mayor."
 
 #: dat/assets/smaal.xml:31
 msgid ""
@@ -13434,10 +13813,14 @@ msgid ""
 "last thing a captain wants when coming to port is to have to deal with low "
 "gravity."
 msgstr ""
+"Smaal no es muy popular entre los comerciantes. La vida en el espacio "
+"implica inevitablemente períodos de trabajo fuera de las zonas de gravedad "
+"controlada de la nave, y lo último que quiere un capitán al llegar a puerto "
+"es tener que enfrentarse a la baja gravedad."
 
 #: dat/assets/socrates_military_academy.xml:2
 msgid "Socrates Military Academy"
-msgstr ""
+msgstr "Academia Militar Socrates"
 
 #: dat/assets/socrates_military_academy.xml:27
 msgid ""
@@ -13447,6 +13830,12 @@ msgid ""
 "this facility the students learn do command fleets, win military engagements "
 "and represent the interests of House Sirius in diplomatic negotiations."
 msgstr ""
+"La Academia Militar Sócrates es el lugar donde se forman los oficiales "
+"militares de más alto rango de la flota Sirio. La instalación está poblada "
+"predominantemente por Sirios del escalón Serra, con una minoría de Sirios "
+"del escalón Fyrra mezclados. En estas instalaciones los estudiantes aprenden "
+"a comandar flotas, a ganar compromisos militares y a representar los "
+"intereses de la Casa Sirio en las negociaciones diplomáticas."
 
 #: dat/assets/socrates_military_academy.xml:28
 msgid ""
@@ -13455,10 +13844,15 @@ msgid ""
 "teachers. Needless to say, most students have little time for social "
 "pleasantries."
 msgstr ""
+"Muchos estudiantes son vistos estudiando aquí en el bar del puerto espacial. "
+"Ser aceptado aquí es una hazaña en sí misma, y los profesores sólo aceptan "
+"un rendimiento de primera categoría. Ni que decir tiene que la mayoría de "
+"los estudiantes tienen poco tiempo para las cortesías sociales."
 
 #: dat/assets/sola.xml:2
+#, fuzzy
 msgid "Sola"
-msgstr ""
+msgstr "Sola"
 
 #: dat/assets/sola.xml:27
 msgid ""
@@ -13468,6 +13862,11 @@ msgid ""
 "wings are in various states of disrepair, but somehow the plant always "
 "manages to stay in operation."
 msgstr ""
+"En Sola hay una planta de fabricación de piezas de nave de bajo perfil y "
+"algo cutre. Suministra módulos terciarios de la nave, como cabezales, aseos "
+"y equipos de gimnasio. Las instalaciones están crónicamente infrafinanciadas "
+"y sus alas de fabricación están en varios estados de deterioro, pero de "
+"alguna manera la planta siempre se las arregla para seguir funcionando."
 
 #: dat/assets/sola.xml:28
 msgid ""
@@ -13477,18 +13876,26 @@ msgid ""
 "Solan arena for decades now, but they are being stonewalled by the local "
 "Dvaered administration."
 msgstr ""
+"En una sala lateral del bar principal hay una pequeña arena utilizada para "
+"las peleas de ratas Fureng. Técnicamente, estas peleas están prohibidas en "
+"toda la galaxia conocida por ser crueles y bárbaras, y las organizaciones de "
+"defensa de los animales llevan décadas intentando cerrar la arena de Solan, "
+"pero la administración local Dvaered les pone trabas."
 
 #: dat/assets/sollav_ii.xml:2
+#, fuzzy
 msgid "Sollav II"
-msgstr ""
+msgstr "Sollav II"
 
 #: dat/assets/sollav_vi.xml:2
+#, fuzzy
 msgid "Sollav VI"
-msgstr ""
+msgstr "Sollav VI"
 
 #: dat/assets/sollebor.xml:2
+#, fuzzy
 msgid "Sollebor"
-msgstr ""
+msgstr "Sollebor"
 
 #: dat/assets/sollebor.xml:30
 msgid ""
@@ -13498,6 +13905,11 @@ msgid ""
 "landscape is composed largely of frozen methane. The frozen methane provides "
 "for a lucrative mining business."
 msgstr ""
+"Sollebor está muy alejado de su primario, por lo que es un planeta frío. Los "
+"astrónomos creen que originalmente era un gigante gaseoso, pero que se "
+"enfrió tanto que colapsó hasta convertirse en una esfera sólida. Creen que "
+"esto se debe a que el paisaje helado está compuesto en gran parte por metano "
+"congelado. El metano congelado proporciona un lucrativo negocio minero."
 
 #: dat/assets/sollebor.xml:31
 msgid ""
@@ -13505,10 +13917,14 @@ msgid ""
 "subterranean. It is well heated, so it doesn't really seem like you're on a "
 "frozen ball of methane at all."
 msgstr ""
+"Como la mayor parte del complejo habitacional del planeta, el bar del puerto "
+"espacial es subterráneo. Está bien calentado, así que no parece que estés en "
+"una bola de metano congelada."
 
 #: dat/assets/solpere.xml:2
+#, fuzzy
 msgid "Solpere"
-msgstr ""
+msgstr "Solpere"
 
 #: dat/assets/solpere.xml:31
 msgid ""
@@ -13518,6 +13934,11 @@ msgid ""
 "those who can endure the cold the icy landscape is a magnificent sight to "
 "behold."
 msgstr ""
+"Solpere es un planeta frío con una población relativamente pequeña. Sólo "
+"tiene tres estaciones: primavera, invierno e invierno profundo. Sin embargo, "
+"un clima tan duro tiene sus ventajas. El cielo se ilumina con frecuencia con "
+"auroras, y para los que pueden soportar el frío, el paisaje helado es un "
+"espectáculo magnífico."
 
 #: dat/assets/solpere.xml:32
 msgid ""
@@ -13525,10 +13946,13 @@ msgid ""
 "facilities are available. It's not a big place though, since Solpere isn't a "
 "very frequently visited port."
 msgstr ""
+"Este es un bar relativamente normal. La calidad del servicio es bastante "
+"decente y todas las instalaciones están disponibles. Sin embargo, no es un "
+"lugar grande, ya que Solpere no es un puerto muy visitado."
 
 #: dat/assets/solvac_crops.xml:2
 msgid "Solvac Crops"
-msgstr ""
+msgstr "Cultivos Solvac"
 
 #: dat/assets/solvac_crops.xml:29
 msgid ""
@@ -13540,20 +13964,32 @@ msgid ""
 "gravity environments. This is why it us usually processed into liquid or "
 "dried foods before being sent to the consumer market."
 msgstr ""
+"Cultivos Solvac es una estación agrícola. Su objetivo principal es "
+"suministrar nutrientes para satisfacer la demanda de alimentos en los "
+"planetas cercanos. Los cultivos aquí son modificados genéticamente por "
+"Soromida, y se cultivan en condiciones de gravedad cero, lo que permite "
+"obtener rendimientos mucho más potentes. Desgraciadamente, los productos son "
+"a menudo estructuralmente inseguros, y se derrumban por su propio peso "
+"incluso en entornos de baja gravedad. Por ello, se suelen procesar en "
+"alimentos líquidos o secos antes de ser enviados al mercado de consumo."
 
 #: dat/assets/solvac_crops.xml:30
 msgid ""
 "The entire station is zero-G, including the spacedock bar. This can be "
 "inconvenient, but most spacers worth their salt know how to deal with it."
 msgstr ""
+"Toda la estación es de gravedad cero, incluida el bar del muelle espacial. "
+"Esto puede ser un inconveniente, pero la mayoría de los espaciales que se "
+"precien saben cómo lidiar con ello."
 
 #: dat/assets/sorom.xml:2
+#, fuzzy
 msgid "Sorom"
-msgstr ""
+msgstr "Sorom"
 
 #: dat/assets/soromid_customs_central.xml:2
 msgid "Soromid Customs Central"
-msgstr ""
+msgstr "Central de Aduanas Soromida"
 
 #: dat/assets/soromid_customs_central.xml:26
 msgid ""
@@ -13569,7 +14005,7 @@ msgstr ""
 
 #: dat/assets/soromid_databank.xml:2
 msgid "Soromid Databank"
-msgstr ""
+msgstr "Banco de Datos Soromida"
 
 #: dat/assets/soromid_databank.xml:27
 msgid ""
@@ -13578,6 +14014,11 @@ msgid ""
 "industry are managed here. This is why, although the Soromid Databank is not "
 "a military base, it has been classified a restricted facility."
 msgstr ""
+"El Banco de Datos Soromida es el principal centro de datos Soromida. Aquí se "
+"gestiona toda la administración sobre la política interplanetaria, así como "
+"los registros de la industria de tratamiento genético. Por eso, aunque el "
+"Banco de Datos Soromida no es una base militar, ha sido clasificado como "
+"instalación restringida."
 
 #: dat/assets/soromid_databank.xml:28
 msgid ""
@@ -13587,10 +14028,16 @@ msgid ""
 "taken at booths adjoining the spacedock bar, which are manned by secretive-"
 "looking Soromid who never leave the station."
 msgstr ""
+"La mayoría de los visitantes no pasan del bar del muelle espacial, ni "
+"siquiera el personal de rango Soromida. El centro de datos está gestionado "
+"en su mayor parte por drones automatizados internos, que sólo requieren "
+"mantenimiento manual ocasionalmente. Las solicitudes de información se "
+"atienden en las cabinas contiguas al bar del muelle espacial, atendidas por "
+"Soromida de aspecto reservado que nunca salen de la estación."
 
 #: dat/assets/soromid_wards_alpha.xml:2
 msgid "Soromid Wards Alpha"
-msgstr ""
+msgstr "Pabellones Soromida Alfa"
 
 #: dat/assets/soromid_wards_alpha.xml:27
 msgid ""
@@ -13604,10 +14051,20 @@ msgid ""
 "clients spend anywhere from a 5 to 65 decaperiods in an artificial coma "
 "while their genetic code is rewritten."
 msgstr ""
+"Como todo el mundo sabe, Soromida son exportadores de servicios de "
+"tratamiento genético. Gente de toda la galaxia viaja al espacio Soromida "
+"para mejorar sus habilidades naturales, curar enfermedades o mejorar su "
+"apariencia. Todas estas personas necesitan ser tratadas en algún lugar, y "
+"este es uno de esos lugares. El Pabellón Soromida Alfa es una enorme "
+"instalación médica, la mayor de todos los Pabellones Soromida. Aquí se puede "
+"tratar a miles de clientes a la vez. La mayor parte del volumen de la "
+"estación la ocupan los tanques de tratamiento personal, donde los clientes "
+"pasan entre 5 y 65 decaperiodos en coma artificial mientras se reescribe su "
+"código genético."
 
 #: dat/assets/soromid_wards_beta.xml:2
 msgid "Soromid Wards Beta"
-msgstr ""
+msgstr "Pabellones Soromida Beta"
 
 #: dat/assets/soromid_wards_beta.xml:28
 msgid ""
@@ -13618,6 +14075,13 @@ msgid ""
 "cost, so the clients visiting Beta tend to be from the upper classes of "
 "galactic society."
 msgstr ""
+"Mientras los Pabellones Soromida Alfa de Shikima atienden a siete de cada "
+"diez clientes de terapia génica, estos están mal equipados para algunas de "
+"las operaciones más invasivas. En cambio, los Pabellones Soromida Beta "
+"disponen de varias instalaciones que hacen posible este tipo de operaciones. "
+"Por supuesto, estos procedimientos avanzados tienen un coste más elevado, "
+"por lo que los clientes que visitan Beta suelen pertenecer a las clases "
+"altas de la sociedad galáctica."
 
 #: dat/assets/soromid_wards_beta.xml:29
 msgid ""
@@ -13626,10 +14090,14 @@ msgid ""
 "ocular augmentation, bone and muscle reinforcement, disease immunities and "
 "reproductive facility expansion."
 msgstr ""
+"El bar del muelle espacial, que hace las veces de sala de espera para los "
+"clientes, ofrece a sus visitantes información sobre los servicios que se "
+"prestan en Beta, como el aumento ocular, el refuerzo óseo y muscular, la "
+"inmunidad a las enfermedades y la instalación de ampliación reproductiva."
 
 #: dat/assets/soromid_wards_gamma.xml:2
 msgid "Soromid Wards Gamma"
-msgstr ""
+msgstr "Pabellones Soromida Gamma"
 
 #: dat/assets/soromid_wards_gamma.xml:28
 msgid ""
@@ -13640,6 +14108,13 @@ msgid ""
 "here are usually colonists or working personnel who need to adapt themselves "
 "to a particular climate."
 msgstr ""
+"Los pabellones Soromida Gamma pueden considerarse una instalación privada. "
+"Mientras que Alfa y Beta atienden las necesidades de tratamiento genético "
+"del resto de la galaxia, Gamma es sólo para Soromida. Las operaciones aquí "
+"están orientadas a una mayor tolerancia a las modificaciones a las que los "
+"humanos normales probablemente no sobrevivirían. Los pacientes aquí suelen "
+"ser colonos o personal de trabajo que necesitan adaptarse a un clima "
+"determinado."
 
 #: dat/assets/soromid_wards_gamma.xml:29
 msgid ""
@@ -13648,10 +14123,14 @@ msgid ""
 "genes and the modifications in youth education. They know what they're "
 "coming for."
 msgstr ""
+"A diferencia de Alfa y Beta, el bar del muelle espacial de Gamma no ofrece "
+"mucha información sobre lo que ocurre en la instalación. Los Soromida "
+"aprenden sobre sus genes y las modificaciones en la educación primaria. "
+"Saben a qué vienen."
 
 #: dat/assets/soros_station.xml:2
 msgid "Soros Station"
-msgstr ""
+msgstr "Estación Soros"
 
 #: dat/assets/soros_station.xml:29
 msgid ""
@@ -13666,10 +14145,15 @@ msgid ""
 "outlets, and what better way to do this than combine the trip with the "
 "ship's test run?"
 msgstr ""
+"A menudo hay más pilotos en este bar que naves atracadas en la estación. "
+"Alguien tiene que transportar los productos terminados a los puntos de "
+"venta, y ¿qué mejor manera de hacerlo que combinar el viaje con la prueba de "
+"la nave?"
 
 #: dat/assets/sroolu.xml:2
+#, fuzzy
 msgid "Sroolu"
-msgstr ""
+msgstr "Sroolu"
 
 #: dat/assets/sroolu.xml:28
 msgid ""
@@ -13679,6 +14163,12 @@ msgid ""
 "them. The operation seems to be making profit, though it seems it is fated "
 "to remain a minor player in the Sirian economy."
 msgstr ""
+"Sroolu es la única luna que orbita alrededor de An'ku II. La colonia se "
+"dedica principalmente a la recolección de los recursos que se encuentran en "
+"An'ku, refinándolos para su procesamiento e incluso produciendo algunos "
+"productos finales de bajo nivel a partir de ellos. La operación parece ser "
+"rentable, aunque parece que está destinada a seguir siendo un actor menor en "
+"la economía Sirio."
 
 #: dat/assets/sroolu.xml:29
 msgid ""
@@ -13687,10 +14177,15 @@ msgid ""
 "fit inside at once. Suffice to say only part of the bar's floor surface is "
 "actually in use, the remaining space being screened off by mobile panels."
 msgstr ""
+"Sroolu es sólo una pequeña colonia, pero su bar es enorme, incluso para los "
+"estándares intergalácticos. Parece que quien lo construyó pretendía que toda "
+"la plantilla cupiera dentro a la vez. Basta con decir que sólo una parte de "
+"la superficie del bar se utiliza realmente, ya que el espacio restante está "
+"protegido por paneles móviles."
 
 #: dat/assets/stalwart_station.xml:2
 msgid "Stalwart Station"
-msgstr ""
+msgstr "Estación Stalwart"
 
 #: dat/assets/stalwart_station.xml:28
 msgid ""
@@ -13701,22 +14196,30 @@ msgid ""
 "fact, Stalwart Station features as the base of most military operations in "
 "the surrounding systems."
 msgstr ""
+"Desde que los acomodados Dvaereds han reclamado por completo la superficie "
+"de Varia, todas las empresas industriales y militares se han trasladado "
+"fuera del mundo a la estación Stalwart. Aunque dos tercios de las cubiertas "
+"de la estación están en uso por las principales corporaciones Dvaered, queda "
+"espacio suficiente para un ala militar respetable. De hecho, la Estación "
+"Stalwart es la base de la mayoría de las operaciones militares en los "
+"sistemas circundantes."
 
 #: dat/assets/starlight_end_i.xml:2
 msgid "Starlight End I"
-msgstr ""
+msgstr "Luz Estelar Final I"
 
 #: dat/assets/starlight_end_ii.xml:2
 msgid "Starlight End II"
-msgstr ""
+msgstr "Luz Estelar Final II"
 
 #: dat/assets/starlight_end_iii.xml:2
 msgid "Starlight End III"
-msgstr ""
+msgstr "Luz Estelar Final III"
 
 #: dat/assets/stein.xml:2
+#, fuzzy
 msgid "Stein"
-msgstr ""
+msgstr "Stein"
 
 #: dat/assets/stein.xml:31
 msgid ""
@@ -13725,6 +14228,10 @@ msgid ""
 "prestigious universities. This world has resisted the entropy that has "
 "gripped much of this region of Za'lek space."
 msgstr ""
+"Probablemente la mayor presencia Za'lek que queda en el sur de su espacio. "
+"Un mundo oceánico moderadamente próspero con una economía diversa y varias "
+"universidades prestigiosas. Este mundo ha resistido la entropía que se ha "
+"apoderado de gran parte de esta región del espacio Za'lek."
 
 #: dat/assets/stein.xml:32
 msgid ""
@@ -13732,10 +14239,14 @@ msgid ""
 "off the local marine life. Tables are placed with little rhyme or reason, "
 "and the chatter of the patrons adds to the somewhat energetic feel."
 msgstr ""
+"Un lugar destartalado y bastante alegre. Tiene varios acuarios grandes que "
+"muestran la vida marina local. Las mesas están colocadas sin ton ni son, y "
+"el parloteo de los clientes contribuye a la energía de la atmósfera."
 
 #: dat/assets/steiner.xml:2
+#, fuzzy
 msgid "Steiner"
-msgstr ""
+msgstr "Steiner"
 
 #: dat/assets/steiner.xml:26
 msgid ""
@@ -13745,10 +14256,16 @@ msgid ""
 "previously used by the people of Uhrabi-9, is now a popular tourist spot due "
 "to its proximity to it."
 msgstr ""
+"Uhrabi-9, que una vez fue un planeta muy próspero del Antiguo Imperio, fue "
+"trágicamente golpeado por un gran asteroide, lo que provocó una gran "
+"actividad volcánica y redujo el planeta a un estado sin vida. Steiner, uno "
+"de los satélites utilizados anteriormente por los habitantes de Uhrabi-9, es "
+"ahora un popular lugar turístico debido a su proximidad."
 
 #: dat/assets/stella.xml:2
+#, fuzzy
 msgid "Stella"
-msgstr ""
+msgstr "Stella"
 
 #: dat/assets/stella.xml:29
 msgid ""
@@ -13757,6 +14274,11 @@ msgid ""
 "economies, a sad but inevitable phenomenon. Life here is rough and "
 "unforgiving, and nobody comes here because they like to."
 msgstr ""
+"Como recurso para muchos materiales de construcción comunes, Stella es un "
+"mundo ocupado pero bastante escuálido. Planetas como éste aparecen en la "
+"mayoría de las economías interplanetarias, un fenómeno triste pero "
+"inevitable. La vida aquí es dura e implacable, y nadie viene aquí porque le "
+"guste."
 
 #: dat/assets/stella.xml:30
 msgid ""
@@ -13765,14 +14287,21 @@ msgid ""
 "spaceport bar attempts to lift spirits with a plaque over the bar that reads "
 "\"A better tomorrow for all\". It doesn't help any."
 msgstr ""
+"No es muy divertido vivir en un mundo como el de Stella. Pocas personas "
+"pueden mantenerse alegres después de vivir aquí durante un tiempo "
+"considerable. Este bar del puerto espacial intenta levantar el ánimo con una "
+"placa sobre la barra que dice \"Un mañana mejor para todos\". Pero no ayuda "
+"en nada."
 
 #: dat/assets/stelman_i3.xml:2
+#, fuzzy
 msgid "Stelman I-3"
-msgstr ""
+msgstr "Stelman I-3"
 
 #: dat/assets/sternguard.xml:2
+#, fuzzy
 msgid "Sternguard"
-msgstr ""
+msgstr "Sternguard"
 
 #: dat/assets/sternguard.xml:28
 msgid ""
@@ -13782,20 +14311,29 @@ msgid ""
 "candidate for conversion. At the moment the population seems to be stable, "
 "but the Dvaered know better than to relax their guard."
 msgstr ""
+"Aunque es un mundo bastante discreto, lleno de ciudadanos de clase media "
+"baja Dvaered, las autoridades Dvaered prestan mucha atención a lo que ocurre "
+"en Sternguard. Cerca de la frontera con Sirio, el mundo es un candidato "
+"ideal para la conversión. Por el momento, la población parece estable, pero "
+"los Dvaered saben que no deben bajar la guardia."
 
 #: dat/assets/sternguard.xml:29
 msgid ""
 "Grimy. Smelly. Dank. Drinks that taste of waste products. All in all, this "
 "bar meets the galactic norm."
 msgstr ""
+"Mugriento. Apestoso. Húmedo. Bebidas que saben a productos de desecho. En "
+"definitiva, este bar cumple con la normativa galáctica."
 
 #: dat/assets/stint_iii.xml:2
+#, fuzzy
 msgid "Stint III"
-msgstr ""
+msgstr "Stint III"
 
 #: dat/assets/stormgard.xml:2
+#, fuzzy
 msgid "Stormgard"
-msgstr ""
+msgstr "Stormgard"
 
 #: dat/assets/stormgard.xml:31
 msgid ""
@@ -13806,16 +14344,25 @@ msgid ""
 "popular pastime here, with the valuable minerals hiding beneath the ice "
 "sheets."
 msgstr ""
+"Stormgard es, a pesar de su duro y gélido entorno, un mundo muy poblado. "
+"Esto se debe a que varios elementos de la familia del emperador han hecho de "
+"este mundo su hogar, e inevitablemente eso significa que los burócratas "
+"imperiales, los cortesanos y los parásitos en general también se trasladarán "
+"aquí. La industria es un pasatiempo popular aquí, con los valiosos minerales "
+"que se esconden bajo las capas de hielo."
 
 #: dat/assets/stormgard.xml:32
 msgid ""
 "This bar is warm and cozy despite the howling winds outside. Windows show "
 "off the breathtaking view of the sunlight reflecting off the ice crystals."
 msgstr ""
+"Este bar es cálido y acogedor a pesar de los fuertes vientos del exterior. "
+"Las ventanas muestran la impresionante vista de la luz del sol reflejada en "
+"los cristales de hielo."
 
 #: dat/assets/stormy.xml:2
 msgid "Stormy"
-msgstr ""
+msgstr "Tormentoso"
 
 #: dat/assets/stormy.xml:31
 msgid ""
@@ -13833,14 +14380,19 @@ msgid ""
 "manufacturers and a few militia. The drinks glow suspiciously and the "
 "bartender smirks as you side-eye them."
 msgstr ""
+"Este bar es significativamente más ordenado que la mayoría de los bares de "
+"los puertos espaciales Za'lek. Eso no quiere decir que sea ordenado. La "
+"mayoría de los clientes son mineros de gas, fabricantes y algunos "
+"milicianos. Las bebidas brillan de forma sospechosa y el camarero sonríe "
+"cuando las mira de reojo."
 
 #: dat/assets/straight_row_ii.xml:2
 msgid "Straight Row II"
-msgstr ""
+msgstr "Fila Recta II"
 
 #: dat/assets/strangelove_lab.xml:2
 msgid "Strangelove Lab"
-msgstr ""
+msgstr "Laboratorio StrangeLove"
 
 #: dat/assets/strangelove_lab.xml:28
 msgid ""
@@ -13850,6 +14402,11 @@ msgid ""
 "than that of a medium-sized ship. It is incredible that anyone could "
 "survive, let alone live here."
 msgstr ""
+"El laboratorio está oculto en un asteroide y toda la infraestructura se "
+"encuentra bajo tierra. En el interior, una red de túneles polvorientos "
+"conecta las diferentes instalaciones y, en conjunto, el interior parece más "
+"pequeño que el de una nave de tamaño medio. Es increíble que alguien pueda "
+"sobrevivir, y mucho menos vivir aquí."
 
 #: dat/assets/strangelove_lab.xml:29
 msgid ""
@@ -13859,10 +14416,17 @@ msgid ""
 "recreational things you can find are a chessboard that is missing about a "
 "dozen pieces and bottles of ethanol which you probably shouldn't be drinking."
 msgstr ""
+"La sala de descanso del laboratorio tiene montones de equipos de "
+"investigación acumulando polvo en los rincones. Parece que también hay "
+"muestras biológicas mal refrigeradas que no te sorprendería que se movieran. "
+"Las únicas cosas recreativas que encuentras son un tablero de ajedrez al que "
+"le faltan una docena de piezas y botellas de etanol que probablemente no "
+"deberías beber."
 
 #: dat/assets/stutee.xml:2
+#, fuzzy
 msgid "Stutee"
-msgstr ""
+msgstr "Stutee"
 
 #: dat/assets/stutee.xml:30
 msgid ""
@@ -13875,6 +14439,15 @@ msgid ""
 "rule and setting them to work. Though Stutee is still of little material "
 "value, its location one jump off Dvaer makes up for that."
 msgstr ""
+"Stutee es un antiguo mundoprisión del Viejo Imperio. Como tenía una "
+"atmósfera respirable y poco más, se consideraba perfecto para dejar a los "
+"criminales y luego olvidarse de ellos. Sin embargo, cuando los trabajadores "
+"de clase baja se rebelaron contra el Imperio, dando lugar a la creación de "
+"la Casa Dvaered, Stutee pasó a estar bajo la jurisdicción de la nueva Gran "
+"Casa. La Casa Dvaered decidió asentarse en Stutee de forma más permanente, "
+"poniendo a los antiguos convictos bajo su dominio y poniéndolos a trabajar. "
+"Aunque Stutee sigue teniendo poco valor material, su ubicación a un salto de "
+"Dvaer lo compensa."
 
 #: dat/assets/stutee.xml:31
 msgid ""
@@ -13883,10 +14456,16 @@ msgid ""
 "appealing to any who visit. As such, the spaceport bar is arguably the most "
 "important meeting place on the face of the moon."
 msgstr ""
+"El bar de Stutee está situado justo al lado del puerto espacial. Aunque el "
+"planeta ha sido colonizado y cuenta con una infraestructura adecuada, el "
+"mundo no es muy atractivo para quienes lo visitan. Por ello, el bar del "
+"puerto espacial es, sin duda, el lugar de encuentro más importante sobre la "
+"faz de la luna."
 
 #: dat/assets/sudra.xml:2
+#, fuzzy
 msgid "Sudra"
-msgstr ""
+msgstr "Sudra"
 
 #: dat/assets/sudra.xml:30
 msgid ""
@@ -13895,6 +14474,11 @@ msgid ""
 "authorities actively try to stamp out criminal elements and make arrests "
 "almost every week, they are fighting a futile battle."
 msgstr ""
+"Situada en la periferia del territorio controlado por Dvaered, Sudra tiene "
+"una cantidad relativamente alta de actividad ilegal. Aunque las autoridades "
+"de Dvaered intentan activamente acabar con los elementos criminales y "
+"realizan detenciones casi todas las semanas, están librando una batalla "
+"fútil."
 
 #: dat/assets/sudra.xml:31
 msgid ""
@@ -13905,34 +14489,48 @@ msgid ""
 "please. Despite these obvious signs, the Dvaered officials that sometimes "
 "visit the bar don't seem very keen to investigate."
 msgstr ""
+"Este bar del puerto espacial es desagradable. Ninguna otra palabra "
+"describiría el lugar con la misma precisión. Una buena parte de la clientela "
+"del bar lleva capuchas, máscaras u otras prendas para ocultar sus rasgos "
+"personales. La iluminación está ajustada a un nivel bastante tenue, lo que "
+"permite a los clientes encontrar rincones tan oscuros como deseen. A pesar "
+"de estos signos evidentes, los funcionarios de Dvaered que a veces visitan "
+"el bar no parecen muy dispuestos a investigar."
 
 #: dat/assets/suk_ii.xml:2
+#, fuzzy
 msgid "Suk II"
-msgstr ""
+msgstr "Suk II"
 
 #: dat/assets/suk_iv.xml:2
+#, fuzzy
 msgid "Suk IV"
-msgstr ""
+msgstr "Suk IV"
 
 #: dat/assets/sultan_iii.xml:2
+#, fuzzy
 msgid "Sultan III"
-msgstr ""
+msgstr "Sultan III"
 
 #: dat/assets/sultan_vi.xml:2
+#, fuzzy
 msgid "Sultan VI"
-msgstr ""
+msgstr "Sultan VI"
 
 #: dat/assets/suna_i.xml:2
+#, fuzzy
 msgid "Suna I"
-msgstr ""
+msgstr "Suna I"
 
 #: dat/assets/suna_ii.xml:2
+#, fuzzy
 msgid "Suna II"
-msgstr ""
+msgstr "Suna II"
 
 #: dat/assets/suoer.xml:2
+#, fuzzy
 msgid "Suoer"
-msgstr ""
+msgstr "Suoer"
 
 #: dat/assets/suoer.xml:28
 msgid ""
@@ -13941,10 +14539,16 @@ msgid ""
 "affects its primary, so both planets orbit each other. Suoer's high gravity "
 "also makes it a comfortable world to live on for humans."
 msgstr ""
+"Aunque Suoer se clasifica como una luna, es técnicamente un planeta hermano "
+"de Esker IV. Su núcleo superdenso le da tanta gravedad que afecta "
+"significativamente a su primario, por lo que ambos planetas se orbitan "
+"mutuamente. La alta gravedad de Suoer también hace que sea un mundo "
+"agradable para la vida humana."
 
 #: dat/assets/sy1025.xml:2
+#, fuzzy
 msgid "SY-1025"
-msgstr ""
+msgstr "SY-1025"
 
 #: dat/assets/sy1025.xml:28 dat/assets/sy1206.xml:28 dat/assets/sy159.xml:28
 #: dat/assets/sy19.xml:28 dat/assets/sy237.xml:28 dat/assets/sy256.xml:28
@@ -13955,78 +14559,96 @@ msgid ""
 "specifications as every other Thurion shipyard. The station hums with "
 "activity as ships are constructed at the station's maximum capacity."
 msgstr ""
+"Este es un astillero estándar Turion fabricado con las mismas "
+"especificaciones que cualquier otro astillero Turion. La estación bulle de "
+"actividad mientras se construyen naves a la máxima capacidad."
 
 #: dat/assets/sy1206.xml:2
+#, fuzzy
 msgid "SY-1206"
-msgstr ""
+msgstr "SY-1206"
 
 #: dat/assets/sy159.xml:2
+#, fuzzy
 msgid "SY-159"
-msgstr ""
+msgstr "SY-159"
 
 #: dat/assets/sy19.xml:2
+#, fuzzy
 msgid "SY-19"
-msgstr ""
+msgstr "SY-19"
 
 #: dat/assets/sy237.xml:2
+#, fuzzy
 msgid "SY-237"
-msgstr ""
+msgstr "SY-237"
 
 #: dat/assets/sy256.xml:2
+#, fuzzy
 msgid "SY-256"
-msgstr ""
+msgstr "SY-256"
 
 #: dat/assets/sy314.xml:2
+#, fuzzy
 msgid "SY-314"
-msgstr ""
+msgstr "SY-314"
 
 #: dat/assets/sy413.xml:2
+#, fuzzy
 msgid "SY-413"
-msgstr ""
+msgstr "SY-413"
 
 #: dat/assets/sy612.xml:2
+#, fuzzy
 msgid "SY-612"
-msgstr ""
+msgstr "SY-612"
 
 #: dat/assets/sy894.xml:2
+#, fuzzy
 msgid "SY-894"
-msgstr ""
+msgstr "SY-894"
 
 #: dat/assets/sy920.xml:2
+#, fuzzy
 msgid "SY-920"
-msgstr ""
+msgstr "SY-920"
 
 #: dat/assets/sylph_ii.xml:2
 msgid "Sylph II"
-msgstr ""
+msgstr "Sílfide II"
 
 #: dat/assets/sylph_iv.xml:2
 msgid "Sylph IV"
-msgstr ""
+msgstr "Sílfide IV"
 
 #: dat/assets/sylph_iva.xml:2
 msgid "Sylph IVa"
-msgstr ""
+msgstr "Sílfide IVa"
 
 #: dat/assets/symm_ii.xml:2
+#, fuzzy
 msgid "Symm II"
-msgstr ""
+msgstr "Symm II"
 
 #: dat/assets/symm_iii.xml:2
+#, fuzzy
 msgid "Symm III"
-msgstr ""
+msgstr "Symm III"
 
 #: dat/assets/symm_iiia.xml:2
+#, fuzzy
 msgid "Symm IIIa"
-msgstr ""
+msgstr "Symm IIIa"
 
 #: dat/assets/symm_iiib.xml:2
+#, fuzzy
 msgid "Symm IIIb"
-msgstr ""
+msgstr "Symm IIIb"
 
 #: dat/assets/takeru.xml:2
+#, fuzzy
 msgid "Takeru"
-msgstr ""
+msgstr "Takeru"
 
 #: dat/assets/takeru.xml:28
 msgid ""
@@ -14035,6 +14657,10 @@ msgid ""
 "failure, and refused to grant it Imperial status. Since then, the colonists "
 "have governed themselves."
 msgstr ""
+"La colonia de Takeru se fundó como parte de un programa de colonización "
+"Imperial. Sin embargo, el gobierno de la época consideró que la colonia era "
+"un fracaso y se negó a concederle el estatus de Imperial. Desde entonces, "
+"los colonos se autogobiernan."
 
 #: dat/assets/takeru.xml:29
 msgid ""
@@ -14043,22 +14669,29 @@ msgid ""
 "components, which makes it a comfortable place to be for anyone with more "
 "than a few light years under their belt."
 msgstr ""
+"¿Qué es un bar de puerto espacial? Un miserable montón de bebida, ruido, "
+"terminales de datos y, por supuesto, alguna que otra pelea. El bar de Takeru "
+"tiene todos estos componentes, lo que lo convierte en un lugar cómodo para "
+"cualquier persona con más de unos cuantos años luz a sus espaldas."
 
 #: dat/assets/tandar_i.xml:2
+#, fuzzy
 msgid "Tandar I"
-msgstr ""
+msgstr "Tandar I"
 
 #: dat/assets/tandar_ia.xml:2
+#, fuzzy
 msgid "Tandar Ia"
-msgstr ""
+msgstr "Tandar Ia"
 
 #: dat/assets/tandar_iix.xml:2
+#, fuzzy
 msgid "Tandar IIX"
-msgstr ""
+msgstr "Tandar IIX"
 
 #: dat/assets/tankard_station.xml:2
 msgid "Tankard Station"
-msgstr ""
+msgstr "Estación Jarra de Cerveza"
 
 #: dat/assets/tankard_station.xml:30
 msgid ""
@@ -14068,6 +14701,12 @@ msgid ""
 "security detail stationed here, but this is merely for the purpose of "
 "customs, not so much the repulsion of hostile elements."
 msgstr ""
+"La Estación Jarra de Cerveza es una instalación espacial económica de Sirio. "
+"Procesa una gran parte de todas las transacciones comerciales realizadas "
+"dentro de An'ku, y también sirve como terminal para los materiales "
+"producidos por Sroolu. También hay un pequeño destacamento de seguridad "
+"estacionado aquí, pero esto es meramente para el cometido de las aduanas, no "
+"tanto para la repulsión de elementos hostiles."
 
 #: dat/assets/tankard_station.xml:31
 msgid ""
@@ -14076,10 +14715,15 @@ msgid ""
 "the actual bar seems more like a section of a larger commerce centre than "
 "the other way around."
 msgstr ""
+"El bar de la Estación Jarra de Cerveza, que sirve tanto de centro comercial "
+"como de punto de venta de productos finales de consumo, es siempre un "
+"hervidero de actividad. De hecho, el propio bar parece más una sección de un "
+"centro comercial más grande que lo contrario."
 
 #: dat/assets/tanulwa.xml:2
+#, fuzzy
 msgid "Tanulwa"
-msgstr ""
+msgstr "Tanulwa"
 
 #: dat/assets/tanulwa.xml:27
 msgid ""
@@ -14090,6 +14734,12 @@ msgid ""
 "elsewhere. Tanulwa is a detention world where some of the worst Soromid "
 "criminals are kept."
 msgstr ""
+"El resto de la galaxia suele considerar a los Soromida como no humanos, y de "
+"hecho ellos mismos tienden a considerarse un tipo diferente de personas. "
+"Pero en muchos aspectos los Soromida y el resto de la humanidad son muy "
+"parecidos. El crimen, por ejemplo, existe en el espacio Soromida tanto como "
+"en cualquier otro lugar. Tanulwa es un mundo de detención en el que se "
+"encuentran algunos de los peores criminales Soromida."
 
 #: dat/assets/tanulwa.xml:28
 msgid ""
@@ -14099,18 +14749,24 @@ msgid ""
 "and goods are handled strictly by the government, there's not much in the "
 "way of civilian traffic to and from the planet."
 msgstr ""
+"Menos un bar y más una zona de espera, esta instalación se utiliza para las "
+"raras ocasiones en que los visitantes tienen motivos para venir a Tanulwa. "
+"Dado que Tanulwa no permite las visitas personales a los presos y que toda "
+"la logística de personal y bienes es manejada estrictamente por el gobierno, "
+"no hay mucho tráfico civil hacia y desde el planeta."
 
 #: dat/assets/tarrum.xml:2
+#, fuzzy
 msgid "Tarrum"
-msgstr ""
+msgstr "Tarrum"
 
 #: dat/assets/tarsus_ii.xml:2
 msgid "Tarsus II"
-msgstr ""
+msgstr "Tarso II"
 
 #: dat/assets/tarsus_station.xml:2
 msgid "Tarsus Station"
-msgstr ""
+msgstr "Estación Tarso"
 
 #: dat/assets/tarsus_station.xml:26
 msgid ""
