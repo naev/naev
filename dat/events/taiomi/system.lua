@@ -51,7 +51,7 @@ function create ()
 
    -- Worn-out Drone
    d_wornout = addDrone( "Drone", vec2.new(-500,-300), _("Worn-out Drone") )
-   d_wornout:setHilight(true)
+   --d_wornout:setHilight(true)
    hook.pilot( d_wornout, "hail", "hail_wornout" )
 
    -- Younglings  that follow around the player
@@ -136,7 +136,14 @@ function hail_scavenger ()
    player.commClose()
 end
 
-function hail_wornout ()
+function hail_wornout( p )
+   if true then
+      p:comm(_("The drone seems fairly beaten and immobile. It slightly moves to acknowledge your presence but nothing more."))
+      player.commClose()
+      return
+   end
+
+   --[[
    vn.clear()
    vn.scene()
    local d = vn.newCharacter( taiomi.vn_wornout() )
@@ -147,6 +154,7 @@ function hail_wornout ()
    vn.done()
    vn.run()
    player.commClose()
+   --]]
 end
 
 function hail_youngling( p )
