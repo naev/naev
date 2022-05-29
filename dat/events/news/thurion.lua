@@ -8,5 +8,5 @@ local articles = {
 }
 
 return function ()
-   return "THurion", head, greeting, articles
+   return "Thurion", head, greeting, articles
 end
