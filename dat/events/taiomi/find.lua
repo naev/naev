@@ -98,14 +98,19 @@ end
 
 function heartbeat ()
    local pp = player.pilot()
+
+   local function player_setup ()
+      player.autonavAbort(_("You have noticed something strange…"))
+      pp:setInvincible(true)
+      pp:control()
+      pp:brake()
+   end
+
    if evt_state==0 then
       local dist = pp:pos():dist( drone:pos() )
       if dist < dist_detect_mule then
          evt_state = 1
-         player.autonavAbort(_("You have noticed something strange…"))
-         pp:setInvincible(true)
-         pp:control()
-         pp:brake()
+         player_setup()
          camera.set( derelict_mule:pos() )
          camera.setZoom( math.max(1.5,camera.getZoom()) )
          vn._sfx.eerie:play()
@@ -116,10 +121,7 @@ function heartbeat ()
       local dist = pp:pos():dist( drone:pos() )
       if dist < dist_detect_jump then
          evt_state = 3
-         player.autonavAbort(_("You have noticed something strange…"))
-         pp:setInvincible(true)
-         pp:control()
-         pp:brake()
+         player_setup()
          camera.set( drone:pos() )
          camera.setZoom( math.max(1.5,camera.getZoom()) )
          drone:taskClear()
