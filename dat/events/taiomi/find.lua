@@ -7,6 +7,7 @@
  </flags>
  <chance>100</chance>
  <cond>system.cur() == system.get("Bastion")</cond>
+ <chapter>[^0]</chapter>
  <notes>
   <campaign>Taiomi</campaign>
  </notes>
