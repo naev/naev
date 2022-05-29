@@ -131,7 +131,7 @@ function land ()
 
    add_header( my_faction )
    add_article( my_faction )
-   add_econ_article()
+   add_econ_article( my_faction )
 end
 
 
@@ -218,12 +218,13 @@ function add_article( my_faction )
 end
 
 
-function add_econ_article ()
+function add_econ_article( my_faction )
    local last_article = var.peek( "news_last_econ_article" )
    local t = nil
+   local generic = faction.get(my_faction):tags().generic
    if last_article ~= nil then t = time.fromnumber( last_article ) end
    if (t == nil or time.get() - t > time.create( 0, 2, 0 ))
-         and rnd.rnd() < 0.75 then
+         and rnd.rnd() < 0.75 and generic then
       local planets = {}
       for i, s in ipairs( lmisn.getSysAtDistance( system.cur(), 2, 4 ) ) do
          for j, p in ipairs( s:spobs() ) do
@@ -251,6 +252,11 @@ function add_econ_article ()
    -- Remove old econ articles (we only want one at a time)
    for i, article in ipairs(news.get("econ")) do
       article:rm()
+   end
+
+   -- Ignore non-generic factions
+   if not generic then
+      return
    end
 
    local cur_t = time.get()
