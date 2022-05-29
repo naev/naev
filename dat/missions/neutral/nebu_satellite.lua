@@ -39,7 +39,6 @@ local articles = {
       faction = "Generic",
       head = _("Scientists Launch Research Probe Into Nebula"),
       body = _("A group of scientists successfully launched a science probe into the Nebula. The probe was specifically designed to be resistant to the corrosive environment of the Nebula and is supposed to find new clues about the nature of the gas and where it's from."),
-      priority = 4,
    }
 }
 
@@ -143,7 +142,7 @@ function countLaunch ()
    end
 end
 function launchSatellite ()
-   articles[1].date_to_rm = time.get()+time.create(0,10,0)
+   articles[1].date_to_rm = time.get()+time.create(0,20,0)
    news.add( articles )
 
    mem.misn_stage = 1

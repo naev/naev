@@ -62,5 +62,14 @@ He raises his stein into the air, with you and everyone else following his lead.
    player.outfitAdd( reward )
    ant.log(_([[You were given a Commemorative Stein from Verner for helping terraform Antlejos V.]]))
 
+   news.add{
+      {
+         faction = "Generic",
+         head = _("New Independent Spaceport Antlejos V"),
+         body = _("Through a long process of terraforming, the once barren moon Antlejos V has become officially been recognized as a new trading independent spaceport by the Great Houses."),
+         date_to_rm = time.get()+time.create(0,20,0),
+      },
+   }
+
    misn.finish(true)
 end
