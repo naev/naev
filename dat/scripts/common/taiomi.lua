@@ -33,17 +33,28 @@ local taiomi = {
    },
 }
 
+local missions = {
+   "Taiomi 1", -- 1
+}
+
 -- Gets the current progress of the Taiomi campaign
 function taiomi.progress ()
-   local missions = {
-      "Taiomi 1", -- 1
-   }
    for i = #missions, 1, -1 do
-      if player.misndone( missions[i] ) then
+      if player.misnDone( missions[i] ) then
          return i
       end
    end
    return 0
+end
+
+-- Checks to see if a mission is in progress
+function taiomi.inprogress ()
+   for k,v in ipairs(missions) do
+      if player.misnActive(v) then
+         return true
+      end
+   end
+   return false
 end
 
 -- Helpers to create main characters

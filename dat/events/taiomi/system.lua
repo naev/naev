@@ -18,6 +18,7 @@
 local vn = require 'vn'
 local taiomi = require 'common.taiomi'
 
+local progress
 local d_loiter, d_philosopher, d_scavenger, d_wornout, d_young_a, d_young_b -- Drone pilots.
 -- luacheck: globals hail_philosopher hail_scavenger hail_wornout hail_youngling (Hook functions passed by name)
 
@@ -27,6 +28,7 @@ function create ()
    --]]
    local pp = player.pilot()
    local dfact = faction.get("Independent")
+   progress = taiomi.progress()
 
    local function addDrone( ship, pos, name )
       local d = pilot.add( ship, dfact, pos, name )
@@ -124,18 +126,6 @@ function hail_philosopher ()
    player.commClose()
 end
 
-function hail_scavenger ()
-   vn.clear()
-   vn.scene()
-   local d = vn.newCharacter( taiomi.vn_scavenger() )
-   vn.transition()
-   d("TODO")
-
-   vn.done()
-   vn.run()
-   player.commClose()
-end
-
 function hail_wornout( p )
    if true then
       p:comm(_("The drone seems fairly beaten and immobile. It slightly moves to acknowledge your presence but nothing more."))
@@ -159,5 +149,44 @@ end
 
 function hail_youngling( p )
    p:comm( _("(You hear some sort of giggling over the comm. Is it laughing?)") )
+   player.commClose()
+end
+
+function hail_scavenger ()
+   local inprogress = taiomi.inprogress()
+
+   vn.clear()
+   vn.scene()
+   local d = vn.newCharacter( taiomi.vn_scavenger() )
+   vn.transition( taiomi.scavenger.transition )
+
+   -- Set up main options
+   local opts = {
+      {_("Leave."),"leave"},
+   }
+   if progress < 5 then
+      table.insert( opts, {_("Ask about the drones following you around"), "curious_drones"} )
+   end
+
+   -- Progress-based text
+   if progress == 0 then
+      if inprogress then
+         d(_([[""]]))
+      else
+         -- Explanation and mission offering
+         d(_([["Although this system is very suited us given the tranquility and secrecy, our numbers have been dwindling and we have no other option than to carve our own path among the stars."]]))
+      end
+   end
+
+   vn.label("menu")
+   vn.menu( opts )
+
+   vn.label("curious_drones")
+   vn.jump("menu")
+
+   vn.label("leave")
+   vn.na(_("You take your leave."))
+   vn.done( taiomi.scavenger.transition )
+   vn.run()
    player.commClose()
 end
