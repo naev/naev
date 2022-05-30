@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-02-19 12:48-0500\n"
-"PO-Revision-Date: 2022-05-29 22:14+0000\n"
+"PO-Revision-Date: 2022-05-30 22:15+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -2743,11 +2743,11 @@ msgid ""
 "natural environment but, with the Dvaered being Dvaered, no attempt is being "
 "made to address this."
 msgstr ""
-"Aunque no es tan bonito como Varia en el sistema Darkstone, Buritt es, sin "
-"embargo, un mundo razonablemente habitable. Aquí encontrarás gran parte de "
-"la clase media Dvaered, tal y como es. También encontrarás una contaminación "
-"a gran escala del entorno natural pero, siendo los Dvaered Dvaered, no se "
-"hace ningún intento de solucionar esto."
+"Aunque no es tan bonito como Varia en el sistema Piedraoscura, Buritt es, "
+"sin embargo, un mundo razonablemente habitable. Aquí encontrarás gran parte "
+"de la clase media Dvaered, tal y como es. También encontrarás una "
+"contaminación a gran escala del entorno natural pero, siendo los Dvaered "
+"Dvaered, no se hace ningún intento de solucionar esto."
 
 #: dat/assets/buritt.xml:31
 msgid ""
@@ -3196,7 +3196,7 @@ msgstr ""
 "armamento con licencia civil. Cornwal importa materias primas de los "
 "planetas cercanos de Wagenni y Sollebor y vende los productos acabados fuera "
 "del sistema para obtener un buen beneficio. Cornwal es comprensivo con la "
-"gente que vive en los duros mundos de Undergate y siempre se asegura de que "
+"gente que vive en los duros mundos de Bajopuerta y siempre se asegura de que "
 "reciban un precio generoso por sus exportaciones."
 
 #: dat/assets/cornwal_ordinance.xml:29
@@ -3602,14 +3602,12 @@ msgstr ""
 "modelos a escala de muchas naves populares."
 
 #: dat/assets/darkstone_iv.xml:2
-#, fuzzy
 msgid "Darkstone IV"
-msgstr "Darkstone IV"
+msgstr "Piedraoscura IV"
 
 #: dat/assets/darkstone_v.xml:2
-#, fuzzy
 msgid "Darkstone V"
-msgstr "Darkstone V"
+msgstr "Piedraoscura V"
 
 #: dat/assets/dawn.xml:2
 msgid "Dawn"
@@ -6533,9 +6531,8 @@ msgstr ""
 "tan pesado."
 
 #: dat/assets/haven.xml:2 dat/ssys/haven.xml:2
-#, fuzzy
 msgid "Haven"
-msgstr "Haven"
+msgstr "Refugio"
 
 #: dat/assets/heii.xml:2
 #, fuzzy
@@ -10070,7 +10067,7 @@ msgstr ""
 #: dat/assets/new_haven.xml:2 dat/ssys/new_haven.xml:2
 #: dat/events/discovery.lua:127
 msgid "New Haven"
-msgstr "Nuevo Haven"
+msgstr "Nuevo Refugio"
 
 #: dat/assets/new_haven.xml:32
 msgid ""
@@ -10082,9 +10079,9 @@ msgid ""
 "strategic resources necessary to justify the cost of terraforming. Its "
 "distance from other civilized worlds affords it protection from prying eyes."
 msgstr ""
-"Nuevo Haven es un planeta situado más allá de los límites de la ley y la "
+"Nuevo Refugio es un planeta situado más allá de los límites de la ley y la "
 "justicia. Fue fundado por Bartax el Grande, uno de los piratas más exitosos "
-"de la historia, tras la aniquilación de Haven. La atmósfera del planeta es "
+"de la historia, tras la aniquilación de Refugio. La atmósfera del planeta es "
 "altamente tóxica y tiene altos niveles de radiación fuera de la fortaleza. "
 "Estas mismas características son las que hicieron que el Imperio lo "
 "clasificara como inhabitable, ya que carece de los recursos estratégicos "
@@ -10102,9 +10099,9 @@ msgid ""
 "place to bring your family."
 msgstr ""
 "Bazofia y Parrilla es una de las tabernas más desagradables del universo. La "
-"comida y la bebida no ayudan. La mayor parte se elabora en Nueva Haven y no "
-"pasaría ninguna prueba mínima de seguro sanitario en ningún sitio. Parte de "
-"la bebida incluso sirve de combustible para la nave, en tiempos de "
+"comida y la bebida no ayudan. La mayor parte se elabora en Nueva Refugio y "
+"no pasaría ninguna prueba mínima de seguro sanitario en ningún sitio. Parte "
+"de la bebida incluso sirve de combustible para la nave, en tiempos de "
 "necesidad. Los clientes son también matones del espacio profundo, piratas, "
 "mercaderes del mercado negro, mercenarios y otras personas sospechosas que "
 "insisten en mantener el suelo cubierto de sangre y dientes rotos. No es un "
@@ -11043,15 +11040,15 @@ msgstr ""
 
 #: dat/assets/overture_i.xml:2
 msgid "Overture I"
-msgstr "Obertura I"
+msgstr "Aperturea I"
 
 #: dat/assets/overture_ii.xml:2
 msgid "Overture II"
-msgstr "Obertura II"
+msgstr "Apertura II"
 
 #: dat/assets/overture_iii.xml:2
 msgid "Overture III"
-msgstr "Obertura III"
+msgstr "Apertura III"
 
 #: dat/assets/ozogo_x.xml:2
 #, fuzzy
@@ -13753,9 +13750,8 @@ msgstr ""
 "líderes Proteron."
 
 #: dat/assets/sleuth_ii.xml:2
-#, fuzzy
 msgid "Sleuth II"
-msgstr "Sleuth II"
+msgstr "Detective II"
 
 #: dat/assets/slofeldt.xml:2
 #, fuzzy
@@ -14206,15 +14202,15 @@ msgstr ""
 
 #: dat/assets/starlight_end_i.xml:2
 msgid "Starlight End I"
-msgstr "Luz Estelar Final I"
+msgstr "Fin de Luz Estelar I"
 
 #: dat/assets/starlight_end_ii.xml:2
 msgid "Starlight End II"
-msgstr "Luz Estelar Final II"
+msgstr "Fin de Luz Estelar II"
 
 #: dat/assets/starlight_end_iii.xml:2
 msgid "Starlight End III"
-msgstr "Luz Estelar Final III"
+msgstr "Fin de Luz Estelar III"
 
 #: dat/assets/stein.xml:2
 #, fuzzy
@@ -16026,15 +16022,15 @@ msgstr "UMW-1345a"
 
 #: dat/assets/undergate_ii.xml:2
 msgid "Undergate II"
-msgstr "Bajoportal II"
+msgstr "Bajopuerta II"
 
 #: dat/assets/undergate_iii.xml:2
 msgid "Undergate III"
-msgstr "Bajoportal III"
+msgstr "Bajopuerta III"
 
 #: dat/assets/undergate_v.xml:2
 msgid "Undergate V"
-msgstr "Bajoportal V"
+msgstr "Bajopuerto V"
 
 #: dat/assets/unicorn_i.xml:2
 msgid "Unicorn I"
@@ -17311,14 +17307,21 @@ msgid ""
 "make sure they're not here with a Za'lek agenda. The spaceport bar can only "
 "be accessed after pilots have passed all the security protocols."
 msgstr ""
+"Al ser un lugar tan importante para la sociedad Soromida, la seguridad en "
+"Woncloak es bastante estricta. En particular, se comprueban los antecedentes "
+"de los visitantes, para asegurarse de que no están aquí con una agenda "
+"Za'lek. Sólo se puede acceder al bar del puerto espacial después de que los "
+"pilotos hayan superado todos los protocolos de seguridad."
 
 #: dat/assets/worgen.xml:2
+#, fuzzy
 msgid "Worgen"
-msgstr ""
+msgstr "Worgen"
 
 #: dat/assets/worscha.xml:2
+#, fuzzy
 msgid "Worscha"
-msgstr ""
+msgstr "Worscha"
 
 #: dat/assets/worscha.xml:31
 msgid ""
@@ -17327,6 +17330,10 @@ msgid ""
 "25% longer than that of old Earth, which has led to the daily rhythm being a "
 "little slower than elsewhere."
 msgstr ""
+"Worscha es un mundo Sirio relativamente rico, con un clima suave y "
+"condiciones planetarias agradables. Su rotación es un poco larga, "
+"aproximadamente un 25% más larga que la de la vieja Tierra, lo que ha "
+"provocado que el ritmo diario sea un poco más lento que en otros lugares."
 
 #: dat/assets/worscha.xml:32
 msgid ""
@@ -17335,22 +17342,29 @@ msgid ""
 "sometimes leads to Sirian traders getting confused, as they are used to "
 "placing themselves in the correct section of the bar."
 msgstr ""
+"Muchos bares de Sirio tienen algún tipo de separación de disposición para "
+"los distintos escalones, pero el bar de Worscha no tiene nada de eso. Esto "
+"hace que a veces los comerciantes Sirio se confundan, ya que están "
+"acostumbrados a colocarse en la sección correcta del bar."
 
 #: dat/assets/wsthvn_d1.xml:2
+#, fuzzy
 msgid "WSTHVN D-1"
-msgstr ""
+msgstr "WSTHVN D-1"
 
 #: dat/assets/wsthvn_p1.xml:2
+#, fuzzy
 msgid "WSTHVN P-1"
-msgstr ""
+msgstr "WSTHVN P-1"
 
 #: dat/assets/xavier.xml:2 dat/ssys/xavier.xml:2
+#, fuzzy
 msgid "Xavier"
-msgstr ""
+msgstr "Xavier"
 
 #: dat/assets/yak_station.xml:2
 msgid "Yak Station"
-msgstr ""
+msgstr "Estación Yak"
 
 #: dat/assets/yak_station.xml:27
 msgid ""
@@ -17360,16 +17374,24 @@ msgid ""
 "and in-system supply routes are always easier to maintain than routes "
 "leading through a jump point."
 msgstr ""
+"Esta estación militar iba a construirse originalmente en el sistema vecino "
+"de Bonanza, pero los militares Soromida optaron por cambiar la ubicación por "
+"razones de logística. Hasselt tiene varios planetas habitados, y las rutas "
+"de suministro dentro del sistema son siempre más fáciles de mantener que las "
+"rutas que pasan por un punto de salto."
 
 #: dat/assets/yak_station.xml:28
 msgid ""
 "Most of the people in this bar are Soromid soldiers. There are few officers, "
 "since they have their own facility elsewhere on the station."
 msgstr ""
+"La mayoría de la gente de este bar son soldados Soromida. Hay pocos "
+"oficiales, ya que tienen sus propias instalaciones en otra parte de la "
+"estación."
 
 #: dat/assets/yaroslav_farming_station.xml:2
 msgid "Yaroslav Farming Station"
-msgstr ""
+msgstr "Estación Granja Yaroslav"
 
 #: dat/assets/yaroslav_farming_station.xml:27
 msgid ""
@@ -17377,6 +17399,9 @@ msgid ""
 "produce is shipped to the nearby world of Boowoy, but the majority is traded "
 "out of system."
 msgstr ""
+"Esta instalación agrícola suministra alimentos a los sistemas cercanos. Una "
+"parte de los productos se envía al mundo cercano de Boowoy, pero la mayor "
+"parte se comercializa fuera del sistema."
 
 #: dat/assets/yaroslav_farming_station.xml:28
 msgid ""
@@ -17387,8 +17412,9 @@ msgid ""
 msgstr ""
 
 #: dat/assets/yrina.xml:2
+#, fuzzy
 msgid "Yrina"
-msgstr ""
+msgstr "Yrina"
 
 #: dat/assets/yrina.xml:29
 msgid ""
@@ -17399,6 +17425,13 @@ msgid ""
 "some of the more exotic elements are exported to other parts of Sirius "
 "space, and beyond."
 msgstr ""
+"Yrina es un mundo de recursos que está siendo explotado por los Sirio. El "
+"clima es duro y casi toda la superficie del planeta está congelada, pero en "
+"algunos casos eso es realmente deseable, ya que las sustancias que "
+"normalmente serían fluidas son ahora sólidas, y por lo tanto se extraen más "
+"fácilmente. Yrina suministra principalmente a Aesir, pero algunos de los "
+"elementos más exóticos se exportan a otras partes del espacio de Sirio, y "
+"más allá."
 
 #: dat/assets/yrina.xml:30
 msgid ""
@@ -17408,10 +17441,16 @@ msgid ""
 "least hand it to the Sirius that they take an informative approach to their "
 "operation here."
 msgstr ""
+"El bar cuenta con varios expositores que ofrecen a los clientes detalles "
+"sobre el proceso de extracción y el estado actual de la operación en "
+"diversas áreas. Aunque para la mayoría de los visitantes es un interés "
+"pasajero en el mejor de los casos, hay que reconocer que Sirio tiene un "
+"enfoque informativo de su operación."
 
 #: dat/assets/zaals.xml:2
+#, fuzzy
 msgid "Zaals"
-msgstr ""
+msgstr "Zaals"
 
 #: dat/assets/zaals.xml:30
 msgid ""
@@ -17423,6 +17462,13 @@ msgid ""
 "current settlement is predicted to stay in the light for another forty "
 "cycles."
 msgstr ""
+"Zaals, un planeta un poco extraño, tiene un periodo de rotación casi (pero "
+"no del todo) idéntico a su periodo orbital. Un día en Zaals dura muchos, "
+"muchos ciclos. La vivienda de los Soromida aquí se ha construido en el lado "
+"que da al sol, donde las condiciones son todavía aceptables. En realidad es "
+"la segunda iteración del asentamiento, ya que la primera iteración ha "
+"comenzado a deslizarse hacia el lado oscuro. Se prevé que el asentamiento "
+"actual permanezca en la luz durante otros cuarenta ciclos."
 
 #: dat/assets/zaals.xml:31
 msgid ""
@@ -17431,10 +17477,15 @@ msgid ""
 "quite thrilling to roam around such a large complex that has been completely "
 "left to the elements."
 msgstr ""
+"Este bar del puerto espacial ofrece excursiones al viejo y abandonado puerto "
+"espacial que se encuentra en la zona crepuscular del planeta. Para algunos "
+"aventureros puede ser muy emocionante recorrer un complejo tan grande que ha "
+"sido abandonado completamente a la intemperie."
 
 #: dat/assets/zabween.xml:2
+#, fuzzy
 msgid "Zabween"
-msgstr ""
+msgstr "Zabween"
 
 #: dat/assets/zabween.xml:31
 msgid ""
@@ -17453,10 +17504,16 @@ msgid ""
 "their lives protecting the Empire's ideals. They are working on another "
 "addition to be able to fit more pictures."
 msgstr ""
+"Las paredes del bar están decoradas con fotos de los soldados del Imperio "
+"que han caído en la lucha contra Refugio y la piratería en general. Se ha "
+"convertido en una costumbre del Imperio colocar fotos de los caídos, en "
+"honor a los que dieron su vida protegiendo los ideales del Imperio. Están "
+"trabajando en otra adición para poder colocar más fotos."
 
 #: dat/assets/zalebus.xml:2
+#, fuzzy
 msgid "Zalebus"
-msgstr ""
+msgstr "Zalebus"
 
 #: dat/assets/zalebus.xml:31
 msgid ""
@@ -17465,6 +17522,10 @@ msgid ""
 "one of the fastest in human history. Now, there are billions of people "
 "living here."
 msgstr ""
+"Zalebus es un bonito planeta que fue terraformado por los Soromida poco "
+"antes del Incidente. Para empezar, era un planeta de clase M, por lo que el "
+"proceso fue uno de los más rápidos de la historia de la humanidad. Ahora, "
+"hay miles de millones de personas viviendo aquí."
 
 #: dat/assets/zalebus.xml:32
 msgid ""
@@ -17474,16 +17535,19 @@ msgid ""
 msgstr ""
 
 #: dat/assets/zalek_ii.xml:2
+#, fuzzy
 msgid "Za'lek II"
-msgstr ""
+msgstr "Za'lek II"
 
 #: dat/assets/zalek_iv.xml:2
+#, fuzzy
 msgid "Za'lek IV"
-msgstr ""
+msgstr "Za'lek IV"
 
 #: dat/assets/zaren.xml:2
+#, fuzzy
 msgid "Zaren"
-msgstr ""
+msgstr "Zaren"
 
 #: dat/assets/zaren.xml:28
 msgid ""
@@ -17491,10 +17555,15 @@ msgid ""
 "propellant by House Dvaered. It is one of the harshest planets in Dvaered "
 "space, so convicts are the ones usually used to get the gasses necessary."
 msgstr ""
+"Zaren es un mundo en el que se extraen gases raros y valiosos, para ser "
+"utilizados como propulsores por la Casa Dvaered. Es uno de los planetas más "
+"duros del espacio Dvaered, por lo que los convictos son los que se suelen "
+"utilizar para conseguir los gases necesarios."
 
 #: dat/assets/zazarin.xml:2
+#, fuzzy
 msgid "Zazarin"
-msgstr ""
+msgstr "Zazarin"
 
 #: dat/assets/zazarin.xml:29
 msgid ""
@@ -17516,8 +17585,9 @@ msgid ""
 msgstr ""
 
 #: dat/assets/zembla_shakar.xml:2
+#, fuzzy
 msgid "Zembla Shakar"
-msgstr ""
+msgstr "Zembla Shakar"
 
 #: dat/assets/zembla_shakar.xml:30
 msgid ""
@@ -17534,14 +17604,20 @@ msgid ""
 "surface of the planet will be disappointed, as there is very little to see "
 "here."
 msgstr ""
+"El bar es el lugar donde los comerciantes esperan hasta que se cargue y "
+"descargue su mercancía. Los pilotos que vengan aquí esperando echar un "
+"vistazo a las ricas tierras que cubren la superficie del planeta se sentirán "
+"decepcionados, ya que hay muy poco que ver aquí."
 
 #: dat/assets/zemur_iii.xml:2
+#, fuzzy
 msgid "Zemur III"
-msgstr ""
+msgstr "Zemur III"
 
 #: dat/assets/zeo.xml:2
+#, fuzzy
 msgid "Zeo"
-msgstr ""
+msgstr "Zeo"
 
 #: dat/assets/zeo.xml:29
 msgid ""
@@ -17559,10 +17635,16 @@ msgid ""
 "colonists. As a result, most of the infrastructure here is relatively "
 "modern. You won't find anything out of order or slow to respond in this bar."
 msgstr ""
+"Debido a la brusca revalorización de Zeo tras el Incidente, las anticuadas "
+"instalaciones de la época tuvieron que ser sustituidas para hacer frente a "
+"la afluencia de colonos Imperiales. Como resultado, la mayor parte de la "
+"infraestructura aquí es relativamente moderna. No encontrarás nada que esté "
+"fuera de servicio o que sea lento para responder en este bar."
 
 #: dat/assets/zepei.xml:2
+#, fuzzy
 msgid "Zepei"
-msgstr ""
+msgstr "Zepei"
 
 #: dat/assets/zepei.xml:30
 msgid ""
@@ -17572,6 +17654,11 @@ msgid ""
 "Soromid. Non-modified humans would find the recreational activities too "
 "rough for comfort."
 msgstr ""
+"Zepei tiene una modesta población autóctona y una considerable población no "
+"permanente. La superficie del planeta está cubierta de centros de "
+"vacaciones, parques naturales y zonas deportivas al aire libre. La mayoría "
+"de los asistentes a las vacaciones son Soromida. Los humanos no modificados "
+"encontrarían las actividades recreativas demasiado duras para su comodidad."
 
 #: dat/assets/zepei.xml:31
 msgid ""
@@ -17580,22 +17667,27 @@ msgid ""
 "the spaceport's traffic. The bar is used only by the captains of the supply "
 "and trade ships that land on Zeppei."
 msgstr ""
+"El bar del puerto espacial no es muy frecuentado. Los Soromida que vienen "
+"aquí de vacaciones suelen ir directamente a las terminales, y constituyen la "
+"mayor parte del tráfico del puerto espacial. El bar sólo lo utilizan los "
+"capitanes de las naves de suministro y comercio que aterrizan en Zeppei."
 
 #: dat/assets/zeroeleven.xml:2
 msgid "Zero-Eleven"
-msgstr ""
+msgstr "Cero-Once"
 
 #: dat/assets/zerofive.xml:2
 msgid "Zero-Five"
-msgstr ""
+msgstr "Cero-Cinco"
 
 #: dat/assets/zeroone.xml:2
 msgid "Zero-One"
-msgstr ""
+msgstr "Cero-Uno"
 
 #: dat/assets/zesta.xml:2
+#, fuzzy
 msgid "Zesta"
-msgstr ""
+msgstr "Zesta"
 
 #: dat/assets/zesta.xml:27
 msgid ""
@@ -17604,14 +17696,20 @@ msgid ""
 "routinely used as part of the extraction process, and to prevent severe "
 "burns to the miners."
 msgstr ""
+"Rica en minerales, pero insoportablemente calurosa, Zesta ha sido "
+"establecida como una colonia minera de alta intensidad por Proteron. El agua "
+"y el hielo extraídos de Amianta se utilizan habitualmente como parte del "
+"proceso de extracción, y para evitar graves quemaduras a los mineros."
 
 #: dat/assets/zethus.xml:2
+#, fuzzy
 msgid "Zethus"
-msgstr ""
+msgstr "Zethus"
 
 #: dat/assets/zhang_lu.xml:2
+#, fuzzy
 msgid "Zhang Lu"
-msgstr ""
+msgstr "Zhang Lu"
 
 #: dat/assets/zhang_lu.xml:30
 msgid ""
@@ -17622,6 +17720,13 @@ msgid ""
 "countless peaks that have never been conquered, so tourists like to try and "
 "be the first to climb one."
 msgstr ""
+"Zhang Lu es un mundo con vastas cadenas montañosas, la mayor de las cuales "
+"alcanza casi un tercio de la superficie del planeta. El mundo carece por "
+"completo de interés para ser habitado, incluso para los estándares de los "
+"Soromida, pero el terreno escarpado es irresistible para las personas a las "
+"que les gusta el alpinismo. Hay innumerables picos que nunca han sido "
+"conquistados, por lo que a los turistas les gusta intentar ser los primeros "
+"en escalar uno."
 
 #: dat/assets/zhang_lu.xml:31
 msgid ""
@@ -17631,10 +17736,17 @@ msgid ""
 "is less than practical from a pilot's point of view, as having mountains all "
 "around the spaceport severely limits the choice in approach vectors."
 msgstr ""
+"El puerto espacial está construido en un valle. La razón de ello es que los "
+"turistas que llegan se encuentran inmediatamente con montañas que se elevan "
+"sobre ellos por todos los lados, lo que les hace sentir muy bien. "
+"Desgraciadamente, esta ubicación es poco práctica desde el punto de vista "
+"del piloto, ya que el hecho de tener montañas alrededor del puerto espacial "
+"limita mucho la elección de los vectores de aproximación."
 
 #: dat/assets/zhiru.xml:2
+#, fuzzy
 msgid "Zhiru"
-msgstr ""
+msgstr "Zhiru"
 
 #: dat/assets/zhiru.xml:31
 msgid ""
@@ -17646,6 +17758,13 @@ msgid ""
 "Zhiru, which allows the massive spacecraft to land and take off with little "
 "difficulty."
 msgstr ""
+"Zhiru fue una vez el hogar de Eduard Manuel Goddard, el hombre que diseñó "
+"sin ayuda el entonces revolucionario crucero de batalla Goddard, y que "
+"fundaría la Casa Goddard, de menor importancia. Ahora Zhiru tiene una "
+"floreciente industria de naves espaciales, especializada en la creación y el "
+"mantenimiento de las naves Goddard. Todo esto es posible gracias a la débil "
+"gravedad y a la atmósfera que envuelve a Zhiru, que permite que las enormes "
+"naves espaciales aterricen y despeguen con poca dificultad."
 
 #: dat/assets/zhiru.xml:32
 msgid ""
@@ -17654,22 +17773,30 @@ msgid ""
 "comfortable and cozy as a bar, although every so often you can hear creaking "
 "in the ancient metal frame."
 msgstr ""
+"El Bar Goddard es, como es lógico, un modelo obsoleto de su nave homónima, "
+"despojado y reacondicionado en forma de bar. Es sorprendentemente cómodo y "
+"acogedor como bar, aunque de vez en cuando se oyen crujidos en la antigua "
+"estructura metálica."
 
 #: dat/assets/zintar_iv.xml:2
+#, fuzzy
 msgid "Zintar IV"
-msgstr ""
+msgstr "Zintar IV"
 
 #: dat/assets/zintar_v.xml:2
+#, fuzzy
 msgid "Zintar V"
-msgstr ""
+msgstr "Zintar V"
 
 #: dat/assets/ziz.xml:2
+#, fuzzy
 msgid "Ziz"
-msgstr ""
+msgstr "Ziz"
 
 #: dat/assets/zuner.xml:2
+#, fuzzy
 msgid "Zuner"
-msgstr ""
+msgstr "Zuner"
 
 #: dat/assets/zuner.xml:29
 msgid ""
@@ -17691,179 +17818,179 @@ msgstr ""
 
 #: dat/assets_virtual/dvaered_small.xml:2
 msgid "Dvaered Small"
-msgstr ""
+msgstr "Dvaered Poco"
 
 #: dat/assets_virtual/dvaered_unpresence.xml:2
 msgid "Dvaered Unpresence"
-msgstr ""
+msgstr "Dvaered Inexistente"
 
 #: dat/assets_virtual/dvaered_unpresence_range1.xml:2
 msgid "Dvaered Unpresence (Range 1)"
-msgstr ""
+msgstr "Dvaered Inexistente (Rango 1)"
 
 #: dat/assets_virtual/empire_small.xml:2
 msgid "Empire Small"
-msgstr ""
+msgstr "Imperio Poco"
 
 #: dat/assets_virtual/empire_unpresence.xml:2
 msgid "Empire Unpresence"
-msgstr ""
+msgstr "Imperio Inexistente"
 
 #: dat/assets_virtual/empire_unpresence_range1.xml:2
 msgid "Empire Unpresence (Range 1)"
-msgstr ""
+msgstr "Imperio Inexistente (Rango 1)"
 
 #: dat/assets_virtual/flf_small.xml:2
 msgid "FLF Small"
-msgstr ""
+msgstr "FLF Poco"
 
 #: dat/assets_virtual/flf_unpresence.xml:2
 msgid "FLF Unpresence"
-msgstr ""
+msgstr "FLF Inexistente"
 
 #: dat/assets_virtual/frontier_small.xml:2
 msgid "Frontier Small"
-msgstr ""
+msgstr "Frontera Poco"
 
 #: dat/assets_virtual/frontier_unpresence.xml:2
 msgid "Frontier Unpresence"
-msgstr ""
+msgstr "Frontera Inexistente"
 
 #: dat/assets_virtual/independent_all_unpresence.xml:2
 msgid "Independent All Unpresence"
-msgstr ""
+msgstr "Independiente Total Inexistente"
 
 #: dat/assets_virtual/independent_all_unpresence_range1.xml:2
 msgid "Independent All Unpresence (Range 1)"
-msgstr ""
+msgstr "Independiente Total Inexistente (Rango 1)"
 
 #: dat/assets_virtual/independent_trader_area.xml:2
 msgid "Independent Trader Area"
-msgstr ""
+msgstr "Zona de Comerciantes Independientes"
 
 #: dat/assets_virtual/independent_trader_local.xml:2
 msgid "Independent Trader Local"
-msgstr ""
+msgstr "Local Comercial Independiente"
 
 #: dat/assets_virtual/independent_unpresence.xml:2
 msgid "Independent Unpresence"
-msgstr ""
+msgstr "Independiente Inexistente"
 
 #: dat/assets_virtual/miner_local.xml:2
 msgid "Miner Local"
-msgstr ""
+msgstr "Local Minero"
 
 #: dat/assets_virtual/miner_small.xml:2
 msgid "Miner Small"
-msgstr ""
+msgstr "Pequeño Minero"
 
 #: dat/assets_virtual/pirate_all_unpresence.xml:2
 msgid "Pirate All Unpresence"
-msgstr ""
+msgstr "Pirata Todo Inexistente"
 
 #: dat/assets_virtual/pirate_all_unpresence_range1.xml:2
 msgid "Pirate All Unpresence (Range 1)"
-msgstr ""
+msgstr "Pirata Todo Inexistente (Rango 1)"
 
 #: dat/assets_virtual/pirate_medium.xml:2
 msgid "Pirate Medium"
-msgstr ""
+msgstr "Medio Pirata"
 
 #: dat/assets_virtual/pirate_small.xml:2
 msgid "Pirate Small"
-msgstr ""
+msgstr "Poco Pirata"
 
 #: dat/assets_virtual/pirate_unpresence.xml:2
 msgid "Pirate Unpresence"
-msgstr ""
+msgstr "Pirata Inexistente"
 
 #: dat/assets_virtual/proteron_small.xml:2
 msgid "Proteron Small"
-msgstr ""
+msgstr "Poco Proteron"
 
 #: dat/assets_virtual/proteron_unpresence.xml:2
 msgid "Proteron Unpresence"
-msgstr ""
+msgstr "Inexistente Proteron"
 
 #: dat/assets_virtual/proteron_unpresence_range1.xml:2
 msgid "Proteron Unpresence (Range 1)"
-msgstr ""
+msgstr "Inexistente Proteron (Rango 1)"
 
 #: dat/assets_virtual/sirius_small.xml:2
 msgid "Sirius Small"
-msgstr ""
+msgstr "Poco Sirio"
 
 #: dat/assets_virtual/sirius_unpresence.xml:2
 msgid "Sirius Unpresence"
-msgstr ""
+msgstr "Inexistente Sirio"
 
 #: dat/assets_virtual/soromid_unpresence.xml:2
 msgid "Soromid Unpresence"
-msgstr ""
+msgstr "Inexistente Soromida"
 
 #: dat/assets_virtual/soromid_unpresence_range1.xml:2
 msgid "Soromid Unpresence (Range 1)"
-msgstr ""
+msgstr "Inexistente Soromida (Rango 1)"
 
 #: dat/assets_virtual/thurion_local.xml:2
 msgid "Thurion Local"
-msgstr ""
+msgstr "Poco Turion"
 
 #: dat/assets_virtual/tradelane.xml:2 src/map.c:696
 msgid "Trade Lane"
-msgstr ""
+msgstr "Carril Comercial"
 
 #: dat/assets_virtual/tradelane_dvaered.xml:2
 msgid "Trade Lane (Dvaered)"
-msgstr ""
+msgstr "Carril Comercial (Dvaered)"
 
 #: dat/assets_virtual/tradelane_empire.xml:2
 msgid "Trade Lane (Empire)"
-msgstr ""
+msgstr "Carril Comercial (Imperio)"
 
 #: dat/assets_virtual/tradelane_sirius.xml:2
 msgid "Trade Lane (Sirius)"
-msgstr ""
+msgstr "Carril Comercial (Sirio)"
 
 #: dat/assets_virtual/tradelane_soromid.xml:2
 msgid "Trade Lane (Soromid)"
-msgstr ""
+msgstr "Carril Comercial (Soromida)"
 
 #: dat/assets_virtual/tradelane_zalek.xml:2
 msgid "Trade Lane (Za'lek)"
-msgstr ""
+msgstr "Carril Comercial (Za'lek)"
 
 #: dat/assets_virtual/trader_area.xml:2
 msgid "Trader Area"
-msgstr ""
+msgstr "Zona Comercial"
 
 #: dat/assets_virtual/trader_local.xml:2
 msgid "Trader Local"
-msgstr ""
+msgstr "Local Comercial"
 
 #: dat/assets_virtual/trader_unpresence.xml:2
 msgid "Trader Unpresence"
-msgstr ""
+msgstr "Inexistencia Comercial"
 
 #: dat/assets_virtual/virtual_sindbad.xml:2
 msgid "Virtual Sindbad"
-msgstr ""
+msgstr "Sindbad Virtual"
 
 #: dat/assets_virtual/zalek_medium.xml:2
 msgid "Za'lek Medium"
-msgstr ""
+msgstr "Medio Za'lek"
 
 #: dat/assets_virtual/zalek_small.xml:2
 msgid "Za'lek Small"
-msgstr ""
+msgstr "Poco Za'lek"
 
 #: dat/assets_virtual/zalek_unpresence.xml:2
 msgid "Za'lek Unpresence"
-msgstr ""
+msgstr "Inexistencia Za'lek"
 
 #: dat/assets_virtual/zalek_unpresence_range1.xml:2
 msgid "Za'lek Unpresence (Range 1)"
-msgstr ""
+msgstr "Inexistencia Za'lek (Rango 1)"
 
 #: dat/commodities/diamond.xml:3 dat/scripts/pilotname/generic.lua:29
 msgid "Diamond"
@@ -18006,7 +18133,7 @@ msgid ""
 "that control the Haven sector between Empire and Soromid territories."
 msgstr ""
 "El Clan Pirata Salvajes es una banda violenta y poco organizada de piratas "
-"que controla el sector de Haven entre los territorios del Imperio y de los "
+"que controla el sector Refugio entre los territorios del Imperio y de los "
 "Soromid."
 
 #: dat/faction.xml:153
@@ -25452,56 +25579,68 @@ msgid "This slot can be used for fighter bays."
 msgstr "Esta ranura se puede utilizar para las bahías de cazas."
 
 #: dat/ssys/acheron.xml:2
+#, fuzzy
 msgid "Acheron"
-msgstr ""
+msgstr "Acheron"
 
 #: dat/ssys/adraia.xml:2
+#, fuzzy
 msgid "Adraia"
-msgstr ""
+msgstr "Adraia"
 
 #: dat/ssys/adran.xml:2
+#, fuzzy
 msgid "Adran"
-msgstr ""
+msgstr "Adran"
 
 #: dat/ssys/aesir.xml:2
+#, fuzzy
 msgid "Aesir"
-msgstr ""
+msgstr "Aesir"
 
 #: dat/ssys/aesir.xml:4
 msgid "#pSirius Homeworld#0"
-msgstr ""
+msgstr "#pMundo Hogar Sirio#0"
 
 #: dat/ssys/aesria.xml:2
+#, fuzzy
 msgid "Aesria"
-msgstr ""
+msgstr "Aesria"
 
 #: dat/ssys/aet.xml:2
+#, fuzzy
 msgid "Aet"
-msgstr ""
+msgstr "Aet"
 
 #: dat/ssys/akodu.xml:2
+#, fuzzy
 msgid "Akodu"
-msgstr ""
+msgstr "Akodu"
 
 #: dat/ssys/akra.xml:2
+#, fuzzy
 msgid "Akra"
-msgstr ""
+msgstr "Akra"
 
 #: dat/ssys/allous.xml:2
+#, fuzzy
 msgid "Allous"
-msgstr ""
+msgstr "Allous"
 
 #: dat/ssys/alteris.xml:2
+#, fuzzy
 msgid "Alteris"
-msgstr ""
+msgstr "Alteris"
 
 #: dat/ssys/amaroq.xml:2
+#, fuzzy
 msgid "Amaroq"
-msgstr ""
+msgstr "Amaroq"
 
 #: dat/ssys/amatiri.xml:2
+#, fuzzy
 msgid "Amatiri"
-msgstr ""
+msgstr "Amatiri"
 
 #: dat/ssys/amatiri.xml:5 dat/ssys/ariadus.xml:5 dat/ssys/bonanza.xml:5
 #: dat/ssys/hasselt.xml:5 dat/ssys/kansas.xml:5 dat/ssys/klunzar.xml:5
@@ -25513,175 +25652,205 @@ msgstr ""
 #: dat/ssys/ngc8468.xml:5 dat/ssys/ngc9654.xml:5 dat/ssys/sleuth.xml:5
 #: dat/ssys/sylph.xml:5 dat/ssys/zintar.xml:5
 msgid "#rHaze (-50% Shield and Shield Regen)#0"
-msgstr ""
+msgstr "#rNiebal (-50% Escudo y Regen. Escudo)#0"
 
 #: dat/ssys/anarbalis.xml:2
+#, fuzzy
 msgid "Anarbalis"
-msgstr ""
+msgstr "Anarbalis"
 
 #: dat/ssys/andee.xml:2
+#, fuzzy
 msgid "Andee"
-msgstr ""
+msgstr "Andee"
 
 #: dat/ssys/andres.xml:2
+#, fuzzy
 msgid "Andres"
-msgstr ""
+msgstr "Andres"
 
 #: dat/ssys/aneel_azi.xml:2
+#, fuzzy
 msgid "Aneel Azi"
-msgstr ""
+msgstr "Aneel Azi"
 
 #: dat/ssys/anger.xml:2
 msgid "Anger"
-msgstr ""
+msgstr "Ira"
 
 #: dat/ssys/anku.xml:2
+#, fuzzy
 msgid "An'ku"
-msgstr ""
+msgstr "An'ku"
 
 #: dat/ssys/anrique.xml:2
+#, fuzzy
 msgid "Anrique"
-msgstr ""
+msgstr "Anrique"
 
 #: dat/ssys/antares.xml:2
+#, fuzzy
 msgid "Antares"
-msgstr ""
+msgstr "Antares"
 
 #: dat/ssys/antlejos.xml:2
+#, fuzzy
 msgid "Antlejos"
-msgstr ""
+msgstr "Antlejos"
 
 #: dat/ssys/apez.xml:2
+#, fuzzy
 msgid "Apez"
-msgstr ""
+msgstr "Apez"
 
 #: dat/ssys/apik.xml:2
+#, fuzzy
 msgid "Apik"
-msgstr ""
+msgstr "Apik"
 
 #: dat/ssys/arandon.xml:2
+#, fuzzy
 msgid "Arandon"
-msgstr ""
+msgstr "Arandon"
 
 #: dat/ssys/arcanis.xml:2
+#, fuzzy
 msgid "Arcanis"
-msgstr ""
+msgstr "Arcanis"
 
 #: dat/ssys/arcturus.xml:2
+#, fuzzy
 msgid "Arcturus"
-msgstr ""
+msgstr "Arcturus"
 
 #: dat/ssys/ariadus.xml:2
+#, fuzzy
 msgid "Ariadus"
-msgstr ""
+msgstr "Ariadus"
 
 #: dat/ssys/armorhead.xml:2
 msgid "Armorhead"
-msgstr ""
+msgstr "Cabeza de Armadura"
 
 #: dat/ssys/atlantis.xml:2
+#, fuzzy
 msgid "Atlantis"
-msgstr ""
+msgstr "Atlantis"
 
 #: dat/ssys/auger.xml:2
 msgid "Auger"
-msgstr ""
+msgstr "Taladradora"
 
 #: dat/ssys/awowa.xml:2
+#, fuzzy
 msgid "Awowa"
-msgstr ""
+msgstr "Awowa"
 
 #: dat/ssys/babylon.xml:2
 msgid "Babylon"
-msgstr ""
+msgstr "Babilonia"
 
 #: dat/ssys/baf.xml:2
+#, fuzzy
 msgid "Baf"
-msgstr ""
+msgstr "Baf"
 
 #: dat/ssys/baf.xml:4
 msgid "#oRestricted#0"
-msgstr ""
+msgstr "#oRestringido#0"
 
 #: dat/ssys/basel.xml:2
 msgid "Basel"
-msgstr ""
+msgstr "Basilea"
 
 #: dat/ssys/bastion.xml:2
 msgid "Bastion"
-msgstr ""
+msgstr "Bastión"
 
 #: dat/ssys/bedimann.xml:2
+#, fuzzy
 msgid "Bedimann"
-msgstr ""
+msgstr "Bedimann"
 
 #: dat/ssys/beeklo.xml:2
+#, fuzzy
 msgid "Beeklo"
-msgstr ""
+msgstr "Beeklo"
 
 #: dat/ssys/behar.xml:2
+#, fuzzy
 msgid "Behar"
-msgstr ""
+msgstr "Behar"
 
 #: dat/ssys/blacin.xml:2
+#, fuzzy
 msgid "Blacin"
-msgstr ""
+msgstr "Blacin"
 
 #: dat/ssys/blackwell.xml:2
 msgid "Blackwell"
-msgstr ""
+msgstr "Pozonegro"
 
 #: dat/ssys/blunderbuss.xml:2
 msgid "Blunderbuss"
-msgstr ""
+msgstr "Trabuco"
 
 #: dat/ssys/bonanza.xml:2
+#, fuzzy
 msgid "Bonanza"
-msgstr ""
+msgstr "Bonanza"
 
 #: dat/ssys/booster.xml:2
 msgid "Booster"
-msgstr ""
+msgstr "Potenciador"
 
 #: dat/ssys/borla.xml:2
+#, fuzzy
 msgid "Borla"
-msgstr ""
+msgstr "Borla"
 
 #: dat/ssys/botarn.xml:2
+#, fuzzy
 msgid "Botarn"
-msgstr ""
+msgstr "Botarn"
 
 #: dat/ssys/brendon.xml:2
+#, fuzzy
 msgid "Brendon"
-msgstr ""
+msgstr "Brendon"
 
 #: dat/ssys/brimstone.xml:2
 msgid "Brimstone"
-msgstr ""
+msgstr "azufre"
 
 #: dat/ssys/brumerebus.xml:2
+#, fuzzy
 msgid "Brumerebus"
-msgstr ""
+msgstr "Brumerebus"
 
 #: dat/ssys/c00.xml:2
+#, fuzzy
 msgid "C-00"
-msgstr ""
+msgstr "C-00"
 
 #: dat/ssys/c14.xml:2
+#, fuzzy
 msgid "C-14"
-msgstr ""
+msgstr "C-14"
 
 #: dat/ssys/c28.xml:2
+#, fuzzy
 msgid "C-28"
-msgstr ""
+msgstr "C-28"
 
 #: dat/ssys/c43.xml:2
 msgid "C-43"
 msgstr ""
 
 #: dat/ssys/c59.xml:2
+#, fuzzy
 msgid "C-59"
-msgstr ""
+msgstr "C-59"
 
 #: dat/ssys/capricorn.xml:2
 msgid "Capricorn"
@@ -25689,39 +25858,44 @@ msgstr "Capricornio"
 
 #: dat/ssys/castellan.xml:2
 msgid "Castellan"
-msgstr ""
+msgstr "Castellano"
 
 #: dat/ssys/chloe.xml:2
 msgid "Chloe"
-msgstr ""
+msgstr "Chloe"
 
 #: dat/ssys/chraan.xml:2
+#, fuzzy
 msgid "Chraan"
-msgstr ""
+msgstr "Chraan"
 
 #: dat/ssys/churchill.xml:2
+#, fuzzy
 msgid "Churchill"
-msgstr ""
+msgstr "Churchill"
 
 #: dat/ssys/cleai.xml:2
+#, fuzzy
 msgid "Cleai"
-msgstr ""
+msgstr "Cleai"
 
 #: dat/ssys/copernicus.xml:2
 msgid "Copernicus"
-msgstr ""
+msgstr "Copérnico"
 
 #: dat/ssys/corinth.xml:2
 msgid "Corinth"
-msgstr ""
+msgstr "Corinto"
 
 #: dat/ssys/coriolis.xml:2
+#, fuzzy
 msgid "Coriolis"
-msgstr ""
+msgstr "Coriolis"
 
 #: dat/ssys/corvus.xml:2
+#, fuzzy
 msgid "Corvus"
-msgstr ""
+msgstr "Corvus"
 
 #. Create the OSD
 #: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:134
@@ -25730,20 +25904,24 @@ msgid "Crimson Gauntlet"
 msgstr ""
 
 #: dat/ssys/cygnus.xml:2
+#, fuzzy
 msgid "Cygnus"
-msgstr ""
+msgstr "Cygnus"
 
 #: dat/ssys/daan.xml:2
+#, fuzzy
 msgid "Daan"
-msgstr ""
+msgstr "Daan"
 
 #: dat/ssys/dakron.xml:2
+#, fuzzy
 msgid "Dakron"
-msgstr ""
+msgstr "Dakron"
 
 #: dat/ssys/daled.xml:2
+#, fuzzy
 msgid "Daled"
-msgstr ""
+msgstr "Daled"
 
 #: dat/ssys/daled.xml:5 dat/ssys/defa.xml:5 dat/ssys/fried.xml:5
 #: dat/ssys/gold.xml:5 dat/ssys/kretogg.xml:5 dat/ssys/mason.xml:5
@@ -25751,1127 +25929,1356 @@ msgstr ""
 #: dat/ssys/titus.xml:5 dat/ssys/unicorn.xml:5 dat/ssys/vedalus.xml:5
 #: dat/ssys/volus.xml:5
 msgid "#bStellar Wind (1 fuel regen)#0"
-msgstr ""
+msgstr "#bViento Estelar(1 regen. combustible)#0"
 
 #: dat/ssys/damien.xml:2
+#, fuzzy
 msgid "Damien"
-msgstr ""
+msgstr "Damien"
 
 #: dat/ssys/daravon.xml:2
+#, fuzzy
 msgid "Daravon"
-msgstr ""
+msgstr "Daravon"
 
 #: dat/ssys/darkstone.xml:2
 msgid "Darkstone"
-msgstr ""
+msgstr "Piedraoscura"
 
 #: dat/ssys/defa.xml:2
+#, fuzzy
 msgid "Defa"
-msgstr ""
+msgstr "Defa"
 
 #: dat/ssys/delta_pavonis.xml:2
+#, fuzzy
 msgid "Delta Pavonis"
-msgstr ""
+msgstr "Delta Pavonis"
 
 #: dat/ssys/delta_polaris.xml:2
+#, fuzzy
 msgid "Delta Polaris"
-msgstr ""
+msgstr "Delta Polaris"
 
 #: dat/ssys/dendria.xml:2
+#, fuzzy
 msgid "Dendria"
-msgstr ""
+msgstr "Dendria"
 
 #: dat/ssys/diadem.xml:2
 msgid "Diadem"
-msgstr ""
+msgstr "Diadema"
 
 #: dat/ssys/doeston.xml:2
+#, fuzzy
 msgid "Doeston"
-msgstr ""
+msgstr "Doeston"
 
 #: dat/ssys/dohriabi.xml:2
+#, fuzzy
 msgid "Dohriabi"
-msgstr ""
+msgstr "Dohriabi"
 
 #: dat/ssys/doowa.xml:2
+#, fuzzy
 msgid "Doowa"
-msgstr ""
+msgstr "Doowa"
 
 #: dat/ssys/doranthex.xml:2
+#, fuzzy
 msgid "Doranthex"
-msgstr ""
+msgstr "Doranthex"
 
 #: dat/ssys/draconis.xml:2
+#, fuzzy
 msgid "Draconis"
-msgstr ""
+msgstr "Draconis"
 
 #: dat/ssys/draygar.xml:2
+#, fuzzy
 msgid "Draygar"
-msgstr ""
+msgstr "Draygar"
 
 #: dat/ssys/druid.xml:2
 msgid "Druid"
-msgstr ""
+msgstr "Druida"
 
 #: dat/ssys/druss.xml:2
+#, fuzzy
 msgid "Druss"
-msgstr ""
+msgstr "Druss"
 
 #: dat/ssys/dune.xml:2
 msgid "Dune"
-msgstr ""
+msgstr "Duna"
 
 #: dat/ssys/duros.xml:2
+#, fuzzy
 msgid "Duros"
-msgstr ""
+msgstr "Duros"
 
 #: dat/ssys/dvaer.xml:2
+#, fuzzy
 msgid "Dvaer"
-msgstr ""
+msgstr "Dvaer"
 
 #: dat/ssys/dvaer.xml:4
 msgid "#pDvaered Homeworld#0"
-msgstr ""
+msgstr "#pMundo Hogar Dvaered#0"
 
 #: dat/ssys/effetey.xml:2
+#, fuzzy
 msgid "Effetey"
-msgstr ""
+msgstr "Effetey"
 
 #: dat/ssys/eiderdown.xml:2
+#, fuzzy
 msgid "Eiderdown"
-msgstr ""
+msgstr "Eiderdown"
 
 #: dat/ssys/eisenhorn.xml:2
+#, fuzzy
 msgid "Eisenhorn"
-msgstr ""
+msgstr "Eisenhorn"
 
 #: dat/ssys/ekkodu.xml:2
+#, fuzzy
 msgid "Ekkodu"
-msgstr ""
+msgstr "Ekkodu"
 
 #: dat/ssys/ekta.xml:2
+#, fuzzy
 msgid "Ekta"
-msgstr ""
+msgstr "Ekta"
 
 #: dat/ssys/elixir.xml:2
+#, fuzzy
 msgid "Elixir"
-msgstr ""
+msgstr "Elixir"
 
 #: dat/ssys/elza.xml:2
+#, fuzzy
 msgid "Elza"
-msgstr ""
+msgstr "Elza"
 
 #: dat/ssys/eneguoz.xml:2
+#, fuzzy
 msgid "Eneguoz"
-msgstr ""
+msgstr "Eneguoz"
 
 #: dat/ssys/eridani.xml:2
+#, fuzzy
 msgid "Eridani"
-msgstr ""
+msgstr "Eridani"
 
 #: dat/ssys/esker.xml:2
+#, fuzzy
 msgid "Esker"
-msgstr ""
+msgstr "Esker"
 
 #: dat/ssys/euler.xml:2
+#, fuzzy
 msgid "Euler"
-msgstr ""
+msgstr "Euler"
 
 #: dat/ssys/eye_of_night.xml:2
 msgid "Eye of Night"
-msgstr ""
+msgstr "Ojo de la Noche"
 
 #: dat/ssys/farizel.xml:2
+#, fuzzy
 msgid "Farizel"
-msgstr ""
+msgstr "Farizel"
 
 #: dat/ssys/fathers_pride.xml:2
 msgid "Father's Pride"
-msgstr ""
+msgstr "Orgullo de Padre"
 
 #: dat/ssys/faust.xml:2
 msgid "Faust"
-msgstr ""
+msgstr "Fausto"
 
 #: dat/ssys/felzen.xml:2
+#, fuzzy
 msgid "Felzen"
-msgstr ""
+msgstr "Felzen"
 
 #: dat/ssys/fern.xml:2
 msgid "Fern"
-msgstr ""
+msgstr "Helecho"
 
 #: dat/ssys/feye.xml:2 dat/events/discovery.lua:77
+#, fuzzy
 msgid "Feye"
-msgstr ""
+msgstr "Feye"
 
 #: dat/ssys/feye.xml:4
 msgid "#pSoromid Homeworld#0"
-msgstr ""
+msgstr "#pMundo Hogar Soromida#0"
 
 #: dat/ssys/fidelis.xml:2
 msgid "Fidelis"
-msgstr ""
+msgstr "Fidelis"
 
 #: dat/ssys/firk.xml:2
 msgid "Firk"
-msgstr ""
+msgstr "Firk"
 
 #: dat/ssys/flok.xml:2
+#, fuzzy
 msgid "Flok"
-msgstr ""
+msgstr "Flok"
 
 #: dat/ssys/flow.xml:2
 msgid "Flow"
-msgstr ""
+msgstr "Flujo"
 
 #: dat/ssys/forlat.xml:2
+#, fuzzy
 msgid "Forlat"
-msgstr ""
+msgstr "Forlat"
 
 #: dat/ssys/fortitude.xml:2
 msgid "Fortitude"
-msgstr ""
+msgstr "Fortaleza"
 
 #: dat/ssys/fried.xml:2
 msgid "Fried"
-msgstr ""
+msgstr "Frito"
 
 #: dat/ssys/frolina.xml:2
+#, fuzzy
 msgid "Frolina"
-msgstr ""
+msgstr "Frolina"
 
 #: dat/ssys/fulcrum.xml:2
+#, fuzzy
 msgid "Fulcrum"
-msgstr ""
+msgstr "Fulcrum"
 
 #: dat/ssys/fury.xml:2
 msgid "Fury"
-msgstr ""
+msgstr "Furia"
 
 #: dat/ssys/gamel.xml:2
+#, fuzzy
 msgid "Gamel"
-msgstr ""
+msgstr "Gamel"
 
 #: dat/ssys/gamma_polaris.xml:2
+#, fuzzy
 msgid "Gamma Polaris"
-msgstr ""
+msgstr "Gamma Polaris"
 
 #: dat/ssys/gamma_polaris.xml:5
 msgid "#pEmpire Homeworld#0"
-msgstr ""
+msgstr "#pMundo Hogar Imperio#0"
 
 #: dat/ssys/gammacron.xml:2
+#, fuzzy
 msgid "Gammacron"
-msgstr ""
+msgstr "Gammacron"
 
 #: dat/ssys/ganth.xml:2
+#, fuzzy
 msgid "Ganth"
-msgstr ""
+msgstr "Ganth"
 
 #: dat/ssys/garten.xml:2
+#, fuzzy
 msgid "Garten"
-msgstr ""
+msgstr "Garten"
 
 #: dat/ssys/gewirn.xml:2
+#, fuzzy
 msgid "Gewirn"
-msgstr ""
+msgstr "Gewirn"
 
 #: dat/ssys/gilligans_light.xml:2
 msgid "Gilligan's Light"
-msgstr ""
+msgstr "Luz de Gilligan"
 
 #: dat/ssys/ginger.xml:2
 msgid "Ginger"
-msgstr ""
+msgstr "Jenjibre"
 
 #: dat/ssys/gorman.xml:2
+#, fuzzy
 msgid "Gorman"
-msgstr ""
+msgstr "Gorman"
 
 #: dat/ssys/gremlin.xml:2
+#, fuzzy
 msgid "Gremlin"
-msgstr ""
+msgstr "Gremlin"
 
 #: dat/ssys/griffin.xml:2
 msgid "Griffin"
-msgstr ""
+msgstr "Grifo"
 
 #: dat/ssys/gruz.xml:2
+#, fuzzy
 msgid "Gruz"
-msgstr ""
+msgstr "Gruz"
 
 #: dat/ssys/gutter.xml:2
 msgid "Gutter"
-msgstr ""
+msgstr "Canalón"
 
 #: dat/ssys/gyrios.xml:2
+#, fuzzy
 msgid "Gyrios"
-msgstr ""
+msgstr "Gyrios"
 
 #: dat/ssys/hades.xml:2
+#, fuzzy
 msgid "Hades"
-msgstr ""
+msgstr "Hades"
 
 #: dat/ssys/hadosh.xml:2
+#, fuzzy
 msgid "Hadosh"
-msgstr ""
+msgstr "Hadosh"
 
 #: dat/ssys/haered.xml:2
+#, fuzzy
 msgid "Haered"
-msgstr ""
+msgstr "Haered"
 
 #: dat/ssys/hakoi.xml:2
+#, fuzzy
 msgid "Hakoi"
-msgstr ""
+msgstr "Hakoi"
 
 #: dat/ssys/haleb.xml:2
+#, fuzzy
 msgid "Haleb"
-msgstr ""
+msgstr "Haleb"
 
 #: dat/ssys/halo.xml:2
+#, fuzzy
 msgid "Halo"
-msgstr ""
+msgstr "Halo"
 
 #: dat/ssys/hargen.xml:2
+#, fuzzy
 msgid "Hargen"
-msgstr ""
+msgstr "Hargen"
 
 #: dat/ssys/hasselt.xml:2
+#, fuzzy
 msgid "Hasselt"
-msgstr ""
+msgstr "Hasselt"
 
 #: dat/ssys/hatter.xml:2
+#, fuzzy
 msgid "Hatter"
-msgstr ""
+msgstr "Hatter"
 
 #: dat/ssys/hekaras.xml:2
+#, fuzzy
 msgid "Hekaras"
-msgstr ""
+msgstr "Hekaras"
 
 #: dat/ssys/hephaestus.xml:2
 msgid "Hephaestus"
-msgstr ""
+msgstr "Hefesto"
 
 #: dat/ssys/herakin.xml:2
+#, fuzzy
 msgid "Herakin"
-msgstr ""
+msgstr "Herakin"
 
 #: dat/ssys/hideyoshis_star.xml:2
 msgid "Hideyoshi's Star"
-msgstr ""
+msgstr "Estrella Hideyoshi"
 
 #: dat/ssys/humdrum.xml:2
+#, fuzzy
 msgid "Humdrum"
-msgstr ""
+msgstr "Humdrum"
 
 #: dat/ssys/hystera.xml:2
 msgid "Hystera"
-msgstr ""
+msgstr "Hystera"
 
 #: dat/ssys/infinity.xml:2
 msgid "Infinity"
-msgstr ""
+msgstr "Infinito"
 
 #: dat/ssys/ingot.xml:2
 msgid "Ingot"
-msgstr ""
+msgstr "Lingote"
 
 #: dat/ssys/iris.xml:2
+#, fuzzy
 msgid "Iris"
-msgstr ""
+msgstr "Iris"
 
 #: dat/ssys/jackson.xml:2
+#, fuzzy
 msgid "Jackson"
-msgstr ""
+msgstr "Jackson"
 
 #: dat/ssys/jade.xml:2
+#, fuzzy
 msgid "Jade"
-msgstr ""
+msgstr "Jade"
 
 #: dat/ssys/jervis.xml:2
+#, fuzzy
 msgid "Jervis"
-msgstr ""
+msgstr "Jervis"
 
 #: dat/ssys/jommel.xml:2
+#, fuzzy
 msgid "Jommel"
-msgstr ""
+msgstr "Jommel"
 
 #: dat/ssys/kansas.xml:2
+#, fuzzy
 msgid "Kansas"
-msgstr ""
+msgstr "Kansas"
 
 #: dat/ssys/karman.xml:2
+#, fuzzy
 msgid "Karman"
-msgstr ""
+msgstr "Karman"
 
 #: dat/ssys/katami.xml:2
+#, fuzzy
 msgid "Katami"
-msgstr ""
+msgstr "Katami"
 
 #: dat/ssys/kelvos.xml:2
+#, fuzzy
 msgid "Kelvos"
-msgstr ""
+msgstr "Kelvos"
 
 #: dat/ssys/khaas.xml:2
+#, fuzzy
 msgid "Khaas"
-msgstr ""
+msgstr "Khaas"
 
 #: dat/ssys/kiwi.xml:2
+#, fuzzy
 msgid "Kiwi"
-msgstr ""
+msgstr "Kiwi"
 
 #: dat/ssys/klantar.xml:2
+#, fuzzy
 msgid "Klantar"
-msgstr ""
+msgstr "Klantar"
 
 #: dat/ssys/klintus.xml:2
+#, fuzzy
 msgid "Klintus"
-msgstr ""
+msgstr "Klintus"
 
 #: dat/ssys/klunzar.xml:2
+#, fuzzy
 msgid "Klunzar"
-msgstr ""
+msgstr "Klunzar"
 
 #: dat/ssys/knave.xml:2 dat/scripts/pilotname/pirate.lua:359
 msgid "Knave"
-msgstr ""
+msgstr "Bribón"
 
 #: dat/ssys/kobopos.xml:2
+#, fuzzy
 msgid "Kobopos"
-msgstr ""
+msgstr "Kobopos"
 
 #: dat/ssys/kohler.xml:2
+#, fuzzy
 msgid "Kohler"
-msgstr ""
+msgstr "Kohler"
 
 #: dat/ssys/koralis.xml:2
+#, fuzzy
 msgid "Koralis"
-msgstr ""
+msgstr "Koralis"
 
 #: dat/ssys/korifa.xml:2
+#, fuzzy
 msgid "Korifa"
-msgstr ""
+msgstr "Korifa"
 
 #: dat/ssys/korma.xml:2
+#, fuzzy
 msgid "Korma"
-msgstr ""
+msgstr "Korma"
 
 #: dat/ssys/kraft.xml:2
+#, fuzzy
 msgid "Kraft"
-msgstr ""
+msgstr "Kraft"
 
 #: dat/ssys/kretogg.xml:2 dat/events/discovery.lua:133
+#, fuzzy
 msgid "Kretogg"
-msgstr ""
+msgstr "Kretogg"
 
 #: dat/ssys/ksher.xml:2
+#, fuzzy
 msgid "Ksher"
-msgstr ""
+msgstr "Ksher"
 
 #: dat/ssys/kyo.xml:2
+#, fuzzy
 msgid "Kyo"
-msgstr ""
+msgstr "Kyo"
 
 #: dat/ssys/lapis.xml:2
+#, fuzzy
 msgid "Lapis"
-msgstr ""
+msgstr "Lapis"
 
 #: dat/ssys/lazuli.xml:2
+#, fuzzy
 msgid "Lazuli"
-msgstr ""
+msgstr "Lazuli"
 
 #: dat/ssys/limbo.xml:2
+#, fuzzy
 msgid "Limbo"
-msgstr ""
+msgstr "Limbo"
 
 #: dat/ssys/longbow.xml:2
 msgid "Longbow"
-msgstr ""
+msgstr "Arcolargo"
 
 #: dat/ssys/machea.xml:2
+#, fuzzy
 msgid "Machea"
-msgstr ""
+msgstr "Machea"
 
 #: dat/ssys/marat.xml:2
+#, fuzzy
 msgid "Marat"
-msgstr ""
+msgstr "Marat"
 
 #: dat/ssys/margarita.xml:2
+#, fuzzy
 msgid "Margarita"
-msgstr ""
+msgstr "Margarita"
 
 #: dat/ssys/maron.xml:2
+#, fuzzy
 msgid "Maron"
-msgstr ""
+msgstr "Maron"
 
 #: dat/ssys/mason.xml:2
+#, fuzzy
 msgid "Mason"
-msgstr ""
+msgstr "Mason"
 
 #: dat/ssys/massia.xml:2
+#, fuzzy
 msgid "Massia"
-msgstr ""
+msgstr "Massia"
 
 #: dat/ssys/maus.xml:2
+#, fuzzy
 msgid "Maus"
-msgstr ""
+msgstr "Maus"
 
 #: dat/ssys/merisi.xml:2
+#, fuzzy
 msgid "Merisi"
-msgstr ""
+msgstr "Merisi"
 
 #: dat/ssys/metsys.xml:2
+#, fuzzy
 msgid "Metsys"
-msgstr ""
+msgstr "Metsys"
 
 #: dat/ssys/mida.xml:2
+#, fuzzy
 msgid "Mida"
-msgstr ""
+msgstr "Mida"
 
 #: dat/ssys/midoros.xml:2
+#, fuzzy
 msgid "Midoros"
-msgstr ""
+msgstr "Midoros"
 
 #: dat/ssys/millstone.xml:2
+#, fuzzy
 msgid "Millstone"
-msgstr ""
+msgstr "Millstone"
 
 #: dat/ssys/mirror.xml:2
 msgid "Mirror"
-msgstr ""
+msgstr "Espejo"
 
 #: dat/ssys/mizar.xml:2
+#, fuzzy
 msgid "Mizar"
-msgstr ""
+msgstr "Mizar"
 
 #: dat/ssys/modus_manis.xml:2
+#, fuzzy
 msgid "Modus Manis"
-msgstr ""
+msgstr "Modus Manis"
 
 #: dat/ssys/monogram.xml:2
 msgid "Monogram"
-msgstr ""
+msgstr "Monograma"
 
 #: dat/ssys/moor.xml:2
 msgid "Moor"
-msgstr ""
+msgstr "Páramo"
 
 #: dat/ssys/moordra.xml:2
+#, fuzzy
 msgid "Moordra"
-msgstr ""
+msgstr "Moordra"
 
 #: dat/ssys/muirat.xml:2
+#, fuzzy
 msgid "Muirat"
-msgstr ""
+msgstr "Muirat"
 
 #: dat/ssys/mural.xml:2
+#, fuzzy
 msgid "Mural"
-msgstr ""
+msgstr "Mural"
 
 #: dat/ssys/muran.xml:2
+#, fuzzy
 msgid "Muran"
-msgstr ""
+msgstr "Muran"
 
 #: dat/ssys/myad.xml:2
+#, fuzzy
 msgid "Myad"
-msgstr ""
+msgstr "Myad"
 
 #: dat/ssys/narousse.xml:2
+#, fuzzy
 msgid "Narousse"
-msgstr ""
+msgstr "Narousse"
 
 #: dat/ssys/nartur.xml:2
+#, fuzzy
 msgid "Nartur"
-msgstr ""
+msgstr "Nartur"
 
 #: dat/ssys/nasona.xml:2
+#, fuzzy
 msgid "Nasona"
-msgstr ""
+msgstr "Nasona"
 
 #: dat/ssys/nava.xml:2
+#, fuzzy
 msgid "Nava"
-msgstr ""
+msgstr "Nava"
 
 #: dat/ssys/neexi.xml:2
+#, fuzzy
 msgid "Neexi"
-msgstr ""
+msgstr "Neexi"
 
 #: dat/ssys/neon.xml:2
 msgid "Neon"
-msgstr ""
+msgstr "Neón"
 
 #: dat/ssys/newmarch.xml:2
+#, fuzzy
 msgid "Newmarch"
-msgstr ""
+msgstr "Newmarch"
 
 #: dat/ssys/ngc1001.xml:2
+#, fuzzy
 msgid "NGC-1001"
-msgstr ""
+msgstr "NGC-1001"
 
 #: dat/ssys/ngc10180.xml:2
+#, fuzzy
 msgid "NGC-10180"
-msgstr ""
+msgstr "NGC-10180"
 
 #: dat/ssys/ngc10452.xml:2
+#, fuzzy
 msgid "NGC-10452"
-msgstr ""
+msgstr "NGC-10452"
 
 #: dat/ssys/ngc10789.xml:2
+#, fuzzy
 msgid "NGC-10789"
-msgstr ""
+msgstr "NGC-10789"
 
 #: dat/ssys/ngc10907.xml:2
+#, fuzzy
 msgid "NGC-10907"
-msgstr ""
+msgstr "NGC-10907"
 
 #: dat/ssys/ngc1098.xml:2
+#, fuzzy
 msgid "NGC-1098"
-msgstr ""
+msgstr "NGC-1098"
 
 #: dat/ssys/ngc11231.xml:2
+#, fuzzy
 msgid "NGC-11231"
-msgstr ""
+msgstr "NGC-11231"
 
 #: dat/ssys/ngc11444.xml:2
+#, fuzzy
 msgid "NGC-11444"
-msgstr ""
+msgstr "NGC-11444"
 
 #: dat/ssys/ngc11718.xml:2
+#, fuzzy
 msgid "NGC-11718"
-msgstr ""
+msgstr "NGC-11718"
 
 #: dat/ssys/ngc11935.xml:2
+#, fuzzy
 msgid "NGC-11935"
-msgstr ""
+msgstr "NGC-11935"
 
 #: dat/ssys/ngc12056.xml:2
+#, fuzzy
 msgid "NGC-12056"
-msgstr ""
+msgstr "NGC-12056"
 
 #: dat/ssys/ngc12654.xml:2
+#, fuzzy
 msgid "NGC-12654"
-msgstr ""
+msgstr "NGC-12654"
 
 #: dat/ssys/ngc12882.xml:2
+#, fuzzy
 msgid "NGC-12882"
-msgstr ""
+msgstr "NGC-12882"
 
 #: dat/ssys/ngc1292.xml:2
+#, fuzzy
 msgid "NGC-1292"
-msgstr ""
+msgstr "NGC-1292"
 
 #: dat/ssys/ngc1317.xml:2
+#, fuzzy
 msgid "NGC-1317"
-msgstr ""
+msgstr "NGC-1317"
 
 #: dat/ssys/ngc13322.xml:2
+#, fuzzy
 msgid "NGC-13322"
-msgstr ""
+msgstr "NGC-13322"
 
 #: dat/ssys/ngc13674.xml:2
+#, fuzzy
 msgid "NGC-13674"
-msgstr ""
+msgstr "NGC-13674"
 
 #: dat/ssys/ngc13798.xml:2
+#, fuzzy
 msgid "NGC-13798"
-msgstr ""
+msgstr "NGC-13798"
 
 #: dat/ssys/ngc14479.xml:2
+#, fuzzy
 msgid "NGC-14479"
-msgstr ""
+msgstr "NGC-14479"
 
 #: dat/ssys/ngc1562.xml:2
+#, fuzzy
 msgid "NGC-1562"
-msgstr ""
+msgstr "NGC-1562"
 
 #: dat/ssys/ngc1872.xml:2
+#, fuzzy
 msgid "NGC-1872"
-msgstr ""
+msgstr "NGC-1872"
 
 #: dat/ssys/ngc1931.xml:2
+#, fuzzy
 msgid "NGC-1931"
-msgstr ""
+msgstr "NGC-1931"
 
 #: dat/ssys/ngc2175.xml:2
+#, fuzzy
 msgid "NGC-2175"
-msgstr ""
+msgstr "NGC-2175"
 
 #: dat/ssys/ngc2232.xml:2
+#, fuzzy
 msgid "NGC-2232"
-msgstr ""
+msgstr "NGC-2232"
 
 #: dat/ssys/ngc23.xml:2
+#, fuzzy
 msgid "NGC-23"
-msgstr ""
+msgstr "NGC-23"
 
 #: dat/ssys/ngc2601.xml:2
+#, fuzzy
 msgid "NGC-2601"
-msgstr ""
+msgstr "NGC-2601"
 
 #: dat/ssys/ngc2836.xml:2
+#, fuzzy
 msgid "NGC-2836"
-msgstr ""
+msgstr "NGC-2836"
 
 #: dat/ssys/ngc2948.xml:2
+#, fuzzy
 msgid "NGC-2948"
-msgstr ""
+msgstr "NGC-2948"
 
 #: dat/ssys/ngc2954.xml:2
+#, fuzzy
 msgid "NGC-2954"
-msgstr ""
+msgstr "NGC-2954"
 
 #: dat/ssys/ngc3219.xml:2
+#, fuzzy
 msgid "NGC-3219"
-msgstr ""
+msgstr "NGC-3219"
 
 #: dat/ssys/ngc3371.xml:2
+#, fuzzy
 msgid "NGC-3371"
-msgstr ""
+msgstr "NGC-3371"
 
 #: dat/ssys/ngc3858.xml:2
+#, fuzzy
 msgid "NGC-3858"
-msgstr ""
+msgstr "NGC-3858"
 
 #: dat/ssys/ngc4087.xml:2
+#, fuzzy
 msgid "NGC-4087"
-msgstr ""
+msgstr "NGC-4087"
 
 #: dat/ssys/ngc4131.xml:2
+#, fuzzy
 msgid "NGC-4131"
-msgstr ""
+msgstr "NGC-4131"
 
 #: dat/ssys/ngc4637.xml:2
+#, fuzzy
 msgid "NGC-4637"
-msgstr ""
+msgstr "NGC-4637"
 
 #: dat/ssys/ngc4746.xml:2
+#, fuzzy
 msgid "NGC-4746"
-msgstr ""
+msgstr "NGC-4746"
 
 #: dat/ssys/ngc4771.xml:2
+#, fuzzy
 msgid "NGC-4771"
-msgstr ""
+msgstr "NGC-4771"
 
 #: dat/ssys/ngc5240.xml:2
+#, fuzzy
 msgid "NGC-5240"
-msgstr ""
+msgstr "NGC-5240"
 
 #: dat/ssys/ngc5483.xml:2
+#, fuzzy
 msgid "NGC-5483"
-msgstr ""
+msgstr "NGC-5483"
 
 #: dat/ssys/ngc5631.xml:2
 msgid "NGC-5631"
 msgstr ""
 
 #: dat/ssys/ngc5838.xml:2
+#, fuzzy
 msgid "NGC-5838"
-msgstr ""
+msgstr "NGC-5838"
 
 #: dat/ssys/ngc6057.xml:2
+#, fuzzy
 msgid "NGC-6057"
-msgstr ""
+msgstr "NGC-6057"
 
 #: dat/ssys/ngc7061.xml:2
+#, fuzzy
 msgid "NGC-7061"
-msgstr ""
+msgstr "NGC-7061"
 
 #: dat/ssys/ngc7078.xml:2
+#, fuzzy
 msgid "NGC-7078"
-msgstr ""
+msgstr "NGC-7078"
 
 #: dat/ssys/ngc728.xml:2
+#, fuzzy
 msgid "NGC-728"
-msgstr ""
+msgstr "NGC-728"
 
 #: dat/ssys/ngc7402.xml:2
+#, fuzzy
 msgid "NGC-7402"
-msgstr ""
+msgstr "NGC-7402"
 
 #: dat/ssys/ngc7533.xml:2
+#, fuzzy
 msgid "NGC-7533"
-msgstr ""
+msgstr "NGC-7533"
 
 #: dat/ssys/ngc7784.xml:2
+#, fuzzy
 msgid "NGC-7784"
-msgstr ""
+msgstr "NGC-7784"
 
 #: dat/ssys/ngc7786.xml:2
+#, fuzzy
 msgid "NGC-7786"
-msgstr ""
+msgstr "NGC-7786"
 
 #: dat/ssys/ngc8338.xml:2
+#, fuzzy
 msgid "NGC-8338"
-msgstr ""
+msgstr "NGC-8338"
 
 #: dat/ssys/ngc8468.xml:2
+#, fuzzy
 msgid "NGC-8468"
-msgstr ""
+msgstr "NGC-8468"
 
 #: dat/ssys/ngc9017.xml:2
+#, fuzzy
 msgid "NGC-9017"
-msgstr ""
+msgstr "NGC-9017"
 
 #: dat/ssys/ngc902.xml:2
+#, fuzzy
 msgid "NGC-902"
-msgstr ""
+msgstr "NGC-902"
 
 #: dat/ssys/ngc9415.xml:2
+#, fuzzy
 msgid "NGC-9415"
-msgstr ""
+msgstr "NGC-9415"
 
 #: dat/ssys/ngc9654.xml:2
+#, fuzzy
 msgid "NGC-9654"
-msgstr ""
+msgstr "NGC-9654"
 
 #: dat/ssys/ngc9897.xml:2
+#, fuzzy
 msgid "NGC-9897"
-msgstr ""
+msgstr "NGC-9897"
 
 #: dat/ssys/ngcg5882.xml:2
+#, fuzzy
 msgid "NGCG-5882"
-msgstr ""
+msgstr "NGCG-5882"
 
 #: dat/ssys/niger.xml:2
+#, fuzzy
 msgid "Niger"
-msgstr ""
+msgstr "Niger"
 
 #: dat/ssys/nixon.xml:2
+#, fuzzy
 msgid "Nixon"
-msgstr ""
+msgstr "Nixon"
 
 #: dat/ssys/norn.xml:2
+#, fuzzy
 msgid "Norn"
-msgstr ""
+msgstr "Norn"
 
 #: dat/ssys/norpin.xml:2
+#, fuzzy
 msgid "Norpin"
-msgstr ""
+msgstr "Norpin"
 
 #: dat/ssys/nougat.xml:2
+#, fuzzy
 msgid "Nougat"
-msgstr ""
+msgstr "Nougat"
 
 #: dat/ssys/nunavut.xml:2
+#, fuzzy
 msgid "Nunavut"
-msgstr ""
+msgstr "Nunavut"
 
 #: dat/ssys/octantis.xml:2
+#, fuzzy
 msgid "Octantis"
-msgstr ""
+msgstr "Octantis"
 
 #: dat/ssys/octavian.xml:2
+#, fuzzy
 msgid "Octavian"
-msgstr ""
+msgstr "Octavian"
 
 #: dat/ssys/ogat.xml:2
+#, fuzzy
 msgid "Ogat"
-msgstr ""
+msgstr "Ogat"
 
 #: dat/ssys/olympus.xml:2
 msgid "Olympus"
-msgstr ""
+msgstr "Olimpo"
 
 #: dat/ssys/opal.xml:2
 msgid "Opal"
-msgstr ""
+msgstr "Ópalo"
 
 #: dat/ssys/oriantis.xml:2
+#, fuzzy
 msgid "Oriantis"
-msgstr ""
+msgstr "Oriantis"
 
 #: dat/ssys/orion.xml:2
+#, fuzzy
 msgid "Orion"
-msgstr ""
+msgstr "Orion"
 
 #: dat/ssys/overture.xml:2
 msgid "Overture"
-msgstr ""
+msgstr "Apertura"
 
 #: dat/ssys/palin.xml:2
+#, fuzzy
 msgid "Palin"
-msgstr ""
+msgstr "Palin"
 
 #: dat/ssys/palovi.xml:2
+#, fuzzy
 msgid "Palovi"
-msgstr ""
+msgstr "Palovi"
 
 #: dat/ssys/paradox.xml:2
 msgid "Paradox"
-msgstr ""
+msgstr "Paradoja"
 
 #: dat/ssys/pas.xml:2
+#, fuzzy
 msgid "Pas"
-msgstr ""
+msgstr "Pas"
 
 #: dat/ssys/pastor.xml:2
+#, fuzzy
 msgid "Pastor"
-msgstr ""
+msgstr "Pastor"
 
 #: dat/ssys/pellmell.xml:2
+#, fuzzy
 msgid "Pellmell"
-msgstr ""
+msgstr "Pellmell"
 
 #: dat/ssys/penn.xml:2
+#, fuzzy
 msgid "Penn"
-msgstr ""
+msgstr "Penn"
 
 #: dat/ssys/peogas.xml:2
+#, fuzzy
 msgid "Peogas"
-msgstr ""
+msgstr "Peogas"
 
 #: dat/ssys/percival.xml:2
+#, fuzzy
 msgid "Percival"
-msgstr ""
+msgstr "Percival"
 
 #: dat/ssys/perhelion.xml:2
+#, fuzzy
 msgid "Perhelion"
-msgstr ""
+msgstr "Perhelion"
 
 #: dat/ssys/peter.xml:2
+#, fuzzy
 msgid "Peter"
-msgstr ""
+msgstr "Peter"
 
 #: dat/ssys/pike.xml:2
 msgid "Pike"
-msgstr ""
+msgstr "Pica"
 
 #: dat/ssys/pilatis.xml:2
+#, fuzzy
 msgid "Pilatis"
-msgstr ""
+msgstr "Pilatis"
 
 #: dat/ssys/pisces_prime.xml:2
 msgid "Pisces Prime"
-msgstr ""
+msgstr "Piscis Prime"
 
 #: dat/ssys/point_zero.xml:2
 msgid "Point Zero"
-msgstr ""
+msgstr "Punto Zero"
 
 #: dat/ssys/polack.xml:2
+#, fuzzy
 msgid "Polack"
-msgstr ""
+msgstr "Polack"
 
 #: dat/ssys/polaris.xml:2
+#, fuzzy
 msgid "Polaris"
-msgstr ""
+msgstr "Polaris"
 
 #: dat/ssys/poller.xml:2
+#, fuzzy
 msgid "Poller"
-msgstr ""
+msgstr "Poller"
 
 #: dat/ssys/poltergeist.xml:2
+#, fuzzy
 msgid "Poltergeist"
-msgstr ""
+msgstr "Poltergeist"
 
 #: dat/ssys/pontus.xml:2
 msgid "Pontus"
-msgstr ""
+msgstr "Pontus"
 
 #: dat/ssys/porro.xml:2
+#, fuzzy
 msgid "Porro"
-msgstr ""
+msgstr "Porro"
 
 #: dat/ssys/possum.xml:2
 msgid "Possum"
-msgstr ""
+msgstr "Zarigüeya"
 
 #: dat/ssys/procyon.xml:2
 msgid "Procyon"
-msgstr ""
+msgstr "Procyon"
 
 #: dat/ssys/protera.xml:2
+#, fuzzy
 msgid "Protera"
-msgstr ""
+msgstr "Protera"
 
 #: dat/ssys/provectus_nova.xml:2
+#, fuzzy
 msgid "Provectus Nova"
-msgstr ""
+msgstr "Provectus Nova"
 
 #: dat/ssys/pso.xml:2
+#, fuzzy
 msgid "PSO"
-msgstr ""
+msgstr "PSO"
 
 #: dat/ssys/pudas.xml:2
+#, fuzzy
 msgid "Pudas"
-msgstr ""
+msgstr "Pudas"
 
 #: dat/ssys/pultatis.xml:2
+#, fuzzy
 msgid "Pultatis"
-msgstr ""
+msgstr "Pultatis"
 
 #: dat/ssys/qellan.xml:2
+#, fuzzy
 msgid "Qellan"
-msgstr ""
+msgstr "Qellan"
 
 #: dat/ssys/qex.xml:2
+#, fuzzy
 msgid "Qex"
-msgstr ""
+msgstr "Qex"
 
 #: dat/ssys/qorel.xml:2
+#, fuzzy
 msgid "Qorel"
-msgstr ""
+msgstr "Qorel"
 
 #: dat/ssys/quai.xml:2
+#, fuzzy
 msgid "Quai"
-msgstr ""
+msgstr "Quai"
 
 #: dat/ssys/qulam.xml:2
+#, fuzzy
 msgid "Qulam"
-msgstr ""
+msgstr "Qulam"
 
 #: dat/ssys/radix.xml:2
+#, fuzzy
 msgid "Radix"
-msgstr ""
+msgstr "Radix"
 
 #: dat/ssys/raelid.xml:2
+#, fuzzy
 msgid "Raelid"
-msgstr ""
+msgstr "Raelid"
 
 #: dat/ssys/ram.xml:2
 msgid "Ram"
 msgstr ""
 
 #: dat/ssys/rauthia.xml:2
+#, fuzzy
 msgid "Rauthia"
-msgstr ""
+msgstr "Rauthia"
 
 #: dat/ssys/regas.xml:2
+#, fuzzy
 msgid "Regas"
-msgstr ""
+msgstr "Regas"
 
 #: dat/ssys/regulus.xml:2
+#, fuzzy
 msgid "Regulus"
-msgstr ""
+msgstr "Regulus"
 
 #: dat/ssys/rei.xml:2
+#, fuzzy
 msgid "Rei"
-msgstr ""
+msgstr "Rei"
 
 #: dat/ssys/reptile.xml:2
 msgid "Reptile"
-msgstr ""
+msgstr "Reptil"
 
 #: dat/ssys/rhu.xml:2
+#, fuzzy
 msgid "Rhu"
-msgstr ""
+msgstr "Rhu"
 
 #: dat/ssys/rockbed.xml:2
 msgid "Rockbed"
-msgstr ""
+msgstr "Lecho de roca"
 
 #: dat/ssys/rotide.xml:2
+#, fuzzy
 msgid "Rotide"
-msgstr ""
+msgstr "Rotide"
 
 #: dat/ssys/ruadan.xml:2
+#, fuzzy
 msgid "Ruadan"
-msgstr ""
+msgstr "Ruadan"
 
 #: dat/ssys/ruadan.xml:4
 msgid "#pZa'lek Homeworld#0"
-msgstr ""
+msgstr "#pMundo Hogar Za'lek#0"
 
 #: dat/ssys/ruttwi.xml:2
+#, fuzzy
 msgid "Ruttwi"
-msgstr ""
+msgstr "Ruttwi"
 
 #: dat/ssys/ryder.xml:2
+#, fuzzy
 msgid "Ryder"
-msgstr ""
+msgstr "Ryder"
 
 #: dat/ssys/sagittarius_prime.xml:2
 msgid "Sagittarius Prime"
-msgstr ""
+msgstr "Sagitario Prime"
 
 #: dat/ssys/salvador.xml:2
+#, fuzzy
 msgid "Salvador"
-msgstr ""
+msgstr "Salvador"
 
 #: dat/ssys/sarcophagus.xml:2
 msgid "Sarcophagus"
-msgstr ""
+msgstr "Sarcófago"
 
 #: dat/ssys/sarrii.xml:2
+#, fuzzy
 msgid "Sarrii"
-msgstr ""
+msgstr "Sarrii"
 
 #: dat/ssys/scarlet.xml:2
 msgid "Scarlet"
-msgstr ""
+msgstr "Escarlata"
 
 #: dat/ssys/seelie.xml:2
+#, fuzzy
 msgid "Seelie"
-msgstr ""
+msgstr "Seelie"
 
 #: dat/ssys/seiben.xml:2
+#, fuzzy
 msgid "Seiben"
-msgstr ""
+msgstr "Seiben"
 
 #: dat/ssys/seifer.xml:2
+#, fuzzy
 msgid "Seifer"
-msgstr ""
+msgstr "Seifer"
 
 #: dat/ssys/senara.xml:2
+#, fuzzy
 msgid "Senara"
-msgstr ""
+msgstr "Senara"
 
 #: dat/ssys/seport.xml:2
+#, fuzzy
 msgid "Seport"
-msgstr ""
+msgstr "Seport"
 
 #: dat/ssys/seran.xml:2
+#, fuzzy
 msgid "Seran"
-msgstr ""
+msgstr "Seran"
 
 #: dat/ssys/sergio_vix.xml:2
+#, fuzzy
 msgid "Sergio Vix"
-msgstr ""
+msgstr "Sergio Vix"
 
 #: dat/ssys/severus.xml:2
+#, fuzzy
 msgid "Severus"
-msgstr ""
+msgstr "Severus"
 
 #: dat/ssys/shakar.xml:2
+#, fuzzy
 msgid "Shakar"
-msgstr ""
+msgstr "Shakar"
 
 #: dat/ssys/sheffield.xml:2
+#, fuzzy
 msgid "Sheffield"
-msgstr ""
+msgstr "Sheffield"
 
 #: dat/ssys/shickhaw.xml:2
+#, fuzzy
 msgid "Shickhaw"
-msgstr ""
+msgstr "Shickhaw"
 
 #: dat/ssys/shikima.xml:2
+#, fuzzy
 msgid "Shikima"
-msgstr ""
+msgstr "Shikima"
 
 #: dat/ssys/shinnok.xml:2
+#, fuzzy
 msgid "Shinnok"
-msgstr ""
+msgstr "Shinnok"
 
 #: dat/ssys/sigur.xml:2
+#, fuzzy
 msgid "Sigur"
-msgstr ""
+msgstr "Sigur"
 
 #: dat/ssys/sikh.xml:2
+#, fuzzy
 msgid "Sikh"
-msgstr ""
+msgstr "Sikh"
 
 #: dat/ssys/sirou.xml:2
+#, fuzzy
 msgid "Sirou"
-msgstr ""
+msgstr "Sirou"
 
 #: dat/ssys/slaccid.xml:2
+#, fuzzy
 msgid "Slaccid"
-msgstr ""
+msgstr "Slaccid"
 
 #: dat/ssys/sleuth.xml:2
 msgid "Sleuth"
-msgstr ""
+msgstr "Detective"
 
 #. event ends on player leaving the system or landing
 #.
@@ -26907,328 +27314,384 @@ msgstr ""
 #. -- Unique / Interesting systems
 #. --
 #: dat/ssys/sol.xml:2 dat/events/discovery.lua:39
+#, fuzzy
 msgid "Sol"
-msgstr ""
+msgstr "Sol"
 
 #: dat/ssys/solene.xml:2
+#, fuzzy
 msgid "Solene"
-msgstr ""
+msgstr "Solene"
 
 #: dat/ssys/sollav.xml:2
+#, fuzzy
 msgid "Sollav"
-msgstr ""
+msgstr "Sollav"
 
 #: dat/ssys/somard.xml:2
+#, fuzzy
 msgid "Somard"
-msgstr ""
+msgstr "Somard"
 
 #: dat/ssys/sonas.xml:2
+#, fuzzy
 msgid "Sonas"
-msgstr ""
+msgstr "Sonas"
 
 #: dat/ssys/sorrow.xml:2
 msgid "Sorrow"
-msgstr ""
+msgstr "Lamento"
 
 #: dat/ssys/south_bell.xml:2
 msgid "South Bell"
-msgstr ""
+msgstr "Campana Sur"
 
 #: dat/ssys/stained_soul.xml:2
 msgid "Stained Soul"
-msgstr ""
+msgstr "Alma Contaminada"
 
 #: dat/ssys/starlight_end.xml:2
 msgid "Starlight End"
-msgstr ""
+msgstr "Fin de Luz Estelar"
 
 #: dat/ssys/stelman.xml:2
+#, fuzzy
 msgid "Stelman"
-msgstr ""
+msgstr "Stelman"
 
 #: dat/ssys/sten.xml:2
+#, fuzzy
 msgid "Sten"
-msgstr ""
+msgstr "Sten"
 
 #: dat/ssys/stint.xml:2
+#, fuzzy
 msgid "Stint"
-msgstr ""
+msgstr "Stint"
 
 #: dat/ssys/stone_table.xml:2
 msgid "Stone Table"
-msgstr ""
+msgstr "Mesa de Piedra"
 
 #: dat/ssys/straight_row.xml:2
 msgid "Straight Row"
-msgstr ""
+msgstr "Fila Recta"
 
 #: dat/ssys/suk.xml:2
+#, fuzzy
 msgid "Suk"
-msgstr ""
+msgstr "Suk"
 
 #: dat/ssys/sultan.xml:2
+#, fuzzy
 msgid "Sultan"
-msgstr ""
+msgstr "Sultan"
 
 #: dat/ssys/suna.xml:2
+#, fuzzy
 msgid "Suna"
-msgstr ""
+msgstr "Suna"
 
 #: dat/ssys/surano.xml:2
+#, fuzzy
 msgid "Surano"
-msgstr ""
+msgstr "Surano"
 
 #: dat/ssys/sylph.xml:2
 msgid "Sylph"
-msgstr ""
+msgstr "Sílfide"
 
 #: dat/ssys/symm.xml:2
+#, fuzzy
 msgid "Symm"
-msgstr ""
+msgstr "Symm"
 
 #: dat/ssys/taiomi.xml:2 dat/events/discovery.lua:91
 #: dat/scripts/common/taiomi.lua:28
+#, fuzzy
 msgid "Taiomi"
-msgstr ""
+msgstr "Taiomi"
 
 #: dat/ssys/taiomi.xml:5
 msgid "#pShip Graveyard#0"
-msgstr ""
+msgstr "#pCementerio de Naves#0"
 
 #: dat/ssys/tandar.xml:2
+#, fuzzy
 msgid "Tandar"
-msgstr ""
+msgstr "Tandar"
 
 #: dat/ssys/tarmak.xml:2
+#, fuzzy
 msgid "Tarmak"
-msgstr ""
+msgstr "Tarmak"
 
 #: dat/ssys/tarsus.xml:2
 msgid "Tarsus"
-msgstr ""
+msgstr "Tarso"
 
 #: dat/ssys/tartan.xml:2
 msgid "Tartan"
-msgstr ""
+msgstr "Tartán"
 
 #: dat/ssys/telika.xml:2
+#, fuzzy
 msgid "Telika"
-msgstr ""
+msgstr "Telika"
 
 #: dat/ssys/teller.xml:2
+#, fuzzy
 msgid "Teller"
-msgstr ""
+msgstr "Teller"
 
 #: dat/ssys/tempus.xml:2
+#, fuzzy
 msgid "Tempus"
-msgstr ""
+msgstr "Tempus"
 
 #: dat/ssys/theras.xml:2
+#, fuzzy
 msgid "Theras"
-msgstr ""
+msgstr "Theras"
 
 #: dat/ssys/thirty_stars.xml:2
 msgid "Thirty Stars"
-msgstr ""
+msgstr "Treinta Estrellas"
 
 #: dat/ssys/thorndyke.xml:2
 msgid "Thorndyke"
-msgstr ""
+msgstr "Thorndyke"
 
 #: dat/ssys/tide.xml:2
 msgid "Tide"
-msgstr ""
+msgstr "Marea"
 
 #: dat/ssys/titus.xml:2
+#, fuzzy
 msgid "Titus"
-msgstr ""
+msgstr "Titus"
 
 #: dat/ssys/toaxis.xml:2
+#, fuzzy
 msgid "Toaxis"
-msgstr ""
+msgstr "Toaxis"
 
 #: dat/ssys/tobanna.xml:2
+#, fuzzy
 msgid "Tobanna"
-msgstr ""
+msgstr "Tobanna"
 
 #: dat/ssys/tomas.xml:2
+#, fuzzy
 msgid "Tomas"
-msgstr ""
+msgstr "Tomas"
 
 #: dat/ssys/torg.xml:2
+#, fuzzy
 msgid "Torg"
-msgstr ""
+msgstr "Torg"
 
 #: dat/ssys/tormulex.xml:2
+#, fuzzy
 msgid "Tormulex"
-msgstr ""
+msgstr "Tormulex"
 
 #: dat/ssys/toros.xml:2
+#, fuzzy
 msgid "Toros"
-msgstr ""
+msgstr "Toros"
 
 #: dat/ssys/toxin.xml:2
 msgid "Toxin"
-msgstr ""
+msgstr "Toxina"
 
 #: dat/ssys/trask.xml:2
+#, fuzzy
 msgid "Trask"
-msgstr ""
+msgstr "Trask"
 
 #: dat/ssys/triap.xml:2
+#, fuzzy
 msgid "Triap"
-msgstr ""
+msgstr "Triap"
 
 #: dat/ssys/trohem.xml:2
+#, fuzzy
 msgid "Trohem"
-msgstr ""
+msgstr "Trohem"
 
 #: dat/ssys/tuoladis.xml:2
+#, fuzzy
 msgid "Tuoladis"
-msgstr ""
+msgstr "Tuoladis"
 
 #: dat/ssys/uhriabi.xml:2
+#, fuzzy
 msgid "Uhriabi"
-msgstr ""
+msgstr "Uhriabi"
 
 #: dat/ssys/ulysses.xml:2
 msgid "Ulysses"
-msgstr ""
+msgstr "Ulises"
 
 #: dat/ssys/undergate.xml:2
 msgid "Undergate"
-msgstr ""
+msgstr "Bajopuerta"
 
 #: dat/ssys/unicorn.xml:2
 msgid "Unicorn"
-msgstr ""
+msgstr "Unicornio"
 
 #: dat/ssys/urbanus.xml:2
 msgid "Urbanus"
-msgstr ""
+msgstr "Urbano"
 
 #: dat/ssys/urdads.xml:2
+#, fuzzy
 msgid "Urdads"
-msgstr ""
+msgstr "Urdads"
 
 #: dat/ssys/uridhrion.xml:2
+#, fuzzy
 msgid "Uridhrion"
-msgstr ""
+msgstr "Uridhrion"
 
 #: dat/ssys/ux.xml:2
+#, fuzzy
 msgid "Ux"
-msgstr ""
+msgstr "Ux"
 
 #: dat/ssys/valerie.xml:2
+#, fuzzy
 msgid "Valerie"
-msgstr ""
+msgstr "Valerie"
 
 #: dat/ssys/valur_gem.xml:2
 msgid "Valur Gem"
-msgstr ""
+msgstr "Gema Valur"
 
 #: dat/ssys/vandal.xml:2
 msgid "Vandal"
-msgstr ""
+msgstr "Vándalo"
 
 #: dat/ssys/vanir.xml:2
+#, fuzzy
 msgid "Vanir"
-msgstr ""
+msgstr "Vanir"
 
 #: dat/ssys/vauban.xml:2
+#, fuzzy
 msgid "Vauban"
-msgstr ""
+msgstr "Vauban"
 
 #: dat/ssys/vean.xml:2
+#, fuzzy
 msgid "Vean"
-msgstr ""
+msgstr "Vean"
 
 #: dat/ssys/vedalus.xml:2
+#, fuzzy
 msgid "Vedalus"
-msgstr ""
+msgstr "Vedalus"
 
 #: dat/ssys/vega.xml:2
+#, fuzzy
 msgid "Vega"
-msgstr ""
+msgstr "Vega"
 
 #: dat/ssys/verex.xml:2
+#, fuzzy
 msgid "Verex"
-msgstr ""
+msgstr "Verex"
 
 #: dat/ssys/vlexon.xml:2
+#, fuzzy
 msgid "Vlexon"
-msgstr ""
+msgstr "Vlexon"
 
 #: dat/ssys/volus.xml:2
+#, fuzzy
 msgid "Volus"
-msgstr ""
+msgstr "Volus"
 
 #: dat/ssys/vost.xml:2
+#, fuzzy
 msgid "Vost"
-msgstr ""
+msgstr "Vost"
 
 #: dat/ssys/westhaven.xml:2
 msgid "Westhaven"
-msgstr ""
+msgstr "Refugio Oeste"
 
 #: dat/ssys/willow.xml:2 dat/scripts/pilotname/pirate.lua:494
 msgid "Willow"
-msgstr ""
+msgstr "Sauce"
 
 #: dat/ssys/wolf.xml:2 dat/scripts/pilotname/generic.lua:94
 #: dat/scripts/pilotname/pirate.lua:497
 msgid "Wolf"
-msgstr ""
+msgstr "Lobo"
 
 #: dat/ssys/woreck.xml:2
+#, fuzzy
 msgid "Woreck"
-msgstr ""
+msgstr "Woreck"
 
 #: dat/ssys/xeric.xml:2
+#, fuzzy
 msgid "Xeric"
-msgstr ""
+msgstr "Xeric"
 
 #: dat/ssys/yarn.xml:2
 msgid "Yarn"
-msgstr ""
+msgstr "Ovillo"
 
 #: dat/ssys/zacron.xml:2
+#, fuzzy
 msgid "Zacron"
-msgstr ""
+msgstr "Zacron"
 
 #: dat/ssys/zemur.xml:2
+#, fuzzy
 msgid "Zemur"
-msgstr ""
+msgstr "Zemur"
 
 #: dat/ssys/zerantix.xml:2
+#, fuzzy
 msgid "Zerantix"
-msgstr ""
+msgstr "Zerantix"
 
 #: dat/ssys/zied.xml:2
+#, fuzzy
 msgid "Zied"
-msgstr ""
+msgstr "Zied"
 
 #: dat/ssys/zintar.xml:2
+#, fuzzy
 msgid "Zintar"
-msgstr ""
+msgstr "Zintar"
 
 #: dat/ssys/zylex.xml:2
+#, fuzzy
 msgid "Zylex"
-msgstr ""
+msgstr "Zylex"
 
 #: dat/start.xml:3
 msgid "Sea of Darkness"
-msgstr ""
+msgstr "Mar de la Oscuridad"
 
 #: dat/start.xml:5
+#, fuzzy
 msgid "El Ego de Deiz"
-msgstr ""
+msgstr "El Ego de Deiz"
 
 #: dat/unidiff/antlejosv_1.xml:4
 msgid ""
 "A cold and barren inhospitable moon devoid of all life except for a small "
 "base camp for terraforming the entire planet."
 msgstr ""
+"Una luna inhóspita, fría y estéril, desprovista de toda vida, salvo un "
+"pequeño campamento base para la terraformación de todo el planeta."
 
 #: dat/unidiff/antlejosv_2.xml:4
 msgid ""
@@ -27236,6 +27699,9 @@ msgid ""
 "camp for terraforming the entire planet. You can see dust on the ground "
 "vibrating as heavy machinery operates nearby."
 msgstr ""
+"Una luna inhóspita, fría y estéril, desprovista de toda vida, salvo un "
+"campamento base para la terraformación de todo el planeta. Se puede ver el "
+"polvo en el suelo vibrando mientras la maquinaria pesada opera cerca."
 
 #: dat/unidiff/antlejosv_3.xml:4
 msgid ""
@@ -27244,6 +27710,10 @@ msgid ""
 "heavy machinery operates nearby. A weak atmosphere has started to form "
 "around the surface of the planet."
 msgstr ""
+"Una luna inhóspita y estéril, desprovista de toda vida, salvo un campamento "
+"base para la terraformación de todo el planeta. Se puede ver el polvo en el "
+"suelo vibrando mientras la maquinaria pesada opera cerca. Una débil "
+"atmósfera ha comenzado a formarse alrededor de la superficie del planeta."
 
 #: dat/unidiff/antlejosv_4.xml:4
 msgid ""
@@ -27253,6 +27723,12 @@ msgid ""
 "bacteria starting to colonize the surface. There is a deafening background "
 "noise of heavy machinery operating non-stop."
 msgstr ""
+"Una luna mayoritariamente estéril y desprovista de toda vida con un extenso "
+"campamento base de terraformación que ya es visible desde el espacio. Se ha "
+"empezado a formar una atmósfera alrededor de la superficie del planeta y "
+"parece que hay hongos y bacterias que empiezan a colonizar la superficie. "
+"Hay un ruido de fondo ensordecedor de maquinaria pesada que funciona sin "
+"parar."
 
 #: dat/unidiff/antlejosv_5.xml:4
 msgid ""
@@ -27264,6 +27740,13 @@ msgid ""
 "place to live at, but it has gone leaps and bounds from how the moon was "
 "when you first landed on it."
 msgstr ""
+"Una luna fuertemente terraformada con un gran campamento base claramente "
+"visible desde el espacio. A pesar de la baja gravedad, hay una atmósfera "
+"respirable y una diversidad de formas de vida simples, como hongos y "
+"líquenes, están colonizando la superficie del lugar. Desde los alrededores "
+"de la luna se oyen débiles sonidos de maquinaria pesada operando bajo la "
+"superficie. No parece un gran lugar para vivir, pero ha avanzado mucho "
+"respecto a cómo era la luna cuando se aterrizó en ella por primera vez."
 
 #: dat/unidiff/antlejosv_5.xml:5 dat/unidiff/antlejosv_6.xml:5
 #: dat/unidiff/antlejosv_7.xml:5 dat/unidiff/antlejosv_8.xml:5
@@ -27275,6 +27758,12 @@ msgid ""
 "have no idea whether or not that is possible, nor if you even should brave "
 "to drink it if distilled."
 msgstr ""
+"La cantina de Antlejos V es bastante ruidosa y está abarrotada de "
+"trabajadores de la terraformación, con el sonido de la maquinaria pesada "
+"cerca del núcleo lunar actuando como música de fondo. El camarero dice que "
+"está trabajando en la elaboración de una cerveza local, pero no tienes ni "
+"idea de si eso es posible o no, ni siquiera si deberías atreverte a beberla "
+"si está destilada."
 
 #: dat/unidiff/antlejosv_6.xml:4 dat/unidiff/antlejosv_7.xml:4
 #: dat/unidiff/antlejosv_8.xml:4
@@ -27288,6 +27777,15 @@ msgid ""
 "when you first landed on it. People have started to flock from other points "
 "of the galaxy and a trade centre has recently begun operations."
 msgstr ""
+"Una luna fuertemente terraformada con un gran campamento base claramente "
+"visible desde el espacio. A pesar de la baja gravedad, hay una atmósfera "
+"respirable y una diversidad de formas de vida simples, como hongos y "
+"líquenes, están colonizando la superficie del lugar. Desde los alrededores "
+"de la luna se oyen débiles sonidos de maquinaria pesada operando bajo la "
+"superficie. No parece un gran lugar para vivir, pero ha mejorado mucho "
+"respecto a cómo era la luna cuando aterrizastes en ella por primera vez. La "
+"gente ha empezado a acudir en masa desde otros puntos de la galaxia y "
+"recientemente ha comenzado a funcionar un centro comercial."
 
 #: dat/unidiff/antlejosv_9.xml:4
 msgid ""
@@ -27301,10 +27799,20 @@ msgid ""
 "of the galaxy, allowing for trade centre, and even a space ship dealer to "
 "begin operations."
 msgstr ""
+"Una luna fuertemente terraformada con un gran campamento base claramente "
+"visible desde el espacio. A pesar de la baja gravedad, hay una atmósfera "
+"respirable y una diversidad de formas de vida simples, como hongos y "
+"líquenes, están colonizando la superficie del lugar. Desde los alrededores "
+"de la luna se oyen débiles sonidos de maquinaria pesada operando bajo la "
+"superficie. No parece un gran lugar para vivir, pero ha mejorado mucho "
+"respecto a cómo era la luna cuando aterrizastes en ella por primera vez. La "
+"gente ha empezado a acudir en masa desde otros puntos de la galaxia, lo que "
+"ha permitido que el centro de comercio, e incluso un comerciante de naves "
+"espaciales, hayan empezado a operar."
 
 #: dat/ai/advertiser.lua:11
 msgid "Fly safe, fly Milspec."
-msgstr ""
+msgstr "Vuele seguro, vuele Milspec."
 
 #: dat/ai/advertiser.lua:12
 msgid "Reynir's Hot Dogs: enjoy the authentic taste of tradition."
