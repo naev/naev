@@ -27,7 +27,10 @@ local taiomi = {
          shiplog.create( "log_taiomi_main", _("Taiomi"), _("Taiomi") )
          shiplog.append( "log_taiomi_main", text )
       end,
-   }
+   },
+   rewards = {
+      taiomi01 = 100e3,
+   },
 }
 
 -- Helpers to create main characters
