@@ -33,6 +33,19 @@ local taiomi = {
    },
 }
 
+-- Gets the current progress of the Taiomi campaign
+function taiomi.progress ()
+   local missions = {
+      "Taiomi 1", -- 1
+   }
+   for i = #missions, 1, -1 do
+      if player.misndone( missions[i] ) then
+         return i
+      end
+   end
+   return 0
+end
+
 -- Helpers to create main characters
 function taiomi.vn_scavenger( params )
    return vn.Character.new( taiomi.scavenger.name,
