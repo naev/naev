@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-05-12 10:59+0900\n"
-"PO-Revision-Date: 2022-05-29 17:52+0000\n"
+"PO-Revision-Date: 2022-05-30 16:30+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
@@ -26508,43 +26508,50 @@ msgid ""
 "make sure they're not here with a Za'lek agenda. The spaceport bar can only "
 "be accessed after pilots have passed all the security protocols."
 msgstr ""
+"Al ser un lugar tan importante para la sociedad Soromida, la seguridad en "
+"Woncloak es bastante estricta. En particular, se comprueban los antecedentes "
+"de los visitantes, para asegurarse de que no están aquí con una agenda "
+"Za'lek. Sólo se puede acceder al bar del puerto espacial después de que los "
+"pilotos hayan superado todos los protocolos de seguridad."
 
 #: dat/spob/worgen.xml:2
+#, fuzzy
 msgid "Worgen"
-msgstr ""
+msgstr "Worgen"
 
 #: dat/spob/wormhole_ngc13674.xml:2
 msgid "Wormhole NGC-13674"
-msgstr ""
+msgstr "Agujero de gusano NGC-13674"
 
 #: dat/spob/wormhole_ngc13674.xml:3 dat/spob/wormhole_ngc13674.xml:4
 #: dat/spob/wormhole_ngc15670.xml:3 dat/spob/wormhole_ngc15670.xml:4
 #: dat/spob/wormhole_ngc1931.xml:3 dat/spob/wormhole_ngc1931.xml:4
 #: dat/spob/wormhole_ngc4087.xml:3 dat/spob/wormhole_ngc4087.xml:4
 msgid "#bWormhole#0"
-msgstr ""
+msgstr "#bAgujero de gusano#0"
 
 #: dat/spob/wormhole_ngc13674.xml:10 dat/spob/wormhole_ngc15670.xml:10
 #: dat/spob/wormhole_ngc1931.xml:10 dat/spob/wormhole_ngc4087.xml:10
 #: dat/missions/zalek/blackhole/zbh09.lua:214
 msgid "Wormhole"
-msgstr ""
+msgstr "Agujero de gusano"
 
 #: dat/spob/wormhole_ngc15670.xml:2
 msgid "Wormhole NGC-15670"
-msgstr ""
+msgstr "Agujero de gusano NGC-15670"
 
 #: dat/spob/wormhole_ngc1931.xml:2
 msgid "Wormhole NGC-1931"
-msgstr ""
+msgstr "Agujero de gusano NGC-1931"
 
 #: dat/spob/wormhole_ngc4087.xml:2
 msgid "Wormhole NGC-4087"
-msgstr ""
+msgstr "Agujero de gusano NGC-4087"
 
 #: dat/spob/worscha.xml:2
+#, fuzzy
 msgid "Worscha"
-msgstr ""
+msgstr "Worscha"
 
 #: dat/spob/worscha.xml:28
 msgid ""
@@ -26553,6 +26560,10 @@ msgid ""
 "25% longer than that of old Earth, which has led to the daily rhythm being a "
 "little slower than elsewhere."
 msgstr ""
+"Worscha es un mundo Sirio relativamente rico, con un clima suave y "
+"condiciones planetarias agradables. Su rotación es un poco larga, "
+"aproximadamente un 25% más larga que la de la vieja Tierra, lo que ha "
+"provocado que el ritmo diario sea un poco más lento que en otros lugares."
 
 #: dat/spob/worscha.xml:29
 msgid ""
@@ -26561,22 +26572,29 @@ msgid ""
 "sometimes leads to Sirian traders getting confused, as they are used to "
 "placing themselves in the correct section of the bar."
 msgstr ""
+"Muchos bares de Sirio tienen algún tipo de separación de disposición para "
+"los distintos escalones, pero el bar de Worscha no tiene nada de eso. Esto "
+"hace que a veces los comerciantes Sirio se confundan, ya que están "
+"acostumbrados a colocarse en la sección correcta del bar."
 
 #: dat/spob/wsthvn_d1.xml:2
+#, fuzzy
 msgid "WSTHVN D-1"
-msgstr ""
+msgstr "WSTHVN D-1"
 
 #: dat/spob/wsthvn_p1.xml:2
+#, fuzzy
 msgid "WSTHVN P-1"
-msgstr ""
+msgstr "WSTHVN P-1"
 
 #: dat/spob/xavier.xml:2 dat/ssys/xavier.xml:2
+#, fuzzy
 msgid "Xavier"
-msgstr ""
+msgstr "Xavier"
 
 #: dat/spob/yak_station.xml:2
 msgid "Yak Station"
-msgstr ""
+msgstr "Estación Yak"
 
 #: dat/spob/yak_station.xml:24
 msgid ""
@@ -26586,16 +26604,24 @@ msgid ""
 "and in-system supply routes are always easier to maintain than routes "
 "leading through a jump point."
 msgstr ""
+"Esta estación militar iba a construirse originalmente en el sistema vecino "
+"de Bonanza, pero los militares Soromida optaron por cambiar la ubicación por "
+"razones de logística. Hasselt tiene varios planetas habitados, y las rutas "
+"de suministro dentro del sistema son siempre más fáciles de mantener que las "
+"rutas que pasan por un punto de salto."
 
 #: dat/spob/yak_station.xml:25
 msgid ""
 "Most of the people in this bar are Soromid soldiers. There are few officers, "
 "since they have their own facility elsewhere on the station."
 msgstr ""
+"La mayoría de la gente de este bar son soldados Soromida. Hay pocos "
+"oficiales, ya que tienen sus propias instalaciones en otra parte de la "
+"estación."
 
 #: dat/spob/yaroslav_farming_station.xml:2
 msgid "Yaroslav Farming Station"
-msgstr ""
+msgstr "Estación Granja Yaroslav"
 
 #: dat/spob/yaroslav_farming_station.xml:24
 msgid ""
@@ -26603,6 +26629,9 @@ msgid ""
 "produce is shipped to the nearby world of Boowoy, but the majority is traded "
 "out of system."
 msgstr ""
+"Esta instalación agrícola suministra alimentos a los sistemas cercanos. Una "
+"parte de los productos se envía al mundo cercano de Boowoy, pero la mayor "
+"parte se comercializa fuera del sistema."
 
 #: dat/spob/yaroslav_farming_station.xml:25
 msgid ""
@@ -26611,10 +26640,16 @@ msgid ""
 "Some merchants time their purchase right after one of the harvests that "
 "happen once every dozen decaperiods or so to get the lowest prices possible."
 msgstr ""
+"La mayoría de los visitantes de este bar del puerto espacial están aquí por "
+"la misma razón. Quieren comprar comida para poder venderla en un planeta que "
+"la importe con beneficio. Algunos comerciantes programan su compra justo "
+"después de una de las cosechas que se producen una vez cada doce "
+"decaperíodos o así para conseguir los precios más bajos posibles."
 
 #: dat/spob/yrina.xml:2
+#, fuzzy
 msgid "Yrina"
-msgstr ""
+msgstr "Yrina"
 
 #: dat/spob/yrina.xml:26
 msgid ""
@@ -26625,6 +26660,13 @@ msgid ""
 "some of the more exotic elements are exported to other parts of Sirius "
 "space, and beyond."
 msgstr ""
+"Yrina es un mundo de recursos que está siendo explotado por los Sirio. El "
+"clima es duro y casi toda la superficie del planeta está congelada, pero en "
+"algunos casos eso es realmente deseable, ya que las sustancias que "
+"normalmente serían fluidas son ahora sólidas, y por lo tanto se extraen más "
+"fácilmente. Yrina suministra principalmente a Aesir, pero algunos de los "
+"elementos más exóticos se exportan a otras partes del espacio de Sirio, y "
+"más allá."
 
 #: dat/spob/yrina.xml:27
 msgid ""
@@ -26634,10 +26676,16 @@ msgid ""
 "least hand it to the Sirius that they take an informative approach to their "
 "operation here."
 msgstr ""
+"El bar cuenta con varios expositores que ofrecen a los clientes detalles "
+"sobre el proceso de extracción y el estado actual de la operación en "
+"diversas áreas. Aunque para la mayoría de los visitantes es un interés "
+"pasajero en el mejor de los casos, hay que reconocer que Sirio tiene un "
+"enfoque informativo de su operación."
 
 #: dat/spob/zaals.xml:2
+#, fuzzy
 msgid "Zaals"
-msgstr ""
+msgstr "Zaals"
 
 #: dat/spob/zaals.xml:27
 msgid ""
@@ -26649,6 +26697,13 @@ msgid ""
 "current settlement is predicted to stay in the light for another forty "
 "cycles."
 msgstr ""
+"Zaals, un planeta un poco extraño, tiene un periodo de rotación casi (pero "
+"no del todo) idéntico a su periodo orbital. Un día en Zaals dura muchos, "
+"muchos ciclos. La vivienda de los Soromida aquí se ha construido en el lado "
+"que da al sol, donde las condiciones son todavía aceptables. En realidad es "
+"la segunda iteración del asentamiento, ya que la primera iteración ha "
+"comenzado a deslizarse hacia el lado oscuro. Se prevé que el asentamiento "
+"actual permanezca en la luz durante otros cuarenta ciclos."
 
 #: dat/spob/zaals.xml:28
 msgid ""
@@ -26657,10 +26712,15 @@ msgid ""
 "quite thrilling to roam around such a large complex that has been completely "
 "left to the elements."
 msgstr ""
+"Este bar del puerto espacial ofrece excursiones al viejo y abandonado puerto "
+"espacial que se encuentra en la zona crepuscular del planeta. Para algunos "
+"aventureros puede ser muy emocionante recorrer un complejo tan grande que ha "
+"sido abandonado completamente a la intemperie."
 
 #: dat/spob/zabween.xml:2
+#, fuzzy
 msgid "Zabween"
-msgstr ""
+msgstr "Zabween"
 
 #: dat/spob/zabween.xml:28
 msgid ""
@@ -26670,6 +26730,12 @@ msgid ""
 "trading in many commodities. It keeps a museum with all sorts of ships and "
 "weapons that were used in the final fight against Haven."
 msgstr ""
+"Zabween es una estación antigua. En un principio se creó como puesto de "
+"avanzada para luchar contra la piratería, pero con la destrucción de Haven "
+"se ha asentado en un papel más tradicional. En la actualidad funciona como "
+"una estación principalmente comercial, que comercia con muchas mercancías. "
+"Mantiene un museo con todo tipo de naves y armas que se utilizaron en la "
+"lucha final contra Haven."
 
 #: dat/spob/zabween.xml:29
 msgid ""
@@ -26679,10 +26745,16 @@ msgid ""
 "their lives protecting the Empire's ideals. They are working on another "
 "addition to be able to fit more pictures."
 msgstr ""
+"Las paredes del bar están decoradas con fotos de los soldados del Imperio "
+"que han caído en la lucha contra Haven y la piratería en general. Se ha "
+"convertido en una costumbre del Imperio colocar fotos de los caídos, en "
+"honor a los que dieron su vida protegiendo los ideales del Imperio. Están "
+"trabajando en otra adición para poder colocar más fotos."
 
 #: dat/spob/zalebus.xml:2
+#, fuzzy
 msgid "Zalebus"
-msgstr ""
+msgstr "Zalebus"
 
 #: dat/spob/zalebus.xml:28
 msgid ""
@@ -26691,6 +26763,10 @@ msgid ""
 "one of the fastest in human history. Now, there are billions of people "
 "living here."
 msgstr ""
+"Zalebus es un bonito planeta que fue terraformado por los Soromida poco "
+"antes del Incidente. Para empezar, era un planeta de clase M, por lo que el "
+"proceso fue uno de los más rápidos de la historia de la humanidad. Ahora, "
+"hay miles de millones de personas viviendo aquí."
 
 #: dat/spob/zalebus.xml:29
 msgid ""
@@ -26698,18 +26774,24 @@ msgid ""
 "the spaceport bar is often full of youngsters preparing for a trip into "
 "space or just returning from one."
 msgstr ""
+"La edad demográfica de Zalebus tiende a los ciudadanos más jóvenes. Por "
+"ello, el bar del puerto espacial suele estar lleno de jóvenes que se "
+"preparan para un viaje al espacio o que acaban de regresar de él."
 
 #: dat/spob/zalek_ii.xml:2
+#, fuzzy
 msgid "Za'lek II"
-msgstr ""
+msgstr "Za'lek II"
 
 #: dat/spob/zalek_iv.xml:2
+#, fuzzy
 msgid "Za'lek IV"
-msgstr ""
+msgstr "Za'lek IV"
 
 #: dat/spob/zaren.xml:2
+#, fuzzy
 msgid "Zaren"
-msgstr ""
+msgstr "Zaren"
 
 #: dat/spob/zaren.xml:25
 msgid ""
@@ -26717,10 +26799,15 @@ msgid ""
 "propellant by House Dvaered. It is one of the harshest planets in Dvaered "
 "space, so convicts are the ones usually used to get the gasses necessary."
 msgstr ""
+"Zaren es un mundo en el que se extraen gases raros y valiosos, para ser "
+"utilizados como propulsores por la Casa Dvaered. Es uno de los planetas más "
+"duros del espacio Dvaered, por lo que los convictos son los que se suelen "
+"utilizar para conseguir los gases necesarios."
 
 #: dat/spob/zazarin.xml:2
+#, fuzzy
 msgid "Zazarin"
-msgstr ""
+msgstr "Zazarin"
 
 #: dat/spob/zazarin.xml:26
 msgid ""
@@ -26732,6 +26819,13 @@ msgid ""
 "amount of buildable real estate. That real estate is now being occupied by "
 "heavy industry."
 msgstr ""
+"Zazarin era un mundo habitable para los humanos desde el principio, pero no "
+"se asentó hasta hace relativamente poco. La razón es simple: es un mundo "
+"feo. No hay nada en él que lo haga atractivo. Su superficie es "
+"mayoritariamente plana, su cielo es amarillo por el polvo, su aire es "
+"viciado y su suelo carece de materiales de valor. Lo único que ofrece es una "
+"gran cantidad de terrenos edificables. Y ese terreno está ocupado por la "
+"industria pesada."
 
 #: dat/spob/zazarin.xml:27
 msgid ""
@@ -26740,10 +26834,16 @@ msgid ""
 "bare minimum of maintenance, which has left tables rickety and chairs "
 "broken. It's a miracle the basic facilities are mostly in working order."
 msgstr ""
+"Como reflejo del mal estado del planeta Zazarin, este bar del puerto "
+"espacial es un negocio triste. Está claro que el personal no se siente lo "
+"suficientemente motivado como para hacer nada más que el mínimo de "
+"mantenimiento, lo que ha dejado las mesas desvencijadas y las sillas rotas. "
+"Es un milagro que las instalaciones básicas funcionen en su mayor parte."
 
 #: dat/spob/zembla_shakar.xml:2
+#, fuzzy
 msgid "Zembla Shakar"
-msgstr ""
+msgstr "Zembla Shakar"
 
 #: dat/spob/zembla_shakar.xml:27
 msgid ""
@@ -26752,6 +26852,12 @@ msgid ""
 "all of. Most of the planet is off-limits to offworlders, and most traffic to "
 "the planet consists of imports of luxury goods and exports of waste products."
 msgstr ""
+"Zembla Shakar es como un complejo turístico para la élite del sistema "
+"Shakar. La gente que vive aquí lo hace en fincas gigantescas que, por lo "
+"general, no han visto en su totalidad. La mayor parte del planeta está "
+"vedada a los forasteros, y la mayor parte del tráfico hacia el planeta "
+"consiste en la importación de bienes de lujo y la exportación de productos "
+"de desecho."
 
 #: dat/spob/zembla_shakar.xml:28
 msgid ""
@@ -26760,14 +26866,20 @@ msgid ""
 "surface of the planet will be disappointed, as there is very little to see "
 "here."
 msgstr ""
+"El bar es el lugar donde los comerciantes esperan hasta que se cargue y "
+"descargue su mercancía. Los pilotos que vengan aquí esperando echar un "
+"vistazo a las ricas tierras que cubren la superficie del planeta se sentirán "
+"decepcionados, ya que hay muy poco que ver aquí."
 
 #: dat/spob/zemur_iii.xml:2
+#, fuzzy
 msgid "Zemur III"
-msgstr ""
+msgstr "Zemur III"
 
 #: dat/spob/zeo.xml:2
+#, fuzzy
 msgid "Zeo"
-msgstr ""
+msgstr "Zeo"
 
 #: dat/spob/zeo.xml:26
 msgid ""
@@ -26777,6 +26889,13 @@ msgid ""
 "Imperial citizens. Though the population is still on the low side compared "
 "to older civilian worlds, the number of people living here rises by the day."
 msgstr ""
+"La mayor parte de la población de Zeo es de reciente construcción. Tras el "
+"Incidente, los precios de los bienes inmuebles experimentaron una importante "
+"revisión en toda la galaxia y el otrora descuidado mundo atrasado de Zeo se "
+"convirtió rápidamente en tierra de primera para el asentamiento de "
+"ciudadanos Imperiales. Aunque la población sigue siendo baja en comparación "
+"con los mundos civiles más antiguos, el número de personas que viven aquí "
+"aumenta cada día."
 
 #: dat/spob/zeo.xml:27
 msgid ""
@@ -26785,10 +26904,16 @@ msgid ""
 "colonists. As a result, most of the infrastructure here is relatively "
 "modern. You won't find anything out of order or slow to respond in this bar."
 msgstr ""
+"Debido a la brusca revalorización de Zeo tras el Incidente, las anticuadas "
+"instalaciones de la época tuvieron que ser sustituidas para hacer frente a "
+"la afluencia de colonos Imperiales. Como resultado, la mayor parte de la "
+"infraestructura aquí es relativamente moderna. No encontrarás nada que esté "
+"fuera de servicio o que sea lento para responder en este bar."
 
 #: dat/spob/zepei.xml:2
+#, fuzzy
 msgid "Zepei"
-msgstr ""
+msgstr "Zepei"
 
 #: dat/spob/zepei.xml:27
 msgid ""
@@ -26798,6 +26923,11 @@ msgid ""
 "Soromid. Non-modified humans would find the recreational activities too "
 "rough for comfort."
 msgstr ""
+"Zepei tiene una modesta población autóctona y una considerable población no "
+"permanente. La superficie del planeta está cubierta de centros de "
+"vacaciones, parques naturales y zonas deportivas al aire libre. La mayoría "
+"de los asistentes a las vacaciones son Soromida. Los humanos no modificados "
+"encontrarían las actividades recreativas demasiado duras para su comodidad."
 
 #: dat/spob/zepei.xml:28
 msgid ""
@@ -26806,22 +26936,27 @@ msgid ""
 "the spaceport's traffic. The bar is used only by the captains of the supply "
 "and trade ships that land on Zeppei."
 msgstr ""
+"El bar del puerto espacial no es muy frecuentado. Los Soromida que vienen "
+"aquí de vacaciones suelen ir directamente a las terminales, y constituyen la "
+"mayor parte del tráfico del puerto espacial. El bar sólo lo utilizan los "
+"capitanes de las naves de suministro y comercio que aterrizan en Zeppei."
 
 #: dat/spob/zeroeleven.xml:2
 msgid "Zero-Eleven"
-msgstr ""
+msgstr "Cero-Once"
 
 #: dat/spob/zerofive.xml:2
 msgid "Zero-Five"
-msgstr ""
+msgstr "Cero-Cinco"
 
 #: dat/spob/zeroone.xml:2
 msgid "Zero-One"
-msgstr ""
+msgstr "Cero-Uno"
 
 #: dat/spob/zesta.xml:2
+#, fuzzy
 msgid "Zesta"
-msgstr ""
+msgstr "Zesta"
 
 #: dat/spob/zesta.xml:24
 msgid ""
@@ -26830,14 +26965,20 @@ msgid ""
 "routinely used as part of the extraction process, and to prevent severe "
 "burns to the miners."
 msgstr ""
+"Rica en minerales, pero insoportablemente calurosa, Zesta ha sido "
+"establecida como una colonia minera de alta intensidad por Proteron. El agua "
+"y el hielo extraídos de Amianta se utilizan habitualmente como parte del "
+"proceso de extracción, y para evitar graves quemaduras a los mineros."
 
 #: dat/spob/zethus.xml:2
+#, fuzzy
 msgid "Zethus"
-msgstr ""
+msgstr "Zethus"
 
 #: dat/spob/zhang_lu.xml:2
+#, fuzzy
 msgid "Zhang Lu"
-msgstr ""
+msgstr "Zhang Lu"
 
 #: dat/spob/zhang_lu.xml:27
 msgid ""
@@ -26848,6 +26989,13 @@ msgid ""
 "countless peaks that have never been conquered, so tourists like to try and "
 "be the first to climb one."
 msgstr ""
+"Zhang Lu es un mundo con vastas cadenas montañosas, la mayor de las cuales "
+"alcanza casi un tercio de la superficie del planeta. El mundo carece por "
+"completo de interés para ser habitado, incluso para los estándares de los "
+"Soromida, pero el terreno escarpado es irresistible para las personas a las "
+"que les gusta el alpinismo. Hay innumerables picos que nunca han sido "
+"conquistados, por lo que a los turistas les gusta intentar ser los primeros "
+"en escalar uno."
 
 #: dat/spob/zhang_lu.xml:28
 msgid ""
@@ -26857,10 +27005,17 @@ msgid ""
 "is less than practical from a pilot's point of view, as having mountains all "
 "around the spaceport severely limits the choice in approach vectors."
 msgstr ""
+"El puerto espacial está construido en un valle. La razón de ello es que los "
+"turistas que llegan se encuentran inmediatamente con montañas que se elevan "
+"sobre ellos por todos los lados, lo que les hace sentir muy bien. "
+"Desgraciadamente, esta ubicación es poco práctica desde el punto de vista "
+"del piloto, ya que el hecho de tener montañas alrededor del puerto espacial "
+"limita mucho la elección de los vectores de aproximación."
 
 #: dat/spob/zhiru.xml:2
+#, fuzzy
 msgid "Zhiru"
-msgstr ""
+msgstr "Zhiru"
 
 #: dat/spob/zhiru.xml:28
 msgid ""
@@ -26872,6 +27027,13 @@ msgid ""
 "Zhiru, which allows the massive spacecraft to land and take off with little "
 "difficulty."
 msgstr ""
+"Zhiru fue una vez el hogar de Eduard Manuel Goddard, el hombre que diseñó "
+"sin ayuda el entonces revolucionario crucero de batalla Goddard, y que "
+"fundaría la Casa Goddard, de menor importancia. Ahora Zhiru tiene una "
+"floreciente industria de naves espaciales, especializada en la creación y el "
+"mantenimiento de las naves Goddard. Todo esto es posible gracias a la débil "
+"gravedad y a la atmósfera que envuelve a Zhiru, que permite que las enormes "
+"naves espaciales aterricen y despeguen con poca dificultad."
 
 #: dat/spob/zhiru.xml:29
 msgid ""
@@ -26880,22 +27042,30 @@ msgid ""
 "comfortable and cozy as a bar, although every so often you can hear creaking "
 "in the ancient metal frame."
 msgstr ""
+"El Bar Goddard es, como es lógico, un modelo obsoleto de su nave homónima, "
+"despojado y reacondicionado en forma de bar. Es sorprendentemente cómodo y "
+"acogedor como bar, aunque de vez en cuando se oyen crujidos en la antigua "
+"estructura metálica."
 
 #: dat/spob/zintar_iv.xml:2
+#, fuzzy
 msgid "Zintar IV"
-msgstr ""
+msgstr "Zintar IV"
 
 #: dat/spob/zintar_v.xml:2
+#, fuzzy
 msgid "Zintar V"
-msgstr ""
+msgstr "Zintar V"
 
 #: dat/spob/ziz.xml:2
+#, fuzzy
 msgid "Ziz"
-msgstr ""
+msgstr "Ziz"
 
 #: dat/spob/zuner.xml:2
+#, fuzzy
 msgid "Zuner"
-msgstr ""
+msgstr "Zuner"
 
 #: dat/spob/zuner.xml:26
 msgid ""
@@ -26906,6 +27076,13 @@ msgid ""
 "are in no way out of touch with the rest of the galaxy and are, in fact, "
 "quite wealthy, due to how lucrative Zuner's choice of food production is."
 msgstr ""
+"La superficie de Zuner se ha dedicado casi por completo al cultivo. Aunque "
+"hay algunos núcleos urbanos repartidos por el mundo, su población es baja en "
+"comparación con los megaplexos residenciales de los mundos más densamente "
+"poblados. Aunque la comunidad es, en gran medida, agrícola, sus habitantes "
+"no están en absoluto fuera de contacto con el resto de la galaxia y son, de "
+"hecho, bastante ricos, debido a lo lucrativa que es la producción de "
+"alimentos en Zuner."
 
 #: dat/spob/zuner.xml:27
 msgid ""
@@ -26914,74 +27091,78 @@ msgid ""
 "case of Zuner. The spaceport is as modern as can be and its bar wouldn't be "
 "out of place even in the Sirius core."
 msgstr ""
+"Muchos espaciales piensan que los mundos agrícolas son lugares atrasados que "
+"van muy por detrás del resto de la galaxia. A veces tienen razón, pero no en "
+"el caso de Zuner. El puerto espacial es todo lo moderno que puede ser y su "
+"bar no desentonaría ni siquiera en el núcleo Sirio."
 
 #: dat/spob_virtual/dvaered_small.xml:2
 msgid "Dvaered Small"
-msgstr ""
+msgstr "Dvaered Poco"
 
 #: dat/spob_virtual/dvaered_unpresence.xml:2
 msgid "Dvaered Unpresence"
-msgstr ""
+msgstr "Dvaered Inexistente"
 
 #: dat/spob_virtual/dvaered_unpresence_range1.xml:2
 msgid "Dvaered Unpresence (Range 1)"
-msgstr ""
+msgstr "Dvaered Inexistente (Rango 1)"
 
 #: dat/spob_virtual/empire_small.xml:2
 msgid "Empire Small"
-msgstr ""
+msgstr "Imperio Poco"
 
 #: dat/spob_virtual/empire_unpresence.xml:2
 msgid "Empire Unpresence"
-msgstr ""
+msgstr "Imperio Inexistente"
 
 #: dat/spob_virtual/empire_unpresence_range1.xml:2
 msgid "Empire Unpresence (Range 1)"
-msgstr ""
+msgstr "Imperio Inexistente (Rango 1)"
 
 #: dat/spob_virtual/flf_small.xml:2
 msgid "FLF Small"
-msgstr ""
+msgstr "FLF Poco"
 
 #: dat/spob_virtual/flf_unpresence.xml:2
 msgid "FLF Unpresence"
-msgstr ""
+msgstr "FLF Inexistente"
 
 #: dat/spob_virtual/frontier_small.xml:2
 msgid "Frontier Small"
-msgstr ""
+msgstr "Frontera Poco"
 
 #: dat/spob_virtual/frontier_unpresence.xml:2
 msgid "Frontier Unpresence"
-msgstr ""
+msgstr "Frontera Inexistente"
 
 #: dat/spob_virtual/independent_all_unpresence.xml:2
 msgid "Independent All Unpresence"
-msgstr ""
+msgstr "Independiente Total Inexistente"
 
 #: dat/spob_virtual/independent_all_unpresence_range1.xml:2
 msgid "Independent All Unpresence (Range 1)"
-msgstr ""
+msgstr "Independiente Total Inexistente (Rango 1)"
 
 #: dat/spob_virtual/independent_trader_area.xml:2
 msgid "Independent Trader Area"
-msgstr ""
+msgstr "Zona de Comerciantes Independientes"
 
 #: dat/spob_virtual/independent_trader_local.xml:2
 msgid "Independent Trader Local"
-msgstr ""
+msgstr "Local Comercial Independiente"
 
 #: dat/spob_virtual/independent_unpresence.xml:2
 msgid "Independent Unpresence"
-msgstr ""
+msgstr "Independiente Inexistente"
 
 #: dat/spob_virtual/miner_local.xml:2
 msgid "Miner Local"
-msgstr ""
+msgstr "Local Minero"
 
 #: dat/spob_virtual/miner_small.xml:2
 msgid "Miner Small"
-msgstr ""
+msgstr "Pequeño Minero"
 
 #: dat/spob_virtual/pirate_all_unpresence.xml:2
 msgid "Pirate All Unpresence"
