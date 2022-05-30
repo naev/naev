@@ -26,7 +26,7 @@ function create ()
    -- Create NPCs
    --]]
    local pp = player.pilot()
-   local dfact = "Independent"
+   local dfact = faction.get("Independent")
 
    local function addDrone( ship, pos, name )
       local d = pilot.add( ship, dfact, pos, name )
