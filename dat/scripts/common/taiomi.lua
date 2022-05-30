@@ -22,6 +22,18 @@ local taiomi = {
       image = 'gfx/ship/drone/drone_comm.webp',
       colour = nil,
    },
+   younga = {
+      name = _("Hugonn"), -- Odin's raven
+      portrait = nil,
+      image = 'gfx/ship/drone/drone_comm.webp',
+      colour = nil,
+   },
+   youngb = {
+      name = _("Muninn"), -- Odin's raven
+      portrait = nil,
+      image = 'gfx/ship/drone/drone_comm.webp',
+      colour = nil,
+   },
    log = {
       main = function( text )
          shiplog.create( "log_taiomi_main", _("Taiomi"), _("Taiomi") )
@@ -77,6 +89,20 @@ function taiomi.vn_philosopher( params )
          tmerge( {
             image=taiomi.philosopher.image,
             color=taiomi.philosopher.colour,
+         }, params) )
+end
+function taiomi.vn_younga( params )
+   return vn.Character.new( taiomi.younga.name,
+         tmerge( {
+            image=taiomi.younga.image,
+            color=taiomi.younga.colour,
+         }, params) )
+end
+function taiomi.vn_youngb( params )
+   return vn.Character.new( taiomi.youngb.name,
+         tmerge( {
+            image=taiomi.youngb.image,
+            color=taiomi.youngb.colour,
          }, params) )
 end
 

@@ -65,9 +65,8 @@ function create ()
    d_young_b:follow(pp)
    hook.pilot( d_young_b, "hail", "hail_youngling" )
    if var.peek( "taiomi_drone_names", true ) then
-      -- Odin's Ravens
-      d_young_a:rename(_("Hugonn"))
-      d_young_b:rename(_("Muninn"))
+      d_young_a:rename( taiomi.younga.name )
+      d_young_b:rename( taiomi.youngb.name )
    end
 
    -- Loitering drones
@@ -109,8 +108,8 @@ function hail_philosopher ()
    end )
    vn.menu( function ()
       local opts = {
-         {[["Who are you?"]], "who"},
-         {"Leave.", "leave"},
+         {_([["Who are you?"]]), "who"},
+         {_("Leave."), "leave"},
       }
       return opts
    end )
@@ -173,9 +172,9 @@ function hail_scavenger ()
    local opts = {
       {_("Leave."),"leave"},
    }
-   if progress < 5 then
-		table.insert( opts, 1, {_("Ask about the drones following you around"), "curious_drones"} )
-	end
+   if progress == 0 then
+      table.insert( opts, 1, {_([["Who are you?"]]), "who"} )
+   end
 
    -- Progress-based text
    if progress == 0 then
@@ -210,11 +209,34 @@ function hail_scavenger ()
    vn.menu( function ()
       local o = tcopy( opts )
       -- TOOD manipulate stuff as needed here
+      if not var.peek( "taiomi_drone_names" ) then
+         table.insert( opts, 1, {_("Ask about the drones following you around"), "curious_drones"} )
+      end
       return o
    end )
 
+   vn.label("who")
+   d(_([["Ah, humans are more inquisitive that I thought. We do not customarily use human-pronounceable names for ourselves. You can call me Scavenger, as per my profession."]]))
+   d(_([[""]]))
+   vn.jump("menu_ask")
+
    vn.label("curious_drones")
+   d(fmt.f(_([["Are you referring to {namea} and {nameb}? They are the newest members of our community. Created from pooling together our collective conciousness. I'm afraid there may not be many more like them if our plan does not succeed."]]),
+      {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
+   d(fmt.f(_([["Here, let me introduce you to them."
+Your sensors don't pick up anything but {namea} ad {nameb} make a beeline to your position.]]),
+      {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
+   local ya = taiomi.vn_younga{pos="farleft"}
+   local yb = taiomi.vn_youngb{pos="farright"}
+   vn.appear( {ya, yb}, "slidedown" )
+   vn.na(_("The inquisitive duo begins to fly around close to your ship, while emitting some frequencies somehow feel like giggling."))
+   d(_([["Did you not get my memo? It is human custom to introduce yourselves to humans."]]))
+   vn.na(_(""))
+   vn.disappear( {ya, yb}, "slideup" )
+   vn.na(_("They take off and go back to carefree frolicking among the derelicts and debris."))
    vn.func( function ()
+      d_young_a:rename( taiomi.younga.name )
+      d_young_b:rename( taiomi.youngb.name )
       var.push( "taiomi_drone_names", true )
    end )
    vn.jump("menu_ask")
