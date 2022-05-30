@@ -455,19 +455,24 @@ static int misn_markerMove( lua_State *L )
  *
  * @usage misn.markerRm( my_marker )
  *
- *    @luatparam number id ID of the marker to remove.
+ *    @luatparam[opt] number id ID of the marker to remove. If no parameter is passed, all markers associated with the mission are removed.
  * @luafunc markerRm
  */
 static int misn_markerRm( lua_State *L )
 {
    int id;
    MissionMarker *marker;
-   Mission *cur_mission;
+   Mission *cur_mission = misn_getFromLua(L);
+
+   /* Remove all markers. */
+   if (lua_isnoneornil(L,1)) {
+      array_erase( &cur_mission->markers, array_begin(cur_mission->markers), array_end(cur_mission->markers) );
+      mission_sysMark();
+      return 0;
+   }
 
    /* Handle parameters. */
    id    = luaL_checkinteger( L, 1 );
-
-   cur_mission = misn_getFromLua(L);
 
    /* Check id. */
    marker = NULL;
