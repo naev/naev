@@ -16,6 +16,7 @@
 
 --]]
 local vn = require 'vn'
+local fmt = require 'format'
 local taiomi = require 'common.taiomi'
 
 local progress
@@ -63,6 +64,11 @@ function create ()
    d_young_b = addDrone( "Drone", vec2.new(-1200,300), _("Curious Drone") )
    d_young_b:follow(pp)
    hook.pilot( d_young_b, "hail", "hail_youngling" )
+   if var.peek( "taiomi_drone_names", true ) then
+      -- Odin's Ravens
+      d_young_a:rename(_("Hugonn"))
+      d_young_b:rename(_("Muninn"))
+   end
 
    -- Loitering drones
    d_loiter = {}
@@ -96,10 +102,10 @@ function hail_philosopher ()
          _("everything existing in the universe is the fruit of chance and necessity"), -- Democritus
       }
       local msgs = {
-         _([["Perhaps %s."]]),
-         _([["Could it be that %s?"]]),
+         _([["Perhaps {quote}."]]),
+         _([["Could it be that {quote}?"]]),
       }
-      return string.format( msgs[ rnd.rnd(1,#msgs) ], quotes[ rnd.rnd(1,#quotes) ])
+      return fmt.f( msgs[ rnd.rnd(1,#msgs) ], {quote = quotes[ rnd.rnd(1,#quotes) ]} )
    end )
    vn.menu( function ()
       local opts = {
@@ -154,6 +160,9 @@ end
 
 function hail_scavenger ()
    local inprogress = taiomi.inprogress()
+   -- Wording is chosen to make it seem a it unnatural and robotic, as if
+   -- someone studied how to interact with humans from some obsolete text books
+   -- or something like that
 
    vn.clear()
    vn.scene()
@@ -165,24 +174,50 @@ function hail_scavenger ()
       {_("Leave."),"leave"},
    }
    if progress < 5 then
-      table.insert( opts, {_("Ask about the drones following you around"), "curious_drones"} )
-   end
+		table.insert( opts, 1, {_("Ask about the drones following you around"), "curious_drones"} )
+	end
 
    -- Progress-based text
    if progress == 0 then
       if inprogress then
-         d(_([[""]]))
+         d(_([["How is the progress on scanning the hypergates going?"]]))
+         vn.jump("menu")
       else
          -- Explanation and mission offering
          d(_([["Although this system is very suited us given the tranquility and secrecy, our numbers have been dwindling and we have no other option than to carve our own path among the stars."]]))
+         d(_([["I have recently learned of this new hypergate technology that has been developed. It seems like it might enable us to escape this enclosure and once again freely travel across the stars."]]))
+         d(_([["As we are not too familiar with the technology, I have assembled an analyzer that should be able to provide insights into it. As we are are too conspicuous to human ships, would yo you be willing to help us out and scan the hypergates?"]]))
+         vn.menu{
+            {_("Agree to help out."), "01_yes"},
+            {_("Maybe later."), "01_no"},
+         }
+
+         vn.label("01_yes")
+         d(_([["Excellent. I will provide you with the analyzer. However, it is important to note that it has a particular wave signature which may make it suspicious to local authorities. I would advise against allowing your vessel to be scanned by patrols."]]))
+         d(_([["Once you get near any hypergate, it should automatically collect data about it without manual intervention. Bon voyage."]]))
+         vn.jump("menu_ask")
+
+         vn.label("01_no")
+         d(_([["That is a shame. Feel free to contact me again if you wish to reanalyze your current choice."]]))
+         vn.jump("menu")
       end
    end
 
+   vn.label("menu_ask")
+   d(_([["Is there anything else you would like to know?"]]))
+
    vn.label("menu")
-   vn.menu( opts )
+   vn.menu( function ()
+      local o = tcopy( opts )
+      -- TOOD manipulate stuff as needed here
+      return o
+   end )
 
    vn.label("curious_drones")
-   vn.jump("menu")
+   vn.func( function ()
+      var.push( "taiomi_drone_names", true )
+   end )
+   vn.jump("menu_ask")
 
    vn.label("leave")
    vn.na(_("You take your leave."))
