@@ -30,6 +30,7 @@ local taiomi = require "common.taiomi"
 
 local reward = taiomi.rewards.taiomi01
 local title = _("Taiomi")
+local base, basesys = spob.get("One-Wing Goddard")
 
 local beep = audio.newSource( "snd/sounds/computer_lock.ogg" )
 
@@ -63,7 +64,7 @@ function create ()
 
    misn.osdCreate( title, {
       _("Fly near a hypergate to scan it"),
-      _("Return to the One-Wing Goddard at Taiomi"),
+      fmt.f(_("Return to the {spobname} ({spobsys})"), {spobname=base, spobsys=basesys}),
    } )
 
    hook.enter( "enter" )
@@ -102,7 +103,7 @@ function heartbeat ()
       mem.state = 1
       misn.osdActive(2)
       misn.markerRm()
-      misn.markerAdd( spob.get("One-Wing Goddard") )
+      misn.markerAdd( base )
 
       misn.cargoRm( mem.cargo )
       local c = commodity.new( N_("Hypergate Data"), N_("In-depth scan data collected from a functional hypergate.") )
@@ -114,7 +115,7 @@ function heartbeat ()
 end
 
 function land ()
-   if mem.state < 1 then
+   if mem.state < 1 or not spob.cur()==base then
       return
    end
 
