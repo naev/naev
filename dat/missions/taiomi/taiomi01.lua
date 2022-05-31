@@ -29,8 +29,8 @@ local taiomi = require "common.taiomi"
 -- luacheck: globals enter heartbeat land (Hook functions passed by name)
 
 local reward = taiomi.rewards.taiomi01
-local title = _("Taiomi")
-local base, basesys = spob.get("One-Wing Goddard")
+local title = _("Escaping Taiomi")
+local base, basesys = spob.getS("One-Wing Goddard")
 
 local beep = audio.newSource( "snd/sounds/computer_lock.ogg" )
 
@@ -134,6 +134,6 @@ function land ()
    vn.run()
 
    player.pay( reward )
-   taiomi.main.log(_("You helped the robotic citizens of Taiomi collect important information about the functionality and nature of the hypergates."))
+   taiomi.log.main(_("You helped the robotic citizens of Taiomi collect important information about the functionality and nature of the hypergates."))
    misn.finish(true)
 end
