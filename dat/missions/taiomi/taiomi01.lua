@@ -93,7 +93,7 @@ function enter ()
 end
 
 function heartbeat ()
-   if hypergate:pos():dist( player.pos() ) < 5e3 then
+   if hypergate:pos():dist( player.pos() ) < 10e3 then
       player.autonavReset( 3 )
       luaspfx.sfx( nil, nil, beep )
       player.msg( _("The analyzer has collected the hypergate data and become inert."), true )
