@@ -28,15 +28,15 @@ function background ()
    -- Load graphics
    local images_raw = {
       -- Debris
-      { n = 5, i = lg.newImage( 'gfx/spfx/cargo.webp' ), s = 6 },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris0.webp' ), s = 6 },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris1.webp' ), s = 6 },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris2.webp' ), s = 6 },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris3.webp' ), s = 6 },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris4.webp' ), s = 6 },
-      { n = 5, i = lg.newImage( 'gfx/spfx/debris5.webp' ), s = 6 },
-      { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster1.webp' ), s = 6 },
-      { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster2.webp' ), s = 6 },
+      { n = 5, i = lg.newImage( 'gfx/spfx/cargo.webp' ), s = 6, debris = true },
+      { n = 5, i = lg.newImage( 'gfx/spfx/debris0.webp' ), s = 6, debris = true },
+      { n = 5, i = lg.newImage( 'gfx/spfx/debris1.webp' ), s = 6, debris = true },
+      { n = 5, i = lg.newImage( 'gfx/spfx/debris2.webp' ), s = 6, debris = true },
+      { n = 5, i = lg.newImage( 'gfx/spfx/debris3.webp' ), s = 6, debris = true },
+      { n = 5, i = lg.newImage( 'gfx/spfx/debris4.webp' ), s = 6, debris = true },
+      { n = 5, i = lg.newImage( 'gfx/spfx/debris5.webp' ), s = 6, debris = true },
+      { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster1.webp' ), s = 6, debris = true },
+      { n = 2, i = lg.newImage( 'gfx/spfx/debris_cluster2.webp' ), s = 6, debris = true },
       -- Neutral
       { n = 2, i = lg.newImage( 'gfx/spfx/derelict_llama1.webp' ), s = 6 },
       { n = 1, i = lg.newImage( 'gfx/spfx/derelict_koala1.webp' ), s = 6 },
@@ -71,11 +71,20 @@ function background ()
       end
    end
 
-   local function parts_create ()
+   local function parts_create( nodebris )
       local part = {}
       part.x = tw*rnd.rnd() - buffer
       part.y = th*rnd.rnd() - buffer
-      part.i = images[ rnd.rnd( 1, #images ) ]
+      if nodebris then
+         repeat
+            local i = images[ rnd.rnd( 1, #images ) ]
+            if not i.debris  then
+               part.i = images[ rnd.rnd( 1, #images ) ]
+            end
+         until (part.i ~= nil)
+      else
+         part.i = images[ rnd.rnd( 1, #images ) ]
+      end
       local img = part.i
       local sx = rnd.rnd(1,img.s)-1
       local sy = rnd.rnd(1,img.s)-1
@@ -134,10 +143,10 @@ function background ()
          cache.taiomi = {}
       end
 
-      n = n or 100000
+      n = n or 3e3
       move = move or 0.03
       scale = scale or 1.5
-      g = g or 0.5
+      g = g or 0.8
       salpha = salpha or 5
       sbeta = sbeta or 3
       local w = 2048
@@ -149,7 +158,7 @@ function background ()
       lg.setColor( g, g, g, 1 )
       local angle = math.rad( 20 + 10 * rnd.rnd() )
       for i = 1,n do
-         local p = parts_create()
+         local p = parts_create( true )
          p.s = 1 / (salpha + sbeta*rnd.rnd())
          local x = 0.8 * naev.rnd.threesigma()
          local y = 0.7 * naev.rnd.threesigma()
@@ -165,9 +174,9 @@ function background ()
    end
    -- Create three layers using parallax, this lets us cut down significantly
    -- on the number of ships we have to render to create them
-   add_bkg( 0, 6e4, 0.03, 1.5, 0.3, 6, 3 )
-   add_bkg( 1, 5e4, 0.05, 1.5, 0.4, 5, 3 )
-   add_bkg( 2, 3e4, 0.08, 1.5, 0.5, 4, 3 )
+   add_bkg( 0, 9e3, 0.03, 1.5, 0.6, 6, 3 )
+   add_bkg( 1, 6e3, 0.05, 1.5, 0.7, 5, 3 )
+   add_bkg( 2, 3e3, 0.08, 1.5, 0.8, 4, 3 )
 
    -- Default nebula background (no star)
    starfield.init{ nolocalstars = true }
