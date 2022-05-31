@@ -59,7 +59,7 @@ function create ()
 
    local c = commodity.new( N_("Subspace Analyzer"), N_("An amalgam of parts recovered from derelict ships heavily modified to be able to perform in-depth analysis of subspace spectrum.") )
    c:illegalto( {"Empire", "Dvaered", "Soromid", "Sirius", "Za'lek", "Frontier"} )
-   misn.cargoAdd( c, 0 )
+   mem.cargo = misn.cargoAdd( c, 0 )
 
    misn.osdCreate( title, {
       _("Fly near a hypergate to scan it"),
@@ -96,11 +96,15 @@ function heartbeat ()
    if hypergate:pos():dist( player.pos() ) < 5e3 then
       player.autonavReset( 3 )
       luaspfx.sfx( nil, nil, beep )
-      player.msg( _("The analyzer has collected the hypergate data."), true )
+      player.msg( _("The analyzer has collected the hypergate data and become inert."), true )
       mem.state = 1
       misn.osdActive(2)
       misn.markerRm()
-      misn.markerAdd( spob.get("One-Winged Goddard") )
+      misn.markerAdd( spob.get("One-Wing Goddard") )
+
+      misn.cargoRm( mem.cargo )
+      local c = commodity.new( N_("Hypergate Data"), N_("In-depth scan data collected from a functional hypergate.") )
+      mem.cargo = misn.cargoAdd( c, 0 )
       return
    end
 
