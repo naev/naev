@@ -25,7 +25,7 @@ local d_loiter, d_philosopher, d_scavenger, d_wornout, d_young_a, d_young_b -- D
 
 function create ()
    --[[
-   -- Create NPCs
+      Create NPCs
    --]]
    local pp = player.pilot()
    local dfact = faction.get("Independent")
@@ -72,7 +72,7 @@ function create ()
    -- Loitering drones
    d_loiter = {}
    for i = 1,rnd.rnd(3,6) do
-      local d = addDrone( "Drone", vec2.new( rnd.rnd()*1000, rnd.rnd()*359 ) )
+      local d = addDrone( "Drone", vec2.new( rnd.rnd()*1000, rnd.angle() ) )
       d:setVisplayer(false)
       d:control(false)
       d:setNoJump(true)
@@ -204,36 +204,67 @@ function hail_scavenger ()
 
    vn.label("menu_ask")
    d(_([["Is there anything else you would like to know?"]]))
-
    vn.label("menu")
    vn.menu( function ()
       local o = tcopy( opts )
       -- TOOD manipulate stuff as needed here
-      if not var.peek( "taiomi_drone_names" ) then
-         table.insert( opts, 1, {_("Ask about the drones following you around"), "curious_drones"} )
+      if var.peek( "taiomi_scav_who" ) and not var.peek( "taiomi_drone_names" ) then
+         table.insert( o, 1, {_("Ask about the drones following you around"), "curious_drones"} )
       end
       return o
    end )
 
    vn.label("who")
-   d(_([["Ah, humans are more inquisitive that I thought. We do not customarily use human-pronounceable names for ourselves. You can call me Scavenger, as per my profession."]]))
-   d(_([[""]]))
+   d(_([["Ah, humans are more inquisitive that I thought. We do not customarily use human-pronounceable names for ourselves. You can call me Scavenger, as per my profession. That should be enough to get my attention."]]))
+   d(_([["Now, who am I? I am a member of our community mainly in charge of organizing and collecting resources. Although they may seem abundant due to the large amount of derelicts, many have already been stripped clean by pirates and marauders before arriving by the stellar winds."]]))
+   d(_([["Unlike most human robotics, we have what you would call conciousness, albeit, from what I read, I believe it is significantly different than what is found in organic beings. While we are part of the whole, created and molded by it, we also obtain an individual sense of being. It is somewhat hard to explain, but I guess for practical purposes you can think of us as analogous to human individuals."]]))
+   vn.func( function ()
+      var.push( "taiomi_scav_who", true )
+   end )
    vn.jump("menu_ask")
 
    vn.label("curious_drones")
    d(fmt.f(_([["Are you referring to {namea} and {nameb}? They are the newest members of our community. Created from pooling together our collective conciousness. I'm afraid there may not be many more like them if our plan does not succeed."]]),
       {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
    d(fmt.f(_([["Here, let me introduce you to them."
-Your sensors don't pick up anything but {namea} ad {nameb} make a beeline to your position.]]),
+Your sensors don't pick up anything but {namea} and {nameb} make a beeline to your position.]]),
       {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
    local ya = taiomi.vn_younga{pos="farleft"}
    local yb = taiomi.vn_youngb{pos="farright"}
    vn.appear( {ya, yb}, "slidedown" )
    vn.na(_("The inquisitive duo begins to fly around close to your ship, while emitting some frequencies somehow feel like giggling."))
    d(_([["Did you not get my memo? It is human custom to introduce yourselves to humans."]]))
-   vn.na(_(""))
+   vn.na(_("The two ships fly behind Scavenger and bob their heads shyly. Eventually, after some nudging by Scavenger, they initiate communication."))
+   yb(fmt.f(_([["My name is… is… {name}!"]]),{name=taiomi.youngb.name}))
+   ya(_([[…]]))
+   d(_([["Go on."]]))
+   ya(fmt.f(_([["I am {name}…"
+They fidget a bit in place.
+"Do you eat… potatoes?"]]),{name=taiomi.younga.name}))
+   vn.menu{
+      {_([["Yes"]]), "young_01yes"},
+      {_([["No"]]), "young_01no"},
+      {_([["What is a potato?"]]), "young_01what"},
+      {_([[…]]), "young_01cont"},
+   }
+   vn.label("young_01yes")
+   ya(_([["I knew it!"]]))
+   vn.jump("young_01cont")
+   vn.label("young_01no")
+   ya(_([["If you don't eat potatoes, are you not human?"]]))
+   vn.jump("young_01cont")
+   vn.label("young_01what")
+   ya(_([["Po-tah-to? Puh-tay-tow?"]]))
+   vn.label("young_01cont")
+   d(_([[Scavenger lets out what you can only describe as a sigh.
+"They have been reading recovered documents and are obsessed with obscure parts of ancient human history."]]))
+   d(_([["If you let them start talking, they will never finish, so it is best to let them play around. It is best for their development."]]))
    vn.disappear( {ya, yb}, "slideup" )
-   vn.na(_("They take off and go back to carefree frolicking among the derelicts and debris."))
+   vn.na(fmt.f(_([[Taking that as some sort of sign, {namea} and {nameb} spin off and go back to carefree frolicking among the derelicts and debris.]]),
+      {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
+   d(_([[Letting out what seems to be a sigh, Scavenger continues.
+"Given the weakening of our collective conciousness, I would have never thought we would have been able to create new individuals. Their strong individually personality is likely also a direct effect of that. They even chose to have human names they researched instead of going by our traditional names."]]))
+   d(_([["I worry for their future. We must ensure that no harm comes to them."]]))
    vn.func( function ()
       d_young_a:rename( taiomi.younga.name )
       d_young_b:rename( taiomi.youngb.name )
