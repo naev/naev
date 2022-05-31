@@ -90,6 +90,8 @@ function enter ()
          return
       end
    end
+
+   hook.land( "land" )
 end
 
 function heartbeat ()
