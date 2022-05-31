@@ -16,7 +16,7 @@
 </mission>
 --]]
 --[[
-   Taiomi 01
+   Taiomi 02
 
    Player is asked to board convoys
 ]]--
