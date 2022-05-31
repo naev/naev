@@ -175,9 +175,9 @@ function background ()
    end
    -- Create three layers using parallax, this lets us cut down significantly
    -- on the number of ships we have to render to create them
-   add_bkg( 0, 9e3, 0.03, 1.5, 0.7, 6.7, 3 )
-   add_bkg( 1, 6e3, 0.05, 1.5, 0.8, 4.0, 3 )
-   add_bkg( 2, 3e3, 0.08, 1.5, 0.9, 2.5, 3 )
+   add_bkg( 0, 9e3, 0.03, 1.5, 0.6, 6.7, 3 )
+   add_bkg( 1, 6e3, 0.05, 1.5, 0.7, 4.0, 3 )
+   add_bkg( 2, 3e3, 0.08, 1.5, 0.8, 2.5, 3 )
 
    -- Default nebula background (no star)
    starfield.init{ nolocalstars = true }
