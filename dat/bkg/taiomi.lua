@@ -202,7 +202,9 @@ local function update ()
       local y = (p.y - znh2) / z + nh2
       p.rx = x
       p.ry = y
-      p.r  = (x > -p.w and y > -p.h and x <= nw+p.w and y <= nh+p.h)
+      local w = p.w * zmax
+      local h = p.h * zmax
+      p.r  = (x > -w and y > -h and x <= nw+w and y <= nh+h)
    end
 
    -- Update background
