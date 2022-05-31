@@ -87,10 +87,8 @@ int nlua_loadRnd( nlua_env env )
  */
 static int rndL_int( lua_State *L )
 {
-   int o;
    int l,h;
-
-   o = lua_gettop(L);
+   int o = lua_gettop(L);
 
    if (o==0)
       lua_pushnumber(L, RNGF() ); /* random double 0 <= x <= 1 */
@@ -226,7 +224,6 @@ static int rndL_permutation( lua_State *L )
    int max;
    int new_table;
 
-   NLUA_MIN_ARGS(1);
    if (lua_isnumber(L,1)) {
       max = lua_tointeger(L,1);
       new_table = 1;
