@@ -13,7 +13,7 @@
  </presence>
  <general>
   <class>A</class>
-  <population>6e+05</population>
+  <population>600000</population>
   <hide>1.000000</hide>
   <services>
    <land>land_lowclass</land>
