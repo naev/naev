@@ -68,6 +68,7 @@ function create ()
    } )
 
    hook.enter( "enter" )
+   hook.land( "land" )
 end
 
 local heartbeat_hook, hypergate
@@ -91,8 +92,6 @@ function enter ()
          return
       end
    end
-
-   hook.land( "land" )
 end
 
 function heartbeat ()
