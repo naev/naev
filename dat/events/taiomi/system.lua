@@ -193,7 +193,7 @@ function hail_scavenger ()
 
          vn.label("01_yes")
          d(_([["Excellent. I will provide you with the analyzer. However, it is important to note that it has a particular wave signature which may make it suspicious to local authorities. I would advise against allowing your vessel to be scanned by patrols."]]))
-         d(_([["Once you get near any hypergate, it should automatically collect data about it without manual intervention. Bon voyage."]]))
+         d(_([["Once you get near any hypergate, it should automatically collect data about it without manual intervention. Please deliver the collected data to the One-Winged Goddard. I will collect it there. Bon voyage."]]))
          vn.func( function ()
             naev.missionStart("Taiomi 01")
             --inprogress = true
