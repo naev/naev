@@ -2310,7 +2310,7 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
    MELEMENT( spob_hasService(spob,SPOB_SERVICE_INHABITED) &&
          (flags&FLAG_FACTIONSET)==0,"faction");
    MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
-   MELEMENT( (spob_hasService(spob,SPOB_SERVICE_OUTFITS) ||
+   MELEMENT( spob_hasService(spob,SPOB_SERVICE_INHABITED) && (spob_hasService(spob,SPOB_SERVICE_OUTFITS) ||
             spob_hasService(spob,SPOB_SERVICE_SHIPYARD)) &&
          (spob->tech==NULL), "tech" );
    /*MELEMENT( spob_hasService(spob,SPOB_SERVICE_COMMODITY) &&
