@@ -70,18 +70,19 @@ function background ()
          table.insert( images, v )
       end
    end
+   local images_nodebris = {}
+   for k,v in ipairs(images) do
+      if not v.debris then
+         table.insert( images_nodebris, v )
+      end
+   end
 
    local function parts_create( nodebris )
       local part = {}
       part.x = tw*rnd.rnd() - buffer
       part.y = th*rnd.rnd() - buffer
       if nodebris then
-         repeat
-            local i = images[ rnd.rnd( 1, #images ) ]
-            if not i.debris  then
-               part.i = images[ rnd.rnd( 1, #images ) ]
-            end
-         until (part.i ~= nil)
+         part.i = images_nodebris[ rnd.rnd( 1, #images_nodebris ) ]
       else
          part.i = images[ rnd.rnd( 1, #images ) ]
       end
