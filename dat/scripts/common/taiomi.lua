@@ -42,6 +42,7 @@ local taiomi = {
    },
    rewards = {
       taiomi01 = 300e3,
+      taiomi02 = 300e3,
    },
 }
 
