@@ -80,6 +80,8 @@ function background ()
       local sx = rnd.rnd(1,img.s)-1
       local sy = rnd.rnd(1,img.s)-1
       part.q = lg.newQuad( sx*img.w, sy*img.h, img.w, img.h, img.i )
+      part.w = img.w
+      part.h = img.h
       return part
    end
 
@@ -173,6 +175,7 @@ end
 local function update ()
    -- Calculate player motion
    local npos = camera.get()
+   local z = camera.getZoom()
    local diff = npos - pos
    local dx, dy = diff:get()
    dx = -dx
@@ -193,6 +196,13 @@ local function update ()
       elseif p.y > th-buffer then
          p.y = p.y - th
       end
+
+      -- See if renderable
+      local x = (p.x - znw2) / z + nw2
+      local y = (p.y - znh2) / z + nh2
+      p.rx = x
+      p.ry = y
+      p.r  = (x > -p.w and y > -p.h and x <= nw+p.w and y <= nh+p.h)
    end
 
    -- Update background
@@ -209,9 +219,9 @@ end
 renderbg = starfield.render
 
 local function draw_part( p, s, z )
-   local x = (p.x - znw2) / z + nw2
-   local y = (p.y - znh2) / z + nh2
-   lg.draw( p.i.i, p.q, x, y, 0, p.s * s / z )
+   if p.r then
+      lg.draw( p.i.i, p.q, p.rx, p.ry, 0, p.s * s / z )
+   end
 end
 function renderfg ()
    -- Run the update stuff here
