@@ -236,8 +236,8 @@ function hail_scavenger ()
    d(fmt.f(_([["Here, let me introduce you to them."
 Your sensors don't pick up anything but {namea} and {nameb} make a beeline to your position.]]),
       {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
-   local ya = taiomi.vn_younga{pos="farleft"}
-   local yb = taiomi.vn_youngb{pos="farright"}
+   local ya = taiomi.vn_younga{pos="farleft", flip=true}
+   local yb = taiomi.vn_youngb{pos="farright", flip=false}
    vn.appear( {ya, yb}, "slidedown" )
    vn.na(_("The inquisitive duo begins to fly around close to your ship, while emitting some frequencies somehow feel like giggling."))
    d(_([["Did you not get my memo? It is human custom to introduce yourselves to humans."]]))
