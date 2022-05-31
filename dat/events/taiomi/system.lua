@@ -204,6 +204,9 @@ function hail_scavenger ()
          d(_([["That is a shame. Feel free to contact me again if you wish to reanalyze your current choice."]]))
          vn.jump("menu")
       end
+   else
+      d(_([["I am still preparing our next steps."]]))
+      vn.jump("menu")
    end
 
    vn.label("menu_ask")
