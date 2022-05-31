@@ -19,7 +19,7 @@ local buffer, tw, th, fgparts, bgparts, wing, pos
 
 function background ()
    -- Create particles and buffer
-   local density = 200*200
+   local density = 250*250
    buffer = 200
    tw = zmax*nw+2*buffer
    th = zmax*nh+2*buffer
