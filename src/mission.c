@@ -100,7 +100,7 @@ int mission_getID( const char* name )
       if (strcmp(name,mission_stack[i].name)==0)
          return i;
 
-   DEBUG(_("Mission '%s' not found in stack"), name);
+   WARN(_("Mission '%s' not found in stack"), name);
    return -1;
 }
 
