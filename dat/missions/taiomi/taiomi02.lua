@@ -24,6 +24,7 @@ local vn = require "vn"
 local fmt = require "format"
 local taiomi = require "common.taiomi"
 local der = require 'common.derelict'
+local pilotai = require "pilotai"
 
 -- luacheck: globals enter heartbeat land spawn_fleet board_convoy (Hook functions passed by name)
 
@@ -155,11 +156,10 @@ function spawn_fleet ()
    fleet[1]:rename(_("Convoy"))
    fleet[1]:setFaction(cursys.fct)
    fleet[1]:setHilight(true)
-   fleet[1]:control()
+   pilotai.hyperspace( fleet[1], endpos )
    local fm = fleet[1]:memory()
-   fm.goal = "hyperspace"
-   fm.goal_hyperspace = endpos
-   fm.goal_pos = endpos:pos()
+   fm.norun = true
+   fm.aggressive = false
    hook.pilot( fleet[1], "board", "board_convoy" )
 end
 
