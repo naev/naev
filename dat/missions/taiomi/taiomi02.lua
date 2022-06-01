@@ -143,25 +143,20 @@ function spawn_fleet ()
    local startpos = j[1]
    local endpos = j[2]
 
-   local function padd( shipname, boss )
-      local p = pilot.add( shipname, cursys.fct, startpos, endpos )
-      if boss then
-         p:setLeader( boss )
-      else
-         p:control()
-         p:jump( endpos )
-      end
-      return p
-   end
-
-   table.insert( fleet, padd( "Mule" ) )
+   -- Create the mule and change faction
+   table.insert( fleet, pilot.add( "Mule", "Trader", startpos ) )
    for k,v in ipairs(cursys.escorts) do
-      table.insert( fleet, padd( v, fleet[1] ) )
+      local p = pilot.add( v, cursys.fct, startpos )
+      p:setLeader( fleet[1] )
+      table.insert( fleet, p )
    end
 
    -- First ship is the convoy ship that has special stuff
    fleet[1]:rename(_("Convoy"))
+   fleet[1]:setFaction(cursys.fct)
    fleet[1]:setHilight(true)
+   fleet[1]:control()
+   fleet[1]:hyperspace( endpos )
    hook.pilot( fleet[1], "board", "board_convoy" )
 end
 
@@ -195,6 +190,12 @@ function board_convoy( p )
    if mem.state >= N then
       misn.markerRm()
       misn.markerAdd( base )
+
+      if heartbeat_hook then
+         hook.rm( heartbeat_hook )
+         heartbeat_hook = nil
+         fleet = nil
+      end
    end
 end
 
@@ -209,10 +210,12 @@ function heartbeat ()
 
    -- Spawn new fleet
    if #fleet <= 0 then
-      hook.timer( 10+rnd.rnd()*10, "spawn_fleet" )
+      local t = 10+rnd.rnd()*10
+      hook.timer( t, "spawn_fleet" )
+      heartbeat_hook = hook.timer( t+1, "heartbeat" )
+   else
+      heartbeat_hook = hook.timer( 1, "heartbeat" )
    end
-
-   hook.timer( 1, "heartbeat" )
 end
 
 function land ()
