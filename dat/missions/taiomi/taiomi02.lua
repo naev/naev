@@ -156,7 +156,10 @@ function spawn_fleet ()
    fleet[1]:setFaction(cursys.fct)
    fleet[1]:setHilight(true)
    fleet[1]:control()
-   fleet[1]:hyperspace( endpos )
+   local fm = fleet[1]:memory()
+   fm.goal = "hyperspace"
+   fm.goal_hyperspace = endpos
+   fm.goal_pos = endpos:pos()
    hook.pilot( fleet[1], "board", "board_convoy" )
 end
 
