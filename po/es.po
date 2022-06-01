@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-05-12 10:59+0900\n"
-"PO-Revision-Date: 2022-05-30 18:05+0000\n"
+"PO-Revision-Date: 2022-05-31 18:24+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
@@ -27577,8 +27577,9 @@ msgid "C-28"
 msgstr "C-28"
 
 #: dat/ssys/c43.xml:2
+#, fuzzy
 msgid "C-43"
-msgstr ""
+msgstr "C-43"
 
 #: dat/ssys/c59.xml:2
 #, fuzzy
@@ -28956,8 +28957,9 @@ msgid "Raelid"
 msgstr "Raelid"
 
 #: dat/ssys/ram.xml:2
+#, fuzzy
 msgid "Ram"
-msgstr ""
+msgstr "Ram"
 
 #: dat/ssys/rauthia.xml:2
 #, fuzzy
@@ -29721,184 +29723,235 @@ msgstr "Vuele seguro, vuele Milspec."
 #: dat/ai/advertiser.lua:11
 msgid "Reynir's Hot Dogs: enjoy the authentic taste of tradition."
 msgstr ""
+"Perritos Calientes Reynir: disfruta del auténtico sabor de la tradición."
 
 #: dat/ai/advertiser.lua:12
 msgid ""
 "Everyone is faster than light, but only Tricon engines are faster than "
 "thought!"
 msgstr ""
+"Todo el mundo es más rápido que la luz, ¡pero sólo los motores Tricon son "
+"más rápidos que el pensamiento!"
 
 #: dat/ai/advertiser.lua:13
 msgid "Dare excellence! Dare Teracom rockets!"
-msgstr ""
+msgstr "¡Atrévete con la excelencia! ¡Atrévete con los cohetes Teracom!"
 
 #: dat/ai/advertiser.lua:14
 msgid ""
 "Most people are ordinary. For the others, Nexus designed the Shark fighter."
 msgstr ""
+"La mayoría de la gente es ordinaria. Para los demás, Nexus diseñó el caza "
+"Tiburón."
 
 #: dat/ai/advertiser.lua:15
 msgid ""
 "Never take off without your courage. Never take off without your Vendetta."
-msgstr ""
+msgstr "Nunca despegues sin tu valor. Nunca despegues sin tu Vendetta."
 
 #: dat/ai/advertiser.lua:16
 msgid "Unicorp: low price and high quality!"
-msgstr ""
+msgstr "Unicorp: ¡precio bajo y alta calidad!"
 
 #: dat/ai/advertiser.lua:17
 msgid "Life is short, spend it at Minerva Station in the Limbo System!"
-msgstr ""
+msgstr "La vida es corta, ¡pásala en la Estación Minerva del Sistema Limbo!"
 
 #: dat/ai/advertiser.lua:18
 msgid "Insuperable Sleekness. Introducing the Krain Industries Starbridge."
 msgstr ""
+"Una elegancia insuperable. Presentamos el Starbridge de Industrias Krain."
 
 #: dat/ai/advertiser.lua:19
 msgid ""
 "Take care of the ones you do love. Let your Enygma System Turreted Launchers "
 "deal with the ones you don't!"
 msgstr ""
+"Cuida de los que sí quieres. ¡Deja que tus torretas lanzadoras del Sistema "
+"Enigma se ocupen de los que no quieres!"
 
 #: dat/ai/advertiser.lua:22
 msgid "Do you love your Emperor as much as he loves you?"
-msgstr ""
+msgstr "¿Amas a tu emperador tanto como él te ama a ti?"
 
 #: dat/ai/advertiser.lua:23
 msgid "You're quick and dependable? The Emperor needs you in the Armada!"
-msgstr ""
+msgstr "¿Eres rápido y fiable? ¡El Emperador te necesita en la Armada!"
 
 #: dat/ai/advertiser.lua:24
 msgid ""
 "Made money hauling cargo? Remember to file your EW-59831 every cycle or face "
 "the consequences."
 msgstr ""
+"¿Has ganado dinero transportando carga? Acuérdate de presentar tu EW-59831 "
+"cada ciclo o atente a las consecuencias."
 
 #: dat/ai/advertiser.lua:25
 msgid ""
 "Need help with your EW-59831 form? Try Bob's Bureaucratic Bazaar at Semper!"
 msgstr ""
+"¿Necesita ayuda con tu formulario EW-59831? ¡Prueba el Bazar Burocrático de "
+"Bob en Semper!"
 
 #: dat/ai/advertiser.lua:26
 msgid ""
 "Not filing your EE-91726 for unauthorized pet iguanas is a crime. Report to "
 "your Empire Animal Bureau now."
 msgstr ""
+"No presentar tu EE-91726 para las iguanas mascotas no autorizadas es un "
+"delito. Informe a tu Oficina de Animales del Imperio ahora."
 
 #: dat/ai/advertiser.lua:27
 msgid "Keep your documents properly filed. Unicorp Filing Cabinets."
-msgstr ""
+msgstr "Mantén tus documentos bien clasificados. Archivadores Unicorp."
 
 #: dat/ai/advertiser.lua:30
 msgid "Only your hard work will save the Dvaered economy!"
-msgstr ""
+msgstr "¡Sólo tu trabajo duro salvará la economía Dvaered!"
 
 #: dat/ai/advertiser.lua:31
 msgid "Together, we will beat the economic crisis!"
-msgstr ""
+msgstr "¡Juntos, venceremos la crisis económica!"
 
 #: dat/ai/advertiser.lua:32
 msgid "Bet on Totoran and win incredible sums thanks to the Crimson Gauntlet!"
 msgstr ""
+"¡Apuesta por Totoran y gana sumas increíbles gracias al Guantelete Carmesí!"
 
 #: dat/ai/advertiser.lua:33
 msgid ""
 "Mace rockets lacking shine? Try Lady Killington's premium rocket polish!"
 msgstr ""
+"¿Los cohetes Maza carecen de brillo? ¡Prueba el pulidor de cohetes premium "
+"de Dama Killington!"
 
 #: dat/ai/advertiser.lua:34
 msgid ""
 "Other warlords not letting you enjoy bloodshed? Join Lord Easytrigger's "
 "battalion today!"
 msgstr ""
+"¿Otros señores de la guerra no te dejan disfrutar de un baño de sangre? ¡"
+"Únete al batallón de Señor Gatillofácil hoy mismo!"
 
 #: dat/ai/advertiser.lua:35
 msgid ""
 "A Dvaered Success Story: Buy the outstanding autobiography by Lady "
 "Bitterfly. "
 msgstr ""
+"Una historia de éxito Dvaered: Compre la extraordinaria autobiografía de "
+"Lady Bitterfly."
 
 #: dat/ai/advertiser.lua:38
 msgid "Remember Sorom."
-msgstr ""
+msgstr "Recuerda a Sorom."
 
 #: dat/ai/advertiser.lua:39
 msgid "Special offer on Crow: buy one IR-eye, and the second comes for free!"
 msgstr ""
+"¡Oferta especial en Cuervo: compre un ojo IR y el segundo le saldrá gratis!"
 
 #: dat/ai/advertiser.lua:40
 msgid ""
 "Looking to modify an entire species? Visit Dr. Hu's Gene Clinic at Point "
 "Zero Station!"
 msgstr ""
+"¿Quiere modificar toda una especie? ¡Visite la Clínica Genética del Dr. Hu "
+"en la Estación Punto Cero!"
 
 #: dat/ai/advertiser.lua:41
 msgid ""
 "Endogenous DNA damage hampering your Gene Drive? Drop by your local "
 "Chromosomal Rearrangement Laboratory for a check-up."
 msgstr ""
+"¿Los daños endógenos en el ADN dificultan tus Impulsores Genéticos? Acércate "
+"a tu laboratorio local de reordenación cromosómica para que te hagan un "
+"chequeo."
 
 #: dat/ai/advertiser.lua:42
 msgid ""
 "Visit Bohr Laboratory for all your epistatic mutation woes. 10 locations and "
 "counting!"
 msgstr ""
+"Visite el Laboratorio Bohr para todos sus problemas de mutaciones "
+"epistémicas. ¡10 ubicaciones y contando!"
 
 #: dat/ai/advertiser.lua:43
 msgid ""
 "Worried about your bio-ship adenosine triphosphate output? Leave it to ATP "
 "Specialists!"
 msgstr ""
+"¿Preocupado por la producción de trifosfato de adenosina de su bionave? ¡"
+"Déjelo en manos de Especialistas ATP!"
 
 #: dat/ai/advertiser.lua:44
 msgid ""
 "Preemptively treat your bio-ship for space fleas with Dr. Nastya's Ointment!"
 msgstr ""
+"¡Trata preventivamente tu bionave de las pulgas espaciales con el ungüento "
+"de la Dra. Nastya!"
 
 #: dat/ai/advertiser.lua:47
 msgid ""
 "Want to solve a large-dimensional stochastic PDE? The LMKSTD method is what "
 "you need!"
 msgstr ""
+"¿Quiere resolver una EDP estocástica de grandes dimensiones? ¡El método "
+"LMKSTD es lo que necesita!"
 
 #: dat/ai/advertiser.lua:48
 msgid "Love non-convex minimization? Join Ruadan's Computation Science Lab!"
 msgstr ""
+"¿Te gusta la minimización no convexa? ¡Únete al Laboratorio de Ciencias de "
+"la Computación de Ruadan!"
 
 #: dat/ai/advertiser.lua:49
 msgid "Keeping your drones in top shape. Prof. Imarisha's Robotic Laboratory."
 msgstr ""
+"Mantén tus drones en plena forma. Laboratorio de Robótica del Profesor "
+"Imarisha."
 
 #: dat/ai/advertiser.lua:50
 msgid "Interested in Genetic Lifeforms research? Apply to Interstice Science!"
 msgstr ""
+"¿Interesado en la investigación de Formas de Vida Genética? ¡Solicita un "
+"puesto en Ciencia Intersticial!"
 
 #. Reference to Aperture Science (synonyms) from Portal
 #: dat/ai/advertiser.lua:51
 msgid "Want to learn about Anti-Mass Spectometry? Join Ebony Plateau today!"
 msgstr ""
+"¿Quieres aprender sobre la Espectrometría Antimasa? ¡Únete a Ébano Mesa hoy "
+"mismo!"
 
 #. Reference to Black Mesa (synonyms) from Half-Life
 #: dat/ai/advertiser.lua:54
 msgid "Want a new look? Try Verrill's Ceremonial Robes at Burnan!"
 msgstr ""
+"¿Quieres un nuevo aspecto? ¡Prueba las túnicas ceremoniales de Verrill en "
+"Burnan!"
 
 #. Special ads that can be multi-faction
 #: dat/ai/advertiser.lua:59
 msgid "Nexus Augmentation: trust the galactic leader in cyber-organs rental!"
 msgstr ""
+"Aumentos Nexus: ¡confíe en el líder galáctico en alquiler de órganos "
+"cibernéticos!"
 
 #: dat/ai/advertiser.lua:60
 msgid ""
 "Love your children? Get them the new Nexus Augmentation NCB-567K cyber-brain "
 "and they will never fail an exam!"
 msgstr ""
+"¿Quieres a tus hijos? ¡Consígueles el nuevo cibercerebro Aumento NCB-567K y "
+"nunca suspenderán un examen!"
 
 #: dat/ai/advertiser.lua:61
 msgid ""
 "Rent arrears for your cyber-organs? Take out a credit at Nexus Bank and save "
 "your vital organs from being removed!"
 msgstr ""
+"¿Retraso en el pago del alquiler de tus órganos cibernéticos? ¡Pide un "
+"crédito en el Banco Nexus y evita que te extirpen los órganos vitales!"
 
 #. Credits.
 #. No bribe
@@ -29928,17 +29981,17 @@ msgstr ""
 #: dat/ai/advertiser.lua:71 dat/ai/civilian.lua:9 dat/ai/independent.lua:10
 #: dat/ai/proteron_dissident.lua:12
 msgid "\"Just leave me alone!\""
-msgstr ""
+msgstr "\"¡Sólo déjame en paz!\""
 
 #: dat/ai/advertiser.lua:72 dat/ai/civilian.lua:10 dat/ai/independent.lua:11
 #: dat/ai/proteron_dissident.lua:13
 msgid "\"What do you want from me!?\""
-msgstr ""
+msgstr "\"¿Qué quieres de mí?\""
 
 #: dat/ai/advertiser.lua:73 dat/ai/civilian.lua:11 dat/ai/independent.lua:12
 #: dat/ai/proteron_dissident.lua:14
 msgid "\"Get away from me!\""
-msgstr ""
+msgstr "\"¡Aléjate de mí!\""
 
 #. Refuel
 #. Credits.
@@ -29984,7 +30037,7 @@ msgstr ""
 #: dat/ai/mercenary.lua:66 dat/ai/miner.lua:33 dat/ai/proteron_dissident.lua:32
 #: dat/ai/thurion.lua:72 dat/ai/trader.lua:53
 msgid "\"I'll supply your ship with fuel for {credits}.\""
-msgstr ""
+msgstr "\"Te abasteceré de combustible por {créditos}.\""
 
 #. Set up potential advertiser messages in msg variable
 #. Faction specific messages
@@ -29992,7 +30045,7 @@ msgstr ""
 #. Dvaered messages
 #: dat/ai/advertiser.lua:100
 msgid "Butthead"
-msgstr ""
+msgstr "Cabeza de Chorlito"
 
 #: dat/ai/advertiser.lua:101
 msgid "Nincompoop"
