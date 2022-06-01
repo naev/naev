@@ -48,6 +48,7 @@ local taiomi = {
 
 local missions = {
    "Taiomi 1", -- 1
+   "Taiomi 2", -- 2
 }
 
 -- Gets the current progress of the Taiomi campaign
