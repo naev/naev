@@ -144,7 +144,7 @@ function spawn_fleet ()
    local endpos = j[2]
 
    local function padd( shipname, boss )
-      local p = pilot.add( cursys.fct, shipname, startpos, endpos )
+      local p = pilot.add( shipname, cursys.fct, startpos, endpos )
       if boss then
          p:setLeader( boss )
       else
