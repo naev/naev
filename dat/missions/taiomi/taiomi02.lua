@@ -87,7 +87,12 @@ function create ()
 
    -- Mission details
    misn.setTitle( title )
-   misn.setDesc( _("You have agreed to help the robotic citizens of Taiomi to obtain important information regarding the hypergates.") )
+
+   local desc = _("You have agreed to help the robotic citizens of Taiomi to obtain important information regarding the hypergates. The information can be found on convoys that tend to cross the following systems:")
+   for k,v in ipairs(convoysys) do
+      desc = desc .. "\n" .. fmt.f(_("   {sysname}"),{sysname=v.sys})
+   end
+   misn.setDesc( desc )
    misn.setReward( fmt.credits(reward) )
 
    for k,v in ipairs(convoysys) do
@@ -126,6 +131,7 @@ function enter ()
       return
    end
 
+   fleet = {}
    heartbeat()
 end
 
@@ -155,6 +161,7 @@ function spawn_fleet ()
 
    -- First ship is the convoy ship that has special stuff
    fleet[1]:rename(_("Convoy"))
+   fleet[1]:setHilight(true)
    hook.pilot( fleet[1], "board", "board_convoy" )
 end
 
@@ -189,7 +196,16 @@ function board_convoy ()
 end
 
 function heartbeat ()
-   if not fleet then
+   local nfleet = {}
+   for k,v in ipairs(fleet) do
+      if v:exists() then
+         table.insert( nfleet, v )
+      end
+   end
+   fleet = nfleet
+
+   -- Spawn new fleet
+   if #fleet <= 0 then
       hook.timer( 10+rnd.rnd()*10, "spawn_fleet" )
    end
 

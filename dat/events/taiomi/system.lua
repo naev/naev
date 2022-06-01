@@ -188,7 +188,7 @@ function hail_scavenger ()
          d(_([["As we are not too familiar with the technology, I have assembled an analyzer that should be able to provide insights into it. As we are are too conspicuous to human ships, would yo you be willing to help us out and scan the hypergates?"]]))
          vn.menu{
             {_("Agree to help out."), "01_yes"},
-            {_("Maybe later."), "01_no"},
+            {_("Maybe later."), "mission_reject"},
          }
 
          vn.label("01_yes")
@@ -199,15 +199,37 @@ function hail_scavenger ()
             --inprogress = true
          end )
          vn.jump("menu_ask")
-
-         vn.label("01_no")
-         d(_([["That is a shame. Feel free to contact me again if you wish to reanalyze your current choice."]]))
+      end
+   elseif progress == 0 then
+      if inprogress then
+         d(_([["How is the progress on collecting the hypergate information going?"]]))
          vn.jump("menu")
+      else
+         d(_([["I have been analyzing the data you collected and it is quite surprising. Human ingenuity never ceases to amaze me. It looks like it may be possible to replicate the approach, but we will need more information to work with that."]]))
+         d(_([["Given that it does not seem reasonable to try to replicate the results from scratch, our best bet is to try to collect more details from the human build hypergates."]]))
+         d(_([["From my incursions in human territory, it seems like convoys going to and from hypergates tend to frequent the same systems. I would need you to raid the convoys and collect the necessary data. Would it be possible for you to collect the data for us?"]]))
+         vn.menu{
+            {_("Agree to help out."), "02_yes"},
+            {_("Maybe later."), "mission_reject"},
+         }
+
+         vn.label("02_yes")
+         d(_([["Appreciations. I have marked systems that are known for having convoys on your map. I would like to warn you that this may decrease your goodwill with the dominant factions of the systems. I hope this does not cause you too much inconvenience."]]))
+         d(_([["You will have to disable the convoys before you can board them to access the data. It is unlikely that a single convoy will contain all the information we seek, so you will most likely have to board several. My analysis of your flying capabilities estimates over 80% chance of success. Gluckliche Reise."]]))
+         vn.func( function ()
+            naev.missionStart("Taiomi 2")
+            --inprogress = true
+         end )
+         vn.jump("menu_ask")
       end
    else
       d(_([["I am still preparing our next steps."]]))
       vn.jump("menu")
    end
+
+   vn.label("mission_reject")
+   d(_([["That is a shame. Feel free to contact me again if you wish to reanalyze your current choice."]]))
+   vn.jump("menu")
 
    vn.label("menu_ask")
    d(_([["Is there anything else you would like to know?"]]))
