@@ -165,7 +165,7 @@ function spawn_fleet ()
    hook.pilot( fleet[1], "board", "board_convoy" )
 end
 
-function board_convoy ()
+function board_convoy( p )
    vn.clear()
    vn.scene()
    vn.sfx( der.sfx.board )
@@ -185,6 +185,9 @@ function board_convoy ()
    vn.sfx( der.sfx.unboard )
    vn.run()
    player.unboard()
+
+   -- Store faction which will be used for next missions
+   var.push( "taiomi_convoy_fct", p:faction():nameRaw() )
 
    mem.state = mem.state+1
    osd() -- Update OSD
@@ -221,15 +224,19 @@ function land ()
    vn.scene()
    local s = vn.newCharacter( taiomi.vn_scavenger() )
    vn.transition( taiomi.scavenger.transition )
-   vn.na(_([[You board the Goddard and by the time you get off the ship Scavenger is waiting for you.]]))
-   s(_([[""]]))
+   vn.na(_([[You board the Goddard and and find Scavenger waiting for you.]]))
+   s(_([["I can sense you have managed to collect the necessary data. Let me analyze it hastily."]]))
+   s(_([[Scavenger takes the data and there is a brief flicker of their lights.]]))
+   s(_([["Very interesting. While the documents contain mainly mundane details that aren't particularly of importance to us, there is a lead to one of the experimental locations. I believe it should be possible to find more in-depth construction details there."]]))
+   s(_([["I will be outside preparing our next steps."
+Scavenger backs out of the Goddard and returns to space.
+]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
-   vn.na(_([[Scavenger once again elegantly exits the ship, leaving you to yourself.]]))
    vn.done( taiomi.scavenger.transition )
    vn.run()
 
    player.pay( reward )
-   taiomi.log.main(_("TODO"))
+   taiomi.log.main(_("You helped the robotic inhabitants of Taiomi collect important information regarding the hypergates by obtaining it from convoys."))
    misn.finish(true)
 end
