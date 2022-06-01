@@ -23,6 +23,7 @@
 local vn = require "vn"
 local fmt = require "format"
 local taiomi = require "common.taiomi"
+local der = require 'common.derelict'
 
 -- luacheck: globals enter heartbeat land spawn_fleet board_convoy (Hook functions passed by name)
 
@@ -153,11 +154,29 @@ function spawn_fleet ()
    end
 
    -- First ship is the convoy ship that has special stuff
+   fleet[1]:rename(_("Convoy"))
    hook.pilot( fleet[1], "board", "board_convoy" )
 end
 
 function board_convoy ()
-   -- TODO do boarding stuff
+   vn.clear()
+   vn.scene()
+   vn.sfx( der.sfx.board )
+   vn.music( der.sfx.ambient )
+   if mem.state == 0 then
+      vn.na(_([[You board the ship and are able to obtain some hypergate information from the convoy systems.]]))
+      vn.func( function ()
+         local c = commodity.new( N_("Hypergate Information"), N_("Information relating to the hypergate construction and planning.") )
+         mem.cargo = misn.cargoAdd( c, 0 )
+      end )
+   else
+      vn.na(_([[You board the ship and are able to more hypergate information from the convoy systems.]]))
+      if mem.state == N then
+         vn.na(_([[It seems like you have collected all the necessary data and can return to Scavenger.]]))
+      end
+   end
+   vn.sfx( der.sfx.unboard )
+   vn.run()
    player.unboard()
 
    mem.state = mem.state+1
