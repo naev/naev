@@ -430,6 +430,7 @@ if buildExec.disabled() == false
    endif
    if host_machine.system() == 'darwin'
      meson.add_install_script('extras/macos/bundle.py')
+     meson.add_install_script('extras/macos/createDMG.sh', '-s', meson.source_root() , '-b', meson.current_build_dir())
    endif
 endif
 
