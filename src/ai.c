@@ -2322,7 +2322,7 @@ static int aiL_land( lua_State *L )
    spob = cur_system->spobs[ cur_pilot->nav_spob ];
 
    /* Check landability. */
-   if ((spob->lua_can_land==LUA_NOREF) && !spob_hasService(spob,SPOB_SERVICE_INHABITED)) { /* Basic services */
+   if ((spob->lua_can_land==LUA_NOREF) && !spob_hasService(spob,SPOB_SERVICE_LAND)) { /* Basic services */
       lua_pushboolean(L,0);
       return 1;
    }
