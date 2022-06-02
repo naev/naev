@@ -28,6 +28,7 @@ local fmt = require "format"
 local ant = require "common.antlejos"
 local lmisn = require "lmisn"
 local lg = require "love.graphics"
+local pilotai = require "pilotai"
 
 local reward = ant.rewards.ant09
 
@@ -283,9 +284,7 @@ function enter ()
          else
             p:setLeader( l )
          end
-         local aimem = p:memory()
-         aimem.waypoints = route
-         aimem.loiter = math.huge -- patrol forever
+         pilotai.patrol( p, route )
       end
    end
 

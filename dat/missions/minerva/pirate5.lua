@@ -31,6 +31,7 @@ local minerva = require "common.minerva"
 local vn = require 'vn'
 local equipopt = require 'equipopt'
 local fmt = require "format"
+local pilotai = require "pilotai"
 
 local reward_amount = minerva.rewards.pirate5
 local drone_control_update -- Forward-declared functions
@@ -304,9 +305,7 @@ function enter ()
          local p = spawn_drone( s, pos )
          if k==1 then
             l = p
-            local aimem = p:memory()
-            aimem.waypoints = route
-            aimem.loiter = math.huge -- patrol forever
+            pilotai.patrol( p, route )
          else
             p:setLeader( l )
          end

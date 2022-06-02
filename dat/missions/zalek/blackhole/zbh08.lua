@@ -26,6 +26,7 @@ local vntk = require "vntk"
 local fmt = require "format"
 local zbh = require "common.zalek_blackhole"
 local lmisn = require  "lmisn"
+local pilotai = require "pilotai"
 
 -- luacheck: globals land enter scout_discovered feral_hail (Hook functions passed by name)
 
@@ -206,9 +207,7 @@ function enter ()
             p:setHostile(true)
             if k==1 then
                l = p
-               local aimem = p:memory()
-               aimem.waypoints = route
-               aimem.loiter = math.huge -- patrol forever
+               pilotai( p, route )
             else
                p:setLeader( l )
             end

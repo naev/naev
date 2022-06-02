@@ -17,4 +17,16 @@ function pilotai.hyperspace( p, target )
    m.route = lanes.getRouteP( p, m.goal_pos )
 end
 
+--[[
+   Makes a pilot patrol a set of waypoints indefinately
+
+      @tparam Pilot p Pilot to make patrol.
+      @tparam Table waypoints Ordered table with the waypoints as Vec2.
+--]]
+function pilotai.patrol( p, waypoints )
+   local m = p:memory()
+   m.waypoints = waypoints
+   m.loiter = math.huge
+end
+
 return pilotai

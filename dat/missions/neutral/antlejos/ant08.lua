@@ -27,6 +27,7 @@ local fmt = require "format"
 local ant = require "common.antlejos"
 local fleet = require "fleet"
 local escort = require "escort"
+local pilotai = require "pilotai"
 
 local reward = ant.rewards.ant08
 
@@ -228,12 +229,11 @@ function enter ()
       local f = spawn_protestors( vec2.new(), {"Ancestor", "Ancestor", "Lancelot", "Lancelot"} )
       for k,p in ipairs(f) do
          p:changeAI( "baddiepatrol" )
-         local m = p:memory()
-         m.waypoints = {
+         pilotai.patrol( p, {
             vec2.new(    0, -2000 ),
             vec2.new( -4000, 4000 ),
             vec2.new( -8000, 2000 ),
-         }
+         } )
       end
    end
 end
