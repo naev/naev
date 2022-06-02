@@ -43,7 +43,6 @@ elif ! [ -x "$(command -v dmg)" ]; then
     echo "Get it from https://github.com/fanquake/libdmg-hfsplus"
     exit 1
 fi
-fi
 
 
 # Creates temp directory
@@ -60,4 +59,4 @@ cp -r "$BUILDPATH"/dist/Naev.app "$WORKPATH"
 
 # Generate ISO image and compress into DMG
 genisoimage -V Naev -D -R -apple -no-pad -o "$WORKPATH"/naev.iso "$WORKPATH"
-dmg "$WORKPATH"/naev.iso "$BUILDPATH"/dist/naev.dmg 
+dmg "$WORKPATH"/naev.iso "$BUILDPATH"/dist/naev.dmg
