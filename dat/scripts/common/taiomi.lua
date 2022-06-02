@@ -43,12 +43,14 @@ local taiomi = {
    rewards = {
       taiomi01 = 300e3,
       taiomi02 = 300e3,
+      taiomi03 = 350e3,
    },
 }
 
 local missions = {
    "Taiomi 1", -- 1
    "Taiomi 2", -- 2
+   "Taiomi 3", -- 3
 }
 
 -- Gets the current progress of the Taiomi campaign
@@ -106,6 +108,14 @@ function taiomi.vn_youngb( params )
             image=taiomi.youngb.image,
             color=taiomi.youngb.colour,
          }, params) )
+end
+
+function taiomi.laboratory ()
+   local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
+   if fct == "Soromid" then
+      return spob.getS( "Soromid Databank" )
+   end
+   return spob.getS( "Zhiru" )
 end
 
 return taiomi
