@@ -190,8 +190,7 @@ Spob* luaL_validspob( lua_State *L, int ind )
  */
 LuaSpob* lua_pushspob( lua_State *L, LuaSpob spob )
 {
-   LuaSpob *p;
-   p = (LuaSpob*) lua_newuserdata(L, sizeof(LuaSpob));
+   LuaSpob *p = (LuaSpob*) lua_newuserdata(L, sizeof(LuaSpob));
    *p = spob;
    luaL_getmetatable(L, SPOB_METATABLE);
    lua_setmetatable(L, -2);
@@ -836,15 +835,12 @@ static int spobL_outfitsSold( lua_State *L )
  */
 static int spobL_commoditiesSold( lua_State *L )
 {
-   Spob *p;
-   int i;
-
    /* Get result and tech. */
-   p = luaL_validspob(L,1);
+   Spob *p = luaL_validspob(L,1);
 
    /* Push results in a table. */
    lua_newtable(L);
-   for (i=0; i<array_size(p->commodities); i++) {
+   for (int i=0; i<array_size(p->commodities); i++) {
       lua_pushcommodity(L,p->commodities[i]); /* value = LuaCommodity */
       lua_rawseti(L,-2,i+1); /* store the value in the table */
    }
@@ -910,13 +906,10 @@ static int spobL_isKnown( lua_State *L )
  */
 static int spobL_setKnown( lua_State *L )
 {
-   int b, changed;
-   Spob *p;
+   Spob *p = luaL_validspob(L,1);
+   int b = lua_toboolean(L, 2);
 
-   p = luaL_validspob(L,1);
-   b = lua_toboolean(L, 2);
-
-   changed = (b != (int)spob_isKnown(p));
+   int changed = (b != (int)spob_isKnown(p));
 
    if (b)
       spob_setKnown( p );
