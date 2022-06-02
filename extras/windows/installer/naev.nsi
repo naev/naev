@@ -1,5 +1,6 @@
 ;For testing the script
 ;SetCompress Off
+SetCompressor /FINAL /SOLID lzma
 
 ;Enables Unicode installer to clear ANSI deprecation message
 ;Unicode true
