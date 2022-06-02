@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-02-19 12:48-0500\n"
-"PO-Revision-Date: 2022-06-01 22:16+0000\n"
+"PO-Revision-Date: 2022-06-02 22:18+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -3580,12 +3580,12 @@ msgid ""
 "shadier characters in the universe, leading to frequent fights in which they "
 "test their newly bought outfits."
 msgstr ""
-"Famosa por su mercado de complementos y sus astilleros, casi la totalidad de "
-"la estación Darkshed está dedicada al comercio de atuendos y naves. "
-"Mercenarios y cazarrecompensas de toda la galaxia acuden aquí para ver y "
-"probar las últimas mejoras disponibles en el mercado. También suele atraer a "
-"muchos de los personajes más turbios del universo, lo que provoca frecuentes "
-"peleas en las que ponen a prueba sus trajes recién comprados."
+"Famosa por su mercado de equipos y sus astilleros, casi la totalidad de la "
+"estación Darkshed está dedicada al comercio de equipos y naves. Mercenarios "
+"y cazarrecompensas de toda la galaxia acuden aquí para ver y probar las "
+"últimas mejoras disponibles en el mercado. También suele atraer a muchos de "
+"los personajes más turbios del universo, lo que provoca frecuentes peleas en "
+"las que ponen a prueba sus equipos recién comprados."
 
 #: dat/assets/darkshed.xml:32
 msgid ""
@@ -5415,7 +5415,7 @@ msgid ""
 msgstr ""
 "Aunque la Estación Furia no es la mejor construida, cumple con su cometido "
 "al contar con un astillero con todos las nave piratas habituales y una "
-"tienda de equipamiento con una importante gama de productos. Incluso tiene "
+"tienda de equipos con una importante gama de productos. Incluso tiene "
 "algunas mercancías que no se ofrecen en el cercano mucho clan Sánchez."
 
 #: dat/assets/fuzka.xml:2
@@ -18980,7 +18980,7 @@ msgstr ""
 "Encontrado en un caza Cuatro Vientos que llevaba un rayo Ragnarok. Parece "
 "aumentar el rendimiento de tu motor cuando la masa de la nave es elevada. "
 "Seguramente no es una aspiradora real, pero no se sabe el nombre real de "
-"este complemento."
+"este equipo."
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_1.xml:2
 msgid "BioPlasma Claw Stage 1"
@@ -25468,8 +25468,8 @@ msgid ""
 "normal means."
 msgstr ""
 "Esta ranura se utiliza para equipar accesorios que pueden mejorar el "
-"rendimiento de una nave. Los complementos que caben en estas ranuras no "
-"suelen adquirirse por medios normales."
+"rendimiento de una nave. Los equipos que caben en estas ranuras no suelen "
+"adquirirse por medios normales."
 
 #: dat/slots.xml:9
 msgid "Core Systems"
@@ -28134,7 +28134,7 @@ msgstr "\"¡Aléjate de mí!\""
 #: dat/ai/mercenary.lua:66 dat/ai/miner.lua:33 dat/ai/proteron_dissident.lua:32
 #: dat/ai/thurion.lua:63 dat/ai/trader.lua:53
 msgid "\"I'll supply your ship with fuel for {credits}.\""
-msgstr "\"Te abasteceré de combustible por {créditos}.\""
+msgstr "\"Te abasteceré de combustible por {credits}.\""
 
 #. Set up potential advertiser messages in msg variable
 #. Faction specific messages
@@ -28248,13 +28248,11 @@ msgstr "Dama Proserpina"
 
 #: dat/ai/advertiser.lua:129
 msgid "I hereby declare {butthead} is a {badword}. -{sponsor}"
-msgstr ""
-"Por la presente declaró que {tontolculo} es una {palabra mala}. "
-"-{patrocinador}"
+msgstr "Por la presente declaró que {butthead} es una {badword}. -{sponsor}"
 
 #: dat/ai/advertiser.lua:130
 msgid "Let it be known that {butthead} is a {badword}. -{sponsor}"
-msgstr "Que se sepa que {tontolculo} es una {palabra mala}. -{patrocinador}"
+msgstr "Que se sepa que {butthead} es una {badword}. -{sponsor}"
 
 #. Soromid messages
 #. Soromid+Empire messages
@@ -28276,7 +28274,7 @@ msgid ""
 "we invite you to contribute other unpublished papers of relevant fields to "
 "the Interstellar Pay-to-win Journal for Mathematics and Applications."
 msgstr ""
-"Estimado Prof. {jugador}, su reciente trabajo nos ha dejado una profunda "
+"Estimado Prof. {player}, su reciente trabajo nos ha dejado una profunda "
 "impresión. Debido al avance, la novedad y la posibilidad de una amplia "
 "aplicación de su invención, le invitamos a que contribuya con otros trabajos "
 "inéditos de campos relevantes a la Revista Interestelar de Pago por Ganar "
@@ -29002,7 +29000,7 @@ msgstr "Transferencia de combustible terminada."
 #. Generic AI
 #: dat/ai/core/control/generic.lua:237
 msgid "Pilot '{plt}': formation '{formation}' not found!"
-msgstr "Piloto '{plt}': ¡formación '{formación}' no encontrada!"
+msgstr "Piloto '{plt}': ¡formación '{formation}' no encontrada!"
 
 #. Run instead of "control" when under manual control; use should be limited
 #. Skip message from nonexistent sender
@@ -29515,7 +29513,7 @@ msgstr "\"No eres digno de mi atención.\""
 
 #: dat/ai/dvaered.lua:63 dat/ai/frontier_police.lua:64
 msgid "\"For you I could make an exception for {credits}.\""
-msgstr "\"Por ti podría hacer una excepción de {créditos}.\""
+msgstr "\"Por ti podría hacer una excepción de {credits}.\""
 
 #. Handle bribing
 #. Only 50% of actually taunting.
@@ -29637,13 +29635,13 @@ msgid ""
 "\"I suppose I could spare some fuel for {credits}, but you'll have to do the "
 "paperwork.\""
 msgstr ""
-"\"Supongo que podría prescindir de algo de combustible por {créditos}, pero "
+"\"Supongo que podría prescindir de algo de combustible por {credits}, pero "
 "tendrás que hacer el papeleo.\""
 
 #. See if can be bribed
 #: dat/ai/empire.lua:98
 msgid "\"For some {credits} I could forget about seeing you.\""
-msgstr "\"Por algunos {créditos} podría olvidarme de verte.\""
+msgstr "\"Por algunos {credits} podría olvidarme de verte.\""
 
 #: dat/ai/empire.lua:99
 msgid "\"Now scram before I change my mind.\""
@@ -29723,7 +29721,7 @@ msgstr "¡Muerte a los enemigos de Frontera!"
 #. Handle bribes.
 #: dat/ai/flf.lua:71
 msgid "\"It'll cost you {credits} for me to ignore your dirty presence.\""
-msgstr "\"Te costará {créditos} que ignore tu sucia presencia.\""
+msgstr "\"Te costará {credits} que ignore tu sucia presencia.\""
 
 #: dat/ai/flf.lua:72
 msgid "\"Begone before I change my mind.\""
@@ -29736,8 +29734,7 @@ msgstr "\"¡La única manera de lidiar con escoria como tú es con cañones!\""
 #. Handle refueling.
 #: dat/ai/flf.lua:82
 msgid "\"I should be able to spare some fuel for {credits}.\""
-msgstr ""
-"\"Debería ser capaz de disponer de algo de combustible por {créditos}.\""
+msgstr "\"Debería ser capaz de disponer de algo de combustible por {credits}.\""
 
 #: dat/ai/flf.lua:84
 msgid "\"I can't spare fuel for you.\""
@@ -29774,7 +29771,7 @@ msgstr ""
 #. Handle bribing
 #: dat/ai/frontier_police.lua:73
 msgid "\"For {credits} I'll let your grievances slide.\""
-msgstr "\"Por {créditos} dejaré pasar tus agravios.\""
+msgstr "\"Por {credits} dejaré pasar tus agravios.\""
 
 #: dat/ai/frontier_police.lua:74
 msgid "\"Now get out of my sight and don't cause any more trouble.\""
@@ -29801,7 +29798,7 @@ msgstr "¡Eres un parásito!"
 #. Deal with refueling
 #: dat/ai/goddard.lua:59
 msgid "\"I could do you the favour of refueling for the price of {credits}.\""
-msgstr "\"Podría hacerle el favor de repostar por el precio de {créditos}.\""
+msgstr "\"Podría hacerle el favor de repostar por el precio de {credits}.\""
 
 #: dat/ai/mercenary.lua:12
 msgid "\"I'm afraid you can't make it worth my while.\""
@@ -29834,7 +29831,7 @@ msgstr "¡Esto no es para lo que me apunte!"
 #. Set up bribes
 #: dat/ai/mercenary.lua:72
 msgid "\"Your life is worth {credits} to me.\""
-msgstr "\"Tu vida vale {créditos} para mí.\""
+msgstr "\"Tu vida vale {credits} para mí.\""
 
 #: dat/ai/mercenary.lua:73
 msgid "\"Beat it.\""
@@ -29853,24 +29850,24 @@ msgstr "\"No quiero ningún problema.\""
 #. Settings
 #: dat/ai/pirate.lua:26
 msgid "\"Pay up {credits} or it's the end of the line.\""
-msgstr "\"Paga {créditos} o es el final de la línea.\""
+msgstr "\"Paga {credits} o es el final de la línea.\""
 
 #: dat/ai/pirate.lua:27
 msgid "\"Your money or your life. {credits} and make the choice quickly.\""
-msgstr "\"Tu dinero o tu vida. {créditos} y haz la elección rápidamente.\""
+msgstr "\"Tu dinero o tu vida. {credits} y haz la elección rápidamente.\""
 
 #: dat/ai/pirate.lua:28
 msgid "\"Money talks bub. {credits} up front or get off my channel.\""
-msgstr "\"El dinero habla amigo. {créditos} por adelantado o sal de mi canal.\""
+msgstr "\"El dinero habla amigo. {credits} por adelantado o sal de mi canal.\""
 
 #: dat/ai/pirate.lua:29
 msgid ""
 "\"You're either really desperate or really rich. {credits} or shut up.\""
-msgstr "\"O estás muy desesperado o eres muy rico. {créditos} o te callo.\""
+msgstr "\"O estás muy desesperado o eres muy rico. {credits} o te callo.\""
 
 #: dat/ai/pirate.lua:30
 msgid "\"This is a toll road, pay up {credits} or die.\""
-msgstr "\"Esta es una carretera de peaje, paga {créditos} o muere.\""
+msgstr "\"Esta es una carretera de peaje, paga {credits} o muere.\""
 
 #: dat/ai/pirate.lua:31
 msgid ""
@@ -29878,70 +29875,70 @@ msgid ""
 "be, {credits} or…\""
 msgstr ""
 "\"Así que esta es la parte en la que pagas o te disparan. Tú eliges. Qué "
-"será, {créditos} o...\""
+"será, {credits} o...\""
 
 #: dat/ai/pirate.lua:34
 msgid "\"It'll cost you {credits} for me to ignore your pile of rubbish.\""
-msgstr "\"Te costará {créditos} que ignore tu montón de basura.\""
+msgstr "\"Te costará {credits} que ignore tu montón de basura.\""
 
 #: dat/ai/pirate.lua:35
 msgid "\"I'm in a good mood so I'll let you go for {credits}.\""
-msgstr "\"Estoy de buen humor así que te dejaré ir por {créditos}.\""
+msgstr "\"Estoy de buen humor así que te dejaré ir por {credits}.\""
 
 #: dat/ai/pirate.lua:36
 msgid "\"Send me {credits} or you're dead.\""
-msgstr "\"Envíame {créditos} o estás muerto.\""
+msgstr "\"Envíame {credits} o estás muerto.\""
 
 #: dat/ai/pirate.lua:37
 msgid "\"Shut up and give me your money! {credits} now.\""
-msgstr "\"¡Cállate y dame tu dinero! {créditos} ahora.\""
+msgstr "\"¡Cállate y dame tu dinero! {credits} ahora.\""
 
 #: dat/ai/pirate.lua:38
 msgid "\"You give me {credits} and I'll act like I never saw you.\""
-msgstr "\"Dame {créditos} y actuaré como si nunca te hubiera visto.\""
+msgstr "\"Dame {credits} y actuaré como si nunca te hubiera visto.\""
 
 #: dat/ai/pirate.lua:39
 msgid ""
 "\"If you're willing to negotiate I'll gladly take {credits} to not kill you."
 "\""
 msgstr ""
-"\"Si estás dispuesto a negociar, aceptaré con gusto {créditos} por no "
-"matarte.\""
+"\"Si estás dispuesto a negociar, aceptaré con gusto {credits} por no matarte."
+"\""
 
 #: dat/ai/pirate.lua:40
 msgid ""
 "\"Pay up or don't. {credits} now just means I'll wait till later to collect "
 "the rest.\""
 msgstr ""
-"\"Paga o no lo hagas. {créditos} ahora sólo significa que esperaré hasta más "
+"\"Paga o no lo hagas. {credits} ahora sólo significa que esperaré hasta más "
 "tarde para cobrar el resto.\""
 
 #: dat/ai/pirate.lua:43
 msgid "\"It'll cost you {credits} for us to ignore your pile of rubbish.\""
-msgstr "\"Te costará {créditos} que ignoremos tu montón de basura.\""
+msgstr "\"Te costará {credits} que ignoremos tu montón de basura.\""
 
 #: dat/ai/pirate.lua:44
 msgid "\"We're in a good mood so we'll let you go for {credits}.\""
-msgstr "\"Estamos de buen humor así que te dejaremos ir por {créditos}.\""
+msgstr "\"Estamos de buen humor así que te dejaremos ir por {credits}.\""
 
 #: dat/ai/pirate.lua:45
 msgid "\"Send us {credits} or you're dead.\""
-msgstr "\"Envíanos {créditos} o estás muerto.\""
+msgstr "\"Envíanos {credits} o estás muerto.\""
 
 #: dat/ai/pirate.lua:46
 msgid "\"Shut up and give us your money! {credits} now.\""
-msgstr "\"¡Cállate y danos tu dinero! {créditos} ahora.\""
+msgstr "\"¡Cállate y danos tu dinero! {credits} ahora.\""
 
 #: dat/ai/pirate.lua:47
 msgid "\"You give us {credits} and we'll act like we never saw you.\""
-msgstr "\"Nos das {créditos} y actuaremos como si nunca te hubiéramos visto.\""
+msgstr "\"Nos das {credits} y actuaremos como si nunca te hubiéramos visto.\""
 
 #: dat/ai/pirate.lua:48
 msgid ""
 "\"If you're willing to negotiate we'll gladly take {credits} to not kill you."
 "\""
 msgstr ""
-"\"Si estás dispuesto a negociar, aceptaremos con gusto {créditos} por no "
+"\"Si estás dispuesto a negociar, aceptaremos con gusto {credits} por no "
 "matarte.\""
 
 #: dat/ai/pirate.lua:49
@@ -29949,7 +29946,7 @@ msgid ""
 "\"Pay up or don't. {credits} now just means we'll wait till later to collect "
 "the rest.\""
 msgstr ""
-"\"Paga o no lo hagas. {créditos} ahora sólo significa que esperaremos hasta "
+"\"Paga o no lo hagas. {credits} ahora sólo significa que esperaremos hasta "
 "más tarde para cobrar el resto.\""
 
 #: dat/ai/pirate.lua:52
@@ -30205,7 +30202,7 @@ msgstr "¡Te voy a hacer pedazos!"
 #. Deal with refueling
 #: dat/ai/pirate.lua:174
 msgid "\"For you, only {credits} for a jump of fuel.\""
-msgstr ", sólo {créditos} para un salto de combustible.\""
+msgstr "\"Por ti, sólo {credits} por un salto de combustible.\""
 
 #. Deal with bribeability
 #: dat/ai/pirate.lua:183
@@ -30285,7 +30282,7 @@ msgstr "\"Lo siento, mi combustible no está a la venta.\""
 #. Most likely no chance to refuel
 #: dat/ai/proteron.lua:87
 msgid "\"I can transfer some fuel for {credits}.\""
-msgstr "\"Puedo transferir algo de combustible por {créditos}.\""
+msgstr "\"Puedo transferir algo de combustible por {credits}.\""
 
 #. See if can be bribed
 #: dat/ai/proteron.lua:92
@@ -30293,7 +30290,7 @@ msgid ""
 "\"The Proteron can always use some income. {credits} and you were never here."
 "\""
 msgstr ""
-"\"Proteron siempre puede usar algunos ingresos. {créditos} y tú nunca "
+"\"Proteron siempre puede usar algunos ingresos. {credits} y tú nunca "
 "estuviste aquí.\""
 
 #: dat/ai/proteron.lua:93
@@ -30343,7 +30340,7 @@ msgstr "\"No tengo combustible de sobra.\""
 #. Most likely no chance to refuel
 #: dat/ai/sirius.lua:69
 msgid "\"I would be able to refuel your ship for {credits}.\""
-msgstr "\"Podría repostar tu nave por {créditos}.\""
+msgstr "\"Podría repostar tu nave por {credits}.\""
 
 #: dat/ai/soromid.lua:13
 msgid "\"Snivelling waste of carbon.\""
@@ -30410,13 +30407,13 @@ msgstr "\"Los guerreros de Sorom no son tu repostador personal.\""
 #. Most likely no chance to refuel
 #: dat/ai/soromid.lua:83
 msgid "\"I suppose I could spare some fuel for {credits}.\""
-msgstr "\"Supongo que podría ahorrar algo de combustible para {créditos}.\""
+msgstr "\"Supongo que podría ahorrar algo de combustible para {credits}.\""
 
 #. Handle bribing
 #: dat/ai/soromid.lua:92
 msgid "\"For {credits} I'll give you enough time to get out of my sight.\""
 msgstr ""
-"\"Por {créditos} Te daré el tiempo suficiente para que desaparezcas de mi "
+"\"Por {credits} Te daré el tiempo suficiente para que desaparezcas de mi "
 "vista.\""
 
 #: dat/ai/soromid.lua:93
@@ -30549,12 +30546,12 @@ msgstr "ACCESO DENEGADO."
 #. Most likely no chance to refuel
 #: dat/ai/zalek.lua:108
 msgid "\"I will agree to refuel your ship for {credits}.\""
-msgstr "\"Aceptaré repostar su nave por {créditos}.\""
+msgstr "\"Aceptaré repostar su nave por {credits}.\""
 
 #. See if can be bribed
 #: dat/ai/zalek.lua:116
 msgid "\"We will agree to end the battle for {credits}.\""
-msgstr "\"Aceptaremos terminar la batalla por {créditos}.\""
+msgstr "\"Aceptaremos terminar la batalla por {credits}.\""
 
 #: dat/ai/zalek.lua:117
 msgid "\"Temporarily stopping fire.\""
@@ -30569,11 +30566,11 @@ msgstr "\"Detener temporalmente el fuego.\""
 #. First check, make sure required slots are equipped
 #: dat/autoequip.lua:19
 msgid "Missing Required Outfits"
-msgstr "Faltan Complementos Obligatorios"
+msgstr "Faltan Equipos Obligatorios"
 
 #: dat/autoequip.lua:19
 msgid "Please equip all required outfit slots first!"
-msgstr "¡Por favor, equipa todas las ranuras de complementos obligatorias!"
+msgstr "¡Por favor, equipa todas las ranuras de equipos obligatorias!"
 
 #. Make sure
 #: dat/autoequip.lua:24
@@ -30735,7 +30732,7 @@ msgid ""
 "#rCosts {credits} ({sbonus}%#r from crew strength) to extract!#0"
 msgstr ""
 "\n"
-"#rCuesta {créditos} ({bono}%#r de la fuerza de la tripulación) a extraer!#0"
+"#rCuesta {credits} ({sbonus}%#r de la fuerza de la tripulación) a extraer!#0"
 
 #: dat/board.lua:56
 msgid ""
@@ -30744,18 +30741,19 @@ msgid ""
 "{stype}\n"
 "{desc}"
 msgstr ""
-"{nombre}{precio}\n"
-"{tamaño de ranura} {tipo de ranura}#0 ranura{prop}\n"
-"{stipo}\n"
+"{name}{sprice}\n"
+"{slotsize} {slottype}#0 ranura{sprop}\n"
+"{stype}\n"
 "{desc}"
 
 #. special_col, -- TODO new special condition
 #: dat/board.lua:80
+#, fuzzy
 msgid ""
 "{name}\n"
 "{desc}"
 msgstr ""
-"{nombre}\n"
+"{name}\n"
 "{desc}"
 
 #: dat/board.lua:83
@@ -30815,11 +30813,11 @@ msgstr ""
 #. Ignore anything that isn't loot from now on
 #: dat/board.lua:279
 msgid "You have {freespace} of free space."
-msgstr "Tienes {espacio libre} de espacio libre."
+msgstr "Tienes {freespace} de espacio libre."
 
 #: dat/board.lua:334
 msgid "Your ship cannibalized {armour:.0f} armour from {plt}."
-msgstr "Tu nave canibalizó {armadura:.0f} armadura de {plt}."
+msgstr "Tu nave canibalizó {armour:.0f} armadura de {plt}."
 
 #. Destroy if exists
 #: dat/board.lua:362 dat/comm.lua:166 dat/shipai.lua:26 dat/shipai.lua:39
@@ -30866,20 +30864,20 @@ msgstr "¡Tus depósitos de combustible ya están llenos!"
 
 #: dat/board.lua:421
 msgid "You looted {amount} fuel from {plt}."
-msgstr "Saqueastes {cantidad} de combustible de {plt}."
+msgstr "Saqueastes {amount} de combustible de {plt}."
 
 #. Looted all the fuel
 #: dat/board.lua:432
 msgid "Extract {outfit}?"
-msgstr "¿Extraer {complemento}?"
+msgstr "¿Extraer {outfit}?"
 
 #: dat/board.lua:433
 msgid ""
 "It will cost #r{credits}#0 in repairs to successfully extract the {outfit}. "
 "You have {playercreds}. Extract the {outfit}?"
 msgstr ""
-"Costará #r{créditos}#0 en reparaciones para extraer con éxito el "
-"{complemento}. Tienes {créditos}. ¿Extraer el {complemento}?"
+"Costará #r{credits}#0 en reparaciones para extraer con éxito el {outfit}. "
+"Tienes {credits}. ¿Extraer el {outfit}?"
 
 #: dat/board.lua:437 src/map_system.c:1037
 msgid "Insufficient Credits"
@@ -30887,18 +30885,18 @@ msgstr "Créditos insuficientes"
 
 #: dat/board.lua:437
 msgid "You lack #r{diff}#0 to be able to extract the {outfit}."
-msgstr "Te falta #r{diff}#0 para poder extraer el {complemento}."
+msgstr "Te falta #r{diff}#0 para poder extraer el {outfit}."
 
 #. Soft warning
 #: dat/board.lua:442 dat/board.lua:453
 msgid "Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"
 msgstr ""
-"¡La secuencia de comandos de embarque no pudo eliminar '{complemento}' del "
-"piloto embarcado '{plt}'!"
+"¡La secuencia de comandos de embarque no pudo eliminar '{outfit}' del piloto "
+"embarcado '{plt}'!"
 
 #: dat/board.lua:445 dat/board.lua:458
 msgid "You looted a {outfit} from {plt}."
-msgstr "Saqueastes un {complemento} de {plt}."
+msgstr "Saqueastes un {outfit} de {plt}."
 
 #. Unable to loot anything
 #: dat/board.lua:467
@@ -30912,7 +30910,7 @@ msgstr "¡No tienes espacio de carga libre!"
 #. Might be a misaligned here with loot_mod, but we sort of ignore it :/
 #: dat/board.lua:473
 msgid "You looted {amount} of {cargo} from {plt}."
-msgstr "Has saqueado {cantidad} de {carga} de {plt}."
+msgstr "Has saqueado {amount} de {cargo} de {plt}."
 
 #. Looted all the cargo
 #. Clean up
@@ -30932,8 +30930,8 @@ msgid ""
 "\"We'll need at least {credits} to not leave you as a hunk of floating "
 "debris.\""
 msgstr ""
-"\"Necesitaremos al menos {créditos} para no dejarte como un trozo de "
-"escombro flotante.\""
+"\"Necesitaremos al menos {credits} para no dejarte como un trozo de escombro "
+"flotante.\""
 
 #: dat/comm.lua:133
 msgid ""
@@ -30947,13 +30945,25 @@ msgid_plural ""
 "This action will bribe {n} {fct_list} pilots.\n"
 "You have {credits}. Pay #r{price}#0?"
 msgstr[0] ""
+"Singular\n"
+"{msg}\n"
+"\n"
+"Esta acción sobornará a {n} {fct_list} piloto.\n"
+"Tienes {créditos}. ¿Pagar #r{precio}#0?"
 msgstr[1] ""
+"Plural\n"
+"{msg}\n"
+"\n"
+"Esta acción sobornará a {n} {fct_list} pilotos.\n"
+"Tienes {créditos}. ¿Pagar #r{precio}#0?"
 
 #: dat/comm.lua:142
 msgid ""
 "\"I'm gonna need at least {credits} to not leave you as a hunk of floating "
 "debris.\""
 msgstr ""
+"\"Voy a necesitar al menos {credits} para no dejarte como un trozo de "
+"escombro flotante.\""
 
 #: dat/comm.lua:144 dat/comm.lua:444
 msgid ""
@@ -30961,10 +30971,13 @@ msgid ""
 "\n"
 "You have {credits}. Pay #r{price}#0?"
 msgstr ""
+"{msg}\n"
+"\n"
+"Tienes {credits}. ¿Pagar #r{price}#0?"
 
 #: dat/comm.lua:160
 msgid "You open a communication channel with {plt}."
-msgstr ""
+msgstr "Abres un canal de comunicación con {plt}."
 
 #. global
 #. global
@@ -30972,51 +30985,60 @@ msgstr ""
 msgid "Bribe {n} nearby {fct_list} pilot"
 msgid_plural "Bribe {n} nearby {fct_list} pilots"
 msgstr[0] ""
+"Singular\n"
+"Sobornar {n} piloto {fct_list} cercano"
 msgstr[1] ""
+"Plural\n"
+"Sobornar {n} pilotos {fct_list} cercanos"
 
 #: dat/comm.lua:199
 msgid "Bribe fleet ({n} pilot)"
 msgid_plural "Bribe fleet ({n} pilots)"
 msgstr[0] ""
+"Singular\n"
+"Sobornar flota ({n} piloto)"
 msgstr[1] ""
+"Plural\n"
+"Sobornar flota de ({n} pilotos)"
 
 #: dat/comm.lua:205
 msgid "Bribe this pilot"
-msgstr ""
+msgstr "Sobornar a este piloto"
 
 #.
 #. Bribing
 #.
 #: dat/comm.lua:224
 msgid "\"Money won't save your hide now!\""
-msgstr ""
+msgstr "\"¡El dinero no salvará tu pellejo ahora!\""
 
 #. Disable rebribes
 #. Disable rebribes
 #: dat/comm.lua:233 dat/comm.lua:296 dat/comm.lua:342 dat/comm.lua:447
 msgid "Pay"
-msgstr ""
+msgstr "Pagar"
 
 #: dat/comm.lua:234 dat/comm.lua:297 dat/comm.lua:343 dat/comm.lua:448
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:665
 #: dat/missions/neutral/aristodrink.lua:71
 msgid "Refuse"
-msgstr ""
+msgstr "Rechazar"
 
 #: dat/comm.lua:238 dat/comm.lua:409 src/comm.c:386
 msgid "You decide not to pay."
-msgstr ""
+msgstr "Decides no pagar."
 
 #: dat/comm.lua:251 dat/comm.lua:304 dat/comm.lua:350
 msgid ""
 "You only have {credits}. You need #r{cdif}#0 more to be able to afford the "
 "bribe!"
 msgstr ""
+"Sólo tienes {credits}. ¡Necesitas #r{cdif}#0 más para poder pagar el soborno!"
 
 #: dat/comm.lua:266 dat/comm.lua:319 dat/comm.lua:365
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:125
 msgid "\"Pleasure to do business with you.\""
-msgstr ""
+msgstr "\"Un placer hacer negocios con usted.\""
 
 #. Disable rebribes
 #.
@@ -31024,23 +31046,23 @@ msgstr ""
 #.
 #: dat/comm.lua:389
 msgid "Your fuel deposits are already full."
-msgstr ""
+msgstr "Tus depósitos de combustible ya están llenos."
 
 #: dat/comm.lua:393
 msgid "\"Sorry, I don't have enough fuel to spare at the moment.\""
-msgstr ""
+msgstr "\"Lo siento, no tengo suficiente combustible en este momento.\""
 
 #: dat/comm.lua:397
 msgid "\"Sorry, I'm busy now.\""
-msgstr ""
+msgstr "\"Lo siento, ahora estoy ocupado.\""
 
 #: dat/comm.lua:401
 msgid "\"What part of 'on my way' don't you understand?\""
-msgstr ""
+msgstr "\"¿Qué parte de 'en mi camino' no entiendes?\""
 
 #: dat/comm.lua:405
 msgid "Pilot is already refueling you."
-msgstr ""
+msgstr "El piloto ya te está repostando."
 
 #: dat/comm.lua:439
 msgid "\"I should be able to refuel you for {credits}.\""
@@ -31051,10 +31073,12 @@ msgid ""
 "You only have {credits} credits. You need #r{cdif}#0 more to be able to "
 "afford the refueling!"
 msgstr ""
+"Sólo tienes {credits} créditos. ¡Necesitas #r{cdif}#0 más para poder "
+"permitirte el repostaje!"
 
 #: dat/comm.lua:472
 msgid "\"On my way.\""
-msgstr ""
+msgstr "\"En mi camino.\""
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -31082,7 +31106,7 @@ msgstr ""
 #. luacheck: globals DvaeredSpawn FLFSpawn leave (Hook functions passed by name)
 #: dat/events/cinematic/DvdFLFbattle.lua:31
 msgid "Dvaered forces engaged in combat with small terrorist group"
-msgstr ""
+msgstr "Las fuerzas Dvaered entran en combate con un pequeño grupo terrorista"
 
 #: dat/events/cinematic/DvdFLFbattle.lua:32
 msgid ""
@@ -31097,6 +31121,8 @@ msgstr ""
 #: dat/events/cinematic/DvdFLFbattle.lua:38
 msgid "FLF terrorists blasted by joint Dvaered military forces"
 msgstr ""
+"Los terroristas del FLF son abatidos por las fuerzas militares conjuntas "
+"Dvaered"
 
 #: dat/events/cinematic/DvdFLFbattle.lua:39
 msgid ""
@@ -31111,6 +31137,8 @@ msgstr ""
 #: dat/events/cinematic/DvdFLFbattle.lua:45
 msgid "Dvaered forces engage FLF freedom fighters in open combat"
 msgstr ""
+"Las fuerzas Dvaered se enfrentan a los combatientes por la libertad del FLF "
+"en combate abierto"
 
 #: dat/events/cinematic/DvdFLFbattle.lua:46
 msgid ""
@@ -31125,7 +31153,7 @@ msgstr ""
 
 #: dat/events/cinematic/DvdFLFbattle.lua:52
 msgid "Dvaered, FLF clash in Tuoladis"
-msgstr ""
+msgstr "Dvaered, FLF se enfrentan en Tuoladis"
 
 #: dat/events/cinematic/DvdFLFbattle.lua:53
 msgid ""
@@ -31138,27 +31166,27 @@ msgstr ""
 
 #: dat/events/discovery.lua:40
 msgid "Home"
-msgstr ""
+msgstr "Hogar"
 
 #: dat/events/discovery.lua:48
 msgid "Human Made Divine"
-msgstr ""
+msgstr "Lo Humano Convertido en Divino"
 
 #: dat/events/discovery.lua:56
 msgid "Bastion of Knowledge"
-msgstr ""
+msgstr "Bastión del Conocimiento"
 
 #: dat/events/discovery.lua:64
 msgid "New Heart of the Za'lek"
-msgstr ""
+msgstr "Nuevo Corazón de Za'lek"
 
 #: dat/events/discovery.lua:72
 msgid "Convening of the Warlords"
-msgstr ""
+msgstr "Convocatoria de Señores de la Guerra"
 
 #: dat/events/discovery.lua:78
 msgid "Remembering Sorom"
-msgstr ""
+msgstr "Recordando a Sorom"
 
 #: dat/events/discovery.lua:85
 msgid "Crater City"
@@ -31166,120 +31194,120 @@ msgstr ""
 
 #: dat/events/discovery.lua:86
 msgid "Touching the Universe"
-msgstr ""
+msgstr "Tocando el Universo"
 
 #: dat/events/discovery.lua:92
 msgid "Ship Graveyard"
-msgstr ""
+msgstr "Cementerio de Naves"
 
 #: dat/events/discovery.lua:103
 msgid "Gambler's Paradise"
-msgstr ""
+msgstr "Paraiso del Jugador"
 
 #: dat/events/discovery.lua:111
 msgid "Brave your Fate in the #rCrimson Gauntlet#0"
-msgstr ""
+msgstr "Enfréntate a tu destino en el #rGuantelete Carmesí#0"
 
 #: dat/events/discovery.lua:116
 msgid "The Devastation of Haven"
-msgstr ""
+msgstr "La Devastación de Refugio"
 
 #: dat/events/discovery.lua:117
 msgid "The Old Wound That Never Heals"
-msgstr ""
+msgstr "La Vieja Herida Que Nunca Sana"
 
 #: dat/events/discovery.lua:128
 msgid "They Will Never Destroy Us"
-msgstr ""
+msgstr "Nunca Nos Destruirán"
 
 #: dat/events/discovery.lua:134
 msgid "Any Business is Good Business"
-msgstr ""
+msgstr "Cualquier Negocio es un Buen Negocio"
 
 #. These trigger for specific factions controlled systems
 #: dat/events/discovery.lua:142
 msgid "The Za'lek Territories"
-msgstr ""
+msgstr "Territorios Za'lek"
 
 #: dat/events/discovery.lua:143
 msgid "Knowledge at All Costs"
-msgstr ""
+msgstr "Conocimiento A Cualquier Coste"
 
 #: dat/events/discovery.lua:148
 msgid "The Dvaered Territories"
-msgstr ""
+msgstr "Territorios Dvaered"
 
 #: dat/events/discovery.lua:149
 msgid "The Warlords are Eager for Blood"
-msgstr ""
+msgstr "Los Señores de la Guerra están Ansiosos de Sangre"
 
 #: dat/events/discovery.lua:154
 msgid "The Soromid Territories"
-msgstr ""
+msgstr "Territorios Soromida"
 
 #: dat/events/discovery.lua:155
 msgid "Human is Just an Ephemeral Condition"
-msgstr ""
+msgstr "Lo Humano es Sólo una Condición Efímera"
 
 #: dat/events/discovery.lua:160
 msgid "The Sirius Territories"
-msgstr ""
+msgstr "Territorios Sirio"
 
 #: dat/events/discovery.lua:161
 msgid "Sirichana Will Lead the Way"
-msgstr ""
+msgstr "Sirichana Marcará el Camino"
 
 #: dat/events/discovery.lua:166
 msgid "The Proteron Territories"
-msgstr ""
+msgstr "Territorios Proteron"
 
 #: dat/events/discovery.lua:167
 msgid "United through Sacrifice"
-msgstr ""
+msgstr "Unidos a través del Sacrificio"
 
 #: dat/events/discovery.lua:173
 msgid "The Thurion Space"
-msgstr ""
+msgstr "Espacio Turion"
 
 #: dat/events/discovery.lua:174
 msgid "We Shall All Become One"
-msgstr ""
+msgstr "Todos nos Convertiremos en Uno"
 
 #: dat/events/discovery.lua:179
 msgid "The Frontier"
-msgstr ""
+msgstr "Frontera"
 
 #: dat/events/discovery.lua:180
 msgid "Leading to a New Future"
-msgstr ""
+msgstr "Liderando un Nuevo Futuro"
 
 #: dat/events/discovery.lua:186
 msgid "The Collective"
-msgstr ""
+msgstr "Colectivo"
 
 #: dat/events/discovery.lua:187
 msgid "Do Robots Dream of Electric Sheep?"
-msgstr ""
+msgstr "¿Sueñan los Robots con Ovejas Eléctricas?"
 
 #. Custom events can handle custom triggers such as nebula systems
 #. These are currently the only systems from which the player can
 #. enter the nebula
 #: dat/events/discovery.lua:217
 msgid "The Nebula"
-msgstr ""
+msgstr "La Nebulosa"
 
 #: dat/events/discovery.lua:218
 msgid "Grim Reminder of Our Fragility"
-msgstr ""
+msgstr "Recordatorio Sombrío de Nuestra Fragilidad"
 
 #: dat/events/discovery.lua:235
 msgid "Northern Stellar Winds"
-msgstr ""
+msgstr "Vientos Estelares del Norte"
 
 #. subtitle = _("None"),
 #: dat/events/discovery.lua:252
 msgid "Southern Stellar Winds"
-msgstr ""
+msgstr "Vientos Estelares del Sur"
 
 #. subtitle = _("None"),
 #: dat/events/discovery.lua:262
@@ -31332,14 +31360,14 @@ msgstr ""
 #. Log and message
 #: dat/events/discovery.lua:376 src/map.c:1854
 msgid "Discovery"
-msgstr ""
+msgstr "Descubrimiento"
 
 #. the probability of ambushes will change
 #. In the first ambush, there will be a little surprise text
 #: dat/events/discovery.lua:376 dat/events/shiplog.lua:26
 #: dat/missions/shark/sh04_meeting.lua:55
 msgid "Travel"
-msgstr ""
+msgstr "Viajar"
 
 #. Break autonav
 #. If custom function, run it
@@ -31389,7 +31417,7 @@ msgstr ""
 #. Player answers to hail
 #: dat/events/dvaered/fwA_treason.lua:79
 msgid "You are needed for a special job"
-msgstr ""
+msgstr "Se le necesita para un trabajo especial"
 
 #: dat/events/dvaered/fwA_treason.lua:81
 msgid ""
@@ -31412,45 +31440,65 @@ msgid ""
 "you'll receive {credits} in the process. Oh yes, that's different from what "
 "you're used to! What do you say?\""
 msgstr ""
+"El piloto del caza dice, a través de un canal encriptado: \"Por fin te he "
+"encontrado, {jugador}. Más vale tarde que nunca. Mis jefes quieren "
+"felicitarte por lo eficaz que has sido con el Señor AdictoABatalla. Me temo "
+"que no habrá mucha gente que lo llore\". Tu respondes que no sabes de qué se "
+"trata y que, por lo que sabe, Señor AdictoABatalla ha sido asesinado en un "
+"duelo honesto por el General Klank. El interlocutor se ríe \"Estás haciendo "
+"tu papel, ¿eh? Puedo entenderte, después de todo, te pagan bien... Espera, "
+"no, no pagan bien. En absoluto. ¿Cuánto fue por arriesgar tu vida dos veces "
+"con ese truco de la bomba EMP? {credits_01}? ¡Haw haw haw! ¡Puedes ganar más "
+"dinero con una misión de carga!\n"
+"   \"¡Incluso he oído que una vez te pagaron con armas gauss! Esos tipos son "
+"tan lamentables, ¿no?\n"
+"   \"Ahora, hablemos en serio: tú quieres dinero y yo quiero un piloto. ¡"
+"Estamos hechos para llevarnos bien, tú y yo! Te necesito para una tarea "
+"especial. No voy a negar que implica ir en contra de los intereses del "
+"General Klank y del Mayor Tam y compañía, pero si lo haces bien, ellos nunca "
+"sabrán que estás implicado, y recibirás {credits} en el proceso. Oh sí, ¡"
+"bastante diferente a lo que estás acostumbrado! ¿Qué me dices?\""
 
 #: dat/events/dvaered/fwA_treason.lua:85 dat/missions/flf/flf_pre02.lua:173
 msgid "Accept the offer"
-msgstr ""
+msgstr "Aceptar la oferta"
 
 #: dat/events/dvaered/fwA_treason.lua:86
 msgid "Refuse and miss a unique opportunity"
-msgstr ""
+msgstr "Rechazar y perder una oportunidad única"
 
 #: dat/events/dvaered/fwA_treason.lua:89
 msgid "Your task"
-msgstr ""
+msgstr "Tu tarea"
 
 #: dat/events/dvaered/fwA_treason.lua:91
 msgid ""
 "\"Very good choice, colleague!\" The pilot answers. \"Go to {system}, and "
 "you will be hailed by an other Vendetta for your briefing.\""
 msgstr ""
+"\"¡Muy buena elección, colega!\" El piloto responde. \"Dirígete a {system}, "
+"y serás avisado por otra Vendetta para informarte.\""
 
 #: dat/events/dvaered/fwA_treason.lua:95
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:76
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:87
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:108
 msgid "Too bad"
-msgstr ""
+msgstr "Una pena"
 
 #: dat/events/dvaered/fwA_treason.lua:95
 msgid "\"I see. Stay tuned, then, maybe we will see each other again!\""
-msgstr ""
+msgstr "\"Ya veo. Permanece atento, ¡quizás nos volvamos a ver!\""
 
 #. Reaction to player's choice at first landing
 #: dat/events/dvaered/fwA_treason.lua:108
 msgid "You are a loyal citizen of House Dvaered"
-msgstr ""
+msgstr "Eres un leal ciudadano de la Casa Dvaered"
 
 #. Traitor
 #: dat/events/dvaered/fwA_treason.lua:111
 msgid "You tried to betray us"
-msgstr ""
+msgstr "Intentaste traicionarnos"
 
 #: dat/events/dvaered/fwA_treason.lua:113
 msgid ""
@@ -31461,12 +31509,19 @@ msgid ""
 "stupid people. With regards to how well you have helped us in the past, we "
 "will exceptionally let you live, but don't expect us to trust you anymore!\""
 msgstr ""
+"Al desembarcar, ves a la capitana Leblanc en el muelle y te reprende: \"Era "
+"una trampa, {player}. El hecho de que hayas caído en ella demuestra que eres "
+"desleal. Desleal y estúpido, por cierto, ya que la trampa era bastante "
+"obvia, si se me permite añadir. Y el Alto Mando no puede permitirse trabajar "
+"con gente desleal y estúpida. Con respecto a lo bien que nos has ayudado en "
+"el pasado, excepcionalmente te dejaremos vivir, ¡pero no esperes que sigamos "
+"confiando en ti!\""
 
 #: dat/events/dvaered/fwA_treason.lua:117
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:256
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:521
 msgid "Dvaered Military Coordination"
-msgstr ""
+msgstr "Coordinación Militar Dvaered"
 
 #: dat/events/dvaered/fwA_treason.lua:118
 msgid ""
@@ -31474,6 +31529,9 @@ msgid ""
 "General Klank... and you miserably failed. By chance, they did not kill you, "
 "but you'll have to find other employers."
 msgstr ""
+"El Mayor Tam y el Capitán Leblanc, del AMD, han puesto a prueba tu lealtad "
+"al general Klank... y has fracasado estrepitosamente. Por suerte, no te han "
+"matado, pero tendrás que buscar a otros patrones."
 
 #. Loyal
 #: dat/events/dvaered/fwA_treason.lua:124
@@ -31483,14 +31541,18 @@ msgid ""
 "have passed the test. You remained loyal to our general, in spite of the "
 "absurdly high reward they had proposed to you for betraying us.\""
 msgstr ""
+"Al desembarcar, ves al Capitán Leblanc en el muelle y te felicita: \"He oído "
+"hablar bien de ti, ciudadano {player}. Parece que has superado la prueba. "
+"Has permanecido fiel a nuestro general, a pesar de la recompensa "
+"absurdamente alta que te habían propuesto por traicionarnos.\""
 
 #: dat/events/dvaered/fwA_treason.lua:126
 msgid "The amount of your rewards is pathetic"
-msgstr ""
+msgstr "La cantidad de tus recompensas es patética"
 
 #: dat/events/dvaered/fwA_treason.lua:127
 msgid "Money is not important, captain"
-msgstr ""
+msgstr "El dinero no es importante, capitán"
 
 #. Actually we don't care of the answer
 #: dat/events/dvaered/fwA_treason.lua:128
@@ -31512,6 +31574,23 @@ msgid ""
 "doomed to fail, creating weird and ugly monsters like the Empire, House "
 "Sirius or the Soromid.\""
 msgstr ""
+"\"Los temas de dinero son asuntos secundarios, piloto. Un día eres rico y al "
+"siguiente eres pobre. El valor, en cambio, es el asunto central de la vida, "
+"pues el valor contiene todas las demás cualidades que debe tener un Dvaered:"
+"\n"
+"   \"Rectitud para entender lo que hay que hacer,\n"
+"   \"Lealtad para saber en quién puedes confiar para ayudarte en tu deber,\n"
+"   \"Fuerza para ser capaz de hacer lo que la Rectitud y la Lealtad te "
+"exigen.\n"
+"   \"Esta moral exigente puede requerir que los Dvaered arriesguen sus "
+"propias vidas o que maten por la comunidad, porque la filosofía de la Casa "
+"Dvaered es una filosofía de vida. Y la vida no viene sin su contrapartida, "
+"la muerte. Ser un Dvaered significa aceptar la regla última del universo, la "
+"finitud de todas las cosas, ya que a diferencia de las demás facciones, que "
+"persiguen desesperadamente la eternidad. La eternidad en la sucesión de "
+"Emperadores, la eternidad en la fe, la eternidad en el progreso de la "
+"humanidad biológicamente mejorada. Su búsqueda está condenada al fracaso, "
+"creando monstruos raros y feos como el Imperio, la Casa Sirio o Soromida.\""
 
 #: dat/events/dvaered/fwA_treason.lua:133
 msgid ""
@@ -31537,6 +31616,27 @@ msgid ""
 "periods, with a huge risk of ending up bogged down and vulnerable to attacks "
 "on other fronts.\""
 msgstr ""
+"\"La Casa Dvaered se ha construido respetando esta ética de vida y muerte, "
+"que se enseña a todos los niños de todos los mundos del espacio Dvaered. Tú "
+"no recibiste tal educación y aun así, pasaste la prueba de lealtad. Esto "
+"significa que el Alto Mando Dvaered puede confiar en ti. Como prueba de esta "
+"confianza, puedo revelarte lo que algunos en el ejército saben, pero que "
+"nunca fue revelado a los no Dvaered.\n"
+"   \"Desde hace un ciclo, los señores de la guerra han estado vigilando con "
+"avidez los planetas Frontera. Desde que el FLF ha sido destruido, el Alto "
+"Mando Dvaered hace todo lo que está en su mano para retenerlos porque "
+"sabemos que muchas otras facciones están esperando a que nos enredemos en "
+"una guerra en la frontera para golpearnos. Pero el propósito de los señores "
+"de la guerra es invadir mundos, y el papel del AMD es no obstaculizarlo, así "
+"que, en última instancia, tendremos que permitir esta invasión.\n"
+"   \"Hace unos decenios, el general Klank había sido ascendido a general de "
+"segunda clase, con la tarea de organizar esta invasión. El primer plan de "
+"invasión que se le había propuesto era dar rienda suelta a cada señor de la "
+"guerra, permitiéndoles elegir qué planeta invadir y cómo proceder. Sin "
+"embargo, al contrario que los demás generales, Klank pronto se dio cuenta de "
+"que una invasión tan desorganizada, con inevitables batallas entre señores "
+"de la guerra, llevaría varios periodos, con el enorme riesgo de acabar "
+"empantanado y exponiéndonos a ataques en otros frentes.\""
 
 #: dat/events/dvaered/fwA_treason.lua:136
 msgid ""
@@ -31549,6 +31649,15 @@ msgid ""
 "been weakened with Battleaddict's death, we will move to the diplomatic "
 "step. That is why you should expect to be summoned again by us.\""
 msgstr ""
+"\"Por eso, el general Klank propuso un plan de invasión eficaz, que requiere "
+"coordinar los esfuerzos de todos los señores de la guerra, así como "
+"apoyarlos con una flota de reserva comandada directamente por el AMD. El "
+"problema es que muchos señores de la guerra no quieren que el AMD decida "
+"cómo utilizar sus tropas. El más temerario de ellos fue el Señor "
+"AdictoABatalla, pero también están Dama Bitterfight y Señor Jim. Ahora que "
+"la oposición interna al plan se ha debilitado con la muerte de "
+"AdictoABatalla, pasaremos al paso diplomático. Por eso debes esperar que te "
+"convoquemos de nuevo.\""
 
 #. Pay and finish the mission
 #. Timer for the next mission
@@ -31558,7 +31667,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:165
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:265
 msgid "Frontier War"
-msgstr ""
+msgstr "Guerra Frontera"
 
 #: dat/events/dvaered/fwA_treason.lua:139
 msgid ""
@@ -31567,6 +31676,10 @@ msgid ""
 "you that they will soon need your services in the framework of the "
 "preparation of the invasion of the Frontier."
 msgstr ""
+"El Mayor Tam y el Capitán Leblanc, del AMD, han puesto a prueba tu lealtad "
+"al General Klank. La prueba ha resultado concluyente, y Leblanc te ha "
+"revelado que pronto necesitarán tus servicios en el marco de la preparación "
+"de la invasión de la Frontera."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -31645,7 +31758,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:139
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:208
 msgid "Major Tam"
-msgstr ""
+msgstr "Mayor Tam"
 
 #. Nice outfits for Colonel Hamelsen (the Hellburner is her life insurance)
 #. We can't afford to loose our main baddie
@@ -31662,7 +31775,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:140
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:293
 msgid "Captain Leblanc"
-msgstr ""
+msgstr "Capitán Leblanc"
 
 #. The death of Tronk
 #. When entering Empire Space, contact with Captain HewHew
@@ -31692,7 +31805,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:272
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:569
 msgid "Lieutenant Strafer"
-msgstr ""
+msgstr "Teniente Strafer"
 
 #: dat/events/dvaered/fwB_repay.lua:26
 msgid ""
@@ -31700,10 +31813,13 @@ msgid ""
 "major, sitting at a table with a few High Command officers that you don't "
 "happen to know."
 msgstr ""
+"En el bar militar reservado Dvaered, al que ahora tienes acceso, ves al "
+"mayor, sentado en una mesa con unos cuantos oficiales del Alto Mando que por "
+"lo visto no conoces."
 
 #: dat/events/dvaered/fwB_repay.lua:27
 msgid "Leblanc is relaxing at a table, with a group of Dvaered pilots."
-msgstr ""
+msgstr "Leblanc se relaja en una mesa, con un grupo de pilotos Dvaered."
 
 #: dat/events/dvaered/fwB_repay.lua:28
 msgid ""
@@ -31712,29 +31828,35 @@ msgid ""
 "the dead bodies of defeated enemies.\" As it is written on the Dvaered "
 "etiquette manual Strafer gave to you recently."
 msgstr ""
+"Strafer juega a las cartas con algunos otros soldados. Por supuesto, no usan "
+"dinero real porque \"los guerreros Dvaered nunca se apoderan del dinero de "
+"otros, excepto de los cadáveres de los enemigos derrotados\". Como está "
+"escrito en el manual de etiqueta Dvaered que Strafer te dio recientemente."
 
 #. luacheck: globals takeoff (Hook functions passed by name)
 #. luacheck: globals pay (NPC functions passed by name)
 #. Each time the player lands, he meets a member of the team who proposes to pay
 #: dat/events/dvaered/fwB_repay.lua:41 dat/events/dvaered/fwB_repay.lua:49
 msgid "Do you want to repay DHC?"
-msgstr ""
+msgstr "¿Quieres pagar a AMD?"
 
 #: dat/events/dvaered/fwB_repay.lua:41
 msgid "You still owe {credits} to the High Command. Do you want to repay now?"
-msgstr ""
+msgstr "Todavía debes {credits} al Alto Mando. ¿Quieres pagar ahora?"
 
 #: dat/events/dvaered/fwB_repay.lua:45
 msgid ""
 "You repaid the Dvaered High Command. For now, your collaboration with House "
 "Dvaered has not been lucrative AT ALL."
 msgstr ""
+"Has pagado al Alto Mando Dvaered. Por ahora, tu colaboración con la Casa "
+"Dvaered no ha sido NADA lucrativa."
 
 #: dat/events/dvaered/fwB_repay.lua:49
 #: dat/missions/neutral/seek_n_destroy.lua:461
 #: dat/missions/neutral/seek_n_destroy.lua:552
 msgid "You don't have enough money."
-msgstr ""
+msgstr "No tienes suficiente dinero."
 
 #. baddie:outfitAdd("Power Regulation Override",2)
 #. baddie:outfitAdd("S&K Light Stealth Plating")
@@ -31744,11 +31866,13 @@ msgid ""
 "You are being attacked! You may get information from your attacker if you "
 "catch them alive!"
 msgstr ""
+"¡Te están atacando! ¡Puedes obtener información de tu atacante si lo atrapas "
+"vivo!"
 
 #. Ambusher is death: event failed
 #: dat/events/dvaered/fwD_hitman.lua:114
 msgid "Target destroyed"
-msgstr ""
+msgstr "Objetivo destruido"
 
 #: dat/events/dvaered/fwD_hitman.lua:114
 msgid ""
@@ -31756,11 +31880,15 @@ msgid ""
 "between feeling relieved to be alive and disappointed not to have taken the "
 "pilot alive. There will however probably be other opportunities to do that."
 msgstr ""
+"Mientras la nave de tu atacante se transforma en una bola de fuego, dudas "
+"entre sentirte aliviado por estar vivo y decepcionado por no haber atrapado "
+"al piloto con vida. Sin embargo, probablemente habrá otras oportunidades "
+"para hacerlo."
 
 #. Ambusher was boarded: start the Dvaered Base mission
 #: dat/events/dvaered/fwD_hitman.lua:120
 msgid "Boarding aborted"
-msgstr ""
+msgstr "Embarque abortado"
 
 #: dat/events/dvaered/fwD_hitman.lua:120
 msgid ""
@@ -31778,6 +31906,19 @@ msgid ""
 "drifting away? Oho! Come back. Hey! You belong to me. Come back into the "
 "inside of me, my intestine.\""
 msgstr ""
+"Tras atracar en la nave hostil, los androides de combate de tu tripulación "
+"comienzan a atacar su esclusa con sus antorchas. Recibes un mensaje de tu "
+"atacante:\n"
+"   \"¡Aléjate de ahí! ¡Hay un detonador en la esclusa! Harás que nos "
+"matemos\". En ese mismo momento, una enorme explosión ilumina tu cabina. La "
+"sacudida desconecta ambas naves y despide a tus androides. La nave de tu "
+"enemigo se desvía con una fuerza que rompe tu casco. Crees que el piloto "
+"está muerto, pero pronto escuchas su mensaje:\n"
+"   \"Maldita sea. Pensaba que ser atravesado por una chispa te dolería más. "
+"Supongo que no estás en mejor forma que yo. Lástima, ¡ninguno de nosotros "
+"verá cómo la División Marius destruye la flota Dvaered! Espera, ¿es mi "
+"intestino el que se aleja? ¡Oh! Vuelve. ¡Hey! Me perteneces. Vuelve a mi "
+"interior, intestino.\""
 
 #. TODO: unboard and destroy the ship
 #.
@@ -31797,16 +31938,16 @@ msgstr ""
 #. List of FLF flyers
 #: dat/events/dvaered/poster.lua:35
 msgid "This is an advertisement for the Dvaered Army."
-msgstr ""
+msgstr "Este es un anuncio del Ejército Dvaered."
 
 #: dat/events/dvaered/poster.lua:36
 msgid "Does this poster make you want to buy this book?"
-msgstr ""
+msgstr "¿Este póster hace que quieras comprar este libro?"
 
 #. Did the FLF wreck this poster?
 #: dat/events/dvaered/poster.lua:47
 msgid "The FLF has wrecked this Dvaered poster."
-msgstr ""
+msgstr "El FLF ha destrozado este cartel Dvaered."
 
 #. Create the NPC.
 #. End event on takeoff.
@@ -31816,12 +31957,13 @@ msgstr ""
 #. Finish
 #. Create the vn scene
 #: dat/events/dvaered/poster.lua:53 dat/events/dvaered/poster.lua:87
+#, fuzzy
 msgid "Poster"
-msgstr ""
+msgstr "Poster"
 
 #: dat/events/dvaered/poster.lua:53
 msgid "There is a poster on the wall."
-msgstr ""
+msgstr "Hay un poster en la pared."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -31839,49 +31981,56 @@ msgstr ""
 #. Unsaved global tables
 #: dat/events/dvaered/totoran.lua:26
 msgid "Spectator"
-msgstr ""
+msgstr "Espectador"
 
 #: dat/events/dvaered/totoran.lua:27
+#, fuzzy
 msgid "Aficionado"
-msgstr ""
+msgstr "Aficionado"
 
 #: dat/events/dvaered/totoran.lua:28
 msgid "Gauntlet Fan"
-msgstr ""
+msgstr "Fan del Guantelete"
 
 #: dat/events/dvaered/totoran.lua:31
 msgid "A person enjoying their time at the station."
-msgstr ""
+msgstr "Una persona disfrutando de su tiempo en la estación."
 
 #: dat/events/dvaered/totoran.lua:32
 msgid "An individual taking a break from viewing the action."
-msgstr ""
+msgstr "Un individuo que se toma un descanso para ver la acción."
 
 #: dat/events/dvaered/totoran.lua:33
 msgid "A spectator that looks strangely out of place."
-msgstr ""
+msgstr "Un espectador que parece extrañamente fuera de lugar."
 
 #: dat/events/dvaered/totoran.lua:34
 msgid "A person enjoying some drinks."
-msgstr ""
+msgstr "Una persona disfrutando de unas copas."
 
 #: dat/events/dvaered/totoran.lua:37
 msgid ""
 "\"Sometimes when watching some of the competitions, I forget it is all just "
 "virtual reality.\""
 msgstr ""
+"\"A veces, cuando veo algunas de las competiciones, me olvido de que todo es "
+"realidad virtual.\""
 
 #: dat/events/dvaered/totoran.lua:38
 msgid ""
 "\"The realism of virtual reality here is impressive! It almost feels like "
 "it's real!\""
 msgstr ""
+"\"¡El realismo de la realidad virtual aquí es impresionante! ¡Casi parece "
+"que es real!\""
 
 #: dat/events/dvaered/totoran.lua:40 dat/events/minerva/station.lua:72
 msgid ""
 "\"I came all the way from {pnt} to be here! We don't have anything like this "
 "back at home.\""
 msgstr ""
+"\"¡He venido desde {pnt} para estar aquí! No tenemos nada como esto en casa."
+"\""
 
 #. No Dvaered
 #: dat/events/dvaered/totoran.lua:43
@@ -31889,6 +32038,8 @@ msgid ""
 "\"The Dvaered sure know how to put on a good show. I love seeing it rain "
 "Mace Rockets!\""
 msgstr ""
+"\"¡Los Dvaered sí que saben dar un buen espectáculo. Me encanta ver llover "
+"Cohetes de Maza!\""
 
 #: dat/events/dvaered/totoran.lua:44
 msgid ""
@@ -31896,60 +32047,73 @@ msgid ""
 "enter the virtual reality competitions. I would love to try fly one of those "
 "majestic Dvaered Goddards.\""
 msgstr ""
+"\"Es una pena que te exijan ser dueño de la nave que quieres usar para "
+"participar en las competiciones de realidad virtual. Me encantaría intentar "
+"volar uno de esos majestuosos Dvaered Goddarde\""
 
 #: dat/events/dvaered/totoran.lua:45
 msgid ""
 "\"I like watching the competitions between fighters, it's incredible all the "
 "moves they can pull off.\""
 msgstr ""
+"\"Me gusta ver las competiciones entre luchadores, es increíble todos los "
+"movimientos que pueden hacer.\""
 
 #: dat/events/dvaered/totoran.lua:46
 msgid ""
 "\"I tried to compete in my Llama, but it doesn't stand a chance against even "
 "a single Hyena.\""
 msgstr ""
+"\"Intenté competir en mi Llama, pero no tiene ninguna posibilidad contra una "
+"sola Hiena.\""
 
 #: dat/events/dvaered/totoran.lua:47
 msgid ""
 "\"I was always told that Dvaered technology was primitive, but the virtual "
 "reality of the Crimson Gauntlet is incredible!\""
 msgstr ""
+"\"¡Siempre me dijeron que la tecnología Dvaered era primitiva, pero la "
+"realidad virtual del Guantelete Carmesí es increíble!\""
 
 #: dat/events/dvaered/totoran.lua:48
 msgid ""
 "\"There's nothing quite like seeing two capital ships duke it out. I love "
 "watching railguns blasting away.\""
 msgstr ""
+"\"No hay nada como ver a dos naves capitales enfrentarse. Me encanta ver los "
+"cañones de riel disparandoe\""
 
 #: dat/events/dvaered/totoran.lua:49
 msgid ""
 "\"I used to think the Za'lek virtual games were great, but this is so much "
 "better!\""
 msgstr ""
+"\"Antes pensaba que los juegos virtuales de los Za'lek eran geniales, ¡pero "
+"esto es mucho mejor!\""
 
 #: dat/events/dvaered/totoran.lua:52
 msgid "Gauntlet Pilot"
-msgstr ""
+msgstr "Piloto de Guantelete"
 
 #: dat/events/dvaered/totoran.lua:53
 msgid "Resting Pilot"
-msgstr ""
+msgstr "Piloto Descansando"
 
 #: dat/events/dvaered/totoran.lua:54
 msgid "Tired Pilot"
-msgstr ""
+msgstr "Piloto Cansado"
 
 #: dat/events/dvaered/totoran.lua:57
 msgid "A pilot enjoying some downtime between competitions."
-msgstr ""
+msgstr "Un piloto disfrutando de un tiempo de descanso entre competiciones."
 
 #: dat/events/dvaered/totoran.lua:58
 msgid "A tired pilot taking a break."
-msgstr ""
+msgstr "Un piloto cansado tomándose un respiro."
 
 #: dat/events/dvaered/totoran.lua:59
 msgid "A pilot lounging around."
-msgstr ""
+msgstr "Un piloto descansando."
 
 #: dat/events/dvaered/totoran.lua:62
 msgid ""
@@ -31957,63 +32121,80 @@ msgid ""
 "violence, but I've been destroying ships long before I started participating "
 "in the Crimson Gauntlet!\""
 msgstr ""
+"\"Algunas personas dicen que el Guantelete Carmesí fomenta y promueve la "
+"violencia, ¡pero yo he estado destruyendo naves mucho antes de empezar a "
+"participar en el Guantelete Carmesí!\""
 
 #: dat/events/dvaered/totoran.lua:64
 msgid ""
 "\"Hey, didn't I see you flying a {ship} in the Crimson Gauntlet? Nice flying."
 "\""
 msgstr ""
+"\"Oye, ¿no te vi volando una {ship} en el Guantelete Carmesí? Buen vuelo.\""
 
 #: dat/events/dvaered/totoran.lua:67
 msgid ""
 "\"I was doing so well in my Hyena, but it just lacks the firepower to take "
 "on larger ships. Maybe I should upgrade to a Vendetta.\""
 msgstr ""
+"\"Me iba muy bien con mi Hiena, pero le falta potencia de fuego para "
+"enfrentarse a naves más grandes. Tal vez debería cambiar a una Vendetta.\""
 
 #: dat/events/dvaered/totoran.lua:68
 msgid ""
 "\"The Crimson Gauntlet has really taught me to appreciate the small things "
 "in life, you know, blowing up your enemies with mace rockets and such.\""
 msgstr ""
+"\"El Guantelete Carmesí me ha enseñado de verdad a apreciar las pequeñas "
+"cosas de la vida, ya sabes, reventar a tus enemigos con cohetes maza y demás."
+"\""
 
 #: dat/events/dvaered/totoran.lua:69
 msgid ""
 "\"I used to be a pretty sloppy pilot before participating in the Crimson "
 "Gauntlet. I still am, but I used to be too.\""
 msgstr ""
+"\"Solía ser un piloto bastante descuidado antes de participar en el "
+"Guantelete Carmesí. Todavía lo soy, pero antes también lo era.\""
 
 #: dat/events/dvaered/totoran.lua:70
 msgid ""
 "\"Sometimes I get motion sickness from the virtual reality. What's more "
 "troublesome is it also happens when I fly my real ship!\""
 msgstr ""
+"\"A veces me mareo con la realidad virtual. ¡Lo que es más molesto es que "
+"también me pasa cuando piloto mi nave real!\""
 
 #: dat/events/dvaered/totoran.lua:71
 msgid ""
 "\"Sometimes when I get blown up in Crimson Gauntlet, it takes me a while to "
 "realize I haven't actually been blown up to smithereens.\""
 msgstr ""
+"\"A veces, cuando salgo por los aires en el Guantelete Carmesí, tardo en "
+"darme cuenta de que en realidad no he volado en pedazos.\""
 
 #. Create random noise NPCs while avoiding duplicate messages
 #. Custom NPCs
 #. Just do random noise
 #: dat/events/dvaered/totoran.lua:121
 msgid "You approach the Crimson Gauntlet guide."
-msgstr ""
+msgstr "Te acercas al guía del Guantelete Carmesí."
 
 #: dat/events/dvaered/totoran.lua:123
 msgid ""
 "\"Hello and welcome to the Crimson Gauntlet! You have {emblems}. What would "
 "you like to do?\""
 msgstr ""
+"\"¡Hola y bienvenidos al Guantelete Carmesí! Tienes {emblems}. ¿Qué te "
+"gustaría hacer?\""
 
 #: dat/events/dvaered/totoran.lua:125 dat/events/minerva/station.lua:217
 msgid "Information"
-msgstr ""
+msgstr "Información"
 
 #: dat/events/dvaered/totoran.lua:126
 msgid "Trade Emblems"
-msgstr ""
+msgstr "Comerciar con Emblemas"
 
 #. TODO add some other more info text
 #: dat/events/dvaered/totoran.lua:127 dat/events/minerva/station.lua:219
@@ -32027,27 +32208,27 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:766 dat/missions/minerva/pirate3.lua:179
 #: dat/missions/minerva/pirate4.lua:132 dat/missions/minerva/pirate5.lua:150
 msgid "Leave"
-msgstr ""
+msgstr "Dejarlo"
 
 #: dat/events/dvaered/totoran.lua:131
 msgid "What would you like to know about?"
-msgstr ""
+msgstr "¿Qué te gustaría saber?"
 
 #: dat/events/dvaered/totoran.lua:135
 msgid "Gauntlet History"
-msgstr ""
+msgstr "Historia del Guantelete"
 
 #: dat/events/dvaered/totoran.lua:136
 msgid "Crimson Challenge"
-msgstr ""
+msgstr "Reto Carmesí"
 
 #: dat/events/dvaered/totoran.lua:137
 msgid "Totoran Emblems"
-msgstr ""
+msgstr "Emblemas Totoran"
 
 #: dat/events/dvaered/totoran.lua:138
 msgid "Nothing."
-msgstr ""
+msgstr "Nada."
 
 #: dat/events/dvaered/totoran.lua:142
 msgid ""
@@ -32056,6 +32237,10 @@ msgid ""
 "is scan your ship and its outfits, and you will be ready to participate in "
 "all the challenges."
 msgstr ""
+"El Guantelete Carmesí te permite experimentar el combate con tus naves en "
+"realidad virtual, sin tener que preocuparte por ningún daño real. Todo lo "
+"que tienes que hacer es escanear tu nave y tus equipos, y estarás listo para "
+"participar en todos los desafíos."
 
 #. incident is 593:3726.4663
 #: dat/events/dvaered/totoran.lua:147
@@ -32067,6 +32252,13 @@ msgid ""
 "to virtual reality, and now the Crimson Gauntlet boasts some of the best "
 "full immersion virtual reality experiences in the Universe."
 msgstr ""
+"El Guantelete Carmesí se fundó originalmente a mediados del año 568-UST, "
+"como un programa de entrenamiento para los militares Dvaered. Por supuesto, "
+"por aquel entonces no disponían de una tecnología de realidad virtual tan "
+"buena y, en su lugar, confiaban en el combate real. Sin embargo, a medida "
+"que el número de accidentes y bajas crecía, acabaron iniciando el paso a la "
+"realidad virtual, y ahora el Guantelete Carmesí cuenta con algunas de las "
+"mejores experiencias de realidad virtual de inmersión total del Universo."
 
 #: dat/events/dvaered/totoran.lua:148
 msgid ""
@@ -32077,6 +32269,12 @@ msgid ""
 "having a fear of dying. If your ship is destroyed, you are only dropped out "
 "of the virtual reality environment."
 msgstr ""
+"Finalmente, para fomentar el espíritu guerrero entre la población en "
+"general, en el 588 UST, 20 ciclos después de su creación, el Guantelete "
+"Carmesí se abrió al público en general como experiencia de realidad virtual. "
+"Se trata de uno de los pocos lugares del universo donde se puede "
+"experimentar un duro combate espacial sin tener miedo a morir. Si tu nave es "
+"destruida, sólo se te expulsa del entorno de realidad virtual."
 
 #: dat/events/dvaered/totoran.lua:149
 msgid ""
@@ -32084,6 +32282,10 @@ msgid ""
 "by scouting agencies from across the Universe to find good pilots. Not to "
 "mention all the prizes that can be won from competing in the tournaments."
 msgstr ""
+"Muchos pilotos famosos han tenido su formación aquí, y también es "
+"frecuentado por agencias de exploración de todo el Universo para encontrar "
+"buenos pilotos. Por no hablar de todos los premios que se pueden ganar "
+"compitiendo en los torneos."
 
 #: dat/events/dvaered/totoran.lua:153
 msgid ""
@@ -32093,6 +32295,12 @@ msgid ""
 "as cruisers or carriers. Once you enter a specific challenge, you will face "
 "waves of increasingly hard opponents which you must defeat."
 msgstr ""
+"El Reto del Guantelete Carmesí es un conjunto de desafíos divididos en tres "
+"tipos: escaramuzador, para naves pequeñas como cazas y bombarderos; "
+"guerrero, para naves como corbetas y destructores; y señor de la guerra, "
+"para las naves más grandes como cruceros o portanaves. Una vez que entres en "
+"un desafío específico, te enfrentarás a oleadas de oponentes cada vez más "
+"duros a los que deberás derrotar."
 
 #: dat/events/dvaered/totoran.lua:154
 msgid ""
@@ -32103,38 +32311,49 @@ msgid ""
 "in virtual reality, you don't have to worry about any damage to your real "
 "ships!"
 msgstr ""
+"Obtienes puntos de bonificación según la clase de nave que tengas con "
+"respecto a la categoría. El uso de barcos más pequeños te dará una "
+"bonificación en general. También obtienes una bonificación por eliminar las "
+"olas más rápidamente. Si eres derrotado, la puntuación total hasta tu "
+"derrota se utilizará para calcular tus recompensas. Como todo esto se hace "
+"en la realidad virtual, ¡no tienes que preocuparte de que tus naves reales "
+"sufran daños!"
 
 #: dat/events/dvaered/totoran.lua:162
 msgid "Is there anything else you would like to know about?"
-msgstr ""
+msgstr "¿Hay algo más que te gustaría saber?"
 
 #: dat/events/dvaered/totoran.lua:166
 msgid "\"You have {emblems}. What would you like to trade for?\""
-msgstr ""
+msgstr "\"Tienes {emblems}. ¿Por qué te gustaría cambiar?\""
 
 #: dat/events/dvaered/totoran.lua:168
 msgid "Unlock Warrior Challenge"
-msgstr ""
+msgstr "Desbloquear Reto del Guerrero"
 
 #: dat/events/dvaered/totoran.lua:169
 msgid ""
 "Unlocks participation in the difficult Warrior Challenge meant for Corvette "
 "and Destroyer-class ships."
 msgstr ""
+"Desbloquear la participación en el difícil Reto del Guerrero, destinado a "
+"las naves de clase Corbeta y Destructor."
 
 #: dat/events/dvaered/totoran.lua:170
 msgid "Unlock Warlord Challenge"
-msgstr ""
+msgstr "Desbloquear Reto de Señor de la Guerra"
 
 #: dat/events/dvaered/totoran.lua:171
 msgid ""
 "Unlocks participation in the most difficult Warlord Challenge meant for "
 "Cruiser, Carrier, and Battleship-class ships."
 msgstr ""
+"Desbloquea la participación en el Reto de los Señores de la Guerra más "
+"difícil, destinado a naves de clase Crucero, Portanaves y Acorazado."
 
 #: dat/events/dvaered/totoran.lua:173
 msgid "Unlock Double Damage Enemies Perk"
-msgstr ""
+msgstr "Desbloquear la Habilidad de Doble Daño de Enemigos"
 
 #: dat/events/dvaered/totoran.lua:174
 msgid ""
@@ -32142,10 +32361,13 @@ msgid ""
 "the amount of damage. While this increases the challenge difficulty, it also "
 "immensely increases the rewards."
 msgstr ""
+"Desbloquea la habilidad \"Enemigos de doble daño\", que hace que todos los "
+"enemigos dupliquen la cantidad de daño. Aunque esto aumenta la dificultad "
+"del desafío, también aumenta enormemente las recompensas."
 
 #: dat/events/dvaered/totoran.lua:175
 msgid "Unlock No Healing Perk"
-msgstr ""
+msgstr "Desbloquear Habilidad Sin Sanación"
 
 #: dat/events/dvaered/totoran.lua:176
 msgid ""
@@ -32153,6 +32375,9 @@ msgid ""
 "waves. While this increases the challenge difficulty, it also increases the "
 "rewards."
 msgstr ""
+"Desbloquear la habilidad Sin Sanación, que hace que no te cures entre "
+"oleadas. Aunque esto aumenta la dificultad del desafío, también aumenta las "
+"recompensas."
 
 #. Jump in case of 'Back'
 #. Not enough money.
@@ -32163,18 +32388,18 @@ msgstr ""
 #: dat/events/dvaered/totoran.lua:198 dat/events/dvaered/totoran.lua:248
 #: dat/events/minerva/station.lua:312 dat/events/minerva/station.lua:356
 msgid "unknown tradein type"
-msgstr ""
+msgstr "tipo de intercambio desconocido"
 
 #: dat/events/dvaered/totoran.lua:214
 #: dat/missions/empire/collective/ec03.lua:56 src/map_find.c:427
 #, c-format, lua-format
 msgid "%s (%s)"
-msgstr ""
+msgstr "%s (%s)"
 
 #: dat/events/dvaered/totoran.lua:217 dat/events/minerva/station.lua:232
 #: dat/events/minerva/station.lua:332 src/load.c:369
 msgid "Back"
-msgstr ""
+msgstr "Volver"
 
 #: dat/events/dvaered/totoran.lua:222
 msgid ""
@@ -32182,6 +32407,9 @@ msgid ""
 "the '{item}'.\n"
 "Is there anything else you would like to purchase?\""
 msgstr ""
+"\"Sólo tienes {emblems}, necesitarías {emblems_more} más para comprar el "
+"'{item}'.\n"
+"¿Hay algo más que quieras comprar?\""
 
 #: dat/events/dvaered/totoran.lua:232
 msgid ""
@@ -32189,11 +32417,14 @@ msgid ""
 "as follows:\"\n"
 "#w{description}#0\""
 msgstr ""
+"\"¿Estás seguro de que quieres cambiar por el '#w{name}#0'? La descripción "
+"es la siguiente:\"\n"
+"#w{description}#0\""
 
 #: dat/events/dvaered/totoran.lua:237 dat/events/minerva/station.lua:344
 #: dat/events/minerva/station.lua:371
 msgid "Trade"
-msgstr ""
+msgstr "Comerciar"
 
 #: dat/events/dvaered/totoran.lua:238 dat/events/minerva/station.lua:345
 #: dat/events/minerva/station.lua:372 dat/missions/dvaered/gauntlet/gui.lua:200
@@ -32201,11 +32432,11 @@ msgstr ""
 #: src/map_find.c:240 src/options.c:265 src/options.c:793 src/options.c:896
 #: src/options.c:1147 src/options.c:1198
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: dat/events/dvaered/totoran.lua:252
 msgid "\"Hope you enjoy your purchase!\""
-msgstr ""
+msgstr "\"¡Espero que disfrutes de tu compra!\""
 
 #: dat/events/dvaered/totoran.lua:256 dat/events/minerva/station.lua:635
 #: dat/missions/minerva/kex1.lua:229 dat/missions/minerva/kex2.lua:208
@@ -32214,7 +32445,7 @@ msgstr ""
 #: dat/missions/minerva/pirate3.lua:265 dat/missions/minerva/pirate4.lua:140
 #: dat/missions/minerva/pirate5.lua:180
 msgid "You take your leave."
-msgstr ""
+msgstr "Te vas."
 
 #. Spawns a merchant ship that explains what happens
 #: dat/events/dvaered/warlords_battle.lua:86
@@ -39281,7 +39512,7 @@ msgstr ""
 #: src/player.c:1962 src/player_autonav.c:92 src/player_autonav.c:217
 #: src/player_autonav.c:460 src/ship.c:205
 msgid "Unknown"
-msgstr ""
+msgstr "Desconocido"
 
 #. Make sure they survive the nebula
 #. Add pilot as spawned
