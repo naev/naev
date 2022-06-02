@@ -12,7 +12,7 @@ typedef struct Claim_s Claim_t;
 /*
  * Individual claim handling.
  */
-Claim_t *claim_create (void);
+Claim_t *claim_create( int exclusive );
 int claim_addStr( Claim_t *claim, const char *str );
 int claim_addSys( Claim_t *claim, int ss_id );
 int claim_test( const Claim_t *claim );

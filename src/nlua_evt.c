@@ -301,6 +301,7 @@ static int evtL_save( lua_State *L )
  *
  *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
  *    @luatparam[opt=false] boolean onlytest Whether or not to only test the claim, but not apply it.
+ *    @luatparam[opt=false] boolean inclusive Whether or not to allow the claim to include other inclusive claims. Multiple missions/events can inclusively claim the same system, but only one system can exclusively claim it.
  *    @luatreturn boolean true if was able to claim, false otherwise.
  * @luafunc claim
  */
@@ -308,12 +309,13 @@ static int evtL_claim( lua_State *L )
 {
    Claim_t *claim;
    Event_t *cur_event;
-   int onlytest;
+   int onlytest, inclusive;
 
    /* Get current event. */
    cur_event = event_getFromLua(L);
 
    onlytest = lua_toboolean(L,2);
+   inclusive = lua_toboolean(L,3);
 
    /* Check to see if already claimed. */
    if (!onlytest && (cur_event->claims != NULL)) {
@@ -322,7 +324,7 @@ static int evtL_claim( lua_State *L )
    }
 
    /* Create the claim. */
-   claim = claim_create();
+   claim = claim_create( !inclusive );
 
    /* Handle parameters. */
    if (lua_istable(L,1)) {

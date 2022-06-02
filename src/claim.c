@@ -22,9 +22,13 @@
  * @brief The claim structure.
  */
 struct Claim_s {
-   int active; /**< Have we, in fact, claimed these contents?. */
-   int *ids; /**< System ids. */
-   char **strs; /**< Strings. */
+   int active;    /**< Have we, in fact, claimed these contents?. */
+   int *ids;      /**< System ids. */
+   char **strs;   /**< Strings. */
+   int exclusive; /**< Whether or not this claim is exclusive. Exclusive claims
+      do not allow other claims to work, but non-exclusive do not have this issue,
+      so multiple non-exclusive claims can share the same system and block any
+      exclusive claims. */
 };
 
 static char **claimed_strs = NULL; /**< Global claimed strings. */
@@ -32,14 +36,16 @@ static char **claimed_strs = NULL; /**< Global claimed strings. */
 /**
  * @brief Creates a system claim.
  *
+ *    @param exclusive Whether or not this claim is exclusive.
  *    @return Newly created system claim or NULL on error.
  */
-Claim_t *claim_create (void)
+Claim_t *claim_create( int exclusive )
 {
    Claim_t *claim= malloc( sizeof(Claim_t) );
    claim->active = 0;
    claim->ids    = NULL;
    claim->strs   = NULL;
+   claim->exclusive = exclusive;
 
    return claim;
 }
@@ -111,22 +117,25 @@ int claim_isNull( const Claim_t *claim )
  */
 int claim_test( const Claim_t *claim )
 {
-   int claimed, i, j;
+   int exc;
 
    /* Must actually have a claim. */
    if (claim == NULL)
       return 0;
 
+   exc = claim->exclusive;
+
    /* See if the system is claimed. */
-   for (i=0; i<array_size(claim->ids); i++) {
-      claimed = sys_isFlag( system_getIndex(claim->ids[i]), SYSTEM_CLAIMED );
-      if (claimed)
+   for (int i=0; i<array_size(claim->ids); i++) {
+      StarSystem *sys = system_getIndex( claim->ids[i] );
+      int claimed = sys_isFlag( sys, SYSTEM_CLAIMED );
+      if (claimed || (exc && (sys->claims_soft>0)))
          return 1;
    }
 
    /* Check strings. */
-   for (i=0; i<array_size(claim->strs); i++) {
-      for (j=0; j<array_size(claimed_strs); j++) {
+   for (int i=0; i<array_size(claim->strs); i++) {
+      for (int j=0; j<array_size(claimed_strs); j++) {
          if (strcmp( claim->strs[i], claimed_strs[j] )==0)
             return 1;
       }
@@ -186,8 +195,13 @@ int claim_testSys( const Claim_t *claim, int sys )
 void claim_destroy( Claim_t *claim )
 {
    if (claim->active)
-      for (int i=0; i<array_size(claim->ids); i++)
-         sys_rmFlag( system_getIndex(claim->ids[i]), SYSTEM_CLAIMED );
+      for (int i=0; i<array_size(claim->ids); i++) {
+         StarSystem *sys = system_getIndex(claim->ids[i]);
+         if (claim->exclusive)
+            sys_rmFlag( sys, SYSTEM_CLAIMED );
+         else
+            sys->claims_soft--;
+      }
    array_free( claim->ids );
 
    if (claim->active)
@@ -204,8 +218,10 @@ void claim_clear (void)
 {
    /* Clears all the flags. */
    StarSystem *sys = system_getAll();
-   for (int i=0; i<array_size(sys); i++)
+   for (int i=0; i<array_size(sys); i++) {
       sys_rmFlag( &sys[i], SYSTEM_CLAIMED );
+      sys[i].claims_soft = 0;
+   }
 
    for (int i=0; i<array_size(claimed_strs); i++)
       free(claimed_strs[i]);
@@ -231,8 +247,13 @@ void claim_activateAll (void)
 void claim_activate( Claim_t *claim )
 {
    /* Add flags. */
-   for (int i=0; i<array_size(claim->ids); i++)
-      sys_setFlag( system_getIndex(claim->ids[i]), SYSTEM_CLAIMED );
+   for (int i=0; i<array_size(claim->ids); i++) {
+      StarSystem *sys = system_getIndex( claim->ids[i] );
+      if (claim->exclusive)
+         sys_setFlag( sys, SYSTEM_CLAIMED );
+      else
+         sys->claims_soft++;
+   }
 
    /* Add strings. */
    if ((claimed_strs == NULL) && (array_size(claim->strs) > 0))
@@ -256,6 +277,8 @@ int claim_xmlSave( xmlTextWriterPtr writer, const Claim_t *claim )
 {
    if (claim == NULL)
       return 0;
+
+   xmlw_attr( writer, "exclusive", "%d", claim->exclusive );
 
    for (int i=0; i<array_size(claim->ids); i++) {
       StarSystem *sys = system_getIndex( claim->ids[i] );
@@ -281,9 +304,13 @@ Claim_t *claim_xmlLoad( xmlNodePtr parent )
 {
    Claim_t *claim;
    xmlNodePtr node;
+   int exclusive;
+
+   /* Exclusiveness defaults to true due to older versions. */
+   xmlr_attr_int_def( parent, "exclusive", exclusive, 1 );
 
    /* Create the claim. */
-   claim = claim_create();
+   claim = claim_create( exclusive );
 
    /* Load the nodes. */
    node = parent->xmlChildrenNode;

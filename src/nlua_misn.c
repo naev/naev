@@ -972,6 +972,7 @@ static int misn_npcRm( lua_State *L )
  *
  *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
  *    @luatparam[opt=false] boolean onlytest Whether or not to only test the claim, but not apply it.
+ *    @luatparam[opt=false] boolean inclusive Whether or not to allow the claim to include other inclusive claims. Multiple missions/events can inclusively claim the same system, but only one system can exclusively claim it.
  *    @luatreturn boolean true if was able to claim, false otherwise.
  * @luafunc claim
  */
@@ -979,12 +980,13 @@ static int misn_claim( lua_State *L )
 {
    Claim_t *claim;
    Mission *cur_mission;
-   int onlytest;
+   int onlytest, inclusive;
 
    /* Get mission. */
    cur_mission = misn_getFromLua(L);
 
    onlytest = lua_toboolean(L,2);
+   inclusive = lua_toboolean(L,3);
 
    /* Check to see if already claimed. */
    if (!onlytest && !claim_isNull(cur_mission->claims)) {
@@ -993,7 +995,7 @@ static int misn_claim( lua_State *L )
    }
 
    /* Create the claim. */
-   claim = claim_create();
+   claim = claim_create( !inclusive );
 
    if (lua_istable(L,1)) {
       /* Iterate over table. */

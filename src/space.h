@@ -288,6 +288,7 @@ struct StarSystem_ {
    unsigned int flags;  /**< flags for system properties */
    ShipStatList *stats; /**< System stats. */
    char *note;          /**< Note to player marked system */
+   int claims_soft;     /**< Number of soft claims on the system. */
 };
 
 /* Some useful externs. */
