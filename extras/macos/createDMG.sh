@@ -38,6 +38,11 @@ done
 if ! [ -x "$(command -v genisoimage)" ]; then
     echo "You don't have genisoimage in PATH"
     exit 1
+elif ! [ -x "$(command -v dmg)" ]; then
+    echo "You don't have dmg in PATH"
+    echo "Get it from https://github.com/fanquake/libdmg-hfsplus"
+    exit 1
+fi
 fi
 
 
