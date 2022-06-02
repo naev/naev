@@ -123,7 +123,7 @@ function create ()
    end
 
    mem.missys = systems[ rnd.rnd( 1, #systems ) ]
-   if not misn.claim( mem.missys ) then misn.finish( false ) end
+   if not misn.claim( mem.missys, false, true ) then misn.finish( false ) end
 
    mem.jumps_permitted = system.cur():jumpDist(mem.missys) + rnd.rnd( 5 )
    if rnd.rnd() < 0.05 then

@@ -79,7 +79,7 @@ function create ()
          return false
       end
       -- Must not be claimed
-      if not misn.claim( sys, true ) then
+      if not misn.claim( sys, true, true ) then
          return false
       end
       -- Must have two jumps that are fair away-ish
@@ -97,7 +97,7 @@ function create ()
 
    -- Choose system
    mem.targetsys = syslist[ rnd.rnd(1,#syslist) ]
-   if not misn.claim( mem.targetsys ) then
+   if not misn.claim( mem.targetsys, false, true ) then
       misn.finish(false)
    end
 
