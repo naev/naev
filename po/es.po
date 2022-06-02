@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-05-12 10:59+0900\n"
-"PO-Revision-Date: 2022-05-31 18:24+0000\n"
+"PO-Revision-Date: 2022-06-01 17:59+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
@@ -11136,19 +11136,16 @@ msgid "BGG-1356"
 msgstr "BGG-1356"
 
 #: dat/spob/blackwell_i.xml:2
-#, fuzzy
 msgid "Blackwell I"
-msgstr "Blackwell I"
+msgstr "Pozonegro I"
 
 #: dat/spob/blackwell_iix.xml:2
-#, fuzzy
 msgid "Blackwell IIX"
-msgstr "Blackwell IIX"
+msgstr "Pozonegro IIX"
 
 #: dat/spob/blackwell_vii.xml:2
-#, fuzzy
 msgid "Blackwell VII"
-msgstr "Blackwell VII"
+msgstr "Pozonegro VII"
 
 #: dat/spob/blunderbuss_ii.xml:2
 #, fuzzy
@@ -30045,27 +30042,27 @@ msgstr "\"Te abasteceré de combustible por {créditos}.\""
 #. Dvaered messages
 #: dat/ai/advertiser.lua:100
 msgid "Butthead"
-msgstr "Cabeza de Chorlito"
+msgstr "Tontolculo"
 
 #: dat/ai/advertiser.lua:101
 msgid "Nincompoop"
-msgstr ""
+msgstr "Estúpido"
 
 #: dat/ai/advertiser.lua:102
 msgid "Dunderhead"
-msgstr ""
+msgstr "Lerdo"
 
 #: dat/ai/advertiser.lua:103
 msgid "Ass"
-msgstr ""
+msgstr "Imbécil"
 
 #: dat/ai/advertiser.lua:104
 msgid "Fool"
-msgstr ""
+msgstr "Idiota"
 
 #: dat/ai/advertiser.lua:105
 msgid "Coward"
-msgstr ""
+msgstr "Cobarde"
 
 #. TODO probably merge this with 'common.frontier_war' into a separate module
 #. Travel to third rendezvous
@@ -30086,7 +30083,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:177
 #: dat/scripts/common/frontier_war.lua:19
 msgid "Lord Jim"
-msgstr ""
+msgstr "Señor Jim"
 
 #. Go to first rendezvous
 #. Spawn the Warlord
@@ -30099,23 +30096,23 @@ msgstr "Dama Bitterfly"
 
 #: dat/ai/advertiser.lua:110 dat/scripts/common/frontier_war.lua:21
 msgid "Lady Pointblank"
-msgstr ""
+msgstr "Dama Bocajarro"
 
 #: dat/ai/advertiser.lua:111 dat/scripts/common/frontier_war.lua:22
 msgid "Lord Chainsaw"
-msgstr ""
+msgstr "Señor Motosierra"
 
 #: dat/ai/advertiser.lua:112 dat/scripts/common/frontier_war.lua:23
 msgid "Lord Painbishop"
-msgstr ""
+msgstr "Señor Dolorobispo"
 
 #: dat/ai/advertiser.lua:113 dat/scripts/common/frontier_war.lua:24
 msgid "Lord Kriegsreich Hundertfeuer"
-msgstr ""
+msgstr "Señor Kriegsreich Hundertfeuer"
 
 #: dat/ai/advertiser.lua:114 dat/scripts/common/frontier_war.lua:25
 msgid "Lady Blackswan"
-msgstr "Dama Blackswan"
+msgstr "Dama Cisnenegro"
 
 #: dat/ai/advertiser.lua:115 dat/scripts/common/frontier_war.lua:26
 msgid "Lady Killington"
@@ -30123,15 +30120,15 @@ msgstr "Dama Killington"
 
 #: dat/ai/advertiser.lua:116 dat/scripts/common/frontier_war.lua:27
 msgid "Lord Richthofen"
-msgstr ""
+msgstr "Señor Richthofen"
 
 #: dat/ai/advertiser.lua:117 dat/scripts/common/frontier_war.lua:28
 msgid "Lady Dewinter"
-msgstr ""
+msgstr "Dama Dewinter"
 
 #: dat/ai/advertiser.lua:118 dat/scripts/common/frontier_war.lua:29
 msgid "Lord Easytrigger"
-msgstr ""
+msgstr "Señor Gatillo Fácil"
 
 #. Load defaults
 #. return nils if cancelled
@@ -30164,11 +30161,11 @@ msgstr "Dama Sainte-Beuverie"
 
 #: dat/ai/advertiser.lua:120 dat/scripts/common/frontier_war.lua:31
 msgid "Lord Louverture"
-msgstr ""
+msgstr "Señor Louverture"
 
 #: dat/ai/advertiser.lua:121 dat/scripts/common/frontier_war.lua:32
 msgid "Lord Abdelkiller"
-msgstr ""
+msgstr "Señor Abdelkiller"
 
 #: dat/ai/advertiser.lua:122 dat/scripts/common/frontier_war.lua:33
 msgid "Lady Proserpina"
@@ -30177,10 +30174,12 @@ msgstr "Dama Proserpina"
 #: dat/ai/advertiser.lua:128
 msgid "I hereby declare {butthead} is a {badword}. -{sponsor}"
 msgstr ""
+"Por la presente declaró que {tontolculo} es una {palabra mala}. "
+"-{patrocinador}"
 
 #: dat/ai/advertiser.lua:129
 msgid "Let it be known that {butthead} is a {badword}. -{sponsor}"
-msgstr ""
+msgstr "Que se sepa que {tontolculo} es una {palabra mala}. -{patrocinador}"
 
 #. Soromid messages
 #. Soromid+Empire messages
@@ -30189,6 +30188,8 @@ msgid ""
 "Remember to fill in your EX-29528-B form if returning to the Empire from "
 "Soromid territory."
 msgstr ""
+"Recuerda rellenar tu formulario EX-29528-B si vuelves al Imperio desde "
+"territorio Soromida."
 
 #. Za'lek messages
 #. Note that when running in the main menu background, player.name() might not exist (==nil), so
@@ -30200,6 +30201,11 @@ msgid ""
 "we invite you to contribute other unpublished papers of relevant fields to "
 "the Interstellar Pay-to-win Journal for Mathematics and Applications."
 msgstr ""
+"Estimado Prof. {jugador}, su reciente trabajo nos ha dejado una profunda "
+"impresión. Debido al avance, la novedad y la posibilidad de una amplia "
+"aplicación de su invención, le invitamos a que contribuya con otros trabajos "
+"inéditos de campos relevantes a la Revista Interestelar de Pago por Ganar "
+"para Matemáticas y Aplicaciones."
 
 #. Sirius messages
 #. Custom greeting
@@ -30231,17 +30237,17 @@ msgstr ""
 #: dat/ai/baddie.lua:15 dat/ai/baddiepatrol.lua:13 dat/ai/baddiepos.lua:13
 #: dat/ai/guard.lua:13
 msgid "You can't bribe me!"
-msgstr ""
+msgstr "¡No puedes sobornarme!"
 
 #: dat/ai/baddie.lua:16 dat/ai/baddiepatrol.lua:14 dat/ai/baddiepos.lua:14
 #: dat/ai/guard.lua:14
 msgid "I won't give you fuel!"
-msgstr ""
+msgstr "¡No te voy a dar combustible!"
 
 #. Player will almost certainly go through these ships as shortcut isn't known yet
 #: dat/ai/baddie.lua:24 dat/missions/zalek/blackhole/zbh05.lua:172
 msgid "ACCESS DENIED."
-msgstr ""
+msgstr "ACCESO DENEGADO."
 
 #. Settings
 #. Lower control rate
@@ -30296,7 +30302,7 @@ msgstr ""
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:298
 #: dat/missions/minerva/kex5.lua:300 dat/missions/tutorial/nelly02.lua:255
 msgid "No response."
-msgstr ""
+msgstr "Sin respuesta."
 
 #.
 #. -- Main control function for bomber behavior.
@@ -30706,7 +30712,7 @@ msgstr ""
 #. Bail out if no valid planet could be found.
 #: dat/ai/core/basic.lua:390
 msgid "Pilot '{plt}' tried to land with no landable spob!"
-msgstr ""
+msgstr "¡El piloto '{plt}' ha intentado aterrizar sin poder hacerlo!"
 
 #. Decide exact land point
 #. luacheck: globals _landgo (AI Task functions passed by name)
@@ -30795,7 +30801,7 @@ msgstr ""
 #. See if finished refueling
 #: dat/ai/core/basic.lua:863
 msgid "Finished fuel transfer."
-msgstr ""
+msgstr "Transferencia de combustible terminada."
 
 #. Untarget
 #. Try to board
@@ -30950,7 +30956,7 @@ msgstr ""
 #. Generic AI
 #: dat/ai/core/control/generic.lua:237
 msgid "Pilot '{plt}': formation '{formation}' not found!"
-msgstr ""
+msgstr "Piloto '{plt}': ¡formación '{formación}' no encontrada!"
 
 #. Run instead of "control" when under manual control; use should be limited
 #. This is the case that the message is being sent from the environment, such as asteroids
@@ -31255,39 +31261,39 @@ msgstr ""
 #. Turreted Missiles
 #: dat/ai/core/misc/distress.lua:15 dat/ai/thurion.lua:12
 msgid "Local security: requesting assistance!"
-msgstr ""
+msgstr "Seguridad local: ¡solicitando ayuda!"
 
 #: dat/ai/core/misc/distress.lua:16
 msgid "Mayday! We are under attack!"
-msgstr ""
+msgstr "¡Mayday! ¡Nos atacan!"
 
 #: dat/ai/core/misc/distress.lua:17 dat/ai/thurion.lua:13
 msgid "Requesting assistance. We are under attack!"
-msgstr ""
+msgstr "Solicitando ayuda. ¡Nos estan atacando!"
 
 #: dat/ai/core/misc/distress.lua:18
 msgid "{fct} vessel under attack! Requesting help!"
-msgstr ""
+msgstr "¡Nave {fct} esta sienda atacada! ¡Solicitando ayuda!"
 
 #: dat/ai/core/misc/distress.lua:19 dat/ai/thurion.lua:15
 msgid "Help! Ship under fire!"
-msgstr ""
+msgstr "¡Ayuda! ¡Nave bajo fuego!"
 
 #: dat/ai/core/misc/distress.lua:20 dat/ai/thurion.lua:16
 msgid "Taking hostile fire! Need assistance!"
-msgstr ""
+msgstr "¡Recibiendo fuego enemigo! ¡Necesitamos ayuda!"
 
 #: dat/ai/core/misc/distress.lua:21 dat/ai/thurion.lua:17
 msgid "We are under attack, require support!"
-msgstr ""
+msgstr "Estamos bajo ataque, ¡necesitamos apoyo!"
 
 #: dat/ai/core/misc/distress.lua:22 dat/ai/thurion.lua:18
 msgid "Mayday! Ship taking damage!"
-msgstr ""
+msgstr "¡Auxilio! ¡La nave está recibiendo daños!"
 
 #: dat/ai/core/misc/distress.lua:23
 msgid "Mayday! {fct} {cls} being assaulted!"
-msgstr ""
+msgstr "¡Auxilio! ¡{fct} {cls} siendo asaltado!"
 
 #. Must be defined after sos
 #.
@@ -31390,7 +31396,7 @@ msgstr ""
 #. Send a message if applicable
 #: dat/ai/core/misc/scans.lua:52
 msgid "Prepare to be scanned."
-msgstr ""
+msgstr "Prepárese para ser escaneado."
 
 #.
 #. -- Tries to get close to scan the enemy
@@ -31402,13 +31408,13 @@ msgstr ""
 #. Note this check MUST be done after settarget
 #: dat/ai/core/misc/scans.lua:85
 msgid "Illegal objects detected! Do not resist!"
-msgstr ""
+msgstr "¡Objetos ilegales detectados! ¡No se resista!"
 
 #. Player gets faction hit and more hostiles on them
 #. Small faction hit
 #: dat/ai/core/misc/scans.lua:99
 msgid "Thank you for your cooperation."
-msgstr ""
+msgstr "Gracias por su colaboración."
 
 #. Default task to run when idle
 #. luacheck: globals idle (AI Task functions passed by name)
@@ -31429,44 +31435,44 @@ msgstr ""
 #. Settings
 #: dat/ai/dvaered.lua:10 dat/ai/frontier_police.lua:11 dat/ai/goddard.lua:10
 msgid "\"You insult my honour.\""
-msgstr ""
+msgstr "\"Insultas mi honor.\""
 
 #: dat/ai/dvaered.lua:11 dat/ai/frontier_police.lua:12 dat/ai/goddard.lua:11
 msgid "\"I find your lack of honour disturbing.\""
-msgstr ""
+msgstr "\"Encuentro su falta de honor perturbadora.\""
 
 #: dat/ai/dvaered.lua:12 dat/ai/frontier_police.lua:13 dat/ai/goddard.lua:12
 msgid "\"You disgust me.\""
-msgstr ""
+msgstr "\"Me das asco.\""
 
 #: dat/ai/dvaered.lua:13 dat/ai/frontier_police.lua:14 dat/ai/goddard.lua:13
 msgid "\"Bribery carries a harsh penalty.\""
-msgstr ""
+msgstr "\"El soborno conlleva una dura sanción.\""
 
 #: dat/ai/dvaered.lua:14
 msgid "\"House Dvaered does not lower itself to common scum.\""
-msgstr ""
+msgstr "\"La Casa Dvaered no se rebaja a la escoria común.\""
 
 #: dat/ai/dvaered.lua:17 dat/ai/goddard.lua:18
 #: dat/events/minerva/altercation1.lua:42
 msgid "I shall wash my hull in your blood!"
-msgstr ""
+msgstr "¡Lavaré mi casco con tu sangre!"
 
 #: dat/ai/dvaered.lua:18 dat/ai/frontier_police.lua:20 dat/ai/goddard.lua:19
 msgid "Your head will make a great trophy!"
-msgstr ""
+msgstr "¡Tu cabeza será un gran trofeo!"
 
 #: dat/ai/dvaered.lua:21 dat/ai/goddard.lua:17
 msgid "Prepare to face annihilation!"
-msgstr ""
+msgstr "¡Prepárate para la aniquilación!"
 
 #: dat/ai/dvaered.lua:22
 msgid "You're no match for the Dvaered!"
-msgstr ""
+msgstr "¡No eres rival para los Dvaered!"
 
 #: dat/ai/dvaered.lua:23 dat/ai/frontier_police.lua:22
 msgid "Death awaits you!"
-msgstr ""
+msgstr "¡La muerte te espera!"
 
 #. Create function
 #. See if it's a transport ship
@@ -31478,11 +31484,11 @@ msgstr ""
 #. Handle refueling
 #: dat/ai/dvaered.lua:70
 msgid "\"You are not worthy of my attention.\""
-msgstr ""
+msgstr "\"No eres digno de mi atención.\""
 
 #: dat/ai/dvaered.lua:73 dat/ai/frontier_police.lua:74
 msgid "\"For you I could make an exception for {credits}.\""
-msgstr ""
+msgstr "\"Por ti podría hacer una excepción de {créditos}.\""
 
 #. Handle bribing
 #. Only 50% of actually taunting.
@@ -31496,7 +31502,7 @@ msgstr ""
 #. Settings
 #: dat/ai/dvaered.lua:78 dat/ai/frontier_police.lua:10 dat/ai/soromid.lua:12
 msgid "\"I shall especially enjoy your death.\""
-msgstr ""
+msgstr "\"Disfrutaré especialmente de tu muerte.\""
 
 #. taunts
 #. Only 50% of actually taunting.
@@ -31515,79 +31521,79 @@ msgstr ""
 #. Settings
 #: dat/ai/empire.lua:12 dat/ai/mercenary.lua:11 dat/ai/proteron.lua:12
 msgid "\"You won't buy your way out of this one.\""
-msgstr ""
+msgstr "\"No vas a comprar tu salida de esta.\""
 
 #: dat/ai/empire.lua:13
 msgid "\"The Empire likes to make examples out of scum like you.\""
-msgstr ""
+msgstr "\"Al Imperio le gusta hacer ejemplo de escoria como tú.\""
 
 #: dat/ai/empire.lua:14 dat/ai/proteron.lua:14
 msgid "\"You've made a huge mistake.\""
-msgstr ""
+msgstr "\"Has cometido un gran error.\""
 
 #: dat/ai/empire.lua:15 dat/ai/proteron.lua:15
 msgid "\"Bribery carries a harsh penalty, scum.\""
-msgstr ""
+msgstr "\"El soborno conlleva una dura pena, escoria.\""
 
 #: dat/ai/empire.lua:16 dat/ai/proteron.lua:16
 msgid "\"I'm not interested in your blood money!\""
-msgstr ""
+msgstr "\"¡No me interesa tu dinero de sangre!\""
 
 #: dat/ai/empire.lua:17 dat/ai/proteron.lua:17
 msgid "\"All the money in the world won't save you now!\""
-msgstr ""
+msgstr "\"¡Todo el dinero del mundo no te salvará ahora!\""
 
 #: dat/ai/empire.lua:20 dat/ai/soromid.lua:20
 msgid "There is no room in this universe for scum like you!"
-msgstr ""
+msgstr "¡No hay lugar en este universo para escoria como tú!"
 
 #: dat/ai/empire.lua:21
 msgid "The Empire will enjoy your death!"
-msgstr ""
+msgstr "¡El Imperio disfrutará de tu muerte!"
 
 #: dat/ai/empire.lua:22
 msgid "Your head will make a fine gift for the Emperor!"
-msgstr ""
+msgstr "¡Tu cabeza será un buen regalo para el Emperador!"
 
 #: dat/ai/empire.lua:23
 msgid "None survive the wrath of the Emperor!"
-msgstr ""
+msgstr "¡Nadie sobrevive a la ira del Emperador!"
 
 #: dat/ai/empire.lua:24
 msgid "Enjoy your last moments, criminal!"
-msgstr ""
+msgstr "¡Disfruta de tus últimos momentos, criminal!"
 
 #: dat/ai/empire.lua:27 dat/ai/pirate.lua:92
 msgid "You dare attack me?!"
-msgstr ""
+msgstr "¡¿Te atreves a atacarme?!"
 
 #: dat/ai/empire.lua:28
 msgid "You are no match for the Empire!"
-msgstr ""
+msgstr "¡No eres rival para el Imperio!"
 
 #: dat/ai/empire.lua:29
 msgid "The Empire will have your head!"
-msgstr ""
+msgstr "¡El Imperio tendrá tu cabeza!"
 
 #: dat/ai/empire.lua:30 dat/ai/flf.lua:22 dat/ai/proteron.lua:31
 #: dat/ai/soromid.lua:31
 msgid "You'll regret that!"
-msgstr ""
+msgstr "¡Vas a lamentar eso!"
 
 #: dat/ai/empire.lua:31 dat/ai/soromid.lua:32
 msgid "That was a fatal mistake!"
-msgstr ""
+msgstr "¡Eso ha sido un error fatal!"
 
 #. See if it's a transport ship
 #. Credits, and other transport-specific stuff
 #. Lines to annoy the player. Shouldn't be too common or Gamma Polaris and such get inundated.
 #: dat/ai/empire.lua:52
 msgid "The Empire is watching you."
-msgstr ""
+msgstr "El Imperio te está vigilando."
 
 #: dat/ai/empire.lua:54
 msgid "The Emperor sees all."
-msgstr ""
+msgstr "El Emperador lo ve todo."
 
 #. Set how far they attack
 #. Finish up creation
@@ -31597,7 +31603,7 @@ msgstr ""
 #. Get refuel chance
 #: dat/ai/empire.lua:89 dat/ai/empire.lua:92
 msgid "\"My fuel is property of the Empire.\""
-msgstr ""
+msgstr "\"Mi combustible es propiedad del Imperio.\""
 
 #. Most likely no chance to refuel
 #: dat/ai/empire.lua:98
@@ -31605,15 +31611,17 @@ msgid ""
 "\"I suppose I could spare some fuel for {credits}, but you'll have to do the "
 "paperwork.\""
 msgstr ""
+"\"Supongo que podría prescindir de algo de combustible por {créditos}, pero "
+"tendrás que hacer el papeleo.\""
 
 #. See if can be bribed
 #: dat/ai/empire.lua:106
 msgid "\"For some {credits} I could forget about seeing you.\""
-msgstr ""
+msgstr "\"Por algunos {créditos} podría olvidarme de verte.\""
 
 #: dat/ai/empire.lua:107
 msgid "\"Now scram before I change my mind.\""
-msgstr ""
+msgstr "\"Ahora lárgate antes de que cambie de opinión.\""
 
 #. taunts
 #. Only 50% of actually taunting.
@@ -31628,19 +31636,19 @@ msgstr ""
 #. Settings
 #: dat/ai/empire_refuel.lua:6
 msgid "Empire refuel ship under attack!"
-msgstr ""
+msgstr "¡Nave de reabastecimiento del Imperio bajo ataque!"
 
 #. Broke
 #. Finish up creation
 #. Doesn't make sense to bribe
 #: dat/ai/empire_refuel.lua:20
 msgid "I'm out of here."
-msgstr ""
+msgstr "Me voy de aquí."
 
 #. Override refuel chance
 #: dat/ai/empire_refuel.lua:24
 msgid "\"Sure thing.\""
-msgstr ""
+msgstr "\"Claro.\""
 
 #.
 #. ===FLEE AI===
@@ -31655,27 +31663,27 @@ msgstr ""
 #. Settings
 #: dat/ai/flf.lua:15
 msgid "For the Frontier!"
-msgstr ""
+msgstr "¡Por la Frontera!"
 
 #: dat/ai/flf.lua:16
 msgid "You'll make great target practice!"
-msgstr ""
+msgstr "¡Serás una gran práctica de tiro!"
 
 #: dat/ai/flf.lua:17
 msgid "Purge the oppressors!"
-msgstr ""
+msgstr "¡Purgar a los opresores!"
 
 #: dat/ai/flf.lua:20
 msgid "You are no match for the FLF."
-msgstr ""
+msgstr "No eres rival para el FLF."
 
 #: dat/ai/flf.lua:21
 msgid "I've killed scum far more dangerous than you."
-msgstr ""
+msgstr "He matado a escoria mucho más peligrosa que tú."
 
 #: dat/ai/flf.lua:23
 msgid "Death to the enemies of the Frontier!"
-msgstr ""
+msgstr "¡Muerte a los enemigos de Frontera!"
 
 #. Give monies.
 #. Set how far they attack
@@ -31685,40 +31693,41 @@ msgstr ""
 #. Handle bribes.
 #: dat/ai/flf.lua:71
 msgid "\"It'll cost you {credits} for me to ignore your dirty presence.\""
-msgstr ""
+msgstr "\"Te costará {créditos} que ignore tu sucia presencia.\""
 
 #: dat/ai/flf.lua:72
 msgid "\"Begone before I change my mind.\""
-msgstr ""
+msgstr "\"Vete antes de que cambie de opinión.\""
 
 #: dat/ai/flf.lua:74
 msgid "\"The only way to deal with scum like you is with cannons!\""
-msgstr ""
+msgstr "\"¡La única manera de lidiar con escoria como tú es con cañones!\""
 
 #. Handle refueling.
 #: dat/ai/flf.lua:82
 msgid "\"I should be able to spare some fuel for {credits}.\""
 msgstr ""
+"\"Debería ser capaz de disponer de algo de combustible por {créditos}.\""
 
 #: dat/ai/flf.lua:84
 msgid "\"I can't spare fuel for you.\""
-msgstr ""
+msgstr "\"No puedo prescindir del combustible por ti.\""
 
 #: dat/ai/frontier_police.lua:15
 msgid "\"The Frontier does not lower itself to common scum.\""
-msgstr ""
+msgstr "\"La Frontera no se rebaja a la escoria común.\""
 
 #: dat/ai/frontier_police.lua:18
 msgid "Alea iacta est!"
-msgstr ""
+msgstr "¡Alea iacta est!"
 
 #: dat/ai/frontier_police.lua:19
 msgid "Morituri te salutant!"
-msgstr ""
+msgstr "¡Morituri te salutant!"
 
 #: dat/ai/frontier_police.lua:21
 msgid "Cave canem!"
-msgstr ""
+msgstr "¡Cave canem!"
 
 #. Create function
 #. See if it's a transport ship
@@ -31731,27 +31740,28 @@ msgstr ""
 msgid ""
 "\"Mare magno turbantibus. That means that I don't care about your problems.\""
 msgstr ""
+"\"Mare magno turbantibus. Eso significa que no me importan tus problemas.\""
 
 #. Handle bribing
 #: dat/ai/frontier_police.lua:83
 msgid "\"For {credits} I'll let your grievances slide.\""
-msgstr ""
+msgstr "\"Por {créditos} dejaré pasar tus agravios.\""
 
 #: dat/ai/frontier_police.lua:84
 msgid "\"Now get out of my sight and don't cause any more trouble.\""
-msgstr ""
+msgstr "\"Ahora sal de mi vista y no causes más problemas.\""
 
 #: dat/ai/goddard.lua:14
 msgid "\"House Goddard does not lower itself to common scum.\""
-msgstr ""
+msgstr "\"La Casa Goddard no se rebaja a la escoria común.\""
 
 #: dat/ai/goddard.lua:20
 msgid "These moments will be your last!"
-msgstr ""
+msgstr "¡Estos momentos serán tus últimos!"
 
 #: dat/ai/goddard.lua:21
 msgid "You are a parasite!"
-msgstr ""
+msgstr "¡Eres un parásito!"
 
 #. Create function
 #. See if it's a transport ship
@@ -31763,49 +31773,49 @@ msgstr ""
 #. Deal with refueling
 #: dat/ai/goddard.lua:69
 msgid "\"I could do you the favour of refueling for the price of {credits}.\""
-msgstr ""
+msgstr "\"Podría hacerle el favor de repostar por el precio de {créditos}.\""
 
 #: dat/ai/mercenary.lua:12
 msgid "\"I'm afraid you can't make it worth my while.\""
-msgstr ""
+msgstr "\"Me temo que no puedes hacer que valga la pena.\""
 
 #: dat/ai/mercenary.lua:15
 msgid "Don't take this personally."
-msgstr ""
+msgstr "No te lo tomes como algo personal."
 
 #: dat/ai/mercenary.lua:16
 msgid "It's just business."
-msgstr ""
+msgstr "Son sólo negocios."
 
 #: dat/ai/mercenary.lua:19
 msgid "Your skull will make a great hood ornament."
-msgstr ""
+msgstr "Tu calavera será un gran adorno para el capó."
 
 #: dat/ai/mercenary.lua:20
 msgid "I've destroyed ships twice the size of yours!"
-msgstr ""
+msgstr "¡He destruido naves del doble de tamaño que la tuya!"
 
 #: dat/ai/mercenary.lua:21
 msgid "I'll crush you like a grape!"
-msgstr ""
+msgstr "¡Te aplastaré como a una uva!"
 
 #: dat/ai/mercenary.lua:22
 msgid "This isn't what I signed up for!"
-msgstr ""
+msgstr "¡Esto no es para lo que me apunte!"
 
 #. Set up bribes
 #: dat/ai/mercenary.lua:72
 msgid "\"Your life is worth {credits} to me.\""
-msgstr ""
+msgstr "\"Tu vida vale {créditos} para mí.\""
 
 #: dat/ai/mercenary.lua:73
 msgid "\"Beat it.\""
-msgstr ""
+msgstr "\"Lárgate.\""
 
 #. Communication stuff
 #: dat/ai/miner.lua:37
 msgid "\"I don't want any problems.\""
-msgstr ""
+msgstr "\"No quiero ningún problema.\""
 
 #. No idle function, ship won't react until it detects enemies
 #. luacheck: globals idle (AI Task functions passed by name)
@@ -31815,333 +31825,347 @@ msgstr ""
 #. Settings
 #: dat/ai/pirate.lua:26
 msgid "\"Pay up {credits} or it's the end of the line.\""
-msgstr ""
+msgstr "\"Paga {créditos} o es el final de la línea.\""
 
 #: dat/ai/pirate.lua:27
 msgid "\"Your money or your life. {credits} and make the choice quickly.\""
-msgstr ""
+msgstr "\"Tu dinero o tu vida. {créditos} y haz la elección rápidamente.\""
 
 #: dat/ai/pirate.lua:28
 msgid "\"Money talks bub. {credits} up front or get off my channel.\""
-msgstr ""
+msgstr "\"El dinero habla amigo. {créditos} por adelantado o sal de mi canal.\""
 
 #: dat/ai/pirate.lua:29
 msgid ""
 "\"You're either really desperate or really rich. {credits} or shut up.\""
-msgstr ""
+msgstr "\"O estás muy desesperado o eres muy rico. {créditos} o te callo.\""
 
 #: dat/ai/pirate.lua:30
 msgid "\"This is a toll road, pay up {credits} or die.\""
-msgstr ""
+msgstr "\"Esta es una carretera de peaje, paga {créditos} o muere.\""
 
 #: dat/ai/pirate.lua:31
 msgid ""
 "\"So this is the part where you pay up or get shot up. Your choice. What'll "
 "be, {credits} or…\""
 msgstr ""
+"\"Así que esta es la parte en la que pagas o te disparan. Tú eliges. Qué "
+"será, {créditos} o...\""
 
 #: dat/ai/pirate.lua:34
 msgid "\"It'll cost you {credits} for me to ignore your pile of rubbish.\""
-msgstr ""
+msgstr "\"Te costará {créditos} que ignore tu montón de basura.\""
 
 #: dat/ai/pirate.lua:35
 msgid "\"I'm in a good mood so I'll let you go for {credits}.\""
-msgstr ""
+msgstr "\"Estoy de buen humor así que te dejaré ir por {créditos}.\""
 
 #: dat/ai/pirate.lua:36
 msgid "\"Send me {credits} or you're dead.\""
-msgstr ""
+msgstr "\"Envíame {créditos} o estás muerto.\""
 
 #: dat/ai/pirate.lua:37
 msgid "\"Shut up and give me your money! {credits} now.\""
-msgstr ""
+msgstr "\"¡Cállate y dame tu dinero! {créditos} ahora.\""
 
 #: dat/ai/pirate.lua:38
 msgid "\"You give me {credits} and I'll act like I never saw you.\""
-msgstr ""
+msgstr "\"Dame {créditos} y actuaré como si nunca te hubiera visto.\""
 
 #: dat/ai/pirate.lua:39
 msgid ""
 "\"If you're willing to negotiate I'll gladly take {credits} to not kill you."
 "\""
 msgstr ""
+"\"Si estás dispuesto a negociar, aceptaré con gusto {créditos} por no "
+"matarte.\""
 
 #: dat/ai/pirate.lua:40
 msgid ""
 "\"Pay up or don't. {credits} now just means I'll wait till later to collect "
 "the rest.\""
 msgstr ""
+"\"Paga o no lo hagas. {créditos} ahora sólo significa que esperaré hasta más "
+"tarde para cobrar el resto.\""
 
 #: dat/ai/pirate.lua:43
 msgid "\"It'll cost you {credits} for us to ignore your pile of rubbish.\""
-msgstr ""
+msgstr "\"Te costará {créditos} que ignoremos tu montón de basura.\""
 
 #: dat/ai/pirate.lua:44
 msgid "\"We're in a good mood so we'll let you go for {credits}.\""
-msgstr ""
+msgstr "\"Estamos de buen humor así que te dejaremos ir por {créditos}.\""
 
 #: dat/ai/pirate.lua:45
 msgid "\"Send us {credits} or you're dead.\""
-msgstr ""
+msgstr "\"Envíanos {créditos} o estás muerto.\""
 
 #: dat/ai/pirate.lua:46
 msgid "\"Shut up and give us your money! {credits} now.\""
-msgstr ""
+msgstr "\"¡Cállate y danos tu dinero! {créditos} ahora.\""
 
 #: dat/ai/pirate.lua:47
 msgid "\"You give us {credits} and we'll act like we never saw you.\""
-msgstr ""
+msgstr "\"Nos das {créditos} y actuaremos como si nunca te hubiéramos visto.\""
 
 #: dat/ai/pirate.lua:48
 msgid ""
 "\"If you're willing to negotiate we'll gladly take {credits} to not kill you."
 "\""
 msgstr ""
+"\"Si estás dispuesto a negociar, aceptaremos con gusto {créditos} por no "
+"matarte.\""
 
 #: dat/ai/pirate.lua:49
 msgid ""
 "\"Pay up or don't. {credits} now just means we'll wait till later to collect "
 "the rest.\""
 msgstr ""
+"\"Paga o no lo hagas. {créditos} ahora sólo significa que esperaremos hasta "
+"más tarde para cobrar el resto.\""
 
 #: dat/ai/pirate.lua:52
 msgid "\"You're lucky I'm so kind.\""
-msgstr ""
+msgstr "\"Tienes suerte de que sea tan amable.\""
 
 #: dat/ai/pirate.lua:53
 msgid "\"Life doesn't get easier than this.\""
-msgstr ""
+msgstr "\"La vida no es más fácil que esto.\""
 
 #: dat/ai/pirate.lua:54
 msgid "\"Pleasure doing business.\""
-msgstr ""
+msgstr "\"Un placer hacer negocios.\""
 
 #: dat/ai/pirate.lua:55
 msgid "\"See you again, real soon.\""
-msgstr ""
+msgstr "\"Nos vemos de nuevo, muy pronto.\""
 
 #: dat/ai/pirate.lua:56
 msgid "\"I'll be around if you get generous again.\""
-msgstr ""
+msgstr "\"Estaré por aquí si te pones generoso de nuevo.\""
 
 #: dat/ai/pirate.lua:57
 msgid "\"Lucky day, lucky day!\""
-msgstr ""
+msgstr "\"¡Día de suerte, día de suerte!\""
 
 #: dat/ai/pirate.lua:58
 msgid "\"And I didn't even have to kill anyone!\""
-msgstr ""
+msgstr "\"¡Y ni siquiera tuve que matar a nadie!\""
 
 #: dat/ai/pirate.lua:59
 msgid "\"See, this is how we become friends.\""
-msgstr ""
+msgstr "\"Ves, así es como nos hacemos amigos.\""
 
 #: dat/ai/pirate.lua:60
 msgid "\"Now if I kill you it'll be just for fun!\""
-msgstr ""
+msgstr "\"¡Ahora si te mato será sólo por diversión!\""
 
 #: dat/ai/pirate.lua:61
 msgid "\"You just made a good financial decision today.\""
-msgstr ""
+msgstr "\"Hoy has tomado una buena decisión financiera.\""
 
 #: dat/ai/pirate.lua:62
 msgid "\"Know what? I won't kill you.\""
-msgstr ""
+msgstr "\"¿Sabes qué? No te voy a matar.\""
 
 #: dat/ai/pirate.lua:63
 msgid ""
 "\"Something feels strange. It's almost as if my urge to kill you has "
 "completely dissipated.\""
 msgstr ""
+"\"Siento algo raro. Es casi como si mis ganas de matarte se hubieran "
+"disipado por completo.\""
 
 #: dat/ai/pirate.lua:64
 msgid "\"Can I keep shooting you anyhow? No? You sure? Fine.\""
-msgstr ""
+msgstr "\"¿Puedo seguir disparando de todos modos? ¿No? ¿Estás seguro? Bien.\""
 
 #: dat/ai/pirate.lua:65
 msgid "\"And it only cost you an arm and a leg.\""
-msgstr ""
+msgstr "\"Y sólo te costó un brazo y una pierna.\""
 
 #: dat/ai/pirate.lua:68
 msgid "Prepare to be boarded!"
-msgstr ""
+msgstr "¡Prepárate para ser abordado!"
 
 #: dat/ai/pirate.lua:69
 msgid "Yohoho!"
-msgstr ""
+msgstr "¡Yohoho!"
 
 #: dat/ai/pirate.lua:70
 msgid "Arr!"
-msgstr ""
+msgstr "¡Arr!"
 
 #: dat/ai/pirate.lua:71
 msgid "What's a ship like you doing in a place like this?"
-msgstr ""
+msgstr "¿Qué hace una nave como tú en un lugar como éste?"
 
 #: dat/ai/pirate.lua:72
 msgid "Prepare to have your booty plundered!"
-msgstr ""
+msgstr "¡Prepárate para que tu botín sea saqueado!"
 
 #: dat/ai/pirate.lua:73
 msgid "Give me your credits or die!"
-msgstr ""
+msgstr "¡Dame tus créditos o muere!"
 
 #: dat/ai/pirate.lua:74
 msgid "Your ship's mine!"
-msgstr ""
+msgstr "¡Tu nave es mía!"
 
 #: dat/ai/pirate.lua:75
 msgid "Oh ho ho, what do I see here?"
-msgstr ""
+msgstr "Oh ho ho, ¿qué veo aquí?"
 
 #: dat/ai/pirate.lua:76
 msgid "You may want to send that distress signal now."
-msgstr ""
+msgstr "Es posible que quieras enviar esa señal de socorro ahora."
 
 #: dat/ai/pirate.lua:77
 msgid "It's time to die."
-msgstr ""
+msgstr "Hora de morir."
 
 #: dat/ai/pirate.lua:78
 msgid "Back so soon?"
-msgstr ""
+msgstr "¿De vuelta tan pronto?"
 
 #: dat/ai/pirate.lua:79
 msgid "What? Were you expecting prince charming?"
-msgstr ""
+msgstr "¿Qué? ¿Esperabas al príncipe azul?"
 
 #: dat/ai/pirate.lua:80
 msgid "Long time no see."
-msgstr ""
+msgstr "Cuánto tiempo sin vernos."
 
 #: dat/ai/pirate.lua:81
 msgid "Nothing personal, just business."
-msgstr ""
+msgstr "Nada personal, sólo negocios."
 
 #: dat/ai/pirate.lua:82
 msgid "Nothing personal."
-msgstr ""
+msgstr "Nada personal."
 
 #: dat/ai/pirate.lua:83
 msgid "Just business."
-msgstr ""
+msgstr "Sólo negocios."
 
 #: dat/ai/pirate.lua:84
 msgid "I can already taste the rum."
-msgstr ""
+msgstr "Ya puedo saborear el ron."
 
 #: dat/ai/pirate.lua:85
 msgid "How else am I going to pay off my tab?"
-msgstr ""
+msgstr "¿De qué otra manera voy a pagar mi cuenta?"
 
 #: dat/ai/pirate.lua:86
 msgid "Seems you're being shot at."
-msgstr ""
+msgstr "Parece que te están disparando."
 
 #: dat/ai/pirate.lua:87
 msgid "I'm trying to kill you. Is it working?"
-msgstr ""
+msgstr "Estoy tratando de matarte. ¿Funciona?"
 
 #: dat/ai/pirate.lua:88
 msgid "I'm sorry, I just don't like you."
-msgstr ""
+msgstr "Lo siento, me caes mal."
 
 #: dat/ai/pirate.lua:89
 msgid "Sorry, but I'm a private tracker."
-msgstr ""
+msgstr "Lo siento, pero soy un rastreador privado."
 
 #: dat/ai/pirate.lua:93
 msgid "You think that you can take me on?"
-msgstr ""
+msgstr "¿Crees que puedes enfrentarte a mí?"
 
 #: dat/ai/pirate.lua:94
 msgid "Die!"
-msgstr ""
+msgstr "¡Muere!"
 
 #: dat/ai/pirate.lua:95
 msgid "You'll regret this!"
-msgstr ""
+msgstr "¡Te arrepentirás de esto!"
 
 #: dat/ai/pirate.lua:96
 msgid "You can either pray now or sit in hell later."
-msgstr ""
+msgstr "Puedes rezar ahora o sentarte en el infierno después."
 
 #: dat/ai/pirate.lua:97
 msgid "Game over, you're dead!"
-msgstr ""
+msgstr "¡Se acabó el juego, estás muerto!"
 
 #: dat/ai/pirate.lua:98
 msgid "I'm sorry things couldn't work out between us."
-msgstr ""
+msgstr "Siento que las cosas no hayan podido funcionar entre nosotros."
 
 #: dat/ai/pirate.lua:99
 msgid "Knock it off!"
-msgstr ""
+msgstr "¡Dejalo ya!"
 
 #: dat/ai/pirate.lua:100
 msgid "Shooting back isn't allowed!"
-msgstr ""
+msgstr "¡No está permitido devolver los disparos!"
 
 #: dat/ai/pirate.lua:101
 msgid "You owe me 20 credits!"
-msgstr ""
+msgstr "¡Me debes 20 créditos!"
 
 #: dat/ai/pirate.lua:102
 msgid "You owe me a new paint job!"
-msgstr ""
+msgstr "¡Me debes un nuevo trabajo de pintura!"
 
 #: dat/ai/pirate.lua:103
 msgid "Fred here said to shoot the red blip."
-msgstr ""
+msgstr "Fred dijo que disparara a la mancha roja."
 
 #: dat/ai/pirate.lua:104
 msgid "Now you're in for it!"
-msgstr ""
+msgstr "¡Ahora te toca a ti!"
 
 #: dat/ai/pirate.lua:105
 msgid "Did you really think you would get away with that?"
-msgstr ""
+msgstr "¿Realmente pensaste que te saldrías con la tuya?"
 
 #: dat/ai/pirate.lua:106
 msgid "I just painted this thing!"
-msgstr ""
+msgstr "¡Acabo de pintar esta cosa!"
 
 #: dat/ai/pirate.lua:107
 msgid "Rot."
-msgstr ""
+msgstr "Tonterias."
 
 #: dat/ai/pirate.lua:108
 msgid "Burn."
-msgstr ""
+msgstr "Arde."
 
 #: dat/ai/pirate.lua:109
 msgid "I can't wait to see you burn."
-msgstr ""
+msgstr "No puedo esperar a verte arder."
 
 #: dat/ai/pirate.lua:110
 msgid "Just. Stop. Moving."
-msgstr ""
+msgstr "Sólo. Para. De moverte."
 
 #: dat/ai/pirate.lua:111
 msgid "Die already!"
-msgstr ""
+msgstr "¡Muérete ya!"
 
 #: dat/ai/pirate.lua:112
 msgid ""
 "Tell you what, if you can keep dodging for 20 hectoseconds I'll let you live."
 msgstr ""
+"Te diré algo, si puedes seguir esquivando durante 20 hectosegundos te dejaré "
+"vivir."
 
 #: dat/ai/pirate.lua:113
 msgid "Stop dodging!"
-msgstr ""
+msgstr "¡Deja de esquivar!"
 
 #: dat/ai/pirate.lua:114
 msgid "Okay, that's enough of that!"
-msgstr ""
+msgstr "Bien, ¡ya es suficiente!"
 
 #: dat/ai/pirate.lua:115
 msgid "I'm gonna torrent you to bits!"
-msgstr ""
+msgstr "¡Te voy a hacer pedazos!"
 
 #. Some pirates do kill
 #. Not too much money
@@ -32153,64 +32177,64 @@ msgstr ""
 #. Deal with refueling
 #: dat/ai/pirate.lua:174
 msgid "\"For you, only {credits} for a jump of fuel.\""
-msgstr ""
+msgstr ", sólo {créditos} para un salto de combustible.\""
 
 #. Deal with bribeability
 #: dat/ai/pirate.lua:183
 msgid "\"You won't be able to slide out of this one!\""
-msgstr ""
+msgstr "\"¡No podrás salirte de ésta!\""
 
 #: dat/ai/proteron.lua:13
 msgid "\"We like to make examples out of scum like you.\""
-msgstr ""
+msgstr "\"Nos gusta hacer ejemplos de escoria como tú.\""
 
 #: dat/ai/proteron.lua:20
 msgid "Animals like you don't deserve to live!"
-msgstr ""
+msgstr "¡Los animales como tú no merecen vivir!"
 
 #: dat/ai/proteron.lua:21
 msgid "Begone from this universe, inferior scum!"
-msgstr ""
+msgstr "¡Vete de este universo, escoria inferior!"
 
 #: dat/ai/proteron.lua:22
 msgid "We will cleanse you and all other scum from this universe!"
-msgstr ""
+msgstr "¡Te limpiaremos a ti y a toda la escoria de este universo!"
 
 #: dat/ai/proteron.lua:23
 msgid "Enemies of the state will not be tolerated!"
-msgstr ""
+msgstr "¡Los enemigos del Estado no serán tolerados!"
 
 #: dat/ai/proteron.lua:24
 msgid "Long live the Proteron!"
-msgstr ""
+msgstr "¡Larga vida a Proteron!"
 
 #: dat/ai/proteron.lua:25
 msgid "War is peace!"
-msgstr ""
+msgstr "¡La guerra es la paz!"
 
 #: dat/ai/proteron.lua:26
 msgid "Freedom is slavery!"
-msgstr ""
+msgstr "¡La libertad es la esclavitud!"
 
 #: dat/ai/proteron.lua:29
 msgid "How dare you attack the Proteron?!"
-msgstr ""
+msgstr "¡¿Cómo te atreves a atacar a Proteron?!"
 
 #: dat/ai/proteron.lua:30
 msgid "I will have your head!"
-msgstr ""
+msgstr "¡Tendré tu cabeza!"
 
 #: dat/ai/proteron.lua:32
 msgid "Your fate has been sealed, dissident!"
-msgstr ""
+msgstr "¡Tu destino está sellado, disidente!"
 
 #: dat/ai/proteron.lua:33
 msgid "You will pay for your treason!"
-msgstr ""
+msgstr "¡Pagarás por tu traición!"
 
 #: dat/ai/proteron.lua:34
 msgid "Die along with the old Empire!"
-msgstr ""
+msgstr "¡Muere junto con el viejo Imperio!"
 
 #. Not too many credits.
 #. See if it's a transport ship
@@ -32218,7 +32242,7 @@ msgstr ""
 #. Lines to annoy the player.
 #: dat/ai/proteron.lua:56
 msgid "The Proteron are watching you."
-msgstr ""
+msgstr "Proteron te está vigilando."
 
 #. Finish up creation
 #. Remove randomness from future calls
@@ -32226,16 +32250,16 @@ msgstr ""
 #. Deal with refueling
 #: dat/ai/proteron.lua:88
 msgid "\"My fuel isn't for sale.\""
-msgstr ""
+msgstr "\"Mi combustible no está en venta.\""
 
 #: dat/ai/proteron.lua:91
 msgid "\"Sorry, my fuel isn't for sale.\""
-msgstr ""
+msgstr "\"Lo siento, mi combustible no está a la venta.\""
 
 #. Most likely no chance to refuel
 #: dat/ai/proteron.lua:97
 msgid "\"I can transfer some fuel for {credits}.\""
-msgstr ""
+msgstr "\"Puedo transferir algo de combustible por {créditos}.\""
 
 #. See if can be bribed
 #: dat/ai/proteron.lua:102
@@ -32243,32 +32267,34 @@ msgid ""
 "\"The Proteron can always use some income. {credits} and you were never here."
 "\""
 msgstr ""
+"\"Proteron siempre puede usar algunos ingresos. {créditos} y tú nunca "
+"estuviste aquí.\""
 
 #: dat/ai/proteron.lua:103
 msgid "\"Get lost before I have to dispose of you.\""
-msgstr ""
+msgstr "\"Piérdete antes de que tenga que deshacerme de ti.\""
 
 #. No bribe
 #. Settings
 #: dat/ai/sirius.lua:12
 msgid "\"Your money is of no interest to me.\""
-msgstr ""
+msgstr "\"Tu dinero no me interesa.\""
 
 #: dat/ai/sirius.lua:15
 msgid "The universe shall be cleansed of your presence!"
-msgstr ""
+msgstr "¡El universo tiene que ser limpiado de tu presencia!"
 
 #: dat/ai/sirius.lua:18
 msgid "Sirichana protect me!"
-msgstr ""
+msgstr "¡Sirichana protégeme!"
 
 #: dat/ai/sirius.lua:19
 msgid "You have made a grave error!"
-msgstr ""
+msgstr "¡Has cometido un grave error!"
 
 #: dat/ai/sirius.lua:20
 msgid "You do wrong in your provocations!"
-msgstr ""
+msgstr "¡Haces mal en tus provocaciones!"
 
 #. See if it's a transport ship
 #. Credits, and other transport-specific stuff
@@ -32288,64 +32314,64 @@ msgstr ""
 #. Deal with refueling
 #: dat/ai/sirius.lua:68 dat/ai/sirius.lua:71 dat/ai/zalek.lua:108
 msgid "\"I do not have fuel to spare.\""
-msgstr ""
+msgstr "\"No tengo combustible de sobra.\""
 
 #. Most likely no chance to refuel
 #: dat/ai/sirius.lua:77
 msgid "\"I would be able to refuel your ship for {credits}.\""
-msgstr ""
+msgstr "\"Podría repostar tu nave por {créditos}.\""
 
 #: dat/ai/soromid.lua:13
 msgid "\"Snivelling waste of carbon.\""
-msgstr ""
+msgstr "\"Un desperdicio de carbono.\""
 
 #: dat/ai/soromid.lua:14
 msgid "\"Money won't save you from being purged from the gene pool.\""
-msgstr ""
+msgstr "\"El dinero no te salvará de ser purgado de la reserva genética.\""
 
 #: dat/ai/soromid.lua:15
 msgid "\"Culling you will be doing humanity a service.\""
-msgstr ""
+msgstr "\"Sacrificaros hará un servicio a la humanidad.\""
 
 #: dat/ai/soromid.lua:16
 msgid "\"We do not consort with vermin.\""
-msgstr ""
+msgstr "\"No nos relacionamos con las alimañas.\""
 
 #: dat/ai/soromid.lua:17
 msgid "\"Who do you take us for, the Empire?\""
-msgstr ""
+msgstr "\"¿Por quién nos tomas, por el Imperio?\""
 
 #: dat/ai/soromid.lua:21
 msgid "Culling you will be doing humanity a service."
-msgstr ""
+msgstr "Sacrificarte hará un servicio a la humanidad."
 
 #: dat/ai/soromid.lua:22
 msgid "Enjoy your last moments, worm!"
-msgstr ""
+msgstr "¡Disfruta de tus últimos momentos, gusano!"
 
 #: dat/ai/soromid.lua:23
 msgid "Time for a little natural selection!"
-msgstr ""
+msgstr "¡Es hora de un poco de selección natural!"
 
 #: dat/ai/soromid.lua:24
 msgid "Might makes right!"
-msgstr ""
+msgstr "¡El poder hace el derecho!"
 
 #: dat/ai/soromid.lua:25
 msgid "Embrace your weakness!"
-msgstr ""
+msgstr "¡Acepta tu debilidad!"
 
 #: dat/ai/soromid.lua:28
 msgid "Cunning, but foolish."
-msgstr ""
+msgstr "Astuto, pero tonto."
 
 #: dat/ai/soromid.lua:29
 msgid "Ambush! Defend yourselves!"
-msgstr ""
+msgstr "¡Emboscada! ¡Defiéndete!"
 
 #: dat/ai/soromid.lua:30
 msgid "You should have picked easier prey!"
-msgstr ""
+msgstr "¡Deberías haber elegido una presa más fácil!"
 
 #. See if it's a transport ship
 #. Credits, and other transport-specific stuff
@@ -32356,47 +32382,51 @@ msgstr ""
 #. Deal with refueling
 #: dat/ai/soromid.lua:82 dat/ai/soromid.lua:85
 msgid "\"The warriors of Sorom are not your personal refueller.\""
-msgstr ""
+msgstr "\"Los guerreros de Sorom no son tu repostador personal.\""
 
 #. Most likely no chance to refuel
 #: dat/ai/soromid.lua:91
 msgid "\"I suppose I could spare some fuel for {credits}.\""
-msgstr ""
+msgstr "\"Supongo que podría ahorrar algo de combustible para {créditos}.\""
 
 #. Handle bribing
 #: dat/ai/soromid.lua:100
 msgid "\"For {credits} I'll give you enough time to get out of my sight.\""
 msgstr ""
+"\"Por {créditos} Te daré el tiempo suficiente para que desaparezcas de mi "
+"vista.\""
 
 #: dat/ai/soromid.lua:101
 msgid "\"Now get out of my sight.\""
-msgstr ""
+msgstr "\"Ahora sal de mi vista.\""
 
 #: dat/ai/thurion.lua:14
 msgid "Vessel under attack! Requesting help!"
-msgstr ""
+msgstr "¡Nave bajo ataque! ¡Solicito ayuda!"
 
 #: dat/ai/thurion.lua:19
 msgid "01010101011011100110010001100101011100100010000001100001011101000111010001100001011000110110101100100001"
 msgstr ""
+"01010101011011100110010001100101011100100010000001100001011101000111010001100"
+"001011000110110101100100001"
 
 #. "Under attack!" in binary
 #: dat/ai/thurion.lua:22
 msgid "\"The Thurion will not be bribed!\""
-msgstr ""
+msgstr "\"¡Turion no será sobornado!\""
 
 #: dat/ai/thurion.lua:23
 msgid "\"I have no use for your money.\""
-msgstr ""
+msgstr "\"No me sirve tu dinero.\""
 
 #: dat/ai/thurion.lua:24
 msgid "\"Credits are no replacement for a good shield.\""
-msgstr ""
+msgstr "\"Los créditos no sustituyen a un buen escudo.\""
 
 #. Bribes
 #: dat/ai/trader.lua:57
 msgid "\"The Space Traders do not negotiate with criminals.\""
-msgstr ""
+msgstr "\"Los Comerciantes del Espacio no negocian con criminales.\""
 
 #. We’ll consider the Za'lek prefer to turn a bad (i.e. battle) situation into
 #. a profitable one by getting money and selling fuel if possible if the player
@@ -32405,113 +32435,119 @@ msgstr ""
 #. Za'lek armour is pretty crap. They know this, and will dip when their shields go down.
 #: dat/ai/zalek.lua:15
 msgid "\"Keep your cash, you troglodyte.\""
-msgstr ""
+msgstr "\"Guarda tu dinero, troglodita.\""
 
 #: dat/ai/zalek.lua:16
 msgid "\"Don't make me laugh. Eat laser beam!\""
-msgstr ""
+msgstr "\"No me hagas reír. ¡Come rayo láser!\""
 
 #: dat/ai/zalek.lua:17
 msgid ""
 "\"My drones aren't interested in your ill-gotten gains and neither am I!\""
 msgstr ""
+"\"¡Mis drones no están interesados en tus ganancias mal habidas y yo tampoco!"
+"\""
 
 #: dat/ai/zalek.lua:18
 msgid "\"Ahaha! Nice one! Oh, you're actually serious? Ahahahaha!\""
-msgstr ""
+msgstr "\"¡Ahaha! ¡Muy bonito! Oh, ¿realmente hablas en serio? !Ahahahaha!\""
 
 #: dat/ai/zalek.lua:19
 msgid ""
 "\"While I admire the spirit of it, testing my patience is suicide, NOT "
 "science.\""
 msgstr ""
+"\"Aunque admiro ku espíritu, poner a prueba mi paciencia es un suicidio, NO "
+"una ciencia.\""
 
 #: dat/ai/zalek.lua:23
 msgid "Move drones in to engage. Cook this clown!"
-msgstr ""
+msgstr "Mueve los drones para atacar. ¡Cocinen a este payaso!"
 
 #: dat/ai/zalek.lua:24
 msgid "Say hello to my little friends!"
-msgstr ""
+msgstr "¡Saluden a mis pequeños amigos!"
 
 #: dat/ai/zalek.lua:25
 msgid "Ooh, more victi- ah, volunteers for our experiments!"
-msgstr ""
+msgstr "Ooh, más victi- ah, ¡voluntarios para nuestros experimentos!"
 
 #: dat/ai/zalek.lua:26
 msgid "We need a test subject to test our attack on; you'll do nicely!"
 msgstr ""
+"Necesitamos un sujeto de prueba para probar nuestro ataque; ¡tú lo harás "
+"bien!"
 
 #: dat/ai/zalek.lua:27
 msgid "Ready for a physics lesson, punk?"
-msgstr ""
+msgstr "¿Preparado para una lección de física, gamberro?"
 
 #: dat/ai/zalek.lua:28
 msgid "After we wax you, we can return to our experiments!"
-msgstr ""
+msgstr "Después de depilarte, ¡podemos volver a nuestros experimentos!"
 
 #: dat/ai/zalek.lua:31
 msgid "We're being attacked! Prepare defence protocols!"
-msgstr ""
+msgstr "¡Nos están atacando! ¡Preparen los protocolos de defensa!"
 
 #: dat/ai/zalek.lua:32
 msgid "You just made a big mistake!"
-msgstr ""
+msgstr "¡Acabas de cometer un gran error!"
 
 #: dat/ai/zalek.lua:33
 msgid "Our technology will fix your attitude!"
-msgstr ""
+msgstr "¡Nuestra tecnología arreglará su actitud!"
 
 #: dat/ai/zalek.lua:34
 msgid "You wanna do this? Have it your way."
-msgstr ""
+msgstr "¿Quieres hacer esto? Hazlo a tu manera."
 
 #: dat/ai/zalek.lua:37
 msgid "ENGAGING OFFENSIVE PROTOCOLS."
-msgstr ""
+msgstr "ACTIVAR PROTOCOLOS OFENSIVOS."
 
 #: dat/ai/zalek.lua:38
 msgid "EXTERMINATING HOSTILES."
-msgstr ""
+msgstr "EXTERMINANDO A LOS HOSTILES."
 
 #: dat/ai/zalek.lua:39
 msgid "COMBAT PROTOCOLS INITIATED."
-msgstr ""
+msgstr "PROTOCOLOS DE COMBATE INICIADOS."
 
 #: dat/ai/zalek.lua:42
 msgid "ENGAGING DEFENSIVE PROTOCOLS."
-msgstr ""
+msgstr "ACTIVAR PROTOCOLOS DEFENSIVOS."
 
 #. See if a drone
 #: dat/ai/zalek.lua:54
 msgid "\"ACCESS DENIED."
-msgstr ""
+msgstr "ACCESO DENEGADO."
 
 #: dat/ai/zalek.lua:57
 msgid "COMMENCING SCAN PROCEDURE."
-msgstr ""
+msgstr "INICIAR EL PROCEDIMIENTO DE ESCANEO."
 
 #: dat/ai/zalek.lua:58
 msgid "SCAN COMPLETED."
-msgstr ""
+msgstr "ESCANEO COMPLETADO."
 
 #: dat/ai/zalek.lua:59
 msgid "ILLEGAL OBJECTS DETECTED! RESISTANCE IS FUTILE!"
-msgstr ""
+msgstr "¡OBJETOS ILEGALES DETECTADOS! ¡LA RESISTENCIA ES FÚTIL!"
 
 #. Most likely no chance to refuel
 #: dat/ai/zalek.lua:113
 msgid "\"I will agree to refuel your ship for {credits}.\""
-msgstr ""
+msgstr "\"Aceptaré repostar su nave por {créditos}.\""
 
 #. See if can be bribed
 #: dat/ai/zalek.lua:121
 msgid "\"We will agree to end the battle for {credits}.\""
-msgstr ""
+msgstr "\"Aceptaremos terminar la batalla por {créditos}.\""
 
 #: dat/ai/zalek.lua:122
 msgid "\"Temporarily stopping fire.\""
-msgstr ""
+msgstr "\"Detener temporalmente el fuego.\""
 
 #. Only 50% of actually taunting.
 #.
@@ -32522,21 +32558,22 @@ msgstr ""
 #. First check, make sure required slots are equipped
 #: dat/autoequip.lua:19
 msgid "Missing Required Outfits"
-msgstr ""
+msgstr "Faltan Complementos Obligatorios"
 
 #: dat/autoequip.lua:19
 msgid "Please equip all required outfit slots first!"
-msgstr ""
+msgstr "¡Por favor, equipa todas las ranuras de complementos obligatorias!"
 
 #. Make sure
 #: dat/autoequip.lua:24
 msgid "Autoequip Confirmation"
-msgstr ""
+msgstr "Confirmación de Autoequipamiento"
 
 #: dat/autoequip.lua:24
 msgid ""
 "This will re-equip your current pilot, are you sure you want to continue?"
 msgstr ""
+"Esto reequipará a tu actual piloto, ¿estás seguro de que quieres continuar?"
 
 #. Remove all non-cores from the ship and add to inventory
 #. Store and remove old
@@ -32549,13 +32586,15 @@ msgstr ""
 #. Report success or failure
 #: dat/autoequip.lua:72
 msgid "Autoequipper Failure!"
-msgstr ""
+msgstr "¡Fallo del Autoequipamiento!"
 
 #: dat/autoequip.lua:72
 msgid ""
 "Autoequipper failed to equip! Please make sure that the equipped required "
 "outfits are adequate for this ship."
 msgstr ""
+"¡El autoequipador ha fallado! Por favor, asegúrese de que los equipos "
+"obligatorios son adecuados para esta nave."
 
 #.
 #. Default background
@@ -32710,6 +32749,8 @@ msgid ""
 "\n"
 "#rCosts {credits} ({sbonus}%#r from crew strength) to extract!#0"
 msgstr ""
+"\n"
+"#rCuesta {créditos} ({bono}%#r de la fuerza de la tripulación) a extraer!#0"
 
 #: dat/board.lua:56
 msgid ""
@@ -32718,6 +32759,10 @@ msgid ""
 "{stype}\n"
 "{desc}"
 msgstr ""
+"{nombre}{precio}\n"
+"{tamaño de ranura} {tipo de ranura}#0 ranura{prop}\n"
+"{stipo}\n"
+"{desc}"
 
 #. special_col, -- TODO new special condition
 #: dat/board.lua:80
@@ -32725,42 +32770,54 @@ msgid ""
 "{name}\n"
 "{desc}"
 msgstr ""
+"{nombre}\n"
+"{desc}"
 
 #: dat/board.lua:83
 msgid ""
 "\n"
 "#rIllegalized by the following factions:\n"
 msgstr ""
+"\n"
+"#rIlegalizado por las siguientes facciones:\n"
 
 #: dat/board.lua:86
+#, fuzzy
 msgid ""
 "\n"
 "   - {fct}"
 msgstr ""
+"\n"
+"   - {fct}"
 
 #. Credits
 #: dat/board.lua:112
 msgid "Credits"
-msgstr ""
+msgstr "Creditos"
 
 #: dat/board.lua:116
 msgid ""
 "Credits\n"
 "Used as the main form of currency throughout the galaxy."
 msgstr ""
+"Creditos\n"
+"Se utiliza como la principal forma de moneda en toda la galaxia."
 
 #. Fuel
 #. Strafer stops following the player
 #. Add some fuel, far away so that no npc gathers it
 #: dat/board.lua:126 dat/missions/dvaered/frontier_war/fw02_escape.lua:629
 msgid "Fuel"
-msgstr ""
+msgstr "Combustible"
 
 #: dat/board.lua:130
 msgid ""
 "Fuel\n"
 "Necessary for the activation of jump drives that allow inter-system travel."
 msgstr ""
+"Combustible\n"
+"Necesario para la activación de las unidades de salto que permiten viajar "
+"entre sistemas."
 
 #. Steal outfits before cargo, since they are always considered "special"
 #. Skips locked outfits
@@ -32774,11 +32831,11 @@ msgstr ""
 #. Ignore anything that isn't loot from now on
 #: dat/board.lua:282
 msgid "You have {freespace} of free space."
-msgstr ""
+msgstr "Tienes {espacio libre} de espacio libre."
 
 #: dat/board.lua:345
 msgid "Your ship cannibalized {armour:.0f} armour from {plt}."
-msgstr ""
+msgstr "Tu nave canibalizó {armadura:.0f} armadura de {plt}."
 
 #. Destroy if exists
 #: dat/board.lua:378 dat/comm.lua:166 dat/events/shipai.lua:37
@@ -32792,84 +32849,88 @@ msgstr ""
 #: src/info.c:1566 src/land_outfits.c:165 src/map.c:375 src/map_find.c:1003
 #: src/map_system.c:202
 msgid "Close"
-msgstr ""
+msgstr "Cerrar"
 
 #: dat/board.lua:379
 msgid "Loot"
-msgstr ""
+msgstr "Saquear"
 
 #: dat/board.lua:380
 msgid "Loot All"
-msgstr ""
+msgstr "Saquear Todo"
 
 #: dat/board.lua:382
 msgid "Cannibalize"
-msgstr ""
+msgstr "Canibalizar"
 
 #: dat/board.lua:385
 msgid "Boarding {plt}"
-msgstr ""
+msgstr "Embarcar {plt}"
 
 #. Moolah
 #. Will go negative with loot_mod
 #: dat/board.lua:422
 msgid "You looted {creds} from {plt}."
-msgstr ""
+msgstr "Has saqueader {creds} de {plt}."
 
 #. Unable to loot anything
 #: dat/board.lua:431
 msgid "Fuel Tank Full"
-msgstr ""
+msgstr "Tanque de Combustible Lleno"
 
 #: dat/board.lua:431
 msgid "Your fuel tanks are already full!"
-msgstr ""
+msgstr "¡Tus depósitos de combustible ya están llenos!"
 
 #: dat/board.lua:437
 msgid "You looted {amount} fuel from {plt}."
-msgstr ""
+msgstr "Saqueastes {cantidad} de combustible de {plt}."
 
 #. Looted all the fuel
 #: dat/board.lua:448
 msgid "Extract {outfit}?"
-msgstr ""
+msgstr "¿Extraer {complemento}?"
 
 #: dat/board.lua:449
 msgid ""
 "It will cost #r{credits}#0 in repairs to successfully extract the {outfit}. "
 "You have {playercreds}. Extract the {outfit}?"
 msgstr ""
+"Costará #r{créditos}#0 en reparaciones para extraer con éxito el "
+"{complemento}. Tienes {créditos}. ¿Extraer el {complemento}?"
 
 #: dat/board.lua:453 dat/spob/lua/lib/hypergate.lua:295 src/map_system.c:1037
 msgid "Insufficient Credits"
-msgstr ""
+msgstr "Créditos insuficientes"
 
 #: dat/board.lua:453
 msgid "You lack #r{diff}#0 to be able to extract the {outfit}."
-msgstr ""
+msgstr "Te falta #r{diff}#0 para poder extraer el {complemento}."
 
 #. Soft warning
 #: dat/board.lua:458 dat/board.lua:470
 msgid "Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"
 msgstr ""
+"¡La secuencia de comandos de embarque no pudo eliminar '{complemento}' del "
+"piloto embarcado '{plt}'!"
 
 #: dat/board.lua:462 dat/board.lua:475
 msgid "You looted a {outfit} from {plt}."
-msgstr ""
+msgstr "Saqueastes un {complemento} de {plt}."
 
 #. Unable to loot anything
 #: dat/board.lua:484
 msgid "No Space"
-msgstr ""
+msgstr "Sin Espacio"
 
 #: dat/board.lua:484
 msgid "You have no free cargo space!"
-msgstr ""
+msgstr "¡No tienes espacio de carga libre!"
 
 #. Might be a misaligned here with loot_mod, but we sort of ignore it :/
 #: dat/board.lua:490
 msgid "You looted {amount} of {cargo} from {plt}."
-msgstr ""
+msgstr "Has saqueado {cantidad} de {carga} de {plt}."
 
 #. Looted all the cargo
 #. Clean up
@@ -32881,7 +32942,7 @@ msgstr ""
 #. Respects fleets
 #: dat/comm.lua:104
 msgid "Pilot '{plt}' accepts bribes but doesn't give a price!"
-msgstr ""
+msgstr "¡El piloto '{plt}' acepta sobornos pero no da un precio!"
 
 #. just ridiculous for now, players should report it
 #: dat/comm.lua:130
@@ -32889,6 +32950,8 @@ msgid ""
 "\"We'll need at least {credits} to not leave you as a hunk of floating "
 "debris.\""
 msgstr ""
+"\"Necesitaremos al menos {créditos} para no dejarte como un trozo de "
+"escombro flotante.\""
 
 #: dat/comm.lua:133
 msgid ""
