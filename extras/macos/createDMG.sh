@@ -53,5 +53,6 @@ cp -r "$SOURCEPATH"/extras/macos/dmg_assets/. "$WORKPATH"
 # Extract Naev app bundle to BundleDir
 cp -r "$BUILDPATH"/dist/Naev.app "$WORKPATH"
 
-# Generate DMG image
-genisoimage -V Naev -D -R -apple -no-pad -o "$BUILDPATH"/dist/naev.dmg "$WORKPATH"
+# Generate ISO image and compress into DMG
+genisoimage -V Naev -D -R -apple -no-pad -o "$BUILDPATH"/naev.iso "$WORKPATH"
+dmg "$BUILDPATH"/naev.iso "$BUILDPATH"/dist/naev.dmg 
