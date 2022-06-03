@@ -2756,6 +2756,8 @@ dat/scripts/minigames/sokoban/conf.lua
 dat/scripts/minigames/sokoban/core.lua
 dat/scripts/minigames/sokoban/levels.lua
 dat/scripts/minigames/sokoban/main.lua
+dat/scripts/minigames/string/core.lua
+dat/scripts/minigames/string/main.lua
 dat/scripts/outfits/shaders.lua
 dat/scripts/pilotai.lua
 dat/scripts/pilotname.lua
