@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-05-12 10:59+0900\n"
-"PO-Revision-Date: 2022-06-02 22:18+0000\n"
+"PO-Revision-Date: 2022-06-03 19:31+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
@@ -34899,6 +34899,12 @@ msgid ""
 "take one of these missions. What is more, landing on the planet where you "
 "just dropped your posters is not an option.\""
 msgstr ""
+"\"Sin embargo, tienes que ser consciente de que después de eso, el rival del "
+"Señor de la Guerra que ordenó la operación, y quizá también sus aliados, "
+"probablemente enviarán naves tras de ti. Así que tienes que estar preparado "
+"para esquivar los ataques de Vendettas si aceptas una de estas misiones. Es "
+"más, aterrizar en el planeta donde acabas de dejar tus pósters no es una "
+"opción.\""
 
 #: dat/events/dvaered/warlord_propaganda.lua:74
 msgid ""
@@ -34909,15 +34915,21 @@ msgid ""
 "\"Once you get out of the system, you have nothing to fear from Dvaered "
 "patrol ships anymore, even if you go back to the afterwards.\""
 msgstr ""
+"\"Ten en cuenta también que sólo te perseguirán las naves de los Señores de "
+"la Guerra \"equivocados\", y sólo en el sistema donde ejecutaste la misión. "
+"Es más, está totalmente permitido destruir esas naves ya que se hace en el "
+"marco de una guerra leal entre honorables Señores de la Guerra.\n"
+"\"Una vez que salgas del sistema, ya no tienes nada que temer de las naves "
+"de patrulla de Dvaered, incluso si después regresas.\""
 
 #. Spawns a merchant ship that explains what happens
 #: dat/events/dvaered/warlords_battle.lua:85
 msgid "Trader {ship}"
-msgstr ""
+msgstr "{ship} comerciante"
 
 #: dat/events/dvaered/warlords_battle.lua:96
 msgid "A battle is about to begin"
-msgstr ""
+msgstr "Una batalla está a punto de comenzar"
 
 #: dat/events/dvaered/warlords_battle.lua:96
 msgid ""
@@ -34927,6 +34939,12 @@ msgid ""
 "works? If you attack a warlord's ship, and he loses the battle, the other "
 "warlord will reward you. But if he wins, you will be hunted down.\""
 msgstr ""
+"\"Oye, tú\", dice el capitán de la nave. \"Parece que no sabes lo que va a "
+"pasar aquí: un poderoso señor de la guerra de {sys} va a atacar {pnt}. No "
+"deberías quedarte allí, a menos que seas un mercenario. ¿Sabes cómo "
+"funciona? Si atacas la nave de un señor de la guerra, y él pierde la "
+"batalla, el rival del señor de la guerra te recompensará. Pero si él gana, "
+"serás perseguido.\""
 
 #. Arranges a list of pilot with their mass
 #. Processing of the equality case
@@ -34935,18 +34953,20 @@ msgstr ""
 #. Simultaneous destruction?
 #: dat/events/dvaered/warlords_battle.lua:148
 msgid "Here comes your reward"
-msgstr ""
+msgstr "Aquí viene tu recompensa"
 
 #: dat/events/dvaered/warlords_battle.lua:148
 msgid ""
 "\"Hello captain,\" a Dvaered officer says, \"You helped us in this battle. I "
 "am authorized to give you {credits} as a reward.\""
 msgstr ""
+"\"Hola capitán\", dice un oficial Dvaered, \"Nos has ayudado en esta "
+"batalla. Estoy autorizado a darte {credits} como recompensa.\""
 
 #. Returns leader of fleet
 #: dat/events/dvaered/warlords_battle.lua:177
 msgid "Invader"
-msgstr ""
+msgstr "Invasor"
 
 #. some transport ships
 #. The transport ships tend to run away
@@ -34954,7 +34974,7 @@ msgstr ""
 #. mass of the player's victims
 #: dat/events/dvaered/warlords_battle.lua:233
 msgid "Local Warlord's Force"
-msgstr ""
+msgstr "Fuerza Local del Señor de la Guerra"
 
 #. The heaviest ships will surround the leader
 #. mass of the player's victims
@@ -34987,11 +35007,11 @@ msgstr ""
 #: dat/events/flf/derelict.lua:54 dat/events/flf/derelict.lua:83
 #: dat/missions/flf/flf_pre02.lua:67 dat/missions/flf/flf_pre02.lua:194
 msgid "Dvaered Patrol"
-msgstr ""
+msgstr "Patrulla Dvaered"
 
 #: dat/events/flf/derelict.lua:55 dat/events/flf/derelict.lua:89
 msgid "Frontier Patrol"
-msgstr ""
+msgstr "Patrulla Frontera"
 
 #. Set a bunch of vars, for no real reason
 #. Caution: if you change this, change the location for base Sindbad in unidiff.xml as well!
@@ -34999,12 +35019,15 @@ msgstr ""
 #: dat/events/flf/derelict.lua:83
 msgid "SOS. This is {plt}. Primary systems down. Requesting assistance."
 msgstr ""
+"SOS. Aquí {plt}. Los sistemas primarios no funcionan. Solicitando ayuda."
 
 #. Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
 #: dat/events/flf/derelict.lua:89
 msgid ""
 "Calling all ships. This is {plt}. Engines down, ship damaged. Please help."
 msgstr ""
+"Llamando a todas las naves. Aquí {plt}. Motores apagados, nave dañada. Por "
+"favor, ayuda."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -35030,7 +35053,7 @@ msgstr ""
 #: dat/events/flf/flf_catastrophe.lua:62 dat/events/flf/flf_catastrophe.lua:64
 #: dat/events/flf/flf_catastrophe.lua:65
 msgid "Catastrophe Looms"
-msgstr ""
+msgstr "La catástrofe se acerca"
 
 #: dat/events/flf/flf_catastrophe.lua:59
 msgid ""
@@ -35038,6 +35061,9 @@ msgid ""
 "wrong. Everyone is frantic and you sense dread around your comrades. You are "
 "about to ask around when Benito approaches."
 msgstr ""
+"Cuando entras en el bar de Sindbad, sabes inmediatamente que algo va mal. "
+"Todo el mundo está frenético y percibes el temor en torno a tus compañeros. "
+"Estás a punto de preguntar cuando se acerca Benito."
 
 #: dat/events/flf/flf_catastrophe.lua:60
 msgid ""
@@ -35050,6 +35076,14 @@ msgid ""
 "and told the Empire where our base is, and they even told them where our "
 "hidden jumps are! This is terrible!\""
 msgstr ""
+"\"{player}, es horrible\", dice con una mirada de espanto en sus ojos. \"Nos "
+"han encontrado. El maldito Imperio nos ha encontrado. Voy a ser sincero, ni "
+"siquiera sé si podremos sobrevivir a esto\". Balbucea por un momento. No, ¡"
+"no puede ser verdad! ¡Tiene que ser un error! ¿Cómo puede la FLF ser "
+"derrotada así? Ahora la agitación tiene mucho sentido.\n"
+"    \"¡Son esos malditos traidores!\" Continúa Benito. \"¡Uno de ellos se "
+"fue y le dijo al Imperio dónde está nuestra base, e incluso les dijeron "
+"dónde están nuestros saltos ocultos! ¡Esto es terrible!\""
 
 #: dat/events/flf/flf_catastrophe.lua:62
 msgid ""
@@ -35065,6 +35099,18 @@ msgid ""
 "Empire ships. You have to destroy all of the ships. I will be here helping "
 "to man the station; our defences are weak, but better than nothing.\""
 msgstr ""
+"\"Escucha, no tenemos mucho más tiempo. Una flota combinada del Imperio y "
+"Dvaered está a punto de entrar desde {sys}. Tienen Pacificadores, Hawkings, "
+"Goddards, Calmas, lo que sea. Están listos para borrarnos del mapa. {player}"
+", no sé cómo decir esto, pero...\" Benito rebusca un poco en sus bolsillos "
+"antes de sacar un pequeño chip de datos. \"Toma, coge esto\", dice mientras "
+"te lo pone en la mano. \"Es el plan B. Espero que no se llegue a eso, "
+"pero... mantenlo a salvo, por si acaso\".\n"
+"    Benito se aclara la garganta. \"Pero estoy seguro de que puedes adivinar "
+"cuál es tu misión. Tienes que unirte a los demás en la lucha contra las "
+"naves del Imperio que llegan. Tienes que destruir todas las naves. Yo estaré "
+"aquí ayudando a tripular la estación; nuestras defensas son débiles, pero es "
+"mejor que nada.\""
 
 #: dat/events/flf/flf_catastrophe.lua:64
 msgid ""
@@ -35074,11 +35120,17 @@ msgid ""
 "this time, it's not in the usual playful tone you tend to expect of her. She "
 "then hurriedly exits toward the station's weapon controls room."
 msgstr ""
+"El silencio parece envolver la sala. Ves las bocas de tus compañeros "
+"hablando frenéticamente, pero no puedes oírlos. Benito te pone la mano en el "
+"hombro y te mira a los ojos. \"No te mueras, soldado\", te dice, sólo que "
+"esta vez no lo hace en el habitual tono juguetón que sueles esperar de ella. "
+"Luego sale apresuradamente hacia la sala de control de armas de la estación."
 
 #: dat/events/flf/flf_catastrophe.lua:65
 msgid ""
 "There's no time to lose. You go to the hangar bay and immediately take off."
 msgstr ""
+"No hay tiempo que perder. Ve a la bahía del hangar e inmediatamente despega."
 
 #. Spawn FLF ships
 #. Spawn Empire ships
@@ -35093,11 +35145,13 @@ msgid ""
 "You turned on the FLF and helped the Empire and the Dvaereds destroy Sindbad "
 "for some reason."
 msgstr ""
+"Te enfrentaste al FLF y ayudaste al Imperio y a los Dvaereds a destruir a "
+"Sindbad por alguna razón."
 
 #: dat/events/flf/flf_catastrophe.lua:234
 #: dat/events/flf/flf_catastrophe.lua:236
 msgid "Escape and Live On"
-msgstr ""
+msgstr "Escapa y Mantente Con Vida"
 
 #: dat/events/flf/flf_catastrophe.lua:234
 msgid ""
@@ -35107,6 +35161,11 @@ msgid ""
 "immediately accept, and you see Benito on your screen once again. You hear "
 "sirens and explosions in the background, but you pay them no mind."
 msgstr ""
+"Cuando el último disparo penetra en el casco del Sindbad, te invade una "
+"sensación de espanto. El FLF, Benito, tus compañeros... no...\n"
+"Justo cuando piensas esto, la estación que ahora está explotando te llama. "
+"Aceptas inmediatamente y vuelves a ver a Benito en tu pantalla. Oyes sirenas "
+"y explosiones de fondo, pero no les prestas atención."
 
 #: dat/events/flf/flf_catastrophe.lua:236
 msgid ""
@@ -35121,6 +35180,17 @@ msgid ""
 "The transmission then cuts as you are forced to watch Sindbad finally erupt "
 "in a fiery explosion."
 msgstr ""
+"\"Bueno, esto es todo, soldado. Mi última transmisión para ti. No puedo "
+"decir que quería que fuera de esta manera, pero...\n"
+"    \"Escucha. ¿Ese chip que te entregué antes? Es un mapa. Muestra la "
+"ubicación de un salto oculto de Iris a un sistema desconocido en lo profundo "
+"de la nebulosa. Ve directamente allí, ahora mismo. Escapa del Imperio, "
+"encuentra lo que hay más allá, y sigue viviendo. Quizás, en tus futuros "
+"viajes, encuentres la forma de destruir a los Dvaereds, y al Imperio, de una "
+"vez por todas\". Benito sonríe mientras crece la detonación de la estación a "
+"su alrededor. \"Adiós, {player}. Mantente alerta\". La transmisión se corta "
+"entonces mientras te ves obligado a ver cómo Sindbad estalla finalmente en "
+"una intensa explosión."
 
 #: dat/events/flf/flf_catastrophe.lua:240
 msgid ""
@@ -35133,12 +35203,22 @@ msgid ""
 "rise again and defeat the Dvaereds once and for all. Her last words were "
 "short, but memorable: \"Goodbye, {player}. Stay vigilant.\""
 msgstr ""
+"El Imperio descubrió a Sindbad. Por más que lo intentasteis, tú y tus "
+"compañeros no pudisteis detener el ataque combinado del Imperio y los "
+"Dvaereds, y Sindbad estalló en una intensa explosión, matando a Benito y a "
+"todos los demás compañeros que estaban dentro de Sindbad. Antes de que la "
+"estación explotara, Benito te dio un mapa que conducía a los confines "
+"desconocidos de la nebulosa interior y te dijo que utilizaras el mapa para "
+"encontrar lo que había dentro con la esperanza de que un día pudieras ayudar "
+"a la FLF a levantarse de nuevo y derrotar a los Dvaereds de una vez por "
+"todas. Sus últimas palabras fueron cortas, pero memorables: \"Adiós, {player}"
+". Mantente alerta\"."
 
 #: dat/events/flf/flf_catastrophe.lua:275
 #: dat/events/flf/flf_catastrophe.lua:277
 #: dat/events/flf/flf_catastrophe.lua:279
 msgid "Strange Happenings"
-msgstr ""
+msgstr "Acontecimientos Extraños"
 
 #: dat/events/flf/flf_catastrophe.lua:275
 msgid ""
@@ -35150,6 +35230,14 @@ msgid ""
 "sigh of relief. An unfamiliar face appears on your viewscreen. She glares "
 "silently for what seems like an eternity. Finally, she speaks up."
 msgstr ""
+"Tus instrumentos se vuelven locos y tu nave se queda a oscuras. Juras en voz "
+"baja mientras intentas que el sistema vuelva a funcionar. Esto no es bueno. ¿"
+"Cómo ha podido fallar tu sistema central, y en un momento tan crítico? ¿Va a "
+"ser esto el fin para ti, como para Benito y tus otros compañeros hace unos "
+"momentos?\n"
+"    Justo cuando empiezas a entrar en pánico, la energía vuelve a funcionar "
+"y respiras aliviado. Una cara desconocida aparece en tu pantalla. Te mira en "
+"silencio durante lo que parece una eternidad. Finalmente, habla."
 
 #: dat/events/flf/flf_catastrophe.lua:277
 msgid ""
@@ -35168,6 +35256,21 @@ msgid ""
 "don't have the guts for it, turn back now while you still can. But if you "
 "do, you turn back for good.\""
 msgstr ""
+"\"Así que la FLF está muerta, por lo que veo. Bueno, no tan muerta como una "
+"sombra de lo que fue. Veo que has conseguido más o menos tu objetivo; las "
+"fuerzas Dvaered se han retirado en gran medida del espacio Frontera. Supongo "
+"que esa fue el arma de doble filo que esgrimiste cuando involucraste a los "
+"piratas. El Imperio nunca iba a permitirte vivir una vez que hicieras eso, "
+"pero te dio la ventaja que necesitabas para debilitar a las fuerzas Dvaered "
+"temporalmente.\n"
+"    \"No es que importe de todos modos, por supuesto. El resultado final "
+"será el mismo de cualquier manera. Pero eso no es ni aquí ni allá. Piloto de "
+"FLF, puedo ver que has adquirido algunos datos internos. Dicho esto, sigues "
+"sin saber nada en el gran esquema de las cosas. Así que te diré lo siguiente:"
+" procede a Metsys si te atreves. Entonces te lo explicaré todo. Te advierto: "
+"la nebulosa de aquí es muy inestable, así que será mejor que tus escudos "
+"estén a la altura. Si no tienes las agallas para ello, regresa ahora "
+"mientras puedas. Pero si lo haces, no vuelvas para nada.\""
 
 #: dat/events/flf/flf_catastrophe.lua:279
 msgid ""
@@ -35178,13 +35281,19 @@ msgid ""
 "figure said that you can only make this decision once, so you'd better make "
 "sure it's the right one."
 msgstr ""
+"Antes de que puedas responder, la misteriosa figura desaparece. No detectas "
+"ninguna presencia cercana, pero notas que tu nave ha sido repostada de "
+"alguna manera. Qué raro. En cualquier caso, parece que tienes dos opciones: ¿"
+"te enfrentas a los peligros de la nebulosa y sigues hacia Metsys, o te das "
+"la vuelta ahora? La figura dice que sólo puedes tomar esta decisión una vez, "
+"así que será mejor que te asegures de que es la correcta."
 
 #: dat/events/flf/flf_catastrophe.lua:286
 #: dat/events/flf/flf_catastrophe.lua:288
 #: dat/events/flf/flf_catastrophe.lua:290
 #: dat/events/flf/flf_catastrophe.lua:292
 msgid "Welcome To the Nebula"
-msgstr ""
+msgstr "Bienvenido a la Nebulosa"
 
 #: dat/events/flf/flf_catastrophe.lua:286
 msgid ""
@@ -35196,6 +35305,13 @@ msgid ""
 "    \"Well met,\" she says. \"I see you have made the right choice and "
 "survived the nebula. Very good.\""
 msgstr ""
+"Cuando llegas a la misteriosa estación, unos guardias armados rodean "
+"inmediatamente tu nave y te ordenan que salgas al hangar. Obedeces y te "
+"llevan a una sala que parece ser una sala de interrogatorios, donde esperas "
+"durante unos angustiosos hectosegundos. Finalmente, una holopantalla se "
+"enciende y muestra la figura que habías visto antes. Mira en tu dirección.\n"
+"\"Bien hecho\", dice. \"Veo que has tomado la decisión correcta y has "
+"sobrevivido a la nebulosa. Muy bien.\""
 
 #: dat/events/flf/flf_catastrophe.lua:288
 msgid ""
@@ -35210,6 +35326,18 @@ msgid ""
 "computer, and so when they came after us, we uploaded ourselves and escaped "
 "into what are now our core systems to rebuild.\""
 msgstr ""
+"\"Seguro que te preguntas quiénes somos. Somos los Turion, una civilización "
+"sobrante de uno de los antiguos proyectos secretos del Imperio. ¿Has "
+"conocido a los Za'lek? ¿Colectivo? Esos también eran los \"grandes "
+"proyectos\" del Imperio, al igual que el ahora muerto Proteron. Pero nos "
+"mantuvieron mucho más en la oscuridad.\n"
+"    \"Verás, cuando el Imperio renunció al Proyecto Turion hace muchos "
+"ciclos, intentaron matarnos para que nunca se supiera de nuestra existencia. "
+"Pensaron que éramos una vergüenza para el Imperio. Sin embargo, no sabían "
+"que habíamos descubierto un método para cargar la mente humana en un "
+"ordenador, así que cuando vinieron a por nosotros, nos cargamos a nosotros "
+"mismos y escapamos a lo que ahora son nuestros sistemas centrales para "
+"reconstruir\""
 
 #: dat/events/flf/flf_catastrophe.lua:290
 msgid ""
@@ -35231,6 +35359,23 @@ msgid ""
 "anyhow, so we'll see when we get there, should you have an interest in being "
 "uploaded.\""
 msgstr ""
+"\"Ahora, casi la mitad de nosotros estamos cargados, yo incluido. Este "
+"rostro que ves y esta voz que oyes no son más que proyecciones, un reflejo "
+"de mí mismo que he elegido libremente. Ser subido es maravilloso, debo decir;"
+" no hay sufrimiento, somos inmortales, y podemos tener cualquier experiencia "
+"humana que deseemos y mucho más. Y cuando decidimos que hemos vivido al "
+"máximo, podemos borrarnos y desaparecer en el vacío como hace cualquier otra "
+"persona cuando muere. No es raro que la gente decida autoeliminarse después "
+"de haber estado subido durante unos 200 ciclos más o menos. Yo, sin embargo, "
+"me he quedado desde el principio. Disfruto mucho viendo cómo los Turion "
+"biológicos crecen, aprenden y se unen a nosotros en la conciencia subida "
+"cuando sus cuerpos humanos envejecen y se cansan.\n"
+"    \"Lamentablemente, no creo que puedas ser subido. El proceso de carga "
+"tiende a fallar con las personas que tienen el más mínimo daño cerebral, y "
+"vosotros, los forasteros, normalmente tomáis demasiadas sustancias que dañan "
+"al cerebro. Dicho esto, el momento de comprobar si eres apto para ser subido "
+"está a muchos ciclos de distancia, así que ya veremos cuando lleguemos, si "
+"es que tienes interés en ser subido.\""
 
 #: dat/events/flf/flf_catastrophe.lua:292
 msgid ""
@@ -35255,6 +35400,27 @@ msgid ""
 "which has been refueled while you were gone. This should be an interesting "
 "experience...."
 msgstr ""
+"Fascinado, finalmente hablas, lo que provoca una sonrisa del Turion subido y "
+"una discusión bastante larga y amistosa sobre sus experiencias como Turion "
+"subido y tu experiencia como piloto en el exterior. Descubres que se llama "
+"Alicia. En algún momento de la conversación, un par de guardias Turion "
+"humanos entran en la habitación. Le preguntan a Alicia cómo te fue, y ella "
+"les dice que te han introducido correctamente en la cultura Turion y que se "
+"puede confiar en ti para que te muevas libremente. Los dos guardias sonríen "
+"y te dan la mano. \"Bienvenido a la nebulosa, {player}\", dice uno de ellos. "
+"\"Ahora tienes permiso para vagar libremente por el espacio de Turion y "
+"llevar a cabo tus negocios. Por supuesto, confío en que no revelarás nuestra "
+"ubicación secreta a nadie. Eso sería tan malo para ti como para nosotros\".\n"
+"    Afirmas que mantendrás a salvo el secreto de los Turion. \"Sí, "
+"bienvenido\", dice Alicia. \"Y no dejes de visitar nuestros bares y "
+"ordenadores de misiones de vez en cuando. Es muy posible que tengamos alguna "
+"misión para ti en el futuro. Mientras tanto, cómprate un revestimiento "
+"resistente a la nebulosa y ponte cómodo. Eres nuestro invitado de honor y, "
+"espero, el primero de muchos forasteros que aprenderán las maravillas de "
+"nuestro modo de vida\".\n"
+"    A continuación, los guardias te acompañan rápida pero cortésmente de "
+"vuelta a su nave, que ha sido repostada mientras estabas fuera. Esta debería "
+"ser una experiencia interesante...."
 
 #: dat/events/flf/flf_catastrophe.lua:296
 msgid ""
@@ -35276,6 +35442,23 @@ msgid ""
 "for you in the future and has also recommended that you buy one of the "
 "Thurion's nebula-resistant ships."
 msgstr ""
+"Después de haber desafiado la nebulosa, Alicia, una de las muchas Turion "
+"subidas, te presentó a los Turion. Los Turion son los restos de un proyecto "
+"secreto iniciado por el Imperio, el Proyecto Turion. El Za'lek, Colectivo y "
+"el ya fallecido Proteron también fueron \"grandes proyectos\" del Imperio, "
+"pero el Proyecto Turion se consideró una vergüenza, lo que llevó al Imperio "
+"a intentar matar a los Turion para que no se supiera de su existencia. Sin "
+"embargo, los Turion aprendieron una forma de cargar la mente humana en un "
+"ordenador, lo que les permitió escapar y reconstruirse.\n"
+"    Ahora, los Turion han formado una civilización secreta. Alrededor de la "
+"mitad de la población Turion está cargada y Alicia se apresuró a ensalzar "
+"las virtudes de estar cargado, pero también señaló que probablemente no te "
+"puedas cargar debido a la probabilidad de un daño cerebral excesivo.\n"
+"    En cualquier caso, te has ganado la confianza de los Turion y se te ha "
+"concedido permiso para vagar libremente por el espacio de Turion. Has "
+"prometido mantener a salvo el secreto del Turion. Alicia ha dicho que Turion "
+"puede tener misiones para ti en el futuro y también te ha recomendado que "
+"compres una de las naves resistentes a la nebulosa de Turion."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -35304,12 +35487,16 @@ msgid ""
 "\"Hi there! I'm looking to get some piloting experience. Here are my "
 "credentials. Would you be interested in hiring me?\""
 msgstr ""
+"\"¡Hola! Estoy buscando obtener experiencia de pilotaje. Aquí están mis "
+"credenciales. ¿Estarían interesados en contratarme?\""
 
 #: dat/events/hired_escorts.lua:33
 msgid ""
 "\"Hello! I'm looking to join someone's fleet. Here's my credentials. What do "
 "you say, would you like me on board?\""
 msgstr ""
+"\"¡Hola! Estoy buscando unirme a la flota de alguien. Aquí están mis "
+"credenciales. ¿Qué dices, te gustaría que estuviera a bordo?\""
 
 #: dat/events/hired_escorts.lua:34
 msgid ""
@@ -35318,11 +35505,15 @@ msgid ""
 "Here's my info. Well, what do you think? Would you like to add me to your "
 "fleet?\""
 msgstr ""
+"\"¡Hola! ¡Parece que te vendría bien un piloto! Estoy disponible y cobro una "
+"de las mejores tarifas de la galaxia, ¡y te prometo que soy perfecto para el "
+"trabajo! Aquí tienes mis datos. Bueno, ¿qué te parece? ¿Te gustaría añadirme "
+"a tu flota?\""
 
 #. { ship = "Llama",       royalty = 0.05 },
 #: dat/events/hired_escorts.lua:121
 msgid "Pilot for Hire"
-msgstr ""
+msgstr "Piloto a Contratar"
 
 #: dat/events/hired_escorts.lua:122
 msgid ""
@@ -35332,6 +35523,11 @@ msgid ""
 "Deposit: {deposit_text}\n"
 "Royalty: {royalty_percent:.1f}% of mission earnings"
 msgstr ""
+"Este piloto parece estar buscando trabajo.\n"
+"\n"
+"Nave: {ship}\n"
+"Depósito: {deposit_text}\n"
+"Derechos: {royalty_percent:.1f}% de las ganancias de la misión"
 
 #: dat/events/hired_escorts.lua:147
 msgid ""
@@ -35340,18 +35536,24 @@ msgid ""
 "Deposit: {deposit_text}\n"
 "Royalty: {royalty_percent:.1f}% of mission earnings"
 msgstr ""
+"Nombre del piloto: {name}\n"
+"Nave: {ship}\n"
+"Depósito: {deposit_text}\n"
+"Derechos: {royalty_percent:.1f}% de las ganancias de la misión"
 
 #: dat/events/hired_escorts.lua:153
 msgid ""
 "Money: {credits}\n"
 "Current total royalties: {total:.1f}% of mission earnings"
 msgstr ""
+"Dinero: {credits}\n"
+"Derechos totales actuales: {total:.1f}% de las ganancias de la misión"
 
 #. Clean up dead escorts so it doesn't build up, and create NPCs for
 #. existing escorts.
 #: dat/events/hired_escorts.lua:181 dat/events/hired_escorts.lua:446
 msgid "This is one of the pilots currently under your wing."
-msgstr ""
+msgstr "Este es uno de los pilotos actualmente bajo su mando."
 
 #. Ignore on uninhabited and planets without bars
 #. Create NPCs for pilots you can hire.
@@ -35363,7 +35565,7 @@ msgstr ""
 #. Whitelist control of reasons
 #: dat/events/hired_escorts.lua:304 dat/events/hired_escorts.lua:337
 msgid "'{name}' ({ship}) has left your employment."
-msgstr ""
+msgstr "'{name}' ({ship}) ha dejado de ser tu empleado."
 
 #. Asks the player whether or not they want to fire the pilot
 #: dat/events/hired_escorts.lua:346
@@ -35372,22 +35574,26 @@ msgid ""
 "\n"
 "Pilot credentials:"
 msgstr ""
+"¿Te gustaría hacer algo con este piloto?\n"
+"\n"
+"Credenciales de piloto:"
 
 #: dat/events/hired_escorts.lua:350
 msgid "Fire pilot"
-msgstr ""
+msgstr "Despedir piloto"
 
 #: dat/events/hired_escorts.lua:350
 msgid "Do nothing"
-msgstr ""
+msgstr "No hagas nada"
 
 #: dat/events/hired_escorts.lua:353
 msgid "Are you sure you want to fire {name}? This cannot be undone."
 msgstr ""
+"¿Estás seguro de que quieres despedir a {name}? Esto no se puede deshacer."
 
 #: dat/events/hired_escorts.lua:359
 msgid "You fired '{name}' ({ship})."
-msgstr ""
+msgstr "Despides a '{name}' ({ship})."
 
 #. Pilot was hailed by the player
 #. Check if player attacked his own escort
@@ -35397,19 +35603,19 @@ msgstr ""
 #. just have them all disband at once and attack.
 #: dat/events/hired_escorts.lua:386
 msgid "You turned on your hired escort '{name}' ({ship})."
-msgstr ""
+msgstr "Has activado tu escolta contratada '{name}' ({ship})."
 
 #. Escort got killed
 #: dat/events/hired_escorts.lua:398
 msgid "'{name}' ({ship}) was killed in combat."
-msgstr ""
+msgstr "'{name}' ({ship}) murió en combate."
 
 #. Approaching hired pilot at the bar
 #. Approaching unhired pilot at the bar
 #. Player rejected offer
 #: dat/events/hired_escorts.lua:426
 msgid "You don't have enough credits to pay for this pilot's deposit."
-msgstr ""
+msgstr "No tienes suficientes créditos para pagar el depósito de este piloto."
 
 #: dat/events/hired_escorts.lua:430
 msgid ""
@@ -35417,16 +35623,21 @@ msgid ""
 "from missions, meaning you will lose credits when doing missions. Are you "
 "sure you want to hire this pilot?"
 msgstr ""
+"Contratar a este piloto te llevará a pagar más en derechos de lo que ganas "
+"con las misiones, lo que significa que perderás créditos al hacer misiones. ¿"
+"Estás seguro de que quieres contratar a este piloto?"
 
 #: dat/events/hired_escorts.lua:451
 msgid "Hired Escorts"
-msgstr ""
+msgstr "Escoltas Contratados"
 
 #: dat/events/hired_escorts.lua:452
 msgid ""
 "You hired a {ship} ship named '{name}' for {deposit_text} and "
 "{royalty_percent:.1f}% of mission earnings."
 msgstr ""
+"Has contratado una nave {ship} llamada '{name}' por {deposit_text} y "
+"{royalty_percent:.1f}% de las ganancias de la misión."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -35438,7 +35649,7 @@ msgstr ""
 #. luacheck: globals update hypergate (Hook functions passed by name)
 #: dat/events/hypergate.lua:22
 msgid "Hypergate event run with no target!"
-msgstr ""
+msgstr "¡Evento de Hiperportal sin objetivo!"
 
 #. avoids visual artefact
 #. Clear hypergate
@@ -35468,49 +35679,52 @@ msgstr ""
 #. We assume dominant faction is the one we want here
 #: dat/events/hypergate_construction.lua:42
 #: dat/events/hypergate_construction.lua:84
+#, fuzzy
 msgid "Supervisor"
-msgstr ""
+msgstr "Supervisor"
 
 #: dat/events/hypergate_construction.lua:43
 msgid "Boss"
-msgstr ""
+msgstr "Jefe"
 
 #: dat/events/hypergate_construction.lua:44
 msgid "Chief"
-msgstr ""
+msgstr "Lider"
 
 #: dat/events/hypergate_construction.lua:45
 #: dat/scripts/pilotname/pirate.lua:442
 msgid "Shepherd"
-msgstr ""
+msgstr "Pastor"
 
 #: dat/events/hypergate_construction.lua:46
 msgid "Administrator"
-msgstr ""
+msgstr "Administrador"
 
 #: dat/events/hypergate_construction.lua:50
 msgid "Mineral acquiration skills required. Inquire within."
 msgstr ""
+"Se requieren conocimientos de adquisición de minerales. Infórmese en el "
+"interior."
 
 #: dat/events/hypergate_construction.lua:51
 msgid "Interested in blowing asteroids up? Looking for miners!"
-msgstr ""
+msgstr "¿Interesado en explotar asteroides? ¡Buscamos mineros!"
 
 #: dat/events/hypergate_construction.lua:52
 msgid "Seeking mineral gatherers."
-msgstr ""
+msgstr "Buscando recolectores de minerales."
 
 #: dat/events/hypergate_construction.lua:53
 msgid "Requiring miners for Sirichana."
-msgstr ""
+msgstr "Se requieren mineros para Sirichana."
 
 #: dat/events/hypergate_construction.lua:54
 msgid "Mine minerals for the Empire!"
-msgstr ""
+msgstr "¡Mina minerales para el Imperio!"
 
 #: dat/events/hypergate_construction.lua:136
 msgid "\"We don't deal with the likes of you!\""
-msgstr ""
+msgstr "\"¡No tratamos con gente como tú!\""
 
 #: dat/events/hypergate_construction.lua:139
 msgid ""
@@ -35519,16 +35733,22 @@ msgid ""
 "the market price. If you are interested, please bring the minerals and board "
 "to do the transaction.\""
 msgstr ""
+"\"Buscamos mineros para obtener minerales valiosos como {minerals}. Dada la "
+"dificultad de adquirirlos, estamos dispuestos a pagar el {markup}% del "
+"precio de mercado. Si estás interesado, por favor traigan los minerales y "
+"embarquen para hacer la transacción.\""
 
 #: dat/events/hypergate_construction.lua:146
 msgid ""
 "\"Do you have minerals available? If so, please board for the transaction.\""
 msgstr ""
+"\"¿Tiene minerales disponibles? Si es así, por favor, embarque para la "
+"transacción.\""
 
 #. Should allow the player to ransack the ship
 #: dat/events/hypergate_construction.lua:164
 msgid "You are not allowed to board the ship!"
-msgstr ""
+msgstr "¡No se te permite embarcar en la nave!"
 
 #. Boarding sound
 #: dat/events/hypergate_construction.lua:182
@@ -35537,26 +35757,30 @@ msgid ""
 "efficiently process minerals. There is a holosign with the needed resources "
 "and their prices:"
 msgstr ""
+"Abordas la {ship}, y descubres que la bahía de carga ha sido preparada para "
+"procesar eficazmente los minerales. Hay un holosigno con los recursos "
+"necesarios y sus precios:"
 
 #: dat/events/hypergate_construction.lua:184
+#, fuzzy
 msgid "{mineral}: {price}"
-msgstr ""
+msgstr "{mineral}: {price}"
 
 #: dat/events/hypergate_construction.lua:190
 msgid "What do you want to do?"
-msgstr ""
+msgstr "¿Qué quieres hacer?"
 
 #: dat/events/hypergate_construction.lua:193
 msgid "Leave."
-msgstr ""
+msgstr "Irse."
 
 #: dat/events/hypergate_construction.lua:199
 msgid "Trade {mineral} for {value} (You have {amount})"
-msgstr ""
+msgstr "Intercambias {mineral} por {valor} (Tienes {amount})"
 
 #: dat/events/hypergate_construction.lua:203
 msgid "Ask about the construction."
-msgstr ""
+msgstr "Preguntas por la construcción."
 
 #: dat/events/hypergate_construction.lua:208
 msgid ""
@@ -35564,6 +35788,9 @@ msgid ""
 "that. I'm not too up-to-date on the details, but I do recall there was "
 "something similar to this back at Sol before the incident…\""
 msgstr ""
+"\"Es una especie de traductor de energía cuántica de alta potencia o algo "
+"así. No estoy muy al tanto de los detalles, pero recuerdo que había algo "
+"similar a esto en Sol antes del incidente...\""
 
 #. Mineral options
 #: dat/events/hypergate_construction.lua:216
@@ -35571,6 +35798,8 @@ msgid ""
 "You deliver the {amount} of {mineral}.\n"
 "{reward}"
 msgstr ""
+"Entregas {amount} de {mineral}.\n"
+"{reward}"
 
 #. Store how much was traded
 #. Boarding sound
@@ -35599,49 +35828,49 @@ msgstr ""
 #. Messages
 #: dat/events/minerva/altercation1.lua:39
 msgid "*incoherent expletives*"
-msgstr ""
+msgstr "* improperios incoherentes*"
 
 #: dat/events/minerva/altercation1.lua:40
 msgid "Disgusting Za'lek scum!"
-msgstr ""
+msgstr "¡Asquerosa escoria Za'lek!"
 
 #: dat/events/minerva/altercation1.lua:41
 msgid "Your head will make a fine trophy on my ships!"
-msgstr ""
+msgstr "¡Tu cabeza será un buen trofeo en mis naves!"
 
 #: dat/events/minerva/altercation1.lua:43
 msgid "Za'lek trash!"
-msgstr ""
+msgstr "¡Basura Za'lek!"
 
 #: dat/events/minerva/altercation1.lua:46
 msgid "My defence protocols will make short work of you!"
-msgstr ""
+msgstr "¡Mis protocolos de defensa harán un trabajo corto contigo!"
 
 #: dat/events/minerva/altercation1.lua:47
 msgid "I'll teach you physics Dvaered punk!"
-msgstr ""
+msgstr "¡Te enseñaré física gamberro Dvaered!"
 
 #: dat/events/minerva/altercation1.lua:48
 msgid "My ship's hull is less thick than your Dvaered skull!"
-msgstr ""
+msgstr "¡El casco de mi nave es menos grueso que tu cráneo Dvaered!"
 
 #: dat/events/minerva/altercation1.lua:49
 msgid "You Dvaereds smell worse than my vials of thiol!"
-msgstr ""
+msgstr "¡Vosotros los Dvaereds oleis peor que mis frascos de tiol!"
 
 #. Create scuffle
 #: dat/events/minerva/altercation1.lua:56
 #: dat/events/minerva/altercation1.lua:100
 #: dat/events/minerva/altercation1.lua:249
 msgid "Za'lek Belligerent"
-msgstr ""
+msgstr "Beligerante Za'lek"
 
 #. Create the ships
 #: dat/events/minerva/altercation1.lua:58
 #: dat/events/minerva/altercation1.lua:95
 #: dat/events/minerva/altercation1.lua:211
 msgid "Dvaered Hooligan"
-msgstr ""
+msgstr "Hooligan Dvaered"
 
 #: dat/events/minerva/altercation1.lua:64
 msgid ""
@@ -35649,42 +35878,57 @@ msgid ""
 "approach you can make out what seems to be an altercation between a group of "
 "Za'lek and Dvaered ruffians."
 msgstr ""
+"Oyes un gran alboroto en una de las alas de la estación Minerva. Al "
+"acercarte puedes distinguir lo que parece ser un altercado entre un grupo de "
+"rufianes Za'lek y Dvaered."
 
 #: dat/events/minerva/altercation1.lua:66
 msgid ""
 "\"You were using a bloody computation drone to cheat, you dirty Za'lek stink!"
 "\""
 msgstr ""
+"\"¡Estabas usando un maldito dron de computación para hacer trampa, sucio "
+"Za'lek apestoso!\""
 
 #: dat/events/minerva/altercation1.lua:67
 msgid ""
 "\"Your logic makes no sense. Are you sure the excessive amounts of alcohol "
 "aren't making your rotten brain hallucinate?\""
 msgstr ""
+"\"Tu lógica no tiene sentido. ¿Estás seguro de que las cantidades excesivas "
+"de alcohol no están haciendo que tu podrido cerebro alucine?\""
 
 #: dat/events/minerva/altercation1.lua:68
 msgid ""
 "\"You won't trick me with your fancy words. I know a cheater when I see one!"
 "\""
 msgstr ""
+"\"No me vas a engañar con tus palabras rebuscadas. ¡Reconozco a un tramposo "
+"cuando lo veo!\""
 
 #: dat/events/minerva/altercation1.lua:69
 msgid ""
 "\"I wouldn't trust your judgment on bricks let alone anything that requires "
 "minimal intellect.\""
 msgstr ""
+"\"No confiaría en tu juicio en materia de ladrillos y mucho menos en algo "
+"que requiera un mínimo de intelecto.\""
 
 #: dat/events/minerva/altercation1.lua:70
 msgid ""
 "\"You Za'lek punk. Bring your ass outside and I will fill your ship with "
 "holes just like your lies!\""
 msgstr ""
+"\"Tú, gamberro Za'lek. ¡Trae tu culo fuera y llenaré tu nave de agujeros "
+"como tus mentiras de grandes!\""
 
 #: dat/events/minerva/altercation1.lua:71
 msgid ""
 "\"When you are getting eviscerated by my drones, I hope you realize you have "
 "brought this upon yourself, Dvaered trash!\""
 msgstr ""
+"\"¡Cuando seas destripado por mis drones, espero que te des cuenta de que tú "
+"mismo te lo has buscado, basura Dvaered!\""
 
 #: dat/events/minerva/altercation1.lua:73
 msgid ""
@@ -35693,6 +35937,11 @@ msgid ""
 "It seems like it could be an opportunity to curry favour with either one of "
 "the factions if you wished to intervene in their fight."
 msgstr ""
+"Los rufianes Za'lek y Dvaered se dirigen a sus naves para aparentemente "
+"luchar hasta la muerte para resolver su disputa. Individuos verdaderamente "
+"civilizados.\n"
+"Parece que podría ser una oportunidad para ganarse el favor de cualquiera de "
+"las dos facciones si quisieras intervenir en su pelea."
 
 #. Scuffle between Za'lek and Dvaered
 #. Set up system
@@ -35700,11 +35949,11 @@ msgstr ""
 #. Clear
 #: dat/events/minerva/altercation1.lua:86 dat/missions/minerva/kex3.lua:250
 msgid "Dvaered Thug"
-msgstr ""
+msgstr "Matón Dvaered"
 
 #: dat/events/minerva/altercation1.lua:87
 msgid "Za'lek Thug"
-msgstr ""
+msgstr "Matón Za'lek"
 
 #. Prepare hooks
 #. Set up hooks when it is over
@@ -35713,37 +35962,45 @@ msgstr ""
 #: dat/events/minerva/altercation1.lua:168
 #: dat/events/minerva/altercation1.lua:181
 msgid "Et tu brute?"
-msgstr ""
+msgstr "Et tu brute?"
 
 #: dat/events/minerva/altercation1.lua:201
 msgid "Dust to dust."
-msgstr ""
+msgstr "Polvo al polvo."
 
 #: dat/events/minerva/altercation1.lua:214
 msgid ""
 "\"Thank you for the help with the Za'lek scum. Let us celebrate with a drink "
 "in the bar down at Minerva Station!\""
 msgstr ""
+"\"Gracias por la ayuda con la escoria Za'lek. ¡Celebrémoslo con una copa en "
+"el bar de la estación Minerva!\""
 
 #: dat/events/minerva/altercation1.lua:221
 msgid ""
 "You helped a Dvaered pilot get rid of a Za'lek pilot they had a quarrel with."
 msgstr ""
+"Ayudaste a un piloto Dvaered a deshacerse de un piloto Za'lek con el que "
+"tenía una disputa."
 
 #: dat/events/minerva/altercation1.lua:239
 msgid "Good riddance."
-msgstr ""
+msgstr "Que te vaya bien."
 
 #: dat/events/minerva/altercation1.lua:252
 msgid ""
 "\"As my computations predicted, the Dvaered scum was no match for the Za'lek "
 "superiority. Let us celebrate with a drink down at Minerva Station\""
 msgstr ""
+"\"Como predijeron mis cálculos, la escoria Dvaered no fue rival para la "
+"superioridad Za'lek. Celebremoslo con un trago en la estación Minerva\""
 
 #: dat/events/minerva/altercation1.lua:259
 msgid ""
 "You helped a Za'lek pilot get rid of a Dvaered pilot they had a quarrel with."
 msgstr ""
+"Ayudaste a un piloto Za'lek a deshacerse de un piloto Dvaered con el que "
+"tenía una disputa."
 
 #. event ends on player leaving the system or landing
 #.
@@ -35771,7 +36028,7 @@ msgstr ""
 #: dat/missions/neutral/crimelord.lua:121 dat/missions/pirate/hitman.lua:58
 #: dat/missions/pirate/hitman.lua:62
 msgid "Thug"
-msgstr ""
+msgstr "Matón"
 
 #: dat/events/minerva/altercation2.lua:32
 msgid ""
@@ -35779,52 +36036,61 @@ msgid ""
 "station. As you get closer you see what seems to be a group of people "
 "chasing something small… Wait, is that a chicken?"
 msgstr ""
+"Vuelves a escuchar un gran alboroto en una de las alas de la estación "
+"Minerva. Al acercarte ves lo que parece ser un grupo de personas "
+"persiguiendo algo pequeño... Espera, ¿es una gallina?"
 
 #: dat/events/minerva/altercation2.lua:55
 msgid "\"Get back here you thief! Give me back my tokens! There is no way \""
-msgstr ""
+msgstr "\"¡Vuelve aquí, ladrón! ¡Devuélveme mis fichas! No hay salida \""
 
 #: dat/events/minerva/altercation2.lua:57
 msgid "\"Puk Puk Pukaaak! Quack!\""
-msgstr ""
+msgstr "\"¡Puk Puk Pukaaak! ¡Quack!\""
 
 #: dat/events/minerva/altercation2.lua:60
 msgid "\"Filthy little animal! I'll beat you into a pulp!\""
-msgstr ""
+msgstr "\"¡Animal asqueroso! ¡Te voy a hacer papilla!\""
 
 #: dat/events/minerva/altercation2.lua:63
 msgid "\"Cluck Quack Clukuk Pukaaaaaaaaak!\""
-msgstr ""
+msgstr "\"¡Cluck Quack Clukuk Pukaaaaaaaaak!\""
 
 #: dat/events/minerva/altercation2.lua:65
 msgid ""
 "Cyborg Chicken runs itself into a corner and it doesn't seem like station "
 "security will make it in time. What do you do?"
 msgstr ""
+"Gallina Ciborg se encuentra en una esquina y no parece que la seguridad de "
+"la estación vaya a llegar a tiempo. ¿Qué hacer?"
 
 #: dat/events/minerva/altercation2.lua:67
 msgid "Try to intervene"
-msgstr ""
+msgstr "Intentar intervenir"
 
 #: dat/events/minerva/altercation2.lua:68
 msgid "Wait"
-msgstr ""
+msgstr "Esperar"
 
 #: dat/events/minerva/altercation2.lua:72
 msgid "You approach the chicken and thug and try to mediate."
-msgstr ""
+msgstr "Te acercas a la gallina y al matón e intentas intermediar."
 
 #: dat/events/minerva/altercation2.lua:73
 msgid ""
 "As the thug is distracted by you, Cyborg Chicken suddenly sprints and runs "
 "past you. Did it wink at you?"
 msgstr ""
+"Mientras el matón se distrae contigo, la Gallina Cyborg corre de repente y "
+"pasa por delante de ti. ¿Te ha guiñado el ojo?"
 
 #: dat/events/minerva/altercation2.lua:77
 msgid ""
 "\"Not such a tough chicken anymore, huh? Going to beat you so bad we'll have "
 "chicken nuggets for lunch!\""
 msgstr ""
+"\"Ya no es una gallina tan dura, ¿eh? ¡Te voy a golpear tanto que comeremos "
+"nuggets de pollo de almuerzo!\""
 
 #: dat/events/minerva/altercation2.lua:78
 msgid ""
