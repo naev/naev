@@ -1,5 +1,8 @@
+--[[--
+   Pilot AI helper utilities. Meant for controlling the AI without using explicit pilot#control.
+   @module pilotai
+--]]
 local lanes = require "ai.core.misc.lanes"
-
 local pilotai = {}
 
 --[[
