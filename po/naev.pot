@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: naev 0.9.2\n"
+"Project-Id-Version: naev 0.9.3\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-02-19 12:48-0500\n"
+"POT-Creation-Date: 2022-06-03 22:07-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24418,25 +24418,25 @@ msgid "You lack #r{diff}#0 to be able to extract the {outfit}."
 msgstr ""
 
 #. Soft warning
-#: dat/board.lua:442 dat/board.lua:453
+#: dat/board.lua:442 dat/board.lua:454
 msgid "Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"
 msgstr ""
 
-#: dat/board.lua:445 dat/board.lua:458
+#: dat/board.lua:446 dat/board.lua:459
 msgid "You looted a {outfit} from {plt}."
 msgstr ""
 
 #. Unable to loot anything
-#: dat/board.lua:467
+#: dat/board.lua:468
 msgid "No Space"
 msgstr ""
 
-#: dat/board.lua:467
+#: dat/board.lua:468
 msgid "You have no free cargo space!"
 msgstr ""
 
 #. Might be a misaligned here with loot_mod, but we sort of ignore it :/
-#: dat/board.lua:473
+#: dat/board.lua:474
 msgid "You looted {amount} of {cargo} from {plt}."
 msgstr ""
 
@@ -32802,7 +32802,7 @@ msgstr ""
 #: src/gui.c:1518 src/map.c:503 src/map.c:509 src/map.c:515 src/map.c:521
 #: src/map.c:527 src/map.c:533 src/map.c:1646 src/map_overlay.c:221
 #: src/map_system.c:479 src/outfit.c:295 src/outfit.c:314 src/outfit.c:932
-#: src/player.c:1962 src/player_autonav.c:92 src/player_autonav.c:217
+#: src/player.c:1970 src/player_autonav.c:92 src/player_autonav.c:217
 #: src/player_autonav.c:460 src/ship.c:205
 msgid "Unknown"
 msgstr ""
@@ -34293,8 +34293,8 @@ msgstr ""
 #: dat/missions/baron/baron_prince.lua:56
 msgid ""
 "As you approach the stranger, he extends his hand in greeting. He introduces "
-"himself as an associate of Baron Sauterfeldt, the man you helped to \"acquire"
-"\" a holopainting not too long ago.\n"
+"himself as an associate of Baron Sauterfeldt, the man you helped to "
+"\"acquire\" a holopainting not too long ago.\n"
 "    \"The Baron was quite pleased with your performance in that matter,\" he "
 "confides. \"He has asked me to try to find you again for another job not "
 "unlike the last one. The Baron is a collector, you see, and his hunger for "
@@ -47190,8 +47190,8 @@ msgstr ""
 #: dat/missions/minerva/kex5.lua:440
 msgid ""
 "You find a tunnel leading towards the back room. It seems to have been "
-"blocked off once, but now has been torn wide open. You ignore the \"KEEP OUT"
-"\" sign that is bent up underfoot and make your way through."
+"blocked off once, but now has been torn wide open. You ignore the \"KEEP "
+"OUT\" sign that is bent up underfoot and make your way through."
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:441
@@ -62454,8 +62454,8 @@ msgstr ""
 
 #: dat/missions/shark/sh00_ancestorkill.lua:95
 msgid ""
-"The Nexus employee who recruited you for a very special demo of the \"Shark"
-"\" fighter."
+"The Nexus employee who recruited you for a very special demo of the "
+"\"Shark\" fighter."
 msgstr ""
 
 #. Did the player land again on Ulios after having killed the pirate
@@ -64564,9 +64564,10 @@ msgstr ""
 #: dat/missions/sirius/heretic/heretic1.lua:80
 msgid ""
 "You found out that the organization you delivered an illegal package for is "
-"Nasin, a group of followers of Sirichana who the Sirii brand as \"heretics"
-"\". You then delivered a message for Nasin to their base in The Wringer. You "
-"were then invited to meet the Nasin officials at the bar on The Wringer."
+"Nasin, a group of followers of Sirichana who the Sirii brand as "
+"\"heretics\". You then delivered a message for Nasin to their base in The "
+"Wringer. You were then invited to meet the Nasin officials at the bar on The "
+"Wringer."
 msgstr ""
 
 #.
@@ -69048,9 +69049,9 @@ msgid ""
 "You enter a shop that sells only lab coats. The assortment of lab coats is "
 "impressive: lab coats of all colours, different materials, and cuts. There "
 "are distinct sections for casual and working lab coats. Whatever the "
-"difference is, it is too subtle for you to grasp. You settle on a \"business"
-"\" lab coat because something formal is probably suitable for your talk. The "
-"price tag reads {credits}."
+"difference is, it is too subtle for you to grasp. You settle on a "
+"\"business\" lab coat because something formal is probably suitable for your "
+"talk. The price tag reads {credits}."
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:154
@@ -76876,7 +76877,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/ai.c:582 src/board.c:77 src/comm.c:168 src/info.c:378 src/land.c:1498
-#: src/player.c:3343
+#: src/player.c:3351
 #, c-format
 msgid ""
 "Error loading file: %s\n"
@@ -77025,12 +77026,12 @@ msgid "unknown error"
 msgstr ""
 
 #. error has occurred
-#: src/board.c:92 src/player.c:3357
+#: src/board.c:92 src/player.c:3365
 #, c-format
 msgid "Board: '%s'"
 msgstr ""
 
-#: src/board.c:123 src/player.c:1674
+#: src/board.c:123 src/player.c:1678
 msgid "#rYou need a target to board first!"
 msgstr ""
 
@@ -81560,8 +81561,8 @@ msgstr ""
 #, c-format
 msgid ""
 "%s is partially translated (%.0f%%) into your language (%s), but the "
-"remaining text will be English. Language settings are available in the \"%s"
-"\" screen."
+"remaining text will be English. Language settings are available in the "
+"\"%s\" screen."
 msgstr ""
 
 #: src/naev.c:400
@@ -82477,12 +82478,12 @@ msgstr ""
 
 #: src/nstring.c:205
 #, c-format
-msgid "%.0f,%.0f,%.0f,%03.*f"
+msgid "%.0f,%03.0f,%03.0f,%03.*f"
 msgstr ""
 
 #: src/nstring.c:212
 #, c-format
-msgid "%.0f,%.0f,%03.*f"
+msgid "%.0f,%03.0f,%03.*f"
 msgstr ""
 
 #: src/nstring.c:218
@@ -82599,7 +82600,7 @@ msgstr ""
 msgid "No such material %s"
 msgstr ""
 
-#: src/opengl.c:109 src/player.c:2196
+#: src/opengl.c:109 src/player.c:2204
 msgid "Aborting screenshot"
 msgstr ""
 
@@ -84359,101 +84360,101 @@ msgstr ""
 msgid "Unable to find price for player's ship '%s': ship does not exist!"
 msgstr ""
 
-#: src/player.c:1372
+#: src/player.c:1376
 #, c-format
 msgid "Trying to set player's planet target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1422
+#: src/player.c:1426
 msgid "Asteroid targeted, composition: "
 msgstr ""
 
-#: src/player.c:1425
+#: src/player.c:1429
 #, c-format
 msgid "%s, quantity: %i"
 msgstr ""
 
-#: src/player.c:1430
+#: src/player.c:1434
 msgid "Asteroid targeted"
 msgstr ""
 
-#: src/player.c:1495
+#: src/player.c:1499
 msgid "#rThere are no planets to land on."
 msgstr ""
 
-#: src/player.c:1532
+#: src/player.c:1536
 msgid "#rDocking stabilizers malfunctioning, cannot land."
 msgstr ""
 
-#: src/player.c:1539
+#: src/player.c:1543
 msgid "#rYou can't land here."
 msgstr ""
 
 #. No shoes, no shirt, no lifeforms, no service.
-#: src/player.c:1557
+#: src/player.c:1561
 #, c-format
 msgid "#oReady to land on %s."
 msgstr ""
 
-#: src/player.c:1567
+#: src/player.c:1571
 #, c-format
 msgid "#rYou are too far away to land on %s."
 msgstr ""
 
-#: src/player.c:1573
+#: src/player.c:1577
 #, c-format
 msgid "#rYou are going too fast to land on %s."
 msgstr ""
 
-#: src/player.c:1615
+#: src/player.c:1619
 msgid "Player has landing permission, but no valid planet targeted."
 msgstr ""
 
-#: src/player.c:1626
+#: src/player.c:1630
 #, c-format
 msgid "#%c%s>#0 Landing permission revoked."
 msgstr ""
 
-#: src/player.c:1651
+#: src/player.c:1655
 msgid "You are not allowed to land at this moment."
 msgstr ""
 
-#: src/player.c:1693
+#: src/player.c:1701
 #, c-format
 msgid "Trying to set player's hyperspace target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1795
+#: src/player.c:1803
 #, c-format
 msgid "#rReceiving hail! Press #b%s#0 to respond."
 msgstr ""
 
-#: src/player.c:1848
+#: src/player.c:1856
 msgid "#rAborting hyperspace sequence."
 msgstr ""
 
-#: src/player.c:1855
+#: src/player.c:1863
 msgid "#rYou are too far from a jump point to initiate hyperspace."
 msgstr ""
 
-#: src/player.c:1857 src/player_autonav.c:84
+#: src/player.c:1865 src/player_autonav.c:84
 msgid "#rHyperspace drive is offline."
 msgstr ""
 
-#: src/player.c:1859
+#: src/player.c:1867
 msgid "#rYou do not have enough fuel to hyperspace jump."
 msgstr ""
 
-#: src/player.c:1861
+#: src/player.c:1869
 msgid "#oPreparing for hyperspace."
 msgstr ""
 
-#: src/player.c:1953
+#: src/player.c:1961
 #, c-format
 msgid "#oAutonav arrived at the %s system."
 msgstr ""
 
-#: src/player.c:1959
+#: src/player.c:1967
 #, c-format
 msgid "#oAutonav continuing until %s (%d jump left)."
 msgid_plural "#oAutonav continuing until %s (%d jumps left)."
@@ -84461,98 +84462,98 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. in case the crap system breaks :)
-#: src/player.c:2208
+#: src/player.c:2216
 msgid "You have reached the maximum amount of screenshots [999]"
 msgstr ""
 
 #. now proceed to take the screenshot
-#: src/player.c:2213
+#: src/player.c:2221
 #, c-format
 msgid "Taking screenshot [%03d]..."
 msgstr ""
 
-#: src/player.c:2242
+#: src/player.c:2250
 #, c-format
 msgid "#r%s is out of comm range, unable to contact."
 msgstr ""
 
-#: src/player.c:2265 src/player.c:2287
+#: src/player.c:2273 src/player.c:2295
 msgid "#rNo target selected to hail."
 msgstr ""
 
-#: src/player.c:2320
+#: src/player.c:2328
 msgid "#rYou haven't been hailed by any pilots."
 msgstr ""
 
-#: src/player.c:2333
+#: src/player.c:2341
 msgid "#oMouse flying enabled."
 msgstr ""
 
-#: src/player.c:2339
+#: src/player.c:2347
 msgid "#rMouse flying disabled."
 msgstr ""
 
-#: src/player.c:2555 src/player.c:2574
+#: src/player.c:2563 src/player.c:2582
 #, c-format
 msgid "Player ship '%s' not found in stack"
 msgstr ""
 
-#: src/player.c:2969
+#: src/player.c:2977
 msgid "Escort is undeployed, removing."
 msgstr ""
 
-#: src/player.c:3185
+#: src/player.c:3193
 msgid "Found mission cargo without associated mission."
 msgstr ""
 
-#: src/player.c:3186
+#: src/player.c:3194
 msgid "Please reload save game to remove the dead cargo."
 msgstr ""
 
-#: src/player.c:3412
+#: src/player.c:3420
 #, c-format
 msgid "Saved license does not exist and could not be found or updated: '%s'!"
 msgstr ""
 
-#: src/player.c:3481
+#: src/player.c:3489
 msgid "Malformed time in save game!"
 msgstr ""
 
-#: src/player.c:3518
+#: src/player.c:3526
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
 
-#: src/player.c:3542
+#: src/player.c:3550
 msgid "Player ship does not exist!"
 msgstr ""
 
-#: src/player.c:3545
+#: src/player.c:3553
 msgid "Player has no other ships, giving starting ship."
 msgstr ""
 
-#: src/player.c:3556
+#: src/player.c:3564
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr ""
 
-#: src/player.c:3562
+#: src/player.c:3570
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 
-#: src/player.c:3572
+#: src/player.c:3580
 msgid "Save has no time information, setting to start information."
 msgstr ""
 
-#: src/player.c:3578
+#: src/player.c:3586
 msgid "Player save was updated!"
 msgstr ""
 
-#: src/player.c:3579
+#: src/player.c:3587
 msgid "Save Game Updated"
 msgstr ""
 
-#: src/player.c:3579
+#: src/player.c:3587
 msgid ""
 "The loaded save games has had outfits and ships updated to the current Naev "
 "version. You will find that some outfits and ships you have had have been "
@@ -84560,138 +84561,138 @@ msgid ""
 "refunded the cost in credits."
 msgstr ""
 
-#: src/player.c:3587
+#: src/player.c:3595
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid planet '%s',trying to find a "
 "suitable one instead."
 msgstr ""
 
-#: src/player.c:3617
+#: src/player.c:3625
 #, c-format
 msgid "Could not find a planet satisfying criteria %d."
 msgstr ""
 
-#: src/player.c:3621
+#: src/player.c:3629
 msgid "Could not find a suitable planet. Choosing a random planet."
 msgstr ""
 
-#: src/player.c:3668
+#: src/player.c:3676
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3690
+#: src/player.c:3698
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3712
+#: src/player.c:3720
 msgid "License node is missing name attribute."
 msgstr ""
 
-#: src/player.c:3739
+#: src/player.c:3747
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:3800
+#: src/player.c:3808
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
 
-#: src/player.c:3819
+#: src/player.c:3827
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:3827
+#: src/player.c:3835
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:3848
+#: src/player.c:3856
 msgid "Empty ship slot node found, skipping."
 msgstr ""
 
-#: src/player.c:3914
+#: src/player.c:3922
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr ""
 
-#: src/player.c:3961
+#: src/player.c:3969
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 
-#: src/player.c:3974 src/player.c:3987
+#: src/player.c:3982 src/player.c:3995
 msgid "Outfit slot out of range, not adding."
 msgstr ""
 
-#: src/player.c:4006
+#: src/player.c:4014
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr ""
 
-#: src/player.c:4030
+#: src/player.c:4038
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
 
-#: src/player.c:4080
+#: src/player.c:4088
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
 
-#: src/player.c:4088
+#: src/player.c:4096
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4092
+#: src/player.c:4100
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
 
-#: src/player.c:4108
+#: src/player.c:4116
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4121
+#: src/player.c:4129
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 
-#: src/player.c:4129
+#: src/player.c:4137
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
 
-#: src/player.c:4134
+#: src/player.c:4142
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
-#: src/player.c:4173
+#: src/player.c:4181
 msgid "You have destealthed."
 msgstr ""
 
-#: src/player.c:4179
+#: src/player.c:4187
 msgid "#gYou have entered stealth mode."
 msgstr ""
 
-#: src/player.c:4184
+#: src/player.c:4192
 msgid "#rUnable to stealth: missiles locked on!"
 msgstr ""
 
-#: src/player.c:4186
+#: src/player.c:4194
 msgid "#rUnable to stealth: other pilots nearby!"
 msgstr ""
 
@@ -86195,246 +86196,246 @@ msgstr ""
 msgid "Toolkit: Button '%s' of Window '%s' doesn't have a function trigger"
 msgstr ""
 
-#: src/unidiff.c:194
+#: src/unidiff.c:195
 #, c-format
 msgid "Malformed XML header for '%s' UniDiff: missing root element '%s'"
 msgstr ""
 
-#: src/unidiff.c:206
+#: src/unidiff.c:207
 #, c-format
 msgid "Loaded %d UniDiff"
 msgid_plural "Loaded %d UniDiffs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/unidiff.c:278
+#: src/unidiff.c:279
 #, c-format
 msgid "UniDiff '%s' not found in %s!"
 msgstr ""
 
-#: src/unidiff.c:286
+#: src/unidiff.c:287
 msgid "Malformed unidiff file: missing root element 'unidiff'"
 msgstr ""
 
-#: src/unidiff.c:320
+#: src/unidiff.c:321
 #, c-format
 msgid "Unidiff '%s' has a system node without a 'name' tag, not applying."
 msgstr ""
 
-#: src/unidiff.c:331 src/unidiff.c:363 src/unidiff.c:391 src/unidiff.c:740
+#: src/unidiff.c:332 src/unidiff.c:364 src/unidiff.c:392 src/unidiff.c:741
 #, c-format
 msgid "Unidiff '%s': Null hunk type."
 msgstr ""
 
-#: src/unidiff.c:351
+#: src/unidiff.c:352
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for asset '%s'."
 msgstr ""
 
-#: src/unidiff.c:379
+#: src/unidiff.c:380
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for virtual asset '%s'."
 msgstr ""
 
-#: src/unidiff.c:407
+#: src/unidiff.c:408
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for jump '%s'."
 msgstr ""
 
-#: src/unidiff.c:444 src/unidiff.c:513 src/unidiff.c:667 src/unidiff.c:767
-#: src/unidiff.c:812
+#: src/unidiff.c:445 src/unidiff.c:514 src/unidiff.c:668 src/unidiff.c:768
+#: src/unidiff.c:813
 #, c-format
 msgid "Unidiff '%s' has unknown node '%s'."
 msgstr ""
 
-#: src/unidiff.c:471 src/unidiff.c:540 src/unidiff.c:695
+#: src/unidiff.c:472 src/unidiff.c:541 src/unidiff.c:696
 #, c-format
 msgid "Unidiff '%s' has an target node without a 'name' tag"
 msgstr ""
 
-#: src/unidiff.c:758
+#: src/unidiff.c:759
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for faction '%s'."
 msgstr ""
 
-#: src/unidiff.c:818
+#: src/unidiff.c:819
 #, c-format
 msgid "Unidiff '%s' failed to apply %d hunk."
 msgid_plural "Unidiff '%s' failed to apply %d hunks."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/unidiff.c:825
+#: src/unidiff.c:826
 #, c-format
 msgid "   [%s] asset add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:828
+#: src/unidiff.c:829
 #, c-format
 msgid "   [%s] asset remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:831
+#: src/unidiff.c:832
 #, c-format
 msgid "   [%s] asset blackmarket: '%s'"
 msgstr ""
 
-#: src/unidiff.c:834
+#: src/unidiff.c:835
 #, c-format
 msgid "   [%s] asset legalmarket: '%s'"
 msgstr ""
 
-#: src/unidiff.c:837
+#: src/unidiff.c:838
 #, c-format
 msgid "   [%s] virtual asset add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:840
+#: src/unidiff.c:841
 #, c-format
 msgid "   [%s] virtual asset remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:843
+#: src/unidiff.c:844
 #, c-format
 msgid "   [%s] jump add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:846
+#: src/unidiff.c:847
 #, c-format
 msgid "   [%s] jump remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:849
+#: src/unidiff.c:850
 #, c-format
 msgid "   [%s] tech add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:853
+#: src/unidiff.c:854
 #, c-format
 msgid "   [%s] tech remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:857
+#: src/unidiff.c:858
 #, c-format
 msgid "   [%s] asset faction: '%s'"
 msgstr ""
 
-#: src/unidiff.c:861
+#: src/unidiff.c:862
 #, c-format
 msgid "   [%s] asset faction removal: '%s'"
 msgstr ""
 
-#: src/unidiff.c:865
+#: src/unidiff.c:866
 #, c-format
 msgid "   [%s] asset population: '%s'"
 msgstr ""
 
-#: src/unidiff.c:869
+#: src/unidiff.c:870
 #, c-format
 msgid "   [%s] asset population removal: '%s'"
 msgstr ""
 
-#: src/unidiff.c:873
+#: src/unidiff.c:874
 #, c-format
 msgid "   [%s] asset description: '%s'"
 msgstr ""
 
-#: src/unidiff.c:877
+#: src/unidiff.c:878
 #, c-format
 msgid "   [%s] asset description revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:881
+#: src/unidiff.c:882
 #, c-format
 msgid "   [%s] asset bar: '%s'"
 msgstr ""
 
-#: src/unidiff.c:885
+#: src/unidiff.c:886
 #, c-format
 msgid "   [%s] asset bar revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:889
+#: src/unidiff.c:890
 #, c-format
 msgid "   [%s] asset exterior: '%s'"
 msgstr ""
 
-#: src/unidiff.c:893
+#: src/unidiff.c:894
 #, c-format
 msgid "   [%s] asset exterior revert: '%s'"
 msgstr ""
 
-#: src/unidiff.c:897
+#: src/unidiff.c:898
 #, c-format
 msgid "   [%s] asset service add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:901
+#: src/unidiff.c:902
 #, c-format
 msgid "   [%s] asset service remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:905
+#: src/unidiff.c:906
 #, c-format
 msgid "   [%s] asset tech add: '%s'"
 msgstr ""
 
-#: src/unidiff.c:909
+#: src/unidiff.c:910
 #, c-format
 msgid "   [%s] asset tech remove: '%s'"
 msgstr ""
 
-#: src/unidiff.c:913
+#: src/unidiff.c:914
 #, c-format
 msgid "   [%s] faction visible: '%s'"
 msgstr ""
 
-#: src/unidiff.c:917
+#: src/unidiff.c:918
 #, c-format
 msgid "   [%s] faction invisible: '%s'"
 msgstr ""
 
-#: src/unidiff.c:921
+#: src/unidiff.c:922
 #, c-format
 msgid "   [%s] faction set ally: '%s'"
 msgstr ""
 
-#: src/unidiff.c:925
+#: src/unidiff.c:926
 #, c-format
 msgid "   [%s] faction set enemy: '%s'"
 msgstr ""
 
-#: src/unidiff.c:929
+#: src/unidiff.c:930
 #, c-format
 msgid "   [%s] faction set neutral: '%s'"
 msgstr ""
 
-#: src/unidiff.c:933
+#: src/unidiff.c:934
 #, c-format
 msgid "   [%s] faction alignment reset: '%s'"
 msgstr ""
 
-#: src/unidiff.c:938
+#: src/unidiff.c:939
 #, c-format
 msgid "   unknown hunk '%d'"
 msgstr ""
 
-#: src/unidiff.c:1218
+#: src/unidiff.c:1219
 #, c-format
 msgid "Unknown hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1416
+#: src/unidiff.c:1417
 #, c-format
 msgid "Unknown Hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1421
+#: src/unidiff.c:1422
 #, c-format
 msgid "Failed to remove hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1541
+#: src/unidiff.c:1542
 msgid "Expected node \"diff\" to contain the name of a unidiff. Was empty."
 msgstr ""
 
