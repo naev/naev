@@ -2,10 +2,36 @@ local lg = require "love.graphics"
 local le = require "love.event"
 local mg = {}
 
+local function _( x )
+   return x
+end
+local format = {}
+function format.f( str, tab )
+   return (str:gsub("%b{}", function(block)
+      local key, fmt = block:match("{(.*):(.*)}")
+      key = key or block:match("{(.*)}")
+      key = tonumber(key) or key  -- Support {1} for printing the first member of the table, etc.
+      local val = tab[key]
+      if val==nil then
+         warn(string.format(_("fmt.f: string '%s' has '%s'==nil!"), str, key))
+      end
+      return fmt and string.format('%'..fmt, val) or tostring(val)
+   end))
+end
+local fmt = format
+
 local function inlist( tbl, elm )
    for k,v in ipairs(tbl) do
       if v==elm then
          return true
+      end
+   end
+   return false
+end
+local function getpos( tbl, elm )
+   for k,v in ipairs(tbl) do
+      if v==elm then
+         return k
       end
    end
    return false
@@ -19,11 +45,10 @@ local function shuffle(tbl)
    return tbl
 end
 
-local font, fontlh, keyset, sol, guess, tries, game
+local font, keyset, sol, guess, tries, game, selected
 
 function mg.load ()
-   font = lg.newFont( 32 )
-   fontlh = 40
+   font = lg.newFont( 16 )
 
    keyset = {"Q","W","E","R","T","Y"}
    local rndset = {}
@@ -42,6 +67,7 @@ function mg.load ()
    guess = {}
    tries = 6
    game  = 0
+   selected = 1
 end
 
 local matches_exact, matches_fuzzy
@@ -57,9 +83,16 @@ function mg.keypressed( key )
    local k = string.upper(key)
    if inlist( keyset, k ) then
       if #guess >= #sol then
+      selected = 1
       guess = { k }
       elseif not inlist( guess, k ) then
-         table.insert( guess, k )
+         guess[selected] = k
+         for i=1,#sol do
+            if not guess[i] then
+               selected = i
+               break
+            end
+         end
          if #guess >= #sol then
             matches_exact = 0
             matches_fuzzy = 0
@@ -80,11 +113,78 @@ function mg.keypressed( key )
          end
       end
    end
+
+   if key == "left" then
+      selected = math.max( selected-1, 1 )
+   elseif key == "right" then
+      selected = math.min( selected+1, #sol )
+   elseif key == "down" then
+      local p = getpos( keyset, guess[selected] ) or 0
+      for i=p+1, #keyset do
+         if not inlist( guess, keyset[i] ) then
+            guess[selected] = keyset[i]
+            break
+         end
+      end
+   elseif key == "up" then
+      local p = getpos( keyset, guess[selected] ) or #sol+1
+      for i=p-1,1,-1 do
+         if not inlist( guess, keyset[i] ) then
+            guess[selected] = keyset[i]
+            break
+         end
+      end
+   end
+end
+
+local function drawglyph( g, f, x, y, w, h, col )
+   col = col or {0, 0.2, 0.8, 0.6}
+   lg.setColor( col )
+   lg.rectangle( "fill", x, y, w, h )
+   lg.setColor{ 1, 1, 1 }
+   local fh = f:getHeight()
+   lg.printf( g, f, x, y+(h-fh)*0.5, w, "center" )
 end
 
 function mg.draw ()
-   local x, y = 40, 40
-   local s
+   local bx, by = 0, 0
+   local x, y
+
+   -- Draw glyph bar
+   x = 20
+   y = 30
+   lg.setColor{ 1, 1, 1, 1 }
+   lg.rectangle( "line", bx+x, by+y, 30, 30*#keyset )
+   for k,v in ipairs(keyset) do
+      local col
+      if inlist( guess, v ) then
+         col = { 0, 0.8, 0.8, 0.6 }
+      else
+         col = nil
+      end
+      drawglyph( v, font, bx+x+5, by+y+k*30-25, 20, 20, col )
+   end
+
+   x = 60
+   lg.print( fmt.f(_("Input the code ({tries} tries left):"),{tries=tries}), font, bx+x, by+y )
+
+   x = 70
+   y = 70
+   lg.setColor{ 1, 1, 1, 1 }
+   lg.rectangle( "line", bx+x-5, by+y-5, 50*#sol+10, 50+10 )
+   for i=1,#sol do
+      local v = guess[i] or ""
+      local col
+      if i==selected then
+         col = { 0, 0.8, 0.8, 0.6 }
+      else
+         col = nil
+      end
+      drawglyph( v, font, bx+x+i*50-45, by+y+5, 40, 40, col )
+   end
+
+
+--[[
 
    s = "ATTEMPTS LEFT: "..tostring(tries)
    lg.print( s, font, x, y )
@@ -121,6 +221,7 @@ function mg.draw ()
    elseif game < 0 then
       lg.print( "YOU LOSE!", font, x, y )
    end
+--]]
 end
 
 function mg.update( _dt )
