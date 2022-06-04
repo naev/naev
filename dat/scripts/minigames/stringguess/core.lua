@@ -123,4 +123,8 @@ function mg.draw ()
    end
 end
 
+function mg.update( _dt )
+   return false -- true to finish
+end
+
 return mg
