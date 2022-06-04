@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-03 22:07-0400\n"
-"PO-Revision-Date: 2022-06-03 21:19+0000\n"
+"PO-Revision-Date: 2022-06-04 19:08+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -30844,7 +30844,7 @@ msgstr "Canibalizar"
 
 #: dat/board.lua:369
 msgid "Boarding {plt}"
-msgstr "Embarcar {plt}"
+msgstr "Abordar {plt}"
 
 #. Moolah
 #. Will go negative with loot_mod
@@ -30890,7 +30890,7 @@ msgstr "Te falta #r{diff}#0 para poder extraer el {outfit}."
 #: dat/board.lua:442 dat/board.lua:454
 msgid "Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"
 msgstr ""
-"¡La secuencia de comandos de embarque no pudo eliminar '{outfit}' del piloto "
+"¡La secuencia de comandos de abordaje no pudo eliminar '{outfit}' del piloto "
 "embarcado '{plt}'!"
 
 #: dat/board.lua:446 dat/board.lua:459
@@ -31887,7 +31887,7 @@ msgstr ""
 #. Ambusher was boarded: start the Dvaered Base mission
 #: dat/events/dvaered/fwD_hitman.lua:120
 msgid "Boarding aborted"
-msgstr "Embarque abortado"
+msgstr "Aborjaje abortado"
 
 #: dat/events/dvaered/fwD_hitman.lua:120
 msgid ""
@@ -33366,7 +33366,7 @@ msgid ""
 msgstr ""
 "Vuelves a escuchar un gran alboroto en una de las alas de la estación "
 "Minerva. Al acercarte ves lo que parece ser un grupo de personas "
-"persiguiendo algo pequeño... Espera, ¿es una gallina?"
+"persiguiendo algo pequeño... Espera, ¿es un pollo?"
 
 #: dat/events/minerva/altercation2.lua:55
 msgid "\"Get back here you thief! Give me back my tokens! There is no way \""
@@ -33389,8 +33389,8 @@ msgid ""
 "Cyborg Chicken runs itself into a corner and it doesn't seem like station "
 "security will make it in time. What do you do?"
 msgstr ""
-"Gallina Ciborg se encuentra en una esquina y no parece que la seguridad de "
-"la estación vaya a llegar a tiempo. ¿Qué hacer?"
+"Pollo Ciborg se encuentra en una esquina y no parece que la seguridad de la "
+"estación vaya a llegar a tiempo. ¿Qué hacer?"
 
 #: dat/events/minerva/altercation2.lua:67
 msgid "Try to intervene"
@@ -33402,14 +33402,14 @@ msgstr "Esperar"
 
 #: dat/events/minerva/altercation2.lua:72
 msgid "You approach the chicken and thug and try to mediate."
-msgstr "Te acercas a la gallina y al matón e intentas intermediar."
+msgstr "Te acercas al pollo y al matón e intentas mediar."
 
 #: dat/events/minerva/altercation2.lua:73
 msgid ""
 "As the thug is distracted by you, Cyborg Chicken suddenly sprints and runs "
 "past you. Did it wink at you?"
 msgstr ""
-"Mientras el matón se distrae contigo, la Gallina Cyborg corre de repente y "
+"Mientras el matón se distrae contigo, el pollo Cyborg corre de repente y "
 "pasa por delante de ti. ¿Te ha guiñado el ojo?"
 
 #: dat/events/minerva/altercation2.lua:77
@@ -33417,7 +33417,7 @@ msgid ""
 "\"Not such a tough chicken anymore, huh? Going to beat you so bad we'll have "
 "chicken nuggets for lunch!\""
 msgstr ""
-"\"Ya no es una gallina tan dura, ¿eh? ¡Te voy a golpear tanto que comeremos "
+"\"Ya no eres un pollo tan duro, ¿eh? ¡Te voy a golpear tanto que comeremos "
 "nuggets de pollo de almuerzo!\""
 
 #: dat/events/minerva/altercation2.lua:78
@@ -33425,11 +33425,16 @@ msgid ""
 "Cyborg Chicken blinks twice then sprints through the thugs legs and runs "
 "past you. The thug tries to chase but ends up bumping into you."
 msgstr ""
+"Pollo Cyborg parpadea dos veces y corre a través de las piernas de los "
+"matones y pasa por delante de ti. El matón intenta perseguirlo pero acaba "
+"chocando contigo."
 
 #: dat/events/minerva/altercation2.lua:92
 msgid ""
 "\"You let the chicken get away punk! How are you going to make up for this!\""
 msgstr ""
+"\"¡Dejaste que el pollo se escapara gamberro! ¿Cómo vas a resarcirte de esto?"
+"\""
 
 #: dat/events/minerva/altercation2.lua:93
 msgid ""
@@ -33437,10 +33442,13 @@ msgid ""
 "thug away. As you go back to what you were doing, you see cyborg chicken in "
 "the distance who seems to wink at you. What was that all about?"
 msgstr ""
+"Ganas tiempo y al final llega la seguridad de la estación escoltando al "
+"matón lejos. Mientras vuelves a lo que estabas haciendo, ves a lo lejos al "
+"pollo cyborg que parece guiñarte un ojo. ¿Qué ha sido eso?"
 
 #: dat/events/minerva/altercation2.lua:97
 msgid "You sort of helped cyborg chicken get away from a thug."
-msgstr ""
+msgstr "Ayudaste al pollo cyborg a escapar de un matón."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -33467,12 +33475,17 @@ msgid ""
 "blasting music and flashing lights before triumphantly announcing to "
 "everyone in the vicinity:"
 msgstr ""
+"Muestras el boleto ganador al terminal más cercano. De repente empieza a "
+"sonar música y a parpadear las luces antes de anunciar triunfalmente a todos "
+"los que están cerca:"
 
 #: dat/events/minerva/chicken_rendezvous.lua:35
 msgid ""
 "\"CONGRATULATIONS MISTER HARPER BOWDOIN ON WINNING THE EXCLUSIVE STAY AT THE "
 "MINERVA SPA.\""
 msgstr ""
+"\"ENHORABUENA, SEÑOR HARPER BOWDOIN, POR GANAR LA ESTANCIA EXCLUSIVA EN EL "
+"BALNEARIO DE MINERVA.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:36
 msgid ""
@@ -33481,6 +33494,10 @@ msgid ""
 "the same gaudy decorations and similar patrons. You wonder if you will be "
 "able to make it back to where you came from."
 msgstr ""
+"Si solo la terminal pudiera ser más discreta... Sigues la terminal mientras "
+"te lleva hacia las instalaciones del balneario. Todas las salas por las que "
+"pasas parecen tener la misma decoración llamativa y clientes similares. Te "
+"preguntas si serás capaz de volver al lugar de donde viniste."
 
 #: dat/events/minerva/chicken_rendezvous.lua:37
 msgid ""
@@ -33489,6 +33506,10 @@ msgid ""
 "\"I BELIEVE YOU WILL BE VERY IMPRESSED WITH THE ACCOMMODATIONS AT THE SPA. "
 "THE RENOVATIONS TOOK ALMOST A CYCLE AND IT IS MORE BEAUTIFUL THAN EVER.\""
 msgstr ""
+"El terminal se desliza por el laberinto que es la estación Minerva mientras "
+"su cabeza gira hacia atrás para dirigirse a tu persona.\n"
+"\"CREO QUE ESTARÁ MUY IMPRESIONADO CON LAS INSTALACIONES DEL BALNEARIO. LAS "
+"RENOVACIONES HAN DURADO CASI UN CICLO Y ESTÁ MÁS BONITO QUE NUNCA.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:39
 msgid ""
@@ -33497,12 +33518,19 @@ msgid ""
 "THE ZA'LEK AND SHOULD EVEN SURPASS THE ANTI-AGING PROPERTIES OF THE SOROMID "
 "SKIN LEECHES, WITHOUT EVEN CLOUDING THE WATER.\""
 msgstr ""
+"\"HOY EL AGUA ESTÁ INFUNDIDA CON NANOBOTS ESPECIALIZADOS EN EL "
+"ANTIENVEJECIMIENTO, DESPUÉS DE UN CHAPUZÓN PARECERÁS MÁS JOVEN. ESTOS HAN "
+"SIDO DESARROLLADOS POR LOS ZA'LEK Y DEBERÍAN INCLUSO SUPERAR LAS PROPIEDADES "
+"ANTIENVEJECIMIENTO DE LAS SANGUIJUELAS DE PIEL SOROMIDA, SIN SIQUIERA "
+"ENTURBIAR EL AGUA.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:40
 msgid ""
 "As you walk, you feel that the surrounding decorations are starting to get "
 "fancier, you must be nearing the VIP area."
 msgstr ""
+"Mientras caminas, notas que la decoración de los alrededores empieza a ser "
+"más elegante, debes estar acercándote a la zona VIP."
 
 #: dat/events/minerva/chicken_rendezvous.lua:41
 msgid ""
@@ -33510,6 +33538,9 @@ msgid ""
 "HIS CYBORG IMPLEMENTS ARE ALL WATER-PROOF UNLIKE MY BODY. MAKE SURE TO MAKE "
 "MOST OF THIS ONCE IN A LIFETIME OPPORTUNITY.\""
 msgstr ""
+"\"ADEMÁS, EL POLLO CYBORG SE TE UNIRÁ EN EL BALNEARIO. NO TE PREOCUPES, SUS "
+"IMPLEMENTOS CYBORG SON TODOS A PRUEBA DE AGUA, A DIFERENCIA DE MI CUERPO. "
+"ASEGÚRATE DE APROVECHAR ESTA OPORTUNIDAD ÚNICA EN LA VIDA.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:42
 msgid ""
@@ -33517,6 +33548,9 @@ msgid ""
 "be diamonds on a gold enamel.\n"
 "\"WE HAVE REACHED OUR DESTINATION. PLEASE ENJOY YOURSELF.\""
 msgstr ""
+"El terminal deja de moverse frente a una esclusa con incrustaciones de lo "
+"que parecen ser diamantes sobre un esmalte dorado.\n"
+"\"HEMOS LLEGADO A NUESTRO DESTINO. POR FAVOR, DISFRUTE.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:45
 msgid ""
@@ -33524,6 +33558,9 @@ msgid ""
 "of the changing rooms. You get rid of your clothes, take a small towel, and "
 "proceed to enter the spa area."
 msgstr ""
+"La esclusa se abre cuando te acercas a ella y te encuentras en la entrada de "
+"los vestuarios. Te deshaces de tu ropa, coges una pequeña toalla y procedes "
+"a entrar en la zona del balneario."
 
 #. Start the fancy spa scene!
 #: dat/events/minerva/chicken_rendezvous.lua:63
@@ -33533,6 +33570,10 @@ msgid ""
 "alone. It smells like some sort of mix between lemons and assorted herbs, "
 "but is rather quite pleasant."
 msgstr ""
+"Al entrar en el balneario, te golpea una ola de vapor, probablemente "
+"infundido con los nanobots mencionados por la terminal, y te encuentras "
+"solo. Huele a una especie de mezcla de limones y hierbas variadas, pero es "
+"bastante agradable."
 
 #: dat/events/minerva/chicken_rendezvous.lua:64
 msgid ""
@@ -33541,6 +33582,11 @@ msgid ""
 "standards of volcanic world natural springs, it is very impressive when you "
 "consider that this installation is located inside a space station."
 msgstr ""
+"En la espesa niebla se pueden distinguir varias piscinas de gran tamaño, y "
+"hay un sonido de fondo constante de agua corriente. Aunque no es demasiado "
+"lujoso para los estándares de los manantiales naturales del mundo volcánico, "
+"es muy impresionante si se tiene en cuenta que esta instalación se encuentra "
+"dentro de una estación espacial."
 
 #. Special case doing Minerva Pirate mission
 #: dat/events/minerva/chicken_rendezvous.lua:68
@@ -33549,6 +33595,9 @@ msgid ""
 "to in a corner of the room so that it won't be noticed. That should make "
 "your current employer happy and get your work out of the way."
 msgstr ""
+"Antes de disfrutar, colocas el dispositivo de escucha que debías en un "
+"rincón de la habitación para que no se note. Eso debería contentar a tu "
+"actual empleador y quitarte el trabajo de encima."
 
 #: dat/events/minerva/chicken_rendezvous.lua:71
 msgid ""
@@ -33559,6 +33608,12 @@ msgid ""
 "accumulates by space travel, probably obtained on all sorts of different "
 "planets."
 msgstr ""
+"Hay un cartel con instrucciones sobre cómo bañarse correctamente. Parece que "
+"primero hay que lavarse el cuerpo en pequeñas cabinas individuales antes de "
+"meterse en las bañeras grandes. Procedes a lavarte el cuerpo a fondo, "
+"deshaciéndote de toda la suciedad de tus viajes. Es sorprendente la cantidad "
+"de suciedad que se acumula en los viajes espaciales, probablemente obtenida "
+"en todo tipo de planetas diferentes."
 
 #: dat/events/minerva/chicken_rendezvous.lua:72
 msgid ""
@@ -33566,6 +33621,10 @@ msgid ""
 "pore of your skin in an incredibly relaxing and soothing manner. You melt "
 "into the water and let it all flow in. You should come here more often."
 msgstr ""
+"Entras en el primer baño que encuentras. El agua caliente parece filtrarse "
+"en cada poro de tu piel de una manera increíblemente relajante y calmante. "
+"Te fundes en el agua y dejas que todo fluya. Deberías venir aquí más a "
+"menudo."
 
 #: dat/events/minerva/chicken_rendezvous.lua:73
 msgid ""
@@ -33575,24 +33634,35 @@ msgid ""
 "question why the management decided to include Cyborg Chicken into this "
 "renovation event deal."
 msgstr ""
+"Mientras te pierdes en el espacio y el tiempo, te devuelve a la realidad un "
+"leve sonido de chapoteo. Ah vale, se suponía que la Pollo Cyborg te "
+"acompañaría en el balneario. Teniendo en cuenta lo estupendo que es el spa, "
+"no puedes evitar preguntarte por qué la dirección decidió incluir a la Pollo "
+"Cyborg en este acuerdo de evento de renovación."
 
 #: dat/events/minerva/chicken_rendezvous.lua:74
 msgid ""
 "The splashing sound stops, and you hear the pit-pat sound of chicken feet "
 "approaching you."
 msgstr ""
+"El sonido del chapoteo se detiene, y escuchas el sonido de las patas del "
+"pollo acercándose a ti."
 
 #: dat/events/minerva/chicken_rendezvous.lua:78
 msgid ""
 "Cyborg Chicken comes up to the pool you are in and tests the water by "
 "sticking a foot in. Seeming satisfied, it jumps in and starts floating."
 msgstr ""
+"El Pollo Cyborg se acerca a la piscina en la que estás y prueba el agua "
+"metiendo una pata. Como parece satisfecha, salta al agua y empieza a flotar."
 
 #: dat/events/minerva/chicken_rendezvous.lua:79
 msgid ""
 "Concentrating on the cathartic spa water, you let your thoughts wander, "
 "while Cyborg Chicken floats around lazily."
 msgstr ""
+"Concentrado en el agua catártica del balneario, dejas que tus pensamientos "
+"vaguen, mientras el Pollo Cyborg flota perezosamente."
 
 #: dat/events/minerva/chicken_rendezvous.lua:82
 msgid ""
@@ -33600,6 +33670,9 @@ msgid ""
 "father? What is the shady character's objective? It seems like there are "
 "many loose ends at Minerva station."
 msgstr ""
+"¿Hay realmente un topo en la estación? ¿Qué le pudo pasar al padre de "
+"Maikki? ¿Cuál es el objetivo del personaje sospechoso? Parece que hay muchos "
+"cabos sueltos en la estación Minerva."
 
 #. else -- TODO case other missions when implemented
 #: dat/events/minerva/chicken_rendezvous.lua:86
@@ -33608,28 +33681,33 @@ msgid ""
 "a spa with a chicken, that happens to be a cyborg. This doesn't seem like is "
 "something that happens very often."
 msgstr ""
+"Al final sales de tu estupor pensativo y recuerdas que estás en un balneario "
+"con un pollo, que resulta ser un cyborg. Esto no parece ser algo que ocurra "
+"muy a menudo."
 
 #: dat/events/minerva/chicken_rendezvous.lua:88
 msgid "Squawk at the chicken"
-msgstr ""
+msgstr "Graznar a la gallina"
 
 #: dat/events/minerva/chicken_rendezvous.lua:89
 msgid "\"Yo chicken!\""
-msgstr ""
+msgstr "\"¡Eh pollo!\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:92
 msgid "Cyborg Chicken stares at you intensely."
-msgstr ""
+msgstr "Pollo Cyborg te mira intensamente."
 
 #: dat/events/minerva/chicken_rendezvous.lua:93
 msgid ""
 "You once again wonder about what the entire point of swimming with a chicken "
 "is, even if it is a cyborg one."
 msgstr ""
+"Una vez más te preguntas qué sentido tiene nadar con un pollo, aunque sea "
+"cibernético."
 
 #: dat/events/minerva/chicken_rendezvous.lua:94
 msgid "They still are staring at you with a creepy fixation."
-msgstr ""
+msgstr "Sigue mirándote con una fijación espeluznante."
 
 #: dat/events/minerva/chicken_rendezvous.lua:95
 msgid ""
@@ -33637,10 +33715,13 @@ msgid ""
 "chicken, you hear a small faint sound come out of it. However, you can't "
 "make out what the sound was."
 msgstr ""
+"Finalmente, después de lo que parece una eternidad de estar mirando "
+"fijamente a un pollo, oyes un pequeño y débil sonido que sale de él. Sin "
+"embargo, no puedes distinguir de qué sonido se trata."
 
 #: dat/events/minerva/chicken_rendezvous.lua:97
 msgid "Cyborg Duck?"
-msgstr ""
+msgstr "¿Pato Cyborg?"
 
 #: dat/events/minerva/chicken_rendezvous.lua:98
 msgid ""
@@ -33649,18 +33730,23 @@ msgid ""
 "\"Actually, I'm not a chicken: I'm a duck. Well, genetically speaking, "
 "mostly a duck.\""
 msgstr ""
+"Te mira directamente a los ojos y empiezan a hablar, poco a poco, cada vez "
+"más fuerte.\n"
+"\"En realidad, no soy un pollo: Soy un pato. Bueno, genéticamente hablando, "
+"casi un pato.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:102
 #: dat/missions/minerva/kex4.lua:158 dat/missions/minerva/kex5.lua:521
 #: dat/missions/minerva/kex5.lua:537 dat/missions/minerva/kex5.lua:564
 #: dat/missions/minerva/kex5.lua:607 dat/missions/minerva/kex5.lua:662
 #: dat/missions/minerva/kex5.lua:687
+#, fuzzy
 msgid "…"
-msgstr ""
+msgstr "…"
 
 #: dat/events/minerva/chicken_rendezvous.lua:103
 msgid "\"A duck?\""
-msgstr ""
+msgstr "\"¿Un pato?\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:108
 msgid ""
@@ -33670,26 +33756,36 @@ msgid ""
 "for a living? Oh wait, I'm a damn male.\"\n"
 "They continue rambling furiously."
 msgstr ""
+"\"¡Un maldito pato! Con esta estúpida excusa de implante cibernético que no "
+"puede hacer una mierda. ¿Qué demonios se supone que debo hacer como pato? ¿"
+"Cagar en el suelo? ¿Comer comida para pájaros? ¿Qué clase de vida es esa? ¿"
+"Tal vez pueda sacar huevos y venderlos para vivir? Oh, espera, soy un "
+"maldito macho\".\n"
+"Continúa divagando furiosamente."
 
 #: dat/events/minerva/chicken_rendezvous.lua:111
 msgid "\"Are you okay?…\""
-msgstr ""
+msgstr "\"¿Estás bien?...\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:112
 msgid "\"Quack\""
-msgstr ""
+msgstr "\"Cuac\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:115
 msgid ""
 "\"Do I look like I'm bloody OK? Stuck in the middle of no where as a bloody "
 "duck!\""
 msgstr ""
+"\"¿Te parece que estoy bien? ¡Atrapado en medio de la nada como un maldito "
+"pato!\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:118
 msgid ""
 "\"Bloody hell! What did I deserve to get mocked in a space station in the "
 "middle of no where!\""
 msgstr ""
+"\"¡Maldita sea! ¡Yo no me merezco que se burlen de mí en una estación "
+"espacial en medio de la nada!\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:121
 msgid ""
@@ -33698,6 +33794,10 @@ msgid ""
 "lover or whatever with a ton of credits, you're going to end up broke crying "
 "in the toilet stall. Bloody who do they think they are.\""
 msgstr ""
+"\"Obligado a servir cartas de blackjack todo el día a idiotas que creen que "
+"pueden hacerse ricos en un juego amañado. No, no van a sorprender a su "
+"cónyuge o amante o lo que sea con una tonelada de créditos, van a acabar "
+"arruinados llorando en el retrete. Maldita sea, ¿quiénes se creen que son?.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:122
 msgid ""
@@ -33705,20 +33805,25 @@ msgid ""
 "lit up with neon lights that attracts idiots as surely as moths to flame. "
 "Whatever happened to me, Kex, intrepid explorer of the nebula…\""
 msgstr ""
+"\"¿Es esto lo que va a ser de mí? La maldita atracción de una estación "
+"perversa iluminada con luces de neón que atrae a los idiotas con tanta "
+"seguridad como las polillas a la llama. Lo que sea que me pasó, Kex, "
+"explorador intrépido de la nebulosa...\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:124
 msgid "\"Kex…!\""
-msgstr ""
+msgstr "\"¡Kex…!\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:125
 msgid "\"Intrepid explorer…?\""
-msgstr ""
+msgstr "\"¿Explorador intrépido...?\""
 
 #. Orangish
 #: dat/events/minerva/chicken_rendezvous.lua:131
 #: dat/scripts/common/minerva.lua:18 dat/scripts/common/minerva.lua:101
+#, fuzzy
 msgid "Kex"
-msgstr ""
+msgstr "Kex"
 
 #: dat/events/minerva/chicken_rendezvous.lua:132
 msgid ""
@@ -33727,6 +33832,10 @@ msgid ""
 "\"You look like a good kid, and I'm bloody fed up with everything to give a "
 "shit anymore.\""
 msgstr ""
+"\"Sí, el único. Supongo que quieres escuchar la historia completa\".\n"
+"Hace un profundo suspiro.\n"
+"\"Pareces un buen chico, y estoy jodidamente harto de todo para que me siga "
+"importando una mierda.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:135
 msgid ""
@@ -33736,6 +33845,11 @@ msgid ""
 "\"You see, I was lucky enough to not get caught in the Incident, although "
 "most of my friends and family were caught up in it.\""
 msgstr ""
+"\"Soy Kex McPherson... tacha eso... más bien era Kex McPherson antes de que "
+"me convirtieran en esta payasada. Valiente explorador de la nebulosa.\"\n"
+"Sus ojos se vuelven un poco llorosos cuando empieza a recordar el pasado.\n"
+"\"Verás, tuve la suerte de no quedar atrapado en el Incidente, aunque la "
+"mayoría de mis amigos y familiares quedaron atrapados en él.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:138
 msgid ""
@@ -33745,6 +33859,11 @@ msgid ""
 "sure the world would be a better place for her. You know, like not repeating "
 "the mistakes of the past, and figure out what went wrong.\""
 msgstr ""
+"\"Sabía que no podía quedarme quieto y decidí ver si podía encontrar algo "
+"sobre lo ocurrido, alguna pista o prácticamente cualquier cosa. Era joven e "
+"ingenuo, mi hija acababa de nacer y quería asegurarme de que el mundo fuera "
+"un lugar mejor para ella. Ya sabes, como no repetir los errores del pasado, "
+"y averiguar qué salió mal.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:139
 msgid ""
@@ -33762,6 +33881,10 @@ msgid ""
 "parts of civilian vessels, but sometimes we found really weird shit, you "
 "know? Stuff that we had no idea where it came from.\""
 msgstr ""
+"\"Es algo horrible de ver, pero tuve cuidado y nunca lo pillé. Traíamos "
+"muchos artefactos, algunos de los cuales podíamos distinguir, como partes de "
+"naves civiles, pero a veces encontrábamos cosas muy raras, ¿sabes? Cosas que "
+"no teníamos ni idea de dónde venían.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:141
 msgid ""
@@ -33771,6 +33894,11 @@ msgid ""
 "paid the bills. Sometimes life doesn't really give you options, you just "
 "have to make do.\""
 msgstr ""
+"\"Todavía tenía que ganarme la vida, y vendía muchos de esos artefactos a "
+"los Za'lek. Compraban casi cualquier cosa. No tengo ni idea de qué demonios "
+"hacían con ellos, pero seguía teniendo que atender a mi mujer y a mi hija, y "
+"eso pagaba las facturas. A veces la vida no te da opciones, tu tienes que "
+"hacerlas.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:142
 msgid ""
@@ -33780,6 +33908,11 @@ msgid ""
 "new reality much before that station was up and running. I miss those days, "
 "the good old times.\""
 msgstr ""
+"\"Mi primera compañera Mireia Sibeko y yo pasábamos la mayor parte del día "
+"viajando dentro y fuera de la nebulosa. Una vez se instaló la estación "
+"Cerbero en Doeston, fue mucho más fácil hacer cosas, pero ya estábamos "
+"explorando la nueva realidad mucho antes de que esa estación estuviera en "
+"funcionamiento. Echo de menos aquellos días, los buenos tiempos.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:143
 msgid ""
@@ -33789,6 +33922,11 @@ msgid ""
 "really have much memory of all that traumatic experience. You can't really "
 "expect to remember much when you are blacking out from pure agony.\""
 msgstr ""
+"\"Un día, no recuerdo qué pasó, pero al parecer nos vimos envueltos en un "
+"accidente o algo así. Todo se oscureció, y cuando me desperté, estaba en el "
+"laboratorio de ese bastardo enfermo siendo descuartizado y reconstruido. "
+"Realmente no tengo muchos recuerdos de toda esa experiencia traumática. No "
+"puedes esperar recordar mucho cuando estás desmayado de pura agonía.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:144
 msgid ""
@@ -33797,6 +33935,10 @@ msgid ""
 "monstrosity. I'm a bloody fusion of hell knows what poultry and horrible "
 "Za'lek technology.\""
 msgstr ""
+"\"Sin embargo, nunca olvidaré su maldito nombre. El tipo que me hizo esto, "
+"Strangelove, experimentó conmigo, torturándome, y me convirtió en esta "
+"monstruosidad. Soy una sangrienta fusión de sabe qué aves de corral y "
+"horrible tecnología Za'lek.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:145
 msgid ""
@@ -33806,6 +33948,11 @@ msgid ""
 "state. I'd rather have them think I died a great explorer.\"\n"
 "He looks depressed."
 msgstr ""
+"\"A veces los implantes empiezan a sonar muy fuerte en mi cabeza, y me "
+"desmayo del dolor... Nunca pedí esto. Estoy condenado a vivir mis días en "
+"soledad. No soporto pensar en que mi familia me vea en este lamentable "
+"estado. Prefiero que piensen que morí como un gran explorador.\"\n"
+"Parece deprimido."
 
 #: dat/events/minerva/chicken_rendezvous.lua:147
 msgid ""
@@ -33814,6 +33961,11 @@ msgid ""
 "feign stupidity to avoid any issues. Pretending I had some blackjack "
 "software or something also saved me from potentially worse fates.\""
 msgstr ""
+"\"Al parecer, el muy cabrón tenía alguna deuda pendiente o algo así, y me "
+"llevaron unos cretinos que me trajeron aquí como su mascota esclava. Pude "
+"fingir mi estupidez para evitar cualquier problema. Fingir que tenía un "
+"programa de blackjack o algo parecido también me salvó de destinos "
+"potencialmente peores.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:148
 msgid ""
@@ -33821,6 +33973,9 @@ msgid ""
 "\"\n"
 "He seems to be fidgety."
 msgstr ""
+"\"Y ahora estoy aquí, viendo cómo el tiempo retrocede, incapaz de hacer "
+"nada\".\n"
+"Parece estar inquieto."
 
 #: dat/events/minerva/chicken_rendezvous.lua:150
 msgid ""
@@ -33828,6 +33983,9 @@ msgid ""
 "away. I yearn for the stars. Maybe getting back out in space will make me "
 "forget all this mockery of an existence.\""
 msgstr ""
+"\"Sin embargo, estoy harto de esta mierda. Esto no es vivir, esto es "
+"pudrirse. Anhelo las estrellas. Quizá volver al espacio me haga olvidar toda "
+"esta burla de existencia.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:151
 msgid ""
@@ -33836,6 +33994,10 @@ msgid ""
 "of what you have, lady fortune sometimes will deal you a bad one and there "
 "might not be any coming back.\""
 msgstr ""
+"Suspirando, te mira a los ojos.\n"
+"\"Sólo valoras lo que tienes cuando lo pierdes, chico. Debes aprovechar lo "
+"que tienes, la señora fortuna a veces te reparte una mala y puede que no "
+"haya vuelta atrás.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:153
 msgid ""
@@ -33844,6 +34006,10 @@ msgid ""
 "to a place I like to hang out at the station. It's quiet enough that nobody "
 "will give us trouble. You can find me there when I'm off my shifts.\""
 msgstr ""
+"\"Te diré algo. Hablar contigo ha sido terapéutico o algo así. Podríamos "
+"hablar algún día o algo. Toma, te daré la dirección de un lugar que me gusta "
+"frecuentar en la estación. Es lo suficientemente tranquilo como para que "
+"nadie nos dé problemas. Puedes encontrarme allí cuando salga de mis turnos.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:154
 msgid ""
@@ -33852,6 +34018,10 @@ msgid ""
 "You hear the sound of his duck feet grow fainter until it is quiet except "
 "for the sound of running water."
 msgstr ""
+"\"Hablando de turnos, creo que llego tarde al siguiente. Nos vemos.\"\n"
+"Kex se desliza fuera del agua, eriza su pluma y se desvanece en el vapor. Se "
+"oye el sonido de sus patas de pato, que se va haciendo más tenue hasta que "
+"todo queda en silencio, salvo el sonido del agua corriente."
 
 #: dat/events/minerva/chicken_rendezvous.lua:159
 msgid ""
@@ -33859,12 +34029,16 @@ msgid ""
 "unleashed to you by Kex. With nothing better to do, you once again melt into "
 "the thermal water and let your mind wander."
 msgstr ""
+"Te quedas una vez más solo en el balneario para desgranar toda la "
+"información que te ha soltado Kex. Sin nada mejor que hacer, vuelves a "
+"fundirte en el agua termal y dejas que tu mente divague."
 
 #: dat/events/minerva/chicken_rendezvous.lua:160
 msgid ""
 "Eventually you leave the baths, get changed back into your space clothes and "
 "head out towards the station."
 msgstr ""
+"Finalmente, sales de los baños, te pones tu ropa y te diriges a la estación."
 
 #. Go back to normal BG
 #: dat/events/minerva/chicken_rendezvous.lua:169
@@ -33873,12 +34047,17 @@ msgid ""
 "you feel younger from the anti-aging nanobots. Maybe you should get a spa "
 "for your ship…"
 msgstr ""
+"El ruido y las luces te devuelven de nuevo a la realidad con dureza. Al "
+"menos te sientes más joven gracias a los nanobots antienvejecimiento. Tal "
+"vez deberías conseguir un balneario para tu nave…"
 
 #: dat/events/minerva/chicken_rendezvous.lua:173
 msgid ""
 "You found out that Cyborg Chicken is Kex, Maikki's father. He told you of a "
 "spot you can meet up with him on Minerva station."
 msgstr ""
+"Has descubierto que Pollo Cyborg es Kex, el padre de Maikki. Te ha hablado "
+"de un lugar en el que puedes reunirte con él en la estación de Minerva."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -33903,6 +34082,8 @@ msgid ""
 "You are minding your own business when suddenly a big fanfare plays while "
 "the lights begin strobing."
 msgstr ""
+"Estás ocupándote de tus asuntos cuando, de repente, suena una gran fanfarria "
+"mientras las luces empiezan a parpadear."
 
 #: dat/events/minerva/spa_propaganda.lua:30
 msgid ""
@@ -33911,6 +34092,10 @@ msgid ""
 "\"WELCOME LADIES AND GENTLEMEN. ARE YOU HAVING A GOOD TIME?\"\n"
 "Some of the patrons cheer at the terminals."
 msgstr ""
+"Las terminales se encienden todes juntas y comienzan a emitir sus altavoces."
+"\n"
+"\"BIENVENIDOS DAMAS Y CABALLEROS. ¿SE ESTÁN DIVIRTIENDO?\"\n"
+"Algunos de los clientes aclaman a los terminales."
 
 #: dat/events/minerva/spa_propaganda.lua:33
 msgid ""
@@ -33920,6 +34105,12 @@ msgid ""
 "TO GIVE EVERYONE AN OPPORTUNITY TO BE ABLE TO ENJOY THE HEALING AND LIFE-"
 "EXTENDING PROPERTIES OF THE NEBULA-DUST INFUSED MINERAL WATER.\""
 msgstr ""
+"\"LA ESTACIÓN DE MINERVA SE ENORGULLECE DE ANUNCIAR UNA OPORTUNIDAD MUY "
+"ESPECIAL PARA TODOS. PARA CELEBRAR EL PRIMER CICLO DESDE LA INAUGURACIÓN DE "
+"LAS LUJOSAS AGUAS TERMALES NATURALES Y EL BALNEARIO DE ESTACIÓN MINERVA, NOS "
+"GUSTARÍA DAR A TODO EL MUNDO LA OPORTUNIDAD DE PODER DISFRUTAR DE LAS "
+"PROPIEDADES CURATIVAS Y DE PROLONGACIÓN DE LA VIDA DEL AGUA MINERAL "
+"INFUNDIDA CON POLVO DE NEBULOSA.\""
 
 #: dat/events/minerva/spa_propaganda.lua:34
 msgid ""
@@ -33927,6 +34118,10 @@ msgid ""
 "BUYS A TICKET WILL BE ENTERED TO SPEND AN UNFORGETTABLE NIGHT AT THE SPA, "
 "THE FAVOURITE OF THE EMPEROR'S THIRD PET IGUANA'S CARETAKER.\""
 msgstr ""
+"\"A LA MANERA TRADICIONAL DE MINERVA, HAREMOS UN SORTEO EN EL QUE TODOS LOS "
+"QUE COMPREN UN BOLETO PARTICIPARÁN PARA PASAR UNA NOCHE INOLVIDABLE EN EL "
+"BALNEARIO, EL FAVORITO DEL CUIDADOR DE LA TERCERA MASCOTA DEL EMPERADOR, LA "
+"IGUANA.\""
 
 #: dat/events/minerva/spa_propaganda.lua:35
 msgid ""
@@ -33935,6 +34130,10 @@ msgid ""
 "SPECIAL SURPRISE FOR YOU!\"\n"
 "The terminal pauses for effect."
 msgstr ""
+"\"Y SI CREES QUE ESO YA ES SUFICIENTEMENTE EMOCIONANTE, ¡PREPÁRATE PARA "
+"DEJAR CAER LA MANDÍBULA CON INCREDULIDAD! NO SÓLO PODRÁ DISFRUTAR DEL "
+"BALNEARIO, ¡TENEMOS UNA SORPRESA MUY ESPECIAL PARA USTED!\"\n"
+"El terminal hace una pausa para que surta efecto."
 
 #: dat/events/minerva/spa_propaganda.lua:37
 msgid ""
@@ -33943,12 +34142,17 @@ msgid ""
 "BACK WINNER OF THE 'I WOULD EAT THIS IF IT WEREN'T ILLEGAL' POPULAR HOLO-"
 "CAST SHOW.\""
 msgstr ""
+"\"PODRÁS PASAR TU TIEMPO EN EL BALNEARIO CON NUESTRO ÚNICO POLLO CYBORG, LA "
+"QUERIDA MASCOTA DE LA ESTACIÓN MINERVA, Y 3 VECES GANADOR DEL POPULAR "
+"PROGRAMA DE HOLOCAST 'ME COMERÍA ESTO SI NO FUERA ILEGAL'.\""
 
 #: dat/events/minerva/spa_propaganda.lua:38
 msgid ""
 "\"EVEN IF YOU HAVE BEEN TO THE SPA BEFORE, THIS IS A ONCE IN A LIFETIME "
 "OPPORTUNITY THAT MANY WOULD DIE FOR. I KNOW I WOULD.\""
 msgstr ""
+"\"INCLUSO SI YA HAS ESTADO EN EL BALNEARIO, ESTA ES UNA OPORTUNIDAD ÚNICA EN "
+"LA VIDA POR LA QUE MUCHOS MORIRÍAN. YO SÉ QUE LO HARÍA.\""
 
 #: dat/events/minerva/spa_propaganda.lua:39
 msgid ""
@@ -33956,20 +34160,29 @@ msgid ""
 "TERMINAL. PARTICIPATION COST IS #p100 MINERVA TOKENS#0. ONLY ONE TICKET PER "
 "PARTICIPANT. SOME TERMS AND CONDITIONS MAY APPLY.\""
 msgstr ""
+"\"PARA PARTICIPAR, SÓLO HAY QUE COMPRAR UN BILLETE EN CUALQUIER TERMINAL DE "
+"LA ESTACIÓN DE MINERVA. EL COSTE DE LA PARTICIPACIÓN ES DE #100 MINERVA "
+"TOKENS#0. SÓLO UN BILLETE POR PARTICIPANTE. PUEDEN APLICARSE ALGUNOS "
+"TÉRMINOS Y CONDICIONES.\""
 
 #: dat/events/minerva/spa_propaganda.lua:40
 msgid "\"AND REMEMBER, LIFE IS SHORT, SPEND IT AT MINERVA STATION.\""
-msgstr ""
+msgstr "\"Y RECUERDA, LA VIDA ES CORTA, PÁSALA EN LA ESTACIÓN MINERVA.\""
 
 #: dat/events/minerva/spa_propaganda.lua:41
 msgid "As if nothing happened, Minerva Station returns to normality."
 msgstr ""
+"Como si no hubiera pasado nada, la estación de Minerva vuelve a la "
+"normalidad."
 
 #: dat/events/minerva/spa_propaganda.lua:44
 msgid ""
 "Minerva station terminals announced an event where you can buy a ticket to "
 "enter a raffle. The winner can go to the spa with cyborg chicken."
 msgstr ""
+"Las terminales de la estación de Minerva han anunciado un evento en el que "
+"se puede comprar un boleto para participar en un sorteo. El ganador podrá ir "
+"al balneario con un pollo cyborg."
 
 #. One off event
 #.
@@ -33997,121 +34210,152 @@ msgstr ""
 #. Special
 #: dat/events/minerva/station.lua:49
 msgid "Patron"
-msgstr ""
+msgstr "Patrocinador"
 
 #: dat/events/minerva/station.lua:52
 msgid "A gambling patron enjoying their time at the station."
-msgstr ""
+msgstr "Un patrocinador del juego disfrutando de su tiempo en la estación."
 
 #: dat/events/minerva/station.lua:53
 msgid ""
 "A tourist looking a bit bewildered at all the noises and shiny lights all "
 "over."
 msgstr ""
+"Un turista que parece un poco desconcertado por todos los ruidos y luces "
+"brillantes que hay por todas partes."
 
 #: dat/events/minerva/station.lua:54
 msgid "A patron who seems down on their luck."
-msgstr ""
+msgstr "Un patrocinador que parece tener mala suerte."
 
 #: dat/events/minerva/station.lua:55
 msgid "A patron who looks exhilarated as if they won big today."
 msgstr ""
+"Un patrocinador que parece exultante, como si hoy hubiera ganado a lo grande."
 
 #: dat/events/minerva/station.lua:56
 msgid ""
 "A patron that looks like they have spend a lot of time at the station. There "
 "are clear dark circles under their eyes."
 msgstr ""
+"Un patrocinador que parece haber pasado mucho tiempo en la estación. Tiene "
+"unas claras ojeras."
 
 #: dat/events/minerva/station.lua:57
 msgid "A patron that looks strangely out of place."
-msgstr ""
+msgstr "Un patrocinador que parece extrañamente fuera de lugar."
 
 #: dat/events/minerva/station.lua:58
 msgid "A patron that fits in perfectly into the gambling station."
-msgstr ""
+msgstr "Un patrocinador que encaja perfectamente en la estación de juego."
 
 #: dat/events/minerva/station.lua:61
 msgid ""
 "\"This place is totally what I thought it would be. The lights, the sounds, "
 "the action! I feel like I'm in Heaven!\""
 msgstr ""
+"\"Este lugar es totalmente lo que pensé que sería. ¡Las luces, los sonidos, "
+"la acción! ¡Me siento como en el Cielo\"!"
 
 #: dat/events/minerva/station.lua:62
 msgid ""
 "\"It's incredible! Who would have thought to make money physical! These "
 "Minerva Tokens defy all logic!\""
 msgstr ""
+"\"¡Es increíble! ¡Quién hubiera pensado en hacer dinero físico! ¡Estas "
+"fichas de Minerva desafían toda lógica!\""
 
 #: dat/events/minerva/station.lua:66
 msgid " Wait, what? What do you mean they are sold out!?"
-msgstr ""
+msgstr " Espera, ¿qué? ¿Qué quieres decir con que se han agotado?"
 
 #: dat/events/minerva/station.lua:68
 msgid ""
 "\"I really have my eyes on the Fuzzy Dice available at the terminal. I "
 "always wanted to own a piece of history!{msg}\""
 msgstr ""
+"\"Le he echado el ojo a los Dados Borrosos disponibles en la terminal. ¡"
+"Siempre quise tener un pedazo de historia! {msg}\""
 
 #: dat/events/minerva/station.lua:69
 msgid ""
 "\"I played 20 hands of blackjack with that Cyborg Chicken. I may have lost "
 "them all, but that was worth every credit!\""
 msgstr ""
+"\"He jugado 20 manos de blackjack con ese Pollo Cyborg. ¡Puede que las haya "
+"perdido todas, pero ha valido la pena cada crédito!"
 
 #: dat/events/minerva/station.lua:70
 msgid ""
 "\"This place is great! I still have no idea how to play blackjack, but I "
 "just keep on playing again and again against that Cyborg Chicken.\""
 msgstr ""
+"\"¡Este lugar es genial! Todavía no tengo ni idea de cómo jugar al "
+"blackjack, pero sigo jugando una y otra vez contra ese Pollo Cyborg.\""
 
 #: dat/events/minerva/station.lua:75
 msgid ""
 "\"Critics of Minerva Station say that being able to acquire nice outfits "
 "here without needing licenses increases piracy. I think they are all lame!\""
 msgstr ""
+"\"Los críticos de la estación Minerva dicen que poder adquirir aquí bonitos "
+"complementos sin necesidad de licencias aumenta la piratería. ¡Yo creo que "
+"son todos unos lerdos!\""
 
 #: dat/events/minerva/station.lua:76
 msgid ""
 "\"I really want to go to the VIP hot springs they have, but I don't have the "
 "tokens. How does that even work in a space station?\""
 msgstr ""
+"\"Tengo muchas ganas de ir a las termas VIP que tienen, pero no tengo las "
+"fichas. ¿Cómo funciona eso en una estación espacial?\""
 
 #: dat/events/minerva/station.lua:77
 msgid ""
 "\"I hear you can do all sorts of crazy stuff here if you have enough tokens. "
 "Need… to… get… more…!\""
 msgstr ""
+"\"He oído que puedes hacer todo tipo de locuras aquí si tienes suficientes "
+"fichas. ¡Necesito... conseguir... más...!\""
 
 #: dat/events/minerva/station.lua:78
 msgid ""
 "\"I have never seen robots talk so roboty like the terminals here. That is "
 "so retro!\""
 msgstr ""
+"\"Nunca he visto a los robots hablar de forma tan robótica como los "
+"terminales de aquí. ¡Es tan retro!\""
 
 #: dat/events/minerva/station.lua:79
 msgid ""
 "\"I scrounged up my lifetime savings to get a ticket here, but I forgot to "
 "bring extra to gamble…\""
 msgstr ""
+"\"He reunido mis ahorros de toda la vida para conseguir un billete aquí, "
+"pero me olvidé de traer algo extra para apostar...\""
 
 #: dat/events/minerva/station.lua:80
 msgid ""
 "\"I gambled all my savings away… I'm going to get killed when I get back "
 "home…\""
 msgstr ""
+"\"Me he jugado todos mis ahorros... Me van a matar cuando vuelva a casa...\""
 
 #: dat/events/minerva/station.lua:81
 msgid ""
 "\"They say you shouldn't gamble more than you can afford to lose. I wish "
 "someone had told me that yesterday. I don't even own a ship anymore!\""
 msgstr ""
+"\"Dicen que no debes apostar más de lo que puedes permitirte perder. Ojalá "
+"alguien me hubiera dicho eso ayer. ¡Ya ni siquiera tengo una nave!\""
 
 #: dat/events/minerva/station.lua:82
 msgid ""
 "\"I like to play blackjack. I'm not addicted to gambling. I'm addicted to "
 "sitting in a semi-circle.\""
 msgstr ""
+"\"Me gusta jugar al blackjack. No soy adicto al juego. Soy adicto a sentarme "
+"en un semicírculo.\""
 
 #. Mitch Hedberg
 #: dat/events/minerva/station.lua:83
@@ -34119,16 +34363,20 @@ msgid ""
 "\"Gambling has brought our family together. We had to move to a smaller "
 "house.\""
 msgstr ""
+"\"El juego ha unido a nuestra familia. Tuvimos que mudarnos a una casa más "
+"pequeña.\""
 
 #. Tommy Cooper
 #: dat/events/minerva/station.lua:84
 msgid "\"You don’t gamble to win. You gamble so you can gamble the next day.\""
-msgstr ""
+msgstr "\"No se juega para ganar. Se juega para poder jugar al día siguiente.\""
 
 #. Bert Ambrose
 #: dat/events/minerva/station.lua:85
 msgid "\"A credit won is twice as sweet as a credit earned!\""
 msgstr ""
+"\"¡Un crédito ganado jugando es dos veces más dulce que un crédito ganado "
+"trabajando!\""
 
 #. Paul Newman (dollar -> credit)
 #: dat/events/minerva/station.lua:86
@@ -34136,43 +34384,50 @@ msgid ""
 "\"There is a very easy way to return from Minerva Station with a small "
 "fortune: come here with a large one!\""
 msgstr ""
+"\"Hay una forma muy fácil de volver de la Estación Minerva con una pequeña "
+"fortuna: ¡venir aquí con una grande!\""
 
 #. Jack Yelton (paraphrased)
 #: dat/events/minerva/station.lua:87
 msgid "\"Luck always seems to be against the ones who depends on it.\""
 msgstr ""
+"\"La suerte siempre parece estar en contra de los que dependen de ella.\""
 
 #. Create NPCs
 #: dat/events/minerva/station.lua:94
+#, fuzzy
 msgid "Blackjack"
-msgstr ""
+msgstr "Blackjack"
 
 #: dat/events/minerva/station.lua:94
 msgid ""
 "Seems to be one of the more popular card games where you can play blackjack "
 "against a \"cyborg chicken\"."
 msgstr ""
+"Parece ser uno de los juegos de cartas más populares porque puedes jugar al "
+"blackjack contra un \"pollo cyborg\"."
 
 #: dat/events/minerva/station.lua:95
 msgid "Chuck-a-luck"
-msgstr ""
+msgstr "Chuck-a-luck"
 
 #: dat/events/minerva/station.lua:95
 msgid "A fast-paced luck-based betting game using dice."
 msgstr ""
+"Un juego de apuestas de ritmo rápido basado en la suerte y que utiliza dados."
 
 #. Some conditional NPCs
 #: dat/events/minerva/station.lua:100
 msgid "You see Maikki enjoying a parfait."
-msgstr ""
+msgstr "Ves a Maikki disfrutando de un parfait."
 
 #: dat/events/minerva/station.lua:101
 msgid "You see Maikki talking on a transponder."
-msgstr ""
+msgstr "Ves a Maikki hablando por un transpondedor."
 
 #: dat/events/minerva/station.lua:102
 msgid "You see Maikki looking thoughtfully into the distance."
-msgstr ""
+msgstr "Ves a Maikki mirando pensativa en la distancia."
 
 #. Create random noise NPCs
 #. avoids duplicates
@@ -34190,7 +34445,7 @@ msgstr ""
 #. Doesn't seem to work however
 #: dat/events/minerva/station.lua:181
 msgid "Greeter"
-msgstr ""
+msgstr "Saludador"
 
 #: dat/events/minerva/station.lua:184
 msgid ""
