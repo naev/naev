@@ -656,7 +656,7 @@ static int gfxL_printfWrap( lua_State *L )
       lua_newtable(L);                 /* t, t */
       lua_pushlstring(L, &s[iter.l_begin], iter.l_end - iter.l_begin);  /* t, t, s */
       lua_rawseti(L,-2,1);             /* t, t */
-      lua_pushinteger(L,iter.l_width);/* t, t, n */
+      lua_pushinteger(L,iter.l_width); /* t, t, n */
       lua_rawseti(L,-2,2);             /* t, t */
       lua_rawseti(L,-2,linenum++);     /* t */
    }

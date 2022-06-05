@@ -519,8 +519,9 @@ typedef struct _linepos_t_ {
 
 /**
  * @brief Updates \p iter with the next line's information.
- * @param iter An iterator returned by \ref gl_printLineIteratorInit.
- * @return nonzero if there's a line.
+ *
+ *    @param iter An iterator returned by \ref gl_printLineIteratorInit.
+ *    @return nonzero if there's a line.
  */
 int gl_printLineIteratorNext( glPrintLineIterator* iter )
 {
