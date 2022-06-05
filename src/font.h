@@ -32,6 +32,8 @@ typedef struct glFontRestore_s {
  * @brief The state of a line iteration. This matches the process of rendering text into an on-screen box:
  * An empty string produces a zero-width line. Each regular, fitting character expands its line horizontally.
  * A newline or wrapping leads to vertical expansion.
+ * Word-wrapping happens at "line break opportunities" (defined by Unicode), or mid-word if there's no other way to fit in the width limit.
+ * The iterator honors the width limit if at all possible; the only exception is when a single character is enough to overflow it.
  * The layout calculation is iterative; one may for instance change the width limit between lines.
  * \see gl_printLineIteratorInit, gl_printLineIteratorNext.
  */

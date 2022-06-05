@@ -526,7 +526,7 @@ typedef struct _linepos_t_ {
 int gl_printLineIteratorNext( glPrintLineIterator* iter )
 {
    glFontStash *stsh = gl_fontGetStash( iter->ft_font );
-   int brk, can_break, can_fit;
+   int brk, can_break, can_fit, any_char_fit = 0, any_word_fit;
    struct LineBreakContext lbc;
 
    if (iter->dead)
@@ -550,6 +550,10 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
       brk = lb_process_next_char( &lbc, nextpos.ch );
       can_break = (brk == LINEBREAK_ALLOWBREAK && !iter->no_soft_breaks) || brk == LINEBREAK_MUSTBREAK;
       can_fit = (iter->width >= (int)round(nextpos.w));
+      any_word_fit = (iter->l_end != iter->l_begin);
+      /* Emergency situations: */
+      can_break |= !can_fit && !any_word_fit;
+      can_fit |= !any_char_fit;
 
       if (can_break && iswspace( pos.ch )) {
          iter->l_width = (int)round(pos.w);
@@ -560,16 +564,17 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
          iter->l_width = (int)round(nextpos.w);
          iter->l_end = iter->l_next = pos.i;
       }
-
-      if (!can_fit && iter->l_end == iter->l_begin) {
-         /* Case we weren't able to write any whole words. */
+      else if (!can_fit && !any_word_fit) {
          iter->l_width = (int)round(pos.w);
          iter->l_end = iter->l_next = pos.i;
+         u8_dec( iter->text, &iter->l_end );
+         u8_dec( iter->text, &iter->l_next );
       }
 
       if (!can_fit || brk == LINEBREAK_MUSTBREAK)
          return 1;
 
+      any_char_fit = 1;
       pos = nextpos;
    }
 
