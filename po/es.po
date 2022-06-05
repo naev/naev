@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-05-12 10:59+0900\n"
-"PO-Revision-Date: 2022-06-04 19:08+0000\n"
+"PO-Revision-Date: 2022-06-05 21:17+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
@@ -4605,7 +4605,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_sirian_border_systems.xml:2
 msgid "Map: Sirian Border Systems"
-msgstr "Sistemas Fronterizos de Sirio, Mapa"
+msgstr "Sistemas Fronterizos Sirio, Mapa"
 
 #: dat/outfits/maps/map_sirian_border_systems.xml:6
 msgid "This map contains the systems that lead to Sirius controlled space."
@@ -14234,8 +14234,8 @@ msgstr ""
 "destacamento regular estacionado aquí, que se asegura de que la ley y el "
 "orden se mantienen tan bien como se puede esperar razonablemente en Esker y "
 "sus sistemas vecinos. La estación Fyruse también actúa como guardia "
-"fronteriza del espacio fronterizo, aunque nadie cree realmente en la "
-"necesidad de ello."
+"fronteriza del espacio Frontera, aunque nadie cree realmente en la necesidad "
+"de ello."
 
 #: dat/spob/fyruse_station.xml:25
 msgid ""
@@ -36893,11 +36893,11 @@ msgstr ""
 #. Special
 #: dat/events/minerva/station.lua:49
 msgid "Patron"
-msgstr "Patrocinador"
+msgstr "Cliente"
 
 #: dat/events/minerva/station.lua:52
 msgid "A gambling patron enjoying their time at the station."
-msgstr "Un patrocinador del juego disfrutando de su tiempo en la estación."
+msgstr "Un cliente del juego disfrutando de su tiempo en la estación."
 
 #: dat/events/minerva/station.lua:53
 msgid ""
@@ -36909,28 +36909,28 @@ msgstr ""
 
 #: dat/events/minerva/station.lua:54
 msgid "A patron who seems down on their luck."
-msgstr "Un patrocinador que parece tener mala suerte."
+msgstr "Un cliente que parece tener mala suerte."
 
 #: dat/events/minerva/station.lua:55
 msgid "A patron who looks exhilarated as if they won big today."
 msgstr ""
-"Un patrocinador que parece exultante, como si hoy hubiera ganado a lo grande."
+"Un cliente que parece exultante, como si hoy hubiera ganado a lo grande."
 
 #: dat/events/minerva/station.lua:56
 msgid ""
 "A patron that looks like they have spend a lot of time at the station. There "
 "are clear dark circles under their eyes."
 msgstr ""
-"Un patrocinador que parece haber pasado mucho tiempo en la estación. Tiene "
-"unas claras ojeras."
+"Un cliente que parece haber pasado mucho tiempo en la estación. Tiene unas "
+"claras ojeras."
 
 #: dat/events/minerva/station.lua:57
 msgid "A patron that looks strangely out of place."
-msgstr "Un patrocinador que parece extrañamente fuera de lugar."
+msgstr "Un cliente que parece extrañamente fuera de lugar."
 
 #: dat/events/minerva/station.lua:58
 msgid "A patron that fits in perfectly into the gambling station."
-msgstr "Un patrocinador que encaja perfectamente en la estación de juego."
+msgstr "Un cliente que encaja perfectamente en la estación de juego."
 
 #: dat/events/minerva/station.lua:61
 msgid ""
@@ -37137,6 +37137,10 @@ msgid ""
 "is saying over all the background noise created by other patrons and "
 "gambling machines, but you try to make it out as best as you can."
 msgstr ""
+"Nada más entrar en el bar del puerto espacial, un individuo pulcramente "
+"vestido se acerca a ti y te ofrece una bebida de cortesía. Es difícil "
+"entender lo que dice con el ruido de fondo de otros clientes y de las "
+"máquinas de juego, pero intentas entenderlo lo mejor posible."
 
 #: dat/events/minerva/station.lua:185
 msgid ""
@@ -37144,6 +37148,10 @@ msgid ""
 "here. As you enjoy your complementary drink, let me briefly explain to you "
 "how this wonderful place works. It is all very exciting!\""
 msgstr ""
+"\"¡Bienvenido al complejo de la Estación Minerva! Parece que es su primera "
+"vez aquí. Mientras disfruta de su bebida complementaria, permítame "
+"explicarle brevemente cómo funciona este maravilloso lugar. Es todo muy "
+"emocionante.\""
 
 #: dat/events/minerva/station.lua:186
 msgid ""
@@ -37155,6 +37163,14 @@ msgid ""
 "of our resort. To start out your fun Minerva Adventure®, please enjoy these "
 "10 complementary Minerva Tokens!\""
 msgstr ""
+"\"La moneda que utilizamos en esta estación son las Fichas Minerva. A "
+"diferencia de los créditos, ¡son físicos y muy bonitos! No puedes comprar "
+"Fichas Minerva directamente, sin embargo, participando y apostando créditos "
+"en los diversos juegos finos disponibles, puedes obtener Fichas Minerva. "
+"Cuando tengas suficientes Fichas Minerva, podrás comprar fabulosos premios y "
+"disfrutar de zonas más exclusivas de nuestro complejo. Para empezar tu "
+"divertida Aventura Minerva®, ¡disfruta de estas 10 Fichas Minerva "
+"complementarias!\""
 
 #: dat/events/minerva/station.lua:187
 msgid ""
@@ -37163,27 +37179,32 @@ msgid ""
 "our universe-famous Cyborg Chicken at the blackjack table, and always "
 "remember, 'life is short, spend it at Minerva Station'®!\""
 msgstr ""
+"\"Si desea más información o quiere consultar su saldo. Por favor, utilice "
+"los terminales situados en toda la estación. Te recomiendo encarecidamente "
+"que eches un vistazo a nuestro universalmente conocido Pollo Cyborg en la "
+"mesa de blackjack, y recuerda siempre, ¡'la vida es corta, ¡gástala en la "
+"Estación Minerva'®!\""
 
 #. Have to remove
 #: dat/events/minerva/station.lua:197
 msgid " TODAY MIGHT BE YOUR LUCKY DAY."
-msgstr ""
+msgstr " HOY PUEDE SER TU DÍA DE SUERTE."
 
 #: dat/events/minerva/station.lua:198
 msgid " THIS IS SO EXCITING."
-msgstr ""
+msgstr " ESTO ES TAN EMOCIONANTE."
 
 #: dat/events/minerva/station.lua:199
 msgid " YOU SEEM LIKE YOU MIGHT ENJOY A GAME OF BLACKJACK."
-msgstr ""
+msgstr " PARECE QUE PODRÍAS DISFRUTAR DE UNA PARTIDA DE BLACKJACK."
 
 #: dat/events/minerva/station.lua:200
 msgid " FORTUNE FAVOURS THE PERSISTENT."
-msgstr ""
+msgstr " LA FORTUNA FAVORECE A LOS PERSISTENTES."
 
 #: dat/events/minerva/station.lua:201
 msgid " LIFE IS SHORT, SPEND IT AT MINERVA STATION."
-msgstr ""
+msgstr " LA VIDA ES CORTA, PÁSALA EN LA ESTACIÓN MINERVA."
 
 #: dat/events/minerva/station.lua:209
 msgid ""
@@ -37195,29 +37216,37 @@ msgid_plural ""
 "\n"
 "WHAT DO YOU WISH TO DO TODAY?\""
 msgstr[0] ""
+"\"CLIENTE VALORADO, TIENES #p{n} FICHA DE MINERVA#0.{msg}\n"
+"\n"
+"¿QUÉ DESEAS HACER HOY?\""
 msgstr[1] ""
+"\"VALORADO CLIENTE, TIENES #p{n} FICHAS DE MINERVA#0.{msg}\n"
+"\n"
+"¿QUÉ DESEAS HACER HOY?\""
 
 #: dat/events/minerva/station.lua:218 dat/events/minerva/station.lua:230
 msgid "Trade-in"
-msgstr ""
+msgstr "Intercambiar"
 
 #: dat/events/minerva/station.lua:222
 msgid ""
 "\"I AM PROGRAMMED TO EXPLAIN ABOUT THE WONDERFUL MINERVA STATION GAMBLING "
 "FACILITIES. WHAT WOULD YOU LIKE TO KNOW ABOUT?\""
 msgstr ""
+"\"ESTOY PROGRAMADO PARA EXPLICARLE SOBRE LAS MARAVILLOSAS INSTALACIONES DE "
+"JUEGO DE LA ESTACIÓN DE MINERVA. ¿QUÉ LE GUSTARÍA SABER?\""
 
 #: dat/events/minerva/station.lua:225
 msgid "\"WHAT ELSE WOULD YOU LIKE TO KNOW?\""
-msgstr ""
+msgstr "\"¿QUÉ MÁS QUIERES SABER?\""
 
 #: dat/events/minerva/station.lua:228
 msgid "Station"
-msgstr ""
+msgstr "Estación"
 
 #: dat/events/minerva/station.lua:229
 msgid "Gambling"
-msgstr ""
+msgstr "Juegos de Azar"
 
 #. Don't remove or it'll mess cargo
 #. Teleport the player to the Crimson Gauntlet and hide the rest of the universe
@@ -37236,7 +37265,7 @@ msgstr ""
 #. Main Characters
 #: dat/events/minerva/station.lua:231 dat/scripts/common/minerva.lua:11
 msgid "Cyborg Chicken"
-msgstr ""
+msgstr "Pollo Cyborg"
 
 #: dat/events/minerva/station.lua:235
 msgid ""
@@ -37245,6 +37274,10 @@ msgid ""
 "REST ASSURED THAT THERE IS LESS THAN A 2% OF CHANCE OF TOTAL DESTRUCTION OF "
 "THE STATION.\""
 msgstr ""
+"\"LA ESTACIÓN MINERVA ES EL MEJOR LUGAR PARA SENTARSE Y DISFRUTAR DE "
+"ACTIVIDADES DE JUEGO RELAJADAS. AUNQUE LA ZONA ESTÁ MUY DISPUTADA POR LOS "
+"ZA'LEK Y LOS DVAERED, TENGA LA SEGURIDAD DE QUE HAY MENOS DE UN 2% DE "
+"POSIBILIDADES DE DESTRUCCIÓN TOTAL DE LA ESTACIÓN.\""
 
 #: dat/events/minerva/station.lua:238
 msgid ""
@@ -37254,6 +37287,12 @@ msgid ""
 "POSSIBLE TO PLAY GAMES USING CREDITS TO OBTAIN MINERVA TOKENS THAT CAN BE "
 "TRADED IN FOR GOODS AND SERVICES ANY TERMINAL THROUGHOUT THE STATION.\""
 msgstr ""
+"\"MIENTRAS QUE EL JUEGO NO ESTÁ PERMITIDO EN LA MAYOR PARTE DEL IMPERIO, LA "
+"ESTACIÓN MINERVA PRESUME DE UN ESTATUS EXCLUSIVO GRACIAS AL DECRETO IMPERIAL "
+"289.78 ARTÍCULO 478 SECCIÓN 19 QUE PERMITE DISFRUTAR DEL JUEGO SIN "
+"RESTRICCIONES. ES POSIBLE JUGAR UTILIZANDO CRÉDITOS PARA OBTENER FICHAS "
+"MINERVA QUE PUEDEN CANJEARSE POR BIENES Y SERVICIOS EN CUALQUIER TERMINAL DE "
+"LA ESTACIÓN.\""
 
 #: dat/events/minerva/station.lua:241
 msgid ""
@@ -37263,6 +37302,11 @@ msgid ""
 "RESTRICTIONS. FURTHERMORE, THEY ALL HAVE 'I Got This Sucker at Minerva "
 "Station' ENGRAVED ON THEM.\""
 msgstr ""
+"\"ES POSIBLE INTERCAMBIAR FICHAS MINERVA POR BIENES Y SERVICIOS EN LAS "
+"TERMINALES DE TODA LA ESTACIÓN. GRACIAS AL DECRETO IMPERIAL 289.78 ARTÍCULO "
+"478 SECCIÓN 72, TODOS LOS INTERCAMBIOS NO ESTÁN SUJETOS A LAS RESTRICCIONES "
+"ESTÁNDAR DE LA LICENCIA IMPERIAL. ADEMÁS, TODAS TIENEN GRABADO 'Conseguí "
+"esta ficha en la Estación Minerva'.\""
 
 #: dat/events/minerva/station.lua:244
 msgid ""
@@ -37270,6 +37314,9 @@ msgid ""
 "UNIVERSE WILL YOU BE ABLE TO PLAY CARD GAMES WITH AN AI-ENHANCED CHICKEN "
 "CYBORG. IT IS A ONCE AND A LIFE-TIME CHANCE THAT YOU SHOULD NOT MISS.\""
 msgstr ""
+"\"EL POLLO CYBORG ES NUESTRO CROUPIER DE BLACKJACK MÁS POPULAR. EN NINGÚN "
+"OTRO LUGAR DEL UNIVERSO PODRÁS JUGAR A LAS CARTAS CON UN POLLO CYBORG CON "
+"UNA IA-MEJORADA. ES UNA OPORTUNIDAD ÚNICA EN LA VIDA QUE NO DEBES PERDER.\""
 
 #: dat/events/minerva/station.lua:249
 msgid ""
@@ -37281,7 +37328,13 @@ msgid_plural ""
 "REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE "
 "#p{n} MINERVA TOKENS#0.\""
 msgstr[0] ""
+"\"LO SIENTO, NO TIENE SUFICIENTES FICHAS MINERVA PARA CANJEAR POR SU "
+"ARTÍCULO SOLICITADO. ¿DESEA CANJEARLO POR OTRA COSA? TIENES #p{n} FICHA "
+"MINERVA#0.\""
 msgstr[1] ""
+"\"LO SIENTO, NO TIENE SUFICIENTES FICHAS MINERVA PARA CANJEAR POR SU "
+"ARTÍCULO SOLICITADO. ¿DESEA CANJEARLO POR OTRA COSA? TIENES #p{n} FICHAS "
+"MINERVA#0.\""
 
 #: dat/events/minerva/station.lua:255
 msgid ""
@@ -37293,7 +37346,11 @@ msgid_plural ""
 "OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p{n} MINERVA "
 "TOKENS#0.\""
 msgstr[0] ""
+"\"LAMENTO INFORMARTE DE QUE EL ARTÍCULO QUE DESEA ESTÁ ACTUALMENTE AGOTADO. ¿"
+"LE GUSTARÍA CAMBIARLO POR OTRA COSA? TIENES #p{n} FICHA MINERVA#0.\""
 msgstr[1] ""
+"\"LAMENTO INFORMARTE DE QUE EL ARTÍCULO QUE DESEA ESTÁ ACTUALMENTE AGOTADO. ¿"
+"LE GUSTARÍA CAMBIARLO POR OTRA COSA? TIENES #p{n} FICHAS MINERVA#0.\""
 
 #: dat/events/minerva/station.lua:261
 msgid ""
@@ -37303,20 +37360,24 @@ msgid_plural ""
 "\"YOU CAN TRADE IN YOUR PRECIOUS #p{n} MINERVA TOKENS#0 FOR THE FOLLOWING "
 "GOODS.\""
 msgstr[0] ""
+"\"PUEDES INTERCAMBIAR TU PRECIADA #p{n} FICHA MINERVA #0 POR LOS SIGUIENTES "
+"BIENES.\""
 msgstr[1] ""
+"\"PUEDES INTERCAMBIAR TUS PRECIADAS #p{n} FICHAS MINERVA #0 POR LOS "
+"SIGUIENTES BIENES.\""
 
 #: dat/events/minerva/station.lua:323
 msgid "{item} (#rSOLD OUT#0)"
-msgstr ""
+msgstr "{item} (#rAGOTADO#0)"
 
 #: dat/events/minerva/station.lua:325
 msgid "{item} ({tokens})"
-msgstr ""
+msgstr "{item} ({tokens})"
 
 #. Add special ticket
 #: dat/events/minerva/station.lua:330
 msgid "Special Spa Ticket ({tokens})"
-msgstr ""
+msgstr "Ticket de Balneario Especial ({tokens})"
 
 #. Buying stuff
 #: dat/events/minerva/station.lua:340
@@ -37325,14 +37386,17 @@ msgid ""
 "AS FOLLOWS:\"\n"
 "#w{description}#0"
 msgstr ""
+"\"¿SEGURO QUE QUIERES INTERCAMBIARLAS POR '#w{item}#0'? LA DESCRIPCIÓN ES LA "
+"SIGUIENTE:\"\n"
+"#w{description}#0"
 
 #: dat/events/minerva/station.lua:352
 msgid "Gambling Bounty"
-msgstr ""
+msgstr "Recompensa del Juego"
 
 #: dat/events/minerva/station.lua:363
 msgid "\"THANK YOU FOR YOUR BUSINESS.\""
-msgstr ""
+msgstr "\"GRACIAS POR SU VISITA.\""
 
 #. Buying the ticket
 #: dat/events/minerva/station.lua:368
@@ -37342,6 +37406,11 @@ msgid ""
 "\"THIS TICKET WILL ALLOW YOU TO ENTER A LOTTERY TO WIN AN EXCLUSIVE RELAXING "
 "TIME AT THE MINERVA STATION ALL NATURAL SPA WITH CYBORG CHICKEN.\""
 msgstr ""
+"\"¿ESTÁ SEGURO DE QUE QUIERE CAMBIAR POR EL BOLETO ESPECIAL PREMIUM Y "
+"EXCLUSIVO DEL BALNEARIO?\"\n"
+"\"ESTE BILLETE TE PERMITIRÁ ENTRAR EN UNA LOTERÍA PARA GANAR UN EXCLUSIVO "
+"TIEMPO DE RELAX EN EL BALNEARIO TOTALMENTE NATURAL DE LA ESTACIÓN MINERVA "
+"CON POLLO CYBORG.\""
 
 #. Handle random bar events if necessary
 #. Not adding to queue first
@@ -37352,6 +37421,10 @@ msgid ""
 "eventually have to elbow your way to the front to get a view of what is "
 "going on."
 msgstr ""
+"Te diriges a la mesa de blackjack, que parece estar rodeada de muchos "
+"clientes, algunos de los cuales parecen estar haciendo fotos de algo. Al "
+"final tienes que abrirte paso a codazos hasta la parte delantera para poder "
+"ver lo que está pasando."
 
 #: dat/events/minerva/station.lua:398
 msgid ""
@@ -37362,27 +37435,38 @@ msgid ""
 "doing this for a while. You watch as the game progresses and the patron "
 "loses all his credits to the chicken, who seems unfazed."
 msgstr ""
+"Cuando llegas al frente te recibe la fría mirada de lo que parece ser el "
+"Pollo Cyborg del que te hablaron. Parece estar midiendo al público mientras "
+"juega contra un cliente. La forma en que se mueve es muy extraña, con "
+"movimientos mecánicos cortos y precisos. Se nota que lleva tiempo "
+"haciéndolo. Observas cómo avanza la partida y el cliente pierde todos sus "
+"créditos ante el pollo, que parece no inmutarse."
 
 #: dat/events/minerva/station.lua:404
 msgid ""
 "You elbow your way to the front of the table and are once again greeted by "
 "the cold mechanical eyes of Cyborg Chicken."
 msgstr ""
+"Te abres paso a codazos hasta la parte delantera de la mesa y, una vez más, "
+"te reciben los fríos ojos mecánicos del Pollo Cyborg."
 
 #. Clear buffer without waiting
 #: dat/events/minerva/station.lua:409 dat/events/minerva/station.lua:485
 msgid "Play"
-msgstr ""
+msgstr "Jugar"
 
 #: dat/events/minerva/station.lua:410 dat/events/minerva/station.lua:486
 msgid "Explanation"
-msgstr ""
+msgstr "Explicación"
 
 #: dat/events/minerva/station.lua:414
 msgid ""
 "Cyborg Chicken's eyes blink one second and go blank as a pre-recorded "
 "explanation is played from its back. Wait… are those embedded speakers?"
 msgstr ""
+"Los ojos del Pollo Cyborg parpadean un segundo y se quedan en blanco "
+"mientras se reproduce una explicación pregrabada desde su espalda. Espera... "
+"¿son altavoces integrados?"
 
 #: dat/events/minerva/station.lua:415
 msgid ""
@@ -37392,12 +37476,19 @@ msgid ""
 "and ace is either worth 1 or 11. You win if you have a higher value than "
 "CYBORG CHICKEN without going over 21.\""
 msgstr ""
+"\"Bienvenido a la mesa de blackjack de ESTACIÓN MINERVA. El objetivo de este "
+"juego de cartas es acercarse al máximo al valor de 21 sin pasarse. Todas las "
+"cartas valen su rango, excepto la jota, la reina y el rey, que valen 10, y "
+"el as vale 1 u 11. Ganas si tienes un valor más alto que POLLO CYBORG sin "
+"pasarte de 21.\""
 
 #: dat/events/minerva/station.lua:416
 msgid ""
 "Cyborg Chicken eyes flutter as it seems like conciousness returns to its "
 "body."
 msgstr ""
+"Los ojos del Pollo Cyborg revolotean cuando parece que la conciencia vuelve "
+"a su cuerpo."
 
 #. Resize the window
 #. cc.offset is only set up when the they appear in the VN
@@ -37408,17 +37499,17 @@ msgstr ""
 #. Undo the resize
 #: dat/events/minerva/station.lua:468
 msgid "You leave the blackjack table behind and head back to the main area."
-msgstr ""
+msgstr "Dejas atrás la mesa de blackjack y vuelves a la zona principal."
 
 #. Handle random bar events if necessary
 #. Not adding to queue first
 #: dat/events/minerva/station.lua:479
 msgid "Dealer"
-msgstr ""
+msgstr "Distribuidor"
 
 #: dat/events/minerva/station.lua:481
 msgid "You approach the chuck-a-luck table."
-msgstr ""
+msgstr "Te acercas a la mesa de chuck-a-luck."
 
 #: dat/events/minerva/station.lua:490
 msgid ""
@@ -37428,6 +37519,11 @@ msgid ""
 "two dice, you get double the amount of tokens. Furthermore, if you match all "
 "three dice, you get ten times the amount of tokens!\""
 msgstr ""
+"\"Chuck-a-luck es un juego sencillo. Haces tu apuesta y luego apuesta por el "
+"número que saldrá en los dados. Si el número que has elegido coincide con un "
+"dado, ganas una ficha por cada 1000 créditos que hayas apostado. Si aciertas "
+"dos dados, obtienes el doble de fichas. Además, si aciertas los tres dados, ¡"
+"obtienes diez veces la cantidad de fichas!\""
 
 #. Resize the window
 #. dealer.offset is only set up when the they appear in the VN
@@ -37438,7 +37534,7 @@ msgstr ""
 #. Undo the resize
 #: dat/events/minerva/station.lua:543
 msgid "You leave the chuck-a-luck table behind and head back to the main area."
-msgstr ""
+msgstr "Dejas la mesa de chuck-a-luck y vuelves a la zona principal."
 
 #. Handle random bar events if necessary, however, don't do it with secret code or we get a dialogue inside a dialogue.
 #. The mole was caught, we have to change and redo the chuckaluck NPC
@@ -37450,45 +37546,49 @@ msgstr ""
 #. TODO maybe more text?
 #: dat/events/minerva/station.lua:582 dat/missions/minerva/maikki1.lua:369
 msgid "\"What are you looking at?\""
-msgstr ""
+msgstr "\"¿Qué estás mirando?\""
 
 #. local kex = minerva.vn_kex{ pos=0, rotation=30*math.pi/180., shader=love_shaders.aura() }
 #: dat/events/minerva/station.lua:595
 msgid "You find Maikki, who beams you a smile as you approach."
-msgstr ""
+msgstr "Encuentras a Maikki, que te sonríe al acercarte."
 
 #: dat/events/minerva/station.lua:597
 msgid "\"Did you find anything new?\""
-msgstr ""
+msgstr "\"¿Has encontrado algo nuevo?\""
 
 #: dat/events/minerva/station.lua:605 dat/events/minerva/station.lua:607
 msgid "Talk about Kex"
-msgstr ""
+msgstr "Hablas sobre Kex"
 
 #. table.insert( opts, 1, { _("Ask about her father"), "memory" } )
 #: dat/events/minerva/station.lua:614
 msgid "\"Anything else?\""
-msgstr ""
+msgstr "\"¿Algo más?\""
 
 #: dat/events/minerva/station.lua:618
 msgid "You ask to see if she remembered anything else about her father."
-msgstr ""
+msgstr "Le preguntas para ver si recuerda algo más sobre su padre."
 
 #: dat/events/minerva/station.lua:624
 msgid "As you are about to talk, you notice Kex out of the corner of your eye."
-msgstr ""
+msgstr "Cuando estás a punto de hablar, observas a Kex por el rabillo del ojo."
 
 #: dat/events/minerva/station.lua:625
 msgid ""
 "As he stares directly at you, he makes a gesture that you should watch your "
 "back."
 msgstr ""
+"Mientras te mira directamente, te hace un gesto para que te cuides las "
+"espaldas."
 
 #: dat/events/minerva/station.lua:626
 msgid ""
 "You decide against telling Maikki anything. It does not seem like it is the "
 "time, unless you wish to get murdered by a rampant cyborg duck."
 msgstr ""
+"Decides no decirle nada a Maikki. No parece que sea el momento, a no ser que "
+"quieras ser asesinado por un pato cibernético desbocado."
 
 #. played backwards so slides left
 #: dat/events/minerva/station.lua:631
@@ -37496,6 +37596,8 @@ msgid ""
 "You are about to talk, but decide not to. Now is not the time to deal with "
 "this."
 msgstr ""
+"Estás a punto de hablar, pero decides no hacerlo. Ahora no es el momento de "
+"ocuparse de esto."
 
 #.
 #. -- Event is over when player takes off.
@@ -37540,6 +37642,21 @@ msgid ""
 "large. A face peeps down at you from the height of eternity.\n"
 "    \"Everything all right in there?\""
 msgstr ""
+"Al salir de tu nave, la luz del sol parpadea de repente. La estrella local "
+"en el cielo se vuelve azul, luego de un profundo color púrpura, y luego se "
+"oscurece. Todo el planeta se sumerge en la oscuridad.\n"
+"    Entonces una voz habla, más fuerte que un terremoto. Parece resonar "
+"dentro de tus huesos y desde el mismo centro de la galaxia. \"Oh, mierda...\""
+", dice.\n"
+"    Otra voz ríe musicalmente, como si el propio mundo estuviera cantando. "
+"\"Bobbens, ¿acabas de destruir el universo, otra vez?\"\n"
+"    \"Mmmm, espera\", retumba la primera voz. \"...SIGSEGV... libc start "
+"main+0xe5... ah ha! Ahí está el problema\".  Sientes que algo fundamental en "
+"el tejido de la realidad cambia. La sensación es como estornudar y tener "
+"hipo al mismo tiempo. \"Ya está, eso debería solucionarlo\".\n"
+"    Una ventana se abre en la oscuridad, infinitamente lejos e infinitamente "
+"grande. Un rostro se asoma desde la altura de la eternidad.\n"
+"    \"¿Todo bien ahí dentro?\""
 
 #. yes/no choice
 #. If yes, the voice of the creator speaks to you:
@@ -37559,6 +37676,21 @@ msgid ""
 "smiles.\n"
 "    \"OK then. Pushed. And we're back in 3... 2... 1...\""
 msgstr ""
+"\"Bien. Lamento las molestias. Por favor, no se preocupe, tendré la realidad "
+"recargada de nuevo en un segundo\".\n"
+"    El creador se da la vuelta para irse, y luego hace una pausa.\n"
+"    \"Por cierto, estamos trabajando duro para mejorar la vida, el universo "
+"y todo eso, pero estamos un poco cortos de personal. Si te gusta esta "
+"existencia pero crees que los detalles podrían mejorarse, al equipo de "
+"creación del universo le vendría bien tu ayuda. Estaremos especialmente "
+"contentos de verte si tienes alguna habilidad especial para dibujar "
+"planetas, diseñar naves, programar las leyes de la naturaleza subyacentes o "
+"componer la música de las esferas. Para obtener información sobre cómo "
+"contribuir, sólo tienes que dirigir tu navegador de la web en la realidad a "
+"naev.org\".\n"
+"    El relojero levanta la mirada más allá de tu marco de referencia y "
+"sonríe.\n"
+"    \"De acuerdo entonces. Pulsado. Y volvemos en 3... 2... 1...\""
 
 #. If no, the voice of the creator speaks to you:
 #: dat/events/naev_needs_YOU.lua:41
@@ -37576,6 +37708,19 @@ msgid ""
 "smiles.\n"
 "    \"OK then. Pushed. And we're back in 3... 2... 1...\""
 msgstr ""
+"\"Oh, lo siento. Estamos trabajando duro para mejorar la vida, el universo y "
+"todo eso, pero el equipo está un poco corto de personal. No te preocupes, "
+"tendré la realidad recargada de nuevo en un segundo\".\n"
+"    El creador se da la vuelta para marcharse, y luego hace una pausa.\n"
+"    \"Te diré algo: al equipo de creación del universo le vendría muy bien "
+"tu ayuda. Si tienes alguna habilidad especial para dibujar planetas, diseñar "
+"naves, programar las leyes subyacentes de la naturaleza o componer la música "
+"de las esferas, estaremos especialmente contentos de verte. Para obtener "
+"información sobre cómo contribuir, sólo tienes que dirigir tu navegador de "
+"la web de la realidad a naev.org\".\n"
+"    El relojero levanta la mirada más allá de tu marco de referencia y "
+"sonríe.\n"
+"    \"De acuerdo entonces. Pulsado. Y volvemos en 3... 2... 1...\""
 
 #. Event should only occur if player has played a bit.
 #. Create an eerie atmosphere by cutting off the background music and substituting something spooky
@@ -37583,14 +37728,14 @@ msgstr ""
 #. The big programmer in the sky looks in to ask the player a question
 #: dat/events/naev_needs_YOU.lua:65
 msgid "Naev received SIGSEGV (address not mapped to object)!"
-msgstr ""
+msgstr "¡Naev recibió SIGSEGV (dirección no asignada al objeto)!"
 
 #. if the answer is 'yes'
 #. Mission ends with a little comment after blasting off.
 #. hook.takeoff( "enter_system")
 #: dat/events/naev_needs_YOU.lua:66 dat/events/naev_needs_YOU.lua:72
 msgid "The voice of the creator"
-msgstr ""
+msgstr "La voz del creador"
 
 #. if the answer is 'no', not much different from 'yes'
 #. Mission ends with a little comment after blasting off.
@@ -37630,19 +37775,21 @@ msgstr ""
 #. Cancel autonav.
 #: dat/events/neutral/animaltrouble.lua:35
 msgid "Panic!"
-msgstr ""
+msgstr "¡Pánico!"
 
 #: dat/events/neutral/animaltrouble.lua:35
 msgid ""
 "Suddenly, your instruments go haywire, and your ship careens out of control. "
 "The controls aren't responding! Something is wrong with your systems!"
 msgstr ""
+"De repente, tus instrumentos se vuelven locos y tu nave se descontrola. Los "
+"controles no responden. ¡Algo va mal en tus sistemas!"
 
 #. Fly off in a random direction
 #. In theory, never deviate more than 90 degrees from the current course.
 #: dat/events/neutral/animaltrouble.lua:55
 msgid "Calm"
-msgstr ""
+msgstr "Calma"
 
 #: dat/events/neutral/animaltrouble.lua:55
 msgid ""
@@ -37652,6 +37799,11 @@ msgid ""
 "ensuing short-circuit. You've fixed the damage, and your ship is under "
 "control again."
 msgstr ""
+"Has encontrado la causa del problema. Uno de los pequeños roedores que "
+"transportaste para ese Sirio aparentemente se salió de la caja en el camino, "
+"y mordisqueó algunos de los circuitos de tu nave. La criatura murió en el "
+"consiguiente cortocircuito. Has reparado los daños y tu nave vuelve a estar "
+"bajo control."
 
 #: dat/events/neutral/animaltrouble.lua:58
 msgid ""
@@ -37661,6 +37813,11 @@ msgid ""
 "haywire. After you fixed the damage, your ship's controls were brought back "
 "to normal."
 msgstr ""
+"Descubriste que uno de los roedores que transportabas para ese Sirio se "
+"salió de la caja por el camino, mordisqueó algunos de los circuitos de tu "
+"nave y murió por el cortocircuito causado por dicho mordisqueo, lo que "
+"también provocó que tu nave se volviera loca. Después de arreglar los daños, "
+"los controles de tu nave volvieron a la normalidad."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -37713,11 +37870,14 @@ msgid ""
 "Flintley is here. He nervously sips from his drink, clearly uncomfortable in "
 "this environment."
 msgstr ""
+"Flintley está aquí. Da un sorbo nervioso a su bebida, claramente incómodo en "
+"este entorno."
 
 #: dat/events/neutral/baron_flintley.lua:26
 #: dat/missions/baron/baron_prince.lua:137
+#, fuzzy
 msgid "Flintley"
-msgstr ""
+msgstr "Flintley"
 
 #: dat/events/neutral/baron_flintley.lua:26
 msgid ""
@@ -37726,6 +37886,10 @@ msgid ""
 "again. Nothing too interesting, I'm afraid, just everyday stuff.\"\n"
 "    You spend some time chatting with Flintley, then you get back to work."
 msgstr ""
+"    Flintley te saluda, aliviado de ver una cara amiga. \"Hola de nuevo, "
+"{player}. ¿Qué te trae hoy por aquí? Como puedes ver, estoy aquí de nuevo "
+"por negocios. Nada demasiado interesante, me temo, sólo cosas cotidianas\".\n"
+"    Pasas un rato charlando con Flintley y luego vuelves al trabajo."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -37748,14 +37912,14 @@ msgstr ""
 #: dat/events/neutral/baron_prowl.lua:23 dat/missions/baron/baron_baron.lua:99
 #: dat/missions/baron/baron_prince.lua:256
 msgid "Pinnacle"
-msgstr ""
+msgstr "Pináculo"
 
 #. Much more visible
 #. If player is low on fuel make it more likely they get fuel
 #. Pick a random message from the list, display it, unboard.
 #: dat/events/neutral/derelict.lua:129 dat/events/neutral/derelict.lua:251
 msgid "Lucky find!"
-msgstr ""
+msgstr "¡Que suerte en el hallazgo!"
 
 #: dat/events/neutral/derelict.lua:129
 msgid ""
@@ -37764,12 +37928,18 @@ msgid ""
 "walls. The fuel is in a good state and you siphon it off to fill your ship's "
 "fuel tanks. Talk about good timing."
 msgstr ""
+"El derelicto parece desierto, con casi todo lcon valor desaparecido. "
+"Mientras exploras la nave, de repente recoges un depósito de combustible de "
+"reserva escondido en las paredes. El combustible está en buen estado y lo "
+"extraes para llenar los depósitos de tu nave. Qué oportuno."
 
 #: dat/events/neutral/derelict.lua:129
 msgid ""
 "Just as you were running out of fuel you found a derelict with some to spare "
 "in {sys}, what good fortune!"
 msgstr ""
+"Justo cuando te estabas quedando sin combustible encontraste un derelicto "
+"con algo de sobra en {sys}, ¡qué buena suerte!"
 
 #. Roll for events
 #. neuevent is a table of tables { {title of event, text of event, log of event}, {...}, ... }
@@ -37796,7 +37966,7 @@ msgstr ""
 #: dat/events/neutral/derelict.lua:162 dat/events/neutral/derelict.lua:217
 #: dat/missions/neutral/derelict_rescue.lua:32
 msgid "Empty derelict"
-msgstr ""
+msgstr "Derelicto Vacío"
 
 #: dat/events/neutral/derelict.lua:163
 msgid ""
@@ -37804,15 +37974,18 @@ msgid ""
 "any remaining passengers, nor is there anything of interest to you. You "
 "decide to return to your ship."
 msgstr ""
+"Pasas un rato registrando el barco abandonado, pero no parece que haya "
+"ningún pasajero restante, ni tampoco hay nada de interés para ti. Decides "
+"volver a tu barco."
 
 #: dat/events/neutral/derelict.lua:164
 msgid "You searched an empty derelict in {sys}."
-msgstr ""
+msgstr "Has registrado un derelicto vacío en {sys}."
 
 #: dat/events/neutral/derelict.lua:167 dat/events/neutral/derelict.lua:177
 #: dat/events/neutral/derelict.lua:207
 msgid "Distracting Derelict"
-msgstr ""
+msgstr "Derelicto Distrayente"
 
 #: dat/events/neutral/derelict.lua:168
 msgid ""
@@ -37827,16 +38000,29 @@ msgid ""
 "{shipai}, is getting annoying. You regretfully leave the game behind and "
 "return to the reality of your everyday life."
 msgstr ""
+"Esta nave ha sido claramente abandonada hace mucho tiempo. Los saqueadores "
+"han estado aquí muchas veces y todos los sistemas primarios y de respaldo "
+"están caídos. Sin embargo, hay una consola que todavía está operativa. "
+"Parece estar ejecutando un antiguo juego de ordenador sobre exploración "
+"espacial, comercio y combate. Intrigado, decides probar el juego, y al poco "
+"tiempo te encuentras enganchado a él. Pasas muchos ratos divertidos "
+"transportando carga, mejorando tu nave, luchando contra los enemigos y "
+"explorando el universo. Pero, por supuesto, no puedes quedarte aquí para "
+"siempre y, además, los chirridos a través de las comunicaciones de la IA de "
+"tu nave, {shipai}, se están volviendo molestos. Lamentablemente, dejas el "
+"juego y vuelves a la realidad de tu vida cotidiana."
 
 #: dat/events/neutral/derelict.lua:169
 msgid ""
 "You searched a derelict in {sys} and ended up spending an inordinate amount "
 "of time playing an ancient computer game!"
 msgstr ""
+"Registrastes un derelicto en {sys} y acabaste pasando un tiempo desmesurado "
+"jugando a un antiguo juego de ordenador."
 
 #: dat/events/neutral/derelict.lua:172
 msgid "Errie Derelict"
-msgstr ""
+msgstr "Derelicto Errie"
 
 #: dat/events/neutral/derelict.lua:173
 msgid ""
@@ -37847,10 +38033,16 @@ msgid ""
 "own ship, you decide to give up and leave the derelict to its creepy "
 "creaking."
 msgstr ""
+"Estás explorando el derelicto abandonado cuando oyes un extraño ruido que "
+"cruje. Decides seguirlo para ver cuál es su causa, pero no consigues "
+"localizar el origen. Después de una hora abriendo paneles sin éxito, "
+"presionando el oído contra la cubierta y realizando escaneos del casco desde "
+"tu propia nave, decides rendirte y dejar que la nave abandonada siga con su "
+"espeluznante chirrido."
 
 #: dat/events/neutral/derelict.lua:174
 msgid "You searched an empty, creaking derelict in {sys}."
-msgstr ""
+msgstr "Has registrado un vacío y chirriante derelicto en {sys}."
 
 #: dat/events/neutral/derelict.lua:178
 msgid ""
@@ -37863,17 +38055,27 @@ msgid ""
 "{shipai}, your Ship AI, confirms there is little but \"emotional human "
 "chatter\" in the captain's logs."
 msgstr ""
+"Mientras exploras la cabina de este derelicto abandonada, encuentras los "
+"diarios del capitán. Con la esperanza de encontrar alguna información que "
+"pueda serte útil, decides reproducir las entradas más recientes. Por "
+"desgracia, resulta que los diarios de la capitana no son más que grabaciones "
+"de las acaloradas discusiones de la capitana con su copiloto. No tardas en "
+"decidir que probablemente no vas a encontrar nada que valga la pena aquí. Al "
+"volver a tu nave {shipai}, la IA de tu nave, te confirma que en los "
+"registros de la capitana hay poco más que \"charla humana emocional\"."
 
 #: dat/events/neutral/derelict.lua:179
 msgid ""
 "You searched a derelict in {sys} but found little but for \"emotional human "
 "chatter\" in the captain's logs."
 msgstr ""
+"Registrastes un derelicto en {sys} pero encontraste poco más que \"charla "
+"humana emocional\" en los registros del capitán."
 
 #: dat/events/neutral/derelict.lua:182 dat/events/neutral/derelict.lua:202
 #: dat/events/neutral/derelict.lua:222
 msgid "Wrecked Derelict"
-msgstr ""
+msgstr "Derelicto Abandonado"
 
 #: dat/events/neutral/derelict.lua:183
 msgid ""
@@ -37882,16 +38084,23 @@ msgid ""
 "their ship. Your ship, {shipai}, and you decide to give the crew and their "
 "ship a decent space burial before moving on."
 msgstr ""
+"Este derrelicto no está abandonado. La tripulación sigue a bordo. Por "
+"desgracia para ellos, no han sobrevivido a lo que sea que haya destrozado su "
+"nave, ni tampoco gran parte de ella. Tu nave, {shipai}, y tú decidís dar a "
+"la tripulación y a su nave un entierro espacial decente antes de seguir "
+"adelante."
 
 #: dat/events/neutral/derelict.lua:184
 msgid ""
 "You found a wrecked derelict in {sys} and gave it and its crew a decent "
 "space burial."
 msgstr ""
+"Has encontrado un derelicto abandonada en {sys} y le has dado a ella y a su "
+"tripulación un entierro espacial decente."
 
 #: dat/events/neutral/derelict.lua:187 dat/events/neutral/derelict.lua:238
 msgid "Empty Derelict"
-msgstr ""
+msgstr "Derelicto Vacio"
 
 #: dat/events/neutral/derelict.lua:188
 msgid ""
@@ -37900,14 +38109,19 @@ msgid ""
 "Below it is another carved message that says \"NO U WASNT\". Otherwise, "
 "there is nothing of interest left on this ship."
 msgstr ""
+"Parece que este derelicto ya ha sido visitado por los saqueadores. "
+"Encuentras un mensaje grabado en la pared cerca de la esclusa. Se lee: \"YO "
+"ESTAVO AQUI\". Debajo hay otro mensaje tallado que dice \"NO TU NO\". Por lo "
+"demás, no queda nada de interés en esta nave."
 
 #: dat/events/neutral/derelict.lua:189
 msgid "You searched an empty derelict in {sys} and found only graffiti."
 msgstr ""
+"Has registrado un derelicto vacío en {sys} y solo has encontrado grafitis."
 
 #: dat/events/neutral/derelict.lua:192 dat/events/neutral/derelict.lua:197
 msgid "Not-so-empty Derelict"
-msgstr ""
+msgstr "Derrelicto No Tan Vacío"
 
 #: dat/events/neutral/derelict.lua:193
 msgid ""
@@ -37918,11 +38132,19 @@ msgid ""
 "underfoot. You don't reckon you're going to find anything useful here so you "
 "leave."
 msgstr ""
+"Este derrelicto parece haber sido, en algún momento, utilizado como casino "
+"ilegal. Hay mesas de ruleta y máquinas tragaperras instaladas en la bodega. "
+"Sin embargo, parece que las autoridades locales se enteraron de la operación;"
+" hay marcas de quemaduras en los muebles y las paredes y casquillos de "
+"rifles de asalto bajo los pies. No crees que vayas a encontrar nada útil "
+"aquí, así que te vas."
 
 #: dat/events/neutral/derelict.lua:194
 msgid ""
 "You boarded a derelict in {sys} and found an ex-hive of illegal activity."
 msgstr ""
+"Abordaste un derrelicto en {sys} y encontraste una ex colonia de actividad "
+"ilegal."
 
 #: dat/events/neutral/derelict.lua:198
 msgid ""
@@ -37931,10 +38153,14 @@ msgid ""
 "again and flee back into your own ship. Whatever is on that derelict, you "
 "don't want to find out!"
 msgstr ""
+"Cuando la esclusa se abre, te golpea en la cara un olor impío que casi te "
+"hace desmayarte en el acto. Te apresuras a cerrar la esclusa de nuevo y "
+"huyes a tu propia nave. Lo que sea que haya en ese derelicto abandonado, ¡no "
+"quieres averiguarlo!"
 
 #: dat/events/neutral/derelict.lua:199
 msgid "An ungodly smell stopped you from searching a derelict in {sys}."
-msgstr ""
+msgstr "Un olor infernal te impidió buscar en un derrelicto en {sys}."
 
 #: dat/events/neutral/derelict.lua:203
 msgid ""
@@ -37943,11 +38169,16 @@ msgid ""
 "depressurized compartments all over the ship. There's not much you can do "
 "here, so you decide to leave the derelict to itself."
 msgstr ""
+"Este derelicto ha sido muy maltratado. La mayoría de los pasillos están "
+"bloqueados por metal destrozado y tu nave, {shipai}, te dice que hay "
+"compartimentos despresurizados por toda la nave. No hay mucho que puedas "
+"hacer aquí, así que decides dejar el derelicto a su suerte."
 
 #: dat/events/neutral/derelict.lua:204
 msgid ""
 "You tried to search a wrecked derelict in {sys} but there wasn't much left."
 msgstr ""
+"Intentaste buscar en un derrelicto destrozado en {sys} pero no quedaba mucho."
 
 #: dat/events/neutral/derelict.lua:208
 msgid ""
@@ -37960,17 +38191,28 @@ msgid ""
 "to fly a space ship, so they ended up stranded and had to be rescued. "
 "Shaking your head, you return to your own ship."
 msgstr ""
+"El interior de este barco está decorado de forma llamativa. Hay lindos "
+"peluches colgando de las puertas, cortinas en cada mirador, almohadas de "
+"colores en las esquinas de la mayoría de los compartimentos y alegres "
+"grafitis en casi todas las paredes. Un análisis del ordenador de la nave "
+"muestra que ésta pertenecía a un trío de jóvenes aventureras que decidieron "
+"realizar un maravilloso viaje por el espacio. Lamentablemente, el diario de "
+"a bordo te dice que ninguna de ellas sabía realmente cómo pilotar una nave "
+"espacial, por lo que acabaron varadas y tuvieron que ser rescatadas. "
+"Sacudiendo la cabeza, vuelves a tu propia nave."
 
 #: dat/events/neutral/derelict.lua:209
 msgid ""
 "You searched a gaudily decorated derelict in {sys} and found the previous "
 "occupants had already been rescued"
 msgstr ""
+"Registraste un derrelicto llamativamente decorado en {sys} y descubriste que "
+"los anteriores ocupantes ya habían sido rescatados"
 
 #: dat/events/neutral/derelict.lua:212 dat/events/neutral/derelict.lua:227
 #: dat/events/neutral/derelict.lua:233
 msgid "Eerie Derelict"
-msgstr ""
+msgstr "Derelicto Escalofriante"
 
 #: dat/events/neutral/derelict.lua:213
 msgid ""
@@ -37981,12 +38223,20 @@ msgid ""
 "polarized gravity at the airlock, so you, again, smack against the deck "
 "plates."
 msgstr ""
+"La gravedad artificial de esta nave ha fallado extrañamente, consiguiendo "
+"invertirse de algún modo. En cuanto subes a bordo, te caes hacia arriba y "
+"hacia el techo, con lo que te llevas unos desagradables moratones. Molesto, "
+"buscas en la nave, pero sin resultado. Vuelves a tu nave, pero te olvidas de "
+"la gravedad polarizada en la esclusa, por lo que, de nuevo, te golpeas "
+"contra las placas de la cubierta."
 
 #: dat/events/neutral/derelict.lua:214
 msgid ""
 "Having searched a derelict in {sys} you remind yourself always to check the "
 "gravity before boarding another ship. Ow."
 msgstr ""
+"Después de registrar un barco abandonado en {sys} te recuerdas a ti mismo "
+"que debes comprobar siempre la gravedad antes de subir a otra nave. Ay."
 
 #: dat/events/neutral/derelict.lua:218
 msgid ""
@@ -37995,10 +38245,15 @@ msgid ""
 "by other looters already. You decide not to waste any time on this ship and "
 "return to your own."
 msgstr ""
+"La bodega de esta nave contiene varios cofres metálicos pesados. Haces "
+"palanca para abrirlos, pero están vacíos. Lo que había en ellos ya debe "
+"haber sido robado por otros saqueadores. Decides no perder el tiempo en esta "
+"nave y volver a la tuya."
 
 #: dat/events/neutral/derelict.lua:219
 msgid "You found some empty chests on an empty derelict in {sys} system."
 msgstr ""
+"Has encontrado unos cofres vacíos en un derelicto vacío en el sistema {sys}."
 
 #: dat/events/neutral/derelict.lua:223
 msgid ""
@@ -38008,12 +38263,19 @@ msgid ""
 "have suffered too many hull breaches over the years. It doesn't seem like "
 "there's much you can do here."
 msgstr ""
+"Has acoplado tu pinza de acoplamiento a la esclusa del derelicto, pero la "
+"puerta se niega a abrirse. {shipai}, tu nave, te dice que el otro lado no "
+"está presurizado y que las puertas están tratando de salvar tu vida. El "
+"derrelicto debe haber sufrido muchas brechas en el casco a lo largo de los "
+"años. No parece que haya mucho que puedas hacer aquí."
 
 #: dat/events/neutral/derelict.lua:224
 msgid ""
 "You tried to search an empty derelict in {sys} but your airlock doors and "
 "the vacuum of space defeated you!"
 msgstr ""
+"¡Intentaste registrar un derelicto vacío en {sys} pero las puertas de tu "
+"esclusa y el vacío del espacio te derrotaron!"
 
 #: dat/events/neutral/derelict.lua:228
 msgid ""
@@ -38024,12 +38286,21 @@ msgid ""
 "soon as possible, despite your ship's assurances of sensing no signs of life "
 "onboard, so you abandon the search and swiftly disengage your boarding clamp."
 msgstr ""
+"Mientras caminas por los pasillos del derrelicto, no puedes evitar notar las "
+"grandes marcas de arañazos en las paredes, el suelo e incluso el techo. Es "
+"como si algo hubiera hecho estragos en esta nave, algo grande, con un montón "
+"de garras y dientes muy afilados... Crees que lo mejor sería marcharse "
+"cuanto antes, a pesar de que tu nave te asegura que no percibe señales de "
+"vida a bordo, así que abandonas la búsqueda y desactivas rápidamente tu "
+"pinza de abordaje."
 
 #: dat/events/neutral/derelict.lua:229
 msgid ""
 "You left an empty, torn-up (literally) derelict you found in {sys} system to "
 "itself."
 msgstr ""
+"Dejaste un vacío, desgarrado (literalmente) derrelicto que encontraste en el "
+"sistema {sys} para sí mismo."
 
 #: dat/events/neutral/derelict.lua:234
 msgid ""
@@ -38046,12 +38317,27 @@ msgid ""
 "anything more about this ship without an appropriately equipped boarding "
 "party, maybe one with a magician!"
 msgstr ""
+"Al entrar en la esclusa, ves que la esclusa del derrelicto se abre, "
+"extrañamente, en espiral hacia un pasillo octogonal que brilla débilmente en "
+"color púrpura. Observando esta extraña elección de diseño interior, "
+"continúas por el pasillo que irradia débilmente para encontrarte en una "
+"habitación octogonal (\"cuboctaedro truncado\", chirría en {shipai}, la IA "
+"de tu nave) que emana un color púrpura-verde o verde-morado bastante "
+"extraño. Los muebles que puedes ver son angulares de una manera que hace que "
+"te lloren los ojos. Estas elecciones de diseño van de lo extraño a lo... ¡"
+"\"Golpe\"! ¡Aterrizas en el suelo (?) al tropezar con tus pies confundidos "
+"por la gravedad! ¿¡En serio!? ¿¡Han instalado la gravedad en las \"paredes\" "
+"exteriores de la habitación!? Decides que sería mejor _no_ descubrir nada "
+"más sobre esta nave sin un grupo de abordaje debidamente equipado, ¡quizás "
+"uno con un mago!"
 
 #: dat/events/neutral/derelict.lua:235
 msgid ""
 "An eldritch, possibly derelict, {shp} in {sys} system unnerved you, its true "
 "story is no longer your concern, thankfully!"
 msgstr ""
+"Un espeluznante, posiblemente abandonada, {shp} en el sistema {sys} te "
+"inquietó, su verdadera historia ya no te preocupa, ¡afortunadamente!"
 
 #: dat/events/neutral/derelict.lua:239
 msgid ""
@@ -38061,12 +38347,18 @@ msgid ""
 "tempts you not to do this again on the off chance you run across another "
 "such distressingly worthless derelict."
 msgstr ""
+"Las puertas de la esclusa se abren para dar comienzo a lo que resulta ser la "
+"pérdida de tiempo más aburrida, insípida, mundana y poco útil que jamás haya "
+"tenido un abordaje de un derrelicto, incluso te tienta a no volver a hacerlo "
+"en caso de que te encuentres con otro derrelicto tan angustiosamente inútil."
 
 #: dat/events/neutral/derelict.lua:240
 msgid ""
 "You became disenchanted with boarding derelicts on a ship in {sys}… next "
 "time better to watch paint dry."
 msgstr ""
+"Te has desencantado de abordar a los derrelictos en una nave en {sys}... la "
+"próxima vez mejor ver cómo se seca la pintura."
 
 #: dat/events/neutral/derelict.lua:255
 msgid ""
@@ -38074,12 +38366,17 @@ msgid ""
 "to have left behind a small amount of credit chips in their hurry to leave! "
 "You decide to help yourself to them and leave the derelict."
 msgstr ""
+"El derrelicto parece desierto, sus pasajeros se han ido hace tiempo. Sin "
+"embargo, parece que se han dejado una pequeña cantidad de fichas de crédito "
+"en su prisa por irse. Decides cogerlas y dejar el derrelicto."
 
 #: dat/events/neutral/derelict.lua:255
 msgid ""
 "You found a derelict in {sys}, it was empty but for some scattered credit "
 "chips. Lucky you!"
 msgstr ""
+"Has encontrado un derrelicto en {sys}, estaba vacío salvo por algunas fichas "
+"de crédito dispersas. ¡Qué suerte!"
 
 #: dat/events/neutral/derelict.lua:296
 msgid ""
@@ -38090,49 +38387,57 @@ msgid ""
 "contact the {fct} authorities. Your reputation with them has slightly "
 "improved."
 msgstr ""
+"Esta nave parece un trozo de chatarra a simple vista, pero en realidad es "
+"una antigüedad, ¡una de las primeras de su clase jamás producidas según tu "
+"nave, {shipai}! A los museos de toda la galaxia les encantaría tener una "
+"nave como ésta. Colocas una baliza en la nave abandonada para marcarla para "
+"su rescate y te pones en contacto con las autoridades de la {fct}. Tu "
+"reputación con ellos ha mejorado ligeramente."
 
 #: dat/events/neutral/derelict.lua:296
 msgid ""
 "In the {sys} system you found a very rare antique derelict {shp} and "
 "reported it to the, happy to hear from you, {fct} authorities."
 msgstr ""
+"En el sistema {sys} encontraste un derrelicto abandonado antiguo muy raro "
+"{shp} y lo reportaste, felices de saber de ti, a las autoridades {fct}."
 
 #. See if we should add maps
 #: dat/events/neutral/derelict.lua:303
 msgid "local system"
-msgstr ""
+msgstr "sistema local"
 
 #: dat/events/neutral/derelict.lua:304
 msgid "Empire core systems"
-msgstr ""
+msgstr "sistemas centrales del Imperio"
 
 #: dat/events/neutral/derelict.lua:305
 msgid "Za'lek core systems"
-msgstr ""
+msgstr "sistemas centrales Za'lek"
 
 #: dat/events/neutral/derelict.lua:306
 msgid "Dvaered core systems"
-msgstr ""
+msgstr "sistemas centrales Dvaered"
 
 #: dat/events/neutral/derelict.lua:307
 msgid "Dvaered-Soromid trade route"
-msgstr ""
+msgstr "ruta comercial Dvaered-Soromida"
 
 #: dat/events/neutral/derelict.lua:308
 msgid "Sirius core systems"
-msgstr ""
+msgstr "sistemas centrales Sirio"
 
 #: dat/events/neutral/derelict.lua:309
 msgid "Sirian border systems"
-msgstr ""
+msgstr "sistemas fronterizos Sirio"
 
 #: dat/events/neutral/derelict.lua:310
 msgid "Frontier systems"
-msgstr ""
+msgstr "sistemas Frontera"
 
 #: dat/events/neutral/derelict.lua:311
 msgid "Imperial Nebula edge"
-msgstr ""
+msgstr "borde de Nebulosa del Imperio"
 
 #. Make sure map names are valid
 #. There are unknown maps
@@ -38142,12 +38447,17 @@ msgid ""
 "space buccaneers. However, the ship's computer contains a map of the {smp}! "
 "You download it to your own computer."
 msgstr ""
+"El derrelicto está vacío y parece haber sido minuciosamente revisado por "
+"otros piratas espaciales. Sin embargo, el ordenador de la nave contiene un "
+"mapa del {smp}. Lo descargas en tu propio ordenador."
 
 #: dat/events/neutral/derelict.lua:329
 msgid ""
 "You found a derelict in {sys}, it was empty but the nav system contained a "
 "{smp} map! Nice!"
 msgstr ""
+"Has encontrado un derrelicto en {sys}, ¡estaba vacío pero el sistema de "
+"navegación contenía un mapa {smp}! ¡Qué bien!"
 
 #. If the player has little fuel left allow for refueling
 #: dat/events/neutral/derelict.lua:339
@@ -38157,12 +38467,18 @@ msgid ""
 "hidden in the walls. The fuel is in a good state and you siphon it off to "
 "fill your own ship's fuel tanks."
 msgstr ""
+"El derrelicto parece abandonado, con casi todo lo de valor desaparecido. "
+"Mientras exploras la nave, tu escáner de mano detecta de repente un depósito "
+"de combustible de reserva escondido en las paredes. El combustible está en "
+"buen estado y lo extraes para llenar los depósitos de tu propia nave."
 
 #: dat/events/neutral/derelict.lua:339
 msgid ""
 "A derelict you found in {sys} was empty but for a reserve fuel tank you "
 "fortuitously discovered!"
 msgstr ""
+"¡Un derrelicto que encontraste en {sys} estaba vacío de no ser por un tanque "
+"de combustible de reserva que descubriste fortuitamente!"
 
 #. If the player is low on health and not regenerating, offer armour repairs
 #: dat/events/neutral/derelict.lua:348
@@ -38173,17 +38489,24 @@ msgid ""
 "{shipai}, your ship AI, and without thinking too deeply about it you strip "
 "some of the hull components and are able to repair your own ship's armour."
 msgstr ""
+"El derrelicto está abandonado y despojado de todo lo que tiene valor, sin "
+"embargo, observas que el casco del barco está en muy buen estado. De hecho, "
+"es bastante sospechoso que una nave en tan buen estado se haya convertido en "
+"un derrelicto. Sin pensarlo demasiado, desmontas algunos de los componentes "
+"del casco y eres capaz de reparar el blindaje de tu propia nave."
 
 #: dat/events/neutral/derelict.lua:348
 msgid ""
 "The hull of a derelict you found in {sys} provided you with the resources to "
 "repair your own, very useful in the circumstances!"
 msgstr ""
+"¡El casco de un derrelicto que encontraste en {sys} te proporcionó los "
+"recursos para reparar el tuyo, muy útil en estas circunstancias!"
 
 #. Run random good event
 #: dat/events/neutral/derelict.lua:359
 msgid "Oh no!"
-msgstr ""
+msgstr "¡Oh no!"
 
 #. So the pilot doesn't end the event by dying.
 #: dat/events/neutral/derelict.lua:363
@@ -38192,12 +38515,18 @@ msgid ""
 "booby trap! The derelict explodes, severely damaging your ship. You escaped "
 "death this time, but it was a close call!"
 msgstr ""
+"En el momento en que colocas tu pinza de abordaje en el derrelicto, ¡se "
+"activa una trampa explosiva! ¡La nave abandonada explota, dañando gravemente "
+"tu nave. Esta vez te has librado de la muerte, pero ha estado muy cerca!"
 
 #: dat/events/neutral/derelict.lua:363
 msgid ""
 "It was a trap! A derelict you found in {sys} was rigged to explode when your "
 "boarding clamp closed! That was a little too close for comfort."
 msgstr ""
+"¡Era una trampa! ¡Un derrelicto que encontraste en {sys} estaba preparado "
+"para explotar cuando se cerrara tu pinza de abordaje! Eso fue un poco "
+"demasiado cerca para tu comodidad."
 
 #: dat/events/neutral/derelict.lua:369
 msgid ""
@@ -38208,12 +38537,21 @@ msgid ""
 "little buggers have already drunk all of your fuel. You're not jumping "
 "anywhere until you find some more!"
 msgstr ""
+"Abordas el derrelicto y buscas en su interior, pero no encuentras nada. Sin "
+"embargo, cuando vuelves a tu nave, los sensores de tu nave descubren que "
+"había Sanguijuelas Espaciales a bordo de la nave abandonada, ¡y que se han "
+"adherido a tu nave! Las quemas con una antorcha de plasma, pero es demasiado "
+"tarde. Los pequeños bichos ya se han bebido todo el combustible. ¡No vas a "
+"saltar a ningún sitio hasta que encuentres más!"
 
 #: dat/events/neutral/derelict.lua:369
 msgid ""
 "Space Leeches attached to a derelict you found in {sys} sucked your ship "
 "empty of jump fuel before you could get rid of them! Rough break."
 msgstr ""
+"Unas Sanguijuelas Espaciales adheridas a un derrelicto que has encontrado en "
+"{sys} han vaciado tu nave de combustible de salto antes de que pudieras "
+"deshacerte de ellas. Un golpe duro."
 
 #: dat/events/neutral/derelict.lua:374
 msgid ""
@@ -38224,6 +38562,12 @@ msgid ""
 "prepare to undock, but you've lost precious time. The pirates are already in "
 "firing range…"
 msgstr ""
+"Colocas tu pinza de abordaje y subes al derrelicto abandonado. Apenas llevas "
+"un rato registrando el interior cuando {shipai}, la IA de tu nave, hace "
+"sonar una alarma de proximidad desde tu barco. ¡Los piratas se acercan a su "
+"posición! Está claro que este barco abandonado era una trampa. Vuelves a tu "
+"nave y te preparas para el abordaje, pero has perdido un tiempo precioso. "
+"Los piratas ya están a rango de tiro…"
 
 #: dat/events/neutral/derelict.lua:374
 msgid ""
@@ -38231,6 +38575,9 @@ msgid ""
 "you lived to tell the tale but you'll be more wary next time you board a "
 "derelict."
 msgstr ""
+"¡Era una trampa! Los piratas te atrajeron con un derrelicto en {sys}, "
+"afortunadamente viviste para contarlo, pero serás más cauteloso la próxima "
+"vez que abordes un derrelicto."
 
 #. Should naturally attack the player
 #. Run random bad event
@@ -38273,174 +38620,180 @@ msgstr ""
 #. Other misc factions
 #: dat/events/neutral/news.lua:30
 msgid "We bring you the latest news in the universe."
-msgstr ""
+msgstr "Te traemos las últimas noticias del universo."
 
 #: dat/events/neutral/news.lua:31
 msgid "Welcome to Universal News Feed."
-msgstr ""
+msgstr "Bienvenido al Feed de Noticias Universal."
 
 #: dat/events/neutral/news.lua:32
 msgid "Welcome to the Empire News Centre."
-msgstr ""
+msgstr "Bienvenido al Centro de Noticias Imperio."
 
 #: dat/events/neutral/news.lua:33
 msgid "Welcome to the Dvaered News Centre."
-msgstr ""
+msgstr "Bienvenido al Centro de Noticias Dvaered."
 
 #: dat/events/neutral/news.lua:34
 msgid "Welcome to Goddard News Centre."
-msgstr ""
+msgstr "Bienvenido al Centro de Noticias Goddard."
 
 #: dat/events/neutral/news.lua:35
 msgid "Pirate News Network."
-msgstr ""
+msgstr "Red de Noticias Pirata."
 
 #: dat/events/neutral/news.lua:36
 msgid "Sirius News Reel. Words of the Sirichana for all."
-msgstr ""
+msgstr "Noticias de Sirio. Palabras del Sirichana para todos."
 
 #: dat/events/neutral/news.lua:37
 msgid "The word of the Free Resistance."
-msgstr ""
+msgstr "La palabra de la Resistencia Libre."
 
 #: dat/events/neutral/news.lua:38
 msgid "News from the Frontier Alliance."
-msgstr ""
+msgstr "Noticias de la Alianza Frontera."
 
 #: dat/events/neutral/news.lua:39
 msgid "Word from the Proteron state."
-msgstr ""
+msgstr "Palabra del estado Proteron."
 
 #: dat/events/neutral/news.lua:40
 msgid "Scientific, Socioeconomic, and Sundry Events"
-msgstr ""
+msgstr "Acontecimientos Científicos, Socioeconómicos y Diversos Eventos"
 
 #: dat/events/neutral/news.lua:41
 msgid "The voice of the future."
-msgstr ""
+msgstr "La voz del futuro."
 
 #: dat/events/neutral/news.lua:42
 msgid "Data Relay Network"
-msgstr ""
+msgstr "Red de Retransmisión de Datos"
 
 #: dat/events/neutral/news.lua:48
 msgid "Interesting events from around the universe."
-msgstr ""
+msgstr "Eventos interesantes de todo el universo."
 
 #: dat/events/neutral/news.lua:49
 msgid "Fair and unbiased news."
-msgstr ""
+msgstr "Noticias justas e imparciales."
 
 #: dat/events/neutral/news.lua:50
 msgid "All the headlines all the time."
-msgstr ""
+msgstr "Todos los titulares todo el tiempo."
 
 #: dat/events/neutral/news.lua:53
 msgid "Fresh news from around the Empire."
-msgstr ""
+msgstr "Noticias frescas de todo el Imperio."
 
 #: dat/events/neutral/news.lua:54
 msgid "Remembering the Incident."
-msgstr ""
+msgstr "Recuerda el Incidente."
 
 #: dat/events/neutral/news.lua:55
 msgid "Keeping you informed."
-msgstr ""
+msgstr "Manteniéndole informado."
 
 #: dat/events/neutral/news.lua:58
 msgid "Short and to the point news."
-msgstr ""
+msgstr "Noticias cortas y directas."
 
 #: dat/events/neutral/news.lua:59
 msgid "All that happens. In simple words. So you can understand."
-msgstr ""
+msgstr "Todo lo que sucede. En palabras sencillas. Para que lo entiendas."
 
 #: dat/events/neutral/news.lua:60
 msgid "Simple news for busy people."
-msgstr ""
+msgstr "Noticias sencillas para gente ocupada."
 
 #: dat/events/neutral/news.lua:63
 msgid "We bring you the news from around the Empire."
-msgstr ""
+msgstr "Te traemos las noticias de todo el Imperio."
 
 #: dat/events/neutral/news.lua:66
 msgid "News that matters."
-msgstr ""
+msgstr "Noticias que importan."
 
 #: dat/events/neutral/news.lua:67
 msgid "Adopt a cat today!"
-msgstr ""
+msgstr "¡Adopta un gato hoy mismo!"
 
 #: dat/events/neutral/news.lua:68
 msgid "Laughing at the Emperor."
-msgstr ""
+msgstr "Riéndose del Emperador."
 
 #: dat/events/neutral/news.lua:69
 msgid "On top of the world."
-msgstr ""
+msgstr "En la cima del mundo."
 
 #: dat/events/neutral/news.lua:70
 msgid "Piracy has never been better."
-msgstr ""
+msgstr "La piratería nunca ha sido mejor."
 
 #: dat/events/neutral/news.lua:74
 msgid "News you can trust."
-msgstr ""
+msgstr "Noticias en las que puede confiar."
 
 #: dat/events/neutral/news.lua:77
 msgid "Stay faithful."
-msgstr ""
+msgstr "Permanece fiel."
 
 #: dat/events/neutral/news.lua:78
 msgid "Sirichana watches and guides you."
-msgstr ""
+msgstr "Sirichana te observa y te guía."
 
 #: dat/events/neutral/news.lua:82
 msgid "Information by optimization."
-msgstr ""
+msgstr "Información por optimización."
 
 #: dat/events/neutral/news.lua:83
 msgid "Statistically significant news."
-msgstr ""
+msgstr "Noticias estadísticamente significativas."
 
 #: dat/events/neutral/news.lua:84
 msgid "Peer reviewed news."
-msgstr ""
+msgstr "Noticias revisadas por pares."
 
 #: dat/events/neutral/news.lua:87
 msgid "Genetically tailoured for you."
-msgstr ""
+msgstr "Genéticamente adaptadas a ti."
 
 #: dat/events/neutral/news.lua:88
 msgid "Naturally selected news."
-msgstr ""
+msgstr "Noticias naturalmente seleccionadas."
 
 #.
 #. Science and technology
 #. --
 #: dat/events/neutral/news.lua:100
 msgid "Techs Probe for Sol"
-msgstr ""
+msgstr "Sondas Técnicas para el Sol"
 
 #: dat/events/neutral/news.lua:101
 msgid ""
 "Technicians recently returned from a new effort to understand the Sol "
 "Incident. They expect the first data to arrive in 50 decaperiods' time."
 msgstr ""
+"Los técnicos han regresado recientemente de un nuevo esfuerzo para "
+"comprender el Incidente de Sol. Esperan que los primeros datos lleguen "
+"dentro de 50 decaperiodos."
 
 #: dat/events/neutral/news.lua:104
 msgid "Sand Monster Caught On Tape"
-msgstr ""
+msgstr "Monstruo de Arena Grabado En Cinta"
 
 #: dat/events/neutral/news.lua:105
 msgid ""
 "Local residents claim footage from a security camera shows elusive beast "
 "walking through a desert storm. Exobiologists suspect a hoax."
 msgstr ""
+"Los residentes locales afirman que las imágenes de una cámara de seguridad "
+"muestran a una bestia escurridiza caminando a través de una tormenta en el "
+"desierto. Los exobiólogos sospechan que se trata de un engaño."
 
 #: dat/events/neutral/news.lua:108
 msgid "New Handheld AI Debuts"
-msgstr ""
+msgstr "Debut de la Nueva IA Portátil"
 
 #: dat/events/neutral/news.lua:109
 msgid ""
@@ -38448,10 +38801,13 @@ msgid ""
 "PDAI. Developer Isaac Asimov assured us the new model is guaranteed not to "
 "develop a personality of its own."
 msgstr ""
+"Braeburn, la división doméstica de Wellington, mostró ayer su nuevo PDAI. El "
+"desarrollador Isaac Asimov aseguró que el nuevo modelo está garantizado que "
+"no desarrollará una personalidad propia."
 
 #: dat/events/neutral/news.lua:112
 msgid "Experiment Produces Cold Fusion"
-msgstr ""
+msgstr "Experimento Produce Fusión Fría"
 
 #: dat/events/neutral/news.lua:113
 msgid ""
@@ -38459,10 +38815,14 @@ msgid ""
 "Eureka labs says he has produced a tabletop atomic reaction. He hopes to "
 "publish his results in a science journal later this cycle."
 msgstr ""
+"En una entrevista con el presentador de Vanguardia, McKenzie Kruft, un "
+"investigador de los laboratorios Eureka dice que ha producido una reacción "
+"atómica de mesa. Espera publicar sus resultados en una revista científica a "
+"finales de este ciclo."
 
 #: dat/events/neutral/news.lua:116
 msgid "The Case for Sex"
-msgstr ""
+msgstr "El Caso Por Sexo"
 
 #: dat/events/neutral/news.lua:117
 msgid ""
@@ -38470,10 +38830,13 @@ msgid ""
 "benefit from genetic recombination. \"Lady chance is more creative than we,"
 "\" says the famous gene splicer."
 msgstr ""
+"Aunque las tasas de clonación siguen aumentando, Vlad Taneev cree que "
+"todavía podemos beneficiarnos de la recombinación genética. \"La casualidad "
+"es más creativa que nosotros\", dice el famoso desdoblador de genes."
 
 #: dat/events/neutral/news.lua:120
 msgid "Hyperspace is Hot"
-msgstr ""
+msgstr "El Hiperespacio esta Caliente"
 
 #: dat/events/neutral/news.lua:121
 msgid ""
@@ -38481,23 +38844,29 @@ msgid ""
 "They are not yet sure whether the minute particles originated there, or are "
 "human contaminants."
 msgstr ""
+"Los investigadores han encontrado rastros de materia que se mueve muy "
+"rápidamente en el hiperespacio. Aún no están seguros de si las diminutas "
+"partículas se originaron allí o son contaminantes humanos."
 
 #: dat/events/neutral/news.lua:124
 msgid "A Family Freezer"
-msgstr ""
+msgstr "Un Congelador Familiar"
 
 #: dat/events/neutral/news.lua:125
 msgid ""
 "Looking for a cryotube for your parents?  Our expert panel finds Glass Box "
 "Mark II will keep your family alive for nearly as long as the previous model."
 msgstr ""
+"¿Buscas un criotubo para tus padres?  Nuestro panel de expertos considera "
+"que Caja de Cristal Versión II mantendrá a su familia con vida durante casi "
+"el mismo tiempo que el modelo anterior."
 
 #.
 #. Business
 #. --
 #: dat/events/neutral/news.lua:131
 msgid "Fullerton Reports Quarterly Loss"
-msgstr ""
+msgstr "Fullerton Reporta Pérdidas Trimestrales"
 
 #: dat/events/neutral/news.lua:132
 msgid ""
@@ -38505,10 +38874,14 @@ msgid ""
 "decaperiods. A company spokeswoman attributed the loss to the high cost of "
 "deuterium fuel and falling sales."
 msgstr ""
+"El fabricante de motores Industrias Fullerton ha registrado unas pérdidas de "
+"47.000 millones de créditos en los últimos 25 años. Una portavoz de la "
+"empresa atribuyó las pérdidas al elevado coste del combustible de deuterio y "
+"a la caída de ventas."
 
 #: dat/events/neutral/news.lua:135
 msgid "Genetric Board Meets"
-msgstr ""
+msgstr "Reunión de la Junta de Genetric"
 
 #: dat/events/neutral/news.lua:136
 msgid ""
@@ -38516,6 +38889,9 @@ msgid ""
 "the board of directors will meet today. The group is expected to appoint a "
 "new chief science officer."
 msgstr ""
+"Tras la salida de Yavi Bartolo como CSO de Genetric Technologies, el consejo "
+"de administración se reunirá hoy. Se espera que el grupo nombre un nuevo "
+"director científico."
 
 #.
 #. Politics
@@ -38525,7 +38901,7 @@ msgstr ""
 #. --
 #: dat/events/neutral/news.lua:145
 msgid "Eyeteeth Back in Fashion"
-msgstr ""
+msgstr "Los Engarces en dientes Vuelven a Estar a la Moda"
 
 #: dat/events/neutral/news.lua:146
 msgid ""
@@ -38534,6 +38910,10 @@ msgid ""
 "of enamel from their teeth in favour of a binding of quartz, granite, or "
 "even flint."
 msgstr ""
+"A pesar de los consejos de los dentistas, las fundas dentales se han puesto "
+"de moda de nuevo. Los jóvenes de todos los mundos habitados utilizan kits "
+"caseros para despojar a sus dientes de una capa de esmalte en favor de una "
+"ligadura de cuarzo, granito o incluso sílex."
 
 #: dat/events/neutral/news.lua:149
 msgid "Everyone Loves a SuperChimp"
