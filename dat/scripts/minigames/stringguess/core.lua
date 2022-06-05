@@ -45,7 +45,7 @@ local function shuffle(tbl)
    return tbl
 end
 
-local font, keyset, sol, guess, tries, game, selected
+local font, keyset, sol, guess, tries, game, round, selected
 
 function mg.load ()
    font = lg.newFont( 16 )
@@ -68,9 +68,30 @@ function mg.load ()
    tries = 6
    game  = 0
    selected = 1
+   round = true
 end
 
 local matches_exact, matches_fuzzy
+local function finish_round ()
+   matches_exact = 0
+   matches_fuzzy = 0
+   for i,v in ipairs(guess) do
+      if v==sol[i] then
+         matches_exact = matches_exact+1
+      elseif inlist( sol, v ) then
+         matches_fuzzy = matches_fuzzy+1
+      end
+   end
+
+   tries = tries - 1
+   if matches_exact == 3 then
+      game = 1
+   elseif tries <= 0 then
+      game = -1
+   end
+   round = false
+end
+
 function mg.keypressed( key )
    if key == "escape" then
       le.quit()
@@ -82,9 +103,17 @@ function mg.keypressed( key )
 
    local k = string.upper(key)
    if inlist( keyset, k ) then
-      if #guess >= #sol then
-      selected = 1
-      guess = { k }
+      if not round then
+         selected = 2
+         guess = { k }
+         round = true
+      elseif guess[selected]==k then
+         for i=1,#sol do
+            if not guess[i] then
+               selected = i
+               break
+            end
+         end
       elseif not inlist( guess, k ) then
          guess[selected] = k
          for i=1,#sol do
@@ -94,27 +123,26 @@ function mg.keypressed( key )
             end
          end
          if #guess >= #sol then
-            matches_exact = 0
-            matches_fuzzy = 0
-            for i,v in ipairs(guess) do
-               if v==sol[i] then
-                  matches_exact = matches_exact+1
-               elseif inlist( sol, v ) then
-                  matches_fuzzy = matches_fuzzy+1
-               end
-            end
-
-            tries = tries - 1
-            if matches_exact == 3 then
-               game = 1
-            elseif tries <= 0 then
-               game = -1
-            end
+            finish_round()
+            return
          end
       end
    end
 
-   if key == "left" then
+   -- Next round if applicable
+   if not round then
+      guess = {}
+      selected = 1
+      round = true
+      return
+   end
+
+   -- handle keys
+   if key == "space" then
+      if #guess >= #sol then
+         finish_round()
+      end
+   elseif key == "left" then
       selected = math.max( selected-1, 1 )
    elseif key == "right" then
       selected = math.min( selected+1, #sol )
@@ -148,13 +176,15 @@ end
 
 function mg.draw ()
    local bx, by = 0, 0
-   local x, y
+   local x, y, s, b
 
    -- Draw glyph bar
    x = 20
    y = 30
+   s = 30
+   b = 10
    lg.setColor{ 1, 1, 1, 1 }
-   lg.rectangle( "line", bx+x, by+y, 30, 30*#keyset )
+   lg.rectangle( "line", bx+x, by+y, s+b, s*#keyset+b )
    for k,v in ipairs(keyset) do
       local col
       if inlist( guess, v ) then
@@ -162,25 +192,49 @@ function mg.draw ()
       else
          col = nil
       end
-      drawglyph( v, font, bx+x+5, by+y+k*30-25, 20, 20, col )
+      drawglyph( v, font, bx+x+b, by+y+k*s-s+b, s-b, s-b, col )
    end
 
-   x = 60
+   x = 80
    lg.print( fmt.f(_("Input the code ({tries} tries left):"),{tries=tries}), font, bx+x, by+y )
 
-   x = 70
+   x = 100
    y = 70
+   s = 50
+   b = 14
    lg.setColor{ 1, 1, 1, 1 }
-   lg.rectangle( "line", bx+x-5, by+y-5, 50*#sol+10, 50+10 )
+   lg.rectangle( "line", bx+x, by+y, s*#sol+b, s+b )
    for i=1,#sol do
       local v = guess[i] or ""
       local col
-      if i==selected then
-         col = { 0, 0.8, 0.8, 0.6 }
+      if not round then
+         if matches_exact >= #sol then
+            col = { 0.2, 0.8, 0.2 }
+         else
+            col = { 0.8, 0.2, 0.2 }
+         end
       else
-         col = nil
+         if i==selected then
+            col = { 0, 0.8, 0.8, 0.6 }
+         else
+            col = nil
+         end
       end
-      drawglyph( v, font, bx+x+i*50-45, by+y+5, 40, 40, col )
+      drawglyph( v, font, bx+x+i*s-s+b, by+y+b, s-b, s-b, col )
+   end
+
+   if not round then
+      x = x + s*#sol+b + 10
+      y = y + (s+b-font:getHeight())*0.5
+      local str = ""
+      for i=1,matches_fuzzy do
+         str = str .. "?"
+      end
+      for i=1,matches_exact do
+         str = str .. "!"
+      end
+      lg.setColor{ 1, 0, 0 }
+      lg.print( str, x, y )
    end
 
 
