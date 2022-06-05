@@ -527,6 +527,7 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
 {
    glFontStash *stsh = gl_fontGetStash( iter->ft_font );
    int brk, can_break, can_fit, any_char_fit = 0, any_word_fit;
+   size_t char_end = iter->l_next;
    struct LineBreakContext lbc;
 
    if (iter->dead)
@@ -539,13 +540,14 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
    iter->l_begin = iter->l_next;
    iter->l_end = iter->l_begin;
    _linepos_t pos = { .i = iter->l_begin, .w = 0. };
-   pos.ch = font_nextChar( iter->text, &pos.i );
+   pos.ch = font_nextChar( iter->text, &char_end );
    lb_init_break_context( &lbc, pos.ch, gettext_getLanguage() );
 
    while (pos.ch != '\0') {
       glFontGlyph *glyph = gl_fontGetGlyph( stsh, pos.ch );
       _linepos_t nextpos = pos;
-      nextpos.ch = font_nextChar( iter->text, &nextpos.i );
+      nextpos.i = char_end;
+      nextpos.ch = font_nextChar( iter->text, &char_end );
       nextpos.w += glyph==NULL ? 0 : gl_fontKernGlyph( stsh, pos.ch, glyph ) + glyph->adv_x;
       brk = lb_process_next_char( &lbc, nextpos.ch );
       can_break = (brk == LINEBREAK_ALLOWBREAK && !iter->no_soft_breaks) || brk == LINEBREAK_MUSTBREAK;
@@ -557,16 +559,16 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
 
       if (can_break && iswspace( pos.ch )) {
          iter->l_width = (int)round(pos.w);
-         iter->l_end = iter->l_next = pos.i;
+         iter->l_end = iter->l_next = nextpos.i;
          u8_dec( iter->text, &iter->l_end );
       }
       else if (can_break && can_fit) {
          iter->l_width = (int)round(nextpos.w);
-         iter->l_end = iter->l_next = pos.i;
+         iter->l_end = iter->l_next = nextpos.i;
       }
       else if (!can_fit && !any_word_fit) {
          iter->l_width = (int)round(pos.w);
-         iter->l_end = iter->l_next = pos.i;
+         iter->l_end = iter->l_next = nextpos.i;
          u8_dec( iter->text, &iter->l_end );
          u8_dec( iter->text, &iter->l_next );
       }
