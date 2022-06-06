@@ -62,9 +62,10 @@ local function shuffle(tbl)
    return tbl
 end
 
-local font, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha, showhelp
+local font, fonth, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha
 function mg.load ()
-   font = lg.newFont( 16 )
+   fonth = 16
+   font = lg.newFont( fonth )
 
    keyset = {"Q","W","E","R","T","Y"}
    local rndset = {}
@@ -88,7 +89,6 @@ function mg.load ()
    round = true
    alpha = 0
    done = false
-   showhelp = false
    attempts = {}
 end
 
@@ -134,11 +134,6 @@ function mg.keypressed( key )
    end
 
    if game ~= 0 then
-      return
-   end
-
-   if key == "h" then
-      showhelp = not showhelp
       return
    end
 
@@ -222,7 +217,7 @@ local function drawglyph( g, f, x, y, w, h, col )
    lg.printf( g, f, x, y+(h-fh)*0.5, w, "center" )
 end
 
-local function drawresult( exact, fuzzy, x, y, _h )
+local function drawresult( exact, fuzzy, x, y, h )
    local str = ""
    for i=1,fuzzy do
       str = str .. "?"
@@ -231,7 +226,7 @@ local function drawresult( exact, fuzzy, x, y, _h )
       str = str .. "!"
    end
    setcol{ 1, 0, 0 }
-   lg.print( str, font, x, y )
+   lg.print( str, font, x, y+(h-fonth)*0.5 )
 end
 
 function mg.draw ()
@@ -241,7 +236,7 @@ function mg.draw ()
    -- Draw glyph bar
    x = 10
    y = 30
-   s = 30
+   s = 40
    b = 10
    setcol( colours.text )
    lg.printf( "Codes", font, bx+x, by+y, s+40+b, "center" )
@@ -261,13 +256,13 @@ function mg.draw ()
    -- Draw the main interface
    x = 90
    y = 70
-   s = 50
+   s = 60
    b = 14
    setcol( colours.text )
-   local txt = fmt.f(_("Input the code ({tries} tries left):"),{tries=tries})
+   local txt = fmt.f(_("Input the code sequence ({tries} tries left):"),{tries=tries})
    local txtw = font:getWidth( txt )
    local boxw = s*#sol+b
-   local len = math.max( boxw, txtw )
+   local len = math.max( boxw, txtw )+40
    lg.print( txt, font, bx+x+(len-txtw)*0.5, by+y )
 
    x = x + (len-boxw)*0.5
@@ -294,20 +289,16 @@ function mg.draw ()
    end
 
    x = 90
-   if showhelp then
-      txt = _([[Help:
+   txt = _([[Help:
 Crack the password by guessing the codes
-? indicates correct code, but wrong position
-! indicates correct code and position]])
-   else
-      txt = _("Press h for help")
-   end
+? correct code, wrong position
+! correct code and position]])
    lg.printf( txt, font, x, y+s+b+10, len )
 
    -- Display attempts
    x = 90 + len + 20
    y = 30
-   s = 30
+   s = 40
    b = 10
    boxw = s*#sol+b+40
    setcol( colours.text )
@@ -320,7 +311,7 @@ Crack the password by guessing the codes
       for j,v in ipairs(t.guess) do
          drawglyph( v, font, bx+x+j*s-s+b, by+y+b, s-b, s-b )
       end
-      drawresult( t.matches_exact, t.matches_fuzzy, bx+x+boxw-40, by+y+b, 30 )
+      drawresult( t.matches_exact, t.matches_fuzzy, bx+x+boxw-40, by+y, s+b )
       y = y+s
    end
 end
