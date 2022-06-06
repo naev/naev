@@ -4,12 +4,12 @@ local mg = {}
 
 local colours = {
    dark        = {0x00/0xFF, 0x00/0xFF, 0x00/0xFF},
-   bg         = {0x1C/0xFF, 0x30/0xFF, 0x4A/0xFF},
+   bg          = {0x1C/0xFF, 0x30/0xFF, 0x4A/0xFF},
    highlight   = {0x04/0xFF, 0x6B/0xFF, 0x99/0xFF},
-   ok = {0x00/0xFF, 0xCF/0xFF, 0xFF/0xFF},
-   foobar = {0xB3/0xFF, 0xEF/0xFF, 0xFF/0xFF},
-   text = {0xFF/0xFF, 0xFF/0xFF, 0xFF/0xFF},
-   bad = { 0.8, 0.2, 0.2 },
+   ok          = {0x00/0xFF, 0xCF/0xFF, 0xFF/0xFF},
+   foobar      = {0xB3/0xFF, 0xEF/0xFF, 0xFF/0xFF},
+   text        = {0xFF/0xFF, 0xFF/0xFF, 0xFF/0xFF},
+   bad         = { 0.8, 0.2, 0.2 },
 }
 
 local function _( x )
@@ -117,6 +117,15 @@ local function finish_round ()
    round = false
 end
 
+local function inguess( k )
+   for i=1,#sol do
+      if guess[i] == k then
+         return true
+      end
+   end
+   return false
+end
+
 function mg.keypressed( key )
    if key == "escape" then
       le.quit()
@@ -174,7 +183,7 @@ function mg.keypressed( key )
    elseif key == "down" then
       local p = getpos( keyset, guess[selected] ) or 0
       for i=p+1, #keyset do
-         if not inlist( guess, keyset[i] ) then
+         if not inguess( keyset[i] ) then
             guess[selected] = keyset[i]
             break
          end
@@ -182,7 +191,7 @@ function mg.keypressed( key )
    elseif key == "up" then
       local p = getpos( keyset, guess[selected] ) or #sol+1
       for i=p-1,1,-1 do
-         if not inlist( guess, keyset[i] ) then
+         if not inguess( keyset[i] ) then
             guess[selected] = keyset[i]
             break
          end
@@ -292,45 +301,6 @@ function mg.draw ()
       drawresult( t.matches_exact, t.matches_fuzzy, bx+x+boxw-40, by+y+b, 30 )
       y = y+s
    end
-
---[[
-
-   s = "ATTEMPTS LEFT: "..tostring(tries)
-   lg.print( s, font, x, y )
-
-   y = y + fontlh
-   s = "SYMBOL SET: "
-   for k,v in ipairs( keyset ) do
-      s = s .. v .. " "
-   end
-   lg.print( s, font, x, y )
-
-   y = y + fontlh
-   s = "GUESS: "
-   for k,v in ipairs( guess ) do
-      s = s .. v .. " "
-   end
-   lg.print( s, font, x, y )
-
-   if #guess >= #sol then
-      y = y + fontlh
-      s = "RESULT: "
-      for i=1,matches_fuzzy do
-         s = s .. "? "
-      end
-      for i=1,matches_exact do
-         s = s .. "! "
-      end
-      lg.print( s, font, x, y )
-   end
-
-   y = y + fontlh
-   if game > 0 then
-      lg.print( "YOU WIN!", font, x, y )
-   elseif game < 0 then
-      lg.print( "YOU LOSE!", font, x, y )
-   end
---]]
 end
 
 function mg.update( _dt )
