@@ -2,6 +2,7 @@ local lg = require "love.graphics"
 local le = require "love.event"
 local la = require 'love.audio'
 local love = require "love"
+local love_shaders   = require "love_shaders"
 local fmt = require "format"
 local mg = {}
 
@@ -25,6 +26,7 @@ local function getpos( tbl, elm )
 end
 
 local font, fonth, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha, bx, by
+local bgshader
 function mg.load ()
    -- Load audio if applicable
    if not mg.sfx then
@@ -64,6 +66,8 @@ function mg.load ()
 
    bx = (lw-ww)*0.5
    by = (lh-wh)*0.5
+
+   bgshader = love_shaders.circuit()
 end
 
 local matches_exact, matches_fuzzy
@@ -178,11 +182,10 @@ function mg.keypressed( key )
    end
 end
 
-local function setcol( rgb, a )
-   rgb = rgb or {1, 1, 1}
+local function setcol( col )
+   local r, g, b, a = table.unpack( col )
    a = a or 1
-   rgb[4] = alpha * a
-   lg.setColor( rgb )
+   lg.setColor( r, g, b, a*alpha )
 end
 
 local function drawglyph( g, f, x, y, w, h, col )
@@ -208,6 +211,13 @@ end
 
 function mg.draw ()
    local x, y, s, b
+
+   -- Fancy shader background
+   local nw, nh = naev.gfx.dim()
+   setcol{ 0.2, 0.2, 0.2, 0.85}
+   lg.setShader( bgshader )
+   love_shaders.img:draw( 0, 0, 0, nw, nh )
+   lg.setShader()
 
    -- Draw glyph bar
    x = 0
@@ -303,6 +313,7 @@ function mg.update( dt )
    else
       alpha = math.min( 1, alpha + spd*dt )
    end
+   bgshader:update(dt)
    return false -- true to finish
 end
 
