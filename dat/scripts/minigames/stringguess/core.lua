@@ -24,9 +24,15 @@ local function getpos( tbl, elm )
    return false
 end
 
-local font, fonth, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha, bx, by
+local font, fonth, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha, bx, by, sol_length
 local bgshader
 function mg.load ()
+   local c = naev.cache()
+   local params = c.stringguess.params
+   max_tries = params.max_tries or 7
+   keyset = params.keyset or {"A","E","K","N","O","V"} -- NAEV OK
+   sol_length = params.sol_length or 3
+
    -- Load audio if applicable
    if not mg.sfx then
       mg.sfx = {
@@ -39,15 +45,13 @@ function mg.load ()
    fonth = 16
    font = lg.newFont( fonth )
 
-   keyset = {"A","E","K","N","O","V"} -- NAEV OK
    local rndset = rnd.permutation( keyset )
    sol = {}
-   for i=1,3 do
+   for i=1,sol_length do
       table.insert( sol, rndset[i] )
    end
 
    guess = {}
-   max_tries = 7
    tries = max_tries
    game  = 0
    selected = 1
