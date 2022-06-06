@@ -197,6 +197,13 @@ local function drawglyph( g, f, x, y, w, h, col )
    lg.printf( g, f, x, y+(h-fh)*0.5, w, "center" )
 end
 
+local function drawbox( x, y, w, h )
+   setcol( colours.dark )
+   lg.rectangle( "fill", x, y, w, h )
+   setcol( colours.text )
+   lg.rectangle( "line", x, y, w, h )
+end
+
 local function drawresult( exact, fuzzy, x, y, h )
    local str = ""
    for i=1,fuzzy do
@@ -228,7 +235,7 @@ function mg.draw ()
    lg.printf( "Codes", font, bx+x, by+y, s+40+b, "center" )
    y = y+25
    x = x+20
-   lg.rectangle( "line", bx+x, by+y, s+b, s*#keyset+b )
+   drawbox( bx+x, by+y, s+b, s*#keyset+b )
    for k,v in ipairs(keyset) do
       local col
       if inlist( guess, v ) then
@@ -253,8 +260,7 @@ function mg.draw ()
 
    x = x + (len-boxw)*0.5
    y = y+30
-   setcol( colours.text )
-   lg.rectangle( "line", bx+x, by+y, boxw, s+b )
+   drawbox( bx+x, by+y, boxw, s+b )
    for i=1,#sol do
       local v = guess[i] or ""
       local col
@@ -292,8 +298,7 @@ Guess the sequence of codes
    lg.printf( "Attempts", font, bx+x, by+y, boxw, "center" )
    y = y+25
    x = x
-   setcol( colours.text )
-   lg.rectangle( "line", bx+x, by+y, boxw, s*(max_tries-1)+b )
+   drawbox( bx+x, by+y, boxw, s*(max_tries-1)+b )
    for i,t in ipairs(attempts) do
       for j,v in ipairs(t.guess) do
          drawglyph( v, font, bx+x+j*s-s+b, by+y+b, s-b, s-b )
