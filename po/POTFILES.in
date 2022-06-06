@@ -2757,6 +2757,7 @@ dat/scripts/minigames/sokoban/core.lua
 dat/scripts/minigames/sokoban/levels.lua
 dat/scripts/minigames/sokoban/main.lua
 dat/scripts/minigames/stringguess.lua
+dat/scripts/minigames/stringguess/conf.lua
 dat/scripts/minigames/stringguess/core.lua
 dat/scripts/minigames/stringguess/main.lua
 dat/scripts/outfits/shaders.lua
