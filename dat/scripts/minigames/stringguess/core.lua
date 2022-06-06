@@ -62,7 +62,7 @@ local function shuffle(tbl)
    return tbl
 end
 
-local font, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha
+local font, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha, showhelp
 function mg.load ()
    font = lg.newFont( 16 )
 
@@ -88,6 +88,7 @@ function mg.load ()
    round = true
    alpha = 0
    done = false
+   showhelp = false
    attempts = {}
 end
 
@@ -133,6 +134,11 @@ function mg.keypressed( key )
    end
 
    if game ~= 0 then
+      return
+   end
+
+   if key == "h" then
+      showhelp = not showhelp
       return
    end
 
@@ -287,9 +293,16 @@ function mg.draw ()
       drawglyph( v, font, bx+x+i*s-s+b, by+y+b, s-b, s-b, col )
    end
 
-   if not round then
-      drawresult( matches_exact, matches_fuzzy, x, y+s+b+10, 30 )
+   x = 90
+   if showhelp then
+      txt = _([[Help:
+Crack the password by guessing the codes
+? indicates correct code, but wrong position
+! indicates correct code and position]])
+   else
+      txt = _("Press h for help")
    end
+   lg.printf( txt, font, x, y+s+b+10, len )
 
    -- Display attempts
    x = 90 + len + 20
