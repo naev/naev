@@ -1,5 +1,4 @@
 local lg = require "love.graphics"
-local le = require "love.event"
 local la = require 'love.audio'
 local love = require "love"
 local love_shaders   = require "love_shaders"
@@ -85,6 +84,8 @@ local function finish_round ()
    tries = tries - 1
    if matches_exact == 3 then
       game = 1
+      local c = naev.cache()
+      c.stringguess.won = true
       mg.sfx.level:play()
    elseif tries <= 0 then
       game = -1
@@ -313,13 +314,13 @@ function mg.update( dt )
    if done then
       alpha = alpha - spd*dt
       if alpha < 0 then
-         le.quit()
+         return true
       end
    else
       alpha = math.min( 1, alpha + spd*dt )
    end
    bgshader:update(dt)
-   return false -- true to finish
+   return false
 end
 
 return mg

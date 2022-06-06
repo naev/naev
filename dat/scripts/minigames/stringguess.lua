@@ -12,6 +12,7 @@ local function setup( params, standalone )
    c.stringguess = {}
    c.stringguess.params = params
    c.stringguess.standalone = standalone
+   c.stringguess.won = false
 end
 
 --[[
@@ -46,9 +47,9 @@ function stringguess.vn( params )
    return s
 end
 
-function stringguess.completed ()
+function stringguess.won ()
    local c = naev.cache()
-   return (c.stringguess and c.stringguess.completed)
+   return (c.stringguess and c.stringguess.won)
 end
 
 return stringguess
