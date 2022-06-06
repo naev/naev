@@ -1,5 +1,7 @@
 local lg = require "love.graphics"
 local le = require "love.event"
+local la = require 'love.audio'
+local love = require "love"
 local fmt = require "format"
 local mg = {}
 
@@ -22,12 +24,21 @@ local function getpos( tbl, elm )
    return false
 end
 
-local font, fonth, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha
+local font, fonth, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha, bx, by
 function mg.load ()
+   -- Load audio if applicable
+   if not mg.sfx then
+      mg.sfx = {
+         --goal     = la.newSource( 'snd/sounds/sokoban/goal.ogg' ),
+         invalid  = la.newSource( 'snd/sounds/sokoban/invalid.ogg' ),
+         level    = la.newSource( 'snd/sounds/sokoban/level.ogg' ),
+      }
+   end
+
    fonth = 16
    font = lg.newFont( fonth )
 
-   keyset = {"N","A","E","V","G","O"}
+   keyset = {"A","E","K","N","O","V"} -- NAEV OK
    local rndset = rnd.permutation( keyset )
    sol = {}
    for i=1,3 do
@@ -35,7 +46,7 @@ function mg.load ()
    end
 
    guess = {}
-   max_tries = 6
+   max_tries = 7
    tries = max_tries
    game  = 0
    selected = 1
@@ -43,6 +54,16 @@ function mg.load ()
    alpha = 0
    done = false
    attempts = {}
+
+   -- Window properties
+   local lw, lh = love.window.getDesktopDimensions()
+   lg.setBackgroundColor(0, 0, 0, 0)
+   local ww, wh
+   ww = 90 + 60*#sol+14 +  40 + 20 + 40*#sol+10+40
+   wh = 25 + #keyset*40+10
+
+   bx = (lw-ww)*0.5
+   by = (lh-wh)*0.5
 end
 
 local matches_exact, matches_fuzzy
@@ -60,14 +81,17 @@ local function finish_round ()
    tries = tries - 1
    if matches_exact == 3 then
       game = 1
+      mg.sfx.level:play()
    elseif tries <= 0 then
       game = -1
+      mg.sfx.invalid:play()
    else
       table.insert( attempts, {
          guess = tcopy( guess ),
          matches_exact = matches_exact,
          matches_fuzzy = matches_fuzzy,
       } )
+      mg.sfx.invalid:play()
    end
    round = false
 end
@@ -183,12 +207,11 @@ local function drawresult( exact, fuzzy, x, y, h )
 end
 
 function mg.draw ()
-   local bx, by = 0, 0
    local x, y, s, b
 
    -- Draw glyph bar
-   x = 10
-   y = 30
+   x = 0
+   y = 0
    s = 40
    b = 10
    setcol( colours.text )
@@ -215,7 +238,7 @@ function mg.draw ()
    local txt = fmt.f(_("Input the code sequence ({tries} tries left):"),{tries=tries})
    local txtw = font:getWidth( txt )
    local boxw = s*#sol+b
-   local len = math.max( boxw, txtw )+40
+   local len = boxw + 160
    lg.print( txt, font, bx+x+(len-txtw)*0.5, by+y )
 
    x = x + (len-boxw)*0.5
@@ -247,11 +270,11 @@ function mg.draw ()
 Guess the sequence of codes
 ? correct code, wrong position
 ! correct code and position]])
-   lg.printf( txt, font, x, y+s+b+10, len )
+   lg.printf( txt, font, bx+x, by+y+s+b+10, len )
 
    -- Display attempts
    x = 90 + len + 20
-   y = 30
+   y = 0
    s = 40
    b = 10
    boxw = s*#sol+b+40
