@@ -1,5 +1,6 @@
 local lg = require "love.graphics"
 local le = require "love.event"
+local fmt = require "format"
 local mg = {}
 
 local colours = {
@@ -12,39 +13,6 @@ local colours = {
    bad         = { 0.8, 0.2, 0.2 },
 }
 
-local function _( x )
-   return x
-end
-local format = {}
-function format.f( str, tab )
-   return (str:gsub("%b{}", function(block)
-      local key, fmt = block:match("{(.*):(.*)}")
-      key = key or block:match("{(.*)}")
-      key = tonumber(key) or key  -- Support {1} for printing the first member of the table, etc.
-      local val = tab[key]
-      if val==nil then
-         warn(string.format(_("fmt.f: string '%s' has '%s'==nil!"), str, key))
-      end
-      return fmt and string.format('%'..fmt, val) or tostring(val)
-   end))
-end
-local fmt = format
-local function tcopy( tbl, copy )
-   copy = copy or {}
-   for k,v in pairs(tbl) do
-      copy[k] = v
-   end
-   return copy
-end
-
-local function inlist( tbl, elm )
-   for k,v in ipairs(tbl) do
-      if v==elm then
-         return true
-      end
-   end
-   return false
-end
 local function getpos( tbl, elm )
    for k,v in ipairs(tbl) do
       if v==elm then
@@ -54,28 +22,13 @@ local function getpos( tbl, elm )
    return false
 end
 
-local function shuffle(tbl)
-   for i = #tbl, 2, -1 do
-      local j = math.random(i)
-      tbl[i], tbl[j] = tbl[j], tbl[i]
-   end
-   return tbl
-end
-
 local font, fonth, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha
 function mg.load ()
    fonth = 16
    font = lg.newFont( fonth )
 
    keyset = {"Q","W","E","R","T","Y"}
-   local rndset = {}
-   for k,v in ipairs(keyset) do
-      table.insert( rndset, v )
-   end
-   rndset = shuffle( rndset )
-   --[[
-   rndset = rnd.permutation( keyset )
-   --]]
+   local rndset = rnd.permutation( keyset )
    sol = {}
    for i=1,3 do
       table.insert( sol, rndset[i] )
@@ -289,8 +242,9 @@ function mg.draw ()
    end
 
    x = 90
+   y = y + 20
    txt = _([[Help:
-Crack the password by guessing the codes
+Guess the sequence of codes
 ? correct code, wrong position
 ! correct code and position]])
    lg.printf( txt, font, x, y+s+b+10, len )
