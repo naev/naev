@@ -207,10 +207,10 @@ end
 local function drawresult( exact, fuzzy, x, y, h )
    local str = ""
    for i=1,fuzzy do
-      str = str .. "?"
+      str = str .. "#o?#0"
    end
    for i=1,exact do
-      str = str .. "!"
+      str = str .. "#b!#0"
    end
    setcol{ 1, 0, 0 }
    lg.print( str, font, x, y+(h-fonth)*0.5 )
@@ -252,10 +252,10 @@ function mg.draw ()
    s = 60
    b = 14
    setcol( colours.text )
-   local txt = fmt.f(_("Input the code sequence ({tries} tries left):"),{tries=tries})
+   local txt = fmt.f(_("Input the code sequence ({tries} attempts left):"),{tries=tries})
    local txtw = font:getWidth( txt )
    local boxw = s*#sol+b
-   local len = boxw + 160
+   local len = boxw + 220
    lg.print( txt, font, bx+x+(len-txtw)*0.5, by+y )
 
    x = x + (len-boxw)*0.5
@@ -280,12 +280,12 @@ function mg.draw ()
       drawglyph( v, font, bx+x+i*s-s+b, by+y+b, s-b, s-b, col )
    end
 
-   x = 90
+   x = 140
    y = y + 20
-   txt = _([[Help:
-Guess the sequence of codes
-? correct code, wrong position
-! correct code and position]])
+   txt = _([[#nHelp:
+#0Guess the sequence of codes
+#o?#0 correct code, wrong position
+#b!#0 correct code and position]])
    lg.printf( txt, font, bx+x, by+y+s+b+10, len )
 
    -- Display attempts
