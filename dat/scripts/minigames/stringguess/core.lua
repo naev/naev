@@ -27,7 +27,7 @@ function mg.load ()
    fonth = 16
    font = lg.newFont( fonth )
 
-   keyset = {"Q","W","E","R","T","Y"}
+   keyset = {"N","A","E","V","G","O"}
    local rndset = rnd.permutation( keyset )
    sol = {}
    for i=1,3 do
@@ -271,13 +271,14 @@ Guess the sequence of codes
 end
 
 function mg.update( dt )
+   local spd = 4
    if done then
-      alpha = alpha - 4*dt
+      alpha = alpha - spd*dt
       if alpha < 0 then
          le.quit()
       end
    else
-      alpha = math.min( 1, alpha + 4*dt )
+      alpha = math.min( 1, alpha + spd*dt )
    end
    return false -- true to finish
 end
