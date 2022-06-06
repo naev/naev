@@ -62,8 +62,7 @@ local function shuffle(tbl)
    return tbl
 end
 
-local font, keyset, sol, guess, max_tries, tries, game, round, selected, attempts
-
+local font, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha
 function mg.load ()
    font = lg.newFont( 16 )
 
@@ -87,6 +86,8 @@ function mg.load ()
    game  = 0
    selected = 1
    round = true
+   alpha = 0
+   done = false
    attempts = {}
 end
 
@@ -128,7 +129,7 @@ end
 
 function mg.keypressed( key )
    if key == "escape" then
-      le.quit()
+      done = true
    end
 
    if game ~= 0 then
@@ -199,11 +200,18 @@ function mg.keypressed( key )
    end
 end
 
+local function setcol( rgb, a )
+   rgb = rgb or {1, 1, 1}
+   a = a or 1
+   rgb[4] = alpha * a
+   lg.setColor( rgb )
+end
+
 local function drawglyph( g, f, x, y, w, h, col )
    col = col or colours.bg
-   lg.setColor( col )
+   setcol( col )
    lg.rectangle( "fill", x, y, w, h )
-   lg.setColor( colours.text )
+   setcol( colours.text )
    local fh = f:getHeight()
    lg.printf( g, f, x, y+(h-fh)*0.5, w, "center" )
 end
@@ -216,7 +224,7 @@ local function drawresult( exact, fuzzy, x, y, _h )
    for i=1,exact do
       str = str .. "!"
    end
-   lg.setColor{ 1, 0, 0 }
+   setcol{ 1, 0, 0 }
    lg.print( str, font, x, y )
 end
 
@@ -229,7 +237,7 @@ function mg.draw ()
    y = 30
    s = 30
    b = 10
-   lg.setColor( colours.text )
+   setcol( colours.text )
    lg.printf( "Codes", font, bx+x, by+y, s+40+b, "center" )
    y = y+25
    x = x+20
@@ -244,11 +252,12 @@ function mg.draw ()
       drawglyph( v, font, bx+x+b, by+y+k*s-s+b, s-b, s-b, col )
    end
 
+   -- Draw the main interface
    x = 90
    y = 70
    s = 50
    b = 14
-   lg.setColor( colours.text )
+   setcol( colours.text )
    local txt = fmt.f(_("Input the code ({tries} tries left):"),{tries=tries})
    local txtw = font:getWidth( txt )
    local boxw = s*#sol+b
@@ -257,7 +266,7 @@ function mg.draw ()
 
    x = x + (len-boxw)*0.5
    y = y+30
-   lg.setColor( colours.text )
+   setcol( colours.text )
    lg.rectangle( "line", bx+x, by+y, boxw, s+b )
    for i=1,#sol do
       local v = guess[i] or ""
@@ -288,11 +297,11 @@ function mg.draw ()
    s = 30
    b = 10
    boxw = s*#sol+b+40
-   lg.setColor( colours.text )
+   setcol( colours.text )
    lg.printf( "Attempts", font, bx+x, by+y, boxw, "center" )
    y = y+25
    x = x
-   lg.setColor( colours.text )
+   setcol( colours.text )
    lg.rectangle( "line", bx+x, by+y, boxw, s*(max_tries-1)+b )
    for i,t in ipairs(attempts) do
       for j,v in ipairs(t.guess) do
@@ -303,7 +312,15 @@ function mg.draw ()
    end
 end
 
-function mg.update( _dt )
+function mg.update( dt )
+   if done then
+      alpha = alpha - 4*dt
+      if alpha < 0 then
+         le.quit()
+      end
+   else
+      alpha = math.min( 1, alpha + 4*dt )
+   end
    return false -- true to finish
 end
 
