@@ -25,13 +25,22 @@ local function getpos( tbl, elm )
 end
 
 local font, fonth, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha, bx, by, sol_length
-local bgshader
+local bgshader, movekeys
 function mg.load ()
    local c = naev.cache()
    local params = c.stringguess.params
    max_tries = params.max_tries or 7
    keyset = params.keyset or {"A","E","K","N","O","V"} -- NAEV OK
    sol_length = params.sol_length or 3
+
+   -- Get movement keys
+   movekeys = {
+      shoot = string.lower( naev.keyGet("primary") ),
+      left = string.lower( naev.keyGet("left") ),
+      right= string.lower( naev.keyGet("right") ),
+      accel= string.lower( naev.keyGet("accel") ),
+      reverse = string.lower( naev.keyGet("reverse") ),
+   }
 
    -- Load audio if applicable
    if not mg.sfx then
@@ -160,15 +169,15 @@ function mg.keypressed( key )
    end
 
    -- handle keys
-   if key == "space" then
+   if key == movekeys.shoot then
       if #guess >= #sol then
          finish_round()
       end
-   elseif key == "left" then
+   elseif key == movekeys.left then
       selected = math.max( selected-1, 1 )
-   elseif key == "right" then
+   elseif key == movekeys.right then
       selected = math.min( selected+1, #sol )
-   elseif key == "down" then
+   elseif key == movekeys.reverse then
       local p = getpos( keyset, guess[selected] ) or 0
       for i=p+1, #keyset do
          if not inguess( keyset[i] ) then
@@ -176,7 +185,7 @@ function mg.keypressed( key )
             break
          end
       end
-   elseif key == "up" then
+   elseif key == movekeys.accel then
       local p = getpos( keyset, guess[selected] ) or #sol+1
       for i=p-1,1,-1 do
          if not inguess( keyset[i] ) then
