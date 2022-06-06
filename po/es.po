@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-03 22:07-0400\n"
-"PO-Revision-Date: 2022-06-05 21:20+0000\n"
+"PO-Revision-Date: 2022-06-06 22:18+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -737,7 +737,7 @@ msgstr "KAHAN"
 
 #: artwork/gfx/loading/kestrel_pirate.webp.txt:1
 msgid "PIRATE KESTREL"
-msgstr ""
+msgstr "CÉRNICALO PIRATA"
 
 #: artwork/gfx/loading/koala.webp.txt:1
 #, fuzzy
@@ -20117,10 +20117,10 @@ msgid ""
 "its tuning renders it ill-suited to heavier vessels."
 msgstr ""
 "El Remige fue desarrollado por Industrias Krain exclusivamente para su buque "
-"insignia, el Kestrel. Optimizado para las necesidades del Kestrel, el Remige "
-"ofrece un rendimiento que supera a la mayoría de los motores de crucero en "
-"todos los aspectos, aunque su puesta a punto lo hace poco adecuado para "
-"naves más pesadas."
+"insignia, el Cérnicalo. Optimizado para las necesidades del Cérnicalo, el "
+"Remige ofrece un rendimiento que supera a la mayoría de los motores de "
+"crucero en todos los aspectos, aunque su puesta a punto lo hace poco "
+"adecuado para naves más pesadas."
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:2
 msgid "Melendez Mammoth XL Engine"
@@ -24625,9 +24625,8 @@ msgid ""
 msgstr ""
 
 #: dat/ships/kestrel.xml:2
-#, fuzzy
 msgid "Kestrel"
-msgstr "Kestrel"
+msgstr "Cérnicalo"
 
 #: dat/ships/kestrel.xml:15 dat/ships/starbridge.xml:15
 msgid "Krain Industries"
@@ -24641,8 +24640,8 @@ msgid ""
 "firepower with state-of-the-art electronics, making for a truly fearsome "
 "ship in the hands of an able captain."
 msgstr ""
-"El Kestrel, la nave que puso por sí sola a Industrias Krain en el mapa, fue "
-"diseñado para ser un elegante crucero de asalto pesado. Generalmente más "
+"El Cérnicalo, la nave que puso por sí sola a Industrias Krain en el mapa, "
+"fue diseñado para ser un elegante crucero de asalto pesado. Generalmente más "
 "frágil que otros cruceros, consigue combinar una excelente maniobrabilidad y "
 "potencia de fuego con una electrónica de última generación, lo que la "
 "convierte en una nave realmente temible en manos de un capitán competente."
@@ -24780,7 +24779,7 @@ msgstr ""
 
 #: dat/ships/pirate_kestrel.xml:2
 msgid "Pirate Kestrel"
-msgstr "Kestrel Pirata"
+msgstr "Cérnicalo Pirata"
 
 #: dat/ships/pirate_kestrel.xml:17
 msgid ""
@@ -35849,7 +35848,7 @@ msgstr ""
 
 #: dat/events/neutral/news.lua:149
 msgid "Everyone Loves a SuperChimp"
-msgstr ""
+msgstr "Todo el Mundo Quiere a un SuperMono"
 
 #: dat/events/neutral/news.lua:150
 msgid ""
@@ -35857,10 +35856,14 @@ msgid ""
 "being widely adopted as domestic companions. Enhanced primates make an "
 "affectionate, intelligent pet, or a low-cost servant."
 msgstr ""
+"Durante decenas de ciclos utilizados sólo como mano de obra servil, ahora "
+"los SuperMonos están siendo ampliamente adoptados como compañeros "
+"domésticos. Los primates mejorados son una mascota afectuosa e inteligente, "
+"o un sirviente de bajo coste."
 
 #: dat/events/neutral/news.lua:153
 msgid "Admiral's Ball a Triumph"
-msgstr ""
+msgstr "El Baile del Almirante, un Triunfo"
 
 #: dat/events/neutral/news.lua:154
 msgid ""
@@ -35868,10 +35871,13 @@ msgid ""
 "air bubbles deep under the oceans of Anecu. All the season's debutantes "
 "attended."
 msgstr ""
+"La glamurosa temporada llegó a su fin con un baile temático submarino "
+"celebrado en burbujas de aire en las profundidades de los océanos de Anecu. "
+"Asistieron todas las debutantes de la temporada."
 
 #: dat/events/neutral/news.lua:157
 msgid "Amazing Survival Story"
-msgstr ""
+msgstr "Increíble Historia de Supervivencia"
 
 #: dat/events/neutral/news.lua:158
 msgid ""
@@ -35879,10 +35885,13 @@ msgid ""
 "meditation to slow my breathing,\" Xing Long told us. \"It was hard because "
 "I was scared.\""
 msgstr ""
+"Xing Long fue rescatado tras dos decaperíodos flotando en el espacio. "
+"\"Utilicé la meditación para ralentizar mi respiración\", nos dijo Xing "
+"Long. \"Fue difícil porque tenía miedo.\""
 
 #: dat/events/neutral/news.lua:161
 msgid "The Best Spaceport Bars"
-msgstr ""
+msgstr "Los Mejores Bares de Puertos Espaciales"
 
 #: dat/events/neutral/news.lua:162
 msgid ""
@@ -35890,10 +35899,13 @@ msgid ""
 "the Doranthex Lava Room charmed our reviewer, but if you care for ambiance, "
 "don't miss the Goddard Bar."
 msgstr ""
+"¿Dónde se puede conseguir el mejor trago blaster?  La famosa lista de "
+"bebidas exóticas de la Sala de Lava Doranthex encantó a nuestro crítico, "
+"pero si te importa el ambiente, no te pierdas el Bar Goddard."
 
 #: dat/events/neutral/news.lua:165
 msgid "RIP: The Floating Vagabond"
-msgstr ""
+msgstr "DEP: El Vagabundo Flotante"
 
 #: dat/events/neutral/news.lua:166
 msgid ""
@@ -35901,20 +35913,26 @@ msgid ""
 "galaxy's only deep space bar shut down the generators and cycled the airlock "
 "one last time."
 msgstr ""
+"Sólo dos ciclos después de la misteriosa desaparición de su propietario, el "
+"único bar de espacio profundo de la galaxia apagó los generadores y giró la "
+"esclusa por última vez."
 
 #: dat/events/neutral/news.lua:169
 msgid "Games for Young Pilots"
-msgstr ""
+msgstr "Juegos para Jovenes Pilotos"
 
 #: dat/events/neutral/news.lua:170
 msgid ""
 "Want your child to have a chance at a career as a space pilot?  Games like "
 "Super Julio Omniverse and SpaceFox help your child develop twitch muscles."
 msgstr ""
+"¿Quiere que su hijo tenga la oportunidad de hacer carrera como piloto "
+"espacial?  Juegos como Super Julio Omniverse y ZorroEspacial ayudan a tu "
+"hijo a desarrollar los músculos."
 
 #: dat/events/neutral/news.lua:173
 msgid "Former Pirate Writes Target Management Self-Help Book"
-msgstr ""
+msgstr "Un ExPirata Escribe un Libro de Autoayuda para la Gestión de Objetivos"
 
 #: dat/events/neutral/news.lua:175
 msgid ""
@@ -35927,13 +35945,21 @@ msgid ""
 "longer have to lose money or alienate friends. If the universe followed this "
 "simple advice, I suspect we would live in a much safer society.\""
 msgstr ""
+"Una antigua pirata comparte su historia sobre cómo se alejó de la piratería, "
+"sobre la que escribió un premiado libro de autoayuda. \"Me pasaba toda la "
+"vida pulsando {target_nearest} para apuntar a los enemigos, pero mi vida "
+"cambió cuando tuve un sueño sobre un gato que comía hierba. '¿Estás usando "
+"la tecla {target_hostile}?', me preguntó. Me parece que es muy útil\". Desde "
+"entonces, hago lo que me dijo el extraño gato de mi sueño y ya no tengo que "
+"perder dinero ni alejarme de mis amigos. Si el universo siguiera este "
+"sencillo consejo, sospecho que viviríamos en una sociedad mucho más segura.\""
 
 #.
 #. Science and technology
 #. --
 #: dat/events/neutral/news.lua:185
 msgid "New Mace Rockets"
-msgstr ""
+msgstr "Nuevos Cohetes Maza"
 
 #: dat/events/neutral/news.lua:186
 msgid ""
@@ -35942,6 +35968,10 @@ msgid ""
 "destructive as the previous versions,\" says Chief Dvaered Engineer "
 "Nordstrom."
 msgstr ""
+"Los ingenieros Dvaered se enorgullecen de presentar la nueva versión "
+"mejorada del cohete Dvaered Maza. \"Hemos demostrado que el nuevo cohete es "
+"casi dos veces más destructivo que las versiones anteriores\", afirma el "
+"ingeniero jefe de Dvaered Nordstrom."
 
 #.
 #. Business
@@ -35951,7 +35981,7 @@ msgstr ""
 #. --
 #: dat/events/neutral/news.lua:195
 msgid "FLF Responsible for Piracy"
-msgstr ""
+msgstr "FLF Responsable de la Piratería"
 
 #: dat/events/neutral/news.lua:196
 msgid ""
@@ -35959,10 +35989,13 @@ msgid ""
 "\"more criminal gang than independence movement\", according to his "
 "publicist."
 msgstr ""
+"El próximo ensayo del experto en fuerzas del orden Paet Dohmer describe al "
+"grupo como \"más banda criminal que movimiento independentista\", según su "
+"publicista."
 
 #: dat/events/neutral/news.lua:199
 msgid "Front Responsible for Shipping Woes"
-msgstr ""
+msgstr "El Frente es Responsable de los Problemas en los Envios"
 
 #: dat/events/neutral/news.lua:200
 msgid ""
@@ -35970,20 +36003,25 @@ msgid ""
 "series of attacks on cargo ships operating between Dakron and Theras. "
 "Dvaered officials condemned the actions."
 msgstr ""
+"Una portavoz del grupo separatista afirma que están detrás de la reciente "
+"serie de ataques a naves de carga que operan entre Dakron y Theras. Los "
+"funcionarios Dvaered condenaron las acciones."
 
 #: dat/events/neutral/news.lua:203
 msgid "Jouvanin Tapped as Interim Chief"
-msgstr ""
+msgstr "Jouvanin es Nombrado Jefe Interino"
 
 #: dat/events/neutral/news.lua:204
 msgid ""
 "Following the arrest of Rex Helmer, former Anecu deputy governor Elene "
 "Jouvanin will be sworn in today. She will serve out the term as governor."
 msgstr ""
+"Tras la detención de Rex Helmer, la ex vicegobernadora de la Anecu, Elene "
+"Jouvanin, jurará hoy su cargo. Cumplirá su mandato como gobernadora."
 
 #: dat/events/neutral/news.lua:207
 msgid "FLF Terrorist Trial Ends"
-msgstr ""
+msgstr "Finaliza el Juicio a los Terroristas del FLF"
 
 #: dat/events/neutral/news.lua:208
 msgid ""
@@ -35991,10 +36029,13 @@ msgid ""
 "all five members of the Nor spaceport bombing. Execution is scheduled in 10 "
 "periods."
 msgstr ""
+"El Juicio a los Terroristas del FLF terminó este ciclo con una sorprendente "
+"sentencia de muerte para los cinco miembros del atentado del puerto espacial "
+"de Nor. La ejecución está prevista en 10 períodos."
 
 #: dat/events/neutral/news.lua:211
 msgid "New Challenges for New Times"
-msgstr ""
+msgstr "Nuevos Retos para Nuevos Tiempos"
 
 #: dat/events/neutral/news.lua:212
 msgid ""
@@ -36002,13 +36043,16 @@ msgid ""
 "Dvaered space due to the recent uprising in FLF terrorism. The new measure "
 "is expected to start within the next cycle."
 msgstr ""
+"El consejo Dvaered, tras una decisión unánime, decidió aumentar las "
+"patrullas en el espacio Dvaered debido al reciente aumento del terrorismo "
+"del FLF. Se espera que la nueva medida comience en el próximo ciclo."
 
 #.
 #. Human interest.
 #. --
 #: dat/events/neutral/news.lua:218
 msgid "Sirius Weaker Than Ever"
-msgstr ""
+msgstr "Sirio Más Débil Que Nunca"
 
 #: dat/events/neutral/news.lua:219
 msgid ""
@@ -36016,13 +36060,17 @@ msgid ""
 "the formation of House Sirius. This weakness is yet another sign that House "
 "Dvaered must increase patrols on the border and into Sirius space."
 msgstr ""
+"Este ciclo rompe el récord negativo de menor número de peregrinos a Mutris "
+"desde la formación de la Casa Sirio. Esta debilidad es una señal más de que "
+"la Casa Dvaered debe aumentar las patrullas en la frontera y en el espacio "
+"Sirio."
 
 #.
 #. Science and technology
 #. --
 #: dat/events/neutral/news.lua:228
 msgid "Goddard: Raising the Bar"
-msgstr ""
+msgstr "Goddard: Subiendo el Listón"
 
 #: dat/events/neutral/news.lua:229
 msgid ""
@@ -36030,13 +36078,16 @@ msgid ""
 "possible improvements. This new strategy will increase the gap with the "
 "competing ship fabricators."
 msgstr ""
+"La Casa Goddard está contratando a muchos nuevos científicos para que "
+"investiguen posibles mejoras. Esta nueva estrategia aumentará la diferencia "
+"con los fabricantes de naves de la competencia."
 
 #.
 #. Business
 #. --
 #: dat/events/neutral/news.lua:235
 msgid "Goddard Earnings on the Rise"
-msgstr ""
+msgstr "Aumentan los Beneficios de Goddard"
 
 #: dat/events/neutral/news.lua:236
 msgid ""
@@ -36044,10 +36095,13 @@ msgid ""
 "technology and quality has paid off,\" said Kari Baker of House Goddard's "
 "marketing bureau."
 msgstr ""
+"Casa Goddard ha vuelto a aumentar sus ingresos. \"Nuestra inversión en "
+"tecnología y calidad ha dado sus frutos\", afirma Kari Baker, de la oficina "
+"de marketing de Casa Goddard."
 
 #: dat/events/neutral/news.lua:239
 msgid "Goddard Awarded Best Ship"
-msgstr ""
+msgstr "Premio a Mejor Nave Para Goddard"
 
 #: dat/events/neutral/news.lua:240
 msgid ""
@@ -36056,10 +36110,14 @@ msgid ""
 "reliability like the Goddard,\" said Lord Warthon upon receiving the award "
 "on behalf of House Goddard."
 msgstr ""
+"Una vez más, el crucero de batalla Goddard fue galardonado con el premio a "
+"la mejor nave en general en los premios anuales de la Armada Dvaered. \"Muy "
+"pocas naves tienen una fiabilidad como la Goddard\", dijo Lord Warthon al "
+"recibir el premio en nombre de la Casa Goddard."
 
 #: dat/events/neutral/news.lua:243
 msgid "Aerosys Earnings Drop"
-msgstr ""
+msgstr "Caída de Ganancias en Aerosys"
 
 #: dat/events/neutral/news.lua:244
 msgid ""
@@ -36067,20 +36125,26 @@ msgid ""
 "another quarterly loss. The company is investigating the discrepancy between "
 "the popularity of the craft and its sales figures."
 msgstr ""
+"Las naves espaciales pueden ser un hervidero de naves modelo Hiena, pero hoy "
+"Aerosys ha registrado otra pérdida trimestral. La empresa está investigando "
+"la discrepancia entre la popularidad de la nave y sus cifras de ventas."
 
 #: dat/events/neutral/news.lua:247
 msgid "Aerosys Victim of Pirate Manufacturing"
-msgstr ""
+msgstr "Aerosys, Víctima de la Fabricación Pirata"
 
 #: dat/events/neutral/news.lua:248
 msgid ""
 "The ship manufacturer has released a study indicating its signature Hyena "
 "model is being produced by a hidden system of unlicensed manufacturers."
 msgstr ""
+"El fabricante de naves ha publicado un estudio que indica que su emblemático "
+"modelo Hiena está siendo producido por un sistema oculto de fabricantes sin "
+"licencia."
 
 #: dat/events/neutral/news.lua:251
 msgid "Melendez CEO on Strategy"
-msgstr ""
+msgstr "CEO Melendez en Estrategia"
 
 #: dat/events/neutral/news.lua:252
 msgid ""
@@ -36088,10 +36152,13 @@ msgid ""
 "manufacturers should follow his company's lead in keeping costs down and "
 "producing for the mass market."
 msgstr ""
+"El Director General Ejecutivo del fabricante de naves Melendez Corp. cree "
+"que los fabricantes deberían seguir el ejemplo de su empresa a la hora de "
+"mantener los costes bajos y producir para el mercado de masas."
 
 #: dat/events/neutral/news.lua:255
 msgid "The Goddard Exception"
-msgstr ""
+msgstr "La Excepción Goddard"
 
 #: dat/events/neutral/news.lua:256
 msgid ""
@@ -36099,16 +36166,21 @@ msgid ""
 "Empire's elite civilian spacecraft?  Lord Warthon says the secret lies in "
 "his family's hands-on tradition of leadership."
 msgstr ""
+"¿Por qué una comunidad con más experiencia en la navegación que en el vuelo "
+"ha producido la nave espacial civil de élite del Imperio?  Lord Warthon dice "
+"que el secreto reside en la tradición de liderazgo de su familia."
 
 #: dat/events/neutral/news.lua:259
 msgid "Sneak Peek: the Kestrel"
-msgstr ""
+msgstr "Vistazo: el Cernícalo"
 
 #: dat/events/neutral/news.lua:260
 msgid ""
 "Our reporter took a tour through Krain's mysterious space craft. He says it "
 "poses a challenge to the Goddard."
 msgstr ""
+"Nuestro reportero hizo un recorrido por la misteriosa nave espacial de "
+"Krain. Dice que supone un reto para el Goddard."
 
 #.
 #. Politics
@@ -36124,7 +36196,7 @@ msgstr ""
 #. --
 #: dat/events/neutral/news.lua:278
 msgid "Trade Meeting at Lorelei"
-msgstr ""
+msgstr "Reunión Comercial en Lorelei"
 
 #: dat/events/neutral/news.lua:279
 msgid ""
@@ -36132,13 +36204,17 @@ msgid ""
 "negotiations between the Fyrra and the Space Traders Guild. The Fyrra Arch-"
 "Canter has indicated that opening up trade routes is a major goal."
 msgstr ""
+"Lorelei, en el sistema Churchill, es el último mundo que ha acogido "
+"importantes negociaciones comerciales entre los Fyrra y la Cofradía de "
+"Comerciantes Espaciales. El ArchiCantero de Fyrra ha indicado que la "
+"apertura de rutas comerciales es un objetivo importante."
 
 #.
 #. Politics
 #. --
 #: dat/events/neutral/news.lua:285
 msgid "Dvaered extorting pilgrims"
-msgstr ""
+msgstr "Dvaered extorsionando peregrinos"
 
 #: dat/events/neutral/news.lua:286
 msgid ""
@@ -36147,13 +36223,17 @@ msgid ""
 "are \"figments of the touched's imagination\". Official complaints have been "
 "made to the Emperor."
 msgstr ""
+"Los últimos peregrinos que se dirigían a Mutris han contado historias de "
+"extorsión y violaciones por parte de los operadores Dvaered. El Señor de la "
+"Guerra Dvaered, Kra'tok, afirma que son \"productos de la imaginación de los "
+"tocados\". Se han presentado quejas oficiales al Emperador."
 
 #.
 #. Human interest.
 #. --
 #: dat/events/neutral/news.lua:292
 msgid "Words of Tranquility"
-msgstr ""
+msgstr "Palabras de Tranquilidad"
 
 #: dat/events/neutral/news.lua:293
 msgid ""
@@ -36161,13 +36241,17 @@ msgid ""
 "Shaira echelon after their long pilgrimage on Mutris. House Sirius is still "
 "a refugee for the orphans lost in this Universe."
 msgstr ""
+"Damos la bienvenida a muchos nuevos Tocados que han comenzado recientemente "
+"a ministrar al escalón de Shaira después de su largo peregrinaje en Mutris. "
+"La Casa Sirio sigue siendo un refugio para los huérfanos perdidos en este "
+"Universo."
 
 #.
 #. Science and technology
 #. --
 #: dat/events/neutral/news.lua:302
 msgid "Skull and Bones Improving"
-msgstr ""
+msgstr "Cráneo y Huesos Mejorando"
 
 #: dat/events/neutral/news.lua:303
 msgid ""
@@ -36176,13 +36260,17 @@ msgid ""
 "edge against the injustice of the Empire,\" says Millicent Felecia Black, "
 "lead Skull and Bones engineer."
 msgstr ""
+"La tecnología de Cráneo y Huesos avanza. No sólo roban naves, sino que "
+"mejoran el diseño original. \"Esto nos da a los piratas una ventaja contra "
+"la injusticia del Imperio\", dice Millicent Felecia Black, ingeniera "
+"principal de Cráneo y Huesos."
 
 #.
 #. Business
 #. --
 #: dat/events/neutral/news.lua:309
 msgid "Draconis Favourite Plundering Space"
-msgstr ""
+msgstr "Espacio de Saqueo Favorito de Draconis"
 
 #: dat/events/neutral/news.lua:310
 msgid ""
@@ -36190,10 +36278,14 @@ msgid ""
 "favoured plundering space. The abundance of traders and high interference "
 "make it an excellent place to get some fast credits."
 msgstr ""
+"Draconis ha superado recientemente a Delta Pavonis en las encuestas de los "
+"piratas como el espacio de saqueo más favorecido. La abundancia de "
+"comerciantes y la alta interferencia lo convierten en un lugar excelente "
+"para conseguir créditos rápidos."
 
 #: dat/events/neutral/news.lua:313
 msgid "New Ships for Skull and Bones"
-msgstr ""
+msgstr "Nuevos Naves para Cráneo y Huesos"
 
 #: dat/events/neutral/news.lua:314
 msgid ""
@@ -36201,13 +36293,16 @@ msgid ""
 "from Caladan warehouses under the nose of the Empire. These ships will help "
 "keep production high and booming."
 msgstr ""
+"Cráneo y Huesos pudo extraer unas cuantas docenas de naves de alta calidad "
+"de los almacenes de Caladan en las narices del Imperio. Estas naves ayudarán "
+"a mantener la producción alta y en auge."
 
 #.
 #. Politics
 #. --
 #: dat/events/neutral/news.lua:320
 msgid "Emperor Weaker Than Ever"
-msgstr ""
+msgstr "Emperador Más Débil que Nunca"
 
 #: dat/events/neutral/news.lua:321
 msgid ""
@@ -36221,7 +36316,7 @@ msgstr ""
 #. --
 #: dat/events/neutral/news.lua:327
 msgid "Cats in New Haven"
-msgstr ""
+msgstr "Gatos en Nuevo Refugio"
 
 #: dat/events/neutral/news.lua:328
 msgid ""
@@ -36229,13 +36324,17 @@ msgid ""
 "campaign with the slogan, \"Pirate Cats, for those lonely space trips.\". Is "
 "your space vessel full of vermin? Adopt a cat today!"
 msgstr ""
+"Una explosión de la población de gatos en Nuevo Refugio ha creado una "
+"campaña de adopción con el eslogan \"Gatos piratas, para esos solitarios "
+"viajes espaciales\". ¿Está tu nave espacial llena de bichos? ¡Adopte un gato "
+"hoy mismo!"
 
 #.
 #. Science and technology
 #. --
 #: dat/events/neutral/news.lua:337
 msgid "Terraforming Emperor's Fist"
-msgstr ""
+msgstr "Terraformación del Puño del Emperador"
 
 #: dat/events/neutral/news.lua:338
 msgid ""
@@ -36243,10 +36342,13 @@ msgid ""
 "Studies show that these techniques could speed up the terraforming process "
 "by as much as 40%."
 msgstr ""
+"Nuevas técnicas de terraformación de vanguardia que se probarán en el Puño "
+"del Emperador. Los estudios muestran que estas técnicas podrían acelerar el "
+"proceso de terraformación hasta en un 40%."
 
 #: dat/events/neutral/news.lua:341
 msgid "Bees Introduced to Emperor's Fist"
-msgstr ""
+msgstr "Las Abejas se Introducen en el Puño del Emperador"
 
 #: dat/events/neutral/news.lua:342
 msgid ""
@@ -36254,13 +36356,16 @@ msgid ""
 "have established the first colony of the Earth insects on the planet "
 "formerly known as G Scorpeii 5."
 msgstr ""
+"Mientras preparan los jardines del futuro complejo Imperial, los entomólogos "
+"han establecido la primera colonia de insectos terrestres en el planeta "
+"antes conocido como G Scorpeii 5."
 
 #.
 #. Business
 #. --
 #: dat/events/neutral/news.lua:348
 msgid "Empire Keeping Traders Safe"
-msgstr ""
+msgstr "Imperio Mantiene la Seguridad de los Comerciantes"
 
 #: dat/events/neutral/news.lua:349
 msgid ""
@@ -36268,10 +36373,13 @@ msgid ""
 "by up to 40% in some sectors. This is a demonstration of the Empire's "
 "commitment to eradicating piracy."
 msgstr ""
+"Estudios recientes demuestran que las denuncias de piratería en las naves "
+"Comerciantes han descendido hasta un 40% en algunos sectores. Esto es una "
+"demostración del compromiso del Imperio con la erradicación de la piratería."
 
 #: dat/events/neutral/news.lua:352
 msgid "Nexus Contract Finalised"
-msgstr ""
+msgstr "Contrato Nexus Finalizado"
 
 #: dat/events/neutral/news.lua:353
 msgid ""
@@ -36279,13 +36387,16 @@ msgid ""
 "military craft. The deal extends the partnership with the government for "
 "another 10 cycles."
 msgstr ""
+"El Imperio ha llegado a un acuerdo con el constructor naval Nexus para una "
+"nueva generación de naves militares. El acuerdo amplía la colaboración con "
+"el gobierno durante otros 10 ciclos."
 
 #.
 #. Politics
 #. --
 #: dat/events/neutral/news.lua:359
 msgid "New Empire Recruits"
-msgstr ""
+msgstr "Reclutas del Nuevo Imperio"
 
 #: dat/events/neutral/news.lua:360
 msgid ""
@@ -36293,10 +36404,13 @@ msgid ""
 "Empire Armada. \"We haven't had such a successful campaign in ages!\" - Raid "
 "Steele, spokesman for recruiting campaign."
 msgstr ""
+"La estrategia de reclutamiento del Emperador es un éxito. Muchos nuevos "
+"soldados se unen a la Armada del Imperio. \"¡No hemos tenido una campaña tan "
+"exitosa en años!\" - Raid Steele, portavoz de la campaña de reclutamiento."
 
 #: dat/events/neutral/news.lua:363
 msgid "Governor Helmer Jailed"
-msgstr ""
+msgstr "Gobernador Helmer Encarcelado"
 
 #: dat/events/neutral/news.lua:364
 msgid ""
@@ -36304,33 +36418,41 @@ msgid ""
 "corruption. He has been removed from office and transported to a holding "
 "facility awaiting trial."
 msgstr ""
+"Los Auditores Imperiales han detenido al gobernador Rex Helmer de Anecu por "
+"cargos de corrupción. Ha sido destituido de su cargo y trasladado a un "
+"centro de detención a la espera de juicio."
 
 #: dat/events/neutral/news.lua:367
 msgid "Imperial Council Opens Doors"
-msgstr ""
+msgstr "El Consejo Imperial Abre Sus Puertas"
 
 #: dat/events/neutral/news.lua:368
 msgid ""
 "The supreme advisory body invited undergraduates from six top schools to sit "
 "in on a day's deliberations. Topics required biodiversity strategy."
 msgstr ""
+"El órgano consultivo supremo invitó a estudiantes de seis escuelas de alto "
+"nivel a asistir a una jornada de deliberaciones. Los temas requerían una "
+"estrategia de biodiversidad."
 
 #.
 #. Human interest.
 #. --
 #: dat/events/neutral/news.lua:374
 msgid "New Cat in the Imperial Family"
-msgstr ""
+msgstr "Nuevo Gato en la Familia Imperial"
 
 #: dat/events/neutral/news.lua:375
 msgid ""
 "The Emperor's daughter was recently gifted a cat. Cat could be named "
 "\"Snuggles\" and seems to be all white."
 msgstr ""
+"A la hija del Emperador le han regalado recientemente un gato. El gato "
+"podría ser llamado \"Snuggles\" y parece ser todo blanco."
 
 #: dat/events/neutral/news.lua:378
 msgid "Emperor's Aid Gets Hitched"
-msgstr ""
+msgstr "La Ayuda del Emperador se Pone en Marcha"
 
 #: dat/events/neutral/news.lua:379
 msgid ""
@@ -36338,16 +36460,21 @@ msgid ""
 "the future palace gardens on Emperor's Fist. His Eminence the Bishop of Bao "
 "performed the ceremony."
 msgstr ""
+"El secretario Imperial Karil Lorenze se casó con su prometida Rachid Baouda "
+"en los futuros jardines del palacio del Puño del Emperador. Su Eminencia el "
+"Obispo de Bao celebró la ceremonia."
 
 #: dat/events/neutral/news.lua:382
 msgid "Remembering the Past"
-msgstr ""
+msgstr "Recordando el Pasado"
 
 #: dat/events/neutral/news.lua:383
 msgid ""
 "The Emperor has scheduled a new monument to be constructed on Emperor's Fist "
 "in honour of all those dead in the Incident."
 msgstr ""
+"El Emperador ha programado la construcción de un nuevo monumento en el Puño "
+"del Emperador en honor a todos los muertos en el Incidente."
 
 #.
 #. Science and technology
@@ -36360,7 +36487,7 @@ msgstr ""
 #. --
 #: dat/events/neutral/news.lua:398
 msgid "Election on Caladan Marred by Fraud"
-msgstr ""
+msgstr "Elecciones en Caladan Empañadas por el Fraude"
 
 #: dat/events/neutral/news.lua:399
 msgid ""
@@ -36368,20 +36495,26 @@ msgid ""
 "decaperiod may be falsified, an ombudsman reports. The opposition party "
 "demanded the election be annulled."
 msgstr ""
+"Hasta dos de cada cien votos contados tras el reciente decaimiento de los "
+"comicios podrían estar falsificados, según informa un defensor del pueblo. "
+"El partido de la oposición exigió la anulación de las elecciones."
 
 #: dat/events/neutral/news.lua:402
 msgid "Empire Relies on Prison Labour"
-msgstr ""
+msgstr "El Imperio se Apoya en el Trabajo de Prisioneros"
 
 #: dat/events/neutral/news.lua:403
 msgid ""
 "A recent report by the Soromid House Ways and Means Committee suggests "
 "infrastructure may be too dependent the on the incarcerated population."
 msgstr ""
+"Un reciente informe de la Comisión de Medios y Arbitrios de la Cámara de "
+"Representantes Soromida sugiere que las infraestructuras pueden depender "
+"demasiado de la población encarcelada."
 
 #: dat/events/neutral/news.lua:406
 msgid "Imperial Oversight Scandal"
-msgstr ""
+msgstr "Escándalo de Supervisión Imperial"
 
 #: dat/events/neutral/news.lua:407
 msgid ""
@@ -36389,6 +36522,9 @@ msgid ""
 "Department of Oversight, whose inspectors overlooked serious failings in "
 "other supervisory bodies, as a serious oversight."
 msgstr ""
+"Fuentes cercanas al Canciller Imperial afirman que ven un grave fallo en el "
+"Departamento de Supervisión, cuyos inspectores pasaron por alto graves "
+"fallos en otros organismos supervisores."
 
 #.
 #. Human interest.
@@ -36396,7 +36532,7 @@ msgstr ""
 #. Return an economy article based on the given commodity, planet object, and number of credits.
 #: dat/events/neutral/news.lua:424
 msgid "Unfortunate Merchant Goes Bankrupt"
-msgstr ""
+msgstr "El Comerciante Desafortunado Quiebra"
 
 #: dat/events/neutral/news.lua:425
 msgid ""
@@ -36404,10 +36540,14 @@ msgid ""
 "on {pnt}. \"I thought {credits} per tonne was a good deal, but it turns out "
 "I should have waited,\" the merchant said."
 msgstr ""
+"Un comerciante se vio obligado a declararse en bancarrota debido a una "
+"operación mal programada de {carga} en {pnt}. \"Pensé que {credits} por "
+"tonelada era un buen negocio, pero resulta que debería haber previsto pedir "
+"más\", dijo el comerciante."
 
 #: dat/events/neutral/news.lua:428
 msgid "Shipping Company Goes Out of Business"
-msgstr ""
+msgstr "La Compañía Naviera Cierra sus Puertas"
 
 #: dat/events/neutral/news.lua:429
 msgid ""
@@ -36417,10 +36557,16 @@ msgid ""
 "\" one analyst asserts. \"Patience is key when trading, and it's clear that "
 "the owner of this company didn't have enough of that.\""
 msgstr ""
+"Un pequeño negocio de transporte naval fracasó justo en este decaperíodo. "
+"Aunque ya estaba fracasando, lo que finalmente hundió a la empresa fue una "
+"operación poco oportuna de {cargo} en {pnt} por {credits} por tonelada. \"Fue"
+" una mala decisión ejecutiva\", asegura un analista. \"La paciencia es clave "
+"a la hora de negociar, y está claro que el propietario de esta empresa no "
+"tenía suficiente de eso.\""
 
 #: dat/events/neutral/news.lua:432
 msgid "Interview with an Economist"
-msgstr ""
+msgstr "Entrevista con un Economista"
 
 #: dat/events/neutral/news.lua:433
 msgid ""
@@ -36431,10 +36577,16 @@ msgid ""
 "price reached was {credits} per tonne, which we were only off by about 15%. "
 "Over time, we hope to lower that margin of error to as little as 2%.\""
 msgstr ""
+"Uno de los mayores expertos en economía de la galaxia concede una entrevista "
+"en la que explica nuestra economía moderna. \"En realidad, entendemos muy "
+"bien cómo funciona la economía. Por ejemplo, pudimos predecir con mucha "
+"exactitud el precio de la {cargo} en {pnt}; el precio real alcanzado fue de "
+"{credits} por tonelada, en el que sólo nos equivocamos en un 15%. Con el "
+"tiempo, esperamos reducir ese margen de error a tan sólo un 2%.\""
 
 #: dat/events/neutral/news.lua:436
 msgid "Economist Describes Sinusoidal Economic Theory"
-msgstr ""
+msgstr "Un Economista Describe la Teoría Económica Sinusoidal"
 
 #: dat/events/neutral/news.lua:437
 msgid ""
@@ -36445,10 +36597,17 @@ msgid ""
 "these curves more accurately.\" Other economists disagree, however, "
 "attributing these economists' results to chance."
 msgstr ""
+"Un economista poco conocido analiza una controvertida teoría económica. "
+"\"Cuando se observan las tendencias, se asemejan a una onda sinusoidal. Por "
+"ejemplo, el precio de {cargo} en {pnt} es ahora de {credits} por tonelada, y "
+"parece volver a ese precio con cierta regularidad. Estamos trabajando en el "
+"desarrollo de un modelo para predecir estas curvas con mayor precisión\". "
+"Sin embargo, otros economistas no están de acuerdo y atribuyen sus "
+"resultados al azar."
 
 #: dat/events/neutral/news.lua:440
 msgid "Young Pilot Buys Their First Commodity"
-msgstr ""
+msgstr "Un Joven Piloto Compra su Primera Mercancía"
 
 #: dat/events/neutral/news.lua:441
 msgid ""
@@ -36460,10 +36619,17 @@ msgid ""
 "variation, so much potential for profit! I'm excited to finally get started."
 "\""
 msgstr ""
+"Un joven piloto ha comprado una {cargo} como forma de introducirse en el "
+"negocio del pilotaje autónomo. Nacidos y criados en {pnt}, donde compraron "
+"su primera mercancía, hablan con entusiasmo de la nueva carrera. \"¡Es "
+"realmente emocionante! Incluso en mi planeta natal el precio de los {credits}"
+" por tonelada no es estático, pero cuando miras a tu alrededor, hay tanta "
+"variación de precios, ¡tanto potencial de beneficio! Estoy emocionado por "
+"empezar por fin.\""
 
 #: dat/events/neutral/news.lua:444
 msgid "Corporate Scandal Rips Through the Galaxy"
-msgstr ""
+msgstr "El Escándalo Corporativo Atraviesa la Galaxia"
 
 #: dat/events/neutral/news.lua:445
 msgid ""
@@ -36472,10 +36638,14 @@ msgid ""
 "the price, seen to be {credits} per tonne, will go up, down, or remain the "
 "same this time."
 msgstr ""
+"Los economistas atribuyen el precio de la {cargo} en {pnt} a un escándalo en "
+"el que está implicada Industrias WarpTron. Se ha debatido si el precio, que "
+"se considera de {credits} por tonelada, subirá, bajará o se mantendrá esta "
+"vez."
 
 #: dat/events/neutral/news.lua:448
 msgid "Commodity Trading Likened to Gambling"
-msgstr ""
+msgstr "El Comercio de Materias Primas se Compara con los Juegos de Azar"
 
 #: dat/events/neutral/news.lua:449
 msgid ""
@@ -36486,10 +36656,17 @@ msgid ""
 "knows? Frankly, it is my firm opinion that this 'commodity trading' is self-"
 "destructive and needs to stop.\""
 msgstr ""
+"En una polémica declaración, un activista ha comparado el comercio de "
+"materias primas con el juego. \"¡Es un juego legalizado, simple y "
+"llanamente! Ahora mismo el precio de {cargo} en {pnt} es de {credits} por "
+"tonelada, por ejemplo, pero todo el mundo sabe que el precio fluctúa. Mañana "
+"podría ser más bajo, o podría ser más alto. ¿Quién lo sabe? Francamente, "
+"tengo la firme opinión de que este \"comercio de productos básicos\" es "
+"autodestructivo y debe detenerse.\""
 
 #: dat/events/neutral/news.lua:452
 msgid "Leadership Decision Disrupts Prices"
-msgstr ""
+msgstr "La Decisión de Liderazgo Altera los Precios"
 
 #: dat/events/neutral/news.lua:453
 msgid ""
@@ -36498,10 +36675,14 @@ msgid ""
 "Protests have erupted demanding a repeal of the law so that the economy can "
 "stabilize."
 msgstr ""
+"El precio de {cargo} ha peligrado hoy al aprobar el gobierno local una "
+"controvertida ley que lo sitúa en {credits} por tonelada. Han estallado "
+"protestas exigiendo la derogación de la ley para que la economía se "
+"estabilice."
 
 #: dat/events/neutral/news.lua:456
 msgid "Five Cycle Old Child Starts Commodity Trading"
-msgstr ""
+msgstr "Un Niño de Cinco Ciclos Empieza a Comerciar con Materias Primas"
 
 #: dat/events/neutral/news.lua:457
 msgid ""
@@ -36512,6 +36693,12 @@ msgid ""
 "you can make more money! My mom is a trader too and I want to be just like "
 "her.\""
 msgstr ""
+"Una niña de no más de cinco ciclos se ha iniciado en el comercio de "
+"productos básicos a una edad temprana, comprando una tonelada de {cargo}. "
+"Natural de {pnt}, explica que le interesa mucho la economía y que desea ser "
+"comerciante espacial algún día. \"Lo compré por {credits}, pero sube y baja, "
+"así que si calculas bien el tiempo, ¡puedes ganar más dinero! Mi madre "
+"también es comerciante y quiero ser como ella.\""
 
 #. create news
 #. Needs to be inhabited and have a bar for there to be news
@@ -36520,21 +36707,23 @@ msgstr ""
 #: dat/events/neutral/news.lua:500
 msgid "News: Faction '{fct}' does not have entry in faction table!"
 msgstr ""
+"Noticias: ¡La facción '{fct}' no tiene entrada en la tabla de facciones!"
 
 #. Remove old econ articles (we only want one at a time)
 #: dat/events/neutral/news.lua:590
 msgid "{pnt} in {sys}"
-msgstr ""
+msgstr "{pnt} en {sys}"
 
 #: dat/events/neutral/news.lua:592
+#, fuzzy
 msgid "{cargo}: {price}"
-msgstr ""
+msgstr "{cargo}: {price}"
 
 #. Create news, expires immediately when time advances (i.e.
 #. when you take off from the planet).
 #: dat/events/neutral/news.lua:602
 msgid "Current Market Prices"
-msgstr ""
+msgstr "Precios Actuales del Mercado"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -36564,65 +36753,69 @@ msgstr ""
 #. about the appearance of the NPC!
 #: dat/events/neutral/npc.lua:59
 msgid "This person seems to be here to relax."
-msgstr ""
+msgstr "Esta persona parece estar aquí para relajarse."
 
 #: dat/events/neutral/npc.lua:60
 msgid "There is a civilian sitting on one of the tables."
-msgstr ""
+msgstr "Hay un civil sentado en una de las mesas."
 
 #: dat/events/neutral/npc.lua:61
 msgid "There is a civilian sitting there, looking somewhere else."
-msgstr ""
+msgstr "Hay un civil sentado allí, mirando hacia otro lado."
 
 #: dat/events/neutral/npc.lua:62
 msgid ""
 "A worker sits at one of the tables, wearing a name tag saying \"Go away\"."
 msgstr ""
+"Un trabajador se sienta en una de las mesas y lleva una etiqueta con su "
+"nombre que dice \"Vete\"."
 
 #: dat/events/neutral/npc.lua:63
 msgid ""
 "A civilian sits at the bar, seemingly serious about the cocktails on offer."
 msgstr ""
+"Un civil se sienta en la barra, aparentemente serio sobre los cócteles que "
+"se le ofrecen."
 
 #: dat/events/neutral/npc.lua:64
 msgid "A civilian wearing a shirt saying: \"Ask me about Jaegnhild\""
-msgstr ""
+msgstr "Un civil que lleva una camiseta que dice: \"Pregúntame por Jaegnhild\""
 
 #: dat/events/neutral/npc.lua:65
 msgid "There is a civilian sitting in the corner."
-msgstr ""
+msgstr "Hay un civil sentado en la esquina."
 
 #: dat/events/neutral/npc.lua:66
 msgid "A civilian feverishly concentrating on a fluorescing drink."
-msgstr ""
+msgstr "Un civil se concentra febrilmente en una bebida fluorescente."
 
 #: dat/events/neutral/npc.lua:67
 msgid "A civilian drinking alone."
-msgstr ""
+msgstr "Un civil bebiendo solo."
 
 #: dat/events/neutral/npc.lua:68
 msgid "This person seems friendly enough."
-msgstr ""
+msgstr "Esta persona parece bastante amigable."
 
 #: dat/events/neutral/npc.lua:69
 msgid "A civilian sitting at the bar."
-msgstr ""
+msgstr "Un civil sentado en el bar."
 
 #: dat/events/neutral/npc.lua:70
 msgid "This person is idly browsing a news terminal."
-msgstr ""
+msgstr "Esta persona está navegando ociosamente por un terminal de noticias."
 
 #: dat/events/neutral/npc.lua:71
 msgid "A worker sips a cold drink after a hard shift."
-msgstr ""
+msgstr "Un trabajador da un sorbo a una bebida fría después de un duro turno."
 
 #: dat/events/neutral/npc.lua:72
 msgid "A worker slouched against the bar, nursing a drink."
-msgstr ""
+msgstr "Un trabajador se ha apoyado en la barra, tomando una copa."
 
 #: dat/events/neutral/npc.lua:73
 msgid "This worker seems bored with everything but their drink."
-msgstr ""
+msgstr "Este trabajador parece aburrido de todo menos de su bebida."
 
 #. Lore messages. These come in general and factional varieties.
 #. General lore messages will be said by non-faction NPCs, OR by faction NPCs if they have no factional text to say.
@@ -36634,36 +36827,49 @@ msgid ""
 "\"I heard the nebula is haunted! My uncle Bobby told me he saw one of the "
 "ghost ships himself over in Arandon!\""
 msgstr ""
+"\"¡He oído que la nebulosa está embrujada! ¡Mi tío Bobby me dijo que vio uno "
+"de las naves fantasmas en Arandon!\""
 
 #: dat/events/neutral/npc.lua:84
 msgid ""
 "\"I don't believe in those nebula ghost stories. The people who talk about "
 "it are just trying to scare you.\""
 msgstr ""
+"\"No creo en esas historias de fantasmas de la nebulosa. La gente que habla "
+"de ello sólo quiere asustarte.\""
 
 #: dat/events/neutral/npc.lua:85
 msgid ""
 "\"I heard the Soromid lost their homeworld Sorom in the Incident. Its corpse "
 "can still be found in Basel.\""
 msgstr ""
+"\"He oído que los Soromida perdieron su mundo natal, Sorom, en el Incidente. "
+"Su cadáver aún se puede encontrar en Basilea.\""
 
 #: dat/events/neutral/npc.lua:86
 msgid ""
 "\"The Soromid fly organic ships! I heard their ships can even heal "
 "themselves in flight. That's so weird.\""
 msgstr ""
+"\"¡Los Soromida vuelan con naves orgánicas! He oído que sus naves pueden "
+"incluso curarse a sí mismas en vuelo. Eso es muy raro.\""
 
 #: dat/events/neutral/npc.lua:87
 msgid ""
 "\"Have you seen that ship the Emperor lives on? It's huge! But if you ask "
 "me, it looks a bit like a... No, never mind.\""
 msgstr ""
+"\"¿Has visto la nave en la que vive el Emperador? Es enorme. Pero si me "
+"preguntas, se parece un poco a un... No, no importa.\""
 
 #: dat/events/neutral/npc.lua:88
 msgid ""
 "\"I wonder why the Sirii are all so devout? I heard they have these special "
 "priesty people walking around. I wonder what's so special about them.\""
 msgstr ""
+"\"Me pregunto por qué los Sirio son tan devotos. He oído que tienen unos "
+"sacerdotes especiales que andan por ahí. Me pregunto qué tienen de especial."
+"\""
 
 #: dat/events/neutral/npc.lua:89
 msgid ""
@@ -36671,23 +36877,33 @@ msgid ""
 "amidst a cache of his inventions! What I wouldn't give to rummage through "
 "there...\""
 msgstr ""
+"\"Dicen que Eduard Manual Goddard está a la deriva en algún lugar del "
+"espacio, sepultado entre un alijo de sus inventos. Lo que daría por rebuscar "
+"allí...\""
 
 #: dat/events/neutral/npc.lua:90
 msgid ""
 "\"Ah man, I lost all my money on Totoran. I love the fights they stage "
 "there, but the guys I bet on always lose. What am I doing wrong?\""
 msgstr ""
+"\"Ah, tío, he perdido todo mi dinero en Totoran. Me encantan las peleas que "
+"organizan allí, pero los tipos por los que apuesto siempre pierden. ¿Qué "
+"estoy haciendo mal?\""
 
 #: dat/events/neutral/npc.lua:91
 msgid ""
 "\"Don't try to fly into the inner nebula. I've known people who tried, and "
 "none of them came back.\""
 msgstr ""
+"\"No intentes volar a la nebulosa interior. He conocido a gente que lo ha "
+"intentado y ninguno ha vuelto.\""
 
 #: dat/events/neutral/npc.lua:92
 msgid ""
 "\"Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!\""
 msgstr ""
+"\"¿Has oído hablar del Capitán T. Practice? Es increíble, ¡soy su mayor fan!"
+"\""
 
 #: dat/events/neutral/npc.lua:93
 msgid ""
@@ -36695,12 +36911,17 @@ msgid ""
 "fighter! That area of space has really gone down the drain since the "
 "Incident.\""
 msgstr ""
+"\"Yo en tu lugar no viajaría al norte de Alteris, ¡a menos que seas un buen "
+"luchador! Esa zona del espacio se ha ido realmente al garete desde el "
+"Incidente.\""
 
 #: dat/events/neutral/npc.lua:94
 msgid ""
 "\"Sometimes I look at the stars and wonder... are we the only sentient "
 "species in the universe?\""
 msgstr ""
+"\"A veces miro las estrellas y me pregunto... ¿somos la única especie "
+"sensible en el universo?\""
 
 #: dat/events/neutral/npc.lua:95
 msgid ""
@@ -36711,30 +36932,44 @@ msgid ""
 "stares at you incredulously. \"What?? No, I mean why are we in here, in this "
 "bar?\""
 msgstr ""
+"\"Oye, ¿te has preguntado alguna vez por qué estamos aquí?\" Tú respondes "
+"que es uno de los grandes misterios del universo. ¿Por qué estamos aquí? ¿"
+"Somos el producto de alguna coincidencia cósmica o hay algún gran plan "
+"cósmico para nosotros? No lo sabes, pero a veces te quita el sueño. Mientras "
+"dices esto, el ciudadano te mira incrédulo. \"¿Qué? No, me refiero a por qué "
+"estamos aquí, en este bar\""
 
 #: dat/events/neutral/npc.lua:96
 msgid ""
 "\"Life is so boring here. I would love to go gamble with all the famous "
 "people at Minerva Station.\""
 msgstr ""
+"\"La vida es tan aburrida aquí. Me encantaría ir a jugar con toda la gente "
+"famosa en la Estación Minerva.\""
 
 #: dat/events/neutral/npc.lua:100
 msgid ""
 "\"We're not part of any of the galactic superpowers. We can take care of "
 "ourselves!\""
 msgstr ""
+"\"No somos parte de ninguna de las superpotencias galácticas. ¡Podemos "
+"cuidar de nosotros mismos!\""
 
 #: dat/events/neutral/npc.lua:101
 msgid ""
 "\"Sometimes I worry that our lack of a standing military leaves us "
 "vulnerable to attack. I hope nobody will get any ideas about conquering us!\""
 msgstr ""
+"\"A veces me preocupa que nuestra falta de ejército permanente nos haga "
+"vulnerables a los ataques. ¡Espero que a nadie se le ocurra conquistarnos!\""
 
 #: dat/events/neutral/npc.lua:105
 msgid ""
 "\"Things are getting worse by the cycle. What happened to the Empire? We "
 "used to be the lords and masters over the whole galaxy!\""
 msgstr ""
+"\"Las cosas están empeorando por ciclos. ¿Qué ha pasado con el Imperio? ¡"
+"Antes éramos los amos y señores de toda la galaxia!\""
 
 #: dat/events/neutral/npc.lua:106
 msgid ""
@@ -36742,24 +36977,34 @@ msgid ""
 "the Empire? Well, now you do! There was also a Project Proteron, but that "
 "didn't go so well.\""
 msgstr ""
+"\"¿Sabías que la Casa Za'lek fue originalmente un Gran Proyecto iniciado por "
+"el Imperio? Bueno, ¡ahora lo sabes! También hubo un Proyecto Proteron, pero "
+"no salió tan bien.\""
 
 #: dat/events/neutral/npc.lua:107
 msgid ""
 "\"The Emperor lives on a giant supercruiser in Gamma Polaris. It's said to "
 "be the biggest ship in the galaxy! I totally want one.\""
 msgstr ""
+"\"El Emperador vive en un supercrucero gigante en Gamma Polaris. Se dice que "
+"es la nave más grande de la galaxia. Quiero una.\""
 
 #: dat/events/neutral/npc.lua:108
 msgid ""
 "\"I'm still waiting for my pilot license application to get through. Oh "
 "well, it's only been half a cycle, I just have to be patient.\""
 msgstr ""
+"\"Todavía estoy esperando que me llegue la solicitud de licencia de piloto. "
+"Oh, bueno, sólo ha pasado medio ciclo, sólo tengo que ser paciente.\""
 
 #: dat/events/neutral/npc.lua:109
 msgid ""
 "\"Between you and me, the laws the Council passes can get really ridiculous! "
 "Most planets find creative ways of ignoring them...\""
 msgstr ""
+"\"¡Entre tú y yo, las leyes que aprueba el Consejo pueden ser realmente "
+"ridículas! La mayoría de los planetas encuentran formas creativas de "
+"ignorarlas...\""
 
 #: dat/events/neutral/npc.lua:110
 msgid ""
@@ -36767,30 +37012,42 @@ msgid ""
 "ever seen a Peacemaker up close? I doubt any ship fielded by any other power "
 "could stand up to one.\""
 msgstr ""
+"\"No hagas caso a los detractores. El Imperio sigue siendo fuerte. ¿Has "
+"visto alguna vez un Pacificador de cerca? Dudo que cualquier nave de "
+"cualquier otra potencia pueda enfrentarse a uno.\""
 
 #: dat/events/neutral/npc.lua:114
 msgid ""
 "\"Our Warlord is currently fighting for control over another planet. We all "
 "support him unconditionally, of course! Of course...\""
 msgstr ""
+"\"Nuestro Señor de la Guerra está luchando actualmente por el control de "
+"otro planeta. Todos le apoyamos incondicionalmente, ¡por supuesto! Por "
+"supuesto...\""
 
 #: dat/events/neutral/npc.lua:115
 msgid ""
 "\"My great-great-great-grandfather fought in the Dvaered Revolts! We still "
 "have the holovids he made. I'm proud to be a Dvaered!\""
 msgstr ""
+"\"¡Mi tatarabuelo luchó en las Revueltas Dvaered! Todavía tenemos los "
+"holovídeos que hizo. ¡Estoy orgulloso de ser un Dvaered!\""
 
 #: dat/events/neutral/npc.lua:116
 msgid ""
 "\"I've got lots of civilian commendations! It's important to have "
 "commendations if you're a Dvaered.\""
 msgstr ""
+"\"¡Tengo muchas menciones civiles! Es importante tener menciones si eres un "
+"Dvaered.\""
 
 #: dat/events/neutral/npc.lua:117
 msgid ""
 "\"You better not mess with House Dvaered. Our military is the largest and "
 "strongest in the galaxy. Nobody can stand up to us!\""
 msgstr ""
+"\"Será mejor que no te metas con la Casa Dvaered. Nuestro ejército es el más "
+"grande y fuerte de la galaxia. ¡Nadie puede enfrentarse a nosotros!\""
 
 #: dat/events/neutral/npc.lua:118
 msgid ""
@@ -36799,6 +37056,10 @@ msgid ""
 "they going to do, subjugate us? We all know how well that went last time! Ha!"
 "\""
 msgstr ""
+"\"¿Casa Dvaered? ¿Casa? El Imperio es débil e inútil, ¡ya no los "
+"necesitamos! Yo digo que nos declaremos una facción independiente hoy mismo. "
+"¿Qué van a hacer, subyugarnos? ¡Todos sabemos lo bien que les fue la última "
+"vez! ¡Ja!\""
 
 #: dat/events/neutral/npc.lua:119
 msgid ""
@@ -36806,6 +37067,9 @@ msgid ""
 "about those rotten FLF bastards, it makes my blood boil! They should all be "
 "pounded into space dust!\""
 msgstr ""
+"\"Estoy pensando en unirme al ejército. Cada vez que veo o escucho noticias "
+"sobre esos podridos bastardos del FLF, ¡me hace hervir la sangre! ¡Deberían "
+"convertirlos a todos en polvo espacial!\""
 
 #: dat/events/neutral/npc.lua:120
 msgid ""
@@ -36813,35 +37077,47 @@ msgid ""
 "will have smoked them out of their den soon enough, and then the Frontier "
 "will be ours.\""
 msgstr ""
+"\"¿Terroristas del FLF? No me preocupan demasiado. Ya verás, el Alto Mando "
+"los habrá echado de su guarida muy pronto, y entonces la Frontera será "
+"nuestra.\""
 
 #: dat/events/neutral/npc.lua:121
 msgid ""
 "\"Did you know that House Dvaered was named after a hero of the revolt? At "
 "least that's what my grandparents told me.\""
 msgstr ""
+"\"¿Sabías que la Casa Dvaered lleva el nombre de un héroe de la revuelta? Al "
+"menos eso es lo que me contaron mis abuelos.\""
 
 #: dat/events/neutral/npc.lua:125
 msgid ""
 "\"Greetings, traveler. May Sirichana's wisdom guide you as it guides me.\""
-msgstr ""
+msgstr "\"Saludos, viajero. Que la sabiduría de Sirichana te guíe como a mí.\""
 
 #: dat/events/neutral/npc.lua:126
 msgid ""
 "\"I once met one of the Touched in person. Well, it wasn't really a meeting, "
 "our eyes simply met... But that instant alone was awe-inspiring.\""
 msgstr ""
+"\"Una vez conocí a uno de los Tocados en persona. Bueno, no fue realmente un "
+"encuentro, nuestros ojos simplemente se encontraron... Pero ese instante por "
+"sí solo fue sobrecogedor.\""
 
 #: dat/events/neutral/npc.lua:127
 msgid ""
 "\"They say Sirichana lives and dies like any other man, but each new "
 "Sirichana is the same as the last. How is that possible?\""
 msgstr ""
+"\"Dicen que Sirichana vive y muere como cualquier otro hombre, pero cada "
+"nuevo Sirichana es igual que el anterior. ¿Cómo es posible?\""
 
 #: dat/events/neutral/npc.lua:128
 msgid ""
 "\"My cousin was called to Mutris a cycle ago... He must be in Crater City by "
 "now. And one day, he will become one of the Touched!\""
 msgstr ""
+"\"Mi primo fue llamado a Mutris hace un ciclo... Ya debe estar en Ciudad "
+"Cráter. Y un día, ¡se convertirá en uno de los Tocados!\""
 
 #: dat/events/neutral/npc.lua:129
 msgid ""
@@ -36849,6 +37125,10 @@ msgid ""
 "determined by birth. But even though we are different, we are all followers "
 "of Sirichana. Spiritually, we are equal.\""
 msgstr ""
+"\"Algunos dicen que la sociedad de Sirio es injusta porque nuestros "
+"escalafones están determinados por el nacimiento. Pero aunque seamos "
+"diferentes, todos somos seguidores de Sirichana. Espiritualmente, somos "
+"iguales\""
 
 #: dat/events/neutral/npc.lua:130
 msgid ""
@@ -36856,22 +37136,29 @@ msgid ""
 "only true on paper. The Emperor has nothing to say in these systems. We "
 "follow Sirichana, and no-one else.\""
 msgstr ""
+"\"La Casa Sirio es oficialmente parte del Imperio, pero todo el mundo sabe "
+"que eso sólo es cierto sobre el papel. El Emperador no tiene nada que decir "
+"en estos sistemas. Nosotros seguimos a Sirichana, y a nadie más.\""
 
 #: dat/events/neutral/npc.lua:131
 msgid ""
 "\"You can easily tell the different echelons apart. Every Sirian citizen and "
 "soldier wears clothing appropriate to his or her echelon.\""
 msgstr ""
+"\"Se pueden distinguir fácilmente los diferentes escalones. Cada ciudadano y "
+"soldado sirio lleva la ropa adecuada a su escalafón.\""
 
 #: dat/events/neutral/npc.lua:132
 msgid "\"I hope to meet one of the Touched one day!\""
-msgstr ""
+msgstr "\"¡Espero conocer a uno de los Tocados algún día!\""
 
 #: dat/events/neutral/npc.lua:136
 msgid ""
 "Hello. Can I interest you in one of our galaxy famous cosmetic gene "
 "treatments? You look like you could use them..."
 msgstr ""
+"Hola. ¿Puedo interesarle en uno de nuestros famosos tratamientos genéticos "
+"cosméticos de la galaxia? Parece que podrías usarlos..."
 
 #: dat/events/neutral/npc.lua:137
 msgid ""
@@ -36879,6 +37166,9 @@ msgid ""
 "boom! It got burnt to a crisp! Even now, cycles later, I still can't believe "
 "it.\""
 msgstr ""
+"\"¿Te lo puedes creer? Iba a visitar Sorom para encontrar mis raíces, y "
+"entonces ¡boom! ¡Se quemó hasta la saciedad! Incluso ahora, ciclos después, "
+"todavía no puedo creerlo.\""
 
 #: dat/events/neutral/npc.lua:138
 msgid ""
@@ -36886,6 +37176,9 @@ msgid ""
 "own bioships though, we have to make do with synthetic constructs just like "
 "everyone else.\""
 msgstr ""
+"\"Sí, es cierto, nuestras naves militares están vivas. Sin embargo, la gente "
+"normal no tiene bionaves, tenemos que conformarnos con construcciones "
+"sintéticas como todo el mundo.\""
 
 #: dat/events/neutral/npc.lua:139
 msgid ""
@@ -36894,18 +37187,26 @@ msgid ""
 "often is that billions of us died from the therapy itself. We paid a high "
 "price for survival.\""
 msgstr ""
+"\"Todo el mundo sabe que los Soromida nos alteramos para sobrevivir a las "
+"condiciones mortales de Sorom durante la Gran Cuarentena. Lo que no se oye "
+"tan a menudo es que miles de millones de nosotros murieron por la propia "
+"terapia. Pagamos un alto precio por sobrevivir.\""
 
 #: dat/events/neutral/npc.lua:140
 msgid ""
 "\"Our cosmetic gene treatments are even safer now for non-Soromids, with a "
 "rate of survival of 99.4%!\""
 msgstr ""
+"\"Nuestros tratamientos genéticos cosméticos son ahora incluso más seguros "
+"para los no soromida, ¡con una tasa de supervivencia del 99,4%!\""
 
 #: dat/events/neutral/npc.lua:141
 msgid ""
 "\"We have been rebuilding and enhancing our bodies for so long, I say we've "
 "become a new species, one above human.\""
 msgstr ""
+"\"Llevamos tanto tiempo reconstruyendo y mejorando nuestros cuerpos que digo "
+"que nos hemos convertido en una nueva especie, una por encima de la humana.\""
 
 #: dat/events/neutral/npc.lua:145
 msgid ""
@@ -36913,17 +37214,25 @@ msgid ""
 "impossible tasks! Like, where am I supposed to get a triple redundant "
 "helitron converter? Honestly.\""
 msgstr ""
+"\"No es fácil bailar al son de esos científicos. ¡Te dan las tareas más "
+"imposibles! Como, ¿dónde se supone que voy a conseguir un convertidor de "
+"helitrones triplemente redundante? De verdad.\""
 
 #: dat/events/neutral/npc.lua:146
 msgid ""
 "\"The Soromids? Hah! We Za'lek are the only true scientists in this galaxy.\""
 msgstr ""
+"¿\"Los Soromida\"? ¡Ja! Nosotros los Za'lek somos los únicos verdaderos "
+"científicos en esta galaxia.\""
 
 #: dat/events/neutral/npc.lua:147
 msgid ""
 "\"I don't understand why we bother sending our research results to the "
 "Empire. These asshats can't understand the simplest formulas!\""
 msgstr ""
+"\"No entiendo por qué nos molestamos en enviar los resultados de nuestras "
+"investigaciones al Imperio. ¡Estos imbéciles no pueden entender las fórmulas "
+"más simples!\""
 
 #: dat/events/neutral/npc.lua:148
 msgid ""
@@ -36933,12 +37242,19 @@ msgid ""
 "current iterate, the next one will lead to a greater value of your objective "
 "function. There are still too many people who don't know this!\""
 msgstr ""
+"\"¿Sabes por qué muchos algoritmos de optimización requieren que tu función "
+"objetivo sea convexa? No es sólo por la cuestión de los mínimos locales, "
+"sino también porque si tu función es localmente cóncava alrededor del "
+"iterado actual, el siguiente conducirá a un valor mayor de tu función "
+"objetivo. ¡Todavía hay demasiada gente que no sabe esto!\""
 
 #: dat/events/neutral/npc.lua:149
 msgid ""
 "\"There are so many algorithms for solving the non-linear eigenvalues "
 "problem, I never know which one to choose. Which one do you prefer?\""
 msgstr ""
+"\"Hay tantos algoritmos para resolver el problema de los valores propios no "
+"lineales que nunca sé cuál elegir. ¿Cuál prefieres?\""
 
 #: dat/events/neutral/npc.lua:150
 msgid ""
@@ -36948,18 +37264,29 @@ msgid ""
 "back at that time! Imagine: they had to wait for hours to solve a problem "
 "with only a dozen billion degrees of freedom!\""
 msgstr ""
+"\"Hace poco asistí a una conferencia muy interesante sobre la historia de "
+"las matemáticas aplicadas antes de la era espacial. Incluso en aquellos "
+"tiempos primitivos, la gente hacía álgebra numérica. En aquella época, ¡ni "
+"siquiera tenían ordenadores cuánticos! Imagínese: ¡tenían que esperar horas "
+"para resolver un problema con sólo una docena de mil millones de grados de "
+"libertad!\""
 
 #: dat/events/neutral/npc.lua:151
 msgid ""
 "\"Last time I had to solve a deconvolution problem, its condition number was "
 "so high that its inverse reached numerical zero on Octuple Precision!\""
 msgstr ""
+"\"¡La última vez que tuve que resolver un problema de deconvolución, su "
+"número de condición era tan alto que su inversa alcanzaba el cero numérico "
+"en Octuple Precision!\""
 
 #: dat/events/neutral/npc.lua:152
 msgid ""
 "\"I am worried about my sister. She's on trial for 'abusive self-citing' and "
 "the public prosecutor has requested a life sentence.\""
 msgstr ""
+"\"Estoy preocupada por mi hermana. Está siendo juzgada por 'autocitación "
+"abusiva' y el fiscal ha pedido cadena perpetua.\""
 
 #: dat/events/neutral/npc.lua:153
 msgid ""
@@ -36970,6 +37297,13 @@ msgid ""
 "lab posted a positive review of the president of the Za'lek central "
 "scientific recruitment committee.\""
 msgstr ""
+"\"Abrieron dos puestos de profesor de mecanizado de precisión en el "
+"Laboratorio Central de Fabricación de Atryssa, y ninguno en el Laboratorio "
+"de Procesos Avanzados de Bedimann, pero todo el mundo sabe que el LPAB "
+"necesita refuerzos desde que tres de sus profesores se jubilaron el pasado "
+"ciclo. La gente dice que es porque un miembro del laboratorio de Atryssa "
+"publicó una crítica positiva del presidente del comité central de "
+"contratación científica de Za'lek.\""
 
 #: dat/events/neutral/npc.lua:154
 msgid ""
@@ -36978,6 +37312,11 @@ msgid ""
 "used to be very successful until it was nuked by mistake by a warlord during "
 "an invasion of the planet.\""
 msgstr ""
+"\"Aunque nuestros laboratorios sean los mejores de la galaxia, otras "
+"facciones también tienen sus propios laboratorios. Por ejemplo, el "
+"Laboratorio de Estudios Avanzados de Cohetes Maza de Dvaer Prime solía tener "
+"mucho éxito hasta que fue bombardeado por error por un señor de la guerra "
+"durante una invasión del planeta.\""
 
 #: dat/events/neutral/npc.lua:158
 msgid ""
@@ -36985,6 +37324,9 @@ msgid ""
 "during the upload process? That's why we're very careful to not allow our "
 "brains to be damaged, even a little.\""
 msgstr ""
+"\"¿Sabías que el más mínimo daño cerebral puede provocar la muerte durante "
+"el proceso de carga? Por eso tenemos mucho cuidado de no permitir que "
+"nuestros cerebros se dañen, aunque sea un poco.\""
 
 #: dat/events/neutral/npc.lua:159
 msgid ""
@@ -36992,6 +37334,9 @@ msgid ""
 "safely uploaded. It's okay, though; he had a long and fulfilling life, for a "
 "non-uploaded human, that is.\""
 msgstr ""
+"\"Mi padre, por desgracia, se golpeó la cabeza cuando era joven, por lo que "
+"no pudo ser subido con seguridad. Pero no pasa nada; tuvo una vida larga y "
+"plena, para un humano no subido, eso sí.\""
 
 #: dat/events/neutral/npc.lua:160
 msgid ""
@@ -37000,6 +37345,10 @@ msgid ""
 "for him before he could watch it, so once he got uploaded, he deleted that "
 "memory and watched it with a fresh perspective. Cool, huh?\""
 msgstr ""
+"\"Una cosa estupenda una vez que estás subido es que puedes elegir olvidar "
+"las cosas que no quieres recordar. A mi bisabuelo le estropearon una "
+"película antes de que pudiera verla, así que una vez que se cargó, borró ese "
+"recuerdo y la vio con una nueva perspectiva. Genial, ¿no?\""
 
 #: dat/events/neutral/npc.lua:161
 msgid ""
@@ -37007,6 +37356,9 @@ msgid ""
 "we lead boring lives before then. We have quite easy and satisfying "
 "biological lives before uploading.\""
 msgstr ""
+"\"La mejor parte de nuestras vidas es después de ser subidos, pero eso no "
+"significa que llevemos vidas aburridas antes de eso. Tenemos vidas "
+"biológicas bastante fáciles y satisfactorias antes de subir.\""
 
 #: dat/events/neutral/npc.lua:162
 msgid ""
@@ -37014,6 +37366,9 @@ msgid ""
 "forced to. Any uploaded Thurion can choose to end their own life if they "
 "want, though few have chosen to do so.\""
 msgstr ""
+"\"Estar subido te permite vivir para siempre, pero eso no significa que "
+"estés obligado a ello. Cualquier Turion subido puede elegir acabar con su "
+"propia vida si lo desea, aunque pocos han elegido hacerlo.\""
 
 #: dat/events/neutral/npc.lua:163
 msgid ""
@@ -37021,6 +37376,9 @@ msgid ""
 "that, well, what kind of person would turn down the chance to live a second "
 "life on the network?\""
 msgstr ""
+"\"Subir es una opción en nuestra sociedad. Nadie está obligado a hacerlo. Es "
+"que, bueno, ¿qué clase de persona rechazaría la posibilidad de vivir una "
+"segunda vida en la red?\""
 
 #: dat/events/neutral/npc.lua:164
 msgid ""
@@ -37028,6 +37386,9 @@ msgid ""
 "benefited from it. The nebula that resulted gave us a great cover and sealed "
 "off the Empire from us. It also got rid of those dangerous Proterons.\""
 msgstr ""
+"\"Tuvimos suerte de que no nos tocara el Incidente. De hecho, nos "
+"beneficiamos de él. La nebulosa que resultó nos dio una gran cobertura y nos "
+"selló el Imperio. También nos libró de esos peligrosos Proteron.\""
 
 #: dat/events/neutral/npc.lua:165
 msgid ""
@@ -37035,18 +37396,26 @@ msgid ""
 "our way of life to the rest of the galaxy, so that everyone can experience "
 "the joy of being uploaded.\""
 msgstr ""
+"\"No deseamos el dominio galáctico. Dicho esto, sí queremos extender nuestra "
+"forma de vida al resto de la galaxia, para que todos puedan experimentar la "
+"alegría de ser subidos.\""
 
 #: dat/events/neutral/npc.lua:166
 msgid ""
 "\"I think you're from the outside, aren't you? That's awesome! I've never "
 "met a foreigner before. What's it like outside the nebula?\""
 msgstr ""
+"\"Creo que eres de fuera, ¿no? ¡Esto es increíble! Nunca había conocido a un "
+"extranjero. ¿Cómo es el exterior de la nebulosa?\""
 
 #: dat/events/neutral/npc.lua:167
 msgid ""
 "\"We actually make occasional trips outside of the nebula, though only "
 "rarely, and we always make sure to not get discovered by the Empire.\""
 msgstr ""
+"\"En realidad hacemos viajes ocasionales fuera de la nebulosa, aunque sólo "
+"en raras ocasiones, y siempre nos aseguramos de no ser descubiertos por el "
+"Imperio.\""
 
 #: dat/events/neutral/npc.lua:168
 msgid ""
@@ -37055,46 +37424,65 @@ msgid ""
 "they overcame those odds, the Incident blew up their homeworld. The fact "
 "that they're still thriving now despite that is phenomenal, I must say.\""
 msgstr ""
+"\"Los Soromida tienen una historia difícil. ¿Has leído algo al respecto? "
+"Primero el Imperio los confinó en un planeta mortal y los condenó a la "
+"extinción. Luego, cuando superaron esas probabilidades, el Incidente voló su "
+"mundo natal. El hecho de que ahora sigan prosperando a pesar de eso es "
+"fenomenal, debo decir.\""
 
 #: dat/events/neutral/npc.lua:172
 msgid ""
 "\"Our system of government is clearly superior to all others. Nothing could "
 "be more obvious.\""
 msgstr ""
+"\"Nuestro sistema de gobierno es claramente superior a todos los demás. Nada "
+"podría ser más obvio.\""
 
 #: dat/events/neutral/npc.lua:173
 msgid ""
 "\"The Incident really set back our plan for galactic dominance, but that was "
 "only temporary.\""
 msgstr ""
+"\"El Incidente realmente hizo retroceder nuestro plan de dominio galáctico, "
+"pero eso fue sólo temporal.\""
 
 #: dat/events/neutral/npc.lua:174
 msgid ""
 "\"We don't have time for fun and games. The whole reason we're so great is "
 "because we're more productive than any other society.\""
 msgstr ""
+"\"No tenemos tiempo para la diversión y los juegos. La razón por la que "
+"somos tan grandes es porque somos más productivos que cualquier otra "
+"sociedad.\""
 
 #: dat/events/neutral/npc.lua:175
 msgid ""
 "\"We are superior, so of course we deserve control over the galaxy. It's our "
 "destiny.\""
 msgstr ""
+"\"Somos superiores, así que por supuesto que merecemos el control de la "
+"galaxia. Es nuestro destino.\""
 
 #: dat/events/neutral/npc.lua:176
 msgid "\"The Empire is weak, obsolete. That is why we must replace them.\""
-msgstr ""
+msgstr "\"El Imperio es débil, obsoleto. Por eso debemos reemplazarlos.\""
 
 #: dat/events/neutral/npc.lua:177
 msgid ""
 "\"Slaves? Of course we're not slaves. Slaves are beaten and starved. We are "
 "in top shape so we can serve our country better.\""
 msgstr ""
+"\"¿Esclavos? Por supuesto que no somos esclavos. A los esclavos se les "
+"golpea y se les hace pasar hambre. Estamos en plena forma para poder servir "
+"mejor a nuestro país.\""
 
 #: dat/events/neutral/npc.lua:178
 msgid ""
 "\"I can't believe the Empire continues to allow families. So primitive. "
 "Obviously, all this does is make them less productive.\""
 msgstr ""
+"\"No puedo creer que el Imperio siga permitiendo familias. Tan primitivo. "
+"Obviamente, todo esto hace que sean menos productivos.\""
 
 #: dat/events/neutral/npc.lua:179
 msgid ""
@@ -37102,6 +37490,9 @@ msgid ""
 "government says it was caused by the Empire's inferiority. I would expect "
 "nothing less.\""
 msgstr ""
+"\"La causa exacta del Incidente es un secreto muy bien guardado, pero el "
+"gobierno dice que fue causado por la inferioridad del Imperio. No esperaba "
+"menos.\""
 
 #: dat/events/neutral/npc.lua:180
 msgid ""
@@ -37110,6 +37501,10 @@ msgid ""
 "the perfect society we are, of course we would never cause such a massive "
 "catastrophe.\""
 msgstr ""
+"\"Hace unos meses me encontré con un pagano que afirmaba, fíjate, ¡que los "
+"proteron éramos la causa del Incidente! Qué tontería más calumniosa. Siendo "
+"la sociedad perfecta que somos, por supuesto que nunca causaríamos una "
+"catástrofe tan masiva.\""
 
 #: dat/events/neutral/npc.lua:184
 msgid ""
@@ -37117,6 +37512,9 @@ msgid ""
 "Warlords! Can't they just shoot at each other instead of threatening us? If "
 "it wasn't for the Liberation Front...\""
 msgstr ""
+"\"Valoramos nuestra autonomía. No queremos que nos gobiernen esos señores de "
+"la guerra de Dvaered. ¿No pueden dispararse entre ellos en lugar de "
+"amenazarnos? Si no fuera por el Frente de Liberación...\""
 
 #: dat/events/neutral/npc.lua:185
 msgid ""
@@ -37124,6 +37522,10 @@ msgid ""
 "to be colonized by humans. That makes our worlds the oldest human "
 "settlements in the galaxy, now that Earth is gone.\""
 msgstr ""
+"\"¿Has estudiado tu historia galáctica? Los mundos de la Frontera fueron los "
+"primeros en ser colonizados por los humanos. Eso hace que nuestros mundos "
+"sean los asentamientos humanos más antiguos de la galaxia, ahora que la "
+"Tierra ha desaparecido.\""
 
 #: dat/events/neutral/npc.lua:186
 msgid ""
@@ -37131,6 +37533,9 @@ msgid ""
 "Sirius zealots on the other. Sometimes I worry that in a few decacycles, the "
 "Frontier will no longer exist.\""
 msgstr ""
+"\"Tenemos a los Dvaered invadiendo nuestro territorio por un lado, y a los "
+"fanáticos de Sirio por el otro. A veces me preocupa que dentro de unas "
+"décadas la Frontera ya no exista.\""
 
 #: dat/events/neutral/npc.lua:187
 msgid ""
@@ -37138,6 +37543,10 @@ msgid ""
 "Growth colony ship on display in one of the big rooms. Even scaled down like "
 "that, it's massive! Imagine how overwhelming the real ones must have been.\""
 msgstr ""
+"\"¿Has visitado el Museo de la Frontera? Tienen una maqueta de una nave "
+"colonial del Primer Crecimiento expuesta en una de las grandes salas. "
+"Incluso a escala, es enorme. Imagina lo abrumadoras que debían ser las "
+"reales.\""
 
 #: dat/events/neutral/npc.lua:188
 msgid ""
@@ -37147,6 +37556,10 @@ msgid ""
 "it. Some are said to have mysteriously disappeared. I wonder what happened "
 "to them?\""
 msgstr ""
+"\"Hay doce mundos Frontera verdaderos, porque doce naves colonia completaron "
+"con éxito su viaje en el Primer Crecimiento. Pero, ¿sabías que al principio "
+"había veinte naves coloniales? Ocho de ellas nunca llegaron. Se dice que "
+"algunas desaparecieron misteriosamente. ¿Me pregunto qué pasó con ellas?\""
 
 #: dat/events/neutral/npc.lua:189
 msgid ""
@@ -37154,6 +37567,9 @@ msgid ""
 "leading directly back to Earth. But I don't mind. I'm happy living here, and "
 "I wouldn't want to move anywhere else.\""
 msgstr ""
+"\"No tenemos mucho aquí en la Frontera, aparte de nuestra larga historia que "
+"nos lleva directamente a la Tierra. Pero no me importa. Soy feliz viviendo "
+"aquí, y no querría mudarme a ningún otro sitio.\""
 
 #: dat/events/neutral/npc.lua:190
 msgid ""
@@ -37162,24 +37578,32 @@ msgid ""
 "Frontier, the Frontier Front for Liberation, or the Liberal Frontier's Front!"
 "\""
 msgstr ""
+"\"¿Conoces al Frente de Liberación de la Frontera? Son el movimiento "
+"guerrillero que lucha por la Frontera. ¡No hay que confundirlo con la "
+"Liberación Frontal de la Frontera, el Frente Frontera de Liberación o La "
+"Frontera Liberal del Frente!\""
 
 #: dat/events/neutral/npc.lua:194
 msgid ""
 "\"I can't stand Dvaereds. I just want to wipe them all off the map. Don't "
 "you?\""
-msgstr ""
+msgstr "\"No soporto a los Dvaereds. Sólo quiero borrarlos del mapa. ¿Tú no?\""
 
 #: dat/events/neutral/npc.lua:195
 msgid ""
 "\"One of these days, we will completely rid the Frontier of Dvaered "
 "oppressors. Mark my words!\""
 msgstr ""
+"\"Uno de estos días, libraremos completamente a la Frontera de los opresores "
+"Dvaered. ¡Recuerda mis palabras!\""
 
 #: dat/events/neutral/npc.lua:196
 msgid ""
 "\"Have you ever wondered about our chances of actually winning over the "
 "Dvaereds? Sometimes I worry a little.\""
 msgstr ""
+"\"¿Te has preguntado alguna vez sobre nuestras posibilidades de ganar a los "
+"Dvaereds? A veces me preocupa un poco.\""
 
 #: dat/events/neutral/npc.lua:197
 msgid ""
@@ -37187,6 +37611,9 @@ msgid ""
 "I lost a lot of comrades. Oh well... this is the sacrifice we must make to "
 "resist the oppressors.\""
 msgstr ""
+"\"Hace poco estuve a cargo de un bombardeo. La misión fue un éxito, pero "
+"perdí muchos camaradas. Oh, bueno... este es el sacrificio que debemos hacer "
+"para resistir a los opresores.\""
 
 #: dat/events/neutral/npc.lua:198
 msgid ""
@@ -37195,6 +37622,11 @@ msgid ""
 "Dvaered threat is ended, we'll still have those Sirius freaks to worry "
 "about. I don't think our job will ever end in our lifetimes.\""
 msgstr ""
+"\"¿Y después de vencer a los Dvaereds, dices? Bueno, nuestro trabajo nunca "
+"está realmente hecho hasta que la Frontera esté completamente a salvo de la "
+"opresión. Incluso si la amenaza de los Dvaered ha terminado, todavía "
+"tendremos que preocuparnos por esos monstruos de Sirio. No creo que nuestro "
+"trabajo termine nunca en nuestras vidas.\""
 
 #: dat/events/neutral/npc.lua:199
 msgid ""
@@ -37202,12 +37634,18 @@ msgid ""
 "didn't, we'd have a really hard time landing on Frontier planets, what with "
 "the kinds of operations we perform against the Dvaereds.\""
 msgstr ""
+"\"Sí, es cierto, muchos funcionarios de la Frontera financian nuestras "
+"operaciones. Si no lo hicieran, tendríamos muchas dificultades para "
+"aterrizar en planetas de la Frontera, con el tipo de operaciones que "
+"realizamos contra los Dvaereds.\""
 
 #: dat/events/neutral/npc.lua:200
 msgid ""
 "\"Yeah, some civilians die because of our efforts, but that's just a "
 "sacrifice we have to make. It's for the greater good.\""
 msgstr ""
+"\"Sí, algunos civiles mueren por nuestros esfuerzos, pero es un sacrificio "
+"que tenemos que hacer. Es por un bien mayor.\""
 
 #: dat/events/neutral/npc.lua:201
 msgid ""
@@ -37215,6 +37653,9 @@ msgid ""
 "without purpose. Our operations do have a purpose: to drive out the Dvaered "
 "oppressors from the Frontier.\""
 msgstr ""
+"\"No, no somos terroristas. Somos soldados. Los verdaderos terroristas matan "
+"y destruyen sin un propósito. Nuestras operaciones sí tienen un propósito: "
+"expulsar a los opresores Dvaered de la Frontera.\""
 
 #: dat/events/neutral/npc.lua:202
 msgid ""
@@ -37222,6 +37663,9 @@ msgid ""
 "encroaching on Frontier territory? It's the most ridiculous thing I ever "
 "heard.\""
 msgstr ""
+"\"Adivíname esto: ¿cómo podemos ser terroristas si los Dvaereds empezaron "
+"por invadir el territorio de la Frontera? Es la cosa más ridícula que he "
+"oído nunca.\""
 
 #: dat/events/neutral/npc.lua:203
 msgid ""
@@ -37230,20 +37674,25 @@ msgid ""
 "reason could they possibly have them there for if not to set up an invasion?"
 "\""
 msgstr ""
+"\"Bueno, no, los Dvaereds nunca han atacado a las naves de la Frontera, pero "
+"ese no es el punto. Tienen sus naves en territorio Frontera. ¿Por qué otra "
+"razón podrían tenerlas allí si no es para preparar una invasión?\""
 
 #: dat/events/neutral/npc.lua:207
 msgid "\"Hi mate. Money or your life! Heh heh, just messing with you.\""
-msgstr ""
+msgstr "\"Hola amigo. ¡El dinero o tu vida! Je, je, sólo me meto contigo.\""
 
 #: dat/events/neutral/npc.lua:208
 msgid "\"Hey, look at these new scars I got!\""
-msgstr ""
+msgstr "\"¡Oye, mira estas nuevas cicatrices que tengo!\""
 
 #: dat/events/neutral/npc.lua:209
 msgid ""
 "\"Have you heard of the Pirates' Code? They're more guidelines than rules..."
 "\""
 msgstr ""
+"\"¿Has oído hablar del Código de los Piratas? Son más directrices que "
+"reglas...\""
 
 #: dat/events/neutral/npc.lua:210
 msgid ""
@@ -37251,24 +37700,33 @@ msgid ""
 "got a pretty credit chip outta her wallet last time I saw her, and I'd do it "
 "again.\""
 msgstr ""
+"\"Mi abuela me dijo una vez: 'Nunca confíes en un pirata'. Bueno, ¡tenía "
+"razón! La última vez que la vi le saqué una bonita ficha de crédito de la "
+"cartera, y lo volvería a hacer.\""
 
 #: dat/events/neutral/npc.lua:211
 msgid ""
 "\"I don't understand why some pirates talk like 16th-century Earth pirates "
 "even though that planet is literally dead.\""
 msgstr ""
+"\"No entiendo por qué algunos piratas hablan como los piratas terrestres del "
+"siglo XVI aunque ese planeta esté literalmente muerto.\""
 
 #: dat/events/neutral/npc.lua:212
 msgid ""
 "\"I may be a pirate who blows up ships and steals for a living, but that "
 "inner nebula still kind of freaks me out.\""
 msgstr ""
+"\"Puede que sea un pirata que se gana la vida volando barcos y robando, pero "
+"esa nebulosa interior me sigue asustando.\""
 
 #: dat/events/neutral/npc.lua:213
 msgid ""
 "\"Damn Empire stopped my heist a few decaperiods ago. Just wait'll they see "
 "me again...\""
 msgstr ""
+"\"El maldito Imperio detuvo mi atraco hace unos cuantos decaperíodos. Sólo "
+"hay que esperar a que me vean de nuevo...\""
 
 #: dat/events/neutral/npc.lua:214
 msgid ""
@@ -37276,12 +37734,18 @@ msgid ""
 "let me in because I'm a 'small-time pirate'! Sometimes I think I'll never "
 "make it in this line of work...\""
 msgstr ""
+"\"¡Hay un mundo de clanes de piratas al que realmente quería llegar, pero no "
+"me dejaron entrar porque soy un 'pirata de poca monta'! A veces pienso que "
+"nunca llegaré a triunfar en este trabajo...\""
 
 #: dat/events/neutral/npc.lua:215
 msgid ""
 "\"Just caught an old mate ferrying tourists for credits. Nearly puked out my "
 "grog! Your reputation won't survive for long working for our victims.\""
 msgstr ""
+"\"Acabo de pillar a un viejo compañero transportando turistas por créditos. ¡"
+"Casi vomito mi grog! Tu reputación no sobrevivirá mucho tiempo trabajando "
+"para nuestras víctimas.\""
 
 #: dat/events/neutral/npc.lua:216
 msgid ""
@@ -37290,6 +37754,11 @@ msgid ""
 "done for. Ha! As if! It barely even made a difference. We just relocated to "
 "New Haven and resumed business as usual.\""
 msgstr ""
+"\"Yo estaba por aquí antes de que Refugio fuera destruido, ¿sabes? Tiempos "
+"divertidos. Todos los piratas entraban en pánico y el Imperio se alegraba "
+"pensando que estábamos acabados. ¡Ja! ¡Como si! Apenas hubo diferencia. "
+"Simplemente nos trasladamos a Nuevo Refugio y reanudamos los negocios como "
+"de costumbre.\""
 
 #: dat/events/neutral/npc.lua:217
 msgid ""
@@ -37297,6 +37766,9 @@ msgid ""
 "can you do? I could get a fake ID and pretend to be someone else but I'd get "
 "caught eventually and I'd lose my fame as a pirate.\""
 msgstr ""
+"\"A decir verdad, me metí en este negocio por accidente. ¿Pero qué se puede "
+"hacer? Podría conseguir una identificación falsa y fingir ser otra persona, "
+"pero al final me pillarían y perdería mi fama de pirata.\""
 
 #: dat/events/neutral/npc.lua:218
 msgid ""
@@ -37304,6 +37776,10 @@ msgid ""
 "contraband as I can before I get caught. It's great fun, and finding out "
 "that my identity's been discovered gives me a rush!\""
 msgstr ""
+"\"Una de las cosas que más me gusta hacer es comprar una identificación "
+"falsa y luego distribuir todo el contrabando que pueda antes de que me "
+"pillen. Es muy divertido, ¡y descubrir que mi identidad ha sido descubierta "
+"me da un subidón!\""
 
 #: dat/events/neutral/npc.lua:219
 msgid ""
@@ -37313,6 +37789,11 @@ msgid ""
 "things are way more exciting for normies, but I don't regret my choice one "
 "bit!\""
 msgstr ""
+"\"Cuando empecé en este negocio todo lo que podías hacer era ir por ahí "
+"entregando paquetes para otras personas. Convertirse en pirata era muy "
+"difícil entonces, pero me aburrí tanto que pasé varios decenios haciéndolo. "
+"Hoy en día las cosas son mucho más emocionantes para los normales, ¡pero no "
+"me arrepiento ni un poco de mi elección!\""
 
 #: dat/events/neutral/npc.lua:220
 msgid ""
@@ -37320,6 +37801,10 @@ msgid ""
 "mean, I respect ya more if you're flying a Goddard than if you're flying a "
 "civilian Lancelot, but the best pirates fly the good old Pirate Kestrel!\""
 msgstr ""
+"\"Volar una nave realmente grande es impresionante, pero sigue sin ser una "
+"nave pirata. Quiero decir, te respeto más si vuelas un Goddard que si vuelas "
+"un Lancelot civil, ¡pero los mejores piratas vuelan el buen y viejo "
+"Cérnicalo Pirata!\""
 
 #: dat/events/neutral/npc.lua:224
 msgid "\"Just another link in the Great Chain, right?\""
