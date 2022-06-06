@@ -2,6 +2,16 @@ local lg = require "love.graphics"
 local le = require "love.event"
 local mg = {}
 
+local colours = {
+   dark        = {0x00/0xFF, 0x00/0xFF, 0x00/0xFF},
+   bg         = {0x1C/0xFF, 0x30/0xFF, 0x4A/0xFF},
+   highlight   = {0x04/0xFF, 0x6B/0xFF, 0x99/0xFF},
+   ok = {0x00/0xFF, 0xCF/0xFF, 0xFF/0xFF},
+   foobar = {0xB3/0xFF, 0xEF/0xFF, 0xFF/0xFF},
+   text = {0xFF/0xFF, 0xFF/0xFF, 0xFF/0xFF},
+   bad = { 0.8, 0.2, 0.2 },
+}
+
 local function _( x )
    return x
 end
@@ -19,6 +29,13 @@ function format.f( str, tab )
    end))
 end
 local fmt = format
+local function tcopy( tbl, copy )
+   copy = copy or {}
+   for k,v in pairs(tbl) do
+      copy[k] = v
+   end
+   return copy
+end
 
 local function inlist( tbl, elm )
    for k,v in ipairs(tbl) do
@@ -45,7 +62,7 @@ local function shuffle(tbl)
    return tbl
 end
 
-local font, keyset, sol, guess, tries, game, round, selected
+local font, keyset, sol, guess, max_tries, tries, game, round, selected, attempts
 
 function mg.load ()
    font = lg.newFont( 16 )
@@ -65,10 +82,12 @@ function mg.load ()
    end
 
    guess = {}
-   tries = 6
+   max_tries = 6
+   tries = max_tries
    game  = 0
    selected = 1
    round = true
+   attempts = {}
 end
 
 local matches_exact, matches_fuzzy
@@ -88,6 +107,12 @@ local function finish_round ()
       game = 1
    elseif tries <= 0 then
       game = -1
+   else
+      table.insert( attempts, {
+         guess = tcopy( guess ),
+         matches_exact = matches_exact,
+         matches_fuzzy = matches_fuzzy,
+      } )
    end
    round = false
 end
@@ -166,12 +191,24 @@ function mg.keypressed( key )
 end
 
 local function drawglyph( g, f, x, y, w, h, col )
-   col = col or {0, 0.2, 0.8, 0.6}
+   col = col or colours.bg
    lg.setColor( col )
    lg.rectangle( "fill", x, y, w, h )
-   lg.setColor{ 1, 1, 1 }
+   lg.setColor( colours.text )
    local fh = f:getHeight()
    lg.printf( g, f, x, y+(h-fh)*0.5, w, "center" )
+end
+
+local function drawresult( exact, fuzzy, x, y, _h )
+   local str = ""
+   for i=1,fuzzy do
+      str = str .. "?"
+   end
+   for i=1,exact do
+      str = str .. "!"
+   end
+   lg.setColor{ 1, 0, 0 }
+   lg.print( str, font, x, y )
 end
 
 function mg.draw ()
@@ -179,43 +216,52 @@ function mg.draw ()
    local x, y, s, b
 
    -- Draw glyph bar
-   x = 20
+   x = 10
    y = 30
    s = 30
    b = 10
-   lg.setColor{ 1, 1, 1, 1 }
+   lg.setColor( colours.text )
+   lg.printf( "Codes", font, bx+x, by+y, s+40+b, "center" )
+   y = y+25
+   x = x+20
    lg.rectangle( "line", bx+x, by+y, s+b, s*#keyset+b )
    for k,v in ipairs(keyset) do
       local col
       if inlist( guess, v ) then
-         col = { 0, 0.8, 0.8, 0.6 }
+         col = colours.highlight
       else
          col = nil
       end
       drawglyph( v, font, bx+x+b, by+y+k*s-s+b, s-b, s-b, col )
    end
 
-   x = 80
-   lg.print( fmt.f(_("Input the code ({tries} tries left):"),{tries=tries}), font, bx+x, by+y )
-
-   x = 100
+   x = 90
    y = 70
    s = 50
    b = 14
-   lg.setColor{ 1, 1, 1, 1 }
-   lg.rectangle( "line", bx+x, by+y, s*#sol+b, s+b )
+   lg.setColor( colours.text )
+   local txt = fmt.f(_("Input the code ({tries} tries left):"),{tries=tries})
+   local txtw = font:getWidth( txt )
+   local boxw = s*#sol+b
+   local len = math.max( boxw, txtw )
+   lg.print( txt, font, bx+x+(len-txtw)*0.5, by+y )
+
+   x = x + (len-boxw)*0.5
+   y = y+30
+   lg.setColor( colours.text )
+   lg.rectangle( "line", bx+x, by+y, boxw, s+b )
    for i=1,#sol do
       local v = guess[i] or ""
       local col
       if not round then
          if matches_exact >= #sol then
-            col = { 0.2, 0.8, 0.2 }
+            col = colours.ok
          else
-            col = { 0.8, 0.2, 0.2 }
+            col = colours.bad
          end
       else
          if i==selected then
-            col = { 0, 0.8, 0.8, 0.6 }
+            col = colours.highlight
          else
             col = nil
          end
@@ -224,19 +270,28 @@ function mg.draw ()
    end
 
    if not round then
-      x = x + s*#sol+b + 10
-      y = y + (s+b-font:getHeight())*0.5
-      local str = ""
-      for i=1,matches_fuzzy do
-         str = str .. "?"
-      end
-      for i=1,matches_exact do
-         str = str .. "!"
-      end
-      lg.setColor{ 1, 0, 0 }
-      lg.print( str, x, y )
+      drawresult( matches_exact, matches_fuzzy, x, y+s+b+10, 30 )
    end
 
+   -- Display attempts
+   x = 90 + len + 20
+   y = 30
+   s = 30
+   b = 10
+   boxw = s*#sol+b+40
+   lg.setColor( colours.text )
+   lg.printf( "Attempts", font, bx+x, by+y, boxw, "center" )
+   y = y+25
+   x = x
+   lg.setColor( colours.text )
+   lg.rectangle( "line", bx+x, by+y, boxw, s*(max_tries-1)+b )
+   for i,t in ipairs(attempts) do
+      for j,v in ipairs(t.guess) do
+         drawglyph( v, font, bx+x+j*s-s+b, by+y+b, s-b, s-b )
+      end
+      drawresult( t.matches_exact, t.matches_fuzzy, bx+x+boxw-40, by+y+b, 30 )
+      y = y+s
+   end
 
 --[[
 
