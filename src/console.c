@@ -302,7 +302,7 @@ static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
          for (int i=cli_history; i>=0; i--) {
             if (strncmp(cli_buffer[i], "#C>", 3) == 0) {
                /* Strip escape codes from beginning and end */
-               char *str = strndup(cli_buffer[i]+5, strlen(cli_buffer[i])-5);
+               char *str = strndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
                if (i == cli_history &&
                   strcmp(window_getInput(wid, "inpInput"), str) == 0) {
                   free(str);

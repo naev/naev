@@ -558,8 +558,9 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
 
       if (can_break && iswspace( pos.ch )) {
          iter->l_width = (int)round(pos.w);
-         iter->l_end = pos.i;
-         iter->l_next = nextpos.i;
+         /* IMPORTANT: when eating a space, we can't backtrack to a previous position, because there might be a skipped font markup sequence in between. */
+         iter->l_end = iter->l_next = nextpos.i;
+         u8_dec( iter->text, &iter->l_end );
       }
       else if (can_break && can_fit) {
          iter->l_width = (int)round(nextpos.w);
@@ -579,7 +580,7 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
 
    /* Ran out of text. */
    iter->l_width = (int)round(pos.w);
-   iter->l_end = iter->l_next = pos.i;
+   iter->l_end = iter->l_next = char_end;
    iter->dead = 1;
    return 1;
 }
