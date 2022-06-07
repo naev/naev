@@ -334,6 +334,8 @@ static int audioL_new( lua_State *L )
 
       SDL_RWclose( rw );
    }
+   else
+      la.nocleanup = 1; /* Not initialized so no need to clean up. */
 
    lua_pushaudio(L, la);
    return 1;
@@ -344,8 +346,10 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
    double master;
 
    memset( la, 0, sizeof(LuaAudio_t) );
-   if (sound_disabled)
+   if (sound_disabled) {
+      la->nocleanup = 1;
       return;
+   }
 
    soundLock();
    alGenSources( 1, &la->source );
