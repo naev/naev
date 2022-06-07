@@ -285,11 +285,9 @@ static int audioL_new( lua_State *L )
    LuaAudio_t la;
    LuaFile_t *lf;
    const char *name;
-   SDL_RWops *rw;
    double master;
 
    name = NULL;
-   rw = NULL;
 
    if (lua_isstring(L,1))
       name = lua_tostring(L,1);
@@ -302,7 +300,7 @@ static int audioL_new( lua_State *L )
 
    memset( &la, 0, sizeof(LuaAudio_t) );
    if (!sound_disabled) {
-      rw = PHYSFSRWOPS_openRead( name );
+      SDL_RWops *rw = PHYSFSRWOPS_openRead( name );
       if (rw==NULL)
          NLUA_ERROR(L,"Unable to open '%s'", name );
 
