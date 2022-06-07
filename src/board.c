@@ -49,6 +49,15 @@ int board_hook( void *data )
    HookParam hparam[2];
    Pilot *p = (Pilot*) data;
 
+   /* Don't allow boarding own escorts. */
+   if (pilot_isWithPlayer( p )) {
+      p->stress       = 0.;
+      p->dtimer_accum = 0;
+      pilot_updateDisable(p, 0);
+      player_message(_("#gYou reactivate the systems of %s."), p->name);
+      return 0;
+   }
+
    /*
     * run hook if needed
     */
