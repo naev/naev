@@ -198,6 +198,7 @@ static void spfx_cleanup( LuaSpfxData_t *ls )
    ls->update     = LUA_NOREF;
 
    /* Clean up audio. */
+   ls->sfx->nocleanup = 0; /* Have to disable so it gets cleaned. */
    audio_cleanup( &ls->sfx );
 
    /* Set as cleaned up. */
