@@ -2745,6 +2745,7 @@ dat/scripts/luatk/main.lua
 dat/scripts/luatk/map.lua
 dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/chuckaluck.lua
+dat/scripts/minigames/flip.lua
 dat/scripts/minigames/flip/conf.lua
 dat/scripts/minigames/flip/core.lua
 dat/scripts/minigames/flip/main.lua

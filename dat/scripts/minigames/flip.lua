@@ -3,30 +3,30 @@
 --]]
 local love = require "love"
 local vn = require "vn"
-local score = require "minigames.stringguess.core"
-local stringguess = {}
+local score = require "minigames.flip.core"
+local flip = {}
 
 local function setup( params, standalone )
    params = params or {}
    local c = naev.cache()
-   c.stringguess = {}
-   c.stringguess.params = params
-   c.stringguess.standalone = standalone
-   c.stringguess.won = false
+   c.flip = {}
+   c.flip.params = params
+   c.flip.standalone = standalone
+   c.flip.won = false
 end
 
 --[[
    Runs the Sokoban minigame as a standalone
 --]]
-function stringguess.love( params )
+function flip.love( params )
    setup( params, true )
-   love.exec( 'scripts/minigames/stringguess' )
+   love.exec( 'scripts/minigames/flip' )
 end
 
 --[[
    Runs the Sokoban minigame from the VN
 --]]
-function stringguess.vn( params )
+function flip.vn( params )
    local s = vn.custom()
    s._init = function ()
       setup( params, false )
@@ -47,9 +47,9 @@ function stringguess.vn( params )
    return s
 end
 
-function stringguess.completed ()
+function flip.completed ()
    local c = naev.cache()
-   return (c.stringguess and c.stringguess.won)
+   return (c.flip and c.flip.won)
 end
 
-return stringguess
+return flip

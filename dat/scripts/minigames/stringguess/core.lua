@@ -25,10 +25,11 @@ local function getpos( tbl, elm )
 end
 
 local font, fonth, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha, bx, by, sol_length
-local bgshader, movekeys
+local bgshader, movekeys, standalone
 function mg.load ()
    local c = naev.cache()
    local params = c.stringguess.params
+   standalone = c.stringguess.standalone
    max_tries = params.max_tries or 7
    keyset = params.keyset or {"A","E","K","N","O","V"} -- NAEV OK
    sol_length = params.sol_length or 3
@@ -327,6 +328,9 @@ function mg.update( dt )
    if done then
       alpha = alpha - spd*dt
       if alpha < 0 then
+         if standalone then
+            love.event.quit()
+         end
          return true
       end
    else
