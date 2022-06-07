@@ -25,7 +25,7 @@ local function getpos( tbl, elm )
 end
 
 local font, fonth, keyset, sol, guess, max_tries, tries, game, done, round, selected, attempts, alpha, bx, by, sol_length
-local bgshader, movekeys, standalone
+local bgshader, movekeys, standalone, headertext, headerfont
 function mg.load ()
    local c = naev.cache()
    local params = c.stringguess.params
@@ -33,6 +33,7 @@ function mg.load ()
    max_tries = params.max_tries or 7
    keyset = params.keyset or {"A","E","K","N","O","V"} -- NAEV OK
    sol_length = params.sol_length or 3
+   headertext = params.header
 
    -- Get movement keys
    movekeys = {
@@ -79,7 +80,10 @@ function mg.load ()
 
    bx = (lw-ww)*0.5
    by = (lh-wh)*0.5
-
+   if headertext then
+      by = by - 40
+   end
+   headerfont = lg.newFont(24)
    bgshader = love_shaders.circuit()
 end
 
@@ -130,6 +134,7 @@ function mg.keypressed( key )
    end
 
    if game ~= 0 then
+      done = true
       return
    end
 
@@ -240,10 +245,15 @@ function mg.draw ()
    lg.setShader( bgshader )
    love_shaders.img:draw( 0, 0, 0, nw, nh )
    lg.setShader()
+   x, y = 0, 0
+
+   if headertext then
+      setcol{ 1, 1, 1 }
+      lg.printf( headertext, headerfont, 0, by, nw, "center" )
+      y = y + 60
+   end
 
    -- Draw glyph bar
-   x = 0
-   y = 0
    s = 40
    b = 10
    setcol( colours.text )
@@ -297,8 +307,8 @@ function mg.draw ()
 
    x = 140
    y = y + 20
-   txt = _([[#nHelp:
-#0Guess the sequence of codes
+   txt = _([[#nHelp:#0
+Guess the sequence of codes
 #o?#0 correct code, wrong position
 #b!#0 correct code and position]])
    lg.printf( txt, font, bx+x, by+y+s+b+10, len )
@@ -306,6 +316,9 @@ function mg.draw ()
    -- Display attempts
    x = 90 + len + 20
    y = 0
+   if headertext then
+      y = y + 60
+   end
    s = 40
    b = 10
    boxw = s*#sol+b+40

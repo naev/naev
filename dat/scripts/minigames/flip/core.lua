@@ -113,6 +113,8 @@ function mg.keypressed( key )
    if key == movekeys.shoot then
       flip( selected_x, selected_y )
       if checkwon() then
+         local c = naev.cache()
+         c.flip.won = true
          game_won = true
       end
    elseif key == movekeys.left then
