@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-03 22:07-0400\n"
-"PO-Revision-Date: 2022-06-06 22:18+0000\n"
+"PO-Revision-Date: 2022-06-07 23:18+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -37808,25 +37808,31 @@ msgstr ""
 
 #: dat/events/neutral/npc.lua:224
 msgid "\"Just another link in the Great Chain, right?\""
-msgstr ""
+msgstr "\"Sólo un eslabón más de la Gran Cadena, ¿verdad?\""
 
 #: dat/events/neutral/npc.lua:225
 msgid ""
 "\"You win some, you lose some, but if you don't try you're never going to "
 "win.\""
 msgstr ""
+"\"Unas veces se gana y otras se pierde, pero si no lo intentas nunca vas a "
+"ganar.\""
 
 #: dat/events/neutral/npc.lua:226
 msgid ""
 "\"If you don't watch the markets then you'll be hopping between planets in a "
 "jury-rigged ship in no time.\""
 msgstr ""
+"\"Si no vigilas los mercados, estarás saltando entre planetas en una nave "
+"improvisada en poco tiempo.\""
 
 #: dat/events/neutral/npc.lua:227
 msgid ""
 "\"Them blimming pirates, stopping honest folk from making an honest living - "
 "it's not like we're exploiting the needy!\""
 msgstr ""
+"\"Esos malditos piratas, impidiendo que la gente honrada se gane la vida "
+"honradamente, ¡no es que estemos explotando a los necesitados!\""
 
 #. Gameplay tip messages.
 #. ALL NPCs have a chance to say one of these lines instead of a lore message.
@@ -37836,6 +37842,9 @@ msgid ""
 "\"I heard you can set your weapons to only fire when your target is in "
 "range, or just let them fire when you pull the trigger. Sounds handy!\""
 msgstr ""
+"\"He oído que puedes configurar tus armas para que sólo disparen cuando tu "
+"objetivo esté al alcance, o simplemente dejar que disparen cuando aprietes "
+"el gatillo. Suena práctico.\""
 
 #: dat/events/neutral/npc.lua:235
 msgid ""
@@ -37843,6 +37852,10 @@ msgid ""
 "spaceport operators and land anyway? Just hail the planet with {hailkey}, "
 "and click the bribe button! Careful though, it doesn't always work.\""
 msgstr ""
+"\"¿Sabías que si no le gustas a un planeta, a menudo puedes sobornar a los "
+"operadores del puerto espacial y aterrizar de todos modos? Sólo tienes que "
+"saludar al planeta con {hailkey} y pulsar el botón de soborno. Pero cuidado, "
+"no siempre funciona.\""
 
 #: dat/events/neutral/npc.lua:236
 msgid ""
@@ -37850,6 +37863,9 @@ msgid ""
 "mission computer, giving them a chance to get back into their good graces. "
 "It can get really expensive for serious offenders though!\""
 msgstr ""
+"\"Muchas facciones ofrecen programas de rehabilitación a los delincuentes a "
+"través del ordenador de la misión, dándoles la oportunidad de volver a ser "
+"buenos. Sin embargo, ¡puede resultar muy caro para los delincuentes serios!\""
 
 #: dat/events/neutral/npc.lua:237
 msgid ""
@@ -37858,6 +37874,11 @@ msgid ""
 "actually make it harder for them to lock on to your ship by equipping "
 "scramblers or jammers. Scout class ships are also harder to target.\""
 msgstr ""
+"\"¡Estos nuevos sistemas de misiles modernos! Ni siquiera puedes dispararlos "
+"si no consigues fijar el objetivo primero. Pero lo mismo ocurre con tus "
+"oponentes. De hecho, puedes dificultar que fijen tu nave equipando "
+"codificadores o inhibidores. Las naves de clase Exploradora también son más "
+"difíciles de apuntar.\""
 
 #: dat/events/neutral/npc.lua:238
 msgid ""
@@ -37865,6 +37886,9 @@ msgid ""
 "Well, it seems you need an outfitter to change equipment, and a shipyard to "
 "change ships! Bet you didn't know that.\""
 msgstr ""
+"\"¿Sabes que en algunos planetas no puedes cambiar de nave ni de equipo? "
+"Bueno, parece que necesitas un equipador para cambiar de equipo, ¡y un "
+"astillero para cambiar de nave! Apuesto a que no lo sabías.\""
 
 #: dat/events/neutral/npc.lua:239
 msgid ""
@@ -37873,6 +37897,10 @@ msgid ""
 "can buy 500 at a time! You can actually do that with outfits too, but why "
 "would you want to buy 50 laser cannons?\""
 msgstr ""
+"\"¿Estás comerciando con materias primas? Puedes mantener pulsado #bctrl#0 "
+"para comprar 50 de ellas a la vez, y #bshift#0 para comprar 100. Y si pulsas "
+"los dos a la vez, ¡puedes comprar 500 a la vez! En realidad, también puedes "
+"hacer eso con los equipos, pero ¿por qué querrías comprar 50 cañones láser?\""
 
 #: dat/events/neutral/npc.lua:240
 msgid ""
@@ -37880,18 +37908,25 @@ msgid ""
 "panel and abort the mission. There's no penalty for doing it, so don't "
 "hesitate to try the mission again later.\""
 msgstr ""
+"\"Si estás en una misión que no puedes superar, puedes abrir el panel de "
+"información y abortar la misión. No hay penalización por hacerlo, así que no "
+"dudes en volver a intentar la misión más tarde.\""
 
 #: dat/events/neutral/npc.lua:241
 msgid ""
 "\"Some weapons have a different effect on shields than they do on armour. "
 "Keep that in mind when equipping your ship.\""
 msgstr ""
+"\"Algunas armas tienen un efecto diferente sobre los escudos que sobre el "
+"blindaje. Tenlo en cuenta al equipar tu nave.\""
 
 #: dat/events/neutral/npc.lua:242
 msgid ""
 "\"Afterburners can speed you up a lot, but when they get hot they don't work "
 "as well anymore. Don't use them carelessly!\""
 msgstr ""
+"\"Los postquemadores pueden acelerar mucho, pero cuando se calientan ya no "
+"funcionan tan bien. ¡No los uses descuidadamente!\""
 
 #: dat/events/neutral/npc.lua:243
 msgid ""
@@ -37900,18 +37935,26 @@ msgid ""
 "usually can't keep an active outfit on all the time, so you need to be "
 "careful only to use it when you need it.\""
 msgstr ""
+"\"Hay equipos pasivos y equipos activos. Los pasivos modifican tu nave "
+"continuamente y los activos sólo funcionan si los enciendes. Por lo general, "
+"no puedes mantener un equipo activo encendido todo el tiempo, así que tienes "
+"que tener cuidado de usarlo sólo cuando lo necesites.\""
 
 #: dat/events/neutral/npc.lua:244
 msgid ""
 "\"If you're new to the galaxy, I recommend you buy a map or two. It can make "
 "exploration a bit easier.\""
 msgstr ""
+"\"Si eres nuevo en la galaxia, te recomiendo que compres un mapa o dos. "
+"Puede facilitar la exploración.\""
 
 #: dat/events/neutral/npc.lua:245
 msgid ""
 "\"Scramblers and jammers make it harder for missiles to track you. They can "
 "be very handy if your enemies use missiles.\""
 msgstr ""
+"\"Los distorsionadores y los inhibidores dificultan el seguimiento de los "
+"misiles. Pueden ser muy útiles si tus enemigos usan misiles.\""
 
 #: dat/events/neutral/npc.lua:246
 msgid ""
@@ -37921,12 +37964,20 @@ msgid ""
 "your rocket ammunition. Careful though, your energy and shields won't "
 "recharge while you do it!\""
 msgstr ""
+"\"Si tienes problemas con el sobrecalentamiento de las armas o los trajes, "
+"puedes pulsar {cooldownkey} o tocar dos veces {reversekey} para poner tu "
+"nave en enfriamiento activo; eso disipará todo el calor de tu nave y también "
+"rellenará la munición de tus cohetes. Pero cuidado, ¡tu energía y tus "
+"escudos no se recargarán mientras lo haces!\""
 
 #: dat/events/neutral/npc.lua:247
 msgid ""
 "\"If you're having trouble shooting other ships face on, try outfitting with "
 "turrets or use an afterburner to avoid them entirely!\""
 msgstr ""
+"\"Si tienes problemas para disparar a otras naves de frente, prueba a "
+"equiparte con torretas o utiliza un postquemador para evitarlas por "
+"completo\""
 
 #: dat/events/neutral/npc.lua:248
 msgid ""
@@ -37936,6 +37987,11 @@ msgid ""
 "it. Really handy if you want to ignore enemies that aren't actually hitting "
 "you.\""
 msgstr ""
+"\"¿Sabes que el tiempo se acelera cuando el Autonav está activado, pero "
+"luego vuelve a la normalidad cuando hay enemigos cerca? Resulta que no "
+"puedes desactivar por completo la vuelta a la velocidad normal, pero puedes "
+"controlar qué cantidad de peligro la activa. Muy útil si quieres ignorar a "
+"los enemigos que no te están atacando.\""
 
 #: dat/events/neutral/npc.lua:249
 msgid ""
@@ -37944,6 +38000,10 @@ msgid ""
 "seems to fly by faster. I guess the upside of that is that you don't notice "
 "how slow your ship is as much.\""
 msgstr ""
+"\"Pilotar naves más grandes es increíble, pero es un poco más difícil que "
+"pilotar naves más pequeñas. Hay mucho más que hacer para las mismas "
+"acciones, el tiempo parece volar más rápido. Supongo que el lado bueno de "
+"eso es que no notas tanto la lentitud de tu nave.\""
 
 #: dat/events/neutral/npc.lua:250
 msgid ""
@@ -37952,6 +38012,11 @@ msgid ""
 "size, you have a lot more time to react with a smaller vessel. Some are even "
 "so simple to pilot that time seems to slow down all around you!\""
 msgstr ""
+"\"Sé que puede ser tentador pilotar las naves grandes y potentes, ¡pero no "
+"subestimes a las más pequeñas! Dados sus diseños más sencillos y el menor "
+"número de tripulantes, tienes mucho más tiempo para reaccionar con una nave "
+"más pequeña. ¡Algunas son incluso tan sencillas de pilotar que el tiempo "
+"parece ralentizarse a tu alrededor!\""
 
 #: dat/events/neutral/npc.lua:251
 msgid ""
@@ -37966,6 +38031,9 @@ msgid ""
 "yacht. I don't get it personally; it's all the same no matter what ship "
 "you're in.\""
 msgstr ""
+"\"La gente rica pagará un extra por hacer un recorrido turístico fuera del "
+"mundo en un yate de lujo. Personalmente no lo entiendo; es todo lo mismo sin "
+"importar en qué nave estés.\""
 
 #: dat/events/neutral/npc.lua:253
 msgid ""
@@ -37976,6 +38044,13 @@ msgid ""
 "your reaction time, so you need to learn to just take the hits and focus "
 "your attention on firing back at your enemies.\""
 msgstr ""
+"\"Las diferentes naves deben prepararse y pilotarse de forma diferente. Una "
+"de las lecciones más duras que aprendí como piloto fue dejar de preocuparme "
+"tanto por el daño que recibía mi nave en la batalla mientras pilotaba una "
+"nave grande. Estas naves son demasiado lentas para esquivar, por no hablar "
+"de que son tan complicadas que reducen tu tiempo de reacción, así que tienes "
+"que aprender a aguantar los golpes y centrar tu atención en devolver los "
+"disparos a tus enemigos.\""
 
 #: dat/events/neutral/npc.lua:254
 msgid ""
@@ -37985,6 +38060,12 @@ msgid ""
 "depressurize the exhaust valve while also configuring the capacitance array. "
 "In a way the slow speed of the ship becomes a pretty huge relief!\""
 msgstr ""
+"\"Recuerda que cuando pilotas una nave grande, percibes que el tiempo pasa "
+"mucho más rápido que cuando pilotas una nave pequeña. Puede ser fácil "
+"olvidar lo lentas que son estas naves más grandes cuando estás tratando "
+"frenéticamente de despresurizar la válvula de escape al mismo tiempo que "
+"configuras la matriz de capacitancia. ¡En cierto modo, la lentitud de la "
+"nave se convierte en un gran alivio!\""
 
 #: dat/events/neutral/npc.lua:255
 msgid ""
@@ -37994,6 +38075,11 @@ msgid ""
 "aiming is harder anyway what with how complex these ships are. Turrets are "
 "much better; they aim automatically and usually do a very good job!\""
 msgstr ""
+"\"Siempre hay una excepción a la regla, pero yo no recomendaría usar armas "
+"orientadas hacia delante en naves grandes. La velocidad de giro de las naves "
+"grandes no es capaz de seguir el ritmo de las naves más pequeñas, y apuntar "
+"es más difícil con lo complejas que son estas naves. ¡Las torretas son mucho "
+"mejores; apuntan automáticamente y suelen hacer un buen trabajo!\""
 
 #: dat/events/neutral/npc.lua:256
 msgid ""
@@ -38001,6 +38087,10 @@ msgid ""
 "cloaking? Well, now you do! Small ships majorly benefit from a scrambler or "
 "two; it makes it much easier to dodge those turrets on the larger ships.\""
 msgstr ""
+"\"¿Sabías que el seguimiento automático de objetivos por parte de las "
+"torretas se ve ralentizado por el camuflaje? Pues bien, ¡ahora sí! Las naves "
+"pequeñas se benefician en gran medida de un distorsionador o dos; hace que "
+"sea mucho más fácil esquivar las torretas de las naves más grandes.\""
 
 #: dat/events/neutral/npc.lua:257
 msgid ""
@@ -38008,6 +38098,9 @@ msgid ""
 "weapons, the weapons will swivel a bit to track your target. But it's "
 "absolutely essential for turreted weapons.\""
 msgstr ""
+"\"No olvides tener tu objetivo seleccionado. Incluso si tienes armas "
+"orientadas hacia delante, las armas girarán un poco para seguir tu objetivo. "
+"Pero es absolutamente esencial para las armas con torretas.\""
 
 #: dat/events/neutral/npc.lua:258
 msgid ""
@@ -38016,6 +38109,10 @@ msgid ""
 "your target to follow! I like to use this feature for escort missions. It "
 "makes them a lot less tedious.\""
 msgstr ""
+"\"¿Sabías que puedes seguir automáticamente al piloto con Autonav? ¡Es "
+"cierto! ¡Sólo tienes que hacer #bleft-click#0 en el piloto para apuntarlo y "
+"luego #bright-click#0 en tu objetivo para seguirlo! Me gusta utilizar esta "
+"función para las misiones de escolta. Las hace mucho menos tediosas.\""
 
 #: dat/events/neutral/npc.lua:259
 msgid ""
@@ -38023,6 +38120,9 @@ msgid ""
 "weapons configuration and you get little guides telling you where you should "
 "aim to hit your target! I use it a lot.\""
 msgstr ""
+"\"¡La nueva función de ayuda para apuntar es increíble! Sólo tienes que "
+"activarla en la configuración de armas de tu nave y obtendrás pequeñas guías "
+"que te dirán a dónde debes apuntar para alcanzar tu objetivo. Lo uso mucho.\""
 
 #: dat/events/neutral/npc.lua:260
 msgid ""
@@ -38031,6 +38131,10 @@ msgid ""
 "sometimes expressed with SI prefixes: 'k¤' for thousands of credits, 'M¤' "
 "for millions of credits, and so on.\""
 msgstr ""
+"\"El símbolo \"¤\" es el símbolo galáctico oficial de los créditos. Se "
+"supone que procede del símbolo monetario de una antigua civilización "
+"terrestre. A veces se expresa con prefijos SI: 'k¤' para miles de créditos, "
+"'M¤' para millones de créditos, etc.\""
 
 #: dat/events/neutral/npc.lua:261
 msgid ""
@@ -38041,12 +38145,20 @@ msgid ""
 "pilot. I've not had that problem ever since I equipped a turreted missile "
 "launcher.\""
 msgstr ""
+"\"Si pilotas una nave mediana, te recomiendo que inviertas en al menos una "
+"torreta con lanzamisiles. Tuve una situación cercana hace unos decaperiodos "
+"en la que un bombardero casi me hace volar en pedazos fuera del alcance de "
+"mis torretas láser. Por suerte, conseguí escapar a duras penas a un planeta "
+"cercano para poder huir del piloto. No he tenido ese problema desde que "
+"equipé una torreta  con lanzamisiles.\""
 
 #: dat/events/neutral/npc.lua:262
 msgid ""
 "\"I've heard rumours that a pirate's reputations depends on flying pirate "
 "ships, but I think they only loathe peaceful honest work.\""
 msgstr ""
+"\"He oído rumores de que la reputación de un pirata depende de pilotar naves "
+"piratas, pero creo que sólo detestan el trabajo pacífico y honesto.\""
 
 #: dat/events/neutral/npc.lua:263
 msgid ""
@@ -38055,12 +38167,18 @@ msgid ""
 "'{R}' means restricted, and '{U}' means uninhabited but landable. I wish "
 "someone had told me that!\""
 msgstr ""
+"\"¡Estos símbolos informáticos pueden ser confusos a veces! Pero ya lo he "
+"entendido: '{F}' significa amistoso, '{N}' significa neutral, '{H}' "
+"significa hostil, '{R}' significa restringido y '{U}' significa deshabitado "
+"pero aterrizable. ¡Ojalá alguien me lo hubiera dicho!\""
 
 #: dat/events/neutral/npc.lua:264
 msgid ""
 "\"Trade Lanes are the safest bet to travel around the universe. They have "
 "many patrols to keep you safe from pirates.\""
 msgstr ""
+"\"Las rutas comerciales son la apuesta más segura para viajar por el "
+"universo. Tienen muchas patrullas para mantenerte a salvo de los piratas.\""
 
 #. Jump point messages.
 #. For giving the location of a jump point in the current system to the player for free.
@@ -38073,6 +38191,9 @@ msgid ""
 "know already, let me give you the location of the jump from here to {jmp}. I "
 "hope that helps.\""
 msgstr ""
+"\"Hola, viajero. ¿Está tu mapa del sistema actualizado? Por si aún no lo "
+"sabes, déjame darte la ubicación del salto desde aquí a {jmp}. Espero que "
+"eso te ayude.\""
 
 #: dat/events/neutral/npc.lua:274
 msgid ""
@@ -38080,6 +38201,9 @@ msgid ""
 "to get to {jmp}. I travel there often, so I know exactly where the jump "
 "point is. Here, let me show you.\""
 msgstr ""
+"\"Mucha gente que viene aquí se queja de que no sabe cómo llegar a {jmp}. Yo "
+"viajo allí a menudo, así que sé exactamente dónde está el punto de salto. "
+"Aquí, déjame mostrarte.\""
 
 #: dat/events/neutral/npc.lua:275
 msgid ""
@@ -38087,6 +38211,9 @@ msgid ""
 "give you the coordinates of the jump to {jmp}. Check your map next time you "
 "take off!\""
 msgstr ""
+"\"Así que todavía estás conociendo esta zona, ¿eh? Te diré algo, te daré las "
+"coordenadas del salto a {jmp}. ¡Comprueba tu mapa la próxima vez que "
+"despegues!\""
 
 #: dat/events/neutral/npc.lua:276
 msgid ""
@@ -38094,12 +38221,17 @@ msgid ""
 "is? It'll cost you! Ha ha, just kidding. Here you go, I've added it to your "
 "map.\""
 msgstr ""
+"\"De hecho, hay un salto directo de aquí a {jmp}. ¿Quieres saber dónde está? "
+"Te costará. Ja, ja, es una broma. Aquí tienes, lo he añadido a tu mapa.\""
 
 #: dat/events/neutral/npc.lua:277
 msgid ""
 "\"There's a system just one jump away by the name of {jmp}. I can tell you "
 "where the jump point is. There, I've updated your map. Don't mention it.\""
 msgstr ""
+"\"Hay un sistema a un salto de distancia con el nombre de {jmp}. Puedo "
+"decirte dónde está el punto de salto. Ahí, he actualizado tu mapa. Ni lo "
+"menciones.\""
 
 #. Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
 #. ALL NPCs have a chance to say one of these lines instead of a lore message.
@@ -38109,6 +38241,8 @@ msgid ""
 "\"Apparently there's a woman who regularly turns up on planets in and around "
 "the Klantar system. I wonder what she's looking for?\""
 msgstr ""
+"\"Aparentemente hay una mujer que aparece regularmente en los planetas del "
+"sistema Klantar y sus alrededores. ¿Me pregunto qué está buscando?\""
 
 #: dat/events/neutral/npc.lua:285
 msgid ""
@@ -38116,6 +38250,8 @@ msgid ""
 "Who knows, maybe you can even help them out if you make it to Omega Station."
 "\""
 msgstr ""
+"\"He oído que el Imperio está tratando de hacer algo con el Colectivo. Quién "
+"sabe, quizás puedas ayudarles si llegas a la Estación Omega.\""
 
 #: dat/events/neutral/npc.lua:286
 msgid ""
@@ -38123,12 +38259,17 @@ msgid ""
 "stay away from there if I were you, someone might offer you a dirty kind of "
 "job!\""
 msgstr ""
+"\"A menudo hay personajes sombríos rondando por el sistema Alteris. Yo que "
+"tú me mantendría alejado de allí, ¡alguien podría ofrecerte un trabajo sucio!"
+"\""
 
 #: dat/events/neutral/npc.lua:287
 msgid ""
 "\"So there's some Za'lek scientist looking for a cargo jockey out on "
 "Niflheim in the Dohriabi system. I hear it's pretty good money.\""
 msgstr ""
+"\"He oido que hay un científico Za'lek buscando un transportista de carga en "
+"Niflheim en el sistema Dohriabi. He oído que ofrece un buen dinero.\""
 
 #. Event hint messages. Each element should be a table containing the event name and the corresponding hint.
 #. Make sure the hints are always faction neutral.
@@ -38137,6 +38278,8 @@ msgid ""
 "\"The FLF and the Dvaered sometimes clash in Surano. If you go there, you "
 "might find something of interest... Or not.\""
 msgstr ""
+"\"El FLF y el Dvaered a veces se enfrentan en Surano. Si vas allí, puede que "
+"encuentres algo de interés... O no.\""
 
 #. Mission after-care messages. Each element should be a table containing the mission name and a line of text.
 #. This text will be said by NPCs once the player has completed the mission in question.
@@ -38147,6 +38290,10 @@ msgid ""
 "nebula for them. I thought everyone with half a brain knew to stay out of "
 "there, but oh well.\""
 msgstr ""
+"\"Escuché que algunos científicos imprudentes consiguieron que alguien "
+"pusiera un satélite dentro de la nebulosa para ellos. Pensé que todos los "
+"que tienen medio cerebro sabían que debían mantenerse alejados de allí, pero "
+"bueno.\""
 
 #: dat/events/neutral/npc.lua:301
 msgid ""
@@ -38155,12 +38302,18 @@ msgid ""
 "both diplomats died. Now both sides are accusing the other of foul play. "
 "Could get ugly.\""
 msgstr ""
+"\"¿Te has enterado? Hubo un gran incidente durante una reunión diplomática "
+"entre el Imperio y los Dvaered. Nadie sabe qué pasó exactamente, pero ambos "
+"diplomáticos murieron. Ahora ambas partes están acusando al otro de juego "
+"sucio. Podría ponerse feo.\""
 
 #: dat/events/neutral/npc.lua:302
 msgid ""
 "\"Hey, remember the Collective? They got wiped out! I feel so much better "
 "now that there aren't a bunch of robot ships out there to get me anymore.\""
 msgstr ""
+"\"Oye, ¿te acuerdas del Colectivo? ¡Fueron aniquilados!. Me siento mucho "
+"mejor ahora que ya no hay un montón de naves robóticas persiguiéndome.\""
 
 #: dat/events/neutral/npc.lua:303
 msgid ""
@@ -38168,6 +38321,10 @@ msgid ""
 "of the thieves were caught, but the one who carried the holopainting "
 "offworld is still at large. No leads. Damn criminals...\""
 msgstr ""
+"\"Unos ladrones entraron en un museo de Varia y robaron una holopintura. La "
+"mayoría de los ladrones fueron capturados, pero el que se llevó la "
+"holopintura fuera del mundo sigue en libertad. No hay pistas. Malditos "
+"criminales...\""
 
 #: dat/events/neutral/npc.lua:304
 msgid ""
@@ -38175,6 +38332,9 @@ msgid ""
 "into Sigur and blew the hidden base there to bits! I bet that was a serious "
 "setback for the FLF.\""
 msgstr ""
+"\"Los Dvaered consiguieron una gran victoria contra el FLF recientemente. "
+"Entraron en Sigur y volaron en pedazos la base oculta que había allí. "
+"Apuesto a que fue un serio revés para el FLFe\""
 
 #. Event after-care messages. Each element should be a table containing the event name and a line of text.
 #. This text will be said by NPCs once the player has completed the event in question.
@@ -38184,12 +38344,16 @@ msgid ""
 "\"What? You had rodents sabotage your ship? Man, you're lucky to be alive. "
 "If it had hit the wrong power line...\""
 msgstr ""
+"\"¿Qué? ¿Hiciste que unos roedores sabotearan tu nave? Hombre, tienes suerte "
+"de estar vivo. Si hubieran golpeado la línea eléctrica equivocada...\""
 
 #: dat/events/neutral/npc.lua:312
 msgid ""
 "\"What do you mean, the world ended and then the creator of the universe "
 "came and fixed it? What kind of illegal substance are you on?\""
 msgstr ""
+"\"¿Cómo que el mundo se acabó y luego vino el creador del universo a "
+"arreglarlo? ¿Qué clase de sustancia ilegal estás tomando?\""
 
 #. Returns a lore message for the given faction.
 #. Select the faction messages for this NPC's faction, if it exists.
@@ -38212,13 +38376,13 @@ msgstr ""
 #. Select a faction for the NPC. NPCs may not have a specific faction.
 #: dat/events/neutral/npc.lua:423
 msgid "Civilian"
-msgstr ""
+msgstr "Civil"
 
 #. Choose faction, overriding if necessary
 #. Append the faction to the civilian name, unless there is no faction.
 #: dat/events/neutral/npc.lua:456
 msgid "{fct} Civilian"
-msgstr ""
+msgstr "Civil {fct}"
 
 #. Select a portrait
 #. Select a description for the civilian.
@@ -38260,14 +38424,14 @@ msgstr ""
 #. Create a Vendetta who hails the player after a bit
 #: dat/events/neutral/shadow_comm.lua:38
 msgid "Four Winds Vendetta"
-msgstr ""
+msgstr "Vendetta Cuatro Vientos"
 
 #. Clean up on events that remove the Vendetta from the game
 #. Make the ship hail the player
 #. Triggered when the player hails the ship
 #: dat/events/neutral/shadow_comm.lua:61
 msgid "An open invitation"
-msgstr ""
+msgstr "Un invitación abierta"
 
 #: dat/events/neutral/shadow_comm.lua:61
 msgid ""
@@ -38286,10 +38450,23 @@ msgid ""
 "you, and there's only one way to find out what about. Perhaps you should "
 "make a note of the place you're supposed to meet her: the {sys} system."
 msgstr ""
+"\"Saludos, {player}\", te dice el piloto de la Vendetta en cuanto respondes "
+"a su llamada. \"Te he estado buscando de parte de una conocida tuya. Desea "
+"reunirse contigo en el lugar que ella elija y a la hora que tú decidas. Se "
+"trata de una propuesta que podría interesarte, si no te importa arriesgarte\""
+".\n"
+"    Frunces el ceño, pero de todas formas le preguntas al piloto a dónde "
+"quiere que vayas este conocido.\n"
+"    \"Vuela al sistema {sys}\", responde. \"Ella se reunirá contigo allí. No "
+"hay prisa, pero te sugiero que vayas a verla lo antes posible\".\n"
+"    La pantalla se apaga y la Vendetta sigue con sus asuntos, sin prestarte "
+"más atención. Parece que hay alguien ahí fuera que quiere verte, y sólo hay "
+"una forma de saber de qué. Tal vez debas tomar nota del lugar en el que se "
+"supone que te encontrarás con ella: el sistema {sys}."
 
 #: dat/events/neutral/shadow_comm.lua:69
 msgid "Do you intend to respond to the invitation?"
-msgstr ""
+msgstr "¿Piensas responder a la invitación?"
 
 #: dat/events/neutral/shadow_comm.lua:70
 msgid ""
@@ -38297,6 +38474,9 @@ msgid ""
 "acquaintance of yours. The pilot who told you this said that there's no "
 "rush, \"but I suggest you go see her at the earliest opportunity\"."
 msgstr ""
+"Alguien te ha invitado a reunirte con una supuestamente conocida tuya en el "
+"sistema {sys}. El piloto que te lo ha dicho te ha dicho que no hay prisa, "
+"\"pero sugerido que vayas a verla lo antes posible.\""
 
 #. Clean up
 #.
@@ -38338,25 +38518,25 @@ msgstr ""
 #. Create question
 #: dat/events/neutral/shiplover.lua:99
 msgid "\"What class is the #o{ship}#0 ship?\""
-msgstr ""
+msgstr "\"¿De qué clase es la nave #o{ship}#0?\""
 
 #. Create question
 #: dat/events/neutral/shiplover.lua:115
 msgid "\"What is the name of this ship?\""
-msgstr ""
+msgstr "\"¿Cuál es el nombre de esta nave?\""
 
 #. elseif difficulty == 2 then
 #. Create the log if necessary.
 #: dat/events/neutral/shiplover.lua:141
 msgid "Ship Quiz"
-msgstr ""
+msgstr "Prueba de Naves"
 
 #: dat/events/neutral/shiplover.lua:141 dat/factions/standing/lib/base.lua:42
 #: dat/factions/standing/lib/base.lua:51 dat/scripts/common/antlejos.lua:29
 #: dat/scripts/common/derelict.lua:19 dat/scripts/common/neutral.lua:10
 #: dat/scripts/common/tut_nelly.lua:28 dat/scripts/common/tutorial.lua:46
 msgid "Neutral"
-msgstr ""
+msgstr "Neutral"
 
 #. Ignore claimed systems (don't want to ruin the atmosphere)
 #. Do not spawn on restricted assets
@@ -38373,6 +38553,7 @@ msgstr ""
 msgid ""
 "You obtained 1 {outfit} from the Ship Enthusiast for getting 5 quizzes right."
 msgstr ""
+"Obtuviste un {outfit} de la Entusiasta de las Naves por acertar 5 pruebas."
 
 #: dat/events/neutral/shiplover.lua:240
 msgid ""
@@ -38380,12 +38561,17 @@ msgid ""
 "reward. Here, take this special trading card. Don't worry, I have a dozen "
 "like it. I'll have to step up my quiz game from now on.\""
 msgstr ""
+"\"Vaya. Es la quinta vez que aciertas mi cuestionario. Esto merece una "
+"recompensa especial. Toma, coge esta tarjeta especial de intercambio. No te "
+"preocupes, tengo una docena como esta. Tendré que mejorar mi juego de "
+"preguntas a partir de ahora.\""
 
 #: dat/events/neutral/shiplover.lua:246
 msgid ""
 "You obtained 1 {outfit} from the Ship Enthusiast for getting 10 quizzes "
 "right."
 msgstr ""
+"Obtuviste un {outfit} de la Entusiasta de las Naves por acertar 10 pruebas."
 
 #: dat/events/neutral/shiplover.lua:249
 msgid ""
@@ -38394,12 +38580,17 @@ msgid ""
 "Make sure not to lose it, this one is fairly special! I'll have to think of "
 "better quizzes from now on.\""
 msgstr ""
+"\"Vaya, es la décima vez que aciertas mi cuestionario. Lo estás haciendo "
+"mucho mejor de lo que esperaba. Toma, coge una de mis cartas de intercambio "
+"preferidas. Asegúrate de no perderla, ¡ésta es bastante especial! Tendré que "
+"pensar en mejores pruebas a partir de ahora.\""
 
 #: dat/events/neutral/shiplover.lua:255
 msgid ""
 "You obtained a {outfit} from the Ship Enthusiast for getting 25 quizzes "
 "right."
 msgstr ""
+"Obtuviste un {outfit} de la Entusiasta de las Naves por acertar 25 pruebas."
 
 #: dat/events/neutral/shiplover.lua:258
 msgid ""
@@ -38409,11 +38600,18 @@ msgid ""
 "copy of this one so make sure to take good care of it. No! Don't take it out "
 "of the card foil! It might get damaged that way!\""
 msgstr ""
+"\"Maldita sea. Esta es la 25ª vez que aciertas mi cuestionario. Nadie ha "
+"jugado mi prueba conmigo durante tanto tiempo. Supongo que tengo que "
+"conmemorar esto de una manera especial. Toma, coge una de las cartas más "
+"raras de mi colección. Sólo tengo una copia de ésta, así que asegúrate de "
+"cuidarla bien. ¡No! ¡No la saques de la lámina de la tarjeta! ¡Podría "
+"dañarse de esa manera!\""
 
 #: dat/events/neutral/shiplover.lua:263
 msgid ""
 "You obtained {credits} from the Ship Enthusiast for getting a quiz right."
 msgstr ""
+"Has obtenido {credits} de la Entusiasta de las naves por acertar una prueba."
 
 #. Don't trigger hooks
 #: dat/events/neutral/shiplover.lua:267
@@ -38424,18 +38622,24 @@ msgid_plural ""
 "\"That's right! Damn, I thought you wouldn't know this one. You've solved my "
 "quiz {n} times now! Here, take this as a reward for your performance.\""
 msgstr[0] ""
+"\"¡Eso es! Maldita sea, pensé que no sabrías esta. ¡Has resuelto mi "
+"cuestionario {n} vez! Toma, coge esto como recompensa por tu actuación.\""
 msgstr[1] ""
+"\"¡Eso es! Maldita sea, pensé que no sabrías esta. ¡Has resuelto mi "
+"cuestionario {n} veces! Toma, coge esto como recompensa por tu actuación.\""
 
 #. Set up NPC and hooks
 #: dat/events/neutral/shiplover.lua:274 dat/events/neutral/shiplover.lua:288
 msgid "Ship Enthusiast"
-msgstr ""
+msgstr "Entusiasta de las Naves"
 
 #: dat/events/neutral/shiplover.lua:274
 msgid ""
 "You see a surprisingly young individual who is playing with a small ship "
 "model."
 msgstr ""
+"Ves a un individuo sorprendentemente joven que está jugando con un pequeño "
+"modelo de nave."
 
 #. First meeting
 #: dat/events/neutral/shiplover.lua:293
@@ -38443,34 +38647,41 @@ msgid ""
 "You approach the individual who is making weird noises, likely imitating "
 "space ship noises, while playing with a space ship toy."
 msgstr ""
+"Te acercas al individuo que está haciendo ruidos extraños, probablemente "
+"imitando ruidos de naves espaciales, mientras juega con un juguete de nave "
+"espacial."
 
 #: dat/events/neutral/shiplover.lua:294
 msgid ""
 "\"Why hello there. How do you like my new limited edition Lancelot figurine?"
 "\""
 msgstr ""
+"\"Vaya, hola. ¿Qué te parece mi nueva estatuilla de edición limitada de "
+"Lancelot?\""
 
 #: dat/events/neutral/shiplover.lua:297
 msgid "\"It looks great!\""
-msgstr ""
+msgstr "\"¡Se ve muy bien!\""
 
 #: dat/events/neutral/shiplover.lua:298
 msgid "\"It's awful.\""
-msgstr ""
+msgstr "\"Es horrible.\""
 
 #: dat/events/neutral/shiplover.lua:299
 msgid "\"Aren't you too young to be here?\""
-msgstr ""
+msgstr "\"¿No eres demasiado joven para estar aquí?\""
 
 #: dat/events/neutral/shiplover.lua:310
 msgid "\"You know I own a real one.\""
-msgstr ""
+msgstr "\"Sabes que tengo una de verdad.\""
 
 #: dat/events/neutral/shiplover.lua:316
 msgid ""
 "\"I know right! It cost me a lot to find it. It was sold out all over! But "
 "it was all worth it in the end.\""
 msgstr ""
+"\"¡Lo sé bien! Me costó mucho encontrarlo. ¡Estaba agotado por todas partes! "
+"Pero al final valió la pena.\""
 
 #: dat/events/neutral/shiplover.lua:320
 msgid ""
@@ -38480,12 +38691,20 @@ msgid ""
 "You look closely and indeed are able to see the pilots. The level of detail "
 "is fairly ridiculous."
 msgstr ""
+"\"Phhhsssh. No puedes apreciar esta belleza. ¡Mira las curvas! ¡Las luces "
+"brillantes! ¡Es un modelo a escala 1/128 totalmente anatómico! Incluso "
+"puedes ver a los pilotos a través de la cabina\".\n"
+"Miras de cerca y, efectivamente, se pueden ver a los pilotos. El nivel de "
+"detalle es verdaderamente ridículo."
 
 #: dat/events/neutral/shiplover.lua:325
 msgid ""
 "\"Aren't you too old to be here? It's not like I'm drinking or anything.\"\n"
 "They stick their tongue out at you as they still play with the space ship."
 msgstr ""
+"\"¿No eres demasiado mayor para estar aquí? No es que esté bebiendo o algo "
+"así\".\n"
+"Te saca la lengua mientras siguen jugando con la nave espacial."
 
 #: dat/events/neutral/shiplover.lua:330
 msgid ""
@@ -38495,6 +38714,11 @@ msgid ""
 "They lift up their toy Lancelot. You can barely make out a golden Efreeti "
 "etched on the side."
 msgstr ""
+"\"¿De verdad? ¿También es un modelo del escuadrón Sigma-5 Efreeti Dorado? ¿"
+"No sabes lo que es? Deja de meterte conmigo, probablemente sea otro Lancelot "
+"producido en masa sin ninguna historia detrás. Esto es una obra maestra\".\n"
+"Levanta su Lancelot de juguete. Apenas se puede distinguir un Efreeti dorado "
+"grabado en el lateral."
 
 #: dat/events/neutral/shiplover.lua:335
 msgid ""
@@ -38502,53 +38726,63 @@ msgid ""
 "I'll ask you a question and if you get it right, I'll give you a nice "
 "reward. What do you say?\""
 msgstr ""
+"\"¿Sabes qué? Vamos a jugar a un juego. Conozco TODOS los datos de todos las "
+"naves. Te haré una pregunta y si la aciertas, te daré una buena recompensa. ¿"
+"Qué dices?\""
 
 #. Met, didn't play quiz and came back
 #: dat/events/neutral/shiplover.lua:341
 msgid "You once again approach the ship enthusiast."
-msgstr ""
+msgstr "De nuevo te acercas al Entusiasta de las naves."
 
 #: dat/events/neutral/shiplover.lua:342
 msgid ""
 "\"So you're back. Did you change your mind about playing my ship quiz?\""
 msgstr ""
+"\"Así que has vuelto. ¿Cambiaste de opinión sobre jugar a mi prueba de naves?"
+"\""
 
 #: dat/events/neutral/shiplover.lua:344
 msgid ""
 "You once again approach the ship enthusiast. They seem to move about a lot."
 msgstr ""
+"Vuelves a acercarte a la entusiasta de las naves. Parece que se mueve un "
+"montón."
 
 #: dat/events/neutral/shiplover.lua:345
 msgid ""
 "\"Would you like to play another round of the ship quiz? I think the "
 "question I prepared will stump you completely!\""
 msgstr ""
+"\"¿Te gustaría jugar otra ronda de la prueba de naves? ¡Creo que la pregunta "
+"que he preparado te dejará completamente perplejo!\""
 
 #: dat/events/neutral/shiplover.lua:348 dat/missions/minerva/maikki2.lua:196
 msgid "\"Yes!\""
-msgstr ""
+msgstr "\"¡Sí!\""
 
 #: dat/events/neutral/shiplover.lua:349 dat/missions/minerva/kex4.lua:149
 msgid "\"No.\""
-msgstr ""
+msgstr "\"No.\""
 
 #: dat/events/neutral/shiplover.lua:353
 msgid "\"Oh well, your loss!\""
-msgstr ""
+msgstr "\"¡Oh, bueno, tú te lo pierdes!\""
 
 #: dat/events/neutral/shiplover.lua:358
 msgid "\"Great! So here it goes. Listen carefully.\""
-msgstr ""
+msgstr "\"¡Genial! Así que aquí va. Escucha con atención.\""
 
 #: dat/events/neutral/shiplover.lua:375
 msgid "\"Great! So take a look at this ship and listen carefully.\""
 msgstr ""
+"\"¡Genial! Así que echa un vistazo a esta nave y escucha con atención.\""
 
 #. Show choices
 #. Give reward
 #: dat/events/neutral/shiplover.lua:415
 msgid "You got the Ship Enthusiast's quiz wrong."
-msgstr ""
+msgstr "Te equivocaste en la prueba de la Entusiasta de las Naves."
 
 #. TODO wrong sound
 #: dat/events/neutral/shiplover.lua:419
@@ -38557,6 +38791,9 @@ msgid ""
 "\"The correct answer was #g{answer}#0! Better luck next time.\"\n"
 "They take their leave."
 msgstr ""
+"Parece presumida mientras exclama \"¡Error!\".\n"
+"\"¡La respuesta correcta era #g{answer}#0! Mejor suerte la próxima vez\".\n"
+"Y se despide."
 
 #. Non-persistent state
 #. luacheck: globals broadcast destroyevent endevent rescue (Hook functions passed by name)
@@ -38567,7 +38804,7 @@ msgstr ""
 #. Create the derelict.
 #: dat/events/neutral/shipwreck.lua:62
 msgid "Shipwrecked {plt}"
-msgstr ""
+msgstr "Náufragos en {plt}"
 
 #. Added extra visibility for big systems (A.)
 #. Set hooks
@@ -38577,6 +38814,8 @@ msgid ""
 "SOS. This is {plt}. We are shipwrecked. Please #bboard#0 us by positioning "
 "your ship over ours and then #bdouble-clicking#0 on our ship."
 msgstr ""
+"SOS. Aquí en {plt}. Hemos naufragado. Por favor, #bboard#0 posicionando tu "
+"nave sobre la nuestra y luego #bdouble-click#0 en nuestra nave."
 
 #. Player boards the _("Shipwrecked {plt}") and rescues the crew, this spawns a new mission.
 #.
@@ -38597,36 +38836,44 @@ msgstr ""
 #. Non-persistent state
 #: dat/events/neutral/travelling_merchant.lua:21
 msgid "Machiavellian Misi"
-msgstr ""
+msgstr "Misi Maquiavélica"
 
 #. Mireia Sibeko
 #: dat/events/neutral/travelling_merchant.lua:24
 msgid "Machiavellian Misi's \"Fine\" Wares"
-msgstr ""
+msgstr "Mercancias \"Finas\" de Misi Maquiavélica"
 
 #: dat/events/neutral/travelling_merchant.lua:26
 msgid ""
 "Machiavellian Misi's the name and selling fine shit is my game! Come get "
 "your outfits here!"
 msgstr ""
+"¡Misi Maquiavélica es el nombre y la venta de mierda fina es mi juego! ¡Ven "
+"a buscar tus equipos aquí!"
 
 #: dat/events/neutral/travelling_merchant.lua:27
 msgid ""
 "Get your fiiiiiiiine outfits here! Guaranteed 3 space lice or less or your "
 "money back!"
 msgstr ""
+"¡Consigue tus equipos fiiiiiiinos aquí! ¡Garantizamos 3 piojos espaciales o "
+"menos o te devolvemos el dinero!"
 
 #: dat/events/neutral/travelling_merchant.lua:28
 msgid ""
 "Recommended by the Emperor's pet iguana's third cousin! High quality outfits "
 "sold here!"
 msgstr ""
+"¡Recomendado por el primo tercero de la iguana mascota del Emperador! ¡Aquí "
+"se venden equipos de alta calidad!"
 
 #: dat/events/neutral/travelling_merchant.lua:29
 msgid ""
 "Best outfits in the universe! So freaking good that 50% of my clients lose "
 "their hair from joy!"
 msgstr ""
+"¡Los mejores equipos del universo! ¡Tan jodidamente buenos que el 50% de mis "
+"clientes pierden el pelo de la alegría!"
 
 #: dat/events/neutral/travelling_merchant.lua:30
 msgid "Sweeet sweet space outfits! Muaha hahaha ha ha ha erk..."
@@ -38666,6 +38913,13 @@ msgid ""
 "wares and most don't seem of much value, there might be some interesting "
 "find."
 msgstr ""
+"Abres la esclusa e inmediatamente te recibe una humedad y un calor intensos, "
+"casi como una jungla. A medida que avanzas por la nave poco iluminada puedes "
+"ver todo tipo de moho y plantas cacareando en las grietas de la pared. "
+"Espera, ¿era eso un pequeño animal correteando por ahí? Finalmente llegas a "
+"la bodega de carga que ha sido readaptada como una especie de bazar. Es un "
+"desorden de diferentes mercancías y la mayoría no parecen de mucho valor, "
+"podría haber algún hallazgo interesante."
 
 #.
 #. Ideas
@@ -38702,20 +38956,22 @@ msgstr ""
 #. --
 #: dat/events/pirate/fake_transponder.lua:19
 msgid "Shifty-Eyed Pirate"
-msgstr ""
+msgstr "Pirata de Ojos Saltones"
 
 #: dat/events/pirate/fake_transponder.lua:22
 msgid ""
 "You see a seedy pirate flashing looks at you, as if they had something "
 "interesting to show you."
 msgstr ""
+"Ves a un pirata sórdido que te mira, como si tuviera algo interesante que "
+"mostrarte."
 
 #. luacheck: globals enter (Hook functions passed by name)
 #. luacheck: globals approach_pirate (NPC functions passed by name)
 #. Player already has it somehow, so this event makes no sense
 #: dat/events/pirate/fake_transponder.lua:45
 msgid "You approach the pirate who begins grinning from ear to ear."
-msgstr ""
+msgstr "Te acercas al pirata que empieza a sonreír de oreja a oreja."
 
 #: dat/events/pirate/fake_transponder.lua:46
 msgid ""
@@ -38725,22 +38981,32 @@ msgid ""
 "sensors will pick you up as a docile and inoffensive independent ship. It "
 "can fool pretty much any ship sensors!\""
 msgstr ""
+"\"Parece que reconoces un robo cuando lo ves. Tengo en mis manos una "
+"maravilla de la tecnología, un #o{outfit}#0 que puede ayudarte a evitar "
+"todas esas molestas naves cuando te deleitas con la piratería. "
+"Independientemente de la nave que pilotes, los sensores te detectarán como "
+"una dócil e inofensiva nave independiente. ¡Puede engañar a casi todos los "
+"sensores de las naves!\""
 
 #: dat/events/pirate/fake_transponder.lua:47
 msgid ""
 "\"As a one-time offer, I'd be willing to part with it for {credits}. It's "
 "such a steal that it's almost like you're robbing me!\""
 msgstr ""
+"\"Como oferta única, estaría dispuesto a desprenderme de él por {credits}. ¡"
+"Es una ganga tan grande que es casi como si me robaras!\""
 
 #: dat/events/pirate/fake_transponder.lua:50
 msgid "Purchase the Transponder"
-msgstr ""
+msgstr "Comprar el Transpondedor"
 
 #: dat/events/pirate/fake_transponder.lua:55
 msgid ""
 "You lack the funds to make the purchase and the pirate quickly loses "
 "interest in you."
 msgstr ""
+"Te faltan fondos para hacer la compra y el pirata pierde rápidamente el "
+"interés en ti."
 
 #: dat/events/pirate/fake_transponder.lua:68
 msgid ""
@@ -38748,10 +39014,13 @@ msgid ""
 "they'll find out who you are.\"\n"
 "Having sold his wares, the pirate disappears into the shadows."
 msgstr ""
+"\"¡No te arrepentirás de esta compra! Sólo asegúrate de no ser escaneado, o "
+"descubrirán quién eres.\"\n"
+"Tras vender su mercancía, el pirata desaparece en las sombras."
 
 #: dat/events/pirate/fake_transponder.lua:73
 msgid "You leave the pirate and their fake transponder behind."
-msgstr ""
+msgstr "Dejas atrás al pirata y su falso transpondedor detrás."
 
 #. Player bought it, we're done!
 #.
@@ -38784,7 +39053,7 @@ msgstr ""
 #. TODO change this when something can make them non-hostile
 #: dat/events/proteron/blockade.lua:76
 msgid "Unknown vessel trying to breach blockade. All ships engage!"
-msgstr ""
+msgstr "Nave desconocida tratando de romper bloqueo. ¡Todas las naves ataquen!"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -38827,7 +39096,7 @@ msgstr ""
 #. Probably going to die but be nice and add reset autonav the first time
 #: dat/events/restricted.lua:54
 msgid "{faction} Message Buoy"
-msgstr ""
+msgstr "Boya de Mensajes de {faction}"
 
 #. Keep on repeating as the spawn
 #.
@@ -38852,19 +39121,19 @@ msgstr ""
 #. luacheck: globals jumpin land player_attacked (Hook functions passed by name)
 #: dat/events/shiplog.lua:26
 msgid "Travel Log"
-msgstr ""
+msgstr "Registro de Viaje"
 
 #: dat/events/shiplog.lua:39
 msgid "Hostility met in the {sys} system"
-msgstr ""
+msgstr "Hostilidad encontrada en el sistema {sys}"
 
 #: dat/events/shiplog.lua:47
 msgid "Jumped from the {1} system to the {2} system"
-msgstr ""
+msgstr "Saltó del sistema {1} al sistema {2}"
 
 #: dat/events/shiplog.lua:56
 msgid "Landed on {pnt} in the {sys} system"
-msgstr ""
+msgstr "Aterrizó en {pnt} en el sistema {sys}"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -38908,178 +39177,187 @@ msgid ""
 "{player}, although you are an enemy of House Sirius, I shall not attack "
 "unless provoked, for I abhor violence!"
 msgstr ""
+"¡{player}, aunque seas un enemigo de la Casa Sirio, no atacaré a menos que "
+"me provoques, pues aborrezco la violencia!"
 
 #: dat/events/sirius/preach.lua:26
 msgid ""
 "{player}, although you are an enemy of House Sirius, I shall not attack "
 "unless provoked, for I believe mercy is a great Truth!"
 msgstr ""
+"¡{player}, aunque seas un enemigo de la Casa Sirio, no atacaré a menos que "
+"me provoques, pues creo que la misericordia es una gran Verdad!"
 
 #: dat/events/sirius/preach.lua:27
 msgid ""
 "{player}, although you are an enemy of House Sirius, I shall not attack "
 "unless provoked, for you too are Sirichana's child!"
 msgstr ""
+"¡{player}, aunque seas un enemigo de la Casa Sirio, no atacaré a menos que "
+"se me provoque, pues tú también eres hijo de Sirichana!"
 
 #: dat/events/sirius/preach.lua:31
 msgid ""
 "{player}, I foresee in you a great Sirian citizen, and I look forward to "
 "your friendship!"
 msgstr ""
+"¡{player}, preveo en ti un gran ciudadano de Sirio, y espero tu amistad!"
 
 #: dat/events/sirius/preach.lua:32
 msgid ""
 "{player}, I foresee a bright future for you, illuminated by Sirichana's "
 "light!"
 msgstr ""
+"¡{player}, preveo un futuro brillante para ti, iluminado por la luz de "
+"Sirichana!"
 
 #: dat/events/sirius/preach.lua:33
 msgid "{player}, may Sirichana's light illuminate your path!"
-msgstr ""
+msgstr "¡{player}, que la luz de Sirichana ilumine tu camino!"
 
 #: dat/events/sirius/preach.lua:37
 msgid "You shall all follow Sirichana henceforth!"
-msgstr ""
+msgstr "¡Todos seguirán a Sirichana de ahora en adelante!"
 
 #: dat/events/sirius/preach.lua:38
 msgid "Sirichana shall lead you to peace and wisdom!"
-msgstr ""
+msgstr "¡Sirichana te llevará a la paz y a la sabiduría!"
 
 #: dat/events/sirius/preach.lua:39
 msgid "Sirichana is the Father of you all!"
-msgstr ""
+msgstr "¡Sirichana es el Padre de todos!"
 
 #: dat/events/sirius/preach.lua:40
 msgid "Sirichana's grace shall liberate you!"
-msgstr ""
+msgstr "¡La gracia de Sirichana te liberará!"
 
 #: dat/events/sirius/preach.lua:41
 msgid "May Sirichana's light shine on you henceforth!"
-msgstr ""
+msgstr "¡Que la luz de Sirichana te ilumine de ahora en adelante!"
 
 #: dat/events/sirius/preach.lua:45
 msgid "We shall all follow Sirichana now!"
-msgstr ""
+msgstr "¡Ahora todos seguiremos a Sirichana!"
 
 #: dat/events/sirius/preach.lua:46
 msgid "We have been liberated from our evil ways!"
-msgstr ""
+msgstr "¡Hemos sido liberados de nuestros malos caminos!"
 
 #: dat/events/sirius/preach.lua:47
 msgid "No more shall we tread the path of evil!"
-msgstr ""
+msgstr "¡No volveremos a pisar el camino del mal!"
 
 #: dat/events/sirius/preach.lua:48
 msgid "We see the True path now!"
-msgstr ""
+msgstr "¡Ahora vemos la ruta Verdadera!"
 
 #: dat/events/sirius/preach.lua:49
 msgid "No more shall we commit sins!"
-msgstr ""
+msgstr "¡No cometeremos más pecados!"
 
 #: dat/events/sirius/preach.lua:53
 msgid "Serves you right for attacking a Touched!"
-msgstr ""
+msgstr "¡Te lo mereces por atacar a un Tocado!"
 
 #: dat/events/sirius/preach.lua:54
 msgid "Fry in hell, demon!"
-msgstr ""
+msgstr "¡Fríete en el infierno, demonio!"
 
 #: dat/events/sirius/preach.lua:55
 msgid "May you suffer eternal torment!"
-msgstr ""
+msgstr "¡Que sufras un tormento eterno!"
 
 #: dat/events/sirius/preach.lua:56
 msgid "Your doom is Sirichana's curse!"
-msgstr ""
+msgstr "¡Tu condenación es la maldición de Sirichana!"
 
 #: dat/events/sirius/preach.lua:60
 msgid "All the attackers are dead!"
-msgstr ""
+msgstr "¡Todos los atacantes están muertos!"
 
 #: dat/events/sirius/preach.lua:61
 msgid "We can resume our Quest now!"
-msgstr ""
+msgstr "¡Ahora podemos reanudar nuestra Búsqueda!"
 
 #: dat/events/sirius/preach.lua:62
 msgid "The glory of Sirichana remains unblemished!"
-msgstr ""
+msgstr "¡La gloria de Sirichana permanece intacta!"
 
 #: dat/events/sirius/preach.lua:63
 msgid "All heretics have been destroyed!"
-msgstr ""
+msgstr "¡Todos los herejes han sido destruidos!"
 
 #: dat/events/sirius/preach.lua:67
 msgid "Do you think everyone can be brainwashed?"
-msgstr ""
+msgstr "¿Crees que a todo el mundo se le puede lavar el cerebro?"
 
 #: dat/events/sirius/preach.lua:68
 msgid "You shall convert no more of us!"
-msgstr ""
+msgstr "¡No convertirás a nadie más!"
 
 #: dat/events/sirius/preach.lua:69
 msgid "Some of us shall not be converted, fool!"
-msgstr ""
+msgstr "¡Algunos de nosotros no serán convertidos, estúpido!"
 
 #: dat/events/sirius/preach.lua:70
 msgid "You'll never convert me!"
-msgstr ""
+msgstr "¡Nunca me convertirás!"
 
 #: dat/events/sirius/preach.lua:71
 msgid "I shall never be converted!"
-msgstr ""
+msgstr "¡Nunca seré convertido!"
 
 #: dat/events/sirius/preach.lua:75
 msgid "You feel an overwhelming presence nearby!"
-msgstr ""
+msgstr "¡Sientes una presencia abrumadora cerca!"
 
 #: dat/events/sirius/preach.lua:76
 msgid "Something compels you to stop"
-msgstr ""
+msgstr "Algo te obliga a detenerte"
 
 #: dat/events/sirius/preach.lua:77
 msgid "You are jerked awake by a mysterious but compelling urge"
-msgstr ""
+msgstr "Te despiertas de un tirón por un impulso misterioso pero irresistible"
 
 #: dat/events/sirius/preach.lua:78
 msgid "You feel... Touched... by a magical power"
-msgstr ""
+msgstr "Te sientes... Tocado... por un poder mágico"
 
 #: dat/events/sirius/preach.lua:82
 msgid "Die, heretics!"
-msgstr ""
+msgstr "¡Morid, herejes!"
 
 #: dat/events/sirius/preach.lua:83
 msgid "Those who insult the Sirichana shall die!"
-msgstr ""
+msgstr "¡Aquellos que insulten a Sirichana morirán!"
 
 #: dat/events/sirius/preach.lua:84
 msgid "You've committed an unpardonable sin!"
-msgstr ""
+msgstr "¡Has cometido un pecado imperdonable!"
 
 #: dat/events/sirius/preach.lua:85
 msgid "Hell awaits, fools!"
-msgstr ""
+msgstr "¡El infierno os espera, idiotas!"
 
 #: dat/events/sirius/preach.lua:89
 msgid "Oh no! The Touched One is dead!"
-msgstr ""
+msgstr "¡Oh no! ¡El Tocado está muerto!"
 
 #: dat/events/sirius/preach.lua:90
 msgid "Sirichana save our souls!"
-msgstr ""
+msgstr "¡Sirichana salva nuestras almas!"
 
 #: dat/events/sirius/preach.lua:91
 msgid "We shall never forget You, O Touched One!"
-msgstr ""
+msgstr "¡Nunca te olvidaremos, oh, Tocado!"
 
 #: dat/events/sirius/preach.lua:92
 msgid "We swear eternal revenge!"
-msgstr ""
+msgstr "¡Juramos venganza eterna!"
 
 #: dat/events/sirius/preach.lua:96
 msgid "You feel an overwhelming urge to hear him out!"
-msgstr ""
+msgstr "¡Sientes unas ganas irrefrenables de escucharle!"
 
 #: dat/events/sirius/preach.lua:97
 msgid "A mysterious force forces you to listen!"
@@ -40393,11 +40671,11 @@ msgstr ""
 
 #: dat/events/updater.lua:94 dat/shipai.lua:42
 msgid "Enable tutorial hints"
-msgstr ""
+msgstr "Habilitar consejos de tutorial"
 
 #: dat/events/updater.lua:95 dat/shipai.lua:44
 msgid "Disable tutorial hints"
-msgstr ""
+msgstr "Desactivar consejos de tutorial"
 
 #: dat/events/updater.lua:99
 msgid ""
@@ -55693,8 +55971,9 @@ msgstr ""
 #: dat/missions/minerva/maikki1.lua:76 dat/missions/minerva/maikki2.lua:100
 #: dat/missions/shadow/shadowvigil.lua:61 src/faction.c:1042 src/faction.c:1056
 #: src/faction.c:1062 src/faction.c:1091
+#, fuzzy
 msgid "???"
-msgstr ""
+msgstr "???"
 
 #. Move target back to origin
 #: dat/missions/minerva/maikki1.lua:77 dat/missions/minerva/maikki1.lua:215
@@ -75448,7 +75727,7 @@ msgstr ""
 #: dat/missions/tutorial/tutorial.lua:109
 #: dat/missions/tutorial/tutorial.lua:118 dat/shipai.lua:63 dat/shipai.lua:99
 msgid "Nevermind"
-msgstr ""
+msgstr "No importa"
 
 #: dat/missions/tutorial/tutorial.lua:115
 msgid ""
@@ -80069,7 +80348,7 @@ msgstr ""
 #. TODO replace with real portrait
 #: dat/scripts/common/tutorial.lua:16 src/info.c:272
 msgid "Ship AI"
-msgstr ""
+msgstr "IA de Nave"
 
 #: dat/scripts/common/tutorial.lua:22
 msgid "\"I can't let you do that, Dave. …Wait, what was that?\""
@@ -84492,79 +84771,86 @@ msgstr ""
 #: dat/shipai.lua:20
 msgid ""
 "\"Hello {playername}! Is there anything you want to change or brush up on?\""
-msgstr ""
+msgstr "\"¡Hola {playername}! ¿Hay algo que quieras cambiar o repasar?\""
 
 #: dat/shipai.lua:23
 msgid "Get Advice"
-msgstr ""
+msgstr "Obtener Consejo"
 
 #: dat/shipai.lua:24
 msgid "Get Information"
-msgstr ""
+msgstr "Obtener Información"
 
 #: dat/shipai.lua:25
 msgid "Tutorial/Ship AI Options"
-msgstr ""
+msgstr "Tutorial/Opciones de IA de Nave"
 
 #: dat/shipai.lua:37
 msgid "Reset all tutorial hints"
-msgstr ""
+msgstr "Restablecer todos los consejos del tutorial"
 
 #: dat/shipai.lua:38
 msgid "Rename Ship AI"
-msgstr ""
+msgstr "Renombrar IA de Nave"
 
 #: dat/shipai.lua:51
 msgid ""
 "\"In-game hints are now enabled! If you want to revisit old tutorial hints, "
 "make sure to reset them.\""
 msgstr ""
+"\"¡Los consejos del juego ya están habilitados! Si quieres volver a ver los "
+"antiguos consejos del tutorial, asegúrate de restablecerlos.\""
 
 #: dat/shipai.lua:56
 msgid "\"In-game tutorial hints are now disabled.\""
-msgstr ""
+msgstr "\"Los consejos del tutorial del juego están ahora desactivados.\""
 
 #: dat/shipai.lua:60
 msgid ""
 "\"This will reset and enable all in-game tutorial hints, are you sure you "
 "want to do this?\""
 msgstr ""
+"\"Esto reiniciará y habilitará todos los consejos del tutorial del juego, ¿"
+"estás seguro de que quieres hacerlo?\""
 
 #: dat/shipai.lua:62
 msgid "Reset tutorial hints"
-msgstr ""
+msgstr "Restablecer los consejos del tutorial"
 
 #: dat/shipai.lua:67
 msgid ""
 "\"All in-game tutorial hints have been set and enabled! They will naturally "
 "pop up as you do different things in the game.\""
 msgstr ""
+"\"¡Todos los consejos del tutorial del juego se han establecido y "
+"habilitado! Aparecerán de forma natural a medida que hagas diferentes cosas "
+"en el juego.\""
 
 #. TODO integrate into vn
 #: dat/shipai.lua:74
 msgid "Name your Ship AI"
-msgstr ""
+msgstr "Nombrar tu IA de Nave"
 
 #: dat/shipai.lua:74
 msgid "SAI"
-msgstr ""
+msgstr "IAN"
 
 #. Can't use rename here
 #: dat/shipai.lua:90
 msgid "Your Ship AI has been renamed '{ainame}'."
-msgstr ""
+msgstr "Tu IA de Nave ha sido renombrada con '{ainame}'."
 
 #: dat/shipai.lua:94
 msgid "\"Hello {playername}. What do you want to learn about?\""
-msgstr ""
+msgstr "\"Hola {playername}. ¿Sobre qué quieres aprender?\""
 
 #: dat/shipai.lua:96
 msgid "Weapon Sets"
-msgstr ""
+msgstr "Conjuntos de Armas"
 
 #: dat/shipai.lua:98 src/input.c:58 src/shipstats.c:102
 msgid "Stealth"
-msgstr ""
+msgstr "Sígilo"
 
 #: dat/shipai.lua:103
 msgid ""
@@ -84574,6 +84860,12 @@ msgid ""
 "from the '#oWeapons#0' tab of the information window. You have 10 different "
 "weapon sets that can be configured separately for each ship.\""
 msgstr ""
+"\"Una gran parte del combate se decide de antemano por las clases de las "
+"naves y su carga. Sin embargo, un buen pilotaje puede cambiar las tornas "
+"fácilmente. Es importante asignar conjuntos de armas para que sean fáciles "
+"de usar. Puedes establecer conjuntos de armas desde la pestaña \"#oArmas#0\" "
+"de la ventana de información. Tienes 10 conjuntos de armas diferentes que se "
+"pueden configurar por separado para cada nave.\""
 
 #: dat/shipai.lua:104
 msgid ""
@@ -84584,6 +84876,13 @@ msgid ""
 "- #oAbilities - Toggled#0: activating the hotkey will toggle the state of "
 "the outfits"
 msgstr ""
+"Hay tres tipos diferentes de conjuntos de armas:\n"
+"- #oArmas - Intercambiadas#0: al activar la tecla de acceso directo, se "
+"configuran tus armas primarias y secundarias\n"
+"- #oArmas - Instantáneas#0: al activar la tecla de acceso directo se "
+"disparan las armas\n"
+"- #oHabilidades - Alternadas#0: al activar la tecla de acceso directo se "
+"cambiará el estado de los equipos"
 
 #: dat/shipai.lua:108
 msgid ""
@@ -84594,6 +84893,13 @@ msgid ""
 "override this and set them however you prefer. Just remember to update them "
 "whenever you change your outfits.\""
 msgstr ""
+"\"Por defecto, los conjuntos de armas serán gestionados automáticamente por "
+"mí, con los pernos delanteros en el conjunto 1 (conmutado), las armas de la "
+"torreta en el conjunto 2 (conmutado), y tanto las armas de la torreta como "
+"las delanteras en el conjunto 3 (intercambiadas). Las armas del buscador "
+"están en el conjunto 4 (instantáneo), y las bahías de combate en el conjunto "
+"5 (instantáneo). Sin embargo, puedes anular esto y configurarlos como "
+"prefieras. Sólo recuerda actualizarlos cada vez que cambies de equipo.\""
 
 #: dat/shipai.lua:112
 msgid ""
@@ -84602,6 +84908,11 @@ msgid ""
 "yachts or interceptors are inherently much harder to detect than carriers or "
 "battleship.\""
 msgstr ""
+"\"Los sensores de las naves se basan en la detección de anomalías "
+"gravitacionales, por lo que la masa de una nave juega un papel fundamental "
+"para ser detectada. Las naves más pequeñas, como los yates o los "
+"interceptores, son intrínsecamente mucho más difíciles de detectar que los "
+"portanaves o los acorazados.\""
 
 #: dat/shipai.lua:117
 msgid ""
@@ -84611,6 +84922,12 @@ msgid ""
 "stealth ranges, making outfits that give concealment bonuses very useful if "
 "you get your hands on them.\""
 msgstr ""
+"\"#oDetección#0 juega un papel crucial en la cantidad de atención que atraes "
+"en un sistema, y las bonificaciones de detección pueden ser muy útiles para "
+"evitar los peligros que acechan. Además, las bonificaciones de ocultación "
+"reducirán tus rangos de detección, evasión y sigilo, lo que hace que los "
+"equipos que dan bonificaciones de ocultación sean muy útiles si los "
+"consigues.\""
 
 #: dat/shipai.lua:118
 msgid ""
@@ -84622,6 +84939,14 @@ msgid ""
 "also has an effect on launcher lock-on time, with lower evasion increasing "
 "the time it takes for rockets to lock on to you.\""
 msgstr ""
+"\"La #Evasión#0 es muy importante a la hora de combatir, ya que determina lo "
+"bien que las armas pueden rastrear tu nave. Si tu evasión está por debajo "
+"del #rastreo mínimo#0 del arma de tu enemigo, sus armas no podrán apuntar "
+"con precisión a tu nave en absoluto. Sin embargo, si tu evasión está por "
+"encima del #rastreo óptimo#0, te rastrearán perfectamente. Lo mismo ocurre "
+"con tus objetivos. Esto también tiene un efecto en el tiempo de fijación de "
+"los lanzadores, ya que una menor evasión aumenta el tiempo que tardan los "
+"cohetes en fijarse en ti.\""
 
 #: dat/shipai.lua:119
 msgid ""
@@ -84629,6 +84954,9 @@ msgid ""
 "stealth mode with {stealthkey}. If you want to learn more about stealth, "
 "please ask me about it.\""
 msgstr ""
+"\"#oSigilo#0 es una bestia completamente diferente y sólo es útil cuando se "
+"entra en modo sigilo con {stealthkey}. Si quieres aprender más sobre el "
+"sigilo, pregúntame sobre ello.\""
 
 #: dat/shipai.lua:123
 msgid ""
@@ -84638,6 +84966,11 @@ msgid ""
 "a ship gets within the #ostealth#0 distance of your ship, it will slowly "
 "uncover you.\""
 msgstr ""
+"\"Puedes activar el modo sigilo con {stealthkey} cuando estés lo "
+"suficientemente lejos de otras naves, y sólo cuando no tengas misiles "
+"apuntando hacia ti. Cuando estés en modo sigilo, tu nave será completamente "
+"invisible para todas las naves. Sin embargo, si una nave se acerca a la "
+"distancia #osigilo#0 de tu nave, te descubrirá lentamente.\""
 
 #: dat/shipai.lua:124
 msgid ""
@@ -84647,6 +84980,11 @@ msgid ""
 "outfits that can change and modify this behaviour to get more out of stealth."
 "\""
 msgstr ""
+"\"Además de hacer que tu nave sea invisible para otras naves, #osigilo#0 "
+"ralentiza tu nave un 50% para enmascarar tu presencia gravitatoria. Esto "
+"también tiene el efecto de permitirte saltar desde puntos de salto más "
+"lejanos. Hay muchos conjuntos que pueden cambiar y modificar este "
+"comportamiento para sacar más partido al sigilo.\""
 
 #: dat/shipai.lua:125
 msgid ""
@@ -84659,6 +84997,15 @@ msgid ""
 "their #ostealth#0 range, however, you will not be able to know where they "
 "are until you are on top of them.\""
 msgstr ""
+"\"Cuando no están en sigilo, las naves pueden apuntar a tu nave para "
+"realizar un escaneo. Esto puede descubrir información no deseada, como "
+"cargas o equipos ilegales. El tiempo de escaneo depende de la masa de la "
+"nave. Si no quieres que te escaneen, debes usar el sigilo tanto como sea "
+"posible. Las naves enemigas también pueden utilizar el sigilo. De forma "
+"similar a cómo te descubrencuando las naves entran en tu rango de #osigilo#"
+"0, puedes descubrir naves neutrales u hostiles entrando en su rango de "
+"#osigilo#0, sin embargo, no podrás saber dónde están hasta que estés encima "
+"de ellas.\""
 
 #: dat/shipai.lua:126
 msgid ""
@@ -84667,6 +85014,11 @@ msgid ""
 "you may be commanding. Friendly ships will also not uncover your stealth, so "
 "it is good to make as many friends as possible.\""
 msgstr ""
+"\"Por último, los escoltas y los cazas se pondrán en sigilo automáticamente "
+"cuando su líder entre en sigilo, así que no tienes que preocuparte de dar "
+"órdenes de sigilo a las naves que puedas estar comandando. Las naves amigas "
+"tampoco descubrirán tu sigilo, así que es bueno hacer tantos amigos como te "
+"sea posible.\""
 
 #. Tries to give the player useful contextual information
 #: dat/shipai.lua:141
@@ -84677,6 +85029,11 @@ msgid ""
 "by boarding ships. Bribing hostile ships can also encourage them to give you "
 "fuel afterwards.\""
 msgstr ""
+"\"Cuando te quedas sin combustible, si hay un planeta habitable puedes "
+"aterrizar para repostar gratis. Sin embargo, si quieres ahorrar tiempo o no "
+"tienes otra opción, es posible llamar a las naves que pasan para que te "
+"reposten, o incluso tomar el combustible por la fuerza abordando naves. "
+"Sobornar a las naves hostiles también puede animarlas a darte combustible.\""
 
 #: dat/shipai.lua:148
 msgid ""
@@ -84684,6 +85041,9 @@ msgid ""
 "pinch by bribing them so that they leave you alone. Not all pilots or "
 "factions are susceptible to bribing, however.\""
 msgstr ""
+"\"Cuando te ves abrumado por enemigos hostiles, a veces puedes salir de un "
+"apuro sobornándolos para que te dejen en paz. Sin embargo, no todos los "
+"pilotos o facciones son susceptibles de ser sobornados.\""
 
 #: dat/shipai.lua:155
 msgid ""
@@ -84694,6 +85054,12 @@ msgid ""
 "will your ship be cool, it will also have replenished all ammunition and "
 "fighters.\""
 msgstr ""
+"\"Cuando tu nave o tus armas se calientan mucho, suele ser una buena idea "
+"realizar un enfriamiento activo cuando sea seguro hacerlo. Puedes realizar "
+"un enfriamiento activo con {cooldownkey} o pulsando dos veces {reversekey}. "
+"La cantidad de tiempo que tarda en enfriarse depende del tamaño de la nave, "
+"pero cuando termine, no sólo tu nave estará fría, sino que también habrás "
+"repuesto toda la munición y cazas.\""
 
 #: dat/shipai.lua:162
 msgid ""
@@ -84703,6 +85069,12 @@ msgid ""
 "you to repair your ship, and some ships have built-in  armour regeneration "
 "allowing you to survive longer in space.\""
 msgstr ""
+"\"En general, las naves no pueden regenerar el daño del blindaje en el "
+"espacio. Si recibes grandes daños en el blindaje, lo mejor es que intentes "
+"encontrar un lugar seguro para aterrizar y ser reparado por completo. Sin "
+"embargo, existen muchos equipos diferentes que te permiten reparar tu nave, "
+"y algunas naves tienen regeneración de blindaje incorporada que te permite "
+"sobrevivir más tiempo en el espacio.\""
 
 #. error has occurred
 #: src/ai.c:424
