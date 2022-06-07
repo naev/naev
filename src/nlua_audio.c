@@ -226,7 +226,8 @@ void audio_cleanup( LuaAudio_t *la )
    if ((la==NULL) || sound_disabled || la->nocleanup)
       return;
    soundLock();
-   alDeleteSources( 1, &la->source );
+   if (la->source > 0)
+      alDeleteSources( 1, &la->source );
    /* Check if buffers need freeing. */
    if (la->buf != NULL) {
       la->buf->refcount--;
