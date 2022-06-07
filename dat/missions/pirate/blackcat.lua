@@ -26,6 +26,7 @@ local tut = require "common.tutorial"
 local der = require 'common.derelict'
 local portrait = require 'portrait'
 local audio = require 'love.audio'
+local luaspfx = require "luaspfx"
 local love_shaders = require "love_shaders"
 
 local cat_image = "blackcat.webp"
@@ -128,7 +129,7 @@ end
 local event_list = {
    function () -- Overheat
       local pp = player.pilot()
-      meow:play()
+      luaspfx.sfx( false, nil, meow )
       if islucky() then
          player.msg(_("Black cat hair has clogged the radiators but burns up before overheating the ship."), true)
          return
@@ -142,7 +143,7 @@ local event_list = {
       local pp = player.pilot()
       local _a, _s, _st, dis = pp:health()
       if dis then return end -- Already disabled
-      meow:play()
+      luaspfx.sfx( false, nil, meow )
       if islucky() then
          player.msg(_("The black cat accidentally hit the ship restart button, but nothing happens."), true)
          return
@@ -154,7 +155,7 @@ local event_list = {
    end,
    function () -- Energy discharge
       local pp = player.pilot()
-      meow:play()
+      luaspfx.sfx( false, nil, meow )
       if islucky() then
          player.msg(_("The black cat managed to accidentally disconnect the energy capacitors, but the back up system takes over while you fix it."), true)
          return
@@ -180,7 +181,7 @@ local function event ()
          _("The black cat uses the commander chair as a scratching post."),
          _("The black cat bumps into your ship's self-destruct button, but you manage to abort it in time."),
       }
-      meow:play()
+      luaspfx.sfx( false, nil, meow )
       player.msg( msg_list[rnd.rnd(1,#msg_list)], true )
       return
    end
