@@ -67,18 +67,23 @@ function mg.load ()
    end
 
    -- Initialize board
+   local poslist = {}
    board = {}
    for i=1,board_size do
       board[i] = {}
       for j=1,board_size do
          --board[i][j] = (love.math.random() > 0.5)
          board[i][j] = true
+         table.insert( poslist, {i, j} )
       end
    end
    repeat
       local n = board_size*board_size
-      for i=1,rnd.rnd( math.floor(n*0.4), math.floor(n*0.6) ) do
-         flip( rnd.rnd(1,board_size), rnd.rnd(1,board_size) )
+      n = rnd.rnd( math.floor(n*0.4), math.floor(n*0.6) )
+      poslist = rnd.permutation( poslist )
+      for i=1,n do
+         local p = poslist[i]
+         flip( p[1], p[2] )
       end
    until not checkwon()
 
