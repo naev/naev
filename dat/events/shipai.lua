@@ -41,6 +41,7 @@ local function clicked ()
 
    vn.label("advice")
    sai( advice )
+   vn.jump("mainmenu")
 
    vn.label("opts")
    vn.menu( function ()
