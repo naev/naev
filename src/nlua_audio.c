@@ -241,7 +241,6 @@ void audio_cleanup( LuaAudio_t *la )
 /**
  * @brief Lua bindings to interact with audio.
  *
- *
  * @luamod audio
  */
 /**
