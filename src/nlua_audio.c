@@ -228,10 +228,12 @@ void audio_cleanup( LuaAudio_t *la )
    soundLock();
    alDeleteSources( 1, &la->source );
    /* Check if buffers need freeing. */
-   la->buf->refcount--;
-   if (la->buf->refcount <= 0) {
-      alDeleteBuffers( 1, &la->buf->buffer );
-      free( la->buf );
+   if (la->buf != NULL) {
+      la->buf->refcount--;
+      if (la->buf->refcount <= 0) {
+         alDeleteBuffers( 1, &la->buf->buffer );
+         free( la->buf );
+      }
    }
    /* Clean up. */
    al_checkErr();
@@ -299,7 +301,9 @@ static int audioL_new( lua_State *L )
       NLUA_INVALID_PARAMETER(L);
 
    memset( &la, 0, sizeof(LuaAudio_t) );
-   if (!sound_disabled) {
+   if (sound_disabled)
+      la.nocleanup = 1; /* Not initialized so no need to clean up. */
+   else {
       SDL_RWops *rw = PHYSFSRWOPS_openRead( name );
       if (rw==NULL)
          NLUA_ERROR(L,"Unable to open '%s'", name );
@@ -334,8 +338,6 @@ static int audioL_new( lua_State *L )
 
       SDL_RWclose( rw );
    }
-   else
-      la.nocleanup = 1; /* Not initialized so no need to clean up. */
 
    lua_pushaudio(L, la);
    return 1;
