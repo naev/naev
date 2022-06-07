@@ -45,7 +45,7 @@ function mg.load ()
    local c = naev.cache()
    local params = c.flip.params
    standalone = c.flip.standalone
-   board_size = params.board_size or 3
+   board_size = params.board_size or 4
    headertext = params.header
 
    -- Get movement keys
@@ -75,10 +75,12 @@ function mg.load ()
          board[i][j] = true
       end
    end
-   local n = board_size*board_size
-   for i=1,rnd.rnd( math.floor(n*0.4), math.floor(n*0.6) ) do
-      flip( rnd.rnd(1,board_size), rnd.rnd(1,board_size) )
-   end
+   repeat
+      local n = board_size*board_size
+      for i=1,rnd.rnd( math.floor(n*0.4), math.floor(n*0.6) ) do
+         flip( rnd.rnd(1,board_size), rnd.rnd(1,board_size) )
+      end
+   until not checkwon()
 
    selected_x = math.ceil(board_size/2)
    selected_y = math.ceil(board_size/2)
@@ -145,7 +147,7 @@ function mg.draw ()
    if headertext then
       setcol{ 1, 1, 1 }
       lg.printf( headertext, headerfont, 0, by, nw, "center" )
-      y = y + 60
+      y = y + 45
    end
 
    -- Draw selected
@@ -176,7 +178,7 @@ function mg.draw ()
       y = y + 40
    end
 
-   y = y + 20
+   y = y + 10
    setcol{ 1, 1, 1 }
    lg.printf( "#n".._("Flip the blocks until they are all lit"), 0, by+y, nw, "center" )
 end
