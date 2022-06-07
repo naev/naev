@@ -356,7 +356,7 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
 void effect_clear( Effect **efxlist )
 {
    for (int i=0; i<array_size(*efxlist); i++) {
-      const Effect *e = efxlist[i];
+      const Effect *e = &(*efxlist)[i];
       /* Run Lua if necessary. */
       if (e->data->lua_remove != LUA_NOREF) {
          lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_remove); /* f */
