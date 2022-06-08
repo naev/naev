@@ -135,6 +135,31 @@ function mg.keypressed( key )
    end
 end
 
+function mg.mousepressed( mx, my, _button )
+   if game_won then
+      done = true
+      return
+   end
+
+   -- identify the clicked cell (if any)
+   mx, my = mx - bx, my - by
+   if headertext then
+      my = my - 45
+   end
+   if mx < 0 or (mx % 40) > 32 or mx > 40*board_size or
+      my < 0 or (my % 40) > 32 or my > 40*board_size then
+      return
+   end
+   selected_x = math.floor( mx / 40 ) + 1
+   selected_y = math.floor( my / 40 ) + 1
+   flip( selected_x, selected_y )
+   if checkwon() then
+      local c = naev.cache()
+      c.flip.won = true
+      game_won = true
+   end
+end
+
 local function setcol( col )
    local r, g, b, a = table.unpack( col )
    a = a or 1

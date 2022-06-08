@@ -23,6 +23,7 @@
 local vn = require "vn"
 local fmt = require "format"
 local taiomi = require "common.taiomi"
+local mg = require "minigames.stringguess"
 
 -- luacheck: globals enter land (Hook functions passed by name)
 
@@ -65,7 +66,19 @@ function enter ()
 end
 
 local function land_lab ()
-   -- TODO minigame
+   vn.clear()
+   vn.scene()
+   vn.transition()
+   vn.na(_([[]]))
+   mg.vn()
+   vn.func( function ()
+   --[[
+      if mg.completed() then
+      else
+      end
+   --]]
+   end )
+   vn.run()
 end
 
 local function land_done ()
