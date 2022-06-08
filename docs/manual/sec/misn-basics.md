@@ -1,19 +1,19 @@
 ## Basics
 
-Foobar.
+TODO
 
 ### Hooks
 
-Foobar.
+TODO
 
 ### Memory Model
 
-Foobar.
+TODO
 
 ### Formatting Text
 
-Foobar.
+TODO
 
 ### Visual Novel Framework
 
-Foobar.
+TODO
