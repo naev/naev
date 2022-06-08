@@ -22,13 +22,23 @@ Once the mission or event is started, the obligatory `create` function entry poi
 
 Let us start by writing a simple mission header. This will be enclosed by long lua comments `--[[` and `--]]` in the file. Below is our simple header.
 
-```xml
+```lua
+--[[
 <mission name="My First Mission">
+ <flags>
+  <unique />
+ </flags>
  <avail>
   <chance>50</chance>
   <location>Bar</location>
  </avail>
 </mission>
+--]]
 ```
 
-The mission is named "My First Mission" and has a 50\% chance of appearing in any spaceport bar. For more information on headers refer to Section \ref{sec:misn-headers}.
+The mission is named "My First Mission" and has a 50\% chance of appearing in any spaceport bar. Furthermore, it is marked complete so that once it is successfully completed, it will not appear again to the same player. For more information on headers refer to Section \ref{sec:misn-headers}.
+
+Now, we can start coding the actual mission. This all begins with the `create ()` function. Let us write a simple one to create an NPC at the Spaceport Bar where the mission appears:
+
+```lua
+```
