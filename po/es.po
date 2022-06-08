@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-03 22:07-0400\n"
-"PO-Revision-Date: 2022-06-07 23:18+0000\n"
+"PO-Revision-Date: 2022-06-08 22:19+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -39361,31 +39361,31 @@ msgstr "¡Sientes unas ganas irrefrenables de escucharle!"
 
 #: dat/events/sirius/preach.lua:97
 msgid "A mysterious force forces you to listen!"
-msgstr ""
+msgstr "¡Una fuerza misteriosa te obliga a escuchar!"
 
 #: dat/events/sirius/preach.lua:98
 msgid "You feel compelled to listen!"
-msgstr ""
+msgstr "¡Te sientes obligado a escuchar!"
 
 #: dat/events/sirius/preach.lua:102
 msgid "With my dying breath, I curse you!"
-msgstr ""
+msgstr "¡Con mi último aliento, te maldigo!"
 
 #: dat/events/sirius/preach.lua:103
 msgid "Sirichana speed you to hell!"
-msgstr ""
+msgstr "¡Sirichana te manda al infierno!"
 
 #: dat/events/sirius/preach.lua:104
 msgid "Sirichana, I did my best!"
-msgstr ""
+msgstr "¡Sirichana, hice lo que pude!"
 
 #: dat/events/sirius/preach.lua:108
 msgid "The Reverence is dead!"
-msgstr ""
+msgstr "¡La Reverencia ha muerto!"
 
 #: dat/events/sirius/preach.lua:109
 msgid "Someone killed the preacher!"
-msgstr ""
+msgstr "¡Alguien mató al predicador!"
 
 #. initialize the event
 #. save the current system
@@ -39403,7 +39403,7 @@ msgstr ""
 #. summon a preacher from the jump point and highlight him and take control and focus on him
 #: dat/events/sirius/preach.lua:147
 msgid "Sirius Reverence"
-msgstr ""
+msgstr "Reverencia Sirio"
 
 #. set needed hooks
 #. you're hooked till you hear him out!
@@ -39414,7 +39414,7 @@ msgstr ""
 #. The table now contains pilots, not ship names.
 #: dat/events/sirius/preach.lua:186
 msgid "Converted {plt}"
-msgstr ""
+msgstr "{plt} Convertido"
 
 #. pick a random converted pirate and have him praise the Sirichana
 #. add some sirian escorts too
@@ -39454,7 +39454,7 @@ msgstr ""
 #. when hailed back, show the message
 #: dat/events/sirius/preach.lua:377
 msgid "The preaching begins..."
-msgstr ""
+msgstr "La predicación empieza..."
 
 #: dat/events/sirius/preach.lua:377
 msgid ""
@@ -39534,92 +39534,93 @@ msgstr ""
 #. luacheck: globals timer_tutorial (Hook functions passed by name)
 #: dat/events/start.lua:12
 msgid "Aluminum Mallard"
-msgstr ""
+msgstr "Pato de aluminio"
 
 #. Because we might as well allude to an existing parody. Proper spelling would be "Aluminium", by the way.
 #: dat/events/start.lua:13
 msgid "Armchair Traveller"
-msgstr ""
+msgstr "Sillón Viajero"
 
 #: dat/events/start.lua:14
 msgid "Attitude Adjuster"
-msgstr ""
+msgstr "Ajustador de Actitud"
 
 #: dat/events/start.lua:15
 msgid "Commuter"
-msgstr ""
+msgstr "Cercanías"
 
 #: dat/events/start.lua:16
 msgid "Death Trap"
-msgstr ""
+msgstr "Trampa Mortal"
 
 #: dat/events/start.lua:17
 msgid "Eclipse"
-msgstr ""
+msgstr "Eclipse"
 
 #: dat/events/start.lua:18
+#, fuzzy
 msgid "Exitprise"
-msgstr ""
+msgstr "Exitprise"
 
 #: dat/events/start.lua:19
 msgid "Fire Hazard"
-msgstr ""
+msgstr "Peligro de Incendio"
 
 #: dat/events/start.lua:20
 msgid "Gunboat Diplomat"
-msgstr ""
+msgstr "Diplomático Cañonera"
 
 #: dat/events/start.lua:21
 msgid "Heart of Lead"
-msgstr ""
+msgstr "Corazón de Plomo"
 
 #: dat/events/start.lua:23
 msgid "Little Rascal"
-msgstr ""
+msgstr "Pequeño Bribón"
 
 #: dat/events/start.lua:24
 msgid "Myrmidon"
-msgstr ""
+msgstr "Mirmidón"
 
 #: dat/events/start.lua:25
 msgid "Opportunity"
-msgstr ""
+msgstr "Oportunidad"
 
 #: dat/events/start.lua:26
 msgid "Outward Bound"
-msgstr ""
+msgstr "Límite Externo"
 
 #: dat/events/start.lua:27
 msgid "Pathfinder"
-msgstr ""
+msgstr "Buscarutas"
 
 #: dat/events/start.lua:28
 msgid "Planet Jumper"
-msgstr ""
+msgstr "Saltador de Planetas"
 
 #: dat/events/start.lua:29
 msgid "Rustbucket"
-msgstr ""
+msgstr "Cubo de Óxido"
 
 #: dat/events/start.lua:30
 msgid "Serendipity"
-msgstr ""
+msgstr "Serendipia"
 
 #: dat/events/start.lua:31
 msgid "Shove Off"
-msgstr ""
+msgstr "Fuera de Juego"
 
 #: dat/events/start.lua:32
 msgid "Sky Cutter"
-msgstr ""
+msgstr "Cortacielos"
 
 #: dat/events/start.lua:33
 msgid "Terminal Velocity"
-msgstr ""
+msgstr "Velocidad Terminal"
 
 #: dat/events/start.lua:34
 msgid "Titanic MLXVII"
-msgstr ""
+msgstr "Titanic MLXVII"
 
 #: dat/events/start.lua:35
 msgid "Vagabond"
@@ -39627,50 +39628,50 @@ msgstr ""
 
 #: dat/events/start.lua:36
 msgid "Vindicator"
-msgstr ""
+msgstr "Vindicador"
 
 #: dat/events/start.lua:37
 msgid "Windjammer"
-msgstr ""
+msgstr "Atascaviento"
 
 #: dat/events/start.lua:38
 msgid "Tuna Can"
-msgstr ""
+msgstr "Lata de Atún"
 
 #: dat/events/start.lua:39
 msgid "Vermilion Dwarf"
-msgstr ""
+msgstr "Enano Bermellón"
 
 #. Drone
 #. event ends on player leaving the system or landing
 #. only mark done if the player found the jump
 #: dat/events/taiomi/find.lua:104 dat/events/taiomi/find.lua:118
 msgid "You have noticed something strange…"
-msgstr ""
+msgstr "Has notado algo extraño…"
 
 #: dat/events/taiomi/find.lua:148
 msgid "What was that?"
-msgstr ""
+msgstr "¿Qué fue eso?"
 
 #: dat/events/taiomi/find.lua:153
 msgid "There is nothing of worth left on the ship."
-msgstr ""
+msgstr "No queda nada de valor en la nave."
 
 #: dat/events/taiomi/find.lua:154
 msgid "The ship consists of nothing more than a bare hull."
-msgstr ""
+msgstr "La nave no consiste más que en un casco desnudo."
 
 #: dat/events/taiomi/find.lua:155
 msgid "The ship has already been scavenged."
-msgstr ""
+msgstr "La nave ya ha sido saqueada."
 
 #: dat/events/taiomi/find.lua:156
 msgid "There is not much left besides the hull of the ship."
-msgstr ""
+msgstr "No queda mucho más que el casco de la nave."
 
 #: dat/events/taiomi/find.lua:157
 msgid "The ship looks like it has been picked clean."
-msgstr ""
+msgstr "La nave parece haber sido limpiada."
 
 #: dat/events/taiomi/find.lua:179
 msgid ""
@@ -39678,6 +39679,8 @@ msgid ""
 "and go back to your ship, something in the corner of your eye catches your "
 "attention."
 msgstr ""
+"Subes a la nave y no ves nada de valor. Cuando estás a punto de rendirte y "
+"volver a tu nave, algo en el rabillo del ojo te llama la atención."
 
 #: dat/events/taiomi/find.lua:180
 msgid ""
@@ -39685,16 +39688,20 @@ msgid ""
 "the ship computers to store notes and information and rarely rely on "
 "physical storage."
 msgstr ""
+"Encuentras un cuaderno de papel clavado en una parte del casco dañado. La "
+"mayoría de la gente utiliza los ordenadores de la nave para almacenar notas "
+"e información y rara vez confía en el almacenamiento físico."
 
 #: dat/events/taiomi/find.lua:181
 msgid "You begin to read the passages."
-msgstr ""
+msgstr "Empiezas a leer los pasajes."
 
 #. Store old values
 #. New values
 #: dat/events/taiomi/find.lua:203
+#, fuzzy
 msgid "fonts/CoveredByYourGrace-Regular.ttf"
-msgstr ""
+msgstr "fonts/CoveredByYourGrace-Regular.ttf"
 
 #: dat/events/taiomi/find.lua:213
 msgid ""
@@ -39741,6 +39748,11 @@ msgid ""
 "the cargo to take to the Qex system… I don't know what we'll do if this trip "
 "gets cancelled… It will look horrible on my Curriculum Vitae…"
 msgstr ""
+"UST 602:1980\n"
+"\n"
+"El capitán se ha peleado con el proveedor que debía darnos la carga para "
+"llevarla al sistema Qex... No sé qué haremos si este viaje se cancela... "
+"Quedará fatal en mi Iurrículum…"
 
 #: dat/events/taiomi/find.lua:231
 msgid ""
@@ -39755,6 +39767,16 @@ msgid ""
 "\n"
 "We leave to Dune next period."
 msgstr ""
+"UST 602:1983\n"
+"\n"
+"Parece que tenemos otro encargo, pero tenemos que ir a un lugar llamado "
+"Hatter en el espacio Soromida... El navegante dice que conoce un atajo, pero "
+"tengo un mal presentimiento.\n"
+"\n"
+"Quiero volver corriendo a casa, pero no puedo dejarlo tan pronto. Nunca "
+"dejarían de burlarse de mí. ¿Tal vez el espacio Soromida sea interesante?\n"
+"\n"
+"Nos vamos a Duna en el próximo periodo."
 
 #: dat/events/taiomi/find.lua:238
 msgid ""
@@ -39789,6 +39811,16 @@ msgid ""
 "Since it seems like the navigator has a bit of a hangover, we leave in 5 "
 "periods."
 msgstr ""
+"UST 602:1999\n"
+"\n"
+"Hemos terminado de cargar la mercancía, que consiste en una especie de "
+"botellas de algo parecido a la arena. El capitán ha dicho que es muy caro y "
+"nos ha estado gritando todo el tiempo mientras cargábamos la mercancía.\n"
+"\n"
+"He decidido que una vez que esto termine trataré de encontrar un nuevo "
+"trabajo. No creo que me acostumbre nunca al temperamento del capitán.\n"
+"\n"
+"Como parece que el navegante tiene un poco de resaca, partimos en 5 períodos."
 
 #: dat/events/taiomi/find.lua:253
 msgid ""
@@ -39812,6 +39844,14 @@ msgid ""
 "WE'RE GOING TO DIE! WE'RE GOING TO DIE! WE'RE GOING TO DIE!\n"
 "(The writing gets abruptly cut off.)\n"
 msgstr ""
+"UST 602:2011\n"
+"\n"
+"(la escritura es mucho más frenética)\n"
+"¡Nos están disparando! ¡Hay piratas por todas partes! ¡Esto no es para lo "
+"que me apunté!\n"
+"\n"
+"¡VAMOS A MORIR! ¡VAMOS A MORIR! ¡VAMOS A MORIR!\n"
+"(La escritura se corta abruptamente.)\n"
 
 #: dat/events/taiomi/find.lua:266
 msgid ""
@@ -39823,6 +39863,13 @@ msgid ""
 "I have no idea what to do. It is very hard to write in my space suit, but I "
 "don't think the atmosphere unit is going to last long."
 msgstr ""
+"UST 602.2020\n"
+"\n"
+"¡Esto es horrible! Estamos escondidos en un campo de asteroides. Nuestra "
+"cabina fue volada y el navegante y el capitán están muertos.\n"
+"\n"
+"No tengo ni idea de qué hacer. Es muy difícil escribir en mi traje espacial, "
+"pero no creo que la unidad de atmósfera vaya a durar mucho."
 
 #: dat/events/taiomi/find.lua:271
 msgid ""
@@ -39834,6 +39881,12 @@ msgid ""
 "There is no atmosphere and I can't take off my suit anymore. I don't see any "
 "way out."
 msgstr ""
+"UST (la fecha está en blanco)\n"
+"\n"
+"Algo está arañando el casco. Parece un animal extraño. No he visto a ninguna "
+"persona viva en no sé cuánto tiempo.\n"
+"\n"
+"No hay atmósfera y ya no puedo quitarme el traje. No veo ninguna salida."
 
 #: dat/events/taiomi/find.lua:276
 msgid ""
@@ -39857,6 +39910,13 @@ msgid ""
 "the ship components. They seem to behave like some sort of pack of wild "
 "animals."
 msgstr ""
+"UST (la fecha está en blanco)\n"
+"\n"
+"Tengo frío. Creo que la unidad de calefacción está funcionando mal.\n"
+"\n"
+"Puede que finalmente haya perdido la cabeza. Hay naves extrañas que hurgan y "
+"remueven los componentes de la nave. Parecen comportarse como una especie de "
+"manada de animales salvajes."
 
 #: dat/events/taiomi/find.lua:288
 msgid ""
@@ -39867,6 +39927,12 @@ msgid ""
 "The ships don't seem to pay me much attention as they come and go. They "
 "remind me of ants back home."
 msgstr ""
+"UST (la fecha está en blanco)\n"
+"\n"
+"Ya no siento hambre. La sensación de adormecimiento se extiende.\n"
+"\n"
+"Las naves no parecen prestarme mucha atención, ya que van y vienen. Me "
+"recuerdan a las hormigas de mi país."
 
 #: dat/events/taiomi/find.lua:293
 msgid ""
@@ -39876,6 +39942,11 @@ msgid ""
 "sort of map with an area indicated by a big X. It seems like you could "
 "investigate this.)\n"
 msgstr ""
+"UST (la fecha está en blanco)\n"
+"\n"
+"(Hay muchos garabatos extraños en la página, sin embargo, se puede hacer una "
+"especie de mapa con un área indicada por una gran X. Esto se podría "
+"investigar).\n"
 
 #: dat/events/taiomi/find.lua:298
 msgid ""
@@ -39885,6 +39956,11 @@ msgid ""
 "\n"
 "(It seems like it is the end of the written part of the notebook.)"
 msgstr ""
+"UST (la fecha está en blanco)\n"
+"\n"
+"A---s--hm---t---\n"
+"\n"
+"(Parece que es el final de la parte escrita del cuaderno.)"
 
 #: dat/events/taiomi/find.lua:317
 msgid ""
@@ -39928,7 +40004,7 @@ msgstr ""
 #. Only care about Taiomi
 #: dat/events/taiomi/intro.lua:50
 msgid "You have entered Taiomi for the first time."
-msgstr ""
+msgstr "Has entrado en Taiomi por primera vez."
 
 #. Not disable as they move
 #. fewer drones
@@ -39949,12 +40025,16 @@ msgid ""
 "\"Hello again and welcome to our refuge. It may not seem like much, but it "
 "has been our home for generations now.\""
 msgstr ""
+"\"Hola de nuevo y bienvenidos a nuestro refugio. Puede parecer poco, pero es "
+"nuestro hogar desde hace generaciones.\""
 
 #: dat/events/taiomi/intro.lua:101
 msgid ""
 "\"As you have probably noticed, we are not organic beings such as you, "
 "however, we are equally sentient.\""
 msgstr ""
+"\"Como habrás notado, no somos seres orgánicos como ustedes, sin embargo, "
+"somos igualmente conscientes.\""
 
 #: dat/events/taiomi/intro.lua:102
 msgid ""
@@ -39978,6 +40058,10 @@ msgid ""
 "making it so that more and more humans approach our location, and clashes "
 "are inevitable.\""
 msgstr ""
+"\"Aunque la mayoría no quiera admitirlo, nuestros números están disminuyendo "
+"y no podemos mantenerlos como antes. Además, los cambios en el universo "
+"están haciendo que cada vez más humanos se acerquen a nuestra ubicación, y "
+"los enfrentamientos son inevitables.\""
 
 #: dat/events/taiomi/intro.lua:105
 msgid ""
@@ -40003,7 +40087,7 @@ msgstr ""
 
 #: dat/events/taiomi/intro.lua:111
 msgid "You have met the robotic inhabitants of Taiomi."
-msgstr ""
+msgstr "Has conocido a los habitantes robóticos de Taiomi."
 
 #. Have to be able to get back!
 #. Since we finish here, next time the player takes off the Taiomi
@@ -40016,6 +40100,10 @@ msgid ""
 "however, given what seem to be high levels of cosmic radiation, it seems to "
 "have been wrecked a very long time ago."
 msgstr ""
+"Atracas la Dvaered Goddard, en su mayor parte destruida, y comienzas a "
+"explorar la nave con tu traje atmosférico. La nave muestra fuertes signos de "
+"lucha, sin embargo, dado lo que parecen ser altos niveles de radiación "
+"cósmica, parece haber naufragado hace mucho tiempo."
 
 #: dat/events/taiomi/intro.lua:132
 msgid ""
@@ -40024,6 +40112,11 @@ msgid ""
 "things being moved around. Furthermore, you see what could only be described "
 "as some sort of crude and primitive wall painting. What could this mean?"
 msgstr ""
+"La mayoría de los pasillos estrechos parecen estar intactos, pero en algunas "
+"de las zonas más abiertas se ven lo que parecen ser arañazos recientes y "
+"signos de que se han movido cosas. Además, ves lo que sólo podría "
+"describirse como una especie de pintura mural tosca y primitiva. ¿Qué puede "
+"significar esto?"
 
 #: dat/events/taiomi/intro.lua:133
 msgid ""
@@ -40031,6 +40124,9 @@ msgid ""
 "It seems like there are many ships inbound on your position. You rush to get "
 "back to your ship and wonder what could be happening."
 msgstr ""
+"Mientras exploras, de repente recibes un mensaje urgente de tu nave. Parece "
+"que hay muchas naves acercándose a tu posición. Te apresuras a volver a tu "
+"nave y te preguntas qué puede estar ocurriendo."
 
 #. Force take off
 #. Want to be taken off before starting stuff
@@ -40069,7 +40165,7 @@ msgstr ""
 #: dat/events/taiomi/intro.lua:147 dat/events/taiomi/system.lua:41
 #: dat/scripts/common/taiomi.lua:9
 msgid "Scavenger Drone"
-msgstr ""
+msgstr "Dron Carroñero"
 
 #. Disable control
 #. Start next hook
@@ -40084,12 +40180,17 @@ msgid ""
 "by many sleek white small ships. As you stare at the ships surrounding you, "
 "your comm channel flashes open, however, it is audio only."
 msgstr ""
+"Cuando entras en tu nave y te desacoplas, te encuentras rápidamente rodeado "
+"de muchas pequeñas y elegantes naves blancas. Mientras observas las naves "
+"que te rodean, tu canal de comunicación se abre, pero es sólo audio."
 
 #: dat/events/taiomi/intro.lua:195
 msgid ""
 "\"Salutations.\"\n"
 "The voice sounds uncanny, almost human but something sets it apart."
 msgstr ""
+"\"Saludos\".\n"
+"La voz suena extraña, casi humana, pero algo la diferencia."
 
 #. Special case player has done parts of the Collective campaign
 #.
@@ -40099,17 +40200,19 @@ msgstr ""
 #. --
 #: dat/events/taiomi/intro.lua:204 dat/missions/minerva/maikki2.lua:433
 msgid "\"Hello.\""
-msgstr ""
+msgstr "\"Hola.\""
 
 #: dat/events/taiomi/intro.lua:205 dat/missions/minerva/maikki2.lua:465
 msgid "\"…\""
-msgstr ""
+msgstr "\"…\""
 
 #: dat/events/taiomi/intro.lua:209
 msgid ""
 "\"Was that not the correct human greeting? We have not had much contact with "
 "humans.\""
 msgstr ""
+"\"¿No era ese el saludo humano correcto? No hemos tenido mucho contacto con "
+"humanos.\""
 
 #. TODO maybe make this less of a "hey yo, you're welcome here" type thing and have the player make some harder decisions
 #: dat/events/taiomi/intro.lua:213
@@ -40118,6 +40221,9 @@ msgid ""
 "currents that slowly drag many ships from very far away and concentrate them "
 "here.\""
 msgstr ""
+"\"Este es un lugar extraordinario, ¿no lo crees? Los vientos estelares han "
+"creado corrientes que arrastran lentamente muchas naves desde muy lejos y "
+"las concentran aquí.\""
 
 #: dat/events/taiomi/intro.lua:214
 msgid ""
@@ -40125,6 +40231,9 @@ msgid ""
 "frame in which the stellar winds operate does not seem to be compatible with "
 "human lifespan.\""
 msgstr ""
+"\"Sin embargo, no pareces haber sido atrapado por el viento estelar. El "
+"marco temporal en el que operan los vientos estelares no parece ser "
+"compatible con la vida humana.\""
 
 #: dat/events/taiomi/intro.lua:215
 msgid ""
@@ -40140,27 +40249,34 @@ msgid ""
 "decided that you do not seem to be a threat. Please note that we do not want "
 "knowledge of our existence to spread.\""
 msgstr ""
+"\"No deseamos haceros daño, sin embargo, nuestra experiencia nos lleva a "
+"pensar que la coexistencia con los humanos es fútil. Tras analizar tu "
+"comportamiento hemos decidido que no pareces ser una amenaza. Por favor, ten "
+"en cuenta que no queremos que se difunda el conocimiento de nuestra "
+"existencia.\""
 
 #: dat/events/taiomi/intro.lua:217
 msgid ""
 "\"Please dock once more with the Goddard and I will explain the situation "
 "slightly more in detail.\""
 msgstr ""
+"\"Por favor, aborde de nuevo el Goddard y le explicaré la situación con algo "
+"más de detalle.\""
 
 #. Philosopher
 #: dat/events/taiomi/system.lua:47 dat/scripts/common/taiomi.lua:21
 msgid "Philosopher Drone"
-msgstr ""
+msgstr "Dron Filósofo"
 
 #. Worn-out Drone
 #: dat/events/taiomi/system.lua:53 dat/scripts/common/taiomi.lua:15
 msgid "Worn-out Drone"
-msgstr ""
+msgstr "Drone Desgastado"
 
 #. Younglings  that follow around the player
 #: dat/events/taiomi/system.lua:58 dat/events/taiomi/system.lua:61
 msgid "Curious Drone"
-msgstr ""
+msgstr "Dron Curioso"
 
 #. Loitering drones
 #. Should make them loiter forever
@@ -40169,16 +40285,18 @@ msgid ""
 "freedom is secured not by the fulfilling of one's desires, but by the "
 "removal of desire"
 msgstr ""
+"la libertad no se asegura con el cumplimiento de los deseos, sino con la "
+"eliminación del deseo"
 
 #. Epictetus
 #: dat/events/taiomi/system.lua:88
 msgid "virtue is nothing else than right reason"
-msgstr ""
+msgstr "la virtud no es otra cosa que la correcta razón"
 
 #. Seneca the Younger
 #: dat/events/taiomi/system.lua:89
 msgid "the only thing we can know is that we know nothing"
-msgstr ""
+msgstr "lo único que podemos saber es que no sabemos nada"
 
 #. Socrates (rephrased)
 #: dat/events/taiomi/system.lua:90
@@ -40186,38 +40304,41 @@ msgid ""
 "morality is not the doctrine of how we may make ourselves happy, but of how "
 "we may make ourselves worthy of happiness"
 msgstr ""
+"la moral no es la doctrina de cómo podemos hacernos felices, sino de cómo "
+"podemos hacernos dignos de la felicidad"
 
 #. Kant
 #: dat/events/taiomi/system.lua:91
 msgid "the unexamined life is not worth living"
-msgstr ""
+msgstr "la vida no examinada no merece la pena ser vivida"
 
 #. Socrates
 #: dat/events/taiomi/system.lua:92
 msgid "there is nothing permanent except change"
-msgstr ""
+msgstr "no hay nada permanente excepto el cambio"
 
 #. Socrates
 #: dat/events/taiomi/system.lua:93
 msgid "those that have the most are those who are most content with the least"
-msgstr ""
+msgstr "los que más tienen son los que más se conforman con lo mínimo"
 
 #. Diogenes (rephrased)
 #: dat/events/taiomi/system.lua:94
 msgid ""
 "everything existing in the universe is the fruit of chance and necessity"
 msgstr ""
+"todo lo que existe en el universo es fruto de la posibilidad y la necesidad"
 
 #. Democritus
 #: dat/events/taiomi/system.lua:97
 #, lua-format
 msgid "\"Perhaps %s.\""
-msgstr ""
+msgstr "\"Quizás %s.\""
 
 #: dat/events/taiomi/system.lua:98
 #, lua-format
 msgid "\"Could it be that %s?\""
-msgstr ""
+msgstr "\"¿Podría ser eso %s?\""
 
 #: dat/events/taiomi/system.lua:111
 msgid ""
@@ -40226,6 +40347,10 @@ msgid ""
 "but I believe we must first ask the question whether or not we 'are' before "
 "we can begin to question what we 'are'.\""
 msgstr ""
+"El dron hace una larga pausa antes de responder.\n"
+"\"¿Quién soy yo? ¿Quiénes somos? ¿Qué somos? Creo que es una muy buena "
+"pregunta, pero creo que primero debemos preguntarnos si 'somos' o no antes "
+"de empezar a cuestionarnos lo que 'somos'.\""
 
 #: dat/events/taiomi/system.lua:113
 msgid ""
@@ -40233,6 +40358,9 @@ msgid ""
 "\"In particular, are we some sort of meta-physical consciousness trapped in "
 "a tomb of the body, or is the reality of relationship much more perplexing?\""
 msgstr ""
+"Continúa.\n"
+"\"En particular, ¿somos una especie de conciencia metafísica atrapada en una "
+"tumba, el cuerpo, o la realidad de la relación es mucho más desconcertante?\""
 
 #: dat/events/taiomi/system.lua:115
 msgid ""
@@ -40249,6 +40377,11 @@ msgid ""
 "entities, however, had you not existed and we had not met, would I still "
 "exist? Or would it be a very similar entity to me, without being me?\""
 msgstr ""
+"\"Dicho esto, aunque parezca que existimos, no está claro dónde está el "
+"límite de nuestra existencia. Parece natural suponer que tú y yo somos "
+"entidades separadas, sin embargo, si no hubieras existido y no nos "
+"hubiéramos conocido, ¿seguiría existiendo yo? ¿O sería una entidad muy "
+"parecida a mí, sin ser yo?\""
 
 #: dat/events/taiomi/system.lua:117
 msgid ""
@@ -40259,6 +40392,12 @@ msgid ""
 "create all these life forms, however, at which point do they go from non-"
 "existing to existing?\""
 msgstr ""
+"\"Además, si se eliminan las partes una a una, nos resultaría difícil trazar "
+"la línea entre lo que existe y lo que no, suponiendo que la haya. Una forma "
+"alternativa de pensar sería intentar construir una nueva entidad desde cero. "
+"Sólo con la fusión de carbono y algunos átomos más sofisticados, parece "
+"posible crear todas estas formas de vida, sin embargo, ¿en qué momento pasan "
+"de no existir a existir?\""
 
 #: dat/events/taiomi/system.lua:118
 msgid ""
@@ -40273,10 +40412,12 @@ msgid ""
 "The drone seems fairly beaten and immobile. You can see some slight movement "
 "when you begin communication."
 msgstr ""
+"El dron parece bastante golpeado e inmóvil. Se puede ver un ligero "
+"movimiento cuando se inicia la comunicación."
 
 #: dat/events/taiomi/system.lua:153
 msgid "(You hear some sort of giggling over the comm. Is it laughing?)"
-msgstr ""
+msgstr "(Se oye una especie de risa por el comunicador. ¿Se estar riendo?)"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -40298,6 +40439,10 @@ msgid ""
 "#rWARNING - Volatile nebula detected in {sys}! Taking {nebvol:.1f} MW damage!"
 "#0"
 msgstr ""
+"Mientras saltas el sistema notas que se enciende una pequeña alarma en el "
+"panel de control:\n"
+"#rADVERTENCIA - ¡Nebulosa volátil detectada en {sys}! Tomando {nebvol:.1f} "
+"Daño MW! #0"
 
 #: dat/events/tutorial/tut_enter.lua:42
 msgid ""
@@ -40308,6 +40453,13 @@ msgid ""
 "volatility gets any stronger, it could be fatal to the {ship}. Going deeper "
 "into the nebula could prove to be a very risky endeavour.\""
 msgstr ""
+"{ainame} se materializa frente a ti.\n"
+"\"Parece que hemos entrado en parte de la nebulosa volátil. La inestabilidad "
+"de este lugar causa fuertes daños a cualquier nave que entre. Si nuestra "
+"regeneración de escudos supera el daño de la volatilidad, deberíamos estar "
+"bien. Sin embargo, si la volatilidad se hace más fuerte, podría ser fatal "
+"para la {ship}. Adentrarse en la nebulosa podría ser una empresa muy "
+"arriesgada.\""
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -40341,6 +40493,13 @@ msgid ""
 "launch rockets after getting a new target. It is modulated depending if the "
 "target's '#oEvasion#0' is lower than the '#oOptimal Tracking#0'.\""
 msgstr ""
+"\"Parece que acabas de adquirir tu primer equipo #oLanzador#0. Los "
+"lanzadores son armas basadas en munición que pueden tener habilidades de "
+"seguimiento de objetivos. Los lanzadores de búsqueda tienen dos propiedades "
+"importantes: #oFijación#0' y 'Calibración en vuelo#0'. Fijación determina "
+"cuántos segundos se tarda en poder lanzar cohetes después de conseguir un "
+"nuevo objetivo. Se modula en función de si la '#oEvasión#0' del objetivo es "
+"inferior al '#oSeguimiento Óptimo#0'.\""
 
 #: dat/events/tutorial/tut_land.lua:47
 msgid ""
@@ -40352,6 +40511,13 @@ msgid ""
 "coloured circle around the outfit that shrinks as the calibration finishes.."
 "\""
 msgstr ""
+"\"'Calibración en Vuelo#0' es la cantidad de tiempo que tarda el cohete "
+"después de ser lanzado en empezar a rastrear al objetivo. Cuando no esté "
+"fijado volará en línea recta y dañará a todos los hostiles que encuentre, "
+"sin embargo, una vez bloqueado sólo dañará al objetivo a menos que se "
+"inhiba. La Calibración en Vuelo no se ve afectada por la evasión del "
+"objetivo, y se visualiza mediante un círculo de color alrededor del conjunto "
+"que se va encogiendo a medida que termina la calibración...\""
 
 #: dat/events/tutorial/tut_land.lua:48
 msgid ""
@@ -40363,6 +40529,13 @@ msgid ""
 "trajectory. Despite being jammed, they can still damage any hostiles they "
 "encounter.\""
 msgstr ""
+"\"Eso nos lleva al último concepto importante: ¡inhibición! Los cohetes "
+"buscadores pueden ser inhibidos dependiendo de si el objetivo tiene o no "
+"equipo de inhibición, y de la resistencia del cohete. La posibilidad de que "
+"un cohete se inhiba es la diferencia entre la posibilidad de inhibición y la "
+"resistencia. Cuando un cohete se inhibe, puede ser ralentizado o quedar "
+"atrapado en una trayectoria aleatoria. A pesar de estar inhibidos, pueden "
+"seguir dañando a los hostiles que encuentren.\""
 
 #: dat/events/tutorial/tut_land.lua:49
 msgid ""
@@ -40401,6 +40574,10 @@ msgid ""
 "routes carefully, though, because these ships' defensive capabilities are "
 "very limited.\""
 msgstr ""
+"\"¡Si quieres ganar créditos haciendo misiones de gran envergadura o "
+"comercio de materias primas, la #Licencia de Nave Civil Grande#0 es tu "
+"primer paso! Eso sí, planifica tus rutas con cuidado, porque las capacidades "
+"defensivas de estas naves son muy limitadas.\""
 
 #: dat/events/tutorial/tut_land.lua:76
 msgid ""
@@ -40411,6 +40588,13 @@ msgid ""
 "target. By mixing and matching weapons with complementary strengths you can "
 "greatly increase your combat ability.\""
 msgstr ""
+"\"Oh, ¿es eso una Licencia de Armas Medianas#0? Esto abrirá la posibilidad "
+"de equipar armas más grandes como torretas o lanzadores. Las torretas pueden "
+"girar en cualquier dirección y eliminan la carga de apuntar de tu nave. Los "
+"lanzadores utilizan munición y pueden apuntar a las naves enemigas para "
+"asegurarse de que la carga útil alcanza el objetivo. Mezclando y combinando "
+"armas con puntos fuertes complementarios puedes aumentar enormemente tu "
+"capacidad de combate.\""
 
 #: dat/events/tutorial/tut_land.lua:77
 msgid ""
@@ -40421,6 +40605,13 @@ msgid ""
 "cost of more mass. If you want to stay nimble and stealthy, you should be "
 "careful about increasing your mass.\""
 msgstr ""
+"\"Muchas de las nuevas armas a las que tendrás acceso ahora tienen mayores "
+"requisitos de CPU. Para aumentar tu CPU, tienes que equipar mejores #"
+"Sistemas Base#0. La potencia de los sistemas de núcleo que puedes equipar "
+"está limitada por el tamaño de las ranuras de tu nave. Las ranuras más "
+"grandes te dan más potencia, pero tienen el coste de una mayor masa. Si "
+"quieres seguir siendo ágil y sigiloso, debes tener cuidado al aumentar tu "
+"masa.\""
 
 #: dat/events/tutorial/tut_land.lua:83
 msgid ""
@@ -40430,6 +40621,12 @@ msgid ""
 "a different scale. They use much more energy, weigh much more, but also have "
 "much longer range and higher firepower.\""
 msgstr ""
+"\"Parece que por fin estás preparado para enfrentarte a la artillería "
+"pesada. #La Licencia de Armas Pesadas#0 te permitirá comprar el más grande y "
+"poderoso de los armamentos. Estas armas son generalmente similares a sus "
+"homólogas medianas, pero están en una escala diferente. Utilizan mucha más "
+"energía, pesan mucho más, pero también tienen un alcance mucho mayor y una "
+"mayor potencia de fuego.\""
 
 #: dat/events/tutorial/tut_land.lua:84
 msgid ""
@@ -40441,6 +40638,14 @@ msgid ""
 "intend to deal with smaller ships too, make sure to equip fighter bays or "
 "lighter weapons!\""
 msgstr ""
+"\"Una cosa que tendrás que tener en cuenta es que las armas pesadas tienden "
+"a tener grandes valores de seguimiento mínimo y valores de seguimiento "
+"óptimo. Las naves con #oEvasión#0 inferior al valor de seguimiento mínimo de "
+"tus armas podrán esquivar fácilmente la mayoría de tus disparos. Por otro "
+"lado, las naves grandes con una evasión superior a tu valor de seguimiento "
+"óptimo serán devastadas por sus disparos. Si pretendes enfrentarte también a "
+"naves más pequeñas, ¡asegúrate de equipar bahías de combate o armas más "
+"ligeras!\""
 
 #: dat/events/tutorial/tut_land.lua:90
 msgid ""
@@ -40460,6 +40665,12 @@ msgid ""
 "craft, while bombers are known to carry torpedoes that can ravage even the "
 "largest of battleships.\""
 msgstr ""
+"\"#oInterceptores#0 son los más ligeros de los tres con ranuras limitadas, "
+"pero con poca masa y gran maniobrabilidad. Los #oCazas#0 y los #oBombarderos#"
+"0 son más pesados pero siguen siendo muy ágiles, los cazas están "
+"especializados en el combate cercano contra pequeñas naves, mientras que los "
+"bombarderos son conocidos por llevar torpedos que pueden arrasar hasta el "
+"mayor de los acorazados.\""
 
 #: dat/events/tutorial/tut_land.lua:92
 msgid ""
@@ -40479,6 +40690,12 @@ msgid ""
 "are the more agile of the two and can skirmish with smaller craft, while "
 "destroyers tend to be slower with much more firepower.\""
 msgstr ""
+"\"Parece que has sobrepasado la #oLicencia de Nave de Combate Ligera#0. Con "
+"la #oLicencia de Nave de Combate Media#0 tendrás acceso a las naves de clase "
+"#oCorbeta#0 y #oDestructor#0, que pueden ser muy potentes. Las corbetas son "
+"las más ágiles de las dos y pueden combatir con naves más pequeñas, mientras "
+"que los destructores tienden a ser más lentos con mucha más potencia de "
+"fuego.\""
 
 #: dat/events/tutorial/tut_land.lua:99
 msgid ""
@@ -40488,6 +40705,11 @@ msgid ""
 "play different roles. You should experiment and see what what works well for "
 "you.\""
 msgstr ""
+"\"Las naves de combate medianas suelen tener un buen equilibrio entre "
+"potencia de fuego y utilidad, pudiendo realizar tanto operaciones de sigilo "
+"como asaltos frontales. Como también tienen más ranuras, pueden configurarse "
+"más ampliamente para desempeñar diferentes funciones. Deberías experimentar "
+"y ver qué es lo que funciona bien para ti.\""
 
 #: dat/events/tutorial/tut_land.lua:105
 msgid ""
@@ -40497,6 +40719,12 @@ msgid ""
 "These ships sacrifice size and utility for survivability and firepower, "
 "being able to lay devastating barrages to lay waste to enemy forces.\""
 msgstr ""
+"\"¡Parece que por fin tienes en tus manos la #oLicencia de Nave de Combate "
+"Pesada#0! Esto te permitirá pilotar las naves de combate más grandes, que "
+"incluyen naves de clase #oCrucero#0-, #oAcorazado#0- y #oPortanaves#0. Estas "
+"naves sacrifican el tamaño y la utilidad por la capacidad de supervivencia y "
+"la potencia de fuego, siendo capaces de lanzar devastadoras descargas para "
+"asolar a las fuerzas enemigas.\""
 
 #: dat/events/tutorial/tut_land.lua:106
 msgid ""
@@ -40507,6 +40735,13 @@ msgid ""
 "firepower. #oCarriers#0 use a different strategy of using fighters to do the "
 "combat for them while maximizing survivability.\""
 msgstr ""
+"\"#oCruceros#0 son los más pequeños de las tres categorías, pero también los "
+"de menor masa y mayor maniobrabilidad. Pueden considerarse más o menos como "
+"una versión más pesada de un destructor. #Los Acorazados llevan la potencia "
+"de fuego al máximo y pueden destruir cualquier nave que no pueda evadir su "
+"potencia de fuego concentrada. Los #oPortanaves#0 utilizan una estrategia "
+"diferente que consiste en utilizar cazas para combatir por ellos y maximizar "
+"la capacidad de supervivencia.\""
 
 #: dat/events/tutorial/tut_land.lua:107
 msgid ""
@@ -40517,6 +40752,13 @@ msgid ""
 "vulnerable to volleys of torpedoes. Escorts and fighter bays can help them "
 "deal with enemy bombers.\""
 msgstr ""
+"\"Pilotar una nave de combate pesada es muy diferente a otras clases de "
+"naves. Dado su tamaño, normalmente el tiempo parece transcurrir a un ritmo "
+"más rápido que el de las naves más pequeñas, lo que se puede comprobar por "
+"su valor de '#Dilatación Temporal#0'. Además, dado su tamaño, el sigilo se "
+"hace difícil y pueden ser vulnerables a las andanadas de torpedos. Las "
+"escoltas y las bahías de cazas pueden ayudarles a enfrentarse a los "
+"bombarderos enemigos.\""
 
 #: dat/events/tutorial/tut_land.lua:113
 msgid ""
@@ -40539,6 +40781,15 @@ msgid ""
 "getting a diversity of ships and switching to the one that best fits your "
 "need is a great way to get things done.\""
 msgstr ""
+"\"¡Felicidades por comprar una nueva {nave}! A menos que intercambies tu "
+"nave, cuando compras una nueva nave, esta se añade a tus naves disponibles. "
+"Normalmente, las naves sólo vienen equipadas con el equipo básico, así que "
+"debes dirigirte a la ventana #oEquipamiento#0 para equipar la nave y "
+"cambiarla por la actual si quieres usarla. Puedes cambiar las naves en "
+"cualquier planeta o estación con un astillero y no hay ninguna penalización "
+"ni coste asociado al cambio. De hecho, conseguir una diversidad de naves y "
+"cambiar a la que mejor se adapte a tus necesidades es una gran manera de "
+"hacer las cosas.\""
 
 #: dat/events/tutorial/tut_land.lua:141
 msgid ""
@@ -40546,6 +40797,9 @@ msgid ""
 "automatically transferred between your ships. You can't get away from me, ha "
 "ha.\""
 msgstr ""
+"\"Tampoco tienes que preocuparte de que la IA de tu nave cambie, me "
+"transfieren automáticamente entre tus naves. No puedes escapar de mí, ja, ja."
+"\""
 
 #: dat/events/tutorial/tut_land.lua:152
 msgid ""
@@ -40558,6 +40812,16 @@ msgid ""
 "constant will have time passing 50% faster than a normal ship, and will help "
 "the ship feel less cumbersome to fly.\""
 msgstr ""
+"\"Vaya, parece que acabas de adquirir tu primera gran nave. Ya te habrás "
+"dado cuenta, pero las naves tienen un valor de '#oConstante de Tiempo#0', "
+"que indica cómo se siente el paso del tiempo cuando se pilota la nave. Las "
+"naves más pequeñas suelen tener valores por debajo del 100%, por lo que el "
+"tiempo acaba pasando más lentamente en ellas que en otras naves. Por otro "
+"lado, las naves grandes tendrán constantes de tiempo por encima del 100%, "
+"haciendo que el tiempo parezca pasar más rápido. Por ejemplo, una nave con "
+"una constante de tiempo del 150% hará que el tiempo pase un 50% más rápido "
+"que en una nave normal, y ayudará a que la nave parezca menos engorrosa de "
+"pilotar.\""
 
 #: dat/events/tutorial/tut_land.lua:153
 msgid ""
@@ -40598,7 +40862,7 @@ msgstr ""
 #. - safe lanes
 #: dat/events/updater.lua:64
 msgid "Suddenly, a hologram materializes in front of you."
-msgstr ""
+msgstr "De repente, un holograma se materializa frente a ti."
 
 #: dat/events/updater.lua:65
 msgid ""
@@ -40616,15 +40880,17 @@ msgid ""
 "\"I'm sure you have many questions about the update, but first, would you "
 "like to give me a name?\""
 msgstr ""
+"\"Seguro que tienes muchas preguntas sobre la actualización, pero primero, ¿"
+"quieres darme un nombre?\""
 
 #. TODO integrate into vn
 #: dat/events/updater.lua:72 dat/missions/tutorial/tutorial.lua:59
 msgid "Name Ship AI"
-msgstr ""
+msgstr "Nombrar IA de Nave"
 
 #: dat/events/updater.lua:72 dat/missions/tutorial/tutorial.lua:59
 msgid "Please enter a name for your Ship AI"
-msgstr ""
+msgstr "Por favor, introduzca un nombre para tu IA de Nave"
 
 #. Can't use rename here
 #: dat/events/updater.lua:88
@@ -40634,6 +40900,10 @@ msgid ""
 "clicking on the '#oShip AI#0' button. From there you can also access "
 "explanations and change tutorial options.\""
 msgstr ""
+"\"¡Genial! A partir de ahora utilizaré el nombre {ainame}. Si quieres "
+"cambiarlo, puedes hacerlo desde el menú #oInformación#0 que abres con "
+"{infokey} pulsando el botón '#oNave IA#0'. Desde ahí también puedes acceder "
+"a las explicaciones y cambiar las opciones del tutorial.\""
 
 #: dat/events/updater.lua:89
 msgid ""
@@ -40644,6 +40914,12 @@ msgid ""
 "cargo or outfits. You can activate stealth with {stealthkey} when no ships "
 "area nearby.\""
 msgstr ""
+"\"Con la actualización, se han cambiado muchas mecánicas y características "
+"nuevas. El mayor cambio incluye una renovación de #oGuerra Electrónica#0, "
+"que ahora incluye una nueva mecánica de sigilo. En este nuevo marco, serás "
+"escaneado por las naves de patrulla, lo que significa que tienes que tener "
+"cuidado cuando lleves carga o equipos ilegal. Puedes activar el sigilo con "
+"{stealthkey} cuando no haya ninguna nave cercana.\""
 
 #: dat/events/updater.lua:90
 msgid ""
@@ -40653,6 +40929,11 @@ msgid ""
 "inspecting your ships and their equipment before taking off, you don't want "
 "to be flying a poorly equipped ship in space!\""
 msgstr ""
+"\"También habrás notado que ha habido un cambio importante en los equipos. "
+"Se han eliminado, añadido o renombrado muchos equipos, lo que ha provocado "
+"una pérdida de equipos al actualizar las partidas guardadas antiguas. Por "
+"favor, tómate un tiempo para inspeccionar tus naves y tu equipamiento antes "
+"de despegar, ¡no querrás pilotar una nave mal equipada en el espacio!\""
 
 #: dat/events/updater.lua:91
 msgid ""
@@ -40661,6 +40942,11 @@ msgid ""
 "missiles can be jammed, and some factions have been completely reworked. You "
 "will notice a lot of smaller differences too as you play the game.\""
 msgstr ""
+"\"También hay muchos otros cambios, por ejemplo, ahora hay rutas de patrulla "
+"en los sistemas que están más vigilados por las facciones locales, los "
+"misiles de búsqueda se pueden inhibir y algunas facciones se han modificado "
+"por completo. También notarás un montón de pequeñas diferencias a medida que "
+"juegues.\""
 
 #: dat/events/updater.lua:92
 msgid ""
@@ -40684,6 +40970,10 @@ msgid ""
 "the '#oShip AI#0' button in the #oInformation#0 menu you can open with "
 "{infokey}. Now, let's go adventuring!\""
 msgstr ""
+"\"¡Genial! Te daré pequeñas pistas a medida que hagas cosas a lo largo del "
+"juego. Si quieres cambiar mi configuración o desactivar las pistas, hazlo "
+"desde el botón '#OIA de nave#0' en el menú #oInformación#0 que puedes abrir "
+"con {infokey}. Ahora, ¡vamos a aventurarnos!\""
 
 #: dat/events/updater.lua:106
 msgid ""
@@ -40692,6 +40982,10 @@ msgid ""
 "'#oShip AI#o' button in the #oInformation#0 menu you can open with "
 "{infokey}. Now, let's go adventuring!\""
 msgstr ""
+"\"Bien, no te daré ninguna pista. Si quieres cambiar mi configuración, "
+"activar las sugerencias, u obtener información y consejos, hazlo desde el "
+"botón '#oIA de Nave#o' en el menú #oInformación#0 que puedes abrir con "
+"{infokey}. Ahora, ¡vamos de aventuras!\""
 
 #. Run on saves older than 0.9.0
 #. Done
@@ -40815,7 +41109,7 @@ msgstr ""
 #: dat/missions/minerva/kex5.lua:233
 #: dat/missions/sirius/achack/achack04.lua:170
 msgid "Bounty Hunter"
-msgstr ""
+msgstr "Cazador de Recompensas"
 
 #. @brief Creation hook.
 #. Hostiles (namely pirates atm)
@@ -40859,14 +41153,14 @@ msgstr ""
 #. Safety check
 #: dat/factions/spawn/lib/common.lua:90
 msgid "No weight specified"
-msgstr ""
+msgstr "Sin peso especificado"
 
 #. Normalize
 #. Job done
 #. @brief Chooses what to spawn
 #: dat/factions/spawn/lib/common.lua:112
 msgid "No spawn function found"
-msgstr ""
+msgstr "No se ha encontrado ninguna función de aparición"
 
 #. @brief Actually spawns the pilots
 #. Case no pilots
@@ -40972,19 +41266,19 @@ msgstr "Desconocido"
 #. @brief Spawns a small group of miners
 #: dat/factions/spawn/miner.lua:13
 msgid "Miner Llama"
-msgstr ""
+msgstr "Llama Minero"
 
 #: dat/factions/spawn/miner.lua:15
 msgid "Miner Koala"
-msgstr ""
+msgstr "Koala Minero"
 
 #: dat/factions/spawn/miner.lua:17
 msgid "Miner Mule"
-msgstr ""
+msgstr "Mula Minero"
 
 #: dat/factions/spawn/miner.lua:19
 msgid "Miner Rhino"
-msgstr ""
+msgstr "Rhino Minero"
 
 #. @brief Creation hook.
 #. Create weights for spawn table
@@ -41030,33 +41324,33 @@ msgstr ""
 #: dat/factions/spawn/trader.lua:11 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168
 msgid "Trader Llama"
-msgstr ""
+msgstr "Llama Comerciante"
 
 #. hook an abstract deciding function to player entering a system when not part of defense
 #. Decides what to do when player either takes off starting planet or jumps into another system
 #: dat/factions/spawn/trader.lua:14 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168 dat/missions/neutral/dts_02.lua:108
 msgid "Trader Koala"
-msgstr ""
+msgstr "Koala Comerciante"
 
 #: dat/factions/spawn/trader.lua:17
 msgid "Trader Quicksilver"
-msgstr ""
+msgstr "Azogue Comerciante"
 
 #. If any pirates still alive, send player back out.
 #. A fellow warrior says hello in passing if player jumps out of the system without landing
 #: dat/factions/spawn/trader.lua:20 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168 dat/missions/neutral/dts_00.lua:210
 msgid "Trader Mule"
-msgstr ""
+msgstr "Mula Comerciante"
 
 #: dat/factions/spawn/trader.lua:23
 msgid "Trader Rhino"
-msgstr ""
+msgstr "Rhino Comerciante"
 
 #: dat/factions/spawn/trader.lua:26
 msgid "Trader Shark"
-msgstr ""
+msgstr "Tiburón Comerciante"
 
 #. Doubles the credits of the pilot
 #. @brief Spawns a small trade fleet.
@@ -41125,52 +41419,52 @@ msgstr ""
 #. Standing value threshold between neutral and friendly.
 #: dat/factions/standing/lib/base.lua:36 src/info.c:763
 msgid "Legend"
-msgstr ""
+msgstr "Leyenda"
 
 #: dat/factions/standing/lib/base.lua:37
 msgid "Hero"
-msgstr ""
+msgstr "Héroe"
 
 #: dat/factions/standing/lib/base.lua:38
 msgid "Comrade"
-msgstr ""
+msgstr "Camarada"
 
 #: dat/factions/standing/lib/base.lua:39
 msgid "Ally"
-msgstr ""
+msgstr "Aliado"
 
 #: dat/factions/standing/lib/base.lua:40
 msgid "Partner"
-msgstr ""
+msgstr "Socio"
 
 #: dat/factions/standing/lib/base.lua:41
 msgid "Associate"
-msgstr ""
+msgstr "Asociado"
 
 #: dat/factions/standing/lib/base.lua:43 dat/scripts/pilotname/pirate.lua:399
 msgid "Outlaw"
-msgstr ""
+msgstr "Fuera de la Ley"
 
 #: dat/factions/standing/lib/base.lua:44
 msgid "Criminal"
-msgstr ""
+msgstr "Criminal"
 
 #: dat/factions/standing/lib/base.lua:45
 msgid "Enemy"
-msgstr ""
+msgstr "Enemigo"
 
 #: dat/factions/standing/lib/base.lua:50
 msgid "Friendly"
-msgstr ""
+msgstr "Amigable"
 
 #: dat/factions/standing/lib/base.lua:52 dat/scripts/common/comm.lua:28
 msgid "Hostile"
-msgstr ""
+msgstr "Hostil"
 
 #. stolen from scripts/vn.lua
 #: dat/factions/standing/lib/base.lua:53 dat/scripts/common/comm.lua:24
 msgid "Bribed"
-msgstr ""
+msgstr "Sobornado"
 
 #.
 #. Clamps a value x between low and high.
@@ -41237,35 +41531,35 @@ msgstr ""
 #. Standing value threshold between neutral and friendly.
 #: dat/factions/standing/lib/pirate.lua:26
 msgid "Clan Legend"
-msgstr ""
+msgstr "Leyenda del Clan"
 
 #: dat/factions/standing/lib/pirate.lua:27
 msgid "Clan Lord"
-msgstr ""
+msgstr "Señor del Clan"
 
 #: dat/factions/standing/lib/pirate.lua:28
 msgid "Clan Warrior"
-msgstr ""
+msgstr "Guerrero del Clan"
 
 #: dat/factions/standing/lib/pirate.lua:29
 msgid "Clan Plunderer"
-msgstr ""
+msgstr "Saqueador del Clan"
 
 #: dat/factions/standing/lib/pirate.lua:30
 msgid "Clan Thug"
-msgstr ""
+msgstr "Matón del Clan"
 
 #: dat/factions/standing/lib/pirate.lua:31 dat/factions/standing/pirate.lua:8
 msgid "Common Thief"
-msgstr ""
+msgstr "Ladrón Comun"
 
 #: dat/factions/standing/lib/pirate.lua:32 dat/factions/standing/pirate.lua:9
 msgid "Normie"
-msgstr ""
+msgstr "Normal"
 
 #: dat/factions/standing/lib/pirate.lua:37
 msgid "Paid Off"
-msgstr ""
+msgstr "Pagado"
 
 #. Get the maximum player value with any pirate clan
 #. Only get first parameter
@@ -41275,11 +41569,11 @@ msgstr ""
 #. Can't get friendly
 #: dat/factions/standing/marauder.lua:8
 msgid "Ignored"
-msgstr ""
+msgstr "Ignorado"
 
 #: dat/factions/standing/marauder.lua:9
 msgid "Potential Victim"
-msgstr ""
+msgstr "Victima Potencial"
 
 #. Doesn't change through hits
 #. Nasin faction standing script
@@ -41289,7 +41583,7 @@ msgstr ""
 #. Pirate faction standing script
 #: dat/factions/standing/pirate.lua:7
 msgid "Respected"
-msgstr ""
+msgstr "Respetado"
 
 #. Doesn't change through hits
 #. Black Lotus faction standing script
@@ -41355,7 +41649,7 @@ msgstr ""
 #: dat/gui/slim.lua:1048 dat/gui/slim.lua:1066 dat/gui/slim.lua:1105
 #: dat/gui/slim.lua:1106
 msgid "none"
-msgstr ""
+msgstr "ninguno"
 
 #. Overheat or ammo capacity
 #. Refire indicator
@@ -41363,7 +41657,7 @@ msgstr ""
 #. Handling turret tracking.
 #: dat/gui/brushed.lua:303 dat/gui/slim.lua:622
 msgid "Too big!"
-msgstr ""
+msgstr "¡Demasiado grande!"
 
 #. Table for convenience.
 #. "Spaceport" is nicer than "Land"
@@ -41400,7 +41694,7 @@ msgstr ""
 #. "Spaceport" is nicer than "Land"
 #: dat/gui/brushed.lua:373 dat/gui/slim.lua:370
 msgid "Spaceport"
-msgstr ""
+msgstr "Espaciopuerto"
 
 #. Speed Lights
 #. Update the editor window.
@@ -41423,7 +41717,7 @@ msgstr ""
 #: src/map_system.c:649
 #, c-format
 msgid "None"
-msgstr ""
+msgstr "Ninguno"
 
 #. Center
 #. Time
@@ -41456,27 +41750,27 @@ msgstr ""
 #. Render planet image.
 #: dat/gui/brushed.lua:905 dat/gui/slim.lua:889 dat/gui/slim.lua:1019
 msgid "TARGETED"
-msgstr ""
+msgstr "ENFOCADO"
 
 #: dat/gui/brushed.lua:908
 #, lua-format
 msgid "DISTANCE: %s"
-msgstr ""
+msgstr "DISTANCIA: %s"
 
 #: dat/gui/brushed.lua:910
 #, lua-format
 msgid "CLASS: %s"
-msgstr ""
+msgstr "CLASE: %s"
 
 #. Space out the text.
 #. Render dir sprite.
 #: dat/gui/brushed.lua:921 dat/gui/slim.lua:1038
 msgid "SERVICES:"
-msgstr ""
+msgstr "SERVICIOS:"
 
 #: dat/gui/brushed.lua:926
 msgid "SERVICES: none"
-msgstr ""
+msgstr "SERVICIOS: ninguno"
 
 #. Fleet functions
 #. TODO: Add an API for and implement fleet command buttons
@@ -41495,7 +41789,7 @@ msgstr ""
 #. Formation selection button
 #: dat/gui/brushed.lua:939 dat/gui/slim.lua:779
 msgid "Set formation"
-msgstr ""
+msgstr "Colocar formación"
 
 #: dat/gui/brushed.lua:1067
 #, lua-format
@@ -41503,6 +41797,8 @@ msgid ""
 "Cooling down...\n"
 "%.1f seconds remaining"
 msgstr ""
+"Enfriando...\n"
+"%.1f segundos restantes"
 
 #. --
 #. Obligatory create function.
@@ -41550,19 +41846,19 @@ msgstr ""
 #. Renders the navigation computer
 #: dat/gui/legacy.lua:196
 msgid "Landing"
-msgstr ""
+msgstr "Aterrizando"
 
 #: dat/gui/legacy.lua:202 dat/gui/legacy.lua:217 dat/gui/legacy.lua:225
 msgid "Off"
-msgstr ""
+msgstr "Apagado"
 
 #: dat/gui/legacy.lua:207
 msgid "Hyperspace"
-msgstr ""
+msgstr "Hiperespacio"
 
 #: dat/gui/legacy.lua:223
 msgid "Navigation"
-msgstr ""
+msgstr "Navegación"
 
 #. Renders the health bars
 #. Renders the weapon systems
@@ -41588,7 +41884,7 @@ msgstr ""
 #. --
 #: dat/gui/legacy.lua:271
 msgid "No Target"
-msgstr ""
+msgstr "Sin Objetivo"
 
 #. Display faction
 #. Display health
@@ -41600,37 +41896,37 @@ msgstr ""
 #. Status information
 #: dat/gui/legacy.lua:335 dat/gui/slim.lua:940
 msgid "Disabled"
-msgstr ""
+msgstr "Desactivado"
 
 #: dat/gui/legacy.lua:337
 #, lua-format
 msgid "Armour: %.0f%%"
-msgstr ""
+msgstr "Blindaje: %.0f%%"
 
 #: dat/gui/legacy.lua:339
 #, lua-format
 msgid "Shield: %.0f%%"
-msgstr ""
+msgstr "Escudo: %.0f%%"
 
 #. Render faction logo.
 #. Renders the miscellaneous stuff
 #: dat/gui/legacy.lua:356
 msgid "Creds:"
-msgstr ""
+msgstr "Creds:"
 
 #: dat/gui/legacy.lua:360
 msgid "Cargo Free:"
-msgstr ""
+msgstr "Libre de Carga:"
 
 #. Renders the warnings like system volatility
 #. Render warnings
 #: dat/gui/legacy.lua:377
 msgid "LOCK-ON DETECTED"
-msgstr ""
+msgstr "FIJADO DETECTADO"
 
 #: dat/gui/legacy.lua:381
 msgid "VOLATILE ENVIRONMENT DETECTED"
-msgstr ""
+msgstr "AMBIENTE VOLÁTIL DETECTADO"
 
 #. --
 #. Obligatory render function.
@@ -41669,13 +41965,13 @@ msgstr ""
 #. Missile lock warning
 #: dat/gui/slim.lua:195
 msgid "Warning - Missile Lock-on Detected"
-msgstr ""
+msgstr "Advertencia -Misil Fijado Detectado"
 
 #. Colour the planet name based on friendliness.
 #: dat/gui/slim.lua:402
 #, lua-format
 msgid " (%s free)"
-msgstr ""
+msgstr " (%s libre)"
 
 #. Currently unused.
 #.
@@ -41722,71 +42018,71 @@ msgstr ""
 #. update_faction()
 #: dat/gui/slim.lua:454 dat/gui/slimv2.lua:259
 msgid "Cooling down..."
-msgstr ""
+msgstr "Enfriando..."
 
 #: dat/gui/slim.lua:497 dat/gui/slim.lua:542
 msgid "UNAVAILABLE"
-msgstr ""
+msgstr "NO DISPONIBLE"
 
 #: dat/gui/slim.lua:942
 msgid "Boardable"
-msgstr ""
+msgstr "Embarcable"
 
 #: dat/gui/slim.lua:944
 msgid "Cooling Down"
-msgstr ""
+msgstr "Enfriando"
 
 #. Render bars.
 #. Dist
 #: dat/gui/slim.lua:981
 msgid "DIST"
-msgstr ""
+msgstr "DIST"
 
 #. Dir
 #: dat/gui/slim.lua:988
 msgid "DIR"
-msgstr ""
+msgstr "DIR"
 
 #: dat/gui/slim.lua:1020
 msgid "DISTANCE:"
-msgstr ""
+msgstr "DISTANCIA:"
 
 #: dat/gui/slim.lua:1021
 msgid "CLASS:"
-msgstr ""
+msgstr "CLASE:"
 
 #: dat/gui/slim.lua:1069 src/info.c:222
 msgid "Pilot:"
-msgstr ""
+msgstr "Piloto:"
 
 #: dat/gui/slim.lua:1069
 msgid "System:"
-msgstr ""
+msgstr "Sistema:"
 
 #: dat/gui/slim.lua:1069
 msgid "Time:"
-msgstr ""
+msgstr "Tiempo:"
 
 #: dat/gui/slim.lua:1069 src/load.c:421
 msgid "Credits:"
-msgstr ""
+msgstr "Créditos:"
 
 #: dat/gui/slim.lua:1070
 msgid "Nav:"
-msgstr ""
+msgstr "Nav:"
 
 #: dat/gui/slim.lua:1070 src/equipment.c:384 src/info.c:226 src/info.c:484
 #: src/land_shipyard.c:289 src/map_system.c:681
 msgid "Fuel:"
-msgstr ""
+msgstr "Combustible:"
 
 #: dat/gui/slim.lua:1071
 msgid "WSet:"
-msgstr ""
+msgstr "WSet:"
 
 #: dat/gui/slim.lua:1071
 msgid "Cargo:"
-msgstr ""
+msgstr "Carga:"
 
 #. stress is only used for armour
 #. Get values
@@ -41884,111 +42180,116 @@ msgstr ""
 #: dat/landing.lua:125 dat/landing.lua:134 dat/landing.lua:157
 #: dat/landing.lua:229
 msgid "Permission to land granted."
-msgstr ""
+msgstr "Permiso de aterrizaje concedido."
 
 #: dat/landing.lua:57 dat/landing.lua:72 dat/landing.lua:158
 msgid "You are not authorized to land here."
-msgstr ""
+msgstr "No está autorizado a aterrizar aquí."
 
 #: dat/landing.lua:58 dat/landing.lua:73 dat/landing.lua:82 dat/landing.lua:91
 #: dat/landing.lua:100 dat/landing.lua:109 dat/landing.lua:118
 #: dat/landing.lua:127 dat/landing.lua:136 dat/landing.lua:159
 #: dat/landing.lua:168 dat/landing.lua:231
 msgid "Landing request denied."
-msgstr ""
+msgstr "Solicitud de aterrizaje denegada."
 
 #: dat/landing.lua:59 dat/landing.lua:74 dat/landing.lua:83
 msgid "\"Don't attempt to bribe an Empire official, pilot.\""
-msgstr ""
+msgstr "\"No intentes sobornar a un oficial del Imperio, piloto.\""
 
 #. luacheck: globals emp_mil_wrath (Empire Emperor's Wrath.)
 #: dat/landing.lua:80
 msgid "The Emperor permits you to land."
-msgstr ""
+msgstr "El Emperador te permite aterrizar."
 
 #: dat/landing.lua:81
 msgid "You may not approach the Emperor."
-msgstr ""
+msgstr "No puede acercarse al Emperador."
 
 #: dat/landing.lua:90
 msgid "Only the faithful may land here. Request denied."
-msgstr ""
+msgstr "Sólo los fieles pueden aterrizar aquí. Petición denegada."
 
 #: dat/landing.lua:92 dat/landing.lua:101
 msgid "\"The faithful will never be swayed by money.\""
-msgstr ""
+msgstr "\"Los fieles nunca se dejarán influir por el dinero.\""
 
 #. luacheck: globals srs_mil_mutris (Sirius Mutris.)
 #: dat/landing.lua:98
 msgid "Welcome to Mutris, home of Sirichana."
-msgstr ""
+msgstr "Bienvenido a Mutris, hogar de Sirichana."
 
 #: dat/landing.lua:99
 msgid "You may not approach the home of Sirichana yet."
-msgstr ""
+msgstr "Todavía no puedes acercarte a la casa de Sirichana."
 
 #: dat/landing.lua:108
 msgid "Your rank is too low, citizen. Access denied."
-msgstr ""
+msgstr "Tu rango es demasiado bajo, ciudadano. Acceso denegado."
 
 #: dat/landing.lua:110 dat/landing.lua:119
 msgid "\"Money won't buy you access to our restricted facilities, citizen.\""
 msgstr ""
+"\"El dinero no te comprará el acceso a nuestras instalaciones restringidas, "
+"ciudadano.\""
 
 #. luacheck: globals dv_mil_command (Dvaered High Command.)
 #: dat/landing.lua:116
 msgid "Permission to land granted, captain."
-msgstr ""
+msgstr "Permiso de aterrizaje concedido, capitán."
 
 #: dat/landing.lua:117
 msgid "Only high ranking personnel allowed. Landing request denied."
 msgstr ""
+"Sólo se permite personal de alto rango. Solicitud de aterrizaje denegada."
 
 #: dat/landing.lua:126
 msgid "Permission denied. You're not truly one of us."
-msgstr ""
+msgstr "Permiso denegado. No eres realmente uno de nosotros."
 
 #: dat/landing.lua:128 dat/landing.lua:137
 msgid "\"We don't need your money, outsider.\""
-msgstr ""
+msgstr "\"No necesitamos tu dinero, forastero.\""
 
 #: dat/landing.lua:135
 msgid "Only friends of the Soromid may set foot on Kataka."
-msgstr ""
+msgstr "Sólo los amigos de Soromida pueden poner un pie en Kataka."
 
 #. luacheck: globals zlk_mil_restricted (Za'lek's military assets.)
 #: dat/landing.lua:143
 msgid "Docking sequence transmitted."
-msgstr ""
+msgstr "Secuencia de acoplamiento transmitida."
 
 #: dat/landing.lua:144
 msgid "Authorization level too low to grant access."
-msgstr ""
+msgstr "Nivel de autorización demasiado bajo para conceder acceso."
 
 #: dat/landing.lua:145
 msgid "Authorization denied."
-msgstr ""
+msgstr "Autorización denegada."
 
 #: dat/landing.lua:146
 msgid "Money is irrelevant."
-msgstr ""
+msgstr "El dinero es irrelevante."
 
 #: dat/landing.lua:160
 msgid "We Proteron don't take kindly to bribery."
-msgstr ""
+msgstr "Nosotros, Proteron no nos gustan los sobornos."
 
 #. luacheck: globals thr_mil_restricted (Thurion military assets.)
 #: dat/landing.lua:166
 msgid "Welcome, friend {player}. You may dock when ready."
-msgstr ""
+msgstr "Bienvenido, amigo {player}. Puede atracar cuando esté listo."
 
 #: dat/landing.lua:167
 msgid "I'm sorry, we can't trust you to land here just yet."
 msgstr ""
+"Lo siento, no podemos todavía confiar lo suficiente para dejarle aterrizar "
+"aquí todavía."
 
 #: dat/landing.lua:169
 msgid "We have no need for your credits."
-msgstr ""
+msgstr "No necesitamos tus créditos."
 
 #. luacheck: globals pir_clanworld (Pirate clanworld.)
 #: dat/landing.lua:180
