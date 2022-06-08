@@ -638,7 +638,7 @@ static int ss_printD( char *buf, int len, int newline, double d, const ShipStats
 {
    if (FABS(d) < 1e-10)
       return 0;
-   return scnprintf( buf, len, "%s#%s%+.0f%% %s#0",
+   return scnprintf( buf, len, "%s#%s%+g%% %s#0",
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
          d*100., _(sl->display) );
@@ -651,7 +651,7 @@ static int ss_printA( char *buf, int len, int newline, double d, const ShipStats
 {
    if (FABS(d) < 1e-10)
       return 0;
-   return scnprintf( buf, len, "%s#%s%+.0f %s#0",
+   return scnprintf( buf, len, "%s#%s%+g %s#0",
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
          d, _(sl->display) );
