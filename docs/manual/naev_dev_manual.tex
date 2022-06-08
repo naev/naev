@@ -10,6 +10,16 @@
 \usepackage{hyperref}  % for hyperlinks
 \usepackage[a4paper,top=4.2cm,bottom=4.2cm,left=3.5cm,right=3.5cm]{geometry} % for setting page size and margins
 \usepackage{listings}
+\usepackage{color}
+
+\lstdefinestyle{lua}{
+   language=[5.1]Lua,
+}
+
+\definecolor{bluekeywords}{rgb}{0.13, 0.13, 1}
+\definecolor{greencomments}{rgb}{0, 0.5, 0}
+\definecolor{redstrings}{rgb}{0.9, 0, 0}
+\definecolor{graynumbers}{rgb}{0.5, 0.5, 0.5}
 
 \lstset{
 	defaultdialect=[5.1]Lua
