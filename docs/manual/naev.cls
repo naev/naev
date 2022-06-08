@@ -15,7 +15,7 @@
 \RequirePackage{sfmath}
 
 % load the base class with default options
-\LoadClass[12pt,a4paper]{article}
+\LoadClass[12pt,a4paper]{book}
 
 % extra front matter commands
 \DeclareRobustCommand*{\softwarelogo}[1]{\gdef\@logocmd{#1}}
