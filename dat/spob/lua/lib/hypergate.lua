@@ -237,7 +237,7 @@ function hypergate_window ()
       else
          jumpx, jumpy = 0, 0
          jumpl, jumpa = 0, 0
-         map.center( cpos, hardset )
+         map:center( cpos, hardset )
       end
    end
    map_center( nil, 1, true ) -- Center on first item in the list
