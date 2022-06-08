@@ -105,9 +105,6 @@ function land ()
 
          -- We'll take off right away again
          player.takeoff()
-
-         -- Saving should be disabled for as short a time as possible
-         player.allowSave()
       end
    elseif mem.landed == mem.ret and mem.misn_stage == 1 then
 
@@ -130,6 +127,9 @@ end
 function enter ()
    local sys = system.cur()
    if mem.misn_stage == 1 and sys == mem.destsys then
+      -- Saving should be disabled for as short a time as possible
+      player.allowSave()
+
       -- Force FLF combat music (note: must clear this later on).
       var.push( "music_combat_force", "FLF" )
 
