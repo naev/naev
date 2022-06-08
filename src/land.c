@@ -74,6 +74,7 @@ unsigned int land_generated = 0;
 int landed = 0; /**< Is player landed. */
 int land_loaded = 0; /**< Finished loading? */
 int land_takeoff = 0; /**< Takeoff. */
+int land_takeoff_nosave = 0; /**< Whether or not to disable saving when taking off. */
 unsigned int land_wid = 0; /**< Land window ID, also used in gui.c */
 static int land_regen = 0; /**< Whether or not regenning. */
 static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */
@@ -142,6 +143,7 @@ static void misn_update( unsigned int wid, const char *str );
 void land_queueTakeoff (void)
 {
    land_takeoff = 1;
+   land_takeoff_nosave = player_isFlag(PLAYER_NOSAVE);
 }
 
 /* Maps are only offered if the spob provides fuel. */
@@ -573,7 +575,7 @@ static void bar_approach( unsigned int wid, const char *str )
 
    /* Mission forced take off. */
    if (land_takeoff)
-      takeoff(0);
+      takeoff( 0, land_takeoff_nosave );
 }
 /**
  * @brief Loads the news.
@@ -926,7 +928,7 @@ void land_buttonTakeoff( unsigned int wid, const char *unused )
    (void) wid;
    (void) unused;
    /* We'll want the time delay. */
-   takeoff(1);
+   takeoff( 1, player_isFlag(PLAYER_NOSAVE) );
 }
 
 /**
@@ -1259,7 +1261,7 @@ void land( Spob* p, int load )
 
    /* Mission forced take off. */
    if (land_takeoff)
-      takeoff(0);
+      takeoff( 0, land_takeoff_nosave );
 }
 
 /**
@@ -1439,7 +1441,7 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab 
       visited(to_visit);
 
       if (land_takeoff)
-         takeoff(1);
+         takeoff( 1, land_takeoff_nosave );
    }
 }
 
@@ -1447,8 +1449,9 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab 
  * @brief Makes the player take off if landed.
  *
  *    @param delay Whether or not to have time pass as if the player landed normally.
+ *    @param nosave Whether or not to avoid saving the game.
  */
-void takeoff( int delay )
+void takeoff( int delay, int nosave )
 {
    int h, stu;
    char *nt;
@@ -1505,6 +1508,7 @@ void takeoff( int delay )
 
    /* Clear queued takeoff. */
    land_takeoff = 0;
+   land_takeoff_nosave = 0;
 
    /* Refuel if needed. */
    land_refuel();
@@ -1544,7 +1548,7 @@ void takeoff( int delay )
    player.p->nav_hyperspace = h;
 
    /* Only save when the player shouldn't get stranded. */
-   if (land_canSave() && (save_all() < 0)) /* must be before cleaning up spob */
+   if (!nosave && land_canSave() && (save_all() < 0)) /* must be before cleaning up spob */
       dialogue_alert( _("Failed to save game! You should exit and check the log to see what happened and then file a bug report!") );
 
    /* time goes by, triggers hook before takeoff */

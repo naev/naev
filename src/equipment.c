@@ -2321,7 +2321,7 @@ static void equipment_sellShip( unsigned int wid, const char* str )
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "ship_sell", hparam );
    if (land_takeoff)
-      takeoff(1);
+      takeoff( 1, land_takeoff_nosave );
    free(name);
 }
 

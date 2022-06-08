@@ -421,7 +421,7 @@ static void shipyard_buy( unsigned int wid, const char* str )
    hparam[1].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "ship_buy", hparam );
    if (land_takeoff)
-      takeoff(1);
+      takeoff( 1, land_takeoff_nosave );
 }
 
 static int shipyard_canAcquire( const Ship *ship, const Spob *spob, credits_t price )

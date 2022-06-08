@@ -1533,7 +1533,7 @@ int player_land( int loud )
    int silent = 0; /* Whether to suppress the land ack noise. */
 
    if (landed) { /* player is already landed */
-      takeoff(1);
+      takeoff( 1, 0 );
       return PLAYER_LAND_DENIED;
    }
 
