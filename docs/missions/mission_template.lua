@@ -28,8 +28,8 @@
    above license header and the MISSION and DESCRIPTION fields below,
    adapted to your mission.
 
-   MISSION: <NAME GOES HERE>
-   DESCRIPTION: <DESCRIPTION GOES HERE>
+   MISSION: <NAME GOES HERE>
+   DESCRIPTION: <DESCRIPTION GOES HERE>
 
 --]]
 
