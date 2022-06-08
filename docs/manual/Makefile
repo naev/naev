@@ -1,6 +1,6 @@
 TEX := pdflatex -shell-escape
 
-.PHONY: all
+.PHONY: all naev_dev_manual.pdf
 
 all: naev_dev_manual.pdf
 
