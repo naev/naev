@@ -11,6 +11,28 @@
 \usepackage[a4paper,top=4.2cm,bottom=4.2cm,left=3.5cm,right=3.5cm]{geometry} % for setting page size and margins
 \usepackage{listings}
 
+\lstset{
+	defaultdialect=[5.1]Lua
+   autogobble,
+   columns=fullflexible,
+   showspaces=false,
+   showtabs=false,
+   breaklines=true,
+   showstringspaces=false,
+   breakatwhitespace=true,
+   escapeinside={(*@}{@*)},
+   commentstyle=\color{greencomments},
+   keywordstyle=\color{bluekeywords},
+   stringstyle=\color{redstrings},
+   numberstyle=\color{graynumbers},
+   basicstyle=\ttfamily\footnotesize,
+   frame=l,
+   framesep=12pt,
+   xleftmargin=12pt,
+   tabsize=4,
+   captionpos=b
+}
+
 \title{Naev Development Manual}
 \author{Naev DevTeam}
 \version{0.10.0-alpha.1}
