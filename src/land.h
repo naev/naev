@@ -43,8 +43,6 @@ enum {
  */
 extern int landed;
 extern Spob* land_spob;
-extern int land_takeoff;
-extern int land_takeoff_nosave;
 
 /* Tracking for which tabs have been generated. */
 #define land_tabGenerate(w)       (land_generated |= (1 << w)) /**< Mark tab generated. */
@@ -55,6 +53,7 @@ extern unsigned int land_generated;
  * Main interface.
  */
 void land_queueTakeoff (void);
+void land_needsTakeoff( int delay );
 int land_canSave (void);
 int land_doneLoading (void);
 void land( Spob* p, int load );

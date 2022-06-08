@@ -146,6 +146,12 @@ void land_queueTakeoff (void)
    land_takeoff_nosave = player_isFlag(PLAYER_NOSAVE);
 }
 
+void land_needsTakeoff( int delay )
+{
+   if (land_takeoff)
+      takeoff( delay, land_takeoff_nosave );
+}
+
 /* Maps are only offered if the spob provides fuel. */
 static int land_hasLocalMap (void)
 {
@@ -574,8 +580,7 @@ static void bar_approach( unsigned int wid, const char *str )
    mission_sysMark();
 
    /* Mission forced take off. */
-   if (land_takeoff)
-      takeoff( 0, land_takeoff_nosave );
+   land_needsTakeoff( 0 );
 }
 /**
  * @brief Loads the news.
@@ -1260,8 +1265,7 @@ void land( Spob* p, int load )
    hook_addFunc( land_gc, NULL, "safe" );
 
    /* Mission forced take off. */
-   if (land_takeoff)
-      takeoff( 0, land_takeoff_nosave );
+   land_needsTakeoff( 0 );
 }
 
 /**
@@ -1440,8 +1444,7 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab 
 
       visited(to_visit);
 
-      if (land_takeoff)
-         takeoff( 1, land_takeoff_nosave );
+      land_needsTakeoff( 1 );
    }
 }
 

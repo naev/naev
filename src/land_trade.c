@@ -365,8 +365,7 @@ void commodity_buy( unsigned int wid, const char *str )
    hparam[1].u.num   = q;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "comm_buy", hparam );
-   if (land_takeoff)
-      takeoff( 1, land_takeoff_nosave );
+   land_needsTakeoff( 1 );
 }
 
 /**
@@ -408,8 +407,7 @@ void commodity_sell( unsigned int wid, const char *str )
    hparam[1].u.num   = q;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "comm_sell", hparam );
-   if (land_takeoff)
-      takeoff( 1, land_takeoff_nosave );
+   land_needsTakeoff( 1 );
 }
 
 /**

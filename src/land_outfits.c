@@ -866,8 +866,7 @@ static void outfits_buy( unsigned int wid, const char *str )
    hparam[1].u.num   = q;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "outfit_buy", hparam );
-   if (land_takeoff)
-      takeoff( 1, land_takeoff_nosave );
+   land_needsTakeoff( 1 );
 
    /* Regenerate list. */
    outfits_regenList( wid, NULL );
@@ -947,8 +946,7 @@ static void outfits_sell( unsigned int wid, const char *str )
    hparam[1].u.num   = q;
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "outfit_sell", hparam );
-   if (land_takeoff)
-      takeoff( 1, land_takeoff_nosave );
+   land_needsTakeoff( 1 );
 
    /* Regenerate list. */
    outfits_regenList( wid, NULL );
