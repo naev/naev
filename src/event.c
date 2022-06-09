@@ -441,7 +441,7 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
       else if (xml_isNode(node,"notes"))
          continue;
 
-      DEBUG(_("Unknown node '%s' in event '%s'"), node->name, temp->name);
+      WARN(_("Unknown node '%s' in event '%s'"), node->name, temp->name);
    } while (xml_nextNode(node));
 
    /* Process. */
