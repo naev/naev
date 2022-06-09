@@ -418,9 +418,9 @@ static int hook_run( Hook *hook, const HookParam *param, int claims )
          break;
 
       case HOOK_TYPE_FUNC:
-         ret = hook->u.func.func( hook->u.func.data );
          if (hook->once)
             hook_rmRaw( hook );
+         ret = hook->u.func.func( hook->u.func.data );
          break;
 
       default:
