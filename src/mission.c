@@ -911,14 +911,8 @@ static int mission_location( const char *loc )
          return MIS_AVAIL_COMPUTER;
       else if (strcasecmp( loc, "Bar" ) == 0)
          return MIS_AVAIL_BAR;
-      else if (strcasecmp( loc, "Outfit" ) == 0)
-         return MIS_AVAIL_OUTFIT;
-      else if (strcasecmp( loc, "Shipyard" ) == 0)
-         return MIS_AVAIL_SHIPYARD;
       else if (strcasecmp( loc, "Land" ) == 0)
          return MIS_AVAIL_LAND;
-      else if (strcasecmp( loc, "Commodity" ) == 0)
-         return MIS_AVAIL_COMMODITY;
       else if (strcasecmp( loc, "Enter" ) == 0)
          return MIS_AVAIL_ENTER;
    }
