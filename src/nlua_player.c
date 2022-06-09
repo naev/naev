@@ -664,6 +664,7 @@ static int playerL_cinematics( lua_State *L )
       ovr_setOpen(0);
 
       /* Handle options. */
+      player_setFlag( PLAYER_CINEMATICS );
       if (!f_gui)
          player_setFlag( PLAYER_CINEMATICS_GUI );
       if (f_2x)
@@ -677,6 +678,7 @@ static int playerL_cinematics( lua_State *L )
       player_resetSpeed();
 
       /* Clean up flags. */
+      player_rmFlag( PLAYER_CINEMATICS );
       player_rmFlag( PLAYER_CINEMATICS_GUI );
       player_rmFlag( PLAYER_CINEMATICS_2X );
 
