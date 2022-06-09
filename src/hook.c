@@ -425,7 +425,7 @@ static int hook_run( Hook *hook, const HookParam *param, int claims )
 
       default:
          WARN(_("Invalid hook type '%d', deleting."), hook->type);
-         hook->delete = 1;
+         hook_rmRaw( hook );
          return -1;
    }
 
