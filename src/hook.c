@@ -418,8 +418,10 @@ static int hook_run( Hook *hook, const HookParam *param, int claims )
          break;
 
       case HOOK_TYPE_FUNC:
+         /* We have to remove the hook first, so it doesn't get run again.
+          * Note that the function will not do any checks nor has arguments, since it is C-side. */
          if (hook->once)
-            hook_rmRaw( hook );
+            hook->delete = 1;
          ret = hook->u.func.func( hook->u.func.data );
          break;
 
