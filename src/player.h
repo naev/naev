@@ -24,6 +24,7 @@ enum {
    PLAYER_CREATING,     /**< player is being created */
    PLAYER_AUTONAV,      /**< player has autonavigation on. */
    PLAYER_NOLAND,       /**< player is not allowed to land (cleared on enter). */
+   PLAYER_CINEMATICS,   /**< Cinematics mode is enabled. */
    PLAYER_CINEMATICS_GUI,/**< Disable rendering the GUI when in cinematics mode. */
    PLAYER_CINEMATICS_2X,/**< Disables usage of the 2x button when in cinematics mode. */
    PLAYER_HOOK_LAND,    /**< Hook hack to avoid running hooks in the middle of the pilot stack. */
