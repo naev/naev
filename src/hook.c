@@ -663,7 +663,7 @@ static void hooks_updateDateExecute( ntime_t change )
             continue;
 
          /* Decrement timer and check to see if should run. */
-         if (j==0)
+         if (j==1)
             h->acc += change;
          if (h->acc < h->res)
             continue;
@@ -673,7 +673,7 @@ static void hooks_updateDateExecute( ntime_t change )
          /* Date hooks are not deleted. */
 
          /* Time is modified at the end. */
-         if (j==1)
+         if (j==0)
             h->acc %= h->res; /* We'll skip all buggers. */
       }
    }
@@ -746,7 +746,7 @@ void hooks_update( double dt )
             continue;
 
          /* Decrement timer and check to see if should run. */
-         if (j==0)
+         if (j==1)
             h->ms -= dt;
          if (h->ms > 0.)
             continue;
