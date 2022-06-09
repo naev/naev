@@ -4,9 +4,7 @@
  <trigger>enter</trigger>
  <chance>3</chance>
  <cond>require("common.pirate").systemPresence() &gt; 0</cond>
- <flags>
-  <unique />
- </flags>
+ <unique />
  <notes>
   <tier>1</tier>
  </notes>

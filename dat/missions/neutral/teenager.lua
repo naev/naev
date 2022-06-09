@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The macho teenager">
- <flags>
-  <unique />
- </flags>
+ <unique />
  <avail>
   <priority>4</priority>
   <chance>5</chance>

@@ -5,9 +5,7 @@
   <chance>10</chance>
   <cond>false</cond>
   <!--<cond>player.misnDone("Dvaered Ballet") and not (player.misnDone("Dvaered Base") or player.misnActive("Dvaered Base") or player.misnDone("Dvaered Triathlon"))</cond>-->
-  <flags>
-   <unique />
-  </flags>
+  <unique />
   <notes>
    <done_misn name="Dvaered Ballet"/>
    <campaign>Frontier Invasion</campaign>

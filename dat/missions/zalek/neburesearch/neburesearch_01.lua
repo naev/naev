@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Advanced Nebula Research">
- <flags>
-  <unique />
- </flags>
+ <unique />
  <avail>
   <priority>4</priority>
   <done>Novice Nebula Research</done>

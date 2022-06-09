@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Joanne's Doubt">
-  <flags>
-   <unique />
-  </flags>
+  <unique />
   <avail>
    <priority>3</priority>
    <done>Harja's Vengeance</done>

@@ -3,8 +3,6 @@
 <event name="System Tour">
  <trigger>none</trigger>
  <chance>0</chance>
- <flags>
- </flags>
 </event>
 --]]
 --[[

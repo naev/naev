@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Hitman 2">
- <flags>
-  <unique />
- </flags>
+ <unique />
  <avail>
   <priority>2</priority>
   <chance>10</chance>

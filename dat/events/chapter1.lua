@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Chapter 1">
- <flags>
-  <unique />
- </flags>
+ <unique />
  <trigger>enter</trigger>
  <chance>100</chance>
  <chapter>0</chapter>

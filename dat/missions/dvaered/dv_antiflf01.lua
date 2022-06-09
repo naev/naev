@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Take the Dvaered crew home">
-  <flags>
-   <unique />
-  </flags>
+  <unique />
   <avail>
    <priority>2</priority>
    <chance>100</chance>

@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Destroy the FLF base!">
- <flags>
-  <unique />
- </flags>
+ <unique />
  <avail>
   <priority>2</priority>
   <chance>10</chance>

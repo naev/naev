@@ -2,9 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Finding Taiomi">
  <trigger>enter</trigger>
- <flags>
-  <unique />
- </flags>
+ <unique />
  <chance>100</chance>
  <cond>system.cur() == system.get("Bastion")</cond>
  <chapter>[^0]</chapter>

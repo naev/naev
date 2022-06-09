@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Last Detail">
- <flags>
-  <unique />
- </flags>
+ <unique />
  <avail>
   <priority>3</priority>
   <done>A Journey To Arandon</done>

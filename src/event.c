@@ -432,16 +432,8 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
       }
 
       /* Flags. */
-      else if (xml_isNode(node,"flags")) { /* set the various flags */
-         xmlNodePtr cur = node->children;
-         do {
-            xml_onlyNodes(cur);
-            if (xml_isNode(cur,"unique")) {
-               temp->flags |= EVENT_FLAG_UNIQUE;
-               continue;
-            }
-            WARN(_("Event '%s' has unknown flag node '%s'."), temp->name, cur->name);
-         } while (xml_nextNode(cur));
+      else if (xml_isNode(node,"unique")) { /* unique event. */
+         temp->flags |= EVENT_FLAG_UNIQUE;
          continue;
       }
 

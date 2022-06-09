@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dvaered Long Distance Recruitment">
- <flags>
-  <unique />
- </flags>
+ <unique />
  <avail>
   <priority>4</priority>
   <cond>faction.playerStanding("Empire") &gt;= 0</cond>

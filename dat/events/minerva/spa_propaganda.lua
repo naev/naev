@@ -3,9 +3,7 @@
 <event name="Spa Propaganda">
  <trigger>none</trigger>
  <chance>0</chance>
- <flags>
-  <unique />
- </flags>
+ <unique />
  <notes>
   <campaign>Minerva</campaign>
   <requires name="Spa Propaganda" />

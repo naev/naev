@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Runaway">
- <flags>
-   <unique />
- </flags>
+  <unique />
  <avail>
   <priority>4</priority>
   <chance>11</chance>

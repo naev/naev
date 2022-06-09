@@ -954,16 +954,8 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
       /* Only handle nodes. */
       xml_onlyNodes(node);
 
-      if (xml_isNode(node,"flags")) { /* set the various flags */
-         xmlNodePtr cur = node->children;
-         do {
-            xml_onlyNodes(cur);
-            if (xml_isNode(cur,"unique")) {
-               mis_setFlag(temp,MISSION_UNIQUE);
-               continue;
-            }
-            WARN(_("Mission '%s' has unknown flag node '%s'."), temp->name, cur->name);
-         } while (xml_nextNode(cur));
+      if (xml_isNode(node,"unique")) { /* Unique mission. */
+         mis_setFlag(temp,MISSION_UNIQUE);
          continue;
       }
       else if (xml_isNode(node,"avail")) { /* mission availability */

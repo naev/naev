@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
  <mission name="Dvaered Meeting">
-  <flags>
-   <unique />
-  </flags>
+  <unique />
   <avail>
    <priority>2</priority>
    <chance>25</chance>

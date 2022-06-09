@@ -4,9 +4,7 @@
   <trigger>enter</trigger>
   <chance>20</chance>
   <cond>var.peek("shipinfested") == true</cond>
-  <flags>
-   <unique />
-  </flags>
+  <unique />
   <notes>
    <done_misn name="Animal transport">The rodents sabotage your ship</done_misn>
   </notes>

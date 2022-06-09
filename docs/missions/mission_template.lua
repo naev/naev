@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Mission Template (mission name goes here)">
- <flags>
-  <unique />
- </flags>
+ <unique />
  <avail>
   <priority>4</priority>
   <chance>5</chance>

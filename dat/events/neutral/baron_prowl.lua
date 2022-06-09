@@ -4,8 +4,6 @@
   <trigger>enter</trigger>
   <chance>100</chance>
   <cond>player.misnActive("Baron") == false and player.misnActive("Prince") == false and system.cur() == system.get("Ingot")</cond>
-  <flags>
-  </flags>
   <notes>
    <campaign>Baron Sauterfeldt</campaign>
   </notes>

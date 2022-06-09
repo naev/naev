@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="A Shark Bites">
- <flags>
-  <unique />
- </flags>
+ <unique />
  <avail>
   <priority>3</priority>
   <cond>spob.cur() ~= spob.get("Ulios") and player.numOutfit("Mercenary License") &gt; 0</cond>

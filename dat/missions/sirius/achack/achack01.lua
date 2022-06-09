@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Sirian Bounty">
-  <flags>
-   <unique />
-  </flags>
+  <unique />
   <avail>
    <priority>3</priority>
    <spob>The Wringer</spob>

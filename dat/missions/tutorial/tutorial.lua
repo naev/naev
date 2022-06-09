@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Tutorial">
- <flags>
-  <unique />
- </flags>
+ <unique />
  <avail>
   <priority>1</priority>
   <location>None</location>

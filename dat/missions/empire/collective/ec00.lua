@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Collective Scouting">
- <flags>
-  <unique />
- </flags>
+ <unique />
  <avail>
   <priority>2</priority>
   <cond>var.peek("es_cargo") == true and faction.playerStanding("Empire") &gt; 5</cond>

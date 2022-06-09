@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Pirate Fake Transponder">
- <flags>
   <unique/>
- </flags>
  <trigger>land</trigger>
  <cond>require("common.pirate").factionIsPirate( spob.cur():faction() ) and faction.playerStanding("Pirate") &gt;= -20 and player.credits() &gt;= 500e3</cond>
  <chance>50</chance>

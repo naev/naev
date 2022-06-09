@@ -23,9 +23,7 @@ Let us start by writing a simple mission header. This will be enclosed by long L
 ```lua
 --[[
 <mission name="My First Mission">
- <flags>
-  <unique />
- </flags>
+ <unique />
  <avail>
   <chance>50</chance>
   <location>Bar</location>

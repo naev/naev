@@ -4,9 +4,7 @@
  <trigger>enter</trigger>
  <chance>10</chance>
  <cond>system.cur() == system.get("Tuoladis")</cond>
- <flags>
-  <unique />
- </flags>
+ <unique />
  <notes>
   <campaign>Join the FLF</campaign>
   <tier>1</tier>

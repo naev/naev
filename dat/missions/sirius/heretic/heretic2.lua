@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Patrol">
-  <flags>
-   <unique />
-  </flags>
+  <unique />
   <avail>
    <priority>3</priority>
    <done>The Return</done>

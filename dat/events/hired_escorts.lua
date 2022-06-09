@@ -3,9 +3,7 @@
 <event name="Hired Escort Handler">
  <trigger>load</trigger>
  <chance>100</chance>
- <flags>
-  <unique />
- </flags>
+ <unique />
 </event>
 --]]
 --[[

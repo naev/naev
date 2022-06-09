@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Gauntlet">
-  <flags>
-   <unique />
-  </flags>
+  <unique />
   <avail>
    <priority>3</priority>
    <cond>faction.playerStanding("Nasin") &gt;= 0</cond>

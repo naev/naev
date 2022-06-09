@@ -3,9 +3,7 @@
 <event name="Chicken Rendezvous">
  <trigger>none</trigger>
  <chance>0</chance>
- <flags>
-  <unique />
- </flags>
+ <unique />
  <notes>
   <campaign>Minerva</campaign>
   <done_evt name="Spa Propaganda" />

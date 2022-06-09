@@ -3,9 +3,7 @@
 <event name="Bioship Manager">
  <trigger>load</trigger>
  <chance>100</chance>
- <flags>
-  <unique />
- </flags>
+ <unique />
 </event>
 --]]
 local fmt = require "format"

@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Helping Nelly Out 3">
- <flags>
-  <unique />
- </flags>
+ <unique />
  <avail>
   <priority>1</priority>
   <chance>100</chance>

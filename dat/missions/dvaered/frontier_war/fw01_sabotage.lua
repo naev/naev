@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dvaered Sabotage">
- <flags>
-  <unique />
- </flags>
+ <unique />
  <avail>
   <priority>2</priority>
   <chance>20</chance>

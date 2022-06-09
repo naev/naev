@@ -3,9 +3,7 @@
 <event name="Minerva Station Altercation 2">
  <trigger>none</trigger>
  <chance>0</chance>
- <flags>
-  <unique />
- </flags>
+ <unique />
  <notes>
   <campaign>Minerva</campaign>
   <done_misn name="Maikki's Father 2">Random event</done_misn>

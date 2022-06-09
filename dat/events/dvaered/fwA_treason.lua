@@ -4,9 +4,7 @@
   <trigger>enter</trigger>
   <chance>10</chance>
   <cond>system.cur():faction() == faction.get("Dvaered") and player.misnDone("Dvaered Sabotage") == true</cond>
-  <flags>
-   <unique />
-  </flags>
+  <unique />
   <notes>
    <campaign>Frontier Invasion</campaign>
    <done_misn name="Dvaered Sabotage"/>

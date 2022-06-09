@@ -1,9 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Kex's Freedom 4">
- <flags>
-  <unique />
- </flags>
+ <unique />
  <avail>
   <location>Bar</location>
   <chance>100</chance>

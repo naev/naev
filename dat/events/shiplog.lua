@@ -3,9 +3,7 @@
 <event name="Travel Log">
   <trigger>enter</trigger>
   <chance>100</chance>
-  <flags>
-   <unique />
-  </flags>
+  <unique />
  </event>
  --]]
 --[[
