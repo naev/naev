@@ -49,6 +49,8 @@ We can see the changes are minimal. We no longer declare the `dest` variable, an
 
 It is important to note that almost everything can be stored in the `mem` table, and this includes other tables. However, make sure to not create loops or it will hang the saving of the games.
 
+The most common use of the persistent memory table `mem` is variables that keep track of the mission progress, such as if the player has delivered cargo or has talked to a certain NPC.
+
 ### Hooks
 \label{sec:misn-basic-hooks}
 
@@ -90,16 +92,57 @@ end
 
 The above example is setting up a `land` hook when the player lands, and an `enter` hook, which activates whenever the player enters a system by either taking off or jumping. Both hooks are stored in persistent memory, and are removed when the `enter` function is run when the player enters a system.
 
-Each mission or event can have an infinite number of hooks enabled. Except for timer hooks, hooks do not get removed when run.
+Each mission or event can have an infinite number of hooks enabled. Except for `timer` and `safe` hooks, hooks do not get removed when run.
 
 #### Timer Hooks
 
-TODO
+Timer hooks are hooks that get run once when a certain amount of real in-game time has passed. Once the hook is triggered, it gets removed automatically. If you wish to repeat a function periodically, you have to create a new timer hook. A comomnly used example is shown below.
+
+```
+function create ()
+   -- ...
+
+   hook.enter( "enter" )
+end
+
+function enter ()
+   -- ...
+
+   hook.timer( 5, "dostuff" )
+end
+
+function dostuff ()
+   if condition then
+      -- ...
+      return
+   end
+   -- ...
+   hook.timer( 5, "dostuff" )
+end
+```
+
+In this example, an `enter` hook is created and triggered when the player enters a system by taking off or jumping. Then, in the `enter` function, a 5 second timer hook is started that runs the `dostuff` function when the time is up. The `dostuff` function then checks a condition to do something and end, otherwise it repeats the 5 second hook. This system can be used to, for example, detect when the player is near a pilot or position, or display periodic messages.
 
 #### Pilot Hooks
 
-TODO
+When it comes to pilots, hooks can also be used. However, given that pilots are not saved, the hooks are not saved either. The hooks can be made to be specific to a particular pilot, or apply to any pilot. In either case, the pilot triggering the hook is passed as a parameter. An illustrative example is shown below:
 
+```lua
+function enter ()
+   -- ...
+
+   local p = pilot.add( "Llama", "Independent" )
+   hook.pilot( p, "death", "pilot_died" )
+end
+
+function pilot_died( p )
+   -- ...
+end
+```
+
+In the above example, when the player enters a system with the `enter` function, a new pilot `p` is created, and a `"death"` hook is set on that pilot. Thus, when the pilot `p` dies, the `pilot_dead` function will get called. Furthermore, the `pilot_died` function takes the pilot that died as a parameter.
+
+There are other hooks for a diversity of pilot actions that are documented in [the official API documentation](https://naev.org/api/modules/hook.html#pilot), allowing for full control of pilot actions.
 
 ### Translating
 \label{sec:misn-basic-translation}
@@ -108,6 +151,11 @@ TODO
 
 ### Formatting Text
 \label{sec:misn-basic-fmt}
+
+TODO
+
+### System Claiming
+\label{sec:misn-basic-claims}
 
 TODO
 
