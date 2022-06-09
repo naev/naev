@@ -8,8 +8,8 @@
 \linespread{1.1}
 
 % use Roboto as the main font
-\RequirePackage[utf8]{inputenc}
-\RequirePackage[T1]{fontenc}
+%\RequirePackage[utf8]{inputenc}
+%\RequirePackage[T1]{fontenc}
 %\RequirePackage[sfdefault]{roboto}
 %\RequirePackage[scaled=0.95]{roboto-mono}
 \RequirePackage{sfmath}

@@ -1,10 +1,12 @@
 \documentclass{naev}
-\usepackage[hybrid,smartEllipses,fencedCode,footnotes,relativeReferences]{markdown}
+\usepackage[hybrid,pipeTables,tableCaptions,smartEllipses,fencedCode,footnotes,relativeReferences]{markdown}
 
 \usepackage{graphicx}  % for including images
 \usepackage{microtype} % for typographical enhancements
 \usepackage{minted}    % for code listings
 \usepackage{amsmath}   % for equations and mathematics
+\usepackage{polyglossia}
+\usepackage{newunicodechar}
 \setminted{style=friendly,fontsize=\small}
 \renewcommand{\listoflistingscaption}{List of Code Listings}
 \usepackage{hyperref}  % for hyperlinks
@@ -12,12 +14,25 @@
 \usepackage{listings}
 \usepackage{xcolor}
 
+\markdownSetup{
+   renderers = {
+      inputVerbatim = {
+         \lstinputlisting[style=lua]{#1}%
+      },
+      inputFencedCode = {
+         \markdownRendererInputVerbatim{#1}%
+      },
+   },
+}
+
 \usepackage{fontspec}
 \setmainfont{Roboto}
 
 \lstdefinestyle{lua}{
    language=[5.1]Lua,
 }
+
+\newunicodechar{✔}{{\checkmark}}
 
 \definecolor{bluekeywords}{rgb}{0.13, 0.13, 1}
 \definecolor{greencomments}{rgb}{0, 0.5, 0}
