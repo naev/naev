@@ -15,11 +15,11 @@
 \usepackage{xcolor}
 
 \markdownSetup{
-   renderers = {
-      inputVerbatim = {
+   renderers = {%
+      inputVerbatim = {%
          \lstinputlisting[style=lua]{#1}%
       },
-      inputFencedCode = {
+      inputFencedCode = {%
          \markdownRendererInputVerbatim{#1}%
       },
    },
