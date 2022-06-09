@@ -309,7 +309,7 @@ static int hook_runMisn( Hook *hook, const HookParam *param, int claims )
    misn = hook_getMission( hook );
    if (misn == NULL) {
       WARN(_("Trying to run hook with parent not in player mission stack: deleting"));
-      hook->delete = 1; /* so we delete it */
+      hook_rmRaw( hook ); /* so we delete it. */
       return -1;
    }
 
@@ -364,7 +364,7 @@ static int hook_runEvent( Hook *hook, const HookParam *param, int claims )
    if (event_get(hook->u.event.parent) == NULL) {
       WARN(_("Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting hook."), hook->stack,
             hook->id, hook->u.event.func);
-      hook->delete = 1; /* Set for deletion. */
+      hook_rmRaw( hook ); /* Set for deletion. */
       return -1;
    }
 
