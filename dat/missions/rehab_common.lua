@@ -68,7 +68,7 @@ function setFine(standing)
 end
 
 -- Standing hook. Manages faction reputation, keeping it at 0 until it goes positive.
-function standing(hookfac, delta)
+function standing( hookfac, delta )
     if hookfac == mem.fac then
         if delta >= 0 then
             mem.rep = mem.rep + delta

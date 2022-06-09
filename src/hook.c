@@ -418,9 +418,9 @@ static int hook_run( Hook *hook, const HookParam *param, int claims )
          break;
 
       case HOOK_TYPE_FUNC:
+         ret = hook->u.func.func( hook->u.func.data );
          if (hook->once)
             hook_rmRaw( hook );
-         ret = hook->u.func.func( hook->u.func.data );
          break;
 
       default:
@@ -722,7 +722,6 @@ unsigned int hook_addDateEvt( unsigned int parent, const char *func, ntime_t res
  */
 void hooks_update( double dt )
 {
-   int j;
    Hook *h;
 
    /* Don't update without player. */
@@ -734,7 +733,7 @@ void hooks_update( double dt )
       h->created = 0;
 
    hook_runningstack++; /* running hooks */
-   for (j=1; j>=0; j--) {
+   for (int j=1; j>=0; j--) {
       for (h=hook_list; h!=NULL; h=h->next) {
          /* Not be deleting. */
          if (h->delete)
