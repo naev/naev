@@ -147,7 +147,27 @@ There are other hooks for a diversity of pilot actions that are documented in [t
 ### Translating
 \label{sec:misn-basic-translation}
 
-TODO
+Naev supports translation through [Weblate](https://hosted.weblate.org/projects/naev/naev/). However, in order for translations to be used you have to mark strings as translatable. This is done with a [gettext](https://www.gnu.org/software/gettext/) compatible interface. In particular, the following functions are provided:
+
+* `_()`: This function takes a string, marks it as translatable, and returns the translated version.
+* `N_()`: This function takes a string, marks it as translatable, however, it returns the *untranslated* version of the string.
+* `n_()`: Takes two strings related to a number quantity and return the translated version that matches the number quantity. This is because some languages translate number quantities differently. For example "1 apple", but "2 apple**s**".
+
+In general, you want to use `_()` and `n_()` to envelope all strings that are being shown to the player, which will allow for translations to work without extra effort. For example, when defining a new mission you want to translate all the strings as shown below:
+
+```lua
+misn.setTitle( _("My Mission") )
+misn.setDesc( _("You have been asked to do lots of fancy stuff for a very fancy individual. How fancy!") )
+misn.setReward( _("Lots of good stuff!") )
+```
+
+Note that `_()` and friends all assume that you are inputting strings in English.
+
+It is important to note that strings not shown to the player, e.g., strings representing faction names or ship names, do not need to be translated! So when adding a pilot you can just use directly the correct strings:
+
+```lua
+pilot.add( "Hyena", "Mercenary" )
+```
 
 ### Formatting Text
 \label{sec:misn-basic-fmt}
