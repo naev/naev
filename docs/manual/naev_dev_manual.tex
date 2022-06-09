@@ -14,6 +14,7 @@
 \usepackage{listings}
 \usepackage{xcolor}
 
+\makeatletter
 \markdownSetup{
    renderers = {%
       inputVerbatim = {%
@@ -22,8 +23,32 @@
       inputFencedCode = {%
          \markdownRendererInputVerbatim{#1}%
       },
+      table = {%
+    \markdownLaTeXTable={}%
+    \markdownLaTeXTableAlignment={}%
+    \markdownLaTeXTableEnd={%
+      \markdownLaTeXBottomRule
+      \end{tabular}%
+      \vspace{3mm}}%
+    \ifx\empty#1\empty\else
+      \addto@hook\markdownLaTeXTable{%
+        \begin{table}[htbp]
+        \centering}%
+      \addto@hook\markdownLaTeXTableEnd{%
+        \caption{#1}
+        \end{table}}%
+    \fi
+    \addto@hook\markdownLaTeXTable{%
+      \vspace{3mm}%
+      \begin{tabular}}%
+    \markdownLaTeXRowCounter=0%
+    \markdownLaTeXRowTotal=#2%
+    \markdownLaTeXColumnTotal=#3%
+    \markdownLaTeXRenderTableRow
+  }
    },
 }
+\makeatother
 
 \usepackage{fontspec}
 \setmainfont{Roboto}
