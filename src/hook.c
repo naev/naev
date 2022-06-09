@@ -301,7 +301,7 @@ static int hook_runMisn( Hook *hook, const HookParam *param, int claims )
    /* Make sure it's valid. */
    if (hook->u.misn.parent == 0) {
       WARN(_("Trying to run hook with nonexistent parent: deleting"));
-      hook->delete = 1; /* so we delete it */
+      hook_rmRaw( hook ); /* so we delete it */
       return -1;
    }
 
@@ -806,7 +806,7 @@ void hook_rmMisnParent( unsigned int parent )
 {
    for (Hook *h=hook_list; h!=NULL; h=h->next)
       if ((h->type==HOOK_TYPE_MISN) && (parent == h->u.misn.parent))
-         h->delete = 1;
+         hook_rmRaw( h );
 }
 
 /**
@@ -818,7 +818,7 @@ void hook_rmEventParent( unsigned int parent )
 {
    for (Hook *h=hook_list; h!=NULL; h=h->next)
       if ((h->type==HOOK_TYPE_EVENT) && (parent == h->u.event.parent))
-         h->delete = 1;
+         hook_rmRaw( h );
 }
 
 /**
