@@ -291,8 +291,11 @@ function hypergate_window ()
       local d = destinations[ idx ]
       local s = d:system()
       local extramsg = ""
-      if s:faction():areEnemies(ppf) then
+      if d:known() and s:faction():areEnemies(ppf) then
          extramsg = "#r"..fmt.f(_("\nYou are enemies with the {fctname}!"),{fctname=s:faction()}).."#0"
+      end
+      if not d:known() then
+         extramsg = "#r".._("\nThe destination is unknown!").."#0"
       end
       luatk.yesno( fmt.f(_("Jump to {sysname}?"),{sysname=s}),
          fmt.f(_("Are you sure you want to jump to {sysname} for {credits}?{extramsg}"),{sysname=s,credits=fmt.credits(totalcost),extramsg=extramsg}), function ()
