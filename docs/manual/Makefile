@@ -1,4 +1,4 @@
-TEX := pdflatex -shell-escape
+TEX := lualatex -shell-escape
 
 .PHONY: all naev_dev_manual.pdf
 
