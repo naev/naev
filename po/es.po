@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-03 22:07-0400\n"
-"PO-Revision-Date: 2022-06-08 22:19+0000\n"
+"PO-Revision-Date: 2022-06-09 22:19+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -42294,15 +42294,16 @@ msgstr "No necesitamos tus créditos."
 #. luacheck: globals pir_clanworld (Pirate clanworld.)
 #: dat/landing.lua:180
 msgid "Permission to land granted. Welcome, mate."
-msgstr ""
+msgstr "Permiso de aterrizaje concedido. Bienvenido, amigo."
 
 #: dat/landing.lua:182
 msgid "Small time pirates have no business on our clanworld!"
 msgstr ""
+"¡Los piratas de poca monta no tienen nada que hacer en nuestro mundo clan!"
 
 #: dat/landing.lua:184
 msgid "Get out of here!"
-msgstr ""
+msgstr "¡Sal de aquí!"
 
 #. Calculate bribe price. Custom for pirates.
 #. 36K max, at -50 rep. Pirates are supposed to be cheaper than regular factions.
@@ -42311,10 +42312,12 @@ msgid ""
 "\"Well, I think you're scum, but I'm willing to look the other way for "
 "{credits}. Deal?\""
 msgstr ""
+"\"Bueno, creo que eres una escoria, pero estoy dispuesto a mirar hacia otro "
+"lado por {credits}. ¿Trato?\""
 
 #: dat/landing.lua:195
 msgid "Heh heh, thanks. Now get off the comm, I'm busy!"
-msgstr ""
+msgstr "Gracias. Ahora sal del comunicador, ¡estoy ocupado!"
 
 #. Helper function for determining the bribe cost multiplier for the player's current ship.
 #. Returns the factor the bribe cost is multiplied by when the player tries to bribe.
@@ -42324,7 +42327,7 @@ msgstr ""
 #. Returns whether the planet can be bribed, and the cost for doing so.
 #: dat/landing.lua:213
 msgid "\"I'm not dealing with dangerous criminals like you!\""
-msgstr ""
+msgstr "\"¡No voy a lidiar con criminales peligrosos como tú!\""
 
 #. Calculate bribe price. Note: Assumes bribe floor < land_floor.
 #. TODO: different rates for different factions.
@@ -42334,10 +42337,13 @@ msgid ""
 "\n"
 "Pay {credits}?"
 msgstr ""
+"\"Te dejaré aterrizar por el módico precio de {credits}.\"\n"
+"\n"
+"¿Pagar {credits}?"
 
 #: dat/landing.lua:242
 msgid "Make it quick."
-msgstr ""
+msgstr "Hazlo rápido."
 
 #. Military planet landing logic.
 #. Expects the planet, the lowest standing at which landing is allowed, and four strings:
@@ -42368,13 +42374,15 @@ msgstr ""
 #: dat/missions/baron/baron_baron.lua:43 dat/missions/baron/baron_baron.lua:44
 #: dat/missions/baron/baron_baron.lua:45 dat/missions/baron/baron_baron.lua:46
 msgid "You've been scouted!"
-msgstr ""
+msgstr "¡Has sido visto!"
 
 #: dat/missions/baron/baron_baron.lua:43
 msgid ""
 "Your viewscreen flashes to life. You're greeted by a nondescript pilot who "
 "doesn't seem to be affiliated with anyone you know."
 msgstr ""
+"La pantalla se enciende. Te recibe un piloto anodino que no parece estar "
+"relacionado con nadie que conozcas."
 
 #: dat/missions/baron/baron_baron.lua:44
 msgid ""
@@ -42385,6 +42393,11 @@ msgid ""
 "looking for hired help, and you seem like the sort he needs, judging by your "
 "ship.\""
 msgstr ""
+"\"¡Hola! Represento a un hombre llamado Barón Sauterfeldt. ¿Habrás oído "
+"hablar de él en tus viajes? ¿No? Bueno, supongo que no se puede tener todo. "
+"Mi empleador es un hombre medianamente influyente, y... No, no te aburriré "
+"con los detalles. La conclusión es que el Señor Sauterfeldt busca ayuda "
+"contratada, y tú pareces ser eltipo que necesita, a juzgar por tu nave.\""
 
 #: dat/missions/baron/baron_baron.lua:45
 msgid ""
@@ -42394,6 +42407,12 @@ msgid ""
 "if you understand what I mean. So what do you think? Sound like a suitable "
 "job for you? The pay is good, I can assure you that!\""
 msgstr ""
+"Preguntas qué es exactamente lo que el Sr. Sauterfeldt necesita de tí. \"Oh, "
+"nada terriblemente invasivo, se lo aseguro. Su señoría necesita actualmente "
+"un mensajero, nada más. Eh, bueno, un mensajero que no pueda ser rastreado "
+"hasta él, si entiende lo que quiero decir. Entonces, ¿qué te parece? ¿Te "
+"parece un trabajo conveniente para ti? La paga es buena, ¡te lo puedo "
+"asegurar!\""
 
 #: dat/missions/baron/baron_baron.lua:46
 msgid ""
@@ -42402,6 +42421,10 @@ msgid ""
 "but then again this job sounds like it could get you in trouble with the "
 "authorities. What will you do?"
 msgstr ""
+"Te detienes un momento antes de responder a esta repentina oferta. No todos "
+"los días la gente viene a ti con trabajo en lugar de que tú lo busques, "
+"pero, por otra parte, este trabajo parece que podría meterte en problemas "
+"con las autoridades. ¿Qué vas a hacer?"
 
 #. skip back to message if already accepted job
 #: dat/missions/baron/baron_baron.lua:46 dat/missions/minerva/maikki2.lua:793
@@ -42409,29 +42432,31 @@ msgstr ""
 #: dat/missions/minerva/pirate3.lua:124 dat/missions/minerva/pirate4.lua:104
 #: dat/missions/minerva/pirate5.lua:122
 msgid "Accept the job"
-msgstr ""
+msgstr "Aceptar el trabajo"
 
 #: dat/missions/baron/baron_baron.lua:46
 msgid "Politely decline"
-msgstr ""
+msgstr "Declinar educadamente"
 
 #: dat/missions/baron/baron_baron.lua:46
 msgid "Angrily refuse"
-msgstr ""
+msgstr "Rechazar airadamente"
 
 #: dat/missions/baron/baron_baron.lua:50
 msgid "Never the wiser"
-msgstr ""
+msgstr "No el más sabio"
 
 #: dat/missions/baron/baron_baron.lua:50
 msgid ""
 "\"Oh. Oh well, too bad. I'll just try to find someone who will take the job, "
 "then. Sorry for taking up your time. See you around!\""
 msgstr ""
+"\"Oh, bueno, qué pena. Intentaré encontrar a alguien que acepte el trabajo, "
+"entonces. Siento haberte molestado. ¡Nos vemos!\""
 
 #: dat/missions/baron/baron_baron.lua:53
 msgid "Well, then..."
-msgstr ""
+msgstr "Bien, entonces..."
 
 #: dat/missions/baron/baron_baron.lua:53
 msgid ""
@@ -42439,6 +42464,9 @@ msgid ""
 "more open-minded. Get out of my sight and never show your face to me again! "
 "You are clearly useless to my employer.\""
 msgstr ""
+"El piloto frunce el ceño. \"Veo que te juzgué mal. Estaba seguro de que "
+"serías más abierto de mente. Sal de mi vista y no vuelvas a mostrar tu cara "
+"ante mí. Está claro que eres inútil para mi jefe.\""
 
 #: dat/missions/baron/baron_baron.lua:55
 msgid ""
@@ -42446,11 +42474,14 @@ msgid ""
 "angrily refused to accept the job. It seems whoever the pilot worked for "
 "won't be contacting you again."
 msgstr ""
+"Un piloto anodino te ha ofrecido un trabajo de poca monta, pero te has "
+"negado airadamente a aceptarlo. Parece que la persona para la que trabajaba "
+"el piloto no volverá a ponerse en contacto contigo."
 
 #: dat/missions/baron/baron_baron.lua:61 dat/missions/baron/baron_baron.lua:62
 #: dat/missions/baron/baron_baron.lua:63 dat/missions/baron/baron_baron.lua:64
 msgid "A risky retrieval"
-msgstr ""
+msgstr "Una recuperación arriesgada"
 
 #: dat/missions/baron/baron_baron.lua:61
 msgid ""
@@ -42462,6 +42493,14 @@ msgid ""
 "of art, but the museum has refused to sell it to him. So, we've sent agents "
 "to... appropriate... the holopainting.\""
 msgstr ""
+"\"¡Oh, eso es genial! Bien, esto es lo que el Barón Sauterfeldt necesita que "
+"hagas. Debes volar al mundo Dvaered {pnt}. Hay un museo de arte dedicado a "
+"uno de los más grandes Señores de la Guerra en la historia reciente Dvaered. "
+"He olvidado su nombre. ¿Drovan o algo así? ¿Durvan? Uh, como sea. Este museo "
+"tiene una holopintura del Señor de la Guerra y su séquito militar. Su "
+"señoría realmente quiere esta pieza de arte, pero el museo se ha negado a "
+"vendérsela. Así que hemos enviado agentes para... apropiarse... de la "
+"holopintura.\""
 
 #: dat/missions/baron/baron_baron.lua:62
 msgid ""
@@ -42472,6 +42511,13 @@ msgid ""
 "course. No need for the authorities to know until you're long gone. Don't "
 "worry, our people are pros. It'll go off without a hitch, trust me.\""
 msgstr ""
+"Levanta una ceja, pero el piloto al otro lado parece ignorar el gesto. \"Así "
+"que, bien, vas a ir a {pnt} para reunirte con nuestros agentes. Deberías "
+"encontrarlos en el bar del puerto espacial. Ellos llevarán el objeto a tu "
+"nave y tú lo transportarás fuera del espacio Dvaered. Todo en silencio, por "
+"supuesto. No es necesario que las autoridades lo sepan hasta que te hayas "
+"ido. No te preocupes, nuestra gente es profesional. Saldrás sin problemas, "
+"confía en mí.\""
 
 #: dat/missions/baron/baron_baron.lua:63
 msgid ""
@@ -42482,6 +42528,12 @@ msgid ""
 "And even if the authorities somehow get on your case, you'll only have to "
 "deal with the planetary police, not the entirety of House Dvaered."
 msgstr ""
+"Sonríes ante eso. Sabes por experiencia que las cosas rara vez \"salen bien\""
+", y este plan en particular no parece estar muy bien pensado. Sin embargo, "
+"no parece que vayas a correr mucho peligro. Si las cosas se van al garete, "
+"se irán al garete mucho antes de que tú aparezcas en escena. E incluso si "
+"las autoridades se ocupan de tu caso, sólo tendrás que lidiar con la policía "
+"planetaria, no con toda la Casa Dvaered."
 
 #: dat/missions/baron/baron_baron.lua:64
 msgid ""
@@ -42493,6 +42545,13 @@ msgid ""
 "delivery. Any questions?\" You indicate that you know what to do, then cut "
 "the connection. Next stop: planet {pnt}."
 msgstr ""
+"Le preguntas al mensajero del Barón dónde hay que entregar esta holopintura. "
+"\"Su señoría recibirá su entrega en el sistema {sys}, a bordo de su nave, la "
+"Pináculo\", responde. \"Una vez que llegue con la holopintura a bordo de su "
+"nave, llame a la Pináculo y pida permiso para atracar. Sabrán quién eres, "
+"así que te permitirán atracar. Te pagarán la entrega. ¿Alguna pregunta?\" "
+"Indicas que sabe lo que tiene que hacer y cortas la conexión. Próxima parada:"
+" planeta {pnt}."
 
 #.
 #.
@@ -42503,47 +42562,53 @@ msgstr ""
 #: dat/missions/baron/baron_baron.lua:68 dat/missions/baron/baron_baron.lua:72
 #: dat/scripts/common/baron.lua:10
 msgid "Baron"
-msgstr ""
+msgstr "Barón"
 
 #: dat/missions/baron/baron_baron.lua:69
 msgid "A tidy sum of money"
-msgstr ""
+msgstr "Una buena suma de dinero"
 
 #: dat/missions/baron/baron_baron.lua:70
 msgid ""
 "You've been hired as a courier for one Baron Sauterfeldt. Your job is to "
 "transport a holopainting from a Dvaered world to the Baron's ship."
 msgstr ""
+"Has sido contratado como mensajero de un tal Barón Sauterfeldt. Tu trabajo "
+"consiste en transportar una holopintura desde un mundo Dvaered hasta la nave "
+"del Barón."
 
 #: dat/missions/baron/baron_baron.lua:73
 #: dat/missions/neutral/animaltransport.lua:66
 #: dat/missions/neutral/kidnapped/traffic_00.lua:72
 #: dat/missions/neutral/kidnapped/traffic_00.lua:110
 msgid "Fly to the {sys} system and land on planet {pnt}"
-msgstr ""
+msgstr "Vuela al sistema {sys} y aterriza en el planeta {pnt}"
 
 #: dat/missions/baron/baron_baron.lua:74 dat/missions/baron/baron_prince.lua:66
 #: dat/missions/baron/baron_prince.lua:86
 #: dat/missions/baron/baron_prince.lua:194
 msgid "Fly to the {sys} system and dock with (board) Kahan Pinnacle"
-msgstr ""
+msgstr "Vuela al sistema {sys} y atraca con (aborda) Pináculo Kahan"
 
 #: dat/missions/baron/baron_baron.lua:89
 msgid ""
 "These must be the 'agents' hired by this Baron Sauterfeldt. They look "
 "shifty. Why must people involved in underhanded business always look shifty?"
 msgstr ""
+"Estos deben ser los \"agentes\" contratados por este Barón Sauterfeldt. "
+"Parecen sospechosos. ¿Por qué la gente involucrada en negocios turbios "
+"siempre parece sospechosa?"
 
 #: dat/missions/baron/baron_baron.lua:90 dat/missions/baron/baron_baron.lua:91
 #: dat/missions/baron/baron_baron.lua:92
 msgid "Sauterfeldt's agents"
-msgstr ""
+msgstr "Agentes de Sauterfeldt"
 
 #. Just go towards the player position and attack if they are around
 #: dat/missions/baron/baron_baron.lua:120
 #: dat/missions/baron/baron_prince.lua:295
 msgid "Green light for docking"
-msgstr ""
+msgstr "Luz verde para el atraque"
 
 #: dat/missions/baron/baron_baron.lua:120
 #: dat/missions/baron/baron_prince.lua:295
@@ -42553,12 +42618,16 @@ msgid ""
 "checks on a console off the screen, then tells you you've been cleared for "
 "docking and that the Pinnacle will be brought to a halt."
 msgstr ""
+"Una oficial de comunicaciones en el puente del Pináculo responde a tu "
+"llamada. Le dices que tienes una entrega para el barón. Ella realiza algunas "
+"comprobaciones en una consola fuera de la pantalla, y luego te dice que te "
+"han autorizado a atracar y que el Pináculo se detendrá."
 
 #: dat/missions/baron/baron_baron.lua:131
 #: dat/missions/baron/baron_baron.lua:132
 #: dat/missions/baron/baron_baron.lua:133
 msgid "No bad deed goes unrewarded"
-msgstr ""
+msgstr "Ninguna mala acción queda sin recompensa"
 
 #: dat/missions/baron/baron_baron.lua:131
 msgid ""
@@ -42567,6 +42636,10 @@ msgid ""
 "\"You'll be wanting your reward, eh? Come along\", one of them yells at you. "
 "They both chuckle and head off down the corridor."
 msgstr ""
+"Cuando llegas a la esclusa de tu nave, el cofre que contiene la holopintura "
+"de Dvaered ya está siendo cargado en el Pináculo por un par de tripulantes. "
+"\"Querrás tu recompensa, ¿eh? Vamos\", te grita uno de ellos. Ambos se ríen "
+"y se alejan por el corredor."
 
 #: dat/missions/baron/baron_baron.lua:132
 msgid ""
@@ -42578,6 +42651,13 @@ msgid ""
 "monocle, and several rings on each finger. In a word, the Baron has a taste "
 "for the extravagant."
 msgstr ""
+"Sigues a los tripulantes mientras empujan el carro por el pasillo principal "
+"de la nave. Pronto llegas a una puerta que conduce a un gran y lujoso "
+"compartimento. A simple vista, puedes ver que se trata de los aposentos "
+"personales del barón Sauterfeldt. El barón en persona está presente. Es un "
+"hombre corpulento, que lleva un traje a medida que le hace parecer "
+"majestuoso más que pomposo, un monóculo y varios anillos en cada dedo. En "
+"una palabra, el Barón tiene un gusto por lo extravagante."
 
 #: dat/missions/baron/baron_baron.lua:133
 msgid ""
@@ -42586,12 +42666,16 @@ msgid ""
 "be aware of your presence at all. He continues to fuss over the holopainting "
 "even as his crewman strip away the chest and lift the frame up to the wall."
 msgstr ""
+"\"Ah, mi holopintura\", murmura mientras llevan el cofre a sus aposentos. "
+"\"Por fin, he estado esperando una eternidad\". El Barón no parece darse "
+"cuenta de tu presencia. Continúa preocupándose por la holopintura mientras "
+"su tripulación retira el cofre y levanta el marco hasta la pared."
 
 #: dat/missions/baron/baron_baron.lua:134
 #: dat/missions/baron/baron_baron.lua:135
 #: dat/missions/baron/baron_baron.lua:136
 msgid "The Baron's Quarters"
-msgstr ""
+msgstr "Los Alojamientos del Barón"
 
 #: dat/missions/baron/baron_baron.lua:134
 msgid ""
@@ -42600,6 +42684,11 @@ msgid ""
 "You notice a bowl atop a velvet rug with \"Fluffles\" on it. Hanging above "
 "it seems to be a precariously balanced ancient blade."
 msgstr ""
+"Miras alrededor de sus aposentos. Todo tipo de cuchillas exóticas y otras "
+"obras de \"arte\" adornan su habitación, junto con tapices y otras "
+"holopinturas. Te fijas en un cuenco sobre una alfombra de terciopelo con la "
+"inscripción \"Fluffles\". Sobre él parece colgar una antigua espada en "
+"precario equilibrio."
 
 #: dat/missions/baron/baron_baron.lua:135
 msgid ""
@@ -42608,6 +42697,11 @@ msgid ""
 "strategy with his staff. Unfortunately you don't seem to be able to "
 "appreciate Dvaered art, and you lose interest almost right away."
 msgstr ""
+"Los tripulantes finalmente desembalan la holopintura. Miras la "
+"representación tridimensional de un señor de la guerra Dvaered, que parece "
+"estar discutiendo la estrategia con su personal. Desgraciadamente, no "
+"pareces capaz de apreciar el arte dvaered, y pierdes el interés casi de "
+"inmediato."
 
 #: dat/missions/baron/baron_baron.lua:136
 msgid ""
@@ -42618,19 +42712,28 @@ msgid ""
 "couple of credit chips, and then you are once again air to him. You are left "
 "with little choice but to return to your ship, undock, and be on your way."
 msgstr ""
+"Toses para llamar la atención del Barón. Él levanta la vista, claramente "
+"disgustado por la perturbación, y luego se fija en ti por primera vez. \"Ah, "
+"por supuesto\", gruñe. \"Supongo que hay que pagarte por tu servicio. Toma, "
+"ten unos créditos. Ahora déjame en paz. Tengo arte que admirar\". El Barón "
+"te lanza un par de fichas de crédito, y entonces vuelves a estar "
+"desaparecido para él. No te queda más remedio que volver a tu nave, "
+"desatracar y seguir tu camino."
 
 #: dat/missions/baron/baron_baron.lua:144
 msgid ""
 "You helped some selfish baron steal a Dvaered holopainting and were paid a "
 "measly sum of credits."
 msgstr ""
+"Ayudaste a un barón egoísta a robar una holopintura Dvaered y te pagaron una "
+"miserable suma de créditos."
 
 #: dat/missions/baron/baron_baron.lua:149
 #: dat/missions/baron/baron_baron.lua:150
 #: dat/missions/baron/baron_baron.lua:151
 #: dat/missions/baron/baron_baron.lua:152
 msgid "Cloak and dagger"
-msgstr ""
+msgstr "Capa y daga"
 
 #: dat/missions/baron/baron_baron.lua:149
 msgid ""
@@ -42643,6 +42746,14 @@ msgid ""
 "several hectoseconds later you are back at your ship, preparing it for "
 "takeoff while you wait for the agents to bring you your cargo."
 msgstr ""
+"Los tres clientes de aspecto sospechoso te miran con aprensión cuando te "
+"acercas a su mesa. Está claro que no saben quién es su interlocutor. Decides "
+"ser discreto y les preguntas si han oído hablar de un tal Sauterfeldt. Al "
+"oír esto, el trío se relaja visiblemente. Te dicen que efectivamente conocen "
+"al hombre del que hablas y que tienen algo suyo en su poder. A partir de ese "
+"momento, las cosas se desarrollan sin problemas y, varios hectosegundos "
+"después, estás de vuelta en tu nave, preparándola para el despegue mientras "
+"esperas a que los agentes te traigan tu carga."
 
 #: dat/missions/baron/baron_baron.lua:150
 msgid ""
@@ -42653,6 +42764,13 @@ msgid ""
 "viewport, you can't help but wonder how they managed to get something that "
 "big out of a Dvaered museum unnoticed."
 msgstr ""
+"Estáis a mitad de camino de los controles de seguridad previos al vuelo "
+"cuando los tres aparecen en el hangar de atraque. Llevan un carro sobre el "
+"que se asienta un cofre rectangular tan alto como un hombre y tan largo como "
+"dos. Está claro que esta holopintura es bastante grande. Mientras los "
+"observas desde el mirador de tu puente, no puedes evitar preguntarte cómo se "
+"las han arreglado para sacar algo tan grande de un museo Dvaered sin que se "
+"note."
 
 #: dat/missions/baron/baron_baron.lua:151
 msgid ""
@@ -42664,6 +42782,13 @@ msgid ""
 "you have time to note that the Dvaered seem more interested in punishing the "
 "criminals than retrieving their possession intact."
 msgstr ""
+"Resulta que no lo hicieron. Acaban de llegar al puente de atraque que da "
+"acceso a su nave cuando varias fuerzas de seguridad Dvaered armadas irrumpen "
+"en el hangar de atraque. Descubren a los tres agentes e inmediatamente abren "
+"fuego. Uno de ellos cae, y los otros se apresuran a empujar la caja por el "
+"puente hacia tu nave. A pesar del drástico cambio en la situación, tienes "
+"tiempo de comprobar que los Dvaered parecen más interesados en castigar a "
+"los delincuentes que en recuperar su posesión intacta."
 
 #: dat/missions/baron/baron_baron.lua:152
 msgid ""
@@ -42673,23 +42798,29 @@ msgid ""
 "the Dvaered near your ship, you seal the airlock, fire up your engines and "
 "punch it out of the docking hangar."
 msgstr ""
+"El segundo agente es alcanzado por una bala Dvaered, y cae del puente de "
+"atraque al abismo de abajo. El tercero consigue meter el carro con el cofre "
+"en tu esclusa antes de recibir también una bala con el cofre. Mientras los "
+"Dvaered se acercan a tu nave, sellas la esclusa, enciendes tus motores y la "
+"sacas del hangar de atraque."
 
 #: dat/missions/baron/baron_baron.lua:159
 msgid "The Baron's holopainting"
-msgstr ""
+msgstr "La holopintura del Barón"
 
 #: dat/missions/baron/baron_baron.lua:159
 msgid "A rectangular chest containing a holopainting."
-msgstr ""
+msgstr "Un cofre rectangular que contiene una holopintura."
 
 #: dat/missions/baron/baron_baron.lua:176
 #: dat/missions/baron/baron_baron.lua:177
 msgid "Dvaered Police Vendetta"
-msgstr ""
+msgstr "Vendetta Policia Dvaered"
 
 #: dat/missions/baron/baron_baron.lua:181
 msgid "All troops, engage {ship_type} {ship_name}! It has broken {pnt} law!"
 msgstr ""
+"¡Todas las tropas, ataquen a {ship_name}! ¡Ha quebrantado la ley de {pnt}!"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -42723,17 +42854,19 @@ msgstr ""
 #. Note: this mission makes no system claims.
 #: dat/missions/baron/baron_prince.lua:46
 msgid "An unfamiliar man"
-msgstr ""
+msgstr "Un hombre desconocido"
 
 #: dat/missions/baron/baron_prince.lua:46
 msgid ""
 "A man you've never seen before makes eye contact with you. He seems to know "
 "who you are."
 msgstr ""
+"Un hombre que nunca has visto antes hace contacto visual contigo. Parece "
+"saber quién eres."
 
 #: dat/missions/baron/baron_prince.lua:56
 msgid "His Baronship remembers you"
-msgstr ""
+msgstr "Su Baronía le recuerda"
 
 #: dat/missions/baron/baron_prince.lua:56
 msgid ""
@@ -42753,10 +42886,25 @@ msgid ""
 "him so he can brief you in person. You will find his ship in the {sys} "
 "system. Shall I inform his lordship that you will be paying him a visit?\""
 msgstr ""
+"Cuando te acercas al desconocido, te tiende la mano en señal de saludo. Se "
+"presenta como socio del barón Sauterfeldt, el hombre al que ayudaste a "
+"\"adquirir\" una holopintura no hace mucho tiempo.\n"
+"    \"El barón quedó bastante satisfecho con tu actuación en ese asunto\", "
+"confiesa. \"Me ha pedido que intente encontrarte de nuevo para otro trabajo "
+"no muy diferente al anterior. El Barón es un coleccionista, ya ves, y su "
+"hambre de nuevas posesiones es difícil de saciar\". Hace una mueca. \"Por "
+"supuesto, sus métodos no siempre son completamente respetables, como usted "
+"mismo ha experimentado. Pero te aseguro que el Barón no es un mal hombre, "
+"simplemente es muy entusiasta\".\n"
+"    Decides guardarte tu opinión sobre el aristócrata. En cambio, preguntas "
+"qué quiere el hombre de ti esta vez. \"A decir verdad, no lo sé\", dice el "
+"hombre. \"El Barón quiere que te reúnas con él para informarte en persona. "
+"Encontrarás su nave en el sistema {sys}. ¿Debo informar a su señoría de que "
+"le hará una visita?\""
 
 #: dat/missions/baron/baron_prince.lua:60
 msgid "At your beck and call"
-msgstr ""
+msgstr "A su disposición"
 
 #: dat/missions/baron/baron_prince.lua:60
 msgid ""
@@ -42765,26 +42913,30 @@ msgid ""
 "so contact the Pinnacle when you arrive at {sys}, and they will allow you to "
 "board.\""
 msgstr ""
+"\"Espléndido. Por favor, vaya a ver a su señoría lo antes posible. No le "
+"gusta que le hagan esperar. Enviaré la noticia de que vendrá, así que "
+"contacte con la Pináculo cuando llegue a {sys}, y le permitirán embarcar.\""
 
 #: dat/missions/baron/baron_prince.lua:62
 #: dat/missions/baron/baron_prince.lua:65
 #: dat/missions/baron/baron_prince.lua:85
 #: dat/missions/baron/baron_prince.lua:193
 msgid "Prince"
-msgstr ""
+msgstr "Principe"
 
 #: dat/missions/baron/baron_prince.lua:63
 msgid "You weren't told!"
-msgstr ""
+msgstr "¡No te lo han dicho!"
 
 #: dat/missions/baron/baron_prince.lua:64
 msgid ""
 "Baron Sauterfeldt has summoned you to his ship, which is in the {sys} system."
 msgstr ""
+"El barón Sauterfeldt te ha convocado a su nave, que está en el sistema {sys}."
 
 #: dat/missions/baron/baron_prince.lua:72
 msgid "Sorry, not today"
-msgstr ""
+msgstr "Lo siento, hoy no"
 
 #: dat/missions/baron/baron_prince.lua:72
 msgid ""
@@ -42796,7 +42948,7 @@ msgstr ""
 #: dat/missions/baron/baron_prince.lua:79
 #: dat/missions/baron/baron_prince.lua:81
 msgid "An audience with the Baron"
-msgstr ""
+msgstr "Una audiencia con el Barón"
 
 #: dat/missions/baron/baron_prince.lua:79
 msgid ""
@@ -42815,6 +42967,20 @@ msgid ""
 "itself, dating back to before the Faction Wars. I must have it. It belongs "
 "in the hands of a connoisseur like myself.\""
 msgstr ""
+"Te encuentras de nuevo a bordo del Pináculo, la nave insignia del Barón "
+"Sauterfeldt. Al cabo de un rato, un asistente te hace pasar a los aposentos "
+"personales del barón, que son tan extravagantes como los recuerdas. Observas "
+"que la holopintura está ahora firmemente fijada en una de las paredes.\n"
+"    El barón Dovai Sauterfeldt te saluda con un pomposo gesto de la mano. "
+"\"Ahh sí, ahí estás por fin. {wrongname1}, ¿no? Toma asiento\". Te ofrece "
+"una copa, pero la rechazas porque tienes que conducir. \"Ahora bien, "
+"{wrongname2}, supongo que te preguntarás por qué te he llamado aquí. Como "
+"sin duda has oído, me interesa lo único, lo exquisito\". El Barón hace un "
+"gesto alrededor de la sala. \"He reunido una colección bastante "
+"impresionante, como puede ver, pero aún le falta algo. Afortunadamente, me "
+"han llegado noticias de un artefacto de valor incalculable procedente de la "
+"propia Tierra, que data de antes de las Guerras de las Facciones. Debo "
+"tenerlo. Debe estar en manos de un conocedor como yo.\""
 
 #: dat/missions/baron/baron_prince.lua:81
 msgid ""
@@ -42837,10 +43003,28 @@ msgid ""
 "to take it off you. I trust you are equipped to defend yourself against "
 "their despicable sort.\""
 msgstr ""
+"\"Por desgracia, las noticias de este artefacto han llegado a más oídos que "
+"los míos. En toda la galaxia hay gente que intenta venderte 'artefactos "
+"antiguos', que siempre resultan ser imitaciones en el mejor de los casos y "
+"chatarra sin valor que recogieron de las calles\". El Barón resopla "
+"burlonamente. \"Incluso los contactos que normalmente me suministran nuevos "
+"objetos para mi colección participan en el frenesí.\n"
+"    \"He reducido mi búsqueda a tres de estas personas. Estoy seguro de que "
+"uno de ellos está vendiendo el artículo genuino, mientras que los otros dos "
+"son falsos. Y aquí es donde entras tú, {wrongname1}. Quiero que visites a "
+"estos vendedores, les compres sus mercancías y me traigas el artefacto "
+"auténtico. Tendrás la ayuda de un hombre llamado Flintley, que es un "
+"aficionado a la historia o algo así. Lo encontrarás en {pnt} en el sistema "
+"{sys}. Simplemente dile que trabajas para mí y muéstrale los artefactos que "
+"tengas en tu poder. Él te dirá cuáles son auténticos y cuáles son falsos.\n"
+"    \"Debo advertirte, {wrongname2}. Algunos de mis, ah, colegas también han "
+"puesto sus ojos en este objeto, así que puedes esperar que sus secuaces "
+"intenten quitártelo. Confío en que estés equipado para defenderte de su "
+"despreciable clase.\""
 
 #: dat/missions/baron/baron_prince.lua:84
 msgid "Off to the shops"
-msgstr ""
+msgstr "De compras"
 
 #: dat/missions/baron/baron_prince.lua:84
 msgid ""
@@ -42852,17 +43036,26 @@ msgid ""
 "names and portraits. It would seem that the only way to find out what you're "
 "dealing with is the hard way."
 msgstr ""
+"Te escoltan rápidamente de vuelta a tu nave. No tienes la oportunidad de "
+"preguntarle al Barón nada, como quiénes son estos potenciales atacantes, "
+"cómo se supone que vas a pagar por los artefactos una vez que localices a "
+"los vendedores, o qué vas a conseguir con todo esto. Sin embargo, encuentras "
+"una actualización de tu mapa de la galaxia que muestra la ubicación de los "
+"vendedores, así como una lista de nombres y retratos. Parece que la única "
+"manera de saber con qué te enfrentas es por las malas."
 
 #: dat/missions/baron/baron_prince.lua:87
 #: dat/missions/baron/baron_prince.lua:195
 msgid "Buy the artefact and take it to Flintley"
-msgstr ""
+msgstr "Compra el artefacto y llévalo a Flintley"
 
 #: dat/missions/baron/baron_prince.lua:89
 msgid ""
 "Baron Sauterfeldt has tasked you with finding an ancient artefact, but he "
 "doesn't know exactly where to get it."
 msgstr ""
+"El barón Sauterfeldt te ha encargado que encuentres un antiguo artefacto, "
+"pero no sabe exactamente dónde conseguirlo."
 
 #. Because the player has no right to enter a system if mem.tamJumped is false
 #. Major Tam gives Gauss Guns instead of credits, because Major Tam is a freak.
@@ -42892,7 +43085,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:235
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:255
 msgid "What are you doing here?"
-msgstr ""
+msgstr "¿Qué haces aquí?"
 
 #: dat/missions/baron/baron_prince.lua:105
 msgid ""
@@ -42900,10 +43093,13 @@ msgid ""
 "artefacts from the sellers and visit Flintley on {pnt} ({sys}) to identify "
 "the real one."
 msgstr ""
+"Todavía no has recogido e identificado el artefacto auténtico. Compra los "
+"artefactos a los vendedores y visita a Flintley en {pnt} ({sys}) para "
+"identificar el auténtico."
 
 #: dat/missions/baron/baron_prince.lua:110
 msgid "The Baron has his prize"
-msgstr ""
+msgstr "El Barón tiene su premio"
 
 #: dat/missions/baron/baron_prince.lua:110
 msgid ""
@@ -42928,38 +43124,65 @@ msgid ""
 "undock, you wonder what kind of wild goose chase the man will send you on "
 "next time."
 msgstr ""
+"El barón Dovai Sauterfeldt le da la vuelta a la tabla de skate en sus manos, "
+"inspeccionando cada mella, cada arañazo en la superficie. Sus ojos brillan "
+"de placer.\n"
+"    \"¡Oh, esto es maravilloso, maravilloso de verdad, {wrongname1}! Un "
+"trozo de la historia anterior al crecimiento, justo aquí, en mis manos. ¡"
+"Casi puedo oír los ecos de esa antigua civilización cuando pongo mi oído "
+"cerca de ella! Esto va a ser la pieza central de mi colección de reliquias y "
+"artefactos. ¡Sí!\n"
+"    \"Hice bien en enviarte, {wrongname2}, has cumplido maravillosamente mis "
+"expectativas. Y soy un hombre de palabra, te recompensaré como te prometí. ¿"
+"Qué fue lo que acordamos de nuevo? ¿Qué, nunca te prometí nada? Bueno, eso "
+"no servirá. Haré que mi asistente deposite una cantidad adecuada de dinero "
+"en tu cuenta. ¡No me encontrarás desagradecido! Ah, pero debe disculparme. "
+"Necesito tiempo para deleitarme con esta fantástica obra de arte. Adiós, "
+"{wrongname3}, te llamaré cuando vuelva a necesitarte\".\n"
+"    Te ven salir de los aposentos del Barón, así que te diriges a través de "
+"la esclusa y vuelves a tu propia nave. Lo primero que haces es comprobar tu "
+"saldo y, para tu alivio, ha aumentado considerablemente. También parece que "
+"has recibido una estatua de dudoso gusto. Mientras te desacoplas, te "
+"preguntas en qué clase de búsqueda inútil te enviará el hombre la próxima "
+"vez."
 
 #: dat/missions/baron/baron_prince.lua:119
 msgid ""
 "Baron Sauterfeldt sent you on a wild goose chase to find some ancient "
 "artefact known as a \"skate-board\", which you found for him."
 msgstr ""
+"El barón Sauterfeldt te envió a buscar un antiguo artefacto conocido como "
+"\"tabla de skate\", que encontraste para él."
 
 #: dat/missions/baron/baron_prince.lua:126
 msgid ""
 "You spot a dodgy individual who matches one of the portraits in your ship's "
 "database. This must be one of the artefact sellers."
 msgstr ""
+"Descubres a un individuo dudoso que coincide con uno de los retratos de la "
+"base de datos de tu nave. Debe ser uno de los vendedores de artefactos."
 
 #: dat/missions/baron/baron_prince.lua:128
 #: dat/missions/baron/baron_prince.lua:130
 #: dat/missions/baron/baron_prince.lua:132
 msgid "Artefact seller"
-msgstr ""
+msgstr "Vendedor de artefactos"
 
 #: dat/missions/baron/baron_prince.lua:135
 msgid "A reedy-looking man"
-msgstr ""
+msgstr "Un hombre de aspecto flacucho"
 
 #: dat/missions/baron/baron_prince.lua:135
 msgid ""
 "You spot a thin, nervous looking individual. He does not seem to want to be "
 "here. This could be that Flintley fellow the Baron told you about."
 msgstr ""
+"Ves a un individuo delgado y de aspecto nervioso. No parece querer estar "
+"aquí. Podría ser el tipo Flintley del que te habló el Barón."
 
 #: dat/missions/baron/baron_prince.lua:147
 msgid "Flintley, at your service"
-msgstr ""
+msgstr "Flintley, a tu servicio"
 
 #: dat/missions/baron/baron_prince.lua:147
 msgid ""
@@ -42977,22 +43200,38 @@ msgid ""
 "    Flintley sighs. \"Well, that's that. Come to me with any artefacts you "
 "manage to procure, and I'll analyse them to the best of my ability.\""
 msgstr ""
+"Te acercas al hombre de aspecto nervioso y le preguntas si es Flintley, el "
+"historiador al servicio del barón Sauterfeldt.\n"
+"    \"Oh, sí. Sí, sí. Soy yo. Soy Flintley\", responde el hombre. \"Y usted "
+"debe ser {player}. Sé lo que está pasando, la gente del Pináculo me ha "
+"informado. Pero dónde están mis modales. Permíteme presentarme "
+"adecuadamente. Mi nombre es Flintley, y soy arqueólogo e historiador. El "
+"mejor de la galaxia, dirían algunos, ¡ja!\" Te mira. \"Bueno, quizá no. Pero "
+"soy un gran conocedor de la historia de la galaxia. Lástima que no haya "
+"demasiada gente interesada en eso hoy en día. El único trabajo que puedo "
+"conseguir es la tasación ocasional, como la que estoy haciendo ahora para su "
+"señoría. Ojalá no tuviera que aceptar trabajos como éste, pero ahí lo "
+"tienes\".\n"
+"    Flintley suspira. \"Bueno, eso es todo. Ven a mí con cualquier artefacto "
+"que consigas, y lo analizaré lo mejor que pueda.\""
 
 #: dat/missions/baron/baron_prince.lua:151
 msgid "Just passing through"
-msgstr ""
+msgstr "Sólo de paso"
 
 #: dat/missions/baron/baron_prince.lua:151
 msgid ""
 "Flintley greets you. \"Do you have any objects for me to look at, {player}? "
 "No? Well, alright. I'll be here if you need me. Good luck out there.\""
 msgstr ""
+"Flintley te saluda. \"¿Tienes algún objeto para que lo mire, {player}? ¿No? "
+"Bueno, está bien. Estaré aquí si me necesitas. Buena suerte ahí fuera.\""
 
 #: dat/missions/baron/baron_prince.lua:158
 #: dat/missions/baron/baron_prince.lua:169
 #: dat/missions/baron/baron_prince.lua:180
 msgid "This is not the artefact you're looking for"
-msgstr ""
+msgstr "Este no es el artefacto que estás buscando"
 
 #: dat/missions/baron/baron_prince.lua:158
 msgid ""
@@ -43006,6 +43245,15 @@ msgid ""
 "    You feel disappointed and frustrated, but you have no choice but to "
 "deposit the \"artefact\" into the nearest disintegrator inlet."
 msgstr ""
+"\"Veamos qué tenemos aquí\", dice Flintley mientras le entregas el artefacto "
+"que compraste en {pnt}. \"Ah, ya sé lo que es esto sin siquiera buscar nada. "
+"Es una pieza de un mecanismo de esclusa antiguo, como los que se usaban en "
+"la mayoría de las naves durante las Guerras de Facción. Eso lo hace bastante "
+"antiguo, pero también lo hace inútil, me temo. Esto es sólo chatarra vieja\""
+". Le lanza una mirada de disculpa. \"No dejes que te desanime. No mucha "
+"gente lo sabría a primera vista. Esos estafadores pueden ser muy astutos\".\n"
+"    Te sientes decepcionado y frustrado, pero no tienes más remedio que "
+"depositar el \"artefacto\" en la entrada del desintegrador más cercano."
 
 #: dat/missions/baron/baron_prince.lua:169
 msgid ""
@@ -43020,6 +43268,17 @@ msgid ""
 "    You promptly decide to dispose of the thing, unwilling to carry it "
 "around with you a moment longer than necessary."
 msgstr ""
+"Le entregas a Flintley el artefacto que conseguiste en {pnt}. Lo examina "
+"durante unos instantes y luego introduce algunas consultas en el terminal de "
+"información de su mesa. Una vez que ha encontrado lo que buscaba, lanza un "
+"suspiro. \"Lo siento, {player}. Parece que te han engañado. Lo que tienes "
+"aquí es poco más que una baratija. Es una pieza de \"arte\" creada por una "
+"escultora de tercer rango llamada Biena Gharibri que vive en Lapra. Me temo "
+"que no tiene mucho talento. Sus creaciones han sido calificadas como \"peores"
+" que la ópera Dvaered\" por un importante crítico de arte. No creo que "
+"quiera presentar esto a su señoría\".\n"
+"    Decides rápidamente deshacerte de la cosa, no queriendo llevarla contigo "
+"un momento más de lo necesario."
 
 #: dat/missions/baron/baron_prince.lua:180
 msgid ""
@@ -43037,7 +43296,7 @@ msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:189
 msgid "From days long gone"
-msgstr ""
+msgstr "De días pasados"
 
 #: dat/missions/baron/baron_prince.lua:189
 msgid ""
@@ -43065,32 +43324,56 @@ msgid ""
 "artefact. You can only hope that the Baron is as enthusiastic about this "
 "skate-board as his historian!"
 msgstr ""
+"Flintley estudia detenidamente el objeto que tiene delante, le da la vuelta "
+"y consulta la base de datos en línea a través del terminal de la mesa del "
+"bar. Tras varios hectosegundos, se echa hacia atrás y silba. \"Pues no. "
+"Tiene que ser esto, {player}. Haría una datación por carbono si pudiera, "
+"pero incluso sin ella estoy seguro. Este objeto se remonta a la Tierra "
+"anterior al crecimiento. Y está en un estado increíblemente bueno\".\n"
+"    Vuelve a mirar la cosa. Se parece a una pequeña superficie plana, aparte "
+"del recodo en un extremo. En uno de los lados hay unas protuberancias "
+"cilíndricas y sólidas que no parecen tener ninguna utilidad. No sabes para "
+"qué sirve el artefacto.\n"
+"    \"Se llama tabla de skate\", continúa Flintley. \"Los registros sobre "
+"ella son un poco incompletos y mucho no es más que conjeturas, pero parece "
+"que se utilizó una vez en rituales comunales primitivos. Se desconoce la "
+"naturaleza exacta de estos rituales, pero es posible que fueran iniciaciones "
+"tribales o incluso rituales de apareamiento. Se cree que los patrones del "
+"propio panel tienen un significado espiritual o místico. Además, según "
+"algunas teorías, la gente se ponía de pie encima de la tabla de skate, con "
+"las ruedas cilíndricas mirando al suelo. Esto ha llevado a algunos "
+"historiadores a creer que los pies fueron en su día el centro de la "
+"psicología humana.\"\n"
+"    Flintley parece tener mucho más que decir sobre el tema, pero no te "
+"interesa tanto, así que le das las gracias y vuelves a tu nave con el "
+"antiguo artefacto. ¡Sólo te queda esperar que el Barón esté tan entusiasmado "
+"con esta tabla de skate como su historiador!"
 
 #: dat/missions/baron/baron_prince.lua:196
 msgid "Take the artefact to Baron Sauterfeldt"
-msgstr ""
+msgstr "Lleva el artefacto al Barón Sauterfeldt"
 
 #: dat/missions/baron/baron_prince.lua:201
 msgid "Ancient Artefact"
-msgstr ""
+msgstr "Artefacto Antiguo"
 
 #: dat/missions/baron/baron_prince.lua:201
 msgid "A seemingly ancient artefact."
-msgstr ""
+msgstr "Un artefacto aparentemente antiguo."
 
 #: dat/missions/baron/baron_prince.lua:213
 msgid "Buy the artefact ({credits})"
-msgstr ""
+msgstr "Comprar el artefacto ({credits})"
 
 #: dat/missions/baron/baron_prince.lua:214
 msgid "Don't buy the artefact"
-msgstr ""
+msgstr "No comprar el artefacto"
 
 #: dat/missions/baron/baron_prince.lua:216
 #: dat/missions/baron/baron_prince.lua:228
 #: dat/missions/baron/baron_prince.lua:240
 msgid "A suspicious salesman"
-msgstr ""
+msgstr "Un vendedor sospechoso"
 
 #: dat/missions/baron/baron_prince.lua:216
 msgid ""
@@ -43098,28 +43381,33 @@ msgid ""
 "in this bona fide relic from an ancient past? Unlike all those scammers out "
 "there, I offer you the real deal, no fakes here!\""
 msgstr ""
+"\"Hola\", te dice el tipo cuando te acercas. \"¿Puede interesarte por esta "
+"reliquia de buena fe de un pasado antiguo? A diferencia de todos esos "
+"estafadores que hay por ahí, yo te ofrezco la auténtica, ¡no hay "
+"falsificaciones aquí!\""
 
 #: dat/missions/baron/baron_prince.lua:220
 msgid "Artefact? A"
-msgstr ""
+msgstr "¿Artefacto? A"
 
 #: dat/missions/baron/baron_prince.lua:220
 #: dat/missions/baron/baron_prince.lua:232
 #: dat/missions/baron/baron_prince.lua:244
 msgid "An ancient artefact?"
-msgstr ""
+msgstr "¿Un artefacto antiguo?"
 
 #: dat/missions/baron/baron_prince.lua:224
 #: dat/missions/baron/baron_prince.lua:236
 #: dat/missions/baron/baron_prince.lua:248
 msgid "Not enough money!"
-msgstr ""
+msgstr "¡No hay suficiente dinero!"
 
 #: dat/missions/baron/baron_prince.lua:224
 #: dat/missions/baron/baron_prince.lua:236
 #: dat/missions/baron/baron_prince.lua:248
 msgid "You can't currently afford to buy this artefact. You need {credits}."
 msgstr ""
+"Actualmente no puedes permitirte comprar este artefacto. Necesitas {credits}."
 
 #: dat/missions/baron/baron_prince.lua:228
 msgid ""
@@ -43128,10 +43416,14 @@ msgid ""
 "can see that you are, you won't trust all those opportunists who will try to "
 "sell you fakes! How about it?\""
 msgstr ""
+"El hombre te sonríe. \"¡Ah, me doy cuenta de que tienes el ojo de un "
+"conocedor! Sólo negocio con las mejores antigüedades, sin falsificaciones. "
+"Si eres inteligente, y veo que lo eres, no te fiarás de todos esos "
+"oportunistas que intentarán venderte falsificaciones. ¿Qué te parece?\""
 
 #: dat/missions/baron/baron_prince.lua:232
 msgid "Artefact? B"
-msgstr ""
+msgstr "¿Artefacto? B"
 
 #: dat/missions/baron/baron_prince.lua:240
 msgid ""
@@ -43140,16 +43432,20 @@ msgid ""
 "article, trust me on that. One hundred per cent legit! And you wouldn't want "
 "to spend good credits on a fake, right?\""
 msgstr ""
+"La mujer te hace señas para que te acerques a la barra. \"Escuche, amigo. "
+"Tengo aquí un vestigio único y extremadamente raro de la prehistoria. Este "
+"es el artículo genuino, créame. Cien por cien legítimo. Y no querrás gastar "
+"buenos créditos en una falsificación, ¿verdad?\""
 
 #: dat/missions/baron/baron_prince.lua:244
 msgid "Artefact? C"
-msgstr ""
+msgstr "¿Artefacto? C"
 
 #. Spawn artefact hunters, maybe.
 #. 60% chance of artefact hunters.
 #: dat/missions/baron/baron_prince.lua:278
 msgid "Artefact Hunter"
-msgstr ""
+msgstr "Cazador de Artefactos"
 
 #. Function that tries to misspell whatever string is passed to it.
 #. TODO support Unicode to a certain point
@@ -43181,17 +43477,19 @@ msgstr ""
 #. luacheck: globals death jumpin land (Hook functions passed by name)
 #: dat/missions/dvaered/assault_on_unicorn.lua:33
 msgid "Fly to the Unicorn system."
-msgstr ""
+msgstr "Vuela al sistema Unicornio."
 
 #: dat/missions/dvaered/assault_on_unicorn.lua:35
 msgid "You have reached your maximum payment. Return to {pnt}."
-msgstr ""
+msgstr "Has alcanzado tu pago máximo. Volver a {pnt}."
 
 #: dat/missions/dvaered/assault_on_unicorn.lua:37
 msgid ""
 "Destroy some pirates! You have killed {n} and have earned {credits}. If "
 "finished, return to {pnt}."
 msgstr ""
+"¡Destruye algunos piratas! Has matado a {n} y has ganado {credits}. Si has "
+"terminado, vuelve a {pnt}."
 
 #. Round the payment to the nearest thousand.
 #: dat/missions/dvaered/assault_on_unicorn.lua:40
@@ -43201,7 +43499,7 @@ msgstr ""
 
 #: dat/missions/dvaered/assault_on_unicorn.lua:48 src/space.c:254
 msgid "Variable"
-msgstr ""
+msgstr "Variable"
 
 #: dat/missions/dvaered/assault_on_unicorn.lua:49
 msgid ""
@@ -43209,6 +43507,9 @@ msgid ""
 "pirate presence in the system of Unicorn. We are offering a small sum for "
 "each pirate killed. The maximum we will pay you is {credits}."
 msgstr ""
+"Es hora de hacer mella en las fuerzas de los piratas. Hemos detectado una "
+"fuerte presencia pirata en el sistema de Unicornio. Ofrecemos una pequeña "
+"suma por cada pirata muerto. El máximo que le pagaremos es de {credits}."
 
 #. This mission makes no system claims.
 #. Makes sure only one copy of the mission can run.
@@ -43234,7 +43535,7 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:84
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:87
 msgid "Mission accomplished"
-msgstr ""
+msgstr "Misión Completada"
 
 #: dat/missions/dvaered/assault_on_unicorn.lua:97
 msgid ""
@@ -43242,6 +43543,9 @@ msgid ""
 "for your hard and diligent work, he hands you the bounty you've earned, a "
 "number of chips worth {credits}."
 msgstr ""
+"Al aterrizar, ves que se acerca un oficial militar Dvaered. Agradeciendo tu "
+"duro y diligente trabajo, te entrega la recompensa que has ganado, un número "
+"de fichas por valor de {credits}."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -43282,57 +43586,59 @@ msgstr ""
 #: dat/missions/dvaered/championship.lua:61
 #: dat/missions/dvaered/championship.lua:355
 msgid "An official"
-msgstr ""
+msgstr "Un oficial"
 
 #: dat/missions/dvaered/championship.lua:61
 #: dat/missions/dvaered/championship.lua:355
 msgid "This person seems to be looking for suitable combat pilots."
-msgstr ""
+msgstr "Esta persona parece estar buscando pilotos de combate adecuados."
 
 #. add some random npcs
 #: dat/missions/dvaered/championship.lua:66
 #: dat/missions/dvaered/championship.lua:69
 msgid "Pilot"
-msgstr ""
+msgstr "Piloto"
 
 #: dat/missions/dvaered/championship.lua:66
 msgid "This pilot looks very self-confident"
-msgstr ""
+msgstr "Este piloto parece muy seguro de sí mismo"
 
 #: dat/missions/dvaered/championship.lua:69
 msgid "This pilot seems to work as a private combat pilot"
-msgstr ""
+msgstr "Este piloto parece trabajar como piloto privado de combate"
 
 #: dat/missions/dvaered/championship.lua:72
 msgid "Imperial pilot"
-msgstr ""
+msgstr "Piloto Imperial"
 
 #: dat/missions/dvaered/championship.lua:72
 msgid "This pilot is is clearly from the Empire."
-msgstr ""
+msgstr "Este piloto es claramente del Imperio."
 
 #: dat/missions/dvaered/championship.lua:75
 msgid "Dvaered pilot"
-msgstr ""
+msgstr "Piloto Dvaered"
 
 #: dat/missions/dvaered/championship.lua:75
 msgid "This pilot surely works as a Vendetta pilot."
-msgstr ""
+msgstr "Este piloto seguramente trabaja como piloto de Vendetta."
 
 #: dat/missions/dvaered/championship.lua:78
 msgid "Strange pilot"
-msgstr ""
+msgstr "Piloto Extraño"
 
 #: dat/missions/dvaered/championship.lua:78
 msgid ""
 "This pilot looks like a pirate, but strangely enough, the authorities don't "
 "seem worried."
 msgstr ""
+"Este piloto parece un pirata, pero extrañamente, las autoridades no parecen "
+"preocupadas."
 
 #: dat/missions/dvaered/championship.lua:84
 #: dat/missions/dvaered/championship.lua:87
 msgid "I am here to win the championship"
-msgstr ""
+msgstr "Estoy aquí para ganar el campeonato"
 
 #: dat/missions/dvaered/championship.lua:84
 msgid ""
@@ -43344,6 +43650,13 @@ msgid ""
 "lots of FLF fighters with my ship! I will tell you my adventures some other "
 "time, but for now, I need to concentrate.\""
 msgstr ""
+"\"¡Estoy aquí para reclamar mi lugar como campeón de este ciclo! Me he "
+"preparado desde el primer día que piloté una nave. Créanme, soy casi "
+"invencible y mi Vendetta es indestructible.\n"
+"    \"¿Saben quién soy? Soy el famoso piloto independiente que ayudó al Alto "
+"Mando Dvaered a destruir la base de la FLF en la nebulosa. ¡Conseguí "
+"derrotar a muchos cazas de la FLF con mi nave! Ya te contaré mis aventuras "
+"en otro momento, pero por ahora, necesito concentrarme.\""
 
 #: dat/missions/dvaered/championship.lua:87
 msgid ""
@@ -43354,10 +43667,16 @@ msgid ""
 "galaxy? It's the reason why every pilot who's won this championship had one."
 "\""
 msgstr ""
+"\"¡Hola! Estoy aquí para reclamar mi lugar como campeón de este ciclo. Me he "
+"preparado desde el primer día que piloté una nave. Confía en mí, soy casi "
+"invencible y mi Vendetta es indestructible.\n"
+"    \"¿Sabías que la Vendetta es el mejor caza de esta parte de la galaxia? "
+"Es la razón por la que todos los pilotos que han ganado este campeonato "
+"tenían uno.\""
 
 #: dat/missions/dvaered/championship.lua:92
 msgid "Hello"
-msgstr ""
+msgstr "Hola"
 
 #: dat/missions/dvaered/championship.lua:92
 msgid ""
@@ -43369,10 +43688,17 @@ msgid ""
 "guided missiles and stealth ships. Dvaered pilots, on the other hand, only "
 "understand basic dogfighting.\""
 msgstr ""
+"\"¿Estás aquí por el campeonato de combate de naves Dvaered? Soy un "
+"competidor. Vuelo una, así que no espero ganar muchas rondas... Pero aún así "
+"disfruto de la batalla. Cada ciclo, un piloto Dvaered gana. ¿Sabes por qué? "
+"Es porque las reglas del campeonato favorecen a los cazas pesados y bien "
+"armados, como el Vendetta. Los pilotos imperiales están acostumbrados a la "
+"guerra electrónica con misiles guiados y naves furtivas. Los pilotos "
+"Dvaered, en cambio, sólo entienden de combate de naves básicas.\""
 
 #: dat/missions/dvaered/championship.lua:95
 msgid "Imperial Pilot"
-msgstr ""
+msgstr "Piloto Imperial"
 
 #: dat/missions/dvaered/championship.lua:95
 msgid ""
@@ -43381,10 +43707,14 @@ msgid ""
 "Lancelot on their radar. But in this championship, only armour and firepower "
 "are useful.\""
 msgstr ""
+"\"Qué lástima. Soy el mejor de mi escuadrón. He entrenado ciclos para poder "
+"derribar a estos lamentables Vendettas con mis misiles antes de que vean mi "
+"Lancelot en su radar. Pero en este campeonato, sólo sirven el blindaje y la "
+"potencia de fuego.\""
 
 #: dat/missions/dvaered/championship.lua:98
 msgid "Dvaered Pilot"
-msgstr ""
+msgstr "Piloto Dvaered"
 
 #: dat/missions/dvaered/championship.lua:98
 msgid ""
@@ -43393,10 +43723,14 @@ msgid ""
 "which makes you closer to Dvaered High Command! Who knows? Maybe one day I "
 "will become a Warlord.\""
 msgstr ""
+"\"Me alegro de verte. Soy un piloto de Vendetta. ¡Espero ganar esta vez! "
+"Para nosotros, ser el campeón aquí significa que te conviertes en miembro "
+"del personal superior, ¡lo que te hace estar más cerca del Alto Mando "
+"Dvaered! ¿Quién sabe? Tal vez un día me convierta en un Señor de la Guerra.\""
 
 #: dat/missions/dvaered/championship.lua:101
 msgid "Obvious Pirate"
-msgstr ""
+msgstr "Pirata Obvio"
 
 #: dat/missions/dvaered/championship.lua:101
 msgid ""
@@ -43404,10 +43738,13 @@ msgid ""
 "challenge and see the best Dvaered Vendetta pilots in action. It helps to "
 "know how they fly in my job.\""
 msgstr ""
+"\"Hola, soy... err... Soy un piloto independiente. Estoy aquí para "
+"participar en el desafío y ver a los mejores pilotos de Dvaered Vendetta en "
+"acción. Me ayuda saber cómo vuelan en mi trabajo.\""
 
 #: dat/missions/dvaered/championship.lua:108
 msgid "Do you want to take part to a challenge?"
-msgstr ""
+msgstr "¿Quieres participar en un reto?"
 
 #: dat/missions/dvaered/championship.lua:108
 msgid ""
@@ -43421,27 +43758,38 @@ msgid ""
 "during the championship.\n"
 "    We are looking for pilots. Are you in?\""
 msgstr ""
+"\"Hola, soy un miembro del personal del desafío de naves de combate Dvaered. "
+"Estas son las reglas: tienes que despegar con una nave de clase caza y "
+"unirte a tu marca inicial. Después, intentarás inutilizar a tu oponente. No "
+"los mates; el personal de seguridad no te lo perdonará. Está prohibido "
+"utilizar misiles, por lo que no podrás tenerlos equipados mientras despegas. "
+"También está prohibido abordar la nave del oponente y atacarle antes de que "
+"se dé la señal. No está permitido aterrizar en ningún planeta ni saltar "
+"durante el campeonato.\n"
+"    Estamos buscando pilotos. ¿Te apuntas?\""
 
 #: dat/missions/dvaered/championship.lua:113
 #: dat/missions/dvaered/championship.lua:116
 msgid "The Dvaered Championship"
-msgstr ""
+msgstr "El Campeonato Dvaered"
 
 #: dat/missions/dvaered/championship.lua:114
 msgid "From 50k to 1.6m credits, depending on your rank"
-msgstr ""
+msgstr "De 50.000 a 1,6 millones de créditos, según tu rango"
 
 #: dat/missions/dvaered/championship.lua:115
 msgid "You are taking part in a fight contest. Try to do your best!"
 msgstr ""
+"Estás participando en un concurso de lucha. ¡Intenta hacerlo lo mejor "
+"posible!"
 
 #: dat/missions/dvaered/championship.lua:117
 msgid "Go to the starting point"
-msgstr ""
+msgstr "Ir al punto de partida"
 
 #: dat/missions/dvaered/championship.lua:118
 msgid "Disable your opponent; DO NOT KILL"
-msgstr ""
+msgstr "Inhabilita a tu oponente; NO LO MATES"
 
 #: dat/missions/dvaered/championship.lua:119
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:82
@@ -43461,7 +43809,7 @@ msgstr ""
 #: dat/missions/neutral/race1.lua:203
 #: dat/missions/sirius/heretic/heretic2.lua:65
 msgid "Land on {pnt}"
-msgstr ""
+msgstr "Atraca en {pnt}"
 
 #: dat/missions/dvaered/championship.lua:125
 #: dat/missions/shark/sh00_ancestorkill.lua:85
@@ -43471,65 +43819,67 @@ msgstr ""
 #: dat/missions/shark/sh04_meeting.lua:76 dat/missions/shark/sh05_flf.lua:72
 #: dat/missions/shark/sh07_pirates.lua:113
 msgid "Sorry, not interested"
-msgstr ""
+msgstr "Lo siento, no me interesa"
 
 #: dat/missions/dvaered/championship.lua:125
 msgid "\"That's your choice. Goodbye, then.\""
-msgstr ""
+msgstr "\"Esa es tu elección. Entonces, adiós.\""
 
 #. Everyone lands in case the player aborts
 #. Give a name to the competitor
 #: dat/missions/dvaered/championship.lua:138
 msgid "The Nice Killer"
-msgstr ""
+msgstr "El Asesino Agradable"
 
 #: dat/missions/dvaered/championship.lua:139
 msgid "Longship Victory"
-msgstr ""
+msgstr "Nave de Guerra Victoria"
 
 #: dat/missions/dvaered/championship.lua:140
 msgid "The Victim"
-msgstr ""
+msgstr "La Victima"
 
 #: dat/missions/dvaered/championship.lua:141
 msgid "Old Fellow"
-msgstr ""
+msgstr "Antiguo Compañero"
 
 #: dat/missions/dvaered/championship.lua:142
 msgid "Angel of Grace"
-msgstr ""
+msgstr "Ángel de la Gracia"
 
 #: dat/missions/dvaered/championship.lua:143
 msgid "Easy Killer"
-msgstr ""
+msgstr "Asesino Fácil"
 
 #: dat/missions/dvaered/championship.lua:144
 msgid "The Unicorn"
-msgstr ""
+msgstr "El Unicornio"
 
 #: dat/missions/dvaered/championship.lua:145
 msgid "The White Knight"
-msgstr ""
+msgstr "El Caballero Blanco"
 
 #: dat/missions/dvaered/championship.lua:146
 msgid "Spirit of St Jean"
-msgstr ""
+msgstr "Espíritu de San Juan"
 
 #: dat/missions/dvaered/championship.lua:147
 msgid "Nec Mergitur"
-msgstr ""
+msgstr "Nec Mergitur"
 
 #. Re-pick a name while it is in the usedNames list
 #: dat/missions/dvaered/championship.lua:162
 #: dat/missions/shark/sh06_arandon.lua:49
 msgid "Let's go"
-msgstr ""
+msgstr "Vamos"
 
 #: dat/missions/dvaered/championship.lua:162
 msgid ""
 "For this round, your opponent is {plt}. Remember: use a fighter with no "
 "launchers. You still have to defeat {n} opponents to win."
 msgstr ""
+"Para esta ronda, tu oponente es {plt}. Recuerda: usa un caza sin lanzadores. "
+"Todavía tienes que derrotar a {n} oponentes para ganar."
 
 #. Launchers are forbidden
 #. The player took off for the battle
@@ -43543,14 +43893,14 @@ msgstr ""
 #: dat/missions/dvaered/championship.lua:245
 #: dat/missions/dvaered/championship.lua:246
 msgid "Holovision"
-msgstr ""
+msgstr "Holovision"
 
 #: dat/missions/dvaered/championship.lua:247
 #: dat/missions/dvaered/championship.lua:248
 #: dat/missions/dvaered/championship.lua:249
 #: dat/missions/dvaered/championship.lua:250
 msgid "Security"
-msgstr ""
+msgstr "Seguridad"
 
 #. Set the radius for the follow function
 #. Set the angle for the follow function
@@ -43559,7 +43909,7 @@ msgstr ""
 #. Adding the starting mark
 #: dat/missions/dvaered/championship.lua:305
 msgid "START"
-msgstr ""
+msgstr "INICIO"
 
 #. The player tries to cheat by attacking before the signal
 #. The player is never allowed to go away
@@ -43569,60 +43919,62 @@ msgstr ""
 #: dat/missions/dvaered/championship.lua:335
 #: dat/missions/dvaered/championship.lua:371
 msgid "You are dismissed"
-msgstr ""
+msgstr "EstáS descartado"
 
 #: dat/missions/dvaered/championship.lua:309
 msgid "You weren't allowed to use missiles"
-msgstr ""
+msgstr "No se te permitió usar misiles"
 
 #: dat/missions/dvaered/championship.lua:312
 msgid "You had to use a fighter"
-msgstr ""
+msgstr "Tenías que usar un caza"
 
 #: dat/missions/dvaered/championship.lua:328
 msgid "You weren't supposed to attack before the signal."
-msgstr ""
+msgstr "Se supone que no debes atacar antes de la señal."
 
 #: dat/missions/dvaered/championship.lua:335
 #: dat/missions/dvaered/championship.lua:371
 msgid "You weren't supposed to go away."
-msgstr ""
+msgstr "Se supone que no debías irte."
 
 #. Probably fine to just attack player
 #. player goes to next round
 #. Manage the player's progress
 #: dat/missions/dvaered/championship.lua:352
 msgid "You won this round"
-msgstr ""
+msgstr "Has ganado esta ronda"
 
 #: dat/missions/dvaered/championship.lua:352
 msgid ""
 "\"Congratulations,\" the staff says to you. \"Come back when you are ready "
 "for the next round!\""
 msgstr ""
+"\"Enhorabuena\", te dice el personal. \"¡Vuelve cuando estés preparado para "
+"la siguiente ronda!\""
 
 #. player will be payed
 #. you are the champion
 #: dat/missions/dvaered/championship.lua:360
 msgid "You are the new champion"
-msgstr ""
+msgstr "Eres el nuevo campeón"
 
 #: dat/missions/dvaered/championship.lua:360
 #: dat/missions/dvaered/championship.lua:362
 msgid "Congratulations! The staff pays you {credits}."
-msgstr ""
+msgstr "¡Felicidades! El personal te paga {credits}."
 
 #: dat/missions/dvaered/championship.lua:362
 msgid "You are the vice-champion"
-msgstr ""
+msgstr "Eres el vicecampeón"
 
 #: dat/missions/dvaered/championship.lua:364
 msgid "Thanks for playing"
-msgstr ""
+msgstr "Gracias por jugar"
 
 #: dat/missions/dvaered/championship.lua:364
 msgid "The staff pays you {credits}."
-msgstr ""
+msgstr "El personal te paga {credits}."
 
 #. Remove some hooks and begin a new battle
 #. The player killed his opponent
@@ -43665,7 +44017,7 @@ msgstr ""
 #. Note: this mission makes no system claims.
 #: dat/missions/dvaered/dv_antiflf01.lua:36
 msgid "A Dvaered crew in need is a Dvaered crew indeed"
-msgstr ""
+msgstr "Una tripulación Dvaered necesitada es una tripulación Dvaered verdadera"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:36
 msgid ""
@@ -43680,35 +44032,49 @@ msgid ""
 "charged to scout the area, dispose of the enemy ship, then deliver me and my "
 "crew to the nearest Dvaered controlled system!\""
 msgstr ""
+"\" Tu llegada es oportuna, ciudadano\", te dice el oficial al mando Dvaered. "
+"\"Escucha. Estuvimos en un tiroteo con un terrorista renegado, pero el "
+"bastardo dejó fuera de combate nuestros motores y la mayoría de nuestros "
+"sistemas primarios antes de que pudiéramos atraparlo. Afortunadamente, creo "
+"que también le causamos graves daños, así que debería estar por aquí. Pero "
+"mis sensores no funcionan, así que no puedo asegurarlo\".\n"
+"    El oficial se levanta y adopta el tono de hablar a los subordinados que "
+"es tan típico de los comandantes Dvaered. \"¡Ciudadano! ¡Se le encarga que "
+"explore la zona, se deshaga de la nave enemiga y me entregue a mí y a mi "
+"tripulación al sistema controlado por Dvaered más cercano!\""
 
 #: dat/missions/dvaered/dv_antiflf01.lua:39
 #: dat/missions/dvaered/dv_antiflf01.lua:43
 msgid "Take the Dvaered crew home"
-msgstr ""
+msgstr "Lleva a la tripulación Dvaered a casa"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:40
 msgid ""
 "Take the Dvaered crew on board your ship to any Dvaered controlled world or "
 "station"
 msgstr ""
+"Lleva a la tripulación Dvaered a bordo de tu nave a cualquier mundo o "
+"estación controlada por Dvaered"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:42
 msgid ""
 "Take the Dvaered crew on board your ship to any Dvaered controlled world or "
 "station."
 msgstr ""
+"Lleva a la tripulación Dvaered a bordo de tu nave a cualquier mundo o "
+"estación controlada por Dvaered."
 
 #: dat/missions/dvaered/dv_antiflf01.lua:44
 msgid "A chance to aid in the effort against the FLF"
-msgstr ""
+msgstr "Una oportunidad para ayudar en el esfuerzo contra el FLF"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:46
 msgid "Dvaered Ship Crew"
-msgstr ""
+msgstr "Tripulación de Nave Dvaered"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:46
 msgid "Dvaered crew from a ship that was disabled by the FLF."
-msgstr ""
+msgstr "La tripulación Dvaered de una nave que fue inutilizado por la FLF."
 
 #: dat/missions/dvaered/dv_antiflf01.lua:56
 msgid ""
@@ -43716,6 +44082,9 @@ msgid ""
 "that threatened the peace and stability of the region. You will be rewarded "
 "appropriately.\""
 msgstr ""
+"Además, has cumplido tus instrucciones y has destruido a un terrorista que "
+"amenazaba la paz y la estabilidad de la región. Serás recompensado "
+"adecuadamente.\""
 
 #: dat/missions/dvaered/dv_antiflf01.lua:59
 msgid ""
@@ -43723,10 +44092,13 @@ msgid ""
 "dangerous terrorist get away with his crimes. I will not apply any penalties "
 "in light of the situation, but consider yourself reprimanded.\""
 msgstr ""
+"Sin embargo, usted no cumplió con las instrucciones y dejó que un terrorista "
+"potencialmente peligroso se saliera con la suya. No aplicaré ninguna sanción "
+"a la vista de la situación, pero considérese amonestado.\""
 
 #: dat/missions/dvaered/dv_antiflf01.lua:62
 msgid "The crew is home"
-msgstr ""
+msgstr "La tripulación está en casa"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:63
 msgid ""
@@ -43737,6 +44109,13 @@ msgid ""
 "upstanding member of society by rendering assistance to an official Dvaered "
 "patrol. "
 msgstr ""
+"La tripulación Dvaered salen en fila de tu nave. No has llegado a conocerlos "
+"en este viaje, ya que son muy reservados. El oficial al mando va en la "
+"retaguardia de la tripulación que se marcha, pero se detiene cuando pasa "
+"junto a ti.\n"
+"    \"Bien hecho, ciudadano\", dice. \"Has cumplido con tu deber como "
+"miembro honrado de la sociedad al prestar ayuda a una patrulla oficial de "
+"Dvaered. "
 
 #: dat/missions/dvaered/dv_antiflf01.lua:66
 msgid ""
@@ -43749,6 +44128,14 @@ msgid ""
 "    When he is gone, you find yourself wondering what this campaign he "
 "mentioned is all about. There is one way to find out - if you are up to it..."
 msgstr ""
+"El agente se da la vuelta para marcharse, pero luego parece haber recordado "
+"algo, porque vuelve a dirigirse a ti.\n"
+"    \"Por cierto, ciudadano. Las autoridades de Dvaered están preparando una "
+"campaña contra los terroristas del FLF. Usted parece ser un hábil piloto, y "
+"necesitamos una nave civil como parte de nuestra estrategia. Si está "
+"interesado, busque el enlace oficial Dvaered\".\n"
+"    Cuando se ha ido, te encuentras preguntando de qué trata la campaña que "
+"ha mencionado. Hay una forma de averiguarlo, si estás dispuesto a ello..."
 
 #: dat/missions/dvaered/dv_antiflf01.lua:75
 msgid ""
@@ -43757,6 +44144,10 @@ msgid ""
 "terrorists; if you are interested in joining in that operation, you can seek "
 "out a Dvaered liaison."
 msgstr ""
+"Has rescatado a la tripulación de una nave Dvaered que fue inutilizada por "
+"una nave FLF. El oficial Dvaered mencionó que se está preparando una campaña "
+"contra los terroristas del FLF; si estás interesado en unirte a esa "
+"operación, puedes buscar un enlace Dvaered."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -43825,7 +44216,7 @@ msgstr ""
 #: dat/missions/dvaered/dv_antiflf02.lua:45
 #: dat/missions/dvaered/dv_antiflf03.lua:49
 msgid "Dvaered liaison"
-msgstr ""
+msgstr "Enlace Dvaered"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:45
 #: dat/missions/dvaered/dv_antiflf03.lua:49
@@ -43833,10 +44224,13 @@ msgid ""
 "This must be the Dvaered liaison you heard about. Allegedly, he may have a "
 "job for you that involves fighting the Frontier Liberation Front."
 msgstr ""
+"Este debe ser el enlace Dvaered del que has oído hablar. Supuestamente, "
+"puede tener un trabajo para ti que implica luchar contra el Frente de "
+"Liberación de la Frontera."
 
 #: dat/missions/dvaered/dv_antiflf02.lua:49
 msgid "House Dvaered needs YOU"
-msgstr ""
+msgstr "House Dvaered TE necesita"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:49
 msgid ""
@@ -43851,12 +44245,23 @@ msgid ""
 "duty to assist us, there is an opportunity to serve alongside the real "
 "Dvaered warriors. How about it? Can we count on your support?\""
 msgstr ""
+"Te reúnes con el funcionario Dvaered en su mesa. Te saluda de forma cordial, "
+"al menos para los estándares Dvaered. Le explicas que deseas saber más sobre "
+"la operación contra el FLF en la que supuestamente está trabajando la Casa "
+"Dvaered.\n"
+"    \"¡Ah! Es bueno ver un entusiasmo tan justo entre nuestros ciudadanos. "
+"Efectivamente, nuestras fuerzas se han estado preparando para asestar un "
+"importante golpe a los terroristas del FLF. No puedo revelar los detalles, "
+"por supuesto - se trata de una operación militar. Sin embargo, si tienes una "
+"nave con capacidad de combate y suficiente sentido del deber para ayudarnos, "
+"existe la oportunidad de servir junto a los verdaderos guerreros Dvaered. ¿"
+"Qué te parece? ¿Podemos contar con su apoyo?\""
 
 #: dat/missions/dvaered/dv_antiflf02.lua:52
 #: dat/missions/dvaered/dv_antiflf02.lua:55
 #: dat/missions/dvaered/dv_antiflf02.lua:61
 msgid "A clever ruse"
-msgstr ""
+msgstr "Una astuta artimaña"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:52
 msgid ""
@@ -43872,6 +44277,16 @@ msgid ""
 "he's the man in charge.\n"
 "    A Dvaered soldier instructs you to take a seat."
 msgstr ""
+"\"Espléndido. Tienes la mentalidad correcta, ciudadano. ¡Ojalá todos fueran "
+"como tú! Pero eso no es ni aquí ni allá. Ven, te llevaré al búnker de mando "
+"local. Allí se te explicarán los detalles de esta operación\".\n"
+"    Fiel a su palabra, el enlace Dvaered te escolta fuera del bar del puerto "
+"espacial, y en menos de una hora te encuentras dentro de un complejo militar "
+"de Dvaered de alta seguridad. Te hacen pasar a una sala en la que hay una "
+"gran mesa y varios militares de aspecto importante. A la cabeza de la mesa "
+"se encuentra un hombre cuya etiqueta lo identifica como el Coronel Urnus. "
+"Evidentemente es el hombre al mando.\n"
+"    Un soldado Dvaered te indica que tomes asiento."
 
 #: dat/missions/dvaered/dv_antiflf02.lua:55
 msgid ""
@@ -43905,6 +44320,36 @@ msgid ""
 "has come under attack! Since their base is nearby, they will undoubtedly "
 "send reinforcements to help their 'comrade' out of a tight situation.\""
 msgstr ""
+"Mientras ocupa el último asiento vacío de la mesa, el Coronel Urnus inicia "
+"la reunión. \"Bienvenido, ciudadano. Ya sabe por qué está aquí y sabe de qué "
+"trata esta reunión, así que permítame ir al grano. Tenemos razones para "
+"creer que los terroristas del FLF están operando desde una base de "
+"operaciones secreta. Sabemos que esta base se encuentra en algún lugar de la "
+"nebulosa, y recientemente hemos descubierto información que indica que la "
+"base probablemente esté en el sistema {sys}.\"\n"
+"    Una de las paredes se ilumina, mostrando parte del mapa de la galaxia. "
+"El sistema {sys} está coloreado en rojo, y está pulsando suavemente.\n"
+"    \"Por supuesto, hemos realizado patrullas en este sistema, pero hasta "
+"ahora sin resultado. Nuestros sensores están gravemente perjudicados por la "
+"nebulosa de este sistema, así que las posibilidades de que encontremos la "
+"colmena terrorista por nuestros propios medios son escasas. Afortunadamente, "
+"nuestros mejores estrategas han ideado una treta, una que hará que la FLF "
+"venga a nosotros\".\n"
+"    \"Utilizaremos una nave civil -su nave, naturalmente- como señuelo\", "
+"continúa Urnus. La imagen de la pared se amplía hasta el sistema {sys}, y "
+"una mancha blanca que representa su nave aparece cerca del punto de salto. "
+"\"Su nave estará equipada con un transpondedor IFF en uso por la FLF, así "
+"que para cualquiera que no esté mirando muy de cerca aparecerá como una nave "
+"de la FLF. Por supuesto, esto no es suficiente. La FLF asumirá que sabes "
+"dónde está su base, ya que pareces uno de ellos. Es importante tener en "
+"cuenta que el transpondedor funcionará mejor en la Nebulosa, que es donde "
+"creemos que debe estar la base\".\n"
+"    La imagen en la pared se actualiza de nuevo, esta vez mostrando varias "
+"crestas de la Casa Dvaered cerca de tu nave.\n"
+"    \"Algún tiempo después de entrar en el sistema, varios de nuestros "
+"activos militares saltarán y abrirán fuego. Para el FLF, parecerá que uno de "
+"los suyos ha sido atacado. Como su base está cerca, sin duda enviarán "
+"refuerzos para ayudar a su 'camarada' a salir de una situación difícil.\""
 
 #: dat/missions/dvaered/dv_antiflf02.lua:61
 msgid ""
@@ -43932,11 +44377,34 @@ msgid ""
 "time is of the essence, so get to your ship and follow your orders. "
 "Dismissed!\""
 msgstr ""
+"\"Tan pronto como las naves del FLF se unan a la batalla, usted y las naves "
+"de Dvaered se desmarcarán y apuntarán al FLF en su lugar. Su misión es hacer "
+"que al menos una de sus naves sea incapaz de luchar, y abordarla. Entonces "
+"podrás acceder al ordenador de la nave y descargar el registro de vuelo, que "
+"debería contener la ubicación de la base del FLF. Lleva esta información a "
+"una base Dvaered, y tu misión estará completa\".\n"
+"    La imagen en la pared se actualiza una última vez, simulando la batalla "
+"tal y como la describió el Coronel Urnus. Aparecen varios logotipos de la "
+"FLF, que rápidamente son rodeados por los de Dvaered. Entonces los logotipos "
+"se vuelven grises, indicando que han sido desactivados.\n"
+"    \"Permítame aclarar una cosa, ciudadano. Se le permite, incluso se "
+"espera, que dispare a las naves Dvaered que le están disparando. Sin "
+"embargo, debes hacer que parezca que estás en el bando perdedor, ¡o la FLF "
+"no acudirá en tu ayuda! Por lo tanto, NO inutilices ni destruyas ninguna "
+"nave Dvaered, y asegúrate de que tu propio blindaje reciba una pequeña "
+"paliza. Esto es vital para el éxito de la misión. No falles\".\n"
+"    El Coronel Urnus parece haber concluido su explicación, por lo que tú, "
+"habiendo detectado el evidente fallo en el plan de los Dvaereds, planteas la "
+"pregunta de qué pasa si el FLF nunca aparece.\n"
+"    \"Bueno\", reflexiona el Coronel, \"eso significará que nuestra "
+"información estaba probablemente equivocada. Pero no se preocupe, ciudadano, "
+"¡al final atraparemos a esos terroristas! Ahora, el tiempo es esencial, así "
+"que vaya a su nave y siga sus órdenes. ¡Puede retirarse!\""
 
 #: dat/missions/dvaered/dv_antiflf02.lua:68
 #: dat/missions/dvaered/dv_antiflf02.lua:76
 msgid "Lure out the FLF"
-msgstr ""
+msgstr "Atrae a la FLF"
 
 #. Set mission details
 #: dat/missions/dvaered/dv_antiflf02.lua:69
@@ -43958,23 +44426,23 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:88
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:89
 msgid "Fly to the {sys} system"
-msgstr ""
+msgstr "Vuela al sistema {sys}"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:70
 msgid "Wait for the Dvaered military to jump in and attack you"
-msgstr ""
+msgstr "Espera a que los militares Dvaered salten y te ataquen"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:71
 msgid "Fight the Dvaered until the FLF step in"
-msgstr ""
+msgstr "Lucha contra los Dvaered hasta que el FLF intervenga"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:72
 msgid "Disable and board at least one FLF ship"
-msgstr ""
+msgstr "Desactiva y aborda al menos una nave FLF"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:73
 msgid "Return to any Dvaered world"
-msgstr ""
+msgstr "Vuelve a cualquier mundo Dvaered"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:75
 msgid ""
@@ -43984,22 +44452,27 @@ msgid ""
 "mission if you disable or destroy any Dvaered ship, or if you leave the "
 "system before the operation is complete."
 msgstr ""
+"Has sido reclutado para actuar como señuelo en una operación militar "
+"diseñada por Dvaered. Tu objetivo principal es incitar a la FLF a que se "
+"muestre, y luego inutilizar y abordar una de sus naves. Fracasarás en esta "
+"misión si inutilizas o destruyes alguna nave de Dvaered, o si abandonas el "
+"sistema antes de que la operación se complete."
 
 #: dat/missions/dvaered/dv_antiflf02.lua:77
 msgid "Serving alongside real Dvaered warlords"
-msgstr ""
+msgstr "Sirviendo junto a verdaderos señores de la guerra Dvaered"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:85
 msgid "FLF IFF Transponder"
-msgstr ""
+msgstr "Transpondedor IFF FLF"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:85
 msgid "A transponder that will make your ship appear as FLF in the nebula."
-msgstr ""
+msgstr "Un transpondedor que hará que tu nave aparezca como FLF en la nebulosa."
 
 #: dat/missions/dvaered/dv_antiflf02.lua:92
 msgid "House Dvaered is out of luck"
-msgstr ""
+msgstr "La casa Dvaered no tiene suerte"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:92
 #: dat/missions/dvaered/dv_diversion.lua:77
@@ -44008,6 +44481,9 @@ msgid ""
 "recruit a civilian, but you're clearly not the pilot I'm looking for. You "
 "may excuse yourself, citizen.\""
 msgstr ""
+"\"Ya veo. En ese caso, voy a tener que pedirte que te vayas. Mi trabajo es "
+"reclutar a un civil, pero está claro que usted no es el piloto que busco. "
+"Puede retirarse, ciudadano.\""
 
 #. The player has jumped away from the mission theater, which instantly ends the mission.
 #. Wait for the player to fly to the Obstinate before commencing the mission
@@ -44018,7 +44494,7 @@ msgstr ""
 #: dat/missions/dvaered/dv_antiflf03.lua:143
 #: dat/missions/dvaered/dv_diversion.lua:88
 msgid "You ran away!"
-msgstr ""
+msgstr "¡Has huido!"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:108
 #: dat/missions/dvaered/dv_diversion.lua:88
@@ -44026,10 +44502,12 @@ msgid ""
 "You have left the system without first completing your mission. The "
 "operation ended in failure."
 msgstr ""
+"Has abandonado el sistema sin haber completado tu misión. La operación ha "
+"acabado en fracaso."
 
 #: dat/missions/dvaered/dv_antiflf02.lua:116
 msgid "X marks the spot"
-msgstr ""
+msgstr "La X marca el lugar"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:116
 msgid ""
@@ -44053,6 +44531,27 @@ msgid ""
 "outside the security compound. But at least you earned some money - and a "
 "chance to see some real action."
 msgstr ""
+"Nada más aterrizar, un operador militar Dvaered se pone en contacto contigo "
+"y te pide que le entregues el diario de vuelo que conseguiste en la nave "
+"FLF, así que lo haces. Los Dvaered permanecen en silencio durante unos "
+"veinte hectosegundos, tiempo que utilizas para completar tus rutinas "
+"posteriores al aterrizaje. A continuación, se te convoca en el puesto de "
+"seguridad local Dvaered.\n"
+"El Coronel Urnus te da la bienvenida. \"Bienvenido, ciudadano. He recibido "
+"noticias de tus logros en nuestra reciente operación. Parece que el Cuartel "
+"General está bastante satisfecho con el resultado, y me han dado "
+"instrucciones para recompensarte adecuadamente\".\n"
+"    Te entrega una ficha de crédito que representa una buena suma de dinero, "
+"aunque crees que una mera recompensa monetaria no compensa en absoluto el "
+"peligroso plan del que te han hecho partícipe los Dvaered. Sin embargo, "
+"optas sabiamente por no dar voz a ese pensamiento.\n"
+"    \"Además\", prosigue Urnus, \"el mando militar de los Dvaered ha "
+"decidido que puedes participar en la próxima batalla contra la fortaleza del "
+"FLF, en reconocimiento a tu valor y tu habilidad en la batalla. Puedes "
+"ponerte en contacto con nuestro enlace cuando estés preparado\".\n"
+"    Así terminan las galanterías, y te depositan sin contemplaciones fuera "
+"del recinto de seguridad. Pero al menos has ganado algo de dinero, y la "
+"oportunidad de ver algo de acción real."
 
 #: dat/missions/dvaered/dv_antiflf02.lua:124
 msgid ""
@@ -44062,6 +44561,12 @@ msgid ""
 "an assault on the terrorist base, and Colonel Urnus said that you can "
 "contact a Dvaered liaison whenever you're ready for the operation."
 msgstr ""
+"Ayudaste a los Dvaered en sus esfuerzos por localizar una base secreta de la "
+"FLF. Te has hecho pasar por un piloto de la FLF, atrayendo a los pilotos "
+"reales de la FLF para poder inutilizar uno y robar sus registros de vuelo. "
+"Los Dvaered están ahora planeando un asalto a la base terrorista, y el "
+"Coronel Urnus dijo que puedes contactar con un enlace Dvaered cuando estés "
+"preparado para la operación."
 
 #. The Dvaered ships should attack the player, so set them hostile.
 #. These are Vigilances, so we should tune them WAY down so the player doesn't insta-die.
@@ -44073,43 +44578,53 @@ msgstr ""
 msgid ""
 "Here come the FLF! All units, switch to EMPs and disable the terrorist ships!"
 msgstr ""
+"¡Aquí viene el FLF! ¡Todas las unidades, pasen a los PEM y desactiven las "
+"naves terroristas!"
 
 #. Only true as long as the FLF aren't there yet
 #: dat/missions/dvaered/dv_antiflf02.lua:193
 msgid "You fought too hard!"
-msgstr ""
+msgstr "¡Has luchado demasiado!"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:193
 msgid ""
 "You have disabled a Dvaered ship, thereby violating your orders. The "
 "operation is canceled thanks to you. The Dvaered are less than pleased."
 msgstr ""
+"Ha inutilizado una nave Dvaered, violando así sus órdenes. La operación se "
+"cancela gracias a usted. Los Dvaered no están muy contentos."
 
 #. Persuade the Dvaered to stop shooting at disabled FLF
 #: dat/missions/dvaered/dv_antiflf02.lua:205
 msgid ""
 "All targets neutralized. Download the flight log and let's get out of here!"
 msgstr ""
+"Todos los objetivos neutralizados. ¡Descarga el registro de vuelo y salgamos "
+"de aquí!"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:216
 msgid "All the FLF are dead!"
-msgstr ""
+msgstr "¡Todos los FLF están muertos!"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:216
 msgid ""
 "Unfortunately, all the FLF ships have been destroyed before you managed to "
 "board one of them. The operation ended in failure."
 msgstr ""
+"Desgraciadamente, todas las naves de la FLF han sido destruidas antes de que "
+"consiguieras abordar una de ellas. La operación terminó en fracaso."
 
 #: dat/missions/dvaered/dv_antiflf02.lua:223
 msgid "Take no prisoners - only their logs"
-msgstr ""
+msgstr "No tomes prisioneros - sólo sus registros"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:223
 msgid ""
 "You successfully board the FLF ship and secure its flight logs. This is what "
 "the Dvaered want - you should take it to a Dvaered planet immediately."
 msgstr ""
+"Abordas con éxito la nave FLF y aseguras sus registros de vuelo. Esto es lo "
+"que quieren los Dvaered: debes llevarlo a un planeta Dvaered inmediatamente."
 
 #: dat/missions/dvaered/dv_antiflf03.lua:57
 msgid ""
@@ -44130,6 +44645,22 @@ msgid ""
 "    The liaison blinks awake. \"These are the parameters and conditions of "
 "the mission. Will you be accepting this assignment?\""
 msgstr ""
+"La expresión del enlace se torna pálida, y su voz se vuelve uniforme. Está "
+"claro que lleva mucho tiempo informando a la gente en su carrera, así que "
+"probablemente pueda hacer esto mientras duerme. Se te ocurre que tal vez sí "
+"duerma la siesta mientras lo hace.\n"
+"    \"En un futuro próximo, la flota Dvaered se moverá contra los enemigos "
+"del estado en el sistema {sys}. El objetivo es buscar y destruir a todos los "
+"hostiles. Esta operación estará encabezada por la HDSF Obstinada, y todas "
+"las unidades en esta batalla se someterán a su oficial al mando, "
+"independientemente de su clase y rango. El Obstinado y su grupo de combate "
+"se concentrarán en realizar bombardeos sobre el objetivo principal. Tu tarea "
+"como unidad auxiliar será asegurar los flancos y atacar a cualquier hostil "
+"que amenace el éxito de la misión. Tenga en cuenta que una vez que entre en "
+"el teatro de combate, se le considerará comprometido, y su salida del "
+"sistema será vista como un acto de cobardía y traición.\"\n"
+"    El enlace parpadea despierto. \"Estos son los parámetros y condiciones "
+"de la misión\". ¿Aceptarás esta misión?\""
 
 #: dat/missions/dvaered/dv_antiflf03.lua:61
 msgid ""
@@ -44142,6 +44673,14 @@ msgid ""
 "happen to just anybody.\"\n"
 "    "
 msgstr ""
+"El enlace de Dvaered te descubre y se levanta para estrechar tu mano.\n"
+"    \"Buen encuentro, ciudadano {player}. He oído hablar de tus recientes "
+"logros en la lucha contra la amenaza del FLF. Al igual que muchos Dvaered, "
+"me alegro de que las cosas vayan tan bien, ¡y en gran medida gracias a tus "
+"esfuerzos! Al parecer, el Alto Mando opina lo mismo, porque te ha dado la "
+"autorización militar para la próxima operación, y eso no le ocurre a "
+"cualquiera\".\n"
+"    "
 
 #: dat/missions/dvaered/dv_antiflf03.lua:65
 msgid ""
@@ -44151,16 +44690,21 @@ msgid ""
 "what this is all about.\"\n"
 "    "
 msgstr ""
+"El enlace de Dvaered te saluda.\n"
+"    \"Sabía que volverías, ciudadano {player}. La operación aún no ha "
+"comenzado y todavía podemos utilizar tu ayuda, así que quizá deba explicarte "
+"de nuevo de qué va todo esto.\"\n"
+"    "
 
 #: dat/missions/dvaered/dv_antiflf03.lua:71
 msgid "One swift stroke"
-msgstr ""
+msgstr "Un golpe rápido"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:72
 #: dat/missions/dvaered/dv_antiflf03.lua:76
 #: dat/missions/dvaered/dv_antiflf03.lua:81
 msgid "The battlefield awaits"
-msgstr ""
+msgstr "El campo de batalla espera"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:72
 msgid ""
@@ -44181,6 +44725,21 @@ msgid ""
 "Dvaered pilots, who are clearly going to be participating in the upcoming "
 "battle as well."
 msgstr ""
+"\"Excelente. Por favor, preséntese en el centro de mando militar local a las "
+"0400 de hoy. Allí se le informará\".\n"
+"    El enlace te entrega una pequeña tarjeta de acceso. Lleva el emblema del "
+"ejército Dvaered. Parece que se le ha concedido un nivel de autorización que "
+"va más allá del de un voluntario civil.\n"
+"    El enlace se levanta, ofrece un saludo cortante y sale del bar. Tú te "
+"quedas un rato, ya que no tienes que ir a la reunión informativa hasta "
+"dentro de un tiempo. Reflexionas sobre tus recientes logros. Tus acciones "
+"han reducido drásticamente el equilibrio de poder entre los Dvaered y los "
+"insurgentes del FLF, y pronto podrás ver los resultados de tus decisiones "
+"con tus propios ojos. Sientes una sensación de logro al saber que estás "
+"marcando la diferencia en esta galaxia.\n"
+"    Varios periodos después, te encuentras en una sala de reuniones "
+"funcional y estéril en la base militar Dvaered. Te acompañan varios pilotos "
+"Dvaered, que claramente también van a participar en la próxima batalla."
 
 #: dat/missions/dvaered/dv_antiflf03.lua:76
 msgid ""
@@ -44208,6 +44767,31 @@ msgid ""
 "if the FLF decide to sit and cower. However, we expect them to put up a "
 "fight.\""
 msgstr ""
+"\"Todos\", se dirige a la sala un oficial Dvaered de aspecto severo pero por "
+"lo demás anodino, \"Si me permiten su atención, por favor. Estoy aquí para "
+"informarles sobre la próxima operación, que como todos saben gira en torno a "
+"la destrucción de la base terrorista conocida como Sindbad\".\n"
+"    La pared detrás del oficial se ilumina, mostrando una representación "
+"esquemática del sistema {sys}. En el centro se encuentra un disco rojo "
+"brillante con el logotipo de la FLF superpuesto.\n"
+"    \"Estamos ante una instalación militar totalmente operativa y "
+"fuertemente armada. Puede que el FLF sea terrorista, pero está bien "
+"organizado. Dado que este es su mayor bastión, debemos asumir que esta base "
+"está fuertemente armada, y tiene un gran complemento de naves espaciales "
+"defensivas para defenderla de los ataques. Por lo tanto, llevaremos a cabo "
+"nuestro asalto en dos fases\".\n"
+"    El esquema del sistema en la pared se actualiza con un grupo de "
+"logotipos blancos Dvaered, colocados a cierta distancia del disco brillante. "
+"También hay varios puntos blancos que aparentemente representan las escoltas "
+"de los cazas.\n"
+"    \"Nuestra fuerza de ataque estará formada por el HDSF Obstinado, varios "
+"destructores de escolta y dos alas de cazas de escolta. Además, a nuestras "
+"fuerzas se unirá el ciudadano {player}, que se ha ofrecido a luchar en "
+"nombre de la Casa Dvaered en esta ocasión\". El oficial te asiente con la "
+"cabeza y luego continúa con su informe. \"Nuestras fuerzas y formación serán "
+"tales que parece que nos estamos preparando para un ametrallamiento "
+"estándar, y de hecho esto es lo que ocurrirá si el FLF decide sentarse y "
+"acobardarse. Sin embargo, esperamos que presenten batalla.\""
 
 #: dat/missions/dvaered/dv_antiflf03.lua:81
 msgid ""
@@ -44237,19 +44821,46 @@ msgid ""
 "action before in your career, but you still feel tense about what is to "
 "come. You decide to have another drink, just for luck."
 msgstr ""
+"El esquema se actualiza de nuevo, esta vez mostrando varios pequeños grupos "
+"de puntos rojos entre el disco brillante y la formación Dvaered.\n"
+"   \"La FLF enviará alas de cazas y bombarderos para enfrentarse a nuestra "
+"fuerza de ataque. En este momento se desconoce el número y la composición de "
+"las naves, pero parece prudente asumir que nos superarán en número por un "
+"buen margen. Su tarea como escoltas auxiliares es proteger los flancos de la "
+"fuerza de ataque e interceptar cualquier nave del FLF que intente apuntar al "
+"Obstinado. Tengan en cuenta que el Obstinado dispondrá de un armamento "
+"limitado contra los cazas, ya que la mayor parte de su casco está dedicada a "
+"las bahías de caza. El Obstinado no debe ser destruido. Este es su objetivo "
+"primordial\".\n"
+"    En la pared, los puntos rojos son interceptados por los puntos blancos y "
+"parpadean fuera de la existencia. A continuación, un segundo grupo de puntos "
+"blancos aparece cerca de los logotipos de Dvaered, y se dirige hacia el "
+"disco brillante.\n"
+"    \"Tan pronto como el FLF haya agotado sus fuerzas tratando de "
+"contraatacar, el HDSF Obstinado comenzará a lanzar bombarderos. Creemos que "
+"los bombarderos por sí solos podrán acabar con la base enemiga, pero en caso "
+"de que la resistencia sea más fuerte de lo esperado, la propia Obstinada se "
+"desplazará para proporcionar apoyo de fuego.\"\n"
+"    El disco brillante en la pared se desvanece, dejando a la flota Dvaered "
+"sola y victoriosa.\n"
+"    \"Eso es todo. Tienen sus órdenes. Preséntense en sus puestos según sus "
+"horarios. Los veré a todos en {sys}. Buena suerte\".\n"
+"    Algún tiempo después, estás de vuelta en el bar del puerto espacial "
+"Dvaered. Ya has visto acción en tu carrera, pero aún te sientes tenso por lo "
+"que está por venir. Decides tomar otro trago, sólo para tener suerte."
 
 #: dat/missions/dvaered/dv_antiflf03.lua:90
 #: dat/missions/dvaered/dv_antiflf03.lua:98
 msgid "Destroy the FLF base!"
-msgstr ""
+msgstr "¡Destruye la base FLF!"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:92
 msgid "Defend the HDSF Obstinate and its escorts"
-msgstr ""
+msgstr "Defiende el HDSF Obstinado y sus escoltas"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:93
 msgid "Destroy the FLF base"
-msgstr ""
+msgstr "Destruye la base FLF"
 
 #. Update mission
 #: dat/missions/dvaered/dv_antiflf03.lua:94
@@ -44258,23 +44869,26 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:90
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:64
 msgid "Return to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Regresa a {pnt} en el sistema {sys}"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:96
 msgid ""
 "The Dvaered are poised to launch an all-out attack on the secret FLF base. "
 "You have chosen to join this battle for wealth and glory."
 msgstr ""
+"Los Dvaered están preparados para lanzar un ataque total contra la base "
+"secreta de la FLF. Has elegido unirte a esta batalla por la riqueza y la "
+"gloria."
 
 #: dat/missions/dvaered/dv_antiflf03.lua:97
 msgid "Wealth and glory"
-msgstr ""
+msgstr "Riqueza y gloria"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:107
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:76
 #: dat/missions/neutral/race1.lua:59 dat/missions/neutral/race2.lua:69
 msgid "Refusal"
-msgstr ""
+msgstr "Rechazar"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:107
 msgid ""
@@ -44282,6 +44896,9 @@ msgid ""
 "isn't yet underway, you may still choose to participate. Simply come back to "
 "me if you change your mind.\""
 msgstr ""
+"\"Entendido, ciudadano. Tenga en cuenta, sin embargo, que mientras la "
+"operación no esté todavía en marcha, puede optar por participar. Simplemente "
+"vuelve a mí si cambias de parecer.\""
 
 #. Amount of initial Dvaered bombers
 #. Amount of reinforcement Dvaered bombers
@@ -44293,17 +44910,21 @@ msgid ""
 "All Dvaered vessels in position. Citizen, join the fleet and commence the "
 "attack!"
 msgstr ""
+"Todas las naves Dvaered en posición. ¡Ciudadano, únase a la flota y comience "
+"el ataque!"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:143
 msgid ""
 "You have left the system without first completing your mission. This "
 "treachery will not soon be forgotten by the Dvaered authorities!"
 msgstr ""
+"Has abandonado el sistema sin haber completado tu misión. ¡Esta traición no "
+"será olvidada pronto por las autoridades Dvaered!"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:168
 #: dat/missions/dvaered/dv_antiflf03.lua:172
 msgid "FLF base? What FLF base?"
-msgstr ""
+msgstr "¿Base FLF? ¿Qué base FLF?"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:168
 msgid ""
@@ -44329,6 +44950,27 @@ msgid ""
 "enjoy greater respect when you wear this on your lapel, at least as long as "
 "you're in Dvaered space.\""
 msgstr ""
+"Cuando sales de tu nave, una delegación militar Dvaered te está esperando. "
+"Normalmente esto no sería algo bueno, ya que los militares Dvaered suelen "
+"ver a los civiles como parches móviles de aire, a menos que hayan hecho algo "
+"malo. Pero este caso es una excepción. Los soldados te acompañan amablemente "
+"al despacho del coronel Urnus, el hombre que te involucró en esta operación "
+"en primer lugar.\n"
+"    \"Bien visto, ciudadano {player}\", te dice Urnus. \"¿Un cigarro? Oh. "
+"Bueno, como quieras. De todos modos, quería agradecerte personalmente tu "
+"papel en la reciente victoria contra el FLF. Si no hubiera sido por la "
+"información que nos proporcionaste, quizá nunca hubiéramos acabado con su "
+"nido. Además, tus esfuerzos en el campo de batalla han ayudado a asegurar "
+"nuestra victoria. La Casa Dvaered reconoce logros como ese, ciudadano\".\n"
+"    El Coronel se dirige a un armario de su despacho y saca una pequeña "
+"caja. De la caja saca un par de fichas de crédito, así como un pequeño "
+"alfiler de metal con forma de estrella.\n"
+"    \"Esto es una recompensa por sus servicios. El dinero habla por sí "
+"mismo, por supuesto. En cuanto al broche, es una condecoración civil, la "
+"Estrella del Valor. Piensa en ella como una insignia de honor. No es una "
+"medalla, pero se considera una marca de prestigio entre los ciudadanos "
+"Dvaered. Sin duda gozarás de mayor respeto cuando la lleves en la solapa, al "
+"menos mientras estés en el espacio Dvaered.\""
 
 #: dat/missions/dvaered/dv_antiflf03.lua:172
 msgid ""
@@ -44349,6 +44991,22 @@ msgid ""
 "regime, perhaps you might want to reconsider your allegiance when the time "
 "comes..."
 msgstr ""
+"El coronel Urnus vuelve a su asiento.\n"
+"    \"Sin embargo, déjeme decirle una cosa. Dudo que hayamos visto lo último "
+"del FLF. Puede que les hayamos asestado un golpe mortal al eliminar su base "
+"oculta, pero mientras el sentimiento rebelde sea alto entre los mundos "
+"Frontera, volverán a asomar sus feas cabezas. Eso significa que mi trabajo "
+"no ha terminado, y tal vez significa que el tuyo tampoco. Tal vez en el "
+"futuro volvamos a trabajar juntos, pero esta vez no se tratará sólo de "
+"eliminar una amenaza a nuestras puertas\". Urnus sonríe con tristeza. \"Se "
+"tratará de erradicar el origen del problema de una vez por todas\".\n"
+"Mientras camina por el pasillo que conduce a la salida del complejo militar, "
+"con la Estrella del Valor brillando en tu solapa, te encuentras pensando en "
+"lo que tus decisiones podrían conducir en última instancia. El Coronel Urnus "
+"insinuó una guerra en la Frontera, y también indicó que tú estarías "
+"involucrado. Aunque los Dvaered te han tratado tan bien como se puede "
+"esperar de un régimen militar, quizás quieras reconsiderar tu lealtad cuando "
+"llegue el momento..."
 
 #: dat/missions/dvaered/dv_antiflf03.lua:183
 msgid ""
@@ -44358,17 +45016,22 @@ msgid ""
 "Dvaered again in a future campaign aimed at \"rooting out the source of the "
 "problem once and for all\"."
 msgstr ""
+"Has ayudado a los Dvaered en la destrucción de la base secreta del FLF, "
+"Sindbad. Los terroristas no han sido eliminados del todo, pero su número se "
+"ha reducido considerablemente. El coronel Urnus sugirió que podríais ayudar "
+"a los Dvaered de nuevo en una futura campaña destinada a \"erradicar el "
+"origen del problema de una vez por todas\"."
 
 #. Timer for the frontier's invasion
 #. Spawns the FLF base, ship version.
 #: dat/missions/dvaered/dv_antiflf03.lua:238
 msgid "Terrorist station eliminated! All units, return to base."
-msgstr ""
+msgstr "¡Estación terrorista eliminada! Todas las unidades, regresen a base."
 
 #. Spawns the one-time-only Dvaered ships. Bombers are handled elsewhere.
 #: dat/missions/dvaered/dv_antiflf03.lua:257
 msgid "Obstinate"
-msgstr ""
+msgstr "Obstinado"
 
 #. Treat player as one more
 #. Helper function
@@ -44385,12 +45048,14 @@ msgstr ""
 #. player.msg("Starting stage 4.")
 #: dat/missions/dvaered/dv_antiflf03.lua:388
 msgid "This is Obstinate. Launching bombers."
-msgstr ""
+msgstr "Aquí Obstinado. Lanzando bombarderos."
 
 #: dat/missions/dvaered/dv_antiflf03.lua:396
 msgid ""
 "WARNING: dv_antiflf03: going to next stage, but next stage doesn't exist!"
 msgstr ""
+"ADVERTENCIA: dv_antiflf03: ¡va a la siguiente etapa, pero la siguiente etapa "
+"no existe!"
 
 #. Capsule function for pilot.broadcast, for timer use
 #. Spawns the initial Dvaered bombers.
@@ -44409,17 +45074,19 @@ msgstr ""
 #. Handle mission failure.
 #: dat/missions/dvaered/dv_antiflf03.lua:538
 msgid "The flagship is dead!"
-msgstr ""
+msgstr "¡La nave insignia ha muerto!"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:538
 msgid ""
 "The HDSF Obstinate has been destroyed by the FLF defending forces! This "
 "mission can no longer be completed."
 msgstr ""
+"El HDSF Obstinado ha sido destruido por las fuerzas defensoras del FLF. Esta "
+"misión ya no puede ser completada."
 
 #: dat/missions/dvaered/dv_antiflf03.lua:561
 msgid "This is Obstinate, we're under fire!"
-msgstr ""
+msgstr "Aquí Obstinado, ¡estamos bajo fuego!"
 
 #. Make escorts fight back, then return to their positions
 #.
@@ -44450,25 +45117,28 @@ msgstr ""
 #. luacheck: globals abort complete enter fleetdv_attacked hawk_attacked hawk_dead hawk_jump hawk_land jump_fleet_cap_dead jumpout land spawn_fleet undo_invuln (Hook functions passed by name)
 #: dat/missions/dvaered/dv_diversion.lua:39
 msgid "Khan is dead! Who will be our warlord now?"
-msgstr ""
+msgstr "¡Khan está muerto! ¿Quién será ahora nuestro señor de la guerra?"
 
 #: dat/missions/dvaered/dv_diversion.lua:40
 msgid "Obviously the one who killed him!"
-msgstr ""
+msgstr "¡Obviamente el que lo mató!"
 
 #: dat/missions/dvaered/dv_diversion.lua:41
 msgid "I will never serve a different warlord than Khan! Die, you traitors!"
 msgstr ""
+"¡Nunca serviré a un señor de la guerra diferente a Khan! ¡Morid, traidores!"
 
 #: dat/missions/dvaered/dv_diversion.lua:49
 msgid ""
 "A high ranking Dvaered officer. It looks like he might have a job offer for "
 "you."
 msgstr ""
+"Un oficial de alto rango Dvaered. Parece que podría tener una oferta de "
+"trabajo para ti."
 
 #: dat/missions/dvaered/dv_diversion.lua:53
 msgid "The job offer"
-msgstr ""
+msgstr "La oferta de trabajo"
 
 #: dat/missions/dvaered/dv_diversion.lua:53
 msgid ""
@@ -44476,12 +45146,16 @@ msgid ""
 "looking for a pilot like yourself.\n"
 "\"I am looking for a skilled pilot to do a simple job for me, interested?\""
 msgstr ""
+"Te acercas al oficial Dvaered en su mesa. Menciona que está buscando un "
+"piloto como tú.\n"
+"\"Estoy buscando un piloto experto que haga un trabajo sencillo para mí, "
+"¿interesado?\""
 
 #: dat/missions/dvaered/dv_diversion.lua:55
 #: dat/missions/dvaered/dv_diversion.lua:58
 #: dat/missions/dvaered/dv_diversion.lua:59
 msgid "A small distraction"
-msgstr ""
+msgstr "Una pequeña distracción"
 
 #: dat/missions/dvaered/dv_diversion.lua:55
 msgid ""
@@ -44506,6 +45180,12 @@ msgid ""
 "Then we will jump into the system and destroy the Hawk before the fighters "
 "can return.\""
 msgstr ""
+"\"Ahí es donde entras tú. Saltarás a {sys} y encontrarás al Halcón y sus "
+"escoltas. Antes de que el Halcón pueda alcanzar el hiperespacio, le "
+"dispararás y harás que los cazas se enfrenten a ti. En este punto, debes "
+"huir del Halcón y del punto de salto, para que los cazas te persigan. "
+"Entonces saltaremos al sistema y destruiremos el Halcón antes de que los "
+"cazas puedan regresar.\""
 
 #: dat/missions/dvaered/dv_diversion.lua:59
 msgid ""
@@ -44513,17 +45193,22 @@ msgid ""
 "so the fighters must be far enough away by then not to come back and attack "
 "us.\""
 msgstr ""
+"\"Saltaremos en aproximadamente 80 hectosegundos después de que tú saltes a "
+"{sys}, así que los cazas deben estar lo suficientemente lejos para entonces "
+"como para no volver a atacarnos.\""
 
 #: dat/missions/dvaered/dv_diversion.lua:62
 #: dat/missions/dvaered/dv_diversion.lua:67
 msgid "A Small Distraction"
-msgstr ""
+msgstr "Una Pequeña Distracción"
 
 #: dat/missions/dvaered/dv_diversion.lua:64
 msgid ""
 "Fire on the Hawk and flee from the fighter escorts until the Dvaered fleet "
 "jumps in and destroys the Hawk"
 msgstr ""
+"Dispara al Halcón y huye de los cazas de escolta hasta que la flota Dvaered "
+"salta y destruye el Halcón"
 
 #: dat/missions/dvaered/dv_diversion.lua:66
 msgid ""
@@ -44533,25 +45218,30 @@ msgid ""
 "can return. The mission will fail if the Hawk survives or the Dvaered task "
 "force is eliminated."
 msgstr ""
+"Has sido reclutado para distraer a los cazas Dvaered de escolta y alejarlos "
+"de la puerta de salto y de la nave capital, el Halcón. El grupo de trabajo "
+"Dvaered saltará e intentará destruir el Halcón antes de que las naves de "
+"escolta puedan regresar. La misión fracasará si el Halcón sobrevive o el "
+"grupo de trabajo Dvaered es eliminado."
 
 #: dat/missions/dvaered/dv_diversion.lua:77
 msgid "Nuts"
-msgstr ""
+msgstr "Nueces"
 
 #. Create the custom factions
 #: dat/missions/dvaered/dv_diversion.lua:97
 msgid "The Hawk"
-msgstr ""
+msgstr "El Halcón"
 
 #: dat/missions/dvaered/dv_diversion.lua:98
 msgid "Attackers"
-msgstr ""
+msgstr "Atacantes"
 
 #. Spawn people
 #: dat/missions/dvaered/dv_diversion.lua:108
 #: dat/scripts/pilotname/generic.lua:41
 msgid "Hawk"
-msgstr ""
+msgstr "Halcón"
 
 #. Half finished installing weapons. :)
 #: dat/missions/dvaered/dv_diversion.lua:119
@@ -44559,16 +45249,18 @@ msgid ""
 "Alright folks, this will be Hawk's maiden jump. Continue on course to the "
 "{sys} jump gate."
 msgstr ""
+"Muy bien amigos, este será el primer salto de Halcón. Continúen el curso "
+"hacia la puerta de salto de {sys}."
 
 #. Got away
 #: dat/missions/dvaered/dv_diversion.lua:145
 #: dat/missions/dvaered/dv_diversion.lua:151
 msgid "The Hawk got away!"
-msgstr ""
+msgstr "¡El Halcón se escapó!"
 
 #: dat/missions/dvaered/dv_diversion.lua:145
 msgid "The Hawk jumped out of the system. You have failed your mission."
-msgstr ""
+msgstr "El Halcón saltó fuera del sistema. Has fracasado en tu misión."
 
 #: dat/missions/dvaered/dv_diversion.lua:151
 msgid "The Hawk landed back on {pnt}. You have failed your mission."
