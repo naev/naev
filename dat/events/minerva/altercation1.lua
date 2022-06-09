@@ -3,7 +3,6 @@
 <event name="Minerva Station Altercation 1">
  <trigger>none</trigger>
  <chance>0</chance>
- <flags />
  <notes>
   <campaign>Minerva</campaign>
   <requires name="Minerva Station">Random event when gained more than 10 tokens</requires>
