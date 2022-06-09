@@ -1,6 +1,6 @@
 # Missions and Events
 
-Naev missions and events are written in the Lua Programming Language[^lua].
+Naev missions and events are written in the [Lua Programming Language](https://www.lua.org).
 In particular, they use version 5.1 of the Lua programming language.
 While both missions and events share most of the same API, they differ in the following ways:
 
@@ -13,14 +13,12 @@ On the other hand, most events are related to game internals and cutscenes such 
 
 A full overview of the Lua API can be found at [naev.org/api](https://naev.org/api) and is out of the scope of this document.
 
-[^lua]: https://www.lua.org/
-
 ## Getting Started
 
 Missions and events share the same overall structure in which there is a large Lua comment at the top containing all sorts of meta-data, such as where it appears, requirements, etc.
 Once the mission or event is started, the obligatory `create` function entry point is run.
 
-Let us start by writing a simple mission header. This will be enclosed by long lua comments `--[[` and `--]]` in the file. Below is our simple header.
+Let us start by writing a simple mission header. This will be enclosed by long Lua comments `--[[` and `--]]` in the file. Below is our simple header.
 
 ```lua
 --[[
