@@ -215,6 +215,8 @@ unsigned int npc_add_event( unsigned int evt, const char *func, const char *name
  */
 static int npc_rm( NPC_t *npc )
 {
+   if (npc == NULL)
+      return 0;
    npc_free(npc);
    array_erase( &npc_array, &npc[0], &npc[1] );
    return 0;
