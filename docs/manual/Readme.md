@@ -4,14 +4,14 @@ This is the home of the Naev Development Manual that covers all topics of Naev d
 
 Please click on the following links to access different parts of the document.
 
-## [Introduction](docs/manual/sec/intro.md)
+## [Introduction](sec/intro.md)
 
-## [Missions and Events](docs/manual/sec/misn.md)
+## [Missions and Events](sec/misn.md)
 
-### [Headers](docs/manual/sec/misn-header.md)
+### [Headers](sec/misn-header.md)
 
-### [Basics](docs/manual/sec/misn-basics.md)
+### [Basics](sec/misn-basics.md)
 
-### [Advanced](docs/manual/sec/misn-advanced.md)
+### [Advanced](sec/misn-advanced.md)
 
-### [Tips](docs/manual/sec/misn-tips.md)
+### [Tips](sec/misn-tips.md)
