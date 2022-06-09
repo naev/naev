@@ -52,7 +52,54 @@ It is important to note that almost everything can be stored in the `mem` table,
 ### Hooks
 \label{sec:misn-basic-hooks}
 
+Hooks are the basic way missions and events can interact with the game. They are accessed via the `hook.*` API and basically serve the purpose of binding script functions to specific in-game events or actions. A full list of the hook API is [available here](https://naev.org/api/modules/hook.html). **Hooks are saved and loaded automatically.**
+
+The basics to using hooks is as follows:
+
+```lua
+function create ()
+   -- ...
+
+   hook.land( "land" )
+end
+
+function land ()
+   -- ...
+end
+```
+
+In this example, at the end of the `create` function, the local function `land` is bound to the player landing with `hook.land`. Thus, whenever the player lands, the script function `land` will be run. All hook functions return a hook ID that can be used to remove the hook with `hook.rm`. For example, we can write a slightly more complicated example as such:
+
+```lua
+function create ()
+   -- ...
+
+   mem.hook_land = hook.land( "land" )
+   mem.hook_enter = hook.enter( "enter" )
+end
+
+function land ()
+   -- ...
+end
+
+function enter ()
+   hook.rm( mem.hook_land )
+   hook.rm( mem.hook_enter )
+end
+```
+
+The above example is setting up a `land` hook when the player lands, and an `enter` hook, which activates whenever the player enters a system by either taking off or jumping. Both hooks are stored in persistent memory, and are removed when the `enter` function is run when the player enters a system.
+
+Each mission or event can have an infinite number of hooks enabled. Except for timer hooks, hooks do not get removed when run.
+
+#### Timer Hooks
+
 TODO
+
+#### Pilot Hooks
+
+TODO
+
 
 ### Translating
 \label{sec:misn-basic-translation}
