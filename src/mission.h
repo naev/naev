@@ -24,7 +24,7 @@ typedef enum MissionAvailability_ {
    MIS_AVAIL_SHIPYARD,   /**< Mission is available at shipyard. */
    MIS_AVAIL_LAND,       /**< Mission is available on landing. */
    MIS_AVAIL_COMMODITY,  /**< Mission is available at commodity exchange. */
-   MIS_AVAIL_SPACE       /**< Mission is available in space. */
+   MIS_AVAIL_ENTER       /**< Mission is available in space when player enters a system. */
 } MissionAvailability;
 
 /* flag functions */

@@ -919,8 +919,8 @@ static int mission_location( const char *loc )
          return MIS_AVAIL_LAND;
       else if (strcasecmp( loc, "Commodity" ) == 0)
          return MIS_AVAIL_COMMODITY;
-      else if (strcasecmp( loc, "Space" ) == 0)
-         return MIS_AVAIL_SPACE;
+      else if (strcasecmp( loc, "Enter" ) == 0)
+         return MIS_AVAIL_ENTER;
    }
    return -1;
 }
