@@ -81,11 +81,13 @@ function accept ()
 
    misn.setTitle( _("Deliver Apples") )
    misn.setReward( fmt.credits( reward ) )
-   misn.setDesc( fmt.f(_("Take Apples to {spb} ({sys})."),
+   local desc = fmt.f(_("Take Apples to {spb} ({sys})."),
          {spb=mem.dest,sys=mem.destsys}) )
+   misn.setDesc( desc )
+   misn.osdCreate( _("Apples"), { desc } )
 
    misn.cargoAdd( "Food", 1 )
-   misn.markerAdd( mem.destsys )
+   misn.markerAdd( mem.dest )
 
    hook.land( "land" )
 end
@@ -97,7 +99,7 @@ The function contains of 3 main parts:
 
 1. We first check to see if the player has enough space for the apples with `player.pilot():cargoFree()` and display a message and return from the function if not.
 1. We then ask the player if then ask the player if they want to deliver apples to **Caladan** and if they don't, we give a message and return from the function.
-1. Finally, we accept the mission, adding it to the player's active mission list, set the details, add the cargo to the player, and define a hook on when the player lands to run the final part of the mission.
+1. Finally, we accept the mission, adding it to the player's active mission list, set the details, add the cargo to the player, and define a hook on when the player lands to run the final part of the mission. Functions like `misn.markerAdd` add markers on the spob the player has to go to, making it easier to complete the mission. The On-Screen Display (OSD) is also set with the mission details to guide the player with `misn.osdCreate`.
 
 Some important notes.
 
@@ -108,17 +110,19 @@ Some important notes.
 Now this gives us almost the entirety of the mission, but a last crucial component is missing: we need to reward the player when they deliver the cargo to **Caladan**. We do this by exploiting the `hook.land` that makes it so our defined `land` function gets called whenever the player lands. We can define one as follows:
 
 ```lua
+local neu = require "common.neutral"
 function land ()
    if spob.cur() ~= mem.dest then
       return
    end
 
    vn.msg(_("Winner"), _("You win!"))
+   neu.addMiscLog( _("You helped deliver apples!") )
    player.pay( reward )
    misn.finish(true)
 end
 ```
 
-We can see it's very simple. It first does a check to make sure the landed planet `spob.cur()` is indeed the destination planet `mem.dest`. If not, it returns, but if it is, it'll display a message, pay the player, and finally finish the mission with `misn.finish(true)`. Remember that since this is defined to be a unique mission, once the mission is done it will not appear again to the same player.
+We can see it's very simple. It first does a check to make sure the landed planet `spob.cur()` is indeed the destination planet `mem.dest`. If not, it returns, but if it is, it'll display a message, add a message to the ship log, pay the player, and finally finish the mission with `misn.finish(true)`. Remember that since this is defined to be a unique mission, once the mission is done it will not appear again to the same player.
 
-That concludes our very simple introduction to mission writing. Note that it doesn't handle things like the ship log, playing victory sounds, nor other more advanced functionality. However, please refer to the full example in Section \ref{sec:misn-example} that covers more advanced functionality.
+That concludes our very simple introduction to mission writing. Note that it doesn't handle things like playing victory sounds, nor other more advanced functionality. However, please refer to the full example in Section \ref{sec:misn-example} that covers more advanced functionality.
