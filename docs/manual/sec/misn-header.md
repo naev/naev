@@ -1,7 +1,7 @@
 ## Headers
 \label{sec:misn-headers}
 
-Headers contain all the necessary data about a mission or event to determine where and when they should be run. They are written as XML code embedded in a Lua comment at the top of each individual mission or event. In the case a lua file does not contain a header, it is ignored and not loaded as a mission or event.
+Headers contain all the necessary data about a mission or event to determine where and when they should be run. They are written as XML code embedded in a Lua comment at the top of each individual mission or event. In the case a Lua file does not contain a header, it is ignored and not loaded as a mission or event.
 
 The header has to be at the top of the file starting with `--[[` and ending with `--]]` which are long Lua comments with newlines. A full example is shown below using all the parameters, however, some are contradictory in this case.
 
@@ -24,13 +24,14 @@ The header has to be at the top of the file starting with `--[[` and ending with
  <tags>
   <some_random_binary_tag />
  </tags>
+ <notes />
 </mission>
 --]]
 ```
 
 Let us go over the different parameters. First of all, either a `<mission>` or `<event>` node is necessary as the root for either missions (located in `dat/missions/`) or events (located in `dat/events/`). The `name` attribute has to be set to a unique string and will be used to identify the mission.
 
-Next it is possible to identify mission properties. In particular, only the `<unique />` property is supported, which indicates the mission can only be completed once. It will not appear agian to the same player.
+Next it is possible to identify mission properties. In particular, only the `<unique />` property is supported, which indicates the mission can only be completed once. It will not appear again to the same player.
 
 The core of the header lies in the `<avail>` node which includes all the information about mission availability. Most are optional and ignored if not provided. The following nodes can be used to control the availability:
 
@@ -57,4 +58,78 @@ The valid location parameters are as follows:
 
 Note that availability differs between events and missions. Furthermore, there are two special cases for missions: `computer` and `bar` that both support an `accept` function. In the case of the mission computer, the `accept` function is run when the player tries to click on the accept button in the interface. On the other hand, the spaceport bar `accept` function is called when the NPC is approached. Note that this NPC must be defined with `misn.setNPC` to be approachable.
 
-Finally, notice that it is also possible to define arbitrary tags in the `<tags>` node. This can be accessed with `player.misnDoneList()` and can be used for things such as handling faction standing caps automatically.
+Also notice that it is also possible to define arbitrary tags in the `<tags>` node. This can be accessed with `player.misnDoneList()` and can be used for things such as handling faction standing caps automatically.
+
+Finally, there is a `<notes>` section that contains optional meta data about the meta data. This is only used by auxiliary tools to create visualizations of mission maps.
+
+### Example: Cargo Missions
+
+Cargo missions appear at the mission computer in a multitude of different factions. Since they are not too important, they have a lower than default priority (6). Furthermore, they have 9 independent chances to appear, each with 60\% chance. This is written as `<chance>960</chance>`. The full example is shown below:
+
+```lua
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Cargo">
+ <avail>
+  <priority>6</priority>
+  <chance>960</chance>
+  <location>Computer</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
+--]]
+```
+
+### Example: Antlejos
+
+Terraforming antlejos missions form a chain. Each mission requires the previous one and are available at the same planet (Antlejos V) with 100\% chance. The priority is slightly lower than default to try to ensure the claims get through. Most missions trigger on *Land* because Antlejos V does not have a spaceport bar at the beginning. The full example is shown below:
+
+```lua
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Terraforming Antlejos 3">
+ <unique />
+ <avail>
+  <priority>4</priority>
+  <chance>100</chance>
+  <location>Land</location>
+  <spob>Antlejos V</spob>
+  <done>Terraforming Antlejos 2</done>
+ </avail>
+ <notes>
+  <campaign>Terraforming Antlejos</campaign>
+ </notes>
+</mission>
+--]]
+```
+
+
+### Example: Taiomi
+
+Next is an example of a unique event. The Finding Taiomi event has a 100\% of appearing in the `Bastion` system outside of Chapter 0. It triggers automatically when entering the system.
+
+```lua
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Finding Taiomi">
+ <trigger>enter</trigger>
+ <unique />
+ <chance>100</chance>
+ <cond>system.cur() == system.get("Bastion")</cond>
+ <chapter>[^0]</chapter>
+ <notes>
+  <campaign>Taiomi</campaign>
+ </notes>
+</event>
+--]]
+```
