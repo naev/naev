@@ -233,7 +233,7 @@ Each mission or event can have an infinite number of hooks enabled. Except for `
 
 Timer hooks are hooks that get run once when a certain amount of real in-game time has passed. Once the hook is triggered, it gets removed automatically. If you wish to repeat a function periodically, you have to create a new timer hook. A comomnly used example is shown below.
 
-```
+```lua
 function create ()
    -- ...
 
