@@ -21,10 +21,9 @@
    There is documentation on Naev's Lua API at: http://api.naev.org/
    You can study the source code of missions in [path_to_Naev_folder]/dat/missions/
 
-   When creating a mission with this template, please erase the
-   explanatory comments (such as this one) along the way, but retain the
-   above license header and the MISSION and DESCRIPTION fields below,
-   adapted to your mission.
+   When creating a mission with this template, please erase the explanatory
+   comments (such as this one) along the way, but retain the the MISSION and
+   DESCRIPTION fields below, adapted to your mission.
 
    MISSION: <NAME GOES HERE>
    DESCRIPTION: <DESCRIPTION GOES HERE>
