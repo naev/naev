@@ -322,7 +322,7 @@ function create ()
 end
 ```
 
-Let us break down this example. First, we include the library as `fmt`. This is the recommended way of including it. Afterwards, we run `fmt.f` which is the main formatting function. This takes two parameters: a string to be formatted, and a table of values to format with. The string contains substrings of the form `"{foo}"`, that is, a variable name sorrounded by `{` and `}`. Each of these substrings is replaced by the corresponding field in the table passed as the second parameter, which are converted to strings. So, in this case, `{spb}` gets replaced by the value of `table.spb` which in this case is the variable `spb` that corresponds to the Spob of `Caladan`. This gets converted to a string, which in this case is the translated name of the planet. If any of the substrings are missing and not found in the table, it will raise an error.
+Let us break down this example. First, we include the library as `fmt`. This is the recommended way of including it. Afterwards, we run `fmt.f` which is the main formatting function. This takes two parameters: a string to be formatted, and a table of values to format with. The string contains substrings of the form `"{foo}"`, that is, a variable name surrounded by `{` and `}`. Each of these substrings is replaced by the corresponding field in the table passed as the second parameter, which are converted to strings. So, in this case, `{spb}` gets replaced by the value of `table.spb` which in this case is the variable `spb` that corresponds to the Spob of `Caladan`. This gets converted to a string, which in this case is the translated name of the planet. If any of the substrings are missing and not found in the table, it will raise an error.
 
 There are additional useful functions in the `format` library. In particular the following:
 
@@ -330,13 +330,36 @@ There are additional useful functions in the `format` library. In particular the
 * `format.credits`: Displays a credit value with the credit symbol ¤.
 * `format.reward`: Used for displaying mission rewards.
 * `format.tonnes`: Used to convert tonne values to strings.
-* `format.list`: Displays a list of values with commans and the word "and". For example `{"one", "two", "three"}` becomes `"one, two, and three"`.
-* `format.humanize`: Converts a number string to a human readable rough string such as`"1.5 billion"`.
+* `format.list`: Displays a list of values with commas and the word "and". For example `{"one", "two", "three"}` becomes `"one, two, and three"`.
+* `format.humanize`: Converts a number string to a human readable rough string such as `"1.5 billion"`.
 
 More details can be found in the [generated documentation](https://naev.org/api/modules/format.html).
 
 ### Colouring Text
 \label{sec:misn-basic-colour}
+
+All string printing functions in Naev accept special combinations to change the colour. This will work whenever the string is shown to the player. In particular, the character `#` is used for a prefix to set the colour of text in a string. The colour is determined by the character after `#`. In particular, the following are valid values:
+
+| Symbol | Description |
+| --- | --- |
+| `#0` | Resets colour to the default value. |
+| `#r` | Red colour. |
+| `#g` | Green colour. |
+| `#b` | Blue colour. |
+| `#o` | Orange colour. |
+| `#y` | Yellow colour. |
+| `#w` | White colour. |
+| `#p` | Purple colour. |
+| `#n` | Grey colour. |
+| `#F` | Colour indicating friend. |
+| `#H` | Colour indicating hostile. |
+| `#N` | Colour indicating neutral. |
+| `#I` | Colour indicating inert. |
+| `#R` | Colour indicating restricted. |
+
+Multiple colours can be used in a string such as `"It is a #ggood#0 #rmonday#0!"`. In this case, the word `"good"` is shown in green, and `"monday"` is shown in red. The rest of the text will be shown in the default colour.
+
+While it is possible to accent and emphasize text with this, it is important to not go too overboard, as it can difficult translating. When possible, it is also best to put the colour outside of the string being translated. For example `_("#rred#0")`  should be written as `"#r".._("red").."#0"`.
 
 ### System Claiming
 \label{sec:misn-basic-claims}
