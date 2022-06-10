@@ -154,7 +154,7 @@ function create ()
 end
 
 function land ()
-   if spob.cur() == dest then
+   if spob.cur() == dest then -- This is wrong!
       -- ...
    end
 end
