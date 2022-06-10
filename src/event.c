@@ -61,6 +61,7 @@ typedef struct EventData_ {
    char *spob; /**< Spob name. */
    char *system; /**< System name. */
    char *chapter; /**< Chapter name. */
+   int *factions; /**< Faction checks. */
    pcre2_code *chapter_re; /**< Compiled regex chapter if applicable. */
 
    EventTrigger_t trigger; /**< What triggers the event. */
@@ -338,6 +339,28 @@ void events_trigger( EventTrigger_t trigger )
             (player_eventAlreadyDone(i) || event_alreadyRunning(i)))
          continue;
 
+      /* Test factions. */
+      if (ed->factions != NULL) {
+         int fct, match = 0;
+         if (trigger==EVENT_TRIGGER_ENTER)
+            fct = cur_system->faction;
+         else if (trigger==EVENT_TRIGGER_LOAD || trigger==EVENT_TRIGGER_LAND)
+            fct = land_spob->presence.faction;
+         else
+            match = -1; /* Don't hae to check factions. */
+
+         if (match==0) {
+            for (int j=0; j<array_size(ed->factions); j++) {
+               if (fct == ed->factions[j]) {
+                  match = 1;
+                  break;
+               }
+            }
+            if (!match)
+               continue;
+         }
+      }
+
       /* If chapter, must match chapter regex. */
       if (ed->chapter_re != NULL) {
          pcre2_match_data *match_data = pcre2_match_data_create_from_pattern( ed->chapter_re, NULL );
@@ -411,6 +434,13 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
       xmlr_strd(node,"cond",temp->cond);
       xmlr_float(node,"chance",temp->chance);
       xmlr_int(node,"priority",temp->priority);
+
+      if (xml_isNode(node,"faction")) {
+         if (temp->factions == NULL)
+            temp->factions = array_create( int );
+         array_push_back( &temp->factions, faction_get( xml_get(node) ) );
+         continue;
+      }
 
       /* Trigger. */
       if (xml_isNode(node,"trigger")) {
