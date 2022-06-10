@@ -755,7 +755,8 @@ void hooks_update( double dt )
 
          /* Run the timer hook. */
          hook_run( h, NULL, j );
-         hook_rmRaw( h );
+         if (j==0)
+            hook_rmRaw( h );
       }
    }
    hook_runningstack--; /* not running hooks anymore */
