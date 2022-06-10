@@ -8,8 +8,6 @@ Please click on the following links to access different parts of the document.
 
 ## [Missions and Events](sec/misn.md)
 
-### [Headers](sec/misn-header.md)
-
 ### [Basics](sec/misn-basics.md)
 
 ### [Advanced](sec/misn-advanced.md)
