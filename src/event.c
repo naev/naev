@@ -322,11 +322,20 @@ void events_trigger( EventTrigger_t trigger )
          continue;
 
       /* Spob. */
-      if ((ed->spob != NULL) && (strcmp(ed->spob,land_spob->name)!=0))
+      if ((trigger==EVENT_TRIGGER_LAND || trigger==EVENT_TRIGGER_LOAD) && (ed->spob != NULL) && (strcmp(ed->spob,land_spob->name)!=0))
          continue;
 
       /* System. */
       if ((ed->system != NULL) && (strcmp(ed->system,cur_system->name)!=0))
+         continue;
+
+      /* Make sure chance is succeeded. */
+      if (RNGF() > ed->chance)
+         continue;
+
+      /* Test uniqueness. */
+      if ((ed->flags & EVENT_FLAG_UNIQUE) &&
+            (player_eventAlreadyDone(i) || event_alreadyRunning(i)))
          continue;
 
       /* If chapter, must match chapter regex. */
@@ -347,15 +356,6 @@ void events_trigger( EventTrigger_t trigger )
          else if (rc == 0)
             continue;
       }
-
-      /* Make sure chance is succeeded. */
-      if (RNGF() > ed->chance)
-         continue;
-
-      /* Test uniqueness. */
-      if ((ed->flags & EVENT_FLAG_UNIQUE) &&
-            (player_eventAlreadyDone(i) || event_alreadyRunning(i)))
-         continue;
 
       /* Test conditional. */
       if (ed->cond != NULL) {
