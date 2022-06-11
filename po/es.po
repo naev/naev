@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-03 22:07-0400\n"
-"PO-Revision-Date: 2022-06-10 21:20+0000\n"
+"PO-Revision-Date: 2022-06-11 21:20+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -52,6 +52,11 @@ msgid ""
 "civilisation spread, as it always has, with exponential enthusiasm -- "
 "ripples in the dark sea of space."
 msgstr ""
+"La primera oleada de exploradores se arrastró de estrella en estrella a "
+"velocidades sublumínicas, hasta que la invención del motor hiperespacial "
+"impulsó un segundo crecimiento. En ese momento la civilización se extendió, "
+"como siempre lo ha hecho, con un entusiasmo exponencial, ondas a través del "
+"oscuro mar del espacio."
 
 #: dat/intro:12
 msgid ""
@@ -66,6 +71,8 @@ msgid ""
 "After a hundred years of interstellar conflict, on the ashes that remained, "
 "at last a new order built its foundations."
 msgstr ""
+"Tras cien años de conflicto interestelar, sobre las cenizas que "
+"permanecieron, finalmente una nueva orden construyó sus cimientos."
 
 #: dat/intro:17
 msgid ""
@@ -74,6 +81,11 @@ msgid ""
 "military, relations between planets resumed; abandoned trade routes saw "
 "traffic for the first time in living memory."
 msgstr ""
+"Un hombre llamado Daedris afirmó su dominio sobre los mundos exhaustos. "
+"Fundó un Imperio Galáctico y se nombró a sí mismo su soberano. Bajo el puño "
+"de hierro de su ejército, se reanudaron las relaciones entre los planetas; "
+"las rutas comerciales abandonadas retornaron desde tiempos que ya no se "
+"recordaban."
 
 #: dat/intro:19
 msgid ""
@@ -81,6 +93,10 @@ msgid ""
 "irradiated rock was cleansed and dead planets brought back to life. Peace "
 "reigned in an imperial golden age."
 msgstr ""
+"Los académicos lo llamaron el cenit: la tecnología avanzó a pasos "
+"agigantados, la cultura floreció, las rocas irradiadas fueron limpiadas y "
+"los planetas muertos volvieron a la vida. La paz reinó en una edad de oro "
+"imperial."
 
 #: dat/intro:21
 msgid ""
@@ -89,14 +105,21 @@ msgid ""
 "the imperium went awry. In some regions, administration fell into the hands "
 "of other powers. The Great Houses now policed the space lanes."
 msgstr ""
+"Después de Daedris, bajo sus sucesores, la luz del imperio se desvaneció. "
+"Las disputas civiles y la división religiosa debilitaron los vínculos "
+"sociales. Los grandes proyectos del imperio se torcieron. En algunas "
+"regiones, la administración cayó en manos de otras fuerzas. Las Grandes "
+"Casas ahora vigilaban las rutas espaciales."
 
 #: dat/intro:23
 msgid "Rise and fall, the rhythm of history."
-msgstr ""
+msgstr "Ascenso y caída, el ritmo de la historia."
 
 #: dat/intro:25
 msgid "But the march of history stumbled over the unknown, over the Incident."
 msgstr ""
+"Pero la marcha de la historia se tropezó con lo desconocido, con el "
+"Incidente."
 
 #: dat/intro:27
 msgid "It tore the heart out of the Empire."
@@ -109,6 +132,11 @@ msgid ""
 "the mysterious nebula left behind. Now the great, galaxy-spanning "
 "civilisation survives as a shadow of its former glory."
 msgstr ""
+"Desde la Tierra, una explosión cataclísmica rasgó el espacio, aniquilando "
+"estrellas, vaporizando mundos. Miles de millones de personas murieron. "
+"Decenas de sistemas desaparecieron en la misteriosa nebulosa que quedó tras "
+"de sí. Ahora, la gran civilización que abarca toda la galaxia sobrevive como "
+"una sombra de su antigua gloria."
 
 #: dat/intro:32
 msgid "What else remains? Questions."
@@ -131,7 +159,6 @@ msgstr ""
 
 #: dat/AUTHORS:2 dat/AUTHORS:26 dat/AUTHORS:38 dat/AUTHORS:63 dat/AUTHORS:173
 #: dat/AUTHORS:181
-#, fuzzy
 msgid "---------------------------------------"
 msgstr "---------------------------------------"
 
@@ -144,7 +171,6 @@ msgid "   * Lead Developer"
 msgstr ""
 
 #: dat/AUTHORS:7
-#, fuzzy
 msgid "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
 msgstr "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
 
@@ -153,7 +179,6 @@ msgid "   * Story Writer and Misc. Development"
 msgstr ""
 
 #: dat/AUTHORS:10
-#, fuzzy
 msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 msgstr "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 
@@ -162,7 +187,6 @@ msgid "   * Misc. Development and Lua unifier"
 msgstr ""
 
 #: dat/AUTHORS:13
-#, fuzzy
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
 msgstr "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
 
@@ -171,7 +195,6 @@ msgid "   * Code Carnage and Bug Beating"
 msgstr ""
 
 #: dat/AUTHORS:16
-#, fuzzy
 msgid "nenau"
 msgstr "nenau"
 
@@ -180,7 +203,6 @@ msgid "   * Misc. Development and Dvaered aficionado"
 msgstr ""
 
 #: dat/AUTHORS:19
-#, fuzzy
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 msgstr "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 
@@ -189,7 +211,6 @@ msgid "   * CI dude and Bringer of automated releases"
 msgstr ""
 
 #: dat/AUTHORS:22
-#, fuzzy
 msgid "Viktor Hahn <viktor.hahn@web.de>"
 msgstr "Viktor Hahn <viktor.hahn@web.de>"
 
@@ -202,7 +223,6 @@ msgid "Past Development Team"
 msgstr ""
 
 #: dat/AUTHORS:28
-#, fuzzy
 msgid "Nikola Whallon <6.saturn.6@gmail.com>"
 msgstr "Nikola Whallon <6.saturn.6@gmail.com>"
 
@@ -211,7 +231,6 @@ msgid "   * Bringer of Sound"
 msgstr ""
 
 #: dat/AUTHORS:31
-#, fuzzy
 msgid "Deiz"
 msgstr "Deiz"
 
@@ -220,7 +239,6 @@ msgid "   * Misc. Development"
 msgstr ""
 
 #: dat/AUTHORS:34
-#, fuzzy
 msgid "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
 msgstr "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
 
@@ -229,7 +247,6 @@ msgid "Major Contributors"
 msgstr ""
 
 #: dat/AUTHORS:40
-#, fuzzy
 msgid "Josiah Schwartfeger"
 msgstr "Josiah Schwartfeger"
 
@@ -238,7 +255,6 @@ msgid "   * Graphic Designer and Modeller"
 msgstr ""
 
 #: dat/AUTHORS:43
-#, fuzzy
 msgid "Elderman"
 msgstr "Elderman"
 
@@ -251,7 +267,6 @@ msgid "   The first non-bobbens mission developer!"
 msgstr ""
 
 #: dat/AUTHORS:47
-#, fuzzy
 msgid "Ingo Ruhnke <grumbel@gmx.de>"
 msgstr "Ingo Ruhnke <grumbel@gmx.de>"
 
@@ -260,7 +275,6 @@ msgid "   * NPC Portrait Artist"
 msgstr ""
 
 #: dat/AUTHORS:50
-#, fuzzy
 msgid "Enigmatic"
 msgstr "Enigmatic"
 
@@ -269,7 +283,6 @@ msgid "   * Ships for the Sirius, many other models and faction logos"
 msgstr ""
 
 #: dat/AUTHORS:53
-#, fuzzy
 msgid "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
 msgstr "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
 
@@ -278,7 +291,6 @@ msgid "   * Naev logo, Lua GUI development"
 msgstr ""
 
 #: dat/AUTHORS:56
-#, fuzzy
 msgid "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
 msgstr "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
 
@@ -287,7 +299,6 @@ msgid "   * Ships for the Soromid and the Za'lek"
 msgstr ""
 
 #: dat/AUTHORS:59
-#, fuzzy
 msgid "Askyel"
 msgstr "Askyel"
 
@@ -300,7 +311,6 @@ msgid "Contributions"
 msgstr ""
 
 #: dat/AUTHORS:65
-#, fuzzy
 msgid "Vega Strike <http://vegastrike.sf.net>"
 msgstr "Vega Strike <http://vegastrike.sf.net>"
 
@@ -328,7 +338,6 @@ msgid ""
 msgstr ""
 
 #: dat/AUTHORS:72
-#, fuzzy
 msgid "Joel Hans <wolorf@gmail.com>"
 msgstr "Joel Hans <wolorf@gmail.com>"
 
@@ -345,12 +354,10 @@ msgid "   Helped out when the project was starting. Great morale booster."
 msgstr ""
 
 #: dat/AUTHORS:77
-#, fuzzy
 msgid "Amir Taaki <genjix@gmail.com>"
 msgstr "Amir Taaki <genjix@gmail.com>"
 
 #: dat/AUTHORS:78
-#, fuzzy
 msgid "Rob Loach <http://robloach.net>"
 msgstr "Rob Loach <http://robloach.net>"
 
@@ -365,12 +372,10 @@ msgid ""
 msgstr ""
 
 #: dat/AUTHORS:82
-#, fuzzy
 msgid "Pete Shinners <pete@shinners.org>"
 msgstr "Pete Shinners <pete@shinners.org>"
 
 #: dat/AUTHORS:83
-#, fuzzy
 msgid "   * SavePNG"
 msgstr "   * SavePNG"
 
@@ -18620,7 +18625,7 @@ msgstr "Mercenario"
 #: dat/events/taiomi/find.lua:52 dat/events/taiomi/find.lua:64
 #: dat/missions/tutorial/nelly01.lua:322 dat/scripts/common/derelict.lua:19
 msgid "Derelict"
-msgstr "Derelicto"
+msgstr "Derrelicto"
 
 #: dat/faction.xml:603 dat/faction.xml:619
 msgid "Four Winds"
@@ -30947,13 +30952,13 @@ msgstr[0] ""
 "{msg}\n"
 "\n"
 "Esta acción sobornará a {n} {fct_list} piloto.\n"
-"Tienes {créditos}. ¿Pagar #r{precio}#0?"
+"Tienes {credits}. ¿Pagar #r{price}#0?"
 msgstr[1] ""
 "Plural\n"
 "{msg}\n"
 "\n"
 "Esta acción sobornará a {n} {fct_list} pilotos.\n"
-"Tienes {créditos}. ¿Pagar #r{precio}#0?"
+"Tienes {credits}. ¿Pagar #r{price}#0?"
 
 #: dat/comm.lua:142
 msgid ""
@@ -35258,7 +35263,7 @@ msgstr ""
 #: dat/events/neutral/derelict.lua:133
 #: dat/missions/neutral/derelict_rescue.lua:32
 msgid "Empty derelict"
-msgstr "Derelicto Vacío"
+msgstr "Derrelicto Vacío"
 
 #: dat/events/neutral/derelict.lua:135
 msgid ""
@@ -35266,9 +35271,9 @@ msgid ""
 "any remaining passengers, nor is there anything of interest to you. You "
 "decide to return to your ship."
 msgstr ""
-"Pasas un rato registrando el barco abandonado, pero no parece que haya "
+"Pasas un rato registrando el derrelicto abandonado, pero no parece que haya "
 "ningún pasajero restante, ni tampoco hay nada de interés para ti. Decides "
-"volver a tu barco."
+"volver a tu nave."
 
 #: dat/events/neutral/derelict.lua:136
 msgid ""
@@ -35292,12 +35297,12 @@ msgid ""
 "own ship, you decide to give up and leave the derelict to its creepy "
 "creaking."
 msgstr ""
-"Estás explorando el derelicto abandonado cuando oyes un extraño ruido que "
+"Estás explorando el derrelicto abandonado cuando oyes un extraño ruido que "
 "cruje. Decides seguirlo para ver cuál es su causa, pero no consigues "
 "localizar el origen. Después de una hora abriendo paneles sin éxito, "
 "presionando el oído contra la cubierta y realizando escaneos del casco desde "
-"tu propia nave, decides rendirte y dejar que la nave abandonada siga con su "
-"espeluznante chirrido."
+"tu propia nave, decides rendirte y dejar que el derrelicto abandonado siga "
+"con su espeluznante chirrido."
 
 #: dat/events/neutral/derelict.lua:138
 msgid ""
@@ -35324,7 +35329,7 @@ msgid ""
 "Below it is another carved message that says \"NO U WASNT\". Otherwise, "
 "there is nothing of interest left on this ship."
 msgstr ""
-"Parece que este derelicto ya ha sido visitado por los saqueadores. "
+"Parece que este derrelicto ya ha sido visitado por los saqueadores. "
 "Encuentras un mensaje grabado en la pared cerca de la esclusa. Se lee: \"YO "
 "ESTAVO AQUI\". Debajo hay otro mensaje tallado que dice \"NO TU NO\". Por lo "
 "demás, no queda nada de interés en esta nave."
@@ -35348,8 +35353,8 @@ msgid ""
 msgstr ""
 "Cuando la esclusa se abre, te golpea en la cara un olor impío que casi te "
 "hace desmayarte en el acto. Te apresuras a cerrar la esclusa de nuevo y "
-"huyes a tu propia nave. Lo que sea que haya en ese derelicto abandonado, ¡no "
-"quieres averiguarlo!"
+"huyes a tu propia nave. Lo que sea que haya en ese derrelicto abandonado, ¡"
+"no quieres averiguarlo!"
 
 #: dat/events/neutral/derelict.lua:143
 msgid ""
@@ -35619,7 +35624,7 @@ msgstr "Noticias frescas de todo el Imperio."
 
 #: dat/events/neutral/news.lua:54
 msgid "Remembering the Incident."
-msgstr "Recuerda el Incidente."
+msgstr "Recordando el Incidente."
 
 #: dat/events/neutral/news.lua:55
 msgid "Keeping you informed."
@@ -36541,7 +36546,7 @@ msgid ""
 "I should have waited,\" the merchant said."
 msgstr ""
 "Un comerciante se vio obligado a declararse en bancarrota debido a una "
-"operación mal programada de {carga} en {pnt}. \"Pensé que {credits} por "
+"operación mal programada de {cargo} en {pnt}. \"Pensé que {credits} por "
 "tonelada era un buen negocio, pero resulta que debería haber previsto pedir "
 "más\", dijo el comerciante."
 
@@ -36902,7 +36907,7 @@ msgstr ""
 msgid ""
 "\"Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!\""
 msgstr ""
-"\"¿Has oído hablar del Capitán T. Practice? Es increíble, ¡soy su mayor fan!"
+"\"¿Has oído hablar del Capitán T. Practica? Es increíble, ¡soy su mayor fan!"
 "\""
 
 #: dat/events/neutral/npc.lua:93
@@ -40982,8 +40987,8 @@ msgid ""
 "'#oShip AI#o' button in the #oInformation#0 menu you can open with "
 "{infokey}. Now, let's go adventuring!\""
 msgstr ""
-"\"Bien, no te daré ninguna pista. Si quieres cambiar mi configuración, "
-"activar las sugerencias, u obtener información y consejos, hazlo desde el "
+"\"Bien, no te daré ningun consejor. Si quieres cambiar mi configuración, "
+"activar los consejos, consigue información y asesoramiento, hazlo desde el "
 "botón '#oIA de Nave#o' en el menú #oInformación#0 que puedes abrir con "
 "{infokey}. Ahora, ¡vamos de aventuras!\""
 
@@ -41694,7 +41699,7 @@ msgstr "¡Demasiado grande!"
 #. "Spaceport" is nicer than "Land"
 #: dat/gui/brushed.lua:373 dat/gui/slim.lua:370
 msgid "Spaceport"
-msgstr "Espaciopuerto"
+msgstr "Puerto Espacial"
 
 #. Speed Lights
 #. Update the editor window.
@@ -46770,12 +46775,18 @@ msgid ""
 "people around are not suited to commandos, who are used to seeing strangers "
 "as potential hostiles."
 msgstr ""
+"El segundo al mando del escuadrón de Hamfresser parece tan relajado como un "
+"gladiador totorano drogado con cocaína. Está claro que los espacios abiertos "
+"como este bar con mucha gente alrededor no son adecuados para los comandos, "
+"que están acostumbrados a ver a los extraños como potenciales hostiles."
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:60
 msgid ""
 "The young cyborg sits to the right of his captain and looks suspiciously at "
 "his glass of sparkling water."
 msgstr ""
+"El joven ciborg se sienta a la derecha de su capitán y mira con recelo su "
+"vaso de agua con gas."
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:61
 msgid ""
@@ -46783,6 +46794,9 @@ msgid ""
 "combat-ready than the others, but her large, cybernetically-enhanced arms "
 "still make her look like she could crush a bull."
 msgstr ""
+"Esta soldado es la médica del equipo. Como tal, parece estar ligeramente "
+"menos preparada para el combate que los demás, pero sus grandes brazos "
+"mejorados cibernéticamente hacen que parezca que podría aplastar a un toro."
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:62
 msgid ""
@@ -46790,16 +46804,22 @@ msgid ""
 "with whom you are used to working. His presence, along with the others, "
 "makes the group even stranger."
 msgstr ""
+"El piloto es el único del grupo que parece el tipo de persona con la que "
+"estás acostumbrado a trabajar. Su presencia, junto con la de los demás, hace "
+"que el grupo sea aún más extraño."
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:82
 msgid ""
 "Captain Leblanc is the top pilot of General Klank's task force. Her presence "
 "in this bar means that the High Command needs your help."
 msgstr ""
+"El Capitán Leblanc es el mejor piloto del grupo de trabajo del General "
+"Klank. Su presencia en este bar significa que el Alto Mando necesita tu "
+"ayuda."
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:86
 msgid "A difficult mission"
-msgstr ""
+msgstr "Una misión difícil"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:86
 msgid ""
@@ -46810,17 +46830,26 @@ msgid ""
 "could be more illegal than helping black ops commandos assassinate a pilot, "
 "steal a corvette, and sabotage a warlord's cruiser. And, so, you answer:"
 msgstr ""
+"Al acercarse, Leblanc te reconoce. \"Hola, ciudadano. Es un placer "
+"encontrarte aquí. El comandante me dijo que acabaría encontrándote revisando "
+"todos los lugares sospechosos del espacio Dvaered. Necesitamos tus servicios "
+"una vez más. Pero, esta vez, será un poco... Más ilegal\". Te preguntas cómo "
+"puede ser algo más ilegal que ayudar a los comandos de operaciones "
+"encubiertas a asesinar a un piloto, robar una corbeta y sabotear el crucero "
+"de un señor de la guerra. Y, entonces, respondes:"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:87
 msgid ""
 "\"As you wish, citizen. After all, one can not obligate people to do their "
 "duty...\""
 msgstr ""
+"\"Como quiera, ciudadano. Después de todo, no se puede obligar a la gente a "
+"cumplir con su deber...\""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:90
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:92
 msgid "The problem to solve"
-msgstr ""
+msgstr "El problema a resolver"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:90
 msgid ""
@@ -46842,6 +46871,24 @@ msgid ""
 "may have guessed at this point, our mission is to help this man escape from "
 "Za'lek prison.\""
 msgstr ""
+"\"Muy bien\", dice Leblanc, \"Esta es la situación: antes de prepararnos "
+"para nuestras operaciones militares, necesitamos proteger nuestras espaldas. "
+"El comandante Tam cree que la Casa Goddard es la clave para que el Imperio "
+"no frustre nuestro plan. Tam lo explicaría mucho mejor que yo, pero como "
+"Goddard está justo en medio de nuestro espacio y el espacio imperial, "
+"realmente tienen mucho que perder en caso de un conflicto directo. Además, "
+"como somos el mejor cliente de la Casa Goddard, suelen apreciarnos. Por "
+"ejemplo, hace poco pagamos 6 millones de créditos para reparar toda la "
+"electrónica de los Goddard de Klank y AdictoABatalla.\n"
+"   Sin embargo, no todos los miembros de la junta directiva de Goddard "
+"comparten la misma opinión sobre nuestros proyectos de invasión de la "
+"frontera. El Sr. Danftang, su director de relaciones públicas, en "
+"particular, solía verlo como una oportunidad para vender más cruceros al "
+"Alto Mando y era muy favorable a la invasión. Sin embargo, recientemente fue "
+"detenido por la policía Za'lek por razones poco claras. Muchos sospechan que "
+"los accionistas de Goddard intentan ajustar cuentas. Como habrás adivinado a "
+"estas alturas, nuestra misión es ayudar a este hombre a escapar de la "
+"prisión Za'lek.\""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:92
 msgid ""
@@ -46863,14 +46910,33 @@ msgid ""
 "recognized as hostile by the Za'lek patrols and ground control services. So "
 "we should be able to refuel without any problem on Za'lek planets.\""
 msgstr ""
+"\"El objetivo se encuentra actualmente en una celda VIP de Za'lek en {pripla}"
+" en {prisys}. Será trasladado a {zlkpla} en {zlksys} para una entrevista "
+"preliminar con el juez. Los Za'lek no esperan que nadie intente liberarlo "
+"mediante la violencia, así que no están tomando demasiadas precauciones.\n"
+"   \"El comandante Tam ha planeado la operación. Primero, recogerás a "
+"Hamfresser y su equipo en {hampla} en {hamsys}. Yo también estaré allí, y "
+"luego volaremos en formación hasta {intsys} y prepararemos la emboscada. "
+"Sería preferible que te aseguraras de que tu nave no sobrepasa a mi "
+"Vendetta. El convoy debería ser de unos pocos drones y una corbeta. "
+"Destruiremos los drones e inutilizaremos la corbeta para que la unidad de "
+"comandos pueda entrar en la nave y recuperar el objetivo. Tam ha insistido "
+"en que no quiere que matemos a nadie ya que podría irritar demasiado a los "
+"Za'lek. Después, tendremos que saltar fuera del sistema y volver a {reppla} "
+"por separado.\n"
+"  \"Se instalará un transpondedor falso en nuestras dos naves. Esto "
+"asegurará que, siempre que no hagamos ninguna estupidez en nuestro camino de "
+"vuelta, no seremos reconocidos como hostiles por las patrullas Za'lek y los "
+"servicios de control en tierra. Así que deberíamos poder repostar sin "
+"problemas en los planetas Za'lek.\""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:97
 msgid "You will help a Goddard executive to evade his Za'lek prison."
-msgstr ""
+msgstr "Ayudarás a un ejecutivo de Goddard a evadir su prisión Za'lek."
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:98
 msgid "Hopefully something better than Gauss Guns..."
-msgstr ""
+msgstr "Esperemos que sea algo mejor que las armas Gauss..."
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:105
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:239
@@ -46880,47 +46946,47 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:682
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:697
 msgid "Dvaered Escape"
-msgstr ""
+msgstr "Escape Dvaered"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:106
 msgid "Meet the rest of the team in {pnt} in {sys}"
-msgstr ""
+msgstr "Conoce al resto del equipo en {pnt} en {sys}"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:107
 msgid "Intercept the convoy in {sys}. Your Vendetta escort must survive"
-msgstr ""
+msgstr "Interceptar el convoy en {sys}. Tu escolta Vendetta debe sobrevivir"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:118
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:202
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:218
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:295
 msgid "Sergeant Nikolov"
-msgstr ""
+msgstr "Sargento Nikolov"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:119
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:203
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:221
 msgid "Private Tronk"
-msgstr ""
+msgstr "Soldado Tronk"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:120
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:204
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:225
 msgid "Corporal Therus"
-msgstr ""
+msgstr "Cabo Therus"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:123
 msgid "Commando"
-msgstr ""
+msgstr "Comando"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:123
 msgid "A commando unit."
-msgstr ""
+msgstr "Una unidad de comando."
 
 #. TODO: see if it gets auto-removed at the end of mission
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:126
 msgid "Hello again"
-msgstr ""
+msgstr "Hola de nuevo"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:126
 msgid ""
@@ -46943,13 +47009,31 @@ msgid ""
 "mind and his skin twists horribly. As you approach, he tells you the team is "
 "ready to leave on a moment's notice."
 msgstr ""
+"Al entrar en el bar, percibes un ambiente tenso en el aire. La mayoría de "
+"los clientes parecen estar inquietos, sin levantar la vista de sus bebidas. "
+"Incluso los pilotos mercenarios, normalmente fáciles de distinguir por su "
+"postura arrogante y sus voces fuertes, están solemnes y comedidos. Al entrar "
+"en la sala, pronto descubres la razón: El capitán Hamfresser, de los "
+"comandos de infantería espacial. Y esta vez no está solo.\n"
+"   El grupo de ciborgs está sentado en una parte vacía de la sala, mirando "
+"de vez en cuando a cada cliente y a las paredes. Por primera vez, piensas "
+"que probablemente puedan ver a través de la mayoría de las paredes con sus "
+"implantes y tratas de recordar si tenías contrabando en tu nave la última "
+"vez que estuvieron a bordo. Finalmente, entre dos ciborgs, divisas al "
+"Teniente Strafer, el piloto, aparentemente la única persona normal que puede "
+"parecer serena ante los ciborgs de la infantería espacial. Bueno, \"normal\" "
+"podría ser una exageración; después de todo, es un soldado Dvaered.\n"
+"   Al mirar la cara de Hamfresser, se nota una gran sonrisa en ella. Los "
+"implantes de su cara no parecen haber sido diseñados pensando en la sonrisa "
+"y su piel se retuerce horriblemente. Cuando te acercas, te dice que el "
+"equipo está listo para partir en un segundo."
 
 #. Land at an Imperial planet and meet the agents
 #. Discuss with the Pirate or Imperial agent
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:148
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:663
 msgid "Other help offer"
-msgstr ""
+msgstr "Otra oferta de ayuda"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:148
 msgid ""
@@ -46978,31 +47062,59 @@ msgid ""
 "Imperial secret services. Meet the fake transponder dealer at the bar if "
 "interested."
 msgstr ""
+"Cuando aterrizas, alguien te espera en el puerto espacial. \"¡Hola, amigo! "
+"Parece que estás teniendo problemas con las autoridades de ahí fuera. Parece "
+"que los Za'lek han conseguido la ayuda de los imperiales. Hay bloqueos por "
+"todas partes en las fronteras del espacio imperial. Incluso los caminos a "
+"los saltos secretos son intransitables. Parece que el Imperio quiere "
+"atraparte a toda costa, pero por suerte, tengo la solución. Imagino que ya "
+"tienes un transpondedor falso, pero parece que lo han identificado.  Apuesto "
+"a que te vendría bien un reemplazo. Puedo venderte un transpondedor falso "
+"auténtico recién salido de la fábrica de Cráneos y Huesos\".\n"
+"   Claramente se trata de un pirata que busca sacar unos cuantos créditos de "
+"tu grave situación. Pero, la idea no es mala. Las naves imperiales no "
+"buscarían una nave con un transpondedor falso de Cráneos y Huesos. Así que "
+"le preguntas cuántos créditos quiere. \"{number}\" es la respuesta. \"Parece "
+"mucho, ¿verdad? Pero tal vez sea una ganga a cambio de tu vida y del éxito "
+"de cualquier misión sin escrúpulos que estés intentando llevar a cabo. Tal "
+"vez no lleves tantos créditos encima en este momento. No pasa nada.  "
+"Aceptaré tu palabra de pagarme en algún momento. Bueno, tu palabra y tu "
+"firma de ADN. Así podré encontrarte si intentas engañarme.\"\n"
+"   Sabes que si aceptas, tendrás que pagar, pase lo que pase, de lo "
+"contrario serás acosado por sicarios hasta el final de tu, probablemente muy "
+"corta, vida. Sin embargo, el pago de {credits} podría permitirte evitar el "
+"comprometedor trato que tendrías que hacer con los servicios secretos "
+"imperiales. Reúnete con el falso traficante de transpondedores en el bar si "
+"estás interesado."
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:151
 msgid "Fake transponder dealer"
-msgstr ""
+msgstr "Distribuidor de transpondedores falsos"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:151
 msgid ""
 "This shifty person is for sure one of the pirates that wants to sell you a "
 "fake transponder."
 msgstr ""
+"Esta persona sospechosa es seguramente uno de los piratas que quiere "
+"venderte un transpondedor falso."
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:152
 msgid "Feather-hat agent"
-msgstr ""
+msgstr "Agente del sombrero de pluma"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:152
 msgid ""
 "The Imperial agent looks like a non-descript trader, as there are so many in "
 "Imperial space."
 msgstr ""
+"El agente imperial parece un comerciante indescriptible, como hay muchos en "
+"el espacio Imperial."
 
 #. Land to end the mission
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:157
 msgid "Finally back"
-msgstr ""
+msgstr "Finalmente de vuelta"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:157
 msgid ""
@@ -47021,11 +47133,27 @@ msgid ""
 "about the soldier, I will make sure he is replaced immediately.\n"
 "   \"And you, {player}, anything to report?\""
 msgstr ""
+"Al aterrizar, tú, Hamfresser y el VIP os dirigís a la oficina militar del "
+"puerto espacial, donde os espera el comandante Tam junto a otros soldados. "
+"Saluda calurosamente al ejecutivo y se dirige a Hamfresser: \"¿Sabe que "
+"ustedes nos han asustado? Nos hemos enterado por vía diplomática de que "
+"habéis destruido casi por completo la farmacia de un hospital, junto con dos "
+"carros de combate y media docena de androides de combate en {pnt}. Al menos, "
+"aparentemente, no matasteis a nadie. Pero los Za'lek estaban realmente "
+"molestos\".\n"
+"   El capitán explica: \"Señor, el VIP resultó herido durante la extracción "
+"y necesitamos un dispositivo médico para curarlo. Pero una vez en el "
+"hospital, nos vio un policía de tráfico. Entonces las cosas empeoraron "
+"rápidamente y tuvimos que escapar a través del muro de la farmacia. Perdí a "
+"un soldado en esta operación\". Tam responde: \"Bueno, luego harás un "
+"informe detallado. Y no te preocupes por el soldado, me aseguraré de que sea "
+"reemplazado inmediatamente.\n"
+"   \"Y tú, {player}, ¿algo que informar?\""
 
 #. Empire solution
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:164
 msgid "A problem with the Empire"
-msgstr ""
+msgstr "Un problema con el Imperio"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:164
 msgid ""
@@ -47043,6 +47171,19 @@ msgid ""
 "   The major starts to go away, but then comes back \"Oh, I almost forgot to "
 "pay you. Hehe. Here are {credits}.\""
 msgstr ""
+"Le explicas al mayor los problemas que has encontrado. Le hablas del extraño "
+"trato que el Imperio te ha obligado a hacer con ellos y la cara del mayor se "
+"pone roja: \"¿Qué has hecho QUE? El servicio de inteligencia Imperial es el "
+"más fuerte del universo. Pueden deducir cosas que ni siquiera imaginarías "
+"con sólo mirar a alguien, ¡y tú les dejas entrevistar a un líder de un "
+"comando de operaciones encubiertas!\".\n"
+"   Argumentas que no tenías otra opción y él parece calmarse un poco "
+"\"Interrogaré a Hamfresser para ver si puedo determinar lo que estaban "
+"buscando. ¡Maldición! Tengo miedo de que nos pase algo horrible por culpa de "
+"esto. Ah, y por cierto, me aseguré de que los Za'lek no te culparan "
+"personalmente por lo ocurrido. Ahora deberían aceptarte en tu espacio\".\n"
+"   El mayor comienza a alejarse, pero luego regresa \"Oh, casi me olvido de "
+"pagarte. Jeje. Aquí tienes {credits}.\""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:168
 msgid ""
@@ -47052,11 +47193,17 @@ msgid ""
 "angle. Many unexpected events happened during this operation which forced "
 "you to make a deal with the Imperial secret service."
 msgstr ""
+"Has ayudado al Alto Mando Dvaered a liberar al Sr. Danftang, ejecutivo de "
+"relaciones públicas de Goddard, que fue encarcelado por los Za'lek por "
+"razones dudosas. Es probable que este ejecutivo ayude a la Casa Dvaered "
+"desde el punto de vista diplomático. Durante esta operación se produjeron "
+"muchos imprevistos que le obligaron a hacer un trato con el servicio secreto "
+"imperial."
 
 #. Pirate debt
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:170
 msgid "Everything is almost alright"
-msgstr ""
+msgstr "Casi todo está bien"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:170
 msgid ""
@@ -47077,6 +47224,21 @@ msgid ""
 "   The major starts to go away, but then comes back \"Oh, I almost forgot to "
 "pay you. Hehe. Here are {credits}.\""
 msgstr ""
+"Le explicas al comandante los problemas que has encontrado. Le hablas del "
+"extraño trato que el Imperio intentó hacer contigo. \"Sí, los servicios de "
+"inteligencia Imperiales son formidables. Es muy difícil ocultarles nuestras "
+"intenciones. Hiciste bien en no aceptar su oferta. Así que compraste un "
+"transpondedor pirata falso, ¿verdad? ¡Espero que no fuera demasiado caro!\"\n"
+"  Cuando le dices la suma que tuviste que prometer pagar, el Mayor Tam "
+"chilla. \"¿Qué, como? ¡{price} por un transpondedor falso! Eso no es "
+"comercio, es robo\". \"Bueno, técnicamente...\" Respondes \"esa gente es "
+"pirata, así que su trabajo es robar a la gente\". El mayor se calma \"De "
+"acuerdo. Me encargaré del pago, para que no te maten, pero tendrás que "
+"devolvernos el dinero, ¡no lo olvides! Ah, y por cierto, me aseguré de que "
+"los Za'lek no te culparan personalmente de lo ocurrido. Ahora deberían "
+"aceptarte en tu espacio\".\n"
+"   El mayor comienza a alejarse, pero luego vuelve \"Oh, casi me olvido de "
+"pagaros. Jeje. Aquí tienes {credits}\"."
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:174
 msgid ""
@@ -47087,13 +47249,19 @@ msgid ""
 "you into debt with House Dvaered. It is very likely they won't entrust you "
 "with important missions until you repay them."
 msgstr ""
+"Has ayudado al Alto Mando Dvaered a liberar al Sr. Danftang, ejecutivo de "
+"relaciones públicas de Goddard, que fue encarcelado por los Za'lek por "
+"razones dudosas. Es probable que este ejecutivo ayude a la Casa Dvaered "
+"desde el punto de vista diplomático. Durante esta operación se produjeron "
+"muchos imprevistos que te obligaron a endeudarse con la Casa Dvaered. Es muy "
+"probable que no te confíen misiones importantes hasta que les pagues."
 
 #. Pirate cash
 #. Normally, the player should not achieve that (maybe with a trick I did not foresee, but it should be Xtremely hard)
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:176
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:182
 msgid "No major problem to report"
-msgstr ""
+msgstr "Ningún problema importante que comunicar"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:176
 msgid ""
@@ -47112,6 +47280,19 @@ msgid ""
 "   The major starts to go away, but then comes back \"Oh, I almost forgot to "
 "pay you. Hehe. Here are {credits}.\""
 msgstr ""
+"Le explicas al comandante los problemas que has encontrado. Le hablas del "
+"extraño trato que el Imperio intentó hacer contigo. \"Sí, los servicios de "
+"inteligencia Imperiales son formidables. Es muy difícil ocultarles nuestras "
+"intenciones. Hiciste bien en no aceptar su oferta. Así que compraste un "
+"transpondedor pirata falso, ¿verdad? Espero que no fuera demasiado caro.\"\n"
+"Te planteas pedir que te devuelvan los gastos de la misión, pero luego "
+"recuerdas que los Dvaered son tacaños y violentos, así que desistes y "
+"simplemente respondes: \"Oh, no... no... realmente.\"\n"
+"   Tam parece satisfecho y responde: \"Por cierto, me aseguré de que los "
+"Za'lek no te culparan personalmente por lo ocurrido. Ahora deberían "
+"aceptarte en su espacio.\"\n"
+"   El mayor comienza a alejarse, pero luego regresa \"Oh, casi me olvido de "
+"pagarte. Jeje. Aquí tienes {credits}.\""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:180
 msgid ""
@@ -47121,6 +47302,12 @@ msgid ""
 "angle. Many unexpected events happened during this operation, that forced "
 "you to buy a fake transponder at an outrageous price."
 msgstr ""
+"Has ayudado al Alto Mando Dvaered a liberar al Sr. Danftang, ejecutivo de "
+"relaciones públicas de Goddard, que fue encarcelado por los Za'lek por "
+"razones dudosas. Es probable que este ejecutivo ayude a la Casa Dvaered "
+"desde el punto de vista diplomático. Durante esta operación se produjeron "
+"muchos imprevistos que le obligaron a comprar un transpondedor falso a un "
+"precio escandaloso."
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:182
 msgid ""
@@ -47135,6 +47322,15 @@ msgid ""
 "  The major starts to go away, but then comes back \"Oh, I almost forgot to "
 "pay you. Hehe. Here are {credits}.\""
 msgstr ""
+"Le explicas al comandante los problemas que has encontrado. Le hablas del "
+"extraño trato que el Imperio intentó hacer contigo. \"Sí, los servicios de "
+"inteligencia Imperiales son formidables. Es muy difícil ocultarles nuestras "
+"intenciones. Hiciste bien en no aceptar su oferta. Supongo que debe haber "
+"sido muy difícil, y arriesgado, eludir el bloqueo Imperial, ¡felicidades! "
+"Ah, y por cierto, me aseguré de que los Za'lek no te culparan personalmente "
+"por lo ocurrido. Ahora deberían aceptarte en su espacio.\"\n"
+"  El comandante empieza a marcharse, pero luego vuelve \"Oh, casi me olvido "
+"de pagarte. Jeje. Aquí tienes {credits}.\""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:184
 msgid ""
@@ -47144,6 +47340,11 @@ msgid ""
 "angle. Many unexpected events happened during this operation, but you "
 "managed to survive somehow."
 msgstr ""
+"Has ayudado al Alto Mando de Dvaered a liberar al Sr. Danftang, ejecutivo de "
+"relaciones públicas de Goddard, que fue encarcelado por los Za'lek por "
+"razones oscuras. Es probable que este ejecutivo ayude a la Casa Dvaered "
+"desde el punto de vista diplomático. Durante esta operación se produjeron "
+"muchos imprevistos, pero lograsteis sobrevivir de alguna manera."
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:215
 msgid ""
@@ -47154,6 +47355,12 @@ msgid ""
 "change in the plan regarding Captain Leblanc. She won't be able to join us. "
 "Talk to the Lieutenant, he can explain it further.\""
 msgstr ""
+"\"¡Hola, {player}! ¿Te acuerdas de nosotros?\", pregunta el capitán, "
+"aparentemente inconsciente de que su aspecto es difícil de olvidar. \"¡"
+"Estamos listos para embarcar cuando quieras, piloto! Sólo tendrás que hacer "
+"espacio para {tonnes} de carga (tenemos algo de equipo). Ah, sí, y al "
+"parecer hay un pequeño cambio en el plan con respecto al capitán Leblanc. No "
+"podrá unirse a nosotros. Habla con el Teniente, él puede explicarlo mejor.\""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:218
 msgid ""
@@ -47166,6 +47373,14 @@ msgid ""
 "refectory, there are dangerous-looking cyborgs all around and nobody feels "
 "unsafe. It must be something else...\""
 msgstr ""
+"\"Hola, ciudadano. Supongo que quieres discutir el plan con los oficiales. "
+"Pero antes, ¿puedes explicarme por qué hay tanta gente en esta sala, pero "
+"ninguno quiere sentarse en las mesas contiguas a la nuestra? ¿Sabe qué es lo "
+"que pasa en esta parte de la sala?\". Tú respondes que probablemente la "
+"gente se siente insegura al sentarse junto a un grupo de cyborgs de aspecto "
+"peligroso, y ella responde \"No creo que tengas razón. Cuando estoy en el "
+"comedor de la Infantería Espacial, hay cyborgs de aspecto peligroso por "
+"todas partes y nadie se siente inseguro. Debe ser otra cosa...\""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:221
 msgid ""
@@ -47186,6 +47401,23 @@ msgid ""
 "am afraid she won't be able to take part in this cycle's championship as she "
 "hasn't yet fully recovered from her decapitation during her last fight.\""
 msgstr ""
+"\"Pedí agua y el camarero me dio este vaso que está lleno de burbujas. No "
+"parece seguro. ¿Sabe qué es? Espero que no sea alcohol...\" Mientras le "
+"dices que es simplemente agua con gas, y que no contiene alcohol ni nada "
+"tóxico, te responde agradecido: \"¡Vaya, eres todo un experto en bebidas! Lo "
+"he preguntado porque los ciborgs de la clase gamma no podemos beber alcohol. "
+"Todas las mañanas tenemos que tomar una medicación especial, el Cóctel de la "
+"Marina Espacial, para que nuestros cuerpos sigan soportando nuestros "
+"implantes biológicos y cibernéticos. Este cóctel es incompatible con "
+"cualquier tipo de alcohol.\n"
+"   \"Mi hermano bebió una vez una cerveza por error y tuvo que pasar dos "
+"meses en el hospital. Pero ahora está mejor y ha vuelto a su unidad\". Le "
+"preguntas si todos los miembros de su familia son tan fuertes como él y te "
+"responde: \"Oh no, mi hermana pequeña es mucho más fuerte. Ella lucha en "
+"Totoran en el campeonato de mano desnuda uno a uno. Ganó 6 combates "
+"seguidos, la temporada pasada. Pero me temo que no podrá participar en el "
+"campeonato de este ciclo, ya que aún no se ha recuperado del todo de su "
+"decapitación durante su último combate.\""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:225
 msgid ""
@@ -47206,6 +47438,22 @@ msgid ""
 "actually. I remembered that riddle while we were hiking on {pnt} a while "
 "ago, and we saw a turtle.\""
 msgstr ""
+"\"Hola, ciudadano. ¿Estás listo para transportarnos una vez más? ¿Has "
+"hablado con el capitán? ¿Y con el piloto? No conozco los detalles de la "
+"operación, así que tendrás que preguntarles a ellos\".\n"
+"   El cabo parece dudar, y luego continúa: \"Hoy, el Teniente me ha "
+"planteado un acertijo: supongamos que el comandante Tam corre detrás de una "
+"tortuga. Cuando el comandante Tam llega al punto donde estaba la tortuga "
+"cuando empezó a correr, la tortuga ha avanzado un poco en el mismo tiempo, ¿"
+"no? Luego, llega al punto donde estaba la tortuga cuando llegó al punto "
+"anterior, pero la tortuga ha vuelto a avanzar. Y así sucesivamente. "
+"Conclusión: El mayor Tam es más rápido que la tortuga, pero nunca la "
+"alcanza. ¿Cómo es posible?\"\n"
+"   Entonces llega Strafer: \"Sí, un día estuve en el museo de Theras, y este "
+"acertijo estaba escrito en un libro de antes de la era espacial. El nombre "
+"del autor era: 'Clase de filosofía del instituto'. Es un nombre extraño, en "
+"realidad. Me acordé de ese acertijo mientras estábamos de excursión en {pnt} "
+"hace un tiempo, y vimos una tortuga.\""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:230
 msgid ""
@@ -47223,20 +47471,36 @@ msgid ""
 "On the way back, we will take separate ways. We'll take off when you decide."
 "\""
 msgstr ""
+"Mira al teniente, sorprendido de no ver al capitán Leblanc, como se "
+"esperaba. \"Han surgido circunstancias inesperadas. El general fue atacado "
+"en Doranthex por pilotos mercenarios y nuestro escuadrón tuvo que "
+"rescatarlo. El segundo al mando fue asesinado, así que Leblanc ya no puede "
+"delegar su mando. La necesitamos para dirigir el escuadrón y me envió a mí "
+"en su lugar. No te preocupes, puede que esté un poco menos dotado que ella, "
+"pero sigo siendo un as de los combates aéreos. Tengo 15 victorias "
+"confirmadas en combates aéreos hasta ahora, y eso sin tener en cuenta las "
+"operaciones secretas en las que he participado.\n"
+"   \"Así que, de camino, te seguiré con mi Vendetta civil y sólo tendrás que "
+"llamarme si quieres que haga algo especial. Durante la extracción, me "
+"centraré en los drones para que puedas enfrentarte a la nave principal. En "
+"el camino de vuelta, tomaremos caminos separados. Despegaremos cuando tú lo "
+"decidas.\""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:235
 msgid "Ready for action?"
-msgstr ""
+msgstr "¿Preparado para la acción?"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:235
 msgid ""
 "Are you ready to start \"Operation Drugstore Thunder\"? (Hamfresser named "
 "it.)"
 msgstr ""
+"¿Estás listo para comenzar la \"Operación Trueno de Farmacia\"? (Hamfresser "
+"la nombró.)"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:236
 msgid "At the hospital"
-msgstr ""
+msgstr "Al hospital"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:236
 msgid ""
@@ -47249,29 +47513,39 @@ msgid ""
 "made a mess, out there!\" Says Hamfresser \"But at least we've got the "
 "device!\""
 msgstr ""
+"Tras dar la señal a Hamfresser, entras en la cabina de tu nave y enciendes "
+"los motores en previsión de una huida. Una fuerte explosión procedente de la "
+"distancia sacude tu nave, seguida de detonaciones que parecen acercarse. Al "
+"cabo de un rato, ves a los comandos corriendo en tu dirección, perseguidos "
+"por los androides de la policía Za'lek. Cuando el último miembro del equipo "
+"entra en la nave, despegas a toda prisa, seguido de cerca por unos cuantos "
+"drones. \"¡Hemos hecho un lío, ahí fuera!\" Dice Hamfresser \"¡Pero al menos "
+"tenemos el dispositivo!\""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:240
 msgid ""
 "Escape to {pnt} in {sys}. Do NOT destroy any occupied Za'lek ship (only "
 "drones are allowed)"
 msgstr ""
+"Escapa a {pnt} en {sys}. NO destruir ninguna nave Za'lek ocupada (sólo se "
+"permiten los drones)"
 
 #. Test to see if the player killed a zlk inhabited ship
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:259
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:491
 msgid "The mission failed"
-msgstr ""
+msgstr "La misión falló"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:259
 msgid "The rule was not to kill anybody, did you forget?"
-msgstr ""
+msgstr "La regla era no matar a nadie, ¿lo has olvidado?"
 
 #. Intercept the ship
 #. To reset it after the fight
 #. At first jump, it gets announced that you've got to land
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:283
 msgid "Journey to the other side"
-msgstr ""
+msgstr "Viaje al otro lado"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:283
 msgid ""
@@ -47302,6 +47576,33 @@ msgid ""
 "\"Damn! He's the fifth kid to die under my command and it still hurts as "
 "much. I just can't get used to that.\""
 msgstr ""
+"Tras dejar atrás a tus enemigos, empiezas a preguntar cómo ha ido la "
+"operación en el hospital. Un rápido vistazo a tu vivienda te da la "
+"respuesta. Ves al VIP, todavía inconsciente, con el cuerpo cubierto de "
+"electrodos conectados al aparato médico. Sin embargo, ya no está azul. A su "
+"lado, los comandos parecen haber tenido días mejores. Hamfresser, con el "
+"rostro pálido como la muerte, está sentado en el suelo, apoyado en un pilar, "
+"ocupado en cambiar un vendaje harapiento y empapado de sangre en su brazo "
+"izquierdo. La Sargento Nikolov mira un enorme agujero en su pie con los ojos "
+"vacíos y el médico, Therus, cojea de un soldado a otro dejando un rastro de "
+"huellas de manos ensangrentadas en las paredes.\n"
+"   En el centro de la sala, cubierto de vendas, se encuentra el soldado "
+"Tronk. Su armadura de combate, perforada con múltiples agujeros, ha sido "
+"arrojada a unos metros de distancia en un charco de sangre. Con una sonrisa "
+"triste, el soldado mira los dos dedos que le quedan de su brazo menos dañado "
+"y que caminan lentamente por el suelo. \"Leopold, ¿recuerdas cuando eras un "
+"niño? ¿Jugabas así con los dedos?\". responde Hamfresser: \"Tronky-boy, no "
+"uses mi nombre de pila, sólo los moribundos han usado mi nombre de pila "
+"antes...\" \"No tengas miedo, esto no va a cambiar, Leopold\".\n"
+"   De repente, el soldado abre mucho los ojos y llama al médico: \"¡Therus! ¡"
+"Ya sé por qué el comandante Tam puede atrapar la tortuga! Cada vez, cuando "
+"llega al punto donde antes estaba la tortuga, el tiempo que necesita para "
+"ello es menor. Y en un momento dado, se hace tan infinitamente pequeño que, "
+"aunque tenga una infinidad de pasos que dar, el tiempo total es finito\". El "
+"médico mira al moribundo: \"Tronky, ¿cómo lo has hecho? ¿Tronky?\" Luego se "
+"detiene y toma el pulso en el cuello de Tronk \"Se acabó, capitán\". "
+"Hamfresser responde: \"¡Maldición! Es el quinto chico que muere bajo mi "
+"mando y sigue doliendo igual. No puedo acostumbrarme a eso.\""
 
 #. give him top equipment
 #. strafer:outfitAdd("Solar Panel")
@@ -47325,15 +47626,15 @@ msgstr ""
 #. Functions for the escort
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:396
 msgid "Mission Failed: escort destroyed"
-msgstr ""
+msgstr "Misión Fallida: escolta destruida"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:396
 msgid "Your escort died. You have to abort the mission"
-msgstr ""
+msgstr "Tu escolta ha muerto. Tienes que abortar la misión"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:450
 msgid "A new passenger"
-msgstr ""
+msgstr "Un nuevo pasajero"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:450
 msgid ""
@@ -47347,23 +47648,37 @@ msgid ""
 "busy trying to explain himself. After that come the androids, which seem to "
 "have received heavy damage. You jump into the cockpit and start the engines."
 msgstr ""
+"Los comandos se reúnen cerca de la esclusa. Esta vez, cuatro androides de "
+"combate están al frente. Hamfresser da sus órdenes y el primer androide "
+"destroza la esclusa de la nave enemiga con su puño. Después de eso, el "
+"equipo se precipita hacia la nave y las explosiones comienzan a retumbar. Al "
+"poco tiempo, el equipo regresa. Primero entra Nikolov, que lleva a un hombre "
+"inmóvil y azul con vestimenta de presidiario, seguido de Hamfresser, seguido "
+"del médico, Therus, que se afana en aplicar compresas en una gran herida "
+"sangrienta en el costado del capitán, y de Tronk, que parece estar ocupado "
+"tratando de explicarse. Después vienen los androides, que parecen haber "
+"recibido grandes daños. Saltas a la cabina y enciendes los motores."
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:464
 msgid ""
 "You were supposed to disable that ship, not destroy it. How are you supposed "
 "to free anyone now?"
 msgstr ""
+"Se suponía que debías desactivar esa nave, no destruirla. ¿Cómo se supone "
+"que vas a liberar a alguien ahora?"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:468
 msgid ""
 "You were supposed to disable that ship, not let it escape. How are you "
 "supposed to free anyone now?"
 msgstr ""
+"Se suponía que debías desactivar esa nave, no dejarla escapar. ¿Cómo se "
+"supone que vas a liberar a alguien ahora?"
 
 #. Hamfresser explains that we need to land at an hospital
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:475
 msgid "We are in trouble"
-msgstr ""
+msgstr "Tenemos problemas"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:475
 msgid ""
@@ -47387,12 +47702,37 @@ msgid ""
 "the VIP is likely to die. Choose a place with a shipyard and an outfitter so "
 "that you'll be able to prepare your ship in case we need to escape quickly.\""
 msgstr ""
+"Cuando finalmente saltas, Hamfresser informa: \"Nos encontramos con una "
+"situación inesperada allí. Después de destruir a los androides y llegar a la "
+"celda de la cárcel, vimos que había otros tres prisioneros junto con el "
+"objetivo, y muchos más guardias humanos de lo esperado. Volaron nuestro "
+"primer robot de asalto y tuvimos que derribarlos con los paralizadores, pero "
+"uno de los prisioneros cogió un arma y, por alguna razón, empezó a "
+"dispararnos. Afortunadamente para mí, sólo me perforó el pulmón. Esa es una "
+"parte reemplazable.\n"
+"   \"Entonces, Tronk paralizó a todos los prisioneros y nosotros "
+"identificamos y recuperamos el objetivo. Por eso el tipo es azul, en "
+"realidad. Pero en su prisa, Tronk usó la dosis extra fuerte. Según el "
+"médico, es peor de lo que pensábamos al principio. Aparentemente, puede "
+"mantener al tipo con vida durante unos períodos, pero necesita un "
+"dispositivo médico especial para salvarlo. Así que en nuestra próxima "
+"parada, me temo que tendremos que robar el dispositivo en el hospital del "
+"puerto espacial. Me molesta mucho, ya que es el tipo de operación que puede "
+"ponerse fea muy rápidamente, sobre todo porque todavía nos buscan los "
+"Za'leks, pero no tenemos otra opción. Esperaré tu señal en el bar la próxima "
+"vez que aterricemos.\n"
+"   \"Si me lo permites, te aconsejo que aterrices en algún lugar dentro de "
+"los 3 periodos, de lo contrario es probable que el VIP muera. Elige un lugar "
+"con un astillero y un armador para que puedas preparar tu nave en caso de "
+"que necesitemos escapar rápidamente.\""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:480
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:488
 msgid ""
 "Land anywhere to let Hamfresser steal a medical device. Time left: {time}"
 msgstr ""
+"Aterriza en cualquier lugar para que Hamfresser robe un dispositivo médico. "
+"Tiempo restante: {time}"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:491
 msgid ""
