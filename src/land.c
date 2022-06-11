@@ -1219,6 +1219,8 @@ void land( Spob* p, int load )
    /* Heal the player so GUI shows player at full everything. */
    pilot_healLanded( player.p );
 
+   player_addEscorts(); /* TODO only regenerate fleet if planet has a shipyard */
+
    /* Stop player sounds. */
    player_soundStop();
 

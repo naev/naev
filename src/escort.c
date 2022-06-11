@@ -188,10 +188,10 @@ unsigned int escort_createRef( Pilot *p, Pilot *pe,
       const vec2 *pos, const vec2 *vel, double dir,
       EscortType_t type, int add, int dockslot )
 {
-   /* Reset internals. */
-   pilot_reset( pe );
    if (pilot_get( pe->id ) == NULL) /* Not on stack yet. */
-      pilot_addStack( pe ); /* Sets the ID. */
+      pilot_addStack( pe ); /* Sets the ID, and resets internals. */
+   else
+      pilot_reset( pe ); /* Reset internals. */
    pe->parent = p->id;
 
    /* Make invincible to player. */

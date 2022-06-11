@@ -22,6 +22,10 @@ enum {
    /*
     * Dynamic flags
     */
+   /* Escort stuff. */
+   PILOT_NOFREE,        /**< Don't free the pilot memory (but erase from stack). */
+   PILOT_PERSIST,       /**< Persist pilot on jump. */
+   PILOT_NOCLEAR,       /**< Pilot isn't removed by pilots_clear(). */
    /* Hyperspace. */
    PILOT_HYP_PREP,      /**< Pilot is getting ready for hyperspace. */
    PILOT_HYP_BRAKE,     /**< PIlot has already braked before jumping. */
@@ -79,9 +83,6 @@ enum {
    PILOT_NOLAND,        /**< Pilot cannot land on spobs. */
    PILOT_HASSPEEDLIMIT, /**< Speed limiting is activated for Pilot.*/
    PILOT_BRAKING,       /**< Pilot is braking. */
-   PILOT_PERSIST,       /**< Persist pilot on jump. */
-   PILOT_NOCLEAR,       /**< Pilot isn't removed by pilots_clear(). */
-   PILOT_NOFREE,        /**< Don't free the pilot memory (but erase from stack). */
    /* Sentinal. */
    PILOT_FLAGS_MAX      /**< Maximum number of flags. */
 };

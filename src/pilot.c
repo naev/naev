@@ -3070,6 +3070,10 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
  */
 void pilot_reset( Pilot* pilot )
 {
+   /* Clean up flag.s */
+   for (int i=PILOT_NOCLEAR+1; i<PILOT_FLAGS_MAX; i++)
+      pilot->flags[i] = 0;
+
    /* Initialize heat. */
    pilot_heatReset( pilot );
 
