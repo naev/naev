@@ -486,7 +486,7 @@ void npc_clear (void)
       /* TODO this is horrible and should be removed */
       /* Clean up all missions that haven't been moved to the active missions. */
       for (j=0; j<MISSION_MAX; j++)
-         if (player_missions[i]->id == npc_missions[i].id)
+         if (player_missions[j]->id == npc_missions[i].id)
             break;
       if (j>=MISSION_MAX)
          mission_cleanup( &npc_missions[i] );
