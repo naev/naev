@@ -928,61 +928,29 @@ static int hookL_custom( lua_State *L )
 /**
  * @brief Triggers manually a hook stack. This is run deferred (next frame). Meant mainly to be used with hook.custom, but can work with other hooks too (if you know what you are doing).
  *
- * You can pass multiple parameters that get directly passed to the hook. However, this is limited by HOOK_MAX_PARAM.
+ * @usage hook.trigger( "my_event", data ) -- data will be passed to the receiving end
  *
  *    @luatparam string hookname Name of the hook to be run.
+ *    @luaparam arg Parameter to pass to the hooks.
  * @see custom
  * @luafunc trigger
  */
 static int hookL_trigger( lua_State *L )
 {
-   int i, n;
    HookParam hp[HOOK_MAX_PARAM];
    const char *hookname = luaL_checkstring(L,1);
-   n = lua_gettop(L);
 
    /* Set up hooks. */
-   for (i=0; i< MIN(n, HOOK_MAX_PARAM-1); i++) {
-      HookParam *p = &hp[i];
-      switch (lua_type(L,i+1)) {
-         case LUA_TNIL:
-            p->type = HOOK_PARAM_NIL;
-            break;
-         case LUA_TNUMBER:
-            p->type = HOOK_PARAM_NUMBER;
-            p->u.num = lua_tonumber(L,i+1);
-            break;
-         case LUA_TBOOLEAN:
-            p->type = HOOK_PARAM_BOOL;
-            p->u.b = lua_toboolean(L,i+1);
-            break;
-         case LUA_TSTRING:
-            p->type = HOOK_PARAM_STRING;
-            p->u.str = lua_tostring(L,i+1);
-            break;
-         case LUA_TUSERDATA:
-            if (lua_ispilot(L,i+1)) {
-               p->type = HOOK_PARAM_PILOT;
-               p->u.lp = lua_topilot(L,i+1);
-            }
-            else if (lua_isfaction(L,i+1)) {
-               p->type = HOOK_PARAM_FACTION;
-               p->u.lf = lua_tofaction(L,i+1);
-            }
-            else if (lua_isspob(L,i+1)) {
-               p->type = HOOK_PARAM_SPOB;
-               p->u.la = lua_tospob(L,i+1);
-            }
-            else if (lua_isjump(L,i+1)) {
-               p->type = HOOK_PARAM_JUMP;
-               p->u.lj = *lua_tojump(L,i+1);
-            }
-            break;
-         default:
-            NLUA_ERROR(L, _("Unsupported Lua hook paramater type '%s'!"), lua_typename(L,i+1));
-      }
+   if (lua_isnoneornil(L,2)) {
+      /* Since this doesn't get saved and is triggered by Lua code, we can
+       * actually pass references here. */
+      hp[0].type = HOOK_PARAM_REF;
+      lua_pushvalue(L,2);
+      hp[0].u.ref = luaL_ref( L, LUA_REGISTRYINDEX );
+      hp[1].type = HOOK_PARAM_SENTINEL;
    }
-   hp[i].type = HOOK_PARAM_SENTINEL;
+   else
+      hp[0].type = HOOK_PARAM_SENTINEL;
 
    /* Run the deferred hooks. */
    hooks_runParamDeferred( hookname, hp );
