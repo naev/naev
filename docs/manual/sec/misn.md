@@ -4,8 +4,8 @@ Naev missions and events are written in the [Lua Programming Language](https://w
 In particular, they use version 5.1 of the Lua programming language.
 While both missions and events share most of the same API, they differ in the following ways:
 
-* **Missions:** only a fixed number can be active at a time and they are visible to the player. The player can also abort them at any time. Missions are saved by default. Have exclusive access to the `misn` library and are found in `dat/missions/`.
-* **Events:** an infinite amount can be active at a time. They are not visible or shown to the player in any way, however, their consequences can be seen by the player. By default, they are *not saved to the player savefile*. If you want the event to be saved you have to explicitly do it with `evt.save()`. Have exclusive access to the `evt` library and are found in `dat/events/`.
+* **Missions:** Always visible to the player in the info window. The player can also abort them at any time. Missions are saved by default. Have exclusive access to the `misn` library and are found in `dat/missions/`.
+* **Events:** Not visible or shown to the player in any way, however, their consequences can be seen by the player. By default, they are *not saved to the player savefile*. If you want the event to be saved you have to explicitly do it with `evt.save()`. Have exclusive access to the `evt` library and are found in `dat/events/`.
 
 The general rule of thumb when choosing which to make is that if you want the player to have control, use a mission, otherwise use an event.
 Example missions include cargo deliveries, system patrols, etc.
