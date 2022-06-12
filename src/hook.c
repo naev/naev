@@ -755,7 +755,7 @@ void hooks_update( double dt )
 
          /* Run the timer hook. */
          hook_run( h, NULL, j );
-         if (j==0)
+         if (h->ran_once) /* Remove when run. */
             hook_rmRaw( h );
       }
    }
