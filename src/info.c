@@ -1022,7 +1022,7 @@ static void cargo_jettison( unsigned int wid, const char *str )
 
       /* Get the mission. */
       f = -1;
-      for (int i=0; i<MISSION_MAX; i++) {
+      for (int i=0; i<array_size(player_missions); i++) {
          for (int j=0; j<array_size(player_missions[i]->cargo); j++) {
             if (player_missions[i]->cargo[j] == player.p->commodities[pos].id) {
                f = i;
@@ -1256,10 +1256,10 @@ static void mission_menu_genList( unsigned int wid, int first )
    window_dimWindow( wid, &w, &h );
 
    /* list */
-   misn_names = malloc(sizeof(char*) * MISSION_MAX);
+   misn_names = malloc(sizeof(char*) * array_size(player_missions));
    selectedMission = -1;
    j = 0;
-   for (int i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<array_size(player_missions); i++)
       if (player_missions[i]->id != 0)
          misn_names[j++] = (player_missions[i]->title != NULL) ?
                strdup(player_missions[i]->title) : NULL;

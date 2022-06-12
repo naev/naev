@@ -88,7 +88,7 @@ static Mission* npc_getMisn( const NPC_t *npc );
 static Mission* npc_getMisn( const NPC_t *npc )
 {
    /* First check active missions. */
-   for (int i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<array_size(player_missions); i++)
       if (player_missions[i]->id == npc->u.m.id)
          return player_missions[i];
 
@@ -485,10 +485,10 @@ void npc_clear (void)
       int j;
       /* TODO this is horrible and should be removed */
       /* Clean up all missions that haven't been moved to the active missions. */
-      for (j=0; j<MISSION_MAX; j++)
+      for (j=0; j<array_size(player_missions); j++)
          if (player_missions[j]->id == npc_missions[i].id)
             break;
-      if (j>=MISSION_MAX)
+      if (j>=array_size(player_missions))
          mission_cleanup( &npc_missions[i] );
    }
    array_free( npc_missions );
@@ -575,19 +575,9 @@ int npc_isImportant( int i )
  */
 static int npc_approach_giver( NPC_t *npc )
 {
-   int i;
    int ret;
    Mission *misn;
    unsigned int id;
-
-   /* Make sure player can accept the mission. */
-   for (i=0; i<MISSION_MAX; i++)
-      if (player_missions[i]->data == NULL)
-         break;
-   if (i >= MISSION_MAX) {
-      dialogue_alert(_("You have too many active missions."));
-      return -1;
-   }
 
    /* Get mission. */
    misn = npc_getMisn( npc );

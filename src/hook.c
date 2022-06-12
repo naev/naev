@@ -28,6 +28,7 @@
 
 #include "hook.h"
 
+#include "array.h"
 #include "claim.h"
 #include "event.h"
 #include "log.h"
@@ -770,7 +771,7 @@ void hooks_update( double dt )
  */
 static Mission *hook_getMission( Hook *hook )
 {
-   for (int i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<array_size(player_missions); i++)
       if (player_missions[i]->id == hook->u.misn.parent)
          return player_missions[i];
 

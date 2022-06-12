@@ -1336,7 +1336,7 @@ static int playerL_missions( lua_State *L )
 {
    int j = 1;
    lua_newtable(L);
-   for (int i=0; i<MISSION_MAX; i++) {
+   for (int i=0; i<array_size(player_missions); i++) {
       if (player_missions[i]->id == 0)
          continue;
       lua_pushstring( L, player_missions[i]->data->name );

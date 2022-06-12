@@ -107,8 +107,7 @@ typedef struct Mission_ {
 /*
  * current player missions
  */
-#define MISSION_MAX  12 /**< No sense in allowing the player have infinite missions. */
-extern Mission *player_missions[MISSION_MAX]; /**< Player's active missions. */
+extern Mission **player_missions; /**< Player's active missions. */
 
 /*
  * creates missions for a spob and such

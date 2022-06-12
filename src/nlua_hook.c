@@ -18,6 +18,7 @@
 
 #include "nlua_hook.h"
 
+#include "array.h"
 #include "event.h"
 #include "hook.h"
 #include "log.h"
@@ -276,10 +277,10 @@ static unsigned int hookL_generic( lua_State *L, const char* stack, double sec, 
    if (running_mission != NULL) {
       int i;
       /* make sure mission is a player mission */
-      for (i=0; i<MISSION_MAX; i++)
+      for (i=0; i<array_size(player_missions); i++)
          if (player_missions[i]->id == running_mission->id)
             break;
-      if (i>=MISSION_MAX) {
+      if (i>=array_size(player_missions)) {
          WARN(_("Mission not in stack trying to hook, forgot to run misn.accept()?"));
          return 0;
       }

@@ -43,7 +43,7 @@
  * current player missions
  */
 static unsigned int mission_id = 0; /**< Mission ID generator. */
-Mission *player_missions[MISSION_MAX]; /**< Player's active missions. */
+Mission **player_missions = NULL; /**< Player's active missions. */
 
 /*
  * mission stack
@@ -82,7 +82,7 @@ static unsigned int mission_genID (void)
 {
    unsigned int id = ++mission_id; /* default id, not safe if loading */
    /* we save mission ids, so check for collisions with player's missions */
-   for (int i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<array_size(player_missions); i++)
       if (id == player_missions[i]->id) /* mission id was loaded from save */
          return mission_genID(); /* recursively try again */
    return id;
@@ -207,7 +207,7 @@ int mission_accept( Mission* mission )
  */
 int mission_alreadyRunning( const MissionData* misn )
 {
-   for (int i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<array_size(player_missions); i++)
       if (player_missions[i]->data == misn)
          return 1;
    return 0;
@@ -512,7 +512,7 @@ void mission_sysMark (void)
 {
    /* Clear markers. */
    space_clearMarkers();
-   for (int i=0; i<MISSION_MAX; i++) {
+   for (int i=0; i<array_size(player_missions); i++) {
       /* Must be a valid player mission. */
       if (player_missions[i]->id == 0)
          continue;
@@ -726,7 +726,7 @@ void mission_shift( int pos )
 {
    Mission *misn;
 
-   if (pos >= (MISSION_MAX-1))
+   if (pos >= (array_size(player_missions)-1))
       return;
 
    /* Store specified mission. */
@@ -734,10 +734,10 @@ void mission_shift( int pos )
 
    /* Move other missions down. */
    memmove( &player_missions[pos], &player_missions[pos+1],
-      sizeof(Mission*) * (MISSION_MAX - pos - 1) );
+      sizeof(Mission*) * (array_size(player_missions) - pos - 1) );
 
    /* Put the specified mission at the end of the array. */
-   player_missions[MISSION_MAX - 1] = misn;
+   player_missions[array_size(player_missions) - 1] = misn;
 }
 
 /**
@@ -794,7 +794,7 @@ static int mission_matchFaction( const MissionData* misn, int faction )
  */
 void missions_activateClaims (void)
 {
-   for (int i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<array_size(player_missions); i++)
       if (player_missions[i]->claims != NULL)
          claim_activate( player_missions[i]->claims );
 }
@@ -1046,10 +1046,6 @@ int missions_load (void)
    char **mission_files;
    Uint32 time = SDL_GetTicks();
 
-   /* Allocate player missions. */
-   for (int i=0; i<MISSION_MAX; i++)
-      player_missions[i] = calloc(1, sizeof(Mission));
-
    /* Run over missions. */
    mission_files = ndata_listRecursive( MISSION_DATA_PATH );
    mission_stack = array_create_size( MissionData, array_size( mission_files ) );
@@ -1164,8 +1160,8 @@ void missions_free (void)
    mission_stack = NULL;
 
    /* Free the player mission stack. */
-   for (int i=0; i<MISSION_MAX; i++)
-      free(player_missions[i]);
+   array_free( player_missions );
+   player_missions = NULL;
 }
 
 /**
@@ -1173,8 +1169,11 @@ void missions_free (void)
  */
 void missions_cleanup (void)
 {
-   for (int i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<array_size(player_missions); i++) {
       mission_cleanup( player_missions[i] );
+      free( player_missions[i] );
+   }
+   array_erase( player_missions, array_begin(player_missions), array_end(player_missions) );
 }
 
 /**
@@ -1200,7 +1199,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
    xmlw_endElem(writer); /* "missions_cargo */
 
    xmlw_startElem(writer,"missions");
-   for (int i=0; i<MISSION_MAX; i++) {
+   for (int i=0; i<array_size(player_missions); i++) {
       if (player_missions[i]->id != 0) {
          xmlw_startElem(writer,"mission");
 
@@ -1393,7 +1392,6 @@ int missions_loadActive( xmlNodePtr parent )
  */
 static int missions_parseActive( xmlNodePtr parent )
 {
-   int m, i;
    char *buf;
    char *title;
    const char **items;
@@ -1401,16 +1399,19 @@ static int missions_parseActive( xmlNodePtr parent )
 
    xmlNodePtr node, cur, nest;
 
-   m = 0; /* start with mission 0 */
+   if (player_missions == NULL)
+      player_missions = array_create( Mission* );
+
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node, "mission")) {
          const MissionData *data;
-         Mission *misn = player_missions[m];
+         Mission *misn = calloc( 1, sizeof(Mission) );
+         array_push_back( &player_missions, misn );
 
          /* process the attributes to create the mission */
          xmlr_attr_strd(node, "data", buf);
-         data = mission_get(mission_getID(buf));
+         data = mission_get( mission_getID(buf) );
          if (data == NULL) {
             WARN(_("Mission '%s' from saved game not found in game - ignoring."), buf);
             free(buf);
@@ -1455,12 +1456,12 @@ static int missions_parseActive( xmlNodePtr parent )
 
             /* OSD. */
             if (xml_isNode(cur,"osd")) {
+               int i = 0;
                xmlr_attr_int_def( cur, "nitems", nitems, -1 );
                if (nitems == -1)
                   continue;
                xmlr_attr_strd(cur,"title",title);
                items = malloc( nitems * sizeof(char*) );
-               i = 0;
                nest = cur->xmlChildrenNode;
                do {
                   if (xml_isNode(nest,"msg")) {
@@ -1493,9 +1494,6 @@ static int missions_parseActive( xmlNodePtr parent )
                nxml_unpersistLua( misn->env, cur );
 
          } while (xml_nextNode(cur));
-
-         m++; /* next mission */
-         if (m >= MISSION_MAX) break; /* full of missions, must be an error */
       }
    } while (xml_nextNode(node));
 

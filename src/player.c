@@ -3342,7 +3342,7 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
       /* Remove cargo with id and no mission. */
       if (pc->id > 0) {
          int found = 0;
-         for (int j=0; j<MISSION_MAX; j++) {
+         for (int j=0; j<array_size(player_missions); j++) {
             /* Only check active missions. */
             if (player_missions[j]->id > 0) {
                /* Now check if it's in the cargo list. */
