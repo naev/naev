@@ -573,6 +573,8 @@ static int misn_factions( lua_State *L )
 /**
  * @brief Attempts to accept the mission.
  *
+ * Note: there is no limit on the maximum number of missions a player can have simultaneously.
+ *
  * @usage if not misn.accept() then return end
  *    @luatreturn boolean true if mission was properly accepted.
  * @luafunc accept
