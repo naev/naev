@@ -18,6 +18,7 @@ local vntk = require 'vntk'
 local fmt = require 'format'
 local tut = require 'common.tutorial'
 local der = require 'common.derelict'
+local pir = require "common.pirate"
 local vn = require 'vn'
 
 local badevent, goodevent, missionevent, neutralevent -- forward-declared functions
@@ -370,6 +371,9 @@ function badevent()
          player.pilot():setFuel(false)
          destroyevent()
       end,
+   }
+   if pir.systemPresence() > 0 then
+      table.insert( badevent_list,
       function ()
          derelict_msg(btitle, fmt.f(_([[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a little time searching the interior when {shipai}, your ship AI sounds a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to undock, but you've lost precious time. The pirates are already in firing range…]]), {shipai=tut.ainame()}), fmt.f(_([[It was a trap! Pirates baited you with a derelict ship in {sys}, fortunately you lived to tell the tale but you'll be more wary next time you board a derelict.]]), {sys=system.cur()}))
 
@@ -456,8 +460,9 @@ function badevent()
             end
          end
          destroyevent()
-      end,
-   }
+      end
+      )
+   end
 
    -- Run random bad event
    badevent_list[ rnd.rnd(1,#badevent_list) ]()
