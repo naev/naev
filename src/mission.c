@@ -1173,7 +1173,7 @@ void missions_cleanup (void)
       mission_cleanup( player_missions[i] );
       free( player_missions[i] );
    }
-   array_erase( player_missions, array_begin(player_missions), array_end(player_missions) );
+   array_erase( &player_missions, array_begin(player_missions), array_end(player_missions) );
 }
 
 /**
