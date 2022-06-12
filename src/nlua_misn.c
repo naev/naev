@@ -585,6 +585,17 @@ static int misn_accept( lua_State *L )
    if (player_missions == NULL)
       player_missions = array_create( Mission* );
 
+   /* Clean up old stale stuff if necessary. */
+   for (int i=array_size(player_missions)-1; i>=0; i--) {
+      Mission *m = player_missions[i];
+      if (m->id != 0)
+         continue;
+      mission_cleanup( m );
+      free( m );
+      array_erase( &player_missions, &player_missions[i], &player_missions[i+1] );
+   }
+
+   /* Create the new mission. */
    new_misn = calloc( 1, sizeof(Mission) );
    array_push_back( &player_missions, new_misn );
 
