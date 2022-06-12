@@ -36,6 +36,9 @@ function nebula.init( params )
 
    -- Initialize shader
    local texsize = math.min( 0.25*size, 1024 ) -- over 1024 makes intel GPUs choke
+   if texsize < 16 then
+      return -- Ignore tiny nebula
+   end
    local w, h = texsize, texsize
    local scale = size / texsize
    local shader = lg.newShader(
