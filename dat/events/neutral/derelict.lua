@@ -374,93 +374,93 @@ function badevent()
    }
    if pir.systemPresence() > 0 then
       table.insert( badevent_list,
-      function ()
-         derelict_msg(btitle, fmt.f(_([[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a little time searching the interior when {shipai}, your ship AI sounds a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to undock, but you've lost precious time. The pirates are already in firing range…]]), {shipai=tut.ainame()}), fmt.f(_([[It was a trap! Pirates baited you with a derelict ship in {sys}, fortunately you lived to tell the tale but you'll be more wary next time you board a derelict.]]), {sys=system.cur()}))
+         function ()
+            derelict_msg(btitle, fmt.f(_([[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a little time searching the interior when {shipai}, your ship AI sounds a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to undock, but you've lost precious time. The pirates are already in firing range…]]), {shipai=tut.ainame()}), fmt.f(_([[It was a trap! Pirates baited you with a derelict ship in {sys}, fortunately you lived to tell the tale but you'll be more wary next time you board a derelict.]]), {sys=system.cur()}))
 
-         local s = player.pilot():ship():size()
-         local enemies_tiny = {
-            "Pirate Hyena",
-            "Pirate Hyena",
-            "Pirate Hyena",
-         }
-         local enemies_sml = {
-            "Pirate Vendetta",
-            "Pirate Shark",
-            "Pirate Shark",
-         }
-         local enemies_med1 = {
-            "Pirate Vendetta",
-            "Pirate Vendetta",
-            "Pirate Ancestor",
-            "Pirate Ancestor",
-         }
-         local enemies_med2 = {
-            "Pirate Admonisher",
-            "Pirate Shark",
-            "Pirate Shark",
-            "Pirate Shark",
-         }
-         local enemies_hvy = {
-            "Pirate Starbridge",
-            "Pirate Vendetta",
-            "Pirate Vendetta",
-            "Pirate Ancestor",
-            "Pirate Ancestor",
-         }
-         local enemies_dng = {
-            "Pirate Kestrel",
-            "Pirate Vendetta",
-            "Pirate Vendetta",
-            "Pirate Ancestor",
-            "Pirate Ancestor",
-         }
-         local enemies
-         local r = rnd.rnd()
-         if s == 1 then
-            enemies = enemies_tiny
-         elseif s == 2 then
-            if r < 0.5 then
-               enemies = enemies_sml
-            else
+            local s = player.pilot():ship():size()
+            local enemies_tiny = {
+               "Pirate Hyena",
+               "Pirate Hyena",
+               "Pirate Hyena",
+            }
+            local enemies_sml = {
+               "Pirate Vendetta",
+               "Pirate Shark",
+               "Pirate Shark",
+            }
+            local enemies_med1 = {
+               "Pirate Vendetta",
+               "Pirate Vendetta",
+               "Pirate Ancestor",
+               "Pirate Ancestor",
+            }
+            local enemies_med2 = {
+               "Pirate Admonisher",
+               "Pirate Shark",
+               "Pirate Shark",
+               "Pirate Shark",
+            }
+            local enemies_hvy = {
+               "Pirate Starbridge",
+               "Pirate Vendetta",
+               "Pirate Vendetta",
+               "Pirate Ancestor",
+               "Pirate Ancestor",
+            }
+            local enemies_dng = {
+               "Pirate Kestrel",
+               "Pirate Vendetta",
+               "Pirate Vendetta",
+               "Pirate Ancestor",
+               "Pirate Ancestor",
+            }
+            local enemies
+            local r = rnd.rnd()
+            if s == 1 then
                enemies = enemies_tiny
-            end
-         elseif s == 3 then
-            if r < 0.1 then
-               enemies = enemies_med2
-            elseif r < 0.6 then
-               enemies = enemies_med1
-            else
-               enemies = enemies_sml
-            end
-         elseif s == 4 then
-            if r < 0.1 then
+            elseif s == 2 then
+               if r < 0.5 then
+                  enemies = enemies_sml
+               else
+                  enemies = enemies_tiny
+               end
+            elseif s == 3 then
+               if r < 0.1 then
+                  enemies = enemies_med2
+               elseif r < 0.6 then
+                  enemies = enemies_med1
+               else
+                  enemies = enemies_sml
+               end
+            elseif s == 4 then
+               if r < 0.1 then
+                  enemies = enemies_hvy
+               elseif r < 0.6 then
+                  enemies = enemies_med2
+               else
+                  enemies = enemies_sml
+               end
+            elseif s == 5 then
                enemies = enemies_hvy
-            elseif r < 0.6 then
-               enemies = enemies_med2
             else
-               enemies = enemies_sml
+               enemies = enemies_dng
             end
-         elseif s == 5 then
-            enemies = enemies_hvy
-         else
-            enemies = enemies_dng
-         end
-         local pirates = {}
-         local pos = player.pos()
-         local leader
-         for _k,v in ipairs(enemies) do
-            local dist = 800 + 200 * ship.get(v):size()
-            local p = pilot.add( v, "Marauder", pos + vec2.newP( dist + rnd.rnd()*0.5*dist, rnd.angle() ) )
-            p:setHostile( true ) -- Should naturally attack the player
-            table.insert( pirates, p )
-            if not leader then
-               leader = p
-            else
-               p:setLeader( leader )
+            local pirates = {}
+            local pos = player.pos()
+            local leader
+            for _k,v in ipairs(enemies) do
+               local dist = 800 + 200 * ship.get(v):size()
+               local p = pilot.add( v, "Marauder", pos + vec2.newP( dist + rnd.rnd()*0.5*dist, rnd.angle() ) )
+               p:setHostile( true ) -- Should naturally attack the player
+               table.insert( pirates, p )
+               if not leader then
+                  leader = p
+               else
+                  p:setLeader( leader )
+               end
             end
+            destroyevent()
          end
-         destroyevent()
-      end
       )
    end
 
