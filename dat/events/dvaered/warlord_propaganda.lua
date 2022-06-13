@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
  <event name="Deliver Flyers">
   <unique />
-  <trigger>land</trigger>
+  <location>land</location>
   <chance>30</chance>
   <cond>spob.cur():faction() and spob.cur():faction() == faction.get("Dvaered") and var.peek("dc_misn") ~= nil and var.peek("dc_misn") &gt;= 2</cond>
   <notes>

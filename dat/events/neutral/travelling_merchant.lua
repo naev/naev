@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Travelling Merchant">
- <trigger>enter</trigger>
+ <location>enter</location>
  <chance>5</chance>
  <cond>require("common.pirate").systemPresence() &gt; 100 and system.cur():presence("Independent") &gt; 100 and player.credits() >= 1e6</cond>
 </event>

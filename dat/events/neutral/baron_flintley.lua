@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Flintley">
-  <trigger>land</trigger>
+  <location>land</location>
   <chance>100</chance>
   <cond>player.misnActive("Baron") == false and spob.cur() == spob.get("Tau Station") and player.misnDone("Prince")</cond>
   <notes>

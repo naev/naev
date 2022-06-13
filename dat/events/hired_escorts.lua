@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Hired Escort Handler">
- <trigger>load</trigger>
+ <location>load</location>
  <chance>100</chance>
  <unique />
 </event>

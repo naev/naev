@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Prowling baron">
-  <trigger>enter</trigger>
+  <location>enter</location>
   <chance>100</chance>
   <cond>player.misnActive("Baron") == false and player.misnActive("Prince") == false and system.cur() == system.get("Ingot")</cond>
   <notes>

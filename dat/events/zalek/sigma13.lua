@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Sigma-13 Zach">
- <trigger>land</trigger>
+ <location>land</location>
  <chance>100</chance>
  <cond>player.misnDone("Za'lek Black Hole 11") and spob.cur()==spob.get("Research Post Sigma-13")</cond>
  <notes>

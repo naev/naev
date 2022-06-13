@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Finding Taiomi">
- <trigger>enter</trigger>
+ <location>enter</location>
  <unique />
  <chance>100</chance>
  <cond>system.cur() == system.get("Bastion")</cond>

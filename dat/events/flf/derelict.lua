@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="FLF/DV Derelicts">
- <trigger>enter</trigger>
+ <location>enter</location>
  <chance>60</chance>
  <cond>faction.get("Dvaered"):playerStanding() &gt;= 0 and not (player.misnDone("Take the Dvaered crew home") or player.misnDone("Deal with the FLF agent")) and not (player.misnActive("Deal with the FLF agent") or player.misnActive("Take the Dvaered crew home")) </cond>
 </event>

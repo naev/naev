@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="FLF Catastrophe">
- <trigger>enter</trigger>
+ <location>enter</location>
  <chance>70</chance>
  <cond>system.cur() == system.get("Sigur") and faction.get("FLF"):playerStanding() &gt;= 98 and player.misnDone("The FLF Split")</cond>
  <notes>

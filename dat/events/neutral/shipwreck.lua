@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Shipwreck">
- <trigger>enter</trigger>
+ <location>enter</location>
  <chance>3</chance>
  <cond>require("common.pirate").systemPresence() &gt; 0</cond>
  <unique />

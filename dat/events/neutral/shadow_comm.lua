@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Shadowcomm">
- <trigger>enter</trigger>
+ <location>enter</location>
  <chance>3</chance>
  <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadowrun") and not (player.misnDone("Shadow Vigil") or player.misnActive("Shadow Vigil")) and not (system.cur() == system.get("Pas")) and system.cur():presence("Independent") &gt; 100</cond>
  <notes>

@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Animal trouble">
-  <trigger>enter</trigger>
+  <location>enter</location>
   <chance>20</chance>
   <cond>var.peek("shipinfested") == true</cond>
   <unique />

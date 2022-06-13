@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Restricted zone">
- <trigger>enter</trigger>
+ <location>enter</location>
  <chance>100</chance>
  <cond>system.cur():tags().restricted~=nil</cond>
 </event>

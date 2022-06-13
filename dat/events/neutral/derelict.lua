@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Derelict">
- <trigger>enter</trigger>
+ <location>enter</location>
  <chance>45</chance>
  <cond>system.cur():faction() ~= nil</cond>
  <notes>

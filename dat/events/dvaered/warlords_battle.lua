@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Warlords Battle">
- <trigger>enter</trigger>
+ <location>enter</location>
  <chance>5</chance>
  <cond>system.cur():faction() == faction.get("Dvaered") and not player.evtActive ("Warlords Battle")</cond>
  <notes>

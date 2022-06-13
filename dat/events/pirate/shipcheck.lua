@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Pirate Shipcheck">
- <trigger>enter</trigger>
+ <location>enter</location>
  <chance>100</chance>
 </event>
 --]]

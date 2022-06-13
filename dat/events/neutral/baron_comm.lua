@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Baroncomm_baron">
-  <trigger>enter</trigger>
+  <location>enter</location>
   <chance>4</chance>
   <cond>
    not var.peek("baron_hated") and

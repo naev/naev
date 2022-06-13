@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Cinematic Dvaered/FLF battle">
- <trigger>enter</trigger>
+ <location>enter</location>
  <chance>10</chance>
  <cond>system.cur() == system.get("Tuoladis")</cond>
  <unique />

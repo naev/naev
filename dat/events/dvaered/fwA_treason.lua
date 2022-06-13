@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
  <event name="Betray General Klank">
-  <trigger>enter</trigger>
+  <location>enter</location>
   <chance>10</chance>
   <cond>system.cur():faction() == faction.get("Dvaered") and player.misnDone("Dvaered Sabotage") == true</cond>
   <unique />

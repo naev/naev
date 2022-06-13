@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Minerva Station Altercation 1">
- <trigger>none</trigger>
+ <location>none</location>
  <chance>0</chance>
  <notes>
   <campaign>Minerva</campaign>

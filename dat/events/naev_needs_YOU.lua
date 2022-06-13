@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Naev Needs You!">
-  <trigger>land</trigger>
+  <location>land</location>
   <chance>8</chance>
   <unique />
  </event>

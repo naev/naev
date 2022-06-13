@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Spa Propaganda">
- <trigger>none</trigger>
+ <location>none</location>
  <chance>0</chance>
  <unique />
  <notes>

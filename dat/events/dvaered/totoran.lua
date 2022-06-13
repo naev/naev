@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Totoran Station Events">
- <trigger>land</trigger>
+ <location>land</location>
  <chance>100</chance>
  <cond>spob.cur()==spob.get("Totoran")</cond>
 </event>

@@ -443,7 +443,7 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
       }
 
       /* Trigger. */
-      if (xml_isNode(node,"trigger")) {
+      if (xml_isNode(node,"location")) {
          char *buf = xml_get(node);
          if (buf == NULL)
             WARN(_("Event '%s': Null trigger type."), temp->name);
@@ -490,7 +490,7 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
    if (o) WARN(_("Event '%s' missing/invalid '%s' element"), temp->name, s)
-   MELEMENT(temp->trigger==EVENT_TRIGGER_NULL,"trigger");
+   MELEMENT(temp->trigger==EVENT_TRIGGER_NULL,"location");
    MELEMENT((temp->trigger!=EVENT_TRIGGER_NONE) && (temp->chance==0.),"chance");
 #undef MELEMENT
 

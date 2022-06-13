@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Taiomi System">
- <trigger>enter</trigger>
+ <location>enter</location>
  <chance>100</chance>
  <cond>system.cur() == system.get("Taiomi") and player.evtDone("Introducing Taiomi")</cond>
  <notes>

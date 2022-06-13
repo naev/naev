@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Strafer's Ceremony">
- <trigger>enter</trigger>
+ <location>enter</location>
  <chance>50</chance>
  <cond>
   system.cur():faction() == faction.get("Dvaered") and

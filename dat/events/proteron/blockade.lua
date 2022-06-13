@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Protera Blockade">
- <trigger>enter</trigger>
+ <location>enter</location>
  <chance>100</chance>
  <cond>system.cur() == system.get("Protera")</cond>
 </event>

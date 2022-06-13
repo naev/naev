@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Hypergate Construction">
- <trigger>enter</trigger>
+ <location>enter</location>
  <chance>100</chance>
  <chapter>0</chapter>
 </event>

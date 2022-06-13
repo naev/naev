@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Ship Lover Quiz">
- <trigger>land</trigger>
+ <location>land</location>
  <chance>10</chance>
  <notes>
   <tier>1</tier>

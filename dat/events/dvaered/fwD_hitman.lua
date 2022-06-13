@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Division Marius">
-  <trigger>enter</trigger>
+  <location>enter</location>
   <chance>10</chance>
   <cond>false</cond>
   <!--<cond>player.misnDone("Dvaered Ballet") and not (player.misnDone("Dvaered Base") or player.misnActive("Dvaered Base") or player.misnDone("Dvaered Triathlon"))</cond>-->

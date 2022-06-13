@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Hypergate Fleets">
- <trigger>enter</trigger>
+ <location>enter</location>
  <chance>100</chance>
  <chapter>1</chapter>
 </event>
