@@ -102,7 +102,7 @@ function enter ()
    local angle = rnd.angle()
    local mpos = pos
    for i=1,rnd.rnd(13,17) do -- should average 15*5505 = 8250 units
-      mpos = mpos + vec2.newP( 400+300*rnd.rnd(), angle )
+      mpos = vec2.newP( 400+300*rnd.rnd(), angle ) + mpos
       angle = angle + rnd.sigma()
       table.insert( path, mpos )
    end
@@ -146,9 +146,6 @@ function scan ()
    -- Starts marks
    started = true
    path_spfx = {}
-   for k,v in ipairs(path) do
-      table.insert( path_spfx, luaspfx.trail( v ) )
-   end
 
    timer = hook.timer( 1, "heartbeat" )
 end
@@ -157,7 +154,7 @@ function heartbeat ()
    for k,v in ipairs(path) do
       -- Have to follow the path
       if not path_spfx[k] and (k<=1 or path_spfx[k-1]) and player.pos():dist( v ) < 1e3 then
-         path_spfx[k] = luaspfx.trail( v )
+         path_spfx[k] = luaspfx.trail( v, path[k+1] or goal )
       end
    end
 
