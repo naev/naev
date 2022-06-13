@@ -33,6 +33,11 @@ local vn = require "vn"
 function create ()
    mem.sys, mem.risk, mem.reward = poi.start()
 
+   -- We do a soft claim on the final system
+   if not misn.claim( {mem.sys}, nil, true ) then
+      return
+   end
+
    local riskstr = "Low"
    local rewardstr = "Unknown"
 
