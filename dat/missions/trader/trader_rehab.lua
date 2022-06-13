@@ -1,10 +1,10 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Trader Rehabilitation">
-   <priority>10</priority>
-   <cond>faction.playerStanding("Traders Guild") &lt; 0</cond>
-   <chance>100</chance>
-   <location>Computer</location>
+  <priority>10</priority>
+  <cond>faction.playerStanding("Traders Guild") &lt; 0</cond>
+  <chance>100</chance>
+  <location>Computer</location>
  </mission>
  --]]
 --[[
