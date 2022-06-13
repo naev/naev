@@ -2,9 +2,9 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Kidnapped">
  <unique />
-  <priority>4</priority>
-  <chance>100</chance>
-  <location>None</location>
+ <priority>4</priority>
+ <chance>100</chance>
+ <location>None</location>
  <notes>
   <done_evt name="Kidnapped">Triggers</done_evt>
   <campaign>Kidnapping</campaign>

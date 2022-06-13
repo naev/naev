@@ -2,9 +2,9 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dark Shadow">
  <unique />
-  <priority>3</priority>
-  <chance>100</chance>
-  <location>None</location>
+ <priority>3</priority>
+ <chance>100</chance>
+ <location>None</location>
  <notes>
   <done_evt name="Shadowcomm2">Triggers</done_evt>
   <campaign>Shadow</campaign>

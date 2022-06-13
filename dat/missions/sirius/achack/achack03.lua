@@ -1,16 +1,16 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Joanne's Doubt">
-  <unique />
-  <priority>3</priority>
-  <done>Harja's Vengeance</done>
-  <chance>10</chance>
-  <location>Bar</location>
-  <faction>Sirius</faction>
-  <notes>
+ <unique />
+ <priority>3</priority>
+ <done>Harja's Vengeance</done>
+ <chance>10</chance>
+ <location>Bar</location>
+ <faction>Sirius</faction>
+ <notes>
    <campaign>Academy Hack</campaign>
-  </notes>
- </mission>
+ </notes>
+</mission>
  --]]
 --[[
 -- This is the third mission in the Academy Hack minor campaign.

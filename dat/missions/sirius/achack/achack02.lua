@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Harja's Vengeance">
  <unique />
-  <priority>3</priority>
-  <cond>spob.get("Violin Station"):system():jumpDist() &lt; 4</cond>
-  <done>Sirian Bounty</done>
-  <chance>10</chance>
-  <location>Bar</location>
-  <faction>Sirius</faction>
+ <priority>3</priority>
+ <cond>spob.get("Violin Station"):system():jumpDist() &lt; 4</cond>
+ <done>Sirian Bounty</done>
+ <chance>10</chance>
+ <location>Bar</location>
+ <faction>Sirius</faction>
  <notes>
   <campaign>Academy Hack</campaign>
   <tier>3</tier>

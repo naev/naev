@@ -2,10 +2,10 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Terraforming Antlejos 1">
  <unique />
-  <priority>4</priority>
-  <chance>5</chance>
-  <location>Bar</location>
-  <cond>system.jumpDist("Antlejos") &gt; 3 and system.jumpDist("Antlejos") &lt; 13</cond>
+ <priority>4</priority>
+ <chance>5</chance>
+ <location>Bar</location>
+ <cond>system.jumpDist("Antlejos") &gt; 3 and system.jumpDist("Antlejos") &lt; 13</cond>
  <notes>
   <tier>1</tier>
   <campaign>Terraforming Antlejos</campaign>

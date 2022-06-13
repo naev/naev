@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Anxious Merchant">
-  <priority>3</priority>
-  <chance>5</chance>
-  <location>Bar</location>
-  <faction>Dvaered</faction>
-  <faction>Empire</faction>
-  <faction>Frontier</faction>
-  <faction>Goddard</faction>
-  <faction>Independent</faction>
-  <faction>Sirius</faction>
-  <faction>Soromid</faction>
-  <faction>Traders Guild</faction>
-  <faction>Za'lek</faction>
+ <priority>3</priority>
+ <chance>5</chance>
+ <location>Bar</location>
+ <faction>Dvaered</faction>
+ <faction>Empire</faction>
+ <faction>Frontier</faction>
+ <faction>Goddard</faction>
+ <faction>Independent</faction>
+ <faction>Sirius</faction>
+ <faction>Soromid</faction>
+ <faction>Traders Guild</faction>
+ <faction>Za'lek</faction>
  <notes>
   <tier>2</tier>
  </notes>

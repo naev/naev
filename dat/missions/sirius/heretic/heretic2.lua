@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Patrol">
-  <unique />
-  <priority>3</priority>
-  <done>The Return</done>
-  <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
-  <chance>100</chance>
-  <location>Bar</location>
-  <spob>The Wringer</spob>
-  <notes>
+ <unique />
+ <priority>3</priority>
+ <done>The Return</done>
+ <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
+ <chance>100</chance>
+ <location>Bar</location>
+ <spob>The Wringer</spob>
+ <notes>
    <campaign>Heretic</campaign>
    <tier>3</tier>
-  </notes>
- </mission>
+ </notes>
+</mission>
  --]]
 --[[misn title - the patrol]]
 --[[in this mission, the player will be guarding the "high command" of the

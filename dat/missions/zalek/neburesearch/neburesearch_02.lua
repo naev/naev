@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Emergency of Immediate Inspiration">
  <unique />
-  <priority>4</priority>
-  <done>Advanced Nebula Research</done>
-  <chance>30</chance>
-  <location>Bar</location>
-  <faction>Empire</faction>
-  <cond>system.get("Gamma Polaris"):jumpDist() &lt; 3 and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3"</cond>
+ <priority>4</priority>
+ <done>Advanced Nebula Research</done>
+ <chance>30</chance>
+ <location>Bar</location>
+ <faction>Empire</faction>
+ <cond>system.get("Gamma Polaris"):jumpDist() &lt; 3 and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3"</cond>
  <notes>
   <campaign>Nebula Research</campaign>
  </notes>

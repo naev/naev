@@ -2,10 +2,10 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Smuggle Cake">
  <unique />
-  <priority>3</priority>
-  <chance>20</chance>
-  <location>Bar</location>
-  <cond>require("common.pirate").systemPresence() &gt; 0</cond>
+ <priority>3</priority>
+ <chance>20</chance>
+ <location>Bar</location>
+ <cond>require("common.pirate").systemPresence() &gt; 0</cond>
  <notes>
   <tier>1</tier>
  </notes>

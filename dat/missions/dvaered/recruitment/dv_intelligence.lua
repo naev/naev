@@ -1,11 +1,11 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dvaered Intelligence">
-  <priority>3</priority>
-  <chance>150</chance>
-  <location>Computer</location>
-  <faction>Dvaered</faction>
-  <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+ <priority>3</priority>
+ <chance>150</chance>
+ <location>Computer</location>
+ <faction>Dvaered</faction>
+ <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
  <notes>
   <tier>1</tier>
   <campaign>Dvaered Recruitment</campaign>

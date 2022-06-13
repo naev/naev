@@ -2,18 +2,18 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Helping Nelly Out 1">
  <unique />
-  <priority>1</priority>
-  <chance>100</chance>
-  <cond>require("common.pirate").systemPresence() &lt;= 0 and not player.misnActive("Tutorial")</cond>
-  <location>Bar</location>
-  <faction>Dvaered</faction>
-  <faction>Empire</faction>
-  <faction>Frontier</faction>
-  <faction>Goddard</faction>
-  <faction>Independent</faction>
-  <faction>Sirius</faction>
-  <faction>Soromid</faction>
-  <faction>Za'lek</faction>
+ <priority>1</priority>
+ <chance>100</chance>
+ <cond>require("common.pirate").systemPresence() &lt;= 0 and not player.misnActive("Tutorial")</cond>
+ <location>Bar</location>
+ <faction>Dvaered</faction>
+ <faction>Empire</faction>
+ <faction>Frontier</faction>
+ <faction>Goddard</faction>
+ <faction>Independent</faction>
+ <faction>Sirius</faction>
+ <faction>Soromid</faction>
+ <faction>Za'lek</faction>
   <chapter>[01]</chapter>
  <notes>
   <campaign>Tutorial Nelly</campaign>

@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Assault on Raelid">
-  <unique />
-  <priority>2</priority>
-  <chance>30</chance>
-  <done>FLF Pirate Alliance</done>
-  <location>Bar</location>
-  <faction>FLF</faction>
-  <cond>faction.playerStanding("FLF") &gt;= 50</cond>
-  <notes>
+ <unique />
+ <priority>2</priority>
+ <chance>30</chance>
+ <done>FLF Pirate Alliance</done>
+ <location>Bar</location>
+ <faction>FLF</faction>
+ <cond>faction.playerStanding("FLF") &gt;= 50</cond>
+ <notes>
    <provides name="The Empire and the FLF are enemies">Because they're caught in the battle</provides>
    <campaign>Save the Frontier</campaign>
-  </notes>
- </mission>
+ </notes>
+</mission>
  --]]
 --[[
 

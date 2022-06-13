@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Sirius Long Distance Recruitment">
  <unique />
-  <priority>4</priority>
-  <cond>faction.playerStanding("Empire") &gt;= 0</cond>
-  <chance>75</chance>
-  <done>Frontier Long Distance Recruitment</done>
-  <location>Bar</location>
-  <faction>Empire</faction>
+ <priority>4</priority>
+ <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+ <chance>75</chance>
+ <done>Frontier Long Distance Recruitment</done>
+ <location>Bar</location>
+ <faction>Empire</faction>
  <notes>
   <campaign>Empire Shipping</campaign>
  </notes>

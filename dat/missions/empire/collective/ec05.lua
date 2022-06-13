@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Operation Black Trinity">
  <unique />
-  <priority>2</priority>
-  <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
-  <done>Collective Extraction</done>
-  <chance>100</chance>
-  <location>Bar</location>
-  <spob>Omega Station</spob>
+ <priority>2</priority>
+ <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+ <done>Collective Extraction</done>
+ <chance>100</chance>
+ <location>Bar</location>
+ <spob>Omega Station</spob>
  <notes>
   <campaign>Collective</campaign>
   <tier>4</tier>

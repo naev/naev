@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="FLF Pirate Alliance">
  <unique />
-  <priority>2</priority>
-  <chance>30</chance>
-  <done>Diversion from Raelid</done>
-  <location>Bar</location>
-  <faction>FLF</faction>
-  <cond>faction.playerStanding("FLF") &gt;= 30</cond>
+ <priority>2</priority>
+ <chance>30</chance>
+ <done>Diversion from Raelid</done>
+ <location>Bar</location>
+ <faction>FLF</faction>
+ <cond>faction.playerStanding("FLF") &gt;= 30</cond>
  <notes>
   <campaign>Save the Frontier</campaign>
  </notes>

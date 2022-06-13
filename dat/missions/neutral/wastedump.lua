@@ -1,19 +1,19 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Waste Dump">
-  <priority>9</priority>
-  <chance>10</chance>
-  <location>Computer</location>
-  <faction>Dvaered</faction>
-  <faction>Empire</faction>
-  <faction>Frontier</faction>
-  <faction>Goddard</faction>
-  <faction>Independent</faction>
-  <faction>Sirius</faction>
-  <faction>Soromid</faction>
-  <faction>Thurion</faction>
-  <faction>Traders Guild</faction>
-  <faction>Za'lek</faction>
+ <priority>9</priority>
+ <chance>10</chance>
+ <location>Computer</location>
+ <faction>Dvaered</faction>
+ <faction>Empire</faction>
+ <faction>Frontier</faction>
+ <faction>Goddard</faction>
+ <faction>Independent</faction>
+ <faction>Sirius</faction>
+ <faction>Soromid</faction>
+ <faction>Thurion</faction>
+ <faction>Traders Guild</faction>
+ <faction>Za'lek</faction>
 </mission>
 --]]
 --[[

@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Empire Long Distance Recruitment">
  <unique />
-  <priority>4</priority>
-  <cond>faction.playerStanding("Empire") &gt;= 0</cond>
-  <chance>100</chance>
-  <done>Sirius Long Distance Recruitment</done>
-  <location>Bar</location>
-  <faction>Empire</faction>
+ <priority>4</priority>
+ <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+ <chance>100</chance>
+ <done>Sirius Long Distance Recruitment</done>
+ <location>Bar</location>
+ <faction>Empire</faction>
  <tags>
   <tag>emp_cap_ch01_lrg</tag>
  </tags>

@@ -2,9 +2,9 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Drunkard">
  <unique />
-  <priority>4</priority>
-  <chance>3</chance>
-  <location>Bar</location>
+ <priority>4</priority>
+ <chance>3</chance>
+ <location>Bar</location>
  <notes>
   <tier>1</tier>
  </notes>

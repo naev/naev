@@ -2,11 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Empire Recruitment">
  <unique />
-  <priority>4</priority>
-  <chance>30</chance>
-  <location>Bar</location>
-  <faction>Empire</faction>
-  <cond>player.credits() &gt;= 200e3</cond>
+ <priority>4</priority>
+ <chance>30</chance>
+ <location>Bar</location>
+ <faction>Empire</faction>
+ <cond>player.credits() &gt;= 200e3</cond>
  <notes>
   <tier>1</tier>
  </notes>

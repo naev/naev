@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dvaered Escort">
  <unique />
-  <priority>2</priority>
-  <chance>100</chance>
-  <location>Bar</location>
-  <faction>Dvaered</faction>
-  <done>Destroy the FLF base!</done>
-  <cond>system.get("Tarsus"):jumpDist() &lt; 4 and not (spob.cur():services().shipyard == nil)</cond>
+ <priority>2</priority>
+ <chance>100</chance>
+ <location>Bar</location>
+ <faction>Dvaered</faction>
+ <done>Destroy the FLF base!</done>
+ <cond>system.get("Tarsus"):jumpDist() &lt; 4 and not (spob.cur():services().shipyard == nil)</cond>
  <notes>
   <campaign>Frontier Invasion</campaign>
   <requires name="The FLF is dead"/>

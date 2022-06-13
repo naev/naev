@@ -1,17 +1,17 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Alive Bounty">
-  <priority>4</priority>
-  <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
-  <chance>360</chance>
-  <location>Computer</location>
-  <faction>Empire</faction>
-  <faction>Frontier</faction>
-  <faction>Goddard</faction>
-  <faction>Independent</faction>
-  <faction>Sirius</faction>
-  <faction>Soromid</faction>
-  <faction>Za'lek</faction>
+ <priority>4</priority>
+ <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+ <chance>360</chance>
+ <location>Computer</location>
+ <faction>Empire</faction>
+ <faction>Frontier</faction>
+ <faction>Goddard</faction>
+ <faction>Independent</faction>
+ <faction>Sirius</faction>
+ <faction>Soromid</faction>
+ <faction>Za'lek</faction>
  <notes>
   <tier>3</tier>
  </notes>

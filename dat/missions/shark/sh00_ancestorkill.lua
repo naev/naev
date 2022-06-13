@@ -2,19 +2,19 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="A Shark Bites">
  <unique />
-  <priority>3</priority>
-  <cond>spob.cur() ~= spob.get("Ulios") and player.numOutfit("Mercenary License") &gt; 0</cond>
-  <chance>5</chance>
-  <location>Bar</location>
-  <faction>Dvaered</faction>
-  <faction>Empire</faction>
-  <faction>Frontier</faction>
-  <faction>Goddard</faction>
-  <faction>Independent</faction>
-  <faction>Sirius</faction>
-  <faction>Soromid</faction>
-  <faction>Traders Guild</faction>
-  <faction>Za'lek</faction>
+ <priority>3</priority>
+ <cond>spob.cur() ~= spob.get("Ulios") and player.numOutfit("Mercenary License") &gt; 0</cond>
+ <chance>5</chance>
+ <location>Bar</location>
+ <faction>Dvaered</faction>
+ <faction>Empire</faction>
+ <faction>Frontier</faction>
+ <faction>Goddard</faction>
+ <faction>Independent</faction>
+ <faction>Sirius</faction>
+ <faction>Soromid</faction>
+ <faction>Traders Guild</faction>
+ <faction>Za'lek</faction>
  <notes>
   <campaign>Nexus show their teeth</campaign>
   <tier>3</tier>

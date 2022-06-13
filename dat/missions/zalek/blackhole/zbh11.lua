@@ -2,11 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Za'lek Black Hole 11">
  <unique />
-  <priority>4</priority>
-  <chance>100</chance>
-  <spob>Research Post Sigma-13</spob>
-  <location>Bar</location>
-  <done>Za'lek Black Hole 10</done>
+ <priority>4</priority>
+ <chance>100</chance>
+ <spob>Research Post Sigma-13</spob>
+ <location>Bar</location>
+ <done>Za'lek Black Hole 10</done>
  <tags>
   <tag>zlk_cap_ch01_lrg</tag>
  </tags>

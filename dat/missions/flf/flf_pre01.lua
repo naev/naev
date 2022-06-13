@@ -2,9 +2,9 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Deal with the FLF agent">
  <unique />
-  <priority>2</priority>
-  <chance>100</chance>
-  <location>None</location>
+ <priority>2</priority>
+ <chance>100</chance>
+ <location>None</location>
  <notes>
   <done_evt name="FLF/DV Derelicts">If you choose to help Gregar</done_evt>
   <campaign>Join the FLF</campaign>

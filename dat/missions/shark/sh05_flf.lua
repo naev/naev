@@ -2,20 +2,20 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The FLF Contact">
  <unique />
-  <priority>3</priority>
-  <done>The Meeting</done>
-  <chance>5</chance>
-  <location>Bar</location>
-  <faction>Dvaered</faction>
-  <faction>Empire</faction>
-  <faction>Frontier</faction>
-  <faction>Goddard</faction>
-  <faction>Independent</faction>
-  <faction>Sirius</faction>
-  <faction>Soromid</faction>
-  <faction>Traders Guild</faction>
-  <faction>Za'lek</faction>
-  <cond>not diff.isApplied( "flf_dead" )</cond>
+ <priority>3</priority>
+ <done>The Meeting</done>
+ <chance>5</chance>
+ <location>Bar</location>
+ <faction>Dvaered</faction>
+ <faction>Empire</faction>
+ <faction>Frontier</faction>
+ <faction>Goddard</faction>
+ <faction>Independent</faction>
+ <faction>Sirius</faction>
+ <faction>Soromid</faction>
+ <faction>Traders Guild</faction>
+ <faction>Za'lek</faction>
+ <cond>not diff.isApplied( "flf_dead" )</cond>
  <notes>
   <campaign>Nexus show their teeth</campaign>
  </notes>

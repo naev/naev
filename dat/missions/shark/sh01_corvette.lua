@@ -2,19 +2,19 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Sharkman Is Back">
  <unique />
-  <priority>3</priority>
-  <done>A Shark Bites</done>
-  <chance>10</chance>
-  <location>Bar</location>
-  <faction>Dvaered</faction>
-  <faction>Empire</faction>
-  <faction>Frontier</faction>
-  <faction>Goddard</faction>
-  <faction>Independent</faction>
-  <faction>Sirius</faction>
-  <faction>Soromid</faction>
-  <faction>Traders Guild</faction>
-  <faction>Za'lek</faction>
+ <priority>3</priority>
+ <done>A Shark Bites</done>
+ <chance>10</chance>
+ <location>Bar</location>
+ <faction>Dvaered</faction>
+ <faction>Empire</faction>
+ <faction>Frontier</faction>
+ <faction>Goddard</faction>
+ <faction>Independent</faction>
+ <faction>Sirius</faction>
+ <faction>Soromid</faction>
+ <faction>Traders Guild</faction>
+ <faction>Za'lek</faction>
  <notes>
   <campaign>Nexus show their teeth</campaign>
  </notes>

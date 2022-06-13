@@ -2,14 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Defend the System 1">
  <unique />
-  <priority>4</priority>
-  <chance>3</chance>
-  <location>None</location>
-  <faction>Dvaered</faction>
-  <faction>Frontier</faction>
-  <faction>Goddard</faction>
-  <faction>Independent</faction>
-  <faction>Soromid</faction>
+ <priority>4</priority>
+ <chance>3</chance>
+ <location>None</location>
+ <faction>Dvaered</faction>
+ <faction>Frontier</faction>
+ <faction>Goddard</faction>
+ <faction>Independent</faction>
+ <faction>Soromid</faction>
  <notes>
   <tier>3</tier>
  </notes>

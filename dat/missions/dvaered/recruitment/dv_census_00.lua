@@ -2,10 +2,10 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dvaered Census 0">
  <unique />
-  <priority>4</priority>
-  <chance>30</chance>
-  <location>Bar</location>
-  <faction>Dvaered</faction>
+ <priority>4</priority>
+ <chance>30</chance>
+ <location>Bar</location>
+ <faction>Dvaered</faction>
  <notes>
   <tier>1</tier>
   <campaign>Dvaered Recruitment</campaign>

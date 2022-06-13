@@ -1,11 +1,11 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Za'lek Test">
-  <priority>3</priority>
-  <cond>faction.playerStanding("Za'lek") &gt; 5 and spob.cur():services()["outfits"] == "Outfits"</cond>
-  <chance>450</chance>
-  <location>Computer</location>
-  <faction>Za'lek</faction>
+ <priority>3</priority>
+ <cond>faction.playerStanding("Za'lek") &gt; 5 and spob.cur():services()["outfits"] == "Outfits"</cond>
+ <chance>450</chance>
+ <location>Computer</location>
+ <faction>Za'lek</faction>
  <notes>
   <tier>2</tier>
  </notes>

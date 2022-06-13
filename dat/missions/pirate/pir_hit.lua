@@ -1,17 +1,17 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Hit">
-  <priority>3</priority>
-  <chance>1260</chance>
-  <location>Computer</location>
-  <faction>Wild Ones</faction>
-  <faction>Black Lotus</faction>
-  <faction>Raven Clan</faction>
-  <faction>Dreamer Clan</faction>
-  <faction>Pirate</faction>
-  <faction>Independent</faction>
-  <faction>FLF</faction>
-  <done>Pirate Hit Intro</done>
+ <priority>3</priority>
+ <chance>1260</chance>
+ <location>Computer</location>
+ <faction>Wild Ones</faction>
+ <faction>Black Lotus</faction>
+ <faction>Raven Clan</faction>
+ <faction>Dreamer Clan</faction>
+ <faction>Pirate</faction>
+ <faction>Independent</faction>
+ <faction>FLF</faction>
+ <done>Pirate Hit Intro</done>
  <notes>
   <tier>3</tier>
  </notes>

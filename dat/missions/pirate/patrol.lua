@@ -1,14 +1,14 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Patrol">
-  <priority>4</priority>
-  <chance>560</chance>
-  <location>Computer</location>
-  <faction>Wild Ones</faction>
-  <faction>Black Lotus</faction>
-  <faction>Raven Clan</faction>
-  <faction>Dreamer Clan</faction>
-  <faction>Pirate</faction>
+ <priority>4</priority>
+ <chance>560</chance>
+ <location>Computer</location>
+ <faction>Wild Ones</faction>
+ <faction>Black Lotus</faction>
+ <faction>Raven Clan</faction>
+ <faction>Dreamer Clan</faction>
+ <faction>Pirate</faction>
  <notes>
   <tier>3</tier>
  </notes>

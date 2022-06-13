@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Sightseeing">
-  <priority>4</priority>
-  <cond>spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
-  <chance>460</chance>
-  <location>Computer</location>
-  <faction>Dvaered</faction>
-  <faction>Empire</faction>
-  <faction>Frontier</faction>
-  <faction>Goddard</faction>
-  <faction>Independent</faction>
-  <faction>Sirius</faction>
-  <faction>Soromid</faction>
-  <faction>Za'lek</faction>
+ <priority>4</priority>
+ <cond>spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
+ <chance>460</chance>
+ <location>Computer</location>
+ <faction>Dvaered</faction>
+ <faction>Empire</faction>
+ <faction>Frontier</faction>
+ <faction>Goddard</faction>
+ <faction>Independent</faction>
+ <faction>Sirius</faction>
+ <faction>Soromid</faction>
+ <faction>Za'lek</faction>
  <notes>
   <tier>1</tier>
  </notes>

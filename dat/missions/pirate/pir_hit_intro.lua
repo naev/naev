@@ -2,16 +2,16 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Hit Intro">
  <unique />
-  <priority>3</priority>
-  <cond>player.numOutfit("Mercenary License") &gt; 0 or spob.cur():blackmarket() or spob.cur():tags().criminal ~= nil</cond>
-  <chance>100</chance>
-  <location>Bar</location>
-  <faction>Wild Ones</faction>
-  <faction>Black Lotus</faction>
-  <faction>Raven Clan</faction>
-  <faction>Dreamer Clan</faction>
-  <faction>Pirate</faction>
-  <faction>Independent</faction>
+ <priority>3</priority>
+ <cond>player.numOutfit("Mercenary License") &gt; 0 or spob.cur():blackmarket() or spob.cur():tags().criminal ~= nil</cond>
+ <chance>100</chance>
+ <location>Bar</location>
+ <faction>Wild Ones</faction>
+ <faction>Black Lotus</faction>
+ <faction>Raven Clan</faction>
+ <faction>Dreamer Clan</faction>
+ <faction>Pirate</faction>
+ <faction>Independent</faction>
  <notes>
   <tier>3</tier>
  </notes>

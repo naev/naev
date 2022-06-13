@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Shielding Prototype Funding">
  <unique />
-  <priority>4</priority>
-  <done>The Substitute Speaker</done>
-  <chance>10</chance>
-  <location>Bar</location>
-  <faction>Za'lek</faction>
-  <cond>system.get("Hideyoshi's Star"):jumpDist() &gt; 2</cond>
+ <priority>4</priority>
+ <done>The Substitute Speaker</done>
+ <chance>10</chance>
+ <location>Bar</location>
+ <faction>Za'lek</faction>
+ <cond>system.get("Hideyoshi's Star"):jumpDist() &gt; 2</cond>
  <notes>
   <campaign>Nebula Research</campaign>
  </notes>

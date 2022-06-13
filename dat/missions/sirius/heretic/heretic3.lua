@@ -1,17 +1,17 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Assault">
-  <unique />
-  <priority>3</priority>
-  <done>The Patrol</done>
-  <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
-  <chance>100</chance>
-  <location>Bar</location>
-  <spob>The Wringer</spob>
-  <notes>
+ <unique />
+ <priority>3</priority>
+ <done>The Patrol</done>
+ <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
+ <chance>100</chance>
+ <location>Bar</location>
+ <spob>The Wringer</spob>
+ <notes>
    <campaign>Heretic</campaign>
-  </notes>
- </mission>
+ </notes>
+</mission>
  --]]
 --[[misn title - the assault]]
 --[[in this mission, the wringer is assaulted by a full assault fleet

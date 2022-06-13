@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Diversion from Haleb">
  <unique />
-  <priority>2</priority>
-  <chance>40</chance>
-  <done>Assault on Raelid</done>
-  <location>Bar</location>
-  <faction>FLF</faction>
-  <cond>faction.playerStanding("FLF") &gt;= 70</cond>
+ <priority>2</priority>
+ <chance>40</chance>
+ <done>Assault on Raelid</done>
+ <location>Bar</location>
+ <faction>FLF</faction>
+ <cond>faction.playerStanding("FLF") &gt;= 70</cond>
  <notes>
   <campaign>Save the Frontier</campaign>
  </notes>

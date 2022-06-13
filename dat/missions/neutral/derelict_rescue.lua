@@ -1,8 +1,8 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Derelict Rescue">
-  <chance>0</chance>
-  <location>None</location>
+ <chance>0</chance>
+ <location>None</location>
  <notes>
   <tier>1</tier>
  </notes>

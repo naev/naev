@@ -2,8 +2,8 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Taiomi 1">
  <unique />
-  <chance>0</chance>
-  <location>None</location>
+ <chance>0</chance>
+ <location>None</location>
  <notes>
   <campaign>Taiomi</campaign>
   <tier>2</tier>

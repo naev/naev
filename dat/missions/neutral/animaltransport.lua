@@ -2,11 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Animal transport">
  <unique />
-  <priority>4</priority>
-  <chance>10</chance>
-  <location>Bar</location>
-  <faction>Sirius</faction>
-  <cond>spob.cur():class() ~= "0" and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3"</cond>
+ <priority>4</priority>
+ <chance>10</chance>
+ <location>Bar</location>
+ <faction>Sirius</faction>
+ <cond>spob.cur():class() ~= "0" and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3"</cond>
  <notes>
   <tier>1</tier>
  </notes>

@@ -2,9 +2,9 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Black Cat">
  <unique />
-  <priority>4</priority>
-  <chance>0</chance>
-  <location>None</location>
+ <priority>4</priority>
+ <chance>0</chance>
+ <location>None</location>
  <notes>
   <tier>1</tier>
  </notes>

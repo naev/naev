@@ -2,11 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dvaered Sabotage">
  <unique />
-  <priority>2</priority>
-  <chance>20</chance>
-  <done>Dvaered Escort</done>
-  <location>Bar</location>
-  <faction>Dvaered</faction>
+ <priority>2</priority>
+ <chance>20</chance>
+ <done>Dvaered Escort</done>
+ <location>Bar</location>
+ <faction>Dvaered</faction>
  <notes>
   <campaign>Frontier Invasion</campaign>
  </notes>

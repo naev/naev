@@ -1,15 +1,15 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Sirian Bounty">
-  <unique />
-  <priority>3</priority>
-  <spob>The Wringer</spob>
-  <chance>50</chance>
-  <location>Bar</location>
-  <notes>
+ <unique />
+ <priority>3</priority>
+ <spob>The Wringer</spob>
+ <chance>50</chance>
+ <location>Bar</location>
+ <notes>
    <campaign>Academy Hack</campaign>
-  </notes>
- </mission>
+ </notes>
+</mission>
  --]]
 --[[
 -- This is the first mission in the Academy Hack minor campaign.

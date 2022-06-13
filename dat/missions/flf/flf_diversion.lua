@@ -1,14 +1,14 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Divert the Dvaered Forces">
-  <priority>3</priority>
-  <chance>550</chance>
-  <done>Diversion from Raelid</done>
-  <location>Computer</location>
-  <faction>FLF</faction>
-  <faction>Frontier</faction>
-  <cond>not diff.isApplied( "flf_dead" )</cond>
- </mission>
+ <priority>3</priority>
+ <chance>550</chance>
+ <done>Diversion from Raelid</done>
+ <location>Computer</location>
+ <faction>FLF</faction>
+ <faction>Frontier</faction>
+ <cond>not diff.isApplied( "flf_dead" )</cond>
+</mission>
  --]]
 --[[
 

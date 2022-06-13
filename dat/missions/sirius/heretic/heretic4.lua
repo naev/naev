@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Egress">
  <unique />
-  <priority>3</priority>
-  <done>The Assault</done>
-  <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
-  <chance>100</chance>
-  <location>Bar</location>
-  <spob>The Wringer</spob>
+ <priority>3</priority>
+ <done>The Assault</done>
+ <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
+ <chance>100</chance>
+ <location>Bar</location>
+ <spob>The Wringer</spob>
  <notes>
   <campaign>Heretic</campaign>
  </notes>

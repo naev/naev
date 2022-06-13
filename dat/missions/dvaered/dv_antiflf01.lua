@@ -1,15 +1,15 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Take the Dvaered crew home">
-  <unique />
-  <priority>2</priority>
-  <chance>100</chance>
-  <location>None</location>
-  <notes>
+ <unique />
+ <priority>2</priority>
+ <chance>100</chance>
+ <location>None</location>
+ <notes>
    <done_evt name="FLF/DV Derelicts">If you choose to help the Dvaered</done_evt>
    <campaign>Doom the FLF</campaign>
-  </notes>
- </mission>
+ </notes>
+</mission>
  --]]
 --[[
 -- This is the first mission in the anti-FLF Dvaered campaign. The player is tasked with ferrying home some Dvaered people.
