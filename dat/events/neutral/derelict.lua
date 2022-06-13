@@ -362,7 +362,7 @@ function badevent()
       function ()
          derelict:hookClear() -- So the pilot doesn't end the event by dying.
          derelict_msg(btitle, _([[The moment you affix your boarding clamp to the derelict ship, it triggers a booby trap! The derelict explodes, severely damaging your ship. You escaped death this time, but it was a close call!]]), fmt.f(_([[It was a trap! A derelict you found in {sys} was rigged to explode when your boarding clamp closed! That was a little too close for comfort.]]), {sys=system.cur()}))
-         derelict:setHealth(0,0)
+         derelict:setHealth(-1,-1)
          player.pilot():control(true)
          hook.pilot(derelict, "exploded", "derelict_exploded")
       end,
@@ -471,7 +471,8 @@ end
 function derelict_exploded()
    local pp = player.pilot()
    pp:control(false)
-   pp:setHealth(42, 0)
+   local pa, _ps = pp:health()
+   pp:setHealth(math.max(1,0.42*pa), 0)
    camera.shake()
    destroyevent()
 end
