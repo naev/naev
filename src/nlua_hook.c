@@ -106,6 +106,10 @@ static const luaL_Reg hookL_methods[] = {
    { "pilot", hookL_pilot },
    {0,0}
 }; /**< Hook Lua methods. */
+static const luaL_Reg hookL_methods_trigger[] = {
+   { "trigger", hookL_trigger },
+   {0,0}
+}; /**< Hook Lua methods. */
 
 /*
  * Prototypes.
@@ -116,11 +120,15 @@ static unsigned int hookL_generic( lua_State *L, const char* stack, double ms, i
 /**
  * @brief Loads the hook Lua library.
  *    @param env Lua environment.
+ *    @param full_api Whether or not to include full API or only trigger.
  *    @return 0 on success.
  */
-int nlua_loadHook( nlua_env env )
+int nlua_loadHook( nlua_env env, int full_api )
 {
-   nlua_register(env, "hook", hookL_methods, 0);
+   if (full_api)
+      nlua_register(env, "hook", hookL_methods, 0);
+   else
+      nlua_register(env, "hook", hookL_methods_trigger, 0);
    return 0;
 }
 

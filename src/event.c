@@ -205,7 +205,7 @@ static int event_create( int dataid, unsigned int *id )
    ev->env = nlua_newEnv();
    nlua_loadStandard(ev->env);
    nlua_loadEvt(ev->env);
-   nlua_loadHook(ev->env);
+   nlua_loadHook(ev->env, 1);
    nlua_loadCamera(ev->env);
    nlua_loadTex(ev->env);
    nlua_loadBackground(ev->env);

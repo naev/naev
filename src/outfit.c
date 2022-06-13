@@ -32,6 +32,7 @@
 #include "nlua_pilotoutfit.h"
 #include "nlua_outfit.h"
 #include "nlua_camera.h"
+#include "nlua_hook.h"
 #include "nstring.h"
 #include "nstring.h"
 #include "nxml.h"
@@ -2473,6 +2474,7 @@ int outfit_load (void)
       nlua_loadGFX( env );
       nlua_loadPilotOutfit( env );
       nlua_loadCamera( env );
+      nlua_loadHook( env, 0 );
 
       /* Run code. */
       if (nlua_dobufenv( env, dat, sz, o->lua_file ) != 0) {
