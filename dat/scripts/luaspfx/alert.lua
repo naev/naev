@@ -39,6 +39,7 @@ local function alert( pos, params )
    d.timer  = 0
    d.size   = params.size or 100
    d.col    = params.col or {1, 1, 0, 0.5}
+   return s
 end
 
 return alert

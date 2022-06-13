@@ -12,6 +12,7 @@ local function sfx( pos, vel, source, params )
    if params.volume then
       ss:setVolume( params.volume )
    end
+   return s
 end
 
 return sfx

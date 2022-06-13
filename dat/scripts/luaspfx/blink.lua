@@ -36,6 +36,7 @@ local function blink( pos )
    local d  = s:data()
    d.canvas = lg.newCanvas( player.pilot():render() )
    d.timer = 0
+   return s
 end
 
 return blink
