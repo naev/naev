@@ -2528,6 +2528,7 @@ dat/missions/neutral/oldwoman.lua
 dat/missions/neutral/patrol.lua
 dat/missions/neutral/pirbounty_alive.lua
 dat/missions/neutral/pirbounty_dead.lua
+dat/missions/neutral/point_of_interest.lua
 dat/missions/neutral/race1.lua
 dat/missions/neutral/race2.lua
 dat/missions/neutral/reynir.lua
@@ -2668,6 +2669,7 @@ dat/scripts/common/minerva.lua
 dat/scripts/common/nebu_research.lua
 dat/scripts/common/neutral.lua
 dat/scripts/common/pirate.lua
+dat/scripts/common/poi.lua
 dat/scripts/common/sciencegonewrong.lua
 dat/scripts/common/shadow.lua
 dat/scripts/common/shark.lua
