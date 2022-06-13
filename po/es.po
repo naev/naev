@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-05-12 10:59+0900\n"
-"PO-Revision-Date: 2022-06-12 21:18+0000\n"
+"PO-Revision-Date: 2022-06-13 15:19+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
@@ -1985,7 +1985,6 @@ msgstr ""
 
 #: dat/outfits/accessory/black_cat_doll.xml:13
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
-#, fuzzy
 msgid "#pOnly active when in stealth.#0"
 msgstr "#pSolo activo en sigilo.#0"
 
@@ -2068,7 +2067,6 @@ msgstr ""
 "la Nebulosa antes de desaparecer misteriosamente."
 
 #: dat/outfits/accessory/fuzzy_dice.xml:12
-#, fuzzy
 msgid "#pImproves luck!#0"
 msgstr "#p¡Mejora la suerte!#0"
 
@@ -2087,7 +2085,6 @@ msgstr ""
 "podría ambientar la nave."
 
 #: dat/outfits/accessory/left_boot.xml:13
-#, fuzzy
 msgid "#pSmells funky.#0"
 msgstr "#pHuele raro.#0"
 
@@ -10502,7 +10499,6 @@ msgstr ""
 "\"La especia debe fluir\", dicen, puede que no, pero al menos el ron sí."
 
 #: dat/spob/arrentil.xml:2
-#, fuzzy
 msgid "Arrentil"
 msgstr "Arrentil"
 
@@ -10539,7 +10535,6 @@ msgstr ""
 "sensación más orgánica, tanto que casi parece que está creciendo."
 
 #: dat/spob/astana.xml:2 dat/ssys/astana.xml:2
-#, fuzzy
 msgid "Astana"
 msgstr "Astana"
 
@@ -10571,12 +10566,10 @@ msgstr ""
 "mundo por mucho tiempo aparte del bar."
 
 #: dat/spob/astana_iiv.xml:2
-#, fuzzy
 msgid "Astana IIV"
 msgstr "Astana IIV"
 
 #: dat/spob/atalanta.xml:2
-#, fuzzy
 msgid "Atalanta"
 msgstr "Atalanta"
 
@@ -10608,12 +10601,10 @@ msgstr ""
 "ciclo."
 
 #: dat/spob/atlantis_i.xml:2
-#, fuzzy
 msgid "Atlantis I"
 msgstr "Atlantis I"
 
 #: dat/spob/atryssa.xml:2
-#, fuzzy
 msgid "Atryssa"
 msgstr "Atryssa"
 
@@ -10692,7 +10683,6 @@ msgstr ""
 "relajarse y desconectar."
 
 #: dat/spob/avoss.xml:2
-#, fuzzy
 msgid "Avoss"
 msgstr "Avoss"
 
@@ -10718,47 +10708,38 @@ msgstr ""
 "en día."
 
 #: dat/spob/awowa_iv.xml:2
-#, fuzzy
 msgid "Awowa IV"
 msgstr "Awowa IV"
 
 #: dat/spob/awowa_v.xml:2
-#, fuzzy
 msgid "Awowa V"
 msgstr "Awowa V"
 
 #: dat/spob/baba_yaga.xml:2
-#, fuzzy
 msgid "Baba Yaga"
 msgstr "Baba Yaga"
 
 #: dat/spob/babylon_i.xml:2
-#, fuzzy
 msgid "Babylon I"
-msgstr "Babylon I"
+msgstr "Babilonia I"
 
 #: dat/spob/babylon_ii.xml:2
-#, fuzzy
 msgid "Babylon II"
-msgstr "Babylon II"
+msgstr "Babilonia II"
 
 #: dat/spob/babylon_iia.xml:2
-#, fuzzy
 msgid "Babylon IIa"
-msgstr "Babylon IIa"
+msgstr "Babilonia IIa"
 
 #: dat/spob/baf_i.xml:2
-#, fuzzy
 msgid "Baf I"
 msgstr "Baf I"
 
 #: dat/spob/baf_iv.xml:2
-#, fuzzy
 msgid "Baf IV"
 msgstr "Baf IV"
 
 #: dat/spob/basel_i.xml:2
-#, fuzzy
 msgid "Basel I"
 msgstr "Basel I"
 
@@ -10796,12 +10777,10 @@ msgstr ""
 "contingente de naves Za'lek en casa para servir de guardia en el sistema."
 
 #: dat/spob/beeklo_ii.xml:2
-#, fuzzy
 msgid "Beeklo II"
 msgstr "Beeklo II"
 
 #: dat/spob/beene.xml:2
-#, fuzzy
 msgid "Beene"
 msgstr "Beene"
 
@@ -10835,7 +10814,6 @@ msgstr ""
 "entre los comerciantes que buscan una bebida."
 
 #: dat/spob/behemoth.xml:2
-#, fuzzy
 msgid "Behemoth"
 msgstr "Behemoth"
 
@@ -10872,7 +10850,6 @@ msgstr ""
 "instalaciones penales de Agino, en el sistema de Zintar."
 
 #: dat/spob/benedict.xml:2
-#, fuzzy
 msgid "Benedict"
 msgstr "Benedict"
 
@@ -10906,7 +10883,6 @@ msgstr ""
 "para los comerciantes que se ven obligados a llevar respiradores."
 
 #: dat/spob/benteen.xml:2
-#, fuzzy
 msgid "Benteen"
 msgstr "Benteen"
 
@@ -10932,7 +10908,6 @@ msgstr ""
 "mayoría son inofensivos."
 
 #: dat/spob/berkhere.xml:2
-#, fuzzy
 msgid "Berkhere"
 msgstr "Berkhere"
 
@@ -10966,12 +10941,10 @@ msgstr ""
 "protegida por sistemas de seguridad."
 
 #: dat/spob/beth.xml:2
-#, fuzzy
 msgid "Beth"
 msgstr "Beth"
 
 #: dat/spob/bgg1356.xml:2
-#, fuzzy
 msgid "BGG-1356"
 msgstr "BGG-1356"
 
