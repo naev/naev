@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-03 22:07-0400\n"
-"PO-Revision-Date: 2022-06-12 21:18+0000\n"
+"PO-Revision-Date: 2022-06-13 15:19+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -1927,7 +1927,6 @@ msgstr ""
 "\"La especia debe fluir\", dicen, puede que no, pero al menos el ron sí."
 
 #: dat/assets/arrentil.xml:2
-#, fuzzy
 msgid "Arrentil"
 msgstr "Arrentil"
 
@@ -1958,7 +1957,6 @@ msgstr ""
 "sensación más orgánica, tanto que casi parece que está creciendo."
 
 #: dat/assets/astana.xml:2 dat/ssys/astana.xml:2
-#, fuzzy
 msgid "Astana"
 msgstr "Astana"
 
@@ -1984,12 +1982,10 @@ msgstr ""
 "mundo por mucho tiempo aparte del bar."
 
 #: dat/assets/astana_iiv.xml:2
-#, fuzzy
 msgid "Astana IIV"
 msgstr "Astana IIV"
 
 #: dat/assets/atalanta.xml:2
-#, fuzzy
 msgid "Atalanta"
 msgstr "Atalanta"
 
@@ -2021,12 +2017,10 @@ msgstr ""
 "ciclo."
 
 #: dat/assets/atlantis_i.xml:2
-#, fuzzy
 msgid "Atlantis I"
 msgstr "Atlantis I"
 
 #: dat/assets/atryssa.xml:2
-#, fuzzy
 msgid "Atryssa"
 msgstr "Atryssa"
 
@@ -2105,7 +2099,6 @@ msgstr ""
 "relajarse y desconectar."
 
 #: dat/assets/avoss.xml:2
-#, fuzzy
 msgid "Avoss"
 msgstr "Avoss"
 
@@ -2131,47 +2124,38 @@ msgstr ""
 "en día."
 
 #: dat/assets/awowa_iv.xml:2
-#, fuzzy
 msgid "Awowa IV"
 msgstr "Awowa IV"
 
 #: dat/assets/awowa_v.xml:2
-#, fuzzy
 msgid "Awowa V"
 msgstr "Awowa V"
 
 #: dat/assets/baba_yaga.xml:2
-#, fuzzy
 msgid "Baba Yaga"
 msgstr "Baba Yaga"
 
 #: dat/assets/babylon_i.xml:2
-#, fuzzy
 msgid "Babylon I"
-msgstr "Babylon I"
+msgstr "Babilonia I"
 
 #: dat/assets/babylon_ii.xml:2
-#, fuzzy
 msgid "Babylon II"
-msgstr "Babylon II"
+msgstr "Babilonia II"
 
 #: dat/assets/babylon_iia.xml:2
-#, fuzzy
 msgid "Babylon IIa"
-msgstr "Babylon IIa"
+msgstr "Babilonia IIa"
 
 #: dat/assets/baf_i.xml:2
-#, fuzzy
 msgid "Baf I"
 msgstr "Baf I"
 
 #: dat/assets/baf_iv.xml:2
-#, fuzzy
 msgid "Baf IV"
 msgstr "Baf IV"
 
 #: dat/assets/basel_i.xml:2
-#, fuzzy
 msgid "Basel I"
 msgstr "Basel I"
 
@@ -2200,12 +2184,10 @@ msgid ""
 msgstr ""
 
 #: dat/assets/beeklo_ii.xml:2
-#, fuzzy
 msgid "Beeklo II"
 msgstr "Beeklo II"
 
 #: dat/assets/beene.xml:2
-#, fuzzy
 msgid "Beene"
 msgstr "Beene"
 
@@ -2239,7 +2221,6 @@ msgstr ""
 "entre los comerciantes que buscan una bebida."
 
 #: dat/assets/behemoth.xml:2
-#, fuzzy
 msgid "Behemoth"
 msgstr "Behemoth"
 
@@ -2276,7 +2257,6 @@ msgstr ""
 "instalaciones penales de Agino, en el sistema de Zintar."
 
 #: dat/assets/benedict.xml:2
-#, fuzzy
 msgid "Benedict"
 msgstr "Benedict"
 
@@ -2310,7 +2290,6 @@ msgstr ""
 "para los comerciantes que se ven obligados a llevar respiradores."
 
 #: dat/assets/benteen.xml:2
-#, fuzzy
 msgid "Benteen"
 msgstr "Benteen"
 
@@ -2331,7 +2310,6 @@ msgstr ""
 "mayoría son inofensivos."
 
 #: dat/assets/berkhere.xml:2
-#, fuzzy
 msgid "Berkhere"
 msgstr "Berkhere"
 
@@ -2365,12 +2343,10 @@ msgstr ""
 "protegida por sistemas de seguridad."
 
 #: dat/assets/beth.xml:2
-#, fuzzy
 msgid "Beth"
 msgstr "Beth"
 
 #: dat/assets/bgg1356.xml:2
-#, fuzzy
 msgid "BGG-1356"
 msgstr "BGG-1356"
 
@@ -18642,7 +18618,6 @@ msgstr ""
 
 #: dat/outfits/accessory/black_cat_doll.xml:13
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
-#, fuzzy
 msgid "#pOnly active when in stealth.#0"
 msgstr "#pSolo activo en sigilo.#0"
 
@@ -18674,7 +18649,6 @@ msgid ""
 msgstr ""
 
 #: dat/outfits/accessory/fuzzy_dice.xml:12
-#, fuzzy
 msgid "#pImproves luck!#0"
 msgstr "#p¡Mejora la suerte!#0"
 
