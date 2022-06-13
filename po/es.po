@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-03 22:07-0400\n"
-"PO-Revision-Date: 2022-06-13 15:19+0000\n"
+"PO-Revision-Date: 2022-06-13 21:17+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -2363,12 +2363,10 @@ msgid "Blackwell VII"
 msgstr "Pozonegro VII"
 
 #: dat/assets/blunderbuss_ii.xml:2
-#, fuzzy
 msgid "Blunderbuss II"
-msgstr "Blunderbuss II"
+msgstr "Trabuco II"
 
 #: dat/assets/bolero.xml:2
-#, fuzzy
 msgid "Bolero"
 msgstr "Bolero"
 
@@ -2408,7 +2406,6 @@ msgstr ""
 "temporales, que llegan de vacaciones o en viaje de negocios."
 
 #: dat/assets/bon_sebb.xml:2
-#, fuzzy
 msgid "Bon Sebb"
 msgstr "Bon Sebb"
 
@@ -2438,17 +2435,14 @@ msgstr ""
 "cuelga sobre la barra inclinada."
 
 #: dat/assets/bonanza_i.xml:2
-#, fuzzy
 msgid "Bonanza I"
 msgstr "Bonanza I"
 
 #: dat/assets/bonanza_ii.xml:2
-#, fuzzy
 msgid "Bonanza II"
 msgstr "Bonanza II"
 
 #: dat/assets/boowoy.xml:2
-#, fuzzy
 msgid "Boowoy"
 msgstr "Boowoy"
 
@@ -2482,7 +2476,6 @@ msgstr ""
 "preferirían que no estuvieras aquí mucho tiempo."
 
 #: dat/assets/botarn_i.xml:2
-#, fuzzy
 msgid "Botarn I"
 msgstr "Botarn I"
 
@@ -2515,37 +2508,30 @@ msgstr ""
 "consecuencia."
 
 #: dat/assets/brendon_i.xml:2
-#, fuzzy
 msgid "Brendon I"
 msgstr "Brendon I"
 
 #: dat/assets/brimstone_i.xml:2
-#, fuzzy
 msgid "Brimstone I"
 msgstr "Brimstone I"
 
 #: dat/assets/brimstone_ia.xml:2
-#, fuzzy
 msgid "Brimstone Ia"
 msgstr "Brimstone Ia"
 
 #: dat/assets/brimstone_ib.xml:2
-#, fuzzy
 msgid "Brimstone Ib"
 msgstr "Brimstone Ib"
 
 #: dat/assets/brimstone_ii.xml:2
-#, fuzzy
 msgid "Brimstone II"
 msgstr "Brimstone II"
 
 #: dat/assets/brimstone_iii.xml:2
-#, fuzzy
 msgid "Brimstone III"
 msgstr "Brimstone III"
 
 #: dat/assets/brock.xml:2
-#, fuzzy
 msgid "Brock"
 msgstr "Brock"
 
@@ -2574,7 +2560,6 @@ msgstr ""
 "bastante limpio. Bastante chocante, sobre todo para los forasteros."
 
 #: dat/assets/brooks.xml:2
-#, fuzzy
 msgid "Brooks"
 msgstr "Brooks"
 
@@ -2601,7 +2586,6 @@ msgid ""
 msgstr ""
 
 #: dat/assets/buritt.xml:2
-#, fuzzy
 msgid "Buritt"
 msgstr "Buritt"
 
@@ -2630,7 +2614,6 @@ msgstr ""
 "estar. Pero lo hace, así que no lo es."
 
 #: dat/assets/burnan.xml:2
-#, fuzzy
 msgid "Burnan"
 msgstr "Burnan"
 
@@ -2668,7 +2651,6 @@ msgid "Burnan's moon"
 msgstr "Luna de Burnan"
 
 #: dat/assets/caladan.xml:2
-#, fuzzy
 msgid "Caladan"
 msgstr "Caladan"
 
@@ -2708,7 +2690,6 @@ msgstr ""
 "la mayoría de los platos contienen carne."
 
 #: dat/assets/calvin.xml:2
-#, fuzzy
 msgid "Calvin"
 msgstr "Calvin"
 
@@ -2841,7 +2822,6 @@ msgid "Cerberus IV"
 msgstr "Cerbero IV"
 
 #: dat/assets/cetrat.xml:2
-#, fuzzy
 msgid "Cetrat"
 msgstr "Cetrat"
 
@@ -2883,7 +2863,6 @@ msgid "Charred"
 msgstr "Calcinado"
 
 #: dat/assets/chriik.xml:2
-#, fuzzy
 msgid "Chriik"
 msgstr "Chriik"
 
@@ -2915,22 +2894,18 @@ msgstr ""
 "contribuye a que haya mucha gente."
 
 #: dat/assets/churchill_i.xml:2
-#, fuzzy
 msgid "Churchill I"
 msgstr "Churchill I"
 
 #: dat/assets/churchill_ii.xml:2
-#, fuzzy
 msgid "Churchill II"
 msgstr "Churchill II"
 
 #: dat/assets/churchill_iia.xml:2
-#, fuzzy
 msgid "Churchill IIa"
 msgstr "Churchill IIa"
 
 #: dat/assets/claudius_mehan.xml:2
-#, fuzzy
 msgid "Claudius Mehan"
 msgstr "Claudius Mehan"
 
@@ -2946,7 +2921,6 @@ msgid ""
 msgstr ""
 
 #: dat/assets/colley.xml:2
-#, fuzzy
 msgid "Colley"
 msgstr "Colley"
 
@@ -2980,12 +2954,10 @@ msgid ""
 msgstr ""
 
 #: dat/assets/coran.xml:2
-#, fuzzy
 msgid "Coran"
 msgstr "Coran"
 
 #: dat/assets/corax.xml:2
-#, fuzzy
 msgid "Corax"
 msgstr "Corax"
 
@@ -3083,22 +3055,18 @@ msgstr ""
 "mantener el negocio en marcha también ayudan, así como el bar."
 
 #: dat/assets/corvus_i.xml:2
-#, fuzzy
 msgid "Corvus I"
 msgstr "Corvus I"
 
 #: dat/assets/corvus_vi.xml:2
-#, fuzzy
 msgid "Corvus VI"
 msgstr "Corvus VI"
 
 #: dat/assets/corvus_via.xml:2
-#, fuzzy
 msgid "Corvus VI-a"
 msgstr "Corvus VI-a"
 
 #: dat/assets/corvus_vib.xml:2
-#, fuzzy
 msgid "Corvus VI-b"
 msgstr "Corvus VI-b"
 
@@ -3130,7 +3098,6 @@ msgstr ""
 "precaución sea la mejor parte del valor."
 
 #: dat/assets/cristen.xml:2
-#, fuzzy
 msgid "Cristen"
 msgstr "Cristen"
 
@@ -3196,7 +3163,6 @@ msgstr ""
 "agradecen."
 
 #: dat/assets/crylo.xml:2
-#, fuzzy
 msgid "Crylo"
 msgstr "Crylo"
 
@@ -3223,7 +3189,6 @@ msgstr ""
 "más experimentales, a menos que te gusten los ingredientes muy frescos."
 
 #: dat/assets/culex.xml:2
-#, fuzzy
 msgid "Culex"
 msgstr "Culex"
 
@@ -3259,7 +3224,6 @@ msgstr ""
 "pista de baile."
 
 #: dat/assets/curie.xml:2
-#, fuzzy
 msgid "Curie"
 msgstr "Curie"
 
@@ -3290,7 +3254,6 @@ msgstr ""
 "interesen por la geología."
 
 #: dat/assets/cutha.xml:2
-#, fuzzy
 msgid "Cutha"
 msgstr "Cutha"
 
@@ -3332,17 +3295,14 @@ msgstr ""
 "algo que los clientes habituales, si no los forasteros, agradecen."
 
 #: dat/assets/cygnus_iv.xml:2
-#, fuzzy
 msgid "Cygnus IV"
 msgstr "Cygnus IV"
 
 #: dat/assets/cyrene.xml:2
-#, fuzzy
 msgid "Cyrene"
 msgstr "Cyrene"
 
 #: dat/assets/daahrax.xml:2
-#, fuzzy
 msgid "Daahrax"
 msgstr "Daahrax"
 
@@ -3375,7 +3335,6 @@ msgstr ""
 "sensibles al tema. ¿Qué tal un trago en su lugar?"
 
 #: dat/assets/daal.xml:2
-#, fuzzy
 msgid "Daal"
 msgstr "Daal"
 
@@ -3410,37 +3369,30 @@ msgstr ""
 "Daal ocupa un buen segundo lugar."
 
 #: dat/assets/dakron_iii.xml:2
-#, fuzzy
 msgid "Dakron III"
 msgstr "Dakron III"
 
 #: dat/assets/dakron_v.xml:2
-#, fuzzy
 msgid "Dakron V"
 msgstr "Dakron V"
 
 #: dat/assets/damien_vii.xml:2
-#, fuzzy
 msgid "Damien VII"
 msgstr "Damien VII"
 
 #: dat/assets/damphyr.xml:2
-#, fuzzy
 msgid "Damphyr"
 msgstr "Damphyr"
 
 #: dat/assets/daravon_i.xml:2
-#, fuzzy
 msgid "Daravon I"
 msgstr "Daravon I"
 
 #: dat/assets/daravon_iii.xml:2
-#, fuzzy
 msgid "Daravon III"
 msgstr "Daravon III"
 
 #: dat/assets/darkshed.xml:2
-#, fuzzy
 msgid "Darkshed"
 msgstr "Darkshed"
 
@@ -3521,37 +3473,30 @@ msgstr ""
 "en toda la galaxia."
 
 #: dat/assets/delta_pavonis_i.xml:2
-#, fuzzy
 msgid "Delta Pavonis I"
 msgstr "Delta Pavonis I"
 
 #: dat/assets/delta_pavonis_ii.xml:2
-#, fuzzy
 msgid "Delta Pavonis II"
 msgstr "Delta Pavonis II"
 
 #: dat/assets/delta_pavonis_iia.xml:2
-#, fuzzy
 msgid "Delta Pavonis IIa"
 msgstr "Delta Pavonis IIa"
 
 #: dat/assets/delta_polaris_i.xml:2
-#, fuzzy
 msgid "Delta Polaris I"
 msgstr "Delta Polaris I"
 
 #: dat/assets/delta_polaris_ii.xml:2
-#, fuzzy
 msgid "Delta Polaris II"
 msgstr "Delta Polaris II"
 
 #: dat/assets/delta_polaris_vi.xml:2
-#, fuzzy
 msgid "Delta Polaris VI"
 msgstr "Delta Polaris VI"
 
 #: dat/assets/diabolos.xml:2
-#, fuzzy
 msgid "Diabolos"
 msgstr "Diabolos"
 
@@ -3580,17 +3525,14 @@ msgid "Diadem II"
 msgstr "Diadema II"
 
 #: dat/assets/doeston_prime.xml:2
-#, fuzzy
 msgid "Doeston Prime"
 msgstr "Doeston Prime"
 
 #: dat/assets/dohriabi_prime.xml:2
-#, fuzzy
 msgid "Dohriabi Prime"
 msgstr "Dohriabi Prime"
 
 #: dat/assets/dolmen.xml:2
-#, fuzzy
 msgid "Dolmen"
 msgstr "Dolmen"
 
@@ -3616,7 +3558,6 @@ msgstr ""
 "este bar están libres de impuestos."
 
 #: dat/assets/donnar.xml:2
-#, fuzzy
 msgid "Donnar"
 msgstr "Donnar"
 
@@ -3654,7 +3595,6 @@ msgstr ""
 "el hecho de que a los Dvaered se les haya ocurrido esta idea."
 
 #: dat/assets/dono.xml:2
-#, fuzzy
 msgid "Dono"
 msgstr "Dono"
 
@@ -3693,7 +3633,6 @@ msgid ""
 msgstr ""
 
 #: dat/assets/doranthex_prime.xml:2
-#, fuzzy
 msgid "Doranthex Prime"
 msgstr "Doranthex Prime"
 
@@ -3729,17 +3668,14 @@ msgstr ""
 "superficie del planeta. Un bar realmente extraño."
 
 #: dat/assets/doranthex_secundus.xml:2
-#, fuzzy
 msgid "Doranthex Secundus"
 msgstr "Doranthex Secundus"
 
 #: dat/assets/doro.xml:2
-#, fuzzy
 msgid "Doro"
 msgstr "Doro"
 
 #: dat/assets/dowue.xml:2
-#, fuzzy
 msgid "Dowue"
 msgstr "Dowue"
 
@@ -3779,22 +3715,18 @@ msgstr ""
 "corazón del puerto espacial."
 
 #: dat/assets/draconis_alpha.xml:2
-#, fuzzy
 msgid "Draconis Alpha"
 msgstr "Draconis Alpha"
 
 #: dat/assets/draconis_beta.xml:2
-#, fuzzy
 msgid "Draconis Beta"
 msgstr "Draconis Beta"
 
 #: dat/assets/draconis_delta.xml:2
-#, fuzzy
 msgid "Draconis Delta"
 msgstr "Draconis Delta"
 
 #: dat/assets/draconis_epsilon.xml:2
-#, fuzzy
 msgid "Draconis Epsilon"
 msgstr "Draconis Epsilon"
 
@@ -3828,12 +3760,10 @@ msgstr ""
 "espaciales son tan impresionantes como éste."
 
 #: dat/assets/draconis_gamma.xml:2
-#, fuzzy
 msgid "Draconis Gamma"
 msgstr "Draconis Gamma"
 
 #: dat/assets/draconis_omega.xml:2
-#, fuzzy
 msgid "Draconis Omega"
 msgstr "Draconis Omega"
 
@@ -3871,12 +3801,10 @@ msgstr ""
 "algún día."
 
 #: dat/assets/draygar_iii.xml:2
-#, fuzzy
 msgid "Draygar III"
 msgstr "Draygar III"
 
 #: dat/assets/drognain.xml:2
-#, fuzzy
 msgid "Drognain"
 msgstr "Drognain"
 
@@ -3896,17 +3824,14 @@ msgstr ""
 "sobre todo a través de la frontera de la fuerza."
 
 #: dat/assets/druss_ii.xml:2
-#, fuzzy
 msgid "Druss II"
 msgstr "Druss II"
 
 #: dat/assets/druss_iia.xml:2
-#, fuzzy
 msgid "Druss IIa"
 msgstr "Druss IIa"
 
 #: dat/assets/druss_iii.xml:2
-#, fuzzy
 msgid "Druss III"
 msgstr "Druss III"
 
@@ -3993,7 +3918,6 @@ msgstr ""
 "hay poco espacio para la interacción social."
 
 #: dat/assets/dunmer.xml:2
-#, fuzzy
 msgid "Dunmer"
 msgstr "Dunmer"
 
@@ -4056,7 +3980,6 @@ msgstr ""
 "nave espacial, aunque sea relativamente pequeña."
 
 #: dat/assets/durea.xml:2
-#, fuzzy
 msgid "Durea"
 msgstr "Durea"
 
@@ -4097,17 +4020,14 @@ msgstr ""
 "bastante fuerte, lo que se debe, en gran medida, al duro entorno del planeta."
 
 #: dat/assets/duros_i.xml:2
-#, fuzzy
 msgid "Duros I"
 msgstr "Duros I"
 
 #: dat/assets/duros_ia.xml:2
-#, fuzzy
 msgid "Duros Ia"
 msgstr "Duros Ia"
 
 #: dat/assets/durumdra.xml:2
-#, fuzzy
 msgid "Durumdra"
 msgstr "Durumdra"
 
@@ -4149,27 +4069,22 @@ msgid "Dust"
 msgstr "Polvo"
 
 #: dat/assets/dvaer_ii.xml:2
-#, fuzzy
 msgid "Dvaer II"
 msgstr "Dvaer II"
 
 #: dat/assets/dvaer_iii.xml:2
-#, fuzzy
 msgid "Dvaer III"
 msgstr "Dvaer III"
 
 #: dat/assets/dvaer_iiia.xml:2
-#, fuzzy
 msgid "Dvaer IIIa"
 msgstr "Dvaer IIIa"
 
 #: dat/assets/dvaer_iv.xml:2
-#, fuzzy
 msgid "Dvaer IV"
 msgstr "Dvaer IV"
 
 #: dat/assets/dvaer_prime.xml:2
-#, fuzzy
 msgid "Dvaer Prime"
 msgstr "Dvaer Prime"
 
@@ -4274,7 +4189,6 @@ msgstr ""
 "parecen encontrarlo entretenido."
 
 #: dat/assets/ebenezer.xml:2
-#, fuzzy
 msgid "Ebenezer"
 msgstr "Ebenezer"
 
@@ -4337,12 +4251,10 @@ msgstr ""
 "predominante."
 
 #: dat/assets/edergast.xml:2
-#, fuzzy
 msgid "Edergast"
 msgstr "Edergast"
 
 #: dat/assets/edorn.xml:2
-#, fuzzy
 msgid "Edorn"
 msgstr "Edorn"
 
@@ -4372,7 +4284,6 @@ msgstr ""
 "bueno de cómo es la vida en la ciudad en el resto del planeta."
 
 #: dat/assets/eenerim.xml:2
-#, fuzzy
 msgid "Eenerim"
 msgstr "Eenerim"
 
@@ -4401,7 +4312,6 @@ msgstr ""
 "forma desagradable."
 
 #: dat/assets/efferey.xml:2
-#, fuzzy
 msgid "Efferey"
 msgstr "Efferey"
 
@@ -4416,17 +4326,14 @@ msgstr ""
 "que atracar aquí."
 
 #: dat/assets/eiderdown_i.xml:2
-#, fuzzy
 msgid "Eiderdown I"
 msgstr "Eiderdown I"
 
 #: dat/assets/eiderdown_iii.xml:2
-#, fuzzy
 msgid "Eiderdown III"
 msgstr "Eiderdown III"
 
 #: dat/assets/eiger.xml:2 dat/ssys/eiger.xml:2
-#, fuzzy
 msgid "Eiger"
 msgstr "Eiger"
 
@@ -4455,7 +4362,6 @@ msgstr ""
 "se llena casi hasta el punto de estar de pie."
 
 #: dat/assets/eiroik.xml:2 dat/missions/empire/collective/ec05.lua:108
-#, fuzzy
 msgid "Eiroik"
 msgstr "Eiroik"
 
@@ -4492,22 +4398,18 @@ msgstr ""
 "civiles a algunos individuos y organizaciones."
 
 #: dat/assets/ekta_i.xml:2
-#, fuzzy
 msgid "Ekta I"
 msgstr "Ekta I"
 
 #: dat/assets/ekta_ii.xml:2
-#, fuzzy
 msgid "Ekta II"
 msgstr "Ekta II"
 
 #: dat/assets/ekta_iia.xml:2
-#, fuzzy
 msgid "Ekta IIa"
 msgstr "Ekta IIa"
 
 #: dat/assets/ekta_iib.xml:2
-#, fuzzy
 msgid "Ekta IIb"
 msgstr "Ekta IIb"
 
@@ -4540,12 +4442,10 @@ msgstr ""
 "bar pequeño pero acogedor, con gente entrando y saliendo constantemente."
 
 #: dat/assets/elixir_i.xml:2
-#, fuzzy
 msgid "Elixir I"
 msgstr "Elixir I"
 
 #: dat/assets/elpa.xml:2
-#, fuzzy
 msgid "Elpa"
 msgstr "Elpa"
 
@@ -4568,22 +4468,18 @@ msgstr ""
 "pesar de la falta de asientos."
 
 #: dat/assets/elza_i.xml:2
-#, fuzzy
 msgid "Elza I"
 msgstr "Elza I"
 
 #: dat/assets/elza_ia.xml:2
-#, fuzzy
 msgid "Elza Ia"
 msgstr "Elza Ia"
 
 #: dat/assets/elza_iii.xml:2
-#, fuzzy
 msgid "Elza III"
 msgstr "Elza III"
 
 #: dat/assets/em_1.xml:2
-#, fuzzy
 msgid "Em 1"
 msgstr "Em 1"
 
@@ -4607,17 +4503,14 @@ msgstr ""
 "economía imperial."
 
 #: dat/assets/em_2.xml:2
-#, fuzzy
 msgid "Em 2"
 msgstr "Em 2"
 
 #: dat/assets/em_4.xml:2
-#, fuzzy
 msgid "Em 4"
 msgstr "Em 4"
 
 #: dat/assets/em_5.xml:2
-#, fuzzy
 msgid "Em 5"
 msgstr "Em 5"
 
@@ -4742,67 +4635,54 @@ msgstr ""
 "personas tienen el privilegio de subir a bordo de la nave."
 
 #: dat/assets/eneguoz_ii.xml:2
-#, fuzzy
 msgid "Eneguoz II"
 msgstr "Eneguoz II"
 
 #: dat/assets/eridani_ii.xml:2
-#, fuzzy
 msgid "Eridani II"
 msgstr "Eridani II"
 
 #: dat/assets/eridani_iii.xml:2
-#, fuzzy
 msgid "Eridani III"
 msgstr "Eridani III"
 
 #: dat/assets/eryla.xml:2
-#, fuzzy
 msgid "Eryla"
 msgstr "Eryla"
 
 #: dat/assets/esker_i.xml:2
-#, fuzzy
 msgid "Esker I"
 msgstr "Esker I"
 
 #: dat/assets/esker_ii.xml:2
-#, fuzzy
 msgid "Esker II"
 msgstr "Esker II"
 
 #: dat/assets/esker_iv.xml:2
-#, fuzzy
 msgid "Esker IV"
 msgstr "Esker IV"
 
 #: dat/assets/euler_i.xml:2
-#, fuzzy
 msgid "Euler I"
 msgstr "Euler I"
 
 #: dat/assets/euler_ia.xml:2
-#, fuzzy
 msgid "Euler Ia"
 msgstr "Euler Ia"
 
 #: dat/assets/euler_ii.xml:2
-#, fuzzy
 msgid "Euler II"
 msgstr "Euler II"
 
 #: dat/assets/euler_iii.xml:2
-#, fuzzy
 msgid "Euler III"
 msgstr "Euler III"
 
 #: dat/assets/euler_iiia.xml:2
-#, fuzzy
 msgid "Euler IIIa"
 msgstr "Euler IIIa"
 
 #: dat/assets/euler_iv.xml:2
-#, fuzzy
 msgid "Euler IV"
 msgstr "Euler IV"
 
@@ -4845,7 +4725,6 @@ msgstr ""
 "faz del planeta."
 
 #: dat/assets/excelcior.xml:2
-#, fuzzy
 msgid "Excelcior"
 msgstr "Excelcior"
 
@@ -4923,7 +4802,6 @@ msgstr ""
 "requiera su asistencia."
 
 #: dat/assets/fae.xml:2
-#, fuzzy
 msgid "Fae"
 msgstr "Fae"
 
@@ -4945,7 +4823,6 @@ msgstr ""
 "grandes que se desplazan por esta zona del espacio."
 
 #: dat/assets/falas.xml:2
-#, fuzzy
 msgid "Falas"
 msgstr "Falas"
 
@@ -4985,7 +4862,6 @@ msgid "Faust VI"
 msgstr "Fausto VI"
 
 #: dat/assets/fd24.xml:2
-#, fuzzy
 msgid "FD-24"
 msgstr "FD-24"
 
@@ -5035,7 +4911,6 @@ msgstr ""
 "entonces la Estación Fernando no está destinada a hacerse popular."
 
 #: dat/assets/ferrungir.xml:2
-#, fuzzy
 msgid "Ferrungir"
 msgstr "Ferrungir"
 
@@ -5065,27 +4940,22 @@ msgstr ""
 "deteriorado como éste."
 
 #: dat/assets/feye_i.xml:2
-#, fuzzy
 msgid "Feye I"
 msgstr "Feye I"
 
 #: dat/assets/feye_iv.xml:2
-#, fuzzy
 msgid "Feye IV"
 msgstr "Feye IV"
 
 #: dat/assets/fidelis_iii.xml:2
-#, fuzzy
 msgid "Fidelis III"
 msgstr "Fidelis III"
 
 #: dat/assets/fidelis_iv.xml:2
-#, fuzzy
 msgid "Fidelis IV"
 msgstr "Fidelis IV"
 
 #: dat/assets/finn.xml:2
-#, fuzzy
 msgid "Finn"
 msgstr "Finn"
 
@@ -5115,7 +4985,6 @@ msgstr ""
 "instantáneamente a los reclusos que estén dentro."
 
 #: dat/assets/flach.xml:2
-#, fuzzy
 msgid "Flach"
 msgstr "Flach"
 
@@ -5139,7 +5008,6 @@ msgid ""
 msgstr ""
 
 #: dat/assets/folevo.xml:2
-#, fuzzy
 msgid "Folevo"
 msgstr "Folevo"
 
@@ -5267,7 +5135,6 @@ msgid "Fried IIIa"
 msgstr "Frito IIIa"
 
 #: dat/assets/fulcrum_i.xml:2
-#, fuzzy
 msgid "Fulcrum I"
 msgstr "Fulcrum I"
 
@@ -5292,7 +5159,6 @@ msgstr ""
 "algunas mercancías que no se ofrecen en el cercano mucho clan Sánchez."
 
 #: dat/assets/fuzka.xml:2
-#, fuzzy
 msgid "Fuzka"
 msgstr "Fuzka"
 
@@ -5353,12 +5219,10 @@ msgstr ""
 "la sección de Shaira."
 
 #: dat/assets/galileo.xml:2
-#, fuzzy
 msgid "Galileo"
 msgstr "Galileo"
 
 #: dat/assets/gamma.xml:2
-#, fuzzy
 msgid "Gamma"
 msgstr "Gamma"
 
@@ -5402,42 +5266,34 @@ msgstr ""
 "por las pagas militares y no es raro ver a novatos desmayados."
 
 #: dat/assets/gammacron_iv.xml:2
-#, fuzzy
 msgid "Gammacron IV"
 msgstr "Gammacron IV"
 
 #: dat/assets/gammacron_v.xml:2
-#, fuzzy
 msgid "Gammacron V"
 msgstr "Gammacron V"
 
 #: dat/assets/gammacron_va.xml:2
-#, fuzzy
 msgid "Gammacron Va"
 msgstr "Gammacron Va"
 
 #: dat/assets/gammacron_vb.xml:2
-#, fuzzy
 msgid "Gammacron Vb"
 msgstr "Gammacron Vb"
 
 #: dat/assets/ganth_i.xml:2
-#, fuzzy
 msgid "Ganth I"
 msgstr "Ganth I"
 
 #: dat/assets/garten_iv.xml:2
-#, fuzzy
 msgid "Garten IV"
 msgstr "Garten IV"
 
 #: dat/assets/garten_x.xml:2
-#, fuzzy
 msgid "Garten X"
 msgstr "Garten X"
 
 #: dat/assets/gastan.xml:2
-#, fuzzy
 msgid "Gastan"
 msgstr "Gastan"
 
@@ -5478,7 +5334,6 @@ msgstr ""
 "sector y responde a los ataques piratas."
 
 #: dat/assets/gaula.xml:2
-#, fuzzy
 msgid "Gaula"
 msgstr "Gaula"
 
@@ -5564,7 +5419,6 @@ msgid "Gem"
 msgstr "Gema"
 
 #: dat/assets/gennus.xml:2
-#, fuzzy
 msgid "Gennus"
 msgstr "Gennus"
 
@@ -5620,7 +5474,6 @@ msgstr ""
 "Estación de Salida. Todo un desaire."
 
 #: dat/assets/geron.xml:2
-#, fuzzy
 msgid "Geron"
 msgstr "Geron"
 
@@ -5654,7 +5507,6 @@ msgstr ""
 "para los que se ganan la vida en el espacio."
 
 #: dat/assets/gewirn_iv.xml:2
-#, fuzzy
 msgid "Gewirn IV"
 msgstr "Gewirn IV"
 
@@ -5716,7 +5568,6 @@ msgid "Ginger III"
 msgstr "Jenjibre III"
 
 #: dat/assets/ginni.xml:2
-#, fuzzy
 msgid "Ginni"
 msgstr "Ginni"
 
@@ -5751,17 +5602,14 @@ msgstr ""
 "ajustara automáticamente. Además, no hay mucho que ver de todos modos."
 
 #: dat/assets/goddard_iii.xml:2
-#, fuzzy
 msgid "Goddard III"
 msgstr "Goddard III"
 
 #: dat/assets/goddard_iv.xml:2
-#, fuzzy
 msgid "Goddard IV"
 msgstr "Goddard IV"
 
 #: dat/assets/godtra.xml:2
-#, fuzzy
 msgid "Godtra"
 msgstr "Godtra"
 
@@ -5794,7 +5642,6 @@ msgstr ""
 "infraestructura local ha sido bien diseñada."
 
 #: dat/assets/golem.xml:2
-#, fuzzy
 msgid "Golem"
 msgstr "Golem"
 
@@ -5906,7 +5753,6 @@ msgstr ""
 "cuánto de ella es cierta y cuánto se ha inventado a lo largo de los ciclos."
 
 #: dat/assets/grandard.xml:2
-#, fuzzy
 msgid "Grandard"
 msgstr "Grandard"
 
@@ -5960,7 +5806,6 @@ msgstr ""
 "irse."
 
 #: dat/assets/greis.xml:2
-#, fuzzy
 msgid "Greis"
 msgstr "Greis"
 
@@ -6059,67 +5904,54 @@ msgstr ""
 "estándar de un bar, así como con acceso al catálogo de naves de la estación."
 
 #: dat/assets/gruz_i.xml:2
-#, fuzzy
 msgid "Gruz I"
 msgstr "Gruz I"
 
 #: dat/assets/gruz_ii.xml:2
-#, fuzzy
 msgid "Gruz II"
 msgstr "Gruz II"
 
 #: dat/assets/gruz_iii.xml:2
-#, fuzzy
 msgid "Gruz III"
 msgstr "Gruz III"
 
 #: dat/assets/gutter_i.xml:2
-#, fuzzy
 msgid "Gutter I"
-msgstr "Gutter I"
+msgstr "Canalón I"
 
 #: dat/assets/gutter_iii.xml:2
-#, fuzzy
 msgid "Gutter III"
-msgstr "Gutter III"
+msgstr "Canalón III"
 
 #: dat/assets/gyrios_ii.xml:2
-#, fuzzy
 msgid "Gyrios II"
 msgstr "Gyrios II"
 
 #: dat/assets/gyrios_iv.xml:2
-#, fuzzy
 msgid "Gyrios IV"
 msgstr "Gyrios IV"
 
 #: dat/assets/gyrios_v.xml:2
-#, fuzzy
 msgid "Gyrios V"
 msgstr "Gyrios V"
 
 #: dat/assets/hadosh_ia.xml:2
-#, fuzzy
 msgid "Hadosh Ia"
 msgstr "Hadosh Ia"
 
 #: dat/assets/hadosh_ii.xml:2
-#, fuzzy
 msgid "Hadosh II"
 msgstr "Hadosh II"
 
 #: dat/assets/hadosh_iii.xml:2
-#, fuzzy
 msgid "Hadosh III"
 msgstr "Hadosh III"
 
 #: dat/assets/hadosh_iv.xml:2
-#, fuzzy
 msgid "Hadosh IV"
 msgstr "Hadosh IV"
 
 #: dat/assets/haldr.xml:2
-#, fuzzy
 msgid "Haldr"
 msgstr "Haldr"
 
@@ -6157,12 +5989,10 @@ msgstr ""
 "sienta tan incómodo que no quiere volver a visitar Haldr."
 
 #: dat/assets/haleb_iv.xml:2
-#, fuzzy
 msgid "Haleb IV"
 msgstr "Haleb IV"
 
 #: dat/assets/halir.xml:2
-#, fuzzy
 msgid "Halir"
 msgstr "Halir"
 
@@ -6204,7 +6034,6 @@ msgstr ""
 "en el distrito del placer, que está a una sola estación de metro."
 
 #: dat/assets/handalier.xml:2
-#, fuzzy
 msgid "Handalier"
 msgstr "Handalier"
 
@@ -6228,7 +6057,6 @@ msgstr ""
 "paranoia."
 
 #: dat/assets/hankies.xml:2
-#, fuzzy
 msgid "Hankies"
 msgstr "Hankies"
 
@@ -6257,7 +6085,6 @@ msgstr ""
 "vista desde las ventanas: una cordillera que se extiende en la distancia."
 
 #: dat/assets/harnaar.xml:2
-#, fuzzy
 msgid "Harnaar"
 msgstr "Harnaar"
 
@@ -6318,7 +6145,6 @@ msgstr ""
 "buena salud."
 
 #: dat/assets/hassak.xml:2
-#, fuzzy
 msgid "Hassak"
 msgstr "Hassak"
 
@@ -6352,27 +6178,22 @@ msgstr ""
 "están deteriorados."
 
 #: dat/assets/hasselt_ii.xml:2
-#, fuzzy
 msgid "Hasselt II"
 msgstr "Hasselt II"
 
 #: dat/assets/hasselt_iv.xml:2
-#, fuzzy
 msgid "Hasselt IV"
 msgstr "Hasselt IV"
 
 #: dat/assets/hatter_i.xml:2
-#, fuzzy
 msgid "Hatter I"
 msgstr "Hatter I"
 
 #: dat/assets/hatter_ii.xml:2
-#, fuzzy
 msgid "Hatter II"
 msgstr "Hatter II"
 
 #: dat/assets/haurn.xml:2
-#, fuzzy
 msgid "Haurn"
 msgstr "Haurn"
 
@@ -6405,7 +6226,6 @@ msgid "Haven"
 msgstr "Refugio"
 
 #: dat/assets/heii.xml:2
-#, fuzzy
 msgid "Heii"
 msgstr "Heii"
 
@@ -6445,17 +6265,14 @@ msgstr ""
 "la superficie y quizás incluso elegir una para llevarla a su propio mundo."
 
 #: dat/assets/hekaras_iii.xml:2
-#, fuzzy
 msgid "Hekaras III"
 msgstr "Hekaras III"
 
 #: dat/assets/hekaras_iv.xml:2
-#, fuzzy
 msgid "Hekaras IV"
 msgstr "Hekaras IV"
 
 #: dat/assets/heronus.xml:2
-#, fuzzy
 msgid "Heronus"
 msgstr "Heronus"
 
@@ -6505,7 +6322,6 @@ msgstr ""
 "ha sido tratada en Ebenezer que llama especialmente la atención."
 
 #: dat/assets/hikatalat.xml:2
-#, fuzzy
 msgid "Hikatalat"
 msgstr "Hikatalat"
 
@@ -6556,12 +6372,10 @@ msgstr ""
 "por supuesto, de primera calidad, pero no extravagantes."
 
 #: dat/assets/hrimfaxi.xml:2
-#, fuzzy
 msgid "Hrimfaxi"
 msgstr "Hrimfaxi"
 
 #: dat/assets/hs224.xml:2
-#, fuzzy
 msgid "HS-224"
 msgstr "HS-224"
 
@@ -6588,27 +6402,22 @@ msgstr ""
 "comidas y bebidas seguras para el cerebro."
 
 #: dat/assets/hs232.xml:2
-#, fuzzy
 msgid "HS-232"
 msgstr "HS-232"
 
 #: dat/assets/hs24.xml:2
-#, fuzzy
 msgid "HS-24"
 msgstr "HS-24"
 
 #: dat/assets/hs37.xml:2
-#, fuzzy
 msgid "HS-37"
 msgstr "HS-37"
 
 #: dat/assets/hs5.xml:2
-#, fuzzy
 msgid "HS-5"
 msgstr "HS-5"
 
 #: dat/assets/hs51.xml:2
-#, fuzzy
 msgid "HS-51"
 msgstr "HS-51"
 
@@ -6638,12 +6447,10 @@ msgstr ""
 "mayoría de los mundos Za'lek, aquí hay pocos científicos."
 
 #: dat/assets/hs54.xml:2
-#, fuzzy
 msgid "HS-54"
 msgstr "HS-54"
 
 #: dat/assets/huanxi.xml:2
-#, fuzzy
 msgid "Huan'xi"
 msgstr "Huan'xi"
 
@@ -6675,22 +6482,18 @@ msgstr ""
 "establecimientos, más que por las bebidas que sirve."
 
 #: dat/assets/humdrum_i.xml:2
-#, fuzzy
 msgid "Humdrum I"
 msgstr "Humdrum I"
 
 #: dat/assets/humdrum_ii.xml:2
-#, fuzzy
 msgid "Humdrum II"
 msgstr "Humdrum II"
 
 #: dat/assets/humdrum_iii.xml:2
-#, fuzzy
 msgid "Humdrum III"
 msgstr "Humdrum III"
 
 #: dat/assets/hurada.xml:2
-#, fuzzy
 msgid "Hurada"
 msgstr "Hurada"
 
@@ -6741,17 +6544,14 @@ msgstr ""
 "los últimos rumores sobre el estado de la galaxia."
 
 #: dat/assets/hystera_i.xml:2
-#, fuzzy
 msgid "Hystera I"
 msgstr "Hystera I"
 
 #: dat/assets/hystera_ia.xml:2
-#, fuzzy
 msgid "Hystera Ia"
 msgstr "Hystera Ia"
 
 #: dat/assets/hystera_ii.xml:2
-#, fuzzy
 msgid "Hystera II"
 msgstr "Hystera II"
 
@@ -6788,7 +6588,6 @@ msgstr ""
 "sin perder un momento de su tiempo."
 
 #: dat/assets/hzmm01.xml:2
-#, fuzzy
 msgid "HZMM-01"
 msgstr "HZMM-01"
 
@@ -6803,7 +6602,6 @@ msgstr ""
 "y probablemente nunca lo tendrá."
 
 #: dat/assets/hznss1.xml:2
-#, fuzzy
 msgid "HZNSS-1"
 msgstr "HZNSS-1"
 
@@ -6839,7 +6637,6 @@ msgstr ""
 "ti."
 
 #: dat/assets/hznss2.xml:2
-#, fuzzy
 msgid "HZNSS-2"
 msgstr "HZNSS-2"
 
@@ -6866,7 +6663,6 @@ msgstr ""
 "pueden obtener por sí mismos."
 
 #: dat/assets/ian.xml:2
-#, fuzzy
 msgid "Ian"
 msgstr "Ian"
 
@@ -6918,7 +6714,6 @@ msgstr ""
 "con el terreno inestable."
 
 #: dat/assets/idio.xml:2
-#, fuzzy
 msgid "Idio"
 msgstr "Idio"
 
@@ -6941,12 +6736,10 @@ msgstr ""
 "diferente. Parece ser una especie de broma."
 
 #: dat/assets/imk.xml:2
-#, fuzzy
 msgid "Imk"
 msgstr "Imk"
 
 #: dat/assets/impala.xml:2
-#, fuzzy
 msgid "Impala"
 msgstr "Impala"
 
@@ -6963,7 +6756,6 @@ msgstr ""
 "de parada para repostar en el escasamente poblado sur del espacio Za'lek."
 
 #: dat/assets/inca.xml:2
-#, fuzzy
 msgid "Inca"
 msgstr "Inca"
 
@@ -7096,12 +6888,10 @@ msgstr ""
 "instalaciones básicas sean funcionales."
 
 #: dat/assets/isador.xml:2
-#, fuzzy
 msgid "Isador"
 msgstr "Isador"
 
 #: dat/assets/jaan.xml:2
-#, fuzzy
 msgid "Jaan"
 msgstr "Jaan"
 
@@ -7135,17 +6925,14 @@ msgstr ""
 "del puerto espacial."
 
 #: dat/assets/jackson_ii.xml:2
-#, fuzzy
 msgid "Jackson II"
 msgstr "Jackson II"
 
 #: dat/assets/jackson_v.xml:2
-#, fuzzy
 msgid "Jackson V"
 msgstr "Jackson V"
 
 #: dat/assets/jacqueline.xml:2
-#, fuzzy
 msgid "Jacqueline"
 msgstr "Jacqueline"
 
@@ -7207,27 +6994,22 @@ msgstr ""
 "todos tienen sus propios despachos privados a bordo de la estación."
 
 #: dat/assets/jade_i.xml:2
-#, fuzzy
 msgid "Jade I"
 msgstr "Jade I"
 
 #: dat/assets/jade_ii.xml:2
-#, fuzzy
 msgid "Jade II"
 msgstr "Jade II"
 
 #: dat/assets/jade_iii.xml:2
-#, fuzzy
 msgid "Jade III"
 msgstr "Jade III"
 
 #: dat/assets/jade_vi.xml:2
-#, fuzzy
 msgid "Jade VI"
 msgstr "Jade VI"
 
 #: dat/assets/jaegnhild.xml:2
-#, fuzzy
 msgid "Jaegnhild"
 msgstr "Jaegnhild"
 
@@ -7264,7 +7046,6 @@ msgstr ""
 "revestimiento original en algunos lugares."
 
 #: dat/assets/jankelo.xml:2
-#, fuzzy
 msgid "Jankelo"
 msgstr "Jankelo"
 
@@ -7294,7 +7075,6 @@ msgstr ""
 "no esté en viaje de negocios no tiene ninguna razón para estar aquí."
 
 #: dat/assets/janko.xml:2
-#, fuzzy
 msgid "Janko"
 msgstr "Janko"
 
@@ -7401,7 +7181,6 @@ msgstr ""
 "no parece que esto vaya a cambiar."
 
 #: dat/assets/jaxheen.xml:2
-#, fuzzy
 msgid "Jaxheen"
 msgstr "Jaxheen"
 
@@ -7440,7 +7219,6 @@ msgstr ""
 "vehículos de emergencia."
 
 #: dat/assets/jemard.xml:2
-#, fuzzy
 msgid "Jemard"
 msgstr "Jemard"
 
@@ -7470,7 +7248,6 @@ msgstr ""
 "cocinados vivos."
 
 #: dat/assets/jermose.xml:2
-#, fuzzy
 msgid "Jermose"
 msgstr "Jermose"
 
@@ -7507,7 +7284,6 @@ msgstr ""
 "no tienen ni idea de cómo funciona."
 
 #: dat/assets/jeronon.xml:2
-#, fuzzy
 msgid "Jeronon"
 msgstr "Jeronon"
 
@@ -7541,22 +7317,18 @@ msgstr ""
 "sucias que él."
 
 #: dat/assets/jervis_v.xml:2
-#, fuzzy
 msgid "Jervis V"
 msgstr "Jervis V"
 
 #: dat/assets/jervis_vii.xml:2
-#, fuzzy
 msgid "Jervis VII"
 msgstr "Jervis VII"
 
 #: dat/assets/jezza.xml:2
-#, fuzzy
 msgid "Jezza"
 msgstr "Jezza"
 
 #: dat/assets/jomos.xml:2
-#, fuzzy
 msgid "Jomos"
 msgstr "Jomos"
 
@@ -7594,7 +7366,6 @@ msgstr ""
 "sirve de poco, ya que suelen estar aquí por negocios, no por diversión."
 
 #: dat/assets/jorcan.xml:2
-#, fuzzy
 msgid "Jorcan"
 msgstr "Jorcan"
 
@@ -7623,7 +7394,6 @@ msgstr ""
 "mano al sostener la bebida. Te preguntas si alguna vez se quitará."
 
 #: dat/assets/jorla.xml:2
-#, fuzzy
 msgid "Jorla"
 msgstr "Jorla"
 
@@ -7652,7 +7422,6 @@ msgstr ""
 "mediana edad."
 
 #: dat/assets/jorlan.xml:2
-#, fuzzy
 msgid "Jorlan"
 msgstr "Jorlan"
 
@@ -7692,12 +7461,10 @@ msgstr ""
 "pero casi ningún nativo."
 
 #: dat/assets/jugreny.xml:2
-#, fuzzy
 msgid "Jugreny"
 msgstr "Jugreny"
 
 #: dat/assets/jurai.xml:2
-#, fuzzy
 msgid "Jurai"
 msgstr "Jurai"
 
@@ -7724,17 +7491,14 @@ msgstr ""
 "suave. Los clientes son desproporcionadamente mayores."
 
 #: dat/assets/juran.xml:2
-#, fuzzy
 msgid "Juran"
 msgstr "Juran"
 
 #: dat/assets/kaira.xml:2
-#, fuzzy
 msgid "Kaira"
 msgstr "Kaira"
 
 #: dat/assets/kanar.xml:2
-#, fuzzy
 msgid "Kan'ar"
 msgstr "Kan'ar"
 
@@ -7763,42 +7527,34 @@ msgstr ""
 "discutiendo y hablando sobre lo que ven."
 
 #: dat/assets/kanel.xml:2
-#, fuzzy
 msgid "Kanel"
 msgstr "Kanel"
 
 #: dat/assets/kansas_i.xml:2
-#, fuzzy
 msgid "Kansas I"
 msgstr "Kansas I"
 
 #: dat/assets/kansas_iii.xml:2
-#, fuzzy
 msgid "Kansas III"
 msgstr "Kansas III"
 
 #: dat/assets/kansas_iv.xml:2
-#, fuzzy
 msgid "Kansas IV"
 msgstr "Kansas IV"
 
 #: dat/assets/kansas_vi.xml:2
-#, fuzzy
 msgid "Kansas VI"
 msgstr "Kansas VI"
 
 #: dat/assets/karman_i.xml:2
-#, fuzzy
 msgid "Karman I"
 msgstr "Karman I"
 
 #: dat/assets/karman_ii.xml:2
-#, fuzzy
 msgid "Karman II"
 msgstr "Karman II"
 
 #: dat/assets/karvua.xml:2
-#, fuzzy
 msgid "Karvua"
 msgstr "Karvua"
 
@@ -7813,12 +7569,10 @@ msgstr ""
 "convertir el planeta en una gran colonia minera."
 
 #: dat/assets/kaso.xml:2
-#, fuzzy
 msgid "Kaso"
 msgstr "Kaso"
 
 #: dat/assets/kataka.xml:2
-#, fuzzy
 msgid "Kataka"
 msgstr "Kataka"
 
@@ -7854,17 +7608,14 @@ msgstr ""
 "cabinas privadas donde la gente puede conversar en privado."
 
 #: dat/assets/katami_i.xml:2
-#, fuzzy
 msgid "Katami I"
 msgstr "Katami I"
 
 #: dat/assets/katar.xml:2
-#, fuzzy
 msgid "Katar"
 msgstr "Katar"
 
 #: dat/assets/katar_i.xml:2
-#, fuzzy
 msgid "Katar I"
 msgstr "Katar I"
 
@@ -7909,7 +7660,6 @@ msgstr ""
 "que los internos tienden a terminar desmayados después de romper átomos."
 
 #: dat/assets/kaulas.xml:2
-#, fuzzy
 msgid "Kaulas"
 msgstr "Kaulas"
 
@@ -7948,7 +7698,6 @@ msgstr ""
 "públicos no modificados. Este bar, por ejemplo, es completamente seguro."
 
 #: dat/assets/kayel.xml:2
-#, fuzzy
 msgid "Kayel"
 msgstr "Kayel"
 
@@ -7975,12 +7724,10 @@ msgstr ""
 "lugar más relajante."
 
 #: dat/assets/khaas_i.xml:2
-#, fuzzy
 msgid "Khaas I"
 msgstr "Khaas I"
 
 #: dat/assets/khelim.xml:2
-#, fuzzy
 msgid "Khelim"
 msgstr "Khelim"
 
@@ -8012,42 +7759,34 @@ msgstr ""
 "tiene nada de especial."
 
 #: dat/assets/khorin.xml:2
-#, fuzzy
 msgid "Khorin"
 msgstr "Khorin"
 
 #: dat/assets/killerog.xml:2
-#, fuzzy
 msgid "Killerog"
 msgstr "Killerog"
 
 #: dat/assets/klantar_i.xml:2
-#, fuzzy
 msgid "Klantar I"
 msgstr "Klantar I"
 
 #: dat/assets/klantar_iii.xml:2
-#, fuzzy
 msgid "Klantar III"
 msgstr "Klantar III"
 
 #: dat/assets/kobopos_i.xml:2
-#, fuzzy
 msgid "Kobopos I"
 msgstr "Kobopos I"
 
 #: dat/assets/kobopos_ii.xml:2
-#, fuzzy
 msgid "Kobopos II"
 msgstr "Kobopos II"
 
 #: dat/assets/kobopos_iv.xml:2
-#, fuzzy
 msgid "Kobopos IV"
 msgstr "Kobopos IV"
 
 #: dat/assets/koga.xml:2
-#, fuzzy
 msgid "Koga"
 msgstr "Koga"
 
@@ -8066,67 +7805,54 @@ msgid ""
 msgstr ""
 
 #: dat/assets/koralis_iv.xml:2
-#, fuzzy
 msgid "Koralis IV"
 msgstr "Koralis IV"
 
 #: dat/assets/koralis_vi.xml:2
-#, fuzzy
 msgid "Koralis VI"
 msgstr "Koralis VI"
 
 #: dat/assets/korifa_i.xml:2
-#, fuzzy
 msgid "Korifa I"
 msgstr "Korifa I"
 
 #: dat/assets/korifa_ia.xml:2
-#, fuzzy
 msgid "Korifa Ia"
 msgstr "Korifa Ia"
 
 #: dat/assets/korifa_ii.xml:2
-#, fuzzy
 msgid "Korifa II"
 msgstr "Korifa II"
 
 #: dat/assets/korifa_iii.xml:2
-#, fuzzy
 msgid "Korifa III"
 msgstr "Korifa III"
 
 #: dat/assets/kotori.xml:2
-#, fuzzy
 msgid "Kotori"
 msgstr "Kotori"
 
 #: dat/assets/kraft_i.xml:2
-#, fuzzy
 msgid "Kraft I"
 msgstr "Kraft I"
 
 #: dat/assets/kraft_ii.xml:2
-#, fuzzy
 msgid "Kraft II"
 msgstr "Kraft II"
 
 #: dat/assets/kraft_iv.xml:2
-#, fuzzy
 msgid "Kraft IV"
 msgstr "Kraft IV"
 
 #: dat/assets/kraft_v.xml:2
-#, fuzzy
 msgid "Kraft V"
 msgstr "Kraft V"
 
 #: dat/assets/kraft_vi.xml:2
-#, fuzzy
 msgid "Kraft VI"
 msgstr "Kraft VI"
 
 #: dat/assets/kramer.xml:2
-#, fuzzy
 msgid "Kramer"
 msgstr "Kramer"
 
@@ -8154,42 +7880,34 @@ msgstr ""
 "bebible. Un verdadero bar de piratas."
 
 #: dat/assets/kretogg_i.xml:2
-#, fuzzy
 msgid "Kretogg I"
 msgstr "Kretogg I"
 
 #: dat/assets/kretogg_ii.xml:2
-#, fuzzy
 msgid "Kretogg II"
 msgstr "Kretogg II"
 
 #: dat/assets/kretogg_iii.xml:2
-#, fuzzy
 msgid "Kretogg III"
 msgstr "Kretogg III"
 
 #: dat/assets/ksher_i.xml:2
-#, fuzzy
 msgid "Ksher I"
 msgstr "Ksher I"
 
 #: dat/assets/ksher_ii.xml:2
-#, fuzzy
 msgid "Ksher II"
 msgstr "Ksher II"
 
 #: dat/assets/ksher_iii.xml:2
-#, fuzzy
 msgid "Ksher III"
 msgstr "Ksher III"
 
 #: dat/assets/kyo_iii.xml:2
-#, fuzzy
 msgid "Kyo III"
 msgstr "Kyo III"
 
 #: dat/assets/laarss.xml:2
-#, fuzzy
 msgid "Laarss"
 msgstr "Laarss"
 
@@ -8223,7 +7941,6 @@ msgstr ""
 "tiempo libre y sus créditos en bebida y entretenimiento."
 
 #: dat/assets/lanze.xml:2 dat/scripts/pilotname/pirate.lua:365
-#, fuzzy
 msgid "Lanze"
 msgstr "Lanze"
 
@@ -8257,17 +7974,14 @@ msgstr ""
 "vista de las naves espaciales que entran y salen."
 
 #: dat/assets/lapis_i.xml:2
-#, fuzzy
 msgid "Lapis I"
 msgstr "Lapis I"
 
 #: dat/assets/lapis_ii.xml:2
-#, fuzzy
 msgid "Lapis II"
 msgstr "Lapis II"
 
 #: dat/assets/lapra.xml:2
-#, fuzzy
 msgid "Lapra"
 msgstr "Lapra"
 
@@ -8307,7 +8021,6 @@ msgstr ""
 "bebida y una terminal de noticias, si se busca lo suficiente."
 
 #: dat/assets/larling.xml:2
-#, fuzzy
 msgid "Larling"
 msgstr "Larling"
 
@@ -8335,27 +8048,22 @@ msgstr ""
 "particularmente excepcional en él."
 
 #: dat/assets/lazuli_i.xml:2
-#, fuzzy
 msgid "Lazuli I"
 msgstr "Lazuli I"
 
 #: dat/assets/lazuli_ia.xml:2
-#, fuzzy
 msgid "Lazuli Ia"
 msgstr "Lazuli Ia"
 
 #: dat/assets/lazuli_iii.xml:2
-#, fuzzy
 msgid "Lazuli III"
 msgstr "Lazuli III"
 
 #: dat/assets/leo.xml:2
-#, fuzzy
 msgid "Leo"
 msgstr "Leo"
 
 #: dat/assets/leszec.xml:2
-#, fuzzy
 msgid "Leszec"
 msgstr "Leszec"
 
@@ -8389,22 +8097,18 @@ msgstr ""
 "hacer el viaje."
 
 #: dat/assets/leviathan.xml:2
-#, fuzzy
 msgid "Leviathan"
-msgstr "Leviathan"
+msgstr "Leviatán"
 
 #: dat/assets/limbo_i.xml:2
-#, fuzzy
 msgid "Limbo I"
 msgstr "Limbo I"
 
 #: dat/assets/limbo_ii.xml:2
-#, fuzzy
 msgid "Limbo II"
 msgstr "Limbo II"
 
 #: dat/assets/lirith.xml:2
-#, fuzzy
 msgid "Lirith"
 msgstr "Lirith"
 
@@ -8453,7 +8157,6 @@ msgid "Longbow IV"
 msgstr "Arcolargo IV"
 
 #: dat/assets/loramor.xml:2
-#, fuzzy
 msgid "Lora-Mor"
 msgstr "Lora-Mor"
 
@@ -8489,7 +8192,6 @@ msgstr ""
 "transportar a los turistas de un lado a otro."
 
 #: dat/assets/lorelei.xml:2
-#, fuzzy
 msgid "Lorelei"
 msgstr "Lorelei"
 
@@ -8526,7 +8228,6 @@ msgstr ""
 "ocupa de la comida y la bebida."
 
 #: dat/assets/lugun.xml:2
-#, fuzzy
 msgid "Lugun"
 msgstr "Lugun"
 
@@ -8555,17 +8256,14 @@ msgstr ""
 "bebidas y comida."
 
 #: dat/assets/luna_skona.xml:2
-#, fuzzy
 msgid "Luna Skona"
 msgstr "Luna Skona"
 
 #: dat/assets/luxsor.xml:2
-#, fuzzy
 msgid "Luxsor"
 msgstr "Luxsor"
 
 #: dat/assets/maatsu.xml:2
-#, fuzzy
 msgid "Maatsu"
 msgstr "Maatsu"
 
@@ -8621,7 +8319,6 @@ msgstr ""
 "cantina que un bar."
 
 #: dat/assets/madria.xml:2
-#, fuzzy
 msgid "Madria"
 msgstr "Madria"
 
@@ -8653,7 +8350,6 @@ msgstr ""
 "un portal a la sociedad. Los espaciales normales se mantienen alejados de él."
 
 #: dat/assets/magellan.xml:2
-#, fuzzy
 msgid "Magellan"
 msgstr "Magellan"
 
@@ -8685,27 +8381,22 @@ msgstr ""
 "el desierto circundante. Magallanes tiene un largo camino por recorrer."
 
 #: dat/assets/malebolge.xml:2 dat/ssys/malebolge.xml:2
-#, fuzzy
 msgid "Malebolge"
 msgstr "Malebolge"
 
 #: dat/assets/malebolge_iii.xml:2
-#, fuzzy
 msgid "Malebolge III"
 msgstr "Malebolge III"
 
 #: dat/assets/malebolge_iv.xml:2
-#, fuzzy
 msgid "Malebolge IV"
 msgstr "Malebolge IV"
 
 #: dat/assets/malebolge_v.xml:2
-#, fuzzy
 msgid "Malebolge V"
 msgstr "Malebolge V"
 
 #: dat/assets/manis.xml:2
-#, fuzzy
 msgid "Manis"
 msgstr "Manis"
 
@@ -8738,7 +8429,6 @@ msgstr ""
 "lo haría la ordinaria bazofia espacial."
 
 #: dat/assets/mannannan.xml:2
-#, fuzzy
 msgid "Mannannan"
 msgstr "Mannannan"
 
@@ -8825,22 +8515,18 @@ msgid "The bar is completely unnoteworthy, besides the vile stench."
 msgstr "El bar es completamente imperceptible, además del vil hedor."
 
 #: dat/assets/margarita_i.xml:2
-#, fuzzy
 msgid "Margarita I"
 msgstr "Margarita I"
 
 #: dat/assets/margarita_ii.xml:2
-#, fuzzy
 msgid "Margarita II"
 msgstr "Margarita II"
 
 #: dat/assets/margarita_iv.xml:2
-#, fuzzy
 msgid "Margarita IV"
 msgstr "Margarita IV"
 
 #: dat/assets/margot.xml:2
-#, fuzzy
 msgid "Margot"
 msgstr "Margot"
 
@@ -8899,32 +8585,26 @@ msgstr ""
 "bar del muelle, y mucho menos para atenderlo."
 
 #: dat/assets/mason_i.xml:2
-#, fuzzy
 msgid "Mason I"
 msgstr "Mason I"
 
 #: dat/assets/mason_ii.xml:2
-#, fuzzy
 msgid "Mason II"
 msgstr "Mason II"
 
 #: dat/assets/mason_iv.xml:2
-#, fuzzy
 msgid "Mason IV"
 msgstr "Mason IV"
 
 #: dat/assets/massia_i.xml:2
-#, fuzzy
 msgid "Massia I"
 msgstr "Massia I"
 
 #: dat/assets/massia_iv.xml:2
-#, fuzzy
 msgid "Massia IV"
 msgstr "Massia IV"
 
 #: dat/assets/massia_iva.xml:2
-#, fuzzy
 msgid "Massia IVa"
 msgstr "Massia IVa"
 
@@ -8953,17 +8633,14 @@ msgstr ""
 "impresión de que el lugar está activo."
 
 #: dat/assets/maus_i.xml:2
-#, fuzzy
 msgid "Maus I"
 msgstr "Maus I"
 
 #: dat/assets/maus_ii.xml:2
-#, fuzzy
 msgid "Maus II"
 msgstr "Maus II"
 
 #: dat/assets/maus_iii.xml:2
-#, fuzzy
 msgid "Maus III"
 msgstr "Maus III"
 
@@ -8985,7 +8662,6 @@ msgstr ""
 "estricta como en todas partes."
 
 #: dat/assets/maya.xml:2
-#, fuzzy
 msgid "Maya"
 msgstr "Maya"
 
@@ -9021,7 +8697,6 @@ msgstr ""
 "en tiempo real y las últimas teorías sobre el Incidente."
 
 #: dat/assets/megala.xml:2
-#, fuzzy
 msgid "Megala"
 msgstr "Megala"
 
@@ -9056,7 +8731,6 @@ msgstr ""
 "necesario."
 
 #: dat/assets/megas.xml:2
-#, fuzzy
 msgid "Megas"
 msgstr "Megas"
 
@@ -9112,7 +8786,6 @@ msgstr ""
 "lugar para que nadie se relaje."
 
 #: dat/assets/mendez.xml:2
-#, fuzzy
 msgid "Mendez"
 msgstr "Mendez"
 
@@ -9145,42 +8818,34 @@ msgstr ""
 "completo."
 
 #: dat/assets/merisi_i.xml:2
-#, fuzzy
 msgid "Merisi I"
 msgstr "Merisi I"
 
 #: dat/assets/merisi_ii.xml:2
-#, fuzzy
 msgid "Merisi II"
 msgstr "Merisi II"
 
 #: dat/assets/merisi_iii.xml:2
-#, fuzzy
 msgid "Merisi III"
 msgstr "Merisi III"
 
 #: dat/assets/merisi_iv.xml:2
-#, fuzzy
 msgid "Merisi IV"
 msgstr "Merisi IV"
 
 #: dat/assets/meya.xml:2
-#, fuzzy
 msgid "Meya"
 msgstr "Meya"
 
 #: dat/assets/mgg003.xml:2
-#, fuzzy
 msgid "MGG-003"
 msgstr "MGG-003"
 
 #: dat/assets/mgg007.xml:2
-#, fuzzy
 msgid "MGG-007"
 msgstr "MGG-007"
 
 #: dat/assets/mgg1294.xml:2
-#, fuzzy
 msgid "MGG-1294"
 msgstr "MGG-1294"
 
@@ -9246,22 +8911,18 @@ msgid "Mirror VIb"
 msgstr "Espejo VIb"
 
 #: dat/assets/mizar_iii.xml:2
-#, fuzzy
 msgid "Mizar III"
 msgstr "Mizar III"
 
 #: dat/assets/mizar_iv.xml:2
-#, fuzzy
 msgid "Mizar IV"
 msgstr "Mizar IV"
 
 #: dat/assets/mizar_vi.xml:2
-#, fuzzy
 msgid "Mizar VI"
 msgstr "Mizar VI"
 
 #: dat/assets/mk.xml:2
-#, fuzzy
 msgid "M.K."
 msgstr "M.K."
 
@@ -49639,6 +49300,20 @@ msgid ""
 "I would be honoured if my memory helps you remain right, loyal, and strong "
 "for the rest of your own lifetime.\""
 msgstr ""
+"Tu nave recibe un mensaje holográfico del Sistema de Mensajería a Distancia "
+"del Ejército Dvaered. Al pulsar el botón \"Enter\", el rostro adolescente de "
+"un joven Teniente Strafer emerge de tu holoproyector:\n"
+"   \"Soy el Soldado Helmut Strafer y este es mi anuncio de muerte\". Una "
+"extraña sonrisa aparece en su rostro mientras continúa: \"Sí, esto está "
+"sucediendo. Es para mí un gran privilegio haber muerto al servicio de la "
+"Nación Dvaered, Gran Casa del Glorioso Imperio Galáctico. Has recibido esta "
+"grabación porque estás en la lista de personas que consideraba mis amigos. "
+"Estás invitado a mi ceremonia fúnebre, que espero sinceramente que "
+"disfrutes. Como obviamente no conozco aún las circunstancias de mi muerte, "
+"ni los detalles de la ceremonia, lo único que puedo hacer es invitarte a "
+"encontrar más información en los datos adjuntos. Ahora que me he fundido con "
+"el vacío, me sentiría honrado si mi recuerdo te ayuda a mantenerte correcto, "
+"leal y fuerte durante el resto de tu vida.\""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:77
 msgid ""
@@ -49648,6 +49323,11 @@ msgid ""
 "show up with a fighter and mace launchers.\n"
 "   Are you going to go there?"
 msgstr ""
+"Consultas los datos adjuntos y descubres que la ceremonia tendrá lugar en "
+"los alrededores de Dvaer Prime. Como piloto, se te invita a participar en un "
+"Ballet de Cohetes Maza en memoria del Teniente Strafer, y se te recomienda "
+"encarecidamente que te presentes con un caza y lanzadores maza.\n"
+"   ¿Vas a ir allí?"
 
 #. Take off for the next stage
 #. Mace Throw: spawn Llamas and competitors.
@@ -49664,62 +49344,63 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:463
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:496
 msgid "Dvaered Ballet"
-msgstr ""
+msgstr "Ballet Dvaered"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:84
 msgid "Fly to {pnt}"
-msgstr ""
+msgstr "Vuela a {pnt}"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:85
 msgid ""
 "You are invited to a Mace Rocket Ballet in memory of Lieutenant Strafer."
 msgstr ""
+"Están invitados a un Ballet de Cohetes Maza en memoria del Teniente Strafer."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:86
 msgid "Say goodbye to Lieutenant Strafer"
-msgstr ""
+msgstr "Despídete del Teniente Strafer"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:106
 msgid "Sergeant Strafer"
-msgstr ""
+msgstr "Sargento Strafer"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:107
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:142
 msgid "Private Micoult"
-msgstr ""
+msgstr "Soldado Micoult"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:108
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:143
 msgid "Sergeant Garcia"
-msgstr ""
+msgstr "Sargento Garcia"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:109
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:144
 msgid "Corporal Johnson"
-msgstr ""
+msgstr "Cabo Johnson"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:110
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:145
 msgid "Private Ernst"
-msgstr ""
+msgstr "Soldado Ernst"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:111
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:141
 msgid "Lieutenant Guo"
-msgstr ""
+msgstr "Teniente Guo"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:118
 msgid "Flowers"
-msgstr ""
+msgstr "Flores"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:118
 msgid "Pretty flowers."
-msgstr ""
+msgstr "Flores bonitas."
 
 #. Introduction scene (with flowers everywhere)
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:155
 msgid "The Mace Ballet"
-msgstr ""
+msgstr "El Ballet Maza"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:155
 msgid ""
@@ -49738,6 +49419,20 @@ msgid ""
 "until now, it has at least rewarded you with this unique view of overgrown "
 "flowers aimlessly drifting on the starry background."
 msgstr ""
+"Tus sensores detectan un grupo de naves de guerra realizando maniobras "
+"alrededor de Dvaer Prime. Cuando te acercas, un Vigilante te saluda y "
+"reconoces la voz del Mayor Tam:\n"
+"   \"Saludos, ciudadano. ¿Has venido a la ceremonia? Por supuesto que sí. ¿"
+"Lo ves? Ya hemos lanzado algunas guirnaldas. El desfile fúnebre terminará "
+"pronto, y después empezaremos con el Ballet de Mazas. Encuéntranos en el bar "
+"de Dvaer Prime\".\n"
+"   Antes de darte la oportunidad de preguntarle de qué se trata el evento, "
+"Tam cierra el canal de comunicación, y te encuentras rodeado por un campo de "
+"gigantescas flores blancas. Dejas que tu mente navegue ociosamente entre las "
+"plantas de bioingeniería que han invadido la órbita de Dvaer, y piensas que "
+"aunque tu alianza con los Dvaered no ha sido muy lucrativa hasta ahora, al "
+"menos te ha recompensado con esta vista única de flores desmesuradas que "
+"vagan sin rumbo por el fondo estrellado."
 
 #. Actually, fleet AI should not require that, but...
 #. Landing (on Dv Prime)
@@ -49747,11 +49442,11 @@ msgstr ""
 #. First, compute the people's scores
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:196
 msgid "Total Scores"
-msgstr ""
+msgstr "Puntuaciones Totales"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:203
 msgid "Dvaered People"
-msgstr ""
+msgstr "Gente Dvaered"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:203
 msgid ""
@@ -49761,10 +49456,17 @@ msgid ""
 "also civilians. You can tell they're all there for the ceremony from their "
 "black armbands and the slow military music playing on the speakers."
 msgstr ""
+"Un grupo bastante numeroso se reúne en torno a unas mesas reservadas. "
+"Reconoces muchas caras, entre ellas la del general Klank, la del Mayor Tam y "
+"la de los miembros de su grupo. Pero también hay personas que no conoces, en "
+"su mayoría militares, pero también civiles. Puedes saber que todos están "
+"allí para la ceremonia por sus brazaletes negros y la música militar lenta "
+"que suena en los altavoces."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:208
 msgid "Major Tam is ready to explain the next stage of the ceremony to you."
 msgstr ""
+"El Mayor Tam está listo para explicarte la siguiente etapa de la ceremonia."
 
 #. Ex-aequo always profit the player.
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:211
@@ -49774,6 +49476,11 @@ msgid ""
 "   \"Congratulations to {name}, who is the great winner of the Mace Ballet! "
 "All participants will be rewarded according to their rank.\""
 msgstr ""
+"Mientras aterrizas, ves a los demás participantes de la ceremonia reunidos "
+"en el muelle. El padre de Strafer, siendo el maestro de ceremonias, anuncia:"
+"\n"
+"   \"¡Felicidades a {name}, que es el gran ganador del Ballet Maza! Todos "
+"los participantes serán recompensados según su rango.\""
 
 #. TODO: add lore about this Handbook
 #. Give a reward depending on the rank (10 is highest and 1 lowest)
@@ -49785,20 +49492,20 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:246
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:249
 msgid "You receive a {1} as a reward."
-msgstr ""
+msgstr "Recibes un {1} como recompensa."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:226
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:230
 msgid "You receive a {1} and a {2} as a reward."
-msgstr ""
+msgstr "Recibes un {1} y un {2} como recompensa."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:237
 msgid "You receive three Shredders as a reward."
-msgstr ""
+msgstr "Recibes tres Trituradoras como recompensa."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:252
 msgid "Major Tam warns you, and gives you a new task."
-msgstr ""
+msgstr "El Mayor Tam le avisa y te da una nueva tarea."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:252
 msgid ""
@@ -49818,12 +49525,27 @@ msgid ""
 "will be the following: if some bounty hunter tries to kill you, capture them "
 "alive and bring them to me.\""
 msgstr ""
+"Tras el anuncio de los resultados, el Mayor Tam se acerca a ti. Parece tener "
+"algo importante que decir: \"Fue tu primer Ballet, ¿verdad? Lo has hecho muy "
+"bien, ciudadano.\n"
+"\"De todos modos, hay un asunto que debo discutir contigo: uno de mis "
+"informantes me dijo que la ex Coronel Hamelsen ha puesto precio a tu cabeza. "
+"Sí. Este tipo de cosas ocurren, ya sabes. Parece que da miedo, ¿no? En "
+"realidad, mucha gente aqui ya tiene un precio por su cabeza, incluyendome a "
+"mi, al General Klank y al Capitan Leblanc. Y se puede vivir muy bien a pesar "
+"de ello. Lo único es tener un poco más de cuidado que de costumbre.\n"
+"   \"Como Hamelsen ha hecho matar a tantos mercenarios bajo su mando, es "
+"poco probable que los pilotos independientes se lancen a intentar matarte. "
+"Estoy bastante seguro de que sus atacantes estarán motivados por algo más "
+"que el dinero. Quiero saber por qué siguen atacándonos después de tantas "
+"pérdidas. Así que tu misión será la siguiente: si algúnos cazarrecompensas "
+"intentan matarte, captúralos vivos y tráemelos.\""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:255
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:258
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:261
 msgid "Goodbye, Lieutenant Strafer"
-msgstr ""
+msgstr "Adiós, Teniente Strafer"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:255
 msgid ""
@@ -49838,6 +49560,17 @@ msgid ""
 "me! Please reassure me!\n"
 "   \"For an answer I already have. And it is all but pleasant.\""
 msgstr ""
+"Una vez que los participantes han recogido sus recompensas, los sigues a "
+"todos a una arena que se ha reservado para la ocasión. Mientras los cyborg-"
+"gladiadores masacran a los criminales convictos en el ring de lucha, el "
+"capitán Leblanc, como superior directo de Strafer, pronuncia un discurso:\n"
+"   \"¿Cómo puede ser el espacio tan oscuro con toda la sangre brillante que "
+"hemos derramado allí arriba? ¿Cómo pueden los planetas ser tan majestuosos "
+"con todas las naves que se han estrellado en sus superficies? ¿Cómo pueden "
+"las estrellas estar tan tranquilas con todos los horrores que han "
+"presenciado? Si alguno de vosotros tiene una buena respuesta, ¡por favor, "
+"decídmelo! ¡Por favor, interrumpidme! ¡Por favor, tranquilizadme!\n"
+"   \"Pues una respuesta ya tengo. Y es todo menos agradable.\""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:258
 msgid ""
@@ -49856,6 +49589,22 @@ msgid ""
 "already have made our own big plans!\n"
 "   \"And Helmut Strafer's big plan is named Great House Dvaered.\""
 msgstr ""
+"\"El espacio, los planetas y las estrellas. La razón por la que permanecen "
+"impasibles ante los horrores humanos es simple y cruel: no les importa. El "
+"universo no requería que existiéramos. Ni siquiera lo deseaba. Sin embargo, "
+"estamos aquí, sin rumbo, sin pistas, desgarrándonos unos a otros para pasar "
+"el tiempo. Es mi destino, como capitán, liderar un grupo de hombres "
+"perdidos, todos destinados a morir en este universo oscuro y vacío.\n"
+"   \"¿Pero qué sabemos del vacío? ¿Cómo podemos decir, en primer lugar, que "
+"el universo está vacío? Porque nuestros corazones están llenos. Lleno de "
+"belleza y fealdad. Lleno de amor y de odio. Lleno de deseos y de "
+"desesperación. Nuestros corazones están llenos de todas esas cosas "
+"contrarias que no se pueden encontrar en ningún otro lugar del universo. ¿El "
+"espacio no tiene compasión por nosotros? ¿Los planetas no se preocupan por "
+"nuestras naves? ¿Las estrellas no tienen un gran plan para nosotros? ¡Tanto "
+"mejor! Porque nosotros, los humanos, ¡ya hemos hecho nuestros propios "
+"grandes planes!\n"
+"   \"Y el gran plan de Helmut Strafer se llama Gran Casa Dvaered.\""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:261
 msgid ""
@@ -49874,6 +49623,22 @@ msgid ""
 "   \"In conclusion, if you want to honor the memory of Helmut Strafer, do "
 "worthy things: do work for the Nation!\""
 msgstr ""
+"\"La Gran Casa Dvaered se vuelve escarlata cuando sus ciudadanos derraman su "
+"sangre por ella. La Gran Casa Dvaered pierde un poco de su majestuosidad "
+"cada vez que una de sus naves se estrella. La Gran Casa Dvaered se horroriza "
+"cuando es testigo de atrocidades.\n"
+"   \"Helmut Strafer dedicó su vida a la Gran Casa Dvaered, y tengo el gran "
+"honor de hablar de él en esta ocasión. Podría decirles lo correcto, leal y "
+"fuerte que era este hombre. Podría contarles la confianza que su sola "
+"presencia junto a mi nave me hizo sentir. Pero ustedes ya lo saben. Así que "
+"sólo les contaré esta historia: Estábamos volando, uno al lado del otro, en "
+"la nebulosa de Arandon. Habíamos pasado horas allí, con los gases abrasivos "
+"royendo lentamente nuestros escudos. Todo para encontrar y destruir un solo "
+"caza terrorista. Le pregunté a Strafer si creía que valía la pena y me dio "
+"esta sencilla respuesta: \"Todo vale la pena cuando se hace por la Nación "
+"Dvaered\".\n"
+"   \"En conclusión, si queréis honrar la memoria de Helmut Strafer, haced "
+"cosas que merezcan la pena: ¡trabajad por la Nación!\""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:266
 msgid ""
@@ -49881,16 +49646,21 @@ msgid ""
 "won an astonishing prize. Major Tam warned you that assassins are on your "
 "tracks and requested you to capture one of them alive."
 msgstr ""
+"Participaste en un Ballet de Cohetes de Maza en memoria del Teniente "
+"Strafer, y ganaste un premio sorprendente. El comandante Tam te ha advertido "
+"de que hay asesinos tras tu pista y te ha pedido que captures a uno de ellos "
+"con vida."
 
 #. All the cases where the player is not authorized to land nor jump
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:276
 msgid "You left the system."
-msgstr ""
+msgstr "Dejaste el sistema."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:276
 msgid ""
 "You were supposed to take part in the competition, not leave the system."
 msgstr ""
+"Se suponía que debías participar en la competición, no abandonar el sistema."
 
 #. Approaching the group of soldiers
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:283
@@ -49909,6 +49679,20 @@ msgid ""
 "weapons, and utilities.\n"
 "   \"Come tell me when you're ready to take off."
 msgstr ""
+"Te acercas al Mayor Tam y al grupo. \"Buenos días, ciudadano {player}. "
+"Espero que estés preparado para el Ballet Maza\". Respondes que no tienes ni "
+"idea de qué es ese Ballet, pero que siempre estás preparado cuando se trata "
+"de cohetes maza.\n"
+"   \"El ballet maza, también conocido como triatlón de mazas, es una serie "
+"de tres pruebas en las que los pilotos deben honrar la memoria de su "
+"compañero caído y demostrar sus habilidades. Los miembros del escuadrón "
+"GarrasNoctunas participarán en el evento, junto con nosotros dos, el general "
+"Klank, algunos miembros de la familia de Strafer y algunos de sus antiguos "
+"compañeros antes de que se uniera al escuadrón. El resultado de la "
+"competición determinará cómo se distribuirán los trajes personales de "
+"Strafer. Esto incluye dos Vendettas, bonitos trajes básicos, armas y "
+"utilidades.\n"
+"\" Dime cuando estés listo para despegar."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:293
 msgid ""
@@ -49916,16 +49700,21 @@ msgid ""
 "respective collections of decapitated heads. Their demeanor feels "
 "surprisingly relaxed."
 msgstr ""
+"Leblanc está rodeada de sus pilotos, que de alguna manera intercambian "
+"bromas sobre sus respectivas colecciones de cabezas decapitadas. Su "
+"comportamiento es sorprendentemente relajado."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:294
 msgid "The general is talking to Major Tam."
-msgstr ""
+msgstr "El general está hablando con el Mayor Tam."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:295
 msgid ""
 "Nikolov is arm-wrestling half a dozen soldiers. The cyborg sergeant seems to "
 "be very cautious in order so as to not harm them."
 msgstr ""
+"Nikolov está echando un pulso a media docena de soldados. El sargento cyborg "
+"parece ser muy cauteloso para no dañarlos."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:296
 msgid ""
@@ -49933,20 +49722,25 @@ msgid ""
 "seems to give him any attention. His face seems to reflect not only boredom, "
 "but also shame in not being able to fit in among the group."
 msgstr ""
+"Hamfresser intenta conversar con un grupo de técnicos del ejército, pero "
+"nadie parece prestarle atención. Su cara parece reflejar no sólo el "
+"aburrimiento, sino también la vergüenza de no poder encajar en el grupo."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:297
 msgid "Well-dressed woman"
-msgstr ""
+msgstr "Mujer bien vestida"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:297
 msgid ""
 "One of the few civilians around, this woman seems however to fit in with the "
 "place. You think that she must be used to hanging out with soldiers."
 msgstr ""
+"Esta mujer, una de las pocas civiles que hay, parece sin embargo encajar en "
+"el lugar. Piensas que debe estar acostumbrada a juntarse con los soldados."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:298
 msgid "Retired soldier"
-msgstr ""
+msgstr "Soldado retirado"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:298
 msgid ""
@@ -49955,26 +49749,34 @@ msgid ""
 "fighting in space while his face sags from days of anguish over comrades he "
 "loved and lost fighting up there."
 msgstr ""
+"Un viejo capitán que parece haber planchado su uniforme de gala para la "
+"ocasión habla con algunos civiles. Sus hombros cargan con el peso de los "
+"años de lucha en el espacio mientras su rostro se hunde por los días de "
+"angustia por los compañeros que amó y perdió luchando allí arriba."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:299
 msgid "Sergeant"
-msgstr ""
+msgstr "Sargento"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:299
 msgid ""
 "This pilot is not a member of Leblanc's squadron, however, she converses "
 "with them."
 msgstr ""
+"Esta piloto no es miembro del escuadrón de Leblanc, sin embargo, conversa "
+"con ellos."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:300
 msgid "Technician"
-msgstr ""
+msgstr "Técnico"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:300
 msgid ""
 "A military technician encourages his comrades who are arm-wrestling with "
 "Nikolov."
 msgstr ""
+"Un técnico militar anima a sus compañeros que están echando un pulso con "
+"Nikolov."
 
 #. Discussions
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:305
@@ -49988,6 +49790,14 @@ msgid ""
 "ex-Colonel Hamelsen will have a hard time recruiting pilots after such a "
 "high loss rate."
 msgstr ""
+"Hola, ciudadano. Me alegra ver que te han invitado. Te lo mereces. Siempre "
+"me molesta perder a un buen piloto como Strafer, pero ya sabes, la vida es "
+"así, cuando eres un Dvaered. De todos modos, nos las arreglamos para "
+"vengarlo allí. Además de los cuatro que neutralizó, conseguimos siete "
+"durante la persecución. Desgraciadamente, el del Schroedinger logró escapar. "
+"Pero esta vez dudo que pueda reconstruir sus fuerzas pronto. El Ex-Coronel "
+"Hamelsen lo tendrá difícil para reclutar pilotos después de una tasa de "
+"pérdidas tan alta."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:308
 msgid ""
@@ -49995,6 +49805,9 @@ msgid ""
 "I have heard that you are doing a fairly good job. Continue and you will get "
 "rewarded for your merit, be sure of that!"
 msgstr ""
+"Buenos días, ciudadano. Usted es el piloto privado que nos ayuda en nuestra "
+"tarea, ¿verdad? He oído que está haciendo un trabajo bastante bueno. "
+"Continúe y será recompensado por su mérito, ¡esté seguro de ello!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:311
 msgid ""
@@ -50004,6 +49817,11 @@ msgid ""
 "few who did not despise us spacemarines, and we could count on him. He "
 "certainly will be missed."
 msgstr ""
+"Sí, seguro que era un buen tipo. Por supuesto, era un hombre \"educado\", "
+"como los demás aquí, siempre llamando a todo el mundo \"ciudadano\", y "
+"molestando a la gente con \"rectitud\", \"valor\" y esas cosas. Pero era uno "
+"de los pocos que no nos despreciaba a los marines espaciales, y podíamos "
+"contar con él. Desde luego, se le echará de menos."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:314
 msgid ""
@@ -50015,6 +49833,13 @@ msgid ""
 "can now scratch my nose without leaving oil marks on it. Everyone is jealous "
 "at the barracks."
 msgstr ""
+"¡Hola, {player}! Cuánto tiempo sin verte, ¿eh? ¿Cómo estás? He estado "
+"atrapado en el hospital debido a todo el daño que recibí durante la última "
+"misión. Tengo un nuevo brazo derecho, ¿ves? Tiene las últimas mejoras "
+"biológicas y cibernéticas. La capacidad de apuntar se ha incrementado en un "
+"0,23%, la fuerza de tracción en un 0,26% y la de empuje en un 0,22%. Pero su "
+"mejor característica es que ahora puedo rascarme la nariz sin dejar marcas "
+"de aceite en ella. Todo el mundo está celoso en el cuartel."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:317
 msgid ""
@@ -50023,6 +49848,10 @@ msgid ""
 "husband from now on. It makes me so sad. Do you think that creating the next "
 "generation of Dvaered warriors is the sole purpose of marriage?"
 msgstr ""
+"Se siente tan extraño. Sabía que este día podría llegar tarde o temprano, "
+"pero aún así... No puedo imaginarme cómo vamos a vivir los niños y yo sin mi "
+"marido a partir de ahora. Me entristece mucho. ¿Crees que crear la próxima "
+"generación de guerreros Dvaered es el único propósito del matrimonio?"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:320
 msgid ""
@@ -50031,12 +49860,18 @@ msgid ""
 "simply meant to stay home, waiting for the rest of my family members to die "
 "one after the other."
 msgstr ""
+"El mar oscuro se llevó a muchos de mis antepasados, a mi propio padre, luego "
+"a mi esposa y ahora a mi hijo mayor. El destino no me hizo morir en mi "
+"época, así que supongo que simplemente estoy destinado a quedarme en casa, "
+"esperando que el resto de los miembros de mi familia mueran uno tras otro."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:323
 msgid ""
 "You will take part to the mace ballet too? Ah! I can't wait to fight the "
 "friends of my big brother!"
 msgstr ""
+"¿También participarás en el Ballet Maza? ¡Ah! ¡No puedo esperar a luchar "
+"contra los amigos de mi hermano mayor!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:326
 msgid ""
@@ -50050,14 +49885,23 @@ msgid ""
 "   \"You know what they say? Joining the Dvaered army is the best way to "
 "find your place in the society.\""
 msgstr ""
+"\"Hola, ciudadano {player}, ¿cómo estás?\" Le preguntas al soldado cómo sabe "
+"tu nombre y te responde \"Bueno, soy parte de los GarrasNocturnas, y todos "
+"te conocen en el escuadrón. Los pilotos privados no estáis acostumbrados a "
+"hablar con los técnicos, ¿verdad? Es normal: en cada puerto te encuentras "
+"con trabajadores diferentes.  Así es difícil hacer amigos. En nuestro "
+"ejército, la situación es diferente. Pasamos mucho tiempo juntos y nos une "
+"el trabajo duro y nuestra fe en la Nación.\n"
+"   \"¿Sabes lo que dicen? Unirse al ejército de Dvaered es la mejor manera "
+"de encontrar tu lugar en la sociedad.\""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:332
 msgid "Explain next stage"
-msgstr ""
+msgstr "Explicar la siguiente fase"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:332
 msgid "Display the scores"
-msgstr ""
+msgstr "Visualizar las puntuaciones"
 
 #. if mem.stage == 5 then
 #. Display the scores
@@ -50078,6 +49922,13 @@ msgid ""
 "or when time runs out, wins. It is forbidden to shoot at other competitors. "
 "Are you ready? Have you checked you have enough free cargo space?"
 msgstr ""
+"El segundo evento es el \"Estadio Maza\". Allí se han lanzado coronas de "
+"flores. Algunos pilotos junior de la academia patrullan la \"zona de "
+"reunión\" con sus lanzadores de maza. Dispararán a los competidores. Si tu "
+"escudo está desactivado, serás eliminado. Hay {tonnes} de flores en total. "
+"Gana el piloto que haya recogido más flores antes de ser eliminado, o cuando "
+"se agote el tiempo. Está prohibido disparar a otros competidores. ¿Estás "
+"preparado? ¿Has comprobado que tienes suficiente espacio de carga libre?"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:354
 msgid ""
@@ -50091,56 +49942,56 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:416
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:464
 msgid "Wait for the signal"
-msgstr ""
+msgstr "Espera por la señal"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:369
 msgid "Hit the most targets before your opponents"
-msgstr ""
+msgstr "Acierta al mayor número de objetivos antes que tus oponentes"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:383
 msgid "Target "
-msgstr ""
+msgstr "Objetivo "
 
 #. Just in case
 #. Remember which joy cries have been used  /!\ this should have the same length as joy /!#. Timer and messages
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:397
 msgid "The stars look very different today"
-msgstr ""
+msgstr "Las estrellas se ven muy diferentes hoy en día"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:398
 msgid "My rockets can't wait to fly for Strafer"
-msgstr ""
+msgstr "Mis cohetes no pueden esperar a volar por Strafer"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:399
 msgid "Poor small Llamas!"
-msgstr ""
+msgstr "¡Pobrecillas Llamas!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:417
 msgid "Catch the most flowers possible"
-msgstr ""
+msgstr "Atrapa la mayor cantidad de flores posible"
 
 #. Bouuuh! they r cheating!
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:436
 msgid "Shooter"
-msgstr ""
+msgstr "Tirador"
 
 #. If player has zero shield: eliminated
 #. Timer and messages
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:451
 msgid "Time to pick up flowers"
-msgstr ""
+msgstr "Hora de recoger las flores"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:452
 msgid "You may as well give up now, I'm invincible!"
-msgstr ""
+msgstr "Ya puedes rendirte, ¡soy invencible!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:453
 msgid "Flower Power, I'm coming!"
-msgstr ""
+msgstr "Poder Flor, ¡ya voy!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:465
 msgid "Defeat your opponent {name} (nullify their shield)"
-msgstr ""
+msgstr "Derrota a tu oponente {name} (anula tu escudo)"
 
 #. Mark this one as player's opponent
 #. Timer and messages
@@ -50149,14 +50000,16 @@ msgid ""
 "Hey, Tamtam, take your protein pills and put your helmet on, because I'M "
 "COMING FOR YOU!"
 msgstr ""
+"¡Oye, Tamtam, tómate tus pastillas de proteínas y ponte el casco, porque VOY "
+"POR TI!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:487
 msgid "I will win for my brother!"
-msgstr ""
+msgstr "¡Ganaré por mi hermano!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:488
 msgid "{player}, are you ready for punishment?"
-msgstr ""
+msgstr "{player}, ¿estás listo para el castigo?"
 
 #. Test wether the player only has mace rockets
 #. Increment the printing timer
@@ -50164,12 +50017,12 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:518
 #: dat/missions/neutral/race1.lua:117 dat/missions/neutral/race2.lua:152
 msgid "Go!"
-msgstr ""
+msgstr "¡Vamos!"
 
 #. Increment the time over timer
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:529
 msgid "Time Over!"
-msgstr ""
+msgstr "¡Se acabó el tiempo!"
 
 #. Actually start the Mace Throw
 #. Actually start the Mace Stadion
@@ -50183,7 +50036,7 @@ msgstr ""
 #. This was a bad idea
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:595
 msgid "That was not very smart."
-msgstr ""
+msgstr "Eso no fue muy inteligente."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:595
 msgid ""
@@ -50192,6 +50045,10 @@ msgid ""
 "competition. You think that the Dvaered might be upset at you for this, but "
 "then you realize they will probably just kill you instead."
 msgstr ""
+"Mientras observas cómo el casco de la nave de tu oponente se derrumba bajo "
+"el impacto de tus cohetes, de repente recuerdas con horror que todo esto es "
+"sólo una competición. Piensas que los Dvaered podrían enfadarse contigo por "
+"esto, pero entonces te das cuenta de que probablemente te matarán."
 
 #. Hack for the ships not to be hostile anymore once shot (Mace Throw)
 #. Spawn Competitors
@@ -50203,13 +50060,13 @@ msgstr ""
 #. Sort and print top scores
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:679
 msgid "Scores for the Mace Throw"
-msgstr ""
+msgstr "Puntuaciones del Lanzamiento Maza"
 
 #. One of the competitors is Idle (Mace Stadion)
 #. A competitor is hit during Stadion (problematic if the player is the agressor)
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:695
 msgid "This is not allowed!"
-msgstr ""
+msgstr "¡Esto no está permitido!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:695
 msgid ""
@@ -50217,6 +50074,9 @@ msgid ""
 "Stadion. The Stadion must now be interrupted and you receive 5 penalty "
 "points. Land and speak again with Major Tam."
 msgstr ""
+"No debes disparar a los otros competidores durante el Estadio Maza. El "
+"Estadio debe ser ahora interrumpido y recibes 5 puntos de penalización. "
+"Aterriza y habla de nuevo con el Mayor Tam."
 
 #. Back to previous mem.stage
 #. Player is hit during Stadion
@@ -50227,19 +50087,21 @@ msgid ""
 "time runs out. Your score will be equal to the number of flowers you already "
 "collected."
 msgstr ""
+"Has sido eliminado. No podrás moverte más hasta que se agote el tiempo. Tu "
+"puntuación será igual al número de flores que ya hayas recogido."
 
 #. End of the Mace Stadion
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:739
 msgid "Scores for the Mace Stadion"
-msgstr ""
+msgstr "Puntuaciones para el Estadio Maza"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:744
 msgid "Time Over"
-msgstr ""
+msgstr "Tiempo Acabado"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:744
 msgid "Land on Dvaer Prime."
-msgstr ""
+msgstr "Aterriza en Dvaer Prime."
 
 #. Free the player
 #. One of the competitors (or the player) is hit (Mace Pankration)
@@ -50251,12 +50113,12 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:796
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:810
 msgid "{1} won against {2}!"
-msgstr ""
+msgstr "¡{1} ganó contra {2}!"
 
 #. See if all duels are over
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:828
 msgid "Scores for the Mace Pankration"
-msgstr ""
+msgstr "Puntuaciones para el Pancracio Maza"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -50280,10 +50142,13 @@ msgid ""
 "directly allows you to enter the different challenges and tournaments "
 "available."
 msgstr ""
+"Un terminal para acceder al entorno de realidad virtual del Guantelete "
+"Carmesí. Esto te permite directamente entrar en los diferentes desafíos y "
+"torneos disponibles."
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:35
 msgid "Crimson Gauntlet Terminal"
-msgstr ""
+msgstr "Terminal del Guantelete Carmesí"
 
 #. Land is unified for all types of combat
 #. TODO only give emblems from bosses or special clears?
@@ -50292,24 +50157,24 @@ msgstr ""
 #. Set details
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:75
 msgid "Annihilate all enemies in the Crimson Gauntlet."
-msgstr ""
+msgstr "Aniquila a todos los enemigos en el Guantelete Carmesí."
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:76
 msgid "Great riches!"
-msgstr ""
+msgstr "¡Grandes riquezas!"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:77
 msgid "Crimson Gauntlet Challenge"
-msgstr ""
+msgstr "Desafío del Guantelete Carmesí"
 
 #. Add to log
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:80
 msgid "Totoran Tournament"
-msgstr ""
+msgstr "Torneo Totoran"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:84
 msgid "Defeat all the other adversaries!"
-msgstr ""
+msgstr "¡Derrota a todos los demás adversarios!"
 
 #. take off and enter the ring!
 #. Wave meta-information
@@ -50342,34 +50207,34 @@ msgstr ""
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:163
 #: dat/missions/minerva/kex3.lua:425
 msgid "5…"
-msgstr ""
+msgstr "5…"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:164
 #: dat/missions/minerva/kex3.lua:426
 msgid "4…"
-msgstr ""
+msgstr "4…"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:165
 #: dat/missions/minerva/kex3.lua:427
 msgid "3…"
-msgstr ""
+msgstr "3…"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:166
 #: dat/missions/minerva/kex3.lua:428
 msgid "2…"
-msgstr ""
+msgstr "2…"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:167
 #: dat/missions/minerva/kex3.lua:429
 msgid "1…"
-msgstr ""
+msgstr "1…"
 
 #. TODO play countdown sound
 #. TODO play sound and cooler text
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:176
 #: dat/missions/minerva/kex3.lua:438
 msgid "FIGHT!"
-msgstr ""
+msgstr "¡LUCHA!"
 
 #. We let them do their thing
 #.
@@ -50391,7 +50256,7 @@ msgstr ""
 #. Metafactions
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:257
 msgid "Combatant"
-msgstr ""
+msgstr "Combatiente"
 
 #. Don't allow talking
 #. Determine position
@@ -50405,7 +50270,7 @@ msgstr ""
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:363
 #, lua-format
 msgid "%.1f seconds"
-msgstr ""
+msgstr "%.1f segundos"
 
 #. Store all the stuff the pilot killed
 #. I'd love to see someone take down a kestrel in a fighter
@@ -50413,7 +50278,7 @@ msgstr ""
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:452
 #, lua-format
 msgid "TOTAL %d (#g+%d#0)"
-msgstr ""
+msgstr "TOTAL %d (#g+%d#0)"
 
 #. TODO add sound
 #. TODO Cooler animation or something
@@ -50426,7 +50291,7 @@ msgstr ""
 #. TODO play sound and cooler text
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:478
 msgid "YOU ARE VICTORIOUS!"
-msgstr ""
+msgstr "¡ERES VICTORIOSO!"
 
 #. shiplog.append( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
 #.
@@ -50442,54 +50307,54 @@ msgstr ""
 
 #: dat/missions/dvaered/gauntlet/gui.lua:14
 msgid "Double Enemies"
-msgstr ""
+msgstr "Enemigos Dobles"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:125
 msgid "Skirmisher"
-msgstr ""
+msgstr "Escaramuzador"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:125
 msgid "Warrior"
-msgstr ""
+msgstr "Guerrero"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:125
 msgid "Warlord"
-msgstr ""
+msgstr "Señor de la Guerra"
 
 #. Outlined fonts
 #. Clear defaults
 #. Window and top details
 #: dat/missions/dvaered/gauntlet/gui.lua:170
 msgid "CRIMSON"
-msgstr ""
+msgstr "CARMESÍ"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:171
 msgid "GAUNTLET"
-msgstr ""
+msgstr "GUANTELETE"
 
 #. Tournament Types
 #: dat/missions/dvaered/gauntlet/gui.lua:177
 msgid "Tournament"
-msgstr ""
+msgstr "Torneo"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:177
 msgid "Challenge"
-msgstr ""
+msgstr "Desafío"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:177
 msgid "Infinity Arena"
-msgstr ""
+msgstr "Arena Infinita"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:177
 msgid "Special"
-msgstr ""
+msgstr "Especial"
 
 #. Tournament Options
 #. Modifier
 #. Close or Cancel
 #: dat/missions/dvaered/gauntlet/gui.lua:198
 msgid "ENTER ARENA"
-msgstr ""
+msgstr "ENTRAR EN ARENA"
 
 #. Load defaults
 #. return nils if cancelled
@@ -69519,7 +69384,7 @@ msgstr ""
 #. landed
 #: dat/missions/pirate/hitman.lua:126 dat/missions/pirate/hitman2.lua:112
 msgid "Mission Complete"
-msgstr ""
+msgstr "Misión Completada"
 
 #: dat/missions/pirate/hitman.lua:126
 msgid ""
@@ -72713,7 +72578,7 @@ msgstr ""
 
 #: dat/missions/shark/sh01_corvette.lua:97
 msgid "Reward"
-msgstr ""
+msgstr "Recompensa"
 
 #: dat/missions/shark/sh01_corvette.lua:97
 msgid ""
@@ -79230,13 +79095,13 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:166
 #: dat/scripts/luatk/core.lua:463 dat/scripts/vntk.lua:74 src/dialogue.c:380
 msgid "Yes"
-msgstr ""
+msgstr "Si"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:156
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:166
 #: dat/scripts/luatk/core.lua:469 dat/scripts/vntk.lua:75 src/dialogue.c:382
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:162
 msgid ""
