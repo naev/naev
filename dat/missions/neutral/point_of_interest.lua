@@ -96,12 +96,12 @@ function enter ()
    path = {}
    local angle = rnd.angle()
    local mpos = pos
-   for i=1,rnd.rnd(13,17) do -- should average 15*375 = 5625 units
-      mpos = mpos + vec2.newP( 250+250*rnd.rnd(), angle )
-      angle = angle + rnd.sigma()
+   for i=1,rnd.rnd(13,17) do -- should average 15*5505 = 8250 units
+      mpos = mpos + vec2.newP( 400+300*rnd.rnd(), angle )
+      angle = angle + 1.3*rnd.sigma()
       table.insert( path, mpos )
    end
-   goal = mpos + vec2.newP( 250+250*rnd.rnd(), angle )
+   goal = mpos + vec2.newP( 300+400*rnd.rnd(), angle )
 
    system.mrkAdd( pos, _("Point of Interest") )
 
