@@ -51,7 +51,7 @@ function create ()
          } )
       end
    end
-   add_unique_reward( "Ion Cannon MK1" )
+   add_unique_reward( "Laser Cannon MK1" )
 
    -- Choose a random reward and stick to it
    mem.reward = reward_list[ rnd.rnd(1,#reward_list) ]
@@ -64,8 +64,8 @@ function create ()
    misn.setDesc(fmt.f(_([[A point of interest has been found in the {sys} system. It is not clear what can be foound, however, it warrants investigation. You should bring an outfit that can perform scans such as a #bPulse Scanner#0.
 
 #nEstimated Risk:#0 {risk}
-#nEstimated Reward:#0 {reward}]])),
-      {sys=mem.sys, risk=riskstr, reward=rewardstr} )
+#nEstimated Reward:#0 {reward}]]),
+      {sys=mem.sys, risk=riskstr, reward=rewardstr} ) )
 
    misn.markerAdd( mem.sys, "low" )
 
@@ -161,10 +161,11 @@ function heartbeat ()
       player.msg(_("You have found something!"),true)
 
       -- TODO something more interesting
-      local p = pilot.add( "Mule", "Derelict" )
+      local p = pilot.add( "Mule", "Derelict", goal )
       p:rename(_("Pristine Derelict"))
       p:disable()
       p:setInvincible()
+      p:setHilight()
       hook.pilot( p, "board", "board" )
       return
    end
@@ -172,7 +173,7 @@ function heartbeat ()
    timer = hook.timer( 1, "heartbeat" )
 end
 
-function board ()
+function board( p )
    vn.clear()
    vn.scene()
    vn.sfx( der.sfx.board )
@@ -197,5 +198,6 @@ function board ()
       player.outfitAdd( mem.reward.value )
    end
 
+   p:setHilight(false)
    player.unboard()
 end

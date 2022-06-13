@@ -3,12 +3,13 @@
 --]]
 local poi = {}
 
-function poi.setup( system, risk, reward )
+function poi.setup( sys, risk, reward )
+   sys = system.get( sys )
    if var.peek("_poi_system") ~= nil or var.peek("_poi_risk") ~= nil or var.peek("_poi_reward") ~= nil then
       warn(_("Point of Interest variables being overwritten!"))
    end
 
-   var.push( "_poi_system", system:nameRaw() )
+   var.push( "_poi_system", sys:nameRaw() )
    var.push( "_poi_risk", risk )
    var.push( "_poi_reward", reward )
 end
