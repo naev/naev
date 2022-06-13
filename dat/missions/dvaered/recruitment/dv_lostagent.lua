@@ -1,6 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dvaered Delivery">
+ <unique />
  <avail>
   <priority>2</priority>
   <chance>30</chance>
