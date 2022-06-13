@@ -1,13 +1,13 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Supplies for Antlejos">
- <avail>
+
   <priority>4</priority>
   <chance>350</chance>
   <location>Computer</location>
   <spob>Antlejos V</spob>
   <done>Terraforming Antlejos 5</done>
- </avail>
+
  <notes>
   <campaign>Terraforming Antlejos</campaign>
  </notes>

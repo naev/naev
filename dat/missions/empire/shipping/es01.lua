@@ -2,14 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Empire Shipping 2">
  <unique />
- <avail>
+
   <priority>2</priority>
   <cond>faction.playerStanding("Empire") &gt;= 0 and faction.playerStanding("Dvaered") &gt;= 0 and faction.playerStanding("FLF") &lt; 10</cond>
   <chance>50</chance>
   <done>Empire Shipping 1</done>
   <location>Bar</location>
   <spob>Halir</spob>
- </avail>
+
  <notes>
   <campaign>Empire Shipping</campaign>
  </notes>

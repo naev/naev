@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="A Shark Bites">
  <unique />
- <avail>
+
   <priority>3</priority>
   <cond>spob.cur() ~= spob.get("Ulios") and player.numOutfit("Mercenary License") &gt; 0</cond>
   <chance>5</chance>
@@ -16,7 +16,7 @@
   <faction>Soromid</faction>
   <faction>Traders Guild</faction>
   <faction>Za'lek</faction>
- </avail>
+
  <notes>
   <campaign>Nexus show their teeth</campaign>
   <tier>3</tier>

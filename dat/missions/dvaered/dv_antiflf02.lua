@@ -2,13 +2,13 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Lure out the FLF">
  <unique />
- <avail>
+
   <priority>2</priority>
   <chance>10</chance>
   <location>Bar</location>
   <cond>var.peek("flfbase_intro") == 1</cond>
   <faction>Dvaered</faction>
- </avail>
+
  <notes>
   <done_misn name="Take the Dvaered crew home"/>
   <done_misn name="Deal with the FLF agent">If you deliver Gregar to the Dvaered</done_misn>

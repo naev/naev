@@ -2,13 +2,13 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Advanced Nebula Research">
  <unique />
- <avail>
+
   <priority>4</priority>
   <done>Novice Nebula Research</done>
   <chance>100</chance>
   <location>Bar</location>
   <spob>Vilati Vilata</spob>
- </avail>
+
  <notes>
   <campaign>Nebula Research</campaign>
  </notes>

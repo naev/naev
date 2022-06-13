@@ -2,11 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Black Cat">
  <unique />
- <avail>
+
   <priority>4</priority>
   <chance>0</chance>
   <location>None</location>
- </avail>
+
  <notes>
   <tier>1</tier>
  </notes>

@@ -2,11 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="DIY Nerds">
  <unique />
- <avail>
+
   <priority>4</priority>
   <chance>2</chance>
   <location>Bar</location>
- </avail>
+
  <notes>
   <tier>1</tier>
  </notes>

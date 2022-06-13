@@ -1,13 +1,13 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Smuggling">
- <avail>
+
   <priority>4</priority>
   <cond>faction.playerStanding("Pirate") &gt;= -100</cond>
   <chance>960</chance>
   <location>Computer</location>
   <done>Pirate Smuggle Cake</done>
- </avail>
+
  <notes/>
 </mission>
 --]]

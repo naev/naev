@@ -2,14 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Assault on Haleb">
  <unique />
- <avail>
+
   <priority>2</priority>
   <chance>30</chance>
   <done>Alliance of Inconvenience</done>
   <location>Bar</location>
   <faction>FLF</faction>
   <cond>faction.playerStanding("FLF") &gt;= 80</cond>
- </avail>
+
  <notes>
   <campaign>Save the Frontier</campaign>
  </notes>

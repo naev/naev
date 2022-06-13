@@ -2,13 +2,13 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Expert Nebula Research">
  <unique />
- <avail>
+
   <priority>4</priority>
   <done>Shielding Prototype Funding</done>
   <chance>100</chance>
   <location>Bar</location>
   <spob>Jorla</spob>
- </avail>
+
  <tags>
   <tag>zlk_cap_ch01_med</tag>
  </tags>

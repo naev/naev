@@ -2,14 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Assault">
   <unique />
-  <avail>
+
    <priority>3</priority>
    <done>The Patrol</done>
    <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
    <chance>100</chance>
    <location>Bar</location>
    <spob>The Wringer</spob>
-  </avail>
+
   <notes>
    <campaign>Heretic</campaign>
   </notes>

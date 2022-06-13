@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Smuggle Cake">
  <unique />
- <avail>
+
   <priority>3</priority>
   <chance>20</chance>
   <location>Bar</location>
   <cond>require("common.pirate").systemPresence() &gt; 0</cond>
- </avail>
+
  <notes>
   <tier>1</tier>
  </notes>

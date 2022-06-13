@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Stealing ships">
- <avail>
+
   <priority>4</priority>
   <chance>10</chance>
   <location>Bar</location>
@@ -11,7 +11,7 @@
   <faction>Raven Clan</faction>
   <faction>Dreamer Clan</faction>
   <faction>Pirate</faction>
- </avail>
+
  <notes>
   <tier>2</tier>
  </notes>

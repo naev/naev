@@ -2,14 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dvaered Diplomacy">
  <unique />
- <avail>
+
   <priority>2</priority>
   <chance>30</chance>
   <done>Dvaered Escape</done>
   <location>Bar</location>
   <faction>Dvaered</faction>
   <cond>var.peek("dv_pirate_debt") == false</cond>
- </avail>
+
  <notes>
   <campaign>Frontier Invasion</campaign>
   <done_evt name="Repay General Klank"/>

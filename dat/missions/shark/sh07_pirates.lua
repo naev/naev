@@ -2,14 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Last Detail">
  <unique />
- <avail>
+
   <priority>3</priority>
   <done>A Journey To Arandon</done>
   <chance>50</chance>
   <location>Bar</location>
   <spob>Darkshed</spob>
   <cond>not diff.isApplied( "flf_dead" )</cond>
- </avail>
+
  <notes>
   <campaign>Nexus show their teeth</campaign>
  </notes>

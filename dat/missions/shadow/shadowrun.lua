@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Shadowrun">
  <unique />
- <avail>
+
   <priority>3</priority>
   <chance>20</chance>
   <location>Bar</location>
   <cond>system.get("Klantar"):jumpDist() &lt; 3</cond>
- </avail>
+
  <notes>
   <campaign>Shadow</campaign>
  </notes>

@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Cargo Rush">
- <avail>
+
   <priority>5</priority>
   <chance>960</chance>
   <location>Computer</location>
@@ -16,7 +16,7 @@
   <faction>Thurion</faction>
   <faction>Traders Guild</faction>
   <faction>Za'lek</faction>
- </avail>
+
  <notes>
   <tier>1</tier>
  </notes>

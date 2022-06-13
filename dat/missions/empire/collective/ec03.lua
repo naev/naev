@@ -2,14 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Collective Distraction">
   <unique />
-  <avail>
+
    <priority>2</priority>
    <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <done>Collective Espionage 2</done>
    <chance>100</chance>
    <location>Bar</location>
    <spob>Omega Station</spob>
-  </avail>
+
   <notes>
    <campaign>Collective</campaign>
    <tier>3</tier>

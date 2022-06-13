@@ -2,13 +2,13 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Maikki's Father 2">
  <unique />
- <avail>
+
   <priority>4</priority>
   <chance>100</chance>
   <location>Bar</location>
   <spob>Minerva Station</spob>
   <done>Maikki's Father 1</done>
- </avail>
+
  <notes>
   <campaign>Minerva</campaign>
  </notes>

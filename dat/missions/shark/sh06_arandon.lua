@@ -2,14 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="A Journey To Arandon">
  <unique />
- <avail>
+
   <priority>3</priority>
   <done>The FLF Contact</done>
   <chance>100</chance>
   <location>Bar</location>
   <spob>Darkshed</spob>
   <cond>not diff.isApplied( "flf_dead" )</cond>
- </avail>
+
  <notes>
   <campaign>Nexus show their teeth</campaign>
  </notes>

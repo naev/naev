@@ -2,13 +2,13 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Minerva Pirates 4">
  <unique />
- <avail>
+
   <priority>4</priority>
   <chance>100</chance>
   <location>Bar</location>
   <spob>Minerva Station</spob>
   <done>Minerva Pirates 3</done>
- </avail>
+
  <notes>
   <campaign>Minerva</campaign>
   <done_evt name="Chicken Rendezvous" />

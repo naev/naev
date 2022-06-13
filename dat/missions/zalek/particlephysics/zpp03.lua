@@ -2,13 +2,13 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Za'lek Particle Physics 3">
  <unique />
- <avail>
+
   <priority>4</priority>
   <chance>100</chance>
   <spob>Katar I</spob>
   <location>Bar</location>
   <done>Za'lek Particle Physics 2</done>
- </avail>
+
  <notes>
   <campaign>Za'lek Particle Physics</campaign>
  </notes>

@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Rogue FLF">
-  <avail>
+
    <priority>4</priority>
    <chance>550</chance>
    <done>The FLF Split</done>
@@ -9,7 +9,7 @@
    <faction>FLF</faction>
    <faction>Frontier</faction>
    <cond>not diff.isApplied( "flf_dead" )</cond>
-  </avail>
+
  </mission>
  --]]
 --[[

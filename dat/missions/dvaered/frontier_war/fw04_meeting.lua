@@ -2,13 +2,13 @@
 <?xml version='1.0' encoding='utf8'?>
  <mission name="Dvaered Meeting">
   <unique />
-  <avail>
+
    <priority>2</priority>
    <chance>25</chance>
    <done>Dvaered Diplomacy</done>
    <location>Bar</location>
    <faction>Dvaered</faction>
-  </avail>
+
   <notes>
    <campaign>Frontier Invasion</campaign>
   </notes>

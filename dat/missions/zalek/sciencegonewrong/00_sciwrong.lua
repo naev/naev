@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The one with the Shopping">
  <unique />
- <avail>
+
   <priority>4</priority>
   <chance>10</chance>
   <location>Bar</location>
   <faction>Za'lek</faction>
- </avail>
+
  <notes>
   <tier>2</tier>
  </notes>

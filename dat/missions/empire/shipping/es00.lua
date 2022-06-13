@@ -2,14 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Empire Shipping 1">
  <unique />
- <avail>
+
   <priority>2</priority>
   <cond>faction.playerStanding("Empire") &gt;= 0 and faction.playerStanding("Dvaered") &gt;= 0 and faction.playerStanding("FLF") &lt; 10</cond>
   <chance>35</chance>
   <done>Frontier Long Distance Recruitment</done>
   <location>Bar</location>
   <faction>Empire</faction>
- </avail>
+
  <notes>
   <campaign>Empire Shipping</campaign>
   <tier>2</tier>

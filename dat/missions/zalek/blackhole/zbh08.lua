@@ -2,13 +2,13 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Za'lek Black Hole 8">
  <unique />
- <avail>
+
   <priority>4</priority>
   <chance>100</chance>
   <spob>Research Post Sigma-13</spob>
   <location>Bar</location>
   <done>Za'lek Black Hole 7</done>
- </avail>
+
  <notes>
   <campaign>Za'lek Black Hole</campaign>
  </notes>

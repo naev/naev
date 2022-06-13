@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Racing Skills 1">
   <unique />
- <avail>
+
   <priority>3</priority>
   <cond>player.pilot():ship():class() == "Yacht" and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
   <chance>10</chance>
   <location>Bar</location>
- </avail>
+
 </mission>
 --]]
 --[[

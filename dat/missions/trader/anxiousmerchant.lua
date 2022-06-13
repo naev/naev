@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Anxious Merchant">
- <avail>
+
   <priority>3</priority>
   <chance>5</chance>
   <location>Bar</location>
@@ -14,7 +14,7 @@
   <faction>Soromid</faction>
   <faction>Traders Guild</faction>
   <faction>Za'lek</faction>
- </avail>
+
  <notes>
   <tier>2</tier>
  </notes>

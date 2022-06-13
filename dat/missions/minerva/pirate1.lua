@@ -2,13 +2,13 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Minerva Pirates 1">
  <unique />
- <avail>
+
   <priority>4</priority>
   <chance>100</chance>
   <location>Bar</location>
   <spob>Minerva Station</spob>
   <cond>var.peek("minerva_altercation_probability")~=nil</cond>
- </avail>
+
  <notes>
   <campaign>Minerva</campaign>
   <requires name="Minerva Altercation 1" />

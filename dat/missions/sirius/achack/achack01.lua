@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Sirian Bounty">
   <unique />
-  <avail>
+
    <priority>3</priority>
    <spob>The Wringer</spob>
    <chance>50</chance>
    <location>Bar</location>
-  </avail>
+
   <notes>
    <campaign>Academy Hack</campaign>
   </notes>

@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Alive Bounty">
- <avail>
+
   <priority>4</priority>
   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
   <chance>360</chance>
@@ -13,7 +13,7 @@
   <faction>Sirius</faction>
   <faction>Soromid</faction>
   <faction>Za'lek</faction>
- </avail>
+
  <notes>
   <tier>3</tier>
  </notes>

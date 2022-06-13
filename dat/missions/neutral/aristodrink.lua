@@ -2,11 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Drinking Aristocrat">
  <unique />
- <avail>
+
   <priority>4</priority>
   <chance>5</chance>
   <location>Bar</location>
- </avail>
+
  <notes>
   <tier>1</tier>
  </notes>

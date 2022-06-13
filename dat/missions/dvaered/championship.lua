@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Dvaered Championship">
   <unique />
-  <avail>
+
    <priority>4</priority>
    <chance>50</chance>
    <location>Bar</location>
    <spob>Dvaer Prime</spob>
-  </avail>
+
   <notes>
    <tier>3</tier>
   </notes>

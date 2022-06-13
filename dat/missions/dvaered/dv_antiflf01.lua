@@ -2,11 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Take the Dvaered crew home">
   <unique />
-  <avail>
+
    <priority>2</priority>
    <chance>100</chance>
    <location>None</location>
-  </avail>
+
   <notes>
    <done_evt name="FLF/DV Derelicts">If you choose to help the Dvaered</done_evt>
    <campaign>Doom the FLF</campaign>

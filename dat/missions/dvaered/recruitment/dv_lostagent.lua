@@ -2,14 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dvaered Delivery">
  <unique />
- <avail>
+
   <priority>2</priority>
   <chance>30</chance>
   <location>Bar</location>
   <faction>Dvaered</faction>
   <done>Dvaered Census 0</done>
   <cond>faction.playerStanding("Dvaered") &gt;= 20 and var.peek("es_cargo") == true and player.numOutfit("Mercenary License") &gt; 0 and (not diff.isApplied("flf_dead"))</cond>
- </avail>
+
  <notes>
   <tier>3</tier>
   <campaign>Dvaered Recruitment</campaign>

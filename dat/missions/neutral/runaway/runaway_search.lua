@@ -2,13 +2,13 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Search for Cynthia">
   <unique />
- <avail>
+
   <priority>4</priority>
   <done>The Runaway</done>
   <chance>11</chance>
   <location>Bar</location>
   <system>Goddard</system>
- </avail>
+
 </mission>
 --]]
 --[[

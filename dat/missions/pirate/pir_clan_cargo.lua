@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Clan Shipping">
- <avail>
+
   <priority>2</priority>
   <cond>faction.playerStanding("Pirate") &gt;= 20 and var.peek("ps_misn") ~= nil and var.peek("ps_misn") &gt;= 2</cond>
   <chance>10</chance>
@@ -11,7 +11,7 @@
   <faction>Raven Clan</faction>
   <faction>Dreamer Clan</faction>
   <faction>Pirate</faction>
- </avail>
+
  <notes>
   <tier>2</tier>
  </notes>

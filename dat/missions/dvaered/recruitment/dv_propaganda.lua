@@ -1,13 +1,13 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dvaered Propaganda">
- <avail>
+
   <priority>3</priority>
   <chance>150</chance>
   <location>Computer</location>
   <faction>Dvaered</faction>
   <cond>var.peek("dp_available") == true</cond>
- </avail>
+
  <notes>
   <tier>2</tier>
   <campaign>Dvaered Recruitment</campaign>

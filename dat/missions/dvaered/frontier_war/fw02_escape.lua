@@ -2,14 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dvaered Escape">
  <unique />
- <avail>
+
   <priority>2</priority>
   <chance>10</chance>
   <done>Dvaered Sabotage</done>
   <location>Bar</location>
   <cond>var.peek("loyal2klank") == true</cond>
   <faction>Dvaered</faction>
- </avail>
+
  <notes>
   <campaign>Frontier Invasion</campaign>
   <done_evt name="Betray General Klank">If you don't betray</done_evt>

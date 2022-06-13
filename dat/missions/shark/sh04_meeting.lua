@@ -2,13 +2,13 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Meeting">
  <unique />
- <avail>
+
   <priority>3</priority>
   <done>Invitation</done>
   <chance>100</chance>
   <location>Bar</location>
   <spob>Darkshed</spob>
- </avail>
+
  <notes>
   <campaign>Nexus show their teeth</campaign>
  </notes>

@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Sharkman Is Back">
  <unique />
- <avail>
+
   <priority>3</priority>
   <done>A Shark Bites</done>
   <chance>10</chance>
@@ -16,7 +16,7 @@
   <faction>Soromid</faction>
   <faction>Traders Guild</faction>
   <faction>Za'lek</faction>
- </avail>
+
  <notes>
   <campaign>Nexus show their teeth</campaign>
  </notes>

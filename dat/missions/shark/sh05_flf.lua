@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The FLF Contact">
  <unique />
- <avail>
+
   <priority>3</priority>
   <done>The Meeting</done>
   <chance>5</chance>
@@ -17,7 +17,7 @@
   <faction>Traders Guild</faction>
   <faction>Za'lek</faction>
   <cond>not diff.isApplied( "flf_dead" )</cond>
- </avail>
+
  <notes>
   <campaign>Nexus show their teeth</campaign>
  </notes>

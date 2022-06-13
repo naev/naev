@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Za'lek Shipping Delivery">
  <unique />
- <avail>
+
   <priority>4</priority>
   <chance>10</chance>
   <faction>Za'lek</faction>
   <location>Bar</location>
- </avail>
+
  <notes>
   <tier>1</tier>
  </notes>

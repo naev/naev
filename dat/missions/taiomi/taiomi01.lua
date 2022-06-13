@@ -2,10 +2,10 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Taiomi 1">
  <unique />
- <avail>
+
   <chance>0</chance>
   <location>None</location>
- </avail>
+
  <notes>
   <campaign>Taiomi</campaign>
   <tier>2</tier>

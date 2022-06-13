@@ -2,14 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The one with the Visit">
  <unique />
- <avail>
+
   <priority>4</priority>
   <done>The one with the Shopping</done>
   <chance>100</chance>
   <location>Bar</location>
   <faction>Za'lek</faction>
   <cond>spob.cur() == require("common.sciencegonewrong").getCenterOperations()</cond>
- </avail>
+
 </mission>
 --]]
 --[[

@@ -2,11 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Space Family">
  <unique />
- <avail>
+
   <priority>4</priority>
   <chance>100</chance>
   <location>None</location>
- </avail>
+
  <notes>
   <done_evt name="Shipwreck">If you make the mistake to help Harrus</done_evt>
  </notes>

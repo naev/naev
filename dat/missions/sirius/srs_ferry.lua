@@ -1,13 +1,13 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Sirius Pilgrimage Transport">
- <avail>
+
   <priority>3</priority>
   <chance>266</chance>
   <cond>faction.playerStanding("Sirius") &gt; 5</cond>
   <location>Computer</location>
   <faction>Sirius</faction>
- </avail>
+
  <notes>
   <tier>1</tier>
  </notes>

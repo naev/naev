@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Hit">
- <avail>
+
   <priority>3</priority>
   <chance>1260</chance>
   <location>Computer</location>
@@ -13,7 +13,7 @@
   <faction>Independent</faction>
   <faction>FLF</faction>
   <done>Pirate Hit Intro</done>
- </avail>
+
  <notes>
   <tier>3</tier>
  </notes>

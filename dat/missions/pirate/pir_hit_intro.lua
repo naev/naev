@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Hit Intro">
  <unique />
- <avail>
+
   <priority>3</priority>
   <cond>player.numOutfit("Mercenary License") &gt; 0 or spob.cur():blackmarket() or spob.cur():tags().criminal ~= nil</cond>
   <chance>100</chance>
@@ -13,7 +13,7 @@
   <faction>Dreamer Clan</faction>
   <faction>Pirate</faction>
   <faction>Independent</faction>
- </avail>
+
  <notes>
   <tier>3</tier>
  </notes>

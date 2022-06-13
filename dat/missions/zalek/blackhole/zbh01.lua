@@ -2,14 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Za'lek Black Hole 1">
  <unique />
- <avail>
+
   <priority>4</priority>
   <chance>20</chance>
   <faction>Za'lek</faction>
   <cond>faction.playerStanding("Za'lek") &gt;= 0</cond>
   <location>Bar</location>
   <done>Za'lek Particle Physics 6</done>
- </avail>
+
  <notes>
   <campaign>Za'lek Black Hole</campaign>
  </notes>

@@ -2,14 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The FLF Split">
   <unique />
-  <avail>
+
    <priority>2</priority>
    <chance>30</chance>
    <done>Assault on Haleb</done>
    <location>Bar</location>
    <faction>FLF</faction>
    <cond>faction.playerStanding("FLF") &gt;= 90</cond>
-  </avail>
+
   <notes>
    <campaign>Save the Frontier</campaign>
   </notes>

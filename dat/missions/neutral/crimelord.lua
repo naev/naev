@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Crimelord">
  <unique />
- <avail>
+
   <priority>3</priority>
   <chance>10</chance>
   <location>Bar</location>
   <cond>system.get("Ogat"):jumpDist() == 4 and player.jumps() &gt;= 4</cond>
- </avail>
+
  <notes>
   <tier>2</tier>
  </notes>

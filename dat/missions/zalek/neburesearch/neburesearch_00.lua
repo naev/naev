@@ -2,12 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Novice Nebula Research">
  <unique />
- <avail>
+
   <priority>4</priority>
   <chance>100</chance>
   <location>Bar</location>
   <spob>Jorla</spob>
- </avail>
+
  <notes>
   <campaign>Nebula Research</campaign>
   <tier>2</tier>

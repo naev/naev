@@ -2,13 +2,13 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Alliance of Inconvenience">
  <unique />
- <avail>
+
   <priority>2</priority>
   <chance>30</chance>
   <done>Diversion from Haleb</done>
   <location>Bar</location>
   <faction>FLF</faction>
- </avail>
+
  <notes>
   <campaign>Save the Frontier</campaign>
  </notes>

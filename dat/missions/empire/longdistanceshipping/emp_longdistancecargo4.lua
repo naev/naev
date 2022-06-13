@@ -2,14 +2,14 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Frontier Long Distance Recruitment">
  <unique />
- <avail>
+
   <priority>4</priority>
   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
   <chance>75</chance>
   <done>Za'lek Long Distance Recruitment</done>
   <location>Bar</location>
   <faction>Empire</faction>
- </avail>
+
  <notes>
   <campaign>Empire Shipping</campaign>
  </notes>
