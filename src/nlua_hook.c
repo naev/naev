@@ -125,10 +125,18 @@ static unsigned int hookL_generic( lua_State *L, const char* stack, double ms, i
  */
 int nlua_loadHook( nlua_env env, int full_api )
 {
+   (void) full_api;
+   (void) hookL_methods_trigger;
+   nlua_register(env, "hook", hookL_methods, 0);
+   /* Since "hook" gets cached, the outfits load it without full_api and all
+    * events/missions inherit that. Would need a way to store them
+    * separately... */
+   /*
    if (full_api)
       nlua_register(env, "hook", hookL_methods, 0);
    else
       nlua_register(env, "hook", hookL_methods_trigger, 0);
+   */
    return 0;
 }
 
