@@ -16,7 +16,7 @@ local function render( sp, x, y, z )
    alert_shader:send( "u_time", d.timer )
    alert_shader:send( "u_size", d.size )
 
-   local s = d.size / z
+   local s = d.size * z
    local old_shader = lg.getShader()
    lg.setShader( alert_shader )
    lg.setColor( d.col )
