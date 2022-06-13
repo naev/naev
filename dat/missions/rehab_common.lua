@@ -37,6 +37,15 @@ Cost: {credits}]]), {fct=mem.fac, credits=fmt.credits(mem.fine)}))
     misn.setReward(_("None"))
 end
 
+local function setosd ()
+    local osd_msg = { n_(
+       "You need to gain %d more reputation",
+       "You need to gain %d more reputation",
+       -mem.rep
+    ):format(-mem.rep) }
+    misn.osdCreate(fmt.f(_("{fct} Rehabilitation"), {fct=mem.fac}), osd_msg)
+end
+
 function accept()
     if player.credits() < mem.fine then
         vntk.msg("", fmt.f(_("You don't have enough money. You need at least {credits} to buy a cessation of hostilities with this faction."), {credits=fmt.credits(mem.fine)}))
@@ -50,12 +59,7 @@ While this agreement is active, your reputation will not change, but if you cont
     mem.fac:modPlayerRaw(-mem.rep)
 
     misn.accept()
-    local osd_msg = { n_(
-       "You need to gain %d more reputation",
-       "You need to gain %d more reputation",
-       -mem.rep
-    ):format(-mem.rep) }
-    misn.osdCreate(fmt.f(_("{fct} Rehabilitation"), {fct=mem.fac}), osd_msg)
+    setosd()
 
     mem.standhook = hook.standing("standing")
 
@@ -69,8 +73,21 @@ end
 
 -- Standing hook. Manages faction reputation, keeping it at 0 until it goes positive.
 function standing( hookfac, delta )
+
     if hookfac == mem.fac then
         if delta >= 0 then
+            -- Be ware of the fake transponder!
+            local pp = player.pilot()
+            local hasft = false
+            local ft = outfit.get("Fake Transponder")
+            for k,v in ipairs(pp:outfits()) do
+               if v==ft then
+                  hasft = true
+                  break
+               end
+            end
+            if hasft then return end -- When fake transponder is equipped, we ignore all positive stuff
+
             mem.rep = mem.rep + delta
             if mem.rep >= 0 then
                 -- The player has successfully erased his criminal record.
@@ -82,12 +99,7 @@ function standing( hookfac, delta )
 
             mem.excess = mem.excess + delta
             mem.fac:modPlayerRaw(-delta)
-            local osd_msg = { n_(
-               "You need to gain %d more reputation",
-               "You need to gain %d more reputation",
-               -mem.rep
-            ):format(-mem.rep) }
-            misn.osdCreate(fmt.f(_("{fct} Rehabilitation"), {fct=mem.fac}), osd_msg)
+            setosd()
         else
             mem.excess = mem.excess + delta
             if mem.excess < 0 or mem.fac:playerStanding() < 0 then
