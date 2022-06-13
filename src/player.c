@@ -731,16 +731,6 @@ void player_cleanup (void)
    /* Clear up info buttons. */
    info_buttonClear();
 
-   /* clean up the stack */
-   for (int i=0; i<array_size(player_stack); i++) {
-      pilot_rmFlag( player_stack[i].p, PILOT_NOFREE );
-      pilot_free( player_stack[i].p );
-      free( player_stack[i].acquired );
-   }
-   array_free(player_stack);
-   player_stack = NULL;
-   /* nothing left */
-
    array_free(player_outfits);
    player_outfits  = NULL;
 
@@ -761,6 +751,16 @@ void player_cleanup (void)
 
    /* Purge the pilot stack, and player.p. */
    pilots_cleanAll();
+
+   /* clean up the stack */
+   for (int i=0; i<array_size(player_stack); i++) {
+      pilot_rmFlag( player_stack[i].p, PILOT_NOFREE );
+      pilot_free( player_stack[i].p );
+      free( player_stack[i].acquired );
+   }
+   array_free(player_stack);
+   player_stack = NULL;
+   /* nothing left */
 
    /* Reset some player stuff. */
    player_creds   = 0;
