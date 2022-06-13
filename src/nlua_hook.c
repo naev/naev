@@ -912,7 +912,6 @@ static int hookL_mission_done( lua_State *L )
  *
  *    @luatparam string hookname Name to give the hook. This should not overlap with standard names.
  *    @luatparam string funcname Name of function to run when hook is triggered.
- *    @luaparam arg Argument to pass to hook.
  *    @luatreturn number Hook identifier.
  * @see safe
  * @luafunc custom
@@ -927,6 +926,8 @@ static int hookL_custom( lua_State *L )
 
 /**
  * @brief Triggers manually a hook stack. This is run deferred (next frame). Meant mainly to be used with hook.custom, but can work with other hooks too (if you know what you are doing).
+ *
+ * @note This will trigger all hooks waiting on a stack.
  *
  * @usage hook.trigger( "my_event", data ) -- data will be passed to the receiving end
  *
