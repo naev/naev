@@ -1169,7 +1169,7 @@ static int playerL_outfits( lua_State *L )
  * @usage q = player.numOutfit( "Laser Cannon MK0", true ) -- Number of 'Laser Cannon MK0' the player owns (unequipped)
  *
  *    @luatparam string name Name of the outfit to remove.
- *    @luatparam[opt] bool unequipped_only Whether or not to check only the unequipped outfits and not equipped outfits. Defaults to false.
+ *    @luatparam[opt=false] bool unequipped_only Whether or not to check only the unequipped outfits and not equipped outfits. Defaults to false.
  *    @luatreturn number The quantity the player owns.
  * @luafunc numOutfit
  */
