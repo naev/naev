@@ -2,13 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Minerva Pirates 3">
  <unique />
-
   <priority>4</priority>
   <chance>100</chance>
   <location>Bar</location>
   <spob>Minerva Station</spob>
   <done>Minerva Pirates 2</done>
-
  <notes>
   <campaign>Minerva</campaign>
   <provides name="Spa Propaganda" />

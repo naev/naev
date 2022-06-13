@@ -1,7 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Commodity Run">
-
   <priority>5</priority>
   <cond>false or var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
   <chance>90</chance>
@@ -11,7 +10,6 @@
   <faction>Raven Clan</faction>
   <faction>Dreamer Clan</faction>
   <faction>Pirate</faction>
-
  <notes>
   <tier>1</tier>
  </notes>

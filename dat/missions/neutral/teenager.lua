@@ -2,13 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The macho teenager">
  <unique />
-
   <priority>4</priority>
   <chance>5</chance>
   <location>Bar</location>
   <faction>Dvaered</faction>
   <cond>player.numOutfit("Mercenary License") &gt; 0 and spob.cur():class() ~= "0" and spob.cur():class() ~= "1" and spob.cur():class() ~= "2" and spob.cur():class() ~= "3"</cond>
-
  <notes>
   <tier>3</tier>
  </notes>

@@ -2,10 +2,8 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Tutorial">
  <unique />
-
   <priority>1</priority>
   <location>None</location>
-
 </mission>
 --]]
 --[[

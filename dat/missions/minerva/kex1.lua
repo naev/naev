@@ -2,12 +2,10 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Kex's Freedom 1">
  <unique />
-
   <location>Bar</location>
   <chance>100</chance>
   <spob>Minerva Station</spob>
   <cond>player.evtDone("Chicken Rendezvous")</cond>
-
  <notes>
   <campaign>Minerva</campaign>
   <done_evt name="Chicken Rendezvous" />

@@ -1,7 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Trader Escort">
-
   <priority>5</priority>
   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
   <chance>560</chance>
@@ -15,7 +14,6 @@
   <faction>Soromid</faction>
   <faction>Traders Guild</faction>
   <faction>Za'lek</faction>
-
  <notes>
   <tier>3</tier>
  </notes>

@@ -2,12 +2,10 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Deliver Love">
  <unique />
-
   <priority>4</priority>
   <chance>50</chance>
   <location>Bar</location>
   <spob>Zeo</spob>
-
  <notes>
   <tier>1</tier>
  </notes>

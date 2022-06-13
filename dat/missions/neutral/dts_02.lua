@@ -2,7 +2,6 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Defend the System 3">
  <unique />
-
   <priority>4</priority>
   <chance>3</chance>
   <done>Defend the System 2</done>
@@ -12,7 +11,6 @@
   <faction>Goddard</faction>
   <faction>Independent</faction>
   <faction>Soromid</faction>
-
 </mission>
 --]]
 --[[

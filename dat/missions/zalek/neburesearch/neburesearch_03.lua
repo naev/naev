@@ -2,13 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Substitute Speaker">
  <unique />
-
   <priority>4</priority>
   <done>Emergency of Immediate Inspiration</done>
   <chance>100</chance>
   <location>Bar</location>
   <spob>Jorla</spob>
-
  <notes>
   <campaign>Nebula Research</campaign>
  </notes>

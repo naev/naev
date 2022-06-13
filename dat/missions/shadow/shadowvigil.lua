@@ -2,11 +2,9 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Shadow Vigil">
  <unique />
-
   <priority>3</priority>
   <chance>100</chance>
   <location>None</location>
-
  <notes>
   <done_evt name="Shadowcomm">Triggers</done_evt>
   <campaign>Shadow</campaign>

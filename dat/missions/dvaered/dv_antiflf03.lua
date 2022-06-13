@@ -2,13 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Destroy the FLF base!">
  <unique />
-
   <priority>2</priority>
   <chance>10</chance>
   <location>Bar</location>
   <cond>var.peek("flfbase_intro") == 3</cond>
   <faction>Dvaered</faction>
-
  <notes>
   <requires name="The Dvaered know where Sindbad is"/>
   <campaign>Doom the FLF</campaign>

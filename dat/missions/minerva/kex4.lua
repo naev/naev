@@ -2,12 +2,10 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Kex's Freedom 4">
  <unique />
-
   <location>Bar</location>
   <chance>100</chance>
   <spob>Minerva Station</spob>
   <done>Kex's Freedom 3</done>
-
  <notes>
   <campaign>Minerva</campaign>
  </notes>

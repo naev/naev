@@ -2,12 +2,10 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Runaway">
   <unique />
-
   <priority>4</priority>
   <chance>11</chance>
   <location>Bar</location>
   <system>Gamma Polaris</system>
-
  <notes>
   <tier>1</tier>
  </notes>

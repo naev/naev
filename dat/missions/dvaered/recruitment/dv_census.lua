@@ -1,13 +1,11 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dvaered Census">
-
   <priority>3</priority>
   <chance>150</chance>
   <location>Computer</location>
   <faction>Dvaered</faction>
   <done>Dvaered Census 0</done>
-
  <notes>
   <campaign>Dvaered Recruitment</campaign>
  </notes>

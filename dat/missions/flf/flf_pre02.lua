@@ -2,13 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Disrupt a Dvaered Patrol">
  <unique />
-
   <priority>2</priority>
   <chance>100</chance>
   <location>Bar</location>
   <cond>var.peek("flfbase_intro") == 2</cond>
   <spob>Sindbad</spob>
-
  <notes>
   <done_misn name="Deal with the FLF agent">If you return Gregar to Sindbad</done_misn>
   <provides name="The Dvaered know where Sindbad is">If you betray the FLF</provides>

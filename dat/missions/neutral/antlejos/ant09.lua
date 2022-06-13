@@ -2,14 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Terraforming Antlejos 9">
  <unique />
-
   <priority>3</priority>
   <chance>100</chance>
   <location>Bar</location>
   <spob>Antlejos V</spob>
   <cond>require('common.antlejos').unidiffLevel() &gt;= 9</cond>
   <done>Terraforming Antlejos 8</done>
-
  <notes>
   <campaign>Terraforming Antlejos</campaign>
  </notes>

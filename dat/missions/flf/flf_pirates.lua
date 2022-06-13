@@ -1,7 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="FLF Pirate Disturbance">
-
   <priority>4</priority>
   <chance>330</chance>
   <done>Alliance of Inconvenience</done>
@@ -9,7 +8,6 @@
   <faction>FLF</faction>
   <faction>Frontier</faction>
   <cond>not diff.isApplied( "flf_dead" )</cond>
-
 </mission>
 --]]
 --[[

@@ -2,14 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Nebula Satellite">
  <unique />
-
   <priority>4</priority>
   <chance>10</chance>
   <location>Bar</location>
   <faction>Dvaered</faction>
   <faction>Empire</faction>
   <faction>Goddard</faction>
-
  <notes>
   <tier>2</tier>
  </notes>

@@ -2,11 +2,9 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Baron">
  <unique />
-
   <priority>4</priority>
   <chance>100</chance>
   <location>None</location>
-
  <notes>
   <done_evt name="Baroncomm_baron">Triggers</done_evt>
   <campaign>Baron Sauterfeldt</campaign>

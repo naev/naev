@@ -2,11 +2,9 @@
 <?xml version='1.0' encoding='utf8'?>
  <mission name="Dvaered Ballet">
   <unique />
-
    <priority>2</priority>
    <chance>100</chance>
    <location>None</location>
-
   <notes>
    <done_evt name="Strafer's Ceremony">Triggers</done_evt>
    <campaign>Frontier Invasion</campaign>

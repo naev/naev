@@ -2,7 +2,6 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Prince">
  <unique />
-
   <priority>4</priority>
   <done>Baron</done>
   <chance>2</chance>
@@ -11,7 +10,6 @@
   <faction>Dvaered</faction>
   <faction>Goddard</faction>
   <faction>Sirius</faction>
-
  <notes>
   <campaign>Baron Sauterfeldt</campaign>
  </notes>

@@ -2,14 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Collective Extraction">
  <unique />
-
   <priority>2</priority>
   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("emp_commando") ~= nil and time.get() &gt; time.fromnumber( var.peek("emp_commando") )</cond>
   <done>Collective Distraction</done>
   <chance>100</chance>
   <location>Land</location>
   <spob>Omega Station</spob>
-
  <notes>
   <campaign>Collective</campaign>
  </notes>

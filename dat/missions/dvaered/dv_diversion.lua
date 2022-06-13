@@ -2,13 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="A Small Diversion">
  <unique />
-
   <priority>4</priority>
   <cond>faction.playerStanding("Dvaered") &gt; 5</cond>
   <chance>10</chance>
   <location>Bar</location>
   <spob>Doranthex Prime</spob>
-
  <notes>
   <tier>2</tier>
  </notes>

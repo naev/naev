@@ -2,13 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Hitman 2">
  <unique />
-
   <priority>2</priority>
   <chance>10</chance>
   <location>Bar</location>
   <cond>system.cur() == system.get("Alteris")</cond>
   <done>Hitman</done>
-
 </mission>
 --]]
 --[[

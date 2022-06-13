@@ -2,14 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dvaered Long Distance Recruitment">
  <unique />
-
   <priority>4</priority>
   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
   <chance>75</chance>
   <done>Soromid Long Distance Recruitment</done>
   <location>Bar</location>
   <faction>Empire</faction>
-
  <notes>
   <campaign>Empire Shipping</campaign>
  </notes>

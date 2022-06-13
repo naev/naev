@@ -2,12 +2,10 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Hitman">
  <unique />
-
   <priority>2</priority>
   <chance>10</chance>
   <location>Bar</location>
   <cond>system.cur() == system.get("Alteris")</cond>
-
  <notes>
   <tier>3</tier>
  </notes>

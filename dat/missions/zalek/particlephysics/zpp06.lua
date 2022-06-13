@@ -2,13 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Za'lek Particle Physics 6">
  <unique />
-
   <priority>4</priority>
   <chance>100</chance>
   <spob>Katar I</spob>
   <location>Bar</location>
   <done>Za'lek Particle Physics 5</done>
-
  <tags>
   <tag>zlk_cap_ch01_lrg</tag>
  </tags>

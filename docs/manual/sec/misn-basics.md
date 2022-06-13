@@ -14,15 +14,17 @@ The header has to be at the top of the file starting with `--[[` and ending with
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Mission Name">
  <unique />
- <chance>5</chance>
- <location>Bar</location>
- <chapter>[^0]</chapter>
- <spob>Caladan</spob>
- <faction>Empire</faction>
- <system>Delta Pavonis</system>
- <cond>player.credits() &gt; 10e3</cond>
- <done>Another Mission</done>
- <priority>4</priority>
+ <avail>
+  <chance>5</chance>
+  <location>Bar</location>
+  <chapter>[^0]</chapter>
+  <spob>Caladan</spob>
+  <faction>Empire</faction>
+  <system>Delta Pavonis</system>
+  <cond>player.credits() &gt; 10e3</cond>
+  <done>Another Mission</done>
+  <priority>4</priority>
+ </avail>
  <tags>
   <some_random_binary_tag />
  </tags>
@@ -33,11 +35,12 @@ The header has to be at the top of the file starting with `--[[` and ending with
 
 Let us go over the different parameters. First of all, either a `<mission>` or `<event>` node is necessary as the root for either missions (located in `dat/missions/`) or events (located in `dat/events/`). The `name` attribute has to be set to a unique string and will be used to identify the mission.
 
-Next it is possible to identify mission properties, which are almost all optional and set to default values if not specified. The following nodes can be used to control the availability.
+Next it is possible to identify mission properties. In particular, only the `<unique />` property is supported, which indicates the mission can only be completed once. It will not appear again to the same player.
+
+The core of the header lies in the `<avail>` node which includes all the information about mission availability. Most are optional and ignored if not provided. The following nodes can be used to control the availability:
 
 * **chance**: *required field*. indicates the chance that the mission appears. For values over 100, the whole part of dividing the value by 100 indicates how many instances can spawn, and the remainder is the chance of each instance. So, for example, a value of 320 indicates that 3 instances can spawn with 20\% each.
 * **location**: *required field*. indicates where the mission or event can start. It can be one of `none`, `land`, `enter`, `load`, `computer`, or `bar`. Note that not all are supported by both missions and events. More details will be discussed later in this section.
-* **unique**: indicates the mission or event can only be completed once. It will not appear again after completion. Has no value and is defined as `<unique />`.
 * **chapter**: indicates what chapter it can appear in. Note that this is regular expression-powered. Something like `0` will match chapter 0 only, while you can write `[01]` to match either chapter 0 or 1. All chapters except 0 would be `[^0]`, and such. Please refer to a regular expression guide such as [regexr](https://regexr.com/) for more information on how to write regex.
 * **faction**: must match a faction. Multiple can be specified, and only one has to match. In the case of `land`, `computer`, or `bar` locations it refers to the spob faction, while for `enter` locations it refers to the system faction.
 * **spob**: must match a specific spob. Only used for `land`, `computer`, and `bar` locations. Only one can be specified.

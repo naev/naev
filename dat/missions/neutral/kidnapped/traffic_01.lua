@@ -2,7 +2,6 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Lost Brother">
  <unique />
-
   <priority>4</priority>
   <done>Kidnapped</done>
   <chance>12</chance>
@@ -12,7 +11,6 @@
   <faction>Frontier</faction>
   <faction>Goddard</faction>
   <faction>Sirius</faction>
-
  <notes>
   <campaign>Kidnapping</campaign>
  </notes>

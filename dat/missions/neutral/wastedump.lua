@@ -1,7 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Waste Dump">
-
   <priority>9</priority>
   <chance>10</chance>
   <location>Computer</location>
@@ -15,7 +14,6 @@
   <faction>Thurion</faction>
   <faction>Traders Guild</faction>
   <faction>Za'lek</faction>
-
 </mission>
 --]]
 --[[

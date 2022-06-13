@@ -2,14 +2,12 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Operation Cold Metal">
  <unique />
-
   <priority>2</priority>
   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
   <done>Operation Black Trinity</done>
   <chance>100</chance>
   <location>Bar</location>
   <spob>Omega Station</spob>
-
  <tags>
   <tag>emp_cap_ch01_lrg</tag>
  </tags>

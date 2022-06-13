@@ -2,13 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Terraforming Antlejos 5">
  <unique />
-
   <priority>4</priority>
   <chance>100</chance>
   <location>Land</location>
   <spob>Antlejos V</spob>
   <done>Terraforming Antlejos 4</done>
-
  <notes>
   <campaign>Terraforming Antlejos</campaign>
  </notes>

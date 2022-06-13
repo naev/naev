@@ -2,7 +2,6 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Unfair Competition">
  <unique />
-
   <priority>3</priority>
   <done>Sharkman Is Back</done>
   <chance>5</chance>
@@ -15,7 +14,6 @@
   <faction>Soromid</faction>
   <faction>Traders Guild</faction>
   <faction>Za'lek</faction>
-
  <notes>
   <campaign>Nexus show their teeth</campaign>
  </notes>

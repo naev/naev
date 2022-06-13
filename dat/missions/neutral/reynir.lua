@@ -2,7 +2,6 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Hot dogs from space">
  <unique />
-
   <priority>1</priority>
   <chance>2</chance>
   <location>Bar</location>
@@ -15,7 +14,6 @@
            end
            return count &gt; 1
         end)()</cond>
-
  <notes>
   <tier>1</tier>
  </notes>

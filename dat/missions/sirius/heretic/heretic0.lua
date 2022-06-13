@@ -2,13 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Gauntlet">
   <unique />
-
    <priority>3</priority>
    <cond>faction.playerStanding("Nasin") &gt;= 0</cond>
    <chance>50</chance>
    <location>Bar</location>
    <faction>Sirius</faction>
-
   <notes>
    <campaign>Heretic</campaign>
   </notes>

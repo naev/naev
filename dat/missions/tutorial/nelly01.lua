@@ -2,7 +2,6 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Helping Nelly Out 1">
  <unique />
-
   <priority>1</priority>
   <chance>100</chance>
   <cond>require("common.pirate").systemPresence() &lt;= 0 and not player.misnActive("Tutorial")</cond>
@@ -16,7 +15,6 @@
   <faction>Soromid</faction>
   <faction>Za'lek</faction>
   <chapter>[01]</chapter>
-
  <notes>
   <campaign>Tutorial Nelly</campaign>
  </notes>

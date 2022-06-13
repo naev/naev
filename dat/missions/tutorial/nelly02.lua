@@ -2,7 +2,6 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Helping Nelly Out 2">
  <unique />
-
   <priority>1</priority>
   <chance>100</chance>
   <cond>require("common.pirate").systemPresence() &lt;= 0</cond>
@@ -17,7 +16,6 @@
   <faction>Za'lek</faction>
   <done>Helping Nelly Out 1</done>
   <chapter>[01]</chapter>
-
  <notes>
   <campaign>Tutorial Nelly</campaign>
  </notes>

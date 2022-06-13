@@ -2,13 +2,11 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Za'lek Particle Physics 1">
  <unique />
-
   <priority>4</priority>
   <chance>20</chance>
   <faction>Za'lek</faction>
   <location>Bar</location>
   <cond>spob.cur() ~= spob.get("Katar I") and faction.playerStanding("Za'lek") &gt;= 0</cond>
-
  <notes>
   <campaign>Za'lek Particle Physics</campaign>
   <tier>1</tier>

@@ -1,7 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Convoy Raid">
-
   <priority>4</priority>
   <cond>faction.playerStanding("Pirate") &gt;= -20</cond>
   <chance>460</chance>
@@ -11,7 +10,6 @@
   <faction>Raven Clan</faction>
   <faction>Dreamer Clan</faction>
   <faction>Pirate</faction>
-
  <notes>
   <tier>1</tier>
  </notes>

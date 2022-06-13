@@ -2,12 +2,10 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="An old woman">
  <unique />
-
   <priority>4</priority>
   <chance>3</chance>
   <location>Bar</location>
   <faction>Dvaered</faction>
-
  <notes>
   <tier>1</tier>
  </notes>
