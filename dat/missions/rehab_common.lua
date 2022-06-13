@@ -68,9 +68,21 @@ function setFine(standing)
 end
 
 -- Standing hook. Manages faction reputation, keeping it at 0 until it goes positive.
-function standing(hookfac, delta)
+function standing( hookfac, delta )
     if hookfac == mem.fac then
         if delta >= 0 then
+            -- Be ware of the fake transponder!
+            local pp = player.pilot()
+            local hasft = false
+            local ft = outfit.get("Fake Transponder")
+            for k,v in ipairs(pp:outfits()) do
+               if v==ft then
+                  hasft = true
+                  break
+               end
+            end
+            if hasft then return end -- When fake transponder is equipped, we ignore all positive stuff
+
             mem.rep = mem.rep + delta
             if mem.rep >= 0 then
                 -- The player has successfully erased his criminal record.
