@@ -66,7 +66,7 @@ function enter ()
    end
 
    -- Find the initial point of interest, and path to the real location
-   pos = vec2.new() -- TODO
+   pos = vec2.newP( system.cur():radius()*0.6, rnd.angle() ) -- TODO better initialization
    path = {}
    local angle = rnd.angle()
    local mpos = pos
