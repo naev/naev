@@ -103,7 +103,7 @@ function enter ()
    local mpos = pos
    for i=1,rnd.rnd(13,17) do -- should average 15*5505 = 8250 units
       mpos = mpos + vec2.newP( 400+300*rnd.rnd(), angle )
-      angle = angle + 1.3*rnd.sigma()
+      angle = angle + rnd.sigma()
       table.insert( path, mpos )
    end
    goal = mpos + vec2.newP( 300+400*rnd.rnd(), angle )
@@ -191,7 +191,7 @@ function board( p )
       vn.na(_("Exploring the cargo bay, you find something that might be of use to you."))
    end
    vn.sfxVictory()
-   vn.na(fmt.reward_(mem.reward.value))
+   vn.na(fmt.reward(mem.reward.value))
    vn.na(_("You explore the rest of the ship but do not find anything else of interest."))
    vn.sfx( der.sfx.unboard )
    vn.run()
