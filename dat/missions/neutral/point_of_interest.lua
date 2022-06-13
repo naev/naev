@@ -80,7 +80,7 @@ function create ()
    end
 end
 
-local pos, timer, path, goal
+local pos, timer, path, goal, mrk
 function enter ()
    if system.cur() ~= mem.sys then
       pos = nil
@@ -108,7 +108,7 @@ function enter ()
    end
    goal = mpos + vec2.newP( 300+400*rnd.rnd(), angle )
 
-   system.mrkAdd( pos, _("Point of Interest") )
+   mrk = system.mrkAdd( pos, _("Point of Interest") )
 
    -- Custom hook for when the player scans
    mem.chook = hook.custom( "poi_scan", "scan" )
@@ -203,6 +203,12 @@ function board( p )
       player.outfitAdd( mem.reward.value )
    end
 
+   -- Clean up stuff
    p:setHilight(false)
+   system.mrkRm( mrk )
+   for k,v in ipairs(path_spfx) do
+      v:rm()
+   end
    player.unboard()
+   misn.finish(true)
 end
