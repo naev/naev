@@ -952,34 +952,27 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
          mis_setFlag(temp,MISSION_UNIQUE);
          continue;
       }
-      else if (xml_isNode(node,"avail")) { /* mission availability */
-         xmlNodePtr cur = node->children;
-         do {
-            xml_onlyNodes(cur);
-            if (xml_isNode(cur,"location")) {
-               temp->avail.loc = mission_location( xml_get(cur) );
-               if (temp->avail.loc < 0)
-                  WARN(_("Mission '%s' has unknown location '%s'!"), temp->name, xml_get(cur) );
-               continue;
-            }
-            xmlr_int(cur,"chance",temp->avail.chance);
-            xmlr_strd(cur,"spob",temp->avail.spob);
-            xmlr_strd(cur,"system",temp->avail.system);
-            xmlr_strd(cur,"chapter",temp->avail.chapter);
-            if (xml_isNode(cur,"faction")) {
-               if (temp->avail.factions == NULL)
-                  temp->avail.factions = array_create( int );
-               array_push_back( &temp->avail.factions, faction_get( xml_get(cur) ) );
-               continue;
-            }
-            xmlr_strd(cur,"cond",temp->avail.cond);
-            xmlr_strd(cur,"done",temp->avail.done);
-            xmlr_int(cur,"priority",temp->avail.priority);
-            WARN(_("Mission '%s' has unknown avail node '%s'."), temp->name, cur->name);
-         } while (xml_nextNode(cur));
+      if (xml_isNode(node,"location")) {
+         temp->avail.loc = mission_location( xml_get(node) );
+         if (temp->avail.loc < 0)
+            WARN(_("Mission '%s' has unknown location '%s'!"), temp->name, xml_get(node) );
          continue;
       }
-      else if (xml_isNode(node,"tags")) {
+      xmlr_int(node,"chance",temp->avail.chance);
+      xmlr_strd(node,"spob",temp->avail.spob);
+      xmlr_strd(node,"system",temp->avail.system);
+      xmlr_strd(node,"chapter",temp->avail.chapter);
+      if (xml_isNode(node,"faction")) {
+         if (temp->avail.factions == NULL)
+            temp->avail.factions = array_create( int );
+         array_push_back( &temp->avail.factions, faction_get( xml_get(node) ) );
+         continue;
+      }
+      xmlr_strd(node,"cond",temp->avail.cond);
+      xmlr_strd(node,"done",temp->avail.done);
+      xmlr_int(node,"priority",temp->avail.priority);
+
+      if (xml_isNode(node,"tags")) {
          xmlNodePtr cur = node->children;
          temp->tags = array_create( char* );
          do {
@@ -1014,8 +1007,8 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
    if (o) WARN( _("Mission '%s' missing/invalid '%s' element"), temp->name, s)
    MELEMENT(temp->avail.loc==MIS_AVAIL_UNSET,"location");
    MELEMENT((temp->avail.loc!=MIS_AVAIL_NONE) && (temp->avail.chance==0),"chance");
-   MELEMENT( ((temp->avail.spob!=NULL) && spob_get(temp->avail.spob)==NULL), "avail.spob" );
-   MELEMENT( ((temp->avail.system!=NULL) && system_get(temp->avail.system)==NULL), "avail.system" );
+   MELEMENT( ((temp->avail.spob!=NULL) && spob_get(temp->avail.spob)==NULL), "spob" );
+   MELEMENT( ((temp->avail.system!=NULL) && system_get(temp->avail.system)==NULL), "system" );
 #undef MELEMENT
 
    return 0;
