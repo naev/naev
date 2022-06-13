@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Pulse Scanner">
+ <general>
+  <typename>Electronic Warfare</typename>
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>300000</price>
+  <description>TODO</description>
+  <desc_extra>Activates for 10 seconds with a 15 second cooldown period. #pCan be used for tracking anomaly signals.#0</desc_extra>
+  <gfx_store>jammer0.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <lua>outfits/unique/pulse_scanner.lua</lua>
+  <ew_detect>30</ew_detect>
+ </specific>
+ <tags>
+  <tag>poi_scan</tag>
+ </tags>
+</outfit>
