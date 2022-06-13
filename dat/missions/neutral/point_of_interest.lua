@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Point of Interest">
- <trigger>none</trigger>
+ <location>none</location>
  <chance>0</chance>
 </mission>
 --]]
