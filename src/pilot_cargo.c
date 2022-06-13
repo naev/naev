@@ -345,6 +345,10 @@ int pilot_cargoRmRaw( Pilot* pilot, const Commodity* cargo, int quantity, int cl
  */
 int pilot_cargoRmAll( Pilot* pilot, int cleanup )
 {
+   /* No commodities. */
+   if (pilot->commodities == NULL)
+      return 0;
+
    /* Check if pilot has it */
    int q = 0;
    for (int i=array_size(pilot->commodities)-1; i>=0; i--) {
