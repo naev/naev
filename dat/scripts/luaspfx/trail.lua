@@ -16,6 +16,7 @@ local function render( sp, x, y, z )
    trail_shader:send( "u_time", d.timer )
    trail_shader:send( "u_size", d.size )
    trail_shader:send( "u_r", d.r )
+   trail_shader:send( "u_vel", d.vx, d.vy )
 
    local s = d.size * z
    local old_shader = lg.getShader()
@@ -25,7 +26,7 @@ local function render( sp, x, y, z )
    lg.setShader( old_shader )
 end
 
-local function trail( pos, params )
+local function trail( pos, point, params )
    params = params or {}
    -- Lazy loading shader / sound
    if not trail_shader then
@@ -38,6 +39,12 @@ local function trail( pos, params )
    d.size   = params.size or 300
    d.col    = params.col or {0.8, 0.2, 0.7, 0.3}
    d.r      = 1000*rnd.rnd()
+   if not point then
+      d.vx, d.vy = 0, 0
+   else
+      local _m, dir = ((point-pos) * vec2.new(1, -1)):polar()
+      d.vx, d.vy = math.cos(dir+math.pi), math.sin(dir+math.pi)
+   end
    return s
 end
 
