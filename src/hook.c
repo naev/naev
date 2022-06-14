@@ -327,8 +327,7 @@ static int hook_runMisn( Hook *hook, const HookParam *param, int claims )
    n = hook_parseParam( param );
 
    /* Add hook parameters. */
-   hookL_getarg( id );
-   n++;
+   n += hookL_getarg( id );
 
    /* Run mission code. */
    hook->ran_once = 1;
@@ -374,8 +373,7 @@ static int hook_runEvent( Hook *hook, const HookParam *param, int claims )
    n = hook_parseParam( param );
 
    /* Add hook parameters. */
-   hookL_getarg( hook->id );
-   n++;
+   n += hookL_getarg( hook->id );
 
    /* Run the hook. */
    ret = event_runFunc( hook->u.event.parent, hook->u.event.func, n );

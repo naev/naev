@@ -40,7 +40,6 @@ static int hookL_jumpout( lua_State *L );
 static int hookL_jumpin( lua_State *L );
 static int hookL_enter( lua_State *L );
 static int hookL_hail( lua_State *L );
-static int hookL_boarding( lua_State *L );
 static int hookL_board( lua_State *L );
 static int hookL_timer( lua_State *L );
 static int hookL_date( lua_State *L );
@@ -77,7 +76,6 @@ static const luaL_Reg hookL_methods[] = {
    { "jumpin", hookL_jumpin },
    { "enter", hookL_enter },
    { "hail", hookL_hail },
-   { "boarding", hookL_boarding },
    { "board", hookL_board },
    { "timer", hookL_timer },
    { "date", hookL_date },
@@ -242,16 +240,14 @@ void hookL_unsetarg( unsigned int hook )
  * @brief Gets a Lua argument for a hook.
  *
  *    @param hook Hook to get argument of.
- *    @return 0 on success.
+ *    @return Number of arguments added.
  */
 int hookL_getarg( unsigned int hook )
 {
    nlua_env env = hook_env(hook);
 
-   if (env == LUA_NOREF) {
-       lua_pushnil(naevL);
+   if (env == LUA_NOREF)
        return 0;
-   }
 
    nlua_getenv(naevL, env, "mem");       /* t */
    lua_getfield(naevL, -1, "__hook_arg");/* t, t */
@@ -261,7 +257,7 @@ int hookL_getarg( unsigned int hook )
       lua_remove( naevL, -2 );           /* t, v */
    }
    lua_remove( naevL, -2 );              /* v */
-   return 0;
+   return 1;
 }
 
 /**
@@ -502,23 +498,6 @@ static int hookL_enter( lua_State *L )
 static int hookL_hail( lua_State *L )
 {
    unsigned int h = hookL_generic( L, "hail", 0., 1, 0 );
-   lua_pushnumber( L, h );
-   return 1;
-}
-
-/**
- * @brief Hooks the function to the player boarding any ship.
- *
- * The hook receives a single parameter which is the ship doing the boarding.
- *
- *    @luatparam string funcname Name of function to run when hook is triggered.
- *    @luaparam arg Argument to pass to hook.
- *    @luatreturn number Hook identifier.
- * @luafunc boarding
- */
-static int hookL_boarding( lua_State *L )
-{
-   unsigned int h = hookL_generic( L, "boarding", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }
