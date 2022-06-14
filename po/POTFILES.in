@@ -51,6 +51,7 @@ dat/effects/blink.xml
 dat/effects/bloodlust.xml
 dat/effects/crippling_plasma.xml
 dat/effects/ethereal.xml
+dat/effects/fadein.xml
 dat/effects/feral_rage_i.xml
 dat/effects/hypergate_enter.xml
 dat/effects/hypergate_exit.xml

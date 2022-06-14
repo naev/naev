@@ -168,6 +168,7 @@ function heartbeat ()
       p:disable()
       p:setInvincible()
       p:setHilight()
+      p:effectAdd( "Fade-In" )
       hook.pilot( p, "board", "board" )
       return
    end

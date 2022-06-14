@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Fade-In">
+ <description>Fading in!</description>
+ <duration>3</duration>
+ <overwrite>fadein</overwrite>
+ <icon>/gfx/misc/icons/galaxy.webp</icon>
+ <shader>effects/fadein.frag</shader>
+</effect>
