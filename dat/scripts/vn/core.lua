@@ -16,6 +16,7 @@ local transitions = require 'vn.transitions'
 local log         = require "vn.log"
 local sdf         = require "vn.sdf"
 local opt         = require "vn.options"
+local luaspfx     = require "luaspfx"
 
 local vn = {
    speed = var.peek("vn_textspeed") or 0.025,
@@ -1492,13 +1493,7 @@ function vn.sfx( sfx, params )
    s._init = function (state)
       local _sfx = sfx:clone()
       s._sfx = _sfx
-      _sfx:play()
-      if params.pitch then
-         _sfx:setPitch( params.pitch )
-      end
-      if params.effect then
-         _sfx:setEffect( params.effect )
-      end
+      luaspfx.sfx( false, nil, _sfx, params )
       _finish(state)
    end
    table.insert( vn._states, s )
