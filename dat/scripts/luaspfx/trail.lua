@@ -37,7 +37,7 @@ local function trail( pos, point, params )
    local d  = s:data()
    d.timer  = 0
    d.size   = params.size or 300
-   d.col    = params.col or {0.8, 0.2, 0.7, 0.3}
+   d.col    = params.col or {0.8, 0.2, 0.7, 0.5}
    d.r      = 1000*rnd.rnd()
    if not point then
       d.vx, d.vy = 0, 0
