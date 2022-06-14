@@ -22,7 +22,7 @@ local function turnon( p, po )
       luaspfx.sfx( true, nil, sfx )
 
       -- Can trigger scan hooks
-      hook.trigger( "poi_scan" )
+      naev.trigger( "poi_scan" )
    else
       luaspfx.sfx( p:pos(), p:vel(), sfx )
    end

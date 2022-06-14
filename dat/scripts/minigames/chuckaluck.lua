@@ -66,7 +66,7 @@ local function _chatter( chat_type )
    if var.peek("minerva_caninputcode") then
       if secretcode_status == 4 then
          cl.chatter = _("The dealer hands you a note saying to meet him after his shift.")
-         hook.trigger( "minerva_secretcode" )
+         naev.trigger( "minerva_secretcode" )
          cl.secretcode = true
          return
       elseif secretcode_status > 2 then

@@ -164,7 +164,7 @@ They make a cutting gesture from their belly up to their neck.
 
    -- Signal they were caught
    var.pop("minerva_caninputcode")
-   hook.trigger( "minerva_molecaught" )
+   naev.trigger( "minerva_molecaught" )
 
    -- On to next state
    mem.misn_state = 1
