@@ -2474,7 +2474,7 @@ int outfit_load (void)
       nlua_loadGFX( env );
       nlua_loadPilotOutfit( env );
       nlua_loadCamera( env );
-      nlua_loadHook( env, 0 );
+      nlua_loadHook( env );
 
       /* Run code. */
       if (nlua_dobufenv( env, dat, sz, o->lua_file ) != 0) {

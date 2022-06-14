@@ -6,7 +6,7 @@
 #include "nlua.h"
 
 /* individual library stuff */
-int nlua_loadHook( nlua_env env, int full_api );
+int nlua_loadHook( nlua_env env );
 
 /* Misc. */
 int hookL_getarg( unsigned int hook );

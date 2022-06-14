@@ -15,6 +15,7 @@
 #include "nlua_naev.h"
 
 #include "console.h"
+#include "hook.h"
 #include "input.h"
 #include "land.h"
 #include "log.h"
@@ -47,6 +48,7 @@ static int naevL_isSimulation( lua_State *L );
 static int naevL_conf( lua_State *L );
 static int naevL_confSet( lua_State *L );
 static int naevL_cache( lua_State *L );
+static int naevL_trigger( lua_State *L );
 static const luaL_Reg naev_methods[] = {
    { "version", naevL_version },
    { "versionTest", naevL_versionTest },
@@ -67,6 +69,7 @@ static const luaL_Reg naev_methods[] = {
    { "conf", naevL_conf },
    { "confSet", naevL_confSet },
    { "cache", naevL_cache },
+   { "trigger", naevL_trigger },
    {0,0}
 }; /**< Naev Lua methods. */
 
@@ -501,4 +504,38 @@ static int naevL_cache( lua_State *L )
 {
    lua_rawgeti( L, LUA_REGISTRYINDEX, cache_table );
    return 1;
+}
+
+/**
+ * @brief Triggers manually a hook stack. This is run deferred (next frame). Meant mainly to be used with hook.custom, but can work with other hooks too (if you know what you are doing).
+ *
+ * @note This will trigger all hooks waiting on a stack.
+ *
+ * @usage naev.trigger( "my_event", data ) -- data will be passed to the receiving end
+ *
+ *    @luatparam string hookname Name of the hook to be run.
+ *    @luaparam arg Parameter to pass to the hooks.
+ * @see custom
+ * @luafunc trigger
+ */
+static int naevL_trigger( lua_State *L )
+{
+   HookParam hp[HOOK_MAX_PARAM];
+   const char *hookname = luaL_checkstring(L,1);
+
+   /* Set up hooks. */
+   if (lua_isnoneornil(L,2)) {
+      /* Since this doesn't get saved and is triggered by Lua code, we can
+       * actually pass references here. */
+      hp[0].type = HOOK_PARAM_REF;
+      lua_pushvalue(L,2);
+      hp[0].u.ref = luaL_ref( L, LUA_REGISTRYINDEX );
+      hp[1].type = HOOK_PARAM_SENTINEL;
+   }
+   else
+      hp[0].type = HOOK_PARAM_SENTINEL;
+
+   /* Run the deferred hooks. */
+   hooks_runParamDeferred( hookname, hp );
+   return 0;
 }

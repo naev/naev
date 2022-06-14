@@ -64,7 +64,6 @@ static int hookL_standing( lua_State *L );
 static int hookL_discover( lua_State *L );
 static int hookL_pay( lua_State *L );
 static int hookL_custom( lua_State *L );
-static int hookL_trigger( lua_State *L );
 static int hookL_pilot( lua_State *L );
 static const luaL_Reg hookL_methods[] = {
    { "rm", hookL_rm },
@@ -100,12 +99,7 @@ static const luaL_Reg hookL_methods[] = {
    { "discover", hookL_discover },
    { "pay", hookL_pay },
    { "custom", hookL_custom },
-   { "trigger", hookL_trigger },
    { "pilot", hookL_pilot },
-   {0,0}
-}; /**< Hook Lua methods. */
-static const luaL_Reg hookL_methods_trigger[] = {
-   { "trigger", hookL_trigger },
    {0,0}
 }; /**< Hook Lua methods. */
 
@@ -118,23 +112,11 @@ static unsigned int hookL_generic( lua_State *L, const char* stack, double ms, i
 /**
  * @brief Loads the hook Lua library.
  *    @param env Lua environment.
- *    @param full_api Whether or not to include full API or only trigger.
  *    @return 0 on success.
  */
-int nlua_loadHook( nlua_env env, int full_api )
+int nlua_loadHook( nlua_env env )
 {
-   (void) full_api;
-   (void) hookL_methods_trigger;
    nlua_register(env, "hook", hookL_methods, 0);
-   /* Since "hook" gets cached, the outfits load it without full_api and all
-    * events/missions inherit that. Would need a way to store them
-    * separately... */
-   /*
-   if (full_api)
-      nlua_register(env, "hook", hookL_methods, 0);
-   else
-      nlua_register(env, "hook", hookL_methods_trigger, 0);
-   */
    return 0;
 }
 
@@ -903,12 +885,12 @@ static int hookL_mission_done( lua_State *L )
 }
 
 /**
- * @brief Hook run once at the end of the next frame regardless when manually triggered.
+ * @brief Hook run once at the end of the next frame regardless when manually triggered. Can be triggered manually with `naev.trigger`.
  *
  *    @luatparam string hookname Name to give the hook. This should not overlap with standard names.
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luatreturn number Hook identifier.
- * @see safe
+ * @see naev.trigger
  * @luafunc custom
  */
 static int hookL_custom( lua_State *L )
@@ -917,40 +899,6 @@ static int hookL_custom( lua_State *L )
    unsigned int h       = hookL_generic( L, hookname, 0., 2, 0 );
    lua_pushnumber( L, h );
    return 1;
-}
-
-/**
- * @brief Triggers manually a hook stack. This is run deferred (next frame). Meant mainly to be used with hook.custom, but can work with other hooks too (if you know what you are doing).
- *
- * @note This will trigger all hooks waiting on a stack.
- *
- * @usage hook.trigger( "my_event", data ) -- data will be passed to the receiving end
- *
- *    @luatparam string hookname Name of the hook to be run.
- *    @luaparam arg Parameter to pass to the hooks.
- * @see custom
- * @luafunc trigger
- */
-static int hookL_trigger( lua_State *L )
-{
-   HookParam hp[HOOK_MAX_PARAM];
-   const char *hookname = luaL_checkstring(L,1);
-
-   /* Set up hooks. */
-   if (lua_isnoneornil(L,2)) {
-      /* Since this doesn't get saved and is triggered by Lua code, we can
-       * actually pass references here. */
-      hp[0].type = HOOK_PARAM_REF;
-      lua_pushvalue(L,2);
-      hp[0].u.ref = luaL_ref( L, LUA_REGISTRYINDEX );
-      hp[1].type = HOOK_PARAM_SENTINEL;
-   }
-   else
-      hp[0].type = HOOK_PARAM_SENTINEL;
-
-   /* Run the deferred hooks. */
-   hooks_runParamDeferred( hookname, hp );
-   return 0;
 }
 
 /**

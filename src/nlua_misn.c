@@ -116,7 +116,7 @@ int misn_loadLibs( nlua_env env )
 {
    nlua_loadStandard(env);
    nlua_loadMisn(env);
-   nlua_loadHook(env, 1);
+   nlua_loadHook(env);
    nlua_loadCamera(env);
    nlua_loadTex(env);
    nlua_loadBackground(env);
