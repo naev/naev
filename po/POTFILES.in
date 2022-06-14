@@ -2741,6 +2741,7 @@ dat/scripts/luaspfx.lua
 dat/scripts/luaspfx/alert.lua
 dat/scripts/luaspfx/blink.lua
 dat/scripts/luaspfx/core.lua
+dat/scripts/luaspfx/pulse.lua
 dat/scripts/luaspfx/sfx.lua
 dat/scripts/luaspfx/trail.lua
 dat/scripts/luatk.lua
