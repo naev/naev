@@ -59,8 +59,8 @@ local mission_list = {
          vn.sfx( der.sfx.board )
          vn.music( der.sfx.ambient )
          vn.transition()
-         vn.na(fmt.f(_([[While the derelict itself has been picked clean. You manage to find some interesting data remaining in the navigation log. It looks like you may be able to follow the lead to something of interest in the #b{sys}#0 system. Do you wish to download the data?]]),
-            {sys=poidata.sys}))
+         vn.na(fmt.f(_([[While the derelict itself has been picked clean. You manage to find some interesting data remaining in the navigation log. It looks like you may be able to follow the lead to something of interest in the {sys} system. Do you wish to download the data?]]),
+            {sys="#b"..poidata.sys:name().."#0"}))
 
          vn.menu{
             {_("Download the data"), "accept"},
