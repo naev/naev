@@ -12,6 +12,12 @@ local function sfx( pos, vel, source, params )
    if params.volume then
       ss:setVolume( params.volume )
    end
+   if params.pitch then
+      ss:setPitch( params.pitch )
+   end
+   if params.effect then
+      ss:setEffect( params.effect )
+   end
    return s
 end
 
