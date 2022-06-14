@@ -3,6 +3,7 @@
    @module lmisn
 --]]
 local fmt = require "format"
+local luaspfx = require "luaspfx"
 local lmisn = {}
 
 --[[
@@ -25,7 +26,7 @@ function lmisn.sfxVictory ()
    if not _sfx then _sfx_load() end
 
    local sfx = _sfx.victory:clone()
-   sfx:play()
+   luaspfx.sfx( false, nil, sfx )
 end
 
 --[[--
@@ -35,7 +36,7 @@ function lmisn.sfxMoney ()
    if not _sfx then _sfx_load() end
 
    local sfx = _sfx.money:clone()
-   sfx:play()
+   luaspfx.sfx( false, nil, sfx )
 end
 
 
