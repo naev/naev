@@ -36,13 +36,13 @@ static int pilot_hookCleanup = 0; /**< Are hooks being removed from a pilot? */
  */
 int pilot_runHookParam( Pilot* p, int hook_type, const HookParam* param, int nparam )
 {
-   int n, i, run, ret;
+   int n, run, ret;
    HookParam hstaparam[5], *hdynparam, *hparam;
 
    /* Set up hook parameters. */
    if (nparam <= 3) {
-      hstaparam[0].type       = HOOK_PARAM_PILOT;
-      hstaparam[0].u.lp       = p->id;
+      hstaparam[0].type = HOOK_PARAM_PILOT;
+      hstaparam[0].u.lp = p->id;
       n  = 1;
       if (nparam != 0)
          memcpy( &hstaparam[n], param, sizeof(HookParam)*nparam );
@@ -62,7 +62,7 @@ int pilot_runHookParam( Pilot* p, int hook_type, const HookParam* param, int npa
 
    /* Run pilot specific hooks. */
    run = 0;
-   for (i=0; i<array_size(p->hooks); i++) {
+   for (int i=0; i<array_size(p->hooks); i++) {
       if (p->hooks[i].type != hook_type)
          continue;
 
@@ -74,7 +74,7 @@ int pilot_runHookParam( Pilot* p, int hook_type, const HookParam* param, int npa
    }
 
    /* Run global hooks. */
-   for (i=0; i<array_size(pilot_globalHooks); i++) {
+   for (int i=0; i<array_size(pilot_globalHooks); i++) {
       if (pilot_globalHooks[i].type != hook_type)
          continue;
 
