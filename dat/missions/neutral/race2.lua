@@ -213,7 +213,7 @@ end
 function stopcount()
    player.omsgRm(mem.omsg)
 end
-function board(ship)
+function board( ship )
    for i,j in ipairs(checkpoint) do
       if ship == j and target[4] == i then
          player.msg( fmt.f( _("{plt} just reached checkpoint {n}"), {plt=player.name(), n=target[4]}) )
