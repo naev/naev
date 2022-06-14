@@ -46,7 +46,7 @@ int player_isBoarded (void)
 
 int board_hook( void *data )
 {
-   HookParam hparam[3];
+   HookParam hparam[2];
    Pilot *p = (Pilot*) data;
 
    /* Don't allow boarding own escorts. */
@@ -62,15 +62,13 @@ int board_hook( void *data )
     * run hook if needed
     */
    hparam[0].type = HOOK_PARAM_PILOT;
+   hparam[0].u.lp = PLAYER_ID;
+   hparam[1].type = HOOK_PARAM_SENTINEL;
+   pilot_runHookParam(p, PILOT_HOOK_BOARD, hparam, 1);
+   pilot_runHookParam(p, PILOT_HOOK_BOARD_ALL, hparam, 1);
    hparam[0].u.lp = p->id;
-   hparam[1].type = HOOK_PARAM_PILOT;
-   hparam[1].u.lp = PLAYER_ID;
-   hparam[2].type = HOOK_PARAM_SENTINEL;
    hooks_runParam( "board", hparam );
-   pilot_runHookParam(p, PILOT_HOOK_BOARD, &hparam[1], 1);
-   pilot_runHookParam(p, PILOT_HOOK_BOARD_ALL, &hparam[1], 1);
-   hparam[1].u.lp = p->id;
-   pilot_runHookParam(player.p, PILOT_HOOK_BOARDING, &hparam[1], 1);
+   pilot_runHookParam(player.p, PILOT_HOOK_BOARDING, hparam, 1);
 
    if (board_stopboard) {
       board_boarded = 0;
