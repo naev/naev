@@ -3,7 +3,20 @@
 --]]
 local poi = {}
 
+--[[
+   @brief Tries to generate a new setting for a point of interest.
+--]]
+function poi.generate()
+
+end
+
 function poi.setup( sys, risk, reward )
+   if type(sys)=="table" then
+      risk = sys.risk
+      reward = sys.reward
+      sys = sys.sys
+   end
+
    sys = system.get( sys )
    if var.peek("_poi_system") ~= nil or var.peek("_poi_risk") ~= nil or var.peek("_poi_reward") ~= nil then
       warn(_("Point of Interest variables being overwritten!"))

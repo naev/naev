@@ -19,6 +19,7 @@ local fmt = require 'format'
 local tut = require 'common.tutorial'
 local der = require 'common.derelict'
 local pir = require "common.pirate"
+local poi = require "common.poi"
 local vn = require 'vn'
 
 local badevent, goodevent, missionevent, neutralevent -- forward-declared functions
@@ -36,6 +37,57 @@ local mission_list = {
    {
       name = "Derelict Rescue",
       repeatable = true,
+   },
+   {
+      name = "Point of Interest",
+      repeatable = true,
+      nolimit = true,
+      cond = function ()
+         return false -- Disabled for now
+         --return player.misnActive( "Point of Interest" ) < 3
+      end,
+      func = function ()
+         local poidata = poi.generate()
+         if not poidata then -- Failed to generate
+            neutralevent()
+            return
+         end
+
+         local accept = false
+         vn.clear()
+         vn.scene()
+         vn.sfx( der.sfx.board )
+         vn.music( der.sfx.ambient )
+         vn.transition()
+         vn.na(fmt.f(_([[While the derelict itself has been picked clean. You manage to find some interesting data remaining in the navigation log. It looks like you may be able to follow the lead to something of interest in the #b{sys}#0 system. Do you wish to download the data?]]),
+            {sys=poidata.sys}))
+
+         vn.menu{
+            {_("Download the data"), "accept"},
+            {_("Leave."), "leave"},
+         }
+
+         vn.label("accept")
+         vn.func( function () accept = true end )
+         vn.na(_([[You download the data and mark the target system on your navigation console. With nothing else to do on the derelict, you leave it behind, and return to your ship.]]))
+         vn.jump("done")
+
+         vn.label("leave")
+         vn.na(_([[You leave the information alone and leave the derelict.]]))
+
+         vn.label("done")
+         vn.sfx( der.sfx.unboard )
+         vn.run()
+         player.unboard()
+
+         if accept then
+            poi.setup( poidata )
+            naev.missionStart("Point of Interest")
+            der.addMiscLog(fmt.f(_([[You found information on a point of interest aboard a derelict in the {sys} system.]]),{sys=system.cur()}))
+         else
+            der.addMiscLog(_([[You found information about a point of interest aboard a derelict, but decided not to download it.]]))
+         end
+      end,
    },
    {
       name = "Black Cat",
@@ -483,7 +535,7 @@ function missionevent()
    local available_missions = {}
    local weights = 0
    for _k,m in ipairs(mission_list) do
-      if (m.repeatable or not player.misnDone(m.name)) and not player.misnActive(m.name) and (not m.cond or m.cond()) then
+      if (m.repeatable or not player.misnDone(m.name)) and (m.nolimit or not player.misnActive(m.name)) and (not m.cond or m.cond()) then
          weights = weights + (m.weight or 1)
          m.chance = weights
          table.insert( available_missions, m )
@@ -500,7 +552,11 @@ function missionevent()
    local r = rnd.rnd()
    for _k,m in ipairs(available_missions) do
       if r < m.chance / weights then
-         naev.missionStart( m.name )
+         if m.func then
+            m.func()
+         else
+            naev.missionStart( m.name )
+         end
          destroyevent()
          return
       end
