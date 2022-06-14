@@ -4,7 +4,7 @@ local luaspfx = require 'luaspfx'
 local active = 10 -- active time in seconds
 local cooldown = 15 -- cooldown time in seconds
 
-local sfx = audio.newSource( 'snd/sounds/activate4.ogg' )
+local sfx = audio.newSource( 'snd/sounds/activate5.ogg' )
 
 local function turnon( p, po )
    -- Still on cooldown
