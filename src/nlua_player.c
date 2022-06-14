@@ -1351,7 +1351,7 @@ static int playerL_missions( lua_State *L )
  * @usage if player.misnActive( "The Space Family" ) then -- Player is doing space family mission
  *
  *    @luatparam string name Name of the mission to check.
- *    @luatreturn boolean true if the mission is active, false if it isn't.
+ *    @luatreturn boolean|number Number of instances if the mission is active, false if it isn't.
  * @luafunc misnActive
  */
 static int playerL_misnActive( lua_State *L )
@@ -1362,7 +1362,11 @@ static int playerL_misnActive( lua_State *L )
       NLUA_ERROR(L, _("Mission '%s' not found in stack"), str);
       return 0;
    }
-   lua_pushboolean( L, mission_alreadyRunning( misn ) );
+   int n = mission_alreadyRunning( misn );
+   if (n > 0)
+      lua_pushinteger( L, n );
+   else
+      lua_pushboolean( L, 0 );
    return 1;
 }
 

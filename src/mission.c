@@ -203,14 +203,15 @@ int mission_accept( Mission* mission )
  * @brief Checks to see if mission is already running.
  *
  *    @param misn Mission to check if is already running.
- *    @return 1 if already running, 0 if isn't.
+ *    @return Number of instances if already running, 0 if isn't.
  */
 int mission_alreadyRunning( const MissionData* misn )
 {
+   int n = 0;
    for (int i=0; i<array_size(player_missions); i++)
       if (player_missions[i]->data == misn)
-         return 1;
-   return 0;
+         n++;
+   return n;
 }
 
 /**
