@@ -667,7 +667,7 @@ function hailMe()
    hook.rm(mem.hailie)
    player.commClose()
    tk.msg( _("Help offer"), fmt.f(_([[The pilot of the ship addresses you with a strange and disturbing familiarity: "Doing well, folks? Ya just walked into those Za'lek freaks' space, wrecked a squadron, helped a prisoner escape, and demolished a hospital. You're worse than the Incident, mates!" You wonder how this pilot could know so much about your operation, but his spiel continues: "Hewhewhew! People usually think I'm some sort of useless pirates scum. I know you thought that, too! Neh, don't lie to me!"
-   The pilot's voice suddenly becomes harsh: "In reality, I am a faithful subject of his Imperial Majesty, as should you be, {player}! But instead you've chosen to aid and abet those criminals, the Dvaeredsy. For that you should be severely punished. Don't forget, {player}: The Empire is watching you. Anywhere. Anytime. Anyhow.
+   The pilot's voice suddenly becomes harsh: "In reality, I am a faithful subject of his Imperial Majesty, as should you be, {player}! But instead you've chosen to aid and abet those criminals, the Dvaereds. For that you should be severely punished. Don't forget, {player}: The Empire is watching you. Anywhere. Anytime. Anyhow.
    "Hewhewhew! And what was the other one already? Oh yeah: The Emperor sees all! But ya're all lucky, 'cause the Empire is in a merciful mood today. So at your next stop, you will kindly go and talk to the agent with a feather hat, and the two of you will reach an agreement and hopefully we won't have to kill you!"]]), {player=player.name()}) )
    mem.stage = 5
 end
