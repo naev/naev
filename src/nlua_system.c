@@ -255,7 +255,12 @@ static int systemL_get( lua_State *L )
       pnt = luaL_validspob(L,1);
       ss = system_get( spob_getSystem( pnt->name ) );
    }
-   else NLUA_INVALID_PARAMETER(L);
+   else if (lua_issystem(L,1)) {
+      lua_pushvalue(L,1);
+      return 1;
+   }
+   else
+      NLUA_INVALID_PARAMETER(L);
 
    /* Error checking. */
    if (ss == NULL) {
@@ -869,7 +874,6 @@ static int systemL_setknown( lua_State *L )
 {
    int b, r;
    StarSystem *sys;
-
 
    r   = 0;
    sys = luaL_validsystem(L, 1);
