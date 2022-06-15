@@ -10,6 +10,7 @@ local poi = {}
 
 --[[
    @brief Tries to generate a new setting for a point of interest.
+      @treturn table A table of parameters for the point of interest mission or nil if failed to generate.
 --]]
 function poi.generate()
    local syscand = lmisn.getSysAtDistance( nil, 1, 5, function( sys )
@@ -36,6 +37,10 @@ function poi.generate()
    }
 end
 
+--[[
+   @brief sets up a point of interest mission. Meant to be called before starting the point of interest mission with naev.missionStart()
+      @tparam table params Parameter table. Can be passed directly from poi.generate
+--]]
 function poi.setup( params )
    local risk = params.risk or 0
    local reward = params.reward or 0
@@ -153,17 +158,18 @@ end
 
 --[[
    @brief Sets up a Point Of Interest (POI) mission
-
       @tparam table params Table of parameters to use. `sys` and `found` must be defined, where `sys` is the system the POI takes place in, and `found` is the name of the global function to call when found.
 --]]
 function poi.misnSetup( params )
    mem.poi = {
-      sys   = params.sys,
-      found = params.found,
+      sys      = params.sys,
+      found    = params.found,
+      riskstr  = params.riskstr or _("Low"),
+      rewardstr= params.rewardstr or _("Unknown"),
    }
 
-   local riskstr = "Low"
-   local rewardstr = "Unknown"
+   -- Bias towards easier at start
+   --if poi.done() >
 
    -- Accept and set up mission
    misn.accept()
@@ -173,7 +179,7 @@ function poi.misnSetup( params )
 
 #nEstimated Risk:#0 {risk}
 #nEstimated Reward:#0 {reward}]]),
-      {sys=mem.poi.sys, risk=riskstr, reward=rewardstr} ) )
+      {sys=mem.poi.sys, risk=mem.poi.riskstr, reward=mem.poi.rewardstr} ) )
 
    misn.markerAdd( mem.poi.sys, "low" )
 
@@ -183,11 +189,25 @@ function poi.misnSetup( params )
    end
 end
 
-function poi.misnCleanup()
+--[[
+   @brief Cleans up after a point of interest mission.
+--]]
+function poi.misnDone()
    system.mrkRm( mrk )
    for k,v in ipairs(path_spfx) do
       v:rm()
    end
+
+   var.push( "poi_done", poi.done()+1 )
+end
+
+--[[
+   @brief Gets how many points of interest were completed by the player.
+
+      @treturn number Number of points of interest completed by the player.
+--]]
+function poi.done()
+   return var.peek("poi_done") or 0
 end
 
 return poi

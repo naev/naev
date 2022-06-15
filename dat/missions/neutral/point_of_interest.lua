@@ -100,7 +100,7 @@ function board( p )
    end
 
    -- Clean up stuff
-   poi.misnCleanup()
+   poi.misnDone()
    p:setHilight(false)
    player.unboard()
    misn.finish(true)
