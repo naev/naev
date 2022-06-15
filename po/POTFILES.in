@@ -2782,6 +2782,7 @@ dat/scripts/playerform.lua
 dat/scripts/portrait.lua
 dat/scripts/pp_shaders.lua
 dat/scripts/prng.lua
+dat/scripts/prob.lua
 dat/scripts/proximity.lua
 dat/scripts/reverb_preset.lua
 dat/scripts/swapship.lua

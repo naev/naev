@@ -4,11 +4,12 @@
 local lmisn = require "lmisn"
 local fmt = require "format"
 local luaspfx = require "luaspfx"
+local prob = require "prob"
 local poi = {}
 
 -- luacheck: globals _poi_enter _poi_scan _poi_heartbeat_nooutfit _poi_heartbeat (Hook functions passed by name)
 
---[[
+--[[--
    @brief Tries to generate a new setting for a point of interest.
       @treturn table A table of parameters for the point of interest mission or nil if failed to generate.
 --]]
@@ -27,9 +28,15 @@ function poi.generate()
    if #syscand<=0 then return end
 
    local sys = syscand[ rnd.rnd(1,#syscand) ]
-   -- TODO do something with risk and reward
-   local risk = 0
+
+   -- Bias towards easier at start
+   local risk = math.min(1+prob.poisson_sample( 1.5 ),5) -- 1 to 5
+   risk = math.min( poi.done(), risk ) -- Only easy ones at first
+
+   -- Reward depends on risk
    local reward = 0
+
+   -- Return parameter table
    return {
       sys = sys,
       risk = risk,
@@ -37,7 +44,7 @@ function poi.generate()
    }
 end
 
---[[
+--[[--
    @brief sets up a point of interest mission. Meant to be called before starting the point of interest mission with naev.missionStart()
       @tparam table params Parameter table. Can be passed directly from poi.generate
 --]]
@@ -156,7 +163,7 @@ function _poi_heartbeat ()
    timer = hook.timer( 1, "_poi_heartbeat" )
 end
 
---[[
+--[[--
    @brief Sets up a Point Of Interest (POI) mission
       @tparam table params Table of parameters to use. `sys` and `found` must be defined, where `sys` is the system the POI takes place in, and `found` is the name of the global function to call when found.
 --]]
@@ -167,9 +174,6 @@ function poi.misnSetup( params )
       riskstr  = params.riskstr or _("Low"),
       rewardstr= params.rewardstr or _("Unknown"),
    }
-
-   -- Bias towards easier at start
-   --if poi.done() >
 
    -- Accept and set up mission
    misn.accept()
@@ -189,7 +193,7 @@ function poi.misnSetup( params )
    end
 end
 
---[[
+--[[--
    @brief Cleans up after a point of interest mission.
 --]]
 function poi.misnDone()
@@ -201,9 +205,8 @@ function poi.misnDone()
    var.push( "poi_done", poi.done()+1 )
 end
 
---[[
+--[[--
    @brief Gets how many points of interest were completed by the player.
-
       @treturn number Number of points of interest completed by the player.
 --]]
 function poi.done()
