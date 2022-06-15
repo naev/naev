@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-14 19:00-0400\n"
-"PO-Revision-Date: 2022-06-14 22:16+0000\n"
+"PO-Revision-Date: 2022-06-15 22:20+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -9656,7 +9656,6 @@ msgid "Newmarch A-1"
 msgstr "Nuevomarzo A-1"
 
 #: dat/assets/newmarch_d3.xml:2
-#, fuzzy
 msgid "Newmarch D-3"
 msgstr "Nuevomarzo D-3"
 
@@ -15825,7 +15824,6 @@ msgstr ""
 "se cuentan por toda la galaxia."
 
 #: dat/assets/vino.xml:2
-#, fuzzy
 msgid "Vino"
 msgstr "Vino"
 
@@ -15850,7 +15848,6 @@ msgid ""
 msgstr ""
 
 #: dat/assets/vinooso.xml:2
-#, fuzzy
 msgid "Vinooso"
 msgstr "Vinooso"
 
@@ -15900,7 +15897,6 @@ msgstr ""
 "Eiderdown, cuando el Escurridor vuelve a causar problemas."
 
 #: dat/assets/vlexair.xml:2
-#, fuzzy
 msgid "Vlexair"
 msgstr "Vlexair"
 
@@ -15927,17 +15923,14 @@ msgstr ""
 "mucha variedad de bebidas, aparte del estandar grog Dvaered."
 
 #: dat/assets/vlexon_i.xml:2
-#, fuzzy
 msgid "Vlexon I"
 msgstr "Vlexon I"
 
 #: dat/assets/vlexon_ii.xml:2
-#, fuzzy
 msgid "Vlexon II"
 msgstr "Vlexon II"
 
 #: dat/assets/vorca.xml:2
-#, fuzzy
 msgid "Vorca"
 msgstr "Vorca"
 
@@ -15964,7 +15957,6 @@ msgid ""
 msgstr ""
 
 #: dat/assets/vracha.xml:2
-#, fuzzy
 msgid "Vracha"
 msgstr "Vracha"
 
@@ -15991,7 +15983,6 @@ msgstr ""
 "regularidad."
 
 #: dat/assets/vuere.xml:2
-#, fuzzy
 msgid "Vuere"
 msgstr "Vuere"
 
@@ -16029,7 +16020,6 @@ msgstr ""
 "lo más cómodas y atractivas posible. El bar es un buen ejemplo de ello."
 
 #: dat/assets/wagenni.xml:2
-#, fuzzy
 msgid "Wagenni"
 msgstr "Wagenni"
 
@@ -16062,7 +16052,6 @@ msgstr ""
 "aterrizaje. Wagenni es una colonia pobre. No tiene uso para tales cosas."
 
 #: dat/assets/wahri.xml:2 dat/ssys/wahri.xml:2
-#, fuzzy
 msgid "Wahri"
 msgstr "Wahri"
 
@@ -16088,17 +16077,14 @@ msgstr ""
 "servirá."
 
 #: dat/assets/wahri_iii.xml:2
-#, fuzzy
 msgid "Wahri III"
 msgstr "Wahri III"
 
 #: dat/assets/wahri_iv.xml:2
-#, fuzzy
 msgid "Wahri IV"
 msgstr "Wahri IV"
 
 #: dat/assets/wakan.xml:2
-#, fuzzy
 msgid "Wa'kan"
 msgstr "Wa'kan"
 
@@ -16113,7 +16099,6 @@ msgstr ""
 "investigadores Za'lek que trabajan en programas de justicia penal."
 
 #: dat/assets/waldar.xml:2
-#, fuzzy
 msgid "Waldar"
 msgstr "Waldar"
 
@@ -16170,7 +16155,6 @@ msgid ""
 msgstr ""
 
 #: dat/assets/warei.xml:2
-#, fuzzy
 msgid "Warei"
 msgstr "Warei"
 
@@ -16196,7 +16180,6 @@ msgstr ""
 "bar dista mucho de ser confortable."
 
 #: dat/assets/warnecke.xml:2
-#, fuzzy
 msgid "Warnecke"
 msgstr "Warnecke"
 
@@ -16227,12 +16210,10 @@ msgstr ""
 "depuradores de aire que trabajan en las esquinas."
 
 #: dat/assets/warnecke_i.xml:2
-#, fuzzy
 msgid "Warnecke I"
 msgstr "Warnecke I"
 
 #: dat/assets/warnecke_ii.xml:2
-#, fuzzy
 msgid "Warnecke II"
 msgstr "Warnecke II"
 
@@ -16278,7 +16259,6 @@ msgstr ""
 "durante períodos prolongados."
 
 #: dat/assets/wayline.xml:2
-#, fuzzy
 msgid "Wayline"
 msgstr "Wayline"
 
@@ -16291,17 +16271,14 @@ msgid ""
 msgstr ""
 
 #: dat/assets/wayline_m1.xml:2
-#, fuzzy
 msgid "Wayline m1"
 msgstr "Wayline m1"
 
 #: dat/assets/wayline_m2.xml:2
-#, fuzzy
 msgid "Wayline m2"
 msgstr "Wayline m2"
 
 #: dat/assets/wellen.xml:2
-#, fuzzy
 msgid "Wellen"
 msgstr "Wellen"
 
@@ -16325,7 +16302,6 @@ msgid ""
 msgstr ""
 
 #: dat/assets/werlen.xml:2
-#, fuzzy
 msgid "Werlen"
 msgstr "Werlen"
 
@@ -16370,7 +16346,6 @@ msgid ""
 msgstr ""
 
 #: dat/assets/wigheta.xml:2
-#, fuzzy
 msgid "Wigheta"
 msgstr "Wigheta"
 
@@ -16401,7 +16376,6 @@ msgid ""
 msgstr ""
 
 #: dat/assets/wikon.xml:2
-#, fuzzy
 msgid "Wikon"
 msgstr "Wikon"
 
@@ -16462,7 +16436,6 @@ msgid "Wolf VII"
 msgstr "Lobo VII"
 
 #: dat/assets/wonclock.xml:2
-#, fuzzy
 msgid "Wonclock"
 msgstr "Wonclock"
 
@@ -16496,12 +16469,10 @@ msgstr ""
 "pilotos hayan superado todos los protocolos de seguridad."
 
 #: dat/assets/worgen.xml:2
-#, fuzzy
 msgid "Worgen"
 msgstr "Worgen"
 
 #: dat/assets/worscha.xml:2
-#, fuzzy
 msgid "Worscha"
 msgstr "Worscha"
 
@@ -16530,17 +16501,14 @@ msgstr ""
 "acostumbrados a colocarse en la sección correcta del bar."
 
 #: dat/assets/wsthvn_d1.xml:2
-#, fuzzy
 msgid "WSTHVN D-1"
 msgstr "WSTHVN D-1"
 
 #: dat/assets/wsthvn_p1.xml:2
-#, fuzzy
 msgid "WSTHVN P-1"
 msgstr "WSTHVN P-1"
 
 #: dat/assets/xavier.xml:2 dat/ssys/xavier.xml:2
-#, fuzzy
 msgid "Xavier"
 msgstr "Xavier"
 
@@ -16594,7 +16562,6 @@ msgid ""
 msgstr ""
 
 #: dat/assets/yrina.xml:2
-#, fuzzy
 msgid "Yrina"
 msgstr "Yrina"
 
@@ -16630,7 +16597,6 @@ msgstr ""
 "enfoque informativo de su operación."
 
 #: dat/assets/zaals.xml:2
-#, fuzzy
 msgid "Zaals"
 msgstr "Zaals"
 
@@ -16665,7 +16631,6 @@ msgstr ""
 "sido abandonado completamente a la intemperie."
 
 #: dat/assets/zabween.xml:2
-#, fuzzy
 msgid "Zabween"
 msgstr "Zabween"
 
@@ -16693,7 +16658,6 @@ msgstr ""
 "trabajando en otra adición para poder colocar más fotos."
 
 #: dat/assets/zalebus.xml:2
-#, fuzzy
 msgid "Zalebus"
 msgstr "Zalebus"
 
@@ -16717,17 +16681,14 @@ msgid ""
 msgstr ""
 
 #: dat/assets/zalek_ii.xml:2
-#, fuzzy
 msgid "Za'lek II"
 msgstr "Za'lek II"
 
 #: dat/assets/zalek_iv.xml:2
-#, fuzzy
 msgid "Za'lek IV"
 msgstr "Za'lek IV"
 
 #: dat/assets/zaren.xml:2
-#, fuzzy
 msgid "Zaren"
 msgstr "Zaren"
 
@@ -16743,7 +16704,6 @@ msgstr ""
 "utilizar para conseguir los gases necesarios."
 
 #: dat/assets/zazarin.xml:2
-#, fuzzy
 msgid "Zazarin"
 msgstr "Zazarin"
 
@@ -16767,7 +16727,6 @@ msgid ""
 msgstr ""
 
 #: dat/assets/zembla_shakar.xml:2
-#, fuzzy
 msgid "Zembla Shakar"
 msgstr "Zembla Shakar"
 
@@ -16792,12 +16751,10 @@ msgstr ""
 "decepcionados, ya que hay muy poco que ver aquí."
 
 #: dat/assets/zemur_iii.xml:2
-#, fuzzy
 msgid "Zemur III"
 msgstr "Zemur III"
 
 #: dat/assets/zeo.xml:2
-#, fuzzy
 msgid "Zeo"
 msgstr "Zeo"
 
@@ -16824,7 +16781,6 @@ msgstr ""
 "fuera de servicio o que sea lento para responder en este bar."
 
 #: dat/assets/zepei.xml:2
-#, fuzzy
 msgid "Zepei"
 msgstr "Zepei"
 
@@ -16867,7 +16823,6 @@ msgid "Zero-One"
 msgstr "Cero-Uno"
 
 #: dat/assets/zesta.xml:2
-#, fuzzy
 msgid "Zesta"
 msgstr "Zesta"
 
@@ -16884,12 +16839,10 @@ msgstr ""
 "proceso de extracción, y para evitar graves quemaduras a los mineros."
 
 #: dat/assets/zethus.xml:2
-#, fuzzy
 msgid "Zethus"
 msgstr "Zethus"
 
 #: dat/assets/zhang_lu.xml:2
-#, fuzzy
 msgid "Zhang Lu"
 msgstr "Zhang Lu"
 
@@ -16926,7 +16879,6 @@ msgstr ""
 "limita mucho la elección de los vectores de aproximación."
 
 #: dat/assets/zhiru.xml:2
-#, fuzzy
 msgid "Zhiru"
 msgstr "Zhiru"
 
@@ -16961,22 +16913,18 @@ msgstr ""
 "estructura metálica."
 
 #: dat/assets/zintar_iv.xml:2
-#, fuzzy
 msgid "Zintar IV"
 msgstr "Zintar IV"
 
 #: dat/assets/zintar_v.xml:2
-#, fuzzy
 msgid "Zintar V"
 msgstr "Zintar V"
 
 #: dat/assets/ziz.xml:2
-#, fuzzy
 msgid "Ziz"
 msgstr "Ziz"
 
 #: dat/assets/zuner.xml:2
-#, fuzzy
 msgid "Zuner"
 msgstr "Zuner"
 
@@ -24745,22 +24693,18 @@ msgid "This slot can be used for fighter bays."
 msgstr "Esta ranura se puede utilizar para las bahías de cazas."
 
 #: dat/ssys/acheron.xml:2
-#, fuzzy
 msgid "Acheron"
 msgstr "Acheron"
 
 #: dat/ssys/adraia.xml:2
-#, fuzzy
 msgid "Adraia"
 msgstr "Adraia"
 
 #: dat/ssys/adran.xml:2
-#, fuzzy
 msgid "Adran"
 msgstr "Adran"
 
 #: dat/ssys/aesir.xml:2
-#, fuzzy
 msgid "Aesir"
 msgstr "Aesir"
 
@@ -24769,42 +24713,34 @@ msgid "#pSirius Homeworld#0"
 msgstr "#pMundo Hogar Sirio#0"
 
 #: dat/ssys/aesria.xml:2
-#, fuzzy
 msgid "Aesria"
 msgstr "Aesria"
 
 #: dat/ssys/aet.xml:2
-#, fuzzy
 msgid "Aet"
 msgstr "Aet"
 
 #: dat/ssys/akodu.xml:2
-#, fuzzy
 msgid "Akodu"
 msgstr "Akodu"
 
 #: dat/ssys/akra.xml:2
-#, fuzzy
 msgid "Akra"
 msgstr "Akra"
 
 #: dat/ssys/allous.xml:2
-#, fuzzy
 msgid "Allous"
 msgstr "Allous"
 
 #: dat/ssys/alteris.xml:2
-#, fuzzy
 msgid "Alteris"
 msgstr "Alteris"
 
 #: dat/ssys/amaroq.xml:2
-#, fuzzy
 msgid "Amaroq"
 msgstr "Amaroq"
 
 #: dat/ssys/amatiri.xml:2
-#, fuzzy
 msgid "Amatiri"
 msgstr "Amatiri"
 
@@ -24821,22 +24757,18 @@ msgid "#rHaze (-50% Shield and Shield Regen)#0"
 msgstr "#rNiebal (-50% Escudo y Regen. Escudo)#0"
 
 #: dat/ssys/anarbalis.xml:2
-#, fuzzy
 msgid "Anarbalis"
 msgstr "Anarbalis"
 
 #: dat/ssys/andee.xml:2
-#, fuzzy
 msgid "Andee"
 msgstr "Andee"
 
 #: dat/ssys/andres.xml:2
-#, fuzzy
 msgid "Andres"
 msgstr "Andres"
 
 #: dat/ssys/aneel_azi.xml:2
-#, fuzzy
 msgid "Aneel Azi"
 msgstr "Aneel Azi"
 
@@ -24845,37 +24777,30 @@ msgid "Anger"
 msgstr "Ira"
 
 #: dat/ssys/anku.xml:2
-#, fuzzy
 msgid "An'ku"
 msgstr "An'ku"
 
 #: dat/ssys/anrique.xml:2
-#, fuzzy
 msgid "Anrique"
 msgstr "Anrique"
 
 #: dat/ssys/antares.xml:2
-#, fuzzy
 msgid "Antares"
 msgstr "Antares"
 
 #: dat/ssys/antlejos.xml:2
-#, fuzzy
 msgid "Antlejos"
 msgstr "Antlejos"
 
 #: dat/ssys/apez.xml:2
-#, fuzzy
 msgid "Apez"
 msgstr "Apez"
 
 #: dat/ssys/apik.xml:2
-#, fuzzy
 msgid "Apik"
 msgstr "Apik"
 
 #: dat/ssys/arandon.xml:2
-#, fuzzy
 msgid "Arandon"
 msgstr "Arandon"
 
@@ -52254,6 +52179,9 @@ msgid ""
 "Lieutenant Czesc told you to keep an eye out for him in Empire space to "
 "continue the operation."
 msgstr ""
+"Dejas al burócrata en {pnt} y te entrega una ficha de un crédito. El "
+"teniente Czesc te dijo que estuvieras atento a él en el espacio del Imperio "
+"para continuar la operación."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:73
 msgid ""
@@ -52261,6 +52189,9 @@ msgid ""
 "Czesc told you to keep an eye out out for him in Empire space to continue "
 "the operation."
 msgstr ""
+"Has entregado un burócrata de envio a {pnt} para el Imperio. El Teniente "
+"Czesc te dijo que lo buscaras en el espacio del Imperio para continuar la "
+"operación."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:45
 msgid ""
@@ -52270,6 +52201,11 @@ msgid ""
 "presses a button on his wrist computer. \"We're hoping to expand to Dvaered "
 "territory next. Can I count on your help?\""
 msgstr ""
+"El Teniente Czesc te saluda con la mano cuando se da cuenta de que entras en "
+"el bar. \"Sabía que nos encontraríamos pronto. Gran trabajo en la entrega de "
+"ese burócrata. Deberíamos estar en marcha en el espacio Soromida en poco "
+"tiempo\". Pulsa un botón en su ordenador de muñeca. \"Esperamos expandirnos "
+"al territorio Dvaered a continuación. ¿Puedo contar con tu ayuda?\""
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
@@ -52278,7 +52214,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:54
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:58
 msgid "Dvaered Long Distance Recruitment"
-msgstr ""
+msgstr "Reclutamiento a Larga Distancia Dvaered"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:49
 msgid ""
@@ -52290,6 +52226,13 @@ msgid ""
 "Afterwards, keep an eye out for me in Empire space and we can continue the "
 "operation.\""
 msgstr ""
+"\"¡Genial!\", dice el Teniente Czesc. \"Enviaré un mensaje al burócrata para "
+"que se reúna con usted en el hangar. Los Dvaered son, por supuesto, aliados "
+"del Imperio. Aun así, se ofenden con facilidad, así que intenta no hablar "
+"demasiado. Tu misión es dejar al burócrata en {pnt} en el sistema {sys}. Él "
+"se encargará a partir de ahí y me informará cuando se haya establecido el "
+"contrato de transporte. Después, manténgase atento a mí en el espacio del "
+"Imperio y podremos continuar la operación.\""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:72
 msgid ""
@@ -52297,12 +52240,18 @@ msgid ""
 "remember Lieutenant Czesc told you to look for him on Empire controlled "
 "planets after you finish."
 msgstr ""
+"Dejas al burócrata en {pnt} y te entrega una ficha de crédito. Recuerdas que "
+"el Teniente Czesc te dijo que lo buscaras en los planetas controlados por el "
+"Imperio cuando terminaras."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:74
 msgid ""
 "You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
 "Czesc told you to look for him on Empire controlled planets after you finish."
 msgstr ""
+"Has entregado un burócrata de envio a {pnt} para el Imperio. El Teniente "
+"Czesc te ha dicho que lo busques en los planetas controlados por el Imperio "
+"cuando termines."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:45
 msgid ""
@@ -52312,6 +52261,11 @@ msgid ""
 "next mission is to get House Za'lek on board. Interested in helping out "
 "again?\""
 msgstr ""
+"El Teniente Czesc se sienta en el bar. Parece que realmente maneja los "
+"negocios en todo el Imperio. Tú tomas asiento junto a él. \"Gracias a tu "
+"ayuda, la División de Envio de la Armada del Imperio pronto operará en toda "
+"la galaxia. Nuestra próxima misión es conseguir que la Casa Za'lek esté a "
+"bordo. ¿Interesado en volver a ayudar?\""
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
@@ -52320,7 +52274,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:54
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:58
 msgid "Za'lek Long Distance Recruitment"
-msgstr ""
+msgstr "Reclutamiento a Larga Distancia Za'lek"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:49
 msgid ""
@@ -52331,6 +52285,12 @@ msgid ""
 "established. There is still more work to be done, so I expect to see you "
 "again soon.\""
 msgstr ""
+"\"¡Tenía el presentimiento de que lo harías!\", dice el Teniente Czesc. "
+"\"Tengo otro burócrata listo para establecer lazos comerciales. Los Za'lek "
+"son bastante misteriosos, así que mantén tu ingenio para tí. El diplomático "
+"sólo tiene que ir al {pnt} en el sistema {sys}. Él me hará saber cuando se "
+"hayan establecido relaciones comerciales. Todavía hay más trabajo por hacer, "
+"así que espero volver a verte pronto.\""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:72
 msgid ""
@@ -52338,6 +52298,9 @@ msgid ""
 "Lieutenant Czesc mentioned more work, so you figure you'll run into him at a "
 "bar again soon."
 msgstr ""
+"Dejas a la diplomática en {pnt}, y te entrega una ficha de crédito. El "
+"Teniente Czesc mencionó más trabajo, así que te imaginas que pronto te lo "
+"encontrarás de nuevo en un bar."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:74
 msgid ""
@@ -52345,6 +52308,9 @@ msgid ""
 "Czesc mentioned more work, so you figure you'll run into him at a bar again "
 "soon."
 msgstr ""
+"Entregaste un burócrata de envio a {pnt} para el Imperio. El Teniente Czesc "
+"mencionó más trabajo, así que te imaginas que pronto te lo encontrarás en un "
+"bar."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:45
 msgid ""
@@ -52354,12 +52320,17 @@ msgid ""
 "We're hoping to extend our relations to the Frontier Alliance. You know the "
 "drill by this point. Ready to help?\""
 msgstr ""
+"\"Tenemos que dejar de cruzarnos así\". El Teniente Czesc se ríe de su "
+"chiste. \"Es una broma, sabes que estoy en deuda contigo por ayudar a "
+"establecer estos contratos. Hasta ahora, todo se ha movido sin problemas por "
+"nuestra parte. Esperamos ampliar nuestras relaciones con la Alianza "
+"Frontera. A estas alturas ya conoces el procedimiento. ¿Listo para ayudar?\""
 
 #. Flavour text and mini-briefing
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:49
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:58
 msgid "Frontier Alliance Long Distance Recruitment"
-msgstr ""
+msgstr "Reclutamiento de Larga Distancia de la Alianza Frontera"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:49
 msgid ""
@@ -52369,12 +52340,17 @@ msgid ""
 "bureaucrat off at {pnt} in the {sys} system. After this, there should only "
 "be one more faction to bring into the fold. I expect to see you again soon.\""
 msgstr ""
+"\"Aplaudo tu compromiso\", dice el Teniente Czesc, \"y sé que no son las "
+"misiones más emocionantes, pero son muy útiles. La frontera puede ser un "
+"poco peligrosa, así que asegúrate de estar preparado. Tienes que dejar al "
+"burócrata en {pnt} en el sistema {sys}. Después de esto, sólo debería haber "
+"una facción más que traer al redil. Espero volver a verte pronto.\""
 
 #. -Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:54
 msgid "Frontier Long Distance Recruitment"
-msgstr ""
+msgstr "Reclutamiento de Larga Distancia Frontera"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:72
 msgid ""
@@ -52385,6 +52361,12 @@ msgid ""
 "bureaucracy. Only your loyalty to the Empire stopped you from sending her "
 "out into the vacuum of space."
 msgstr ""
+"Entregas el diplomático a {pnt}, y ella te entrega una ficha de crédito. "
+"Afortunadamente, la Teniente Czesc mencionó que sólo necesitaba tu ayuda "
+"para una misión más. Esta última burócrata se negó a quedarse en sus "
+"aposentos, prefiriendo pasar el rato en el puente y darte los entresijos de "
+"la burocracia del Imperio. Sólo tu lealtad al Imperio te impidió enviarla al "
+"vacío del espacio."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:74
 msgid ""
@@ -52395,6 +52377,12 @@ msgid ""
 "Only your loyalty to the Empire stopped you from sending her out into the "
 "vacuum of space."
 msgstr ""
+"Entregaste un burócrata de envio a {pnt} para el Imperio. Afortunadamente, "
+"la Teniente Czesc mencionó que sólo necesitaba tu ayuda de nuevo para una "
+"misión más. Esta última burócrata se negó a quedarse en sus aposentos, "
+"prefiriendo pasar el rato en el puente y darte los entresijos de la "
+"burocracia del Imperio. Sólo su lealtad al Imperio te impidió enviarla al "
+"vacío del espacio."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:45
 msgid ""
@@ -52402,6 +52390,10 @@ msgid ""
 "Empire Armada employee. We're on track to establish a deal with House "
 "Sirius. This should be the last contract to be negotiated. Ready to go?\""
 msgstr ""
+"El Teniente Czesc se acerca al entrar en el bar. \"Si es mi empleado "
+"favorito de la Armada del Imperio. Estamos en camino de establecer un "
+"acuerdo con la Casa Sirio. Este debería ser el último contrato a negociar. ¿"
+"Listo para ir?\""
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
@@ -52410,7 +52402,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:54
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:58
 msgid "Sirius Long Distance Recruitment"
-msgstr ""
+msgstr "Reclutamiento de Larga Distancia Sirio"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:49
 msgid ""
@@ -52420,6 +52412,10 @@ msgid ""
 "time and we'll finalize the paperwork to get you all set up for these "
 "missions.\""
 msgstr ""
+"\"Ya sabes cómo va esto\", dice el Teniente Czesc, \"Deja al burócrata en "
+"{pnt} en el sistema {sys}. El espacio Sirio está bastante lejos, así que "
+"prepárate para cualquier cosa. Después, ven a buscarme una vez más y "
+"finalizaremos el papeleo para que estés preparado para estas misiones.\""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:72
 msgid ""
@@ -52427,6 +52423,9 @@ msgid ""
 "Lieutenant Czesc said to look for him in an Empire bar for some paperwork. "
 "Bureaucracy at its finest."
 msgstr ""
+"Dejas al diplomático en {pnt}, y te entrega una ficha de crédito. El "
+"Teniente Czesc dijo que lo buscara en un bar del Imperio para hacer unos "
+"trámites. La burocracia en su máxima expresión."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:74
 msgid ""
@@ -52434,6 +52433,9 @@ msgid ""
 "Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy "
 "at its finest."
 msgstr ""
+"Has entregado un burócrata de envio a {pnt} para el Imperio. El Teniente "
+"Czesc dijo que lo buscara en un bar del Imperio por unos papeles. La "
+"burocracia en su máxima expresión."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:48
 msgid ""
@@ -52443,6 +52445,12 @@ msgid ""
 "transport back to {pnt} in the {sys} system. Once there, I can authorize you "
 "to help out with the long-distance shipping missions. Can I count on you?\""
 msgstr ""
+"El Teniente Czesc te da una palmada en la espalda mientras tomas asiento "
+"junto a él en la barra. \"¡Lo hemos conseguido! Hemos establecido puestos de "
+"avanzada de la Armada del Imperio en gran parte de la galaxia. Sólo tengo "
+"que pedirte un favor más. Necesito transporte de vuelta a {pnt} en el "
+"sistema {sys}. Una vez allí, puedo autorizarte a ayudar en las misiones de "
+"envio de larga distancia. ¿Puedo contar contigo?\""
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
@@ -52451,7 +52459,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:57
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:61
 msgid "Empire Long Distance Recruitment"
-msgstr ""
+msgstr "Reclutamiento de Larga Distancia Imperio"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:52
 msgid ""
@@ -52460,10 +52468,14 @@ msgid ""
 "Lieutenant Czesc excitedly gets up from the bar. \"Let's get going as soon "
 "as possible. There's no place like home!\""
 msgstr ""
+"Internamente gimes ante la idea de tener que hacer otro viaje por la galaxia "
+"para conseguir más papeleo, pero al menos tendrás acceso a nuevas misiones. "
+"El Teniente Czesc se levanta entusiasmado de la barra. \"Pongámonos en "
+"marcha cuanto antes. ¡No hay lugar como el hogar!\""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:59
 msgid "Deliver Lieutenant Czesc to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Entregar al Teniente Czesc a {pnt} en el sistema {sys}"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:75
 msgid ""
@@ -52478,6 +52490,16 @@ msgid ""
 "factions. Again, I can't thank you enough! The Empire does not quickly "
 "forget such dedication.\""
 msgstr ""
+"El Teniente Czesc sale de tu nave y toma una profunda bocanada de aire. \"Me "
+"encanta el olor de la burocracia por la mañana\". Le estrecha la mano. \"¡"
+"Gracias por toda tu ayuda, capitán! Acompáñeme al cuartel general y podremos "
+"hacer algunos trámites para ponerte en orden. Después deberías empezar a "
+"recibir misiones de transporte de larga distancia. Pagan mejor que nuestras "
+"misiones de transporte regulares, pero a menudo requieren viajar distancias "
+"más largas y entrar en territorio controlado por otras facciones. Es más "
+"probable que las veas en los límites del espacio del Imperio, donde la carga "
+"está lista para salir hacia otras facciones. De nuevo, ¡no puedo "
+"agradecertelo suficiente! El Imperio no olvida rápidamente tal dedicación.\""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:77
 msgid ""
@@ -52488,6 +52510,13 @@ msgid ""
 "to see them on the edges of Empire space where cargo is ready to head out to "
 "other factions."
 msgstr ""
+"Has transportado al Teniente Czesc a {pnt} para realizar unos trámites. "
+"Ahora puedes hacer misiones de carga de larga distancia para el Imperio. Se "
+"pagan mejor que las misiones de transporte regulares del Imperio, pero a "
+"menudo requieren viajar distancias más largas y entrar en territorio "
+"controlado por otras facciones. Es más probable que las veas en los límites "
+"del espacio del Imperio, donde la carga está lista para salir hacia otras "
+"facciones."
 
 #.
 #. -- Empire shipping missions are always timed, but quite lax on the schedules
@@ -52509,10 +52538,12 @@ msgstr ""
 msgid ""
 "Official Empire long distance cargo transport to {pnt} in the {sys} system."
 msgstr ""
+"Transporte oficial de carga de larga distancia del Imperio a {pnt} en el "
+"sistema {sys}."
 
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:149
 msgid "Long Distance Empire Shipping"
-msgstr ""
+msgstr "Envío de Larga Distancia del Imperio"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -52548,11 +52579,11 @@ msgstr ""
 #. Spaceport bar stuff
 #: dat/missions/empire/shipping/es00.lua:44
 msgid "Commander"
-msgstr ""
+msgstr "Comandante"
 
 #: dat/missions/empire/shipping/es00.lua:44
 msgid "You see an Empire Commander. He seems to have noticed you."
-msgstr ""
+msgstr "Ves a un Comandante del Imperio. Parece que se ha fijado en ti."
 
 #: dat/missions/empire/shipping/es00.lua:50
 msgid ""
@@ -52563,6 +52594,12 @@ msgid ""
 "missions, unlike the ones you've recently completed for the division. Would "
 "you be up for the challenge?\""
 msgstr ""
+"Te acercas al Comandante del Imperio.\n"
+"    \"Hola, usted debe ser {player}. He oído hablar de ti. Soy el Comandante "
+"Soldner. Tenemos algunas misiones más difíciles para alguien como tú en la "
+"división de Envíos del Imperio. Habría algún peligro real en estas misiones, "
+"a diferencia de las que has completado recientemente para la división. ¿"
+"Estarías dispuesto a aceptar el reto?\""
 
 #. Accept mission
 #. target destination
@@ -52579,12 +52616,12 @@ msgstr ""
 #: dat/missions/empire/shipping/es00.lua:95
 #: dat/missions/empire/shipping/es00.lua:99
 msgid "Prisoner Exchange"
-msgstr ""
+msgstr "Intercambio de Prisioneros"
 
 #: dat/missions/empire/shipping/es00.lua:65
 #: dat/missions/empire/shipping/es00.lua:71
 msgid "Go to {pnt} in the {sys} system to exchange prisoners with the FLF"
-msgstr ""
+msgstr "Ve a {pnt} en el sistema {sys} para intercambiar prisioneros con el FLF"
 
 #: dat/missions/empire/shipping/es00.lua:68
 msgid ""
@@ -52598,21 +52635,32 @@ msgid ""
 "{ret_sys} for debriefing. You'll be compensated for your troubles. Good luck."
 "\""
 msgstr ""
+"\"Tenemos un intercambio de prisioneros con la FLF que tendrá lugar en "
+"{dest_pnt} en el sistema {dest_sys}. Quieren que un piloto más \"neutral\" "
+"haga el intercambio. Tendrías que ir a {dest_pnt} con algunos prisioneros "
+"del FLF a bordo de tu nave e intercambiarlos por algunos de los nuestros. No "
+"tendrás escoltas visibles pero usaremos naves en sectores cercanos para "
+"monitorear tu estado.\n"
+"\"Una vez que recuperes a nuestra gente capturada, tráelos a {ret_pnt} en "
+"{ret_sys} para interrogarlos. Serás compensado por tus problemas. Buena "
+"suerte.\""
 
 #. Set up the goal
 #: dat/missions/empire/shipping/es00.lua:74
 msgid "Prisoners"
-msgstr ""
+msgstr "Prisioneros"
 
 #: dat/missions/empire/shipping/es00.lua:74
 msgid "FLF prisoners."
-msgstr ""
+msgstr "Prisioneros FLF."
 
 #: dat/missions/empire/shipping/es00.lua:76
 msgid ""
 "The prisoners are loaded onto your ship along with a few marines to ensure "
 "nothing untoward happens."
 msgstr ""
+"Los prisioneros son cargados en tu nave junto con algunos marines para "
+"asegurar que no ocurra nada malo."
 
 #: dat/missions/empire/shipping/es00.lua:93
 msgid ""
@@ -52624,6 +52672,13 @@ msgid ""
 "with guns to their backs. You see figures step out of the shadows with "
 "weapons too; most likely the FLF."
 msgstr ""
+"Al aterrizar, observas que el puerto estelar ha sido vaciado. También "
+"observas que hay explosivos colocados en algunas de las columnas. Esto no "
+"tiene buena pinta. Los marines te dicen que te quedes quieto mientras ellos "
+"salen a intentar completar el intercambio de prisioneros.\n"
+"    Desde la cabina ves que los marines llevan a los prisioneros delante de "
+"ellos con las armas a la espalda. Ves a unas figuras salir de las sombras "
+"con armas también; seguramente el FLF."
 
 #: dat/missions/empire/shipping/es00.lua:95
 msgid ""
@@ -52636,11 +52691,19 @@ msgid ""
 "up many FLF and Dvaered ships. Looks like you're going to have quite a run "
 "to get the hell out of here. This didn't go as you expected."
 msgstr ""
+"De repente, suena una sirena y se oye un tiroteo. Rápidamente enciendes los "
+"motores y te preparas para despegar. Los disparos suenan por toda la bahía "
+"de aterrizaje y puedes ver un par de cadáveres mientras sales del puerto "
+"estelar. Te acuerdas de los explosivos justo cuando se producen fuertes "
+"explosiones detrás de ti. Esto no pinta nada bien.\n"
+"    Empiezas a salir de la atmósfera y notas cómo estás captando muchas "
+"naves FLF y Dvaered. Parece que vas a tener una buena carrera para salir de "
+"aquí. Esto no ha ido como esperabas."
 
 #: dat/missions/empire/shipping/es00.lua:98
 #: dat/missions/empire/shipping/es00.lua:100
 msgid "Return to {pnt} in the {sys} system to report what happened"
-msgstr ""
+msgstr "Vuelve a {pnt} en el sistema {sys} para informar de lo sucedido"
 
 #. Prevent players from saving on the destination planet
 #. We'll take off right away again
@@ -52649,7 +52712,7 @@ msgstr ""
 #. Flavour text
 #: dat/missions/empire/shipping/es00.lua:119
 msgid "Mission Report"
-msgstr ""
+msgstr "Informe de Misión"
 
 #: dat/missions/empire/shipping/es00.lua:119
 msgid ""
@@ -52664,6 +52727,15 @@ msgid ""
 "meet me up in the bar in a while. We get no rest around here. The payment "
 "has already been transferred to your bank account.\""
 msgstr ""
+"Después de dejar tu nave en el puerto estelar, te encuentras con el "
+"comandante Soldner. Por su cara, parece que ya sabe lo que ha pasado.\n"
+"    \"Todo fue culpa de los Dvaered. Llegaron de la nada y empezaron a "
+"disparar. Qué lío tan horrible. Ya estamos trabajando en ordenar las culpas\""
+".\n"
+"    Suspira. \"Teníamos buena gente allí. Y desde luego no queríamos que "
+"empezaran con un lío como éste, pero si estás interesado en más misiones, "
+"reúnete conmigo en el bar dentro de un rato. No tenemos descanso por aquí. "
+"El pago ya ha sido transferido a tu cuenta bancaria.\""
 
 #: dat/missions/empire/shipping/es00.lua:123
 msgid ""
@@ -52673,6 +52745,11 @@ msgid ""
 "Soldner has asked you to meet him in the bar on Halir if you're interested "
 "in more missions."
 msgstr ""
+"Participaste en un intercambio de prisioneros con el FLF en nombre del "
+"Imperio. Por desgracia, el intercambio de prisioneros fracasó. \"Fue todo "
+"culpa de los Dvaered. Llegaron de la nada y empezaron a disparar\". El "
+"comandante Soldner te ha pedido que te reúnas con él en el bar de Halir si "
+"estás interesado en más misiones."
 
 #. Force FLF combat music (note: must clear this later on).
 #. Get a random position near the player
@@ -52689,13 +52766,14 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:159
 #: dat/missions/empire/shipping/es02.lua:214
 msgid "FLF Ambusher"
-msgstr ""
+msgstr "Emboscada FLF"
 
 #. Now the Dvaered
 #. Player should not be able to reland
 #: dat/missions/empire/shipping/es00.lua:164
 msgid "The docking stabilizers have been damaged by weapons fire!"
 msgstr ""
+"¡Los estabilizadores de atraque han sido dañados por el fuego de las armas!"
 
 #. Storing the system the player jumped from.
 #.
@@ -52737,11 +52815,11 @@ msgstr ""
 #: dat/missions/empire/shipping/es01.lua:46
 #: dat/missions/empire/shipping/es02.lua:61
 msgid "Soldner"
-msgstr ""
+msgstr "Soldner"
 
 #: dat/missions/empire/shipping/es01.lua:46
 msgid "You see Commander Soldner. He is expecting you."
-msgstr ""
+msgstr "Ves al Comandante Soldner. Te está esperando."
 
 #. See if accept mission
 #. Flavour text and mini-briefing
@@ -52755,13 +52833,15 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:85
 #: dat/missions/empire/shipping/es02.lua:87
 msgid "Commander Soldner"
-msgstr ""
+msgstr "Comandante Soldner"
 
 #: dat/missions/empire/shipping/es01.lua:52
 msgid ""
 "You approach Commander Soldner, who seems to be waiting for you.\n"
 "\"Ready for your next mission?\""
 msgstr ""
+"Te acercas al Comandante Soldner, que parece estar esperándote.\n"
+"\"¿Listo para tu próxima misión?\""
 
 #. target destination
 #. Mission details
@@ -52770,12 +52850,12 @@ msgstr ""
 #: dat/missions/empire/shipping/es01.lua:106
 #: dat/missions/empire/shipping/es01.lua:119
 msgid "Empire Shipping Delivery"
-msgstr ""
+msgstr "Entrega de Envíos del Imperio"
 
 #: dat/missions/empire/shipping/es01.lua:66
 #: dat/missions/empire/shipping/es01.lua:72
 msgid "Pick up a package at {pnt} in the {sys} system"
-msgstr ""
+msgstr "Recoger un paquete en {pnt} en el sistema {sys}"
 
 #: dat/missions/empire/shipping/es01.lua:69
 msgid ""
@@ -52788,6 +52868,15 @@ msgid ""
 "actual delivery by yourself. This way we shouldn't arouse suspicion. You are "
 "to report here when you finish delivery and you'll be paid {credits}.\""
 msgstr ""
+"El Comandante Soldner comienza: \"Tenemos un paquete importante que debe "
+"llegar desde {pickup_pnt} en el sistema {pickup_sys} hasta {dropoff_pnt} en "
+"el sistema {dropoff_sys}. Tenemos razones para creer que también es buscado "
+"por fuerzas externas.\n"
+"    \"El plan es enviar un convoy de avanzada con guardias para hacer la "
+"carrera en un intento de confundir a los posibles enemigos. A continuación, "
+"irás y harás la entrega real por ti mismo. De esta manera no deberíamos "
+"levantar sospechas. Debes reportarte aquí cuando termines la entrega y se te "
+"pagarán {credits}.\""
 
 #: dat/missions/empire/shipping/es01.lua:76
 msgid ""
@@ -52795,12 +52884,15 @@ msgid ""
 "destination. Since you are undercover, Empire ships won't assist you if you "
 "come under fire, so stay sharp. Good luck.\""
 msgstr ""
+"\"Evite las hostilidades a toda costa. El paquete debe llegar a su destino. "
+"Como estás de incógnito, las naves del Imperio no te ayudarán si estás bajo "
+"fuego, así que mantente alerta. Buena suerte.\""
 
 #. Set hooks
 #. Make sure player has room.
 #: dat/missions/empire/shipping/es01.lua:92
 msgid "Need More Space"
-msgstr ""
+msgstr "Necesitas Más Espacio"
 
 #: dat/missions/empire/shipping/es01.lua:93
 #, lua-format
@@ -52811,37 +52903,43 @@ msgid_plural ""
 "You do not have enough space to load the packages. You need to make room for "
 "%d more tonnes."
 msgstr[0] ""
+"No tienes suficiente espacio para cargar los paquetes. Necesita hacer "
+"espacio para %d tonelada más."
 msgstr[1] ""
+"No tienes suficiente espacio para cargar los paquetes. Necesitas hacer "
+"espacio para %d toneladas más."
 
 #. Update mission
 #: dat/missions/empire/shipping/es01.lua:100
 msgid "Packages"
-msgstr ""
+msgstr "Paquetes"
 
 #: dat/missions/empire/shipping/es01.lua:100
 msgid "Several packages of \"food\"."
-msgstr ""
+msgstr "Varios paquetes de \"comida\"."
 
 #: dat/missions/empire/shipping/es01.lua:104
 #: dat/missions/empire/shipping/es01.lua:107
 msgid "Deliver the package to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Entrega el paquete a {pnt} en el sistema {sys}"
 
 #. Load message
 #: dat/missions/empire/shipping/es01.lua:111
 msgid "Loading Cargo"
-msgstr ""
+msgstr "Cargando Carga"
 
 #: dat/missions/empire/shipping/es01.lua:111
 msgid ""
 "The packages labelled \"Food\" are loaded discreetly onto your ship. Now to "
 "deliver them to {pnt} in the {sys} system."
 msgstr ""
+"Los paquetes etiquetados como \"Comida\" son cargados discretamente en tu "
+"nave. Ahora hay que entregarlos a {pnt} en el sistema {sys}."
 
 #. Some text
 #: dat/missions/empire/shipping/es01.lua:122
 msgid "Cargo Delivery"
-msgstr ""
+msgstr "Envio de Carga"
 
 #: dat/missions/empire/shipping/es01.lua:122
 msgid ""
@@ -52849,6 +52947,10 @@ msgid ""
 "notice that one of them gives you a note. Looks like you'll have to go to "
 "{pnt} in the {sys} system to report to Commander Soldner."
 msgstr ""
+"Los trabajadores descargan rápidamente el paquete con la misma discreción "
+"con la que fue cargado. Te das cuenta de que uno de ellos te da una nota. "
+"Parece que tendrás que ir a {pnt} en el sistema {sys} para presentarte al "
+"Comandante Soldner."
 
 #: dat/missions/empire/shipping/es01.lua:133
 msgid ""
@@ -52860,6 +52962,13 @@ msgid ""
 "    \"If you're interested in more work, meet me in the bar in a bit. I've "
 "got some paperwork I need to finish first.\""
 msgstr ""
+"Llegas a {pnt} y te presentas ante el Comandante Soldner. Te saluda y "
+"empieza a hablar. \"He oído que has encontrado resistencia. Al menos has "
+"podido entregar el paquete. Gran trabajo. He conseguido que te den la "
+"Licencia de Armas Pesadas. Aunque todavía tendrás que pagar la cuota para "
+"conseguirla.\n"
+"    \"Si estás interesado en más trabajo, reúnete conmigo en el bar en un "
+"rato. Tengo que terminar un papeleo antes.\""
 
 #: dat/missions/empire/shipping/es01.lua:136
 msgid ""
@@ -52869,6 +52978,11 @@ msgid ""
 "    \"If you're interested in more work, meet me in the bar in a bit. I've "
 "got some paperwork I need to finish first.\""
 msgstr ""
+"Llegas a {pnt} y te presentas ante el Comandante Soldner. Te saluda y "
+"empieza a hablar. \"He oído que has encontrado resistencia. Al menos has "
+"conseguido entregar el paquete\".\n"
+"    \"Si estás interesado en más trabajo, reúnete conmigo en el bar dentro "
+"de un rato. Tengo que terminar un papeleo antes.\""
 
 #. The goods
 #: dat/missions/empire/shipping/es01.lua:143
@@ -52878,6 +52992,10 @@ msgid ""
 "outfitter. Commander Soldner said that you can meet him in the bar at Halir "
 "if you're interested in more work."
 msgstr ""
+"Has completado con éxito una entrega de paquetes para el Imperio. Como "
+"resultado, has sido autorizado para obtener una Licencia de Armas Pesadas y "
+"ahora puedes comprarla en un proveedor. El Comandante Soldner dijo que "
+"puedes reunirte con él en el bar de Halir si estás interesado en más trabajo."
 
 #: dat/missions/empire/shipping/es01.lua:145
 msgid ""
@@ -52885,6 +53003,9 @@ msgid ""
 "Soldner said that you can meet him in the bar at Halir if you're interested "
 "in more work."
 msgstr ""
+"Has completado con éxito una entrega de paquetes para el Imperio. El "
+"comandante Soldner dice que puedes reunirte con él en el bar de Halir si te "
+"interesa más trabajo."
 
 #. Mercenaries appear after a couple of jumps
 #. Get player position
@@ -52936,10 +53057,12 @@ msgid ""
 "You failed in your attempt to rescue a VIP for the Empire. Meet with "
 "Commander Soldner on Halir to try again."
 msgstr ""
+"Has fallado en tu intento de rescatar a un VIP para el Imperio. Reúnete con "
+"el Comandante Soldner en Halir para volver a intentarlo."
 
 #: dat/missions/empire/shipping/es02.lua:61
 msgid "Commander Soldner is waiting for you."
-msgstr ""
+msgstr "El Comandante Soldner te está esperando."
 
 #: dat/missions/empire/shipping/es02.lua:67
 msgid ""
@@ -52947,6 +53070,9 @@ msgid ""
 "    \"Hello again, {player}. Still interested in doing another mission? This "
 "one will be more dangerous.\""
 msgstr ""
+"Te encuentras una vez más con el Comandante Soldner en el bar.\n"
+"    \"Hola de nuevo, {player}. ¿Sigues interesado en hacer otra misión? Esta "
+"será más peligrosa.\""
 
 #. Accept the mission
 #. Set marker
@@ -52955,12 +53081,12 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:88
 #: dat/missions/empire/shipping/es02.lua:231
 msgid "Empire VIP Rescue"
-msgstr ""
+msgstr "Rescatar Imperial VIP"
 
 #: dat/missions/empire/shipping/es02.lua:82
 #: dat/missions/empire/shipping/es02.lua:89
 msgid "Rescue the VIP from a transport ship in the {sys} system"
-msgstr ""
+msgstr "Rescata al VIP de una nave de transporte en el sistema {sys}"
 
 #: dat/missions/empire/shipping/es02.lua:85
 msgid ""
@@ -52977,6 +53103,18 @@ msgid ""
 "must not allow the transport ship to be destroyed before you rescue the VIP. "
 "His survival is vital.\""
 msgstr ""
+"El Comandante Soldner asiente y continúa: \"Nos han informado de que una "
+"nave de transporte fue atacada mientras llevaba a un VIP. Lograron escapar, "
+"pero el motor terminó por fallar en el sistema {sys}. La nave está ahora "
+"inutilizada y necesitamos que alguien aborde la nave y rescate al VIP. Se "
+"han detectado muchas naves FLF cerca del sector, pero hemos conseguido "
+"organizar una escolta Dvaered para ti.\n"
+"    \"Tendrás que volar al sistema {sys}, encontrar y abordar la nave de "
+"transporte para rescatar al VIP, y luego volar de vuelta. Lo más probable es "
+"que el sector esté caliente. Ahí es donde entrarán tus escoltas Dvaered. Tu "
+"misión será distraer y neutralizar a todos los posibles hostiles. No debes "
+"permitir que la nave de transporte sea destruida antes de rescatar al VIP. "
+"Su supervivencia es vital.\""
 
 #: dat/missions/empire/shipping/es02.lua:87
 msgid ""
@@ -52984,6 +53122,9 @@ msgid ""
 "accidentally destroy the transport ship. If all goes well, you'll be paid "
 "{credits} when you return with the VIP. Good luck, pilot.\""
 msgstr ""
+"\" Ten cuidado con los Dvaered; pueden ser un poco bruscos, y podrían "
+"destruir accidentalmente la nave de transporte. Si todo va bien, te pagarán "
+"{credits} cuando vuelvas con el VIP. Buena suerte, piloto.\""
 
 #: dat/missions/empire/shipping/es02.lua:119
 msgid ""
@@ -52995,12 +53136,22 @@ msgid ""
 "Heavy Combat Vessel License; congratulations! We have nothing more for you "
 "now, but check in periodically in case something comes up for you.\""
 msgstr ""
+"Aterrizas en el puerto estelar. Parece que el VIP ya se ha recuperado. Te "
+"agradece profusamente antes de marcharse. Procedes a visitar al Comandante "
+"Soldner. Parece estar contento, por una vez.\n"
+"    \"Parece que lo has conseguido. Al principio tenía mis dudas, pero has "
+"demostrado ser un piloto muy hábil. Ah, y te he dado el visto bueno para la "
+"Licencia de Naves de Combate Pesado; ¡felicidades! No tenemos nada más para "
+"ti ahora, pero comprueba periódicamente por si surge algo.\""
 
 #: dat/missions/empire/shipping/es02.lua:121
 msgid ""
 "You successfully rescued a VIP for the Empire and have been cleared for a "
 "Heavy Combat Vessel License; you can now buy one at the outfitter."
 msgstr ""
+"Has rescatado con éxito a un VIP para el Imperio y has sido autorizado para "
+"obtener una Licencia de Nave de Combate Pesada; ahora puedes comprar una en "
+"el equipador."
 
 #: dat/missions/empire/shipping/es02.lua:124
 msgid ""
@@ -53011,10 +53162,16 @@ msgid ""
 "but you've proven to be a very skilled pilot. We have nothing more for you "
 "now, but check in periodically in case something comes up for you.\""
 msgstr ""
+"Aterrizas en el puerto estelar. Parece que el VIP ya se ha recuperado. Te lo "
+"agradece profusamente antes de marcharse. Procedes a visitar al Comandante "
+"Soldner. Pareces estar contento, por una vez.\n"
+"    \"Parece que lo has conseguido. Al principio tenía mis dudas, pero has "
+"demostrado ser un piloto muy hábil. No tenemos nada más para ti ahora, pero "
+"comprueba periódicamente por si te surge algo.\""
 
 #: dat/missions/empire/shipping/es02.lua:126
 msgid "You successfully rescued a VIP for the Empire."
-msgstr ""
+msgstr "Has rescatado con éxito a un VIP para el Imperio."
 
 #. Force FLF combat music (note: must clear this later on).
 #. Put the VIP a ways off of the player but near the jump.
@@ -53022,7 +53179,7 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:146
 #: dat/missions/empire/shipping/es02.lua:223
 msgid "VIP"
-msgstr ""
+msgstr "VIP"
 
 #. To make it more interesting a vendetta will solely target the player.
 #. If player is seen, have them target player
@@ -53037,33 +53194,35 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:192
 #: dat/missions/empire/shipping/es02.lua:256
 msgid "You abandoned the VIP."
-msgstr ""
+msgstr "Has abandonado al VIP."
 
 #: dat/missions/empire/shipping/es02.lua:223
 msgid "A Very Important Person."
-msgstr ""
+msgstr "Una persona muy importante (Very important Person)."
 
 #: dat/missions/empire/shipping/es02.lua:225
 msgid "Disabled Ship"
-msgstr ""
+msgstr "Nave Desactivada"
 
 #: dat/missions/empire/shipping/es02.lua:225
 msgid ""
 "The ship's hatch opens and immediately an unconscious VIP is brought aboard "
 "by his bodyguard. Looks like there is no one else aboard."
 msgstr ""
+"La escotilla de la nave se abre e inmediatamente un VIP inconsciente es "
+"llevado a bordo por su guardaespaldas. Parece que no hay nadie más a bordo."
 
 #. Update mission details
 #: dat/missions/empire/shipping/es02.lua:230
 #: dat/missions/empire/shipping/es02.lua:232
 msgid "Return to {pnt} in the {sys} system with the VIP"
-msgstr ""
+msgstr "Volver a {pnt} en el sistema {sys} con el VIP"
 
 #. Force unboard
 #. Notify of death
 #: dat/missions/empire/shipping/es02.lua:245
 msgid "VIP is dead."
-msgstr ""
+msgstr "El VIP ha muerto."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -53097,6 +53256,9 @@ msgid ""
 "says. \"You should get back to the base now before you get killed! I'll be "
 "waiting for you there.\""
 msgstr ""
+"Recibes una transmisión. Es de Benito. \"¡Operación con éxito!\", dice. \"¡"
+"Debes volver a la base ahora antes de que te maten! Te estaré esperando allí."
+"\""
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:37
 msgid ""
@@ -53108,6 +53270,13 @@ msgid ""
 "congratulate you. It occurs to you that you never learned what the mission "
 "actually was. Perhaps you will find out some other time."
 msgstr ""
+"Al atracar en la estación, Benito se acerca a ti con una sonrisa. \"Gracias "
+"por tu ayuda\", dice. \"¡La misión ha sido un éxito rotundo! Lo que hemos "
+"logrado ayudará mucho a nuestros esfuerzos contra los Dvaereds en el futuro\""
+". Te entrega una ficha de crédito. \"Este es tu pago. Hasta la próxima vez\""
+". Benito se despide mientras varios soldados adicionales de la FLF te "
+"felicitan. Se te ocurre que nunca te enteraste de cuál era la misión en "
+"realidad. Tal vez lo descubras en otra ocasión."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -53139,15 +53308,15 @@ msgstr ""
 #: dat/missions/flf/dvk/flf_dvk05.lua:51 dat/missions/flf/dvk/flf_dvk06.lua:45
 #: dat/missions/flf/dvk/flf_dvk07.lua:44
 msgid "Benito"
-msgstr ""
+msgstr "Benito"
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:48
 msgid "Benito seems to want to speak with you."
-msgstr ""
+msgstr "Parece que Benito quiere hablar contigo."
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:53 dat/missions/flf/dvk/flf_dvk01.lua:55
 msgid "Taking One for the Team"
-msgstr ""
+msgstr "Tomando una por el equipo"
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:53
 msgid ""
@@ -55535,7 +55704,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex1.lua:190
 msgid "Maybe later."
-msgstr ""
+msgstr "Quizás más tarde."
 
 #: dat/missions/minerva/kex1.lua:194
 msgid ""
@@ -58959,7 +59128,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:198 dat/missions/tutorial/nelly01.lua:154
 msgid "\"No\""
-msgstr ""
+msgstr "\"No\""
 
 #: dat/missions/minerva/maikki2.lua:204
 msgid ""
@@ -59706,7 +59875,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:566
 msgid "\"Is there anything else you would like to know?\""
-msgstr ""
+msgstr "\"¿Hay algo más que quieras saber?\""
 
 #: dat/missions/minerva/maikki2.lua:584 dat/missions/minerva/maikki2.lua:606
 msgid "Feral Drone"
@@ -76757,7 +76926,7 @@ msgstr ""
 
 #: dat/missions/tutorial/nelly01.lua:153
 msgid "\"Yes\""
-msgstr ""
+msgstr "\"Sí\""
 
 #: dat/missions/tutorial/nelly01.lua:158
 msgid ""
