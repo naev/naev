@@ -44501,7 +44501,7 @@ msgstr ""
 #. Player got scanned by a patrol ship: mission is a failure
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:314
 msgid ""
-"You recieve the signal that a patrol ship has achieved a scan of your cargo. "
+"You receive the signal that a patrol ship has achieved a scan of your cargo. "
 "The pilot does not mention anything special, but it is obvious that they now "
 "know what you were transporting. In that condition, you have to jettison the "
 "cargo and to abort the mission."
@@ -44509,7 +44509,7 @@ msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:331
 msgid ""
-"I don't know how much you did inderstand of our conversation on the "
+"I don't know how much you did understand of our conversation on the "
 "spaceport, but we need you now to disable the ship of a pilot surnamed "
 "'Shaky Swan'. He is supposed to be hanging around {sys} in the near future."
 msgstr ""

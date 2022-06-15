@@ -310,7 +310,7 @@ end
 
 -- Player got scanned by a patrol ship: mission is a failure
 function scanned()
-   vntk.msg("", _("You recieve the signal that a patrol ship has achieved a scan of your cargo. The pilot does not mention anything special, but it is obvious that they now know what you were transporting. In that condition, you have to jettison the cargo and to abort the mission."))
+   vntk.msg("", _("You receive the signal that a patrol ship has achieved a scan of your cargo. The pilot does not mention anything special, but it is obvious that they now know what you were transporting. In that condition, you have to jettison the cargo and to abort the mission."))
    misn.cargoRm( mem.cid )
    misn.finish(false)
 end
@@ -327,7 +327,7 @@ function discussWithAg()
    vn.scene()
    local agent = vn.newCharacter( _("Bony Boudica"), { image=portrait.getFullPath(agentPort) } )
 
-   agent(fmt.f(_([[I don't know how much you did inderstand of our conversation on the spaceport, but we need you now to disable the ship of a pilot surnamed 'Shaky Swan'. He is supposed to be hanging around {sys} in the near future.]]),{sys=mem.flfsys}))
+   agent(fmt.f(_([[I don't know how much you did understand of our conversation on the spaceport, but we need you now to disable the ship of a pilot surnamed 'Shaky Swan'. He is supposed to be hanging around {sys} in the near future.]]),{sys=mem.flfsys}))
 
    vn.label("menu")
    vn.menu{
