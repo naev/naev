@@ -10,6 +10,7 @@ lua_source = files(
    'love_shaders.lua',
    'pilotai.lua',
    'portrait.lua',
+   'prob.lua',
    'pp_shaders.lua',
    'prng.lua',
    'proximity.lua',
