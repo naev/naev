@@ -157,7 +157,7 @@ function land()
       var.push("dv_pirate_debt", false)
       shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
       if mem.stage == 7 then -- Empire solution
-         tk.msg(_("A problem with the Empire"), fmt.f(_([[You explain to the major the problems you encountered. You talk about the strange deal the Empire has forced you to make with them and the major's face turns red: "You did WHAT? The Imperial intelligence service is the strongest in the world! They can deduce things you would not even imagine just by looking at someone, and you let them interview a black ops commando leader!"
+         tk.msg(_("A problem with the Empire"), fmt.f(_([[You explain to the major the problems you encountered. You talk about the strange deal the Empire has forced you to make with them and the major's face turns red: "You did WHAT? The Imperial intelligence service is the strongest in the universe! They can deduce things you would not even imagine just by looking at someone, and you let them interview a black ops commando leader!"
    You argue that you had no other choice and he seems to calm down a little bit "I will interrogate Hamfresser to see if I can determine what they were looking for. Damn! I'm afraid something awful may happen to us somehow because of this. Oh, and by the way, I made sure the Za'lek don't blame you personally for what happened. They should accept you in their space now."
    The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are {credits}."]]), {credits=fmt.credits(fw.credits_02)}))
          var.push("dv_empire_deal", true)

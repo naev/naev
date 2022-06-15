@@ -368,7 +368,7 @@ def optimizeLanes( systems, problem ):
         utilde = stiff_c.solve_A( ftilde ) # .004 s
 
         # Compute QQ and PP, and use utilde to detect connected parts of the mesh
-        # It's in the loop, but only happends once
+        # It's in the loop, but only happens once
         if i == 0: # .5 s
             PPl, QQ = compute_PPts_QtQ( problem, utilde, systems )
 

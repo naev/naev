@@ -6817,7 +6817,7 @@ msgstr ""
 #: dat/ships/soromid/soromid_arx.xml:24
 msgid ""
 "The Soromid Arx usually features in Soromid fleets as a command vessel and "
-"fighter carrier. Its unique properties allow it amply the strentgh of its "
+"fighter carrier. Its unique properties allow it amply the strength of its "
 "carried ships, which easily makes up for its reduced number of slots. The "
 "Arx tends to be a more lightweight carrier than is typically found in non-"
 "Soromid fleets, without sacrificing carrying capacity."
@@ -16744,7 +16744,7 @@ msgstr ""
 msgid ""
 "The bar is quiet and orderly, with a few deals going down in closed-off "
 "booths, nice food and only the occasional drunken brawl. The lord of "
-"Shanchez doesn't appreciate louts, it seems."
+"Sanchez doesn't appreciate louts, it seems."
 msgstr ""
 
 #: dat/spob/sander.xml:2
@@ -29490,7 +29490,7 @@ msgstr ""
 
 #: dat/events/minerva/station.lua:415
 msgid ""
-"\"Welcome to MINERVA STATIONS blackjack table. The objective of this card "
+"\"Welcome to MINERVA STATION'S blackjack table. The objective of this card "
 "game is to get as close to a value of 21 without going over. All cards are "
 "worth their rank except for Jack, Queen, and King which are all worth 10, "
 "and ace is either worth 1 or 11. You win if you have a higher value than "
@@ -40518,7 +40518,7 @@ msgid ""
 "You explain to the major the problems you encountered. You talk about the "
 "strange deal the Empire has forced you to make with them and the major's "
 "face turns red: \"You did WHAT? The Imperial intelligence service is the "
-"strongest in the world! They can deduce things you would not even imagine "
+"strongest in the universe! They can deduce things you would not even imagine "
 "just by looking at someone, and you let them interview a black ops commando "
 "leader!\"\n"
 "   You argue that you had no other choice and he seems to calm down a little "
@@ -43960,7 +43960,7 @@ msgid ""
 "3) You will be rewarded for that"
 msgstr ""
 
-#. Player makes it to the second rendez-vous point. An overly complicated discussion happends to show how messy the Dvaered-Imperial black-ops system is.
+#. Player makes it to the second rendez-vous point. An overly complicated discussion happens to show how messy the Dvaered-Imperial black-ops system is.
 #. Remove scan hook.
 #. Add boudica at the bar
 #. Done with the cargo
@@ -44193,7 +44193,7 @@ msgstr ""
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:279
 msgid ""
 "Of course. I know the mission did not go very well from your point of view, "
-"but sometimes unexpected things happend. And when you work for secret "
+"but sometimes unexpected things happen. And when you work for secret "
 "services of major powers, you have to fix unexpected things as soon as "
 "possible. Otherwise, the consequences might be catastrophic."
 msgstr ""
@@ -44442,8 +44442,8 @@ msgid ""
 "But this won't be the worst! Because I've got my informations. And the "
 "Empire has weapons even more powerful. Even more abominable. Even more "
 "unmentionable and unimaginable. Some say the Incident was provoked by a such "
-"weapon. Imagine if they decide to make a new incident happend!\n"
-"Then you would have to bare that monstrous responsability on your shoulders. "
+"weapon. Imagine if they decide to make a new incident happen!\n"
+"Then you would have to bare that monstrous responsibility on your shoulders. "
 "Just because you refused to catch that shaky bastard!"
 msgstr ""
 
