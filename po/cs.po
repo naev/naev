@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-06-03 22:07-0400\n"
+"POT-Creation-Date: 2022-06-14 19:00-0400\n"
 "PO-Revision-Date: 2022-01-27 17:54+0000\n"
 "Last-Translator: Jirka Justra <jjustra@seznam.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev-0-9-x/cs/"
@@ -9883,8 +9883,8 @@ msgstr ""
 #: dat/assets/sanchez.xml:32
 msgid ""
 "The bar is quiet and orderly, with a few deals going down in closed-off "
-"booths, nice food and only the occasional drunken brawl. The lord of "
-"Sanchez doesn't appreciate louts, it seems."
+"booths, nice food and only the occasional drunken brawl. The lord of Sanchez "
+"doesn't appreciate louts, it seems."
 msgstr ""
 
 #: dat/assets/sander.xml:2
@@ -24874,6 +24874,7 @@ msgstr ""
 #. Initialize seed
 #. Initialize shader
 #. over 1024 makes intel GPUs choke
+#. Ignore tiny nebula
 #.
 #. Nebula framework.
 #. --
@@ -31346,7 +31347,7 @@ msgstr ""
 
 #. Choose faction, overriding if necessary
 #. Append the faction to the civilian name, unless there is no faction.
-#: dat/events/neutral/npc.lua:456
+#: dat/events/neutral/npc.lua:451
 msgid "{fct} Civilian"
 msgstr ""
 
@@ -61879,7 +61880,7 @@ msgstr ""
 #. Only spawn this mission if the player needs it.
 #. Don't spawn this mission if the player is buddies with this faction's enemies.
 #: dat/missions/rehab_common.lua:33 dat/missions/rehab_common.lua:47
-#: dat/missions/rehab_common.lua:58 dat/missions/rehab_common.lua:90
+#: dat/missions/rehab_common.lua:58 dat/missions/rehab_common.lua:102
 msgid "{fct} Rehabilitation"
 msgstr ""
 
@@ -61912,7 +61913,7 @@ msgid ""
 "offenses will eventually be stricken from the record."
 msgstr ""
 
-#: dat/missions/rehab_common.lua:54 dat/missions/rehab_common.lua:86
+#: dat/missions/rehab_common.lua:54 dat/missions/rehab_common.lua:98
 #, lua-format
 msgid "You need to gain %d more reputation"
 msgid_plural "You need to gain %d more reputation"
@@ -61924,12 +61925,14 @@ msgstr[2] ""
 #. Function to set the height of the fine. Missions that require this script may override this.
 #. A value between 0 and 10M credits
 #. Standing hook. Manages faction reputation, keeping it at 0 until it goes positive.
+#. Be ware of the fake transponder!
+#. When fake transponder is equipped, we ignore all positive stuff
 #. The player has successfully erased his criminal record.
-#: dat/missions/rehab_common.lua:79
+#: dat/missions/rehab_common.lua:91
 msgid "{fct} Rehabilitation Successful"
 msgstr ""
 
-#: dat/missions/rehab_common.lua:79
+#: dat/missions/rehab_common.lua:91
 msgid ""
 "Congratulations, you have successfully worked your way back into good "
 "standing with this faction. Try not to relapse into your life of crime!"
@@ -61938,11 +61941,11 @@ msgstr ""
 #. On abort, reset reputation.
 #. Remove the standing hook prior to modifying reputation.
 #. Reapply the original negative reputation.
-#: dat/missions/rehab_common.lua:108
+#: dat/missions/rehab_common.lua:120
 msgid "{fct} Rehabilitation Canceled"
 msgstr ""
 
-#: dat/missions/rehab_common.lua:108
+#: dat/missions/rehab_common.lua:120
 msgid ""
 "You have committed another offense against this faction! Your rehabilitation "
 "procedure has been canceled, and your reputation is once again tarnished. "
