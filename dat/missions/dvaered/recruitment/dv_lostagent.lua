@@ -191,7 +191,7 @@ But it is too risky to wait for them here. This means that we have to take the c
       misn.markerRm( mem.misn_marker )
       mem.misn_marker = misn.markerAdd( mem.spob2 )
 
-   -- Player makes it to the second rendez-vous point. An overly complicated discussion happends to show how messy the Dvaered-Imperial black-ops system is.
+   -- Player makes it to the second rendez-vous point. An overly complicated discussion happens to show how messy the Dvaered-Imperial black-ops system is.
    elseif mem.misn_state == 1 and spob.cur() == mem.spob2 then
       hook.rm(mem.schook) -- Remove scan hook.
 
@@ -275,7 +275,7 @@ And again, be ensured that your initial reward will be dramatically increased fr
       vn.jump("well")
 
       vn.label("bad")
-      agent(_([[Of course. I know the mission did not go very well from your point of view, but sometimes unexpected things happend. And when you work for secret services of major powers, you have to fix unexpected things as soon as possible. Otherwise, the consequences might be catastrophic.]]))
+      agent(_([[Of course. I know the mission did not go very well from your point of view, but sometimes unexpected things happen. And when you work for secret services of major powers, you have to fix unexpected things as soon as possible. Otherwise, the consequences might be catastrophic.]]))
       vn.jump("well")
 
       vn.label("well")
@@ -310,7 +310,7 @@ end
 
 -- Player got scanned by a patrol ship: mission is a failure
 function scanned()
-   vntk.msg("", _("You recieve the signal that a patrol ship has achieved a scan of your cargo. The pilot does not mention anything special, but it is obvious that they now know what you were transporting. In that condition, you have to jettison the cargo and to abort the mission."))
+   vntk.msg("", _("You receive the signal that a patrol ship has achieved a scan of your cargo. The pilot does not mention anything special, but it is obvious that they now know what you were transporting. In that condition, you have to jettison the cargo and to abort the mission."))
    misn.cargoRm( mem.cid )
    misn.finish(false)
 end
@@ -327,7 +327,7 @@ function discussWithAg()
    vn.scene()
    local agent = vn.newCharacter( _("Bony Boudica"), { image=portrait.getFullPath(agentPort) } )
 
-   agent(fmt.f(_([[I don't know how much you did inderstand of our conversation on the spaceport, but we need you now to disable the ship of a pilot surnamed 'Shaky Swan'. He is supposed to be hanging around {sys} in the near future.]]),{sys=mem.flfsys}))
+   agent(fmt.f(_([[I don't know how much you did understand of our conversation on the spaceport, but we need you now to disable the ship of a pilot surnamed 'Shaky Swan'. He is supposed to be hanging around {sys} in the near future.]]),{sys=mem.flfsys}))
 
    vn.label("menu")
    vn.menu{
@@ -400,8 +400,8 @@ We have always suspected that the Imperials are protecting the swan. Anyways, no
 Shall you see the death squadrons taking off from Halir, loaded with all the kinds of deadly viruses only human madness can breed. Shall you see the fleet of the united Warlords silentely flying towards humanity's doom before an helpless sky of horrified stars. Shall you see them hide the sun of Doranthex as would the black wings of death.
 Shall you hear the frenetic lament of sirens while the sky of Antica gets torn apart by the trails of hypersonic bombs. Shall you hear the roaring of space stations, wounded to death by torpedoes, disseminating into the void the helpless bodies of their inhabitants.]]))
    agent(_([[Maybe you think that as a pilot, you won't endure starvation, contrary to the billions of poor souls who will struggle to survive the nuclear winter on their sterilized planets. Maybe you think you won't have to endure the gaze of the slowly dying victims of incendary bombs, bio-weapons, climatic and sismeic bombs...]]))
-   agent(_([[But this won't be the worst! Because I've got my informations. And the Empire has weapons even more powerful. Even more abominable. Even more unmentionable and unimaginable. Some say the Incident was provoked by a such weapon. Imagine if they decide to make a new incident happend!
-Then you would have to bare that monstrous responsability on your shoulders. Just because you refused to catch that shaky bastard!]])) -- Clearly, she is not well informed about the Incident.
+   agent(_([[But this won't be the worst! Because I've got my informations. And the Empire has weapons even more powerful. Even more abominable. Even more unmentionable and unimaginable. Some say the Incident was provoked by a such weapon. Imagine if they decide to make a new incident happen!
+Then you would have to bare that monstrous responsibility on your shoulders. Just because you refused to catch that shaky bastard!]])) -- Clearly, she is not well informed about the Incident.
    vn.jump("peace")
 
    vn.label("peace")
