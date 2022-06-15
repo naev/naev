@@ -203,7 +203,7 @@ function heartbeat ()
    local d = retpnt:pos():dist( pp:pos() )
    if mem.state==2 and d < 10e3 then
       local pos = player.pos() + vec2.new( 3e3, 9e3 )
-      local feral = zbh.feralkid( pos )
+      local feral = zbh.plt_icarus( pos )
       feral:setInvisible(true)
       feral:control(true)
       feral:hyperspace( system.get("NGC-2601") )
