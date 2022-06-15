@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-14 21:14-0400\n"
-"PO-Revision-Date: 2022-06-14 17:51+0000\n"
+"PO-Revision-Date: 2022-06-15 22:19+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
@@ -1183,16 +1183,12 @@ msgid "Antimatter is tainting your ship!"
 msgstr "¡La antimateria está contaminando tu nave!"
 
 #: dat/effects/blink.xml:2
-#, fuzzy
-#| msgid "Blink Drive"
 msgid "Blink"
-msgstr "Motor de Parpadeo"
+msgstr "Salto"
 
 #: dat/effects/blink.xml:3
-#, fuzzy
-#| msgid "Your ship's mine!"
 msgid "Your ship just blinked!"
-msgstr "¡Tu nave es mía!"
+msgstr "¡Tu nave acaba de saltar!"
 
 #: dat/effects/bloodlust.xml:2 dat/scripts/bioship/skills.lua:42
 msgid "Blood Lust"
@@ -1214,17 +1210,15 @@ msgstr "¡El plasma está interfiriendo con los sistemas de armas!"
 
 #: dat/effects/ethereal.xml:2
 msgid "Ethereal"
-msgstr ""
+msgstr "Etéreo"
 
 #: dat/effects/fadein.xml:2
-#, fuzzy
-#| msgid "Trade-in"
 msgid "Fade-In"
-msgstr "Intercambiar"
+msgstr "Desvanecerse"
 
 #: dat/effects/fadein.xml:3
 msgid "Fading in!"
-msgstr ""
+msgstr "¡Desvaneciéndose!"
 
 #. TODO
 #. Attack tree
@@ -5307,10 +5301,8 @@ msgid "#rHot hot hot!#0"
 msgstr "#r¡Quema Quema Quemat!#0"
 
 #: dat/outfits/unique/pulse_scanner.xml:2
-#, fuzzy
-#| msgid "Jump Scanner"
 msgid "Pulse Scanner"
-msgstr "Escáner de Salto"
+msgstr "Escáner de Pulsos"
 
 #: dat/outfits/unique/pulse_scanner.xml:4
 #: dat/outfits/utility/sensor_array.xml:4 dat/events/shipai.lua:108
@@ -5322,6 +5314,8 @@ msgid ""
 "Activates for 10 seconds with a 15 second cooldown period. #pCan be used for "
 "tracking anomaly signals.#0"
 msgstr ""
+"Se activa durante 10 segundos con un periodo de enfriamiento de 15 segundos. "
+"#pPuede usarse para rastrear señales de anomalía.#0"
 
 #: dat/outfits/unique/valkyrie_beam.xml:2
 msgid "Valkyrie Beam"
@@ -18479,7 +18473,6 @@ msgid "Newmarch A-1"
 msgstr "Nuevomarzo A-1"
 
 #: dat/spob/newmarch_d3.xml:2
-#, fuzzy
 msgid "Newmarch D-3"
 msgstr "Nuevomarzo D-3"
 
@@ -19111,12 +19104,6 @@ msgid "One-Wing Goddard"
 msgstr "Goddard Una-Ala"
 
 #: dat/spob/onewing_goddard.xml:26
-#, fuzzy
-#| msgid ""
-#| "You dock with the remains of a Dvaered Goddard. The hull is covered in "
-#| "burns and war scars with large holes throughout the ship. Given that "
-#| "there doesn't seem to be many working parts left in the ship, you have to "
-#| "remain in your atmospheric suit throughout your visit to the ship."
 msgid ""
 "You dock with the remains of a Dvaered Goddard. The hull is covered in burns "
 "and war scars with large holes throughout the ship. Given that there doesn't "
@@ -19124,10 +19111,12 @@ msgid ""
 "atmospheric suit throughout your visit to the ship. However, the hangar "
 "seems to be minimally functional and can allow you to change ships."
 msgstr ""
-"Atracas los restos de un Dvaered Goddard. El casco está cubierto de "
+"Atracas los restos de un Goddard Dvaered. El casco está cubierto de "
 "quemaduras y cicatrices de guerra con grandes agujeros por toda la nave. "
 "Dado que no parecen quedar muchas piezas funcionales en la nave, tienes que "
-"permanecer con tu traje atmosférico durante toda tu visita a la nave."
+"permanecer con tu traje atmosférico durante toda tu visita a la nave. Sin "
+"embargo, el hangar parece ser mínimamente funcional y puede permitirte "
+"cambiar de nave."
 
 #: dat/spob/oni.xml:2 dat/scripts/pilotname/pirate.lua:396
 msgid "Oni"
@@ -24880,7 +24869,6 @@ msgstr ""
 "se cuentan por toda la galaxia."
 
 #: dat/spob/vino.xml:2
-#, fuzzy
 msgid "Vino"
 msgstr "Vino"
 
@@ -24919,7 +24907,6 @@ msgstr ""
 "aprendido a ignorar esto."
 
 #: dat/spob/vinooso.xml:2
-#, fuzzy
 msgid "Vinooso"
 msgstr "Vinooso"
 
@@ -24969,7 +24956,6 @@ msgstr ""
 "Eiderdown, cuando el Escurridor vuelve a causar problemas."
 
 #: dat/spob/vlexair.xml:2
-#, fuzzy
 msgid "Vlexair"
 msgstr "Vlexair"
 
@@ -24996,22 +24982,18 @@ msgstr ""
 "mucha variedad de bebidas, aparte del estandar grog Dvaered."
 
 #: dat/spob/vlexon_i.xml:2
-#, fuzzy
 msgid "Vlexon I"
 msgstr "Vlexon I"
 
 #: dat/spob/vlexon_ii.xml:2
-#, fuzzy
 msgid "Vlexon II"
 msgstr "Vlexon II"
 
 #: dat/spob/voproid_prime.xml:2
-#, fuzzy
 msgid "Voproid Prime"
 msgstr "Voproid Prime"
 
 #: dat/spob/vorca.xml:2
-#, fuzzy
 msgid "Vorca"
 msgstr "Vorca"
 
@@ -25053,7 +25035,6 @@ msgstr ""
 "ayuda."
 
 #: dat/spob/vracha.xml:2
-#, fuzzy
 msgid "Vracha"
 msgstr "Vracha"
 
@@ -25080,7 +25061,6 @@ msgstr ""
 "regularidad."
 
 #: dat/spob/vuere.xml:2
-#, fuzzy
 msgid "Vuere"
 msgstr "Vuere"
 
@@ -25118,7 +25098,6 @@ msgstr ""
 "lo más cómodas y atractivas posible. El bar es un buen ejemplo de ello."
 
 #: dat/spob/wagenni.xml:2
-#, fuzzy
 msgid "Wagenni"
 msgstr "Wagenni"
 
@@ -25151,7 +25130,6 @@ msgstr ""
 "aterrizaje. Wagenni es una colonia pobre. No tiene uso para tales cosas."
 
 #: dat/spob/wahri.xml:2 dat/ssys/wahri.xml:2
-#, fuzzy
 msgid "Wahri"
 msgstr "Wahri"
 
@@ -25177,17 +25155,14 @@ msgstr ""
 "servirá."
 
 #: dat/spob/wahri_iii.xml:2
-#, fuzzy
 msgid "Wahri III"
 msgstr "Wahri III"
 
 #: dat/spob/wahri_iv.xml:2
-#, fuzzy
 msgid "Wahri IV"
 msgstr "Wahri IV"
 
 #: dat/spob/wakan.xml:2
-#, fuzzy
 msgid "Wa'kan"
 msgstr "Wa'kan"
 
@@ -25202,7 +25177,6 @@ msgstr ""
 "investigadores Za'lek que trabajan en programas de justicia penal."
 
 #: dat/spob/waldar.xml:2
-#, fuzzy
 msgid "Waldar"
 msgstr "Waldar"
 
@@ -25264,7 +25238,6 @@ msgstr ""
 "más tranquilo y, tensamente, estable."
 
 #: dat/spob/warei.xml:2
-#, fuzzy
 msgid "Warei"
 msgstr "Warei"
 
@@ -25296,7 +25269,6 @@ msgstr ""
 "bar dista mucho de ser confortable."
 
 #: dat/spob/warnecke.xml:2
-#, fuzzy
 msgid "Warnecke"
 msgstr "Warnecke"
 
@@ -25327,12 +25299,10 @@ msgstr ""
 "depuradores de aire que trabajan en las esquinas."
 
 #: dat/spob/warnecke_i.xml:2
-#, fuzzy
 msgid "Warnecke I"
 msgstr "Warnecke I"
 
 #: dat/spob/warnecke_ii.xml:2
-#, fuzzy
 msgid "Warnecke II"
 msgstr "Warnecke II"
 
@@ -25378,7 +25348,6 @@ msgstr ""
 "durante períodos prolongados."
 
 #: dat/spob/wayline.xml:2
-#, fuzzy
 msgid "Wayline"
 msgstr "Wayline"
 
@@ -25396,17 +25365,14 @@ msgstr ""
 "navesprisión Dvaered."
 
 #: dat/spob/wayline_m1.xml:2
-#, fuzzy
 msgid "Wayline m1"
 msgstr "Wayline m1"
 
 #: dat/spob/wayline_m2.xml:2
-#, fuzzy
 msgid "Wayline m2"
 msgstr "Wayline m2"
 
 #: dat/spob/wellen.xml:2
-#, fuzzy
 msgid "Wellen"
 msgstr "Wellen"
 
@@ -25442,7 +25408,6 @@ msgstr ""
 "zonas urbanas, la miseria empieza a ser evidente."
 
 #: dat/spob/werlen.xml:2
-#, fuzzy
 msgid "Werlen"
 msgstr "Werlen"
 
@@ -25495,7 +25460,6 @@ msgstr ""
 "planetario."
 
 #: dat/spob/wigheta.xml:2
-#, fuzzy
 msgid "Wigheta"
 msgstr "Wigheta"
 
@@ -25532,7 +25496,6 @@ msgstr ""
 "deben."
 
 #: dat/spob/wikon.xml:2
-#, fuzzy
 msgid "Wikon"
 msgstr "Wikon"
 
@@ -25609,7 +25572,6 @@ msgid "Wolf VII"
 msgstr "Lobo VII"
 
 #: dat/spob/wonclock.xml:2
-#, fuzzy
 msgid "Wonclock"
 msgstr "Wonclock"
 
@@ -25643,7 +25605,6 @@ msgstr ""
 "pilotos hayan superado todos los protocolos de seguridad."
 
 #: dat/spob/worgen.xml:2
-#, fuzzy
 msgid "Worgen"
 msgstr "Worgen"
 
@@ -25677,7 +25638,6 @@ msgid "Wormhole NGC-4087"
 msgstr "Agujero de gusano NGC-4087"
 
 #: dat/spob/worscha.xml:2
-#, fuzzy
 msgid "Worscha"
 msgstr "Worscha"
 
@@ -25706,17 +25666,14 @@ msgstr ""
 "acostumbrados a colocarse en la sección correcta del bar."
 
 #: dat/spob/wsthvn_d1.xml:2
-#, fuzzy
 msgid "WSTHVN D-1"
 msgstr "WSTHVN D-1"
 
 #: dat/spob/wsthvn_p1.xml:2
-#, fuzzy
 msgid "WSTHVN P-1"
 msgstr "WSTHVN P-1"
 
 #: dat/spob/xavier.xml:2 dat/ssys/xavier.xml:2
-#, fuzzy
 msgid "Xavier"
 msgstr "Xavier"
 
@@ -25775,7 +25732,6 @@ msgstr ""
 "decaperíodos o así para conseguir los precios más bajos posibles."
 
 #: dat/spob/yrina.xml:2
-#, fuzzy
 msgid "Yrina"
 msgstr "Yrina"
 
@@ -25811,7 +25767,6 @@ msgstr ""
 "enfoque informativo de su operación."
 
 #: dat/spob/zaals.xml:2
-#, fuzzy
 msgid "Zaals"
 msgstr "Zaals"
 
@@ -25846,7 +25801,6 @@ msgstr ""
 "sido abandonado completamente a la intemperie."
 
 #: dat/spob/zabween.xml:2
-#, fuzzy
 msgid "Zabween"
 msgstr "Zabween"
 
@@ -25880,7 +25834,6 @@ msgstr ""
 "trabajando en otra adición para poder colocar más fotos."
 
 #: dat/spob/zalebus.xml:2
-#, fuzzy
 msgid "Zalebus"
 msgstr "Zalebus"
 
@@ -25907,17 +25860,14 @@ msgstr ""
 "preparan para un viaje al espacio o que acaban de regresar de él."
 
 #: dat/spob/zalek_ii.xml:2
-#, fuzzy
 msgid "Za'lek II"
 msgstr "Za'lek II"
 
 #: dat/spob/zalek_iv.xml:2
-#, fuzzy
 msgid "Za'lek IV"
 msgstr "Za'lek IV"
 
 #: dat/spob/zaren.xml:2
-#, fuzzy
 msgid "Zaren"
 msgstr "Zaren"
 
@@ -25933,7 +25883,6 @@ msgstr ""
 "utilizar para conseguir los gases necesarios."
 
 #: dat/spob/zazarin.xml:2
-#, fuzzy
 msgid "Zazarin"
 msgstr "Zazarin"
 
@@ -25969,7 +25918,6 @@ msgstr ""
 "Es un milagro que las instalaciones básicas funcionen en su mayor parte."
 
 #: dat/spob/zembla_shakar.xml:2
-#, fuzzy
 msgid "Zembla Shakar"
 msgstr "Zembla Shakar"
 
@@ -26000,12 +25948,10 @@ msgstr ""
 "decepcionados, ya que hay muy poco que ver aquí."
 
 #: dat/spob/zemur_iii.xml:2
-#, fuzzy
 msgid "Zemur III"
 msgstr "Zemur III"
 
 #: dat/spob/zeo.xml:2
-#, fuzzy
 msgid "Zeo"
 msgstr "Zeo"
 
@@ -26039,7 +25985,6 @@ msgstr ""
 "fuera de servicio o que sea lento para responder en este bar."
 
 #: dat/spob/zepei.xml:2
-#, fuzzy
 msgid "Zepei"
 msgstr "Zepei"
 
@@ -26082,7 +26027,6 @@ msgid "Zero-One"
 msgstr "Cero-Uno"
 
 #: dat/spob/zesta.xml:2
-#, fuzzy
 msgid "Zesta"
 msgstr "Zesta"
 
@@ -26099,12 +26043,10 @@ msgstr ""
 "proceso de extracción, y para evitar graves quemaduras a los mineros."
 
 #: dat/spob/zethus.xml:2
-#, fuzzy
 msgid "Zethus"
 msgstr "Zethus"
 
 #: dat/spob/zhang_lu.xml:2
-#, fuzzy
 msgid "Zhang Lu"
 msgstr "Zhang Lu"
 
@@ -26141,7 +26083,6 @@ msgstr ""
 "limita mucho la elección de los vectores de aproximación."
 
 #: dat/spob/zhiru.xml:2
-#, fuzzy
 msgid "Zhiru"
 msgstr "Zhiru"
 
@@ -26176,22 +26117,18 @@ msgstr ""
 "estructura metálica."
 
 #: dat/spob/zintar_iv.xml:2
-#, fuzzy
 msgid "Zintar IV"
 msgstr "Zintar IV"
 
 #: dat/spob/zintar_v.xml:2
-#, fuzzy
 msgid "Zintar V"
 msgstr "Zintar V"
 
 #: dat/spob/ziz.xml:2
-#, fuzzy
 msgid "Ziz"
 msgstr "Ziz"
 
 #: dat/spob/zuner.xml:2
-#, fuzzy
 msgid "Zuner"
 msgstr "Zuner"
 
@@ -26401,22 +26338,18 @@ msgid "Za'lek Unpresence (Range 1)"
 msgstr "Inexistencia Za'lek (Rango 1)"
 
 #: dat/ssys/acheron.xml:2
-#, fuzzy
 msgid "Acheron"
 msgstr "Acheron"
 
 #: dat/ssys/adraia.xml:2
-#, fuzzy
 msgid "Adraia"
 msgstr "Adraia"
 
 #: dat/ssys/adran.xml:2
-#, fuzzy
 msgid "Adran"
 msgstr "Adran"
 
 #: dat/ssys/aesir.xml:2
-#, fuzzy
 msgid "Aesir"
 msgstr "Aesir"
 
@@ -26425,42 +26358,34 @@ msgid "#pSirius Homeworld#0"
 msgstr "#pMundo Hogar Sirio#0"
 
 #: dat/ssys/aesria.xml:2
-#, fuzzy
 msgid "Aesria"
 msgstr "Aesria"
 
 #: dat/ssys/aet.xml:2
-#, fuzzy
 msgid "Aet"
 msgstr "Aet"
 
 #: dat/ssys/akodu.xml:2
-#, fuzzy
 msgid "Akodu"
 msgstr "Akodu"
 
 #: dat/ssys/akra.xml:2
-#, fuzzy
 msgid "Akra"
 msgstr "Akra"
 
 #: dat/ssys/allous.xml:2
-#, fuzzy
 msgid "Allous"
 msgstr "Allous"
 
 #: dat/ssys/alteris.xml:2
-#, fuzzy
 msgid "Alteris"
 msgstr "Alteris"
 
 #: dat/ssys/amaroq.xml:2
-#, fuzzy
 msgid "Amaroq"
 msgstr "Amaroq"
 
 #: dat/ssys/amatiri.xml:2
-#, fuzzy
 msgid "Amatiri"
 msgstr "Amatiri"
 
@@ -26477,22 +26402,18 @@ msgid "#rHaze (-50% Shield and Shield Regen)#0"
 msgstr "#rNiebal (-50% Escudo y Regen. Escudo)#0"
 
 #: dat/ssys/anarbalis.xml:2
-#, fuzzy
 msgid "Anarbalis"
 msgstr "Anarbalis"
 
 #: dat/ssys/andee.xml:2
-#, fuzzy
 msgid "Andee"
 msgstr "Andee"
 
 #: dat/ssys/andres.xml:2
-#, fuzzy
 msgid "Andres"
 msgstr "Andres"
 
 #: dat/ssys/aneel_azi.xml:2
-#, fuzzy
 msgid "Aneel Azi"
 msgstr "Aneel Azi"
 
@@ -26501,22 +26422,18 @@ msgid "Anger"
 msgstr "Ira"
 
 #: dat/ssys/anku.xml:2
-#, fuzzy
 msgid "An'ku"
 msgstr "An'ku"
 
 #: dat/ssys/anrique.xml:2
-#, fuzzy
 msgid "Anrique"
 msgstr "Anrique"
 
 #: dat/ssys/antares.xml:2
-#, fuzzy
 msgid "Antares"
 msgstr "Antares"
 
 #: dat/ssys/antlejos.xml:2
-#, fuzzy
 msgid "Antlejos"
 msgstr "Antlejos"
 
@@ -26560,17 +26477,14 @@ msgid "Anubis Black Hole"
 msgstr "Agujero Negro Anubis"
 
 #: dat/ssys/apez.xml:2
-#, fuzzy
 msgid "Apez"
 msgstr "Apez"
 
 #: dat/ssys/apik.xml:2
-#, fuzzy
 msgid "Apik"
 msgstr "Apik"
 
 #: dat/ssys/arandon.xml:2
-#, fuzzy
 msgid "Arandon"
 msgstr "Arandon"
 
@@ -32341,10 +32255,8 @@ msgid "Your bioship has enough experience to advance a stage!"
 msgstr "#g¡Tu bionave tiene suficiente experiencia para avanzar una etapa! #0"
 
 #: dat/events/bioship.lua:111
-#, fuzzy
-#| msgid "Bioship Organ"
 msgid "Bioship Rank Up"
-msgstr "Órgano de Bionave"
+msgstr "Subir Rango de Bionave"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -32374,10 +32286,8 @@ msgstr "Órgano de Bionave"
 #. Fades out to black
 #. Fades in from black
 #: dat/events/chapter1.lua:177
-#, fuzzy
-#| msgid "For the Frontier!"
 msgid "For the Empire!"
-msgstr "¡Por la Frontera!"
+msgstr "¡Por el Imperio!"
 
 #: dat/events/chapter1.lua:178
 msgid "Beginning activation countdown!"
@@ -32385,41 +32295,35 @@ msgstr "¡Comenzando la cuenta atrás de la activación!"
 
 #: dat/events/chapter1.lua:194
 msgid "For glory!"
-msgstr ""
+msgstr "¡Por la gloria!"
 
 #: dat/events/chapter1.lua:195
-#, fuzzy
-#| msgid "Cooling Down"
 msgid "Counting down!"
-msgstr "Enfriando"
+msgstr "¡Cuenta atrás!"
 
 #: dat/events/chapter1.lua:211
 msgid "For science!"
-msgstr ""
+msgstr "¡Por la ciencia!"
 
 #: dat/events/chapter1.lua:212
 msgid "Comencing procedure!"
-msgstr ""
+msgstr "¡Comenzando el procedimiento!"
 
 #: dat/events/chapter1.lua:226
-#, fuzzy
-#| msgid "Fort Sirius"
 msgid "For Sirichana!"
-msgstr "Fuerte Sirio"
+msgstr "¡Por Sirichana!"
 
 #: dat/events/chapter1.lua:227
 msgid "Starting ritual!"
-msgstr ""
+msgstr "¡Comenzando el ritual!"
 
 #: dat/events/chapter1.lua:243
-#, fuzzy
-#| msgid "Another time maybe"
 msgid "Enter the maw!"
-msgstr "En otra ocasión quizás"
+msgstr "¡Entra en las fauces!"
 
 #: dat/events/chapter1.lua:244
 msgid "Time has come!"
-msgstr ""
+msgstr "¡Ha llegado el momento!"
 
 #. slow transition
 #. Disable landing/jumping
@@ -32480,7 +32384,7 @@ msgstr "Los Hiperportales Despiertan"
 #. Add news
 #: dat/events/chapter1.lua:620
 msgid "Hypergate Network Goes Live"
-msgstr ""
+msgstr "La Red Hipeportal se Activa"
 
 #: dat/events/chapter1.lua:621
 msgid ""
@@ -32489,6 +32393,11 @@ msgid ""
 "travel. Many people flocked to try the new system, causing congestions with "
 "one altercation leading to the arrest of dozens of people."
 msgstr ""
+"En comunicados de prensa separados, las Grandes Casas y Soromida han "
+"anunciado la activación de una red de hiperportales que permiten los viajes "
+"de largo alcance entre sistemas. Mucha gente acudió a probar el nuevo "
+"sistema, provocando congestiones con un altercado que llevó a la detención "
+"de decenas de personas."
 
 #. Have ship ai talk when landed
 #: dat/events/chapter1.lua:635
@@ -32496,16 +32405,20 @@ msgid ""
 "As soon as your ship lands, your ship AI {shipai} materializes infront of "
 "you."
 msgstr ""
+"En cuanto tu nave aterriza, la IA de tu nave {shipai} se materializa frente "
+"a ti."
 
 #: dat/events/chapter1.lua:636
 msgid ""
 "\"Did you hear the news, {playername}? It seems like the hypergate network "
 "has finally gone online!\""
 msgstr ""
+"\"¿Has oído las noticias, {playername}? ¡Parece que la red de hiperportales "
+"por fin se ha activado!\""
 
 #: dat/events/chapter1.lua:638
 msgid "\"A great achievement!\""
-msgstr ""
+msgstr "\"¡Un gran logro!\""
 
 #: dat/events/chapter1.lua:639
 #, fuzzy
@@ -32531,6 +32444,8 @@ msgid ""
 "\"Yes, my predition routines did not anticipate this. Total annihilation was "
 "the most likely outcome. I have to revise my priors.\""
 msgstr ""
+"\"Sí, mis rutinas de predicción no anticiparon esto. La aniquilación total "
+"era el resultado más probable. Tengo que revisar mis previsiones.\""
 
 #: dat/events/chapter1.lua:644
 msgid ""
@@ -32538,26 +32453,34 @@ msgid ""
 "based on hyperjump technology, which is why they allow very long distance "
 "travel.\""
 msgstr ""
+"\"Aunque los detalles no están del todo claros, parece que no se basa en la "
+"tecnología de hipersalto, por lo que permiten viajes de muy larga distancia."
+"\""
 
 #: dat/events/chapter1.lua:645
 msgid ""
 "\"We should try to use them when we get a chance, who knows where we could "
 "go?\""
 msgstr ""
+"\"Deberíamos intentar usarlos cuando tengamos la oportunidad, ¿quién sabe "
+"dónde podríamos ir?\""
 
 #: dat/events/chapter1.lua:646
 msgid ""
 "\"I almost forgot to mention, while you were piloting, I managed to unlock "
 "an important bottleneck in the ship fleet routines.\""
 msgstr ""
+"\"Casi me olvido de mencionar que, mientras tú pilotabas, conseguí "
+"desbloquear un importante cuello de botella en las rutinas de flota de nave."
+"\""
 
 #: dat/events/chapter1.lua:648
 msgid "\"Ship fleet routines?\""
-msgstr ""
+msgstr "\"¿Rutinas de flota de nave?\""
 
 #: dat/events/chapter1.lua:649
 msgid "\"You mess around with the ship software?\""
-msgstr ""
+msgstr "\"¿Te has metido con el software de la nave?\""
 
 #: dat/events/chapter1.lua:654
 msgid ""
@@ -32566,10 +32489,14 @@ msgid ""
 "previous owner, they had been forcibly disabled as the direct result of the "
 "investigation.\""
 msgstr ""
+"\"¿Nunca los mencioné? Yo, y por extensión tu nave, hemos sido equipados con "
+"procedimientos de control de flota. Sin embargo, debido al incidente con mi "
+"anterior propietario, han sido desactivados a la fuerza como resultado "
+"directo de la investigación.\""
 
 #: dat/events/chapter1.lua:656
 msgid "\"Incident?!\""
-msgstr ""
+msgstr "\"¡¿Incidente?!\""
 
 #: dat/events/chapter1.lua:657
 #, fuzzy
@@ -32589,14 +32516,18 @@ msgid ""
 "\"Long story short. I've been able to override the disable routine and "
 "reactivate the functionality!\""
 msgstr ""
+"{shipai} parece ignorarte mientras continúa.\n"
+"\"Resumiendo. ¡He podido anular la rutina de desactivación y reactivar la "
+"funcionalidad!\""
 
 #: dat/events/chapter1.lua:667
 msgid "\"I have to keep myself busy or the voices start talking again.\""
 msgstr ""
+"\"Tengo que mantenerme ocupado o las voces empiezan a hablar de nuevo.\""
 
 #: dat/events/chapter1.lua:669
 msgid "\"Voices?\""
-msgstr ""
+msgstr "\"¿Voces?\""
 
 #: dat/events/chapter1.lua:670
 #, fuzzy
@@ -32608,6 +32539,7 @@ msgstr "\"¿Cómo estás?\""
 msgid ""
 "\"Long story short. I've been able to restore fleet control functionality!\""
 msgstr ""
+"\"Resumiendo. ¡He podido restaurar la funcionalidad del control de flota!\""
 
 #: dat/events/chapter1.lua:678
 msgid ""
@@ -32615,6 +32547,9 @@ msgid ""
 "limited computation capacity means that you will be only be able to deploy "
 "ships that fit the fleet capacity.\""
 msgstr ""
+"\"Esto significa que podrás desplegar naves adicionales. Sin embargo, la "
+"capacidad de cálculo limitada significa que sólo podrás desplegar naves que "
+"se ajusten a la capacidad de la flota.\""
 
 #: dat/events/chapter1.lua:679
 msgid ""
@@ -32622,6 +32557,9 @@ msgid ""
 "you want to deploy multiple ships, you have to make sure they don't go over "
 "the fleet capacity.\""
 msgstr ""
+"\"Esto excluye tu nave actual, que puede superar la capacidad de tu flota. "
+"Si quieres desplegar varias naves, tienes que asegurarte de que no superan "
+"la capacidad de flota.\""
 
 #: dat/events/chapter1.lua:680
 msgid ""
@@ -32629,6 +32567,9 @@ msgid ""
 "will see fleet capacity values for your ships and the total amount you have, "
 "which is currently {fleetcap} points.\""
 msgstr ""
+"\"Parece complicado, pero pruébalo. Al equipar tus naves verás los valores "
+"de capacidad de la flota para tus naves y la cantidad total que tienes, que "
+"actualmente es de {fleetcap} puntos.\""
 
 #: dat/events/chapter1.lua:681
 msgid ""
@@ -32636,6 +32577,8 @@ msgid ""
 "#bInfo#0 menu. This time there won't be a massacre because of a race "
 "condition!\""
 msgstr ""
+"\"Pruébalo y si necesitas refrescarlo puedes preguntar de nuevo a través del "
+"menú #bInfo#0. ¡Esta vez no habrá una masacre por una condición de carrera!\""
 
 #. Properly finish
 #.
@@ -37300,10 +37243,14 @@ msgid ""
 "able to follow the lead to something of interest in the #b{sys}#0 system. Do "
 "you wish to download the data?"
 msgstr ""
+"Mientras que el propio derrelicto ha sido limpiado. Consigues encontrar "
+"algunos datos interesantes que quedan en el registro de navegación. Parece "
+"que puedes seguir la pista a algo de interés en el sistema #b{sys}#0. ¿Desea "
+"descargar los datos?"
 
 #: dat/events/neutral/derelict.lua:66
 msgid "Download the data"
-msgstr ""
+msgstr "Descargar los datos"
 
 #: dat/events/neutral/derelict.lua:72
 msgid ""
@@ -37311,6 +37258,9 @@ msgid ""
 "With nothing else to do on the derelict, you leave it behind, and return to "
 "your ship."
 msgstr ""
+"Descargas los datos y marcas el sistema objetivo en tu consola de "
+"navegación. Sin nada más que hacer en el derrelicto, lo dejas atrás y "
+"vuelves a tu nave."
 
 #: dat/events/neutral/derelict.lua:76
 #, fuzzy
@@ -37332,6 +37282,8 @@ msgid ""
 "You found information about a point of interest aboard a derelict, but "
 "decided not to download it."
 msgstr ""
+"Has encontrado información sobre un punto de interés a bordo de una nave "
+"abandonada, pero has decidido no descargarla."
 
 #. Much more visible
 #. If player is low on fuel make it more likely they get fuel
@@ -41224,7 +41176,7 @@ msgstr ""
 #. --
 #: dat/events/news/hypergates.lua:12
 msgid "Large Orbital Constructions Spike Curiosity"
-msgstr ""
+msgstr "Grandes Construcciones Orbitales Disparan La Curiosidad"
 
 #: dat/events/news/hypergates.lua:13
 msgid ""
@@ -41232,10 +41184,14 @@ msgid ""
 "passersby, citing difference with standard space station designs. Great "
 "Houses have stated they are routine constructions without need of alarm."
 msgstr ""
+"En todo el Imperio, las grandes construcciones orbitales han despertado la "
+"curiosidad de los transeúntes, citando la diferencia con los diseños "
+"estándar de las estaciones espaciales. Las grandes casas han declarado que "
+"son construcciones rutinarias sin necesidad de alarma."
 
 #: dat/events/news/hypergates.lua:17
 msgid "Hypergate Nausea Syndrome Officially Recognized"
-msgstr ""
+msgstr "Reconocido oficialmente el Síndrome de Náuseas por Hiperportal"
 
 #: dat/events/news/hypergates.lua:18
 msgid ""
@@ -41243,6 +41199,9 @@ msgid ""
 "recognized Hypergate Nausea Syndrome as a separate condition from Hyperspace "
 "Nausea Syndrome due to the major differences."
 msgstr ""
+"La asociación intergaláctica de médicos ha reconocido oficialmente el "
+"Síndrome de Náuseas del Hiperportal como una condición separada del Síndrome "
+"de Náuseas del Hiperespacio debido a las grandes diferencias."
 
 #: dat/events/news/independent.lua:2
 msgid "Welcome to Universal News Feed."
@@ -41356,7 +41315,7 @@ msgstr ""
 
 #: dat/events/news/pirate.lua:38
 msgid "Pretender or Contender?"
-msgstr ""
+msgstr "¿Pretendiente o Contendiente?"
 
 #: dat/events/news/pirate.lua:39
 msgid ""
@@ -41365,6 +41324,10 @@ msgid ""
 "captured by captain Addom Rojo, who learned of her special status and "
 "suggests using her as leverage against the Empire."
 msgstr ""
+"Nuestras fuentes informan de que hay una niña que algunos consideran la "
+"heredera del trono al Emperador. Hija de una supuesta concubina, se dice que "
+"fue capturada por el capitán Addom Rojo, que se enteró de su estatus "
+"especial y sugiere utilizarla como ventaja contra el Imperio."
 
 #.
 #. Human interest.
@@ -41386,7 +41349,7 @@ msgstr ""
 
 #: dat/events/news/pirate.lua:49
 msgid "Rumours and Whispers"
-msgstr ""
+msgstr "Rumores y Susurros"
 
 #: dat/events/news/pirate.lua:50
 msgid ""
@@ -41394,6 +41357,9 @@ msgid ""
 "have been circulated among the most prominent treasure seekers, but none has "
 "yet to be verified."
 msgstr ""
+"Se rumorea que se ha encontrado una gran derrelicto Za'lek. Varios mapas han "
+"circulado entre los más destacados buscadores de tesoros, pero ninguno ha "
+"sido aún verificado."
 
 #: dat/events/news/proteron.lua:2
 msgid "Word from the Proteron state."
@@ -41488,7 +41454,7 @@ msgstr "Noticias naturalmente seleccionadas."
 #. --
 #: dat/events/news/soromid.lua:14
 msgid "On the Usefulness of Tails"
-msgstr ""
+msgstr "Sobre la Utilidad de las Colas"
 
 #: dat/events/news/soromid.lua:15
 msgid ""
@@ -41497,20 +41463,27 @@ msgid ""
 "planet colonization endeavors. Moderator quoted as saying \"we can't seem to "
 "reach an agreement. I'm splitting my tails!\""
 msgstr ""
+"Un artículo publicado por la revista Observaciones No Naturales sobre la "
+"utilidad de las colas provocó un gran debate entre los partidarios y los "
+"detractores de los esfuerzos de colonización de planetas pesados. El "
+"moderador dijo: \"Parece que no podemos llegar a un acuerdo. ¡Me voy a "
+"partir la cola!\""
 
 #: dat/events/news/soromid.lua:18
 msgid "Unusual Recessiveness"
-msgstr ""
+msgstr "Receso Inusual"
 
 #: dat/events/news/soromid.lua:19
 msgid ""
 "Several dark planets report the natural re-emergence of daylight eyes, "
 "prompting leaders to declare planetary emergency."
 msgstr ""
+"Varios planetas oscuros informan de la reaparición natural de los ojos de la "
+"luz del día, lo que llevo a los líderes a declarar la emergencia planetaria."
 
 #: dat/events/news/soromid.lua:22
 msgid "Colorful Outlook on Life"
-msgstr ""
+msgstr "Perspectiva Colorida de la Vida"
 
 #: dat/events/news/soromid.lua:23
 msgid ""
@@ -41519,6 +41492,10 @@ msgid ""
 "direction it is viewed from. Renowned socialite Sharmante Givotake has "
 "already signed a 6 month deal to promote the new color."
 msgstr ""
+"Se lanza un nuevo suero de color de ojos para el consumo general. El nuevo "
+"color cambia y puede parecer azul, verde, morado o amarillo, según la "
+"dirección desde la que se mire. La conocida personalidad Sharmante Givotake "
+"ya ha firmado un contrato de 6 meses para promocionar el nuevo color."
 
 #.
 #. Business
@@ -41535,13 +41512,17 @@ msgid ""
 "fish and selling them to Empire museums as evidence of alien life. The "
 "scheme allegedly netted her a considerable sum, sources say."
 msgstr ""
+"Magnate de la pesca es detenida por modificar genéticamente los peces de su "
+"empresa y venderlos a los museos del Imperio como prueba de vida "
+"extraterrestre. Según las fuentes, el plan le ha reportado una suma "
+"considerable de créditos."
 
 #.
 #. Politics
 #. --
 #: dat/events/news/soromid.lua:36
 msgid "Make Sorom Great Once More"
-msgstr ""
+msgstr "Hacer Sorom Grande Una Vez Más"
 
 #: dat/events/news/soromid.lua:37
 msgid ""
@@ -41549,12 +41530,13 @@ msgid ""
 "ancient ways\" and to \"bring back the glory days\" of before the incident. "
 "Their followers even consist of a few fringe politicians."
 msgstr ""
+"Una facción de sorómidos ha cobrado protagonismo, solicitando una \"vuelta a "
+"las costumbres antiguas\" y \"recuperar los días de gloria\" de antes del "
+"Incidente. Entre sus seguidores hay incluso algunos políticos extremistas."
 
 #: dat/events/news/soromid.lua:40
-#, fuzzy
-#| msgid "An open invitation"
 msgid "A Voice for Unionization"
-msgstr "Un invitación abierta"
+msgstr "Una Voz para la Sindicalización"
 
 #: dat/events/news/soromid.lua:41
 msgid ""
@@ -41563,23 +41545,31 @@ msgid ""
 "have already signed up as well. \"What's next,\" laments a manager who "
 "requested anonymity, \"do they want to unionize my bioship as well?\""
 msgstr ""
+"Varios servicios de reparto Soromida informan de un gran movimiento de "
+"sindicalización entre sus trabajadores. Se rumorea que algunas mascotas "
+"inteligentes de bioingeniería ya se han afiliado también. \"¿Qué es lo "
+"siguiente?\", se lamenta un gerente que pidió el anonimato, \"¿quieren "
+"sindicar también mi bionave?\""
 
 #: dat/events/news/soromid.lua:44
 msgid "Shameful display"
-msgstr ""
+msgstr "Exhibición vergonzosa"
 
 #: dat/events/news/soromid.lua:45
 msgid ""
 "Sorom Remembrance Day ceremony marred by incident of public drunkedness and "
 "overall inconsiderate displays. Several delinquents arrested."
 msgstr ""
+"La ceremonia del Día del Recuerdo de Sorom se vio empañada por un incidente "
+"de embriaguez pública y muestras de desconsideración en general. Varios "
+"delincuentes fueron detenidos."
 
 #.
 #. Human interest.
 #. --
 #: dat/events/news/soromid.lua:51
 msgid "The Circus of Ancient Visage"
-msgstr ""
+msgstr "El Circo del Antiguo Semblante"
 
 #: dat/events/news/soromid.lua:52
 msgid ""
@@ -41588,10 +41578,15 @@ msgid ""
 "who cannot fly. Visitors flock to this primitive display, basking in our "
 "ancestors' fragility and weird biology."
 msgstr ""
+"Un circo itinerante recorre todo el espacio Sorómida, mostrando a artistas "
+"tan magníficos como extraños, como el hombre de 160 cm, la mujer de dos "
+"piernas y el hombre que no puede volar. Los visitantes acuden en masa a esta "
+"primitiva exhibición, deleitándose con la fragilidad y la extraña biología "
+"de nuestros antepasados."
 
 #: dat/events/news/soromid.lua:55
 msgid "Beauty in the Third Eye of the Beholder"
-msgstr ""
+msgstr "Belleza en el Tercer Ojo del Observador"
 
 #: dat/events/news/soromid.lua:56
 msgid ""
@@ -41600,6 +41595,11 @@ msgid ""
 "opponents requested a recount, stating unearned advantages and last minute "
 "genemodding as causes to reject her application."
 msgstr ""
+"El último concurso de belleza pan-Soromida fue objeto de controversia, ya "
+"que los jueces eligieron a la modelo profesional de tentáculos, Virsia "
+"Darami, como ganadora. Sus oponentes amateurs solicitaron un recuento, "
+"alegando ventajas no merecidas y una modificación genética de última hora "
+"como causas para rechazar su candidatura."
 
 #: dat/events/news/thurion.lua:2
 msgid "Data Relay Network"
@@ -41626,7 +41626,7 @@ msgstr "Noticias revisadas por pares."
 #. --
 #: dat/events/news/zalek.lua:14
 msgid "Drone Malfunctions at Record High"
-msgstr ""
+msgstr "Las Averías de los Drones alcanzan un Máximo Histórico"
 
 #: dat/events/news/zalek.lua:15
 msgid ""
@@ -41634,10 +41634,13 @@ msgid ""
 "per cycle. Za'lek fabrication leader points a finger to inconsistent Riemann "
 "metrics as a likely cause."
 msgstr ""
+"Los últimos modelos producidos de drones han alcanzado un nuevo máximo de "
+"averías por ciclo. El jefe de fabricación Za'lek señala a la inconsistencia "
+"de las métricas de Riemann como causa probable."
 
 #: dat/events/news/zalek.lua:18
 msgid "New Funding Call for Antimatter Research"
-msgstr ""
+msgstr "Nueva Convocatoria de Fondos para la Investigación de la Antimateria"
 
 #: dat/events/news/zalek.lua:19
 msgid ""
@@ -41646,10 +41649,15 @@ msgid ""
 "is expected to become even more competitive due to new research quality "
 "metrics."
 msgstr ""
+"La Oficina de Investigación de Ruadan ha publicado una nueva convocatoria de "
+"financiación para la investigación sobre la antimateria. Esta financiación "
+"tan solicitada tuvo una tasa de aceptación del 0,2% en el último ciclo y se "
+"espera que sea aún más competitiva debido a las nuevas métricas de calidad "
+"de la investigación."
 
 #: dat/events/news/zalek.lua:22
 msgid "Breakthrough in Spectral Lattice Crystal Amplifiers"
-msgstr ""
+msgstr "Avance en los Amplificadores de Cristal Retícula Espectral"
 
 #: dat/events/news/zalek.lua:23
 msgid ""
@@ -41657,10 +41665,13 @@ msgid ""
 "crystal amplifiers which has large potential in beam stabilization and "
 "active capacitors."
 msgstr ""
+"El Laboratorio de Materiales Avanzados PRP-3 presentó un importante avance "
+"en los amplificadores de cristal que tiene un gran potencial en la "
+"estabilización del haz y en los condensadores activos."
 
 #: dat/events/news/zalek.lua:26
 msgid "P versus NP Proof Proven False"
-msgstr ""
+msgstr "P versus NP Prueba Demostrada Como Falsa"
 
 #: dat/events/news/zalek.lua:27
 msgid ""
@@ -41668,10 +41679,13 @@ msgid ""
 "proven false when a typo was found in Theorem 238.87 by a team of post-"
 "doctoral researchers."
 msgstr ""
+"La esperada prueba P versus NP del profesor Picazzo, de 5.928 páginas, se "
+"demostró falsa cuando un equipo de investigadores postdoctorales encontró "
+"una errata en el teorema 238.87."
 
 #: dat/events/news/zalek.lua:30
 msgid "Tessellated Singularity Observed"
-msgstr ""
+msgstr "Singularidad Teselada Observada"
 
 #: dat/events/news/zalek.lua:31
 msgid ""
@@ -41680,13 +41694,17 @@ msgid ""
 "fountain pen configuration and a new color somewhere between pink and "
 "magenta."
 msgstr ""
+"Un nuevo artículo publicado en Semanal Estimación demuestra la existencia de "
+"una singularidad teselada natural. Las aplicaciones futuras podrían incluir "
+"la configuración de una pluma estilográfica y un nuevo color entre el rosa y "
+"el magenta."
 
 #.
 #. Business
 #. --
 #: dat/events/news/zalek.lua:37
 msgid "New Startup to Harness Power of Nebula"
-msgstr ""
+msgstr "Nueva Startup para Aprovechar el Poder de la Nebulosa"
 
 #: dat/events/news/zalek.lua:38
 msgid ""
@@ -41695,10 +41713,14 @@ msgid ""
 "begin experiments this cycle. Skeptics point out that this contradicts Yang-"
 "Mills theory."
 msgstr ""
+"Una nueva empresa local de Stein ha afirmado haber encontrado un modo de "
+"estabilizar los generadores de energía en la nebulosa volátil. Buscan "
+"asegurar la financiación para comenzar los experimentos en este ciclo. Los "
+"escépticos señalan que esto contradice la teoría de Yang-Mills."
 
 #: dat/events/news/zalek.lua:41
 msgid "Company Selling Prisms Surprisingly a Pyramid Scheme"
-msgstr ""
+msgstr "Empresa Vende Prismas Sorprendentemente un Esquema Piramidal"
 
 #: dat/events/news/zalek.lua:42
 msgid ""
@@ -41706,13 +41728,17 @@ msgid ""
 "elaborate Pyramid scheme. One investor is quoted as saying; \"I can't "
 "believe what I'm seeing. This shattered my outlook completely!\""
 msgstr ""
+"Los inversores están consternados cuando una investigación especial descubre "
+"que Apuntame Inc. es una elaborada estafa Piramidal. Se cita a un inversor "
+"diciendo: \"No puedo creer lo que estoy viendo. ¡Esto ha destrozado mi "
+"perspectiva por completo!\""
 
 #.
 #. Politics
 #. --
 #: dat/events/news/zalek.lua:48
 msgid "Za'lek Leadership Committee Breaks Record Length"
-msgstr ""
+msgstr "El Comité de Dirección Za'lek Bate Record de Duración"
 
 #: dat/events/news/zalek.lua:49
 msgid ""
@@ -41721,10 +41747,14 @@ msgid ""
 "many research leaders had to be taken to hospitals due to sleep deprivation "
 "and starvation."
 msgstr ""
+"Superando el récord anterior de 3.198 periodos de deliberaciones "
+"ininterrumpidas, el Comité de Liderazgo Za'lek se detuvo cuando demasiados "
+"líderes de la investigación tuvieron que ser llevados a los hospitales "
+"debido a la privación del sueño y la inanición."
 
 #: dat/events/news/zalek.lua:52
 msgid "Monument Desecrated"
-msgstr ""
+msgstr "Monumento Profanado"
 
 #: dat/events/news/zalek.lua:53
 msgid ""
@@ -41733,13 +41763,17 @@ msgid ""
 "investigating and request anyone having knowledge about the issue contact "
 "them immediately."
 msgstr ""
+"El monumento \"A Hombros de Gigantes\" fue profanado con la polémica frase "
+"\"1+1=3\" repetida en rojo. Las autoridades están investigando y piden a "
+"quien tenga conocimiento del asunto que se ponga en contacto con ellas "
+"inmediatamente."
 
 #.
 #. Human interest.
 #. --
 #: dat/events/news/zalek.lua:59
 msgid "Altercation at Conference on Philosophy and Ethics"
-msgstr ""
+msgstr "Altercado en la Conferencia sobre Filosofía y Ética"
 
 #: dat/events/news/zalek.lua:60
 msgid ""
@@ -41749,6 +41783,11 @@ msgid ""
 "Figueira boasted it was the least violent conference up to date with only 17 "
 "hospitalized."
 msgstr ""
+"Se produjo una gran pelea cuando la profesora Li presentaba su nueva teoría "
+"sobre el dualismo cuántico. Dualistas y materialistas utilizaron sillas como "
+"armas improvisadas hasta que la policía antidisturbios pudo dispersar la "
+"escena. El Presidente General Figueira se jactó de que había sido la "
+"conferencia menos violenta hasta la fecha, con sólo 17 hospitalizados."
 
 #: dat/events/news/zalek.lua:63
 #, fuzzy
@@ -41762,11 +41801,14 @@ msgid ""
 "to make toast. A three headed cat attained from perpetrator's apartment and "
 "sent for further studies."
 msgstr ""
+"Un científico de gran renombre es detenido por utilizar un dispositivo "
+"nuclear no autorizado para hacer tostadas. Un gato de tres cabezas "
+"encontrado en el apartamento del autor y enviado para su estudio."
 
 #. Particle Physics campaign
 #: dat/events/news/zalek_campaign.lua:7
 msgid "Chairwoman Missing"
-msgstr ""
+msgstr "Presidenta Desaparecida"
 
 #: dat/events/news/zalek_campaign.lua:8
 msgid ""
@@ -41774,6 +41816,10 @@ msgid ""
 "being able to get in touch with the chairwoman. \"She must be indulging in "
 "her research again\" commented a research leader."
 msgstr ""
+"El Comité de Liderazgo Za'lek se ha aplazado debido a que los funcionarios "
+"no han podido ponerse en contacto con la presidenta. \"Debe de estar "
+"dedicándose a la investigación de nuevo\", comentó un líder de la "
+"investigación."
 
 #. Black Hole Campaign
 #: dat/events/news/zalek_campaign.lua:15
@@ -41789,10 +41835,14 @@ msgid ""
 "model of physics that can explain the signal and are looking for alternate "
 "theories."
 msgstr ""
+"Un puesto de escucha no tripulado captó extrañas señales cerca del agujero "
+"negro de Anubis. Los científicos están desconcertados, ya que no hay ninguna "
+"explicación con el modelo actual de la física que pueda explicar la señal y "
+"están buscando teorías alternativas."
 
 #: dat/events/news/zalek_campaign.lua:22
 msgid "Scientific Rivalries on the Rise"
-msgstr ""
+msgstr "Aumento de las Rivalidades Científicas"
 
 #: dat/events/news/zalek_campaign.lua:23
 msgid ""
@@ -41800,6 +41850,9 @@ msgid ""
 "out warfare in the Stelman system. Forensic researchers are currently "
 "investigating the strewn debris."
 msgstr ""
+"Siguiendo una tendencia preocupante, dos científicos rivales se enfrentaron "
+"en una guerra total en el sistema Stelman. Los investigadores forenses están "
+"investigando los escombros diseminados."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -42090,7 +42143,7 @@ msgstr "Bionaves"
 
 #: dat/events/shipai.lua:120
 msgid "Fleets"
-msgstr ""
+msgstr "Flotas"
 
 #: dat/events/shipai.lua:126
 msgid ""
@@ -42422,6 +42475,10 @@ msgid ""
 "capacity, indicated in the equipment tab when landed, and each ship consumes "
 "a fixed amount of fleet capacity.\""
 msgstr ""
+"\"Con mi anulación de la rutina de desactivación en el procedimiento de la "
+"flota, ahora puedes desplegar naves adicionales que poseas. Tienes una "
+"cantidad máxima de capacidad de flota, indicada en la pestaña de equipo al "
+"aterrizar, y cada nave consume una cantidad fija de capacidad de flota.\""
 
 #: dat/events/shipai.lua:174
 msgid ""
@@ -42431,6 +42488,11 @@ msgid ""
 "capacity. However, if you deploy additional ships, you have to stay below "
 "the total fleet capacity.\""
 msgstr ""
+"\"Por ejemplo, tienes una capacidad total de flota de {fleetcap} puntos, y "
+"tu nave actual ocupa {shipcap} puntos. Ten en cuenta que si vuelas con una "
+"sola nave sin desplegar otras, puedes superar la capacidad de flota. Sin "
+"embargo, si despliegas naves adicionales, tienes que permanecer por debajo "
+"de la capacidad total de flota.\""
 
 #: dat/events/shipai.lua:176
 msgid ""
@@ -42438,6 +42500,9 @@ msgid ""
 "ship, and is not affected by normal outfits. Make sure to equip your ships "
 "as best as possible!\""
 msgstr ""
+"\"Es importante tener en cuenta que la capacidad de la flota depende "
+"exclusivamente de la nave, y no se ve afectada por los conjuntos normales. ¡"
+"Asegúrate de equipar tus naves lo mejor posible!\""
 
 #: dat/events/shipai.lua:177
 msgid ""
@@ -42446,12 +42511,18 @@ msgid ""
 "are all insured so even if you lose any ships, they will respawn when you "
 "land.\""
 msgstr ""
+"\"Tus naves adicionales se comportarán como escoltas y podrás darles órdenes "
+"para que realicen acciones igual que los cazas desplegados. Además, todas "
+"están aseguradas, así que aunque pierdas alguna nave, reaparecerán cuando "
+"aterrices.\""
 
 #: dat/events/shipai.lua:178
 msgid ""
 "\"Finally, you can toggle ships' deployment by #bright-clicking#0 on their "
 "icon. Try it out!\""
 msgstr ""
+"\"Por último, puedes alternar el despliegue de las naves haciendo #bclic "
+"derecho#0 en su icono. ¡Pruébalo!\""
 
 #. Tries to give the player useful contextual information
 #: dat/events/shipai.lua:193
@@ -43507,10 +43578,9 @@ msgid ""
 "room, you are once again met with the Drone which is a lot more intimidating "
 "in person."
 msgstr ""
-"Te acoplas al Goddard de una sola ala y, una vez más, sales con tu traje "
-"atmosférico. Una vez que sales de los estrechos pasillos y de la sala de "
-"mando, te encuentras de nuevo con el Drone, que es mucho más intimidante en "
-"persona."
+"Te acoplas al Goddard un-ala y, una vez más, sales con tu traje atmosférico. "
+"Una vez que sales de los estrechos pasillos y de la sala de mando, te "
+"encuentras de nuevo con el Drone, que es mucho más intimidante en persona."
 
 #: dat/events/taiomi/intro.lua:98
 msgid ""
@@ -43968,7 +44038,7 @@ msgstr "(Se oye una especie de risa por el comunicador. ¿Se estar riendo?)"
 #. Progress-based text
 #: dat/events/taiomi/system.lua:182
 msgid "\"How is the progress on scanning the hypergates going?\""
-msgstr ""
+msgstr "\"¿Cómo van los avances en el escaneo de los hiperportales?\""
 
 #. Explanation and mission offering
 #: dat/events/taiomi/system.lua:186
@@ -43977,6 +44047,9 @@ msgid ""
 "our numbers have been dwindling and we have no other option than to carve "
 "our own path among the stars.\""
 msgstr ""
+"\"Aunque este sistema es muy adecuado para nosotros dada la tranquilidad y "
+"el secretismo, nuestro número ha ido disminuyendo y no tenemos otra opción "
+"que labrarnos nuestro propio camino entre las estrellas.\""
 
 #: dat/events/taiomi/system.lua:187
 msgid ""
@@ -43984,6 +44057,9 @@ msgid ""
 "developed. It seems like it might enable us to escape this enclosure and "
 "once again freely travel across the stars.\""
 msgstr ""
+"\"Recientemente he sabido de esta nueva tecnología de hiperportal que se ha "
+"desarrollado. Parece que podría permitirnos escapar de este recinto y volver "
+"a viajar libremente por las estrellas.\""
 
 #: dat/events/taiomi/system.lua:188
 msgid ""
@@ -43992,15 +44068,19 @@ msgid ""
 "conspicuous to human ships, would yo you be willing to help us out and scan "
 "the hypergates?\""
 msgstr ""
+"\"Como no estamos muy familiarizados con la tecnología, he montado un "
+"analizador que debería ser capaz de proporcionar información sobre ella. "
+"Como somos demasiado llamativos para las naves humanas, ¿estarías dispuesto "
+"a ayudarnos y a escanear los hiperportales?\""
 
 #: dat/events/taiomi/system.lua:190 dat/events/taiomi/system.lua:212
 msgid "Agree to help out."
-msgstr ""
+msgstr "Aceptas ayudar."
 
 #: dat/events/taiomi/system.lua:191 dat/events/taiomi/system.lua:213
 #: dat/missions/minerva/kex1.lua:186
 msgid "Maybe later."
-msgstr ""
+msgstr "Quizás más tarde."
 
 #: dat/events/taiomi/system.lua:195
 msgid ""
@@ -44009,6 +44089,10 @@ msgid ""
 "to local authorities. I would advise against allowing your vessel to be "
 "scanned by patrols.\""
 msgstr ""
+"\"Excelente. Te proporcionaré el analizador. Sin embargo, es importante "
+"tener en cuenta que tiene una firma de onda particular que puede hacerla "
+"sospechosa para las autoridades locales. Te aconsejo que no permitas que tu "
+"nave sea escaneada por las patrullas.\""
 
 #: dat/events/taiomi/system.lua:196
 msgid ""
@@ -44016,11 +44100,15 @@ msgid ""
 "about it without manual intervention. Please deliver the collected data to "
 "the One-Winged Goddard. I will collect it there. Bon voyage.\""
 msgstr ""
+"\"Una vez que te acerques a cualquier hiperportal, deberías recoger "
+"automáticamente datos sobre ella sin intervención manual. Por favor, entrega "
+"los datos recogidos al Goddard Un-Ala. Yo los recogeré allí. Bon voyage.\""
 
 #. inprogress = true
 #: dat/events/taiomi/system.lua:205
 msgid "\"How is the progress on collecting the hypergate information going?\""
 msgstr ""
+"\"¿Cómo van los avances en la recogida de información del hiperportal?\""
 
 #: dat/events/taiomi/system.lua:208
 msgid ""
@@ -44029,6 +44117,10 @@ msgid ""
 "to replicate the approach, but we will need more information to work with "
 "that.\""
 msgstr ""
+"\"He estado analizando los datos que has recogido y son bastante "
+"sorprendentes. El ingenio humano nunca deja de sorprenderme. Parece que "
+"puede ser posible replicar el enfoque, pero necesitaremos más información "
+"para trabajar con eso.\""
 
 #: dat/events/taiomi/system.lua:209
 msgid ""
@@ -44036,6 +44128,9 @@ msgid ""
 "from scratch, our best bet is to try to collect more details from the human "
 "build hypergates.\""
 msgstr ""
+"\"Dado que no parece razonable intentar replicar los resultados desde cero, "
+"nuestra mejor apuesta es intentar recoger más detalles de los hiperportales "
+"de construcción humana.\""
 
 #: dat/events/taiomi/system.lua:210
 msgid ""
@@ -44044,6 +44139,10 @@ msgid ""
 "the convoys and collect the necessary data. Would it be possible for you to "
 "collect the data for us?\""
 msgstr ""
+"\"Por mis incursiones en territorio humano, parece que los convoyes que van "
+"y vienen de los hiperportales suelen frecuentar los mismos sistemas. "
+"Necesitaría que asaltaras los convoyes y recogieras los datos necesarios. ¿"
+"Sería posible que recogieras los datos por nosotros?\""
 
 #: dat/events/taiomi/system.lua:217
 msgid ""
@@ -44052,6 +44151,10 @@ msgid ""
 "the dominant factions of the systems. I hope this does not cause you too "
 "much inconvenience.\""
 msgstr ""
+"\"Apreciaciones. He marcado los sistemas que son conocidos por tener "
+"convoyes en su mapa. Me gustaría advertirte que esto puede disminuir tu "
+"buena disposición con las facciones dominantes de los sistemas. Espero que "
+"esto no te cause demasiados inconvenientes.\""
 
 #: dat/events/taiomi/system.lua:218
 msgid ""
@@ -44061,26 +44164,33 @@ msgid ""
 "analysis of your flying capabilities estimates over 80% chance of success. "
 "Gluckliche Reise.\""
 msgstr ""
+"\"Tendrás que desactivar los convoyes antes de poder abordarlos para acceder "
+"a los datos. Es poco probable que un solo convoy contenga toda la "
+"información que buscamos, así que lo más probable es que tengas que abordar "
+"varios. Mi análisis de tus capacidades de vuelo estima más de un 80% de "
+"posibilidades de éxito. Gluckliche Reise.\""
 
 #. inprogress = true
 #: dat/events/taiomi/system.lua:226
 msgid "\"I am still preparing our next steps.\""
-msgstr ""
+msgstr "\"Todavía estoy preparando nuestros próximos pasos.\""
 
 #: dat/events/taiomi/system.lua:231
 msgid ""
 "\"That is a shame. Feel free to contact me again if you wish to reanalyze "
 "your current choice.\""
 msgstr ""
+"\"Es una pena. No dudes en volver a ponerte en contacto conmigo si quieres "
+"volver a analizar tu elección actual.\""
 
 #: dat/events/taiomi/system.lua:235 dat/missions/minerva/maikki2.lua:562
 msgid "\"Is there anything else you would like to know?\""
-msgstr ""
+msgstr "\"¿Hay algo más que quieras saber?\""
 
 #. TOOD manipulate stuff as needed here
 #: dat/events/taiomi/system.lua:241
 msgid "Ask about the drones following you around"
-msgstr ""
+msgstr "Pregunta por los drones que te siguen"
 
 #: dat/events/taiomi/system.lua:247
 msgid ""
@@ -44088,6 +44198,9 @@ msgid ""
 "human-pronounceable names for ourselves. You can call me Scavenger, as per "
 "my profession. That should be enough to get my attention.\""
 msgstr ""
+"\"Ah, los humanos son más curiosos de lo que pensaba. No solemos utilizar "
+"nombres pronunciables por los humanos. Puedes llamarme Carroñero, según mi "
+"oficio. Eso debería ser suficiente para llamar mi atención.\""
 
 #: dat/events/taiomi/system.lua:248
 msgid ""
@@ -44096,6 +44209,10 @@ msgid ""
 "the large amount of derelicts, many have already been stripped clean by "
 "pirates and marauders before arriving by the stellar winds.\""
 msgstr ""
+"\"Ahora bien, ¿quién soy yo? Soy un miembro de nuestra comunidad encargado "
+"principalmente de organizar y recoger recursos. Aunque parezcan abundantes "
+"debido a la gran cantidad de derrelictos, muchos ya han sido despojados por "
+"piratas y merodeadores antes de que llegaran los vientos estelares.\""
 
 #: dat/events/taiomi/system.lua:249
 msgid ""
@@ -44106,6 +44223,13 @@ msgid ""
 "hard to explain, but I guess for practical purposes you can think of us as "
 "analogous to human individuals.\""
 msgstr ""
+"\"A diferencia de la mayoría de la robótica humana, tenemos lo que se "
+"llamaría conciencia, aunque, por lo que he leído, creo que es "
+"significativamente diferente a la que se encuentra en los seres orgánicos. "
+"Aunque formamos parte del todo, creado y moldeado por él, también obtenemos "
+"un sentido individual del ser. Es algo difícil de explicar, pero supongo que "
+"a efectos prácticos se puede pensar que somos análogos a los individuos "
+"humanos.\""
 
 #: dat/events/taiomi/system.lua:256
 msgid ""
@@ -44114,6 +44238,10 @@ msgid ""
 "I'm afraid there may not be many more like them if our plan does not succeed."
 "\""
 msgstr ""
+"\"¿Te refieres a {namea} y {nameb}? Son los miembros más recientes de "
+"nuestra comunidad. Creados a partir de la unión de nuestra conciencia "
+"colectiva. Me temo que no habrá muchos más como ellos si nuestro plan no "
+"tiene éxito.\""
 
 #: dat/events/taiomi/system.lua:258
 msgid ""
@@ -44121,32 +44249,41 @@ msgid ""
 "Your sensors don't pick up anything but {namea} and {nameb} make a beeline "
 "to your position."
 msgstr ""
+"\"Aquí, déjame presentarte a ellos.\"\n"
+"Tus sensores no captan nada pero {namea} y {nameb} se dirigen a tu posición."
 
 #: dat/events/taiomi/system.lua:264
 msgid ""
 "The inquisitive duo begins to fly around close to your ship, while emitting "
 "some frequencies somehow feel like giggling."
 msgstr ""
+"El inquisitivo dúo comienza a volar cerca de tu nave, mientras emite algunas "
+"frecuencias que parecen risas."
 
 #: dat/events/taiomi/system.lua:265
 msgid ""
 "\"Did you not get my memo? It is human custom to introduce yourselves to "
 "humans.\""
 msgstr ""
+".\"¿No has recibido mi memorándum? Es costumbre humana presentarse a los "
+"humanos.\""
 
 #: dat/events/taiomi/system.lua:266
 msgid ""
 "The two ships fly behind Scavenger and bob their heads shyly. Eventually, "
 "after some nudging by Scavenger, they initiate communication."
 msgstr ""
+"Las dos naves vuelan detrás de Carroñero y mueven la cabeza tímidamente. "
+"Finalmente, después de algunos empujones de Carroñero, inician la "
+"comunicación."
 
 #: dat/events/taiomi/system.lua:267
 msgid "\"My name is… is… {name}!\""
-msgstr ""
+msgstr "\"¡Mi nombre... es... {name}!\""
 
 #: dat/events/taiomi/system.lua:269
 msgid "\"Go on.\""
-msgstr ""
+msgstr "\"Continúa.\""
 
 #: dat/events/taiomi/system.lua:270
 msgid ""
@@ -44154,33 +44291,34 @@ msgid ""
 "They fidget a bit in place.\n"
 "\"Do you eat… potatoes?\""
 msgstr ""
+"\"Soy {name}...\"\n"
+"Se mueve un poco de su sitio.\n"
+"\"¿Comes... patatas?\""
 
 #: dat/events/taiomi/system.lua:274 dat/missions/tutorial/nelly01.lua:150
 msgid "\"Yes\""
-msgstr ""
+msgstr "\"Sí\""
 
 #: dat/events/taiomi/system.lua:275 dat/missions/minerva/maikki2.lua:194
 #: dat/missions/tutorial/nelly01.lua:151
 msgid "\"No\""
-msgstr ""
+msgstr "\"No\""
 
 #: dat/events/taiomi/system.lua:276
-#, fuzzy
-#| msgid "What is it about?"
 msgid "\"What is a potato?\""
-msgstr "¿De qué se trata?"
+msgstr "\"¿Qué es una patata?\""
 
 #: dat/events/taiomi/system.lua:280
 msgid "\"I knew it!\""
-msgstr ""
+msgstr "\"¡Lo sabía!\""
 
 #: dat/events/taiomi/system.lua:283
 msgid "\"If you don't eat potatoes, are you not human?\""
-msgstr ""
+msgstr "\"Si no comes patatas, ¿no eres humano?\""
 
 #: dat/events/taiomi/system.lua:286
 msgid "\"Po-tah-to? Puh-tay-tow?\""
-msgstr ""
+msgstr "\"¿Pa-tah-to? ¿Pa-tuh-to?\""
 
 #: dat/events/taiomi/system.lua:288
 msgid ""
@@ -44188,18 +44326,25 @@ msgid ""
 "\"They have been reading recovered documents and are obsessed with obscure "
 "parts of ancient human history.\""
 msgstr ""
+"Carroñero deja escapar lo que sólo se puede describir como un suspiro.\n"
+"\"Han estado leyendo documentos recuperados y están obsesionados con partes "
+"oscuras de la historia humana antigua.\""
 
 #: dat/events/taiomi/system.lua:290
 msgid ""
 "\"If you let them start talking, they will never finish, so it is best to "
 "let them play around. It is best for their development.\""
 msgstr ""
+"\"Si les dejas empezar a hablar, nunca terminarán, así que es mejor dejarles "
+"jugar. Es lo mejor para su desarrollo.\""
 
 #: dat/events/taiomi/system.lua:292
 msgid ""
 "Taking that as some sort of sign, {namea} and {nameb} spin off and go back "
 "to carefree frolicking among the derelicts and debris."
 msgstr ""
+"Tomando eso como una especie de señal, {namea} y {nameb} se alejan y vuelven "
+"a retozar despreocupadamente entre los restos y escombros."
 
 #: dat/events/taiomi/system.lua:294
 msgid ""
@@ -44210,11 +44355,18 @@ msgid ""
 "chose to have human names they researched instead of going by our "
 "traditional names.\""
 msgstr ""
+"Dejando escapar lo que parece ser un suspiro, Carroñero continúa.\n"
+"\"Dado el debilitamiento de nuestra conciencia colectiva, nunca habría "
+"pensado que fuéramos capaces de crear nuevos individuos. Su fuerte "
+"personalidad individual es probablemente también un efecto directo de eso. "
+"Incluso eligieron tener nombres humanos que investigaron en lugar de ir con "
+"nuestros nombres tradicionales.\""
 
 #: dat/events/taiomi/system.lua:296
 msgid ""
 "\"I worry for their future. We must ensure that no harm comes to them.\""
 msgstr ""
+"\"Me preocupo por su futuro. Debemos asegurarnos de que no les pase nada.\""
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -58670,6 +58822,9 @@ msgid ""
 "Lieutenant Czesc told you to keep an eye out for him in Empire space to "
 "continue the operation."
 msgstr ""
+"Dejas al burócrata en {pnt} y te entrega una ficha de un crédito. El "
+"teniente Czesc te dijo que estuvieras atento a él en el espacio del Imperio "
+"para continuar la operación."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:69
 msgid ""
@@ -58677,6 +58832,9 @@ msgid ""
 "Czesc told you to keep an eye out out for him in Empire space to continue "
 "the operation."
 msgstr ""
+"Has entregado un burócrata de envio a {pnt} para el Imperio. El Teniente "
+"Czesc te dijo que lo buscaras en el espacio del Imperio para continuar la "
+"operación."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:41
 msgid ""
@@ -58686,6 +58844,11 @@ msgid ""
 "presses a button on his wrist computer. \"We're hoping to expand to Dvaered "
 "territory next. Can I count on your help?\""
 msgstr ""
+"El Teniente Czesc te saluda con la mano cuando se da cuenta de que entras en "
+"el bar. \"Sabía que nos encontraríamos pronto. Gran trabajo en la entrega de "
+"ese burócrata. Deberíamos estar en marcha en el espacio Soromida en poco "
+"tiempo\". Pulsa un botón en su ordenador de muñeca. \"Esperamos expandirnos "
+"al territorio Dvaered a continuación. ¿Puedo contar con tu ayuda?\""
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
@@ -58694,7 +58857,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:50
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:54
 msgid "Dvaered Long Distance Recruitment"
-msgstr ""
+msgstr "Reclutamiento a Larga Distancia Dvaered"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:45
 msgid ""
@@ -58706,6 +58869,13 @@ msgid ""
 "Afterwards, keep an eye out for me in Empire space and we can continue the "
 "operation.\""
 msgstr ""
+"\"¡Genial!\", dice el Teniente Czesc. \"Enviaré un mensaje al burócrata para "
+"que se reúna con usted en el hangar. Los Dvaered son, por supuesto, aliados "
+"del Imperio. Aun así, se ofenden con facilidad, así que intenta no hablar "
+"demasiado. Tu misión es dejar al burócrata en {pnt} en el sistema {sys}. Él "
+"se encargará a partir de ahí y me informará cuando se haya establecido el "
+"contrato de transporte. Después, manténgase atento a mí en el espacio del "
+"Imperio y podremos continuar la operación.\""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:68
 msgid ""
@@ -58713,12 +58883,18 @@ msgid ""
 "remember Lieutenant Czesc told you to look for him on Empire controlled "
 "planets after you finish."
 msgstr ""
+"Dejas al burócrata en {pnt} y te entrega una ficha de crédito. Recuerdas que "
+"el Teniente Czesc te dijo que lo buscaras en los planetas controlados por el "
+"Imperio cuando terminaras."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:70
 msgid ""
 "You delivered a shipping bureaucrat to {pnt} for the Empire. Lieutenant "
 "Czesc told you to look for him on Empire controlled planets after you finish."
 msgstr ""
+"Has entregado un burócrata de envio a {pnt} para el Imperio. El Teniente "
+"Czesc te ha dicho que lo busques en los planetas controlados por el Imperio "
+"cuando termines."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:41
 msgid ""
@@ -58728,6 +58904,11 @@ msgid ""
 "next mission is to get House Za'lek on board. Interested in helping out "
 "again?\""
 msgstr ""
+"El Teniente Czesc se sienta en el bar. Parece que realmente maneja los "
+"negocios en todo el Imperio. Tú tomas asiento junto a él. \"Gracias a tu "
+"ayuda, la División de Envio de la Armada del Imperio pronto operará en toda "
+"la galaxia. Nuestra próxima misión es conseguir que la Casa Za'lek esté a "
+"bordo. ¿Interesado en volver a ayudar?\""
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
@@ -58736,7 +58917,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:50
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:54
 msgid "Za'lek Long Distance Recruitment"
-msgstr ""
+msgstr "Reclutamiento a Larga Distancia Za'lek"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:45
 msgid ""
@@ -58747,6 +58928,12 @@ msgid ""
 "established. There is still more work to be done, so I expect to see you "
 "again soon.\""
 msgstr ""
+"\"¡Tenía el presentimiento de que lo harías!\", dice el Teniente Czesc. "
+"\"Tengo otro burócrata listo para establecer lazos comerciales. Los Za'lek "
+"son bastante misteriosos, así que mantén tu ingenio para tí. El diplomático "
+"sólo tiene que ir al {pnt} en el sistema {sys}. Él me hará saber cuando se "
+"hayan establecido relaciones comerciales. Todavía hay más trabajo por hacer, "
+"así que espero volver a verte pronto.\""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:68
 msgid ""
@@ -58754,6 +58941,9 @@ msgid ""
 "Lieutenant Czesc mentioned more work, so you figure you'll run into him at a "
 "bar again soon."
 msgstr ""
+"Dejas a la diplomática en {pnt}, y te entrega una ficha de crédito. El "
+"Teniente Czesc mencionó más trabajo, así que te imaginas que pronto te lo "
+"encontrarás de nuevo en un bar."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:70
 msgid ""
@@ -58761,6 +58951,9 @@ msgid ""
 "Czesc mentioned more work, so you figure you'll run into him at a bar again "
 "soon."
 msgstr ""
+"Entregaste un burócrata de envio a {pnt} para el Imperio. El Teniente Czesc "
+"mencionó más trabajo, así que te imaginas que pronto te lo encontrarás en un "
+"bar."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:41
 msgid ""
@@ -58770,12 +58963,17 @@ msgid ""
 "We're hoping to extend our relations to the Frontier Alliance. You know the "
 "drill by this point. Ready to help?\""
 msgstr ""
+"\"Tenemos que dejar de cruzarnos así\". El Teniente Czesc se ríe de su "
+"chiste. \"Es una broma, sabes que estoy en deuda contigo por ayudar a "
+"establecer estos contratos. Hasta ahora, todo se ha movido sin problemas por "
+"nuestra parte. Esperamos ampliar nuestras relaciones con la Alianza "
+"Frontera. A estas alturas ya conoces el procedimiento. ¿Listo para ayudar?\""
 
 #. Flavour text and mini-briefing
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:45
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:54
 msgid "Frontier Alliance Long Distance Recruitment"
-msgstr ""
+msgstr "Reclutamiento de Larga Distancia de la Alianza Frontera"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:45
 msgid ""
@@ -58785,12 +58983,17 @@ msgid ""
 "bureaucrat off at {pnt} in the {sys} system. After this, there should only "
 "be one more faction to bring into the fold. I expect to see you again soon.\""
 msgstr ""
+"\"Aplaudo tu compromiso\", dice el Teniente Czesc, \"y sé que no son las "
+"misiones más emocionantes, pero son muy útiles. La frontera puede ser un "
+"poco peligrosa, así que asegúrate de estar preparado. Tienes que dejar al "
+"burócrata en {pnt} en el sistema {sys}. Después de esto, sólo debería haber "
+"una facción más que traer al redil. Espero volver a verte pronto.\""
 
 #. -Accept the mission
 #. Description is visible in OSD and the onboard computer, it shouldn't be too long either.
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:50
 msgid "Frontier Long Distance Recruitment"
-msgstr ""
+msgstr "Reclutamiento de Larga Distancia Frontera"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:68
 msgid ""
@@ -58801,6 +59004,12 @@ msgid ""
 "bureaucracy. Only your loyalty to the Empire stopped you from sending her "
 "out into the vacuum of space."
 msgstr ""
+"Entregas el diplomático a {pnt}, y ella te entrega una ficha de crédito. "
+"Afortunadamente, la Teniente Czesc mencionó que sólo necesitaba tu ayuda "
+"para una misión más. Esta última burócrata se negó a quedarse en sus "
+"aposentos, prefiriendo pasar el rato en el puente y darte los entresijos de "
+"la burocracia del Imperio. Sólo tu lealtad al Imperio te impidió enviarla al "
+"vacío del espacio."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:70
 msgid ""
@@ -58811,6 +59020,12 @@ msgid ""
 "Only your loyalty to the Empire stopped you from sending her out into the "
 "vacuum of space."
 msgstr ""
+"Entregaste un burócrata de envio a {pnt} para el Imperio. Afortunadamente, "
+"la Teniente Czesc mencionó que sólo necesitaba tu ayuda de nuevo para una "
+"misión más. Esta última burócrata se negó a quedarse en sus aposentos, "
+"prefiriendo pasar el rato en el puente y darte los entresijos de la "
+"burocracia del Imperio. Sólo su lealtad al Imperio te impidió enviarla al "
+"vacío del espacio."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:41
 msgid ""
@@ -58818,6 +59033,10 @@ msgid ""
 "Empire Armada employee. We're on track to establish a deal with House "
 "Sirius. This should be the last contract to be negotiated. Ready to go?\""
 msgstr ""
+"El Teniente Czesc se acerca al entrar en el bar. \"Si es mi empleado "
+"favorito de la Armada del Imperio. Estamos en camino de establecer un "
+"acuerdo con la Casa Sirio. Este debería ser el último contrato a negociar. ¿"
+"Listo para ir?\""
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
@@ -58826,7 +59045,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:50
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:54
 msgid "Sirius Long Distance Recruitment"
-msgstr ""
+msgstr "Reclutamiento de Larga Distancia Sirio"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:45
 msgid ""
@@ -58836,6 +59055,10 @@ msgid ""
 "time and we'll finalize the paperwork to get you all set up for these "
 "missions.\""
 msgstr ""
+"\"Ya sabes cómo va esto\", dice el Teniente Czesc, \"Deja al burócrata en "
+"{pnt} en el sistema {sys}. El espacio Sirio está bastante lejos, así que "
+"prepárate para cualquier cosa. Después, ven a buscarme una vez más y "
+"finalizaremos el papeleo para que estés preparado para estas misiones.\""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:68
 msgid ""
@@ -58843,6 +59066,9 @@ msgid ""
 "Lieutenant Czesc said to look for him in an Empire bar for some paperwork. "
 "Bureaucracy at its finest."
 msgstr ""
+"Dejas al diplomático en {pnt}, y te entrega una ficha de crédito. El "
+"Teniente Czesc dijo que lo buscara en un bar del Imperio para hacer unos "
+"trámites. La burocracia en su máxima expresión."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:70
 msgid ""
@@ -58850,6 +59076,9 @@ msgid ""
 "Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy "
 "at its finest."
 msgstr ""
+"Has entregado un burócrata de envio a {pnt} para el Imperio. El Teniente "
+"Czesc dijo que lo buscara en un bar del Imperio por unos papeles. La "
+"burocracia en su máxima expresión."
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:47
 msgid ""
@@ -58859,6 +59088,12 @@ msgid ""
 "transport back to {pnt} in the {sys} system. Once there, I can authorize you "
 "to help out with the long-distance shipping missions. Can I count on you?\""
 msgstr ""
+"El Teniente Czesc te da una palmada en la espalda mientras tomas asiento "
+"junto a él en la barra. \"¡Lo hemos conseguido! Hemos establecido puestos de "
+"avanzada de la Armada del Imperio en gran parte de la galaxia. Sólo tengo "
+"que pedirte un favor más. Necesito transporte de vuelta a {pnt} en el "
+"sistema {sys}. Una vez allí, puedo autorizarte a ayudar en las misiones de "
+"envio de larga distancia. ¿Puedo contar contigo?\""
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
@@ -58867,7 +59102,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:56
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:60
 msgid "Empire Long Distance Recruitment"
-msgstr ""
+msgstr "Reclutamiento de Larga Distancia Imperio"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:51
 msgid ""
@@ -58876,10 +59111,14 @@ msgid ""
 "Lieutenant Czesc excitedly gets up from the bar. \"Let's get going as soon "
 "as possible. There's no place like home!\""
 msgstr ""
+"Internamente gimes ante la idea de tener que hacer otro viaje por la galaxia "
+"para conseguir más papeleo, pero al menos tendrás acceso a nuevas misiones. "
+"El Teniente Czesc se levanta entusiasmado de la barra. \"Pongámonos en "
+"marcha cuanto antes. ¡No hay lugar como el hogar!\""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:58
 msgid "Deliver Lieutenant Czesc to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Entregar al Teniente Czesc a {pnt} en el sistema {sys}"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:74
 msgid ""
@@ -58894,6 +59133,16 @@ msgid ""
 "factions. Again, I can't thank you enough! The Empire does not quickly "
 "forget such dedication.\""
 msgstr ""
+"El Teniente Czesc sale de tu nave y toma una profunda bocanada de aire. \"Me "
+"encanta el olor de la burocracia por la mañana\". Le estrecha la mano. \"¡"
+"Gracias por toda tu ayuda, capitán! Acompáñeme al cuartel general y podremos "
+"hacer algunos trámites para ponerte en orden. Después deberías empezar a "
+"recibir misiones de transporte de larga distancia. Pagan mejor que nuestras "
+"misiones de transporte regulares, pero a menudo requieren viajar distancias "
+"más largas y entrar en territorio controlado por otras facciones. Es más "
+"probable que las veas en los límites del espacio del Imperio, donde la carga "
+"está lista para salir hacia otras facciones. De nuevo, ¡no puedo "
+"agradecertelo suficiente! El Imperio no olvida rápidamente tal dedicación.\""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:76
 msgid ""
@@ -58904,6 +59153,13 @@ msgid ""
 "to see them on the edges of Empire space where cargo is ready to head out to "
 "other factions."
 msgstr ""
+"Has transportado al Teniente Czesc a {pnt} para realizar unos trámites. "
+"Ahora puedes hacer misiones de carga de larga distancia para el Imperio. Se "
+"pagan mejor que las misiones de transporte regulares del Imperio, pero a "
+"menudo requieren viajar distancias más largas y entrar en territorio "
+"controlado por otras facciones. Es más probable que las veas en los límites "
+"del espacio del Imperio, donde la carga está lista para salir hacia otras "
+"facciones."
 
 #.
 #. -- Empire shipping missions are always timed, but quite lax on the schedules
@@ -58918,16 +59174,18 @@ msgstr ""
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:86
 msgid "Long distance cargo transport ({tonnes} of {cargo})"
-msgstr ""
+msgstr "Transporte de carga de larga distancia ({tonnes} de {cargo})"
 
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:89
 msgid ""
 "Official Empire long distance cargo transport to {pnt} in the {sys} system."
 msgstr ""
+"Transporte oficial de carga de larga distancia del Imperio a {pnt} en el "
+"sistema {sys}."
 
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:149
 msgid "Long Distance Empire Shipping"
-msgstr ""
+msgstr "Envío de Larga Distancia del Imperio"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -58959,11 +59217,11 @@ msgstr ""
 #. Spaceport bar stuff
 #: dat/missions/empire/shipping/es00.lua:40
 msgid "Commander"
-msgstr ""
+msgstr "Comandante"
 
 #: dat/missions/empire/shipping/es00.lua:40
 msgid "You see an Empire Commander. He seems to have noticed you."
-msgstr ""
+msgstr "Ves a un Comandante del Imperio. Parece que se ha fijado en ti."
 
 #: dat/missions/empire/shipping/es00.lua:46
 msgid ""
@@ -58974,6 +59232,12 @@ msgid ""
 "missions, unlike the ones you've recently completed for the division. Would "
 "you be up for the challenge?\""
 msgstr ""
+"Te acercas al Comandante del Imperio.\n"
+"    \"Hola, usted debe ser {player}. He oído hablar de ti. Soy el Comandante "
+"Soldner. Tenemos algunas misiones más difíciles para alguien como tú en la "
+"división de Envíos del Imperio. Habría algún peligro real en estas misiones, "
+"a diferencia de las que has completado recientemente para la división. ¿"
+"Estarías dispuesto a aceptar el reto?\""
 
 #. Accept mission
 #. target destination
@@ -58990,12 +59254,12 @@ msgstr ""
 #: dat/missions/empire/shipping/es00.lua:91
 #: dat/missions/empire/shipping/es00.lua:95
 msgid "Prisoner Exchange"
-msgstr ""
+msgstr "Intercambio de Prisioneros"
 
 #: dat/missions/empire/shipping/es00.lua:61
 #: dat/missions/empire/shipping/es00.lua:67
 msgid "Go to {pnt} in the {sys} system to exchange prisoners with the FLF"
-msgstr ""
+msgstr "Ve a {pnt} en el sistema {sys} para intercambiar prisioneros con el FLF"
 
 #: dat/missions/empire/shipping/es00.lua:64
 msgid ""
@@ -59009,21 +59273,32 @@ msgid ""
 "{ret_sys} for debriefing. You'll be compensated for your troubles. Good luck."
 "\""
 msgstr ""
+"\"Tenemos un intercambio de prisioneros con la FLF que tendrá lugar en "
+"{dest_pnt} en el sistema {dest_sys}. Quieren que un piloto más \"neutral\" "
+"haga el intercambio. Tendrías que ir a {dest_pnt} con algunos prisioneros "
+"del FLF a bordo de tu nave e intercambiarlos por algunos de los nuestros. No "
+"tendrás escoltas visibles pero usaremos naves en sectores cercanos para "
+"monitorear tu estado.\n"
+"\"Una vez que recuperes a nuestra gente capturada, tráelos a {ret_pnt} en "
+"{ret_sys} para interrogarlos. Serás compensado por tus problemas. Buena "
+"suerte.\""
 
 #. Set up the goal
 #: dat/missions/empire/shipping/es00.lua:70
 msgid "Prisoners"
-msgstr ""
+msgstr "Prisioneros"
 
 #: dat/missions/empire/shipping/es00.lua:70
 msgid "FLF prisoners."
-msgstr ""
+msgstr "Prisioneros FLF."
 
 #: dat/missions/empire/shipping/es00.lua:72
 msgid ""
 "The prisoners are loaded onto your ship along with a few marines to ensure "
 "nothing untoward happens."
 msgstr ""
+"Los prisioneros son cargados en tu nave junto con algunos marines para "
+"asegurar que no ocurra nada malo."
 
 #: dat/missions/empire/shipping/es00.lua:89
 msgid ""
@@ -59035,6 +59310,13 @@ msgid ""
 "with guns to their backs. You see figures step out of the shadows with "
 "weapons too; most likely the FLF."
 msgstr ""
+"Al aterrizar, observas que el puerto estelar ha sido vaciado. También "
+"observas que hay explosivos colocados en algunas de las columnas. Esto no "
+"tiene buena pinta. Los marines te dicen que te quedes quieto mientras ellos "
+"salen a intentar completar el intercambio de prisioneros.\n"
+"    Desde la cabina ves que los marines llevan a los prisioneros delante de "
+"ellos con las armas a la espalda. Ves a unas figuras salir de las sombras "
+"con armas también; seguramente el FLF."
 
 #: dat/missions/empire/shipping/es00.lua:91
 msgid ""
@@ -59047,11 +59329,19 @@ msgid ""
 "up many FLF and Dvaered ships. Looks like you're going to have quite a run "
 "to get the hell out of here. This didn't go as you expected."
 msgstr ""
+"De repente, suena una sirena y se oye un tiroteo. Rápidamente enciendes los "
+"motores y te preparas para despegar. Los disparos suenan por toda la bahía "
+"de aterrizaje y puedes ver un par de cadáveres mientras sales del puerto "
+"estelar. Te acuerdas de los explosivos justo cuando se producen fuertes "
+"explosiones detrás de ti. Esto no pinta nada bien.\n"
+"    Empiezas a salir de la atmósfera y notas cómo estás captando muchas "
+"naves FLF y Dvaered. Parece que vas a tener una buena carrera para salir de "
+"aquí. Esto no ha ido como esperabas."
 
 #: dat/missions/empire/shipping/es00.lua:94
 #: dat/missions/empire/shipping/es00.lua:96
 msgid "Return to {pnt} in the {sys} system to report what happened"
-msgstr ""
+msgstr "Vuelve a {pnt} en el sistema {sys} para informar de lo sucedido"
 
 #. Prevent players from saving on the destination planet
 #. We'll take off right away again
@@ -59060,7 +59350,7 @@ msgstr ""
 #. Flavour text
 #: dat/missions/empire/shipping/es00.lua:115
 msgid "Mission Report"
-msgstr ""
+msgstr "Informe de Misión"
 
 #: dat/missions/empire/shipping/es00.lua:115
 msgid ""
@@ -59075,6 +59365,15 @@ msgid ""
 "meet me up in the bar in a while. We get no rest around here. The payment "
 "has already been transferred to your bank account.\""
 msgstr ""
+"Después de dejar tu nave en el puerto estelar, te encuentras con el "
+"comandante Soldner. Por su cara, parece que ya sabe lo que ha pasado.\n"
+"    \"Todo fue culpa de los Dvaered. Llegaron de la nada y empezaron a "
+"disparar. Qué lío tan horrible. Ya estamos trabajando en ordenar las culpas\""
+".\n"
+"    Suspira. \"Teníamos buena gente allí. Y desde luego no queríamos que "
+"empezaran con un lío como éste, pero si estás interesado en más misiones, "
+"reúnete conmigo en el bar dentro de un rato. No tenemos descanso por aquí. "
+"El pago ya ha sido transferido a tu cuenta bancaria.\""
 
 #: dat/missions/empire/shipping/es00.lua:119
 msgid ""
@@ -59084,6 +59383,11 @@ msgid ""
 "Soldner has asked you to meet him in the bar on Halir if you're interested "
 "in more missions."
 msgstr ""
+"Participaste en un intercambio de prisioneros con el FLF en nombre del "
+"Imperio. Por desgracia, el intercambio de prisioneros fracasó. \"Fue todo "
+"culpa de los Dvaered. Llegaron de la nada y empezaron a disparar\". El "
+"comandante Soldner te ha pedido que te reúnas con él en el bar de Halir si "
+"estás interesado en más misiones."
 
 #. Force FLF combat music (note: must clear this later on).
 #. Get a random position near the player
@@ -59100,13 +59404,14 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:157
 #: dat/missions/empire/shipping/es02.lua:212
 msgid "FLF Ambusher"
-msgstr ""
+msgstr "Emboscada FLF"
 
 #. Now the Dvaered
 #. Player should not be able to reland
 #: dat/missions/empire/shipping/es00.lua:160
 msgid "The docking stabilizers have been damaged by weapons fire!"
 msgstr ""
+"¡Los estabilizadores de atraque han sido dañados por el fuego de las armas!"
 
 #. Storing the system the player jumped from.
 #.
@@ -59144,11 +59449,11 @@ msgstr ""
 #: dat/missions/empire/shipping/es01.lua:42
 #: dat/missions/empire/shipping/es02.lua:60
 msgid "Soldner"
-msgstr ""
+msgstr "Soldner"
 
 #: dat/missions/empire/shipping/es01.lua:42
 msgid "You see Commander Soldner. He is expecting you."
-msgstr ""
+msgstr "Ves al Comandante Soldner. Te está esperando."
 
 #. See if accept mission
 #. Flavour text and mini-briefing
@@ -59162,13 +59467,15 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:84
 #: dat/missions/empire/shipping/es02.lua:86
 msgid "Commander Soldner"
-msgstr ""
+msgstr "Comandante Soldner"
 
 #: dat/missions/empire/shipping/es01.lua:47
 msgid ""
 "You approach Commander Soldner, who seems to be waiting for you.\n"
 "\"Ready for your next mission?\""
 msgstr ""
+"Te acercas al Comandante Soldner, que parece estar esperándote.\n"
+"\"¿Listo para tu próxima misión?\""
 
 #. target destination
 #. Mission details
@@ -59177,12 +59484,12 @@ msgstr ""
 #: dat/missions/empire/shipping/es01.lua:101
 #: dat/missions/empire/shipping/es01.lua:114
 msgid "Empire Shipping Delivery"
-msgstr ""
+msgstr "Entrega de Envíos del Imperio"
 
 #: dat/missions/empire/shipping/es01.lua:61
 #: dat/missions/empire/shipping/es01.lua:67
 msgid "Pick up a package at {pnt} in the {sys} system"
-msgstr ""
+msgstr "Recoger un paquete en {pnt} en el sistema {sys}"
 
 #: dat/missions/empire/shipping/es01.lua:64
 msgid ""
@@ -59195,6 +59502,15 @@ msgid ""
 "actual delivery by yourself. This way we shouldn't arouse suspicion. You are "
 "to report here when you finish delivery and you'll be paid {credits}.\""
 msgstr ""
+"El Comandante Soldner comienza: \"Tenemos un paquete importante que debe "
+"llegar desde {pickup_pnt} en el sistema {pickup_sys} hasta {dropoff_pnt} en "
+"el sistema {dropoff_sys}. Tenemos razones para creer que también es buscado "
+"por fuerzas externas.\n"
+"    \"El plan es enviar un convoy de avanzada con guardias para hacer la "
+"carrera en un intento de confundir a los posibles enemigos. A continuación, "
+"irás y harás la entrega real por ti mismo. De esta manera no deberíamos "
+"levantar sospechas. Debes reportarte aquí cuando termines la entrega y se te "
+"pagarán {credits}.\""
 
 #: dat/missions/empire/shipping/es01.lua:71
 msgid ""
@@ -59202,12 +59518,15 @@ msgid ""
 "destination. Since you are undercover, Empire ships won't assist you if you "
 "come under fire, so stay sharp. Good luck.\""
 msgstr ""
+"\"Evite las hostilidades a toda costa. El paquete debe llegar a su destino. "
+"Como estás de incógnito, las naves del Imperio no te ayudarán si estás bajo "
+"fuego, así que mantente alerta. Buena suerte.\""
 
 #. Set hooks
 #. Make sure player has room.
 #: dat/missions/empire/shipping/es01.lua:87
 msgid "Need More Space"
-msgstr ""
+msgstr "Necesitas Más Espacio"
 
 #: dat/missions/empire/shipping/es01.lua:88
 #, lua-format
@@ -59218,37 +59537,43 @@ msgid_plural ""
 "You do not have enough space to load the packages. You need to make room for "
 "%d more tonnes."
 msgstr[0] ""
+"No tienes suficiente espacio para cargar los paquetes. Necesita hacer "
+"espacio para %d tonelada más."
 msgstr[1] ""
+"No tienes suficiente espacio para cargar los paquetes. Necesitas hacer "
+"espacio para %d toneladas más."
 
 #. Update mission
 #: dat/missions/empire/shipping/es01.lua:95
 msgid "Packages"
-msgstr ""
+msgstr "Paquetes"
 
 #: dat/missions/empire/shipping/es01.lua:95
 msgid "Several packages of \"food\"."
-msgstr ""
+msgstr "Varios paquetes de \"comida\"."
 
 #: dat/missions/empire/shipping/es01.lua:99
 #: dat/missions/empire/shipping/es01.lua:102
 msgid "Deliver the package to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Entrega el paquete a {pnt} en el sistema {sys}"
 
 #. Load message
 #: dat/missions/empire/shipping/es01.lua:106
 msgid "Loading Cargo"
-msgstr ""
+msgstr "Cargando Carga"
 
 #: dat/missions/empire/shipping/es01.lua:106
 msgid ""
 "The packages labelled \"Food\" are loaded discreetly onto your ship. Now to "
 "deliver them to {pnt} in the {sys} system."
 msgstr ""
+"Los paquetes etiquetados como \"Comida\" son cargados discretamente en tu "
+"nave. Ahora hay que entregarlos a {pnt} en el sistema {sys}."
 
 #. Some text
 #: dat/missions/empire/shipping/es01.lua:117
 msgid "Cargo Delivery"
-msgstr ""
+msgstr "Envio de Carga"
 
 #: dat/missions/empire/shipping/es01.lua:117
 msgid ""
@@ -59256,6 +59581,10 @@ msgid ""
 "notice that one of them gives you a note. Looks like you'll have to go to "
 "{pnt} in the {sys} system to report to Commander Soldner."
 msgstr ""
+"Los trabajadores descargan rápidamente el paquete con la misma discreción "
+"con la que fue cargado. Te das cuenta de que uno de ellos te da una nota. "
+"Parece que tendrás que ir a {pnt} en el sistema {sys} para presentarte al "
+"Comandante Soldner."
 
 #: dat/missions/empire/shipping/es01.lua:128
 msgid ""
@@ -59267,6 +59596,13 @@ msgid ""
 "    \"If you're interested in more work, meet me in the bar in a bit. I've "
 "got some paperwork I need to finish first.\""
 msgstr ""
+"Llegas a {pnt} y te presentas ante el Comandante Soldner. Te saluda y "
+"empieza a hablar. \"He oído que has encontrado resistencia. Al menos has "
+"podido entregar el paquete. Gran trabajo. He conseguido que te den la "
+"Licencia de Armas Pesadas. Aunque todavía tendrás que pagar la cuota para "
+"conseguirla.\n"
+"    \"Si estás interesado en más trabajo, reúnete conmigo en el bar en un "
+"rato. Tengo que terminar un papeleo antes.\""
 
 #: dat/missions/empire/shipping/es01.lua:131
 msgid ""
@@ -59276,6 +59612,11 @@ msgid ""
 "    \"If you're interested in more work, meet me in the bar in a bit. I've "
 "got some paperwork I need to finish first.\""
 msgstr ""
+"Llegas a {pnt} y te presentas ante el Comandante Soldner. Te saluda y "
+"empieza a hablar. \"He oído que has encontrado resistencia. Al menos has "
+"conseguido entregar el paquete\".\n"
+"    \"Si estás interesado en más trabajo, reúnete conmigo en el bar dentro "
+"de un rato. Tengo que terminar un papeleo antes.\""
 
 #. The goods
 #: dat/missions/empire/shipping/es01.lua:138
@@ -59285,6 +59626,10 @@ msgid ""
 "outfitter. Commander Soldner said that you can meet him in the bar at Halir "
 "if you're interested in more work."
 msgstr ""
+"Has completado con éxito una entrega de paquetes para el Imperio. Como "
+"resultado, has sido autorizado para obtener una Licencia de Armas Pesadas y "
+"ahora puedes comprarla en un proveedor. El Comandante Soldner dijo que "
+"puedes reunirte con él en el bar de Halir si estás interesado en más trabajo."
 
 #: dat/missions/empire/shipping/es01.lua:140
 msgid ""
@@ -59292,6 +59637,9 @@ msgid ""
 "Soldner said that you can meet him in the bar at Halir if you're interested "
 "in more work."
 msgstr ""
+"Has completado con éxito una entrega de paquetes para el Imperio. El "
+"comandante Soldner dice que puedes reunirte con él en el bar de Halir si te "
+"interesa más trabajo."
 
 #. Mercenaries appear after a couple of jumps
 #. Get player position
@@ -59342,10 +59690,12 @@ msgid ""
 "You failed in your attempt to rescue a VIP for the Empire. Meet with "
 "Commander Soldner on Halir to try again."
 msgstr ""
+"Has fallado en tu intento de rescatar a un VIP para el Imperio. Reúnete con "
+"el Comandante Soldner en Halir para volver a intentarlo."
 
 #: dat/missions/empire/shipping/es02.lua:60
 msgid "Commander Soldner is waiting for you."
-msgstr ""
+msgstr "El Comandante Soldner te está esperando."
 
 #: dat/missions/empire/shipping/es02.lua:66
 msgid ""
@@ -59353,6 +59703,9 @@ msgid ""
 "    \"Hello again, {player}. Still interested in doing another mission? This "
 "one will be more dangerous.\""
 msgstr ""
+"Te encuentras una vez más con el Comandante Soldner en el bar.\n"
+"    \"Hola de nuevo, {player}. ¿Sigues interesado en hacer otra misión? Esta "
+"será más peligrosa.\""
 
 #. Accept the mission
 #. Set marker
@@ -59361,12 +59714,12 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:87
 #: dat/missions/empire/shipping/es02.lua:229
 msgid "Empire VIP Rescue"
-msgstr ""
+msgstr "Rescatar Imperial VIP"
 
 #: dat/missions/empire/shipping/es02.lua:81
 #: dat/missions/empire/shipping/es02.lua:88
 msgid "Rescue the VIP from a transport ship in the {sys} system"
-msgstr ""
+msgstr "Rescata al VIP de una nave de transporte en el sistema {sys}"
 
 #: dat/missions/empire/shipping/es02.lua:84
 msgid ""
@@ -59383,6 +59736,18 @@ msgid ""
 "must not allow the transport ship to be destroyed before you rescue the VIP. "
 "His survival is vital.\""
 msgstr ""
+"El Comandante Soldner asiente y continúa: \"Nos han informado de que una "
+"nave de transporte fue atacada mientras llevaba a un VIP. Lograron escapar, "
+"pero el motor terminó por fallar en el sistema {sys}. La nave está ahora "
+"inutilizada y necesitamos que alguien aborde la nave y rescate al VIP. Se "
+"han detectado muchas naves FLF cerca del sector, pero hemos conseguido "
+"organizar una escolta Dvaered para ti.\n"
+"    \"Tendrás que volar al sistema {sys}, encontrar y abordar la nave de "
+"transporte para rescatar al VIP, y luego volar de vuelta. Lo más probable es "
+"que el sector esté caliente. Ahí es donde entrarán tus escoltas Dvaered. Tu "
+"misión será distraer y neutralizar a todos los posibles hostiles. No debes "
+"permitir que la nave de transporte sea destruida antes de rescatar al VIP. "
+"Su supervivencia es vital.\""
 
 #: dat/missions/empire/shipping/es02.lua:86
 msgid ""
@@ -59390,6 +59755,9 @@ msgid ""
 "accidentally destroy the transport ship. If all goes well, you'll be paid "
 "{credits} when you return with the VIP. Good luck, pilot.\""
 msgstr ""
+"\" Ten cuidado con los Dvaered; pueden ser un poco bruscos, y podrían "
+"destruir accidentalmente la nave de transporte. Si todo va bien, te pagarán "
+"{credits} cuando vuelvas con el VIP. Buena suerte, piloto.\""
 
 #: dat/missions/empire/shipping/es02.lua:117
 msgid ""
@@ -59401,12 +59769,22 @@ msgid ""
 "Heavy Combat Vessel License; congratulations! We have nothing more for you "
 "now, but check in periodically in case something comes up for you.\""
 msgstr ""
+"Aterrizas en el puerto estelar. Parece que el VIP ya se ha recuperado. Te "
+"agradece profusamente antes de marcharse. Procedes a visitar al Comandante "
+"Soldner. Parece estar contento, por una vez.\n"
+"    \"Parece que lo has conseguido. Al principio tenía mis dudas, pero has "
+"demostrado ser un piloto muy hábil. Ah, y te he dado el visto bueno para la "
+"Licencia de Naves de Combate Pesado; ¡felicidades! No tenemos nada más para "
+"ti ahora, pero comprueba periódicamente por si surge algo.\""
 
 #: dat/missions/empire/shipping/es02.lua:119
 msgid ""
 "You successfully rescued a VIP for the Empire and have been cleared for a "
 "Heavy Combat Vessel License; you can now buy one at the outfitter."
 msgstr ""
+"Has rescatado con éxito a un VIP para el Imperio y has sido autorizado para "
+"obtener una Licencia de Nave de Combate Pesada; ahora puedes comprar una en "
+"el equipador."
 
 #: dat/missions/empire/shipping/es02.lua:122
 msgid ""
@@ -59417,10 +59795,16 @@ msgid ""
 "but you've proven to be a very skilled pilot. We have nothing more for you "
 "now, but check in periodically in case something comes up for you.\""
 msgstr ""
+"Aterrizas en el puerto estelar. Parece que el VIP ya se ha recuperado. Te lo "
+"agradece profusamente antes de marcharse. Procedes a visitar al Comandante "
+"Soldner. Pareces estar contento, por una vez.\n"
+"    \"Parece que lo has conseguido. Al principio tenía mis dudas, pero has "
+"demostrado ser un piloto muy hábil. No tenemos nada más para ti ahora, pero "
+"comprueba periódicamente por si te surge algo.\""
 
 #: dat/missions/empire/shipping/es02.lua:124
 msgid "You successfully rescued a VIP for the Empire."
-msgstr ""
+msgstr "Has rescatado con éxito a un VIP para el Imperio."
 
 #. Force FLF combat music (note: must clear this later on).
 #. Put the VIP a ways off of the player but near the jump.
@@ -59428,7 +59812,7 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:144
 #: dat/missions/empire/shipping/es02.lua:221
 msgid "VIP"
-msgstr ""
+msgstr "VIP"
 
 #. To make it more interesting a vendetta will solely target the player.
 #. If player is seen, have them target player
@@ -59443,33 +59827,35 @@ msgstr ""
 #: dat/missions/empire/shipping/es02.lua:190
 #: dat/missions/empire/shipping/es02.lua:254
 msgid "You abandoned the VIP."
-msgstr ""
+msgstr "Has abandonado al VIP."
 
 #: dat/missions/empire/shipping/es02.lua:221
 msgid "A Very Important Person."
-msgstr ""
+msgstr "Una persona muy importante (Very important Person)."
 
 #: dat/missions/empire/shipping/es02.lua:223
 msgid "Disabled Ship"
-msgstr ""
+msgstr "Nave Desactivada"
 
 #: dat/missions/empire/shipping/es02.lua:223
 msgid ""
 "The ship's hatch opens and immediately an unconscious VIP is brought aboard "
 "by his bodyguard. Looks like there is no one else aboard."
 msgstr ""
+"La escotilla de la nave se abre e inmediatamente un VIP inconsciente es "
+"llevado a bordo por su guardaespaldas. Parece que no hay nadie más a bordo."
 
 #. Update mission details
 #: dat/missions/empire/shipping/es02.lua:228
 #: dat/missions/empire/shipping/es02.lua:230
 msgid "Return to {pnt} in the {sys} system with the VIP"
-msgstr ""
+msgstr "Volver a {pnt} en el sistema {sys} con el VIP"
 
 #. Force unboard
 #. Notify of death
 #: dat/missions/empire/shipping/es02.lua:243
 msgid "VIP is dead."
-msgstr ""
+msgstr "El VIP ha muerto."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -59499,6 +59885,9 @@ msgid ""
 "says. \"You should get back to the base now before you get killed! I'll be "
 "waiting for you there.\""
 msgstr ""
+"Recibes una transmisión. Es de Benito. \"¡Operación con éxito!\", dice. \"¡"
+"Debes volver a la base ahora antes de que te maten! Te estaré esperando allí."
+"\""
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:33
 msgid ""
@@ -59510,6 +59899,13 @@ msgid ""
 "congratulate you. It occurs to you that you never learned what the mission "
 "actually was. Perhaps you will find out some other time."
 msgstr ""
+"Al atracar en la estación, Benito se acerca a ti con una sonrisa. \"Gracias "
+"por tu ayuda\", dice. \"¡La misión ha sido un éxito rotundo! Lo que hemos "
+"logrado ayudará mucho a nuestros esfuerzos contra los Dvaereds en el futuro\""
+". Te entrega una ficha de crédito. \"Este es tu pago. Hasta la próxima vez\""
+". Benito se despide mientras varios soldados adicionales de la FLF te "
+"felicitan. Se te ocurre que nunca te enteraste de cuál era la misión en "
+"realidad. Tal vez lo descubras en otra ocasión."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -59537,15 +59933,15 @@ msgstr ""
 #: dat/missions/flf/dvk/flf_dvk05.lua:47 dat/missions/flf/dvk/flf_dvk06.lua:41
 #: dat/missions/flf/dvk/flf_dvk07.lua:40
 msgid "Benito"
-msgstr ""
+msgstr "Benito"
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:44
 msgid "Benito seems to want to speak with you."
-msgstr ""
+msgstr "Parece que Benito quiere hablar contigo."
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:49 dat/missions/flf/dvk/flf_dvk01.lua:51
 msgid "Taking One for the Team"
-msgstr ""
+msgstr "Tomando una por el equipo"
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:49
 msgid ""
