@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-14 19:00-0400\n"
-"PO-Revision-Date: 2022-06-15 22:20+0000\n"
+"PO-Revision-Date: 2022-06-16 21:18+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -24805,7 +24805,6 @@ msgid "Arandon"
 msgstr "Arandon"
 
 #: dat/ssys/arcanis.xml:2
-#, fuzzy
 msgid "Arcanis"
 msgstr "Arcanis"
 
@@ -53332,6 +53331,17 @@ msgid ""
 "this will surely earn you more respect among our ranks. Would you be "
 "interested?\""
 msgstr ""
+"Benito sonríe cuando te acercas a ella. \"¡Hola de nuevo, {player}!\", dice. "
+"\"Tengo otra misión para ti, si decides aceptarla. Verás, tenemos... una "
+"importante operación encubierta que debemos lanzar en Raelid. No te aburriré "
+"con los detalles de esa operación, pero necesito a alguien que distraiga a "
+"las fuerzas Dvaered mientras lo hacemos. Básicamente tendrás que viajar al "
+"sistema {sys} y causar estragos allí para que los Dvaereds vayan a por ti y "
+"no a por los soldados que dirigen la operación.\n"
+"\"Por supuesto, esta será una misión altamente peligrosa, y no puedo "
+"garantizarte ningún respaldo. Sin embargo, se te pagará sustancialmente, y "
+"esto seguramente te hará ganar más respeto entre nuestras filas. ¿Estarías "
+"interesado?\""
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:55
 msgid ""
@@ -53340,39 +53350,48 @@ msgid ""
 "they succeed. Good luck, and try not to get yourself killed!\" She grins, "
 "and you grin back. Now to cause some mayhem..."
 msgstr ""
+"\"¡Genial! El equipo a cargo de la operación se esconderá en los alrededores "
+"de Raelid hasta que consigan un hueco gracias a tus esfuerzos. Te enviaré un "
+"mensaje cuando lo consigan. Buena suerte, e intenta que no te maten\". Ella "
+"sonríe, y tú le devuelves la sonrisa. Ahora a causar algo de caos..."
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:60 dat/missions/flf/dvk/flf_dvk04.lua:59
 #: dat/missions/flf/flf_diversion.lua:71
 msgid "FLF Diversion"
-msgstr ""
+msgstr "Distracción FLF"
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:61
 msgid "Diversion from Raelid"
-msgstr ""
+msgstr "Distracción de Raelid"
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:62
 msgid ""
 "A covert operation is being conducted in Raelid. You are to create a "
 "diversion from this operation by wreaking havoc in the nearby {sys} system."
 msgstr ""
+"Se está llevando a cabo una operación encubierta en Raelid. Debes crear una "
+"distracción de esta operación causando estragos en el sistema {sys} cercano."
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:64
 msgid "Substantial pay and a great amount of respect"
-msgstr ""
+msgstr "Paga considerable y un gran respeto"
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:73 dat/missions/flf/dvk/flf_dvk04.lua:72
 msgid "Maybe Another Time"
-msgstr ""
+msgstr "Tal vez en otro momento"
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:73 dat/missions/flf/dvk/flf_dvk04.lua:72
 msgid "\"OK, then. Feel free to come back later if you change your mind.\""
 msgstr ""
+"\"De acuerdo. Siéntete libre de volver más tarde si cambias de opinión.\""
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:84
 msgid ""
 "You helped the FLF conduct some kind of operation in Raelid by distracting "
 "the Dvaereds in another system."
 msgstr ""
+"Ayudaste al FLF a realizar algún tipo de operación en Raelid distrayendo a "
+"los Dvaereds en otro sistema."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -53404,27 +53423,27 @@ msgstr ""
 #. for now I just swapped "Pirate" for "Dreamer Clan"
 #: dat/missions/flf/dvk/flf_dvk02.lua:36
 msgid "You call those weapons? They look more like babies' toys to me!"
-msgstr ""
+msgstr "¿Llamas a eso armas? A mí me parecen más bien juguetes para bebés."
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:37
 msgid "What a hopeless weakling!"
-msgstr ""
+msgstr "¡Qué débil sin esperanza!"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:38
 msgid "What, did you really think I would be impressed that easily?"
-msgstr ""
+msgstr "¿Qué, realmente pensaste que me impresionarías tan fácilmente?"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:39
 msgid "Keep hailing all you want, but I don't listen to weaklings!"
-msgstr ""
+msgstr "¡Sigue diciendo todo lo que quieras, pero no escucho a los débiles!"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:40
 msgid "We'll have your ship plundered in no time at all!"
-msgstr ""
+msgstr "¡Tendremos tu nave saqueada en un abrir y cerrar de ojos!"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:43
 msgid "Find pirates and try to talk to (hail) them"
-msgstr ""
+msgstr "Encuentra a los piratas y trata de hablar con ellos (llamar)"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:45 dat/missions/flf/dvk/flf_dvk02.lua:143
 #: dat/missions/flf/dvk/flf_dvk02.lua:155
@@ -53433,17 +53452,19 @@ msgstr ""
 #: dat/missions/flf/flf_empatrol.lua:42 dat/missions/flf/flf_patrol.lua:45
 #: dat/missions/flf/flf_pirates.lua:46 dat/missions/flf/flf_rogue.lua:44
 msgid "Return to FLF base"
-msgstr ""
+msgstr "Regresa a la base FLF"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:54
 msgid ""
 "It seems Benito wants something from you again. Something about her looks a "
 "little off this time around."
 msgstr ""
+"Parece que Benito quiere algo de ti otra vez. Algo en ella parece un poco "
+"fuera de lugar esta vez."
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:59 dat/missions/flf/dvk/flf_dvk02.lua:62
 msgid "The enemy of my enemy..."
-msgstr ""
+msgstr "El enemigo de mi enemigo..."
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:59
 msgid ""
@@ -53460,6 +53481,18 @@ msgid ""
 "We're not entirely sure, but we have detected some evidence of occasional "
 "pirate activity in the nearby {sys} system.\""
 msgstr ""
+"Benito te indica que te sientes. No parece tan tranquila y relajada como "
+"suele estar.\n"
+"    \"Hola de nuevo, {player}. Mira: tenemos una situación bastante mala "
+"aquí. Como habrás adivinado, dependemos de... fuentes no convencionales para "
+"los suministros. Desgraciadamente, parece que nos hemos topado con un "
+"pequeño obstáculo. Verás, una de nuestras fuentes importantes ha dejado de "
+"abastecernos, y me temo que podemos quedar aislados y no ser capaces de "
+"llevar a cabo nuestras operaciones en poco tiempo si no hacemos algo.\n"
+"    \"Pero dicho esto, creo que he encontrado una solución. Verás, tenemos "
+"razones para creer que en realidad estamos cerca de un bastión pirata. No "
+"estamos del todo seguros, pero hemos detectado algunas evidencias de "
+"actividad pirata ocasional en el sistema cercano.\""
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:62
 msgid ""
@@ -53476,10 +53509,22 @@ msgid ""
 "official FLF business, and that we're seeking to become trade partners with "
 "them. Are you in?\""
 msgstr ""
+"Levantas una ceja. Parece bastante extraño que haya piratas en un sistema "
+"tan remoto. ¿Tal vez podría ser un portal de algún tipo?\n"
+"    \"Debes estar pensando lo mismo\", dice Benito. \"Sí, es un sistema muy "
+"extraño para ver piratas, aunque sea ocasionalmente. Por eso creemos que hay "
+"una fortaleza secreta de piratas cerca. Incluso puede ser uno asociado a la "
+"piratería en la Frontera.\n"
+"    \"Debemos establecer relaciones comerciales con esa fortaleza de "
+"inmediato. Esto podría darnos la ventaja que necesitamos contra los "
+"Dvaereds. Sinceramente, no sé cómo puedes hacerlo, pero mi recomendación "
+"sería ir al sistema {sys} y ver si encuentras algún pirata. Diles que estás "
+"en un asunto oficial de la FLF, y que estamos buscando convertirnos en "
+"socios comerciales con ellos. ¿Te apuntas?\""
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:65
 msgid "...is my friend."
-msgstr ""
+msgstr "...es mi amigo."
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:65
 msgid ""
@@ -53491,48 +53536,63 @@ msgid ""
 "understanding. \"Good,\" she says. \"Report back here with your results.\" "
 "Benito then excuses herself, presumably to take care of other things."
 msgstr ""
+"\"¡Excelente! Sabía que lo harías\". Benito se vuelve visiblemente más "
+"relajada, casi como siempre. \"Ahora, {player}, estoy seguro de que eres muy "
+"consciente de esto, pero por favor recuerda que los piratas son "
+"extremadamente peligrosos. Es probable que te ataquen, y puede que tengan "
+"exigencias. Cuento con usted para superar cualquier... obstáculo que puedas "
+"encontrar y asegurar un trato\". Asientes en señal de comprensión. \"Bien\", "
+"dice ella. \"Vuelve aquí con tus resultados\". Entonces Benito se excusa, "
+"presumiblemente para ocuparse de otras cosas."
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:70 dat/missions/flf/dvk/flf_dvk02.lua:71
 #: dat/missions/flf/dvk/flf_dvk02.lua:144
 #: dat/missions/flf/dvk/flf_dvk02.lua:156
 #: dat/missions/flf/dvk/flf_dvk02.lua:223
 msgid "Pirate Alliance"
-msgstr ""
+msgstr "Alianza Pirata"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:72
 msgid ""
 "You are to seek out pirates in the {sys} system and try to convince them to "
 "become trading partners with the FLF."
 msgstr ""
+"Debes buscar piratas en el sistema {sys} y tratar de convencerlos de que se "
+"conviertan en socios comerciales de la FLF."
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:74
 msgid "Supplies for the FLF"
-msgstr ""
+msgstr "Suministros para la FLF"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:92
 msgid "...is still my enemy."
-msgstr ""
+msgstr "...sigue siendo mi enemigo."
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:92
 msgid ""
 "\"That's too bad. I understand where you're coming from, though. Please feel "
 "free to return if you are willing to take on this mission at a later date.\""
 msgstr ""
+"\"Es una pena. Sin embargo, entiendo de dónde vienes. Por favor, siéntete "
+"libre de volver si estás dispuesto a asumir esta misión en una fecha "
+"posterior.\""
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:100
 msgid ""
 "Har, har, har! You're hailing the wrong ship, buddy. Latest word from the "
 "boss is you're a weakling just waiting to be plundered!"
 msgstr ""
+"¡Har, har, har! Estás llamando al barco equivocado, amigo. ¡Lo último que ha "
+"dicho el jefe es que eres un debilucho que espera ser saqueado!"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:102
 msgid "I guess you're not so bad after all!"
-msgstr ""
+msgstr "¡Supongo que no eres tan malo después de todo!"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:132
 #: dat/missions/flf/dvk/flf_dvk02.lua:134
 msgid "Not So Weak After All"
-msgstr ""
+msgstr "No Tan Débil Después de Todo"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:132
 msgid ""
@@ -53543,6 +53603,12 @@ msgid ""
 "    \"L-look, we got off on the wrong foot, eh? I've misjudged you lot. I "
 "guess FLF pilots can fight after all.\""
 msgstr ""
+"El pirata vuelve a aparecer en tu pantalla, pero esta vez su expresión ha "
+"cambiado. Lo disimula, pero te das cuenta de que tiene miedo de lo que "
+"puedas hacerle. Te das cuenta de que por fin está dispuesto a hablar y "
+"reprimes un suspiro de alivio.\n"
+"    \"Mira, hemos empezado con mal pie, ¿eh? Os he juzgado mal. Supongo que "
+"los pilotos de la FLF pueden luchar después de todo.\""
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:134
 msgid ""
@@ -53561,14 +53627,28 @@ msgid ""
 "hidden jump point. \"Now, away with you! Meet me in the {sys} system when "
 "you have the loot.\""
 msgstr ""
+"Empiezas a hablar con el pirata sobre lo que tú y el FLF buscáis, y la "
+"mirada de miedo en el rostro del pirata se desvanece. \"¿Suministros? Sí, "
+"tenemos suministros, de acuerdo. Pero te costará. Je, je, je...\" Preguntas "
+"cuál es el coste. \"Es sencillo, en realidad. Queremos construir otra base "
+"en el sistema {sys}. Podemos hacerlo nosotros mismos, por supuesto, pero si "
+"podemos conseguir que lo paguéis vosotros, ¡aún mejor! En concreto, "
+"necesitamos otras {tonnes} de mineral para construir la base. Así que "
+"traedlo al sistema Cólera, y lo consideramos un trato.\n"
+"\"Oh sí, casi lo olvido; no sabes cómo llegar al sistema Cólera, ahora, ¿"
+"verdad? Bueno, ya que has demostrado ser digno, supongo que te dejaré entrar "
+"en nuestro pequeño secreto\". Transfiere un archivo a la computadora de tu "
+"nave. Cuando lo miras, ves que es un mapa que muestra un único punto de "
+"salto oculto. \"¡Ahora, fuera de aquí! Reúnete conmigo en el sistema {sys} "
+"cuando tengas el botín.\""
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:142
 msgid "Bring {tonnes} of Ore to the Pirate Kestrel in the {sys} system"
-msgstr ""
+msgstr "Lleva {tonnes} de Minerales al Cernícalo Pirata en el sistema {sys}"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:152
 msgid "Who are you calling a weakling?"
-msgstr ""
+msgstr "¿A quién llamas debilucho?"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:152
 msgid ""
@@ -53582,15 +53662,27 @@ msgid ""
 "talk to you, maybe it's time to show him what you're made of. Destroying "
 "just one or two of his escorts should do the trick."
 msgstr ""
+"Un pirata de aspecto desaliñado aparece en tu pantalla. Te das cuenta de que "
+"debe ser el líder del grupo. \"¡Bwah ha ha!\" se ríe. \"¡Esa tiene que ser "
+"la excusa más patética para una nave que he visto nunca!\" Intentas ignorar "
+"su grosero comentario y empiezas a explicarle que sólo quieres hablar. \""
+"¿Hablar?\", responde. \"¿Por qué querría hablar con un normalito como tú? ¡"
+"Apuesto a que mis compañeros de aquí podrían hacerte volar por los aires "
+"incluso sin mi ayuda!\"\n"
+"    El pirata corta inmediatamente su conexión. Bueno, si estos piratas no "
+"quieren hablar contigo, tal vez sea el momento de mostrarle de qué estás "
+"hecho. Destruir sólo uno o dos de sus escoltas debería ser suficiente."
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:154
 msgid ""
 "Destroy some of the weaker pirate ships, then try to hail the Kestrel again"
 msgstr ""
+"Destruye algunos de las naves piratas más débiles, y luego intenta llamar al "
+"Cernícalo de nuevo"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:159
 msgid "Still Not Impressed"
-msgstr ""
+msgstr "Todavía No Estoy Impresionado"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:159
 msgid ""
@@ -53599,10 +53691,14 @@ msgid ""
 "need to destroy some more of his escorts so he can see you're just a bit "
 "more than a \"normie\"."
 msgstr ""
+"El líder pirata vuelve a aparecer en tu pantalla. \"¡Un golpe de suerte, "
+"normalito!\", dice antes de volver a interrumpir la conexión. Tal vez tengas "
+"que destruir a algunos de sus escoltas para que vea que eres algo más que un "
+"\"normalito\"."
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:164
 msgid "I knew we could work something out"
-msgstr ""
+msgstr "Sabía que podíamos llegar a un acuerdo"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:164
 msgid ""
@@ -53620,10 +53716,23 @@ msgid ""
 "against Dvaered scum. You seem to get along well. You then part ways. Now to "
 "report to Benito...."
 msgstr ""
+"\"¡Ja, has vuelto después de todo! Maravilloso. Entonces me llevaré ese "
+"mineral\". Dudas por un momento, pero teniendo en cuenta el número de "
+"piratas que hay, probablemente te lo quitarán por la fuerza si te niegas en "
+"este momento. Lanzas la carga al espacio, que el Cernícalo recoge "
+"rápidamente con un rayo tractor. \"¡Excelente! Ha sido un placer hacer "
+"negocios con usted. Envíe a sus compañeros a la nueva estación cuando esté "
+"lista. Debería estar en funcionamiento en un par de periodos más o menos. Y "
+"mientras tanto, ¡puedes considerarte uno de los nuestros! Bwa ha ha!\"\n"
+"    Intercambias con el pirata lo que, a falta de una palabra mejor, debe "
+"llamarse cortesía, con él contando una historia sobre una mula "
+"lamentablemente armada que ha saqueado recientemente y tú compartiendo "
+"historias de tus victorias contra la escoria Dvaered. Parece que os lleváis "
+"bien. Luego os separáis. Ahora a informar a Benito...."
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:173
 msgid "Don't be bothering me without the loot, you hear?"
-msgstr ""
+msgstr "No me molestes sin el botín, ¿me oyes?"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:191
 msgid ""
@@ -53633,10 +53742,16 @@ msgid ""
 "pirates. You shamefully transmit your result to Benito via a coded message "
 "and abort the mission. Perhaps you will be given another opportunity later."
 msgstr ""
+"Mientras el Cernícalo Pirata es volado del cielo, se te ocurre que has "
+"cometido un terrible error. Al haber matado al líder del grupo pirata, has "
+"perdido la oportunidad de negociar un acuerdo comercial con los piratas. "
+"Transmites vergonzosamente tu resultado a Benito a través de un mensaje "
+"codificado y abortas la misión. Tal vez se te dé otra oportunidad más "
+"adelante."
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:244
 msgid "Just The Edge We Need"
-msgstr ""
+msgstr "Justo Lo Que Necesitamos"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:244
 msgid ""
@@ -53656,6 +53771,21 @@ msgid ""
 "keep your reputation up.\" You make a mental note to do what she suggests as "
 "she excuses herself and heads off."
 msgstr ""
+"Saludas a Benito de forma amistosa como siempre, compartiendo tu historia y "
+"contándole las buenas noticias antes de entregarle un chip con los datos del "
+"mapa. Ella parece complacida. \"Excelente\", dice. \"Comenzaremos a enviar "
+"nuestros convoyes comerciales de inmediato. Necesitaremos muchos suministros "
+"para nuestra próxima misión. Gracias por tu servicio, {player}. Tu paga ha "
+"sido depositada en tu cuenta. Pasará un tiempo antes de que estemos listos "
+"para tu próxima gran misión, así que puedes hacer algunas misiones en el "
+"ordenador de misiones mientras tanto. Y no olvides visitar tú mismo los "
+"mundos piratas y poner a punto tu propia nave.\n"
+"    \"Oh, una última cosa. Asegúrate de mantenerte en buenos términos con "
+"los piratas, ¿sí? Lo siguiente que deberías hacer es comprar una nave Cráneo "
+"y Huesos; los piratas tienden a respetar más a los que usan sus naves que a "
+"los que no lo hacen. Y asegúrate de destruir a la escoria Dvaered con los "
+"piratas cerca. Eso debería mantener tu reputación alta\". Haces una nota "
+"mental para hacer lo que ella sugiere mientras te excusas y te vas."
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:252
 msgid ""
@@ -53666,6 +53796,12 @@ msgid ""
 "with the pirates up. She also suggested you may want to upgrade your ship "
 "now that you have access to the black market."
 msgstr ""
+"Ayudaste a los Piratas a construir una nueva base en el sistema Cólera y "
+"estableciste una alianza comercial entre la FLF y los Piratas. Benito "
+"sugirió que compraras una nave Calavera y Huesos a los piratas y que "
+"destruyeras las naves Dvaered en las zonas donde están los piratas para "
+"mantener tu reputación con ellos. También sugirió que tal vez quieras "
+"mejorar tu nave ahora que tienes acceso al mercado negro."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -53698,31 +53834,37 @@ msgstr ""
 #: dat/missions/flf/dvk/flf_dvk03.lua:35 dat/missions/flf/dvk/flf_dvk06.lua:35
 msgid "Wait until the coast is clear, then hail one of your wingmates"
 msgstr ""
+"Espera hasta que no haya moros en la costa, entonces llama a uno de tus "
+"compañeros de vuelo"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:36
 msgid "Attack Raelid Outpost until it is destroyed"
-msgstr ""
+msgstr "Ataca el Puesto de Avanzada Raelid hasta destruirlo"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:45 dat/missions/flf/dvk/flf_dvk06.lua:45
 msgid ""
 "Benito is seated at a table with several other FLF soldiers. She motions for "
 "you to come over."
 msgstr ""
+"Benito está sentado en una mesa con varios otros soldados del FLF. Te hace "
+"un gesto para que te acerques."
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:50
 msgid "The Next Level"
-msgstr ""
+msgstr "El Próximo Nivel"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:50
 msgid ""
 "\"Hello there, {player}! You're just in time. We were just discussing our "
 "next operation against the Dvaered oppressors! Do you want in?\""
 msgstr ""
+"\"¡Hola, {player}! Llegas justo a tiempo. ¡Estábamos discutiendo nuestra "
+"próxima operación contra los opresores Dvaered! ¿Quieres participar?\""
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:51 dat/missions/flf/dvk/flf_dvk03.lua:52
 #: dat/missions/flf/dvk/flf_dvk03.lua:54
 msgid "A Decisive Strike"
-msgstr ""
+msgstr "Un Golpe Decisivo"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:51
 msgid ""
@@ -53735,6 +53877,15 @@ msgid ""
 "out. So while you were getting the attention of those Dvaereds, we rigged a "
 "special bomb and covertly installed it onto the outpost!\""
 msgstr ""
+"Toma asiento entre el grupo. \"¡Fantástico!\", dice Benito. \"Deja que te "
+"ponga al día, entonces. ¿Recuerdas aquella misión en Raelid en la que "
+"ayudaste hace tiempo?\" Asientes con la cabeza. Te preguntas de qué estás "
+"creando una distracción. \"Sí, bueno, nunca llegué a contarte lo que "
+"realmente hicimos allí. Verás, llevamos un tiempo queriendo destruir el "
+"Puesto de Avanzada Raelid, sobre todo porque a menudo se utiliza como "
+"fachada para intentar explorarnos. Así que, mientras tú llamabas la atención "
+"de esos Dvaereds, ¡preparamos una bomba especial y la instalamos de forma "
+"encubierta en el puesto de avanzada!\""
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:52
 msgid ""
@@ -53751,6 +53902,19 @@ msgid ""
 "of the others when it's time to attack, then make a beeline for Raelid "
 "Outpost and shoot at it with all you've got!\""
 msgstr ""
+"\"Ahora, la bomba no es perfecta. Dada la premura con la que tuvimos que "
+"instalarla, no pudimos hacerla para que pudiera ser detonada a distancia. En "
+"su lugar, tiene que ser detonada manualmente, haciendo estallar la estación "
+"repetidamente. Disparándola, en otras palabras.\n"
+"    \"Así que este es el plan. Hemos contratado a un gran grupo de piratas "
+"para que nos ayuden creando una perturbación masiva lejos de nuestro "
+"objetivo. Deben esperar hasta que la costa esté despejada, luego entrar en "
+"tropel y atacar el puesto de avanzada con todo lo que tienen. Tú, {player}, "
+"liderarás la carga. Tienes que determinar el momento óptimo, cuando los "
+"Dvaereds estén lo suficientemente lejos para que puedas iniciar el ataque, "
+"pero antes de que los piratas sean inevitablemente abrumados. ¡Simplemente "
+"llama a uno de los otros cuando sea el momento de atacar, y luego dirígete "
+"al puesto de avanzada Raelid y dispárale con todo lo que tengas!\""
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:54
 msgid ""
@@ -53759,6 +53923,10 @@ msgid ""
 "earns Benito a cheer from the crowd. Well, time to get your ship ready for "
 "the battle."
 msgstr ""
+"\"Sois algunos de nuestros mejores pilotos, así que intentad que no os "
+"maten, ¿eh? ¡El momento del triunfo ha llegado! ¡Abajo los opresores!\" La "
+"última línea hace que Benito se gane una ovación de la multitud. Bueno, es "
+"hora de preparar tu nave para la batalla."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -53789,27 +53957,29 @@ msgstr ""
 #. luacheck: globals enter hail land pilot_attacked pilot_attacked_civilian pilot_attacked_station pilot_death_civilian pilot_death_kestrel pilot_death_station timer_pirates timer_start (Hook functions passed by name)
 #: dat/missions/flf/dvk/flf_dvk03.lua:58 dat/missions/flf/dvk/flf_dvk06.lua:34
 msgid "Fly to the {sys} system and meet with the group of FLF ships"
-msgstr ""
+msgstr "Vuela al sistema {sys} y reúnete con el grupo de naves FLF"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:59 dat/missions/flf/dvk/flf_dvk03.lua:60
 msgid "Assault on Raelid"
-msgstr ""
+msgstr "Asalto a Raelid"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:61
 msgid "Join with the other FLF pilots for the assault on Raelid Outpost."
 msgstr ""
+"Únete a los demás pilotos de la FLF para el asalto al puesto de Avanzada de "
+"Raelid."
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:63
 msgid "A great victory against the Dvaereds"
-msgstr ""
+msgstr "Una gran victoria contra los Dvaereds"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:74 dat/missions/flf/dvk/flf_dvk06.lua:72
 msgid "Not This Time"
-msgstr ""
+msgstr "No Esta Vez"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:74 dat/missions/flf/dvk/flf_dvk06.lua:72
 msgid "\"Okay. Just let me know if you change your mind.\""
-msgstr ""
+msgstr "\"De acuerdo. Sólo hazme saber si cambias de opinión.\""
 
 #. Spawn Raelid Outpost ship
 #. Spawn Dvaered and Empire ships
@@ -53820,22 +53990,22 @@ msgstr ""
 #: dat/missions/flf/dvk/flf_dvk03.lua:174
 #: dat/missions/flf/dvk/flf_dvk06.lua:157
 msgid "You're just in time, {player}! The chaos is just about to unfold."
-msgstr ""
+msgstr "¡Llegas justo a tiempo, {player}! El caos está a punto de desatarse."
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:204
 #: dat/missions/flf/dvk/flf_dvk06.lua:187
 msgid "Help! SOS! We are under attack! In need of immediate assistance!"
-msgstr ""
+msgstr "¡Ayuda! ¡SOS! ¡Estamos bajo ataque! ¡Necesitamos ayuda inmediata!"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:240
 #: dat/missions/flf/dvk/flf_dvk06.lua:223
 msgid "You heard the boss! Let's grind that station to dust!"
-msgstr ""
+msgstr "¡Ya habéis oído al jefe! ¡Vamos a hacer polvo esa estación!"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:301
 #: dat/missions/flf/dvk/flf_dvk03.lua:303
 msgid "Ominous Foretelling"
-msgstr ""
+msgstr "Predicción Ominosa"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:301
 msgid ""
@@ -53847,6 +54017,14 @@ msgid ""
 "hide. But no matter.\" You try not to show any reaction to his icy stare. He "
 "continues."
 msgstr ""
+"Mientras el Puesto de Avanzada Raelid estalla en una fantástica explosión "
+"ante tus ojos, tus compañeros te aclaman. Pero entonces, ves algo extraño. "
+"Alguien te está llamando... ¿una nave del Imperio? Seguramente esto no puede "
+"ser. Con cautela, respondes. El hombre cuya cara aparece en tu pantalla no "
+"pierde el tiempo.\n"
+"    \"Así que has dado la cara. Casi esperaba que huyeras y te escondieras. "
+"Pero no importa\". Intentas no mostrar ninguna reacción ante su gélida "
+"mirada. Continúa."
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:303
 msgid ""
@@ -53861,10 +54039,21 @@ msgid ""
 "out of it. \"Pay the Empire no mind,\" he says. \"More importantly, we have "
 "to get out of here! We'll meet you at Sindbad.\""
 msgstr ""
+"\"Terrorista, apuesto a que crees que este último acto tuyo es una victoria "
+"para ti. Quizás, por ahora, lo sea. Pero te aseguro que el Imperio no "
+"ignorará tus actividades por más tiempo. Ya he enviado un mensaje al "
+"Emperador, y él ha autorizado la declaración de tu organización, el FLF, "
+"como enemigo del Imperio. Cuenta los minutos con tus dedos, terrorista. Tus "
+"días están contados\".\n"
+"    El oficial del Imperio interrumpe inmediatamente la comunicación, y tú "
+"sientes de repente un escalofrío en la columna vertebral. Pero uno de tus "
+"compañeros de ala te saca de dudas. \"No hagas caso al Imperio\", dice. \"Lo "
+"más importante es que tenemos que salir de aquí. Nos encontraremos en "
+"Sindbad.\""
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:330
 msgid "Victory on the Horizon"
-msgstr ""
+msgstr "Victoria en el Horizonte"
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:330
 msgid ""
@@ -53881,6 +54070,18 @@ msgid ""
 "other hand, stay behind to celebrate for a few more periods before finally "
 "excusing yourself."
 msgstr ""
+"Cuando regresas a la base, te reciben con todo tipo de vítores y entusiasmo. "
+"También puedes entender por qué; esta es una gran victoria para el FLF, y "
+"seguramente sólo una de las muchas victorias que vendrán. Pero aún así...\n"
+"Consigues acercarte a Benito, que está claramente satisfecha con el "
+"resultado. \"¡Excelente trabajo!\", dice. \"Esa base ha sido una carga para "
+"nosotros durante mucho tiempo. Ahora ha desaparecido, ¡al 100%! Creo que no "
+"hace falta que te diga lo fantástico que es este triunfo. La victoria está a "
+"nuestro alcance\". Es entonces cuando toda duda se borra de tu mente. Tiene "
+"razón; ¿y qué pasa si el Imperio está ahora en tu contra? Intercambias "
+"algunas palabras más con Benito, tras lo cual ella te entrega tu paga por el "
+"trabajo bien hecho y se excusa. Tú, por el contrario, te quedas celebrando "
+"unos cuantos periodos más antes de excusarte finalmente."
 
 #: dat/missions/flf/dvk/flf_dvk03.lua:341
 msgid ""
@@ -53888,6 +54089,9 @@ msgid ""
 "major victory for the FLF. This act led to the Empire listing you and the "
 "FLF as an enemy of the Empire."
 msgstr ""
+"Dirigiste los esfuerzos para destruir la odiada base Dvaered, el Puesto de "
+"Avanzada Raelid, una gran victoria para el FLF. Este acto hizo que el "
+"Imperio os incluyera a ti y a la FLF en la lista de enemigos del Imperio."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -53920,22 +54124,29 @@ msgid ""
 "\"I've got your pay waiting for you back at home, so don't get yourself "
 "blown up on the way back!\""
 msgstr ""
+"Recibe una transmisión de Benito. \"¡Operación exitosa!\", dice. \"¡Tengo tu "
+"paga esperándote en casa, así que no te hagas explotar en el camino de "
+"vuelta!\""
 
 #: dat/missions/flf/dvk/flf_dvk04.lua:36
 msgid ""
 "When you return, Benito hands you the agreed-upon payment, after which you "
 "exchange some pleasantries before parting ways once again."
 msgstr ""
+"Cuando vuelves, Benito te entrega el pago acordado, después de lo cual "
+"intercambiáis algunas palabras de cortesía antes de despediros de nuevo."
 
 #: dat/missions/flf/dvk/flf_dvk04.lua:47
 msgid ""
 "Benito looks in your direction and waves you over. It seems your services "
 "are needed again."
 msgstr ""
+"Benito mira en tu dirección y te hace señas para que te acerques. Parece que "
+"sus servicios son necesarios de nuevo."
 
 #: dat/missions/flf/dvk/flf_dvk04.lua:52 dat/missions/flf/dvk/flf_dvk04.lua:54
 msgid "This looks familiar..."
-msgstr ""
+msgstr "Esto me resulta familiar..."
 
 #: dat/missions/flf/dvk/flf_dvk04.lua:52
 msgid ""
@@ -53947,6 +54158,13 @@ msgid ""
 "ago.\" Aha, preparation for destruction of another Dvaered base! \"You'll be "
 "paid {credits} if you accept. Would you like to help with this one?\""
 msgstr ""
+"Benito te saluda como siempre. Después de unas cuantas galanterías, va al "
+"grano. \"¡Te he estado buscando, {player}!\", dice. \"Tengo otra operación "
+"especial de distracción para ti. Esta vez se trata de una distracción en el "
+"sistema {sys}, para que podamos realizar un trabajo importante en el sistema "
+"Haleb. Es el mismo trato que la distracción de Raelid que hiciste hace un "
+"tiempo\". Aha, ¡preparación para la destrucción de otra base Dvaered! \"Se "
+"te pagarán {credits} si aceptas. ¿Te gustaría ayudar con este?\""
 
 #: dat/missions/flf/dvk/flf_dvk04.lua:54
 msgid ""
@@ -53955,16 +54173,22 @@ msgid ""
 "luck, not like a pilot as great as you needs it!\" You grin, and Benito "
 "excuses herself. Time to cause some mayhem again!"
 msgstr ""
+"Benito sonríe. \"Sabía que querrías hacerlo. Como siempre, el equipo estará "
+"esperando una oportunidad para hacer tu trabajo y te saludarán cuando "
+"terminen. Buena suerte, ¡no como la necesita un piloto tan grande como tú!\""
+". Sonríes, y Benito se excusa. ¡Es hora de volver a causar un poco de caos!"
 
 #: dat/missions/flf/dvk/flf_dvk04.lua:60
 msgid "Diversion from Haleb"
-msgstr ""
+msgstr "Distracción de Haleb"
 
 #: dat/missions/flf/dvk/flf_dvk04.lua:61
 msgid ""
 "A covert operation is being conducted in Haleb. You are to create a "
 "diversion from this operation by wreaking havoc in the nearby {sys} system."
 msgstr ""
+"Se está llevando a cabo una operación encubierta en Haleb. Debes crear una "
+"distracción de esta operación causando estragos en el sistema {sys} cercano."
 
 #: dat/missions/flf/dvk/flf_dvk04.lua:83
 msgid ""
@@ -53972,6 +54196,9 @@ msgid ""
 "complete an important operation there, most likely planting a bomb on "
 "another Dvaered base."
 msgstr ""
+"Distrae las fuerzas Dvaered lejos de Haleb para que otros agentes del FLF "
+"pudieran completar una importante operación allí, probablemente colocando "
+"una bomba en otra base Dvaered."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -54005,16 +54232,23 @@ msgid ""
 "mission for you next time, eh?\" You both grin and exchange some "
 "pleasantries before parting ways."
 msgstr ""
+"A su regreso, Benito parece alegrarse de saber que la misión ha sido un "
+"éxito. \"Excelente\", dice. \"Es un desvío algo molesto, lo sé, pero "
+"agradezco mucho tu ayuda. Intentaré tener una misión mejor para ti la "
+"próxima vez, ¿eh?\". Los dos sonreís y os intercambiáis algunas palabras de "
+"cortesía antes de separaros."
 
 #: dat/missions/flf/dvk/flf_dvk05.lua:51
 msgid ""
 "Benito is shuffling around papers and overall appearing a bit stressed. "
 "Perhaps you should see what is the matter."
 msgstr ""
+"Benito está revolviendo papeles y en general parece un poco estresado. Tal "
+"vez debería ver qué le pasa."
 
 #: dat/missions/flf/dvk/flf_dvk05.lua:56 dat/missions/flf/dvk/flf_dvk05.lua:57
 msgid "Inconvenient happenings"
-msgstr ""
+msgstr "Acontecimientos incómodos"
 
 #: dat/missions/flf/dvk/flf_dvk05.lua:56
 msgid ""
@@ -54025,6 +54259,12 @@ msgid ""
 "nothing too huge, just destroying some more ships. We're prepared to give "
 "you {credits} in exchange.\""
 msgstr ""
+"Benito levanta la vista e inmediatamente parece aliviado de verte. Parece "
+"que tiene un problema con el que lidiar. \"Bien visto, {player}\", dice. "
+"\"Llevo un rato pensando en cómo solucionar un problema y, al verte, ¡la "
+"solución es mucho más sencilla! ¿Puedes ayudarme? No es nada demasiado "
+"grande, sólo destruir algunas naves más. Estamos dispuestos a darte {credits}"
+" a cambio.\""
 
 #: dat/missions/flf/dvk/flf_dvk05.lua:57
 msgid ""
@@ -54042,19 +54282,34 @@ msgid ""
 "before you joined the FLF. Interesting. Well, it's about time to get going, "
 "then."
 msgstr ""
+"\"¡Gracias! Como siempre, eres un salvavidas. Bueno, para nosotros, eso es\""
+". Benito sonríe antes de continuar. \"Verás, unos cuantos piratas han "
+"decidido ser oportunistas, yendo en contra de los clanes con los que estamos "
+"aliados, y atacando nuestras naves. Ahora bien, esperábamos que esto "
+"ocurriera en algún momento, pero esto nos pone en un molesto aprieto: "
+"tenemos que despachar a los agresores, lo que los clanes piratas ya han "
+"acordado que es perfectamente aceptable, pero no podemos ir desviando "
+"nuestras fuerzas de tareas más importantes para luchar contra los piratas "
+"renegados. Así que ahí es donde entras tú: Necesito que vayas al sistema "
+"{sys} y despaches a este grupo de piratas que nos está causando problemas. "
+"Como he dicho, los clanes están de acuerdo, así que no te meterás en "
+"problemas con los piratas en general\".\n"
+"    Luchar contra los piratas, ¿eh? Esto suena como si fuera casi como en "
+"los viejos tiempos, antes de que te unieras a la FLF. Interesante. Bueno, ya "
+"es hora de ponerse en marcha, entonces."
 
 #. Set mission details
 #: dat/missions/flf/dvk/flf_dvk05.lua:62 dat/missions/flf/flf_pirates.lua:135
 msgid "Pirate Disturbance"
-msgstr ""
+msgstr "Molestia Pirata"
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:36
 msgid "Attack Raglan Outpost until it is destroyed"
-msgstr ""
+msgstr "Atacar al Puesto de Avanzada Raglan hasta destruirlo"
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:50
 msgid "Here we go again"
-msgstr ""
+msgstr "Aquí vamos de nuevo"
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:50
 msgid ""
@@ -54062,10 +54317,13 @@ msgid ""
 "great assault against the Dvaered oppressors, and we'd like you to lead the "
 "way to victory once again! Are you in?\""
 msgstr ""
+"\"{player}, ¡decíamos que deberías unirte a esta! Es otro gran asalto contra "
+"los opresores Dvaered, ¡y nos gustaría que lideraras el camino a la victoria "
+"una vez más! ¿Te apuntas?\""
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:51
 msgid "Another Decisive Strike"
-msgstr ""
+msgstr "Otro Golpe Decisivo"
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:51
 msgid ""
@@ -54080,22 +54338,36 @@ msgid ""
 "and it might be a little harder to destroy. So be extra careful!\" Time to "
 "get your ship ready for battle, then."
 msgstr ""
+"\"¡Excelente!\" Toma asiento. \"Así que una vez más, nuestra misión de hoy "
+"es la destrucción de una base Dvaered detestable: ¡El Puesto de Avanzada "
+"Raglan! El plan es más o menos el mismo que antes: hemos encargado a un "
+"grupo de piratas que creen una perturbación en las cercanías, y hemos "
+"colocado una bomba dentro del puesto de avanzada para ayudar a su "
+"destrucción. Sólo tienes que decidir cuándo atacar y avisar a tus compañeros "
+"de equipo.\n"
+"    La única cosa que será diferente, sin embargo, es que es probable que "
+"encuentres más naves Dvaered custodiando el puesto de avanzada de Raglan en "
+"comparación con el puesto de avanzada de Raelid, y podría ser un poco más "
+"difícil de destruir. Así que ten mucho cuidado\". Es hora de preparar tu "
+"nave para la batalla, entonces."
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:57 dat/missions/flf/dvk/flf_dvk06.lua:58
 msgid "Assault on Haleb"
-msgstr ""
+msgstr "Asalto a Haleb"
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:59
 msgid "Join with the other FLF pilots for the assault on Raglan Outpost."
 msgstr ""
+"Únete a los demás pilotos de la FLF para el asalto al Puesto de Avanzada "
+"Raglan."
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:61
 msgid "Another great victory against the Dvaereds"
-msgstr ""
+msgstr "Otra gran victoria contra los Dvaereds"
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:301
 msgid "Another Day, Another Victory"
-msgstr ""
+msgstr "Otro Día, Otra Victoria"
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:301
 msgid ""
@@ -54112,6 +54384,18 @@ msgid ""
 "party with the others for a period or two, and then make your way back to "
 "your ship for some much-needed rest."
 msgstr ""
+"Si tus compañeros se alegraron de tu éxito en Raelid, están extasiados por "
+"tu victoria en Haleb. Cuando entras en la estación, eres recibido con "
+"vítores de lo que parece ser todo el mundo. Por ello, tardas más de lo "
+"habitual en llegar hasta Benito. \"Enhorabuena\", dice. \"¡Ha sido una "
+"victoria asombrosa, que seguramente hará retroceder a los opresores Dvaered "
+"de forma sustancial! Es la primera vez que los expulsamos del espacio de la "
+"Frontera, y por ello, todos te damos las gracias. Si no lo has notado, te "
+"has convertido en un héroe.\n"
+"    \"Aquí está tu paga, {player}. ¡Que tengamos otra atrevida operación más "
+"adelante! Abajo los opresores!\" Intercambias algunas palabras más con "
+"Benito, festejas con los demás durante un par de horas y luego te diriges a "
+"tu nave para un muy necesario descanso."
 
 #: dat/missions/flf/dvk/flf_dvk06.lua:312
 msgid ""
@@ -54120,15 +54404,20 @@ msgid ""
 "started to be pushed out of Frontier space, the first time the FLF has ever "
 "done so and a major victory for the Frontier."
 msgstr ""
+"Has liderado la carga para destruir el Puesto de Avanzada de Raglan, una "
+"fuente de penetración profunda de las fuerzas de Dvaered en la Frontera. "
+"Como resultado, las fuerzas Dvaered han comenzado a ser empujadas fuera del "
+"espacio de la Frontera, la primera vez que la FLF lo ha hecho y una "
+"importante victoria para la Frontera."
 
 #: dat/missions/flf/dvk/flf_dvk07.lua:44
 msgid "Benito seems to be frantically searching for a pilot."
-msgstr ""
+msgstr "Benito parece estar buscando frenéticamente un piloto."
 
 #: dat/missions/flf/dvk/flf_dvk07.lua:49 dat/missions/flf/dvk/flf_dvk07.lua:51
 #: dat/missions/flf/dvk/flf_dvk07.lua:55 dat/missions/flf/dvk/flf_dvk07.lua:71
 msgid "The Split"
-msgstr ""
+msgstr "La Escisión"
 
 #: dat/missions/flf/dvk/flf_dvk07.lua:49
 msgid ""
@@ -54143,6 +54432,16 @@ msgid ""
 "us! Can't anyone see that?\" She takes a deep breath. \"Will you do it, "
 "please? You'll be paid for the service, of course.\""
 msgstr ""
+"Al acercarte, notas que Benito tiene una expresión inusualmente molesta. "
+"Pero cuando te ve, se calma un poco. \"Ah, {player}\". Suspira. \"Nadie está "
+"dispuesto a aceptar esta misión, y aunque puedo entender que es una misión "
+"difícil, realmente hay que ocuparse de ella.\n"
+"    \"Verás, por alguna razón, un grupo de pilotos de la FLF ha decidido "
+"volverse traidor a nosotros. Están merodeando por las afueras de Sindbad y "
+"disparándonos. Hay que detenerlos, pero nadie quiere ensuciarse las manos "
+"matando a otros pilotos de la FLF. ¡Pero ya no son pilotos de la FLF! Nos "
+"han traicionado. ¿Nadie puede ver eso?\" Respira profundamente. \"¿Lo harás, "
+"por favor? Se te pagará por el servicio, por supuesto.\""
 
 #: dat/missions/flf/dvk/flf_dvk07.lua:51
 msgid ""
@@ -54154,25 +54453,35 @@ msgid ""
 "to get a couple more pilots to join in and help you defend our interests "
 "against the traitors. Good luck!\""
 msgstr ""
+"\"¡Sí, por fin!\" Es como si Benito se hubiera quitado un enorme peso de "
+"encima. \"Todos confían mucho en ti, así que estoy seguro de que esto les "
+"convencerá de que, sí, matar a los traidores es lo correcto. No son mejores "
+"que los Dvaereds, o esa escoria del Imperio que empezó a dispararnos hace "
+"poco. Gracias por aceptar la misión. Ahora al menos debería poder conseguir "
+"que un par de pilotos más se unan y te ayuden a defender nuestros intereses "
+"contra los traidores. ¡Buena suerte!\""
 
 #: dat/missions/flf/dvk/flf_dvk07.lua:56
 msgid "A fleet of FLF soldiers has betrayed the FLF. Destroy this fleet."
 msgstr ""
+"Una flota de soldados de la FLF ha traicionado a la FLF. Destruye esta flota."
 
 #: dat/missions/flf/dvk/flf_dvk07.lua:57
 msgid "Getting rid of treacherous scum"
-msgstr ""
+msgstr "Deshacerse de la escoria traidora"
 
 #: dat/missions/flf/dvk/flf_dvk07.lua:61 dat/missions/flf/flf_rogue.lua:105
 #: dat/missions/flf/flf_rogue.lua:188
 msgid "Rogue FLF"
-msgstr ""
+msgstr "FLF Traidor"
 
 #: dat/missions/flf/dvk/flf_dvk07.lua:71
 msgid ""
 "\"Ugh, this is so annoying... I understand, though. Just let me know if you "
 "change your mind, okay?\""
 msgstr ""
+"\"Ugh, esto es tan molesto... Pero lo entiendo. Sólo hazme saber si cambias "
+"de opinión, ¿de acuerdo?\""
 
 #: dat/missions/flf/dvk/flf_dvk07.lua:80
 msgid ""
@@ -54182,6 +54491,11 @@ msgid ""
 "idea that, hey, traitors are traitors and must be eliminated.\" She hands "
 "you a credit chip. \"Here is your pay. Thank you again.\""
 msgstr ""
+"A tu regreso a la estación, te recibe Benito. \"Gracias una vez más por un "
+"trabajo bien hecho. Realmente lo aprecio. No sólo te has encargado de esos "
+"traidores, sino que los demás se han abierto mucho más a la idea de que, "
+"oye, los traidores son traidores y deben ser eliminados.\" Te entrega una "
+"chip de créditos. \"Aquí tienes tu paga. Gracias de nuevo.\""
 
 #: dat/missions/flf/dvk/flf_dvk07.lua:83
 msgid ""
@@ -54190,6 +54504,10 @@ msgid ""
 "treacherous FLF pilots who turn on their comrades are enemies just like any "
 "other."
 msgstr ""
+"Lamentablemente, algunos pilotos de la FLF se han vuelto traidores, lo que "
+"te ha obligado a destruirlos. Tu acción ayudó a asegurar a los compañeros de "
+"la FLF que los pilotos traidores de la FLF que se vuelven contra sus "
+"camaradas son enemigos como cualquier otro."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -54214,13 +54532,15 @@ msgstr ""
 #. luacheck: globals cargo_land commchoices (from base mission neutral.commodity_run)
 #: dat/missions/flf/flf_commodity_run.lua:25
 msgid "FLF: {cargo} Supply Run"
-msgstr ""
+msgstr "FLF: {cargo} Carrera de suministros"
 
 #: dat/missions/flf/flf_commodity_run.lua:26
 msgid ""
 "There is a need to supply {pnt} with more {cargo}. Find a planet where you "
 "can buy this commodity and bring as much of it back as possible."
 msgstr ""
+"Es necesario suministrar a {pnt} más {cargo}. Busca un planeta en el que "
+"puedas comprar esta mercancía y trae la mayor cantidad posible."
 
 #: dat/missions/flf/flf_commodity_run.lua:29
 msgid ""
@@ -54228,6 +54548,9 @@ msgid ""
 "making sure nothing was missed from your cargo hold, you are paid {credits}, "
 "thanked for assisting the FLF's operations, and dismissed."
 msgstr ""
+"Los contenedores de {cargo} son sacados de tu nave y contados. Después de "
+"asegurarse de que no se ha perdido nada de tu bodega, se te pagan {credits}, "
+"se te da las gracias por ayudar a las operaciones de la FLF y se te despide."
 
 #: dat/missions/flf/flf_commodity_run.lua:30
 msgid ""
@@ -54235,6 +54558,9 @@ msgid ""
 "transported to the storage facility. The FLF officer in charge thanks you "
 "with a credit chip worth {credits}."
 msgstr ""
+"Los contenedores de {cargo} son descargados y transportados de forma rápida "
+"y eficaz al almacén. El funcionario de FLF encargado le agradece con un chip "
+"de créditos por valor de {credits}."
 
 #: dat/missions/flf/flf_commodity_run.lua:31
 msgid ""
@@ -54242,10 +54568,13 @@ msgid ""
 "soldiers who are in no rush to finish, eventually delivering {credits} after "
 "the number of tonnes is determined."
 msgstr ""
+"Los contenedores de {cargo} son descargados de tu barco por un equipo de "
+"soldados de la FLF que no tienen prisa por terminar, entregándote finalmente "
+"{credits} después de que se determine el número de toneladas."
 
 #: dat/missions/flf/flf_commodity_run.lua:34
 msgid "FLF Supply Run"
-msgstr ""
+msgstr "Carrera de Suministros FLF"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -54273,12 +54602,16 @@ msgid ""
 "You receive a transmission from an FLF officer saying that the operation was "
 "completed, and you can now return to the base."
 msgstr ""
+"Recibes una transmisión de un oficial de la FLF diciendo que la operación se "
+"ha completado y que ya puedes volver a la base."
 
 #: dat/missions/flf/flf_diversion.lua:32
 msgid ""
 "The FLF officer in charge of the primary operation thanks you for your "
 "contribution and hands you your pay."
 msgstr ""
+"El oficial de la FLF a cargo de la operación principal te agradece tu "
+"contribución y te entrega tu paga."
 
 #: dat/missions/flf/flf_diversion.lua:33
 msgid ""
@@ -54286,15 +54619,18 @@ msgid ""
 "happy that the mission was a success. You congratulate each other and the "
 "officer hands you your pay."
 msgstr ""
+"Saludas al oficial de la FLF a cargo de la operación principal, que parece "
+"contento de que la misión haya sido un éxito. Os felicitáis mutuamente y el "
+"oficial te entrega tu paga."
 
 #: dat/missions/flf/flf_diversion.lua:38
 msgid "Engage and destroy Dvaered ships to get their attention"
-msgstr ""
+msgstr "Enfréntate y destruye las naves Dvaered para llamar tu atención"
 
 #. Set mission details
 #: dat/missions/flf/flf_diversion.lua:60
 msgid "FLF: Diversion in {sys}"
-msgstr ""
+msgstr "FLF: Diversión en {sys}"
 
 #: dat/missions/flf/flf_diversion.lua:61
 msgid ""
@@ -54302,18 +54638,21 @@ msgid ""
 "forces. Create a diversion from this operation by wreaking havoc in the "
 "nearby {sys} system."
 msgstr ""
+"Una flota de naves de la FLF llevará a cabo una operación contra las fuerzas "
+"Dvaered. Crea una distracción de esta operación causando estragos en el "
+"sistema {sys} cercano."
 
 #: dat/missions/flf/flf_diversion.lua:164
 msgid "Dvaered Small Patrol"
-msgstr ""
+msgstr "Patrulla Pequeña Dvaered"
 
 #: dat/missions/flf/flf_diversion.lua:166
 msgid "Dvaered Big Patrol"
-msgstr ""
+msgstr "Patrulla Grande Dvaered"
 
 #: dat/missions/flf/flf_diversion.lua:169
 msgid "{fleet} has warped in!"
-msgstr ""
+msgstr "¡{fleet} ha llegado!"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -54340,23 +54679,23 @@ msgstr ""
 #. Forward-declared functions
 #: dat/missions/flf/flf_empatrol.lua:31
 msgid "FLF: Single Empire patrol in {sys}"
-msgstr ""
+msgstr "FLF: Patrulla Simple del Imperio en {sys}"
 
 #: dat/missions/flf/flf_empatrol.lua:32
 msgid "FLF: Small Empire patrol in {sys}"
-msgstr ""
+msgstr "FLF: Patrulla Pequeña del Imperio en {sys}"
 
 #: dat/missions/flf/flf_empatrol.lua:33
 msgid "FLF: Medium Empire patrol in {sys}"
-msgstr ""
+msgstr "FLF: Patrulla Media del Imperio en {sys}"
 
 #: dat/missions/flf/flf_empatrol.lua:34
 msgid "FLF: Large Empire patrol in {sys}"
-msgstr ""
+msgstr "FLF: Patrulla Grande del Imperio en {sys}"
 
 #: dat/missions/flf/flf_empatrol.lua:35
 msgid "FLF: Dangerous Empire patrol in {sys}"
-msgstr ""
+msgstr "FLF: Patrulla Peligrosa del Imperio en {sys}"
 
 #: dat/missions/flf/flf_empatrol.lua:36
 msgid "FLF: Highly Dangerous Empire patrol in {sys}"
