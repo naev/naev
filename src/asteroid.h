@@ -81,6 +81,7 @@ typedef struct Asteroid_ {
    /* Movement. */
    vec2 pos;  /**< Position. */
    vec2 vel;  /**< Velocity. */
+   double ang; /**< Angle. */
    /* Stats. */
    double timer;  /**< Internal timer for animations. */
    double timer_max; /**< Internal timer initial value. */

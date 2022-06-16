@@ -31,6 +31,7 @@ typedef struct Debris_ {
    const glTexture *gfx; /**< Graphic of the debris. */
    vec2 pos;  /**< Position. */
    vec2 vel;  /**< Velocity. */
+   double ang; /**< Angle. */
    double height; /**< height vs player */
    double alpha;  /**< Alpha value. */
 } Debris;
@@ -273,6 +274,7 @@ void asteroids_init (void)
          else
             a->state = ASTEROID_XX;
          a->timer = a->timer_max = 30.*RNGF();
+         a->ang = RNGF() * M_PI * 2.;
       }
 
       density_max = MAX( density_max, ast->density );
@@ -361,6 +363,7 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
    /* Fade in stuff. */
    ast->state = ASTEROID_XX;
    ast->timer_max = ast->timer = -1.;
+   ast->ang = RNGF() * M_PI * 2.;
 
    return 0;
 }
@@ -388,6 +391,7 @@ static void debris_init( Debris *deb )
    /* Random height vs player. */
    deb->height = 0.8 + RNGF()*0.4;
    deb->alpha = 0.;
+   deb->ang = RNGF() * M_PI * 2.;
 }
 
 /**
@@ -938,7 +942,7 @@ static void asteroid_renderSingle( const Asteroid *a )
    }
 
    at = a->type;
-   gl_renderSprite( a->gfx, a->pos.x, a->pos.y, 0, 0, &col );
+   gl_renderSpriteRotate( a->gfx, a->pos.x, a->pos.y, a->ang, 0, 0, &col );
 
    /* Add the commodities if scanned. */
    if (!a->scanned)
@@ -967,7 +971,7 @@ static void debris_renderSingle( const Debris *d, double cx, double cy )
    const double scale = 0.5;
    const glColour col = COL_ALPHA( cInert, d->alpha );
 
-   gl_renderSpriteScale( d->gfx, d->pos.x+cx, d->pos.y+cy, scale, scale, 0, 0, &col );
+   gl_renderSpriteScaleRotate( d->gfx, d->pos.x+cx, d->pos.y+cy, scale, scale, d->ang, 0, 0, &col );
 }
 
 /**
