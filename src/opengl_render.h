@@ -45,6 +45,13 @@ void gl_renderSprite( const glTexture* sprite,
 void gl_renderSpriteScale( const glTexture* sprite, double bx, double by,
       double scalew, double scaleh,
       int sx, int sy, const glColour* c );
+void gl_renderSpriteRotate( const glTexture* sprite,
+      double bx, double by, double angle,
+      int sx, int sy, const glColour *c );
+void gl_renderSpriteScaleRotate( const glTexture* sprite,
+      double bx, double by,
+      double scalew, double scaleh, double angle,
+      int sx, int sy, const glColour *c );
 /* Blits a sprite interpolating between textures, relative pos. */
 void gl_renderSpriteInterpolate( const glTexture* sa, const glTexture *sb,
       double inter, double bx, double by,
