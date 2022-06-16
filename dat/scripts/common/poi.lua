@@ -30,17 +30,13 @@ function poi.generate()
    local sys = syscand[ rnd.rnd(1,#syscand) ]
 
    -- Bias towards easier at start
-   local risk = math.min(1+prob.poisson_sample( 1.5 ),5) -- 1 to 5
+   local risk = math.min(prob.poisson_sample( 1.5 ),5) -- 0 to 5
    risk = math.min( poi.done(), risk ) -- Only easy ones at first
-
-   -- Reward depends on risk
-   local reward = 0
 
    -- Return parameter table
    return {
       sys = sys,
       risk = risk,
-      reward = reward,
    }
 end
 
@@ -50,29 +46,26 @@ end
 --]]
 function poi.setup( params )
    local risk = params.risk or 0
-   local reward = params.reward or 0
    local sys = system.get( params.sys )
 
-   if var.peek("_poi_system") ~= nil or var.peek("_poi_risk") ~= nil or var.peek("_poi_reward") ~= nil then
+   if var.peek("_poi_system") ~= nil or var.peek("_poi_risk") ~= nil then
       warn(_("Point of Interest variables being overwritten!"))
    end
 
    var.push( "_poi_system", sys:nameRaw() )
    var.push( "_poi_risk", risk )
-   var.push( "_poi_reward", reward )
 end
 
 function poi.start ()
    local sys = var.peek("_poi_system")
    local risk = var.peek("_poi_risk")
-   local reward = var.peek("_poi_reward")
-   if sys==nil or risk==nil or reward==nil then
+   if sys==nil or risk==nil then
       warn(_("Point of Interest not properly initialized!"))
    end
    if sys ~= nil then
       sys = system.get( sys )
    end
-   return sys, risk, reward
+   return sys, risk
 end
 
 local pos, timer, path, goal, mrk
@@ -168,10 +161,20 @@ end
       @tparam table params Table of parameters to use. `sys` and `found` must be defined, where `sys` is the system the POI takes place in, and `found` is the name of the global function to call when found.
 --]]
 function poi.misnSetup( params )
+   local function riskstr( r )
+      if r > 3 then
+         return _("High")
+      elseif r > 1 then
+         return _("Low")
+      else
+         return _("None")
+      end
+   end
    mem.poi = {
       sys      = params.sys,
       found    = params.found,
-      riskstr  = params.riskstr or _("Low"),
+      risk     = params.risk,
+      riskstr  = params.riskstr or riskstr( params.risk ),
       rewardstr= params.rewardstr or _("Unknown"),
    }
 
@@ -196,13 +199,15 @@ end
 --[[--
    @brief Cleans up after a point of interest mission.
 --]]
-function poi.misnDone()
+function poi.misnDone( failed )
    system.mrkRm( mrk )
    for k,v in ipairs(path_spfx) do
       v:rm()
    end
 
-   var.push( "poi_done", poi.done()+1 )
+   if not failed then
+      var.push( "poi_done", poi.done()+1 )
+   end
 end
 
 --[[--
