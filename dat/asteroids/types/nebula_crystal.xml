@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asteroid name="Nebula Crystal">
+ <scanned>rare</scanned>
+ <gfx>NC01.webp</gfx>
+ <gfx>NC02.webp</gfx>
+ <gfx>NC03.webp</gfx>
+ <gfx>NC04.webp</gfx>
+ <gfx>NC05.webp</gfx>
+ <armour_min>2500</armour_min>
+ <armour_max>3500</armour_max>
+ <absorb>90</absorb>
+ <commodity>
+  <name>Silicate</name>
+  <quantity>5</quantity>
+ </commodity>
+ <commodity>
+  <name>Nebula Crystals</name>
+  <quantity>3</quantity>
+  <rarity>2</rarity>
+ </commodity>
+</asteroid>

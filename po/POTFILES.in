@@ -17,6 +17,7 @@ dat/asteroids/types/iron_nickel.xml
 dat/asteroids/types/kermite.xml
 dat/asteroids/types/liquid.xml
 dat/asteroids/types/massive.xml
+dat/asteroids/types/nebula_crystal.xml
 dat/asteroids/types/nodrop.xml
 dat/asteroids/types/rhodium_yttrium.xml
 dat/asteroids/types/silicate_olivine.xml
@@ -32,6 +33,7 @@ dat/commodities/iron.xml
 dat/commodities/kermite.xml
 dat/commodities/luxury_goods.xml
 dat/commodities/medicine.xml
+dat/commodities/nebula_crystals.xml
 dat/commodities/neodymium.xml
 dat/commodities/nickel.xml
 dat/commodities/olivine.xml
