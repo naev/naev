@@ -40,6 +40,7 @@ const double DEBRIS_BUFFER = 1000.; /**< Buffer to smooth appearance of debris *
 static const double SCAN_FADE = 10.; /**< 1/time it takes to fade in/out scanning text. */
 
 static Debris *debris_stack = NULL; /**< All the debris in the current system (array.h). */
+static glTexture **debris_gfx = NULL; /**< Graphics to use for debris. */
 
 /*
  * Useful data for asteroids.
@@ -235,10 +236,25 @@ void asteroids_init (void)
    double density_max = 0.;
    int ndebris;
    asteroid_creating = 1;
+
+   if (debris_gfx==NULL)
+      debris_gfx = array_create( glTexture* );
+   array_erase( &debris_gfx, array_begin(debris_gfx), array_end(debris_gfx) );
+
    /* Set up asteroids. */
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *ast = &cur_system->asteroids[i];
       ast->id = i;
+
+      /* Add graphics to debris. */
+      for (int j=0; j<array_size(ast->groups); j++) {
+         AsteroidTypeGroup *ag = ast->groups[j];
+         for (int k=0; k<array_size(ag->types); k++) {
+            AsteroidType *at = ag->types[k];
+            for (int x=0; x<array_size(at->gfxs); x++)
+               array_push_back( &debris_gfx, (glTexture*)at->gfxs[x] );
+         }
+      }
 
       /* Add the asteroids to the anchor */
       ast->asteroids = realloc( ast->asteroids, (ast->nb) * sizeof(Asteroid) );
@@ -366,7 +382,8 @@ static void debris_init( Debris *deb )
    vec2_pset( &deb->vel, mod, theta );
 
    /* Randomly init the gfx ID */
-   deb->gfx = asteroid_gfx[ RNG(0,(int)array_size(asteroid_gfx)-1) ];
+   //deb->gfx = asteroid_gfx[ RNG(0,(int)array_size(asteroid_gfx)-1) ];
+   deb->gfx = debris_gfx[ RNG(0,(int)array_size(debris_gfx)-1) ];
 
    /* Random height vs player. */
    deb->height = 0.8 + RNGF()*0.4;
@@ -975,6 +992,7 @@ void asteroids_free (void)
    for (int i=0; i<array_size(asteroid_gfx); i++)
       gl_freeTexture(asteroid_gfx[i]);
    array_free(asteroid_gfx);
+   array_free(debris_gfx);
 
    /* Free the asteroid types. */
    for (int i=0; i<array_size(asteroid_types); i++) {
