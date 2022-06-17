@@ -32,17 +32,24 @@ local vn = require "vn"
 
 function create ()
    mem.sys, mem.risk = poi.start()
+   mem.rewardrisk = mem.risk
 
    -- We do a soft claim on the final system
    if not misn.claim( {mem.sys}, nil, true ) then
       return
    end
 
+   -- Chance of being locked with less risk
+   if rnd.rnd() < 0.2*mem.risk then
+      mem.locked = true
+      mem.risk = mem.risk-1
+   end
+
    -- Roll for rewards here to disallow save scumming
    local reward_list = {
       {
          type = "credits",
-         value = 100e3 + 100e3*rnd.rnd() * mem.risk,
+         value = 100e3 + 100e3*rnd.rnd() * (mem.rewardrisk+1),
       },
    }
    local function add_unique_reward( oname )
@@ -58,11 +65,6 @@ function create ()
    -- Choose a random reward and stick to it
    mem.reward = reward_list[ rnd.rnd(1,#reward_list) ]
 
-   -- CHance of being locked with less risk
-   if mem.risk > 0 and rnd.rnd() > 0.5 then
-      mem.locked = true
-      mem.risk = mem.risk-1
-   end
    poi.misnSetup{ sys=mem.sys, found="found", risk=mem.risk }
 end
 
