@@ -360,6 +360,12 @@ function goodevent()
    if player.fleetCargoFree() > 10 then
       table.insert( goodevent_list, function ()
          local commodities = {
+            -- Uncommon
+            "Gold",
+            "Platinum",
+            "Rhodium",
+            "Yttrium",
+            -- Rare
             "Vixilium",
             "Therite",
             "Kermite",
