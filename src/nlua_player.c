@@ -1532,8 +1532,8 @@ static int playerL_fleetCargoRm( lua_State *L )
    Commodity *c = luaL_validcommodity( L, 1 );
    int q = luaL_checkinteger( L, 2 );
    lua_pushinteger( L, pfleet_cargoRm( c, q ) );
-   return 1;}
-
+   return 1;
+}
 
 /**
  * @brief Teleports the player to a new spob or system (only if not landed).
