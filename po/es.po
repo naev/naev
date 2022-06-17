@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-14 19:00-0400\n"
-"PO-Revision-Date: 2022-06-16 21:18+0000\n"
+"PO-Revision-Date: 2022-06-18 00:19+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -54699,11 +54699,11 @@ msgstr "FLF: Patrulla Peligrosa del Imperio en {sys}"
 
 #: dat/missions/flf/flf_empatrol.lua:36
 msgid "FLF: Highly Dangerous Empire patrol in {sys}"
-msgstr ""
+msgstr "FLF: Patrulla Altamente Peligrosa del Imperio en {sys}"
 
 #: dat/missions/flf/flf_empatrol.lua:41
 msgid "Eliminate the Empire patrol"
-msgstr ""
+msgstr "Elimina la Patrulla del Imperio"
 
 #: dat/missions/flf/flf_empatrol.lua:49
 msgid ""
@@ -54712,28 +54712,31 @@ msgid_plural ""
 "There is an Empire patrol with {n} ships in the {sys} system. Eliminate this "
 "patrol."
 msgstr[0] ""
+"Hay {n} nave del Imperio patrullando el sistema {sys}. Elimina esta nave."
 msgstr[1] ""
+"Hay una patrulla del Imperio con {n} naves en el sistema {sys}. Elimina esta "
+"patrulla."
 
 #: dat/missions/flf/flf_empatrol.lua:54
 msgid " There is a Pacifier among them, so you must proceed with caution."
-msgstr ""
+msgstr " Hay una Calma entre ellos, así que debes proceder con precaución."
 
 #: dat/missions/flf/flf_empatrol.lua:57
 msgid " There is a Hawking among them, so you must be very careful."
-msgstr ""
+msgstr " Hay un Hawking entre ellos, así que debes tener mucho cuidado."
 
 #: dat/missions/flf/flf_empatrol.lua:61 dat/missions/flf/flf_patrol.lua:64
 #: dat/missions/flf/flf_pirates.lua:68 dat/missions/flf/flf_rogue.lua:55
 msgid " You will be accompanied by {n} other FLF pilot for this mission."
 msgid_plural ""
 " You will be accompanied by {n} other FLF pilots for this mission."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " Estarás acompañado por {n} otro piloto de FLF para esta misión."
+msgstr[1] " Te acompañarán {n} otros pilotos de la FLF para esta misión."
 
 #: dat/missions/flf/flf_empatrol.lua:88 dat/missions/flf/flf_patrol.lua:163
 #: dat/missions/flf/flf_pirates.lua:164
 msgid "Alright, let's have at them!"
-msgstr ""
+msgstr "Muy bien, ¡vamos a por ellos!"
 
 #. Spawn an Empire patrol with n ships.
 #.
@@ -54758,27 +54761,27 @@ msgstr ""
 #. luacheck: globals enter fleetDV fleetFLF land_flf leave misn_title patrol_getSystem patrol_spawnDV patrol_spawnFLF pilot_death_dv setDescription timer_lateFLF (shared with derived missions flf_empatrol, flf_pre02)
 #: dat/missions/flf/flf_patrol.lua:28
 msgid "FLF: Single Dvaered patrol in {sys}"
-msgstr ""
+msgstr "FLF: Patrulla Dvaered Solitaria en {sys}"
 
 #: dat/missions/flf/flf_patrol.lua:29
 msgid "FLF: Small Dvaered patrol in {sys}"
-msgstr ""
+msgstr "FLF: Patrulla Dvaered pequeña en {sys}"
 
 #: dat/missions/flf/flf_patrol.lua:30
 msgid "FLF: Medium Dvaered patrol in {sys}"
-msgstr ""
+msgstr "FLF: Patrulla Dvaered media en {sys}"
 
 #: dat/missions/flf/flf_patrol.lua:31
 msgid "FLF: Large Dvaered patrol in {sys}"
-msgstr ""
+msgstr "FLF: Patrulla Dvaered grande en {sys}"
 
 #: dat/missions/flf/flf_patrol.lua:32
 msgid "FLF: Dangerous Dvaered patrol in {sys}"
-msgstr ""
+msgstr "FLF: Patrulla Dvaered peligrosa en {sys}"
 
 #: dat/missions/flf/flf_patrol.lua:33
 msgid "FLF: Highly Dangerous Dvaered patrol in {sys}"
-msgstr ""
+msgstr "FLF: Patrulla Dvaered altamente peligrosa en {sys}"
 
 #: dat/missions/flf/flf_patrol.lua:37
 msgid ""
@@ -54786,18 +54789,22 @@ msgid ""
 "victory and buys you a drink. You chat for a while before getting back to "
 "work."
 msgstr ""
+"Después de que te entreguen la paga, un soldado de la FLF te felicita por tu "
+"victoria y te invita a una copa. Charláis un rato antes de volver al trabajo."
 
 #: dat/missions/flf/flf_patrol.lua:38
 msgid ""
 "As you get your pay from the officer, FLF soldiers congratulate you on your "
 "victory."
 msgstr ""
+"Mientras recibe tu paga del oficial, los soldados del FLF te felicitan por "
+"tu victoria."
 
 #: dat/missions/flf/flf_patrol.lua:39
 msgid ""
 "You collect your pay from the officer, who then congratulates you on your "
 "victory."
-msgstr ""
+msgstr "Recoges la paga del oficial, que te felicita por tu victoria."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -54834,7 +54841,7 @@ msgstr ""
 #. Non-persistent state
 #: dat/missions/flf/flf_patrol.lua:44 dat/missions/flf/flf_pre02.lua:44
 msgid "Eliminate the Dvaered patrol"
-msgstr ""
+msgstr "Elimina la patrulla Dvaered"
 
 #: dat/missions/flf/flf_patrol.lua:52
 msgid ""
@@ -54842,25 +54849,27 @@ msgid ""
 msgid_plural ""
 "There is a Dvaered patrol with {n} ships in the {sys} system. Eliminate this "
 "patrol."
-msgstr[0] ""
+msgstr[0] "Hay {n} nave Dvaered patrullando el sistema {sys}. Elimina esta nave."
 msgstr[1] ""
+"Hay una patrulla Dvaered con {n} naves en el sistema {sys}. Elimina esta "
+"patrulla."
 
 #: dat/missions/flf/flf_patrol.lua:57
 msgid " There is a Vigilance among them, so you must proceed with caution."
-msgstr ""
+msgstr " Hay una Vigilancia entre ellos, así que debes proceder con precaución."
 
 #: dat/missions/flf/flf_patrol.lua:60
 msgid " There is a Goddard among them, so you must be very careful."
-msgstr ""
+msgstr " Hay un Goddard entre ellos, así que debes tener mucho cuidado."
 
 #. Set mission details
 #: dat/missions/flf/flf_patrol.lua:137
 msgid "FLF Patrol"
-msgstr ""
+msgstr "Patrulla FLF"
 
 #: dat/missions/flf/flf_patrol.lua:185 dat/missions/flf/flf_pirates.lua:186
 msgid "Sorry we're late! Did we miss anything?"
-msgstr ""
+msgstr "¡Perdón por el retraso! ¿Nos hemos perdido algo?"
 
 #. Spawn a Dvaered patrol with n ships.
 #. Spawn n FLF ships at/from the location param.
@@ -54887,54 +54896,62 @@ msgstr ""
 #. luacheck: globals pilot_death_pirate timer_lateFLF (Hook functions passed by name)
 #: dat/missions/flf/flf_pirates.lua:28
 msgid "FLF: Lone Pirate Disturbance in {sys}"
-msgstr ""
+msgstr "FLF: Disturbio Pirata Solitario en {sys}"
 
 #: dat/missions/flf/flf_pirates.lua:29
 msgid "FLF: Minor Pirate Disturbance in {sys}"
-msgstr ""
+msgstr "FLF: Disturbio Pirata Menor en {sys}"
 
 #: dat/missions/flf/flf_pirates.lua:30
 msgid "FLF: Moderate Pirate Disturbance in {sys}"
-msgstr ""
+msgstr "FLF: Disturbio Pirata Moderado en {sys}"
 
 #: dat/missions/flf/flf_pirates.lua:31
 msgid "FLF: Substantial Pirate Disturbance in {sys}"
-msgstr ""
+msgstr "FLF: Disturbio Pirata Sustancial en {sys}"
 
 #: dat/missions/flf/flf_pirates.lua:32
 msgid "FLF: Dangerous Pirate Disturbance in {sys}"
-msgstr ""
+msgstr "FLF: Disturbio Pirata Peligroso en {sys}"
 
 #: dat/missions/flf/flf_pirates.lua:33
 msgid "FLF: Highly Dangerous Pirate Disturbance in {sys}"
-msgstr ""
+msgstr "FLF: Disturbio Pirata Altamente Peligroso en {sys}"
 
 #: dat/missions/flf/flf_pirates.lua:37
 msgid ""
 "The official mumbles something about the pirates being irritating as a "
 "credit chip is pressed into your hand."
 msgstr ""
+"El funcionario murmura algo acerca de que los piratas son irritantes "
+"mientras te pone un chip de créditos en la mano."
 
 #: dat/missions/flf/flf_pirates.lua:38
 msgid ""
 "While polite, something seems off about the smile plastered on the official "
 "who hands you your pay."
 msgstr ""
+"Aunque es cortés, hay algo que no encaja en la sonrisa del funcionario que "
+"te entrega la paga."
 
 #: dat/missions/flf/flf_pirates.lua:39
 msgid ""
 "The official thanks you dryly for your service and hands you a credit chip."
 msgstr ""
+"El funcionario te agradece secamente tu servicio y te entrega un chip de "
+"créditos."
 
 #: dat/missions/flf/flf_pirates.lua:40
 msgid ""
 "The official takes an inordinate amount of time to do so, but eventually "
 "hands you your pay as promised."
 msgstr ""
+"El funcionario tarda un tiempo desmesurado en hacerlo, pero finalmente te "
+"entrega tu paga tal y como te ha prometido."
 
 #: dat/missions/flf/flf_pirates.lua:45
 msgid "Eliminate the pirates"
-msgstr ""
+msgstr "Elimina los piratas"
 
 #. Non-persistent state (not reused by flf_dvk05, which "require"s this script)
 #. Forward-declared functions
@@ -54946,20 +54963,24 @@ msgid_plural ""
 "There is a pirate group with {n} ships disturbing FLF operations in the "
 "{sys} system. Eliminate this group."
 msgstr[0] ""
+"Hay {n} nave pirata que perturba las operaciones del FLF en el sistema {sys}"
+". Elimina esta nave."
 msgstr[1] ""
+"Hay un grupo de piratas con {n} naves que perturban las operaciones del FLF "
+"en el sistema {sys}. Elimina este grupo."
 
 #: dat/missions/flf/flf_pirates.lua:61
 msgid " There is a Phalanx among them, so you must proceed with caution."
-msgstr ""
+msgstr " Hay una Falange entre ellos, así que debes proceder con precaución."
 
 #: dat/missions/flf/flf_pirates.lua:64
 msgid " There is a Kestrel among them, so you must be very careful."
-msgstr ""
+msgstr " Hay un Cernícalo entre ellos, así que debes tener mucho cuidado."
 
 #. Spawn a pirate patrol with n ships.
 #: dat/missions/flf/flf_pirates.lua:228
 msgid "Rogue Pirate"
-msgstr ""
+msgstr "Pirata Traidor"
 
 #. fleetPirate = {}
 #. fleetPirate[i] = p
@@ -54996,7 +55017,7 @@ msgstr ""
 #. Flag to keep track if the player has seen the base
 #: dat/missions/flf/flf_pre01.lua:48
 msgid "Gregar joins the party"
-msgstr ""
+msgstr "Gregar se une al grupo"
 
 #: dat/missions/flf/flf_pre01.lua:48
 msgid ""
@@ -55017,39 +55038,59 @@ msgid ""
 "to find his friends, but harboring a known terrorist, let alone helping him, "
 "might not be looked kindly upon by the authorities..."
 msgstr ""
+"Un hombre de aspecto demacrado sale de la esclusa. Dice: \"Menos mal que "
+"estás aquí. Mi nombre es Gregar, soy del Frente de Liberación de la "
+"Frontera. No quiero hacerte daño\". Se lame los labios en señal de duda "
+"antes de continuar. \"He sido atacado por una patrulla de Dvaered. No estaba "
+"violando ninguna ley, ¡y ni siquiera estamos en territorio Dvaered! De todos "
+"modos, mi nave no puede volar\".\n"
+"    Ayudas a Gregar a subir a la cabina y lo instalas en un asiento libre. "
+"Es evidente que está muy cansado, pero se obliga a hablar. \"Escucha, estaba "
+"volviendo de una misión cuando esos bastardos Dvaered me asaltaron. Sé que "
+"es mucho pedir, pero no tengo otra opción, ya que mi nave es una causa "
+"perdida. ¿Puedes llevarme el resto del camino? No está lejos. Tenemos una "
+"base secreta en el sistema {sys}. Vuela allí y contacta con mis camaradas. "
+"Ellos te llevarán el resto del camino\".\n"
+"    Gregar asiente, dejándote decidir qué hacer a continuación. Gregar "
+"quiere que encuentres a tus amigos, pero albergar a un conocido terrorista, "
+"y más aún ayudarlo, podría no ser visto con buenos ojos por las "
+"autoridades..."
 
 #. Small buffer to ensure it doesn't go negative again right away.
 #: dat/missions/flf/flf_pre01.lua:52 dat/missions/flf/flf_pre01.lua:57
 #: dat/missions/flf/flf_pre01.lua:172
 msgid "Deal with the FLF agent"
-msgstr ""
+msgstr "Acuerdo con el agente de la FLF"
 
 #: dat/missions/flf/flf_pre01.lua:53 dat/missions/flf/flf_pre01.lua:173
 msgid ""
 "Take Gregar, the FLF agent, to the {sys} system and make contact with the FLF"
 msgstr ""
+"Lleva a Gregar, el agente de la FLF, al sistema {sys} y contacta con la FLF"
 
 #: dat/missions/flf/flf_pre01.lua:54 dat/missions/flf/flf_pre01.lua:175
 msgid "Alternatively, turn Gregar in to the nearest Dvaered base"
-msgstr ""
+msgstr "Alternativamente, entrega a Gregar a la base Dvaered más cercana"
 
 #: dat/missions/flf/flf_pre01.lua:56
 msgid ""
 "You have taken onboard a member of the FLF. You must either take him where "
 "he wants to go, or turn him in to the Dvaered."
 msgstr ""
+"Has subido a bordo a un miembro de la FLF. Debes llevarlo a donde quiera ir "
+"o entregarlo a los Dvaered."
 
 #: dat/missions/flf/flf_pre01.lua:58
 msgid "A chance to learn more about the FLF"
-msgstr ""
+msgstr "Una oportunidad para saber más sobre la FLF"
 
 #: dat/missions/flf/flf_pre01.lua:61
 msgid "Gregar"
-msgstr ""
+msgstr "Gregar"
 
 #: dat/missions/flf/flf_pre01.lua:61
 msgid "A rescued FLF pilot."
-msgstr ""
+msgstr "Un piloto FLF rescatado."
 
 #. Handle the FLF encounter, Gregar's intervention, and ultimately the search for the base.
 #. Collect information needed for course calculations
@@ -55070,7 +55111,7 @@ msgstr ""
 #. Case FLF base
 #: dat/missions/flf/flf_pre01.lua:115 dat/missions/flf/flf_pre01.lua:117
 msgid "Gregar leaves the party"
-msgstr ""
+msgstr "Gregar deja el grupo"
 
 #: dat/missions/flf/flf_pre01.lua:115
 msgid ""
@@ -55090,6 +55131,21 @@ msgid ""
 "probably just arrest you and torture you for what you know. So, I trust you "
 "understand that your discretion is in both our interests.\""
 msgstr ""
+"Gregar y tú salís de la esclusa y entráis en el Sindbad. Os recibe un grupo "
+"de cinco o seis soldados de la FLF. Parecen aliviados de ver a Gregar, pero "
+"te miran claramente con desconfianza. Te llevan a reunirte con un oficial "
+"superior de la base. Gregar no te acompaña, ya que parece tener asuntos "
+"urgentes que atender, lejos de oídos indiscretos como los tuyos.\n"
+"    \"Muy bien, {player}\", comienza el oficial. \"No sé quién eres ni qué "
+"crees que haces aquí, pero no deberías engañarte. La única razón por la que "
+"estás en mi despacho y no en una celda es porque uno de mis colegas de "
+"confianza responde por ti\". El oficial se inclina un poco más hacia ti y te "
+"mira fijamente. \"No creo que seas un espía de los Dvaered. Los Dvaered no "
+"tienen el ingenio necesario para realizar un espionaje decente. Pero no se "
+"te ocurra ir corriendo a los Dvaered a contarles nuestra presencia aquí. No "
+"son ni confiados ni agradecidos, así que probablemente te arrestarían y te "
+"torturarían por lo que sabes. Así que, confío en que entiendas que tu "
+"discreción nos beneficia a ambos.\""
 
 #: dat/missions/flf/flf_pre01.lua:117
 msgid ""
@@ -55105,6 +55161,18 @@ msgid ""
 "gained access to a centre of FLF activity. Should you want to make an enemy "
 "of House Dvaered, perhaps this would be a good place to start..."
 msgstr ""
+"El momento de tensión pasa y el oficial se reclina en su silla.\n"
+"\" Dicha la amenaza, debería al menos extender mi gratitud por haber ayudado "
+"a uno de los nuestros en su momento de necesidad, aunque no tenías ninguna "
+"razón para hacerlo. Por eso te permitiré moverte libremente por esta "
+"estación, al menos hasta cierto punto, y te permitiré salir cuando te "
+"plazca, así como volver si lo ves necesario. Quién sabe, tal vez si haces "
+"buenas migas con el personal destinado aquí, incluso podríamos llegar a "
+"considerarte un amigo\".\n"
+"    Intercambias unas cuantas palabras más de cortesía con el oficial y "
+"sales de su despacho. Mientras regresas a tu nave, consideras tu posición. "
+"Has accedido a un centro de actividad de la FLF. Si quieres enemistarte con "
+"la Casa Dvaered, quizás este sea un buen lugar para empezar..."
 
 #: dat/missions/flf/flf_pre01.lua:122
 msgid ""
@@ -55112,11 +55180,15 @@ msgid ""
 "This has earned you a small level of trust from the FLF and enabled you to "
 "freely access the FLF base."
 msgstr ""
+"Has ayudado a escoltar al Teniente Gregar Fletcher de la FLF a la base "
+"secreta de la FLF, Sindbad. Esto te ha hecho ganar un pequeño nivel de "
+"confianza por parte de la FLF y te ha permitido acceder libremente a la base "
+"de la FLF."
 
 #. Case Dvaered planet
 #: dat/missions/flf/flf_pre01.lua:126
 msgid "An opportunity to uphold the law"
-msgstr ""
+msgstr "Una oportunidad para defender la ley"
 
 #: dat/missions/flf/flf_pre01.lua:126
 msgid ""
@@ -55125,10 +55197,15 @@ msgid ""
 "to alert the authorities and turn him in, and possibly collect a reward.\n"
 "    Would you like to do so?"
 msgstr ""
+"Has llegado a un mundo controlado por Dvaered, y estás albergando a un "
+"fugitivo del FLF en tu nave. Afortunadamente, Gregar sigue dormido. Podrías "
+"optar por alertar a las autoridades y entregarlo, y posiblemente cobrar una "
+"recompensa.\n"
+"    ¿Te gustaría hacerlo?"
 
 #: dat/missions/flf/flf_pre01.lua:128
 msgid "Another criminal caught"
-msgstr ""
+msgstr "Otro delincuente capturado"
 
 #: dat/missions/flf/flf_pre01.lua:128
 msgid ""
@@ -55144,6 +55221,17 @@ msgid ""
 "rewarding you in any tangible way. You wonder if you should scout out this "
 "liaison, in hopes of at least getting something out of this whole situation."
 msgstr ""
+"La seguridad Dvaered no tarda en llegar a tu muelle de aterrizaje. Abordan "
+"tu nave, cogen a Gregar y se lo llevan antes de que comprendas lo que está "
+"pasando.\n"
+"    \"Has servido adecuadamente a la Casa Dvaered, ciudadano\", te dice el "
+"capitán de la seguridad con cara de piedra. \"En reconocimiento a tu "
+"servicio, podemos permitirte participar en otras operaciones relacionadas "
+"con los terroristas del FLF. Si tiene más preguntas, diríjalas a nuestro "
+"enlace público\".\n"
+"    El oficial se da la vuelta y se marcha sin esperar una respuesta, y sin "
+"recompensarte de ninguna manera tangible. Te preguntas si deberías explorar "
+"este enlace, con la esperanza de al menos sacar algo de toda esta situación."
 
 #: dat/missions/flf/flf_pre01.lua:134
 msgid ""
@@ -55152,19 +55240,25 @@ msgid ""
 "campaign against the FLF terrorists; you can direct questions to a Dvaered "
 "public liaison. You may want to scout out this liaison."
 msgstr ""
+"Entregaste al teniente del FLF Gregar Fletcher a las autoridades Dvaered. El "
+"capitán Dvaered que te lo quitó de las manos dijo que podías unirte a una "
+"campaña contra los terroristas del FLF; puedes dirigir tus preguntas a un "
+"enlace público Dvaered. Es posible que quieras explorar este contacto."
 
 #: dat/missions/flf/flf_pre01.lua:141
 msgid ""
 "Nothing personal, mate, but we're expecting someone and you ain't him. No "
 "witnesses!"
 msgstr ""
+"No es nada personal, amigo, pero estamos esperando a alguien y tú no eres "
+"él. ¡No hay testigos!"
 
 #. Gregar wakes up and calls off the FLF attackers. They agree to guide you to their hidden base.
 #. If the player has destroyed the FLF ships, nothing happens and a flag is set. In this case, the player can only do the Dvaered side of the mini-campaign.
 #. Prevents failure if ALL the ships are dead.
 #: dat/missions/flf/flf_pre01.lua:161 dat/missions/flf/flf_pre01.lua:166
 msgid "Gregar puts an end to hostilities"
-msgstr ""
+msgstr "Gregar pone fin a las hostilidades"
 
 #: dat/missions/flf/flf_pre01.lua:161
 msgid ""
@@ -55185,6 +55279,24 @@ msgid ""
 "fire!\" He then turns to you. \"Same to you. Stop shooting. This is a "
 "misunderstanding, they're not your enemies.\""
 msgstr ""
+"\"¿Qué...? ¡Oye! ¿Qué está pasando?\"\n"
+"    Estabas demasiado ocupado esquivando el fuego entrante, reequilibrando "
+"tus escudos y, en general, intentando matar a tus atacantes antes de que "
+"ellos te maten a ti, como para darte cuenta de que Gregar, tu pasajero, se "
+"ha despertado de su sueño. Está claro que el ruido y el balanceo le han "
+"despertado. Le gritas que no te distraiga del combate, pero él te interrumpe "
+"desesperadamente.\n"
+"    \"¡Estos tipos son mis contactos, mis amigos! ¡Se suponía que iba a "
+"encontrarme con ellos aquí! Oh, mierda, esto no es bueno. ¡No me di cuenta "
+"de que iba a estar fuera tanto tiempo! Mira, necesito usar tu matriz de "
+"comunicaciones ahora mismo. Confía en mí\".\n"
+"    Antes de que tengas la oportunidad de preguntarle qué cree que está "
+"haciendo, Gregar empieza a sintonizar tu matriz de comunicaciones, y pronto "
+"encuentra la frecuencia que quiere.\n"
+"\"¡Formación centinela FLF, aquí el Teniente Gregar Fletcher, código de "
+"autorización seis-seis-nueve-cuatro-siete-Gamma-Foxtrot! ¡Alto el fuego, "
+"repito, alto el fuego!\" Luego se dirige a ti. \"Lo mismo para ti. Deja de "
+"disparar. Esto es un malentendido, no son tus enemigos.\""
 
 #: dat/missions/flf/flf_pre01.lua:166
 msgid ""
@@ -55205,10 +55317,28 @@ msgid ""
 "    With that, Alpha breaks the connection. It seems you have little choice "
 "but to do as he says if you ever want to take Gregar to his destination."
 msgstr ""
+"Al principio se muestra escéptico, pero unos segundos después se hace "
+"evidente que los cazas FLF han dejado de disparar. Entonces, hay una "
+"comunicación entrante desde la nave líder.\n"
+"    \"Aquí centinela FLF Alfa. Teniente Fletcher, código de autorización "
+"verificado. ¿Por qué está con ese civil? ¿Dónde está su nave? ¿Y por qué no "
+"contactó con nosotros de inmediato?\"\n"
+"    \"Mis disculpas, Alfa. Es una larga historia. Por ahora, déjame decirte "
+"que puedes confiar en el piloto de esta nave. Este piloto me ayudó "
+"amablemente a salir de una situación desesperada, y sin esa ayuda "
+"probablemente nunca habría vuelto con vida. Solicito que nos escolte hasta "
+"Sindbad\".\n"
+"\"Recibido, Teniente Fletcher\". Alpha se dirige entonces a usted. \"Por "
+"favor, sígannos. Les guiaremos hasta nuestra base. Manténgase cerca. El "
+"alcance de los sensores es pésimo en estos lugares, y si se separan de "
+"nosotros, no podremos encontrarlos de nuevo, y ustedes no podrán "
+"encontrarnos a nosotros ni a nuestra base.\"\n"
+"    Con eso, Alfa rompe la conexión. Parece que no tienes más remedio que "
+"hacer lo que dice si quieres llevar a Gregar a su destino."
 
 #: dat/missions/flf/flf_pre01.lua:174
 msgid "Follow the FLF ships to their secret base. Do not lose them!"
-msgstr ""
+msgstr "Sigue a las naves de la FLF hasta su base secreta. ¡No los pierdas!"
 
 #. definitely OOR.
 #. Fly the FLF ships through their waypoints
@@ -55220,7 +55350,7 @@ msgstr ""
 #. definitely OOR.
 #: dat/missions/flf/flf_pre01.lua:254
 msgid "You have lost contact with your escorts!"
-msgstr ""
+msgstr "¡Has perdido el contacto con tus escoltas!"
 
 #: dat/missions/flf/flf_pre01.lua:254
 msgid ""
@@ -55230,14 +55360,19 @@ msgid ""
 "around your ship, but he's nowhere to be found. Seeing no other option, you "
 "give up on your search. Perhaps he'll turn up somewhere later."
 msgstr ""
+"Tus escoltas han desaparecido de tu red de sensores. Desgraciadamente, "
+"parece que no tienes forma de saber dónde han ido.\n"
+"    Te das cuenta de que Gregar ha desaparecido de tu cabina. Buscas "
+"alrededor de tu nave, pero no está en ninguna parte. Al no ver otra opción, "
+"abandonas la búsqueda. Tal vez aparezca en algún lugar más tarde."
 
 #: dat/missions/flf/flf_pre02.lua:45
 msgid "Return to the FLF base"
-msgstr ""
+msgstr "Regresa a la base FLF"
 
 #: dat/missions/flf/flf_pre02.lua:51
 msgid "FLF petty officer"
-msgstr ""
+msgstr "Oficial mezquina del FLF"
 
 #: dat/missions/flf/flf_pre02.lua:51
 msgid ""
@@ -55245,10 +55380,13 @@ msgid ""
 "one of the tables. She seems somewhat more receptive than most people in the "
 "bar."
 msgstr ""
+"Hay una oficial de bajo rango del Frente de Liberación de la Frontera "
+"sentada en una de las mesas. Parece algo más receptiva que la mayoría de la "
+"gente del bar."
 
 #: dat/missions/flf/flf_pre02.lua:56 dat/missions/flf/flf_pre02.lua:58
 msgid "A chance to prove yourself"
-msgstr ""
+msgstr "Una oportunidad para probarte"
 
 #: dat/missions/flf/flf_pre02.lua:56
 msgid ""
@@ -55262,6 +55400,16 @@ msgid ""
 "of you, see. You helped us once, it is true, but that doesn't tell us much. "
 "We don't know you.\""
 msgstr ""
+"La funcionaria del FLF no parece en absoluto sorprendida de que te hayas "
+"acercado a ella. Al contrario, parece que esperaba que lo hicieras desde el "
+"principio.\n"
+"    \"Saludos\", dice, asintiendo con la cabeza a modo de saludo. \"Soy la "
+"Cabo Benito. Y tú debes ser {player}, el que trajo al teniente Fletcher de "
+"vuelta aquí de una pieza\". La expresión de Benito se vuelve un poco más "
+"severa. \"Sin embargo, no estoy aquí para intercambiar bromas. Seguramente "
+"lo habrás notado, pero la gente de aquí está un poco incómoda con tu "
+"presencia. No saben qué hacer contigo. Es cierto que nos ayudaste una vez, "
+"pero eso no nos dice mucho. No te conocemos.\""
 
 #: dat/missions/flf/flf_pre02.lua:58
 msgid ""
@@ -55276,10 +55424,20 @@ msgid ""
 "you're in for greater things, if you stand for justice... Perhaps you'll "
 "consider joining with us?\""
 msgstr ""
+"De hecho, eres consciente en todo momento de las miradas furtivas que te "
+"dirigen las demás personas de este bar. No parecen abiertamente hostiles, "
+"pero te das cuenta de que si no te andas con cuidado y eliges bien tus "
+"palabras, las cosas podrían empeorar rápidamente.\n"
+"    Benito hace un gesto con la mano para indicarte que no les hagas caso. "
+"\"Dicho esto, los rangos superiores han decidido que si realmente simpatizas "
+"con nuestra causa, se te dará la oportunidad de demostrar tu valía. Por "
+"supuesto, si prefieres no involucrarte en nuestra lucha, es comprensible. "
+"Pero si estás por cosas mayores, si defiendes la justicia... ¿Quizás "
+"consideres unirte a nosotros?\""
 
 #: dat/missions/flf/flf_pre02.lua:60
 msgid "Patrol-B-gone"
-msgstr ""
+msgstr "Patrulla-B-desaparecida"
 
 #: dat/missions/flf/flf_pre02.lua:60
 msgid ""
@@ -55298,24 +55456,40 @@ msgid ""
 "you're really unlucky. If you think that's too much for you, you can abort "
 "the mission for now and come to me again later. Otherwise, good luck!\""
 msgstr ""
+"\"Me alegra oírlo. Es bueno saber que todavía tenemos el apoyo del piloto "
+"común. De todos modos, déjame ponerte al corriente de lo que queremos que "
+"hagas. Como ya sabrás, los Dvaered han destinado muchos recursos a "
+"encontrarnos y hacernos salir últimamente. Y aunque nuestra base está bien "
+"escondida, esas patrullas constantes no están haciendo nada para que nos "
+"sintamos más seguros. Creo que puedes ver a dónde va esto. Saldrás y "
+"eliminarás una de esas patrullas en el sistema {sys}\".\n"
+"    Te opones, preguntando al Cabo si todos los reclutas tienen que realizar "
+"misiones peligrosas como ésta para ser aceptados en las filas de la FLF. "
+"Benito se ríe y hace un gesto pacificador.\n"
+"    \"Tranquilo, no es tan malo como parece. Sólo tienes que acabar con una "
+"pequeña patrulla; no creo que tengas que luchar contra más de 3 naves, 4 si "
+"tienes muy mala suerte. Si crees que es demasiado para ti, puedes abortar la "
+"misión por ahora y volver a buscarme más tarde. Si no, ¡buena suerte!\""
 
 #: dat/missions/flf/flf_pre02.lua:68
 msgid ""
 "To prove yourself to the FLF, you must take out one of the Dvaered security "
 "patrols."
 msgstr ""
+"Para probarte a ti mismo ante el FLF, debes acabar con una de las patrullas "
+"de seguridad Dvaered."
 
 #: dat/missions/flf/flf_pre02.lua:69
 msgid "FLF: Small Dvaered Patrol in {sys}"
-msgstr ""
+msgstr "FLF: Patrulla Dvaered Pequeña en {sys}"
 
 #: dat/missions/flf/flf_pre02.lua:71
 msgid "A chance to make friends with the FLF."
-msgstr ""
+msgstr "Una oportunidad para hacer amigos con la FLF."
 
 #: dat/missions/flf/flf_pre02.lua:83
 msgid "Some other time perhaps"
-msgstr ""
+msgstr "Tal vez en otro momento"
 
 #: dat/missions/flf/flf_pre02.lua:83
 msgid ""
@@ -55323,12 +55497,15 @@ msgid ""
 "ever change your mind, I'll be around on Sindbad. You won't have trouble "
 "finding me, I'm sure.\""
 msgstr ""
+"\"Ya veo. Es una respuesta justa, estoy seguro de que tienes tus razones. "
+"Pero si alguna vez cambias de opinión, estaré por aquí en Sindbad. No "
+"tendrás problemas para encontrarme, estoy seguro.\""
 
 #. Check for defection possibility
 #: dat/missions/flf/flf_pre02.lua:170 dat/missions/flf/flf_pre02.lua:171
 #: dat/missions/flf/flf_pre02.lua:172
 msgid "A tempting offer"
-msgstr ""
+msgstr "Una oferta tentadora"
 
 #: dat/missions/flf/flf_pre02.lua:170
 msgid ""
@@ -55336,6 +55513,9 @@ msgid ""
 "Dvaered would be bad news, but then this one bothered to hail you in the "
 "heat of battle, so perhaps there is more here than meets the eye."
 msgstr ""
+"Tu pantalla muestra a un Coronel Dvaered. Parece tenso. Normalmente, un "
+"Dvaered tenso sería una mala noticia, pero este se molestó en llamarte en el "
+"fragor de la batalla, así que quizás haya más de lo que parece."
 
 #: dat/missions/flf/flf_pre02.lua:171
 msgid ""
@@ -55344,6 +55524,11 @@ msgid ""
 "officer has looked through our records and found that you were recently a "
 "law-abiding citizen, doing honest freelance missions.\""
 msgstr ""
+"\"Soy el Coronel Urnus de la Flota Dvaered, división antiterrorista. "
+"Normalmente nunca me pondría en contacto con un enemigo de la Casa Dvaered, "
+"pero mi oficial de inteligencia ha revisado nuestros registros y ha "
+"descubierto que recientemente eras un ciudadano respetuoso con la ley, que "
+"realizaba honradas misiones por libre.\""
 
 #: dat/missions/flf/flf_pre02.lua:172
 msgid ""
@@ -55359,14 +55544,26 @@ msgid ""
 "guarantee you that you will never again be safe in Dvaered space. What say "
 "you? Surely this proposition beats anything that rabble can do for you?\""
 msgstr ""
+"\"Conozco tu tipo, {player}. Aceptas los trabajos en los que hay beneficios "
+"y te pones del lado del mejor postor. Hay muchos como tú en la galaxia, "
+"aunque hay que reconocer que no hay muchos con tu talento. Por eso estoy "
+"dispuesto a hacerte esta oferta: nos proporcionarás información sobre la "
+"base de operaciones del FLF y su fuerza de combate. A cambio, convenceré a "
+"mis superiores de que has estado trabajando para mí todo el tiempo, por lo "
+"que no te enfrentarás a ninguna repercusión por asaltar las naves de "
+"Dvaered. Además, transferiré una cantidad considerable de créditos en tu "
+"cuenta, así como te pondré en posición de hacerte un aliado de la Casa "
+"Dvaered. Sin embargo, si te niegas, te garantizo que nunca más estarás a "
+"salvo en el espacio Dvaered. ¿Qué dices? Seguro que esta propuesta es mejor "
+"que cualquier cosa que la chusma pueda hacer por ti.\""
 
 #: dat/missions/flf/flf_pre02.lua:173
 msgid "Remain loyal to the FLF"
-msgstr ""
+msgstr "Permanece leal a la FLF"
 
 #: dat/missions/flf/flf_pre02.lua:175
 msgid "Opportunism is an art"
-msgstr ""
+msgstr "El oportunismo es un arte"
 
 #: dat/missions/flf/flf_pre02.lua:175
 msgid ""
@@ -55376,14 +55573,19 @@ msgid ""
 "turns back to you. \"Proceed to {pnt} in the {sys} system, citizen. I will "
 "personally meet you there.\""
 msgstr ""
+"El coronel Urnus sonríe ampliamente. \"¡Sabía que tomarías la decisión "
+"correcta, ciudadano!\" Se dirige a alguien en su puente, fuera de la vista "
+"de la cámara. \"Avisa al grupo de vuelo. Esta nave es ahora amistosa. Cesen "
+"el fuego\". Luego se vuelve hacia ti. \"Proceda a {pnt} en el sistema {sys}, "
+"ciudadano. Me reuniré personalmente con usted allí.\""
 
 #: dat/missions/flf/flf_pre02.lua:191
 msgid "Fly to the {sys} system and land on {pnt}"
-msgstr ""
+msgstr "Vuela al sistema {sys} y aterriza en {pnt}"
 
 #: dat/missions/flf/flf_pre02.lua:201
 msgid "End of negotiations"
-msgstr ""
+msgstr "Fin de las Negociaciones"
 
 #: dat/missions/flf/flf_pre02.lua:201
 msgid ""
@@ -55391,23 +55593,27 @@ msgid ""
 "bites at you. \"In that case you will be destroyed along with the rest of "
 "that terrorist scum. Helm, full speed ahead! All batteries, fire at will!\""
 msgstr ""
+"El Coronel Urnus está visiblemente molesto por tu respuesta. \"Muy bien "
+"entonces\", te suelta. \"En ese caso serás destruido junto con el resto de "
+"esa escoria terrorista. Timón, ¡a toda velocidad! Todas las baterías, ¡fuego "
+"a discreción!\""
 
 #: dat/missions/flf/flf_pre02.lua:235
 msgid "We have your back, {player}!"
-msgstr ""
+msgstr "¡Te cubrimos la espalda, {player}!"
 
 #: dat/missions/flf/flf_pre02.lua:249
 msgid "{player} is selling us out! Eliminate the traitor!"
-msgstr ""
+msgstr "¡{player} nos está vendiendo! ¡Eliminad al traidor!"
 
 #: dat/missions/flf/flf_pre02.lua:280
 msgid "Let's get out of here, {player}! We'll meet you back at the base."
-msgstr ""
+msgstr "¡Salgamos de aquí, {player}! Nos encontraremos en la base."
 
 #: dat/missions/flf/flf_pre02.lua:295 dat/missions/flf/flf_pre02.lua:297
 #: dat/missions/flf/flf_pre02.lua:298 dat/missions/flf/flf_pre02.lua:300
 msgid "Breaking the ice"
-msgstr ""
+msgstr "Rompiendo el hielo"
 
 #: dat/missions/flf/flf_pre02.lua:295
 msgid ""
@@ -55419,6 +55625,13 @@ msgid ""
 "faces, and some even tell you you did a fine job. Among them is Corporal "
 "Benito. She walks up to you and offers you her hand."
 msgstr ""
+"Cuando dejaste la Estación Sindbad, era un lugar frío y solitario para ti. "
+"Los soldados de la FLF de la estación te evitaban siempre que podían, y los "
+"servicios básicos eran más difíciles de conseguir de lo que deberían.\n"
+"    Pero ahora que has vuelto victorioso sobre los Dvaered, el lugar se ha "
+"vuelto considerablemente más hospitalario. Hay más sonrisas en los rostros "
+"de la gente, y algunos incluso te dicen que has hecho un buen trabajo. Entre "
+"ellos está el Cabo Benito. Se acerca a ti y te ofrece su mano."
 
 #: dat/missions/flf/flf_pre02.lua:297
 msgid ""
@@ -55427,6 +55640,11 @@ msgid ""
 "sent you alone if I did, and I might not have sent you at all. But then, "
 "you're still in one piece, so maybe I shouldn't worry so much, eh?\""
 msgstr ""
+"\"Bienvenido de nuevo, {player}, y enhorabuena. No esperaba que los Dvaered "
+"enviaran refuerzos, y mucho menos una Vigilante. Desde luego, no te habría "
+"enviado solo si lo hiciera, y puede que no te enviara en absoluto. Pero "
+"bueno, sigues de una pieza, así que quizás no debería preocuparme tanto, ¿eh?"
+"\""
 
 #: dat/missions/flf/flf_pre02.lua:298
 msgid ""
@@ -55441,6 +55659,16 @@ msgid ""
 "those you've impressed, so from today on, you can call yourself one of us! "
 "How about that, huh?\""
 msgstr ""
+"Benito te lleva al bar de la estación y te invita a lo que, a falta de una "
+"palabra mejor, debe llamarse una bebida.\n"
+"    \"Por supuesto que te recompensaremos por tu servicio\", dice una vez "
+"que estás sentado. \"Aunque debes entender que la FLF no tiene un "
+"presupuesto tan grande. El apoyo financiero es complicado y, para empezar, "
+"la Frontera no dispone de mucho dinero. Sin embargo, estamos dispuestos a "
+"pagar por un buen trabajo, y el tuyo es más que eso. Además, te has "
+"congraciado con muchos de nosotros, como sin duda has notado. Nuestros altos "
+"mandos están entre los que has impresionado, así que a partir de hoy, ¡"
+"puedes llamarte uno de los nuestros! ¿Qué te parece, eh?\""
 
 #: dat/missions/flf/flf_pre02.lua:300
 msgid ""
@@ -55454,6 +55682,16 @@ msgid ""
 "to raise your glass with them, making a toast to the fortune of battle in "
 "the upcoming campaign - and the sweet victory that lies beyond."
 msgstr ""
+"\"Por supuesto, nuestro trabajo no ha hecho más que empezar. No hay descanso "
+"para los cansados; debemos continuar la lucha contra los opresores. Estoy "
+"seguro de que el camino es todavía largo, pero me anima el hecho de que hoy "
+"hemos ganado otro valioso aliado. Comprueba en el ordenador de la misión si "
+"hay más tareas en las que puedas ayudarnos. Por favor, toma este Pentagrama "
+"de Valor como muestra de agradecimiento. Estoy seguro de que jugarás un "
+"papel importante en nuestra eventual victoria sobre los Dvaered\".\n"
+"    Esa última parte se gana una ovación de los soldados de la FLF reunidos. "
+"Decides levantar tu copa con ellos, haciendo un brindis por la fortuna de la "
+"batalla en la próxima campaña - y la dulce victoria que está más allá."
 
 #: dat/missions/flf/flf_pre02.lua:307
 msgid ""
@@ -55461,11 +55699,14 @@ msgid ""
 "then refusing to change sides when the Dvaereds pressured you to. You can "
 "now consider yourself to be one of the FLF."
 msgstr ""
+"Te has ganado la total confianza del FLF al eliminar una patrulla Dvaered y "
+"luego negarte a cambiar de bando cuando los Dvaered te presionaron para "
+"hacerlo. Ahora puedes considerarte uno de los FLF."
 
 #: dat/missions/flf/flf_pre02.lua:316 dat/missions/flf/flf_pre02.lua:318
 #: dat/missions/flf/flf_pre02.lua:320
 msgid "A reward for a job well botched"
-msgstr ""
+msgstr "Una recompensa por un trabajo bien hecho"
 
 #: dat/missions/flf/flf_pre02.lua:316
 msgid ""
@@ -55479,6 +55720,16 @@ msgid ""
 "you've cornered them, poof! They're gone, lost in that nebula. Thick as "
 "soup, that thing. I don't know how they can even find their own way home!\""
 msgstr ""
+"Poco después de atracar, te recogen un par de soldados, que te escoltan "
+"hasta el despacho del Coronel Urnus. Urnus te saluda cordialmente y te "
+"ofrece un asiento y un cigarro. Aceptas lo primero, pero no lo segundo.\n"
+"    \"Estoy muy satisfecho con el resultado de esta situación, ciudadano\", "
+"comienza Urnus. \"Para serle absolutamente sincero, estaba empezando a "
+"frustrarme. Mis superiores me han estado presionando, exigiendo resultados "
+"sobre esos malditos del FLF, pero son tan escurridizos como las anguilas. "
+"Justo cuando crees que los has acorralado, ¡puf! Se van, se pierden en esa "
+"nebulosa. Espesa como la sopa, esa cosa. ¡No sé cómo pueden encontrar su "
+"propio camino a casa!\""
 
 #: dat/missions/flf/flf_pre02.lua:318
 msgid ""
@@ -55497,6 +55748,21 @@ msgid ""
 "be moving against them in force very soon, and I will make sure you'll be "
 "given the chance to be part of that. I'm sure it'll be worth your while.\""
 msgstr ""
+"Urnus da una calada a su cigarro y expulsa un anillo de humo. No hace falta "
+"ser un genio para darse cuenta de que eres lo mejor que leñ ha pasado en "
+"mucho tiempo.\n"
+"    \"En fin. Te prometí dinero, estatus y oportunidades, y pienso cumplir "
+"esas promesas. Tu dinero ya está en tu cuenta. Comprueba tu saldo más tarde. "
+"En cuanto al estatus, puedo asegurarte que ningún Dvaered se enterará de lo "
+"que has estado haciendo. En lo que respecta a la maquinaria militar, no "
+"tienes nada que ver con la FLF. De hecho, eres conocido como un importante "
+"aliado en la lucha contra ellos. Por último, las oportunidades. Estamos "
+"analizando los datos de tu registrador de vuelo mientras hablamos, y se te "
+"harán algunas preguntas cuando terminemos aquí. Basándonos en eso, podemos "
+"formar una nueva estrategia contra el FLF. A menos que me equivoque por "
+"mucho, nos moveremos contra ellos con fuerza muy pronto, y me aseguraré de "
+"que tengas la oportunidad de formar parte de ello. Estoy seguro de que "
+"valdrá la pena.\""
 
 #: dat/missions/flf/flf_pre02.lua:320
 msgid ""
