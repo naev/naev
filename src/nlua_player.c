@@ -1464,18 +1464,37 @@ static int playerL_evtDone( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Gets the amount of cargo space free in the player's fleet.
+ *
+ *    @luatreturn number Amount of free cargo space.
+ * @luafunc fleetCargoFree
+ */
 static int playerL_fleetCargoFree( lua_State *L )
 {
    lua_pushinteger( L, pfleet_cargoFree() );
    return 1;
 }
 
+/**
+ * @brief Gets the amount of cargo space used in the player's fleet.
+ *
+ *    @luatreturn number Amount of used cargo space.
+ * @luafunc fleetCargoUsed
+ */
 static int playerL_fleetCargoUsed( lua_State *L )
 {
    lua_pushinteger( L, pfleet_cargoUsed() );
    return 1;
 }
 
+/**
+ * @brief Gets the amount of cargo space used by a specific commodity in the player's fleet.
+ *
+ *    @luatparam Commodity c Commodity to check how much the player has in their fleet.
+ *    @luatreturn number Amount of used cargo space for the commodity.
+ * @luafunc fleetCargoOwned
+ */
 static int playerL_fleetCargoOwned( lua_State *L )
 {
    Commodity *c = luaL_validcommodity( L, 1 );
@@ -1483,6 +1502,14 @@ static int playerL_fleetCargoOwned( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Tries to add an amount of commodity to the player's fleet.
+ *
+ *    @luatparam Commodity c Commodity to add to the player fleet.
+ *    @luatparam number q Amount to add.
+ *    @luatreturn number Amount of commodity added to the player fleet.
+ * @luafunc fleetCargoAdd
+ */
 static int playerL_fleetCargoAdd( lua_State *L )
 {
    Commodity *c = luaL_validcommodity( L, 1 );
@@ -1491,6 +1518,14 @@ static int playerL_fleetCargoAdd( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Tries to remove an amount of commodity to the player's fleet.
+ *
+ *    @luatparam Commodity c Commodity to remove from the player fleet.
+ *    @luatparam number q Amount to remove.
+ *    @luatreturn number Amount of commodity removed from the player fleet.
+ * @luafunc fleetCargoRm
+ */
 static int playerL_fleetCargoRm( lua_State *L )
 {
 
