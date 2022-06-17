@@ -203,7 +203,7 @@ function enter ()
             p:setHostile(true)
             if k==1 then
                l = p
-               pilotai( p, route )
+               pilotai.patrol( p, route )
             else
                p:setLeader( l )
             end

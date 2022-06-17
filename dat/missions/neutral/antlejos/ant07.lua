@@ -136,7 +136,7 @@ function enter ()
       local f = spawn_protestors( vec2.new( -10000, 8700 ), {"Pacifier", "Lancelot", "Lancelot"} )
       for k,p in ipairs(f) do
          p:changeAI( "baddiepatrol" )
-         pilotai( p, {
+         pilotai.patrol( p, {
             vec2.new(    0, -2000 ),
             vec2.new( -4000, 4000 ),
             vec2.new( -8000, 2000 ),
