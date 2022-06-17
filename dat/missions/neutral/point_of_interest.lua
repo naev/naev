@@ -61,7 +61,8 @@ function create ()
          } )
       end
    end
-   add_unique_reward( "Jump Deregulator", _([[You explore the ship, and while most things seem like they aren't of any use to you, one thing catches your eye. It seems like there is a weird module attached to the navigation console. Upon closer inspection it seems like it overrides some core jump behaviour of the ships. You don't know if it will be of use to you, but pocket it just in case.]]) )
+   add_unique_reward( "Daphne's Leap", _([[You explore the ship, and while most things seem like they aren't of any use to you, one thing catches your eye. It seems like there is a weird module attached to the navigation console. Upon closer inspection it seems like it overrides some core jump behaviour of the ships. You don't know if it will be of use to you, but pocket it just in case.]]) )
+   add_unique_reward( "Veil of Penelope", _([[You explore the ship and eventually reach the systems room. You notice there seems to be a device interfering with the radiation emitted. You can't tell who made it, but it seems that it was likely the main reason that the derelict was so hard to find. You manage to dislodge it to take it back to your ship for further analysis.]]) )
 
    -- Choose a random reward and stick to it
    mem.reward = reward_list[ rnd.rnd(1,#reward_list) ]

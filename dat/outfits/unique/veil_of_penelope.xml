@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Veil of Penelope">
+ <general>
+  <rarity>6</rarity>
+  <unique />
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>This device seems to be almost like a parasite that hooks up to the ship's systems. It's not exactly clear what it does, but it seems to feed on the emitted radiation, allowing the ship to remain undetected longer when near other ships.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <cpu>0</cpu>
+ </general>
+ <specific type="modification">
+  <ew_stealth_timer>-50</ew_stealth_timer>
+ </specific>
+</outfit>

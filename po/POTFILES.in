@@ -290,11 +290,12 @@ dat/outfits/structure/shield_capacitor_iv.xml
 dat/outfits/structure/small_cargo_pod.xml
 dat/outfits/structure/small_fuel_pod.xml
 dat/outfits/structure/small_shield_booster.xml
+dat/outfits/unique/daphnes_leap.xml
 dat/outfits/unique/fake_transponder.xml
 dat/outfits/unique/hades_torch.xml
-dat/outfits/unique/jump_deregulator.xml
 dat/outfits/unique/pulse_scanner.xml
 dat/outfits/unique/valkyrie_beam.xml
+dat/outfits/unique/veil_of_penelope.xml
 dat/outfits/utility/asteroid_scanner.xml
 dat/outfits/utility/berserk_chip.xml
 dat/outfits/utility/blink_drive.xml
