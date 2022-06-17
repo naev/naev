@@ -52,15 +52,16 @@ function create ()
          value = 100e3 + 100e3*rnd.rnd() * (mem.rewardrisk+1),
       },
    }
-   local function add_unique_reward( oname )
+   local function add_unique_reward( oname, msg )
       if player.numOutfit( oname ) <= 0 then
          table.insert( reward_list, {
             type = "outfit",
             value = oname,
+            msg = msg,
          } )
       end
    end
-   add_unique_reward( "Laser Cannon MK1" )
+   add_unique_reward( "Jump Deregulator", _([[You explore the ship, and while most things seem like they aren't of any use to you, one thing catches your eye. It seems like there is a weird module attached to the navigation console. Upon closer inspection it seems like it overrides some core jump behaviour of the ships. You don't know if it will be of use to you, but pocket it just in case.]]) )
 
    -- Choose a random reward and stick to it
    mem.reward = reward_list[ rnd.rnd(1,#reward_list) ]
@@ -119,7 +120,7 @@ function board( p )
       msg = _([[You access the main computer and are able to login to find a hefty amount of credits. This will come in handy.]])
       player.pay( mem.reward.value )
    elseif mem.reward.type == "outfit" then
-      msg = _([[Exploring the cargo bay, you find something that might be of use to you.]])
+      msg = mem.reward.msg or _([[Exploring the cargo bay, you find something that might be of use to you.]])
       player.outfitAdd( mem.reward.value )
    end
    msg = msg .. "\n\n" .. fmt.reward(mem.reward.value)
