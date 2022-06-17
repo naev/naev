@@ -33,6 +33,7 @@
 #include "map_overlay.h"
 #include "mission.h"
 #include "nlua_col.h"
+#include "nlua_commodity.h"
 #include "nlua_outfit.h"
 #include "nlua_pilot.h"
 #include "nlua_spob.h"
@@ -106,6 +107,12 @@ static int playerL_misnDone( lua_State *L );
 static int playerL_misnDoneList( lua_State *L );
 static int playerL_evtActive( lua_State *L );
 static int playerL_evtDone( lua_State *L );
+/* Cargo space. */
+static int playerL_fleetCargoFree( lua_State *L );
+static int playerL_fleetCargoUsed( lua_State *L );
+static int playerL_fleetCargoOwned( lua_State *L );
+static int playerL_fleetCargoAdd( lua_State *L );
+static int playerL_fleetCargoRm( lua_State *L );
 /* Misc stuff. */
 static int playerL_teleport( lua_State *L );
 static int playerL_dt_mod( lua_State *L );
@@ -165,6 +172,11 @@ static const luaL_Reg playerL_methods[] = {
    { "misnDoneList", playerL_misnDoneList },
    { "evtActive", playerL_evtActive },
    { "evtDone", playerL_evtDone },
+   { "fleetCargoFree", playerL_fleetCargoFree },
+   { "fleetCargoUsed", playerL_fleetCargoUsed },
+   { "fleetCargoOwned", playerL_fleetCargoOwned },
+   { "fleetCargoAdd", playerL_fleetCargoAdd },
+   { "fleetCargoRm", playerL_fleetCargoRm },
    { "teleport", playerL_teleport },
    { "dt_mod", playerL_dt_mod },
    { "fleetCapacity", playerL_fleetCapacity },
@@ -1451,6 +1463,42 @@ static int playerL_evtDone( lua_State *L )
    lua_pushboolean( L, player_eventAlreadyDone( id ) );
    return 1;
 }
+
+static int playerL_fleetCargoFree( lua_State *L )
+{
+   lua_pushinteger( L, pfleet_cargoFree() );
+   return 1;
+}
+
+static int playerL_fleetCargoUsed( lua_State *L )
+{
+   lua_pushinteger( L, pfleet_cargoUsed() );
+   return 1;
+}
+
+static int playerL_fleetCargoOwned( lua_State *L )
+{
+   Commodity *c = luaL_validcommodity( L, 1 );
+   lua_pushinteger( L, pfleet_cargoOwned( c ) );
+   return 1;
+}
+
+static int playerL_fleetCargoAdd( lua_State *L )
+{
+   Commodity *c = luaL_validcommodity( L, 1 );
+   int q = luaL_checkinteger( L, 2 );
+   lua_pushinteger( L, pfleet_cargoAdd( c, q ) );
+   return 1;
+}
+
+static int playerL_fleetCargoRm( lua_State *L )
+{
+
+   Commodity *c = luaL_validcommodity( L, 1 );
+   int q = luaL_checkinteger( L, 2 );
+   lua_pushinteger( L, pfleet_cargoRm( c, q ) );
+   return 1;}
+
 
 /**
  * @brief Teleports the player to a new spob or system (only if not landed).
