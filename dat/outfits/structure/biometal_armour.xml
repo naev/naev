@@ -10,7 +10,7 @@
   <description>Biometal is an armour that regenerates itself due to genetically-engineered bacteria throughout it. Due to the compartmentalization to permit bacterial life, and the difficulty of cultivating the bacteria, Biometal has greater mass than alternatives, and is the most expensive hull plating.</description>
  </general>
  <specific type="modification">
-  <armour>1000</armour>
+  <armour>750</armour>
   <armour_regen>2</armour_regen>
  </specific>
 </outfit>
