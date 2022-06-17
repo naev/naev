@@ -356,6 +356,20 @@ function goodevent()
       end,
    }
 
+   -- Only give cargo if enough space
+   if player.fleetCargoFree() > 10 then
+      table.insert( goodevent_list, function ()
+         local commodities = {
+            "Vixilium",
+            "Therite",
+            "Kermite",
+         }
+         local c = commodity.get( commodities[ rnd.rnd(1,#commodities) ] )
+         derelict_msg( gtitle, fmt.f(_([[You explore the empty derelict without much success. As you cross a hallway you hear a weird echo of your footsteps. After some careful investigation. you find that there is an entire hidden cargo hold in the ship full of {cargo}! This should fetch a pretty penny on the market. You load as much of it as you can fit in your hold.]]),{cargo=c}), fmt.f(_([[You found a derelict in {sys}, it had a hidden cargo hold full of {cargo}!]]), {sys=system.cur(),cargo=c}) )
+         player.fleetCargoAdd( c, rnd.rnd(30,100) )
+      end )
+   end
+
    -- See if we should add maps
    local maps = {
       ["Local System Map"] = _("local system"),
