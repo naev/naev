@@ -13,7 +13,7 @@
   <limit>combatai</limit>
  </general>
  <specific type="modification">
-  <launch_lockon>20</launch_lockon>
+  <launch_lockon>-20</launch_lockon>
   <launch_range>10</launch_range>
  </specific>
 </outfit>

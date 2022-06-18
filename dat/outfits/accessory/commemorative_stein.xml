@@ -13,6 +13,6 @@
  <rarity>6</rarity></general>
  <specific type="modification">
   <ew_track>15</ew_track>
-  <launch_lockon>20</launch_lockon>
+  <launch_lockon>-20</launch_lockon>
  </specific>
 </outfit>
