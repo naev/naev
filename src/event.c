@@ -318,6 +318,9 @@ void events_trigger( EventTrigger_t trigger )
    for (int i=0; i<array_size(event_data); i++) {
       EventData *ed = &event_data[i];
 
+      if (naev_isQuit())
+         return;
+
       /* Make sure trigger matches. */
       if (ed->trigger != trigger)
          continue;

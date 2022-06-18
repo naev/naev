@@ -304,6 +304,9 @@ void missions_run( MissionAvailability loc, int faction, const Spob *pnt, const 
       double chance;
       MissionData *misn = &mission_stack[i];
 
+      if (naev_isQuit())
+         return;
+
       if (misn->avail.loc != loc)
          continue;
 

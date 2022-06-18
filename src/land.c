@@ -1088,6 +1088,10 @@ void land_genWindows( int load, int changetab )
          hooks_run("land");
       events_trigger( EVENT_TRIGGER_LAND );
 
+      /* An event, hook or the likes made Naev quit. */
+      if (naev_isQuit())
+         return;
+
       /* Make sure services didn't change or we have to do the tab window. */
       if (land_spob->services != pntservices) {
          land_setupTabs();
