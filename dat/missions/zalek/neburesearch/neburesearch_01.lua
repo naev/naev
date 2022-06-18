@@ -169,7 +169,7 @@ function jumpin()
             local ambushers = fleet.add( 1,  {"Pirate Admonisher", "Pirate Vendetta", "Pirate Hyena", "Pirate Hyena"}, "Marauder", vec2.new(0,7500), nil, {ai="baddie_norun"} )
             for i, j in ipairs(ambushers) do
                 j:setHostile()
-                j:memory().guardpos = transporter.pos()
+                j:memory().guardpos = transporter:pos()
 --                j:control(true)
 --                j:attack(transporter)
             end
