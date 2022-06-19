@@ -248,7 +248,7 @@ function poi.vn_soundonly( id, params )
 
    return vn.Character.new(
          fmt.f(_("VOICE {id}"),{id=id}),
-         tmerge( {image=c}, params ) )
+         tmerge( {image=c, flip=false}, params ) )
 end
 
 return poi

@@ -31,7 +31,7 @@ return function ( mem )
 
          vn.scene()
          local v01 = vn.newCharacter( poi.vn_soundonly( _("01"), {color={1,0,0}, pos="left"} ) )
-         local v02 = vn.newCharacter( poi.vn_soundonly( _("02"), {color={0.6,0,0.8}, pos="right"} ) )
+         local v02 = vn.newCharacter( poi.vn_soundonly( _("02"), {color={0.4,0,0.8}, pos="right"} ) )
          vn.transition()
 
          vn.na(_([[BEGIN PLAYBACK OF AUDIO DATA ##1892]]))
