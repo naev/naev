@@ -215,7 +215,9 @@ function poi.misnDone( failed )
       v:rm()
    end
 
-   if not failed then
+   if failed then
+      var.push( "poi_failed", poi.failed()+1 )
+   else
       var.push( "poi_done", poi.done()+1 )
    end
 end
@@ -226,6 +228,14 @@ end
 --]]
 function poi.done()
    return var.peek("poi_done") or 0
+end
+
+--[[--
+   @brief Gets how many points of interest were failed by the player.
+      @treturn number Number of points of interest failed by the player.
+--]]
+function poi.failed()
+   return var.peek("poi_failed") or 0
 end
 
 --[[--

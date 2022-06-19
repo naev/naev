@@ -16,7 +16,7 @@
    4. Loot goal!
 
    TODO
-   - Use minigames? stringguess is a good candidate
+   - Give expensive lock override (500k?) if the player fails too many times (5 > ?) from NPC
    - Give a couple interesting outfit rewards, some that are repeatable
    - Add lots of lore rewards, not sure if best to store in ship log or somewhere else
 
