@@ -133,7 +133,7 @@ end
 local started, path_spfx
 function _poi_scan ()
    -- Ignore if not close
-   if started or player.pos():dist( pos ) > 3e3 then
+   if started or not pos or player.pos():dist( pos ) > 3e3 then
       return
    end
 
