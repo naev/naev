@@ -69,7 +69,7 @@ function poi.start ()
    end
    -- Clean up
    var.pop( "_poi_system" )
-   var.pop( "_poi_system" )
+   var.pop( "_poi_risk" )
    return sys, risk
 end
 
