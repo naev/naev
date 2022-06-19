@@ -1020,10 +1020,10 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
    if (p->ctimer < 0.) {
       pilot_heatReset( p );
       pilot_fillAmmo( p );
-      pilot_outfitLCooldown(p,1,1, 0.);
+      pilot_outfitLCooldown(p, 1, 1, 0.);
    }
    else {
-      pilot_outfitLCooldown(p,1,0, 0.);
+      pilot_outfitLCooldown(p, 1, 0, 0.);
    }
 }
 
