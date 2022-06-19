@@ -246,7 +246,9 @@ function poi.vn_soundonly( id, params )
    lg.printf( "SOUND ONLY", fs, 0, 550, 1000, "center" )
    lg.setCanvas( oc )
 
-   return vn.Character.new( fmt.f(_("VOICE {id}"),{id=id}), tmerge( {image=c}, params ) )
+   return vn.Character.new(
+         fmt.f(_("VOICE {id}"),{id=id}),
+         tmerge( {image=c}, params ) )
 end
 
 return poi
