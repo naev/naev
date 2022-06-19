@@ -232,7 +232,7 @@ function poi.vn_soundonly( id, params )
    local fl = lg.newFont( "fonts/D2CodingBold.ttf", 300 )
    local fs = lg.newFont( 64 )
    lg.setCanvas( c )
-   lg.clear{ 0, 0, 0 }
+   lg.clear{ 0, 0, 0, 0.8 }
    lg.setColor( 1, 0, 0 )
    lg.printf( id, fl, 0, 200, 1000, "center" )
    lg.printf( "SOUND ONLY", fs, 0, 550, 1000, "center" )
