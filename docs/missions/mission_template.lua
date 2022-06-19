@@ -2,11 +2,9 @@
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Mission Template (mission name goes here)">
  <unique />
- <avail>
-  <priority>4</priority>
-  <chance>5</chance>
-  <location>Bar</location>
- </avail>
+ <priority>4</priority>
+ <chance>5</chance>
+ <location>Bar</location>
 </mission>
 --]]
 --[[

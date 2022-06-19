@@ -14,17 +14,15 @@ The header has to be at the top of the file starting with `--[[` and ending with
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Mission Name">
  <unique />
- <avail>
-  <chance>5</chance>
-  <location>Bar</location>
-  <chapter>[^0]</chapter>
-  <spob>Caladan</spob>
-  <faction>Empire</faction>
-  <system>Delta Pavonis</system>
-  <cond>player.credits() &gt; 10e3</cond>
-  <done>Another Mission</done>
-  <priority>4</priority>
- </avail>
+ <chance>5</chance>
+ <location>Bar</location>
+ <chapter>[^0]</chapter>
+ <spob>Caladan</spob>
+ <faction>Empire</faction>
+ <system>Delta Pavonis</system>
+ <cond>player.credits() &gt; 10e3</cond>
+ <done>Another Mission</done>
+ <priority>4</priority>
  <tags>
   <some_random_binary_tag />
  </tags>
@@ -37,10 +35,11 @@ Let us go over the different parameters. First of all, either a `<mission>` or `
 
 Next it is possible to identify mission properties. In particular, only the `<unique />` property is supported, which indicates the mission can only be completed once. It will not appear again to the same player.
 
-The core of the header lies in the `<avail>` node which includes all the information about mission availability. Most are optional and ignored if not provided. The following nodes can be used to control the availability:
+The header includes all the information about mission availability. Most are optional and ignored if not provided. The following nodes can be used to control the availability:
 
 * **chance**: *required field*. indicates the chance that the mission appears. For values over 100, the whole part of dividing the value by 100 indicates how many instances can spawn, and the remainder is the chance of each instance. So, for example, a value of 320 indicates that 3 instances can spawn with 20\% each.
 * **location**: *required field*. indicates where the mission or event can start. It can be one of `none`, `land`, `enter`, `load`, `computer`, or `bar`. Note that not all are supported by both missions and events. More details will be discussed later in this section.
+* **unique**: the presence of this tag indicates the mission or event is unique and will *not appear again* once fully completed.
 * **chapter**: indicates what chapter it can appear in. Note that this is regular expression-powered. Something like `0` will match chapter 0 only, while you can write `[01]` to match either chapter 0 or 1. All chapters except 0 would be `[^0]`, and such. Please refer to a regular expression guide such as [regexr](https://regexr.com/) for more information on how to write regex.
 * **faction**: must match a faction. Multiple can be specified, and only one has to match. In the case of `land`, `computer`, or `bar` locations it refers to the spob faction, while for `enter` locations it refers to the system faction.
 * **spob**: must match a specific spob. Only used for `land`, `computer`, and `bar` locations. Only one can be specified.
@@ -74,19 +73,17 @@ Cargo missions appear at the mission computer in a multitude of different factio
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Cargo">
- <avail>
-  <priority>6</priority>
-  <chance>960</chance>
-  <location>Computer</location>
-  <faction>Dvaered</faction>
-  <faction>Empire</faction>
-  <faction>Frontier</faction>
-  <faction>Goddard</faction>
-  <faction>Independent</faction>
-  <faction>Sirius</faction>
-  <faction>Soromid</faction>
-  <faction>Za'lek</faction>
- </avail>
+ <priority>6</priority>
+ <chance>960</chance>
+ <location>Computer</location>
+ <faction>Dvaered</faction>
+ <faction>Empire</faction>
+ <faction>Frontier</faction>
+ <faction>Goddard</faction>
+ <faction>Independent</faction>
+ <faction>Sirius</faction>
+ <faction>Soromid</faction>
+ <faction>Za'lek</faction>
  <notes>
   <tier>1</tier>
  </notes>
@@ -96,20 +93,18 @@ Cargo missions appear at the mission computer in a multitude of different factio
 
 #### Example: Antlejos
 
-Terraforming antlejos missions form a chain. Each mission requires the previous one and are available at the same planet (Antlejos V) with 100\% chance. The priority is slightly lower than default to try to ensure the claims get through. Most missions trigger on *Land* because Antlejos V does not have a spaceport bar at the beginning. The full example is shown below:
+Terraforming antlejos missions form a chain. Each mission requires the previous one and are available at the same planet (Antlejos V) with 100\% chance. The priority is slightly lower than default to try to ensure the claims get through. Most missions trigger on *Land* (`<location>Land</location>`) because Antlejos V does not have a spaceport bar at the beginning. The full example is shown below:
 
 ```lua
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Terraforming Antlejos 3">
  <unique />
- <avail>
-  <priority>4</priority>
-  <chance>100</chance>
-  <location>Land</location>
-  <spob>Antlejos V</spob>
-  <done>Terraforming Antlejos 2</done>
- </avail>
+ <priority>4</priority>
+ <chance>100</chance>
+ <location>Land</location>
+ <spob>Antlejos V</spob>
+ <done>Terraforming Antlejos 2</done>
  <notes>
   <campaign>Terraforming Antlejos</campaign>
  </notes>
@@ -119,13 +114,13 @@ Terraforming antlejos missions form a chain. Each mission requires the previous 
 
 #### Example: Taiomi
 
-Next is an example of a unique event. The Finding Taiomi event has a 100\% of appearing in the `Bastion` system outside of Chapter 0. It triggers automatically when entering the system.
+Next is an example of a unique event. The Finding Taiomi event has a 100\% of appearing in the `Bastion` system outside of Chapter 0. It triggers automatically when entering the system (`<location>enter</location>`).
 
 ```lua
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Finding Taiomi">
- <trigger>enter</trigger>
+ <location>enter</location>
  <unique />
  <chance>100</chance>
  <cond>system.cur() == system.get("Bastion")</cond>
@@ -433,3 +428,9 @@ You would use the function to quickly add log messages with `addlog(_("This is a
 
 ### Visual Novel Framework
 \label{sec:misn-basic-vn}
+
+The Visual Novel framework is based on the Love2D API and allows for displaying text, characters, and other effects to the player. It can be thought of as a graph representing the choices and messages the player can engage with. The core API is in the [`vn` module](https://naev.org/api/modules/vn.html).
+
+Let us start by looking at a simple example.
+
+### `vntk` Wrapper
