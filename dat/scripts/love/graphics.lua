@@ -307,9 +307,9 @@ function graphics.clear( ... )
       col = _scol( r, g, b, a )
    elseif type(arg[1])=="table" then
       local r = arg[1][1]
-      local g = arg[1][1]
-      local b = arg[1][1]
-      local a = arg[1][1] or 1
+      local g = arg[1][2]
+      local b = arg[1][3]
+      local a = arg[1][4] or 1
       col = _scol( r, g, b, a )
    end
    if graphics._canvas then
