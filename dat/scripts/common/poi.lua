@@ -17,6 +17,7 @@ local poi = {}
 --]]
 function poi.generate()
    local syscand = lmisn.getSysAtDistance( nil, 1, 5, function( sys )
+      -- TODO have systems with higher risk or more abandoned
       -- Want no inhabited spobs
       for k,p in ipairs(sys:spobs()) do
          if sys.land and sys.inhabitable then
@@ -90,8 +91,9 @@ function _poi_enter ()
    end
 
    -- Find the initial point of interest, and path to the real location
+   -- TODO have path be out of the way
    pos = vec2.newP( system.cur():radius()*0.6, rnd.angle() ) -- TODO better initialization
-   path = {}
+   path = { pos }
    local angle = rnd.angle()
    local mpos = pos
    for i=1,rnd.rnd(13,17) do -- should average 15*5505 = 8250 units
