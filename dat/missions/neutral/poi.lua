@@ -104,7 +104,7 @@ function board( p )
 
    -- Have to resolve lock or bad thing happens (tm)
    if mem.locked then
-      local stringguess = require "stringguess"
+      local stringguess = require "minigames.stringguess"
       vn.na(_([[You board the ship and enter the airlock. When you attempt to enter, an authorization prompt opens up. Looking at the make of the ship, it seems heavily reinforced. It looks like you're going to have to break the code to gain complete access to the ship.]]))
       stringguess.vn()
       vn.func( function ()
@@ -116,11 +116,11 @@ function board( p )
       end )
 
       vn.label("unlocked")
-      vn.na(_([[You deftly crack the code and the screen flashes with 'AUTHORIZATION GRANTED'. Time to see what goodness awaits you!]]))
+      vn.na(_([[You deftly crack the code and the screen flashes with '#gAUTHORIZATION GRANTED#0'. Time to see what goodness awaits you!]]))
       vn.jump("reward")
 
       vn.label("unlock_failed")
-      vn.na(_([["A brief 'AUTHORIZATION DENIED' flashes on the screen and you hear the ship internals groan as the emergency security protocol kicks in and everything gets locked down. It looks like you won't be getting anywhere hre, the ship is as good as debris. You have no option but to return dejectedly to your ship. Maybe next time."]]))
+      vn.na(_([["A brief '#rAUTHORIZATION DENIED#0' flashes on the screen and you hear the ship internals groan as the emergency security protocol kicks in and everything gets locked down. It looks like you won't be getting anywhere hre, the ship is as good as debris. You have no option but to return dejectedly to your ship. Maybe next time."]]))
       vn.func( function () failed = true end )
       vn.done()
    else
