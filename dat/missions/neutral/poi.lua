@@ -40,17 +40,21 @@ function create ()
       return
    end
 
+   --[[
    -- Chance of being locked with less risk
    if rnd.rnd() < 0.2*mem.risk then
       mem.locked = true
       mem.risk = mem.risk-1
    end
+   --]]
+   mem.risk = 2
+   mem.locked = true
 
    -- Roll for rewards here to disallow save scumming
    local reward_list = {
       {
          type = "credits",
-         value = 100e3 + 100e3*rnd.rnd() * (mem.rewardrisk+1),
+         value = (100e3 + 100e3*rnd.rnd()) * (mem.rewardrisk*0.5+1),
       },
    }
    local function add_unique_reward( oname, msg )
