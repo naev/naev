@@ -142,7 +142,7 @@ function board( p )
          player.outfitAdd( mem.reward.value )
       end )
    elseif mem.reward.type == "function" then
-      local rwd = require( mem.reward.requirename )
+      local rwd = require( mem.reward.requirename )( mem )
       rwd.func()
    end
    vn.sfxVictory()
