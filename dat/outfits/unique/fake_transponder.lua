@@ -92,7 +92,7 @@ function onscanned( p, po, _scanner )
    disable( p, po, true )
 end
 
-function cooldown( p, po, done, _opt )
-   if not done then return end
+function cooldown( p, po, done, opt )
+   if not done or not opt then return end
    reset( p, po )
 end
