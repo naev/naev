@@ -2534,7 +2534,7 @@ dat/missions/neutral/oldwoman.lua
 dat/missions/neutral/patrol.lua
 dat/missions/neutral/pirbounty_alive.lua
 dat/missions/neutral/pirbounty_dead.lua
-dat/missions/neutral/point_of_interest.lua
+dat/missions/neutral/poi.lua
 dat/missions/neutral/race1.lua
 dat/missions/neutral/race2.lua
 dat/missions/neutral/reynir.lua
