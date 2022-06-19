@@ -56,6 +56,10 @@ function poi.setup( params )
 
    var.push( "_poi_system", sys:nameRaw() )
    var.push( "_poi_risk", risk )
+
+   -- Clean up
+   var.pop( "_poi_system" )
+   var.pop( "_poi_system" )
 end
 
 function poi.start ()
@@ -137,6 +141,8 @@ function _poi_scan ()
    -- Starts marks
    started = true
    path_spfx = {}
+
+   player.msg(_("You uncovered a trail!"),true)
 
    timer = hook.timer( 1, "_poi_heartbeat" )
 end
