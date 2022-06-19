@@ -48,5 +48,6 @@ In this case, `"my_custom_hook_type"` is the name we are using for the hook. It 
 The hook will not be triggered immediately, but the second the current running code is done to ensure that no Lua code is run in parallel. In general, the mission variables should be more than good enough for event-mission communication, however, in the few cases communication needs to be more tightly coupled, custom hooks are a perfect solution.
 
 ### Love2D API
+\label{sec:misn-adv-love2d}
 
 TODO
