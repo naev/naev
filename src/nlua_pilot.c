@@ -2698,6 +2698,7 @@ static int pilotL_cooldownCycle( lua_State *L )
    Pilot *p = luaL_validpilot(L,1);
    pilot_cooldown( p, 0 );
    p->ctimer = -1.;
+   pilot_rmFlag(p, PILOT_COOLDOWN_BRAKE); /* Should allow triggering. */
    pilot_cooldownEnd( p, NULL );
    return 0;
 }
