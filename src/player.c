@@ -2536,6 +2536,11 @@ static int player_shipsCompare( const void *arg1, const void *arg2 )
    else if (ps2->favourite && !ps1->favourite)
       return +1;
 
+   if (ps1->deployed && !ps2->deployed)
+      return -1;
+   else if (ps2->deployed && !ps1->deployed)
+      return +1;
+
    /* Get prices. */
    p1 = pilot_worth( ps1->p );
    p2 = pilot_worth( ps2->p );
