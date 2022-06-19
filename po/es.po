@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: naev 0.10.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-14 21:14-0400\n"
-"PO-Revision-Date: 2022-06-18 20:18+0000\n"
+"PO-Revision-Date: 2022-06-19 16:07+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev/es/>\n"
 "Language: es\n"
@@ -64087,7 +64087,7 @@ msgstr "Te acercas al Mayor Malik que parece estar disfrutando de una bebida."
 #: dat/missions/minerva/kex3.lua:309
 msgctxt "Malik"
 msgid "\"What do you want?\""
-msgstr ""
+msgstr "\"¿Qué quieres?\""
 
 #: dat/missions/minerva/kex3.lua:310
 msgid ""
@@ -64506,14 +64506,19 @@ msgid ""
 "He looks visibly tired.\n"
 "\"You ever do anything you regret, kid?\""
 msgstr ""
+"\"He estado mejor, chico. Sólo he tenido algunas noches de insomnio, mirando "
+"al techo, sin poder moverme, perseguido por los remordimientos del pasado.\""
+"\n"
+"Parece visiblemente cansado.\n"
+"\"¿Alguna vez has hecho algo de lo que te arrepientas, chico?\""
 
 #: dat/missions/minerva/kex4.lua:203
 msgid "\"Of course\""
-msgstr ""
+msgstr "\"Por supuesto\""
 
 #: dat/missions/minerva/kex4.lua:204
 msgid "\"No, never\""
-msgstr ""
+msgstr "\"No, nunca\""
 
 #: dat/missions/minerva/kex4.lua:207
 msgid ""
@@ -64521,12 +64526,17 @@ msgid ""
 "\"We all have our inner demons, refusing to let go no matter how many cycles "
 "pass.\""
 msgstr ""
+"Asiente solemnemente con la cabeza.\n"
+"\"Todos tenemos nuestros demonios internos, que se niegan a abandonarnos sin "
+"importar cuántos ciclos pasan.\""
 
 #: dat/missions/minerva/kex4.lua:211
 msgid ""
 "\"I envy you kid. My regrets seem to follow me no matter how much I try to "
 "run away.\""
 msgstr ""
+"\"Te envidio chico. Mis remordimientos parecen seguirme por mucho que "
+"intente huir.\""
 
 #: dat/missions/minerva/kex4.lua:213
 msgid ""
@@ -64534,6 +64544,10 @@ msgid ""
 "waking up in the middle of the night in cold sweat, well probably would if I "
 "had some damn sweat glands, gasping for breath.\""
 msgstr ""
+"\"Últimamente, mi pasado parece perseguirme. Cuando puedo dormir, me he "
+"estado despertando en medio de la noche con sudores fríos, bueno "
+"probablemente lo haría si tuviera unas malditas glándulas sudoríparas, "
+"jadeando.\""
 
 #: dat/missions/minerva/kex4.lua:214
 msgid ""
@@ -64541,6 +64555,9 @@ msgid ""
 "worse as time goes by. I'm sure it will all get better when this is over. I "
 "mean, it has to, right?\""
 msgstr ""
+"\"No le he prestado mucha atención, pero está empeorando a medida que pasa "
+"el tiempo. Estoy seguro de que todo mejorará cuando esto termine. Quiero "
+"decir, tiene que mejorar, ¿no?\""
 
 #: dat/missions/minerva/kex4.lua:215
 msgid ""
@@ -64549,6 +64566,9 @@ msgid ""
 "adversity. I loved the adrenaline rush and could never get enough of it all."
 "\""
 msgstr ""
+"Tras una breve pausa, continúa. \"Sabes, desde que era un niño, siempre me "
+"gustó la aventura: estar en el centro de todo y desafiar la adversidad. Me "
+"encantaba el subidón de adrenalina y nunca me cansaba de todo eso.\""
 
 #: dat/missions/minerva/kex4.lua:216
 msgid ""
@@ -64557,6 +64577,10 @@ msgid ""
 "Whenever I stayed in the same place too long I got all itchy. It's like my "
 "soul was yearning to go out and adventure.\""
 msgstr ""
+"\"Cuando me hice mayor, creo que intenté seguir lo que hacía todo el mundo y "
+"asentarme, pero nunca fui muy bueno en quedarme quieto. Cada vez que me "
+"quedaba mucho tiempo en el mismo sitio, me picaba todo. Es como si mi alma "
+"estuviera anhelando salir y aventurarse.\""
 
 #: dat/missions/minerva/kex4.lua:217
 msgid ""
@@ -64565,12 +64589,18 @@ msgid ""
 "His biological eye looks a bit hazy.\n"
 "\"I guess you don't appreciate what you have until you lose it all.\""
 msgstr ""
+"\"Incluso cuando tuve mi primer hijo, no podía quedarme quieto. Tenía que "
+"salir. Pero ahora...\"\n"
+"Su ojo biológico parece un poco borroso.\n"
+"\"Supongo que no aprecias lo que tienes hasta que lo pierdes todo.\""
 
 #: dat/missions/minerva/kex4.lua:232
 msgid ""
 "You approach Jie de Luca who seems to be reading some sort of document while "
 "nonchalantly sipping a drink."
 msgstr ""
+"Te acercas a Jie de Luca, que parece estar leyendo algún tipo de documento "
+"mientras bebe despreocupadamente."
 
 #: dat/missions/minerva/kex4.lua:233
 msgid ""
@@ -64579,20 +64609,26 @@ msgid ""
 "different from what I expected.\"\n"
 "They look up at you."
 msgstr ""
+"Sin levantar la vista se dirigen a ti.\n"
+"\"Así que tú eres el que está causando un alboroto aquí y allá. Tienes un "
+"aspecto un poco diferente al que esperaba.\"\n"
+"Levantan la vista hacia ti."
 
 #: dat/missions/minerva/kex4.lua:236
 msgid ""
 "\"Have you come to threaten me? Perhaps kill me?\"\n"
 "They speak calmly, without so much as a tinge of urgency."
 msgstr ""
+"\"¿Has venido a amenazarme? ¿Quizás a matarme?\"\n"
+"Habla con calma, sin ni siquiera un matiz de urgencia."
 
 #: dat/missions/minerva/kex4.lua:239 dat/missions/minerva/pirate3.lua:174
 msgid "Ask about Minerva Station"
-msgstr ""
+msgstr "Pregunta sobre la Estación Minerva"
 
 #: dat/missions/minerva/kex4.lua:240
 msgid "Ask about the Minerva CEO"
-msgstr ""
+msgstr "Pregunta por el CEO de Minerva"
 
 #: dat/missions/minerva/kex4.lua:243
 msgid ""
@@ -64600,6 +64636,9 @@ msgid ""
 "decent living, now, can we?\"\n"
 "They take a sip from their drink."
 msgstr ""
+"\"Ya veo. Sabía que llegaría el día. No se puede tener un grupo de "
+"delincuentes que se ganen la vida decentemente, ¿verdad?\"\n"
+"Bebe un sorbo de su bebida."
 
 #: dat/missions/minerva/kex4.lua:245
 msgid ""
@@ -64608,6 +64647,10 @@ msgid ""
 "offered us nothing but cruelty and suffering. Forced to work in the ore "
 "mines to survive.\""
 msgstr ""
+"\"Yo y el tipo al que llamas CEO de Minerva, nacimos aquí en Jorlan. No sé "
+"si fuimos huérfanos o abandonados, pero desde pequeños este mundo no nos ha "
+"ofrecido más que crueldad y sufrimiento. Obligados a trabajar en las minas "
+"de mineral para sobrevivir.\""
 
 #: dat/missions/minerva/kex4.lua:246
 msgid ""
@@ -64616,6 +64659,10 @@ msgid ""
 "\"\n"
 "They hit the table for emphasis."
 msgstr ""
+"\"Este agujero de mierda nos enseñó que nada es gratis. ¡Hay que luchar con "
+"uñas y dientes para conseguir lo que quieres! No, no eso, ¡lo que te mereces!"
+"\"\n"
+"Golpea la mesa para enfatizar."
 
 #: dat/missions/minerva/kex4.lua:248
 msgid ""
@@ -64624,6 +64671,10 @@ msgid ""
 "what you damn want. I'm not going to wind up as another corpse deep down "
 "underground.\""
 msgstr ""
+"\"Este universo está podrido hasta la médula, lo sabes. Si no quieres "
+"terminar como una cáscara de humano, trabajando para el beneficio de otros, "
+"tienes que tomar lo que malditamente quieres. No voy a terminar como otro "
+"cadáver bajo tierra.\""
 
 #: dat/missions/minerva/kex4.lua:249
 msgid ""
@@ -64632,6 +64683,10 @@ msgid ""
 "do your master's bidding, like the loyal dog you are.\"\n"
 "They give a small chuckle and lean forward."
 msgstr ""
+"\"No creo que un sicario como tú entienda realmente el tipo de sufrimiento "
+"de trabajar casi hasta la muerte en las minas de mineral. Sólo estás aquí "
+"para cumplir las órdenes de tu amo, como el perro leal que eres.\"\n"
+"Da una pequeña risa y se inclina hacia adelante."
 
 #: dat/missions/minerva/kex4.lua:251
 msgid ""
@@ -64639,6 +64694,9 @@ msgid ""
 "same, you are trying to take what we worked hard for with our blood, sweat, "
 "and tears.\""
 msgstr ""
+"\"Bueno, honestamente, me importa una mierda quién es tu maestro. El "
+"resultado es el mismo, estás tratando de quitarnos lo que hemos conseguido "
+"con trabajo duro, con nuestra sangre, sudor y lágrimas.\""
 
 #: dat/missions/minerva/kex4.lua:252
 msgid ""
@@ -64647,6 +64705,10 @@ msgid ""
 "went through to get here, and I'll be damned if I let that get taken away "
 "from us!\""
 msgstr ""
+"Aprieta los dientes.\n"
+"\"¡No te lo permitiré! ¡La Estación Minerva es nuestra! No tienes ni idea "
+"del infierno que hemos pasado para llegar hasta aquí, ¡y que me cuelguen si "
+"permito que nos la arrebaten!\""
 
 #: dat/missions/minerva/kex4.lua:255
 msgid ""
@@ -64655,10 +64717,15 @@ msgid ""
 "that went well…\n"
 "You rush to your ship to see if you can catch them in pursuit!"
 msgstr ""
+"En un abrir y cerrar de ojos te lanza la bebida. Consigues esquivar la mayor "
+"parte, pero al volver a mirarles ves que la mesa está vacía. Mierda, eso ha "
+"ido bien...\n"
+"¡Te apresuras a ir a tu nave para ver si puedes alcanzarlo en una "
+"persecución!"
 
 #: dat/missions/minerva/kex4.lua:263
 msgid "Deal with Jie de Luca"
-msgstr ""
+msgstr "Encargate de Jie de Luca"
 
 #. Henchmen
 #. Start the attack, should be close enough to aggro naturally
@@ -64668,31 +64735,35 @@ msgstr ""
 #. Start the attack, should be close enough to aggro naturally
 #: dat/missions/minerva/kex4.lua:378 dat/missions/minerva/kex5.lua:324
 msgid "Looks like we found our target!"
-msgstr ""
+msgstr "¡Parece que hemos encontrado nuestro objetivo!"
 
 #: dat/missions/minerva/kex4.lua:379 dat/missions/minerva/kex5.lua:325
 msgid "That's the one!"
-msgstr ""
+msgstr "¡Ese es!"
 
 #: dat/missions/minerva/kex4.lua:380 dat/missions/minerva/kex5.lua:326
 msgid "Time to collect our bounty!"
-msgstr ""
+msgstr "¡Es hora de recoger nuestra recompensa!"
 
 #: dat/missions/minerva/kex4.lua:381 dat/missions/minerva/kex5.lua:327
 msgid "Target locked. Engaging."
-msgstr ""
+msgstr "Objetivo fijado. Apuntando."
 
 #: dat/missions/minerva/kex4.lua:427
 msgid ""
 "You board the ship with your weapons drawn and make your way to the command "
 "centre. You don't encounter any resistance on the way there."
 msgstr ""
+"Subes a la nave con las armas desplegadas y te diriges al centro de mando. "
+"No encuentras ninguna resistencia en el camino."
 
 #: dat/missions/minerva/kex4.lua:428
 msgid ""
 "Eventually you reach the command centre and cautiously enter. The room is "
 "empty except for a chair in the centre with its back facing towards you."
 msgstr ""
+"Finalmente, llegas al centro de mando y entras con precaución. La sala está "
+"vacía excepto por una silla en el centro con el respaldo hacia ti."
 
 #: dat/missions/minerva/kex4.lua:430
 msgid ""
@@ -64700,6 +64771,9 @@ msgid ""
 "blood is gushing out. In their other hand they clutch a weapon, but it "
 "doesn't really look like they are in any condition to use it."
 msgstr ""
+"Lentamente, la silla gira para revelar a Jie de Luca, sosteniendo su cabeza "
+"de la que brota sangre. En su otra mano empuña un arma, pero no parece estar "
+"en condiciones de utilizarla."
 
 #: dat/missions/minerva/kex4.lua:431
 msgid ""
@@ -64707,6 +64781,9 @@ msgid ""
 "prize from your master?\"\n"
 "They cough and you can see some blood drip from the side of their mouth."
 msgstr ""
+"\"¿Te sientes orgulloso de ti mismo perro? ¿Moviendo la cola pensando en "
+"recibir un premio de tu amo?\"\n"
+"Tose y se puede ver cómo gotea algo de sangre de un lado de su boca."
 
 #. blaring alarm
 #: dat/missions/minerva/kex4.lua:434
@@ -64715,36 +64792,45 @@ msgid ""
 "As their head slouches down, you hear an alarm blaring, and a voice "
 "announcing \"Self-destruct imminent!\"."
 msgstr ""
+"\"Por eso no podemos tener cosas bonitas...\"\n"
+"Mientras su cabeza se inclina hacia abajo, se oye una alarma y una voz que "
+"anuncia \"¡Autodestrucción inminente!\"."
 
 #: dat/missions/minerva/kex4.lua:436
 msgid ""
 "You leave Jie behind as you rush to get back to your ship to get away from "
 "the explosion."
 msgstr ""
+"Dejas atrás a Jie mientras te apresuras a volver a tu nave para alejarte de "
+"la explosión."
 
 #: dat/missions/minerva/kex4.lua:444
 msgid "You aren't leaving this alive, dog!"
-msgstr ""
+msgstr "¡No saldrás vivo de esto, perro!"
 
 #: dat/missions/minerva/kex4.lua:451
 msgid ""
 "As the debris of Jie's ship disperses you realize you never got around to "
 "questioning them or getting any information at all…"
 msgstr ""
+"Cuando los restos de la nave de Jie se dispersan, te das cuenta de que nunca "
+"llegaste a interrogarlo ni a obtener ninguna información…"
 
 #: dat/missions/minerva/kex4.lua:452
 msgid "Might be best to head back to Kex for now and see what can be done."
-msgstr ""
+msgstr "Tal vez sea mejor volver a Kex por ahora y ver qué se puede hacer."
 
 #: dat/missions/minerva/kex5.lua:59
 msgid "Kex wants you to kill Dr. Strangelove at {pnt} in the {sys} system."
-msgstr ""
+msgstr "Kex quiere que mates al Dr. Strangelove en {pnt} en el sistema {sys}."
 
 #: dat/missions/minerva/kex5.lua:73
 msgid ""
 "You approach Kex, who is sort of slumping at his usual spot. He doesn't seem "
 "to be in very good condition."
 msgstr ""
+"Te acercas a Kex, que está como desplomado en su lugar habitual. No parece "
+"estar en muy buenas condiciones."
 
 #: dat/missions/minerva/kex5.lua:74
 msgid ""
@@ -64752,6 +64838,9 @@ msgid ""
 "disheveled.\n"
 "\"Oh, hey kid.\""
 msgstr ""
+"Kex tarda un poco en darse cuenta de tu presencia. Sus plumas están bastante "
+"despeinadas.\n"
+"\"Oh, hola chico.\""
 
 #: dat/missions/minerva/kex5.lua:76
 msgid ""
@@ -64760,6 +64849,10 @@ msgid ""
 "insignificant. Our sorrows and glories go unheard and seemingly devoid of "
 "all meaning.\""
 msgstr ""
+"Tarda un rato en continuar.\n"
+"\"Comparados con la inmensidad de todo el universo, somos completamente "
+"insignificantes. Nuestras penas y glorias pasan desapercibidas y "
+"aparentemente carecen de todo significado.\""
 
 #: dat/missions/minerva/kex5.lua:78
 msgid ""
@@ -64767,16 +64860,21 @@ msgid ""
 "and makes clear one's deepest desires. What has to be done then becomes "
 "clear.\""
 msgstr ""
+"\"Llegar a un acuerdo con la propia insignificancia da claridad a la mente y "
+"aclara los deseos más profundos de uno. Lo que hay que hacer entonces se "
+"vuelve claro.\""
 
 #: dat/missions/minerva/kex5.lua:79
 msgid "Without blinking Kex states \"I need you to kill Strangelove.\""
-msgstr ""
+msgstr "Sin pestañear, Kex afirma: \"Necesito que mates a Strangelove.\""
 
 #: dat/missions/minerva/kex5.lua:85
 msgid ""
 "He looks even more dejected.\n"
 "\"I see. I'll be around.\""
 msgstr ""
+"Parece aún más abatido.\n"
+"\"Ya veo. Estaré por aquí.\""
 
 #: dat/missions/minerva/kex5.lua:90
 msgid ""
@@ -64785,24 +64883,35 @@ msgid ""
 "name when reviewing some of the documents you gave me, then it was all clear."
 "\""
 msgstr ""
+"\"Debería haberme dado cuenta antes. Era obvio desde el principio que "
+"Strangelove estaría involucrado en esta parodia de estación. Encontré su "
+"nombre al revisar algunos de los documentos que me diste, entonces estaba "
+"todo claro.\""
 
 #: dat/missions/minerva/kex5.lua:91
 msgid ""
 "\"There aren't too many trails to where he is right now, but I do think I "
 "know where to find him.\""
 msgstr ""
+"\"No hay demasiadas pistas para saber dónde está ahora mismo, pero creo que "
+"sé dónde encontrarlo.\""
 
 #: dat/missions/minerva/kex5.lua:92
 msgid ""
 "\"Wait, you know where he is? How you know is not important now, all I need "
 "you to do is go over there and end his rotten life once and for all.\""
 msgstr ""
+"\"Espera, ¿sabes dónde está? Cómo lo sabes no es importante ahora, todo lo "
+"que necesito es que vayas allí y acabes con su podrida vida de una vez por "
+"todas.\""
 
 #: dat/missions/minerva/kex5.lua:93
 msgid ""
 "\"The universe will be a much better place with scum like him gone, and I'll "
 "finally get my vengeance.\""
 msgstr ""
+"\"El universo será un lugar mucho mejor con escoria como él muerto, y "
+"finalmente obtendré mi venganza.\""
 
 #: dat/missions/minerva/kex5.lua:95
 msgid ""
@@ -64810,15 +64919,18 @@ msgid ""
 "the station. You feel like it is best to leave him alone right now and "
 "decide to go see Strangelove. He should be in the {sys} system."
 msgstr ""
+"Sin decir nada más, Kex se aleja dando tumbos en la oscuridad de la "
+"estación. Crees que lo mejor es dejarlo solo en este momento y decides ir a "
+"ver a Strangelove. Debería estar en el sistema {sys}."
 
 #. If not accepted, mem.misn_state will still be nil
 #: dat/missions/minerva/kex5.lua:108
 msgid "You have agreed to help Kex deal with Dr. Strangelove."
-msgstr ""
+msgstr "Has aceptado ayudar a Kex a lidiar con el Dr. Strangelove."
 
 #: dat/missions/minerva/kex5.lua:111
 msgid "Go find Dr. Strangelove in the {sys} system"
-msgstr ""
+msgstr "Busca al Dr. Strangelove en el sistema {sys}"
 
 #. Can't use spob.get() here for when the diff is removed
 #: dat/missions/minerva/kex5.lua:141
@@ -64826,6 +64938,8 @@ msgid ""
 "You approach Kex who is sort of slumping at his usual spot. He doesn't seem "
 "much better than last time you met him."
 msgstr ""
+"Te acercas a Kex, que está desplomado en su lugar habitual. No parece estar "
+"mucho mejor que la última vez que lo viste."
 
 #: dat/missions/minerva/kex5.lua:142
 msgid ""
@@ -64833,6 +64947,9 @@ msgid ""
 "He seems a bit nervious and speaks softer than usual.\n"
 "\"Did you do what I asked?\""
 msgstr ""
+"\"Hola chico\".\n"
+"Parece un poco nervioso y habla más suave que de costumbre.\n"
+"\"¿Hiciste lo que te pedí?\""
 
 #: dat/missions/minerva/kex5.lua:147
 msgid ""
@@ -64840,6 +64957,9 @@ msgid ""
 "the laboratory, and explain how you comforted the dying Dr. Strangelove as "
 "he passed away from his mysterious illness in front of your eyes."
 msgstr ""
+"Le explicas cómo fue la misión, entregándole el dron que encontraste en el "
+"laboratorio, y le explicas cómo consolaste al moribundo Dr. Strangelove "
+"mientras fallecía de su misteriosa enfermedad ante tus ojos."
 
 #: dat/missions/minerva/kex5.lua:148
 msgid ""
@@ -64847,6 +64967,9 @@ msgid ""
 "\"I can't believe you comforted him. Do you know all the shit he's done! The "
 "shit he's put me through!\""
 msgstr ""
+"Te mira después de tu explicación y frunce un poco las cejas.\n"
+"\"No puedo creer que lo hayas consolado. ¿Sabes toda la mierda que ha hecho? "
+"¡La mierda que me ha hecho pasar!\""
 
 #: dat/missions/minerva/kex5.lua:150
 msgid ""
@@ -64854,24 +64977,33 @@ msgid ""
 "at you.\"\n"
 "He looks down sadly at the floor for a while before looking at you again."
 msgstr ""
+"\"Maldita sea, no sólo no siento ningún alivio, sino que ni siquiera puedo "
+"enfadarme contigoe\"\n"
+"Mira tristemente al suelo durante un rato antes de volver a mirarte."
 
 #: dat/missions/minerva/kex5.lua:155
 msgid ""
 "You explain to him how the mission went and go into graphic detail of how "
 "you finished Dr. Strangelove off by shooting at him point-blank as Kex asked."
 msgstr ""
+"Le explicas cómo fue la misión y entras en detalles gráficos de cómo "
+"acabaste con el Dr. Strangelove disparándole a bocajarro como te pidió Kex."
 
 #: dat/missions/minerva/kex5.lua:156 dat/missions/minerva/kex5.lua:159
 msgid ""
 "You also hand him the droid you recovered. Kex looks at it briefly before "
 "pocketing it somewhere inside his mat of feathers."
 msgstr ""
+"También le entregas el droide que has recuperado. Kex lo mira brevemente "
+"antes de guardarlo en algún lugar de su alfombra de plumas."
 
 #: dat/missions/minerva/kex5.lua:158
 msgid ""
 "You explain to him how the mission went and go into details of how you "
 "finished Dr. Strangelove off by unplugging him as Kex asked."
 msgstr ""
+"Le explicas cómo fue la misión y entras en detalles de cómo acabaste con el "
+"Dr. Strangelove desenchufándolo como te pidió Kex."
 
 #: dat/missions/minerva/kex5.lua:161
 msgid ""
@@ -64879,6 +65011,9 @@ msgid ""
 "the laboratory, and explain how Dr. Strangelove died of his mysterious "
 "illness in front of your eyes."
 msgstr ""
+"Le explicas cómo fue la misión, entregándole el dron que encontraste en el "
+"laboratorio, y le explicas cómo el Dr. Strangelove murió de su misteriosa "
+"enfermedad delante de tus ojos."
 
 #: dat/missions/minerva/kex5.lua:163
 msgid ""
@@ -64887,24 +65022,30 @@ msgid ""
 "all I ever wanted since I escaped from the laboratory. All I ever dreamed "
 "of, and when I finally get it… nothing?\""
 msgstr ""
+"Te mira después de tu explicación y frunce un poco las cejas.\n"
+"\"Esperaba algún tipo de alivio. Sabes, tener a Strangelove muerto es todo "
+"lo que siempre quise desde que escapé del laboratorio. Todo lo que he "
+"soñado, y cuando por fin lo consigo... ¿nada?\""
 
 #: dat/missions/minerva/kex5.lua:168
 msgid ""
 "\"He's dead. He's completely toasted! Why aren't we celebrating?! Why aren't "
 "we happy!?\""
 msgstr ""
+"\"Está muerto. ¡Está completamente tostado! ¡¿Por qué no estamos "
+"celebrándolo?! ¿Por qué no estamos contentos?\""
 
 #: dat/missions/minerva/kex5.lua:172
 msgid "\"We should be dancing!\""
-msgstr ""
+msgstr "\"¡Deberíamos estar bailando!\""
 
 #: dat/missions/minerva/kex5.lua:179
 msgid "\"We should be partying!\""
-msgstr ""
+msgstr "\"¡Deberíamos estar de fiesta!\""
 
 #: dat/missions/minerva/kex5.lua:181
 msgid "\"We should…\""
-msgstr ""
+msgstr "\"Deberíamos...\""
 
 #: dat/missions/minerva/kex5.lua:185
 msgid ""
@@ -64912,18 +65053,24 @@ msgid ""
 "He looks as glum as ever.\n"
 "\"You can't kill your way out of depression…\""
 msgstr ""
+"\"Mierda, a quién quiero engañar\".\n"
+"Se ve tan triste como siempre.\n"
+"\"No puedes matar para salir de una depresión...\""
 
 #: dat/missions/minerva/kex5.lua:188
 msgid ""
 "\"Hey, kid, I'm really grateful for all you've done, but I don't think I can "
 "go on. I just need some time alone to gather my thoughts.\""
 msgstr ""
+"\"Oye, chico, estoy muy agradecido por todo lo que has hecho, pero no creo "
+"que pueda seguir. Necesito un tiempo a solas para ordenar mis pensamientos.\""
 
 #: dat/missions/minerva/kex5.lua:189
 msgid ""
 "\"I've scrounged up some cash, I don't think I'll be needing it. Here take "
 "it.\""
 msgstr ""
+"\"He conseguido algo de dinero, no creo que lo necesite. Toma, cógelo.\""
 
 #: dat/missions/minerva/kex5.lua:197
 msgid ""
@@ -64931,28 +65078,33 @@ msgid ""
 "doesn't seem like he'll recover soon. Maybe there is another way to help him "
 "without getting him directly involved?"
 msgstr ""
+"Sin decir nada más, Kex desaparece lentamente entre las sombras. No parece "
+"que vaya a recuperarse pronto. ¿Quizás haya otra forma de ayudarle sin "
+"involucrarle directamente?"
 
 #: dat/missions/minerva/kex5.lua:201
 msgid ""
 "You reported back to Kex, who gave up on working for his freedom due to his "
 "crippling depression. Maybe there is another way to help him indirectly?"
 msgstr ""
+"Informaste a Kex, que renunció a trabajar por su libertad debido a su "
+"depresión paralizante. ¿Tal vez hay otra manera de ayudarlo indirectamente?"
 
 #: dat/missions/minerva/kex5.lua:210
 msgid "You never met up with Dr. Strangelove."
-msgstr ""
+msgstr "Nunca te reuniste con el Dr. Strangelove."
 
 #. Try to make sure they meet up the player
 #. No spawns nor anything in Westhaven
 #. TODO better handling, maybe more fighting with drones and a close-up cinematic?
 #: dat/missions/minerva/kex5.lua:265
 msgid "#rYou are unable to land while the bounty hunters are still active.#0"
-msgstr ""
+msgstr "#rNo puedes aterrizar mientras los cazarrecompensas sigan activos.#0"
 
 #. Broadcast after hostile
 #: dat/missions/minerva/kex5.lua:331
 msgid "Looks like we have company!"
-msgstr ""
+msgstr "¡Parece que tenemos compañía!"
 
 #. Decrease chance
 #. Reset autonav just in case
@@ -64964,6 +65116,9 @@ msgid ""
 "should be able to safely land and search for Dr. Strangelove at his "
 "laboratory now."
 msgstr ""
+"Todo lo que queda de los cazarrecompensas son restos flotantes. Parece que "
+"ahora deberías poder aterrizar con seguridad y buscar al Dr. Strangelove en "
+"su laboratorio."
 
 #: dat/missions/minerva/kex5.lua:398
 msgid ""
@@ -64971,6 +65126,9 @@ msgid ""
 "pressurized and without an atmosphere, so you don your space suit before "
 "entering."
 msgstr ""
+"Los sensores de tu nave indican que el laboratorio de Strangelove ya no está "
+"presurizado y sin atmósfera, así que te pones el traje espacial antes de "
+"entrar."
 
 #: dat/missions/minerva/kex5.lua:399
 msgid ""
@@ -64979,18 +65137,22 @@ msgid ""
 "the last time you came, but now you have to jump over obstacles as you "
 "progress through the laboratory."
 msgstr ""
+"Lo primero que observas es que el laboratorio ha sido devastado, "
+"probablemente por los cazarrecompensas que encontraste fuera. El lugar ya "
+"era un desastre la última vez que viniste, pero ahora tienes que saltar "
+"obstáculos mientras avanzas por el laboratorio."
 
 #: dat/missions/minerva/kex5.lua:410
 msgid "Check the Living Quarters"
-msgstr ""
+msgstr "Revisa los Alojamientos"
 
 #: dat/missions/minerva/kex5.lua:413
 msgid "Check the Recreation Room"
-msgstr ""
+msgstr "Revisa la Sala de Recreo"
 
 #: dat/missions/minerva/kex5.lua:416
 msgid "Check the Back Room"
-msgstr ""
+msgstr "Compruebe la Sala Trasera"
 
 #: dat/missions/minerva/kex5.lua:422
 msgid ""
@@ -64998,6 +65160,9 @@ msgid ""
 "living quarters. Although it is a mess, you don't really see any signs of "
 "anyone living here. It rather seems all abandoned."
 msgstr ""
+"Te abres paso a través de un pasillo estrecho y casi impracticable hacia la "
+"vivienda. Aunque es un desorden, no ves realmente ningún signo de que "
+"alguien viva aquí. Más bien parece todo abandonado."
 
 #: dat/missions/minerva/kex5.lua:423
 msgid ""
@@ -65005,10 +65170,14 @@ msgid ""
 "bed are splattered with blood, but it seems very old and desiccated. Some "
 "empty medical syringes and pouches are scattered on the floor."
 msgstr ""
+"Finalmente, llegas a una habitación muy pequeña con una cápsula cama. El "
+"suelo y la cama están salpicados de sangre, pero parece muy vieja y "
+"desecada. Algunas jeringuillas y bolsas médicas vacías están esparcidas por "
+"el suelo."
 
 #: dat/missions/minerva/kex5.lua:424
 msgid "You turn over everything, but find nothing of interest."
-msgstr ""
+msgstr "Lo revuelves todo, pero no encuentras nada de interés."
 
 #: dat/missions/minerva/kex5.lua:429
 msgid ""
@@ -65016,6 +65185,9 @@ msgid ""
 "completely trashed. Even pieces of the wall have been ripped out, revealing "
 "shoddy cable connections and lots of weird mold."
 msgstr ""
+"Te diriges hacia la sala de recreo, que ha sido completamente destrozada, y "
+"llegas a ella. Incluso han arrancado trozos de la pared, revelando "
+"conexiones de cables de mala calidad y un montón de moho extraño."
 
 #: dat/missions/minerva/kex5.lua:430
 msgid ""
@@ -65023,10 +65195,14 @@ msgid ""
 "unsurprisingly, completely wrecked. It doesn't seem like you'll be able to "
 "use it to get in touch with Dr. Strangelove anymore."
 msgstr ""
+"Mirando a tu alrededor, descubres que el proyector de hologramas que "
+"utilizaste la última vez está, como era de esperar, completamente "
+"destrozado. Parece que ya no podrás utilizarlo para ponerte en contacto con "
+"el Dr. Strangelove."
 
 #: dat/missions/minerva/kex5.lua:431
 msgid "Try as you might, you are unable to find anything of interest."
-msgstr ""
+msgstr "Por mucho que lo intentes, no consigues encontrar nada de interés."
 
 #: dat/missions/minerva/kex5.lua:436
 msgid ""
@@ -65034,12 +65210,19 @@ msgid ""
 "blocked off once, but now has been torn wide open. You ignore the \"KEEP OUT"
 "\" sign that is bent up underfoot and make your way through."
 msgstr ""
+"Encuentras un túnel que lleva a la sala de atrás. Parece que estuvo "
+"bloqueada en su día, pero ahora ha sido abierta de par en par. Ignoras la "
+"señal de \" MANTENGASE FUERA\" que está doblada bajo tus pies y te abres "
+"paso."
 
 #: dat/missions/minerva/kex5.lua:437
 msgid ""
 "The tunnel twists and turns as it heads towards the centre of the asteroid. "
 "There is no lighting along the way, so you rely on the lamps of your suit."
 msgstr ""
+"El túnel se retuerce y gira mientras te diriges al centro del asteroide. No "
+"hay iluminación en el camino, por lo que dependes de las lámparas de tu "
+"traje."
 
 #: dat/missions/minerva/kex5.lua:438
 msgid ""
@@ -65047,6 +65230,9 @@ msgid ""
 "compared to the rest of the laboratory, but is jammed with junk and rubbish, "
 "lots of which has been recently moved around."
 msgstr ""
+"Finalmente llegas a una sala en el núcleo del asteroide. Es bastante grande "
+"en comparación con el resto del laboratorio, pero está atestada de chatarra "
+"y basura, mucha de la cual ha sido movida recientemente."
 
 #: dat/missions/minerva/kex5.lua:439
 msgid ""
@@ -65054,6 +65240,9 @@ msgid ""
 "but after a long time of looking around and not making significant progress, "
 "you decide to take a break and sit on a fallen bookcase."
 msgstr ""
+"Empiezas a rebuscar entre las cosas para tratar de encontrar algo de "
+"interés, pero después de un buen rato de mirar y no hacer progresos "
+"significativos, decides tomarte un descanso y sentarte en una librería caída."
 
 #: dat/missions/minerva/kex5.lua:440
 msgid ""
@@ -65061,6 +65250,9 @@ msgid ""
 "Slowly and carefully you lift up some debris to uncover a small and heavily "
 "damaged droid."
 msgstr ""
+"Mientras examinas la sala, notas un pequeño movimiento junto a tus pies. "
+"Lentamente y con cuidado levantas algunos escombros para descubrir un "
+"pequeño droide muy dañado."
 
 #: dat/missions/minerva/kex5.lua:441
 msgid ""
@@ -65070,16 +65262,23 @@ msgid ""
 "with strong encryption. You pocket it as it seems like it might be something "
 "of interest to Kex."
 msgstr ""
+"Recoges el droide y le quitas el polvo. Su lente principal y su motor de "
+"vuelo parecen completamente destruidos, pero parece que aún tiene energía y "
+"probablemente datos. Intentas conectarte a él, pero parece estar bloqueado "
+"con una fuerte encriptación. Lo guardas en el bolsillo, ya que parece que "
+"podría ser algo de interés para Kex."
 
 #: dat/missions/minerva/kex5.lua:442
 msgid ""
 "You get back to searching around the stuff and end up finding nothing else "
 "of interest."
 msgstr ""
+"Vuelves a buscar entre las cosas y terminas por no encontrar nada más de "
+"interés."
 
 #: dat/missions/minerva/kex5.lua:445
 msgid "You collected a small robot in Dr. Strangelove's laboratory."
-msgstr ""
+msgstr "Has recogido un pequeño robot en el laboratorio del Dr. Strangelove."
 
 #: dat/missions/minerva/kex5.lua:450
 msgid ""
@@ -65087,18 +65286,23 @@ msgid ""
 "up being mostly in vain: Dr. Strangelove is nowhere to be found. At least "
 "you found a droid that might be useful."
 msgstr ""
+"Dedicas tu tiempo a recorrer cuidadosamente toda la estación, pero acaba "
+"siendo en su mayor parte en vano: El Dr. Strangelove no aparece por ningún "
+"lado. Al menos has encontrado un droide que podría ser útil."
 
 #: dat/missions/minerva/kex5.lua:451
 msgid ""
 "You let out a sigh as you head outside. Maybe Dr. Strangelove escaped "
 "somewhere else?"
 msgstr ""
+"Dejas escapar un suspiro mientras te diriges al exterior. ¿Quizás el Dr. "
+"Strangelove se haya escapado a otro lugar?"
 
 #. Take off
 #. Disable landing, will get disabled on entering new system
 #: dat/missions/minerva/kex5.lua:459
 msgid "You have better things to do right now."
-msgstr ""
+msgstr "Tienes mejores cosas que hacer ahora mismo."
 
 #. TODO small scene
 #: dat/missions/minerva/kex5.lua:469
@@ -65106,6 +65310,8 @@ msgid ""
 "As you loiter around the system, you suddenly receive an unexpected incoming "
 "transmission."
 msgstr ""
+"Mientras merodeas por el sistema, de repente recibes una transmisión "
+"entrante inesperada."
 
 #: dat/missions/minerva/kex5.lua:470
 msgid ""
@@ -65114,6 +65320,10 @@ msgid ""
 "vaguely look in your direction, although his eyes seem unnaturally clouded.\n"
 "\"Is that you?\""
 msgstr ""
+"Un holograma del Dr. Strangelove aparece ante ti. Está tumbado y su cuerpo "
+"parece estar desprovisto de toda energía. Parece reunir energía para mirar "
+"vagamente en tu dirección, aunque sus ojos parecen anormalmente nublados.\n"
+"\"¿Eres tú?\""
 
 #: dat/missions/minerva/kex5.lua:472
 msgid ""
@@ -65121,10 +65331,14 @@ msgid ""
 "A coughing fit wracks his body.\n"
 "\"There is not much time, come to my ship.\""
 msgstr ""
+"\"Te estaba esperando\".\n"
+"Un ataque de tos sacude su cuerpo.\n"
+"\"No hay mucho tiempo, ven a mi nave.\""
 
 #: dat/missions/minerva/kex5.lua:475
 msgid "The communication channel closes and you receive coordinates to a ship."
 msgstr ""
+"El canal de comunicación se cierra y recibes las coordenadas de una nave."
 
 #. Reset variable if player aborted mission after this for some reason
 #. TODO small scene
@@ -65135,6 +65349,10 @@ msgid ""
 "you board without your space suit. However, when you enter the ship, a "
 "strong, pungent odour makes you regret your decision."
 msgstr ""
+"Subes a la nave con cautela, sin saber lo que te vas a encontrar. Confiando "
+"en que los sensores de tu sistema indiquen una atmósfera adecuada en la "
+"nave, subes sin tu traje espacial. Sin embargo, cuando entras en la nave, un "
+"fuerte y penetrante olor te hace lamentar tu decisión."
 
 #: dat/missions/minerva/kex5.lua:492
 msgid ""
@@ -65144,12 +65362,19 @@ msgid ""
 "in a fairly clunky fashion, as if they had some of their moving apparatus "
 "damaged."
 msgstr ""
+"Mientras te diriges a la sala de mando, notas pequeños movimientos con el "
+"rabillo del ojo. Al observar más de cerca, distingues todo tipo de pequeños "
+"objetos en movimiento, que te recuerdan a los droides de limpieza de la "
+"mayoría de las naves; sin embargo, estos se mueven de forma bastante torpe, "
+"como si tuvieran algún aparato de movimiento dañado."
 
 #: dat/missions/minerva/kex5.lua:493
 msgid ""
 "You pay little attention to the small critters, which seem harmless, and "
 "proceed through the ship. After a short walk you enter the command room."
 msgstr ""
+"Prestas poca atención a los pequeños bichos, que parecen inofensivos, y "
+"avanzas por la nave. Tras un breve paseo, entras en la sala de mando."
 
 #: dat/missions/minerva/kex5.lua:497
 msgid ""
@@ -65159,6 +65384,11 @@ msgid ""
 "that everything is fairly rundown and dirty, you would think you were in a "
 "planetary hospital instead of a space ship at the edge of the universe."
 msgstr ""
+"Entras en la habitación y conoces al Dr. Strangelove cara a cara por primera "
+"vez. El Dr. Strangelove está tumbado en una cama médica conectada a un "
+"montón de máquinas extrañas, con un droide médico atendiéndole. Si no fuera "
+"porque todo está bastante deteriorado y sucio, pensarías que estás en un "
+"hospital planetario en lugar de en una nave espacial al borde del universo."
 
 #: dat/missions/minerva/kex5.lua:498
 msgid ""
@@ -65167,6 +65397,11 @@ msgid ""
 "his laboratory coat seems to be a few sizes too large on his frail body. His "
 "vitals monitor also confirms your suspicion that he is more dead than alive."
 msgstr ""
+"Miras de cerca al Dr. Strangelove y parece una cáscara de lo que podría "
+"haber sido un hombre. Sus pómulos sobresalen de su pálido rostro y su bata "
+"de laboratorio parece ser un par de tallas más grande que su frágil cuerpo. "
+"Su monitor de signos vitales también confirma tu sospecha de que está más "
+"muerto que vivo."
 
 #: dat/missions/minerva/kex5.lua:499
 msgid ""
@@ -65176,6 +65411,10 @@ msgid ""
 "He doesn't seem to be focusing much on you and is just talking in your "
 "general direction."
 msgstr ""
+"\"Veo que has podido llegar.\"\n"
+"Tose violentamente.\n"
+"\"Lo siento, no me he sentido muy bien últimamente.\"\n"
+"No parece centrarse mucho en ti y se limita a hablar en tu dirección general."
 
 #: dat/missions/minerva/kex5.lua:503
 msgid ""
@@ -65184,6 +65423,10 @@ msgid ""
 "to see the truth!\"\n"
 "His vital monitor's warning light flashes on."
 msgstr ""
+"\"Todo va bien. Creo que estamos cerca de un avance, la próxima vez debería "
+"ser capaz de tener éxito. Después de todo este tiempo, ¡por fin podré ver la "
+"verdad!\"\n"
+"La luz de aviso de su monitor vital se enciende."
 
 #: dat/missions/minerva/kex5.lua:505
 msgid ""
@@ -65191,6 +65434,9 @@ msgid ""
 "sooner, but I was foolish and naïve.\"\n"
 "He lets out a sigh."
 msgstr ""
+"\"Tenías razón. Todo estaba y está conectado. Debí haberte escuchado antes, "
+"pero fui tonto e ingenuo.\"\n"
+"Deja escapar un suspiro."
 
 #: dat/missions/minerva/kex5.lua:507
 msgid ""
@@ -65199,6 +65445,9 @@ msgid ""
 "and the entropy flux was nearly stable, but the connection was never "
 "established.\""
 msgstr ""
+"\"Pensé que casi lo tenía con el último espécimen. Todo iba tan bien... La "
+"conexión de la interfaz bionimórfica de punto cero fue impecable, y el flujo "
+"de entropía era casi estable, pero la conexión nunca se estableció.\""
 
 #: dat/missions/minerva/kex5.lua:508
 msgid ""
@@ -65207,6 +65456,10 @@ msgid ""
 "itself and twisted around in higher dimensions. Measly Euclidean distances "
 "shouldn't matter at all.\""
 msgstr ""
+"\"Podría ser la distancia, pero mis cálculos indican que no debería "
+"importar. Debería estar en todas partes. ¡Todo está en todas partes! Se "
+"pliega sobre sí mismo y se retuerce en dimensiones superiores. Las míseras "
+"distancias euclidianas no deberían importar en absoluto.\""
 
 #: dat/missions/minerva/kex5.lua:509
 msgid ""
@@ -65216,6 +65469,11 @@ msgid ""
 "He coughs violently.\n"
 "\"It failed. Like always. It failed.\""
 msgstr ""
+"\"...pero no funcionó. Casi como si se burlara de la propia ciencia y me "
+"escupiera en la cara. Casi como si el propio universo no quisiera entregar "
+"sus secretos.\"\n"
+"Tose violentamente.\n"
+"\"Falló. Como siempre. Falló.\""
 
 #: dat/missions/minerva/kex5.lua:512
 msgid ""
@@ -65223,19 +65481,21 @@ msgid ""
 "everything I could possibly imagine. You would have been able to make it "
 "work!\""
 msgstr ""
+"\"Williams, ¿por qué tuviste que morir? Sabes tanto. Me superaste en todo lo "
+"que pude imaginar. ¡Habrías sido capaz de hacerlo funcionar!\""
 
 #: dat/missions/minerva/kex5.lua:514 dat/missions/minerva/kex5.lua:536
 #: dat/missions/minerva/kex5.lua:563 dat/missions/minerva/kex5.lua:606
 msgid "Ask about Kex"
-msgstr ""
+msgstr "Pregunta por Kex"
 
 #: dat/missions/minerva/kex5.lua:515
 msgid "Say you are sorry"
-msgstr ""
+msgstr "Di que lo sientes"
 
 #: dat/missions/minerva/kex5.lua:516
 msgid "Mention he is delirious"
-msgstr ""
+msgstr "Menciona que está delirando"
 
 #: dat/missions/minerva/kex5.lua:523
 msgid ""
@@ -65243,6 +65503,10 @@ msgid ""
 "\"You were always the brightest in the class. I always admired how fast you "
 "were able to solve partial differential equations so elegantly.\""
 msgstr ""
+"Continúa.\n"
+"\"Siempre fuiste el más brillante de la clase. Siempre admiré lo rápido que "
+"eras capaz de resolver ecuaciones diferenciales parciales con tanta "
+"elegancia.\""
 
 #: dat/missions/minerva/kex5.lua:525
 msgid ""
@@ -65250,6 +65514,10 @@ msgid ""
 "hyperphased quantum auto-cycle hit the self-refractive frequency? Your quick "
 "thinking saved us from turning the entire system into a sterile void.\""
 msgstr ""
+"\"¿Recuerdas aquella vez que casi provocamos una implosión subatómica cuando "
+"el autociclo cuántico hiperfásico alcanzó la frecuencia de autorrefracción? "
+"Tu rapidez mental nos salvó de convertir todo el sistema en un vacío estéril."
+"\""
 
 #: dat/missions/minerva/kex5.lua:526
 msgid ""
@@ -65257,25 +65525,31 @@ msgid ""
 "together.\"\n"
 "His voice tears up slightly."
 msgstr ""
+"\"Si hubieras estado conmigo todo este tiempo. Podríamos haber hecho tanto "
+"juntos.\"\n"
+"La voz se le rompe ligeramente."
 
 #: dat/missions/minerva/kex5.lua:528
 msgid "\"Why did you have to do it?\""
-msgstr ""
+msgstr "\"¿Por qué tuviste que hacerlo?\""
 
 #: dat/missions/minerva/kex5.lua:532
 msgid "\"Do what?\""
-msgstr ""
+msgstr "\"¿Hacer qué?\""
 
 #: dat/missions/minerva/kex5.lua:538 dat/missions/minerva/kex5.lua:565
 #: dat/missions/minerva/kex5.lua:608
 msgid "Ask about Kex again"
-msgstr ""
+msgstr "Vuelve a preguntar por Kex"
 
 #: dat/missions/minerva/kex5.lua:546
 msgid ""
 "\"Why did you have to kill yourself?\"\n"
 "His sightless eyes look vacantly while tears flow down his face."
 msgstr ""
+"\"¿Por qué tuviste que suicidarte?\"\n"
+"Sus ojos sin vista miran con desgana mientras las lágrimas fluyen por su "
+"rostro."
 
 #: dat/missions/minerva/kex5.lua:548
 msgid ""
@@ -65284,6 +65558,11 @@ msgid ""
 "\"I should have been the one to try to defuse the reactor core, not you. I "
 "should have been the one vaporized in the resulting explosion, not you.\""
 msgstr ""
+"No sabes qué responder y el silencio envuelve la habitación. Finalmente, él "
+"rompe la calma.\n"
+"\"Debería haber sido yo quien intentara desactivar el núcleo del reactor, no "
+"tú. Yo debería haber sido el que se vaporizó en la explosión resultante, no "
+"tú.\""
 
 #: dat/missions/minerva/kex5.lua:550
 msgid ""
@@ -65291,6 +65570,9 @@ msgid ""
 "tweak and make adjustments to intravenous drips and other medical devices.\n"
 "He coughs a bit and you can see blood flecks splatter onto his clothes."
 msgstr ""
+"El monitor de signos vitales empieza a parpadear en rojo y el droide médico "
+"comienza a ajustar los goteos intravenosos y otros dispositivos médicos.\n"
+"Tose un poco y se pueden ver motas de sangre que salpican tu ropa."
 
 #: dat/missions/minerva/kex5.lua:552
 msgid ""
@@ -65300,22 +65582,27 @@ msgid ""
 "where did I go wrong?\"\n"
 "The vitals monitor is still flashing."
 msgstr ""
+"\"Si tan sólo nuestros lugares se hubieran intercambiado, habrías podido "
+"resolverlo y encontrarme de nuevo. Estuve tan cerca y, sin embargo, sigue "
+"pareciendo que hay una especie de muro impenetrable entre la solución y yo. ¿"
+"Qué me he perdido, en qué me he equivocado?\"\n"
+"El monitor de signos vitales sigue parpadeando."
 
 #: dat/missions/minerva/kex5.lua:557
 msgid "\"Everything.\""
-msgstr ""
+msgstr "\"Todo.\""
 
 #: dat/missions/minerva/kex5.lua:558
 msgid "\"It is already connected.\""
-msgstr ""
+msgstr "\"Ya está conectado.\""
 
 #: dat/missions/minerva/kex5.lua:559
 msgid "\"It never connected.\""
-msgstr ""
+msgstr "\"Nunca se conecto.\""
 
 #: dat/missions/minerva/kex5.lua:567 dat/missions/minerva/kex5.lua:610
 msgid "Insist about Kex"
-msgstr ""
+msgstr "Insistes sobre Kex"
 
 #: dat/missions/minerva/kex5.lua:573
 msgid ""
@@ -65325,6 +65612,12 @@ msgid ""
 "He tries feebly to get up before coughs wrack his body and stain it further "
 "with specks of blood. He falls back to the bed impotently."
 msgstr ""
+"¿\"Todo\"? ¿Quieres decir que me he perdido lo fundamental? Ya veo. Lo que "
+"estamos viendo es sólo la proyección de una dimensión inferior de un espacio "
+"de dimensión intrínsecamente superior. Entonces hay que reescribirlo todo.\""
+"\n"
+"Intenta débilmente levantarse antes de que la tos agite su cuerpo y lo "
+"manche aún más con motas de sangre. Vuelve a caer en la cama con impotencia."
 
 #: dat/missions/minerva/kex5.lua:578
 msgid ""
@@ -65334,6 +65627,12 @@ msgid ""
 "He tries feebly to get up before coughs wrack his body and stain it further "
 "with specks of blood. He falls back to the bed impotently."
 msgstr ""
+"\"¿Ya está conectado? ¿Quieres decir que no era necesario forzar la "
+"conexión, sólo que no éramos capaces de verla? Entonces puede que aún "
+"estemos a tiempo de rehacer el último experimento. Tal vez si recalibro el "
+"oscilador podría...\"\n"
+"Trata de levantarse débilmente antes de que la tos agite su cuerpo y lo "
+"manche aún más con motas de sangre. Vuelve a caer en la cama con impotencia."
 
 #: dat/missions/minerva/kex5.lua:583
 msgid ""
@@ -65343,6 +65642,11 @@ msgid ""
 "He tries feebly to get up before coughs wrack his body and stain it further "
 "with specks of blood. He falls back to the bed impotently."
 msgstr ""
+"\"¿Incluso en el último experimento? ¿La energía no era suficiente? Tal vez "
+"si redirijo el sistema de energía de la nave y vuelvo a hacer el experimento "
+"pueda conectarme. Debo rehacer el experimento...\"\n"
+"Trata de levantarse débilmente antes de que la tos le agite el cuerpo y lo "
+"manche aún más con motas de sangre. Vuelve a caer en la cama con impotencia."
 
 #: dat/missions/minerva/kex5.lua:590
 msgid ""
@@ -65351,6 +65655,10 @@ msgid ""
 "He tries feebly to get up before coughs wrack his body and stain it further "
 "with specks of blood. He falls back to the bed impotently."
 msgstr ""
+"\"Estoy tan cerca que no puedo detenerme aquí, frente a ti. Recalibrar el "
+"tejido polimórfico podría estabilizar la conexión...\"\n"
+"Intenta débilmente levantarse antes de que la tos agite su cuerpo y lo "
+"manche aún más con motas de sangre. Vuelve a caer en la cama con impotencia."
 
 #: dat/missions/minerva/kex5.lua:594
 msgid ""
@@ -65358,6 +65666,9 @@ msgid ""
 "\"Today is not a good day. I just need a bit more rest and I can get started "
 "again.\""
 msgstr ""
+"Parece estar sin aliento.\n"
+"\"Hoy no es un buen día. Sólo necesito un poco más de descanso y puedo "
+"volver a empezar.\""
 
 #: dat/missions/minerva/kex5.lua:596
 msgid ""
@@ -65368,14 +65679,20 @@ msgid ""
 "His talking is slowing down and starting to get muddled. You have trouble "
 "making out what he's saying."
 msgstr ""
+"\"Fue tal como dijiste, la nebulosa es sólo una manifestación, no una "
+"entidad en sí misma, pero establecer la conexión es menos sencillo que lo "
+"que dejaste en tus notas. He intentado corregir la ecuación armónica, pero "
+"no...\"\n"
+"Su discurso se ralentiza y empieza a ser confuso. Te cuesta entender lo que "
+"dice."
 
 #: dat/missions/minerva/kex5.lua:601
 msgid "\"You are dying.\""
-msgstr ""
+msgstr "\"Te estás muriendo.\""
 
 #: dat/missions/minerva/kex5.lua:602
 msgid "\"It is over.\""
-msgstr ""
+msgstr "\"Se ha acabado.\""
 
 #: dat/missions/minerva/kex5.lua:618
 msgid ""
@@ -65384,6 +65701,9 @@ msgid ""
 "the monitors and you see his vitals are tanking. It looks like he has run "
 "out of time."
 msgstr ""
+"Sus labios comienzan a moverse y se oye una especie de sonido áspero, pero "
+"ya no se puede entender lo que dice. Miras los monitores y ves que sus "
+"constantes vitales están cayendo. Parece que se le ha acabado el tiempo."
 
 #: dat/missions/minerva/kex5.lua:620
 msgid ""
@@ -65393,6 +65713,11 @@ msgid ""
 "strength slowly ebb out of him as he collapses one last time and his pulse "
 "flatlines."
 msgstr ""
+"Levanta lentamente un brazo como si tratara de alcanzar algo. Es "
+"extremadamente fino y pálido, casi transparente. Sus labios se mueven como "
+"si intentara decir algo, pero no se puede distinguir ningún sonido. Ves cómo "
+"se le van quitando las fuerzas mientras se desploma por última vez y su "
+"pulso se desploma."
 
 #. played backwards so should be down
 #. Stop music
@@ -65403,6 +65728,10 @@ msgid ""
 "bit unsettling with a corpse nearby, but you try to focus on getting the "
 "grime off the console and interfacing with it. "
 msgstr ""
+"El silencio vuelve a envolver la sala. Miras a tu alrededor y decides "
+"intentar acceder a la consola de mando para ver si queda alguna información. "
+"Es un poco inquietante con un cadáver cerca, pero tratas de concentrarte en "
+"quitar la mugre de la consola e interactuar con ella. "
 
 #: dat/missions/minerva/kex5.lua:625
 msgid ""
@@ -65411,6 +65740,10 @@ msgid ""
 "system. After a few unsuccessful attempts you manage to find what looks like "
 "a flaw in the cryptographic armour and try to access it."
 msgstr ""
+"Te das cuenta de que todo parece estar fuertemente encriptado, mucho más de "
+"lo habitual incluso en las naves militares Za'lek, e intentas entrar en el "
+"sistema. Tras varios intentos infructuosos, consigues encontrar lo que "
+"parece un fallo en el blindaje criptográfico e intentas acceder a él."
 
 #: dat/missions/minerva/kex5.lua:626
 msgid ""
@@ -65419,6 +65752,11 @@ msgid ""
 "SELF-DESTRUCT SEQUENCE ENGAGED\n"
 "30 SECONDS REMAINING#0"
 msgstr ""
+"De repente, un mensaje brillante comienza a parpadear en todos los monitores:"
+"\n"
+"#rHONEYPOT ##329 ACTIVADO\n"
+"SECUENCIA DE AUTODESTRUCCIÓN ACTIVADA\n"
+"30 SEGUNDOS RESTANTES#0"
 
 #: dat/missions/minerva/kex5.lua:630
 msgid ""
@@ -65426,6 +65764,10 @@ msgid ""
 "console and you make a dash for your ship. As the airlock closes behind you "
 "you can hear explosions starting to rip Dr. Strangelove's ship apart."
 msgstr ""
+"Maldiciendo para ti mismo, te das cuenta de que no tienes tiempo suficiente "
+"para anular la consola y corres hacia tu nave. Cuando la esclusa se cierra "
+"tras de ti, oyes las explosiones que empiezan a destrozar la nave del Dr. "
+"Strangelove."
 
 #. Player insists and goes to kex arc
 #: dat/missions/minerva/kex5.lua:635
@@ -65434,6 +65776,9 @@ msgid ""
 "\"Kex? Kex… where have I heard that name before… Wait… You mean Experiment "
 "#085? The one taken from the nebula wreck?\""
 msgstr ""
+"De repente parece recuperar un poco de lucidez.\n"
+"\"¿Kex? Kex... dónde he oído ese nombre antes... Espera... ¿Te refieres al "
+"Experimento #085? ¿El que se sacó del naufragio de la nebulosa?\""
 
 #: dat/missions/minerva/kex5.lua:637
 msgid ""
@@ -65441,23 +65786,29 @@ msgid ""
 "fuzzy. I don't recall much of the encounter. Must have not been interesting "
 "anyway. Most non-research talk is boring.\""
 msgstr ""
+"\"Alguien también vino a preguntar por eso hace tiempo, pero mi memoria es "
+"borrosa. No recuerdo mucho del encuentro. De todos modos, no debe haber sido "
+"interesante. La mayoría de las conversaciones no relacionadas con la "
+"investigación son aburridas.\""
 
 #: dat/missions/minerva/kex5.lua:638
 msgid ""
 "\"Anyway, the subject of that experiment is long gone. It was a failure.\""
 msgstr ""
+"\"De todos modos, el sujeto de ese experimento hace tiempo que se fue. Fue "
+"un fracaso.\""
 
 #: dat/missions/minerva/kex5.lua:640
 msgid "\"Failure?\""
-msgstr ""
+msgstr "\"¿Fracaso?\""
 
 #: dat/missions/minerva/kex5.lua:641
 msgid "Ask why he did it."
-msgstr ""
+msgstr "Pregúnta por qué lo hizo."
 
 #: dat/missions/minerva/kex5.lua:642
 msgid "\"Kex sends you his regards.\" (draw weapon)"
-msgstr ""
+msgstr "\"Kex te envía saludos.\" (desenfundas el arma)"
 
 #: dat/missions/minerva/kex5.lua:646
 msgid ""
@@ -65466,6 +65817,11 @@ msgid ""
 "don't need any ethics committee approval for experimenting on cadavers, not "
 "that I am subject to that oversight anymore.\""
 msgstr ""
+"\"¿Por qué no iba a seguir con ese experimento perfecto? Los sujetos "
+"encontrados en el naufragio ya estaban muertos desde hace tiempo según la "
+"definición moderna del mundo. No se necesita la aprobación de ningún comité "
+"de ética para experimentar con cadáveres, aunque ya no estoy sujeto a esa "
+"supervisión.\""
 
 #: dat/missions/minerva/kex5.lua:647
 msgid ""
@@ -65473,12 +65829,18 @@ msgid ""
 "testing. Had I not performed it, it would have been a crime against science! "
 "It was my moral obligation to do it!\""
 msgstr ""
+"\"Al haber pasado tanto tiempo en ese naufragio, era el candidato perfecto "
+"para las pruebas. Si no la hubiera realizado, ¡habría sido un crimen contra "
+"la ciencia! ¡Era mi obligación moral hacerlo!\""
 
 #: dat/missions/minerva/kex5.lua:651
 msgid ""
 "\"Yes, it was a failure. It never became a vessel to the void. It was just a "
 "husk of what it should have been. So much potential, all wasted.\""
 msgstr ""
+"\"Sí, fue un fracaso. Nunca se convirtió en un recipiente para el vacío. Fue "
+"sólo una cáscara de lo que debería haber sido. Tanto potencial, todo "
+"desperdiciadoe\""
 
 #: dat/missions/minerva/kex5.lua:652
 msgid ""
@@ -65488,18 +65850,23 @@ msgid ""
 "He coughs violently again, spasms overtaking his body. The medical robot "
 "seems to inject him with something and he calms down again."
 msgstr ""
+"\"Aunque los signos vitales y las respuestas neuronales parecían nominales, "
+"no parecía mostrar ninguna respuesta consciente estándar. Incluso falló la "
+"prueba de NIVEL II, un signo de una mente débil. Un fracaso total\".\n"
+"Vuelve a toser violentamente, los espasmos se apoderan de su cuerpo. El "
+"robot médico parece inyectarle algo y se calma de nuevo."
 
 #: dat/missions/minerva/kex5.lua:655
 msgid "\"Kex sends you his regards\" (draw weapon)\""
-msgstr ""
+msgstr "\"Kex te envía saludos\" (sacas el arma)\""
 
 #: dat/missions/minerva/kex5.lua:656 dat/missions/minerva/kex5.lua:681
 msgid "Unplug his life support."
-msgstr ""
+msgstr "Desconecta su soporte vital."
 
 #: dat/missions/minerva/kex5.lua:657 dat/missions/minerva/kex5.lua:682
 msgid "Comfort him."
-msgstr ""
+msgstr "Confórtarlo."
 
 #: dat/missions/minerva/kex5.lua:662
 msgid ""
@@ -65507,6 +65874,9 @@ msgid ""
 "away. His lips begin moving and you can hear some sort of rasping sound "
 "coming out, however, you can no longer make out what he is saying."
 msgstr ""
+"Desconectas su soporte vital y ves que el poco color que queda en su rostro "
+"se desvanece. Sus labios comienzan a moverse y puedes oír una especie de "
+"sonido rasposo, pero ya no puedes entender lo que está diciendo."
 
 #: dat/missions/minerva/kex5.lua:667
 msgid ""
@@ -65515,12 +65885,17 @@ msgid ""
 "judge. You get close to him and hold his hand. It feels very cold to the "
 "touch."
 msgstr ""
+"Verlo en su última etapa hace que surja tu compasión. Si el Dr. Strangelove "
+"es un monstruo o no, no es algo que debas juzgar. Te acercas a él y le coges "
+"la mano. La sientes muy fría al tacto."
 
 #: dat/missions/minerva/kex5.lua:668
 msgid ""
 "\"I can feel it… getting close…\"\n"
 "He seems to be looking at something in the distance."
 msgstr ""
+"\"Puedo sentirlo... acercándose...\"\n"
+"Parece estar mirando algo en la distancia."
 
 #: dat/missions/minerva/kex5.lua:670
 msgid ""
@@ -65528,6 +65903,9 @@ msgid ""
 "more of curiosity and awe.\n"
 "\"It's more beautiful… than I… thought.\""
 msgstr ""
+"De repente, abre mucho los ojos, pero su expresión es menos de terror y más "
+"de curiosidad y asombro.\n"
+"\"Es más hermoso... de lo que... pensaba.\""
 
 #: dat/missions/minerva/kex5.lua:672
 msgid ""
@@ -65535,6 +65913,9 @@ msgid ""
 "see the nebula in all its fury and glory reflected in them. You look around "
 "the room but nothing has changed."
 msgstr ""
+"Miras sus ojos casi opacos y, por un segundo, crees ver la nebulosa en toda "
+"su furia y gloria reflejada en ellos. Miras alrededor de la habitación pero "
+"nada ha cambiado."
 
 #: dat/missions/minerva/kex5.lua:677
 msgid ""
@@ -65542,6 +65923,9 @@ msgid ""
 "doesn't seem to flinch when the cold barrel makes contact with his skin. In "
 "fact, he seems very oblivious to everything around him."
 msgstr ""
+"Desenfundas tu arma y la presionas contra la frente del Dr. Strangelove. No "
+"parece inmutarse cuando el frío cañón hace contacto con su piel. De hecho, "
+"parece muy ajeno a todo lo que le rodea."
 
 #: dat/missions/minerva/kex5.lua:678
 msgid ""
@@ -65550,10 +65934,14 @@ msgid ""
 "someone who doesn't look like they will survive the next period? Dr. "
 "Strangelove seems unresponsive to your actions."
 msgstr ""
+"Te miras a ti mismo y piensas en lo que estás a punto de hacer. Incluso si "
+"esto es lo que Kex cree que quiere, ¿tiene algún sentido acabar "
+"violentamente con la vida de alguien que no parece que vaya a sobrevivir al "
+"siguiente periodo? El Dr. Strangelove parece no responder a tus acciones."
 
 #: dat/missions/minerva/kex5.lua:680
 msgid "Pull the trigger."
-msgstr ""
+msgstr "Apretar el gatillo."
 
 #. played backwards so should be down
 #: dat/missions/minerva/kex5.lua:689
@@ -65563,26 +65951,34 @@ msgid ""
 "confirming his death. You did the task and you can only hope this will bring "
 "Kex peace of mind, although you somehow doubt it."
 msgstr ""
+"Aprietas el gatillo y el cuerpo del Dr. Strangelove queda completamente "
+"inerte y sin vida. El monitor de signos vitales emite una alarma antes de "
+"silenciarse, confirmando su muerte. Has hecho la tarea y sólo puedes esperar "
+"que esto traiga tranquilidad a Kex, aunque de alguna manera lo dudas."
 
 #. Remove station
 #. Advance mission
 #: dat/missions/minerva/kex5.lua:704
 msgid "You shot a dying Dr. Strangelove in cold blood, fulfilling Kex's wish."
 msgstr ""
+"Disparaste a un moribundo Dr. Strangelove a sangre fría, cumpliendo el deseo "
+"de Kex."
 
 #: dat/missions/minerva/kex5.lua:706
 msgid ""
 "You unplugged the life support system of Dr. Strangelove who quickly passed "
 "away."
 msgstr ""
+"Desenchufaste el sistema de soporte vital del Dr. Strangelove, que falleció "
+"rápidamente."
 
 #: dat/missions/minerva/kex5.lua:708
 msgid "You comforted a dying Dr. Strangelove before he passed away."
-msgstr ""
+msgstr "Has confortado a un Dr. Strangelove moribundo antes de que falleciera."
 
 #: dat/missions/minerva/kex5.lua:710
 msgid "You watched Dr. Strangelove die before your eyes."
-msgstr ""
+msgstr "Has visto morir al Dr. Strangelove ante tus ojos."
 
 #. And that's all folks
 #: dat/missions/minerva/kex5.lua:722
@@ -65590,6 +65986,8 @@ msgid ""
 "The explosions clear and the system is once again silent except for your "
 "heavy breathing from running back to the ship."
 msgstr ""
+"Las explosiones se disipan y el sistema vuelve a quedar en silencio, salvo "
+"por tu pesada respiración al correr de vuelta a la nave."
 
 #: dat/missions/minerva/kex5.lua:723
 msgid ""
@@ -65599,6 +65997,11 @@ msgid ""
 "inert asteroids. It is possible that the self-destruct sequence didn't "
 "affect only the ship…"
 msgstr ""
+"Cuando vuelves a inspeccionar el sistema, te das cuenta de que ya no eres "
+"capaz de detectar el laboratorio del Dr. Strangelove. Incluso apuntando con "
+"tus sensores a la posición donde debería estar, no eres capaz de encontrar "
+"nada más que asteroides inertes. Es posible que la secuencia de "
+"autodestrucción no haya afectado sólo a la nave…"
 
 #: dat/missions/minerva/kex5.lua:724
 msgid ""
@@ -65606,6 +66009,9 @@ msgid ""
 "should get back to Kex to report what happened. Is this what Kex wanted? You "
 "feel like not even he will know the answer to that question."
 msgstr ""
+"Mientras tu mente divaga por todo lo que acabas de vivir, te das cuenta de "
+"que debes volver a Kex para informarle de lo sucedido. ¿Es esto lo que Kex "
+"quería? Sientes que ni siquiera él sabrá la respuesta a esa pregunta."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -65657,13 +66063,15 @@ msgstr ""
 #. luacheck: globals approach_maikki approach_oldman approach_scavengers (NPC functions passed by name)
 #: dat/missions/minerva/maikki1.lua:71 dat/missions/minerva/maikki1.lua:115
 msgid "Distraught Young Woman"
-msgstr ""
+msgstr "Mujer Joven Angustiada"
 
 #: dat/missions/minerva/maikki1.lua:71
 msgid ""
 "You see a small young woman sitting by herself. She has a worried expression "
 "on her face."
 msgstr ""
+"Ves a una pequeña mujer joven sentada sola. Tiene una expresión de "
+"preocupación en su rostro."
 
 #. Move target back to origin
 #: dat/missions/minerva/maikki1.lua:73 dat/missions/minerva/maikki1.lua:211
@@ -65673,11 +66081,11 @@ msgstr ""
 #: dat/missions/minerva/maikki2.lua:802 dat/missions/minerva/maikki2.lua:866
 #: dat/scripts/common/minerva.lua:104
 msgid "Finding Maikki's Father"
-msgstr ""
+msgstr "Encontrar al padre de Maikki"
 
 #: dat/missions/minerva/maikki1.lua:74
 msgid "Maikki wants you to help her find her father."
-msgstr ""
+msgstr "Maikki quiere que la ayudes a encontrar a su padre."
 
 #. If not accepted, mem.misn_state will still be nil
 #. Clear just in case
@@ -65686,11 +66094,12 @@ msgstr ""
 #: dat/missions/minerva/maikki1.lua:100 dat/missions/minerva/maikki1.lua:264
 #: dat/missions/neutral/runaway/runaway_search.lua:44
 msgid "Old Man"
-msgstr ""
+msgstr "Hombre Viejo"
 
 #: dat/missions/minerva/maikki1.lua:100
 msgid "You see a nonchalant old man sipping on his drink with a carefree aura."
 msgstr ""
+"Ves a un anciano despreocupado que sorbe su bebida con un aura despreocupada."
 
 #. Start mission
 #: dat/missions/minerva/maikki1.lua:122
@@ -65698,6 +66107,8 @@ msgid ""
 "You approach a young woman who seems somewhat distraught. It looks like she "
 "has something important on her mind."
 msgstr ""
+"Te acercas a una mujer joven que parece algo angustiada. Parece que tiene "
+"algo importante en mente."
 
 #: dat/missions/minerva/maikki1.lua:123
 msgid ""
@@ -65705,14 +66116,17 @@ msgid ""
 "told they would be here, but I never expected this place to be so…\"\n"
 "She trails off."
 msgstr ""
+"\"¿Por casualidad no serás de por aquí? Estoy buscando a alguien. Me dijeron "
+"que estarían aquí, pero nunca esperé que este lugar fuera tan...\"\n"
+"Se queda sin palabras."
 
 #: dat/missions/minerva/maikki1.lua:126
 msgid "\"spacious?\""
-msgstr ""
+msgstr "\"¿espacioso?\""
 
 #: dat/missions/minerva/maikki1.lua:127
 msgid "\"grubby?\""
-msgstr ""
+msgstr "\"¿mugriento?\""
 
 #: dat/missions/minerva/maikki1.lua:130
 msgid ""
@@ -65720,6 +66134,9 @@ msgid ""
 "\"…unsubstantial. Furthermore, it is all so tacky! I thought such a famous "
 "gambling world would be much more cute!\""
 msgstr ""
+"Frunce un poco el ceño.\n"
+"\"...insustancial. Además, ¡es todo tan hortera! ¡Pensé que un mundo de "
+"juego tan famoso sería mucho más bonito!\""
 
 #: dat/missions/minerva/maikki1.lua:132
 msgid ""
@@ -65727,10 +66144,12 @@ msgid ""
 "\"You wouldn't happen to be familiar with the station? I'm looking for "
 "someone.\""
 msgstr ""
+"De repente recuerda por qué ha venido aquí y sus ojos se iluminan.\n"
+"\"¿Por casualidad no conoces la estación? Estoy buscando a alguien.\""
 
 #: dat/missions/minerva/maikki1.lua:135
 msgid "Offer to help her"
-msgstr ""
+msgstr "Ofrécete a ayudarla"
 
 #: dat/missions/minerva/maikki1.lua:136 dat/missions/minerva/maikki2.lua:175
 #: dat/missions/tutorial/nelly01.lua:125 dat/missions/tutorial/nelly02.lua:123
@@ -65741,17 +66160,19 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:53
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:66
 msgid "Decline to help"
-msgstr ""
+msgstr "Declinar tu ayuda"
 
 #: dat/missions/minerva/maikki1.lua:139 dat/missions/minerva/maikki2.lua:178
 msgid ""
 "You feel it is best to leave her alone for now and disappear into the crowds "
 "leaving her once again alone to her worries."
 msgstr ""
+"Crees que lo mejor es dejarla sola por ahora y desaparecer entre la multitud "
+"dejándola una vez más sola con sus preocupaciones."
 
 #: dat/missions/minerva/maikki1.lua:146
 msgid "You have agreed to help Maikki find her father (Kex)."
-msgstr ""
+msgstr "Has aceptado ayudar a Maikki a encontrar a su padre (Kex)."
 
 #: dat/missions/minerva/maikki1.lua:148
 msgid ""
@@ -65759,18 +66180,21 @@ msgid ""
 "gotten anywhere.\"\n"
 "She gives out a heavy sigh."
 msgstr ""
+"\"Me dijeron que estaría aquí, pero llevo años aquí y no he llegado a nada\"."
+"\n"
+"Da un fuerte suspiro."
 
 #: dat/missions/minerva/maikki1.lua:151
 msgid "\"My name is Maisie, but you can call me Maikki.\""
-msgstr ""
+msgstr "\"Me llamo Maisie, pero puedes llamarme Maikki.\""
 
 #: dat/missions/minerva/maikki1.lua:153
 msgid "Offer her a drink ({tokens})"
-msgstr ""
+msgstr "Ofrecerle una bebida ({tokens})"
 
 #: dat/missions/minerva/maikki1.lua:154
 msgid "Ask her who she is looking for"
-msgstr ""
+msgstr "Pregúntale a quién está buscando"
 
 #: dat/missions/minerva/maikki1.lua:165
 msgid ""
@@ -65778,79 +66202,99 @@ msgid ""
 "a strawberry cheesecake caramel parfait with extra berries. Wait, was that "
 "even on the menu?"
 msgstr ""
+"Le ofreces una bebida. Después de mirar atentamente la carta de bebidas, "
+"pide un parfait de tarta de queso y fresas con extra de bayas. Espera, ¿"
+"estaba eso en el menú?"
 
 #: dat/missions/minerva/maikki1.lua:166
 msgid ""
 "\"Thank you! At least the food isn't bad here!\"\n"
 "She starts eating the parfait, which seems to be larger than her head."
 msgstr ""
+"\"¡Gracias! Al menos la comida no es mala aquí\".\n"
+"Comienza a comer el parfait, que parece ser más grande que su cabeza."
 
 #: dat/missions/minerva/maikki1.lua:171
 msgid "You do not have enough Minerva Tokens to buy her a drink."
-msgstr ""
+msgstr "No tienes suficientes Fichas de Minerva para comprarle una bebida."
 
 #: dat/missions/minerva/maikki1.lua:178
 msgid ""
 "\"The truth is I am looking for my father. He disappeared when I was a "
 "little girl and I don't even remember a single memory of him.\""
 msgstr ""
+"\"La verdad es que estoy buscando a mi padre. Desapareció cuando yo era una "
+"niña y no recuerdo nada de él.\""
 
 #: dat/missions/minerva/maikki1.lua:181
 msgid "You approach Maikki who seems to be enjoying a parfait."
-msgstr ""
+msgstr "Te acercas a Maikki que parece estar disfrutando de un parfait."
 
 #. Normal chitchat
 #: dat/missions/minerva/maikki1.lua:186
 msgid "Ask about her father"
-msgstr ""
+msgstr "Pregunta por su padre"
 
 #: dat/missions/minerva/maikki1.lua:190
 msgid "Show her the picture"
-msgstr ""
+msgstr "Muéstrale la foto"
 
 #: dat/missions/minerva/maikki1.lua:196
 msgid ""
 "\"I don't remember him at all. He disappeared when I was only 5 cycles old. "
 "Before my mother died, she told me he was a famous space pilot.\""
 msgstr ""
+"\"No lo recuerdo en absoluto. Desapareció cuando yo tenía sólo 5 ciclos. "
+"Antes de que mi madre muriera, me dijo que era un famoso piloto espacial.\""
 
 #: dat/missions/minerva/maikki1.lua:197
 msgid ""
 "\"She used to tell me stories about how he would go on all sorts of brave "
 "adventures in the nebula to recover artefacts of human history.\""
 msgstr ""
+"\"Solía contarme historias sobre cómo se embarcaba en todo tipo de valientes "
+"aventuras en la nebulosa para recuperar artefactos de la historia humana.\""
 
 #: dat/missions/minerva/maikki1.lua:199
 msgid "\"He was a scavenger?\""
-msgstr ""
+msgstr "\"¿Era un carroñero?\""
 
 #: dat/missions/minerva/maikki1.lua:200
 msgid "\"He was a scholar?\""
-msgstr ""
+msgstr "\"¿Era un erudito?\""
 
 #: dat/missions/minerva/maikki1.lua:203
 msgid ""
 "\"I like to think that he was a scholar, but most people would call him a "
 "scavenger.\""
 msgstr ""
+"\"Me gusta pensar que era un erudito, pero la mayoría de la gente lo "
+"llamaría un carroñero.\""
 
 #: dat/missions/minerva/maikki1.lua:204
 msgid ""
 "\"My mother died without telling me, but, after her death, while going "
 "through her stuff, I found out that my father was the famous Kex McPherson!\""
 msgstr ""
+"\"Mi madre murió sin decírmelo, pero, después de su muerte, al revisar sus "
+"cosas, ¡descubrí que mi padre era el famoso Kex McPherson!\""
 
 #: dat/missions/minerva/maikki1.lua:205
 msgid ""
 "\"Apparently, one day he went into the nebula with his business partner "
 "Mireia and they were never seen again. All attempts to find them failed.\""
 msgstr ""
+"\"Al parecer, un día se adentró en la nebulosa con su socia Mireia y no se "
+"les volvió a ver. Todos los intentos de encontrarlos fracasaron.\""
 
 #: dat/missions/minerva/maikki1.lua:206
 msgid ""
 "\"Most people believe they are dead, but I think he was kidnapped and is "
 "being held here. Maybe he hit his head and even forgot who he was!\""
 msgstr ""
+"\"La mayoría de la gente cree que están muertos, pero yo creo que fue "
+"secuestrado y está retenido aquí. ¡Quizá se golpeó la cabeza y hasta olvidó "
+"quién era!\""
 
 #: dat/missions/minerva/maikki1.lua:207
 msgid ""
@@ -65858,23 +66302,26 @@ msgid ""
 "look for hints around where he went missing? I heard he was very fond of the "
 "Cerberus bar in Doeston. Maybe there is a hint there.\""
 msgstr ""
+"\"No tengo una nave espacial, pero mientras miro por aquí, ¿podrías intentar "
+"buscar pistas alrededor de donde desapareció? He oído que le gustaba mucho "
+"el bar Cerbero en Doeston. Tal vez haya una pista allí.\""
 
 #: dat/missions/minerva/maikki1.lua:212
 msgid "Look around the {sys} system"
-msgstr ""
+msgstr "Mira alrededor del sistema {sys}"
 
 #: dat/missions/minerva/maikki1.lua:214
 msgid "You were told her father could be near Doeston."
-msgstr ""
+msgstr "Te dijeron que su padre podría estar cerca de Doeston."
 
 #: dat/missions/minerva/maikki1.lua:220
 msgid "You show her the picture you found in Zerantix of her and her parents."
-msgstr ""
+msgstr "Le enseñas la foto que encontraste en Zerantix de ella y sus padres."
 
 #. TODO show picture
 #: dat/missions/minerva/maikki1.lua:222
 msgid "As she stares deeply at the picture, her eyes tear up."
-msgstr ""
+msgstr "Mientras mira fijamente la imagen, sus ojos se llenan de lágrimas."
 
 #: dat/missions/minerva/maikki1.lua:223
 msgid ""
@@ -65882,6 +66329,8 @@ msgid ""
 "seeing us together just brings back some memories which I had thought I had "
 "forgotten.\""
 msgstr ""
+"\"Lo siento, no debería estar llorando. Apenas conozco al hombre. Es que "
+"vernos juntos me trae algunos recuerdos que creía haber olvidado.\""
 
 #: dat/missions/minerva/maikki1.lua:224
 msgid ""
@@ -65889,6 +66338,9 @@ msgid ""
 "what should have been my childhood…\"\n"
 "She reminisces."
 msgstr ""
+"\"Parece tan bobo en esta foto, y mi madre parece tan feliz... Esto es lo "
+"que debería haber sido mi infancia...\"\n"
+"Rememora."
 
 #. TODO flashback with her family
 #: dat/missions/minerva/maikki1.lua:227
@@ -65896,6 +66348,8 @@ msgid ""
 "You give a few moments to recover before explaining to her what you saw in "
 "the wreck and your encounter with the scavengers."
 msgstr ""
+"Le das unos momentos para recuperarse antes de explicarle lo que viste en el "
+"naufragio y tu encuentro con los carroñeros."
 
 #: dat/missions/minerva/maikki1.lua:228
 msgid ""
@@ -65904,6 +66358,10 @@ msgid ""
 "\"From what you tell me, it seems like it wasn't an accident…\"\n"
 "She looks up expectantly."
 msgstr ""
+"Se seca los ojos con un pañuelo tratando infructuosamente de no manchar su "
+"maquillaje.\n"
+"\"Por lo que me cuentas, parece que no fue un accidente...\"\n"
+"Levanta la mirada expectante."
 
 #: dat/missions/minerva/maikki1.lua:231
 msgid ""
@@ -65911,6 +66369,9 @@ msgid ""
 "dies that easily!\"\n"
 "She looks clearly excited at the possibility."
 msgstr ""
+"\"¡Si no encontraron un cuerpo estoy seguro de que sobrevivió! ¡No sería "
+"alguien que muere tan fácilmente!\"\n"
+"Parece claramente emocionada ante la posibilidad."
 
 #: dat/missions/minerva/maikki1.lua:233
 msgid ""
@@ -65919,6 +66380,10 @@ msgid ""
 "have to do with my father? I always thought those creeps couldn't be up to "
 "anything good.\""
 msgstr ""
+"Frunce las cejas.\n"
+"\"Los carroñeros estaban vendiendo a los Za'lek, ¿verdad? ¿Qué podrían tener "
+"que ver los Za'lek con mi padre? Siempre pensé que esos asquerosos no podían "
+"estar tramando nada bueno.\""
 
 #: dat/missions/minerva/maikki1.lua:235
 msgid ""
@@ -65926,56 +66391,65 @@ msgid ""
 "\"I think I have an idea for our next steps. Meet me up here in a bit. I "
 "have to get some information first.\""
 msgstr ""
+"Su cara brilla.\n"
+"\"Creo que tengo una idea para nuestros próximos pasos. Reúnete conmigo aquí "
+"dentro de un rato. Tengo que conseguir algo de información en primer lugar.\""
 
 #. no reward, yet...
 #: dat/missions/minerva/maikki1.lua:241
 msgid ""
 "You gave Maikki the information you found in the nebula about her father."
 msgstr ""
+"Le diste a Maikki la información que encontraste en la nebulosa sobre su "
+"padre."
 
 #: dat/missions/minerva/maikki1.lua:246 dat/missions/minerva/maikki2.lua:282
 msgid "\"Is there anything you would like to know about?\""
-msgstr ""
+msgstr "\"¿Hay algo que quieras saber?\""
 
 #: dat/missions/minerva/maikki1.lua:250 dat/missions/minerva/maikki2.lua:286
 msgid "You take your leave to continue the search for her father."
-msgstr ""
+msgstr "Te despides para continuar la búsqueda de su padre."
 
 #: dat/missions/minerva/maikki1.lua:267
 msgid ""
 "You see an old man casually drinking at the bar. He has a sort of distant, "
 "bored look on his face."
 msgstr ""
+"Ves a un anciano bebiendo despreocupadamente en el bar. Tiene una especie de "
+"mirada distante y aburrida."
 
 #: dat/missions/minerva/maikki1.lua:271
 msgid "Ask about Kex McPherson"
-msgstr ""
+msgstr "Pregunta por Kex McPherson"
 
 #: dat/missions/minerva/maikki1.lua:272
 msgid "Ask about Doeston"
-msgstr ""
+msgstr "Pregunta por Doeston"
 
 #: dat/missions/minerva/maikki1.lua:273
 msgid "Ask about the Nebula"
-msgstr ""
+msgstr "Pregunta por la Nebulosa"
 
 #: dat/missions/minerva/maikki1.lua:277
 msgid "Ask about scavengers you saw"
-msgstr ""
+msgstr "Pregunta por los carroñeros que vistes"
 
 #: dat/missions/minerva/maikki1.lua:280
 msgid "Ask about {sys}"
-msgstr ""
+msgstr "Pregunta por {sys}"
 
 #: dat/missions/minerva/maikki1.lua:283
 msgid "Show him the picture"
-msgstr ""
+msgstr "Muéstrale la imagen"
 
 #: dat/missions/minerva/maikki1.lua:288
 msgid ""
 "\"Kex? Now that is not a name I've heard in a while.\"\n"
 "He nods reflectively."
 msgstr ""
+"\"¿Kex? Ese no es un nombre que haya escuchado en mucho tiempo.\"\n"
+"Asiente reflexivamente."
 
 #: dat/missions/minerva/maikki1.lua:290
 msgid ""
@@ -65983,6 +66457,9 @@ msgid ""
 "nebula, spending his time with the useless lot of us. Shame that he went "
 "missing.\""
 msgstr ""
+"\"Kex era un gran tipo. Solía pasar el rato aquí antes de aventurarse en la "
+"nebulosa, pasando su tiempo con los inútiles de nosotros. Es una pena que "
+"haya desaparecido.\""
 
 #: dat/missions/minerva/maikki1.lua:291
 msgid ""
@@ -65990,12 +66467,17 @@ msgid ""
 "other side of the nebula, if there is one.\"\n"
 "He takes a long swig from his drink."
 msgstr ""
+"\"Como nunca encontraron su nave, me gusta pensar que llegó al otro lado de "
+"la nebulosa, si es que existe\".\n"
+"Da un largo trago a su bebida."
 
 #: dat/missions/minerva/maikki1.lua:293
 msgid ""
 "\"Still that doesn't stop the odd folk here and there from trying to find "
 "it, they usually don't end up much past Arandon.\""
 msgstr ""
+"\"Aun así, eso no impide que alguna gente de aquí y de allá intente "
+"encontrarlo, normalmente no acaban mucho más allá de Arandon.\""
 
 #: dat/missions/minerva/maikki1.lua:303
 msgid ""
@@ -66004,6 +66486,10 @@ msgid ""
 "exploring, but can't with this bad knee.\"\n"
 "He pats his left knee."
 msgstr ""
+"\"No hay mucho que hacer en Doeston. Principalmente un lugar de parada para "
+"todos los locos que se dirigen a la nebulosa. Quizá si fuera más joven "
+"estaría con ellos explorando, pero no puedo con esta rodilla maltrecha\".\n"
+"Se palpa la rodilla izquierda."
 
 #: dat/missions/minerva/maikki1.lua:305
 msgid ""
@@ -66013,12 +66499,18 @@ msgid ""
 "Mireia.\"\n"
 "He muses thoughtfully."
 msgstr ""
+"\"Solía ser un lugar más popular, pero con la mayor parte de las presas "
+"fáciles sacadas de la nebulosa, ya no viene mucha gente. Sobre todo después "
+"de la desaparición de famosos carroñeros como Kex y Mireia.\"\n"
+"Se queda pensativo."
 
 #: dat/missions/minerva/maikki1.lua:307
 msgid ""
 "\"To better times.\"\n"
 "He downs his drink and orders another."
 msgstr ""
+"\"Por tiempos mejores.\"\n"
+"Se toma su bebida y pide otra."
 
 #: dat/missions/minerva/maikki1.lua:312
 msgid ""
@@ -66027,6 +66519,10 @@ msgid ""
 "it, however, it do got quite a character. If you try to go too deep into 'er "
 "you can't easily get back. Many a soul has been lost in there.\""
 msgstr ""
+"Silba despreocupadamente.\n"
+"\"La nebulosa es una verdadera obra. Es casi hipnotizante volar a través de "
+"ella, sin embargo, tiene bastante carácter. Si intentas adentrarte demasiado "
+"en ella, no puedes volver fácilmente. Muchas almas se han perdido ahí.\""
 
 #: dat/missions/minerva/maikki1.lua:315
 msgid ""
@@ -66034,64 +66530,85 @@ msgid ""
 "\"Rumour has it that there are ghosts lurking in the depths. I've seen "
 "people come back, pale as snow, claiming they seen them.\""
 msgstr ""
+"Se queda un poco más tranquilo y se inclina hacia ti.\n"
+"\"Se rumorea que hay fantasmas acechando en las profundidades. He visto a "
+"gente volver, pálida como la nieve, diciendo que los han visto.\""
 
 #: dat/missions/minerva/maikki1.lua:317
 msgid ""
 "\"I believe it be the boredom getting to their heads. Likely naught but "
 "another scavenger or some debris.\""
 msgstr ""
+"\"Creo que el aburrimiento se les ha subido a la cabeza. Probablemente no "
+"sea más que otro carroñero o algún resto.\""
 
 #: dat/missions/minerva/maikki1.lua:321
 msgid ""
 "\"It's not uncommon to see scavengers around here. Although there are no "
 "where near as many as there were in Kex's time.\""
 msgstr ""
+"\"No es raro ver carroñeros por aquí. Aunque no hay ni de lejos tantos como "
+"en la época de Kex.\""
 
 #: dat/missions/minerva/maikki1.lua:322
 msgid ""
 "He takes a long sip, gets close and whispers.\n"
 "\"You wouldn't suppose they found something interesting?\""
 msgstr ""
+"Toma un largo sorbo, se acerca y susurra.\n"
+"\"¿No crees que han encontrado algo interesante?\""
 
 #: dat/missions/minerva/maikki1.lua:324
 msgid ""
 "\"Suppose not. However, you could ask them over there. Those two look like "
 "they could be scavengers.\""
 msgstr ""
+"\"Supongo que no. Sin embargo, podrías preguntar a esos de ahí. Esos dos "
+"parecen que podrían ser carroñeros.\""
 
 #: dat/missions/minerva/maikki1.lua:325
 msgid "He points to a table with two fairly drunk people."
-msgstr ""
+msgstr "Señala una mesa con dos personas bastante borrachas."
 
 #: dat/missions/minerva/maikki1.lua:335
 msgid ""
 "\"{stealthsys}? That should be just past {cutscenesys}. Do you think the "
 "scavengers could have found something there?\""
 msgstr ""
+"¿{Stealthsys}? Eso debería estar justo después de {cutscenesys}. ¿Crees que "
+"los carroñeros podrían haber encontrado algo allí?\""
 
 #: dat/missions/minerva/maikki1.lua:336
 msgid ""
 "\"If you plan to go, you should bring your best sensors. It's very hard to "
 "see anything due to the density of the nebula there.\""
 msgstr ""
+"\"Si planeas ir, deberías llevar tus mejores sensores. Es muy difícil ver "
+"algo debido a la densidad de la nebulosa allí.\""
 
 #: dat/missions/minerva/maikki1.lua:340
 msgid ""
 "\"Wow! Where did you find that picture of Kex? He looks younger than I "
 "remember him!\""
 msgstr ""
+"\"¡Vaya! ¿Dónde has encontrado esa foto de Kex? ¡Parece más joven de lo que "
+"recuerdo!\""
 
 #: dat/missions/minerva/maikki1.lua:344
 msgid ""
 "He gives you a bored look as he takes a sip from his drink.\n"
 "\"Is there anything else you would like to know about?\""
 msgstr ""
+"Te mira con aburrimiento mientras da un sorbo a su bebida.\n"
+"\"¿Hay algo más que quieras saber?\""
 
 #: dat/missions/minerva/maikki1.lua:369
 msgid ""
 "You see some scavengers at the bar. They are clearly plastered. They don't "
 "really seem to be aware of your presence."
 msgstr ""
+"Ves a algunos carroñeros en el bar. Están claramente borrachos. No parecen "
+"darse cuenta de tu presencia."
 
 #. Already got mission, just give player a refresher
 #: dat/missions/minerva/maikki1.lua:373
@@ -66099,12 +66616,16 @@ msgid ""
 "\"Aren't you drinking too much? Don't forget to fix my sensors before we "
 "leave to Zerantix tomorrow.\""
 msgstr ""
+"\"¿No estás bebiendo demasiado? No te olvides de arreglar mis sensores antes "
+"de irnos a Zerantix mañana.\""
 
 #: dat/missions/minerva/maikki1.lua:374
 msgid ""
 "\"Meee? Drinkinging tooo mich? Thatss sshtoopid.\"\n"
 "He takes another long swig of his drink and burps."
 msgstr ""
+"\"¿Yo? ¿Beber demasiado? Eso es una tontería\".\n"
+"Da otro largo trago a su bebida y eructa."
 
 #. Blabber target to player
 #: dat/missions/minerva/maikki1.lua:378
@@ -66112,14 +66633,16 @@ msgid ""
 "\"…and then I said to him 'while that may look like a hamster, it's got a "
 "bite like a moose!'\""
 msgstr ""
+"\"...y entonces le dije '¡aunque parezca un hámster, tiene una mordida de "
+"alce!'\""
 
 #: dat/missions/minerva/maikki1.lua:379
 msgid "The scavengers hoot with laughter."
-msgstr ""
+msgstr "Los carroñeros se ríen a carcajadas."
 
 #: dat/missions/minerva/maikki1.lua:380
 msgid "\"That's a great story. Them space hamsters be wicked.\""
-msgstr ""
+msgstr "\"Eso es una gran historia. Esos hámsters espaciales son malvados.\""
 
 #: dat/missions/minerva/maikki1.lua:381
 msgid ""
@@ -66127,23 +66650,32 @@ msgid ""
 "nebula always gives me the chills.\"\n"
 "He shivers exaggeratedly."
 msgstr ""
+"\"Sobre mañana, ¿estás seguro de que la información es correcta? Ir tan "
+"profundo en la nebulosa siempre me da escalofríos.\"\n"
+"Se estremece exageradamente."
 
 #: dat/missions/minerva/maikki1.lua:383
 msgid ""
 "\"Yeah! I saw it with my own eyes. That shit is legit. Seems to be the wreck "
 "of a scavenger.\""
 msgstr ""
+"\"¡Sí! Lo vi con mis propios ojos. Esa mierda es legítima. Parecen ser los "
+"restos de un carroñero.\""
 
 #: dat/missions/minerva/maikki1.lua:384
 msgid ""
 "\"Why didn't you haul it back then? We might not be able to find it again!\""
 msgstr ""
+"\"¿Por qué no lo arrastraste entonces? ¡Puede que no lo encontremos de nuevo!"
+"\""
 
 #: dat/missions/minerva/maikki1.lua:386
 msgid ""
 "\"How many times do I have to tell you? My sensors were acting up, didn't "
 "want to spend too long in Zerantix with all them ghosts around.\""
 msgstr ""
+"\"¿Cuántas veces tengo que decírtelo? Mis sensores estaban actuando, no "
+"quería pasar mucho tiempo en Zerantix con todos esos fantasmas alrededore\""
 
 #: dat/missions/minerva/maikki1.lua:387
 msgid ""
@@ -66151,34 +66683,41 @@ msgid ""
 "fix!\"\n"
 "He pats his biceps in a fairly uninspiring way."
 msgstr ""
+"\"Voy a echar un vistazo a la fijación de tus sensores. ¡No hay nada que "
+"estos brutos no puedan arreglar!\"\n"
+"Se da unas palmaditas en el bíceps de una manera bastante poco inspiradora."
 
 #: dat/missions/minerva/maikki1.lua:389
 msgid ""
 "\"Yeah, let's do that after one more round of drinks. Got to get there "
 "before other scroungers do.\""
 msgstr ""
+"\"Sí, hagamos eso después de una ronda más de bebidas. Tenemos que llegar "
+"antes de que lo hagan otros gorrones.\""
 
 #: dat/missions/minerva/maikki1.lua:390
 msgid "\"To our future success in Zerantix!\""
-msgstr ""
+msgstr "\"¡Por nuestro futuro éxito en Zerantix!\""
 
 #: dat/missions/minerva/maikki1.lua:391
 msgid ""
 "They cheer, down their drinks, and order another round. Perhaps the wreck in "
 "Zerantix is related to Kex somehow."
 msgstr ""
+"Aplauden, bajan sus bebidas y piden otra ronda. Tal vez el naufragio en "
+"Zerantix esté relacionado con Kex de alguna forma."
 
 #: dat/missions/minerva/maikki1.lua:395
 msgid "Follow the scavengers in the {sys} system"
-msgstr ""
+msgstr "Sigue a los carroñeros en el sistema {sys}"
 
 #: dat/missions/minerva/maikki1.lua:398
 msgid "You overheard some scavengers talking about a wreck in Zerantix."
-msgstr ""
+msgstr "Escuchaste a unos carroñeros hablando de un naufragio en Zerantix."
 
 #: dat/missions/minerva/maikki1.lua:403
 msgid "You take your leave without them noticing you."
-msgstr ""
+msgstr "Te despides sin que se den cuenta."
 
 #. Set up system
 #. Cutscene with scavengerB
@@ -66195,27 +66734,27 @@ msgstr ""
 #: dat/missions/minerva/maikki1.lua:419 dat/missions/minerva/maikki1.lua:442
 #: dat/missions/minerva/maikki1.lua:505
 msgid "Scavenger"
-msgstr ""
+msgstr "Carroñero"
 
 #: dat/missions/minerva/maikki1.lua:420
 msgid "Scavenger Vendetta"
-msgstr ""
+msgstr "Vendetta Carroñero"
 
 #: dat/missions/minerva/maikki1.lua:459
 msgid "Sensors damaged. Requesting assistance."
-msgstr ""
+msgstr "Sensores dañados. Solicitando asistencia."
 
 #: dat/missions/minerva/maikki1.lua:460
 msgid "S.O.S. Scavenger here, sensors damaged."
-msgstr ""
+msgstr "S.O.S. Carroñero aquí, sensores dañados."
 
 #: dat/missions/minerva/maikki1.lua:461
 msgid "Is anybody out there? Sensors damaged, requesting assistance."
-msgstr ""
+msgstr "¿Hay alguien ahí fuera? Sensores dañados, solicitando ayuda."
 
 #: dat/missions/minerva/maikki1.lua:462
 msgid "Mayday! Requesting assistance. Wait, what was that?"
-msgstr ""
+msgstr "¡Auxilio! Solicitando ayuda. Espera, ¿qué fue eso?"
 
 #. Get rid of the timeout hook
 #: dat/missions/minerva/maikki1.lua:495
@@ -66223,203 +66762,224 @@ msgid ""
 "#pYour ship has detected a curious signal originating from inside the system."
 "#0"
 msgstr ""
+"#Tu nave ha detectado una curiosa señal procedente del interior del "
+"sistema.#0"
 
 #: dat/missions/minerva/maikki1.lua:496 dat/missions/minerva/maikki2.lua:613
 msgid "Curious Signal"
-msgstr ""
+msgstr "Señal Curiosa"
 
 #: dat/missions/minerva/maikki1.lua:509
 msgid ""
 "The comm flickers as a scavenger appears into view. He looks a bit pale."
 msgstr ""
+"El comunicador parpadea mientras un carroñero aparece a la vista. Parece un "
+"poco pálido."
 
 #: dat/missions/minerva/maikki1.lua:510
 msgid ""
 "\"Thank you. I thought I was a goner. My sensors failed me at the worst time "
 "and it's impossible to see shit in this nebula.\""
 msgstr ""
+"\"Gracias. Pensé que estaba perdido. Mis sensores me fallaron en el peor "
+"momento y es imposible ver una mierda en esta nebulosa.\""
 
 #: dat/missions/minerva/maikki1.lua:511
 msgid ""
 "\"Could you tell me the way to {sys}? I have to get out of here as soon as "
 "possible.\""
 msgstr ""
+"\"¿Podría decirme el camino a {sys}? Tengo que salir de aquí lo antes "
+"posible.\""
 
 #: dat/missions/minerva/maikki1.lua:513
 msgid "Give him directions"
-msgstr ""
+msgstr "Darle indicaciones"
 
 #: dat/missions/minerva/maikki1.lua:518
 msgid "You close the comm and leave the scavenger to his fate."
-msgstr ""
+msgstr "Cierras la comunicación y dejas al carroñero a su suerte."
 
 #: dat/missions/minerva/maikki1.lua:523
 msgid "\"Thanks! I can't wait to get out of this hellhole.\""
-msgstr ""
+msgstr "\"¡Gracias! No puedo esperar a salir de este infierno\""
 
 #: dat/missions/minerva/maikki1.lua:524
 msgid ""
 "\"Don't tell me you've also come here to scavenge? I'm telling you, this "
 "place is haunted.\""
 msgstr ""
+"\"¿No me digas que también has venido aquí a escarbar? Te digo que este "
+"lugar está embrujado.\""
 
 #: dat/missions/minerva/maikki1.lua:525
 msgid ""
 "\"I was told this would be easy money on the blackmarket, but this wasn't "
 "what I expected at all.\""
 msgstr ""
+"\"Me dijeron que sería dinero fácil en el mercado negro, pero esto no era lo "
+"que esperaba en absoluto.\""
 
 #: dat/missions/minerva/maikki1.lua:526
 msgid "\"Anyway, good luck scavenging.\""
-msgstr ""
+msgstr "\"De todos modos, buena suerte en la búsqueda de tesoros.\""
 
 #: dat/missions/minerva/maikki1.lua:527
 msgid "The scavenger disappears from view."
-msgstr ""
+msgstr "El carroñero desaparece de la vista."
 
 #. Close comm immediately
 #. Was player an asshole?
 #: dat/missions/minerva/maikki1.lua:536
 msgid "Asshole!"
-msgstr ""
+msgstr "¡Imbécil!"
 
 #. reset timer
 #: dat/missions/minerva/maikki1.lua:540
 msgid "Thanks!"
-msgstr ""
+msgstr "¡Gracias!"
 
 #. reset timer
 #: dat/missions/minerva/maikki1.lua:547
 msgid "You helped a scavenger in Arandon."
-msgstr ""
+msgstr "Ayudaste a un carroñero en Arandon."
 
 #. Start the cinematics
 #: dat/missions/minerva/maikki1.lua:568
 msgid "Damnit! I thought I told you to fix the sensors."
-msgstr ""
+msgstr "¡Maldita sea! Pensé que te había dicho que arreglaras los sensores."
 
 #: dat/missions/minerva/maikki1.lua:571
 msgid ""
 "Hey! I fixed them, it's this damn nebula that must have broken them again."
 msgstr ""
+"¡Oye! Los arreglé, es esta maldita nebulosa la que debe haberlos roto de "
+"nuevo."
 
 #: dat/missions/minerva/maikki1.lua:574
 msgid ""
 "Damnit. I really dislike broadcasting, but my encryption also seems damaged "
 "now."
 msgstr ""
+"Maldita sea. Realmente me disgusta la emisión, pero mi encriptación también "
+"parece dañada ahora."
 
 #: dat/missions/minerva/maikki1.lua:577
 msgid "Don't worry, it's not like there's anybody else here."
-msgstr ""
+msgstr "No te preocupes, no hay nadie más aquí."
 
 #: dat/missions/minerva/maikki1.lua:580
 msgid "Let's just get this over with."
-msgstr ""
+msgstr "Acabemos con esto."
 
 #. Back to player
 #: dat/missions/minerva/maikki1.lua:595
 msgid "This place always gives me the creeps."
-msgstr ""
+msgstr "Este lugar siempre me da escalofríos."
 
 #: dat/missions/minerva/maikki1.lua:596
 msgid "C'mon, the guy said that this was a great wreck."
-msgstr ""
+msgstr "Vamos, el tipo dijo que era un gran naufragio."
 
 #: dat/missions/minerva/maikki1.lua:597
 msgid "You know the Za'lek pay premium for this sort of shit, right?"
-msgstr ""
+msgstr "Sabes que los Za'lek pagan una prima por este tipo de cosas, ¿verdad?"
 
 #: dat/missions/minerva/maikki1.lua:598
 msgid "Yeah, yeah…  just hope we don't see any ghosts."
-msgstr ""
+msgstr "Sí, sí... sólo espero que no veamos ningún fantasma."
 
 #: dat/missions/minerva/maikki1.lua:599
 msgid "You don't really believe in them do you?"
-msgstr ""
+msgstr "No crees realmente en ellos, ¿verdad?"
 
 #: dat/missions/minerva/maikki1.lua:600
 msgid "Dude, there's really freaky shit out there."
-msgstr ""
+msgstr "Tío, hay cosas muy raras por ahí."
 
 #: dat/missions/minerva/maikki1.lua:601
 msgid "Yeah, but most of that freaky shit are Soromid bioengineered crap."
 msgstr ""
+"Sí, pero la mayoría de esas cosas raras es la basura de bioingeniería "
+"Soromida."
 
 #: dat/missions/minerva/maikki1.lua:602
 msgid "Ugh, Soromids give me the creeps."
-msgstr ""
+msgstr "Uf, los Sorómidas me dan escalofríos."
 
 #: dat/missions/minerva/maikki1.lua:603
 msgid ""
 "I'd take them over Za'leks any day. I have no idea what Za'leks are thinking."
 msgstr ""
+"Los prefiero a los Za'leks cualquier día. No tengo ni idea de lo que los "
+"Za'leks están pensando."
 
 #. 37 seconds
 #: dat/missions/minerva/maikki1.lua:605
 msgid "Hey, did you see something?"
-msgstr ""
+msgstr "Oye, ¿has visto algo?"
 
 #: dat/missions/minerva/maikki1.lua:606
 msgid ""
 "How the hell am I supposed to see anything with my sensors broken, dipshit?"
 msgstr ""
+"¿Cómo diablos se supone que voy a ver algo con mis sensores rotos, imbécil?"
 
 #: dat/missions/minerva/maikki1.lua:607
 msgid "I already said I was sorry!"
-msgstr ""
+msgstr "¡Ya dije que lo sentía!"
 
 #: dat/missions/minerva/maikki1.lua:608
 msgid "This is coming out of your cut."
-msgstr ""
+msgstr "Esto sale de tu parte."
 
 #. 53 seconds
 #: dat/missions/minerva/maikki1.lua:610
 msgid "C'mon!"
-msgstr ""
+msgstr "¡Venga!"
 
 #. Cut off point here, restarts at heading to waypoint[4]
 #: dat/missions/minerva/maikki1.lua:612
 msgid "We should be there soon."
-msgstr ""
+msgstr "Deberíamos llegar pronto."
 
 #: dat/missions/minerva/maikki1.lua:613
 msgid "I swear I'll never come to the nebula again after this…"
-msgstr ""
+msgstr "Juro que nunca más vendré a la nebulosa después de esto…"
 
 #: dat/missions/minerva/maikki1.lua:614
 msgid "That's what you said last time too!"
-msgstr ""
+msgstr "¡Eso es lo que dijiste la última vez también!"
 
 #: dat/missions/minerva/maikki1.lua:637
 msgid "#rYou are about to be discovered!"
-msgstr ""
+msgstr "#r¡Estás a punto de ser descubierto!"
 
 #: dat/missions/minerva/maikki1.lua:641
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:289
 msgid "Run!"
-msgstr ""
+msgstr "¡Corre!"
 
 #: dat/missions/minerva/maikki1.lua:642
 msgid "There's definitely something there! Scram!"
-msgstr ""
+msgstr "¡Definitivamente hay algo ahí! ¡Largo!"
 
 #: dat/missions/minerva/maikki1.lua:647
 msgid "#rYou have been detected! Stealth failed!"
-msgstr ""
+msgstr "#r¡Has sido detectado! ¡El Sigilo ha fallado!"
 
 #: dat/missions/minerva/maikki1.lua:654
 msgid "#rYou are about to lose track of the scavengers!!"
-msgstr ""
+msgstr "¡¡#Estas a punto de perder la pista de los carroñeros!!"
 
 #: dat/missions/minerva/maikki1.lua:663
 msgid "#rYou lost track of the scavengers! Stealth failed!"
-msgstr ""
+msgstr "#¡Has perdido el rastro de los carroñeros! ¡Sigilo falló!"
 
 #. Starting out
 #: dat/missions/minerva/maikki1.lua:673
 msgid "Let's get going."
-msgstr ""
+msgstr "Continuemos."
 
 #. Check if made it to next target
 #. Finished current target, go to next
@@ -66427,48 +66987,52 @@ msgstr ""
 #. pscavA is following pscavB
 #: dat/missions/minerva/maikki1.lua:707
 msgid "Did you see something?"
-msgstr ""
+msgstr "¿Viste algo?"
 
 #. Should trigger another catch
 #: dat/missions/minerva/maikki1.lua:713
 msgid "It's your imagination. Let's get this over with."
-msgstr ""
+msgstr "Es tu imaginación. Terminemos con esto."
 
 #. Spawn the wreck
 #: dat/missions/minerva/maikki1.lua:727
 msgid "Ship Wreck"
-msgstr ""
+msgstr "Naufragio de Nave"
 
 #. Else, still travelling to target
 #: dat/missions/minerva/maikki1.lua:743
 msgid "Looks like we made it!"
-msgstr ""
+msgstr "¡Parece que lo hemos conseguido!"
 
 #: dat/missions/minerva/maikki1.lua:745
 msgid "We came all the way for this wreck? It better be worth it…"
 msgstr ""
+"¿Hemos hecho todo el camino para este naufragio? Más vale que valga la pena…"
 
 #: dat/missions/minerva/maikki1.lua:747
 msgid "They said it was whatshisname… Xex? Vex? Some famous guy's wreck."
 msgstr ""
+"Dijeron que era como se llamaba... ¿Xex? ¿Vex? La ruina de algún famoso."
 
 #: dat/missions/minerva/maikki1.lua:749
 msgid "Wait, someone is there!"
-msgstr ""
+msgstr "Espera, ¡hay alguien ahí!"
 
 #: dat/missions/minerva/maikki1.lua:776
 msgid "Two angry scavengers appear on your screen."
-msgstr ""
+msgstr "Dos furiosos carroñeros aparecen en tu pantalla."
 
 #: dat/missions/minerva/maikki1.lua:777
 msgid "\"You better beat it, punk. We are doing business here.\""
-msgstr ""
+msgstr "\"Será mejor que te vayas, gamberro. Estamos haciendo negocios aquí.\""
 
 #: dat/missions/minerva/maikki1.lua:778
 msgid ""
 "\"Yeah, the Za'lek wouldn't like it if we weren't able to deliver the goods "
 "they want.\""
 msgstr ""
+"\"Sí, a los Za'lek no les gustaría que no fuéramos capaces de entregar la "
+"mercancía que quieren.\""
 
 #: dat/missions/minerva/maikki1.lua:779
 msgid ""
@@ -66477,124 +67041,144 @@ msgid ""
 "worse state than that wreck over there.\"\n"
 "He points at the wreck nearby."
 msgstr ""
+"Frunce el ceño a su compañero antes de volver a mirarte fijamente.\n"
+"\"Este no es lugar para gente como tú. Piérdete o te dejaremos en un estado "
+"peor que el de esa ruina de allí\".\n"
+"Señala los restos que hay cerca."
 
 #: dat/missions/minerva/maikki1.lua:783
 msgid "\"What is that about the Za'lek?\""
-msgstr ""
+msgstr "\"¿Qué es eso de los Za'lek?\""
 
 #: dat/missions/minerva/maikki1.lua:784
 msgid "Lock your weapon systems on their ships"
-msgstr ""
+msgstr "Fija tus sistemas de armas a sus naves"
 
 #: dat/missions/minerva/maikki1.lua:788
 msgid ""
 "He glares at his partner.\n"
 "\"This is why I always tell you to keep your mouth shut!\""
 msgstr ""
+"Mira fijamente a su compañero.\n"
+"\"¡Por eso siempre te digo que mantengas la boca cerrada!\""
 
 #: dat/missions/minerva/maikki1.lua:790
 msgid ""
 "\"Damnit, why can't shit go right for a change?\"\n"
 "He seems to be clutching his head. A headache perhaps?"
 msgstr ""
+"\"Maldita sea, ¿por qué la mierda no puede ir bien para variar?\"\n"
+"Parece que se agarra la cabeza. ¿Un dolor de cabeza quizás?"
 
 #: dat/missions/minerva/maikki1.lua:793
 msgid "\"Look I just want to talk\""
-msgstr ""
+msgstr "\"Mira, sólo quiero hablar\""
 
 #: dat/missions/minerva/maikki1.lua:794
 msgid "Try to bribe them (#r{credits}#0)"
-msgstr ""
+msgstr "Intenta sobornarlos (#r{credits}#0)"
 
 #. TODO possibly add a pacifist option here too
 #: dat/missions/minerva/maikki1.lua:799
 msgid "\"What do you want to talk about asshole? This is our job.\""
-msgstr ""
+msgstr "\"¿De qué quieres hablar, gilipollas? Este es nuestro trabajo.\""
 
 #: dat/missions/minerva/maikki1.lua:814
 msgid "You found a wreck and bribed scavengers so that they left."
 msgstr ""
+"Has encontrado un naufragio y sobornado a los carroñeros para que se vayan."
 
 #: dat/missions/minerva/maikki1.lua:818
 msgid "You wire them {credits}."
-msgstr ""
+msgstr "Les transfieres {credits}."
 
 #: dat/missions/minerva/maikki1.lua:819
 msgid ""
 "\"I guess this isn't worth our trouble. We already got enough stuff for the "
 "Za'leks already.\""
 msgstr ""
+"\"Supongo que este no merece la pena. Ya tenemos suficientes cosas para los "
+"Za'leks.\""
 
 #: dat/missions/minerva/maikki1.lua:820
 msgid ""
 "\"C'mon, let's get out of here. This place gives me the creeps. Feel like a "
 "ghost is going to pop out any minute.\""
 msgstr ""
+"\"Vamos, salgamos de aquí. Este lugar me da escalofríos. Siento que un "
+"fantasma va a salir en cualquier momento.\""
 
 #: dat/missions/minerva/maikki1.lua:821
 msgid "\"Next round in Doeston is on me.\""
-msgstr ""
+msgstr "\"La próxima ronda en Doeston la pago yo.\""
 
 #: dat/missions/minerva/maikki1.lua:822
 msgid ""
 "The scavengers disappear from your screen as you see their ships start to "
 "head back to Arandon."
 msgstr ""
+"Los carroñeros desaparecen de tu pantalla mientras ves que sus naves "
+"comienzan a regresar a Arandon."
 
 #. Fight to the death :D
 #: dat/missions/minerva/maikki1.lua:827
 msgid "You don't have enough money to bribe them and fumble with words."
-msgstr ""
+msgstr "No tienes suficiente dinero para sobornarles y tentarlos con palabras."
 
 #: dat/missions/minerva/maikki1.lua:829
 msgid "\"He's stalling for time! He must have reinforcements coming!\""
-msgstr ""
+msgstr "\"¡Está ganando tiempo! ¡Debe tener refuerzos en camino!\""
 
 #: dat/missions/minerva/maikki1.lua:831
 msgid "\"Shit man! I knew we shouldn't have come here.\""
-msgstr ""
+msgstr "\"¡Mierda, hombre! Sabía que no deberíamos haber venido aquí.\""
 
 #: dat/missions/minerva/maikki1.lua:832
 msgid "\"Shut up and follow my lead!\""
-msgstr ""
+msgstr "\"¡Cállate y sígueme la corriente!\""
 
 #: dat/missions/minerva/maikki1.lua:833
 msgid "You detect they are powering up their weapon systems."
-msgstr ""
+msgstr "Detectas que están potenciando sus sistemas de armas."
 
 #. TODO add angry messages
 #: dat/missions/minerva/maikki1.lua:841
 msgid "You found a wreck and were attacked by scavengers."
-msgstr ""
+msgstr "Encontraste un naufragio y fuiste atacado por carroñeros."
 
 #: dat/missions/minerva/maikki1.lua:856
 msgid "Scavenger attacked."
-msgstr ""
+msgstr "Carroñero atacó."
 
 #: dat/missions/minerva/maikki1.lua:866
 msgid ""
 "You can see clear laser burns on the hull of the wreck as you approach the "
 "ship and prepare to board. This doesn't look like it was an accident."
 msgstr ""
+"Se pueden ver claras quemaduras de láser en el casco del naufragio al "
+"acercarte a la nave y prepararte para abordar. No parece que haya sido un "
+"accidente."
 
 #: dat/missions/minerva/maikki1.lua:867
 msgid ""
 "You board the wreck in your space suit and begin to investigate the insides "
 "of the ship."
 msgstr ""
+"Abordas el naufragio con tu traje espacial y empiezas a investigar el "
+"interior de la nave."
 
 #. Give player the illusion of choice
 #: dat/missions/minerva/maikki1.lua:873
 msgid "Investigate the bridge"
-msgstr ""
+msgstr "Investiga el puente"
 
 #: dat/missions/minerva/maikki1.lua:876
 msgid "Investigate the dormitories"
-msgstr ""
+msgstr "Investiga los dormitorios"
 
 #: dat/missions/minerva/maikki1.lua:879
 msgid "Investigate the engine room"
-msgstr ""
+msgstr "Investiga la sala de máquinas"
 
 #: dat/missions/minerva/maikki1.lua:888
 msgid ""
@@ -66602,6 +67186,9 @@ msgid ""
 "be very old space-weathered bloodstains over most of the controls. However, "
 "there are no bodies to be seen."
 msgstr ""
+"Te diriges a lo que queda del puente. Puedes ver lo que parecen ser manchas "
+"de sangre muy antiguas y desgastadas por el espacio sobre la mayoría de los "
+"controles. Sin embargo, no se ve ningún cuerpo."
 
 #: dat/missions/minerva/maikki1.lua:893
 msgid ""
