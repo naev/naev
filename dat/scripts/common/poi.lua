@@ -5,6 +5,8 @@ local lmisn = require "lmisn"
 local fmt = require "format"
 local luaspfx = require "luaspfx"
 local prob = require "prob"
+local lg = require "love.graphics"
+local vn = require "vn"
 local poi = {}
 
 -- luacheck: globals _poi_enter _poi_scan _poi_heartbeat_nooutfit _poi_heartbeat (Hook functions passed by name)
@@ -216,6 +218,27 @@ end
 --]]
 function poi.done()
    return var.peek("poi_done") or 0
+end
+
+--[[--
+   @brief Creates a "SOUND ONLY" character for the VN.
+      @tparam string id ID of the voice to add.
+      @tparam table params Optional parameters to pass or overwrite.
+      @treturn vn.Character A new vn character you can add with `vn.newCharacter`.
+--]]
+function poi.vn_soundonly( id, params )
+   local c = lg.newCanvas( 1000, 1415 )
+   local oc = lg.getCanvas()
+   local fl = lg.newFont( "fonts/D2CodingBold.ttf", 300 )
+   local fs = lg.newFont( 64 )
+   lg.setCanvas( c )
+   lg.clear{ 0, 0, 0 }
+   lg.setColor( 1, 0, 0 )
+   lg.printf( id, fl, 0, 200, 1000, "center" )
+   lg.printf( "SOUND ONLY", fs, 0, 550, 1000, "center" )
+   lg.setCanvas( oc )
+
+   return vn.Character.new( fmt.f(_("VOICE {id}"),{id=id}), tmerge( {image=c}, params ) )
 end
 
 return poi

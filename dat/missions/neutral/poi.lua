@@ -84,7 +84,8 @@ function found ()
    player.msg(_("You have found something!"),true)
 
    -- TODO something more interesting
-   local p = pilot.add( "Mule", "Derelict", mem.goal, _("Pristine Derelict"), {naked=true} )
+   local shiptype = mem.reward.ship or "Mule"
+   local p = pilot.add( shiptype, "Derelict", mem.goal, _("Pristine Derelict"), {naked=true} )
    p:disable()
    p:setInvincible()
    p:setHilight()
