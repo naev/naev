@@ -10,6 +10,11 @@ function cooldown( p, po, done, opt )
       local regen = (ps.armour - a) / opt
       po:set( "armour_regen_malus", -regen )
    else
+      -- We force set it to 100% here in the case of outfits that trigger full cycles
+      if opt then
+         local _a, s = p:health()
+         p:setHealth( 100, s )
+      end
       -- Stop repairing
       po:clear()
    end
