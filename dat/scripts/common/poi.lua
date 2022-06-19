@@ -142,6 +142,9 @@ function _poi_scan ()
    started = true
    path_spfx = {}
 
+   -- Highlight the first point
+   path_spfx[1] = luaspfx.trail( path[1], path[2] or goal )
+
    player.msg(_("You uncovered a trail!"),true)
 
    timer = hook.timer( 1, "_poi_heartbeat" )
