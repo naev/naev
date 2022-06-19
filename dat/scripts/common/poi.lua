@@ -56,10 +56,6 @@ function poi.setup( params )
 
    var.push( "_poi_system", sys:nameRaw() )
    var.push( "_poi_risk", risk )
-
-   -- Clean up
-   var.pop( "_poi_system" )
-   var.pop( "_poi_system" )
 end
 
 function poi.start ()
@@ -71,6 +67,9 @@ function poi.start ()
    if sys ~= nil then
       sys = system.get( sys )
    end
+   -- Clean up
+   var.pop( "_poi_system" )
+   var.pop( "_poi_system" )
    return sys, risk
 end
 
