@@ -288,7 +288,7 @@ In the above example, when the player enters a system with the `enter` function,
 
 There are other hooks for a diversity of pilot actions that are documented in [the official API documentation](https://naev.org/api/modules/hook.html#pilot), allowing for full control of pilot actions.
 
-### Translating
+### Translation Support
 \label{sec:misn-basic-translation}
 
 Naev supports translation through [Weblate](https://hosted.weblate.org/projects/naev/naev/). However, in order for translations to be used you have to mark strings as translatable. This is done with a [gettext](https://www.gnu.org/software/gettext/) compatible interface. In particular, the following functions are provided:
