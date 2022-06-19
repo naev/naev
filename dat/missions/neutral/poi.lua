@@ -100,12 +100,11 @@ function board( p )
    vn.sfx( der.sfx.board )
    vn.music( der.sfx.ambient )
    vn.transition()
-   vn.na(_([[You board the derelict which seems oddly in pretty good condition. What a lucky find!]]))
 
    -- Have to resolve lock or bad thing happens (tm)
    if mem.locked then
       local stringguess = require "stringguess"
-      vn.na(_([[You access the main computer and try to log in, however, it seems like you're going to have to break the code to gain complete access to the ship.]]))
+      vn.na(_([[You board the ship and enter the airlock. When you attempt to enter, an authorization prompt opens up. Looking at the make of the ship, it seems heavily reinforced. It looks like you're going to have to break the code to gain complete access to the ship.]]))
       stringguess.vn()
       vn.func( function ()
          if stringguess.completed then
@@ -123,6 +122,8 @@ function board( p )
       vn.na(_([["A brief 'AUTHORIZATION DENIED' flashes on the screen and you hear the ship internals groan as the emergency security protocol kicks in and everything gets locked down. It looks like you won't be getting anywhere hre, the ship is as good as debris. You have no option but to return dejectedly to your ship. Maybe next time."]]))
       vn.func( function () failed = true end )
       vn.done()
+   else
+      vn.na(_([[You board the derelict which seems oddly in pretty good condition. Furthermore, it seems like there is no access lock in place. What a lucky find!]]))
    end
 
    vn.label("reward")
