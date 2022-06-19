@@ -63,12 +63,13 @@ function create ()
       end
    end
    add_unique_reward( "Daphne's Leap", _([[You explore the ship, and while most things seem like they aren't of any use to you, one thing catches your eye. It seems like there is a weird module attached to the navigation console. Upon closer inspection it seems like it overrides some core jump behaviour of the ships. You don't know if it will be of use to you, but pocket it just in case.]]) )
-   add_unique_reward( "Veil of Penelope", _([[You explore the ship and eventually reach the systems room. You notice there seems to be a device interfering with the radiation emitted. You can't tell who made it, but it seems that it was likely the main reason that the derelict was so hard to find. You manage to dislodge it to take it back to your ship for further analysis.]]) )
 
    -- Parse directory to add potential rewards
    for k,v in ipairs(lf.enumerate("missions/neutral/poi")) do
-      local reward = require( "missions.neutral.poi."..string.gsub(v,".lua","") )()
+      local requirename = "missions.neutral.poi."..string.gsub(v,".lua","")
+      local reward = require( requirename )()
       if reward then
+         reward.requirename = requirename
          table.insert( reward_list, reward )
       end
    end
@@ -125,16 +126,24 @@ function board( p )
    end
 
    vn.label("reward")
-   local msg = ""
    if mem.reward.type == "credits" then
-      msg = _([[You access the main computer and are able to login to find a hefty amount of credits. This will come in handy.]])
-      player.pay( mem.reward.value )
+      local msg = _([[You access the main computer and are able to login to find a hefty amount of credits. This will come in handy.]])
+      msg = msg .. "\n\n" .. fmt.reward(mem.reward.value)
+      vn.na( msg )
+      vn.func( function ()
+         player.pay( mem.reward.value )
+      end )
    elseif mem.reward.type == "outfit" then
-      msg = mem.reward.msg or _([[Exploring the cargo bay, you find something that might be of use to you.]])
-      player.outfitAdd( mem.reward.value )
+      local msg = mem.reward.msg or _([[Exploring the cargo bay, you find something that might be of use to you.]])
+      msg = msg .. "\n\n" .. fmt.reward(mem.reward.value)
+      vn.na( msg )
+      vn.func( function ()
+         player.outfitAdd( mem.reward.value )
+      end )
+   elseif mem.reward.type == "function" then
+      local rwd = require( mem.reward.requirename )
+      rwd.func()
    end
-   msg = msg .. "\n\n" .. fmt.reward(mem.reward.value)
-   vn.na( msg )
    vn.sfxVictory()
    vn.na(_([[You explore the rest of the ship but do not find anything else of interest.]]))
    vn.sfx( der.sfx.unboard )
