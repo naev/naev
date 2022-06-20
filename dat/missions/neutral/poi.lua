@@ -151,7 +151,7 @@ function board( p )
       rwd.func()
    end
    vn.sfxVictory()
-   vn.na(_([[You explore the rest of the ship but do not find anything else of interest.]]))
+   vn.na(_([[You explore the rest of the ship but do not find anything else of interest. Although the ship is in very good condition, it is still not space-worthy, and there is not anything that you can do with it. You let it rest among the stars.]]))
    vn.sfx( der.sfx.unboard )
    vn.run()
 
