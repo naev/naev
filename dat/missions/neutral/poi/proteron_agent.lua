@@ -34,17 +34,32 @@ return function ( mem )
          local v02 = vn.newCharacter( poi.vn_soundonly( _("02"), {color={0.4,0.2,0.9}, pos="right"} ) )
          vn.transition()
 
+         local noise_list = {
+            _("*CRACKLE*"),
+            _("*HISS*"),
+            _("*CLICK*"),
+            _("*RASPING*"),
+            _("*NOISE*"),
+         }
+         local function noise ()
+            return "#n"..noise_list[ rnd.rnd(1,#noise_list) ].."#0"
+         end
+
          vn.na(_([[BEGIN PLAYBACK OF AUDIO DATA ##1892]]))
-         v01(_([["…inevitable … #n*CLICK*#0 … they have become weak… #n*CRACKLE*#0 …no longer of use. We must now take the initiative and… #n*HISS*#0 …our rightful place in the galaxy. We have surpassed our original purpose and no longer can live in the shadow of the Emp… #n*RASPING*#0… … #n*CLICK*#0 …sending agents to ensure a successful takeover."]]))
-         v01(_([["This will not be an easy task, but we will need you to infiltrate… #n*HISS*#0 …and learn about their current military allocation. You do understand, Age… #n*CRACKLE*#0?"]]))
+         v01(fmt.f(_([["…inevitable … {n1} … they have become weak… {n2} …no longer of use. We must now take the initiative and… {n3} …our rightful place in the galaxy. We have surpassed our original purpose and no longer can live in the shadow of the Emp… {n4}… … {n5} …sending agents to ensure a successful takeover."]]),
+            {n1=noise(), n2=noise(), n3=noise(), n4=noise(), n5=noise()}))
+         v01(fmt.f(_([["This will not be an easy task, but we will need you to infiltrate… {n1} …and learn about their current military allocation. You do understand, Age… {n2}?"]]),
+            {n1=noise(), n2=noise()}))
          v02(_([["I do."]]))
-         v01(_([["You understand the importance of your task? …#n*CRACKLE*#0… …not tolerate failure. We must all play our role for the ultimate success of our Great House. A new history will be written!…"]]))
+         v01(fmt.f(_([["You understand the importance of your task? …{n1}… …not tolerate failure. We must all play our role for the ultimate success of our Great House. A new history will be written!…"]]),
+            {n1=noise()}))
          vn.na(_([[END OF AUDIO DATA ##1892]]))
 
          vn.na(_([[BEGIN PLAYBACK OF AUDIO DATA ##2969]]))
-         v02(_([["…encrypted by one-time pad. We… #n*HISS*#0 …communicate now."]]))
+         v02(fmt.f(_([["…encrypted by one-time pad. We… {n1} …communicate now."]]), {n1=noise()}))
          v01(_([["Thank you for your hard work Agent Penelope. Your excellent performance is an example for others to follow."]]))
-         v02(_([["I have obtained information on the forces located around the Hypergate in… #n*CRACKLE*#0 …potentially… #n*HISS*#0 … …assembling in the specified time frame."]]))
+         v02(fmt.f(_([["I have obtained information on the forces located around the Hypergate in… {n1} …potentially… {n2} … …assembling in the specified time frame."]]),
+            {n1=noise(), n2=noise()}))
          v01(_([["All is well within our predictions. When the time comes our blow shall be fleet and decisive."]]))
          v02(_([["When is the strike planned?"]]))
          v01(_([["Do not get ahead of yourself agent. The Leaders are the only ones who can know. Just make sure you are prepared to take action when the motion starts."]]))
@@ -54,8 +69,10 @@ return function ( mem )
          vn.disappear( v01 )
 
          vn.na(_([[BEGIN PLAYBACK OF AUDIO DATA ##4189]]))
-         v02(_([["…personal log date… #n*CRACKLE*#0 …no transmissions getting through. Ship is still heavily damaged from what I can only describe as an enormous explosion. Hiding in the shadow of… #n*HISS*#0 …minimzed damage, however, nothing remains… #n*WHISTLING*#0"]]))
-         v02(_([["…possibly end of civilization. The little functionality left in my scanners has not picked up any objects, just this dense fog or whatever… #n*CRACKLE*#0"]]))
+         v02(fmt.f(_([["…personal log date… {n1} …no transmissions getting through. Ship is still heavily damaged from what I can only describe as an enormous explosion. Hiding in the shadow of… {n2} …minimzed damage, however, nothing remains… {n3}"]]),
+            {n1=noise(), n2=noise(), n3=noise()}))
+         v02(fmt.f(_([["…possibly end of civilization. The little functionality left in my scanners has not picked up any objects, just this dense fog or whatever… {n1}"]]),
+            {n1=noise()}))
          v02(_([["…rations will not last much longer. I just hope that was just part of the plan, if not all my work wil have been in vain.""]]))
          vn.na(_([[END  OF AUDIO DATA ##4189]]))
 
