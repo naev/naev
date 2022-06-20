@@ -3,15 +3,7 @@
 --]]
 local starfield = require "bkg.lib.starfield"
 local nebula = require "bkg.lib.nebula"
-
-local nebu_blacklist = {
-   ["Mizar"] = true,
-   ["Haven"] = true,
-   ["Amaroq"] = true,
-   ["PSO"] = true,
-   ["Sultan"] = true,
-   ["Faust"] = true,
-}
+local nebu = require "common.nebula"
 
 local function nebula_add_local( cpos, sys, radius, params )
    params = params or {}
@@ -38,8 +30,7 @@ function background ()
    local radius = 300
    local maxscale = 0
    for _k,s in ipairs(system.getAll()) do
-      local neb = s:nebula()
-      if neb > 0 and not nebu_blacklist[s:nameRaw()] then
+      if nebu.isNebula( s ) then
          local d = s:pos():dist( cpos )
          local scale = (radius - d) / radius
          maxscale = math.max( maxscale, scale )
