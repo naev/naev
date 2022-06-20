@@ -1,6 +1,7 @@
 local fmt = require "format"
 local vn = require "vn"
 local tut = require "common.tutorial"
+local nebu = require "common.nebula"
 
 local reward = outfit.get("ZD-5 Guardian Unit")
 
@@ -9,12 +10,12 @@ return function ( mem )
    if not mem.locked then return end
 
    -- Must be nebula or near nebula
-   local near_nebula = (mem.sys.nebula() > 0)
+   local near_nebula = nebu.isNebula( mem.sys )
    for k,v in ipairs(mem.sys:adjacentSystems()) do
       if near_nebula then
          break
       end
-      near_nebula = near_nebula or (v:nebula() > 0)
+      near_nebula = near_nebula or nebu.isNebula( v )
    end
    if not near_nebula then return end
 
