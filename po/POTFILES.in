@@ -2536,6 +2536,7 @@ dat/missions/neutral/patrol.lua
 dat/missions/neutral/pirbounty_alive.lua
 dat/missions/neutral/pirbounty_dead.lua
 dat/missions/neutral/poi.lua
+dat/missions/neutral/poi/nebula_crystals.lua
 dat/missions/neutral/poi/proteron_agent.lua
 dat/missions/neutral/poi/zalek_drone.lua
 dat/missions/neutral/race1.lua
