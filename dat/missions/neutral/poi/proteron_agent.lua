@@ -3,12 +3,14 @@ local vn = require "vn"
 local tut = require "common.tutorial"
 local poi = require "common.poi"
 
+local reward = outfit.get("Veil of Penelope")
+
 return function ( mem )
    -- Must be locked
    if not mem.locked then return end
 
    -- Already done
-   if player.numOutfit( "Veil of Penelope" ) > 0 then
+   if player.numOutfit( reward ) > 0 then
       return
    end
 
@@ -69,7 +71,7 @@ return function ( mem )
          vn.disappear( v01 )
 
          vn.na(_([[BEGIN PLAYBACK OF AUDIO DATA ##4189]]))
-         v02(fmt.f(_([["…personal log date… {n1} …no transmissions getting through. Ship is still heavily damaged from what I can only describe as an enormous explosion. Hiding in the shadow of… {n2} …minimzed damage, however, nothing remains… {n3}"]]),
+         v02(fmt.f(_([["…personal log date… {n1} …no transmissions getting through. Ship is still heavily damaged from what I can only describe as an enormous explosion. Hiding in the shadow of… {n2} …minimized damage, however, nothing remains… {n3}"]]),
             {n1=noise(), n2=noise(), n3=noise()}))
          v02(fmt.f(_([["…possibly end of civilization. The little functionality left in my scanners has not picked up any objects, just this dense fog or whatever… {n1}"]]),
             {n1=noise()}))
@@ -86,13 +88,15 @@ return function ( mem )
             {_("…"), "cont01"},
          }
          vn.label("cont01")
-         sai(_([["I see. maybe you should continue exploring the ship. There might be something of use that the ship scanner has not been able to pick up."]]))
+         sai(_([["I see. Maybe you should continue exploring the ship. There might be something of use that the ship scanner has not been able to pick up."]]))
          vn.disappear( sai, tut.shipai.transition )
 
          vn.na(fmt.f(_([[Following {shipai}'s advice, you continue to explore the ship and eventually reach the systems room. You notice there seems to be a device interfering with the radiation emitted. You can't tell who made it, but it seems that it was likely the main reason that the derelict was so hard to find. You manage to dislodge it to take it back to your ship for further analysis.]]),{shipai=tut.ainame()}))
 
+         vn.na(fmt.reward(reward))
+
          vn.func( function ()
-            player.outfitAdd( "Veil of Penelope" )
+            player.outfitAdd( reward )
          end )
       end,
    }
