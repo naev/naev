@@ -20,7 +20,8 @@ function poi.generate()
       -- TODO have systems with higher risk or more abandoned
       -- Want no inhabited spobs
       for k,p in ipairs(sys:spobs()) do
-         if sys.land and sys.inhabitable then
+         local s = p:services()
+         if s.land and s.inhabitable then
             return false
          end
       end
