@@ -4,7 +4,7 @@
   <typename>Armour Modifier</typename>
   <slot>structure</slot>
   <size>medium</size>
-  <mass>700</mass>
+  <mass>70</mass>
   <price>85000</price>
   <gfx_store>placeholder.webp</gfx_store>
   <description>Further developed from Nanobond plating, Microbond plating is a less dense, lighter revision that's still stronger than Plasteel, making it a great choice to strengthen the hull of a medium-sized ship.</description>
