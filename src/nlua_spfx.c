@@ -373,6 +373,7 @@ static int spfxL_rm( lua_State *L )
 {
    LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
    ls->flags &= SPFX_CLEANUP;
+   ls->ttl = -1.;
    return 0;
 }
 
