@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-14 19:00-0400\n"
-"PO-Revision-Date: 2022-06-19 20:15+0000\n"
+"PO-Revision-Date: 2022-06-20 22:17+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -24809,12 +24809,10 @@ msgid "Arcanis"
 msgstr "Arcanis"
 
 #: dat/ssys/arcturus.xml:2
-#, fuzzy
 msgid "Arcturus"
 msgstr "Arcturus"
 
 #: dat/ssys/ariadus.xml:2
-#, fuzzy
 msgid "Ariadus"
 msgstr "Ariadus"
 
@@ -24823,7 +24821,6 @@ msgid "Armorhead"
 msgstr "Cabeza de Armadura"
 
 #: dat/ssys/atlantis.xml:2
-#, fuzzy
 msgid "Atlantis"
 msgstr "Atlantis"
 
@@ -24832,7 +24829,6 @@ msgid "Auger"
 msgstr "Taladradora"
 
 #: dat/ssys/awowa.xml:2
-#, fuzzy
 msgid "Awowa"
 msgstr "Awowa"
 
@@ -24841,7 +24837,6 @@ msgid "Babylon"
 msgstr "Babilonia"
 
 #: dat/ssys/baf.xml:2
-#, fuzzy
 msgid "Baf"
 msgstr "Baf"
 
@@ -24858,22 +24853,18 @@ msgid "Bastion"
 msgstr "Bastión"
 
 #: dat/ssys/bedimann.xml:2
-#, fuzzy
 msgid "Bedimann"
 msgstr "Bedimann"
 
 #: dat/ssys/beeklo.xml:2
-#, fuzzy
 msgid "Beeklo"
 msgstr "Beeklo"
 
 #: dat/ssys/behar.xml:2
-#, fuzzy
 msgid "Behar"
 msgstr "Behar"
 
 #: dat/ssys/blacin.xml:2
-#, fuzzy
 msgid "Blacin"
 msgstr "Blacin"
 
@@ -24886,7 +24877,6 @@ msgid "Blunderbuss"
 msgstr "Trabuco"
 
 #: dat/ssys/bonanza.xml:2
-#, fuzzy
 msgid "Bonanza"
 msgstr "Bonanza"
 
@@ -24895,17 +24885,14 @@ msgid "Booster"
 msgstr "Potenciador"
 
 #: dat/ssys/borla.xml:2
-#, fuzzy
 msgid "Borla"
 msgstr "Borla"
 
 #: dat/ssys/botarn.xml:2
-#, fuzzy
 msgid "Botarn"
 msgstr "Botarn"
 
 #: dat/ssys/brendon.xml:2
-#, fuzzy
 msgid "Brendon"
 msgstr "Brendon"
 
@@ -24914,32 +24901,26 @@ msgid "Brimstone"
 msgstr "azufre"
 
 #: dat/ssys/brumerebus.xml:2
-#, fuzzy
 msgid "Brumerebus"
 msgstr "Brumerebus"
 
 #: dat/ssys/c00.xml:2
-#, fuzzy
 msgid "C-00"
 msgstr "C-00"
 
 #: dat/ssys/c14.xml:2
-#, fuzzy
 msgid "C-14"
 msgstr "C-14"
 
 #: dat/ssys/c28.xml:2
-#, fuzzy
 msgid "C-28"
 msgstr "C-28"
 
 #: dat/ssys/c43.xml:2
-#, fuzzy
 msgid "C-43"
 msgstr "C-43"
 
 #: dat/ssys/c59.xml:2
-#, fuzzy
 msgid "C-59"
 msgstr "C-59"
 
@@ -24956,17 +24937,14 @@ msgid "Chloe"
 msgstr "Chloe"
 
 #: dat/ssys/chraan.xml:2
-#, fuzzy
 msgid "Chraan"
 msgstr "Chraan"
 
 #: dat/ssys/churchill.xml:2
-#, fuzzy
 msgid "Churchill"
 msgstr "Churchill"
 
 #: dat/ssys/cleai.xml:2
-#, fuzzy
 msgid "Cleai"
 msgstr "Cleai"
 
@@ -24979,12 +24957,10 @@ msgid "Corinth"
 msgstr "Corinto"
 
 #: dat/ssys/coriolis.xml:2
-#, fuzzy
 msgid "Coriolis"
 msgstr "Coriolis"
 
 #: dat/ssys/corvus.xml:2
-#, fuzzy
 msgid "Corvus"
 msgstr "Corvus"
 
@@ -24995,22 +24971,18 @@ msgid "Crimson Gauntlet"
 msgstr ""
 
 #: dat/ssys/cygnus.xml:2
-#, fuzzy
 msgid "Cygnus"
 msgstr "Cygnus"
 
 #: dat/ssys/daan.xml:2
-#, fuzzy
 msgid "Daan"
 msgstr "Daan"
 
 #: dat/ssys/dakron.xml:2
-#, fuzzy
 msgid "Dakron"
 msgstr "Dakron"
 
 #: dat/ssys/daled.xml:2
-#, fuzzy
 msgid "Daled"
 msgstr "Daled"
 
@@ -25023,12 +24995,10 @@ msgid "#bStellar Wind (1 fuel regen)#0"
 msgstr "#bViento Estelar(1 regen. combustible)#0"
 
 #: dat/ssys/damien.xml:2
-#, fuzzy
 msgid "Damien"
 msgstr "Damien"
 
 #: dat/ssys/daravon.xml:2
-#, fuzzy
 msgid "Daravon"
 msgstr "Daravon"
 
@@ -25037,22 +25007,18 @@ msgid "Darkstone"
 msgstr "Piedraoscura"
 
 #: dat/ssys/defa.xml:2
-#, fuzzy
 msgid "Defa"
 msgstr "Defa"
 
 #: dat/ssys/delta_pavonis.xml:2
-#, fuzzy
 msgid "Delta Pavonis"
 msgstr "Delta Pavonis"
 
 #: dat/ssys/delta_polaris.xml:2
-#, fuzzy
 msgid "Delta Polaris"
 msgstr "Delta Polaris"
 
 #: dat/ssys/dendria.xml:2
-#, fuzzy
 msgid "Dendria"
 msgstr "Dendria"
 
@@ -25061,32 +25027,26 @@ msgid "Diadem"
 msgstr "Diadema"
 
 #: dat/ssys/doeston.xml:2
-#, fuzzy
 msgid "Doeston"
 msgstr "Doeston"
 
 #: dat/ssys/dohriabi.xml:2
-#, fuzzy
 msgid "Dohriabi"
 msgstr "Dohriabi"
 
 #: dat/ssys/doowa.xml:2
-#, fuzzy
 msgid "Doowa"
 msgstr "Doowa"
 
 #: dat/ssys/doranthex.xml:2
-#, fuzzy
 msgid "Doranthex"
 msgstr "Doranthex"
 
 #: dat/ssys/draconis.xml:2
-#, fuzzy
 msgid "Draconis"
 msgstr "Draconis"
 
 #: dat/ssys/draygar.xml:2
-#, fuzzy
 msgid "Draygar"
 msgstr "Draygar"
 
@@ -25095,7 +25055,6 @@ msgid "Druid"
 msgstr "Druida"
 
 #: dat/ssys/druss.xml:2
-#, fuzzy
 msgid "Druss"
 msgstr "Druss"
 
@@ -25104,12 +25063,10 @@ msgid "Dune"
 msgstr "Duna"
 
 #: dat/ssys/duros.xml:2
-#, fuzzy
 msgid "Duros"
 msgstr "Duros"
 
 #: dat/ssys/dvaer.xml:2
-#, fuzzy
 msgid "Dvaer"
 msgstr "Dvaer"
 
@@ -25118,57 +25075,46 @@ msgid "#pDvaered Homeworld#0"
 msgstr "#pMundo Hogar Dvaered#0"
 
 #: dat/ssys/effetey.xml:2
-#, fuzzy
 msgid "Effetey"
 msgstr "Effetey"
 
 #: dat/ssys/eiderdown.xml:2
-#, fuzzy
 msgid "Eiderdown"
 msgstr "Eiderdown"
 
 #: dat/ssys/eisenhorn.xml:2
-#, fuzzy
 msgid "Eisenhorn"
 msgstr "Eisenhorn"
 
 #: dat/ssys/ekkodu.xml:2
-#, fuzzy
 msgid "Ekkodu"
 msgstr "Ekkodu"
 
 #: dat/ssys/ekta.xml:2
-#, fuzzy
 msgid "Ekta"
 msgstr "Ekta"
 
 #: dat/ssys/elixir.xml:2
-#, fuzzy
 msgid "Elixir"
 msgstr "Elixir"
 
 #: dat/ssys/elza.xml:2
-#, fuzzy
 msgid "Elza"
 msgstr "Elza"
 
 #: dat/ssys/eneguoz.xml:2
-#, fuzzy
 msgid "Eneguoz"
 msgstr "Eneguoz"
 
 #: dat/ssys/eridani.xml:2
-#, fuzzy
 msgid "Eridani"
 msgstr "Eridani"
 
 #: dat/ssys/esker.xml:2
-#, fuzzy
 msgid "Esker"
 msgstr "Esker"
 
 #: dat/ssys/euler.xml:2
-#, fuzzy
 msgid "Euler"
 msgstr "Euler"
 
@@ -25177,7 +25123,6 @@ msgid "Eye of Night"
 msgstr "Ojo de la Noche"
 
 #: dat/ssys/farizel.xml:2
-#, fuzzy
 msgid "Farizel"
 msgstr "Farizel"
 
@@ -25190,7 +25135,6 @@ msgid "Faust"
 msgstr "Fausto"
 
 #: dat/ssys/felzen.xml:2
-#, fuzzy
 msgid "Felzen"
 msgstr "Felzen"
 
@@ -25199,7 +25143,6 @@ msgid "Fern"
 msgstr "Helecho"
 
 #: dat/ssys/feye.xml:2 dat/events/discovery.lua:77
-#, fuzzy
 msgid "Feye"
 msgstr "Feye"
 
@@ -25216,7 +25159,6 @@ msgid "Firk"
 msgstr "Firk"
 
 #: dat/ssys/flok.xml:2
-#, fuzzy
 msgid "Flok"
 msgstr "Flok"
 
@@ -25225,7 +25167,6 @@ msgid "Flow"
 msgstr "Flujo"
 
 #: dat/ssys/forlat.xml:2
-#, fuzzy
 msgid "Forlat"
 msgstr "Forlat"
 
@@ -25238,12 +25179,10 @@ msgid "Fried"
 msgstr "Frito"
 
 #: dat/ssys/frolina.xml:2
-#, fuzzy
 msgid "Frolina"
 msgstr "Frolina"
 
 #: dat/ssys/fulcrum.xml:2
-#, fuzzy
 msgid "Fulcrum"
 msgstr "Fulcrum"
 
@@ -39877,7 +39816,7 @@ msgid ""
 "getting a diversity of ships and switching to the one that best fits your "
 "need is a great way to get things done.\""
 msgstr ""
-"\"¡Felicidades por comprar una nueva {nave}! A menos que intercambies tu "
+"\"¡Felicidades por comprar una nueva {ship}! A menos que intercambies tu "
 "nave, cuando compras una nueva nave, esta se añade a tus naves disponibles. "
 "Normalmente, las naves sólo vienen equipadas con el equipo básico, así que "
 "debes dirigirte a la ventana #oEquipamiento#0 para equipar la nave y "
@@ -41491,9 +41430,9 @@ msgid ""
 msgstr ""
 "\"¡Hola! Represento a un hombre llamado Barón Sauterfeldt. ¿Habrás oído "
 "hablar de él en tus viajes? ¿No? Bueno, supongo que no se puede tener todo. "
-"Mi empleador es un hombre medianamente influyente, y... No, no te aburriré "
-"con los detalles. La conclusión es que el Señor Sauterfeldt busca ayuda "
-"contratada, y tú pareces ser eltipo que necesita, a juzgar por tu nave.\""
+"Mi empleador es un hombre moderadamente influyente, y... Pero bueno, no te "
+"aburriré con los detalles. La conclusión es que el Señor Sauterfeldt busca "
+"ayuda, y tú pareces ser del tipo que el necesita, a juzgar por tu nave.\""
 
 #: dat/missions/baron/baron_baron.lua:45
 msgid ""
@@ -60605,6 +60544,9 @@ msgid ""
 "best shape, if you don't count all the damage that seems to have been done "
 "by scavengers trying to find parts to sell."
 msgstr ""
+"Los dormitorios son la parte de la nave que parece haberse mantenido en "
+"mejor estado, si no se cuentan todos los daños que parecen haber causado los "
+"carroñeros que intentaban encontrar piezas para vender."
 
 #: dat/missions/minerva/maikki1.lua:898
 msgid ""
@@ -60612,12 +60554,17 @@ msgid ""
 "catches your eye. You grab what appears to be a picture of two adults and a "
 "child. The child looks very familiar."
 msgstr ""
+"Aunque parece que no queda nada de valor, un pequeño trozo de papel te llama "
+"la atención. Coges lo que parece ser una foto de dos adultos y un niño. El "
+"niño te resulta muy familiar."
 
 #: dat/missions/minerva/maikki1.lua:900
 msgid ""
 "You turn the picture around and you see that 'Maikki 596:0928' is written in "
 "the corner. You should probably bring this back to Maikki."
 msgstr ""
+"Das la vuelta a la foto y ves que en la esquina está escrito \"Maikki 596:"
+"0928\". Probablemente deberías devolverle esto a Maikki."
 
 #: dat/missions/minerva/maikki1.lua:905
 msgid ""
@@ -60625,12 +60572,17 @@ msgid ""
 "like most of it was sliced off by some powerful beam weapon. Someone really "
 "didn't want this ship getting away."
 msgstr ""
+"La sala de máquinas parece ser la parte que recibió la mayor parte de la "
+"paliza. Parece que la mayor parte fue cortada por algún arma de rayos "
+"poderosa. Alguien realmente no quería que esta nave se escapara."
 
 #: dat/missions/minerva/maikki1.lua:910
 msgid ""
 "After your thorough investigation, you leave the wreck behind and get back "
 "into your ship."
 msgstr ""
+"Después de tu minuciosa investigación, dejas atrás el pecio y vuelves a tu "
+"nave."
 
 #: dat/missions/minerva/maikki1.lua:914
 msgid ""
@@ -60638,10 +60590,13 @@ msgid ""
 "his family and signs that this was not an accident with possible Za'lek "
 "involvement."
 msgstr ""
+"Abordaste los restos de lo que parece ser la nave de Kex. Has encontrado una "
+"foto de su familia y señales de que no fue un accidente con una posible "
+"implicación de los Za'lek."
 
 #: dat/missions/minerva/maikki1.lua:918
 msgid "Return to {name} in the {sys} system"
-msgstr ""
+msgstr "Volver a {name} en el sistema {sys}"
 
 #. Clear scavengers if exist
 #. Unboard
@@ -60682,22 +60637,22 @@ msgstr ""
 #. --
 #: dat/missions/minerva/maikki2.lua:42
 msgid "Prof. Sato"
-msgstr ""
+msgstr "Prof. Sato"
 
 #. Computer Science / Mathematics
 #: dat/missions/minerva/maikki2.lua:47
 msgid "Prof. Stova"
-msgstr ""
+msgstr "Prof. Stova"
 
 #. Material Science
 #: dat/missions/minerva/maikki2.lua:52
 msgid "Prof. Hsu"
-msgstr ""
+msgstr "Prof. Hsu"
 
 #. Philosophy
 #: dat/missions/minerva/maikki2.lua:57
 msgid "Dr. Cayne"
-msgstr ""
+msgstr "Dr. Cayne"
 
 #. Dr. Shrimp
 #. Should coincide with "Strangelove Lab"
@@ -60716,18 +60671,18 @@ msgstr ""
 #. luacheck: globals approach_eccentric approach_hint1 approach_hint2 approach_hint3 approach_hint4 approach_maikki (NPC functions passed by name)
 #: dat/missions/minerva/maikki2.lua:99
 msgid "Maikki wants you to help her find out what happened to her father."
-msgstr ""
+msgstr "Maikki quiere que la ayudes a averiguar qué le pasó a su padre."
 
 #. If not accepted, mem.misn_state will still be nil
 #. Set up mission stuff
 #. Re-add Maikki if accepted
 #: dat/missions/minerva/maikki2.lua:129
 msgid "Investigate the Za'lek"
-msgstr ""
+msgstr "Investiga a los Za'lek"
 
 #: dat/missions/minerva/maikki2.lua:132
 msgid "\tGo to {pnt} in {sys}"
-msgstr ""
+msgstr "\tVe a {pnt} en {sys}"
 
 #: dat/missions/minerva/maikki2.lua:162
 msgid ""
@@ -60736,11 +60691,16 @@ msgid ""
 "{name2} in the {sys2} system,\n"
 "and {name3} in the {sys3} system.\""
 msgstr ""
+"\"Los tres investigadores Za'lek que debes buscar son:\n"
+"{name1} en el sistema {sys1},\n"
+"{name2} en el sistema {sys2},\n"
+"y {name3} en el sistema {sys3}.\""
 
 #: dat/missions/minerva/maikki2.lua:173
 msgid ""
 "You approach Maikki who seems to have a fierce determination in her eyes."
 msgstr ""
+"Te acercas a Maikki que parece tener una feroz determinación en sus ojos."
 
 #: dat/missions/minerva/maikki2.lua:175
 msgid ""
@@ -60748,16 +60708,21 @@ msgid ""
 "\"From what you told me, I think I have a good idea for our next lead. Would "
 "you be interested in helping again?\""
 msgstr ""
+"Parece animada por tus hallazgos en la nebulosa.\n"
+"\"Por lo que me has contado, creo que tengo una buena idea para nuestra "
+"próxima pista. ¿Estarías interesado en ayudar de nuevo?\""
 
 #: dat/missions/minerva/maikki2.lua:178
 msgid "Help Maikki again"
-msgstr ""
+msgstr "Ayuda a Maikki otra vez"
 
 #: dat/missions/minerva/maikki2.lua:189
 msgid ""
 "You agreed to continue helping Maikki find her father. She told you to try "
 "to find hints from three Za'lek researchers."
 msgstr ""
+"Aceptas seguir ayudando a Maikki a encontrar a su padre. Te dijo que "
+"intentaras encontrar pistas de tres investigadores Za'lek."
 
 #: dat/missions/minerva/maikki2.lua:191
 msgid ""
@@ -60767,6 +60732,11 @@ msgid ""
 "them could also be related to whatever happened to the ship in the first "
 "place.\""
 msgstr ""
+"\"Creo que deberíamos ser capaces de averiguar qué pasó con la nave de mi "
+"padre en la nebulosa. Parece que alguien está muy interesado en las cosas "
+"que se encuentran en la nebulosa y está detrás de los carroñeros que "
+"conociste. Quienquiera que esté detrás de ellos también podría estar "
+"relacionado con lo que le ocurrió a la nave en primer lugar.\""
 
 #: dat/missions/minerva/maikki2.lua:192
 msgid ""
@@ -60775,6 +60745,11 @@ msgid ""
 "was able to get a list of three researchers. I'll give you the details on "
 "them and you should pay them a visit to see if they know anything.\""
 msgstr ""
+"\"Hice una comprobación de los investigadores Za'lek que probablemente "
+"estarían interesados en las cosas tomadas de la nebulosa y parece que hay "
+"menos de lo que imaginaba. Pude conseguir una lista de tres investigadores. "
+"Te daré los detalles sobre ellos y deberías hacerles una visita para ver si "
+"saben algo.\""
 
 #: dat/missions/minerva/maikki2.lua:193
 msgid ""
@@ -60782,10 +60757,12 @@ msgid ""
 "determination.\n"
 "\"You will do whatever it takes to find him right?\""
 msgstr ""
+"Se inclina hacia ti y te mira a los ojos con feroz determinación.\n"
+"\"Harás lo que sea necesario para encontrarlo, ¿verdad?\""
 
 #: dat/missions/minerva/maikki2.lua:197
 msgid "\"Maybe…\""
-msgstr ""
+msgstr "\" Quizás... \""
 
 #: dat/missions/minerva/maikki2.lua:198 dat/missions/tutorial/nelly01.lua:154
 msgid "\"No\""
@@ -60797,12 +60774,17 @@ msgid ""
 "convincing.\"\n"
 "She winks at you."
 msgstr ""
+"\"Sabes que el Za'lek puede ser muy terco a veces y puede necesitar algo de "
+"convencimiento.\"\n"
+"Te guiña un ojo."
 
 #: dat/missions/minerva/maikki2.lua:209
 msgid ""
 "\"I thought that after your experience in the nebula you would understand "
 "how dangerous this can get.\""
 msgstr ""
+"\"Pensé que después de tu experiencia en la nebulosa entenderías lo "
+"peligroso que puede llegar a ser esto.\""
 
 #: dat/missions/minerva/maikki2.lua:219
 msgid ""
@@ -60810,6 +60792,9 @@ msgid ""
 "\"I hope you're joking. This is very important to me and I hope you don't "
 "lose this lead…\""
 msgstr ""
+"Ella te mira fijamente.\n"
+"\"Espero que estés bromeando. Esto es muy importante para mí y espero que no "
+"pierdas esta pista...\""
 
 #: dat/missions/minerva/maikki2.lua:225
 msgid ""
@@ -60818,6 +60803,10 @@ msgid ""
 "think that they must know something about this; the disappearance of my "
 "father was big news!\""
 msgstr ""
+"\"Al parecer, los tres investigadores solían trabajar juntos en algún "
+"proyecto sobre los orígenes de la nebulosa, pero nunca hicieron nada "
+"público. Creo totalmente que deben saber algo sobre esto; ¡la desaparición "
+"de mi padre fue una gran noticia!\""
 
 #: dat/missions/minerva/maikki2.lua:226
 msgid ""
@@ -60826,19 +60815,23 @@ msgid ""
 "Za'lek researchers a visit and see if you can find out what happened to my "
 "father!\""
 msgstr ""
+"Te mira expectante.\n"
+"\"Me quedaré aquí y seguiré buscándolo. ¡Por favor, haz una visita a esos "
+"espeluznantes investigadores Za'lek y ve si puedes averiguar qué le pasó a "
+"mi padre!\""
 
 #: dat/missions/minerva/maikki2.lua:231
 msgid "Ask about the researchers"
-msgstr ""
+msgstr "Pregunta por los investigadores"
 
 #: dat/missions/minerva/maikki2.lua:232
 msgid "Ask about her father (Kex)"
-msgstr ""
+msgstr "Pregunta por su padre (Kex)"
 
 #. TODO more options as more researchers are found
 #: dat/missions/minerva/maikki2.lua:237
 msgid "Tell her want you found"
-msgstr ""
+msgstr "Cuéntale lo que has encontrado"
 
 #: dat/missions/minerva/maikki2.lua:243
 msgid ""
@@ -60856,6 +60849,11 @@ msgid ""
 "understands and makes them move constantly from research laboratory to "
 "research laboratory. So droll!\""
 msgstr ""
+"\"Al parecer, el proyecto se disolvió por una u otra razón, y algunos "
+"miembros desaparecieron. Sin embargo, pude localizar a algunos de ellos, "
+"aunque no fue demasiado fácil. Tienen un extraño sistema llamado titularidad "
+"que nadie entiende y que les hace pasar constantemente de un laboratorio de "
+"investigación a otro. ¡Tan gracioso!\""
 
 #: dat/missions/minerva/maikki2.lua:246
 msgid ""
@@ -60864,6 +60862,10 @@ msgid ""
 "\"ma'am that beaker of acid is not a toy\". So boring!\"\n"
 "She frowns and shakes her head."
 msgstr ""
+"\"No creo que te sea fácil obtener información de los Za'lek. Nunca dan una "
+"respuesta directa y todo es \"eso es ilógico\" y \"señora ese vaso de ácido "
+"no es un juguete\". ¡Qué aburrido!\"\n"
+"Frunce el ceño y sacude la cabeza."
 
 #. TODO messages regarding each of the researchers
 #: dat/missions/minerva/maikki2.lua:252
@@ -60871,6 +60873,8 @@ msgid ""
 "\"I don't remember much about my father, most of what I know about him are "
 "from stories from my late mother and pilots who knew him.\""
 msgstr ""
+"\"No recuerdo mucho de mi padre, la mayor parte de lo que sé de él son "
+"historias de mi difunta madre y de los pilotos que le conocieron.\""
 
 #: dat/missions/minerva/maikki2.lua:253
 msgid ""
@@ -60895,6 +60899,10 @@ msgid ""
 "the time and my mother was probably very lonely. She told me he never came "
 "to any of my birthdays…\""
 msgstr ""
+"Sus ojos se oscurecen un poco y su voz se suaviza.\n"
+"\"Su obsesión por encontrar la verdad significaba que estaba fuera de casa "
+"la mayor parte del tiempo y mi madre probablemente se sentía muy sola. Me "
+"dijo que nunca vino a ninguno de mis cumpleaños...\""
 
 #: dat/missions/minerva/maikki2.lua:258
 msgid ""
@@ -60903,6 +60911,10 @@ msgid ""
 "history as humans was lost! I would love to be able to meet him again and be "
 "able to ask him all sorts of things.\""
 msgstr ""
+"Sus ojos se iluminan de nuevo.\n"
+"\"Sin embargo, aquellos eran tiempos excepcionales. La mayor parte del "
+"universo y de nuestra historia como humanos se perdió. Me encantaría poder "
+"volver a encontrarme con él y poder preguntarle todo tipo de cosas.\""
 
 #: dat/missions/minerva/maikki2.lua:260
 msgid ""
@@ -60912,6 +60924,12 @@ msgid ""
 "have to find out what happened and set things right!\"\n"
 "Her eyes sparkle with determination."
 msgstr ""
+"\"¡Ya que encontraste su nave en la nebulosa tenemos que llegar al fondo de "
+"lo que pasó! No hay manera de que esto haya sido un accidente, y estoy "
+"seguro de que los Za'lek están involucrados en esto. Ya que no encontraron "
+"un cuerpo, ¡tiene que estar vivo! ¡Tenemos que averiguar lo que pasó y "
+"arreglar las cosas!\"\n"
+"Sus ojos brillan con determinación."
 
 #: dat/missions/minerva/maikki2.lua:265
 msgid ""
@@ -60919,6 +60937,9 @@ msgid ""
 "Strangelove, in particular. This includes the good news that Kex should be "
 "at Minerva Station, taken into custody by some thugs."
 msgstr ""
+"Le cuentas tu situación con los investigadores Za'lek, y el Dr. Strangelove, "
+"en particular. Esto incluye la buena noticia de que Kex debería estar en la "
+"estación Minerva, detenido por unos matones."
 
 #: dat/missions/minerva/maikki2.lua:266
 msgid ""
@@ -60926,6 +60947,9 @@ msgid ""
 "thought: that he's somewhere here being held captive or something… This is "
 "still all very weird though.\""
 msgstr ""
+"\"Los Za'leks fueron unos gilipollas, como era de esperar, pero me alegro de "
+"que hayas averiguado lo que yo pensaba: que está en algún lugar de aquí "
+"cautivo o algo así... Aunque todo esto sigue siendo muy raro.\""
 
 #: dat/missions/minerva/maikki2.lua:267
 msgid ""
@@ -60934,6 +60958,11 @@ msgid ""
 "nor what they want with my father. Instead of answering questions we keep on "
 "finding new questions. I suppose that this is progress?…\""
 msgstr ""
+"\"Estoy un poco preocupado por ese Dr. Strangelove. ¿Qué quiso decir "
+"exactamente? ¿Es siquiera un médico de verdad? Todavía no sabemos qué pasó "
+"en la nebulosa ni qué quieren con mi padre. En lugar de responder a las "
+"preguntas, seguimos encontrando nuevas preguntas. Supongo que esto es un "
+"progreso...\""
 
 #: dat/missions/minerva/maikki2.lua:268
 msgid ""
@@ -60942,6 +60971,10 @@ msgid ""
 "tend to lie, they only bend the truth. All we have to do is find my father "
 "now and everything should fall in place.\""
 msgstr ""
+"\"De todos modos, si podemos creer al Dr. Strangelove, ¡mi padre está vivo y "
+"en algún lugar de aquí! No creo que tengamos ninguna razón para dudar de él. "
+"Los Za'leks no tienden a mentir, sólo falsean la verdad. Todo lo que tenemos "
+"que hacer es encontrar a mi padre ahora y todo debería encajar.\""
 
 #: dat/missions/minerva/maikki2.lua:269
 msgid ""
@@ -60950,6 +60983,9 @@ msgid ""
 "is so great! I don't know what to tell him first. Do you think he'll "
 "recognize me?\""
 msgstr ""
+"Está visiblemente emocionada.\n"
+"\"¡Todo se va a concretar! ¡Por fin podré volver a verle! ¡Esto es genial! "
+"No sé qué decirle primero. ¿Crees que me reconocerá?\""
 
 #: dat/missions/minerva/maikki2.lua:271
 msgid ""
@@ -60957,6 +60993,9 @@ msgid ""
 "open and if you find anything that looks suspicious, please get in touch "
 "with me! I'll also be keeping my eyes open.\""
 msgstr ""
+"\"De momento no tengo ninguna pista, pero no puede estar lejos. Mantén los "
+"ojos abiertos y si encuentras algo que parezca sospechoso, por favor ponte "
+"en contacto conmigo. Yo también mantendré los ojos abiertos.\""
 
 #: dat/missions/minerva/maikki2.lua:272
 msgid ""
@@ -60964,6 +61003,10 @@ msgid ""
 "Minerva Tokens and a lifetime supply of parfaits! Since I don't need the "
 "tokens to buy anything anymore, here, you can take them.\""
 msgstr ""
+"\"Oh, casi lo olvido. He tenido suerte con una máquina de Pachinko y he "
+"ganado un montón de fichas de Minerva y un suministro de por vida de "
+"parfaits. Como ya no necesito las fichas para comprar nada, toma, puedes "
+"cogerlas.\""
 
 #. no reward, yet...
 #. roughly 1M if you consider winning rates
@@ -60973,16 +61016,20 @@ msgid ""
 "doesn't have any leads at the moment, but it does seem like he is at Minerva "
 "Station."
 msgstr ""
+"Informaste a Maikki de lo que el Dr. Strangelove te dijo sobre tu padre. De "
+"momento no tienes ninguna pista, pero parece que está en la estación Minerva."
 
 #: dat/missions/minerva/maikki2.lua:281
 msgid "\"I'll be around here if you find anything.\""
-msgstr ""
+msgstr "\"Estaré por aquí si encuentras algo.\""
 
 #: dat/missions/minerva/maikki2.lua:282
 msgid ""
 "You take your leave. Without any leads, it might prove hard to find where "
 "Kex is. You wonder what your next steps should be…"
 msgstr ""
+"Te vas. Sin ninguna pista, podría resultar difícil encontrar dónde está Kex. "
+"Te preguntas cuáles deberían ser tus próximos pasos…"
 
 #. Can't run it in the VN or it causes an error
 #: dat/missions/minerva/maikki2.lua:306 dat/missions/minerva/maikki2.lua:309
@@ -60991,28 +61038,36 @@ msgid ""
 "You see a person in a fancy lab coat. It seems like they are enjoying their "
 "time off."
 msgstr ""
+"Ves a una persona con una elegante bata de laboratorio. Parece que está "
+"disfrutando de su tiempo libre."
 
 #: dat/missions/minerva/maikki2.lua:315
 msgid ""
 "You see a young fellow intently reading a book. There seems to be a shrimp "
 "floating in a nearby aquarium bowl."
 msgstr ""
+"Ves a un joven que lee atentamente un libro. Parece que hay una gamba "
+"flotando en la pecera de un acuario cercano."
 
 #: dat/missions/minerva/maikki2.lua:318
 msgid "Hologram Projector"
-msgstr ""
+msgstr "Proyector de Hologramas"
 
 #: dat/missions/minerva/maikki2.lua:318
 msgid ""
 "An old decrepit hologram projector sits in the corner. It looks like you "
 "could use this to communicate with the owner of the station."
 msgstr ""
+"Un viejo y decrépito proyector de hologramas se encuentra en una esquina. "
+"Parece que puedes usarlo para comunicarte con el dueño de la estación."
 
 #: dat/missions/minerva/maikki2.lua:342
 msgid ""
 "You met the three researchers that Maikki told you about and found out a "
 "lead about another researcher."
 msgstr ""
+"Has conocido a los tres investigadores de los que te habló Maikki y has "
+"descubierto una pista sobre otro investigador."
 
 #: dat/missions/minerva/maikki2.lua:351
 msgid ""
@@ -61020,23 +61075,26 @@ msgid ""
 "candidate working on the project by the name of Cayne. I think he was last "
 "working at {pnt} in the {sys} system.\""
 msgstr ""
+"\"Oh, de repente me acordé. También había un candidato a investigador "
+"postdoctoral trabajando en el proyecto con el nombre de Cayne. Creo que "
+"estuvo trabajando por última vez en {pnt} en el sistema {sys}.\""
 
 #. The mission state will be updated afterwards
 #: dat/missions/minerva/maikki2.lua:369 dat/missions/minerva/maikki2.lua:399
 #: dat/missions/minerva/maikki2.lua:432
 msgid "You approach the professor."
-msgstr ""
+msgstr "Te acercas al profesor."
 
 #: dat/missions/minerva/maikki2.lua:370
 msgid "\"Hello, how can I help you?\""
-msgstr ""
+msgstr "\"Hola, ¿En qué puedo ayudarte?\""
 
 #: dat/missions/minerva/maikki2.lua:371 dat/missions/minerva/maikki2.lua:401
 #: dat/missions/minerva/maikki2.lua:434
 msgid ""
 "You inquire to about whether or not they are interested in artefacts from "
 "the nebula."
-msgstr ""
+msgstr "Preguntas si está interesado en los artefactos de la nebulosa."
 
 #: dat/missions/minerva/maikki2.lua:372
 msgid ""
@@ -61044,6 +61102,9 @@ msgid ""
 "cycles ago. It was really a mess of a project. The project leader was "
 "pushing us very hard due to the other competition.\""
 msgstr ""
+"\"Muy interesado, pero dejé de trabajar en esa línea de investigación hace "
+"varios ciclos. Era un verdadero desastre de proyecto. El jefe del proyecto "
+"nos presionaba mucho debido a la otra competencia.\""
 
 #: dat/missions/minerva/maikki2.lua:373
 msgid ""
@@ -61051,6 +61112,9 @@ msgid ""
 "barred from doing research. That was too much for them and they took their "
 "own life. How illogical!\""
 msgstr ""
+"\"Al final, los resultados de algunos trabajos fueron falsificados y al "
+"director del proyecto se le prohibió investigar. Eso fue demasiado para "
+"ellos y se quitaron la vida.¡Qué ilógico!\""
 
 #: dat/missions/minerva/maikki2.lua:374
 msgid ""
@@ -61058,6 +61122,9 @@ msgid ""
 "of nebula artefacts. Although due to administrative changes, I don't think "
 "it'll open again for a few cycles.\""
 msgstr ""
+"\"Si te interesa la investigación de la nebulosa, deberías ir a visitar el "
+"museo de artefactos de las nebulosas. Aunque debido a los cambios "
+"administrativos, no creo que vuelva a abrir hasta dentro de unos ciclos.\""
 
 #: dat/missions/minerva/maikki2.lua:375
 msgid ""
@@ -61065,6 +61132,9 @@ msgid ""
 "However, most of us have moved on from that traumatic experience and are now "
 "researching new topics.\""
 msgstr ""
+"\"Puede que tengas buena suerte hablando con otros miembros del proyecto. "
+"Sin embargo, la mayoría de nosotros hemos superado esa experiencia "
+"traumática y ahora estamos investigando nuevos temas.\""
 
 #: dat/missions/minerva/maikki2.lua:376
 msgid ""
@@ -61074,6 +61144,12 @@ msgid ""
 "non-convex elliptic reflections without any meta-heuristics!\"\n"
 "They are getting excited."
 msgstr ""
+"\"¿He mencionado que he empezado a trabajar con hipertablas infinitamente "
+"meta-recursivas? Son un tipo fascinante de estructura de datos basada en "
+"cuasi-proyecciones de colectores de Grassman autorreferenciados. ¡Incluso "
+"manejan implícitamente reflexiones elípticas no convexas sin ninguna meta-"
+"heurística!\"\n"
+"Se está entusiasmando."
 
 #: dat/missions/minerva/maikki2.lua:378
 msgid ""
@@ -61083,16 +61159,23 @@ msgid ""
 "they may even have a practical application!\"\n"
 "Their excitement grows."
 msgstr ""
+"\"Aunque mi beca ha sido rechazada cinco veces, la maldita junta de revisión "
+"sigue impulsando la obsoleta teoría del aproximador universal algebroide de "
+"Riemann y no escucha nada más, ¡son definitivamente el futuro! ¡Creo que "
+"incluso pueden tener una aplicación práctica!\"\n"
+"Su entusiasmo crece."
 
 #: dat/missions/minerva/maikki2.lua:380
 msgid ""
 "They don't seem like they will stop talking anytime soon… You take your "
 "leave as they start rambling in a trance-like state."
 msgstr ""
+"No parece que vaya a dejar de hablar en breve... Te despides mientras "
+"empiezan a divagar en estado de trance."
 
 #: dat/missions/minerva/maikki2.lua:400
 msgid "\"What can I do for you?\""
-msgstr ""
+msgstr "\"¿Qué puedo hacer por ti?\""
 
 #: dat/missions/minerva/maikki2.lua:402
 msgid ""
@@ -61100,6 +61183,9 @@ msgid ""
 "\"Ah, the nebula artefacts… Not very good experiences with those, no, not "
 "really interested in them anymore.\""
 msgstr ""
+"Se frota las sienes.\n"
+"\"Ah, los artefactos de la nebulosa... No hay muy buenas experiencias con "
+"ellos, no, ya no me interesan.\""
 
 #: dat/missions/minerva/maikki2.lua:404
 msgid ""
@@ -61113,6 +61199,10 @@ msgid ""
 "co-leaders want to have meetings and goals and work packages.\"\n"
 "They shudder when they says the word \"work packages\"."
 msgstr ""
+"\" Verás, cuanto más grande es el proyecto de investigación, más quiere el "
+"director y los codirectores del proyecto tener reuniones y objetivos y "
+"paquetes de trabajo.\"\n"
+"Se estremece cuando dice la palabra \"paquetes de trabajo.\""
 
 #: dat/missions/minerva/maikki2.lua:407
 msgid ""
@@ -61121,6 +61211,11 @@ msgid ""
 "intern for the mid-project evaluation and almost lost all the funding. The "
 "project leader panicked and it all went to hell from there.\""
 msgstr ""
+"\"Al final, no hacíamos más que encadenar reuniones y contestar correos "
+"electrónicos sin conseguir nada. Acabamos entregando un informe de 5 páginas "
+"escrito por un becario para la evaluación de mitad de proyecto y casi "
+"perdimos toda la financiación. El jefe del proyecto entró en pánico y a "
+"partir de ahí todo se fue al garete.\""
 
 #: dat/missions/minerva/maikki2.lua:408
 msgid ""
@@ -61128,10 +61223,13 @@ msgid ""
 "succeed yet, despite all the proposal calls attempting to address the issue."
 "\""
 msgstr ""
+"\"Toda la investigación sobre las nebulosas está condenada a terminar de "
+"esta manera. Todavía no he visto ningún proyecto que tenga éxito, a pesar de "
+"todas las convocatorias de propuestas que intentan abordar el tema.\""
 
 #: dat/missions/minerva/maikki2.lua:409
 msgid "You inquire about other project members."
-msgstr ""
+msgstr "Pregunta por otros miembros del proyecto."
 
 #: dat/missions/minerva/maikki2.lua:410
 msgid ""
@@ -61139,6 +61237,10 @@ msgid ""
 "away as possible from nebula research. As far as I know all the project "
 "members moved to new topics, although none as exciting as mine.\""
 msgstr ""
+"\"El único paso lógico después de esa experiencia traumática es alejarse lo "
+"más posible de la investigación de la nebulosa. Por lo que sé, todos los "
+"miembros del proyecto se pasaron a nuevos temas, aunque ninguno tan "
+"apasionante como el mío.\""
 
 #: dat/missions/minerva/maikki2.lua:411
 msgid ""
@@ -61149,6 +61251,12 @@ msgid ""
 "they naturally form octahedral quasi-lattices that allow absorbing most low-"
 "spectrum frequencies!\""
 msgstr ""
+"\"¿Ha oído hablar de las hidro-redes infundidas de grafeno? Tomando láminas "
+"de grafeno y creando una fuerte tensión lateral bajo el efecto de intensos "
+"campos de inducción electromagnética de Coriolis, es posible obtener un "
+"comportamiento similar al de los hidroplanos turbulentos. Y lo que es aún "
+"mejor, ¡forman naturalmente cuasilátices octaédricos que permiten absorber "
+"la mayoría de las frecuencias de bajo espectro!\""
 
 #: dat/missions/minerva/maikki2.lua:412
 msgid ""
@@ -61159,10 +61267,17 @@ msgid ""
 "able to solve it in no time. By the way, since the accident with my last "
 "assistant, I'm looking for a new one. Would you be interested?\""
 msgstr ""
+"\"¡Podrían cambiar la ciencia de los materiales tal y como la conocemos! ¡"
+"Imagina poder crear materiales con casi cualquier propiedad que desees! "
+"Todavía tenemos que resolver el problema de la implosión de los cristalitos "
+"subatómicos, pero una vez que termine de recuperar las notas del cráter que "
+"dejó mi último laboratorio, debería poder resolverlo en poco tiempo. Por "
+"cierto, desde el accidente de mi último ayudante, estoy buscando uno nuevo. ¿"
+"Te interesaría?\""
 
 #: dat/missions/minerva/maikki2.lua:413
 msgid "You get away as fast as you can from them as they keep on rambling."
-msgstr ""
+msgstr "Te alejas tan rápido como puedes mientras sigue divagando."
 
 #: dat/missions/minerva/maikki2.lua:435
 msgid ""
@@ -61170,6 +61285,9 @@ msgid ""
 "the nebula themselves, but I was part of a large project dealing with them "
 "as part of the philosophical and ethical committee.\""
 msgstr ""
+"\"Ah, qué buenos recuerdos. Nunca me han interesado los artefactos de la "
+"nebulosa en sí, pero formé parte de un gran proyecto relacionado con ellos "
+"como parte del comité filosófico y ético.\""
 
 #: dat/missions/minerva/maikki2.lua:436
 msgid ""
@@ -61180,6 +61298,12 @@ msgid ""
 "the reality of others, deforming them to a way we can interpret them with "
 "our imperfect minds.\""
 msgstr ""
+"\"Es un tema muy fascinante. Como no hay forma de demostrar la existencia de "
+"una realidad absoluta, desde un punto de vista práctico, hay infinitas "
+"realidades relativas, donde cada uno tiene la suya. Todo lo demás es una "
+"ilusión derivada de que proyectamos nuestra comprensión y nuestra realidad "
+"sobre la de los demás, deformándolas de manera que podamos interpretarlas "
+"con nuestras mentes imperfectas.\""
 
 #: dat/missions/minerva/maikki2.lua:437
 msgid ""
@@ -61188,6 +61312,10 @@ msgid ""
 "members. This has given me lots of opportunities to work on many interesting "
 "projects.\""
 msgstr ""
+"\"Recientemente, debido al ilógico desequilibrio entre las ciencias y las "
+"humanidades, todos los grandes proyectos de Za'lek están obligados a tener "
+"al menos un 10% de miembros de humanidades. Esto me ha dado muchas "
+"oportunidades de trabajar en muchos proyectos interesantes.\""
 
 #: dat/missions/minerva/maikki2.lua:438
 msgid ""
@@ -61198,10 +61326,16 @@ msgid ""
 "our imperfect organs, can we actually know whether or not there is an "
 "absolute objective reality?\""
 msgstr ""
+"\"Ah, sí, sobre los artefactos de la nebulosa. Recuerdo haber tenido "
+"divertidas conversaciones con nuestros colegas sobre si los artefactos de la "
+"nebulosa existen realmente o no, dado que estamos utilizando órganos "
+"sensoriales imperfectos para verlos, tocarlos y sentirlos. Verás, dado que "
+"sólo percibimos la realidad a través de nuestros órganos imperfectos, ¿"
+"podemos saber realmente si existe o no una realidad objetiva absoluta?\""
 
 #: dat/missions/minerva/maikki2.lua:439
 msgid "You inquire about the other members of the project."
-msgstr ""
+msgstr "Preguntas por los demás miembros del proyecto."
 
 #: dat/missions/minerva/maikki2.lua:440
 msgid ""
@@ -61209,6 +61343,9 @@ msgid ""
 "and gave me a windowless room in the basement. What an honour! Anyway, back "
 "to what I was saying.\""
 msgstr ""
+"\"¿Otros miembros? Recuerdo algunos, pero les gusté tanto que me ascendieron "
+"y me dieron una habitación sin ventanas en el sótano. ¡Qué honor! En fin, "
+"volviendo a lo que decía.\""
 
 #: dat/missions/minerva/maikki2.lua:441
 msgid ""
@@ -61219,6 +61356,12 @@ msgid ""
 "this too is an illusion, and that our existence itself is something we can't "
 "prove.\""
 msgstr ""
+"\"También debemos cuestionar aún más no sólo nuestros órganos sensoriales, y "
+"la existencia de artefactos de la nebulosa, sino nuestra propia existencia. "
+"Aparentemente somos capaces de pensar y algunos argumentarían que con esto, "
+"lo único que podemos probar, dados los datos sensoriales imperfectos, es "
+"nuestra propia existencia. Sin embargo, yo sostengo que esto también es una "
+"ilusión, y que nuestra propia existencia es algo que no podemos probar.\""
 
 #: dat/missions/minerva/maikki2.lua:442
 msgid ""
@@ -61228,18 +61371,24 @@ msgid ""
 "not only impossible to perceive nor understand our self as it is, but also "
 "makes it impossible to draw a line between different individuals…\""
 msgstr ""
+"\"A cada instante, lo que percibimos como nosotros mismos está dejando de "
+"existir y una nueva existencia, que, aunque muy cercana al \"nosotros\" de "
+"la instancia anterior, es, posiblemente, una existencia completamente nueva. "
+"Esta fluidez hace que no sólo sea imposible percibir ni comprender nuestro "
+"yo tal y como es, sino que también hace imposible trazar una línea entre los "
+"distintos individuos...\""
 
 #: dat/missions/minerva/maikki2.lua:443
 msgid "You thank them and run away while they keeps on talking to themselves."
-msgstr ""
+msgstr "Le das las gracias y sales corriendo mientras sigue hablando."
 
 #: dat/missions/minerva/maikki2.lua:453 dat/missions/minerva/maikki2.lua:483
 msgid "Dr. Shrimp"
-msgstr ""
+msgstr "Dr. Gamba"
 
 #: dat/missions/minerva/maikki2.lua:461
 msgid "Floating Shrimp"
-msgstr ""
+msgstr "Gamba Flotante"
 
 #: dat/missions/minerva/maikki2.lua:464
 msgid ""
@@ -61247,6 +61396,9 @@ msgid ""
 "lab coat. He seems to be really into a book titled 'SHRIMP: Anatomical "
 "studies of the Neo-neo-neocaridina species'."
 msgstr ""
+"Te acercas al joven que lleva escrito en su bata de laboratorio "
+"\"INVESTIGADOR POST-DOCTORAL\". Parece estar metido de lleno en un libro "
+"titulado \"GAMBA: Estudios anatómicos de la especie Neo-neo-neocaridina\"."
 
 #: dat/missions/minerva/maikki2.lua:466
 msgid ""
@@ -61254,6 +61406,10 @@ msgid ""
 "the book hasn't, it does seem like the strange shrimp-like creature floating "
 "in an aquarium near them has. You feel like it's staring into your soul."
 msgstr ""
+"Espera a ver si se da cuenta de tu presencia. Aunque el joven que lee el "
+"libro no lo ha hecho, parece que la extraña criatura parecida a un camarón "
+"que flota en un acuario cerca de ellos sí lo ha hecho. Sientes que te está "
+"mirando el alma."
 
 #: dat/missions/minerva/maikki2.lua:467
 msgid ""
@@ -61262,6 +61418,10 @@ msgid ""
 "noise.\n"
 "\"PERSON. PERSON.\""
 msgstr ""
+"Después de lo que parece ser una eternidad de un concurso de miradas entre "
+"tú y la gamba, oyes un fuerte pitido y el altavoz de la gamba empieza a "
+"hacer ruido.\n"
+"\"PERSONA. PERSONA\"."
 
 #: dat/missions/minerva/maikki2.lua:469
 msgid ""
@@ -61269,6 +61429,9 @@ msgid ""
 "\"I told you I already submitted my temporal research proposal clarification "
 "application yesterday.\""
 msgstr ""
+"El joven refunfuña.\n"
+"\"Ya te dije que ayer presenté mi solicitud de aclaración de la propuesta de "
+"investigación temporal.\""
 
 #: dat/missions/minerva/maikki2.lua:472
 msgid ""
@@ -61276,18 +61439,21 @@ msgid ""
 "if you had appeared out of thin air.\n"
 "\"Wait, what? Who are you?\""
 msgstr ""
+"El joven sale de repente de su estupor de lectura y te mira como si hubieras "
+"aparecido de la nada.\n"
+"\"Espera, ¿qué? ¿Quién es usted?\""
 
 #: dat/missions/minerva/maikki2.lua:474
 msgid "\"PERSON. PERSON. PERSON.\""
-msgstr ""
+msgstr "\"PERSONA\". PERSONA. PERSONA\"."
 
 #: dat/missions/minerva/maikki2.lua:475
 msgid "\"C'mon Calliope, I already know that. Here, have a pellet.\""
-msgstr ""
+msgstr "\"Vamos Calíope, ya lo sé. Toma, ten una bolita.\""
 
 #: dat/missions/minerva/maikki2.lua:476
 msgid "Calliope"
-msgstr ""
+msgstr "Calíope"
 
 #: dat/missions/minerva/maikki2.lua:477
 msgid ""
@@ -61295,12 +61461,17 @@ msgid ""
 "wastes no time in scarfing it down.\n"
 "   \"HAPPY. GOOD.\""
 msgstr ""
+"Se suelta un gránulo de comida para gambas en el acuario flotante. El "
+"camarón no pierde tiempo en devorarlo.\n"
+"   \"FELIZ. BUENO.\""
 
 #: dat/missions/minerva/maikki2.lua:480
 msgid ""
 "You explain to him that you are looking for information related to nebula "
 "artefacts."
 msgstr ""
+"Le explicas que estás buscando información relacionada con los artefactos de "
+"la nebulosa."
 
 #: dat/missions/minerva/maikki2.lua:481
 msgid ""
@@ -61309,18 +61480,26 @@ msgid ""
 "derailed spectacularly. I'm glad it ended as it did, or I would be still "
 "stuck in that purgatory.\""
 msgstr ""
+"\"Ah, ese proyecto infernal. Estaba condenado desde el principio. Los "
+"profesores e investigadores a tiempo completo dejaron que sus egos se les "
+"subieran a la cabeza y se descarriló espectacularmente. Me alegro de que "
+"terminara como lo hizo, o todavía estaría atrapado en ese purgatorio.\""
 
 #: dat/missions/minerva/maikki2.lua:482
 msgid ""
 "\"I don't think most of the people remember me, but I was the one stuck "
 "doing most of the work. If you can call it that.\""
 msgstr ""
+"\"No creo que la mayoría de la gente se acuerde de mí, pero fui el que se "
+"quedó haciendo la mayor parte del trabajo. Si se puede llamar así.\""
 
 #: dat/missions/minerva/maikki2.lua:484
 msgid ""
 "\"My name is Cayne, but you can call me Dr. Shrimp. What would you like to "
 "know?\""
 msgstr ""
+"\"Mi nombre es Cayne, pero puedes llamarme Dr. Gamba. ¿Qué te gustaría saber?"
+"\""
 
 #: dat/missions/minerva/maikki2.lua:487
 msgid ""
@@ -61328,30 +61507,33 @@ msgid ""
 "if you had appeared out of thin air.\n"
 "\"Ah, it is you again. Is there anything else you would want to know about?\""
 msgstr ""
+"El joven sale de repente de su estupor de lectura y te mira como si hubieras "
+"aparecido de la nada.\n"
+"\"Ah, es usted de nuevo. ¿Hay algo más que quieras saber?\""
 
 #: dat/missions/minerva/maikki2.lua:494
 msgid "\"Dr. Shrimp?\""
-msgstr ""
+msgstr "\"¿Dr. Gamba?\""
 
 #: dat/missions/minerva/maikki2.lua:495
 msgid "Ask about nebula artefacts"
-msgstr ""
+msgstr "Pregunta por los artefactos de la nebulosa"
 
 #: dat/missions/minerva/maikki2.lua:496
 msgid "Ask about other members."
-msgstr ""
+msgstr "Pregunta por otros miembros."
 
 #: dat/missions/minerva/maikki2.lua:500
 msgid "Ask about Calliope"
-msgstr ""
+msgstr "Pregunta sobre Calíope"
 
 #: dat/missions/minerva/maikki2.lua:503
 msgid "Ask about Dr. Strangelove"
-msgstr ""
+msgstr "Pregunta por el Dr. Strangelove"
 
 #: dat/missions/minerva/maikki2.lua:505
 msgid "Anything else?…"
-msgstr ""
+msgstr "¿Algo más?…"
 
 #: dat/missions/minerva/maikki2.lua:510
 msgid ""
@@ -61360,6 +61542,10 @@ msgid ""
 "about fresh-water shrimp breeding and became enthralled. One thing led to "
 "another, and now I'm doing shrimp research.\""
 msgstr ""
+"\"Después del proyecto de la nebulosa, como la mayoría de los investigadores "
+"del equipo, me alejé de la investigación de la nebulosa. Un día, mientras "
+"visitaba {pnt} me enteré de la cría de gambas de agua dulce y me entusiasmé. "
+"Una cosa llevó a la otra, y ahora me dedico a la investigación de la gamba.\""
 
 #: dat/missions/minerva/maikki2.lua:511
 msgid ""
@@ -61370,6 +61556,13 @@ msgid ""
 "of an extremely mentally capable shrimp.\"\n"
 "He taps the tank of the floating shrimp next to him."
 msgstr ""
+"\"Verás, las gambas son criaturas fascinantes. Tienen un ciclo de "
+"reproducción muy rápido y se reproducen en grandes cantidades, lo que "
+"permite una manipulación genética sencilla. Aunque la mayoría se crían por "
+"sus colores y rasgos físicos, algunos también han sido entrenados para "
+"obtener rasgos mentales. Calíope es un ejemplo de una gamba con gran "
+"capacidad mental.\"\n"
+"Golpea el tanque de la gamba flotante que tiene al lado."
 
 #: dat/missions/minerva/maikki2.lua:513
 msgid ""
@@ -61377,6 +61570,9 @@ msgid ""
 "understand much more about genetic modification than the brute-force "
 "approaches of the Soromid, although our technology is still lagging behind.\""
 msgstr ""
+"\"Las capacidades de estas gambas son infinitas, y nos están ayudando a "
+"entender mucho más sobre la modificación genética que los enfoques de fuerza "
+"bruta Soromida, aunque nuestra tecnología todavía se está quedando atrás.\""
 
 #: dat/missions/minerva/maikki2.lua:514
 msgid ""
@@ -61384,6 +61580,9 @@ msgid ""
 "He enthusiastically points towards Calliope.\n"
 "\"Isn't she the cutest?\""
 msgstr ""
+"\"Y lo que es mejor, ¡mira qué bonitas son!\"\n"
+"Señala con entusiasmo a Calíope.\n"
+"\"¿No es ella la más linda?\""
 
 #: dat/missions/minerva/maikki2.lua:517
 msgid ""
@@ -61391,6 +61590,10 @@ msgid ""
 "Shrimp and the name stuck. Honestly, it's the best nickname they could give "
 "me. Makes me feel like getting my PhD was finally worth it!\""
 msgstr ""
+"\" Calíope fue criada por sus facultades mentales. Con su acuario flotante "
+"especial es capaz de articular hasta 20 palabras únicas. ¡Es increíble! Y no "
+"sólo eso, sino que hemos conservado su buen aspecto. ¡Además, como neo-neo-"
+"neocaridina, es mucho más grande que las neo-neocaridinas!\""
 
 #: dat/missions/minerva/maikki2.lua:522
 msgid ""
@@ -61399,20 +61602,26 @@ msgid ""
 "Not only that, but we kept her good looks! Plus as a neo-neo-neocaridina, "
 "she is much larger than neo-neocaridinas.\""
 msgstr ""
+"\" Calíope fue criada por sus facultades mentales. Con su acuario flotante "
+"especial es capaz de articular hasta 20 palabras únicas. ¡Es increíble! Y no "
+"sólo eso, sino que hemos conservado su buen aspecto. Además, como neo-neo-"
+"neocaridina, es mucho más grande que las neo-neocaridinas.\""
 
 #: dat/missions/minerva/maikki2.lua:523
 msgid "\"FOOD. FOOD. FOOD.\""
-msgstr ""
+msgstr "\"COMIDA. COMIDA. COMIDA.\""
 
 #: dat/missions/minerva/maikki2.lua:524
 msgid ""
 "\"What would I do without her?\"\n"
 "He activates her feeding system and a food pellet drops out."
 msgstr ""
+"\"¿Qué haría sin ella?\"\n"
+"Activa su sistema de alimentación y cae una bolita de comida."
 
 #: dat/missions/minerva/maikki2.lua:526
 msgid "\"HAPPY. HAPPY.\""
-msgstr ""
+msgstr "\"FELIZ. FELIZ.\""
 
 #: dat/missions/minerva/maikki2.lua:527
 msgid ""
@@ -61423,6 +61632,12 @@ msgid ""
 "up a whole set of new functionality, given that their reaction speed and "
 "neuro-motor ability is superb.\""
 msgstr ""
+"\"Es la mejor gamba que hemos podido producir hasta ahora. Todavía no es "
+"capaz de tener conciencia de sí misma y tiende a olvidar las palabras si no "
+"se la entrena adecuadamente, pero es un comienzo. Al ampliar su "
+"funcionalidad neural, esperamos que con el tiempo sea compatible con los "
+"neuroimplantes. Esto abrirá toda una serie de nuevas funcionalidades, dado "
+"que su velocidad de reacción y su capacidad neuromotora son magníficas.\""
 
 #: dat/missions/minerva/maikki2.lua:528
 msgid ""
@@ -61430,6 +61645,9 @@ msgid ""
 "researching. She is the only thing that keeps me going during my 17th post "
 "doctoral fellowship.\""
 msgstr ""
+"\"Le puse el nombre de una musa de una religión arcaica que encontré "
+"mientras investigaba. Ella es lo único que me hace seguir adelante durante "
+"mi 17ª beca postdoctoral.\""
 
 #: dat/missions/minerva/maikki2.lua:532
 msgid ""
@@ -61439,6 +61657,12 @@ msgid ""
 "stuff from the outer areas. Many times they were even trying to sell us "
 "random debris as nebula artefacts, but that's really easy to detect.\""
 msgstr ""
+"\"¿Con qué tipo de artefactos estábamos tratando? De todo tipo. "
+"Prácticamente cualquier cosa que pudiéramos conseguir. Intentábamos hacernos "
+"con cosas más cercanas al origen, cerca de Sol, pero, la mayoría de las "
+"veces, los carroñeros nos traían cosas de las zonas exteriores. Muchas veces "
+"incluso intentaban vendernos restos aleatorios como artefactos de la "
+"nebulosa, pero eso es muy fácil de detectar.\""
 
 #: dat/missions/minerva/maikki2.lua:533
 msgid ""
@@ -61447,6 +61671,10 @@ msgid ""
 "in nearly imperceptible ways. Our tools could detect the alterations easily."
 "\""
 msgstr ""
+"\"Verá, la nebulosa emite un tipo específico de radiación. No estamos muy "
+"familiarizados con ella, pero altera las partículas subatómicas de la basura "
+"espacial de forma casi imperceptible. Nuestras herramientas podrían detectar "
+"las alteraciones fácilmente.\""
 
 #: dat/missions/minerva/maikki2.lua:534
 msgid ""
@@ -61455,6 +61683,10 @@ msgid ""
 "station, although not entirely sure. It's a bit damaged beyond recognition "
 "you see.\""
 msgstr ""
+"\"Cuando el proyecto fracasó, la mayoría de los artefactos fueron "
+"confiscados a quién sabe dónde, pero me las arreglé para conservar una "
+"tuerca de lo que creo que es una estación espacial, aunque no estoy del todo "
+"seguro. Está un poco dañada hasta el punto de que no se puede reconocer.\""
 
 #: dat/missions/minerva/maikki2.lua:535
 msgid ""
@@ -61464,6 +61696,11 @@ msgid ""
 "still interested in that, but that's about it. Furthermore, it's not "
 "entirely legal if you catch my drift.\""
 msgstr ""
+"\"Con el fracaso de la mayoría de los proyectos de nebulosa, no creo que "
+"haya ya nadie que compre artefactos de nebulosa. No hay mucho mercado para "
+"ellos, y la mayoría de los restos de fácil acceso han sido recogidos de "
+"todos modos. Algunos coleccionistas siguen interesados en ello, pero eso es "
+"todo. Además, no es del todo legal, si me entiendes.\""
 
 #: dat/missions/minerva/maikki2.lua:540
 msgid ""
@@ -61471,6 +61708,9 @@ msgid ""
 "failed. Us post-doctoral researchers do all the work and get none of the "
 "credit.\""
 msgstr ""
+"\"La mayoría de los miembros del proyecto eran profesores titulares, y "
+"probablemente por eso fracasó. Los investigadores posdoctorales hacemos todo "
+"el trabajo y no recibimos ningún crédito.\""
 
 #: dat/missions/minerva/maikki2.lua:541
 msgid ""
@@ -61479,6 +61719,11 @@ msgid ""
 "Sato, and Prof. Hsu. I think they even got some stupid promotion, while the "
 "other post docs and I lost our jobs.\""
 msgstr ""
+"\"Después de que se fuera al infierno, muchos de los investigadores "
+"perdieron sus puestos o se escondieron. Los pocos que conozco que siguen en "
+"activo son el profesor Stova, el profesor Sato y el profesor Hsu. Creo que "
+"incluso consiguieron algún estúpido ascenso, mientras que los otros post "
+"docs y yo perdimos nuestros trabajos.\""
 
 #: dat/missions/minerva/maikki2.lua:542
 msgid ""
@@ -61487,12 +61732,19 @@ msgid ""
 "results, not a single tenured post opened! It's ridiculous! If industry "
 "wasn't so horrible, I would quit academia in an instant!\""
 msgstr ""
+"\"Es bastante increíble pensar que originalmente había unas 100 personas en "
+"el proyecto. Sin embargo, incluso con toda la gente despedida por "
+"falsificación de resultados, ¡no se abrió ni un solo puesto de titular! Es "
+"ridículo. Si la industria no fuera tan horrible, dejaría el mundo académico "
+"en un instante.\""
 
 #: dat/missions/minerva/maikki2.lua:543
 msgid ""
 "\"Now that I think of it, there was another guy. What was his name? I "
 "totally forget. Oh well.\""
 msgstr ""
+"\"Ahora que lo pienso, había otro tipo. ¿Cómo se llamaba? Lo he olvidado por "
+"completo. Ah, bueno.\""
 
 #: dat/missions/minerva/maikki2.lua:548
 msgid ""
@@ -61501,6 +61753,10 @@ msgid ""
 "Quite a few went missing during the project and I think it was probably him "
 "who was taking them.\""
 msgstr ""
+"\"¡Ahora me acuerdo! Había otro investigador posdoctoral que trabajaba "
+"conmigo. Era un poco raro y se obsesionaba con los artefactos de la "
+"nebulosa. Desaparecieron bastantes durante el proyecto y creo que "
+"probablemente era él quien se los llevaba.\""
 
 #: dat/missions/minerva/maikki2.lua:549
 msgid ""
@@ -61509,6 +61765,10 @@ msgid ""
 "out. Nobody really did much as we were all busy dealing with all the "
 "paperwork of the project cancellation.\""
 msgstr ""
+"\"Se enfadó mucho cuando se canceló el proyecto, hizo un gran berrinche y "
+"todo. Estuvo encerrado en su despacho durante días hasta que consiguieron "
+"sacarlo. Nadie hizo gran cosa porque todos estábamos ocupados con todo el "
+"papeleo de la cancelación del proyecto.\""
 
 #: dat/missions/minerva/maikki2.lua:551
 msgid ""
@@ -61516,6 +61776,9 @@ msgid ""
 "{sys}, which is a bit strange, because not only is there not a research "
 "centre there, but there isn't even an inhabited planet nor station!\""
 msgstr ""
+"\"Al final desapareció. Lo último que supe es que iba a {sys}, lo cual es un "
+"poco extraño, porque no sólo no hay un centro de investigación allí, ¡sino "
+"que ni siquiera hay un planeta habitado ni una estación!\""
 
 #: dat/missions/minerva/maikki2.lua:552
 msgid ""
@@ -61523,16 +61786,21 @@ msgid ""
 "try to take a look around there. The whole thing gives me the me the creeps "
 "though.\""
 msgstr ""
+"\"Es realmente extraño, pero si estás realmente interesado, supongo que "
+"podrías intentar echar un vistazo por allí. Aunque todo esto me da "
+"escalofríos.\""
 
 #: dat/missions/minerva/maikki2.lua:557
 msgid "\tGo to {sys}"
-msgstr ""
+msgstr "Ve a {sys}"
 
 #: dat/missions/minerva/maikki2.lua:560
 msgid ""
 "You found about a strange researcher who appears to be in Westhaven and is "
 "related to the nebula research."
 msgstr ""
+"Descubriste a un extraño investigador que parece estar en Refugio Oeste y "
+"está relacionado con la investigación de la nebulosa."
 
 #: dat/missions/minerva/maikki2.lua:566
 msgid "\"Is there anything else you would like to know?\""
@@ -61540,60 +61808,65 @@ msgstr "\"¿Hay algo más que quieras saber?\""
 
 #: dat/missions/minerva/maikki2.lua:584 dat/missions/minerva/maikki2.lua:606
 msgid "Feral Drone"
-msgstr ""
+msgstr "Dron Salvaje"
 
 #. Spawn the drones
 #: dat/missions/minerva/maikki2.lua:597
 msgid "Feral Alpha Drone"
-msgstr ""
+msgstr "Dron Salvaje Alfa"
 
 #: dat/missions/minerva/maikki2.lua:615
 msgid ""
 "Your ship has detected a curious signal originating from inside the system."
 msgstr ""
+"Su nave ha detectado una curiosa señal procedente del interior del sistema."
 
 #: dat/missions/minerva/maikki2.lua:637
 msgid "Security Drone"
-msgstr ""
+msgstr "Dron de Seguridad"
 
 #: dat/missions/minerva/maikki2.lua:641
 msgid "Hostiles detected!"
-msgstr ""
+msgstr "¡Hostiles detectados!"
 
 #: dat/missions/minerva/maikki2.lua:642
 msgid "UNAUTHORIZED VESSEL DETECTED. ELIMINATING."
-msgstr ""
+msgstr "NAVEGACIÓN NO AUTORIZADA DETECTADA. ELIMINANDO."
 
 #. All dead
 #: dat/missions/minerva/maikki2.lua:669
 msgid "Your ship detects that one of the asteroids isn't what it seems…"
-msgstr ""
+msgstr "Tu nave detecta que uno de los asteroides no es lo que parece…"
 
 #: dat/missions/minerva/maikki2.lua:673
 msgid ""
 "You were attacked by a Za'lek security system and found a laboratory "
 "disguised as an asteroid in Westhaven."
 msgstr ""
+"Has sido atacado por un sistema de seguridad Za'lek y has encontrado un "
+"laboratorio disfrazado de asteroide en Refugio Oeste."
 
 #: dat/missions/minerva/maikki2.lua:689
 msgid "Unknown Voice"
-msgstr ""
+msgstr "Voz Desconocida"
 
 #. Really slow fade in so the player stops mashing keys due to combat (keypresses aren't processed in animations)
 #: dat/missions/minerva/maikki2.lua:691
 msgid ""
 "While the drone is blowing up, you receive a faint, audio-only transmission."
-msgstr ""
+msgstr "Mientras el dron explota, recibes una débil transmisión de audio."
 
 #: dat/missions/minerva/maikki2.lua:693
 msgid "\"Thank you for setting me free…\""
-msgstr ""
+msgstr "\"Gracias por liberarme...\""
 
 #: dat/missions/minerva/maikki2.lua:694
 msgid ""
 "You wonder what that was about as you watch the drone thrash as it blows up. "
 "Westhaven is a really weird place."
 msgstr ""
+"Te preguntas de qué se trata mientras ves cómo el dron se estrella al "
+"explotar. Refugio Oeste es un lugar realmente extraño."
 
 #: dat/missions/minerva/maikki2.lua:695
 msgid ""
@@ -61601,54 +61874,62 @@ msgid ""
 "this is what Dr. Strangelove was referring to as a nebula artefact. "
 "Strangely, your ship sensors identify it as mainly biological material…"
 msgstr ""
+"De los restos de la nave consigues encontrar una cosa... muy dañada... "
+"Supones que es lo que el Dr. Strangelove denominaba artefacto de la "
+"nebulosa. Extrañamente, los sensores de tu nave lo identifican como material "
+"principalmente biológico…"
 
 #: dat/missions/minerva/maikki2.lua:699
 msgid "Nebula Artefact?"
-msgstr ""
+msgstr "¿Artefacto de Nebulosa?"
 
 #: dat/missions/minerva/maikki2.lua:699
 msgid ""
 "A very damaged thing that seems to be mainly biological. I guess this is the "
 "nebula artefact?"
 msgstr ""
+"Una cosa muy dañada que parece ser principalmente biológica. ¿Supongo que "
+"esto es el artefacto de la nebulosa?"
 
 #: dat/missions/minerva/maikki2.lua:702
 msgid "Go back to Dr. Strangelove"
-msgstr ""
+msgstr "Vuelve a ver al Dr. Strangelove"
 
 #: dat/missions/minerva/maikki2.lua:703
 msgid ""
 "You recovered a nebula artefact that Dr. Strangelove wanted from feral "
 "drones."
 msgstr ""
+"Has recuperado un artefacto de la nebulosa que el Dr. Strangelove quería de "
+"los drones salvajes."
 
 #: dat/missions/minerva/maikki2.lua:707
 msgid "Just destroy me and put me out of my misery."
-msgstr ""
+msgstr "Sólo destrúyeme y sácame de mi miseria."
 
 #: dat/missions/minerva/maikki2.lua:708
 msgid "Why am I still alive?"
-msgstr ""
+msgstr "¿Por qué estoy todavía vivo?"
 
 #: dat/missions/minerva/maikki2.lua:709
 msgid "I can't deal with this anymore."
-msgstr ""
+msgstr "No puedo seguir lidiando con esto."
 
 #: dat/missions/minerva/maikki2.lua:710
 msgid "Please end me!"
-msgstr ""
+msgstr "¡Por favor, acaba conmigo!"
 
 #: dat/missions/minerva/maikki2.lua:711
 msgid "Living is suffering."
-msgstr ""
+msgstr "Vivir es sufrir."
 
 #: dat/missions/minerva/maikki2.lua:712
 msgid "It all hurts."
-msgstr ""
+msgstr "Todo duele."
 
 #: dat/missions/minerva/maikki2.lua:713
 msgid "Please kill me!"
-msgstr ""
+msgstr "¡Por favor, mátame!"
 
 #. We go with nebula music
 #: dat/missions/minerva/maikki2.lua:746
@@ -61656,16 +61937,19 @@ msgid ""
 "The hologram projector flickers and what appears to be a grumpy old man "
 "appears into view. He doesn't look very pleased to be disturbed."
 msgstr ""
+"El proyector de hologramas parpadea y aparece lo que parece ser un viejo "
+"gruñón. No parece muy contento de ser molestado."
 
 #: dat/missions/minerva/maikki2.lua:747
 msgid "\"How did you get in there? Who are you!\""
-msgstr ""
+msgstr "\"¿Cómo has entrado ahí? ¿Quién eres tú?\""
 
 #: dat/missions/minerva/maikki2.lua:748
 msgid ""
 "You explain to him that you are looking for information about nebula "
 "artefacts."
 msgstr ""
+"Le explicas que estás buscando información sobre artefactos de la nebulosa."
 
 #: dat/missions/minerva/maikki2.lua:749
 msgid ""
@@ -61674,6 +61958,10 @@ msgid ""
 "work, sweat, and tears! They're all mine!\"\n"
 "He cackles manically."
 msgstr ""
+"\"¿Quién te envió aquí? ¿Fue el Dr. Bob? Esa comadreja siempre estaba detrás "
+"de mis preciosos artefactos. ¡Bueno, no puede tenerlos! ¡Tengo todo esto con "
+"mi trabajo duro, sudor y lágrimas! Son todos míos\".\n"
+"Se ríe maníacamente."
 
 #: dat/missions/minerva/maikki2.lua:751
 msgid ""
@@ -61682,6 +61970,11 @@ msgid ""
 "You glance at a crate labelled 'NEBULA ARTEFACTS #082' in the corner of the "
 "room."
 msgstr ""
+"\"Los he escondido muy bien. Aunque de alguna manera hayas burlado mi "
+"sistema de seguridad y hayas conseguido entrar en mi laboratorio, ¡nunca los "
+"encontrarás!\"\n"
+"Miras una caja etiquetada como \"ARTEFACTOS DE NEBULOSA #082\" en la esquina "
+"de la habitación."
 
 #: dat/missions/minerva/maikki2.lua:753
 msgid ""
@@ -61689,32 +61982,39 @@ msgid ""
 "have a new specimen ready and it will be better than ever! The old ones were "
 "fairly inadequate.\""
 msgstr ""
+"\"De todos modos, estoy muy ocupado ahora, ¿sí? Toda esta ciencia no se hará "
+"sola. Casi tengo un nuevo espécimen listo y será mejor que nunca. Los "
+"antiguos eran bastante inadecuados.\""
 
 #: dat/missions/minerva/maikki2.lua:755
 msgid "You met an eccentric researcher named Dr. Strangelove in Westhaven."
 msgstr ""
+"Conociste a un excéntrico investigador llamado Dr. Strangelove en Refugio "
+"Oeste."
 
 #: dat/missions/minerva/maikki2.lua:757
 msgid ""
 "The hologram projector flickers and Dr. Strangelove comes into view. He "
 "doesn't look very happy to see you again."
 msgstr ""
+"El proyector de hologramas parpadea y el Dr. Strangelove aparece. No parece "
+"muy contento de volver a verte."
 
 #: dat/missions/minerva/maikki2.lua:764
 msgid "Ask about the nebula"
-msgstr ""
+msgstr "Pregunta por la nebulosa"
 
 #: dat/missions/minerva/maikki2.lua:765
 msgid "Ask about this place"
-msgstr ""
+msgstr "Pregunta por este lugar"
 
 #: dat/missions/minerva/maikki2.lua:769
 msgid "Hand over the artefact"
-msgstr ""
+msgstr "Entrega el artefacto"
 
 #: dat/missions/minerva/maikki2.lua:771
 msgid "Ask about job"
-msgstr ""
+msgstr "Pregunta por el trabajo"
 
 #: dat/missions/minerva/maikki2.lua:777
 msgid ""
@@ -61732,6 +62032,11 @@ msgid ""
 "mattered.\"\n"
 "He grins as nostalgia takes him over."
 msgstr ""
+"\"Hace poco tuve la gran oportunidad de trabajar directamente en la "
+"investigación de las nebulosas. Fue un proyecto fabuloso con cientos de las "
+"mentes más brillantes de los Za'lek trabajando en conjunto. No tan "
+"brillantes como yo, pero los números eran lo que importaba.\"\n"
+"Sonríe mientras la nostalgia se apodera de él."
 
 #: dat/missions/minerva/maikki2.lua:780
 msgid ""
@@ -61743,6 +62048,13 @@ msgid ""
 "You see a greasy robot in the corner that is boiling some sort of brown "
 "liquid. Is that… cheese?"
 msgstr ""
+"\"¡Pudimos tener equipos dedicados a recuperar todo tipo de objetos "
+"increíbles! ¡Incluso encontramos los restos de un replicador Proteron! Sólo "
+"era capaz de replicar fondue de queso, pero era increíble. Lo integré con "
+"una plataforma de drones y ¡eso me ha mantenido sano y en forma desde "
+"entonces! Debería estar en el bar si quieres probarlo.\"\n"
+"Ves un robot grasiento en la esquina que está hirviendo una especie de "
+"líquido marrón. ¿Es eso... queso?"
 
 #: dat/missions/minerva/maikki2.lua:782
 msgid ""
@@ -61752,14 +62064,20 @@ msgid ""
 "fancy as the replicator yet, but the bodies have been very interesting.\"\n"
 "He coughs, wracking his body."
 msgstr ""
+"\"De todos modos, es una verdadera lástima que los burócratas de la estación "
+"central hayan matado el proyecto en su mejor momento. Al menos pude traer la "
+"mayoría de los dispositivos aquí y seguir adquiriendo más artefactos "
+"después. Todavía no he encontrado nada tan elegante como el replicador, pero "
+"los cuerpos han sido muy interesantes.\"\n"
+"Tose, sacudiendo su cuerpo."
 
 #: dat/missions/minerva/maikki2.lua:785
 msgid "\"Bodies…?\""
-msgstr ""
+msgstr "\"¿Cuerpos...?\""
 
 #: dat/missions/minerva/maikki2.lua:786
 msgid "\"What devices?\""
-msgstr ""
+msgstr "\"¿Qué dispositivos?\""
 
 #: dat/missions/minerva/maikki2.lua:789
 msgid ""
@@ -61767,14 +62085,17 @@ msgid ""
 "job that I would like you to do, and, in exchange, I might give you the "
 "information you seek.\""
 msgstr ""
+"\" Jajaja. Estás interesado, ¿no? Esa información no será barata. Tengo un "
+"trabajo que me gustaría que hicieras y, a cambio, podría darte la "
+"información que buscas.\""
 
 #: dat/missions/minerva/maikki2.lua:794
 msgid "Refuse the job"
-msgstr ""
+msgstr "Rechazas el trabajo"
 
 #: dat/missions/minerva/maikki2.lua:797
 msgid "\"You don't scratch my back and I don't scratch yours.\""
-msgstr ""
+msgstr "\"Tú no me rascas la espalda y yo no te rasco la tuya.\""
 
 #: dat/missions/minerva/maikki2.lua:801
 msgid ""
@@ -61783,6 +62104,10 @@ msgid ""
 "the functionality could be improved. Sadly, an incompatibility resulted in "
 "the drones going… ahem… feral.\""
 msgstr ""
+"\"Veo que eres más valiente de lo que pareces. Tengo un pequeño problema. "
+"Verás, estaba mejorando algunos de mis drones con algunos artefactos de la "
+"nebulosa para probar si se podía mejorar la funcionalidad. Lamentablemente, "
+"una incompatibilidad hizo que los drones se volvieran... ejem... salvajes.\""
 
 #: dat/missions/minerva/maikki2.lua:802
 msgid ""
@@ -61791,6 +62116,9 @@ msgid ""
 "\"\n"
 "He glares at you."
 msgstr ""
+"\"Iba a intentar ocuparme de ellos con mis drones de seguridad, pero como "
+"puedes adivinar, eso ya no es una opción desde que los hiciste añicos\".\n"
+"Te mira fijamente."
 
 #: dat/missions/minerva/maikki2.lua:804
 msgid ""
@@ -61799,16 +62127,22 @@ msgid ""
 "asteroid field and should be fairly easy to find. Make sure to recover the "
 "parts in one piece!\""
 msgstr ""
+"\"Mientras que los propios drones son prescindibles, necesito que recuperes "
+"los artefactos de la nebulosa utilizados en su mejora. Deberían estar "
+"vagando por el campo de asteroides y deberían ser bastante fáciles de "
+"encontrar. ¡Asegúrate de recuperar las piezas en una sola pieza!\""
 
 #: dat/missions/minerva/maikki2.lua:807
 msgid "Recover nebula artefacts from the {sys} asteroid field"
-msgstr ""
+msgstr "Recupera los artefactos de la nebulosa del campo de asteroides en {sys}"
 
 #: dat/missions/minerva/maikki2.lua:810
 msgid ""
 "You accepted Dr. Strangelove's request to recover nebula artefacts from "
 "feral drones in Westhaven."
 msgstr ""
+"Has aceptado la petición del Dr. Strangelove de recuperar los artefactos de "
+"la nebulosa de los drones salvajes en Refugio Oeste."
 
 #: dat/missions/minerva/maikki2.lua:815
 msgid ""
@@ -61819,6 +62153,12 @@ msgid ""
 "one piece.\"\n"
 "He glares at you."
 msgstr ""
+"\"Debería ser un trabajo fácil. Todo lo que tienes que hacer es recuperar "
+"los artefactos de la nebulosa de los drones salvajes. Puede que se resistan "
+"o que no sean fáciles de atrapar, pero espero que un piloto que se cargó "
+"todos mis drones de seguridad no tenga problemas con unos cuantos drones "
+"salvajes. Intenta traer los artefactos de una pieza.\"\n"
+"Te mira fijamente."
 
 #: dat/missions/minerva/maikki2.lua:820
 msgid ""
@@ -61828,6 +62168,11 @@ msgid ""
 "appropriate it!\"\n"
 "He smiles mischievously."
 msgstr ""
+"\"¿Qué te parece? ¡Investigación Za'lek de vanguardia! Tuve que tomar "
+"prestadas muchas cosas de mis trabajos anteriores, pero no pueden "
+"recuperarlas. ¡Ahora es todo mío! ¡Me aseguré de que todo estuviera cubierto "
+"de mi olor para que no pudieran apropiarse de él!\"\n"
+"Sonríe con picardía."
 
 #: dat/missions/minerva/maikki2.lua:822
 msgid ""
@@ -61838,6 +62183,12 @@ msgid ""
 "than me to visit!\"\n"
 "You don't like how he puts emphasis on 'living biological'…"
 msgstr ""
+"\"Mis drones los desenterraron y es el lugar más acogedor en el que he "
+"vivido, pero no tengo muchos invitados. De hecho, tú eres mi...\"\n"
+"Empieza a contar con los dedos atentamente.\n"
+"\"...¡el primer invitado! Sí, eso es, ¡el primer ser biológico vivo "
+"verdadero que me visita!\"\n"
+"No te gusta cómo pone el énfasis en \"biológico vivo\"…"
 
 #: dat/missions/minerva/maikki2.lua:826
 msgid ""
@@ -61847,12 +62198,19 @@ msgid ""
 "wafting from the backroom, you feel like it is best to heed his advice for "
 "your own safety."
 msgstr ""
+"\"Siéntete libre de usar las instalaciones como quieras, pero mantente "
+"alejado de la habitación trasera.\"\n"
+"Teniendo en cuenta el olor de todo el laboratorio y, sobre todo, los "
+"horribles olores que emanan de la sala trasera, crees que es mejor seguir su "
+"consejo por tu propia seguridad."
 
 #: dat/missions/minerva/maikki2.lua:831
 msgid ""
 "You show him the nebula artefact and suddenly a couple of small drones whirl "
 "into the room and start to perform a deeper inspection."
 msgstr ""
+"Le muestras el artefacto de la nebulosa y, de repente, un par de pequeños "
+"drones entran en la sala y comienzan a realizar una inspección más profunda."
 
 #: dat/missions/minerva/maikki2.lua:832
 msgid ""
@@ -61860,6 +62218,10 @@ msgid ""
 "no vitals… not very good… mmmm… nebula radiation at minimum… can't be helped "
 "I guess…\""
 msgstr ""
+"\"Niveles de energía 7%... ya veo, ya veo... inestabilidad de flujo menor... "
+"no es tan malo...\n"
+"no hay signos vitales... no es muy bueno... mmmm... la radiación de la "
+"nebulosa al mínimo... no se puede evitar, supongo...\""
 
 #: dat/missions/minerva/maikki2.lua:834
 msgid ""
@@ -61867,14 +62229,17 @@ msgid ""
 "you are there.\n"
 "\"Why are you still here? Go back to wherever the hell you came from!\""
 msgstr ""
+"Continúa durante lo que parece una eternidad antes de recordar finalmente "
+"que estás ahí.\n"
+"\"¿Por qué sigues aquí? ¡Vuelve al infierno de donde has venido!\""
 
 #: dat/missions/minerva/maikki2.lua:837
 msgid "\"What about my information?\""
-msgstr ""
+msgstr "\"¿Y mi información?\""
 
 #: dat/missions/minerva/maikki2.lua:838
 msgid "\"What the hell is this thing?\""
-msgstr ""
+msgstr "\"¿Qué demonios es esta cosa?\""
 
 #: dat/missions/minerva/maikki2.lua:841
 msgid ""
@@ -61882,6 +62247,9 @@ msgid ""
 "be helped with such an inferior intellect as yours.\"\n"
 "He sneers."
 msgstr ""
+"\"Ya veo... No comprendes la importancia de este artefacto. Supongo que no "
+"se puede evitar con un intelecto tan inferior como el tuyo.\"\n"
+"Se burla."
 
 #: dat/missions/minerva/maikki2.lua:843
 msgid ""
@@ -61890,6 +62258,10 @@ msgid ""
 "biotechnology, but also Za'lek cybertechnology. It is the peak of "
 "technological advancement!\""
 msgstr ""
+"\"Esta es mi última creación, una amalgama de tecnología y vida de la "
+"nebulosa antigua. Piensa en esto como algo que no sólo supera cualquier "
+"biotecnología Soromida, sino también la cibertecnología Za'lek. ¡Es la cima "
+"del avance tecnológico!\""
 
 #: dat/missions/minerva/maikki2.lua:844
 msgid ""
@@ -61898,14 +62270,18 @@ msgid ""
 "interesting failure, it is still a failure at heart. Most of my other "
 "creations have had much more success.\""
 msgstr ""
+"\"Aunque tiene un potencial increíble, hay... algunas complicaciones "
+"todavía. Las faculteaes mentales tienden a carecer de estabilidad. Aunque "
+"este es un fracaso muy interesante, sigue siendo un fracaso en el fondo. La "
+"mayoría de mis otras creaciones han tenido mucho más éxito.\""
 
 #: dat/missions/minerva/maikki2.lua:845
 msgid "\"What was it you wanted?\""
-msgstr ""
+msgstr "\"¿Qué era lo que querías?\""
 
 #: dat/missions/minerva/maikki2.lua:846
 msgid "You ask him if he knows anything about Kex's ship in the nebula."
-msgstr ""
+msgstr "Le preguntas si sabe algo de la nave de Kex en la nebulosa."
 
 #: dat/missions/minerva/maikki2.lua:847
 msgid ""
@@ -61917,6 +62293,13 @@ msgid ""
 "people who were investigating like us.\"\n"
 "He coughs."
 msgstr ""
+"\"¡Ah, sí! Recuerdo ese naufragio. Uno muy, muy curioso. Por aquel entonces "
+"yo mismo estaba explorando la nebulosa, y nos topamos con este pecio tan "
+"curioso que tenía claros signos de lucha. Aunque no es raro que los "
+"carroñeros se peleen entre ellos, éste tenía la mayor parte de los daños en "
+"el interior. El daño en el exterior fue claramente hecho después para "
+"confundir a la gente que estaba investigando como nosotros.\"\n"
+"Tose."
 
 #: dat/missions/minerva/maikki2.lua:849
 msgid ""
@@ -61927,6 +62310,13 @@ msgid ""
 "with so much nebula radiation that they seemed to have potential!\"\n"
 "He starts to get excited."
 msgstr ""
+"\"Aunque no era una nave anterior al Incidente ni tenía características "
+"interesantes, lo que había dentro era sorprendente. Había dos cuerpos "
+"todavía calientes al tacto, parece que el tiempo pasa de forma diferente en "
+"una nebulosa tan profunda. Normalmente ignoraría tales cosas, sin embargo, ¡"
+"habían sido infundidos con tanta radiación de la nebulosa que parecían tener "
+"potencial!\"\n"
+"Empieza a emocionarse."
 
 #: dat/missions/minerva/maikki2.lua:851
 msgid ""
@@ -61936,6 +62326,11 @@ msgid ""
 "the potential infused in the nebula! Now I get it! All my research had led "
 "up to this!\""
 msgstr ""
+"\"Fue entonces cuando me di cuenta, la humanidad y la nebulosa son una misma "
+"cosa. ¡Nuestros futuros están entrelazados! ¡Al absorber la nebulosa en el "
+"cuerpo, uno puede trascender la humanidad y vivir para siempre entre las "
+"estrellas! ¡No hay límite para el potencial infundido en la nebulosa! ¡Ahora "
+"lo entiendo! ¡Toda mi investigación me había llevado a esto!\""
 
 #: dat/missions/minerva/maikki2.lua:852
 msgid ""
@@ -61945,6 +62340,12 @@ msgid ""
 "but with suitable replacements I was able to solve it.\"\n"
 "He laughs manically."
 msgstr ""
+"\"Y fue entonces cuando me di cuenta de que, amalgamando la nebulosa y la "
+"carne, ¡podemos trascender a nosotros mismos! Tenía que hacerlo; ¡había que "
+"hacerlo! Y funcionó, vaya si funcionó. Hubo algunas dificultades con la "
+"incompatibilidad de la carne, pero con los reemplazos adecuados pude "
+"resolverlo.\"\n"
+"Se ríe maníacamente."
 
 #: dat/missions/minerva/maikki2.lua:854
 msgid ""
@@ -61956,6 +62357,14 @@ msgid ""
 "also be perfect. It was so simple!\"\n"
 "He seems delirious."
 msgstr ""
+"\"Eran tan perfectos, como Adán y Eva, dispuestos a crear una nueva "
+"humanidad perfecta. Sin embargo, no es tan sencillo. El hombre, un tonto "
+"desagradecido, tenía demasiado apego a su vida anterior. Qué débil... Fue "
+"entonces cuando me di cuenta. Se necesita una mente perfecta y una carne "
+"perfecta para convertirse en el ser perfecto. Con la nebulosa, la carne "
+"perfecta puede hacerse, pero la mente también debe ser perfecta. Era tan "
+"sencillo\".\n"
+"Parece desvariar."
 
 #: dat/missions/minerva/maikki2.lua:856
 msgid ""
@@ -61964,6 +62373,10 @@ msgid ""
 "deteriorates the body.\"\n"
 "He coughs, convulsing."
 msgstr ""
+"\"Así que lo hice. Intenté actualizarme. Pero no es tan sencillo, verás, es "
+"la experiencia cercana a la muerte lo que es necesario. En la carne sana "
+"sólo deteriora el cuerpo.\"\n"
+"Tose, convulsionando."
 
 #: dat/missions/minerva/maikki2.lua:858
 msgid ""
@@ -61971,10 +62384,14 @@ msgid ""
 "I'm wasting away. So close and here wasting away. What uselessness.\"\n"
 "He lowers his gaze."
 msgstr ""
+"\"La mente era lo suficientemente buena, pero no mi cuerpo. No, y no tengo "
+"mucho tiempo. Me estoy consumiendo. Tan cerca y aquí consumiéndose. Qué "
+"inutilidad.\"\n"
+"Baja la mirada."
 
 #: dat/missions/minerva/maikki2.lua:860
 msgid "You ask what happened to the 'individuals' in the experiments."
-msgstr ""
+msgstr "Preguntas qué pasó con los \"individuos\" de los experimentos."
 
 #: dat/missions/minerva/maikki2.lua:861
 msgid ""
@@ -61983,6 +62400,10 @@ msgid ""
 "space. Not beautiful at all.\"\n"
 "He coughs softly."
 msgstr ""
+"\"Intenté localizarlo, la última vez que lo comprobé fue atrapado por unos "
+"matones en la estación Minerva. Un lugar desagradable en el sistema Limbo. "
+"No hay nebulosas y el espacio es muy rancio. No es nada bonito\".\n"
+"Tose suavemente."
 
 #: dat/missions/minerva/maikki2.lua:863
 msgid ""
@@ -61991,6 +62412,10 @@ msgid ""
 "need more time. One more cycle…\"\n"
 "His voice gets softer and softer as he keeps on mumbling."
 msgstr ""
+"\"Intentó ayudarme, pero ella también estaba débil de mente, y un día partió "
+"hacia las estrellas. No pude detenerla, pero pensé que estaba lo "
+"suficientemente cerca. Sólo necesito más tiempo. Un ciclo más...\"\n"
+"Su voz se vuelve cada vez más suave mientras sigue murmurando."
 
 #: dat/missions/minerva/maikki2.lua:865
 msgid ""
@@ -61998,10 +62423,13 @@ msgid ""
 "have fallen into a stupor. You feel you have enough information to report to "
 "Maikki again."
 msgstr ""
+"Intentas llamar su atención de nuevo, pero no parece funcionar. Parece haber "
+"caído en un estado de estupor. Crees que tienes suficiente información para "
+"informar a Maikki de nuevo."
 
 #: dat/missions/minerva/maikki2.lua:870
 msgid "Report back to Maikki in the Limbo system"
-msgstr ""
+msgstr "Informa a Maikki en el sistema Limbo"
 
 #: dat/missions/minerva/maikki2.lua:873
 msgid ""
@@ -62009,18 +62437,25 @@ msgid ""
 "individual from a wreck in the nebula. Kex appears to have run away and is "
 "likely held by thugs at Minerva station."
 msgstr ""
+"Te has enterado de que el Dr. Strangelove ha salvado a lo que parece ser Kex "
+"y a otro individuo de un naufragio en la nebulosa. Kex parece haber huido y "
+"es probable que esté retenido por matones en la estación Minerva."
 
 #: dat/missions/minerva/maikki2.lua:875
 msgid ""
 "You leave behind the hologram projection and hope you won't have to deal "
 "with Dr. Strangelove in the future."
 msgstr ""
+"Dejas atrás la proyección del holograma y esperas no tener que lidiar con el "
+"Dr. Strangelove en el futuro."
 
 #: dat/missions/minerva/maikki2.lua:879
 msgid ""
 "You turn off the hologram projector and Dr. Strangelove's image flickers and "
 "disappears."
 msgstr ""
+"Apagas el proyector de hologramas y la imagen del Dr. Strangelove parpadea y "
+"desaparece."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -62057,23 +62492,23 @@ msgstr ""
 #. luacheck: globals enter harassed heartbeat land thugs_attacked thugs_dead (Hook functions passed by name)
 #: dat/missions/minerva/pirate1.lua:54
 msgid "Someone wants you to mess around with Dvaered thugs."
-msgstr ""
+msgstr "Alguien quiere que te metas con los matones Dvaered."
 
 #: dat/missions/minerva/pirate1.lua:55 dat/missions/minerva/pirate2.lua:68
 #: dat/missions/minerva/pirate3.lua:65 dat/missions/minerva/pirate4.lua:52
 #: dat/missions/minerva/pirate5.lua:56
 msgid "Cold hard credits"
-msgstr ""
+msgstr "Créditos duros y fríos"
 
 #: dat/missions/minerva/pirate1.lua:56 dat/missions/minerva/pirate1.lua:157
 #: dat/missions/minerva/pirate1.lua:181 dat/missions/minerva/pirate2.lua:69
 msgid "Dvaered Thugs"
-msgstr ""
+msgstr "Matones Dvaered"
 
 #: dat/missions/minerva/pirate1.lua:67
 msgid ""
 "You approach the sketchy individual who seems to be calling your attention."
-msgstr ""
+msgstr "Te acercas al individuo impreciso que parece llamar tu atención."
 
 #: dat/missions/minerva/pirate1.lua:68
 msgid ""
@@ -62081,6 +62516,9 @@ msgid ""
 "Always getting into fights with each other and creating trouble for those "
 "who just want to enjoy life. Such a bother.\""
 msgstr ""
+"\"¿Qué piensas de los Za'leks y los Dvaereds? Todo un trabajo, ¿eh? Siempre "
+"metiéndose en peleas entre ellos y creando problemas a los que sólo quieren "
+"disfrutar de la vida. Una molestia.\""
 
 #: dat/missions/minerva/pirate1.lua:69
 msgid ""
@@ -62088,17 +62526,20 @@ msgid ""
 "a somewhat non-standard job? Nothing very out of the ordinary, just want to "
 "ruffle some feathers.\""
 msgstr ""
+"\"Dime qué, sé que eres un piloto bastante decente. ¿Estarías interesado en "
+"un trabajo un tanto atípico? Nada muy fuera de lo común, sólo quiero "
+"alborotar algunas plumas.\""
 
 #: dat/missions/minerva/pirate1.lua:72 dat/missions/minerva/pirate2.lua:86
 #: dat/missions/minerva/pirate3.lua:125 dat/missions/minerva/pirate4.lua:105
 #: dat/missions/minerva/pirate5.lua:123
 msgid "Kindly decline"
-msgstr ""
+msgstr "Rechazar amablemente"
 
 #: dat/missions/minerva/pirate1.lua:76 dat/missions/minerva/pirate3.lua:129
 #: dat/missions/minerva/pirate5.lua:127
 msgid "You decline their offer and take your leave."
-msgstr ""
+msgstr "Rechazas su oferta y te vas."
 
 #: dat/missions/minerva/pirate1.lua:83
 msgid ""
@@ -62109,6 +62550,12 @@ msgid ""
 "directly, we can sort of encourage them to take care of each other and "
 "problem solved, no?\""
 msgstr ""
+"\"Excelente. Como probablemente sabes, los Za'lek y los Dvaered quieren "
+"tomar el control de esta estación, de ahí la gran cantidad de militares que "
+"se arrastran por toda la estación. Esto conduce a inevitables desacuerdos, "
+"riñas, peleas, altercados, peleas, lo que sea. En lugar de intentar "
+"ocuparnos directamente, podemos animarles a que se ocupen unos de otros y "
+"problema resuelto, ¿no?\""
 
 #: dat/missions/minerva/pirate1.lua:84
 msgid ""
@@ -62117,6 +62564,10 @@ msgid ""
 "cleverest of folks, so I want you to provoke them. You know, just rough them "
 "up a little and get out of there.\""
 msgstr ""
+"\"Sé lo que estás pensando, es una gran idea, ¿verdad? Pues es muy sencillo. "
+"Algunos matones Dvaered están apostados por el sistema, no son los más "
+"listos, así que quiero que los provoques. Ya sabes, dales un poco de caña y "
+"sal de ahí.\""
 
 #: dat/missions/minerva/pirate1.lua:85
 msgid ""
@@ -62126,6 +62577,12 @@ msgid ""
 "probably would think that there is some kind of Za'lek involvement. They're "
 "not the smartest fellows in the world if you catch my drift.\""
 msgstr ""
+"\"Suena ingenuo, ¿no? Puede ser. Así que me las he arreglado para conseguir "
+"un caparazón de dron Za'lek, todo lo que tiene es el motor y algún software "
+"básico de seguimiento, pero no hay armas ni equipo. Si lo arrastras mientras "
+"acosas a los matones, probablemente pensarán que hay algún tipo de "
+"participación Za'lek. No son los tipos más inteligentes del mundo, si me "
+"entiendes.\""
 
 #: dat/missions/minerva/pirate1.lua:86
 msgid ""
@@ -62134,6 +62591,10 @@ msgid ""
 "don't kill them! We want them to tell the other Dvaereds about this. Once "
 "the time is up, get the hell away from there, in one piece if possible.\""
 msgstr ""
+"\"Para asegurarte de que están todos irritados, quiero que pases 15 segundos "
+"acosándolos cerca de su ubicación original. Asegúrate de acosarlos, pero no "
+"los mates. Queremos que le cuenten esto a los otros Dvaereds. Una vez que el "
+"tiempo se acabe, aléjate de allí, en una pieza si es posible.\""
 
 #: dat/missions/minerva/pirate1.lua:87
 msgid ""
