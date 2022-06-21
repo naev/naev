@@ -240,7 +240,7 @@ Each mission or event can have an infinite number of hooks enabled. Except for `
 
 #### Timer Hooks
 
-Timer hooks are hooks that get run once when a certain amount of real in-game time has passed. Once the hook is triggered, it gets removed automatically. If you wish to repeat a function periodically, you have to create a new timer hook. A comomnly used example is shown below.
+Timer hooks are hooks that get run once when a certain amount of real in-game time has passed. Once the hook is triggered, it gets removed automatically. If you wish to repeat a function periodically, you have to create a new timer hook. A commonly used example is shown below.
 
 ```lua
 function create ()
@@ -389,7 +389,7 @@ function create ()
 end
 ```
 
-The above mission tries to claim the system `"Gamma Polaris"` right away in the `create` function. If it fails and the function returns false, the mission then finishes unsuccessfully with `misn.finish(false)`. This will casue the mission to only start when it can claim the `"Gamma Polaris"` system and silently fail otherwise. You can pass more systems to claim them, and by default they will be *exclusive* claims.
+The above mission tries to claim the system `"Gamma Polaris"` right away in the `create` function. If it fails and the function returns false, the mission then finishes unsuccessfully with `misn.finish(false)`. This will cause the mission to only start when it can claim the `"Gamma Polaris"` system and silently fail otherwise. You can pass more systems to claim them, and by default they will be *exclusive* claims.
 
 Say our event only adds a small derelict in the system and we don't mind it sharing the system with other missions and events. Then we can write the event as:
 
@@ -404,6 +404,8 @@ end
 ```
 
 In this case, the second parameter is set to `nil`, which defaults to trying to claim the system instead of just testing it, and more importantly, the third parameter is set to `true` which indicates that this event is trying to do an **inclusive** claim. Again, if the claiming fails, the event silently fails.
+
+Claims can also be tested in an event/mission-neutral way with `naev.claimTest`. However, this can only test the claims. Only `misn.claim` and `evt.claim` can enforce claims for missions and events, respectively.
 
 As missions and events are processed by `priority`, make sure to give higher priority to those that you want to be able to claim easier. Otherwise, they will have difficulties claiming systems and may never appear to the player. Minimizing the number of claims and cutting up missions and events into smaller parts is also a way to minimize the amount of claim collisions.
 
