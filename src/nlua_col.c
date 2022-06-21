@@ -102,8 +102,7 @@ glColour* luaL_checkcolour( lua_State *L, int ind )
  */
 glColour* lua_pushcolour( lua_State *L, glColour colour )
 {
-   glColour *c;
-   c = (glColour*) lua_newuserdata(L, sizeof(glColour));
+   glColour *c = (glColour*) lua_newuserdata(L, sizeof(glColour));
    *c = colour;
    luaL_getmetatable(L, COL_METATABLE);
    lua_setmetatable(L, -2);
@@ -254,6 +253,7 @@ static int colL_rgb( lua_State *L )
  * @usage h,s,v = col:rgb()
  *
  *    @luatparam Colour col Colour to get HSV values of.
+ *    @luatparam[opt=false] boolean gamma Whether or not to get the gamma-corrected value or not.
  *    @luatreturn number The hue of the colour.
  *    @luatreturn number The saturation of the colour.
  *    @luatreturn number The value of the colour.
@@ -261,9 +261,19 @@ static int colL_rgb( lua_State *L )
  */
 static int colL_hsv( lua_State *L )
 {
-   float h, s, v;
+   float h, s, v, r, g, b;
    glColour *col = luaL_checkcolour(L,1);
-   col_rgb2hsv( &h, &s, &v, col->r, col->g, col->b );
+   if (lua_toboolean(L,2)) {
+      r = linearToGamma( col->r );
+      g = linearToGamma( col->g );
+      b = linearToGamma( col->b );
+   }
+   else {
+      r = col->r;
+      g = col->g;
+      b = col->b;
+   }
+   col_rgb2hsv( &h, &s, &v, r, g, b );
    lua_pushnumber( L, h );
    lua_pushnumber( L, s );
    lua_pushnumber( L, v );
