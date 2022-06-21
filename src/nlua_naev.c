@@ -72,7 +72,7 @@ static const luaL_Reg naev_methods[] = {
    { "confSet", naevL_confSet },
    { "cache", naevL_cache },
    { "trigger", naevL_trigger },
-   { "claimtest", naevL_claimTest },
+   { "claimTest", naevL_claimTest },
    {0,0}
 }; /**< Naev Lua methods. */
 
