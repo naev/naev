@@ -38,7 +38,7 @@ local neu = require "common.neutral"
 
 local reward = 200e3
 
-local badguys, broship, misn_marker -- Non-persistent state
+local badguys, broship -- Non-persistent state
 local spawn_baddies -- Forward-declared functions
 -- luacheck: globals do_msg do_msg2 got_boarded got_hailed idle sys_enter (Hook functions passed by name)
 
@@ -52,8 +52,6 @@ function create ()
    if not misn.claim(mem.brosys) then
       misn.finish(false)
    end
-
-   misn_marker = {}
 
    -- Spaceport bar stuff
    misn.setNPC( _("Ordinary Woman"), "neutral/unique/fakesister.webp", _("The woman waves at you a bit desperately.") )
@@ -86,7 +84,11 @@ function accept ()
 	   desc,
 	   _("Hail the Poppy Seed and board it to reunite the siblings"),
    })
-   misn_marker = {[1]=misn.markerAdd( mem.targetsys[1], "low" ), [2]=misn.markerAdd( mem.targetsys[2], "low" ), [3]=misn.markerAdd( mem.targetsys[3], "low" )}
+   mem.misn_marker = {
+      misn.markerAdd( mem.targetsys[1], "low" ),
+      misn.markerAdd( mem.targetsys[2], "low" ),
+      misn.markerAdd( mem.targetsys[3], "low" )
+   }
 
    -- Some flavour text
    tk.msg( _("In the Bar"), _([[The woman calms down as you signal your willingness to help. "Oh, thank goodness! I was told where he usually hangs around. Please take me there and tell him that I have to talk to him.
@@ -115,7 +117,6 @@ end
 
 -- Entering a system
 -- checking if it is right system, updating OSD, if right system: create ship and wait for hail
-
 function sys_enter ()
    -- Check to see if reaching target system
    if system.cur() ~= mem.brosys then
@@ -123,8 +124,8 @@ function sys_enter ()
       for i=1,#mem.targetsys do
          if system.cur() == mem.targetsys[i] then
             table.remove(mem.targetsys,i)
-            misn.markerRm(misn_marker[i])
-            table.remove(misn_marker,i)
+            misn.markerRm(mem.misn_marker[i])
+            table.remove(mem.misn_marker,i)
             -- we can break, we found what we were looking for
             hook.timer( 3.0, "do_msg" )
             break
