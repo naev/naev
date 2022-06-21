@@ -21,6 +21,7 @@
 #include "log.h"
 #include "nlua_evt.h"
 #include "nlua_misn.h"
+#include "nlua_system.h"
 #include "nluadef.h"
 #include "nstring.h"
 #include "player.h"
@@ -49,6 +50,7 @@ static int naevL_conf( lua_State *L );
 static int naevL_confSet( lua_State *L );
 static int naevL_cache( lua_State *L );
 static int naevL_trigger( lua_State *L );
+static int naevL_claimTest( lua_State *L );
 static const luaL_Reg naev_methods[] = {
    { "version", naevL_version },
    { "versionTest", naevL_versionTest },
@@ -70,6 +72,7 @@ static const luaL_Reg naev_methods[] = {
    { "confSet", naevL_confSet },
    { "cache", naevL_cache },
    { "trigger", naevL_trigger },
+   { "claimtest", naevL_claimTest },
    {0,0}
 }; /**< Naev Lua methods. */
 
@@ -538,4 +541,54 @@ static int naevL_trigger( lua_State *L )
    /* Run the deferred hooks. */
    hooks_runParamDeferred( hookname, hp );
    return 0;
+}
+
+/**
+ * @brief Tries to claim systems or strings.
+ *
+ * Claiming systems and strings is a way to avoid mission collisions preemptively.
+ *
+ * Note it does not actually perform the claim if it fails to claim. It also
+ *  does not work more than once.
+ *
+ * @usage if not misn.claim( { system.get("Gamma Polaris") } ) then misn.finish( false ) end
+ * @usage if not misn.claim( system.get("Gamma Polaris") ) then misn.finish( false ) end
+ * @usage if not misn.claim( 'some_string' ) then misn.finish( false ) end
+ * @usage if not misn.claim( { system.get("Gamma Polaris"), 'some_string' } ) then misn.finish( false ) end
+ *
+ *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
+ *    @luatparam[opt=false] boolean inclusive Whether or not to allow the claim to include other inclusive claims. Multiple missions/events can inclusively claim the same system, but only one system can exclusively claim it.
+ *    @luatreturn boolean true if was able to claim, false otherwise.
+ * @luafunc claimTest
+ */
+static int naevL_claimTest( lua_State *L )
+{
+   Claim_t *claim;
+   int inclusive = lua_toboolean(L,2);
+
+   /* Create the claim. */
+   claim = claim_create( !inclusive );
+
+   if (lua_istable(L,1)) {
+      /* Iterate over table. */
+      lua_pushnil(L);
+      while (lua_next(L, 1) != 0) {
+         if (lua_issystem(L,-1))
+            claim_addSys( claim, lua_tosystem( L, -1 ) );
+         else if (lua_isstring(L,-1))
+            claim_addStr( claim, lua_tostring( L, -1 ) );
+         lua_pop(L,1);
+      }
+   }
+   else if (lua_issystem(L, 1))
+      claim_addSys( claim, lua_tosystem( L, 1 ) );
+   else if (lua_isstring(L, 1))
+      claim_addStr( claim, lua_tostring( L, 1 ) );
+   else
+      NLUA_INVALID_PARAMETER(L);
+
+   /* Only test, but don't apply case. */
+   lua_pushboolean( L, !claim_test( claim ) );
+   claim_destroy( claim );
+   return 1;
 }
