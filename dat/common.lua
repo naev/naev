@@ -1,6 +1,9 @@
+-- Some compatibility with Lua 5.2
 table.pack = function ( ... ) -- luacheck: globals table (Pairity with newer versions)
    return {...}
 end
+math.mod = nil -- luacheck: globals math (Pairity with newer versions)
+string.gfind = nil -- luacheck: globals string (Pairity with newer versions)
 
 --[[--
 Checks to see if an element is in a table. Uses comparison operator.
