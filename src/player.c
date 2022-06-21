@@ -3042,9 +3042,9 @@ int player_addEscorts (void)
 
    /* Go over escorts. */
    for (int i=0; i<array_size(player.p->escorts); i++) {
+      PilotOutfitSlot *po;
       Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
-      int dockslot = -1;
 
       /* Non-persistent pilots should have been wiped already. */
       if (pe == NULL) {
@@ -3063,31 +3063,15 @@ int player_addEscorts (void)
       if (e->type != ESCORT_TYPE_BAY)
          continue;
 
-      for (int j=0; j<array_size(player.p->outfits); j++) {
-         int q;
-         const PilotOutfitSlot *po = player.p->outfits[j];
-
-         /* Must have outfit. */
-         if (po->outfit == NULL)
-            continue;
-
-         /* Must be fighter bay. */
-         if (!outfit_isFighterBay(po->outfit))
-            continue;
-
-         /* Must not have all deployed. */
-         q = po->u.ammo.deployed + po->u.ammo.quantity;
-         if (q >= pilot_maxAmmoO(player.p,po->outfit))
-            continue;
-
-         dockslot = j;
-         break;
-      }
-
-      if (dockslot == -1) {
+      po = pilot_getDockSlot( pe );
+      if (po == NULL) {
          WARN(_("Escort is undeployed, removing."));
+         escort_rmListIndex(player.p, i);
+         i--;
          continue;
       }
+      else
+         po->u.ammo.deployed++;
    }
 
    /* Add the player fleets. */
