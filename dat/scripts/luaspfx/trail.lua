@@ -21,15 +21,11 @@ local function update( sp, dt )
    if d.timer <= 0 then
       local sz = 20 + 20*rnd.rnd()
 
-      local ncol = naev.colour.new( d.col[1], d.col[2], d.col[3] )
-      local h, s, v = ncol:hsv(true)
+      local ncol = naev.colour.new()
       local cs = d.colspread
-      ncol:setHSV( h+rnd.rnd()*cs*2 - cs, s, v )
-      --ncol:setHSV( h, s, v )
+      ncol:setHSV( d.col[1]+rnd.rnd()*cs*2 - cs, d.col[2], d.col[3] )
       local col = table.pack( ncol:rgb(true) )
       col[4] = d.col[4]
-
-      s = 50
 
       -- Initialize new
       if not d.rot then
@@ -43,7 +39,7 @@ local function update( sp, dt )
          } )
       else
          table.insert( d.r, {
-            p = vec2.new( 1, rnd.rnd()*(d.size-2*s)/d.size+s/d.size ),
+            p = vec2.new( 1, rnd.rnd()*(d.size-2*sz)/d.size+sz/d.size ),
             v = vec2.new( -1, 0 ),
             s = sz,
             a = 0,
@@ -85,7 +81,7 @@ local function trail( pos, point, params )
    local d  = s:data()
    d.timer  = 0
    d.size   = params.size or 300
-   d.col    = params.col or {1.0, 0.0, 0.0, 0.5}
+   d.col    = params.col or {0, 1.0, 0.7, 0.5} -- in HSV
 	d.colspread = params.colspread or 50
    if point then
       local _m, dir = ((point-pos) * vec2.new(-1, 1)):polar()
