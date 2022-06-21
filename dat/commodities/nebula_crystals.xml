@@ -2,7 +2,7 @@
 <commodity>
  <name>Nebula Crystals</name>
  <description>TODO</description>
- <gfx_store>therite.webp</gfx_store>
+ <gfx_store>nebula_crystals.webp</gfx_store>
  <gfx_space>diamonds.webp</gfx_space>
  <price>9500</price>
  <always_can_sell/>
