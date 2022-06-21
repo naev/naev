@@ -232,8 +232,8 @@ void nebu_update( double dt )
       bonus = player.p->stats.nebu_visibility;
    }
 
-   /* At density 1000 you have zero visibility. */
-   nebu_view = (1000. - nebu_density) * mod + bonus;
+   /* At density 1200 you have zero visibility. */
+   nebu_view = (1200. - nebu_density) * mod + bonus;
 
    /* Below only care if not simulating. */
    if (space_isSimulation())
