@@ -1,50 +1,98 @@
 local lg = require 'love.graphics'
-local lf = require 'love.filesystem'
---local audio = require 'love.audio'
-local love_shaders = require 'love_shaders'
+local center = vec2.new( 0.5, 0.5 )
 
-local trail_bg_shader_frag = lf.read( "scripts/luaspfx/shaders/trail.frag" )
-local trail_shader
+local function update( sp, dt )
+   local d = sp:data()
+   d.timer = d.timer - dt
 
-local function update( s, dt )
-   local d = s:data()
-   d.timer = d.timer + dt
+   if not d.rot then
+      for k,v in ipairs(d.r) do
+         v.p = v.p + v.v * dt * 0.3
+         v.a = math.min( 1, 5*(0.5 - v.p:dist( center ) ) )
+      end
+   else
+      for k,v in ipairs(d.r) do
+         v.p = v.p + v.v * dt * 0.3
+         local x, _y = v.p:get()
+         v.a = math.min( 1, 5*(0.5 - math.abs(x-0.5)) )
+      end
+   end
+
+   if d.timer <= 0 then
+      local sz = 20 + 20*rnd.rnd()
+
+      local ncol = naev.colour.new( d.col[1], d.col[2], d.col[3] )
+      local h, s, v = ncol:hsv(true)
+      local cs = d.colspread
+      ncol:setHSV( h+rnd.rnd()*cs*2 - cs, s, v )
+      --ncol:setHSV( h, s, v )
+      local col = table.pack( ncol:rgb(true) )
+      col[4] = d.col[4]
+
+      s = 50
+
+      -- Initialize new
+      if not d.rot then
+         local r = rnd.angle()
+         table.insert( d.r, {
+            p = vec2.newP( 1, r ),
+            v = vec2.newP( -1, r ),
+            s = sz,
+            a = 0,
+				c = col,
+         } )
+      else
+         table.insert( d.r, {
+            p = vec2.new( 1, rnd.rnd()*(d.size-2*s)/d.size+s/d.size ),
+            v = vec2.new( -1, 0 ),
+            s = sz,
+            a = 0,
+				c = col,
+         } )
+      end
+
+      d.timer = rnd.rnd()
+   end
 end
 
 local function render( sp, x, y, z )
    local d = sp:data()
-   trail_shader:send( "u_time", d.timer )
-   trail_shader:send( "u_size", d.size )
-   trail_shader:send( "u_r", d.r )
-   trail_shader:send( "u_vel", d.vx, d.vy )
+   local sz = d.size * z
 
-   local s = d.size * z
-   local old_shader = lg.getShader()
-   lg.setShader( trail_shader )
-   lg.setColor( d.col )
-   love_shaders.img:draw( x-s*0.5, y-s*0.5, 0, s )
-   lg.setShader( old_shader )
+   lg.push()
+   lg.translate( x, y )
+   if d.rot then
+      lg.rotate( d.rot )
+   end
+   lg.translate( -sz*0.5, -sz*0.5 )
+   lg.scale( z )
+
+   for k,v in ipairs(d.r) do
+      local px, py = v.p:get()
+      local c = { v.c[1], v.c[2], v.c[3], v.c[4]*v.a }
+      local s = v.s
+      lg.setColor( c )
+      lg.rectangle( "fill", px*d.size, py*d.size, s, s )
+   end
+
+   lg.pop()
 end
 
 local function trail( pos, point, params )
    params = params or {}
-   -- Lazy loading shader / sound
-   if not trail_shader then
-      trail_shader = lg.newShader( trail_bg_shader_frag )
-   end
 
    local s = spfx.new( math.huge, update, nil, nil, render, pos )
    local d  = s:data()
    d.timer  = 0
    d.size   = params.size or 300
-   d.col    = params.col or {0.8, 0.2, 0.7, 0.5}
-   d.r      = 1000*rnd.rnd()
-   if not point then
-      d.vx, d.vy = 0, 0
-   else
-      local _m, dir = ((point-pos) * vec2.new(1, -1)):polar()
-      d.vx, d.vy = math.cos(dir+math.pi), math.sin(dir+math.pi)
+   d.col    = params.col or {1.0, 0.0, 0.0, 0.5}
+	d.colspread = params.colspread or 50
+   if point then
+      local _m, dir = ((point-pos) * vec2.new(-1, 1)):polar()
+      d.rot = dir
    end
+   d.r = {}
+
    return s
 end
 
