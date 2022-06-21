@@ -1,3 +1,7 @@
+table.pack = function ( ... ) -- luacheck: globals table (Pairity with newer versions)
+   return {...}
+end
+
 --[[--
 Checks to see if an element is in a table. Uses comparison operator.
 
