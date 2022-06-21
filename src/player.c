@@ -3042,6 +3042,7 @@ int player_addEscorts (void)
 
    /* Go over escorts. */
    for (int i=0; i<array_size(player.p->escorts); i++) {
+      int q;
       PilotOutfitSlot *po;
       Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
@@ -3070,8 +3071,15 @@ int player_addEscorts (void)
          i--;
          continue;
       }
-      else
-         po->u.ammo.deployed++;
+
+      po->u.ammo.deployed++;
+      q = po->u.ammo.deployed + po->u.ammo.quantity;
+      if (q >= pilot_maxAmmoO(player.p,po->outfit)) {
+         WARN(_("Escort is deployed past outfit limits, removing."));
+         escort_rmListIndex(player.p, i);
+         i--;
+         continue;
+      }
    }
 
    /* Add the player fleets. */
