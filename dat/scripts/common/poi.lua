@@ -18,6 +18,12 @@ local poi = {}
 function poi.generate()
    local syscand = lmisn.getSysAtDistance( nil, 1, 5, function( sys )
       -- TODO have systems with higher risk or more abandoned
+
+      -- Must be claimable
+      if not naev.claimTest( {sys}, true ) then
+         return
+      end
+
       -- Want no inhabited spobs
       for k,p in ipairs(sys:spobs()) do
          local s = p:services()
