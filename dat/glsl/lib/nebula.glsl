@@ -22,7 +22,7 @@ vec4 nebula( vec4 bg, vec2 rel_pos, float time, float hue, float value, float vo
 
    /* Calculate coordinates */
    uv.xy = rel_pos;
-   uv.z = time;
+   uv.z = time * 0.5;
 
    /* Create the noise */
    //scale = 1.0;
@@ -52,7 +52,7 @@ vec4 nebula( vec4 bg, vec2 rel_pos, float time, float hue, float value, float vo
       float flash_1 = sin(15.0 * t);
       float flash_2 = sin(2.85 * t);
       float flash_3 = sin(5.18 * t);
-      uv    *= vec3(0.1, 0.1, 3.0);
+      uv    *= vec3(0.1, 0.1, 5.0);
       float flash = max( 0.0, snoise(uv) * flash_0 * flash_1 * flash_2 * flash_3 );
       colour.rgb += vec3( 2.0*(f+0.5*flash)*flash*(0.5+0.5*flash_2) );
    }

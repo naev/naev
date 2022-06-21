@@ -19,7 +19,7 @@ void main(void) {
    /* Compute coordinates for the noise */
    rel_pos = gl_FragCoord.xy + projection[3].xy;
    uv.xy = rel_pos / eddy_scale;
-   uv.z = time;
+   uv.z = time * 0.5;
 
    /* Compute hue as in lib/nebula.glsl. */
    hhue = nebula_hue( hue, uv );
