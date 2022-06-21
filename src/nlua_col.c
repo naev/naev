@@ -178,10 +178,7 @@ static int colL_new( lua_State *L )
       col.r = gammaToLinear(luaL_checknumber(L,1));
       col.g = gammaToLinear(luaL_checknumber(L,2));
       col.b = gammaToLinear(luaL_checknumber(L,3));
-      if (lua_isnumber(L,4))
-         col.a = luaL_checknumber(L,4);
-      else
-         col.a = 1.;
+      col.a = luaL_optnumber(L,4,1.);
    }
    else if (lua_isstring(L,1)) {
       col2 = col_fromName( lua_tostring(L,1) );
@@ -190,10 +187,7 @@ static int colL_new( lua_State *L )
          return 0;
       }
       col = *col2;
-      if (lua_isnumber(L,2))
-         col.a = luaL_checknumber(L,2);
-      else
-         col.a = 1.;
+      col.a = luaL_optnumber(L,2,1.);
    }
    else if (lua_iscolour(L,1))
       col = *lua_tocolour(L,1);
