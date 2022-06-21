@@ -544,30 +544,19 @@ static int naevL_trigger( lua_State *L )
 }
 
 /**
- * @brief Tries to claim systems or strings.
+ * @brief Tests a claim of a system or strings.
  *
- * Claiming systems and strings is a way to avoid mission collisions preemptively.
- *
- * Note it does not actually perform the claim if it fails to claim. It also
- *  does not work more than once.
- *
- * @usage if not misn.claim( { system.get("Gamma Polaris") } ) then misn.finish( false ) end
- * @usage if not misn.claim( system.get("Gamma Polaris") ) then misn.finish( false ) end
- * @usage if not misn.claim( 'some_string' ) then misn.finish( false ) end
- * @usage if not misn.claim( { system.get("Gamma Polaris"), 'some_string' } ) then misn.finish( false ) end
+ * @usage if not naev.claimTest( { system.get("Gamma Polaris") } ) then print("Failed to claim!") end
  *
  *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
  *    @luatparam[opt=false] boolean inclusive Whether or not to allow the claim to include other inclusive claims. Multiple missions/events can inclusively claim the same system, but only one system can exclusively claim it.
- *    @luatreturn boolean true if was able to claim, false otherwise.
+ *    @luatreturn boolean true if it is possible to claim, false otherwise.
  * @luafunc claimTest
  */
 static int naevL_claimTest( lua_State *L )
 {
-   Claim_t *claim;
    int inclusive = lua_toboolean(L,2);
-
-   /* Create the claim. */
-   claim = claim_create( !inclusive );
+   Claim_t *claim = claim_create( !inclusive );
 
    if (lua_istable(L,1)) {
       /* Iterate over table. */
