@@ -20,7 +20,7 @@ ignore = {"21./_.*", "213", "231/_.*"}
 stds.Basic={
    globals={
       table={
-         fields={"unpack"}
+         fields={"unpack", "pack"}
       },
       "_LOADED", -- NLUA_LOAD_TABLE
       "inlist",
