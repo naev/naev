@@ -54,6 +54,12 @@ end
 local function render( sp, x, y, z )
    local d = sp:data()
    local sz = d.size * z
+   local nw, nh = naev.gfx.dim()
+
+   -- Out of bounds, no need to draw
+   if x < -sz or y < -sz or x > nw+sz or y > nh+sz then
+      return
+   end
 
    lg.push()
    lg.translate( x, y )
