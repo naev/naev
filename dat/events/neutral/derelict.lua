@@ -44,9 +44,20 @@ local mission_list = {
       nolimit = true,
       cond = function ()
          return false -- Disabled for now
-         --return player.misnActive( "Point of Interest" ) < 3
+         --return not player.misnActive( "Point of Interest - Intro" ) and player.misnActive( "Point of Interest" ) < 3
       end,
       func = function ()
+         local poiintro = "Point of Interest - Intro"
+
+         -- Tries to do the intro the first time
+         if not player.misnDone( poiintro ) then
+            if not naev.missionStart( poiintro ) then
+               -- Failed to start
+               neutralevent()
+            end
+            return
+         end
+
          local poidata = poi.generate()
          if not poidata then -- Failed to generate
             neutralevent()
