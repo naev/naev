@@ -580,7 +580,7 @@ static int factionL_tags( lua_State *L )
 }
 
 /**
- * @brief Adds a faction dynamically.
+ * @brief Adds a faction dynamically. Note that if the faction already exists as a dynamic faction, the existing one is returned.
  *
  * @note Defaults to known.
  *
@@ -596,13 +596,22 @@ static int factionL_dynAdd( lua_State *L )
    const char *name, *display, *ai;
    int clear_allies, clear_enemies;
 
-
    if (!lua_isnoneornil(L, 1))
       fac   = luaL_validfaction(L,1);
    else
       fac   = -1;
    name     = luaL_checkstring(L,2);
    display  = luaL_optstring(L,3,name);
+
+   /* Just return existing and ignore the rest. */
+   if (faction_exists(name)) {
+      int f = faction_get(name);
+      if (!faction_isDynamic(f))
+         NLUA_ERROR(L,_("Trying to overwrite existing faction '%s' with dynamic faction!"),name);
+
+      lua_pushfaction( L, f );
+      return 1;
+   }
 
    /* Parse parameters. */
    if (lua_istable(L,4)) {
@@ -623,10 +632,6 @@ static int factionL_dynAdd( lua_State *L )
       clear_allies   = 0;
       clear_enemies  = 0;
    }
-
-   /* Check if exists. */
-   if (faction_exists(name))
-      NLUA_ERROR(L,_("Faction '%s' already exists!"), name);
 
    /* Create new faction. */
    newfac = faction_dynAdd( fac, name, display, ai );
