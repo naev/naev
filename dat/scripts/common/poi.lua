@@ -15,9 +15,9 @@ local poi = {}
    @brief Tries to generate a new setting for a point of interest.
       @treturn table A table of parameters for the point of interest mission or nil if failed to generate.
 --]]
-function poi.generate()
+function poi.generate( force )
    -- Must have done intro mission
-   if player.misnActive("Point of Interest - Intro") or not player.misnDone("Point of Interest - Intro") then
+   if not force and (player.misnActive("Point of Interest - Intro") or not player.misnDone("Point of Interest - Intro")) then
       return
    end
 
