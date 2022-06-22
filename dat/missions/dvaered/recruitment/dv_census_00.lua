@@ -39,7 +39,7 @@ local detected
 
 function create ()
    mem.sys = system.get("Dvaer")
-   if not misn.claim(mem.sys) then misn.finish(false) end
+   if not misn.claim( {mem.sys, "nelly"} ) then misn.finish(false) end
 
    mem.nbships, mem.credits = cens.calculateNb( mem.sys, {faction.get("Dvaered")} )
 

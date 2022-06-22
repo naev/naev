@@ -72,7 +72,7 @@ end
 function create ()
    -- Save current system to return to
    mem.retpnt, mem.retsys = spob.cur()
-   if not misn.claim( mem.retsys, true ) then
+   if not misn.claim( {mem.retsys, "nelly"} ) then
       misn.finish()
    end
    -- Need commodity exchange and mission computer

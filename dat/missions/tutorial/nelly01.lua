@@ -69,7 +69,7 @@ local outfit_tobuy = outfit.get("Ion Cannon") -- If changed, references to ion c
 function create ()
    -- Save current system to return to
    mem.retpnt, mem.retsys = spob.cur()
-   if not misn.claim( mem.retsys ) then
+   if not misn.claim( {mem.retsys, "nelly"} ) then
       misn.finish()
    end
    -- Need commodity exchange and mission computer

@@ -71,7 +71,7 @@ function create ()
       end )
       mem.destsys = candidates[ rnd.rnd(1,#candidates) ]
    end
-   if not misn.claim{ mem.destsys } then
+   if not misn.claim{ mem.destsys, "nelly" } then
       misn.finish()
    end
 
