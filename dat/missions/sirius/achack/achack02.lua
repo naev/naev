@@ -211,6 +211,8 @@ end
 
 -- Sets up the ambush ships and trigger area.
 function ambushSet(ships, location)
+   -- TODO should probably redo how this is handled. It's not very robust if
+   -- the player or whatever attacks them early
    ambush = fleet.add(1, ships, "Achack_thugs", location)
    for _, j in ipairs(ambush) do
       j:control()
@@ -220,12 +222,16 @@ end
 
 -- Commences combat once Joanne is close to the ambushers.
 function ambushActivate()
+   mem.deadmans = 0
    for _, j in ipairs(ambush) do
-      j:control(false)
-      j:setHostile()
-      j:setVisplayer()
-      hook.pilot(j, "death", "ambusherDead")
-      mem.deadmans = 0
+      if j:exists() then
+         j:control(false)
+         j:setHostile()
+         j:setVisplayer()
+         hook.pilot(j, "death", "ambusherDead")
+      else
+         mem.deadmans = mem.deadmans+1
+      end
    end
    ambush[1]:broadcast(_("That's our target! Get her, boys!"))
    joanne:control(false)
