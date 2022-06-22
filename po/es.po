@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-06-22 16:56+0000\n"
+"PO-Revision-Date: 2022-06-22 21:44+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -65368,7 +65368,7 @@ msgstr "¡Ningúna nave de suministros logró pasar!"
 #: dat/missions/neutral/antlejos/ant_supplies.lua:30
 #: dat/missions/neutral/antlejos/ant_supplies.lua:115
 msgid "Volunteers and Equipment"
-msgstr ""
+msgstr "Voluntarios y Equipos"
 
 #. bar, missions
 #. Up to 5 already done
@@ -65393,7 +65393,7 @@ msgstr ""
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:69
 msgid "#oANTLEJOS:#0 {adj} delivery of supplies from {pnt} ({sys} system)"
-msgstr ""
+msgstr "#oANTLEJOS:#0 {adj} entrega de suministros desde {pnt} (sistema {sys})"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:73
 msgid ""
@@ -65401,6 +65401,9 @@ msgid ""
 "further accelerate the terraforming. Note that protestors from the PUAAA are "
 "expected to show up.\n"
 msgstr ""
+"Recoge {cargo} en {pnt} en el sistema {sys} y llévalos a {retpnt} para "
+"acelerar la terraformación. Tenga en cuenta que se espera que aparezcan "
+"manifestantes de la PUCAA.\n"
 
 #. The price of each artefact will always be 15% of this, so at most the player will be paid 85% and at least 55%.
 #. --
@@ -65454,63 +65457,67 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant_supplies.lua:75
 #: dat/scripts/common/cargo.lua:226
 msgid "#nCargo:#0 {cargo} ({mass})"
-msgstr ""
+msgstr "#nCarga:#0 {cargo} ({mass})"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:76
 #: dat/scripts/common/cargo.lua:234
 msgid "#nJumps:#0 {jumps}"
 msgid_plural "#nJumps:#0 {jumps}"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#nSalto:#0 {jumps}"
+msgstr[1] "#nSaltos:#0 {jumps}"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:77
 #: dat/scripts/common/cargo.lua:236
 msgid "#nTravel distance:#0 {dist}"
 msgid_plural "#nTravel distance:#0 {dist}"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#nDistancia de viaje:#0 {dist}"
+msgstr[1] "#nDistancia de viaje:#0 {dist}"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:79
 msgid "#nSupplies at Antlejos V:#0 {total}"
-msgstr ""
+msgstr "#nSuministros en Antlejos V:#0 {total}"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:84
 msgid "#nSupplies until next upgrade:#0 {needed}"
-msgstr ""
+msgstr "#nSuministros hasta la próxima actualización:#0 {needed}"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:93
 msgid "Supplies for Antlejos"
-msgstr ""
+msgstr "Suministros de Antlejos"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:113
 msgid "The volunteers load the equipment onto your ship and get onboard."
-msgstr ""
+msgstr "Los voluntarios cargan el equipo en tu barco y suben a bordo."
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:115
 msgid "Volunteers and equipment meant for terraforming Antlejos V."
-msgstr ""
+msgstr "Voluntarios y equipos destinados a la terraformación de Antlejos V."
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:126
 msgid ""
 "The volunteers unload the equipment and get off your ship. It looks like "
 "they are eager to get started."
 msgstr ""
+"Los voluntarios descargan el equipo y bajan de tu nave. Parece que están "
+"ansiosos por empezar."
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:134
 msgid "You delivered {amount} of {cargo} to {pnt} for terraforming."
-msgstr ""
+msgstr "Has entregado {amount} de {cargo} a {pnt} para la terraformación."
 
 #. Level up antlejos as necessary
 #. TODO bette messages
 #: dat/missions/neutral/antlejos/ant_supplies.lua:142
 msgid "Terraforming Progress"
-msgstr ""
+msgstr "Progreso de la Terraformación"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:142
 msgid ""
 "Through the new supplies and volunteers, Antlejos V has been able to expand "
 "its facilities."
 msgstr ""
+"Gracias a los nuevos suministros y a los voluntarios, Antlejos V ha sido "
+"capaz de ampliar sus instalaciones."
 
 #. Say some protest slogan
 #. Protest again
@@ -65554,6 +65561,12 @@ msgid ""
 "working at the bar on {pnt} in the {sys} system after they left here. Good "
 "luck!\" With high hopes, you decide to head off to there."
 msgstr ""
+"Entras y ves a alguien detrás de la barra. Cuando te acercas y describes la "
+"bebida, te dicen que esa bebida no es la especialidad de ningún bar, sino "
+"que es la especialidad de un camarero que trabajaba aquí. \"Se llama Bomba "
+"de Pantano. No sé dónde trabaja ahora, pero empezaron a trabajar en el bar "
+"de {pnt} en el sistema {sys} después de salir de aquí. Buena suerte\". Con "
+"grandes esperanzas, decides dirigirte hacia allí."
 
 #: dat/missions/neutral/aristodrink.lua:42
 msgid ""
@@ -65564,6 +65577,12 @@ msgid ""
 "working at the bar on {pnt} in the {sys} system after he left here. Good "
 "luck!\" With high hopes, you decide to head off to there."
 msgstr ""
+"Entras y ves a alguien detrás de la barra. Cuando te acercas y describes la "
+"bebida, te dicen que esa bebida no es la especialidad de ningún bar, sino "
+"que es la especialidad de un camarero que trabajaba aquí. \"Se llama Bomba "
+"de Pantano. No sé dónde trabaja ahora, pero empezó a trabajar en el bar de "
+"{pnt} en el sistema {sys} después de irse de aquí. ¡Buena suerte!\" Con "
+"grandes esperanzas, decides dirigirte hacia allí."
 
 #: dat/missions/neutral/aristodrink.lua:43
 msgid ""
@@ -65574,6 +65593,12 @@ msgid ""
 "working at the bar on {pnt} in the {sys} system after she left here. Good "
 "luck!\" With high hopes, you decide to head off to there."
 msgstr ""
+"Entras y ves a alguien detrás de la barra. Cuando te acercas y describes la "
+"bebida, te dicen que esa bebida no es la especialidad de ningún bar, sino "
+"que es la especialidad de un camarero que trabajaba aquí. \"Se llama Bomba "
+"de Pantano. No sé dónde trabaja ahora, pero empezó a trabajar en el bar de "
+"{pnt} en el sistema {sys} después de irse de aquí. ¡Buena suerte!\" Con "
+"grandes esperanzas, decides dirigirte hacia allí."
 
 #: dat/missions/neutral/aristodrink.lua:46
 msgid ""
@@ -65590,6 +65615,18 @@ msgid ""
 "take with you. You taste it expecting something incredible. It's alright, "
 "but you doubt it was worth all this trouble."
 msgstr ""
+"Entras en el bar y sabes al instante que por fin estás aquí. Este es el "
+"lugar. Te acercas al camarero, que sonríe. Tienen que ser ellos. Empiezas a "
+"describirle la bebida y te interrumpe. \"Una Bomba de Pantano. Por supuesto, "
+"es mi especialidad\". Les preguntas si pueden hacerlo para llevar, "
+"provocando una pequeña risa. \"Claro, ¿por qué no?\"\n"
+"Sin embargo, justo cuando están a punto de empezar a hacerla, les paras y "
+"les dices que, después de todo, tomarás una aquí. Ya que has venido hasta "
+"aquí, podrías probarlo. Te sorprende la rapidez y elegancia con la que se "
+"mueven sus entrenadas manos, volteando botellas y agitando diversos "
+"recipientes. Antes de que te des cuenta, han puesto una bebida ante ti y han "
+"cerrado otro recipiente para llevártelo. La pruebas esperando algo "
+"increíble. Está bien, pero dudas de que haya merecido la pena tanto esfuerzo."
 
 #: dat/missions/neutral/aristodrink.lua:48
 msgid ""
@@ -65631,7 +65668,7 @@ msgstr ""
 #: dat/missions/neutral/aristodrink.lua:69
 #: dat/missions/neutral/aristodrink.lua:80
 msgid "Drinking Aristocrat"
-msgstr ""
+msgstr "Aristócrata de la Bebida"
 
 #: dat/missions/neutral/aristodrink.lua:57
 msgid ""
@@ -65639,6 +65676,9 @@ msgid ""
 "a swirling concoction in a martini glass with a disappointed look on his "
 "face every time he takes a sip."
 msgstr ""
+"Ves a un aristócrata sentado en una mesa en el centro del bar, bebiendo un "
+"brebaje en una copa de martini con una mirada de decepción cada vez que da "
+"un sorbo."
 
 #: dat/missions/neutral/aristodrink.lua:69
 msgid ""
@@ -65657,6 +65697,21 @@ msgid ""
 "Bombing or something. It's the bar's specialty. They'll know what you're "
 "talking about. You should go get me one. Can you leave right away?\""
 msgstr ""
+"Comienzas a acercarte al aristócrata. Junto a él se encuentra un hombre bien "
+"vestido y musculoso, tal vez su asistente, o tal vez su guardaespaldas, no "
+"estás seguro. Cuando te acercas a su mesa, empieza a hablarte como si "
+"trabajaras para él. \"Esto simplemente no servirá. Cuando pedí esta \"bebida"
+"\", si se puede llamar así, parecía interesante. Desde luego, no tiene un "
+"sabor interesante. Es simplemente insípido. Las únicas partes que son de "
+"alguna manera interesantes no son para nada agradables. Tiene un sabor "
+"tan... común.\n"
+"    ¿Sabes lo que realmente me gustaría? Había una bebida en un bar en, ¿qué "
+"planeta era? Damien, ¿te acuerdas? La bebida verde con virutas de frutas "
+"rojas\". Damien lo mira y parece pensar un segundo antes de negar con la "
+"cabeza. \"Creo que podría haber sido {pnt} en el sistema {sys}. La bebida "
+"era algo así como una Re-Entrada Atmosférica o un Bombardeo Gaiano o algo "
+"así. Es la especialidad del bar. Ellos sabrán de qué hablas. Deberías ir a "
+"buscarme uno. ¿Puedes irte ahora mismo?\""
 
 #: dat/missions/neutral/aristodrink.lua:71
 msgid ""
@@ -65665,18 +65720,22 @@ msgid ""
 "drink, only to look even more disgusted. Ignoring you, he puts his drink "
 "back on the table and motions to the bartender."
 msgstr ""
+"\"¿Qué quieres decir con que no puedes irte de inmediato? Entonces, ¿por qué "
+"me molestas? Quítate de mi vista\". El aristócrata pone una cara horrible y "
+"da un sorbo a su bebida, para poner aún más cara de asco. Ignorándote, "
+"vuelve a dejar su bebida sobre la mesa y le hace un gesto al camarero."
 
 #: dat/missions/neutral/aristodrink.lua:81
 msgid "He will pay handsomely."
-msgstr ""
+msgstr "Pagará generosamente."
 
 #: dat/missions/neutral/aristodrink.lua:82
 msgid "Go find a specific drink for an aristocrat."
-msgstr ""
+msgstr "Ve a buscar una bebida específica para un aristócrata."
 
 #: dat/missions/neutral/aristodrink.lua:84
 msgid "Leave Immediately"
-msgstr ""
+msgstr "Salir de Inmediato"
 
 #: dat/missions/neutral/aristodrink.lua:84
 msgid ""
@@ -65685,6 +65744,10 @@ msgid ""
 "the aristocrat goes back to sipping his drink, making an awful face every "
 "time he tastes it. You walk away, a bit confused."
 msgstr ""
+"\"¡Oh, bien! Por supuesto, se te pagará generosamente por tus esfuerzos. "
+"Confío en que puedas averiguar cómo llegar aquí intacto por tu cuenta\". "
+"Ignorándote, el aristócrata vuelve a sorber su bebida, poniendo una cara "
+"horrible cada vez que la prueba. Te alejas, un poco confundido."
 
 #. how many systems you'll have to run through
 #. final bartender data
@@ -65693,7 +65756,7 @@ msgstr ""
 #. next planet
 #: dat/missions/neutral/aristodrink.lua:110
 msgid "Clue"
-msgstr ""
+msgstr "Pista"
 
 #: dat/missions/neutral/aristodrink.lua:110
 msgid ""
@@ -65702,18 +65765,21 @@ msgid ""
 "another bartender that they think may be able to help you though, at {pnt} "
 "in the {sys} system."
 msgstr ""
+"Entras en el bar y te acercas al camarero. Describes la bebida, pero el "
+"camarero no parece saber de qué estás hablando. Sin embargo, hay otro "
+"camarero que creen que puede ayudarte, en {pnt} en el sistema {sys}."
 
 #. find out that it's a bartender's specialty
 #. next planet
 #: dat/missions/neutral/aristodrink.lua:124
 msgid "A bit more info..."
-msgstr ""
+msgstr "Un poco más de información..."
 
 #. find another bar that the bartender used to work at
 #. next planet
 #: dat/missions/neutral/aristodrink.lua:136
 msgid "Is this it?"
-msgstr ""
+msgstr "¿Es esto?"
 
 #: dat/missions/neutral/aristodrink.lua:136
 msgid ""
@@ -65722,15 +65788,19 @@ msgid ""
 "right bar. You get another possible clue, {pnt} in the {sys} system, and "
 "head on your way."
 msgstr ""
+"Entras en el bar con la plena seguridad de que éste es el bar. Te acercas al "
+"camarero y le pides un \" Bomba de Pantano\". \"¿Un qué?\" Supongo que este "
+"no es el bar correcto. Consigues otra posible pista, {pnt} en el sistema "
+"{sys}, y sigues tu camino."
 
 #. get the drink
 #: dat/missions/neutral/aristodrink.lua:142
 msgid "This is it!"
-msgstr ""
+msgstr "¡Aquí está!"
 
 #: dat/missions/neutral/aristodrink.lua:150
 msgid "Delivery"
-msgstr ""
+msgstr "Envío"
 
 #: dat/missions/neutral/aristodrink.lua:150
 msgid ""
@@ -65749,25 +65819,42 @@ msgid ""
 "    When you get back to your ship you realize you have a drink left over. "
 "It might look good like an ornament?"
 msgstr ""
+"\"¡Ah! ¡Estaba pensando en lo mucho que quería una de esas bebidas! Me "
+"alegro de que hayas conseguido encontrarla. Aunque parece que te has tomado "
+"tu tiempo.\" Le das su bebida y le dices que no fue fácil, y cuántos "
+"sistemas tuviste que atravesar. \"Hmm. Son bastantes sistemas. Pero no hay "
+"razón para que llegues tan tarde.\" Toma un sorbo de su bebida. \"¡Ah! Pero "
+"es bueno. Supongo que querrás que te paguen por tus esfuerzos. Te has tomado "
+"muchas molestias. Por otra parte, has tardado mucho tiempo. Supongo que los "
+"{credits} deberían ser apropiados\".\n"
+"    Teniendo en cuenta el esfuerzo que has hecho, te sientes casi engañado. "
+"Sin embargo, no te apetece discutir con el aristócrata snob, así que le "
+"dejas con su bebida sin decir nada más. De todos modos, es probablemente lo "
+"máximo que alguien ha pagado por una bebida como esa.\n"
+"Cuando vuelves a tu nave te das cuenta de que te sobra una bebida. ¿Quizás "
+"quede bien como adorno?"
 
 #: dat/missions/neutral/aristodrink.lua:158
 msgid "You delivered a special drink called a Swamp Bombing to an aristocrat."
 msgstr ""
+"Has entregado a un aristócrata una bebida especial llamada Bomba de Pantano."
 
 #: dat/missions/neutral/aristodrink.lua:191
 #: dat/missions/neutral/aristodrink.lua:195
 msgid "Find the Drink"
-msgstr ""
+msgstr "Encuentre la Bebida"
 
 #: dat/missions/neutral/aristodrink.lua:192
 msgid "Return the drink to the Aristocrat at {pnt} in the {sys} system."
-msgstr ""
+msgstr "Devuelve la bebida al Aristócrata en {pnt} en el sistema {sys}."
 
 #: dat/missions/neutral/aristodrink.lua:196
 msgid ""
 "Go to {pnt} in the {sys} system and look for the special drink that the "
 "Aristocrat wants"
 msgstr ""
+"Ve a {pnt} en el sistema {sys} y busca la bebida especial que quiere el "
+"Aristócrata"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -65801,23 +65888,23 @@ msgstr ""
 #. Note: indexed from 0 to match mission tiers.
 #: dat/missions/neutral/cargo.lua:39
 msgid "Small shipment to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Cargamento pequeño a {pnt} en el sistema {sys}."
 
 #: dat/missions/neutral/cargo.lua:40
 msgid "Medium shipment to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Cargamento medio a {pnt} en el sistema {sys}."
 
 #: dat/missions/neutral/cargo.lua:41
 msgid "Sizable cargo delivery to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Entrega de carga considerable a {pnt} en el sistema {sys}."
 
 #: dat/missions/neutral/cargo.lua:42
 msgid "Large cargo delivery to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Entrega de carga grande a {pnt} en el sistema {sys}."
 
 #: dat/missions/neutral/cargo.lua:43
 msgid "Bulk freight delivery to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Entrega de carga a granel a {pnt} en el sistema {sys}."
 
 #. =Landing=--
 #: dat/missions/neutral/cargo.lua:53 dat/missions/neutral/cargo_rush.lua:62
@@ -65826,6 +65913,9 @@ msgid ""
 "workers. The job takes inordinately long to complete, and the leader pays "
 "you #g{credits}#0 without speaking a word."
 msgstr ""
+"Los contenedores de {cargo} son sacadas de tu nave por un grupo de "
+"trabajadores hoscos. El trabajo tarda excesivamente en completarse, y el "
+"líder te paga #g{credits}#0 sin decir una palabra."
 
 #: dat/missions/neutral/cargo.lua:54 dat/missions/neutral/cargo_rush.lua:63
 msgid ""
@@ -65833,6 +65923,10 @@ msgid ""
 "vessel. Before you can even collect your thoughts, one of the workers "
 "presses a credit chip worth #g{credits}#0 in your hand and departs."
 msgstr ""
+"Poco después de aterrizar, un equipo saca a toda prisa los contenedores de "
+"{cargo} de tu nave. Antes de que puedas ordenar tus pensamientos, uno de los "
+"trabajadores presiona un chip de créditos por valor de #g{credits}#0 en tu "
+"mano y se marcha."
 
 #: dat/missions/neutral/cargo.lua:55 dat/missions/neutral/cargo_rush.lua:64
 msgid ""
@@ -65840,6 +65934,9 @@ msgid ""
 "dockworkers. Still, they make fairly good time, delivering your pay of "
 "#g{credits}#0 upon completion of the job."
 msgstr ""
+"Los contenedores de {cargo} son descargados por un grupo de estibadores de "
+"aspecto agotado. Aun así, hacen un tiempo bastante bueno, entregándote tu "
+"paga de #g{credits}#0 al terminar el trabajo."
 
 #: dat/missions/neutral/cargo.lua:56 dat/missions/neutral/cargo_rush.lua:65
 msgid ""
@@ -65847,6 +65944,9 @@ msgid ""
 "supervised by a human overseer, who hands you your pay of #g{credits}#0 when "
 "they finish."
 msgstr ""
+"Los contenedores de {cargo} son descargados por un equipo de drones "
+"robóticos supervisados por un supervisor humano, que te entrega tu paga de "
+"#g{credits}#0 cuando terminan."
 
 #. Create the mission
 #. Note: this mission does not make any system claims.
@@ -65856,7 +65956,7 @@ msgstr ""
 #. Note: Pay is independent from amount by design! Not all deals are equally attractive!
 #: dat/missions/neutral/cargo.lua:91
 msgid "Shipment to {pnt} in {sys} ({tonnes})"
-msgstr ""
+msgstr "Cargamento a {pnt} en {sys} ({tonnes})"
 
 #: dat/missions/neutral/cargo.lua:109
 msgid "Cargo mission"
