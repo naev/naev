@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-14 19:00-0400\n"
-"PO-Revision-Date: 2022-06-21 22:16+0000\n"
+"PO-Revision-Date: 2022-06-22 16:56+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -65112,6 +65112,9 @@ msgid ""
 "You land your planet after all the commotion going on outside, and find "
 "Verner waiting for you. His gang unloads the {cargo} while he talks to you."
 msgstr ""
+"Aterrizas en el planeta después de toda la conmoción que se produce en el "
+"exterior, y encuentras a Verner esperándote. Su banda descarga la {cargo} "
+"mientras él habla contigo."
 
 #: dat/missions/neutral/antlejos/ant04.lua:129
 msgid ""
@@ -65120,6 +65123,10 @@ msgid ""
 "bunch of assholes that reject progress and terraforming barren moons like "
 "this one into places suitable for human living.\""
 msgstr ""
+"\"Veo que los has conocido. Son parte de los #oPilotos Unidos Contra el "
+"Antropocentrismo Atmosférico#0 o #oPUCAA#0 para abreviar. Lo que son es una "
+"panda de gilipollas que rechazan el progreso y la terraformación de lunas "
+"estériles como ésta en lugares aptos para la vida humana.\""
 
 #: dat/missions/neutral/antlejos/ant04.lua:130
 msgid ""
@@ -65129,6 +65136,11 @@ msgid ""
 "careful from now on as they'll only get more aggressive as they see our "
 "wonderful progress.\""
 msgstr ""
+"\"Debieron darse cuenta cuando se hizo público el papeleo que presenté en el "
+"Imperio para obtener el permiso de terraformación. Pensé que tendríamos "
+"mucho más tiempo antes de que empezaran a estropear las cosas. Parece que "
+"tendremos que tener cuidado a partir de ahora, ya que sólo se volverán más "
+"agresivos al ver nuestros maravillosos progresos.\""
 
 #: dat/missions/neutral/antlejos/ant04.lua:131
 msgid ""
@@ -65136,12 +65148,18 @@ msgid ""
 "them around right away. Things should start looking much better now that "
 "life will start to take a hold on this moon.\""
 msgstr ""
+"\"Las arqueas parecen estar en plena forma. Nos pondremos a esparcirlas de "
+"inmediato. Las cosas deberían comenzar a verse mucho mejor ahora que la vida "
+"comenzará a afianzarse en esta luna.\""
 
 #: dat/missions/neutral/antlejos/ant04.lua:132
 msgid ""
 "\"We still have a ton of things for you to do. If you are interested, please "
 "meet me up here again after I organize things a bit.\""
 msgstr ""
+"\"Todavía tenemos un montón de cosas que hacer. Si estas interesado, vuelve "
+"a encontrarte conmigo aquí arriba después de que organice un poco las cosas."
+"\""
 
 #. Apply first diff
 #: dat/missions/neutral/antlejos/ant04.lua:141
@@ -65149,19 +65167,21 @@ msgid ""
 "You delivered some Soromid morphogenic archaea to {pnt} to help Verner "
 "further terraform it."
 msgstr ""
+"Has entregado algunas arqueas morfogénicas Soromida a {pnt} para ayudar a "
+"Verner a seguir terraformándola."
 
 #. They will just go to Antlejos V and attack any hostiles on their way, including the player.
 #: dat/missions/neutral/antlejos/ant04.lua:157
 #: dat/missions/neutral/antlejos/ant05.lua:133
 #: dat/missions/neutral/antlejos/ant_supplies.lua:173
 msgid "Protestor"
-msgstr ""
+msgstr "Manifestante"
 
 #. See surviving pilots
 #: dat/missions/neutral/antlejos/ant04.lua:191
 #: dat/missions/neutral/antlejos/ant_supplies.lua:205
 msgid "Hey! That ship is helping to terraform {pnt}! Get them!"
-msgstr ""
+msgstr "¡Eh! ¡Esa nave está ayudando a terraformar {pnt}! ¡Atrapenla!"
 
 #. Say some protest slogan
 #. Protest again
@@ -65192,7 +65212,7 @@ msgstr ""
 #. luacheck: globals approaching enter heartbeat land protest protestor1 protestor2 protestor3 protestor4 supply1 supply2 supply3 supply4 supply5 supplydeath supplyattacked supplyland (Hook functions passed by name)
 #: dat/missions/neutral/antlejos/ant05.lua:54
 msgid "Verner is waiting for you as your ship touches ground."
-msgstr ""
+msgstr "Verner te está esperando cuando tu nave toca tierra."
 
 #: dat/missions/neutral/antlejos/ant05.lua:55
 msgid ""
@@ -65202,6 +65222,11 @@ msgid ""
 "be willing to guard through {cursys}? I would be able to pay you {creds} for "
 "your troubles.\""
 msgstr ""
+"\"Parece que los PUCAA han empezado a armarse de valor y nos van a poner las "
+"cosas difíciles. Tengo algunas naves de suministro que vienen de {sys}, y "
+"parece que se enfrentarán a hostilidades antes de llegar aquí. ¿Estarías "
+"dispuesto a hacer guardia a través de {cursys}? Podría pagarte {creds} por "
+"tus problemas.\""
 
 #: dat/missions/neutral/antlejos/ant05.lua:67
 msgid ""
@@ -65209,18 +65234,21 @@ msgid ""
 "guard them and try to ensure they all make it safe and sound here. Best of "
 "luck, we are counting on you!\""
 msgstr ""
+"\"¡Genial! Las naves de suministro saltarán desde {jumpsys}. Asegúrate de "
+"vigilarlas y de que todas lleguen sanas y salvas hasta aquí. Mucha suerte, ¡"
+"contamos contigo!\""
 
 #: dat/missions/neutral/antlejos/ant05.lua:80
 msgid "Defend the supply ships coming to {pnt} from the PUAAA."
-msgstr ""
+msgstr "Defienda las naves de suministro que llegan a {pnt} desde la PUCAA."
 
 #: dat/missions/neutral/antlejos/ant05.lua:83
 msgid "Go to the jump point from {sys} and wait for the supply ships"
-msgstr ""
+msgstr "Ve al punto de salto desde {sys} y espera a las naves de suministro"
 
 #: dat/missions/neutral/antlejos/ant05.lua:84
 msgid "Guard the supply ships from the PUAAA"
-msgstr ""
+msgstr "Proteger las naves de suministro de la PUCAA"
 
 #. Land hook.
 #: dat/missions/neutral/antlejos/ant05.lua:102
@@ -65228,18 +65256,24 @@ msgid ""
 "\"That was incredible! All the ships made it through in one piece. You're a "
 "real life saver!\""
 msgstr ""
+"\"¡Ha sido increíble! Todas las naves han llegado de una pieza. ¡Eres un "
+"verdadero salvavidas!\""
 
 #: dat/missions/neutral/antlejos/ant05.lua:104
 msgid ""
 "\"Almost all the ships made it! Against those odds I think we did very good."
 "\""
 msgstr ""
+"\"¡Casi todos las naves lo consiguieron! Contra las probabilidades, creo que "
+"lo hicimos muy bien.\""
 
 #: dat/missions/neutral/antlejos/ant05.lua:106
 msgid ""
 "\"I guess that was better than nothing. With so few supplies making it "
 "through it seems like terraforming will take longer than I was hoping for.\""
 msgstr ""
+"\"Supongo que fue mejor que nada. Con tan pocos suministros, parece que la "
+"terraformación tardará más de lo que esperaba.\""
 
 #: dat/missions/neutral/antlejos/ant05.lua:108
 msgid ""
@@ -65249,6 +65283,12 @@ msgid ""
 "you should be able to find new supply requests there if you want to help. We "
 "still need all the hands we can get!\""
 msgstr ""
+"\"Con estos suministros, creo que podremos iniciar el siguiente paso "
+"importante en la ampliación de la operación de terraformación. Ya casi lo "
+"tenemos, pero aún necesitaremos más ayuda. El terminal de la misión debería "
+"estar funcionando y deberíais poder encontrar nuevas solicitudes de "
+"suministros ahí si queréis ayudar. ¡Todavía necesitamos todas las manos que "
+"podamos conseguir!\""
 
 #. Apply first diff
 #. Give supplies based on how many ships were able to land
@@ -65256,44 +65296,45 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant05.lua:120
 msgid "You guarded supply ships from the PUAAA delivering cargo to {pnt}."
 msgstr ""
+"Has custodiado naves de suministro de la PUCAA que llevaban carga a {pnt}."
 
 #: dat/missions/neutral/antlejos/ant05.lua:124
 msgid "You were supposed to guard the supply ships!"
-msgstr ""
+msgstr "¡Se suponía que ibas a vigilar las naves de suministros!"
 
 #: dat/missions/neutral/antlejos/ant05.lua:142
 msgid "Supply Ship"
-msgstr ""
+msgstr "Nave de Suministros"
 
 #: dat/missions/neutral/antlejos/ant05.lua:168
 msgid "Supply ship under attack! Help requested!"
-msgstr ""
+msgstr "¡Ataque a una nave de suministros! ¡Solicito ayuda!"
 
 #. Nothing to do here
 #. Wrong system
 #: dat/missions/neutral/antlejos/ant05.lua:180
 msgid "You were not supposed to leave {sys}!"
-msgstr ""
+msgstr "¡No se suponía que dejaras {sys}!"
 
 #: dat/missions/neutral/antlejos/ant05.lua:186
 msgid "Supply Ship Entry Point"
-msgstr ""
+msgstr "Punto de Entrada de Naves de Suministros"
 
 #: dat/missions/neutral/antlejos/ant05.lua:198
 msgid "The supply ships will be incoming shortly!"
-msgstr ""
+msgstr "¡Las naves de suministros llegarán en breve!"
 
 #. Initialize ship stuff
 #: dat/missions/neutral/antlejos/ant05.lua:204
 msgid "Supplier"
-msgstr ""
+msgstr "Suministrador"
 
 #. See surviving pilots
 #. Say some protest slogan
 #. Protest again
 #: dat/missions/neutral/antlejos/ant05.lua:303
 msgid "No supply ships made it through!"
-msgstr ""
+msgstr "¡Ningúna nave de suministros logró pasar!"
 
 #. Tell the player to land
 #.
@@ -72623,7 +72664,7 @@ msgstr ""
 
 #: dat/missions/pirate/pir_hit_intro.lua:136
 msgid "Return to {pnt} ({sys} system)"
-msgstr ""
+msgstr "Vuelve a {pnt} (sistema {sys})"
 
 #. Nothing to do.
 #: dat/missions/pirate/pir_hit_intro.lua:206
