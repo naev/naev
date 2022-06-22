@@ -16,6 +16,11 @@ local poi = {}
       @treturn table A table of parameters for the point of interest mission or nil if failed to generate.
 --]]
 function poi.generate()
+   -- Must have done intro mission
+   if player.misnActive("Point of Interest - Intro") or not player.misnDone("Point of Interest - Intro") then
+      return
+   end
+
    local syscand = lmisn.getSysAtDistance( nil, 1, 5, function( sys )
       -- TODO have systems with higher risk or more abandoned
 
@@ -229,6 +234,10 @@ function poi.misnDone( failed )
    else
       var.push( "poi_done", poi.done()+1 )
    end
+end
+
+function poi.misnPos ()
+   return pos
 end
 
 --[[--
