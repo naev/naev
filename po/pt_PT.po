@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-06-14 19:00-0400\n"
+"POT-Creation-Date: 2022-06-22 12:55-0400\n"
 "PO-Revision-Date: 2021-08-30 16:38+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -13625,9 +13625,9 @@ msgstr ""
 #: dat/faction.xml:582 dat/outfits/misc/mercenary_license.xml:10
 #: dat/events/dvaered/fwD_hitman.lua:55 dat/events/dvaered/fwD_hitman.lua:57
 #: dat/events/dvaered/fwD_hitman.lua:59
-#: dat/missions/neutral/kidnapped/traffic_01.lua:229
-#: dat/missions/neutral/kidnapped/traffic_01.lua:247
-#: dat/missions/neutral/kidnapped/traffic_01.lua:267
+#: dat/missions/neutral/kidnapped/traffic_01.lua:230
+#: dat/missions/neutral/kidnapped/traffic_01.lua:248
+#: dat/missions/neutral/kidnapped/traffic_01.lua:268
 #: dat/missions/shark/sh02_tapping.lua:187
 #: dat/missions/shark/sh02_tapping.lua:212
 #: dat/missions/shark/sh02_tapping.lua:239
@@ -34854,7 +34854,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:227
 #: dat/missions/shark/sh07_pirates.lua:271
 #: dat/missions/sirius/achack/achack02.lua:118
-#: dat/missions/sirius/achack/achack02.lua:255
+#: dat/missions/sirius/achack/achack02.lua:261
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:176
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:84
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:87
@@ -55334,11 +55334,11 @@ msgstr ""
 #. luacheck: globals do_msg do_msg2 got_boarded got_hailed idle sys_enter (Hook functions passed by name)
 #. randomly select spawn system and planet where brother will be
 #. Spaceport bar stuff
-#: dat/missions/neutral/kidnapped/traffic_01.lua:59
+#: dat/missions/neutral/kidnapped/traffic_01.lua:57
 msgid "Ordinary Woman"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:59
+#: dat/missions/neutral/kidnapped/traffic_01.lua:57
 msgid "The woman waves at you a bit desperately."
 msgstr ""
 
@@ -55347,49 +55347,49 @@ msgstr ""
 #. --
 #. Mission details:
 #. Some flavour text
-#: dat/missions/neutral/kidnapped/traffic_01.lua:68
-#: dat/missions/neutral/kidnapped/traffic_01.lua:92
+#: dat/missions/neutral/kidnapped/traffic_01.lua:66
+#: dat/missions/neutral/kidnapped/traffic_01.lua:94
 msgid "In the Bar"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:68
+#: dat/missions/neutral/kidnapped/traffic_01.lua:66
 msgid ""
 "\"I must find my dear brother! Please help me. I think he is in danger! I "
 "don't have a ship and he is the only family I have left. Could you please "
 "help me?\""
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:69
+#: dat/missions/neutral/kidnapped/traffic_01.lua:67
 msgid "Sorry, I can't"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:69
+#: dat/missions/neutral/kidnapped/traffic_01.lua:67
 msgid ""
 "\"How can you be such a heartless person? What has this universe become?...\""
 msgstr ""
 
 #. Some variables for keeping track of the mission
 #. Set mission details
-#: dat/missions/neutral/kidnapped/traffic_01.lua:81
-#: dat/missions/neutral/kidnapped/traffic_01.lua:85
-#: dat/missions/neutral/kidnapped/traffic_01.lua:142
+#: dat/missions/neutral/kidnapped/traffic_01.lua:79
+#: dat/missions/neutral/kidnapped/traffic_01.lua:83
+#: dat/missions/neutral/kidnapped/traffic_01.lua:143
 msgid "The Lost Brother"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:82
+#: dat/missions/neutral/kidnapped/traffic_01.lua:80
 msgid "Some money and a happy sister."
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:83
+#: dat/missions/neutral/kidnapped/traffic_01.lua:81
 msgid "Locate the brother in the {1} system, the {2} system, or the {3} system"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:87
-#: dat/missions/neutral/kidnapped/traffic_01.lua:144
+#: dat/missions/neutral/kidnapped/traffic_01.lua:85
+#: dat/missions/neutral/kidnapped/traffic_01.lua:145
 msgid "Hail the Poppy Seed and board it to reunite the siblings"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:92
+#: dat/missions/neutral/kidnapped/traffic_01.lua:94
 msgid ""
 "The woman calms down as you signal your willingness to help. \"Oh, thank "
 "goodness! I was told where he usually hangs around. Please take me there and "
@@ -55406,16 +55406,16 @@ msgstr ""
 #. Check to see if reaching target system
 #. we can break, we found what we were looking for
 #. if we visited a system without the brother: update OSD
-#: dat/missions/neutral/kidnapped/traffic_01.lua:138
+#: dat/missions/neutral/kidnapped/traffic_01.lua:139
 msgid "Locate the brother in the {1} system or the {2} system"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:140
+#: dat/missions/neutral/kidnapped/traffic_01.lua:141
 msgid "Locate the brother in the {1} system"
 msgstr ""
 
 #. update OSD
-#: dat/missions/neutral/kidnapped/traffic_01.lua:152
+#: dat/missions/neutral/kidnapped/traffic_01.lua:153
 msgid "Poppy Seed"
 msgstr ""
 
@@ -55424,11 +55424,11 @@ msgstr ""
 #. get point between jumpgate and broship to spawn mercenaries disencouraging him from following
 #. set spawn point between the broship and jumppoint
 #. if hailed: stop vessel let it be boarded
-#: dat/missions/neutral/kidnapped/traffic_01.lua:182
+#: dat/missions/neutral/kidnapped/traffic_01.lua:183
 msgid "Comm Channel"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:182
+#: dat/missions/neutral/kidnapped/traffic_01.lua:183
 msgid ""
 "You radio the ship with a message saying you have his sister on board and "
 "that she has a message for him.\n"
@@ -55437,11 +55437,11 @@ msgstr ""
 
 #. send ship to nearest jumppoint to escape, spawn baddies that might frighten you of from chasing
 #. get nearest jumppoints and let ship escape in this direction
-#: dat/missions/neutral/kidnapped/traffic_01.lua:199
+#: dat/missions/neutral/kidnapped/traffic_01.lua:200
 msgid "The Deception"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:199
+#: dat/missions/neutral/kidnapped/traffic_01.lua:200
 msgid ""
 "The woman stands next to you while the airlock opens. You see the grin on "
 "the man's face change to a baffled expression, then hear the sound of a "
@@ -55452,7 +55452,7 @@ msgid ""
 msgstr ""
 
 #. turn mercs hostile
-#: dat/missions/neutral/kidnapped/traffic_01.lua:207
+#: dat/missions/neutral/kidnapped/traffic_01.lua:208
 msgid ""
 "You were tricked into aiding an assassination. A woman claimed she needed "
 "help finding her brother, but when you brought her to her \"brother\", she "
@@ -55462,21 +55462,21 @@ msgstr ""
 
 #. idle
 #. delay for msgs because if no delay they will pop in mid transit from system to system. A wait function would be awesome...
-#: dat/missions/neutral/kidnapped/traffic_01.lua:219
+#: dat/missions/neutral/kidnapped/traffic_01.lua:220
 msgid "Wrong system"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:219
+#: dat/missions/neutral/kidnapped/traffic_01.lua:220
 msgid ""
 "\"I don't think he is here. He must be in one of the other systems. Please "
 "hurry!\""
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:222
+#: dat/missions/neutral/kidnapped/traffic_01.lua:223
 msgid "Right system"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:222
+#: dat/missions/neutral/kidnapped/traffic_01.lua:223
 msgid "\"I think this is it! We found him!\""
 msgstr ""
 
@@ -63600,7 +63600,7 @@ msgstr ""
 #. Death hook for ambushers.
 #. Load hook. Makes sure the player can't start on military stations.
 #: dat/missions/sirius/achack/achack02.lua:114
-#: dat/missions/sirius/achack/achack02.lua:252
+#: dat/missions/sirius/achack/achack02.lua:258
 msgid "Another stop successfully reached"
 msgstr ""
 
@@ -63738,24 +63738,26 @@ msgstr ""
 #. Not sure if we need a claim for this.
 #. This variable holds the system the player is supposed to jump to NEXT.
 #. Sets up the ambush ships and trigger area.
+#. TODO should probably redo how this is handled. It's not very robust if
+#. the player or whatever attacks them early
 #. Commences combat once Joanne is close to the ambushers.
-#: dat/missions/sirius/achack/achack02.lua:234
+#: dat/missions/sirius/achack/achack02.lua:240
 msgid "That's our target! Get her, boys!"
 msgstr ""
 
-#: dat/missions/sirius/achack/achack02.lua:262
+#: dat/missions/sirius/achack/achack02.lua:268
 msgid "Joanne has jumped for the {sys} system. Follow her!"
 msgstr ""
 
-#: dat/missions/sirius/achack/achack02.lua:267
+#: dat/missions/sirius/achack/achack02.lua:273
 msgid "Joanne has docked with {pnt}. Follow her!"
 msgstr ""
 
-#: dat/missions/sirius/achack/achack02.lua:271
+#: dat/missions/sirius/achack/achack02.lua:277
 msgid "Joanne's ship has been destroyed!"
 msgstr ""
 
-#: dat/missions/sirius/achack/achack02.lua:271
+#: dat/missions/sirius/achack/achack02.lua:277
 msgid ""
 "Joanne's assailants have succeeded in destroying her ship. Your mission is a "
 "failure!"
@@ -82043,12 +82045,12 @@ msgstr ""
 msgid "Event trying to claim but already has."
 msgstr ""
 
-#: src/nlua_faction.c:611
+#: src/nlua_faction.c:593
 #, c-format
-msgid "Faction '%s' already exists!"
+msgid "Trying to overwrite existing faction '%s' with dynamic faction!"
 msgstr ""
 
-#: src/nlua_faction.c:641 src/nlua_faction.c:666
+#: src/nlua_faction.c:647 src/nlua_faction.c:672
 msgid "Can only add allies to dynamic factions"
 msgstr ""
 

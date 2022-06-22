@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-06-14 19:00-0400\n"
+"POT-Creation-Date: 2022-06-22 12:55-0400\n"
 "PO-Revision-Date: 2022-06-22 16:56+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
@@ -17648,9 +17648,9 @@ msgstr ""
 #: dat/faction.xml:582 dat/outfits/misc/mercenary_license.xml:10
 #: dat/events/dvaered/fwD_hitman.lua:55 dat/events/dvaered/fwD_hitman.lua:57
 #: dat/events/dvaered/fwD_hitman.lua:59
-#: dat/missions/neutral/kidnapped/traffic_01.lua:229
-#: dat/missions/neutral/kidnapped/traffic_01.lua:247
-#: dat/missions/neutral/kidnapped/traffic_01.lua:267
+#: dat/missions/neutral/kidnapped/traffic_01.lua:230
+#: dat/missions/neutral/kidnapped/traffic_01.lua:248
+#: dat/missions/neutral/kidnapped/traffic_01.lua:268
 #: dat/missions/shark/sh02_tapping.lua:187
 #: dat/missions/shark/sh02_tapping.lua:212
 #: dat/missions/shark/sh02_tapping.lua:239
@@ -42565,7 +42565,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:227
 #: dat/missions/shark/sh07_pirates.lua:271
 #: dat/missions/sirius/achack/achack02.lua:118
-#: dat/missions/sirius/achack/achack02.lua:255
+#: dat/missions/sirius/achack/achack02.lua:261
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:176
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:84
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:87
@@ -52330,8 +52330,8 @@ msgid ""
 msgstr ""
 "El Teniente Czesc se acerca al entrar en el bar. \"Si es mi empleado "
 "favorito de la Armada del Imperio. Estamos en camino de establecer un "
-"acuerdo con la Casa Sirio. Este debería ser el último contrato a negociar. ¿"
-"Listo para ir?\""
+"acuerdo con la Casa Sirio. Este debería ser el último contrato a negociar. "
+"¿Listo para ir?\""
 
 #. Flavour text and mini-briefing
 #. -Accept the mission
@@ -52429,14 +52429,14 @@ msgid ""
 "forget such dedication.\""
 msgstr ""
 "El Teniente Czesc sale de tu nave y toma una profunda bocanada de aire. \"Me "
-"encanta el olor de la burocracia por la mañana\". Le estrecha la mano. \"¡"
-"Gracias por toda tu ayuda, capitán! Acompáñeme al cuartel general y podremos "
-"hacer algunos trámites para ponerte en orden. Después deberías empezar a "
-"recibir misiones de transporte de larga distancia. Pagan mejor que nuestras "
-"misiones de transporte regulares, pero a menudo requieren viajar distancias "
-"más largas y entrar en territorio controlado por otras facciones. Es más "
-"probable que las veas en los límites del espacio del Imperio, donde la carga "
-"está lista para salir hacia otras facciones. De nuevo, ¡no puedo "
+"encanta el olor de la burocracia por la mañana\". Le estrecha la mano. "
+"\"¡Gracias por toda tu ayuda, capitán! Acompáñeme al cuartel general y "
+"podremos hacer algunos trámites para ponerte en orden. Después deberías "
+"empezar a recibir misiones de transporte de larga distancia. Pagan mejor que "
+"nuestras misiones de transporte regulares, pero a menudo requieren viajar "
+"distancias más largas y entrar en territorio controlado por otras facciones. "
+"Es más probable que las veas en los límites del espacio del Imperio, donde "
+"la carga está lista para salir hacia otras facciones. De nuevo, ¡no puedo "
 "agradecertelo suficiente! El Imperio no olvida rápidamente tal dedicación.\""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:77
@@ -52536,8 +52536,8 @@ msgstr ""
 "    \"Hola, usted debe ser {player}. He oído hablar de ti. Soy el Comandante "
 "Soldner. Tenemos algunas misiones más difíciles para alguien como tú en la "
 "división de Envíos del Imperio. Habría algún peligro real en estas misiones, "
-"a diferencia de las que has completado recientemente para la división. ¿"
-"Estarías dispuesto a aceptar el reto?\""
+"a diferencia de las que has completado recientemente para la división. "
+"¿Estarías dispuesto a aceptar el reto?\""
 
 #. Accept mission
 #. target destination
@@ -52559,7 +52559,8 @@ msgstr "Intercambio de Prisioneros"
 #: dat/missions/empire/shipping/es00.lua:65
 #: dat/missions/empire/shipping/es00.lua:71
 msgid "Go to {pnt} in the {sys} system to exchange prisoners with the FLF"
-msgstr "Ve a {pnt} en el sistema {sys} para intercambiar prisioneros con el FLF"
+msgstr ""
+"Ve a {pnt} en el sistema {sys} para intercambiar prisioneros con el FLF"
 
 #: dat/missions/empire/shipping/es00.lua:68
 msgid ""
@@ -52668,8 +52669,8 @@ msgstr ""
 "Después de dejar tu nave en el puerto estelar, te encuentras con el "
 "comandante Soldner. Por su cara, parece que ya sabe lo que ha pasado.\n"
 "    \"Todo fue culpa de los Dvaered. Llegaron de la nada y empezaron a "
-"disparar. Qué lío tan horrible. Ya estamos trabajando en ordenar las culpas\""
-".\n"
+"disparar. Qué lío tan horrible. Ya estamos trabajando en ordenar las culpas"
+"\".\n"
 "    Suspira. \"Teníamos buena gente allí. Y desde luego no queríamos que "
 "empezaran con un lío como éste, pero si estás interesado en más misiones, "
 "reúnete conmigo en el bar dentro de un rato. No tenemos descanso por aquí. "
@@ -53194,9 +53195,9 @@ msgid ""
 "says. \"You should get back to the base now before you get killed! I'll be "
 "waiting for you there.\""
 msgstr ""
-"Recibes una transmisión. Es de Benito. \"¡Operación con éxito!\", dice. \"¡"
-"Debes volver a la base ahora antes de que te maten! Te estaré esperando allí."
-"\""
+"Recibes una transmisión. Es de Benito. \"¡Operación con éxito!\", dice. "
+"\"¡Debes volver a la base ahora antes de que te maten! Te estaré esperando "
+"allí.\""
 
 #: dat/missions/flf/dvk/flf_dvk01.lua:37
 msgid ""
@@ -53210,9 +53211,9 @@ msgid ""
 msgstr ""
 "Al atracar en la estación, Benito se acerca a ti con una sonrisa. \"Gracias "
 "por tu ayuda\", dice. \"¡La misión ha sido un éxito rotundo! Lo que hemos "
-"logrado ayudará mucho a nuestros esfuerzos contra los Dvaereds en el futuro\""
-". Te entrega una ficha de crédito. \"Este es tu pago. Hasta la próxima vez\""
-". Benito se despide mientras varios soldados adicionales de la FLF te "
+"logrado ayudará mucho a nuestros esfuerzos contra los Dvaereds en el futuro"
+"\". Te entrega una ficha de crédito. \"Este es tu pago. Hasta la próxima vez"
+"\". Benito se despide mientras varios soldados adicionales de la FLF te "
 "felicitan. Se te ocurre que nunca te enteraste de cuál era la misión en "
 "realidad. Tal vez lo descubras en otra ocasión."
 
@@ -53574,12 +53575,12 @@ msgstr ""
 "podemos conseguir que lo paguéis vosotros, ¡aún mejor! En concreto, "
 "necesitamos otras {tonnes} de mineral para construir la base. Así que "
 "traedlo al sistema Cólera, y lo consideramos un trato.\n"
-"\"Oh sí, casi lo olvido; no sabes cómo llegar al sistema Cólera, ahora, ¿"
-"verdad? Bueno, ya que has demostrado ser digno, supongo que te dejaré entrar "
-"en nuestro pequeño secreto\". Transfiere un archivo a la computadora de tu "
-"nave. Cuando lo miras, ves que es un mapa que muestra un único punto de "
-"salto oculto. \"¡Ahora, fuera de aquí! Reúnete conmigo en el sistema {sys} "
-"cuando tengas el botín.\""
+"\"Oh sí, casi lo olvido; no sabes cómo llegar al sistema Cólera, ahora, "
+"¿verdad? Bueno, ya que has demostrado ser digno, supongo que te dejaré "
+"entrar en nuestro pequeño secreto\". Transfiere un archivo a la computadora "
+"de tu nave. Cuando lo miras, ves que es un mapa que muestra un único punto "
+"de salto oculto. \"¡Ahora, fuera de aquí! Reúnete conmigo en el sistema "
+"{sys} cuando tengas el botín.\""
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:142
 msgid "Bring {tonnes} of Ore to the Pirate Kestrel in the {sys} system"
@@ -53604,9 +53605,9 @@ msgstr ""
 "Un pirata de aspecto desaliñado aparece en tu pantalla. Te das cuenta de que "
 "debe ser el líder del grupo. \"¡Bwah ha ha!\" se ríe. \"¡Esa tiene que ser "
 "la excusa más patética para una nave que he visto nunca!\" Intentas ignorar "
-"su grosero comentario y empiezas a explicarle que sólo quieres hablar. \""
-"¿Hablar?\", responde. \"¿Por qué querría hablar con un normalito como tú? ¡"
-"Apuesto a que mis compañeros de aquí podrían hacerte volar por los aires "
+"su grosero comentario y empiezas a explicarle que sólo quieres hablar. "
+"\"¿Hablar?\", responde. \"¿Por qué querría hablar con un normalito como tú? "
+"¡Apuesto a que mis compañeros de aquí podrían hacerte volar por los aires "
 "incluso sin mi ayuda!\"\n"
 "    El pirata corta inmediatamente su conexión. Bueno, si estos piratas no "
 "quieren hablar contigo, tal vez sea el momento de mostrarle de qué estás "
@@ -54114,8 +54115,8 @@ msgid ""
 msgstr ""
 "Benito sonríe. \"Sabía que querrías hacerlo. Como siempre, el equipo estará "
 "esperando una oportunidad para hacer tu trabajo y te saludarán cuando "
-"terminen. Buena suerte, ¡no como la necesita un piloto tan grande como tú!\""
-". Sonríes, y Benito se excusa. ¡Es hora de volver a causar un poco de caos!"
+"terminen. Buena suerte, ¡no como la necesita un piloto tan grande como tú!"
+"\". Sonríes, y Benito se excusa. ¡Es hora de volver a causar un poco de caos!"
 
 #: dat/missions/flf/dvk/flf_dvk04.lua:60
 msgid "Diversion from Haleb"
@@ -54202,8 +54203,8 @@ msgstr ""
 "que tiene un problema con el que lidiar. \"Bien visto, {player}\", dice. "
 "\"Llevo un rato pensando en cómo solucionar un problema y, al verte, ¡la "
 "solución es mucho más sencilla! ¿Puedes ayudarme? No es nada demasiado "
-"grande, sólo destruir algunas naves más. Estamos dispuestos a darte {credits}"
-" a cambio.\""
+"grande, sólo destruir algunas naves más. Estamos dispuestos a darte "
+"{credits} a cambio.\""
 
 #: dat/missions/flf/dvk/flf_dvk05.lua:57
 msgid ""
@@ -54221,8 +54222,8 @@ msgid ""
 "before you joined the FLF. Interesting. Well, it's about time to get going, "
 "then."
 msgstr ""
-"\"¡Gracias! Como siempre, eres un salvavidas. Bueno, para nosotros, eso es\""
-". Benito sonríe antes de continuar. \"Verás, unos cuantos piratas han "
+"\"¡Gracias! Como siempre, eres un salvavidas. Bueno, para nosotros, eso es"
+"\". Benito sonríe antes de continuar. \"Verás, unos cuantos piratas han "
 "decidido ser oportunistas, yendo en contra de los clanes con los que estamos "
 "aliados, y atacando nuestras naves. Ahora bien, esperábamos que esto "
 "ocurriera en algún momento, pero esto nos pone en un molesto aprieto: "
@@ -54788,14 +54789,16 @@ msgid ""
 msgid_plural ""
 "There is a Dvaered patrol with {n} ships in the {sys} system. Eliminate this "
 "patrol."
-msgstr[0] "Hay {n} nave Dvaered patrullando el sistema {sys}. Elimina esta nave."
+msgstr[0] ""
+"Hay {n} nave Dvaered patrullando el sistema {sys}. Elimina esta nave."
 msgstr[1] ""
 "Hay una patrulla Dvaered con {n} naves en el sistema {sys}. Elimina esta "
 "patrulla."
 
 #: dat/missions/flf/flf_patrol.lua:57
 msgid " There is a Vigilance among them, so you must proceed with caution."
-msgstr " Hay una Vigilancia entre ellos, así que debes proceder con precaución."
+msgstr ""
+" Hay una Vigilancia entre ellos, así que debes proceder con precaución."
 
 #: dat/missions/flf/flf_patrol.lua:60
 msgid " There is a Goddard among them, so you must be very careful."
@@ -54902,8 +54905,8 @@ msgid_plural ""
 "There is a pirate group with {n} ships disturbing FLF operations in the "
 "{sys} system. Eliminate this group."
 msgstr[0] ""
-"Hay {n} nave pirata que perturba las operaciones del FLF en el sistema {sys}"
-". Elimina esta nave."
+"Hay {n} nave pirata que perturba las operaciones del FLF en el sistema "
+"{sys}. Elimina esta nave."
 msgstr[1] ""
 "Hay un grupo de piratas con {n} naves que perturban las operaciones del FLF "
 "en el sistema {sys}. Elimina este grupo."
@@ -55606,8 +55609,8 @@ msgstr ""
 "la Frontera no dispone de mucho dinero. Sin embargo, estamos dispuestos a "
 "pagar por un buen trabajo, y el tuyo es más que eso. Además, te has "
 "congraciado con muchos de nosotros, como sin duda has notado. Nuestros altos "
-"mandos están entre los que has impresionado, así que a partir de hoy, ¡"
-"puedes llamarte uno de los nuestros! ¿Qué te parece, eh?\""
+"mandos están entre los que has impresionado, así que a partir de hoy, "
+"¡puedes llamarte uno de los nuestros! ¿Qué te parece, eh?\""
 
 #: dat/missions/flf/flf_pre02.lua:300
 msgid ""
@@ -56082,7 +56085,8 @@ msgstr ""
 #: dat/missions/minerva/kex1.lua:94
 msgid ""
 "You look around but there seems to be nobody else other than the two of you."
-msgstr "Miras a tu alrededor pero parece que no hay nadie más que vosotros dos."
+msgstr ""
+"Miras a tu alrededor pero parece que no hay nadie más que vosotros dos."
 
 #: dat/missions/minerva/kex1.lua:95
 msgid ""
@@ -56912,8 +56916,8 @@ msgid ""
 "friends, my family…\""
 msgstr ""
 "\"Hoy en día me lo tomo un poco mejor, pero el principio fue especialmente "
-"duro. Simplemente pierdes todas las ganas de vivir. No hay vuelta atrás, ¿"
-"verdad? Todas las cosas que solía tener y apreciar, se han ido. Mi trabajo, "
+"duro. Simplemente pierdes todas las ganas de vivir. No hay vuelta atrás, "
+"¿verdad? Todas las cosas que solía tener y apreciar, se han ido. Mi trabajo, "
 "mis amigos, mi familia...\""
 
 #: dat/missions/minerva/kex2.lua:198
@@ -57850,8 +57854,8 @@ msgid ""
 "\"You ever do anything you regret, kid?\""
 msgstr ""
 "\"He estado mejor, chico. Sólo he tenido algunas noches de insomnio, mirando "
-"al techo, sin poder moverme, perseguido por los remordimientos del pasado.\""
-"\n"
+"al techo, sin poder moverme, perseguido por los remordimientos del pasado."
+"\"\n"
 "Parece visiblemente cansado.\n"
 "\"¿Alguna vez has hecho algo de lo que te arrepientas, chico?\""
 
@@ -58927,8 +58931,8 @@ msgid ""
 msgstr ""
 "\"Si tan sólo nuestros lugares se hubieran intercambiado, habrías podido "
 "resolverlo y encontrarme de nuevo. Estuve tan cerca y, sin embargo, sigue "
-"pareciendo que hay una especie de muro impenetrable entre la solución y yo. ¿"
-"Qué me he perdido, en qué me he equivocado?\"\n"
+"pareciendo que hay una especie de muro impenetrable entre la solución y yo. "
+"¿Qué me he perdido, en qué me he equivocado?\"\n"
 "El monitor de signos vitales sigue parpadeando."
 
 #: dat/missions/minerva/kex5.lua:561
@@ -58957,8 +58961,8 @@ msgid ""
 msgstr ""
 "¿\"Todo\"? ¿Quieres decir que me he perdido lo fundamental? Ya veo. Lo que "
 "estamos viendo es sólo la proyección de una dimensión inferior de un espacio "
-"de dimensión intrínsecamente superior. Entonces hay que reescribirlo todo.\""
-"\n"
+"de dimensión intrínsecamente superior. Entonces hay que reescribirlo todo."
+"\"\n"
 "Intenta débilmente levantarse antes de que la tos agite su cuerpo y lo "
 "manche aún más con motas de sangre. Vuelve a caer en la cama con impotencia."
 
@@ -59095,8 +59099,8 @@ msgid ""
 "SELF-DESTRUCT SEQUENCE ENGAGED\n"
 "30 SECONDS REMAINING#0"
 msgstr ""
-"De repente, un mensaje brillante comienza a parpadear en todos los monitores:"
-"\n"
+"De repente, un mensaje brillante comienza a parpadear en todos los "
+"monitores:\n"
 "#rHONEYPOT ##329 ACTIVADO\n"
 "SECUENCIA DE AUTODESTRUCCIÓN ACTIVADA\n"
 "30 SEGUNDOS RESTANTES#0"
@@ -59528,8 +59532,8 @@ msgid ""
 "gotten anywhere.\"\n"
 "She gives out a heavy sigh."
 msgstr ""
-"\"Me dijeron que estaría aquí, pero llevo años aquí y no he llegado a nada\"."
-"\n"
+"\"Me dijeron que estaría aquí, pero llevo años aquí y no he llegado a nada"
+"\".\n"
 "Da un fuerte suspiro."
 
 #: dat/missions/minerva/maikki1.lua:155
@@ -59551,8 +59555,8 @@ msgid ""
 "even on the menu?"
 msgstr ""
 "Le ofreces una bebida. Después de mirar atentamente la carta de bebidas, "
-"pide un parfait de tarta de queso y fresas con extra de bayas. Espera, ¿"
-"estaba eso en el menú?"
+"pide un parfait de tarta de queso y fresas con extra de bayas. Espera, "
+"¿estaba eso en el menú?"
 
 #: dat/missions/minerva/maikki1.lua:170
 msgid ""
@@ -60110,8 +60114,8 @@ msgid ""
 "#pYour ship has detected a curious signal originating from inside the system."
 "#0"
 msgstr ""
-"#Tu nave ha detectado una curiosa señal procedente del interior del "
-"sistema.#0"
+"#Tu nave ha detectado una curiosa señal procedente del interior del sistema."
+"#0"
 
 #: dat/missions/minerva/maikki1.lua:500 dat/missions/minerva/maikki2.lua:617
 msgid "Curious Signal"
@@ -60563,8 +60567,8 @@ msgid ""
 "You turn the picture around and you see that 'Maikki 596:0928' is written in "
 "the corner. You should probably bring this back to Maikki."
 msgstr ""
-"Das la vuelta a la foto y ves que en la esquina está escrito \"Maikki 596:"
-"0928\". Probablemente deberías devolverle esto a Maikki."
+"Das la vuelta a la foto y ves que en la esquina está escrito \"Maikki "
+"596:0928\". Probablemente deberías devolverle esto a Maikki."
 
 #: dat/missions/minerva/maikki1.lua:905
 msgid ""
@@ -61267,13 +61271,13 @@ msgid ""
 "able to solve it in no time. By the way, since the accident with my last "
 "assistant, I'm looking for a new one. Would you be interested?\""
 msgstr ""
-"\"¡Podrían cambiar la ciencia de los materiales tal y como la conocemos! ¡"
-"Imagina poder crear materiales con casi cualquier propiedad que desees! "
+"\"¡Podrían cambiar la ciencia de los materiales tal y como la conocemos! "
+"¡Imagina poder crear materiales con casi cualquier propiedad que desees! "
 "Todavía tenemos que resolver el problema de la implosión de los cristalitos "
 "subatómicos, pero una vez que termine de recuperar las notas del cráter que "
 "dejó mi último laboratorio, debería poder resolverlo en poco tiempo. Por "
-"cierto, desde el accidente de mi último ayudante, estoy buscando uno nuevo. ¿"
-"Te interesaría?\""
+"cierto, desde el accidente de mi último ayudante, estoy buscando uno nuevo. "
+"¿Te interesaría?\""
 
 #: dat/missions/minerva/maikki2.lua:413
 msgid "You get away as fast as you can from them as they keep on rambling."
@@ -61330,8 +61334,8 @@ msgstr ""
 "divertidas conversaciones con nuestros colegas sobre si los artefactos de la "
 "nebulosa existen realmente o no, dado que estamos utilizando órganos "
 "sensoriales imperfectos para verlos, tocarlos y sentirlos. Verás, dado que "
-"sólo percibimos la realidad a través de nuestros órganos imperfectos, ¿"
-"podemos saber realmente si existe o no una realidad objetiva absoluta?\""
+"sólo percibimos la realidad a través de nuestros órganos imperfectos, "
+"¿podemos saber realmente si existe o no una realidad objetiva absoluta?\""
 
 #: dat/missions/minerva/maikki2.lua:439
 msgid "You inquire about the other members of the project."
@@ -62134,7 +62138,8 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:807
 msgid "Recover nebula artefacts from the {sys} asteroid field"
-msgstr "Recupera los artefactos de la nebulosa del campo de asteroides en {sys}"
+msgstr ""
+"Recupera los artefactos de la nebulosa del campo de asteroides en {sys}"
 
 #: dat/missions/minerva/maikki2.lua:810
 msgid ""
@@ -62313,9 +62318,9 @@ msgstr ""
 "\"Aunque no era una nave anterior al Incidente ni tenía características "
 "interesantes, lo que había dentro era sorprendente. Había dos cuerpos "
 "todavía calientes al tacto, parece que el tiempo pasa de forma diferente en "
-"una nebulosa tan profunda. Normalmente ignoraría tales cosas, sin embargo, ¡"
-"habían sido infundidos con tanta radiación de la nebulosa que parecían tener "
-"potencial!\"\n"
+"una nebulosa tan profunda. Normalmente ignoraría tales cosas, sin embargo, "
+"¡habían sido infundidos con tanta radiación de la nebulosa que parecían "
+"tener potencial!\"\n"
 "Empieza a emocionarse."
 
 #: dat/missions/minerva/maikki2.lua:851
@@ -63323,7 +63328,8 @@ msgstr "Coloca un dispositivo de escucha en el Spa."
 
 #: dat/missions/minerva/pirate3.lua:257
 msgid "You obtained the winning ticket to enter the Minerva Spa."
-msgstr "Has obtenido el billete ganador para entrar en el Balneario de Minerva."
+msgstr ""
+"Has obtenido el billete ganador para entrar en el Balneario de Minerva."
 
 #: dat/missions/minerva/pirate3.lua:263
 msgid ""
@@ -63425,8 +63431,8 @@ msgid ""
 "you? I have a family waiting for me back home."
 msgstr ""
 "Se ríe nerviosamente.\n"
-"\"Tienes que estar bromeando, ¿verdad? No me matarías a sangre fría, ¿"
-"verdad? Tengo una familia que me espera en casa."
+"\"Tienes que estar bromeando, ¿verdad? No me matarías a sangre fría, "
+"¿verdad? Tengo una familia que me espera en casa."
 
 #: dat/missions/minerva/pirate3.lua:431
 msgid "Aim your weapons at him"
@@ -64178,8 +64184,8 @@ msgid ""
 "more, and it seems like they were part of the scouts of an advanced hacking "
 "attack on Minerva Station.\""
 msgstr ""
-"\"Supongo que tienes muchas preguntas, pero lo primero es lo primero. ¿"
-"Recuerdas los sospechosos drones Za'lek? Bueno, hemos podido investigar un "
+"\"Supongo que tienes muchas preguntas, pero lo primero es lo primero. "
+"¿Recuerdas los sospechosos drones Za'lek? Bueno, hemos podido investigar un "
 "poco más, y parece que formaban parte de los exploradores de un ataque de "
 "hackeo avanzado en la Estación Minerva.\""
 
@@ -64201,8 +64207,8 @@ msgid ""
 "She smiles at you."
 msgstr ""
 "\"Resumiendo, necesitamos que destruyas su centro de hackeo cercano. Esta "
-"vez no podremos usar mucha fuerza bruta, tendrás que usar más delicadeza. ¿"
-"Nos ayudarás de nuevo?\"\n"
+"vez no podremos usar mucha fuerza bruta, tendrás que usar más delicadeza. "
+"¿Nos ayudarás de nuevo?\"\n"
 "Te sonríe."
 
 #: dat/missions/minerva/pirate5.lua:132
@@ -64562,8 +64568,8 @@ msgid ""
 "Thanks again!\""
 msgstr ""
 "\"¡Excelente! Mi suegro enviará a alguien a buscarte al puerto espacial para "
-"quitarte la caja de las manos, y se te pagará inmediatamente a la entrega. ¡"
-"Gracias de nuevo!\""
+"quitarte la caja de las manos, y se te pagará inmediatamente a la entrega. "
+"¡Gracias de nuevo!\""
 
 #: dat/missions/neutral/animaltransport.lua:77
 msgid ""
@@ -65235,8 +65241,8 @@ msgid ""
 "luck, we are counting on you!\""
 msgstr ""
 "\"¡Genial! Las naves de suministro saltarán desde {jumpsys}. Asegúrate de "
-"vigilarlas y de que todas lleguen sanas y salvas hasta aquí. Mucha suerte, ¡"
-"contamos contigo!\""
+"vigilarlas y de que todas lleguen sanas y salvas hasta aquí. Mucha suerte, "
+"¡contamos contigo!\""
 
 #: dat/missions/neutral/antlejos/ant05.lua:80
 msgid "Defend the supply ships coming to {pnt} from the PUAAA."
@@ -68081,11 +68087,11 @@ msgstr ""
 #. luacheck: globals do_msg do_msg2 got_boarded got_hailed idle sys_enter (Hook functions passed by name)
 #. randomly select spawn system and planet where brother will be
 #. Spaceport bar stuff
-#: dat/missions/neutral/kidnapped/traffic_01.lua:59
+#: dat/missions/neutral/kidnapped/traffic_01.lua:57
 msgid "Ordinary Woman"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:59
+#: dat/missions/neutral/kidnapped/traffic_01.lua:57
 msgid "The woman waves at you a bit desperately."
 msgstr ""
 
@@ -68094,49 +68100,49 @@ msgstr ""
 #. --
 #. Mission details:
 #. Some flavour text
-#: dat/missions/neutral/kidnapped/traffic_01.lua:68
-#: dat/missions/neutral/kidnapped/traffic_01.lua:92
+#: dat/missions/neutral/kidnapped/traffic_01.lua:66
+#: dat/missions/neutral/kidnapped/traffic_01.lua:94
 msgid "In the Bar"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:68
+#: dat/missions/neutral/kidnapped/traffic_01.lua:66
 msgid ""
 "\"I must find my dear brother! Please help me. I think he is in danger! I "
 "don't have a ship and he is the only family I have left. Could you please "
 "help me?\""
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:69
+#: dat/missions/neutral/kidnapped/traffic_01.lua:67
 msgid "Sorry, I can't"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:69
+#: dat/missions/neutral/kidnapped/traffic_01.lua:67
 msgid ""
 "\"How can you be such a heartless person? What has this universe become?...\""
 msgstr ""
 
 #. Some variables for keeping track of the mission
 #. Set mission details
-#: dat/missions/neutral/kidnapped/traffic_01.lua:81
-#: dat/missions/neutral/kidnapped/traffic_01.lua:85
-#: dat/missions/neutral/kidnapped/traffic_01.lua:142
+#: dat/missions/neutral/kidnapped/traffic_01.lua:79
+#: dat/missions/neutral/kidnapped/traffic_01.lua:83
+#: dat/missions/neutral/kidnapped/traffic_01.lua:143
 msgid "The Lost Brother"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:82
+#: dat/missions/neutral/kidnapped/traffic_01.lua:80
 msgid "Some money and a happy sister."
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:83
+#: dat/missions/neutral/kidnapped/traffic_01.lua:81
 msgid "Locate the brother in the {1} system, the {2} system, or the {3} system"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:87
-#: dat/missions/neutral/kidnapped/traffic_01.lua:144
+#: dat/missions/neutral/kidnapped/traffic_01.lua:85
+#: dat/missions/neutral/kidnapped/traffic_01.lua:145
 msgid "Hail the Poppy Seed and board it to reunite the siblings"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:92
+#: dat/missions/neutral/kidnapped/traffic_01.lua:94
 msgid ""
 "The woman calms down as you signal your willingness to help. \"Oh, thank "
 "goodness! I was told where he usually hangs around. Please take me there and "
@@ -68153,16 +68159,16 @@ msgstr ""
 #. Check to see if reaching target system
 #. we can break, we found what we were looking for
 #. if we visited a system without the brother: update OSD
-#: dat/missions/neutral/kidnapped/traffic_01.lua:138
+#: dat/missions/neutral/kidnapped/traffic_01.lua:139
 msgid "Locate the brother in the {1} system or the {2} system"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:140
+#: dat/missions/neutral/kidnapped/traffic_01.lua:141
 msgid "Locate the brother in the {1} system"
 msgstr ""
 
 #. update OSD
-#: dat/missions/neutral/kidnapped/traffic_01.lua:152
+#: dat/missions/neutral/kidnapped/traffic_01.lua:153
 msgid "Poppy Seed"
 msgstr ""
 
@@ -68171,11 +68177,11 @@ msgstr ""
 #. get point between jumpgate and broship to spawn mercenaries disencouraging him from following
 #. set spawn point between the broship and jumppoint
 #. if hailed: stop vessel let it be boarded
-#: dat/missions/neutral/kidnapped/traffic_01.lua:182
+#: dat/missions/neutral/kidnapped/traffic_01.lua:183
 msgid "Comm Channel"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:182
+#: dat/missions/neutral/kidnapped/traffic_01.lua:183
 msgid ""
 "You radio the ship with a message saying you have his sister on board and "
 "that she has a message for him.\n"
@@ -68184,11 +68190,11 @@ msgstr ""
 
 #. send ship to nearest jumppoint to escape, spawn baddies that might frighten you of from chasing
 #. get nearest jumppoints and let ship escape in this direction
-#: dat/missions/neutral/kidnapped/traffic_01.lua:199
+#: dat/missions/neutral/kidnapped/traffic_01.lua:200
 msgid "The Deception"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:199
+#: dat/missions/neutral/kidnapped/traffic_01.lua:200
 msgid ""
 "The woman stands next to you while the airlock opens. You see the grin on "
 "the man's face change to a baffled expression, then hear the sound of a "
@@ -68199,7 +68205,7 @@ msgid ""
 msgstr ""
 
 #. turn mercs hostile
-#: dat/missions/neutral/kidnapped/traffic_01.lua:207
+#: dat/missions/neutral/kidnapped/traffic_01.lua:208
 msgid ""
 "You were tricked into aiding an assassination. A woman claimed she needed "
 "help finding her brother, but when you brought her to her \"brother\", she "
@@ -68209,21 +68215,21 @@ msgstr ""
 
 #. idle
 #. delay for msgs because if no delay they will pop in mid transit from system to system. A wait function would be awesome...
-#: dat/missions/neutral/kidnapped/traffic_01.lua:219
+#: dat/missions/neutral/kidnapped/traffic_01.lua:220
 msgid "Wrong system"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:219
+#: dat/missions/neutral/kidnapped/traffic_01.lua:220
 msgid ""
 "\"I don't think he is here. He must be in one of the other systems. Please "
 "hurry!\""
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:222
+#: dat/missions/neutral/kidnapped/traffic_01.lua:223
 msgid "Right system"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:222
+#: dat/missions/neutral/kidnapped/traffic_01.lua:223
 msgid "\"I think this is it! We found him!\""
 msgstr ""
 
@@ -76347,7 +76353,7 @@ msgstr ""
 #. Death hook for ambushers.
 #. Load hook. Makes sure the player can't start on military stations.
 #: dat/missions/sirius/achack/achack02.lua:114
-#: dat/missions/sirius/achack/achack02.lua:252
+#: dat/missions/sirius/achack/achack02.lua:258
 msgid "Another stop successfully reached"
 msgstr ""
 
@@ -76485,24 +76491,26 @@ msgstr ""
 #. Not sure if we need a claim for this.
 #. This variable holds the system the player is supposed to jump to NEXT.
 #. Sets up the ambush ships and trigger area.
+#. TODO should probably redo how this is handled. It's not very robust if
+#. the player or whatever attacks them early
 #. Commences combat once Joanne is close to the ambushers.
-#: dat/missions/sirius/achack/achack02.lua:234
+#: dat/missions/sirius/achack/achack02.lua:240
 msgid "That's our target! Get her, boys!"
 msgstr ""
 
-#: dat/missions/sirius/achack/achack02.lua:262
+#: dat/missions/sirius/achack/achack02.lua:268
 msgid "Joanne has jumped for the {sys} system. Follow her!"
 msgstr ""
 
-#: dat/missions/sirius/achack/achack02.lua:267
+#: dat/missions/sirius/achack/achack02.lua:273
 msgid "Joanne has docked with {pnt}. Follow her!"
 msgstr ""
 
-#: dat/missions/sirius/achack/achack02.lua:271
+#: dat/missions/sirius/achack/achack02.lua:277
 msgid "Joanne's ship has been destroyed!"
 msgstr ""
 
-#: dat/missions/sirius/achack/achack02.lua:271
+#: dat/missions/sirius/achack/achack02.lua:277
 msgid ""
 "Joanne's assailants have succeeded in destroying her ship. Your mission is a "
 "failure!"
@@ -94881,12 +94889,12 @@ msgstr ""
 msgid "Event trying to claim but already has."
 msgstr ""
 
-#: src/nlua_faction.c:611
+#: src/nlua_faction.c:593
 #, c-format
-msgid "Faction '%s' already exists!"
+msgid "Trying to overwrite existing faction '%s' with dynamic faction!"
 msgstr ""
 
-#: src/nlua_faction.c:641 src/nlua_faction.c:666
+#: src/nlua_faction.c:647 src/nlua_faction.c:672
 msgid "Can only add allies to dynamic factions"
 msgstr ""
 
