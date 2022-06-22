@@ -2539,6 +2539,7 @@ dat/missions/neutral/poi.lua
 dat/missions/neutral/poi/nebula_crystals.lua
 dat/missions/neutral/poi/proteron_agent.lua
 dat/missions/neutral/poi/zalek_drone.lua
+dat/missions/neutral/poi_intro.lua
 dat/missions/neutral/race1.lua
 dat/missions/neutral/race2.lua
 dat/missions/neutral/reynir.lua
