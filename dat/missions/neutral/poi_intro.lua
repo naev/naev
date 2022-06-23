@@ -118,22 +118,22 @@ function create ()
 
    if accept then
       der.addMiscLog(fmt.f(_([[You found information on a point of interest aboard a derelict in the {sys} system.]]),{sys=system.cur()}))
-      misn.accept()
    else
       der.addMiscLog(_([[You found information about a point of interest aboard a derelict, but decided not to download it.]]))
       misn.finish(false)
       return
    end
 
+   mem.state = 0
+   mem.locked = true
+
+   -- Mission gets accepted in misnSetup
+   poi.misnSetup{ sys=mem.sys, found="found", risk=mem.risk }
+
    misn.osdCreate( _("Point of Interest"), {
       _("Improve your ship's systems"),
       _("Head to the marked location"),
    } )
-
-   mem.state = 0
-   mem.locked = true
-
-   poi.misnSetup{ sys=mem.sys, found="found", risk=mem.risk }
 
    hook.enter( "enter" )
    hook.land( "land" )
@@ -260,8 +260,8 @@ function enter ()
    pilot.clear()
    pilot.toggleSpawn( false )
 
-   fct_nelly = faction.dynAdd( nil, _("Nelly") )
-   fct_nemesis = faction.dynAdd( nil, _("Nemesis") )
+   fct_nelly = faction.dynAdd( "Independent", _("Nelly") )
+   fct_nemesis = faction.dynAdd( "Independent", _("Nemesis") )
    fct_nelly:dynEnemy( fct_nemesis )
 
    local shipname
@@ -272,9 +272,19 @@ function enter ()
    end
 
    -- Spawn ship
-   local jumpin = vec2.new()
-   nelly = pilot.add( "Llama", fct_nelly, shipname, jumpin )
+   local jumpin, jdist
+   jdist = math.huge -- Get closest jump to player, should be robust to player.teleport
+   for k,v in ipairs(system.cur():jumps()) do
+      local d = v:pos():dist( player.pos() )
+      if d < jdist then
+         jumpin = v
+         jdist = d
+      end
+   end
+   nelly = pilot.add( "Llama", fct_nelly, jumpin, shipname )
    nelly:setInvincible(true)
+   nelly:setHilight(true)
+   nelly:setVisplayer(true)
 
    cutscene = 1
    hook.timer( 5, "enter_delay" )
@@ -301,7 +311,7 @@ function heartbeat ()
 
    elseif cutscene == 2 then
       if nelly:pos():dist( player.pos() ) < 1000 then
-         nemesis = pilot.add( "Ancestor", fct_nemesis, _("Nemesis"), pos + vec2.new( 5000, rnd.angle() ) )
+         nemesis = pilot.add( "Ancestor", fct_nemesis, pos + vec2.new( 5000, rnd.angle() ), _("Nemesis") )
          nelly:broadcast(_("Wait? We were followed?"))
          cutscene = 3
          broadcasted = 0
@@ -310,6 +320,8 @@ function heartbeat ()
          misn.osdCreate( _("Point of Interest"), {
             _("Eliminate the hostiles"),
          } )
+         nelly:setHilight(false)
+         nemesis:setHilight(true)
          return
       else
          broadcasted = (broadcasted or 0) - 1
