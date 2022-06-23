@@ -71,7 +71,8 @@ function create ()
 
    vn.na(fmt.f(_([[As the ship's operating system is starting, {shipai} materializes in front of you.]]),{shipai=tut.ainame()}))
    if not var.peek( "poi_sai_intro" ) then
-      sai(_([["While you were exploring I managed to bootstrap the ship's systems. No, nothing bad could have happened. I estimated under 10% chance of triggering the system's security mechasim and blowing up the ship. Oh…"]]))
+      -- Worded to be a bit like the explosion messages in EVC
+      sai(_([["While you were exploring I managed to bootstrap the ship's systems. No, nothing bad could have happened. I estimated under 10% chance of triggering the ship's security self-destruct mechasim and blowing up the ship. Oh…"]]))
       sai(_([["Anyway, it seems like my work paid off, there seems to be some data marking a point of interest. Should I download the data so that we can explore it?"]]))
       vn.func( function ()
          var.push( "poi_sai_intro", true )
