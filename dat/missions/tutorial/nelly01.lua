@@ -170,9 +170,8 @@ function accept ()
 
       vn.label("novice_no")
       nel(_([["Weird. I could have sworn you had some sort of new pilot aura around you. Must have been my imagination. Let's get going!"]]))
-
-      vn.done( tutnel.nelly.transition )
    end
+   vn.done( tutnel.nelly.transition )
    vn.run()
 
    -- Check to see if truly accepted
