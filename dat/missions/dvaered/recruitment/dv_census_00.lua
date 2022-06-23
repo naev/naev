@@ -44,9 +44,9 @@ function create ()
    mem.nbships, mem.credits = cens.calculateNb( mem.sys, {faction.get("Dvaered")} )
 
    if player.misnDone( 'Helping Nelly Out 1' ) then
-      misn.setNPC( tutnel.nelly.name, tutnel.nelly.portrait, _("Nelly has noticed you. Wait? Is she trying to have a sausage infuse in her Vodka?") )
+      misn.setNPC( tutnel.nelly.name, tutnel.nelly.portrait, _("Nelly has noticed you. Wait? Is she trying to infuse a sausage in her Vodka?") )
    else
-      misn.setNPC( _("Pilot"), tutnel.nelly.portrait, _("Wait? Is this woman trying to have a sausage infuse in her Vodka?") )
+      misn.setNPC( _("Pilot"), tutnel.nelly.portrait, _("Wait? Is this woman trying to infuse a sausage in her Vodka?") )
    end
 end
 
@@ -167,7 +167,7 @@ function approach_nelly()
 
    local dvaered = {_("How did you end up in Dvaered Space?"), "nelly_story"}
    local warlord = {_("Isn't it a bit odd, how the Dvaered society works, with those Warlords?"), "warlords"}
-   local sausage = {_("Suggest Nelly to prick the sausage with a fork to make it infuse quicker"), "sausage"}
+   local sausage = {_("Suggest Nelly to prick the sausage with a fork to infuse it quicker"), "sausage"}
    local leave   = {_("Leave Nelly"), "leave"}
 
    vn.label("details")
