@@ -362,11 +362,12 @@ function heartbeat ()
 
    elseif cutscene == 6 then
       luaspfx.pulse( nelly:pos(), nelly:vel() )
+      naev.trigger( "poi_scan" )
       hook.timer( 5, "heartbeat" )
       cutscene = 7
       return
 
-   elseif cutscene == 6 then
+   elseif cutscene == 7 then
       nelly:broadcast(_("My engine stopped, you go on ahead!"))
       misn.osdCreate( _("Point of Interest"), {
          _("Follow the trail"),
@@ -429,7 +430,7 @@ function board( p )
    nel(_([["Don't just stand there! Take a look around"]]))
    vn.na(_([[You attempt to go through the airlock when an authorization prompt opens up. Looking at the make of the ship, it seems heavily reinforced. It looks like you're going to have to break the code to gain complete access to the ship.]]))
 
-   local sai = tut.vn_shipa{ pos="right" }
+   local sai = tut.vn_shipai{ pos="right" }
    vn.appear( sai, "electric" )
    local fuzzy = "#o?#0"
    local exact = "#b!#0"
