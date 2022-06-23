@@ -118,6 +118,7 @@ function create ()
 
    if accept then
       der.addMiscLog(fmt.f(_([[You found information on a point of interest aboard a derelict in the {sys} system.]]),{sys=system.cur()}))
+      misn.accept()
    else
       der.addMiscLog(_([[You found information about a point of interest aboard a derelict, but decided not to download it.]]))
       misn.finish(false)
