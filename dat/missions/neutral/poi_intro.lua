@@ -285,6 +285,7 @@ function enter ()
    nelly:setInvincible(true)
    nelly:setHilight(true)
    nelly:setVisplayer(true)
+   nelly:setFriendly(true)
 
    cutscene = 1
    hook.timer( 5, "enter_delay" )
@@ -447,7 +448,7 @@ They turn quickly to you.
 "Remember, {exact} for exact matches and {fuzzy} for correct symbol but not position. Best of luck!"
 They dematerialize in a hurry.]]),
       {player=player.name(), exact=exact, fuzzy=fuzzy}))
-   vn.disable( sai, "electric" )
+   vn.disappear( sai, "electric" )
    nel(_([[Thinking deeply to herself she murmurs "I definitely know them…".]]))
    nel(_([[She turns again to you.
 "Try to crack the password, we need to see what's on the ship!"]]))
