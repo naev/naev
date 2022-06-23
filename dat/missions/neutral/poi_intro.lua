@@ -29,7 +29,7 @@ local lmisn = require "lmisn"
 local pilotai = require "pilotai"
 local love_shaders = require "love_shaders"
 
--- luacheck: globals land approach_nelly enter enter_delay heartbeat nemesis_dead found board board_nelly (Hook functions passed by name)
+-- luacheck: globals delay_abort land approach_nelly enter enter_delay heartbeat nemesis_dead found board board_nelly (Hook functions passed by name)
 
 --[[
 States
@@ -120,7 +120,10 @@ function create ()
       der.addMiscLog(fmt.f(_([[You found information on a point of interest aboard a derelict in the {sys} system.]]),{sys=system.cur()}))
    else
       der.addMiscLog(_([[You found information about a point of interest aboard a derelict, but decided not to download it.]]))
-      misn.finish(false)
+
+      -- We want to delay aborting the mission a frame so that the derelict
+      -- event thinks it's running fine
+      hook.safe( "delay_abort" )
       return
    end
 
@@ -138,6 +141,10 @@ function create ()
    hook.enter( "enter" )
    hook.land( "land" )
    hook.load( "land" )
+end
+
+function delay_abort ()
+   misn.finish(false)
 end
 
 local npc_nel
