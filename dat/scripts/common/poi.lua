@@ -138,7 +138,7 @@ end
 function _poi_heartbeat_nooutfit ()
    if player.pos():dist( pos ) < 3e3 then
       -- TODO ship AI message
-      player.msg(_("You lack an outtfit no scan the point of interest."),true)
+      player.msg(_("You lack an outfit no scan the point of interest."),true)
       return
    end
    timer = hook.timer( 1, "_poi_heartbeat_nooutfit" )
@@ -206,7 +206,7 @@ function poi.misnSetup( params )
    misn.accept()
    misn.setTitle(_("Point of Interest")) -- TODO maybe randomize somewhat?
    misn.setReward(_("Unknown")) -- TODO give some hint?
-   misn.setDesc(fmt.f(_([[A point of interest has been found in the {sys} system. It is not clear what can be foound, however, it warrants investigation. You should bring an outfit that can perform scans such as a #bPulse Scanner#0.
+   misn.setDesc(fmt.f(_([[A point of interest has been found in the {sys} system. It is not clear what can be found, however, it warrants investigation. You should bring an outfit that can perform scans such as a #bPulse Scanner#0.
 
 #nEstimated Risk:#0 {risk}
 #nEstimated Reward:#0 {reward}]]),
