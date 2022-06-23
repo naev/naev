@@ -134,8 +134,10 @@ function create ()
 
    hook.enter( "enter" )
    hook.land( "land" )
+   hook.load( "land" )
 end
 
+local npc_nel
 function land ()
    local spb = spob.cur()
    local f = spb:faction()
@@ -143,16 +145,100 @@ function land ()
       return
    end
 
+   if mem.state > 0 then return end
+
    local desc
    if var.peek("nelly_met") then
-      desc = _("Nelly is motioning you to come join her at the table.")
+      desc = _("Nelly looks bored out of her mind. Wait, is she trying to bend a spoon with her mind?")
    else
-      desc = _("")
+      desc = _("You see a bored individual doing something weird with a spoon.")
    end
-   mem.npc_nel = misn.npcAdd( "approach_nelly", tutnel.nelly.name, tutnel.nelly.portrait, desc )
+   npc_nel = misn.npcAdd( "approach_nelly", tutnel.nelly.name, tutnel.nelly.portrait, desc )
 end
 
 function approach_nelly ()
+   vn.clear()
+   vn.scene()
+   local nel = vn.newCharacter( tutnel.vn_nelly() )
+   vn.transition( tutnel.nelly.transition )
+
+   if var.peek("nelly_met") then
+      vn.na(_([[You find Nelly gripping and staring intently at a spoon. It's almost as if she is trying to bend it with her mind.]]))
+      vn.menu{
+         {_([["Hello"]]), "cont01" },
+         {_([["What are you doing?"]]), "cont01" },
+         {_([["Nice spoon"]]), "cont01" },
+      }
+
+      vn.label("cont01")
+      nel(_([[She doesn't seem to react, too concentrated on her task. You lightly tap her on the shoulder and she bounces out of her chair, dropping her spoon.
+"Spoonelius!"
+She grabs the fallen spoon and then lifts it up in triumph.
+"I did it! I bent the spoon with my mind!"]]))
+   else
+      vn.na(_([[You get close to the individual and stare at them. They seem so intent on their task that they don't realize you are there. Eventually, they seem to nod off and fall off their chair dropping their spoon. This jolts her out of her slumber.
+"Spoonelius!"
+She grabs the fallen spoon and then lifts it up in triumph.
+"I did it! I bent the spoon with my mind!"]]))
+   end
+
+   vn.menu{
+      {_([["I'm pretty sure it bent when you dropped it"]]), "bent"},
+      {_([[…]]), "silence"},
+   }
+
+   vn.label("bent")
+   nel(_([[She poses triumphantly with her spoon.
+"What? That's impossible. This has to be the result of all my hard training. I've spent 30 minutes on this! Great House Sirius has nothing on me!"]]))
+   vn.jump("cont02")
+
+   vn.label("silence")
+   nel(_([[She poses triumphantly with her spoon.
+"Impressive right! I heard that many people in Great House Sirius can do this and thought, it can't be too hard can it?"]]))
+   vn.jump("cont02")
+
+   vn.label("cont02")
+   if var.peek("nelly_met") then
+      nel(_([["How's it like being humbled by my mental powers!"
+She cackles maniacally.]]))
+   else
+      nel(_([["How's it like being humbled by my mental powers!"
+She cackles maniacally.
+"Nice to meet you! My name is Nelly!"]]))
+      vn.func( function ()
+         vn.push( "nelly_met", true )
+      end )
+   end
+
+   nel(_([["I've been bored out of my mind since my delivery contract was terminated. They said my last delivery of luxury goods stank of fish and was useless.  I can't help that drying fish in the cargo hold is one of my family traditions since last cycle!"]]))
+   nel(_([["You wouldn't have anything interesting I could help with? I would love an adventure!"]]))
+
+   vn.menu{
+      {_([[Tell her about the point of interest]]), "poi"},
+      {_([[Leave]]), "leave"},
+   }
+
+   vn.label("poi")
+   nel(fmt.f(_([[Her eyes light up and twinkle like the endless stars in space.
+"That sounds… AWESOME. I'm totally in! I actually have been saving my {outfit} for a chance like this!"]]),
+      {outfit="#b".._("Pulse Scanner").."#0"}))
+   nel(fmt.f(_([["The location sounds like the {sys} system. I have to do some tweaks on my ship, but I'll meet you there. My ship is leaner and meaner since my radiators caught fire and I threw them out. I'll surely get there before you!"]]),
+      {sys=mem.sys}))
+   vn.na(_([[You're not sure if that was the best idea, but it does seem like she may be able to help this time around.]]))
+   vn.func( function ()
+      mem.state = 1
+      misn.osdCreate( _("Point of Interest"), {
+         fmt.f(_("Meet Nelly at {sys}"),{sys=mem.sys}),
+         _("Head to the point of interest"),
+      } )
+      misn.npcRm( npc_nel )
+   end )
+   vn.done( tutnel.nelly.transition )
+
+   vn.label("leave")
+   vn.na(_([[You take your leave. It may be best not to get involved with Nelly right now.]]))
+   vn.done( tutnel.nelly.transition )
+   vn.run()
 end
 
 local nelly
@@ -176,7 +262,7 @@ function enter ()
    nelly = pilot.add( "Llama", "Independent", shipname, jumpin )
    nelly:setInvincPlayer(true)
 
-   hook.timer( 1, "enter_delay" )
+   hook.timer( 5, "enter_delay" )
 end
 
 local pos
@@ -185,12 +271,13 @@ function enter_delay ()
 
    nelly:control()
    nelly:moveto( pos )
+
+   nelly:broadcast(_("There it is! Let's head towards the point of interest!"))
 end
 
 function found ()
    player.msg(_("You have found something!"),true)
 
-   -- TODO something more interesting
    local p = pilot.add( "Mule", "Derelict", mem.goal, _("Pristine Derelict"), {naked=true} )
    p:disable()
    p:setInvincible()
