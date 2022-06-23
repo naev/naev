@@ -524,7 +524,7 @@ She rubs the cheese to her face.]]))
    nelly:setHilight(false)
    nelly:control(false)
 
-   pilot:toggleSpawn(true) -- Re-enable spawns
+   pilot.toggleSpawn(true) -- Re-enable spawns
    player.unboard()
 
    misn.finish(true) -- We're done here!
