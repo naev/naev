@@ -350,6 +350,7 @@ function heartbeat ()
             _("Get rid of them!"),
             _("Aaaaaaah!"),
          }
+         player.autonavReset( 5 )
          nelly:broadcast( strlist[ rnd.rnd(1,#strlist) ] )
          broadcasted = 15
       end
@@ -446,6 +447,7 @@ They turn quickly to you.
 "Remember, {exact} for exact matches and {fuzzy} for correct symbol but not position. Best of luck!"
 They dematerialize in a hurry.]]),
       {player=player.name(), exact=exact, fuzzy=fuzzy}))
+   vn.disable( sai, "electric" )
    nel(_([[Thinking deeply to herself she murmurs "I definitely know them…".]]))
    nel(_([[She turns again to you.
 "Try to crack the password, we need to see what's on the ship!"]]))
