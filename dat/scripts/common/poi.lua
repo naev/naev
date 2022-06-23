@@ -32,7 +32,7 @@ function poi.generate( force )
       -- Want no inhabited spobs
       for k,p in ipairs(sys:spobs()) do
          local s = p:services()
-         if s.land and s.inhabitable then
+         if s.land and s.inhabited then
             return false
          end
       end
