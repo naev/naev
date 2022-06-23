@@ -57,6 +57,7 @@ function create ()
          value = (100e3 + 100e3*rnd.rnd()) * (mem.rewardrisk*0.5+1),
       },
    }
+   --[=[
    local function add_unique_reward( oname, msg )
       if player.numOutfit( oname ) <= 0 then
          table.insert( reward_list, {
@@ -67,6 +68,7 @@ function create ()
       end
    end
    add_unique_reward( "Daphne's Leap", _([[You explore the ship, and while most things seem like they aren't of any use to you, one thing catches your eye. It seems like there is a weird module attached to the navigation console. Upon closer inspection it seems like it overrides some core jump behaviour of the ships. You don't know if it will be of use to you, but pocket it just in case.]]) )
+   --]=]
 
    -- Parse directory to add potential rewards
    for k,v in ipairs(lf.enumerate("missions/neutral/poi")) do
