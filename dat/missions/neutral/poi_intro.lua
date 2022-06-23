@@ -18,8 +18,7 @@
 
 --]]
 local fmt = require "format"
---local luaspfx = require "luaspfx"
---local tut = require "common.tutorial"
+local luaspfx = require "luaspfx"
 local der = require 'common.derelict'
 local poi = require "common.poi"
 local tut = require "common.tut"
@@ -27,13 +26,16 @@ local tutnel= require "common.tut_nelly"
 local pir = require "common.pirate"
 local vn = require "vn"
 local lmisn = require "lmisn"
+local pilotai = require "pilotai"
+local love_shaders = require "love_shaders"
 
--- luacheck: globals land approach_nelly enter enter_delay found board (Hook functions passed by name)
+-- luacheck: globals land approach_nelly enter enter_delay heartbeat nemesis_dead found board board_nelly (Hook functions passed by name)
 
 --[[
 States
    0: Mission start, POI is marked
    1: Land and Nelly appears
+   2: Fought off pirate
 --]]
 
 function create ()
@@ -124,7 +126,7 @@ function create ()
 
    misn.osdCreate( _("Point of Interest"), {
       _("Improve your ship's systems"),
-      _("Head to the location marked on your map"),
+      _("Head to the marked location"),
    } )
 
    mem.state = 0
@@ -241,14 +243,20 @@ She cackles maniacally.
    vn.run()
 end
 
-local nelly
+local nelly, fct_nelly, fct_nemesis, cutscene
 function enter ()
-   if system.cur() ~= mem.sys then
+   if system.cur() ~= mem.sys or mem.state < 1 then
       return
    end
 
+   misn.osdActive( 2 )
+
    pilot.clear()
    pilot.toggleSpawn( false )
+
+   fct_nelly = faction.dynAdd( nil, _("Nelly") )
+   fct_nemesis = faction.dynAdd( nil, _("Nemesis") )
+   fct_nelly:dynEnemy( fct_nemesis )
 
    local shipname
    if player.misnDone( "Helping Nelly Out 2" ) then
@@ -259,9 +267,10 @@ function enter ()
 
    -- Spawn ship
    local jumpin = vec2.new()
-   nelly = pilot.add( "Llama", "Independent", shipname, jumpin )
-   nelly:setInvincPlayer(true)
+   nelly = pilot.add( "Llama", fct_nelly, shipname, jumpin )
+   nelly:setInvincible(true)
 
+   cutscene = 1
    hook.timer( 5, "enter_delay" )
 end
 
@@ -273,10 +282,93 @@ function enter_delay ()
    nelly:moveto( pos )
 
    nelly:broadcast(_("There it is! Let's head towards the point of interest!"))
+
+   hook.timer( 1, "heartbeat" )
+end
+
+local nemesis, broadcasted
+function heartbeat ()
+   if cutscene == 1 and pos:dist( nelly:pos() ) < 1000 then
+      nelly:taskClear()
+      nelly:brake()
+      cutscene = 2
+
+   elseif cutscene == 2 then
+      if nelly:pos():dist( player.pos() ) < 1000 then
+         nemesis = pilot.add( "Ancestor", fct_nemesis, _("Nemesis"), pos + vec2.new( 5000, rnd.angle() ) )
+         nelly:broadcast(_("Wait? We were followed?"))
+         cutscene = 3
+         broadcasted = 0
+         hook.timer( 5, "heartbeat" )
+
+         misn.osdCreate( _("Point of Interest"), {
+            _("Eliminate the hostiles"),
+         } )
+         return
+      else
+         broadcasted = (broadcasted or 0) - 1
+         if broadcasted < 0 then
+            nelly:broadcast(_("Come over here!"))
+            broadcasted = 15
+         end
+      end
+
+   elseif cutscene == 3 then
+      if nemesis:exists() then
+         nemesis:setHostile()
+         nemesis:broadcast(_("You're as good as fried chicken!"))
+         pilotai.guard( nemesis, pos )
+         hook.pilot( nemesis, "death", "nemesis_dead" )
+         cutscene = 4
+         broadcasted = 5
+      else
+         cutscene = 5
+      end
+   elseif cutscene == 4 then
+      broadcasted = broadcasted - 1
+      if broadcasted < 0 then
+         local strlist = {
+            _("Save me!"),
+            _("Get rid of them!"),
+            _("Aaaaaaah!"),
+         }
+         nelly:broadcast( strlist[ rnd.rnd(1,#strlist) ] )
+         broadcasted = 15
+      end
+
+   elseif cutscene == 5 then
+      nelly:broadcast(_("Phew! Let me activate my pulse scanner!"))
+      hook.timer( 5, "heartbeat" )
+      cutscene = 6
+      return
+
+   elseif cutscene == 6 then
+      luaspfx.pulse( nelly:pos(), nelly:vel() )
+      hook.timer( 5, "heartbeat" )
+      cutscene = 7
+      return
+
+   elseif cutscene == 6 then
+      nelly:broadcast(_("My engine stopped, you go on ahead!"))
+      misn.osdCreate( _("Point of Interest"), {
+         _("Follow the trail"),
+      } )
+      return -- Done
+   end
+
+   hook.timer( 1, "heartbeat" )
+end
+
+function nemesis_dead ()
+   cutscene = 5
 end
 
 function found ()
    player.msg(_("You have found something!"),true)
+
+   misn.osdCreate( _("Point of Interest"), {
+      _("Board the derelict"),
+   } )
 
    local p = pilot.add( "Mule", "Derelict", mem.goal, _("Pristine Derelict"), {naked=true} )
    p:disable()
@@ -295,52 +387,87 @@ function board( p )
    vn.music( der.sfx.ambient )
    vn.transition()
 
-   -- Have to resolve lock or bad thing happens (tm)
-   if mem.locked then
-      local stringguess = require "minigames.stringguess"
-      vn.na(_([[You board the ship and enter the airlock. When you attempt to enter, an authorization prompt opens up. Looking at the make of the ship, it seems heavily reinforced. It looks like you're going to have to break the code to gain complete access to the ship.]]))
-      stringguess.vn()
-      vn.func( function ()
-         if stringguess.completed then
-            vn.jump("unlocked")
-            return
-         end
-         vn.jump("unlock_failed")
-      end )
+   local nel = tutnel.vn_nelly{ shader=love_shaders.hologram(), pos="left" }
 
-      vn.label("unlocked")
-      vn.na(_([[You deftly crack the code and the screen flashes with '#gAUTHORIZATION GRANTED#0'. Time to see what goodness awaits you!]]))
-      vn.jump("reward")
+   vn.appear( nel, "electric" )
+   nel(_([[You board the ship and immediately Nelly establishes a holo-link connection. She seems to be covered in ship grease.
+"Whoa! This looks much fancier than I expected!"]]))
 
-      vn.label("unlock_failed")
-      vn.na(_([["A brief '#rAUTHORIZATION DENIED#0' flashes on the screen and you hear the ship internals groan as the emergency security protocol kicks in and everything gets locked down. It looks like you won't be getting anywhere hre, the ship is as good as debris. You have no option but to return dejectedly to your ship. Maybe next time."]]))
-      vn.func( function () failed = true end )
-      vn.done()
-   else
-      vn.na(_([[You board the derelict which seems oddly in pretty good condition. Furthermore, it seems like there is no access lock in place. What a lucky find!]]))
-   end
+   vn.menu{
+      {_([["Why so greasy?"]]), "grease"},
+      {_([["Is this it?"]]), "it" },
+      {_([[…]]), "cont01" },
+   }
 
-   vn.label("reward")
-   if mem.reward.type == "credits" then
-      local msg = _([[You access the main computer and are able to login to find a hefty amount of credits. This will come in handy.]])
-      msg = msg .. "\n\n" .. fmt.reward(mem.reward.value)
-      vn.na( msg )
-      vn.func( function ()
-         player.pay( mem.reward.value )
-      end )
-   elseif mem.reward.type == "outfit" then
-      local msg = mem.reward.msg or _([[Exploring the cargo bay, you find something that might be of use to you.]])
-      msg = msg .. "\n\n" .. fmt.reward(mem.reward.value)
-      vn.na( msg )
-      vn.func( function ()
-         player.outfitAdd( mem.reward.value )
-      end )
-   elseif mem.reward.type == "function" then
-      local rwd = require( mem.reward.requirename )( mem )
-      rwd.func()
-   end
+   vn.label("grease")
+   nel(_([["When we got attacked by that scary ship, I slipped and accidentally pulled down my fish drying rack. The fish flew over all the ship and one got caught in my reactor because I forgot to close the maintenance panel. I managed to put out the fire, but the fish got lodged in the cooling tube. I had to grease myself up to slide in there and reach it, however, it's still a work in progress."]]))
+   vn.menu{
+      {_([[…]]), "cont01" },
+   }
+
+   vn.label("it")
+   nel(_([["It sure looks like it! It's my first time seeing such a pretty derelict."]]))
+   vn.jump("cont01")
+
+   vn.label("cont01")
+   nel(_([["Don't just stand there! Take a look around"]]))
+   vn.na(_([[You attempt to go through the airlock when an authorization prompt opens up. Looking at the make of the ship, it seems heavily reinforced. It looks like you're going to have to break the code to gain complete access to the ship.]]))
+
+   local sai = tut.vn_shipa{ pos="right" }
+   vn.appear( sai, "electric" )
+   local fuzzy = "#o?#0"
+   local exact = "#b!#0"
+   sai(_([[Your ship AI materializes in front of you.
+"This looks like a standard security mechanism. You will need to crack it to access the ship."]]))
+   sai(fmt.f(_([["You have to guess the combination of symbols to open the password. This lock should have only {num} symbols. After each attempt, you will know how many symbols match exactly with {exact}. If a symbol is in the password, but is not in the correct position you will be shown {fuzzy}. You have to use the clues to attempt to match the true password."]]),
+      {num=3, fuzzy=fuzzy, exact=exact}))
+   nel(fmt.f(_([[She squints looking at {shipai}'s holographic projection.
+"Say, do I know you?"]]),
+      {shipai=tut.ainame()}))
+   sai(fmt.f(_([["It is not possible that we have met. For I am {player}'s ship AI."
+They turn quickly to you.
+"Remember, {exact} for exact matches and {fuzzy} for correct symbol but not position. Best of luck!"
+They dematerialize in a hurry.]]),
+      {player=player.name(), exact=exact, fuzzy=fuzzy}))
+   nel(_([[Thinking deeply to herself she murmurs "I definitely know them…".]]))
+   nel(_([[She turns again to you.
+"Try to crack the password, we need to see what's on the ship!"]]))
+
+   vn.label("trycrack")
+   local stringguess = require "minigames.stringguess"
+   stringguess.vn()
+   vn.func( function ()
+      if stringguess.completed then
+         vn.jump("unlocked")
+         return
+      end
+      vn.jump("unlock_failed")
+   end )
+
+   vn.label("unlock_failed")
+   vn.na(_([[A brief '#rAUTHORIZATION DENIED#0' flashes on the screen and you hear the ship internals groan as the emergency security protocol kicks in and everything starts to get locked down. However, it seems to jam and stops halfway. Then the authorization prompt reappears. Looks like you get another chance!]]))
+   vn.jump("trycrack")
+
+   vn.label("unlocked")
+   vn.na(_([[You deftly crack the code and the screen flashes with '#gAUTHORIZATION GRANTED#0'. Time to see what goodness awaits you!]]))
+   nel(_([[She seems to be banging on her reactor while talking to you.
+"That was great! Go ahead!"]]))
+   vn.na(_([[You proceed to enter and explore the interior of the derelict. Although there is a distinct lack of living life aboard, everything seems to be in pretty good condition. Eventually you reach the cargo hold and find a lone crate marked "cheese".]]))
+   nel(_([[Even though she is apparently squeezing her greasy self through her reactor, her eyes light up the moment she sees the crate.
+"Whoa! Is that what I think it is? Could you bring the crate over to my ship? I need to see that right away!"]]))
+   vn.na(_([[You explore the rest of the ship but do not find anything else of interest. Although the ship is in very good condition, it is still not space-worthy, and there is not anything that you can do with it. You take the crate of cheese and leave the ship behind.]]))
    vn.sfxVictory()
-   vn.na(_([[You explore the rest of the ship but do not find anything else of interest. Although the ship is in very good condition, it is still not space-worthy, and there is not anything that you can do with it. You let it rest among the stars.]]))
+   vn.func( function ()
+      local c = commodity.new( N_("Cheese"), N_("A crate marked cheese. It is quite small and very, very smelly.") )
+      misn.cargoAdd( c, 0 )
+      nelly:setActiveBoard(true)
+      nelly:setHilight()
+      hook.pilot( nelly, "board", "board_nelly" )
+
+      misn.osdCreate( _("Point of Interest"), {
+         _("Board Nelly's ship"),
+      } )
+   end )
    vn.sfx( der.sfx.unboard )
    vn.run()
 
@@ -348,5 +475,7 @@ function board( p )
    poi.misnDone( failed )
    p:setHilight(false)
    player.unboard()
-   misn.finish( not failed )
+end
+
+function board_nelly ()
 end
