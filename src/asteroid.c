@@ -352,7 +352,7 @@ static int asteroid_init( Asteroid *ast, const AsteroidAnchor *field )
 
    /* Randomly init the gfx ID */
    ast->type = at;
-   ast->gfx = asteroid_gfx[ RNG(0, array_size(at->gfxs)-1) ];
+   ast->gfx = at->gfxs[ RNG(0, array_size(at->gfxs)-1) ];
    ast->armour = at->armour_min + RNGF() * (at->armour_max-at->armour_min);
 
    /* And a random velocity */
