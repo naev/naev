@@ -851,12 +851,13 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
    } else {
       if (widget_exists( wid, MAPSYS_OUTFITS )) {
          window_destroyWidget( wid, MAPSYS_OUTFITS );
-         array_free( cur_spob_sel_outfits );
-         cur_spob_sel_outfits = NULL;
       }
-      assert(cur_spob_sel_outfits == NULL);
    }
    spobDone = cur_spobObj_sel;
+
+   /* Clean up array if exists. */
+   array_free( cur_spob_sel_outfits );
+   cur_spob_sel_outfits = NULL;
 
    /* set up the outfits to buy/sell */
    if (cur_spobObj_sel == NULL)
