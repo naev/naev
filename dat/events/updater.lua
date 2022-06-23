@@ -17,6 +17,11 @@ local fmt = require 'format'
 local function updater0100 ()
    -- TODO move ship AI explanation here and deal with both saves older than 0.9.0 and 0.10.0
 
+   -- "nelly_met" variable wasn't used in older versions
+   if player.misnDone("Helping Nelly Out 1") then
+      var.push( "nelly_met", true )
+   end
+
    --[[
    Important new features we should probably introduce:
    1. Notes in the star map
@@ -127,9 +132,9 @@ function create ()
    if not save_version or naev.versionTest( save_version, "0.9.0" ) < 0 then
       updater090()
    end
-   if naev.versionTest( save_version, "0.10.0" ) < 0 then
+   --if naev.versionTest( save_version, "0.10.0" ) < 0 then
       updater0100()
-   end
+   --end
 
    -- Done
    evt.finish()
