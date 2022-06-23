@@ -825,7 +825,7 @@ static int pilotL_clear( lua_State *L )
 static int pilotL_toggleSpawn( lua_State *L )
 {
    /* Setting it directly. */
-   if (lua_gettop(L) > 0) {
+   if (!lua_isnoneornil(L,1)) {
       if (lua_isfaction(L,1) || lua_isstring(L,1)) {
          int f = luaL_validfaction(L,1);
          int b = !lua_toboolean(L,2);
