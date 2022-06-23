@@ -245,6 +245,11 @@ end
 
 local nelly, fct_nelly, fct_nemesis, cutscene
 function enter ()
+   if cutscene then
+      lmisn.fail(_("You abandoned the point of interest and Nelly!"))
+      return
+   end
+
    if system.cur() ~= mem.sys or mem.state < 1 then
       return
    end
@@ -379,8 +384,6 @@ function found ()
 end
 
 function board( p )
-   local failed = false
-
    vn.clear()
    vn.scene()
    vn.sfx( der.sfx.board )
@@ -456,7 +459,6 @@ They dematerialize in a hurry.]]),
    nel(_([[Even though she is apparently squeezing her greasy self through her reactor, her eyes light up the moment she sees the crate.
 "Whoa! Is that what I think it is? Could you bring the crate over to my ship? I need to see that right away!"]]))
    vn.na(_([[You explore the rest of the ship but do not find anything else of interest. Although the ship is in very good condition, it is still not space-worthy, and there is not anything that you can do with it. You take the crate of cheese and leave the ship behind.]]))
-   vn.sfxVictory()
    vn.func( function ()
       local c = commodity.new( N_("Cheese"), N_("A crate marked cheese. It is quite small and very, very smelly.") )
       misn.cargoAdd( c, 0 )
@@ -472,10 +474,42 @@ They dematerialize in a hurry.]]),
    vn.run()
 
    -- Clean up stuff
-   poi.misnDone( failed )
+   poi.misnDone( false ) -- Can't fail
    p:setHilight(false)
    player.unboard()
 end
 
 function board_nelly ()
+   local o = outfit.get("Pulse Scanner")
+
+   vn.clear()
+   vn.scene()
+   local nel = vn.newCharacter( tutnel.vn_nelly() )
+   vn.transition( tutnel.nelly.transition )
+
+   vn.na(_([[The moment you get on Nelly's ship with the smelly cheese, she comes bouncing to you.]]))
+
+   nel(_([["Oh! It's even better in person! Let me check the goods."]]))
+   nel(_([[She takes the crate and deftly pries it open. Suddenly everything smells really strongly of cheese and you gag a bit.
+"Let's see. This is an authentic infused sausage cheese matured cheese! The rumours were true!"]]))
+   nel(_([["Here, take my Pulse Scanner, I'll take the cheese. I won't have to chase points of interest for a while with this beauty!"
+She rubs the cheese to her face.]]))
+   vn.na(_([[Seeing as it doesn't seem like you'll be able to change anything and the Pulse Scanner is probably more useful than the cheese. You take the outfit and head back to your ship. Now you can explore points of interest on your own!]]))
+
+   vn.sfxVictory()
+   vn.na( fmt.reward(o) )
+
+   vn.done( tutnel.nelly.transition )
+   vn.run()
+
+   player.outfitAdd( o )
+
+   -- Let her fly away
+   nelly:setHilight(false)
+   nelly:control(false)
+
+   pilot:toggleSpawn(true) -- Re-enable spawns
+   player.unboard()
+
+   misn.finish(true) -- We're done here!
 end
