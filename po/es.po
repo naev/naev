@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-06-22 21:44+0000\n"
+"PO-Revision-Date: 2022-06-23 21:18+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -25191,12 +25191,10 @@ msgid "Fury"
 msgstr "Furia"
 
 #: dat/ssys/gamel.xml:2
-#, fuzzy
 msgid "Gamel"
 msgstr "Gamel"
 
 #: dat/ssys/gamma_polaris.xml:2
-#, fuzzy
 msgid "Gamma Polaris"
 msgstr "Gamma Polaris"
 
@@ -25205,17 +25203,14 @@ msgid "#pEmpire Homeworld#0"
 msgstr "#pMundo Hogar Imperio#0"
 
 #: dat/ssys/gammacron.xml:2
-#, fuzzy
 msgid "Gammacron"
 msgstr "Gammacron"
 
 #: dat/ssys/ganth.xml:2
-#, fuzzy
 msgid "Ganth"
 msgstr "Ganth"
 
 #: dat/ssys/garten.xml:2
-#, fuzzy
 msgid "Garten"
 msgstr "Garten"
 
@@ -25233,12 +25228,10 @@ msgid "Ginger"
 msgstr "Jenjibre"
 
 #: dat/ssys/gorman.xml:2
-#, fuzzy
 msgid "Gorman"
 msgstr "Gorman"
 
 #: dat/ssys/gremlin.xml:2
-#, fuzzy
 msgid "Gremlin"
 msgstr "Gremlin"
 
@@ -25247,66 +25240,55 @@ msgid "Griffin"
 msgstr "Grifo"
 
 #: dat/ssys/gruz.xml:2
-#, fuzzy
 msgid "Gruz"
 msgstr "Gruz"
 
 #: dat/ssys/gutter.xml:2
+#, fuzzy
 msgid "Gutter"
 msgstr "Canalón"
 
 #: dat/ssys/gyrios.xml:2
-#, fuzzy
 msgid "Gyrios"
 msgstr "Gyrios"
 
 #: dat/ssys/hades.xml:2
-#, fuzzy
 msgid "Hades"
 msgstr "Hades"
 
 #: dat/ssys/hadosh.xml:2
-#, fuzzy
 msgid "Hadosh"
 msgstr "Hadosh"
 
 #: dat/ssys/haered.xml:2
-#, fuzzy
 msgid "Haered"
 msgstr "Haered"
 
 #: dat/ssys/hakoi.xml:2
-#, fuzzy
 msgid "Hakoi"
 msgstr "Hakoi"
 
 #: dat/ssys/haleb.xml:2
-#, fuzzy
 msgid "Haleb"
 msgstr "Haleb"
 
 #: dat/ssys/halo.xml:2
-#, fuzzy
 msgid "Halo"
 msgstr "Halo"
 
 #: dat/ssys/hargen.xml:2
-#, fuzzy
 msgid "Hargen"
 msgstr "Hargen"
 
 #: dat/ssys/hasselt.xml:2
-#, fuzzy
 msgid "Hasselt"
 msgstr "Hasselt"
 
 #: dat/ssys/hatter.xml:2
-#, fuzzy
 msgid "Hatter"
 msgstr "Hatter"
 
 #: dat/ssys/hekaras.xml:2
-#, fuzzy
 msgid "Hekaras"
 msgstr "Hekaras"
 
@@ -25315,20 +25297,20 @@ msgid "Hephaestus"
 msgstr "Hefesto"
 
 #: dat/ssys/herakin.xml:2
-#, fuzzy
 msgid "Herakin"
 msgstr "Herakin"
 
 #: dat/ssys/hideyoshis_star.xml:2
+#, fuzzy
 msgid "Hideyoshi's Star"
 msgstr "Estrella Hideyoshi"
 
 #: dat/ssys/humdrum.xml:2
-#, fuzzy
 msgid "Humdrum"
 msgstr "Humdrum"
 
 #: dat/ssys/hystera.xml:2
+#, fuzzy
 msgid "Hystera"
 msgstr "Hystera"
 
@@ -65565,7 +65547,7 @@ msgstr ""
 "bebida, te dicen que esa bebida no es la especialidad de ningún bar, sino "
 "que es la especialidad de un camarero que trabajaba aquí. \"Se llama Bomba "
 "de Pantano. No sé dónde trabaja ahora, pero empezaron a trabajar en el bar "
-"de {pnt} en el sistema {sys} después de salir de aquí. Buena suerte\". Con "
+"de {pnt} en el sistema {sys} después de salir de aquí. Buena suerte!\". Con "
 "grandes esperanzas, decides dirigirte hacia allí."
 
 #: dat/missions/neutral/aristodrink.lua:42
@@ -65577,12 +65559,12 @@ msgid ""
 "working at the bar on {pnt} in the {sys} system after he left here. Good "
 "luck!\" With high hopes, you decide to head off to there."
 msgstr ""
-"Entras y ves a alguien detrás de la barra. Cuando te acercas y describes la "
-"bebida, te dicen que esa bebida no es la especialidad de ningún bar, sino "
-"que es la especialidad de un camarero que trabajaba aquí. \"Se llama Bomba "
-"de Pantano. No sé dónde trabaja ahora, pero empezó a trabajar en el bar de "
-"{pnt} en el sistema {sys} después de irse de aquí. ¡Buena suerte!\" Con "
-"grandes esperanzas, decides dirigirte hacia allí."
+"Previous translation was \"Entras y ves a alguien detrás de la barra. Cuando "
+"te acercas y describes la bebida, te dicen que esa bebida no es la "
+"especialidad de ningún bar, sino que es la especialidad de un camarero que "
+"trabajaba aquí. \"Se llama Bomba de Pantano. No sé dónde trabaja ahora, pero "
+"empezó a trabajar en el bar de {pnt} en el sistema {sys} después de irse de "
+"aquí. ¡Buena suerte!\" Con grandes esperanzas, decides dirigirte hacia allí."
 
 #: dat/missions/neutral/aristodrink.lua:43
 msgid ""
@@ -65593,12 +65575,12 @@ msgid ""
 "working at the bar on {pnt} in the {sys} system after she left here. Good "
 "luck!\" With high hopes, you decide to head off to there."
 msgstr ""
-"Entras y ves a alguien detrás de la barra. Cuando te acercas y describes la "
-"bebida, te dicen que esa bebida no es la especialidad de ningún bar, sino "
-"que es la especialidad de un camarero que trabajaba aquí. \"Se llama Bomba "
-"de Pantano. No sé dónde trabaja ahora, pero empezó a trabajar en el bar de "
-"{pnt} en el sistema {sys} después de irse de aquí. ¡Buena suerte!\" Con "
-"grandes esperanzas, decides dirigirte hacia allí."
+"Previous translation was \"Entras y ves a alguien detrás de la barra. Cuando "
+"te acercas y describes la bebida, te dicen que esa bebida no es la "
+"especialidad de ningún bar, sino que es la especialidad de un camarero que "
+"trabajaba aquí. \"Se llama Bomba de Pantano. No sé dónde trabaja ahora, pero "
+"empezó a trabajar en el bar de {pnt} en el sistema {sys} después de irse de "
+"aquí. ¡Buena suerte!\" Con grandes esperanzas, decides dirigirte hacia allí."
 
 #: dat/missions/neutral/aristodrink.lua:46
 msgid ""
@@ -65643,6 +65625,18 @@ msgid ""
 "take with you. You taste it expecting something incredible. It's alright, "
 "but you doubt it was worth all this trouble."
 msgstr ""
+"Entras en el bar y sabes al instante que por fin estás aquí. Este es el "
+"lugar. Te acercas al camarero, que sonríe. Tiene que ser él. Empiezas a "
+"describirle la bebida y él te interrumpe. \"Una Bomba de Pantano. Por "
+"supuesto, esa es mi especialidad\". Le preguntas si puede hacerla para "
+"llevar, provocando una pequeña risa. \"Claro, ¿por qué no?\"\n"
+"    Sin embargo, justo cuando está a punto de empezar a hacerlo, le detienes "
+"y le dices que, después de todo, tendrás uno aquí. Ya que has venido hasta "
+"aquí, podrías probarlo. Te sorprende la rapidez y elegancia con la que sus "
+"entrenadas manos se mueven, volteando botellas y agitando varios "
+"recipientes. Antes de que te des cuenta, te ha puesto una bebida delante y "
+"ha cerrado otro recipiente para que te lo lleves. Lo pruebas esperando algo "
+"increíble. Está bien, pero dudas de que haya merecido la pena tanto esfuerzo."
 
 #: dat/missions/neutral/aristodrink.lua:50
 msgid ""
@@ -65659,6 +65653,18 @@ msgid ""
 "take with you. You taste it expecting something incredible. It's alright, "
 "but you doubt it was worth all this trouble."
 msgstr ""
+"Entras en el bar y sabes al instante que por fin estás aquí. Este es el "
+"lugar. Te acercas al camarero, que sonríe. Tiene que ser ella. Empiezas a "
+"describirle la bebida y ella te interrumpe. \"Una Bomba de Pantano. Por "
+"supuesto, es mi especialidad\". Le preguntas si puede hacerla para llevar, "
+"provocando una pequeña risa. \"Claro, ¿por qué no?\"\n"
+"    Sin embargo, justo cuando está a punto de empezar a hacerlo, la detienes "
+"y le dices que, después de todo, tendrás uno aquí. Ya que has venido hasta "
+"aquí, podrías probarlo. Te sorprende la rapidez y la gracia con la que sus "
+"entrenadas manos se mueven, volteando botellas y agitando varios "
+"recipientes. Antes de que te des cuenta, te ha puesto una bebida delante y "
+"ha cerrado otro recipiente para llevártelo. Lo pruebas esperando algo "
+"increíble. Está bien, pero dudas de que haya merecido la pena tanto esfuerzo."
 
 #. Note: this mission does not make any system claims.
 #. creates the NPC at the bar to create the mission
@@ -65960,18 +65966,18 @@ msgstr "Cargamento a {pnt} en {sys} ({tonnes})"
 
 #: dat/missions/neutral/cargo.lua:109
 msgid "Cargo mission"
-msgstr ""
+msgstr "Misión de Carga"
 
 #: dat/missions/neutral/cargo.lua:109 dat/missions/zalek/zlk_test.lua:105
 msgid "Fly to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Vuela a {pnt} en el sistema {sys}"
 
 #. Land hook
 #. Semi-random message.
 #: dat/missions/neutral/cargo.lua:118
 #: dat/missions/neutral/commodity_run.lua:138
 msgid "Delivery success!"
-msgstr ""
+msgstr "¡Entrega exitosa!"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -66005,44 +66011,44 @@ msgstr ""
 #. Note: indexed from 0, to match mission tiers.
 #: dat/missions/neutral/cargo_rush.lua:39
 msgid "Courier transport to {pnt} in {sys} ({tonnes})"
-msgstr ""
+msgstr "Transporte por correo a {pnt} en {sys} ({tonnes})"
 
 #: dat/missions/neutral/cargo_rush.lua:40
 msgid "Priority shipment to {pnt} in {sys} ({tonnes})"
-msgstr ""
+msgstr "Envío con prioridad a {pnt} en {sys} ({tonnes})"
 
 #: dat/missions/neutral/cargo_rush.lua:41
 msgid "Pressing cargo delivery to {pnt} in {sys} ({tonnes})"
-msgstr ""
+msgstr "Envio con prisa de carga a {pnt} en {sys} ( {tonnes})"
 
 #: dat/missions/neutral/cargo_rush.lua:42
 msgid "Urgent cargo delivery to {pnt} in {sys} ({tonnes})"
-msgstr ""
+msgstr "Envio urgente de carga a {pnt} en {sys} ({tonnes})"
 
 #: dat/missions/neutral/cargo_rush.lua:43
 msgid "Emergency cargo delivery to {pnt} in {sys} ({tonnes})"
-msgstr ""
+msgstr "Envío de emergencia de carga a {pnt} en {sys} ({tonnes})"
 
 #. Note: indexed from 0, to match mission tiers.
 #: dat/missions/neutral/cargo_rush.lua:47
 msgid "Courier transport to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Transporte de mensajería a {pnt} en el sistema {sys}."
 
 #: dat/missions/neutral/cargo_rush.lua:48
 msgid "Priority shipment to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Envío con prioridad a {pnt} en {sys} ({tonnes})."
 
 #: dat/missions/neutral/cargo_rush.lua:49
 msgid "Pressing cargo delivery to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Envio con prisa de carga a {pnt} en {sys} ( {tonnes})."
 
 #: dat/missions/neutral/cargo_rush.lua:50
 msgid "Urgent cargo delivery to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Envio urgente de carga a {pnt} en {sys} ({tonnes})."
 
 #: dat/missions/neutral/cargo_rush.lua:51
 msgid "Emergency cargo delivery to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Envío de emergencia de carga a {pnt} en {sys} ({tonnes})."
 
 #: dat/missions/neutral/cargo_rush.lua:68
 msgid ""
@@ -66050,6 +66056,10 @@ msgid ""
 "workers. They are not happy that they have to work overtime because you were "
 "late. You are paid only {credits} of the {reward} you were promised."
 msgstr ""
+"Los contenedores de {cargo} son sacados de tu nave por un grupo de "
+"trabajadores hoscos. No están contentos de tener que trabajar horas extras "
+"porque tú llegaste tarde. Sólo te pagan {credits} de la {reward} que te "
+"prometieron."
 
 #: dat/missions/neutral/cargo_rush.lua:69
 msgid ""
@@ -66057,6 +66067,10 @@ msgid ""
 "vessel. Your late arrival is stretching quite a few schedules! Your pay is "
 "only {credits} instead of {reward} because of that."
 msgstr ""
+"Poco después de aterrizar, un equipo saca a toda prisa los contenedores de "
+"{cargo} de tu nave. Tu llegada tardía está estirando los horarios de "
+"bastantes personas. Tu paga es sólo de {credits} en lugar de {reward} por "
+"eso."
 
 #: dat/missions/neutral/cargo_rush.lua:70
 msgid ""
@@ -66064,10 +66078,13 @@ msgid ""
 "dockworkers. You missed the deadline, so your reward is only {credits} "
 "instead of the {reward} you were hoping for."
 msgstr ""
+"Los contenedores de {cargo} son descargados por un grupo de trabajadores "
+"portuarios que parecen agotados. Se te ha pasado el plazo, así que tu "
+"recompensa es sólo de {credits} en lugar de la {reward} que esperabas."
 
 #: dat/missions/neutral/cargo_rush.lua:144
 msgid "Unknown route"
-msgstr ""
+msgstr "Ruta desconocida"
 
 #: dat/missions/neutral/cargo_rush.lua:145
 msgid ""
@@ -66075,16 +66092,20 @@ msgid ""
 "maps, spending time searching for unknown jumps, or taking a route longer "
 "than {jumps} may cause you to miss the deadline. Accept the mission anyway?"
 msgstr ""
+"La ruta más rápida a {pnt} no la conoces actualmente. Aterrizar para comprar "
+"mapas, gastar tiempo buscando saltos desconocidos o tomar una ruta más larga "
+"que la de {jumps} puede hacer que se pase el plazo. ¿Aceptar la misión de "
+"todos modos?"
 
 #: dat/missions/neutral/cargo_rush.lua:185
 #: dat/missions/neutral/cargo_rush.lua:193
 msgid "Rush cargo mission"
-msgstr ""
+msgstr "Misión de carga apresurada"
 
 #. Case missed second deadline
 #: dat/missions/neutral/cargo_rush.lua:188
 msgid "The delivery to {sys} has been canceled! You were too late."
-msgstr ""
+msgstr "¡La entrega a {sys} ha sido cancelada! Has llegado demasiado tarde."
 
 #. Case missed first deadline
 #: dat/missions/neutral/cargo_rush.lua:192
@@ -66092,6 +66113,9 @@ msgid ""
 "Fly to {pnt} in the {sys} system\n"
 "(deadline missed, but you can still make a late delivery if you hurry)"
 msgstr ""
+"Vuela a {pnt} en el sistema {sys}\n"
+"(no se cumple el plazo, pero aún puedes hacer una entrega tardía si te das "
+"prisa)"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -66126,7 +66150,7 @@ msgstr ""
 #. Mission Details
 #: dat/missions/neutral/commodity_run.lua:37
 msgid "{cargo} Delivery"
-msgstr ""
+msgstr "Entrega {cargo}"
 
 #: dat/missions/neutral/commodity_run.lua:38
 msgid ""
@@ -66134,6 +66158,9 @@ msgid ""
 "Go to any planet which sells this commodity and bring as much of it back as "
 "possible."
 msgstr ""
+"{pnt} tiene un suministro insuficiente de {cargo} para satisfacer la demanda "
+"actual. Ve a cualquier planeta que venda esta mercancía y trae la mayor "
+"cantidad posible."
 
 #: dat/missions/neutral/commodity_run.lua:41
 msgid ""
@@ -66141,6 +66168,9 @@ msgid ""
 "several different workers double-check the register to confirm the amount, "
 "you are paid {credits} and summarily dismissed."
 msgstr ""
+"Los contenedores de {cargo} son sacados de tu nave y contados. Después de "
+"que varios trabajadores vuelvan a comprobar el registro para confirmar la "
+"cantidad, se te pagan {credits} y se te despide sumariamente."
 
 #: dat/missions/neutral/commodity_run.lua:42
 msgid ""
@@ -66148,6 +66178,9 @@ msgid ""
 "readied for distribution. The delivery manager thanks you with a credit chip "
 "worth {credits}."
 msgstr ""
+"Los contenedores de {cargo} se descargan rápida y eficazmente, se etiquetan "
+"y se preparan para su distribución. El encargado de la entrega te agradece "
+"con un chip de créditos por valor de {credits}."
 
 #: dat/missions/neutral/commodity_run.lua:43
 msgid ""
@@ -66155,16 +66188,22 @@ msgid ""
 "dockworkers who are in no rush to finish, eventually delivering {credits} "
 "after the number of tonnes is determined."
 msgstr ""
+"Los contenedores de {cargo} son descargados de tu nave por un equipo de "
+"estibadores que no tienen prisa por terminar, entregando finalmente {credits}"
+" una vez determinado el número de toneladas."
 
 #: dat/missions/neutral/commodity_run.lua:44
 msgid ""
 "The containers of {cargo} are unloaded by robotic drones that scan and tally "
 "the contents. The human overseer hands you {credits} when they finish."
 msgstr ""
+"Los contenedores de {cargo} son descargados por drones robóticos que "
+"escanean y cuentan el contenido. El supervisor humano te entrega {credits} "
+"cuando terminan."
 
 #: dat/missions/neutral/commodity_run.lua:47
 msgid "Commodity Delivery"
-msgstr ""
+msgstr "Entrega de Productos"
 
 #. A script may require "missions.neutral.commodity_run" and override this
 #. with a table of (raw) commodity names to choose from.
@@ -66176,15 +66215,15 @@ msgstr ""
 #: dat/missions/neutral/commodity_run.lua:102
 #: dat/missions/neutral/wastedump.lua:76
 msgid "{credits} per tonne"
-msgstr ""
+msgstr "{credits} por tonelada"
 
 #: dat/missions/neutral/commodity_run.lua:113
 msgid "Buy as much {cargo} as possible"
-msgstr ""
+msgstr "Compra toda la {cargo} posible"
 
 #: dat/missions/neutral/commodity_run.lua:114
 msgid "Take the {cargo} to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Lleva la {cargo} a {pnt} en el sistema {sys}"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -66214,17 +66253,17 @@ msgstr ""
 #. luacheck: globals capHailed enter jumpout land pilotKilled spawnBaddies (Hook functions passed by name)
 #: dat/missions/neutral/crimelord.lua:35
 msgid "A detective"
-msgstr ""
+msgstr "Un detective"
 
 #: dat/missions/neutral/crimelord.lua:35
 msgid "A private detective is signalling you to come speak with him."
-msgstr ""
+msgstr "Un detective privado te está indicando que vengas a hablar con él."
 
 #. Note: this mission does not make any system claims.
 #: dat/missions/neutral/crimelord.lua:40 dat/missions/neutral/crimelord.lua:53
 #: dat/missions/neutral/crimelord.lua:57
 msgid "Crimelord"
-msgstr ""
+msgstr "Señor del Crimen"
 
 #: dat/missions/neutral/crimelord.lua:40
 msgid ""
@@ -66247,11 +66286,30 @@ msgid ""
 "   Given the dangers, you're not sure whether the reward will make this "
 "worth your while. Do you accept?"
 msgstr ""
+"El detective privado te saluda y se pone manos a la obra.\n"
+"   \"He localizado y recogido pruebas contra un señor del crimen local\", "
+"dice. \"Las pruebas están en este disco de datos. Nada le gustaría más que "
+"poner sus manos en esto.\n"
+"   Quiero que lleves esto a mis asociados en el sistema {sys}. Mientras que "
+"las autoridades locales han demostrado ser corrompibles, mis asociados se "
+"asegurarán de que este criminal acabe en la cárcel, donde debe estar. Sin "
+"embargo, debo advertirte:\n"
+"   Este criminal tiene una influencia considerable y muchos amigos. No hay "
+"duda de que enviarán a algunos de sus mercenarios para detenerte. "
+"Necesitarás una nave rápida para librarte de ellos. Mis socios te "
+"compensarán generosamente cuando llegues a {sys}.\n"
+"   Lamentablemente, no eres el primer piloto con el que me pongo en contacto "
+"por este asunto. Tu predecesor fue interceptado cuando aterrizó de camino a "
+"{sys}. El señor del crimen tiene muchos subalternos acechando en los puertos "
+"espaciales cercanos - no debes aterrizar hasta que hayas entregado los datos."
+"\"\n"
+"   Dados los peligros, no estás seguro si la recompensa hará que esto valga "
+"la pena. ¿Aceptas?"
 
 #. if accepted
 #: dat/missions/neutral/crimelord.lua:51 dat/missions/shark/sh05_flf.lua:56
 msgid "Good luck"
-msgstr ""
+msgstr "Buena suerte"
 
 #: dat/missions/neutral/crimelord.lua:51
 msgid ""
@@ -66260,57 +66318,61 @@ msgid ""
 "   \"Be careful out there. I doubt you'll be able to get far without being "
 "noticed.\""
 msgstr ""
+"Tras echar un rápido vistazo a tu alrededor para asegurarte de que nadie se "
+"interesa por ti, el detective te entrega el stick de datos en la mano.\n"
+"   \"Ten cuidado ahí fuera. Dudo que puedas ir muy lejos sin que se den "
+"cuenta.\""
 
 #: dat/missions/neutral/crimelord.lua:54
 msgid "A generous compensation"
-msgstr ""
+msgstr "Una compensación generosa"
 
 #: dat/missions/neutral/crimelord.lua:55 dat/missions/neutral/crimelord.lua:57
 msgid "Evade the thugs and deliver the evidence to {sys}"
-msgstr ""
+msgstr "Evade a los matones y entrega las pruebas a {sys}"
 
 #. needed to make thugs appear random in the first system
 #. ignore this one, it's just the initialization of the variable
 #: dat/missions/neutral/crimelord.lua:78
 msgid "Associate Lancelot"
-msgstr ""
+msgstr "Lancelot Asociado"
 
 #: dat/missions/neutral/crimelord.lua:80
 msgid "Associate Admonisher"
-msgstr ""
+msgstr "Admonisher Asociado"
 
 #: dat/missions/neutral/crimelord.lua:82
 msgid "Associate Pacifier"
-msgstr ""
+msgstr "Calma Asociada"
 
 #: dat/missions/neutral/crimelord.lua:84
 msgid "Associate Hawking"
-msgstr ""
+msgstr "Hawking Asociado"
 
 #: dat/missions/neutral/crimelord.lua:86
 msgid "Associate Kestrel"
-msgstr ""
+msgstr "Cernícalo Asociado"
 
 #: dat/missions/neutral/crimelord.lua:97
 msgid "We've got your back. Engaging hostiles."
-msgstr ""
+msgstr "Te cubrimos la espalda. Atacando a los hostiles."
 
 #. TODO Modern optimized equipping, or at least a manual equip from "naked"
 #: dat/missions/neutral/crimelord.lua:141
 msgid "Surrender now and we'll let you live."
-msgstr ""
+msgstr "Ríndete ahora y te dejaremos vivir."
 
 #: dat/missions/neutral/crimelord.lua:142
 msgid "You're dead!"
-msgstr ""
+msgstr "¡Estás muerto!"
 
 #: dat/missions/neutral/crimelord.lua:143
 msgid "You won't make it out alive!"
-msgstr ""
+msgstr "¡No saldrás con vida!"
 
 #: dat/missions/neutral/crimelord.lua:144
 msgid "Get back here!"
-msgstr ""
+msgstr "¡Vuelve aquí!"
 
 #: dat/missions/neutral/crimelord.lua:158
 msgid ""
@@ -66318,10 +66380,13 @@ msgid ""
 "You've certainly done your part towards cleaning up the region. As for your "
 "compensation, I've had {credits} transferred to you.\""
 msgstr ""
+"\"Excelente trabajo. Estos datos garantizarán una detención y un rápido "
+"enjuiciamiento. Ciertamente has hecho tu parte para limpiar la región. En "
+"cuanto a tu compensación, he hecho que te transfieran {credits}.\""
 
 #: dat/missions/neutral/crimelord.lua:165
 msgid "He told you so..."
-msgstr ""
+msgstr "Te lo dijo..."
 
 #: dat/missions/neutral/crimelord.lua:165
 msgid ""
@@ -66330,6 +66395,10 @@ msgid ""
 "closing in on your position. Surrounded, and with several laser pistols "
 "trained on you, you see no option but to surrender the evidence."
 msgstr ""
+"Cuando sales de tu nave y cierras la esclusa, ves a un hombre corpulento que "
+"se dirige hacia ti. Te das la vuelta para huir, pero hay otros acercándose a "
+"tu posición. Rodeado, y con varias pistolas láser apuntando hacia ti, no ves "
+"otra opción que entregar las pruebas."
 
 #: dat/missions/neutral/derelict_rescue.lua:32
 msgid ""
@@ -66349,45 +66418,49 @@ msgstr ""
 #: dat/missions/neutral/derelict_rescue.lua:46
 #: dat/missions/tutorial/nelly01.lua:127
 msgid "Help them out"
-msgstr ""
+msgstr "Ayúdales a salir"
 
 #: dat/missions/neutral/derelict_rescue.lua:47
 msgid "Refuse to help"
-msgstr ""
+msgstr "Rechazar ayudar"
 
 #: dat/missions/neutral/derelict_rescue.lua:51
 msgid "You refuse to help them and leave them to the mercy of the stars."
-msgstr ""
+msgstr "Te niegas a ayudarlos y los dejas a merced de las estrellas."
 
 #: dat/missions/neutral/derelict_rescue.lua:56
 msgid ""
 "You accept and they thank you profusely as they quickly board your ship with "
 "the few belongings they had with them."
 msgstr ""
+"Tú aceptas y ellos te agradecen efusivamente mientras suben rápidamente a tu "
+"nave con las pocas pertenencias que llevaban."
 
 #. Player didn't accept
 #: dat/missions/neutral/derelict_rescue.lua:72
 #: dat/missions/neutral/derelict_rescue.lua:79
 msgid "Derelict Rescue"
-msgstr ""
+msgstr "Rescate Derrelicto"
 
 #: dat/missions/neutral/derelict_rescue.lua:73
 msgid ""
 "You have agreed to take some crew you rescued from a derelict ship to {pnt} "
 "in the {sys} system."
 msgstr ""
+"Has accedido a llevar a una tripulación que rescataste de una nave "
+"abandonada a {pnt} en el sistema {sys}."
 
 #: dat/missions/neutral/derelict_rescue.lua:76
 msgid "Rescued Crew"
-msgstr ""
+msgstr "Tripulación Rescatada"
 
 #: dat/missions/neutral/derelict_rescue.lua:76
 msgid "Some crew you rescued from a derelict ship."
-msgstr ""
+msgstr "Una tripulación que rescataste de un derrelicto."
 
 #: dat/missions/neutral/derelict_rescue.lua:80
 msgid "Take the rescued crew to {pnt} in {sys}"
-msgstr ""
+msgstr "Lleva a la tripulación rescatada a {pnt} en {sys}"
 
 #: dat/missions/neutral/derelict_rescue.lua:93
 msgid ""
@@ -66405,10 +66478,12 @@ msgid ""
 "You inform the crew you rescued from the derelict that you won't be taking "
 "them any further. They thank you and depart your ship."
 msgstr ""
+"Informas a la tripulación que rescataste del derrelicto que no los llevarás "
+"más lejos. Te dan las gracias y abandonan tu nave."
 
 #: dat/missions/neutral/derelict_rescue.lua:112
 msgid "You jettison the crew you rescued from the derelict out of the airlock."
-msgstr ""
+msgstr "Expulsas por la esclusa a la tripulación que rescataste del derrelicto."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -66440,25 +66515,25 @@ msgstr ""
 #. the mission cargo
 #: dat/missions/neutral/diy-nerds.lua:36
 msgid "Group of Nerds"
-msgstr ""
+msgstr "Grupo de Nerds"
 
 #: dat/missions/neutral/diy-nerds.lua:37
 msgid "A bunch of protagonists."
-msgstr ""
+msgstr "Un grupo de protagonistas."
 
 #: dat/missions/neutral/diy-nerds.lua:39
 msgid "Box"
-msgstr ""
+msgstr "Caja"
 
 #: dat/missions/neutral/diy-nerds.lua:40
 msgid "A homebrew processing unit."
-msgstr ""
+msgstr "Una unidad de procesamiento casera."
 
 #. the outfit name as in outfit.xml
 #. the mission cannot be started with less than two landable assets in the system
 #: dat/missions/neutral/diy-nerds.lua:52
 msgid "Young People"
-msgstr ""
+msgstr "Gente Joven"
 
 #: dat/missions/neutral/diy-nerds.lua:52
 msgid ""
@@ -66466,11 +66541,14 @@ msgid ""
 "which seem to contain column after column of raw numbers. Two of them don't "
 "participate in the babbling, but look at you expectantly."
 msgstr ""
+"Ves a un grupo de chicos y chicas que cuchichean animadamente sobre unos "
+"papeles que parecen contener una columna tras otra de cifras en bruto. Dos "
+"de ellos no participan en el parloteo, pero te miran expectantes."
 
 #. atm, just take the first landable planet which is not the current one
 #: dat/missions/neutral/diy-nerds.lua:65
 msgid "A group of excited nerds"
-msgstr ""
+msgstr "Un grupo de nerds entusiasmados"
 
 #: dat/missions/neutral/diy-nerds.lua:65
 msgid ""
@@ -66487,16 +66565,30 @@ msgid ""
 "    You just start to marvel at the self-assurance of one so young when she "
 "signals her impatience. \"Answer me now! Will you do it?\""
 msgstr ""
+"Al acercarte al grupo, el parloteo cesa y los papeles se guardan rápida y "
+"celosamente. Una de las chicas se acerca y se presenta.\n"
+"    \"Hola, soy Mia. Necesitamos transporte y parece que te vendría bien "
+"algo de pasta. ¿Interesado?\"\n"
+"    Tú le respondes que para que se concrete un trato, más vale que te den "
+"algunos detalles.\n"
+"    \"Escucha\", dice ella, \"hay un concurso de unidades de procesamiento "
+"caseras en {pnt}. Justo ahí, este sistema. Estoy seguro de que nuestra caja "
+"nos dará el primer premio. Si nos llevas allí y nos traes de vuelta, te "
+"llevas 20.000.\"\n"
+"    Empiezas a maravillarte de la seguridad en sí misma de una persona tan "
+"joven cuando te señala su impaciencia. \"¡Respóndeme ahora! ¿Lo harás?\""
 
 #: dat/missions/neutral/diy-nerds.lua:73
 msgid "Not enough cargo space"
-msgstr ""
+msgstr "No hay suficiente espacio de carga"
 
 #: dat/missions/neutral/diy-nerds.lua:73
 msgid ""
 "\"Aw, I forgot\" she adds. \"We would of course need 4 tonnes of free cargo "
 "space for our box.\""
 msgstr ""
+"\"Ah, se me olvidaba\", añade. \"Por supuesto, necesitaremos 4 toneladas de "
+"espacio de carga libre para nuestra caja.\""
 
 #. from common.cargo
 #. takeoff + min travel time + leeway
@@ -66512,15 +66604,15 @@ msgstr ""
 #: dat/missions/neutral/diy-nerds.lua:235
 #: dat/missions/neutral/diy-nerds.lua:275
 msgid "DIY Nerds"
-msgstr ""
+msgstr "DIY Nerds"
 
 #: dat/missions/neutral/diy-nerds.lua:80
 msgid "Cart some nerds to their contest, and back."
-msgstr ""
+msgstr "Lleva a algunos nerds a su concurso, y traelos de vuelta."
 
 #: dat/missions/neutral/diy-nerds.lua:83
 msgid "We have a deal!"
-msgstr ""
+msgstr "¡Tenemos un trato!"
 
 #: dat/missions/neutral/diy-nerds.lua:83
 msgid ""
@@ -66535,11 +66627,21 @@ msgid ""
 "take off immediately and go directly to {pnt}, or we'll be late for the "
 "contest!\""
 msgstr ""
+"Al aceptar la tarea, ves que todo el grupo se relaja visiblemente y casi "
+"puedes sentir que la confianza de Mia se desvanece, al menos hasta cierto "
+"punto. Parece que el grupo está muy interesado en la competición, pero hasta "
+"ahora no tenían ni idea de cómo llegar a ella.\n"
+"    Mientras los demás se apresuran a levantarse de la apretada mesa y "
+"empiezan a recoger sus pertenencias, le toca de nuevo a Mia dirigirse a ti:\n"
+"    \"¿De verdad? ¿Lo harás tú? Genial. Fantástico. Sabía que, en algún "
+"momento, aparecería alguien desesperado. Bien, estamos listos para salir. "
+"Será mejor que despeguemos inmediatamente y vayamos directamente a {pnt}, ¡o "
+"llegaremos tarde al concurso!\""
 
 #: dat/missions/neutral/diy-nerds.lua:93 dat/missions/neutral/diy-nerds.lua:147
 #: dat/missions/neutral/diy-nerds.lua:152
 msgid "Bring the nerds and their box to {pnt} before {time}"
-msgstr ""
+msgstr "Trae a los nerds y su caja a {pnt} antes de {time}"
 
 #. Case still in time
 #: dat/missions/neutral/diy-nerds.lua:94 dat/missions/neutral/diy-nerds.lua:148
@@ -66547,7 +66649,7 @@ msgstr ""
 #: dat/missions/shadow/shadowrun.lua:151 dat/missions/shadow/shadowrun.lua:158
 #: dat/missions/sirius/srs_ferry.lua:351
 msgid "You have {time} remaining"
-msgstr ""
+msgstr "Te queda {time}"
 
 #. invoked upon landing (stage 1: cart the nerds to mem.destPlanet)
 #. in time, right planet
@@ -66556,7 +66658,7 @@ msgstr ""
 #: dat/missions/neutral/diy-nerds.lua:116
 #: dat/missions/neutral/diy-nerds.lua:175
 msgid "Happy nerds"
-msgstr ""
+msgstr "Nerd felices"
 
 #: dat/missions/neutral/diy-nerds.lua:116
 msgid ""
@@ -66567,17 +66669,25 @@ msgid ""
 "    That said, the nerds shoulder the box and rush towards a banner which "
 "reads \"Admissions\"."
 msgstr ""
+"\"Buen trabajo, {player}\", te felicita Mia al llegar. \"Ahora iremos a "
+"ganar la competición y a celebrarlo un poco. Será mejor que te quedes en el "
+"sistema. Te llamaremos en unos 4 o 5 periodos, para que nos recojas y nos "
+"traigas de vuelta a {pnt}\".\n"
+"Dicho esto, los nerds se echan al hombro la caja y corren hacia una pancarta "
+"en la que se lee \"Admisiones\"."
 
 #: dat/missions/neutral/diy-nerds.lua:118
 msgid ""
 "Wait several periods in this system until hailed by the nerds for their "
 "return trip"
 msgstr ""
+"Espera varios periodos en este sistema hasta que eres llamado por los "
+"empollones para tu viaje de vuelta"
 
 #. late, right planet
 #: dat/missions/neutral/diy-nerds.lua:128
 msgid "Angry nerds"
-msgstr ""
+msgstr "Nerds enfadados"
 
 #: dat/missions/neutral/diy-nerds.lua:128
 msgid ""
@@ -66590,11 +66700,20 @@ msgid ""
 "of nerds stroll toward an archway, behind which, judging from the bustling "
 "atmosphere, the contest is already going on."
 msgstr ""
+"Mia echa humo. \"Genial. Simplemente genial. Llegamos tarde, idiota\". "
+"Señala una pancarta arrugada en la que se lee \"Admisiones\". El área debajo "
+"de ella está desierta. \"Sin concurso para nosotros, no hay pago para ti. ¿"
+"Entendido? Ve y lleva tu lamentable excusa de nave a la corona de una "
+"estrella adecuada. Encontraremos a alguien más que nos lleve de vuelta a "
+"{pnt}. Alguien confiable.\"\n"
+"    Con su énfasis en las últimas palabras todavía resonando en tus oídos, "
+"la pandilla de nerds se dirige hacia un arco, detrás del cual, a juzgar por "
+"el ambiente bullicioso, el concurso ya está en marcha."
 
 #. late, not even the right planet
 #: dat/missions/neutral/diy-nerds.lua:135
 msgid "Furious nerds"
-msgstr ""
+msgstr "Nerds furiosos"
 
 #: dat/missions/neutral/diy-nerds.lua:135
 msgid ""
@@ -66609,12 +66728,24 @@ msgid ""
 "in the middle of a fight, do you?\" With this, she joins the rest of her "
 "group, and they are gone."
 msgstr ""
+"Los nerds recogen rápidamente y en silencio su caja y comienzan a abandonar "
+"tu nave. Finalmente, Mia se vuelve hacia ti. Su lenguaje corporal sugiere "
+"que está casi estallando de ira. Sin embargo, su voz es moderada cuando "
+"empieza a hablar:\n"
+"    \"Eres un lamentable perdedor. El concurso está a punto de terminar y "
+"estamos varados en un basurero que nunca quisimos ver. Estoy seguro de que "
+"estás de acuerdo en que esto no merece ningún pago\". Se da la vuelta para "
+"irse, pero luego añade: \"¿Estás seguro de que todo está en orden con el "
+"núcleo de tu nave? No querrás que se funda en medio de un combate, ¿verdad?\""
+". Con esto, se une al resto de su grupo, y se van."
 
 #: dat/missions/neutral/diy-nerds.lua:153
 msgid ""
 "You're late and the nerds are getting angry and abusive; land to get rid of "
 "the nerds and their box"
 msgstr ""
+"Llegas tarde y los nerds se han enfadados; aterriza para librarte de los "
+"nerds y de su caja"
 
 #: dat/missions/neutral/diy-nerds.lua:175
 msgid ""
@@ -66625,10 +66756,16 @@ msgid ""
 "drinking did help a little. \"Take us back to {pnt},\" one of them says, "
 "\"we'll continue to celebrate on the way.\""
 msgstr ""
+"Nada más salir de la nave, te rodea el grupo de nerds, que están eufóricos. "
+"\"¡Hemos ganado!\", te grita uno de los nerds. Sorprendentemente, parece que "
+"el grupo no depende completamente de Mia a la hora de comunicarse con los "
+"forasteros. Aunque tal vez el alcohol que el grupo está bebiendo "
+"copiosamente ayudó un poco. \"Llévanos de vuelta a {pnt}\", dice uno de "
+"ellos, \"seguiremos celebrando por el camino.\""
 
 #: dat/missions/neutral/diy-nerds.lua:177
 msgid "Sad nerds"
-msgstr ""
+msgstr "Nerds tristes"
 
 #: dat/missions/neutral/diy-nerds.lua:177
 msgid ""
@@ -66644,23 +66781,38 @@ msgid ""
 "    \"So no, we didn't win\" she adds after taking a few breaths to calm "
 "down. \"Take us back to {pnt}.\""
 msgstr ""
+"Al bajar de tu nave, no ves inmediatamente a los nerds. Finalmente los "
+"encuentras en un rincón oscuro de la pista de aterrizaje sentados "
+"tranquilamente en su caja, obviamente no de buen humor. Les saludas, pero "
+"nadie dice una palabra. Les preguntas qué les pasa. Los nerds se miran con "
+"recelo antes de que Mia estalle de frustración.\n"
+"    \"¡Ese aristocrático culo de adolescente aburrido! ¡Nos ha arrebatado el "
+"premio! Ni siquiera fue un juego limpio. Su caja no era casera. Era una "
+"flamante unidad de procesamiento de naves, sobre la que golpeó su martillo "
+"hasta que quedó aceptable. ¡Y los imbéciles corruptos del jurado fingieron "
+"no darse cuenta!\"\n"
+"    \"Así que no, no ganamos\", añade tras respirar un poco para calmarse. "
+"\"Llévanos de vuelta a {pnt}.\""
 
 #. player has enough free cargo
 #. player has not enough free cargo space, give him last chance to make room
 #: dat/missions/neutral/diy-nerds.lua:188
 msgid "Room for the box"
-msgstr ""
+msgstr "Espacio para la caja"
 
 #: dat/missions/neutral/diy-nerds.lua:188
 msgid ""
 "\"Aw {player},\" Mia complains, \"as if you didn't know that our box needs 4 "
 "tonnes of free cargo space. Make room now, and pick us up at the bar.\""
 msgstr ""
+"\"Aw {player}\", se queja Mia, \"como si no supieras que nuestra caja "
+"necesita 4 toneladas de espacio de carga libre. Haz espacio ahora, y "
+"recógenos en el bar.\""
 
 #. you're late for the pickup
 #: dat/missions/neutral/diy-nerds.lua:195
 msgid "No more nerds"
-msgstr ""
+msgstr "No más nerds"
 
 #: dat/missions/neutral/diy-nerds.lua:195
 msgid ""
@@ -66671,24 +66823,33 @@ msgid ""
 "girls said some more, in a particularly rude language, but I don't remember "
 "the details\"."
 msgstr ""
+"Miras a tu alrededor, pero los nerds no aparecen por ninguna parte. No es "
+"una gran sorpresa, ya que llegas demasiado tarde.\n"
+"    De repente, un tipo se acerca a ti. \"Hola, ¿eres {player}? Los nerds "
+"querían que supieras que, básicamente, han conseguido otro transporte a "
+"casa. Una de las chicas dijo algo más, en un lenguaje particularmente "
+"grosero, pero no recuerdo los detalles\"."
 
 #. you're late and far from the nerds
 #: dat/missions/neutral/diy-nerds.lua:202
 msgid "You forgot the nerds"
-msgstr ""
+msgstr "Te olvidaste de los nerds"
 
 #: dat/missions/neutral/diy-nerds.lua:202
 msgid ""
 "Seeing that it is already too late to pick up the nerds, and that you're "
 "quite far from {pnt}, you decide it's better to forget about them completely."
 msgstr ""
+"Viendo que ya es demasiado tarde para recoger a los nerds, y que estás "
+"bastante lejos de {pnt}, decides que es mejor olvidarte de ellos "
+"completamente."
 
 #. date hooked in stage 2 (waiting for the nerds hail you for their return trip)
 #. no pickup since hail+2STP
 #: dat/missions/neutral/diy-nerds.lua:211
 #: dat/missions/neutral/diy-nerds.lua:232
 msgid "In-system communication"
-msgstr ""
+msgstr "Comunicación en el sistema"
 
 #: dat/missions/neutral/diy-nerds.lua:211
 msgid ""
@@ -66697,6 +66858,10 @@ msgid ""
 "Mia,\" comes a familiar voice from the speaker. \"We're done here. Time to "
 "come back and pick us up, we have things to do on {pnt}.\""
 msgstr ""
+"Un pitido de tu equipo de comunicaciones te indica que alguien quiere hablar "
+"contigo. Te das cuenta de que son los nerds y devuelves el saludo. \"¡Hola! "
+"Soy Mia\", llega una voz familiar desde el altavoz. \"Ya hemos terminado "
+"aquí. Es hora de volver a recogernos, tenemos cosas que hacer en {pnt}.\""
 
 #: dat/missions/neutral/diy-nerds.lua:213
 #: dat/missions/neutral/diy-nerds.lua:223
@@ -66704,10 +66869,11 @@ msgstr ""
 msgid ""
 "Pick up the nerds on {pickup_pnt} for their return trip to {dropoff_pnt}"
 msgstr ""
+"Recoge a los nerds en {pickup_pnt} para su viaje de vuelta a {dropoff_pnt}"
 
 #: dat/missions/neutral/diy-nerds.lua:224
 msgid "You didn't pick up the nerds in time"
-msgstr ""
+msgstr "No recogiste a los nerds a tiempo"
 
 #: dat/missions/neutral/diy-nerds.lua:232
 msgid ""
@@ -66715,26 +66881,32 @@ msgid ""
 "You hear Mia's voice: \"Hey, what are you waiting for? You'd better be here "
 "within one period, or we'll get another pilot and pay them, not you!\""
 msgstr ""
+"Tu enlace de comunicaciones aparece de nuevo. Son los nerds, a los que casi "
+"habías olvidado. Oyes la voz de Mia: \"Eh, ¿a qué esperas? Más vale que "
+"estés aquí en un periodo, ¡o buscaremos otro piloto y le pagaremos a él y no "
+"a ti!\""
 
 #: dat/missions/neutral/diy-nerds.lua:237
 msgid "The nerds are getting impatient"
-msgstr ""
+msgstr "Los nerds se están impacientando"
 
 #. hooked to entering the bar in stage 2
 #: dat/missions/neutral/diy-nerds.lua:249
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:122
 msgid "Departure"
-msgstr ""
+msgstr "Salida"
 
 #: dat/missions/neutral/diy-nerds.lua:249
 msgid ""
 "The nerds follow you to your ship and finally stow away their box. Now, "
 "you're all set to go."
 msgstr ""
+"Los nerds te siguen hasta tu nave y finalmente guardan su caja. Ahora, ya "
+"está todo listo para partir."
 
 #: dat/missions/neutral/diy-nerds.lua:252
 msgid "No room, no job"
-msgstr ""
+msgstr "No espacio, no trabajo"
 
 #: dat/missions/neutral/diy-nerds.lua:252
 msgid ""
@@ -66744,26 +66916,32 @@ msgid ""
 "business with you.\" Some angry stares later, the nerds are gone, trying to "
 "find another pilot."
 msgstr ""
+"Al entrar en el bar, los nerds se te echan encima inmediatamente. \"¿Qué "
+"pasa contigo?\" pregunta Mia. \"¿Es tan difícil hacer un poco de espacio "
+"para nuestra caja? Estoy harta de ti. Considera nuestro acuerdo anulado. "
+"Espero no volver a tener negocios contigo\". Algunas miradas furiosas más "
+"tarde, los nerds se van, tratando de encontrar otro piloto."
 
 #. hooked to leaving the system in stage 2
 #: dat/missions/neutral/diy-nerds.lua:259
 msgid "Have the nerds not told you to stay in the system? Mission failed!"
 msgstr ""
+"¿No te han dicho los nerds que te quedes en el sistema? ¡Misión fallida!"
 
 #. hooked to inappropriately taking off in stage 2
 #: dat/missions/neutral/diy-nerds.lua:267
 msgid "Have the nerds not told you to pick them up at the bar? Mission failed!"
-msgstr ""
+msgstr "¿No te han dicho los nerds que los recojas en el bar? ¡Misión fallida!"
 
 #: dat/missions/neutral/diy-nerds.lua:275
 msgid "Return the nerds to {pnt}"
-msgstr ""
+msgstr "Devuelve a los nerds a {pnt}"
 
 #. hooked to 'land' in the final stage (returning the nerds)
 #: dat/missions/neutral/diy-nerds.lua:284
 #: dat/missions/neutral/diy-nerds.lua:292
 msgid "The End"
-msgstr ""
+msgstr "El Final"
 
 #: dat/missions/neutral/diy-nerds.lua:284
 msgid ""
@@ -66773,10 +66951,16 @@ msgid ""
 "decided to give you a bonus. After all, we wouldn't have gotten there "
 "without your service. Here, have 30,000. Good day to you.\""
 msgstr ""
+"Los nerds, finalmente agotados por toda la fiesta, siguen sonriendo mientras "
+"recogen su caja premiada y abandonan tu nave. Mia sonríe mientras se dirige "
+"a ti. \"Bien hecho, {player}. Verás, como hemos conseguido un montón de "
+"premios, hemos decidido darte una bonificación. Al fin y al cabo, no "
+"habríamos llegado hasta aquí sin tu servicio. Toma, ten 30.000. Que tengas "
+"un buen día.\""
 
 #: dat/missions/neutral/diy-nerds.lua:287
 msgid "Minor Complications"
-msgstr ""
+msgstr "Complicaciones Menores"
 
 #: dat/missions/neutral/diy-nerds.lua:287
 msgid ""
@@ -66795,10 +66979,25 @@ msgid ""
 "We'll modify our box so that it can be used as a ship's core system, and you "
 "can have it as a compensation for your troubles. Interested?\""
 msgstr ""
+"Con los hombros caídos, los empollones descargan su caja. Mia se vuelve para "
+"dirigirse a ti, sin atreverse esta vez. \"Um, tenemos un pequeño problema "
+"aquí. Ya sabes, teníamos la intención de costear el viaje con el dinero del "
+"premio. Ahora no tenemos dinero del premio.\"\n"
+"Mientras tratas de decidir qué hacer con la situación, uno de los otros "
+"nerds se acerca sigilosamente por detrás de Mia y le hace un gesto cauteloso "
+"para que se una al grupo a unos metros de distancia, evitando todo el tiempo "
+"tus ojos. Un tipo extraño, piensas, como si no estuviera acostumbrado a "
+"socializar con extraños. Mia se une al grupo y se producen algunos "
+"cuchicheos. Mia vuelve hacia ti después de unos hectosegundos.\n"
+"    \"Bien, acabamos de resolver nuestro problema. Verás, ese imbécil de "
+"campeón ganó el concurso con una unidad de procesamiento de nave. Nosotros "
+"podemos hacerlo al revés. Modificaremos nuestra caja para que pueda usarse "
+"como sistema central de una nave, y podrás tenerla como compensación por tus "
+"problemas. ¿Interesado?\""
 
 #: dat/missions/neutral/diy-nerds.lua:290
 msgid "So what?"
-msgstr ""
+msgstr "¿Y qué dices?"
 
 #: dat/missions/neutral/diy-nerds.lua:290
 msgid ""
@@ -66806,6 +67005,9 @@ msgid ""
 "if you were a small child complaining about the finiteness of an ice cream "
 "cone. \"Just stand by while we rig the thing up.\""
 msgstr ""
+"\"Sinceramente, no hay nada que puedas hacer al respecto\", dice Mia con "
+"impaciencia, como si fueras un niño pequeño que se queja de la finura de un "
+"cono de helado. \"Sólo tienes que esperar mientras apañamos la cosa.\""
 
 #: dat/missions/neutral/diy-nerds.lua:292
 msgid ""
@@ -66823,6 +67025,19 @@ msgid ""
 "think you should visit an outfitter to see if the homemade core system may "
 "actually be of any use, or if you can at least sell it."
 msgstr ""
+"\"Puedes esperar, no tardará más de medio período\", te informa Mia. Te "
+"quedas parado mientras los nerds empiezan a modificar su caja. Mientras lo "
+"hacen, te preguntas si en realidad la están destrozando y tal vez te quedes "
+"con un pedazo de chatarra sin valor.\n"
+"    Finalmente, te ponen la caja modificada delante de ti. \"Aquí tienes. "
+"Ahora eres el orgulloso propietario del único sistema base casero del "
+"sistema. Es un poco más voluminoso de lo que esperábamos, con este apaño "
+"para el suministro de energía y refrigerante, debería funcionar bien, más o "
+"menos como el {outfit}. Tenemos que irnos ahora y pensar en algo más "
+"avanzado para la próxima competición. Que tengas un buen día.\"\n"
+"    Con eso, los nerds se van. Al no haber sacado nada más de esto, piensas "
+"que deberías visitar a un equipador para ver si el sistema base casero puede "
+"servir de algo, o si al menos puedes venderlo."
 
 #. to check if the assets in the current system have at least _amount_ of _service_
 #. helper functions, used repeatedly
@@ -66858,13 +67073,15 @@ msgstr ""
 #. mission details
 #: dat/missions/neutral/drunkard.lua:36 dat/missions/neutral/drunkard.lua:61
 msgid "Drunkard"
-msgstr ""
+msgstr "Borracho"
 
 #: dat/missions/neutral/drunkard.lua:36
 msgid ""
 "You see a drunkard at the bar mumbling about how he was so close to getting "
 "his break."
 msgstr ""
+"Ves a un borracho en el bar murmurando que estuvo muy cerca de conseguir su "
+"descanso."
 
 #: dat/missions/neutral/drunkard.lua:50
 msgid ""
@@ -66875,48 +67092,56 @@ msgid ""
 "help me out? You can help me! It'll be good for you. It'll be good for me. "
 "It'll be good for everyone! Will you help me?\""
 msgstr ""
+"Te sientas junto al hombre borracho en la barra y le escuchas casi sollozar "
+"en su bebida. \"¡He estado tan cerca! ¡Casi lo tenía! Podía sentirlo en mis "
+"manos. Y entonces lo estropeé todo. ¿Por qué lo hice? ¡Oye, espera! ¡Tú! ¡"
+"Puedes ayudarme!\" El hombre te agarra del cuello. \"¿Te gustaría ganar un "
+"poco de dinero y ayudarme? ¡Puedes ayudarme! Será bueno para ti. Será bueno "
+"para mí. Será bueno para todos. ¿Me ayudarás?\""
 
 #: dat/missions/neutral/drunkard.lua:54 dat/missions/neutral/drunkard.lua:86
 #: dat/missions/trader/anxiousmerchant.lua:78
 #: dat/missions/zalek/zlk_cargorun.lua:55
 #: dat/missions/zalek/zlk_cargorun.lua:87
 msgid "No Room"
-msgstr ""
+msgstr "Sin Espacio"
 
 #: dat/missions/neutral/drunkard.lua:54 dat/missions/neutral/drunkard.lua:86
 #: dat/missions/trader/anxiousmerchant.lua:78
 #: dat/missions/zalek/zlk_cargorun.lua:55
 #: dat/missions/zalek/zlk_cargorun.lua:87
 msgid "You don't have enough cargo space to accept this mission."
-msgstr ""
+msgstr "No tienes suficiente espacio de carga para aceptar esta misión."
 
 #: dat/missions/neutral/drunkard.lua:62
 msgid "More than it's worth!"
-msgstr ""
+msgstr "¡Más de lo que vale!"
 
 #: dat/missions/neutral/drunkard.lua:63
 msgid ""
 "You've decided to help some drunkard at the bar by picking up some goods for "
 "some countess. Though you're not sure why you accepted."
 msgstr ""
+"Has decidido ayudar a un borracho en el bar recogiendo algunas mercancías "
+"para una condesa. Aunque no estás seguro de por qué has aceptado."
 
 #. pickup
 #. OSD
 #: dat/missions/neutral/drunkard.lua:70
 msgid "Help the Drunkard"
-msgstr ""
+msgstr "Ayudar al borracho"
 
 #: dat/missions/neutral/drunkard.lua:71
 msgid "Go pick up some goods at {pnt} in the {sys} system"
-msgstr ""
+msgstr "Ve a recoger algunas mercancías en {pnt} en el sistema {sys}"
 
 #: dat/missions/neutral/drunkard.lua:72
 msgid "Drop off the goods at {pnt} in the {sys} system"
-msgstr ""
+msgstr "Deja la mercancía en {pnt} en el sistema {sys}"
 
 #: dat/missions/neutral/drunkard.lua:75
 msgid "Pick Up the Countess's Goods"
-msgstr ""
+msgstr "Recoge los Bienes de la Condesa"
 
 #: dat/missions/neutral/drunkard.lua:75
 msgid ""
@@ -66945,12 +67170,37 @@ msgid ""
 "You figure you better take off before the drinks he's had take any more hold "
 "on him, and the bottle sucks you in."
 msgstr ""
+"\"¡Oh, gracias a los ancestros! Sabía que me ayudarías\". El hombre se "
+"relaja considerablemente y te rodea con su brazo. \"Tómate una copa mientras "
+"te lo explico\", hace un gesto al camarero para que traiga dos bebidas. "
+"\"Verás, conozco a esta condesa. Ella es como... whoa... ¿sabes lo que "
+"quiero decir?\", te da un codazo. \"Pero es rica, como una flota de escolta "
+"personal rica, lanzaderas doradas, torretas láser de diamante rica.\n"
+"    Bueno, de vez en cuando necesita que le envíen algunas cosas que no "
+"puede pedir a su chófer para que se las traiga. Así que me pide que vaya a "
+"buscar este paquete. No sé lo que es; no pregunto; ella no me lo dice; así "
+"es como le gusta. Sin embargo, acababa de salir de una carrera de 72 horas "
+"por un espacio infestado de piratas. Así que decidí tomarme una o dos copas "
+"y descansar en un bar. Resultó que esos tragos o dos tuvieron un poco de "
+"procreación y se convirtieron en tres o doce. Tal vez veinte. No lo sé, pero "
+"no parecían gustarles demasiado mis partidas, ya que lo siguiente que supe "
+"fue que me estaba despertando con agua salpicada en la cara, diciéndome que "
+"me había metido en el calabozo, y que tenían mi nave, ¿sabes? Pero oye, todo "
+"lo que tienes que hacer es ir a recoger lo que sea que quiera en {pickup_pnt}"
+" en el sistema {pickup_sys}. Dudo que sea algo demasiado caliente, pero "
+"también dudo que sean gatitos y arco iris. Todo lo que te pido es el 25 por "
+"ciento. Así que ve a buscarlo, entrégalo a {dropoff_pnt} en el sistema "
+"{dropoff_sys}, y no hagas preguntas. Y si ella está allí cuando lo "
+"entregues, sólo dile que yo te envié. Y no la mires demasiado de frente, "
+"o... ya sabes lo que quiero decir\". Supones que será mejor que te vayas "
+"antes de que los tragos que ha tomado se apoderen más de él, y la botella te "
+"absorba."
 
 #. Not enough space
 #: dat/missions/neutral/drunkard.lua:91
 #: dat/missions/trader/anxiousmerchant.lua:112
 msgid "Deliver the Goods"
-msgstr ""
+msgstr "Entrega las Mercancias"
 
 #: dat/missions/neutral/drunkard.lua:91
 msgid ""
@@ -66960,14 +67210,20 @@ msgid ""
 "before motioning for the dockworkers to load up the cargo that's brought out "
 "after he punches in a code on his electronic pad."
 msgstr ""
+"Aterrizas en el planeta y le entregas al encargado de los muelles la hoja de "
+"reclamaciones arrugada que te dio el borracho, dándote cuenta ahora de que "
+"no crees que te haya dicho ni siquiera su nombre. El hombre mira la hoja y "
+"luego te dirige una mirada extraña antes de indicar a los estibadores que "
+"carguen la mercancía que han sacado después de introducir un código en su "
+"teclado electrónico."
 
 #: dat/missions/neutral/drunkard.lua:92
 msgid "Goods"
-msgstr ""
+msgstr "Mercancias"
 
 #: dat/missions/neutral/drunkard.lua:92
 msgid "A package of unknown goods for delivery to a countess."
-msgstr ""
+msgstr "Un paquete de mercancías desconocidas para entregar a una condesa."
 
 #. adds cargo
 #. destination
@@ -66975,7 +67231,7 @@ msgstr ""
 #: dat/missions/neutral/drunkard.lua:101
 #: dat/missions/zalek/zlk_cargorun.lua:102
 msgid "Success"
-msgstr ""
+msgstr "Éxito"
 
 #: dat/missions/neutral/drunkard.lua:101
 msgid ""
@@ -66994,15 +67250,30 @@ msgid ""
 "back onto your ship, you see a card laying on the floor with simply her "
 "name, Countess Amelia Vollana."
 msgstr ""
+"Finalmente llegas a tu destino, bajando tu nave a tierra justo al lado de "
+"una hermosa mujer de largos mechones rubios con un largo y extravagante "
+"vestido. Sabes que debe tratarse de la condesa, pero no estás seguro de cómo "
+"sabía que ibas a llegar, para estar esperándote. Cuando sales de tu nave, te "
+"das cuenta de que no hay trabajadores del muelle a la vista, sólo un grupo "
+"de milicianos privados fuertemente armados que no estaban allí cuando "
+"aterrizaste.\n"
+"    Tragas saliva cuando les hace un gesto sin mostrar un ápice de emoción. "
+"En formación, todos levantan sus armas. Cuando crees que tu vida está a "
+"punto de terminar, cada una de las filas se da la vuelta y suelta su arma, "
+"para luego marchar hacia adelante y descargar rápidamente tu carga en un "
+"pequeño transportador, y marchar. La condesa te sonríe y te guiña un ojo "
+"antes de marcharse. Respiras aliviado, pero te das cuenta de que no te ha "
+"pagado. Cuando vuelves a tu nave, ves una tarjeta tirada en el suelo con su "
+"nombre: Condesa Amelia Vollana."
 
 #: dat/missions/neutral/drunkard.lua:115
 msgid "Ol Bess"
-msgstr ""
+msgstr "Vieja Bess"
 
 #: dat/missions/neutral/drunkard.lua:124
 #: dat/missions/zalek/zlk_cargorun.lua:124
 msgid "Takeoff"
-msgstr ""
+msgstr "Despegue"
 
 #: dat/missions/neutral/drunkard.lua:124
 msgid ""
@@ -67012,10 +67283,15 @@ msgid ""
 "jump gate to get as far away from whatever you just dropped off, you see the "
 "flashing light of an incoming hail."
 msgstr ""
+"Mientras terminas los procedimientos de despegue y entras de nuevo en la "
+"fría oscuridad del espacio, no puedes evitar sentirte aliviado. Puede que no "
+"te hayan pagado, pero te alegras de seguir vivo. Justo cuando estás a punto "
+"de golpear la puerta de salto para alejarte lo máximo posible de lo que "
+"acabas de dejar, ves la luz parpadeante de un granizo que se acerca."
 
 #: dat/missions/neutral/drunkard.lua:130
 msgid "Drunkard's Call"
-msgstr ""
+msgstr "Llamada del Borracho"
 
 #: dat/missions/neutral/drunkard.lua:130
 msgid ""
@@ -67024,6 +67300,10 @@ msgid ""
 "worry about me, the countess has covered my portion just fine. I'm just glad "
 "to have Ol' Bessy here back.\""
 msgstr ""
+"\"Hola de nuevo. Soy Willie. Sólo vengo a informarte de que la condesa se ha "
+"hecho cargo de tu pago y lo ha transferido a tu cuenta. Y no te preocupes "
+"por mí, la condesa ha cubierto mi parte perfectamente. Me alegro de tener a "
+"la Vieja Bessy de vuelta.\""
 
 #. eventually I'll implement a bonus
 #. tk.msg( _("Bonus"), fmt.f(_([["Oh, and she put in a nice bonus for you of {credits} for such a speedy delivery."]]), {credits=fmt.credits(mem.bonus)} ) )
@@ -67032,7 +67312,7 @@ msgstr ""
 #: dat/missions/neutral/drunkard.lua:142
 #: dat/missions/zalek/zlk_cargorun.lua:144
 msgid "Check Account"
-msgstr ""
+msgstr "Chequea tu Cuenta"
 
 #: dat/missions/neutral/drunkard.lua:142
 msgid ""
@@ -67042,12 +67322,19 @@ msgid ""
 "just the 25 percent he was asking for, judging by his sunny disposition. At "
 "least you have your life though."
 msgstr ""
+"Compruebas el saldo de tu cuenta mientras él cierra el canal de comunicación "
+"y te encuentras con {credits} más ricos. El mero hecho de estar vivo te "
+"sienta bien, pero esto se siente mejor. No puedes evitar pensar que ella "
+"podría haberle dado algo más que el 25% que pedía, a juzgar por su alegre "
+"disposición. Sin embargo, al menos tienes tu vida."
 
 #: dat/missions/neutral/drunkard.lua:147
 msgid ""
 "You helped some drunkard deliver goods for some countess. You thought you "
 "might get killed along the way, but you survived and got a generous payment."
 msgstr ""
+"Ayudaste a un borracho a entregar mercancías para una condesa. Pensaste que "
+"te matarían por el camino, pero sobreviviste y recibiste un generoso pago."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -67210,7 +67497,7 @@ msgstr ""
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:58
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:62
 msgid "In the bar"
-msgstr ""
+msgstr "En el bar"
 
 #: dat/missions/neutral/dts_00.lua:67
 msgid ""
@@ -67232,35 +67519,38 @@ msgstr ""
 #: dat/missions/neutral/dts_00.lua:72 dat/missions/neutral/dts_01.lua:70
 #: dat/missions/neutral/dts_02.lua:72
 msgid "Volunteers"
-msgstr ""
+msgstr "Voluntarios"
 
 #: dat/missions/neutral/dts_00.lua:72
 msgid ""
 "You step forward and eight other pilots join you. Together, all of you march "
 "off to your ships and take off to face the pirate horde."
 msgstr ""
+"Das un paso al frente y otros ocho pilotos se unen a ti. Juntos, todos "
+"vosotros marcháis hacia vuestras naves y despegáis para enfrentaros a la "
+"horda de piratas."
 
 #: dat/missions/neutral/dts_00.lua:73 dat/missions/neutral/dts_01.lua:71
 #: dat/missions/neutral/dts_02.lua:73
 msgid "{credits} and the pleasure of serving the Empire."
-msgstr ""
+msgstr "{credits} y el placer de servir al Imperio."
 
 #: dat/missions/neutral/dts_00.lua:74 dat/missions/neutral/dts_01.lua:72
 #: dat/missions/neutral/dts_02.lua:74
 msgid "Defend the system against a pirate fleet."
-msgstr ""
+msgstr "Defiende al sistema contra una flota pirata."
 
 #: dat/missions/neutral/dts_00.lua:75 dat/missions/neutral/dts_01.lua:73
 #: dat/missions/neutral/dts_02.lua:75
 msgid "Defend the System"
-msgstr ""
+msgstr "Defiende al Sistema"
 
 #. hook an abstract deciding function to player entering a system
 #. hook warm reception to player landing
 #. If player didn't accept the mission, the battle's still on, but player has no stake.
 #: dat/missions/neutral/dts_00.lua:87 dat/missions/neutral/dts_01.lua:85
 msgid "Left behind"
-msgstr ""
+msgstr "Dejado atrás"
 
 #: dat/missions/neutral/dts_00.lua:87
 msgid ""
@@ -67270,33 +67560,38 @@ msgid ""
 "    \"Don't get your petticoats caught in the crossfire on your way out of "
 "atmo,\" he sneers. Then he turns to follow his volunteers."
 msgstr ""
+"Ocho pilotos dan un paso adelante. El resto se quedan mirando cómo salis por "
+"la puerta. El jefe de puerto lanza una mirada fulminante a los que se han "
+"quedado atrás.\n"
+"    \"No os dejéis atrapar por el fuego cruzado al salir de la atmósfera\", "
+"se burla. Luego se gira para seguir a sus voluntarios."
 
 #: dat/missions/neutral/dts_00.lua:89 dat/missions/neutral/dts_01.lua:87
 #: dat/missions/neutral/dts_02.lua:92
 msgid "No reward for you."
-msgstr ""
+msgstr "Sin recompensa para tí."
 
 #: dat/missions/neutral/dts_00.lua:90 dat/missions/neutral/dts_01.lua:88
 #: dat/missions/neutral/dts_02.lua:93
 msgid "Watch others defend the system."
-msgstr ""
+msgstr "Mira cómo otros defienden al sistema."
 
 #: dat/missions/neutral/dts_00.lua:91
 msgid "Watch the action."
-msgstr ""
+msgstr "Mira la acción."
 
 #. hook an abstract deciding function to player entering a system when not part of defense
 #. Decides what to do when player either takes off starting planet or jumps into another system
 #: dat/missions/neutral/dts_00.lua:107 dat/missions/neutral/dts_01.lua:105
 #: dat/missions/neutral/dts_02.lua:111
 msgid "You fled from the battle. The Empire won't forget."
-msgstr ""
+msgstr "Huiste de la batalla. El Imperio no lo olvidará."
 
 #. There's a battle to defend the system
 #: dat/missions/neutral/dts_00.lua:120 dat/missions/neutral/dts_01.lua:118
 #: dat/missions/neutral/dts_02.lua:124
 msgid "Raider"
-msgstr ""
+msgstr "Saqueador"
 
 #. Makes the system empty except for the two fleets. No help coming.
 #. Set up distances
@@ -67304,13 +67599,13 @@ msgstr ""
 #: dat/missions/neutral/dts_00.lua:138 dat/missions/neutral/dts_01.lua:136
 #: dat/missions/neutral/dts_02.lua:142
 msgid "Raider Hyena"
-msgstr ""
+msgstr "Hiena Saqueador"
 
 #. And a fleet of defending independents
 #: dat/missions/neutral/dts_00.lua:145 dat/missions/neutral/dts_01.lua:143
 #: dat/missions/neutral/dts_02.lua:149
 msgid "Defender"
-msgstr ""
+msgstr "Defensor"
 
 #. How the Battle ends:
 #. hook fleet departure to disabling or killing ships
@@ -67318,17 +67613,18 @@ msgstr ""
 #: dat/missions/neutral/dts_00.lua:163 dat/missions/neutral/dts_00.lua:187
 msgid "Good job, everyone. Let's get back planetside and get our reward."
 msgstr ""
+"Buen trabajo, a todos. Volvamos al planeta y obtengamos nuestra recompensa."
 
 #. Record each raider death and make the raiders flee after too many casualties
 #. A few seconds after the raiders start to flee declare victory
 #: dat/missions/neutral/dts_00.lua:179
 msgid "That's right, run away you cowards."
-msgstr ""
+msgstr "Eso es, huid, cobardes."
 
 #. The player lands to a warm welcome (if the job is done).
 #: dat/missions/neutral/dts_00.lua:193
 msgid "Welcome back"
-msgstr ""
+msgstr "Bienvenidos"
 
 #: dat/missions/neutral/dts_00.lua:193
 msgid ""
@@ -67342,10 +67638,21 @@ msgid ""
 "One of them kisses the master on both cheeks in the Goddard style, then the "
 "whole crowd moves toward the bar."
 msgstr ""
+"El jefe de puerto saluda a la multitud de voluntarios en la calzada del "
+"puerto espacial.\n"
+"    \"¡Bien hecho. Habéis hecho huir a esos piratas!\", exclama. \"Quizá "
+"ahora se lo piensen dos veces antes de volver a molestarnos. Espero que os "
+"sintáis orgullosos. Habéis ahorrado a este planeta millones en envíos y "
+"habéis salvado innumerables vidas. Y os habéis ganado una recompensa. Antes "
+"de que despeguen hoy, la autoridad portuaria os dará a cada uno cuarenta mil "
+"créditos. ¡Enhorabuena!\".\n"
+"    Tus compañeros lanzan una ovación y todos estrechan la mano del capitán "
+"del puerto. Uno de ellos besa al capitán en ambas mejillas al estilo "
+"Goddard, y luego toda la multitud se dirige hacia el bar."
 
 #: dat/missions/neutral/dts_00.lua:198
 msgid "Over drinks"
-msgstr ""
+msgstr "Sobre las bebidas"
 
 #: dat/missions/neutral/dts_00.lua:198
 msgid ""
@@ -67356,23 +67663,29 @@ msgid ""
 "    \"It's strange, though,\" he mutters. \"I've never seen pirates swarm "
 "like that before.\""
 msgstr ""
+"Muchos periodos después, la celebración ha terminado. Te encuentras bebiendo "
+"con un pequeño grupo de \"veteranos de la batalla de {sys}\", como lo llaman "
+"algunos de ellos. Un piloto mayor se sienta al otro lado de la mesa y mira "
+"fijamente tu bebida.\n"
+"    \"Es extraño\", murmura. \"Nunca había visto a los piratas formar un "
+"enjambre así.\""
 
 #: dat/missions/neutral/dts_00.lua:202 dat/missions/neutral/dts_01.lua:205
 #: dat/missions/neutral/dts_02.lua:258
 msgid "Not done yet."
-msgstr ""
+msgstr "Todavía no se ha acabado."
 
 #: dat/missions/neutral/dts_00.lua:202 dat/missions/neutral/dts_01.lua:205
 #: dat/missions/neutral/dts_02.lua:258
 msgid "The system isn't safe yet. Get back out there!"
-msgstr ""
+msgstr "El sistema aún no es seguro. ¡Vuelve a salir!"
 
 #. If any pirates still alive, send player back out.
 #. A fellow warrior says hello in passing if player jumps out of the system without landing
 #: dat/missions/neutral/dts_00.lua:214 dat/missions/neutral/dts_01.lua:218
 #: dat/missions/neutral/dts_02.lua:270
 msgid "Good job!"
-msgstr ""
+msgstr "¡Buen trabajo!"
 
 #: dat/missions/neutral/dts_00.lua:214
 msgid ""
@@ -67386,18 +67699,31 @@ msgid ""
 "grimly. \"It's strange, though. I've never seen pirates swarm that way "
 "before.\"\n"
 msgstr ""
+"Saltas de {sys} con el sudor aún corriendo por tu cara. La lucha para "
+"despejar el sistema fue breve pero intensa. Al cabo de un momento, otra nave "
+"entra en el mismo vector. Las marcas de las explosiones en los costados de "
+"su nave muestra que también viene del combate con los piratas. Su "
+"comunicador emite un pitido.\n"
+"    \"¡Buen vuelo, compañero. Tenemos a esos piratas en fuga!\", exclama el "
+"piloto. \"Tú tampoco querías volver a por el dinero, ¿eh? No te culpo. ¡Odio "
+"a los piratas, pero no quiero el dinero del Imperio!\" Sonríe de forma "
+"macabra. \"Es extraño, sin embargo. Nunca había visto a los piratas pulular "
+"de esa forma.\"\n"
 
 #: dat/missions/neutral/dts_00.lua:224 dat/missions/neutral/dts_01.lua:229
 msgid ""
 "Comm Trader> You're a coward, {player}. You better hope I never see you "
 "again."
 msgstr ""
+"Comm Comerciante > Eres un cobarde, {player}. Será mejor que no te vuelva a "
+"ver."
 
 #: dat/missions/neutral/dts_00.lua:226 dat/missions/neutral/dts_01.lua:231
 msgid ""
 "Comm Trader> You're running away now, {player}? The fight's finished, you "
 "know..."
 msgstr ""
+"Comm Comerciante> ¿Ahora huyes, {player}? La lucha ha terminado, ya sabes..."
 
 #: dat/missions/neutral/dts_01.lua:65
 msgid ""
@@ -67420,6 +67746,9 @@ msgid ""
 "before you board your ships. \"If you can't chase them off, you might at "
 "least improve the odds. Good luck.\""
 msgstr ""
+"\" Eliminad a todos los que puedas en la lucha rápidamente\", aconseja el "
+"Comodoro antes de subir a vuestras naves. \"Si no podéis ahuyentarlos, al "
+"menos podréis mejorar las probabilidades. Buena suerte.\""
 
 #: dat/missions/neutral/dts_01.lua:85
 msgid ""
@@ -67429,10 +67758,16 @@ msgid ""
 "me to do their dirty work for them?\" he shakes his head. \"It's going to be "
 "a hot ride out of the system though, with all that going on upstairs.\""
 msgstr ""
+"El Comodoro se da la vuelta y se marcha. Ocho hombres y mujeres la siguen, "
+"pero tú te quedas quieto.\n"
+"    Un hombre vestido con un mono en la mesa de al lado te saluda con la "
+"cabeza. \"¿Qué, esperan que les haga el trabajo sucio?\", sacude la cabeza. "
+"\"Aunque va a ser un viaje caliente fuera del sistema, con todo lo que está "
+"pasando arriba.\""
 
 #: dat/missions/neutral/dts_01.lua:89 dat/missions/neutral/dts_02.lua:94
 msgid "Observe the action."
-msgstr ""
+msgstr "Observa la acción."
 
 #. Set conditions for the end of the Battle:
 #. hook fleet departure to disabling or killing ships
@@ -67445,19 +67780,19 @@ msgstr ""
 #. Send in the second wave
 #: dat/missions/neutral/dts_01.lua:174 dat/missions/neutral/dts_02.lua:202
 msgid "We've got them on the run!"
-msgstr ""
+msgstr "¡Los tenemos en fuga!"
 
 #. When the raiders are on the run then the Empire takes over
 #. Call ships to base
 #: dat/missions/neutral/dts_01.lua:185
 msgid "Well done, pilots. Return to port."
-msgstr ""
+msgstr "Bien hecho, pilotos. Volvamos a puerto."
 
 #. Get a position near the player for late Empire re-enforcements
 #. The player lands to a warm welcome (if the job is done).
 #: dat/missions/neutral/dts_01.lua:199
 msgid "On the way in"
-msgstr ""
+msgstr "En el camino de entrada"
 
 #: dat/missions/neutral/dts_01.lua:199
 msgid ""
@@ -67466,10 +67801,14 @@ msgid ""
 "you and your fellow volunteers alight, she greets you with the portmaster by "
 "her side."
 msgstr ""
+"Mientras aterrizas, puedes distinguir la diminuta figura del Comodoro "
+"saludando a un pequeño grupo de personas a un lado de las plataformas de "
+"aterrizaje. Después de que tú y tus compañeros voluntarios bajéis, os saluda "
+"con el jefe de puerto a su lado."
 
 #: dat/missions/neutral/dts_01.lua:202
 msgid "Thank you"
-msgstr ""
+msgstr "Gracias"
 
 #: dat/missions/neutral/dts_01.lua:202
 msgid ""
@@ -67477,6 +67816,10 @@ msgid ""
 "all for your help. This gentleman has arranged a transfer of forty thousand "
 "credits to each of you. You can be proud of what you've done today.\""
 msgstr ""
+"\"Ha sido un buen vuelo\", dice el Comodoro con una apretada sonrisa. "
+"\"Gracias a todos por vuestra ayuda. Este caballero ha dispuesto una "
+"transferencia de cuarenta mil créditos para cada uno de ustedes. Pueden "
+"estar orgullosos de lo que han hecho hoy.\""
 
 #: dat/missions/neutral/dts_01.lua:218
 msgid ""
@@ -67491,6 +67834,16 @@ msgid ""
 "it's good to know there are good Samaritans like you who will step up. "
 "Thanks.\"\n"
 msgstr ""
+"Los escombros de la batalla desaparecen detrás de ti en un borrón de luz. Un "
+"momento después de salir del hiperespacio, una nave imperial salta detrás de "
+"ti y te llama.\n"
+"    \"Por favor, mantenga el rumbo y confirme su identidad, {ship}\".  "
+"Envías tu código de licencia y esperas un momento. \"De acuerdo, está bien. "
+"Sólo nos aseguramos de que ningún pirata haya escapado. Fuiste parte de la "
+"batalla, ¿no es así?  Me sorprende que no hayas vuelto por la recompensa, "
+"piloto. Escucha, aprecio lo que hiciste allá. Tengo familia en {pnt}. Cuando "
+"no estoy volando por encima, es bueno saber que hay buenos samaritanos como "
+"tú que dan un paso adelante. Gracias.\"\n"
 
 #: dat/missions/neutral/dts_02.lua:67
 msgid ""
@@ -67509,6 +67862,20 @@ msgid ""
 "School. If you feel the injustice of this family's loss, will you fly with "
 "us to avenge their son's death?\""
 msgstr ""
+"El tintineo sordo de las copas y el murmullo disperso de las conversaciones "
+"se extiende por el bar hasta que la puerta se abre de golpe. Una pareja "
+"mayor entra a trompicones, con las caras desencajadas y los ojos fijos. Dan "
+"unos pasos antes de que la mujer se arrodille y rompa a llorar.\n"
+"\"Nuestro hijo... su nave debía desembarcar hace un hectosegundo\", dice "
+"mecánicamente su pareja. \"Pero los piratas, de repente en todas partes-\" "
+"se atraganta al hablar. \"-no lo consiguio\".  Su mujer echa la cabeza hacia "
+"atrás y se lamenta.\n"
+"Dos jóvenes se levantan bruscamente de una mesa en el fondo de la sala y se "
+"acercan con rigidez. Uno se dirige a la afligida pareja mientras el otro se "
+"dirige a la sala.\n"
+"    \"Hay que detener a estos asaltantes. Somos cadetes de la Escuela de "
+"Vuelo Imperial. Si sienten la injusticia de la pérdida de esta familia, ¿"
+"volarán con nosotros para vengar la muerte de su hijo?\""
 
 #: dat/missions/neutral/dts_02.lua:72
 msgid ""
@@ -67517,13 +67884,17 @@ msgid ""
 "they have no organization. We can destroy them if you team up and focus your "
 "fire on one ship at a time.\""
 msgstr ""
+"\"Estos terroristas no pueden soportar muchas pérdidas\", explica uno de los "
+"jóvenes mientras tú y un grupo de otros voluntarios os preparáis para el "
+"despegue, y no tienen organización\". Podemos destruirlos si formáis un "
+"equipo y concentráis vuestro fuego en una nave cada vez.\""
 
 #. hook an abstract deciding function to player entering a system
 #. hook warm reception to player landing
 #. If player didn't accept the mission, the battle's still on, but player has no stake.
 #: dat/missions/neutral/dts_02.lua:88
 msgid "Not fighting"
-msgstr ""
+msgstr "No luchar"
 
 #: dat/missions/neutral/dts_02.lua:88
 msgid ""
@@ -67536,6 +67907,13 @@ msgid ""
 "    For long time, the two of them sit on the floor of the bar holding each "
 "other."
 msgstr ""
+"Te quedas junto a la afligida pareja mientras los dos cadetes conducen a un "
+"grupo de pilotos fuera del bar hacia el campo de aterrizaje.\n"
+"    \"¡Oh, no!\", grita de repente la mujer, mirando a la cara de su "
+"compañero. \"Se van a luchar. Esos jóvenes, ellos... habrá más muertes por "
+"nuestra culpa\".\n"
+"    Él asiente sombríamente. \"Así son las cosas\".\n"
+"    Durante mucho tiempo, los dos se sientan en el suelo del bar abrazados."
 
 #. A few seconds after victory, the system is back under control
 #.
@@ -67552,18 +67930,19 @@ msgstr ""
 #. When the raiders are on the run then the Empire takes over
 #: dat/missions/neutral/dts_02.lua:238 dat/missions/neutral/dts_02.lua:240
 msgid "Good flying, volunteers. The governor is waiting for us back in port."
-msgstr ""
+msgstr "Buen vuelo, voluntarios. El gobernador nos espera en el puerto."
 
 #: dat/missions/neutral/dts_02.lua:241
 msgid ""
 "Comm {pnt}> Good flying, volunteers. The governor is waiting for you back in "
 "port."
 msgstr ""
+"Comm {pnt} > Buen vuelo, voluntarios. El gobernador los espera en el puerto."
 
 #. The player lands to a warm welcome (if the job is done).
 #: dat/missions/neutral/dts_02.lua:248
 msgid "A public occasion"
-msgstr ""
+msgstr "Una ocasión pública"
 
 #: dat/missions/neutral/dts_02.lua:248
 msgid ""
@@ -67577,10 +67956,19 @@ msgid ""
 "to attach an microphone to his lapel. Then he turns to the news-casters and "
 "the crowd."
 msgstr ""
+"La noche está cayendo cuando aterrizas de nuevo en {pnt}. Con un aspecto "
+"solemne frente a una multitud que se reúne y a las grabadoras de noticias, "
+"un hombre corpulento de rostro carnoso se acerca a saludar a los "
+"supervivientes del combate. Un grupo de hombres y mujeres le siguen.\n"
+"    Cuando les estrecha la mano, el Gobernador les mira con atención y "
+"sonríe: \"Muy bien hecho\".\n"
+"Tras reunirse con cada uno de los pilotos supervivientes, el hombre alto se "
+"queda quieto para que un ayudante le ponga un micrófono en la solapa. Luego "
+"se dirige a los presentadores de las noticias y a la multitud."
 
 #: dat/missions/neutral/dts_02.lua:253
 msgid "The Governor's speech"
-msgstr ""
+msgstr "El discurso del Gobernador"
 
 #: dat/missions/neutral/dts_02.lua:253
 msgid ""
@@ -67599,6 +67987,22 @@ msgid ""
 "catch sight of the elderly couple from the bar holding each other and "
 "looking up into the darkening sky."
 msgstr ""
+"\"Incluso aquí en {pnt}, incluso en el abrazo protector de la civilización, "
+"nos enfrentamos a muchos peligros. Los lazos que nos unen a través del "
+"espacio con otros mundos son frágiles. Cuando los criminales atacan estas "
+"preciosas conexiones, amenazan los mismos cimientos de nuestra paz. Estamos "
+"agradecidos por la seguridad del Imperio, cuyos jóvenes cadetes de la marina "
+"han dirigido un equipo de pilotos independientes para defendernos hoy\".  El "
+"Gobernador se dirige a la pareja de oficiales en formación. \"En nombre del "
+"Emperador, tengo el privilegio de condecorar a estos dos jóvenes héroes con "
+"el Corazón de Plata. Espero que ellos, y sus voluntarios, no sean demasiado "
+"orgullosos para aceptar también una generosa recompensa, junto con la "
+"gratitud de todo nuestro pueblo. Por favor, únanse a mí para aplaudir su "
+"valentía\".\n"
+"    La ceremonia pública dura sólo unos hectosegundos. Después, mientras los "
+"entrevistadores apartan a los jóvenes oficiales de la marina y la multitud "
+"se dispersa, se ve a la pareja de ancianos del bar abrazados y mirando al "
+"cielo que se oscurece."
 
 #: dat/missions/neutral/dts_02.lua:270
 msgid ""
@@ -67611,6 +68015,14 @@ msgid ""
 "time. I wish the Empire would do something about it. Anyway, thank you for "
 "the information. Safe travels.\""
 msgstr ""
+"Un carguero te saluda mientras saltas al sistema.\n"
+"    \"Gracias por responder, {ship}. ¿Vienes de {sys}?  Tengo una entrega "
+"que necesito llevar a {pnt} y no puedo esperar mucho más. ¿Es el sistema "
+"seguro ahora?\"\n"
+"Relatas el resultado de la batalla espacial.\n"
+"    \"¡Oh, son buenas noticias! Estas incursiones son cada vez peores. Ojalá "
+"el Imperio hiciera algo al respecto. De todos modos, gracias por la "
+"información. Buen viaje.\""
 
 #. If the player aborts the mission, the Empire and Traders react
 #: dat/missions/neutral/dts_02.lua:283
@@ -67618,12 +68030,13 @@ msgid ""
 "Comm Lancelot> You're a coward, {player}. You better hope I never see you "
 "again."
 msgstr ""
+"Comm Lancelot > Eres un cobarde, {player}. Será mejor que no te vuelva a ver."
 
 #: dat/missions/neutral/dts_02.lua:285
 msgid ""
 "Comm Lancelot> You're running away now, {player}? The fight's finished, you "
 "know..."
-msgstr ""
+msgstr "Comm Lancelot > ¿Ahora huyes, {player}? La lucha ha terminado, sabes..."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -67652,11 +68065,11 @@ msgstr ""
 #. No system shall be claimed by mission
 #: dat/missions/neutral/foodbiz/delivercake.lua:33
 msgid "Familiar Face"
-msgstr ""
+msgstr "Cara Familiar"
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:33
 msgid "A familiar looking young woman is looking at you"
-msgstr ""
+msgstr "Una joven de aspecto familiar te está mirando"
 
 #. set up mission computer
 #: dat/missions/neutral/foodbiz/delivercake.lua:37
@@ -67666,7 +68079,7 @@ msgstr ""
 #: dat/missions/neutral/foodbiz/delivercake.lua:55
 #: dat/missions/neutral/foodbiz/delivercake.lua:59
 msgid "A Tasty Job"
-msgstr ""
+msgstr "Un Trabajo Sabroso"
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:37
 msgid ""
@@ -67676,10 +68089,15 @@ msgid ""
 "very exciting.\" She blushes. \"Anyway, Michal is trying to start a "
 "restaurant on {pnt}. Would you be interested in giving him a hand?\""
 msgstr ""
+"La mujer sonríe. \"¿No eres tú el piloto que me entregó esas dulces cartas "
+"de amor? Creo que sí. Me llamo Paddy. Siento no haberme presentado antes. "
+"Estaba atrapado en el momento; las cartas de Michal son siempre muy "
+"emocionantes\". Se sonroja. \"De todos modos, Michal está intentando montar "
+"un restaurante en {pnt}. ¿Te interesaría echarle una mano?\""
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:38
 msgid "\"Oh, that's too bad. I thought it was such a good idea, too...\""
-msgstr ""
+msgstr "\"Qué pena. Yo también pensaba que era una buena idea...\""
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:48
 msgid ""
@@ -67693,6 +68111,15 @@ msgid ""
 "you can't help but to spit it out in disgust. This is easily the most "
 "disgusting cake you've ever tasted. Well, as long as you get paid..."
 msgstr ""
+"\"¡Genial!\" dice Paddy con una sonrisa. Te entrega lo que parecen ser "
+"recetas. \"Sólo necesito que le entregues estas recetas. Ah, ¡y un poco de "
+"mi pastel casero! He metido el pastel en tu nave. No dudes en probarlo. ¡"
+"Está delicioso! De todos modos, Michal te pagará {credits} cuando llegues "
+"allí. Muchas gracias\".\n"
+"    Cuando llegas a tu nave, encuentras la bodega de carga repleta de "
+"pastel. Decides probar un poco, pero en cuanto entra en tu boca, no puedes "
+"evitar escupirlo con asco. Es el pastel más asqueroso que has probado nunca. "
+"Bueno, mientras te paguen..."
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:51
 msgid ""
@@ -67702,10 +68129,15 @@ msgid ""
 "it, so that's unfortunate. In any case, Michal will pay you {credits} when "
 "you arrive. Thank you so much!\""
 msgstr ""
+"\"¡Genial!\" dice Paddy con una sonrisa. Te entrega lo que parecen ser "
+"recetas. \"Sólo necesito que le entregues estas recetas. Esperaba entregarle "
+"también algún pastel, pero parece que tu nave no tiene suficiente espacio "
+"para ello, así que es una pena. En cualquier caso, Michal te pagará {credits}"
+" cuando llegues. ¡Muchas gracias!\""
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:57
 msgid "Deliver the recipes to Michal on {pnt} in the {sys} system."
-msgstr ""
+msgstr "Entrega las recetas a Michal en {pnt} en el sistema {sys}."
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:60
 #: dat/missions/neutral/foodbiz/deliverlove.lua:77
@@ -67713,7 +68145,7 @@ msgstr ""
 #: dat/missions/soromid/comingout/srm_comingout4.lua:64
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:74
 msgid "Fly to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Vuela a {pnt} en el sistema {sys}."
 
 #. set up hooks
 #: dat/missions/neutral/foodbiz/delivercake.lua:71
@@ -67724,6 +68156,12 @@ msgid ""
 "confirms your suspicion that he doesn't have a clue what he's doing. You "
 "bite your tongue, however, wishing him good luck as you take your pay."
 msgstr ""
+"Mientras Michal te quita las recetas y la tarta, no puedes evitar "
+"preguntarte lo rápido que fracasará su negocio con una comida tan mala como "
+"la tarta que has probado. Cuando comenta lo delicioso que le parece el "
+"pastel, se confirma tu sospecha de que no tiene ni idea de lo que está "
+"haciendo. Sin embargo, te muerdes la lengua y le deseas buena suerte "
+"mientras coges tu paga."
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:72
 msgid ""
@@ -67733,6 +68171,11 @@ msgid ""
 "attempt to start a restaurant, but with food as disgusting as that cake, "
 "you're sure the business will fail."
 msgstr ""
+"Has entregado un lote de la tarta más asquerosa que has probado en tu vida, "
+"así como las recetas para hacer dicha tarta a Michal, el hombre que antes te "
+"hizo entregar una tonelada literal de cartas de amor. Supuestamente se trata "
+"de un intento de abrir un restaurante, pero con comida tan asquerosa como "
+"ese pastel, estás seguro de que el negocio fracasará."
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:74
 msgid ""
@@ -67740,12 +68183,17 @@ msgid ""
 "is that you weren't able to taste Paddy's cake, which he says is delicious. "
 "You shrug it off and collect your pay."
 msgstr ""
+"Michal te quita las recetas alegremente y te dice que es una pena que no "
+"hayas podido probar el pastel de Paddy, que dice que está delicioso. Te "
+"encoges de hombros y recoges tu paga."
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:75
 msgid ""
 "You delivered recipes for making some kind of cake to Michal, the man who "
 "had you deliver a literal tonne of love letters before."
 msgstr ""
+"Entregaste recetas para hacer una especie de pastel a Michal, el hombre que "
+"antes te hizo entregar una tonelada literal de cartas de amor."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -67771,22 +68219,24 @@ msgstr ""
 #. --
 #: dat/missions/neutral/foodbiz/deliverlove.lua:28
 msgid "Love Letters"
-msgstr ""
+msgstr "Cartas de Amor"
 
 #: dat/missions/neutral/foodbiz/deliverlove.lua:29
 msgid "A cargo of feelings inked onto pulped, dried cellulose fibres."
 msgstr ""
+"Una carga de sentimientos entintados sobre fibras de celulosa pulidas y "
+"secas."
 
 #. Can get doubled, must be global!
 #. luacheck: globals land (Hook functions passed by name)
 #. No system shall be claimed by mission
 #: dat/missions/neutral/foodbiz/deliverlove.lua:39
 msgid "Old-Fashioned Man"
-msgstr ""
+msgstr "Hombre A La Antigua"
 
 #: dat/missions/neutral/foodbiz/deliverlove.lua:39
 msgid "A man sits in the corner of the bar, writing a letter."
-msgstr ""
+msgstr "Un hombre está sentado en la esquina del bar, escribiendo una carta."
 
 #. Introductions and a bit of bargaining
 #. look at you go, double the reward
@@ -67796,7 +68246,7 @@ msgstr ""
 #: dat/missions/neutral/foodbiz/deliverlove.lua:57
 #: dat/missions/neutral/foodbiz/deliverlove.lua:61
 msgid "Absence Makes The Heart Grow Fonder"
-msgstr ""
+msgstr "La Ausencia Hace Que El Corazón Se Haga Más Cariñoso"
 
 #: dat/missions/neutral/foodbiz/deliverlove.lua:46
 msgid ""
@@ -67808,6 +68258,14 @@ msgid ""
 "glance at the flowing hand writing, back at the man, and back at the paper. "
 "\"You wouldn't happen to be heading to {pnt} would you?\" he asks."
 msgstr ""
+"No puedes evitar preguntarte por qué el hombre de la esquina está "
+"escribiendo en papel en lugar de en un datapad. Cuando te acercas a la mesa, "
+"te indica que te sientes. \"Debes estar preguntándote por qué utiliza una "
+"forma tan anticuada de registrar la información\", comenta con una sonrisa. "
+"Tomas un sorbo de tu bebida mientras él continúa. \"Estoy escribiendo un "
+"poema a mi amada. Ella vive en {pnt}\". Miras la letra que fluye, vuelves a "
+"mirar al hombre y vuelves a mirar el papel. \"Por casualidad no te dirigirás "
+"a {pnt}, ¿verdad?\", pregunta."
 
 #: dat/missions/neutral/foodbiz/deliverlove.lua:50
 msgid ""
@@ -67817,6 +68275,11 @@ msgid ""
 "credits in it for you... say, {credits}?\" The man adds quickly with a "
 "hopeful expression. It seems like a low reward for a long journey..."
 msgstr ""
+"\"¡He oído que es un bonito lugar!\", exclama visiblemente emocionado. \"Oye"
+", a estas alturas he escrito una tonelada de estas cartas. No serías capaz "
+"de dejarlas, ¿verdad?\". Levanta una ceja. \"Habría unos cuantos créditos "
+"para ti... digamos, {credits}\". El hombre añade rápidamente con una "
+"expresión de esperanza. Parece una recompensa baja para un largo viaje..."
 
 #: dat/missions/neutral/foodbiz/deliverlove.lua:52
 msgid ""
@@ -67825,6 +68288,10 @@ msgid ""
 "himself would blush.\" You sigh and give the man a long pause before "
 "answering."
 msgstr ""
+"El hombre te agarra del brazo cuando empiezas a levantarte. \"Muy bien, ¿qué "
+"tal unos {credits}? Mira, no me gustaría que el Imperio leyera esto. El "
+"mismísimo Emperador se sonrojaría\". Suspiras y le das al hombre una larga "
+"pausa antes de responder."
 
 #: dat/missions/neutral/foodbiz/deliverlove.lua:57
 msgid ""
@@ -67833,20 +68300,25 @@ msgid ""
 "space for all of these,\" the man says. \"I will be in the bar if you free "
 "up some space.\" You didn't expect him to have a LITERAL tonne of letters..."
 msgstr ""
+"Compruebas la bodega de carga y te das cuenta de que está llena hasta los "
+"topes. \"¿No te he dicho que he escrito una tonelada de estas cartas? No "
+"tienes suficiente espacio para todas ellas\", dice el hombre. \"Estaré en el "
+"bar si liberas algo de espacio\". No esperabas que tuviera una LITERAL "
+"tonelada de cartas..."
 
 #: dat/missions/neutral/foodbiz/deliverlove.lua:61
 msgid "\"Ah, are you able to deliver my ton of letters for me now?\""
-msgstr ""
+msgstr "\"Ah, ¿eres capaz de entregar mi tonelada de cartas por mí ahora?\""
 
 #. Add Mission Cargo and set up the computer
 #: dat/missions/neutral/foodbiz/deliverlove.lua:72
 #: dat/missions/neutral/foodbiz/deliverlove.lua:76
 msgid "Deliver Love"
-msgstr ""
+msgstr "Entrega de Amor"
 
 #: dat/missions/neutral/foodbiz/deliverlove.lua:74
 msgid "Deliver love letters to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Entrega cartas de amor a {pnt} en el sistema {sys}."
 
 #. set up hooks
 #: dat/missions/neutral/foodbiz/deliverlove.lua:89
@@ -67857,12 +68329,19 @@ msgid ""
 "also seems like you forgot a letter in the ship, but there were enough that "
 "you don't think it will be missed."
 msgstr ""
+"Entregas las cartas a una joven que las coge emocionada y te da las gracias "
+"profusamente. Parece que le has alegrado el día. Cuando compruebas tu saldo, "
+"ves que se han transferido {credits} a tu cuenta. También parece que te "
+"olvidaste una carta en el barco, pero había las suficientes que no crees que "
+"se eche de menos."
 
 #: dat/missions/neutral/foodbiz/deliverlove.lua:91
 msgid ""
 "You delivered a literal tonne of letters for a love-struck, old-fashioned "
 "man."
 msgstr ""
+"Entregaste una tonelada literal de cartas para un hombre enamorado y "
+"anticuado."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -67897,16 +68376,20 @@ msgid ""
 "The two pirates seem to be talking rather quietly, but loud enough for you "
 "to overhear if you are careful."
 msgstr ""
+"Los dos piratas parecen estar hablando en voz baja, pero lo suficientemente "
+"alto como para que los escuches si tienes cuidado."
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:44
 msgid ""
 "The pirates have both drank their wallet's worth today, so eavesdropping "
 "shouldn't be too much of an issue."
 msgstr ""
+"Los piratas se han bebido hoy el valor de su cartera, así que las escuchas "
+"no deberían ser un gran problema."
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:52
 msgid "Help!"
-msgstr ""
+msgstr "¡Ayuda!"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:52
 msgid ""
@@ -67925,18 +68408,34 @@ msgid ""
 "Brooks, but now we need to find someone who will rescue our children. We've "
 "heard of your skills; will you please help us?\""
 msgstr ""
+"\"Hola {player}, ¡muchas gracias por responder a nuestra llamada! Nos "
+"vendría muy bien tu ayuda\", dice un hombre que suena demacrado a través del "
+"comunicador. \"Se trata de nuestros hijos, los de mi mujer y los míos. "
+"Estábamos de vacaciones en familia en Antica, y fuimos atacados por una "
+"banda de piratas...\"\n"
+"    \"Y pensó que podía volar más que ellos\", dice una voz de mujer. \"Mi "
+"marido solía ser un poco piloto, pero eso fue cuando aún éramos novios. "
+"Volaba hasta el sistema Apez para verme. Antes de tener hijos...\" La mujer "
+"se interrumpe.\n"
+"    El hombre se apresura a hablar de nuevo. \"Los piratas inutilizaron "
+"nuestra nave y pensamos que estábamos perdidos, pero cuando nos abordaron, "
+"se llevaron a nuestros tres hijos y nos abandonaron. Intenté luchar contra "
+"ellos, pero tenían a mis hijos con cuchillos en el cuello... ¿qué podía "
+"hacer? Así que conseguimos un remolque de vuelta a Brooks, pero ahora "
+"necesitamos encontrar a alguien que rescate a nuestros hijos. Hemos oído "
+"hablar de tus habilidades; ¿podrías ayudarnos?\""
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:54
 msgid "Rescue those children!"
-msgstr ""
+msgstr "¡Rescata a esos niños!"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:54
 msgid "Politely refuse"
-msgstr ""
+msgstr "Negarse educadamente"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:59
 msgid "Another Time"
-msgstr ""
+msgstr "En Otra Ocasión"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:59
 msgid ""
@@ -67945,10 +68444,14 @@ msgid ""
 "pressing...\" Before the comm is cut you can hear the woman beginning to sob "
 "and the man consoling her."
 msgstr ""
+"Se puede oír que el hombre está bastante decepcionado. \"Estoy seguro de que "
+"tienes una buena razón para no querer ayudarnos. Quizás tengas algo más "
+"urgente...\" Antes de que se corte la comunicación, se oye a la mujer "
+"empezar a sollozar y al hombre consolarla."
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:67
 msgid "Thank you!"
-msgstr ""
+msgstr "¡Gracias!"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:67
 msgid ""
@@ -67965,6 +68468,18 @@ msgid ""
 "like it's all they know how to do. Before it gets really bad, you bid "
 "farewell, break communication, and get on your way."
 msgstr ""
+"Los dos padres comienzan inmediatamente a darte las gracias con profusión, "
+"dedicando unos cuantos hectosegundos a decirte lo mucho que aprecian tu "
+"ayuda. Al cabo de un rato, te das cuenta de que si estos niños van a ser "
+"rescatados en este ciclo, vas a tener que empezar cuanto antes. \"Sí, muy "
+"bien\", responde el padre. \"No hay que retrasar más de lo absolutamente "
+"necesario. No sé mucho, pero deberías poder espiar a algunos piratas en un "
+"bar. Se sabe que el bar de {sys} en {pnt} sirve a los piratas "
+"ocasionalmente, así que parar allí sería una buena medida. Esperaremos tu "
+"regreso. De nuevo, esto significa mucho para nosotros\". Antes de que te des "
+"cuenta, los dos padres están de nuevo en ello, dándote las gracias como si "
+"fuera lo único que saben hacer. Antes de que se ponga realmente mal, te "
+"despides, rompes la comunicación y sigues tu camino."
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:68
 #: dat/missions/neutral/kidnapped/traffic_00.lua:72
@@ -67972,11 +68487,11 @@ msgstr ""
 #: dat/missions/neutral/kidnapped/traffic_00.lua:129
 #: dat/missions/neutral/kidnapped/traffic_00.lua:194
 msgid "Kidnapped"
-msgstr ""
+msgstr "Secuestrados"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:69
 msgid "A Reunited Family"
-msgstr ""
+msgstr "Una Familia Reunida"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:70
 msgid ""
