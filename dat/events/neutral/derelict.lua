@@ -43,8 +43,7 @@ local mission_list = {
       repeatable = true,
       nolimit = true,
       cond = function ()
-         return false -- Disabled for now
-         --return not player.misnActive( "Point of Interest - Intro" ) and player.misnActive( "Point of Interest" ) < 3
+         return not player.misnActive( "Point of Interest - Intro" ) and (player.misnActive("Point of Interest") or 0) < 3
       end,
       func = function ()
          local poiintro = "Point of Interest - Intro"
