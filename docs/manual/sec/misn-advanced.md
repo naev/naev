@@ -2,6 +2,10 @@
 
 TODO
 
+### Dynamic Factions
+
+TODO
+
 ### Minigames
 
 TODO

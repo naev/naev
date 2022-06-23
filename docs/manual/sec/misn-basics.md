@@ -409,6 +409,10 @@ Claims can also be tested in an event/mission-neutral way with `naev.claimTest`.
 
 As missions and events are processed by `priority`, make sure to give higher priority to those that you want to be able to claim easier. Otherwise, they will have difficulties claiming systems and may never appear to the player. Minimizing the number of claims and cutting up missions and events into smaller parts is also a way to minimize the amount of claim collisions.
 
+### Mission Cargo
+
+TODO
+
 ### Ship Log
 
 The Ship Log is a framework that allows recording in-game events so that the player can easily access them later on. This is meant to help players that haven't logged in for a while or have forgotten what they have done in their game. The core API is in the [`shiplog` module](https://naev.org/api/modules/shiplog.html) and is a core library that is always loaded without the need to `require`. It consists of two functions:
