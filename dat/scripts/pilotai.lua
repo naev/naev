@@ -32,4 +32,17 @@ function pilotai.patrol( p, waypoints )
    m.loiter = math.huge
 end
 
+--[[
+   Makes the pilot go to a certain position and guard it. Note that this changes the AI of the pilot.
+
+      @tparam p Pilot to make guard.
+      @tparam Vec2 Position to guard.
+--]]
+function pilotai.guard( p, pos )
+   -- TODO try to figure out how to do this without having to change the AI. Probably a special task could handle it
+   p:changeAI( "guard" )
+   local m = p:memory()
+   m.guardpos = pos
+end
+
 return pilotai
