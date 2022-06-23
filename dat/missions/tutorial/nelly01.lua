@@ -116,9 +116,15 @@ function accept ()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
    vn.transition( tutnel.nelly.transition )
 
-   nel(fmt.f(_([[The lone individual lightens up when you near.
+   if var.peek("nelly_met") then
+      nel(fmt.f(_([[Nelly lightens up when you near her.
+"Hello again! I'm in a bit of a mess. You see, I was supposed to deliver some {cargo} to {pnt} in the {sys} system, but my ship broke down and I don't think I'll be able to deliver it any time soon. Would you be willing to help me take the cargo there and come back? I'll pay you your fair share."]]),
+         {cargo=cargo_type, pnt=mem.destpnt, sys=mem.destsys}))
+   else
+      nel(fmt.f(_([[The lone individual lightens up when you near her.
 "Say, you look like a pilot with a working ship. I'm in a bit of a mess. You see, I was supposed to deliver some {cargo} to {pnt} in the {sys} system, but my ship broke down and I don't think I'll be able to deliver it any time soon. Would you be willing to help me take the cargo there and come back? I'll pay you your fair share."]]),
-      {cargo=cargo_type, pnt=mem.destpnt, sys=mem.destsys}))
+         {cargo=cargo_type, pnt=mem.destpnt, sys=mem.destsys}))
+   end
 
    vn.menu{
       {_("Help them out"), "accept"},
@@ -143,23 +149,30 @@ function accept ()
       end
       doaccept = true
    end )
-   nel(_([["Great! My name is Nelly. Glad to make your acquaintance. I'll have the dock workers load up your ship and we can be off. This should be a piece of cake."
-They cock their head a bit at you.
-"Say, you wouldn't happen to be a novice pilot?"]]))
-   vn.menu{
-      {_([["Yes"]]), "novice_yes"},
-      {_([["No"]]), "novice_no"},
-   }
+   if var.peek("nelly_met") then
+      nel(_([["Great! I'll have the dock workers load up your ship and we can be off. This should be a piece of cake."]]))
+   else
+      nel(_([["Great! My name is Nelly. Glad to make your acquaintance. I'll have the dock workers load up your ship and we can be off. This should be a piece of cake."
+   They cock their head a bit at you.
+   "Say, you wouldn't happen to be a novice pilot?"]]))
+      vn.func( function ()
+         var.push( "nelly_met", true )
+      end )
+      vn.menu{
+         {_([["Yes"]]), "novice_yes"},
+         {_([["No"]]), "novice_no"},
+      }
 
-   vn.label("novice_yes")
-   nel(fmt.f(_([["I knew it! You seem to have a nice fresh aura around you. Reminds me of back in the day when I was starting out. Starting out can be a bit tricky, so I hope you don't mind if I give you some advice on the road."
-"For starters, if you haven't already, you should buy a #oLocal Map#0 that will help you get the directions to {sys}. You can buy it at the main landing window or the outfiting window. Anyway, Let's get going!"]]), {sys=mem.destsys}))
-   vn.done( tutnel.nelly.transition )
+      vn.label("novice_yes")
+      nel(fmt.f(_([["I knew it! You seem to have a nice fresh aura around you. Reminds me of back in the day when I was starting out. Starting out can be a bit tricky, so I hope you don't mind if I give you some advice on the road."
+   "For starters, if you haven't already, you should buy a #oLocal Map#0 that will help you get the directions to {sys}. You can buy it at the main landing window or the outfiting window. Anyway, Let's get going!"]]), {sys=mem.destsys}))
+      vn.done( tutnel.nelly.transition )
 
-   vn.label("novice_no")
-   nel(_([["Weird. I could have sworn you had some sort of new pilot aura around you. Must have been my imagination. Let's get going!"]]))
+      vn.label("novice_no")
+      nel(_([["Weird. I could have sworn you had some sort of new pilot aura around you. Must have been my imagination. Let's get going!"]]))
 
-   vn.done( tutnel.nelly.transition )
+      vn.done( tutnel.nelly.transition )
+   end
    vn.run()
 
    -- Check to see if truly accepted

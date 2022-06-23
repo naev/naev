@@ -43,7 +43,7 @@ function create ()
 
    mem.nbships, mem.credits = cens.calculateNb( mem.sys, {faction.get("Dvaered")} )
 
-   if player.misnDone( 'Helping Nelly Out 1' ) then
+   if var.peek("nelly_met") then
       misn.setNPC( tutnel.nelly.name, tutnel.nelly.portrait, _("Nelly has noticed you. Wait? Is she trying to infuse a sausage in her Vodka?") )
    else
       misn.setNPC( _("Pilot"), tutnel.nelly.portrait, _("Wait? Is this woman trying to infuse a sausage in her Vodka?") )
@@ -61,6 +61,9 @@ function accept()
       nel(fmt.f(_([["Hi, {player}! How do you do? How long have you been here in Dvaered space? Not so long, eh?"]]), {player=player.name()}))
    else
       nel(_([["Hi, I'm Nelly! Oh! I guess you are new to Dvaered space, right?"]]))
+      vn.func( function ()
+         var.push("nelly_met",true)
+      end )
    end
    nel(_([[Nelly puts her hands on the table and lifts herself up.
 "Do you want a good tip from an old skipper who has been sailing among the stars for cycles?"]]))

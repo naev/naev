@@ -23,10 +23,18 @@ local fmt = require "format"
 local der = require 'common.derelict'
 local poi = require "common.poi"
 local tut = require "common.tut"
+local tutnel= require "common.tut_nelly"
+local pir = require "common.pirate"
 local vn = require "vn"
 local lmisn = require "lmisn"
 
--- luacheck: globals enter enter_delay found board (Hook functions passed by name)
+-- luacheck: globals land approach_nelly enter enter_delay found board (Hook functions passed by name)
+
+--[[
+States
+   0: Mission start, POI is marked
+   1: Land and Nelly appears
+--]]
 
 function create ()
    local syscand = lmisn.getSysAtDistance( nil, 1, 3, function( sys )
@@ -119,11 +127,32 @@ function create ()
       _("Head to the location marked on your map"),
    } )
 
+   mem.state = 0
    mem.locked = true
 
    poi.misnSetup{ sys=mem.sys, found="found", risk=mem.risk }
 
    hook.enter( "enter" )
+   hook.land( "land" )
+end
+
+function land ()
+   local spb = spob.cur()
+   local f = spb:faction()
+   if spb:tags().restricted or not f or pir.factionIsPirate(f) then
+      return
+   end
+
+   local desc
+   if var.peek("nelly_met") then
+      desc = _("Nelly is motioning you to come join her at the table.")
+   else
+      desc = _("")
+   end
+   mem.npc_nel = misn.npcAdd( "approach_nelly", tutnel.nelly.name, tutnel.nelly.portrait, desc )
+end
+
+function approach_nelly ()
 end
 
 local nelly
