@@ -19,7 +19,7 @@ local function update( sp, dt )
    end
 
    if d.timer <= 0 then
-      local sz = 20 + 20*rnd.rnd()
+      local sz = 15 + 15*rnd.rnd()
 
       local ncol = naev.colour.new()
       local cs = d.colspread
