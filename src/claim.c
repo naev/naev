@@ -194,7 +194,7 @@ int claim_testSys( const Claim_t *claim, int sys )
  */
 void claim_destroy( Claim_t *claim )
 {
-   if (claim->active)
+   if (claim->active) {
       for (int i=0; i<array_size(claim->ids); i++) {
          StarSystem *sys = system_getIndex(claim->ids[i]);
          if (claim->exclusive)
@@ -202,11 +202,20 @@ void claim_destroy( Claim_t *claim )
          else
             sys->claims_soft--;
       }
+   }
    array_free( claim->ids );
 
-   if (claim->active)
-      for (int i=0; i<array_size(claim->strs); i++)
-         free( claim->strs[i] );
+   if (claim->active) {
+      for (int i=0; i<array_size(claim->strs); i++) {
+         for (int j=0; j<array_size(claimed_strs); j++) {
+            if (strcmp(claim->strs[i], claimed_strs[j])==0) {
+               array_erase( &claimed_strs, &claimed_strs[j], &claimed_strs[j+1] );
+               break;
+            }
+         }
+         free(claimed_strs[i]);
+      }
+   }
    array_free( claim->strs );
    free(claim);
 }
