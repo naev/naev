@@ -209,6 +209,7 @@ void claim_destroy( Claim_t *claim )
       for (int i=0; i<array_size(claim->strs); i++) {
          for (int j=0; j<array_size(claimed_strs); j++) {
             if (strcmp(claim->strs[i], claimed_strs[j])==0) {
+               free( claimed_strs[j] );
                array_erase( &claimed_strs, &claimed_strs[j], &claimed_strs[j+1] );
                break;
             }
