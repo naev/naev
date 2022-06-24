@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-06-23 21:18+0000\n"
+"PO-Revision-Date: 2022-06-24 21:19+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -25215,7 +25215,6 @@ msgid "Garten"
 msgstr "Garten"
 
 #: dat/ssys/gewirn.xml:2
-#, fuzzy
 msgid "Gewirn"
 msgstr "Gewirn"
 
@@ -25244,7 +25243,6 @@ msgid "Gruz"
 msgstr "Gruz"
 
 #: dat/ssys/gutter.xml:2
-#, fuzzy
 msgid "Gutter"
 msgstr "Canalón"
 
@@ -25301,16 +25299,14 @@ msgid "Herakin"
 msgstr "Herakin"
 
 #: dat/ssys/hideyoshis_star.xml:2
-#, fuzzy
 msgid "Hideyoshi's Star"
-msgstr "Estrella Hideyoshi"
+msgstr "Estrella de Hideyoshi"
 
 #: dat/ssys/humdrum.xml:2
 msgid "Humdrum"
 msgstr "Humdrum"
 
 #: dat/ssys/hystera.xml:2
-#, fuzzy
 msgid "Hystera"
 msgstr "Hystera"
 
@@ -25323,72 +25319,58 @@ msgid "Ingot"
 msgstr "Lingote"
 
 #: dat/ssys/iris.xml:2
-#, fuzzy
 msgid "Iris"
 msgstr "Iris"
 
 #: dat/ssys/jackson.xml:2
-#, fuzzy
 msgid "Jackson"
 msgstr "Jackson"
 
 #: dat/ssys/jade.xml:2
-#, fuzzy
 msgid "Jade"
 msgstr "Jade"
 
 #: dat/ssys/jervis.xml:2
-#, fuzzy
 msgid "Jervis"
 msgstr "Jervis"
 
 #: dat/ssys/jommel.xml:2
-#, fuzzy
 msgid "Jommel"
 msgstr "Jommel"
 
 #: dat/ssys/kansas.xml:2
-#, fuzzy
 msgid "Kansas"
 msgstr "Kansas"
 
 #: dat/ssys/karman.xml:2
-#, fuzzy
 msgid "Karman"
 msgstr "Karman"
 
 #: dat/ssys/katami.xml:2
-#, fuzzy
 msgid "Katami"
 msgstr "Katami"
 
 #: dat/ssys/kelvos.xml:2
-#, fuzzy
 msgid "Kelvos"
 msgstr "Kelvos"
 
 #: dat/ssys/khaas.xml:2
-#, fuzzy
 msgid "Khaas"
 msgstr "Khaas"
 
 #: dat/ssys/kiwi.xml:2
-#, fuzzy
 msgid "Kiwi"
 msgstr "Kiwi"
 
 #: dat/ssys/klantar.xml:2
-#, fuzzy
 msgid "Klantar"
 msgstr "Klantar"
 
 #: dat/ssys/klintus.xml:2
-#, fuzzy
 msgid "Klintus"
 msgstr "Klintus"
 
 #: dat/ssys/klunzar.xml:2
-#, fuzzy
 msgid "Klunzar"
 msgstr "Klunzar"
 
@@ -25397,62 +25379,50 @@ msgid "Knave"
 msgstr "Bribón"
 
 #: dat/ssys/kobopos.xml:2
-#, fuzzy
 msgid "Kobopos"
 msgstr "Kobopos"
 
 #: dat/ssys/kohler.xml:2
-#, fuzzy
 msgid "Kohler"
 msgstr "Kohler"
 
 #: dat/ssys/koralis.xml:2
-#, fuzzy
 msgid "Koralis"
 msgstr "Koralis"
 
 #: dat/ssys/korifa.xml:2
-#, fuzzy
 msgid "Korifa"
 msgstr "Korifa"
 
 #: dat/ssys/korma.xml:2
-#, fuzzy
 msgid "Korma"
 msgstr "Korma"
 
 #: dat/ssys/kraft.xml:2
-#, fuzzy
 msgid "Kraft"
 msgstr "Kraft"
 
 #: dat/ssys/kretogg.xml:2 dat/events/discovery.lua:133
-#, fuzzy
 msgid "Kretogg"
 msgstr "Kretogg"
 
 #: dat/ssys/ksher.xml:2
-#, fuzzy
 msgid "Ksher"
 msgstr "Ksher"
 
 #: dat/ssys/kyo.xml:2
-#, fuzzy
 msgid "Kyo"
 msgstr "Kyo"
 
 #: dat/ssys/lapis.xml:2
-#, fuzzy
 msgid "Lapis"
 msgstr "Lapis"
 
 #: dat/ssys/lazuli.xml:2
-#, fuzzy
 msgid "Lazuli"
 msgstr "Lazuli"
 
 #: dat/ssys/limbo.xml:2
-#, fuzzy
 msgid "Limbo"
 msgstr "Limbo"
 
@@ -25461,76 +25431,62 @@ msgid "Longbow"
 msgstr "Arcolargo"
 
 #: dat/ssys/machea.xml:2
-#, fuzzy
 msgid "Machea"
 msgstr "Machea"
 
 #: dat/ssys/marat.xml:2
-#, fuzzy
 msgid "Marat"
 msgstr "Marat"
 
 #: dat/ssys/margarita.xml:2
-#, fuzzy
 msgid "Margarita"
 msgstr "Margarita"
 
 #: dat/ssys/maron.xml:2
-#, fuzzy
 msgid "Maron"
 msgstr "Maron"
 
 #: dat/ssys/mason.xml:2
-#, fuzzy
 msgid "Mason"
 msgstr "Mason"
 
 #: dat/ssys/massia.xml:2
-#, fuzzy
 msgid "Massia"
 msgstr "Massia"
 
 #: dat/ssys/maus.xml:2
-#, fuzzy
 msgid "Maus"
 msgstr "Maus"
 
 #: dat/ssys/merisi.xml:2
-#, fuzzy
 msgid "Merisi"
 msgstr "Merisi"
 
 #: dat/ssys/metsys.xml:2
-#, fuzzy
 msgid "Metsys"
 msgstr "Metsys"
 
 #: dat/ssys/mida.xml:2
-#, fuzzy
 msgid "Mida"
 msgstr "Mida"
 
 #: dat/ssys/midoros.xml:2
-#, fuzzy
 msgid "Midoros"
 msgstr "Midoros"
 
 #: dat/ssys/millstone.xml:2
-#, fuzzy
 msgid "Millstone"
-msgstr "Millstone"
+msgstr "Piedra de Moler"
 
 #: dat/ssys/mirror.xml:2
 msgid "Mirror"
 msgstr "Espejo"
 
 #: dat/ssys/mizar.xml:2
-#, fuzzy
 msgid "Mizar"
 msgstr "Mizar"
 
 #: dat/ssys/modus_manis.xml:2
-#, fuzzy
 msgid "Modus Manis"
 msgstr "Modus Manis"
 
@@ -25543,52 +25499,42 @@ msgid "Moor"
 msgstr "Páramo"
 
 #: dat/ssys/moordra.xml:2
-#, fuzzy
 msgid "Moordra"
 msgstr "Moordra"
 
 #: dat/ssys/muirat.xml:2
-#, fuzzy
 msgid "Muirat"
 msgstr "Muirat"
 
 #: dat/ssys/mural.xml:2
-#, fuzzy
 msgid "Mural"
 msgstr "Mural"
 
 #: dat/ssys/muran.xml:2
-#, fuzzy
 msgid "Muran"
 msgstr "Muran"
 
 #: dat/ssys/myad.xml:2
-#, fuzzy
 msgid "Myad"
 msgstr "Myad"
 
 #: dat/ssys/narousse.xml:2
-#, fuzzy
 msgid "Narousse"
 msgstr "Narousse"
 
 #: dat/ssys/nartur.xml:2
-#, fuzzy
 msgid "Nartur"
 msgstr "Nartur"
 
 #: dat/ssys/nasona.xml:2
-#, fuzzy
 msgid "Nasona"
 msgstr "Nasona"
 
 #: dat/ssys/nava.xml:2
-#, fuzzy
 msgid "Nava"
 msgstr "Nava"
 
 #: dat/ssys/neexi.xml:2
-#, fuzzy
 msgid "Neexi"
 msgstr "Neexi"
 
@@ -25597,202 +25543,162 @@ msgid "Neon"
 msgstr "Neón"
 
 #: dat/ssys/newmarch.xml:2
-#, fuzzy
 msgid "Newmarch"
 msgstr "Newmarch"
 
 #: dat/ssys/ngc1001.xml:2
-#, fuzzy
 msgid "NGC-1001"
 msgstr "NGC-1001"
 
 #: dat/ssys/ngc10180.xml:2
-#, fuzzy
 msgid "NGC-10180"
 msgstr "NGC-10180"
 
 #: dat/ssys/ngc10452.xml:2
-#, fuzzy
 msgid "NGC-10452"
 msgstr "NGC-10452"
 
 #: dat/ssys/ngc10789.xml:2
-#, fuzzy
 msgid "NGC-10789"
 msgstr "NGC-10789"
 
 #: dat/ssys/ngc10907.xml:2
-#, fuzzy
 msgid "NGC-10907"
 msgstr "NGC-10907"
 
 #: dat/ssys/ngc1098.xml:2
-#, fuzzy
 msgid "NGC-1098"
 msgstr "NGC-1098"
 
 #: dat/ssys/ngc11231.xml:2
-#, fuzzy
 msgid "NGC-11231"
 msgstr "NGC-11231"
 
 #: dat/ssys/ngc11444.xml:2
-#, fuzzy
 msgid "NGC-11444"
 msgstr "NGC-11444"
 
 #: dat/ssys/ngc11718.xml:2
-#, fuzzy
 msgid "NGC-11718"
 msgstr "NGC-11718"
 
 #: dat/ssys/ngc11935.xml:2
-#, fuzzy
 msgid "NGC-11935"
 msgstr "NGC-11935"
 
 #: dat/ssys/ngc12056.xml:2
-#, fuzzy
 msgid "NGC-12056"
 msgstr "NGC-12056"
 
 #: dat/ssys/ngc12654.xml:2
-#, fuzzy
 msgid "NGC-12654"
 msgstr "NGC-12654"
 
 #: dat/ssys/ngc12882.xml:2
-#, fuzzy
 msgid "NGC-12882"
 msgstr "NGC-12882"
 
 #: dat/ssys/ngc1292.xml:2
-#, fuzzy
 msgid "NGC-1292"
 msgstr "NGC-1292"
 
 #: dat/ssys/ngc1317.xml:2
-#, fuzzy
 msgid "NGC-1317"
 msgstr "NGC-1317"
 
 #: dat/ssys/ngc13322.xml:2
-#, fuzzy
 msgid "NGC-13322"
 msgstr "NGC-13322"
 
 #: dat/ssys/ngc13674.xml:2
-#, fuzzy
 msgid "NGC-13674"
 msgstr "NGC-13674"
 
 #: dat/ssys/ngc13798.xml:2
-#, fuzzy
 msgid "NGC-13798"
 msgstr "NGC-13798"
 
 #: dat/ssys/ngc14479.xml:2
-#, fuzzy
 msgid "NGC-14479"
 msgstr "NGC-14479"
 
 #: dat/ssys/ngc1562.xml:2
-#, fuzzy
 msgid "NGC-1562"
 msgstr "NGC-1562"
 
 #: dat/ssys/ngc1872.xml:2
-#, fuzzy
 msgid "NGC-1872"
 msgstr "NGC-1872"
 
 #: dat/ssys/ngc1931.xml:2
-#, fuzzy
 msgid "NGC-1931"
 msgstr "NGC-1931"
 
 #: dat/ssys/ngc2175.xml:2
-#, fuzzy
 msgid "NGC-2175"
 msgstr "NGC-2175"
 
 #: dat/ssys/ngc2232.xml:2
-#, fuzzy
 msgid "NGC-2232"
 msgstr "NGC-2232"
 
 #: dat/ssys/ngc23.xml:2
-#, fuzzy
 msgid "NGC-23"
 msgstr "NGC-23"
 
 #: dat/ssys/ngc2601.xml:2
-#, fuzzy
 msgid "NGC-2601"
 msgstr "NGC-2601"
 
 #: dat/ssys/ngc2836.xml:2
-#, fuzzy
 msgid "NGC-2836"
 msgstr "NGC-2836"
 
 #: dat/ssys/ngc2948.xml:2
-#, fuzzy
 msgid "NGC-2948"
 msgstr "NGC-2948"
 
 #: dat/ssys/ngc2954.xml:2
-#, fuzzy
 msgid "NGC-2954"
 msgstr "NGC-2954"
 
 #: dat/ssys/ngc3219.xml:2
-#, fuzzy
 msgid "NGC-3219"
 msgstr "NGC-3219"
 
 #: dat/ssys/ngc3371.xml:2
-#, fuzzy
 msgid "NGC-3371"
 msgstr "NGC-3371"
 
 #: dat/ssys/ngc3858.xml:2
-#, fuzzy
 msgid "NGC-3858"
 msgstr "NGC-3858"
 
 #: dat/ssys/ngc4087.xml:2
-#, fuzzy
 msgid "NGC-4087"
 msgstr "NGC-4087"
 
 #: dat/ssys/ngc4131.xml:2
-#, fuzzy
 msgid "NGC-4131"
 msgstr "NGC-4131"
 
 #: dat/ssys/ngc4637.xml:2
-#, fuzzy
 msgid "NGC-4637"
 msgstr "NGC-4637"
 
 #: dat/ssys/ngc4746.xml:2
-#, fuzzy
 msgid "NGC-4746"
 msgstr "NGC-4746"
 
 #: dat/ssys/ngc4771.xml:2
-#, fuzzy
 msgid "NGC-4771"
 msgstr "NGC-4771"
 
 #: dat/ssys/ngc5240.xml:2
-#, fuzzy
 msgid "NGC-5240"
 msgstr "NGC-5240"
 
 #: dat/ssys/ngc5483.xml:2
-#, fuzzy
 msgid "NGC-5483"
 msgstr "NGC-5483"
 
@@ -25801,132 +25707,106 @@ msgid "NGC-5631"
 msgstr ""
 
 #: dat/ssys/ngc5838.xml:2
-#, fuzzy
 msgid "NGC-5838"
 msgstr "NGC-5838"
 
 #: dat/ssys/ngc6057.xml:2
-#, fuzzy
 msgid "NGC-6057"
 msgstr "NGC-6057"
 
 #: dat/ssys/ngc7061.xml:2
-#, fuzzy
 msgid "NGC-7061"
 msgstr "NGC-7061"
 
 #: dat/ssys/ngc7078.xml:2
-#, fuzzy
 msgid "NGC-7078"
 msgstr "NGC-7078"
 
 #: dat/ssys/ngc728.xml:2
-#, fuzzy
 msgid "NGC-728"
 msgstr "NGC-728"
 
 #: dat/ssys/ngc7402.xml:2
-#, fuzzy
 msgid "NGC-7402"
 msgstr "NGC-7402"
 
 #: dat/ssys/ngc7533.xml:2
-#, fuzzy
 msgid "NGC-7533"
 msgstr "NGC-7533"
 
 #: dat/ssys/ngc7784.xml:2
-#, fuzzy
 msgid "NGC-7784"
 msgstr "NGC-7784"
 
 #: dat/ssys/ngc7786.xml:2
-#, fuzzy
 msgid "NGC-7786"
 msgstr "NGC-7786"
 
 #: dat/ssys/ngc8338.xml:2
-#, fuzzy
 msgid "NGC-8338"
 msgstr "NGC-8338"
 
 #: dat/ssys/ngc8468.xml:2
-#, fuzzy
 msgid "NGC-8468"
 msgstr "NGC-8468"
 
 #: dat/ssys/ngc9017.xml:2
-#, fuzzy
 msgid "NGC-9017"
 msgstr "NGC-9017"
 
 #: dat/ssys/ngc902.xml:2
-#, fuzzy
 msgid "NGC-902"
 msgstr "NGC-902"
 
 #: dat/ssys/ngc9415.xml:2
-#, fuzzy
 msgid "NGC-9415"
 msgstr "NGC-9415"
 
 #: dat/ssys/ngc9654.xml:2
-#, fuzzy
 msgid "NGC-9654"
 msgstr "NGC-9654"
 
 #: dat/ssys/ngc9897.xml:2
-#, fuzzy
 msgid "NGC-9897"
 msgstr "NGC-9897"
 
 #: dat/ssys/ngcg5882.xml:2
-#, fuzzy
 msgid "NGCG-5882"
 msgstr "NGCG-5882"
 
 #: dat/ssys/niger.xml:2
-#, fuzzy
 msgid "Niger"
 msgstr "Niger"
 
 #: dat/ssys/nixon.xml:2
-#, fuzzy
 msgid "Nixon"
 msgstr "Nixon"
 
 #: dat/ssys/norn.xml:2
-#, fuzzy
 msgid "Norn"
 msgstr "Norn"
 
 #: dat/ssys/norpin.xml:2
-#, fuzzy
 msgid "Norpin"
 msgstr "Norpin"
 
 #: dat/ssys/nougat.xml:2
-#, fuzzy
 msgid "Nougat"
 msgstr "Nougat"
 
 #: dat/ssys/nunavut.xml:2
-#, fuzzy
 msgid "Nunavut"
 msgstr "Nunavut"
 
 #: dat/ssys/octantis.xml:2
-#, fuzzy
 msgid "Octantis"
 msgstr "Octantis"
 
 #: dat/ssys/octavian.xml:2
-#, fuzzy
 msgid "Octavian"
 msgstr "Octavian"
 
 #: dat/ssys/ogat.xml:2
-#, fuzzy
 msgid "Ogat"
 msgstr "Ogat"
 
@@ -25939,12 +25819,10 @@ msgid "Opal"
 msgstr "Ópalo"
 
 #: dat/ssys/oriantis.xml:2
-#, fuzzy
 msgid "Oriantis"
 msgstr "Oriantis"
 
 #: dat/ssys/orion.xml:2
-#, fuzzy
 msgid "Orion"
 msgstr "Orion"
 
@@ -25953,12 +25831,10 @@ msgid "Overture"
 msgstr "Apertura"
 
 #: dat/ssys/palin.xml:2
-#, fuzzy
 msgid "Palin"
 msgstr "Palin"
 
 #: dat/ssys/palovi.xml:2
-#, fuzzy
 msgid "Palovi"
 msgstr "Palovi"
 
@@ -25967,42 +25843,34 @@ msgid "Paradox"
 msgstr "Paradoja"
 
 #: dat/ssys/pas.xml:2
-#, fuzzy
 msgid "Pas"
 msgstr "Pas"
 
 #: dat/ssys/pastor.xml:2
-#, fuzzy
 msgid "Pastor"
 msgstr "Pastor"
 
 #: dat/ssys/pellmell.xml:2
-#, fuzzy
 msgid "Pellmell"
 msgstr "Pellmell"
 
 #: dat/ssys/penn.xml:2
-#, fuzzy
 msgid "Penn"
 msgstr "Penn"
 
 #: dat/ssys/peogas.xml:2
-#, fuzzy
 msgid "Peogas"
 msgstr "Peogas"
 
 #: dat/ssys/percival.xml:2
-#, fuzzy
 msgid "Percival"
 msgstr "Percival"
 
 #: dat/ssys/perhelion.xml:2
-#, fuzzy
 msgid "Perhelion"
 msgstr "Perhelion"
 
 #: dat/ssys/peter.xml:2
-#, fuzzy
 msgid "Peter"
 msgstr "Peter"
 
@@ -26011,7 +25879,6 @@ msgid "Pike"
 msgstr "Pica"
 
 #: dat/ssys/pilatis.xml:2
-#, fuzzy
 msgid "Pilatis"
 msgstr "Pilatis"
 
@@ -26024,22 +25891,18 @@ msgid "Point Zero"
 msgstr "Punto Zero"
 
 #: dat/ssys/polack.xml:2
-#, fuzzy
 msgid "Polack"
 msgstr "Polack"
 
 #: dat/ssys/polaris.xml:2
-#, fuzzy
 msgid "Polaris"
 msgstr "Polaris"
 
 #: dat/ssys/poller.xml:2
-#, fuzzy
 msgid "Poller"
 msgstr "Poller"
 
 #: dat/ssys/poltergeist.xml:2
-#, fuzzy
 msgid "Poltergeist"
 msgstr "Poltergeist"
 
@@ -26048,7 +25911,6 @@ msgid "Pontus"
 msgstr "Pontus"
 
 #: dat/ssys/porro.xml:2
-#, fuzzy
 msgid "Porro"
 msgstr "Porro"
 
@@ -26061,87 +25923,70 @@ msgid "Procyon"
 msgstr "Procyon"
 
 #: dat/ssys/protera.xml:2
-#, fuzzy
 msgid "Protera"
 msgstr "Protera"
 
 #: dat/ssys/provectus_nova.xml:2
-#, fuzzy
 msgid "Provectus Nova"
 msgstr "Provectus Nova"
 
 #: dat/ssys/pso.xml:2
-#, fuzzy
 msgid "PSO"
 msgstr "PSO"
 
 #: dat/ssys/pudas.xml:2
-#, fuzzy
 msgid "Pudas"
 msgstr "Pudas"
 
 #: dat/ssys/pultatis.xml:2
-#, fuzzy
 msgid "Pultatis"
 msgstr "Pultatis"
 
 #: dat/ssys/qellan.xml:2
-#, fuzzy
 msgid "Qellan"
 msgstr "Qellan"
 
 #: dat/ssys/qex.xml:2
-#, fuzzy
 msgid "Qex"
 msgstr "Qex"
 
 #: dat/ssys/qorel.xml:2
-#, fuzzy
 msgid "Qorel"
 msgstr "Qorel"
 
 #: dat/ssys/quai.xml:2
-#, fuzzy
 msgid "Quai"
 msgstr "Quai"
 
 #: dat/ssys/qulam.xml:2
-#, fuzzy
 msgid "Qulam"
 msgstr "Qulam"
 
 #: dat/ssys/radix.xml:2
-#, fuzzy
 msgid "Radix"
 msgstr "Radix"
 
 #: dat/ssys/raelid.xml:2
-#, fuzzy
 msgid "Raelid"
 msgstr "Raelid"
 
 #: dat/ssys/ram.xml:2
-#, fuzzy
 msgid "Ram"
 msgstr "Ram"
 
 #: dat/ssys/rauthia.xml:2
-#, fuzzy
 msgid "Rauthia"
 msgstr "Rauthia"
 
 #: dat/ssys/regas.xml:2
-#, fuzzy
 msgid "Regas"
 msgstr "Regas"
 
 #: dat/ssys/regulus.xml:2
-#, fuzzy
 msgid "Regulus"
 msgstr "Regulus"
 
 #: dat/ssys/rei.xml:2
-#, fuzzy
 msgid "Rei"
 msgstr "Rei"
 
@@ -26150,7 +25995,6 @@ msgid "Reptile"
 msgstr "Reptil"
 
 #: dat/ssys/rhu.xml:2
-#, fuzzy
 msgid "Rhu"
 msgstr "Rhu"
 
@@ -26159,12 +26003,10 @@ msgid "Rockbed"
 msgstr "Lecho de roca"
 
 #: dat/ssys/rotide.xml:2
-#, fuzzy
 msgid "Rotide"
 msgstr "Rotide"
 
 #: dat/ssys/ruadan.xml:2
-#, fuzzy
 msgid "Ruadan"
 msgstr "Ruadan"
 
@@ -26173,12 +26015,10 @@ msgid "#pZa'lek Homeworld#0"
 msgstr "#pMundo Hogar Za'lek#0"
 
 #: dat/ssys/ruttwi.xml:2
-#, fuzzy
 msgid "Ruttwi"
 msgstr "Ruttwi"
 
 #: dat/ssys/ryder.xml:2
-#, fuzzy
 msgid "Ryder"
 msgstr "Ryder"
 
@@ -26187,7 +26027,6 @@ msgid "Sagittarius Prime"
 msgstr "Sagitario Prime"
 
 #: dat/ssys/salvador.xml:2
-#, fuzzy
 msgid "Salvador"
 msgstr "Salvador"
 
@@ -26196,7 +26035,6 @@ msgid "Sarcophagus"
 msgstr "Sarcófago"
 
 #: dat/ssys/sarrii.xml:2
-#, fuzzy
 msgid "Sarrii"
 msgstr "Sarrii"
 
@@ -26205,87 +26043,70 @@ msgid "Scarlet"
 msgstr "Escarlata"
 
 #: dat/ssys/seelie.xml:2
-#, fuzzy
 msgid "Seelie"
 msgstr "Seelie"
 
 #: dat/ssys/seiben.xml:2
-#, fuzzy
 msgid "Seiben"
 msgstr "Seiben"
 
 #: dat/ssys/seifer.xml:2
-#, fuzzy
 msgid "Seifer"
 msgstr "Seifer"
 
 #: dat/ssys/senara.xml:2
-#, fuzzy
 msgid "Senara"
 msgstr "Senara"
 
 #: dat/ssys/seport.xml:2
-#, fuzzy
 msgid "Seport"
 msgstr "Seport"
 
 #: dat/ssys/seran.xml:2
-#, fuzzy
 msgid "Seran"
 msgstr "Seran"
 
 #: dat/ssys/sergio_vix.xml:2
-#, fuzzy
 msgid "Sergio Vix"
 msgstr "Sergio Vix"
 
 #: dat/ssys/severus.xml:2
-#, fuzzy
 msgid "Severus"
 msgstr "Severus"
 
 #: dat/ssys/shakar.xml:2
-#, fuzzy
 msgid "Shakar"
 msgstr "Shakar"
 
 #: dat/ssys/sheffield.xml:2
-#, fuzzy
 msgid "Sheffield"
 msgstr "Sheffield"
 
 #: dat/ssys/shickhaw.xml:2
-#, fuzzy
 msgid "Shickhaw"
 msgstr "Shickhaw"
 
 #: dat/ssys/shikima.xml:2
-#, fuzzy
 msgid "Shikima"
 msgstr "Shikima"
 
 #: dat/ssys/shinnok.xml:2
-#, fuzzy
 msgid "Shinnok"
 msgstr "Shinnok"
 
 #: dat/ssys/sigur.xml:2
-#, fuzzy
 msgid "Sigur"
 msgstr "Sigur"
 
 #: dat/ssys/sikh.xml:2
-#, fuzzy
 msgid "Sikh"
 msgstr "Sikh"
 
 #: dat/ssys/sirou.xml:2
-#, fuzzy
 msgid "Sirou"
 msgstr "Sirou"
 
 #: dat/ssys/slaccid.xml:2
-#, fuzzy
 msgid "Slaccid"
 msgstr "Slaccid"
 
@@ -26327,27 +26148,22 @@ msgstr "Detective"
 #. -- Unique / Interesting systems
 #. --
 #: dat/ssys/sol.xml:2 dat/events/discovery.lua:39
-#, fuzzy
 msgid "Sol"
 msgstr "Sol"
 
 #: dat/ssys/solene.xml:2
-#, fuzzy
 msgid "Solene"
 msgstr "Solene"
 
 #: dat/ssys/sollav.xml:2
-#, fuzzy
 msgid "Sollav"
 msgstr "Sollav"
 
 #: dat/ssys/somard.xml:2
-#, fuzzy
 msgid "Somard"
 msgstr "Somard"
 
 #: dat/ssys/sonas.xml:2
-#, fuzzy
 msgid "Sonas"
 msgstr "Sonas"
 
@@ -26368,17 +26184,14 @@ msgid "Starlight End"
 msgstr "Fin de Luz Estelar"
 
 #: dat/ssys/stelman.xml:2
-#, fuzzy
 msgid "Stelman"
 msgstr "Stelman"
 
 #: dat/ssys/sten.xml:2
-#, fuzzy
 msgid "Sten"
 msgstr "Sten"
 
 #: dat/ssys/stint.xml:2
-#, fuzzy
 msgid "Stint"
 msgstr "Stint"
 
@@ -26391,22 +26204,18 @@ msgid "Straight Row"
 msgstr "Fila Recta"
 
 #: dat/ssys/suk.xml:2
-#, fuzzy
 msgid "Suk"
 msgstr "Suk"
 
 #: dat/ssys/sultan.xml:2
-#, fuzzy
 msgid "Sultan"
 msgstr "Sultan"
 
 #: dat/ssys/suna.xml:2
-#, fuzzy
 msgid "Suna"
 msgstr "Suna"
 
 #: dat/ssys/surano.xml:2
-#, fuzzy
 msgid "Surano"
 msgstr "Surano"
 
@@ -26415,13 +26224,11 @@ msgid "Sylph"
 msgstr "Sílfide"
 
 #: dat/ssys/symm.xml:2
-#, fuzzy
 msgid "Symm"
 msgstr "Symm"
 
 #: dat/ssys/taiomi.xml:2 dat/events/discovery.lua:91
 #: dat/scripts/common/taiomi.lua:28
-#, fuzzy
 msgid "Taiomi"
 msgstr "Taiomi"
 
@@ -26430,12 +26237,10 @@ msgid "#pShip Graveyard#0"
 msgstr "#pCementerio de Naves#0"
 
 #: dat/ssys/tandar.xml:2
-#, fuzzy
 msgid "Tandar"
 msgstr "Tandar"
 
 #: dat/ssys/tarmak.xml:2
-#, fuzzy
 msgid "Tarmak"
 msgstr "Tarmak"
 
@@ -26448,22 +26253,18 @@ msgid "Tartan"
 msgstr "Tartán"
 
 #: dat/ssys/telika.xml:2
-#, fuzzy
 msgid "Telika"
 msgstr "Telika"
 
 #: dat/ssys/teller.xml:2
-#, fuzzy
 msgid "Teller"
 msgstr "Teller"
 
 #: dat/ssys/tempus.xml:2
-#, fuzzy
 msgid "Tempus"
 msgstr "Tempus"
 
 #: dat/ssys/theras.xml:2
-#, fuzzy
 msgid "Theras"
 msgstr "Theras"
 
@@ -26480,37 +26281,30 @@ msgid "Tide"
 msgstr "Marea"
 
 #: dat/ssys/titus.xml:2
-#, fuzzy
 msgid "Titus"
 msgstr "Titus"
 
 #: dat/ssys/toaxis.xml:2
-#, fuzzy
 msgid "Toaxis"
 msgstr "Toaxis"
 
 #: dat/ssys/tobanna.xml:2
-#, fuzzy
 msgid "Tobanna"
 msgstr "Tobanna"
 
 #: dat/ssys/tomas.xml:2
-#, fuzzy
 msgid "Tomas"
 msgstr "Tomas"
 
 #: dat/ssys/torg.xml:2
-#, fuzzy
 msgid "Torg"
 msgstr "Torg"
 
 #: dat/ssys/tormulex.xml:2
-#, fuzzy
 msgid "Tormulex"
 msgstr "Tormulex"
 
 #: dat/ssys/toros.xml:2
-#, fuzzy
 msgid "Toros"
 msgstr "Toros"
 
@@ -26519,27 +26313,22 @@ msgid "Toxin"
 msgstr "Toxina"
 
 #: dat/ssys/trask.xml:2
-#, fuzzy
 msgid "Trask"
 msgstr "Trask"
 
 #: dat/ssys/triap.xml:2
-#, fuzzy
 msgid "Triap"
 msgstr "Triap"
 
 #: dat/ssys/trohem.xml:2
-#, fuzzy
 msgid "Trohem"
 msgstr "Trohem"
 
 #: dat/ssys/tuoladis.xml:2
-#, fuzzy
 msgid "Tuoladis"
 msgstr "Tuoladis"
 
 #: dat/ssys/uhriabi.xml:2
-#, fuzzy
 msgid "Uhriabi"
 msgstr "Uhriabi"
 
@@ -26560,22 +26349,18 @@ msgid "Urbanus"
 msgstr "Urbano"
 
 #: dat/ssys/urdads.xml:2
-#, fuzzy
 msgid "Urdads"
 msgstr "Urdads"
 
 #: dat/ssys/uridhrion.xml:2
-#, fuzzy
 msgid "Uridhrion"
 msgstr "Uridhrion"
 
 #: dat/ssys/ux.xml:2
-#, fuzzy
 msgid "Ux"
 msgstr "Ux"
 
 #: dat/ssys/valerie.xml:2
-#, fuzzy
 msgid "Valerie"
 msgstr "Valerie"
 
@@ -26588,47 +26373,38 @@ msgid "Vandal"
 msgstr "Vándalo"
 
 #: dat/ssys/vanir.xml:2
-#, fuzzy
 msgid "Vanir"
 msgstr "Vanir"
 
 #: dat/ssys/vauban.xml:2
-#, fuzzy
 msgid "Vauban"
 msgstr "Vauban"
 
 #: dat/ssys/vean.xml:2
-#, fuzzy
 msgid "Vean"
 msgstr "Vean"
 
 #: dat/ssys/vedalus.xml:2
-#, fuzzy
 msgid "Vedalus"
 msgstr "Vedalus"
 
 #: dat/ssys/vega.xml:2
-#, fuzzy
 msgid "Vega"
 msgstr "Vega"
 
 #: dat/ssys/verex.xml:2
-#, fuzzy
 msgid "Verex"
 msgstr "Verex"
 
 #: dat/ssys/vlexon.xml:2
-#, fuzzy
 msgid "Vlexon"
 msgstr "Vlexon"
 
 #: dat/ssys/volus.xml:2
-#, fuzzy
 msgid "Volus"
 msgstr "Volus"
 
 #: dat/ssys/vost.xml:2
-#, fuzzy
 msgid "Vost"
 msgstr "Vost"
 
@@ -26646,12 +26422,10 @@ msgid "Wolf"
 msgstr "Lobo"
 
 #: dat/ssys/woreck.xml:2
-#, fuzzy
 msgid "Woreck"
 msgstr "Woreck"
 
 #: dat/ssys/xeric.xml:2
-#, fuzzy
 msgid "Xeric"
 msgstr "Xeric"
 
@@ -26660,32 +26434,26 @@ msgid "Yarn"
 msgstr "Ovillo"
 
 #: dat/ssys/zacron.xml:2
-#, fuzzy
 msgid "Zacron"
 msgstr "Zacron"
 
 #: dat/ssys/zemur.xml:2
-#, fuzzy
 msgid "Zemur"
 msgstr "Zemur"
 
 #: dat/ssys/zerantix.xml:2
-#, fuzzy
 msgid "Zerantix"
 msgstr "Zerantix"
 
 #: dat/ssys/zied.xml:2
-#, fuzzy
 msgid "Zied"
 msgstr "Zied"
 
 #: dat/ssys/zintar.xml:2
-#, fuzzy
 msgid "Zintar"
 msgstr "Zintar"
 
 #: dat/ssys/zylex.xml:2
-#, fuzzy
 msgid "Zylex"
 msgstr "Zylex"
 
@@ -26694,7 +26462,6 @@ msgid "Sea of Darkness"
 msgstr "Mar de la Oscuridad"
 
 #: dat/start.xml:5
-#, fuzzy
 msgid "El Ego de Deiz"
 msgstr "El Ego de Deiz"
 
@@ -29761,7 +29528,6 @@ msgstr ""
 
 #. special_col, -- TODO new special condition
 #: dat/board.lua:80
-#, fuzzy
 msgid ""
 "{name}\n"
 "{desc}"
@@ -29778,7 +29544,6 @@ msgstr ""
 "#rIlegalizado por las siguientes facciones:\n"
 
 #: dat/board.lua:86
-#, fuzzy
 msgid ""
 "\n"
 "   - {fct}"
@@ -30970,7 +30735,6 @@ msgstr "El FLF ha destrozado este cartel Dvaered."
 #. Finish
 #. Create the vn scene
 #: dat/events/dvaered/poster.lua:53 dat/events/dvaered/poster.lua:87
-#, fuzzy
 msgid "Poster"
 msgstr "Poster"
 
@@ -30997,7 +30761,6 @@ msgid "Spectator"
 msgstr "Espectador"
 
 #: dat/events/dvaered/totoran.lua:27
-#, fuzzy
 msgid "Aficionado"
 msgstr "Aficionado"
 
@@ -32754,7 +32517,6 @@ msgstr ""
 #: dat/missions/minerva/kex5.lua:537 dat/missions/minerva/kex5.lua:564
 #: dat/missions/minerva/kex5.lua:607 dat/missions/minerva/kex5.lua:662
 #: dat/missions/minerva/kex5.lua:687
-#, fuzzy
 msgid "…"
 msgstr "…"
 
@@ -32835,7 +32597,6 @@ msgstr "\"¿Explorador intrépido...?\""
 #. Orangish
 #: dat/events/minerva/chicken_rendezvous.lua:131
 #: dat/scripts/common/minerva.lua:18 dat/scripts/common/minerva.lua:101
-#, fuzzy
 msgid "Kex"
 msgstr "Kex"
 
@@ -33410,7 +33171,6 @@ msgstr ""
 
 #. Create NPCs
 #: dat/events/minerva/station.lua:94
-#, fuzzy
 msgid "Blackjack"
 msgstr "Blackjack"
 
@@ -34196,7 +33956,6 @@ msgstr ""
 
 #: dat/events/neutral/baron_flintley.lua:26
 #: dat/missions/baron/baron_prince.lua:137
-#, fuzzy
 msgid "Flintley"
 msgstr "Flintley"
 
@@ -35731,7 +35490,6 @@ msgid "{pnt} in {sys}"
 msgstr "{pnt} en {sys}"
 
 #: dat/events/neutral/news.lua:592
-#, fuzzy
 msgid "{cargo}: {price}"
 msgstr "{cargo}: {price}"
 
@@ -38575,7 +38333,6 @@ msgid "Eclipse"
 msgstr "Eclipse"
 
 #: dat/events/start.lua:18
-#, fuzzy
 msgid "Exitprise"
 msgstr "Exitprise"
 
@@ -38716,7 +38473,6 @@ msgstr "Empiezas a leer los pasajes."
 #. Store old values
 #. New values
 #: dat/events/taiomi/find.lua:203
-#, fuzzy
 msgid "fonts/CoveredByYourGrace-Regular.ttf"
 msgstr "fonts/CoveredByYourGrace-Regular.ttf"
 
@@ -44981,7 +44737,7 @@ msgid ""
 "{tonnes} of free cargo"
 msgstr ""
 "Recoge a Hamfresser en {pnt} en {sys}. Utiliza una nave civil con al menos "
-"{tones} de carga libre"
+"{tonnes} de carga libre"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:92
 msgid "Meet Battleaddict around {pnt} in {sys}"
@@ -59409,7 +59165,6 @@ msgstr ""
 #: dat/missions/minerva/maikki1.lua:76 dat/missions/minerva/maikki2.lua:100
 #: dat/missions/shadow/shadowvigil.lua:61 src/faction.c:1042 src/faction.c:1056
 #: src/faction.c:1062 src/faction.c:1091
-#, fuzzy
 msgid "???"
 msgstr "???"
 
@@ -62495,7 +62250,7 @@ msgstr "Matones Dvaered"
 #: dat/missions/minerva/pirate1.lua:67
 msgid ""
 "You approach the sketchy individual who seems to be calling your attention."
-msgstr "Te acercas al individuo impreciso que parece llamar tu atención."
+msgstr "Te acercas al individuo sospechoso que parece llamar tu atención."
 
 #: dat/missions/minerva/pirate1.lua:68
 msgid ""
@@ -62603,7 +62358,7 @@ msgid ""
 "You accepted a job from a sketchy individual to harass Dvaered thugs in the "
 "Limbo system and make it seem like the Za'lek were involved."
 msgstr ""
-"Aceptaste un trabajo de un individuo dudoso para acosar a los matones "
+"Aceptaste un trabajo de un individuo sospechoso para acosar a los matones "
 "Dvaered en el sistema Limbo y hacer parecer que los Za'lek estaban "
 "involucrados."
 
@@ -62633,7 +62388,7 @@ msgid ""
 "character that gave you the job dealing with the Dvaered thugs."
 msgstr ""
 "Después de aterrizar en la Estación Minerva, te vuelve a saludar el "
-"personaje impreciso que te dio el trabajo de lidiar con los matones Dvaered."
+"personaje sospechoso que te dio el trabajo de lidiar con los matones Dvaered."
 
 #: dat/missions/minerva/pirate1.lua:122
 msgid ""
@@ -62755,7 +62510,7 @@ msgid ""
 "You approach the sketchy individual who seems to be calling your attention "
 "once again."
 msgstr ""
-"Te acercas al individuo impreciso que parece llamar tu atención una vez más."
+"Te acercas al individuo sospechoso que parece llamar tu atención una vez más."
 
 #: dat/missions/minerva/pirate2.lua:81
 msgid ""
@@ -62839,7 +62594,7 @@ msgid ""
 "character that gave you the job to clear the Za'lek drones."
 msgstr ""
 "Después de aterrizar en la Estación Minerva, vuelves a ser recibido por el "
-"personaje impreciso que te encargó la tarea de eliminar los drones Za'lek."
+"personaje sospechoso que te encargó la tarea de eliminar los drones Za'lek."
 
 #: dat/missions/minerva/pirate2.lua:129
 msgid ""
@@ -66040,15 +65795,15 @@ msgstr "Envío con prioridad a {pnt} en {sys} ({tonnes})."
 
 #: dat/missions/neutral/cargo_rush.lua:49
 msgid "Pressing cargo delivery to {pnt} in the {sys} system."
-msgstr "Envio con prisa de carga a {pnt} en {sys} ( {tonnes})."
+msgstr "Envio con prisa de carga a {pnt} en sistema {sys}."
 
 #: dat/missions/neutral/cargo_rush.lua:50
 msgid "Urgent cargo delivery to {pnt} in the {sys} system."
-msgstr "Envio urgente de carga a {pnt} en {sys} ({tonnes})."
+msgstr "Envio urgente de carga a {pnt} en sistema {sys}."
 
 #: dat/missions/neutral/cargo_rush.lua:51
 msgid "Emergency cargo delivery to {pnt} in the {sys} system."
-msgstr "Envío de emergencia de carga a {pnt} en {sys} ({tonnes})."
+msgstr "Envío de emergencia de carga a {pnt} en sistema {sys}."
 
 #: dat/missions/neutral/cargo_rush.lua:68
 msgid ""
@@ -66681,8 +66436,8 @@ msgid ""
 "Wait several periods in this system until hailed by the nerds for their "
 "return trip"
 msgstr ""
-"Espera varios periodos en este sistema hasta que eres llamado por los "
-"empollones para tu viaje de vuelta"
+"Espera varios periodos en este sistema hasta que eres llamado por los nerds "
+"para tu viaje de vuelta"
 
 #. late, right planet
 #: dat/missions/neutral/diy-nerds.lua:128
@@ -66979,7 +66734,7 @@ msgid ""
 "We'll modify our box so that it can be used as a ship's core system, and you "
 "can have it as a compensation for your troubles. Interested?\""
 msgstr ""
-"Con los hombros caídos, los empollones descargan su caja. Mia se vuelve para "
+"Con los hombros caídos, los nerds descargan su caja. Mia se vuelve para "
 "dirigirse a ti, sin atreverse esta vez. \"Um, tenemos un pequeño problema "
 "aquí. Ya sabes, teníamos la intención de costear el viaje con el dinero del "
 "premio. Ahora no tenemos dinero del premio.\"\n"
@@ -68498,10 +68253,12 @@ msgid ""
 "Search for the kidnapped children, then rescue the children and return them "
 "to their parents."
 msgstr ""
+"Busca a los niños secuestrados, rescata a los niños y devuélvelos a sus "
+"padres."
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:100
 msgid "Rumours"
-msgstr ""
+msgstr "Rumores"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:100
 msgid ""
@@ -68525,10 +68282,29 @@ msgid ""
 "    From that point you figure the conversation will not be picking up "
 "again, and having a lead you decide to take it."
 msgstr ""
+"Te sientas en una mesa adyacente a estos dos piratas, pides una bebida y "
+"tratas de pasar lo más desapercibido posible. Pillas a los piratas en plena "
+"conversación. \"...Y me dice: \"Te lo daré todo, por favor, déjame en paz\". "
+"Así que tome sus créditos, ¡y todo lo que obtengo son 2K! Está claro que me "
+"está ocultando algo, créeme, lo sé. Así que destrozo su nave, y qué sabes, "
+"realmente no tenía más. Es difícil ganar dinero hoy en día, a veces creo que "
+"tengo que dedicarme a otra cosa.\"\n"
+"    El otro pirata sentado allí responde con un brillo en los ojos: \"En "
+"realidad, he oído en el bar de {pnt} que se pueden hacer grandes cantidades "
+"haciendo un trabajo un poco más arriesgado. Sólo tienes que atrapar a "
+"algunos mocosos, y puedes venderlos por 15 grandes cada uno.\"\n"
+"    \"¿Tráfico de personas? De ninguna manera, hombre, ¡esas cosas me dan "
+"escalofríos!\" Responde el otro pirata.\n"
+"    \"Como quieras, tío\".\n"
+"    Tras una breve pausa, el primer pirata empieza a hablar: \"El otro día "
+"fui al médico y me dijo que ese sarpullido en la espalda es probablemente "
+"una reacción alérgica.\"\n"
+"    A partir de ese momento te das cuenta de que la conversación no va a "
+"retomarse, y teniendo una pista decides cogerla."
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:121
 msgid "The Dirt"
-msgstr ""
+msgstr "La Suciedad"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:121
 msgid ""
@@ -68551,26 +68327,45 @@ msgid ""
 "will never be able to save those children, and you don't even want to think "
 "what will happen to those children if you don't rescue them."
 msgstr ""
+"Ni siquiera te molestas en sentarte demasiado cerca de estos dos piratas "
+"teniendo en cuenta lo fuerte que están hablando. No tardas en escuchar lo "
+"que necesitas, ya que uno de los piratas está contando sus historias "
+"recientes al otro.\n"
+"    \"¡Así que este tonto pensó que podía volar más que yo en su patética "
+"Llama! Así que la desconecté en unos 2 segundos, me subí a la nave y me "
+"llevé a los niños. El tipo trató de defenderse, pero lo detuve lo "
+"suficientemente rápido. Entonces la mujer dijo que estaban de vacaciones, ¡"
+"como si me importara! ¡Ja! Los tontos creen que pueden molestarse en meterse "
+"conmigo cuando tengo trabajo que hacer.\n"
+"    \"Así que llevé a los niños al sistema {sys} donde fueron cargados en "
+"este Comerciante Koala llamado la Progenie. ¡Un nombre inteligente si me "
+"preguntas! Nadie se preguntará nunca qué lleva. Parece el tipo más inocente "
+"volando por ahí. Pero nadie sabe que está esperando para llenar su carga de "
+"mocosos.\"\n"
+"    Después de escuchar a esta basura, te dan ganas de ir allí y darle una "
+"buena paliza a ese pirata. Pero si te haces matar ahora nunca podrás salvar "
+"a esos niños, y no quieres ni pensar lo que les pasará a esos niños si no "
+"los rescatas."
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:129
 msgid "Fly to the {sys} system and disable (do not destroy) that Koala"
-msgstr ""
+msgstr "Vuela al sistema {sys} y desactiva (no destruyas) ese Koala"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:139
 msgid "Kidnappers"
-msgstr ""
+msgstr "Secuestradores"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:142
 msgid "Progeny"
-msgstr ""
+msgstr "Progenie"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:176
 msgid "You are damaging the goods! You are dead!"
-msgstr ""
+msgstr "¡Estás dañando la mercancía! ¡Estás muerto!"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:188
 msgid "You killed the children"
-msgstr ""
+msgstr "Has matado a los niños"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:188
 msgid ""
@@ -68580,10 +68375,15 @@ msgid ""
 "from them. If only you could rewind and try again; you know the next time "
 "you would be more cautious. If only it were so easy..."
 msgstr ""
+"Tras destruir a los secuestradores, también acabas de matar a los niños. "
+"Mientras te sientas en el espacio, con la cabeza apoyada en el salpicadero, "
+"una lágrima rueda por tu mejilla al pensar en los padres y en cómo les han "
+"robado a sus hijos para siempre. Si pudieras rebobinar e intentarlo de "
+"nuevo, sabes que la próxima vez serías más precavido. Si fuera tan fácil..."
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:193
 msgid "You did it!"
-msgstr ""
+msgstr "¡Lo has conseguido!"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:193
 msgid ""
@@ -68596,23 +68396,32 @@ msgid ""
 "tip of the iceberg, too. Either way, it's time to head back to {pnt} and "
 "reunite the parents with their children."
 msgstr ""
+"Después de inutilizar la nave, tú y tu pequeña tripulación entráis "
+"preparados para la lucha. Pero cuando subes al pequeño Koala, sólo "
+"encuentras a dos hombres que lo custodian, y resulta que no están preparados "
+"para luchar en absoluto. Pueden pilotar una nave, pero luchar no es su "
+"fuerte. Después de atarlos, vas a la bodega de carga para rescatar a los "
+"niños. Cuando llegas allí, encuentras algunos más que tres; ¡probablemente "
+"haya un par de docenas! Probablemente todo esto sea sólo la punta del "
+"iceberg. En cualquier caso, es hora de volver a {pnt} y reunir a los padres "
+"con sus hijos."
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:194
 msgid "Return the children to the {sys} system on planet {pnt}"
-msgstr ""
+msgstr "Devuelve los niños al sistema {sys} en el planeta {pnt}"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:198
 msgid "Children"
-msgstr ""
+msgstr "Niños"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:198
 msgid "The rescued children."
-msgstr ""
+msgstr "Los niños rescatados."
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:208
 #: dat/missions/neutral/kidnapped/traffic_00.lua:210
 msgid "Reunited"
-msgstr ""
+msgstr "Reunidos"
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:208
 msgid ""
@@ -68631,6 +68440,20 @@ msgid ""
 "afraid for now it's the best I can do. If there is anything I can ever do "
 "for you, feel free to ask me, my friend.\""
 msgstr ""
+"Cuando sales de la cubierta de aterrizaje con un par de docenas de niños a "
+"cuestas, los dos padres con los que hablaste por comunicación corren hacia "
+"ti. Por detrás, oyes a unos cuantos niños gritar: \"¡Mamá! ¡Papá!\". Tres "
+"niños se abren paso hacia el frente y los padres y los niños se reúnen en un "
+"gran grupo de abrazos, besos, lágrimas y sonrisas de oreja a oreja.\n"
+"    Tú y los demás niños os quedáis a un lado y observáis uno de los "
+"reencuentros más bonitos que hayáis visto nunca. Al cabo de un rato, el "
+"padre se acerca a ti, se limpia una lágrima de la mejilla y te abraza. Al "
+"soltarte y secarse los ojos, te dice: \"Muchas gracias, {player}. No tienes "
+"ni idea de lo que esto significa para nosotros. Me encantaría poder "
+"recompensarte de alguna manera, pero no tengo ni idea de cómo puedo hacerlo "
+"ahora mismo. Has rescatado a mis hijos y me los has devuelto. Agradecer no "
+"es suficiente, pero me temo que por ahora es lo mejor que puedo hacer. Si "
+"hay algo que pueda hacer por ti, no dudes en pedírmelo, amigo mío.\""
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:210
 msgid ""
@@ -68653,6 +68476,25 @@ msgid ""
 "    You watch her return to her family. A child jumps into her arms, and you "
 "climb up into your ship."
 msgstr ""
+"Le aseguras que no pasa nada y que no dudarás en aceptar su oferta. Al cabo "
+"de un rato, la sonrisa desaparece de su rostro. \"¿Ves lo feliz que es mi "
+"familia? Pues mira a todos estos otros niños que están aquí y que siguen "
+"separados de sus padres. Quiero devolverlos a todos a casa. También me "
+"gustaría luchar contra todo este tráfico de personas, pero eso requerirá "
+"mucha planificación. Por ahora, quiero estar con mi familia. Pero vuelve "
+"pronto si estás dispuesto. Me gustaría organizar algo\".\n"
+"    El padre vuelve con sus hijos, y mientras tú empiezas a caminar de "
+"vuelta a tu nave te das cuenta de que el padre y la madre prodigan a sus "
+"hijos amor. Miras a los otros niños que están sentados alrededor, "
+"contemplando a la amorosa familia con envidia. Suspirando, empiezas a subir "
+"a tu nave cuando la madre corre hacia ti: \"{player}, ¡espera un segundo! "
+"Sabemos tu nombre, pero tú no sabes el nuestro. Soy Janice\". Mientras mira "
+"a su marido, que está hablando animadamente con los niños, sonríe. \"Mi "
+"marido se llama Andrew. Gracias por todo\". Una lágrima rueda por su cara "
+"mientras te mira con sus brillantes ojos color avellana y te besa en la "
+"mejilla.\n"
+"    La ves volver con su familia. Un niño salta a sus brazos y tú subes a tu "
+"nave."
 
 #: dat/missions/neutral/kidnapped/traffic_00.lua:213
 msgid ""
@@ -68662,6 +68504,12 @@ msgid ""
 "fight the human trafficking problem directly and invited you to meet them "
 "again in the future on Brooks if you're willing to aid them in this quest."
 msgstr ""
+"Has rescatado con éxito a un par de docenas de niños secuestrados por una "
+"red de tráfico de menores después de que dos padres te pidieran ayuda para "
+"rescatar a sus propios hijos. Dichos padres dijeron que les gustaría hacer "
+"un esfuerzo para luchar directamente contra el problema de la trata de "
+"personas y te invitaron a reunirte con ellos en el futuro en Brooks si estás "
+"dispuesto a ayudarles en esta búsqueda."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -68704,11 +68552,11 @@ msgstr ""
 #. Spaceport bar stuff
 #: dat/missions/neutral/kidnapped/traffic_01.lua:57
 msgid "Ordinary Woman"
-msgstr ""
+msgstr "Mujer Ordinaria"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:57
 msgid "The woman waves at you a bit desperately."
-msgstr ""
+msgstr "La mujer te saluda un poco desesperada."
 
 #.
 #. Mission entry point.
@@ -68718,7 +68566,7 @@ msgstr ""
 #: dat/missions/neutral/kidnapped/traffic_01.lua:66
 #: dat/missions/neutral/kidnapped/traffic_01.lua:94
 msgid "In the Bar"
-msgstr ""
+msgstr "En el Bar"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:66
 msgid ""
@@ -68726,15 +68574,20 @@ msgid ""
 "don't have a ship and he is the only family I have left. Could you please "
 "help me?\""
 msgstr ""
+"\"¡Debo encontrar a mi querido hermano! Por favor, ayúdame. Creo que está en "
+"peligro. No tengo nave y él es la única familia que me queda. ¿Podría "
+"ayudarme, por favor?\""
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:67
 msgid "Sorry, I can't"
-msgstr ""
+msgstr "Lo siento, no puedo"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:67
 msgid ""
 "\"How can you be such a heartless person? What has this universe become?...\""
 msgstr ""
+"\"¿Cómo puedes ser una persona tan despiadada? ¿En qué te ha convertido este "
+"universo?...\""
 
 #. Some variables for keeping track of the mission
 #. Set mission details
@@ -68742,20 +68595,21 @@ msgstr ""
 #: dat/missions/neutral/kidnapped/traffic_01.lua:83
 #: dat/missions/neutral/kidnapped/traffic_01.lua:143
 msgid "The Lost Brother"
-msgstr ""
+msgstr "El Hermano Perdido"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:80
 msgid "Some money and a happy sister."
-msgstr ""
+msgstr "Algo de dinero y una hermana feliz."
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:81
 msgid "Locate the brother in the {1} system, the {2} system, or the {3} system"
 msgstr ""
+"Localiza al hermano en el sistema {1}, en el sistema {2} o en el sistema {3}"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:85
 #: dat/missions/neutral/kidnapped/traffic_01.lua:145
 msgid "Hail the Poppy Seed and board it to reunite the siblings"
-msgstr ""
+msgstr "Llama a la Semilla de Amapola y abórdala para reunir a los hermanos"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:94
 msgid ""
@@ -68765,6 +68619,11 @@ msgid ""
 "    And please hurry. Someone was sent to assassinate him. I don't have much "
 "to give, but whatever I have saved, you can have.\""
 msgstr ""
+"La mujer se tranquiliza cuando le indicas tu voluntad de ayudar. \"¡Oh, "
+"menos mal! Me han dicho dónde suele estar. Por favor, lléveme allí y dígale "
+"que tengo que hablar con él.\n"
+"    Y por favor, date prisa. Han enviado a alguien para asesinarle. No tengo "
+"mucho que dar, pero todo lo que tengo ahorrado, puedes tenerlo.\""
 
 #. Set hooks
 #. gets the nearest jumppoint from a pilot
@@ -68776,16 +68635,16 @@ msgstr ""
 #. if we visited a system without the brother: update OSD
 #: dat/missions/neutral/kidnapped/traffic_01.lua:139
 msgid "Locate the brother in the {1} system or the {2} system"
-msgstr ""
+msgstr "Localiza al hermano en el sistema {1} o en el sistema {2}"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:141
 msgid "Locate the brother in the {1} system"
-msgstr ""
+msgstr "Localiza al hermano en el sistema {1}"
 
 #. update OSD
 #: dat/missions/neutral/kidnapped/traffic_01.lua:153
 msgid "Poppy Seed"
-msgstr ""
+msgstr "Semilla de Amapola"
 
 #. fast Gawain
 #. just some moving around, stolen from baron missions ;D
@@ -68794,7 +68653,7 @@ msgstr ""
 #. if hailed: stop vessel let it be boarded
 #: dat/missions/neutral/kidnapped/traffic_01.lua:183
 msgid "Comm Channel"
-msgstr ""
+msgstr "Canal de Comunicación"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:183
 msgid ""
@@ -68802,12 +68661,16 @@ msgid ""
 "that she has a message for him.\n"
 "    \"My sister? What the heck could she want from me? Prepare for docking.\""
 msgstr ""
+"Llamas por radio a la nave con un mensaje diciendo que tienes a su hermana a "
+"bordo y que ella tiene un mensaje para él.\n"
+"    \"¿Mi hermana? ¿Qué diablos podría querer de mí? Prepárense para acople."
+"\""
 
 #. send ship to nearest jumppoint to escape, spawn baddies that might frighten you of from chasing
 #. get nearest jumppoints and let ship escape in this direction
 #: dat/missions/neutral/kidnapped/traffic_01.lua:200
 msgid "The Deception"
-msgstr ""
+msgstr "El Engaño"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:200
 msgid ""
@@ -68818,6 +68681,12 @@ msgid ""
 "    You find an arrangement of credit chips she left in your ship along with "
 "a note: \"Sorry.\""
 msgstr ""
+"La mujer se sitúa a tu lado mientras se abre la esclusa. Ves que la sonrisa "
+"del hombre se convierte en una expresión de desconcierto, y luego oyes el "
+"sonido de un blaster. Antes de que te des cuenta de lo que ha ocurrido, la "
+"mujer pasa corriendo junto a ti y cierra la esclusa.\n"
+"Encuentras un conjunto de chips de créditos que ella dejó en tu nave junto "
+"con una nota: \"Lo siento.\""
 
 #. turn mercs hostile
 #: dat/missions/neutral/kidnapped/traffic_01.lua:208
@@ -68827,26 +68696,32 @@ msgid ""
 "killed him and ran off, leaving behind an arrangement of credit chips and a "
 "note that simply said, \"Sorry.\""
 msgstr ""
+"Te han engañado para que ayudes en un asesinato. Una mujer dijo que "
+"necesitaba ayuda para encontrar a su hermano, pero cuando la llevaste hasta "
+"su \"hermano\", lo mató y huyó, dejando tras de sí un grupo de chips de "
+"créditos y una nota que decía simplemente: \"Lo siento.\""
 
 #. idle
 #. delay for msgs because if no delay they will pop in mid transit from system to system. A wait function would be awesome...
 #: dat/missions/neutral/kidnapped/traffic_01.lua:220
 msgid "Wrong system"
-msgstr ""
+msgstr "Sistema Equivocado"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:220
 msgid ""
 "\"I don't think he is here. He must be in one of the other systems. Please "
 "hurry!\""
 msgstr ""
+"\"No creo que esté aquí. Debe estar en uno de los otros sistemas.¡Por favor, "
+"date prisa!\""
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:223
 msgid "Right system"
-msgstr ""
+msgstr "Sistema Adecuado"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:223
 msgid "\"I think this is it! We found him!\""
-msgstr ""
+msgstr "\"¡Creo que es aquí! ¡Lo hemos encontrado!\""
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -68881,7 +68756,7 @@ msgstr ""
 #. luacheck: globals beginCountdown beginLaunch countLaunch jumpin land (Hook functions passed by name)
 #: dat/missions/neutral/nebu_satellite.lua:40
 msgid "Scientists Launch Research Probe Into Nebula"
-msgstr ""
+msgstr "Científicos Lanzan una Sonda de Investigación a la Nebulosa"
 
 #: dat/missions/neutral/nebu_satellite.lua:41
 msgid ""
@@ -68890,6 +68765,10 @@ msgid ""
 "environment of the Nebula and is supposed to find new clues about the nature "
 "of the gas and where it's from."
 msgstr ""
+"Un grupo de científicos ha lanzado con éxito una sonda científica a la "
+"Nebulosa. La sonda fue diseñada específicamente para resistir el ambiente "
+"corrosivo de la Nebulosa y se supone que debe encontrar nuevas pistas sobre "
+"la naturaleza del gas y su procedencia."
 
 #. Note: this mission does not make any system claims.
 #. Set up mission variables
@@ -68897,11 +68776,11 @@ msgstr ""
 #. Set stuff up for the spaceport bar
 #: dat/missions/neutral/nebu_satellite.lua:56
 msgid "Scientists"
-msgstr ""
+msgstr "Cientificos"
 
 #: dat/missions/neutral/nebu_satellite.lua:56
 msgid "A bunch of scientists seem to be chattering nervously among themselves."
-msgstr ""
+msgstr "Un grupo de científicos parece charlar nerviosamente entre ellos."
 
 #: dat/missions/neutral/nebu_satellite.lua:63
 msgid ""
@@ -68911,40 +68790,47 @@ msgid ""
 "    \"Hello Captain, we're looking for a ship to take us into the Sol "
 "Nebula. Would you be willing to take us there?\""
 msgstr ""
+"Te acercas a los científicos. Parecen un poco nerviosos y uno murmura algo "
+"sobre si es una buena idea o no. Finalmente, uno de ellos se acerca a ti.\n"
+"    \"Hola capitán, estamos buscando una nave que nos lleve a la nebulosa de "
+"Sol. ¿Estarías dispuesto a llevarnos allí?\""
 
 #: dat/missions/neutral/nebu_satellite.lua:70
 msgid "\"You do not have enough free cargo space to accept this mission!\""
 msgstr ""
+"\"¡No tienen suficiente espacio de carga libre para aceptar esta misión!\""
 
 #. Add cargo
 #: dat/missions/neutral/nebu_satellite.lua:75
 msgid "Satellite"
-msgstr ""
+msgstr "Satélite"
 
 #: dat/missions/neutral/nebu_satellite.lua:75
 msgid ""
 "A small space probe loaded with sensors for exploring the depths of the "
 "nebula."
 msgstr ""
+"Una pequeña sonda espacial cargada de sensores para explorar las "
+"profundidades de la nebulosa."
 
 #. Set up mission information
 #: dat/missions/neutral/nebu_satellite.lua:79
 #: dat/missions/neutral/nebu_satellite.lua:93
 #: dat/missions/neutral/nebu_satellite.lua:152
 msgid "Nebula Satellite"
-msgstr ""
+msgstr "Satélite de Nebulosa"
 
 #: dat/missions/neutral/nebu_satellite.lua:81
 #: dat/missions/neutral/nebu_satellite.lua:93
 msgid "Go to the {sys} system to launch the probe."
-msgstr ""
+msgstr "Vaeal sistema {sys} para lanzar la sonda."
 
 #. Add mission
 #. More flavour text
 #: dat/missions/neutral/nebu_satellite.lua:88
 #: dat/missions/neutral/nebu_satellite.lua:90
 msgid "Scientific Exploration"
-msgstr ""
+msgstr "Exploración Científica"
 
 #: dat/missions/neutral/nebu_satellite.lua:88
 msgid ""
@@ -68958,6 +68844,17 @@ msgid ""
 "the radiation and volatility of the deeper areas haven't been very kind to "
 "our instruments. That's why we designed this probe we're going to launch.\""
 msgstr ""
+"\"Teníamos un viaje programado con un comerciante espacial, pero se echó "
+"atrás en el último momento. Así que nos quedamos atrapados aquí hasta que tú "
+"llegaste. Tenemos una sonda de investigación que queremos lanzar al sistema "
+"{sys} para monitorizar el ritmo de crecimiento de la Nebulosa. El "
+"procedimiento de lanzamiento de la sonda es bastante sencillo y no debería "
+"tener ninguna complicación.\"\n"
+"    Respira profundamente: \"Esperamos poder descubrir más secretos de la "
+"Nebulosa del Sol para que la humanidad pueda volver a recuperar su "
+"patrimonio perdido. Hasta ahora, la radiación y la volatilidad de las zonas "
+"más profundas no han sido muy amables con nuestros instrumentos. Por eso "
+"hemos diseñado esta sonda que vamos a lanzar.\""
 
 #: dat/missions/neutral/nebu_satellite.lua:90
 msgid ""
@@ -68966,6 +68863,10 @@ msgid ""
 "goes well, the probe will automatically send us the data we need. You'll be "
 "paid {credits} when we arrive.\""
 msgstr ""
+"\"El plan es que nos lleves a {sys} para que podamos lanzar la sonda, y "
+"luego regresemos a nuestro hogar en {home_pnt} en el sistema {home_sys}. Si "
+"todo va bien, la sonda nos enviará automáticamente los datos que "
+"necesitamos. Se te pagarán {credits} cuando lleguemos.\""
 
 #: dat/missions/neutral/nebu_satellite.lua:104
 msgid ""
@@ -68973,11 +68874,16 @@ msgid ""
 "continue their nebula research. As a keepsake, one of them gives you a mock-"
 "up of the probe you helped them launch."
 msgstr ""
+"Los científicos te agradecen tu ayuda antes de volver a su casa para seguir "
+"investigando la nebulosa. Como recuerdo, uno de ellos te da una maqueta de "
+"la sonda que les has ayudado a lanzar."
 
 #: dat/missions/neutral/nebu_satellite.lua:108
 msgid ""
 "You helped a group of scientists launch a research probe into the Nebula."
 msgstr ""
+"Has ayudado a un grupo de científicos a lanzar una sonda de investigación en "
+"la Nebulosa."
 
 #. Launch satellite
 #.
@@ -68998,12 +68904,12 @@ msgstr ""
 
 #: dat/missions/neutral/nebu_satellite.lua:149
 msgid "Space probe launch successful!"
-msgstr ""
+msgstr "¡Lanzamiento de sonda espacial con éxito!"
 
 #: dat/missions/neutral/nebu_satellite.lua:151
 #: dat/missions/neutral/nebu_satellite.lua:152
 msgid "Drop off the scientists at {pnt} in the {sys} system."
-msgstr ""
+msgstr "Deja a los científicos en {pnt} en el sistema {sys}."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -69037,6 +68943,10 @@ msgid ""
 "shunts. In my day, we had to use simple monopole instaconductors to keep our "
 "hyperdrives running!\""
 msgstr ""
+"\"Vosotros, jóvenes, y vuestras novedosas derivaciones de retroalimentación "
+"de plasma de triple redundancia. En mis tiempos, ¡teníamos que usar simples "
+"instaconductores monopolares para mantener nuestros hiperimpulsores en "
+"funcionamiento!\""
 
 #: dat/missions/neutral/oldwoman.lua:37
 msgid ""
@@ -69044,6 +68954,9 @@ msgid ""
 "enhancements these days? Cybernetic implants were good enough for us, why "
 "can't they be for you?\""
 msgstr ""
+"\"Dime, jovencito, ¿por qué todo el mundo está tan preocupado por las "
+"mejoras Soromida en estos días? Los implantes cibernéticos fueron lo "
+"suficientemente buenos para nosotros, ¿por qué no pueden serlo para ti?\""
 
 #: dat/missions/neutral/oldwoman.lua:38
 msgid ""
@@ -69051,6 +68964,9 @@ msgid ""
 "was a little girl. I still remember it like it happened yesterday. They "
 "don't make planets like that anymore these days, oh no.\""
 msgstr ""
+"\"Mi madre era de la Tierra, sabes. Incluso me llevó allí una vez, cuando "
+"era una niña. Todavía lo recuerdo como si hubiera sido ayer. Ya no se hacen "
+"planetas como los de antes hoy en día, oh no.\""
 
 #: dat/missions/neutral/oldwoman.lua:39
 msgid ""
@@ -69059,6 +68975,10 @@ msgid ""
 "this. Anything more complex than a subspace pseudo-echo projector is beyond "
 "my understanding.\""
 msgstr ""
+"\"¿Qué dijiste que era esta cosa? ¿Un transmisor de paquetes reforzado con "
+"microblink? No, no, no intentes explicar cómo funciona. Soy demasiado viejo "
+"para esto. Cualquier cosa más compleja que un proyector de pseudo-eco "
+"subespacial está más allá de mi comprensión.\""
 
 #: dat/missions/neutral/oldwoman.lua:40
 msgid ""
@@ -69066,32 +68986,37 @@ msgid ""
 "needed to reprogram our own electronic countermeasures to deal with custom "
 "pirate tracking systems.\""
 msgstr ""
+"\"No sabes lo bien que lo tienes hoy en día. Cuando yo era joven, "
+"necesitábamos reprogramar nuestras propias contramedidas electrónicas para "
+"hacer frente a los sistemas de rastreo de los piratas.\""
 
 #: dat/missions/neutral/oldwoman.lua:41
 msgid "\"Time passes by so quickly. I remember when this was all space.\""
-msgstr ""
+msgstr "\"El tiempo pasa tan rápido. Recuerdo cuando todo esto era espacio.\""
 
 #: dat/missions/neutral/oldwoman.lua:42
 msgid ""
 "\"All this automation is making people lax, I tell you. My uncle ran a tight "
 "ship. If he caught you cutting corners, you'd be defragmenting the sub-ion "
 "matrix filters for a week!\""
-msgstr ""
+msgstr "\"El tiempo pasa tan rápido. ¡Recuerdo cuando todo esto era espacio!\""
 
 #. In case no suitable planets are in range.
 #: dat/missions/neutral/oldwoman.lua:65
 msgid "An old woman"
-msgstr ""
+msgstr "Una mujer vieja"
 
 #: dat/missions/neutral/oldwoman.lua:65
 msgid ""
 "You see a wrinkled old lady, a somewhat unusual sight in a spaceport bar. "
 "She's purposefully looking around."
 msgstr ""
+"Ves a una anciana arrugada, algo inusual en un bar de un puerto espacial. "
+"Está mirando a propósito a Tu alrededor."
 
 #: dat/missions/neutral/oldwoman.lua:70 dat/missions/neutral/oldwoman.lua:72
 msgid "An elderly lady"
-msgstr ""
+msgstr "Una señora mayor"
 
 #: dat/missions/neutral/oldwoman.lua:70
 msgid ""
@@ -69107,6 +69032,17 @@ msgid ""
 "You seem like you've got time on your hands. Fancy making a trip down to "
 "{pnt}? I'll pay you a decent fare, of course.\""
 msgstr ""
+"Decides preguntar a la anciana si hay algo en lo que puedas ayudarla.\n"
+"   \"De hecho, sí lo hay\", dice ella. \"Quiero visitar a mi prima. Vive en "
+"{pnt}, ya sabes, en el sistema {sys}, es un lugar Sirio. Pero no tengo una "
+"nave y esas malditas líneas de pasajeros de aquí no vuelan al espacio Sirio. "
+"Te digo, el servicio al cliente realmente se ha ido a pique con los años. En "
+"mis días de navegación espacial, siempre había algún transporte listo para "
+"llevarte a cualquier parte. Pero ahora mírame, ¡me veo obligado a dirigirme "
+"al bar del puerto espacial para ver si hay un capitán dispuesto a llevarme! "
+"Es una vergüenza, eso es lo que es. ¡Qué galaxia en la que vivimos! Pero "
+"divago. Parece que tienes tiempo libre. ¿Te gustaría hacer un viaje a {pnt}? "
+"Te pagaré un precio decente, por supuesto.\""
 
 #: dat/missions/neutral/oldwoman.lua:72
 msgid ""
@@ -69119,41 +69055,50 @@ msgid ""
 "rambling. Perhaps it would be a good idea to get her to her destination as "
 "quickly as you can."
 msgstr ""
+"\"Oh, es bueno de tu parte\". La anciana te dedica una sonrisa arrugada. "
+"\"Hace mucho tiempo que no veo a mi prima, será estupendo ver cómo está, y "
+"podremos hablar de los viejos tiempos. Ah, los viejos tiempos. Todo era tan "
+"diferente entonces. Las vías espaciales eran mucho más seguras, para "
+"empezar. Y la gente era más educada entre sí, ¡oh sí!\"\n"
+"   Acompañas a la anciana a tu nave, intentando no escuchar sus "
+"divagaciones. Tal vez sea una buena idea llevarla a su destino lo más rápido "
+"posible."
 
 #: dat/missions/neutral/oldwoman.lua:74
 msgid "Old Woman"
-msgstr ""
+msgstr "Mujer Vieja"
 
 #: dat/missions/neutral/oldwoman.lua:74
 msgid "A grumbling old woman."
-msgstr ""
+msgstr "Una vieja gruñona."
 
 #: dat/missions/neutral/oldwoman.lua:79
 msgid "An aging lady has asked you to ferry her to {pnt} in the {sys} system."
 msgstr ""
+"Una señora mayor te ha pedido que la lleves a {pnt} en el sistema {sys}."
 
 #: dat/missions/neutral/oldwoman.lua:80
 msgid "Fair monetary compensation"
-msgstr ""
+msgstr "Compensación monetaria justa"
 
 #: dat/missions/neutral/oldwoman.lua:81
 msgid "The Old Woman"
-msgstr ""
+msgstr "La Anciana"
 
 #: dat/missions/neutral/oldwoman.lua:82
 msgid "Take the old woman to {pnt} ({sys} system)"
-msgstr ""
+msgstr "Lleva a la anciana a {pnt} (sistema {sys})"
 
 #. Date hook.
 #: dat/missions/neutral/oldwoman.lua:102
 msgid "Grumblings from the old lady"
-msgstr ""
+msgstr "Refunfuños de la anciana"
 
 #. Uh... yeah.
 #. Land hook.
 #: dat/missions/neutral/oldwoman.lua:110
 msgid "Delivery complete"
-msgstr ""
+msgstr "Entrega completada"
 
 #: dat/missions/neutral/oldwoman.lua:110
 msgid ""
@@ -69168,12 +69113,24 @@ msgid ""
 "   The lady hands you a credit chip. Then she disappears through the "
 "terminal. Well, that was quite a passenger!"
 msgstr ""
+"Ayudas a la anciana a subir al ascensor del muelle espacial. Sigue "
+"refunfuñando sobre lo incómodos que son los puertos espaciales hoy en día y "
+"sobre cómo los hologramas publicitarios se están volviendo bastante "
+"descarados últimamente. En su época no permitían ese tipo de cosas. Pero una "
+"vez que la llevas a la terminal de salida, te sonríe.\n"
+"   \"Gracias, joven capitán, no sé qué habría hecho sin usted. Parece que "
+"todavía hay gente decente por ahí, incluso ahora. Toma esto, como muestra de "
+"mi agradecimiento.\"\n"
+"   La señora le entrega un chip de créditos. Luego desaparece por la "
+"terminal. ¡Vaya, qué pasajero!"
 
 #: dat/missions/neutral/oldwoman.lua:114
 msgid ""
 "You escorted an old woman to her cousin in Sirian space. She was nice, "
 "albeit somewhat overly chatty."
 msgstr ""
+"Acompañaste a una anciana hasta su primo en el espacio Sirio. Era simpática, "
+"aunque algo parlanchina."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -69214,23 +69171,30 @@ msgid ""
 "After going through some paperwork, an officer hands you your pay and sends "
 "you off."
 msgstr ""
+"Después de pasar por el papeleo, un oficial te entrega tu paga y se despide."
 
 #: dat/missions/neutral/patrol.lua:43
 msgid ""
 "A tired-looking officer verifies your mission log and hands you your pay."
 msgstr ""
+"Un oficial de aspecto cansado verifica el registro de tu misión y te entrega "
+"la paga."
 
 #: dat/missions/neutral/patrol.lua:44
 msgid ""
 "The officer you deal with thanks you for your work, hands you your pay, and "
 "sends you off."
 msgstr ""
+"El funcionario con el que tratas te agradece tu trabajo, te entrega la paga "
+"y se despide."
 
 #: dat/missions/neutral/patrol.lua:45
 msgid ""
 "An officer goes through the necessary paperwork, looking bored the entire "
 "time, and hands you your fee."
 msgstr ""
+"Un funcionario revisa el papeleo necesario, con cara de aburrimiento todo el "
+"tiempo, y te entrega tu pago."
 
 #: dat/missions/neutral/patrol.lua:49
 msgid ""
@@ -69238,34 +69202,39 @@ msgid ""
 "mission is considered to be abandonment. As such, your contract is void and "
 "you will not receive payment."
 msgstr ""
+"Se te ha enviado un mensaje informándote de que aterrizar en medio de una "
+"misión de patrulla se considera un abandono. Por lo tanto, tu contrato queda "
+"anulado y no recibirás ningún pago."
 
 #. Mission details
 #: dat/missions/neutral/patrol.lua:54
 msgid "Patrol of the {sys} System"
-msgstr ""
+msgstr "Patrulla del Sistema {sys}"
 
 #: dat/missions/neutral/patrol.lua:55
 msgid ""
 "Patrol specified points in the {sys} system, eliminating any hostiles you "
 "encounter."
 msgstr ""
+"Patrulla los puntos especificados en el sistema {sys}, eliminando los "
+"hostiles que encuentres."
 
 #. Messages
 #: dat/missions/neutral/patrol.lua:59 dat/missions/pirate/patrol.lua:49
 msgid "Point secure."
-msgstr ""
+msgstr "Punto seguro."
 
 #: dat/missions/neutral/patrol.lua:60
 msgid "Hostiles detected. Engage hostiles."
-msgstr ""
+msgstr "Hostiles detectados. Enfréntate a los hostiles."
 
 #: dat/missions/neutral/patrol.lua:62 dat/missions/pirate/patrol.lua:52
 msgid "Patrol complete. You can now collect your pay."
-msgstr ""
+msgstr "Patrulla completa. Ahora puedes cobrar tu paga."
 
 #: dat/missions/neutral/patrol.lua:63 dat/missions/pirate/patrol.lua:53
 msgid "You showed up too late."
-msgstr ""
+msgstr "Llegaste demasiado tarde."
 
 #. Nothing to do.
 #: dat/missions/neutral/patrol.lua:64
@@ -69274,15 +69243,15 @@ msgstr ""
 #: dat/missions/pirate/pir_hit_intro.lua:171
 #: dat/missions/proteron/dissbounty_dead.lua:70
 msgid "You have left the {sys} system."
-msgstr ""
+msgstr "Has dejado el sistema {sys}."
 
 #: dat/missions/neutral/patrol.lua:70
 msgid "Eliminate hostiles"
-msgstr ""
+msgstr "Elimina a los hostiles"
 
 #: dat/missions/neutral/patrol.lua:71 dat/missions/pirate/patrol.lua:61
 msgid "Land in {fct} territory to collect your pay"
-msgstr ""
+msgstr "Aterriza en el territorio de {fct} para cobrar tu paga"
 
 #. Get the number of enemies in a particular system
 #. Set mission details
@@ -69290,12 +69259,12 @@ msgstr ""
 #, lua-format
 msgid "Go to indicated point (%d remaining)"
 msgid_plural "Go to indicated point (%d remaining)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ve al punto indicado (%d restante)"
+msgstr[1] "Ve al punto indicado (%d restantes)"
 
 #: dat/missions/neutral/patrol.lua:159 dat/missions/neutral/patrol.lua:290
 msgid "Patrol"
-msgstr ""
+msgstr "Patrulla"
 
 #. Non-persistent state
 #. Forward-declared functions
@@ -69307,15 +69276,15 @@ msgstr ""
 #: dat/missions/neutral/pirbounty_dead.lua:219
 #: dat/missions/neutral/sightseeing.lua:182
 msgid "Mission Completed"
-msgstr ""
+msgstr "Misión Completada"
 
 #: dat/missions/neutral/patrol.lua:212
 msgid "Mission Abandoned"
-msgstr ""
+msgstr "Misión Abandonada"
 
 #: dat/missions/neutral/patrol.lua:274
 msgid "Patrol Point"
-msgstr ""
+msgstr "Punto de Patrulla"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -85448,7 +85417,7 @@ msgstr ""
 
 #: dat/scripts/common/minerva.lua:46
 msgid "Sketchy Individual"
-msgstr ""
+msgstr "Individuo sospechoso"
 
 #: dat/scripts/common/minerva.lua:48
 msgid ""
