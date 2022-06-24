@@ -55,36 +55,45 @@ With that set up, the mission will now spawn an NPC with 50% chance at any Space
 local vntk = require "vntk"
 local fmt = require "format"
 
-local reward = 50e3
+local reward = 50e3 -- This is equivalent to 50000, and easier to read
 
 function accept ()
+   -- Make sure the player has space
    if player.pilot():cargoFree() < 1 then
       vntk.msg( _("Not Enough Space"),
             _("You need more free space for this mission!") )
       return
    end
 
+   -- We get a target destination
    mem.dest, mem.destsys = spob.getS( "Caladan" )
+
+   -- Ask the player if they want to do the mission
    if not vntk.yesno( _("Apples?"),
          fmt.f(_("Deliver apples to {spb} ({sys})?"),
                {spb=mem.dest,sys=mem.destsys}) ) then
-
+      -- Player did not accept, so we finish here
       vntk.msg(_("Rejected"),_("Your loss."))
+      misn.finish(false) -- Say the mission failed to complete
       return
    end
 
-   misn.accept()
+   misn.accept() -- Have to accept the mission for it to be active
 
+   -- Set mission details
    misn.setTitle( _("Deliver Apples") )
    misn.setReward( fmt.credits( reward ) )
    local desc = fmt.f(_("Take Apples to {spb} ({sys})."),
          {spb=mem.dest,sys=mem.destsys}) )
    misn.setDesc( desc )
+
+   -- On-screen display
    misn.osdCreate( _("Apples"), { desc } )
 
-   misn.cargoAdd( "Food", 1 )
-   misn.markerAdd( mem.dest )
+   misn.cargoAdd( "Food", 1 ) -- Add cargo
+   misn.markerAdd( mem.dest ) -- Show marker on the destination
 
+   -- Hook will trigger when we land
    hook.land( "land" )
 end
 ```
