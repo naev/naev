@@ -412,6 +412,8 @@ int gatherable_init( const Commodity* com, vec2 pos, vec2 vel, double lifeleng, 
    g->vel = vel;
    g->timer = 0.;
    g->quantity = qtt;
+   g->sx = RNG( 0, com->gfx_space->sx );
+   g->sy = RNG( 0, com->gfx_space->sy );
 
    if (lifeleng < 0.)
       g->lifeleng = RNGF()*100. + 50.;
@@ -460,7 +462,7 @@ void gatherable_render( void )
 {
    for (int i=0; i < array_size(gatherable_stack); i++) {
       Gatherable *gat = &gatherable_stack[i];
-      gl_renderSprite( gat->type->gfx_space, gat->pos.x, gat->pos.y, 0, 0, NULL );
+      gl_renderSprite( gat->type->gfx_space, gat->pos.x, gat->pos.y, gat->sx, gat->sy, NULL );
    }
 }
 

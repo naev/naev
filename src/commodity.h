@@ -90,6 +90,8 @@ typedef struct Gatherable_ {
    double timer; /**< Timer to de-spawn the gatherable. */
    double lifeleng; /**< nb of seconds before de-spawn. */
    int quantity; /**< Quantity of material. */
+   int sx; /**< X sprite to use. */
+   int sy; /**< Y sprite to use. */
 } Gatherable;
 
 /*
