@@ -10,13 +10,13 @@
  </notes>
 </event>
 --]]
---Preliminary draft of a new event where the player meets one of the Touched, who tries to convert him
---Sudarshan S <ssoxygen@users.sf.net>
+-- Preliminary draft of a new event where the player meets one of the Touched, who tries to convert him
+-- Sudarshan S <ssoxygen@users.sf.net>
 local fleet = require "fleet"
 local fmt = require "format"
 
 local restoreControl -- Forward-declared function
-local attackers, curr, follower, followers, hailHook, playerP, praiser, preacher, rep, target -- Event state, never saved.
+local attackers, curr, follower, followers, hailHook, praiser, preacher, rep, target -- Event state, never saved.
 -- luacheck: globals anotherdead badCleanup cleanup funStartsSoon hail jumpCleanup landCleanup pirateSpawn praise preacherSpeak reHail release theFunBegins violence (Hook functions passed by name)
 
 local althoughEnemy={
@@ -111,12 +111,8 @@ _("Someone killed the preacher!")
 function create()
    curr = system.cur() --save the current system
 
-   local v = var.peek( "si_convert" ) -- Get the value
-   if v == nil then -- Doesn't exist, so create
-      var.push( "si_convert", 1 )
-   else
-      var.push( "si_convert", v+1 )
-   end
+   local v = var.peek( "si_convert" ) or 0 -- Get the value
+   var.push( "si_convert", v+1 )
 
    --start the fun when the player jumps
    hook.jumpin("funStartsSoon")
@@ -125,7 +121,6 @@ end
 
 --Start the real mission after a short delay
 function funStartsSoon()
-   playerP=player.pilot() --save player's pilot
    rep=faction.playerStanding(faction.get("Sirius"))
    hook.timer(5.0, "theFunBegins") --for effect, so that we can see them jumping in!
 end
@@ -154,7 +149,8 @@ function theFunBegins()
    preacher:control()
    preacher:broadcast(followSirichana[rnd.rnd(1,#followSirichana)],true)
    preacher:hailPlayer()
-   playerP:setInvincible()
+   local pp = player.pilot()
+   pp:setInvincible()
 
    --set needed hooks
    hook.pilot(preacher,"attacked","violence")
@@ -167,7 +163,7 @@ function theFunBegins()
    player.cinematics(true,{gui=true, abort=presence[rnd.rnd(1,#presence)]})
 
    --you're hooked till you hear him out!
-   playerP:control()
+   pp:control()
    player.msg(urge[rnd.rnd(1,#urge)])
 
    --create a random band of converted pirate followers
@@ -362,8 +358,9 @@ end
 function release()
    camera.set()
    player.cinematics(false)
-   playerP:setInvincible(false)
-   playerP:control(false)
+   local pp = player.pilot()
+   pp:setInvincible(false)
+   pp:control(false)
    --if the attacks have already started, we shouldn't set a target yet
    if #attackers==0 then
       getPreacherTarget()
@@ -391,7 +388,7 @@ end
 
 --oops, it seems the preacher died. End gracefully
 function badCleanup()
-   playerP:setInvincible(false)
+   player.pilot():setInvincible(false)
    player.msg(dead[rnd.rnd(1,#dead)])
    preacher:broadcast(dyingMessage[rnd.rnd(1,#dyingMessage)])
    local survivors={}
@@ -410,7 +407,7 @@ end
 
 --the preacher has landed. Land all his followers too
 function landCleanup()
-   playerP:setInvincible(false)
+   player.pilot():setInvincible(false)
    for _,j in ipairs(followers) do
       if j:exists() then
          j:taskClear()
@@ -422,7 +419,7 @@ end
 
 --the preacher has jumped. Jump all his followers too
 function jumpCleanup()
-   playerP:setInvincible(false)
+   player.pilot():setInvincible(false)
    for _,j in ipairs(followers) do
       if j:exists() then
          j:taskClear()
