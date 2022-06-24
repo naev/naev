@@ -674,8 +674,8 @@ static int systemL_asteroidFields( lua_State *L )
  *
  *    @luatparam string commodity name of the commodity.
  *    @luatparam int nb quantity of commodity in the gatherable .
- *    @luatparam Vec2 pos position of the gatherable.
- *    @luatparam Vec2 vel velocity of the gatherable.
+ *    @luatparam[opt=vec2.new(0,0)] Vec2 pos position of the gatherable.
+ *    @luatparam[opt=vec2.new(0,0)] Vec2 vel velocity of the gatherable.
  *    @luatparam[opt] number lifelength Lifelength of the gatherable in seconds.
  *    @luatreturn int i Id of the created gatherable object.
  * @luafunc addGatherable
@@ -685,17 +685,15 @@ static int systemL_addGatherable( lua_State *L )
    int nb;
    Commodity *commodity;
    vec2 *pos, *vel;
+   vec2 zero = { .x = 0., .y = 0., .mod = 0., .angle = 0. };
    double lifelength;
 
    /* Handle parameters. */
    commodity = luaL_validcommodity( L, 1 );
    nb = luaL_checkint(L,2);
-   pos = luaL_checkvector(L,3);
-   vel = luaL_checkvector(L,4);
-   if (lua_gettop(L) > 4)
-      lifelength = luaL_checknumber(L,5);
-   else
-      lifelength = -1.; /* This means random life length. */
+   pos = luaL_optvector(L,3,&zero);
+   vel = luaL_optvector(L,4,&zero);
+   lifelength = luaL_optnumber(L,5, -1.); /* -1. means random life length. */
 
    lua_pushnumber( L, gatherable_init( commodity, *pos, *vel, lifelength, nb ) );
    return 1;
