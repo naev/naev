@@ -129,7 +129,7 @@ int player_tryBoard( int noisy )
             (!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) ||
             pilot_isFlag(p,PILOT_NOBOARD)) {
          player_targetClear();
-         player_message( _("#rYou need a target to board first!") );
+         player_message( "#r%s", _("You need a target to board first!") );
          return PLAYER_BOARD_IMPOSSIBLE;
       }
    }
@@ -139,26 +139,26 @@ int player_tryBoard( int noisy )
 
    /* More checks. */
    if (pilot_isFlag(p,PILOT_NOBOARD)) {
-      player_message( _("#rTarget ship can not be boarded.") );
+      player_message( "#r%s", _("Target ship can not be boarded.") );
       return PLAYER_BOARD_IMPOSSIBLE;
    }
    else if (pilot_isFlag(p,PILOT_BOARDED)) {
-      player_message( _("#rYour target cannot be boarded again.") );
+      player_message( "#r%s", _("Your target cannot be boarded again.") );
       return PLAYER_BOARD_IMPOSSIBLE;
    }
    else if (!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) {
-      player_message(_("#rYou cannot board a ship that isn't disabled!"));
+      player_message( "#r%s", _("You cannot board a ship that isn't disabled!") );
       return PLAYER_BOARD_IMPOSSIBLE;
    }
    else if (vec2_dist(&player.p->solid->pos,&p->solid->pos) >
          p->ship->gfx_space->sw * PILOT_SIZE_APPROX) {
       if (noisy)
-         player_message(_("#rYou are too far away to board your target."));
+         player_message( "#r%s", _("You are too far away to board your target.") );
       return PLAYER_BOARD_RETRY;
    }
    else if (vec2_dist2( &player.p->solid->vel, &p->solid->vel ) > pow2(MAX_HYPERSPACE_VEL)) {
       if (noisy)
-         player_message(_("#rYou are going too fast to board the ship."));
+         player_message( "#r%s", _("You are going too fast to board the ship.") );
       return PLAYER_BOARD_RETRY;
    }
 
