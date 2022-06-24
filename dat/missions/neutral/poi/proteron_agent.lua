@@ -97,6 +97,8 @@ return function ( mem )
 
          vn.func( function ()
             player.outfitAdd( reward )
+            poi.log(fmt.f(_([[You found a derelict ship with corrupted information about an agent. You also were able to find a strange device called {reward} from the ship.]]),
+               {reward=reward}))
          end )
       end,
    }

@@ -2,6 +2,7 @@ local fmt = require "format"
 local vn = require "vn"
 local tut = require "common.tutorial"
 local nebu = require "common.nebula"
+local poi = require "common.poi"
 
 local reward = outfit.get("ZD-5 Guardian Unit")
 
@@ -60,6 +61,8 @@ NO FURTHER ANALYSIS POSSIBLE WITH CURRENT HARDWARE. CONTINUING CURRENT SURVEILLA
 
          vn.func( function ()
             player.outfitAdd( reward )
+            poi.log(fmt.f(_([[You found a derelict Za'lek drone. It contained information about the Incident and you were able to loot a {reward} from it.]]),
+               {reward=reward}))
          end )
       end,
    }

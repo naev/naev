@@ -12,8 +12,8 @@ local poi = {}
 -- luacheck: globals _poi_enter _poi_scan _poi_heartbeat_nooutfit _poi_heartbeat (Hook functions passed by name)
 
 --[[--
-   @brief Tries to generate a new setting for a point of interest.
-      @treturn table A table of parameters for the point of interest mission or nil if failed to generate.
+Tries to generate a new setting for a point of interest.
+   @treturn table A table of parameters for the point of interest mission or nil if failed to generate.
 --]]
 function poi.generate( force )
    -- Must have done intro mission
@@ -56,8 +56,8 @@ function poi.generate( force )
 end
 
 --[[--
-   @brief sets up a point of interest mission. Meant to be called before starting the point of interest mission with naev.missionStart()
-      @tparam table params Parameter table. Can be passed directly from poi.generate
+Sets up a point of interest mission. Meant to be called before starting the point of interest mission with naev.missionStart()
+   @tparam table params Parameter table. Can be passed directly from poi.generate
 --]]
 function poi.setup( params )
    local risk = params.risk or 0
@@ -181,8 +181,8 @@ function _poi_heartbeat ()
 end
 
 --[[--
-   @brief Sets up a Point Of Interest (POI) mission
-      @tparam table params Table of parameters to use. `sys` and `found` must be defined, where `sys` is the system the POI takes place in, and `found` is the name of the global function to call when found.
+Sets up a Point Of Interest (POI) mission
+   @tparam table params Table of parameters to use. `sys` and `found` must be defined, where `sys` is the system the POI takes place in, and `found` is the name of the global function to call when found.
 --]]
 function poi.misnSetup( params )
    local function riskstr( r )
@@ -241,26 +241,26 @@ function poi.misnPos ()
 end
 
 --[[--
-   @brief Gets how many points of interest were completed by the player.
-      @treturn number Number of points of interest completed by the player.
+Gets how many points of interest were completed by the player.
+   @treturn number Number of points of interest completed by the player.
 --]]
 function poi.done()
    return var.peek("poi_done") or 0
 end
 
 --[[--
-   @brief Gets how many points of interest were failed by the player.
-      @treturn number Number of points of interest failed by the player.
+Gets how many points of interest were failed by the player.
+   @treturn number Number of points of interest failed by the player.
 --]]
 function poi.failed()
    return var.peek("poi_failed") or 0
 end
 
 --[[--
-   @brief Creates a "SOUND ONLY" character for the VN.
-      @tparam string id ID of the voice to add.
-      @tparam table params Optional parameters to pass or overwrite.
-      @treturn vn.Character A new vn character you can add with `vn.newCharacter`.
+Creates a "SOUND ONLY" character for the VN.
+   @tparam string id ID of the voice to add.
+   @tparam table params Optional parameters to pass or overwrite.
+   @treturn vn.Character A new vn character you can add with `vn.newCharacter`.
 --]]
 function poi.vn_soundonly( id, params )
    params = params or {}
@@ -279,6 +279,15 @@ function poi.vn_soundonly( id, params )
    return vn.Character.new(
          fmt.f(_("VOICE {id}"),{id=id}),
          tmerge( {image=c, flip=false}, params ) )
+end
+
+--[[--
+Logs a point of interest message.
+   @tparam string msg Message to log.
+--]]
+function poi.log( msg )
+   shiplog.create( "poi", _("Point of Interest"), _("Neutral") )
+   shiplog.append( "poi", msg )
 end
 
 return poi

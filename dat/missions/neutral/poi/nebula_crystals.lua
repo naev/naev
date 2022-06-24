@@ -2,6 +2,7 @@ local fmt = require "format"
 local vn = require "vn"
 local tut = require "common.tutorial"
 local nebu = require "common.nebula"
+local poi = require "common.poi"
 
 local cargo = commodity.get("Nebula Crystals")
 
@@ -25,6 +26,8 @@ return function ( mem )
       vn.func( function ()
          added = player.fleetCargoAdd( cargo, q )
          var.push( "poi_nebula_crystals", (var.peek("poi_nebula_crystals") or 0)+1 )
+         poi.log(fmt.f(_([[You found large amounts of {cargo} on a pristine derelict in the {sys} system.]]),
+            {cargo=cargo, sys=mem.sys}))
       end )
       vn.na( function ()
          return fmt.f(_("You have received #g{amount} of {cargo}#0."), {amount=fmt.tonnes(added), cargo=cargo})

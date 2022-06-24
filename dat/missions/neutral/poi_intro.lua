@@ -535,5 +535,7 @@ She rubs the cheese to her face.]]))
    pilot.toggleSpawn(true) -- Re-enable spawns
    player.unboard()
 
+   poi.log(_([[Nelly helped you explore a point of interest. You found some smelly cheese and traded it with Nelly for a Pulse Scanner to be able to explore more points of interest.]]))
+
    misn.finish(true) -- We're done here!
 end

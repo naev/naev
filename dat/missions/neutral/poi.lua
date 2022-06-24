@@ -140,6 +140,8 @@ function board( p )
       vn.na( msg )
       vn.func( function ()
          player.pay( mem.reward.value )
+         poi.log(fmt.f(_([[You found a pristine derelict with large amounts of credits in the {sys} system..]]),
+            {sys=mem.sys}))
       end )
    elseif mem.reward.type == "outfit" then
       local msg = mem.reward.msg or _([[Exploring the cargo bay, you find something that might be of use to you.]])
