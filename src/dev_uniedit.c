@@ -86,6 +86,9 @@ static int uniedit_moved      = 0;  /**< Space moved since mouse down. */
 static unsigned int uniedit_lastClick = 0; /**< Time last clicked. */
 static int uniedit_drag       = 0;  /**< Dragging viewport around. */
 static int uniedit_dragSys    = 0;  /**< Dragging system around. */
+static int uniedit_dragSel    = 0;  /**< Dragging selection box. */
+static double uniedit_dragSelX= 0;  /**< Dragging selection initial X position */
+static double uniedit_dragSelY= 0;  /**< Dragging selection initial Y position */
 static StarSystem **uniedit_sys = NULL; /**< Selected systems. */
 static StarSystem *uniedit_tsys = NULL; /**< Temporarily clicked system. */
 static int uniedit_tadd       = 0;  /**< Temporarily clicked system should be added. */
@@ -173,6 +176,7 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    uniedit_view_faction = -1;
    uniedit_drag   = 0;
    uniedit_dragSys = 0;
+   uniedit_dragSel = 0;
    uniedit_tsys   = NULL;
    uniedit_tadd   = 0;
    uniedit_zoom   = 1.;
@@ -980,7 +984,7 @@ static void uniedit_focusLose( unsigned int wid, const char* wgtname )
 {
    (void) wid;
    (void) wgtname;
-   uniedit_drag = uniedit_dragSys = 0;
+   uniedit_drag = uniedit_dragSys = uniedit_dragSel = 0;
 }
 
 /**
@@ -991,7 +995,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 {
    (void) data;
    unsigned int lastClick;
-   StarSystem *sys, *clickedsys;
+   StarSystem *clickedsys;
    int inselection;
    SDL_Keymod mod;
 
@@ -1036,7 +1040,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* Find clicked system. */
          clickedsys = NULL;
          for (int i=0; i<array_size(systems_stack); i++) {
-            sys = system_getIndex(i);
+            StarSystem *sys = system_getIndex(i);
             if ((pow2(mx-sys->pos.x)+pow2(my-sys->pos.y)) > pow2(UNIEDIT_CLICK_THRESHOLD))
                continue;
             clickedsys = sys;
@@ -1068,6 +1072,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                sysedit_open( uniedit_sys[0] );
                uniedit_drag = 0;
                uniedit_dragSys = 0;
+               uniedit_dragSel = 0;
                return 1;
             }
          }
@@ -1096,10 +1101,18 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          }
 
          /* Start dragging. */
-         if (!(mod & (KMOD_LCTRL | KMOD_RCTRL))) {
+         uniedit_moved     = 0;
+         uniedit_tsys      = NULL;
+         if (mod & (KMOD_LCTRL | KMOD_RCTRL | KMOD_LSHIFT | KMOD_RSHIFT)) {
+            if (mod & (KMOD_LSHIFT | KMOD_RSHIFT))
+               uniedit_deselect();
+            uniedit_dragSel   = 1;
+            uniedit_dragSelX  = mx;
+            uniedit_dragSelY  = my;
+            return 1;
+         }
+         else {
             uniedit_drag      = 1;
-            uniedit_moved     = 0;
-            uniedit_tsys      = NULL;
             return 1;
          }
          break;
@@ -1128,6 +1141,31 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             if (conf.devautosave)
                for (int i=0; i<array_size(uniedit_sys); i++)
                   dsys_saveSystem(uniedit_sys[i]);
+         }
+         if (uniedit_dragSel) {
+            double l, r, b, t;
+
+            /* Selecting star system */
+            mx -= w/2. - uniedit_xpos;
+            my -= h/2. - uniedit_ypos;
+            mx /= uniedit_zoom;
+            my /= uniedit_zoom;
+
+            /* Get bounds. */
+            l = MIN( uniedit_dragSelX, mx );
+            r = MAX( uniedit_dragSelX, mx );
+            b = MIN( uniedit_dragSelY, my );
+            t = MAX( uniedit_dragSelY, my );
+
+            for (int i=0; i<array_size(systems_stack); i++) {
+               StarSystem *sys = &systems_stack[i];
+               double x = sys->pos.x;
+               double y = sys->pos.y;
+               if ((x >= l) && (x <= r) && (y >= b) && (y <= t))
+                  uniedit_selectAdd( sys );
+            }
+
+            uniedit_dragSel = 0;
          }
          break;
 
