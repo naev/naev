@@ -114,21 +114,20 @@ function create()
    local v = var.peek( "si_convert" ) or 0 -- Get the value
    var.push( "si_convert", v+1 )
 
-   --start the fun when the player jumps
+   -- Start the fun when the player jumps
    hook.jumpin("funStartsSoon")
    hook.land("cleanup") --oops he landed
 end
 
 --Start the real mission after a short delay
 function funStartsSoon()
-   rep=faction.playerStanding(faction.get("Sirius"))
+   if rep then return end -- Probably system tour event
+   rep = faction.playerStanding(faction.get("Sirius"))
    hook.timer(5.0, "theFunBegins") --for effect, so that we can see them jumping in!
 end
 
 --the preaching's about to begin!
 function theFunBegins()
-   if system.cur() ~= curr then return end -- Probably system tour event
-
    if rep < 0 then
       local dist = vec2.dist(jump.get(system.cur(),curr):pos(),player.pos()) --please note the order of system.cur() and curr matters!
       if dist < 6000 then
