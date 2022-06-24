@@ -768,7 +768,6 @@ static int getPresenceVal( int f, SpobPresence *ap, double *base, double *bonus 
 static void uniedit_renderOverlay( double bx, double by, double bw, double bh, void* data )
 {
    double x,y, mx,my, sx,sy;
-   int l, f;
    double value, base, bonus;
    char buf[STRMAX] = {'\0'};
    StarSystem *sys, *cur, *mousesys;
@@ -786,6 +785,23 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
 
    /* Display location. */
    gl_print( &gl_defFontMono, bx+5, by+65, &cWhite, "% 7.2f x % 7.2f", mx, my );
+
+   /* Select drag stuff. */
+   if (uniedit_dragSel) {
+      double l, r, b, t, rx, ry;
+      const glColour col = { .r = 0.2, .g = 0.2, .b = 0.8, .a = 0.5 };
+
+      l = MIN( uniedit_dragSelX, mx );
+      r = MAX( uniedit_dragSelX, mx );
+      b = MIN( uniedit_dragSelY, my );
+      t = MAX( uniedit_dragSelY, my );
+
+      /* Project back to screen space. */
+      rx = (l * uniedit_zoom) + bw/2. - uniedit_xpos;
+      ry = (b * uniedit_zoom) + bh/2. - uniedit_ypos;
+
+      gl_renderRect( rx, ry, (r-l)*uniedit_zoom, (t-b)*uniedit_zoom, &col );
+   }
 
    /* Don't cover up stuff if possible. */
    if ((x > SCREEN_W-130) || (y < 60))
@@ -821,6 +837,8 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
 
    /* Handle virtual spob viewer. */
    if (uniedit_viewmode == UNIEDIT_VIEW_VIRTUALSPOBS) {
+      int l;
+
       if (array_size(sys->spobs_virtual)==0)
          return;
 
@@ -854,7 +872,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
    /* Handle background. */
    else if (uniedit_viewmode == UNIEDIT_VIEW_ASTEROIDS) {
       if (array_size(sys->asteroids) > 0) {
-         l = 0;
+         int l = 0;
          l = scnprintf( &buf[l], sizeof(buf)-l, _("Density: %g"), sys->asteroid_density );
          for (int i=0; i<array_size(sys->asteroids); i++) {
             AsteroidAnchor *ast = &sys->asteroids[i];
@@ -871,6 +889,8 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       char *techlist[256];
       int ntechs = 0;
       const int len = sizeof(techlist) / sizeof(char*);
+      int l;
+
       if (array_size(sys->spobs)==0)
          return;
 
@@ -902,6 +922,8 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
 
    /* Handle presence sum. */
    else if (uniedit_viewmode == UNIEDIT_VIEW_PRESENCE_SUM) {
+      int l;
+
       if (array_size(sys->presence)==0)
          return;
 
@@ -923,7 +945,8 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
 
    /* Handle presence mode. */
    else if (uniedit_viewmode == UNIEDIT_VIEW_PRESENCE) {
-      f = uniedit_view_faction;
+      int l;
+      int f = uniedit_view_faction;
       if (f < 0)
          return;
 
