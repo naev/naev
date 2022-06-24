@@ -217,7 +217,7 @@ function ambushSet(ships, location)
    for _, j in ipairs(ambush) do
       j:control()
    end
-   hook.timer(0.5, "proximity", {anchor = ambush[1], radius = 1500, funcname = "ambushActivate", focus = joanne})
+   hook.timer(0.5, "proximity", {anchor = ambush[1], radius = 3000, funcname = "ambushActivate", focus = joanne})
 end
 
 -- Commences combat once Joanne is close to the ambushers.
