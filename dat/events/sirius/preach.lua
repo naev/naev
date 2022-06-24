@@ -150,6 +150,9 @@ function theFunBegins()
    preacher:hailPlayer()
    local pp = player.pilot()
    pp:setInvincible()
+   for k,v in ipairs(pp:followers()) do
+      v:setInvincible()
+   end
 
    --set needed hooks
    hook.pilot(preacher,"attacked","violence")
@@ -353,13 +356,20 @@ function restoreControl()
    getPreacherTarget()
 end
 
+local function release_player ()
+   local pp = player.pilot()
+   pp:setInvincible(false)
+   pp:control(false)
+   for k,v in ipairs(pp:followers()) do
+      v:setInvincible(false)
+   end
+end
+
 --releases the player after the cutscene
 function release()
    camera.set()
    player.cinematics(false)
-   local pp = player.pilot()
-   pp:setInvincible(false)
-   pp:control(false)
+   release_player ()
    --if the attacks have already started, we shouldn't set a target yet
    if #attackers==0 then
       getPreacherTarget()
@@ -377,9 +387,7 @@ end
 
 --everything is done
 function cleanup()
-   local pp = player.pilot()
-   pp:setInvincible(false)
-   pp:control(false)
+   release_player()
    camera.set( nil, true )
    player.cinematics(false)
    evt.finish(true)
@@ -387,7 +395,7 @@ end
 
 --oops, it seems the preacher died. End gracefully
 function badCleanup()
-   player.pilot():setInvincible(false)
+   release_player()
    player.msg(dead[rnd.rnd(1,#dead)])
    preacher:broadcast(dyingMessage[rnd.rnd(1,#dyingMessage)])
    local survivors={}
@@ -406,7 +414,7 @@ end
 
 --the preacher has landed. Land all his followers too
 function landCleanup()
-   player.pilot():setInvincible(false)
+   release_player()
    for _,j in ipairs(followers) do
       if j:exists() then
          j:taskClear()
@@ -418,7 +426,7 @@ end
 
 --the preacher has jumped. Jump all his followers too
 function jumpCleanup()
-   player.pilot():setInvincible(false)
+   release_player()
    for _,j in ipairs(followers) do
       if j:exists() then
          j:taskClear()
