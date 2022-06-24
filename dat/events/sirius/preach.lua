@@ -111,9 +111,6 @@ _("Someone killed the preacher!")
 function create()
    curr = system.cur() --save the current system
 
-   local v = var.peek( "si_convert" ) or 0 -- Get the value
-   var.push( "si_convert", v+1 )
-
    -- Start the fun when the player jumps
    hook.jumpin("funStartsSoon")
    hook.land("cleanup") --oops he landed
@@ -123,11 +120,21 @@ end
 function funStartsSoon()
    if rep then return end -- Probably system tour event
    rep = faction.playerStanding(faction.get("Sirius"))
-   hook.timer(5.0, "theFunBegins") --for effect, so that we can see them jumping in!
+   hook.timer(5, "theFunBegins") --for effect, so that we can see them jumping in!
 end
 
 --the preaching's about to begin!
+local claimed
 function theFunBegins()
+   if claimed then evt.finish(false) end -- Case player jumps out in under 5 seconds
+
+   -- Make sure system is not claimed
+   if not evt.claim({system.cur()}) then evt.finish(false) end
+   claimed = true
+
+   -- Only increment if we can actually do stuff
+   var.push( "si_convert", (var.peek("si_convert") or 0)+1 )
+
    if rep < 0 then
       local dist = vec2.dist(jump.get(system.cur(),curr):pos(),player.pos()) --please note the order of system.cur() and curr matters!
       if dist < 6000 then
