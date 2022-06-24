@@ -329,7 +329,7 @@ jobs:
           name: ${{ github.sha }}-lualint-testlog
           path: ${{ github.workspace }}/build/meson-logs/testlog.txt
 
-  "Lua_Documentation":
+  "Documentation":
     runs-on: ubuntu-latest
     container:
       image: "ghcr.io/naev/naev-docs:latest"
@@ -372,4 +372,4 @@ jobs:
           repo: naev.github.io
           github_token: ${{ secrets.WEBSITE_ACCESS_TOKEN }}
           workflow_file_name: website_publish.yml
-          inputs: '{ "publish_type": "api" }'
+          inputs: '{ "publish_type": "docs" }'
