@@ -2010,13 +2010,26 @@ void player_brokeHyperspace (void)
    pilot_stack = pilot_getAll();
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
+
       if (pilot_isFlag(p, PILOT_PERSIST) || pilot_isFlag(p, PILOT_PLAYER)) {
          pilot_clearHooks(p);
          ai_cleartasks(p);
          if (p != player.p)
             space_calcJumpInPos( cur_system, sys, &p->solid->pos, &p->solid->vel, &p->solid->dir, player.p );
+
          /* Run Lua stuff for all persistant pilots. */
          pilot_outfitLInitAll( p );
+         pilot_outfitLOnjumpin( p );
+
+         /* Invulnerable delay too. */
+         p->itimer = PILOT_PLAYER_NONTARGETABLE_JUMPIN_DELAY;
+         pilot_setFlag( p, PILOT_NONTARGETABLE );
+
+         /* Clear flags as necessary. */
+         pilot_rmFlag( p, PILOT_HYPERSPACE );
+         pilot_rmFlag( p, PILOT_HYP_BEGIN );
+         pilot_rmFlag( p, PILOT_HYP_BRAKE );
+         pilot_rmFlag( p, PILOT_HYP_PREP );
       }
    }
 
