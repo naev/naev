@@ -1579,25 +1579,28 @@ void takeoff( int delay, int nosave )
    missions_run( MIS_AVAIL_ENTER, -1, NULL, NULL );
    if (menu_isOpen(MENU_MAIN))
       return;
-   player.p->landing_delay = PILOT_TAKEOFF_DELAY * player_dt_default();
-   player.p->ptimer = player.p->landing_delay;
-   pilot_setFlag( player.p, PILOT_TAKEOFF );
-   pilot_setThrust( player.p, 0. );
-   pilot_setTurn( player.p, 0. );
 
    /* Clear effects of all surviving pilots. */
    Pilot*const* plts = pilot_getAll();
    for (int i=0; i<array_size(plts); i++) {
       Pilot *p = plts[i];
-      if (!pilot_isFlag(p,PILOT_DELETE)) {
-         effect_clear( &p->effects );
-         pilot_calcStats( p );
-      }
-   }
+      if (pilot_isFlag(p,PILOT_DELETE))
+         continue;
 
-   /* Update lua stuff. */
-   pilot_outfitLInitAll( player.p );
-   pilot_outfitLOntakeoff( player.p );
+      effect_clear( &p->effects );
+      pilot_calcStats( p );
+
+      /* Update lua stuff. */
+      pilot_outfitLInitAll( p );
+      pilot_outfitLOntakeoff( p );
+
+      /* Set take off stuff. */
+      p->landing_delay = PILOT_TAKEOFF_DELAY * player_dt_default();
+      p->ptimer = p->landing_delay;
+      pilot_setFlag( p, PILOT_TAKEOFF );
+      pilot_setThrust( p, 0. );
+      pilot_setTurn( p, 0. );
+   }
 
    /* Reset speed */
    player_autonavResetSpeed();
