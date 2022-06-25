@@ -247,7 +247,7 @@ int *generate_news( int faction )
    }
 
    if (p == 0)
-      p = scnprintf(buf, NEWS_MAX_LENGTH, _("\n\nSorry, no news today\n\n\n"));
+      p = scnprintf(buf, NEWS_MAX_LENGTH, "\n\n%s\n\n\n", _("No news is available."));
 
    len = MIN( p, NEWS_MAX_LENGTH );
 

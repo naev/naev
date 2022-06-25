@@ -23,8 +23,6 @@ local override_list = {
    ["Raven Clan"]    = "Pirate",
    ["Dreamer Clan"]  = "Pirate",
    ["Black Lotus"]   = "Pirate",
-   -- Other misc factions
-   ["Strangelove"]   = "Generic",
 }
 
 local header_table = {}
@@ -118,7 +116,13 @@ function land ()
    local p = spob.cur()
    local s = p:services()
    -- Needs to be inhabited and have a bar for there to be news
-   if not s.inhabited or not s.bar then evt.finish(false) end
+   if not s.inhabited or not s.bar or p:tags().nonews then
+      -- Remove old headers (we only want one at a time)
+      for i, article in ipairs( news.get( "header" ) ) do
+         article:rm()
+      end
+      evt.finish(false)
+   end
    -- Needs a faction for there to be news
    local f = p:faction()
    if f == nil then evt.finish(false) end
