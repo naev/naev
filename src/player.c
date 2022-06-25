@@ -3066,6 +3066,7 @@ int player_addEscorts (void)
 
       po = pilot_getDockSlot( pe );
       if (po == NULL) {
+         pilot_delete( pe );
          WARN(_("Escort is undeployed, removing."));
          escort_rmListIndex(player.p, i);
          i--;
@@ -3075,6 +3076,7 @@ int player_addEscorts (void)
       po->u.ammo.deployed++;
       q = po->u.ammo.deployed + po->u.ammo.quantity;
       if (q >= pilot_maxAmmoO(player.p,po->outfit)) {
+         pilot_delete( pe );
          WARN(_("Escort is deployed past outfit limits, removing."));
          escort_rmListIndex(player.p, i);
          i--;
