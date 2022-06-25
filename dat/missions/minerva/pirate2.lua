@@ -36,19 +36,6 @@ mem.misn_state = nil
 local badweaps, drone1, drone2 -- Non-persistent state
 -- luacheck: globals drone_attacked drone_death drone_ranaway enter heartbeat land reinforcements_jumpin (Hook functions passed by name)
 
--- TODO do this with tag
-local allowed = {
-   "Vulcan Gun",
-   "Gauss Gun",
-   "TeraCom Mace Launcher",
-   "TeraCom Banshee Launcher",
-   "Shredder",
-   "Railgun",
-   "Mass Driver",
-   "Turreted Vulcan Gun",
-   "Repeating Railgun",
-}
-
 function create ()
    if not misn.claim( mainsys ) then
       misn.finish( false )
@@ -56,8 +43,10 @@ function create ()
    misn.setNPC( minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
 
    local desc = _("Someone wants you to incapacitate a suspicious Za'lek drone with only Dvaered weapons. Usable weapons are:")
-   for k,v in ipairs(allowed) do
-      desc = desc.._("\n* ").._(v)
+   for k,v in ipairs(outfit.getAll()) do
+      if v:tags().dvaered then
+         desc = desc.._("\n* ")..v:name()
+      end
    end
 
    misn.setDesc( desc )
@@ -145,6 +134,12 @@ local function dvaered_weapons( p )
    local baditems = {}
    if #weapons==0 then
       return false, baditems -- Need weapons
+   end
+   local allowed = {}
+   for k,v in ipairs(outfit.getAll()) do
+      if v:tags().dvaered then
+         table.insert( allowed, v:nameRaw() )
+      end
    end
    for k,o in ipairs(weapons) do
       if not inlist( allowed, o:nameRaw() ) then

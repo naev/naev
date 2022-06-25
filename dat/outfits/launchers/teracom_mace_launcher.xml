@@ -36,4 +36,7 @@ TeraCom's Mace launcher uses an advanced reload mechanism that allows the launch
   </damage>
   <ai>unguided</ai>
  </specific>
+ <tags>
+  <tag>dvaered</tag>
+ </tags>
 </outfit>
