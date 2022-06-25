@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-06-24 21:19+0000\n"
+"PO-Revision-Date: 2022-06-26 00:17+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -69323,6 +69323,10 @@ msgid ""
 "we would rather this pirate be dead than roaming free, so you will be paid "
 "{credits} if you finish them off right now.\""
 msgstr ""
+"Al regresar a tu nave, un oficial se pone en contacto contigo. \"Veo que no "
+"has podido capturar a {plt}\", dice el oficial. \"Es decepcionante. Sin "
+"embargo, preferimos que este pirata esté muerto a que ande libre, así que se "
+"te pagarán {credits} si acabas con él ahora mismo.\""
 
 #: dat/missions/neutral/pirbounty_alive.lua:39
 msgid ""
@@ -69332,6 +69336,10 @@ msgid ""
 "free, so if you kill the pirate now, you will be paid the lesser sum of "
 "{credits}.\""
 msgstr ""
+"De vuelta a tu nave, recibes un mensaje de un oficial. Dice: \"Su fracaso en "
+"la captura de {plt} es decepcionante. Realmente queríamos capturar a este "
+"pirata vivo. Sin embargo, preferimos que esté muerto a que ande libre, así "
+"que si matas al pirata ahora, se te pagará la suma menor de {credits}.\""
 
 #: dat/missions/neutral/pirbounty_alive.lua:40
 msgid ""
@@ -69343,6 +69351,13 @@ msgid ""
 "Having finished delivering the message, the officer then ceases "
 "communication."
 msgstr ""
+"Cuando regresas a tu cabina, un oficial se pone en contacto contigo. \"¡"
+"Patético! ¡Si yo estuviera al mando, diría que no te corresponde ninguna "
+"recompensa! ¿No puedes luchar contra un par de piratas de poca monta?\" "
+"Suspira. \"Pero por suerte para ti, yo no estoy al mando, y mis superiores "
+"prefierenque esten muertos que libres. Así que si acabas con esa escoria, "
+"obtendrás {credits}. Sólo sé rápido al respecto\". Una vez terminado el "
+"mensaje, el oficial cesa la comunicación."
 
 #: dat/missions/neutral/pirbounty_alive.lua:41
 msgid ""
@@ -69350,10 +69365,13 @@ msgid ""
 "kill {plt}; the reward is {credits}. Well, that's pitiful compared to what "
 "you were planning on collecting, but it's better than nothing."
 msgstr ""
+"Cuando vuelves a la nave, ves un mensaje que te da una nueva misión para "
+"matar a {plt}; la recompensa son {credits}. Bueno, eso es lamentable "
+"comparado con lo que pensabas cobrar, pero es mejor que nada."
 
 #: dat/missions/neutral/pirbounty_alive.lua:45
 msgid "An officer takes {plt} into custody and hands you your pay."
-msgstr ""
+msgstr "Un oficial se lleva a {plt} bajo custodia y te entrega tu paga."
 
 #: dat/missions/neutral/pirbounty_alive.lua:46
 msgid ""
@@ -69361,24 +69379,34 @@ msgid ""
 "{plt}. They carefully take the pirate off your hands, taking precautions you "
 "think are completely unnecessary, and then hand you your pay."
 msgstr ""
+"El oficial parece pensar que fuiste tonto al aceptar una recompensa en vivo "
+"por {plt}. Te quitan cuidadosamente al pirata de las manos, tomando "
+"precauciones que crees completamente innecesarias, y luego te entregan tu "
+"paga."
 
 #: dat/missions/neutral/pirbounty_alive.lua:47
 msgid ""
 "The officer you deal with seems to especially dislike {plt}. They take the "
 "pirate off your hands and hand you your pay without speaking a word."
 msgstr ""
+"Al oficial con el que tratas parece disgustarle especialmente {plt}. Te "
+"quitan el pirata de las manos y te entrega la paga sin decir una palabra."
 
 #: dat/missions/neutral/pirbounty_alive.lua:48
 msgid ""
 "A fearful-looking officer rushes {plt} into a secure hold, pays you the "
 "appropriate bounty, and then hurries off."
 msgstr ""
+"Un oficial de aspecto temeroso se apresura a meter {plt} en una sala de "
+"seguridad, te paga la recompensa correspondiente y se marcha a toda prisa."
 
 #: dat/missions/neutral/pirbounty_alive.lua:49
 msgid ""
 "The officer you deal with thanks you profusely for capturing {plt} alive, "
 "pays you, and sends you off."
 msgstr ""
+"El oficial con el que tratas te agradece profusamente que hayas capturado "
+"vivo a {plt}, te paga y te despide."
 
 #: dat/missions/neutral/pirbounty_alive.lua:50
 msgid ""
@@ -69386,6 +69414,9 @@ msgid ""
 "previously sported a defeated look suddenly brightens up. The pirate is "
 "swiftly taken into custody as you are handed your pay."
 msgstr ""
+"Al enterarse de que has conseguido capturar a {plt} con vida, el oficial que "
+"antes tenía una mirada derrotada se anima de repente. El pirata es "
+"rápidamente puesto bajo custodia mientras te entregan tu paga."
 
 #: dat/missions/neutral/pirbounty_alive.lua:51
 msgid ""
@@ -69393,16 +69424,22 @@ msgid ""
 "pirate into custody, go through some paperwork, and hand you your pay, "
 "mumbling something about how useless capturing pirates alive is."
 msgstr ""
+"Cuando preguntas al oficial por tu recompensa en {plt}, suspiran, se llevan "
+"al pirata en custodia, hacen algo de papeleo y te entregan tu paga, "
+"murmurando algo sobre lo inútil que es capturar piratas con vida."
 
 #: dat/missions/neutral/pirbounty_alive.lua:55
 msgid "After verifying that you killed {plt}, an officer hands you your pay."
 msgstr ""
+"Después de verificar que has matado a {plt}, un oficial te entrega tu paga."
 
 #: dat/missions/neutral/pirbounty_alive.lua:56
 msgid ""
 "After verifying that {plt} is indeed dead, the officer sighs and hands you "
 "your pay."
 msgstr ""
+"Tras comprobar que {plt} está efectivamente muerto, el oficial suspira y te "
+"entrega tu paga."
 
 #: dat/missions/neutral/pirbounty_alive.lua:57
 msgid ""
@@ -69410,12 +69447,17 @@ msgid ""
 "about incompetent bounty hunters the entire time as they take care of the "
 "paperwork and hand you your bounty."
 msgstr ""
+"Este oficial está claramente molesto porque {plt} está muerto. Murmura algo "
+"sobre los incompetentes cazadores de recompensas todo el tiempo mientras se "
+"encarga del papeleo y te entrega tu recompensa."
 
 #: dat/missions/neutral/pirbounty_alive.lua:58
 msgid ""
 "The officer seems disappointed, yet unsurprised, that you failed to capture "
 "{plt} alive. You are handed your lesser bounty without a word."
 msgstr ""
+"El oficial parece decepcionado, pero no sorprendido, de que no hayas podido "
+"capturar a {plt} vivo. Te entrega tu recompensa menor sin decir nada."
 
 #: dat/missions/neutral/pirbounty_alive.lua:59
 msgid ""
@@ -69423,32 +69465,37 @@ msgid ""
 "an office, go through some paperwork, and hand you your pay, mumbling "
 "something about how useless bounty hunters are."
 msgstr ""
+"Cuando preguntas al oficial por tu recompensa en {plt}, suspira, te lleva a "
+"una oficina, revisa unos papeles y te entrega tu paga, murmurando algo sobre "
+"lo inútiles que son los cazarrecompensas."
 
 #: dat/missions/neutral/pirbounty_alive.lua:60
 msgid ""
 "The officer verifies the death of {plt}, goes through the necessary "
 "paperwork, and hands you your pay, looking annoyed the entire time."
 msgstr ""
+"El oficial verifica la muerte de {plt}, revisa el papeleo necesario y te "
+"entrega tu paga, con cara de disgusto todo el tiempo."
 
 #: dat/missions/neutral/pirbounty_alive.lua:64
 msgid "Tiny Alive Bounty in {sys}"
-msgstr ""
+msgstr "Recompensa Con Vida Diminuta en {sys}"
 
 #: dat/missions/neutral/pirbounty_alive.lua:65
 msgid "Small Alive Bounty in {sys}"
-msgstr ""
+msgstr "Recompensa Con Vida Pequeña en {sys}"
 
 #: dat/missions/neutral/pirbounty_alive.lua:66
 msgid "Moderate Alive Bounty in {sys}"
-msgstr ""
+msgstr "Recompensa Con Vida Moderada en {sys}"
 
 #: dat/missions/neutral/pirbounty_alive.lua:67
 msgid "High Alive Bounty in {sys}"
-msgstr ""
+msgstr "Recompensa Con Vida Alta en {sys}"
 
 #: dat/missions/neutral/pirbounty_alive.lua:68
 msgid "Dangerous Alive Bounty in {sys}"
-msgstr ""
+msgstr "Recompensa Con Vida Peligrosa en {sys}"
 
 #: dat/missions/neutral/pirbounty_alive.lua:71
 msgid ""
@@ -69456,27 +69503,30 @@ msgid ""
 "authorities want this pirate alive. {pirname} is believed to be flying a "
 "{shipclass}-class ship."
 msgstr ""
+"El pirata conocido como {pirname} fue visto recientemente en el sistema {sys}"
+". Las autoridades de {fct} quieren a este pirata vivo. Se cree que {pirname} "
+"pilota una nave de clase {shipclass}."
 
 #: dat/missions/neutral/pirbounty_alive.lua:73
 msgid "Capture {plt}"
-msgstr ""
+msgstr "Captura {plt}"
 
 #: dat/missions/neutral/pirbounty_alive.lua:80
 msgid "{plt} has been killed."
-msgstr ""
+msgstr "{plt} ha sido matado."
 
 #. Store original one
 #. Set up the ship, credits, and reputation based on the level.
 #: dat/missions/neutral/pirbounty_alive.lua:101
 msgid "Better Dead than Free"
-msgstr ""
+msgstr "Mejor Muerto que Libre"
 
 #: dat/missions/neutral/pirbounty_alive.lua:102
 #: dat/missions/neutral/seek_n_destroy.lua:222
 #: dat/missions/pirate/pir_hit.lua:143
 #: dat/missions/pirate/pir_hit_intro.lua:135
 msgid "Kill {plt}"
-msgstr ""
+msgstr "Matar a {plt}"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -69514,45 +69564,57 @@ msgid ""
 "You and your crew infiltrate the ship's pathetic security and subdue {plt}. "
 "You transport the pirate to your ship."
 msgstr ""
+"Tú y tu tripulación os infiltráis en la patética seguridad de la nave y "
+"sometéis a {plt}. Transportas al pirata a tu nave."
 
 #: dat/missions/neutral/pirbounty_dead.lua:41
 msgid ""
 "Your crew has a difficult time getting past the ship's security, but "
 "eventually succeeds and subdues {plt}."
 msgstr ""
+"Tu tripulación tiene dificultades para superar la seguridad de la nave, pero "
+"finalmente lo consigue y somete a {plt}."
 
 #: dat/missions/neutral/pirbounty_dead.lua:42
 msgid ""
 "The pirate's security system turns out to be no match for your crew. You "
 "infiltrate the ship and capture {plt}."
 msgstr ""
+"El sistema de seguridad del pirata resulta no ser rival para tu tripulación. "
+"Te infiltras en la nave y capturas a {plt}."
 
 #: dat/missions/neutral/pirbounty_dead.lua:43
 msgid "Your crew infiltrates the pirate's ship and captures {plt}."
-msgstr ""
+msgstr "Tu tripulación se infiltra en la nave del pirata y captura a {plt}."
 
 #: dat/missions/neutral/pirbounty_dead.lua:44
 msgid ""
 "Getting past this ship's security was surprisingly easy. Didn't they know "
 "that {plt} was wanted?"
 msgstr ""
+"Pasar la seguridad de esta nave fue sorprendentemente fácil. ¿No sabían que "
+"{plt} era buscado?"
 
 #: dat/missions/neutral/pirbounty_dead.lua:48
 msgid ""
 "Try as you might, you cannot get past the pirate's security system. "
 "Defeated, you and your crew return to the ship."
 msgstr ""
+"Por mucho que lo intentes, no puedes superar el sistema de seguridad de los "
+"piratas. Derrotados, tú y tu tripulación regresáis a tu nave."
 
 #: dat/missions/neutral/pirbounty_dead.lua:49
 #: dat/missions/proteron/dissbounty_dead.lua:37
 msgid "The ship's security system locks you out."
-msgstr ""
+msgstr "El sistema de seguridad de la nave te bloquea."
 
 #: dat/missions/neutral/pirbounty_dead.lua:50
 msgid ""
 "Your crew comes close to getting past the pirate's security system, but "
 "ultimately fails."
 msgstr ""
+"Tu tripulación está a punto de superar el sistema de seguridad de los "
+"piratas, pero finalmente fracasas."
 
 #: dat/missions/neutral/pirbounty_dead.lua:51
 #: dat/missions/proteron/dissbounty_dead.lua:39
@@ -69560,24 +69622,32 @@ msgid ""
 "It seems your crew is no match for this ship's security system. You return "
 "to your ship."
 msgstr ""
+"Parece que tu tripulación no es rival para el sistema de seguridad de esta "
+"nave. Vuelves a tu nave."
 
 #: dat/missions/neutral/pirbounty_dead.lua:55
 msgid ""
 "After verifying that you killed {plt}, an officer hands you your pay of "
 "#g{credits}#0."
 msgstr ""
+"Tras comprobar que has matado a {plt}, un oficial te entrega tu paga de "
+"#g{credits}#0."
 
 #: dat/missions/neutral/pirbounty_dead.lua:56
 msgid ""
 "After verifying that {plt} is indeed dead, the tired-looking officer smiles "
 "and hands you your pay of #g{credits}#0."
 msgstr ""
+"Tras comprobar que {plt} está efectivamente muerto, el oficial de aspecto "
+"cansado sonríe y te entrega tu paga de #g{credits}#0."
 
 #: dat/missions/neutral/pirbounty_dead.lua:57
 msgid ""
 "The officer seems pleased that {plt} is finally dead. They thank you and "
 "promptly hand you your pay of #g{credits}#0."
 msgstr ""
+"El oficial parece complacido de que {plt} esté finalmente muerto. Te da las "
+"gracias y te entrega rápidamente tu paga de #g{credits}#0."
 
 #: dat/missions/neutral/pirbounty_dead.lua:58
 msgid ""
@@ -69585,6 +69655,9 @@ msgid ""
 "of {plt} is quietly verified. The officer then pays you of #g{credits}#0 and "
 "sends you off."
 msgstr ""
+"El oficial de aspecto paranoico te lleva a una habitación cerrada, donde "
+"verifica la muerte de {plt} en silencio. A continuación, el oficial te paga "
+"de #g{credits}#0 y te despide."
 
 #: dat/missions/neutral/pirbounty_dead.lua:59
 msgid ""
@@ -69592,6 +69665,9 @@ msgid ""
 "an office, go through some paperwork, and hand you your pay of #g{credits}"
 "#0, mumbling something about how useless the bounty system is."
 msgstr ""
+"Cuando preguntas al oficial por tu recompensa en {plt}, suspira, te lleva a "
+"una oficina, revisa unos papeles y te entrega tu paga de #g{credits}#0, "
+"murmurando algo sobre lo inútil que es el sistema de recompensas."
 
 #: dat/missions/neutral/pirbounty_dead.lua:60
 msgid ""
@@ -69599,11 +69675,15 @@ msgid ""
 "paperwork, and hands you your pay of #g{credits}#0, looking bored the entire "
 "time."
 msgstr ""
+"El oficial verifica la muerte de {plt}, revisa el papeleo necesario, y te "
+"entrega tu paga de #g{credits}#0, pareciendo aburrido todo el tiempo."
 
 #: dat/missions/neutral/pirbounty_dead.lua:64
 msgid ""
 "An officer takes {plt} into custody and hands you your pay of #g{credits}#0."
 msgstr ""
+"Un oficial se lleva a {plt} bajo custodia y te entrega tu paga de "
+"#g{credits}#0."
 
 #: dat/missions/neutral/pirbounty_dead.lua:65
 msgid ""
@@ -69611,6 +69691,10 @@ msgid ""
 "They carefully take the pirate off your hands, taking precautions you think "
 "are completely unnecessary, and then hand you your pay of #g{credits}#0."
 msgstr ""
+"El oficial parece pensar que tu decisión de capturar vivo a {plt} fue una "
+"estupidez. Te quitan cuidadosamente al pirata de las manos, tomando "
+"precauciones que crees completamente innecesarias, y luego te entregan tu "
+"paga de #g{credits}#0."
 
 #: dat/missions/neutral/pirbounty_dead.lua:66
 msgid ""
@@ -69618,12 +69702,18 @@ msgid ""
 "taken off your hands and you are handed your pay of #g{credits}#0 without a "
 "word."
 msgstr ""
+"Al oficial con el que tratas parece disgustarle especialmente {plt}. Te "
+"quita al pirata de las manos y te entregan tu paga de #g{credits}#0 sin "
+"mediar palabra."
 
 #: dat/missions/neutral/pirbounty_dead.lua:67
 msgid ""
 "A fearful-looking officer rushes {plt} into a secure hold, pays you the "
 "appropriate bounty of #g{credits}#0, and then hurries off."
 msgstr ""
+"Un oficial de aspecto temeroso se apresura a {plt} entrar en una sala de "
+"seguridad, te paga la recompensa correspondiente de #g{credits}#0, y luego "
+"se apresura a salir."
 
 #: dat/missions/neutral/pirbounty_dead.lua:68
 msgid ""
@@ -69631,6 +69721,9 @@ msgid ""
 "captured {plt} alive. Nonetheless, they politely take the pirate off of your "
 "hands and hand you your pay of #g{credits}#0."
 msgstr ""
+"El oficial al que saludas te mira extrañado cuando dices que has capturado a "
+"{plt} vivo. No obstante, te quita amablemente al pirata de las manos y te "
+"entrega tu paga de #g{credits}#0."
 
 #: dat/missions/neutral/pirbounty_dead.lua:72
 msgid ""
@@ -69639,6 +69732,10 @@ msgid ""
 "succeeded without your help, so I've transferred a portion of the bounty "
 "into your account.\""
 msgstr ""
+"\"Saludos. Veo que estabas intentando cobrar una recompensa por {plt}. "
+"Bueno, como puedes ver, me gané la recompensa, pero no creo que hubiera "
+"tenido éxito sin tu ayuda, así que he transferido una parte de la recompensa "
+"a tu cuenta.\""
 
 #: dat/missions/neutral/pirbounty_dead.lua:73
 msgid ""
@@ -69648,6 +69745,11 @@ msgid ""
 "apology, I would like to offer you the portion of the bounty you clearly "
 "earned. The money will be in your account shortly.\""
 msgstr ""
+"\"Siento haberme interpuesto en el camino de tu recompensa. En realidad no "
+"me importa demasiado el dinero, pero quería asegurarme de que la galaxia se "
+"librara de esa escoria; he visto la villanía de {plt} de primera mano, ya "
+"ves. Así que, como disculpa, me gustaría ofrecerte la parte de la recompensa "
+"que claramente has ganado. El dinero estará en tu cuenta en breve.\""
 
 #: dat/missions/neutral/pirbounty_dead.lua:74
 msgid ""
@@ -69656,6 +69758,10 @@ msgid ""
 "transferred what I think is your fair share of the bounty to your bank "
 "account.\""
 msgstr ""
+"\"Oye, gracias por la ayuda allí atrás. ¡No sé si habría sido capaz de "
+"manejar {plt} solo! De todos modos, ya que fuiste de gran ayuda, he "
+"transferido lo que creo que es tu parte justa de la recompensa a tu cuenta "
+"bancaria.\""
 
 #: dat/missions/neutral/pirbounty_dead.lua:75
 msgid ""
@@ -69663,6 +69769,9 @@ msgid ""
 "but still, I appreciate your assistance. Here, I'll transfer some of the "
 "bounty to you, as a token of my appreciation.\""
 msgstr ""
+"\"¡Eh, gracias! Creo que habría sido capaz de eliminar a {plt} por mí mismo, "
+"pero aun así, agradezco tu ayuda. Toma, te transferiré parte de la "
+"recompensa, como muestra de mi agradecimiento.\""
 
 #: dat/missions/neutral/pirbounty_dead.lua:76
 #: dat/missions/proteron/dissbounty_dead.lua:63
@@ -69670,27 +69779,29 @@ msgid ""
 "\"Ha ha ha, looks like I beat you to it this time, eh? Well, I don't do this "
 "often, but here, have some of the bounty. I think you deserve it.\""
 msgstr ""
+"\"Ja, ja, ja, parece que esta vez me he adelantado, ¿eh? Bueno, no hago esto "
+"a menudo, pero toma, ten algo de la recompensa. Creo que te lo mereces.\""
 
 #. Mission details
 #: dat/missions/neutral/pirbounty_dead.lua:81
 msgid "Tiny Dead or Alive Bounty in {sys}"
-msgstr ""
+msgstr "Recompensa Vivo o Muerto Diminuta en {sys}"
 
 #: dat/missions/neutral/pirbounty_dead.lua:82
 msgid "Small Dead or Alive Bounty in {sys}"
-msgstr ""
+msgstr "Recompensa Vivo o Muerto Pequeña en {sys}"
 
 #: dat/missions/neutral/pirbounty_dead.lua:83
 msgid "Moderate Dead or Alive Bounty in {sys}"
-msgstr ""
+msgstr "Recompensa Vivo o Muerto Moderada en {sys}"
 
 #: dat/missions/neutral/pirbounty_dead.lua:84
 msgid "High Dead or Alive Bounty in {sys}"
-msgstr ""
+msgstr "Recompensa Vivo o Muerto Alta en {sys}"
 
 #: dat/missions/neutral/pirbounty_dead.lua:85
 msgid "Dangerous Dead or Alive Bounty in {sys}"
-msgstr ""
+msgstr "Recompensa Vivo o Muerto Peligrosa en {sys}"
 
 #: dat/missions/neutral/pirbounty_dead.lua:88
 msgid ""
@@ -69698,42 +69809,45 @@ msgid ""
 "authorities want this pirate dead or alive. {pirname} is believed to be "
 "flying a {shipclass}-class ship."
 msgstr ""
+"El pirata conocido como {pirname} fue visto recientemente en el sistema {sys}"
+". Las autoridades de {fct} quieren a este pirata vivo o muerto. Se cree que "
+"{pirname} pilota una nave de clase {shipclass}."
 
 #. Messages
 #: dat/missions/neutral/pirbounty_dead.lua:92
 msgid "{plt} got away."
-msgstr ""
+msgstr "{plt} se ha escapado."
 
 #: dat/missions/neutral/pirbounty_dead.lua:93
 msgid "Another pilot eliminated {plt}."
-msgstr ""
+msgstr "Otro piloto eliminó {plt}."
 
 #: dat/missions/neutral/pirbounty_dead.lua:97
 #: dat/missions/proteron/dissbounty_dead.lua:73
 msgid "Bounty Hunt"
-msgstr ""
+msgstr "Caza de Recompensas"
 
 #: dat/missions/neutral/pirbounty_dead.lua:100
 msgid "Kill or capture {plt}"
-msgstr ""
+msgstr "Mata o captura a {plt}"
 
 #: dat/missions/neutral/pirbounty_dead.lua:101
 #: dat/missions/proteron/dissbounty_dead.lua:77
 msgid "Land in {fct} territory to collect your bounty"
-msgstr ""
+msgstr "Aterriza en el territorio {fct} para cobrar tu recompensa"
 
 #: dat/missions/neutral/pirbounty_dead.lua:236
 msgid "Captured Alive"
-msgstr ""
+msgstr "Capturado Con Vida"
 
 #. Stop it from coming back
 #: dat/missions/neutral/pirbounty_dead.lua:245
 msgid "Capture Failed"
-msgstr ""
+msgstr "Captura Fallida"
 
 #: dat/missions/neutral/pirbounty_dead.lua:329
 msgid "A Smaller Reward"
-msgstr ""
+msgstr "Una Recompensa Menor"
 
 #. Set up the ship, credits, and reputation based on the level.
 #. Spawn the ship at the location param.
@@ -69759,7 +69873,7 @@ msgstr ""
 #. --
 #: dat/missions/neutral/pirbounty_dead.lua:432 dat/scripts/common/shark.lua:9
 msgid "Wanted Pirate"
-msgstr ""
+msgstr "Se Busca Pirata"
 
 #. Fail to board the ship; must kill the target instead
 #. (Unused in this mission; used by pirbounty_alive)
@@ -69811,29 +69925,31 @@ msgstr ""
 #. luacheck: globals board counter jumpin land nexttarget1 nexttarget2 nexttarget3 racer1idle racer2idle racer3idle racerland stopcount takeoff (Hook functions passed by name)
 #: dat/missions/neutral/race1.lua:28 dat/missions/neutral/race2.lua:29
 msgid "Let's do this!"
-msgstr ""
+msgstr "¡Vamos a hacer esto!"
 
 #: dat/missions/neutral/race1.lua:29 dat/missions/neutral/race2.lua:30
 msgid "Wooo!"
-msgstr ""
+msgstr "¡Wooo!"
 
 #: dat/missions/neutral/race1.lua:30 dat/missions/neutral/race2.lua:31
 msgid "Time to Shake 'n Bake"
-msgstr ""
+msgstr "Hora de Agitar y Hornear"
 
 #: dat/missions/neutral/race1.lua:40 dat/missions/neutral/race2.lua:41
 msgid "A laid back person"
-msgstr ""
+msgstr "Una persona relajada"
 
 #: dat/missions/neutral/race1.lua:40
 msgid ""
 "You see a laid back person, who appears to be one of the locals, looking "
 "around the bar."
 msgstr ""
+"Ves a una persona relajada, que parece ser uno de los lugareños, mirando "
+"alrededor del bar."
 
 #: dat/missions/neutral/race1.lua:46
 msgid "Looking for a 4th"
-msgstr ""
+msgstr "Buscando un 4º"
 
 #: dat/missions/neutral/race1.lua:46
 msgid ""
@@ -69841,34 +69957,37 @@ msgid ""
 "person to participate. You have to bring a Yacht class ship, and there's a "
 "prize of {credits} if you win. Interested?\""
 msgstr ""
+"\"¡Hola! Pronto tendremos una carrera por este sistema y necesitamos que una "
+"cuarta persona participe. Tienes que traer una nave de clase Yate, y hay un "
+"premio de {credits} si ganas. ¿Interesado?\""
 
 #: dat/missions/neutral/race1.lua:48
 msgid "You're participating in a race!"
-msgstr ""
+msgstr "¡Estás participando en una carrera!"
 
 #: dat/missions/neutral/race1.lua:50
 msgid "Racing Skills 1"
-msgstr ""
+msgstr "Destreza en Carreras 1"
 
 #: dat/missions/neutral/race1.lua:51 dat/missions/neutral/race2.lua:52
 msgid "Board checkpoint 1"
-msgstr ""
+msgstr "Punto de control 1"
 
 #: dat/missions/neutral/race1.lua:52 dat/missions/neutral/race2.lua:53
 msgid "Board checkpoint 2"
-msgstr ""
+msgstr "Punto de control 2"
 
 #: dat/missions/neutral/race1.lua:53 dat/missions/neutral/race2.lua:54
 msgid "Board checkpoint 3"
-msgstr ""
+msgstr "Punto de control 3"
 
 #: dat/missions/neutral/race1.lua:54 dat/missions/neutral/race2.lua:55
 msgid "Land at {pnt}"
-msgstr ""
+msgstr "Aterriza en {pnt}"
 
 #: dat/missions/neutral/race1.lua:56
 msgid "Awesome"
-msgstr ""
+msgstr "Impresionante"
 
 #: dat/missions/neutral/race1.lua:56
 msgid ""
@@ -69878,86 +69997,96 @@ msgid ""
 "the next checkpoint. After the last checkpoint has been boarded, head back "
 "to {pnt} and land. Let's have some fun!\""
 msgstr ""
+"\"¡Eso es genial! Así es como funciona: Todos estaremos en naves de clase "
+"Yate. Una vez que despeguemos de {pnt}, habrá una cuenta atrás, y entonces "
+"procederemos a los distintos puntos de control en orden, abordándolos antes "
+"de ir al siguiente punto de control. Una vez abordado el último punto de "
+"control, volveremos a {pnt} y aterrizaremos. ¡Vamos a divertirnos!\""
 
 #: dat/missions/neutral/race1.lua:59 dat/missions/neutral/race2.lua:69
 msgid "\"I guess we'll need to find another pilot.\""
-msgstr ""
+msgstr "\"Supongo que tendremos que encontrar otro piloto.\""
 
 #: dat/missions/neutral/race1.lua:66 dat/missions/neutral/race2.lua:75
 #: dat/missions/neutral/race2.lua:81
 msgid "Illegal ship!"
-msgstr ""
+msgstr "¡Una nave ilegal!"
 
 #: dat/missions/neutral/race1.lua:66 dat/missions/neutral/race2.lua:75
 msgid ""
 "\"You have switched to a ship that's not allowed in this race. Mission "
 "failed.\""
 msgstr ""
+"\"Has cambiado a una nave que no está permitida en esta carrera. Misión "
+"fallida.\""
 
 #: dat/missions/neutral/race1.lua:81 dat/missions/neutral/race2.lua:104
 msgid "Checkpoint {n}"
-msgstr ""
+msgstr "Punto de Control {n}"
 
 #: dat/missions/neutral/race1.lua:94 dat/missions/neutral/race2.lua:130
 msgid "Racer {n}"
-msgstr ""
+msgstr "Corredor {n}"
 
 #: dat/missions/neutral/race1.lua:138 dat/missions/neutral/race1.lua:156
 #: dat/missions/neutral/race1.lua:174 dat/missions/neutral/race1.lua:199
 #: dat/missions/neutral/race2.lua:173 dat/missions/neutral/race2.lua:188
 #: dat/missions/neutral/race2.lua:202 dat/missions/neutral/race2.lua:221
 msgid "{plt} just reached checkpoint {n}"
-msgstr ""
+msgstr "{plt} acaba de alcanzar el punto de control {n}"
 
 #: dat/missions/neutral/race1.lua:139 dat/missions/neutral/race2.lua:174
 msgid "Checkpoint {n} baby!"
-msgstr ""
+msgstr "¡Punto de control {n} colega!"
 
 #: dat/missions/neutral/race1.lua:157 dat/missions/neutral/race2.lua:189
 msgid "Hooyah"
-msgstr ""
+msgstr "Yuuhuuu"
 
 #: dat/missions/neutral/race1.lua:175 dat/missions/neutral/race2.lua:203
 msgid "Next!"
-msgstr ""
+msgstr "¡Siguiente!"
 
 #: dat/missions/neutral/race1.lua:203 dat/missions/neutral/race1.lua:205
 #: dat/missions/neutral/race2.lua:225 dat/missions/neutral/race2.lua:227
 msgid "Checkpoint {n} reached"
-msgstr ""
+msgstr "Punto de control {n} alcanzado"
 
 #: dat/missions/neutral/race1.lua:205 dat/missions/neutral/race2.lua:227
 msgid "Proceed to Checkpoint {n}"
-msgstr ""
+msgstr "Procede al Punto de Control {n}"
 
 #: dat/missions/neutral/race1.lua:215 dat/missions/neutral/race1.lua:239
 #: dat/missions/neutral/race2.lua:236 dat/missions/neutral/race2.lua:261
 msgid "You left the race!"
-msgstr ""
+msgstr "¡Has abandonado la carrera!"
 
 #: dat/missions/neutral/race1.lua:215 dat/missions/neutral/race1.lua:239
 #: dat/missions/neutral/race2.lua:236 dat/missions/neutral/race2.lua:261
 msgid "\"Because you left the race, you have been disqualified.\""
-msgstr ""
+msgstr "\"Como has abandonado la carrera, has sido descalificado.\""
 
 #: dat/missions/neutral/race1.lua:221 dat/missions/neutral/race2.lua:241
 msgid "{plt} just landed at {pnt} and finished the race"
-msgstr ""
+msgstr "{plt} acaba de aterrizar en {pnt} y ha terminado la carrera"
 
 #: dat/missions/neutral/race1.lua:228 dat/missions/neutral/race2.lua:248
 #: dat/missions/neutral/race2.lua:251
 msgid "You Won!"
-msgstr ""
+msgstr "¡Ganaste!"
 
 #: dat/missions/neutral/race1.lua:228
 msgid ""
 "The laid back person comes up to you and hands you a credit chip.\n"
 "   \"Nice racing! Here's your prize money. Let's race again sometime soon!\""
 msgstr ""
+"La persona relajada se acerca a ti y te da un chip de créditos.\n"
+"   \"¡Buena carrera! Aquí tienes el dinero del premio. ¡Volvamos a correr "
+"pronto!\""
 
 #: dat/missions/neutral/race1.lua:233 dat/missions/neutral/race2.lua:256
 msgid "You failed to win the race."
-msgstr ""
+msgstr "Perdistes la carrera."
 
 #: dat/missions/neutral/race1.lua:233 dat/missions/neutral/race2.lua:256
 msgid ""
@@ -69966,28 +70095,34 @@ msgid ""
 "   \"That was a lot of fun! If you ever have time, let's race again. Maybe "
 "you'll win next time!\""
 msgstr ""
+"Mientras felicitas al ganador por una gran carrera, la persona relajada se "
+"acerca a ti.\n"
+"   \"¡Ha sido muy divertido! Si alguna vez tienes tiempo, volvamos a correr. "
+"¡Quizá ganes la próxima vez!\""
 
 #: dat/missions/neutral/race2.lua:41
 msgid ""
 "You see a laid back person, who appears to be one of the locals, looking "
 "around the bar, apparently in search of a suitable pilot."
 msgstr ""
+"Ves a una persona relajada, que parece ser uno de los lugareños, mirando "
+"alrededor del bar, aparentemente en busca de un piloto adecuado."
 
 #: dat/missions/neutral/race2.lua:48
 msgid "Another race"
-msgstr ""
+msgstr "Otra carrera"
 
 #: dat/missions/neutral/race2.lua:48
 msgid "\"Hey there, great to see you back! You want to have another race?\""
-msgstr ""
+msgstr "\"¡Hola, me alegro de verte de vuelta! ¿Quieres hacer otra carrera?\""
 
 #: dat/missions/neutral/race2.lua:50
 msgid "You're participating in another race!"
-msgstr ""
+msgstr "¡Participas en otra carrera!"
 
 #: dat/missions/neutral/race2.lua:51
 msgid "Racing Skills 2"
-msgstr ""
+msgstr "Destreza en Carreras 2"
 
 #: dat/missions/neutral/race2.lua:57
 msgid ""
@@ -69996,52 +70131,63 @@ msgid ""
 "afterburners allowed. The easy one has a prize of {credits1}, and the hard "
 "one has a prize of {credits2}. Which one do you want to do?\""
 msgstr ""
+"\"Hay dos carreras en las que puedes participar: una fácil, que es como la "
+"primera carrera que tuvimos, o una difícil, con puntos de control más "
+"pequeños y sin permitir la postcombustión. La fácil tiene un premio de "
+"{credits1}, y la difícil tiene un premio de {credits2}. ¿Cuál quieres hacer?"
+"\""
 
 #: dat/missions/neutral/race2.lua:58
 msgid "Choose difficulty"
-msgstr ""
+msgstr "Elige la dificultad"
 
 #: dat/missions/neutral/race2.lua:58
 msgid "Easy"
-msgstr ""
+msgstr "Fácil"
 
 #: dat/missions/neutral/race2.lua:58
 msgid "Hard"
-msgstr ""
+msgstr "Difícil"
 
 #: dat/missions/neutral/race2.lua:61
 msgid "Easy Mode "
-msgstr ""
+msgstr "Modo Fácil "
 
 #: dat/missions/neutral/race2.lua:61
 msgid "\"Let's go have some fun then!\""
-msgstr ""
+msgstr "\"¡Vamos a divertirnos entonces!\""
 
 #: dat/missions/neutral/race2.lua:64
 msgid "Hard Mode"
-msgstr ""
+msgstr "Modo Difícil"
 
 #: dat/missions/neutral/race2.lua:64
 msgid ""
 "\"You want a challenge huh? Remember, no afterburners on your ship or you "
 "will not be allowed to race. Let's go have some fun!\""
 msgstr ""
+"\"¿Quieres un reto, eh? Recuerda, nada de postcombustión en tu nave o no se "
+"te permitirá competir. ¡Vamos a divertirnos!\""
 
 #: dat/missions/neutral/race2.lua:81
 msgid ""
 "\"You have outfits on your ship which is not allowed in this race in hard "
 "mode. Mission failed.\""
 msgstr ""
+"\"Tienes equipos en tu nave que no están permitidos en esta carrera en modo "
+"difícil. Misión fallida.\""
 
 #: dat/missions/neutral/race2.lua:165
 msgid ""
 "This race is sponsored by Melendez Corporation. Problem-free ships for "
 "problem-free voyages!"
 msgstr ""
+"Esta carrera está patrocinada por Corporación Melendez. ¡Naves sin problemas "
+"para viajes sin problemas!"
 
 #: dat/missions/neutral/race2.lua:225
 msgid "Proceed to land at {pnt}"
-msgstr ""
+msgstr "Procede a aterrizar en {pnt}"
 
 #: dat/missions/neutral/race2.lua:248
 msgid ""
@@ -70053,6 +70199,13 @@ msgid ""
 "audience, and then a credit chip with the actual prize money on it. At least "
 "the trophy looks cool."
 msgstr ""
+"Un hombre con traje y corbata te sube a un escenario. Una gran etiqueta con "
+"su nombre en la chaqueta dice \"Corporación Melendez\". \"Enhorabuena por tu "
+"victoria\", dice, estrechando tu mano, \"ha sido una gran carrera. En nombre "
+"de la Corporación Melendez, me gustaría entregarte tu trofeo y el premio en "
+"metálico de {credits}\". Te entrega uno de esos cheques falsos de gran "
+"tamaño para el público, y luego un chip de créditos con el dinero real del "
+"premio. Al menos, el trofeo tiene un aspecto atractivo."
 
 #: dat/missions/neutral/race2.lua:251
 msgid ""
@@ -70063,6 +70216,12 @@ msgid ""
 "He hands you one of those fake oversized cheques for the audience, and then "
 "a credit chip with the actual prize money on it."
 msgstr ""
+"Un hombre con traje y corbata te sube a un escenario. Una gran etiqueta con "
+"su nombre en la chaqueta dice \"Corporación Melendez\". \"Enhorabuena por tu "
+"victoria\", dice, estrechando tu mano, \"ha sido una gran carrera. En nombre "
+"de Corporación Melendez, me gustaría entregarte tu premio en metálico de "
+"{credits}\". Te entrega uno de esos cheques falsos de gran tamaño para el "
+"público, y luego un chip de créditos con el dinero real del premio."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -70111,17 +70270,19 @@ msgstr ""
 #: dat/missions/neutral/reynir.lua:79 dat/missions/neutral/reynir.lua:101
 #: dat/missions/neutral/reynir.lua:107 dat/missions/neutral/reynir.lua:111
 msgid "Reynir"
-msgstr ""
+msgstr "Reynir"
 
 #: dat/missions/neutral/reynir.lua:48
 msgid ""
 "You see an old man with a cap on, on which the letters R-E-Y-N-I-R are "
 "imprinted."
 msgstr ""
+"Ves a un anciano con una gorra en la que están impresas las letras "
+"R-E-Y-N-I-R."
 
 #: dat/missions/neutral/reynir.lua:67
 msgid "\"Do you like money?\""
-msgstr ""
+msgstr "\"¿Te gusta el dinero?\""
 
 #: dat/missions/neutral/reynir.lua:67
 msgid ""
@@ -70132,34 +70293,42 @@ msgid ""
 "to space, and I want you to fly me there! I own a hot dog factory, so I can "
 "reward you richly! Will you do it?\""
 msgstr ""
+"\"Desde que era niño he querido ir al espacio. Sin embargo, mi médico dice "
+"que no puedo ir al espacio porque tengo una presión elevada en la cóclea, "
+"una enfermedad común por aquí.\n"
+"    \"Ya me estoy haciendo mayor, como puedes ver. Antes de morir, quiero "
+"viajar al espacio, ¡y quiero que me lleves allí! Soy dueño de una fábrica de "
+"perritos calientes, ¡así que puedo recompensarte con creces! ¿Lo harás?\""
 
 #. For missions from the Bar only.
 #: dat/missions/neutral/reynir.lua:72 dat/missions/neutral/reynir.lua:78
 #: dat/missions/neutral/reynir.lua:108 dat/missions/neutral/reynir.lua:112
 msgid "Rich reward from space!"
-msgstr ""
+msgstr "¡Recompensa rica desde el espacio!"
 
 #: dat/missions/neutral/reynir.lua:73
 msgid "Lots of cash"
-msgstr ""
+msgstr "Mucho dinero en metálico"
 
 #: dat/missions/neutral/reynir.lua:74
 msgid "Reynir wants to travel to space and will reward you richly."
-msgstr ""
+msgstr "Reynir quiere viajar al espacio y te recompensará ricamente."
 
 #: dat/missions/neutral/reynir.lua:77
 msgid ""
 "\"Thank you so much! Just fly me around in the system, preferably near {pnt}."
 "\""
 msgstr ""
+"\"¡Muchas gracias! Sólo vuela por el sistema, preferiblemente cerca de {pnt}."
+"\""
 
 #: dat/missions/neutral/reynir.lua:78
 msgid "Fly around in the system, preferably near {pnt}"
-msgstr ""
+msgstr "Vuela por el sistema, preferiblemente cerca de {pnt}"
 
 #: dat/missions/neutral/reynir.lua:79
 msgid "A old man who wants to see space."
-msgstr ""
+msgstr "Un anciano que quiere ver el espacio."
 
 #. If landed on mem.misn_base then give reward
 #: dat/missions/neutral/reynir.lua:93
@@ -70168,6 +70337,10 @@ msgid ""
 "    \"I lost my hearing out there! Damn you!! I made a promise, though, so "
 "I'd better keep it. Here's your reward, {tonnes} of hot dogs...\""
 msgstr ""
+"Reynir no parece feliz cuando te encuentras con él fuera de la nave.\n"
+"    \"¡Perdí el oído ahí fuera! ¡Maldito seas! Sin embargo, hice una "
+"promesa, así que será mejor que la cumpla. Aquí tienes tu recompensa, "
+"{tonnes} de perritos calientes...\""
 
 #: dat/missions/neutral/reynir.lua:95
 msgid ""
@@ -70176,34 +70349,48 @@ msgid ""
 "losing his hearing. Still, he begrudgingly paid you in the form of {tonnes} "
 "of hot dogs."
 msgstr ""
+"Llevaste a un anciano llamado Reynir a dar un paseo por el espacio exterior, "
+"pero se enfadó mucho porque la distancia que recorristeis le hizo lesionarse "
+"y perder el oído. Aun así, te pagó a regañadientes en forma de {tonnes} de "
+"perritos calientes."
 
 #: dat/missions/neutral/reynir.lua:98
 msgid ""
 "\"Thank you so much! Here's {tonnes} of hot dogs. They're worth more than "
 "their weight in gold, aren't they?\""
 msgstr ""
+"\"¡Muchas gracias! Aquí hay {tonnes} de perritos calientes. Valen más que su "
+"peso en oro, ¿no?\""
 
 #: dat/missions/neutral/reynir.lua:99
 msgid ""
 "You took an old man named Reynir on a ride in outer space. He was happy and "
 "paid you in the form of {tonnes} of hot dogs."
 msgstr ""
+"Llevaste a un anciano llamado Reynir a dar un paseo por el espacio exterior. "
+"Se alegró y te pagó en forma de {tonnes} de perritos calientes."
 
 #: dat/missions/neutral/reynir.lua:107
 msgid ""
 "Reynir walks out of the ship, amazed by the view. \"So this is how {pnt_cur} "
 "looks like! I've always wondered... I want to go back to {pnt} now, please.\""
 msgstr ""
+"Reynir sale de la nave, asombrado por la vista. \"¡Así que este es el "
+"aspecto de {pnt_cur}! Siempre me lo había preguntado... Quiero volver a {pnt}"
+" ahora, por favor.\""
 
 #: dat/missions/neutral/reynir.lua:108 dat/missions/neutral/reynir.lua:112
 msgid "Take Reynir home to {pnt}"
-msgstr ""
+msgstr "Lleva a Reynir a casa a {pnt}"
 
 #: dat/missions/neutral/reynir.lua:111
 msgid ""
 "Reynir walks out of the ship. You notice that he's bleeding out of both "
 "ears. \"Where have you taken me?! Get me back to {pnt} right now!!\""
 msgstr ""
+"Reynir sale de la nave. Te das cuenta de que estás sangrando por las dos "
+"orejas. \"¡¿Dónde me habéis llevado?! Llévame de vuelta a {pnt} ahora mismo!"
+"\""
 
 #. TODO: There should probably be more here
 #. Remove the passenger.
@@ -70260,21 +70447,21 @@ msgstr ""
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:28
 #: dat/missions/neutral/runaway/runaway_search.lua:36
 msgid "Cynthia"
-msgstr ""
+msgstr "Cynthia"
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:29
 #: dat/missions/neutral/runaway/runaway_search.lua:37
 msgid "A young teenager."
-msgstr ""
+msgstr "Un joven adolescente."
 
 #. luacheck: globals land (Hook functions passed by name)
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:35
 msgid "Young Teenager"
-msgstr ""
+msgstr "Joven Adolescente"
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:35
 msgid "A pretty teenager sits alone at a table."
-msgstr ""
+msgstr "Una bonita adolescente que se sienta sola en una mesa."
 
 #. This mission does not make any system claims
 #. Our *cargo* weighs nothing
@@ -70287,7 +70474,7 @@ msgstr ""
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:70
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:81
 msgid "The Runaway"
-msgstr ""
+msgstr "La Fuga"
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:41
 msgid ""
@@ -70299,27 +70486,35 @@ msgid ""
 "take me to {pnt}.\"\n"
 "    You wonder who she is, but you dare not ask. Do you accept?"
 msgstr ""
+"Parece estar fuera de lugar en el bar. Cuando te acercas, parece que se pone "
+"rígida.\n"
+"    \"H..H..Hola\", tartamudea. \"Me llamo Cynthia. ¿Podría llevarme? "
+"Necesito salir de aquí.\n"
+"    No puedo pagarte mucho, sólo lo que tengo encima, {credits}\". Te "
+"preguntas quién debe ser para tener tantos créditos encima. \"Necesito que "
+"me lleves a {pnt}\".\n"
+"    Te preguntas quién es, pero no te atreves a preguntar. ¿Aceptas?"
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:51
 msgid "Your cargo hold doesn't have enough free space."
-msgstr ""
+msgstr "Tu bodega de carga no tiene suficiente espacio libre."
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:57
 msgid "Deliver Cynthia to Zhiru in the Goddard system"
-msgstr ""
+msgstr "Lleva a Cynthia a Zhiru en el sistema Goddard"
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:65
 #: dat/missions/neutral/runaway/runaway_search.lua:94
 msgid "{credits} on delivery."
-msgstr ""
+msgstr "{credits} a la llegada."
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:67
 msgid "Deliver Cynthia safely to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Entrega a Cynthia de forma segura a {pnt} en el sistema {sys}."
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:70
 msgid "\"Thank you. But we must leave now, before anyone sees me.\""
-msgstr ""
+msgstr "\"Gracias. Pero debemos irnos ahora, antes de que alguien me vea.\""
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:81
 msgid ""
@@ -70327,6 +70522,9 @@ msgid ""
 "    When you look back to where she was, nothing remains but a tidy pile of "
 "credit chips and a worthless pendant."
 msgstr ""
+"Cuando entras en el muelle, ella te advierte que mires detrás de ti.\n"
+"Cuando vuelves a mirar hacia donde estaba ella, no queda nada más que una "
+"ordenada pila de chips de créditon y un colgante sin valor."
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:84
 msgid ""
@@ -70334,15 +70532,19 @@ msgid ""
 "she suddenly disappeared, leaving behind a tidy pile of credit chips and a "
 "worthless pendant."
 msgstr ""
+"Llevaste a una adolescente llamada Cynthia a Zhiru. Cuando llegasteis, "
+"desapareció de repente, dejando un buen montón de chips de créditos y un "
+"colgante sin valor."
 
 #: dat/missions/neutral/runaway/runaway_search.lua:48
 msgid "An old man sits at a table with some missing person papers."
 msgstr ""
+"Un anciano se sienta en una mesa con unos papeles de persona desaparecida."
 
 #. Migrate an old mission in progress
 #: dat/missions/neutral/runaway/runaway_search.lua:67
 msgid "Search for Cynthia on {pnt} in {sys}"
-msgstr ""
+msgstr "Busca a Cynthia en {pnt} en {sys}"
 
 #. This mission does not make any system claims
 #. luacheck: globals land (Hook functions passed by name)
@@ -70367,7 +70569,7 @@ msgstr ""
 #: dat/missions/neutral/runaway/runaway_search.lua:161
 #: dat/missions/neutral/runaway/runaway_search.lua:166
 msgid "The Search for Cynthia"
-msgstr ""
+msgstr "La Búsqueda de Cynthia"
 
 #: dat/missions/neutral/runaway/runaway_search.lua:84
 msgid ""
@@ -70378,10 +70580,16 @@ msgid ""
 "mystery. We know she was kidnapped, but if you know anything...\" The man "
 "begins to cry. \"Have you seen any trace of her?\""
 msgstr ""
+"Al acercarse a él, te entrega un papel. Ofrece una recompensa de {credits} "
+"por encontrar a una persona \"Cynthia\".\n"
+"    \"Esa es mi chica. Desapareció hace varios decaperiodos. Conseguimos "
+"rastrearla hasta aquí, pero dónde fue después sigue siendo un misterio. "
+"Sabemos que fue secuestrada, pero si usted sabe algo...\" El hombre empieza "
+"a llorar. \"¿Ha visto algún rastro de ella?\""
 
 #: dat/missions/neutral/runaway/runaway_search.lua:95
 msgid "Search for Cynthia."
-msgstr ""
+msgstr "Busca a Cynthia."
 
 #: dat/missions/neutral/runaway/runaway_search.lua:99
 msgid ""
@@ -70390,6 +70598,9 @@ msgid ""
 "Stunned, the man hands you a list of planets that they wanted to look for "
 "her on."
 msgstr ""
+"Al mirar la foto, ves que el relicario coincide con el que llevaba Cynthia, "
+"así que se lo entregas a su padre. \"Creo que esto era de ella\". Atónito, "
+"el hombre te entrega una lista de planetas en los que quería buscarla."
 
 #: dat/missions/neutral/runaway/runaway_search.lua:111
 msgid ""
@@ -70397,23 +70608,27 @@ msgid ""
 "schedule says it's destined for Torloth. You begin to wonder if she'll want "
 "to be found."
 msgstr ""
+"Por fin. La encuentras, pero se mete en un autobús turístico cuando te ve. "
+"El horario dice que tiene como destino Torloth. Empiezas a preguntarte si "
+"quiere ser encontrada."
 
 #: dat/missions/neutral/runaway/runaway_search.lua:115
 #: dat/missions/neutral/runaway/runaway_search.lua:144
 msgid "Catch Cynthia on Torloth in Cygnus"
-msgstr ""
+msgstr "Atrapa a Cynthia en Torloth en Cygnus"
 
 #. If we land on Zhiru to finish the mission, clean up, reward, and leave.
 #. Talk to the father and get the reward
 #: dat/missions/neutral/runaway/runaway_search.lua:116
 #: dat/missions/neutral/runaway/runaway_search.lua:160
 msgid "Return Cynthia to her father on Zhiru in the Goddard system"
-msgstr ""
+msgstr "Devuelve a Cynthia a su padre en Zhiru en el sistema Goddard"
 
 #: dat/missions/neutral/runaway/runaway_search.lua:130
 msgid ""
 "After thoroughly searching the spaceport, you decide that she wasn't there."
 msgstr ""
+"Después de registrar a fondo el puerto espacial, decides que no estaba allí."
 
 #: dat/missions/neutral/runaway/runaway_search.lua:142
 msgid ""
@@ -70422,22 +70637,28 @@ msgid ""
 "leave me alone? I don't want to go back to my terrible parents!\" Will you "
 "take her anyway?"
 msgstr ""
+"Tras perseguir a Cynthia por casi toda la estación, la encuentras acurrucada "
+"al final de un pasillo, llorando. Cuando te acercas, grita: \"¿Por qué no me "
+"dejáis en paz? No quiero volver con mis terribles padres\". ¿Te la llevarás "
+"de todos modos?"
 
 #: dat/missions/neutral/runaway/runaway_search.lua:145
 msgid "Go to Zhiru in Goddard to lie to Cynthia's father"
-msgstr ""
+msgstr "Ve a Zhiru en Goddard para mentir al padre de Cynthia"
 
 #: dat/missions/neutral/runaway/runaway_search.lua:147
 msgid ""
 "\"Please, please, please don't ever come looking for me again, I beg of you!"
 "\""
-msgstr ""
+msgstr "\"¡Por favor, por favor no vuelvas a buscarme, te lo ruego!\""
 
 #: dat/missions/neutral/runaway/runaway_search.lua:149
 msgid ""
 "Cynthia stops crying and proceeds to hide in the farthest corner of your "
 "ship. Attempts to talk to her end up fruitless."
 msgstr ""
+"Cynthia deja de llorar y procede a esconderse en el rincón más alejado de tu "
+"nave. Los intentos de hablar con ella acaban siendo infructuosos."
 
 #: dat/missions/neutral/runaway/runaway_search.lua:161
 msgid ""
@@ -70445,6 +70666,9 @@ msgid ""
 "father talking about how her abusive mother died. Cynthia becomes visibly "
 "happier, so you pick up your payment and depart."
 msgstr ""
+"Cuando Cynthia ve a su padre, comienza a llorar de nuevo. Oyes al padre "
+"hablar de cómo murió su abusiva madre. Cynthia se pone visiblemente más "
+"contenta, así que recoges tu pago y te vas."
 
 #: dat/missions/neutral/runaway/runaway_search.lua:164
 msgid ""
@@ -70455,6 +70679,12 @@ msgid ""
 "to become visibly happier when her father told her that her abusive mother "
 "had died."
 msgstr ""
+"El padre de Cynthia, a quien habías transportado antes, te pidió que la "
+"encontraras y se la llevaras, pensando que estaba secuestrada. Cynthia "
+"protestó diciéndote que no quería volver con sus padres, pero tú la llevaste "
+"de todos modos. Cuando vio a su padre, empezó a llorar, pero pareció ponerse "
+"visiblemente más contenta cuando su padre le dijo que su abusiva madre había "
+"muerto."
 
 #: dat/missions/neutral/runaway/runaway_search.lua:166
 msgid ""
@@ -70463,6 +70693,10 @@ msgid ""
 "go back to the spaceport. Before you leave, he hands you a few credits. "
 "\"For your troubles.\""
 msgstr ""
+"Le dices al padre que has comprobado todos los lugares de la lista, y "
+"algunos más, pero que su hija no aparece por ningún lado. Le invitas a una "
+"copa y vuelves al puerto espacial. Antes de salir, te da unos créditos. \"Por"
+" tus molestias.\""
 
 #: dat/missions/neutral/runaway/runaway_search.lua:168
 msgid ""
@@ -70472,6 +70706,11 @@ msgid ""
 "Respecting her wishes, you let her be and lied to her father, saying that "
 "you couldn't find her no matter how hard you tried."
 msgstr ""
+"El padre de Cynthia, a quien habías llevado antes, te pidió que la "
+"encontraras y se la llevaras, pensando que estaba secuestrada. Cynthia "
+"protestó diciéndote que no quería volver con sus padres. Respetando sus "
+"deseos, la dejaste en paz y mentiste a su padre, diciendo que no podías "
+"encontrarla por mucho que lo intentaras."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -70514,135 +70753,167 @@ msgid ""
 "You ask for information about {plt} and the pilot tells you that this outlaw "
 "is supposed to have business in {sys} soon."
 msgstr ""
+"Pides información sobre {plt} y el piloto te dice que este delincuente va a "
+"tener negocios en {sys} pronto."
 
 #: dat/missions/neutral/seek_n_destroy.lua:49
 msgid ""
 "\"{plt}? Yes, I know that scum. I've heard they like to hang around in "
 "{sys}. Good luck!\""
 msgstr ""
+"¿{plt}? Sí, conozco a esa escoria. He oído que les gusta andar por ahí en "
+"{sys}. ¡Buena suerte!\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:50
 msgid ""
 "\"{plt} has owed me 500K credits for dozens of cycles and never paid me "
 "back! You can probably catch that thief in {sys}.\""
 msgstr ""
+"\"{plt} me debe 500 mil créditos desde hace decenas de ciclos y nunca me los "
+"ha devuelto. Probablemente puedas atrapar a ese ladrón en {sys}.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:51
 msgid ""
 "\"If you're looking for {plt}, I would suggest going to {sys} and taking a "
 "look there; that's where that outlaw was last time I heard.\""
 msgstr ""
+"\"Si buscas a {plt}, te sugeriría que fueras a {sys} y echaras un vistazo "
+"allí; allí es donde estaba ese delincuente la última vez que lo oí.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:52
 msgid ""
 "\"If I was looking for {plt}, I would look in the {sys} system. That's "
 "probably a good bet.\""
 msgstr ""
+"\"Si estuviera buscando {plt}, buscaría en el sistema {sys}. Esa es "
+"probablemente una buena apuesta.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:55
 msgid ""
 "This person has never heard of {plt}. It seems you will have to ask someone "
 "else."
 msgstr ""
+"Esta persona nunca ha oído hablar de {plt}. Parece que tendras que preguntar "
+"a otra persona."
 
 #: dat/missions/neutral/seek_n_destroy.lua:56
 msgid ""
 "This person is also looking for {plt}, but doesn't seem to know anything "
 "more than you."
 msgstr ""
+"Esta persona también está buscando {plt}, pero no parece saber nada más que "
+"tú."
 
 #: dat/missions/neutral/seek_n_destroy.lua:57
 msgid ""
 "\"{plt}? Nope, I haven't seen that person in many cycles at this point.\""
 msgstr ""
+"\"¿{plt}? No, no he visto a esa persona en muchos ciclos a estas alturas.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:58
 msgid "\"Sorry, I have no idea where {plt} is.\""
-msgstr ""
+msgstr "\"Lo siento, no tengo ni idea de dónde está {plt}.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:59
 msgid "\"Oh, hell no, I stay as far away from {plt} as I possibly can.\""
-msgstr ""
+msgstr "\"Oh, diablos, no, me mantengo tan lejos de {plt} como puedo.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:60
 msgid "\"I haven't a clue where {plt} is.\""
-msgstr ""
+msgstr "\"No tengo ni idea de dónde está {plt}.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:61
 msgid "\"I don't give a damn about {plt}. Go away.\""
-msgstr ""
+msgstr "\"Me importa un bledo el {plt}. Vete.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:62
 msgid "\"{plt}? Don't know, don't care.\""
-msgstr ""
+msgstr "\"¿{plt}? No lo sé, no me importa.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:63
 msgid "When you ask about {plt}, you are promptly told to get lost."
-msgstr ""
+msgstr "Cuando preguntas por {plt}, te dicen rápidamente que te pierdas."
 
 #: dat/missions/neutral/seek_n_destroy.lua:64
 msgid ""
 "\"I'd love to get back at {plt} for last cycle, but I haven't seen them in "
 "quite some time now.\""
 msgstr ""
+"\"Me encantaría volver a {plt} por el ciclo pasado, pero hace tiempo que no "
+"los veo.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:65
 msgid "\"I've not seen {plt}, but good luck in your search!\""
-msgstr ""
+msgstr "\"No he visto a {plt}, ¡pero buena suerte en su búsqueda!\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:66
 msgid ""
 "\"Wouldn't revenge be nice? Unfortunately I haven't a clue where {plt} is, "
 "though. Sorry!\""
 msgstr ""
+"\"¿No sería agradable la venganza? Desgraciadamente, no tengo ni idea de "
+"dónde está {plt}. ¡Lo siento!\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:67
 msgid ""
 "\"I used to work with {plt}. We haven't seen each other since they stole my "
 "favourite ship, though.\""
 msgstr ""
+"\"Solía trabajar con {plt}. Aunque no nos hemos visto desde que me robaron "
+"mi nave favorita.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:70
 msgid ""
 "\"{plt}, you say? Well, I don't offer my services for free. Pay me {credits} "
 "and I'll tell you where to look; how does that sound?\""
 msgstr ""
+"\"{plt}, ¿dices? Bueno, no ofrezco mis servicios gratis. Págame {credits} y "
+"te diré dónde buscar; ¿qué te parece?\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:71
 msgid ""
 "\"Ah, yes, I know where probably {plt} is. I'll tell you for just {credits}. "
 "What do you say?\""
 msgstr ""
+"\"Ah, sí, sé dónde probablemente está {plt}. Te lo diré por sólo {credits}. ¿"
+"Qué dices?\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:72
 msgid ""
 "\"{plt}? Of course, I know this pilot. I can tell you where they were last "
 "heading, but it'll cost you. {credits}. Deal?\""
 msgstr ""
+"¿{plt}? Por supuesto, conozco a este piloto. Puedo decirte a dónde se "
+"dirigieron por última vez, pero te costará {credits}. ¿Trato?\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:73
 msgid ""
 "\"Ha ha ha! Yes, I've seen {plt} around! Will I tell you where? Heck no! Not "
 "unless you pay me, of course... {credits} should be sufficient.\""
 msgstr ""
+"\"¡Ja, ja, ja! Sí, ¡he visto a {plt} por ahí! ¿Te digo dónde? No, a no ser "
+"que me pagues. No a menos que me pagues, por supuesto... {credits} debería "
+"ser suficiente.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:74
 msgid ""
 "\"You're looking for {plt}? I tell you what: give me {credits} and I'll tell "
 "you. Otherwise, get lost!\""
 msgstr ""
+"\"¿Buscas a {plt}? Te diré qué: dame {credits} y te lo diré. Si no, "
+"¡piérdete!\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:77
 msgid "\"As if the likes of you would ever try to fight me!\""
-msgstr ""
+msgstr "\"¡Como si alguien como tú fuera a intentar luchar contra mí!\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:78
 msgid "The pilot simply sighs and cuts the connection."
-msgstr ""
+msgstr "El piloto simplemente suspira y corta la conexión."
 
 #: dat/missions/neutral/seek_n_destroy.lua:79
 msgid "\"What a lousy attempt to scare me.\""
-msgstr ""
+msgstr "\"Qué intento tan pésimo de asustarme.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:82
 msgid ""
@@ -70650,98 +70921,111 @@ msgid ""
 "smithereens, the pilot tells you that {plt} is supposed to have business in "
 "{sys} soon."
 msgstr ""
+"Como queda claro que no tienes ningún problema en hacer volar una nave en "
+"pedazos, el piloto te dice que {plt} debe tener negocios en {sys} pronto."
 
 #: dat/missions/neutral/seek_n_destroy.lua:83
 msgid ""
 "\"OK, OK, I'll tell you! You can find {plt} in the {sys} system! Leave me "
 "alone!\""
 msgstr ""
+"\"¡Bien, bien, te lo diré! ¡Puedes encontrar {plt} en el sistema {sys}! ¡"
+"Déjame en paz!\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:86
 msgid ""
 "When you ask for information about {plt}, they tell you that this outlaw has "
 "already been killed by someone else."
 msgstr ""
+"Cuando pides información sobre {plt}, te dicen que ese bandido ya ha sido "
+"asesinado por otra persona."
 
 #: dat/missions/neutral/seek_n_destroy.lua:87
 msgid ""
 "\"Didn't you hear? That outlaw's dead. Got blown up in an asteroid field is "
 "what I heard.\""
 msgstr ""
+"\"¿No has oído? Ese bandido está muerto. Fue volado en un campo de "
+"asteroides, al menos es lo que escuché.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:88
 msgid ""
 "\"Ha ha, you're still looking for that outlaw? You're wasting your time; "
 "they've already been taken care of.\""
 msgstr ""
+"\"Ja, ja, ¿todavía estás buscando a ese bandido? Pierdes el tiempo; ya se "
+"han encargado de ellos.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:89
 msgid ""
 "\"Ah, sorry, that target's already dead. Blown to smithereens by a "
 "mercenary. I saw the scene, though! It was glorious.\""
 msgstr ""
+"\"Ah, lo siento, ese objetivo ya está muerto. Volado en pedazos por un "
+"mercenario. ¡Pero vi la escena! Fue gloriosa.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:92
 msgid ""
 "The pilot asks you to give them one good reason to give you that information."
 msgstr ""
+"El piloto te pide que le des una buena razón para darte esa información."
 
 #: dat/missions/neutral/seek_n_destroy.lua:93
 msgid ""
 "\"What if I know where your target is and I don't want to tell you, eh?\""
-msgstr ""
+msgstr "\"¿Y si sé dónde está tu objetivo y no quiero decírtelo, eh?\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:94
 msgid "\"Piss off! I won't tell anything to the likes of you!\""
-msgstr ""
+msgstr "\"¡Vete a la mierda! ¡No voy a contar nada a gente como tú!\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:95
 msgid "\"And why exactly should I give you that information?\""
-msgstr ""
+msgstr "\"¿Y por qué exactamente debería darte esa información?\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:96
 msgid "\"And why should I help you, eh? Get lost!\""
-msgstr ""
+msgstr "\"¿Y por qué debería ayudarte, eh? ¡Piérdete!\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:99
 msgid "Hehe, pleasure to deal with you!"
-msgstr ""
+msgstr "Jeje, ¡un placer tratar contigo!"
 
 #: dat/missions/neutral/seek_n_destroy.lua:100
 msgid "Thank you and goodbye!"
-msgstr ""
+msgstr "¡Gracias y adiós!"
 
 #: dat/missions/neutral/seek_n_destroy.lua:101
 msgid "See ya later!"
-msgstr ""
+msgstr "¡Nos vemos luego!"
 
 #: dat/missions/neutral/seek_n_destroy.lua:102
 msgid "Haha, good luck!"
-msgstr ""
+msgstr "Jaja, ¡buena suerte!"
 
 #: dat/missions/neutral/seek_n_destroy.lua:105
 msgid "Mommy, I'm so scared! Har har har!"
-msgstr ""
+msgstr "¡Mamá, tengo mucho miedo! ¡Har har har!"
 
 #: dat/missions/neutral/seek_n_destroy.lua:106
 msgid "Haw haw haw! You're ridiculous!"
-msgstr ""
+msgstr "¡Haw haw haw! ¡Eres ridículo!"
 
 #: dat/missions/neutral/seek_n_destroy.lua:107
 msgid "Just come at me if you dare!"
-msgstr ""
+msgstr "¡Sólo ven hacia mí si te atreves!"
 
 #: dat/missions/neutral/seek_n_destroy.lua:108
 msgid "You're so pitiful!"
-msgstr ""
+msgstr "¡Eres tan lamentable!"
 
 #: dat/missions/neutral/seek_n_destroy.lua:111
 msgid "You want to meet {plt}? Well he doesn't want to meet you!"
-msgstr ""
+msgstr "¿Quieres conocer a {plt}? ¡Bueno, él no quiere conocerte!"
 
 #: dat/missions/neutral/seek_n_destroy.lua:112
 msgid "Stop asking questions about {plt}!"
-msgstr ""
+msgstr "¡Deja de hacer preguntas sobre {plt}!"
 
 #: dat/missions/neutral/seek_n_destroy.lua:113
 msgid "Why are you following {plt}?"
@@ -80590,7 +80874,7 @@ msgstr ""
 
 #: dat/missions/tutorial/nelly02.lua:245
 msgid "Llaminator MK2"
-msgstr ""
+msgstr "Laminador MK2"
 
 #: dat/missions/tutorial/nelly02.lua:277
 msgid "Noisy Pacifier"
