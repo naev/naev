@@ -8,8 +8,8 @@ This document assumes you have access to the Naev data. This can be either from 
 
 | Operating System | Data Location |
 | --- | --- |
-| Linux | TODO |
-| Mac OS X | TODO |
+| Linux | `/usr/share/naev/dat` |
+| Mac OS X | `/Applications/Naev.app/Contents/Resources/dat` |
 | Windows | TODO |
 
 Most changes will only take place when you restart Naev, although it is possible to force Naev to reload a mission or event with `naev.missionReload` or `naev.eventReload`.
