@@ -1285,6 +1285,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
          }
          if (a<0)
             return -1; /* Didn't find tag! */
+         free( p->tags[a] );
          array_erase( &p->tags, &p->tags[a], &p->tags[a+1] );
          return 0;
 
