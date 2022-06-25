@@ -227,11 +227,8 @@ static int naevL_clock( lua_State *L )
  */
 static int naevL_keyGet( lua_State *L )
 {
-   const char *keyname;
    char buf[128];
-
-   /* Get parameters. */
-   keyname = luaL_checkstring( L, 1 );
+   const char *keyname = luaL_checkstring( L, 1 );
 
    input_getKeybindDisplay( keyname, buf, sizeof(buf) );
    lua_pushstring( L, buf );
@@ -251,12 +248,8 @@ static int naevL_keyGet( lua_State *L )
  */
 static int naevL_keyEnable( lua_State *L )
 {
-   const char *key;
-   int enable;
-
-   /* Parameters. */
-   key = luaL_checkstring(L,1);
-   enable = lua_toboolean(L,2);
+   const char *key = luaL_checkstring(L,1);
+   int enable = lua_toboolean(L,2);
 
    input_toggleEnable( key, enable );
    return 0;
@@ -298,11 +291,8 @@ static int naevL_keyDisableAll( lua_State *L )
  */
 static int naevL_eventStart( lua_State *L )
 {
-   int ret;
-   const char *str;
-
-   str = luaL_checkstring(L, 1);
-   ret = event_start( str, NULL );
+   const char *str = luaL_checkstring(L, 1);
+   int ret = event_start( str, NULL );
 
    if (cli_isOpen() && landed)
       bar_regen();
@@ -321,11 +311,8 @@ static int naevL_eventStart( lua_State *L )
  */
 static int naevL_missionStart( lua_State *L )
 {
-   int ret;
-   const char *str;
-
-   str = luaL_checkstring(L, 1);
-   ret = mission_start( str, NULL );
+   const char *str = luaL_checkstring(L, 1);
+   int ret = mission_start( str, NULL );
 
    if (cli_isOpen() && landed)
       bar_regen();
@@ -345,11 +332,8 @@ static int naevL_missionStart( lua_State *L )
  */
 static int naevL_eventReload( lua_State *L )
 {
-   int ret;
-   const char *str;
-
-   str = luaL_checkstring(L, 1);
-   ret = event_reload( str );
+   const char *str = luaL_checkstring(L, 1);
+   int ret = event_reload( str );
 
    lua_pushboolean( L, !ret );
    return 1;
@@ -366,12 +350,8 @@ static int naevL_eventReload( lua_State *L )
  */
 static int naevL_missionReload( lua_State *L )
 {
-   int ret;
-   const char *str;
-
-
-   str = luaL_checkstring(L, 1);
-   ret = mission_reload( str );
+   const char *str = luaL_checkstring(L, 1);
+   int ret = mission_reload( str );
 
    lua_pushboolean( L, !ret );
    return 1;
