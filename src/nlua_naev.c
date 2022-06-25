@@ -306,7 +306,7 @@ static int naevL_eventStart( lua_State *L )
  *
  * @usage naev.missionStart( "Some Mission" )
  *    @luatparam string misnname Name of the mission to start.
- *    @luatreturn boolean true on success.
+ *    @luatreturn boolean true if mission was either accepted, or started without misn.finish() getting called in create.
  * @luafunc missionStart
  */
 static int naevL_missionStart( lua_State *L )
@@ -317,7 +317,7 @@ static int naevL_missionStart( lua_State *L )
    if (cli_isOpen() && landed)
       bar_regen();
 
-   lua_pushboolean( L, !ret );
+   lua_pushboolean( L, (ret==0) || (ret==3) );
    return 1;
 }
 

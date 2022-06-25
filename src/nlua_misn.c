@@ -169,11 +169,8 @@ int misn_tryRun( Mission *misn, const char *func )
  */
 int misn_run( Mission *misn, const char *func )
 {
-   int ret;
-   /* Run the function. */
    misn_runStart( misn, func );
-   ret = misn_runFunc( misn, func, 0 );
-   return ret;
+   return misn_runFunc( misn, func, 0 );
 }
 
 /**
