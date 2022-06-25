@@ -128,22 +128,25 @@ She winks at you.]]))
    end
 end
 
-
-local function dvaered_weapons( p )
-   local weapons = p:outfits( "weapon" )
+local function dvaered_weapons()
+   local pp = player.pilot()
    local baditems = {}
-   if #weapons==0 then
-      return false, baditems -- Need weapons
-   end
    local allowed = {}
    for k,v in ipairs(outfit.getAll()) do
       if v:tags().dvaered then
          table.insert( allowed, v:nameRaw() )
       end
    end
-   for k,o in ipairs(weapons) do
+   for k,o in ipairs(pp:outfits("weapon")) do
       if not inlist( allowed, o:nameRaw() ) then
          table.insert( baditems, o:name() )
+      end
+   end
+   for i,p in ipairs(pp:followers()) do
+      for k,o in ipairs(p:outfits("weapon")) do
+         if not inlist( allowed, o:nameRaw() ) then
+            table.insert( baditems, o:name()..fmt.f(_(" ({ship})"),{ship=p:name()}) )
+         end
       end
    end
    return #baditems==0, baditems
@@ -164,9 +167,9 @@ end
 
 function enter ()
    if mem.misn_state==0 and system.cur()==mainsys then
-      mem.weap_ok, badweaps = dvaered_weapons( player.pilot() )
+      mem.weap_ok, badweaps = dvaered_weapons()
       if not mem.weap_ok then
-         player.msg(fmt.f(_("#oNon-Dvaered equipped weapons detected: {list}"), {list=fmt.list(badweaps)}))
+         player.msg("#o"..fmt.f(_("Non-Dvaered equipped weapons detected: {list}"), {list=fmt.list(badweaps)}))
       end
 
       pilot.clear()
@@ -184,7 +187,7 @@ end
 
 
 function drone_death ()
-   if not dvaered_weapons( player.pilot() ) then
+   if not dvaered_weapons() then
       lmisn.fail(_("You were supposed to kill the drones with Dvaered-only weapons!"))
    end
    mem.drones_killed = mem.drones_killed+1
