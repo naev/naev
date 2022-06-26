@@ -1182,6 +1182,10 @@ static void input_clickevent( SDL_Event* event )
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "mouse", hparam );
 
+   /* Disable in cinematics. */
+   if (player_isFlag(PLAYER_CINEMATICS))
+      return;
+
    /* Player must not be NULL. */
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
       return;
