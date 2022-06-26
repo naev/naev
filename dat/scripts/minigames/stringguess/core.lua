@@ -31,7 +31,7 @@ function mg.load ()
    local params = c.stringguess.params
    standalone = c.stringguess.standalone
    max_tries = params.max_tries or 7
-   keyset = params.keyset or {"A","E","K","N","O","V"} -- NAEV OK
+   keyset = params.keyset or {"B","E","K","N","O","V"} -- NAEV OK -> change A to B so it doesn't interfere with WASD keybinds
    sol_length = params.sol_length or 3
    headertext = params.header
 
