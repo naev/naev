@@ -12,14 +12,14 @@
  <pos x="-54.893519" y="957.537037"/>
  <spobs/>
  <jumps>
-  <jump target="NGC-12882">
-   <autopos/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="NGC-4637">
+  <jump target="Fertile Crescent">
    <pos x="-7117.394040" y="248.413058"/>
    <hidden/>
    <hide>0.500000</hide>
+  </jump>
+  <jump target="NGC-12882">
+   <autopos/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="NGC-4771">
    <autopos/>

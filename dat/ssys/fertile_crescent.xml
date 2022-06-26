@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ssys name="NGC-4637">
+<ssys name="Fertile Crescent">
  <general>
   <background>haze</background>
   <map_shader>haze_map.frag</map_shader>
@@ -23,7 +23,7 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <group>typeB-rich</group>
+   <group>Mossy</group>
    <radius>3000.000000</radius>
    <pos x="-1632.151769" y="1090.892028"/>
    <density>2.000000</density>
