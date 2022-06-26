@@ -114,7 +114,7 @@ function board( p )
       vn.na(_([[You board the ship and enter the airlock. When you attempt to enter, an authorization prompt opens up. Looking at the make of the ship, it seems heavily reinforced. It looks like you're going to have to break the code to gain complete access to the ship.]]))
       stringguess.vn()
       vn.func( function ()
-         if stringguess.completed then
+         if stringguess.completed() then
             vn.jump("unlocked")
             return
          end
