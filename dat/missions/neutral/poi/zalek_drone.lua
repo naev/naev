@@ -11,14 +11,9 @@ return function ( mem )
    if not mem.locked then return end
 
    -- Must be nebula or near nebula
-   local near_nebula = nebu.isNebula( mem.sys )
-   for k,v in ipairs(mem.sys:adjacentSystems()) do
-      if near_nebula then
-         break
-      end
-      near_nebula = near_nebula or nebu.isNebula( v )
+   if nebu.jumpDist( mem.sys, true ) > 2 then
+      return
    end
-   if not near_nebula then return end
 
    -- Already done
    if player.numOutfit( reward ) > 0 then
