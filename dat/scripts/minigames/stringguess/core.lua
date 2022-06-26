@@ -164,6 +164,7 @@ function mg.keypressed( key )
             return
          end
       end
+      return
    end
 
    -- Next round if applicable
