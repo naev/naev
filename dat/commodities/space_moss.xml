@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commodity>
+ <name>Space Moss</name>
+ <description>TODO</description>
+ <gfx_store>nebula_crystals.webp</gfx_store>
+ <gfx_space sx="2">nebula_crystals.webp</gfx_space>
+ <price>1000</price>
+ <always_can_sell/>
+ <price_constant/>
+</commodity>

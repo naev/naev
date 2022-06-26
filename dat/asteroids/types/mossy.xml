@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asteroid name="Mossy">
+ <scanned>uncommon</scanned>
+ <gfx>moss01.webp</gfx>
+ <gfx>moss02.webp</gfx>
+ <gfx>moss03.webp</gfx>
+ <gfx>moss04.webp</gfx>
+ <armour_min>70</armour_min>
+ <armour_max>90</armour_max>
+ <absorb>20</absorb>
+ <commodity>
+  <name>Water</name>
+  <quantity>5</quantity>
+ </commodity>
+ <commodity>
+  <name>Clay</name>
+  <quantity>5</quantity>
+ </commodity>
+ <commodity>
+  <name>Space Moss</name>
+  <quantity>3</quantity>
+  <rarity>2</rarity>
+ </commodity>
+</asteroid>

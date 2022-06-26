@@ -17,6 +17,7 @@ dat/asteroids/types/iron_nickel.xml
 dat/asteroids/types/kermite.xml
 dat/asteroids/types/liquid.xml
 dat/asteroids/types/massive.xml
+dat/asteroids/types/mossy.xml
 dat/asteroids/types/nebula_crystal.xml
 dat/asteroids/types/nodrop.xml
 dat/asteroids/types/rhodium_yttrium.xml
@@ -41,6 +42,7 @@ dat/commodities/ore.xml
 dat/commodities/platinum.xml
 dat/commodities/rhodium.xml
 dat/commodities/silicate.xml
+dat/commodities/space_moss.xml
 dat/commodities/therite.xml
 dat/commodities/vixilium.xml
 dat/commodities/water.xml
