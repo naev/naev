@@ -31,7 +31,7 @@ return function ( mem )
       func = function ()
          local sai = tut.vn_shipai()
          vn.appear( sai, tut.shipai.transition )
-         sai(_([[Your ship AI appears as you access the system.
+         sai(_([[Your ship AI appears as you access the drone's systems.
 "How rare to see a Za'lek drone out here. It seems to have run out of power. Let me inject a bit and see if I can reactivate the systems fully…"]]))
          vn.na(_([[The light flickers a bit and the drone boots up in maintenance mode.]]))
          sai(_([["I'm afraid this is the best I can do. I was able to find some logs. Let us see them."]]))
