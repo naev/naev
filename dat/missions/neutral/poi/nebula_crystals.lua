@@ -1,7 +1,6 @@
 local fmt = require "format"
 local vn = require "vn"
 local tut = require "common.tutorial"
-local nebu = require "common.nebula"
 local poi = require "common.poi"
 
 local cargo = commodity.get("Nebula Crystals")
@@ -11,7 +10,7 @@ return function ( mem )
    if not mem.locked then return end
 
    -- Must be nebula or near nebula
-   if nebu.jumpDist( mem.sys, true ) > 2 then
+   if not poi.nearNebula( mem ) then
       return
    end
 
