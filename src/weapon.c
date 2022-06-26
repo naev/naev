@@ -992,10 +992,15 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
 
+      /* Ignore pilots being deleted. */
+      if (pilot_isFlag(p, PILOT_DELETE))
+         continue;
+
+      if (w->parent == pilot_stack[i]->id)
+         continue; /* pilot is self */
+
       psx = pilot_stack[i]->tsx;
       psy = pilot_stack[i]->tsy;
-
-      if (w->parent == pilot_stack[i]->id) continue; /* pilot is self */
 
       /* See if the ship has a collision polygon. */
       if (array_size(p->ship->polygon) == 0)
