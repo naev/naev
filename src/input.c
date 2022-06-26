@@ -702,9 +702,10 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          }
 
          else if (value==KEY_RELEASE) {
-            player_accelOver();
             player_rmFlag(PLAYER_ACCEL);
             input_accelButton = 0;
+            if (!player_isFlag(PLAYER_REVERSE))
+               player_accelOver();
          }
 
          /* double tap accel = afterburn! */
