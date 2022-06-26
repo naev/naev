@@ -70,6 +70,7 @@ static int pilotL_getPilots( lua_State *L );
 static int pilotL_getAllies( lua_State *L );
 static int pilotL_getHostiles( lua_State *L );
 static int pilotL_getVisible( lua_State *L );
+static int pilotL_getInrange( lua_State *L );
 static int pilotL_eq( lua_State *L );
 static int pilotL_name( lua_State *L );
 static int pilotL_id( lua_State *L );
@@ -214,6 +215,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "getAllies", pilotL_getAllies },
    { "getHostiles", pilotL_getHostiles },
    { "getVisible", pilotL_getVisible },
+   { "getInrange", pilotL_getInrange },
    { "__eq", pilotL_eq },
    { "__tostring", pilotL_name },
    /* Info. */
@@ -1101,6 +1103,52 @@ static int pilotL_getVisible( lua_State *L )
          continue;
 
       lua_pushpilot(L, pilot_stack[i]->id); /* value */
+      lua_rawseti(L,-2,k++); /* table[key] = value */
+   }
+
+   return 1;
+}
+
+/**
+ * @brief Gets visible pilots to a pilot within a certain distance.
+ *
+ *    @luatparam Pilot pilot Pilot to get visible pilots of.
+ *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
+ *    @luatreturn {Pilot,...} A table containing the pilots.
+ * @luafunc getInrange
+ */
+static int pilotL_getInrange( lua_State *L )
+{
+   int k;
+   vec2 *v = luaL_checkvector(L,1);
+   double d = luaL_checknumber(L,2);
+   int dis = lua_toboolean(L,3);
+   Pilot *const* pilot_stack;
+
+   d = pow2(d); /* Square it. */
+
+   /* Now put all the matching pilots in a table. */
+   pilot_stack = pilot_getAll();
+   lua_newtable(L);
+   k = 1;
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *p = pilot_stack[i];
+
+      /* Check if dead. */
+      if (pilot_isFlag(p, PILOT_DELETE))
+         continue;
+      /* Check if hidden. */
+      if (pilot_isFlag(p, PILOT_HIDE))
+         continue;
+      /* Check if disabled. */
+      if (dis && pilot_isDisabled(p))
+         continue;
+
+      /* Must be in range. */
+      if (vec2_dist2( v, &p->solid->pos ) > d )
+         continue;
+
+      lua_pushpilot(L, p->id); /* value */
       lua_rawseti(L,-2,k++); /* table[key] = value */
    }
 
