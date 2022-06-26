@@ -1247,9 +1247,12 @@ void player_think( Pilot* pplayer, const double dt )
       player_autonavResetSpeed();
    }
 
-
    acc = player_acc;
-   if (player_isFlag(PLAYER_REVERSE) && player.p->stats.misc_reverse_thrust)
+   /* Have to handle the case the player is doing reverse. This takes priority
+    * over normal accel. */
+   if (player_isFlag(PLAYER_REVERSE) && player.p->stats.misc_reverse_thrust
+         && !pilot_isFlag(player.p, PILOT_HYP_PREP)
+         && !pilot_isFlag(player.p, PILOT_HYPERSPACE) )
       acc = -PILOT_REVERSE_THRUST;
 
    pilot_setThrust( pplayer, acc );
