@@ -704,7 +704,7 @@ void gui_renderReticles( double dt )
       return;
 
    /* Disable in cinematics. */
-   if (player_isFlag(player,PLAYER_CINEMATICS))
+   if (player_isFlag(PLAYER_CINEMATICS))
       return;
 
    gui_renderSpobTarget();
