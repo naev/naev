@@ -1197,6 +1197,10 @@ void weapon_hitAI( Pilot *p, const Pilot *shooter, double dmg )
    if (pilot_isDisabled(p))
       return;
 
+   /* Must not be deleting. */
+   if (pilot_isFlag(p, PILOT_DELETE) || pilot_isFlag(p, PILOT_DEAD) || pilot_isFlag( p, PILOT_HIDE ))
+      return;
+
    /* Player is handled differently. */
    if (shooter->faction == FACTION_PLAYER) {
       /* Increment damage done to by player. */

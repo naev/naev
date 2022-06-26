@@ -831,7 +831,7 @@ void ai_think( Pilot* pilot, const double dt )
  *    @param[in] attacker ID of the attacker.
  *    @param[in] dmg Damage done by the attacker.
  */
-void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
+void ai_attacked( Pilot *attacked, const unsigned int attacker, double dmg )
 {
    HookParam hparam[2];
 
