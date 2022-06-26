@@ -96,12 +96,8 @@ function drill.ontoggle( p, _po, on )
       }
    end
 
-   local ap = a:pos()
-   local ar = math.pow( a:alertRange(), 2 )
-   for k,s in ipairs(pilot.get()) do
-      if ap:dist2( s:pos() ) < ar then
-         pilot.msg( nil, s, "asteroid", a )
-      end
+   for k,s in ipairs( pilot.getInrange( a:pos(), a:alertRange() ) ) do
+      pilot.msg( nil, s, "asteroid", a )
    end
 
    a:setTimer( -1 ) -- Get rid of the asteroid
