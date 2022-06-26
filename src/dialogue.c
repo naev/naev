@@ -36,6 +36,7 @@
 #include "toolkit.h"
 
 static int dialogue_open; /**< Number of dialogues open. */
+static int dlgid  = 0; /**< ID generator. */
 
 /*
  * Custom widget scary stuff.
@@ -368,11 +369,13 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
    int w,h;
    glFont* font;
    int done[2];
+   char buf[STRMAX_SHORT];
 
    font = dialogue_getSize( caption, msg, &w, &h );
 
    /* create window */
-   wid = window_create( "dlgYesNo", caption, -1, -1, w, h+110 );
+   snprintf( buf, sizeof(buf), "dlgYesNo%d", ++dlgid );
+   wid = window_create( buf, caption, -1, -1, w, h+110 );
    window_setData( wid, &done );
    /* text */
    window_addText( wid, 20, -40, w-40, h,  0, "txtYesNo",
