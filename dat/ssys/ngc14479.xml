@@ -17,7 +17,8 @@
    <hide>1.000000</hide>
   </jump>
   <jump target="NGC-4637">
-   <autopos/>
+   <pos x="-5043.055667" y="5981.308668"/>
+   <hidden/>
    <hide>0.500000</hide>
   </jump>
   <jump target="NGC-4771">
@@ -25,6 +26,13 @@
    <hide>1.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <group>typeB-rich</group>
+   <radius>3500.000000</radius>
+   <pos x="-5405.601589" y="-153.350400"/>
+  </asteroid>
+ </asteroids>
  <stats>
   <shield_mod>-50.000000</shield_mod>
   <shield_regen_mod>-50.000000</shield_regen_mod>
