@@ -26,11 +26,16 @@ function nebula.isNebula( s )
    return (s:nebula() > 0)
 end
 
-function nebula.jumpDist( sys, hidden )
+function nebula.jumpDist( sys, hidden, maxvol )
    -- Get default parameters
    sys = sys or system.cur()
+   maxvol = maxvol or math.huge
 
    if nebula.isNebula( sys ) then
+      local _dens, vol = sys:nebula()
+      if vol > maxvol then
+         return math.huge
+      end
       return 0
    end
 
@@ -49,8 +54,9 @@ function nebula.jumpDist( sys, hidden )
                return d
             end
 
-            -- Must not have been explored previously
-            if close[ a:nameRaw() ] == nil then
+            -- Must not have been explored previously and be in limit
+            local _dens, vol = a:nebula()
+            if close[ a:nameRaw() ] == nil and vol <= maxvol then
                nopen[ #nopen+1 ] = a
                close[ a:nameRaw() ] = a
             end
@@ -60,7 +66,7 @@ function nebula.jumpDist( sys, hidden )
       d = d+1
    end
 
-   return nil
+   return math.huge
 end
 
 return nebula
