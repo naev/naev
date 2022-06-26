@@ -416,6 +416,8 @@ end
 
 -- Handle the death of the escorts. Abort the mission if all escorts die.
 function escortDeath()
+   if mem.diplomatkilled then return end
+
    if mem.alive[3] then mem.alive[3] = false
    elseif mem.alive[2] then mem.alive[2] = false
    else -- all escorts dead
@@ -533,6 +535,7 @@ function killDiplomats()
 end
 
 function diplomatKilled()
+   mem.diplomatkilled = true
    diplomat:setHealth(0, 0)
    dvaerplomat:setHealth(0, 0)
 end
