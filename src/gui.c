@@ -703,6 +703,10 @@ void gui_renderReticles( double dt )
    if (player.p == NULL)
       return;
 
+   /* Disable in cinematics. */
+   if (player_isFlag(player,PLAYER_CINEMATICS))
+      return;
+
    gui_renderSpobTarget();
    gui_renderPilotTarget();
 }
