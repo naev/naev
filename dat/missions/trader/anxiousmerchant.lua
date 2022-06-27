@@ -71,15 +71,17 @@ function accept()
     You attempt to reassure the merchant by telling them that, surely, the company will cut them some slack. "Like hell they will! I've already been scolded by management for this exact same thing before! If I don't get this shipment of {tonnes} of {cargo} to {pnt}… I really need this job, you know? I don't know what to do…" The merchant pauses. "Unless… Say, you wouldn't be able to help me out here, would you? I'd just need you to take the cargo to {pnt} in the {sys} system. Could you? I'll give you the payment for the mission if you do it; it means a lot!"]]), {tonnes=fmt.tonnes(mem.cargo_size), cargo=_(mem.cargo), pnt=mem.dest_planet, sys=mem.dest_sys})) then
       return
    end
-   if player.pilot():cargoFree() < mem.cargo_size then
+
+   local pp = player.pilot()
+   if pp:cargoFree() < mem.cargo_size then
       tk.msg(_("No Room"), _([[You don't have enough cargo space to accept this mission.]]))  -- Not enough space
       return
    end
-   player.pilot():cargoAdd(mem.cargo, mem.cargo_size)
-   local player_best = car.getTransit(mem.num_jumps, mem.travel_dist)
-   player.pilot():cargoRm(mem.cargo, mem.cargo_size)
+   pp:cargoAdd( mem.cargo, mem.cargo_size )
+   local player_best = car.getTransit( mem.num_jumps, mem.travel_dist )
+   pp:cargoRm( mem.cargo, mem.cargo_size )
    if mem.time_limit < player_best then
-      if not tk.yesno(_("Too slow"), fmt.f(_([[The goods have to arrive in {time_limit} but it will take {time} for your ship to reach {pnt}. Accept the mission anyway?]]) {time_limit=(mem.time_limit - time.get()), time=(player_best - time.get()), pnt=mem.dest_planet})) then
+      if not tk.yesno(_("Too slow"), fmt.f(_([[The goods have to arrive in {time_limit} but it will take {time} for your ship to reach {pnt}. Accept the mission anyway?]]), {time_limit=(mem.time_limit - time.get()), time=(player_best - time.get()), pnt=mem.dest_planet})) then
          return
       end
    end
@@ -90,8 +92,8 @@ function accept()
    misn.setTitle(_("Anxious Merchant"))
    misn.setReward(fmt.credits(mem.payment))
    misn.setDesc(fmt.f(_("You decided to help a fraught merchant by delivering some goods to {pnt}."), {pnt=mem.dest_planet}))
-   mem.marker = misn.markerAdd(mem.dest_planet, "low") -- destination
-   mem.cargo_ID = misn.cargoAdd(mem.cargo, mem.cargo_size) -- adds cargo
+   mem.marker = misn.markerAdd( mem.dest_planet, "low" ) -- destination
+   mem.cargo_ID = misn.cargoAdd( mem.cargo, mem.cargo_size ) -- adds cargo
 
    mem.intime = true
    mem.land_hook = hook.land("land")
