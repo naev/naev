@@ -366,6 +366,7 @@ function phalanx_boarded()
    p:control(true)
    p:taskClear()
    p:hyperspace( mem.nextsys )
+   p:setFriendly(true) -- It's ours now!
 
    misn.osdActive(3)
    misn.markerRm(mem.mark)
