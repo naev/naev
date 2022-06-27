@@ -869,7 +869,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
     * secondary weapons
     */
    /* shooting secondary weapon */
-   } else if (KEY("secondary") && NOHYP() && NODEAD() && !repeat) {
+   } else if (KEY("secondary") && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
          player_setFlag(PLAYER_SECONDARY);
       }
