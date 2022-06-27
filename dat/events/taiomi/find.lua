@@ -17,8 +17,7 @@
 
 --]]
 local vn = require 'vn'
-local love_shaders = require "love_shaders"
-local graphics = require 'love.graphics'
+local vne = require "vn.extras"
 
 local board_flashback -- Forward-declared functions
 local derelict_mule, derelicts, drone, evt_state, fidget_hook, numboarded -- Event state, never saved.
@@ -173,7 +172,6 @@ function boardothers( _p )
 end
 
 function board_flashback()
-   local textbox_bg_alpha, textbox_font, textbox_h, textbox_w, textbox_x, textbox_y
    vn.clear()
    vn.scene()
    vn.transition()
@@ -181,36 +179,7 @@ function board_flashback()
    vn.na(_("You find a paper notebook stuck in a part of damaged hull. Most people use the ship computers to store notes and information and rarely rely on physical storage."))
    vn.na(_("You begin to read the passages."))
 
-   local nw, nh = naev.gfx.dim()
-   local paperbg = love_shaders.paper( nw, nh )
-   local oldify = love_shaders.oldify()
-   vn.func( function ()
-      vn.setBackground( function ()
-         vn.setColor( {1, 1, 1, 1} )
-         graphics.rectangle("fill", 0, 0, nw, nh )
-         vn.setColor( {1, 1, 1, 0.3} )
-         graphics.setShader( oldify )
-         paperbg:draw( 0, 0 )
-         graphics.setShader()
-      end )
-      -- Store old values
-      textbox_bg_alpha = vn.textbox_bg_alpha
-      textbox_h = vn.textbox_h
-      textbox_w = vn.textbox_w
-      textbox_x = vn.textbox_x
-      textbox_y = vn.textbox_y
-      textbox_font = vn.textbox_font
-      -- New values
-      vn.textbox_font = graphics.newFont( _("fonts/CoveredByYourGrace-Regular.ttf"), 24 )
-      vn.textbox_bg_alpha = 0
-      vn.textbox_h = math.min(0.7*nh, 800 )
-      vn.textbox_y = (nh-vn.textbox_h)/2
-      vn.textbox_w = math.min( 0.8*nw, 1000 )
-      vn.textbox_x = (nw-vn.textbox_w)/2
-      vn.show_options = false
-   end )
-   vn.scene()
-   local log = vn.newCharacter( "Notebook", { color={0, 0, 0}, hidetitle=true } )
+   local log = vne.notebookStart()
    log(_([[UST 602:1914
 
 Although my peers will likely make fun of me if they find out, I have decided to start a paper log of my upcoming travels aboard the Beagle. It was hard to find a place selling paper notebooks, as everyone uses holopads, but I was able to find a small place at an antique shop on Antica. For such primitive technology, it was very expensive.
@@ -302,18 +271,7 @@ A---s--hm---t---
 
 (It seems like it is the end of the written part of the notebook.)]]))
 
-   vn.scene()
-   vn.func( function ()
-      vn.setBackground()
-      vn.textbox_bg_alpha = textbox_bg_alpha
-      vn.textbox_h = textbox_h
-      vn.textbox_w = textbox_w
-      vn.textbox_x = textbox_x
-      vn.textbox_y = textbox_y
-      vn.textbox_font = textbox_font
-      vn.show_options = true
-   end )
-   vn.transition()
+   vne.notebookEnd()
    vn.sfxEerie()
    vn.na(_([[You tune your ship sensors to pick up the most miniscule of disturbances and focus on the area indicated by the notebook. You are about to give up when you detect an anomaly. It looks like you can use this to jump, but where could it lead?]]))
    vn.done()

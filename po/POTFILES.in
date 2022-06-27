@@ -2804,6 +2804,7 @@ dat/scripts/textoverlay.lua
 dat/scripts/vn.lua
 dat/scripts/vn/conf.lua
 dat/scripts/vn/core.lua
+dat/scripts/vn/extras.lua
 dat/scripts/vn/log.lua
 dat/scripts/vn/main.lua
 dat/scripts/vn/options.lua
