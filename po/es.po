@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-06-26 21:20+0000\n"
+"PO-Revision-Date: 2022-06-27 21:16+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -73559,6 +73559,13 @@ msgid ""
 "With the arrangement in place, he gets up. \"I look forward to seeing you "
 "soon. Hopefully this will be the end of my problems.\""
 msgstr ""
+"Asiente con aprobación. \"Parece que los comerciantes son bastante "
+"obstinados. No recibieron el mensaje la última vez y su presencia está "
+"aumentando\". Deja escapar un breve suspiro antes de continuar: \"Eso "
+"simplemente no servirá. Es malo para el negocio. Quizá si desaparecen "
+"algunas de sus naves, capten la indirecta\". Una vez hecho el encargo, se "
+"levanta. \"Espero verte pronto. Espero que esto sea el fin de mis problemas."
+"\""
 
 #: dat/missions/pirate/hitman2.lua:112
 msgid ""
@@ -73568,6 +73575,12 @@ msgid ""
 "he continues, \"The payment has been transferred. Much as I enjoy working "
 "with you, hopefully this is the last time I'll require your services.\""
 msgstr ""
+"Miras a tu alrededor, buscando a tu conocido, pero él se ha fijado en ti "
+"primero y te hace un gesto para que te unas a él. Cuando te acercas a la "
+"mesa, sonríe. \"Espero que el Imperio no te haya dado muchos problemas\". "
+"Tras una breve pausa, continúa: \"El pago ha sido transferido. Por mucho que "
+"me guste trabajar contigo, espero que esta sea la última vez que requiera de "
+"tus servicios.\""
 
 #: dat/missions/pirate/hitman2.lua:117
 msgid ""
@@ -73575,6 +73588,9 @@ msgid ""
 "sum of credits for your services. He said that he should hopefully not "
 "require further services from you."
 msgstr ""
+"Has asesinado a algunos de los competidores del mercader y has recibido una "
+"suma de créditos por tus servicios. Te dijo que, con suerte, no necesitaría "
+"más tus servicios."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -73604,13 +73620,15 @@ msgstr ""
 #. luacheck: globals abandon_text msg pay_text (from base mission neutral.patrol)
 #: dat/missions/pirate/patrol.lua:32
 msgid "The crime boss grins and hands you your pay."
-msgstr ""
+msgstr "El jefe del crimen sonríe y te entrega tu paga."
 
 #: dat/missions/pirate/patrol.lua:33
 msgid ""
 "The local crime boss pays what you were promised, though not before trying "
 "(and failing) to pick your pocket."
 msgstr ""
+"El jefe del crimen local te paga lo prometido, aunque no antes de intentar ("
+"y fracasar) hurgar en tu bolsillo."
 
 #: dat/missions/pirate/patrol.lua:34
 msgid ""
@@ -73618,6 +73636,9 @@ msgid ""
 "from, only to see the crime boss waving at you. When you look down, you see "
 "that it is your agreed-upon payment, so you take it and manage a grin."
 msgstr ""
+"Te golpean en la cara con algo y miras en la dirección de la que procede, "
+"sólo para ver al jefe del crimen saludándote con la mano. Cuando bajas la "
+"vista, ves que es el pago acordado, así que lo coges y consigues sonreír."
 
 #: dat/missions/pirate/patrol.lua:35
 msgid ""
@@ -73625,6 +73646,9 @@ msgid ""
 "by the crime boss, but sure enough, it adds up to exactly the amount "
 "promised."
 msgstr ""
+"El jefe del crimen te entrega tu paga en lo que parece ser un millón de "
+"chips de créditos diferentes, pero, en efecto, la suma asciende exactamente "
+"a la cantidad prometida."
 
 #: dat/missions/pirate/patrol.lua:39
 msgid ""
@@ -73632,6 +73656,9 @@ msgid ""
 "is considered to be abandonment. As such, your contract is void and you will "
 "not receive payment."
 msgstr ""
+"Se te envía un mensaje en el que se te informa de que aterrizar en mitad del "
+"trabajo se considera un abandono. Como tal, tu contrato es nulo y no "
+"recibirás el pago."
 
 #. Mission details
 #: dat/missions/pirate/patrol.lua:44
@@ -73645,18 +73672,22 @@ msgid ""
 "tasked with checking various points and eliminating any outsiders along the "
 "way."
 msgstr ""
+"Un jefe del crimen local te ha ofrecido un trabajo para patrullar el sistema "
+"{sys} en un esfuerzo por evitar que los forasteros descubran esta fortaleza "
+"pirata. Se te encomendará la tarea de controlar varios puntos y eliminar a "
+"cualquier forastero que te encuentres por el camino."
 
 #: dat/missions/pirate/patrol.lua:50
 msgid "Outsiders detected. Eliminate all outsiders."
-msgstr ""
+msgstr "Forasteros detectados. Elimina a todos los forasteros."
 
 #: dat/missions/pirate/patrol.lua:51
 msgid "Outsiders eliminated."
-msgstr ""
+msgstr "Forasteros eliminados."
 
 #: dat/missions/pirate/patrol.lua:60
 msgid "Eliminate outsiders"
-msgstr ""
+msgstr "Elimina a los forasteros"
 
 #. mem.misn_desc gets fmt.f'd in the main script
 #.
@@ -73694,13 +73725,15 @@ msgstr ""
 #. target destination
 #: dat/missions/pirate/pir_clan_cargo.lua:53
 msgid "Pirate Lord"
-msgstr ""
+msgstr "Señor Pirata"
 
 #: dat/missions/pirate/pir_clan_cargo.lua:53
 msgid ""
 "You see a pirate lord raving about something. A significant crowd has "
 "gathered around."
 msgstr ""
+"Ves a un señor pirata delirando por algo. Una multitud importante se ha "
+"reunido alrededor."
 
 #: dat/missions/pirate/pir_clan_cargo.lua:61
 msgid ""
@@ -73712,37 +73745,46 @@ msgid ""
 "\n"
 "Will you accept the mission?"
 msgstr ""
+"Parece que el clan de este planeta está buscando un piloto para transportar "
+"un paquete a otro mundo pirata. Obviamente, bastantes mercenarios o incluso "
+"compañeros piratas tratarían de impedir que alguien transportara ese "
+"paquete, y probablemente no hace falta decir que los únicos caminos a los "
+"otros mundos piratas son a través de territorio hostil.\n"
+"\n"
+"¿Aceptas la misión?"
 
 #. Accept the mission
 #. Mission details
 #. Hey, this mission is probably hell, after all.
 #: dat/missions/pirate/pir_clan_cargo.lua:72
 msgid "Clans trade"
-msgstr ""
+msgstr "Comercio entre Clanes"
 
 #: dat/missions/pirate/pir_clan_cargo.lua:74
 #: dat/missions/pirate/pir_clan_cargo.lua:79
 msgid "Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."
-msgstr ""
+msgstr "Entrega unas cajas al clan pirata de {pnt}, en el sistema {sys}."
 
 #: dat/missions/pirate/pir_clan_cargo.lua:77
 msgid "You roll up your sleeves and head off to your ship."
-msgstr ""
+msgstr "Te arremangas y te diriges a tu nave."
 
 #. Set up the goal
 #: dat/missions/pirate/pir_clan_cargo.lua:83
 msgid "Pirate Packages"
-msgstr ""
+msgstr "Paquetes de Piratas"
 
 #: dat/missions/pirate/pir_clan_cargo.lua:83
 msgid "A bunch of pirate packages. You don't want to know what's inside."
-msgstr ""
+msgstr "Un montón de paquetes de piratas. No quieras saber lo que hay dentro."
 
 #: dat/missions/pirate/pir_clan_cargo.lua:96
 msgid ""
 "Your mission was a complete success! The clan you just gave the packages "
 "have already paid you."
 msgstr ""
+"¡Tu misión ha sido un éxito total! El clan al que acabas de dar los paquetes "
+"ya te ha pagado."
 
 #. The first time this mission is done, the player’s max standing is
 #. increased by 5.
@@ -73832,6 +73874,9 @@ msgid ""
 "system. Local crime lords want this pilot dead. {plt} is known to be flying "
 "a {shipclass}-class ship.{msg}"
 msgstr ""
+"Un piloto entrometido de {fct} conocido como {plt} fue visto recientemente "
+"en el sistema {sys}. Los señores del crimen locales quieren a este piloto "
+"muerto. Se sabe que {plt} pilota una nave de clase {shipclass}.{msg}"
 
 #. We're not on a pirate stronghold, so include a clear warning that the
 #. mission is in fact illegal.
@@ -73840,16 +73885,18 @@ msgid ""
 "#rWARNING:#0 This mission is illegal and will get you in trouble with the "
 "authorities!"
 msgstr ""
+"#rADVERTENCIA:#0 ¡Esta misión es ilegal y te meterá en problemas con las "
+"autoridades!"
 
 #: dat/missions/pirate/pir_hit.lua:141
 msgid "Assassination"
-msgstr ""
+msgstr "Asesinato"
 
 #. Nothing to do.
 #: dat/missions/pirate/pir_hit.lua:233
 #: dat/missions/proteron/dissbounty_dead.lua:69
 msgid "Another pilot eliminated your target."
-msgstr ""
+msgstr "Otro piloto eliminó tu objetivo."
 
 #. Set up the level of the mission
 #. House Sirius does not have a Destroyer class ship
@@ -73859,7 +73906,7 @@ msgstr ""
 #: dat/missions/pirate/pir_hit_intro.lua:212
 #: dat/missions/pirate/pir_hit_intro.lua:223
 msgid "Target got away."
-msgstr ""
+msgstr "El objetivo se ha escapado."
 
 #. Use a dynamic faction so they don't get killed
 #. Succeed the mission
@@ -73867,6 +73914,7 @@ msgstr ""
 msgid ""
 "MISSION SUCCESS! Pay of {credits} has been transferred into your account."
 msgstr ""
+"¡MISIÓN CON EXITO! El pago de {credits} ha sido transferido a tu cuenta."
 
 #. Pirate rep cap increase
 #.
@@ -73902,7 +73950,7 @@ msgstr ""
 #. luacheck: globals land jumpin jumpout pilot_attacked pilot_death pilot_jump takeoff (Hook functions passed by name)
 #: dat/missions/pirate/pir_hit_intro.lua:46
 msgid "Shady Individual"
-msgstr ""
+msgstr "Individuo Turbio"
 
 #. Lower probability on non-pirate places
 #. No enemy presence nearby
@@ -73912,12 +73960,16 @@ msgid ""
 "mission for them. You're not entirely sure you want to associate with them "
 "though."
 msgstr ""
+"Ves a un individuo turbio que parece estar buscando pilotos para hacer una "
+"misión. Sin embargo, no estás del todo seguro de querer asociarte con ello."
 
 #: dat/missions/pirate/pir_hit_intro.lua:92
 msgid ""
 "You approach the shady character who begins to speak in a low voice, almost "
 "as if they don't want to be heard."
 msgstr ""
+"Te acercas al personaje turbio que comienza a hablar en voz baja, casi como "
+"si no quisiera ser escuchado."
 
 #: dat/missions/pirate/pir_hit_intro.lua:93
 msgid ""
@@ -73928,6 +73980,12 @@ msgid ""
 "actions. It's not very fair to ask for favours and not doing anything in "
 "return right?\""
 msgstr ""
+"\"Pareces un piloto decente. Represento a algunos clientes, que valoran a "
+"los pilotos que saben hacer el trabajo con un poco de sigilo. ¿Sabes a qué "
+"me refiero? Hacer el trabajo significa asegurarse de que nada se interponga "
+"en el camino. Mis clientes quieren que cierto piloto llamado {nombre} sea "
+"responsable de sus acciones. No es muy justo pedir favores y no hacer nada a "
+"cambio, ¿verdad?\""
 
 #: dat/missions/pirate/pir_hit_intro.lua:95
 msgid ""
@@ -73939,12 +73997,21 @@ msgid ""
 "plasma? You will be compensated well.\"\n"
 "They grin."
 msgstr ""
+"\"Mis clientes quieren que un piloto vaya a buscar a {name} y obtenga una "
+"compensación por los daños causados. Sin embargo, ya ha pasado el momento en "
+"que el problema se puede resolver devolviendo el favor. {name} tiene que ser "
+"castigado por sus excesos con medidas más... drásticas. ¿Estarías dispuesto "
+"a reunirte con {name} y expresar el descontento de mis clientes con, "
+"digamos, todo el peso del plasma caliente? Se te compensará bien.\"\n"
+"Esboza una sonrisa."
 
 #: dat/missions/pirate/pir_hit_intro.lua:100
 msgid ""
 "\"Have you changed your mind about dealing with {name}? My clients are eager "
 "to know.\""
 msgstr ""
+"\" ¿Has cambiado de opinión sobre el trato con {name}? Mis clientes están "
+"deseando saberlo.\""
 
 #: dat/missions/pirate/pir_hit_intro.lua:109
 msgid ""
@@ -73952,22 +74019,27 @@ msgid ""
 "{sys} system. Leaving their ship as a charred memento to their avarice will "
 "be a fitting end for them.\""
 msgstr ""
+"\"Mis clientes se sienten complacidos al saber que {name} puede ser "
+"encontrado alrededor del sistema {sys}. Dejar su nave como un recuerdo "
+"carbonizado de su avaricia será un final apropiado.\""
 
 #: dat/missions/pirate/pir_hit_intro.lua:115
 msgid "You curtly decline and leave."
-msgstr ""
+msgstr "Rechazas la propuesta y te vas."
 
 #. Set mission details
 #: dat/missions/pirate/pir_hit_intro.lua:126
 #: dat/missions/pirate/pir_hit_intro.lua:133
 msgid "Dark Compensation"
-msgstr ""
+msgstr "Compensación Oscura"
 
 #: dat/missions/pirate/pir_hit_intro.lua:128
 msgid ""
 "A pilot known as {plt}, recently seen in the {sys} system, has to be "
 "eliminated as compensation for some unknown clients."
 msgstr ""
+"Un piloto conocido como {plt}, recientemente visto en el sistema {sys}, "
+"tiene que ser eliminado como compensación por algunos clientes desconocidos."
 
 #: dat/missions/pirate/pir_hit_intro.lua:136
 msgid "Return to {pnt} ({sys} system)"
@@ -73976,13 +74048,15 @@ msgstr "Vuelve a {pnt} (sistema {sys})"
 #. Nothing to do.
 #: dat/missions/pirate/pir_hit_intro.lua:206
 msgid "Target eliminated! Return to {pnt} ({sys} system)."
-msgstr ""
+msgstr "¡Objetivo eliminado! Regresa a {pnt} (sistema {sys})."
 
 #. Use a dynamic faction so they don't get killed
 #: dat/missions/pirate/pir_hit_intro.lua:252
 msgid ""
 "You land and find the shady individual beckoning to you from the corner."
 msgstr ""
+"Aterrizas y encuentras al individuo sombrío que te hace señas desde la "
+"esquina."
 
 #: dat/missions/pirate/pir_hit_intro.lua:253
 msgid ""
@@ -73992,6 +74066,12 @@ msgid ""
 "when possible. It was a pleasure working with you.\"\n"
 "They grin and then fade into the shadows."
 msgstr ""
+"\"Un buen trabajo ahí fuera. Mis clientes están muy satisfechos con el "
+"resultado. Les gustaría darte más ofertas de trabajo, aquí, te daré una "
+"clave secreta que te permitirá acceder a más misiones desde el ordenador de "
+"la terminal de misiones cuando sea posible. Ha sido un placer trabajar "
+"contigo.\"\n"
+"Sonríe y luego se desvanece en las sombras."
 
 #: dat/missions/pirate/pir_hit_intro.lua:261
 msgid ""
@@ -73999,6 +74079,9 @@ msgid ""
 "were satisfied with your job and this opened up more similar missions at the "
 "mission computer."
 msgstr ""
+"Hiciste un \"golpe\" a un piloto endeudado para unos clientes desconocidos. "
+"Quedaron satisfechos con tu trabajo y esto abrió más misiones similares en "
+"el ordenador de misión."
 
 #. Pirate rep cap increase
 #.
@@ -74057,17 +74140,19 @@ msgstr ""
 #. If we’re here, it means we couldn’t get a ship of the right faction.
 #: dat/missions/pirate/pir_ship_stealing.lua:161
 msgid "A Pirate informer"
-msgstr ""
+msgstr "Un Informador Pirata"
 
 #: dat/missions/pirate/pir_ship_stealing.lua:161
 msgid ""
 "A pirate informer is looking at you. Maybe they have some useful information "
 "to sell?"
 msgstr ""
+"Un informante pirata te está mirando. ¿Tal vez tengan alguna información "
+"útil que vender?"
 
 #: dat/missions/pirate/pir_ship_stealing.lua:165
 msgid "Ship to steal"
-msgstr ""
+msgstr "Nave a robar"
 
 #: dat/missions/pirate/pir_ship_stealing.lua:165
 msgid ""
@@ -74077,10 +74162,15 @@ msgid ""
 "{credits}, but the ship is probably worth much more if you can get to it.\"\n"
 "    Do you want to pay to know where that ship is?"
 msgstr ""
+"\"Hola, piloto. Tengo la ubicación y los códigos de seguridad de un "
+"desatendido {class} {fct}. Tal vez te interese, ¿quién sabe?\n"
+"    \"Sin embargo, sólo voy a vender esa información. Te costaría {credits}, "
+"pero la nave probablemente vale mucho más si puedes llegar a ella.\"\n"
+"    ¿Quieres pagar por saber dónde está esa nave?"
 
 #: dat/missions/pirate/pir_ship_stealing.lua:170
 msgid "Of course"
-msgstr ""
+msgstr "Por supuesto"
 
 #: dat/missions/pirate/pir_ship_stealing.lua:170
 msgid ""
@@ -74090,37 +74180,44 @@ msgid ""
 "    The pile of information he gives you also contains a way to land on the "
 "planet and to dissimulate your ship there."
 msgstr ""
+"Pagas al informador, que te dice que la nave está actualmente en {pnt}, en "
+"el sistema {sys}. También te da sus códigos de seguridad y te advierte sobre "
+"las patrullas.\n"
+"    El montón de información que te da también contiene una forma de "
+"aterrizar en el planeta y disimular tu nave allí."
 
 #: dat/missions/pirate/pir_ship_stealing.lua:177
 msgid "Stealing a {class}"
-msgstr ""
+msgstr "Robando una {class}"
 
 #: dat/missions/pirate/pir_ship_stealing.lua:178
 msgid "Land on {pnt} in the {sys} system and escape with your new {class}"
-msgstr ""
+msgstr "Aterriza en {pnt} en el sistema {sys} y escapa con tu nueva {class}"
 
 #: dat/missions/pirate/pir_ship_stealing.lua:181
 msgid "A brand new {class}"
-msgstr ""
+msgstr "Una nueva {class}"
 
 #. Mission marker
 #. OSD
 #: dat/missions/pirate/pir_ship_stealing.lua:193
 msgid "Not Enough Money"
-msgstr ""
+msgstr "No Tienes Suficiente Dinero"
 
 #: dat/missions/pirate/pir_ship_stealing.lua:193
 msgid ""
 "\"Do you take me for a fool? Get out of here! Come back when you have enough "
 "money.\""
 msgstr ""
+"\"¿Me tomas por tonto? ¡Vete de aquí! Vuelve cuando tengas suficiente dinero."
+"\""
 
 #. Why would we care?
 #. Try to swap ships
 #. Failed to swap ship!
 #: dat/missions/pirate/pir_ship_stealing.lua:210
 msgid "Ship left alone!"
-msgstr ""
+msgstr "¡Que se quede la nave sola!"
 
 #: dat/missions/pirate/pir_ship_stealing.lua:210
 msgid ""
@@ -74133,7 +74230,7 @@ msgstr ""
 #. Oh yeah, we stole the ship. \o/
 #: dat/missions/pirate/pir_ship_stealing.lua:217
 msgid "Ship successfully stolen!"
-msgstr ""
+msgstr "¡Nave robada con éxito!"
 
 #: dat/missions/pirate/pir_ship_stealing.lua:219
 msgid ""
@@ -74144,6 +74241,12 @@ msgid ""
 "atmosphere, so you should get ready and use the time you have on this planet "
 "wisely."
 msgstr ""
+"Te ha costado un poco, pero finalmente consigues entrar en la nave y tomar "
+"el control de la misma con los códigos de acceso que te han dado. Con "
+"suerte, podrás vender esta {ship}, o incluso utilizarla.\n"
+"    Es probable que las naves enemigas te persigan en cuanto salgas de la "
+"atmósfera, así que debes prepararte y utilizar sabiamente el tiempo que "
+"tienes en este planeta."
 
 #. Hey, stealing a ship isn’t anything! (if you survive, that is)
 #. Let’s keep a counter. Just in case we want to know how many you
@@ -74184,7 +74287,7 @@ msgstr ""
 #. luacheck: globals cargo_land commchoices (from base mission neutral.commodity_run)
 #: dat/missions/pirate/pirate_commodity_run.lua:30
 msgid "Exploit the Demand for {cargo}"
-msgstr ""
+msgstr "Explota la Demanda de {cargo}"
 
 #: dat/missions/pirate/pirate_commodity_run.lua:31
 msgid ""
@@ -74192,32 +74295,41 @@ msgid ""
 "driving the price up. If you find some of it and bring it back, you can make "
 "some good money off of them."
 msgstr ""
+"Los piratas en {pnt} han estado pidiendo mucha {cargo} últimamente, y eso "
+"está haciendo subir el precio. Si encuentras algo de eso y lo traes de "
+"vuelta, puedes hacer un buen dinero."
 
 #: dat/missions/pirate/pirate_commodity_run.lua:34
 msgid ""
 "The containers of {cargo} are bought by the boatload, eventually earning you "
 "{credits}."
 msgstr ""
+"Los contenedores de {cargo} se compran a montones, con lo que se ganan "
+"{credits}."
 
 #: dat/missions/pirate/pirate_commodity_run.lua:35
 msgid "The containers of {cargo} are quickly sold out, earning you {credits}."
-msgstr ""
+msgstr "Los contenedores de {cargo} se agotan rápidamente, ganando {credits}."
 
 #: dat/missions/pirate/pirate_commodity_run.lua:36
 msgid ""
 "The containers of {cargo} are eventually all sold to the pirates, though it "
 "takes some time. Your total earnings in the end amount to {credits}."
 msgstr ""
+"Los contenedores de {cargo} acaban vendiéndose todos a los piratas, aunque "
+"se tarda algún tiempo. Tus ganancias totales al final ascienden a {credits}."
 
 #: dat/missions/pirate/pirate_commodity_run.lua:37
 msgid ""
 "Pirates immediately line up to buy your {cargo}. Before you know it, you "
 "have none left, and you find that you're {credits} richer."
 msgstr ""
+"Los piratas se alinean inmediatamente para comprar tu {cargo}. Antes de que "
+"te des cuenta, no te queda nada, y descubres que eres {credits} más rico."
 
 #: dat/missions/pirate/pirate_commodity_run.lua:40
 msgid "Pirate Sales"
-msgstr ""
+msgstr "Ventas Pirata"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -74254,34 +74366,38 @@ msgstr ""
 #. Standard stuff
 #: dat/missions/pirate/raid.lua:106
 msgid "Corporate Documents"
-msgstr ""
+msgstr "Documentos Corporativos"
 
 #: dat/missions/pirate/raid.lua:106
 msgid ""
 "Documents detailing transactions and operations of certain corporations."
 msgstr ""
+"Documentos que detallan las transacciones y operaciones de determinadas "
+"corporaciones."
 
 #: dat/missions/pirate/raid.lua:107
 msgid "Technology Blueprints"
-msgstr ""
+msgstr "Planos Tecnológicos"
 
 #: dat/missions/pirate/raid.lua:107
 msgid "Blueprints of advanced technology under development."
-msgstr ""
+msgstr "Planos de tecnología avanzada en desarrollo."
 
 #: dat/missions/pirate/raid.lua:108
 msgid "Research Prototypes"
-msgstr ""
+msgstr "Prototipos de Investigación"
 
 #: dat/missions/pirate/raid.lua:108
 msgid ""
 "Advanced prototypes of cutting edge research. Doesn't seem to be of much use "
 "outside of an academic environment."
 msgstr ""
+"Prototipos avanzados de investigación de vanguardia. No parecen tener mucha "
+"utilidad fuera de un entorno académico."
 
 #: dat/missions/pirate/raid.lua:109
 msgid "High-end Implants"
-msgstr ""
+msgstr "Implantes de Alta Gama"
 
 #: dat/missions/pirate/raid.lua:109
 msgid ""
@@ -74289,180 +74405,209 @@ msgid ""
 "nose implants that allow amplifying and modifying smells beyond human "
 "imagination."
 msgstr ""
+"Algunos de los implantes cibernéticos más nuevos y elegantes que existen. "
+"Incluyen implantes nasales que permiten amplificar y modificar los olores "
+"más allá de la imaginación humana."
 
 #: dat/missions/pirate/raid.lua:110
 msgid "Synthetic Organs"
-msgstr ""
+msgstr "Órganos Sintéticos"
 
 #: dat/missions/pirate/raid.lua:110
 msgid "Special synthetic copies of natural human organs."
-msgstr ""
+msgstr "Copias sintéticas especiales de órganos humanos naturales."
 
 #: dat/missions/pirate/raid.lua:111
 msgid "Brand Goods"
-msgstr ""
+msgstr "Productos de Marca"
 
 #: dat/missions/pirate/raid.lua:111
 msgid "A variety of high quality brand luxury goods."
-msgstr ""
+msgstr "Una variedad de artículos de lujo de marca de alta calidad."
 
 #: dat/missions/pirate/raid.lua:112
 msgid "Rare Ores"
-msgstr ""
+msgstr "Minerales Raros"
 
 #: dat/missions/pirate/raid.lua:112
 msgid "Rare ores that are usually only located in isolated asteroid fields."
 msgstr ""
+"Minerales raros que normalmente sólo se encuentran en campos de asteroides "
+"aislados."
 
 #: dat/missions/pirate/raid.lua:113
 msgid "Fine Arts"
-msgstr ""
+msgstr "Bellas Artes"
 
 #: dat/missions/pirate/raid.lua:113
 msgid "Museum-quality artwork done in all sorts of mediums."
-msgstr ""
+msgstr "Obras de arte con calidad de museo realizadas en todo tipo de soportes."
 
 #: dat/missions/pirate/raid.lua:114
 msgid "Highly Refined Metals"
-msgstr ""
+msgstr "Metales Altamente Refinados"
 
 #: dat/missions/pirate/raid.lua:114
 msgid ""
 "High quality refined metals suitable for building space craft and other "
 "advanced technological objects."
 msgstr ""
+"Metales refinados de alta calidad adecuados para la construcción de naves "
+"espaciales y otros objetos tecnológicos avanzados."
 
 #: dat/missions/pirate/raid.lua:115
 msgid "Nebula Artefacts"
-msgstr ""
+msgstr "Artefactos de la Nebulosa"
 
 #: dat/missions/pirate/raid.lua:115
 msgid ""
 "Rare and weird artefacts of ship debris and unidentified objects found in "
 "the Nebula."
 msgstr ""
+"Raros y extraños artefactos de restos de naves y objetos no identificados "
+"encontrados en la Nebulosa."
 
 #: dat/missions/pirate/raid.lua:116
 msgid "Ancient Code"
-msgstr ""
+msgstr "Código Antiguo"
 
 #: dat/missions/pirate/raid.lua:116
 msgid ""
 "Ancient code designed mainly for computers and operating systems that no "
 "longer exist, and of high value to software archaeologists."
 msgstr ""
+"Código antiguo diseñado principalmente para ordenadores y sistemas "
+"operativos que ya no existen, y de gran valor para los arqueólogos de "
+"software."
 
 #: dat/missions/pirate/raid.lua:117
 msgid "Premium Service Droids"
-msgstr ""
+msgstr "Droides de Servicio Premium"
 
 #: dat/missions/pirate/raid.lua:117
 msgid "Expensive service droids that can do all sorts of menial tasks."
 msgstr ""
+"Caros droides de servicio que pueden hacer todo tipo de tareas de poca "
+"importancia."
 
 #. A bit sillier
 #: dat/missions/pirate/raid.lua:119
 msgid "Aged Wines"
-msgstr ""
+msgstr "Vinos Envejecidos"
 
 #: dat/missions/pirate/raid.lua:119
 msgid ""
 "Wines aged in carefully controlled climates to bring out the most subtle and "
 "exquisite flavours."
 msgstr ""
+"Vinos envejecidos en climas cuidadosamente controlados para sacar los "
+"sabores más sutiles y exquisitos."
 
 #: dat/missions/pirate/raid.lua:120
 msgid "Fine-tuned Neural Networks"
-msgstr ""
+msgstr "Redes Neuronales Afinadas"
 
 #: dat/missions/pirate/raid.lua:120
 msgid ""
 "Neural networks trained with billions of data points to do all sorts of "
 "pointless tasks."
 msgstr ""
+"Redes neuronales entrenadas con miles de millones de puntos de datos para "
+"hacer todo tipo de tareas inútiles."
 
 #: dat/missions/pirate/raid.lua:121
 msgid "Blue and White Porcelain"
-msgstr ""
+msgstr "Porcelana Azul y Blanca"
 
 #: dat/missions/pirate/raid.lua:121
 msgid "Very exquisite and highly detailed traditional blue and white pottery."
-msgstr ""
+msgstr "Cerámica tradicional azul y blanca muy exquisita y detallada."
 
 #: dat/missions/pirate/raid.lua:122
 msgid "Exquisite Shaders"
-msgstr ""
+msgstr "Sombreados Exquisitos"
 
 #: dat/missions/pirate/raid.lua:122
 msgid ""
 "Code for exquisite shaders that are able to render computer graphics scenes "
 "beyond all human imagination."
 msgstr ""
+"Código para sombreadores exquisitos que son capaces de renderizar escenas "
+"gráficas por ordenador más allá de toda imaginación humana."
 
 #: dat/missions/pirate/raid.lua:123
 msgid "Audiophile Paraphernalia"
-msgstr ""
+msgstr "Parafernalia Audiófila"
 
 #: dat/missions/pirate/raid.lua:123
 msgid "High end audio systems meant for true audio connoisseurs."
 msgstr ""
+"Sistemas de audio de alta gama destinados a los verdaderos conocedores del "
+"audio."
 
 #: dat/missions/pirate/raid.lua:124
 msgid "Rare Plants"
-msgstr ""
+msgstr "Plantas Raras"
 
 #: dat/missions/pirate/raid.lua:124
 msgid "High quality and rare specimens of plants."
-msgstr ""
+msgstr "Ejemplares de plantas de gran calidad y rareza."
 
 #: dat/missions/pirate/raid.lua:125
 msgid "Ornamental Shrimp"
-msgstr ""
+msgstr "Gambas Ornamentales"
 
 #: dat/missions/pirate/raid.lua:125
 msgid "An assortment of small and colourful shrimp."
-msgstr ""
+msgstr "Un surtido de pequeñas y coloridas gambas."
 
 #: dat/missions/pirate/raid.lua:126
 msgid "High Quality Pasta"
-msgstr ""
+msgstr "Pasta de Alta Calidad"
 
 #: dat/missions/pirate/raid.lua:126
 msgid "Dried pasta of the highest quality."
-msgstr ""
+msgstr "Pasta seca de la más alta calidad."
 
 #: dat/missions/pirate/raid.lua:127
 msgid "Premium Body Soap"
-msgstr ""
+msgstr "Jabón Corporal Premium"
 
 #: dat/missions/pirate/raid.lua:127
 msgid ""
 "Incredibly silky soap that creates a seemingly infinite amount of bubbles."
 msgstr ""
+"Jabón increíblemente sedoso que crea una cantidad aparentemente infinita de "
+"burbujas."
 
 #: dat/missions/pirate/raid.lua:128
 msgid "Luxury Captain Chairs"
-msgstr ""
+msgstr "Sillas del Capitán de Lujo"
 
 #: dat/missions/pirate/raid.lua:128
 msgid ""
 "Very comfortable chairs meant for ship captains. Every captain dreams of "
 "having such chairs."
 msgstr ""
+"Sillas muy cómodas destinadas a los capitanes de nave. Todo capitán sueña "
+"con tener estas sillas."
 
 #: dat/missions/pirate/raid.lua:129
 msgid "Incredibly Spicy Sauce"
-msgstr ""
+msgstr "Salsa Increíblemente Picante"
 
 #: dat/missions/pirate/raid.lua:129
 msgid ""
 "Hot sauce made from the spiciest, genetically engineered peppers. Not really "
 "suited for human consumption, but people use them anyway."
 msgstr ""
+"Salsa picante elaborada con los pimientos más picantes, modificados "
+"genéticamente. No son realmente adecuados para el consumo humano, pero la "
+"gente los utiliza de todos modos."
 
 #: dat/missions/pirate/raid.lua:130
 msgid "Exquisite Cat Toys"
-msgstr ""
+msgstr "Exquisitos Juguetes para Gatos"
 
 #: dat/missions/pirate/raid.lua:130
 msgid ""
@@ -74470,6 +74615,9 @@ msgid ""
 "max. They also don't use cheap glue that make them break down within 5 "
 "minutes of playing with a cat."
 msgstr ""
+"Juguetes para gatos con luces y sistemas de movimiento incorporados para "
+"estimular al máximo a cualquier gato. Además, no utilizan pegamento barato "
+"que hace que se rompan a los 5 minutos de jugar con el gato."
 
 #: dat/missions/pirate/raid.lua:169
 msgid "#rPIRACY#0: Raid a {adjective} {name} convoy in the {sys} system{msg}"
@@ -74482,26 +74630,30 @@ msgid ""
 "the convoy and bring back as many tonnes of {cargo} as possible. You will be "
 "paid based on how much you are able to bring back.{reputation}"
 msgstr ""
+"Un convoy que transporta {cargo} pasará por el sistema {sys} en el camino de "
+"{entersys} a {exitsys}. Un Señor Pirata local quiere que asaltes el convoy y "
+"traigas de vuelta tantas toneladas de {cargo} como sea posible. Se te pagará "
+"en función de la cantidad que seas capaz de traer de vuelta.{reputation}"
 
 #: dat/missions/pirate/raid.lua:172
 msgid "{rbase} and {rcargo} per ton of {cargo} recovered"
-msgstr ""
+msgstr "{rbase} y {rcargo} por tonelada de {cargo} recuperada"
 
 #: dat/missions/pirate/raid.lua:179
 msgid "Pirate Raid"
-msgstr ""
+msgstr "Asalto Pirata"
 
 #: dat/missions/pirate/raid.lua:181
 msgid "Plunder {cargo} from the convoy"
-msgstr ""
+msgstr "Saquea {cargo} del convoy"
 
 #: dat/missions/pirate/raid.lua:182
 msgid "Deliver the loot to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Entrega el botín a {pnt} en el sistema {sys}"
 
 #: dat/missions/pirate/raid.lua:192
 msgid "You did not recover any {cargo} from the convoy!"
-msgstr ""
+msgstr "¡No recuperaste ninguna {cargo} del convoy!"
 
 #: dat/missions/pirate/raid.lua:213
 msgid ""
@@ -74509,6 +74661,9 @@ msgid ""
 "As you wonder about your payment, you suddenly receive a message that "
 "#g{reward}#0 was transferred to your account."
 msgstr ""
+"Los trabajadores descargan tu {cargo} y se la llevan a un lugar que no "
+"puedes ver. Mientras te preguntas por tu pago, de repente recibes un mensaje "
+"de que se ha transferido #g{reward}#0 a tu cuenta."
 
 #. Faction hit
 #. Mark as done
@@ -74517,18 +74672,20 @@ msgid ""
 "You raided a {adjective} {name} convoy in the {sys} system and stole "
 "{tonnes} of {cargo}."
 msgstr ""
+"Has asaltado un convoy de {adjetive} {name} en el sistema {sys} y has robado "
+"{tonnes} de {cargo}."
 
 #: dat/missions/pirate/raid.lua:229
 msgid "Convoy Entry Point"
-msgstr ""
+msgstr "Punto de Entrada del Convoy"
 
 #: dat/missions/pirate/raid.lua:230
 msgid "Convoy Exit Point"
-msgstr ""
+msgstr "Punto de Salida del Convoy"
 
 #: dat/missions/pirate/raid.lua:233
 msgid "The convoy will be coming in from {sys} shortly!"
-msgstr ""
+msgstr "¡El convoy llegará desde {sys} en breve!"
 
 #. Only slow down leader, or it can be faster than other guys
 #.
@@ -74557,77 +74714,97 @@ msgid ""
 "You and your crew infiltrate the ship's pathetic security and subdue the "
 "dissident. You transport them to your ship."
 msgstr ""
+"Tú y tu tripulación os infiltráis en la patética seguridad de la nave y "
+"sometéis al disidente. Lo transportas a tu nave."
 
 #: dat/missions/proteron/dissbounty_dead.lua:29
 msgid ""
 "Your crew has a difficult time getting past the ship's security, but "
 "eventually succeeds and subdues the dissident."
 msgstr ""
+"Tu tripulación tiene dificultades para burlar la seguridad de la nave, pero "
+"finalmente lo consigues y sometes al disidente."
 
 #: dat/missions/proteron/dissbounty_dead.lua:30
 msgid ""
 "The ship's security system turns out to be no match for your crew. You "
 "infiltrate the ship and capture the dissident."
 msgstr ""
+"El sistema de seguridad de la nave resulta no ser rival para tu tripulación. "
+"Te infiltras en la nave y capturas al disidente."
 
 #: dat/missions/proteron/dissbounty_dead.lua:31
 msgid "Your crew infiltrates the ship and captures the dissident."
-msgstr ""
+msgstr "Tu tripulación se infiltra en la nave y captura al disidente."
 
 #: dat/missions/proteron/dissbounty_dead.lua:32
 msgid ""
 "Getting past this ship's security was surprisingly easy. Didn't this "
 "dissident know that they were wanted?"
 msgstr ""
+"Pasar la seguridad de esta nave fue sorprendentemente fácil. ¿No sabía este "
+"disidente que lo buscaban?"
 
 #: dat/missions/proteron/dissbounty_dead.lua:36
 msgid ""
 "Try as you might, you cannot get past the dissident's security system. "
 "Defeated, you and your crew return to the ship."
 msgstr ""
+"Por mucho que lo intentes, no puedes superar el sistema de seguridad de los "
+"disidentes. Derrotados, tú y tu tripulación regresáis a la nave."
 
 #: dat/missions/proteron/dissbounty_dead.lua:38
 msgid ""
 "Your crew comes close to getting past the dissident's security system, but "
 "ultimately fails."
 msgstr ""
+"Tu tripulación está a punto de superar el sistema de seguridad del "
+"disidente, pero finalmente fracasa."
 
 #: dat/missions/proteron/dissbounty_dead.lua:43
 msgid ""
 "After verifying that you killed your target, an officer hands you your pay."
 msgstr ""
+"Tras comprobar que has matado a tu objetivo, un oficial te entrega tu paga."
 
 #: dat/missions/proteron/dissbounty_dead.lua:44
 msgid ""
 "After verifying that the target is indeed dead, the tired-looking officer "
 "smiles and hands you your pay."
 msgstr ""
+"Tras comprobar que el objetivo está efectivamente muerto, el agente, de "
+"aspecto cansado, sonríe y te entrega tu paga."
 
 #: dat/missions/proteron/dissbounty_dead.lua:45
 msgid "The officer thanks you and promptly hands you your pay."
-msgstr ""
+msgstr "El agente te da las gracias y te entrega rápidamente la paga."
 
 #: dat/missions/proteron/dissbounty_dead.lua:46
 msgid ""
 "The officer takes you into a locked room, where the death of your target is "
 "quietly verified. The officer then pays you and sends you off."
 msgstr ""
+"El oficial te lleva a una sala cerrada, donde se verifica en silencio la "
+"muerte de tu objetivo. A continuación, el agente te paga y se despide de ti."
 
 #: dat/missions/proteron/dissbounty_dead.lua:47
 msgid ""
 "The officer verifies the death of your target, goes through the necessary "
 "paperwork, and hands you your pay, looking bored the entire time."
 msgstr ""
+"El oficial verifica la muerte de tu objetivo, revisa el papeleo necesario y "
+"te entrega tu paga, con cara de aburrimiento todo el tiempo."
 
 #: dat/missions/proteron/dissbounty_dead.lua:51
 msgid "An officer takes the dissident into custody and hands you your pay."
-msgstr ""
+msgstr "Un oficial se lleva al disidente bajo custodia y te entrega tu paga."
 
 #: dat/missions/proteron/dissbounty_dead.lua:52
 msgid ""
 "The dissident puts up a fight as you take them to the officer, who then "
 "hands you your pay."
 msgstr ""
+"El disidente se resiste a llevarlo ante el oficial, que te entrega tu paga."
 
 #: dat/missions/proteron/dissbounty_dead.lua:53
 msgid ""
@@ -74635,12 +74812,18 @@ msgid ""
 "you captured is taken off your hands and you are handed your pay without a "
 "word."
 msgstr ""
+"Al oficial con el que tratas parece disgustarle especialmente los "
+"disidentes. Te quitan de las manos al que has capturado y te entregan la "
+"paga sin mediar palabra."
 
 #: dat/missions/proteron/dissbounty_dead.lua:54
 msgid ""
 "An officer rushes the fearful-looking dissident into a secure hold, pays you "
 "the appropriate bounty, and takes the dissident into custody."
 msgstr ""
+"Un oficial se apresura a llevar al disidente de aspecto temeroso a una "
+"bodega segura, te paga la recompensa correspondiente y se lleva al disidente "
+"bajo custodia."
 
 #: dat/missions/proteron/dissbounty_dead.lua:55
 msgid ""
@@ -74648,6 +74831,9 @@ msgid ""
 "captured your target alive. Nonetheless, they politely take the dissident "
 "off of your hands and hand you your pay."
 msgstr ""
+"El oficial al que saludas te mira con desconcierto cuando dices que has "
+"capturado a tu objetivo con vida. No obstante, te quitan amablemente al "
+"disidente de las manos y te entregan la paga."
 
 #: dat/missions/proteron/dissbounty_dead.lua:59
 msgid ""
@@ -74656,6 +74842,9 @@ msgid ""
 "without your help, so I've transferred a portion of the bounty into your "
 "account.\""
 msgstr ""
+"\"Saludos. Veo que estabas intentando cobrar una recompensa. Bueno, como "
+"puedes ver, me gané la recompensa, pero no creo que hubiera tenido éxito sin "
+"tu ayuda, así que he transferido una parte de la recompensa a tu cuenta.\""
 
 #: dat/missions/proteron/dissbounty_dead.lua:60
 msgid ""
@@ -74664,6 +74853,11 @@ msgid ""
 "of that scum. So as an apology, I would like to offer you the portion of the "
 "bounty you clearly earned. The money will be in your account shortly.\""
 msgstr ""
+"\"Siento haberme interpuesto en el camino de tu recompensa. No me importa "
+"demasiado el dinero, pero quería asegurarme de que la galaxia se librara de "
+"esa escoria. Así que como disculpa, me gustaría ofrecerte la parte de la "
+"recompensa que claramente has ganado. El dinero estará en tu cuenta en breve."
+"\""
 
 #: dat/missions/proteron/dissbounty_dead.lua:61
 msgid ""
@@ -74672,6 +74866,10 @@ msgid ""
 "I have transferred what I think is your fair share of the bounty to your "
 "bank account.\""
 msgstr ""
+"\"Oye, gracias por la ayuda allí atrás. No sé si habría sido capaz de "
+"manejar a ese disidente solo. De todos modos, ya que fuiste de gran ayuda, "
+"he transferido lo que creo que es tu parte justa de la recompensa a tu "
+"cuenta bancaria.\""
 
 #: dat/missions/proteron/dissbounty_dead.lua:62
 msgid ""
@@ -74679,35 +74877,40 @@ msgid ""
 "myself, but still, I appreciate your assistance. Here, I'll transfer some of "
 "the bounty to you, as a token of my appreciation.\""
 msgstr ""
+"\"¡Eh, gracias! Creo que habría podido acabar con el objetivo yo solo, pero "
+"aun así, agradezco tu ayuda. Toma, te transferiré parte de la recompensa, "
+"como muestra de mi agradecimiento.\""
 
 #. Messages
 #: dat/missions/proteron/dissbounty_dead.lua:68
 msgid "Your target got away."
-msgstr ""
+msgstr "Tu objetivo se ha escapado."
 
 #: dat/missions/proteron/dissbounty_dead.lua:76
 msgid "Kill or capture your target"
-msgstr ""
+msgstr "Mata o captura a tu objetivo"
 
 #. No dissidents nearby
 #: dat/missions/proteron/dissbounty_dead.lua:104
 msgid "Target Dissident"
-msgstr ""
+msgstr "Disidente Objetivo"
 
 #. Set mission details
 #: dat/missions/proteron/dissbounty_dead.lua:112
 msgid "PD: Dead or Alive Bounty in {sys}"
-msgstr ""
+msgstr "DP: Recompensa Vivo o Muerto en {sys}"
 
 #: dat/missions/proteron/dissbounty_dead.lua:113
 msgid ""
 "A political dissident was recently seen in the {sys} system. {fct} "
 "authorities want this dissident dead or alive."
 msgstr ""
+"Un disidente político fue visto recientemente en el sistema {sys}. Las "
+"autoridades de {fct} quieren a este disidente vivo o muerto."
 
 #: dat/missions/proteron/dissbounty_dead.lua:122
 msgid "Proteron Dissident"
-msgstr ""
+msgstr "Disidente Proteron"
 
 #. _target_faction:dynEnemy( "Proteron" ) -- Avoid letting the proteron kill them
 #. Set up the ship, credits, and reputation.
@@ -74727,7 +74930,7 @@ msgstr ""
 #: dat/missions/rehab_common.lua:33 dat/missions/rehab_common.lua:47
 #: dat/missions/rehab_common.lua:58 dat/missions/rehab_common.lua:102
 msgid "{fct} Rehabilitation"
-msgstr ""
+msgstr "Rehabilitación {fct}"
 
 #: dat/missions/rehab_common.lua:34
 msgid ""
@@ -74739,12 +74942,21 @@ msgid ""
 "Faction: {fct}\n"
 "Cost: {credits}"
 msgstr ""
+"Puedes pagar una multa para tener la oportunidad de redimirte a los ojos de "
+"una facción a la que hayas ofendido. Puedes interactuar con esta facción "
+"como si tu reputación fuera neutral, pero tu reputación no mejorará "
+"realmente hasta que hayas recuperado su confianza. Cualquier acción hostil "
+"contra esta facción anulará inmediatamente este acuerdo.\n"
+"Facción: {fct}\n"
+"Coste: {credits}"
 
 #: dat/missions/rehab_common.lua:42
 msgid ""
 "You don't have enough money. You need at least {credits} to buy a cessation "
 "of hostilities with this faction."
 msgstr ""
+"No tienes suficiente dinero. Necesitas al menos {credits} para comprar un "
+"cese de hostilidades con esta facción."
 
 #: dat/missions/rehab_common.lua:47
 msgid ""
@@ -74757,13 +74969,22 @@ msgid ""
 "continue to behave properly and perform beneficial services, your past "
 "offenses will eventually be stricken from the record."
 msgstr ""
+"Tu solicitud ha sido procesada. Las fuerzas de seguridad de la {fct} ya no "
+"te atacarán al verte. Puedes volver a dirigir tus negocios en el espacio de "
+"la {fct}, pero recuerda que sigues teniendo antecedentes penales. Si atacas "
+"a cualquier comerciante, civil o nave de la {fct}, o cometes cualquier otro "
+"delito contra esta facción, te convertirás inmediatamente en su enemigo de "
+"nuevo.\n"
+"Mientras este acuerdo esté activo, tu reputación no cambiará, pero si sigues "
+"comportándote correctamente y realizas servicios beneficiosos, tus delitos "
+"pasados acabarán siendo borrados del historial."
 
 #: dat/missions/rehab_common.lua:54 dat/missions/rehab_common.lua:98
 #, lua-format
 msgid "You need to gain %d more reputation"
 msgid_plural "You need to gain %d more reputation"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Necesitas ganar %d más reputación"
+msgstr[1] "Necesitas ganar %d más reputación"
 
 #. The maximum amount of reputation the player can LOSE before the contract is void.
 #. Function to set the height of the fine. Missions that require this script may override this.
@@ -74774,20 +74995,22 @@ msgstr[1] ""
 #. The player has successfully erased his criminal record.
 #: dat/missions/rehab_common.lua:91
 msgid "{fct} Rehabilitation Successful"
-msgstr ""
+msgstr "Exitosa Rehabilitación {fct}"
 
 #: dat/missions/rehab_common.lua:91
 msgid ""
 "Congratulations, you have successfully worked your way back into good "
 "standing with this faction. Try not to relapse into your life of crime!"
 msgstr ""
+"Enhorabuena, has conseguido volver a estar bien con esta facción. ¡Intenta "
+"no recaer en tu vida delictiva!"
 
 #. On abort, reset reputation.
 #. Remove the standing hook prior to modifying reputation.
 #. Reapply the original negative reputation.
 #: dat/missions/rehab_common.lua:120
 msgid "{fct} Rehabilitation Canceled"
-msgstr ""
+msgstr "Cancelada Rehabilitación {fct}"
 
 #: dat/missions/rehab_common.lua:120
 msgid ""
@@ -74795,6 +75018,9 @@ msgid ""
 "procedure has been canceled, and your reputation is once again tarnished. "
 "You may start another rehabilitation procedure at a later time."
 msgstr ""
+"Has cometido otra ofensa contra esta facción. Tu procedimiento de "
+"rehabilitación ha sido cancelado, y tu reputación se ve de nuevo empañada. "
+"Podrás iniciar otro procedimiento de rehabilitación más adelante."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -74824,15 +75050,15 @@ msgstr ""
 #. Mission info stuff
 #: dat/missions/shadow/darkshadow.lua:40 dat/missions/shadow/darkshadow.lua:428
 msgid "Dark Shadow"
-msgstr ""
+msgstr "Sombra Oscura"
 
 #: dat/missions/shadow/darkshadow.lua:41
 msgid "Look for Jorek on {pnt} in the {sys} system"
-msgstr ""
+msgstr "Busca a Jorek en {pnt} en el sistema {sys}"
 
 #: dat/missions/shadow/darkshadow.lua:53
 msgid "An urgent invitation"
-msgstr ""
+msgstr "Una invitación urgente"
 
 #: dat/missions/shadow/darkshadow.lua:53
 msgid ""
@@ -74849,12 +75075,27 @@ msgid ""
 "log. Perhaps it would be a good idea to visit the Seiryuu once more, if only "
 "to find out how they got a private line to your ship!"
 msgstr ""
+"De repente, de la nada, uno de los paneles inactivos de tu cabina cobra "
+"vida. Te muestra una cara que no has visto en tu vida, pero reconoces el "
+"uniforme gris liso como perteneciente a los Cuatro Vientos.\n"
+"    \"Hola {player}\", dice la cara. \"Te estarás preguntando quién soy y "
+"cómo es que estoy hablando contigo de esta manera. Ninguna de las dos "
+"preguntas es importante. Lo importante es que la capitana Rebina necesita "
+"urgentemente tus servicios. Debes reunirte con ella en el Seiryuu, que "
+"actualmente está en órbita alrededor de {pnt} en el sistema {sys}. Por "
+"favor, no haga ninguna pregunta ahora. Esperamos verte tan rápido como "
+"puedas llegar hasta aquí\".\n"
+"    La pantalla se apaga de nuevo. Decides anotar esto en tu bitácora. Tal "
+"vez sea una buena idea visitar el Seiryuu una vez más, ¡aunque sólo sea para "
+"averiguar cómo consiguieron una línea privada con tu nave!"
 
 #: dat/missions/shadow/darkshadow.lua:63
 msgid ""
 "You have been summoned to the {sys} system, where the Seiryuu is supposedly "
 "waiting for you in orbit around {pnt}."
 msgstr ""
+"Has sido convocado al sistema {sys}, donde se supone que el Seiryuu te "
+"espera en órbita alrededor de {pnt}."
 
 #. This is here because setDesc initializes the OSD.
 #. This is the "real" start of the mission. Get yer mission variables here!
@@ -74863,18 +75104,20 @@ msgid ""
 "You have been tasked by Captain Rebina of the Four Winds to assist Jorek "
 "McArthy."
 msgstr ""
+"El capitán Rebina de los Cuatro Vientos te ha encargado que ayudes a Jorek "
+"McArthy."
 
 #: dat/missions/shadow/darkshadow.lua:78
 #: dat/missions/shadow/shadowvigil.lua:123
 msgid "A sum of money."
-msgstr ""
+msgstr "Una suma de dinero."
 
 #. Handle boarding of the Seiryuu
 #. Briefing
 #: dat/missions/shadow/darkshadow.lua:89 dat/missions/shadow/darkshadow.lua:92
 #: dat/missions/shadow/darkshadow.lua:98 dat/missions/shadow/darkshadow.lua:101
 msgid "Disclosure"
-msgstr ""
+msgstr "Divulgación"
 
 #: dat/missions/shadow/darkshadow.lua:89
 msgid ""
