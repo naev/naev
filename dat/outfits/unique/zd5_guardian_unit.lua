@@ -30,7 +30,7 @@ function onhit( p, po, armour, _shield, _attacker )
          p:setHealth( (a + abs)/stats.armour ) -- Try to add health
 
          p:setEnergy( e-abs/efficiency, true ) -- Drain health
-         mem.absorbed = mem.absorbed + abs -- Conut damage as absorbed
+         mem.absorbed = mem.absorbed + abs -- Count damage as absorbed
 
          -- Update state
          po:state("cooldown")

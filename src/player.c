@@ -1121,7 +1121,7 @@ static void player_renderAimHelper( double dt )
 void player_think( Pilot* pplayer, const double dt )
 {
    Pilot *target;
-   double turn;
+   double acc, turn;
    int facing, fired;
 
    /* last i heard, the dead don't think */
@@ -1197,25 +1197,10 @@ void player_think( Pilot* pplayer, const double dt )
 
    /* turning taken over by PLAYER_REVERSE */
    if (player_isFlag(PLAYER_REVERSE)) {
-
-      /* Check to see if already stopped. */
-      /*
-      if (VMOD(pplayer->solid->vel) < MIN_VEL_ERR)
-         player_accel( 0. );
-
-      else {
-         d = pilot_face( pplayer, VANGLE(player.p->solid->vel) + M_PI );
-         if ((player_acc < 1.) && (d < MAX_DIR_ERR))
-            player_accel( 1. );
-      }
-      */
-
       /*
        * If the player has reverse thrusters, fire those.
        */
-      if (player.p->stats.misc_reverse_thrust)
-         player_accel( -PILOT_REVERSE_THRUST );
-      else if (!facing) {
+      if (!player.p->stats.misc_reverse_thrust && !facing) {
          pilot_face( pplayer, VANGLE(player.p->solid->vel) + M_PI );
          /* Disable turning. */
          facing = 1;
@@ -1262,7 +1247,15 @@ void player_think( Pilot* pplayer, const double dt )
       player_autonavResetSpeed();
    }
 
-   pilot_setThrust( pplayer, player_acc );
+   acc = player_acc;
+   /* Have to handle the case the player is doing reverse. This takes priority
+    * over normal accel. */
+   if (player_isFlag(PLAYER_REVERSE) && player.p->stats.misc_reverse_thrust
+         && !pilot_isFlag(player.p, PILOT_HYP_PREP)
+         && !pilot_isFlag(player.p, PILOT_HYPERSPACE) )
+      acc = -PILOT_REVERSE_THRUST;
+
+   pilot_setThrust( pplayer, acc );
 }
 
 /**

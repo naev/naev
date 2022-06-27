@@ -7,6 +7,7 @@ local luaspfx = require "luaspfx"
 local prob = require "prob"
 local lg = require "love.graphics"
 local vn = require "vn"
+local nebula = require "common.nebula"
 local poi = {}
 
 -- luacheck: globals _poi_enter _poi_scan _poi_heartbeat_nooutfit _poi_heartbeat (Hook functions passed by name)
@@ -288,6 +289,23 @@ Logs a point of interest message.
 function poi.log( msg )
    shiplog.create( "poi", _("Point of Interest"), _("Neutral") )
    shiplog.append( "poi", msg )
+end
+
+--[[--
+Tests to see the POI is near a nebula.
+   @tparam boolean true if near a nebula.
+--]]
+function poi.nearNebula( mem )
+   local _dens, vol = mem.sys:nebula()
+   if vol > 20 then -- Limit volatility should allow Arandon
+      return false
+   end
+
+   if nebula.jumpDist( mem.sys, true, 20 ) > 2 then
+      return false
+   end
+
+   return true
 end
 
 return poi

@@ -1,7 +1,6 @@
 local fmt = require "format"
 local vn = require "vn"
 local tut = require "common.tutorial"
-local nebu = require "common.nebula"
 local poi = require "common.poi"
 
 local cargo = commodity.get("Nebula Crystals")
@@ -11,14 +10,9 @@ return function ( mem )
    if not mem.locked then return end
 
    -- Must be nebula or near nebula
-   local near_nebula = nebu.isNebula( mem.sys )
-   for k,v in ipairs(mem.sys:adjacentSystems()) do
-      if near_nebula then
-         break
-      end
-      near_nebula = near_nebula or nebu.isNebula( v )
+   if not poi.nearNebula( mem ) then
+      return
    end
-   if not near_nebula then return end
 
    local function add_crystals( q )
       q = q or rnd.rnd(20,50)

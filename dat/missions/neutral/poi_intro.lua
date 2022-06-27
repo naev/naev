@@ -464,7 +464,7 @@ They dematerialize in a hurry.]]),
    local stringguess = require "minigames.stringguess"
    stringguess.vn()
    vn.func( function ()
-      if stringguess.completed then
+      if stringguess.completed() then
          vn.jump("unlocked")
          return
       end

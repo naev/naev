@@ -70,6 +70,7 @@ static int pilotL_getPilots( lua_State *L );
 static int pilotL_getAllies( lua_State *L );
 static int pilotL_getHostiles( lua_State *L );
 static int pilotL_getVisible( lua_State *L );
+static int pilotL_getInrange( lua_State *L );
 static int pilotL_eq( lua_State *L );
 static int pilotL_name( lua_State *L );
 static int pilotL_id( lua_State *L );
@@ -214,6 +215,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "getAllies", pilotL_getAllies },
    { "getHostiles", pilotL_getHostiles },
    { "getVisible", pilotL_getVisible },
+   { "getInrange", pilotL_getInrange },
    { "__eq", pilotL_eq },
    { "__tostring", pilotL_name },
    /* Info. */
@@ -1101,6 +1103,52 @@ static int pilotL_getVisible( lua_State *L )
          continue;
 
       lua_pushpilot(L, pilot_stack[i]->id); /* value */
+      lua_rawseti(L,-2,k++); /* table[key] = value */
+   }
+
+   return 1;
+}
+
+/**
+ * @brief Gets visible pilots to a pilot within a certain distance.
+ *
+ *    @luatparam Pilot pilot Pilot to get visible pilots of.
+ *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
+ *    @luatreturn {Pilot,...} A table containing the pilots.
+ * @luafunc getInrange
+ */
+static int pilotL_getInrange( lua_State *L )
+{
+   int k;
+   vec2 *v = luaL_checkvector(L,1);
+   double d = luaL_checknumber(L,2);
+   int dis = lua_toboolean(L,3);
+   Pilot *const* pilot_stack;
+
+   d = pow2(d); /* Square it. */
+
+   /* Now put all the matching pilots in a table. */
+   pilot_stack = pilot_getAll();
+   lua_newtable(L);
+   k = 1;
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *p = pilot_stack[i];
+
+      /* Check if dead. */
+      if (pilot_isFlag(p, PILOT_DELETE))
+         continue;
+      /* Check if hidden. */
+      if (pilot_isFlag(p, PILOT_HIDE))
+         continue;
+      /* Check if disabled. */
+      if (dis && pilot_isDisabled(p))
+         continue;
+
+      /* Must be in range. */
+      if (vec2_dist2( v, &p->solid->pos ) > d )
+         continue;
+
+      lua_pushpilot(L, p->id); /* value */
       lua_rawseti(L,-2,k++); /* table[key] = value */
    }
 
@@ -3019,16 +3067,19 @@ static int pilotL_outfitRm( lua_State *L )
 /**
  * @brief Removes an outfit from a pilot's named slot.
  *
+ * Note that this only works with the `name="foo"` property of slots. It is not meant to be used with unnamed slots. By default all slots are unnamed unless specified.
+ *
  *    @luatparam Pilot p Pilot to remove outfit from.
- *    @luatparam strin slotname Name of the slot to remove the outfit from.
+ *    @luatparam string slotname Name of the slot to remove the outfit from.
  *    @luatreturn boolean true on success.
  * @luafunc outfitRmSlot
+ * @see outfitRm
  */
 static int pilotL_outfitRmSlot( lua_State *L )
 {
    /* Get parameters. */
    int ret, removed = 0;
-   Pilot *p    = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    const char *slotname = luaL_checkstring(L,2);
    PilotOutfitSlot *s = pilot_getSlotByName( p, slotname );
    if (s==NULL) {
@@ -3051,9 +3102,12 @@ static int pilotL_outfitRmSlot( lua_State *L )
 /**
  * @brief Adds an intrinsic outfit to the pilot.
  *
+ * Intrinsic outfits are outfits that are associated with a ship, but not their slots.
+ *
  *    @luatparam Pilot p Pilot to add intrinsic outfit to.
  *    @luatparam Outfit o Outfit to add as intrinsic outfit (must be modifier outfit).
  * @luafunc outfitAddIntrinsic
+ * @see outfitAdd
  */
 static int pilotL_outfitAddIntrinsic( lua_State *L )
 {
@@ -3069,9 +3123,12 @@ static int pilotL_outfitAddIntrinsic( lua_State *L )
 /**
  * @brief Removes an intrinsic outfit from the pilot.
  *
+ * Intrinsic outfits are outfits that are associated with a ship, but not their slots.
+ *
  *    @luatparam Pilot p Pilot to remove intrinsic outfit from.
  *    @luatparam Outfit o Outfit to remove from intrinsic outfits.
  * @luafunc outfitRmIntrinsic
+ * @see outfitRm
  */
 static int pilotL_outfitRmIntrinsic( lua_State *L )
 {

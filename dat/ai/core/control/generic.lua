@@ -261,11 +261,19 @@ function handle_messages( si, dopush )
 
       -- This is the case that the message is being sent from the environment, such as asteroids
       if sender==nil then
-         if msgtype == "asteroid" and data and data:exists() then
+         -- Asteroid was blown up with mining tools
+         if msgtype=="asteroid" and data and data:exists() then
             local ap = data:pos()
             if not si.fighting and not si.noattack and should_investigate( ap, si ) then
                ap = ap + vec2.newP( 500*rnd.rnd(), rnd.angle () )
                ai.pushtask("inspect_moveto", ap )
+               taskchange = true
+            end
+
+         -- Some signal was detected
+         elseif msgtype=="signal" and data then
+            if not si.fighting and not si.noattack and should_investigate( data, si ) then
+               ai.pushtask("inspect_moveto", data )
                taskchange = true
             end
          end

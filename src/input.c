@@ -702,9 +702,10 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          }
 
          else if (value==KEY_RELEASE) {
-            player_accelOver();
             player_rmFlag(PLAYER_ACCEL);
             input_accelButton = 0;
+            if (!player_isFlag(PLAYER_REVERSE))
+               player_accelOver();
          }
 
          /* double tap accel = afterburn! */
@@ -868,7 +869,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
     * secondary weapons
     */
    /* shooting secondary weapon */
-   } else if (KEY("secondary") && NOHYP() && NODEAD() && !repeat) {
+   } else if (KEY("secondary") && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
          player_setFlag(PLAYER_SECONDARY);
       }
@@ -1181,6 +1182,10 @@ static void input_clickevent( SDL_Event* event )
    hparam[1].u.b     = (event->type == SDL_MOUSEBUTTONDOWN);
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "mouse", hparam );
+
+   /* Disable in cinematics. */
+   if (player_isFlag(PLAYER_CINEMATICS))
+      return;
 
    /* Player must not be NULL. */
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))

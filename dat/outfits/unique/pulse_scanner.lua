@@ -3,6 +3,7 @@ local luaspfx = require 'luaspfx'
 
 local active = 10 -- active time in seconds
 local cooldown = 15 -- cooldown time in seconds
+local alertrange = 3e3 -- Distance to alert
 
 local sfx = audio.newSource( 'snd/sounds/ping.ogg' )
 
@@ -17,15 +18,22 @@ local function turnon( p, po )
    mem.active = true
 
    -- Visual effect
-   luaspfx.pulse( p:pos(), p:vel() )
+   local ppos = p:pos()
+   luaspfx.pulse( ppos, p:vel() )
    if mem.isp then
       luaspfx.sfx( true, nil, sfx )
 
       -- Can trigger scan hooks
       naev.trigger( "poi_scan" )
    else
-      luaspfx.sfx( p:pos(), p:vel(), sfx )
+      luaspfx.sfx( ppos, p:vel(), sfx )
    end
+
+   -- Will notify nearby ships
+   for k,s in ipairs(pilot.getInrange( ppos, alertrange )) do
+      pilot.msg( nil, s, "signal", ppos )
+   end
+
    return true
 end
 
