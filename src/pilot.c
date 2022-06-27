@@ -2058,16 +2058,9 @@ void pilot_renderOverlay( Pilot* p )
 void pilot_update( Pilot* pilot, double dt )
 {
    int cooling, nchg;
-   int ammo_threshold;
-   unsigned int l;
    Pilot *target;
    double a, px,py, vx,vy;
-   char buf[16];
    double Q;
-   Damage dmg;
-   double stress_falloff;
-   double efficiency, thrust;
-   double reload_time;
 
    /* Modify the dt with speedup. */
    dt *= pilot->stats.time_speedup;
@@ -2138,6 +2131,7 @@ void pilot_update( Pilot* pilot, double dt )
        * elsewhere.)
        */
       if (outfit_isLauncher(o->outfit) || outfit_isFighterBay(o->outfit)) {
+         double ammo_threshold, reload_time;
 
          /* Initial (raw) ammo threshold */
          if (outfit_isLauncher(o->outfit)) {
@@ -2204,7 +2198,7 @@ void pilot_update( Pilot* pilot, double dt )
 
    /* Update stress. */
    if (!pilot_isFlag(pilot, PILOT_DISABLED)) { /* Case pilot is not disabled. */
-      stress_falloff = 0.3*sqrt(pilot->solid->mass); /* Should be about 38 seconds for a 300 mass ship with 200 armour, and 172 seconds for a 6000 mass ship with 4000 armour. */
+      double stress_falloff = 0.3*sqrt(pilot->solid->mass); /* Should be about 38 seconds for a 300 mass ship with 200 armour, and 172 seconds for a 6000 mass ship with 4000 armour. */
       pilot->stress -= stress_falloff * pilot->stats.stress_dissipation * dt;
       pilot->stress = MAX(pilot->stress, 0);
    }
@@ -2219,6 +2213,7 @@ void pilot_update( Pilot* pilot, double dt )
 
    /* Damage effect. */
    if ((pilot->stats.damage > 0.) || (pilot->stats.disable > 0.)) {
+      Damage dmg;
       dmg.type          = dtype_get("normal");
       dmg.damage        = pilot->stats.damage * dt;
       dmg.penetration   = 1.; /* Full penetration. */
@@ -2254,6 +2249,7 @@ void pilot_update( Pilot* pilot, double dt )
       /* pilot death sound */
       if (!pilot_isFlag(pilot,PILOT_DEATH_SOUND) &&
             (pilot->ptimer < 0.050)) {
+         char buf[16];
 
          /* Play random explosion sound. */
          snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
@@ -2265,6 +2261,7 @@ void pilot_update( Pilot* pilot, double dt )
       /* final explosion */
       else if (!pilot_isFlag(pilot,PILOT_EXPLODED) &&
             (pilot->ptimer < 0.200)) {
+         Damage dmg;
 
          /* Damage from explosion. */
          a                 = sqrt(pilot->solid->mass);
@@ -2291,6 +2288,8 @@ void pilot_update( Pilot* pilot, double dt )
       }
       /* reset random explosion timer */
       else if (pilot->timer[1] <= 0.) {
+         unsigned int l;
+
          pilot->timer[1] = 0.08 * (pilot->ptimer - pilot->timer[1]) /
                pilot->ptimer;
 
@@ -2471,6 +2470,8 @@ void pilot_update( Pilot* pilot, double dt )
                pilot->afterburner->outfit->u.afb.heat_cap)==0)
             pilot_afterburnOver(pilot);
          else {
+            double efficiency, thrust;
+
             if (pilot->id == PLAYER_ID)
                spfx_shake( 0.75*SPFX_SHAKE_DECAY * dt); /* shake goes down at quarter speed */
             efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
@@ -2519,7 +2520,7 @@ void pilot_update( Pilot* pilot, double dt )
 
    /* Update outfits if necessary. */
    pilot->otimer += dt;
-   while (pilot->otimer > PILOT_OUTFIT_LUA_UPDATE_DT) {
+   while (pilot->otimer >= PILOT_OUTFIT_LUA_UPDATE_DT) {
       pilot_outfitLUpdate( pilot, PILOT_OUTFIT_LUA_UPDATE_DT );
       if (pilot_isFlag( pilot, PILOT_DELETE ))
          return; /* Same as with the effects, it is theoretically possible for the outfit to remove the pilot. */
