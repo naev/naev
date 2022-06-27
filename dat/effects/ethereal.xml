@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <effect name="Ethereal">
- <description>Antimatter is tainting your ship!</description>
+ <description>Ship is ethereal.</description>
  <duration>INF</duration>
  <overwrite>ethereal</overwrite>
  <icon>/gfx/misc/icons/star-cycle.webp</icon>
