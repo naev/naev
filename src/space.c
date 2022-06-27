@@ -1487,10 +1487,9 @@ void space_init( const char* sysname, int do_simulate )
    if ((sysname==NULL) && (cur_system==NULL))
       ERR(_("Cannot reinit system if there is no system previously loaded"));
    else if (sysname!=NULL) {
-      char *nt;
       cur_system = system_get( sysname );
+      char *nt = ntime_pretty(0, 2);
 
-      nt = ntime_pretty(0, 2);
       player_message(_("#oEntering System %s on %s."), _(sysname), nt);
       if (cur_system->nebu_volatility > 0.)
          player_message(_("#rWARNING - Volatile nebula detected in %s! Taking %.1f MW damage!"), _(sysname), cur_system->nebu_volatility);
@@ -1975,8 +1974,6 @@ void spob_updateLua( Spob *spob )
    spob->lua_can_land= LUA_NOREF;
    spob->lua_render  = LUA_NOREF;
    spob->lua_update  = LUA_NOREF;
-
-
 }
 
 /**
