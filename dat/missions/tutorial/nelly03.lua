@@ -69,6 +69,9 @@ function create ()
       local candidates = lmisn.getSysAtDistance( system.cur(), 0, 1, function( s )
          return (#s:asteroidFields() > 0)
       end )
+      if #candidates <= 0 then
+         misn.finish()
+      end
       mem.destsys = candidates[ rnd.rnd(1,#candidates) ]
    end
    if not misn.claim{ mem.destsys, "nelly" } then
