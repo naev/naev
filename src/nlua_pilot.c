@@ -3067,16 +3067,19 @@ static int pilotL_outfitRm( lua_State *L )
 /**
  * @brief Removes an outfit from a pilot's named slot.
  *
+ * Note that this only works with the `name="foo"` property of slots. It is not meant to be used with unnamed slots. By default all slots are unnamed unless specified.
+ *
  *    @luatparam Pilot p Pilot to remove outfit from.
- *    @luatparam strin slotname Name of the slot to remove the outfit from.
+ *    @luatparam string slotname Name of the slot to remove the outfit from.
  *    @luatreturn boolean true on success.
  * @luafunc outfitRmSlot
+ * @see outfitRm
  */
 static int pilotL_outfitRmSlot( lua_State *L )
 {
    /* Get parameters. */
    int ret, removed = 0;
-   Pilot *p    = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    const char *slotname = luaL_checkstring(L,2);
    PilotOutfitSlot *s = pilot_getSlotByName( p, slotname );
    if (s==NULL) {
@@ -3099,9 +3102,12 @@ static int pilotL_outfitRmSlot( lua_State *L )
 /**
  * @brief Adds an intrinsic outfit to the pilot.
  *
+ * Intrinsic outfits are outfits that are associated with a ship, but not their slots.
+ *
  *    @luatparam Pilot p Pilot to add intrinsic outfit to.
  *    @luatparam Outfit o Outfit to add as intrinsic outfit (must be modifier outfit).
  * @luafunc outfitAddIntrinsic
+ * @see outfitAdd
  */
 static int pilotL_outfitAddIntrinsic( lua_State *L )
 {
@@ -3117,9 +3123,12 @@ static int pilotL_outfitAddIntrinsic( lua_State *L )
 /**
  * @brief Removes an intrinsic outfit from the pilot.
  *
+ * Intrinsic outfits are outfits that are associated with a ship, but not their slots.
+ *
  *    @luatparam Pilot p Pilot to remove intrinsic outfit from.
  *    @luatparam Outfit o Outfit to remove from intrinsic outfits.
  * @luafunc outfitRmIntrinsic
+ * @see outfitRm
  */
 static int pilotL_outfitRmIntrinsic( lua_State *L )
 {
