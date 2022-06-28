@@ -7,6 +7,11 @@ local poi = require "common.poi"
 local reward = outfit.get("Bioship Pheromone Emitter")
 
 return function ( mem )
+   -- Disable for now
+   if reward then
+      return
+   end
+
    -- Already done
    if player.numOutfit( reward ) > 0 then
       return
