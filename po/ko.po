@@ -30322,7 +30322,7 @@ msgstr ""
 
 #: dat/events/minerva/station.lua:416
 msgid ""
-"Cyborg Chicken eyes flutter as it seems like conciousness returns to its "
+"Cyborg Chicken eyes flutter as it seems like consciousness returns to its "
 "body."
 msgstr ""
 
@@ -36551,7 +36551,7 @@ msgstr ""
 
 #: dat/events/taiomi/system.lua:249
 msgid ""
-"\"Unlike most human robotics, we have what you would call conciousness, "
+"\"Unlike most human robotics, we have what you would call consciousness, "
 "albeit, from what I read, I believe it is significantly different than what "
 "is found in organic beings. While we are part of the whole, created and "
 "molded by it, we also obtain an individual sense of being. It is somewhat "
@@ -36562,7 +36562,7 @@ msgstr ""
 #: dat/events/taiomi/system.lua:256
 msgid ""
 "\"Are you referring to {namea} and {nameb}? They are the newest members of "
-"our community. Created from pooling together our collective conciousness. "
+"our community. Created from pooling together our collective consciousness. "
 "I'm afraid there may not be many more like them if our plan does not succeed."
 "\""
 msgstr ""
@@ -36656,7 +36656,7 @@ msgstr ""
 #: dat/events/taiomi/system.lua:294
 msgid ""
 "Letting out what seems to be a sigh, Scavenger continues.\n"
-"\"Given the weakening of our collective conciousness, I would have never "
+"\"Given the weakening of our collective consciousness, I would have never "
 "thought we would have been able to create new individuals. Their strong "
 "individually personality is likely also a direct effect of that. They even "
 "chose to have human names they researched instead of going by our "
@@ -59036,7 +59036,7 @@ msgid "PUAAA Protestor"
 msgstr "프로 테론 카한"
 
 #: dat/missions/neutral/antlejos/ant08.lua:49
-msgid "You find Verner enjoying a horribly smelling drink."
+msgid "You find Verner enjoying a horrible smelling drink."
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant08.lua:50
@@ -59180,7 +59180,7 @@ msgstr "투리온의 불꽃"
 
 #: dat/missions/neutral/antlejos/ant09.lua:50
 msgid ""
-"You find a dust-covered Verner once again enjoying a horribly smelling drink "
+"You find a dust-covered Verner once again enjoying a horrible smelling drink "
 "at the bar."
 msgstr ""
 
@@ -59281,7 +59281,7 @@ msgstr "술을 마시지 마세요."
 
 #: dat/missions/neutral/antlejos/ant09.lua:119
 msgid ""
-"You carefully bring the drink up to your moth and first take a whiff. It's "
+"You carefully bring the drink up to your mouth and first take a whiff. It's "
 "awful. It's horrible and much worse up close. Giving Verner the benefit of "
 "the doubt, you bring it up to your lips and take a small sip, it could taste "
 "better than what it smells like, right?"
@@ -59289,9 +59289,9 @@ msgstr ""
 
 #: dat/missions/neutral/antlejos/ant09.lua:120
 msgid ""
-"Immediately the indescribable taste invades your moth, overloading your "
+"Immediately the indescribable taste invades your mouth, overloading your "
 "sensory system. Your body reflexively curls up and you almost struggle to "
-"keep conciousness. You spend awhile trying to regain your senses and catch "
+"stay conscious. You spend a while trying to regain your senses and catch "
 "your breath, all the while under Verner's sly grin."
 msgstr ""
 
@@ -59320,7 +59320,7 @@ msgstr ""
 
 #: dat/missions/neutral/antlejos/ant09.lua:140
 msgid ""
-"You struggle in vein until you realize you aren't feeling anything. You feel "
+"You struggle in vain until you realize you aren't feeling anything. You feel "
 "no sensory input, it's like your body doesn't exist."
 msgstr ""
 
@@ -59335,7 +59335,7 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant09.lua:149
 msgid ""
 "You are awoken to a splash of water and a strong burning sensation "
-"throughout your entire body. As if your internals organs had caught on fire "
+"throughout your entire body. As if your internal organs had caught on fire "
 "and were relentlessly burning."
 msgstr ""
 

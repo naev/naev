@@ -46,7 +46,7 @@ function accept ()
    vn.scene()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
-   vn.na(_("You find Verner enjoying a horribly smelling drink."))
+   vn.na(_("You find Verner enjoying a horrible smelling drink."))
    v(fmt.f(_([["Hey, you seen how everything is chugging along? This beats my wildest expectations. However, we've recently run into a small setback. We're trying to strengthen the gravitational field to minimize the effect of space adaptation syndrome, however, the core seems to be much harder than expected and our current machinery is unable to cut it. Our contacts at Gordon's Exchange will loan us a Melendez Zebra that has been adapted as a core miner, but given the recent PUAAA activity, I need someone to escort it over here from {pnt} in the {sys} system. Would you be willing to do me the favour?"]]),
       {pnt=mainpnt, sys=mainsys}))
    vn.menu{

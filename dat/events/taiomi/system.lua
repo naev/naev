@@ -246,14 +246,14 @@ function hail_scavenger ()
    vn.label("who")
    d(_([["Ah, humans are more inquisitive that I thought. We do not customarily use human-pronounceable names for ourselves. You can call me Scavenger, as per my profession. That should be enough to get my attention."]]))
    d(_([["Now, who am I? I am a member of our community mainly in charge of organizing and collecting resources. Although they may seem abundant due to the large amount of derelicts, many have already been stripped clean by pirates and marauders before arriving by the stellar winds."]]))
-   d(_([["Unlike most human robotics, we have what you would call conciousness, albeit, from what I read, I believe it is significantly different than what is found in organic beings. While we are part of the whole, created and molded by it, we also obtain an individual sense of being. It is somewhat hard to explain, but I guess for practical purposes you can think of us as analogous to human individuals."]]))
+   d(_([["Unlike most human robotics, we have what you would call consciousness, albeit, from what I read, I believe it is significantly different than what is found in organic beings. While we are part of the whole, created and molded by it, we also obtain an individual sense of being. It is somewhat hard to explain, but I guess for practical purposes you can think of us as analogous to human individuals."]]))
    vn.func( function ()
       var.push( "taiomi_scav_who", true )
    end )
    vn.jump("menu_ask")
 
    vn.label("curious_drones")
-   d(fmt.f(_([["Are you referring to {namea} and {nameb}? They are the newest members of our community. Created from pooling together our collective conciousness. I'm afraid there may not be many more like them if our plan does not succeed."]]),
+   d(fmt.f(_([["Are you referring to {namea} and {nameb}? They are the newest members of our community. Created from pooling together our collective consciousness. I'm afraid there may not be many more like them if our plan does not succeed."]]),
       {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
    d(fmt.f(_([["Here, let me introduce you to them."
 Your sensors don't pick up anything but {namea} and {nameb} make a beeline to your position.]]),
@@ -292,7 +292,7 @@ They fidget a bit in place.
    vn.na(fmt.f(_([[Taking that as some sort of sign, {namea} and {nameb} spin off and go back to carefree frolicking among the derelicts and debris.]]),
       {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
    d(_([[Letting out what seems to be a sigh, Scavenger continues.
-"Given the weakening of our collective conciousness, I would have never thought we would have been able to create new individuals. Their strong individually personality is likely also a direct effect of that. They even chose to have human names they researched instead of going by our traditional names."]]))
+"Given the weakening of our collective consciousness, I would have never thought we would have been able to create new individuals. Their strong individually personality is likely also a direct effect of that. They even chose to have human names they researched instead of going by our traditional names."]]))
    d(_([["I worry for their future. We must ensure that no harm comes to them."]]))
    vn.func( function ()
       d_young_a:rename( taiomi.younga.name )
