@@ -13,6 +13,13 @@ On the other hand, most events are related to game internals and cutscenes such 
 
 A full overview of the Lua API can be found at [naev.org/api](https://naev.org/api) and is out of the scope of this document.
 
+## Mission Guidelines
+
+This following section deals with guidelines for getting missions included into the official [Naev repository](https://github.com/naev/naev). These are rough guidelines and do not necessarily have to be followed exactly. Exceptions can be made depending on the context.
+
+1. Avoid stating what the player is feeling or making choices for them. The player should be in control of themselves.
+1. There should be no penalties for aborting missions. Let the player abort/fail and try again.
+
 ## Getting Started
 
 Missions and events share the same overall structure in which there is a large Lua comment at the top containing all sorts of meta-data, such as where it appears, requirements, etc.
