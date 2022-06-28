@@ -37,11 +37,12 @@ local broadcastmsg = {
 
 function create ()
    local scur = system.cur()
-   -- Make sure system isn't claimed, but we don't claim it
-   if not evt.claim( scur, true ) then evt.finish() end
 
    -- Must not be restricted
    if scur:tags().restricted then evt.finish() end
+
+   -- Inclusive claim
+   if not evt.claim( scur, nil, true ) then evt.finish() end
 
    -- Check to see if a nearby spob is inhabited
    local function nearby_spob( pos )
