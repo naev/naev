@@ -7,6 +7,8 @@
  <chapter>0</chapter>
 </event>
 --]]
+local ferals = require "common.ferals"
+local luaspfx = require "luaspfx"
 
 --luacheck: globals leave pheromones spawn_ferals (Hook functions passed by name)
 
@@ -44,5 +46,16 @@ function pheromones ()
    end
 end
 
+local function whalesound ()
+   local sfx
+   if rnd.rnd() < 0.5 then
+      sfx = ferals.sfx.spacewhale1
+   else
+      sfx = ferals.sfx.spacewhale2
+   end
+   luaspfx.sfx( false, nil, sfx )
+end
+
 function spawn_ferals ()
+   whalesound()
 end
