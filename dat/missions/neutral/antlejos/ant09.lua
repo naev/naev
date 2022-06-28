@@ -117,7 +117,7 @@ Verner picks up what seems to be an industrial barrel labelled 'Ammonia' and slo
       vn.label("drink_little")
       vn.func( function () var.push( "antlejos_drank", true ) end )
       vn.na(_([[You carefully bring the drink up to your moth and first take a whiff. It's awful. It's horrible and much worse up close. Giving Verner the benefit of the doubt, you bring it up to your lips and take a small sip, it could taste better than what it smells like, right?]]))
-      vn.na(_([[Immediately the indescribable taste invades your moth, overloading your sensory system. Your body reflexively curls up and you almost struggle to keep conciousness. You spend awhile trying to regain your senses and catch your breath, all the while under Verner's sly grin.]]))
+      vn.na(_([[Immediately the indescribable taste invades your moth, overloading your sensory system. Your body reflexively curls up and you almost struggle to keep consciousness. You spend awhile trying to regain your senses and catch your breath, all the while under Verner's sly grin.]]))
       v(_([["I've never seen that reaction on first taste! Maybe it's still a bit too soon for you to be able to savour Antlejos delicacies."
 He takes a long swig and finishes his mug.
 "Uuuaaaaaaaahh! Now that's the stuff. It gets better the more you try it."]]))
