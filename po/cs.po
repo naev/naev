@@ -58631,7 +58631,7 @@ msgstr ""
 msgid ""
 "Immediately the indescribable taste invades your mouth, overloading your "
 "sensory system. Your body reflexively curls up and you almost struggle to "
-"keep consciousness. You spend a while trying to regain your senses and catch "
+"stay conscious. You spend a while trying to regain your senses and catch "
 "your breath, all the while under Verner's sly grin."
 msgstr ""
 
