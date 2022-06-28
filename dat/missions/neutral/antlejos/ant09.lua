@@ -47,7 +47,7 @@ function accept ()
    vn.scene()
    local v = vn.newCharacter( ant.vn_verner() )
    vn.transition()
-   vn.na(_([[You find a dust-covered Verner once again enjoying a horribly smelling drink at the bar.]]))
+   vn.na(_([[You find a dust-covered Verner once again enjoying a horrible smelling drink at the bar.]]))
    v(fmt.f(_([["Hello! The core drilling is going slow but great. The dust is a pain to get off though, it seems to permeate into clothing. This was my favourite set too. Oh well."
 "Speaking of which, some of my scouts have recently been able to track down some PUAAA activity to be originating from {sys}. It seems like there is a mothership or something like that over there. I know it's quite a challenge, but I would need you to take care of it. Would you be willing to help {pnt} again?"]]),
       {sys=mainsys, pnt=retpnt}))
@@ -116,8 +116,8 @@ Verner picks up what seems to be an industrial barrel labelled 'Ammonia' and slo
 
       vn.label("drink_little")
       vn.func( function () var.push( "antlejos_drank", true ) end )
-      vn.na(_([[You carefully bring the drink up to your moth and first take a whiff. It's awful. It's horrible and much worse up close. Giving Verner the benefit of the doubt, you bring it up to your lips and take a small sip, it could taste better than what it smells like, right?]]))
-      vn.na(_([[Immediately the indescribable taste invades your moth, overloading your sensory system. Your body reflexively curls up and you almost struggle to keep consciousness. You spend awhile trying to regain your senses and catch your breath, all the while under Verner's sly grin.]]))
+      vn.na(_([[You carefully bring the drink up to your mouth and first take a whiff. It's awful. It's horrible and much worse up close. Giving Verner the benefit of the doubt, you bring it up to your lips and take a small sip, it could taste better than what it smells like, right?]]))
+      vn.na(_([[Immediately the indescribable taste invades your mouth, overloading your sensory system. Your body reflexively curls up and you almost struggle to keep consciousness. You spend a while trying to regain your senses and catch your breath, all the while under Verner's sly grin.]]))
       v(_([["I've never seen that reaction on first taste! Maybe it's still a bit too soon for you to be able to savour Antlejos delicacies."
 He takes a long swig and finishes his mug.
 "Uuuaaaaaaaahh! Now that's the stuff. It gets better the more you try it."]]))
@@ -137,7 +137,7 @@ He takes a long swig and finishes his mug.
       end )
       vn.transition( "circleopen" )
       vn.na(_([[Time stops. You try to move your body, but nothing responds, you are lost in darkness.]]))
-      vn.na(_([[You struggle in vein until you realize you aren't feeling anything. You feel no sensory input, it's like your body doesn't exist.]]))
+      vn.na(_([[You struggle in vain until you realize you aren't feeling anything. You feel no sensory input, it's like your body doesn't exist.]]))
       vn.na(_([[You try to focus and see what's going on, but realize something is really amiss. You have a really subtle feeling of movement, like many little things vibrating. Could this be the vibrations of the cells of your body? The vibration of your atoms?]]))
       vn.scene()
       vn.newCharacter( v )
@@ -146,7 +146,7 @@ He takes a long swig and finishes his mug.
          music.play()
       end )
       vn.transition( "circleopen" )
-      vn.na(_([[You are awoken to a splash of water and a strong burning sensation throughout your entire body. As if your internals organs had caught on fire and were relentlessly burning.]]))
+      vn.na(_([[You are awoken to a splash of water and a strong burning sensation throughout your entire body. As if your internal organs had caught on fire and were relentlessly burning.]]))
       v(_([["Glad to have you back with us. I'm pretty sure your heart stopped beating for a few seconds. Maybe I should have warned you about the Antlejos delicacies."
 He takes a long swig and finishes his mug.
 "Uuuaaaaaaaahh! Now that's the stuff. It gets better the more you try it."]]))
