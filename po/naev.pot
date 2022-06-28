@@ -27538,7 +27538,7 @@ msgstr ""
 
 #: dat/events/minerva/station.lua:416
 msgid ""
-"Cyborg Chicken eyes flutter as it seems like conciousness returns to its "
+"Cyborg Chicken eyes flutter as it seems like consciousness returns to its "
 "body."
 msgstr ""
 
