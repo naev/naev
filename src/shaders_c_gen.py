@@ -466,6 +466,7 @@ void shaders_unload (void) {
         yield f"   glDeleteProgram(shaders.{shader.name}.program);\n"
 
     yield """   memset(&shaders, 0, sizeof(shaders));
+   nsimpleshaders = 0;
 }"""
 
 with open("shaders.gen.h", "w") as shaders_gen_h:

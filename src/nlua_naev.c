@@ -45,6 +45,7 @@ static int naevL_eventStart( lua_State *L );
 static int naevL_eventReload( lua_State *L );
 static int naevL_missionStart( lua_State *L );
 static int naevL_missionReload( lua_State *L );
+static int naevL_shadersReload( lua_State *L );
 static int naevL_isSimulation( lua_State *L );
 static int naevL_conf( lua_State *L );
 static int naevL_confSet( lua_State *L );
@@ -67,6 +68,7 @@ static const luaL_Reg naev_methods[] = {
    { "eventReload", naevL_eventReload },
    { "missionStart", naevL_missionStart },
    { "missionReload", naevL_missionReload },
+   { "shadersReload", naevL_shadersReload },
    { "isSimulation", naevL_isSimulation },
    { "conf", naevL_conf },
    { "confSet", naevL_confSet },
@@ -357,6 +359,19 @@ static int naevL_missionReload( lua_State *L )
 
    lua_pushboolean( L, !ret );
    return 1;
+}
+
+/**
+ * @brief Reloads all the Naev shaders excluding those created by the shader library.
+ *
+ * @luafunc shadersReload
+ */
+static int naevL_shadersReload( lua_State *L )
+{
+   (void) L;
+   shaders_unload();
+   shaders_load();
+   return 0;
 }
 
 /**
