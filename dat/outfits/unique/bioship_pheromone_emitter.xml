@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Bioship Pheromone Emitter">
+ <general>
+  <rarity>6</rarity>
+  <unique />
+  <typename>Pheromone Emitter</typename>
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>1</mass>
+  <price>1000</price>
+  <description>TODO</description>
+  <desc_extra>Release bioship pheromones when used.</desc_extra>
+  <gfx_store>placeholder.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <lua>outfits/unique/bioship_pheromone_emitter.lua</lua>
+ </specific>
+</outfit>
