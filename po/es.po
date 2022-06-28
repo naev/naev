@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-06-27 21:16+0000\n"
+"PO-Revision-Date: 2022-06-28 21:54+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -74231,6 +74231,9 @@ msgid ""
 "not ready to deal with the logistics of moving your cargo over. You decide "
 "to leave the ship stealing business for later."
 msgstr ""
+"Antes de llegar a la nave y tomar el control de la misma, te das cuenta de "
+"que no estás preparado para lidiar con la logística de trasladar tu carga. "
+"Decides dejar el asunto del robo de naves para más adelante."
 
 #. Get rid of the temporary pilot
 #. Oh yeah, we stole the ship. \o/
@@ -75213,6 +75216,26 @@ msgid ""
 "extension makes them the highest level of authority within the Four Winds. "
 "You know me. The other three are called Giornio, Zurike and Farett.\""
 msgstr ""
+"La capitana Rebina se sienta en su silla y lanza un suspiro. \"Creo que fue "
+"entonces cuando las cosas empezaron a cambiar. Antes estábamos comprometidos "
+"con nuestro propósito, pero aparentemente las cosas son diferentes ahora. "
+"Sin duda, recuerdas lo que ocurrió con el intercambio diplomático entre el "
+"Imperio y los Dvaered hace algún tiempo. Pues bien, basta con decir que "
+"aumentar la tensión entre ambos no forma parte de nuestro mandato. De hecho, "
+"está completamente en desacuerdo con lo que representamos. Y tampoco fue un "
+"incidente aislado. Han sucedido cosas que sugieren la participación de "
+"Cuatro Vientos, cosas que no auguran nada bueno.\"\n"
+"Activa la holotabla y muestra cuatro cruceros, todos ellos aparentemente "
+"idénticos al Seiryuu, aunque se aprecian sutiles diferencias en los diseños "
+"de los cascos.\n"
+"    \"Estas son nuestras naves insignia. Incluyendo esta nave, son el "
+"Seiryuu, el Suzaku, el Byakko y el Genbu. Tengo entendido que estos nombres, "
+"así como nuestro nombre colectivo, tienen sus raíces en la antigua mitología "
+"asiática.\" El capitán toca otro control y aparecen cuatro retratos "
+"superpuestos sobre las naves. \"Estos son los cuatro capitanes de las naves "
+"insignia, lo que, por extensión, los convierte en el más alto nivel de "
+"autoridad dentro de los Cuatro Vientos. Tú me conoces. Los otros tres se "
+"llaman Giornio, Zurike y Farett.\""
 
 #: dat/missions/shadow/darkshadow.lua:101
 msgid ""
@@ -75237,11 +75260,32 @@ msgid ""
 "humanity behind the scenes? And parts of that organization going rogue? The "
 "road ahead could well be a bumpy one."
 msgstr ""
+"\"Creo que uno o varios de mis compañeros capitanes han abandonado su misión "
+"y están empleando sus recursos para una agenda diferente. No he podido "
+"averiguar los detalles de las misiones de Cuatro Vientos que no ordené yo "
+"misma, lo cual es una mala señal. Me están dando largas, y no me gusta. "
+"Quiero saber qué está pasando, {player}, y tú vas a ayudarme a hacerlo.\"\n"
+"La capitana vuelve a apagar la holotabla para poder tener toda tu atención. "
+"\"He enviado a Jorek en una misión de reconocimiento al planeta de {pnt} en "
+"el sistema {sys}. Hasta ahora no me ha informado, y eso es una mala noticia. "
+"Jorek es un agente confiable. Si no cumple con un plazo, significa que está "
+"atado por factores fuera de su control, o algo peor. Quiero que lo "
+"encuentres. Tu posición como forastero te ayudará a volar por debajo del "
+"radar de los operativos potencialmente hostiles de Cuatro Vientos. Debes ir "
+"a {pnt} y contactar con Jorek si puedes, o averiguar dónde está si no puedes."
+"\"\n"
+"    La capitana Rebina se levanta, señal de que esta reunión informativa ha "
+"terminado. Un tripulante de uniforme gris te acompaña a tu nave. Se sienta "
+"en su cabina durante unos hectosegundos antes de desconectar la pinza de "
+"acoplamiento. Lo que te ha contado la capitana Rebina es mucho para "
+"asimilar. ¿Una organización oscura que guía a la humanidad entre bastidores? "
+"¿Y partes de esa organización que se han rebelado? El camino que nos espera "
+"podría ser muy accidentado."
 
 #. Debriefing
 #: dat/missions/shadow/darkshadow.lua:108
 msgid "A safe return"
-msgstr ""
+msgstr "Un retorno seguro"
 
 #: dat/missions/shadow/darkshadow.lua:108
 msgid ""
@@ -75269,6 +75313,30 @@ msgid ""
 "will only get worse with the Four Winds in the future. A lesser person might "
 "get nervous."
 msgstr ""
+"Te encuentras de nuevo en el Seiryuu, en compañía de Jorek y el informante "
+"de Cuatro Vientos. El informante es escoltado al interior de la nave por "
+"miembros de la tripulación de uniforme gris, mientras Jorek te lleva al "
+"puente para una reunión con la capitana Rebina.\n"
+"    \"Bienvenido, Jorek, {player}\", te saluda Rebina a tu llegada. \"Ya "
+"tengo un informe preliminar sobre la situación, pero vamos a tener una "
+"reunión informativa adecuada. Toma asiento.\"\n"
+"    Jorek y tú os sentáis en la holotabla que hay en el centro del puente, e "
+"informáis de los acontecimientos que rodean la recuperación de Jorek. Cuando "
+"termina, la capitana Rebina muestra una vista esquemática del Genbu desde la "
+"holotabla.\n"
+"    \"Parece que Giornio y sus camaradas tienen un gran interés en "
+"mantenerme alejado de la verdad. Menos mal que he conseguido salir de esa "
+"emboscada y traerme a ese informante. Espero que sea capaz de arrojar más "
+"luz sobre la situación. Tengo un mal presentimiento, una corazonada de que "
+"vamos a tener que actuar pronto si queremos evitar el desastre, sea cual "
+"sea. Confío en que estarás dispuesto a ayudarnos de nuevo cuando llegue ese "
+"momento, {player}. Vamos a necesitar toda la ayuda posible. Por ahora, "
+"encontrarás una modesta cantidad de créditos en tu cuenta. Me pondré en "
+"contacto cuando las cosas estén más claras.\"\n"
+"    Vuelves a tu nave y te desacoplas del Seiryuu. Reflexionas que esta vez "
+"has tenido que correr para salvar tu vida, y por lo que parece, las cosas "
+"sólo empeorarán con los Cuatro Vientos en el futuro. Una persona menor "
+"podría ponerse nerviosa."
 
 #: dat/missions/shadow/darkshadow.lua:117
 msgid ""
@@ -75283,11 +75351,20 @@ msgid ""
 "may be.\"\n"
 "    She said she may need your services again in the future."
 msgstr ""
+"Has encontrado a Jorek y has recuperado con éxito a su informante en nombre "
+"de la capitana Rebina. Los Genbu te tendieron una emboscada, pero lograste "
+"escapar y atracar el Seiryuu. El capitán Rebina comentó la situación.\n"
+"    \"Parece que Giornio y sus camaradas tienen un gran interés en alejarme "
+"de la verdad. Menos mal que he conseguido salir de esa emboscada y traerme a "
+"ese informante. Espero que sea capaz de arrojar más luz sobre la situación. "
+"Tengo un mal presentimiento, una corazonada de que vamos a tener que actuar "
+"pronto si queremos evitar el desastre, sea cual sea.\"\n"
+"   Dijo que podría necesitar tus servicios de nuevo en el futuro."
 
 #. Board hook for Joe
 #: dat/missions/shadow/darkshadow.lua:126
 msgid "An extra passenger"
-msgstr ""
+msgstr "Un pasajero extra"
 
 #: dat/missions/shadow/darkshadow.lua:126
 msgid ""
@@ -75297,16 +75374,22 @@ msgid ""
 "    \"Come on, {player},\" Jorek says. \"Let's not waste any more time here. "
 "We got what we came for. Now let's give these damn vultures the slip, eh?\""
 msgstr ""
+"Subes a la nave de los Cuatro Vientos y, en cuanto se abre la esclusa, un "
+"hombre de aspecto nervioso entra en tu nave. Te mira con recelo, pero cuando "
+"ve que Jorek está contigo su tensión se desvanece.\n"
+"    \"Vamos, {player}\", dice Jorek. \"No perdamos más tiempo aquí. Tenemos "
+"lo que hemos venido a buscar. Ahora vamos a dar esquinazo a estos malditos "
+"buitres, ¿eh?\""
 
 #. Meet Joe, our informant.
 #: dat/missions/shadow/darkshadow.lua:128
 #: dat/missions/shadow/darkshadow.lua:165
 msgid "Four Winds Informant"
-msgstr ""
+msgstr "Informante de Los Cuatro Vientos"
 
 #: dat/missions/shadow/darkshadow.lua:128
 msgid "Jorek's informant."
-msgstr ""
+msgstr "El informante de Jorek."
 
 #. Jump-out hook
 #. Keep track of which system the player came from
@@ -75363,13 +75446,15 @@ msgstr ""
 #: dat/missions/shadow/shadowvigil.lua:203
 #: dat/missions/shadow/shadowvigil.lua:346
 msgid "Seiryuu"
-msgstr ""
+msgstr "Seiryuu"
 
 #: dat/missions/shadow/darkshadow.lua:163
 msgid ""
 "Landing permission denied. Our docking clamps are currently undergoing "
 "maintenance."
 msgstr ""
+"Permiso de aterrizaje denegado. Nuestras abrazaderas de acoplamiento están "
+"actualmente en mantenimiento."
 
 #. Make everyone visible for the cutscene
 #. The cutscene itself
@@ -75378,22 +75463,26 @@ msgid ""
 "Jorek> \"That's my guy. We got to board his ship and get him off before we "
 "jump.\""
 msgstr ""
+"Jorek> \"Ese es mi hombre. Tenemos que abordar su nave y sacarlo antes de "
+"saltar.\""
 
 #: dat/missions/shadow/darkshadow.lua:187
 msgid ""
 "Jorek> \"Watch out for those patrols though. If they spot us, they'll be all "
 "over us.\""
 msgstr ""
+"Jorek> \"Sin embargo, ten cuidado con esas patrullas. Si nos descubren, se "
+"nos echarán encima.\""
 
 #: dat/missions/shadow/darkshadow.lua:193
 msgid "Jorek> \"They're tougher than they look. Don't underestimate them.\""
-msgstr ""
+msgstr "Jorek> \"Son más duros de lo que parecen. No los subestimes.\""
 
 #. Hide everyone again
 #. ...except the leaders.
 #: dat/missions/shadow/darkshadow.lua:212
 msgid "You forgot the informant!"
-msgstr ""
+msgstr "¡Olvidaste al informante!"
 
 #: dat/missions/shadow/darkshadow.lua:212
 msgid ""
@@ -75402,12 +75491,18 @@ msgid ""
 "I'm disembarkin' at the next spaceport, don't bother taking me back to the "
 "Seiryuu.\""
 msgstr ""
+"Jorek se enfurece. \"¡Maldita sea, {player}! ¡Te dije que recogieras a ese "
+"informante en el camino! Demasiado tarde para volver ahora. Tendré que "
+"pensar en otra cosa. Voy a desembarcar en el próximo puerto espacial, no te "
+"molestes en llevarme de vuelta al Seiryuu.\""
 
 #: dat/missions/shadow/darkshadow.lua:213
 msgid ""
 "You failed to pick up Jorek's informant. As such, he refused to allow you to "
 "take him to the Seiryuu."
 msgstr ""
+"No pudiste recoger al informante de Jorek. Como tal, se negó a permitir que "
+"lo llevaras al Seiryuu."
 
 #. Starts an inverse proximity poll for distance from the jump point.
 #. stop spawning the Genbu
@@ -75417,7 +75512,7 @@ msgstr ""
 #. Shorthand notation for the leader pilots
 #: dat/missions/shadow/darkshadow.lua:252
 msgid "Four Winds Patrol"
-msgstr ""
+msgstr "Patrulla de los Cuatro Vientos"
 
 #. Equip these fellas with unfair weaponry
 #. Only need to control leader. Others will follow
@@ -75432,17 +75527,19 @@ msgstr ""
 #: dat/missions/shadow/darkshadow.lua:322
 msgid "All pilots, we've detected McArthy on that ship! Break and intercept!"
 msgstr ""
+"¡Todos los pilotos, hemos detectado a McArthy en esa nave! ¡Rompan filas e "
+"intercepten!"
 
 #. Spawns the Genbu
 #: dat/missions/shadow/darkshadow.lua:332
 msgid "Genbu"
-msgstr ""
+msgstr "Genbu"
 
 #. You can't win. Seriously.
 #. The initial ambush cutscene
 #: dat/missions/shadow/darkshadow.lua:353
 msgid "Ambush!"
-msgstr ""
+msgstr "¡Emboscada!"
 
 #: dat/missions/shadow/darkshadow.lua:353
 msgid ""
@@ -75459,19 +75556,32 @@ msgid ""
 "into a scrap with the Sirius military, so we'll be safe once we get there. "
 "Come on, what are you waitin' for? Step on it!\""
 msgstr ""
+"De repente, tus sensores de largo alcance captan una nave que salta detrás "
+"de ti. Jorek comprueba la telemetría a su lado. De repente, sus ojos se "
+"abren de par en par y gime. El informante de Cuatro Vientos se pone pálido.\n"
+"    \"Oh, maldita sea\", maldice Jorek. \"{player}, esa es el Genbu, la nave "
+"insignia de Giornio. No esperaba que se interesara por mí personalmente. "
+"Maldita sea, esto es malo. Escucha, si tienes algo para aumentar nuestra "
+"velocidad, ahora sería el momento. Tenemos que salir de aquí como si todo el "
+"infierno nos pisara los talones, ¡que más o menos es así! Si esa cosa nos "
+"atrapa, estamos fritos. Lo digo en serio, no quieres meterte en una pelea "
+"contra ella, no por tu cuenta. Mueve tu trasero hacia el espacio Sirio. "
+"Giornio no se arriesgará a meterse en una pelea con los militares de Sirio, "
+"así que estaremos a salvo una vez que lleguemos allí. Vamos, ¿qué estás "
+"esperando? ¡Acelera!\""
 
 #. The continuation of the ambush, for timer purposes
 #. Spawns a wing of Lancelots that intercept the player.
 #: dat/missions/shadow/darkshadow.lua:372
 msgid "Four Winds Lancelot"
-msgstr ""
+msgstr "Lancelot Cuatro Vientos"
 
 #. Equip these fellas with unfair weaponry
 #. Land hook
 #. Thank you player, but our SHITMAN is in another castle.
 #: dat/missions/shadow/darkshadow.lua:392
 msgid "No Jorek"
-msgstr ""
+msgstr "No Jorek"
 
 #: dat/missions/shadow/darkshadow.lua:392
 msgid ""
@@ -75480,30 +75590,36 @@ msgid ""
 "to contemplate your next move. Then, you notice the barman is giving you a "
 "curious look."
 msgstr ""
+"Entras en el bar, esperando encontrar a Jorek McArthy sentado en alguna "
+"mesa. Sin embargo, no lo ves por ninguna parte. Decides ir a tomar una copa "
+"para contemplar tu próximo movimiento. Entonces, te das cuenta de que el "
+"camarero te mira con curiosidad."
 
 #: dat/missions/shadow/darkshadow.lua:393
 msgid "Barman"
-msgstr ""
+msgstr "Camarero"
 
 #: dat/missions/shadow/darkshadow.lua:393
 msgid "The barman seems to be eyeing you in particular."
-msgstr ""
+msgstr "El camarero parece mirarte a ti en particular."
 
 #: dat/missions/shadow/darkshadow.lua:395
 #: dat/missions/shadow/darkshadow.lua:425
 msgid "Jorek"
-msgstr ""
+msgstr "Jorek"
 
 #: dat/missions/shadow/darkshadow.lua:395
 msgid ""
 "There he is, Jorek McArthy, the man you've been chasing across half the "
 "galaxy. What he's doing on this piece of junk is unclear."
 msgstr ""
+"Ahí está, Jorek McArthy, el hombre que has perseguido por media galaxia. Lo "
+"que está haciendo en este pedazo de chatarra no está claro."
 
 #. NPC hook
 #: dat/missions/shadow/darkshadow.lua:401
 msgid "A tip from the barman"
-msgstr ""
+msgstr "Un consejo del camarero"
 
 #: dat/missions/shadow/darkshadow.lua:401
 msgid ""
@@ -75532,7 +75648,7 @@ msgstr ""
 #: dat/missions/shadow/darkshadow.lua:415
 #: dat/missions/shadow/darkshadow.lua:420
 msgid "Still an unpleasant man"
-msgstr ""
+msgstr "Todavía un hombre desagradable"
 
 #: dat/missions/shadow/darkshadow.lua:415
 msgid ""
@@ -75559,6 +75675,28 @@ msgid ""
 "fellow Shadows here, I couldn't afford to give myself away. So that's that. "
 "But there's more.\""
 msgstr ""
+"\"Bueno, hola {player}\", dice Jorek cuando te acercas a su mesa. \"Ya era "
+"hora de que aparecieras. Llevo días desperdiciando créditos en esta horrible "
+"bazofia.\"\n"
+"    No te sorprende en absoluto que Jorek siga siendo tan desagradable como "
+"la última vez que te lo encontraste, y decides pedirle que te explique la "
+"situación, empezando por cómo sabía que eras tú quien iba a venir a por él. "
+"Jorek se ríe a carcajadas.\n"
+"    \"¡Ja! Por supuesto que ibas a ser tú. ¿A quién más iba a enviar esa "
+"muchacha, Rebina? Es muy dura, esa chica, pero sé cómo funciona su mente. "
+"Está acorralada, con enemigos potenciales detrás de cada puerta de la "
+"organización. Y tú ya nos has hecho un par de favores. De hecho, eres el "
+"único en quien puede confiar fuera de su pequeño círculo de amigos, y ahora "
+"mismo no estoy muy seguro de hasta qué punto confía en ellos. Además, tienes "
+"un gran olfato cuando se trata de olfatear a la gente de confianza, y lo "
+"sabe. Sí, sabía que te enviaría a buscarme.\"\n"
+"    Eso responde a una pregunta. Pero aún no sabes por qué Jorek no se ha "
+"reportado como debería.\n"
+"    \"Sí, claro, sobre eso. ¿Sabes lo que pasa con las otras ramas que son "
+"demasiado grandes para tus pantalones? Bien. Bueno, he estado investigando "
+"eso, metiendo mi nariz en sus asuntos. Como estoy tratando con mis "
+"compañeros de las Sombras aquí, no podía permitirme el lujo de delatarme. "
+"Así que eso es todo. Pero hay más.\""
 
 #: dat/missions/shadow/darkshadow.lua:420
 msgid ""
@@ -75583,19 +75721,41 @@ msgid ""
 "in on the details once we're spaceborne. Show me to your ship, buddy, and "
 "let's get rollin'. I've had enough of this damn place.\""
 msgstr ""
+"\"No sé si los has visto de camino aquí, pero hay tipos de los nuestros "
+"merodeando por el sistema. Y cuando digo chicos de los nuestros, quiero "
+"decir chicos de los suyos, ya que seguro que ya no son nuestros chicos. Han "
+"estado tras de mí desde que dejé Manis, así que creo que sé lo que quieren. "
+"Quieren atraparme y ver lo que sé, o tal vez sólo quieren convertirme en "
+"polvo espacial. En cualquier caso, necesito que me ayudes a salir de esta "
+"ratonera.\"\n"
+"    Le preguntas a Jorek por qué no se limitó a pasar desapercibido en algún "
+"mundo hasta que no hubiera moros en la costa, en lugar de venir a este "
+"sumidero de la escoria de la sociedad intergaláctica.\n"
+"    \"No es tan sencillo\", suspira Jorek. \"Verás, tengo un infiltrado. Un "
+"tipo en sus filas que quiere salir. Necesito llevarlo de vuelta a la vieja "
+"para que le cuente lo que sabe de primera mano. Él está ahí fuera ahora, con "
+"la manada, así que tenemos que recogerlo en nuestro camino de salida. Ahora, "
+"hay dos maneras de hacer esto. Podemos entrar rápido, agarrar al tipo y "
+"salir rápido antes de que los lobos nos atrapen. O podemos intentar abrirnos "
+"paso luchando. Déjame advertirte, estos tipos van en serio, y no son los "
+"típicos piratas. A menos que tengas una nave realmente resistente, te "
+"recomiendo que huyas\".\n"
+"    Jorek se sienta de nuevo en su silla. \"Bueno, ahí lo tienes. Te "
+"informaré de los detalles una vez que estemos en el espacio. Muéstrame tu "
+"nave, amigo, y pongámonos en marcha. Ya estoy harto de este maldito lugar.\""
 
 #. For future appearances of this mission
 #: dat/missions/shadow/darkshadow.lua:425 dat/missions/shadow/shadowrun.lua:104
 msgid "An unpleasant man."
-msgstr ""
+msgstr "Un hombre desagradable."
 
 #: dat/missions/shadow/darkshadow.lua:429
 msgid "Fetch the Four Winds informant from his ship"
-msgstr ""
+msgstr "Busca al informante de Cuatro Vientos en su nave"
 
 #: dat/missions/shadow/darkshadow.lua:430
 msgid "Return Jorek and the informant to the Seiryuu in the {sys} system"
-msgstr ""
+msgstr "Devuelve a Jorek y al informante a Seiryuu en el sistema {sys}"
 
 #. Non-persistent state
 #. Forward-declared functions
@@ -75607,7 +75767,7 @@ msgstr ""
 #: dat/missions/shadow/shadowrun.lua:49 dat/missions/shadow/shadowrun.lua:54
 #: dat/missions/shadow/shadowrun.lua:56 dat/missions/shadow/shadowrun.lua:94
 msgid "A dark-haired woman"
-msgstr ""
+msgstr "Una mujer de pelo oscuro"
 
 #: dat/missions/shadow/shadowrun.lua:49
 msgid ""
@@ -75616,6 +75776,10 @@ msgid ""
 "she's in the right place at the right time, waiting for the right person. "
 "You wonder why she's all by herself."
 msgstr ""
+"Ves a una mujer de pelo oscuro sentada en la barra. Sus elegantes rasgos y "
+"su vestimenta la hacen destacar, pero tu presencia aquí parece casi natural, "
+"como si estuviera en el lugar adecuado en el momento adecuado, esperando a "
+"la persona adecuada. Te preguntas por qué está sola."
 
 #: dat/missions/shadow/shadowrun.lua:54
 msgid ""
@@ -75624,6 +75788,10 @@ msgid ""
 "\"As it happens I haven't found anyone to take care of my business yet. "
 "Perhaps you would reconsider? Allow me to remind you what this is about.\""
 msgstr ""
+"Rebina te asiente para reconocer tu existencia. \"Nos encontramos de nuevo. "
+"Me alegra ver que aún no te has matado.\" Sonríe significativamente. "
+"\"Resulta que aún no he encontrado a nadie que se ocupe de mis asuntos. ¿"
+"Quizás lo reconsideres? Permítame recordarte de qué se trata.\""
 
 #: dat/missions/shadow/shadowrun.lua:56
 msgid ""
@@ -75646,7 +75814,7 @@ msgstr ""
 
 #: dat/missions/shadow/shadowrun.lua:60
 msgid "Rebina's proposition"
-msgstr ""
+msgstr "La propuesta de Rebina"
 
 #: dat/missions/shadow/shadowrun.lua:60
 msgid ""
@@ -75674,7 +75842,7 @@ msgstr ""
 #. Translator note: If the plural forms are a problem, assume the numbers here are 20 and 50.
 #: dat/missions/shadow/shadowrun.lua:64 dat/missions/shadow/shadowrun.lua:70
 msgid "Rebina's explanation"
-msgstr ""
+msgstr "Explicación de Rebina"
 
 #: dat/missions/shadow/shadowrun.lua:64
 msgid ""
@@ -75699,6 +75867,27 @@ msgid ""
 "considerable skill.\" She leans back and smiles. \"Still, I have utmost "
 "confidence that you can do it. I seldom misjudge those I choose to trust.\""
 msgstr ""
+"\"¡Maravilloso!\" Rebina te dedica una sonrisa cálida y sincera. \"No me "
+"importa admitir que no es fácil encontrar pilotos que estén a la altura de "
+"mis expectativas, y encontrar a los que están dispuestos a arriesgarse es "
+"aún más difícil. Me alegro mucho.\"\n"
+"    Entonces la expresión de Rebina cambia a la de una mujer de negocios a "
+"punto de ejercer su oficio. \"Ahora, escucha. Al contrario de lo que pueda "
+"pensar, este encargo no es sobre mí. Se trata de un hombre que se llama "
+"Jorek McArthy. El estado actual de las cosas es que Jorek se queda en {pnt} "
+"en el sistema {sys}, y no es donde yo y mis asociados queremos que esté. Por "
+"desgracia, Jorek ha atraído una atención no deseada, y no queremos que "
+"centre esa atención en nosotros\".\n"
+"    Rebina se toma un momento para dar un sorbo a su bebida. \"Creo que "
+"puedes ver a dónde va esto. Debes reunirte con Jorek, llevarlo a bordo de tu "
+"nave, perder a quien lo esté siguiendo, y luego llevarlo al sistema {sys2}. "
+"Allí atracarás con una de nuestras naves, la {plt}, que llevará a Jorek a su "
+"destino final. Recibirás tu recompensa de su capitán una vez que Jorek esté "
+"a bordo.\"\n"
+"    \"Es un objetivo sencillo, pero cumplirlo puede requerir una habilidad "
+"considerable.\" Se echa hacia atrás y sonríe. \"Aun así, tengo la máxima "
+"confianza en que podrás hacerlo. Rara vez juzgo mal a aquellos en los que "
+"decido confiar.\""
 
 #: dat/missions/shadow/shadowrun.lua:70
 msgid ""
@@ -75726,21 +75915,23 @@ msgstr ""
 #: dat/missions/shadow/shadowrun.lua:79 dat/missions/shadow/shadowrun.lua:82
 #: dat/missions/shadow/shadowrun.lua:149 dat/missions/shadow/shadowrun.lua:155
 msgid "Shadowrun"
-msgstr ""
+msgstr "Corredor de la sombra"
 
 #: dat/missions/shadow/shadowrun.lua:80
 msgid "You were promised riches..."
-msgstr ""
+msgstr "Te prometieron riquezas..."
 
 #: dat/missions/shadow/shadowrun.lua:81
 msgid ""
 "Fly to planet {pnt} in the {sys} system and talk to Jorek. Once Jorek has "
 "boarded your ship, proceed to system {sys2} and board the {plt}."
 msgstr ""
+"Vuela al planeta {pnt} en el sistema {sys} y habla con Jorek. Una vez que "
+"Jorek haya subido a tu nave, dirígete al sistema {sys2} y aborda la {plt}."
 
 #: dat/missions/shadow/shadowrun.lua:83 dat/missions/shadow/shadowrun.lua:150
 msgid "Fly to planet {pnt} in the {sys} system and pick up Jorek"
-msgstr ""
+msgstr "Vuela al planeta {pnt} en el sistema {sys} y recoge a Jorek"
 
 #: dat/missions/shadow/shadowrun.lua:94
 msgid ""
@@ -75760,41 +75951,49 @@ msgid ""
 "A middle-aged, cranky looking man is sitting at a table by himself. You are "
 "fairly certain that this is the fellow you're looking for."
 msgstr ""
+"Un hombre de mediana edad y aspecto malhumorado está sentado en una mesa "
+"solo. Estás seguro de que es el hombre que buscas."
 
 #: dat/missions/shadow/shadowrun.lua:105
 msgid "Officer at the bar"
-msgstr ""
+msgstr "Oficial en el bar"
 
 #: dat/missions/shadow/shadowrun.lua:105
 msgid ""
 "You see a military officer with a drink at the bar. He doesn't seem to be "
 "very interested in it, though..."
 msgstr ""
+"Ves a un militar con una bebida en el bar. Sin embargo, no parece estar muy "
+"interesado en ella..."
 
 #: dat/missions/shadow/shadowrun.lua:106
 msgid "Soldier at the news kiosk"
-msgstr ""
+msgstr "Soldado en el quiosco de noticias"
 
 #: dat/missions/shadow/shadowrun.lua:106
 msgid ""
 "You see a soldier at a news kiosk. For some reason, he keeps reading the "
 "same articles over and over again."
 msgstr ""
+"Ves a un soldado en un quiosco de noticias. Por alguna razón, sigue leyendo "
+"los mismos artículos una y otra vez."
 
 #: dat/missions/shadow/shadowrun.lua:108
 msgid "Card-playing soldier"
-msgstr ""
+msgstr "Soldado jugador de cartas"
 
 #: dat/missions/shadow/shadowrun.lua:108
 msgid ""
 "Two soldiers are sharing a table near the exit, playing cards. Neither of "
 "them seems very into the game."
 msgstr ""
+"Dos soldados comparten una mesa cerca de la salida, jugando a las cartas. "
+"Ninguno de los dos parece muy interesado en el juego."
 
 #. Talking to Jorek
 #: dat/missions/shadow/shadowrun.lua:116
 msgid "An unpleasant man"
-msgstr ""
+msgstr "Un hombre desagradable"
 
 #: dat/missions/shadow/shadowrun.lua:116
 msgid ""
@@ -75818,10 +76017,30 @@ msgid ""
 "you'll be hot too. And you have absolutely no problem with that, is that "
 "what you're tellin' me?\""
 msgstr ""
+"Te unes al hombre en tu mesa. Sin embargo, no parece acoger con agrado tu "
+"compañía, ya que te dirige una mirada que la mayoría de la gente reservaría "
+"para invitados especialmente inoportunos. Decidido a no dejar que eso te "
+"afecte, le preguntas si realmente se llama Jorek.\n"
+"    \"Sí, soy yo\", responde. \"¿Qué quieres, chico?\"\n"
+"    Le explicas que has venido a atender sus necesidades especiales. Esto te "
+"hace ganar una sonrisa de desprecio por parte de Jorek. \"¡Ja! Así que estás "
+"haciendo recados para la señorita, ¿no? Oh, no me lo digas, tengo una buena "
+"idea de qué es lo que quieres de mí.\" Se apoya en la mesa, acercando su "
+"cara a la tuya. \"Escucha, amigo. No sé si te has dado cuenta, pero la gente "
+"me observa. Y tú también, ahora que estás hablando conmigo. ¿Esos matones de "
+"ahí? Sí, están aquí por mí. Solían ser elegantes agentes encubiertos, pero "
+"he estado sentado en mi trasero aquí durante mucho tiempo y se dieron cuenta "
+"de que estaba sobre ellos, así que los reemplazaron con un montón de "
+"gruñidos. Más barato, ves.\"\n"
+"    \"Y no son sólo ellos\", continúa Jorek. \"De camino hacia aquí, ¿has "
+"visto la flotilla de 'naves patrulla' merodeando? Lo has adivinado, están "
+"esperando a que me reparta este garito. Estoy caliente, chico. Si subo a tu "
+"nave, tú también estarás caliente. Y no tienes ningún problema con eso, ¿es "
+"eso lo que me estás diciendo?\""
 
 #: dat/missions/shadow/shadowrun.lua:120 dat/missions/shadow/shadowrun.lua:124
 msgid "Jorek's scorn"
-msgstr ""
+msgstr "El desprecio de Jorek"
 
 #: dat/missions/shadow/shadowrun.lua:120
 msgid ""
@@ -75842,6 +76061,20 @@ msgid ""
 "at another table. Unwilling to stoop to his level, you choose not to follow "
 "him."
 msgstr ""
+"Jorek ruge de risa. \"¡Ja! ¡Sí, seguro que no! Sé lo que estás pensando, lo "
+"sé. Me sacarás de aquí, harás una redada heroica entre las naves del "
+"Imperio, me salvarás, y de paso te ganarás tus galones con la dama, ¿tengo "
+"razón? Sí, apuesto a que te enfrentarías al mundo por una cara bonita y una "
+"sonrisa tímida.\" Ni siquiera intenta evitar el tono burlón de su voz.\n"
+"    \"Bueno, me alegro por ti. Eres un héroe de verdad, de verdad. ¿Pero "
+"sabes qué? Me quedo aquí. No me importa si tienes la aprobación de la zorra. "
+"No voy a subirme al barco de un Joe cualquiera sólo para que nos haga volar "
+"a los dos en pedazos.\"\n"
+"    Tu paciencia con el abuso de Jorek ha llegado a su fin y le dejas claro "
+"que tus habilidades como piloto no merecen este trato. Jorek, sin embargo, "
+"no parece impresionado. Te dice que te metas donde no brilla el sol, se "
+"levanta de la silla y se sienta en otra mesa. Como no quieres rebajarte a su "
+"nivel, decides no seguirle."
 
 #: dat/missions/shadow/shadowrun.lua:124
 msgid ""
@@ -75858,58 +76091,74 @@ msgid ""
 "Clearly this conversation is over, and you're not going to get anything more "
 "out of him."
 msgstr ""
+"Jorek exhala burlonamente. \"No, pensé que no. Probablemente pensabas que "
+"esto iba a ser un paseo por el parque, ¿no? Pero cuando las cosas se ponen "
+"feas, te echas atrás. No querríamos meternos con un Imperio que da miedo, "
+"¿verdad?\" Para ello levanta la voz, burlándose del personal militar del "
+"bar. No muestran ningún signo de haber oído hablar a Jorek. Jorek resopla y "
+"vuelve a centrar su atención en ti.\n"
+"    \"No me sirven los cobardes como tú. Vamos, sal de aquí. Vuelve a tu "
+"nave y lárgate de esta roca. Tal vez deberías considerar la posibilidad de "
+"conseguir un trabajo de oficina, ¿eh?\"\n"
+"    Con eso, Jorek abandona tu mesa y se sienta en una cercana y vacía. Está "
+"claro que esta conversación ha terminado, y no vas a conseguir nada más de "
+"él."
 
 #: dat/missions/shadow/shadowrun.lua:131
 msgid "Dismissal"
-msgstr ""
+msgstr "Despedido"
 
 #: dat/missions/shadow/shadowrun.lua:131
 msgid ""
 "Jorek pointedly ignores you. It doesn't seem like he's willing to give you "
 "the time of day any longer. You decide not to push your luck."
 msgstr ""
+"Jorek te ignora de forma evidente. No parece que esté dispuesto a seguir "
+"dándote la hora. Decides no tentar la suerte."
 
 #: dat/missions/shadow/shadowrun.lua:136
 msgid "You were ignored"
-msgstr ""
+msgstr "Te han ignorado"
 
 #: dat/missions/shadow/shadowrun.lua:136
 msgid ""
 "You try to strike a conversation with the officer, but he doesn't seem "
 "interested what you have to say, so you give up."
 msgstr ""
+"Intentas entablar una conversación con el agente, pero no parece interesarle "
+"lo que tienes que decir, así que desistes."
 
 #: dat/missions/shadow/shadowrun.lua:139
 msgid "You were shooed away"
-msgstr ""
+msgstr "Te han echado"
 
 #: dat/missions/shadow/shadowrun.lua:139
 msgid "Leave me alone. Can't you see I'm busy?"
-msgstr ""
+msgstr "Déjame en paz. ¿No ves que estoy ocupado?"
 
 #: dat/missions/shadow/shadowrun.lua:142
 msgid "They didn't need a third player"
-msgstr ""
+msgstr "No necesitaban un tercer jugador"
 
 #: dat/missions/shadow/shadowrun.lua:142
 msgid ""
 "They don't seem to appreciate your company. You decide to leave them to "
 "their game."
-msgstr ""
+msgstr "No parecen apreciar tu compañía. Decides dejarles con su juego."
 
 #: dat/missions/shadow/shadowrun.lua:156
 msgid "You could not persuade Jorek to come with you"
-msgstr ""
+msgstr "No pudiste persuadir a Jorek para que viniera contigo"
 
 #: dat/missions/shadow/shadowrun.lua:157
 msgid ""
 "Fly to the {sys} system and dock with (board) {plt} to report your result"
-msgstr ""
+msgstr "Vuele al sistema {sys} y aborda al {plt} para informar de tu resultado"
 
 #. player reports in without SHITMAN
 #: dat/missions/shadow/shadowrun.lua:230
 msgid "Empty-handed"
-msgstr ""
+msgstr "Con las manos vacías"
 
 #: dat/missions/shadow/shadowrun.lua:230
 msgid ""
@@ -75928,6 +76177,22 @@ msgid ""
 "factory defaults. All custom content has been lost - including your logs of "
 "meeting the {plt}..."
 msgstr ""
+"Completas las operaciones de atraque con el {plt}, consciente de que tu nave "
+"no lleva al hombre que esperaban. En la esclusa, te reciben un par de "
+"tripulantes con uniformes grises. Les explicas que no has podido llevar a "
+"Jorek, y reciben tu informe de forma seca y comercial. La reunión es breve. "
+"Los tripulantes desaparecen en su nave, cerrando la esclusa tras ellos, y tú "
+"vuelves a tu puente.\n"
+"    Te preparas para desacoplarte de la {plt}, pero antes de que completes "
+"los procedimientos hay un repentino pico de energía en tus sistemas "
+"primarios. Todos los paneles se vuelven negros. En la oscuridad, lo único "
+"que perturba el silencio es el sonido del {plt} desprendiéndose de su pinza "
+"de acoplamiento.\n"
+"    Segundos más tarde, el núcleo del ordenador se reinicia por sí mismo y "
+"tus controles vuelven a estar en línea, pero descubres con consternación que "
+"tu sistema operativo se ha restablecido a los valores de fábrica. Todo el "
+"contenido personalizado se ha perdido, incluidos los registros de los "
+"encuentros con el {plt}..."
 
 #. player reports in with SHITMAN
 #: dat/missions/shadow/shadowrun.lua:236 dat/missions/shadow/shadowrun.lua:239
@@ -75935,7 +76200,7 @@ msgstr ""
 #: dat/missions/sirius/achack/achack02.lua:72
 #: dat/missions/sirius/achack/achack02.lua:77
 msgid "An unexpected reunion"
-msgstr ""
+msgstr "Una reunión inesperada"
 
 #: dat/missions/shadow/shadowrun.lua:236
 msgid ""
@@ -75957,6 +76222,24 @@ msgid ""
 "that. I never expected you to bring him to us in the first place. You see, "
 "it's not Jorek we wanted you to get. It was... that.\""
 msgstr ""
+"Completas las operaciones de atraque con el {plt}, consciente de que tu nave "
+"no lleva al hombre que esperaban. Cuando la esclusa se abre, te encuentras "
+"cara a cara con una mujer y dos tripulantes, todos con uniformes grises y "
+"sin rasgos. Tardas unos instantes en darte cuenta de que la mujer es en "
+"realidad Rebina. Pero no es la figura elegante y femenina que conociste en "
+"el bar del puerto espacial no hace mucho tiempo. Esta mujer emite un aura de "
+"autoridad, e inmediatamente comprendes que Rebina es en realidad la capitana "
+"de la {plt}.\n"
+"    \"Bien visto, {player}\", te saluda. Al mismo tiempo, los dos "
+"tripulantes que la acompañaban se abren paso junto a ti y desaparecen en "
+"dirección a tu bodega de carga. Abres la boca para protestar, pero Rebina "
+"levanta una mano para prevenirte. \"No hay motivo de preocupación\", dice. "
+"\"Mis hombres sólo están recuperando lo que les enviamos a buscar. Te "
+"aseguro que tu nave y su carga no serán perturbadas.\"\n"
+"    Le explicas a Rebina que, aunque conociste a Jorek, no te acompañó en tu "
+"viaje hasta aquí. Rebina te devuelve una sonrisa sombría. \"Ya lo sé. En "
+"primer lugar, nunca esperé que nos lo trajeras. Verás, no era a Jorek a "
+"quien queríamos traer. Era... eso.\""
 
 #: dat/missions/shadow/shadowrun.lua:239
 msgid ""
@@ -75979,6 +76262,25 @@ msgid ""
 "credit chip in your hand, first marveling at the wealth it represents and "
 "then astonished to realize you can't remember how it got there."
 msgstr ""
+"Sigues su mirada y ves a los tripulantes volviendo a la esclusa, llevando "
+"entre ellos una caja pequeña pero aparentemente bastante pesada. Estás "
+"absolutamente seguro de que nunca lo habías visto antes.\n"
+"    \"Esto es lo que Jorek nos guardaba en {pnt}, y es lo que necesitamos\", "
+"explica Rebina. \"Jorek no era más que un señuelo para desviar la atención "
+"del Imperio de nuestras verdaderas operaciones. Mientras tú hablabas con él, "
+"sus subordinados aseguraron nuestra carga a bordo de tu nave. Decidimos no "
+"informarte de esto porque, bueno... Es mejor que no sepas lo que había en "
+"esa caja. Estoy seguro de que nos entendemos.\"\n"
+"    Rebina se da la vuelta para seguir a sus hombres de vuelta a la nave, "
+"pero antes de cerrar la escotilla de la esclusa vuelve a mirarte por encima "
+"del hombro, lanzándote una mirada despreocupada que, sin embargo, parece ver "
+"a través de ti. \"Me alegra ver que mi confianza en ti no era errónea\", "
+"comenta. \"Quizás nos volvamos a ver algún día, y cuando lo hagamos quizás "
+"podamos hacer más negocios.\"\n"
+"    Luego se va. Te quedas mirando la escotilla de la esclusa y luego el "
+"chip de créditos que tienes en la mano, primero maravillado por la riqueza "
+"que representa y luego asombrado al darte cuenta de que no recuerdas cómo "
+"llegó allí."
 
 #. in case it was used
 #: dat/missions/shadow/shadowrun.lua:256
@@ -75988,6 +76290,11 @@ msgid ""
 "smuggle something onto Captain Rebina's ship, the Seiryuu. You know next to "
 "nothing about Captain Rebina or who she works for."
 msgstr ""
+"Has participado en una operación para la capitana Rebina. Pensabas que "
+"estabas rescatando a un hombre llamado Jorek, pero resulta que en realidad "
+"estabas ayudando a introducir algo de contrabando en la nave de la capitana "
+"Rebina, el Seiryuu. No sabes casi nada sobre la capitana Rebina ni para "
+"quién trabaja."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -76026,11 +76333,11 @@ msgstr ""
 #. After having accepted the mission from the hailing Vendetta
 #: dat/missions/shadow/shadowvigil.lua:60
 msgid "You are invited to a meeting in {sys}"
-msgstr ""
+msgstr "Estás invitado a una reunión en {sys}"
 
 #: dat/missions/shadow/shadowvigil.lua:64
 msgid "Fly to the {sys} system."
-msgstr ""
+msgstr "Vuela al sistema {sys}."
 
 #. Delayed claim to let time for the event's claim to disappear
 #. Boarding the Seiryuu at the beginning of the mission
@@ -76040,7 +76347,7 @@ msgstr ""
 #: dat/missions/shadow/shadowvigil.lua:87
 #: dat/missions/shadow/shadowvigil.lua:90
 msgid "Reunion with Rebina"
-msgstr ""
+msgstr "Reunión con Rebina"
 
 #: dat/missions/shadow/shadowvigil.lua:80
 msgid ""
@@ -76065,6 +76372,26 @@ msgid ""
 "I'm not the only one. As it turns out Jorek seems to have taken a liking to "
 "you as well. He may seem rough, but he's a good man at heart.\""
 msgstr ""
+"Te acoplas al Seiryuu y apagas los motores. En la esclusa, te reciben dos "
+"anodinos tripulantes con uniformes grises que te dicen que les sigas al "
+"interior de la nave. Te conducen a través de pasillos y pasadizos que "
+"parecen llevar al puente. Por el camino, no puedes evitar mirar a tu "
+"alrededor con asombro. La nave no es nada de lo que estás acostumbrado a "
+"ver. Aunque algunas partes pueden identificarse como elementos comunes como "
+"puertas y miradores, gran parte del equipamiento de los compartimentos y "
+"nichos te parece extraño, casi ajeno. Está claro que el Seiryuu no es un "
+"Cernícalo cualquiera.\n"
+"En el puente de mando, inmediatamente ves a la capitana del Seiryuu, Rebina, "
+"sentada en la silla del capitán. La silla también está diseñada de la forma "
+"extraña que has visto por toda la nave. Lleva varios controles que no puedes "
+"ubicar, a pesar de que tú mismo eres un piloto experimentado. El resto del "
+"puente no es diferente. Todos los puestos y consolas habituales parecen "
+"estar ahí, pero hay otros cuya finalidad sólo puedes adivinar.\n"
+"    Rebina gira la silla y sonríe cuando te ve. \"Ah, {player}\", dice. \"Qué"
+" bien que hayas venido. Esperaba que recibieras mi invitación, ya que me "
+"gustó mucho tu actuación la última vez. Y no soy el único. Resulta que a "
+"Jorek también le has gustado. Puede parecer rudo, pero en el fondo es un "
+"buen hombre.\""
 
 #: dat/missions/shadow/shadowvigil.lua:83
 msgid ""
@@ -76086,6 +76413,24 @@ msgid ""
 "and fixes you with a level stare. \"Speaking of specific objectives, I have "
 "one such objective for you.\""
 msgstr ""
+"Decides no decir nada, pero Rebina parece no tener problemas para leer lo "
+"que tienes en mente. \"Ah, sí, la nave. Es comprensible que te sorprenda su "
+"aspecto. No puedo divulgar demasiado sobre esta tecnología o cómo llegamos a "
+"poseerla, pero basta con decir que no compramos en los puntos de venta "
+"habituales. Necesitamos... una ventaja en nuestra línea de negocio\".\n"
+"    Agradecido por la apertura, le preguntas a Rebina en qué consiste "
+"exactamente esa línea de negocio. Rebina te dedica una rápida sonrisa y se "
+"acomoda en la silla para la explicación.\n"
+"    \"La organización de la que formo parte se conoce como los Cuatro "
+"Vientos, o más bien -hace un gesto despectivo- no se conoce como los Cuatro "
+"Vientos. Mantenemos un perfil bajo. No habrás oído hablar de nosotros antes, "
+"estoy seguro. En este punto debo añadir que muchos de los que nos conocen se "
+"refieren a nosotros como las \"Sombras\", pero se trata de un nombre "
+"puramente coloquial. No cubre lo que hacemos, ciertamente. En cualquier "
+"caso, puedes pensar en nosotros como una operación privada con objetivos muy "
+"específicos. En este momento es todo lo que puedo decirte\". Se inclina "
+"hacia delante y te mira fijamente. \"Hablando de objetivos específicos, "
+"tengo uno de ellos para tí.\""
 
 #: dat/missions/shadow/shadowvigil.lua:87
 msgid ""
@@ -76095,6 +76440,11 @@ msgid ""
 "back, {player}. I hope you've come to reconsider my offer. Let me explain to "
 "you again what it is we need from you.\""
 msgstr ""
+"De nuevo, pones el pie en las cubiertas del Seiryuu, y de nuevo te "
+"encuentras rodeado de la desconocida tecnología de a bordo. Los tripulantes "
+"de la nave te guían hasta el puente, donde te espera Rebina. Te dice: "
+"\"Bienvenido, {player}. Espero que hayas venido a reconsiderar mi oferta. "
+"Deja que te explique de nuevo qué es lo que necesitamos de ti.\""
 
 #: dat/missions/shadow/shadowvigil.lua:90
 msgid ""
@@ -76122,7 +76472,7 @@ msgstr ""
 
 #: dat/missions/shadow/shadowvigil.lua:96
 msgid "Let sleeping shadows lie"
-msgstr ""
+msgstr "Deja que las sombras dormidas descansen"
 
 #: dat/missions/shadow/shadowvigil.lua:96
 msgid ""
@@ -76135,6 +76485,14 @@ msgid ""
 "Seiryuu is leaving. It doesn't really come as a surprise that you can't find "
 "any reference to your rendezvous with the Seiryuu in your flight logs..."
 msgstr ""
+"La capitana Rebina suspira. \"Ya veo. No me importa admitir que esperaba que "
+"aceptaras, pero es tu decisión. No te obligaré a hacer nada con lo que te "
+"sientas incómodo. Sin embargo, aún mantengo la esperanza de que cambies de "
+"opinión. Si lo haces, vuelve a verme. Ya sabes dónde encontrar al Seiryuu.\""
+"\n"
+"    Apenas unos hectosegundos después te encuentras de nuevo en tu cabina, y "
+"el Seiryuu se marcha. No te sorprende que no puedas encontrar ninguna "
+"referencia a tu encuentro con el Seiryuu en tus registros de vuelo..."
 
 #. Keep track of the escorts. Update this when they die.
 #. Keeps track of the mission stage
@@ -76145,7 +76503,7 @@ msgstr ""
 #: dat/missions/shadow/shadowvigil.lua:117
 #: dat/missions/shadow/shadowvigil.lua:126
 msgid "Shadow Vigil"
-msgstr ""
+msgstr "Vigilancia en la Sombra"
 
 #: dat/missions/shadow/shadowvigil.lua:117
 msgid ""
@@ -76162,6 +76520,19 @@ msgid ""
 "    You are politely but efficiently escorted off the Seiryuu's bridge. Soon "
 "you settle back in your own cockpit chair, ready to do what was asked of you."
 msgstr ""
+"\"Excelente, {player}\". Rebina te sonríe. \"Le he dicho a mi tripulación "
+"que proporcione a la computadora de tu nave los datos de navegación "
+"necesarios. Además, he tomado la libertad de instalar un transpondedor IFF "
+"especializado en tu nave. No le hagas caso, sólo servirá para identificarte "
+"como uno de los escoltas. Por diversas razones, es mejor que te abstengas de "
+"comunicarte con los otros escoltas en la medida de lo posible. Creo que "
+"puedes intuir por qué.\"\n"
+"    Rebina se endereza. \"Eso es todo por ahora, {player}\", dice en un tono "
+"más formal, como de capitán. \"Ya tienes tu misión; te sugiero que la lleves "
+"a cabo.\"\n"
+"    Te acompañan educada pero eficazmente fuera del puente del Seiryuu. "
+"Pronto te acomodas en tu propia silla de la cabina, listo para hacer lo que "
+"se te pide."
 
 #: dat/missions/shadow/shadowvigil.lua:120
 msgid ""
@@ -76174,6 +76545,15 @@ msgid ""
 "a private operation with highly specific objectives. At this point that is "
 "all I can tell you.\""
 msgstr ""
+"La capitana Rebina ha revelado algunos datos sobre la organización para la "
+"que trabaja. \"La organización de la que formo parte se conoce como los "
+"Cuatro Vientos, o mejor dicho, no se conoce como los Cuatro Vientos. "
+"Mantenemos un perfil bajo. Seguro que no habrás oído hablar de nosotros "
+"antes. En este punto debo añadir que muchos de los que nos conocen se "
+"refieren a nosotros como las \"Sombras\", pero se trata de un nombre "
+"puramente coloquial. No cubre lo que hacemos, ciertamente. En cualquier "
+"caso, puede pensar en nosotros como una operación privada con objetivos muy "
+"específicos. En este momento es todo lo que puedo decirte.\""
 
 #: dat/missions/shadow/shadowvigil.lua:122
 msgid ""
@@ -76183,28 +76563,28 @@ msgstr ""
 
 #: dat/missions/shadow/shadowvigil.lua:127
 msgid "Fly to the {sys} system and join the other escorts"
-msgstr ""
+msgstr "Vuela al sistema {sys} y únete a los otros escoltas"
 
 #: dat/missions/shadow/shadowvigil.lua:128
 msgid "Follow the group to Nova Shakar and land"
-msgstr ""
+msgstr "Sigue al grupo hasta Nova Shakar y aterriza"
 
 #: dat/missions/shadow/shadowvigil.lua:129
 msgid "Follow the flight leader to the rendezvous location"
-msgstr ""
+msgstr "Sigue al líder del vuelo hasta el lugar de encuentro"
 
 #: dat/missions/shadow/shadowvigil.lua:130
 msgid "Escort the Imperial diplomat"
-msgstr ""
+msgstr "Escolta al diplomático Imperial"
 
 #: dat/missions/shadow/shadowvigil.lua:131
 msgid "Report back to Rebina"
-msgstr ""
+msgstr "Informa a Rebina"
 
 #. Function hooked to jumpout. Used to retain information about the previously visited system.
 #: dat/missions/shadow/shadowvigil.lua:143
 msgid "You have left your charge behind!"
-msgstr ""
+msgstr "¡Has dejado tu cargo atrás!"
 
 #: dat/missions/shadow/shadowvigil.lua:143
 msgid ""
@@ -76217,18 +76597,20 @@ msgstr ""
 #: dat/missions/shadow/shadowvigil.lua:427
 #: dat/missions/shadow/shadowvigil.lua:440
 msgid "You failed to escort a diplomat to safety for the Four Winds."
-msgstr ""
+msgstr "No escoltaste a un diplomático a la seguridad para los Cuatro Vientos."
 
 #. Function hooked to landing. Only used to prevent a fringe case.
 #: dat/missions/shadow/shadowvigil.lua:154
 msgid "You abandoned your charge!"
-msgstr ""
+msgstr "¡Abandonaste tu cargo!"
 
 #: dat/missions/shadow/shadowvigil.lua:154
 msgid ""
 "You have landed, but you were supposed to escort the diplomat. Your mission "
 "is a failure!"
 msgstr ""
+"Has aterrizado, pero se suponía que debías escoltar al diplomático. ¡Tu "
+"misión es un fracaso!"
 
 #: dat/missions/shadow/shadowvigil.lua:158
 #, lua-format
@@ -76245,11 +76627,21 @@ msgid_plural ""
 "jumps worth of fuel on board for the next leg of the journey. You will be "
 "left behind if you can't keep up."
 msgstr[0] ""
+"Mientras te encargas de las operaciones posteriores al aterrizaje y el "
+"repostaje, recibes una comunicación del jefe de vuelo, sólo de audio. Te "
+"dice que este será el último lugar donde podrás repostar, y que debes "
+"asegurarte de tener al menos %d de combustible a bordo para la siguiente "
+"etapa del viaje. Te quedarás atrás si no puedes mantener el ritmo."
 msgstr[1] ""
+"Mientras te encargas de las operaciones posteriores al aterrizaje y el "
+"repostaje, recibes una comunicación del jefe de vuelo, sólo de audio. Te "
+"dice que este será el último lugar donde podrás repostar, y que debes "
+"asegurarte de tener al menos %d de combustible a bordo para la siguiente "
+"etapa del viaje. Te quedarás atrás si no puedes mantener el ritmo."
 
 #: dat/missions/shadow/shadowvigil.lua:160
 msgid "Preparing for the job"
-msgstr ""
+msgstr "Preparación para el trabajo"
 
 #. Fly to the diplomat rendezvous point.
 #. Function hooked to takeoff.
@@ -76263,23 +76655,25 @@ msgstr ""
 #: dat/missions/shadow/shadowvigil.lua:179
 #: dat/missions/shadow/shadowvigil.lua:242
 msgid "Four Winds Escort"
-msgstr ""
+msgstr "Escolta de los Cuatro Vientos"
 
 #. Dead escorts stay dead.
 #: dat/missions/shadow/shadowvigil.lua:189
 msgid "Rendezvous point"
-msgstr ""
+msgstr "Punto de Encuentro"
 
 #. case player is escorting AND jumped to somewhere other than the next escort destination
 #: dat/missions/shadow/shadowvigil.lua:213
 msgid "You diverged!"
-msgstr ""
+msgstr "¡Te has desviado!"
 
 #: dat/missions/shadow/shadowvigil.lua:213
 msgid ""
 "You have jumped to the wrong system! You are no longer part of the mission "
 "to escort the diplomat."
 msgstr ""
+"¡Has saltado al sistema equivocado! Ya no formas parte de la misión de "
+"escoltar al diplomático."
 
 #. Spawn the diplomat.
 #. Dead escorts stay dead.
@@ -76290,7 +76684,7 @@ msgstr ""
 #: dat/missions/shadow/shadowvigil.lua:220
 #: dat/missions/shadow/shadowvigil.lua:264
 msgid "Imperial Diplomat"
-msgstr ""
+msgstr "Diplomático Imperial"
 
 #. Hack to make ambushes more reliable.
 #. Follow the diplomat.
@@ -76302,11 +76696,11 @@ msgstr ""
 
 #: dat/missions/shadow/shadowvigil.lua:282
 msgid "Two, copy."
-msgstr ""
+msgstr "Dos, cambio."
 
 #: dat/missions/shadow/shadowvigil.lua:283
 msgid "Three, copy."
-msgstr ""
+msgstr "Tres, cambio."
 
 #. case rendezvous with Dvaered diplomat
 #. Follow the diplomat.
@@ -76316,28 +76710,32 @@ msgstr ""
 #. Hyperspace toward the next destination system.
 #: dat/missions/shadow/shadowvigil.lua:311
 msgid "So do you guys think we'll run into any trouble?"
-msgstr ""
+msgstr "¿Creéis que tendremos algún problema?"
 
 #: dat/missions/shadow/shadowvigil.lua:312
 msgid ""
 "Not if we all follow the plan. I didn't hear of any trouble coming our way "
 "from any of the others."
 msgstr ""
+"No si todos seguimos el plan. No escuché que ningún problema viniera hacia "
+"nosotros de ninguno de los otros."
 
 #: dat/missions/shadow/shadowvigil.lua:313
 msgid "I just hope Z. knows what he's doing."
-msgstr ""
+msgstr "Sólo espero que Z. sepa lo que está haciendo."
 
 #: dat/missions/shadow/shadowvigil.lua:314
 msgid ""
 "Cut the chatter, two, three. This is a low-profile operation. Act the part, "
 "please."
 msgstr ""
+"Dejad la cháchara, dos, tres. Esta es una operación de bajo perfil. Actúen "
+"como corresponde, por favor."
 
 #. Encounter
 #: dat/missions/shadow/shadowvigil.lua:323
 msgid "Pirate Attacker"
-msgstr ""
+msgstr "Atacante Pirata"
 
 #. The player has successfully joined up with the escort fleet. Cutscene -> departure.
 #. Fly to the refuel planet.
@@ -76347,6 +76745,9 @@ msgid ""
 "There you are at last. Fancy boat you've got there. We're gonna head to Nova "
 "Shakar first, to grab some fuel. Just stick with us, okay?"
 msgstr ""
+"Por fin estás aquí. Bonito nave la que tienes. Vamos a dirigirnos a Nova "
+"Shakar primero, para conseguir algo de combustible. Quédate con nosotros, ¿"
+"de acuerdo?"
 
 #. Hyperspace toward the next destination system.
 #. The player has successfully rendezvoused with the diplomat. Now the real work begins.
@@ -76356,7 +76757,7 @@ msgstr ""
 #. Hyperspace toward the next destination system.
 #: dat/missions/shadow/shadowvigil.lua:407
 msgid "All hostiles eliminated, resume standing orders."
-msgstr ""
+msgstr "Todos los hostiles eliminados, reanuden las órdenes permanentes."
 
 #. safety flag to prevent the escorts from being released twice.
 #. Puts the escorts under AI control again, and makes them fight.
@@ -76364,39 +76765,42 @@ msgstr ""
 #. all escorts dead
 #: dat/missions/shadow/shadowvigil.lua:426
 msgid "The escorts are dead!"
-msgstr ""
+msgstr "¡Los escoltas han muerto!"
 
 #: dat/missions/shadow/shadowvigil.lua:426
 msgid ""
 "All of the escorts have been destroyed. With the flight leader out of the "
 "picture, the diplomat has decided to call off the mission."
 msgstr ""
+"Todos los escoltas han sido destruidos. Con el jefe de vuelo fuera de juego, "
+"el diplomático ha decidido cancelar la misión."
 
 #. Handle the death of the diplomat. Abort the mission if the diplomat dies.
 #: dat/missions/shadow/shadowvigil.lua:434
 msgid "The diplomat is dead!"
-msgstr ""
+msgstr "¡El diplomático está muerto!"
 
 #: dat/missions/shadow/shadowvigil.lua:434
 msgid ""
 "The diplomat you were supposed to be protecting has perished! Your mission "
 "has failed."
 msgstr ""
+"¡El diplomático que debías proteger ha perecido! Tu misión ha fracasado."
 
 #. Handle the departure of the diplomat. Escorts will follow.
 #. Hyperspace toward the next destination system.
 #: dat/missions/shadow/shadowvigil.lua:456
 msgid "Mission update: The diplomat has jumped to {sys}."
-msgstr ""
+msgstr "Actualización de la misión: El diplomático ha saltado a {sys}."
 
 #. Handle the diplomat getting attacked.
 #: dat/missions/shadow/shadowvigil.lua:463
 msgid "Those rats are eyeballing us - take them out!"
-msgstr ""
+msgstr "Esas ratas nos están mirando, ¡acabad con ellas!"
 
 #: dat/missions/shadow/shadowvigil.lua:472
 msgid "Diplomatic vessel under fire!"
-msgstr ""
+msgstr "¡Nave diplomática bajo fuego!"
 
 #. Shuts him up for at least 10s.
 #. As soon as the diplomat is at its destination, set up final cutscene.
@@ -76405,21 +76809,25 @@ msgstr ""
 #: dat/missions/shadow/shadowvigil.lua:505
 msgid "This is Empire zero-zero-four. Transmitting clearance code now."
 msgstr ""
+"Este es el Imperio cero-cero-cuatro. Transmitiendo código de autorización "
+"ahora."
 
 #: dat/missions/shadow/shadowvigil.lua:506
 msgid ""
 "Empire zero-zero-four, your code checks out. Commence boarding maneuvers."
 msgstr ""
+"Imperio cero-cero-cuatro, tu código es correcto. Inicien las maniobras de "
+"abordaje."
 
 #: dat/missions/shadow/shadowvigil.lua:508
 msgid "This is your leader, you're all clear. Execute, execute, execute!"
-msgstr ""
+msgstr "Este es tu líder, todo despejado. ¡Ejecutar, ejecutar, ejecutar!"
 
 #. no longer spawn things
 #. Function hooked to boarding. Only used on the Seiryuu.
 #: dat/missions/shadow/shadowvigil.lua:580
 msgid "An unfortunate outcome"
-msgstr ""
+msgstr "Un resultado desafortunado"
 
 #: dat/missions/shadow/shadowvigil.lua:580
 msgid ""
@@ -76446,6 +76854,28 @@ msgid ""
 "are they, what do they want, and what is your role in all of it? Time will "
 "have to tell."
 msgstr ""
+"La capitana Rebina tamborilea furiosamente con los dedos en su silla de "
+"capitán mientras observa la reconstrucción realizada a partir de los "
+"registros de sus sensores. Sus ojos se entrecierran cuando ambas naves "
+"diplomáticas explotan bajo el ataque de las armas que los escoltas no "
+"deberían haber tenido a bordo.\n"
+"    \"Esto es malo, {player}\", dice cuando la repetición se apaga. \"Peor "
+"de lo que había creído posible. La muerte de los diplomáticos del Imperio y "
+"de Dvaered va a desencadenar un incidente político, en el que cada facción "
+"acusará a la otra de traición.\" Se levanta y comienza a pasearse por el "
+"puente del Seiryuu. \"Pero eso no es lo peor. Ya has visto lo que ha pasado. "
+"Los diplomáticos fueron asesinados por sus propios escoltas, ¡por agentes de "
+"Cuatro Vientos! Esto es un escándalo.\"\n"
+"    La capitana Rebina vuelve a controlarse con un esfuerzo de voluntad. \""
+"{player}, esto no presagia nada bueno. Tenemos un problema, y me temo que "
+"voy a necesitar tu ayuda de nuevo antes del final. Pero todavía no. Tengo "
+"mucho que hacer. Tengo que llegar al fondo de esto, y tengo que tratar de "
+"evitar que esta situación se convierta en un desastre. Me pondré en contacto "
+"contigo de nuevo cuando sepa más. Mientras tanto, tendrás tiempo para gastar "
+"tu recompensa: ya está en tu cuenta.\"\n"
+"    Tras esto, te escoltan rápidamente fuera del Seiryuu. De vuelta a tu "
+"cabina, no puedes evitar sentirte un poco ansioso por estos Cuatro Vientos. ¿"
+"Quiénes son, qué quieren y cuál es tu papel en todo esto? El tiempo lo dirá."
 
 #: dat/missions/shadow/shadowvigil.lua:585
 msgid ""
@@ -76454,11 +76884,15 @@ msgid ""
 "diplomat, killing him. Captain Rebina has said that she may need your help "
 "again at a later date."
 msgstr ""
+"Tu intento de escoltar a un diplomático de los Cuatro Vientos fue frustrado "
+"por los traidores del interior. Otros escoltas de los Cuatro Vientos "
+"abrieron fuego contra el diplomático, matándolo. La capitana Rebina ha dicho "
+"que puede necesitar tu ayuda de nuevo en una fecha posterior."
 
 #. The player boards one of the escort at the end of the mission.
 #: dat/missions/shadow/shadowvigil.lua:593
 msgid "The Pill of Silence"
-msgstr ""
+msgstr "La Píldora del Silencio"
 
 #: dat/missions/shadow/shadowvigil.lua:593
 msgid ""
@@ -76487,6 +76921,30 @@ msgid ""
 "a bit, and finally go back to your ship with what looks like a fancy vacuum "
 "cleaner."
 msgstr ""
+"Tras conseguir burlar el sistema de seguridad de la nave, entras en la "
+"cabina y te das cuenta de que el caza ha sido saboteado y pronto podría "
+"explotar: tienes poco tiempo para encontrar y capturar al piloto. Te diriges "
+"a la cabina. Al cruzar la escotilla de acceso, lo ves, flotando "
+"ingrávidamente cerca del suelo. Al girar su rostro lívido hacia el tuyo, te "
+"encuentras horrorizado por la horrible máscara de dolor de su cara. Sus ojos "
+"saltones e inyectados en sangre te miran fijamente, como si quisieran "
+"atravesar tu piel. Su retorcida boca desprende un repugnante líquido cremoso "
+"cuando empieza a hablar, en un gemido:\n"
+"   \"Buen trabajo ahí fuera. Hum. Pero, ¿ves? No me cogerás vivo. Oh, no. La "
+"píldora del silencio se asegurará de eso. Hmf. Parece doloroso, ¿no? ¿Sabes "
+"qué? Es incluso peor de lo que parece. Te lo garantizo. Gbf. Oh, me hace "
+"vomitar... Siento eso.\"\n"
+"   Te acercas al hombre y le preguntas por qué mató a los diplomáticos. \"No "
+"tienes ni idea de lo que está pasando, ¿verdad? Uh. Deja que te diga algo: ¡"
+"van a venir! Y no tendrán piedad. ¡Oooh! ¡Están tan cerca! ¡Son mucho peores "
+"que tus más oscuras pesadillas! Y un día te atraparán. Ese día, "
+"envidiarás... ¡Envidiarás mi agonía devoradora de vómitos! ¡Taaaaanto!\"\n"
+"   El hombre deja de hablar y de moverse. Su cara de mala leche aún vuelta "
+"hacia ti te hace preguntarte si está completamente muerto, pero en ausencia "
+"de respuesta, primero piensas en abandonar la nave lo antes posible antes de "
+"que explote. Luego decides, en cambio, aprovechar la oportunidad para "
+"saquear un poco, y finalmente vuelves a tu nave con lo que parece una "
+"elegante aspiradora."
 
 #. Make ship explode
 #. Handle the unsuccessful end of the mission.
@@ -76532,16 +76990,16 @@ msgstr ""
 #. Change here to change the planet and the system
 #: dat/missions/shark/sh00_ancestorkill.lua:57
 msgid "An honest-looking man"
-msgstr ""
+msgstr "Un hombre de aspecto honesto"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:57
 msgid "This man looks like a honest citizen. He glances in your direction."
-msgstr ""
+msgstr "Este hombre parece un ciudadano honesto. Mira en tu dirección."
 
 #: dat/missions/shark/sh00_ancestorkill.lua:63
 #: dat/missions/shark/sh01_corvette.lua:60
 msgid "Nexus Shipyards needs you"
-msgstr ""
+msgstr "Los Astilleros Nexus te necesitan"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:63
 msgid ""
@@ -76554,49 +77012,66 @@ msgid ""
 "won't be illegal. The sum of the bounty will be paid to you and Nexus will "
 "add a little extra. Would you be interested?\""
 msgstr ""
+"Te acercas al hombre y se presenta. \"Hola, me llamo Arnold Smith; trabajo "
+"para los Astilleros Nexus. Estoy buscando un piloto con talento para hacer "
+"una demostración a uno de nuestros clientes potenciales.\n"
+"    \"Bastante sencillo, en realidad: queremos que alguien demuestre lo "
+"buenos que son los diseños de las naves de Nexus destruyendo un Ancestro "
+"Pirata con nuestra nave de menor categoría, el Tiburón. Por supuesto, el "
+"piloto del Ancestro tiene una recompensa por su cabeza, así que no será "
+"ilegal. La suma de la recompensa se te pagará a ti y Nexus añadirá un "
+"pequeño extra. ¿Estarías interesado?\""
 
 #. for now, we only need his name
 #: dat/missions/shark/sh00_ancestorkill.lua:67
 #: dat/missions/shark/sh01_corvette.lua:64
 msgid "Wonderful"
-msgstr ""
+msgstr "Maravilloso"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:67
 msgid ""
 "\"Great! I knew I could trust you. I'll meet you on {pnt} in the {sys} "
 "system. I'll be with my boss and our customer, Baron Sauterfeldt.\""
 msgstr ""
+"\"¡Genial! Sabía que podía confiar en ti. Nos encontraremos en {pnt} en el "
+"sistema {sys}. Estaré con mi jefe y nuestro cliente, el Barón Sauterfeldt.\""
 
 #: dat/missions/shark/sh00_ancestorkill.lua:69
 #: dat/missions/shark/sh00_ancestorkill.lua:72
 msgid "A Shark Bites"
-msgstr ""
+msgstr "Un Tiburón Muerde"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:71
 msgid ""
 "Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt the "
 "capabilities of Nexus designs."
 msgstr ""
+"Los Astilleros Nexus necesitan que demuestres al Barón Sauterfeldt las "
+"capacidades de los diseños de Nexus."
 
 #: dat/missions/shark/sh00_ancestorkill.lua:73
 msgid ""
 "Buy a Shark (but not a Pirate Shark), then fly to the {sys} system and land "
 "on {pnt}"
 msgstr ""
+"Compra un tiburón (pero no un tiburón pirata), luego vuela al sistema {sys} "
+"y aterriza en {pnt}"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:74
 msgid "Go to {sys} and kill the pirate with your Shark"
-msgstr ""
+msgstr "Ve a {sys} y mata al pirata con tu Tiburón"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:75
 msgid "Land on {pnt} and collect your fee"
-msgstr ""
+msgstr "Aterriza en {pnt} y cobra tu cuota"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:85
 msgid ""
 "\"That's your choice,\" the man says. \"Don't hesitate to tell me if you "
 "change your mind.\""
 msgstr ""
+"\"Es tu elección\", dice el hombre. \"No dudes en decírmelo si cambias de "
+"opinión.\""
 
 #. landing on any planet system
 #. Did the player reach Ulios ?
@@ -76822,18 +77297,20 @@ msgstr ""
 #: dat/missions/shark/sh06_arandon.lua:43
 #: dat/missions/shark/sh07_pirates.lua:66
 msgid "Arnold Smith"
-msgstr ""
+msgstr "Arnold Smith"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:95
 msgid ""
 "The Nexus employee who recruited you for a very special demo of the \"Shark"
 "\" fighter."
 msgstr ""
+"El empleado de Nexus que te reclutó para una demostración muy especial del "
+"caza \"Tiburón\"."
 
 #. Did the player land again on Ulios after having killed the pirate
 #: dat/missions/shark/sh00_ancestorkill.lua:100
 msgid "Congratulations!"
-msgstr ""
+msgstr "¡Enhorabuena!"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:100
 msgid ""
@@ -76843,31 +77320,38 @@ msgid ""
 "your pay. \"I may have another mission for you later. Be sure to check back!"
 "\""
 msgstr ""
+"Cuando pisas el suelo, Arnold Smith te saluda. \"¡Ha sido una gran "
+"demostración! Gracias. Todavía no he podido hablar con el Barón sobre los "
+"resultados, pero estoy seguro de que quedará impresionado.\" Te entrega tu "
+"paga. \"Puede que tenga otra misión para ti más tarde.¡Asegúrate de volver a "
+"comprobarlo!\""
 
 #: dat/missions/shark/sh00_ancestorkill.lua:106
 msgid ""
 "You helped Nexus Shipyards demonstrate the capabilities of their ships by "
 "destroying a Pirate Ancestor."
 msgstr ""
+"Has ayudado a los Astilleros Nexus a demostrar las capacidades de sus naves "
+"destruyendo un Ancestro Pirata."
 
 #. jumping out the system
 #. You were supposed to kill him, not to go away !
 #: dat/missions/shark/sh00_ancestorkill.lua:115
 msgid "You left the pirate."
-msgstr ""
+msgstr "Dejaste al pirata."
 
 #. Jumping in Toaxis for the battle
 #. Check if the player uses a Shark
 #: dat/missions/shark/sh00_ancestorkill.lua:127
 msgid "You were supposed to use a Shark."
-msgstr ""
+msgstr "Se suponía que usarías un Tiburón."
 
 #. Be sure that nobody unexpected will take part in our epic battle
 #. spawns the bad guy
 #. Chatting with Smith and begin the battle
 #: dat/missions/shark/sh00_ancestorkill.lua:150
 msgid "Ready for action"
-msgstr ""
+msgstr "Listo para la acción"
 
 #: dat/missions/shark/sh00_ancestorkill.lua:150
 msgid ""
