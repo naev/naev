@@ -4,15 +4,11 @@
 
 --]]
 local vn = require "vn"
-local audio = require "love.audio"
+local ferals = require "common.ferals"
 
 local zbh = {}
 
-zbh.sfx = {
-   spacewhale1 = audio.newSource( "snd/sounds/spacewhale1.ogg" ),
-   spacewhale2 = audio.newSource( "snd/sounds/spacewhale2.ogg" ),
-   bite = audio.newSource( "snd/sounds/crash1.ogg" ),
-}
+zbh.sfx = ferals.sfx
 
 -- Zach Xiao
 zbh.zach = {

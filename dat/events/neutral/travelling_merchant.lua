@@ -113,7 +113,8 @@ function create ()
    hook.land("leave")
 end
 
-function leave () --event ends on player leaving the system or landing
+--event ends on player leaving the system or landing
+function leave ()
     evt.finish()
 end
 
