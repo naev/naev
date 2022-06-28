@@ -1,4 +1,10 @@
+--[[--
+Plays a sound.
 
+@usage luaspfx.sfx( pos, vel, sfx ) -- Plays at pos with velocity vel
+@usage luaspfx.sfx( true, nil, sfx ) -- Global but modified by time speed-up
+@usage luaspfx.sfx( false, nil, sfx ) -- Global but not modified by time like GUI events, etc.
+--]]
 local function sfx( pos, vel, source, params )
    params = params or {}
    local ttl = source:getDuration()*1.1
