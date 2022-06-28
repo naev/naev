@@ -355,6 +355,10 @@ SHADERS = [
       fs_path = "hilight.frag",
    ),
    SimpleShader(
+      name = "hilight_circle",
+      fs_path = "hilight_circle.frag",
+   ),
+   SimpleShader(
       name = "stealthmarker",
       fs_path = "stealthmarker.frag",
    ),

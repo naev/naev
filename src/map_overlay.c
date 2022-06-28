@@ -876,10 +876,10 @@ static void ovr_mrkRenderAll( double res, int fg )
                break;
 
             case OVR_MARKER_CIRCLE:
-               r = mrk->u.circle.r / res;
-               glUseProgram( shaders.hilight.program );
-               glUniform1f( shaders.hilight.dt, ovr_dt );
-               gl_renderShader( x, y, r, r, 0., &shaders.hilight, &highlighted, 1 );
+               r = MAX( mrk->u.circle.r / res, 13. ); /* Don't allow to be smaller than a "point" */
+               glUseProgram( shaders.hilight_circle.program );
+               glUniform1f( shaders.hilight_circle.dt, ovr_dt );
+               gl_renderShader( x, y, r, r, 0., &shaders.hilight_circle, &highlighted, 1 );
                break;
          }
       }
