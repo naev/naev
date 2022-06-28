@@ -964,6 +964,7 @@ static int systemL_mrkClear( lua_State *L )
  *
  *    @luatparam Vec2 v Position to display marker at.
  *    @luatparam[opt] string str String to display next to marker.
+ *    @luatparam[opt] number If specified, changes the marker to circle type marker and specifies the radius of the circle to use.
  *    @luatreturn number The id of the marker.
  * @luafunc mrkAdd
  */
@@ -972,14 +973,18 @@ static int systemL_mrkAdd( lua_State *L )
    const char *str;
    vec2 *vec;
    unsigned int id;
-
+   double r;
 
    /* Handle parameters. */
    vec = luaL_checkvector( L, 1 );
    str = luaL_optstring( L, 2, NULL );
+   r = luaL_optnumber( L, 3, -1. );
 
    /* Create marker. */
-   id  = ovr_mrkAddPoint( str, vec->x, vec->y );
+   if (r < 0.)
+      id = ovr_mrkAddPoint( str, vec->x, vec->y );
+   else
+      id = ovr_mrkAddCircle( str, vec->x, vec->y, r );
    lua_pushnumber( L, id );
    return 1;
 }

@@ -33,19 +33,25 @@ typedef struct MapOverlayRadiusConstraint_ {
    double dist;/**< ... is at most this big. */
 } MapOverlayRadiusConstraint;
 
+typedef enum ovr_marker_type_e {
+   OVR_MARKER_POINT,
+   OVR_MARKER_CIRCLE,
+} ovr_marker_type_t;
+
 /**
  * @brief An overlay map marker.
  */
 typedef struct ovr_marker_s {
    unsigned int id;  /**< ID of the marker. */
    char *text;       /**< Marker display text. */
-   int type;         /**< Marker type. */
+   ovr_marker_type_t type; /**< Marker type. */
    int refcount;     /**< Refcount. */
+   double x;   /**< X center of the marker. */
+   double y;   /**< Y center of the marker. */
    union {
       struct {
-         double x;   /**< X center of point marker. */
-         double y;   /**< Y center of point marker. */
-      } pt; /**< Point marker. */
+         double r;
+      } circle;
    } u; /**< Type data. */
 } ovr_marker_t;
 static unsigned int mrk_idgen = 0; /**< ID generator for markers. */
@@ -853,22 +859,44 @@ void ovr_render( double dt )
  */
 static void ovr_mrkRenderAll( double res, int fg )
 {
-   (void) res;
    for (int i=0; i<array_size(ovr_markers); i++) {
       double x, y;
       ovr_marker_t *mrk = &ovr_markers[i];
-      map_overlayToScreenPos( &x, &y, mrk->u.pt.x, mrk->u.pt.y );
+      map_overlayToScreenPos( &x, &y, mrk->x, mrk->y );
 
       if (!fg) {
-         glColour highlighted = cRadar_hilight;
-         highlighted.a = 0.3;
-         glUseProgram( shaders.hilight.program );
-         glUniform1f( shaders.hilight.dt, ovr_dt );
-         gl_renderShader( x, y, 13., 13., 0., &shaders.hilight, &highlighted, 1 );
+         double r;
+         const glColour highlighted = COL_ALPHA( cRadar_hilight, 0.3 );
+
+         switch (mrk->type) {
+            case OVR_MARKER_POINT:
+               glUseProgram( shaders.hilight.program );
+               glUniform1f( shaders.hilight.dt, ovr_dt );
+               gl_renderShader( x, y, 13., 13., 0., &shaders.hilight, &highlighted, 1 );
+               break;
+
+            case OVR_MARKER_CIRCLE:
+               r = mrk->u.circle.r / res;
+               glUseProgram( shaders.hilight.program );
+               glUniform1f( shaders.hilight.dt, ovr_dt );
+               gl_renderShader( x, y, r, r, 0., &shaders.hilight, &highlighted, 1 );
+               break;
+         }
       }
 
-      if (fg && mrk->text != NULL)
-         gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, mrk->text );
+      if (fg && mrk->text != NULL) {
+         double r;
+         switch (mrk->type) {
+            case OVR_MARKER_POINT:
+               gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, mrk->text );
+               break;
+
+            case OVR_MARKER_CIRCLE:
+               r = mrk->u.circle.r / res;
+               gl_printMarkerRaw( &gl_smallFont, x+r+3., y-gl_smallFont.h/2., &cRadar_hilight, mrk->text );
+               break;
+         }
+      }
    }
 }
 
@@ -942,11 +970,15 @@ unsigned int ovr_mrkAddPoint( const char *text, double x, double y )
    /* Check existing ones first. */
    for (int i=0; i<array_size(ovr_markers); i++) {
       mrk = &ovr_markers[i];
+
+      if (mrk->type != OVR_MARKER_POINT)
+         continue;
+
       if (((text==NULL) && (mrk->text!=NULL)) ||
             ((text!=NULL) && ((mrk->text==NULL) || strcmp(text,mrk->text)!=0)))
          continue;
 
-      if (hypotf( x-mrk->u.pt.x, y-mrk->u.pt.y ) > 1e-3)
+      if (hypotf( x-mrk->x, y-mrk->y ) > 1e-3)
          continue;
 
       /* Found same marker already! */
@@ -956,11 +988,55 @@ unsigned int ovr_mrkAddPoint( const char *text, double x, double y )
 
    /* Create new one. */
    mrk = ovr_mrkNew();
-   mrk->type = 0;
+   mrk->type = OVR_MARKER_POINT;
    if (text != NULL)
       mrk->text = strdup( text );
-   mrk->u.pt.x = x;
-   mrk->u.pt.y = y;
+   mrk->x = x;
+   mrk->y = y;
+
+   return mrk->id;
+}
+
+/**
+ * @brief Creates a new circle marker.
+ *
+ *    @param text Text to display with the marker.
+ *    @param x X position of the marker.
+ *    @param y Y position of the marker.
+ *    @param r Radius of the marker.
+ *    @return The id of the newly created marker.
+ */
+unsigned int ovr_mrkAddCircle( const char *text, double x, double y, double r )
+{
+   ovr_marker_t *mrk;
+
+   /* Check existing ones first. */
+   for (int i=0; i<array_size(ovr_markers); i++) {
+      mrk = &ovr_markers[i];
+
+      if (mrk->type != OVR_MARKER_CIRCLE)
+         continue;
+
+      if (((text==NULL) && (mrk->text!=NULL)) ||
+            ((text!=NULL) && ((mrk->text==NULL) || strcmp(text,mrk->text)!=0)))
+         continue;
+
+      if ((mrk->u.circle.r-r) > 1e-3 || hypotf( x-mrk->x, y-mrk->y ) > 1e-3)
+         continue;
+
+      /* Found same marker already! */
+      mrk->refcount++;
+      return mrk->id;
+   }
+
+   /* Create new one. */
+   mrk = ovr_mrkNew();
+   mrk->type = OVR_MARKER_CIRCLE;
+   if (text != NULL)
+      mrk->text = strdup( text );
+   mrk->x = x;
+   mrk->y = y;
+   mrk->u.circle.r = r;
 
    return mrk->id;
 }

@@ -24,4 +24,5 @@ void ovr_center( double *x, double *y );
 void ovr_mrkFree (void);
 void ovr_mrkClear (void);
 unsigned int ovr_mrkAddPoint( const char *text, double x, double y );
+unsigned int ovr_mrkAddCircle( const char *text, double x, double y, double r );
 void ovr_mrkRm( unsigned int id );
