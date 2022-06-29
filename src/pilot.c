@@ -1425,7 +1425,7 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
       const Damage *dmg, const Outfit *outfit, int lua_mem, int reset )
 {
    int mod, shooter;
-   double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, absorb, dmod, start;
+   double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, ddis, absorb, dmod, start;
    double tdshield, tdarmour;
 
    /* Invincible means no damage. */
@@ -1436,6 +1436,7 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
    /* Defaults. */
    dam_mod        = 0.;
    ddmg           = 0.;
+   ddis           = 0.;
    shooter        = (pshooter==NULL) ? 0 : pshooter->id;
 
    /* Calculate the damage. */
@@ -1480,7 +1481,8 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
        * low-damage, high-ROF weapons, while using the ending percentage
        * biases towards high-damage, low-ROF weapons.
        */
-      p->stress += disable * (0.5 + (0.5 - ((start+p->shield) / p->shield_max) / 4.));
+      ddis = disable * (0.5 + (0.5 - ((start+p->shield) / p->shield_max) / 4.));
+      p->stress += ddis;
 
       /* True damage. */
       tdshield = damage_shield;
@@ -1496,7 +1498,8 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
       p->shield   = 0.;
 
       /* Leak some disabling damage through the remaining bit of shields. */
-      p->stress += disable * (1. - dmod) * (0.5 + (0.5 - (start / p->shield_max / 4.)));
+      ddis = disable * (1. - dmod) * (0.5 + (0.5 - (start / p->shield_max / 4.)));
+      p->stress += ddis;
 
       /* Reduce stress as armour is eaten away. */
       p->stress  *= (p->armour - dmod * damage_armour) / p->armour;
@@ -1520,7 +1523,8 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
       /* Reduce stress as armour is eaten away. */
       p->stress  *= (p->armour - damage_armour) / p->armour;
       p->armour  -= damage_armour;
-      p->stress  += disable;
+      ddis = disable;
+      p->stress  += ddis;
 
       /* Increment shield timer or time before shield regeneration kicks in. */
       if (reset) {
@@ -1623,7 +1627,7 @@ double pilot_hit( Pilot* p, const Solid* w, const Pilot *pshooter,
       }
    }
 
-   return ddmg;
+   return ddmg + ddis;
 }
 
 /**
