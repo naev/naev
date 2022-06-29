@@ -286,8 +286,25 @@ static int asteroidL_get( lua_State *L )
  */
 static int asteroidL_exists( lua_State *L )
 {
-   Asteroid *a = luaL_validasteroid(L,1);
-   lua_pushboolean(L,(a->state==ASTEROID_FG));
+   if (!lua_isasteroid(L, 1)) {
+      lua_pushboolean(L, 0);
+      return 1;
+   }
+
+   LuaAsteroid_t *la = luaL_checkasteroid(L, 1);
+   if ((la->parent < 0) || (la->parent >= array_size(cur_system->asteroids))) {
+      lua_pushboolean(L, 0);
+      return 1;
+   }
+
+   AsteroidAnchor *field = &cur_system->asteroids[ la->parent ];
+   if ((la->id < 0) || (la->id >= field->nb)) {
+      lua_pushboolean(L, 0);
+      return 1;
+   }
+
+   Asteroid *a = &field->asteroids[ la->id ];
+   lua_pushboolean(L, (a->state==ASTEROID_FG));
    return 1;
 }
 
