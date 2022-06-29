@@ -85,8 +85,10 @@ end
 function enter ()
    if not mem.job_done then
       if system.cur() == mem.missys then
-         misn.osdActive( 2 )
-         patrol_spawnDV( 3, nil )
+         if mem.osd_desc[2] ~= nil then
+            misn.osdActive( 2 )
+            patrol_spawnDV( 3, nil )
+         end
       else
          misn.osdActive( 1 )
       end
