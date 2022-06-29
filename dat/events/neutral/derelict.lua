@@ -248,7 +248,7 @@ function neutralevent()
       },
       {
          _("Wrecked Derelict"),
-         fmt.f(_([[This derelict is not deserted. The crew are still onboard. Unfortunately for them, they didn't survive whatever wrecked their ship, neither did much of their ship. Your ship, {shipai}, and you decide to give the crew and their ship a decent space burial before moving on.]]), {shipai=tut.ainame()}),
+         fmt.f(_([[This derelict is not deserted. The crew are still onboard. Unfortunately for them, they didn't survive whatever wrecked their ship, neither did much of their ship. Your ship AI, {shipai}, and you decide to give the crew and their ship a decent space burial before moving on.]]), {shipai=tut.ainame()}),
          fmt.f(_([[You found a wrecked derelict in {sys} and gave it and its crew a decent space burial.]]), {sys=system.cur()})
       },
       {
@@ -268,7 +268,7 @@ function neutralevent()
       },
       {
          _("Wrecked Derelict"),
-         fmt.f(_([[This derelict has been really badly beaten up. Most of the corridors are blocked by mangled metal and your ship, {shipai}, tells you there are depressurized compartments all over the ship. There's not much you can do here, so you decide to leave the derelict to itself.]]), {shipai=tut.ainame()}),
+         fmt.f(_([[This derelict has been really badly beaten up. Most of the corridors are blocked by mangled metal and your ship AI, {shipai}, tells you there are depressurized compartments all over the ship. There's not much you can do here, so you decide to leave the derelict to itself.]]), {shipai=tut.ainame()}),
          fmt.f(_([[You tried to search a wrecked derelict in {sys} but there wasn't much left.]]), {sys=system.cur()})
       },
       {
@@ -288,7 +288,7 @@ function neutralevent()
       },
       {
          _("Wrecked Derelict"),
-         fmt.f(_([[You have attached your docking clamp to the derelict's airlock but the door refuses to open. {shipai}, your ship, tells you that the other side isn't pressurized and the doors are trying to save your life. The derelict must have suffered too many hull breaches over the years. It doesn't seem like there's much you can do here.]]), {shipai=tut.ainame()}),
+         fmt.f(_([[You have attached your docking clamp to the derelict's airlock but the door refuses to open. {shipai}, your ship AI, tells you that the other side isn't pressurized and the doors are trying to save your life. The derelict must have suffered too many hull breaches over the years. It doesn't seem like there's much you can do here.]]), {shipai=tut.ainame()}),
          fmt.f(_([[You tried to search an empty derelict in {sys} but your airlock doors and the vacuum of space defeated you!]]), {sys=system.cur()})
       },
       {
@@ -361,7 +361,7 @@ function goodevent()
             end
          end
          local rndfact = fcts[ rnd.rnd(1, #fcts) ]
-         derelict_msg(gtitle, fmt.f(_([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced according to your ship, {shipai}! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging and contact the {fct} authorities. Your reputation with them has slightly improved.]]), {shipai=tut.ainame(), fct=rndfact}), fmt.f(_([[In the {sys} system you found a very rare antique derelict {shp} and reported it to the, happy to hear from you, {fct} authorities.]]), {sys=system.cur(), shp=derelict:ship(), fct=rndfact}))
+         derelict_msg(gtitle, fmt.f(_([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced according to your ship AI, {shipai}! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging and contact the {fct} authorities. Your reputation with them has slightly improved.]]), {shipai=tut.ainame(), fct=rndfact}), fmt.f(_([[In the {sys} system you found a very rare antique derelict {shp} and reported it to the, happy to hear from you, {fct} authorities.]]), {sys=system.cur(), shp=derelict:ship(), fct=rndfact}))
          faction.modPlayerSingle(rndfact, 2, "script")
       end,
    }
