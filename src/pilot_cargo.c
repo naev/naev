@@ -62,10 +62,10 @@ int pilot_cargoFree( const Pilot* p )
  *    @param src Source pilot.
  *    @return 0 on success.
  */
-int pilot_cargoMoveRaw( Pilot* dest, Pilot* src )
+int pilot_cargoMoveRaw( Pilot *dest, Pilot *src )
 {
    /* Copy over. */
-   for (int i=0; i<array_size(src->commodities); i++) {
+   for (int i=array_size(src->commodities)-1; i>=0; i--) {
       const PilotCommodity *pc = &src->commodities[i];
       pilot_cargoAddRaw( dest, pc->commodity, pc->quantity, pc->id );
       pilot_cargoRmRaw( src, pc->commodity, pc->quantity, 1 );
