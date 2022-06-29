@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-06-29 15:21+0000\n"
+"PO-Revision-Date: 2022-06-29 21:21+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -29725,13 +29725,11 @@ msgid_plural ""
 msgstr[0] ""
 "Singular\n"
 "{msg}\n"
-"\n"
 "Esta acción sobornará a {n} {fct_list} piloto.\n"
 "Tienes {credits}. ¿Pagar #r{price}#0?"
 msgstr[1] ""
 "Plural\n"
 "{msg}\n"
-"\n"
 "Esta acción sobornará a {n} {fct_list} pilotos.\n"
 "Tienes {credits}. ¿Pagar #r{price}#0?"
 
@@ -29762,22 +29760,14 @@ msgstr "Abres un canal de comunicación con {plt}."
 #: dat/comm.lua:180 dat/comm.lua:189
 msgid "Bribe {n} nearby {fct_list} pilot"
 msgid_plural "Bribe {n} nearby {fct_list} pilots"
-msgstr[0] ""
-"Singular\n"
-"Sobornar {n} piloto {fct_list} cercano"
-msgstr[1] ""
-"Plural\n"
-"Sobornar {n} pilotos {fct_list} cercanos"
+msgstr[0] "Sobornar {n} piloto {fct_list} cercano"
+msgstr[1] "Sobornar {n} pilotos {fct_list} cercanos"
 
 #: dat/comm.lua:199
 msgid "Bribe fleet ({n} pilot)"
 msgid_plural "Bribe fleet ({n} pilots)"
-msgstr[0] ""
-"Singular\n"
-"Sobornar flota ({n} piloto)"
-msgstr[1] ""
-"Plural\n"
-"Sobornar flota de ({n} pilotos)"
+msgstr[0] "Sobornar flota ({n} piloto)"
+msgstr[1] "Sobornar flota de ({n} pilotos)"
 
 #: dat/comm.lua:205
 msgid "Bribe this pilot"
@@ -33030,7 +33020,7 @@ msgid ""
 "the action! I feel like I'm in Heaven!\""
 msgstr ""
 "\"Este lugar es totalmente lo que pensé que sería. ¡Las luces, los sonidos, "
-"la acción! ¡Me siento como en el Cielo\"!"
+"la acción! ¡Me siento como en el Cielo!\""
 
 #: dat/events/minerva/station.lua:62
 msgid ""
@@ -33058,7 +33048,7 @@ msgid ""
 "them all, but that was worth every credit!\""
 msgstr ""
 "\"He jugado 20 manos de blackjack con ese Pollo Cyborg. ¡Puede que las haya "
-"perdido todas, pero ha valido la pena cada crédito!"
+"perdido todas, pero ha valido la pena cada crédito!\""
 
 #: dat/events/minerva/station.lua:70
 msgid ""
@@ -36924,7 +36914,7 @@ msgstr ""
 "en la que un bombardero casi me hace volar en pedazos fuera del alcance de "
 "mis torretas láser. Por suerte, conseguí escapar a duras penas a un planeta "
 "cercano para poder huir del piloto. No he tenido ese problema desde que "
-"equipé una torreta  con lanzamisiles.\""
+"equipé una torreta con lanzamisiles.\""
 
 #: dat/events/neutral/npc.lua:262
 msgid ""
@@ -53101,7 +53091,7 @@ msgstr ""
 #. for now I just swapped "Pirate" for "Dreamer Clan"
 #: dat/missions/flf/dvk/flf_dvk02.lua:36
 msgid "You call those weapons? They look more like babies' toys to me!"
-msgstr "¿Llamas a eso armas? A mí me parecen más bien juguetes para bebés."
+msgstr "¿Llamas a eso armas? ¡A mí me parecen más bien juguetes para bebés!"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:37
 msgid "What a hopeless weakling!"
@@ -57361,7 +57351,7 @@ msgstr "¿Qué está pasando? ¡No está respondiendo!"
 
 #: dat/missions/minerva/kex3.lua:621
 msgid "What the hell?!"
-msgstr "¿Qué demonios?"
+msgstr "¡¿Qué demonios?!"
 
 #: dat/missions/minerva/kex4.lua:58
 msgid ""
@@ -77477,12 +77467,19 @@ msgid ""
 "fleet. As a reward, they give you twice the sum of credits they promised to "
 "you."
 msgstr ""
+"Al aterrizar, ves a Arnold Smith esperándote. Te explica que el Barón quedó "
+"tan impresionado por la batalla que firmó un contrato actualizado con los "
+"Astilleros Nexus, consolidando a Nexus como el principal proveedor de barcos "
+"para su flota. Como recompensa, te dan el doble de la suma de créditos que "
+"te prometieron."
 
 #: dat/missions/shark/sh01_corvette.lua:104
 msgid ""
 "You helped Nexus Shipyards fake a demonstration by allowing a Lancelot to "
 "disable your Destroyer class ship."
 msgstr ""
+"Ayudaste a los Astilleros Nexus a fingir una demostración permitiendo que un "
+"Lancelot inutilizara tu nave de clase Destructor."
 
 #. Jumping in Toaxis for the battle with a Destroyer class ship
 #. spawns the Shark
@@ -77490,16 +77487,16 @@ msgstr ""
 #. you killed the shark
 #: dat/missions/shark/sh01_corvette.lua:149
 msgid "You destroyed the Lancelot."
-msgstr ""
+msgstr "Has destruido el Lancelot."
 
 #: dat/missions/shark/sh02_tapping.lua:54
 msgid "Arnold Smith is here. Perhaps he might have another job for you."
-msgstr ""
+msgstr "Arnold Smith está aquí. Tal vez podría tener otro trabajo para tí."
 
 #. the chances you have to get an ambush
 #: dat/missions/shark/sh02_tapping.lua:61
 msgid "Nexus Shipyards needs you (again)"
-msgstr ""
+msgstr "Los Astilleros Nexus te necesitan (de nuevo)"
 
 #: dat/missions/shark/sh02_tapping.lua:61
 msgid ""
@@ -77527,10 +77524,34 @@ msgid ""
 "delivery, so you almost certainly won't be implicated. What do you say? Is "
 "this something you can do?\""
 msgstr ""
+"Te sientas en la mesa de Smith y le preguntas si tiene un trabajo para ti. "
+"\"Por supuesto\", responde. \"Pero esta vez, es... bueno...\n"
+"    \"Escucha, tengo que ponerte en antecedentes. Como sabes, los diseños de "
+"Nexus se utilizan en muchos ejércitos pequeños. El Imperio es sin duda "
+"nuestro mayor cliente, pero la Frontera también hace un uso notable de "
+"nuestro diseño Lancelot, al igual que muchos sistemas independientes. Aun "
+"así, la competencia es dura; el diseño Vendetta de la Casa Dvaered, por "
+"ejemplo, es bastante popular entre la FLF, ironicamente.\n"
+"    \"Pero las cosas acaban de empeorar un poco para nosotros: parece que la "
+"Casa Sirio también quiere entrar en el negocio de la construcción naval, y "
+"la Frontera es el principal objetivo. Si tienen éxito, el diseño del "
+"Lancelot podría ser expulsado por completo del espacio Fronter, y nos "
+"veríamos aplastados en ese mercado entre la Casa Dvaered y la Casa Sirio. "
+"Claro que la FLF seguiría utilizando algunos Calma, pero sería un negocio "
+"simbólico en el mejor de los casos, y sin mencionar que las autoridades "
+"empezarían a asociarnos con el terrorismo.\n"
+"    \"Así que hemos realizado un poco de espionaje. Tenemos un agente que ha "
+"grabado algunas conversaciones, esperemos que reveladoras, entre un gerente "
+"de ventas de la Casa Sirio y representantes de la Frontera. Todo lo que "
+"necesitamos es que te reúnas con el agente, consigas las grabaciones y me "
+"las traigas en {pnt} en el sistema {sys}.\" Levantas una ceja.\n"
+"    \"No es exactamente legal. Dicho esto, tú sólo haces la entrega, así que "
+"casi seguro que no estarás implicado. ¿Qué me dices? ¿Es algo que puedes "
+"hacer?\""
 
 #: dat/missions/shark/sh02_tapping.lua:67
 msgid "The job"
-msgstr ""
+msgstr "El trabajo"
 
 #: dat/missions/shark/sh02_tapping.lua:67
 msgid ""
@@ -77538,42 +77559,45 @@ msgid ""
 "yes, and I suppose I should mention that I'm known as 'James Neptune' to the "
 "agent. Good luck!\""
 msgstr ""
+"\"Me alegro de oírlo. Ve a reunirte con nuestro agente en {pnt} en el "
+"sistema {sys}. Ah, sí, y supongo que debo mencionar que el agente me conoce "
+"como 'James Neptune'. ¡Buena suerte!\""
 
 #: dat/missions/shark/sh02_tapping.lua:69
 #: dat/missions/shark/sh02_tapping.lua:72
 msgid "Unfair Competition"
-msgstr ""
+msgstr "Competencia Desleal"
 
 #: dat/missions/shark/sh02_tapping.lua:71
 msgid "Nexus Shipyards is in competition with House Sirius."
-msgstr ""
+msgstr "Los Astilleros Nexus compiten con la Casa Sirio."
 
 #: dat/missions/shark/sh02_tapping.lua:73
 msgid "Land on {pnt} in {sys} and meet the Nexus agent"
-msgstr ""
+msgstr "Aterriza en {pnt} en {sys} y reunete con el agente Nexus"
 
 #: dat/missions/shark/sh02_tapping.lua:74
 msgid "Bring the recording back to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Devuelve la grabación a {pnt} en el sistema {sys}"
 
 #: dat/missions/shark/sh02_tapping.lua:83
 msgid "\"OK, sorry to bother you.\""
-msgstr ""
+msgstr "\"De acuerdo, perdona que te moleste.\""
 
 #. The player is landing on the mission planet to get the box
 #: dat/missions/shark/sh02_tapping.lua:91
 msgid "Nexus's agent"
-msgstr ""
+msgstr "Agente de Nexus"
 
 #: dat/missions/shark/sh02_tapping.lua:91
 msgid "This guy seems to be the agent Arnold Smith was talking about."
-msgstr ""
+msgstr "Este tipo parece ser el agente del que hablaba Arnold Smith."
 
 #. Job is done
 #: dat/missions/shark/sh02_tapping.lua:97
 #: dat/missions/shark/sh03_hailing.lua:81
 msgid "Good job"
-msgstr ""
+msgstr "Buen trabajo"
 
 #: dat/missions/shark/sh02_tapping.lua:97
 msgid ""
@@ -77581,6 +77605,9 @@ msgid ""
 "just need to spend a few hectoseconds analyzing these recordings. See if you "
 "can find me in the bar soon; I might have another job for you.\""
 msgstr ""
+"El empleado de Nexus te saluda al llegar al suelo. \"¡Excelente! Sólo tendré "
+"que dedicar unos cuantos hectosegundos a analizar estas grabaciones. A ver "
+"si me encuentras pronto en el bar; puede que tenga otro trabajo para ti.\""
 
 #: dat/missions/shark/sh02_tapping.lua:103
 msgid ""
@@ -77588,12 +77615,15 @@ msgid ""
 "competition from House Sirius. Arnold Smith said to meet him in the bar "
 "soon; he may have another job for you."
 msgstr ""
+"Ayudaste a los Astilleros Nexus a reunir información en un intento de "
+"sabotear la competencia de la Casa Sirio. Arnold Smith dijo que te reunieras "
+"con él en el bar en breve; puede que tenga otro trabajo para ti."
 
 #. Ambush !
 #. the probability of an ambush goes up when you cross a system without meeting any ennemy
 #: dat/missions/shark/sh02_tapping.lua:121
 msgid "Time to go back to Alteris"
-msgstr ""
+msgstr "Hora de volver a Alteris"
 
 #: dat/missions/shark/sh02_tapping.lua:121
 msgid ""
@@ -77601,27 +77631,29 @@ msgid ""
 "leave, he suggests that you stay vigilant. \"They might come after you,\" he "
 "says."
 msgstr ""
+"Te acercas al agente y obtienes el paquete sin problemas. Antes de salir, te "
+"sugiere que estés atento. \"Podrían venir a por ti\", dice."
 
 #: dat/missions/shark/sh02_tapping.lua:122
 msgid "Recorder"
-msgstr ""
+msgstr "Grabadora"
 
 #: dat/missions/shark/sh02_tapping.lua:122
 msgid "A holophone recorder."
-msgstr ""
+msgstr "Una grabadora holofónica."
 
 #. adding an useless Llama
 #: dat/missions/shark/sh02_tapping.lua:346
 msgid "Amateur Mercenary"
-msgstr ""
+msgstr "Mercenario Aficionado"
 
 #: dat/missions/shark/sh03_hailing.lua:46
 msgid "This guy is looking more and more shifty."
-msgstr ""
+msgstr "Este tipo se ve cada vez más sospechoso."
 
 #: dat/missions/shark/sh03_hailing.lua:52
 msgid "A new job"
-msgstr ""
+msgstr "Un nuevo trabajo"
 
 #: dat/missions/shark/sh03_hailing.lua:52
 msgid ""
@@ -77635,33 +77667,45 @@ msgid ""
 "{next_pnt} in the {next_sys} system. He will understand.\n"
 "    \"Can I count on you to do this for me?\""
 msgstr ""
+"\"¡Hola, encantado de conocerte de nuevo! Según la información que nos has "
+"traído, las negociaciones entre los funcionarios de la Frontera y la Casa "
+"Sirio están avanzando muy rápidamente. Tenemos que actuar ahora. Hay un "
+"miembro del Consejo de la Frontera que, por razones políticas, podría "
+"ayudarnos.\n"
+"\"No puedo enviarle un mensaje sin ser visto por los Sirios, así que "
+"necesito que te pongas en contacto con él. Probablemente esté pilotando su "
+"Hawking en el sistema {sys}. Ve allí, llámalo y hazle saber que tengo que "
+"verle en {next_pnt} en el sistema {next_sys}. Él lo entenderá.\n"
+"    \"¿Puedo contar con usted para hacer esto por mí?\""
 
 #: dat/missions/shark/sh03_hailing.lua:56
 #: dat/missions/shark/sh04_meeting.lua:57
 msgid "Time to go"
-msgstr ""
+msgstr "Hora de partir"
 
 #: dat/missions/shark/sh03_hailing.lua:56
 msgid ""
 "\"Fantastic! I am known as Donald Ulnish to the Council member. Good luck.\""
 msgstr ""
+"\"¡Fantástico! El miembro del Consejo me conoce como Donald Ulnish. Buena "
+"suerte.\""
 
 #: dat/missions/shark/sh03_hailing.lua:58
 #: dat/missions/shark/sh03_hailing.lua:61
 msgid "Invitation"
-msgstr ""
+msgstr "Invitación"
 
 #: dat/missions/shark/sh03_hailing.lua:60
 msgid "Nexus Shipyards asks you to help initiate a secret meeting"
-msgstr ""
+msgstr "Los Astilleros Nexus te piden ayuda para impulsar una reunión secreta"
 
 #: dat/missions/shark/sh03_hailing.lua:62
 msgid "Go to {sys}, find and hail the Air Force One"
-msgstr ""
+msgstr "Ve a {sys}, encuentra y saluda al Air Force One"
 
 #: dat/missions/shark/sh03_hailing.lua:72
 msgid "\"OK, come back when you are interested.\""
-msgstr ""
+msgstr "\"Vale, vuelve cuando estés interesado.\""
 
 #: dat/missions/shark/sh03_hailing.lua:81
 msgid ""
@@ -77669,6 +77713,9 @@ msgid ""
 "\"Fantastic! I have another mission for you; meet me in the bar when you are "
 "ready to bring me to {pnt} in the {sys} system.\""
 msgstr ""
+"Smith parece relajarse cuando le dices que todo ha ido según lo previsto. \"¡"
+"Fantástico! Tengo otra misión para ti; reúnete conmigo en el bar cuando "
+"estés listo para llevarme a {pnt} en el sistema {sys}.\""
 
 #: dat/missions/shark/sh03_hailing.lua:87
 msgid ""
@@ -77677,16 +77724,20 @@ msgid ""
 "to meet him in the bar on Darkshed when you are ready to transport him to "
 "Curie."
 msgstr ""
+"Has ayudado a los Astilleros Nexus a iniciar una reunión secreta con un "
+"miembro del Consejo de la Frontera. Arnold Smith ha dicho que tiene otra "
+"misión para ti y que te reúnas con él en el bar de Darkshed cuando estés "
+"preparado para transportarlo a Curie."
 
 #. the system where the player must look for the Hawking
 #: dat/missions/shark/sh03_hailing.lua:95
 msgid "Air Force One"
-msgstr ""
+msgstr "Air Force One"
 
 #. The player takes contact with the Hawking
 #: dat/missions/shark/sh03_hailing.lua:104
 msgid "Time to go back to {pnt}"
-msgstr ""
+msgstr "Hora de volver a {pnt}"
 
 #: dat/missions/shark/sh03_hailing.lua:104
 msgid ""
@@ -77694,49 +77745,52 @@ msgid ""
 "from Donald Ulnish, he redirects you to one of his officers who takes the "
 "message. Now, back to {pnt}."
 msgstr ""
+"El capitán del Hawking te responde. Cuando dices que tienes un mensaje de "
+"Donald Ulnish, te redirige a uno de sus oficiales que toma el mensaje. "
+"Ahora, de vuelta a {pnt}."
 
 #: dat/missions/shark/sh04_meeting.lua:47
 msgid "He is waiting for you."
-msgstr ""
+msgstr "Él te está esperando."
 
 #: dat/missions/shark/sh04_meeting.lua:55
 msgid "\"OK, are you ready for the travel to {pnt} in the {sys} system?\""
-msgstr ""
+msgstr "\"Bien, ¿estás listo para el viaje a {pnt} en el sistema {sys}?\""
 
 #: dat/missions/shark/sh04_meeting.lua:57
 msgid "\"Let's go, then.\""
-msgstr ""
+msgstr "\"Vamos, entonces.\""
 
 #: dat/missions/shark/sh04_meeting.lua:61
 msgid "Nexus Shipyards asks you to take part in a secret meeting"
-msgstr ""
+msgstr "Los Astilleros Nexus te piden que participes en una reunión secreta"
 
 #: dat/missions/shark/sh04_meeting.lua:63
 msgid "Go to the {sys} system and land on {pnt}"
-msgstr ""
+msgstr "Ve al sistema {sys} y aterriza en {pnt}"
 
 #: dat/missions/shark/sh04_meeting.lua:64
 msgid "Bring Smith back to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Trae a Smith de vuelta a {pnt} en el sistema {sys}"
 
 #: dat/missions/shark/sh04_meeting.lua:70
 #: dat/missions/shark/sh06_arandon.lua:64
 msgid "Smith"
-msgstr ""
+msgstr "Smith"
 
 #: dat/missions/shark/sh04_meeting.lua:70
 #: dat/missions/shark/sh06_arandon.lua:64
 msgid "Arnold Smith of Nexus Shipyards."
-msgstr ""
+msgstr "Arnold Smith de Astilleros Nexus."
 
 #: dat/missions/shark/sh04_meeting.lua:76
 msgid "\"OK, come back when you are ready.\""
-msgstr ""
+msgstr "\"De acuerdo, vuelve cuando estés preparado.\""
 
 #. The player is landing on the mission planet
 #: dat/missions/shark/sh04_meeting.lua:84
 msgid "The meeting"
-msgstr ""
+msgstr "La reunión"
 
 #: dat/missions/shark/sh04_meeting.lua:84
 msgid ""
@@ -77747,11 +77801,17 @@ msgid ""
 "improve Nexus sales in the Frontier, but he was able to stop House Sirius "
 "from entering the picture, at least."
 msgstr ""
+"Al aterrizar, ves a un grupo de personas que estaban esperando tu nave. "
+"Smith los llama y les dice que esperen en la nave mientras él va a una parte "
+"privada del bar.\n"
+"Unos instantes después, vuelve y explica que no ha podido mejorar las ventas "
+"de Nexus en la Frontera, pero que al menos ha podido evitar que la Casa "
+"Sirio entre en escena."
 
 #. Job is done
 #: dat/missions/shark/sh04_meeting.lua:95
 msgid "End of mission"
-msgstr ""
+msgstr "Fin de la misión"
 
 #: dat/missions/shark/sh04_meeting.lua:95
 msgid ""
@@ -77759,12 +77819,18 @@ msgid ""
 "that in our kind of job. Sometimes it works and sometimes it fails. It's not "
 "our fault. Anyway, here is your pay.\""
 msgstr ""
+"Smith sale de tu nave y te mira, sonriendo. \"Ya sabes, es así en nuestro "
+"tipo de trabajo. A veces funciona y a veces falla. No es culpa nuestra. De "
+"todos modos, aquí tienes tu paga.\""
 
 #: dat/missions/shark/sh04_meeting.lua:101
 msgid ""
 "You transported Arnold Smith to a secret meeting for Nexus Shipyards. The "
 "meeting supposedly did not go as well as he hoped, but was a partial success."
 msgstr ""
+"Transportaste a Arnold Smith a una reunión secreta para los Astilleros "
+"Nexus. Se supone que la reunión no fue tan bien como esperaba, pero fue un "
+"éxito parcial."
 
 #. This timer will ensure that the hacked drones don't reveal themselves during the jumping
 #. Ambush !
@@ -77777,13 +77843,13 @@ msgstr ""
 #. only if this happens a few time after the jumping/taking off
 #: dat/missions/shark/sh04_meeting.lua:146
 msgid "Hacked Drone"
-msgstr ""
+msgstr "Dron Hackeado"
 
 #. Only one drone needs to trigger this function.
 #. Surprise message
 #: dat/missions/shark/sh04_meeting.lua:155
 msgid "What is going on?"
-msgstr ""
+msgstr "¿Qué está pasando?"
 
 #: dat/missions/shark/sh04_meeting.lua:155
 msgid ""
@@ -77793,14 +77859,19 @@ msgid ""
 "wanted by the authorities, you are hereby granted authorization to destroy "
 "it.\""
 msgstr ""
+"De repente, un Dron Za'lek empieza a atacarte. Mientras te preguntas qué "
+"hacer, escuchas una transmisión desde una nave Za'lek remota. \"Atención, "
+"por favor, parece que algunos de nuestros drones se han vuelto locos. Si un "
+"dron te ataca y no eres buscado por las autoridades, tienes autorización "
+"para destruirlos.\""
 
 #: dat/missions/shark/sh05_flf.lua:47
 msgid "It looks like he has yet another job for you."
-msgstr ""
+msgstr "Parece que tiene otro trabajo para ti."
 
 #: dat/missions/shark/sh05_flf.lua:53
 msgid "Nice to see you again!"
-msgstr ""
+msgstr "¡Me alegro de verte de nuevo!"
 
 #: dat/missions/shark/sh05_flf.lua:53
 msgid ""
@@ -77813,6 +77884,16 @@ msgid ""
 "doesn't get out that we're supporting terrorists by selling them ships. What "
 "do you say? Can you help us once again?\""
 msgstr ""
+"\"¡Hola, {player}! ¿Estás preparado para participar en otra misión de venta?"
+"\n"
+"    \"Como sabes, la FLF es una gran usuaria de nuestras naves, pero también "
+"lo es de las naves Dvaered, principalmente del diseño Vendetta. Dado que la "
+"Casa Dvaered es enemiga de la FLF, vemos esto como una oportunidad para "
+"ampliar nuestras ventas: queremos convencer a los líderes de la FLF de que "
+"compren más naves Nexus y menos naves Dvaered. Esto será a través de una "
+"falsa compañía de contrabando para que no se corra la voz de que estamos "
+"apoyando a los terroristas vendiéndoles naves. ¿Qué dices? ¿Puedes ayudarnos "
+"una vez más?\""
 
 #: dat/missions/shark/sh05_flf.lua:56
 msgid ""
@@ -77824,31 +77905,40 @@ msgid ""
 "response. If they won't talk, disable and board them so you can force them "
 "to listen. Pretty simple, really. Good luck!\""
 msgstr ""
+"\"¡Perfecto! Entonces, esta misión es bastante simple: Quiero que les "
+"transmitas esta propuesta\". Te entrega un chip de datos. \"Es una solicitud "
+"para reunirse con los líderes de la FLF en {sys}. Si todo va bien, te pediré "
+"que me lleves allí a continuación.\n"
+"    \"Cualquier nave de la FLF debería hacer el trabajo. Intenta llamarles y "
+"ver si obtienes respuesta. Si no hablan, desactívalos y abórdalos para "
+"obligarlos a escuchar. Bastante simple, en realidad. ¡Buena suerte!\""
 
 #: dat/missions/shark/sh05_flf.lua:59 dat/missions/shark/sh05_flf.lua:62
 msgid "The FLF Contact"
-msgstr ""
+msgstr "El Contacto Con FLF"
 
 #: dat/missions/shark/sh05_flf.lua:61
 msgid "Nexus Shipyards is looking to strike a better deal with the FLF."
 msgstr ""
+"Los Astilleros Nexus están tratando de llegar a un mejor acuerdo con la FLF."
 
 #: dat/missions/shark/sh05_flf.lua:63
 msgid "Hail any FLF ship, or disable and board one if necessary"
 msgstr ""
+"Llama a cualquier nave de la FLF, o desactiva y aborda uno si es necesario"
 
 #: dat/missions/shark/sh05_flf.lua:64 dat/missions/shark/sh06_arandon.lua:58
 msgid "Go back to {pnt} in {sys}"
-msgstr ""
+msgstr "Vuelve a {pnt} en {sys}"
 
 #: dat/missions/shark/sh05_flf.lua:72
 msgid "\"Alright, then. I'll see if anyone else is interested.\""
-msgstr ""
+msgstr "\"Muy bien, entonces. Veré si alguien más está interesado.\""
 
 #. Job is done
 #: dat/missions/shark/sh05_flf.lua:80
 msgid "Good news"
-msgstr ""
+msgstr "Buenas noticias"
 
 #: dat/missions/shark/sh05_flf.lua:80
 msgid ""
@@ -77856,16 +77946,22 @@ msgid ""
 "FLF leaders are indeed interested. Meet me at the bar whenever you're ready "
 "to take me to {sys}. And here's your payment.\""
 msgstr ""
+"Smith está claramente satisfecho con los resultados. \"He recibido noticias "
+"de que los líderes de la FLF están efectivamente interesados. Encuéntrame en "
+"el bar cuando estés listo para llevarme a {sys}. Aquí está tu pago.\""
 
 #: dat/missions/shark/sh05_flf.lua:83
 msgid ""
 "You helped Arnold Smith establish a contact with the FLF. He said to meet "
 "you at the bar on Alteris when you're ready to take him to Arandon."
 msgstr ""
+"Ayudaste a Arnold Smith a establecer un contacto con la FLF. Dijo que nos "
+"encontráramos en el bar de Alteris cuando estuvieras listo para llevarlo a "
+"Arandon."
 
 #: dat/missions/shark/sh05_flf.lua:91
 msgid "Peaceful Resolution"
-msgstr ""
+msgstr "Resolución Pacífica"
 
 #: dat/missions/shark/sh05_flf.lua:91
 msgid ""
@@ -77873,10 +77969,13 @@ msgid ""
 "going on and transmit the proposal, after which you both go your separate "
 "ways."
 msgstr ""
+"La nave FLF te responde pacíficamente. Le explicas los detalles de lo que "
+"ocurre y les transmites la propuesta, tras lo cual ambos tomáis caminos "
+"distintos."
 
 #: dat/missions/shark/sh05_flf.lua:101
 msgid "Some Resistance Encountered"
-msgstr ""
+msgstr "Algunas Resistencias Encontradas"
 
 #: dat/missions/shark/sh05_flf.lua:101
 msgid ""
@@ -77884,36 +77983,41 @@ msgid ""
 "assure them that you're just here to talk. Eventually, you are able to give "
 "them a copy of the proposal and leave peacefully, for lack of a better word."
 msgstr ""
+"Los oficiales del FLF están claramente preparados para la batalla, pero "
+"después de someterlos, les aseguras que sólo estás aquí para hablar. Al "
+"final, consigues darles una copia de la propuesta y te vas pacíficamente, a "
+"falta de una palabra mejor."
 
 #: dat/missions/shark/sh06_arandon.lua:43
 msgid "He's waiting for you."
-msgstr ""
+msgstr "Te está esperando."
 
 #: dat/missions/shark/sh06_arandon.lua:49
 msgid "\"Is your ship ready for the dangers of the Nebula?\""
-msgstr ""
+msgstr "\"¿Está tu nave preparada para los peligros de la Nebulosa?\""
 
 #: dat/missions/shark/sh06_arandon.lua:51
 msgid "Go"
-msgstr ""
+msgstr "Ve"
 
 #: dat/missions/shark/sh06_arandon.lua:51
 msgid "Smith once again steps in your ship in order to go to a meeting."
-msgstr ""
+msgstr "Smith vuelve a entrar en tu nave para ir a una reunión."
 
 #: dat/missions/shark/sh06_arandon.lua:53
 #: dat/missions/shark/sh06_arandon.lua:56
 msgid "A Journey To {sys}"
-msgstr ""
+msgstr "Un Viaje A {sys}"
 
 #: dat/missions/shark/sh06_arandon.lua:55
 msgid ""
 "You are to transport Arnold Smith to {sys} so that he can talk about a deal."
 msgstr ""
+"Debes transportar a Arnold Smith a {sys} para que pueda hablar de un trato."
 
 #: dat/missions/shark/sh06_arandon.lua:57
 msgid "Go to {sys} and wait for the FLF ship, then hail and board it."
-msgstr ""
+msgstr "Ve a {sys} y espera a la nave FLF, luego llámala y abórdala."
 
 #: dat/missions/shark/sh06_arandon.lua:70
 msgid "...Or not"
@@ -77921,24 +78025,28 @@ msgstr ""
 
 #: dat/missions/shark/sh06_arandon.lua:70
 msgid "\"Come back when you are ready.\""
-msgstr ""
+msgstr "\"Vuelve cuando estés listo.\""
 
 #. Job is done
 #: dat/missions/shark/sh06_arandon.lua:79
 msgid "Well done!"
-msgstr ""
+msgstr "¡Bien hecho!"
 
 #: dat/missions/shark/sh06_arandon.lua:79
 msgid ""
 "Smith thanks you for the job well done. \"Here is your pay,\" he says. \"I "
 "will be in the bar if I have another task for you.\""
 msgstr ""
+"Smith te agradece el trabajo bien hecho. \"Aquí tienes tu paga\", dice. "
+"\"Estaré en el bar si tengo otra tarea para ti.\""
 
 #: dat/missions/shark/sh06_arandon.lua:85
 msgid ""
 "You transported Arnold Smith to a meeting with someone from the FLF. He said "
 "that he had good results."
 msgstr ""
+"Transportaste a Arnold Smith a una reunión con alguien de la FLF. Dijo que "
+"tuvo buenos resultados."
 
 #. Entering in Arandon in order to find the FLF Pacifier
 #. Lets unspawn everybody (if any)
@@ -77946,23 +78054,27 @@ msgstr ""
 #. Prevents the player from being impatient
 #: dat/missions/shark/sh06_arandon.lua:107
 msgid "Let's wait"
-msgstr ""
+msgstr "Esperemos"
 
 #: dat/missions/shark/sh06_arandon.lua:107
 msgid ""
 "\"Mm. It looks like the others have not arrived yet.\" Smith says. \"Just "
 "wait close to the jump point, they should arrive soon.\""
 msgstr ""
+"\"Mm. Parece que los otros no han llegado todavía\". Dice Smith. \"Espera "
+"cerca del punto de salto, deberían llegar pronto.\""
 
 #. hailing the pacifier
 #: dat/missions/shark/sh06_arandon.lua:122
 msgid "Hail"
-msgstr ""
+msgstr "Llamar"
 
 #: dat/missions/shark/sh06_arandon.lua:122
 msgid ""
 "The Pacifier commander answers you and stops his ship, waiting to be boarded."
 msgstr ""
+"El comandante del Calma te responde y detiene su nave, esperando ser "
+"abordado."
 
 #: dat/missions/shark/sh06_arandon.lua:134
 msgid ""
@@ -77971,6 +78083,10 @@ msgid ""
 "on his side. He mentions that he had good results with a smile on his face "
 "before directing you to take him back to {sys}."
 msgstr ""
+"Al subir a bordo, Arnold Smith insiste en entrar solo en la nave del FLF. "
+"Unos instantes después, vuelve con cara de satisfacción. Parece que esta vez "
+"la suerte está de su lado. Menciona que ha tenido buenos resultados con una "
+"sonrisa en la cara antes de indicarte que le lleves de vuelta a {sys}."
 
 #. Actually, I don't know how it could happened...
 #.
@@ -78005,34 +78121,34 @@ msgstr ""
 #: dat/missions/shark/sh07_pirates.lua:39
 #: dat/missions/shark/sh07_pirates.lua:95
 msgid "The Last Detail"
-msgstr ""
+msgstr "El Último Detalle"
 
 #. Will now pick systems between min and max jumps in distance
 #: dat/missions/shark/sh07_pirates.lua:49
 msgid "Houston, we have a problem!"
-msgstr ""
+msgstr "¡Houston, tenemos un problema!"
 
 #: dat/missions/shark/sh07_pirates.lua:66
 msgid "Perhaps it would be worthwhile to see if he has another job for you."
-msgstr ""
+msgstr "Tal vez valga la pena ver si tiene otro trabajo para ti."
 
 #. Initialization of dead pirate memory
 #. set the names of the pirates (and make sure they aren't duplicates)
 #: dat/missions/shark/sh07_pirates.lua:80
 msgid "{name} III"
-msgstr ""
+msgstr "{name} III"
 
 #: dat/missions/shark/sh07_pirates.lua:81
 msgid "{name} Jr."
-msgstr ""
+msgstr "{name} Jr."
 
 #: dat/missions/shark/sh07_pirates.lua:82
 msgid "{name} II"
-msgstr ""
+msgstr "{name} II"
 
 #: dat/missions/shark/sh07_pirates.lua:84
 msgid "The mission"
-msgstr ""
+msgstr "La misión"
 
 #: dat/missions/shark/sh07_pirates.lua:84
 msgid ""
@@ -78055,7 +78171,7 @@ msgstr ""
 
 #: dat/missions/shark/sh07_pirates.lua:88
 msgid "Very good"
-msgstr ""
+msgstr "Muy bien"
 
 #: dat/missions/shark/sh07_pirates.lua:88
 msgid ""
@@ -78071,29 +78187,41 @@ msgid ""
 "escorts, according to our records.\n"
 "    \"And that's about it! Come back for your fee when you have finished.\""
 msgstr ""
+"\"Así que, aquí están los detalles que hemos reunido sobre estos piratas:\n"
+"    \"{gawname} debe estar en {gawsys}, volando un Gawain. Parece estar de "
+"vacaciones, por lo que probablemente no sea capaz de defenderse y se "
+"limitará a huir.\n"
+"    \"{kername1} debería estar en {kersys1}, volando un Cernícalo. Creemos "
+"que tiene algunos escoltas.\n"
+"   \"{kername2} debería estar en {kersys2}, también volando un Cernícalo. "
+"También tiene escoltas, según nuestros registros.\n"
+"    \"Y finalmente, {godname} está en {godsys}. Ha robado y reforzado un "
+"Goddard recientemente, así que asegúrate de estar preparado para ello. "
+"También tiene escoltas, según nuestros registros.\n"
+"    \"¡Y eso es todo! Vuelve a por tus honorarios cuando hayas terminado.\""
 
 #: dat/missions/shark/sh07_pirates.lua:97
 msgid "Nexus Shipyards has tasked you with killing four pirates."
-msgstr ""
+msgstr "Los Astilleros Nexus te han encargado que mates a cuatro piratas."
 
 #: dat/missions/shark/sh07_pirates.lua:99
 msgid "Kill the four pirates"
-msgstr ""
+msgstr "Mata a los cuatro piratas"
 
 #: dat/missions/shark/sh07_pirates.lua:100
 msgid "Report back to {pnt} in {sys}"
-msgstr ""
+msgstr "Informa a {pnt} en {sys}"
 
 #: dat/missions/shark/sh07_pirates.lua:113
 msgid ""
 "\"I'm sorry to hear that. Don't hesitate to come back if you change your "
 "mind.\""
-msgstr ""
+msgstr "\"Lamento escuchar eso. No dudes en volver si cambias de opinión.\""
 
 #. Job is done
 #: dat/missions/shark/sh07_pirates.lua:121
 msgid "That was impressive"
-msgstr ""
+msgstr "Eso fue impresionante"
 
 #: dat/missions/shark/sh07_pirates.lua:121
 msgid ""
@@ -78104,27 +78232,37 @@ msgid ""
 "    He hands you a credit chip and what appears to be a Nexus Shipyards "
 "commemorative sandwich holder."
 msgstr ""
+"Smith espera tu llegada al puerto espacial. Cuando sales de tu nave, sonríe "
+"y se acerca a ti. \"Buen trabajo\", dice. \"Nuestro trato está asegurado, "
+"gracias a ti. Aquí tienes tu paga y algo extra por tu duro trabajo. Gracias "
+"por tu ayuda.\"\n"
+"    Te entrega un chip de créditos y lo que parece ser un porta bocadillos "
+"conmemorativo de los Astilleros Nexus."
 
 #: dat/missions/shark/sh07_pirates.lua:126
 msgid ""
 "You eliminated some pirates that were about to get in the way of Nexus "
 "Shipyards' business."
 msgstr ""
+"Has eliminado a algunos piratas que estaban a punto de entrometerse en el "
+"negocio de los Astilleros Nexus."
 
 #: dat/missions/shark/sh07_pirates.lua:271
 msgid ""
 "You have killed the four pirates. Now to return to {sys} and collect your "
 "payment..."
 msgstr ""
+"Has matado a los cuatro piratas. Ahora a regresa a {sys} y a cobrar tu "
+"pago..."
 
 #: dat/missions/sirius/achack/achack01.lua:38
 msgid "You see a young Fyrra man with a determined expression on his face."
-msgstr ""
+msgstr "Ves a un joven Fyrra con una expresión decidida en su rostro."
 
 #: dat/missions/sirius/achack/achack01.lua:42
 #: dat/missions/sirius/achack/achack01.lua:48
 msgid "A Sirian with a grudge"
-msgstr ""
+msgstr "Un Sirio con rencor"
 
 #: dat/missions/sirius/achack/achack01.lua:42
 msgid ""
@@ -78164,24 +78302,38 @@ msgid ""
 "mission on the public board? Oh well, it's none of your business. You "
 "accepted the job, now all that's left is to complete it."
 msgstr ""
+"\"¡Genial! Estaba a punto de perder la esperanza de encontrar a alguien con "
+"las suficientes agallas para hacer esto por mí. Bien, entonces, déjame "
+"contarte sobre tu objetivo. Ella es un miembro del escalafón Serra, y tiene "
+"el pelo largo castaño y los ojos azules. Normalmente se la puede encontrar "
+"en el espacio Sirio, creo que estará en {pnt} en el sistema {sys} ahora "
+"mismo. Vuelve a mí cuando esté muerta y te daré tu recompensa.\"\n"
+"    Harja abandona el bar del muelle espacial, satisfecho de haber "
+"encontrado por fin a alguien que acepte tu petición. Sin embargo, no puedes "
+"evitar preguntarse por qué intentaría contratar a un mercenario en un lugar "
+"como el Escurridor. Si el objetivo es un criminal tan peligroso, ¿no sería "
+"mejor publicar una misión de recompensa en el tablón público? Oh, bueno, no "
+"es asunto tuyo. Aceptaste el trabajo, ahora sólo queda completarlo."
 
 #: dat/missions/sirius/achack/achack01.lua:51
 msgid "Sirian Bounty"
-msgstr ""
+msgstr "Recompensa Siria"
 
 #: dat/missions/sirius/achack/achack01.lua:53
 msgid "Find your target on {pnt} and kill her"
-msgstr ""
+msgstr "Encuentra tu objetivo en {pnt} y mátala"
 
 #: dat/missions/sirius/achack/achack01.lua:55
 msgid ""
 "A Sirian man named Harja has hired you to dispatch a \"dangerous criminal\" "
 "who supposedly committed some kind of crime against him."
 msgstr ""
+"Un Sirio llamado Harja te ha contratado para que despaches a un \"peligroso "
+"criminal\" que supuestamente ha cometido algún tipo de delito contra él."
 
 #: dat/missions/sirius/achack/achack01.lua:65
 msgid "A Serra military officer"
-msgstr ""
+msgstr "Un oficial militar Serra"
 
 #: dat/missions/sirius/achack/achack01.lua:65
 msgid ""
@@ -78189,10 +78341,13 @@ msgid ""
 "officer! This can't be right. You'd better talk to her and find out what's "
 "going on."
 msgstr ""
+"Esta mujer coincide con la descripción que te dio Harja... ¡Pero es una "
+"oficial militar! Esto no puede ser cierto. Será mejor que hables con ella y "
+"averigües qué está pasando."
 
 #: dat/missions/sirius/achack/achack01.lua:78
 msgid "A Sirian military officer"
-msgstr ""
+msgstr "Un oficial militar Sirio"
 
 #: dat/missions/sirius/achack/achack01.lua:78
 msgid ""
@@ -78227,6 +78382,10 @@ msgid ""
 "mission, you told her about the plot, and she rewarded you by paying half "
 "what Harja would have paid for her death."
 msgstr ""
+"Un Sirio llamado Harja te contrató para matar a una oficial militar de "
+"Sirio, alegando que era una \"criminal peligrosa\". En lugar de llevar a "
+"cabo la misión, le hablaste del complot, y te recompensó pagando la mitad de "
+"lo que Harja habría pagado por su muerte."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -78311,15 +78470,15 @@ msgstr ""
 #: dat/missions/sirius/achack/achack04.lua:108
 #: dat/missions/sirius/achack/achack04.lua:110
 msgid "Joanne"
-msgstr ""
+msgstr "Joanne"
 
 #: dat/missions/sirius/achack/achack02.lua:52
 msgid "This is Joanne, the woman you were hired to assassinate."
-msgstr ""
+msgstr "Esta es Joanne, la mujer que tenias que asesinar por contrato."
 
 #: dat/missions/sirius/achack/achack02.lua:54
 msgid "The Serra military officer"
-msgstr ""
+msgstr "El oficial militar Serra"
 
 #: dat/missions/sirius/achack/achack02.lua:54
 msgid ""
@@ -78333,6 +78492,9 @@ msgid ""
 "myself under threat from mercenary assassins. Have you reconsidered my "
 "offer? Let me tell you again what I need.\""
 msgstr ""
+"\"Hola de nuevo, {player}\", te saluda Joanne. \"Me temo que todavía me "
+"encuentro bajo la amenaza de los asesinos mercenarios. ¿Has reconsiderado mi "
+"oferta? Deja que te diga de nuevo lo que necesito.\""
 
 #: dat/missions/sirius/achack/achack02.lua:72
 msgid ""
@@ -78371,10 +78533,21 @@ msgid ""
 "reward you, of course. Let's see... Another 750,000 credits seems a fair "
 "sum. What do you think, are you willing to do it?\""
 msgstr ""
+"\"Verás, esta es la situación\", continúa. \"Mis deberes como oficial de la "
+"administración Siria me obliga a visitar varios puestos militares en todo el "
+"espacio Sirio. Es un largo viaje cada vez, pero eso viene con el trabajo. El "
+"problema es que los asesinos de Harja pueden tener muchas oportunidades de "
+"emboscarme en el camino. He recibido entrenamiento de combate, por supuesto, "
+"como cualquier otro soldado Serra, pero me temo que tengo poca experiencia "
+"de lucha real, y no estoy seguro de poder sobrevivir a un ataque sin ayuda. "
+"Tú, sin embargo, pareces haber visto bastante acción. Si me escoltaras "
+"mientras hago mis rondas, me sentiría mucho más seguro. Puedo recompensarte, "
+"por supuesto. Veamos... Otros 750.000 créditos parece una suma justa. ¿Qué "
+"te parece, estás dispuesto a hacerlo?\""
 
 #: dat/missions/sirius/achack/achack02.lua:80
 msgid "Joanne's escort"
-msgstr ""
+msgstr "Escolta de Joanne"
 
 #: dat/missions/sirius/achack/achack02.lua:80
 msgid ""
@@ -78402,20 +78575,22 @@ msgid ""
 "Joanne needs you to escort her ship and fight off mercenaries sent to kill "
 "her."
 msgstr ""
+"Joanne necesita que escoltes su nave y luches contra los mercenarios "
+"enviados a matarla."
 
 #. She "jumped" into the current system by taking off.
 #: dat/missions/sirius/achack/achack02.lua:96
 #: dat/missions/sirius/achack/achack02.lua:124
 msgid "Harja's Vengeance"
-msgstr ""
+msgstr "Venganza de Harja"
 
 #: dat/missions/sirius/achack/achack02.lua:97
 msgid "Follow Joanne's ship"
-msgstr ""
+msgstr "Sigue la nave de Joanne"
 
 #: dat/missions/sirius/achack/achack02.lua:98
 msgid "Defeat Joanne's attackers"
-msgstr ""
+msgstr "Derrota a los atacantes de Joanne"
 
 #. Land hook.
 #. Death hook for ambushers.
@@ -78423,26 +78598,28 @@ msgstr ""
 #: dat/missions/sirius/achack/achack02.lua:114
 #: dat/missions/sirius/achack/achack02.lua:258
 msgid "Another stop successfully reached"
-msgstr ""
+msgstr "Otra parada alcanzada con éxito"
 
 #: dat/missions/sirius/achack/achack02.lua:124
 msgid "Land on Sroolu to get your reward"
-msgstr ""
+msgstr "Aterriza en Sroolu para obtener tu recompensa"
 
 #. Enter hook.
 #: dat/missions/sirius/achack/achack02.lua:127
 #: dat/missions/sirius/achack/achack02.lua:151
 msgid "You didn't follow Joanne!"
-msgstr ""
+msgstr "¡No has seguido a Joanne!"
 
 #: dat/missions/sirius/achack/achack02.lua:127
 msgid ""
 "You landed on a planet Joanne didn't land on. Your mission is a failure!"
 msgstr ""
+"Has aterrizado en un planeta en el que Joanne no ha aterrizado. ¡Tu misión "
+"es un fracaso!"
 
 #: dat/missions/sirius/achack/achack02.lua:131
 msgid "One damsel, safe and sound"
-msgstr ""
+msgstr "Una damisela, sana y salva"
 
 #: dat/missions/sirius/achack/achack02.lua:131
 msgid ""
@@ -78459,11 +78636,24 @@ msgid ""
 "    \"Thank you, {player},\" Joanne says, \"I appreciate it. Well, I guess I "
 "should start at the beginning.\""
 msgstr ""
+"Después de que ambos aterriceis vuestras naves, te encuentras con Joanne en "
+"el bar del puerto espacial.\n"
+"    \"¡Uf! Esta ha sido sin duda la ronda más emocionante que he hecho hasta "
+"la fecha. Gracias {player}, probablemente te debo la vida. Te mereces con "
+"creces tu pago, ya he arreglado la transferencia\". Joanne duda, pero luego "
+"aparentemente se decide. \"De hecho, ¿quieres sentarte un rato? Creo que te "
+"mereces saber de qué va todo este asunto de Harja. Y para ser honesta, tengo "
+"ganas de hablar con alguien sobre esto, y viendo que ya estás involucrado de "
+"todos modos...\"\n"
+"    Decides sentarte y escuchar la historia de Joanne, no en último lugar "
+"porque tú mismo tienes bastante curiosidad.\n"
+"    \"Gracias, {player}\", dice Joanne, \"Te lo agradezco. Bueno, supongo "
+"que debería empezar por el principio.\""
 
 #: dat/missions/sirius/achack/achack02.lua:135
 #: dat/missions/sirius/achack/achack02.lua:137
 msgid "Joanne and Harja"
-msgstr ""
+msgstr "Joanne y Harja"
 
 #: dat/missions/sirius/achack/achack02.lua:135
 msgid ""
@@ -78528,27 +78718,37 @@ msgid ""
 "change all of her grades to perfect scores in an attempt to sabotage her by "
 "making her look like a cheater."
 msgstr ""
+"Joanne, la oficial militar de Serra a la que Harja intentó contratar para "
+"que la asesinaras, te reclutó para que la ayudaras contra los posibles "
+"asesinos. Por el camino, te explicó que Harja era un compañero suyo en la "
+"Academia Superior. Según ella, Harja había pirateado el ordenador principal "
+"de la academia para cambiar todas sus calificaciones por notas perfectas en "
+"un intento de sabotearla haciéndola parecer una tramposa."
 
 #: dat/missions/sirius/achack/achack02.lua:151
 msgid ""
 "You jumped to a system before Joanne did, or you jumped to a different "
 "system than Joanne. Your mission is a failure!"
 msgstr ""
+"Has saltado a un sistema antes que Joanne, o has saltado a un sistema "
+"diferente al de Joanne. ¡Tu misión es un fracaso!"
 
 #: dat/missions/sirius/achack/achack02.lua:155
 msgid "Your ship is to slow!"
-msgstr ""
+msgstr "¡Tu nave es demasiado lenta!"
 
 #: dat/missions/sirius/achack/achack02.lua:155
 msgid ""
 "You need a faster ship to be able to protect Joanne. Your mission is a "
 "failure!"
 msgstr ""
+"Necesitas una nave más rápida para poder proteger a Joanne. ¡Tu misión es un "
+"fracaso!"
 
 #. Warn the player if fuel is not sufficient
 #: dat/missions/sirius/achack/achack02.lua:162
 msgid "Fuel Warning"
-msgstr ""
+msgstr "Aviso de Combustible"
 
 #: dat/missions/sirius/achack/achack02.lua:162
 msgid ""
@@ -78564,25 +78764,27 @@ msgstr ""
 #. Commences combat once Joanne is close to the ambushers.
 #: dat/missions/sirius/achack/achack02.lua:240
 msgid "That's our target! Get her, boys!"
-msgstr ""
+msgstr "¡Ese es nuestro objetivo! ¡Atrápenla, muchachos!"
 
 #: dat/missions/sirius/achack/achack02.lua:268
 msgid "Joanne has jumped for the {sys} system. Follow her!"
-msgstr ""
+msgstr "Joanne ha saltado al sistema {sys}. ¡Seguidla!"
 
 #: dat/missions/sirius/achack/achack02.lua:273
 msgid "Joanne has docked with {pnt}. Follow her!"
-msgstr ""
+msgstr "Joanne ha atracado en {pnt}. ¡Síguela!"
 
 #: dat/missions/sirius/achack/achack02.lua:277
 msgid "Joanne's ship has been destroyed!"
-msgstr ""
+msgstr " ¡La nave de Joanne ha sido destruida!"
 
 #: dat/missions/sirius/achack/achack02.lua:277
 msgid ""
 "Joanne's assailants have succeeded in destroying her ship. Your mission is a "
 "failure!"
 msgstr ""
+"Los asaltantes de Joanne han conseguido destruir su nave. ¡Tu misión es un "
+"fracaso!"
 
 #: dat/missions/sirius/achack/achack03.lua:35
 #: dat/missions/sirius/achack/achack04.lua:75
@@ -78593,7 +78795,7 @@ msgstr ""
 #: dat/missions/sirius/achack/achack03.lua:42
 #: dat/missions/sirius/achack/achack03.lua:48
 msgid "Talking to Joanne"
-msgstr ""
+msgstr "Hablar con Joanne"
 
 #: dat/missions/sirius/achack/achack03.lua:40
 msgid ""
@@ -78602,6 +78804,10 @@ msgid ""
 "you've changed your mind about helping out a damsel in distress? Let me tell "
 "you again what I want you to do.\""
 msgstr ""
+"\"Hola {player}\", dice Joanne. \"Me alegro de verte de nuevo. Oye, todavía "
+"no he resuelto el asunto de Harja y los atentados contra mi vida. ¿Hay "
+"alguna posibilidad de que hayas cambiado de opinión sobre ayudar a una "
+"damisela en apuros? Deja que te repita lo que quiero que hagas.\""
 
 #: dat/missions/sirius/achack/achack03.lua:42
 msgid ""
