@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-06-28 21:54+0000\n"
+"PO-Revision-Date: 2022-06-29 15:21+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -77366,17 +77366,31 @@ msgid ""
 "timing! The pirate has just arrived at {sys}. Now go show them what your "
 "ship can do!\" Time to head back to the ship, then."
 msgstr ""
+"\"Me alegro de volver a verte\", dice con una sonrisa. \"¡Espero que estés "
+"preparado para patear el culo de ese pirata! Por favor, sígueme. Te "
+"presentaré a mi jefe, el director de ventas de los Astilleros Nexus. Ah, y "
+"también al Barón.\"\n"
+"    Arnold Smith te guía a una especie de sala de control donde ves a "
+"algunas personas de aspecto importante. Después de presentarte a algunos de "
+"ellos, te explica la misión, haciendo bastante hincapié en la amenaza que "
+"conlleva; al fin y al cabo, sólo se trata de un Ancestro Pirata. No "
+"obstante, el Barón está intrigado.\n"
+"    Arnold Smith recibe una llamada. Después de contestar, se dirige a ti. \""
+"¡La hora perfecta! El pirata acaba de llegar a {sys}. Ahora ve a mostrarles "
+"lo que tu nave puede hacer.\" Es hora de volver a la nave, entonces."
 
 #. he went away
 #: dat/missions/shark/sh00_ancestorkill.lua:161
 msgid "The pirate ran away."
-msgstr ""
+msgstr "El pirata ha huido."
 
 #: dat/missions/shark/sh01_corvette.lua:54
 msgid ""
 "The Nexus employee seems to be looking for pilots. Maybe he has an other "
 "task for you."
 msgstr ""
+"El empleado de Nexus parece estar buscando pilotos. Quizá tenga otra tarea "
+"para ti."
 
 #: dat/missions/shark/sh01_corvette.lua:60
 msgid ""
@@ -77392,45 +77406,64 @@ msgid ""
 "let another pilot disable them with ion cannons.\n"
 "    \"What do you say? Are you interested?\""
 msgstr ""
+"\"Tengo otro trabajo para ti. Por desgracia, el Barón no quedó tan "
+"impresionado como esperábamos. Así que necesitamos una demostración mejor, y "
+"creemos saber qué hacer: vamos a demostrar que el Lancelot, nuestro diseño "
+"de caza de gama alta, es más que capaz de derrotar a las naves de clase "
+"Destructor.\n"
+"    \"Ahora bien, un pequeño problema al que nos enfrentamos es que los "
+"piratas casi nunca utilizan naves de clase Destructor; suelen ceñirse a los "
+"cazas, corbetas y cruceros. Y lo que es más importante, enviar un caza a por "
+"un destructor es extremadamente peligroso, incluso si pudiéramos encontrar a "
+"un pirata pilotando uno. Así que tenemos otro plan: queremos que alguien "
+"pilote una nave de clase Destructor y que otro piloto la inutilice con "
+"cañones de iones.\n"
+"    \"¿Qué dices? ¿Estás interesado?\""
 
 #: dat/missions/shark/sh01_corvette.lua:64
 msgid ""
 "\"Great! Go and meet our pilot in {battlesys}. After the job is done, meet "
 "me on {pnt} in the {sys} system.\""
 msgstr ""
+"\"¡Genial! Ve y reúnete con nuestro piloto en {battlesys}. Cuando el trabajo "
+"esté hecho, reúnete conmigo en {pnt} en el sistema {sys}.\""
 
 #: dat/missions/shark/sh01_corvette.lua:66
 msgid "Sharkman is back"
-msgstr ""
+msgstr "Hombre Tiburón ha vuelto"
 
 #: dat/missions/shark/sh01_corvette.lua:68
 msgid ""
 "Nexus Shipyards wants you to fake a loss against a Lancelot while piloting a "
 "Destroyer class ship."
 msgstr ""
+"Los Astilleros Nexus quieren que finjas una pérdida contra un Lancelot "
+"mientras pilotas una nave de clase Destructor."
 
 #: dat/missions/shark/sh01_corvette.lua:69
 msgid "Sharkman Is Back"
-msgstr ""
+msgstr "Hombre Tiburón Ha Vuelto"
 
 #: dat/missions/shark/sh01_corvette.lua:70
 msgid ""
 "Jump in {sys} with a Destroyer class ship and let the Lancelot disable you"
 msgstr ""
+"Entra en {sys} con una nave de clase Destructor y deja que el Lancelot te "
+"desactive"
 
 #: dat/missions/shark/sh01_corvette.lua:71
 msgid "Go to {pnt} in {sys} to collect your pay"
-msgstr ""
+msgstr "Ve a {pnt} en {sys} para cobrar tu paga"
 
 #: dat/missions/shark/sh01_corvette.lua:81
 msgid "\"OK, that's alright.\""
-msgstr ""
+msgstr "\"Vale, está bien.\""
 
 #. player trying to escape
 #: dat/missions/shark/sh01_corvette.lua:88
 #: dat/missions/shark/sh01_corvette.lua:94
 msgid "You ran away."
-msgstr ""
+msgstr "Has huido."
 
 #: dat/missions/shark/sh01_corvette.lua:97
 msgid "Reward"
