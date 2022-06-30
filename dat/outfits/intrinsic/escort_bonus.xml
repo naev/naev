@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Integrated Shielding">
+ <general>
+  <slot>intrinsic</slot>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>The "Integrated Shielding" service provides a full retweak and overhaul of the systems shielding circuitry. The optimizations are able to greatly increase the power with only a slight drawback to the electronics and weapons systems. Due to the nature of the service, only one can be applied to each ship.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <rarity>6</rarity>
+ </general>
+ <specific type="modification">
+  <armour_regen>3</armour_regen>
+  <armour_mod>20</armour_mod>
+  <shield_mod>20</shield_mod>
+  <shield_regen_mod>20</shield_regen_mod>
+  <energy_mod>30</energy_mod>
+  <energy_regen_mod>20</energy_regen_mod>
+  <fwd_firerate>-20</fwd_firerate>
+  <tur_firerate>-20</tur_firerate>
+  <launch_rate>-20</launch_rate>
+  <stress_dissipation>-20.000000</stress_dissipation>
+ </specific>
+</outfit>
