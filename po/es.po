@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-06-29 21:21+0000\n"
-"Last-Translator: paco <pacosoftfree@protonmail.com>\n"
+"PO-Revision-Date: 2022-06-30 07:16+0000\n"
+"Last-Translator: G4N1D <jonnattan.garcia@iecmp.edu.co>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
 "Language: es\n"
@@ -731,7 +731,7 @@ msgstr ""
 
 #: artwork/gfx/loading/pacifier.webp.txt:1
 msgid "PACIFIER"
-msgstr "CALMA"
+msgstr "Pacificador"
 
 #: artwork/gfx/loading/peacemaker.webp.txt:1
 msgid "EMPIRE PEACEMAKER"
@@ -4539,7 +4539,7 @@ msgstr ""
 
 #: dat/assets/ember.xml:2
 msgid "Ember"
-msgstr "Ascua"
+msgstr "Brasas"
 
 #: dat/assets/ember.xml:30
 msgid ""
@@ -17239,7 +17239,7 @@ msgstr "Clan Cuervo"
 
 #: dat/faction.xml:86
 msgid "Raven Pirate Clan"
-msgstr "Clan de Piratas Cuervo"
+msgstr "Clan del cuervo pirata"
 
 #: dat/faction.xml:93
 msgid ""
@@ -17255,7 +17255,7 @@ msgstr "Salvajes"
 
 #: dat/faction.xml:121
 msgid "Wild Ones Pirate Clan"
-msgstr "Clan Pirata Salvajes"
+msgstr "Clan de los Piratas Salvajes"
 
 #: dat/faction.xml:128
 msgid ""
@@ -17272,7 +17272,7 @@ msgstr ""
 
 #: dat/faction.xml:156
 msgid "Black Lotus Pirate Clan"
-msgstr "Clan Pirata Loto Negro"
+msgstr "Clan Piratas del Loto Negro"
 
 #: dat/faction.xml:163
 msgid ""
@@ -17285,7 +17285,7 @@ msgstr ""
 
 #: dat/faction.xml:188
 msgid "Dreamer Clan"
-msgstr "Clan Soñador"
+msgstr "Clan del soñador"
 
 #: dat/faction.xml:191
 msgid "Dreamer Pirate Clan"
@@ -17365,7 +17365,7 @@ msgstr "Proteron"
 
 #: dat/faction.xml:321
 msgid "Fallen House Proteron"
-msgstr "Casa Caída de Proteron"
+msgstr "Decadente casa de Proteron"
 
 #: dat/faction.xml:327
 msgid ""
@@ -17396,7 +17396,7 @@ msgstr "Cofradía de Comerciantes"
 
 #: dat/faction.xml:371
 msgid "Space Traders Guild"
-msgstr "Cofradía de Comerciantes Espacial"
+msgstr "Cofradía de Comerciantes Espaciales"
 
 #: dat/faction.xml:376
 msgid "TODO we have to make these guys more interesting."
@@ -17465,7 +17465,7 @@ msgstr "FLF"
 
 #: dat/faction.xml:459
 msgid "Frontier Liberation Front"
-msgstr "Frente de Liberación de la Frontera"
+msgstr "Cuerpo de Liberación Fronteriza"
 
 #: dat/faction.xml:465
 msgid ""
@@ -17833,7 +17833,7 @@ msgstr "Señores de la Guerra Dvaered"
 
 #: dat/faction.xml:761
 msgid "Strangelove"
-msgstr "Strangelove"
+msgstr "Desamor"
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
@@ -18011,7 +18011,7 @@ msgstr ""
 
 #: dat/outfits/accessory/swamp_bombing.xml:2
 msgid "Swamp Bombing"
-msgstr "Bomba de Pantano"
+msgstr "Bomba Pantanosa"
 
 #: dat/outfits/accessory/swamp_bombing.xml:11
 msgid ""
@@ -20504,7 +20504,7 @@ msgstr ""
 
 #: dat/outfits/launchers/convulsion_launcher.xml:2
 msgid "Convulsion Launcher"
-msgstr "Convulsor, Lanzador"
+msgstr "Lanzador percutivo"
 
 #: dat/outfits/launchers/convulsion_launcher.xml:10
 #: dat/outfits/rockets/convulsion_missile.xml:6
@@ -22480,7 +22480,7 @@ msgstr ""
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:2
 msgid "Low Radiation Sensor Modulator"
-msgstr ""
+msgstr "Modulador de Sensor de Baja Radiación"
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:4
 #: dat/outfits/utility/targeting_conduit.xml:4
@@ -22616,7 +22616,7 @@ msgstr ""
 
 #: dat/outfits/utility/targeting_conduit.xml:2
 msgid "Targeting Conduit"
-msgstr "Conducto de Objetivos"
+msgstr "Objetivo orientador"
 
 #: dat/outfits/utility/targeting_conduit.xml:10
 msgid ""
@@ -23130,7 +23130,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:2
 msgid "Plasma Cluster Cannon"
-msgstr "Cañón Cúmulo de Plasma"
+msgstr "Cañones de Plasmas"
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:9
 msgid ""
@@ -24042,7 +24042,7 @@ msgstr ""
 
 #: dat/ships/quicksilver.xml:2
 msgid "Quicksilver"
-msgstr "Azogue"
+msgstr "Dinamico"
 
 #: dat/ships/quicksilver.xml:16
 msgid ""
@@ -24312,7 +24312,7 @@ msgstr ""
 
 #: dat/ships/starbridge.xml:2
 msgid "Starbridge"
-msgstr "Starbridge"
+msgstr "Puente Estelar"
 
 #: dat/ships/starbridge.xml:17
 msgid ""
@@ -24361,7 +24361,7 @@ msgstr ""
 
 #: dat/ships/thurion_perspicacity.xml:2
 msgid "Thurion Perspicacity"
-msgstr "Perpicaz Turion"
+msgstr "Sagacidad de Turion"
 
 #: dat/ships/thurion_perspicacity.xml:20
 msgid ""
@@ -24569,7 +24569,7 @@ msgstr ""
 
 #: dat/ships/zalek_sting.xml:2
 msgid "Za'lek Sting"
-msgstr "Aguijón Zalek"
+msgstr "Aguijón de Za'lek"
 
 #: dat/ships/zalek_sting.xml:18
 msgid ""
@@ -24590,7 +24590,7 @@ msgstr ""
 
 #: dat/slots.xml:9
 msgid "Core Systems"
-msgstr "Sistema Base"
+msgstr "Sistema Central"
 
 #: dat/slots.xml:10
 msgid ""
@@ -26592,7 +26592,7 @@ msgstr ""
 
 #: dat/ai/advertiser.lua:11
 msgid "Fly safe, fly Milspec."
-msgstr "Vuele seguro, vuele Milspec."
+msgstr "Vuele seguro, vuele con Milspec."
 
 #: dat/ai/advertiser.lua:12
 msgid "Reynir's Hot Dogs: enjoy the authentic taste of tradition."
@@ -26993,7 +26993,7 @@ msgstr "Señor Kriegsreich Hundertfeuer"
 
 #: dat/ai/advertiser.lua:115 dat/scripts/common/frontier_war.lua:25
 msgid "Lady Blackswan"
-msgstr "Dama Cisnenegro"
+msgstr "Dama Blackswan"
 
 #: dat/ai/advertiser.lua:116 dat/scripts/common/frontier_war.lua:26
 msgid "Lady Killington"
@@ -51363,7 +51363,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:38
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:38
 msgid "Lieutenant"
-msgstr ""
+msgstr "Teniente"
 
 #: dat/missions/empire/emp_cargo00.lua:53
 msgid "You see an Empire Lieutenant who seems to be looking at you."
@@ -56727,7 +56727,7 @@ msgstr "Busca al Mayor Malik en {pnt} en el sistema {sys}"
 #: dat/missions/minerva/kex3.lua:112 dat/missions/minerva/kex3.lua:309
 #: dat/missions/minerva/kex3.lua:391 dat/missions/minerva/kex3.lua:479
 msgid "Major Malik"
-msgstr ""
+msgstr "Mayor Malik"
 
 #: dat/missions/minerva/kex3.lua:112
 msgid ""
@@ -86976,7 +86976,7 @@ msgstr ""
 #. --
 #: dat/scripts/common/antlejos.lua:79
 msgid "PUAAA"
-msgstr ""
+msgstr "PUCAA"
 
 #: dat/scripts/common/antlejos.lua:83
 msgid "No to terraforming!"
@@ -90264,7 +90264,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:259
 msgid "Brigand"
-msgstr ""
+msgstr "Bandido"
 
 #: dat/scripts/pilotname/pirate.lua:260
 msgid "Bulk"
