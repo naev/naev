@@ -454,7 +454,7 @@ end
 
 You would use the function to quickly add log messages with `addlog(_("This is a message relating to secret stuff."))`. Usually logs are added when important one-time things happen during missions or when they are completed.
 
-### Visual Novel Framework
+### Visual Novel Framework \naev
 \label{sec:misn-basic-vn}
 
 The Visual Novel framework is based on the Love2D API and allows for displaying text, characters, and other effects to the player. It can be thought of as a graph representing the choices and messages the player can engage with. The core API is in the [`vn` module](https://naev.org/api/modules/vn.html).
@@ -491,7 +491,7 @@ Player choices are controlled with `vn.menu` which receives a table where each e
 
 It is recommended to look at existing missions for examples of what can be done with the `vn` framework.
 
-#### `vntk` Wrapper
+#### `vntk` Wrapper \naev
 
 The full `vn` framework can be a bit verbose when only displaying small messages or giving small options. For this purpose, the [`vntk` module](https://naev.org/api/modules/vntk.html) can simplify the usage, as it is a wrapper around the `vn` framework. Like the `vn` framework, you have to import the library with `require`, and all the functions are blocking, that is, the Lua code execution will not continue until the dialogues have closed. Let us look at some simple examples of `vntk.msg` and `vntk.yesno` below:
 
@@ -511,7 +511,7 @@ end
 
 The code is very simple and requires the library. Then it will display a message, and afterwards, it will display another with a `Yes` and `No` prompt. If the player chooses yes, the first part of the code will be executed, and if they choose no, the second part is executed.
 
-#### Arbitrary Code Execution
+#### Arbitrary Code Execution \naev
 
 It is also possible to create nodes in the dialogue that execute arbitrary Lua code, and can be used to do things such as pay the player money or modify mission variables. Note that you can not write Lua code directly, or it will be executed when the `vn` is being set up. To have the code run when triggered by the `vn` framework, you must use `vn.func` and pass a function to it. A very simple example would be
 

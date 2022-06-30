@@ -2,6 +2,8 @@
 
 Welcome to the Naev development manual! This manual is meant to cover all aspects of Naev development. It is currently a work in progress.
 
+While this document does cover the Naev engine in general, many sections refer to customs and properties specific to the **Sea of Darkness** default Naev universe. These are marked with \naev.
+
 ## Getting Started
 
 This document assumes you have access to the Naev data. This can be either from downloading the game directly from a distribution platform, or getting directly the [naev source code](https://github.com/naev/naev). Either way it is possible to modify the game data and change many aspects of the game.
