@@ -19,3 +19,7 @@ Please click on the following links to access different parts of the document.
 ### [Systems](sec/univ-systems.md)
 
 ### [System Objects](sec/univ-spobs.md)
+
+## [Outfits](sec/outfits.md)
+
+## [Ships](sec/ships.md)
