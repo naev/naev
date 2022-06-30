@@ -2417,6 +2417,7 @@ static void sysedit_btnGFXApply( unsigned int wid, const char *wgt )
       p->gfx_spacePath = strdup( str );
       gl_freeTexture( p->gfx_space );
       p->gfx_space = NULL;
+      p->radius = -1.; /* Reset radius. */
       spob_gfxLoad( p );
    }
 
