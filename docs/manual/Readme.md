@@ -15,3 +15,7 @@ Please click on the following links to access different parts of the document.
 ### [Tips](sec/misn-tips.md)
 
 ## [Systems and System Objects](sec/univ.md)
+
+### [Systems](sec/univ-systems.md)
+
+### [System Objects](sec/univ-spobs.md)
