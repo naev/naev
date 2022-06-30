@@ -139,6 +139,7 @@ function heartbeat ()
       if plts[1]:flags( "jumpingout" ) and not nextjump:known() then
          player.msg(_("You have discovered a jump point!"),true)
          nextjump:setKnown(true)
+         return
       end
       hook.time( 1, "heartbeat" )
    end
