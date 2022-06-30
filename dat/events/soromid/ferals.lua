@@ -9,8 +9,12 @@
 --]]
 local ferals = require "common.ferals"
 local luaspfx = require "luaspfx"
+local fleet = require "fleet"
+local pilotai = require "pilotai"
 
---luacheck: globals leave pheromones spawn_ferals (Hook functions passed by name)
+--luacheck: globals leave pheromones spawn_ferals delay_sfx ferals_discovered heartbeat (Hook functions passed by name)
+
+local targetsys = "Fertile Crescent"
 
 function create ()
    local scur = system.cur()
@@ -19,12 +23,25 @@ function create ()
    -- Inclusive claim
    if not evt.claim( scur, nil, true ) then evt.finish() end
 
+   local function has_inhabited_spob( sys )
+      for k,p in ipairs(sys:spobs()) do
+         local s = p:services()
+         if s.land and s.inhabited then
+            return true
+         end
+      end
+      return false
+   end
+
    -- Must be uninhabited
-   for k,p in ipairs(scur:spobs()) do
-      local s = p:services()
-      if s.land and s.inhabited then
+   if has_inhabited_spob( scur ) then
+      evt.finish(false)
+   end
+
+   -- Needs a direct path to targetsys
+   for k,j in ipairs( system.cur():jumpPath( targetsys, true ) ) do
+      if has_inhabited_spob( j:dest() ) then
          evt.finish(false)
-         return
       end
    end
 
@@ -38,24 +55,91 @@ function leave ()
     evt.finish()
 end
 
-local spawned = false
-function pheromones ()
-   if not spawned then
-      spawned = true
-      hook.timer( 5, "spawn_ferals" )
-   end
-end
-
-local function whalesound ()
+local function whalesound( pos )
    local sfx
    if rnd.rnd() < 0.5 then
       sfx = ferals.sfx.spacewhale1
    else
       sfx = ferals.sfx.spacewhale2
    end
-   luaspfx.sfx( false, nil, sfx )
+   luaspfx.sfx( pos, nil, sfx, { dist_ref = 5e3, dist_max = 50e3 } )
+end
+
+local plts, nextjump, lastsys
+local spawned = false
+function pheromones ()
+   if not spawned then
+      spawned = true
+      hook.timer( 5, "spawn_ferals" )
+   else
+      if plts then
+         for k,p in ipairs(plts) do
+            if p:exists() then
+               hook.timer( 3, "delay_sfx", p:pos() )
+               return
+            end
+         end
+      end
+   end
+end
+
+function delay_sfx( pos )
+   whalesound( pos )
 end
 
 function spawn_ferals ()
-   whalesound()
+   local jumps = system.cur():jumpPath( targetsys, true )
+   nextjump = jumps[1]
+   local pos = (nextjump:pos() - player.pos())*0.8 + player.pos()
+   pos = pos + vec2.newP( 3000*rnd.rnd(), rnd.angle() )
+
+   lastsys = (#jumps==1)
+
+   mem.mrk = system.mrkAdd( vec2.newP( 2000*rnd.rnd(), rnd.angle() ), _("Signal"), 4000 )
+
+   whalesound( pos )
+
+   local bioships = {}
+   local r = rnd.rnd()
+   if r < 0.5 then
+      table.insert( bioships, "Taitamariki" )
+      for i=1,rnd.rnd(0,3) do
+         table.insert( bioships, "Nohinohi" )
+      end
+   else
+      for i=1,rnd.rnd(1,3) do
+         table.insert( bioships, "Nohinohi" )
+      end
+   end
+   plts = fleet.add( 1, bioships, ferals.faction() )
+   for k,p in ipairs(plts) do
+      p:control()
+      p:stealth()
+      hook.pilot( p, "discovered", "ferals_discovered" )
+   end
+end
+
+function ferals_discovered ()
+   for k,p in ipairs(plts) do
+      if p:exists() then
+         p:control(false)
+      end
+   end
+   if plts[1]:exists() then
+      -- Just try to go to the next system
+      pilotai.hyperspace( plts[1], nextjump )
+      if lastsys then
+         hook.timer( 1, "heartbeat" )
+      end
+   end
+end
+
+function heartbeat ()
+   if plts[1]:exists() then
+      if plts[1]:flags( "jumpingout" ) and not nextjump:known() then
+         player.msg(_("You have discovered a jump point!"),true)
+         nextjump:setKnown(true)
+      end
+      hook.time( 1, "heartbeat" )
+   end
 end
