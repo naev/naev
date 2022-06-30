@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-06-30 07:16+0000\n"
-"Last-Translator: G4N1D <jonnattan.garcia@iecmp.edu.co>\n"
+"PO-Revision-Date: 2022-06-30 21:18+0000\n"
+"Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
 "Language: es\n"
@@ -78790,6 +78790,8 @@ msgstr ""
 #: dat/missions/sirius/achack/achack04.lua:75
 msgid "Joanne the Serra military officer is here, enjoying a drink by herself."
 msgstr ""
+"Joanne, la oficial militar de Serra, está aquí, disfrutando de una bebida "
+"sola."
 
 #: dat/missions/sirius/achack/achack03.lua:40
 #: dat/missions/sirius/achack/achack03.lua:42
@@ -78858,7 +78860,7 @@ msgstr ""
 
 #: dat/missions/sirius/achack/achack03.lua:53
 msgid "The hunt begins"
-msgstr ""
+msgstr "La caza comienza"
 
 #: dat/missions/sirius/achack/achack03.lua:53
 msgid ""
@@ -78876,35 +78878,48 @@ msgid ""
 "{pnt} for a while longer, so come back here when you've got something. Good "
 "luck!\""
 msgstr ""
+"\"Me alegra escuchar eso. Aquí, voy a cargar los detalles de la nave privada "
+"de Harja en tu ordenador. He investigado un poco en la base de datos militar "
+"para encontrarlos. ¡No te gradúas con honores en la Academia Superior de "
+"Sinass sin aprender algunos trucos! Lo sé, lo sé, son datos clasificados, "
+"pero es por una buena causa, ¿no crees? Deberías ser capaz de identificar a "
+"Harja cuando lo captes con tus sensores ahora. Si tienes problemas para "
+"localizarlo, considera instalar mejores sensores en tu nave para poder "
+"captarlo desde más lejos. Pero no te esfuerces demasiado en buscarlo, sólo "
+"mantente alerta mientras haces tus actividades normales. Si te quedas en el "
+"espacio Sirio, seguro que te lo encuentras tarde o temprano.\"\n"
+"    Joanne se levanta para marcharse, pero antes de irse añade: \"Estaré en "
+"{pnt} un rato más, así que vuelve aquí cuando tengas algo. Buena suerte.\""
 
 #. Keeps track of where the mission was accepted.
 #. Keeps track of where the player enters the system from.
 #: dat/missions/sirius/achack/achack03.lua:60
 msgid "Joanne wants you to find Harja and interrogate him about his motives."
 msgstr ""
+"Joanne quiere que encuentres a Harja y lo interrogues sobre sus motivos."
 
 #: dat/missions/sirius/achack/achack03.lua:62
 msgid "Joanne's Doubt"
-msgstr ""
+msgstr "La Duda de Joanne"
 
 #: dat/missions/sirius/achack/achack03.lua:63
 msgid "Find Harja in Sirius space"
-msgstr ""
+msgstr "Encuentra a Harja en el espacio Sirio"
 
 #: dat/missions/sirius/achack/achack03.lua:64
 msgid "Talk to Harja"
-msgstr ""
+msgstr "Habla con Harja"
 
 #: dat/missions/sirius/achack/achack03.lua:65
 msgid "Return to Joanne on {pnt} ({sys})"
-msgstr ""
+msgstr "Vuelve a Joanne en {pnt} ({sys})"
 
 #. Jump-out hook.
 #. Enter hook.
 #. Local helper function
 #: dat/missions/sirius/achack/achack03.lua:89
 msgid "_mergeTables: Error, this function only accepts tables."
-msgstr ""
+msgstr "_mergeTables: Error, esta función sólo acepta tablas."
 
 #. Date hook.
 #. Determine spawn point. The reason why we don't use the normal random is that we don't want Harja spawning from the same place as the player.
@@ -78915,12 +78930,12 @@ msgstr ""
 #: dat/missions/sirius/achack/achack03.lua:110
 #: dat/missions/sirius/achack/achack04.lua:191
 msgid "Harja's Shark"
-msgstr ""
+msgstr "Tiburón de Harja"
 
 #. Triggers when the player's sensors pick up Harja's ship.
 #: dat/missions/sirius/achack/achack03.lua:120
 msgid "Harja spotted!"
-msgstr ""
+msgstr "¡Harja avistado!"
 
 #: dat/missions/sirius/achack/achack03.lua:120
 msgid ""
@@ -78928,16 +78943,19 @@ msgid ""
 "good opportunity to talk to him, and hailing his ship seems the most "
 "straightforward way to go about it."
 msgstr ""
+"Tus sensores te dan una alerta. Han detectado la nave de Harja. Esta es una "
+"buena oportunidad para hablar con él, y llamar a su nave parece la forma más "
+"directa de hacerlo."
 
 #. Triggers when Harja leaves the system.
 #: dat/missions/sirius/achack/achack03.lua:134
 msgid "Harja is no longer in the system."
-msgstr ""
+msgstr "Harja ya no está en el sistema."
 
 #. Harja's hail hook.
 #: dat/missions/sirius/achack/achack03.lua:144
 msgid "Harja's ire"
-msgstr ""
+msgstr "La ira de Harja"
 
 #: dat/missions/sirius/achack/achack03.lua:144
 msgid ""
@@ -78954,28 +78972,44 @@ msgid ""
 "you spoiling it further!\" With that, Harja breaks the connection. Oh well, "
 "looks like you're going to have to do this the hard way."
 msgstr ""
+"Llamas a la nave de Harja. Unos instantes después, su rostro aparece en tu "
+"consola. Cuando te reconoce, su rostro se frunce en una mueca de enfado.\n"
+"\"¡Tú! ¡Cómo te atreves a presentarte de nuevo ante mí después de haberme "
+"traicionado así! Tenía una oportunidad perfecta para acabar con esa maldita "
+"mujer, pero en lugar de eso tuviste que ir a avisarla. Peor aún, ¡incluso la "
+"ayudaste a luchar contra los otros tipos que contraté para convertirla en "
+"polvo espacial! ¡Arruinaste todo! ¡Los últimos ciclos de mi vida, "
+"completamente desperdiciados! ¡Maldito seas!\"\n"
+"    Intentas convencer a Harja de que quieres hablar con él sobre este "
+"asunto, pero está furioso. \"¡No tengo nada que decir a una escoria traidora "
+"como tú! Ahora déjame en paz, ¡ya tengo un mal día sin que lo estropees más!"
+"\" Con eso, Harja rompe la conexión. Oh, bueno, parece que vas a tener que "
+"hacer esto por las malas."
 
 #: dat/missions/sirius/achack/achack03.lua:149
 msgid "Harja doesn't respond. It doesn't look like he wants to talk to you."
-msgstr ""
+msgstr "Harja no responde. No parece que quiera hablar contigo."
 
 #. Harja's disable hook.
 #. This is to make sure he doesn't re-enable himself.
 #: dat/missions/sirius/achack/achack03.lua:158
 msgid "Harja's ship is disabled"
-msgstr ""
+msgstr "La nave de Harja está desactivada"
 
 #: dat/missions/sirius/achack/achack03.lua:158
 msgid ""
 "With a few well placed shots you overload Harja's systems and set his ship "
 "adrift. Now you can have a little talk with him, face to face."
 msgstr ""
+"Con unos cuantos disparos bien colocados sobrecargas los sistemas de Harja y "
+"dejas su nave a la deriva. Ahora puedes tener una pequeña charla con él, "
+"cara a cara."
 
 #. Harja's board hook.
 #: dat/missions/sirius/achack/achack03.lua:164
 #: dat/missions/sirius/achack/achack03.lua:166
 msgid "A friendly chat at gunpoint"
-msgstr ""
+msgstr "Una charla amistosa a punta de pistola"
 
 #: dat/missions/sirius/achack/achack03.lua:164
 msgid ""
@@ -79019,18 +79053,20 @@ msgstr ""
 #. Harja's death hook.
 #: dat/missions/sirius/achack/achack03.lua:182
 msgid "Harja's ship is destroyed!"
-msgstr ""
+msgstr "¡La nave de Harja es destruida!"
 
 #: dat/missions/sirius/achack/achack03.lua:182
 msgid ""
 "You have destroyed Harja's ship! You were supposed to talk to him, not "
 "destroy him. Your mission is a failure!"
 msgstr ""
+"¡Has destruido la nave de Harja! Se suponía que debías hablar con él, no "
+"destruirlo. ¡Tu misión es un fracaso!"
 
 #. Land hook.
 #: dat/missions/sirius/achack/achack03.lua:191
 msgid "Full circle"
-msgstr ""
+msgstr "Bucle"
 
 #: dat/missions/sirius/achack/achack03.lua:191
 msgid ""
@@ -79055,6 +79091,27 @@ msgid ""
 "bar, a thoughtful expression on her face. It seems your role in the conflict "
 "between Joanne and Harja is growing. Who knows where it'll end."
 msgstr ""
+"Te encuentras con Joanne en el bar del puerto espacial. Ella escucha tu "
+"relato de la conversación con Harja. Cuando terminas, frunce el ceño.\n"
+"    \"Tengo que admitir que su historia me parece un poco inquietante. "
+"Parece creer sinceramente que lo inculpé por ese hackeo, al igual que yo "
+"creo que él trató de inculparme a mí. Por lo que me ha contado, no parece "
+"que sólo estuviera montando una historia santurrona para justificar sus "
+"actos, y de todos modos no esperaría eso de él. Pero eso es imposible. "
+"Aparte de nosotros dos, no había nadie que tuviera el más mínimo interés en "
+"sacar a ninguno de los dos de la academia. Sé que yo no lo hice, así que eso "
+"significa que Harja debe haberlo hecho. Sólo que...\" Joanne hace una pausa. "
+"\"Dijiste que había hecho un juramento. Independientemente de lo que pueda "
+"pensar de él, no puedo creer que abusara de sus creencias Siria de esa "
+"manera. Los Sirios nos tomamos nuestra fe muy en serio.\n"
+"    \"No sé qué decir, {player}. Cuanto más averiguo sobre todo esto, menos "
+"sentido tiene. Necesito pensar en esto, ver si hay algo que pueda resolver "
+"por mi parte. Sospecho que esto aún no es el final, así que puede que "
+"necesite tu ayuda de nuevo pronto. Pero por ahora, debo darte lo que te "
+"prometí para que puedas ocuparte de tus otros asuntos.\"\n"
+"   Joanne te paga la suma acordada. Luego sale del bar del puerto espacial, "
+"con una expresión pensativa en su rostro. Parece que tu papel en el "
+"conflicto entre Joanne y Harja está creciendo. Quién sabe dónde acabará."
 
 #: dat/missions/sirius/achack/achack03.lua:197
 msgid ""
@@ -79092,49 +79149,50 @@ msgstr ""
 #. luacheck: globals talkHarja talkJoanne (NPC functions passed by name)
 #: dat/missions/sirius/achack/achack04.lua:32
 msgid "Where's that Harja? He should be showing up any time now."
-msgstr ""
+msgstr "¿Dónde está ese Harja? Debería aparecer en cualquier momento."
 
 #: dat/missions/sirius/achack/achack04.lua:33
 msgid "I can't wait to pay that Harja back for the stunt he pulled."
-msgstr ""
+msgstr "Estoy deseando devolverle a ese Harja la jugada que hizo."
 
 #: dat/missions/sirius/achack/achack04.lua:34
 msgid ""
 "I swear, the moment he comes out of hyperspace I'll make him wish he hadn't."
 msgstr ""
+"Te juro que en cuanto salga del hiperespacio le haré desear no haberlo hecho."
 
 #: dat/missions/sirius/achack/achack04.lua:35
 msgid "Come on, Harja, come and get it."
-msgstr ""
+msgstr "Vamos, Harja, ven y cógelo."
 
 #: dat/missions/sirius/achack/achack04.lua:36
 msgid "He should be here by now."
-msgstr ""
+msgstr "Ya debería estar aquí."
 
 #: dat/missions/sirius/achack/achack04.lua:37
 msgid "Harja won't know what hit him."
-msgstr ""
+msgstr "Harja no sabrá qué lo golpeó."
 
 #: dat/missions/sirius/achack/achack04.lua:38
 msgid "I've got a laser cannon with Harja's name on it, right here!"
-msgstr ""
+msgstr "¡Tengo un cañón láser con el nombre de Harja, aquí mismo!"
 
 #. Mission info stuff
 #: dat/missions/sirius/achack/achack04.lua:44
 msgid "Look for Harja in Sirian bars"
-msgstr ""
+msgstr "Busca a Harja en los bares de Sirio"
 
 #. Death hook for mercenaries.
 #: dat/missions/sirius/achack/achack04.lua:45
 #: dat/missions/sirius/achack/achack04.lua:225
 msgid "Convince Harja to come with you"
-msgstr ""
+msgstr "Convence a Harja para que venga contigo"
 
 #. Mission constants
 #. Note: this mission does not make any system claims.
 #: dat/missions/sirius/achack/achack04.lua:54
 msgid "You have mail"
-msgstr ""
+msgstr "Tienes correo"
 
 #: dat/missions/sirius/achack/achack04.lua:54
 msgid ""
@@ -79150,11 +79208,25 @@ msgid ""
 "    The message ends. You save it for later reference. Maybe you should "
 "swing by {pnt} to see what Joanne wants."
 msgstr ""
+"La consola de tu ordenador te muestra un aviso. Parece que has recibido un "
+"mensaje a través de la red de intercambio de información Siria. Lo "
+"reproduces.\n"
+"    El mensaje es de Joanne, la mujer con la que has tenido tratos en el "
+"pasado. Su imagen grabada te mira desde la pantalla. \"Querido {player}\", "
+"comienza. \"Me has ayudado en varias ocasiones con respecto a mi problema "
+"personal. He reflexionado desde entonces y he llegado a la conclusión de que "
+"quiero llegar al fondo del asunto. Para ello, volveré a necesitar su ayuda. "
+"Actualmente estoy en una misión en {pnt} en el sistema {sys}. Por favor, "
+"reúnete conmigo allí lo antes posible.\"\n"
+"    El mensaje termina. Lo guardas para consultarlo más tarde. Tal vez "
+"deberías pasar por {pnt} para ver qué quiere Joanne."
 
 #. This mission auto-accepts, but a choice will be offered to the player later. No OSD yet.
 #: dat/missions/sirius/achack/achack04.lua:63
 msgid "Joanne has contacted you. She wants to meet you on {pnt} ({sys})."
 msgstr ""
+"Joanne se ha puesto en contacto contigo. Quiere reunirse contigo en {pnt} "
+"({sys})."
 
 #. Land hook.
 #: dat/missions/sirius/achack/achack04.lua:72
@@ -79162,19 +79234,21 @@ msgid ""
 "You've found Harja. He's sourly watching the galactic news, and hasn't "
 "noticed you yet."
 msgstr ""
+"Has encontrado a Harja. Está mirando amargamente las noticias galácticas y "
+"aún no se ha fijado en ti."
 
 #. Harja appears randomly in the spaceport bar.
 #. TODO: Add checks for planet metadata. Harja must not appear on military installations and such.
 #: dat/missions/sirius/achack/achack04.lua:77
 #: dat/missions/sirius/achack/achack04.lua:82
 msgid "Harja"
-msgstr ""
+msgstr "Harja"
 
 #. Harja, once he spawns, stays put.
 #: dat/missions/sirius/achack/achack04.lua:86
 #: dat/missions/sirius/achack/achack04.lua:89
 msgid "Building a bridge"
-msgstr ""
+msgstr "Construyendo un puente"
 
 #: dat/missions/sirius/achack/achack04.lua:86
 msgid ""
@@ -79227,6 +79301,33 @@ msgid ""
 "surface it might seem like you accomplished little, you get the feeling this "
 "was an important step toward the conclusion of the whole affair."
 msgstr ""
+"Se hace de nuevo el silencio. El juramento de Harja ha sonado práctico y "
+"formal, pero a pesar de eso sientes que estaba siendo muy sincero cuando lo "
+"dijo.\n"
+"    Joanne respira un poco. Repite el juramento de Harja, casi palabra por "
+"palabra, afirmando que ella también es inocente de los hechos que Harja "
+"sospecha que ha cometido. Tiene la sensación de que acabas de ser testigo de "
+"algo insólito, una especie de demostración de fe que sólo los verdaderos "
+"Sirios podrían llegar a comprender. Ciertamente, tiene un impacto en los dos "
+"que están frente a ti. Ambos luchan con la realidad de la situación, "
+"encontrando cada uno sus convicciones personales en conflicto con una "
+"creencia compartida que es mucho más profunda.\n"
+"    Joanne es la que rompe el silencio. \"De acuerdo\", dice. \"De un Sirio "
+"a otro, acepto tu juramento. Creo que no fuiste tú.\"\n"
+"    Harja inclina la cabeza. \"De un Sirio a otro. Tú no lo hiciste\". Tras "
+"unos instantes, añade: \"Pero alguien lo hizo\".\n"
+"    Joanne asiente. \"Alguien lo hizo. ¿Pero quién? ¿Quién pudo tener "
+"interés en que ocurriera? No tiene sentido.\"\n"
+"    Después de eso, no hay mucho más que decir para ninguno de los dos. "
+"Joanne se vuelve hacia ti, y te dice que esto será todo por ahora. \"Esto ha "
+"supuesto una gran carga emocional para mí, y sin duda también para Harja. Te "
+"agradezco tu ayuda, {player}. He dispuesto que se transfieran algunos fondos "
+"a tu cuenta. Es lo menos que puedo hacer. Probablemente volveré a llamarte "
+"cuando sepa cómo proceder a partir de ahora. No se me ocurriría dejarte "
+"fuera de esto, no después de todo lo que has hecho.\"\n"
+"    Te despides y te diriges al puerto espacial. Aunque a primera vista "
+"pueda parecer que has conseguido poco, tienes la sensación de que este ha "
+"sido un paso importante para la conclusión de todo este asunto."
 
 #: dat/missions/sirius/achack/achack04.lua:98
 msgid ""
@@ -79237,6 +79338,13 @@ msgid ""
 "computer which was the source of their feud. Joanne said that she will "
 "probably call for you again when she's figured out how to proceed."
 msgstr ""
+"Fuiste contratado por Joanne para entregar una invitación a Harja para "
+"hablar con ella. Aceptó con la condición de que primero te ocuparas de unos "
+"socios suyos que iban a por él. Cuando Joanne y Harja se reunieron, llegaron "
+"al acuerdo de que ninguna de las dos era responsable del hackeo del "
+"ordenador principal de la Alta Academia, que era el origen de su disputa. "
+"Joanne dijo que probablemente te llamará de nuevo cuando haya resuelto cómo "
+"proceder."
 
 #: dat/missions/sirius/achack/achack04.lua:106
 msgid ""
@@ -79244,6 +79352,9 @@ msgid ""
 "the mystery of the academy computer hack. Let me tell you again what I need "
 "from you.\""
 msgstr ""
+"\"Hola de nuevo, {player}\", dice Joanne. \"Sigo necesitando tu ayuda para "
+"resolver el misterio del hackeo del ordenador de la academia. Déjame decirte "
+"de nuevo lo que necesito de ti.\""
 
 #: dat/missions/sirius/achack/achack04.lua:108
 msgid ""
@@ -79254,6 +79365,12 @@ msgid ""
 "whatever my opinion of Harja may be, I cannot ignore his oath as a follower "
 "of Sirichana. This matter has evolved from an old grudge to a mystery.\""
 msgstr ""
+"Joanne te saluda cordialmente. Está claro que se alegra de volver a verte. "
+"\"Gracias por venir, {player}\", dice. \"Como ya mencioné en mi mensaje, he "
+"decidido que quiero aclarar todo este lío con Harja y el incidente de la "
+"academia. Han pasado demasiadas cosas como para olvidarlo, y sea cual sea mi "
+"opinión sobre Harja, no puedo ignorar su juramento como seguidor de "
+"Sirichana. Este asunto ha pasado de ser un viejo rencor a un misterio.\""
 
 #: dat/missions/sirius/achack/achack04.lua:110
 msgid ""
@@ -79268,12 +79385,23 @@ msgid ""
 "know he's a bit temperamental these days. Please convince him to accept my "
 "invitation. Without violence, if you can. Could you do this for me?\""
 msgstr ""
+"Joanne mete la mano en su maletín y saca una unidad de almacenamiento de "
+"datos, que pone sobre la mesa. \"Esta unidad de datos contiene una "
+"invitación mía a Harja. Le pido que se reúna conmigo aquí. Se la enviaría "
+"directamente, pero desgraciadamente no tengo otra forma de llegar a él que a "
+"través de ti. Lo has encontrado dos veces antes, estoy seguro de que puedes "
+"hacerlo de nuevo. Sin duda, estará en el espacio Sirio, frecuentando los "
+"bares del puerto espacial. Lo único que te pido es que estés pendiente de él "
+"en tus viajes, y cuando lo veas, dale mi mensaje.\" Duda, pero luego "
+"continúa. \"Lo has conocido, así que sabes que es un poco temperamental "
+"estos días. Por favor, convéncelo de que acepte mi invitación. Sin "
+"violencia, si puedes. ¿Podrías hacerlo por mí?\""
 
 #. rejected
 #. accepted
 #: dat/missions/sirius/achack/achack04.lua:116
 msgid "Once more, with feeling"
-msgstr ""
+msgstr "Una vez más, con sentimiento"
 
 #: dat/missions/sirius/achack/achack04.lua:116
 msgid ""
@@ -79288,23 +79416,25 @@ msgstr ""
 
 #: dat/missions/sirius/achack/achack04.lua:118
 msgid "Return to {pnt} ({sys})"
-msgstr ""
+msgstr "Regresa a {pnt} ({sys})"
 
 #: dat/missions/sirius/achack/achack04.lua:120
 #: dat/missions/sirius/achack/achack04.lua:144
 #: dat/missions/sirius/achack/achack04.lua:226
 msgid "Sirian Truce"
-msgstr ""
+msgstr "Tregua Siria"
 
 #: dat/missions/sirius/achack/achack04.lua:121
 msgid "Joanne wants you to find Harja and convince him to meet her in person."
 msgstr ""
+"Joanne quiere que encuentres a Harja y lo convenzas de que se encuentre con "
+"ella en persona."
 
 #. Talking to Harja.
 #: dat/missions/sirius/achack/achack04.lua:129
 #: dat/missions/sirius/achack/achack04.lua:132
 msgid "Remember me?"
-msgstr ""
+msgstr "¿Te acuerdas de mí?"
 
 #: dat/missions/sirius/achack/achack04.lua:129
 msgid ""
@@ -79326,6 +79456,22 @@ msgid ""
 "I guess I might as well skip that bit. Fine, I'll go and see her, it's not "
 "like this can get any worse anyway. However, there's a problem.\""
 msgstr ""
+"Golpeas a Harja en el hombro. Se vuelve irritado hacia ti, sin duda con la "
+"intención de decirte que te vayas sin rodeos, pero entonces te reconoce. Su "
+"rostro palidece y comienza a gritarte que le dejes en paz, incluso "
+"amenazándote. Sin embargo, es evidente que está muy nervioso y no consigue "
+"impresionarte demasiado. Te cuesta un poco de tiempo y le ofreces una copa, "
+"pero consigues convencerle de que no estás aquí para causarle problemas.\n"
+"    \"Bueno, ¿qué quieres esta vez entonces?\" pregunta Harja cuando está un "
+"poco más calmado. \"Vamos a terminar con esto para que puedas irte. Nunca "
+"sale nada bueno de estar cerca de ti.\" Le enseñas la unidad de datos que te "
+"dio Joanne y la coge de mala gana. Lee el contenido, lo que no le lleva "
+"mucho tiempo. La invitación de Joanne debe ser breve y directa. Harja se lo "
+"piensa un momento y vuelve a mirarte.\n"
+"    \"Normalmente me reiría en tu cara por mostrarme esto. Pero no vas a "
+"aceptar un no por respuesta, ¿verdad? Ya lo hablamos la última vez. Así que "
+"supongo que puedo saltarme esa parte. Bien, iré a verla, no es que esto "
+"pueda empeorar de todos modos. Sin embargo, hay un problema.\""
 
 #: dat/missions/sirius/achack/achack04.lua:132
 msgid ""
@@ -79354,14 +79500,38 @@ msgid ""
 "cooperate until you take care of his problem. Why can't it ever just be "
 "quick and easy?"
 msgstr ""
+"\"Verás, esos cazarrecompensas que contraté y a los que tú tan amablemente "
+"les hiciste un agujero tenían algunos amigos, amigos a los que no les caigo "
+"muy bien en este momento, qué sorpresa. He pasado desapercibido, "
+"permaneciendo en el planeta todo lo que he podido para evitar encontrarme "
+"con ellos. No voy a ir a ninguna parte hasta que me dejen en paz.\"\n"
+"    Te sientas, haciendo un gesto para que Harja siga hablando. Sin embargo, "
+"puedes saber hacia dónde va esto.\n"
+"    \"Bien, este es el trato\", continúa Harja. \"Quiero que vayas a hablar "
+"con estos tipos y los convenzas de que me dejen en paz en el futuro. Ya "
+"sabes. Un poco de diplomacia. Tacto. Un poco de violencia. Estoy seguro de "
+"que tendrás éxito con al menos una de ellas.\"\n"
+"   Ignoras su cinismo y le preguntas dónde encontrar a estos "
+"cazarrecompensas.\n"
+"    \"Se mueven mucho, por eso no me arriesgo a ir yo mismo al espacio, pero "
+"si quieres estar seguro de atraparlos, dirígete a Suna. Ya sabes, donde está "
+"el Escurridor. Enviaré un mensaje mal cifrado a uno de los matones de allí, "
+"diciendo que voy a buscarlo. Sin duda, esos cazarrecompensas lo "
+"interceptarán y estarán al acecho justo fuera del punto de salto. Me estarán "
+"esperando, pero se encontrarán contigo. Salta, haz lo que tengas que hacer y "
+"vuelve aquí. Entonces podremos hablar de ir a ver a esa... a ver a Joanne\", "
+"termina. Parece tener su temperamento bajo control un poco mejor ahora, por "
+"lo menos.\n"
+"    Se retira de la mesa de Harja, ya que está claro que no va a cooperar "
+"hasta que se ocupe de su problema. ¿Por qué nunca puede ser rápido y fácil?"
 
 #: dat/missions/sirius/achack/achack04.lua:143
 msgid "Go to {sys} and deal with Harja's associates"
-msgstr ""
+msgstr "Ve a {sys} y trata con los asociados de Harja"
 
 #: dat/missions/sirius/achack/achack04.lua:150
 msgid "Harja joins you"
-msgstr ""
+msgstr "Harja te acompaña"
 
 #: dat/missions/sirius/achack/achack04.lua:150
 msgid ""
@@ -79378,23 +79548,38 @@ msgid ""
 "Joanne, letting her know you're on your way with Harja in tow. Now you just "
 "have to hope it doesn't all fall to pieces again when you get back to {pnt}."
 msgstr ""
+"Harja levanta una ceja cuando se enfrenta de nuevo a ti. \"Bueno, bueno, ¿"
+"hemos vuelto? ¿Significa eso que te has ocupado de mi pequeño problema?\"\n"
+"    Le cuentas la pelea que tuviste con los cazarrecompensas. Harja parece "
+"bastante satisfecho con el resultado. \"Bien {player}, lo admito, eres un "
+"gran piloto\", sonríe. \"Sigo pensando que elegiste el bando equivocado, "
+"pero eso no importa ahora. Dije que iría contigo y pienso cumplir esa "
+"promesa. Iré a preparar mi nave para el despegue ahora mismo. Cuando estés "
+"listo para partir, yo también despegaré.\"\n"
+"    Harja se marcha en dirección a los hangares del puerto espacial. Parece "
+"que por fin estáis haciendo algún progreso. Te tomas un minuto para teclear "
+"un mensaje a Joanne, haciéndole saber que estás en camino con Harja a "
+"cuestas. Ahora sólo tienes que esperar que todo no se desmorone de nuevo "
+"cuando vuelvas a {pnt}."
 
 #: dat/missions/sirius/achack/achack04.lua:162
 msgid "Harja stays put"
-msgstr ""
+msgstr "Harja se queda quieto"
 
 #: dat/missions/sirius/achack/achack04.lua:162
 msgid ""
 "\"I'm not going anywhere until I'm sure those bounty hunters aren't after me "
 "any more.\""
 msgstr ""
+"\"No voy a ninguna parte hasta que esté seguro de que esos cazarrecompensas "
+"ya no me persigan.\""
 
 #. Makes the mercenaries grumble occasionally, until the player opens fire.
 #. Randomville!!
 #. Attacked hook for mercenaries.
 #: dat/missions/sirius/achack/achack04.lua:214
 msgid "We've been set up! Harja isn't coming! Get that guy!"
-msgstr ""
+msgstr "¡Nos han tendido una trampa! ¡Harja no viene! ¡Atrapa a ese tipo!"
 
 #. Hail hook for mercenaries. Just makes it so you can't hail them.
 #.
@@ -79438,16 +79623,18 @@ msgstr ""
 #: dat/missions/sirius/heretic/heretic0.lua:63
 #: dat/missions/sirius/heretic/heretic0.lua:74
 msgid "The Gauntlet"
-msgstr ""
+msgstr "El Guantelete"
 
 #: dat/missions/sirius/heretic/heretic0.lua:42
 msgid "A Scrappy Man"
-msgstr ""
+msgstr "Un Hombre Desarrapado"
 
 #: dat/missions/sirius/heretic/heretic0.lua:42
 msgid ""
 "You see a rougher looking man sitting at the bar and guzzling a brownish ale."
 msgstr ""
+"Ves a un hombre de aspecto rudo sentado en la barra y engullendo una cerveza "
+"marrón."
 
 #: dat/missions/sirius/heretic/heretic0.lua:47
 msgid ""
@@ -79461,10 +79648,19 @@ msgid ""
 "know what I mean. Pay is good though. {credits}. That's all you need to know."
 "\" He pauses for a moment. \"How about it?\""
 msgstr ""
+"Te acercas a un hombrecillo desgarbado que se apoya en la barra. Te sientas "
+"a su lado y te mira de arriba abajo. Le devuelves la mirada con frialdad y "
+"él trata de entablar una conversación a medias. \"Qué buenas bebidas tienen "
+"aquí.\" Finges interés para no ser descortés.\n"
+"    Él continúa impaciente. \"Parece que necesitas un par de créditos de "
+"sobra\", dice finalmente. \"Tengo, eh, un envío que necesita llegar a {pnt}. "
+"¿Te interesa? Sólo tiene que quedar entre bastidores, si sabes lo que quiero "
+"decir. Pero la paga es buena. {credits}. Eso es todo lo que necesitas saber\""
+". Hace una pausa por un momento. \"¿Qué te parece?\""
 
 #: dat/missions/sirius/heretic/heretic0.lua:49
 msgid "\"Well, that's your choice. Be on your way now. I'm busy.\""
-msgstr ""
+msgstr "\"Bueno, esa es tu decisión. Sigue tu camino ahora. Estoy ocupado.\""
 
 #: dat/missions/sirius/heretic/heretic0.lua:52
 msgid ""
@@ -79476,31 +79672,42 @@ msgid ""
 "    You shake his sticky hand and walk off, content that you've made an easy "
 "buck."
 msgstr ""
+"Sientes una mano muy grande que te da una palmada en la espalda. \"¡Sabía "
+"que lo harías! Una gran elección\", dice. \"Haré que mis chicos carguen el "
+"cargamento. Recuerda, todo lo que tienes que hacer es volar a {pnt}, y "
+"evitar a los militares Sirio. No dejes que te escaneen. Le haré saber a mis "
+"contactos que te esperen. Te pagarán cuando aterrices.\"\n"
+"    Le das la mano pegajosa y te vas, contento de haber hecho un dinero "
+"fácil."
 
 #: dat/missions/sirius/heretic/heretic0.lua:54
 msgid ""
 "You are to deliver a shipment to {pnt} in the {sys} system for a strange man "
 "you met at a bar, avoiding Sirius ships."
 msgstr ""
+"Debes entregar un cargamento en {pnt} en el sistema {sys} para un extraño "
+"que conociste en un bar, evitando las naves Sirio."
 
 #: dat/missions/sirius/heretic/heretic0.lua:58
 msgid "Deliver the shipment to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Entrega el envío a {pnt} en el sistema {sys}"
 
 #: dat/missions/sirius/heretic/heretic0.lua:63
 msgid ""
 "\"You say you want this job, but you don't have enough cargo space! Stop "
 "wasting my time!\""
 msgstr ""
+"\"¡Dices que quieres este trabajo, pero no tienes suficiente espacio de "
+"carga! ¡Deja de hacerme perder el tiempo!\""
 
 #. and if they don't, the mission finishes.
 #: dat/missions/sirius/heretic/heretic0.lua:66
 msgid "Small Arms"
-msgstr ""
+msgstr "Armas Pequeñas"
 
 #: dat/missions/sirius/heretic/heretic0.lua:66
 msgid "An assortment of weapons that are not legal in Sirius space."
-msgstr ""
+msgstr "Un surtido de armas que no son legales en el espacio Sirio."
 
 #: dat/missions/sirius/heretic/heretic0.lua:74
 msgid ""
@@ -79565,16 +79772,16 @@ msgstr ""
 #: dat/missions/sirius/heretic/heretic1.lua:63
 #: dat/missions/sirius/heretic/heretic1.lua:74
 msgid "The Return"
-msgstr ""
+msgstr "El Retorno"
 
 #: dat/missions/sirius/heretic/heretic1.lua:40
 msgid "A Tall Man"
-msgstr ""
+msgstr "Un Hombre Alto"
 
 #: dat/missions/sirius/heretic/heretic1.lua:40
 #: dat/missions/sirius/heretic/heretic1.lua:41
 msgid "A tall man sitting at a table littered with papers."
-msgstr ""
+msgstr "Un hombre alto sentado en una mesa llena de papeles."
 
 #: dat/missions/sirius/heretic/heretic1.lua:45
 msgid ""
@@ -79588,6 +79795,15 @@ msgid ""
 "simply as 'heretics'. But we are so much more than that! We are the true "
 "followers of Sirichana!\""
 msgstr ""
+"Te acercas al hombre alto y éste te mira. Te das cuenta de que algunos de "
+"los papeles que hay sobre la mesa son mapas y, mientras los miras con "
+"curiosidad, el hombre sonríe y te indica que te sientes.\n"
+"    \"Hola\", dice. \"Estoy seguro de que no me reconoces, ¡pero yo sí te "
+"reconozco! Me llamo Chamán, orgulloso comandante de los Nasin. Has trabajado "
+"para nosotros antes.\" El extraño hombre y su entrega. Por supuesto.\n"
+"    \"Déjeme contarle un poco sobre nuestra organización. Los Sirii nos "
+"describen simplemente como 'herejes'. Pero somos mucho más que eso. Somos "
+"los verdaderos seguidores de Sirichana.\""
 
 #: dat/missions/sirius/heretic/heretic1.lua:48
 msgid ""
@@ -79610,6 +79826,26 @@ msgid ""
 "All the patrons in the bar turn their heads to your table. A group of young "
 "fellows start clapping and then degrade into laughter."
 msgstr ""
+"\"En un momento dado, todos los Nasin formábamos parte de la Casa Sirio y "
+"creíamos únicamente en las enseñanzas de Sirichana. Lo amábamos y nuestros "
+"corazones eran suyos. Sin embargo, como ocurre con todas las religiones en "
+"algún momento, las enseñanzas de Sirichana se vieron lastradas por las "
+"ideologías y las agendas de los hombres. La mayoría de la gente seguía "
+"aceptando estas enseñanzas como si salieran directamente de la boca del "
+"propio Sirichana, pero nosotros, los Nasin, lo sabíamos mejor.\n"
+"    \"Iniciamos una religión escindida, intentando aún cooperar con los "
+"Sirii, pero cuando se sintieron amenazados por nuestra presencia, nos "
+"tacharon de herejes y nos obligaron a salir del espacio Sirio. Al principio "
+"no sabíamos qué hacer, pero entonces Jan Jusi pi Lawa vino a dirigirnos. Él "
+"fue quien nos llamó, los Nasin, que significa \"El Camino\" en una antigua "
+"lengua terrestre.\"\n"
+"    El chamán parece dejarse llevar por el momento. \"¡Fue él! ¡Él fue quien "
+"nos llevó a unir nuestras manos! ¡Él, que nos llevó a trabajar juntos! ¡Él "
+"fue quien nos llevó a luchar contra los opresores! ¡Fue él! El mismo, el "
+"único, la Verdadera Voz de Sirichana!\"\n"
+"    Shaman parece darse cuenta de dónde está y de lo que está haciendo. "
+"Todos los clientes del bar vuelven la cabeza hacia su mesa. Un grupo de "
+"jóvenes empieza a aplaudir y luego se deshace en carcajadas."
 
 #: dat/missions/sirius/heretic/heretic1.lua:53
 msgid ""
@@ -79620,30 +79856,39 @@ msgid ""
 "system. I need a message delivered there. Of course, we will pay you for "
 "this service. How does {credits} sound? Will you do it?\""
 msgstr ""
+"Chamán tose un \"perdón\" y te mira, avergonzado. \"Está mal que me meta "
+"tanto en esas cosas. Supongo que ahora querrás saber sobre la misión.\n"
+"    \"La misión es sencilla. Nuestra base principal opera en {pnt} en el "
+"sistema {sys}. Necesito que se entregue un mensaje allí. Por supuesto, te "
+"pagaremos por este servicio. ¿Qué te parece {credits}? ¿Lo harás?\""
 
 #: dat/missions/sirius/heretic/heretic1.lua:59
 msgid ""
 "\"Fantastic!\" He hands you the message. \"They will take care of your "
 "payment there. Thank you for aiding the true followers of Sirichana.\""
 msgstr ""
+"\"¡Fantástico!\" Te entrega el mensaje. \"Allí se encargarán de tu pago. "
+"Gracias por ayudar a los verdaderos seguidores de Sirichana.\""
 
 #: dat/missions/sirius/heretic/heretic1.lua:61
 msgid ""
 "Shaman of Nasin has hired you to deliver the message to {pnt} in the {sys} "
 "system."
 msgstr ""
+"Chamán de Nasin te ha contratado para entregar el mensaje a {pnt} en el "
+"sistema {sys}."
 
 #: dat/missions/sirius/heretic/heretic1.lua:64
 msgid "Fly to {pnt} in the {sys} system and deliver the message"
-msgstr ""
+msgstr "Vuela a {pnt} en el sistema {sys} y entrega el mensaje"
 
 #: dat/missions/sirius/heretic/heretic1.lua:67
 msgid "Message"
-msgstr ""
+msgstr "Mensaje"
 
 #: dat/missions/sirius/heretic/heretic1.lua:67
 msgid "A message of seemingly high importance."
-msgstr ""
+msgstr "Un mensaje aparentemente de gran importancia."
 
 #: dat/missions/sirius/heretic/heretic1.lua:74
 msgid ""
@@ -79656,6 +79901,14 @@ msgid ""
 "us and we appreciate your services. Please feel free to meet us at the bar "
 "sometime.\""
 msgstr ""
+"Al aterrizar, te sorprende una vez más no ser recibido por nadie. Después de "
+"buscar un poco, vuelves a tu nave para encontrar que el mensaje ha sido "
+"tomado y un pequeño sobre lo ha reemplazado. Dentro del sobre hay una nota. "
+"\"Nuestras más sinceras disculpas por haberte perdido\", dice. \"Como puede "
+"ver, hemos obtenido el mensaje, y también notará que se ha depositado un "
+"pago de {credits} en tu cuenta. Has hecho un gran trabajo para nosotros y "
+"apreciamos tus servicios. Por favor, siéntete libre de reunirte con nosotros "
+"en el bar en el futuro.\""
 
 #. once again, the Nasin like the fact that we are helping the Nasin.
 #: dat/missions/sirius/heretic/heretic1.lua:80
@@ -79665,6 +79918,11 @@ msgid ""
 "\". You then delivered a message for Nasin to their base in The Wringer. You "
 "were then invited to meet the Nasin officials at the bar on The Wringer."
 msgstr ""
+"Descubriste que la organización para la que entregaste un paquete ilegal es "
+"Nasin, un grupo de seguidores de Sirichana que los Sirii califican de "
+"\"herejes\". A continuación, entregaste un mensaje para Nasin en su base de "
+"El Escurridor. A continuación, te invitaron a reunirte con los responsables "
+"de Nasin en el bar de El Escurridor."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -79710,15 +79968,15 @@ msgstr ""
 #: dat/missions/sirius/heretic/heretic2.lua:117
 #: dat/missions/sirius/heretic/heretic2.lua:129
 msgid "The Patrol"
-msgstr ""
+msgstr "La Patrulla"
 
 #: dat/missions/sirius/heretic/heretic2.lua:51
 msgid "An Imposing Man"
-msgstr ""
+msgstr "Un Hombre Impresionante"
 
 #: dat/missions/sirius/heretic/heretic2.lua:51
 msgid "This man leans against the bar while looking right at you."
-msgstr ""
+msgstr "Este hombre se apoya en la barra mientras te mira."
 
 #: dat/missions/sirius/heretic/heretic2.lua:55
 msgid ""
@@ -79733,6 +79991,17 @@ msgid ""
 "You see... we are expecting a Sirian patrol any hectosecond now, and we want "
 "you to... take care of it. What do you say? We could really use your help.\""
 msgstr ""
+"Te acercas al hombre intimidante. Está vestido elegantemente con un traje de "
+"negocios negro y oscuro, con una gran sonrisa en la cara.\n"
+"    \"¡Ah, así que eres {player}! Todo el mundo ha hablado de ti\", dice. "
+"\"Permíteme que me presente. Me llamo Draga, alto comandante de las "
+"operaciones de Nasin. Te acuerdas de nosotros, ¿verdad? La gente de nuestra "
+"organización ha empezado a fijarse en tus acciones. Tal vez sea la voluntad "
+"de Sirichana que vengas a nosotros. Si ese es el caso, entonces tengo una "
+"oferta que no puedes rechazar. Una oportunidad para probarte a ti mismo como "
+"algo más que un mensajero glorificado. Verás... estamos esperando una "
+"patrulla Siria en cualquier hectosegundo, y queremos que tú... te encargues "
+"de ella. ¿Qué dices? Nos vendría muy bien tu ayuda.\""
 
 #: dat/missions/sirius/heretic/heretic2.lua:58
 msgid ""
@@ -79743,21 +80012,30 @@ msgid ""
 "last second. If you jump out or land before your mission is completed, "
 "consider yourself fired.\""
 msgstr ""
+"\"¡Maravilloso! ¡Sabía que podía contar contigo! No te preocupes; lucharás "
+"junto a algunos de nuestros mejores pilotos. ¡Sé que puedes expulsar a esos "
+"Sirii!\n"
+"    \"Ah, y una última cosa: ni se te ocurra abandonarnos en el último "
+"segundo. Si saltas o aterrizas antes de completar tu misión, considérate "
+"despedido.\""
 
 #: dat/missions/sirius/heretic/heretic2.lua:61
 msgid ""
 "You have been hired once again by Nasin, this time to destroy a Sirius "
 "patrol that has entered {sys}."
 msgstr ""
+"Has sido contratado una vez más por Nasin, esta vez para destruir una "
+"patrulla Sirio que ha entrado en {sys}."
 
 #: dat/missions/sirius/heretic/heretic2.lua:64
 msgid "Destroy the Sirius patrol"
-msgstr ""
+msgstr "Destruye la patrulla Sirio"
 
 #: dat/missions/sirius/heretic/heretic2.lua:72
 msgid ""
 "\"Gah! I should have known you would be so spineless! Get out of my sight!\""
 msgstr ""
+"\"¡Gah! ¡Debería haber sabido que serías tan cobarde! ¡Fuera de mi vista!\""
 
 #. the only Sirius i want in the system currently is the recon force
 #. other escapees.
@@ -79770,7 +80048,7 @@ msgstr ""
 #: dat/missions/sirius/heretic/heretic4.lua:99
 #: dat/missions/sirius/heretic/heretic4.lua:128
 msgid "Nasin Admonisher"
-msgstr ""
+msgstr "Amonestador Nasin"
 
 #: dat/missions/sirius/heretic/heretic2.lua:83
 #: dat/missions/sirius/heretic/heretic3.lua:91
@@ -79778,7 +80056,7 @@ msgstr ""
 #: dat/missions/sirius/heretic/heretic4.lua:99
 #: dat/missions/sirius/heretic/heretic4.lua:128
 msgid "Nasin Lancelot"
-msgstr ""
+msgstr "Lancelot Nasin"
 
 #: dat/missions/sirius/heretic/heretic2.lua:113
 msgid ""
@@ -79796,6 +80074,11 @@ msgid ""
 "chip. \"Thank you for your services. Meet us in the bar again sometime. We "
 "will certainly have another mission for you.\""
 msgstr ""
+"Aterrizas, habiendo derrotado a la pequeña fuerza de reconocimiento, y "
+"encuentras a Draga con una sonrisa en la cara. \"¡Gran trabajo!\", dice. \"¡"
+"Veo que realmente eres lo que se dice que eres y no un mercader exagerado!\" "
+"Te entrega un chip de crédito. \"Gracias por tus servicios. Vuelve a vernos "
+"en el bar algún día. Seguro que tenemos otra misión para ti.\""
 
 #: dat/missions/sirius/heretic/heretic2.lua:122
 msgid ""
@@ -79803,12 +80086,17 @@ msgid ""
 "operations. He said that Nasin will have another mission for you if you meet "
 "him in the bar on The Wringer again."
 msgstr ""
+"Has eliminado una patrulla Siria para Draga, alto comandante de las "
+"operaciones de Nasin. Ha dicho que Nasin tendrá otra misión para ti si "
+"vuelves a encontrarte con él en el bar de El Escurridor."
 
 #: dat/missions/sirius/heretic/heretic2.lua:129
 msgid ""
 "As you abandon your mission, you receive a message from Draga saying that "
 "Nasin has no need for deserters. You hope you made the right decision."
 msgstr ""
+"Mientras abandonas tu misión, recibes un mensaje de Draga diciendo que Nasin "
+"no necesita desertores. Esperas haber tomado la decisión correcta."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -79862,7 +80150,7 @@ msgstr ""
 #: dat/missions/sirius/heretic/heretic3.lua:160
 #: dat/missions/sirius/heretic/heretic3.lua:165
 msgid "The Assault"
-msgstr ""
+msgstr "El Asalto"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -79901,12 +80189,14 @@ msgstr ""
 #: dat/missions/sirius/heretic/heretic3.lua:49
 #: dat/missions/sirius/heretic/heretic4.lua:47
 msgid "Draga"
-msgstr ""
+msgstr "Draga"
 
 #: dat/missions/sirius/heretic/heretic3.lua:49
 msgid ""
 "The familiar form of Draga is at a table with some officers. They look busy."
 msgstr ""
+"La forma familiar de Draga está en una mesa con algunos oficiales. Parecen "
+"ocupados."
 
 #: dat/missions/sirius/heretic/heretic3.lua:53
 msgid ""
@@ -79923,6 +80213,18 @@ msgid ""
 "    \"You will be outnumbered, outgunned, and officially declared an enemy "
 "of the state. Will you help us?\""
 msgstr ""
+"Draga está sentada en una mesa con un par de personas que parecen ser "
+"militares oficiales. Te miran cuando te acercas. Draga se levanta y te "
+"saluda. \"Hola, {player}\", dice. \"Tenemos una situación y necesitamos tu "
+"ayuda.\n"
+"    \"Los Sirii están empezando a tomarnos en serio como una amenaza. Esto "
+"no es lo que esperábamos; esperábamos poder estar un poco más de tiempo bajo "
+"tierra, pero parece que nos están obligando a entrar en batalla. Por ello, "
+"necesitamos que nos ayuden a defender nuestro sistema. Nuestro objetivo no "
+"es eliminar por completo la amenaza Sirio, sino más bien ahuyentarlos y "
+"mostrarles que vamos en serio. Queremos que lo sientan.\n"
+"    \"Serás superado en número, en armas, y oficialmente declarado enemigo "
+"del estado. ¿Nos ayudarás?\""
 
 #: dat/missions/sirius/heretic/heretic3.lua:56
 msgid ""
@@ -79931,22 +80233,30 @@ msgid ""
 "before, desertion will not be tolerated. Do not land or leave the system "
 "until your mission is completed.\""
 msgstr ""
+"\"¡Excelente! ¿Veis, amigos? ¡Les dije que este era un guardián! Nuestras "
+"fuerzas se reunirán contigo ahí fuera. Ah, y aunque estoy seguro de que "
+"nunca harías esto, como antes, no se tolerará la deserción. No aterrices ni "
+"abandones el sistema hasta que tu misión esté completada.\""
 
 #: dat/missions/sirius/heretic/heretic3.lua:59
 msgid ""
 "A Sirius assault fleet has just jumped into {sys}. You are to assist Nasin "
 "in destroying this fleet."
 msgstr ""
+"Una flota de asalto Sirio acaba de saltar a {sys}. Debes ayudar a Nasin a "
+"destruir esta flota."
 
 #: dat/missions/sirius/heretic/heretic3.lua:62
 msgid "Defend {pnt} against the Sirius assault"
-msgstr ""
+msgstr "Defiende {pnt} contra el asalto Sirio"
 
 #: dat/missions/sirius/heretic/heretic3.lua:72
 msgid ""
 "\"Do you not understand the seriousness of this situation?! I thought you "
 "were better than this!\" He grumbles and shoos you away."
 msgstr ""
+"\"¡¿No entiendes la gravedad de esta situación?! ¡Creía que eras mejor que "
+"esto!\" Refunfuña y te echa."
 
 #. for when the player takes off from the wringer.
 #. clearing out all the pilots, and
@@ -79956,19 +80266,23 @@ msgstr ""
 #: dat/missions/sirius/heretic/heretic3.lua:91
 #: dat/missions/sirius/heretic/heretic3.lua:92
 msgid "Nasin Shark"
-msgstr ""
+msgstr "Tiburón Nasin"
 
 #: dat/missions/sirius/heretic/heretic3.lua:122
 msgid ""
 "You receive a frantic message from Draga. \"{player}! This is worse than we "
 "ever thought. We need you back at the base! Stat!\""
 msgstr ""
+"Recibes un mensaje frenético de Draga. ¡\"{player}! Esto es peor de lo que "
+"pensábamos. ¡Te necesitamos de vuelta en la base! ¡Inmediatamente!\""
 
 #: dat/missions/sirius/heretic/heretic3.lua:141
 msgid ""
 "You receive a scathing angry message from Draga chastising you for "
 "abandoning your mission. You put it behind you. There's no turning back now."
 msgstr ""
+"Recibes un mensaje de enfado de Draga que te reprende por haber abandonado "
+"tu misión. Lo dejas atrás. Ya no hay vuelta atrás."
 
 #: dat/missions/sirius/heretic/heretic3.lua:160
 msgid ""
@@ -79987,6 +80301,10 @@ msgid ""
 "bar when you're ready! Payment has been transferred into your account. More "
 "importantly, we have a dire situation!\""
 msgstr ""
+"Al aterrizar, veñ a las fuerzas Nasin tratando desesperadamente de "
+"reagruparse. \"¡Deprisa, prepara tu nave para otra batalla!\", dice, \"¡y "
+"reúnete conmigo en el bar cuando estés listo! El pago ha sido transferido a "
+"tu cuenta. Y lo que es más importante, ¡tenemos una situación grave!\""
 
 #: dat/missions/sirius/heretic/heretic3.lua:169
 msgid ""
@@ -79994,12 +80312,17 @@ msgid ""
 "Draga ordered you to get your ship ready for another battle and meet him at "
 "the bar."
 msgstr ""
+"Ayudaste a Draga en un intento de proteger a Nasin de los militares Sirio. "
+"Draga te ordenó que prepararas tu nave para otra batalla y que te reunieras "
+"con él en el bar."
 
 #: dat/missions/sirius/heretic/heretic4.lua:47
 msgid ""
 "Draga is running around, helping the few Nasin in the bar to get stuff "
 "together and get out."
 msgstr ""
+"Draga va de un lado a otro, ayudando a los pocos Nasin que hay en el bar a "
+"recoger sus cosas y salir."
 
 #. initial convo. Kept it a yes/no to help with the urgent feeling of the situation.
 #: dat/missions/sirius/heretic/heretic4.lua:53
@@ -80022,7 +80345,7 @@ msgstr ""
 #: dat/missions/sirius/heretic/heretic4.lua:138
 #: dat/missions/sirius/heretic/heretic4.lua:152
 msgid "The Egress"
-msgstr ""
+msgstr "La Salida"
 
 #: dat/missions/sirius/heretic/heretic4.lua:59
 msgid ""
@@ -80035,36 +80358,45 @@ msgid ""
 "fire by a Sirian soldier who has infiltrated the base. The last thing you "
 "see as you take off is him lying on the ground, lifeless."
 msgstr ""
+"\"¡Gracias! ¡Sabía que lo harías!\" Draga procede entonces a introducir en "
+"tu nave toda la gente que pueda caber, la suficiente como para llenar la "
+"bodega de tu nave hasta los topes. El número de miembros de los Nasin te "
+"impacta al verlos apiñados en tu nave.\n"
+"    Mientras los Sirii se acercan cada vez más, Draga te grita que pongas en "
+"marcha la nave y despegues. Comienzas a despegar justo a tiempo para ver a "
+"Draga bajo el fuego de un soldado Sirio que se ha infiltrado en la base. Lo "
+"último que ves al despegar es a él tendido en el suelo, sin vida."
 
 #: dat/missions/sirius/heretic/heretic4.lua:67
 msgid ""
 "Assist the Nasin refugees by flying to {pnt} in {sys}, and unloading them "
 "there."
 msgstr ""
+"Ayuda a los refugiados Nasin volando a {pnt} en {sys}, y descargándolos allí."
 
 #: dat/missions/sirius/heretic/heretic4.lua:69
 msgid "Fly the refugees to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Vuelen los refugiados a {pnt} en el sistema {sys}."
 
 #: dat/missions/sirius/heretic/heretic4.lua:71
 msgid "Refugees"
-msgstr ""
+msgstr "Refugiados"
 
 #: dat/missions/sirius/heretic/heretic4.lua:71
 msgid "Nasin refugees."
-msgstr ""
+msgstr "Refugiados Nasin."
 
 #. get the hooks.
 #. left over fleets from the prior mission.
 #: dat/missions/sirius/heretic/heretic4.lua:98
 #: dat/missions/sirius/heretic/heretic4.lua:131
 msgid "Nasin Mule"
-msgstr ""
+msgstr "Mula Nasin"
 
 #: dat/missions/sirius/heretic/heretic4.lua:98
 #: dat/missions/sirius/heretic/heretic4.lua:131
 msgid "Nasin Llama"
-msgstr ""
+msgstr "Llama Nasin"
 
 #: dat/missions/sirius/heretic/heretic4.lua:138
 msgid ""
@@ -80076,6 +80408,14 @@ msgid ""
 "credit chip in your hand just as you finish helping everyone out of your "
 "ship. It seems it was a job well done."
 msgstr ""
+"Aterrizas en {pnt} y abres las puertas de la bahía. Todavía te sorprende la "
+"cantidad de gente que Draga ha ayudado a entrar en la bodega de carga. "
+"Mientras ayudas a todos a salir de tu nave, un hombre se acerca a ti. \"Hola"
+", me llamo Jimmy. Gracias por ayudar a toda esta gente. Estoy muy "
+"agradecido. He oído hablar de ti por Draga, y estaré siempre en deuda "
+"contigo. Aquí, por favor, toma esto.\" Él presiona un chip de crédito en tu "
+"mano justo cuando terminas de ayudar a todos a salir de tu nave. Parece que "
+"fue un trabajo bien hecho."
 
 #. big boost to the Nasin, for completing the prologue
 #: dat/missions/sirius/heretic/heretic4.lua:146
@@ -80085,6 +80425,10 @@ msgid ""
 "made it to Ulios, a man named Jimmy gave you a credit chip and said that he "
 "\"will be forever in your debt\"."
 msgstr ""
+"Ayudaste a rescatar a todos los Nasin que tu nave podía llevar a Ulios. "
+"Draga fue asesinado por un soldado Sirio cuando intentaba rescatar a su "
+"gente. Cuando llegaste a Ulios, un hombre llamado Jimmy te dio un chip de "
+"crédito y dijo que \"estará siempre en deuda contigo\"."
 
 #: dat/missions/sirius/heretic/heretic4.lua:152
 msgid ""
@@ -80092,6 +80436,9 @@ msgid ""
 "and jettison all {n} people out into the cold emptiness of space. The Nasin "
 "will hate you forever, but you did what you had to do."
 msgstr ""
+"Decides que esta misión es demasiado. Abres las puertas de carga y lanzas a "
+"todas las personas al frío vacío del espacio. Los Nasin te odiarán siempre, "
+"pero has hecho lo que tenías que hacer."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -80135,72 +80482,81 @@ msgstr ""
 #. passenger rank
 #: dat/missions/sirius/srs_ferry.lua:49
 msgid "Shaira"
-msgstr ""
+msgstr "Shaira"
 
 #: dat/missions/sirius/srs_ferry.lua:50
 msgid "Fyrra"
-msgstr ""
+msgstr "Fyrra"
 
 #: dat/missions/sirius/srs_ferry.lua:51
 msgid "Serra"
-msgstr ""
+msgstr "Serra"
 
 #: dat/missions/sirius/srs_ferry.lua:54
 msgid "Economy"
-msgstr ""
+msgstr "Economía"
 
 #. Note: indexed from 0, to match mission tiers.
 #: dat/missions/sirius/srs_ferry.lua:55
 msgid "Priority"
-msgstr ""
+msgstr "Prioridad"
 
 #: dat/missions/sirius/srs_ferry.lua:56
 msgid "Express"
-msgstr ""
+msgstr "Expreso"
 
 #. Outcomes for each of the 4 options above:
 #. We pick random number (1-4), then use this as our index into nc_probs[rank]
 #. =Landing=--
 #: dat/missions/sirius/srs_ferry.lua:70
 msgid "The Sirian Shaira"
-msgstr ""
+msgstr "Los Shaira Sirio"
 
 #: dat/missions/sirius/srs_ferry.lua:71
 msgid "The Sirian Fyrra"
-msgstr ""
+msgstr "Los Fyrra Sirio"
 
 #: dat/missions/sirius/srs_ferry.lua:72
 msgid "The Sirian Serra"
-msgstr ""
+msgstr "Los Serra Sirio"
 
 #: dat/missions/sirius/srs_ferry.lua:75
 msgid ""
 "{passenger} thanks you profusely for your generosity, and carefully counts "
 "out your fare."
 msgstr ""
+"{passenger} te agradece profusamente tu generosidad, y cuenta cuidadosamente "
+"tu tarifa."
 
 #: dat/missions/sirius/srs_ferry.lua:76
 msgid ""
 "{passenger} bows briefly in gratitude, and silently places the agreed-upon "
 "fare in your hand."
 msgstr ""
+"{passenger} se inclina brevemente en señal de agradecimiento y deposita en "
+"silencio la tarifa acordada en tu mano."
 
 #: dat/missions/sirius/srs_ferry.lua:77
 msgid ""
 "{passenger} crisply counts out your credits, and nods a momentary farewell."
 msgstr ""
+"{passenger} cuenta tus créditos y se despide momentáneamente con la cabeza."
 
 #: dat/missions/sirius/srs_ferry.lua:80
 msgid ""
 "{passenger}, on seeing the time, looks at you with veiled hurt and "
 "disappointment, but carefully counts out their full fare of {credits}."
 msgstr ""
+"{passenger}, al ver la hora, te mira con velado dolor y decepción, pero "
+"cuenta cuidadosamente tu tarifa completa de {credits}."
 
 #: dat/missions/sirius/srs_ferry.lua:81
 msgid ""
 "{passenger} counts out {credits} with pursed lips, and walks off before you "
 "have time to say anything."
 msgstr ""
+"{passenger} cuenta {credits} con los labios fruncidos, y se va antes de que "
+"tengas tiempo de decir nada."
 
 #: dat/missions/sirius/srs_ferry.lua:82
 msgid ""
@@ -80208,6 +80564,9 @@ msgid ""
 "snaps {credits} down on the seat, with a look suggesting they hardly think "
 "you deserve that much."
 msgstr ""
+"{passenger} expresa escuetamente su descontento con la llegada tardía, y se "
+"suelta los {credits} sobre el asiento, con una mirada que sugiere que no "
+"cree que te merezcas tanto."
 
 #. Customization of car.calculateRoute in common.cargo
 #. Select mission tier.
@@ -80238,7 +80597,7 @@ msgstr ""
 
 #: dat/missions/sirius/srs_ferry.lua:162 dat/missions/sirius/srs_ferry.lua:252
 msgid "{tier} space transport to {pnt} for {rank}-class citizen"
-msgstr ""
+msgstr "Transporte espacial de {tier} para ciudadanos de {rank} clase"
 
 #: dat/missions/sirius/srs_ferry.lua:188
 msgid ""
@@ -80247,6 +80606,10 @@ msgid ""
 "\n"
 "Accept the mission anyway?"
 msgstr ""
+"El pasajero solicita la llegada en {time_limit}, pero tu nave tardará al "
+"menos {time} en llegar a {pnt}, incumpliendo el plazo.\n"
+"\n"
+"¿Aceptas la misión de todos modos?"
 
 #. if faction.get('Sirius'):playerStanding() <= 75 then
 #. Player with mem.rank < 75 will not be allowed to land on Mutris
@@ -80265,6 +80628,8 @@ msgid ""
 "Apparently you are not fit to be the pilot for my pilgrimage. It is the will "
 "of Sirichana to teach me patience...\""
 msgstr ""
+"Aparentemente no eres apto para ser el piloto de mi peregrinaje. Es la "
+"voluntad de Sirichana enseñarme paciencia...\""
 
 #. Rank 1 will accept an alternate destination, but cut your fare
 #: dat/missions/sirius/srs_ferry.lua:231
@@ -80272,6 +80637,8 @@ msgid ""
 "However, if you're on the way to Aesir, I could be willing to pay {credits} "
 "for transportation to {pnt}.\""
 msgstr ""
+"Sin embargo, si estás de camino a Aesir, podría estar dispuesto a pagar "
+"{credits} por el transporte a {pnt}.\""
 
 #. OK with alternate destination, with smaller fare cut
 #: dat/missions/sirius/srs_ferry.lua:235
@@ -80280,22 +80647,28 @@ msgid ""
 "the remainder of the flight. But if that is the case, I wouldn't want to pay "
 "more than {credits}.\""
 msgstr ""
+"Sin embargo, supongo que si puedes llevarme a {pnt}, puedo encontrar otro "
+"piloto para el resto del vuelo. Pero si ese es el caso, no me gustaría pagar "
+"más de {credits}.\""
 
 #. Rank 0 will take whatever they can get
 #: dat/missions/sirius/srs_ferry.lua:238
 msgid ""
 "However, if you can take me as far as {pnt}, I will be satisfied with that.\""
 msgstr ""
+"Sin embargo, si puedes llevarme hasta {pnt}, estaré satisfecho con eso.\""
 
 #: dat/missions/sirius/srs_ferry.lua:241
 msgid ""
 "The passenger looks at your credentials and remarks, \"Someone of your "
 "standing will not be allowed to set foot on the holy ground. "
 msgstr ""
+"El pasajero mira tus credenciales y comenta: \"A alguien de tu categoría no "
+"se le permitirá pisar la tierra sagrada\". "
 
 #: dat/missions/sirius/srs_ferry.lua:243 dat/missions/sirius/srs_ferry.lua:245
 msgid "Deficient clearance"
-msgstr ""
+msgstr "Autorización deficiente"
 
 #. mem.wants_sirian = false    -- Don't care what kind of ship you're flying
 #. Sirians prefer to make their pilgrimage in a Sirian ship
@@ -80307,7 +80680,7 @@ msgstr ""
 #: dat/missions/sirius/srs_ferry.lua:264 dat/missions/sirius/srs_ferry.lua:269
 #: dat/missions/sirius/srs_ferry.lua:279
 msgid "Transportation details"
-msgstr ""
+msgstr "Detalles sobre el transporte"
 
 #: dat/missions/sirius/srs_ferry.lua:264
 msgid ""
@@ -80316,6 +80689,10 @@ msgid ""
 "such a crude ship must not be allowed to touch the sacred soil of Mutris. I "
 "will wait for a pilot who can ferry me in a true Sirian vessel.\""
 msgstr ""
+"Al llegar al hangar, el Sirio mira tu nave y comenta: \"¿Qué? ¿Esta va a ser "
+"la nave de mi peregrinación? Esto es inaceptable, no se debe permitir que "
+"una nave tan tosca toque el suelo sagrado de Mutris. Esperaré a un piloto "
+"que pueda transportarme en una verdadera nave Siria.\""
 
 #: dat/missions/sirius/srs_ferry.lua:269
 msgid ""
@@ -80326,25 +80703,32 @@ msgid ""
 "The Sirian looks like they might be open to negotiating, however. Would you "
 "offer to fly the mission for {credits}?"
 msgstr ""
+"Al llegar al hangar, el Sirio mira tu nave y comenta: \"Oh, no me has dicho "
+"que tu nave no procede de nuestros astilleros Sirios nativos. Dado que es "
+"así, prefiero esperar a otro piloto. Una peregrinación es un asunto sagrado, "
+"y la nave debería serlo también.\"\n"
+"Sin embargo, el Sirio parece estar abierto a negociar. ¿Te ofrecerías a "
+"volar la misión por {credits}?"
 
 #. Player won't offer a discount
 #: dat/missions/sirius/srs_ferry.lua:273
 msgid "Offer denied"
-msgstr ""
+msgstr "Oferta denegada"
 
 #: dat/missions/sirius/srs_ferry.lua:273
 msgid "\"I'm sorry. Your price is reasonable, but piety is of greater value.\""
 msgstr ""
+"\"Lo siento. Tu precio es razonable, pero la piedad es de mayor valor.\""
 
 #. Would not be persuaded by a discount
 #: dat/missions/sirius/srs_ferry.lua:276
 msgid "Offer accepted"
-msgstr ""
+msgstr "Oferta aceptada"
 
 #: dat/missions/sirius/srs_ferry.lua:276
 msgid ""
 "\"Very well. For a price that reasonable, I will adjust my expectations.\""
-msgstr ""
+msgstr "\"Muy bien. Por un precio tan razonable, ajustaré mis expectativas.\""
 
 #: dat/missions/sirius/srs_ferry.lua:279
 msgid ""
@@ -80352,17 +80736,19 @@ msgid ""
 "hint of disappointment on their face, before they notice you and quickly "
 "hide it."
 msgstr ""
+"Al llegar al hangar, los Sirios miran tu nave, y captas un atisbo de "
+"decepción en su rostro, antes de que te fijes en ti y lo ocultes rápidamente."
 
 #. ok with the arrangements
 #. Will not expect to arrive in a Sirian ship
 #. Will expect to arrive in a Sirian ship
 #: dat/missions/sirius/srs_ferry.lua:290
 msgid "Pilgrims"
-msgstr ""
+msgstr "Peregrinos"
 
 #: dat/missions/sirius/srs_ferry.lua:290
 msgid "A bunch of giddy Sirian pilgrims."
-msgstr ""
+msgstr "Un grupo de vertiginosos peregrinos Sirios."
 
 #. We'll assume you can hold as many pilgrims as you want?
 #. 100STU per tick
@@ -80372,7 +80758,7 @@ msgstr ""
 #. A little bonus for doing something nice
 #: dat/missions/sirius/srs_ferry.lua:308 dat/missions/sirius/srs_ferry.lua:332
 msgid "Altering the deal"
-msgstr ""
+msgstr "Alterar el trato"
 
 #: dat/missions/sirius/srs_ferry.lua:308
 msgid ""
@@ -80381,47 +80767,54 @@ msgid ""
 "is quite disappointing.\" They hand you {credits}, but it's definitely less "
 "than you were expecting."
 msgstr ""
+"Al aterrizar, el pasajero te lanza una breve mirada. \"Había pagado por el "
+"transporte en una nave Siria\", comentan. \"Este acuerdo alternativo es "
+"bastante decepcionante\". Te entregan {credits}, pero es definitivamente "
+"menos de lo que esperabas."
 
 #. Good: they weren't expecting a Sirian ship, but they got one anyway
 #. ranges from 0 (<mem.distbonus_minjumps jumps) to 4 (>=mem.distbonus_maxjumps jumps)
 #: dat/missions/sirius/srs_ferry.lua:319
 msgid "Successful arrival!"
-msgstr ""
+msgstr "¡Llegada con éxito!"
 
 #. if we missed the second deadline, drop the person off at the planet.
 #: dat/missions/sirius/srs_ferry.lua:321 dat/missions/sirius/srs_ferry.lua:340
 msgid "Passenger transport failure"
-msgstr ""
+msgstr "Fracaso del transporte de pasajeros"
 
 #: dat/missions/sirius/srs_ferry.lua:321
 msgid ""
 "Well, you arrived, but with this late of an arrival, you can't hope for any "
 "payment."
 msgstr ""
+"Bueno, has llegado, pero con este retraso no puedes esperar ningún pago."
 
 #. You were late
 #: dat/missions/sirius/srs_ferry.lua:326
 msgid "Late arrival"
-msgstr ""
+msgstr "Llegada tardía"
 
 #: dat/missions/sirius/srs_ferry.lua:332
 msgid ""
 "Since you were unexpectedly able to procure a Sirian ship for the journey, "
 "you find a few extra credits tucked in with the fare!"
 msgstr ""
+"Como inesperadamente has podido conseguir una nave Siria para el viaje, ¡"
+"encuentras unos cuantos créditos extra metidos en la tarifa!"
 
 #: dat/missions/sirius/srs_ferry.lua:340
 msgid "You drop the upset pilgrim off at the nearest spaceport."
-msgstr ""
+msgstr "Dejas al molesto peregrino en el puerto espacial más cercano."
 
 #. Date hook
 #: dat/missions/sirius/srs_ferry.lua:348
 msgid "Fly to {pnt} in the {sys} system before {time}"
-msgstr ""
+msgstr "Vuela a {pnt} en el sistema {sys} antes de {time}"
 
 #: dat/missions/sirius/srs_ferry.lua:352 dat/missions/sirius/srs_ferry.lua:363
 msgid "Pilgrimage transport"
-msgstr ""
+msgstr "Transporte de peregrinos"
 
 #. Case missed second deadline
 #: dat/missions/sirius/srs_ferry.lua:355
@@ -80429,29 +80822,34 @@ msgid ""
 "You're far too late ... best to drop your passengers off on the nearest "
 "planet before tempers run any higher."
 msgstr ""
+"Llegas demasiado tarde... mejor dejar a tus pasajeros en el planeta más "
+"cercano antes de que los ánimos se calienten más."
 
 #: dat/missions/sirius/srs_ferry.lua:356
 msgid "Pilgrim drop-off"
-msgstr ""
+msgstr "Entrega de peregrinos"
 
 #: dat/missions/sirius/srs_ferry.lua:357
 msgid "Drop off the pilgrims at the nearest planet"
-msgstr ""
+msgstr "Deja a los peregrinos en el planeta más cercano"
 
 #. Case missed first deadline
 #: dat/missions/sirius/srs_ferry.lua:361 dat/missions/sirius/srs_ferry.lua:362
 msgid "You've missed the scheduled arrival time! But better late than never..."
 msgstr ""
+"¡Has perdido la hora de llegada prevista!. Pero más vale tarde que nunca..."
 
 #: dat/missions/sirius/srs_ferry.lua:369
 msgid "Passenger transport aborted"
-msgstr ""
+msgstr "Transporte de pasajeros abortado"
 
 #: dat/missions/sirius/srs_ferry.lua:369
 msgid ""
 "Informing the pilgrim that their flight to {pnt} has been canceled, you "
 "promise to drop them off at the nearest planet."
 msgstr ""
+"Informando al peregrino de que su vuelo a {pnt} ha sido cancelado, prometes "
+"dejarle en el planeta más cercano."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -81425,11 +81823,11 @@ msgstr ""
 #. Calculate the route, distance, jumps and cargo to take
 #: dat/missions/trader/anxiousmerchant.lua:52
 msgid "Merchant"
-msgstr ""
+msgstr "Comerciante"
 
 #: dat/missions/trader/anxiousmerchant.lua:52
 msgid "You see a merchant at the bar in a clear state of anxiety."
-msgstr ""
+msgstr "Ves a un comerciante en la barra en un claro estado de ansiedad."
 
 #: dat/missions/trader/anxiousmerchant.lua:72
 msgid ""
@@ -81460,16 +81858,20 @@ msgid ""
 "The goods have to arrive in {time_limit} but it will take {time} for your "
 "ship to reach {pnt}. Accept the mission anyway?"
 msgstr ""
+"La mercancía tiene que llegar en {time_limit} pero tu nave tardará {time} en "
+"llegar a {pnt}. ¿Aceptas la misión de todos modos?"
 
 #. mission details
 #: dat/missions/trader/anxiousmerchant.lua:93
 msgid "Anxious Merchant"
-msgstr ""
+msgstr "Comerciante Ansioso"
 
 #: dat/missions/trader/anxiousmerchant.lua:95
 msgid ""
 "You decided to help a fraught merchant by delivering some goods to {pnt}."
 msgstr ""
+"Has decidido ayudar a un comerciante en apuros entregando algunas mercancías "
+"a {pnt}."
 
 #. destination
 #. adds cargo
@@ -81477,7 +81879,7 @@ msgstr ""
 #. OSD
 #: dat/missions/trader/anxiousmerchant.lua:105
 msgid "Happy Day"
-msgstr ""
+msgstr "Día Feliz"
 
 #: dat/missions/trader/anxiousmerchant.lua:105
 msgid ""
@@ -81485,6 +81887,9 @@ msgid ""
 "cargo to the cargo guy at {pnt}. They should pay you {credits} when you get "
 "there. Don't be late, OK?\""
 msgstr ""
+"El comerciante suspira aliviado. \"Muchas gracias por esto. Sólo tienes que "
+"llevar la carga al cargador de {pnt}. Debería pagarte {credits} cuando "
+"llegues ahí. No llegues tarde, ¿OK?\""
 
 #: dat/missions/trader/anxiousmerchant.lua:112
 msgid ""
@@ -81495,6 +81900,12 @@ msgid ""
 "grief. Here's your payment. Maybe I can buy you a drink some time!\" You "
 "laugh and part ways."
 msgstr ""
+"Al aterrizar en el puerto espacial, ves el depósito de la Cofradía de "
+"Comerciantes rodeado de un ajetreo. El inspector de carga te mira con "
+"sorpresa y le explicas lo sucedido mientras se descarga la carga de tu nave. "
+"\"¡Vaya, gracias por la ayuda! Definitivamente nos has ahorrado un montón de "
+"disgustos. Aquí tienes tu pago. Quizá pueda invitarte a una copa alguna vez\""
+". Os reís y os despedís."
 
 #: dat/missions/trader/anxiousmerchant.lua:115
 msgid "Deliver the Goods... late"
