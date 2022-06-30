@@ -11,6 +11,18 @@
   <enemies />
  </faction>
  <faction>
+  <name>Affiliated</name>
+  <ai>pirate</ai>
+  <equip>escort</equip>
+  <static />
+  <invisible />
+  <known />
+  <player>0</player>
+  <standing>static</standing>
+  <allies />
+  <enemies />
+ </faction>
+ <faction>
   <name>Independent</name>
   <ai>independent</ai>
   <static />
