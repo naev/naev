@@ -1637,6 +1637,15 @@ Spob *spob_new (void)
    p->id       = array_size(spob_stack)-1;
    p->presence.faction = -1;
 
+   /* Lua doesn't default to 0 as a safe value... */
+   p->lua_env     = LUA_NOREF;
+   p->lua_load    = LUA_NOREF;
+   p->lua_unload  = LUA_NOREF;
+   p->lua_land    = LUA_NOREF;
+   p->lua_can_land= LUA_NOREF;
+   p->lua_render  = LUA_NOREF;
+   p->lua_update  = LUA_NOREF;
+
    /* Reconstruct the jumps. */
    if (!systems_loading && realloced)
       systems_reconstructSpobs();
