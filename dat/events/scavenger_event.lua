@@ -179,22 +179,22 @@ local chitchat_dreamship = {
     _("I'll bet we find something interesting today."),
     _("I love my {dreamship}."),
     _("I really love my {dreamship}."),
-    _("Have I told you how much I appreciate my {dreamship}?"),
+    _("Have I told you how much I appreciate my {ship}?"),
     _("This is the life."),
-    _("Ahhh, this is the life. I owe it all to the {dreamship}."),
+    _("Ahhh, this is the life. I owe it all to the {ship}."),
     _("Everything will be okay, as long as I have my {dreamship}."),
     _(
         "I figure you've probably spent a lot on me by now, but it was all worth it. I'm thankful for every day I get with my {dreamship}."
     ),
     _("I'm thankful for every day I get with my {dreamship}."),
     _("I hope you realize that this thing is going to cost you {replacement_text} if I have to eject."),
-    _("My {dreamship} will cost you {replacement_text} to cover. I hope it lasts."),
+    _("My {ship} will cost you {replacement_text} to cover. I hope it lasts."),
     _("I'm in a good mood."),
     _("I've got a good feeling about this'"),
     _("You know, you're insane but I like it."),
-    _("Let's not scratch the paint on my {dreamship} today."),
+    _("Let's not scratch the paint on my {ship} today."),
     _("I just had this {dreamship} cleaned, can you notice?"),
-    _("This {dreamship} is perfect for a {rank} like me.")
+    _("This {ship} is perfect for a {rank} like me.")
 }
 
 local chitchat_broken_dreams = {
@@ -360,17 +360,17 @@ local function speak(persona, sentiment, arg)
     elseif ss == "dreamship" then
         spoken = pick_one(chitchat_dreamship)
     elseif ss == "negative" then
-        if persona.dreamship ~= persona.ship:nameRaw() then
-            spoken = pick_one(chitchat_negative)
-        else
+        if string.find(persona.ship:nameRaw(), persona.dreamship) then
             spoken = pick_one(chitchat_dreamship)
+        else
+            spoken = pick_one(chitchat_negative)
         end
     elseif ss == "broken_dreams" then
         -- make sure you don't complain if you replaced your dream ship with a new dream ship
-        if persona.dreamship ~= persona.ship:nameRaw() then
-            spoken = pick_one(chitchat_broken_dreams)
-        else
+        if string.find(persona.ship:nameRaw(), persona.dreamship) then
             spoken = pick_one(chitchat_dreamship)
+        else
+            spoken = pick_one(chitchat_broken_dreams)
         end
     elseif ss == "malfunction" then
         -- if this is the sentiment but there is no argument, that's because we want to stay silent since last time this was our sentiment
@@ -488,7 +488,7 @@ local function getOfferText(approachtext, edata)
     local credentials =
         _(
         [[
-Pilot name: {name}
+Pilot name: {first_name} {name}
 Rank: {rank} ({experience} merit)
 Ship: {ship}
 Goal: {dreamship}
@@ -573,14 +573,21 @@ local function _createReplacementShip(persona, limit_ships)
             local price = ship:price()
             rate = math.min(0.95, 0.19 + 0.07 * ship:size())
             -- don't buy the ship if it's much more expensive than our dream ship
-            if budget > price and dream_budget > price then
+            if budget > price and dream_budget > price - 500e3 then
                 table.insert(ship_choices, {ship = ship:nameRaw(), royalty = rate})
                 if price > most_cost then
                     most_cost = price
                     most_expensive = ship:nameRaw()
                 end
             end
+            -- finally if this looks like our dream ship, add it more to increase our chances of buying it if we can afford it
+            if string.find(ship:nameRaw(), persona.dreamship) then
+                table.insert(ship_choices, {ship = ship:nameRaw(), royalty = 0.21})
+                table.insert(ship_choices, {ship = ship:nameRaw(), royalty = 0.25})
+            end
         end
+        -- add the most expensive ship again
+        table.insert(ship_choices, {ship = most_expensive, royalty = 0.50})
         -- if we are the commander, buy the most expensive ship we can afford at a good rate
         if persona.commander then
             ship_choices = {
@@ -640,7 +647,7 @@ local function _createReplacementShip(persona, limit_ships)
                 table.insert(ship_choices, {ship = "Vigilance", royalty = 0.42})
             end
             -- the Rhino dreamer doesn't want a mule at all and won't spend money on it
-            if persona.dreamship ~= "Rhino" and persona.dreamship ~= "Pirate Rhino" then
+            if not string.find(persona.dreamship, "Rhino") then
                 table.insert(ship_choices, {ship = "Mule", royalty = 0.25})
             end
         end
@@ -671,7 +678,7 @@ local function _createReplacementShip(persona, limit_ships)
 
     local shipchoice = ship_choices[rnd.rnd(1, #ship_choices)]
     -- if we have "enough" then roll the dice for a dream ship (1/3 chance)
-    if budget > dream_budget and shipchoice.ship ~= persona.dreamship and rnd.rnd() < 0.33 then
+    if budget > dream_budget and not string.find(shipchoice.ship, persona.dreamship) and rnd.rnd() < 0.33 then
         if shipchoice.dreamship ~= "Shark" then
             shipchoice = {ship = persona.dreamship, royalty = 0.15}
         end
@@ -694,11 +701,12 @@ local function _createReplacementShip(persona, limit_ships)
     pppp:rm()
     persona.royalty = (shipchoice.royalty + 0.05 * shipchoice.royalty * rnd.sigma())
     persona.deposit = math.floor(deposit - (deposit * persona.royalty)) / 3
-    if shipchoice.ship == persona.dreamship then
-        -- punish larger fleet additions if we're dreamy
+    if string.find(shipchoice.ship, persona.dreamship) then
+        -- a discount for dream livers
         persona.deposit = math.max(100e3, persona.deposit - 1e6)
         persona.royalty = math.min(persona.royalty, 0.25 + 0.05 * shipchoice.royalty * rnd.threesigma())
     elseif #mem.persons > 3 and persona then
+        -- punish larger fleet additions if we're dreamy
         persona.deposit = persona.deposit + #mem.persons * 37500 * persona.ship:size()
     end
     -- if we are good money makers, we don't want as much deposit
@@ -713,7 +721,7 @@ local function _createReplacementShip(persona, limit_ships)
     -- we pay 2/3 of the price at most and sometimes we get a bigger loan
     local payment = math.floor(math.min(rnd.rnd(1, 2) * deposit * persona.royalty, deposit * 0.67))
     -- only pay for it if we can afford it and if it was significant
-
+    -- unless we are filthy rich...
     if deposit > 3e6 and persona.wallet > payment then
         -- and of course, we don't pay for the whole thing in cash now that we have credit
         if persona.pilot ~= nil then
@@ -725,14 +733,20 @@ local function _createReplacementShip(persona, limit_ships)
         persona.debt = persona.debt + deposit
         -- if we bought something huge on credit, lower the money significantly
         local downpayment = 0
-        if deposit > 6e6 then
-            downpayment = persona.wallet * 0.3
+        if deposit > 4e6 then
+            downpayment = persona.wallet * 0.34
             persona.wallet = math.floor(persona.wallet - downpayment)
         elseif deposit > 2e6 then
             -- we bought something small but kind of expensive
-            downpayment = persona.wallet * 0.04
+            downpayment = persona.wallet * 0.042
             persona.wallet = math.floor(persona.wallet - downpayment)
         end
+    end
+
+    -- check if we were filthy rich and pay off debt
+    if persona.wallet > persona.debt * 2 + deposit * 3 then
+        persona.wallet = persona.wallet - persona.debt
+        persona.debt = 0
     end
 
     if persona.pilot ~= nil then
@@ -1336,7 +1350,7 @@ function scav_boarding(plt, target, i)
         commanders_greed = mem.persons[i].experience * 24
     end
     local your_share = math.max(0, math.floor(bounty * mem.persons[i].royalty) - commanders_greed)
-    if mem.persons[i].ship:nameRaw() == mem.persons[i].dreamship then
+    if string.find(mem.persons[i].ship:nameRaw(), mem.persons[i].dreamship) then
         -- no greed in a dreamship, generosity instead
         your_share = math.min(bounty, math.floor(bounty * (1 - mem.persons[i].royalty) + commanders_greed))
         -- random special dream ship message
@@ -1485,8 +1499,8 @@ function scavenger_arrives(arg)
         speak(mem.persons[i], "brb")
         local aimem = plt:memory()
         aimem.stealth = true
-        -- if I'm in a dream ship, enlist help
-        if mem.persons[i].ship:nameRaw() == mem.persons[i].dreamship then
+        -- if I'm in a dream ship (or close), enlist help
+        if string.find(mem.persons[i].ship:nameRaw(), mem.persons[i].dreamship) then
             for j, pers in ipairs(mem.persons) do
                 if i ~= j and pers.pilot ~= nil then
                     if pers.pilot:exists() then
@@ -1778,8 +1792,8 @@ function scav_attacked(p, attacker, _dmg, i)
         _("I'm with you {name}, but I need your help here!"),
         _("We need you {name}!"),
         _("Now is the time to use {flagship}!"),
-        _("Show us what {flagship} can do!"),
-        _("Aren't there any weapons on {flagship}?")
+        _("Show us what the {flagship} can do!"),
+        _("Aren't there any weapons on that {flagship}?")
     }
     -- check if we should change states
     if rnd.rnd() > 0.98 and p:health() < 67 then
@@ -1807,7 +1821,7 @@ end
 -- Escort got killed
 function scavenger_death(p, _attacker, i)
     local edata = mem.persons[i]
-    if edata.ship:nameRaw() == edata.dreamship then
+    if string.find(edata.ship:nameRaw(), edata.dreamship) then
         edata.last_sentiment = "broken_dreams"
     end
     edata.cargo = nil
@@ -1841,39 +1855,6 @@ function scavenger_death(p, _attacker, i)
         p:comm(player:pilot(), "Wait a minute, why isn't it ejecting? Oh sh--", true)
         pilot_disbanded(edata, i)
     end
-end
-
--- Escort boarded something, it doesn't trigger
-function scavenger_boarding2(p, target, i)
-    local edata = mem.persons[i]
-    local plunder_total = target:credits()
-    local ps = p:stats()
-    local pps = player.pilot()
-    local loot_strength = 0.1 * ((10 + pps:stats().crew + pps:shipstat("loot_mod", true)) / (10 + ps.crew))
-    local plunder =
-        math.floor(
-        math.max(
-            plunder_total * loot_strength + 1000 * target:ship():size() - (500 + p:ship():size()),
-            plunder_total * 0.2 + 100
-        )
-    )
-
-    p:broadcast(
-        fmt.f(
-            _("{credits1}! I mean, err, {credits2} in here, sending them your way."),
-            {credits1 = fmt.credits(plunder_total), credits2 = fmt.credits(plunder)}
-        ),
-        true
-    )
-
-    -- target:credits(-plunder_total)
-    -- player.pay(plunder)
-    -- give the scavenger some money
-    -- p:credits(plunder_total - plunder)
-
-    --shiplog.append( logidstr, fmt.f(_("'{name}' ({ship}) plundered {amount}."),
-    --{ name=edata.name, ship=edata.ship, amount=fmt.credits(plunder) }
-    --))
 end
 
 -- Asks the player whether or not they want to fire the pilot
@@ -1944,7 +1925,6 @@ Pilot credentials:]])
     elseif
         n == 2 and tk.yesno("", fmt.f(_("Are you sure you want to get rid of {name}? This cannot be undone."), edata))
      then
-        local k = #mem.persons
         for k, v in ipairs(mem.persons) do
             if edata.name == v.name then
                 mem.persons[k] = mem.persons[#mem.persons]
@@ -1979,8 +1959,10 @@ local function scav_askUpgrade(edata, index)
     local approachtext = _([[Would you like to do something with this pilot?
 
 Pilot credentials:]])
-
-    tip_amount = math.min(3e6, player.pilot():credits() / 10)
+    -- so it costs around 3 million to commend a junior lieutenant in a destroyer
+    local tip_amount = edata.ship:size() * 5e3 * math.ceil(3 + edata.experience * (0.11 + (edata.experience * 0.0667)))
+    local tip_max = 10e6
+    tip_amount = math.min(tip_amount, tip_max)
 
     if player.pilot():credits() < tip_amount then
         return
@@ -1990,7 +1972,7 @@ Pilot credentials:]])
         tk.choice(
         "",
         getOfferText(approachtext, edata),
-        _(fmt.f("Tip Pilot {credits}", {credits = fmt.credits(tip_amount)})),
+        _(fmt.f("Commend efforts", {credits = fmt.credits(tip_amount)})),
         _("Go scavange"),
         _("Call back"),
         _("Do nothing")
@@ -2000,19 +1982,33 @@ Pilot credentials:]])
             tk.yesno(
                 "",
                 fmt.f(
-                    _("Are you sure you want to tip {name}? This will cost {price}."),
-                    {name = edata.name, price = fmt.credits(tip_amount)}
+                    _(
+                        "An effective commendation will cost {price} and increase {rank}s favor with the {ship}. Are you sure you want to commend the efforts of {rank} {name} of {ship}?"
+                    ),
+                    {name = edata.name, price = fmt.credits(tip_amount), ship = edata.ship, rank = edata.rank}
                 )
             )
      then
         --	  mem.persons[index].total_profit = mem.persons[index].total_profit - tip_amount -- do the credit side now since debit comes later
+        if player.credits() < tip_amount * 1.25 then
+            tk.msg(
+                _("Not Enough Money"),
+                _(
+                    "It would be financially irresponsible to commend this pilot, as you risk not being able to cover the replacement fee which is necessary to ensure the retrieval of your pilot after emergency ejection."
+                )
+            )
+            return
+        end
+
         shiplog.append(
             logidstr,
             fmt.f(
-                _("You tipped '{name}' {credits} ({ship})."),
+                _("You commended '{name}' {credits} ({ship})."),
                 {name = edata.name, ship = edata.ship, credits = fmt.credits(tip_amount)}
             )
         )
+        edata.experience = edata.experience + 0.25
+        remember_ship(edata, edata.ship:nameRaw(), 3)
         player.pilot():credits(-tip_amount)
         edata.wallet = edata.wallet + tip_amount
         if edata.pilot ~= nil and edata.pilot:exists() then
@@ -2063,9 +2059,9 @@ function scav_hail(p, arg)
     -- Deal with bribeability
     mem.bribe = mem.bribe_base
     if mem.allowbribe or (mem.natural and mem.bribe_rng < 0.95) then
-        mem.bribe_prompt = fmt.f(bribe_prompt_list[rnd.rnd(1, #bribe_prompt_list)], {credits = fmt.credits(mem.bribe)})
-        mem.bribe_prompt_nearby = bribe_prompt_nearby_list[rnd.rnd(1, #bribe_prompt_nearby_list)]
-        mem.bribe_paid = bribe_paid_list[rnd.rnd(1, #bribe_paid_list)]
+        mem.bribe_prompt = fmt.f(_("I'll let it slide for {credits}."), {credits = fmt.credits(mem.bribe)})
+        mem.bribe_prompt_nearby = _("I guess we could let it slide...")
+        mem.bribe_paid = _("Good enough for me.")
     else
         mem.bribe_no = _([["You won't be able to slide out of this one!"]])
     end
