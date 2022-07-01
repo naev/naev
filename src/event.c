@@ -531,6 +531,15 @@ int events_load (void)
    array_free( event_files );
    array_shrink( &event_data );
 
+#ifdef DEBUGGING
+   for (int i=0; i<array_size(event_data); i++) {
+      EventData *ed = &event_data[i];
+      for (int j=i+1; j<array_size(event_data); j++)
+         if (strcmp( ed->name, event_data[j].name )==0)
+            WARN(_("Duplicate event '%s'!"), ed->name);
+   }
+#endif /* DEBUGGING */
+
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( event_data, array_size(event_data), sizeof(EventData), event_cmp );
 
