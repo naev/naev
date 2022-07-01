@@ -4,7 +4,7 @@
   <background>haze</background>
   <map_shader>haze_map.frag</map_shader>
   <features>#rHaze (-50% Shield and Shield Regen)#0</features>
-  <radius>5000.000000</radius>
+  <radius>10000.000000</radius>
   <stars>400</stars>
   <interference>15.000000</interference>
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
@@ -24,10 +24,14 @@
  <asteroids>
   <asteroid>
    <group>Mossy</group>
-   <radius>3000.000000</radius>
-   <pos x="-1632.151769" y="1090.892028"/>
+   <radius>6000.000000</radius>
+   <pos x="-2382.538740" y="1645.057657"/>
    <density>2.000000</density>
   </asteroid>
+  <exclusion>
+   <radius>4000.000000</radius>
+   <pos x="1495.166397" y="-766.751998"/>
+  </exclusion>
  </asteroids>
  <stats>
   <shield_mod>-50.000000</shield_mod>
