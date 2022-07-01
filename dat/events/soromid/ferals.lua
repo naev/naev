@@ -3,7 +3,7 @@
 <event name="Feral Bioships">
  <location>enter</location>
  <chance>100</chance>
- <cond>system.cur():tags().haze==true</cond>
+ <cond>system.cur():tags().haze==true and #system.cur():presences() &lt;= 0</cond>
 </event>
 --]]
 local ferals = require "common.ferals"
@@ -131,7 +131,7 @@ function spawn_ferals ()
          table.insert( bioships, "Nohinohi" )
       end
    end
-   plts = fleet.add( 1, bioships, ferals.faction() )
+   plts = fleet.add( 1, bioships, ferals.faction(), pos )
    for k,p in ipairs(plts) do
       p:control()
       p:stealth()
@@ -165,6 +165,6 @@ function heartbeat ()
          nextjump:setKnown(true)
          return
       end
-      hook.time( 1, "heartbeat" )
+      hook.timer( 1, "heartbeat" )
    end
 end
