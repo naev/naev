@@ -185,7 +185,6 @@ local descriptors = {
    _("Yummy"),
 }
 
-
 local actors = {
    _("1024"),
    _("Aku"),
@@ -194,7 +193,6 @@ local actors = {
    _("Amigo"),
    _("Angel"),
    _("Angle Grinder"),
-
    _("Ari"),
    _("Arrow"),
    p_("name", "Ass"),
@@ -329,7 +327,6 @@ local actors = {
    _("Knight"),
    _("Kōmori"),
    _("Kumo"),
-
    _("Madōshi"),
    _("Magician"),
    _("Mahō"),
@@ -495,7 +492,6 @@ local prefixes = {
 	_("zi"),
 	_("Ze"),
 	_("Zed"),
-	
 }
 
 local anchors = {
@@ -624,34 +620,27 @@ local anchors = {
 	_("Kord"),
 	_("Kort"),
 	_("Kott"),
-	
-	_("Lance"),	
+	_("Lance"),
 	_("Lanz"),
-    _("Lantern"),
-    _("Law"),
-    _("Lawyer"),
-    _("League"),
+   _("Lantern"),
+   _("Law"),
+   _("Lawyer"),
+   _("League"),
 	_("Lith"),
 	_("Lord"),
 	_("Loth"),
 	_("Lund"),
 	_("Lun"),
 	_("Lunn"),
-	
-	
-   
    _("Lust"),
-	
 	_("Mass"),
 	_("Metal"),
 	_("Meteor"),
 	_("Mil"),
 	_("Mild"),
 	_("Mill"),
-	
 	_("Nickel"),
 	_("Nil"),
-	
 	_("Old"),
 	_("Olden"),
 	_("Oldest"),
@@ -660,7 +649,6 @@ local anchors = {
 	_("Orl"),
 	_("Orph"),
 	_("Ost"),
-	
 	_("Pad"),
 	_("Pam"),
 	_("Pan"),
@@ -679,21 +667,17 @@ local anchors = {
 	_("Pog"),
 	_("Pond"),
 	_("Pondif"),
-	
 	_("Qaas"),
 	_("Qald"),
 	_("Quick"),
-	
 	_("Rand"),
 	_("Round"),
 	_("Rover"),
 	_("Rock"),
-	
 	_("Silver"),
 	_("Somal"),
 	_("Ston"),
 	_("Straw"),
-	
 	_("Ton"),
 	_("Thon"),
 	_("Thor"),
@@ -701,13 +685,11 @@ local anchors = {
 	_("Thun"),
 	_("Thund"),
 	_("Thunder"),
-	
 	_("Uli"),
 	_("Ull"),
 	_("Ullys"),
 	_("Under"),
 	_("Ungv"),
-	
 	_("Van"),
 	_("Vander"),
 	_("Vanst"),
@@ -721,7 +703,6 @@ local anchors = {
 	_("Window"),
 	_("Winston"),
 	_("Wu"),
-	
 	_("Xer"),
 	_("Xi"),
 	_("Xu"),
@@ -735,8 +716,7 @@ local anchors = {
 	_("Zend"),
 	_("Zi"),
 	_("Zor"),
-	
-	   _("Akai"),
+   _("Akai"),
    _("Amarillo"),
    _("Aoi"),
    _("Azul"),
@@ -829,22 +809,15 @@ local suffixes = {
 	_("ison"),
 	_("isen"),
 	_("ist"),
-	
 	_("karl"),
-	
 	_("le"),
-	
 	_("o"),
 	_("oid"),
 	_("on"),
 	_("otten"),
-	
 	_("phne"),
-	
 	_("man"),
 	_("mann"),
-
-	
 	_("rap"),
 	_("red"),
 	_("ress"),
@@ -866,23 +839,21 @@ local suffixes = {
 	_("zor"),
 }
 
-   local ugly_duplicates = {
-		{ found="aaa", replace="a" },
-		{ found="eee", replace="ee" },
-		{ found="iii", replace="i" },
-		{ found="ooo", replace="oo" },
-		{ found="ooi", replace="oi" },
-		{ found="sss", replace="ss" },
-		{ found="uuu", replace="u" },
-		{ found="yyy", replace="y" },
-		
-   }
+local ugly_duplicates = {
+   { found="aaa", replace="a" },
+   { found="eee", replace="ee" },
+   { found="iii", replace="i" },
+   { found="ooo", replace="oo" },
+   { found="ooi", replace="oi" },
+   { found="sss", replace="ss" },
+   { found="uuu", replace="u" },
+   { found="yyy", replace="y" },
+}
 
 --[[
 -- @brief Generates somewhat human sounding names
 --]]
 local function human ()
-   
    local params = {article=article, descriptor=descriptor, colour=colour, actor=actor}
 
    local prefix = prefixes[ rnd.rnd(1, #prefixes) ]
@@ -890,18 +861,18 @@ local function human ()
    local first_name_part = anchors[ rnd.rnd(1, #anchors) ]
    local suffix = suffixes[ rnd.rnd(1, #suffixes) ]
    local suffix2 = suffixes[ rnd.rnd(1, #suffixes) ]
-   
+
    local vowels = { "a", "e", "i", "o", "u", "y" }
-   
+
    local vowel = vowels[rnd.rnd(1, #vowels)]
    local vowel2= vowels[rnd.rnd(1, #vowels)]
-   
+
    local first_name_alt = fmt.f("{prefix}{suffix}", {prefix=prefixes[ rnd.rnd(1, #prefixes) ], suffix=suffixes[ rnd.rnd(1, #suffixes) ]})
-   
+
    if rnd.rnd(0, 1) == 0 then
 	first_name_part = first_name_alt
    end
-   
+
    local params = {
 		first_name_part = first_name_part,
 		first_name_alt = first_name_alt,
@@ -912,10 +883,10 @@ local function human ()
 		vowel=vowel,
 		vowel2=vowel2,
    }
-   
+
    local result = "Unnamed"
    local firstname = "Unknown"
-   
+
    local r = rnd.rnd()
    if r < 0.166 then
       firstname = fmt.f(_("just"), params)
@@ -936,15 +907,13 @@ local function human ()
 	firstname = fmt.f(_("{prefix}{first_name_part}"), params)
       result = fmt.f(_("{anchor}{suffix}{suffix2}"), params)
    end
-   
 
-   
    -- remove ugly duplicate letters
    for found, replacement in pairs(ugly_duplicates) do
 	result = string.gsub( result, found, replacement )
 	firstname = string.gsub( firstname, found, replacement )
 	end
-   
+
    return result, firstname
 end
 

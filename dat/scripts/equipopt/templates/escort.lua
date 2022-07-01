@@ -127,12 +127,12 @@ local escort_params_overwrite = {
    disable = 2.4, -- prefer disablers
    -- some nice preferable escort outfits
   prefer = {
-		[ "TeraCom Medusa Launcher"] = 6 , ["TeraCom Medusa Launcher"] = 2,
+		[ "TeraCom Medusa Launcher"] = 6,
 		[ "Enygma Systems Spearhead Launcher"] = 4, ["TeraCom Headhunter Launcher"] = 10, ["Large Shield Booster"] = 2,
 		[ "Shield Capacitor IV"] = 2
    },
-   
-   
+
+
    -- not too much diversity, but some
    max_same_stru = 2,
    max_same_util = 1,

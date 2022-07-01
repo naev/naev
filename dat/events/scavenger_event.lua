@@ -426,8 +426,6 @@ local function remember_ship(me, ship, points)
     if me.favorite_ships == nil then
         me.favorite_ships = {}
     end
-    -- get current point value
-    local current_score = 0
     -- edge case: never seen the ship before
     if me.favorite_ships[ship] == nil then
         me.favorite_ships[ship] = points
@@ -435,7 +433,7 @@ local function remember_ship(me, ship, points)
     end
 
     -- default: increase
-    current_score = me.favorite_ships[ship]
+    local current_score = me.favorite_ships[ship]
     me.favorite_ships[ship] = current_score + points
     print(
         fmt.f(
@@ -452,8 +450,8 @@ local function pick_favorite_ship(me)
         me.favorite_ships = {}
     end
 
-    local min_score = 1
-    local max_score = 0
+    local min_score
+    local max_score = 1
     local choices = {}
 
     -- lazy method favors first-seen ships
@@ -479,9 +477,7 @@ local function pick_favorite_ship(me)
         choices = {"Shark"} -- give it a default
     end
 
-    choice = choices[rnd.rnd(1, #choices)]
-
-    return choice
+    return choices[ rnd.rnd(1, #choices) ]
 end
 
 local function getOfferText(approachtext, edata)
@@ -568,10 +564,9 @@ local function _createReplacementShip(persona, limit_ships)
         local most_cost = 1e3
         ship_choices = {}
         -- just add the available ships at standard rates
-        local rate = 0.19
         for i, ship in ipairs(limit_ships) do
             local price = ship:price()
-            rate = math.min(0.95, 0.19 + 0.07 * ship:size())
+            local rate = math.min(0.95, 0.19 + 0.07 * ship:size())
             -- don't buy the ship if it's much more expensive than our dream ship
             if budget > price and dream_budget > price then
                 table.insert(ship_choices, {ship = ship:nameRaw(), royalty = rate})
@@ -724,7 +719,7 @@ local function _createReplacementShip(persona, limit_ships)
     else -- don't pay much for this with escort's money
         persona.debt = persona.debt + deposit
         -- if we bought something huge on credit, lower the money significantly
-        local downpayment = 0
+        local downpayment
         if deposit > 6e6 then
             downpayment = persona.wallet * 0.3
             persona.wallet = math.floor(persona.wallet - downpayment)
@@ -1272,7 +1267,7 @@ function scav_boarding(plt, target, i)
     if cargofree then
         local clist = target:cargoList()
         for _k, c in ipairs(clist) do
-            n = plt:cargoAdd(c.name, c.q)
+            local n = plt:cargoAdd(c.name, c.q)
             exp_boost = exp_boost + math.floor(c.q / 10) * 0.01
             table.insert(payout_choices, fmt.f(pick_one(cargo_options), {cargo = c.name}))
         end
@@ -1402,7 +1397,7 @@ function scavenger_arrives(arg)
         print("pilot still exists:", mem.persons[i].name)
         return
     end
-    plt = pilot.add(mem.persons[i].ship, f, arg.spawnpoint, mem.persons[i].name, {naked = true})
+    local plt = pilot.add(mem.persons[i].ship, f, arg.spawnpoint, mem.persons[i].name, {naked = true})
     -- calculate what outfits go missing here
     local penalty = 0
     if mem.persons[i].debt > 1e6 then
@@ -1483,7 +1478,6 @@ function scavenger_arrives(arg)
     if plt.commander and rnd.rnd() < 0.02 then
         -- I'll catch up with you later
         speak(mem.persons[i], "brb")
-        local aimem = plt:memory()
         aimem.stealth = true
         -- if I'm in a dream ship, enlist help
         if mem.persons[i].ship:nameRaw() == mem.persons[i].dreamship then
@@ -1825,7 +1819,7 @@ function scavenger_death(p, _attacker, i)
             pilot_disbanded(edata, i)
         else
             -- pay here
-            replacement_fee = math.floor(edata.deposit * edata.royalty)
+            local replacement_fee = math.floor(edata.deposit * edata.royalty)
             player.pay(-replacement_fee, true)
             edata.total_cost = edata.total_cost + replacement_fee
             edata.replacement_text = fmt.credits(replacement_fee)
@@ -1956,11 +1950,13 @@ Pilot credentials:]])
             npcs[npc_id] = nil
         end
         shiplog.append(logidstr, fmt.f(_("You abandoned '{name}' ({ship})."), edata))
+        --[[
         local pilot_id
 
         if pilot_id then
         --		pilot_disbanded( edata , pilot_id )
         end
+        --]]
     end
 end
 
@@ -1980,7 +1976,7 @@ local function scav_askUpgrade(edata, index)
 
 Pilot credentials:]])
 
-    tip_amount = math.min(3e6, player.pilot():credits() / 10)
+    local tip_amount = math.min(3e6, player.pilot():credits() / 10)
 
     if player.pilot():credits() < tip_amount then
         return
