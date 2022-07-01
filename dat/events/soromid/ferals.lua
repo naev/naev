@@ -87,7 +87,7 @@ end
 local plts, nextjump, lastsys
 local spawned = false
 function pheromones ()
-   if not spawned and not system.cur() == targetsys then
+   if not spawned then
       spawned = true
       hook.timer( 5, "spawn_ferals" )
    else
@@ -115,6 +115,7 @@ function spawn_ferals ()
    lastsys = (#jumps==1)
 
    mem.mrk = system.mrkAdd( vec2.newP( 2000*rnd.rnd(), rnd.angle() ), _("Signal"), 4000 )
+   player.msg(_("You have detected an unknown signal!"), true)
 
    whalesound( pos )
 
@@ -140,7 +141,7 @@ end
 
 function ferals_discovered ()
    if mem.mrk then
-      system.markRm( mem.mrk )
+      system.mrkRm( mem.mrk )
       mem.mrk = nil
    end
    for k,p in ipairs(plts) do
