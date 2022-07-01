@@ -14,7 +14,7 @@ local pilotai = require "pilotai"
 
 --luacheck: globals leave pheromones spawn_ferals delay_sfx ferals_discovered heartbeat (Hook functions passed by name)
 
-local targetsys = "Fertile Crescent"
+local targetsys = system.get( "Fertile Crescent" )
 
 function create ()
    local scur = system.cur()
@@ -22,6 +22,27 @@ function create ()
 
    -- Inclusive claim
    if not evt.claim( scur, nil, true ) then evt.finish() end
+
+   -- Special case final destination
+   if scur == targetsys then
+      for i = 1,rnd.rnd(20,30) do
+         local shp
+         local r = rnd.rnd()
+         if i==1 or r < 0.2 then
+            shp = "Kauweke"
+         elseif r < 0.5 then
+            shp = "Taitamariki"
+         else
+            shp = "Nohinohi"
+         end
+         pilot.add( shp, ferals.faction(), vec2.newP( scur:radius() * 0.8 * rnd.rnd(), rnd.angle() ) )
+      end
+
+      hook.jumpout("leave")
+      hook.land("leave")
+      hook.custom("bioship_pheromones", "pheromones")
+      return
+   end
 
    local function has_inhabited_spob( sys )
       for k,p in ipairs(sys:spobs()) do
@@ -68,7 +89,7 @@ end
 local plts, nextjump, lastsys
 local spawned = false
 function pheromones ()
-   if not spawned then
+   if not spawned and not system.cur() == targetsys then
       spawned = true
       hook.timer( 5, "spawn_ferals" )
    else
