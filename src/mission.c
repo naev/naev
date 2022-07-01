@@ -1053,6 +1053,15 @@ int missions_load (void)
    array_free( mission_files );
    array_shrink(&mission_stack);
 
+#ifdef DEBUGGING
+   for (int i=0; i<array_size(mission_stack); i++) {
+      MissionData *md = &mission_stack[i];
+      for (int j=i+1; j<array_size(mission_stack); j++)
+         if (strcmp( md->name, mission_stack[j].name )==0)
+            WARN(_("Duplicate event '%s'!"), md->name);
+   }
+#endif /* DEBUGGING */
+
    /* Sort based on priority so higher priority missions can establish claims first. */
    qsort( mission_stack, array_size(mission_stack), sizeof(MissionData), missions_cmp );
 
