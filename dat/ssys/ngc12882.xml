@@ -10,7 +10,10 @@
   <nebula volatility="0.000000" hue="0.000000">0.000000</nebula>
  </general>
  <pos x="-8.362429" y="1007.744335"/>
- <spobs/>
+ <spobs>
+  <spob_virtual>Independent All Unpresence</spob_virtual>
+  <spob_virtual>Soromid Unpresence</spob_virtual>
+ </spobs>
  <jumps>
   <jump target="Klunzar">
    <autopos/>
