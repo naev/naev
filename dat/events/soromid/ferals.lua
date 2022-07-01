@@ -43,6 +43,9 @@ function create ()
    end
 
    local function has_inhabited_spob( sys )
+      if #sys:presences() > 0 then
+         return true
+      end
       for k,p in ipairs(sys:spobs()) do
          local s = p:services()
          if s.land and s.inhabited then
