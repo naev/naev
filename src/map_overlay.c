@@ -892,8 +892,8 @@ static void ovr_mrkRenderAll( double res, int fg )
                break;
 
             case OVR_MARKER_CIRCLE:
-               r = mrk->u.circle.r / res;
-               gl_printMarkerRaw( &gl_smallFont, x+r+3., y-gl_smallFont.h/2., &cRadar_hilight, mrk->text );
+               r = MAX( mrk->u.circle.r / res, 13. ); /* Don't allow to be smaller than a "point" */
+               gl_printMarkerRaw( &gl_smallFont, x+r*M_SQRT1_2+7., y-r*M_SQRT1_2-gl_smallFont.h/2., &cRadar_hilight, mrk->text );
                break;
          }
       }
