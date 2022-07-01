@@ -13,4 +13,13 @@ ferals.sfx = {
    bite = audio.newSource( "snd/sounds/crash1.ogg" ),
 }
 
+function ferals.faction ()
+   local id = "feralbioship"
+   local f = faction.exists( id )
+   if f then
+      return f
+   end
+   return faction.dynAdd( nil, id, _("Feral Bioship"), {ai="feralbioship"} )
+end
+
 return ferals

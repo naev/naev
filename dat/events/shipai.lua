@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Bioship Manager">
+<event name="Ship AI">
  <location>load</location>
  <chance>100</chance>
  <unique />

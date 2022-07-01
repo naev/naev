@@ -44,7 +44,7 @@ function extras.notebookStart( name )
       vn.textbox_bg_alpha = 0
       vn.textbox_h = math.min(0.7*nh, 800 )
       vn.textbox_y = (nh-vn.textbox_h)/2
-      vn.textbox_w = math.min( 0.8*nw, 1000 )
+      vn.textbox_w = math.min( 0.8*nw, 1200 )
       vn.textbox_x = (nw-vn.textbox_w)/2
       vn.show_options = false
    end )

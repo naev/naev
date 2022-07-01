@@ -30,7 +30,7 @@ function ontoggle( p, po, _on )
 
    -- Visual effect
    local ppos = p:pos()
-   luaspfx.pulse( ppos, p:vel() )
+   luaspfx.pheromones( ppos, p:vel() )
    if mem.isp then
       luaspfx.sfx( true, nil, sfx )
 
