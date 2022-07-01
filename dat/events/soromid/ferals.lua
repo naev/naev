@@ -1,10 +1,9 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Hypergate Construction">
+<event name="Feral Bioships">
  <location>enter</location>
  <chance>100</chance>
  <cond>system.cur():tags().haze==true</cond>
- <chapter>0</chapter>
 </event>
 --]]
 local ferals = require "common.ferals"
@@ -18,7 +17,6 @@ local targetsys = system.get( "Fertile Crescent" )
 
 function create ()
    local scur = system.cur()
-   evt.finish() -- Disabled for now
 
    -- Inclusive claim
    if not evt.claim( scur, nil, true ) then evt.finish() end
@@ -141,6 +139,10 @@ function spawn_ferals ()
 end
 
 function ferals_discovered ()
+   if mem.mrk then
+      system.markRm( mem.mrk )
+      mem.mrk = nil
+   end
    for k,p in ipairs(plts) do
       if p:exists() then
          p:control(false)
