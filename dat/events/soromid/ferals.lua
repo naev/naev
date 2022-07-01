@@ -119,6 +119,7 @@ function spawn_ferals ()
 
    mem.mrk = system.mrkAdd( vec2.newP( 2000*rnd.rnd(), rnd.angle() ), _("Signal"), 4000 )
    player.msg(_("You have detected an unknown signal!"), true)
+   player.autonavReset( 1 )
 
    whalesound( pos )
 
@@ -165,6 +166,7 @@ function heartbeat ()
    if plts[1]:exists() then
       if plts[1]:flags( "jumpingout" ) and not nextjump:known() then
          player.msg(_("You have discovered a jump point!"),true)
+         player.autonavReset( 1 )
          nextjump:setKnown(true)
          return
       end
