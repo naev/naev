@@ -5029,8 +5029,9 @@ static int pilotL_setLeader( lua_State *L )
 
    /* If the pilot has followers, they should be given the new leader as well */
    for (int i=0; i<array_size(pilot_stack); i++) {
-      if (pilot_stack[i]->parent == p->id) {
-         pilot_stack[i]->parent = p->parent;
+      Pilot *ps = pilot_stack[i];
+      if (ps->parent == p->id) {
+         ps->parent = p->parent;
       }
    }
 
@@ -5046,11 +5047,10 @@ static int pilotL_setLeader( lua_State *L )
  */
 static int pilotL_followers( lua_State *L )
 {
-   int idx;
    Pilot *p = luaL_validpilot(L, 1);
+   int idx = 1;
 
    lua_newtable(L);
-   idx = 1;
    for (int i=0; i < array_size(p->escorts); i++) {
       /* Make sure the followers are valid. */
       Pilot *pe = pilot_get( p->escorts[i].id );
