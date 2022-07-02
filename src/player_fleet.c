@@ -210,6 +210,8 @@ void pfleet_cargoRedistribute (void)
  */
 int pfleet_cargoUsed (void)
 {
+   if (player.p == NULL)
+      return 0;
    int cargo_used = pilot_cargoUsed( player.p );
    if (player.fleet_capacity <= 0)
       return cargo_used;
@@ -232,6 +234,8 @@ int pfleet_cargoUsed (void)
  */
 int pfleet_cargoFree (void)
 {
+   if (player.p == NULL)
+      return 0;
    int cargo_free = pilot_cargoFree( player.p );
    if (player.fleet_capacity <= 0)
       return cargo_free;
@@ -255,6 +259,8 @@ int pfleet_cargoFree (void)
  */
 int pfleet_cargoOwned( const Commodity *com )
 {
+   if (player.p == NULL)
+      return 0;
    int amount = pilot_cargoOwned( player.p, com );
    if (player.fleet_capacity <= 0)
       return amount;
@@ -279,6 +285,8 @@ int pfleet_cargoOwned( const Commodity *com )
  */
 int pfleet_cargoAdd( const Commodity *com, int q )
 {
+   if (player.p == NULL)
+      return 0;
    int added = pilot_cargoAdd( player.p, com, q, 0 );
    if (player.fleet_capacity <= 0)
       return added;
@@ -306,6 +314,8 @@ int pfleet_cargoAdd( const Commodity *com, int q )
 int pfleet_cargoRm( const Commodity *com, int q )
 {
    int removed;
+   if (player.p == NULL)
+      return 0;
    if (player.fleet_capacity <= 0)
       return pilot_cargoRm( player.p, com, q );
    removed = 0;
