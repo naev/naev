@@ -4995,20 +4995,16 @@ static int pilotL_leader( lua_State *L )
  */
 static int pilotL_setLeader( lua_State *L )
 {
-   Pilot *p, *leader, *prev_leader;
-   PilotOutfitSlot* dockslot;
-   Pilot *const* pilot_stack;
-
-   p           = luaL_validpilot(L, 1);
-   pilot_stack = pilot_getAll();
-
-   prev_leader = pilot_get(p->parent);
+   Pilot *p = luaL_validpilot(L, 1);
+   Pilot *const* pilot_stack = pilot_getAll();
+   Pilot *prev_leader = pilot_get(p->parent);
 
    if (lua_isnoneornil(L, 2)) {
       p->parent = 0;
    }
    else {
-      leader = luaL_validpilot(L, 2);
+      PilotOutfitSlot* dockslot;
+      Pilot *leader = luaL_validpilot(L, 2);
 
       if (leader->parent != 0 && pilot_get(leader->parent) != NULL)
          leader = pilot_get(leader->parent);
@@ -5029,7 +5025,7 @@ static int pilotL_setLeader( lua_State *L )
 
    /* Remove from previous leader's follower list */
    if (prev_leader != NULL)
-      escort_rmList(prev_leader, p->id);
+      escort_rmList( prev_leader, p->id );
 
    /* If the pilot has followers, they should be given the new leader as well */
    for (int i=0; i<array_size(pilot_stack); i++) {
