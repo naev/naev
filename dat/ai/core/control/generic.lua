@@ -404,6 +404,10 @@ function should_attack( enemy, si )
 
    si = si or _stateinfo( ai.taskname() )
 
+   if si.noattack then
+      return false
+   end
+
    -- Don't reattack the current enemy
    if si.attack and enemy==ai.taskdata() then
       return false
@@ -655,11 +659,6 @@ function control ()
 
    -- Enemy sighted, handled doing specific tasks
    if enemy ~= nil and mem.aggressive then
-      -- Don't start new attacks while refueling.
-      if si.noattack then
-         return
-      end
-
       -- See if really want to attack
       if should_attack( enemy, si ) then
          ai.hostile(enemy) -- Should be done before taunting
@@ -1003,7 +1002,6 @@ function distress( pilot, attacker )
    local si   = _stateinfo( task )
    -- Already fighting
    if si.attack then
-      if si.noattack then return end
       -- Ignore if not interested in attacking
       if not should_attack( badguy, si ) then return end
 
