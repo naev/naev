@@ -65,6 +65,8 @@ int pfleet_toggleDeploy( PlayerShip_t *ps, int deploy )
          Pilot *pe = pilot_get( e->id );
          if (pe == NULL)
             continue;
+         if (e->type != ESCORT_TYPE_FLEET)
+            continue;
          if (strcmp( pe->name, p->name )==0) {
             idx = i;
             break;
@@ -175,6 +177,8 @@ void pfleet_cargoRedistribute (void)
       Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
          continue;
+      if (e->type != ESCORT_TYPE_FLEET)
+         continue;
       shipCargo( &pclist, pe );
    }
 
@@ -214,6 +218,8 @@ int pfleet_cargoUsed (void)
       const Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
          continue;
+      if (e->type != ESCORT_TYPE_FLEET)
+         continue;
       cargo_used += pilot_cargoUsed( pe );
    }
    return cargo_used;
@@ -233,6 +239,8 @@ int pfleet_cargoFree (void)
       const Escort_t *e = &player.p->escorts[i];
       const Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
+         continue;
+      if (e->type != ESCORT_TYPE_FLEET)
          continue;
       cargo_free += pilot_cargoFree( pe );
    }
@@ -255,6 +263,8 @@ int pfleet_cargoOwned( const Commodity *com )
       const Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
          continue;
+      if (e->type != ESCORT_TYPE_FLEET)
+         continue;
       amount += pilot_cargoOwned( pe, com );
    }
    return amount;
@@ -276,6 +286,8 @@ int pfleet_cargoAdd( const Commodity *com, int q )
       Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
+         continue;
+      if (e->type != ESCORT_TYPE_FLEET)
          continue;
       added += pilot_cargoAdd( pe, com, q-added, 0 );
       if (q-added <= 0)
@@ -301,6 +313,8 @@ int pfleet_cargoRm( const Commodity *com, int q )
       Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
+         continue;
+      if (e->type != ESCORT_TYPE_FLEET)
          continue;
       removed += pilot_cargoRm( pe, com, q-removed );
       if (q-removed <= 0)
