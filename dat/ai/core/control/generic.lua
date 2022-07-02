@@ -264,7 +264,7 @@ function handle_messages( si, dopush )
          -- Asteroid was blown up with mining tools
          if msgtype=="asteroid" and data and data:exists() then
             local ap = data:pos()
-            if not si.fighting and not si.noattack and should_investigate( ap, si ) then
+            if should_investigate( ap, si ) then
                ap = ap + vec2.newP( 500*rnd.rnd(), rnd.angle () )
                ai.pushtask("inspect_moveto", ap )
                taskchange = true
@@ -272,7 +272,7 @@ function handle_messages( si, dopush )
 
          -- Some signal was detected
          elseif msgtype=="signal" and data then
-            if not si.fighting and not si.noattack and should_investigate( data, si ) then
+            if should_investigate( data, si ) then
                ai.pushtask("inspect_moveto", data )
                taskchange = true
             end
@@ -450,7 +450,11 @@ end
 --[[
 -- Whether or not the pilot should investigate a certain location.
 --]]
-function should_investigate( pos, _si )
+function should_investigate( pos, si )
+   if si.fighting or si.forced or si.noattack then
+      return false
+   end
+
    local d = mem.enemyclose or math.huge
    if mem.doscans and rnd.rnd() < 0.2 and ai.dist2(pos) < d then
       return true
