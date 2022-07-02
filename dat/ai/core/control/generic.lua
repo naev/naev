@@ -227,18 +227,19 @@ local function attack_choose ()
 end
 
 function lead_fleet( p )
-   if #p:followers() ~= 0 then
-      if mem.formation == nil then
-         formation.clear(p)
-         return
-      end
+   if #p:followers() == 0 then
+      return
+   end
+   if mem.formation == nil then
+      formation.clear(p)
+      return
+   end
 
-      local form = formation[mem.formation]
-      if form == nil then
-         warn(fmt.f(_("Pilot '{plt}': formation '{formation}' not found!"), {plt=p, formation=mem.formation}))
-      else
-         form(p)
-      end
+   local form = formation[mem.formation]
+   if form == nil then
+      warn(fmt.f(_("Pilot '{plt}': formation '{formation}' not found!"), {plt=p, formation=mem.formation}))
+   else
+      form(p)
    end
 end
 
@@ -264,7 +265,7 @@ function handle_messages( si, dopush )
          -- Asteroid was blown up with mining tools
          if msgtype=="asteroid" and data and data:exists() then
             local ap = data:pos()
-            if should_investigate( ap, si ) then
+            if dopush and should_investigate( ap, si ) then
                ap = ap + vec2.newP( 500*rnd.rnd(), rnd.angle () )
                ai.pushtask("inspect_moveto", ap )
                taskchange = true
@@ -272,7 +273,7 @@ function handle_messages( si, dopush )
 
          -- Some signal was detected
          elseif msgtype=="signal" and data then
-            if should_investigate( data, si ) then
+            if dopush and should_investigate( data, si ) then
                ai.pushtask("inspect_moveto", data )
                taskchange = true
             end
