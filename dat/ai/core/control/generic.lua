@@ -456,7 +456,7 @@ function should_investigate( pos, si )
    end
 
    local d = mem.enemyclose or math.huge
-   if mem.doscans and rnd.rnd() < 0.2 and ai.dist2(pos) < d then
+   if mem.doscans and rnd.rnd() < 0.2 and ai.dist2(pos) < d*d then
       return true
    end
    return false
