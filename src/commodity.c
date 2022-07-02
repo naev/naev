@@ -118,6 +118,14 @@ void tonnes2str( char *str, int tonnes )
 }
 
 /**
+ * @brief Gets all the commodities.
+ */
+Commodity* commodity_getAll (void)
+{
+   return commodity_stack;
+}
+
+/**
  * @brief Gets a commodity by name.
  *
  *    @param name Name to match.

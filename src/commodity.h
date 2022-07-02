@@ -97,6 +97,7 @@ typedef struct Gatherable_ {
 /*
  * Commodity stuff.
  */
+Commodity* commodity_getAll (void);
 Commodity* commodity_get( const char* name );
 Commodity* commodity_getW( const char* name );
 int commodity_getN( void );
