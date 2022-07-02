@@ -1,10 +1,11 @@
-local function count_classes(pilots)
+local function count_classes( pilots )
    local class_count = {}
    for i, p in ipairs(pilots) do
-      if class_count[p:ship():class()] == nil then
-         class_count[p:ship():class()] = 1
+      local pc = p:ship():class()
+      if class_count[pc] == nil then
+         class_count[pc] = 1
       else
-         class_count[p:ship():class()] = class_count[p:ship():class()] + 1
+         class_count[pc] = class_count[pc] + 1
       end
    end
    return class_count
