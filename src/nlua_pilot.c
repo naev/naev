@@ -4987,7 +4987,8 @@ static int pilotL_leader( lua_State *L )
  * @brief Set a pilots leader.
  *
  * If leader has a leader itself, the leader will instead be set to that
- * pilot's leader.
+ * pilot's leader. The leader can not be set for deployed fighters or members
+ * of the player's fleet.
  *
  *    @luatparam Pilot p Pilot to set the leader of.
  *    @luatparam Pilot|nil leader Pilot to set as leader.
