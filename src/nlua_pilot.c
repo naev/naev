@@ -4996,8 +4996,22 @@ static int pilotL_leader( lua_State *L )
 static int pilotL_setLeader( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L, 1);
-   Pilot *const* pilot_stack = pilot_getAll();
-   Pilot *prev_leader = pilot_get(p->parent);
+   Pilot *prev_leader = pilot_get( p->parent );
+
+   /* Remove from previous leader's follower list */
+   if (prev_leader != NULL) {
+      for (int i=0; i<array_size(prev_leader->escorts); i++) {
+         Escort_t *e = &prev_leader->escorts[i];
+         if (e->id == p->id) {
+            if (e->type != ESCORT_TYPE_MERCENARY) {
+               NLUA_ERROR(L,_("Trying to change the leader of pilot '%s' that is a deployed fighter or part of the player fleet!"), p->name);
+               return 0;
+            }
+            escort_rmListIndex( prev_leader, i );
+            break;
+         }
+      }
+   }
 
    if (lua_isnoneornil(L, 2)) {
       p->parent = 0;
@@ -5021,18 +5035,24 @@ static int pilotL_setLeader( lua_State *L )
 
       /* TODO: Figure out escort type */
       escort_addList( leader, p->ship->name, ESCORT_TYPE_MERCENARY, p->id, 0 );
-   }
 
-   /* Remove from previous leader's follower list */
-   if (prev_leader != NULL)
-      escort_rmList( prev_leader, p->id );
+      /* If the pilot has followers, they should be given the new leader as well, and be added as escorts. */
+      for (int i=0; i<array_size(p->escorts); i++) {
+         Escort_t *e = &p->escorts[i];
+         /* We don't want to deal with fighter bays this way. */
+         if (e->type != ESCORT_TYPE_MERCENARY)
+            continue;
+         Pilot *pe = pilot_get( e->id );
+         if (pe == NULL)
+            continue;
+         pe->parent = p->parent;
 
-   /* If the pilot has followers, they should be given the new leader as well */
-   for (int i=0; i<array_size(pilot_stack); i++) {
-      Pilot *ps = pilot_stack[i];
-      if (ps->parent == p->id) {
-         ps->parent = p->parent;
+         /* Add escort to parent. */
+         escort_addList( leader, pe->ship->name, e->type, pe->id, 0 );
+
+         free( e->ship );
       }
+      array_erase( &p->escorts, array_begin(p->escorts), array_end(p->escorts) );
    }
 
    return 0;
