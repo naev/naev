@@ -5177,6 +5177,9 @@ static int pilotL_damage( lua_State *L )
 /**
  * @brief Knocks back a pilot. It can either accept two pilots, or a pilot and an element represented by mass, velocity, and position.
  *
+ * @usage pilota:knockback( pilotb, 0. ) -- Inelastic collision between pilota and pilotb
+ * @usage pilota:knockback( 100, vec.new(0,0) ) -- Elastic collision between a 100 mass object with no velocity and pilota
+ *
  *    @luatparam Pilot p Pilot being knocked back.
  *    @luatparam number m Mass of object knocking back pilot.
  *    @luatparam Vec2 v Velocity of object knocking back pilot.
@@ -5186,8 +5189,8 @@ static int pilotL_damage( lua_State *L )
  */
 static int pilotL_knockback( lua_State *L )
 {
-   Pilot *p1      = luaL_validpilot(L,1);
-   double m1      = p1->solid->mass;
+   Pilot *p1  = luaL_validpilot(L,1);
+   double m1  = p1->solid->mass;
    vec2 *v1   = &p1->solid->vel;
    vec2 *x1   = &p1->solid->pos;
    Pilot *p2;
