@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-07-03 09:19+0000\n"
+"PO-Revision-Date: 2022-07-03 21:19+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -83159,6 +83159,9 @@ msgid ""
 "your ship heavily to mask your gravitational presence. This also has the "
 "effect of letting you jump out from jumpoints further away.\""
 msgstr ""
+"\"Además de hacer tu nave invisible para otras naves, #osigilo#0 ralentiza "
+"enormemente tu nave para enmascarar tu presencia gravitatoria. Esto también "
+"tiene el efecto de permitirte saltar desde puntos de salto más lejanos.\""
 
 #: dat/missions/tutorial/nelly02.lua:548
 msgid ""
@@ -83167,6 +83170,11 @@ msgid ""
 "to scan depends on the mass of the ship. If you don't want to be scanned, I "
 "recommend you to rely on stealth as much as possible.\""
 msgstr ""
+"\"Cuando no estás en sigilo, las naves pueden apuntar a tu nave para "
+"realizar un escaneo. Esto puede descubrir información no deseada, como "
+"cargas o atuendos ilegales. El tiempo de escaneo depende de la masa de la "
+"nave. Si no quieres que te escaneen, te recomiendo que confíes en el sigilo "
+"todo lo posible.\""
 
 #: dat/missions/tutorial/nelly02.lua:549
 msgid ""
@@ -83177,39 +83185,47 @@ msgid ""
 "to the jump point. It shouldn't be hard, but be careful not to get close to "
 "them!\""
 msgstr ""
+"\"Para evitar ser detectado por {plt}, primero debes alejarte de las naves "
+"cercanas y ser sigiloso con {stealthkey}. A continuación, evita otras naves "
+"utilizando el mapa de superposición que puedes abrir con {overlaykey}, donde "
+"el radio de detección se mostrará en círculos rojos. Entonces deberías ser "
+"capaz de volar alrededor de {plt} y llegar al punto de salto. No debería ser "
+"difícil, pero ten cuidado de no acercarte a ellos.\""
 
 #: dat/missions/tutorial/nelly02.lua:553
 msgid "\"You sure you know how to avoid them? It can be a bit tricky.\""
-msgstr ""
+msgstr "\"¿Seguro que sabes cómo evitarlo? Puede ser un poco complicado.\""
 
 #: dat/missions/tutorial/nelly02.lua:556
 msgid "\"Call me Dr. Electronic Warfare\""
-msgstr ""
+msgstr "\"Llámame Dr. Guerra Electrónica\""
 
 #: dat/missions/tutorial/nelly02.lua:560
 msgid ""
 "\"Great! Avoid getting scanned by them and let's head off to {pnt} in {sys}!"
 "\""
-msgstr ""
+msgstr "\"¡Genial! ¡Evita que te escaneen y vayamos a {pnt} en {sys}!\""
 
 #: dat/missions/tutorial/nelly02.lua:566
 msgid "Avoid Nelly's ex-colleague by using stealth with {stealthkey}"
-msgstr ""
+msgstr "Evita a la excolega de Nelly usando el sigilo con {stealthkey}"
 
 #. Spotter lost track of them
 #: dat/missions/tutorial/nelly02.lua:584
 msgid "Nelly: \"Phew, it seems like they lost track of us.\""
-msgstr ""
+msgstr "Nelly: \"Uf, parece que nos ha perdido la pista.\""
 
 #: dat/missions/tutorial/nelly02.lua:589
 msgid "You won't get away this time Nelly!"
-msgstr ""
+msgstr "¡Esta vez no te escaparás, Nelly!"
 
 #: dat/missions/tutorial/nelly02.lua:598
 msgid ""
 "Nelly: \"They found us and are scanning us. Quickly try to stealth with "
 "{stealthkey}!\""
 msgstr ""
+"Nelly: \"Nos ha encontrado y nos está escaneando. ¡Rápido, trata de pasar "
+"desapercibido con {stealthkey}!\""
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -83233,7 +83249,7 @@ msgstr ""
 #. luacheck: globals enter enter_timer land land_bar land_commodity land_equipment land_mission land_outfits land_shipyard pilot_death pilot_death_timer takeoff taunt timer (Hook functions passed by name)
 #: dat/missions/tutorial/tutorial.lua:36
 msgid "Warning: 'Tutorial' mission was unable to claim system {sys}!"
-msgstr ""
+msgstr "Advertencia: ¡La misión 'Tutorial' no pudo reclamar el sistema {sys}!"
 
 #. We mark as clear anyway, but this is not good
 #. Mark os completed
@@ -83241,21 +83257,23 @@ msgstr ""
 #: dat/missions/tutorial/tutorial.lua:40 dat/missions/tutorial/tutorial.lua:141
 #: dat/scripts/common/tutorial.lua:46
 msgid "Tutorial"
-msgstr ""
+msgstr "Tutorial"
 
 #: dat/missions/tutorial/tutorial.lua:41
 msgid "Your Ship AI has offered to teach you how to fly your ship."
-msgstr ""
+msgstr "La IA de tu nave te ha ofrecido enseñarte a pilotar tu nave."
 
 #: dat/missions/tutorial/tutorial.lua:42
 msgid "Skills to play the game!"
-msgstr ""
+msgstr "¡Habilidades para jugar al juego!"
 
 #: dat/missions/tutorial/tutorial.lua:50
 msgid ""
 "As you are admiring the view from your cockpit, suddenly a holographic "
 "projection appears in front of you."
 msgstr ""
+"Mientras admiras la vista desde tu cabina, de repente aparece una proyección "
+"holográfica frente a ti."
 
 #: dat/missions/tutorial/tutorial.lua:51
 msgid ""
@@ -83265,6 +83283,11 @@ msgid ""
 "\"Say, you look very familiar. You wouldn't be related my late previous "
 "owner? Terrible what happened…\""
 msgstr ""
+"\"¡Felicidades por tu primera nave espacial, {playername}! ¿Qué, qué soy? "
+"Soy tu IA personal de nave. Siempre dispuesta a ser de ayudae\"\n"
+"Te mira fijamente durante unos segundos.\n"
+"\"Oye, me resultas muy familiar. ¿No serás pariente de mi anterior "
+"propietario? Es terrible lo que pasó...\""
 
 #: dat/missions/tutorial/tutorial.lua:54
 msgid ""
@@ -83274,31 +83297,38 @@ msgid ""
 "believe I can be of help. As your new Ship AI, would you like to give me a "
 "name?\""
 msgstr ""
+"\"De todos modos, a partir de ahora, seré la IA de tu nave, pero no te "
+"preocupes si consigues una nueva nave, seré transferida sin problemas. Si "
+"tienes alguna pregunta o comentario sobre cómo funciona tu nave o cómo hacer "
+"las cosas, creo que puedo ser de ayuda. Como tu nueva IA de nave, ¿quieres "
+"darme un nombre?\""
 
 #. Can't use rename here
 #: dat/missions/tutorial/tutorial.lua:78
 msgid "\"You have given me the name of '{ainame}', is this correct?\""
-msgstr ""
+msgstr "\"Me has dado el nombre de '{ainame}', ¿es correcto?\""
 
 #: dat/missions/tutorial/tutorial.lua:81
 msgid "Continue with '{ainame}'"
-msgstr ""
+msgstr "Continuar con '{ainame}'"
 
 #: dat/missions/tutorial/tutorial.lua:82 dat/missions/tutorial/tutorial.lua:91
 #: src/dev_sysedit.c:208 src/dev_sysedit.c:1256 src/dev_uniedit.c:214
 #: src/dev_uniedit.c:1679 src/equipment.c:405
 msgid "Rename"
-msgstr ""
+msgstr "Renombrar"
 
 #: dat/missions/tutorial/tutorial.lua:88
 msgid ""
 "\"You haven't given me a name. I will be continued to be called 'Ship AI' or "
 "SAI for short. Is that OK?\""
 msgstr ""
+"\"No me has dado un nombre. Seguiré llamándome 'AI de Nave' o AIN para "
+"abreviar. ¿OK?\""
 
 #: dat/missions/tutorial/tutorial.lua:90
 msgid "\"'Ship AI' is fine\""
-msgstr ""
+msgstr "\"'AI de Nave' está bien\""
 
 #: dat/missions/tutorial/tutorial.lua:95
 msgid ""
@@ -83306,25 +83336,30 @@ msgid ""
 "name or want to change tutorial settings, you can always do so from the info "
 "menu which you can open with {infokey}.\""
 msgstr ""
+"\"¡Bien! Encantado de conocerte {playername}. Si cambias de opinión sobre mi "
+"nombre o quieres cambiar la configuración del tutorial, siempre puedes "
+"hacerlo desde el menú de información que puedes abrir con {infokey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:98
 msgid ""
 "\"Now that we have you out in space for the first time, how about I go over "
 "your new ship's controls with you real quick? No charge!\""
 msgstr ""
+"\"Ahora que te tenemos en el espacio por primera vez, ¿qué tal si repaso los "
+"controles de tu nueva nave contigo muy rápido? ¡Sin costo alguno!\""
 
 #: dat/missions/tutorial/tutorial.lua:100
 msgid "Do the tutorial"
-msgstr ""
+msgstr "Haz el tutorial"
 
 #: dat/missions/tutorial/tutorial.lua:101
 #: dat/missions/tutorial/tutorial.lua:108
 msgid "Skip the tutorial"
-msgstr ""
+msgstr "Omitir el tutorial"
 
 #: dat/missions/tutorial/tutorial.lua:102
 msgid "Turn off all tutorial hints"
-msgstr ""
+msgstr "Desactivar todos los consejos del tutorial"
 
 #: dat/missions/tutorial/tutorial.lua:106
 msgid ""
@@ -83332,6 +83367,10 @@ msgid ""
 "to do it again without starting a new game. You will still get prompts for "
 "advanced in-game mechanics as you encounter them.\""
 msgstr ""
+"\"¿Estás seguro de que quieres saltarte el tutorial inicial? No podrás "
+"volver a hacerlo sin empezar una nueva partida. Igualmente, recibirás "
+"indicaciones sobre las mecánicas avanzadas del juego a medida que las "
+"encuentres.\""
 
 #: dat/missions/tutorial/tutorial.lua:109
 #: dat/missions/tutorial/tutorial.lua:118 dat/shipai.lua:63 dat/shipai.lua:99
@@ -83343,10 +83382,13 @@ msgid ""
 "\"Are you sure you want to disable all the hints? This includes explanation "
 "of advanced in-game mechanics you will meet as you play the game.\""
 msgstr ""
+"\"¿Estás seguro de que quieres desactivar todas las sugerencias? Esto "
+"incluye la explicación de las mecánicas avanzadas del juego que conocerás "
+"mientras juegas.\""
 
 #: dat/missions/tutorial/tutorial.lua:117
 msgid "Disable all hints"
-msgstr ""
+msgstr "Desactivar todas las sugerencias"
 
 #: dat/missions/tutorial/tutorial.lua:130
 msgid ""
@@ -83358,27 +83400,36 @@ msgid ""
 "your starship. Give it a try by flying over to {pnt}! You see it on your "
 "screen, right? It's the planet right next to you.\""
 msgstr ""
+"\"Muy bien, ¡vamos a repasar cómo pilotar tu nueva nave de última "
+"generación! ¡Moverse es muy sencillo: gira tu nave con {leftkey} y {rightkey}"
+", y empuja tu nave hacia delante con {accelkey}! También puedes usar "
+"{reversekey} para girar tu nave en la dirección opuesta a la que te estás "
+"moviendo, o para invertir el empuje si compras e instalas un propulsor "
+"inverso en tu nave. ¡Pruébalo volando hacia {pnt}! Lo ves en tu pantalla, ¿"
+"verdad? Es el planeta que está al lado.\""
 
 #: dat/missions/tutorial/tutorial.lua:142
 msgid "Fly to {startpnt} in the {sys} system with the movement keys"
-msgstr ""
+msgstr "Vuela a {startpnt} en el sistema {sys} con las teclas de movimiento"
 
 #: dat/missions/tutorial/tutorial.lua:143
 msgid "Land on {startpnt} in the {sys} system by double-clicking on it"
-msgstr ""
+msgstr "Aterriza en {startpnt} en el sistema {sys} haciendo doble clic sobre él"
 
 #: dat/missions/tutorial/tutorial.lua:144
 msgid ""
 "Go to {destpnt} in the {sys} system by right-clicking it on the overview map"
 msgstr ""
+"Vaya a {destpnt} en el sistema {sys} haciendo clic con el botón derecho en "
+"el mapa general"
 
 #: dat/missions/tutorial/tutorial.lua:145
 msgid "Destroy the practice drone near {destpnt} in the {sys} system"
-msgstr ""
+msgstr "Destruye el dron de prácticas cerca de {destpnt} en el sistema {sys}"
 
 #: dat/missions/tutorial/tutorial.lua:146
 msgid "Jump to a nearby system by using your starmap"
-msgstr ""
+msgstr "Salta a un sistema cercano utilizando tu mapa estelar"
 
 #. Set stuff known as necessary
 #. Have to be in the mission system
@@ -83390,6 +83441,11 @@ msgid ""
 "your #bmouse pointer#0 automatically. It's up to you which method you prefer "
 "to use.\""
 msgstr ""
+"\"¡Perfecto! Ha sido bastante fácil, ¿verdad? Recomiendo esta forma de "
+"volar, conocida como 'vuelo con teclado'. Sin embargo, hay otra forma de "
+"volar si así lo deseas: pulsa {mouseflykey} en tu consola y tu nave seguirá "
+"tu #bpuntero de ratón#0 automáticamente. Depende de ti el método que "
+"prefieras utilizar.\""
 
 #: dat/missions/tutorial/tutorial.lua:178
 msgid ""
@@ -83397,6 +83453,9 @@ msgid ""
 "As you can see, you completed your first objective of the Tutorial mission, "
 "so the next objective is now being focused.\""
 msgstr ""
+"\"También habrás notado la visualización de la misión en pantalla en tu "
+"monitor. Como puedes ver, has completado tu primer objetivo de la misión "
+"Tutorial, por lo que ahora se está enfocando en el siguiente objetivo.\""
 
 #: dat/missions/tutorial/tutorial.lua:179
 msgid ""
@@ -83406,6 +83465,11 @@ msgid ""
 "or alternatively by pressing certain buttons on your control console. How "
 "about you try landing on {pnt}?\""
 msgstr ""
+"\"En ese sentido, vamos a repasar el aterrizaje. Todo tipo de acciones, como "
+"aterrizar en planetas, llamar a las naves, abordar las naves inutilizadas y "
+"saltar a otros sistemas, se pueden llevar a cabo haciendo #doble clic#0 en "
+"un objetivo aplicable o, alternativamente, pulsando ciertos botones en tu "
+"consola de control. ¿Qué tal si intentas aterrizar en {pnt}?\""
 
 #: dat/missions/tutorial/tutorial.lua:180
 msgid ""
@@ -83416,6 +83480,13 @@ msgid ""
 "with {targetplanetkey}, and then using the {landkey}. You can also #bdouble "
 "click#0 on the planet to engage the same behaviour. Give it a try!\""
 msgstr ""
+"\"Para aterrizar en {pnt}, tienes que reducir la velocidad de tu nave sobre "
+"el planeta y activar el sistema de aterrizaje. Puedes hacer esto manualmente "
+"con las teclas de movimiento y activar el sistema de aterrizaje con {landkey}"
+", o todo esto se puede hacer automáticamente apuntando al planeta #bclicando#"
+"0 sobre él, o con {targetplanetkey}, y luego usando {landkey}. También "
+"puedes hacer #doble clic#0 en el planeta para conseguir el mismo "
+"comportamiento. ¡Inténtalo!\""
 
 #: dat/missions/tutorial/tutorial.lua:192
 msgid ""
@@ -83424,6 +83495,11 @@ msgid ""
 "appreciate this feature in your ship in time, especially as you travel from "
 "system to system delivering goods and such, given the vastness of space.\""
 msgstr ""
+"\"¡Muy bien hecho! Como puedes ver, al utilizar las funciones de "
+"Autonavegación de tu nave, la duración percibida de tu viaje se redujo "
+"sustancialmente. Con el tiempo apreciarás esta característica en tu nave, "
+"especialmente cuando viajes de sistema en sistema entregando bienes y demás, "
+"dada la inmensidad del espacio.\""
 
 #: dat/missions/tutorial/tutorial.lua:193
 msgid ""
@@ -83435,6 +83511,14 @@ msgid ""
 "around, but they don't guarantee your safety. When starting out it is "
 "probably best to not stray too far.\""
 msgstr ""
+"\"Espero que hayas notado algunas de las características del mapa de visión "
+"general cuando lo tenías activado. No sólo los objetos como los planetas, "
+"las naves y los asteroides son visibles en el mapa general, sino que las "
+"rutas de #opatrulla de facción#0 también se muestran con líneas gruesas. "
+"Estas rutas denotan áreas que son comúnmente patrulladas y utilizadas por "
+"las naves. Seguir estas rutas es generalmente la mejor manera de viajar, "
+"pero no garantizan tu seguridad. Al empezar, probablemente sea mejor no "
+"alejarse demasiado.\""
 
 #: dat/missions/tutorial/tutorial.lua:194
 msgid ""
@@ -83446,6 +83530,13 @@ msgid ""
 "ornament like my late previous owner after encountering… Anyway, on to the "
 "drone.\""
 msgstr ""
+"\" Vamos a practicar el combate. No lo necesitarás si te ciñes a los "
+"sistemas seguros del núcleo del Imperio, pero, por desgracia, es probable "
+"que nos encontremos con naves hostiles si te aventuras más lejos, así que "
+"tienes que saber cómo defenderte. Afortunadamente, tu nave viene preequipada "
+"con un cañón láser de última generación precisamente para eso. Si todo va "
+"bien, no acabarás siendo un adorno de la nave como mi anterior propietario "
+"después de encontrar... En fin, al dron.\""
 
 #: dat/missions/tutorial/tutorial.lua:195
 msgid ""
@@ -83459,6 +83550,15 @@ msgid ""
 "remedy that by pressing {cooldownkey} or double tapping {reversekey} to "
 "engage active cooling.\""
 msgstr ""
+"\"Lanzaré un dron de práctica de combate desde {pnt} ahora para que luches. "
+"No te preocupes; nuestro dron no tiene armas y no te hará daño. ¡Apunta al "
+"dron haciendo clic sobre él o pulsando {targethostilekey}, y luego utiliza "
+"tus armas, controladas con {primarykey} y {secondarykey}, para acabar con el "
+"dron!\"\n"
+"\"Ah, sí, un consejo más, antes de lanzar el dron: si tus armas empiezan a "
+"perder precisión, es porque se están sobrecalentando. Puedes remediarlo "
+"pulsando {cooldownkey} o tocando dos veces {reversekey} para activar la "
+"refrigeración.\""
 
 #: dat/missions/tutorial/tutorial.lua:197
 msgid ""
@@ -83466,6 +83566,9 @@ msgid ""
 "it. Being an artificial intelligence it is unable to compute feelings you "
 "know? Not like me, ha ha. HUMOUR PROCEDURE TERMINATED\""
 msgstr ""
+"\"Se ha dicho que la IA del Dron es un poco extraña, pero no le hagas caso. "
+"Al ser una inteligencia artificial es incapaz de computar sentimientos ¿"
+"sabes? No como yo, ja, ja. PROCEDIMIENTO DE HUMOR TERMINADO\""
 
 #: dat/missions/tutorial/tutorial.lua:212
 msgid ""
@@ -83481,6 +83584,18 @@ msgid ""
 "you can do on a planet. When you are done, click the '#bTake Off#0' button "
 "so we can continue.\""
 msgstr ""
+"\"¡Excelente! El aterrizaje ha sido un éxito. Como tu IA de nave, me encargo "
+"de guiar tu nave y realizar el procedimiento de aterrizaje, lo que ha "
+"reducido significativamente las desgracias durante los procedimientos de "
+"aterrizaje manual controlados por humanos. Cuando aterrizas, tu nave se "
+"reabastece automáticamente y puedes hacer cosas como hablar con civiles en "
+"el bar, comprar nuevos componentes de nave, configurar tu nave y, lo más "
+"importante, aceptar misiones del Ordenador de Misión. ¿Por qué no miramos a "
+"nuestro alrededor? Como puedes ver, actualmente estamos en la pestaña "
+"principal de Aterrizaje, donde puedes aprender sobre el planeta y comprar un "
+"mapa local. Haz clic en las demás pestañas y te daré un recorrido por todo "
+"lo que puedes hacer en el planeta. Cuando hayas terminado, haz clic en el "
+"botón '#bDespegar#0' para que podamos continuar.\""
 
 #: dat/missions/tutorial/tutorial.lua:232
 msgid ""
@@ -83492,6 +83607,14 @@ msgid ""
 "talking to bar patrons, who knows what good tips or interesting jobs they "
 "will have available for you.\""
 msgstr ""
+"\"Este es el Bar del Puerto Espacial, donde puedes leer las últimas noticias "
+"(como puedes ver a tu derecha en este momento), pero lo más importante es "
+"que puedes conocer a otros pilotos, civiles, ¡y más! Clica en alguien en la "
+"barra y luego haz clic en el botón \"#bAcercarte#0\" para acercarte a ellos. "
+"Los personajes importantes estarán marcados con un signo de exclamación "
+"rojo. En general, recomiendo hablar regularmente con los clientes de bar, "
+"quién sabe qué buenos consejos o trabajos interesantes tendrán disponibles "
+"para ti.\""
 
 #: dat/missions/tutorial/tutorial.lua:238
 msgid ""
@@ -83503,6 +83626,14 @@ msgid ""
 "mission. Since many missions involve cargo, you can also see how much free "
 "space is available in your ship in the top-right.\""
 msgstr ""
+"\"Este es el ordenador de misiones, donde puedes encontrar misiones básicas "
+"en la base de datos oficial de misiones. Las misiones son la forma de "
+"ganarte la vida como piloto, así que te recomiendo que consultes esta "
+"pantalla a menudo para ver dónde están las oportunidades de ganar dinero. "
+"Puedes ver que cada misión tiene un breve resumen, y al hacer clic en ellas, "
+"podrás ver más información sobre la misión. Como muchas misiones implican "
+"carga, también puedes ver cuánto espacio libre hay en tu nave en la parte "
+"superior derecha.\""
 
 #: dat/missions/tutorial/tutorial.lua:239
 msgid ""
@@ -83513,6 +83644,12 @@ msgid ""
 "added to your active missions, which you can review via the Info screen by "
 "pressing {infokey}.\""
 msgstr ""
+"\"Cuando elijas las misiones, presta atención a lo que pagan. Querrás "
+"encontrar un equilibrio entre elegir misiones que seas capaz de hacer, pero "
+"que te paguen lo máximo posible por hacerlas. Una vez que hayas elegido una "
+"misión, haz clic en el botón \"#bAceptar Misión#0\" de la parte inferior "
+"derecha y se añadirá a tus misiones activas, que puedes revisar a través de "
+"la pantalla de información pulsando {infokey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:240
 msgid ""
@@ -83521,6 +83658,10 @@ msgid ""
 "computer. That is why I recommend also checking the spaceport bar often when "
 "travelling.\""
 msgstr ""
+"\"A medida que ganes reputación con otras facciones y personajes, se te dará "
+"acceso a misiones más complicadas y bien pagadas en el ordenador de "
+"misiones. Por eso te recomiendo que también compruebes la barra del puerto "
+"espacial a menudo cuando viajes.\""
 
 #: dat/missions/tutorial/tutorial.lua:247
 msgid ""
@@ -83533,6 +83674,15 @@ msgid ""
 "Mule Bulk Cargo Starship. As my previous owner found out, they don't do too "
 "well in combat, however.\""
 msgstr ""
+"\"¡Este es el Armador, donde puedes comprar nuevos equipos para hacer que tu "
+"nave estelar sea aún mejor! ¡Puedes equipar tu nave con nuevas armas, "
+"espacio de carga adicional, sistemas centrales más potentes y mucho más! "
+"Aquí también se pueden comprar mapas regionales que te ayudarán a explorar "
+"la galaxia con mayor facilidad, así como las licencias necesarias para el "
+"armamento y las naves estelares de gama alta. Por ejemplo, necesitarás una "
+"Licencia de Nave Civil Grande para comprar una nave estelar de carga a "
+"granel de la Corporación Melendez. Sin embargo, como descubrió mi anterior "
+"propietario, no van demasiado bien en combate.\""
 
 #: dat/missions/tutorial/tutorial.lua:248
 msgid ""
@@ -83548,6 +83698,18 @@ msgid ""
 "starmap screen. After buying new outfits make sure to equip them in the "
 "#oEquipment#0 window.\""
 msgstr ""
+"\"Como puedes ver, una serie de pestañas en la parte superior de la pantalla "
+"te permiten filtrar los conjuntos por tipo: \"A\" para armas, \"U\" para "
+"utilidades, \"E\" para estructuras, \"Núcleo\" para núcleos, y \"Otros\" "
+"para cualquier cosa fuera de esas categorías, sobre todo, mapas regionales y "
+"licencias. Cuando veas un equipo que te interese, haz clic en él para ver "
+"más información sobre él y, a continuación, haz clic en el botón \"#bComprar#"
+"0\" para comprarlo o en el botón \"#bVender#0\" para venderlo si tienes uno "
+"en tu poder. Los diferentes planetas tienen diferentes equipos disponibles; "
+"si no ves un equipo específico que estás buscando, puedes buscarlo a través "
+"del botón \"#bEncontrar equipos#0\" en la pantalla del mapa estelar. Después "
+"de comprar nuevos equipos, asegúrate de equiparlos en la ventana "
+"#oEquipamiento#0.\""
 
 #: dat/missions/tutorial/tutorial.lua:255
 msgid ""
@@ -83561,6 +83723,15 @@ msgid ""
 "for, you can search for it via the '#bFind Ships#0' button on the starmap "
 "screen.\""
 msgstr ""
+"\"Este es el Astillero, donde puedes comprar nuevas naves estelares para "
+"reemplazar a las que tienes, ¡o para añadir a tu colección! A la izquierda "
+"de esta pantalla, verás las naves disponibles en el planeta en el que te "
+"encuentras. Haz clic en la nave que te interese. A continuación, puedes "
+"comprar la nave con el botón \"#bComprar#0\", o cambiar tu nave actual por "
+"la nueva con el botón \"#bCambiar#0\". Los diferentes planetas tienen "
+"diferentes naves disponibles; si no ves una nave específica que estás "
+"buscando, puedes buscarla a través del botón \"#bEncontrar Naves#0\" en la "
+"pantalla del mapa estelar.\""
 
 #: dat/missions/tutorial/tutorial.lua:256
 msgid ""
@@ -83571,6 +83742,13 @@ msgid ""
 "the different outfits you can equip them with. Note that some ships also "
 "require licenses before you can buy them.\""
 msgstr ""
+"\"Es probable que no tengas suficientes créditos para una nueva nave ahora, "
+"pero más adelante, cuando hayas ahorrado lo suficiente, es probable que "
+"quieras mejorar tu nave a una aún mejor, dependiendo del tipo de tareas que "
+"vayas a realizar. Las diferentes naves tienen diferentes puntos fuertes y "
+"débiles que interactúan con los diferentes equipos que puedes equiparte. Ten "
+"en cuenta que algunas naves también requieren licencias antes de que puedas "
+"comprarlas.\""
 
 #. TODO cut up
 #: dat/missions/tutorial/tutorial.lua:264
@@ -83587,6 +83765,17 @@ msgid ""
 "along with the ship, so do keep that in mind if there's an outfit you need "
 "to keep.\""
 msgstr ""
+"\"Esta es la pantalla de Equipamiento, que sólo está disponible en los "
+"planetas que tienen un armador o un astillero. Aquí puedes equipar tu nave "
+"con cualquier equipo que hayas comprado en el #oArmador#0. Si, y sólo si, el "
+"planeta actual tiene un astillero, también puedes hacerlo con cualquier otra "
+"nave que poseas, y puedes cambiar la nave que estés pilotando en ese momento "
+"seleccionando otra nave y haciendo clic en el botón \"#bCambiar Nave#0\" o "
+"haciendo doble clic#0 en ella. También puedes vender esas otras naves, pero "
+"no tu nave actual, con el botón \"#bVender Nave#0\", si decides que ya no la "
+"necesitas. Si vendes una nave que todavía tiene equipos equipados, esos "
+"equipos también se venderán junto con la nave, así que tenlo en cuenta si "
+"hay un equipo que necesitas conservar.\""
 
 #: dat/missions/tutorial/tutorial.lua:265
 msgid ""
@@ -83594,6 +83783,9 @@ msgid ""
 "have weapons equipped, as you will need those later for practicing combat "
 "and flying around space without any weapons can be very risky anyway.\""
 msgstr ""
+"\"Si haces algún cambio en tu nave ahora, asegúrate de que sigues teniendo "
+"armas equipadas, ya que las necesitarás más adelante para practicar combate "
+"y, de todos modos, volar por el espacio sin armas puede ser muy arriesgado.\""
 
 #. TODO cut up
 #: dat/missions/tutorial/tutorial.lua:273
@@ -83608,6 +83800,17 @@ msgid ""
 "the commodity you're buying or selling at once. This will reduce the number "
 "of times you have to click on the Buy and Sell buttons.\""
 msgstr ""
+"\"Esta es la pantalla de Productos, donde puedes comprar y vender productos. "
+"Los precios de las productos varían de un planeta a otro e incluso a lo "
+"largo del tiempo, así que puedes utilizar esta pantalla para intentar ganar "
+"dinero comprando a bajo precio y vendiendo a alto precio. Haz clic en un "
+"producto para ver información sobre él, sobre todo su precio medio por "
+"tonelada, y haz clic en los botones \"#bComprar#0\" y \"#bVender#0\" para "
+"comprar o vender parte del producto, respectivamente. Aquí, es útil mantener "
+"las teclas #bMayúsculas#0 y/o #bCtrl#0 para ajustar el modificador de "
+"cuántas toneladas de la mercancía estás comprando o vendiendo a la vez. Esto "
+"reducirá el número de veces que tienes que pulsar los botones de Compra y "
+"Venta.\""
 
 #: dat/missions/tutorial/tutorial.lua:274
 msgid ""
@@ -83616,6 +83819,11 @@ msgid ""
 "for various price overviews. The news terminal at the bar also includes "
 "price information for specific nearby planets.\""
 msgstr ""
+"\"Si no estás seguro de qué es rentable comprar o vender, puedes pulsar la "
+"tecla {starmapkey} para ver el mapa estelar y, a continuación, hacer clic en "
+"el botón '#bModo#0' para obtener varios resúmenes de precios. El terminal de "
+"noticias de la barra también incluye información sobre los precios de "
+"determinados planetas cercanos.\""
 
 #: dat/missions/tutorial/tutorial.lua:308
 msgid ""
@@ -83628,6 +83836,15 @@ msgid ""
 "using the Autonav functionality available on all ships. You can trust me as "
 "I've only had under 4 fatal accidents.\""
 msgstr ""
+"\"¡Bienvenido de nuevo al espacio, {playername}! Después de aterrizar, el "
+"juego se guardará automáticamente, así que no tienes que preocuparte por "
+"perder tu progreso. Ahora vamos a seguir hablando de cómo moverse en el "
+"espacio. Como ya hemos dicho, puedes moverte por el espacio manualmente, sin "
+"problemas. Sin embargo, a menudo querrás viajar grandes distancias, y "
+"navegar manualmente por todas partes podría ser un poco tedioso. Una buena "
+"opción es delegar los viajes en mí, la IA de tu nave, utilizando la "
+"funcionalidad de Autonavegación disponible en todas las naves. Puedes "
+"confiar en mí, ya que sólo he tenido menos de 4 accidentes mortales.\""
 
 #: dat/missions/tutorial/tutorial.lua:309
 msgid ""
@@ -83641,6 +83858,16 @@ msgid ""
 "in whatever fashion is deemed necessary. This can be configured from your "
 "ship's #oOptions#0 menu, which you can access by pressing {menukey}."
 msgstr ""
+"La Autonavegación es simple y elegante. Sólo tienes que pulsar {overlaykey} "
+"para abrir el mapa superpuesto de tu nave, y luego sólo tienes que hacer "
+"#clic#0 en cualquier ubicación, planeta, nave o punto de salto para llevar "
+"tu nave directamente a él. El viaje durará lo mismo, pero la compresión del "
+"tiempo te permite alejarte de los controles, haciendo que parezca que el "
+"tiempo pasa más rápido. Y no te preocupes; si se detecta algún piloto "
+"hostil, el sistema de Autonavegación te avisa automáticamente para que "
+"puedas observar la situación y responder de la forma que se considere "
+"necesaria. Esto puede configurarse desde el menú #oOpciones#0 de tu nave, al "
+"que puedes acceder pulsando {menukey}."
 
 #: dat/missions/tutorial/tutorial.lua:310
 msgid ""
@@ -83648,6 +83875,9 @@ msgid ""
 "to see it highlighted on your overlay map which you can activate with "
 "{overlaykey}.\""
 msgstr ""
+"\"¿Por qué no intentas usar Autonavegación para sobrevolar a {pnt}? Deberías "
+"poder verlo resaltado en tu mapa superpuesto que puedes activar con "
+"{overlaykey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:324
 msgid ""
@@ -83658,6 +83888,12 @@ msgid ""
 "clicking#0 on them, or by selecting them with {targetnextkey} and then "
 "pressing {hailkey}.\""
 msgstr ""
+"\"¡Lo has hecho muy bien, {playername}! Como puedes ver, el viaje ha "
+"consumido combustible. Consumes combustible cada vez que haces un salto y "
+"puedes repostar aterrizando en un planeta amigo. Si te encuentras en apuros, "
+"también puedes comprar combustible a otros pilotos del sistema; llama a un "
+"piloto haciendo #doble-clic#0 sobre él, o seleccionándolo con {targetnextkey}"
+" y luego pulsando {hailkey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:325
 msgid ""
@@ -83666,6 +83902,11 @@ msgid ""
 "others; pirates will happily take your offer and may even sell you fuel "
 "afterwards, but many other factions may be less forthcoming.\""
 msgstr ""
+"\"Ah, eso me recuerda: también puedes intentar sobornar a las naves "
+"hostiles, como los piratas, llamándolos por teléfono. Los sobornos funcionan "
+"mejor con algunas facciones que con otras; los piratas aceptarán encantados "
+"tu oferta y puede que incluso te vendan combustible después, pero muchas "
+"otras facciones pueden ser menos comunicativas.\""
 
 #: dat/missions/tutorial/tutorial.lua:326
 msgid ""
@@ -83677,6 +83918,14 @@ msgid ""
 "head to the nearest planet and check out the spaceport bar to see if anybody "
 "can offer us some work to get started out.\""
 msgstr ""
+"\"¡Creo que eso es todo! Debo decir que eres un piloto nato y que tu nueva "
+"nave te sienta bien. Con esto concluye el tutorial básico, pero a medida que "
+"vayas encontrando cosas nuevas iré apareciendo periódicamente. Si necesitas "
+"refrescar tus conocimientos o cambiar mi configuración, puedes hacerlo desde "
+"el menú #oInfo#0 que abres con {infokey}. ¡Ahora salgamos a la aventura! Te "
+"recomiendo que te dirijas al planeta más cercano y te fijes en el bar del "
+"puerto espacial para ver si alguien puede ofrecernos algún trabajo para "
+"empezar a salir.\""
 
 #. Normal finish of the tutorial
 #: dat/missions/tutorial/tutorial.lua:331
@@ -83684,6 +83933,8 @@ msgid ""
 "Your Ship AI gave you a tutorial on how to pilot your ship. Hopefully you "
 "will fare better than their late previous owner."
 msgstr ""
+"La IA de tu Nave te ha dado un tutorial sobre cómo pilotar tu nave. Con "
+"suerte, te irá mejor que a su anterior propietario."
 
 #: dat/missions/tutorial/tutorial.lua:349
 msgid ""
@@ -83693,6 +83944,11 @@ msgid ""
 "repair technology. But even then, armour regeneration is usually much slower "
 "than shield regeneration.\""
 msgstr ""
+"\"¡Excelente trabajo eliminando ese dron! Como habrás notado, el escudo se "
+"regenera con el tiempo, pero el blindaje no. Esto no es universal, por "
+"supuesto; algunas naves, especialmente las más grandes, cuentan con "
+"tecnología avanzada de reparación de blindaje. Pero incluso entonces, la "
+"regeneración del blindaje suele ser mucho más lenta que la del escudo.\""
 
 #: dat/missions/tutorial/tutorial.lua:350
 msgid ""
@@ -83704,6 +83960,13 @@ msgid ""
 "Alternatively, you can cool off your ship instantly by landing on any planet "
 "or station.\""
 msgstr ""
+"\"También habrás notado que tus medidores de calor suben y que tus armas se "
+"vuelven menos precisas a medida que tu nave y sus armas se calientan. Esto "
+"es normal, pero demasiado calor puede dificultar el uso de tus armas, por lo "
+"que te recomiendo que utilices la refrigeración activa cuando sea seguro "
+"hacerlo. Puedes activar la refrigeración activa pulsando {cooldownkey} o "
+"tocando dos veces {reversekey}. Alternativamente, puedes enfriar tu nave "
+"instantáneamente aterrizando en cualquier planeta o estación.\""
 
 #: dat/missions/tutorial/tutorial.lua:351
 msgid ""
@@ -83714,6 +83977,12 @@ msgid ""
 "reputation with the various factions. You will likely be referencing it a "
 "lot as we explore the galaxy.\""
 msgstr ""
+"\"También vale la pena señalar que puedes configurar la forma en que tus "
+"armas disparan desde la pantalla #oInfo#0, a la que puedes acceder pulsando "
+"{infokey} o a través del botón de la parte superior de tu pantalla. La "
+"pantalla #oInfo#0 también te permite ver información sobre tu nave, la "
+"carga, las misiones actuales y la reputación con las distintas facciones. Es "
+"probable que la consultes mucho mientras exploras la galaxia.\""
 
 #: dat/missions/tutorial/tutorial.lua:352
 msgid ""
@@ -83724,6 +83993,13 @@ msgid ""
 "to the locals, or buying maps. Once you have found a jump point, you can use "
 "it by #bright-click#0ing on it or using the {jumpkey}.\""
 msgstr ""
+"\"Creo que deberíamos intentar aventurarnos fuera de este sistema. Hay "
+"muchos sistemas en el universo; ¡éste no es más que una pequeña porción de "
+"lo que se puede encontrar ahí fuera! El viaje a través de los sistemas se "
+"realiza mediante puntos de salto. Al igual que los planetas, normalmente hay "
+"que encontrarlos explorando la zona, hablando con los lugareños o comprando "
+"mapas. Una vez que hayas encontrado un punto de salto, puedes usarlo "
+"haciendo #clicando#0 sobre él o usando la {jumpkey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:353
 msgid ""
@@ -83735,6 +84011,13 @@ msgid ""
 "route to get there, but you will find that this method of travel greatly "
 "simplifies things.\""
 msgstr ""
+"\"¡Pero hay una manera mejor de navegar a través de los sistemas! Pulsando "
+"la tecla {starmap}, puede abrir su #oMapa Estelar#0. El #oMapa Estelar#0 te "
+"muestra todos los sistemas que conoces actualmente. ¡A través de tu #oMapa "
+"Estelar#0, puedes hacer clic en un sistema y pulsar el botón '#bAutonav#0' "
+"para ser transportado automáticamente al sistema! Por supuesto, esto sólo "
+"funciona si conoces una ruta válida para llegar allí, pero verás que este "
+"método de viaje simplifica mucho las cosas.\""
 
 #: dat/missions/tutorial/tutorial.lua:354
 msgid ""
@@ -83744,271 +84027,276 @@ msgid ""
 "do some exploration to find the second jump point. Let's see what you've "
 "learned!\""
 msgstr ""
+"\"¿Por qué no lo intentas y saltas al sistema {sys} cercano? Deberías ver un "
+"indicador en tu mapa; las misiones suelen utilizar estos indicadores para "
+"mostrarte dónde ir a continuación. Tendrás que hacer dos saltos y puede que "
+"tengas que hacer algo de exploración para encontrar el segundo punto de "
+"salto. ¡Vamos a ver lo que has aprendido!\""
 
 #: dat/missions/tutorial/tutorial.lua:360
 msgid "Captain T. Practice"
-msgstr ""
+msgstr "Capitán T. Práctica"
 
 #. Don't distress just in case
 #: dat/missions/tutorial/tutorial.lua:386
 msgid "Bring on the pain!"
-msgstr ""
+msgstr "¡Que empiece el dolor!"
 
 #: dat/missions/tutorial/tutorial.lua:387
 msgid "You're no match for the fearsome T. Practice!"
-msgstr ""
+msgstr "¡No eres rival para el temible T. Práctica!"
 
 #: dat/missions/tutorial/tutorial.lua:388
 msgid "I've been shot by ships ten times your size!"
-msgstr ""
+msgstr "¡Me han disparado naves diez veces más grandes que la tuya!"
 
 #: dat/missions/tutorial/tutorial.lua:389
 msgid "Let's get it on!"
-msgstr ""
+msgstr "¡Vamos a ello!"
 
 #: dat/missions/tutorial/tutorial.lua:390
 msgid "I  haven't got all day."
-msgstr ""
+msgstr "No tengo todo el día."
 
 #: dat/missions/tutorial/tutorial.lua:391
 msgid "You're as threatening as an unborn child!"
-msgstr ""
+msgstr "¡Eres tan amenazante como un niño sin nacer!"
 
 #: dat/missions/tutorial/tutorial.lua:392
 msgid "I've snacked on foes much larger than yourself!"
-msgstr ""
+msgstr "¡Me he merendado a enemigos mucho más grandes que tú!"
 
 #: dat/missions/tutorial/tutorial.lua:393
 msgid "Who's your daddy? I am!"
-msgstr ""
+msgstr "¿Quién es tu papi? ¡Yo soy tu papi!"
 
 #: dat/missions/tutorial/tutorial.lua:394
 msgid "You're less intimidating than a fruit cake!"
-msgstr ""
+msgstr "¡Eres menos intimidante que una tarta de frutas!"
 
 #: dat/missions/tutorial/tutorial.lua:395
 msgid "My ship is the best in the galaxy!"
-msgstr ""
+msgstr "¡Mi nave es la mejor de la galaxia!"
 
 #: dat/missions/tutorial/tutorial.lua:396
 msgid "Bow down before me, and I may spare your life!"
-msgstr ""
+msgstr "¡Arrodíllate ante mí, y puede que te perdone la vida!"
 
 #: dat/missions/tutorial/tutorial.lua:397
 msgid "Someone's about to set you up the bomb."
-msgstr ""
+msgstr "Alguien está a punto de colocarte la bomba."
 
 #: dat/missions/tutorial/tutorial.lua:398
 msgid "Your crew quarters are as pungent as an over-ripe banana!"
-msgstr ""
+msgstr "¡Tu tripulación es tan desagradable como un plátano demasiado maduro!"
 
 #: dat/missions/tutorial/tutorial.lua:399
 msgid "I'm invincible, I cannot be vinced!"
-msgstr ""
+msgstr "¡Soy invencible, no puede ser vencido!"
 
 #: dat/missions/tutorial/tutorial.lua:400
 msgid "You think you can take me?"
-msgstr ""
+msgstr "¿Crees que puedes conmigo?"
 
 #: dat/missions/tutorial/tutorial.lua:401
 msgid "When I'm done, you'll look like pastrami!"
-msgstr ""
+msgstr "¡Cuando termine, parecerás pastrami!"
 
 #: dat/missions/tutorial/tutorial.lua:402
 msgid "I've got better things to do. Hurry up and die!"
-msgstr ""
+msgstr "Tengo mejores cosas que hacer. ¡Date prisa y muere!"
 
 #: dat/missions/tutorial/tutorial.lua:403
 msgid "You call that a barrage? Pah!"
-msgstr ""
+msgstr "¿Llamas a eso un ataque? ¡Bah!"
 
 #: dat/missions/tutorial/tutorial.lua:404
 msgid "You mother isn't much to look at, either!"
-msgstr ""
+msgstr "¡Tu madre tampoco es muy atractiva!"
 
 #: dat/missions/tutorial/tutorial.lua:405
 msgid "You're not exactly a crack-shot, are you?"
-msgstr ""
+msgstr "No eres precisamente un crack, ¿verdad?"
 
 #: dat/missions/tutorial/tutorial.lua:406
 msgid "I've had meals that gave me more resistance than you!"
-msgstr ""
+msgstr "¡He tenido comidas que se me han resistido más que tú!"
 
 #: dat/missions/tutorial/tutorial.lua:407
 msgid "You're a pathetic excuse for a pilot!"
-msgstr ""
+msgstr "¡Eres una patética excusa de piloto!"
 
 #: dat/missions/tutorial/tutorial.lua:408
 msgid "Surrender or face destruction!"
-msgstr ""
+msgstr "¡Ríndete o enfréntate a la destrucción!"
 
 #: dat/missions/tutorial/tutorial.lua:409
 msgid "That all you got?"
-msgstr ""
+msgstr "¿Eso es todo lo que tienes?"
 
 #: dat/missions/tutorial/tutorial.lua:410
 msgid "I am Iron Man!"
-msgstr ""
+msgstr "¡Soy Iron Man!"
 
 #: dat/missions/tutorial/tutorial.lua:411
 msgid "My shields are holding fine!"
-msgstr ""
+msgstr "¡Mis escudos aguantan bien!"
 
 #: dat/missions/tutorial/tutorial.lua:412
 msgid "You'd be dead if I'd remembered to pack my weapons!"
-msgstr ""
+msgstr "¡Estarías muerto si me hubiera acordado de preparar mis armas!"
 
 #: dat/missions/tutorial/tutorial.lua:413
 msgid "I'll end you!"
-msgstr ""
+msgstr "¡Acabaré contigo!"
 
 #: dat/missions/tutorial/tutorial.lua:414
 msgid "… Right after I finish eating this bucket of fried chicken!"
-msgstr ""
+msgstr "...¡justo después de que termine de comer este cubo de pollo frito!"
 
 #: dat/missions/tutorial/tutorial.lua:415
 msgid "{pnt} Fried Chicken. Eat only the best."
-msgstr ""
+msgstr "{pnt} Pollo frito. Coma sólo lo mejor."
 
 #: dat/missions/tutorial/tutorial.lua:416
 msgid "This is your last chance to surrender!"
-msgstr ""
+msgstr "¡Esta es la última oportunidad de rendirte!"
 
 #: dat/missions/tutorial/tutorial.lua:417
 msgid "Don't do school, stay in milk."
-msgstr ""
+msgstr "No hagas la escuela, quédate en la leche."
 
 #: dat/missions/tutorial/tutorial.lua:418
 msgid "I'm going to report you to the NPC Rights watchdog."
-msgstr ""
+msgstr "Voy a denunciarle al organismo de control de los Derechos del PNJ."
 
 #: dat/missions/tutorial/tutorial.lua:419
 msgid "Keep going, see what happens!"
-msgstr ""
+msgstr "Sigue adelante, ¡a ver qué pasa!"
 
 #: dat/missions/tutorial/tutorial.lua:420
 msgid "You don't scare me!"
-msgstr ""
+msgstr "¡No me asustas!"
 
 #: dat/missions/tutorial/tutorial.lua:421
 msgid "What do you think this is, knitting hour?"
-msgstr ""
+msgstr "¿Qué crees que es esto, la hora de tejer?"
 
 #: dat/missions/tutorial/tutorial.lua:422
 msgid "I mean, good lord, man."
-msgstr ""
+msgstr "Quiero decir, buen señor, hombre."
 
 #: dat/missions/tutorial/tutorial.lua:423
 msgid "It's been several minutes of non-stop banter!"
-msgstr ""
+msgstr "¡Han sido varios minutos de bromas sin parar!"
 
 #: dat/missions/tutorial/tutorial.lua:424
 msgid "Haven't I sufficiently annoyed you yet?"
-msgstr ""
+msgstr "¿Aún no te he molestado lo suficiente?"
 
 #: dat/missions/tutorial/tutorial.lua:425
 msgid "Go on, shoot me."
-msgstr ""
+msgstr "Vamos, dispárame."
 
 #: dat/missions/tutorial/tutorial.lua:426
 msgid "You can do it! I believe in you."
-msgstr ""
+msgstr "¡Puedes hacerlo! Yo creo en ti."
 
 #: dat/missions/tutorial/tutorial.lua:427
 msgid "Shoot me!"
-msgstr ""
+msgstr "¡Dispárame!"
 
 #: dat/missions/tutorial/tutorial.lua:428
 msgid "Okay, listen. I'm doing this for attention."
-msgstr ""
+msgstr "Vale, escucha. Estoy haciendo esto para llamar la atención."
 
 #: dat/missions/tutorial/tutorial.lua:429
 msgid "But if you don't shoot me, I'll tell the galaxy your terrible secret."
-msgstr ""
+msgstr "Pero si no me disparas, le diré a la galaxia tu terrible secreto."
 
 #: dat/missions/tutorial/tutorial.lua:432
 msgid "Okay, that's about enough."
-msgstr ""
+msgstr "Bien, ya es suficiente."
 
 #: dat/missions/tutorial/tutorial.lua:433
 msgid "You can stop now."
-msgstr ""
+msgstr "Ya puedes parar."
 
 #: dat/missions/tutorial/tutorial.lua:434
 msgid "I was wrong about you."
-msgstr ""
+msgstr "Me equivoqué contigo."
 
 #: dat/missions/tutorial/tutorial.lua:435
 msgid "Forgive and forget?"
-msgstr ""
+msgstr "¿Perdonar y olvidar?"
 
 #: dat/missions/tutorial/tutorial.lua:436
 msgid "Let's be pals, I'll buy you an ale!"
-msgstr ""
+msgstr "Seamos amigos, ¡te invito a una cerveza!"
 
 #: dat/missions/tutorial/tutorial.lua:437
 msgid "Game over, you win."
-msgstr ""
+msgstr "Se acabó el juego, tú ganas."
 
 #: dat/missions/tutorial/tutorial.lua:438
 msgid "I've got a wife and kids! And a cat!"
-msgstr ""
+msgstr "¡Tengo esposa e hijos! ¡Y un gato!"
 
 #: dat/missions/tutorial/tutorial.lua:439
 msgid "Surely you must have some mercy?"
-msgstr ""
+msgstr "¿Seguramente debes tener algo de piedad?"
 
 #: dat/missions/tutorial/tutorial.lua:440
 msgid "Please stop!"
-msgstr ""
+msgstr "¡Por favor, para!"
 
 #: dat/missions/tutorial/tutorial.lua:441
 msgid "I'm sorry!"
-msgstr ""
+msgstr "¡Lo siento!"
 
 #: dat/missions/tutorial/tutorial.lua:442
 msgid "Leave me alone!"
-msgstr ""
+msgstr "¡Déjame en paz!"
 
 #: dat/missions/tutorial/tutorial.lua:443
 msgid "What did I ever do to you?"
-msgstr ""
+msgstr "¿Qué te he hecho?"
 
 #: dat/missions/tutorial/tutorial.lua:444
 msgid "I didn't sign up for this!"
-msgstr ""
+msgstr "¡Yo no me apunté para esto!"
 
 #: dat/missions/tutorial/tutorial.lua:445
 msgid "Not my ship, anything but my ship!"
-msgstr ""
+msgstr "¡No mi nave, cualquier cosa menos mi nave!"
 
 #: dat/missions/tutorial/tutorial.lua:446
 msgid "We can talk this out!"
-msgstr ""
+msgstr "¡Podemos hablar de esto!"
 
 #: dat/missions/tutorial/tutorial.lua:447
 msgid "I'm scared! Hold me."
-msgstr ""
+msgstr "¡Tengo miedo! Abrazame."
 
 #: dat/missions/tutorial/tutorial.lua:448
 msgid "Make the bad man go away, mommy!"
-msgstr ""
+msgstr "¡Haz que el hombre malo se vaya, mami!"
 
 #: dat/missions/tutorial/tutorial.lua:449
 msgid "If you don't stop I'll cry!"
-msgstr ""
+msgstr "¡Si no paras voy a llorar!"
 
 #: dat/missions/tutorial/tutorial.lua:450
 msgid "Here I go, filling my cabin up with tears."
-msgstr ""
+msgstr "Aquí voy, llenando mi cabina de lágrimas."
 
 #: dat/missions/tutorial/tutorial.lua:451
 msgid "U- oh it a-pears my te-rs hav- da--age t-e co-mand cons-le."
-msgstr ""
+msgstr "U-oh parece que mis l-gr-mas han- da-ado la c-ns-la d- --c-mand-s."
 
 #: dat/missions/tutorial/tutorial.lua:452
 msgid "I a- T. Pr-ct---! Y-- w--l fe-r m- na-e --- Bzzzt!"
-msgstr ""
+msgstr "¡So- T. Pr-ct---! T-mer-s m- no-b-e --- ¡Bzzzt!"
 
 #. Aborting finishes the mission properly
 #.
@@ -85218,7 +85506,7 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp01.lua:36
 #: dat/missions/zalek/zlk_cargorun.lua:32
 msgid "Za'lek Scientist"
-msgstr ""
+msgstr "Científico Za'lek"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:36
 msgid ""
@@ -85536,7 +85824,7 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp02.lua:92
 #: dat/missions/zalek/particlephysics/zpp04.lua:90
 msgid "Pick up cargo at {pnt} ({sys} system)"
-msgstr ""
+msgstr "Recoge la carga en {pnt} (sistema {sys})"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:93
 #: dat/missions/zalek/particlephysics/zpp04.lua:91
