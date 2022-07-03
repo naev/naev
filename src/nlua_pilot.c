@@ -5206,10 +5206,10 @@ static int pilotL_knockback( lua_State *L )
       e  = luaL_optnumber(L,3,1.);
    }
    else {
+      p2 = NULL;
       m2 = luaL_checknumber(L,2);
       v2 = luaL_checkvector(L,3);
       x2 = luaL_optvector(L,4,x1);
-      p2 = NULL;
       e  = luaL_optnumber(L,5,1.);
    }
 
@@ -5218,17 +5218,22 @@ static int pilotL_knockback( lua_State *L )
       double vx = (m1*v1->x + m2*v2->x) / (m1+m2);
       double vy = (m1*v1->y + m2*v2->y) / (m1+m2);
       vec2_cset( &p1->solid->vel, vx, vy );
-      if (p1 != NULL)
+      if (p2 != NULL)
          vec2_cset( &p2->solid->vel, vx, vy );
       return 0.;
    }
 
    /* Pure elastic. */
    double norm    = pow2(x1->x-x2->x) + pow2(x1->y-x2->y);
-   double a1      = -e * (2.*m2)/(m1+m2) * ((v1->x-v2->x)*(x1->x-x2->x) + (v1->y-v2->y)*(x1->y-x2->y)) / norm;
+   double a1      = -e * (2.*m2)/(m1+m2);
+   if (norm > 0.)
+      a1 *= ((v1->x-v2->x)*(x1->x-x2->x) + (v1->y-v2->y)*(x1->y-x2->y)) / norm;
+
    vec2_cadd( &p1->solid->vel, a1*(x1->x-x2->x), a1*(x1->y-x2->y) );
    if (p2 != NULL) {
-      double a2   = -e * (2.*m1)/(m2+m1) * ((v2->x-v1->x)*(x2->x-x1->x) + (v2->y-v1->y)*(x2->y-x1->y)) / norm;
+      double a2   = -e * (2.*m1)/(m2+m1);
+      if (norm > 0.)
+         a2 *= ((v2->x-v1->x)*(x2->x-x1->x) + (v2->y-v1->y)*(x2->y-x1->y)) / norm;
       vec2_cadd( &p2->solid->vel, a2*(x2->x-x1->x), a2*(x2->y-x1->y) );
    }
 
