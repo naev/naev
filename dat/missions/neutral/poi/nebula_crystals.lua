@@ -51,7 +51,7 @@ return function ( mem )
          sai(_([["BEGINNING SCANNING… … … … …SCAN COMPLETE."
 "It seems like these crystals have a very similar signal to the Nebula. I would hypothesize that they are of Nebula origin. I would guess many individuals would want to get their hands on them. It should not be difficult to sell them if you are so inclined. I would recommend taking as many as possible"]]))
 
-         vn.na(fmt.f(_([[Heeding {shipai}'s advice, you load as many {cargo} as you can. You also perform a quick search of the rest of the ship and find nothing useful, other than the {cargo}.]])
+         vn.na(fmt.f(_([[Heeding {shipai}'s advice, you load as many {cargo} as you can. You also perform a quick search of the rest of the ship and find nothing useful, other than the {cargo}.]]),
             {shipai=tut.ainame(), cargo=cargo}))
 
          add_crystals()
