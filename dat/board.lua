@@ -381,7 +381,7 @@ function board( plt )
    if can_cannibalize() then
       luatk.newButton( wdw, w-20-80-350, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
    end
-   --luatk.newButton( wdw, w-20-120, 25, 120, 30, _("Manage Cargo") )
+   --luatk.newButton( wdw, w-20-120, 25, 120, 30, _("Jettison Cargo") )
 
    luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Boarding {plt}"), {plt=plt}), nil, "center" )
    board_freespace = luatk.newText( wdw, 20, 40, w-40, 20, "" )

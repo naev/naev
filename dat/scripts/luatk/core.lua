@@ -424,13 +424,16 @@ end
 luatk.Fader = {}
 setmetatable( luatk.Fader, { __index = luatk.Widget } )
 luatk.Fader_mt = { __index = luatk.Fader }
-function luatk.newFader( parent, x, y, w, h, min, max, def, handler )
-   local wgt   = luatk.newWidget( parent, x, y, w, h )
+function luatk.newFader( parent, x, y, w, h, min, max, def, handler, params )
+   local wgt = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Fader_mt )
-   wgt.handler = handler
+   params = params or {}
+   wgt.handler = handler or function () end
    wgt.min = min
    wgt.max = max
-   wgt.val = def
+   def = def or (min+max)*0.5
+   wgt.val = math.min( math.max( def, min ), max )
+   wgt.params = params
    return wgt
 end
 function luatk.Fader:draw( bx, by )
@@ -622,6 +625,44 @@ function luatk.yesno( title, msg, funcyes, funcno )
          funcno()
       end
    end )
+end
+function luatk.msgFader( title, msg, minval, maxval, def, funcdone )
+   local w, h = msgbox_size( title, msg )
+
+   local wdw = luatk.newWindow( nil, nil, w, 150 + h )
+   luatk.newText( wdw, 0, 10, w, 20, title, nil, "center" )
+   luatk.newText( wdw, 20, 40, w-40, h, msg )
+   local fad = luatk.newFader( wdw, 20, h+110-20-30, w-40, 20, minval, maxval, def )
+   local bw = 120
+   local y = h+110-20-30+40
+   luatk.newButton( wdw, (w-2*bw)/2-10, y, bw, 30, _("Accept"), function( wgt )
+      wgt.parent:destroy()
+      if funcdone then
+         funcdone( fad:get() )
+      end
+   end )
+   luatk.newButton( wdw, (w+0*bw)/2+10, y, bw, 30, _("Cancel"), function( wgt )
+      wgt.parent:destroy()
+      if funcdone then
+         funcdone( nil )
+      end
+   end )
+   local function wdw_done_accept( dying_wdw )
+      if funcdone then
+         funcdone( fad:get() )
+      end
+      dying_wdw:destroy()
+      return true
+   end
+   local function wdw_done_cancel( dying_wdw )
+      if funcdone then
+         funcdone( nil )
+      end
+      dying_wdw:destroy()
+      return true
+   end
+   wdw:setAccept( wdw_done_accept )
+   wdw:setCancel( wdw_done_cancel )
 end
 
 function luatk.drawAltText( bx, by, alt, w )
