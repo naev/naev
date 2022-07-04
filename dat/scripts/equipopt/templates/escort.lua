@@ -134,7 +134,7 @@ local escort_params_overwrite = {
   prefer = {
 		[ "TeraCom Medusa Launcher"] = 6 ,
 		[ "Enygma Systems Spearhead Launcher"] = 4, ["TeraCom Headhunter Launcher"] = 10, ["Large Shield Booster"] = 2,
-		[ "Shield Capacitor IV"] = 2
+		[ "Shield Capacitor IV"] = 2, ["Biometal Armour"] = 2
    },
    
    
@@ -182,7 +182,7 @@ local function equip_escort( p, opt_params )
    end
 
    local mem = p:memory()
-   mem.equip = { type="scavenger", level="standard" }
+   mem.equip = { type="escort", level="standard" }
 
    -- Try to equip
    return optimize.optimize( p, cores, escort_outfits, params )
