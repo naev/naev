@@ -162,6 +162,7 @@ static int pilotL_cargoFree( lua_State *L );
 static int pilotL_cargoHas( lua_State *L );
 static int pilotL_cargoAdd( lua_State *L );
 static int pilotL_cargoRm( lua_State *L );
+static int pilotL_cargoJet( lua_State *L );
 static int pilotL_cargoList( lua_State *L );
 static int pilotL_credits( lua_State *L );
 static int pilotL_ship( lua_State *L );
@@ -318,6 +319,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "cargoHas", pilotL_cargoHas },
    { "cargoAdd", pilotL_cargoAdd },
    { "cargoRm", pilotL_cargoRm },
+   { "cargoJet", pilotL_cargoJet },
    { "cargoList", pilotL_cargoList },
    { "credits", pilotL_credits },
    /* Manual AI control. */
@@ -3859,22 +3861,7 @@ static int pilotL_cargoAdd( lua_State *L )
    return 1;
 }
 
-/**
- * @brief Tries to remove cargo from the pilot's ship.
- *
- * @usage n = pilot.cargoRm(player.pilot(), "Food", 20)
- * @usage n = pilot.cargoRm(player.pilot(), "all") -- Removes all cargo from the player
- *
- *    @luatparam Pilot p The pilot to remove cargo from.
- *    @luatparam Commodity|string cargo Type of cargo to remove, either
- *       as a Commodity object or as the raw (untranslated) name of a
- *       commodity. You can also pass the special value "__all" to
- *       remove all cargo from the pilot, except for mission cargo.
- *    @luatparam number quantity Quantity of the cargo to remove.
- *    @luatreturn number The number of cargo removed.
- * @luafunc cargoRm
- */
-static int pilotL_cargoRm( lua_State *L )
+static int pilotL_cargoRmHelper( lua_State *L, int jet )
 {
    Pilot *p;
    int quantity;
@@ -3907,9 +3894,48 @@ static int pilotL_cargoRm( lua_State *L )
 
    /* Try to remove the cargo. */
    quantity = pilot_cargoRm(p, cargo, quantity);
+   if (jet)
+      commodity_jettison( p->id, cargo, quantity );
 
    lua_pushnumber(L, quantity);
    return 1;
+}
+
+/**
+ * @brief Tries to remove cargo from the pilot's ship.
+ *
+ * @usage n = pilot.cargoRm(player.pilot(), "Food", 20)
+ * @usage n = pilot.cargoRm(player.pilot(), "all") -- Removes all cargo from the player
+ *
+ *    @luatparam Pilot p The pilot to remove cargo from.
+ *    @luatparam Commodity|string cargo Type of cargo to remove, either
+ *       as a Commodity object or as the raw (untranslated) name of a
+ *       commodity. You can also pass the special value "__all" to
+ *       remove all cargo from the pilot, except for mission cargo.
+ *    @luatparam number quantity Quantity of the cargo to remove.
+ *    @luatreturn number The number of cargo removed.
+ * @luafunc cargoRm
+ */
+static int pilotL_cargoRm( lua_State *L )
+{
+   return pilotL_cargoRmHelper( L, 0 );
+}
+
+/**
+ * @brief Tries to remove a cargo from a pilot's ship and jet it into space.
+ *
+ *    @luatparam Pilot p The pilot to remove cargo from.
+ *    @luatparam Commodity|string cargo Type of cargo to remove, either
+ *       as a Commodity object or as the raw (untranslated) name of a
+ *       commodity. You can also pass the special value "__all" to
+ *       remove all cargo from the pilot, except for mission cargo.
+ *    @luatparam number quantity Quantity of the cargo to remove.
+ *    @luatreturn number The number of cargo removed.
+ * @luafunc cargoJet
+ */
+static int pilotL_cargoJet( lua_State *L )
+{
+   return pilotL_cargoRmHelper( L, 1 );
 }
 
 /**

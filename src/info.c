@@ -1059,7 +1059,7 @@ static void cargo_jettison( unsigned int wid, const char *str )
    }
    else {
       /* Remove the cargo */
-      commodity_Jettison( player.p->id, player.p->commodities[pos].commodity,
+      commodity_jettison( player.p->id, player.p->commodities[pos].commodity,
             player.p->commodities[pos].quantity );
       pilot_cargoRm( player.p, player.p->commodities[pos].commodity,
             player.p->commodities[pos].quantity );

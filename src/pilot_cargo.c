@@ -270,7 +270,7 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
       return 1; /* pilot doesn't have it */
 
    if (jettison)
-      commodity_Jettison( pilot->id, pilot->commodities[i].commodity,
+      commodity_jettison( pilot->id, pilot->commodities[i].commodity,
             pilot->commodities[i].quantity );
 
    /* remove cargo */

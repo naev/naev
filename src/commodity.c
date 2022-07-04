@@ -375,7 +375,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
  *    @param com Commodity to throw out.
  *    @param quantity Quantity thrown out.
  */
-void commodity_Jettison( int pilot, const Commodity* com, int quantity )
+void commodity_jettison( int pilot, const Commodity* com, int quantity )
 {
    (void) com;
    Pilot* p;
