@@ -1,4 +1,4 @@
-project('SuiteSparse')
+project('SuiteSparse', 'c', version: '5.12.0')
 
 cc = meson.get_compiler('c')
 foreach arg: ['-Wno-implicit-const-int-float-conversion', '-Wno-implicit-fallthrough', '-Wno-maybe-uninitialized', '-Wno-sign-compare',
