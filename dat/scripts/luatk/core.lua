@@ -647,19 +647,18 @@ function luatk.msgFader( title, msg, minval, maxval, def, funcdone )
          funcdone( nil )
       end
    end )
-   local function wdw_done_accept( dying_wdw )
+   local function wdw_done( dying_wdw, val )
       if funcdone then
-         funcdone( fad:get() )
+         funcdone( val )
       end
       dying_wdw:destroy()
       return true
    end
+   local function wdw_done_accept( dying_wdw )
+      return wdw_done( dying_wdw, fad:get() )
+   end
    local function wdw_done_cancel( dying_wdw )
-      if funcdone then
-         funcdone( nil )
-      end
-      dying_wdw:destroy()
-      return true
+      return wdw_done( dying_wdw, nil )
    end
    wdw:setAccept( wdw_done_accept )
    wdw:setCancel( wdw_done_cancel )
