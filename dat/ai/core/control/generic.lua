@@ -892,6 +892,7 @@ function create_pre ()
    local p        = ai.pilot()
    mem.tookoff    = p:flags("takingoff")
    mem.jumpedin   = p:flags("jumpingin")
+   mem.carried    = p:flags("carried")
 
    -- Amount of faction lost when the pilot distresses at the player
    -- Should be roughly 1 for a 20 point llama and 4.38 for a 150 point hawking
@@ -918,9 +919,7 @@ end
 
 -- Finishes create stuff like choose attack and prepare plans
 function create_post ()
-   local p        = ai.pilot()
    mem.scanned    = {} -- must create for each pilot
-   mem.carried    = p:flags("carried")
 
    -- Give a small delay... except for escorts?
    if mem.jumpedin and not mem.carried then
