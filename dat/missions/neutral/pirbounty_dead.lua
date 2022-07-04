@@ -268,7 +268,7 @@ end
 
 
 function pilot_death( _p, attacker )
-   if attacker and (attacker == player.pilot() or attacker:leader() == player.pilot()) then
+   if attacker and attacker:withPlayer() then
       succeed()
       mem.target_killed = true
    else
@@ -279,7 +279,7 @@ function pilot_death( _p, attacker )
       for i, j in ipairs( hunters ) do
          total_hits = total_hits + hunter_hits[i]
          if j ~= nil and j:exists() then
-            if j == player.pilot() or j:leader() == player.pilot() then
+            if j:withPlayer() then
                player_hits = player_hits + hunter_hits[i]
             elseif hunter_hits[i] > top_hits then
                top_hunter = j
