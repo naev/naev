@@ -423,13 +423,9 @@ function spawn_pirate( param )
 end
 
 
-local _target_faction
 -- Adjust pirate faction (used for "alive" bounties)
 function get_faction()
-   if not _target_faction then
-      _target_faction = faction.dynAdd( "Pirate", "Wanted Pirate", _("Wanted Pirate"), {clear_enemies=true, clear_allies=true} )
-   end
-   return _target_faction
+   return faction.dynAdd( "Pirate", "Wanted Pirate", _("Wanted Pirate"), {clear_enemies=true, clear_allies=true} )
 end
 
 
