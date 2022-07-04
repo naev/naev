@@ -27,6 +27,8 @@ local luatk = {
    },
    scrollbar = {
       colour = {
+         value    = { 0.95, 0.95, 0.95 },
+         label    = { 0.6,  0.6,  0.6  },
          bg       = { 0.0,  0.0,  0.0  },
          fg       = { 0.5,  0.5,  0.5  },
          outline  = { 0.05, 0.05, 0.05 },
@@ -459,13 +461,15 @@ function luatk.Fader:draw( bx, by )
    -- Labels
    if self.params.labels then
       local ly = y + h + 5
-      lg.setColor( luatk.colour.text )
-      if off * w > 20 then
+      lg.setColor( luatk.scrollbar.colour.label )
+      if off * w > 40 then
          lg.printf( tostring(self.min), self.font, x-30, ly, 60, "center" )
       end
-      if off * w < w-20 then
+      if off * w < w-40 then
          lg.printf( tostring(self.max), self.font, x+w-30, ly, 60, "center" )
       end
+      lg.setColor( luatk.colour.text )
+      lg.setColor( luatk.scrollbar.colour.value )
       lg.printf( tostring(math.floor(self.val+0.5)), self.font, cx-30, ly, 60, "center" )
    end
 end
@@ -647,14 +651,14 @@ end
 function luatk.msgFader( title, msg, minval, maxval, def, funcdone )
    local w, h = msgbox_size( title, msg )
 
-   local wdw = luatk.newWindow( nil, nil, w, 165 + h )
+   local wdw = luatk.newWindow( nil, nil, w, 160 + h )
    luatk.newText( wdw, 0, 10, w, 20, title, nil, "center" )
    luatk.newText( wdw, 20, 40, w-40, h, msg )
-   local fad = luatk.newFader( wdw, 20, h+110-20-30, w-40, 40, minval, maxval, def, nil, {
+   local fad = luatk.newFader( wdw, 20, h+105-20-30, w-40, 35, minval, maxval, def, nil, {
       labels = true,
    })
    local bw = 120
-   local y = h+110-20-30+55
+   local y = h+110-20-30+50
    luatk.newButton( wdw, (w-2*bw)/2-10, y, bw, 30, _("Accept"), function( wgt )
       wgt.parent:destroy()
       if funcdone then
