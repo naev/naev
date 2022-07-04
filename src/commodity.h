@@ -132,6 +132,5 @@ void gatherable_gather( int pilot );
 void credits2str( char *str, credits_t credits, int decimals );
 void price2str( char *str, credits_t price, credits_t credits, int decimals );
 void tonnes2str( char *str, int tonnes );
-void commodity_jettison( int pilot, const Commodity* com, int quantity );
 int commodity_compareTech( const void *commodity1, const void *commodity2 );
 Commodity ** standard_commodities (void);

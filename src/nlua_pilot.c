@@ -3893,9 +3893,10 @@ static int pilotL_cargoRmHelper( lua_State *L, int jet )
    }
 
    /* Try to remove the cargo. */
-   quantity = pilot_cargoRm(p, cargo, quantity);
    if (jet)
-      commodity_jettison( p->id, cargo, quantity );
+      quantity = pilot_cargoJet( p, cargo, quantity, 0 );
+   else
+      quantity = pilot_cargoRm( p, cargo, quantity );
 
    lua_pushnumber(L, quantity);
    return 1;

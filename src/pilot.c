@@ -2286,8 +2286,8 @@ void pilot_update( Pilot* pilot, double dt )
          if (pilot_isFlag(pilot, PILOT_EXPLODED)) {
             /* Release cargo */
             for (int i=0; i<array_size(pilot->commodities); i++)
-               commodity_jettison( pilot->id, pilot->commodities[i].commodity,
-                     pilot->commodities[i].quantity );
+               pilot_cargoJet( pilot, pilot->commodities[i].commodity,
+                     pilot->commodities[i].quantity, 1 );
          }
       }
       /* reset random explosion timer */

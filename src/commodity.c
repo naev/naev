@@ -369,41 +369,6 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
 }
 
 /**
- * @brief Throws cargo out in space graphically.
- *
- *    @param pilot ID of the pilot throwing the stuff out
- *    @param com Commodity to throw out.
- *    @param quantity Quantity thrown out.
- */
-void commodity_jettison( int pilot, const Commodity* com, int quantity )
-{
-   (void) com;
-   Pilot* p;
-   int n;
-   double px,py, bvx, bvy;
-
-   p   = pilot_get( pilot );
-
-   n   = MAX( 1, RNG(quantity/10, quantity/5) );
-   px  = p->solid->pos.x;
-   py  = p->solid->pos.y;
-   bvx = p->solid->vel.x;
-   bvy = p->solid->vel.y;
-   for (int i=0; i<n; i++) {
-      int effect = spfx_get("cargo");
-
-      /* Radial distribution gives much nicer results */
-      double r  = RNGF()*25. - 12.5;
-      double a  = 2. * M_PI * RNGF();
-      double vx = bvx + r*cos(a);
-      double vy = bvy + r*sin(a);
-
-      /* Add the cargo effect */
-      spfx_add( effect, px, py, vx, vy, SPFX_LAYER_BACK );
-   }
-}
-
-/**
  * @brief Initializes a gatherable object
  *
  *    @param com Type of commodity.

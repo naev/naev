@@ -323,23 +323,24 @@ int pfleet_cargoRm( const Commodity *com, int q, int jet )
    for (int i=0; i<array_size(player.p->escorts); i++) {
       Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
-      int rmq;
       if (pe == NULL)
          continue;
       if (e->type != ESCORT_TYPE_FLEET)
          continue;
-      rmq = pilot_cargoRm( pe, com, q-removed );
-      removed += rmq;
+
       if (jet)
-         commodity_jettison( pe->id, com, rmq );
+         removed += pilot_cargoJet( pe, com, q-removed, 0 );
+      else
+         removed += pilot_cargoRm( pe, com, q-removed );
+
       if (q-removed <= 0)
          break;
    }
    if (q-removed > 0) {
-      int rmq = pilot_cargoRm( player.p, com, q );
-      removed += rmq;
       if (jet)
-         commodity_jettison( player.p->id, com, rmq );
+         removed += pilot_cargoJet( player.p, com, q, 0 );
+      else
+         removed += pilot_cargoRm( player.p, com, q );
    }
    return removed;
 }
