@@ -113,6 +113,8 @@ static int playerL_fleetCargoUsed( lua_State *L );
 static int playerL_fleetCargoOwned( lua_State *L );
 static int playerL_fleetCargoAdd( lua_State *L );
 static int playerL_fleetCargoRm( lua_State *L );
+static int playerL_fleetCargoJet( lua_State *L );
+static int playerL_fleetCargoList( lua_State *L );
 /* Misc stuff. */
 static int playerL_teleport( lua_State *L );
 static int playerL_dt_mod( lua_State *L );
@@ -177,6 +179,8 @@ static const luaL_Reg playerL_methods[] = {
    { "fleetCargoOwned", playerL_fleetCargoOwned },
    { "fleetCargoAdd", playerL_fleetCargoAdd },
    { "fleetCargoRm", playerL_fleetCargoRm },
+   { "fleetCargoJet", playerL_fleetCargoJet },
+   { "fleetCargoList", playerL_fleetCargoList },
    { "teleport", playerL_teleport },
    { "dt_mod", playerL_dt_mod },
    { "fleetCapacity", playerL_fleetCapacity },
@@ -1528,10 +1532,57 @@ static int playerL_fleetCargoAdd( lua_State *L )
  */
 static int playerL_fleetCargoRm( lua_State *L )
 {
-
    Commodity *c = luaL_validcommodity( L, 1 );
    int q = luaL_checkinteger( L, 2 );
-   lua_pushinteger( L, pfleet_cargoRm( c, q ) );
+   lua_pushinteger( L, pfleet_cargoRm( c, q, 0 ) );
+   return 1;
+}
+
+/**
+ * @brief Tries to remove an amount of commodity to the player's fleet and jettisons it into space.
+ *
+ *    @luatparam Commodity c Commodity to remove from the player fleet.
+ *    @luatparam number q Amount to remove.
+ *    @luatreturn number Amount of commodity removed from the player fleet.
+ * @luafunc fleetCargoJet
+ */
+static int playerL_fleetCargoJet( lua_State *L )
+{
+   Commodity *c = luaL_validcommodity( L, 1 );
+   int q = luaL_checkinteger( L, 2 );
+   lua_pushinteger( L, pfleet_cargoRm( c, q, 1 ) );
+   return 1;
+}
+
+/**
+ * @brief Gets the list of all the cargos in the player's fleet.
+ *
+ * @usage for k,v in ipairs( player.fleetCargoList() ) do print( v.c, v.q ) end
+ *
+ *    @luatreturn table A table containing table entries of the form {c = commodity, q = quantity }.
+ * @luafunc fleetCargoList
+ */
+static int playerL_fleetCargoList( lua_State *L )
+{
+   Commodity *call = commodity_getAll();
+   int n = 0;
+   lua_newtable(L);                 /* t */
+   for (int i=0; i<array_size(call); i++) {
+      Commodity *c = &call[i];
+      int q = pfleet_cargoOwned( c );
+      if (q <= 0)
+         continue;
+
+      lua_newtable(L);              /* t, t */
+
+      lua_pushcommodity( L, c );    /* t, t, c */
+      lua_setfield( L, -2, "c" );   /* t, t  */
+
+      lua_pushinteger( L, q );      /* t, t, q */
+      lua_setfield( L, -2, "q" );   /* t, t */
+
+      lua_rawseti( L, -2, ++n );    /* t */
+   }
    return 1;
 }
 

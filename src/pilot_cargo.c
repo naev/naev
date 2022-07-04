@@ -270,8 +270,8 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
       return 1; /* pilot doesn't have it */
 
    if (jettison)
-      commodity_Jettison( pilot->id, pilot->commodities[i].commodity,
-            pilot->commodities[i].quantity );
+      pilot_cargoJet( pilot, pilot->commodities[i].commodity,
+            pilot->commodities[i].quantity, 1 );
 
    /* remove cargo */
    pilot->cargo_free    += pilot->commodities[i].quantity;
@@ -388,4 +388,42 @@ int pilot_cargoRmAll( Pilot* pilot, int cleanup )
 int pilot_cargoRm( Pilot* pilot, const Commodity* cargo, int quantity )
 {
    return pilot_cargoRmRaw( pilot, cargo, quantity, 0 );
+}
+
+/**
+ * @brief Tries to get rid of quantity cargo from pilot, jetting it into space.
+ *
+ *    @param p Pilot to get rid of cargo.
+ *    @param cargo Cargo to get rid of.
+ *    @param quantity Amount of cargo to get rid of.
+ *    @param simulate Doesn't actually remove cargo, just simulates the removal.
+ *    @return Amount of cargo gotten rid of.
+ */
+int pilot_cargoJet( Pilot *p, const Commodity *cargo, int quantity, int simulate )
+{
+   int n;
+   double px,py, bvx, bvy;
+
+   if (!simulate)
+      quantity = pilot_cargoRmRaw( p, cargo, quantity, 0 );
+
+   n   = MAX( 1, RNG(quantity/10, quantity/5) );
+   px  = p->solid->pos.x;
+   py  = p->solid->pos.y;
+   bvx = p->solid->vel.x;
+   bvy = p->solid->vel.y;
+   for (int i=0; i<n; i++) {
+      int effect = spfx_get("cargo");
+
+      /* Radial distribution gives much nicer results */
+      double r  = RNGF()*25. - 12.5;
+      double a  = 2. * M_PI * RNGF();
+      double vx = bvx + r*cos(a);
+      double vy = bvy + r*sin(a);
+
+      /* Add the cargo effect */
+      spfx_add( effect, px, py, vx, vy, SPFX_LAYER_BACK );
+   }
+
+   return quantity;
 }

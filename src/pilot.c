@@ -27,6 +27,7 @@
 #include "explosion.h"
 #include "faction.h"
 #include "font.h"
+#include "gatherable.h"
 #include "gui.h"
 #include "hook.h"
 #include "land.h"
@@ -2286,8 +2287,8 @@ void pilot_update( Pilot* pilot, double dt )
          if (pilot_isFlag(pilot, PILOT_EXPLODED)) {
             /* Release cargo */
             for (int i=0; i<array_size(pilot->commodities); i++)
-               commodity_Jettison( pilot->id, pilot->commodities[i].commodity,
-                     pilot->commodities[i].quantity );
+               pilot_cargoJet( pilot, pilot->commodities[i].commodity,
+                     pilot->commodities[i].quantity, 1 );
          }
       }
       /* reset random explosion timer */
@@ -2517,7 +2518,7 @@ void pilot_update( Pilot* pilot, double dt )
 
    /* See if there is commodities to gather. */
    if (!pilot_isDisabled(pilot))
-      gatherable_gather( pilot->id );
+      gatherable_gather( pilot );
 
    /* Update the trail. */
    pilot_sample_trails( pilot, 0 );

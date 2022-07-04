@@ -65,6 +65,8 @@ int pfleet_toggleDeploy( PlayerShip_t *ps, int deploy )
          Pilot *pe = pilot_get( e->id );
          if (pe == NULL)
             continue;
+         if (e->type != ESCORT_TYPE_FLEET)
+            continue;
          if (strcmp( pe->name, p->name )==0) {
             idx = i;
             break;
@@ -175,6 +177,8 @@ void pfleet_cargoRedistribute (void)
       Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
          continue;
+      if (e->type != ESCORT_TYPE_FLEET)
+         continue;
       shipCargo( &pclist, pe );
    }
 
@@ -206,6 +210,8 @@ void pfleet_cargoRedistribute (void)
  */
 int pfleet_cargoUsed (void)
 {
+   if (player.p == NULL)
+      return 0;
    int cargo_used = pilot_cargoUsed( player.p );
    if (player.fleet_capacity <= 0)
       return cargo_used;
@@ -213,6 +219,8 @@ int pfleet_cargoUsed (void)
       const Escort_t *e = &player.p->escorts[i];
       const Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
+         continue;
+      if (e->type != ESCORT_TYPE_FLEET)
          continue;
       cargo_used += pilot_cargoUsed( pe );
    }
@@ -226,6 +234,8 @@ int pfleet_cargoUsed (void)
  */
 int pfleet_cargoFree (void)
 {
+   if (player.p == NULL)
+      return 0;
    int cargo_free = pilot_cargoFree( player.p );
    if (player.fleet_capacity <= 0)
       return cargo_free;
@@ -233,6 +243,8 @@ int pfleet_cargoFree (void)
       const Escort_t *e = &player.p->escorts[i];
       const Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
+         continue;
+      if (e->type != ESCORT_TYPE_FLEET)
          continue;
       cargo_free += pilot_cargoFree( pe );
    }
@@ -247,6 +259,8 @@ int pfleet_cargoFree (void)
  */
 int pfleet_cargoOwned( const Commodity *com )
 {
+   if (player.p == NULL)
+      return 0;
    int amount = pilot_cargoOwned( player.p, com );
    if (player.fleet_capacity <= 0)
       return amount;
@@ -254,6 +268,8 @@ int pfleet_cargoOwned( const Commodity *com )
       const Escort_t *e = &player.p->escorts[i];
       const Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
+         continue;
+      if (e->type != ESCORT_TYPE_FLEET)
          continue;
       amount += pilot_cargoOwned( pe, com );
    }
@@ -269,6 +285,8 @@ int pfleet_cargoOwned( const Commodity *com )
  */
 int pfleet_cargoAdd( const Commodity *com, int q )
 {
+   if (player.p == NULL)
+      return 0;
    int added = pilot_cargoAdd( player.p, com, q, 0 );
    if (player.fleet_capacity <= 0)
       return added;
@@ -276,6 +294,8 @@ int pfleet_cargoAdd( const Commodity *com, int q )
       Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
+         continue;
+      if (e->type != ESCORT_TYPE_FLEET)
          continue;
       added += pilot_cargoAdd( pe, com, q-added, 0 );
       if (q-added <= 0)
@@ -289,11 +309,14 @@ int pfleet_cargoAdd( const Commodity *com, int q )
  *
  *    @param com Commodity to remove.
  *    @param q Quantity to remove.
+ *    @param jet Whether or not to jet into space.
  *    @return Total amount of cargo removed (can be less than q).
  */
-int pfleet_cargoRm( const Commodity *com, int q )
+int pfleet_cargoRm( const Commodity *com, int q, int jet )
 {
    int removed;
+   if (player.p == NULL)
+      return 0;
    if (player.fleet_capacity <= 0)
       return pilot_cargoRm( player.p, com, q );
    removed = 0;
@@ -302,11 +325,22 @@ int pfleet_cargoRm( const Commodity *com, int q )
       Pilot *pe = pilot_get( e->id );
       if (pe == NULL)
          continue;
-      removed += pilot_cargoRm( pe, com, q-removed );
+      if (e->type != ESCORT_TYPE_FLEET)
+         continue;
+
+      if (jet)
+         removed += pilot_cargoJet( pe, com, q-removed, 0 );
+      else
+         removed += pilot_cargoRm( pe, com, q-removed );
+
       if (q-removed <= 0)
          break;
    }
-   if (q-removed > 0)
-      removed += pilot_cargoRm( player.p, com, q );
+   if (q-removed > 0) {
+      if (jet)
+         removed += pilot_cargoJet( player.p, com, q, 0 );
+      else
+         removed += pilot_cargoRm( player.p, com, q );
+   }
    return removed;
 }

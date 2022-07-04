@@ -17,6 +17,7 @@
 #include "conf.h"
 #include "array.h"
 #include "camera.h"
+#include "gatherable.h"
 #include "space.h"
 #include "opengl.h"
 #include "toolkit.h"

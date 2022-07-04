@@ -75,7 +75,7 @@ return function ( mem )
             {n1=noise(), n2=noise(), n3=noise()}))
          v02(fmt.f(_([["…possibly end of civilization. The little functionality left in my scanners has not picked up any objects, just this dense fog or whatever… {n1}"]]),
             {n1=noise()}))
-         v02(_([["…rations will not last much longer. I just hope that was just part of the plan, if not all my work wil have been in vain.""]]))
+         v02(_([["…rations will not last much longer. I just hope that was just part of the plan, if not all my work will have been in vain.""]]))
          vn.na(_([[END  OF AUDIO DATA ##4189]]))
 
          vn.disappear( v02 )
@@ -83,7 +83,7 @@ return function ( mem )
          vn.appear( sai, tut.shipai.transition )
          sai(_([["I'm afraid that is all that I was able to recover. Have you managed to make sense of it?"]]))
          vn.menu{
-            {_("I thin I have idea."), "cont01"},
+            {_("I think I have idea."), "cont01"},
             {_("Beats me."), "cont01"},
             {_("…"), "cont01"},
          }

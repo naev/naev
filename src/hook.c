@@ -31,6 +31,7 @@
 #include "array.h"
 #include "claim.h"
 #include "event.h"
+#include "gatherable.h"
 #include "log.h"
 #include "menu.h"
 #include "mission.h"

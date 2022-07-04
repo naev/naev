@@ -200,7 +200,7 @@ end
 
 
 function pilot_death( _p, attacker )
-   if attacker == player.pilot() or attacker:leader() == player.pilot() then
+   if attacker and attacker:withPlayer() then
       succeed()
    else
       local top_hunter = nil

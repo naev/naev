@@ -337,7 +337,7 @@ end
 
 
 function harper_gotattacked( _plt, attacker )
-   if attacker == player.pilot() then
+   if attacker and attacker:withPlayer() then
       if not mem.harper_attacked then
          -- Run to land at the station
          harper:setNoLand(false)

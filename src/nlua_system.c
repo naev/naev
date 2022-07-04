@@ -18,6 +18,7 @@
 #include "land.h"
 #include "land_outfits.h"
 #include "log.h"
+#include "gatherable.h"
 #include "map.h"
 #include "map_overlay.h"
 #include "nebula.h"

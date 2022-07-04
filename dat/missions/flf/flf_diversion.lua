@@ -130,8 +130,7 @@ end
 
 
 function pilot_attacked_dv( _p, attacker )
-   if attacker and (attacker == player.pilot() or attacker:leader() == player.pilot())
-         and not mem.dv_coming and rnd.rnd() < 0.1 then
+   if attacker and attacker:withPlayer() and not mem.dv_coming and rnd.rnd() < 0.1 then
       mem.dv_coming = true
       hook.timer( 10.0, "timer_spawn_dv" )
    end
@@ -139,8 +138,7 @@ end
 
 
 function pilot_death_dv( _p, attacker )
-   if attacker and (attacker == player.pilot() or attacker:leader() == player.pilot())
-         and not mem.dv_coming then
+   if attacker and attacker:withPlayer() and not mem.dv_coming then
       mem.dv_coming = true
       hook.timer( 10.0, "timer_spawn_dv" )
    end

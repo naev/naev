@@ -162,6 +162,7 @@ static int pilotL_cargoFree( lua_State *L );
 static int pilotL_cargoHas( lua_State *L );
 static int pilotL_cargoAdd( lua_State *L );
 static int pilotL_cargoRm( lua_State *L );
+static int pilotL_cargoJet( lua_State *L );
 static int pilotL_cargoList( lua_State *L );
 static int pilotL_credits( lua_State *L );
 static int pilotL_ship( lua_State *L );
@@ -318,6 +319,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "cargoHas", pilotL_cargoHas },
    { "cargoAdd", pilotL_cargoAdd },
    { "cargoRm", pilotL_cargoRm },
+   { "cargoJet", pilotL_cargoJet },
    { "cargoList", pilotL_cargoList },
    { "credits", pilotL_credits },
    /* Manual AI control. */
@@ -3859,22 +3861,7 @@ static int pilotL_cargoAdd( lua_State *L )
    return 1;
 }
 
-/**
- * @brief Tries to remove cargo from the pilot's ship.
- *
- * @usage n = pilot.cargoRm(player.pilot(), "Food", 20)
- * @usage n = pilot.cargoRm(player.pilot(), "all") -- Removes all cargo from the player
- *
- *    @luatparam Pilot p The pilot to remove cargo from.
- *    @luatparam Commodity|string cargo Type of cargo to remove, either
- *       as a Commodity object or as the raw (untranslated) name of a
- *       commodity. You can also pass the special value "__all" to
- *       remove all cargo from the pilot, except for mission cargo.
- *    @luatparam number quantity Quantity of the cargo to remove.
- *    @luatreturn number The number of cargo removed.
- * @luafunc cargoRm
- */
-static int pilotL_cargoRm( lua_State *L )
+static int pilotL_cargoRmHelper( lua_State *L, int jet )
 {
    Pilot *p;
    int quantity;
@@ -3906,10 +3893,50 @@ static int pilotL_cargoRm( lua_State *L )
    }
 
    /* Try to remove the cargo. */
-   quantity = pilot_cargoRm(p, cargo, quantity);
+   if (jet)
+      quantity = pilot_cargoJet( p, cargo, quantity, 0 );
+   else
+      quantity = pilot_cargoRm( p, cargo, quantity );
 
    lua_pushnumber(L, quantity);
    return 1;
+}
+
+/**
+ * @brief Tries to remove cargo from the pilot's ship.
+ *
+ * @usage n = pilot.cargoRm(player.pilot(), "Food", 20)
+ * @usage n = pilot.cargoRm(player.pilot(), "all") -- Removes all cargo from the player
+ *
+ *    @luatparam Pilot p The pilot to remove cargo from.
+ *    @luatparam Commodity|string cargo Type of cargo to remove, either
+ *       as a Commodity object or as the raw (untranslated) name of a
+ *       commodity. You can also pass the special value "__all" to
+ *       remove all cargo from the pilot, except for mission cargo.
+ *    @luatparam number quantity Quantity of the cargo to remove.
+ *    @luatreturn number The number of cargo removed.
+ * @luafunc cargoRm
+ */
+static int pilotL_cargoRm( lua_State *L )
+{
+   return pilotL_cargoRmHelper( L, 0 );
+}
+
+/**
+ * @brief Tries to remove a cargo from a pilot's ship and jet it into space.
+ *
+ *    @luatparam Pilot p The pilot to remove cargo from.
+ *    @luatparam Commodity|string cargo Type of cargo to remove, either
+ *       as a Commodity object or as the raw (untranslated) name of a
+ *       commodity. You can also pass the special value "__all" to
+ *       remove all cargo from the pilot, except for mission cargo.
+ *    @luatparam number quantity Quantity of the cargo to remove.
+ *    @luatreturn number The number of cargo removed.
+ * @luafunc cargoJet
+ */
+static int pilotL_cargoJet( lua_State *L )
+{
+   return pilotL_cargoRmHelper( L, 1 );
 }
 
 /**
@@ -4987,7 +5014,8 @@ static int pilotL_leader( lua_State *L )
  * @brief Set a pilots leader.
  *
  * If leader has a leader itself, the leader will instead be set to that
- * pilot's leader.
+ * pilot's leader. The leader can not be set for deployed fighters or members
+ * of the player's fleet.
  *
  *    @luatparam Pilot p Pilot to set the leader of.
  *    @luatparam Pilot|nil leader Pilot to set as leader.
@@ -4995,20 +5023,30 @@ static int pilotL_leader( lua_State *L )
  */
 static int pilotL_setLeader( lua_State *L )
 {
-   Pilot *p, *leader, *prev_leader;
-   PilotOutfitSlot* dockslot;
-   Pilot *const* pilot_stack;
+   Pilot *p = luaL_validpilot(L, 1);
+   Pilot *prev_leader = pilot_get( p->parent );
 
-   p           = luaL_validpilot(L, 1);
-   pilot_stack = pilot_getAll();
-
-   prev_leader = pilot_get(p->parent);
+   /* Remove from previous leader's follower list */
+   if (prev_leader != NULL) {
+      for (int i=0; i<array_size(prev_leader->escorts); i++) {
+         Escort_t *e = &prev_leader->escorts[i];
+         if (e->id == p->id) {
+            if (e->type != ESCORT_TYPE_MERCENARY) {
+               NLUA_ERROR(L,_("Trying to change the leader of pilot '%s' that is a deployed fighter or part of the player fleet!"), p->name);
+               return 0;
+            }
+            escort_rmListIndex( prev_leader, i );
+            break;
+         }
+      }
+   }
 
    if (lua_isnoneornil(L, 2)) {
       p->parent = 0;
    }
    else {
-      leader = luaL_validpilot(L, 2);
+      PilotOutfitSlot* dockslot;
+      Pilot *leader = luaL_validpilot(L, 2);
 
       if (leader->parent != 0 && pilot_get(leader->parent) != NULL)
          leader = pilot_get(leader->parent);
@@ -5025,17 +5063,24 @@ static int pilotL_setLeader( lua_State *L )
 
       /* TODO: Figure out escort type */
       escort_addList( leader, p->ship->name, ESCORT_TYPE_MERCENARY, p->id, 0 );
-   }
 
-   /* Remove from previous leader's follower list */
-   if (prev_leader != NULL)
-      escort_rmList(prev_leader, p->id);
+      /* If the pilot has followers, they should be given the new leader as well, and be added as escorts. */
+      for (int i=0; i<array_size(p->escorts); i++) {
+         Escort_t *e = &p->escorts[i];
+         /* We don't want to deal with fighter bays this way. */
+         if (e->type != ESCORT_TYPE_MERCENARY)
+            continue;
+         Pilot *pe = pilot_get( e->id );
+         if (pe == NULL)
+            continue;
+         pe->parent = p->parent;
 
-   /* If the pilot has followers, they should be given the new leader as well */
-   for (int i=0; i<array_size(pilot_stack); i++) {
-      if (pilot_stack[i]->parent == p->id) {
-         pilot_stack[i]->parent = p->parent;
+         /* Add escort to parent. */
+         escort_addList( leader, pe->ship->name, e->type, pe->id, 0 );
+
+         free( e->ship );
       }
+      array_erase( &p->escorts, array_begin(p->escorts), array_end(p->escorts) );
    }
 
    return 0;
@@ -5050,11 +5095,10 @@ static int pilotL_setLeader( lua_State *L )
  */
 static int pilotL_followers( lua_State *L )
 {
-   int idx;
    Pilot *p = luaL_validpilot(L, 1);
+   int idx = 1;
 
    lua_newtable(L);
-   idx = 1;
    for (int i=0; i < array_size(p->escorts); i++) {
       /* Make sure the followers are valid. */
       Pilot *pe = pilot_get( p->escorts[i].id );
@@ -5160,6 +5204,9 @@ static int pilotL_damage( lua_State *L )
 /**
  * @brief Knocks back a pilot. It can either accept two pilots, or a pilot and an element represented by mass, velocity, and position.
  *
+ * @usage pilota:knockback( pilotb, 0. ) -- Inelastic collision between pilota and pilotb
+ * @usage pilota:knockback( 100, vec.new(0,0) ) -- Elastic collision between a 100 mass object with no velocity and pilota
+ *
  *    @luatparam Pilot p Pilot being knocked back.
  *    @luatparam number m Mass of object knocking back pilot.
  *    @luatparam Vec2 v Velocity of object knocking back pilot.
@@ -5169,8 +5216,8 @@ static int pilotL_damage( lua_State *L )
  */
 static int pilotL_knockback( lua_State *L )
 {
-   Pilot *p1      = luaL_validpilot(L,1);
-   double m1      = p1->solid->mass;
+   Pilot *p1  = luaL_validpilot(L,1);
+   double m1  = p1->solid->mass;
    vec2 *v1   = &p1->solid->vel;
    vec2 *x1   = &p1->solid->pos;
    Pilot *p2;
@@ -5186,10 +5233,10 @@ static int pilotL_knockback( lua_State *L )
       e  = luaL_optnumber(L,3,1.);
    }
    else {
+      p2 = NULL;
       m2 = luaL_checknumber(L,2);
       v2 = luaL_checkvector(L,3);
       x2 = luaL_optvector(L,4,x1);
-      p2 = NULL;
       e  = luaL_optnumber(L,5,1.);
    }
 
@@ -5198,17 +5245,22 @@ static int pilotL_knockback( lua_State *L )
       double vx = (m1*v1->x + m2*v2->x) / (m1+m2);
       double vy = (m1*v1->y + m2*v2->y) / (m1+m2);
       vec2_cset( &p1->solid->vel, vx, vy );
-      if (p1 != NULL)
+      if (p2 != NULL)
          vec2_cset( &p2->solid->vel, vx, vy );
       return 0.;
    }
 
    /* Pure elastic. */
    double norm    = pow2(x1->x-x2->x) + pow2(x1->y-x2->y);
-   double a1      = -e * (2.*m2)/(m1+m2) * ((v1->x-v2->x)*(x1->x-x2->x) + (v1->y-v2->y)*(x1->y-x2->y)) / norm;
+   double a1      = -e * (2.*m2)/(m1+m2);
+   if (norm > 0.)
+      a1 *= ((v1->x-v2->x)*(x1->x-x2->x) + (v1->y-v2->y)*(x1->y-x2->y)) / norm;
+
    vec2_cadd( &p1->solid->vel, a1*(x1->x-x2->x), a1*(x1->y-x2->y) );
    if (p2 != NULL) {
-      double a2   = -e * (2.*m1)/(m2+m1) * ((v2->x-v1->x)*(x2->x-x1->x) + (v2->y-v1->y)*(x2->y-x1->y)) / norm;
+      double a2   = -e * (2.*m1)/(m2+m1);
+      if (norm > 0.)
+         a2 *= ((v2->x-v1->x)*(x2->x-x1->x) + (v2->y-v1->y)*(x2->y-x1->y)) / norm;
       vec2_cadd( &p2->solid->vel, a2*(x2->x-x1->x), a2*(x2->y-x1->y) );
    }
 

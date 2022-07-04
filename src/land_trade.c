@@ -393,7 +393,7 @@ void commodity_sell( unsigned int wid, const char *str )
       return;
 
    /* Remove commodity. */
-   q = pfleet_cargoRm( com, q );
+   q = pfleet_cargoRm( com, q, 0 );
    price = price * (credits_t)q;
    player_modCredits( price );
    if (pfleet_cargoOwned( com ) == 0) /* None left, set purchase price to zero, in case missions add cargo. */

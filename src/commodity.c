@@ -23,6 +23,7 @@
 #include "conf.h"
 #include "array.h"
 #include "economy.h"
+#include "gatherable.h"
 #include "hook.h"
 #include "log.h"
 #include "ndata.h"
@@ -37,16 +38,9 @@
 
 #define XML_COMMODITY_ID      "commodity" /**< XML document identifier */
 
-/* Gatherables */
-#define GATHER_DIST 30. /**< Maximum distance a gatherable can be gathered. */
-
 /* commodity stack */
 Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
 static Commodity** commodity_temp = NULL; /**< Contains all the temporary commodities. */
-
-/* gatherables stack */
-static Gatherable* gatherable_stack = NULL; /**< Contains the gatherable stuff floating around. */
-static float noscoop_timer = 1.; /**< Timer for the "full cargo" message . */
 
 /* @TODO remove externs. */
 extern int *econ_comm;
@@ -115,6 +109,14 @@ void price2str(char *str, credits_t price, credits_t credits, int decimals )
 void tonnes2str( char *str, int tonnes )
 {
    snprintf( str, ECON_MASS_STRLEN, n_( "%d tonne", "%d tonnes", tonnes ), tonnes );
+}
+
+/**
+ * @brief Gets all the commodities.
+ */
+Commodity* commodity_getAll (void)
+{
+   return commodity_stack;
 }
 
 /**
@@ -361,204 +363,6 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
 }
 
 /**
- * @brief Throws cargo out in space graphically.
- *
- *    @param pilot ID of the pilot throwing the stuff out
- *    @param com Commodity to throw out.
- *    @param quantity Quantity thrown out.
- */
-void commodity_Jettison( int pilot, const Commodity* com, int quantity )
-{
-   (void) com;
-   Pilot* p;
-   int n;
-   double px,py, bvx, bvy;
-
-   p   = pilot_get( pilot );
-
-   n   = MAX( 1, RNG(quantity/10, quantity/5) );
-   px  = p->solid->pos.x;
-   py  = p->solid->pos.y;
-   bvx = p->solid->vel.x;
-   bvy = p->solid->vel.y;
-   for (int i=0; i<n; i++) {
-      int effect = spfx_get("cargo");
-
-      /* Radial distribution gives much nicer results */
-      double r  = RNGF()*25. - 12.5;
-      double a  = 2. * M_PI * RNGF();
-      double vx = bvx + r*cos(a);
-      double vy = bvy + r*sin(a);
-
-      /* Add the cargo effect */
-      spfx_add( effect, px, py, vx, vy, SPFX_LAYER_BACK );
-   }
-}
-
-/**
- * @brief Initializes a gatherable object
- *
- *    @param com Type of commodity.
- *    @param pos Position.
- *    @param vel Velocity.
- *    @param lifeleng Duration in seconds.
- *    @param qtt Quantity to add.
- */
-int gatherable_init( const Commodity* com, vec2 pos, vec2 vel, double lifeleng, int qtt )
-{
-   Gatherable *g = &array_grow( &gatherable_stack );
-   g->type = com;
-   g->pos = pos;
-   g->vel = vel;
-   g->timer = 0.;
-   g->quantity = qtt;
-   g->sx = RNG( 0, com->gfx_space->sx );
-   g->sy = RNG( 0, com->gfx_space->sy );
-
-   if (lifeleng < 0.)
-      g->lifeleng = RNGF()*100. + 50.;
-   else
-      g->lifeleng = lifeleng;
-
-   return g-gatherable_stack;
-}
-
-/**
- * @brief Updates all gatherable objects
- *
- *    @param dt Elapsed time.
- */
-void gatherable_update( double dt )
-{
-   /* Update the timer for "full cargo" message. */
-   noscoop_timer += dt;
-
-   for (int i=0; i < array_size(gatherable_stack); i++) {
-      Gatherable *g = &gatherable_stack[i];
-      g->timer += dt;
-      g->pos.x += dt*gatherable_stack[i].vel.x;
-      g->pos.y += dt*gatherable_stack[i].vel.y;
-
-      /* Remove the gatherable */
-      if (g->timer > g->lifeleng) {
-         array_erase( &gatherable_stack, g, g+1 );
-         i--;
-      }
-   }
-}
-
-/**
- * @brief Frees all the gatherables
- */
-void gatherable_free( void )
-{
-   array_erase( &gatherable_stack, array_begin(gatherable_stack), array_end(gatherable_stack) );
-}
-
-/**
- * @brief Renders all the gatherables
- */
-void gatherable_render( void )
-{
-   for (int i=0; i < array_size(gatherable_stack); i++) {
-      Gatherable *gat = &gatherable_stack[i];
-      gl_renderSprite( gat->type->gfx_space, gat->pos.x, gat->pos.y, gat->sx, gat->sy, NULL );
-   }
-}
-
-/**
- * @brief Gets the closest gatherable from a given position, within a given radius
- *
- *    @param pos position.
- *    @param rad radius.
- *    @return The id of the closest gatherable, or -1 if none is found.
- */
-int gatherable_getClosest( vec2 pos, double rad )
-{
-   int curg = -1;
-   double mindist = INFINITY;
-
-   for (int i=0; i < array_size(gatherable_stack); i++) {
-      Gatherable *gat = &gatherable_stack[i];
-      double curdist = vec2_dist(&pos, &gat->pos);
-      if ( (curdist<mindist) && (curdist<rad) ) {
-         curg = i;
-         mindist = curdist;
-      }
-   }
-   return curg;
-}
-
-/**
- * @brief Returns the position and velocity of a gatherable
- *
- *    @param pos pointer to the position.
- *    @param vel pointer to the velocity.
- *    @param id Id of the gatherable in the stack.
- *    @return flag 1->there exists a gatherable 0->elsewere.
- */
-int gatherable_getPos( vec2* pos, vec2* vel, int id )
-{
-   Gatherable *gat;
-
-   if ((id < 0) || (id > array_size(gatherable_stack)-1) ) {
-      vectnull( pos );
-      vectnull( vel );
-      return 0;
-   }
-
-   gat = &gatherable_stack[id];
-   *pos = gat->pos;
-   *vel = gat->vel;
-
-   return 1;
-}
-
-/**
- * @brief See if the pilot can gather anything
- *
- *    @param pilot ID of the pilot
- */
-void gatherable_gather( int pilot )
-{
-   Pilot *p = pilot_get( pilot );
-   for (int i=0; i < array_size(gatherable_stack); i++) {
-      Gatherable *gat = &gatherable_stack[i];
-
-      if (vec2_dist( &p->solid->pos, &gat->pos ) < GATHER_DIST ) {
-         /* Add cargo to pilot. */
-         int q = pilot_cargoAdd( p, gat->type, gat->quantity, 0 );
-
-         if (q>0) {
-            if (pilot_isPlayer(p)) {
-               HookParam hparam[3];
-               player_message( n_("%d ton of %s gathered", "%d tons of %s gathered", q), q, _(gat->type->name) );
-
-               /* Run hooks. */
-               hparam[0].type    = HOOK_PARAM_STRING;
-               hparam[0].u.str   = gat->type->name;
-               hparam[1].type    = HOOK_PARAM_NUMBER;
-               hparam[1].u.num   = q;
-               hparam[2].type    = HOOK_PARAM_SENTINEL;
-               hooks_runParam( "gather", hparam );
-            }
-
-            /* Remove the object from space. */
-            array_erase( &gatherable_stack, gat, gat+1 );
-
-            /* Test if there is still cargo space */
-            if ((pilot_cargoFree(p) < 1) && (pilot_isPlayer(p)))
-               player_message( _("No more cargo space available") );
-         }
-         else if ((pilot_isPlayer(p)) && (noscoop_timer > 2.)) {
-            noscoop_timer = 0.;
-            player_message( _("Cannot gather material: no more cargo space available") );
-         }
-      }
-   }
-}
-
-/**
  * @brief Checks to see if a commodity is illegal to a faction.
  *
  *    @param com Commodity to check.
@@ -653,7 +457,8 @@ int commodity_load (void)
 
    commodity_stack = array_create( Commodity );
    econ_comm = array_create( int );
-   gatherable_stack = array_create( Gatherable );
+
+   gatherable_load();
 
    for (size_t i=0; commodities[i]!=NULL; i++) {
       xmlNodePtr node;
@@ -720,6 +525,5 @@ void commodity_free (void)
    array_free( econ_comm );
    econ_comm = NULL;
 
-   array_free( gatherable_stack );
-   gatherable_stack = NULL;
+   gatherable_cleanup();
 }

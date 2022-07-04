@@ -78,25 +78,10 @@ typedef struct CommodityPrice_ {
    int cnt;        /**< used for calc of mean and standard deviation - number of records in the data. */
 } CommodityPrice;
 
-/**
- * @struct Gatherable
- *
- * @brief Represents stuff that can be gathered.
- */
-typedef struct Gatherable_ {
-   const Commodity *type; /**< Type of commodity. */
-   vec2 pos; /**< Position. */
-   vec2 vel; /**< Velocity. */
-   double timer; /**< Timer to de-spawn the gatherable. */
-   double lifeleng; /**< nb of seconds before de-spawn. */
-   int quantity; /**< Quantity of material. */
-   int sx; /**< X sprite to use. */
-   int sy; /**< Y sprite to use. */
-} Gatherable;
-
 /*
  * Commodity stuff.
  */
+Commodity* commodity_getAll (void);
 Commodity* commodity_get( const char* name );
 Commodity* commodity_getW( const char* name );
 int commodity_getN( void );
@@ -115,22 +100,10 @@ Commodity* commodity_newTemp( const char* name, const char* desc );
 int commodity_tempIllegalto( Commodity *com, int faction );
 
 /*
- * Gatherable objects
- */
-int gatherable_init( const Commodity* com, vec2 pos, vec2 vel, double lifeleng, int qtt );
-void gatherable_render( void );
-int gatherable_getClosest( vec2 pos, double rad );
-int gatherable_getPos( vec2* pos, vec2* vel, int id );
-void gatherable_free( void );
-void gatherable_update( double dt );
-void gatherable_gather( int pilot );
-
-/*
  * Misc stuff.
  */
 void credits2str( char *str, credits_t credits, int decimals );
 void price2str( char *str, credits_t price, credits_t credits, int decimals );
 void tonnes2str( char *str, int tonnes );
-void commodity_Jettison( int pilot, const Commodity* com, int quantity );
 int commodity_compareTech( const void *commodity1, const void *commodity2 );
 Commodity ** standard_commodities (void);

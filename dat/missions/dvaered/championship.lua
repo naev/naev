@@ -314,8 +314,7 @@ function land_everyone()
 end
 
 function oppo_attacked(_pilot, attacker)  --The player tries to cheat by attacking before the signal
-   if mem.stage == 0 and (attacker == player.pilot()
-            or attacker:leader() == player.pilot()) then
+   if mem.stage == 0 and (attacker and attacker:withPlayer()) then
       land_everyone()
       tk.msg(_("You are dismissed"), _("You weren't supposed to attack before the signal."))
       system.mrkRm(mem.mark)

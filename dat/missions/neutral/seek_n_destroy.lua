@@ -478,8 +478,7 @@ end
 -- Player attacks an informant who has refused to give info
 function clue_attacked( p, attacker )
    -- Target was hit sufficiently to get more talkative
-   if (attacker == player.pilot() or attacker:leader() == player.pilot())
-         and p:health() < 100 then
+   if attacker and attacker:withPlayer() and p:health() < 100 then
       p:control()
       p:runaway(player.pilot())
       tk.msg( _("You're intimidating!"), fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {plt=mem.name, sys=mem.mysys[mem.cursys+1]} ) )

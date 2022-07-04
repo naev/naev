@@ -1059,10 +1059,8 @@ static void cargo_jettison( unsigned int wid, const char *str )
    }
    else {
       /* Remove the cargo */
-      commodity_Jettison( player.p->id, player.p->commodities[pos].commodity,
-            player.p->commodities[pos].quantity );
-      pilot_cargoRm( player.p, player.p->commodities[pos].commodity,
-            player.p->commodities[pos].quantity );
+      pilot_cargoJet( player.p, player.p->commodities[pos].commodity,
+            player.p->commodities[pos].quantity, 0 );
    }
 
    /* We reopen the menu to recreate the list now. */

@@ -227,18 +227,19 @@ local function attack_choose ()
 end
 
 function lead_fleet( p )
-   if #p:followers() ~= 0 then
-      if mem.formation == nil then
-         formation.clear(p)
-         return
-      end
+   if #p:followers() == 0 then
+      return
+   end
+   if mem.formation == nil then
+      formation.clear(p)
+      return
+   end
 
-      local form = formation[mem.formation]
-      if form == nil then
-         warn(fmt.f(_("Pilot '{plt}': formation '{formation}' not found!"), {plt=p, formation=mem.formation}))
-      else
-         form(p)
-      end
+   local form = formation[mem.formation]
+   if form == nil then
+      warn(fmt.f(_("Pilot '{plt}': formation '{formation}' not found!"), {plt=p, formation=mem.formation}))
+   else
+      form(p)
    end
 end
 
@@ -264,7 +265,7 @@ function handle_messages( si, dopush )
          -- Asteroid was blown up with mining tools
          if msgtype=="asteroid" and data and data:exists() then
             local ap = data:pos()
-            if not si.fighting and not si.noattack and should_investigate( ap, si ) then
+            if dopush and should_investigate( ap, si ) then
                ap = ap + vec2.newP( 500*rnd.rnd(), rnd.angle () )
                ai.pushtask("inspect_moveto", ap )
                taskchange = true
@@ -272,7 +273,7 @@ function handle_messages( si, dopush )
 
          -- Some signal was detected
          elseif msgtype=="signal" and data then
-            if not si.fighting and not si.noattack and should_investigate( data, si ) then
+            if dopush and should_investigate( data, si ) then
                ai.pushtask("inspect_moveto", data )
                taskchange = true
             end
@@ -363,7 +364,7 @@ function handle_messages( si, dopush )
                      taskchange = true
                   -- Return to carrier
                   elseif msgtype == "e_return" then
-                     ai.pushtask( "flyback", p:flags("carried") )
+                     ai.pushtask( "flyback", mem.carried )
                      taskchange = true
                   -- Clear orders
                   elseif msgtype == "e_clear" then
@@ -402,6 +403,10 @@ function should_attack( enemy, si )
    end
 
    si = si or _stateinfo( ai.taskname() )
+
+   if si.noattack then
+      return false
+   end
 
    -- Don't reattack the current enemy
    if si.attack and enemy==ai.taskdata() then
@@ -450,9 +455,13 @@ end
 --[[
 -- Whether or not the pilot should investigate a certain location.
 --]]
-function should_investigate( pos, _si )
+function should_investigate( pos, si )
+   if si.fighting or si.forced or si.noattack then
+      return false
+   end
+
    local d = mem.enemyclose or math.huge
-   if mem.doscans and rnd.rnd() < 0.2 and ai.dist2(pos) < d then
+   if mem.doscans and rnd.rnd() < 0.2 and ai.dist2(pos) < d*d then
       return true
    end
    return false
@@ -516,14 +525,16 @@ function control ()
 
    -- Select new leader
    local l = p:leader()
-   if l ~= nil and not l:exists() then
-      local candidate = ai.getBoss()
-      if candidate ~= nil and candidate:exists() then
-         p:setLeader( candidate )
-         l = candidate
-      else -- Indicate this pilot has no leader
-         p:setLeader( nil )
-         l = nil
+   if not mem.carried then -- carried ships don't change
+      if l ~= nil and not l:exists() then
+         local candidate = ai.getBoss()
+         if candidate ~= nil and candidate:exists() then
+            p:setLeader( candidate )
+            l = candidate
+         else -- Indicate this pilot has no leader
+            p:setLeader( nil )
+            l = nil
+         end
       end
    end
 
@@ -650,11 +661,6 @@ function control ()
 
    -- Enemy sighted, handled doing specific tasks
    if enemy ~= nil and mem.aggressive then
-      -- Don't start new attacks while refueling.
-      if si.noattack then
-         return
-      end
-
       -- See if really want to attack
       if should_attack( enemy, si ) then
          ai.hostile(enemy) -- Should be done before taunting
@@ -893,7 +899,7 @@ function create_pre ()
 
    -- Tune PD parameter (with a nice heuristic formula)
    local ps = p:stats()
-   mem.Kd = math.max( 5., 10.84 * (180./ps.turn + ps.speed/ps.thrust) - 10.82 );
+   mem.Kd = math.max( 5., 10.84 * (180./ps.turn + ps.speed/ps.thrust) - 10.82 )
 
    -- Just give some random fuel
    if p ~= player.pilot() then
@@ -914,15 +920,16 @@ end
 function create_post ()
    local p        = ai.pilot()
    mem.scanned    = {} -- must create for each pilot
+   mem.carried    = p:flags("carried")
 
    -- Give a small delay... except for escorts?
-   if mem.jumpedin and not mem.carrier then
+   if mem.jumpedin and not mem.carried then
       ai.settimer( 0, rnd.uniform(5.0, 6.0) )
       ai.pushtask("jumpin_wait")
    end
 
    -- Fighters give much smaller faction hits
-   if p:flags("carried") then
+   if mem.carried then
       mem.distress_hit = mem.distress_hit * 0.1
    end
 end
@@ -998,7 +1005,6 @@ function distress( pilot, attacker )
    local si   = _stateinfo( task )
    -- Already fighting
    if si.attack then
-      if si.noattack then return end
       -- Ignore if not interested in attacking
       if not should_attack( badguy, si ) then return end
 

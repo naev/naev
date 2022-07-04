@@ -1,6 +1,6 @@
 -- Don't run away from master ship
 mem.norun = true
-mem.carrier = true -- Is a carried fighter
+mem.carried = true -- Is a carried fighter
 
 -- Simple create function
 function create ()
