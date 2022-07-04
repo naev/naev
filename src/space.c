@@ -22,6 +22,7 @@
 #include "damagetype.h"
 #include "dev_uniedit.h"
 #include "economy.h"
+#include "gatherable.h"
 #include "gui.h"
 #include "hook.h"
 #include "land.h"

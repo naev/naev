@@ -27,6 +27,7 @@
 #include "explosion.h"
 #include "faction.h"
 #include "font.h"
+#include "gatherable.h"
 #include "gui.h"
 #include "hook.h"
 #include "land.h"

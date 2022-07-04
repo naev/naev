@@ -2906,6 +2906,8 @@ src/faction.c
 src/faction.h
 src/font.c
 src/font.h
+src/gatherable.c
+src/gatherable.h
 src/gettext.c
 src/gettext.h
 src/glad.c

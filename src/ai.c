@@ -77,6 +77,7 @@
 #include "escort.h"
 #include "faction.h"
 #include "hook.h"
+#include "gatherable.h"
 #include "log.h"
 #include "ndata.h"
 #include "nlua.h"
