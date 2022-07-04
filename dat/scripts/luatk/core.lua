@@ -434,11 +434,16 @@ function luatk.newFader( parent, x, y, w, h, min, max, def, handler, params )
    def = def or (min+max)*0.5
    wgt.val = math.min( math.max( def, min ), max )
    wgt.params = params
+   wgt.font = params.font or luatk._deffont or lg.newFont( 12 )
    return wgt
 end
 function luatk.Fader:draw( bx, by )
    local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
-   local cx = x + (self.val-self.min)/(self.max-self.min) * w
+   if self.params.labels then
+      h = h-15
+   end
+   local off = (self.val-self.min)/(self.max-self.min)
+   local cx = x + off * w
    local cy = y + h*0.5
 
    -- Track
@@ -450,6 +455,19 @@ function luatk.Fader:draw( bx, by )
    lg.rectangle( "fill", cx-8, y-1, 17, h+2 )
    lg.setColor( luatk.colour.outline )
    lg.rectangle( "fill", cx-7, y, 15, h )
+
+   -- Labels
+   if self.params.labels then
+      local ly = y + h + 5
+      lg.setColor( luatk.colour.text )
+      if off * w > 20 then
+         lg.printf( tostring(self.min), self.font, x-30, ly, 60, "center" )
+      end
+      if off * w < w-20 then
+         lg.printf( tostring(self.max), self.font, x+w-30, ly, 60, "center" )
+      end
+      lg.printf( tostring(math.floor(self.val+0.5)), self.font, cx-30, ly, 60, "center" )
+   end
 end
 function luatk.Fader:pressed( mx, _my )
    self:set( self.min + (mx / self.w) * self.max )
@@ -629,12 +647,14 @@ end
 function luatk.msgFader( title, msg, minval, maxval, def, funcdone )
    local w, h = msgbox_size( title, msg )
 
-   local wdw = luatk.newWindow( nil, nil, w, 150 + h )
+   local wdw = luatk.newWindow( nil, nil, w, 165 + h )
    luatk.newText( wdw, 0, 10, w, 20, title, nil, "center" )
    luatk.newText( wdw, 20, 40, w-40, h, msg )
-   local fad = luatk.newFader( wdw, 20, h+110-20-30, w-40, 20, minval, maxval, def )
+   local fad = luatk.newFader( wdw, 20, h+110-20-30, w-40, 40, minval, maxval, def, nil, {
+      labels = true,
+   })
    local bw = 120
-   local y = h+110-20-30+40
+   local y = h+110-20-30+55
    luatk.newButton( wdw, (w-2*bw)/2-10, y, bw, 30, _("Accept"), function( wgt )
       wgt.parent:destroy()
       if funcdone then
