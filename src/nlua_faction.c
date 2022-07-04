@@ -23,6 +23,8 @@
 #include "nlua_tex.h"
 #include "nluadef.h"
 
+/* Internal useful functions. */
+static LuaFaction luaL_validfactionSilent( lua_State *L, int ind );
 /* Faction metatable methods */
 static int factionL_exists( lua_State *L );
 static int factionL_get( lua_State *L );
@@ -149,6 +151,16 @@ LuaFaction lua_tofaction( lua_State *L, int ind )
    return *((LuaFaction*) lua_touserdata(L,ind));
 }
 
+static LuaFaction luaL_validfactionSilent( lua_State *L, int ind )
+{
+   if (lua_isfaction(L,ind))
+      return lua_tofaction(L,ind);
+   else if (lua_isstring(L,ind))
+      return faction_get( lua_tostring(L, ind) );
+   luaL_typerror(L, ind, FACTION_METATABLE);
+   return 0;
+}
+
 /**
  * @brief Gets faction (or faction name) at index, raising an error if type isn't a valid faction.
  *
@@ -158,20 +170,9 @@ LuaFaction lua_tofaction( lua_State *L, int ind )
  */
 LuaFaction luaL_validfaction( lua_State *L, int ind )
 {
-   int id;
-
-   if (lua_isfaction(L,ind))
-      id = lua_tofaction(L,ind);
-   else if (lua_isstring(L,ind))
-      id = faction_get( lua_tostring(L, ind) );
-   else {
-      luaL_typerror(L, ind, FACTION_METATABLE);
-      return 0;
-   }
-
+   int id = luaL_validfactionSilent( L, ind );
    if (id == -1)
       NLUA_ERROR(L,_("Faction '%s' not found in stack."), lua_tostring(L,ind) );
-
    return id;
 }
 
@@ -597,7 +598,7 @@ static int factionL_dynAdd( lua_State *L )
    int clear_allies, clear_enemies;
 
    if (!lua_isnoneornil(L, 1))
-      fac   = luaL_validfaction(L,1);
+      fac   = luaL_validfactionSilent(L,1); /* Won't error. */
    else
       fac   = -1;
    name     = luaL_checkstring(L,2);
