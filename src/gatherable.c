@@ -161,11 +161,10 @@ int gatherable_getPos( vec2* pos, vec2* vel, int id )
 /**
  * @brief See if the pilot can gather anything
  *
- *    @param pilot ID of the pilot
+ *    @param p Pilot to try to gather for.
  */
-void gatherable_gather( int pilot )
+void gatherable_gather( Pilot *p )
 {
-   Pilot *p = pilot_get( pilot );
    for (int i=0; i < array_size(gatherable_stack); i++) {
       Gatherable *gat = &gatherable_stack[i];
 

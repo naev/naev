@@ -37,4 +37,4 @@ int gatherable_getClosest( vec2 pos, double rad );
 int gatherable_getPos( vec2* pos, vec2* vel, int id );
 void gatherable_free( void );
 void gatherable_update( double dt );
-void gatherable_gather( int pilot );
+void gatherable_gather( Pilot *p );
