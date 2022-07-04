@@ -587,7 +587,7 @@ end
 -- One of the competitors is killed
 function compDie( _victim, attacker )
    -- This was a bad idea
-   if attacker == player.pilot() then
+   if attacker and attacker:withPlayer() then
       tk.msg( _("That was not very smart."), _([[While watching the hull of your opponent's ship collapsing under the impact of your rockets, you suddently remember with horror that this is all just a competition. You think that the Dvaered might be upset at you for this, but then you realize they will probably just kill you instead.]]) )
       faction.get("Dvaered").setPlayerStanding(-100)
       for i, p in ipairs(competitors) do
@@ -637,7 +637,7 @@ function targetHit( victim, attacker )
    victim:setFaction( "Independent" )
    victim:setHostile( false )
 
-   if attacker == player.pilot() then
+   if attacker and attacker:withPlayer() then
       score_throw[10] = score_throw[10] + 1
       mem.score_total[10] = mem.score_total[10] + 1
    else
@@ -687,7 +687,7 @@ end
 
 -- A competitor is hit during Stadion (problematic if the player is the agressor)
 function compHitS( _victim, attacker )
-   if attacker == player.pilot() then
+   if attacker and attacker:withPlayer() then
       tk.msg( _("This is not allowed!"), _("You are not supposed to shoot at the other competitors during the Mace Stadion. The Stadion must now be interrupted and you receive 5 penalty points. Land and speak again with Major Tam.") )
       for i, p in ipairs(competitors) do
          p:taskClear()

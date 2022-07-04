@@ -81,10 +81,9 @@ function trader_attacked (hook_pilot, hook_attacker, _arg)
       return
    end
 
-   if ( hook_pilot:faction() == faction.get("Trader")
+   if (hook_pilot:faction() == faction.get("Trader")
             or hook_pilot:faction() == faction.get("Traders Guild") )
-         and ( hook_attacker == player.pilot()
-            or hook_attacker:leader() == player.pilot() ) then
+         and (hook_attacker and hook_attacker:withPlayer()) then
       hook_pilot:hookClear()
       hook.pilot(hook_pilot, "jump", "trader_jumped")
       hook.pilot(hook_pilot, "land", "trader_jumped")

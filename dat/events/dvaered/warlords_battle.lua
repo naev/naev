@@ -304,7 +304,7 @@ end
 
 function defenderAttacked(_victim, attacker)
    --The player chose his side
-   if attacker == player.pilot() or attacker:leader() == player.pilot() then
+   if attacker and attacker:withPlayer() then
       for i, p in ipairs(defenders) do
          hook.rm(defAttHook[i])
          if p ~= nil and p:exists() then
@@ -322,7 +322,7 @@ end
 
 function attackerAttacked(_victim, attacker)
    --The player chose his side
-   if attacker == player.pilot() or attacker:leader() == player.pilot() then
+   if attacker and attacker:withPlayer() then
       for i, p in ipairs(attackers) do
          hook.rm(attAttHook[i])
          if p ~= nil and p:exists() then

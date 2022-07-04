@@ -158,7 +158,7 @@ function angrypeople ()
 end
 
 function zl_attacked( _victim, attacker )
-   if attacker ~= player.pilot() then return end
+   if not attacker or not attacker:withPlayer() then return end
    startattack()
    if player_side=="zalek" then
       player_side = "neither"
@@ -171,7 +171,7 @@ function zl_attacked( _victim, attacker )
 end
 
 function dv_attacked( _victim, attacker )
-   if attacker ~= player.pilot() then return end
+   if not attacker or not attacker:withPlayer() then return end
    startattack()
    if player_side=="dvaered" then
       player_side = "neither"

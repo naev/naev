@@ -175,7 +175,7 @@ end
 
 
 function pilot_attacked_sindbad( _pilot, attacker, _arg )
-   if (attacker == player.pilot() or attacker:leader() == player.pilot())
+   if attacker and attacker:withPlayer()
          and faction.get("FLF"):playerStanding() > -100 then
       -- Punish the player with a faction hit every time they attack
       faction.get("FLF"):modPlayer(-10)
@@ -212,7 +212,7 @@ function pilot_death_sindbad( pilot, attacker, _arg )
       end
    end
 
-   if attacker == player.pilot() or attacker:leader() == player.pilot()
+   if (attacker and attacker:withPlayer())
          or faction.get("FLF"):playerStanding() < 0 then
       -- Player decided to help destroy Sindbad for some reason. Set FLF
       -- reputation to "enemy", add a log entry, and finish the event
