@@ -247,27 +247,28 @@ end
 
 
 function pilot_attacked( _p, attacker, dmg )
-   if attacker ~= nil then
-      local found = false
+   if attacker == nil then
+      return
+   end
+   local found = false
 
-      for i, j in ipairs( hunters ) do
-         if j == attacker then
-            hunter_hits[i] = hunter_hits[i] + dmg
-            found = true
-         end
+   for i, j in ipairs( hunters ) do
+      if j == attacker then
+         hunter_hits[i] = hunter_hits[i] + dmg
+         found = true
       end
+   end
 
-      if not found then
-         local i = #hunters + 1
-         hunters[i] = attacker
-         hunter_hits[i] = dmg
-      end
+   if not found then
+      local i = #hunters + 1
+      hunters[i] = attacker
+      hunter_hits[i] = dmg
    end
 end
 
 
 function pilot_death( _p, attacker )
-   if attacker == player.pilot() or attacker:leader() == player.pilot() then
+   if attacker and (attacker == player.pilot() or attacker:leader() == player.pilot()) then
       succeed()
       mem.target_killed = true
    else
