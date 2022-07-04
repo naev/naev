@@ -364,7 +364,7 @@ function handle_messages( si, dopush )
                      taskchange = true
                   -- Return to carrier
                   elseif msgtype == "e_return" then
-                     ai.pushtask( "flyback", p:flags("carried") )
+                     ai.pushtask( "flyback", mem.carried )
                      taskchange = true
                   -- Clear orders
                   elseif msgtype == "e_clear" then
@@ -525,14 +525,16 @@ function control ()
 
    -- Select new leader
    local l = p:leader()
-   if l ~= nil and not l:exists() then
-      local candidate = ai.getBoss()
-      if candidate ~= nil and candidate:exists() then
-         p:setLeader( candidate )
-         l = candidate
-      else -- Indicate this pilot has no leader
-         p:setLeader( nil )
-         l = nil
+   if not mem.carried then -- carried ships don't change
+      if l ~= nil and not l:exists() then
+         local candidate = ai.getBoss()
+         if candidate ~= nil and candidate:exists() then
+            p:setLeader( candidate )
+            l = candidate
+         else -- Indicate this pilot has no leader
+            p:setLeader( nil )
+            l = nil
+         end
       end
    end
 
@@ -918,15 +920,16 @@ end
 function create_post ()
    local p        = ai.pilot()
    mem.scanned    = {} -- must create for each pilot
+   mem.carried    = p:flags("carried")
 
    -- Give a small delay... except for escorts?
-   if mem.jumpedin and not mem.carrier then
+   if mem.jumpedin and not mem.carried then
       ai.settimer( 0, rnd.uniform(5.0, 6.0) )
       ai.pushtask("jumpin_wait")
    end
 
    -- Fighters give much smaller faction hits
-   if p:flags("carried") then
+   if mem.carried then
       mem.distress_hit = mem.distress_hit * 0.1
    end
 end
