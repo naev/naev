@@ -309,9 +309,10 @@ int pfleet_cargoAdd( const Commodity *com, int q )
  *
  *    @param com Commodity to remove.
  *    @param q Quantity to remove.
+ *    @param jet Whether or not to jet into space.
  *    @return Total amount of cargo removed (can be less than q).
  */
-int pfleet_cargoRm( const Commodity *com, int q )
+int pfleet_cargoRm( const Commodity *com, int q, int jet )
 {
    int removed;
    if (player.p == NULL)
@@ -322,15 +323,23 @@ int pfleet_cargoRm( const Commodity *com, int q )
    for (int i=0; i<array_size(player.p->escorts); i++) {
       Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
+      int rmq;
       if (pe == NULL)
          continue;
       if (e->type != ESCORT_TYPE_FLEET)
          continue;
-      removed += pilot_cargoRm( pe, com, q-removed );
+      rmq = pilot_cargoRm( pe, com, q-removed );
+      removed += rmq;
+      if (jet)
+         commodity_jettison( pe->id, com, rmq );
       if (q-removed <= 0)
          break;
    }
-   if (q-removed > 0)
-      removed += pilot_cargoRm( player.p, com, q );
+   if (q-removed > 0) {
+      int rmq = pilot_cargoRm( player.p, com, q );
+      removed += rmq;
+      if (jet)
+         commodity_jettison( player.p->id, com, rmq );
+   }
    return removed;
 }

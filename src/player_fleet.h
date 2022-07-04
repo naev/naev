@@ -13,4 +13,4 @@ int pfleet_cargoUsed (void);
 int pfleet_cargoFree (void);
 int pfleet_cargoOwned( const Commodity *com );
 int pfleet_cargoAdd( const Commodity *com, int q );
-int pfleet_cargoRm( const Commodity *com, int q );
+int pfleet_cargoRm( const Commodity *com, int q, int jet );
