@@ -22,3 +22,20 @@ TODO Explain how to nudge the enemies without relying on pilot:control().
 ### Working with Player Fleets
 
 TODO Explain how to detect and/or limit player fleets.
+
+### Global Cache
+
+In some cases that you want to load large amount of data once and reuse it throughout different instances of events or missions, it is possible to use the global cache with `naev.cache()`. This function returns a table that is accessible by all the Lua code. However, this cache is cleared every time the game starts. You can not rely on elements in this cache to be persistent. It is common to wrap around the cache with the following code:
+
+```lua
+local function get_calculation ()
+   local nc = naev.cache()
+   if nc.my_calculation then
+      return nc.my_calculation
+   end
+   nc.my_calculation = do_expensive_calculation ()
+   return nc.my_calculation
+end
+```
+
+The above code tries to access data in the cache. However, if it does not exist (by default all fields in Lua are nil), it will do the expensive calculation and store it in the cache. Thus, the first call of `get_calculation()` will be slow, however, all subsequent calls will be very fast as no do_expensive_calculation()` gets called.
