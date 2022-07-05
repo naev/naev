@@ -15,14 +15,6 @@ In general, since many events and missions can be checked at every frame, it is 
 
 Furthermore, when a mission or event passes the header and conditional Lua statements, the entire code gets compiled and run. This implies that all global variables are computed. If you load many graphics, shaders, or sound files as global values, this can cause a slowdown whenever the mission is started. An early issue with the visual novel framework was that all cargo missions were loading the visual novel framework that were loading lots of sounds and shaders. Since this was repeated for every mission in the mission computer, it created noticeable slowdowns. This was solved by relying on lazy loading and caching, and not just blindly loading graphics and audio files into global variables on library load.
 
-### Making Aggressive Enemies
-
-TODO Explain how to nudge the enemies without relying on pilot:control().
-
-### Working with Player Fleets
-
-TODO Explain how to detect and/or limit player fleets.
-
 ### Global Cache
 
 In some cases that you want to load large amount of data once and reuse it throughout different instances of events or missions, it is possible to use the global cache with `naev.cache()`. This function returns a table that is accessible by all the Lua code. However, this cache is cleared every time the game starts. You can not rely on elements in this cache to be persistent. It is common to wrap around the cache with the following code:
@@ -39,3 +31,11 @@ end
 ```
 
 The above code tries to access data in the cache. However, if it does not exist (by default all fields in Lua are nil), it will do the expensive calculation and store it in the cache. Thus, the first call of `get_calculation()` will be slow, however, all subsequent calls will be very fast as no do_expensive_calculation()` gets called.
+
+### Making Aggressive Enemies
+
+TODO Explain how to nudge the enemies without relying on pilot:control().
+
+### Working with Player Fleets
+
+TODO Explain how to detect and/or limit player fleets.
