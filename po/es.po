@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-07-03 21:19+0000\n"
+"PO-Revision-Date: 2022-07-05 21:19+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -82042,7 +82042,7 @@ msgstr ""
 #: dat/missions/trader/trader_escort.lua:155
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:168
 msgid "You abandoned your mission!"
-msgstr ""
+msgstr "¡Has abandonado tu misión!"
 
 #: dat/missions/trader/trader_escort.lua:155
 msgid "You have landed, abandoning your mission to escort the trading convoy."
@@ -82104,13 +82104,13 @@ msgstr ""
 #: dat/missions/trader/trader_escort.lua:193
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:203
 msgid "{plt} has jumped to {sys}."
-msgstr ""
+msgstr "{plt} ha saltado a {sys}."
 
 #. Handle landing of convoy
 #: dat/missions/trader/trader_escort.lua:205
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:210
 msgid "{plt} has landed on {pnt}."
-msgstr ""
+msgstr "{plt} ha aterrizado en {pnt}."
 
 #. Handle the convoy getting attacked.
 #: dat/missions/trader/trader_escort.lua:221
@@ -84334,13 +84334,14 @@ msgstr "¡So- T. Pr-ct---! T-mer-s m- no-b-e --- ¡Bzzzt!"
 #. Spaceport bar stuff
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:45
 msgid "A young scientist"
-msgstr ""
+msgstr "Un joven científico"
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:45
 msgid ""
 "You see a young scientist talking with some pilots, apparently without "
 "success."
 msgstr ""
+"Ves a un joven científico hablando con unos pilotos, aparentemente sin éxito."
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:49
 msgid "Science Needs You"
@@ -84401,17 +84402,19 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:78
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:86
 msgid "Novice Nebula Research"
-msgstr ""
+msgstr "Investigación de Nebulosa para Novatos"
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:80
 msgid "{credits} and the gratitude of a student"
-msgstr ""
+msgstr "{credits} y la gratitud de un estudiante"
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:81
 msgid ""
 "You have been asked by a Za'lek student to fly into the Nebula for some kind "
 "of research."
 msgstr ""
+"Un estudiante Za'lek te ha pedido que vueles a la Nebulosa para realizar "
+"algún tipo de investigación."
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:101
 msgid ""
@@ -84430,6 +84433,8 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:107
 msgid "You helped a Za'lek student to collect sensor data in the Nebula."
 msgstr ""
+"Has ayudado a un estudiante Za'lek a recoger datos de sensores en la "
+"Nebulosa."
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:113
 msgid "A Mess On Your Ship"
@@ -84506,10 +84511,12 @@ msgid ""
 "you know when his scan is complete. This had better not cause another "
 "blackout..."
 msgstr ""
+"Llegas al sistema {sys} y Robert Hofer te dice que te avisará cuando termine "
+"su exploración. Será mejor que esto no cause otro apagón..."
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:187
 msgid "\"OK, my measurements are complete! Let's go back to {pnt}.\""
-msgstr ""
+msgstr "\"¡Bien, mis medidas están completas! Volvamos a {pnt}.\""
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -84597,11 +84604,11 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:70
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:54
 msgid "A scientist"
-msgstr ""
+msgstr "Un científico"
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:70
 msgid "You see a scientist who is apparently looking for someone."
-msgstr ""
+msgstr "Ves a un científico que aparentemente está buscando a alguien."
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:74
 msgid ""
@@ -84634,7 +84641,7 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:89
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:116
 msgid "Advanced Nebula Research"
-msgstr ""
+msgstr "Investigación de Nebulosa Avanzada"
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:91
 msgid ""
@@ -84642,26 +84649,36 @@ msgid ""
 "stay close to the transport ship and wait until they jumped out of the "
 "system safely."
 msgstr ""
+"Escolta a la nave de transporte hasta la {station} en el sistema {sys}. "
+"Asegúrate de permanecer cerca de la nave de transporte y espera a que salgan "
+"del sistema de forma segura."
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:122
 msgid ""
 "\"Please follow us, {player}. Make sure to jump to the next system after we "
 "jumped out. We'll have to land on some planets on our way to refuel.\""
 msgstr ""
+"\"Por favor, síguenos, {player}. Asegúrate de saltar al siguiente sistema "
+"después de que salgamos. Tendremos que aterrizar en algunos planetas en "
+"nuestro camino para repostar.\""
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:132
 msgid "You jumped into the wrong system. You failed science miserably!"
 msgstr ""
+"Te metiste en el sistema equivocado. ¡Has fallado miserablemente a la "
+"ciencia!"
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:152
 msgid "You jumped before the transport ship you were escorting."
-msgstr ""
+msgstr "Saltaste antes que la nave de transporte que estabas escoltando."
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:168
 msgid ""
 "You have landed, abandoning your mission to escort the transport ship. You "
 "failed science miserably!"
 msgstr ""
+"Has aterrizado, abandonando tu misión de escoltar la nave de transporte. ¡"
+"Has fallado miserablemente a la ciencia!"
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:171
 msgid "A short break"
@@ -84692,15 +84709,16 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:179
 msgid "You helped Dr. Mensing to collect sensor data of the PSO nebula."
 msgstr ""
+"Ayudaste al Dr. Mensing a recoger datos de los sensores de la nebulosa PSO."
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:224
 msgid "We're under attack!"
-msgstr ""
+msgstr "¡Nos atacan!"
 
 #. Shuts him up for at least 5s.
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:243
 msgid "Research Shuttle"
-msgstr ""
+msgstr "Transbordador de Investigación"
 
 #. Hack to make ambushes more reliable.
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:277
@@ -84831,11 +84849,11 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:55
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:40
 msgid "Dr. Mensing"
-msgstr ""
+msgstr "Dr. Mensing"
 
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:55
 msgid "It appears she wants to talk with you."
-msgstr ""
+msgstr "Parece que quiere hablar contigo."
 
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:59
 msgid ""
@@ -84865,11 +84883,12 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:67
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:73
 msgid "Emergency of Immediate Inspiration"
-msgstr ""
+msgstr "Inspiración Inmediata de Emergencia"
 
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:69
 msgid "Take Dr. Mensing to {pnt} in the {sys} system as fast as possible!"
 msgstr ""
+"¡Lleva al Dr. Mensing a {pnt} en el sistema {sys} lo más rápido posible!"
 
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:84
 msgid ""
@@ -84886,7 +84905,7 @@ msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:90
 msgid "You brought Dr. Mensing back from a Empire scientific conference."
-msgstr ""
+msgstr "Has traído al Dr. Mensing de una conferencia científica del Imperio."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -84922,11 +84941,11 @@ msgstr ""
 #. Spaceport bar stuff
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:53
 msgid "Robert"
-msgstr ""
+msgstr "Robert"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:53
 msgid "The student is already awaiting you."
-msgstr ""
+msgstr "El estudiante ya te está esperando."
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:57
 msgid ""
@@ -84964,16 +84983,17 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:70
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:216
 msgid "The Substitute Speaker"
-msgstr ""
+msgstr "El Portavoz Suplente"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:71
 msgid "a reputation as scientist (?)"
-msgstr ""
+msgstr "una reputación como científico (?)"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:72
 msgid ""
 "Fly to {pnt} in the {sys} system before {time} and give a scientific talk."
 msgstr ""
+"Vuela a {pnt} en el sistema {sys} antes de {time} y da una charla científica."
 
 #. 100STU per tick
 #. set OSD
@@ -85004,7 +85024,7 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:98
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:127
 msgid "It's time to go to the institute."
-msgstr ""
+msgstr "Es hora de ir al instituto."
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:103
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:105
@@ -85018,12 +85038,12 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:103
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:105
 msgid "Explore the space port"
-msgstr ""
+msgstr "Explora el puerto espacial"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:103
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:105
 msgid "Take off immediately"
-msgstr ""
+msgstr "Despega Inmediatamente"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:105
 msgid "Start learning your text"
@@ -85034,6 +85054,8 @@ msgid ""
 "You decide to explore the spaceport. There are a couple of shops here which "
 "may sell something useful for your mission."
 msgstr ""
+"Decides explorar el puerto espacial. Aquí hay un par de tiendas que pueden "
+"vender algo útil para tu misión."
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:112
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:197
@@ -85045,6 +85067,8 @@ msgid ""
 "This is too much! You better leave before doing anything embarrassing or "
 "humiliating."
 msgstr ""
+"¡Esto es demasiado! Será mejor que te vayas antes de hacer algo vergonzoso o "
+"humillante."
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:117
 msgid ""
@@ -85058,28 +85082,28 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:139
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:141
 msgid "Return to your ship"
-msgstr ""
+msgstr "Regresa a tu nave"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:133
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:135
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:139
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:141
 msgid "Go to the institute"
-msgstr ""
+msgstr "Ve al instituto"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:135
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:141
 msgid "Visit the electronics store"
-msgstr ""
+msgstr "Visite la tienda de electrónica"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:139
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:141
 msgid "Buy a lab coat"
-msgstr ""
+msgstr "Compra una bata de laboratorio"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:145
 msgid "You return to your ship."
-msgstr ""
+msgstr "Vuelves a tu nave."
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:152
 msgid ""
@@ -85221,11 +85245,11 @@ msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:194
 msgid "This is a good question."
-msgstr ""
+msgstr "Esta es una buena pregunta."
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:194
 msgid "It's an open question."
-msgstr ""
+msgstr "Es una pregunta pendiente."
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:197
 msgid ""
@@ -85233,6 +85257,9 @@ msgid ""
 "possible. You continue running until you reach the spaceport and enter your "
 "ship. You can't be the first one running from a talk, right?"
 msgstr ""
+"Decides correr hacia la puerta más cercana y salir del edificio lo más "
+"rápido posible. Sigues corriendo hasta llegar al puerto espacial y entrar en "
+"tu nave. No puedes ser el primero en huir de una charla, ¿verdad?"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:199
 msgid ""
@@ -85247,12 +85274,14 @@ msgid ""
 "You gave a scientific talk on {pnt}. Did anyone notice you're not a "
 "scientist?"
 msgstr ""
+"Has dado una charla científica sobre {pnt}. ¿Alguien se ha dado cuenta de "
+"que no eres un científico?"
 
 #. Date hook
 #. Case missed second deadline
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:211
 msgid "You were too late. You're never going to be a great scientist!"
-msgstr ""
+msgstr "Llegaste demasiado tarde. ¡Nunca serás un gran científico!"
 
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:40
 msgid ""
@@ -85280,18 +85309,18 @@ msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:46
 msgid "\"Too bad. Maybe you will change your mind.\""
-msgstr ""
+msgstr "\"Qué pena. Tal vez cambies de opinión.\""
 
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:49
 msgid "\"Great! Our first destination is {pnt} in the {sys} system.\""
-msgstr ""
+msgstr "\"¡Genial! Nuestro primer destino es {pnt} en el sistema {sys}.\""
 
 #. Set up mission information
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:53
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:59
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:71
 msgid "Shielding Prototype Funding"
-msgstr ""
+msgstr "Financiación de Prototipo de Escudos"
 
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:55
 msgid "Help Dr. Mensing to get funding for constructing a shielding prototype."
@@ -85413,11 +85442,13 @@ msgid ""
 "You helped Dr. Mensing to acquire funding for a shielding prototype that "
 "will enable to explore the Sol nebula."
 msgstr ""
+"Ayudas al Dr. Mensing a conseguir financiación para un prototipo de escudo "
+"que permitirá explorar la nebulosa de Sol."
 
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:147
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:152
 msgid "Caution!"
-msgstr ""
+msgstr "¡Precaución!"
 
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:147
 msgid ""
@@ -85435,6 +85466,10 @@ msgid ""
 "care.\"\n"
 "    Just how often is this going to happen?"
 msgstr ""
+"La ya conocida advertencia aparece de nuevo en la pantalla de tu nave. \"¡"
+"Precaución! ¡Un escuadrón de drones en el sistema {sys} se ha vuelto loco! "
+"Proceda con cuidado.\"\n"
+"    ¿Con qué frecuencia va a ocurrir esto?"
 
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:177
 msgid "No clearance to land"
@@ -85519,6 +85554,8 @@ msgid ""
 "You approach the Za'lek scientist who seems to be a bit relieved with your "
 "presence."
 msgstr ""
+"Te acercas al científico Za'lek que parece estar un poco aliviado con tu "
+"presencia."
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:47
 msgid ""
@@ -85534,12 +85571,16 @@ msgid ""
 "\"You too? How am I going to make it to {pnt}…\"\n"
 "She furrows her brow."
 msgstr ""
+"\"¿Tú también? ¿Cómo voy a llegar a {pnt}...?\"\n"
+"Ella frunce el ceño."
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:61
 msgid ""
 "\"You only have {freespace} of free cargo space. My equipment is "
 "{neededspace}!\""
 msgstr ""
+"\"Sólo tienes {freespace} de espacio de carga libre. ¡Mi equipo es "
+"{neededspace}!\""
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:72
 msgid ""
@@ -85550,6 +85591,13 @@ msgid ""
 "\"I forgot to introduce myself didn't I. I am Dr. Sanderaite, but everyone "
 "calls me Noona.\""
 msgstr ""
+"\"¡Genial! Se supone que pronto comenzaré mi residencia en {pnt} para "
+"realizar algunas pruebas de física de partículas. Allí tienen una "
+"instalación de pruebas de última generación que puede realizar todo tipo de "
+"experimentos alucinantes. Es una locura.\"\n"
+"Hace una pausa por un momento.\n"
+"\"Me olvidé de presentarme, ¿no? Soy la Dra. Sanderaite, pero todos me "
+"llaman Noona.\""
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:76
 msgid ""
@@ -85559,21 +85607,30 @@ msgid ""
 "That doesn't sound very reassuring.\n"
 "\"Anyway, onwards to {pnt}!\""
 msgstr ""
+"\"¿Mi equipo? No te preocupes por él. No es nada peligroso, y está "
+"debidamente guardado en un escudo contra la radiación. Sólo tenemos que "
+"asegurarnos de que no se sobrecaliente y deberíamos estar bien.\"\n"
+"Eso no suena muy tranquilizador.\n"
+"\"De todos modos, ¡adelante a {pnt}!\""
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:80
 msgid ""
 "Automated drones at the space docks load up the particle physics equipment "
 "and Noona gets on your ship."
 msgstr ""
+"Los drones automatizados de los muelles espaciales cargan el equipo de "
+"física de partículas y Noona se sube a tu nave."
 
 #. Must be accepted beyond this point
 #: dat/missions/zalek/particlephysics/zpp01.lua:90
 msgid "Noona and Equipment"
-msgstr ""
+msgstr "Noona y su Equipamiento"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:90
 msgid "Za'lek scientist Noona and some particle physics-related equipment."
 msgstr ""
+"La científica Za'lek Noona y algunos equipos relacionados con la física de "
+"partículas."
 
 #. mission details
 #. Must be accepted beyond this point
@@ -85593,15 +85650,15 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp06.lua:79
 #: dat/scripts/common/zalek_physics.lua:34
 msgid "Particle Physics"
-msgstr ""
+msgstr "Física de Partículas"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:96
 msgid "Take Noona and some equipment to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Lleva a Noona y algunos equipos a {pnt} en el sistema {sys}."
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:101
 msgid "Drop off Noona and the equipment at {pnt} ({sys} system)"
-msgstr ""
+msgstr "Deja a Noona y el equipo en {pnt} (sistema {sys})"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:116
 msgid ""
@@ -85629,12 +85686,20 @@ msgid ""
 "She must have anticipated her overexcitement. You wonder if this happens a "
 "lot."
 msgstr ""
+"Vuelves a tu nave y te preguntas cómo deberías ponerte en contacto con ella "
+"para recibir tu pago, cuando te das cuenta de una pequeña carta con un "
+"credencial que parece haber dejado en tu nave. Dice: \"Por favor, vea su "
+"pago adjunto. Puede que necesite más de sus servicios, por favor, búsqueme "
+"más tarde. -n\". Debe haber anticipado su sobreexcitación. Te preguntas si "
+"esto ocurre a menudo."
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:127
 msgid ""
 "You helped deliver Noona and her equipment to {pnt}. It seems like she may "
 "still have more work for you."
 msgstr ""
+"Ayudaste a entregar a Noona y su equipo a {pnt}. Parece que aún tiene más "
+"trabajo para ti."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -85664,7 +85729,7 @@ msgstr ""
 #. luacheck: globals land approach_guy (Hook functions passed by name)
 #: dat/missions/zalek/particlephysics/zpp02.lua:34
 msgid "drone interface controllers"
-msgstr ""
+msgstr "controladores de interfaz para drones"
 
 #. Amount of cargo to take
 #.
@@ -85784,7 +85849,7 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp06.lua:35
 #: dat/scripts/common/zalek_physics.lua:18
 msgid "Noona"
-msgstr ""
+msgstr "Noona"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:58
 msgid "You approach Noona who seems to have a slight frown on her face."
@@ -85806,6 +85871,8 @@ msgid ""
 "\"I see. I'll have to figure out some way to get it over here…\"\n"
 "She furrows her brow."
 msgstr ""
+"\"Ya veo. Tendré que buscar alguna forma de traerlo aquí...\"\n"
+"Arruga la frente."
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:73
 msgid ""
@@ -85820,6 +85887,7 @@ msgid ""
 "Pick up some {cargo} from {pnt} in the {sys} system and deliver them to "
 "{retpnt}."
 msgstr ""
+"Recoge algunas {cargo} de {pnt} en el sistema {sys} y entrégalas en {retpnt}."
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:92
 #: dat/missions/zalek/particlephysics/zpp04.lua:90
@@ -85829,18 +85897,20 @@ msgstr "Recoge la carga en {pnt} (sistema {sys})"
 #: dat/missions/zalek/particlephysics/zpp02.lua:93
 #: dat/missions/zalek/particlephysics/zpp04.lua:91
 msgid "Deliver to {pnt} ({sys} system)"
-msgstr ""
+msgstr "Entrega a {pnt} (sistema {sys})"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:106
 #: dat/missions/zalek/particlephysics/zpp02.lua:137
 msgid "Noona's Colleague"
-msgstr ""
+msgstr "Colega de Noona"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:106
 msgid ""
 "You see a Za'lek scientist who seems to fit the description of Noona's "
 "colleague."
 msgstr ""
+"Ves a un científico Za'lek que parece encajar con la descripción del colega "
+"de Noona."
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:113
 msgid ""
@@ -85874,16 +85944,22 @@ msgid ""
 "You brought some drone interface controllers to Noona so that she can begin "
 "her particle physics experiments."
 msgstr ""
+"Has traído algunos controladores de interfaz de drones a Noona para que "
+"pueda empezar sus experimentos de física de partículas."
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:142
 msgid "\"Ready to try again? Let me activate the memory interface for you.\""
 msgstr ""
+"\"¿Listo para intentarlo de nuevo? Déjame activar la interfaz de memoria "
+"para tí\""
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:144
 msgid ""
 "You approach an individual that matches the contact information that Noona "
 "gave you."
 msgstr ""
+"Te acercas a un individuo que coincide con la información de contacto que te "
+"dio Noona."
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:145
 msgid ""
@@ -85892,6 +85968,11 @@ msgid ""
 "controllers ready, but there was kind of a mishap and they're stuck now.\"\n"
 "They scratch their head."
 msgstr ""
+"Levanta una ceja cuando te acercas.\n"
+"\" Tú debes ser el conocido del Dr. Sanderaite. Tengo listos los "
+"controladores de la interfaz de los drones, pero hubo una especie de "
+"percance y ahora están atascados.\"\n"
+"Se rascan la cabeza."
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:148
 msgid ""
