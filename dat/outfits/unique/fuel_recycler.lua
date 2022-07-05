@@ -10,21 +10,21 @@ local cooldown = 15 -- cooldown time in seconds
 
 local recyclables = {
    -- Rare
-   ["Kermite"]    = 100,
-   ["Therite"]    = 100,
-   ["Vixilium"]   = 100,
+   ["Kermite"]    = 50,
+   ["Therite"]    = 50,
+   ["Vixilium"]   = 50,
    -- Uncommon
-   ["Gold"]       = 45,
-   ["Platinum"]   = 45,
-   ["Rhodium"]    = 45,
-   ["Yttrium"]    = 45,
+   ["Gold"]       = 15,
+   ["Platinum"]   = 15,
+   ["Rhodium"]    = 15,
+   ["Yttrium"]    = 15,
    -- Common
-   ["Clay"]       = 15,
-   ["Iron"]       = 15,
-   ["Nickel"]     = 15,
-   ["Silicate"]   = 15,
-   ["Olivine"]    = 15,
-   ["Water"]      = 15,
+   ["Clay"]       = 5,
+   ["Iron"]       = 5,
+   ["Nickel"]     = 5,
+   ["Silicate"]   = 5,
+   ["Olivine"]    = 5,
+   ["Water"]      = 5,
 }
 
 local function recycle_interface ()
@@ -110,6 +110,7 @@ local function recycle_interface ()
             function ()
                local q = player.fleetCargoRm( c.c, val )
                recycled = recycled + q
+               player.pilot():setFuel( pps.fuel + c.a * q )
                luatk.msg( fmt.f(_("Bye Bye {cargo}, Hello Fuel"),{cargo=c.c} ),
                   fmt.f(_("You activate the Fuel Recycler and convert {tonnes} of {cargo} to {fuel} fuel."),
                      {tonnes=fmt.tonnes(q), cargo=c.c, fuel=c.a*val}) )
