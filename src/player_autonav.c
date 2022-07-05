@@ -460,19 +460,36 @@ static void player_autonav (void)
                               (target_known) ? player.autonavmsg : _("Unknown") );
             player_accel( 0. );
             player_autonavEnd();
+            break;
          }
-         else {
-            ret = (pilot_isDisabled(p) || pilot_isFlag(p,PILOT_BOARDABLE));
-            player_autonavFollow( &p->solid->pos, &p->solid->vel, !ret, &d );
-            if (ret && (!tc_rampdown))
-               player_autonavRampdown(d);
-         }
+
+         ret = (pilot_isDisabled(p) || pilot_isFlag(p,PILOT_BOARDABLE));
+         player_autonavFollow( &p->solid->pos, &p->solid->vel, !ret, &d );
+         if (ret && (!tc_rampdown))
+            player_autonavRampdown(d);
          break;
 
       case AUTONAV_PLT_BOARD_APPROACH:
          p = pilot_getTarget( player.p );
          if (p == NULL)
             p = pilot_get( PLAYER_ID );
+
+         if (p->id != PLAYER_ID) {
+            inrange = pilot_inRangePilot( player.p, p, NULL );
+            target_known = (inrange > 0);
+         }
+         else
+            inrange = 0;
+
+         if ((p->id == PLAYER_ID) || (!inrange)) {
+            /* TODO : handle the different reasons: pilot is too far, jumped, landed or died. */
+            player_message( _("#oAutonav: boarding target %s has been lost."),
+                              (target_known) ? player.autonavmsg : _("Unknown") );
+            player_accel( 0. );
+            player_autonavEnd();
+            break;
+         }
+
          ret = player_autonavApproachBoard( &p->solid->pos, &p->solid->vel, &d, p->ship->gfx_space->sw );
          if (!tc_rampdown)
             player_autonavRampdown(d);
