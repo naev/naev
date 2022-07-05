@@ -107,7 +107,7 @@ static const luaL_Reg hookL_methods[] = {
  * Prototypes.
  */
 static int hookL_setarg( unsigned int hook, int ind );
-static unsigned int hookL_generic( lua_State *L, const char* stack, double ms, int pos, ntime_t date );
+static unsigned int hookL_generic( lua_State *L, const char* stack, double ms, int pos, ntime_t date, int arg );
 
 /**
  * @brief Loads the hook Lua library.
@@ -252,9 +252,10 @@ int hookL_getarg( unsigned int hook )
  *    @param sec Seconds to delay (pass stack as NULL to set as timer).
  *    @param pos Position in the stack of the function name.
  *    @param date Resolution of the timer. (If passed, create a date-based hook.)
+ *    @param arg Position where the arguments start.
  *    @return The hook ID or 0 on error.
  */
-static unsigned int hookL_generic( lua_State *L, const char* stack, double sec, int pos, ntime_t date )
+static unsigned int hookL_generic( lua_State *L, const char* stack, double sec, int pos, ntime_t date, int arg )
 {
    const char *func;
    unsigned int h;
@@ -305,8 +306,8 @@ static unsigned int hookL_generic( lua_State *L, const char* stack, double sec, 
    }
 
    /* Check parameter. */
-   if (!lua_isnoneornil(L,pos+1))
-      hookL_setarg( h, pos+1 );
+   if (!lua_isnoneornil(L,arg))
+      hookL_setarg( h, arg );
 
    return h;
 }
@@ -337,13 +338,13 @@ static int hookL_land( lua_State *L )
 {
    unsigned int h;
 
-   if (lua_isnone(L,2))
-      h = hookL_generic( L, "land", 0., 1, 0 );
-   else {
+   if (lua_isstring(L,2)) {
       const char *where = luaL_checkstring(L, 2);
       /* TODO validity checking? */
-      h = hookL_generic( L, where, 0., 1, 0 );
+      h = hookL_generic( L, where, 0., 1, 0, 3 );
    }
+   else
+      h = hookL_generic( L, "land", 0., 1, 0, 2 );
 
    lua_pushnumber( L, h );
    return 1;
@@ -375,15 +376,15 @@ static int hookL_info( lua_State *L )
 {
    unsigned int h;
 
-   if (lua_isnone(L,2))
-      h = hookL_generic( L, "info", 0., 1, 0 );
-   else {
-      char buf[128];
+   if (lua_isstring(L,2)) {
+      char buf[STRMAX_SHORT];
       const char *where = luaL_checkstring(L, 2);
       snprintf( buf, sizeof(buf), "info_%s", where );
       /* TODO validity checking? */
-      h = hookL_generic( L, buf, 0., 1, 0 );
+      h = hookL_generic( L, buf, 0., 1, 0, 3 );
    }
+   else
+      h = hookL_generic( L, "info", 0., 1, 0, 2 );
 
    lua_pushnumber( L, h );
    return 1;
@@ -401,7 +402,7 @@ static int hookL_info( lua_State *L )
  */
 static int hookL_load( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "load", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "load", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -416,7 +417,7 @@ static int hookL_load( lua_State *L )
  */
 static int hookL_takeoff( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "takeoff", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "takeoff", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -431,7 +432,7 @@ static int hookL_takeoff( lua_State *L )
  */
 static int hookL_jumpout( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "jumpout", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "jumpout", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -446,7 +447,7 @@ static int hookL_jumpout( lua_State *L )
  */
 static int hookL_jumpin( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "jumpin", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "jumpin", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -462,7 +463,7 @@ static int hookL_jumpin( lua_State *L )
  */
 static int hookL_enter( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "enter", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "enter", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -479,7 +480,7 @@ static int hookL_enter( lua_State *L )
  */
 static int hookL_hail( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "hail", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "hail", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -496,7 +497,7 @@ static int hookL_hail( lua_State *L )
  */
 static int hookL_board( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "board", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "board", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -515,7 +516,7 @@ static int hookL_board( lua_State *L )
 static int hookL_timer( lua_State *L )
 {
    double s       = luaL_checknumber( L, 1 );
-   unsigned int h = hookL_generic( L, NULL, s, 2, 0 );
+   unsigned int h = hookL_generic( L, NULL, s, 2, 0, 3 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -536,7 +537,7 @@ static int hookL_timer( lua_State *L )
 static int hookL_date( lua_State *L )
 {
    ntime_t t      = luaL_validtime( L, 1 );
-   unsigned int h = hookL_generic( L, NULL, 0., 2, t );
+   unsigned int h = hookL_generic( L, NULL, 0., 2, t, 3 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -553,7 +554,7 @@ static int hookL_date( lua_State *L )
  */
 static int hookL_commbuy( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "comm_buy", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "comm_buy", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -570,7 +571,7 @@ static int hookL_commbuy( lua_State *L )
  */
 static int hookL_commsell( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "comm_sell", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "comm_sell", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -587,7 +588,7 @@ static int hookL_commsell( lua_State *L )
  */
 static int hookL_gather( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "gather", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "gather", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -604,7 +605,7 @@ static int hookL_gather( lua_State *L )
  */
 static int hookL_outfitbuy( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "outfit_buy", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "outfit_buy", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -621,7 +622,7 @@ static int hookL_outfitbuy( lua_State *L )
  */
 static int hookL_outfitsell( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "outfit_sell", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "outfit_sell", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -636,7 +637,7 @@ static int hookL_outfitsell( lua_State *L )
  */
 static int hookL_equip( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "equip", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "equip", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -653,7 +654,7 @@ static int hookL_equip( lua_State *L )
  */
 static int hookL_shipbuy( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "ship_buy", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "ship_buy", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -670,7 +671,7 @@ static int hookL_shipbuy( lua_State *L )
  */
 static int hookL_shipsell( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "ship_sell", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "ship_sell", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -687,7 +688,7 @@ static int hookL_shipsell( lua_State *L )
  */
 static int hookL_shipswap( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "ship_swap", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "ship_swap", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -707,7 +708,7 @@ static int hookL_shipswap( lua_State *L )
  */
 static int hookL_input( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "input", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "input", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -724,7 +725,7 @@ static int hookL_input( lua_State *L )
  */
 static int hookL_mouse( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "mouse", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "mouse", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -743,7 +744,7 @@ static int hookL_mouse( lua_State *L )
  */
 static int hookL_standing( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "standing", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "standing", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -764,7 +765,7 @@ static int hookL_standing( lua_State *L )
  */
 static int hookL_discover( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "discover", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "discover", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -782,7 +783,7 @@ static int hookL_discover( lua_State *L )
  */
 static int hookL_pay( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "pay", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "pay", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -799,7 +800,7 @@ static int hookL_pay( lua_State *L )
  */
 static int hookL_safe( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "safe", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "safe", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -819,7 +820,7 @@ static int hookL_safe( lua_State *L )
  */
 static int hookL_update( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "update", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "update", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -834,7 +835,7 @@ static int hookL_update( lua_State *L )
  */
 static int hookL_renderbg( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "renderbg", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "renderbg", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -849,7 +850,7 @@ static int hookL_renderbg( lua_State *L )
  */
 static int hookL_renderfg( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "renderfg", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "renderfg", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -864,7 +865,7 @@ static int hookL_renderfg( lua_State *L )
  */
 static int hookL_rendertop( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "rendertop", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "rendertop", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -879,7 +880,7 @@ static int hookL_rendertop( lua_State *L )
  */
 static int hookL_mission_done( lua_State *L )
 {
-   unsigned int h = hookL_generic( L, "mission_done", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "mission_done", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -896,7 +897,7 @@ static int hookL_mission_done( lua_State *L )
 static int hookL_custom( lua_State *L )
 {
    const char *hookname = luaL_checkstring(L,1);
-   unsigned int h       = hookL_generic( L, hookname, 0., 2, 0 );
+   unsigned int h       = hookL_generic( L, hookname, 0., 2, 0, 3 );
    lua_pushnumber( L, h );
    return 1;
 }
@@ -1010,7 +1011,7 @@ static int hookL_pilot( lua_State *L )
 
    /* actually add the hook */
    snprintf( buf, sizeof(buf), "p_%s", hook_type );
-   h = hookL_generic( L, buf, 0., 3, 0 );
+   h = hookL_generic( L, buf, 0., 3, 0, 4 );
    if (p==0)
       pilots_addGlobalHook( type, h );
    else
