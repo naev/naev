@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Fuel Recycler">
+ <general>
+  <rarity>6</rarity>
+  <unique />
+  <slot>utility</slot>
+  <size>medium</size>
+  <mass>30</mass>
+  <price>300000</price>
+  <description>TODO</description>
+  <desc_extra>#gAllows converting space resources to fuel.#0</desc_extra>
+  <gfx_store>placeholder.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <lua>outfits/unique/fuel_recycler.lua</lua>
+ </specific>
+</outfit>
