@@ -240,6 +240,9 @@ end
 function luatk.Window:setKeypress( func )
    self.keypressed = func
 end
+function luatk.Window:getDimensions()
+   return self.w, self.h
+end
 
 --[[
 -- Widget class
