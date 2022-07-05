@@ -444,17 +444,17 @@ static void player_autonav (void)
 
       case AUTONAV_PLT_FOLLOW:
          p = pilot_getTarget( player.p );
-         if (p == NULL)
-            p = pilot_get( PLAYER_ID );
 
-         if (p->id != PLAYER_ID) {
+         if (p != NULL) {
             inrange = pilot_inRangePilot( player.p, p, NULL );
             target_known = (inrange > 0);
          }
-         else
+         else {
             inrange = 0;
+            target_known = 1; /* Suddenly disappeared but in range. */
+         }
 
-         if ((p->id == PLAYER_ID) || (!inrange)) {
+         if (!inrange) {
             /* TODO : handle the different reasons: pilot is too far, jumped, landed or died. */
             player_message( _("#oAutonav: following target %s has been lost."),
                               (target_known) ? player.autonavmsg : _("Unknown") );
@@ -471,17 +471,17 @@ static void player_autonav (void)
 
       case AUTONAV_PLT_BOARD_APPROACH:
          p = pilot_getTarget( player.p );
-         if (p == NULL)
-            p = pilot_get( PLAYER_ID );
 
-         if (p->id != PLAYER_ID) {
+         if (p != NULL) {
             inrange = pilot_inRangePilot( player.p, p, NULL );
             target_known = (inrange > 0);
          }
-         else
+         else {
             inrange = 0;
+            target_known = 1; /* Suddenly disappeared but in range. */
+         }
 
-         if ((p->id == PLAYER_ID) || (!inrange)) {
+         if (!inrange) {
             /* TODO : handle the different reasons: pilot is too far, jumped, landed or died. */
             player_message( _("#oAutonav: boarding target %s has been lost."),
                               (target_known) ? player.autonavmsg : _("Unknown") );
