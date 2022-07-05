@@ -54,10 +54,16 @@ int cond_check( const char *cond )
 {
    int ret;
 
-   /* Load the string. */
-   lua_pushstring(naevL, "return ");
-   lua_pushstring(naevL, cond);
-   lua_concat(naevL, 2);
+   /* Load the string directly. */
+   if (strstr( cond, "return" ) != NULL) {
+      lua_pushstring(naevL, cond);
+   }
+   else {
+      /* Append "return" first. */
+      lua_pushstring(naevL, "return ");
+      lua_pushstring(naevL, cond);
+      lua_concat(naevL, 2);
+   }
    ret = nlua_dobufenv(cond_env, lua_tostring(naevL,-1),
                        lua_strlen(naevL,-1), "Lua Conditional");
    switch (ret) {
