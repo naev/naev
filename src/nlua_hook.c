@@ -62,6 +62,7 @@ static int hookL_rendertop( lua_State *L );
 static int hookL_mission_done( lua_State *L );
 static int hookL_standing( lua_State *L );
 static int hookL_discover( lua_State *L );
+static int hookL_asteroidScan( lua_State *L );
 static int hookL_pay( lua_State *L );
 static int hookL_custom( lua_State *L );
 static int hookL_pilot( lua_State *L );
@@ -97,6 +98,7 @@ static const luaL_Reg hookL_methods[] = {
    { "mission_done", hookL_mission_done },
    { "standing", hookL_standing },
    { "discover", hookL_discover },
+   { "asteroid_scan", hookL_asteroidScan },
    { "pay", hookL_pay },
    { "custom", hookL_custom },
    { "pilot", hookL_pilot },
@@ -766,6 +768,23 @@ static int hookL_standing( lua_State *L )
 static int hookL_discover( lua_State *L )
 {
    unsigned int h = hookL_generic( L, "discover", 0., 1, 0, 2 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+
+/**
+ * @brief Hooks the function to when the player scans an asteroid.
+ *
+ * The parameter passed to the function is the asteroid scanned.
+ *
+ *    @luatparam string funcname Name of the function to run when the hook is triggered.
+ *    @luatparam arg Argument to pass to the hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc asteroid_scan
+ */
+static int hookL_asteroidScan( lua_State *L )
+{
+   unsigned int h = hookL_generic( L, "asteroid_scan", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
