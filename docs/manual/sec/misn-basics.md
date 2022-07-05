@@ -44,7 +44,7 @@ The header includes all the information about mission availability. Most are opt
 * **faction**: must match a faction. Multiple can be specified, and only one has to match. In the case of `land`, `computer`, or `bar` locations it refers to the spob faction, while for `enter` locations it refers to the system faction.
 * **spob**: must match a specific spob. Only used for `land`, `computer`, and `bar` locations. Only one can be specified.
 * **system**: must match a specific system. Only used for `enter` location and only one can be specified.
-* **cond**: arbitrary Lua conditional code. The Lua code must return a boolean value. For example `player.credits() &gt; 10e3` would mean the player having more than 10,000 credits. Note that since this is XML, you have to escape `<` and `>` with `&lt;` and `&gt;`, respectively. Multiple expressions can be hooked with `and` and `or` like regular Lua code.
+* **cond**: arbitrary Lua conditional code. The Lua code must return a boolean value. For example `player.credits() &gt; 10e3` would mean the player having more than 10,000 credits. Note that since this is XML, you have to escape `<` and `>` with `&lt;` and `&gt;`, respectively. Multiple expressions can be hooked with `and` and `or` like regular Lua code. If the code does not contain any `return` statements, `return` is prepended to the string.
 * **done**: indicates that the mission must be done. This allows to create mission strings where one starts after the next one.
 * **priority**: indicates what priority the mission has. Lower priority makes the mission more important. Missions are processed in priority order, so lower priority increases the chance of missions being able to perform claims. If not specified, it is set to the default value of 5.
 
