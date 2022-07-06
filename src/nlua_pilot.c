@@ -4994,7 +4994,7 @@ static int pilotL_msg( lua_State *L )
 }
 
 /**
- * @brief Gets a pilots leader.
+ * @brief Gets a pilots leader. Guaranteed to exist or will be nil.
  *
  *    @luatparam Pilot p Pilot to get the leader of.
  *    @luatreturn Pilot|nil The leader or nil.
@@ -5003,8 +5003,15 @@ static int pilotL_msg( lua_State *L )
 static int pilotL_leader( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L, 1);
-   if (p->parent != 0)
-      lua_pushpilot(L, p->parent);
+   if (p->parent != 0) {
+      Pilot *l = pilot_get( p->parent );
+      if ((l == NULL) || pilot_isFlag( p, PILOT_DEAD )) {
+         p->parent = 0; /* Clear parent for future calls. */
+         lua_pushnil(L);
+      }
+      else
+         lua_pushpilot(L, p->parent);
+   }
    else
       lua_pushnil(L);
    return 1;
