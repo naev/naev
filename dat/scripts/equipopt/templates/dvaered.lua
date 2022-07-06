@@ -6,6 +6,7 @@ local eparams = require 'equipopt.params'
 local dvaered_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Railgun", "Repeating Railgun", "Railgun Turret",
+   "Super-Fast Collider Launcher",
    -- Medium Weapons
    "Mass Driver", "Turreted Vulcan Gun",
    "Repeating Banshee Launcher",
