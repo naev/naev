@@ -196,7 +196,6 @@ function hail_scavenger ()
          d(_([["Once you get near any hypergate, it should automatically collect data about it without manual intervention. Please deliver the collected data to the One-Winged Goddard. I will collect it there. Bon voyage."]]))
          vn.func( function ()
             naev.missionStart("Taiomi 1")
-            --inprogress = true
          end )
          vn.jump("menu_ask")
       end
@@ -218,7 +217,6 @@ function hail_scavenger ()
          d(_([["You will have to disable the convoys before you can board them to access the data. It is unlikely that a single convoy will contain all the information we seek, so you will most likely have to board several. My analysis of your flying capabilities estimates over 80% chance of success. Gluckliche Reise."]]))
          vn.func( function ()
             naev.missionStart("Taiomi 2")
-            --inprogress = true
          end )
          vn.jump("menu_ask")
       end
