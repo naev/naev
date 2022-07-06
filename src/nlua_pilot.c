@@ -4304,7 +4304,7 @@ static int pilotL_task( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to get task name of.
  *    @luatreturn string Name of the task.
- *    @luatreturn string Name of the subtask if applicable.
+ *    @luatreturn string|nil Name of the subtask if applicable, or nil otherwise.
  * @luafunc taskname
  */
 static int pilotL_taskname( lua_State *L )
