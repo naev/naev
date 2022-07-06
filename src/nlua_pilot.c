@@ -4304,6 +4304,7 @@ static int pilotL_task( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to get task name of.
  *    @luatreturn string Name of the task.
+ *    @luatreturn string Name of the subtask if applicable.
  * @luafunc taskname
  */
 static int pilotL_taskname( lua_State *L )
@@ -4312,6 +4313,10 @@ static int pilotL_taskname( lua_State *L )
    Task *t  = ai_curTask(p);
    if (t) {
       lua_pushstring(L, t->name);
+      if (t->subtask != NULL) {
+         lua_pushstring(L, t->subtask->name);
+         return 2;
+      }
       return 1;
    }
    return 0;
