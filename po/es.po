@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-07-05 21:19+0000\n"
+"PO-Revision-Date: 2022-07-06 21:18+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -24223,9 +24223,10 @@ msgid ""
 "but it makes up for this by being fast to grow and therefore relatively "
 "expendable."
 msgstr ""
-"La Ira es un crucero creado ex profeso que se encuentra habitualmente al "
-"frente de las fuerzas Soromida. Aunque su blindaje es algo débil, esto rara "
-"vez salva a los que se encuentran con su devastador bombardeo."
+"La Forajido es una bionave rápida y maniobrable que los Soromida utilizan "
+"para las patrullas del sistema y las tareas policiales. La nave está "
+"ligeramente blindada y es bastante frágil, pero lo compensa con un "
+"crecimiento rápido y, por tanto, relativamente prescindible."
 
 #: dat/ships/soromid_ira.xml:2
 msgid "Soromid Ira"
@@ -24754,7 +24755,7 @@ msgstr "Amatiri"
 #: dat/ssys/ngc8468.xml:5 dat/ssys/ngc9654.xml:5 dat/ssys/sleuth.xml:5
 #: dat/ssys/sylph.xml:5 dat/ssys/zintar.xml:5
 msgid "#rHaze (-50% Shield and Shield Regen)#0"
-msgstr "#rNiebal (-50% Escudo y Regen. Escudo)#0"
+msgstr "#rNeblina (-50% Escudo y Regen. Escudo)#0"
 
 #: dat/ssys/anarbalis.xml:2
 msgid "Anarbalis"
@@ -85983,12 +85984,20 @@ msgid ""
 "do is align the memory by pushing the data boxes into data sockets. Please "
 "take a shot at it.\""
 msgstr ""
+"\"Intenté echarle un vistazo, pero no fui capaz de averiguar nada, y desde "
+"que mi postdoc se fugó a Rulk'ar, no tengo a nadie que se ocupe de este tipo "
+"de inconvenientes. Si pudieras echarle un vistazo y desmontarlo, deberías "
+"poder llevarte los controladores. Todo lo que tienes que hacer es alinear la "
+"memoria empujando las cajas de datos en los zócalos de datos. Por favor, "
+"inténtalo.\""
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:163
 msgid ""
 "\"It seems like the interface hasn't been unlocked. Talk to me if you want "
 "to try again.\""
 msgstr ""
+"\"Parece que la interfaz no ha sido desbloqueada. Habla conmigo si quieres "
+"volver a intentarlo.\""
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:167
 msgid ""
@@ -85997,25 +86006,32 @@ msgid ""
 "\"OK, that's perfect! Let me get the loading drones to get this on your ship "
 "and you can be on your way.\""
 msgstr ""
+"Después de desbloquear la memoria, son capaces de liberar rápidamente el "
+"controlador de la interfaz que cae al suelo con un sonoro clonk.\n"
+"\"¡Bien, eso es perfecto! Déjenme traer los drones de carga para poner esto "
+"en tu nave y podrás seguir tu camino.\""
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:171
 msgid "\"Are you ready to take the cargo now?\""
-msgstr ""
+msgstr "\"¿Estás preparado para tomar la carga ahora?\""
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:184
 msgid "The automated dock drones load the {amount} of {cargo} onto your ship."
 msgstr ""
+"Los drones del muelle automatizado cargan {amount} de {cargo} en tu nave."
 
 #. Failed to do the Sokoban
 #: dat/missions/zalek/particlephysics/zpp02.lua:192
 msgid "Drone Interface Controllers"
-msgstr ""
+msgstr "Controladores de Interfaz de Drones"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:192
 msgid ""
 "Special adapters that are able to connect modern drone controllers with "
 "older drone connectors."
 msgstr ""
+"Adaptadores especiales capaces de conectar controladores de drones modernos "
+"con conectores de drones antiguos."
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:51
 msgid "You approach Noona who doesn't seem too happy."
@@ -86028,6 +86044,10 @@ msgid ""
 "\"I double checked everything and still it seems like the drones failed to "
 "perform the procedure. It should have been a walk in the park!\""
 msgstr ""
+"\"No tengo ni idea de lo que ha salido mal.\"\n"
+"Le cuesta mantener la compostura.\n"
+"\"He comprobado todo dos veces y aún así parece que los drones no han "
+"realizado el procedimiento. ¡Debería haber sido un paseo por el parque!\""
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:55
 msgid ""
@@ -86036,12 +86056,18 @@ msgid ""
 "from here and they don't seem to be moving. If you can, try to access the "
 "black box by opening the hull component. Could you look into this for me?\""
 msgstr ""
+"Te mira con la esperanza brillando en sus ojos.\n"
+"\"Oye, ¿podrías volar y ver qué ha pasado? Los drones no deben estar lejos "
+"de aquí y no parecen moverse. Si puedes, intenta acceder a la caja negra "
+"abriendo el componente del casco. ¿Podrías investigar esto por mí?\""
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:63
 msgid ""
 "\"I see. You must be busy with other things.\"\n"
 "She goes back to ruminating on what to do."
 msgstr ""
+"\"Ya veo. Debes estar ocupado con otras cosas.\"\n"
+"Vuelve a rumiar qué hacer."
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:68
 msgid ""
@@ -86057,19 +86083,21 @@ msgid ""
 "Investigate the issue with the drones near the particle physics testing site "
 "at {sys}."
 msgstr ""
+"Investiga el asunto de los drones cerca del centro de pruebas de física de "
+"partículas en {sys}."
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:87
 msgid "Investigate the drones"
-msgstr ""
+msgstr "Investiga los drones"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:88
 #: dat/missions/zalek/particlephysics/zpp05.lua:86
 msgid "Return to Katar I"
-msgstr ""
+msgstr "Vuelve a Katar I"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:107
 msgid "You land and find Noona waiting outside your ship expectantly."
-msgstr ""
+msgstr "Aterrizas y encuentras a Noona esperando fuera de tu nave expectante."
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:108
 msgid ""
@@ -86090,6 +86118,12 @@ msgid ""
 "face, it would be good for you to have bigger guns.\"\n"
 "Without giving you time to process what she yelled, she vanishes."
 msgstr ""
+"Justo antes de que desaparezca por la esquina, se vuelve hacia ti y te grita."
+"\n"
+"\"Ah, y por cierto, he podido mover algunos hilos con mi amigo y ya deberías "
+"estar autorizado para la Licencia de Armas Pesadas. Viendo los peligros a "
+"los que te enfrentas, sería bueno que tuvieras armas más grandes.\"\n"
+"Sin darte tiempo a procesar lo que ha gritado, desaparece."
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:123
 msgid ""
@@ -86097,12 +86131,17 @@ msgid ""
 "malfunctioned. You're not exactly sure how, but she also managed to get you "
 "cleared for the Heavy Weapon License."
 msgstr ""
+"Ayudaste a Noona a recuperar la caja negra de uno de sus drones que funcionó "
+"mal. No estás muy seguro de cómo, pero también consiguió que te dieran la "
+"Licencia de Armas Pesadas."
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:125
 msgid ""
 "You helped Noona retrieve the black box from one of her drones that "
 "malfunctioned."
 msgstr ""
+"Has ayudado a Noona a recuperar la caja negra de uno de sus drones que ha "
+"funcionado mal."
 
 #. Spawn the drones
 #. TODO better location once testing center object is created
@@ -86111,16 +86150,19 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp03.lua:147
 #: dat/missions/zalek/particlephysics/zpp03.lua:157
 msgid "Malfunctioned Drone"
-msgstr ""
+msgstr "Drone Defectuoso"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:169
 msgid "I've sent you the drone positions, please get close to investigate."
 msgstr ""
+"Te he enviado las posiciones de los drones, por favor acércate a investigar."
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:172
 msgid ""
 "That is weird, maybe a firmware bug? Wait… I'm detecting a power fluctuation!"
 msgstr ""
+"Eso es raro, ¿tal vez un bug en el firmware? Espera... ¡Estoy detectando una "
+"fluctuación de energía!"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:177
 msgid "Watch out!"
@@ -86128,19 +86170,19 @@ msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:182
 msgid "Haywire Drone"
-msgstr ""
+msgstr "Dron Averiado"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:185
 msgid "That was close. Can you try boarding the other drone?"
-msgstr ""
+msgstr "Eso estuvo cerca. ¿Puedes intentar abordar el otro dron?"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:198
 msgid "The drone's black box has already been extracted."
-msgstr ""
+msgstr "La caja negra del dron ya ha sido extraída."
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:207
 msgid "You access the drone control panel and jack into the black box."
-msgstr ""
+msgstr "Accedes al panel de control del dron y te conectas a la caja negra."
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:221
 msgid ""
@@ -86150,15 +86192,15 @@ msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:225
 msgid "You failed to access the black box."
-msgstr ""
+msgstr "No has podido acceder a la caja negra."
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:230
 msgid "Drone Black Box"
-msgstr ""
+msgstr "Caja Negra de Dron"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:230
 msgid "The recovered black box of a Za'lek drone."
-msgstr ""
+msgstr "La caja negra recuperada de un dron Za'lek."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -86192,7 +86234,7 @@ msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:57
 msgid "You once again meet up with Noona."
-msgstr ""
+msgstr "Vuelves a encontrarte con Noona."
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:58
 msgid ""
@@ -86210,6 +86252,8 @@ msgid ""
 "\"OK. I'll try to figure something out…\"\n"
 "She furrows her brow."
 msgstr ""
+"\"De acuerdo. Intentaré pensar en algo...\"\n"
+"Frunce el ceño."
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:71
 msgid ""
@@ -86218,17 +86262,24 @@ msgid ""
 "have finished all the other preparations and this time I'll finally be able "
 "to complete the experiment!… I hope.\""
 msgstr ""
+"\"¡Gracias de nuevo! Sé que {pnt} no es realmente un lugar al que quieres "
+"ir, pero realmente no había opción esta vez. Para cuando vuelvas debería "
+"haber terminado todos los demás preparativos y esta vez por fin podré "
+"completar el experimento... espero.\""
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:105
 #: dat/missions/zalek/particlephysics/zpp04.lua:132
 msgid "Shady Dealer"
-msgstr ""
+msgstr "Comerciante Turbio"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:105
 msgid ""
 "A fairly shady dealer seems to be staring at you and beckoning for you to "
 "come over. Could this be the individual Noona told you to meet…?"
 msgstr ""
+"Un traficante bastante sospechoso parece mirarte fijamente y te hace señas "
+"para que te acerques. ¿Podría ser este el individuo que Noona te dijo que "
+"conocieras...?"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:112
 msgid ""
@@ -86236,6 +86287,9 @@ msgid ""
 "to have trouble balancing it and you amuse yourself by looking at its antics "
 "until you are startled by Noona."
 msgstr ""
+"Aterrizas y el solitario dron de carga comienza a descargar el contenedor. "
+"Parece tener problemas para equilibrarlo y te entretienes mirando sus "
+"travesuras hasta que te sobresalta Noona."
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:113
 msgid ""
@@ -86254,22 +86308,28 @@ msgid ""
 "You helped Noona get some materials from a shady dealer in order for her to "
 "pursue her research and perform experiments."
 msgstr ""
+"Ayudaste a Noona a conseguir algunos materiales de un comerciante sospechoso "
+"para que pudiera continuar con su investigación y realizar experimentos."
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:135
 msgid "You once again approach the shady dealer."
-msgstr ""
+msgstr "Una vez más, te acercas al comerciante turbio."
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:136
 msgid ""
 "\"Have you made preparations for the cargo?\"\n"
 "Their grin makes your feel uneasy."
 msgstr ""
+"\"¿Has hecho los preparativos para la carga?\"\n"
+"Su sonrisa hace que te sientas incómodo."
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:140
 msgid ""
 "As you approach the shady dealer, you can barely make out some movement in "
 "the background."
 msgstr ""
+"Al acercarte al concesionario turbio, apenas puedes distinguir algo de "
+"movimiento en el fondo."
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:141
 msgid ""
@@ -88316,7 +88376,7 @@ msgstr ""
 #. Use default
 #: dat/scripts/common/tut_nelly.lua:14 dat/scripts/common/tut_nelly.lua:28
 msgid "Nelly"
-msgstr ""
+msgstr "Nelly"
 
 #.
 #.
@@ -91302,7 +91362,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:264
 msgid "Cheese"
-msgstr ""
+msgstr "Queso"
 
 #: dat/scripts/pilotname/pirate.lua:265
 msgid "Cheese Grater"
@@ -95633,7 +95693,7 @@ msgstr ""
 
 #: src/info.c:794
 msgid "Jettison"
-msgstr ""
+msgstr "Arrojar al Espacio"
 
 #: src/info.c:837
 msgid " (#rillegal#0)"
