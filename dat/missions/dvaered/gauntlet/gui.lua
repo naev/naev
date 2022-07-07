@@ -154,7 +154,7 @@ local function gauntlet_setoption( wgt )
    for k,v in ipairs( btn_subtypes ) do
       if not v.disabled then
          enabled = enabled+1
-         subtype_def = wgt
+         subtype_def = v
       end
    end
    if enabled == 1 then
@@ -213,7 +213,7 @@ local function gauntlet_settype( wgt )
    for k,v in ipairs( btn_options ) do
       if not v.disabled then
          enabled = enabled+1
-         option_def = wgt
+         option_def = v
       end
    end
    if enabled == 1 then
@@ -328,6 +328,18 @@ local function gauntlet_gui ()
                end
             end
          end
+      end
+   else
+      local enabled = 0
+      local type_def = nil
+      for k,v in ipairs( btn_types ) do
+         if not v.disabled then
+            enabled = enabled+1
+            type_def = v
+         end
+      end
+      if enabled == 1 then
+         gauntlet_settype( type_def )
       end
    end
 
