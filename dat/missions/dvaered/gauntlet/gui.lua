@@ -207,6 +207,18 @@ local function gauntlet_settype( wgt )
       end
    end
    options_divider = luatk.newRect( wdw, 20, headerh+144, w-40, 2, {0, 0, 0} )
+
+   local enabled = 0
+   local option_def = nil
+   for k,v in ipairs( btn_options ) do
+      if not v.disabled then
+         enabled = enabled+1
+         option_def = wgt
+      end
+   end
+   if enabled == 1 then
+      gauntlet_setoption( option_def )
+   end
 end
 
 local function gauntlet_enter ()
