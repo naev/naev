@@ -577,9 +577,18 @@ static char **map_fuzzyOutfits( Outfit **o, const char *name )
    char **names = array_create( char* );
 
    /* Do fuzzy search. */
-   for (int i=0; i<array_size(o); i++)
+   for (int i=0; i<array_size(o); i++) {
       if (strcasestr( _(o[i]->name), name ) != NULL)
          array_push_back( &names, o[i]->name );
+      else if ((o[i]->typename != NULL) && strcasestr( o[i]->typename, name ) != NULL)
+         array_push_back( &names, o[i]->name );
+      else if ((o[i]->condstr != NULL) && strcasestr( o[i]->condstr, name ) != NULL)
+         array_push_back( &names, o[i]->name );
+      else if (strcasestr( o[i]->description, name ) != NULL)
+         array_push_back( &names, o[i]->name );
+      else if (strcasestr( o[i]->desc_short, name ) != NULL)
+         array_push_back( &names, o[i]->name );
+   }
 
    return names;
 }
@@ -798,9 +807,18 @@ static char **map_fuzzyShips( Ship **s, const char *name )
    char **names = array_create( char* );
 
    /* Do fuzzy search. */
-   for (int i=0; i<array_size(s); i++)
+   for (int i=0; i<array_size(s); i++) {
       if (strcasestr( _(s[i]->name), name ) != NULL)
          array_push_back( &names, s[i]->name );
+      else if ((s[i]->license != NULL) && strcasestr( _(s[i]->license), name ) != NULL)
+         array_push_back( &names, s[i]->name );
+      else if (strcasestr( _(ship_classDisplay( s[i] )), name ) != NULL)
+         array_push_back( &names, s[i]->name );
+      else if (strcasestr( _(s[i]->fabricator), name ) != NULL)
+         array_push_back( &names, s[i]->name );
+      else if (strcasestr( _(s[i]->description), name ) != NULL)
+         array_push_back( &names, s[i]->name );
+   }
 
    return names;
 }
