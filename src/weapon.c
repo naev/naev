@@ -26,6 +26,8 @@
 #include "gui.h"
 #include "log.h"
 #include "nstring.h"
+#include "nlua_pilot.h"
+#include "nlua_vec2.h"
 #include "opengl.h"
 #include "pilot.h"
 #include "player.h"
@@ -1289,12 +1291,17 @@ static void weapon_miss( Weapon *w )
 {
    /* On hit weapon effects. */
    if (w->outfit->lua_onmiss != LUA_NOREF) {
+      Pilot *parent = pilot_get( w->parent );
+
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->lua_mem); /* mem */
       nlua_setenv(naevL, w->outfit->lua_env, "mem"); /* */
 
       /* Set up the function: onmiss() */
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->outfit->lua_onmiss); /* f */
-      if (nlua_pcall( w->outfit->lua_env, 0, 0 )) {   /* */
+      lua_pushpilot(naevL, (parent==NULL) ? 0 : parent->id);
+      lua_pushvector(naevL, w->solid->pos);
+      lua_pushvector(naevL, w->solid->vel);
+      if (nlua_pcall( w->outfit->lua_env, 3, 0 )) {   /* */
          WARN( _("Outfit '%s' -> '%s':\n%s"), w->outfit->name, "onmiss", lua_tostring(naevL,-1) );
          lua_pop(naevL, 1);
       }
