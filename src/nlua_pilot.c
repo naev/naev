@@ -5040,19 +5040,24 @@ static int pilotL_setLeader( lua_State *L )
 
    /* Remove from previous leader's follower list */
    if (prev_leader != NULL) {
+      int found = 0;
       for (int i=0; i<array_size(prev_leader->escorts); i++) {
          Escort_t *e = &prev_leader->escorts[i];
-         if (e->id == p->id) {
-            if (e->type != ESCORT_TYPE_MERCENARY) {
-               NLUA_ERROR(L,_("Trying to change the leader of pilot '%s' that is a deployed fighter or part of the player fleet!"), p->name);
-               return 0;
-            }
-            escort_rmListIndex( prev_leader, i );
-            break;
+         if (e->id != p->id)
+            continue;
+         if (e->type != ESCORT_TYPE_MERCENARY) {
+            NLUA_ERROR(L,_("Trying to change the leader of pilot '%s' that is a deployed fighter or part of the player fleet!"), p->name);
+            return 0;
          }
+         escort_rmListIndex( prev_leader, i );
+         found = 1;
+         break;
       }
+      if (!found)
+         WARN(_("Pilot '%s' not found in followers of '%s'"), p->name, prev_leader->name );
    }
 
+   /* Just clear parent, will already be gone from parent escort list. */
    if (lua_isnoneornil(L, 2)) {
       p->parent = 0;
    }
@@ -5060,7 +5065,11 @@ static int pilotL_setLeader( lua_State *L )
       PilotOutfitSlot* dockslot;
       Pilot *leader = luaL_validpilot(L, 2);
 
-      if (leader->parent != 0) {
+      /* Don't allow setting a pilot's leader to themselves. */
+      if (p->id == leader->id)
+         NLUA_ERROR(L,_("Trying to set pilot '%s' to be their own leader!"),p->name);
+
+      if ((leader->parent != 0) && (leader->parent != p->id)) {
          Pilot *leader_leader =  pilot_get(leader->parent);
          if (leader_leader != NULL)
             leader = leader_leader;
@@ -5086,13 +5095,22 @@ static int pilotL_setLeader( lua_State *L )
          if (e->type != ESCORT_TYPE_MERCENARY)
             continue;
          Pilot *pe = pilot_get( e->id );
-         if (pe == NULL)
+         if (pe == NULL) {
+            escort_rmListIndex( p, i ); /* MIght as well remove if they're not there. */
             continue;
+         }
+
+         /* Setting an escort as leader, so we clear the leader of the escort. */
+         if (pe->id == p->parent) {
+            escort_rmListIndex( p, i );
+            pe->parent = 0;
+            continue;
+         }
+
          pe->parent = p->parent;
 
          /* Add escort to parent. */
          escort_addList( leader, pe->ship->name, e->type, pe->id, 0 );
-
          escort_rmListIndex( p, i );
       }
    }
