@@ -33,6 +33,7 @@ outfits.standard.weapons = {
    "Laser Cannon MK2", "Vulcan Gun", "Plasma Blaster MK2",
    "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun",
    "Plasma Turret MK2", "Orion Beam",
+   "EMP Grenade Launcher",
    -- Small Weapons
    "Slicer", "Shredder", "Plasma Cannon",
    "Laser Turret MK1", "Turreted Gauss Gun", "Plasma Turret MK1",

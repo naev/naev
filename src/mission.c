@@ -60,7 +60,7 @@ static int mission_init( Mission* mission, const MissionData* misn, int genid, i
 static void mission_freeData( MissionData* mission );
 /* Matching. */
 static int mission_compare( const void* arg1, const void* arg2 );
-static int mission_meetReq( int mission, int faction,
+static int mission_meetReq( const MissionData *misn, int faction,
       const Spob *pnt, const StarSystem *sys );
 static int mission_matchFaction( const MissionData* misn, int faction );
 static int mission_location( const char *loc );
@@ -217,16 +217,15 @@ int mission_alreadyRunning( const MissionData* misn )
 /**
  * @brief Checks to see if a mission meets the requirements.
  *
- *    @param mission ID of the mission to check.
+ *    @param misn Mission to check.
  *    @param faction Faction of the current spob.
  *    @param pnt Spob to run on.
  *    @param sys System to run on.
  *    @return 1 if requirements are met, 0 if they aren't.
  */
-static int mission_meetReq( int mission, int faction,
+static int mission_meetReq( const MissionData *misn, int faction,
       const Spob *pnt, const StarSystem *sys )
 {
-   const MissionData* misn = mission_get( mission );
    if (misn == NULL) /* In case it doesn't exist */
       return 0;
 
@@ -266,7 +265,7 @@ static int mission_meetReq( int mission, int faction,
 
    /* Must not be already done or running if unique. */
    if (mis_isFlag(misn,MISSION_UNIQUE) &&
-         (player_missionAlreadyDone(mission) ||
+         (player_missionAlreadyDone( mission_getID(misn->name) ) ||
           mission_alreadyRunning(misn)))
       return 0;
 
@@ -310,7 +309,7 @@ void missions_run( MissionAvailability loc, int faction, const Spob *pnt, const 
       if (misn->avail.loc != loc)
          continue;
 
-      if (!mission_meetReq(i, faction, pnt, sys))
+      if (!mission_meetReq( misn, faction, pnt, sys ))
          continue;
 
       chance = (double)(misn->avail.chance % 100)/100.;
@@ -861,7 +860,7 @@ Mission* missions_genList( int *n, int faction,
          continue;
 
       /* Must meet requirements. */
-      if (!mission_meetReq(i, faction, pnt, sys))
+      if (!mission_meetReq( misn, faction, pnt, sys ))
          continue;
 
       /* Must hit chance. */

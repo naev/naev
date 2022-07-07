@@ -4304,6 +4304,7 @@ static int pilotL_task( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to get task name of.
  *    @luatreturn string Name of the task.
+ *    @luatreturn string|nil Name of the subtask if applicable, or nil otherwise.
  * @luafunc taskname
  */
 static int pilotL_taskname( lua_State *L )
@@ -4312,6 +4313,10 @@ static int pilotL_taskname( lua_State *L )
    Task *t  = ai_curTask(p);
    if (t) {
       lua_pushstring(L, t->name);
+      if (t->subtask != NULL) {
+         lua_pushstring(L, t->subtask->name);
+         return 2;
+      }
       return 1;
    }
    return 0;
@@ -4994,7 +4999,7 @@ static int pilotL_msg( lua_State *L )
 }
 
 /**
- * @brief Gets a pilots leader.
+ * @brief Gets a pilots leader. Guaranteed to exist or will be nil.
  *
  *    @luatparam Pilot p Pilot to get the leader of.
  *    @luatreturn Pilot|nil The leader or nil.
@@ -5003,8 +5008,15 @@ static int pilotL_msg( lua_State *L )
 static int pilotL_leader( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L, 1);
-   if (p->parent != 0)
-      lua_pushpilot(L, p->parent);
+   if (p->parent != 0) {
+      Pilot *l = pilot_get( p->parent );
+      if ((l == NULL) || pilot_isFlag( p, PILOT_DEAD )) {
+         p->parent = 0; /* Clear parent for future calls. */
+         lua_pushnil(L);
+      }
+      else
+         lua_pushpilot(L, p->parent);
+   }
    else
       lua_pushnil(L);
    return 1;

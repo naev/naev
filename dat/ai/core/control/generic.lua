@@ -416,7 +416,7 @@ function should_attack( enemy, si )
    -- Try to follow the leader behaviour
    local p = ai.pilot()
    local l = p:leader()
-   if l and l:exists() then
+   if l then
       local ltask, ldata = l:task()
       local lsi = _stateinfo( ltask )
       if lsi.fighting then
@@ -526,7 +526,7 @@ function control ()
    -- Select new leader
    local l = p:leader()
    if not mem.carried then -- carried ships don't change
-      if l ~= nil and not l:exists() then
+      if l ~= nil then
          local candidate = ai.getBoss()
          if candidate ~= nil and candidate:exists() then
             p:setLeader( candidate )
@@ -787,7 +787,7 @@ function attacked_manual( attacker )
          p:msg( v, "l_attacked", attacker )
       end
       local l = p:leader()
-      if l and l:exists() then
+      if l then
          p:msg( l, "f_attacked", attacker )
       end
    end
@@ -841,7 +841,7 @@ function attacked( attacker )
          p:msg( v, "l_attacked", attacker )
       end
       local l = p:leader()
-      if l and l:exists() then
+      if l then
          p:msg( l, "f_attacked", attacker )
       end
    end
@@ -892,6 +892,7 @@ function create_pre ()
    local p        = ai.pilot()
    mem.tookoff    = p:flags("takingoff")
    mem.jumpedin   = p:flags("jumpingin")
+   mem.carried    = p:flags("carried")
 
    -- Amount of faction lost when the pilot distresses at the player
    -- Should be roughly 1 for a 20 point llama and 4.38 for a 150 point hawking
@@ -918,9 +919,7 @@ end
 
 -- Finishes create stuff like choose attack and prepare plans
 function create_post ()
-   local p        = ai.pilot()
    mem.scanned    = {} -- must create for each pilot
-   mem.carried    = p:flags("carried")
 
    -- Give a small delay... except for escorts?
    if mem.jumpedin and not mem.carried then

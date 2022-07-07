@@ -5,15 +5,15 @@
  <priority>1</priority>
  <chance>2</chance>
  <location>Bar</location>
- <cond>(function ()
-           local count = 0
-           for i, p in pairs(system.cur():spobs()) do
-              if p:services()["inhabited"] then
-                 count=count+1
-              end
-           end
-           return count &gt; 1
-        end)()</cond>
+ <cond>
+   local count = 0
+   for i, p in pairs(system.cur():spobs()) do
+      if p:services()["inhabited"] then
+         return true
+      end
+   end
+   return false
+ </cond>
  <notes>
   <tier>1</tier>
  </notes>

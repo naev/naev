@@ -5,8 +5,8 @@ local luatk = require 'luatk'
 local lg = require 'love.graphics'
 local fmt = require "format"
 
-local gauntlet_option, gauntlet_start, gauntlet_type
-local btn_enter, btn_modifiers, btn_options, btn_types, headerh, modifiers_divider, options_divider
+local gauntlet_option, gauntlet_start, gauntlet_type, gauntlet_subtype
+local btn_enter, btn_modifiers, btn_options, btn_subtypes, btn_types, headerh, modifiers_divider, options_divider, subtypes_divider
 
 local gauntlet_modifiers = {
    { id = "doubledmgtaken",
@@ -64,16 +64,17 @@ local function gauntlet_setmodifier( wgt )
    end
 end
 
-
-local function gauntlet_setoption( wgt )
-   local newoption = wgt.gauntlet
-   if gauntlet_option == newoption then
+local function gauntlet_setsubtype( wgt )
+   local newsubtype = wgt.gauntlet
+   --[[
+   if gauntlet_subtype == newsubtype then
       return
    end
-   gauntlet_option = newoption
+   --]]
+   gauntlet_subtype = newsubtype
    btn_enter:enable()
 
-   for k,v in ipairs(btn_options) do
+   for k,v in ipairs(btn_subtypes) do
       v:setCol(nil)
       v:setFCol(nil)
    end
@@ -89,19 +90,75 @@ local function gauntlet_setoption( wgt )
 
    local wdw = wgt.parent
    local w = wdw.w
-   modifiers_divider = luatk.newRect( wdw, 20, headerh+144, w-40, 2, {0, 0, 0} )
+   modifiers_divider = luatk.newRect( wdw, 20, headerh+214, w-40, 2, {0, 0, 0} )
 
    local strlist = {}
    for k,v in ipairs(gauntlet_modifiers) do
       table.insert( strlist, v.str )
    end
    btn_modifiers = button_list( wdw, strlist,
-         0, headerh+160, 240, 60, w, 100, gauntlet_setmodifier )
+         0, headerh+230, 240, 60, w, 100, gauntlet_setmodifier )
    for k,v in ipairs(gauntlet_modifiers) do
       btn_modifiers[k].gauntlet = v.id -- Overwrite and use id instead of string
       if v.var and not var.peek(v.var) then
          btn_modifiers[k]:disable()
       end
+   end
+end
+
+local function gauntlet_setoption( wgt )
+   local newoption = wgt.gauntlet
+   if gauntlet_option == newoption then
+      return
+   end
+   gauntlet_option = newoption
+   btn_enter:disable()
+
+   for k,v in ipairs(btn_options) do
+      v:setCol(nil)
+      v:setFCol(nil)
+   end
+   wgt:setCol{ 0.8, 0.05, 0.20 }
+   wgt:setFCol{ 0.9, 0.9, 0.9 }
+
+   for k,v in ipairs(btn_subtypes) do
+      v:destroy()
+   end
+   if subtypes_divider then
+      subtypes_divider:destroy()
+   end
+
+   for k,v in ipairs(btn_modifiers) do
+      v:destroy()
+   end
+   if modifiers_divider then
+      modifiers_divider:destroy()
+   end
+
+   local wdw = wgt.parent
+   local w = wdw.w
+   if gauntlet_type == "Challenge" then
+      btn_subtypes = button_list( wdw,
+            {N_("Independent")},
+            0, headerh+160, 160, 40, w, 100, gauntlet_setsubtype )
+      --[[
+      if not var.peek("gauntlet_unlock_warrior") then
+         btn_options[2]:disable()
+      end
+      --]]
+   end
+   subtypes_divider = luatk.newRect( wdw, 20, headerh+214, w-40, 2, {0, 0, 0} )
+
+   local enabled = 0
+   local subtype_def = nil
+   for k,v in ipairs( btn_subtypes ) do
+      if not v.disabled then
+         enabled = enabled+1
+         subtype_def = v
+      end
+   end
+   if enabled == 1 then
+      gauntlet_setsubtype( subtype_def )
    end
 end
 
@@ -123,8 +180,14 @@ local function gauntlet_settype( wgt )
    for k,v in ipairs(btn_options) do
       v:destroy()
    end
+   for k,v in ipairs(btn_subtypes) do
+      v:destroy()
+   end
    for k,v in ipairs(btn_modifiers) do
       v:destroy()
+   end
+   if subtypes_divider then
+      subtypes_divider:destroy()
    end
    if options_divider then
       options_divider:destroy()
@@ -144,6 +207,18 @@ local function gauntlet_settype( wgt )
       end
    end
    options_divider = luatk.newRect( wdw, 20, headerh+144, w-40, 2, {0, 0, 0} )
+
+   local enabled = 0
+   local option_def = nil
+   for k,v in ipairs( btn_options ) do
+      if not v.disabled then
+         enabled = enabled+1
+         option_def = v
+      end
+   end
+   if enabled == 1 then
+      gauntlet_setoption( option_def )
+   end
 end
 
 local function gauntlet_enter ()
@@ -168,13 +243,14 @@ local function gauntlet_gui ()
    local cache = naev.cache()
    gauntlet_type = cache.gauntlet_type
    gauntlet_option = cache.gauntlet_option
+   gauntlet_subtype = cache.gauntlet_subtype
    cache.gauntlet_modifiers = cache.gauntlet_modifiers or {}
    for k,v in ipairs(cache.gauntlet_modifiers) do
       gauntlet_modifiers[k].enabled = v
    end
 
    -- Window and top details
-   local w, h = 800, 400
+   local w, h = 800, 470
    local wdw = luatk.newWindow( nil, nil, w, h )
    wdw:setCancel( luatk.close )
    local icon = lg.newImage("gfx/misc/crimson_gauntlet.webp")
@@ -206,6 +282,9 @@ local function gauntlet_gui ()
    -- Tournament Options
    btn_options = {}
 
+   -- Subtypes
+   btn_subtypes = {}
+
    -- Modifier
    btn_modifiers = {}
 
@@ -230,17 +309,37 @@ local function gauntlet_gui ()
                gauntlet_setoption( wgt )
             end
          end
-         for mk,mv in ipairs(gauntlet_modifiers) do
-            for k,wgt in ipairs(btn_modifiers) do
-               if wgt.gauntlet == gauntlet_modifiers[mk].id then
-                  local gm = gauntlet_modifiers[mk]
-                  if gm.enabled then
-                     gm.enabled = false
-                     gauntlet_setmodifier( wgt )
+         if gauntlet_subtype then
+            for k,wgt in ipairs(btn_subtypes) do
+               if wgt.gauntlet == gauntlet_subtype then
+                  gauntlet_subtype = nil
+                  gauntlet_setsubtype( wgt )
+               end
+            end
+            for mk,mv in ipairs(gauntlet_modifiers) do
+               for k,wgt in ipairs(btn_modifiers) do
+                  if wgt.gauntlet == gauntlet_modifiers[mk].id then
+                     local gm = gauntlet_modifiers[mk]
+                     if gm.enabled then
+                        gm.enabled = false
+                        gauntlet_setmodifier( wgt )
+                     end
                   end
                end
             end
          end
+      end
+   else
+      local enabled = 0
+      local type_def = nil
+      for k,v in ipairs( btn_types ) do
+         if not v.disabled then
+            enabled = enabled+1
+            type_def = v
+         end
+      end
+      if enabled == 1 then
+         gauntlet_settype( type_def )
       end
    end
 
@@ -252,18 +351,20 @@ local gui = {}
 function gui.run()
    gauntlet_gui()
 
-   if gauntlet_start then
-      local mods = {}
-      local cache = naev.cache()
-      cache.gauntlet_type = gauntlet_type
-      cache.gauntlet_option = gauntlet_option
-      for k,v in ipairs(gauntlet_modifiers) do
-         cache.gauntlet_modifiers[k] = v.enabled
-         mods[v.id] = v.enabled
-      end
-      return gauntlet_type, gauntlet_option, mods
+   if not gauntlet_start then
+      return -- Return nothing if cancelled
    end
-   -- return nils if cancelled
+
+   local mods = {}
+   local cache = naev.cache()
+   cache.gauntlet_type = gauntlet_type
+   cache.gauntlet_subtype = gauntlet_subtype
+   cache.gauntlet_option = gauntlet_option
+   for k,v in ipairs(gauntlet_modifiers) do
+      cache.gauntlet_modifiers[k] = v.enabled
+      mods[v.id] = v.enabled
+   end
+   return gauntlet_type, gauntlet_option, gauntlet_subtype, mods
 end
 
 return gui

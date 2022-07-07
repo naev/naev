@@ -4,6 +4,7 @@
 #pragma once
 
 #include "mission.h"
+#include "nlua_asteroid.h"
 #include "nlua_faction.h"
 #include "nlua_jump.h"
 #include "nlua_pilot.h"
@@ -21,8 +22,9 @@ typedef enum HookParamType_e {
    HOOK_PARAM_BOOL,     /**< Boolean parameter. */
    HOOK_PARAM_PILOT,    /**< Pilot hook parameter. */
    HOOK_PARAM_FACTION,  /**< Faction hook parameter. */
-   HOOK_PARAM_SPOB,    /**< Spob hook parameter. */
+   HOOK_PARAM_SPOB,     /**< Spob hook parameter. */
    HOOK_PARAM_JUMP,     /**< Jump point hook parameter. */
+   HOOK_PARAM_ASTEROID, /**< Asteroid hook parameter. */
    HOOK_PARAM_REF,      /**< Upvalue parameter. */
    HOOK_PARAM_SENTINEL  /**< Enum sentinel. */
 } HookParamType;
@@ -38,8 +40,9 @@ typedef struct HookParam_s {
       int b;         /**< Boolean parameter. */
       LuaPilot lp;   /**< Hook parameter pilot data. */
       LuaFaction lf; /**< Hook parameter faction data. */
-      LuaSpob la;  /**< Hook parameter spob data. */
+      LuaSpob la;    /**< Hook parameter spob data. */
       LuaJump lj;    /**< Hook parameter jump data. */
+      LuaAsteroid_t ast; /**< Hook parameter asteroid data. */
       int ref;       /**< Hook parameter upvalue. */
    } u; /**< Hook parameter data. */
 } HookParam;

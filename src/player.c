@@ -1344,12 +1344,23 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 
          r2 = pow2(range);
          for (int j=0; j<ast->nb; j++) {
+            HookParam hparam[2];
             Asteroid *a = &ast->asteroids[j];
+
+            if (a->scanned) /* Ignore scanned outfits. */
+               continue;
 
             if (vec2_dist2( &a->pos, &player.p->solid->pos ) > r2)
                continue;
 
             a->scanned = 1;
+
+            /* Run the hook. */
+            hparam[0].type = HOOK_PARAM_ASTEROID;
+            hparam[0].u.ast.parent = ast->id;
+            hparam[0].u.ast.id = a->id;
+            hparam[1].type = HOOK_PARAM_SENTINEL;
+            hooks_runParamDeferred( "asteroid_scan", hparam );
          }
       }
    }

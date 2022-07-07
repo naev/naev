@@ -79,9 +79,9 @@ typedef struct Asteroid_ {
    const glTexture *gfx; /**< Graphic of the asteroid. */
    double armour; /**< Current "armour" of the asteroid. */
    /* Movement. */
-   vec2 pos;  /**< Position. */
-   vec2 vel;  /**< Velocity. */
-   double ang; /**< Angle. */
+   vec2 pos;      /**< Position. */
+   vec2 vel;      /**< Velocity. */
+   double ang;    /**< Angle. */
    /* Stats. */
    double timer;  /**< Internal timer for animations. */
    double timer_max; /**< Internal timer initial value. */
@@ -95,7 +95,7 @@ typedef struct Asteroid_ {
 typedef struct AsteroidAnchor_ {
    char *label;   /**< Label used for unidiffs. */
    int id;        /**< ID of the anchor, for targeting. */
-   vec2 pos;  /**< Position in the system (from center). */
+   vec2 pos;      /**< Position in the system (from center). */
    double density;/**< Density of the field. */
    Asteroid *asteroids; /**< Asteroids belonging to the field. */
    int nb;        /**< Number of asteroids. */
@@ -113,7 +113,7 @@ typedef struct AsteroidAnchor_ {
  * @brief Represents an asteroid exclusion zone.
  */
 typedef struct AsteroidExclusion_ {
-   vec2 pos;  /**< Position in the system (from center). */
+   vec2 pos;      /**< Position in the system (from center). */
    double radius; /**< Radius of the exclusion zone. */
    int affects;   /**< Temporary internal value when rendering. */
 } AsteroidExclusion;

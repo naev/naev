@@ -1,4 +1,4 @@
-project('pcre2', 'c', version: '10.23', license: 'BSD-3')
+project('pcre2', 'c', version: '10.40', license: 'BSD-3')
 
 c_compiler = meson.get_compiler('c')
 if c_compiler.has_argument('-Wno-parentheses')

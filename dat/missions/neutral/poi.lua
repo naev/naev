@@ -126,7 +126,7 @@ function board( p )
       vn.jump("reward")
 
       vn.label("unlock_failed")
-      vn.na(_([[A brief '#rAUTHORIZATION DENIED#0' flashes on the screen and you hear the ship internals groan as the emergency security protocol kicks in and everything gets locked down. It looks like you won't be getting anywhere hre, the ship is as good as debris. You have no option but to return dejectedly to your ship. Maybe next time.]]))
+      vn.na(_([[A brief '#rAUTHORIZATION DENIED#0' flashes on the screen and you hear the ship internals groan as the emergency security protocol kicks in and everything gets locked down. It looks like you won't be getting anywhere here; the ship is as good as debris. You have no option but to return dejectedly to your ship. Maybe next time.]]))
       vn.func( function () failed = true end )
       vn.done()
    else

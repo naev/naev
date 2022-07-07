@@ -182,7 +182,7 @@ function scans.get_target ()
       for k,v in ipairs(p:getVisible()) do
          -- Only care about leaders
          local l = v:leader()
-         if l and l:exists() then
+         if l then
             v = l
          end
 

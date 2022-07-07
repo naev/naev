@@ -577,9 +577,18 @@ static char **map_fuzzyOutfits( Outfit **o, const char *name )
    char **names = array_create( char* );
 
    /* Do fuzzy search. */
-   for (int i=0; i<array_size(o); i++)
+   for (int i=0; i<array_size(o); i++) {
       if (strcasestr( _(o[i]->name), name ) != NULL)
          array_push_back( &names, o[i]->name );
+      else if ((o[i]->typename != NULL) && strcasestr( o[i]->typename, name ) != NULL)
+         array_push_back( &names, o[i]->name );
+      else if ((o[i]->condstr != NULL) && strcasestr( o[i]->condstr, name ) != NULL)
+         array_push_back( &names, o[i]->name );
+      else if (strcasestr( o[i]->description, name ) != NULL)
+         array_push_back( &names, o[i]->name );
+      else if (strcasestr( o[i]->desc_short, name ) != NULL)
+         array_push_back( &names, o[i]->name );
+   }
 
    return names;
 }
@@ -648,7 +657,7 @@ static void map_addOutfitDetailFields(unsigned int wid_results, int x, int y, in
  *    @param w The width of the area where we can draw
  *    @param h The height of the area where we can draw
  */
-static void map_showOutfitDetail(unsigned int wid, const char* wgtname, int x, int y, int w, int h)
+static void map_showOutfitDetail( unsigned int wid, const char* wgtname, int x, int y, int w, int h )
 {
    (void) x;
    (void) y;
@@ -705,15 +714,11 @@ static void map_showOutfitDetail(unsigned int wid, const char* wgtname, int x, i
  */
 static int map_findSearchOutfits( unsigned int wid_map_find, const char *name )
 {
-   int i, j;
    int len, n;
    map_find_t *found;
-   Spob *spob;
-   StarSystem *sys;
    const char *oname, *sysname;
    char **list;
    const Outfit *o;
-   Outfit **olist;
 
    assert( "Outfit search is not reentrant!" && map_foundOutfitNames == NULL );
 
@@ -726,6 +731,8 @@ static int map_findSearchOutfits( unsigned int wid_map_find, const char *name )
       o = outfit_get( oname );
    /* Do fuzzy match. */
    else if (len > 0) {
+      int i;
+
       /* Ask which one player wants. */
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
@@ -749,9 +756,12 @@ static int map_findSearchOutfits( unsigned int wid_map_find, const char *name )
    found = NULL;
    n = 0;
    len = array_size(map_known_techs);
-   for (i=0; i<len; i++) {
+   for (int i=0; i<len; i++) {
       /* Try to find the outfit in the spob. */
-      olist = tech_getOutfit( map_known_techs[i] );
+      int j;
+      Spob *spob;
+      StarSystem *sys;
+      Outfit **olist = tech_getOutfit( map_known_techs[i] );
       for (j=array_size(olist)-1; j>=0; j--)
          if (olist[j] == o)
             break;
@@ -797,9 +807,18 @@ static char **map_fuzzyShips( Ship **s, const char *name )
    char **names = array_create( char* );
 
    /* Do fuzzy search. */
-   for (int i=0; i<array_size(s); i++)
+   for (int i=0; i<array_size(s); i++) {
       if (strcasestr( _(s[i]->name), name ) != NULL)
          array_push_back( &names, s[i]->name );
+      else if ((s[i]->license != NULL) && strcasestr( _(s[i]->license), name ) != NULL)
+         array_push_back( &names, s[i]->name );
+      else if (strcasestr( _(ship_classDisplay( s[i] )), name ) != NULL)
+         array_push_back( &names, s[i]->name );
+      else if (strcasestr( _(s[i]->fabricator), name ) != NULL)
+         array_push_back( &names, s[i]->name );
+      else if (strcasestr( _(s[i]->description), name ) != NULL)
+         array_push_back( &names, s[i]->name );
+   }
 
    return names;
 }

@@ -345,6 +345,78 @@ local function board_cannibalize ()
    player.msg(fmt.f(_("Your ship cannibalized {armour:.0f} armour from {plt}."),{armour=heal_armour, plt=board_plt}))
 end
 
+local function cargo_list ()
+   local clist = player.fleetCargoList()
+   table.sort( clist, function ( a, b )
+      return a.c:price() < b.c:price()
+   end )
+   local cnames = {}
+   for k,v in ipairs(clist) do
+      cnames[k] = fmt.f(_("{cargo} ({credits}/tonne, {tonnes})"),
+         {cargo=v.c, tonnes=fmt.tonnes(v.q), credits=fmt.credits(v.c:price())})
+   end
+
+   return clist, cnames
+end
+local cargo_btn, cargo_wdw, cargo_lst, cargo_jet -- forward declaration
+
+local function cargo_jettison( cargo, max )
+   luatk.msgFader( fmt.f(_("Jettison {cargo}"),{cargo=cargo}),
+      fmt.f(_("How many tonnes of {cargo} do you wish to jettison?"),{cargo=cargo}), 1, max, 10, function( val )
+      if not val then
+         return
+      end
+      val = math.floor( val + 0.5 )
+      luatk.yesno( fmt.f(_("Jettison {cargo}?"), {cargo=cargo}),
+         fmt.f(_("Are you sure you want to get rid of {tonnes} of {cargo}?"),
+            {tonnes=fmt.tonnes(val), cargo=cargo} ),
+         function ()
+            local q = player.fleetCargoJet( cargo, val )
+            luatk.msg( fmt.f(_("Bye Bye {cargo}"),{cargo=cargo} ),
+               fmt.f(_("You dump {tonnes} of {cargo} out the airlock of your ship."),
+                  {tonnes=fmt.tonnes(q), cargo=cargo}) )
+               board_updateFreespace()
+
+               cargo_lst:destroy()
+               local clist, cnames = cargo_list ()
+               if #clist <= 0 then
+                  cnames = { _("None") }
+                  cargo_btn:disable()
+                  cargo_jet:disable()
+               end
+               local w, h = cargo_wdw:getDimensions()
+               cargo_lst = luatk.newList( cargo_wdw, 20, 65, w-40, h-130, cnames )
+         end )
+   end )
+end
+
+local function manage_cargo ()
+   local clist, cnames = cargo_list ()
+   if #cnames <= 0 then return end
+
+   luatk.setDefaultFont( lg.newFont(12) )
+
+   local w, h = 300, 400
+   local wdw = luatk.newWindow( nil, nil, w, h )
+   cargo_wdw = wdw
+
+   luatk.newText( wdw, 0, 10, w, 20, _("Manage Cargo"), nil, "center" )
+
+   luatk.newText( wdw, 20, 40, w-40, 20, _("Select cargo to jettison:") )
+   cargo_lst = luatk.newList( wdw, 20, 65, w-40, h-130, cnames )
+
+   luatk.newButton( wdw, w-20-120, h-20-30, 120, 30, _("Close"), function ()
+      cargo_wdw:destroy()
+   end )
+   cargo_jet = luatk.newButton( wdw, 20, h-20-30, 120, 30, _("Jettison"), function ()
+      local _c, cid = cargo_lst:get()
+      local c = clist[ cid ]
+      if not c then return end
+      cargo_jettison( c.c, c.q )
+      return true
+   end )
+end
+
 local function board_close ()
    luatk.close()
    board_wdw = nil
@@ -381,7 +453,12 @@ function board( plt )
    if can_cannibalize() then
       luatk.newButton( wdw, w-20-80-350, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
    end
-   --luatk.newButton( wdw, w-20-120, 25, 120, 30, _("Manage Cargo") )
+
+   -- Add manage cargo button if applicable
+   cargo_btn = luatk.newButton( wdw, w-20-120, 25, 120, 30, _("Manage Cargo"), manage_cargo )
+   if #player.fleetCargoList() <= 0 then
+      cargo_btn:disable()
+   end
 
    luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Boarding {plt}"), {plt=plt}), nil, "center" )
    board_freespace = luatk.newText( wdw, 20, 40, w-40, 20, "" )
