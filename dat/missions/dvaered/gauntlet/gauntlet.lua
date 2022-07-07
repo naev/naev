@@ -430,7 +430,8 @@ function wave_end_msg( d )
    -- TODO add sound
 end
 function wave_end ()
-   if mem.wave_round < #tables.wave_round_enemies[mem.wave_category] then
+   local round_enemies = tables.wave_round_enemies[mem.wave_subcategory][mem.wave_category]
+   if mem.wave_round < #round_enemies then
       -- TODO Cooler animation or something
       local score_str = wave_compute_score()
       local n = #score_str
