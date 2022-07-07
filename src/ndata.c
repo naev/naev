@@ -144,7 +144,7 @@ void ndata_setupReadDirs (void)
       char **files = PHYSFS_enumerateFiles( "plugins" );
       for (char **f = files; *f != NULL; f++) {
          nfile_concatPaths( buf, PATH_MAX, PHYSFS_getWriteDir(), "plugins", *f );
-         if (!nfile_fileExists( buf ))
+         if (!nfile_fileExists( buf ) && !nfile_dirExists( buf ))
             continue;
 
          if (PHYSFS_mount( buf, NULL, 1 )==0) {
