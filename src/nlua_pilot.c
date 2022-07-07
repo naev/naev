@@ -5010,7 +5010,7 @@ static int pilotL_leader( lua_State *L )
    Pilot *p = luaL_validpilot(L, 1);
    if (p->parent != 0) {
       Pilot *l = pilot_get( p->parent );
-      if ((l == NULL) || pilot_isFlag( p, PILOT_DEAD )) {
+      if ((l == NULL) || pilot_isFlag( l, PILOT_DEAD )) {
          p->parent = 0; /* Clear parent for future calls. */
          lua_pushnil(L);
       }
@@ -5060,8 +5060,11 @@ static int pilotL_setLeader( lua_State *L )
       PilotOutfitSlot* dockslot;
       Pilot *leader = luaL_validpilot(L, 2);
 
-      if (leader->parent != 0 && pilot_get(leader->parent) != NULL)
-         leader = pilot_get(leader->parent);
+      if (leader->parent != 0) {
+         Pilot *leader_leader =  pilot_get(leader->parent);
+         if (leader_leader != NULL)
+            leader = leader_leader;
+      }
 
       p->parent = leader->id;
 
@@ -5077,7 +5080,7 @@ static int pilotL_setLeader( lua_State *L )
       escort_addList( leader, p->ship->name, ESCORT_TYPE_MERCENARY, p->id, 0 );
 
       /* If the pilot has followers, they should be given the new leader as well, and be added as escorts. */
-      for (int i=0; i<array_size(p->escorts); i++) {
+      for (int i=array_size(p->escorts)-1; i>=0; i--) {
          Escort_t *e = &p->escorts[i];
          /* We don't want to deal with fighter bays this way. */
          if (e->type != ESCORT_TYPE_MERCENARY)
@@ -5090,9 +5093,8 @@ static int pilotL_setLeader( lua_State *L )
          /* Add escort to parent. */
          escort_addList( leader, pe->ship->name, e->type, pe->id, 0 );
 
-         free( e->ship );
+         escort_rmListIndex( p, i );
       }
-      array_erase( &p->escorts, array_begin(p->escorts), array_end(p->escorts) );
    }
 
    return 0;

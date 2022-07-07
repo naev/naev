@@ -526,7 +526,7 @@ function control ()
    -- Select new leader
    local l = p:leader()
    if not mem.carried then -- carried ships don't change
-      if l ~= nil then
+      if l == nil then
          local candidate = ai.getBoss()
          if candidate ~= nil and candidate:exists() then
             p:setLeader( candidate )
@@ -539,7 +539,7 @@ function control ()
    end
 
    -- Try to stealth if leader is stealthed
-   if l ~= nil then
+   if l then
       if l:flags("stealth") then
          ai.stealth(true)
       elseif p:flags("stealth") then
