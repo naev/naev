@@ -648,7 +648,7 @@ static void map_addOutfitDetailFields(unsigned int wid_results, int x, int y, in
  *    @param w The width of the area where we can draw
  *    @param h The height of the area where we can draw
  */
-static void map_showOutfitDetail(unsigned int wid, const char* wgtname, int x, int y, int w, int h)
+static void map_showOutfitDetail( unsigned int wid, const char* wgtname, int x, int y, int w, int h )
 {
    (void) x;
    (void) y;
@@ -705,15 +705,11 @@ static void map_showOutfitDetail(unsigned int wid, const char* wgtname, int x, i
  */
 static int map_findSearchOutfits( unsigned int wid_map_find, const char *name )
 {
-   int i, j;
    int len, n;
    map_find_t *found;
-   Spob *spob;
-   StarSystem *sys;
    const char *oname, *sysname;
    char **list;
    const Outfit *o;
-   Outfit **olist;
 
    assert( "Outfit search is not reentrant!" && map_foundOutfitNames == NULL );
 
@@ -726,6 +722,8 @@ static int map_findSearchOutfits( unsigned int wid_map_find, const char *name )
       o = outfit_get( oname );
    /* Do fuzzy match. */
    else if (len > 0) {
+      int i;
+
       /* Ask which one player wants. */
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
@@ -749,9 +747,12 @@ static int map_findSearchOutfits( unsigned int wid_map_find, const char *name )
    found = NULL;
    n = 0;
    len = array_size(map_known_techs);
-   for (i=0; i<len; i++) {
+   for (int i=0; i<len; i++) {
       /* Try to find the outfit in the spob. */
-      olist = tech_getOutfit( map_known_techs[i] );
+      int j;
+      Spob *spob;
+      StarSystem *sys;
+      Outfit **olist = tech_getOutfit( map_known_techs[i] );
       for (j=array_size(olist)-1; j>=0; j--)
          if (olist[j] == o)
             break;
