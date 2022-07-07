@@ -362,7 +362,7 @@ local chitchat_beating = {
     _("Sometimes, the only way to win is to refuse to play.")
 }
 
-local chitchat_closecall = (
+local chitchat_closecall = {
 	_("You know about earlier... That was really close."),
 	_("I thought you were gonna let me lose this {ship}."),
 	_("That was really close back there. Let's not do that again."),
@@ -375,7 +375,7 @@ local chitchat_closecall = (
 	_("My {ship} is looking a little ill-equipped."),
 	_("I think it's time to upgrade my {ship}."),
 	_("For a minute there I thought you were going to pay the {replacement_text} and leave me."),
-)
+}
 
 local chitchat_goodhaul = {
     _("That last haul brought in a decent profit."),
@@ -417,7 +417,8 @@ local chitchat_malfunction = {
     _("One of my panels is fried, I got this thing second hand."),
     _("One of my panels is fried."),
     _("Most of my crew is busy performing ship repairs."),
-    _("What do you do when a {thing} stops functioning?"),
+    _("What do you do when a {thing} malfunctions?"),
+	_("What do you do when a {thing} is malfunctioning?"),
     _("I've had it with all these malfunctions!"),
     _("I really need to get settled into one ship."),
     _("I don't know how to fix the {thing} on my ship."),
@@ -587,7 +588,7 @@ local function speak(persona, sentiment, arg)
 		person.last_sentiment = "content"
 	elseif ss == "closecall" then
 		spoken = pick_one(chitchat_closecall)
-		person.last_sentiment = "beating"
+		persona.last_sentiment = "beating"
     end
 
     if not spoken then
@@ -646,9 +647,9 @@ local function remember_ship(me, ship, points)
 			{ ship = fship, score = score }
 			))
 			if ship ~= fship then
-				local spenalty = math.floor(0, score / 2)
-				me.favorite_ships[fship] = spenalty
-				if 0 == me.favorite_ships[fship] then
+				local spenalty = math.ceil(score / 2)
+				me.favorite_ships[fship] = score - spenalty
+				if 1 == me.favorite_ships[fship] then
 					me.favorite_ships[fship] = nil
 				elseif spenalty > max_penalty then
 					max_penalty = spenalty
@@ -720,7 +721,7 @@ local function _createReplacementShip(persona, limit_ships)
     local budget =
         math.floor(
         persona.wallet * (1 - persona.royalty) + (persona.deposit * persona.royalty) +
-            persona.tribute * persona.experience
+            math.min(10e6, persona.tribute * persona.experience * 0.01)
     )
 
     if persona.pilot then
@@ -887,7 +888,11 @@ local function _createReplacementShip(persona, limit_ships)
     persona.ship = ship.get(shipchoice.ship)
     local _n, deposit = persona.ship:price()
     persona.outfits = {}
-    local pppp = pilot.add(shipchoice.ship, persona.faction)
+	local used_faction = persona.faction
+	if persona.ship:tags("pirate") then
+		used_faction = faction.get("Pirate")
+	end
+    local pppp = pilot.add(shipchoice.ship, used_faction)
     for j, o in ipairs(pppp:outfits()) do
         deposit = deposit + o:price()
         persona.outfits[#persona.outfits + 1] = o:nameRaw()
@@ -1168,7 +1173,7 @@ local function create_pilot(fac)
 end
 
 function createScavNpcs()
-    local num_npcs = rnd.rnd(3, max_escorts - #mem.persons + 2 * max_scavengers)
+    local num_npcs = rnd.rnd(0, max_escorts - #mem.persons + 2 * max_scavengers)
 	
     local cmdr_fudge = 0
     for i = 1, num_npcs do
@@ -1616,7 +1621,7 @@ function scav_boarding(plt, target, i)
 		-- if this is a favorite ship, let's be more generous because
 		-- we chose this ship ourselves even if it isn't the dream ship
 		-- note that if we have many favorites, we might not pick what we're flying now
-		your_share = math.floor(math.max(bounty / 10e3, (bounty / 10 * (1 - mem.persons[i].royalty)) - 1e3))
+		your_share = math.floor(math.max(bounty / 4, (bounty  * (1 - mem.persons[i].royalty)) - 2e3))
 		-- allow a small bounty to give us the chance to resist negativity at the next boarding
 		if bounty > 5e3 and mem.persons[i].last_sentiment ~= "cargofull" then
 			mem.persons[i].last_sentiment = "content"
@@ -1733,6 +1738,8 @@ function detonate_c4( target )
 end
 
 function scavenger_arrives(arg)
+	if var.peek( "hired_escorts_disabled" ) then return end
+	
     local i = arg.i
 	if not mem.persons[i].active then
 		return
@@ -1898,10 +1905,12 @@ function player_attacked ( player_pilot, attacker, dmg, leader )
 	local armor, shield, stress = player_pilot:health()
 	if leader and (shield < 80) and leader:exists() then
 		local subordinates = leader:followers()
-		leader:msg(pick_one(subordinates), "l_attacked", attacker)
-		-- make sure to respond more when appropriate
-		if dmg > 100 or armor < 45 or stress > 50 then
-			leader:msg(pick_one(subordinates), "e_attack", attacker)
+		if #subordinates > 0 then
+			leader:msg(pick_one(subordinates), "l_attacked", attacker)
+			-- make sure to respond more when appropriate
+			if dmg > 100 or armor < 45 or stress > 50 then
+				leader:msg(pick_one(subordinates), "e_attack", attacker)
+			end
 		end
 	end
 end
@@ -2000,10 +2009,16 @@ end
 function land()
     mem.lastplanet = spob.cur()
 	mem.lastsys = system.cur()
+	local commander_active = false
     for i, persona in ipairs(mem.persons) do
-		if persona.commander and persona.commander.hook then
-			hook.rm(persona.commander.hook)
-			persona.commander.hook = nil
+		if persona.commander then
+			if persona.active then
+				commander_active = true
+			end
+			if persona.commander.hook then
+				hook.rm(persona.commander.hook)
+				persona.commander.hook = nil
+			end
 		end
         if persona.alive and persona.pilot ~= nil and persona.pilot:exists() then
             update_wallet(i)
@@ -2078,12 +2093,17 @@ function land()
             end
         end
     end
-
+    local pnt = spob.cur()
+	local services = pnt:services()
     -- Clean up dead escorts so it doesn't build up, and create NPCs for
     -- existing escorts.
     npcs = {}
     local new_escorts = {}
     for i, edata in ipairs(mem.persons) do
+		-- if we are inactive because we died, allow the commander to resurrect us if there's a shipyard here
+		if commander_active and services.shipyard then
+			edata.active = true
+		end
         if edata.spawning then
             hook.rm(edata.spawning)
             edata.spawning = false
@@ -2107,7 +2127,7 @@ function land()
 			end
 			
 			this_desc = fmt.f(this_desc, edata)
-			if edata.active or edata.commander then
+			if (edata.active or not commander_active) or edata.commander then
 				local id = evt.npcAdd("approachHiredScav", edata.rank .. " " .. edata.name, edata.portrait, this_desc, prio)
 				npcs[id] = edata
 			end
@@ -2123,8 +2143,8 @@ function land()
     end
 
     -- Ignore on uninhabited and planets without bars
-    local pnt = spob.cur()
-    local services = pnt:services()
+
+    
     local flags = pnt:flags()
     if not services.inhabited or not services.bar or flags.nomissionspawn then
         return
@@ -2190,7 +2210,7 @@ function scav_attacked(p, attacker, _dmg, i)
 	armor, shield, stress = p:health()
 	
     -- check if we should change states
-    if rnd.rnd() > 0.98 and armor < 67 then
+    if rnd.rnd() > 0.98 and shield < 30 then
         if p:leader() then
 			if mem.persons[i].experience < 7 or rnd.rnd() < 0.01 then
 				p:setLeader(nil)
@@ -2259,7 +2279,7 @@ function scavenger_death(p, _attacker, i)
 	if edata.commander then
 		if edata.commander.hook then
 			hook.rm(edata.commander.hook)
-			edata.comander.hook = nil
+			edata.commander.hook = nil
 		end
 		-- send the followers to the player
 		if false then -- let's test without first
@@ -2293,8 +2313,10 @@ function scavenger_death(p, _attacker, i)
             p:broadcast(fmt.f(_("You paid {replacement_text} to cover the loss of my {ship}."), edata), true)
             -- assign him a new ship
             createReplacementShip(i)
-            -- spawn a new one soon
-            scav_hook_spawner(mem.persons[i], i)
+            -- spawn a new one soon NOTE: Don't actually keep making new ships until the player jumps or lands.
+--          scav_hook_spawner(mem.persons[i], i)
+			-- we lost our ship, don't come back until the cap'n calls us back
+			edata.active = false
         end
     else
         p:comm(player:pilot(), "Wait a minute, why isn't it ejecting? Oh sh--", true)
@@ -2302,7 +2324,7 @@ function scavenger_death(p, _attacker, i)
     end
 end
 
--- Asks the player whether or not they want to fire the pilot
+-- Asks the player whether or not they want to fire the pilot or upgrade him or whatever
 local function pilot_askUpgrades(edata, npc_id)
     local approachtext = _([[Would you like to do something with this scavenger?
 
@@ -2312,8 +2334,6 @@ Pilot credentials:]])
 	local abandon_label = _("Fire Pilot")
     local upgrade_amount = 250e3 -- negligible effect, a red herring and credit sink, but the escort changes ships/outfits
     local limit_ships = spob.cur():shipsSold()
-
-
 
 	-- if we don't need to pay off debt, allow upgrades
     if edata.debt < 1e6 then
@@ -2331,7 +2351,7 @@ Pilot credentials:]])
 	local n, _s
 	-- special commander rules apply
 	if edata.commander then
-		upgrade_amount = upgrade_amount + 350e3
+		upgrade_amount = upgrade_amount + 350e3 + math.floor(upgrade_amount / 20)
 		abandon_label = _("Fire Commander")
 		local vacation_label = _("Begin leave")
 		if not edata.active then
