@@ -136,6 +136,28 @@ void ndata_setupReadDirs (void)
    }
 
    PHYSFS_mount( PHYSFS_getWriteDir(), NULL, 0 );
+
+   /* Load mods I guess. */
+   PHYSFS_Stat stat;
+   PHYSFS_stat( "plugins", &stat );
+   if (stat.filetype == PHYSFS_FILETYPE_DIRECTORY) {
+      char **files = PHYSFS_enumerateFiles( "plugins" );
+      for (char **f = files; *f != NULL; f++) {
+         nfile_concatPaths( buf, PATH_MAX, PHYSFS_getWriteDir(), "plugins", *f );
+         if (!nfile_fileExists( buf ))
+            continue;
+
+         if (PHYSFS_mount( buf, NULL, 1 )==0) {
+            WARN(_("Failed to mount plugin '%s': %s"), buf, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ));
+         }
+      }
+      PHYSFS_freeList(files);
+   }
+   else {
+      nfile_concatPaths( buf, PATH_MAX, PHYSFS_getWriteDir(), "plugins" );
+      nfile_dirMakeExist( buf );
+   }
+
    ndata_testVersion();
 }
 
