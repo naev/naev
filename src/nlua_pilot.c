@@ -5010,7 +5010,7 @@ static int pilotL_leader( lua_State *L )
    Pilot *p = luaL_validpilot(L, 1);
    if (p->parent != 0) {
       Pilot *l = pilot_get( p->parent );
-      if ((l == NULL) || pilot_isFlag( p, PILOT_DEAD )) {
+      if ((l == NULL) || pilot_isFlag( l, PILOT_DEAD )) {
          p->parent = 0; /* Clear parent for future calls. */
          lua_pushnil(L);
       }
