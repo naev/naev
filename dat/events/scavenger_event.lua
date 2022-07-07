@@ -1750,7 +1750,7 @@ function scavenger_arrives(arg)
         print("pilot still exists:", mem.persons[i].name)
         return
     end
-    plt = pilot.add(mem.persons[i].ship, f, arg.spawnpoint, mem.persons[i].name, {naked = true})
+    local plt = pilot.add(mem.persons[i].ship, f, arg.spawnpoint, mem.persons[i].name, {naked = true})
     -- calculate what outfits go missing here
     local penalty = 0
     if mem.persons[i].debt > 1e6 then
@@ -2304,7 +2304,7 @@ function scavenger_death(p, _attacker, i)
             pilot_disbanded(edata, i)
         else
             -- pay here
-            replacement_fee = math.floor(edata.deposit * edata.royalty)
+            local replacement_fee = math.floor(edata.deposit * edata.royalty)
             player.pay(-replacement_fee, true)
             edata.total_cost = edata.total_cost + replacement_fee
             edata.replacement_text = fmt.credits(replacement_fee)
@@ -2409,7 +2409,8 @@ Pilot credentials:]])
     elseif
         n == 2 or (n == 3 and edata.commander)
      then
-		if edata.commander then
+		if edata.commander and n == 2 then
+			-- we chose to go on leave, not to fire the guy, so return from in here
 			edata.active = not edata.active
 			for _i, pers in ipairs(mem.persons) do
 				pers.active = edata.active
@@ -2444,8 +2445,6 @@ Pilot credentials:]])
 		end
     end
 end
-
-
 
 function approachHiredScav(npc_id)
     local edata = npcs[npc_id]
