@@ -179,7 +179,7 @@ int main( int argc, char** argv )
    /* Set up PhysicsFS. */
    if (PHYSFS_init( env.argv0 ) == 0) {
       ERR( "PhysicsFS initialization failed: %s",
-            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+            _( PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
       return -1;
    }
 

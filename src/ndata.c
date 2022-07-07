@@ -148,7 +148,8 @@ void ndata_setupReadDirs (void)
             continue;
 
          if (PHYSFS_mount( buf, NULL, 1 )==0) {
-            WARN(_("Failed to mount plugin '%s': %s"), buf, _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode()) ));
+            WARN(_("Failed to mount plugin '%s': %s"), buf,
+                  _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode()) ));
          }
       }
       PHYSFS_freeList(files);
@@ -178,7 +179,7 @@ void* ndata_read( const char* path, size_t *filesize )
 
    if (!PHYSFS_stat( path, &path_stat )) {
       WARN( _( "Error occurred while opening '%s': %s" ), path,
-            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+            _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
       *filesize = 0;
       return NULL;
    }
@@ -192,7 +193,7 @@ void* ndata_read( const char* path, size_t *filesize )
    file = PHYSFS_openRead( path );
    if ( file == NULL ) {
       WARN( _( "Error occurred while opening '%s': %s" ), path,
-            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+            _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
       *filesize = 0;
       return NULL;
    }
@@ -201,7 +202,7 @@ void* ndata_read( const char* path, size_t *filesize )
    len = PHYSFS_fileLength( file );
    if ( len == -1 ) {
       WARN( _( "Error occurred while seeking '%s': %s" ), path,
-            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+            _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
       PHYSFS_close( file );
       *filesize = 0;
       return NULL;
@@ -223,7 +224,7 @@ void* ndata_read( const char* path, size_t *filesize )
       pos = PHYSFS_readBytes( file, &buf[ n ], len - n );
       if ( pos <= 0 ) {
          WARN( _( "Error occurred while reading '%s': %s" ), path,
-            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+            _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
          PHYSFS_close( file );
          *filesize = 0;
          free(buf);
@@ -276,7 +277,7 @@ static int ndata_enumerateCallback( void* data, const char* origdir, const char*
    asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat )) {
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
-            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+            _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
       free( path );
    }
    else if (stat.filetype == PHYSFS_FILETYPE_REGULAR)
@@ -335,7 +336,8 @@ int ndata_copyIfExists( const char* file1, const char* file2 )
    f_in  = PHYSFS_openRead( file1 );
    f_out = PHYSFS_openWrite( file2 );
    if ((f_in==NULL) || (f_out==NULL)) {
-      WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2,
+            _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
       if (f_in!=NULL)
          PHYSFS_close(f_in);
       return -1;
@@ -364,7 +366,8 @@ int ndata_copyIfExists( const char* file1, const char* file2 )
    return 0;
 
 err:
-   WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+   WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2,
+         _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
    PHYSFS_close( f_in );
    PHYSFS_close( f_out );
 
