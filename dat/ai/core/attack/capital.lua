@@ -42,6 +42,11 @@ function __atk_g_capital( target, dist )
    local range = ai.getweaprange(3)
    local aimdir, dir
    local shoot = false
+
+   -- Always launch fighters for now
+   ai.weapset( 5 )
+
+   -- Set main weapon set
    ai.weapset( mem.weapset )
 
    --capital ships tend to require heavier energy reserves and burst output for maximum effectiveness
