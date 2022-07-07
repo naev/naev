@@ -69,19 +69,11 @@ function idle ()
 				return
 			else
 				-- send a random escort
-				if can_send or mem.send_escort then
+				if (can_send or mem.send_escort) and #subordinates > 0 then
 					me:msg(subordinates[rnd.rnd(1, #subordinates)], "e_attack", enemy)
 					mem.send_escort = false
 				end
 			end
-		elseif not ai.canboard(enemy) then
-			detected_hostile = enemy
-		end
-		
-		if mem.atk_board and ai.canboard(enemy) and dangerous then
-			print(fmt.f("boarding a dangerous {name}", enemy))
-			ai.pushtask("board", enemy )
-			return
 		end
    end
    
