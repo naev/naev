@@ -5060,8 +5060,11 @@ static int pilotL_setLeader( lua_State *L )
       PilotOutfitSlot* dockslot;
       Pilot *leader = luaL_validpilot(L, 2);
 
-      if (leader->parent != 0 && pilot_get(leader->parent) != NULL)
-         leader = pilot_get(leader->parent);
+      if (leader->parent != 0) {
+         Pilot *leader_leader =  pilot_get(leader->parent);
+         if (leader_leader != NULL)
+            leader = leader_leader;
+      }
 
       p->parent = leader->id;
 
