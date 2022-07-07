@@ -66,9 +66,11 @@ end
 
 local function gauntlet_setsubtype( wgt )
    local newsubtype = wgt.gauntlet
+   --[[
    if gauntlet_subtype == newsubtype then
       return
    end
+   --]]
    gauntlet_subtype = newsubtype
    btn_enter:enable()
 
@@ -110,7 +112,7 @@ local function gauntlet_setoption( wgt )
       return
    end
    gauntlet_option = newoption
-   btn_enter:enable()
+   btn_enter:disable()
 
    for k,v in ipairs(btn_options) do
       v:setCol(nil)
@@ -124,6 +126,13 @@ local function gauntlet_setoption( wgt )
    end
    if subtypes_divider then
       subtypes_divider:destroy()
+   end
+
+   for k,v in ipairs(btn_modifiers) do
+      v:destroy()
+   end
+   if modifiers_divider then
+      modifiers_divider:destroy()
    end
 
    local wdw = wgt.parent
