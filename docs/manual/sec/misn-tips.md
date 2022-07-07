@@ -32,6 +32,26 @@ end
 
 The above code tries to access data in the cache. However, if it does not exist (by default all fields in Lua are nil), it will do the expensive calculation and store it in the cache. Thus, the first call of `get_calculation()` will be slow, however, all subsequent calls will be very fast as no do_expensive_calculation()` gets called.
 
+### Finding Natural Pilots \naev
+
+In some cases, you want a mission or event to do things with naturally spawning pilots, and not spawn new ones. Naturally spawned pilots have the `natural` flag set in their memory. You can access this with `p:memory().natural` and use this to limit boarding hooks and the likes to only naturally spawned pilots. An example would be:
+
+```lua
+function create ()
+   -- ...
+   hook.board( "my_board" )
+end
+
+function my_board( pilot_boarded )
+   if not pilot_boarded:memory().natural then
+      return
+   end
+   -- Do something with natural pilots here
+end
+```
+
+In the above example, we can use a board hook to control when the player boards a ship, and only handle the case that naturally spawning pilots are boarded.
+
 ### Making Aggressive Enemies
 
 TODO Explain how to nudge the enemies without relying on pilot:control().
