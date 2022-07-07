@@ -53,15 +53,16 @@ function land ()
 end
 
 function approach_gauntlet ()
-   mem.gtype, mem.gopt, gmods = gauntlet_gui.run()
+   mem.gtype, mem.gopt, mem.gsubtype, gmods = gauntlet_gui.run()
    if mem.gtype == nil then
       return
    end
 
    mem.wave_category = string.lower( mem.gopt )
+   mem.wave_subcategory = string.lower( mem.gsubtype )
 
    -- See if we start the event
-   if mem.wave_category==nil then
+   if mem.wave_category==nil or mem.wave_subcategory==nil then
       return
    end
 
@@ -306,7 +307,7 @@ function wave_round_setup ()
       return e
    end
 
-   local round_enemies = tables.wave_round_enemies[mem.wave_category]
+   local round_enemies = tables.wave_round_enemies[mem.wave_subcategory][mem.wave_category]
    local enemies_list = round_enemies[mem.wave_round]
    if gmods.doubleenemy then
       local doublelist = {}
