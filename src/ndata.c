@@ -148,7 +148,7 @@ void ndata_setupReadDirs (void)
             continue;
 
          if (PHYSFS_mount( buf, NULL, 1 )==0) {
-            WARN(_("Failed to mount plugin '%s': %s"), buf, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ));
+            WARN(_("Failed to mount plugin '%s': %s"), buf, _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode()) ));
          }
       }
       PHYSFS_freeList(files);
