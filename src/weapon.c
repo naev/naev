@@ -133,6 +133,7 @@ static void weapons_purgeLayer( Weapon** layer );
 /* Hitting. */
 static int weapon_checkCanHit( const Weapon* w, const Pilot *p );
 static void weapon_hit( Weapon* w, Pilot* p, vec2* pos );
+static void weapon_miss( Weapon *w );
 static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, vec2* pos );
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       vec2 pos[2], const double dt );
@@ -609,7 +610,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                            w->solid->vel.x,
                            w->solid->vel.y);
                }
-               weapon_destroy(w);
+               weapon_miss(w);
                break;
             }
             break;
@@ -640,7 +641,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                            w->solid->vel.x,
                            w->solid->vel.y);
                }
-               weapon_destroy(w);
+               weapon_miss(w);
                break;
             }
             else if (w->timer < w->falloff)
@@ -658,7 +659,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                Pilot *p = pilot_get(w->parent);
                if (p != NULL)
                   pilot_stopBeam(p, w->mount);
-               weapon_destroy(w);
+               weapon_miss(w);
                break;
             }
             /* We use the explosion timer to tell when we have to create explosions. */
@@ -1276,6 +1277,29 @@ static void weapon_hit( Weapon* w, Pilot* p, vec2* pos )
    weapon_hitAI( p, parent, damage );
 
    /* no need for the weapon particle anymore */
+   weapon_destroy(w);
+}
+
+/**
+ * @brief Weapon missed and is due to be destroyed.
+ *
+ *    @param w Weapon that missed.
+ */
+static void weapon_miss( Weapon *w )
+{
+   /* On hit weapon effects. */
+   if (w->outfit->lua_onmiss != LUA_NOREF) {
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->lua_mem); /* mem */
+      nlua_setenv(naevL, w->outfit->lua_env, "mem"); /* */
+
+      /* Set up the function: onmiss() */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, w->outfit->lua_onmiss); /* f */
+      if (nlua_pcall( w->outfit->lua_env, 0, 0 )) {   /* */
+         WARN( _("Outfit '%s' -> '%s':\n%s"), w->outfit->name, "onmiss", lua_tostring(naevL,-1) );
+         lua_pop(naevL, 1);
+      }
+   }
+
    weapon_destroy(w);
 }
 
@@ -2021,7 +2045,7 @@ void beam_end( const unsigned int parent, unsigned int beam )
    /* Now try to destroy the beam. */
    for (int i=0; i<array_size(curLayer); i++) {
       if (curLayer[i]->ID == beam) { /* Found it. */
-         weapon_destroy(curLayer[i]);
+         weapon_miss(curLayer[i]);
          break;
       }
    }

@@ -2186,6 +2186,7 @@ static int outfit_parse( Outfit* temp, const char* file )
    temp->lua_takeoff    = LUA_NOREF;
    temp->lua_jumpin     = LUA_NOREF;
    temp->lua_onimpact   = LUA_NOREF;
+   temp->lua_onmiss     = LUA_NOREF;
 
    xmlr_attr_strd(parent,"name",temp->name);
    if (temp->name == NULL)
@@ -2505,6 +2506,7 @@ int outfit_load (void)
       o->lua_takeoff    = nlua_refenvtype( env, "takeoff",  LUA_TFUNCTION );
       o->lua_jumpin     = nlua_refenvtype( env, "jumpin",   LUA_TFUNCTION );
       o->lua_onimpact   = nlua_refenvtype( env, "onimpact", LUA_TFUNCTION );
+      o->lua_onmiss     = nlua_refenvtype( env, "onmiss",   LUA_TFUNCTION );
    }
 
 #ifdef DEBUGGING
