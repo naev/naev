@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-07-06 21:18+0000\n"
+"PO-Revision-Date: 2022-07-07 21:16+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -86357,10 +86357,14 @@ msgid ""
 "running river sound that seems to come from the cargo container. What have "
 "you gotten into?"
 msgstr ""
+"Cuando vuelves a tu nave, el cargamento ya ha sido recogido y está "
+"debidamente asegurada en tu nave. Al acercarte a ella, oyes un extraño "
+"sonido de río corriendo que parece provenir del contenedor de carga. ¿En qué "
+"te has metido?"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:167
 msgid "Strange Container"
-msgstr ""
+msgstr "Contenedor Extraño"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:167
 msgid ""
@@ -86371,11 +86375,11 @@ msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:203
 msgid "That's the one! Get 'em!"
-msgstr ""
+msgstr "¡Ese es! ¡Atrápenlo!"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:52
 msgid "You approach Noona who seems giddy with excitement."
-msgstr ""
+msgstr "Te acercas a Noona, que parece estar emocionada."
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:53
 msgid ""
@@ -86390,7 +86394,7 @@ msgstr ""
 #: dat/missions/zalek/particlephysics/zpp05.lua:60
 #: dat/missions/zalek/particlephysics/zpp06.lua:54
 msgid "\"I see. You must be busy with other things.\""
-msgstr ""
+msgstr "\"Ya veo. Debes estar ocupado con otras cosas.\""
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:64
 msgid ""
@@ -86422,28 +86426,28 @@ msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:78
 msgid "Science!"
-msgstr ""
+msgstr "¡Ciencia!"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:79
 msgid "Perform the particle physics experiment at {sys}."
-msgstr ""
+msgstr "Realiza el experimento de física de partículas en {sys}."
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:85
 msgid "Perform the experiment"
-msgstr ""
+msgstr "Realiza el experimento"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:104
 msgid "You land after the dizzying event. What was that about?"
-msgstr ""
+msgstr "Aterrizas después del evento vertiginoso. ¿Qué fue eso?"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:105
 msgid "\"You don't look so good. Did something happen?\""
-msgstr ""
+msgstr "\"No te ves muy bien. ¿Ha pasado algo?\""
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:106
 msgid ""
 "You don't know how to start explaining and give up on mentioning anything."
-msgstr ""
+msgstr "No sabes cómo empezar a explicarlo y renuncias a mencionar nada."
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:107
 msgid ""
@@ -86453,6 +86457,11 @@ msgid ""
 "physics.\"\n"
 "She gives you a not too reassuring smile."
 msgstr ""
+"\"El experimento parece haber recogido una tonelada de datos que tendré que "
+"procesar y analizar. Esperaba una reacción más violenta, pero tienes suerte "
+"de que no haya ocurrido. Nunca se sabe cómo irán las cosas con la física de "
+"partículas.\"\n"
+"Te dedica una sonrisa no demasiado tranquilizadora."
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:109
 msgid ""
@@ -86460,6 +86469,9 @@ msgid ""
 "bar in a bit. I should have another task for you.\"\n"
 "She starts to hum and skips off towards her laboratory space."
 msgstr ""
+"\"Tengo que procesar algunos datos muy rápido, pero reúnete conmigo en el "
+"bar del puerto espacial en un rato. Debería tener otra tarea para ti.\"\n"
+"Comienza a tararear y se va corriendo hacia su laboratorio espacial."
 
 #. vn.na( fmt.credits(reward) )
 #. player.pay( reward )
@@ -86468,21 +86480,23 @@ msgid ""
 "You helped Noona conduct her particle physics experiment. However, you saw "
 "something you couldn't really make out during the experiments."
 msgstr ""
+"Ayudaste a Noona a realizar su experimento de física de partículas. Sin "
+"embargo, viste algo que no pudiste distinguir durante los experimentos."
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:128
 msgid "You were supposed to perform the experiment!"
-msgstr ""
+msgstr "¡Se suponía que debías realizar el experimento!"
 
 #. Spawn the drones
 #. TODO better location once testing center object is created
 #. Hostile drone
 #: dat/missions/zalek/particlephysics/zpp05.lua:137
 msgid "Amplifier"
-msgstr ""
+msgstr "Amplificador"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:158
 msgid "Experiment Site"
-msgstr ""
+msgstr "Lugar del Experimento"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:196
 msgid "You access the amplifiers control panel and jack in."
@@ -86495,21 +86509,23 @@ msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:217
 msgid "You failed to turn the amplifier on."
-msgstr ""
+msgstr "No has encendido el amplificador."
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:232
 msgid "Get close to the experiment site!"
-msgstr ""
+msgstr "¡Acércate al lugar del experimento!"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:235
 msgid "Carefully push the crystals into the beam."
-msgstr ""
+msgstr "Empuja con cuidado los cristales hacia el rayo."
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:238
 msgid ""
 "Hmmm. It looks like the amplifier needs some adjustments. Could you try to "
 "fix it?"
 msgstr ""
+"Hmmm. Parece que el amplificador necesita algunos ajustes. ¿Podrías intentar "
+"arreglarlo?"
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:245
 msgid "It looks everything is OK now."
@@ -86517,15 +86533,15 @@ msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:249
 msgid "Now push the crystals into the beam."
-msgstr ""
+msgstr "Ahora empuja los cristales hacia el rayo."
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:321
 msgid "Are you alright? Communication cut off for a bit."
-msgstr ""
+msgstr "¿Estás bien? La comunicación se cortó un rato."
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:325
 msgid "Come back to Katar I."
-msgstr ""
+msgstr "Vuelve a Katar I."
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:45
 msgid "You meet Noona who seems to be a bit more calm than usually."
@@ -86550,21 +86566,23 @@ msgstr ""
 #. Must be accepted beyond this point
 #: dat/missions/zalek/particlephysics/zpp06.lua:69
 msgid "Za'lek Report"
-msgstr ""
+msgstr "Informe Za'lek"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:69
 msgid ""
 "A in-depth report filled with jargon and technical details you can't "
 "comprehend."
 msgstr ""
+"Un informe exhaustivo lleno de jerga y detalles técnicos que no puedes "
+"comprender."
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:75
 msgid "Deliver Noona's preliminary report to {pnt} in the {sys} system."
-msgstr ""
+msgstr "Entrega el informe preliminar de Noona a {pnt} en el sistema {sys}."
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:80
 msgid "Deliver a report to {pnt} ({sys} system)"
-msgstr ""
+msgstr "Entrega un informe en {pnt} (sistema {sys})"
 
 #. Just for the letter
 #: dat/missions/zalek/particlephysics/zpp06.lua:97
@@ -86590,15 +86608,17 @@ msgid ""
 "As you wonder about what is in the envelope, suddenly two Za'lek Military "
 "officers bust in to the room."
 msgstr ""
+"Mientras te preguntas qué hay en el sobre, de repente irrumpen en la "
+"habitación dos oficiales militares Za'lek."
 
 #. TODO proper graphics
 #: dat/missions/zalek/particlephysics/zpp06.lua:101
 msgid "Za'lek Officer A"
-msgstr ""
+msgstr "Oficial Za'lek A"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:102
 msgid "Za'lek Officer B"
-msgstr ""
+msgstr "Oficial Za'lek B"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:104
 msgid ""
@@ -86608,28 +86628,35 @@ msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:105
 msgid "The secretary lazily points at you."
-msgstr ""
+msgstr "La secretaria te señala perezosamente."
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:106
 msgid "\"Damnit, she got someone else to bring the report for her again…\""
 msgstr ""
+"\"Maldita sea, ha conseguido que otra persona traiga el informe por ella "
+"otra vez...\""
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:107
 msgid ""
 "\"The council should have never passed the law permitting third parties to "
 "hand-in official reports.\""
 msgstr ""
+"\"El Consejo nunca debería haber aprobado la ley que permite a terceros "
+"entregar informes oficiales.\""
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:108
 msgid ""
 "\"They're trying to revoke it, but last time the meeting ended in fisticuffs."
 "\""
 msgstr ""
+"\"Intentan revocarla, pero la última vez la reunión acabó a puñetazos.\""
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:109
 msgid ""
 "\"Oh well, at least we have a hint to where she is now. On to Katar I!\""
 msgstr ""
+"\"Oh, bueno, al menos tenemos una pista de dónde está ahora. ¡Hacia Katar I!"
+"\""
 
 #. Played in reverse
 #: dat/missions/zalek/particlephysics/zpp06.lua:111
@@ -86679,6 +86706,8 @@ msgid ""
 "You see a scientist talking to various pilots. Perhaps you should see what "
 "he's looking for."
 msgstr ""
+"Ves a un científico hablando con varios pilotos. Tal vez deberías ver lo que "
+"está buscando."
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:58
 msgid ""
@@ -86688,12 +86717,17 @@ msgid ""
 "just some minor fiddling to do. Would you like to help me out? I just need "
 "you to find some samples that I can study.\""
 msgstr ""
+"\"¡Oh, hola! Parece que eres un piloto; ¿es así? Tengo un trabajo para ti. "
+"Permítame que me presente: me llamo Dr. Geller y estoy a punto de "
+"revolucionar la ciencia. Básicamente ya lo he hecho; sólo hay que hacer unos "
+"pequeños retoques. ¿Te gustaría ayudarme? Sólo necesito que encuentres "
+"algunas muestras que pueda estudiar.\""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:59
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:55
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:59
 msgid "No Science Today"
-msgstr ""
+msgstr "Hoy No Hay Ciencia"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:59
 msgid "I guess you don't care for science..."
@@ -86714,58 +86748,66 @@ msgstr ""
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:126
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:143
 msgid "The one with the Shopping"
-msgstr ""
+msgstr "El de las Compras"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:65
 msgid "Go to the {sys} system and talk to the trader on {pnt}"
-msgstr ""
+msgstr "Ve al sistema {sys} y habla con el comerciante en {pnt}"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:67
 msgid ""
 "You've been hired by Dr. Geller to collect some materials he urgently needs "
 "for his research."
 msgstr ""
+"Has sido contratado por el Dr. Geller para recoger unos materiales que "
+"necesita urgentemente para su investigación."
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:69
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:68
 msgid "The gratitude of science and a bit of compensation"
-msgstr ""
+msgstr "La gratitud de la ciencia y un poco de compensación"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:76
 msgid ""
 "A scientist conspicuously sits in the corner. Perhaps he might be the person "
 "you're supposed to get this stuff for."
 msgstr ""
+"Un científico se sienta llamativamente en la esquina. Tal vez sea la persona "
+"a la que se supone que tienes que comprar estas cosas."
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:86
 msgid "Contact Person"
-msgstr ""
+msgstr "Persona de Contacto"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:86
 msgid ""
 "You see a shifty-looking dealer of some kind. Maybe he has what you're "
 "looking for."
-msgstr ""
+msgstr "Ves a un traficante de aspecto sospechoso. Quizá tenga lo que buscas."
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:93
 msgid "\"What are you still doing here? No phosphine, no trade.\""
-msgstr ""
+msgstr "\"¿Qué haces todavía aquí? Sin fosfina, no hay comercio.\""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:96
 msgid ""
 "\"With what can I help you, my friend?\" says the shifty figure. You hand "
 "him the memory chip the scientist handed you."
 msgstr ""
+"\"¿En qué puedo ayudarte, amigo mío?\", dice la figura sospechosa. Le "
+"entregas el chip de memoria que te entregó el científico."
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:97
 msgid ""
 "\"Of course I have what you need. I'll trade it for some 3t phosphine. You "
 "can find it on {pnt} in the {sys} system.\""
 msgstr ""
+"\"Por supuesto que tengo lo que necesitas. Lo cambiaré por 3t de fosfina. "
+"Puedes encontrarla en {pnt} en el sistema {sys}.\""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:102
 msgid "Go to the {sys} system and talk to the contact person on {pnt}"
-msgstr ""
+msgstr "Ve al sistema {sys} y habla con la persona de contacto en {pnt}"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:113
 msgid ""
@@ -86777,23 +86819,23 @@ msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:114
 msgid "\"Then we have nothing to to discuss.\""
-msgstr ""
+msgstr "\"Entonces no tenemos nada que discutir.\""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:119
 msgid "\"You don't have enough money. Stop wasting my time.\""
-msgstr ""
+msgstr "\"No tienes suficiente dinero. Deja de hacerme perder el tiempo.\""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:123
 msgid "Phosphine"
-msgstr ""
+msgstr "Fosfina"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:123
 msgid "A colourless, flammable, poisonous gas."
-msgstr ""
+msgstr "Un gas incoloro, inflamable y venenoso."
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:127
 msgid "Return to the {sys} system to the trader on {pnt}"
-msgstr ""
+msgstr "Vuelve al sistema {sys} al comerciante en {pnt}"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:138
 msgid ""
@@ -86801,10 +86843,13 @@ msgid ""
 "will do. And here, as promised: a piece of a ghost ship from the nebula. "
 "100% authentic! At least, according to my supplier.\""
 msgstr ""
+"\"Ah, sí, efectivamente\", dice mientras inspecciona una muestra que tiene "
+"delante. \"Esto servirá. Y aquí, como prometí: una pieza de una nave "
+"fantasma de la nebulosa. 100% auténtica. Al menos, según mi proveedor.\""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:144
 msgid "Return to the {sys} system and deliver to Dr. Geller on {pnt}"
-msgstr ""
+msgstr "Regresa al sistema {sys} y realiza la entrega al Dr. Geller en {pnt}"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:158
 msgid ""
@@ -86825,6 +86870,11 @@ msgid ""
 "apologies for forgetting.\" He hands you a credit chip with your payment. "
 "\"I might need your services again in the future, so do stay in touch!\""
 msgstr ""
+"Cuando se da la vuelta, te aclaras la garganta de forma audible, lo que hace "
+"que se vuelva hacia ti. \"Oh, sí, por supuesto ,quieres algún pago por tu "
+"servicio. Mis disculpas por haberlo olvidado.\" Te entrega un chip de "
+"crédito con tu pago. \"Puede que vuelva a necesitar tus servicios en el "
+"futuro, así que mantente en contacto.\""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:161
 msgid ""
@@ -86853,17 +86903,20 @@ msgstr ""
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:132
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:191
 msgid "On the intercom"
-msgstr ""
+msgstr "En el intercomunicador"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:173
 msgid ""
 "\"We have reason to believe you are carrying controlled substances without a "
 "proper license. Please stop your ship and prepare to be boarded.\""
 msgstr ""
+"\"Tenemos razones para creer que están llevando sustancias controladas sin "
+"una licencia adecuada. Por favor, detenga su nave y prepárese para ser "
+"abordado.\""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:174
 msgid "\"Stand down for inspection.\""
-msgstr ""
+msgstr "\"Retírense para la inspección.\""
 
 #. Re-outfit the ships to use disable weapons. Make a proper function for that.
 #. move to the player ship
@@ -86894,7 +86947,7 @@ msgstr ""
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:313
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:353
 msgid "On your ship"
-msgstr ""
+msgstr "En tu nave"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:227
 msgid ""
@@ -86908,10 +86961,12 @@ msgid ""
 "The inspectors search through your ship and cargo hold. It doesn't take long "
 "for them to find the phosphine; they confiscate it and fine you {credits}."
 msgstr ""
+"Los inspectores registran tu nave y la bodega de carga. No tardan en "
+"encontrar la fosfina; la confiscan y te ponen una multa de {credits}."
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:245
 msgid "Mission failed!"
-msgstr ""
+msgstr "¡Misión fracasada!"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -86946,7 +87001,7 @@ msgstr ""
 #. mem.t_pla[1], mem.t_sys[1] = planet.getS("Gastan")
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:40
 msgid "Tokera"
-msgstr ""
+msgstr "Tokera"
 
 #. Have to be at center of operations.
 #. Spaceport bar stuff
@@ -86987,7 +87042,7 @@ msgstr ""
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:50
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:53
 msgid "Dr. Geller"
-msgstr ""
+msgstr "Dr. Geller"
 
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:50
 msgid ""
@@ -87002,10 +87057,14 @@ msgid ""
 "something that would get you in trouble with Soromid authorities. Do you "
 "accept the job?"
 msgstr ""
+"\"¡Ah, ahí estás! Tengo un trabajo para ti. Específicamente, una... "
+"adquisición... de tecnología de los Soromido, que no han sido muy "
+"cooperativos. ¿Estás dispuesto a ello?\" Parece que quiere que hagas algo "
+"que te meta en problemas con las autoridades Soromido. ¿Aceptas el trabajo?"
 
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:55
 msgid "But I really thought you were into science..."
-msgstr ""
+msgstr "Pero realmente pensé que te gustaba la ciencia..."
 
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:58
 msgid ""
@@ -87023,36 +87082,40 @@ msgstr ""
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:61
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:67
 msgid "The one with the Visit"
-msgstr ""
+msgstr "El de la Visita"
 
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:62
 msgid "Go to the {sys} system and find the {plt}"
-msgstr ""
+msgstr "Ve al sistema {sys} y encuentra el {plt}"
 
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:63
 msgid "Board the {plt} and retrieve the secret technology"
-msgstr ""
+msgstr "Aborda el {plt} y recupera la tecnología secreta"
 
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:66
 msgid ""
 "You've been hired by Dr. Geller to retrieve technology he urgently needs to "
 "build his prototype."
 msgstr ""
+"Has sido contratado por el Dr. Geller para recuperar la tecnología que él "
+"necesita urgentemente para construir su prototipo."
 
 #. Tear down now-useless hooks.
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:122
 msgid "What have you done?"
-msgstr ""
+msgstr "¿Qué has hecho?"
 
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:122
 msgid ""
 "The ship explodes before your eyes and you realize that you will never be "
 "able to get the secret tech now."
 msgstr ""
+"La nave explota ante tus ojos y te das cuenta de que ya no podrás conseguir "
+"la tecnología secreta."
 
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:129
 msgid "In the ship"
-msgstr ""
+msgstr "En la nave"
 
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:129
 msgid ""
@@ -87070,11 +87133,11 @@ msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:133
 msgid "Secret Technology"
-msgstr ""
+msgstr "Tecnología Secreta"
 
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:133
 msgid "A mysterious box of stolen Soromid technology."
-msgstr ""
+msgstr "Una misteriosa caja con tecnología robada Soromida."
 
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:145
 msgid ""
@@ -87090,12 +87153,15 @@ msgid ""
 "You stole something called a \"quantum sharpener\" from a Soromid ship for "
 "Dr. Geller."
 msgstr ""
+"Robaste algo llamado \"afilador cuántico\" de una nave Soromida para el Dr. "
+"Geller."
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:53
 msgid ""
 "You see Dr. Geller going from one person to the next, seemingly asking for "
 "something."
 msgstr ""
+"Ves al Dr. Geller yendo de una persona a otra, aparentemente pidiendo algo."
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:58
 msgid ""
@@ -87108,37 +87174,39 @@ msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:59
 msgid "Don't you care about science?..."
-msgstr ""
+msgstr "¿No te importa la ciencia?..."
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:62
 msgid "\"Excellent! I will join you this time. Let's go.\""
-msgstr ""
+msgstr "\"¡Excelente! Me uniré a ti esta vez. Vamos.\""
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:64
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:69
 msgid "The one with the Runaway"
-msgstr ""
+msgstr "El de la Fuga"
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:65
 msgid "Go to the {sys} system and hail the prototype"
-msgstr ""
+msgstr "Ve al sistema {sys} y llama al prototipo"
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:66
 msgid "Disable the prototype"
-msgstr ""
+msgstr "Desactiva el prototipo"
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:67
 msgid "Return the prototype to {pnt} in the {sys} system"
-msgstr ""
+msgstr "Devuelve el prototipo a {pnt} en el sistema {sys}"
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:68
 msgid ""
 "You've been hired by Dr. Geller to retrieve his prototype that ran away."
 msgstr ""
+"Has sido contratado por el Dr. Geller para recuperar su prototipo que se "
+"escapó."
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:70
 msgid "A peek at the new prototype and some compensation for your efforts"
-msgstr ""
+msgstr "Un vistazo al nuevo prototipo y una compensación por tus esfuerzos"
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:132
 msgid ""
@@ -87147,12 +87215,16 @@ msgid ""
 "control again. But you have to be close so the data transfer is as stable as "
 "possible.\""
 msgstr ""
+"\" ¡Ahí! ¡El rastreador muestra que debe estar aquí! ¡Está justo al lado de "
+"{pnt}! Si lo llamas podré parchear el software. Eso debería darme el control "
+"de nuevo. Pero tienes que estar cerca para que la transferencia de datos sea "
+"lo más estable posible.\""
 
 #. spawn drones
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:135
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:243
 msgid "Prototype Drone"
-msgstr ""
+msgstr "Dron Prototipo"
 
 #. prototype is a scout drone
 #. add something so it is not insta-disabled with one shot?
@@ -87160,13 +87232,15 @@ msgstr ""
 #. wait for the drone to be hailed
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:153
 msgid "Target out of range"
-msgstr ""
+msgstr "Objetivo fuera de rango"
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:159
 msgid ""
 "\"Huh, I don't understand. This should not be happening. Hold on. I can't "
 "get access.\""
 msgstr ""
+"\"Huh, no entiendo. Esto no debería estar pasando. Espera. No puedo acceder."
+"\""
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:160
 msgid ""
@@ -87175,47 +87249,57 @@ msgid ""
 "them to attack us. I never should have tampered with that weird chip those "
 "pirates sold me!\""
 msgstr ""
+"\"Parece que hay un fallo. Bueno, más o menos. Um, si he descifrado esto "
+"correctamente, el dron acaba de secuestrar los drones no utilizados en {pnt} "
+"y les ha ordenado que nos ataquen. ¡Nunca debí manipular ese extraño chip "
+"que me vendieron esos piratas!\""
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:161
 msgid ""
 "\"If you can disable the prototype, do it, but I'd prefer not to die at any "
 "rate!\""
 msgstr ""
+"\"Si puedes desactivar el prototipo, hazlo, ¡pero prefiero no morir en "
+"cualquier caso!\""
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:191
 msgid ""
 "\"NOOOOOO! What have you done!? My prototype! It's going to take me weeks to "
 "rebuild it! You incompetent nincompoop!\""
 msgstr ""
+"\"¡NOOOOO! ¿Qué has hecho? ¡Mi prototipo! ¡Me va a llevar semanas "
+"reconstruirlo! Incompetente papanatas!\""
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:196
 msgid "\"Excellent work! Now load it up and let's get out of here!\""
-msgstr ""
+msgstr "\"¡Excelente trabajo! ¡Ahora cárgalo y salgamos de aquí!\""
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:198
 msgid "Prototype"
-msgstr ""
+msgstr "Prototipo"
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:198
 msgid "A disabled prototype drone."
-msgstr ""
+msgstr "Un prototipo de dron desactivado."
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:213
 msgid ""
 "\"The drone has disappeared from my radar! It must have jumped to the {sys} "
 "system. Let's find it!\""
 msgstr ""
+"\"¡El dron ha desaparecido de mi radar! Debe haber saltado al sistema {sys}. "
+"¡Vamos a encontrarlo!\""
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:223
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:313
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:353
 msgid "\"Interesting, the other drones are running away...\""
-msgstr ""
+msgstr "\"Interesante, los otros drones están huyendo...\""
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:228
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:288
 msgid "\"NOOOOOOOOO! My drone! You imbecile! You failed me!\""
-msgstr ""
+msgstr "\"¡NOOOOOOOOO! ¡Mi drone! ¡Imbecil! ¡Me has fallado!\""
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:238
 msgid ""
@@ -87229,16 +87313,20 @@ msgid ""
 "Something went terribly wrong here! If you see this message please reload "
 "and report a bug in this mission. Thank you!"
 msgstr ""
+"¡Algo salió terriblemente mal aquí! Si ves este mensaje, por favor, vuelve a "
+"cargar e informa de un error en esta misión. ¡Gracias!"
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:274
 msgid ""
 "\"It seems the drone has found a way to shield itself from the EM pulses. I "
 "think I can adjust to that, give me a second.\""
 msgstr ""
+"\"Parece que el dron ha encontrado una forma de protegerke de los pulsos EM. "
+"Creo que puedo ajustarme a eso, dame un segundo.\""
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:293
 msgid "\"There you go! Get it!\""
-msgstr ""
+msgstr "\"¡Ahí tienes! ¡Atrápalo!\""
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:296
 msgid ""
@@ -87250,7 +87338,7 @@ msgstr ""
 #. last hook
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:303
 msgid "Back on {pnt}"
-msgstr ""
+msgstr "Vuelve a {pnt}"
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:303
 msgid ""
@@ -87259,14 +87347,19 @@ msgid ""
 "I know more I might need you again. Oh, and here, for your service!\" A "
 "small bag containing a credit chip and a tiny toy drone is tossed your way."
 msgstr ""
+"\"¡Las cosas que hago por la ciencia! Ahora déjame volver a mi laboratorio y "
+"analizar el dron. Tengo que averiguar qué ha pasado exactamente y qué ha "
+"salido mal. Una vez que sepa más, puede que te necesite de nuevo. ¡Ah, y "
+"toma, por tu servicio!\" Te lanzan una pequeña bolsa con un chip de crédito "
+"y un pequeño dron de juguete."
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:306
 msgid "You helped Dr. Geller retrieve his lost prototype drone."
-msgstr ""
+msgstr "Has ayudado al Dr. Geller a recuperar su prototipo de dron perdido."
 
 #: dat/missions/zalek/zlk_cargorun.lua:32
 msgid "This Za'lek scientist seems to be looking for someone."
-msgstr ""
+msgstr "Este científico Za'lek parece estar buscando a alguien."
 
 #: dat/missions/zalek/zlk_cargorun.lua:51
 msgid ""
@@ -87274,40 +87367,45 @@ msgid ""
 "begins to speak. \"Excuse me, but do you happen to know a ship captain who "
 "can help me with something?\""
 msgstr ""
+"Este científico Za'lek parece estar buscando a alguien. Cuando te acercas, "
+"comienza a hablar. \"Disculpe, pero ¿por casualidad conoce a un capitán de "
+"nave que pueda ayudarme con algo?\""
 
 #. Not enough space
 #. mission details
 #: dat/missions/zalek/zlk_cargorun.lua:62
 msgid "Za'lek Shipping Delivery"
-msgstr ""
+msgstr "Entrega de Envíos Za'lek"
 
 #: dat/missions/zalek/zlk_cargorun.lua:63
 msgid "A handsome payment."
-msgstr ""
+msgstr "Un buen pago."
 
 #: dat/missions/zalek/zlk_cargorun.lua:64
 msgid ""
 "You agreed to help a Za'lek scientist pick up some cargo way out in the "
 "sticks. Hopefully this'll be worth it."
 msgstr ""
+"Aceptaste ayudar a un científico Za'lek a recoger un cargamento en las "
+"afueras. Espero que esto valga la pena."
 
 #. pickup
 #. OSD
 #: dat/missions/zalek/zlk_cargorun.lua:71
 msgid "Za'lek Cargo Jockey"
-msgstr ""
+msgstr "Jinete de Carga Za'lek"
 
 #: dat/missions/zalek/zlk_cargorun.lua:72
 msgid "Go pick up some equipment at {pnt} in the {sys} system"
-msgstr ""
+msgstr "Ve a recoger algunos equipos en {pnt} en el sistema {sys}"
 
 #: dat/missions/zalek/zlk_cargorun.lua:73
 msgid "Drop off the equipment at {pnt} in the {sys} system"
-msgstr ""
+msgstr "Deja el equipo en {pnt} en el sistema {sys}"
 
 #: dat/missions/zalek/zlk_cargorun.lua:76
 msgid "A long haul through tough territory"
-msgstr ""
+msgstr "Un largo camino a través de un territorio difícil"
 
 #: dat/missions/zalek/zlk_cargorun.lua:76
 msgid ""
@@ -87324,11 +87422,23 @@ msgid ""
 "equipment, please deliver it to {dropoff_pnt} in the {dropoff_sys} system. I "
 "will meet you there.\""
 msgstr ""
+"Dices que ahora mismo está mirando uno. Sorprendentemente, se ríe un poco y "
+"parece aliviado. \"¡Gracias, capitán! Esperaba que pudiera ayudarme. Me "
+"llamo Dr. Andrej Logan. El trabajo será un poco peligroso, pero le pagaré "
+"generosamente por sus servicios.\n"
+"    \"Necesito una carga de equipo que está atascada en {pickup_pnt} en el "
+"sistema {pickup_sys}. Por desgracia, eso requiere atravesar el espacio "
+"marginal infestado de piratas entre el Imperio, Za'lek y Dvaered. Como nadie "
+"se pone de acuerdo sobre quién es el responsable de limpiar las alimañas, "
+"los piratas han hecho que sea peligroso atravesar esa ruta. Me ha costado "
+"mucho encontrar a alguien dispuesto a asumir la misión. Una vez que tengas "
+"el equipo, por favor entrégalo en {dropoff_pnt} en el sistema {dropoff_sys}. "
+"Nos encontraremos allí.\""
 
 #. Not enough space
 #: dat/missions/zalek/zlk_cargorun.lua:92
 msgid "Deliver the Equipment"
-msgstr ""
+msgstr "Entrega el Equipamiento"
 
 #: dat/missions/zalek/zlk_cargorun.lua:92
 msgid ""
@@ -87337,10 +87447,14 @@ msgid ""
 "human overseer loads the heavy reinforced crates on your ship and you are "
 "ready to go."
 msgstr ""
+"Una vez en el planeta, encuentras la zona de aceptación y tecleas el código "
+"que te dio el Dr. Logan para recoger el equipo. Rápidamente, un grupo de "
+"droides respaldado por un supervisor humano carga las pesadas cajas "
+"reforzadas en tu nave y estás listo para partir."
 
 #: dat/missions/zalek/zlk_cargorun.lua:93
 msgid "Some heavy reinforced crates of equipment."
-msgstr ""
+msgstr "Algunas cajas reforzadas de equipos pesados."
 
 #: dat/missions/zalek/zlk_cargorun.lua:102
 msgid ""
@@ -87356,10 +87470,23 @@ msgid ""
 "not landed yet. He gives you a code to act as a beacon so you can catch the "
 "shuttle in-bound."
 msgstr ""
+"Aterrizas en el planeta Za'lek y te encuentras con que tu nave está rodeada "
+"de estibadores vestidos de rojo y droides de aspecto avanzado rápidamente. "
+"Descargan el equipo y te dirigen a un edificio de aspecto ramificado para "
+"que pagues.\n"
+"    Cuando entras, la cabeza te da vueltas ante la combinación de la "
+"tecnología altamente avanzada y de aspecto esotérico que se exhibe tan "
+"casualmente, así como el caos absoluto de las instalaciones. Pasan unos diez "
+"hectosegundos antes de que alguien se acerque a ti para preguntarte qué "
+"necesitas, con aspecto bastante agotado. Le dices que has entregado un "
+"equipo y que quieres que te pague. El hombre teclea durante unos segundos en "
+"un teclado de muñeca y dice que la persona que buscas aún no ha aterrizado. "
+"Te da un código para que te sirva de baliza y puedas coger la lanzadera que "
+"viene en camino."
 
 #: dat/missions/zalek/zlk_cargorun.lua:115
 msgid "Dr. Logan"
-msgstr ""
+msgstr "Dr. Logan"
 
 #: dat/missions/zalek/zlk_cargorun.lua:124
 msgid ""
@@ -87368,11 +87495,15 @@ msgid ""
 "organization you've seen on the planet. Suddenly, you hear a ping on your "
 "console, signifying that someone's hailing you."
 msgstr ""
+"Te sientes un poco agitado al salir de la atmósfera, pero supones que no "
+"puedes culpar al científico por llegar tarde, sobre todo teniendo en cuenta "
+"la falta de organización que has visto en el planeta. De repente, oyes un "
+"ping en tu consola, lo que significa que alguien te está llamando."
 
 #. TODO probably handle the case the player ignores Logan
 #: dat/missions/zalek/zlk_cargorun.lua:132
 msgid "A Small Delay"
-msgstr ""
+msgstr "Un Pequeño Retraso"
 
 #: dat/missions/zalek/zlk_cargorun.lua:132
 msgid ""
@@ -87380,6 +87511,9 @@ msgid ""
 "you will be paid your fee. I am pleased by your help, captain; I hope we "
 "meet again.\""
 msgstr ""
+"\"Hola de nuevo. Es el Dr. Logan. Siento mucho el retraso. Como se acordó, "
+"se te pagarán tus honorarios. Estoy complacido por tu ayuda, capitán; espero "
+"que nos encontremos de nuevo.\""
 
 #: dat/missions/zalek/zlk_cargorun.lua:144
 msgid ""
@@ -87387,12 +87521,17 @@ msgid ""
 "yourself {credits} richer. A good compensation indeed. You feel better "
 "already."
 msgstr ""
+"Compruebas el saldo de tu cuenta mientras él cierra el canal de comunicación "
+"para encontrarte con {credits} más rico. Una buena compensación, sin duda. "
+"Ya te sientes mejor."
 
 #: dat/missions/zalek/zlk_cargorun.lua:150
 msgid ""
 "You helped a Za'lek scientist deliver some equipment and were paid "
 "generously for the job."
 msgstr ""
+"Ayudaste a un científico Za'lek a entregar un equipo y te pagaron "
+"generosamente por el trabajo."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -87437,77 +87576,77 @@ msgstr ""
 #. luacheck: globals baTotext backToControl backToNormal enter land noAnswer noAntext outOfControl outOftext slow slowtext speedtext takeoff teleport teleportation (Hook functions passed by name)
 #: dat/missions/zalek/zlk_test.lua:33
 msgid "engine with phase-change material cooling"
-msgstr ""
+msgstr "motor con refrigeración por material de cambio de fase"
 
 #: dat/missions/zalek/zlk_test.lua:34
 msgid "engine controlled with Zermatt-Henry theory"
-msgstr ""
+msgstr "motor controlado con la teoría de Zermatt-Henry"
 
 #. Some random scientists names
 #: dat/missions/zalek/zlk_test.lua:35
 msgid "engine using a new electron propelling system"
-msgstr ""
+msgstr "motor que utiliza un nuevo sistema de propulsión de electrones"
 
 #: dat/missions/zalek/zlk_test.lua:36
 msgid "engine using the fifth law of thermodynamics"
-msgstr ""
+msgstr "motor utilizando la quinta ley de la termodinámica"
 
 #. In these times, there will maybe exist more thermo laws...
 #: dat/missions/zalek/zlk_test.lua:37
 msgid "engine for system identification using the fe-method"
-msgstr ""
+msgstr "motor para la identificación de sistemas mediante el método fe"
 
 #: dat/missions/zalek/zlk_test.lua:38
 msgid "engine with uncontrolled geometrical singularities"
-msgstr ""
+msgstr "motor con singularidades geométricas no controladas"
 
 #: dat/missions/zalek/zlk_test.lua:39
 msgid "5-cycle-old child's engine invention"
-msgstr ""
+msgstr "invención de un motor para niños de 5 ciclos"
 
 #: dat/missions/zalek/zlk_test.lua:40
 msgid "engine using ancestral propellant technology"
-msgstr ""
+msgstr "motor con tecnología de propulsión ancestral"
 
 #: dat/missions/zalek/zlk_test.lua:41
 msgid "UHP-nanobond engine"
-msgstr ""
+msgstr "motor de nanovinculo-UHP"
 
 #: dat/missions/zalek/zlk_test.lua:42
 msgid "ancient engine discovered at an old crash site"
-msgstr ""
+msgstr "motor antiguo descubierto en un antiguo choque"
 
 #: dat/missions/zalek/zlk_test.lua:43
 msgid "engine controlled by the MegaSys Wondigs operating system"
-msgstr ""
+msgstr "motor controlado por el sistema operativo MegaSys Wondigs"
 
 #: dat/missions/zalek/zlk_test.lua:44
 msgid "engine controlled by XF Cell-Ethyrial particles"
-msgstr ""
+msgstr "motor controlado por partículas XF Cell-Ethyrial"
 
 #: dat/missions/zalek/zlk_test.lua:45
 msgid "engine with ancient Beeline Technology axis"
-msgstr ""
+msgstr "motor con el antiguo eje de la Tecnología Beeline"
 
 #: dat/missions/zalek/zlk_test.lua:46
 msgid "unnamed engine prototype"
-msgstr ""
+msgstr "prototipo de motor sin nombre"
 
 #: dat/missions/zalek/zlk_test.lua:47
 msgid "engine constructed with experimental Bob-Bens technology"
-msgstr ""
+msgstr "motor construido con tecnología experimental Bob-Bens"
 
 #: dat/missions/zalek/zlk_test.lua:48
 msgid "new IDS-1024 experimental engine design"
-msgstr ""
+msgstr "nuevo diseño de motor experimental IDS-1024"
 
 #: dat/missions/zalek/zlk_test.lua:49
 msgid "engine with new Dili-Gent Circle conduction"
-msgstr ""
+msgstr "motor con la nueva conducción Circular Dili-Gent"
 
 #: dat/missions/zalek/zlk_test.lua:50
 msgid "engine with experimental DEI-Z controller"
-msgstr ""
+msgstr "motor con controlador experimental DEI-Z"
 
 #: dat/missions/zalek/zlk_test.lua:54
 msgid ""
@@ -87515,12 +87654,17 @@ msgid ""
 "will validate our aerospace course! The last engine exploded during the "
 "flight, but this one is much more reliable... Hopefully.\""
 msgstr ""
+"Un grupo de estudiantes universitarios te saluda. \"¡Si tu vuelo va bien, "
+"convalidaremos nuestro curso aeroespacial! El último motor explotó durante "
+"el vuelo, pero este es mucho más fiable... Esperemos.\""
 
 #: dat/missions/zalek/zlk_test.lua:55
 msgid ""
 "A very old Za'lek researcher needs you to fly with an instrumented device in "
 "order to take measurements."
 msgstr ""
+"Un antiguo investigador Za'lek necesita que vueles con un aparato "
+"instrumentado para hacer mediciones."
 
 #: dat/missions/zalek/zlk_test.lua:56
 msgid ""
@@ -87528,6 +87672,9 @@ msgid ""
 "I need to make precise measurements on this engine in order to validate a "
 "stochastic failure model I developed.\""
 msgstr ""
+"Un estudiante Za'lek dice: \"Hola, estoy preparando un Doctorado en "
+"fiabilidad de sistemas. Necesito hacer mediciones precisas en este motor "
+"para validar un modelo estocástico de fallos que he desarrollado.\""
 
 #: dat/missions/zalek/zlk_test.lua:57
 msgid ""
@@ -87551,14 +87698,16 @@ msgid ""
 "A Za'lek research team needs you to travel to {pnt} in {sys} using an engine "
 "in order to test it."
 msgstr ""
+"Un equipo de investigación Za'lek necesita que viajes a {pnt} en {sys} "
+"usando un motor para probarlo."
 
 #: dat/missions/zalek/zlk_test.lua:95
 msgid "You cannot accept this mission"
-msgstr ""
+msgstr "No puedes aceptar esta misión"
 
 #: dat/missions/zalek/zlk_test.lua:95
 msgid "You are already testing another engine."
-msgstr ""
+msgstr "Ya estás probando otro motor."
 
 #: dat/missions/zalek/zlk_test.lua:103
 msgid ""
@@ -87569,11 +87718,11 @@ msgstr ""
 
 #: dat/missions/zalek/zlk_test.lua:105
 msgid "Za'lek Test"
-msgstr ""
+msgstr "Prueba Za'lek"
 
 #: dat/missions/zalek/zlk_test.lua:109
 msgid "Too many missions"
-msgstr ""
+msgstr "Demasiadas misiones"
 
 #. Flag to know if the pilot has limited speed
 #. must trigger at every takeoff to check if the player forgot the engine
@@ -87581,13 +87730,15 @@ msgstr ""
 #. Player has forgotten the engine
 #: dat/missions/zalek/zlk_test.lua:128
 msgid "Didn't you forget something?"
-msgstr ""
+msgstr "¿No te olvidaste de algo?"
 
 #: dat/missions/zalek/zlk_test.lua:128
 msgid ""
 "It seems you forgot the engine you are supposed to test. Land again and put "
 "it on your ship."
 msgstr ""
+"Parece que has olvidado el motor que debes probar. Aterriza de nuevo y ponlo "
+"en tu nave."
 
 #. Generates a random breakdown
 #. If the player doesn't have the experimental engine, there can't be any bug
@@ -87598,7 +87749,7 @@ msgstr ""
 #. The player is still slow and will recover normal velocity
 #: dat/missions/zalek/zlk_test.lua:161
 msgid "Successful Landing"
-msgstr ""
+msgstr "Aterrizaje Exitoso"
 
 #: dat/missions/zalek/zlk_test.lua:161
 msgid ""
@@ -87608,14 +87759,14 @@ msgstr ""
 
 #: dat/missions/zalek/zlk_test.lua:172
 msgid "You traveled without the engine."
-msgstr ""
+msgstr "Has viajado sin el motor."
 
 #. Breakdowns
 #. Player is teleported in another system
 #. It's enough problem for one travel
 #: dat/missions/zalek/zlk_test.lua:191
 msgid "What the hell is happening?"
-msgstr ""
+msgstr "¿Qué demonios está pasando?"
 
 #: dat/missions/zalek/zlk_test.lua:191
 msgid ""
@@ -87624,6 +87775,10 @@ msgid ""
 "find that your ship is damaged and you have ended up somewhere in the {sys} "
 "system!"
 msgstr ""
+"De repente sientes una gran aceleración, como si tu nave entrara en el "
+"hiperespacio, y luego una repentina sacudida te hace perder el conocimiento. "
+"¡Al despertar, descubres que tu nave está dañada y que has acabado en algún "
+"lugar del sistema {sys}!"
 
 #. player is slowed
 #. Cancel autonav.
@@ -87637,13 +87792,15 @@ msgstr ""
 #. Displays texts
 #: dat/missions/zalek/zlk_test.lua:265
 msgid "Where has the power gone?"
-msgstr ""
+msgstr "¿Dónde ha ido a parar el poder?"
 
 #: dat/missions/zalek/zlk_test.lua:265
 msgid ""
 "The engine makes a loud noise, and you notice that the engine has lost its "
 "ability to thrust at the rate that it's supposed to."
 msgstr ""
+"El motor hace un fuerte ruido, y notas que el motor ha perdido su capacidad "
+"de empuje a la velocidad que se supone."
 
 #: dat/missions/zalek/zlk_test.lua:269
 msgid "Power is back."
