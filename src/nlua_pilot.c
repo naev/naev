@@ -5080,7 +5080,7 @@ static int pilotL_setLeader( lua_State *L )
       escort_addList( leader, p->ship->name, ESCORT_TYPE_MERCENARY, p->id, 0 );
 
       /* If the pilot has followers, they should be given the new leader as well, and be added as escorts. */
-      for (int i=0; i<array_size(p->escorts); i++) {
+      for (int i=array_size(p->escorts)-1; i>=0; i--) {
          Escort_t *e = &p->escorts[i];
          /* We don't want to deal with fighter bays this way. */
          if (e->type != ESCORT_TYPE_MERCENARY)
@@ -5093,9 +5093,8 @@ static int pilotL_setLeader( lua_State *L )
          /* Add escort to parent. */
          escort_addList( leader, pe->ship->name, e->type, pe->id, 0 );
 
-         free( e->ship );
+         escort_rmListIndex( p, i );
       }
-      array_erase( &p->escorts, array_begin(p->escorts), array_end(p->escorts) );
    }
 
    return 0;
