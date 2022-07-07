@@ -148,6 +148,18 @@ local function gauntlet_setoption( wgt )
       --]]
    end
    subtypes_divider = luatk.newRect( wdw, 20, headerh+214, w-40, 2, {0, 0, 0} )
+
+   local enabled = 0
+   local subtype_def = nil
+   for k,v in ipairs( btn_subtypes ) do
+      if not v.disabled then
+         enabled = enabled+1
+         subtype_def = wgt
+      end
+   end
+   if enabled == 1 then
+      gauntlet_setsubtype( subtype_def )
+   end
 end
 
 
