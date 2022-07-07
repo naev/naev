@@ -86,11 +86,24 @@ local escort_params = {
 			[ "Beam Weapon" ] = { min=1, max=2 }
 		},
 	} end,
+	["Goddard"] = function () return {
+		fighterbay = 1.5,
+		disable = 2,
+		move = 1.5,
+		prefer = {
+			["Droid Repair Crew"] = 2, ["Biometal Armour"] = 60, ["Engine Reroute"] = 2,
+			["Hyperbolic Blink Engine"] = 5, ["Enygma Systems Huntsman Launcher"] = 100,
+			["Agility Combat AI"] = 100
+		},
+		type_range = {
+			[ "Launcher" ] = { max=3 }
+		},
+	} end,
 }
 
 local escort_cores = {
    ["Pirate Kestrel"] = function (p)
-         local c = ecores.get( p, { systems=escort_class, hulls=escort_class, heavy=false } )
+         local c = ecores.get( p, { systems=escort_class, hulls=escort_class } )
          table.insert( c, choose_one{ "Nexus Bolt 3500 Engine", "Krain Remige Engine", "Tricon Typhoon Engine", } )
          return c
       end,
@@ -100,13 +113,18 @@ local escort_cores = {
 		 choose_one{ "Unicorp D-48 Heavy Plating", "S&K Heavy Combat Plating" },
 
       } end,
+	["Goddard"] = function () return {
+         choose_one{ "Milspec Thalos 9802 Core System", "Milspec Orion 9901 Core System" },
+         choose_one{ "Tricon Typhoon Engine II", "Melendez Mammoth XL Engine"},
+		 choose_one{ "S&K Superheavy Combat Plating", "S&K Heavy Combat Plating" },
+      } end,
 	["Pirate Starbridge"] = function (p)
-         local c = ecores.get( p, { systems=escort_class, hulls=escort_class, heavy=false } )
+         local c = ecores.get( p, { systems=escort_class, hulls=escort_class } )
          table.insert( c, choose_one{ "Unicorp Falcon 1300 Engine", "Krain Patagium Engine", "Tricon Cyclone Engine"} )
          return c
       end,
    ["Starbridge"] = function (p)
-         local c = ecores.get( p, { systems=escort_class, hulls=escort_class, heavy=false } )
+         local c = ecores.get( p, { systems=escort_class, hulls=escort_class } )
          table.insert( c, choose_one{ "Unicorp Falcon 1300 Engine", "Krain Patagium Engine", "Tricon Cyclone Engine"} )
          return c
       end,
@@ -136,7 +154,6 @@ local escort_params_overwrite = {
 		[ "Enygma Systems Spearhead Launcher"] = 4, ["TeraCom Headhunter Launcher"] = 10, ["Large Shield Booster"] = 2,
 		[ "Shield Capacitor IV"] = 2, ["Biometal Armour"] = 2
    },
-   
    
    -- not too much diversity, but some
    max_same_stru = 2,
