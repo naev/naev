@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Dvaered">
+ <ai>dvaered</ai>
+ <known />
+ <logo>dvaered</logo>
+ <colour>brown</colour>
+ <longname>House Dvaered</longname>
+ <player>1</player>
+ <spawn>dvaered</spawn>
+ <standing>dvaered</standing>
+ <equip>dvaered</equip>
+ <description>House Dvaered is one of the oldest Great Houses in the Empire. They are proud and formed by a coalition of many powerful warlords.</description>
+ <generator weight="0.45">Independent</generator>
+ <generator weight="0.35">Trader</generator>
+ <allies>
+ </allies>
+ <enemies>
+  <enemy>FLF</enemy>
+  <enemy>Pirate</enemy>
+  <enemy>Marauder</enemy>
+  <enemy>Wild Ones</enemy>
+  <enemy>Dreamer Clan</enemy>
+  <enemy>Raven Clan</enemy>
+  <enemy>Black Lotus</enemy>
+ </enemies>
+ <lane_length_per_presence>250</lane_length_per_presence>
+ <lane_base_cost>40</lane_base_cost>
+ <tags>
+  <tag>greathouse</tag>
+  <tag>generic</tag>
+ </tags>
+</faction>

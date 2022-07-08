@@ -355,6 +355,7 @@ typedef struct Outfit_ {
    int lua_jumpin;   /**< Run when the player jumps in. */
    /* Weapons only. */
    int lua_onimpact; /**< Run when weapon hits the enemy. */
+   int lua_onmiss;   /**< Run when weapon particle expires. */
 
    /* Type dependent */
    OutfitType type; /**< Type of the outfit. */

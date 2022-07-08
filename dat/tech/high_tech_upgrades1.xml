@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tech name="High Tech Upgrades 1">
+ <item>Auxiliary Proccessing Unit I</item>
+ <item>Auxiliary Proccessing Unit II</item>
+ <item>Battery I</item>
+ <item>Battery II</item>
+ <item>Reactor Class I</item>
+ <item>Reactor Class II</item>
+ <item>Shield Capacitor I</item>
+ <item>Shield Capacitor II</item>
+ <item>Small Shield Booster</item>
+ <item>Medium Shield Booster</item>
+ <item>Large Shield Booster</item>
+ <item>Plasteel Plating</item>
+ <item>Microbond Plating</item>
+ <item>Nanobond Plating</item>
+ <item>Engine Reroute</item>
+ <item>Improved Stabilizer</item>
+ <item>Unicorp Light Afterburner</item>
+ <item>Unicorp Medium Afterburner</item>
+ <item>Small Fuel Pod</item>
+ <item>Medium Fuel Pod</item>
+ <item>Small Cargo Pod</item>
+ <item>Medium Cargo Pod</item>
+ <item>Large Cargo Pod</item>
+ <item>Targeting Array</item>
+ <item>Unicorp Scrambler</item>
+ <item>Unicorp Jammer</item>
+ <item>Medium Weapon License</item>
+ <item>Emergency Shield Booster</item>
+ <item>Asteroid Scanner</item>
+ <item>Agility Combat AI</item>
+ <item>Efficiency Combat AI</item>
+ <item>Boarding Androids MK1</item>
+ <item>Targeting Conduit</item>
+ <item>Blink Drive</item>
+ <item>Cryogenic Repair Nanobots</item>
+ <item>S&amp;K Heavy Plasma Drill</item>
+</tech>

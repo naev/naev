@@ -83,7 +83,7 @@ msg_lore["general"] = {
    _([["I heard the nebula is haunted! My uncle Bobby told me he saw one of the ghost ships himself over in Arandon!"]]),
    _([["I don't believe in those nebula ghost stories. The people who talk about it are just trying to scare you."]]),
    _([["I heard the Soromid lost their homeworld Sorom in the Incident. Its corpse can still be found in Basel."]]),
-   _([["The Soromid fly organic ships! I heard their ships can even heal themselves in flight. That's so weird."]]),
+   _([["The Soromid fly organic ships! I heard some of their ships can even repair themselves. That's so weird."]]),
    _([["Have you seen that ship the Emperor lives on? It's huge! But if you ask me, it looks a bit like a... No, never mind."]]),
    _([["I wonder why the Sirii are all so devout? I heard they have these special priesty people walking around. I wonder what's so special about them."]]),
    _([["They say Eduard Manual Goddard is drifting in space somewhere, entombed amidst a cache of his inventions! What I wouldn't give to rummage through there..."]]),

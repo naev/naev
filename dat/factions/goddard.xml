@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Goddard">
+ <ai>goddard</ai>
+ <known />
+ <logo>goddard</logo>
+ <colour>blue</colour>
+ <longname>House Goddard</longname>
+ <player>2</player>
+ <spawn>goddard</spawn>
+ <standing>goddard</standing>
+ <equip>empire</equip>
+ <description>House Goddard is a minor house wedged between the Empire and Dvaered. They are one of the main fabricators of ships for the Dvaered.</description>
+ <generator weight="0.5">Independent</generator>
+ <generator weight="0.5">Trader</generator>
+ <allies>
+ </allies>
+ <enemies>
+  <enemy>Pirate</enemy>
+  <enemy>Marauder</enemy>
+  <enemy>Wild Ones</enemy>
+  <enemy>Dreamer Clan</enemy>
+  <enemy>Raven Clan</enemy>
+  <enemy>Black Lotus</enemy>
+ </enemies>
+ <lane_length_per_presence>143</lane_length_per_presence>
+ <lane_base_cost>0</lane_base_cost>
+ <tags>
+  <tag>generic</tag>
+ </tags>
+</faction>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Soromid">
+ <ai>soromid</ai>
+ <known />
+ <logo>soromid</logo>
+ <colour>orange</colour>
+ <player>0</player>
+ <spawn>soromid</spawn>
+ <standing>soromid</standing>
+ <equip>soromid</equip>
+ <description>The Soromid consists of individuals who were forced to genetically modify themselves in order to survive a pandemic. They now openly embrace their human transcendence as a sign of strength.</description>
+ <generator weight="0.4">Independent</generator>
+ <generator weight="0.35">Trader</generator>
+ <allies/>
+ <enemies>
+  <enemy>Pirate</enemy>
+  <enemy>Marauder</enemy>
+  <enemy>Wild Ones</enemy>
+  <enemy>Dreamer Clan</enemy>
+  <enemy>Raven Clan</enemy>
+  <enemy>Black Lotus</enemy>
+ </enemies>
+ <lane_length_per_presence>250</lane_length_per_presence>
+ <lane_base_cost>40</lane_base_cost>
+ <tags>
+  <tag>generic</tag>
+ </tags>
+</faction>

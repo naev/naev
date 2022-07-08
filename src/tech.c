@@ -56,6 +56,7 @@ typedef struct tech_item_s {
  */
 struct tech_group_s {
    char *name;          /**< Name of the tech group. */
+   char *filename;      /**< Name of the file. */
    tech_item_t *items;  /**< Items in the tech group. */
 };
 
@@ -72,8 +73,9 @@ static void tech_freeGroup( tech_group_t *grp );
 static char* tech_getItemName( tech_item_t *item );
 /* Loading. */
 static tech_item_t *tech_itemGrow( tech_group_t *grp );
-static int tech_parseNode( tech_group_t *tech, xmlNodePtr parent );
-static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent );
+static int tech_parseFile( tech_group_t *tech, const char *file );
+static int tech_parseFileData( tech_group_t *tech );
+static int tech_parseXMLData( tech_group_t *tech, xmlNodePtr parent );
 static int tech_addItemOutfit( tech_group_t *grp, const char* name );
 static int tech_addItemShip( tech_group_t *grp, const char* name );
 static int tech_addItemCommodity( tech_group_t *grp, const char* name );
@@ -89,72 +91,35 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, const tech
 int tech_load (void)
 {
    int ret, s;
-   char *buf;
-   xmlNodePtr node, parent;
-   xmlDocPtr doc;
-   tech_group_t *tech;
    Uint32 time = SDL_GetTicks();
-
-   /* Load the data. */
-   doc = xml_parsePhysFS( TECH_DATA_PATH );
-   if (doc == NULL)
-      return -1;
-
-   /* Load root element. */
-   parent = doc->xmlChildrenNode;
-   if (!xml_isNode(parent,XML_TECH_ID)) {
-      WARN(_("Malformed %s file: missing root element '%s'"), TECH_DATA_PATH, XML_TECH_ID);
-      return -1;
-   }
-
-   /* Get first node. */
-   node = parent->xmlChildrenNode;
-   if (node == NULL) {
-      WARN(_("Malformed %s file: does not contain elements"), TECH_DATA_PATH);
-      return -1;
-   }
+   char **tech_files = ndata_listRecursive( TECH_DATA_PATH );
 
    /* Create the array. */
    tech_groups = array_create( tech_group_t );
 
    /* First pass create the groups - needed to reference them later. */
    ret   = 0;
-   tech  = NULL;
-   do {
-      xml_onlyNodes(node);
-      /* Must match tag. */
-      if (!xml_isNode(node, XML_TECH_TAG)) {
-         WARN(_("'%s' has unknown node '%s'."), XML_TECH_ID, node->name);
+   for (int i=0; i<array_size(tech_files); i++) {
+   tech_group_t *tech;
+
+      if (!ndata_matchExt( tech_files[i], "xml" ))
          continue;
-      }
+
       if (ret==0) /* Write over failures. */
          tech = &array_grow( &tech_groups );
-      ret = tech_parseNode( tech, node );
-   } while (xml_nextNode(node));
+      ret = tech_parseFile( tech, tech_files[i] );
+      if (ret==0)
+         tech->filename = strdup( tech_files[i] );
+
+      free( tech_files[i] );
+   }
+   array_free( tech_files );
    array_shrink( &tech_groups );
 
    /* Now we load the data. */
-   node  = parent->xmlChildrenNode;
-   s     = array_size( tech_groups );
-   do {
-      /* Must match tag. */
-      if (!xml_isNode(node, XML_TECH_TAG))
-         continue;
-
-      xmlr_attr_strd( node, "name", buf );
-      if (buf == NULL)
-         continue;
-
-      /* Load next tech. */
-      for (int i=0; i<s; i++) {
-         tech  = &tech_groups[i];
-         if (strcmp(tech->name, buf)==0)
-            tech_parseNodeData( tech, node );
-      }
-
-      /* Free memory. */
-      free(buf);
-   } while (xml_nextNode(node));
+   s = array_size( tech_groups );
+   for (int i=0; i<s; i++)
+      tech_parseFileData( &tech_groups[i] );
 
    /* Info. */
    if (conf.devmode) {
@@ -163,9 +128,6 @@ int tech_load (void)
    }
    else
       DEBUG( n_( "Loaded %d tech group", "Loaded %d tech groups", s ), s );
-
-   /* Free memory. */
-   xmlFreeDoc(doc);
 
    return 0;
 }
@@ -200,7 +162,7 @@ tech_group_t *tech_groupCreateXML( xmlNodePtr node )
 {
    /* Load data. */
    tech_group_t *tech = tech_groupCreate();
-   tech_parseNodeData( tech, node );
+   tech_parseXMLData( tech, node );
    return tech;
 }
 
@@ -274,8 +236,19 @@ int tech_groupWrite( xmlTextWriterPtr writer, tech_group_t *grp )
 /**
  * @brief Parses an XML tech node.
  */
-static int tech_parseNode( tech_group_t *tech, xmlNodePtr parent )
+static int tech_parseFile( tech_group_t *tech, const char *file )
 {
+   xmlNodePtr parent;
+   xmlDocPtr doc = xml_parsePhysFS( file );
+   if (doc == NULL)
+      return -1;
+
+   parent = doc->xmlChildrenNode; /* first faction node */
+   if (parent == NULL) {
+      ERR( _("Malformed '%s' file: does not contain elements"), file);
+      return -1;
+   }
+
    /* Just in case. */
    memset( tech, 0, sizeof(tech_group_t) );
 
@@ -286,23 +259,22 @@ static int tech_parseNode( tech_group_t *tech, xmlNodePtr parent )
       return 1;
    }
 
+   xmlFreeDoc(doc);
+
    return 0;
 }
 
 /**
  * @brief Parses an XML tech node.
  */
-static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
+static int tech_parseXMLData( tech_group_t *tech, xmlNodePtr parent )
 {
-   xmlNodePtr node;
-   char *buf, *name;
-   int ret;
-
    /* Parse the data. */
-   node = parent->xmlChildrenNode;
+   xmlNodePtr node = parent->xmlChildrenNode;
    do {
       xml_onlyNodes(node);
       if (xml_isNode(node,"item")) {
+         char *buf, *name;
 
          /* Must have name. */
          name = xml_get( node );
@@ -314,7 +286,7 @@ static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
          /* Try to find hard-coded type. */
          xmlr_attr_strd( node, "type", buf );
          if (buf == NULL) {
-            ret = 1;
+            int ret = 1;
             if (ret)
                ret = tech_addItemGroup( tech, name );
             if (ret)
@@ -352,6 +324,31 @@ static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
       }
       WARN(_("Tech group '%s' has unknown node '%s'."), tech->name, node->name);
    } while (xml_nextNode( node ));
+
+   return 0;
+}
+
+/**
+ * @brief Parses an XML tech node.
+ */
+static int tech_parseFileData( tech_group_t *tech )
+{
+   xmlNodePtr parent;
+   const char *file = tech->filename;
+   xmlDocPtr doc = xml_parsePhysFS( file );
+   if (doc == NULL)
+      return -1;
+
+   parent = doc->xmlChildrenNode; /* first faction node */
+   if (parent == NULL) {
+      ERR( _("Malformed '%s' file: does not contain elements"), file);
+      return -1;
+   }
+
+   /* Parse the data. */
+   tech_parseXMLData( tech, parent );
+
+   xmlFreeDoc(doc);
 
    return 0;
 }

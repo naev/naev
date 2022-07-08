@@ -45,6 +45,7 @@ po/credits_pot.py \
    > po/credits.pot
 
 (
+   echo po/physfs.pot
    echo po/credits.pot
    find_files dat xml | deterministic_sort
    ( find_files dat lua; find_files src "[ch]") | deterministic_sort

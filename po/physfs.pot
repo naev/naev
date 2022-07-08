@@ -1,0 +1,119 @@
+#: physfs.c:1
+msgid "no error"
+msgstr ""
+
+#: physfs.c:2
+msgid "unknown error"
+msgstr ""
+
+#: physfs.c:3
+msgid "out of memory"
+msgstr ""
+
+#: physfs.c:4
+msgid "not initialized"
+msgstr ""
+
+#: physfs.c:5
+msgid "already initialized"
+msgstr ""
+
+#: physfs.c:6
+msgid "argv[0] is NULL"
+msgstr ""
+
+#: physfs.c:7
+msgid "unsupported"
+msgstr ""
+
+#: physfs.c:8
+msgid "past end of file"
+msgstr ""
+
+#: physfs.c:9
+msgid "files still open"
+msgstr ""
+
+#: physfs.c:10
+msgid "invalid argument"
+msgstr ""
+
+#: physfs.c:11
+msgid "not mounted"
+msgstr ""
+
+#: physfs.c:12
+msgid "not found"
+msgstr ""
+
+#: physfs.c:13
+msgid "symlinks are forbidden"
+msgstr ""
+
+#: physfs.c:14
+msgid "write directory is not set"
+msgstr ""
+
+#: physfs.c:15
+msgid "file open for reading"
+msgstr ""
+
+#: physfs.c:16
+msgid "file open for writing"
+msgstr ""
+
+#: physfs.c:17
+msgid "not a file"
+msgstr ""
+
+#: physfs.c:18
+msgid "read-only filesystem"
+msgstr ""
+
+#: physfs.c:19
+msgid "corrupted"
+msgstr ""
+
+#: physfs.c:20
+msgid "infinite symbolic link loop"
+msgstr ""
+
+#: physfs.c:21
+msgid "i/o error"
+msgstr ""
+
+#: physfs.c:22
+msgid "permission denied"
+msgstr ""
+
+#: physfs.c:23
+msgid "no space available for writing"
+msgstr ""
+
+#: physfs.c:24
+msgid "filename is illegal or insecure"
+msgstr ""
+
+#: physfs.c:25
+msgid "tried to modify a file the OS needs"
+msgstr ""
+
+#: physfs.c:26
+msgid "directory isn't empty"
+msgstr ""
+
+#: physfs.c:27
+msgid "OS reported an error"
+msgstr ""
+
+#: physfs.c:28
+msgid "duplicate resource"
+msgstr ""
+
+#: physfs.c:29
+msgid "bad password"
+msgstr ""
+
+#: physfs.c:30
+msgid "app callback reported error"
+msgstr ""

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Raven Clan">
+ <ai>pirate</ai>
+ <logo>ravenclan</logo>
+ <longname>Raven Pirate Clan</longname>
+ <player>-20</player>
+ <colour>red</colour>
+ <spawn>pirate_raven_clan</spawn>
+ <standing>pirate_raven_clan</standing>
+ <equip>pirate</equip>
+ <useshiddenjumps/>
+ <description>The Raven Pirate Clan is a band of pirates that lead over the widespread Qorel sector between the Empire and Dvaered systems.</description>
+ <generator weight="0.5">Pirate</generator>
+ <generator weight="0.5">Marauder</generator>
+ <allies>
+  <ally>Pirate</ally>
+ </allies>
+ <enemies>
+  <enemy>Collective</enemy>
+  <enemy>Dvaered</enemy>
+  <enemy>Empire</enemy>
+  <enemy>Frontier</enemy>
+  <enemy>Goddard</enemy>
+  <enemy>Independent</enemy>
+  <enemy>Miner</enemy>
+  <enemy>Proteron</enemy>
+  <enemy>Sirius</enemy>
+  <enemy>Soromid</enemy>
+  <enemy>Thurion</enemy>
+  <enemy>DHC</enemy>
+  <enemy>Trader</enemy>
+  <enemy>Traders Guild</enemy>
+  <enemy>Za'lek</enemy>
+ </enemies>
+ <tags>
+  <tag>pirate</tag>
+ </tags>
+</faction>

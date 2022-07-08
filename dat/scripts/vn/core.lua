@@ -1091,8 +1091,6 @@ end
 
 --[[--
 A visual novel character.
-
-@type Character
 --]]
 vn.Character = {}
 --[[--

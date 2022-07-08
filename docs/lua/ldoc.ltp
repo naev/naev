@@ -57,6 +57,9 @@
           <li class="nav-item">
             <a class="nav-link" href="https://naev.org/api/">Lua API</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://naev.org/devmanual/">Dev Manual</a>
+          </li>
         </ul>
       </div>
     </div>

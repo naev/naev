@@ -441,7 +441,7 @@ static int fileL_enumerate( lua_State *L )
    items = PHYSFS_enumerateFiles( path );
    if (items==NULL)
       NLUA_ERROR(L,_("Directory '%s' enumerate error: %s"), path,
-            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ));
+            _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
    for (int i=0; items[i]!=NULL; i++) {
       lua_pushstring(L,items[i]);
       lua_rawseti(L,-2,i+1);

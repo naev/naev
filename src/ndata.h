@@ -23,14 +23,14 @@
 #define SHIP_POLYGON_PATH        "gfx/ship_polygon/" /**< Path to ship's collision polygon. */
 #define OUTFIT_POLYGON_PATH      "gfx/outfit/space_polygon/" /**< Path to ship's collision polygon. */
 
-#define FACTION_DATA_PATH        "faction.xml" /**< Faction xml file. */
+#define FACTION_DATA_PATH        "factions/" /**< Path to factions. */
 #define MISSION_DATA_PATH        "missions/" /**< Path to missions XML. */
 #define EVENT_DATA_PATH          "events/" /**< Path to events XML. */
 #define UNIDIFF_DATA_PATH        "unidiff/" /**< Path to unidiff XML. */
 #define SPFX_DATA_PATH           "spfx/" /**< Location of the spfx datafiles. */
 #define DTYPE_DATA_PATH          "damagetype.xml" /**< Damage-type definitions. */
 #define COMMODITY_DATA_PATH      "commodities/" /**< Path to commodities. */
-#define TECH_DATA_PATH           "tech.xml"   /**< XML file containing techs. */
+#define TECH_DATA_PATH           "tech/"   /**< Path totechs. */
 #define ASTEROID_TYPES_DATA_PATH "asteroids/types/" /**< Asteroid types XML file location path. */
 #define ASTEROID_GROUPS_DATA_PATH "asteroids/groups/" /**< Asteroid groups XML file location path. */
 #define MAP_DECORATOR_DATA_PATH  "map.xml" /**< Where the map has background images. */
