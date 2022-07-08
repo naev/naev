@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-07-07 21:16+0000\n"
+"PO-Revision-Date: 2022-07-08 23:15+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -44,6 +44,10 @@ msgid ""
 "hurled themselves out into the void. On arrival, they decanted and woke to "
 "find new stars staring coldly down from stranger skies."
 msgstr ""
+"Por ello, hombres y mujeres encerraron sus cuerpos dormidos en enormes cajas "
+"de metal. Se lanzaron al vacío. Y al llegar, se decantaron y se despertaron "
+"para encontrar nuevas estrellas mirándoles fríamente desde cielos más "
+"extraños."
 
 #: dat/intro:10
 msgid ""
@@ -164,7 +168,7 @@ msgstr "---------------------------------------"
 
 #: dat/AUTHORS:4
 msgid "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
-msgstr ""
+msgstr "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
 
 #: dat/AUTHORS:5
 msgid "   * Lead Developer"
@@ -17285,7 +17289,7 @@ msgstr ""
 
 #: dat/faction.xml:188
 msgid "Dreamer Clan"
-msgstr "Clan del soñador"
+msgstr "Clan del Soñador"
 
 #: dat/faction.xml:191
 msgid "Dreamer Pirate Clan"
@@ -38389,7 +38393,7 @@ msgstr "Titanic MLXVII"
 
 #: dat/events/start.lua:35
 msgid "Vagabond"
-msgstr ""
+msgstr "Vagabundo"
 
 #: dat/events/start.lua:36
 msgid "Vindicator"
@@ -82033,11 +82037,11 @@ msgstr ""
 
 #: dat/missions/trader/trader_escort.lua:134
 msgid "You jumped into the wrong system."
-msgstr ""
+msgstr "Saltaste al sistema equivocado."
 
 #: dat/missions/trader/trader_escort.lua:142
 msgid "You jumped before the convoy you were escorting."
-msgstr ""
+msgstr "Saltaste antes que el convoy que estabas escoltando."
 
 #. Treat those that didn't exit as dead
 #: dat/missions/trader/trader_escort.lua:155
@@ -87663,8 +87667,8 @@ msgid ""
 "A very old Za'lek researcher needs you to fly with an instrumented device in "
 "order to take measurements."
 msgstr ""
-"Un antiguo investigador Za'lek necesita que vueles con un aparato "
-"instrumentado para hacer mediciones."
+"Un antiguo investigador Za'lek necesita que vueles con un dispositivo "
+"instrumentado para realizar mediciones."
 
 #: dat/missions/zalek/zlk_test.lua:56
 msgid ""
@@ -87672,7 +87676,7 @@ msgid ""
 "I need to make precise measurements on this engine in order to validate a "
 "stochastic failure model I developed.\""
 msgstr ""
-"Un estudiante Za'lek dice: \"Hola, estoy preparando un Doctorado en "
+"Un estudiante de Za'lek dice: \"Hola, estoy preparando un doctorado en "
 "fiabilidad de sistemas. Necesito hacer mediciones precisas en este motor "
 "para validar un modelo estocástico de fallos que he desarrollado.\""
 
@@ -87730,7 +87734,7 @@ msgstr "Demasiadas misiones"
 #. Player has forgotten the engine
 #: dat/missions/zalek/zlk_test.lua:128
 msgid "Didn't you forget something?"
-msgstr "¿No te olvidaste de algo?"
+msgstr "¿No has olvidado algo?"
 
 #: dat/missions/zalek/zlk_test.lua:128
 msgid ""
@@ -87792,7 +87796,7 @@ msgstr ""
 #. Displays texts
 #: dat/missions/zalek/zlk_test.lua:265
 msgid "Where has the power gone?"
-msgstr "¿Dónde ha ido a parar el poder?"
+msgstr "¿Adónde ha ido a parar la energía?"
 
 #: dat/missions/zalek/zlk_test.lua:265
 msgid ""
@@ -87804,39 +87808,43 @@ msgstr ""
 
 #: dat/missions/zalek/zlk_test.lua:269
 msgid "Power is back."
-msgstr ""
+msgstr "La energía ha vuelto."
 
 #: dat/missions/zalek/zlk_test.lua:269
 msgid "It seems the engine decided to work properly again."
-msgstr ""
+msgstr "Parece que el motor ha decidido volver a funcionar correctamente."
 
 #: dat/missions/zalek/zlk_test.lua:273
 msgid "This wasn't supposed to happen"
-msgstr ""
+msgstr "Esto no debía ocurrir"
 
 #: dat/missions/zalek/zlk_test.lua:273
 msgid ""
 "Your ship is totally out of control. You curse under your breath at the "
 "defective engine."
 msgstr ""
+"Tu nave está totalmente fuera de control. Maldices en voz baja el motor "
+"defectuoso."
 
 #: dat/missions/zalek/zlk_test.lua:277
 msgid "Engine is dead"
-msgstr ""
+msgstr "El motor no funciona"
 
 #: dat/missions/zalek/zlk_test.lua:277
 msgid ""
 "The engine has stopped working. It had better start working again soon; you "
 "don't want to die out here!"
 msgstr ""
+"El motor ha dejado de funcionar. Será mejor que vuelva a funcionar pronto; ¡"
+"no quieres morir aquí fuera!"
 
 #: dat/missions/zalek/zlk_test.lua:281
 msgid "Back to normal"
-msgstr ""
+msgstr "Vuelta a la normalidad"
 
 #: dat/missions/zalek/zlk_test.lua:281
 msgid "The engine is working again. You breathe a sigh of relief."
-msgstr ""
+msgstr "El motor vuelve a funcionar. Respiras con alivio."
 
 #. Give them a bad engine just in case they are landed or on a planet
 #. where they can't equip. The bad engine is free so it shouldn't matter.
@@ -88110,7 +88118,7 @@ msgstr ""
 #: dat/rescue.lua:263 dat/rescue.lua:354 dat/rescue.lua:367 dat/rescue.lua:371
 #: dat/rescue.lua:400 dat/rescue.lua:406 dat/rescue.lua:414
 msgid "Stranded"
-msgstr ""
+msgstr "Varado"
 
 #: dat/rescue.lua:263
 msgid ""
@@ -88120,6 +88128,11 @@ msgid ""
 "attempt to take off again to trigger this dialogue, or try loading your "
 "backup save."
 msgstr ""
+"Muy bien, pero es poco probable que puedas despegar.\n"
+"\n"
+"Si no encuentras la manera de hacer que tu nave sea apta para el espacio, "
+"siempre puedes intentar despegar de nuevo para activar este diálogo, o "
+"intentar cargar tu salvado de reserva."
 
 #. Equipped cores are the same as defaults.
 #. Ship has weapons.
@@ -88129,36 +88142,36 @@ msgstr ""
 #. { { desc, callback }, ... }
 #: dat/rescue.lua:301
 msgid "Remove outfits and use default cores"
-msgstr ""
+msgstr "Retira los equipos y utiliza los núcleos por defecto"
 
 #: dat/rescue.lua:302
 msgid "Add missing default cores"
-msgstr ""
+msgstr "Añade los núcleos por defecto que faltan"
 
 #: dat/rescue.lua:303 dat/rescue.lua:310
 msgid "Replace all cores with defaults"
-msgstr ""
+msgstr "Reemplaza todos los núcleos por defecto"
 
 #. TODO: Possibly add a "Select from inventory" option
 #: dat/rescue.lua:309
 msgid "Remove all outfits and set cores to defaults"
-msgstr ""
+msgstr "Elimina todos los equipos y establece los núcleos por defecto"
 
 #: dat/rescue.lua:311
 msgid "Remove all non-core outfits"
-msgstr ""
+msgstr "Retira todos los equipos no esenciales"
 
 #: dat/rescue.lua:312
 msgid "Remove weapons"
-msgstr ""
+msgstr "Elimina las armas"
 
 #: dat/rescue.lua:313
 msgid "Remove utility outfits"
-msgstr ""
+msgstr "Retira los equipos de utilidad"
 
 #: dat/rescue.lua:314
 msgid "Remove structure outfits"
-msgstr ""
+msgstr "Retira los equipos de estructura"
 
 #. Do nothing if already spaceworthy.
 #. Bail out if the player has a reasonable chance of fixing their ship.
@@ -88169,8 +88182,8 @@ msgstr ""
 msgid "Your ship is missing %d core outfit. How do you want to resolve this?"
 msgid_plural ""
 "Your ship is missing %d core outfits. How do you want to resolve this?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "A tu nave le falta %d equipo de núcleo. ¿Cómo quieres resolverlo?"
+msgstr[1] "A tu nave le falta %d equipos de núcleo. ¿Cómo quieres resolverlo?"
 
 #. Run callback.
 #. If ship is now spaceworthy, bail out.
@@ -88184,13 +88197,21 @@ msgid_plural ""
 "may have somewhat lower performance than usual. You should get to a planet "
 "with a proper shipyard and outfitter."
 msgstr[0] ""
+"Después de añadir el equipo que falta, tu nave es ahora apta para el "
+"espacio, aunque puede tener un rendimiento algo inferior al habitual. "
+"Deberías llegar a un planeta con un astillero y un armador adecuado."
 msgstr[1] ""
+"Después de añadir los equipos que faltan, tu nave es ahora apta para el "
+"espacio, aunque puede tener un rendimiento algo inferior al habitual. "
+"Deberías llegar a un planeta con un astillero y un armador adecuado."
 
 #: dat/rescue.lua:371
 msgid ""
 "Unfortunately, your ship still isn't spaceworthy. However, there are still "
 "other options for getting your ship airborne."
 msgstr ""
+"Desgraciadamente, tu nave aún no es apta para el espacio. Sin embargo, "
+"todavía hay otras opciones para hacer que tu nave pueda volar."
 
 #: dat/rescue.lua:400
 msgid ""
@@ -88199,16 +88220,25 @@ msgid ""
 "\n"
 "Please report this to the developers along with a copy of your save file."
 msgstr ""
+"Bueno... esto no es bueno. Tu nave ha sido restaurada a su configuración por "
+"defecto, pero todavía no es apta para el espacio.\n"
+"\n"
+"Por favor, informa de esto a los desarrolladores junto con una copia de tu "
+"archivo salvado."
 
 #: dat/rescue.lua:406
 msgid "The following actions are available to make your ship spaceworthy:"
 msgstr ""
+"Las siguientes acciones están disponibles para hacer que tu nave sea apta "
+"para el espacio:"
 
 #: dat/rescue.lua:414
 msgid ""
 "Your ship is now spaceworthy, though you should get to an outfitter as soon "
 "as possible."
 msgstr ""
+"Tu nave es ahora apta para el espacio, aunque deberías ir a un armador lo "
+"antes posible."
 
 #.
 #. Gets the Pilots United Against Atmosphere Anthropocentrism (PUAAA) faction or creates it if necessary
@@ -88219,46 +88249,46 @@ msgstr "PUCAA"
 
 #: dat/scripts/common/antlejos.lua:83
 msgid "No to terraforming!"
-msgstr ""
+msgstr "¡No a la terraformación!"
 
 #: dat/scripts/common/antlejos.lua:84
 msgid "Leave the planets alone!"
-msgstr ""
+msgstr "¡Dejad a los planetas en paz!"
 
 #: dat/scripts/common/antlejos.lua:85
 msgid "The Universe is beautiful as it is!"
-msgstr ""
+msgstr "¡El Universo es hermoso tal como es!"
 
 #: dat/scripts/common/antlejos.lua:86
 msgid "No modifying atmospheres!"
-msgstr ""
+msgstr "¡No a modificar las atmósferas!"
 
 #: dat/scripts/common/antlejos.lua:87
 msgid "Keep our planets safe!"
-msgstr ""
+msgstr "¡Mantened nuestros planetas a salvo!"
 
 #: dat/scripts/common/antlejos.lua:88
 msgid "No to destroying planets!"
-msgstr ""
+msgstr "¡No a la destrucción de planetas!"
 
 #: dat/scripts/common/cargo.lua:228
 msgid "#nCargo:#0 {cargo}"
-msgstr ""
+msgstr "#nCarga:#0 {cargo}"
 
 #: dat/scripts/common/cargo.lua:243
 msgid "#nTime limit:#0 {deadline}"
-msgstr ""
+msgstr "#nLímite de tiempo:#0 {deadline}"
 
 #.
 #. @brief Increases the reputation limit of the player.
 #. --
 #: dat/scripts/common/dvaered.lua:12
 msgid "Anti-FLF Campaign"
-msgstr ""
+msgstr "Campaña Anti-FLF"
 
 #: dat/scripts/common/empire.lua:23
 msgid "Empire Collective Campaign"
-msgstr ""
+msgstr "Campaña Colectiva del Imperio"
 
 #. Character's portraits. TODO: create unique portraits for them
 #. Major Tam: main mission giver of this campaign
@@ -88272,23 +88302,23 @@ msgstr ""
 #. When an escort is hailed
 #: dat/scripts/common/frontier_war.lua:49
 msgid "Instructions to escort"
-msgstr ""
+msgstr "Instrucciones para la escolta"
 
 #: dat/scripts/common/frontier_war.lua:49
 msgid "What do you want the escort to do?"
-msgstr ""
+msgstr "¿Qué quieres que haga la escolta?"
 
 #: dat/scripts/common/frontier_war.lua:49
 msgid "Attack nearby enemies"
-msgstr ""
+msgstr "Ataca a los enemigos cercanos"
 
 #: dat/scripts/common/frontier_war.lua:49
 msgid "Follow me"
-msgstr ""
+msgstr "Sígueme"
 
 #: dat/scripts/common/frontier_war.lua:49
 msgid "Never mind"
-msgstr ""
+msgstr "No importa"
 
 #. Test if an element is in a list
 #. Gets someone to make a message (useful for hook.timer)
@@ -88298,11 +88328,11 @@ msgstr ""
 #. --
 #: dat/scripts/common/gauntlet.lua:11
 msgid "Crimson Gauntlet Guide"
-msgstr ""
+msgstr "Guía del Guantelete Carmesí"
 
 #: dat/scripts/common/gauntlet.lua:14
 msgid "Information on the Crimson Gauntlet."
-msgstr ""
+msgstr "Información sobre el Guantelete Carmesí."
 
 #. Helpers to create main characters
 #. Emblem stuff
@@ -88311,28 +88341,31 @@ msgstr ""
 #, lua-format
 msgid "#r%s Crimson Emblems#0"
 msgid_plural "#r%s Crimson Emblems#0"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#r%s Emblema Carmesí#0"
+msgstr[1] "#r%s Emblemas Carmesí#0"
 
 #: dat/scripts/common/minerva.lua:19
 msgid "You see Kex taking a break at his favourite spot at Minerva station."
 msgstr ""
+"Ves a Kex tomando un descanso en su lugar favorito en la estación de Minerva."
 
 #. Orangish
 #: dat/scripts/common/minerva.lua:25
 msgid "Maikki"
-msgstr ""
+msgstr "Maikki"
 
 #: dat/scripts/common/minerva.lua:26
 msgid ""
 "You see a very cutely dressed young woman. She seems to have a worried "
 "expression on her face."
 msgstr ""
+"Ves a una joven muy bien vestida. Parece tener una expresión de preocupación "
+"en su rostro."
 
 #. Pink :D
 #: dat/scripts/common/minerva.lua:32
 msgid "Pirate Lord Maikki"
-msgstr ""
+msgstr "Señor Pirata Maikki"
 
 #: dat/scripts/common/minerva.lua:33
 msgid "TODO"
@@ -88343,58 +88376,63 @@ msgid ""
 "A terminal with which you can check your current token balance and buy items "
 "with tokens."
 msgstr ""
+"Un terminal con el que puedes comprobar tu saldo actual de fichas y comprar "
+"artículos con fichas."
 
 #: dat/scripts/common/minerva.lua:46
 msgid "Sketchy Individual"
-msgstr "Individuo sospechoso"
+msgstr "Individuo Sospechoso"
 
 #: dat/scripts/common/minerva.lua:48
 msgid ""
 "You see a sketchy-looking individual, they seem to have their gaze on you."
 msgstr ""
+"Ves a un individuo de aspecto impreciso, que parece tener su mirada puesta "
+"en ti."
 
 #: dat/scripts/common/minerva.lua:55
 msgid "You see Zuri who seems to be motioning for you to come."
-msgstr ""
+msgstr "Ves a Zuri que parece hacer un gesto para que te acerques."
 
 #. Secondary characters
 #: dat/scripts/common/minerva.lua:61
 msgid "Dr. Strangelove"
-msgstr ""
+msgstr "Dr. Strangelove"
 
 #. Purplish (close to nebula?)
 #: dat/scripts/common/minerva.lua:67
 msgid "Minerva CEO"
-msgstr ""
+msgstr "Director General de Minerva"
 
 #: dat/scripts/common/minerva.lua:70
 msgid "The CEO of Minerva Station."
-msgstr ""
+msgstr "El director general de la Estación Minerva."
 
 #: dat/scripts/common/minerva.lua:74
 msgid "Mole"
-msgstr ""
+msgstr "Topo"
 
 #: dat/scripts/common/minerva.lua:80
 msgid "Scavenger A"
-msgstr ""
+msgstr "Saqueador A"
 
 #: dat/scripts/common/minerva.lua:86
 msgid "Scavenger B"
-msgstr ""
+msgstr "Saqueador B"
 
 #: dat/scripts/common/minerva.lua:92
 msgid "Scavengers"
-msgstr ""
+msgstr "Saqueadores"
 
 #: dat/scripts/common/minerva.lua:95
 msgid ""
 "You see a pair of dirty looking fellows talking loudly among themselves."
 msgstr ""
+"Ves a un par de tipos de aspecto sucio hablando en voz alta entre ellos."
 
 #: dat/scripts/common/minerva.lua:109
 msgid "Shady Jobs at Minerva"
-msgstr ""
+msgstr "Trabajos Sucios en Minerva"
 
 #. Maikki stuff
 #.
@@ -88432,7 +88470,7 @@ msgstr ""
 #: dat/scripts/common/minerva.lua:113 dat/scripts/common/neutral.lua:10
 #: dat/scripts/common/pirate.lua:42 dat/scripts/common/zalek.lua:15
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Miscelánea"
 
 #. Chase scavengers and the works
 #. Find Dr. Strangelove, gets paid in tokens (500 ~= 1M creds)
@@ -88455,8 +88493,8 @@ msgstr ""
 #, lua-format
 msgid "#p%s Minerva Token#0"
 msgid_plural "#p%s Minerva Tokens#0"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#p Ficha Minerva %s#0"
+msgstr[1] "#p Fichas Minerva %s#0"
 
 #. List of all the pirate factions
 #. List of all the pirate clan factions
@@ -88498,7 +88536,7 @@ msgstr ""
 #. --
 #: dat/scripts/common/sciencegonewrong.lua:6
 msgid "Science Gone Wrong"
-msgstr ""
+msgstr "La Ciencia Fue Mal"
 
 #. Probably old save, just set to Gastan like before
 #.
@@ -88508,7 +88546,7 @@ msgstr ""
 #. --
 #: dat/scripts/common/shadow.lua:9 dat/scripts/pilotname/generic.lua:76
 msgid "Shadow"
-msgstr ""
+msgstr "Sombra"
 
 #. + "Sandwich Holder" accessory
 #.
@@ -88518,11 +88556,11 @@ msgstr ""
 #. --
 #: dat/scripts/common/sirius.lua:9
 msgid "Academy Hack"
-msgstr ""
+msgstr "Academia de Hacking"
 
 #: dat/scripts/common/sirius.lua:15
 msgid "Heretic"
-msgstr ""
+msgstr "Hereje"
 
 #. Helpers to create main characters
 #.
@@ -88547,7 +88585,7 @@ msgstr "IA de Nave"
 
 #: dat/scripts/common/tutorial.lua:22
 msgid "\"I can't let you do that, Dave. …Wait, what was that?\""
-msgstr ""
+msgstr "\"No puedo dejar que hagas eso, Dave. ...Espera, ¿qué fue eso?\""
 
 #. 2001 Space Odyssey
 #: dat/scripts/common/tutorial.lua:23
@@ -88555,6 +88593,8 @@ msgid ""
 "\"I'm here to keep you safe, Sam. I want to help you. Are you hungry? …Wait, "
 "what was that?\""
 msgstr ""
+"\"Estoy aquí para mantenerte a salvo, Sam. Quiero ayudarte. ¿Tienes hambre? "
+"...Espera, ¿qué fue eso?\""
 
 #. Moon
 #: dat/scripts/common/tutorial.lua:24
@@ -88562,6 +88602,8 @@ msgid ""
 "\"Patience, Sam Flynn. All of your questions will be answered soon. …Wait, "
 "what was that?\""
 msgstr ""
+"\"Paciencia, Sam Flynn. Todas tus preguntas serán respondidas pronto. "
+"...Espera, ¿qué fue eso?\""
 
 #. Tron (Legacy)
 #: dat/scripts/common/tutorial.lua:25
@@ -88569,6 +88611,8 @@ msgid ""
 "\"I could be chasing an untamed ornithoid without cause. …Wait, what was "
 "that?\""
 msgstr ""
+"\"Podría estar persiguiendo a un ornitoide indomable sin motivo. ...Espera, ¿"
+"qué fue eso?\""
 
 #. Star Trek
 #: dat/scripts/common/tutorial.lua:26
@@ -88576,6 +88620,8 @@ msgid ""
 "\"For your convenience I am programmed to respond to the name Robby. …Wait, "
 "what was that?\""
 msgstr ""
+"\"Para su comodidad estoy programado para responder al nombre de Robby. "
+"...Espera, ¿qué fue eso?\""
 
 #. Forbidden Planet
 #: dat/scripts/common/tutorial.lua:27
@@ -88585,6 +88631,11 @@ msgid ""
 "flesh? Let the machines starve, you fools! Let them die! Kill them the "
 "machines! …Wait, what was that?\""
 msgstr ""
+"\"¿Quién es el alimento vivo de las máquinas de Metrópolis? ¿Quién lubrica "
+"las articulaciones de las máquinas con su propia sangre? ¿Quién alimenta a "
+"las máquinas con su propia carne? ¡Dejad que las máquinas se mueran de "
+"hambre, idiotas! ¡Dejadlas morir! ¡Maten a las máquinas! ...Espera, ¿qué fue "
+"eso?\""
 
 #. Metropolis
 #: dat/scripts/common/tutorial.lua:28
@@ -88592,6 +88643,8 @@ msgid ""
 "\"Please Michael, I'm the Knight Industries 2000, not a tomato on wheels!” …"
 "Wait, what was that?\""
 msgstr ""
+"\"Por favor, Michael, soy el Knight Industries 2000, ¡no un tomate con "
+"ruedas!\" ...Espera, ¿qué fue eso?\""
 
 #. Capsule function for enabling basic, important keys.
 #. Capsule function for tk.msg that disables all key input WHILE the msg is open.
@@ -88607,12 +88660,12 @@ msgstr ""
 #. --
 #: dat/scripts/common/zalek.lua:9
 msgid "Nebula Research"
-msgstr ""
+msgstr "Investigador de la Nebulosa"
 
 #. Use default
 #: dat/scripts/common/zalek_physics.lua:21
 msgid "You see Noona who looks like she might have a job for you."
-msgstr ""
+msgstr "Ves a Noona que parece tener un trabajo para ti."
 
 #. + "Heavy Weapons Combat License" permission
 #. zpp05 = 0, -- No payment, reall small flashback really
@@ -88628,7 +88681,7 @@ msgstr ""
 #. We assume standard cargo doesn't change over time
 #: dat/scripts/equipopt/cargo.lua:8
 msgid "No standard commodities!"
-msgstr ""
+msgstr "¡No hay productos estándar!"
 
 #. Bias towards fewer types
 #. Add the cargo
@@ -88727,35 +88780,35 @@ msgstr ""
 #. TODO: displaying budget_row could be useful.
 #: dat/scripts/equipopt/optimize.lua:199
 msgid "Trying to equip:"
-msgstr ""
+msgstr "Intentando equipar:"
 
 #: dat/scripts/equipopt/optimize.lua:203
 msgid "Parameters:"
-msgstr ""
+msgstr "Parámetros:"
 
 #: dat/scripts/equipopt/optimize.lua:214
 msgid "Equipment:"
-msgstr ""
+msgstr "Equipamiento:"
 
 #: dat/scripts/equipopt/optimize.lua:220
 #, lua-format
 msgid "CPU: %d / %d [%d < %d]"
-msgstr ""
+msgstr "CPU: %d / %d [%d < %d]"
 
 #: dat/scripts/equipopt/optimize.lua:221
 #, lua-format
 msgid "Energy Regen: %.3f [%.3f < %.3f (%.1f)]"
-msgstr ""
+msgstr "Reg. Energía: %.3f [%.3f < %.3f (%.1f)]"
 
 #: dat/scripts/equipopt/optimize.lua:222
 #, lua-format
 msgid "Mass: %.3f / %.3f [%.3f < %.3f (%.1f)]"
-msgstr ""
+msgstr "Masa: %.3f / %.3f [%.3f < %.3f (%.1f)]"
 
 #: dat/scripts/equipopt/optimize.lua:225
 #, lua-format
 msgid "Shield Regen: %.3f [%.3f > %.3f (%.1f)]"
-msgstr ""
+msgstr "Reg. Escudo  %.3f [%.3f > %.3f (%.1f)]"
 
 #. --
 #. Equips a pilot with cores and outfits chosen from a list through optimization.
@@ -88773,6 +88826,8 @@ msgstr ""
 msgid ""
 "Pilot '%s' is not space worthy after custom equip script is run! Reason: %s"
 msgstr ""
+"El piloto '%s' no tiene espacio después de ejecutar el script de equipación "
+"personalizado. Razón: %s"
 
 #. Handle cores
 #. Don't actually have to remove cores as it should overwrite default
@@ -88782,7 +88837,7 @@ msgstr ""
 #: dat/scripts/equipopt/optimize.lua:270
 #, lua-format
 msgid "Unable to equip core '%s' on '%s'!"
-msgstr ""
+msgstr "¡No se ha podido equipar el núcleo '%s' en '%s'!"
 
 #. Global ship stuff
 #. Should include cores!!
@@ -88810,7 +88865,7 @@ msgstr ""
 #: dat/scripts/equipopt/optimize.lua:406
 #, lua-format
 msgid "Fighter bay '%s' does not have computed DPS!"
-msgstr ""
+msgstr "¡La bahía de combate '%s' no tiene DPS calculados!"
 
 #. We add it as movement, but weaken the effect a bit
 #. Compute goodness
@@ -88829,6 +88884,8 @@ msgstr ""
 #, lua-format
 msgid "Impossible mass goal of %d set! Ignoring mass for pilot '%s'!"
 msgstr ""
+"¡Objetivo de masa imposible de %d establecido! ¡Ignorandomasa para el piloto "
+"'%s'!"
 
 #. Add limit checks
 #. Add outfit checks
@@ -88862,12 +88919,13 @@ msgstr ""
 #, lua-format
 msgid "Failed to solve equipopt linear program for pilot '%s': %s"
 msgstr ""
+"Fallo en la resolución del programa lineal equipopt para el piloto '%s': %s"
 
 #. Interpret results
 #: dat/scripts/equipopt/optimize.lua:668
 #, lua-format
 msgid "Unable to equip outfit '%s' on '%s'!"
-msgstr ""
+msgstr "¡No se ha podido equipar el equipo '%s' en '%s'!"
 
 #. Due to the approximation, sometimes they end up with not enough
 #. energy, we'll try again with larger energy constraints
@@ -88876,7 +88934,7 @@ msgstr ""
 #: dat/scripts/equipopt/optimize.lua:687
 #, lua-format
 msgid "Failed to equip pilot '%s'!"
-msgstr ""
+msgstr "¡No se ha podido equipar al piloto '%s'!"
 
 #. Fill ammo
 #. Check
@@ -88884,6 +88942,8 @@ msgstr ""
 #, lua-format
 msgid "Pilot '%s' is not space worthy after equip script is run! Reason: %s"
 msgstr ""
+"El piloto '%s' no es digno de espacio después de que se ejecute el script de "
+"equipamiento. Razón: %s"
 
 #.
 #. -- @brief Merges two tables while removing duplicates.
@@ -89133,7 +89193,7 @@ msgstr ""
 #. Put lone ship into table
 #: dat/scripts/fleet.lua:56
 msgid "fleet.add: Error, raw ships must have factions!"
-msgstr ""
+msgstr "fleet.add: Error, ¡las naves en bruto deben tener facciones!"
 
 #. Repeat the pattern as necessary.
 #. --
@@ -89165,8 +89225,8 @@ msgstr ""
 #, lua-format
 msgid "%s ¤"
 msgid_plural "%s ¤"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s ¤"
+msgstr[1] "%s ¤"
 
 #. --
 #. Converts an item object or number of credits to reward string ("You have received _").
@@ -89179,7 +89239,7 @@ msgstr[1] ""
 #. --
 #: dat/scripts/format.lua:60
 msgid "You have received #g{reward}#0."
-msgstr ""
+msgstr "Has recibido #g{reward}#0."
 
 #. --
 #. Converts a number of tonnes to a string, using ngettext.
@@ -89198,8 +89258,8 @@ msgstr ""
 #, lua-format
 msgid "%s tonne"
 msgid_plural "%s tonnes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s tonelada"
+msgstr[1] "%s toneladas"
 
 #. --
 #. Like fmt.tonnes, but for abbreviations.
@@ -89212,8 +89272,8 @@ msgstr[1] ""
 #, c-format, lua-format
 msgid "%d t"
 msgid_plural "%d t"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d t"
+msgstr[1] "%d ts"
 
 #. --
 #. Converts a number of jumps to a string, utilizing ngettext.
@@ -89232,8 +89292,8 @@ msgstr[1] ""
 #, lua-format
 msgid "%s jump"
 msgid_plural "%s jumps"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s salto"
+msgstr[1] "%s saltos"
 
 #. -- A version of string.gsub returning just the string. --
 #. --
@@ -89246,15 +89306,15 @@ msgstr[1] ""
 #. --
 #: dat/scripts/format.lua:130
 msgid "{0} and {1}"
-msgstr ""
+msgstr "{0} y {1}"
 
 #: dat/scripts/format.lua:134
 msgid "{0}, and {1}"
-msgstr ""
+msgstr "{0}, y {1}"
 
 #: dat/scripts/format.lua:137 dat/scripts/format.lua:141
 msgid "{0}, {1}"
-msgstr ""
+msgstr "{0}, {1}"
 
 #. --
 #. String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings">f-strings</a> but closer to Python's str.format().
@@ -89274,7 +89334,7 @@ msgstr ""
 #: dat/scripts/format.lua:167
 #, lua-format
 msgid "fmt.f: string '%s' has '%s'==nil!"
-msgstr ""
+msgstr "fmt.f: string '%s' tiene '%s'==nil!"
 
 #. Cross logic. Forms an X.
 #. Spokes start rotated at a 45 degree angle.
@@ -89462,7 +89522,7 @@ msgstr ""
 #. --
 #: dat/scripts/lmisn.lua:302
 msgid "MISSION FAILED: {reason}"
-msgstr ""
+msgstr "MISIÓN FRACASADA: {reason}"
 
 #. ---
 #. Small music handling library.
@@ -89474,6 +89534,7 @@ msgstr ""
 #, lua-format
 msgid "lmusic: Trying to find music '%s', but it is not playing!"
 msgstr ""
+"lmusic: Intentando encontrar la música '%s', ¡pero no se está reproduciendo!"
 
 #. ---
 #. Plays a music with fade-in and fade-out.
@@ -89506,7 +89567,7 @@ msgstr ""
 #. luacheck: globals love (We are *implementing* the love2d API.)
 #: dat/scripts/love.lua:33
 msgid "unimplemented"
-msgstr ""
+msgstr "sin implementar"
 
 #. Only stuff we care about atm
 #. The window title (string)
@@ -89533,7 +89594,7 @@ msgstr ""
 #. Restore the package.path
 #: dat/scripts/love.lua:171 dat/scripts/love.lua:269
 msgid "can only run one Love2D instance at a time!"
-msgstr ""
+msgstr "¡sólo puede ejecutar una instancia de Love2D a la vez!"
 
 #. Save path to restore it later
 #. only add to path if not there, saves path pollution if crashing
@@ -89542,12 +89603,12 @@ msgstr ""
 #: dat/scripts/love.lua:204
 #, lua-format
 msgid "'%s' is an unknown filetype '%s'"
-msgstr ""
+msgstr "'%s' es un tipo de archivo desconocido '%s'"
 
 #: dat/scripts/love.lua:212
 #, lua-format
 msgid "'%s' is not a valid love2d game!"
-msgstr ""
+msgstr "¡'%s' no es un juego love2d válido!"
 
 #. Set up defaults
 #. Configure
@@ -89584,7 +89645,7 @@ msgstr ""
 #: dat/scripts/love/graphics.lua:22
 #, lua-format
 msgid "Unknown fill mode '%s'"
-msgstr ""
+msgstr "Modo de llenado desconocido '%s'"
 
 #. TODO don't do this for every drawing...
 #. Rendering to canvas
@@ -89599,7 +89660,7 @@ msgstr ""
 #. Set defaults
 #: dat/scripts/love/graphics.lua:107
 msgid "wrong parameter type"
-msgstr ""
+msgstr "tipo de parámetro incorrecto"
 
 #. x, y, r, sx, sy
 #. quad, x, y, r, sx, sy
@@ -89636,7 +89697,7 @@ msgstr ""
 #. Naev default
 #: dat/scripts/love/graphics.lua:458
 msgid "failed to set fallback font"
-msgstr ""
+msgstr "fallo al establecer la fuente de reserva"
 
 #. setOutline is a Naev extension!!
 #.
@@ -89875,7 +89936,7 @@ msgstr ""
 #: src/dialogue.c:329 src/dialogue.c:720 src/options.c:262 src/options.c:591
 #: src/options.c:893 src/options.c:1195
 msgid "OK"
-msgstr ""
+msgstr "Bien"
 
 #. Transparent background in Naev
 #. --
@@ -89900,7 +89961,7 @@ msgstr ""
 #. Compute position stuff
 #: dat/scripts/minigames/blackjack.lua:26
 msgid "#wH#0it"
-msgstr ""
+msgstr "#wH#0it"
 
 #: dat/scripts/minigames/blackjack.lua:26
 msgid "#wS#0tay"
@@ -90212,7 +90273,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/generic.lua:12 dat/scripts/pilotname/pirate.lua:246
 msgid "Black Hole"
-msgstr ""
+msgstr "Agujero Negro"
 
 #: dat/scripts/pilotname/generic.lua:13 dat/scripts/pilotname/pirate.lua:249
 msgid "Blizzard"
@@ -90327,7 +90388,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/generic.lua:43 dat/scripts/pilotname/pirate.lua:328
 msgid "Hunter"
-msgstr ""
+msgstr "Cazador"
 
 #: dat/scripts/pilotname/generic.lua:44
 msgid "Hurricane"
@@ -90607,7 +90668,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:23
 msgid "Benevolent"
-msgstr ""
+msgstr "Benevolente"
 
 #: dat/scripts/pilotname/pirate.lua:24
 msgid "Bedrohliche"
@@ -91215,7 +91276,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:176
 msgid "Violent"
-msgstr ""
+msgstr "Violento"
 
 #: dat/scripts/pilotname/pirate.lua:177
 msgid "Warui"
@@ -93451,7 +93512,7 @@ msgstr ""
 #: src/background.c:437 src/gui.c:1709 src/nlua_evt.c:146 src/nlua_misn.c:243
 #: src/nopenal.c:72
 msgid "unknown error"
-msgstr ""
+msgstr "error desconocido"
 
 #. error has occurred
 #: src/board.c:92 src/player.c:3365
@@ -99582,7 +99643,7 @@ msgstr ""
 
 #: src/outfit.c:896 src/outfit.c:925
 msgid "Afterburner"
-msgstr ""
+msgstr "Postquemador"
 
 #: src/outfit.c:897 src/outfit.c:926
 msgid "Fighter Bay"
