@@ -28,7 +28,7 @@
 #define EVENT_DATA_PATH          "events/" /**< Path to events XML. */
 #define UNIDIFF_DATA_PATH        "unidiff/" /**< Path to unidiff XML. */
 #define SPFX_DATA_PATH           "spfx/" /**< Location of the spfx datafiles. */
-#define DTYPE_DATA_PATH          "damagetype.xml" /**< Damage-type definitions. */
+#define DTYPE_DATA_PATH          "damagetype/" /**< Damage-type definitions. */
 #define SP_DATA_PATH             "slots/" /**< Location of the sp datafile. */
 #define COMMODITY_DATA_PATH      "commodities/" /**< Path to commodities. */
 #define TECH_DATA_PATH           "tech/"   /**< Path totechs. */
