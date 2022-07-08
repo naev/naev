@@ -43,7 +43,8 @@ Naev plugins and data use the same directory structure. It is best to open up th
 
 * `ai/`: contains the different AI profiles and their associated libraries.
 * `asteroids/`: contains the different asteroid types and groups in different directories.
-* `commodities/`: contains all the different commodity files..
+* `commodities/`: contains all the different commodity files.
+* `difficulty/`: contains the different difficulty settings.
 * `effects/`: contains information about effects that can affect ships.
 * `events/`: contains all the events.
 * `factions/`: contains all the factions and their related Lua functionality.
@@ -73,7 +74,6 @@ Furthermore, the following files play a critical role:
 * `comm.lua`: used when the player hails a ship.
 * `common.lua`: changes to the Lua language that are applied to all scripts.
 * `damagetype.xml`: monolithic file of damage types. TODO make a directory.
-* `difficulty.xml`: monolithic file of difficulty settings. TODO make a directory.
 * `intro`: the introduction text when starting a new game.
 * `landing.lua`: handles how spobs allow the player to land. TODO rewrite.
 * `loadscreen.lua`: renders the loading screen.
