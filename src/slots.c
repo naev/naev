@@ -15,11 +15,9 @@
 #include "array.h"
 #include "log.h"
 #include "nxml.h"
+#include "ndata.h"
 
-#define SP_XML_ID     "Slots" /**< XML Document tag. */
-#define SP_XML_TAG    "slot" /**< SP XML node tag. */
-
-#define SP_DATA_PATH  "slots.xml" /**< Location of the sp datafile. */
+#define SP_XML_ID    "slot" /**< SP XML node tag. */
 
 /**
  * @brief Representation of a slot property.
@@ -45,38 +43,25 @@ static int sp_check( unsigned int spid );
  */
 int sp_load (void)
 {
-   xmlNodePtr node;
-   xmlDocPtr doc;
-
-   /* Load and read the data. */
-   doc = xml_parsePhysFS( SP_DATA_PATH );
-   if (doc == NULL)
-      return -1;
-
-   /* Check to see if document exists. */
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,SP_XML_ID)) {
-      ERR(_("Malformed '%s' file: missing root element '%s'"), SP_DATA_PATH, SP_XML_ID);
-      return -1;
-   }
-
-   /* Check to see if is populated. */
-   node = node->xmlChildrenNode; /* first system node */
-   if (node == NULL) {
-      ERR(_("Malformed '%s' file: does not contain elements"), SP_DATA_PATH);
-      return -1;
-   }
+   char **sp_files = ndata_listRecursive( SP_DATA_PATH );
 
    /* First pass, loads up ammunition. */
    sp_array = array_create( SlotProperty_t );
-   do {
+   for (int i=0; i<array_size(sp_files); i++) {
       SlotProperty_t *sp;
-      xmlNodePtr cur;
+      xmlNodePtr node, cur;
+      xmlDocPtr doc;
 
-      xml_onlyNodes(node);
-      if (!xml_isNode(node,SP_XML_TAG)) {
-         WARN(_("'%s' has unknown node '%s'."), SP_DATA_PATH, node->name);
-         continue;
+      /* Load and read the data. */
+      doc = xml_parsePhysFS( sp_files[i] );
+      if (doc == NULL)
+         return -1;
+
+      /* Check to see if document exists. */
+      node = doc->xmlChildrenNode;
+      if (!xml_isNode(node,SP_XML_ID)) {
+         ERR(_("Malformed '%s' file: missing root element '%s'"), sp_files[i], SP_XML_ID );
+         return -1;
       }
 
       sp    = &array_grow( &sp_array );
@@ -105,10 +90,9 @@ int sp_load (void)
          WARN(_("Slot Property '%s' has unknown node '%s'."), node->name, cur->name);
       } while (xml_nextNode(cur));
 
-   } while (xml_nextNode(node));
-
-   /* Clean up. */
-   xmlFreeDoc(doc);
+      /* Clean up. */
+      xmlFreeDoc(doc);
+   }
 
    return 0;
 }

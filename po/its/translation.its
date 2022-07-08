@@ -19,8 +19,8 @@
   <its:translateRule selector="/faction/description" translate="yes"/>
 
   <!-- Slots -->
-  <its:translateRule selector="/Slots/slot/display" translate="yes"/>
-  <its:translateRule selector="/Slots/slot/description" translate="yes"/>
+  <its:translateRule selector="/slot/display" translate="yes"/>
+  <its:translateRule selector="/slot/description" translate="yes"/>
 
   <!-- Commodities -->
   <its:translateRule selector="/commodity/name" translate="yes"/>

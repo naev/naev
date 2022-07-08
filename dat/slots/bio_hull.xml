@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<slot name="bio_hull">
+ <display>Bioship Shells</display>
+ <description>This slot is used for the shell, the biological equivalent to Hull Modifications. The shell is the last line of defence for the organism, protecting critical organs from damage. It is also helps determine the organism's cargo space.</description>
+ <exclusive/>
+ <required/>
+ <locked/>
+</slot>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<slot name="bio_engines">
+ <display>Bioship Gene Drives</display>
+ <description>This slot is used for the gene drives, the biological equivalent to Engines. Gene drives propel the organism through space.</description>
+ <exclusive/>
+ <required/>
+ <locked/>
+</slot>
