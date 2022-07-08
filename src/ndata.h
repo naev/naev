@@ -28,13 +28,14 @@
 #define EVENT_DATA_PATH          "events/" /**< Path to events XML. */
 #define UNIDIFF_DATA_PATH        "unidiff/" /**< Path to unidiff XML. */
 #define SPFX_DATA_PATH           "spfx/" /**< Location of the spfx datafiles. */
-#define DTYPE_DATA_PATH          "damagetype.xml" /**< Damage-type definitions. */
+#define DTYPE_DATA_PATH          "damagetype/" /**< Damage-type definitions. */
+#define SP_DATA_PATH             "slots/" /**< Location of the sp datafile. */
 #define COMMODITY_DATA_PATH      "commodities/" /**< Path to commodities. */
 #define TECH_DATA_PATH           "tech/"   /**< Path totechs. */
 #define ASTEROID_TYPES_DATA_PATH "asteroids/types/" /**< Asteroid types XML file location path. */
 #define ASTEROID_GROUPS_DATA_PATH "asteroids/groups/" /**< Asteroid groups XML file location path. */
-#define MAP_DECORATOR_DATA_PATH  "map.xml" /**< Where the map has background images. */
-#define TRAIL_DATA_PATH          "trails.xml" /**< Trail types XML file. */
+#define MAP_DECORATOR_DATA_PATH  "map_decorator/" /**< Where the map has background images. */
+#define TRAIL_DATA_PATH          "trails/" /**< Trail types XML file. */
 
 #define MISSION_LUA_PATH         "missions/" /**< Path to Lua files. */
 #define EVENT_LUA_PATH           "events/" /**< Path to Lua files. */
@@ -80,7 +81,7 @@
 #define COMM_PATH                "comm.lua"
 #define BOARD_PATH               "board.lua"
 #define SAVE_UPDATER_PATH        "save_updater.lua"
-#define DIFFICULTY_PATH          "difficulty.xml"
+#define DIFFICULTY_PATH          "difficulty/"
 
 void ndata_setupWriteDir (void);
 void ndata_setupReadDirs (void);

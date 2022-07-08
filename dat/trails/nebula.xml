@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trail name="nebula">
+ <type>trail_nebula</type>
+ <nebula>1</nebula>
+ <thickness>9</thickness>
+ <ttl>2</ttl>
+ <idle r="0.4" g="0.4" b="0.9" a="0.7" />
+ <glow r="0.4" g="0.4" b="0.9" a="0.7" />
+ <afterburn r="0.4" g="0.4" b="0.9" a="0.9" />
+ <jumping r="0.4" g="0.4" b="0.9" a="0.9" />
+</trail>

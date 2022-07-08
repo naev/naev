@@ -76,7 +76,7 @@ static double damage_strength = 0.; /**< Damage shader strength intensity. */
  * Trail colours handling.
  */
 static int trailSpec_load (void);
-static void trailSpec_parse( xmlNodePtr cur, TrailSpec *tc );
+static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass );
 static TrailSpec* trailSpec_getRaw( const char* name );
 
 /*
@@ -1108,48 +1108,103 @@ void spfx_render( int layer )
  * @brief Parses raw values out of a "trail" element.
  * \warning This means values like idle->thick aren't ready to use.
  */
-static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
+static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )
 {
    static const char *mode_tags[] = MODE_TAGS;
-   xmlNodePtr cur = node->children;
+   char *inherits;
+   xmlNodePtr parent, node;
+   xmlDocPtr doc;
 
+   if (firstpass) {
+      memset( tc, 0, sizeof(TrailSpec) );
+      for(int i=0; i<MODE_MAX; i++)
+         tc->style[i].thick = 1.;
+   }
+
+   /* Load the data. */
+   doc = xml_parsePhysFS( file );
+   if (doc == NULL)
+      return -1;
+
+   /* Get the first node. */
+   parent = doc->xmlChildrenNode; /* first event node */
+   if (parent == NULL) {
+      WARN( _("Malformed '%s' file: does not contain elements"), file );
+      return -1;
+   }
+
+   xmlr_attr_strd( parent, "inherits", inherits );
+   if (firstpass) {
+      xmlr_attr_strd( parent, "name", tc->name );
+      if (inherits != NULL) {
+         /* Skip this pass. */
+         free( inherits );
+         xmlFreeDoc(doc);
+         return 0;
+      }
+   }
+   else {
+      if (inherits == NULL) {
+         /* Already done here. */
+         free( inherits );
+         xmlFreeDoc(doc);
+         return 0;
+      }
+      else {
+         TrailSpec *tsparent = trailSpec_getRaw( inherits );
+         if (tsparent == NULL)
+            WARN(_("Trail '%s' that inherits from '%s' has missing reference!"), tc->name, inherits );
+         else {
+            char *name = tc->name;
+            memcpy( tc, tsparent, sizeof(TrailSpec) );
+            tc->name = name;
+         }
+      }
+   }
+
+   node = parent->xmlChildrenNode;
    do {
-      xml_onlyNodes(cur);
-      if (xml_isNode(cur,"thickness"))
-         tc->def_thick = xml_getFloat( cur );
-      else if (xml_isNode(cur, "ttl"))
-         tc->ttl = xml_getFloat( cur );
-      else if (xml_isNode(cur, "type")) {
-         char *type = xml_get(cur);
+      xml_onlyNodes(node);
+      if (xml_isNode(node,"thickness"))
+         tc->def_thick = xml_getFloat( node );
+      else if (xml_isNode(node, "ttl"))
+         tc->ttl = xml_getFloat( node );
+      else if (xml_isNode(node, "type")) {
+         char *type = xml_get(node);
          if (gl_has( OPENGL_SUBROUTINES )) {
             tc->type = glGetSubroutineIndex( shaders.trail.program, GL_FRAGMENT_SHADER, type );
             if (tc->type == GL_INVALID_INDEX)
                WARN("Trail '%s' has unknown type '%s'", tc->name, type );
          }
       }
-      else if (xml_isNode(cur, "nebula"))
-         tc->nebula = xml_getInt( cur );
+      else if (xml_isNode(node, "nebula"))
+         tc->nebula = xml_getInt( node );
       else {
          int i;
          for (i=0; i<MODE_MAX; i++)
-            if (xml_isNode(cur, mode_tags[i])) {
-               xmlr_attr_float_opt( cur, "r", tc->style[i].col.r );
-               xmlr_attr_float_opt( cur, "g", tc->style[i].col.g );
-               xmlr_attr_float_opt( cur, "b", tc->style[i].col.b );
-               xmlr_attr_float_opt( cur, "a", tc->style[i].col.a );
-               xmlr_attr_float_opt( cur, "scale", tc->style[i].thick );
+            if (xml_isNode(node, mode_tags[i])) {
+               xmlr_attr_float_opt( node, "r", tc->style[i].col.r );
+               xmlr_attr_float_opt( node, "g", tc->style[i].col.g );
+               xmlr_attr_float_opt( node, "b", tc->style[i].col.b );
+               xmlr_attr_float_opt( node, "a", tc->style[i].col.a );
+               xmlr_attr_float_opt( node, "scale", tc->style[i].thick );
                col_gammaToLinear( &tc->style[i].col );
                break;
             }
          if (i == MODE_MAX)
-            WARN(_("Trail '%s' has unknown node '%s'."), tc->name, cur->name);
+            WARN(_("Trail '%s' has unknown node '%s'."), tc->name, node->name);
       }
-   } while (xml_nextNode(cur));
+   } while (xml_nextNode(node));
 
 #define MELEMENT(o,s)   if (o) WARN(_("Trail '%s' missing '%s' element"), tc->name, s)
    MELEMENT( tc->def_thick==0, "thickness" );
    MELEMENT( tc->ttl==0, "ttl" );
 #undef MELEMENT
+
+   /* Clean up. */
+   free( inherits );
+   xmlFreeDoc(doc);
+   return 0;
 }
 
 /**
@@ -1159,86 +1214,22 @@ static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
  */
 static int trailSpec_load (void)
 {
-   xmlNodePtr first, node;
-   xmlDocPtr doc;
-   char *name, *inherits;
-
-   /* Load the data. */
-   doc = xml_parsePhysFS( TRAIL_DATA_PATH );
-   if (doc == NULL)
-      return -1;
-
-   /* Get the root node. */
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,"Trail_types")) {
-      WARN( _("Malformed '%s' file: missing root element 'Trail_types'"), TRAIL_DATA_PATH);
-      return -1;
-   }
-
-   /* Get the first node. */
-   first = node->xmlChildrenNode; /* first event node */
-   if (node == NULL) {
-      WARN( _("Malformed '%s' file: does not contain elements"), TRAIL_DATA_PATH);
-      return -1;
-   }
+   char **ts_files = ndata_listRecursive( TRAIL_DATA_PATH );
 
    trail_spec_stack = array_create( TrailSpec );
 
    /* First pass sets up and prepares inheritance. */
-   node = first;
-   do {
-      xml_onlyNodes( node );
-      if (xml_isNode(node,"trail")) {
-         TrailSpec *tc = &array_grow( &trail_spec_stack );
-         memset( tc, 0, sizeof(TrailSpec) );
-         for(int i=0; i<MODE_MAX; i++)
-            tc->style[i].thick = 1.;
-         xmlr_attr_strd( node, "name", tc->name );
-
-         /* Do the first pass for non-inheriting trails. */
-         xmlr_attr_strd( node, "inherits", inherits );
-         if (inherits == NULL)
-            trailSpec_parse( node, tc );
-         else
-            free( inherits );
-         continue;
-      }
-   } while (xml_nextNode(node));
+   for (int i=0; i<array_size(ts_files); i++) {
+      TrailSpec *tc = &array_grow( &trail_spec_stack );
+      trailSpec_parse( tc, ts_files[i], 1 );
+   }
 
    /* Second pass to complete inheritance. */
-   node = first;
-   do {
-      xml_onlyNodes( node );
-      if (xml_isNode(node,"trail")) {
-         TrailSpec *tc, *parent;
-         /* Only interested in inherits. */
-         xmlr_attr_strd( node, "inherits", inherits );
-         if (inherits == NULL)
-            continue;
-         parent = trailSpec_getRaw( inherits );
-
-         /* Get the style itself. */
-         xmlr_attr_strd( node, "name", name );
-         tc = trailSpec_getRaw( name );
-
-         /* Make sure we found stuff. */
-         if ((tc==NULL) || (parent==NULL)) {
-            WARN(_("Trail '%s' that inherits from '%s' has missing reference!"), name, inherits );
-            continue;
-         }
-         free( inherits );
-         free( name );
-
-         /* Set properties. */
-         name = tc->name;
-         memcpy( tc, parent, sizeof(TrailSpec) );
-         tc->name = name;
-
-         /* Load remaining properties (overrides parent). */
-         trailSpec_parse( node, tc );
-         continue;
-      }
-   } while (xml_nextNode(node));
+   for (int i=0; i<array_size( trail_spec_stack ); i++) {
+      trailSpec_parse( &trail_spec_stack[i], ts_files[i], 0 );
+      free( ts_files[i] );
+   }
+   array_free( ts_files );
 
    /* Set up thickness. */
    for (TrailSpec *tc=array_begin(trail_spec_stack); tc!=array_end(trail_spec_stack); tc++) {
@@ -1246,9 +1237,6 @@ static int trailSpec_load (void)
          tc->style[i].thick *= tc->def_thick;
    }
    array_shrink(&trail_spec_stack);
-
-   /* Clean up. */
-   xmlFreeDoc(doc);
 
    return 0;
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<slot name="bio_organ">
+ <display>Bioship Organs</display>
+ <description>Through biological synthesis, bioships are able to modify and adapt their organs for many different purposes without the need of any external equipment.</description>
+ <exclusive/>
+ <locked/>
+</slot>

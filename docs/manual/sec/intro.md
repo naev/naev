@@ -43,22 +43,27 @@ Naev plugins and data use the same directory structure. It is best to open up th
 
 * `ai/`: contains the different AI profiles and their associated libraries.
 * `asteroids/`: contains the different asteroid types and groups in different directories.
-* `commodities/`: contains all the different commodity files..
+* `commodities/`: contains all the different commodity files.
+* `damagetype/`: contains all the potential damage types.
+* `difficulty/`: contains the different difficulty settings.
 * `effects/`: contains information about effects that can affect ships.
 * `events/`: contains all the events.
 * `factions/`: contains all the factions and their related Lua functionality.
 * `glsl/`: contains all the shaders. Some are critical for basic game functionality.
 * `gui/`: contains the different GUIs
+* `map_decorator/`: contains the information of what images to render on the map.
 * `missions/`: contains all the missions.
 * `outfits/`: contains all the outfits.
 * `scripts/`: this is an optional directory that contains all libraries and useful scripts by convention. It is directly appended to the Lua path, so you can `require` files in this directory directly without having to prepend `scripts.`.
 * `ships/`: contains all the ships.
+* `slots/`: contains information about the different ship slot types.
 * `snd/`: contains all the sound and music.
 * `spfx/`: contains all the special effects. Explosions are required by the engine and can not be removed.
 * `spob/`: contains all the space objects (planets, stations, etc.).
 * `spob_virtual/`: contains all the virtual space objects. These mainly serve to modify the presence levels of factions in different systems artificially.
 * `ssys/`: contains all the star systems.
 * `tech/`: contains all the tech structures.
+* `trails/`: contains all the descriptions of ship trails that are available and their shaders.
 * `unidiff/`: contains all the universe diffs. These are used to create modifications to the game data during a playthrough, such as adding spobs or systems.
 
 In general, recursive iteration is used with all directories. This means you don't have to put all the ship xml files directly it `ships/`, but you can use subdirectories. Furthermore, in order to avoid collision between plugins, it is highly recommended to use a subdirectory with the plugin name. So if you want to define a new ship called `Stardragon`, you would put the xml file in `ships/my_plugin/stardragon.xml`.
@@ -71,17 +76,12 @@ Furthermore, the following files play a critical role:
 * `board.lua`: used when the player boards a ship.
 * `comm.lua`: used when the player hails a ship.
 * `common.lua`: changes to the Lua language that are applied to all scripts.
-* `damagetype.xml`: monolithic file of damage types. TODO make a directory.
-* `difficulty.xml`: monolithic file of difficulty settings. TODO make a directory.
 * `intro`: the introduction text when starting a new game.
 * `landing.lua`: handles how spobs allow the player to land. TODO rewrite.
 * `loadscreen.lua`: renders the loading screen.
-* `map.xml`: all images to be rendered when opening the map. TODO make a directory.
 * `rep.lua`: internal file for the console. Do not modify!!
 * `rescue.lua`: script run when the game detects the player is stranded, such as they have a non-spaceworthy ship and are stuck in an uninhabited spob.
 * `save_updater.lua`: used when updating saves to replace old outfits and licenses with newer ones.
-* `slots.xml`: defines the types of slots in the game. TODO make a directory.
 * `start.xml`: determines the starting setting, time and such of the game.
-* `trails.xml`: determines the types of ship trails that are available and their shaders. TODO make a directory.
 
 Note that there is still a significant amount of monolithic files that need to be replaced with directories. Editing monolithic files will be bad for future save compatibility.

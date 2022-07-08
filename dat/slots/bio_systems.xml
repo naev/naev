@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<slot name="bio_systems">
+ <display>Bioship Brains</display>
+ <description>This slot is used for the brain, the biological equivalent to Core Systems. The brain of an organism is responsible for managing the function of the rest of the organism and allocating energy reserves for the battery and shield.</description>
+ <exclusive/>
+ <required/>
+ <locked/>
+</slot>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<slot name="hull">
+ <display>Hull Modifications</display>
+ <description>This slot is used for structural modifications to the ship's hull. This slot represents the base layer of armour plating, and also greatly affects mass, cargo space and available weapon slots.</description>
+ <exclusive/>
+ <required/>
+</slot>
