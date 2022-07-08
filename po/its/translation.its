@@ -65,5 +65,6 @@
   <its:translateRule selector="/unidiff/spob/description" translate="yes"/>
 
   <!-- Difficulty -->
-  <its:translateRule selector="/difficulties/difficulty/@name" translate="yes"/>
+  <its:translateRule selector="/difficulty/@name" translate="yes"/>
+  <its:translateRule selector="/difficulty/description" translate="yes"/>
 </its:rules>

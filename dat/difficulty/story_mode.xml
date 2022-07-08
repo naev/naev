@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<difficulty name="Story Mode">
+ <description>Significantly reduces the difficulty of the game, allowing to concentrate on the story.</description>
+ <armour_mod>100</armour_mod>
+ <shield_mod>100</shield_mod>
+ <energy_mod>100</energy_mod>
+ <fwd_damage>50</fwd_damage>
+ <tur_damage>50</tur_damage>
+ <launch_damage>50</launch_damage>
+ <fbay_damage>50</fbay_damage>
+ <thrust_mod>25</thrust_mod>
+ <speed_mod>25</speed_mod>
+ <turn_mod>15</turn_mod>
+ <time_mod>-20</time_mod>
+ <time_speedup>125</time_speedup>
+</difficulty>

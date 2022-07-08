@@ -81,7 +81,7 @@
 #define COMM_PATH                "comm.lua"
 #define BOARD_PATH               "board.lua"
 #define SAVE_UPDATER_PATH        "save_updater.lua"
-#define DIFFICULTY_PATH          "difficulty.xml"
+#define DIFFICULTY_PATH          "difficulty/"
 
 void ndata_setupWriteDir (void);
 void ndata_setupReadDirs (void);
