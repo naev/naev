@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Companion Handler1">
+<event name="Companion Handler2">
  <location>load</location>
  <chance>100</chance>
  <unique />
@@ -118,6 +118,7 @@ local function add_special(speaker, kind)
     return pick_one(options)
 end
 
+
 local function getSpaceThing()
     -- just a bunch of things that you could find out in space
     return pick_one(
@@ -189,6 +190,68 @@ local function getMadeUpName()
 
     -- something like Gartok or Termengix or whatever
     return pick_str(start) .. pick_str(vowel) .. middle_part .. pick_str(vowel) .. pick_str(middle)
+end
+
+
+local function getRandomFruit()
+	-- must end with an s in plural in English, at least how it's being used now
+	local fruits = {
+		_("banana"),
+		_("apple"),
+		_("pear"),
+		_("grape"),
+		_("orange"),
+		_("cantalope"),
+		_("melon"),
+		_("lemon"),
+		_("lime"),
+		getMadeUpName()
+	}
+	
+	return pick_one(fruits)
+end
+
+-- generates a shipboard activity, loosely based on the ship that's being flown
+local function getShipboardActivity( activity_type )
+	local activities = {}
+	-- basic activities: "I'm going to go <do/for [some]> <activity>"
+	activities.basic = {
+		_("exercise"),
+		_("maintenance"),
+		_("sanitation"),
+		_("inspection"),
+		_("rounds"),
+		_("hydration"),
+		_("inventory"),
+		fmt.f(_("{fruit} restocking"), { fruit = getRandomFruit() } ),
+	}
+	-- anyone wanna play some <game>?
+	activities.games = {
+		_("cards"),
+		_("chess"),
+		_("tic-tac-toe"),
+		_("blackjack"),
+		_("21"),
+		getMadeUpName(),
+	}
+	if player.pilot():ship():size()  > 4 then
+	-- these are "places to go" on the cruiser or larger where you go to do some cool activity
+		activities.cruiser = {
+			_("theater room"),
+			_("virtual experience simulator"),
+			_("mess hall"),
+			_("recreation room"),
+			_("gym"),
+			_("spa"),
+			_("sauna"),
+		}
+	end
+	if not activity_type then
+		activity_type = pick_key(activities)
+	elseif not activities[activity_type] then
+		activity_type = basic
+	end
+	return pick_one(activities[activity_type])
 end
 
 -- returns some kind of statement describing an insulting proper noun
@@ -810,6 +873,7 @@ local function create_memory(character, memory_type, params)
         local pso = player.pilot():outfits()
 
         -- a bunch of random memories that will start to sound repetitive eventually and cause the crew member to seem senile
+		-- TODO: Generate a completely unique memory
         local choices = {
             _("I had a thought in {system} but I forgot it."),
             _("I still think about {system} sometimes."),
@@ -2071,10 +2135,16 @@ local function createGenericCrewManagerComponent()
         _("{name} has been causing trouble."),
         _("Honestly, we are having {typetitle} problems."),
         _("The {typetitle} situation could be better."),
+		_("The {typetitle} situation has been better."),
+		_("The {typetitle} problem is getting worse."),
+		_("The {typetitle} situation is becoming noticeable."),
+		_("The {typetitle} situation needs to be improved."),
         _("I've had some complaints about {name}."),
         _("I've had some complaints."),
         _("We've got some issues with {name}."),
         _("We've got some unresolved tension between {name} and the rest of the crew."),
+		_("We've got some unresolved tension some {typetitle} and the rest of the crew."),
+		_("We've got some {typetitle} complaining about the rest of the lot."),
         _("Let's not get into it. It's not looking good."),
         _("I don't want to point any fingers."),
         _("Don't say I didn't warn you. Can we leave it at that?")
@@ -2132,14 +2202,22 @@ local function createGenericCrewmate(fac)
         ["message"] = {
             _("I'm here."),
             _("I'm doing it."),
-            _("I'm on it.")
+            _("I'm on it."),
+			_("I'm working on it."),
+			_("Stop pressuring me."),
+			_("I've got it."),
+			_("I'm on this."),
+			_("I've got this."),
+			_("I hope I got this right."),		
         },
         -- what I say when I'm satisfied
         ["satisfied"] = {
             _("I'm quite happy."),
             _("I am satisfied."),
             _("It's a good day."),
-            _("I feel good.")
+            _("I feel good."),
+			_("Not the worst cycle, right?"),
+			_("I've seen periods worse than this."),
         },
         -- what I say when not satisfied
         ["unsatisfied"] = {
@@ -2149,26 +2227,37 @@ local function createGenericCrewmate(fac)
             _("I'm bored."),
             _("I get bored sometimes."),
             _("There's nothing to do around here."),
-            _("It's too quiet here.")
+            _("It's too quiet here."),
+			_("The past periods will haunt me."),
+			_("The last cycle was harsh."),
+			fmt.f(_("The {fruit} situation on the ship could be better."), {fruit = getRandomFruit() } ),
+			fmt.f(_("I haven't seen a single {fruit} in cycles."), {fruit = getRandomFruit() } ),
+			fmt.f(_("I last saw maybe one {fruit} some periods ago or longer, I don't even remember anymore."), {fruit = getRandomFruit() } ),
+			fmt.f(_("I need my {fruit}s."), {fruit = getRandomFruit() } ),
+			fmt.f(_("There's never enough {fruit}s when I need one."), {fruit = getRandomFruit() } ),
+			fmt.f(_("I last saw maybe one {fruit}... I don't even remember anymore."), {fruit = getRandomFruit() } ),
         },
         -- things I say about {name} when I had a good conversation
         ["good_talker"] = {
             _("You're a good listener, {name}."),
             _("{name} seems nice."),
             _("Right on!"),
-            _("I agree with {name}."),
-            _("I agree with you, {name}."),
+            _("I agree with whatever {firstname} says."),
+			_("I agree with whatever {article_subject} says."),
+            _("I agree with {article_object}, with {name}."),
             _("You know {name}, you're alright."),
             _("Anyone want to give me a hand with this?"),
             _("Say, could you give me a hand with this?"),
             _("Let's go grab a drink with {firstname}."),
-            _("Isn't {name} lovely?"),
-            _("Isn't that {name} wonderful?"),
+            _("Isn't {name} nice?"),
+			_("Isn't {article_subject} nice?"),
+            _("Isn't that {name} great?"),
             _("Isn't this just wonderful?"),
             _("Everything seems great."),
             _("I'm feeling positive."),
             _("I'm glad I had that talk with {name}."),
-            _("I'm glad we had this talk.")
+            _("I'm glad we had this talk."),
+			_("I had a good conversation with {article_object}."),
         },
         -- things I say about {name} when I had a bad conversation
         ["bad_talker"] = {
@@ -2183,7 +2272,12 @@ local function createGenericCrewmate(fac)
             _("Whatever, jeez."),
             _("Oh come on {name}, don't start with me."),
             _("Not this again, {name}."),
-            _("I think {article_subject}'s being offensive.")
+            _("I think {article_subject}'s being offensive."),
+			_("I think {article_subject}'s having a bad day."),
+			_("You'd think {article_subject}'d keep those thoughts to {article_object}self."),
+			fmt.f(_("You should keep those thoughts to yourself, shouldn't {article_subect}, {captain}?"), {article_subject="{article_subject", captain=player.name() } ),
+			_("I don't know what {article_subject}'s on about."),
+			_("What's gotten into {article_object}?"),
         },
         ["fatigue"] = {
             _("Are we going to get some time off anytime soon?"),
@@ -2194,7 +2288,38 @@ local function createGenericCrewmate(fac)
             _("I need a drink."),
             _("I could use a break."),
             _("I'm pretty tired."),
-            _("I could use some rest.")
+            _("I could use some rest."),
+			_("Anyone want to play some cards?"),
+			fmt.f(_("Anyone want to play some {game}?"), { game = pick_one(getShipboardActivity("game")) }),
+			fmt.f(_("Anyone want to play {game}?"), { game = pick_one(getShipboardActivity("game")) }),
+			fmt.f(_("Anyone want to play a game of {game}?"), { game = pick_one(getShipboardActivity("game")) }),
+			fmt.f(_("I really want to play {game}."), { game = pick_one(getShipboardActivity("game")) }),
+			fmt.f(_("Do I really have to do all that {basic}?"), { basic = pick_one(getShipboardActivity("basic")) }),
+			fmt.f(_("Do I really have to do all that {basic}?"), { basic = pick_one(getShipboardActivity("basic")) }),
+			fmt.f(_("Do I have to do the {basic}?"), { basic = pick_one(getShipboardActivity("basic")) }),
+			fmt.f(_("Oh, I forgot that I have to do my {basic} for today."), { basic = pick_one(getShipboardActivity("basic")) }),
+			fmt.f(_("I'm going for some {basic}."), { basic = pick_one(getShipboardActivity("basic")) }),
+			fmt.f(_("I'm going to do that {basic} in a bit."), { basic = pick_one(getShipboardActivity("basic")) }),
+			_("I hope someone can come cover for me soon, I'm getting a bit tired."),
+			_("We've been in space for far too long, we need a break. A good one."),
+			_("We need a break, and by break, I mean a big break with big rewards."),
+			_("I thought it was all going to be action. But instead it's mostly fear, and a lot of nothing."),
+			_("I can't wait for that drink with the crew when we land."),
+			_("I wonder if the captain will mind if I take some time for myself at the next stop."),
+			_("I haven't been feeling like myself lately."),
+			_("Give me a break."),
+			_("Give me a drink."),
+			_("Get me a drink."),
+			_("I need a sandwich or something."),
+			_("Do we still have any fruit?"),
+			_("Why does the water taste so stale?"),
+			_("I can't believe we're out of bananas already, again!"),
+			_("No bananas..."),
+			_("Where are the bananas?"),
+			fmt.f(_("I saw there were some {fruit}s in the break room earlier but I didn't take one."), {fruit = getRandomFruit() } ),
+			fmt.f(_("I can't believe I didn't take the last {fruit}."), {fruit = getRandomFruit() } ),
+			fmt.f(_("I haven't seen a single {fruit} in cycles."), {fruit = getRandomFruit() } ),
+			fmt.f(_("I last saw maybe one {fruit} some periods ago or longer, I don't even remember anymore."), {fruit = getRandomFruit() } ),
         },
         -- special things I know how to say
         ["special"] = {
@@ -2247,12 +2372,39 @@ local function createGenericCrewmate(fac)
             _("I'm about to go prime the locking equipment."),
             _("Do you need a hand with that?"),
             _("I could use a hand with this, do you mind?"),
-            _("I could use a hand in the back, can you help me?")
+            _("I could use a hand in the back, can you help me?"),
+			_("You want a drink?"),
+			_("You want this? I got two."),
+			fmt.f(_("Would you like to play some {game}?"), { game = getRandomGame() }),
+			fmt.f(_("I'll play some {game} if you want."), { game = getRandomGame() }),
+			fmt.f(_("Would you like to this {fruit}?"), { fruit = getRandomFruit() }),
+			fmt.f(_("I'll give you my {fruit} if you want it."), { fruit = getRandomFruit() }),
+			fmt.f(_("I just ate a really nice {fruit}."), { fruit = getRandomFruit() }),
+			fmt.f(_("Do you want a piece of this {fruit}?"), { fruit = getRandomFruit() }),
+			fmt.f(_("So, {fruit} anyone?"), { fruit = getShipboardActivity() }),
         },
         ["smalltalk_negative"] = {
             _("Sometimes I wonder what I'm even doing on this ship."),
             _("What am I even doing here?"),
-            _("This life isn't as glamorous as it was made out to be.")
+            _("This life isn't as glamorous as it was made out to be."),
+			_("The atmosphere here is killing me."),
+			_("I feel like I am suffocating in here."),
+			_("I don't know why I hang out with you."),
+			_("You guys are the worst."),
+			_("Your comany is unappreciated."),
+			_("Please stop leaning in my direction."),
+			_("Please stop looking in my direction."),
+			_("I don't want you to look at me right now."),
+			_("I don't want to look at you right now."),
+			_("Please stop talking to me."),
+			_("Please don't say anything."),
+			_("Don't say anything."),
+			_("Please don't talk to me."),
+			_("Don't talk to me."),
+			_("Stay away from me."),
+			_("Say nothing."),
+			fmt.f(_("Don't say a {thing} thing!"), { thing = getMadeUpName()}),
+			fmt.f(_("What are you looking at, you {insult}?"), {insult = getInsultingProperNoun()}),
         },
         -- list of things I like to talk about and what I say about them
         ["topics_liked"] = liked,
@@ -2288,7 +2440,8 @@ local function createGenericCrewmate(fac)
             _("Right."),
             _("Sure."),
             _("Yeah, because of all the {topic}, of course."),
-            fmt.f(_("I'd rather talk about {made_up}s than {topic}."), {made_up = getRandomThing(), topic = "{topic}"})
+            fmt.f(_("I'd rather talk about {made_up}s than {topic}."), {made_up = getRandomThing(), topic = "{topic}"}),
+			fmt.f(_("Don't be such a {insult}."), {insult = getInsultingProperNoun()}),
         }
     }
 
@@ -2380,304 +2533,323 @@ local function createEscortCompanion()
     -- TODO give her a new name
     end
 
-    -- custom conversation table with new backstory
-    crewmate.conversation = {
-        ["backstory"] = generateBackstory(crewmate),
-        -- what I say when I'm doing my job
-        ["message"] = {"I would never kiss and tell."},
-        -- what I say when I'm satisfied
-        ["satisfied"] = {
-            _("I'm feeling positive."),
-            _("Business is good."),
-            _("Keep up the good work."),
-            _("There's something about this place."),
-            _("I hope you're all having a pleasant time."),
-            _("I hope you're having a lovely time."),
-            _("I'm really enjoying this ship."),
-            _("I love this ship."),
-            fmt.f(_("I'm taking a liking to this {ship}."), {ship = player.pilot():ship():name()}),
-            _("I've got a good feeling, things are looking up."),
-            _("I will lavish myself in luxury tonight."),
-            _("I will enjoy some luxuries tonight."),
-            _("I will reap my rewards tonight."),
-            fmt.f(
-                _("I recently acquired a sample of {made_up}'s latest youth serum. Would anyone care to try some?"),
-                {made_up = getMadeUpName()}
-            ),
-            _("I'm expecting a call from a customer soon, I'll spare you the details."),
-            fmt.f(_("Did I tell you about the bison from {place}?"), {place = spob.get(faction.get("Dvaered"))}),
-            _("I'm have a scheduled call with a client soon, I'll spare you the details."),
-            _("I feel like we are on a winning streak."),
-            _("I feel like we are on a lucky streak."),
-            _("I feel like we are on a lucky roll."),
-            _("Things are going alright, aren't they?"),
-            _("Things are good, huh?"),
-            _("Were any of you at the party last night? Wait, when was the party again? My sleep cycle is off again."),
-            _("Overall, I'd say things are looking pretty good."),
-            _("Sometimes there are bad times, but these aren't the worst of times."),
-            _("Things have definitely been worse.")
-        },
-        -- what I say when not satisfied
-        ["unsatisfied"] = {
-            _("I am unhappy."),
-            _("I've been better."),
-            _("I'm not feeling so well."),
-            _("I worry about my financial situation."),
-            _("I haven't had a good customer in far too long."),
-            _("I haven't been able to visit my regular clients."),
-            _("My customers are hungry, I don't know what to tell them."),
-            _("Are we going anywhere nice soon?"),
-            _("Please tell me we are headed towards civilization."),
-            _("What in heavens are we even doing out here?"),
-            _("My patience is wearing thin."),
-            _("I would advise you to tread carefully."),
-            _("Don't test me right now."),
-            _("My patience is running out.")
-        },
-        -- things I say about {name} when I had a good conversation
-        ["good_talker"] = {
-            _("I like talking with {name}."),
-            _("I like {name}."),
-            _("We've had some good conversations."),
-            _("I think {name} likes me."),
-            _("{name} is nice."),
-            _("{name} seems nice."),
-            _("{name} is a dear isn't {article_subject}."),
-            _("Isn't {article_subject} a dear."),
-            _("{name} is lovely."),
-            _("That was pleasant."),
-            _("That was pleasant of {article_object}."),
-            _("That was nice of {article_object}."),
-            _("Don't forget to enjoy the view. Look at that bright one over there. I think it's a moon."),
-            _("On a happiness scale to somewhere around ten, I'd put you at around {satisfaction}."),
-            _("That was pretty smart for someone with {skill} expertise."),
-            _("I wouldn't have expected that from some {typetitle} with {skill} expertise.")
-        },
-        -- things I say about {name} when I had a bad conversation
-        ["bad_talker"] = {
-            _("{name} is too negative."),
-            _("I dislike {name}."),
-            _("I dislike {article_object}."),
-            _("I'm not fond of {name}."),
-            _("I'm not very fond of {article_object}."),
-            _("I am not a fan of {name}."),
-            _("I'm not friends with {name}."),
-            _("I'm not friends with {article_object}."),
-            _("I don't want to associate with {article_object}."),
-            _("I don't enjoy my conversations with {article_object}."),
-            _("I think {article_subject}'s being offensive."),
-            _("Sometimes I wonder if you have any {skill} experience at all.")
-        },
-        ["fatigue"] = {
-            _("I hope we're going somewhere nice."),
-            _("I hope we'll land soon, preferably somewhere nice."),
-            _("It can be a bit lonely out here sometimes."),
-            _("Will someone join me for a spa?"),
-            _("I'm going to take a bath later if someone wants to join."),
-            _("I could use a break."),
-            _("I'm a bit tired."),
-            _("I could use some rest."),
-            _(
-                "You know I need my wealthy planets, don't let me be the black sheep of the bunch that's bringing everyone down."
-            )
-        },
-        ["bar_actions"] = {
-            {
-                ["verb"] = pick_one(
-                    {
-                        _("seducing"),
-                        _("talking to"),
-                        _("gesturing at"),
-                        _("giggling at")
-                    }
-                ),
-                ["descriptor"] = pick_one(
-                    {
-                        _("some"),
-                        _("a"),
-                        _("a")
-                    }
-                ),
-                ["adjective"] = pick_one(
-                    {
-                        _("nice looking"),
-                        _("strange"),
-                        _("shady"),
-                        _("handsome"),
-                        _("dark"),
-                        _("mysterious"),
-                        _("preoccupied"),
-                        _("unknown")
-                    }
-                ),
-                ["object"] = pick_one(
-                    {
-                        _("stranger"),
-                        _("person"),
-                        _("man"),
-                        _("woman"),
-                        _("interloper"),
-                        _("dock worker"),
-                        _("crew member")
-                    }
-                )
-            }
-        },
-        -- special things I know how to say
-        ["special"] = {
-            ["laugh"] = {
-                _("*giggles*"),
-                _("Hah!"),
-                _("Haha!"),
-                _("*laughs hysterically*"),
-                _("*laughs briefly*")
-            },
-            ["worry"] = {
-                _("I hope I manage to secure a client on the next world."),
-                _("Things just aren't as good as they used to be."),
-                _("I'm growing increasingly concerned."),
-                _("I feel as if I'm being reduced to nothing."),
-                _("We are going to have to do something about that."),
-                _("There are situations that need to be addressed."),
-                _("From my viewpoint, things could be better."),
-                _("I worry about the violence on this ship."),
-                _("I'm a bit worried")
-            }
-        },
-        ["smalltalk_positive"] = {
-            _("What a lovely view."),
-            _("I'll be in my quarters."),
-            _("I wish I could tell you about my last customer."),
-            _("I like being surrounded by all this science."),
-            _("Of all my travels, this is my favourite journey so far.")
-        },
-        ["smalltalk_negative"] = {
-            _("I really need a break... To bathe myself in luxury."),
-            _("I've seen better days."),
-            _("The viewscreen in my quarters is malfunctioning, could you help me repair it?"),
-            _("I'm getting tired of all these backwater worlds."),
-            _("I'll be in my quarters."),
-            _("Business could be better."),
-            _("I wish I could tell you about my last customer..."),
-            _("What? I don't want to talk about it."),
-            _("I'm not making enough credits to keep up with my luxurious lifestyle.")
-        },
-        -- list of things I like to talk about and what I say about them
-        ["topics_liked"] = {
-            -- list of phrases that use the things I like (or not)
-            ["luxury"] = {
-                _("Do you want to see my new hat?"),
-                _("How do you like this vintage neck-scarf?"),
-                _("What do you think about this color?")
-            },
-            ["friendship"] = {
-                fmt.f(_("Check out this {ship} my friend thinking of buying."), {ship = getRandomShip()}),
-                _("Do you want to see some pictures of my neice?"),
-                _("I like how close we are."),
-                _("I know we've had our differences, but you're alright."),
-                _("I fear that we are becoming a bit too intimate."),
-                _("Have I told you about my cat?"),
-                _("Did I tell you about my cat?"),
-                _("Do you want to see my kitty?"),
-                _("Do you want to see my cat?"),
-                _("Don't you just love my kitty?")
-            },
-            ["travel"] = {
-                fmt.f(
-                    _("One of my favourite places to visit is {place}. Have you been there?"),
-                    {place = spob.get(faction.get("Independent"))}
-                ),
-                fmt.f(
-                    _("I fell in love with a pirate from {place}. I wonder what {article}'s up to these days."),
-                    {place = spob.get(faction.get("Raven Clan")), name = pilotname.human(), article = opposite_article}
-                ),
-                fmt.f(
-                    _("If you've never been to {place}, we should go."),
-                    {place = spob.get(faction.get("Independent"))}
-                ),
-                fmt.f(
-                    _("An intriguing place to visit is {place}. Have you been there?"),
-                    {place = spob.get(faction.get("Za'lek"))}
-                ),
-                fmt.f(
-                    _("I heard that {place} is developing a new {made_up}. What do you make of that?"),
-                    {place = spob.get(faction.get("Za'lek")), made_up = getMadeUpName()}
-                ),
-                fmt.f(
-                    _("Of all my travels I must say, I've been too often to {place}. I don't mind the work."),
-                    {place = spob.get(faction.get("Empire"))}
-                ),
-                fmt.f(
-                    _(
-                        "I had an affair with a servant from {place}. I wonder what meddlesome {name} is up to these days."
-                    ),
-                    {place = spob.get(faction.get("Dvaered")), name = pilotname.human()}
-                ),
-                fmt.f(
-                    _(
-                        "All the violence and lawlessness on {place} led my sister {name} towards a path of disastrous affairs."
-                    ),
-                    {place = spob.get(faction.get("Dvaered")), name = pilotname.human()}
-                ),
-                fmt.f(
-                    _("I went to {place} just to check it out. I haven't had the urge to go since."),
-                    {place = spob.get(faction.get("Soromid"))}
-                ),
-                fmt.f(
-                    _("I went to {place} just to check it out. I don't recommend it."),
-                    {place = spob.get(faction.get("Soromid"))}
-                )
-            },
-            ["view"] = {
-                _("Did you enjoy the view?"),
-                _("Did you notice the spectacular view towards the star?"),
-                _("What a wonderful view. The stars are amazing."),
-                _("What an amazing view!"),
-                _("What are you looking at?"),
-                _("Are you enjoying the view?"),
-                _("Keep your hands to yourself or I'll have to charge you some credits."),
-                _("I like looking out at the stars."),
-                _("How could anyone not admire this view?")
-            }
-        },
-        -- list of things I don't like talking about
-        ["topics_disliked"] = {
-            _("violence"),
-            _("credits")
-        },
-        -- things we say about things we are indifferent to
-        ["default_participation"] = {
-            _("Of course."),
-            _("Sure!"),
-            _("That sounds good."),
-            _("That sounds nice."),
-            _("Sounds good."),
-            _("Yeah."),
-            _("Nice."),
-            _("Alright."),
-            _("I'm a bit busy, but I'll do what I can."),
-            _("I'll do what I can."),
-            _("I always do my best."),
-            _("I'll do my best.")
-        },
-        -- responses to conversations about topics I don't like
-        -- generally something dismissive
-        ["phrases_disliked"] = {
-            _("Do we have to talk about this?"),
-            _("All you ever talk about is {topic}."),
-            _("It's {topic} this, {topic} that, you just can't get enough {topic} can you?"),
-            _("Whatever."),
-            _("Yeah, okay."),
-            _("I am not interested in that at all. Can we talk about something else?"),
-            _("Sorry, not interested."),
-            _("Right."),
-            _("Sure."),
-            _("Yeah, because of all the {topic}, of course."),
-            _("Please give me some privacy."),
-            _("I would like to be dismissed."),
-            _("I have something else I have to do.")
-        }
-    }
+    -- customize the conversation table with new backstory
+	crewmate.conversation.backstory = generateBackstory(crewmate)
+
+	-- what I say when I'm doing my job
+	crewmate.conversation.message = {"I would never kiss and tell."}
+	-- what I say when I'm satisfied
+	crewmate.conversation.satisfied = append_table(crewmate.conversation.satisfied, {
+		_("I'm feeling positive."),
+		_("Business is good."),
+		_("Keep up the good work."),
+		_("There's something about this place."),
+		_("I hope you're all having a pleasant time."),
+		_("I hope you're having a lovely time."),
+		_("I'm really enjoying this ship."),
+		_("I love this ship."),
+		fmt.f(_("I'm taking a liking to this {ship}."), {ship = player.pilot():ship():name()}),
+		_("I've got a good feeling, things are looking up."),
+		_("I will lavish myself in luxury tonight."),
+		_("I will enjoy some luxuries tonight."),
+		_("I will reap my rewards tonight."),
+		fmt.f(
+			_("I recently acquired a sample of {made_up}'s latest youth serum. Would anyone care to try some?"),
+			{made_up = getMadeUpName()}
+		),
+		_("I'm expecting a call from a customer soon, I'll spare you the details."),
+		fmt.f(_("Did I tell you about the bison from {place}?"), {place = spob.get(faction.get("Dvaered"))}),
+		_("I'm have a scheduled call with a client soon, I'll spare you the details."),
+		_("I feel like we are on a winning streak."),
+		_("I feel like we are on a lucky streak."),
+		_("I feel like we are on a lucky roll."),
+		_("Things are going alright, aren't they?"),
+		_("Things are good, huh?"),
+		_("Were any of you at the party last night? Wait, when was the party again? My sleep cycle is off again."),
+		_("Overall, I'd say things are looking pretty good."),
+		_("Sometimes there are bad times, but these aren't the worst of times."),
+		_("Things have definitely been worse.")
+	})
+	-- what I say when not satisfied
+	crewmate.conversation.unsatisfied = append_table(crewmate.conversation.unsatisfied, {
+		_("I am quite unhappy."),
+		_("I've been better."),
+		_("I'm not feeling so well."),
+		_("I worry about my financial situation."),
+		_("I haven't had a good customer in far too long."),
+		_("I haven't been able to visit my regular clients."),
+		_("My customers are hungry, I don't know what to tell them."),
+		_("Are we going anywhere nice soon?"),
+		_("Please tell me we are headed towards civilization."),
+		_("What in heavens are we even doing out here?"),
+		_("My patience is wearing thin."),
+		_("I would advise you to tread carefully."),
+		_("Don't test me right now."),
+		_("My patience is running out.")
+	})
+	
+	-- maybe we don't want the generic things too here, idk
+	-- things I say about {name} when I had a good conversation
+	crewmate.conversation.good_talker = append_table(crewmate.conversation.good_talker, {
+		_("I like talking with {name}."),
+		_("I like {name}."),
+		_("We've had some good conversations."),
+		_("I think {name} likes me."),
+		_("{name} is nice."),
+		_("{name} seems nice."),
+		_("{name} is a dear isn't {article_subject}."),
+		_("Isn't {article_subject} a dear."),
+		_("{name} is lovely."),
+		_("That was pleasant."),
+		_("That was pleasant of {article_object}."),
+		_("That was nice of {article_object}."),
+		_("Don't forget to enjoy the view. Look at that bright one over there. I think it's a moon."),
+		_("On a happiness scale to somewhere around ten, I'd put you at around {satisfaction}."),
+		_("That was pretty smart for someone with {skill} expertise."),
+		_("I wouldn't have expected that from some {typetitle} with {skill} expertise.")
+	})
+	-- things I say about {name} when I had a bad conversation
+	crewmate.conversation.bad_talker = append_table(crewmate.conversation.bad_talker, {
+		_("{name} is too negative."),
+		_("I dislike {name}."),
+		_("I dislike {article_object}."),
+		_("I'm not fond of {name}."),
+		_("I'm not very fond of {article_object}."),
+		_("I am not a fan of {name}."),
+		_("I'm not friends with {name}."),
+		_("I'm not friends with {article_object}."),
+		_("I don't want to associate with {article_object}."),
+		_("I don't enjoy my conversations with {article_object}."),
+		_("I think {article_subject}'s being offensive."),
+		_("Sometimes I wonder if you have any {skill} experience at all.")
+	})
+	
+	crewmate.conversation.fatigue = append_table(crewmate.conversation.fatigue, {
+		_("I hope we're going somewhere nice."),
+		_("I hope we'll land soon, preferably somewhere nice."),
+		_("It can be a bit lonely out here sometimes."),
+		_("Will someone join me for a spa?"),
+		_("I'm going to take a bath later if someone wants to join."),
+		_("I could use a break."),
+		_("I'm a bit tired."),
+		_("I could use some rest."),
+		_(
+			"You know I need my wealthy planets, don't let me be the black sheep of the bunch that's bringing everyone down."
+		)
+	})
+	crewmate.conversation.bar_actions = append_table(crewmate.conversation.bar_actions, {
+		{
+			["verb"] = pick_one(
+				{
+					_("seducing"),
+					_("talking to"),
+					_("gesturing at"),
+					_("giggling at")
+				}
+			),
+			["descriptor"] = pick_one(
+				{
+					_("some"),
+					_("a"),
+					_("a")
+				}
+			),
+			["adjective"] = pick_one(
+				{
+					_("nice looking"),
+					_("strange"),
+					_("shady"),
+					_("handsome"),
+					_("dark"),
+					_("mysterious"),
+					_("preoccupied"),
+					_("unknown")
+				}
+			),
+			["object"] = pick_one(
+				{
+					_("stranger"),
+					_("person"),
+					_("man"),
+					_("woman"),
+					_("interloper"),
+					_("dock worker"),
+					_("crew member")
+				}
+			)
+		}
+	})
+	-- special things I know how to say
+	-- definitely overwrite whatever was in there before because we might pick
+	-- random things from any topic here sometimes and we design the character
+	-- "here" and not in the generic template
+	crewmate.conversation.special = {
+		["laugh"] = {
+			_("*giggles*"),
+			_("Hah!"),
+			_("Haha!"),
+			_("*laughs hysterically*"),
+			_("*laughs briefly*")
+		},
+		["worry"] = {
+			_("I hope I manage to secure a client on the next world."),
+			_("Things just aren't as good as they used to be."),
+			_("I'm growing increasingly concerned."),
+			_("I feel as if I'm being reduced to nothing."),
+			_("We are going to have to do something about that."),
+			_("There are situations that need to be addressed."),
+			_("From my viewpoint, things could be better."),
+			_("I worry about the violence on this ship."),
+			_("I'm a bit worried")
+		}
+	}
+	crewmate.conversation.smalltalk_positive = append_table(crewmate.conversation.smalltalk_positive, {
+		_("What a lovely view."),
+		_("I'll be in my quarters."),
+		_("I wish I could tell you about my last customer."),
+		_("I like being surrounded by all this science."),
+		_("Of all my travels, this is my favourite journey so far.")
+	})
+	-- unique negative smalltalk to be distinguishable from regular crew
+	crewmate.conversation.smalltalk_negative = {
+		_("I really need a break... To bathe myself in luxury."),
+		_("I've seen better days."),
+		_("The viewscreen in my quarters is malfunctioning, could you help me repair it?"),
+		_("I'm getting tired of all these backwater worlds."),
+		_("I'll be in my quarters."),
+		_("Business could be better."),
+		_("I wish I could tell you about my last customer..."),
+		_("What? I don't want to talk about it."),
+		_("I'm not making enough credits to keep up with my luxurious lifestyle.")
+	}
+	
+	-- overwrite whatever topics we liked or disliked in our template
+	-- list of things I like to talk about and what I say about them
+	-- we'll start with a small set of topics/interests and therefore
+	-- "be better at learning" because there's less noise to choose from
+	crewmate.conversation.topics_liked = {
+		-- list of phrases that use the things I like (or not)
+		["luxury"] = {
+			_("Do you want to see my new hat?"),
+			_("How do you like this vintage neck-scarf?"),
+			_("What do you think about this color?")
+		},
+		-- normally, I call this "friend", but I don't want the companion to always
+		-- be talking about their friends or cat, at least not that often
+		["friendship"] = {
+			fmt.f(_("Check out this {ship} my friend thinking of buying."), {ship = getRandomShip()}),
+			_("Do you want to see some pictures of my neice?"),
+			_("I like how close we are."),
+			_("I know we've had our differences, but you're alright."),
+			_("I fear that we are becoming a bit too intimate."),
+			_("Have I told you about my cat?"),
+			_("Did I tell you about my cat?"),
+			_("Do you want to see my kitty?"),
+			_("Do you want to see my cat?"),
+			_("Don't you just love my kitty?")
+		},
+		["travel"] = {
+			fmt.f(
+				_("One of my favourite places to visit is {place}. Have you been there?"),
+				{place = spob.get(faction.get("Independent"))}
+			),
+			fmt.f(
+				_("I fell in love with a pirate from {place}. I wonder what {article}'s up to these days."),
+				{place = spob.get(faction.get("Raven Clan")), name = pilotname.human(), article = opposite_article}
+			),
+			fmt.f(
+				_("If you've never been to {place}, we should go."),
+				{place = spob.get(faction.get("Independent"))}
+			),
+			fmt.f(
+				_("An intriguing place to visit is {place}. Have you been there?"),
+				{place = spob.get(faction.get("Za'lek"))}
+			),
+			fmt.f(
+				_("I heard that {place} is developing a new {made_up}. What do you make of that?"),
+				{place = spob.get(faction.get("Za'lek")), made_up = getMadeUpName()}
+			),
+			fmt.f(
+				_("Of all my travels I must say, I've been too often to {place}. I don't mind the work."),
+				{place = spob.get(faction.get("Empire"))}
+			),
+			fmt.f(
+				_(
+					"I had an affair with a servant from {place}. I wonder what meddlesome {name} is up to these days."
+				),
+				{place = spob.get(faction.get("Dvaered")), name = pilotname.human()}
+			),
+			fmt.f(
+				_(
+					"All the violence and lawlessness on {place} led my sister {name} towards a path of disastrous affairs."
+				),
+				{place = spob.get(faction.get("Dvaered")), name = pilotname.human()}
+			),
+			fmt.f(
+				_("I went to {place} just to check it out. I haven't had the urge to go since."),
+				{place = spob.get(faction.get("Soromid"))}
+			),
+			fmt.f(
+				_("I went to {place} just to check it out. I don't recommend it."),
+				{place = spob.get(faction.get("Soromid"))}
+			)
+		},
+		["view"] = {
+			_("Did you enjoy the view?"),
+			_("Did you notice the spectacular view towards the star?"),
+			_("What a wonderful view. The stars are amazing."),
+			_("What an amazing view!"),
+			_("What are you looking at?"),
+			_("Are you enjoying the view?"),
+			_("Keep your hands to yourself or I'll have to charge you some credits."),
+			_("I like looking out at the stars."),
+			_("How could anyone not admire this view?")
+		}
+	}
+	-- list of things I don't like talking about
+	-- put a bunch of things related to violent thoughts here
+	crewmate.conversation.topics_disliked = {
+		_("violence"),
+		_("credits"),
+		_("fear"),
+		_("death"),
+		_("kill"),
+		_("poor"),
+		_("trash"),
+	}
+	-- things we say about things we are indifferent to
+	crewmate.conversation.default_participation = append_table(crewmate.conversation.default_participation, {
+		_("Of course."),
+		_("Sure!"),
+		_("That sounds good."),
+		_("That sounds nice."),
+		_("Sounds good."),
+		_("Yeah."),
+		_("Nice."),
+		_("Alright."),
+		_("I'm a bit busy, but I'll do what I can."),
+		_("I'll do what I can."),
+		_("I always do my best."),
+		_("I'll do my best.")
+	})
+	-- responses to conversations about topics I don't like
+	-- generally something dismissive but the companion is a bit diplomatic but can be dramatic
+	crewmate.conversation.phrases_disliked = {
+		_("Do we have to talk about this?"),
+		_("All you ever talk about is about {topic}."),
+		_("It's {topic} this, {topic} that, you just can't get enough {topic} can you?"),
+		_("Whatever."),
+		_("Yeah, okay."),
+		_("I am not interested in that at all. Can we talk about something else?"),
+		_("Sorry, not interested."),
+		_("Right."),
+		_("Sure."),
+		_("Yeah, because of all the {topic}, of course."),
+		_("Please give me some privacy."),
+		_("I would like to be dismissed."),
+		_("I have something else I have to do.")
+	}
+    
     crewmate.hook = {
         ["func"] = "escort",
         ["hook"] = nil
@@ -2742,6 +2914,7 @@ local function createEscortCompanion()
     return crewmate
 end
 
+
 local function createExplosivesEngineer(fac)
     local character = {}
     fac = fac or faction.get("Za'lek")
@@ -2771,6 +2944,8 @@ local function createExplosivesEngineer(fac)
     character.deposit = math.ceil(100e3 * character.satisfaction * character.xp + character.chatter * rnd.rnd() * 10e3)
     character.salary = 0
     character.other_costs = "equipment"
+	-- the explosives expert is a bit of a weirdo and gets his own custom conversation sheet
+	-- actually that's a good way for me to find out if refactoring is breaking stuff
     character.conversation = {
         ["backstory"] = generateBackstory(character),
         -- what I say when I'm doing my job
@@ -3090,15 +3265,13 @@ end
 local function createPilotNPCs()
     local fac = spob.cur():faction()
 
-    if spob.cur():tags("nonpc") then
+    if spob.cur():tags.nonpc then
         return
     end
 
     if fac == nil then
         return
     end
-
-    -- default sex is male for whatever reason
 
     local r = rnd.rnd(0, 3)
 
