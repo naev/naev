@@ -35,7 +35,7 @@
 #define ASTEROID_TYPES_DATA_PATH "asteroids/types/" /**< Asteroid types XML file location path. */
 #define ASTEROID_GROUPS_DATA_PATH "asteroids/groups/" /**< Asteroid groups XML file location path. */
 #define MAP_DECORATOR_DATA_PATH  "map_decorator/" /**< Where the map has background images. */
-#define TRAIL_DATA_PATH          "trails.xml" /**< Trail types XML file. */
+#define TRAIL_DATA_PATH          "trails/" /**< Trail types XML file. */
 
 #define MISSION_LUA_PATH         "missions/" /**< Path to Lua files. */
 #define EVENT_LUA_PATH           "events/" /**< Path to Lua files. */

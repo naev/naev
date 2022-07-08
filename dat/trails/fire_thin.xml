@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trail name="fire-thin" inherits="fire">
+ <thickness>4</thickness>
+ <ttl>1</ttl>
+</trail>
