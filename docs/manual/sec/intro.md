@@ -82,6 +82,6 @@ Furthermore, the following files play a critical role:
 * `slots.xml`: defines the types of slots in the game. TODO make a directory.
 * `start.xml`: determines the starting setting, time and such of the game.
 * `tech.xml`: determines all the tech levels and outfit/ship availability. TODO make a directory.
-* `trails.xml`: determines the types of ship trails that are available and their shaders.
+* `trails.xml`: determines the types of ship trails that are available and their shaders. TODO make a directory.
 
 Note that there is still a significant amount of monolithic files that need to be replaced with directories. Editing monolithic files will be bad for future save compatibility.
