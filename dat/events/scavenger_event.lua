@@ -493,7 +493,6 @@ local function pick_favorite_ship(me)
     return choice
 end
 
-
 local function speak(persona, sentiment, arg)
     local ss = sentiment or "idle"
     local spoken = nil
@@ -533,7 +532,7 @@ local function speak(persona, sentiment, arg)
 				spoken = pick_one(chitchat_commander)
 			end
 				
-		elseif
+		elseif	-- if this looks like a favourite ship
 				string.find(myship, favourite) or
 				string.find(favourite, myship)
 			then
@@ -588,6 +587,7 @@ local function speak(persona, sentiment, arg)
 		person.last_sentiment = "content"
 	elseif ss == "closecall" then
 		spoken = pick_one(chitchat_closecall)
+		-- deescalate our feelings of almost dying and contemplate the beating we just received
 		persona.last_sentiment = "beating"
     end
 
@@ -2009,9 +2009,11 @@ end
 function land()
     mem.lastplanet = spob.cur()
 	mem.lastsys = system.cur()
+	local commander_exists = false
 	local commander_active = false
     for i, persona in ipairs(mem.persons) do
 		if persona.commander then
+			commander_exists = true
 			if persona.active then
 				commander_active = true
 			end
@@ -2127,7 +2129,7 @@ function land()
 			end
 			
 			this_desc = fmt.f(this_desc, edata)
-			if (edata.active or not commander_active) or edata.commander then
+			if (edata.active or not commander_exists) or edata.commander then
 				local id = evt.npcAdd("approachHiredScav", edata.rank .. " " .. edata.name, edata.portrait, this_desc, prio)
 				npcs[id] = edata
 			end
