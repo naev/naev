@@ -58,6 +58,7 @@ Naev plugins and data use the same directory structure. It is best to open up th
 * `spob/`: contains all the space objects (planets, stations, etc.).
 * `spob_virtual/`: contains all the virtual space objects. These mainly serve to modify the presence levels of factions in different systems artificially.
 * `ssys/`: contains all the star systems.
+* `tech/`: contains all the tech structures.
 * `unidiff/`: contains all the universe diffs. These are used to create modifications to the game data during a playthrough, such as adding spobs or systems.
 
 In general, recursive iteration is used with all directories. This means you don't have to put all the ship xml files directly it `ships/`, but you can use subdirectories. Furthermore, in order to avoid collision between plugins, it is highly recommended to use a subdirectory with the plugin name. So if you want to define a new ship called `Stardragon`, you would put the xml file in `ships/my_plugin/stardragon.xml`.
@@ -81,7 +82,6 @@ Furthermore, the following files play a critical role:
 * `save_updater.lua`: used when updating saves to replace old outfits and licenses with newer ones.
 * `slots.xml`: defines the types of slots in the game. TODO make a directory.
 * `start.xml`: determines the starting setting, time and such of the game.
-* `tech.xml`: determines all the tech levels and outfit/ship availability. TODO make a directory.
 * `trails.xml`: determines the types of ship trails that are available and their shaders. TODO make a directory.
 
 Note that there is still a significant amount of monolithic files that need to be replaced with directories. Editing monolithic files will be bad for future save compatibility.
