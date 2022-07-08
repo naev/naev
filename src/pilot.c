@@ -3364,7 +3364,7 @@ void pilot_choosePoint( vec2 *vp, Spob **spob, JumpPoint **jump, int lf, int ign
          JumpPoint *target = cur_system->jumps[i].returnJump;
          double limit = 0.;
          if (guerilla) {/* Test enemy presence on the other side. */
-            int *fact = faction_getEnemies( lf );
+            const int *fact = faction_getEnemies( lf );
             for (int j=0; j<array_size(fact); j++)
                limit += system_getPresence( cur_system->jumps[i].target, fact[j] );
          }

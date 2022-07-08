@@ -453,7 +453,7 @@ static int factionL_playerstandingdefault( lua_State *L )
  */
 static int factionL_enemies( lua_State *L )
 {
-   int *factions;
+   const int *factions;
    int f = luaL_validfaction(L,1);
 
    /* Push the enemies in a table. */
@@ -478,7 +478,7 @@ static int factionL_enemies( lua_State *L )
  */
 static int factionL_allies( lua_State *L )
 {
-   int *factions;
+   const int *factions;
    int f = luaL_validfaction(L,1);
 
    /* Push the enemies in a table. */

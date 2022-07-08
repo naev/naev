@@ -473,7 +473,7 @@ const glColour* faction_colour( int f )
  *    @param f Faction to get enemies of.
  *    @return Array (array.h): The enemies of the faction.
  */
-int* faction_getEnemies( int f )
+const int* faction_getEnemies( int f )
 {
    if (!faction_isFaction(f)) {
       WARN(_("Faction id '%d' is invalid."),f);
@@ -503,7 +503,7 @@ int* faction_getEnemies( int f )
  *    @param f Faction to get allies of.
  *    @return Array (array.h): The allies of the faction.
  */
-int* faction_getAllies( int f )
+const int* faction_getAllies( int f )
 {
    if (!faction_isFaction(f)) {
       WARN(_("Faction id '%d' is invalid."),f);
