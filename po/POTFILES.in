@@ -112,7 +112,15 @@ dat/factions/traders_guild.xml
 dat/factions/warlords.xml
 dat/factions/wild_ones.xml
 dat/factions/zalek.xml
-dat/map.xml
+dat/map_decorator/blackhole.xml
+dat/map_decorator/dvaered.xml
+dat/map_decorator/empire.xml
+dat/map_decorator/frontier.xml
+dat/map_decorator/nebula.xml
+dat/map_decorator/proteron.xml
+dat/map_decorator/sirius.xml
+dat/map_decorator/soromid.xml
+dat/map_decorator/zalek.xml
 dat/outfits/accessory/air_freshener.xml
 dat/outfits/accessory/black_cat_doll.xml
 dat/outfits/accessory/broken_nebular_shielding_prototype.xml
