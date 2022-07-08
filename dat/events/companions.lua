@@ -1100,7 +1100,7 @@ local function speak(talker, other)
     local colour = "F"
     local choices = {"I have nothing to say."}
     local last_sentiment = talker.conversation.sentiment
-
+	
     -- figure out what to say
     -- do I have a sentiment that I need to get off my chest?
     if talker.conversation.sentiment then
@@ -1159,7 +1159,7 @@ local function speak(talker, other)
     end
 
     local spoken = pick_one(choices)
-	print("talker wants to speak", talker, spoken)
+	print("talker wants to speak", talker.name, spoken)
     -- say it
     pilot.comm(talker.name, spoken, colour)
     local listener = pick_one(mem.companions)
@@ -1255,7 +1255,7 @@ local function speak(talker, other)
         local appreciation, interest = appreciate_spoken(spoken, listener)
 
         -- listener thought about something, let's remember that instead of discarding the useful data
-        insert_sentiment(listener, appreciation)
+        insert_sentiment(listener, pick_one(appreciation))
 
         -- listener will mention his interest to the talker and try to start a conversation
         if interest then
