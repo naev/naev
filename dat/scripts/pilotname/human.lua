@@ -1,16 +1,5 @@
 local fmt = require "format"
 
--- For translation, just transliterate if necessary.
-local articles = {
-   _("Das"),
-   _("Der"),
-   _("Kono"),
-   _("La"),
-   _("Le"),
-   _("The"),
-   _("Ye"),
-}
-
 local prefixes = {
 	_("B'"),
 	_("Be"),
@@ -450,7 +439,6 @@ local suffixes = {
 	
 	_("man"),
 	_("mann"),
-
 	
 	_("rap"),
 	_("red"),
@@ -490,8 +478,6 @@ local suffixes = {
 -- @brief Generates somewhat human sounding names
 --]]
 local function human ()
-   
-   local params = {article=article, descriptor=descriptor, colour=colour, actor=actor}
 
    local prefix = prefixes[ rnd.rnd(1, #prefixes) ]
    local anchor = anchors[ rnd.rnd(1, #anchors) ]
@@ -544,8 +530,6 @@ local function human ()
 	firstname = fmt.f(_("{prefix}{first_name_part}"), params)
       result = fmt.f(_("{anchor}{suffix}{suffix2}"), params)
    end
-   
-
    
    -- remove ugly duplicate letters
    for found, replacement in pairs(ugly_duplicates) do
