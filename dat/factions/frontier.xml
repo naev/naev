@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Frontier">
+ <ai>frontier_police</ai>
+ <known />
+ <logo>frontier</logo>
+ <longname>Frontier Alliance</longname>
+ <player>3</player>
+ <colour>yellow</colour>
+ <spawn>frontier</spawn>
+ <standing>frontier</standing>
+ <description>The Frontier Alliance is formed by the survivors of the initial attempts of Human expansion into space.</description>
+ <generator weight="0.6">Independent</generator>
+ <generator weight="0.4">Trader</generator>
+ <allies>
+ </allies>
+ <enemies>
+  <enemy>Pirate</enemy>
+  <enemy>Marauder</enemy>
+  <enemy>Wild Ones</enemy>
+  <enemy>Dreamer Clan</enemy>
+  <enemy>Raven Clan</enemy>
+  <enemy>Black Lotus</enemy>
+ </enemies>
+ <lane_length_per_presence>400</lane_length_per_presence>
+ <lane_base_cost>50</lane_base_cost>
+ <tags>
+  <tag>generic</tag>
+ </tags>
+</faction>

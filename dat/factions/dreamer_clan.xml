@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Dreamer Clan">
+ <ai>pirate</ai>
+ <logo>dreamerclan</logo>
+ <longname>Dreamer Pirate Clan</longname>
+ <player>-10</player>
+ <colour>red</colour>
+ <spawn>pirate_dreamer_clan</spawn>
+ <standing>pirate_dreamer_clan</standing>
+ <equip>pirate</equip>
+ <useshiddenjumps/>
+ <description>The Dreamer Pirate Clan consists largely of disgruntled pirates from the Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny.</description>
+ <generator weight="0.4">Pirate</generator>
+ <generator weight="0.4">Marauder</generator>
+ <allies>
+  <ally>Pirate</ally>
+ </allies>
+ <enemies>
+  <enemy>Collective</enemy>
+  <enemy>Dvaered</enemy>
+  <enemy>Empire</enemy>
+  <enemy>Frontier</enemy>
+  <enemy>Goddard</enemy>
+  <enemy>Independent</enemy>
+  <enemy>Miner</enemy>
+  <enemy>Proteron</enemy>
+  <enemy>Sirius</enemy>
+  <enemy>Soromid</enemy>
+  <enemy>Thurion</enemy>
+  <enemy>DHC</enemy>
+  <enemy>Trader</enemy>
+  <enemy>Traders Guild</enemy>
+  <enemy>Za'lek</enemy>
+ </enemies>
+ <tags>
+  <tag>pirate</tag>
+ </tags>
+</faction>

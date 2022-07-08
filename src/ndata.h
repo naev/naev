@@ -23,7 +23,7 @@
 #define SHIP_POLYGON_PATH        "gfx/ship_polygon/" /**< Path to ship's collision polygon. */
 #define OUTFIT_POLYGON_PATH      "gfx/outfit/space_polygon/" /**< Path to ship's collision polygon. */
 
-#define FACTION_DATA_PATH        "faction.xml" /**< Faction xml file. */
+#define FACTION_DATA_PATH        "factions/" /**< Faction xml file. */
 #define MISSION_DATA_PATH        "missions/" /**< Path to missions XML. */
 #define EVENT_DATA_PATH          "events/" /**< Path to events XML. */
 #define UNIDIFF_DATA_PATH        "unidiff/" /**< Path to unidiff XML. */

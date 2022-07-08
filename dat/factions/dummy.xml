@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Dummy">
+ <ai>dummy</ai>
+ <static />
+ <invisible />
+ <player>0</player>
+ <standing>static</standing>
+ <allies />
+ <enemies />
+</faction>

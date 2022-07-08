@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Strangelove">
+ <!-- Can't be made dynamic because has an asset.-->
+ <ai>zalek</ai>
+ <display>Independent</display>
+ <static />
+ <invisible />
+ <known />
+ <player>0</player>
+ <standing>static</standing>
+ <equip>pirate</equip>
+ <enemies><!-- They are enemies just so they don't land on the planet.-->
+  <enemy>Za'lek</enemy>
+  <enemy>Pirate</enemy>
+  <enemy>Marauder</enemy>
+  <enemy>Wild Ones</enemy>
+  <enemy>Dreamer Clan</enemy>
+  <enemy>Raven Clan</enemy>
+  <enemy>Black Lotus</enemy>
+  <enemy>Miner</enemy>
+  <enemy>Trader</enemy>
+  <enemy>Traders Guild</enemy>
+ </enemies>
+</faction>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Wild Ones">
+ <ai>pirate</ai>
+ <logo>wildones</logo>
+ <longname>Wild Ones Pirate Clan</longname>
+ <player>-40</player>
+ <colour>red</colour>
+ <spawn>pirate_wild_ones</spawn>
+ <standing>pirate_wild_ones</standing>
+ <equip>pirate</equip>
+ <useshiddenjumps/>
+ <description>The Wild Ones Pirate Clan is a violent and loosely organized band of pirates that control the Haven sector between Empire and Soromid territories.</description>
+ <generator weight="0.35">Pirate</generator>
+ <generator weight="0.65">Marauder</generator>
+ <allies>
+  <ally>Pirate</ally>
+ </allies>
+ <enemies>
+  <enemy>Collective</enemy>
+  <enemy>Dvaered</enemy>
+  <enemy>Empire</enemy>
+  <enemy>Frontier</enemy>
+  <enemy>Goddard</enemy>
+  <enemy>Independent</enemy>
+  <enemy>Miner</enemy>
+  <enemy>Proteron</enemy>
+  <enemy>Sirius</enemy>
+  <enemy>Soromid</enemy>
+  <enemy>Thurion</enemy>
+  <enemy>DHC</enemy>
+  <enemy>Trader</enemy>
+  <enemy>Traders Guild</enemy>
+  <enemy>Za'lek</enemy>
+ </enemies>
+ <tags>
+  <tag>pirate</tag>
+ </tags>
+</faction>

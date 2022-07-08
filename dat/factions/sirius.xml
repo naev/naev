@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Sirius">
+ <ai>sirius</ai>
+ <known />
+ <logo>sirius</logo>
+ <colour>aqua</colour>
+ <longname>House Sirius</longname>
+ <player>3</player>
+ <spawn>sirius</spawn>
+ <standing>sirius</standing>
+ <equip>sirius</equip>
+ <description>House Sirius is defined by its state religion more than anything else, with Sirichana as the focus of worship.</description>
+ <generator weight="0.45">Independent</generator>
+ <generator weight="0.5">Trader</generator>
+ <allies>
+ </allies>
+ <enemies>
+  <enemy>Nasin</enemy>
+  <enemy>Pirate</enemy>
+  <enemy>Marauder</enemy>
+  <enemy>Wild Ones</enemy>
+  <enemy>Dreamer Clan</enemy>
+  <enemy>Raven Clan</enemy>
+  <enemy>Black Lotus</enemy>
+ </enemies>
+ <lane_length_per_presence>200</lane_length_per_presence>
+ <lane_base_cost>35</lane_base_cost>
+ <tags>
+  <tag>greathouse</tag>
+  <tag>generic</tag>
+ </tags>
+</faction>

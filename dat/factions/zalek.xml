@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Za'lek">
+ <ai>zalek</ai>
+ <known />
+ <logo>zalek</logo>
+ <colour>DarkRed</colour>
+ <longname>House Za'lek</longname>
+ <player>2</player>
+ <spawn>zalek</spawn>
+ <standing>zalek</standing>
+ <equip>zalek</equip>
+ <description>House Za'lek is the scientific heart of the Empire. Until recently they were a secretive Great House, but they have recently become much more open.</description>
+ <generator weight="0.55">Independent</generator>
+ <generator weight="0.45">Trader</generator>
+ <allies>
+ </allies>
+ <enemies>
+  <enemy>Pirate</enemy>
+  <enemy>Marauder</enemy>
+  <enemy>Wild Ones</enemy>
+  <enemy>Dreamer Clan</enemy>
+  <enemy>Raven Clan</enemy>
+  <enemy>Black Lotus</enemy>
+ </enemies>
+ <lane_length_per_presence>250</lane_length_per_presence>
+ <lane_base_cost>40</lane_base_cost>
+ <tags>
+  <tag>greathouse</tag>
+  <tag>generic</tag>
+ </tags>
+</faction>

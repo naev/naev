@@ -115,8 +115,8 @@ static int faction_getRaw( const char *name );
 static void faction_freeOne( Faction *f );
 static void faction_sanitizePlayer( Faction* faction );
 static void faction_modPlayerLua( int f, double mod, const char *source, int secondary );
-static int faction_parse( Faction* temp, xmlNodePtr parent );
-static void faction_parseSocial( xmlNodePtr parent );
+static int faction_parse( Faction* temp, const char *file );
+static int faction_parseSocial( const char *file );
 static void faction_addStandingScript( Faction* temp, const char* scriptname );
 static void faction_computeGrid (void);
 /* externed */
@@ -1245,19 +1245,33 @@ int faction_isFaction( int f )
  * @brief Parses a single faction, but doesn't set the allies/enemies bit.
  *
  *    @param temp Faction to load data into.
- *    @param parent Parent node to extract faction from.
+ *    @param file File to parse.
  *    @return Faction created from parent node.
  */
-static int faction_parse( Faction* temp, xmlNodePtr parent )
+static int faction_parse( Faction* temp, const char *file )
 {
-   xmlNodePtr node;
+   xmlNodePtr node, parent;
    int saw_player;
+
+   xmlDocPtr doc = xml_parsePhysFS( file );
+   if (doc == NULL)
+      return -1;
+
+   parent = doc->xmlChildrenNode; /* first faction node */
+   if (parent == NULL) {
+      ERR( _("Malformed '%s' file: does not contain elements"), file);
+      return -1;
+   }
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Faction) );
    temp->equip_env   = LUA_NOREF;
    temp->env         = LUA_NOREF;
    temp->sched_env   = LUA_NOREF;
+
+   xmlr_attr_strd(parent,"name",temp->name);
+   if (temp->name == NULL)
+      WARN(_("Faction from file '%s' has no name!"), file);
 
    saw_player = 0;
    node   = parent->xmlChildrenNode;
@@ -1272,7 +1286,6 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
          continue;
       }
 
-      xmlr_strd(node,"name",temp->name);
       xmlr_strd(node,"longname",temp->longname);
       xmlr_strd(node,"display",temp->displayname);
       xmlr_strd(node,"mapname",temp->mapname);
@@ -1355,12 +1368,12 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 
    } while (xml_nextNode(node));
 
-   if (temp->name == NULL)
-      WARN(_("Unable to read data from '%s'"), FACTION_DATA_PATH);
    if (!saw_player)
       WARN(_("Faction '%s' missing 'player' tag."), temp->name);
    if (faction_isKnown_(temp) && !faction_isFlag(temp, FACTION_INVISIBLE) && temp->description==NULL)
       WARN(_("Faction '%s' is known but missing 'description' tag."), temp->name);
+
+   xmlFreeDoc(doc);
 
    return 0;
 }
@@ -1413,25 +1426,32 @@ static void faction_addStandingScript( Faction* temp, const char* scriptname )
 /**
  * @brief Parses the social tidbits of a faction: allies and enemies.
  *
- *    @param parent Node containing the faction.
+ *    @param file File to parse.
+ *    @return 0 on success.
  */
-static void faction_parseSocial( xmlNodePtr parent )
+static int faction_parseSocial( const char *file )
 {
-   char buf[PATH_MAX], *dat;
+   char buf[PATH_MAX], *name, *dat;
    size_t ndat;
-   xmlNodePtr node;
+   xmlNodePtr node, parent;
    Faction *base;
+
+   xmlDocPtr doc = xml_parsePhysFS( file );
+   if (doc == NULL)
+      return -1;
+
+   parent = doc->xmlChildrenNode; /* first faction node */
+   if (parent == NULL) {
+      ERR( _("Malformed '%s' file: does not contain elements"), file);
+      return -1;
+   }
 
    /* Get name. */
    base = NULL;
-   node = parent->xmlChildrenNode;
-   do {
-      xml_onlyNodes(node);
-      if (xml_isNode(node,"name")) {
-         base = &faction_stack[ faction_get( xml_get(node) ) ];
-         break;
-      }
-   } while (xml_nextNode(node));
+   xmlr_attr_strd(parent, "name", name);
+   if (name != NULL) {
+      base = &faction_stack[ faction_get( name ) ];
+   }
 
    assert( base != NULL );
 
@@ -1529,6 +1549,9 @@ static void faction_parseSocial( xmlNodePtr parent )
 
    if ((base->env==LUA_NOREF) && !faction_isFlag( base, FACTION_STATIC ))
       WARN(_("Faction '%s' has no Lua and isn't static!"), base->name);
+
+   xmlFreeDoc(doc);
+   return 0;
 }
 
 /**
@@ -1549,26 +1572,9 @@ void factions_reset (void)
  */
 int factions_load (void)
 {
-   xmlNodePtr factions, node;
    Faction *f;
    Uint32 time = SDL_GetTicks();
-
-   /* Load the document. */
-   xmlDocPtr doc = xml_parsePhysFS( FACTION_DATA_PATH );
-   if (doc == NULL)
-      return -1;
-
-   node = doc->xmlChildrenNode; /* Factions node */
-   if (!xml_isNode(node,XML_FACTION_ID)) {
-      ERR(_("Malformed %s file: missing root element '%s'"), FACTION_DATA_PATH, XML_FACTION_ID);
-      return -1;
-   }
-
-   factions = node->xmlChildrenNode; /* first faction node */
-   if (factions == NULL) {
-      ERR(_("Malformed %s file: does not contain elements"), FACTION_DATA_PATH);
-      return -1;
-   }
+   char **faction_files = ndata_listRecursive( FACTION_DATA_PATH );
 
    /* player faction is hard-coded */
    faction_stack = array_create( Faction );
@@ -1582,28 +1588,30 @@ int factions_load (void)
    f->allies      = array_create( int );
    f->enemies     = array_create( int );
 
-   /* First pass - gets factions */
-   node = factions;
-   do {
-      if (xml_isNode(node,XML_FACTION_TAG)) {
+   /* Add the base factions. */
+   for (int i=0; i<array_size(faction_files); i++) {
+      if (ndata_matchExt( faction_files[i], "xml" )) {
          f = &array_grow( &faction_stack );
-
-         /* Load faction. */
-         faction_parse( f, node );
-         f->oflags = f->flags;
+         int ret = faction_parse( f, faction_files[i] );
+         if (ret < 0) {
+            int n = array_size( faction_stack );
+            array_erase( &faction_stack, &faction_stack[n-1], &faction_stack[n] );
+         }
+         else
+            f->oflags = f->flags;
       }
-   } while (xml_nextNode(node));
+   }
 
    /* Sort by name. */
    qsort( faction_stack, array_size(faction_stack), sizeof(Faction), faction_cmp );
    faction_player = faction_get("Player");
 
    /* Second pass - sets allies and enemies */
-   node = factions;
-   do {
-      if (xml_isNode(node,XML_FACTION_TAG))
-         faction_parseSocial(node);
-   } while (xml_nextNode(node));
+   for (int i=0; i<array_size(faction_files); i++) {
+      if (ndata_matchExt( faction_files[i], "xml" )) {
+         faction_parseSocial( faction_files[i] );
+      }
+   }
 
    /* Third pass, Make allies/enemies symmetric. */
    for (int i=0; i<array_size(faction_stack); i++) {
@@ -1638,8 +1646,13 @@ int factions_load (void)
             faction_addEnemy( f->enemies[j], i );
       }
    }
-   xmlFreeDoc(doc);
 
+   /* Clean up stuff. */
+   for (int i=0; i<array_size(faction_files); i++)
+      free( faction_files[i] );
+   array_free( faction_files );
+
+   /* Compute grid and finalize. */
    faction_computeGrid();
    if (conf.devmode) {
       time = SDL_GetTicks() - time;

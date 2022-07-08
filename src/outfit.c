@@ -2157,7 +2157,7 @@ static int outfit_parse( Outfit* temp, const char* file )
    if (doc == NULL)
       return -1;
 
-   parent = doc->xmlChildrenNode; /* first system node */
+   parent = doc->xmlChildrenNode; /* first outfit node */
    if (parent == NULL) {
       ERR( _("Malformed '%s' file: does not contain elements"), file);
       return -1;
