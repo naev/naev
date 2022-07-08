@@ -53,6 +53,7 @@ Naev plugins and data use the same directory structure. It is best to open up th
 * `outfits/`: contains all the outfits.
 * `scripts/`: this is an optional directory that contains all libraries and useful scripts by convention. It is directly appended to the Lua path, so you can `require` files in this directory directly without having to prepend `scripts.`.
 * `ships/`: contains all the ships.
+* `slots/`: contains information about the different ship slot types.
 * `snd/`: contains all the sound and music.
 * `spfx/`: contains all the special effects. Explosions are required by the engine and can not be removed.
 * `spob/`: contains all the space objects (planets, stations, etc.).
@@ -80,7 +81,6 @@ Furthermore, the following files play a critical role:
 * `rep.lua`: internal file for the console. Do not modify!!
 * `rescue.lua`: script run when the game detects the player is stranded, such as they have a non-spaceworthy ship and are stuck in an uninhabited spob.
 * `save_updater.lua`: used when updating saves to replace old outfits and licenses with newer ones.
-* `slots.xml`: defines the types of slots in the game. TODO make a directory.
 * `start.xml`: determines the starting setting, time and such of the game.
 * `trails.xml`: determines the types of ship trails that are available and their shaders. TODO make a directory.
 
