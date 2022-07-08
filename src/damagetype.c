@@ -94,7 +94,6 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
 
          continue;
       }
-      xmlr_float(node, "armour", temp->adam);
       xmlr_float(node, "knockback", temp->knock);
 
       WARN(_("Unknown node of type '%s' in damage node '%s'."), node->name, temp->name);
@@ -166,6 +165,14 @@ const char* dtype_damageTypeToStr( int type )
  */
 int dtype_load (void)
 {
+   const DTYPE normal = {
+      .name = strdup(_("normal")),
+      .sdam = 1.,
+      .adam = 1.,
+      .knock = 0.,
+      .soffset = 0,
+      .aoffset = 0,
+   };
    xmlNodePtr node;
    xmlDocPtr doc;
 
@@ -190,6 +197,8 @@ int dtype_load (void)
 
    /* Load up the individual damage types. */
    dtype_types = array_create(DTYPE);
+   array_push_back( &dtype_types, normal );
+
    do {
       xml_onlyNodes(node);
 
