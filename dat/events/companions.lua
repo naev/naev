@@ -3265,7 +3265,7 @@ end
 local function createPilotNPCs()
     local fac = spob.cur():faction()
 
-    if spob.cur():tags.nonpc then
+    if spob.cur():tags().nonpc then
         return
     end
 
