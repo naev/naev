@@ -226,7 +226,7 @@ local function getShipboardActivity( activity_type )
 		fmt.f(_("{fruit} restocking"), { fruit = getRandomFruit() } ),
 	}
 	-- anyone wanna play some <game>?
-	activities.games = {
+	activities.game = {
 		_("cards"),
 		_("chess"),
 		_("tic-tac-toe"),
@@ -251,7 +251,8 @@ local function getShipboardActivity( activity_type )
 	elseif not activities[activity_type] then
 		activity_type = basic
 	end
-	return pick_one(activities[activity_type])
+	local choices = activities[activity_type]
+	return pick_one(choices)
 end
 
 -- returns some kind of statement describing an insulting proper noun
@@ -2275,7 +2276,7 @@ local function createGenericCrewmate(fac)
             _("I think {article_subject}'s being offensive."),
 			_("I think {article_subject}'s having a bad day."),
 			_("You'd think {article_subject}'d keep those thoughts to {article_object}self."),
-			fmt.f(_("You should keep those thoughts to yourself, shouldn't {article_subect}, {captain}?"), {article_subject="{article_subject", captain=player.name() } ),
+			fmt.f(_("You should keep those thoughts to yourself, shouldn't {article_subject}, {captain}?"), {article_subject="{article_subject", captain=player.name() } ),
 			_("I don't know what {article_subject}'s on about."),
 			_("What's gotten into {article_object}?"),
         },
@@ -2290,16 +2291,16 @@ local function createGenericCrewmate(fac)
             _("I'm pretty tired."),
             _("I could use some rest."),
 			_("Anyone want to play some cards?"),
-			fmt.f(_("Anyone want to play some {game}?"), { game = pick_one(getShipboardActivity("game")) }),
-			fmt.f(_("Anyone want to play {game}?"), { game = pick_one(getShipboardActivity("game")) }),
-			fmt.f(_("Anyone want to play a game of {game}?"), { game = pick_one(getShipboardActivity("game")) }),
-			fmt.f(_("I really want to play {game}."), { game = pick_one(getShipboardActivity("game")) }),
-			fmt.f(_("Do I really have to do all that {basic}?"), { basic = pick_one(getShipboardActivity("basic")) }),
-			fmt.f(_("Do I really have to do all that {basic}?"), { basic = pick_one(getShipboardActivity("basic")) }),
-			fmt.f(_("Do I have to do the {basic}?"), { basic = pick_one(getShipboardActivity("basic")) }),
-			fmt.f(_("Oh, I forgot that I have to do my {basic} for today."), { basic = pick_one(getShipboardActivity("basic")) }),
-			fmt.f(_("I'm going for some {basic}."), { basic = pick_one(getShipboardActivity("basic")) }),
-			fmt.f(_("I'm going to do that {basic} in a bit."), { basic = pick_one(getShipboardActivity("basic")) }),
+			fmt.f(_("Anyone want to play some {game}?"), { game = getShipboardActivity("game") }),
+			fmt.f(_("Anyone want to play {game}?"), { game = getShipboardActivity("game") }),
+			fmt.f(_("Anyone want to play a game of {game}?"), { game = getShipboardActivity("game") }),
+			fmt.f(_("I really want to play {game}."), { game = getShipboardActivity("game") }),
+			fmt.f(_("Do I really have to do all that {basic}?"), { basic = getShipboardActivity("basic") }),
+			fmt.f(_("Do I really have to do all that {basic}?"), { basic = getShipboardActivity("basic") }),
+			fmt.f(_("Do I have to do the {basic}?"), { basic = getShipboardActivity("basic") }),
+			fmt.f(_("Oh, I forgot that I have to do my {basic} for today."), { basic = getShipboardActivity("basic") }),
+			fmt.f(_("I'm going for some {basic}."), { basic = getShipboardActivity("basic") }),
+			fmt.f(_("I'm going to do that {basic} in a bit."), { basic = getShipboardActivity("basic") }),
 			_("I hope someone can come cover for me soon, I'm getting a bit tired."),
 			_("We've been in space for far too long, we need a break. A good one."),
 			_("We need a break, and by break, I mean a big break with big rewards."),
@@ -2375,8 +2376,8 @@ local function createGenericCrewmate(fac)
             _("I could use a hand in the back, can you help me?"),
 			_("You want a drink?"),
 			_("You want this? I got two."),
-			fmt.f(_("Would you like to play some {game}?"), { game = getRandomGame() }),
-			fmt.f(_("I'll play some {game} if you want."), { game = getRandomGame() }),
+			fmt.f(_("Would you like to play some {game}?"), { game = getShipboardActivity("game") }),
+			fmt.f(_("I'll play some {game} if you want."), { game = getShipboardActivity("game") }),
 			fmt.f(_("Would you like to this {fruit}?"), { fruit = getRandomFruit() }),
 			fmt.f(_("I'll give you my {fruit} if you want it."), { fruit = getRandomFruit() }),
 			fmt.f(_("I just ate a really nice {fruit}."), { fruit = getRandomFruit() }),
