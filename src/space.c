@@ -2039,8 +2039,11 @@ void spob_gfxLoad( Spob *spob )
                gl_freeTexture( spob->gfx_space );
             spob->gfx_space = gl_dupTexture( lua_totex(naevL,-2) );
          }
+         else if (lua_isnil(naevL,-2)) {
+            /* Have the engine handle it if nil. */
+         }
          else
-            WARN(_("Spob '%s' ran '%s' but got non-texture return value!"), spob->name, "load" );
+            WARN(_("Spob '%s' ran '%s' but got non-texture or nil return value!"), spob->name, "load" );
          spob->radius = luaL_optnumber(naevL,-1,-1.);
          lua_pop(naevL,2);
       }
