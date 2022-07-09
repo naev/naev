@@ -21,11 +21,11 @@ function comm.nameboxUpdate( plt )
    local namebox_font = vn.namebox_font
    local faction_str
    if plt:flags("bribed") then
-      faction_str = string.format( "#g%s#0", _("Bribed") )
+      faction_str = "#g".._("Bribed").."#0"
    else
       local _std, str = fac:playerStanding()
       if plt:hostile() then
-         faction_str = string.format( "#r%s#0", _("Hostile") )
+         faction_str = "#r".._("Hostile").."#0"
       elseif not fac:known() then
          faction_str = _("Unknown")
       else
@@ -85,6 +85,14 @@ function comm.newCharacter( vn_in, plt )
    comm.nameboxUpdate( plt )
 
    return vn.newCharacter( plt:name(), { image=shipgfx } )
+end
+
+function comm.newCharacterSpob( vn_in, spb )
+   vn = vn_in
+
+   local spbgfx = lg.newImage( spb:gfxSpace() )
+
+   return vn.newCharacter( spb:name(), { image=spbgfx } )
 end
 
 return comm
