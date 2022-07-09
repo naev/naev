@@ -1646,6 +1646,7 @@ Spob *spob_new (void)
    p->lua_can_land= LUA_NOREF;
    p->lua_render  = LUA_NOREF;
    p->lua_update  = LUA_NOREF;
+   p->lua_comm    = LUA_NOREF;
 
    /* Reconstruct the jumps. */
    if (!systems_loading && realloced)
@@ -1984,6 +1985,7 @@ void spob_updateLua( Spob *spob )
    spob->lua_can_land= LUA_NOREF;
    spob->lua_render  = LUA_NOREF;
    spob->lua_update  = LUA_NOREF;
+   spob->lua_comm    = LUA_NOREF;
 }
 
 /**
@@ -2022,6 +2024,7 @@ void spob_gfxLoad( Spob *spob )
          spob->lua_land     = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
          spob->lua_render   = nlua_refenvtype( env, "render",   LUA_TFUNCTION );
          spob->lua_update   = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
+         spob->lua_comm     = nlua_refenvtype( env, "comm",     LUA_TFUNCTION );
       }
 
       if (spob->lua_load) {
@@ -2136,6 +2139,7 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
    spob->lua_can_land= LUA_NOREF;
    spob->lua_render  = LUA_NOREF;
    spob->lua_update  = LUA_NOREF;
+   spob->lua_comm    = LUA_NOREF;
 
    /* Get the name. */
    xmlr_attr_strd( parent, "name", spob->name );
