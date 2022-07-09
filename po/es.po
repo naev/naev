@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-07-08 23:15+0000\n"
+"PO-Revision-Date: 2022-07-09 21:10+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -89961,11 +89961,11 @@ msgstr "Bien"
 #. Compute position stuff
 #: dat/scripts/minigames/blackjack.lua:26
 msgid "#wH#0it"
-msgstr "#wH#0it"
+msgstr "#wD#0ame"
 
 #: dat/scripts/minigames/blackjack.lua:26
 msgid "#wS#0tay"
-msgstr ""
+msgstr "#wP#0lantarme"
 
 #.
 #. -- Playing card game images
@@ -89995,115 +89995,115 @@ msgstr ""
 #: dat/scripts/minigames/blackjack.lua:27
 #: dat/scripts/minigames/chuckaluck.lua:44
 msgid "#w1#0. Bet 10 k¤"
-msgstr ""
+msgstr "#w1#0. Apostar 10 k¤"
 
 #: dat/scripts/minigames/blackjack.lua:27
 #: dat/scripts/minigames/chuckaluck.lua:44
 msgid "#w2#0. Bet 100 k¤"
-msgstr ""
+msgstr "#w2#0. Apostar 100 k¤"
 
 #: dat/scripts/minigames/blackjack.lua:27
 #: dat/scripts/minigames/chuckaluck.lua:44
 msgid "#w3#0. Leave"
-msgstr ""
+msgstr "#w3#0. Abandonar"
 
 #. Scaling factor
 #. Total height is: scale*(105*2+sep)+40+3*font:height
 #. Start out betting
 #: dat/scripts/minigames/blackjack.lua:59
 msgid "Cyborg Chicken looks emotionless."
-msgstr ""
+msgstr "El Pollo Ciborg no muestra emoción."
 
 #: dat/scripts/minigames/blackjack.lua:70
 msgid "Cyborg Chicken does a little jig."
-msgstr ""
+msgstr "El Pollo Ciborg da un pequeño salto."
 
 #: dat/scripts/minigames/blackjack.lua:71
 msgid "Cyborg Chicken does a short dance."
-msgstr ""
+msgstr "El Pollo Ciborg hace un pequeño baile."
 
 #: dat/scripts/minigames/blackjack.lua:72
 msgid "Cyborg Chicken strikes a cool pose."
-msgstr ""
+msgstr "El Pollo Ciborg adopta una pose chula."
 
 #: dat/scripts/minigames/blackjack.lua:73
 msgid "Cyborg Chicken squawks in delight."
-msgstr ""
+msgstr "El Pollo Ciborg grazna de alegría."
 
 #: dat/scripts/minigames/blackjack.lua:74
 msgid "Cyborg Chicken looks happy."
-msgstr ""
+msgstr "El Pollo Ciborg parece feliz."
 
 #: dat/scripts/minigames/blackjack.lua:75
 msgid "Cyborg Chicken does the robot."
-msgstr ""
+msgstr "El pollo ciborg hace de robot."
 
 #: dat/scripts/minigames/blackjack.lua:76
 msgid "Cyborg Chicken beams."
-msgstr ""
+msgstr "El Pollo Ciborg lanza un rayo de luz."
 
 #: dat/scripts/minigames/blackjack.lua:85
 msgid "Cyborg Chicken looks a bit glum."
-msgstr ""
+msgstr "El Pollo Ciborg parece un poco triste."
 
 #: dat/scripts/minigames/blackjack.lua:86
 msgid "Cyborg Chicken squints at you."
-msgstr ""
+msgstr "El Pollo Ciborg te mira de reojo."
 
 #: dat/scripts/minigames/blackjack.lua:87
 msgid "Cyborg Chicken pecks at the ground."
-msgstr ""
+msgstr "El Pollo Ciborg picotea el suelo."
 
 #: dat/scripts/minigames/blackjack.lua:88
 msgid "Cyborg Chicken kicks at the blackjack table."
-msgstr ""
+msgstr "El Pollo Ciborg da patadas en la mesa de blackjack."
 
 #: dat/scripts/minigames/blackjack.lua:89
 msgid "Cyborg Chicken beeps."
-msgstr ""
+msgstr "El Pollo Cyborg pita como un ordenador."
 
 #: dat/scripts/minigames/blackjack.lua:90
 msgid "Cyborg Chicken squawks defeatedly."
-msgstr ""
+msgstr "El Pollo Ciborg grazna derrotado."
 
 #: dat/scripts/minigames/blackjack.lua:95
 msgid "Cyborg Chicken squawks."
-msgstr ""
+msgstr "El Pollo Ciborg grazna."
 
 #: dat/scripts/minigames/blackjack.lua:97
 msgid "Cyborg Chicken looks very smug."
-msgstr ""
+msgstr "El Pollo Ciborg parece muy creido."
 
 #: dat/scripts/minigames/blackjack.lua:99
 msgid "Cyborg Chicken squawks in surprise!"
-msgstr ""
+msgstr "¡El Pollo Cyborg grazna de sorpresa!"
 
 #. Handle secretcode
 #. All logic here
 #: dat/scripts/minigames/blackjack.lua:131
 #: dat/scripts/minigames/chuckaluck.lua:222
 msgid "#rYou lost!#0"
-msgstr ""
+msgstr "#r¡Has perdido!#0"
 
 #: dat/scripts/minigames/blackjack.lua:133
 #: dat/scripts/minigames/blackjack.lua:143
 #, lua-format
 msgid "#pBlackjack!#0 %s"
-msgstr ""
+msgstr "#p¡Blackjack!#0 %s"
 
 #: dat/scripts/minigames/blackjack.lua:141
 msgid "#gYou won #p{n} Minerva Token#g!#0"
 msgid_plural "#gYou won #p{n} Minerva Tokens#g!#0"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#g¡Haz ganado #p{n} Ficha Minerva #g!#0"
+msgstr[1] "#g¡Haz ganado #p{n} Fichas Minerva #g!#0"
 
 #: dat/scripts/minigames/blackjack.lua:150
 msgid "Double Blackjack! Push!"
-msgstr ""
+msgstr "¡Doble Blackjack! ¡Puja!"
 
 #: dat/scripts/minigames/blackjack.lua:153
 msgid "Push!"
-msgstr ""
+msgstr "¡Pujar!"
 
 #. Special case for blackjacks
 #. Check if player lost
@@ -90113,13 +90113,13 @@ msgstr ""
 #: dat/scripts/minigames/blackjack.lua:266
 #, lua-format
 msgid "Dealer: %s"
-msgstr ""
+msgstr "Crupier: %s"
 
 #. Player
 #: dat/scripts/minigames/blackjack.lua:279
 #, lua-format
 msgid "Player: %d"
-msgstr ""
+msgstr "Jugador: %d"
 
 #. Print status
 #. Buttons
@@ -90131,69 +90131,71 @@ msgstr ""
 #: dat/scripts/minigames/chuckaluck.lua:183
 msgid "You have {credits} and #p{n} Minerva Token#0."
 msgid_plural "You have {credits} and #p{n} Minerva Tokens#0."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Has ganado {credits} y #p{n} Ficha Minerva#0."
+msgstr[1] "Has ganado {credits} y #p{n} Fichas Minerva#0."
 
 #: dat/scripts/minigames/blackjack.lua:332
 #: dat/scripts/minigames/chuckaluck.lua:190
 msgid "#rNot enough credits! You only have {credits}!#0"
-msgstr ""
+msgstr "#r¡Sin suficientes créditos! ¡Tienes {credits}!#0"
 
 #: dat/scripts/minigames/blackjack.lua:336
 #: dat/scripts/minigames/chuckaluck.lua:194
 msgid "You bet {credits}."
-msgstr ""
+msgstr "Apuestas {credits}."
 
 #. Start out betting
 #. Special secretcode being input chat
 #: dat/scripts/minigames/chuckaluck.lua:68
 msgid "The dealer hands you a note saying to meet him after his shift."
 msgstr ""
+"El crupier le entrega una nota diciendo que te reúnas con él después de su "
+"turno."
 
 #: dat/scripts/minigames/chuckaluck.lua:73
 msgid "The dealer raises his eyebrows at you."
-msgstr ""
+msgstr "El crupier levanta las cejas al verte."
 
 #. Normal chat
 #: dat/scripts/minigames/chuckaluck.lua:85
 msgid "The dealer hums to himself."
-msgstr ""
+msgstr "El crupier canturrea para sí mismo."
 
 #: dat/scripts/minigames/chuckaluck.lua:86
 msgid "The dealer smiles."
-msgstr ""
+msgstr "El crupier sonríe."
 
 #: dat/scripts/minigames/chuckaluck.lua:87
 msgid "The dealer chuckles."
-msgstr ""
+msgstr "El crupier suelta una risita."
 
 #: dat/scripts/minigames/chuckaluck.lua:96
 msgid "The dealer frowns slightly."
-msgstr ""
+msgstr "El crupier frunce ligeramente el ceño."
 
 #: dat/scripts/minigames/chuckaluck.lua:97
 msgid "The dealer wrinkles their eyebrows."
-msgstr ""
+msgstr "El crupier arruga las cejas."
 
 #: dat/scripts/minigames/chuckaluck.lua:103
 msgid "The dealer frowns."
-msgstr ""
+msgstr "El crupier frunce el ceño."
 
 #: dat/scripts/minigames/chuckaluck.lua:104
 msgid "The dealer sighs."
-msgstr ""
+msgstr "El crupier suspira."
 
 #: dat/scripts/minigames/chuckaluck.lua:108
 msgid "The dealer lets out a big sigh."
-msgstr ""
+msgstr "El crupier deja escapar un gran suspiro."
 
 #: dat/scripts/minigames/chuckaluck.lua:225
 #: dat/scripts/minigames/chuckaluck.lua:228
 #: dat/scripts/minigames/chuckaluck.lua:231
 msgid "#gYou won #p{n} Minerva Token#g (matched one)!#0"
 msgid_plural "#gYou won #p{n} Minerva Tokens#g (matched one)!#0"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#gGanaste #p{n} Ficha Minerva#g (igualado uno)!#0"
+msgstr[1] "#gGanastes #p{n} Fichas Minerva#g (igualado uno)!#0"
 
 #.
 #. -- Playing dice game stuff
@@ -90231,7 +90233,7 @@ msgstr[1] ""
 #. header
 #: dat/scripts/minigames/sokoban/core.lua:126
 msgid "Sokoban"
-msgstr ""
+msgstr "Sokoban"
 
 #. Load audio
 #. Allow the default keybindings too!
@@ -90241,11 +90243,11 @@ msgstr ""
 #. Player pushed something
 #: dat/scripts/minigames/sokoban/core.lua:329
 msgid "Completed!"
-msgstr ""
+msgstr "¡Completado!"
 
 #: dat/scripts/minigames/sokoban/core.lua:331
 msgid "Layer {cur} / {total}"
-msgstr ""
+msgstr "Capa {cur} / {total}"
 
 #: dat/scripts/minigames/sokoban/core.lua:342
 msgid "#barrow keys#0: move, #br#0: restart, #bq#0: abort"
@@ -90257,19 +90259,19 @@ msgstr ""
 #. way that works less well as a name.
 #: dat/scripts/pilotname/generic.lua:8
 msgid "Aurochs"
-msgstr ""
+msgstr "Aurochs"
 
 #: dat/scripts/pilotname/generic.lua:9 dat/scripts/pilotname/pirate.lua:237
 msgid "Axis"
-msgstr ""
+msgstr "Eje"
 
 #: dat/scripts/pilotname/generic.lua:10
 msgid "Bear"
-msgstr ""
+msgstr "Oso"
 
 #: dat/scripts/pilotname/generic.lua:11
 msgid "Beetle"
-msgstr ""
+msgstr "Escarabajo"
 
 #: dat/scripts/pilotname/generic.lua:12 dat/scripts/pilotname/pirate.lua:246
 msgid "Black Hole"
@@ -90277,52 +90279,52 @@ msgstr "Agujero Negro"
 
 #: dat/scripts/pilotname/generic.lua:13 dat/scripts/pilotname/pirate.lua:249
 msgid "Blizzard"
-msgstr ""
+msgstr "Ventisca"
 
 #: dat/scripts/pilotname/generic.lua:14 dat/scripts/pilotname/pirate.lua:250
 msgid "Blood"
-msgstr ""
+msgstr "Sangre"
 
 #: dat/scripts/pilotname/generic.lua:15 dat/scripts/pilotname/pirate.lua:194
 msgid "Blue"
-msgstr ""
+msgstr "Azul"
 
 #: dat/scripts/pilotname/generic.lua:16
 msgid "Boa"
-msgstr ""
+msgstr "Boa"
 
 #: dat/scripts/pilotname/generic.lua:17
 msgid "Boulder"
-msgstr ""
+msgstr "Peñasco"
 
 #: dat/scripts/pilotname/generic.lua:18
 msgid "Bullet"
-msgstr ""
+msgstr "Bala"
 
 #: dat/scripts/pilotname/generic.lua:19 dat/scripts/pilotname/pirate.lua:263
 msgid "Chainsaw"
-msgstr ""
+msgstr "Motosierra"
 
 #: dat/scripts/pilotname/generic.lua:20 dat/scripts/pilotname/pirate.lua:269
 msgid "Claw"
-msgstr ""
+msgstr "Garra"
 
 #: dat/scripts/pilotname/generic.lua:21
 msgid "Cluster"
-msgstr ""
+msgstr "Cúmulo"
 
 #: dat/scripts/pilotname/generic.lua:22 dat/scripts/pilotname/pirate.lua:275
 msgid "Cougar"
-msgstr ""
+msgstr "Puma"
 
 #: dat/scripts/pilotname/generic.lua:23 dat/scripts/pilotname/pirate.lua:37
 #: dat/scripts/pilotname/pirate.lua:276
 msgid "Crisis"
-msgstr ""
+msgstr "Crisis"
 
 #: dat/scripts/pilotname/generic.lua:25
 msgid "Dart"
-msgstr ""
+msgstr "Dardo"
 
 #: dat/scripts/pilotname/generic.lua:26 dat/scripts/pilotname/pirate.lua:283
 #: src/menu.c:541
@@ -90331,60 +90333,60 @@ msgstr ""
 
 #: dat/scripts/pilotname/generic.lua:27 dat/scripts/pilotname/pirate.lua:284
 msgid "Deity"
-msgstr ""
+msgstr "Deidad"
 
 #: dat/scripts/pilotname/generic.lua:28 dat/scripts/pilotname/pirate.lua:285
 #: src/space.c:260
 msgid "Demon"
-msgstr ""
+msgstr "Demonio"
 
 #: dat/scripts/pilotname/generic.lua:30
 msgid "Dire Wolf"
-msgstr ""
+msgstr "Lobo Feroz"
 
 #: dat/scripts/pilotname/generic.lua:31 dat/scripts/pilotname/pirate.lua:294
 msgid "Dragon"
-msgstr ""
+msgstr "Dragón"
 
 #: dat/scripts/pilotname/generic.lua:32 dat/scripts/pilotname/pirate.lua:299
 msgid "Eagle"
-msgstr ""
+msgstr "Águila"
 
 #: dat/scripts/pilotname/generic.lua:33
 msgid "Earthquake"
-msgstr ""
+msgstr "Terremoto"
 
 #: dat/scripts/pilotname/generic.lua:34
 msgid "Electron"
-msgstr ""
+msgstr "Electrón"
 
 #: dat/scripts/pilotname/generic.lua:35
 msgid "Falcon"
-msgstr ""
+msgstr "Halcón"
 
 #: dat/scripts/pilotname/generic.lua:36 dat/scripts/pilotname/pirate.lua:306
 msgid "Fang"
-msgstr ""
+msgstr "Colmillo"
 
 #: dat/scripts/pilotname/generic.lua:37
 msgid "Fire"
-msgstr ""
+msgstr "Fuego"
 
 #: dat/scripts/pilotname/generic.lua:38 dat/scripts/pilotname/pirate.lua:309
 msgid "Fox"
-msgstr ""
+msgstr "Zorro"
 
 #: dat/scripts/pilotname/generic.lua:39
 msgid "Glory"
-msgstr ""
+msgstr "Gloria"
 
 #: dat/scripts/pilotname/generic.lua:40 dat/scripts/pilotname/pirate.lua:322
 msgid "Hammer"
-msgstr ""
+msgstr "Martillo"
 
 #: dat/scripts/pilotname/generic.lua:42
 msgid "Hornet"
-msgstr ""
+msgstr "Avispón"
 
 #: dat/scripts/pilotname/generic.lua:43 dat/scripts/pilotname/pirate.lua:328
 msgid "Hunter"
@@ -90392,87 +90394,87 @@ msgstr "Cazador"
 
 #: dat/scripts/pilotname/generic.lua:44
 msgid "Hurricane"
-msgstr ""
+msgstr "Huracán"
 
 #: dat/scripts/pilotname/generic.lua:45
 msgid "Ice"
-msgstr ""
+msgstr "Hielo"
 
 #: dat/scripts/pilotname/generic.lua:46
 msgid "Ion"
-msgstr ""
+msgstr "Ión"
 
 #: dat/scripts/pilotname/generic.lua:47 dat/scripts/pilotname/pirate.lua:366
 msgid "Lantern"
-msgstr ""
+msgstr "Linterna"
 
 #: dat/scripts/pilotname/generic.lua:48
 msgid "Leopard"
-msgstr ""
+msgstr "Leopardo"
 
 #: dat/scripts/pilotname/generic.lua:49
 msgid "Light"
-msgstr ""
+msgstr "Luz"
 
 #: dat/scripts/pilotname/generic.lua:50
 msgid "Lion"
-msgstr ""
+msgstr "León"
 
 #: dat/scripts/pilotname/generic.lua:51
 msgid "Lizard"
-msgstr ""
+msgstr "Lagarto"
 
 #: dat/scripts/pilotname/generic.lua:52
 msgid "Mammoth"
-msgstr ""
+msgstr "Mamut"
 
 #: dat/scripts/pilotname/generic.lua:53
 msgid "Mantis"
-msgstr ""
+msgstr "Mantis"
 
 #: dat/scripts/pilotname/generic.lua:54 dat/scripts/pilotname/pirate.lua:377
 msgid "Mech"
-msgstr ""
+msgstr "Meca"
 
 #: dat/scripts/pilotname/generic.lua:55 dat/scripts/pilotname/pirate.lua:382
 msgid "Mosquito"
-msgstr ""
+msgstr "Mosquito"
 
 #: dat/scripts/pilotname/generic.lua:56
 msgid "Neutron"
-msgstr ""
+msgstr "Neutrón"
 
 #: dat/scripts/pilotname/generic.lua:57 dat/scripts/pilotname/pirate.lua:394
 msgid "Nova"
-msgstr ""
+msgstr "Nova"
 
 #: dat/scripts/pilotname/generic.lua:58
 msgid "Orca"
-msgstr ""
+msgstr "Orca"
 
 #: dat/scripts/pilotname/generic.lua:59 dat/scripts/pilotname/pirate.lua:401
 msgid "Panther"
-msgstr ""
+msgstr "Pantera"
 
 #: dat/scripts/pilotname/generic.lua:60 dat/scripts/pilotname/pirate.lua:405
 msgid "Peril"
-msgstr ""
+msgstr "Peligro"
 
 #: dat/scripts/pilotname/generic.lua:61
 msgid "Photon"
-msgstr ""
+msgstr "Fotón"
 
 #: dat/scripts/pilotname/generic.lua:62 dat/scripts/pilotname/pirate.lua:412
 msgid "Pride"
-msgstr ""
+msgstr "Orgullo"
 
 #: dat/scripts/pilotname/generic.lua:63
 msgid "Proton"
-msgstr ""
+msgstr "Protón"
 
 #: dat/scripts/pilotname/generic.lua:64 dat/scripts/pilotname/pirate.lua:416
 msgid "Python"
-msgstr ""
+msgstr "Pitón"
 
 #: dat/scripts/pilotname/generic.lua:65 dat/scripts/pilotname/pirate.lua:422
 msgid "Raven"
@@ -90480,191 +90482,191 @@ msgstr "Cuervo"
 
 #: dat/scripts/pilotname/generic.lua:66
 msgid "Rebirth"
-msgstr ""
+msgstr "Renacimiento"
 
 #: dat/scripts/pilotname/generic.lua:67 dat/scripts/pilotname/pirate.lua:213
 msgid "Red"
-msgstr ""
+msgstr "Rojo"
 
 #: dat/scripts/pilotname/generic.lua:68
 msgid "Raptor"
-msgstr ""
+msgstr "Raptor"
 
 #: dat/scripts/pilotname/generic.lua:69
 msgid "Rex"
-msgstr ""
+msgstr "Rex"
 
 #: dat/scripts/pilotname/generic.lua:70
 msgid "Rocket"
-msgstr ""
+msgstr "Cohete"
 
 #: dat/scripts/pilotname/generic.lua:71 src/space.c:256
 msgid "Rogue"
-msgstr ""
+msgstr "Canalla"
 
 #: dat/scripts/pilotname/generic.lua:72
 msgid "Saber"
-msgstr ""
+msgstr "Sable"
 
 #: dat/scripts/pilotname/generic.lua:73
 msgid "Scorpion"
-msgstr ""
+msgstr "Escorpión"
 
 #: dat/scripts/pilotname/generic.lua:74 dat/scripts/pilotname/pirate.lua:436
 msgid "Scythe"
-msgstr ""
+msgstr "Guadaña"
 
 #: dat/scripts/pilotname/generic.lua:75 dat/scripts/pilotname/pirate.lua:441
 msgid "Serpent"
-msgstr ""
+msgstr "Serpiente"
 
 #: dat/scripts/pilotname/generic.lua:78
 msgid "Star Killer"
-msgstr ""
+msgstr "Asesino Estelar"
 
 #: dat/scripts/pilotname/generic.lua:79 dat/scripts/pilotname/pirate.lua:451
 msgid "Spade"
-msgstr ""
+msgstr "Pala"
 
 #: dat/scripts/pilotname/generic.lua:80 dat/scripts/pilotname/pirate.lua:454
 msgid "Spider"
-msgstr ""
+msgstr "Araña"
 
 #: dat/scripts/pilotname/generic.lua:81
 msgid "Talon"
-msgstr ""
+msgstr "Talón"
 
 #: dat/scripts/pilotname/generic.lua:82 dat/scripts/pilotname/pirate.lua:470
 msgid "Thunder"
-msgstr ""
+msgstr "Trueno"
 
 #: dat/scripts/pilotname/generic.lua:83
 msgid "Tiger"
-msgstr ""
+msgstr "Tigre"
 
 #: dat/scripts/pilotname/generic.lua:84
 msgid "Torch"
-msgstr ""
+msgstr "Antorcha"
 
 #: dat/scripts/pilotname/generic.lua:85
 msgid "Tsunami"
-msgstr ""
+msgstr "Tsunami"
 
 #: dat/scripts/pilotname/generic.lua:86
 msgid "Turtle"
-msgstr ""
+msgstr "Tortuga"
 
 #: dat/scripts/pilotname/generic.lua:87
 msgid "Typhoon"
-msgstr ""
+msgstr "Tifón"
 
 #: dat/scripts/pilotname/generic.lua:88 dat/scripts/pilotname/pirate.lua:484
 msgid "Velocity"
-msgstr ""
+msgstr "Velocidad"
 
 #: dat/scripts/pilotname/generic.lua:89 dat/scripts/pilotname/pirate.lua:485
 msgid "Vengeance"
-msgstr ""
+msgstr "Venganza"
 
 #: dat/scripts/pilotname/generic.lua:90 dat/scripts/pilotname/pirate.lua:486
 msgid "Void"
-msgstr ""
+msgstr "Vacío"
 
 #: dat/scripts/pilotname/generic.lua:91
 msgid "Wasp"
-msgstr ""
+msgstr "Avispa"
 
 #: dat/scripts/pilotname/generic.lua:92 dat/scripts/pilotname/pirate.lua:495
 msgid "Wind"
-msgstr ""
+msgstr "Viento"
 
 #: dat/scripts/pilotname/generic.lua:93
 msgid "Wing"
-msgstr ""
+msgstr "Ala"
 
 #: dat/scripts/pilotname/generic.lua:95
 msgid "Wraith"
-msgstr ""
+msgstr "Espectro"
 
 #: dat/scripts/pilotname/generic.lua:96 dat/scripts/pilotname/pirate.lua:505
 msgid "Zombie"
-msgstr ""
+msgstr "Zombi"
 
 #.
 #. -- @brief Generates generic pilot names
 #. --
 #: dat/scripts/pilotname/generic.lua:115
 msgid "{letter}-{number}"
-msgstr ""
+msgstr "{letter}-{number}"
 
 #: dat/scripts/pilotname/generic.lua:118
 msgid "{name} {suffix}"
-msgstr ""
+msgstr "{name} {suffix}"
 
 #. For translation, just transliterate if necessary.
 #: dat/scripts/pilotname/pirate.lua:5
 msgid "Das"
-msgstr ""
+msgstr "Das"
 
 #: dat/scripts/pilotname/pirate.lua:6
 msgid "Der"
-msgstr ""
+msgstr "Der"
 
 #: dat/scripts/pilotname/pirate.lua:7
 msgid "Kono"
-msgstr ""
+msgstr "Kono"
 
 #: dat/scripts/pilotname/pirate.lua:8
 msgid "La"
-msgstr ""
+msgstr "La"
 
 #: dat/scripts/pilotname/pirate.lua:9
 msgid "Le"
-msgstr ""
+msgstr "Le"
 
 #: dat/scripts/pilotname/pirate.lua:10
 msgid "The"
-msgstr ""
+msgstr "La"
 
 #: dat/scripts/pilotname/pirate.lua:11
 msgid "Ye"
-msgstr ""
+msgstr "Ye"
 
 #: dat/scripts/pilotname/pirate.lua:14
 msgid "Aerobic"
-msgstr ""
+msgstr "Aeróbico"
 
 #: dat/scripts/pilotname/pirate.lua:15
 msgid "Aku No"
-msgstr ""
+msgstr "Aku No"
 
 #: dat/scripts/pilotname/pirate.lua:16
 msgid "Amai"
-msgstr ""
+msgstr "Amai"
 
 #: dat/scripts/pilotname/pirate.lua:17
 msgid "Ancient"
-msgstr ""
+msgstr "Antiguo"
 
 #: dat/scripts/pilotname/pirate.lua:18
 msgid "Astro"
-msgstr ""
+msgstr "Astro"
 
 #: dat/scripts/pilotname/pirate.lua:19
 msgid "Baggy"
-msgstr ""
+msgstr "Holgado"
 
 #: dat/scripts/pilotname/pirate.lua:20
 msgid "Bakana"
-msgstr ""
+msgstr "Bakana"
 
 #: dat/scripts/pilotname/pirate.lua:21
 msgid "Bald"
-msgstr ""
+msgstr "Calvo"
 
 #: dat/scripts/pilotname/pirate.lua:22
 msgid "Beautiful"
-msgstr ""
+msgstr "Bonito"
 
 #: dat/scripts/pilotname/pirate.lua:23
 msgid "Benevolent"
@@ -90672,251 +90674,251 @@ msgstr "Benevolente"
 
 #: dat/scripts/pilotname/pirate.lua:24
 msgid "Bedrohliche"
-msgstr ""
+msgstr "Amenaza"
 
 #: dat/scripts/pilotname/pirate.lua:25
 msgid "Big"
-msgstr ""
+msgstr "Grande"
 
 #: dat/scripts/pilotname/pirate.lua:26
 msgid "Big Bad"
-msgstr ""
+msgstr "Gran Mal"
 
 #: dat/scripts/pilotname/pirate.lua:27
 msgid "Bloody"
-msgstr ""
+msgstr "Sangriento"
 
 #: dat/scripts/pilotname/pirate.lua:28
 msgid "Bright"
-msgstr ""
+msgstr "Brillante"
 
 #: dat/scripts/pilotname/pirate.lua:29
 msgid "Brooding"
-msgstr ""
+msgstr "Taciturno"
 
 #: dat/scripts/pilotname/pirate.lua:30
 msgid "BT"
-msgstr ""
+msgstr "BT"
 
 #: dat/scripts/pilotname/pirate.lua:31
 msgid "Bureina"
-msgstr ""
+msgstr "Bureina"
 
 #: dat/scripts/pilotname/pirate.lua:32
 msgid "Caped"
-msgstr ""
+msgstr "Capado"
 
 #: dat/scripts/pilotname/pirate.lua:33
 msgid "Citrus"
-msgstr ""
+msgstr "Cítricos"
 
 #: dat/scripts/pilotname/pirate.lua:34
 msgid "Clustered"
-msgstr ""
+msgstr "Agrupado"
 
 #: dat/scripts/pilotname/pirate.lua:35
 msgid "Cocky"
-msgstr ""
+msgstr "Gallito"
 
 #: dat/scripts/pilotname/pirate.lua:36
 msgid "Creamy"
-msgstr ""
+msgstr "Cremoso"
 
 #: dat/scripts/pilotname/pirate.lua:38
 msgid "Crusty"
-msgstr ""
+msgstr "Crujiente"
 
 #: dat/scripts/pilotname/pirate.lua:39
 msgid "Dark"
-msgstr ""
+msgstr "Oscuro"
 
 #: dat/scripts/pilotname/pirate.lua:40
 msgid "Deadly"
-msgstr ""
+msgstr "Mortal"
 
 #: dat/scripts/pilotname/pirate.lua:41
 msgid "Deathly"
-msgstr ""
+msgstr "Mortífero"
 
 #: dat/scripts/pilotname/pirate.lua:42
 msgid "Defiant"
-msgstr ""
+msgstr "Desafiante"
 
 #: dat/scripts/pilotname/pirate.lua:43
 msgid "Delicious"
-msgstr ""
+msgstr "Delicioso"
 
 #: dat/scripts/pilotname/pirate.lua:44
 msgid "Despicable"
-msgstr ""
+msgstr "Despreciable"
 
 #: dat/scripts/pilotname/pirate.lua:45
 msgid "Destructive"
-msgstr ""
+msgstr "Destructivo"
 
 #: dat/scripts/pilotname/pirate.lua:46
 msgid "Diligent"
-msgstr ""
+msgstr "Diligente"
 
 #: dat/scripts/pilotname/pirate.lua:47
 msgid "Drunk"
-msgstr ""
+msgstr "Borracho"
 
 #: dat/scripts/pilotname/pirate.lua:48
 msgid "Egotistical"
-msgstr ""
+msgstr "Egoista"
 
 #: dat/scripts/pilotname/pirate.lua:49
 msgid "Electromagnetic"
-msgstr ""
+msgstr "Electromagnético"
 
 #: dat/scripts/pilotname/pirate.lua:50
 msgid "Erroneous"
-msgstr ""
+msgstr "Erróneo"
 
 #: dat/scripts/pilotname/pirate.lua:51
 msgid "Escaped"
-msgstr ""
+msgstr "Escapado"
 
 #: dat/scripts/pilotname/pirate.lua:52
 msgid "Eternal"
-msgstr ""
+msgstr "Eterno"
 
 #: dat/scripts/pilotname/pirate.lua:53
 msgid "Evil"
-msgstr ""
+msgstr "Maligno"
 
 #: dat/scripts/pilotname/pirate.lua:54
 msgid "Fallen"
-msgstr ""
+msgstr "Caído"
 
 #: dat/scripts/pilotname/pirate.lua:55
 msgid "Fearless"
-msgstr ""
+msgstr "Intrépido"
 
 #: dat/scripts/pilotname/pirate.lua:56
 msgid "Fearsome"
-msgstr ""
+msgstr "Temible"
 
 #: dat/scripts/pilotname/pirate.lua:57
 msgid "Filthy"
-msgstr ""
+msgstr "Sucio"
 
 #: dat/scripts/pilotname/pirate.lua:58
 msgid "Flightless"
-msgstr ""
+msgstr "Sin vuelo"
 
 #: dat/scripts/pilotname/pirate.lua:59
 msgid "Flying"
-msgstr ""
+msgstr "Vuelo"
 
 #: dat/scripts/pilotname/pirate.lua:60
 msgid "Foreboding"
-msgstr ""
+msgstr "Precursor"
 
 #: dat/scripts/pilotname/pirate.lua:61
 msgid "Fuketeru"
-msgstr ""
+msgstr "Fuketeru"
 
 #: dat/scripts/pilotname/pirate.lua:62
 msgid "Full-Motion"
-msgstr ""
+msgstr "Movimiento Completo"
 
 #: dat/scripts/pilotname/pirate.lua:63
 msgid "Furchtlose"
-msgstr ""
+msgstr "Furchtlose"
 
 #: dat/scripts/pilotname/pirate.lua:64
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: dat/scripts/pilotname/pirate.lua:65
 msgid "Gigantic"
-msgstr ""
+msgstr "Gigantesco"
 
 #: dat/scripts/pilotname/pirate.lua:66
 msgid "Glittery"
-msgstr ""
+msgstr "Brillante"
 
 #: dat/scripts/pilotname/pirate.lua:67
 msgid "Glorious"
-msgstr ""
+msgstr "Glorioso"
 
 #: dat/scripts/pilotname/pirate.lua:68
 msgid "Great"
-msgstr ""
+msgstr "Grande"
 
 #: dat/scripts/pilotname/pirate.lua:69
 msgid "Groß"
-msgstr ""
+msgstr "Groß"
 
 #: dat/scripts/pilotname/pirate.lua:70
 msgid "Grumpy"
-msgstr ""
+msgstr "Gruñón"
 
 #: dat/scripts/pilotname/pirate.lua:71
 msgid "Hairy"
-msgstr ""
+msgstr "Peludo"
 
 #: dat/scripts/pilotname/pirate.lua:72
 msgid "Hammy"
-msgstr ""
+msgstr "Jamón"
 
 #: dat/scripts/pilotname/pirate.lua:73
 msgid "Handsome"
-msgstr ""
+msgstr "Hermoso"
 
 #: dat/scripts/pilotname/pirate.lua:74
 msgid "Happy"
-msgstr ""
+msgstr "Feliz"
 
 #: dat/scripts/pilotname/pirate.lua:75
 msgid "Hashitteru"
-msgstr ""
+msgstr "Hashitteru"
 
 #: dat/scripts/pilotname/pirate.lua:76
 msgid "Hellen"
-msgstr ""
+msgstr "Hellen"
 
 #: dat/scripts/pilotname/pirate.lua:77
 msgid "Hen'na"
-msgstr ""
+msgstr "Hen'na"
 
 #: dat/scripts/pilotname/pirate.lua:78
 msgid "Hidoi"
-msgstr ""
+msgstr "Hidoi"
 
 #: dat/scripts/pilotname/pirate.lua:79
 msgid "Hilarious"
-msgstr ""
+msgstr "Hilarante"
 
 #: dat/scripts/pilotname/pirate.lua:80
 msgid "Hitori No"
-msgstr ""
+msgstr "Hitori No"
 
 #: dat/scripts/pilotname/pirate.lua:81
 msgid "Horrible"
-msgstr ""
+msgstr "Horrible"
 
 #: dat/scripts/pilotname/pirate.lua:82
 msgid "IDS"
-msgstr ""
+msgstr "IDS"
 
 #: dat/scripts/pilotname/pirate.lua:83
 msgid "Imperial"
-msgstr ""
+msgstr "Imperial"
 
 #: dat/scripts/pilotname/pirate.lua:84
 msgid "Impressive"
-msgstr ""
+msgstr "Impresionante"
 
 #: dat/scripts/pilotname/pirate.lua:85
 msgid "Insatiable"
-msgstr ""
+msgstr "Insaciable"
 
 #: dat/scripts/pilotname/pirate.lua:86
 msgid "Ionic"
-msgstr ""
+msgstr "Iónico"
 
 #: dat/scripts/pilotname/pirate.lua:87
 msgid "Iron"
@@ -90924,355 +90926,355 @@ msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:88
 msgid "Justice"
-msgstr ""
+msgstr "Justicia"
 
 #: dat/scripts/pilotname/pirate.lua:89
 msgid "Kakkowarui"
-msgstr ""
+msgstr "Kakkowarui"
 
 #: dat/scripts/pilotname/pirate.lua:90
 msgid "Koronderu"
-msgstr ""
+msgstr "Koronderu"
 
 #: dat/scripts/pilotname/pirate.lua:91
 msgid "Kowai"
-msgstr ""
+msgstr "Kowai"
 
 #: dat/scripts/pilotname/pirate.lua:92
 msgid "Lesser"
-msgstr ""
+msgstr "Menor"
 
 #: dat/scripts/pilotname/pirate.lua:93
 msgid "Lightspeed"
-msgstr ""
+msgstr "Velocidad Luz"
 
 #: dat/scripts/pilotname/pirate.lua:94
 msgid "Lone"
-msgstr ""
+msgstr "Solitario"
 
 #: dat/scripts/pilotname/pirate.lua:95
 msgid "Loud"
-msgstr ""
+msgstr "Ruidoso"
 
 #: dat/scripts/pilotname/pirate.lua:96
 msgid "Lovely"
-msgstr ""
+msgstr "Precioso"
 
 #: dat/scripts/pilotname/pirate.lua:97
 msgid "Lustful"
-msgstr ""
+msgstr "Lujurioso"
 
 #: dat/scripts/pilotname/pirate.lua:98
 msgid "Mächtige"
-msgstr ""
+msgstr "Mächtige"
 
 #: dat/scripts/pilotname/pirate.lua:99
 msgid "Malodorous"
-msgstr ""
+msgstr "Malodorous"
 
 #: dat/scripts/pilotname/pirate.lua:100
 msgid "Messy"
-msgstr ""
+msgstr "Desordenado"
 
 #: dat/scripts/pilotname/pirate.lua:101
 msgid "Mighty"
-msgstr ""
+msgstr "Poderoso"
 
 #: dat/scripts/pilotname/pirate.lua:102
 msgid "Mijikai"
-msgstr ""
+msgstr "Mijikai"
 
 #: dat/scripts/pilotname/pirate.lua:103
 msgid "Morbid"
-msgstr ""
+msgstr "Mórbido"
 
 #: dat/scripts/pilotname/pirate.lua:104
 msgid "Mukashi No"
-msgstr ""
+msgstr "Mukashi No"
 
 #: dat/scripts/pilotname/pirate.lua:105
 msgid "Murderous"
-msgstr ""
+msgstr "Asesino"
 
 #: dat/scripts/pilotname/pirate.lua:106
 msgid "Nai"
-msgstr ""
+msgstr "Nai"
 
 #: dat/scripts/pilotname/pirate.lua:107
 msgid "Naïve"
-msgstr ""
+msgstr "Ingenuo"
 
 #: dat/scripts/pilotname/pirate.lua:108
 msgid "Neutron-Accelerated"
-msgstr ""
+msgstr "Acelerado por Neutrones"
 
 #: dat/scripts/pilotname/pirate.lua:109
 msgid "New"
-msgstr ""
+msgstr "Nuevo"
 
 #: dat/scripts/pilotname/pirate.lua:110
 msgid "Night's"
-msgstr ""
+msgstr "de Noche"
 
 #: dat/scripts/pilotname/pirate.lua:111
 msgid "Nimble"
-msgstr ""
+msgstr "Ágil"
 
 #: dat/scripts/pilotname/pirate.lua:112
 msgid "Ninkyōna"
-msgstr ""
+msgstr "Ninkyōna"
 
 #: dat/scripts/pilotname/pirate.lua:113
 msgid "No Good"
-msgstr ""
+msgstr "No Bueno"
 
 #: dat/scripts/pilotname/pirate.lua:114
 msgid "Numb"
-msgstr ""
+msgstr "Entumecido"
 
 #: dat/scripts/pilotname/pirate.lua:115
 msgid "Oishī"
-msgstr ""
+msgstr "Oishī"
 
 #: dat/scripts/pilotname/pirate.lua:116
 msgid "Ōkina"
-msgstr ""
+msgstr "Ōkina"
 
 #: dat/scripts/pilotname/pirate.lua:117
 msgid "Old"
-msgstr ""
+msgstr "Viejo"
 
 #: dat/scripts/pilotname/pirate.lua:118
 msgid "Oshirisu No"
-msgstr ""
+msgstr "Oshirisu No"
 
 #: dat/scripts/pilotname/pirate.lua:119
 msgid "Oyoideru"
-msgstr ""
+msgstr "Oyoideru"
 
 #: dat/scripts/pilotname/pirate.lua:120
 msgid "Pale"
-msgstr ""
+msgstr "Pálido"
 
 #: dat/scripts/pilotname/pirate.lua:121
 msgid "Perilous"
-msgstr ""
+msgstr "Peligroso"
 
 #: dat/scripts/pilotname/pirate.lua:122
 msgid "Pirate's"
-msgstr ""
+msgstr "de Pirata"
 
 #: dat/scripts/pilotname/pirate.lua:123
 msgid "Pocket"
-msgstr ""
+msgstr "Bolsillo"
 
 #: dat/scripts/pilotname/pirate.lua:124
 msgid "Princeless"
-msgstr ""
+msgstr "Sin Príncipe"
 
 #: dat/scripts/pilotname/pirate.lua:125
 msgid "Psychic"
-msgstr ""
+msgstr "Psíquico"
 
 #: dat/scripts/pilotname/pirate.lua:126
 msgid "Raging"
-msgstr ""
+msgstr "Enfurecido"
 
 #: dat/scripts/pilotname/pirate.lua:127
 msgid "Reclusive"
-msgstr ""
+msgstr "Reclusivo"
 
 #: dat/scripts/pilotname/pirate.lua:128
 msgid "Relentless"
-msgstr ""
+msgstr "Implacable"
 
 #: dat/scripts/pilotname/pirate.lua:129
 msgid "Rostige"
-msgstr ""
+msgstr "Rostige"
 
 #: dat/scripts/pilotname/pirate.lua:130
 msgid "Rough"
-msgstr ""
+msgstr "Áspero"
 
 #: dat/scripts/pilotname/pirate.lua:131
 msgid "Ruthless"
-msgstr ""
+msgstr "Despiadado"
 
 #: dat/scripts/pilotname/pirate.lua:132
 msgid "Saccharin"
-msgstr ""
+msgstr "Sacarina"
 
 #: dat/scripts/pilotname/pirate.lua:133
 msgid "Salty"
-msgstr ""
+msgstr "Salado"
 
 #: dat/scripts/pilotname/pirate.lua:134
 msgid "Samui"
-msgstr ""
+msgstr "Samui"
 
 #: dat/scripts/pilotname/pirate.lua:135
 msgid "Satanic"
-msgstr ""
+msgstr "Satánico"
 
 #: dat/scripts/pilotname/pirate.lua:136
 msgid "Secluded"
-msgstr ""
+msgstr "Aislado"
 
 #: dat/scripts/pilotname/pirate.lua:137
 msgid "Seltsame"
-msgstr ""
+msgstr "Seltsame"
 
 #: dat/scripts/pilotname/pirate.lua:138
 msgid "Serial"
-msgstr ""
+msgstr "En Serie"
 
 #: dat/scripts/pilotname/pirate.lua:139
 msgid "Sharing"
-msgstr ""
+msgstr "Compartido"
 
 #: dat/scripts/pilotname/pirate.lua:140
 msgid "Silly"
-msgstr ""
+msgstr "Tonto"
 
 #: dat/scripts/pilotname/pirate.lua:141
 msgid "Single"
-msgstr ""
+msgstr "Soltero"
 
 #: dat/scripts/pilotname/pirate.lua:142
 msgid "Sleepy"
-msgstr ""
+msgstr "Somnoliento"
 
 #: dat/scripts/pilotname/pirate.lua:143
 msgid "Slimy"
-msgstr ""
+msgstr "Baboso"
 
 #: dat/scripts/pilotname/pirate.lua:144
 msgid "Smelly"
-msgstr ""
+msgstr "Oloroso"
 
 #: dat/scripts/pilotname/pirate.lua:145
 msgid "Solar"
-msgstr ""
+msgstr "Solar"
 
 #: dat/scripts/pilotname/pirate.lua:146
 msgid "Space"
-msgstr ""
+msgstr "Espacio"
 
 #: dat/scripts/pilotname/pirate.lua:147
 msgid "Stained"
-msgstr ""
+msgstr "Manchado"
 
 #: dat/scripts/pilotname/pirate.lua:148
 msgid "Static"
-msgstr ""
+msgstr "Estático"
 
 #: dat/scripts/pilotname/pirate.lua:149
 msgid "Steel"
-msgstr ""
+msgstr "Acero"
 
 #: dat/scripts/pilotname/pirate.lua:150
 msgid "Strange"
-msgstr ""
+msgstr "Extraño"
 
 #: dat/scripts/pilotname/pirate.lua:151
 msgid "Strawhat"
-msgstr ""
+msgstr "Sombrero de Paja"
 
 #: dat/scripts/pilotname/pirate.lua:152
 msgid "Sukina"
-msgstr ""
+msgstr "Sukina"
 
 #: dat/scripts/pilotname/pirate.lua:153
 msgid "Super"
-msgstr ""
+msgstr "Super"
 
 #: dat/scripts/pilotname/pirate.lua:154
 msgid "Sweaty"
-msgstr ""
+msgstr "Sudoroso"
 
 #: dat/scripts/pilotname/pirate.lua:155
 msgid "Sweet"
-msgstr ""
+msgstr "Dulce"
 
 #: dat/scripts/pilotname/pirate.lua:156
 msgid "Tall"
-msgstr ""
+msgstr "Alto"
 
 #: dat/scripts/pilotname/pirate.lua:157
 msgid "Takai"
-msgstr ""
+msgstr "Takai"
 
 #: dat/scripts/pilotname/pirate.lua:158
 msgid "Terrible"
-msgstr ""
+msgstr "Terrible"
 
 #: dat/scripts/pilotname/pirate.lua:159
 msgid "Tired"
-msgstr ""
+msgstr "Cansado"
 
 #: dat/scripts/pilotname/pirate.lua:160
 msgid "Toothless"
-msgstr ""
+msgstr "Desdentado"
 
 #: dat/scripts/pilotname/pirate.lua:161
 msgid "Tropical"
-msgstr ""
+msgstr "Tropical"
 
 #: dat/scripts/pilotname/pirate.lua:162
 msgid "Tsukareteru"
-msgstr ""
+msgstr "Tsukareteru"
 
 #: dat/scripts/pilotname/pirate.lua:163
 msgid "Typical"
-msgstr ""
+msgstr "Típico"
 
 #: dat/scripts/pilotname/pirate.lua:164
 msgid "Ultimate"
-msgstr ""
+msgstr "Último"
 
 #: dat/scripts/pilotname/pirate.lua:165
 msgid "Umai"
-msgstr ""
+msgstr "Umai"
 
 #: dat/scripts/pilotname/pirate.lua:166
 msgid "Uncombed"
-msgstr ""
+msgstr "Despeinado"
 
 #: dat/scripts/pilotname/pirate.lua:167
 msgid "Undead"
-msgstr ""
+msgstr "No Muerto"
 
 #: dat/scripts/pilotname/pirate.lua:168
 msgid "Unersättliche"
-msgstr ""
+msgstr "Unersättliche"
 
 #: dat/scripts/pilotname/pirate.lua:169
 msgid "Unhealthy"
-msgstr ""
+msgstr "Insalubre"
 
 #: dat/scripts/pilotname/pirate.lua:170
 msgid "Unreal"
-msgstr ""
+msgstr "Irreal"
 
 #: dat/scripts/pilotname/pirate.lua:171
 msgid "Unsightly"
-msgstr ""
+msgstr "Antiestético"
 
 #: dat/scripts/pilotname/pirate.lua:172
 msgid "Urusai"
-msgstr ""
+msgstr "Urusai"
 
 #: dat/scripts/pilotname/pirate.lua:173
 msgid "Utsukushī"
-msgstr ""
+msgstr "Utsukushī"
 
 #: dat/scripts/pilotname/pirate.lua:174
 msgid "Vengeful"
-msgstr ""
+msgstr "Vengativo"
 
 #: dat/scripts/pilotname/pirate.lua:175
 msgid "Very Bad"
-msgstr ""
+msgstr "Muy Malo"
 
 #: dat/scripts/pilotname/pirate.lua:176
 msgid "Violent"
@@ -91280,103 +91282,103 @@ msgstr "Violento"
 
 #: dat/scripts/pilotname/pirate.lua:177
 msgid "Warui"
-msgstr ""
+msgstr "Warui"
 
 #: dat/scripts/pilotname/pirate.lua:178
 msgid "Weeping"
-msgstr ""
+msgstr "Llorando"
 
 #: dat/scripts/pilotname/pirate.lua:179
 msgid "Wild"
-msgstr ""
+msgstr "Salvaje"
 
 #: dat/scripts/pilotname/pirate.lua:180
 msgid "Winged"
-msgstr ""
+msgstr "Alado"
 
 #: dat/scripts/pilotname/pirate.lua:181
 msgid "Wretched"
-msgstr ""
+msgstr "Miserable"
 
 #: dat/scripts/pilotname/pirate.lua:182
 msgid "Yaseteru"
-msgstr ""
+msgstr "Yaseteru"
 
 #: dat/scripts/pilotname/pirate.lua:183
 msgid "Yasui"
-msgstr ""
+msgstr "Yasui"
 
 #: dat/scripts/pilotname/pirate.lua:184
 msgid "Yasashī"
-msgstr ""
+msgstr "Yasashī"
 
 #: dat/scripts/pilotname/pirate.lua:185
 msgid "Yummy"
-msgstr ""
+msgstr "Riquísimo"
 
 #: dat/scripts/pilotname/pirate.lua:188
 msgid "Akai"
-msgstr ""
+msgstr "Akai"
 
 #: dat/scripts/pilotname/pirate.lua:189
 msgid "Amarillo"
-msgstr ""
+msgstr "Amarillo"
 
 #: dat/scripts/pilotname/pirate.lua:190
 msgid "Aoi"
-msgstr ""
+msgstr "Aoi"
 
 #: dat/scripts/pilotname/pirate.lua:191
 msgid "Azul"
-msgstr ""
+msgstr "Azul"
 
 #: dat/scripts/pilotname/pirate.lua:192
 msgid "Blau"
-msgstr ""
+msgstr "Blau"
 
 #: dat/scripts/pilotname/pirate.lua:193
 msgid "Bleu"
-msgstr ""
+msgstr "Bleu"
 
 #: dat/scripts/pilotname/pirate.lua:195
 msgid "Chairo No"
-msgstr ""
+msgstr "Chairo No"
 
 #: dat/scripts/pilotname/pirate.lua:196
 msgid "Crimson"
-msgstr ""
+msgstr "Carmesí"
 
 #: dat/scripts/pilotname/pirate.lua:197
 msgid "Cyan"
-msgstr ""
+msgstr "Cian"
 
 #: dat/scripts/pilotname/pirate.lua:198
 msgid "Gelb"
-msgstr ""
+msgstr "Gelb"
 
 #: dat/scripts/pilotname/pirate.lua:199
 msgid "Gin'iro No"
-msgstr ""
+msgstr "Gin'iro No"
 
 #: dat/scripts/pilotname/pirate.lua:200
 msgid "Golden"
-msgstr ""
+msgstr "Dorado"
 
 #: dat/scripts/pilotname/pirate.lua:201
 msgid "Gray"
-msgstr ""
+msgstr "Gris"
 
 #: dat/scripts/pilotname/pirate.lua:202
 msgid "Green"
-msgstr ""
+msgstr "Verde"
 
 #: dat/scripts/pilotname/pirate.lua:203
 msgid "Grün"
-msgstr ""
+msgstr "Grün"
 
 #: dat/scripts/pilotname/pirate.lua:204
 msgid "Haiiro No"
-msgstr ""
+msgstr "Haiiro No"
 
 #: dat/scripts/pilotname/pirate.lua:205
 msgid "Kiiroi"
