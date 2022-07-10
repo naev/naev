@@ -2996,6 +2996,7 @@ dat/scripts/vn/sdf.lua
 dat/scripts/vn/transitions.lua
 dat/scripts/vntk.lua
 dat/snd/music.lua
+dat/spob/lua/default.lua
 dat/spob/lua/example.lua
 dat/spob/lua/hypergate_dvaer.lua
 dat/spob/lua/hypergate_feye.lua
