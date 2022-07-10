@@ -46,14 +46,11 @@ static ndata_start_t start_data; /**< The actual starting data. */
  */
 int start_load (void)
 {
+   int date_set = 0;
    xmlNodePtr node;
    xmlDocPtr doc;
-   int cycles, periods, seconds;
 
-   /* Defaults. */
-   cycles = -1;
-   periods = -1;
-   seconds = -1;
+   memset( &start_data, 0, sizeof(ndata_start_t) );
 
    /* Try to read the file. */
    doc = xml_parsePhysFS( START_DATA_PATH );
@@ -110,15 +107,14 @@ int start_load (void)
       }
 
       if (xml_isNode(node, "date")) {
-         xmlNodePtr cur = node->children;
-         do {
-            xml_onlyNodes(cur);
+         int cycles, periods, seconds;
+         xmlr_attr_int( node, "scu", cycles );
+         xmlr_attr_int( node, "stp", periods );
+         xmlr_attr_int( node, "stu", seconds );
 
-            xmlr_int( cur, "scu", cycles );
-            xmlr_int( cur, "stp", periods );
-            xmlr_int( cur, "stu", seconds );
-            WARN(_("'%s' has unknown date node '%s'."), START_DATA_PATH, cur->name);
-         } while (xml_nextNode(cur));
+         /* Post process. */
+         start_data.date = ntime_create( cycles, periods, seconds );
+         date_set = 1;
          continue;
       }
 
@@ -135,14 +131,9 @@ int start_load (void)
    MELEMENT( start_data.credits==0, "credits" );
    MELEMENT( start_data.ship==NULL, "ship" );
    MELEMENT( start_data.system==NULL, "player system" );
-   MELEMENT( cycles<0, "scu" );
-   MELEMENT( periods<0, "stp" );
-   MELEMENT( seconds<0, "stu" );
    MELEMENT( start_data.chapter==NULL, "chapter" );
+   MELEMENT( !date_set, "date" );
 #undef MELEMENT
-
-   /* Post process. */
-   start_data.date = ntime_create( cycles, periods, seconds );
 
    return 0;
 }
