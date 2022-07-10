@@ -14,4 +14,5 @@ equipopt.soromid  = require 'equipopt.templates.soromid'
 equipopt.pirate   = require 'equipopt.templates.pirate'
 equipopt.thurion  = require 'equipopt.templates.thurion'
 equipopt.proteron = require 'equipopt.templates.proteron'
+
 return equipopt
