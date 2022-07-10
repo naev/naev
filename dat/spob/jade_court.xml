@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Jade Court">
+ <lua>spob/lua/empire_mil_restricted.lua</lua>
  <pos x="-2507.492761" y="-4718.400357"/>
  <GFX>
   <space>station-commerce.webp</space>
@@ -16,7 +17,7 @@
   <population>24000</population>
   <hide>2.000000</hide>
   <services>
-   <land>emp_mil_restricted</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>
