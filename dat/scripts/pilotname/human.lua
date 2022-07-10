@@ -518,8 +518,8 @@ local function human ()
 	firstname = fmt.f(_("{first_name_part}{vowel}"), params)
       result = fmt.f(_("{anchor}{suffix}"), params)
    elseif r < 0.50 then
-		firstname = fmt.f(_(""), params)
-      result = fmt.f(_("{first_name_part}{vowel2} {anchor}{vowel}"), params)
+		firstname = fmt.f(_("{first_name_part}{vowel2}"), params)
+      result = fmt.f(_("{anchor}{vowel}"), params)
    elseif r < 0.666 then
 	firstname = fmt.f(_("{first_name_part}"), params)
       result = fmt.f(_("{anchor}{suffix}{vowel}"), params)
@@ -537,6 +537,15 @@ local function human ()
 	firstname = string.gsub( firstname, found, replacement )
 	end
    
+   -- final safety check, give the human a generic gender neutral name
+   -- just in case we deleted everything
+   if firstname:len() == 0 then
+	firstname = "Ollie"
+	end
+	
+	if result:len() == 0 then
+		result = "Doe"
+	end
    return result, firstname
 end
 
