@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Bolero">
+ <lua>spob/lua/lowclass.lua</lua>
  <pos x="-11735.014766" y="-3466.579854"/>
  <GFX>
   <space>M00.webp</space>
@@ -16,7 +17,7 @@
   <population>4.56745e+06</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_lowclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

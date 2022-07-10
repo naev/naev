@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Pauldur">
+ <lua>spob/lua/lowclass.lua</lua>
  <pos x="-7605.964301" y="-7782.151406"/>
  <GFX>
   <space>moon-M06.webp</space>
@@ -16,7 +17,7 @@
   <population>1.5e+07</population>
   <hide>2.000000</hide>
   <services>
-   <land>land_lowclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

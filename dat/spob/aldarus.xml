@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Aldarus">
+ <lua>spob/lua/lowclass.lua</lua>
  <pos x="7241.795137" y="-7076.236341"/>
  <GFX>
   <space>K02.webp</space>
@@ -16,7 +17,7 @@
   <population>5e+08</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_lowclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

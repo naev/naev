@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Zuner">
+ <lua>spob/lua/lowclass.lua</lua>
  <pos x="12745.111262" y="6444.312909"/>
  <GFX>
   <space>M02.webp</space>
@@ -16,7 +17,7 @@
   <population>5e+07</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_lowclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

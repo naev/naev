@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vargo's Rock">
+ <lua>spob/lua/lowclass.lua</lua>
  <pos x="20025.798638" y="-6063.478210"/>
  <GFX>
   <space>D01.webp</space>
@@ -16,7 +17,7 @@
   <population>500000</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_lowclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>
