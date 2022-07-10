@@ -54,6 +54,7 @@
 #include "rng.h"
 #include "sound.h"
 #include "spfx.h"
+#include "start.h"
 #include "toolkit.h"
 #include "weapon.h"
 
@@ -2306,6 +2307,13 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
 
    if (spob->radius > 0.)
       spob_setFlag(spob, SPOB_RADIUS);
+
+   /* Set defaults if not set. */
+   if (spob->lua_file == NULL) {
+      const char *str = start_spob_lua_default();
+      if (str != NULL)
+         spob->lua_file = strdup( str );
+   }
 /*
  * Verification
  */

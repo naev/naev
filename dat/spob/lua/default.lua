@@ -12,6 +12,10 @@ function load( spb )
 end
 
 function can_land ()
+   local s = land_spb:services()
+   if not s.land then
+      return false
+   end
    if bribed then
       return true, _("Make it quick.")
    end
@@ -22,16 +26,18 @@ function can_land ()
 end
 
 function comm ()
-   print("yeeah")
-
    vn.clear()
    vn.scene()
    local spb = ccomm.newCharacterSpob( vn, land_spb, bribed )
    vn.transition()
+   vn.na(fmt.f(_("You establish a communication channel with the authorities at {spb}."),
+      {spb=land_spb}))
 
    vn.label("menu")
    vn.menu( function ()
-      local opts = { _("Leave"), "leave" }
+      local opts = {
+         { _("Close"), "leave" }
+      }
       if land_fct:playerStanding() < 0 then
          table.insert( opts, { _("Bribe"), "bribe" } )
       end
@@ -48,14 +54,18 @@ function comm ()
       end
       bribe_cost = -std * 1e3 * player.pilot():ship():size() + 5e3
    end )
-   spb(_([["I'll let you land for the modest price of {credits}."
+   spb( function ()
+      return _([["I'll let you land for the modest price of {credits}."
 
 Pay {credits}?]]),
-      {credits=fmt.credits( bribe_cost )} )
-   vn.menu{
-      { fmt.f(_("Pay {credits}"),{credits=fmt.credits( bribe_cost )}), "bribe_yes" },
-      { _("Refuse"), "bribe_no" },
-   }
+      {credits=fmt.credits( bribe_cost )}
+   end )
+   vn.menu( function ()
+      return {
+         { fmt.f(_("Pay {credits}"),{credits=fmt.credits( bribe_cost )}), "bribe_yes" },
+         { _("Refuse"), "bribe_no" },
+      }
+   end )
 
    vn.label("bribe_yes")
    vn.func( function ()
