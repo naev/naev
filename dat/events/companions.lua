@@ -27,19 +27,20 @@ local logidstr = "log_shipcompanion"
 
 -- this is a good place for easter eggs
 local FAKE_CAPTAIN = {
-	name = player.name(),
-	article_subject = _("the captain"),
-	article_object = _("the captain"),
-	chatter = rnd.rnd(),
+	["name"] = player.name(),
+	["article_subject"] = _("the captain"),
+	["article_object"] = _("the captain"),
+	["firstname"] = player.name(),
+	["chatter"] = rnd.rnd(),
 	-- need a minimal conversation table to be able to pass the fake captain around and create memories as if it was a real character
 	["conversation"] = {
 		["good_talker"] = { "{name} is doing a good job." },
 		["bad_talker"] = { "{name} stands out from the bunch." },
-		["topics_liked"] = { [fmt.f("{name}", player.pilot():ship())] = {_("She's a beauty, isn't she?") } },
+		["topics_liked"] = { [tostring(player.pilot():ship())] = {_("She's a beauty, isn't she?") } },
 		["topics_disliked"] = { _("salary"), _("credits") },
 	},
-	satisfaction = 0,
-	xp = 0,
+	["satisfaction"] = 0,
+	["xp"] = 0,
 }
 
 mem.conversation_hook = nil
@@ -790,7 +791,7 @@ local function create_memory(character, memory_type, params)
 		if params.topic then
 				topic = params.topic
 				local topicsss = tostring(string.gsub(topic, "s+$", ""))
-				punctuation = fmt.f(_("always blabbers about {topic}s."), { topic = topicsss })
+				punctuation = fmt.f(_(" always blabbers about {topic}s."), { topic = topicsss })
 		else
 			-- this is an aggressive thought, let's classify it as violence
 			topic = "violence"
@@ -880,9 +881,9 @@ local function create_memory(character, memory_type, params)
         -- we're having a nervous breakdown and are about to have an unreal experience
         local choices = {
             _("Man, what a {ship], that {target} was a complete waste of {credits}. Am I right?"),
-            add_special(character) .. " " .. getMadeUpName() .. " " .. add_special(character, "laugh") .. ".",
-            add_special(character) .. "... " .. add_special(character) .. "... " .. add_special(character) .. ".",
-            getMadeUpName() .. " " .. getMadeUpName() .. " " .. add_special(character) .. ".",
+            add_special(character) .. " " .. getMadeUpName() .. " " .. add_special(character, "laugh"),
+            add_special(character) .. "... " .. add_special(character) .. "... " .. add_special(character),
+            getMadeUpName() .. " " .. getMadeUpName() .. " " .. add_special(character),
             _("Why are we traveling to {system} again? I'd much rather go to {ship}."),
             _("Can't you see it out there? Tell me you can see it? You can see it can't you?"),
             _("Tell me you just saw that, I'm not the only one that just saw that, right?"),
@@ -1164,7 +1165,13 @@ local function generate_responses(spoken, crewmate)
     end
 
     for _i, phrase in ipairs(crewmate.conversation.phrases_disliked) do
-        table.insert(responses, fmt.f(phrase, {topic = imaginary_topic}))
+        table.insert(responses, fmt.f(phrase, {
+			topic = imaginary_topic,
+			name = "{name}",
+			article_object = "{article_object}",
+			article_subject = "{article_subject}",
+			firstname = "{firstname}",
+		}))
     end
 
     return responses
@@ -1215,7 +1222,7 @@ local function analyze_spoken(spoken, speaker, listener)
 					responses, listener.conversation.bad_talker),
 					listener.conversation.smalltalk_negative
 				)
-			return pick_one(responses)
+			return fmt.f(pick_one(responses), speaker)
 		else -- we like talking about this!
 			-- calculate the interaction (the listener's response) to speaker mentioning topic
 			return pick_one(interact_topic(topic, speaker, listener)), topic
@@ -1244,7 +1251,7 @@ local function analyze_spoken(spoken, speaker, listener)
 			-- asking something specific
 			analysis.question = "specific"
 		elseif string.find(spoken, "Is")
-			or string.find(spoken, "can")
+			or string.find(spoken, "can ")
 			or string.find(spoken, " I ")
 			then -- asking something we're probably unsure about and makes us feel uncomfortable
 			analysis.question = "affirm_negative"
@@ -1288,7 +1295,6 @@ local function analyze_spoken(spoken, speaker, listener)
 				local extracted = extract_keyword(phrase)
 				-- let's see if we think they might be talking about this
 				if string.find(spoken, extracted) then
-					
 					table.insert(analysis.choices, my_topic)
 				end
 			end
@@ -1305,12 +1311,12 @@ local function analyze_spoken(spoken, speaker, listener)
 			if listener.conversation.topics_disliked[keyword] then
 				-- we didn't want to talk about this
 				listener.satisfaction = listener.satisfaction - 0.05
-				return pick_one(listener.conversation.phrases_disliked), keyword
+				return fmt.f(pick_one(listener.conversation.phrases_disliked), speaker), keyword
 			end
 		end
 		-- feel like we are having a good conversation
 		topic = pick_one(analysis.choices)
-		print("picked topic", topic)
+		print(fmt.f("picked topic <{topic}> from <{source}>.", {topic = topic, source = spoken} ))
 		listener.satisfaction = listener.satisfaction + 0.03
 		return pick_one(interact_topic(topic, speaker, listener)), topic
 	else
@@ -1349,7 +1355,7 @@ local function analyze_spoken(spoken, speaker, listener)
             listener.satisfaction = listener.satisfaction - 0.02 -- why you gotta drag me into this
             if not listener.conversation.sentiment then
                 if rnd.rnd(0, 7) == 0 then
-                    listener.conversation.sentiment = fmt.f(pick_one(listener.conversation.bad_talker), listener)
+                    listener.conversation.sentiment = fmt.f(pick_one(listener.conversation.bad_talker), speaker)
                 end
             end
             speaker.conversation.sentiment = fmt.f(pick_one(speaker.conversation.bad_talker), listener)
@@ -1358,7 +1364,7 @@ local function analyze_spoken(spoken, speaker, listener)
             speaker.satisfaction = speaker.satisfaction + math.floor(10 * rnd.threesigma()) / 1000 - 0.01
             listener.satisfaction = listener.satisfaction + math.floor(10 * rnd.threesigma()) / 1000 - 0.0075
         end
-		return pick_one(responses)
+		return fmt.f(pick_one(responses), speaker)
 	end
 end
 
@@ -1367,6 +1373,15 @@ local function converse_topic(topic, talker, other)
     local my_topics = talker.conversation.topics_liked
     local choices = my_topics[topic]
 
+	if not choices then
+		local tname = talker
+		local oname = other
+		if tname then tname = talker.name end
+		if oname then oname = other.name end
+		print(fmt.f("converse_topic no choices {topic} {talker} {other}", {topic = topic, talker=tname, other=oname}))
+		return
+	end
+	
     -- speak the chosen phrase
     pilot.comm(fmt.f("{typetitle} {name}", talker), pick_one(choices), "F")
 
@@ -1390,9 +1405,9 @@ local function converse_topic(topic, talker, other)
                 {me = talker, message = pick_one(talker.conversation.default_participation)}
             )
         end
-
-        hook.timer(answered_in, "say_specific", {me = other, message = fmt.f(pick_one(responses), {topic = topic})})
+        hook.timer(answered_in, "say_specific", {me = other, message = fmt.f(pick_one(responses), append_table(talker,{topic = topic}))})
     end
+
 end
 
 local function speak(talker, other)
@@ -1466,7 +1481,7 @@ local function speak(talker, other)
     local listener = pick_one(mem.companions)
     -- if there's another person in the conversation, let them interact
     -- a response is more likely than striking a conversation
-    if other and other.chatter * 1.5 > rnd.rnd() then
+    if other and other.chatter * 1.5 > rnd.rnd() and other ~= FAKE_CAPTAIN then
 
         -- see if we want to strike up a new conversation based on interests
         for interest, _phrases in pairs(other.conversation.topics_liked) do
@@ -2603,7 +2618,7 @@ local function createGenericCrewmate(fac)
 			_("You want this? I got two."),
 			fmt.f(_("Would you like to play some {game}?"), { game = getShipboardActivity("game") }),
 			fmt.f(_("I'll play some {game} if you want."), { game = getShipboardActivity("game") }),
-			fmt.f(_("Would you like to this {fruit}?"), { fruit = getRandomFruit() }),
+			fmt.f(_("Would you like to have this {fruit}?"), { fruit = getRandomFruit() }),
 			fmt.f(_("I'll give you my {fruit} if you want it."), { fruit = getRandomFruit() }),
 			fmt.f(_("I just ate a really nice {fruit}."), { fruit = getRandomFruit() }),
 			fmt.f(_("Do you want a piece of this {fruit}?"), { fruit = getRandomFruit() }),
@@ -3318,8 +3333,8 @@ local function createExplosivesEngineer(fac)
             _("Bombs away!"),
             _("Radical! Pun intended."),
             _("Well that's pretty sweet."),
-            _("Isn't thit nice."),
-            _("Isn't thit lovely."),
+            _("Isn't this nice."),
+            _("Isn't this lovely."),
             _("That's great."),
             _("Yeah, yeah. I know. I'm with you."),
             _("Yeah, I'm with you."),
@@ -3803,6 +3818,10 @@ function land()
             end
         end
 
+		if edata.shuttle then
+			edata.shuttle = "docked"
+		end
+		
         -- if we don't have a manager that called us, some crew doesn't go to the bar
         -- chance of being elsewhere depends on xp and crew size
         local elsewhere_chance =
@@ -3964,7 +3983,7 @@ function period_fatigue()
                         ramblings = add_special(companion) .. " " .. getMadeUpName() .. " " .. add_special(companion)
                     end
                     -- just in case we got no specials for some reason
-                    if ramblings:len() == 0 then
+                    if ramblings:len() == 0 or rnd.threesigma() > 2 then
                         ramblings = fmt.f(_("This voyage is driving me {made_up} crazy."), {made_up = getMadeUpName()})
                     end
                 end
@@ -3999,7 +4018,7 @@ end
 -- starts a standard discussion with a crewmate (at the bar, unless the ship has a bridge UI where you can talk to your npcs)
 -- this is definitely a place to be excessively wasteful and do computations we might not need if it increases the chance
 -- of a more meaningful interaction. If we have to look every word typed by the player up in several tables, then that's what we'll do!
-local function startDiscussion(crewmate)
+local function startDiscussion(crewmate, skip_intro)
     -- just pick a random thing to say from our interests
     local my_topics = crewmate.conversation.topics_liked
     local topic = nil
@@ -4039,10 +4058,20 @@ local function startDiscussion(crewmate)
     end
 
     local name_label = fmt.f("{firstname} {name}", crewmate)
-    vntk.msg(name_label, message)
-    local spoken = tk.input(_("Conversation"), 0, 64, _("What do you say back?"))
+	if not skip_intro then
+		vntk.msg(name_label, message)
+	end
+	local title_choice = pick_one({
+		_("What do you say back?"),
+		_("What do you say back?"),
+		_("What do you say back?"),
+		_("What do you say back?"),
+		
+	})
+    local spoken = tk.input(_("Conversation"), 0, 64, title_choice)
     if spoken then
         local appreciation, understood = appreciate_spoken(spoken, crewmate)
+
         if not understood then
             -- we didn't even understand this, lets increase the chance of an appropriate response
             local responses = {
@@ -4102,19 +4131,21 @@ local function startDiscussion(crewmate)
                 -- try to be a bit smarter than usual and enlist help from a function
                 responses = append_table(responses, generate_responses(spoken, crewmate))
             end
+
 			-- finally, use our fancy analyzer to add a smart lucky response to surprise the player
 			local response, detected = analyze_spoken(spoken, FAKE_CAPTAIN, crewmate)
-
-			if detected then
-				vntk.msg(name_label, pick_one(crewmate.conversation.default_participation) .. "\n" .. response)
+			-- I don't know how many stack frames we can handle, but 10 sounds like a long conversation in case the player is trapped
+			-- which I guess is kind of likely if the just keeps saying the same stuff
+			if detected and (not skip_intro or skip_intro < 10) then
+				skip_intro = skip_intro or 0
+				vntk.msg(name_label, pick_one(crewmate.conversation.default_participation) .. "\n" .. fmt.f(response, FAKE_CAPTAIN))
+				return startDiscussion(crewmate, skip_intro + 1)
 			else
 				table.insert(responses, response)
-				vntk.msg(name_label, pick_one(responses))
+				vntk.msg(name_label, fmt.f(pick_one(responses), FAKE_CAPTAIN))
 			end
-			
-            
         else
-            vntk.msg(name_label, pick_one(appreciation))
+            vntk.msg(name_label, fmt.f(pick_one(appreciation), FAKE_CAPTAIN))
         end
     end
 end
@@ -4398,17 +4429,21 @@ function approachGenericCrewmate(npc_id)
 
 	-- check if this crew member has a typetitle that is limited
 	local limits = {
-		{"Engineer", 2}
+		["Engineer"] = 2,
 	}
 	local count = 0
 	for ttt, lll in pairs(limits) do
+		
 		if ttt == pdata.typetitle then
+		
 			for _i, crewmate in ipairs(mem.companions) do
 				if crewmate.typetitle == pdata.typetitle then
 					count = count + 1
-					if count > lll then
+		
+					if count >= lll then
 						pdata.limit = lll
 						vntk.msg(
+						    _("No thanks"),
 							fmt.f(_("How many {typetitle}s do you think you need? If you think you need more than {limit}, then I don't think I want to be anywhere near your ship."), pdata )
 						)
 						return
@@ -4452,6 +4487,7 @@ function approachGenericCrewmate(npc_id)
         vntk.msg(_("No thanks"), fmt.f(_("{start} {reason} {excuse} {bye}"), params))
         return
     end
+	vntk.msg(fmt.f(_("{typetitle} hired"), pdata), _("You pay the worker, who heads towards your ship to begin a new life."))
     mem.companions[i] = pdata
     evt.npcRm(npc_id)
     npcs[npc_id] = nil
@@ -4563,7 +4599,7 @@ function approachDemolitionMan(npc_id)
 	for _i, crewmate in ipairs(mem.companions) do
 		if crewmate.typetitle == "Engineer" then
 			count = count + 1
-			if count > 2 then
+			if count >= 2 then
 				pdata.limit = 2
 				vntk.msg(
 					fmt.f(_("How many {typetitle}s do you think you need? If you think you need more than {limit}, then I don't think I want to be anywhere near your ship."), pdata )
@@ -4765,7 +4801,7 @@ function escort_landing(speaker)
 end
 
 function smuggle_cargo(speaker)
-	if speaker.shuttle ~= "docked" then
+	if speaker.shuttle and speaker.shuttle ~= "docked" then
 		return
 	end
 	
@@ -4949,12 +4985,22 @@ function engineer_armour(engineer)
 	
 --	print(fmt.f("{armour}, {shield}, {stress}", {armour=armour, shield=shield, stress=stress}))
 	
-	if (armour < 95 + engineer.xp
+	-- engineer hero sacrifice
+	if (armour <= 2 and pp:energy() > 36) then
+		local health_bonus = engineer.xp * engineer.xp * engineer.xp * engineer.satisfaction * engineer.satisfaction
+		pp:addHealth(health_bonus, health_bonus / 8)
+		engineer.bonus = health_bouns
+		local message = fmt.f(_("Your engineer, {name}, was lost in space combat while maintaining hull integrity. As a final valiant act of heroism and ultimately leading to {article_object} death, {bonus} armor was repaired in a massive power surge."), engineer)
+		vntk.msg(_("Heroic Sacrifice"), message)
+		terminate_crew(engineer, message)
+	end
+	
+	if (armour < math.min(100, 90 + engineer.xp)
 		and shield >= 100 - engineer.xp - engineer.satisfaction
 		and stress * stress < engineer.satisfaction * engineer.xp
-		and pp:energy() > 98 - engineer.satisfaction
+		and pp:energy() > 96 - engineer.satisfaction
 		) or	-- engineer spits out his coffee and roll up his sleeves
-		armour <= 16 + engineer.xp + engineer.satisfaction and pp:energy() >= 4
+		(armour <= 16 + engineer.xp + engineer.satisfaction and pp:energy() >= 4)
 	then
 		print(engineer.active)
 		-- begin healing in a 10th of a period
@@ -4965,24 +5011,36 @@ function engineer_armour(engineer)
 				"engineer_armour", engineer)
 			engineer.active = engineer.active + 1
 			local healed = math.ceil(engineer.xp * engineer.active / (engineer.xp * engineer.xp + 1))
-			pp:addHealth(healed)
+			pp:addHealth(healed, -healed * healed )
 			local heated = engineer.active / (engineer.xp * engineer.xp + engineer.active + 1)
 			pp:setTemp(pp:temp() + heated)
-			print(fmt.f("healed {healed} armour points and heated by {heat} K", { healed = healed, heat = heated }))
+			local energy_used = heated * healed * engineer.xp
+			pp:setEnergy(pp:energy(true) - energy_used, true)
+			print(fmt.f("healed {healed} armour points and heated by {heat} K at cost of {mw} energy", { healed = healed, heat = heated, mw=energy_used }))
 			-- TODO: engineer says things like "easy girl", "easy does it", "there we go"...
 		else
 			engineer.active = 1
-			local delay = 100 - engineer.xp * engineer.satisfaction
+			local delay = math.max(2, 20 - engineer.xp - engineer.satisfaction)
 			engineer.hook.hook = hook.timer(delay, "engineer_armour", engineer)
 			print("engineer active, timer is, delay", engineer.hook.hook, delay)
 			local message = pick_one(engineer.conversation.message)
 			pilot.comm(fmt.f("{typetitle} {name}", engineer), message .. fmt.f(" I need about {delay} more seconds... ", { delay = math.max(2, math.ceil(delay + rnd.threesigma() * 10)) }) .. add_special(engineer) )
+			engineer.satisfaction = math.min(10, engineer.satisfaction + 0.01)
 		end
 		return
 	elseif engineer.active then
 		-- experience gained while cooling down
 		local gained_xp = (engineer.active * 0.01)
 		print(fmt.f("engineer cooldown and gained {xp} xp", {xp = gained_xp}))
+		local listener = pick_one(mem.companions)
+		if rnd.rnd(0, 1) == 0 then
+			-- act like an engineer
+			speak_to( {me=engineer, responder=listener, message=add_special(engineer) .. " " .. add_special(engineer) })
+		else
+			-- act normally
+			speak(engineer)
+		end
+--		pilot.comm(fmt.f("{typetitle} {name}", engineer), add_special(engineer) .. " " .. add_special(engineer))
 		engineer.xp = math.min(10, engineer.xp + gained_xp)
 		-- cooldown
 		engineer.active = math.max(0, engineer.active / 2 - 3)
