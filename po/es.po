@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-07-09 21:10+0000\n"
+"PO-Revision-Date: 2022-07-10 21:19+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -12810,7 +12810,7 @@ msgid ""
 "the wrong section, though."
 msgstr ""
 "Este bar está dividido en tres secciones. Una es azul, otra verde y la otra "
-"morada. Parece tener algún significado, pero nadie parece saber exactamente "
+"púrpura. Parece tener algún significado, pero nadie parece saber exactamente "
 "cuál es. Sin embargo, los lugareños se molestan mucho cuando te sientas en "
 "la sección equivocada."
 
@@ -91382,187 +91382,187 @@ msgstr "Haiiro No"
 
 #: dat/scripts/pilotname/pirate.lua:205
 msgid "Kiiroi"
-msgstr ""
+msgstr "Kiiroi"
 
 #: dat/scripts/pilotname/pirate.lua:206
 msgid "Kin'iro No"
-msgstr ""
+msgstr "Kin'iro No"
 
 #: dat/scripts/pilotname/pirate.lua:207
 msgid "Kuroi"
-msgstr ""
+msgstr "Kuroi"
 
 #: dat/scripts/pilotname/pirate.lua:208
 msgid "Mauve"
-msgstr ""
+msgstr "Mauve"
 
 #: dat/scripts/pilotname/pirate.lua:209
 msgid "Midori No"
-msgstr ""
+msgstr "Midori No"
 
 #: dat/scripts/pilotname/pirate.lua:210
 msgid "Murasaki No"
-msgstr ""
+msgstr "Murasaki No"
 
 #: dat/scripts/pilotname/pirate.lua:211
 msgid "Pink"
-msgstr ""
+msgstr "Rosa"
 
 #: dat/scripts/pilotname/pirate.lua:212
 msgid "Purple"
-msgstr ""
+msgstr "Violeta"
 
 #: dat/scripts/pilotname/pirate.lua:214
 msgid "Roho"
-msgstr ""
+msgstr "Roho"
 
 #: dat/scripts/pilotname/pirate.lua:215
 msgid "Schwarz"
-msgstr ""
+msgstr "Schwarz"
 
 #: dat/scripts/pilotname/pirate.lua:216
 msgid "Shiroi"
-msgstr ""
+msgstr "Shiroi"
 
 #: dat/scripts/pilotname/pirate.lua:217
 msgid "Silver"
-msgstr ""
+msgstr "Plata"
 
 #: dat/scripts/pilotname/pirate.lua:218
 msgid "Violet"
-msgstr ""
+msgstr "Violeta"
 
 #: dat/scripts/pilotname/pirate.lua:219
 msgid "Yellow"
-msgstr ""
+msgstr "Amarillo"
 
 #: dat/scripts/pilotname/pirate.lua:222
 msgid "1024"
-msgstr ""
+msgstr "1024"
 
 #: dat/scripts/pilotname/pirate.lua:223
 msgid "Aku"
-msgstr ""
+msgstr "Aku"
 
 #: dat/scripts/pilotname/pirate.lua:224
 msgid "Akuma"
-msgstr ""
+msgstr "Akuma"
 
 #: dat/scripts/pilotname/pirate.lua:225
 msgid "Alphabet Soup"
-msgstr ""
+msgstr "Sopa de Alfabeto"
 
 #: dat/scripts/pilotname/pirate.lua:226
 msgid "Amigo"
-msgstr ""
+msgstr "Amigo"
 
 #: dat/scripts/pilotname/pirate.lua:227
 msgid "Angel"
-msgstr ""
+msgstr "Ángel"
 
 #: dat/scripts/pilotname/pirate.lua:228
 msgid "Angle Grinder"
-msgstr ""
+msgstr "Amoladora Angular"
 
 #: dat/scripts/pilotname/pirate.lua:229
 msgid "Anvil"
-msgstr ""
+msgstr "Yunque"
 
 #: dat/scripts/pilotname/pirate.lua:230
 msgid "Ari"
-msgstr ""
+msgstr "Ari"
 
 #: dat/scripts/pilotname/pirate.lua:231
 msgid "Arrow"
-msgstr ""
+msgstr "Flecha"
 
 #: dat/scripts/pilotname/pirate.lua:233
 msgid "Atama"
-msgstr ""
+msgstr "Atama"
 
 #: dat/scripts/pilotname/pirate.lua:234
 msgid "Aunt"
-msgstr ""
+msgstr "Tía"
 
 #: dat/scripts/pilotname/pirate.lua:235
 msgid "Auster"
-msgstr ""
+msgstr "Auster"
 
 #: dat/scripts/pilotname/pirate.lua:236
 msgid "Avenger"
-msgstr ""
+msgstr "Vengador"
 
 #: dat/scripts/pilotname/pirate.lua:238
 msgid "Baka"
-msgstr ""
+msgstr "Baka"
 
 #: dat/scripts/pilotname/pirate.lua:239
 msgid "Bakemono"
-msgstr ""
+msgstr "Bakemono"
 
 #: dat/scripts/pilotname/pirate.lua:240
 msgid "Band Saw"
-msgstr ""
+msgstr "Sierra de Banda"
 
 #: dat/scripts/pilotname/pirate.lua:241
 msgid "Bat"
-msgstr ""
+msgstr "Murciélago"
 
 #: dat/scripts/pilotname/pirate.lua:242
 msgid "Beard"
-msgstr ""
+msgstr "Barba"
 
 #: dat/scripts/pilotname/pirate.lua:243
 msgid "Belt Sander"
-msgstr ""
+msgstr "Lijadora de Banda"
 
 #: dat/scripts/pilotname/pirate.lua:244
 msgid "Bench Grinder"
-msgstr ""
+msgstr "Amoladora de Banco"
 
 #: dat/scripts/pilotname/pirate.lua:245
 msgid "Bengoshi"
-msgstr ""
+msgstr "Bengoshi"
 
 #: dat/scripts/pilotname/pirate.lua:247
 msgid "Blarg"
-msgstr ""
+msgstr "Blarg"
 
 #: dat/scripts/pilotname/pirate.lua:248
 msgid "Blitzschneider"
-msgstr ""
+msgstr "Blitzschneider"
 
 #: dat/scripts/pilotname/pirate.lua:251
 msgid "Blunder"
-msgstr ""
+msgstr "Metedura de Pata"
 
 #: dat/scripts/pilotname/pirate.lua:252
 msgid "Boot"
-msgstr ""
+msgstr "Arranque"
 
 #: dat/scripts/pilotname/pirate.lua:253
 msgid "Bobber"
-msgstr ""
+msgstr "Corcho de Pesca"
 
 #: dat/scripts/pilotname/pirate.lua:254
 msgid "Bolt Cutter"
-msgstr ""
+msgstr "Cortador de Pernos"
 
 #: dat/scripts/pilotname/pirate.lua:255
 msgid "Bōshi"
-msgstr ""
+msgstr "Bōshi"
 
 #: dat/scripts/pilotname/pirate.lua:256
 msgid "Brain"
-msgstr ""
+msgstr "Cerebro"
 
 #: dat/scripts/pilotname/pirate.lua:257
 msgid "Breeze"
-msgstr ""
+msgstr "Brisa"
 
 #: dat/scripts/pilotname/pirate.lua:258
 msgid "Bride"
-msgstr ""
+msgstr "Novia"
 
 #: dat/scripts/pilotname/pirate.lua:259
 msgid "Brigand"
@@ -91570,15 +91570,15 @@ msgstr "Bandido"
 
 #: dat/scripts/pilotname/pirate.lua:260
 msgid "Bulk"
-msgstr ""
+msgstr "Crudo"
 
 #: dat/scripts/pilotname/pirate.lua:261
 msgid "Burglar"
-msgstr ""
+msgstr "Ladrón"
 
 #: dat/scripts/pilotname/pirate.lua:262
 msgid "Cane"
-msgstr ""
+msgstr "Bastón"
 
 #: dat/scripts/pilotname/pirate.lua:264
 msgid "Cheese"
@@ -91586,119 +91586,119 @@ msgstr "Queso"
 
 #: dat/scripts/pilotname/pirate.lua:265
 msgid "Cheese Grater"
-msgstr ""
+msgstr "Rallador de Queso"
 
 #: dat/scripts/pilotname/pirate.lua:266
 msgid "Chi"
-msgstr ""
+msgstr "Chi"
 
 #: dat/scripts/pilotname/pirate.lua:267
 msgid "Chicken"
-msgstr ""
+msgstr "Pollo"
 
 #: dat/scripts/pilotname/pirate.lua:268
 msgid "Circle"
-msgstr ""
+msgstr "Círculo"
 
 #: dat/scripts/pilotname/pirate.lua:270
 msgid "Claw Hammer"
-msgstr ""
+msgstr "Martillo Garra"
 
 #: dat/scripts/pilotname/pirate.lua:271
 msgid "Club"
-msgstr ""
+msgstr "Garrote"
 
 #: dat/scripts/pilotname/pirate.lua:272
 msgid "Coconut"
-msgstr ""
+msgstr "Coco"
 
 #: dat/scripts/pilotname/pirate.lua:273
 msgid "Coot"
-msgstr ""
+msgstr "Focha"
 
 #: dat/scripts/pilotname/pirate.lua:274
 msgid "Corsair"
-msgstr ""
+msgstr "Corsario"
 
 #: dat/scripts/pilotname/pirate.lua:278
 msgid "Crowbar"
-msgstr ""
+msgstr "Pata de Cabra"
 
 #: dat/scripts/pilotname/pirate.lua:279
 msgid "Crusader"
-msgstr ""
+msgstr "Cruzado"
 
 #: dat/scripts/pilotname/pirate.lua:280
 msgid "Curse"
-msgstr ""
+msgstr "Maldito"
 
 #: dat/scripts/pilotname/pirate.lua:281
 msgid "Cyborg"
-msgstr ""
+msgstr "Ciborg"
 
 #: dat/scripts/pilotname/pirate.lua:282
 msgid "Darkness"
-msgstr ""
+msgstr "Oscuridad"
 
 #: dat/scripts/pilotname/pirate.lua:286
 msgid "Destruction"
-msgstr ""
+msgstr "Destrucción"
 
 #: dat/scripts/pilotname/pirate.lua:287
 msgid "Devil"
-msgstr ""
+msgstr "Diablo"
 
 #: dat/scripts/pilotname/pirate.lua:288
 msgid "Dictator"
-msgstr ""
+msgstr "Dictador"
 
 #: dat/scripts/pilotname/pirate.lua:289
 msgid "Disaster"
-msgstr ""
+msgstr "Desastre"
 
 #: dat/scripts/pilotname/pirate.lua:290
 msgid "Discord"
-msgstr ""
+msgstr "Discordia"
 
 #: dat/scripts/pilotname/pirate.lua:291
 msgid "Donkey"
-msgstr ""
+msgstr "Burro"
 
 #: dat/scripts/pilotname/pirate.lua:292
 msgid "Doom"
-msgstr ""
+msgstr "Condenación"
 
 #: dat/scripts/pilotname/pirate.lua:293
 msgid "Drache"
-msgstr ""
+msgstr "Drache"
 
 #: dat/scripts/pilotname/pirate.lua:295
 msgid "Dread"
-msgstr ""
+msgstr "Pavor"
 
 #: dat/scripts/pilotname/pirate.lua:296
 msgid "Drifter"
-msgstr ""
+msgstr "Vagador"
 
 #: dat/scripts/pilotname/pirate.lua:297
 msgid "Drill Press"
-msgstr ""
+msgstr "Prensa de Taladro"
 
 #: dat/scripts/pilotname/pirate.lua:298
 msgid "Duckling"
-msgstr ""
+msgstr "Patito"
 
 #: dat/scripts/pilotname/pirate.lua:300
 msgid "Eggplant"
-msgstr ""
+msgstr "Berenjena"
 
 #: dat/scripts/pilotname/pirate.lua:301
 msgid "Ego"
-msgstr ""
+msgstr "Ego"
 
 #: dat/scripts/pilotname/pirate.lua:302
 msgid "Electricity"
-msgstr ""
+msgstr "Electricidad"
 
 #: dat/scripts/pilotname/pirate.lua:303
 msgid "Emperor"
@@ -91706,472 +91706,472 @@ msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:304
 msgid "Energy-Volt"
-msgstr ""
+msgstr "Energía-Voltio"
 
 #: dat/scripts/pilotname/pirate.lua:305
 msgid "Engine"
-msgstr ""
+msgstr "Motor"
 
 #: dat/scripts/pilotname/pirate.lua:307
 msgid "Flare"
-msgstr ""
+msgstr "Bengala"
 
 #: dat/scripts/pilotname/pirate.lua:308
 msgid "Flash"
-msgstr ""
+msgstr "Destello"
 
 #: dat/scripts/pilotname/pirate.lua:310
 msgid "Friend"
-msgstr ""
+msgstr "Friend"
 
 #: dat/scripts/pilotname/pirate.lua:311
 msgid "Fugitive"
-msgstr ""
+msgstr "Fugitivo"
 
 #: dat/scripts/pilotname/pirate.lua:312
 msgid "Gaki"
-msgstr ""
+msgstr "Gaki"
 
 #: dat/scripts/pilotname/pirate.lua:313
 msgid "Geschützturmdrehbank"
-msgstr ""
+msgstr "Geschützturmdrehbank"
 
 #: dat/scripts/pilotname/pirate.lua:314
 msgid "Giant"
-msgstr ""
+msgstr "Gigante"
 
 #: dat/scripts/pilotname/pirate.lua:315
 msgid "Gift"
-msgstr ""
+msgstr "Regalo"
 
 #: dat/scripts/pilotname/pirate.lua:316
 msgid "Gohan"
-msgstr ""
+msgstr "Gohan"
 
 #: dat/scripts/pilotname/pirate.lua:317
 msgid "Goose"
-msgstr ""
+msgstr "Ganso"
 
 #: dat/scripts/pilotname/pirate.lua:318
 msgid "Gorilla"
-msgstr ""
+msgstr "Gorila"
 
 #: dat/scripts/pilotname/pirate.lua:319
 msgid "Gun"
-msgstr ""
+msgstr "Arma"
 
 #: dat/scripts/pilotname/pirate.lua:320
 msgid "Hae"
-msgstr ""
+msgstr "Hae"
 
 #: dat/scripts/pilotname/pirate.lua:321
 msgid "Hamburger"
-msgstr ""
+msgstr "Hamburguesa"
 
 #: dat/scripts/pilotname/pirate.lua:323
 msgid "Headache"
-msgstr ""
+msgstr "Dolor de Cabeza"
 
 #: dat/scripts/pilotname/pirate.lua:324
 msgid "Hex"
-msgstr ""
+msgstr "Embrujo"
 
 #: dat/scripts/pilotname/pirate.lua:325
 msgid "Hikari"
-msgstr ""
+msgstr "Hikari"
 
 #: dat/scripts/pilotname/pirate.lua:326
 msgid "Horobi"
-msgstr ""
+msgstr "Horobi"
 
 #: dat/scripts/pilotname/pirate.lua:327
 msgid "Horror"
-msgstr ""
+msgstr "Horror"
 
 #: dat/scripts/pilotname/pirate.lua:329
 msgid "Husband"
-msgstr ""
+msgstr "Marido"
 
 #: dat/scripts/pilotname/pirate.lua:330
 msgid "Ichigo"
-msgstr ""
+msgstr "Ichigo"
 
 #: dat/scripts/pilotname/pirate.lua:331
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: dat/scripts/pilotname/pirate.lua:332
 msgid "Impact Wrench"
-msgstr ""
+msgstr "Llave de Impacto"
 
 #: dat/scripts/pilotname/pirate.lua:333
 msgid "Inazuma"
-msgstr ""
+msgstr "Inazuma"
 
 #: dat/scripts/pilotname/pirate.lua:334
 msgid "Ionizer"
-msgstr ""
+msgstr "Ionizador"
 
 #: dat/scripts/pilotname/pirate.lua:335
 msgid "Ishi"
-msgstr ""
+msgstr "Ishi"
 
 #: dat/scripts/pilotname/pirate.lua:336
 msgid "Itoyōji"
-msgstr ""
+msgstr "Itoyōji"
 
 #: dat/scripts/pilotname/pirate.lua:337
 msgid "Jalapeño"
-msgstr ""
+msgstr "Jalapeño"
 
 #: dat/scripts/pilotname/pirate.lua:338
 msgid "Jigsaw"
-msgstr ""
+msgstr "Rompecabezas"
 
 #: dat/scripts/pilotname/pirate.lua:339
 msgid "Jishin"
-msgstr ""
+msgstr "Jishin"
 
 #: dat/scripts/pilotname/pirate.lua:340
 msgid "Jinx"
-msgstr ""
+msgstr "Jinx"
 
 #: dat/scripts/pilotname/pirate.lua:341
 msgid "Ka"
-msgstr ""
+msgstr "Ka"
 
 #: dat/scripts/pilotname/pirate.lua:342
 msgid "Kailan"
-msgstr ""
+msgstr "Kailan"
 
 #: dat/scripts/pilotname/pirate.lua:343
 msgid "Kaji"
-msgstr ""
+msgstr "Kaji"
 
 #: dat/scripts/pilotname/pirate.lua:344
 msgid "Kamakiri"
-msgstr ""
+msgstr "Kamakiri"
 
 #: dat/scripts/pilotname/pirate.lua:345
 msgid "Kame"
-msgstr ""
+msgstr "Kame"
 
 #: dat/scripts/pilotname/pirate.lua:346
 msgid "Kami"
-msgstr ""
+msgstr "Kami"
 
 #: dat/scripts/pilotname/pirate.lua:347
 msgid "Kamikaze"
-msgstr ""
+msgstr "Kamikaze"
 
 #: dat/scripts/pilotname/pirate.lua:348
 msgid "Kappa"
-msgstr ""
+msgstr "Kappa"
 
 #: dat/scripts/pilotname/pirate.lua:349
 msgid "Karaoke"
-msgstr ""
+msgstr "Karaoke"
 
 #: dat/scripts/pilotname/pirate.lua:350
 msgid "Katana"
-msgstr ""
+msgstr "Katana"
 
 #: dat/scripts/pilotname/pirate.lua:351
 msgid "Kaze"
-msgstr ""
+msgstr "Kaze"
 
 #: dat/scripts/pilotname/pirate.lua:352
 msgid "Keel"
-msgstr ""
+msgstr "Quilla"
 
 #: dat/scripts/pilotname/pirate.lua:354
 msgid "Killer"
-msgstr ""
+msgstr "Asesino"
 
 #: dat/scripts/pilotname/pirate.lua:355
 msgid "Kirin"
-msgstr ""
+msgstr "Kirin"
 
 #: dat/scripts/pilotname/pirate.lua:356
 msgid "Kitchen Knife"
-msgstr ""
+msgstr "Cuchillo de Cocina"
 
 #: dat/scripts/pilotname/pirate.lua:357
 msgid "Kitsune"
-msgstr ""
+msgstr "Kitsune"
 
 #: dat/scripts/pilotname/pirate.lua:358
 msgid "Kitten"
-msgstr ""
+msgstr "Gatito"
 
 #: dat/scripts/pilotname/pirate.lua:360
 msgid "Knife"
-msgstr ""
+msgstr "Cuchillo"
 
 #: dat/scripts/pilotname/pirate.lua:361
 msgid "Knight"
-msgstr ""
+msgstr "Caballero"
 
 #: dat/scripts/pilotname/pirate.lua:362
 msgid "Kōmori"
-msgstr ""
+msgstr "Kōmori"
 
 #: dat/scripts/pilotname/pirate.lua:363
 msgid "Kumo"
-msgstr ""
+msgstr "Kumo"
 
 #: dat/scripts/pilotname/pirate.lua:364
 msgid "Lance"
-msgstr ""
+msgstr "Lanza"
 
 #: dat/scripts/pilotname/pirate.lua:367
 msgid "Lawyer"
-msgstr ""
+msgstr "Abogado"
 
 #: dat/scripts/pilotname/pirate.lua:368
 msgid "League"
-msgstr ""
+msgstr "Liga"
 
 #: dat/scripts/pilotname/pirate.lua:369
 msgid "Lust"
-msgstr ""
+msgstr "Lujuria"
 
 #: dat/scripts/pilotname/pirate.lua:370
 msgid "Madōshi"
-msgstr ""
+msgstr "Madōshi"
 
 #: dat/scripts/pilotname/pirate.lua:371
 msgid "Magician"
-msgstr ""
+msgstr "Mago"
 
 #: dat/scripts/pilotname/pirate.lua:372
 msgid "Mahō"
-msgstr ""
+msgstr "Mahō"
 
 #: dat/scripts/pilotname/pirate.lua:373
 msgid "Maize"
-msgstr ""
+msgstr "Maíz"
 
 #: dat/scripts/pilotname/pirate.lua:374
 msgid "Mangaka"
-msgstr ""
+msgstr "Mangaka"
 
 #: dat/scripts/pilotname/pirate.lua:375
 msgid "Mangekyō"
-msgstr ""
+msgstr "Mangekyō"
 
 #: dat/scripts/pilotname/pirate.lua:376
 msgid "Mango"
-msgstr ""
+msgstr "Mango"
 
 #: dat/scripts/pilotname/pirate.lua:378
 msgid "Melon"
-msgstr ""
+msgstr "Melón"
 
 #: dat/scripts/pilotname/pirate.lua:379
 msgid "Mind"
-msgstr ""
+msgstr "Mente"
 
 #: dat/scripts/pilotname/pirate.lua:380
 msgid "Model"
-msgstr ""
+msgstr "Modelo"
 
 #: dat/scripts/pilotname/pirate.lua:381
 msgid "Monster"
-msgstr ""
+msgstr "Monstruo"
 
 #: dat/scripts/pilotname/pirate.lua:383
 msgid "Moustache"
-msgstr ""
+msgstr "Mostacho"
 
 #: dat/scripts/pilotname/pirate.lua:384
 msgid "Mugi"
-msgstr ""
+msgstr "Mugi"
 
 #: dat/scripts/pilotname/pirate.lua:385
 msgid "Nanika"
-msgstr ""
+msgstr "Nanika"
 
 #: dat/scripts/pilotname/pirate.lua:386
 msgid "Neckbeard"
-msgstr ""
+msgstr "Barba de Cuello"
 
 #: dat/scripts/pilotname/pirate.lua:387
 msgid "Necromancer"
-msgstr ""
+msgstr "Nigromante"
 
 #: dat/scripts/pilotname/pirate.lua:388
 msgid "Neko"
-msgstr ""
+msgstr "Neko"
 
 #: dat/scripts/pilotname/pirate.lua:389
 msgid "Nezumi"
-msgstr ""
+msgstr "Nezumi"
 
 #: dat/scripts/pilotname/pirate.lua:390
 msgid "Night"
-msgstr ""
+msgstr "Noche"
 
 #: dat/scripts/pilotname/pirate.lua:391
 msgid "Niku"
-msgstr ""
+msgstr "Niku"
 
 #: dat/scripts/pilotname/pirate.lua:392
 msgid "Ninja"
-msgstr ""
+msgstr "Ninja"
 
 #: dat/scripts/pilotname/pirate.lua:393
 msgid "Niwatori"
-msgstr ""
+msgstr "Niwatori"
 
 #: dat/scripts/pilotname/pirate.lua:395
 msgid "Ogre"
-msgstr ""
+msgstr "Ogro"
 
 #: dat/scripts/pilotname/pirate.lua:397
 msgid "Onion"
-msgstr ""
+msgstr "Cebolla"
 
 #: dat/scripts/pilotname/pirate.lua:398
 msgid "Osiris"
-msgstr ""
+msgstr "Osiris"
 
 #: dat/scripts/pilotname/pirate.lua:400
 msgid "Oyster"
-msgstr ""
+msgstr "Ostra"
 
 #. Console-main.
 #: dat/scripts/pilotname/pirate.lua:402 src/input.c:126
 msgid "Paste"
-msgstr ""
+msgstr "Copiar"
 
 #: dat/scripts/pilotname/pirate.lua:403
 msgid "Pea"
-msgstr ""
+msgstr "Guisante"
 
 #: dat/scripts/pilotname/pirate.lua:404
 msgid "Peapod"
-msgstr ""
+msgstr "Vaina"
 
 #: dat/scripts/pilotname/pirate.lua:406
 msgid "Pickaxe"
-msgstr ""
+msgstr "Pico"
 
 #: dat/scripts/pilotname/pirate.lua:407
 msgid "Pipe Wrench"
-msgstr ""
+msgstr "Llave de Tubo"
 
 #: dat/scripts/pilotname/pirate.lua:408
 msgid "Pitchfork"
-msgstr ""
+msgstr "Horca"
 
 #: dat/scripts/pilotname/pirate.lua:409
 msgid "Politician"
-msgstr ""
+msgstr "Político"
 
 #: dat/scripts/pilotname/pirate.lua:410
 msgid "Potato"
-msgstr ""
+msgstr "Patata"
 
 #: dat/scripts/pilotname/pirate.lua:411
 msgid "Potter"
-msgstr ""
+msgstr "Alfarero"
 
 #: dat/scripts/pilotname/pirate.lua:413
 msgid "Princess"
-msgstr ""
+msgstr "Princesa"
 
 #: dat/scripts/pilotname/pirate.lua:414
 msgid "Pulse"
-msgstr ""
+msgstr "Pulso"
 
 #: dat/scripts/pilotname/pirate.lua:415
 msgid "Puppy"
-msgstr ""
+msgstr "Perrito"
 
 #: dat/scripts/pilotname/pirate.lua:417
 msgid "Raigeki"
-msgstr ""
+msgstr "Raigeki"
 
 #: dat/scripts/pilotname/pirate.lua:419
 msgid "Rat"
-msgstr ""
+msgstr "Rata"
 
 #: dat/scripts/pilotname/pirate.lua:420
 msgid "Ratte"
-msgstr ""
+msgstr "Ratte"
 
 #: dat/scripts/pilotname/pirate.lua:421
 msgid "Ravager"
-msgstr ""
+msgstr "Devastador"
 
 #: dat/scripts/pilotname/pirate.lua:423
 msgid "Reaver"
-msgstr ""
+msgstr "Reapertura"
 
 #: dat/scripts/pilotname/pirate.lua:424
 msgid "Recluse"
-msgstr ""
+msgstr "Recluso"
 
 #: dat/scripts/pilotname/pirate.lua:425
 msgid "Rice"
-msgstr ""
+msgstr "Arroz"
 
 #: dat/scripts/pilotname/pirate.lua:426
 msgid "Ring"
-msgstr ""
+msgstr "Anillo"
 
 #: dat/scripts/pilotname/pirate.lua:427
 msgid "River"
-msgstr ""
+msgstr "Río"
 
 #: dat/scripts/pilotname/pirate.lua:428
 msgid "Roba"
-msgstr ""
+msgstr "Roba"
 
 #: dat/scripts/pilotname/pirate.lua:429
 msgid "Rōjin"
-msgstr ""
+msgstr "Rōjin"
 
 #: dat/scripts/pilotname/pirate.lua:430
 msgid "Rubber Mallet"
-msgstr ""
+msgstr "Mazo de Goma"
 
 #: dat/scripts/pilotname/pirate.lua:431
 msgid "Ryū"
-msgstr ""
+msgstr "Ryū"
 
 #: dat/scripts/pilotname/pirate.lua:432
 msgid "Sakura"
-msgstr ""
+msgstr "Sakura"
 
 #: dat/scripts/pilotname/pirate.lua:433
 msgid "Salad"
-msgstr ""
+msgstr "Ensalada"
 
 #: dat/scripts/pilotname/pirate.lua:434
 msgid "Samurai"
-msgstr ""
+msgstr "Samurai"
 
 #: dat/scripts/pilotname/pirate.lua:435
 msgid "Sasori"
-msgstr ""
+msgstr "Sasori"
 
 #: dat/scripts/pilotname/pirate.lua:437
 msgid "Sea"
-msgstr ""
+msgstr "Mar"
 
 #: dat/scripts/pilotname/pirate.lua:438
 msgid "Seaweed"
-msgstr ""
+msgstr "Alga Marina"
 
 #: dat/scripts/pilotname/pirate.lua:439
 msgid "Seijika"
-msgstr ""
+msgstr "Seijika"
 
 #: dat/scripts/pilotname/pirate.lua:440
 msgid "Sentinel"
-msgstr ""
+msgstr "Centinela"
 
 #: dat/scripts/pilotname/pirate.lua:442
 msgid "Shepherd"
@@ -92179,234 +92179,234 @@ msgstr "Pastor"
 
 #: dat/scripts/pilotname/pirate.lua:443
 msgid "Shinigami"
-msgstr ""
+msgstr "Shinigami"
 
 #: dat/scripts/pilotname/pirate.lua:444
 msgid "Shinobi"
-msgstr ""
+msgstr "Shinobi"
 
 #: dat/scripts/pilotname/pirate.lua:445
 msgid "Shock"
-msgstr ""
+msgstr "Choque"
 
 #: dat/scripts/pilotname/pirate.lua:446
 msgid "Shovel"
-msgstr ""
+msgstr "Pala"
 
 #: dat/scripts/pilotname/pirate.lua:447
 msgid "Shujin"
-msgstr ""
+msgstr "Shujin"
 
 #: dat/scripts/pilotname/pirate.lua:448
 msgid "Siren"
-msgstr ""
+msgstr "Sirena"
 
 #: dat/scripts/pilotname/pirate.lua:449
 msgid "Slayer"
-msgstr ""
+msgstr "Exterminador"
 
 #: dat/scripts/pilotname/pirate.lua:450
 msgid "Space Dog"
-msgstr ""
+msgstr "Perro Espacial"
 
 #: dat/scripts/pilotname/pirate.lua:452
 msgid "Spaghetti"
-msgstr ""
+msgstr "Espaguetis"
 
 #: dat/scripts/pilotname/pirate.lua:453
 msgid "Spaghetti Monster"
-msgstr ""
+msgstr "Monstruo del Espagueti"
 
 #: dat/scripts/pilotname/pirate.lua:455
 msgid "Squeegee"
-msgstr ""
+msgstr "Escobilla de Goma"
 
 #: dat/scripts/pilotname/pirate.lua:456
 msgid "Staple Gun"
-msgstr ""
+msgstr "Grapadora"
 
 #: dat/scripts/pilotname/pirate.lua:457
 msgid "Stern"
-msgstr ""
+msgstr "Popa"
 
 #: dat/scripts/pilotname/pirate.lua:458
 msgid "Stir-fry"
-msgstr ""
+msgstr "Salteado"
 
 #: dat/scripts/pilotname/pirate.lua:459
 msgid "Storm"
-msgstr ""
+msgstr "Tormenta"
 
 #: dat/scripts/pilotname/pirate.lua:460
 msgid "Supernova"
-msgstr ""
+msgstr "Supernova"
 
 #: dat/scripts/pilotname/pirate.lua:461
 msgid "Surströmming"
-msgstr ""
+msgstr "Surströmming"
 
 #: dat/scripts/pilotname/pirate.lua:462
 msgid "Table Saw"
-msgstr ""
+msgstr "Sierra de Mesa"
 
 #: dat/scripts/pilotname/pirate.lua:463
 msgid "Tallman"
-msgstr ""
+msgstr "Hombre Alto"
 
 #: dat/scripts/pilotname/pirate.lua:464
 msgid "Tanoshimi"
-msgstr ""
+msgstr "Tanoshimi"
 
 #: dat/scripts/pilotname/pirate.lua:465
 msgid "Tatsumaki"
-msgstr ""
+msgstr "Tatsumaki"
 
 #: dat/scripts/pilotname/pirate.lua:466
 msgid "Tegami"
-msgstr ""
+msgstr "Tegami"
 
 #: dat/scripts/pilotname/pirate.lua:467
 msgid "Teineigo"
-msgstr ""
+msgstr "Teineigo"
 
 #: dat/scripts/pilotname/pirate.lua:468
 msgid "Tenkūryū"
-msgstr ""
+msgstr "Tenkūryū"
 
 #: dat/scripts/pilotname/pirate.lua:469
 msgid "Terror"
-msgstr ""
+msgstr "Horror"
 
 #: dat/scripts/pilotname/pirate.lua:471
 msgid "Tomodachi"
-msgstr ""
+msgstr "Tomodachi"
 
 #: dat/scripts/pilotname/pirate.lua:472
 msgid "Tooth"
-msgstr ""
+msgstr "Diente"
 
 #: dat/scripts/pilotname/pirate.lua:475
 msgid "Treasure Hunter"
-msgstr ""
+msgstr "Cazador de Tesoros"
 
 #: dat/scripts/pilotname/pirate.lua:476
 msgid "Tree"
-msgstr ""
+msgstr "Árbol"
 
 #: dat/scripts/pilotname/pirate.lua:477
 msgid "Tsuchi"
-msgstr ""
+msgstr "Tsuchi"
 
 #: dat/scripts/pilotname/pirate.lua:478
 msgid "Tumbler"
-msgstr ""
+msgstr "Acróbata"
 
 #: dat/scripts/pilotname/pirate.lua:479
 msgid "Turret Lathe"
-msgstr ""
+msgstr "Torno de Torreta"
 
 #: dat/scripts/pilotname/pirate.lua:480
 msgid "Twilight"
-msgstr ""
+msgstr "Crepúsculo"
 
 #: dat/scripts/pilotname/pirate.lua:481
 msgid "Tyrant"
-msgstr ""
+msgstr "Tirano"
 
 #: dat/scripts/pilotname/pirate.lua:482
 msgid "Umi"
-msgstr ""
+msgstr "Umi"
 
 #: dat/scripts/pilotname/pirate.lua:483
 msgid "Urchin"
-msgstr ""
+msgstr "Erizo"
 
 #: dat/scripts/pilotname/pirate.lua:487
 msgid "Vomit"
-msgstr ""
+msgstr "Vómito"
 
 #: dat/scripts/pilotname/pirate.lua:488
 msgid "Wache"
-msgstr ""
+msgstr "Wache"
 
 #: dat/scripts/pilotname/pirate.lua:489
 msgid "Watcher"
-msgstr ""
+msgstr "Observador"
 
 #: dat/scripts/pilotname/pirate.lua:490
 msgid "Wedge"
-msgstr ""
+msgstr "Cuña"
 
 #: dat/scripts/pilotname/pirate.lua:491
 msgid "Widget"
-msgstr ""
+msgstr "Widget"
 
 #: dat/scripts/pilotname/pirate.lua:492
 msgid "Widow"
-msgstr ""
+msgstr "Viuda"
 
 #: dat/scripts/pilotname/pirate.lua:493
 msgid "Wight"
-msgstr ""
+msgstr "Criatura"
 
 #: dat/scripts/pilotname/pirate.lua:496
 msgid "Wizard"
-msgstr ""
+msgstr "Hechicero"
 
 #: dat/scripts/pilotname/pirate.lua:498
 msgid "Yakuza"
-msgstr ""
+msgstr "Yakuza"
 
 #: dat/scripts/pilotname/pirate.lua:499
 msgid "Yama"
-msgstr ""
+msgstr "Yama"
 
 #: dat/scripts/pilotname/pirate.lua:500
 msgid "Yami"
-msgstr ""
+msgstr "Yami"
 
 #: dat/scripts/pilotname/pirate.lua:501
 msgid "Yarou"
-msgstr ""
+msgstr "Yarou"
 
 #: dat/scripts/pilotname/pirate.lua:502
 msgid "Yasai"
-msgstr ""
+msgstr "Yasai"
 
 #: dat/scripts/pilotname/pirate.lua:503
 msgid "Yatsu"
-msgstr ""
+msgstr "Yatsu"
 
 #: dat/scripts/pilotname/pirate.lua:504
 msgid "Youma"
-msgstr ""
+msgstr "Youma"
 
 #.
 #. -- @brief Generates pirate names
 #. --
 #: dat/scripts/pilotname/pirate.lua:520
 msgid "{article} {actor}"
-msgstr ""
+msgstr "{article} {actor}"
 
 #: dat/scripts/pilotname/pirate.lua:522
 msgid "{colour} {actor}"
-msgstr ""
+msgstr "{colour} {actor}"
 
 #: dat/scripts/pilotname/pirate.lua:524
 msgid "{descriptor} {actor}"
-msgstr ""
+msgstr "{descriptor} {actor}"
 
 #: dat/scripts/pilotname/pirate.lua:526
 msgid "{article} {descriptor} {actor}"
-msgstr ""
+msgstr "{article} {descriptor} {actor}"
 
 #: dat/scripts/pilotname/pirate.lua:528
 msgid "{article} {colour} {actor}"
-msgstr ""
+msgstr "{article} {colour} {actor}"
 
 #: dat/scripts/pilotname/pirate.lua:530
 msgid "{article} {descriptor} {colour} {actor}"
-msgstr ""
+msgstr "{article} {descriptor} {colour} {actor}"
 
 #.
 #. -- @brief Encodes a number as a roman numeral.
@@ -92586,13 +92586,15 @@ msgstr ""
 #. Ask if the player is fine with removing the cargo
 #: dat/scripts/swapship.lua:96
 msgid "Too much cargo for new ship"
-msgstr ""
+msgstr "Demasiada carga para la nueva nave"
 
 #: dat/scripts/swapship.lua:97
 msgid ""
 "You do not have enough space to move your cargo to the new ship. Get rid of "
 "the following to make room?"
 msgstr ""
+"No tienes suficiente espacio para trasladar tu carga a la nueva nave. ¿"
+"Deshacerse de lo siguiente para hacer espacio?"
 
 #. Get rid of the cargo
 #. Player abandoned attempting to free cargo
@@ -92624,7 +92626,7 @@ msgstr ""
 #. --
 #: dat/scripts/vn/core.lua:112
 msgid "vn: can't modify states when running"
-msgstr ""
+msgstr "vn: no se pueden modificar los estados cuando se ejecuta"
 
 #. --
 #. Sets the current drawing colour of the VN.
@@ -92708,7 +92710,7 @@ msgstr ""
 #. --
 #: dat/scripts/vn/core.lua:590
 msgid "character not found to remove!"
-msgstr ""
+msgstr "¡No se ha encontrado el personaje a eliminar!"
 
 #. reset name
 #.
@@ -92733,7 +92735,7 @@ msgstr ""
 #. Check to see if function
 #: dat/scripts/vn/core.lua:831
 msgid "[VN]: menu has no options!"
-msgstr ""
+msgstr "[VN]: ¡el menú no tiene opciones!"
 
 #. Set up the graphics stuff
 #. Border information
@@ -92744,7 +92746,7 @@ msgstr ""
 #. Mouse over
 #: dat/scripts/vn/core.lua:927
 msgid "[CHOICE]"
-msgstr ""
+msgstr "[CHOICE]"
 
 #.
 #. -- Label
@@ -92787,7 +92789,7 @@ msgstr ""
 #: dat/scripts/vn/core.lua:1133
 #, lua-format
 msgid "vn: character image '%s' not found!"
-msgstr ""
+msgstr "vn: ¡imagen de personaje '%s' no encontrada!"
 
 #. --
 #. Renames a character on the fly.
@@ -92949,12 +92951,12 @@ msgstr ""
 #: dat/scripts/vn/core.lua:1588
 #, lua-format
 msgid "vn: unable to find label '%s'"
-msgstr ""
+msgstr "vn: no se puede encontrar la etiqueta '%s'"
 
 #: dat/scripts/vn/core.lua:1598
 #, lua-format
 msgid "vn: character '%s' not found!"
-msgstr ""
+msgstr "vn: ¡personaje '%s' no encontrado!"
 
 #. Recursive :D
 #. --
@@ -92969,7 +92971,7 @@ msgstr ""
 #. --
 #: dat/scripts/vn/core.lua:1632
 msgid "vn: run without any states"
-msgstr ""
+msgstr "vn: ejecutar sin ningún estado"
 
 #. Destroy remaining lmusic stuff if necessary
 #. --
@@ -92987,7 +92989,7 @@ msgstr ""
 #. Set defaults
 #: dat/scripts/vn/log.lua:16
 msgid "[START]"
-msgstr ""
+msgstr "[START]"
 
 #. Build the tables
 #. Determine offset
@@ -93002,15 +93004,15 @@ msgstr ""
 #. table.insert( vn._states, vn.StateEnd.new() )
 #: dat/scripts/vn/options.lua:36
 msgid "VN Options"
-msgstr ""
+msgstr "Opciones de VN"
 
 #: dat/scripts/vn/options.lua:41
 msgid "#nText Speed#0: {val:.3f} seconds per character"
-msgstr ""
+msgstr "#nVelocidad de Texto#0: {val:.3f} segundos por carácter"
 
 #: dat/scripts/vn/options.lua:46 src/dialogue.c:486
 msgid "Done"
-msgstr ""
+msgstr "Hecho"
 
 #. --
 #. Transitions for the Visual Novel framework.
@@ -93020,7 +93022,7 @@ msgstr ""
 #: dat/scripts/vn/transitions.lua:407
 #, lua-format
 msgid "vn: unknown transition type'%s'"
-msgstr ""
+msgstr "vn: transición desconocida tipo'%s'"
 
 #.
 #. Handles the Ship AI (tutorial-ish?) being triggered from the info menu
@@ -93338,34 +93340,36 @@ msgstr ""
 #: src/ai.c:424
 #, c-format
 msgid "Pilot '%s' ai '%s' error: %s"
-msgstr ""
+msgstr "Piloto '%s' ia '%s' error: %s"
 
 #: src/ai.c:449
 #, c-format
 msgid "AI Profile '%s' not found, using dummy fallback."
 msgstr ""
+"No se ha encontrado el perfil de IA '%s', se está utilizando un básico por "
+"defecto."
 
 #: src/ai.c:454
 msgid "Dummy AI Profile not valid! Things are going to break."
-msgstr ""
+msgstr "¡Perfil de la IA Ficticia no válido! Las cosas se van a romper."
 
 #: src/ai.c:470
 #, c-format
 msgid "AI profile '%s' has no default memory for pilot '%s'."
-msgstr ""
+msgstr "El perfil de IA '%s' no tiene memoria por defecto para el piloto '%s'."
 
 #. Load the profile
 #: src/ai.c:549
 #, c-format
 msgid "Error loading AI profile '%s'"
-msgstr ""
+msgstr "Error al cargar el perfil de IA '%s'"
 
 #: src/ai.c:553
 #, c-format
 msgid "Loaded %d AI Profile"
 msgid_plural "Loaded %d AI Profiles"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Cargado %d Perfil de IA"
+msgstr[1] "Cargados %d Perfiles de IA"
 
 #: src/ai.c:582 src/board.c:77 src/comm.c:168 src/info.c:378 src/land.c:1498
 #: src/player.c:3351
@@ -93375,6 +93379,10 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Error al cargar el archivo: %s\n"
+"%s\n"
+"Lo más probable es que el archivo Lua tenga una sintaxis incorrecta, por "
+"favor compruébelo"
 
 #: src/ai.c:640
 #, c-format
@@ -93383,32 +93391,36 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Error al cargar el archivo IA: %s\n"
+"%s\n"
+"Lo más probable es que el archivo Lua tenga una sintaxis incorrecta, por "
+"favor compruébelo"
 
 #. Find and set up the necessary references.
 #: src/ai.c:653
 #, c-format
 msgid "AI Profile '%s' is missing '%s' function!"
-msgstr ""
+msgstr "¡Al Perfil de IA '%s' le falta la función '%s'!"
 
 #: src/ai.c:679
 #, c-format
 msgid "AI Profile '%s' not found in AI stack"
-msgstr ""
+msgstr "El perfil de IA '%s' no se encuentra en la pila de IA"
 
 #: src/ai.c:842
 #, c-format
 msgid "Pilot '%s' ai '%s' -> 'attacked': %s"
-msgstr ""
+msgstr "Piloto '%s' ia '%s' -> 'atacado': %s"
 
 #: src/ai.c:873
 #, c-format
 msgid "Pilot '%s' ai '%s' -> 'discovered': %s"
-msgstr ""
+msgstr "Piloto '%s' ia '%s' -> 'descubierto': %s"
 
 #: src/ai.c:903
 #, c-format
 msgid "Pilot '%s' ai '%s' -> 'hail': %s"
-msgstr ""
+msgstr "Piloto '%s' ia '%s' -> 'llamar': %s"
 
 #: src/ai.c:919
 #, c-format
@@ -93416,38 +93428,41 @@ msgid ""
 "Pilot '%s' (ai '%s') is trying to refuel when no 'refuel' function is "
 "defined!"
 msgstr ""
+"¡El piloto '%s' (ia '%s') está intentando repostar cuando no está definida "
+"la función 'repostar'!"
 
 #: src/ai.c:973
 #, c-format
 msgid "Pilot '%s' ai '%s' -> 'distress': %s"
-msgstr ""
+msgstr "Piloto '%s' ai '%s' -> 'en peligro': %s"
 
 #. Error has occurred.
 #: src/ai.c:1006
 #, c-format
 msgid "Pilot '%s' equip '%s' -> '%s': %s"
-msgstr ""
+msgstr "Piloto '%s' equipa '%s' -> '%s': %s"
 
 #. Run function.
 #. error has occurred
 #: src/ai.c:1026
 #, c-format
 msgid "Pilot '%s' ai '%s' -> '%s': %s"
-msgstr ""
+msgstr "Piloto '%s' ia '%s' -> '%s': %s"
 
 #: src/ai.c:1069
 #, c-format
 msgid "Trying to add subtask '%s' to non-existent task."
-msgstr ""
+msgstr "Intentando añadir la subtarea '%s' a una tarea inexistente."
 
 #: src/ai.c:1180 src/ai.c:1246 src/nlua_pilot.c:3946
 msgid "Trying to pop task when there are no tasks on the stack."
-msgstr ""
+msgstr "Intentando extraer la tarea cuando no hay tareas en la pila."
 
 #: src/ai.c:1250
 #, c-format
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
+"Intentando abrir una subtarea cuando no hay subtareas para la tarea '%s'."
 
 #: src/ai.c:2289 src/nlua_pilot.c:4408
 #, c-format
@@ -93457,20 +93472,20 @@ msgstr ""
 #: src/ai.c:2297
 #, c-format
 msgid "Pilot '%s' (ai '%s') has no land target"
-msgstr ""
+msgstr "El piloto '%s' (ia '%s') no tiene objetivo de aterrizaje"
 
 #: src/ai.c:2389
 msgid "Jump point must be in current system."
-msgstr ""
+msgstr "El punto de salto debe estar en el sistema actual."
 
 #: src/ai.c:2504
 #, c-format
 msgid "Pilot '%s' can't find jump to leave system!"
-msgstr ""
+msgstr "¡El piloto '%s' no puede encontrar el salto para salir del sistema!"
 
 #: src/ai.c:2951
 msgid "Invalid Bounds"
-msgstr ""
+msgstr "Límites Inválidos"
 
 #: src/background.c:229
 #, c-format
@@ -93478,6 +93493,8 @@ msgid ""
 "Background script 'renderbg' error:\n"
 "%s"
 msgstr ""
+"Error del script de fondo 'renderbg':\n"
+"%s"
 
 #: src/background.c:242
 #, c-format
@@ -93485,6 +93502,8 @@ msgid ""
 "Background script 'renderfg' error:\n"
 "%s"
 msgstr ""
+"Error del script de fondo 'renderfg':\n"
+"%s"
 
 #: src/background.c:257
 #, c-format
@@ -93492,11 +93511,13 @@ msgid ""
 "Background script 'renderov' error:\n"
 "%s"
 msgstr ""
+"Error del script de fondo 'renderov':\n"
+"%s"
 
 #: src/background.c:378
 #, c-format
 msgid "Background script '%s' not found."
-msgstr ""
+msgstr "Error del script de fondo '%s' no encontrado."
 
 #: src/background.c:385
 #, c-format
@@ -93505,11 +93526,15 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Error al cargar el archivo de fondo: %s\n"
+"%s\n"
+"Lo más probable es que el archivo Lua tenga una sintaxis incorrecta, por "
+"favor compruebelo"
 
 #: src/background.c:436
 #, c-format
 msgid "Background -> 'background' : %s"
-msgstr ""
+msgstr "Fondo -> 'fondo' : %s"
 
 #: src/background.c:437 src/gui.c:1709 src/nlua_evt.c:146 src/nlua_misn.c:243
 #: src/nopenal.c:72
@@ -93520,7 +93545,7 @@ msgstr "error desconocido"
 #: src/board.c:92 src/player.c:3365
 #, c-format
 msgid "Board: '%s'"
-msgstr ""
+msgstr "Abordaje: '%s'"
 
 #: src/board.c:123 src/player.c:1678
 msgid "#rYou need a target to board first!"
@@ -93548,151 +93573,153 @@ msgstr ""
 
 #: src/board.c:161
 msgid "Unable to recover fighter."
-msgstr ""
+msgstr "Incapaz de recuperar el caza."
 
 #: src/board.c:164
 #, c-format
 msgid "#oYou recover your %s fighter."
-msgstr ""
+msgstr "#oRecuperas tu caza de %s."
 
 #: src/board.c:178
 #, c-format
 msgid "#oBoarding ship #%c%s#0."
-msgstr ""
+msgstr "#oAbordando nave #%c%s#0."
 
 #: src/board.c:267
 #, c-format
 msgid "#%c%s#0 has plundered %s from your ship!"
-msgstr ""
+msgstr "¡#%c%s#0 ha saqueado %s de tu nave!"
 
 #: src/claim.c:265
 msgid "System Claim has inexistent system"
-msgstr ""
+msgstr "Reclamación del Sistema tiene un sistema inexistente"
 
 #: src/claim.c:296
 #, c-format
 msgid "System Claim trying to load system '%s' which doesn't exist"
-msgstr ""
+msgstr "Reclamación del sistema intentando cargar el sistema '%s' que no existe"
 
 #: src/collision.c:114 src/collision.c:118 src/collision.c:196
 #: src/collision.c:482
 #, c-format
 msgid "Texture '%s' has no transparency map"
-msgstr ""
+msgstr "La textura '%s' no tiene mapa de transparencia"
 
 #: src/comm.c:95
 msgid "#rTarget is out of communications range"
-msgstr ""
+msgstr "#rObjetivo está fuera del alcance de las comunicaciones"
 
 #: src/comm.c:108
 #, c-format
 msgid "#%c%s#r is jumping and can't respond"
-msgstr ""
+msgstr "#%c%s#r está saltando y no puede responder"
 
 #: src/comm.c:114
 #, c-format
 msgid "#%c%s#r does not respond"
-msgstr ""
+msgstr "#%c%s#r no responde"
 
 #. error has occurred
 #: src/comm.c:182
 #, c-format
 msgid "Comm: '%s'"
-msgstr ""
+msgstr "Com: '%s'"
 
 #: src/comm.c:208
 #, c-format
 msgid "%s does not respond."
-msgstr ""
+msgstr "%s no responde."
 
 #: src/comm.c:221
 msgid "Bribe"
-msgstr ""
+msgstr "Sobornar"
 
 #. Create the window.
 #: src/comm.c:299
 msgid "Communication Channel"
-msgstr ""
+msgstr "Canal de Comunicación"
 
 #. Yes/No input.
 #: src/comm.c:377 src/comm.c:382 src/comm.c:386 src/comm.c:392 src/comm.c:398
 msgid "Bribe Starport"
-msgstr ""
+msgstr "Sobornar Puerto Estelar"
 
 #: src/comm.c:392
 msgid "You don't have enough credits for the bribery."
-msgstr ""
+msgstr "No tienes suficientes créditos para el soborno."
 
 #: src/comm.c:398
 msgid "You have permission to dock."
-msgstr ""
+msgstr "Tienes permiso para atracar."
 
 #: src/commodity.c:70 src/commodity.c:84
 #, c-format
 msgid "%.*f ¤"
-msgstr ""
+msgstr "%.*f ¤"
 
 #: src/commodity.c:72
 #, c-format
 msgid "%.*f E¤"
-msgstr ""
+msgstr "%.*f E¤"
 
 #: src/commodity.c:74
 #, c-format
 msgid "%.*f P¤"
-msgstr ""
+msgstr "%.*f P¤"
 
 #: src/commodity.c:76
 #, c-format
 msgid "%.*f T¤"
-msgstr ""
+msgstr "%.*f T¤"
 
 #: src/commodity.c:78
 #, c-format
 msgid "%.*f G¤"
-msgstr ""
+msgstr "%.*f G¤"
 
 #: src/commodity.c:80
 #, c-format
 msgid "%.*f M¤"
-msgstr ""
+msgstr "%.*f M¤"
 
 #: src/commodity.c:82
 #, c-format
 msgid "%.*f k¤"
-msgstr ""
+msgstr "%.*f k¤"
 
 #: src/commodity.c:116
 #, c-format
 msgid "%d tonne"
 msgid_plural "%d tonnes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "tonelada %d"
+msgstr[1] "toneladas %d"
 
 #: src/commodity.c:130 src/commodity.c:571
 #, c-format
 msgid "Commodity '%s' not found in stack"
-msgstr ""
+msgstr "Mercancía '%s' no se encuentra en la pila"
 
 #: src/commodity.c:170
 #, c-format
 msgid "Commodity with index %d not found"
-msgstr ""
+msgstr "Mercancía con índice %d no encontrada"
 
 #: src/commodity.c:322
 #, c-format
 msgid "Commodity from %s has invalid or no name"
-msgstr ""
+msgstr "Bercancía de %s no es válida o no tiene nombre"
 
 #: src/commodity.c:325
 #, c-format
 msgid "No <gfx_store> node found, using default texture for commodity \"%s\""
 msgstr ""
+"No se ha encontrado ningún nodo <gfx_store>, utilizando la textura por "
+"defecto para la mercancía \"%s\""
 
 #: src/commodity.c:333
 #, c-format
 msgid "Commodity '%s' missing '"
-msgstr ""
+msgstr "Falta la mercancía '%s' '"
 
 #: src/commodity.c:514
 #, c-format
@@ -93712,186 +93739,189 @@ msgstr ""
 #: src/commodity.c:604
 #, c-format
 msgid "Trying to modify temporary commodity '%s'!"
-msgstr ""
+msgstr "¡Intentando modificar la mercancía temporal '%s'!"
 
 #: src/commodity.c:652 src/faction.c:1484 src/tech.c:105
 #, c-format
 msgid "Malformed %s file: missing root element '%s'"
-msgstr ""
+msgstr "Archivo %s malformado: falta el elemento raíz '%s'"
 
 #: src/commodity.c:671
 #, c-format
 msgid "Loaded %d Commodity"
 msgid_plural "Loaded %d Commodities"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Cargado %d Mercancia"
+msgstr[1] "Cargado %d Mercancias"
 
 #: src/cond.c:31
 msgid "Failed to load standard Lua libraries."
-msgstr ""
+msgstr "Fallo en la carga de las librerías Lua estándar."
 
 #: src/cond.c:68
 #, c-format
 msgid "Lua conditional syntax error: %s"
-msgstr ""
+msgstr "Error de sintaxis condicional de Lua: %s"
 
 #: src/cond.c:71
 #, c-format
 msgid "Lua Conditional had a runtime error: %s"
-msgstr ""
+msgstr "Condicional Lua tuvo un error de ejecución: %s"
 
 #: src/cond.c:74
 #, c-format
 msgid "Lua Conditional ran out of memory: %s"
-msgstr ""
+msgstr "Condicional Lua se quedó sin memoria: %s"
 
 #: src/cond.c:77
 #, c-format
 msgid "Lua Conditional had an error while handling error function: %s"
-msgstr ""
+msgstr "Condicional Lua tuvo un error al manejar la función de error: %s"
 
 #: src/cond.c:93
 msgid "Lua Conditional didn't return a boolean"
-msgstr ""
+msgstr "Conditional Lua no devuelve un booleano"
 
 #: src/conf.c:90
 #, c-format
 msgid "Usage: %s [OPTIONS] [DATA]"
-msgstr ""
+msgstr "Uso: %s [OPTIONS] [DATA]"
 
 #: src/conf.c:91
 msgid "Options are:"
-msgstr ""
+msgstr "Las opciones son:"
 
 #: src/conf.c:92
 msgid "   -f, --fullscreen      activate fullscreen"
-msgstr ""
+msgstr "   -f, --fullscreen      activar pantalla completa"
 
 #: src/conf.c:93
 msgid "   -F n, --fps n         limit frames per second to n"
-msgstr ""
+msgstr "   -F n, --fps n         limita los frames por segundo a n"
 
 #: src/conf.c:94
 msgid "   -V, --vsync           enable vsync"
-msgstr ""
+msgstr "   -V, --vsync           habilita la sincronización vertical"
 
 #: src/conf.c:95
 msgid "   -W n                  set width to n"
-msgstr ""
+msgstr "   -W n                  colocar ancho a n"
 
 #: src/conf.c:96
 msgid "   -H n                  set height to n"
-msgstr ""
+msgstr "   -H n                  colocar altura a n"
 
 #: src/conf.c:97
 msgid "   -j n, --joystick n    use joystick n"
-msgstr ""
+msgstr "   -j n, --joystick n    usar joystick n"
 
 #: src/conf.c:98
 msgid "   -J s, --Joystick s    use joystick whose name contains s"
-msgstr ""
+msgstr "   -J s, --Joystick s    usar joystick cuyo nombre contiene s"
 
 #: src/conf.c:99
 msgid "   -M, --mute            disables sound"
-msgstr ""
+msgstr "   -M, --mute            deshabilita el sonido"
 
 #: src/conf.c:100
 msgid "   -S, --sound           forces sound"
-msgstr ""
+msgstr "   -S, --sound           fuerza el sonido"
 
 #: src/conf.c:101
 msgid "   -m f, --mvol f        sets the music volume to f"
-msgstr ""
+msgstr "   -m f, --mvol f        coloca el volumen de la música a f"
 
 #: src/conf.c:102
 msgid "   -s f, --svol f        sets the sound volume to f"
-msgstr ""
+msgstr "   -s f, --svol f        coloca el volumen del sonido a f"
 
 #: src/conf.c:103
 msgid ""
 "   -d, --datapath        adds a new datapath to be mounted (i.e., appends it "
 "to the search path for game assets)"
 msgstr ""
+"   -d, --datapath añade una nueva ruta de datos a montar (es decir, la añade "
+"a la ruta de búsqueda de activos del juego)"
 
 #: src/conf.c:104
 msgid "   -X, --scale           defines the scale factor"
-msgstr ""
+msgstr "   -X, --scale               define el factor de escala"
 
 #: src/conf.c:106
 msgid "   --devmode             enables dev mode perks like the editors"
 msgstr ""
+"   --devmode             habilita modo dev con habilidades como el editor"
 
 #: src/conf.c:108
 msgid "   -h, --help            display this message and exit"
-msgstr ""
+msgstr "   -h, --help            muestra este mensaje y termina el programa"
 
 #: src/conf.c:109
 msgid "   -v, --version         print the version and exit"
-msgstr ""
+msgstr "   -v, --version         imprime la versión y termina el programa"
 
 #: src/conf.c:430
 msgid "Found keybind with no type field!"
-msgstr ""
+msgstr "¡Encontrado combinación de teclas sin campo de tipo!"
 
 #: src/conf.c:434
 msgid "Found keybind with invalid type field!"
-msgstr ""
+msgstr "¡Encontrado combinación de teclas con campo de tipo inválido!"
 
 #: src/conf.c:448
 msgid "Found keybind with no key field!"
-msgstr ""
+msgstr "¡Encontrado combinación de teclas sin campo clave!"
 
 #: src/conf.c:452
 msgid "Found keybind with invalid key field!"
-msgstr ""
+msgstr "¡Encontrado combinación de teclas con campo clave inválido!"
 
 #: src/conf.c:478
 #, c-format
 msgid "Unknown keybinding of type %s"
-msgstr ""
+msgstr "Combinación de teclas desconocida del tipo %s"
 
 #: src/conf.c:484
 #, c-format
 msgid "Keybind for '%s' is invalid"
-msgstr ""
+msgstr "Combinación de teclas para '%s' es inválida"
 
 #: src/conf.c:497
 #, c-format
 msgid "Unknown keybinding mod of type %s"
-msgstr ""
+msgstr "Mod de combinación de teclas desconocido de tipo %s"
 
 #: src/conf.c:508
 #, c-format
 msgid "Malformed keybind for '%s' in '%s'."
-msgstr ""
+msgstr "Combinación de teclas malformada para '%s' en '%s'."
 
 #. failed to load the config file
 #: src/conf.c:515
 #, c-format
 msgid "Config file '%s' has invalid syntax:"
-msgstr ""
+msgstr "El archivo de configuración '%s' tiene una sintaxis inválida:"
 
 #: src/conf.c:610
 msgid "Enabling developer mode."
-msgstr ""
+msgstr "Activando el modo desarrollador."
 
 #. Write a nice header for new configuration files
 #: src/conf.c:787
 msgid "Naev configuration file"
-msgstr ""
+msgstr "Archivo de configuración de Naev"
 
 #: src/conf.c:793
 msgid "Not saving configuration."
-msgstr ""
+msgstr "No guardar la configuración."
 
 #: src/conf.c:799
 msgid "The contents of this section will be rewritten by Naev!"
-msgstr ""
+msgstr "¡El contenido de esta sección será reescrito por Naev!"
 
 #. ndata.
 #: src/conf.c:803
 msgid "The location of Naev's data pack, usually called 'ndata'"
-msgstr ""
+msgstr "La ubicación del paquete de datos de Naev, generalmente llamado 'ndata'"
 
 #. Language.
 #: src/conf.c:808
@@ -93899,281 +93929,314 @@ msgid ""
 "Language to use. Set to the two character identifier to the language (e.g., "
 "\"en\" for English), and nil for autodetect."
 msgstr ""
+"Idioma a utilizar. Establezca el identificador de dos caracteres para el "
+"idioma (por ejemplo, \"en\" para el inglés), y nil para la autodetección."
 
 #. OpenGL.
 #: src/conf.c:813
 msgid "The factor to use in Full-Scene Anti-Aliasing"
-msgstr ""
+msgstr "El factor a utilizar en el Anti-Aliasing de Escena Completa"
 
 #: src/conf.c:814
 msgid "Anything lower than 2 will simply disable FSAA"
-msgstr ""
+msgstr "Todo lo que sea inferior a 2 simplemente desactivará el FSAA"
 
 #: src/conf.c:818
 msgid "Synchronize framebuffer updates with the vertical blanking interval"
 msgstr ""
+"Sincronizar las actualizaciones del framebuffer con el intervalo de blanqueo "
+"vertical"
 
 #. Window.
 #: src/conf.c:823
 msgid "The window size or screen resolution"
-msgstr ""
+msgstr "El tamaño de la ventana o la resolución de la pantalla"
 
 #: src/conf.c:824
 msgid "Set both of these to 0 to make Naev try the desktop resolution"
-msgstr ""
+msgstr "Poner ambos a 0 para que Naev pruebe la resolución del escritorio"
 
 #: src/conf.c:834
 msgid "Factor used to divide the above resolution with"
-msgstr ""
+msgstr "Factor utilizado para dividir la resolución arriba mencionada con"
 
 #: src/conf.c:835
 msgid "This is used to lower the rendering resolution, and scale to the above"
 msgstr ""
+"Esto se utiliza para bajar la resolución de renderizado, y la escala a la "
+"anterior"
 
 #: src/conf.c:839
 msgid "Scale factor for rendered nebula backgrounds."
-msgstr ""
+msgstr "Factor de escala para los fondos de las nebulosas renderizadas."
 
 #: src/conf.c:840
 msgid "Larger values can save time but lead to a blurrier appearance."
 msgstr ""
+"Los valores más grandes pueden ahorrar tiempo pero conducen a una apariencia "
+"más borrosa."
 
 #: src/conf.c:844
 msgid "Run Naev in full-screen mode"
-msgstr ""
+msgstr "Ejecutar Naev en modo pantalla completa"
 
 #: src/conf.c:848
 msgid "Use video modesetting when fullscreen is enabled"
 msgstr ""
+"Utilizar el ajuste de modos de vídeo cuando se activa la pantalla completa"
 
 #: src/conf.c:852
 msgid "Disable allowing resizing the window."
-msgstr ""
+msgstr "Desactivar la posibilidad de cambiar el tamaño de la ventana."
 
 #: src/conf.c:856
 msgid ""
 "Disable window decorations. Use with care and know the keyboard controls to "
 "quit and toggle fullscreen."
 msgstr ""
+"Desactivar las decoraciones de las ventanas. Utilizar con cuidado y conocer "
+"los controles del teclado para salir y alternar la pantalla completa."
 
 #: src/conf.c:860 src/options.c:1311
 msgid "Minimize on focus loss"
-msgstr ""
+msgstr "Minimiza la pérdida de foco"
 
 #: src/conf.c:864 src/options.c:1314
 msgid "Colorblind mode"
-msgstr ""
+msgstr "Modo Daltónico"
 
 #: src/conf.c:868
 msgid ""
 "Background brightness. 1 is normal brightness while setting it to 0 would "
 "make the backgrounds pitch black."
 msgstr ""
+"Brillo del fondo. 1 es el brillo normal, mientras que si se establece en 0, "
+"los fondos serán totalmente negros."
 
 #: src/conf.c:872
 msgid ""
 "Nebula brightness. 1 is normal brightness while setting it to 0 would make "
 "the nebula pitch black."
 msgstr ""
+"Brillo de la nebulosa. 1 es el brillo normal, mientras que si se establece "
+"en 0, la nebulosa será totalmente negra."
 
 #: src/conf.c:876
 msgid "Gamma correction parameter. A value of 1 disables it (no curve)."
 msgstr ""
+"Parámetro de corrección gamma. Un valor de 1 lo desactiva (no hay curva)."
 
 #: src/conf.c:880
 msgid "Expensive high quality shaders for the background. Defaults to false."
-msgstr ""
+msgstr "Shaders de alta calidad para el fondo. Por defecto a falso."
 
 #. FPS
 #: src/conf.c:885
 msgid "Display a frame rate counter"
-msgstr ""
+msgstr "Mostrar un contador de velocidad de frames"
 
 #: src/conf.c:889
 msgid "Limit the rendering frame rate"
-msgstr ""
+msgstr "Limita la tasa de frames de renderizado"
 
 #. Pause
 #: src/conf.c:894
 msgid "Show 'PAUSED' on screen while paused"
-msgstr ""
+msgstr "Muestra 'PAUSADO' en la pantalla mientras está en pausa"
 
 #. Sound.
 #: src/conf.c:899
 msgid "Enables EFX extension for OpenAL backend."
-msgstr ""
+msgstr "Activa la extensión EFX para el backend OpenAL."
 
 #: src/conf.c:903
 msgid "Disable all sound"
-msgstr ""
+msgstr "Desactiva todo el sonido"
 
 #: src/conf.c:907
 msgid "Volume of sound effects and music, between 0.0 and 1.0"
-msgstr ""
+msgstr "Volumen de los efectos de sonido y la música, entre 0.0 y 1.0"
 
 #. Joystick.
 #: src/conf.c:913
 msgid "The name or numeric index of the joystick to use"
-msgstr ""
+msgstr "El nombre o índice numérico del joystick a utilizar"
 
 #: src/conf.c:914
 msgid "Setting this to nil disables the joystick support"
-msgstr ""
+msgstr "Establecerlo como nil desactiva el soporte del joystick"
 
 #. GUI.
 #: src/conf.c:927
 msgid "Number of lines visible in the comm window."
-msgstr ""
+msgstr "Número de líneas visibles en la ventana de comunicaciones."
 
 #: src/conf.c:929
 msgid "Opacity fraction (0-1) for the overlay map."
-msgstr ""
+msgstr "Fracción de opacidad (0-1) para el mapa superpuesto."
 
 #. Key repeat.
 #: src/conf.c:935
 msgid "Delay in ms before starting to repeat (0 disables)"
-msgstr ""
+msgstr "Retraso en ms antes de empezar a repetir (0 desactiva)"
 
 #: src/conf.c:937
 msgid "Delay in ms between repeats once it starts to repeat"
-msgstr ""
+msgstr "Retraso en ms entre repeticiones una vez que comienza a repetirse"
 
 #. Zoom.
 #: src/conf.c:942
 msgid "Minimum and maximum zoom factor to use in-game"
-msgstr ""
+msgstr "Factor de zoom mínimo y máximo para usar en el juego"
 
 #: src/conf.c:943
 msgid "At 1.0, no sprites are scaled"
-msgstr ""
+msgstr "En 1.0, no se escalan los sprites"
 
 #: src/conf.c:944
 msgid "zoom_far should be less then zoom_near"
-msgstr ""
+msgstr "zoom_lejos debe ser menor que zoom_cerca"
 
 #: src/conf.c:950
 msgid "Zooming speed in factor increments per second"
-msgstr ""
+msgstr "Velocidad del zoom en incrementos de factor por segundo"
 
 #: src/conf.c:954
 msgid "Zooming modulation factor for the starry background"
-msgstr ""
+msgstr "Factor de modulación del zoom para el fondo estrellado"
 
 #. Fonts.
 #: src/conf.c:959
 msgid "Font sizes (in pixels) for Naev"
-msgstr ""
+msgstr "Tamaños de letra (en píxeles) para Naev"
 
 #: src/conf.c:960
 msgid "Warning, setting to other than the default can cause visual glitches!"
 msgstr ""
+"¡Atención, una configuración distinta a la predeterminada puede provocar "
+"fallos visuales!"
 
 #: src/conf.c:961
 #, c-format
 msgid "-- Console default: %d\n"
-msgstr ""
+msgstr "-- Consola por defecto: %d\n"
 
 #: src/conf.c:963
 #, c-format
 msgid "-- Intro default: %d\n"
-msgstr ""
+msgstr "-- Introducción por defecto: %d\n"
 
 #: src/conf.c:965
 #, c-format
 msgid "-- Default size: %d\n"
-msgstr ""
+msgstr "-- Tamaño por defecto: %d\n"
 
 #: src/conf.c:967
 #, c-format
 msgid "-- Small size: %d\n"
-msgstr ""
+msgstr "-- Tamaño pequeño: %d\n"
 
 #. Misc.
 #: src/conf.c:971
 msgid ""
 "Sets the velocity (px/s) to compress up to when time compression is enabled."
 msgstr ""
+"Establece la velocidad (px/s) a la que se debe comprimir cuando la "
+"compresión de tiempo está activada."
 
 #: src/conf.c:975
 msgid "Sets the multiplier to compress up to when time compression is enabled."
 msgstr ""
+"Establece el multiplicador para comprimir hasta cuando la compresión de "
+"tiempo está activada."
 
 #: src/conf.c:979
 msgid "Redirects log and error output to files"
-msgstr ""
+msgstr "Redirige la salida del registro y de los errores a los archivos"
 
 #: src/conf.c:983
 msgid "Enables compression on saved games"
-msgstr ""
+msgstr "Activa la compresión de las partidas guardadas"
 
 #: src/conf.c:987
 msgid ""
 "Doubletap sensitivity (used for double tap accel for afterburner or double "
 "tap reverse for cooldown)"
 msgstr ""
+"Sensibilidad de doble toque (se utiliza para el doble toque de aceleración "
+"para la postcombustión o el doble toque de reversa para el enfriamiento)"
 
 #: src/conf.c:991
 msgid ""
 "Whether or not clicking the middle mouse button toggles mouse flying mode."
 msgstr ""
+"Si al pulsar el botón central del ratón se activa o no el modo de vuelo del "
+"ratón."
 
 #: src/conf.c:995
 msgid "Mouse-flying thrust control"
-msgstr ""
+msgstr "Control de empuje en vuelo del ratón"
 
 #: src/conf.c:999
 msgid "Maximum interval to count as a double-click (0 disables)."
-msgstr ""
+msgstr "Intervalo máximo para contar como un doble clic (0 desactiva)."
 
 #: src/conf.c:1003
 msgid "Enemy distance at which autonav speed resets."
-msgstr ""
+msgstr "Distancia del enemigo a la que se restablece la velocidad del autonav."
 
 #: src/conf.c:1007
 msgid "Shield value at which autonav speed resets."
-msgstr ""
+msgstr "Valor de escudo en el que se restablece la velocidad del autonav."
 
 #: src/conf.c:1011
 msgid "Enables developer mode (universe editor and the likes)"
-msgstr ""
+msgstr "Activa el modo desarrollador (editor de universos y similares)"
 
 #: src/conf.c:1015
 msgid ""
 "Automatic saving for when using the universe editor whenever an edit is done"
 msgstr ""
+"Guardado automático para cuando se utiliza el editor de universos cada vez "
+"que se realiza una edición"
 
 #: src/conf.c:1019
 msgid "Save the config every time game exits (rewriting this bit)"
 msgstr ""
+"Guarda la configuración cada vez que se sale del juego (reescribiendo esta "
+"parte)"
 
 #: src/conf.c:1023
 msgid "Indicates the last version the game has run in before"
-msgstr ""
+msgstr "Indica la última versión en la que se ha ejecutado el juego antes"
 
 #: src/conf.c:1027
 msgid ""
 "Indicates whether we've already warned about incomplete game translations."
-msgstr ""
+msgstr "Indica si ya hemos avisado de las traducciones incompletas del juego."
 
 #. Debugging.
 #: src/conf.c:1032
 msgid "Enables FPU exceptions - only works on DEBUG builds"
-msgstr ""
+msgstr "Activa las excepciones de la FPU - sólo funciona en las builds DEBUG"
 
 #. Editor.
 #: src/conf.c:1037
 msgid "Paths for saving different files from the editor"
-msgstr ""
+msgstr "Rutas para guardar diferentes archivos desde el editor"
 
 #: src/conf.c:1047
 msgid "Keybindings"
-msgstr ""
+msgstr "Combinaciones de teclas"
 
 #: src/conf.c:1116
 msgid ""
 "Failed to write configuration!  You'll most likely have to restore it by "
 "copying your backup configuration over your current configuration."
 msgstr ""
+"¡Ha fallado la escritura de la configuración!  Lo más probable es que tengas "
+"que restaurarla copiando la configuración de la copia de seguridad sobre la "
+"configuración actual."
 
 #: src/console.c:148
 #, c-format
@@ -94181,6 +94244,8 @@ msgid ""
 "Error calling 'tostring':\n"
 "%s"
 msgstr ""
+"Error al llamar a 'tostring':\n"
+"%s"
 
 #: src/console.c:239
 #, c-format
@@ -94188,177 +94253,179 @@ msgid ""
 "Error running 'script':\n"
 "%s"
 msgstr ""
+"Error al ejecutar el 'script':\n"
+"%s"
 
 #: src/console.c:591
 msgid "Error printing results."
-msgstr ""
+msgstr "Resultados de la impresión de errores."
 
 #: src/console.c:630
 msgid "#gWelcome to the Lua console!"
-msgstr ""
+msgstr "#g¡Bienvenido a la consola Lua!"
 
 #. Create the window.
 #: src/console.c:639 src/input.c:114
 msgid "Lua Console"
-msgstr ""
+msgstr "Consola Lua"
 
 #: src/damagetype.c:100
 #, c-format
 msgid "Unknown node of type '%s' in damage node '%s'."
-msgstr ""
+msgstr "Nodo desconocido de tipo '%s' en el nodo de daños '%s'."
 
 #: src/damagetype.c:104
 #, c-format
 msgid "DTYPE '%s' invalid '"
-msgstr ""
+msgstr "DTYPE '%s' inválido '"
 
 #: src/damagetype.c:135
 #, c-format
 msgid "Damage type '%s' not found in stack."
-msgstr ""
+msgstr "El tipo de daño '%s' no se encuentra en la pila."
 
 #: src/damagetype.c:145
 #, c-format
 msgid "Damage type '%d' is invalid."
-msgstr ""
+msgstr "El tipo de daño '%d' no es inválido."
 
 #: src/debris.c:54
 msgid "No debris special effects found."
-msgstr ""
+msgstr "No se han encontrado efectos especiales de escombros."
 
 #: src/debug.c:51
 msgid "SIGFPE (raised by program)"
-msgstr ""
+msgstr "SIGFPE ( elevado por el programa)"
 
 #: src/debug.c:52
 msgid "SIGFPE (integer divide by zero)"
-msgstr ""
+msgstr "SIGFPE (división de enteros por cero)"
 
 #: src/debug.c:53
 msgid "SIGFPE (integer overflow)"
-msgstr ""
+msgstr "SIGFPE (desbordamiento de enteros)"
 
 #: src/debug.c:54
 msgid "SIGFPE (floating-point divide by zero)"
-msgstr ""
+msgstr "SIGFPE (división por cero en coma flotante)"
 
 #: src/debug.c:55
 msgid "SIGFPE (floating-point overflow)"
-msgstr ""
+msgstr "SIGFPE (desbordamiento de punto flotante)"
 
 #: src/debug.c:56
 msgid "SIGFPE (floating-point underflow)"
-msgstr ""
+msgstr "SIGFPE (desbordamiento de punto flotante)"
 
 #: src/debug.c:57
 msgid "SIGFPE (floating-point inexact result)"
-msgstr ""
+msgstr "SIGFPE (resultado inexacto en coma flotante)"
 
 #: src/debug.c:58
 msgid "SIGFPE (floating-point invalid operation)"
-msgstr ""
+msgstr "SIGFPE (operación de punto flotante inválida)"
 
 #: src/debug.c:59
 msgid "SIGFPE (subscript out of range)"
-msgstr ""
+msgstr "SIGFPE (subíndice fuera de rango)"
 
 #: src/debug.c:60
 msgid "SIGFPE"
-msgstr ""
+msgstr "SIGFPE"
 
 #: src/debug.c:64
 msgid "SIGSEGV (raised by program)"
-msgstr ""
+msgstr "SIGSEGV ( elevado por el programa)"
 
 #: src/debug.c:65
 msgid "SIGSEGV (address not mapped to object)"
-msgstr ""
+msgstr "SIGSEGV (dirección no asignada al objeto)"
 
 #: src/debug.c:66
 msgid "SIGSEGV (invalid permissions for mapped object)"
-msgstr ""
+msgstr "SIGSEGV (permisos inválidos para el objeto mapeado)"
 
 #: src/debug.c:67
 msgid "SIGSEGV"
-msgstr ""
+msgstr "SIGSEGV"
 
 #: src/debug.c:71
 msgid "SIGABRT (raised by program)"
-msgstr ""
+msgstr "SIGABRT ( elevado por el programa)"
 
 #: src/debug.c:72
 msgid "SIGABRT"
-msgstr ""
+msgstr "SIGABRT"
 
 #: src/debug.c:149
 #, c-format
 msgid "Naev received %s!"
-msgstr ""
+msgstr "¡Naev ha recibido %s!"
 
 #: src/debug.c:157
 msgid "Report this to project maintainer with the backtrace."
-msgstr ""
+msgstr "Informa de esto al mantenedor del proyecto con el backtrace."
 
 #: src/debug.c:203
 msgid "Unable to set up SIGSEGV signal handler."
-msgstr ""
+msgstr "No se ha podido configurar el gestor de señales SIGSEGV."
 
 #: src/debug.c:206
 msgid "Unable to set up SIGFPE signal handler."
-msgstr ""
+msgstr "No se ha podido configurar el gestor de señales SIGFPE."
 
 #: src/debug.c:209
 msgid "Unable to set up SIGABRT signal handler."
-msgstr ""
+msgstr "No se ha podido configurar el gestor de señales SIGABRT."
 
 #: src/debug.c:210
 msgid "BFD backtrace catching enabled."
-msgstr ""
+msgstr "Captura de backtrace BFD habilitada."
 
 #. Create the window.
 #: src/dev_mapedit.c:161
 msgid "Map Outfit Editor"
-msgstr ""
+msgstr "Editor de Equipamiento de Mapa"
 
 #. window
 #: src/dev_mapedit.c:620
 msgid "Open Map Outfit"
-msgstr ""
+msgstr "Equipo de Mapa Abierto"
 
 #: src/dev_mapedit.c:1017 src/dev_planet.c:39 src/dev_system.c:104
 #: src/save.c:105
 msgid "testXmlwriterDoc: Error creating the xml writer"
-msgstr ""
+msgstr "testXmlwriterDoc: Error al crear el escritor xml"
 
 #. Create the window.
 #: src/dev_sysedit.c:170
 #, c-format
 msgid "%s - Star System Editor"
-msgstr ""
+msgstr "%s - Editor de Sistema Estelar"
 
 #: src/dev_sysedit.c:179 src/dev_uniedit.c:190
 msgid "Exit"
-msgstr ""
+msgstr "Salir"
 
 #: src/dev_sysedit.c:184 src/dev_uniedit.c:195
 msgid "Automatically save changes"
-msgstr ""
+msgstr "Guardar automáticamente los cambios"
 
 #: src/dev_sysedit.c:188
 msgid "Scale"
-msgstr ""
+msgstr "Escalar"
 
 #: src/dev_sysedit.c:193
 msgid "Reset Jumps"
-msgstr ""
+msgstr "Reiniciar Saltos"
 
 #: src/dev_sysedit.c:198 src/dev_uniedit.c:219
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #: src/dev_sysedit.c:203 src/dev_uniedit.c:1810
 msgid "Remove"
-msgstr ""
+msgstr "Eliminar"
 
 #: src/dev_sysedit.c:213
 msgid "New Planet"
@@ -94366,13 +94433,13 @@ msgstr ""
 
 #: src/dev_sysedit.c:218
 msgid "Grid"
-msgstr ""
+msgstr "Cuadrilla"
 
 #. Selected text.
 #: src/dev_sysedit.c:225 src/dev_sysedit.c:520
 #, c-format
 msgid "Radius: %.0f"
-msgstr ""
+msgstr "Radio: %.0f"
 
 #. Get new name.
 #: src/dev_sysedit.c:346 src/dev_sysedit.c:399
@@ -94399,34 +94466,36 @@ msgstr ""
 
 #: src/dev_sysedit.c:443
 msgid "This can not be undone."
-msgstr ""
+msgstr "Esto no puede ser deshecho."
 
 #. Prompt scale amount.
 #: src/dev_sysedit.c:492 src/dev_sysedit.c:502
 msgid "Scale Star System"
-msgstr ""
+msgstr "Sistema de Estrellas a Escala"
 
 #: src/dev_sysedit.c:492
 msgid "By how much do you want to scale the star system?"
-msgstr ""
+msgstr "¿En qué medida quieres escalar el sistema estelar?"
 
 #: src/dev_sysedit.c:502
 #, c-format
 msgid ""
 "Are you sure you want to scale the star system by %.2f (from %.2f to %.2f)?"
 msgstr ""
+"¿Estás seguro de que quieres escalar el sistema de estrellas en %.2f (de "
+"%.2f a %.2f)?"
 
 #: src/dev_sysedit.c:653 src/map_overlay.c:612
 msgid "Invalid vertex type."
-msgstr ""
+msgstr "Tipo de vertex inválido."
 
 #: src/dev_sysedit.c:694 src/map.c:753
 msgid "Asteroid Field"
-msgstr ""
+msgstr "Campo de Asteroides"
 
 #: src/dev_sysedit.c:1213
 msgid "Trying to deselect item that is not in selection!"
-msgstr ""
+msgstr "¡Intentando deseleccionar un elemento que no está en la selección!"
 
 #. Create the window.
 #: src/dev_sysedit.c:1240
@@ -94440,93 +94509,93 @@ msgstr ""
 #: src/dev_sysedit.c:1250 src/dev_uniedit.c:1677 src/dev_uniedit.c:1965
 #: src/equipment.c:363 src/info.c:467 src/load.c:413
 msgid "Name:"
-msgstr ""
+msgstr "Nombre:"
 
 #: src/dev_sysedit.c:1258
 msgid "Faction"
-msgstr ""
+msgstr "Facción"
 
 #: src/dev_sysedit.c:1262 src/land.c:1248 src/map.c:300
 msgid "Faction:"
-msgstr ""
+msgstr "Facción:"
 
 #: src/dev_sysedit.c:1271
 msgid "Population"
-msgstr ""
+msgstr "Población"
 
 #: src/dev_sysedit.c:1279
 msgid "Class"
-msgstr ""
+msgstr "Clase"
 
 #: src/dev_sysedit.c:1286 src/input.c:93 src/space.c:166
 msgid "Land"
-msgstr ""
+msgstr "Aterrizar"
 
 #: src/dev_sysedit.c:1295
 msgid "Base Presence"
-msgstr ""
+msgstr "Presencia Base"
 
 #: src/dev_sysedit.c:1303
 msgid "Bonus Presence"
-msgstr ""
+msgstr "Bonificación de Presencia"
 
 #: src/dev_sysedit.c:1311
 msgid "Range"
-msgstr ""
+msgstr "Rango"
 
 #: src/dev_sysedit.c:1321
 msgid "hide"
-msgstr ""
+msgstr "ocultar"
 
 #: src/dev_sysedit.c:1332 src/land.c:1253
 msgid "Tags:"
-msgstr ""
+msgstr "Etiquetas:"
 
 #: src/dev_sysedit.c:1339
 msgid "Rm Service"
-msgstr ""
+msgstr "Del Servicio"
 
 #: src/dev_sysedit.c:1341
 msgid "Add Service"
-msgstr ""
+msgstr "Añadir Servicio"
 
 #: src/dev_sysedit.c:1343
 msgid "Edit Tech"
-msgstr ""
+msgstr "Editar Tech"
 
 #: src/dev_sysedit.c:1345
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #: src/dev_sysedit.c:1347
 msgid "Land GFX"
-msgstr ""
+msgstr "Aterrizar GFX"
 
 #: src/dev_sysedit.c:1349
 msgid "Space GFX"
-msgstr ""
+msgstr "Espacio GFX"
 
 #. Create the window.
 #: src/dev_sysedit.c:1416
 msgid "Jump Point Editor"
-msgstr ""
+msgstr "Editor de Punto de Salto"
 
 #: src/dev_sysedit.c:1423
 #, c-format
 msgid "Target: "
-msgstr ""
+msgstr "Objetivo: "
 
 #: src/dev_sysedit.c:1443
 msgid "Hidden"
-msgstr ""
+msgstr "Oculto"
 
 #: src/dev_sysedit.c:1446
 msgid "Exit only"
-msgstr ""
+msgstr "Sólo salida"
 
 #: src/dev_sysedit.c:1449
 msgid "Hide"
-msgstr ""
+msgstr "Ocultar"
 
 #. Create the window.
 #: src/dev_sysedit.c:1506
@@ -94536,15 +94605,15 @@ msgstr ""
 
 #: src/dev_sysedit.c:1519
 msgid "Properties"
-msgstr ""
+msgstr "Propiedades"
 
 #: src/dev_sysedit.c:1526
 msgid "Landing Description"
-msgstr ""
+msgstr "Descripción de Aterrizaje"
 
 #: src/dev_sysedit.c:1538
 msgid "Bar Description"
-msgstr ""
+msgstr "Descripción de Bar"
 
 #. Create the window.
 #: src/dev_sysedit.c:1706
@@ -94553,20 +94622,20 @@ msgstr ""
 
 #: src/dev_sysedit.c:1719
 msgid "Rm Tech"
-msgstr ""
+msgstr "Del Tech"
 
 #: src/dev_sysedit.c:1723
 msgid "Add Tech"
-msgstr ""
+msgstr "Añadir Tech"
 
 #. Create the window.
 #: src/dev_sysedit.c:1870
 msgid "Modify Faction"
-msgstr ""
+msgstr "Modificar Facción"
 
 #: src/dev_sysedit.c:1905 src/dev_uniedit.c:409
 msgid "Set"
-msgstr ""
+msgstr "Configurar"
 
 #. Create the window.
 #: src/dev_sysedit.c:1973
@@ -94576,54 +94645,54 @@ msgstr ""
 
 #: src/dev_sysedit.c:1986
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #: src/dev_sysedit.c:2000
 #, c-format
 msgid "Unable to check file type for '%s'!"
-msgstr ""
+msgstr "¡Incapaz de comprobar tipo de archivo para '%s!"
 
 #. Create the window.
 #: src/dev_uniedit.c:184
 msgid "Universe Editor"
-msgstr ""
+msgstr "Editor de Universo"
 
 #: src/dev_uniedit.c:199
 msgid "Save All"
-msgstr ""
+msgstr "Guardar Todo"
 
 #: src/dev_uniedit.c:204
 msgid "View Mode"
-msgstr ""
+msgstr "Modo Visión"
 
 #: src/dev_uniedit.c:209
 msgid "Jump"
-msgstr ""
+msgstr "Salto"
 
 #: src/dev_uniedit.c:224
 msgid "New Sys"
-msgstr ""
+msgstr "Nuevo Sistema"
 
 #: src/dev_uniedit.c:229
 msgid "Open"
-msgstr ""
+msgstr "Abrir"
 
 #: src/dev_uniedit.c:234 src/map.c:339 src/map_find.c:1029
 msgid "Find"
-msgstr ""
+msgstr "Encontrar"
 
 #: src/dev_uniedit.c:243
 msgid "Nebula:"
-msgstr ""
+msgstr "Nebulosa:"
 
 #: src/dev_uniedit.c:249 src/map.c:314
 msgid "Presence:"
-msgstr ""
+msgstr "Presencia:"
 
 #. Create the window.
 #: src/dev_uniedit.c:381
 msgid "Select a View Mode"
-msgstr ""
+msgstr "Seleccionar un Modo de Visión"
 
 #: src/dev_uniedit.c:386
 msgid "Default"
@@ -94635,85 +94704,89 @@ msgstr ""
 
 #: src/dev_uniedit.c:388
 msgid "System Radius"
-msgstr ""
+msgstr "Radio de Sistema"
 
 #: src/dev_uniedit.c:389
 msgid "Background"
-msgstr ""
+msgstr "Fondo"
 
 #: src/dev_uniedit.c:390
 msgid "Tech"
-msgstr ""
+msgstr "Tech"
 
 #: src/dev_uniedit.c:391
 msgid "Sum of Presences"
-msgstr ""
+msgstr "Suma de Presencias"
 
 #: src/dev_uniedit.c:760
 msgid "Click to add a new system"
-msgstr ""
+msgstr "Clica para añadir un sistema nuevo"
 
 #: src/dev_uniedit.c:764
 msgid "Click to toggle jump route"
-msgstr ""
+msgstr "Clica para alternar una ruta de salto"
 
 #: src/dev_uniedit.c:805
 #, c-format
 msgid "System Radius: %s"
-msgstr ""
+msgstr "Radio de Sistema: %s"
 
 #: src/dev_uniedit.c:813
 #, c-format
 msgid "Background: %s"
-msgstr ""
+msgstr "Fondo: %s"
 
 #. Count assets.
 #: src/dev_uniedit.c:863
 #, c-format
 msgid "Total: %.0f"
-msgstr ""
+msgstr "Total: %.0f"
 
 #: src/dev_uniedit.c:1134
 #, c-format
 msgid "The Star System '%s' already exists!"
-msgstr ""
+msgstr "¡El Sistema Estelar '%s' ya existe!"
 
 #. Get name.
 #: src/dev_uniedit.c:1168
 msgid "Rename Star System"
-msgstr ""
+msgstr "Renombrar Sistema Estelar"
 
 #: src/dev_uniedit.c:1168
 #, c-format
 msgid "What do you want to rename #r%s#0?"
-msgstr ""
+msgstr "¿A qué quieres renombrar #r%s#0?"
 
 #. Get name.
 #: src/dev_uniedit.c:1214
 msgid "New Star System Creation"
-msgstr ""
+msgstr "Creación de Nuevo Sistema Estelar"
 
 #: src/dev_uniedit.c:1214
 msgid "What do you want to name the new system?"
-msgstr ""
+msgstr "¿Qué nombre quierei ponerle al nuevo sistema?"
 
 #: src/dev_uniedit.c:1218
 msgid "Star System creation aborted!"
-msgstr ""
+msgstr "¡Creación de Sistema Estelar abortado!"
 
 #: src/dev_uniedit.c:1319
 #, c-format
 msgid "Jump for system '%s' not found in system '%s' for removal."
 msgstr ""
+"El salto para el sistema '%s' no se encuentra en el sistema '%s' para su "
+"eliminación."
 
 #: src/dev_uniedit.c:1340
 msgid "No selection"
-msgstr ""
+msgstr "Sin Selección"
 
 #: src/dev_uniedit.c:1384
 #, c-format
 msgid "Trying to remove system '%s' from selection when not selected."
 msgstr ""
+"Intentando eliminar el sistema '%s' de la selección cuando no está "
+"seleccionado."
 
 #: src/dev_uniedit.c:1414
 #, c-format
@@ -94724,7 +94797,7 @@ msgstr ""
 
 #: src/dev_uniedit.c:1418 src/dev_uniedit.c:1419
 msgid "Multiple selected"
-msgstr ""
+msgstr "Múltiples seleccionados"
 
 #. Create the window.
 #: src/dev_uniedit.c:1467
@@ -94734,21 +94807,21 @@ msgstr ""
 #: src/dev_uniedit.c:1537 src/land.c:829
 #, c-format
 msgid "%s (%s system)"
-msgstr ""
+msgstr "%s (sistema %s)"
 
 #. Create the window.
 #: src/dev_uniedit.c:1665
 msgid "Star System Property Editor"
-msgstr ""
+msgstr "Editor de Propiedades de Sistema Estelar"
 
 #: src/dev_uniedit.c:1677 src/dev_uniedit.c:1965
 msgid "#rvarious"
-msgstr ""
+msgstr "#rvarios"
 
 #. Add general stats
 #: src/dev_uniedit.c:1685
 msgid "Radius"
-msgstr ""
+msgstr "Radio"
 
 #: src/dev_uniedit.c:1692
 msgid "(Scales asset positions)"
@@ -94756,27 +94829,27 @@ msgstr ""
 
 #: src/dev_uniedit.c:1701
 msgid "Stars"
-msgstr ""
+msgstr "Estrellas"
 
 #: src/dev_uniedit.c:1709
 msgid "Interference"
-msgstr ""
+msgstr "Interferencia"
 
 #: src/dev_uniedit.c:1722
 msgid "Nebula"
-msgstr ""
+msgstr "Nebulosa"
 
 #: src/dev_uniedit.c:1730
 msgid "Volatility"
-msgstr ""
+msgstr "Volatilidad"
 
 #: src/dev_uniedit.c:1738
 msgid "Hue"
-msgstr ""
+msgstr "Tono"
 
 #: src/dev_uniedit.c:1813 src/dev_uniedit.c:1917
 msgid "Add"
-msgstr ""
+msgstr "Añadir"
 
 #: src/dev_uniedit.c:1870
 #, c-format
@@ -94802,22 +94875,22 @@ msgstr ""
 #. create the window
 #: src/dialogue.c:147 src/options.c:166
 msgid "Warning"
-msgstr ""
+msgstr "Advertencia"
 
 #: src/dialogue.c:410
 msgid "Unknown button clicked in YesNo dialogue!"
-msgstr ""
+msgstr "¡Botón desconocido pulsado en el diálogo SiNo!"
 
 #: src/dialogue.c:496
 #, c-format
 msgid "Input must be at least %d character long!"
 msgid_plural "Input must be at least %d characters long!"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "¡La entrada debe tener al menos %d carácter!"
+msgstr[1] "¡La entrada debe tener al menos %d caracteres!"
 
 #: src/dialogue.c:1053
 msgid "Dialogue counter not in sync!"
-msgstr ""
+msgstr "¡El contador de diálogos no está sincronizado!"
 
 #: src/economy.c:127
 #, c-format
@@ -95346,7 +95419,7 @@ msgstr ""
 #: src/event.c:524 src/slots.c:58 src/spfx.c:175 src/start.c:63
 #, c-format
 msgid "Malformed '%s' file: missing root element '%s'"
-msgstr ""
+msgstr "Archivo '%s' malformado: falta el elemento raíz '%s'"
 
 #: src/event.c:538
 #, c-format
@@ -96005,7 +96078,7 @@ msgstr ""
 
 #: src/info.c:1455 src/load.c:373
 msgid "Delete"
-msgstr ""
+msgstr "Eliminar"
 
 #: src/info.c:1458
 msgid "View Entry"
