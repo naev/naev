@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-07-08 01:48+0900\n"
+"POT-Creation-Date: 2022-07-09 17:13-0400\n"
 "PO-Revision-Date: 2022-04-08 09:11+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/naev/naev/ko/>\n"
@@ -1224,30 +1224,54 @@ msgid ""
 "believe this is a key indicator of rough times ahead."
 msgstr ""
 
-#: dat/difficulty.xml:3 src/dev_uniedit.c:394
+#: dat/difficulty/default.xml:2 src/dev_uniedit.c:394
 #, fuzzy
 #| msgid "Defaults"
 msgid "Default"
 msgstr "기본값"
 
-#: dat/difficulty.xml:6
-msgid "Story Mode"
+#: dat/difficulty/default.xml:3
+msgid "Standard difficulty mode."
 msgstr ""
 
-#: dat/difficulty.xml:21
-#, fuzzy
-#| msgid "Mode"
-msgid "Slow Mode"
-msgstr "모드"
-
-#: dat/difficulty.xml:25
+#: dat/difficulty/easy_mode.xml:2
 #, fuzzy
 #| msgid "Mode"
 msgid "Easy Mode"
 msgstr "모드"
 
-#: dat/difficulty.xml:38
+#: dat/difficulty/easy_mode.xml:3
+msgid "Makes the game easier for the player, without trivializing most things."
+msgstr ""
+
+#: dat/difficulty/masochist_mode.xml:2
 msgid "Masochist Mode"
+msgstr ""
+
+#: dat/difficulty/masochist_mode.xml:3
+msgid "Makes the game significantly harder for the player."
+msgstr ""
+
+#: dat/difficulty/slow_mode.xml:2
+#, fuzzy
+#| msgid "Mode"
+msgid "Slow Mode"
+msgstr "모드"
+
+#: dat/difficulty/slow_mode.xml:3
+msgid ""
+"Makes gameplay run at half speed. Useful if you have difficulties with "
+"reaction times."
+msgstr ""
+
+#: dat/difficulty/story_mode.xml:2
+msgid "Story Mode"
+msgstr ""
+
+#: dat/difficulty/story_mode.xml:3
+msgid ""
+"Significantly reduces the difficulty of the game, allowing to concentrate on "
+"the story."
 msgstr ""
 
 #: dat/effects/ambush_hunter.xml:2
@@ -1388,222 +1412,195 @@ msgstr ""
 msgid "Exiting a wormhole!"
 msgstr ""
 
-#: dat/faction.xml:4
-msgid "Dummy"
+#: dat/factions/achack_sirius.xml:2
+msgid "Achack_sirius"
 msgstr ""
 
-#.
-#. if gauntlet_subtype == newsubtype then
-#. return
-#. end
-#. --
-#. Overwrite and use id instead of string
-#: dat/faction.xml:14 dat/faction.xml:38 dat/faction.xml:64 dat/faction.xml:818
-#: dat/missions/dvaered/gauntlet/gui.lua:142
-msgid "Independent"
+#: dat/factions/achack_sirius.xml:5 dat/factions/sirius.xml:2
+#: dat/scripts/common/sirius.lua:11 dat/scripts/common/sirius.lua:17
+msgid "Sirius"
 msgstr ""
 
-#: dat/faction.xml:37 dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:74
-#: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:76
-msgid "Trader"
+#: dat/factions/achack_thugs.xml:2
+msgid "Achack_thugs"
 msgstr ""
 
-#: dat/faction.xml:63
-msgid "Miner"
+#. Time for !!FUN!!
+#: dat/factions/achack_thugs.xml:5 dat/factions/thugs.xml:2
+#: dat/missions/zalek/particlephysics/zpp04.lua:179
+#: dat/missions/zalek/particlephysics/zpp04.lua:182
+msgid "Thugs"
 msgstr ""
 
-#: dat/faction.xml:89
-msgid "Raven Clan"
-msgstr ""
-
-#: dat/faction.xml:92
+#: dat/factions/associates.xml:2
 #, fuzzy
-#| msgid "Pirate Phalanx"
-msgid "Raven Pirate Clan"
-msgstr "해적 지골"
+msgid "Associates"
+msgstr "해적 황조롱이"
 
-#: dat/faction.xml:99
-msgid ""
-"The Raven Pirate Clan is a band of pirates that lead over the widespread "
-"Qorel sector between the Empire and Dvaered systems."
-msgstr ""
-
-#: dat/faction.xml:127
-msgid "Wild Ones"
-msgstr ""
-
-#: dat/faction.xml:130
-msgid "Wild Ones Pirate Clan"
-msgstr ""
-
-#: dat/faction.xml:137
-msgid ""
-"The Wild Ones Pirate Clan is a violent and loosely organized band of pirates "
-"that control the Haven sector between Empire and Soromid territories."
-msgstr ""
-
-#: dat/faction.xml:165
+#: dat/factions/black_lotus.xml:2
 msgid "Black Lotus"
 msgstr "검은 연꽃"
 
-#: dat/faction.xml:168
+#: dat/factions/black_lotus.xml:5
 msgid "Black Lotus Pirate Clan"
 msgstr ""
 
-#: dat/faction.xml:175
+#: dat/factions/black_lotus.xml:12
 msgid ""
 "The Black Lotus Pirate Clan is a fiercely organized pirate clan located "
 "between the Za'lek and Sirius space. Organized crime at its finest."
 msgstr ""
 
-#: dat/faction.xml:203
+#: dat/factions/collective.xml:2
+msgid "Collective"
+msgstr ""
+
+#: dat/factions/collective.xml:9
+msgid ""
+"The Collective are a hivemind of AI ships gone rogue. They seem to attack "
+"and destroy all humans on sight."
+msgstr ""
+
+#. Don't spawn in restricted space
+#. Don't spawn in Thurion space
+#. Ignore claimed systems (don't want to ruin the atmosphere)
+#. Get the derelict's ship.
+#. Create the derelict.
+#. Red Dwarf
+#. Assign a random name to the player's ship.
+#. Tutorials tell the player to buy and equip ion cannon later, need one weapon slot empty
+#. Give all GUIs
+#. TODO: Would be better to remove these outfits and the association,
+#. but they're so tightly integrated atm (with no other way to define
+#. GUIs as usable) that I'm implementing it this way for now.
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <event name="Finding Taiomi">
+#. <location>enter</location>
+#. <unique />
+#. <chance>100</chance>
+#. <cond>system.cur() == system.get("Bastion")</cond>
+#. <chapter>[^0]</chapter>
+#. <notes>
+#. <campaign>Taiomi</campaign>
+#. </notes>
+#. </event>
+#. --
+#.
+#.
+#. Finding Taiomi Event
+#.
+#. --
+#. Forward-declared functions
+#. Event state, never saved.
+#. luacheck: globals board boardnothing boardothers drone_runaway fidget heartbeat leave returncontrol whatwasthat (Hook functions passed by name)
+#. Threshold distances to detect the drone
+#. first encounter at mule
+#. second encounter at jump
+#.
+#. -- Event states:
+#. -- 0: not found by the player
+#. -- 1: CUTSCENE player near derelict, zoom in and show the drone which runs away
+#. -- 2: player chases drone until near jump
+#. -- 3: CUTSCENE drone jumps off
+#. -- 4: player has to search for jump in derelicts
+#. --
+#. Extra derelicts
+#. Main derelict
+#. Advance so it deosn't do the same convo
+#. Should be to the center of the system
+#. Correct
+#. Get the logo
+#. Shortcuts and graphics
+#. Set up the namebox
+#.
+#. Helpers for dealing with derelict or abandoned ships in general.
+#. --
+#: dat/factions/derelict.xml:2 dat/events/neutral/derelict.lua:154
+#: dat/events/taiomi/find.lua:50 dat/events/taiomi/find.lua:62
+#: dat/missions/tutorial/nelly01.lua:331 dat/scripts/common/derelict.lua:19
+#, fuzzy
+msgid "Derelict"
+msgstr "빈 휴지통"
+
+#: dat/factions/dhc.xml:2
+msgid "DHC"
+msgstr ""
+
+#: dat/factions/dhc.xml:7 dat/spob/dvaered_high_command.xml:2
+#: dat/events/discovery.lua:58
+#, fuzzy
+msgid "Dvaered High Command"
+msgstr "드 베어드 경계"
+
+#: dat/factions/diplomatic.xml:2
+#, fuzzy
+msgid "Diplomatic"
+msgstr "외교 선박"
+
+#: dat/factions/dreamer_clan.xml:2
 msgid "Dreamer Clan"
 msgstr ""
 
-#: dat/faction.xml:206
+#: dat/factions/dreamer_clan.xml:5
 #, fuzzy
 #| msgid "Pirate Phalanx"
 msgid "Dreamer Pirate Clan"
 msgstr "해적 지골"
 
-#: dat/faction.xml:213
+#: dat/factions/dreamer_clan.xml:12
 msgid ""
 "The Dreamer Pirate Clan consists largely of disgruntled pirates from the "
 "Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny."
 msgstr ""
 
-#. hook.pilot( rampant, "idle", "idle" )
-#: dat/faction.xml:241 dat/faction.xml:279 dat/faction.xml:688
-#: dat/missions/neutral/kidnapped/traffic_00.lua:83
-#: dat/missions/neutral/kidnapped/traffic_00.lua:84
-#: dat/missions/neutral/kidnapped/traffic_00.lua:90
-#: dat/missions/neutral/kidnapped/traffic_00.lua:91
-#: dat/missions/tutorial/nelly02.lua:262 dat/scripts/common/pirate.lua:65
-msgid "Pirate"
+#: dat/factions/dummy.xml:2
+msgid "Dummy"
 msgstr ""
 
-#: dat/faction.xml:245
-msgid "Galactic Space Pirates"
+#. Add the Cargo
+#. Ship to go back to
+#. Set up Major Malik
+#: dat/factions/dvaered.xml:2 dat/events/dvaered/fwA_treason.lua:115
+#: dat/events/dvaered/fwA_treason.lua:136 dat/events/dvaered/fwB_repay.lua:44
+#: dat/missions/dvaered/frontier_war/fw00_escort.lua:252
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:520
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:158
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:600
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:161
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:261
+#: dat/missions/dvaered/recruitment/dv_propaganda.lua:96
+#: dat/missions/minerva/kex3.lua:373 dat/scripts/common/dvaered.lua:14
+#: dat/scripts/common/dvaered.lua:19
+msgid "Dvaered"
 msgstr ""
 
-#: dat/faction.xml:252
+#: dat/factions/dvaered.xml:7 dat/ships/dvaered/dvaered_ancestor.xml:15
+#: dat/ships/dvaered/dvaered_arsenal.xml:18
+#: dat/ships/dvaered/dvaered_phalanx.xml:16
+#: dat/ships/dvaered/dvaered_retribution.xml:16
+#: dat/ships/dvaered/dvaered_vendetta.xml:16
+#: dat/ships/dvaered/dvaered_vigilance.xml:15 dat/ships/neutral/ancestor.xml:14
+#: dat/ships/neutral/phalanx.xml:15 dat/ships/neutral/vendetta.xml:15
+#: dat/ships/neutral/vigilance.xml:14
+msgid "House Dvaered"
+msgstr ""
+
+#: dat/factions/dvaered.xml:12
 msgid ""
-"The Galactic Space Pirates consists of independent pirate vessels not "
-"affiliated with any particular clan. Due to their disorganized nature, they "
-"tend to respect the clans they operate near."
+"House Dvaered is one of the oldest Great Houses in the Empire. They are "
+"proud and formed by a coalition of many powerful warlords."
 msgstr ""
 
-#: dat/faction.xml:278
-#, fuzzy
-#| msgid "Soromid Marauder"
-msgid "Marauder"
-msgstr "소로미드 약탈자"
-
-#: dat/faction.xml:280
-#, fuzzy
-msgid "Pirate Marauders"
-msgstr "해적 조상"
-
-#: dat/faction.xml:290
-msgid ""
-"Pirate Marauders are the lowest and most vile of pirates. They are extremely "
-"aggressive and will attack most vessels unprovoked. Even the pirate clans "
-"have difficulty in dealing with them."
-msgstr ""
-
-#: dat/faction.xml:315 dat/scripts/common/empire.lua:12
+#: dat/factions/empire.xml:2 dat/scripts/common/empire.lua:12
 #: dat/scripts/common/empire.lua:17
 msgid "Empire"
 msgstr ""
 
-#: dat/faction.xml:324
+#: dat/factions/empire.xml:11
 msgid ""
 "The Empire is the bureaucratic heart of the universe that provides stability "
 "and cohesion, when possible."
-msgstr ""
-
-#: dat/faction.xml:346 dat/ships/proteron/proteron_archimedes.xml:20
-#: dat/ships/proteron/proteron_derivative.xml:16
-#: dat/ships/proteron/proteron_kahan.xml:16
-#: dat/ships/proteron/proteron_watson.xml:16
-#, fuzzy
-msgid "Proteron"
-msgstr "프로 테론 카한"
-
-#: dat/faction.xml:349
-msgid "Fallen House Proteron"
-msgstr ""
-
-#: dat/faction.xml:355
-msgid ""
-"Fallen House Proteron was an Imperial Great House that decided to move and "
-"attack the Emperor himself. This caused the Incident and left the universe "
-"irreversibly ravaged."
-msgstr ""
-
-#: dat/faction.xml:370 dat/missions/flf/flf_common.lua:71
-msgid "Frontier"
-msgstr ""
-
-#: dat/faction.xml:374
-msgid "Frontier Alliance"
-msgstr "프론티어 얼라이언스"
-
-#: dat/faction.xml:379
-msgid ""
-"The Frontier Alliance is formed by the survivors of the initial attempts of "
-"Human expansion into space."
-msgstr ""
-
-#: dat/faction.xml:399
-msgid "Traders Guild"
-msgstr ""
-
-#: dat/faction.xml:402
-msgid "Space Traders Guild"
-msgstr ""
-
-#: dat/faction.xml:407
-msgid "TODO we have to make these guys more interesting."
-msgstr ""
-
-#: dat/faction.xml:424 dat/ships/feral_bioship/kauweke.xml:23
-#: dat/ships/feral_bioship/nohinohi.xml:16
-#: dat/ships/feral_bioship/taitamariki.xml:18
-#: dat/ships/soromid/soromid_arx.xml:20
-#: dat/ships/soromid/soromid_brigand.xml:13
-#: dat/ships/soromid/soromid_copia.xml:20 dat/ships/soromid/soromid_ira.xml:18
-#: dat/ships/soromid/soromid_marauder.xml:14
-#: dat/ships/soromid/soromid_nyx.xml:14 dat/ships/soromid/soromid_odium.xml:15
-#: dat/ships/soromid/soromid_reaver.xml:13 dat/ships/soromid/soromid_vox.xml:17
-msgid "Soromid"
-msgstr ""
-
-#: dat/faction.xml:433
-msgid ""
-"The Soromid consists of individuals who were forced to genetically modify "
-"themselves in order to survive a pandemic. They now openly embrace their "
-"human transcendence as a sign of strength."
-msgstr ""
-
-#: dat/faction.xml:452
-msgid "Thurion"
-msgstr ""
-
-#: dat/faction.xml:460
-msgid ""
-"The Thurion are a mysterious faction located deep in the Nebula. They seem "
-"to be out of touch with the external world."
-msgstr ""
-
-#: dat/faction.xml:471
-msgid "Collective"
-msgstr ""
-
-#: dat/faction.xml:478
-msgid ""
-"The Collective are a hivemind of AI ships gone rogue. They seem to attack "
-"and destroy all humans on sight."
 msgstr ""
 
 #. FLF are not a natural enemy of the Empire, we have to enforce that
@@ -1619,122 +1616,97 @@ msgstr ""
 #. Get a system with both FLF and Pirate presence.
 #. Change the reputation cap for the FLF.
 #. Add an entry to the FLF campaign log.
-#: dat/faction.xml:493 dat/events/flf/flf_catastrophe.lua:98
+#: dat/factions/flf.xml:2 dat/events/flf/flf_catastrophe.lua:98
 #: dat/missions/flf/flf_common.lua:71
 msgid "FLF"
 msgstr ""
 
-#: dat/faction.xml:496
+#: dat/factions/flf.xml:5
 #, fuzzy
 msgid "Frontier Liberation Front"
 msgstr "프론티어 순찰대"
 
-#: dat/faction.xml:502
+#: dat/factions/flf.xml:11
 msgid ""
 "The Frontier Liberation Front is a group of terrorists advocating for the "
 "independence of the Frontier from Imperial tyranny."
 msgstr ""
 
-#. Add the Cargo
-#. Ship to go back to
-#. Set up Major Malik
-#: dat/faction.xml:509 dat/events/dvaered/fwA_treason.lua:115
-#: dat/events/dvaered/fwA_treason.lua:136 dat/events/dvaered/fwB_repay.lua:44
-#: dat/missions/dvaered/frontier_war/fw00_escort.lua:252
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:520
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:158
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:600
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:161
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:261
-#: dat/missions/dvaered/recruitment/dv_propaganda.lua:96
-#: dat/missions/minerva/kex3.lua:373 dat/scripts/common/dvaered.lua:14
-#: dat/scripts/common/dvaered.lua:19
-msgid "Dvaered"
+#: dat/factions/four_winds.xml:2 dat/factions/rogue_four_winds.xml:5
+msgid "Four Winds"
 msgstr ""
 
-#: dat/faction.xml:514 dat/ships/dvaered/dvaered_ancestor.xml:15
-#: dat/ships/dvaered/dvaered_arsenal.xml:18
-#: dat/ships/dvaered/dvaered_phalanx.xml:16
-#: dat/ships/dvaered/dvaered_retribution.xml:16
-#: dat/ships/dvaered/dvaered_vendetta.xml:16
-#: dat/ships/dvaered/dvaered_vigilance.xml:15 dat/ships/neutral/ancestor.xml:14
-#: dat/ships/neutral/phalanx.xml:15 dat/ships/neutral/vendetta.xml:15
-#: dat/ships/neutral/vigilance.xml:14
-msgid "House Dvaered"
+#: dat/factions/frontier.xml:2 dat/missions/flf/flf_common.lua:71
+msgid "Frontier"
 msgstr ""
 
-#: dat/faction.xml:519
+#: dat/factions/frontier.xml:6
+msgid "Frontier Alliance"
+msgstr "프론티어 얼라이언스"
+
+#: dat/factions/frontier.xml:11
 msgid ""
-"House Dvaered is one of the oldest Great Houses in the Empire. They are "
-"proud and formed by a coalition of many powerful warlords."
+"The Frontier Alliance is formed by the survivors of the initial attempts of "
+"Human expansion into space."
 msgstr ""
 
-#. Gets reset on enter system
-#. Must be goal system
-#. Must be in mission mode (we allow the player to run away and come back)
-#. Clear pilots
-#. Main positions
-#. Define the routes
-#. We'll use a dynamic faction for some ships to lower faction standing damage
-#. Initialize state
-#. Temp faction
-#. general functions
-#. get nearest jumppoint
-#. basically the distance that the map can have at
-#. - create enemy ships
-#: dat/faction.xml:541 dat/ssys/zalek.xml:2
-#: dat/missions/minerva/pirate2.lua:179 dat/missions/minerva/pirate5.lua:245
-#: dat/missions/zalek/blackhole/zbh03.lua:155
-#: dat/missions/zalek/particlephysics/zpp03.lua:135
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:91
-#: dat/scripts/common/nebu_research.lua:35
-#: dat/scripts/common/sciencegonewrong.lua:6 dat/scripts/common/zalek.lua:11
-#: dat/scripts/common/zalek.lua:17 dat/scripts/common/zalek_blackhole.lua:61
-#: dat/scripts/common/zalek_blackhole.lua:89
-#: dat/scripts/common/zalek_physics.lua:32
-msgid "Za'lek"
-msgstr ""
-
-#: dat/faction.xml:546
-msgid "House Za'lek"
-msgstr ""
-
-#: dat/faction.xml:551
-msgid ""
-"House Za'lek is the scientific heart of the Empire. Until recently they were "
-"a secretive Great House, but they have recently become much more open."
-msgstr ""
-
-#: dat/faction.xml:572 dat/faction.xml:744 dat/scripts/common/sirius.lua:11
-#: dat/scripts/common/sirius.lua:17
-msgid "Sirius"
-msgstr ""
-
-#: dat/faction.xml:577
-msgid "House Sirius"
-msgstr ""
-
-#: dat/faction.xml:582
-msgid ""
-"House Sirius is defined by its state religion more than anything else, with "
-"Sirichana as the focus of worship."
-msgstr ""
-
-#: dat/faction.xml:604 dat/ships/neutral/goddard.xml:2 dat/ssys/goddard.xml:2
+#: dat/factions/goddard.xml:2 dat/ships/neutral/goddard.xml:2
+#: dat/ssys/goddard.xml:2
 #, fuzzy
 msgid "Goddard"
 msgstr "드 베어드 고다드"
 
-#: dat/faction.xml:609 dat/ships/dvaered/dvaered_goddard.xml:18
+#: dat/factions/goddard.xml:7 dat/ships/dvaered/dvaered_goddard.xml:18
 #: dat/ships/neutral/goddard.xml:17
 #, fuzzy
 msgid "House Goddard"
 msgstr "드 베어드 고다드"
 
-#: dat/faction.xml:614
+#: dat/factions/goddard.xml:12
 msgid ""
 "House Goddard is a minor house wedged between the Empire and Dvaered. They "
 "are one of the main fabricators of ships for the Dvaered."
+msgstr ""
+
+#.
+#. if gauntlet_subtype == newsubtype then
+#. return
+#. end
+#. --
+#. Overwrite and use id instead of string
+#: dat/factions/independent.xml:2 dat/factions/miner.xml:3
+#: dat/factions/strangelove.xml:5 dat/factions/trader.xml:3
+#: dat/missions/dvaered/gauntlet/gui.lua:142
+msgid "Independent"
+msgstr ""
+
+#: dat/factions/marauder.xml:2
+#, fuzzy
+#| msgid "Soromid Marauder"
+msgid "Marauder"
+msgstr "소로미드 약탈자"
+
+#. hook.pilot( rampant, "idle", "idle" )
+#: dat/factions/marauder.xml:3 dat/factions/pirate.xml:2
+#: dat/factions/shadow_pirates.xml:5
+#: dat/missions/neutral/kidnapped/traffic_00.lua:83
+#: dat/missions/neutral/kidnapped/traffic_00.lua:84
+#: dat/missions/neutral/kidnapped/traffic_00.lua:90
+#: dat/missions/neutral/kidnapped/traffic_00.lua:91
+#: dat/missions/tutorial/nelly02.lua:262 dat/scripts/common/pirate.lua:65
+msgid "Pirate"
+msgstr ""
+
+#: dat/factions/marauder.xml:4
+#, fuzzy
+msgid "Pirate Marauders"
+msgstr "해적 조상"
+
+#: dat/factions/marauder.xml:14
+msgid ""
+"Pirate Marauders are the lowest and most vile of pirates. They are extremely "
+"aggressive and will attack most vessels unprovoked. Even the pirate clans "
+"have difficulty in dealing with them."
 msgstr ""
 
 #.
@@ -1806,7 +1778,7 @@ msgstr ""
 #. Escort
 #. spawning Ancestors
 #. Escort
-#: dat/faction.xml:634 dat/outfits/misc/mercenary_license.xml:10
+#: dat/factions/mercenary.xml:2 dat/outfits/misc/mercenary_license.xml:10
 #: dat/events/dvaered/fwD_hitman.lua:53 dat/events/dvaered/fwD_hitman.lua:55
 #: dat/events/dvaered/fwD_hitman.lua:57
 #: dat/missions/neutral/kidnapped/traffic_01.lua:226
@@ -1823,118 +1795,128 @@ msgstr ""
 msgid "Mercenary"
 msgstr ""
 
-#. Don't spawn in restricted space
-#. Don't spawn in Thurion space
-#. Ignore claimed systems (don't want to ruin the atmosphere)
-#. Get the derelict's ship.
-#. Create the derelict.
-#. Red Dwarf
-#. Assign a random name to the player's ship.
-#. Tutorials tell the player to buy and equip ion cannon later, need one weapon slot empty
-#. Give all GUIs
-#. TODO: Would be better to remove these outfits and the association,
-#. but they're so tightly integrated atm (with no other way to define
-#. GUIs as usable) that I'm implementing it this way for now.
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <event name="Finding Taiomi">
-#. <location>enter</location>
-#. <unique />
-#. <chance>100</chance>
-#. <cond>system.cur() == system.get("Bastion")</cond>
-#. <chapter>[^0]</chapter>
-#. <notes>
-#. <campaign>Taiomi</campaign>
-#. </notes>
-#. </event>
-#. --
-#.
-#.
-#. Finding Taiomi Event
-#.
-#. --
-#. Forward-declared functions
-#. Event state, never saved.
-#. luacheck: globals board boardnothing boardothers drone_runaway fidget heartbeat leave returncontrol whatwasthat (Hook functions passed by name)
-#. Threshold distances to detect the drone
-#. first encounter at mule
-#. second encounter at jump
-#.
-#. -- Event states:
-#. -- 0: not found by the player
-#. -- 1: CUTSCENE player near derelict, zoom in and show the drone which runs away
-#. -- 2: player chases drone until near jump
-#. -- 3: CUTSCENE drone jumps off
-#. -- 4: player has to search for jump in derelicts
-#. --
-#. Extra derelicts
-#. Main derelict
-#. Advance so it deosn't do the same convo
-#. Should be to the center of the system
-#. Correct
-#. Get the logo
-#. Shortcuts and graphics
-#. Set up the namebox
-#.
-#. Helpers for dealing with derelict or abandoned ships in general.
-#. --
-#: dat/faction.xml:645 dat/events/neutral/derelict.lua:154
-#: dat/events/taiomi/find.lua:50 dat/events/taiomi/find.lua:62
-#: dat/missions/tutorial/nelly01.lua:331 dat/scripts/common/derelict.lua:19
-#, fuzzy
-msgid "Derelict"
-msgstr "빈 휴지통"
-
-#: dat/faction.xml:655 dat/faction.xml:674
-msgid "Four Winds"
+#: dat/factions/miner.xml:2
+msgid "Miner"
 msgstr ""
 
-#: dat/faction.xml:672
-msgid "Rogue Four Winds"
-msgstr ""
-
-#: dat/faction.xml:686
-msgid "Shadow_pirates"
-msgstr ""
-
-#: dat/faction.xml:702
-#, fuzzy
-msgid "Diplomatic"
-msgstr "외교 선박"
-
-#: dat/faction.xml:716
-#, fuzzy
-msgid "Associates"
-msgstr "해적 황조롱이"
-
-#. Time for !!FUN!!
-#: dat/faction.xml:729 dat/faction.xml:758
-#: dat/missions/zalek/particlephysics/zpp04.lua:179
-#: dat/missions/zalek/particlephysics/zpp04.lua:182
-msgid "Thugs"
-msgstr ""
-
-#: dat/faction.xml:742
-msgid "Achack_sirius"
-msgstr ""
-
-#: dat/faction.xml:756
-msgid "Achack_thugs"
-msgstr ""
-
-#: dat/faction.xml:770
+#: dat/factions/nasin.xml:2
 msgid "Nasin"
 msgstr ""
 
-#: dat/faction.xml:782
-msgid "DHC"
+#: dat/factions/pirate.xml:6
+msgid "Galactic Space Pirates"
 msgstr ""
 
-#: dat/faction.xml:786 dat/spob/dvaered_high_command.xml:2
-#: dat/events/discovery.lua:58
+#: dat/factions/pirate.xml:13
+msgid ""
+"The Galactic Space Pirates consists of independent pirate vessels not "
+"affiliated with any particular clan. Due to their disorganized nature, they "
+"tend to respect the clans they operate near."
+msgstr ""
+
+#: dat/factions/proteron.xml:2 dat/ships/proteron/proteron_archimedes.xml:20
+#: dat/ships/proteron/proteron_derivative.xml:16
+#: dat/ships/proteron/proteron_kahan.xml:16
+#: dat/ships/proteron/proteron_watson.xml:16
 #, fuzzy
-msgid "Dvaered High Command"
-msgstr "드 베어드 경계"
+msgid "Proteron"
+msgstr "프로 테론 카한"
+
+#: dat/factions/proteron.xml:5
+msgid "Fallen House Proteron"
+msgstr ""
+
+#: dat/factions/proteron.xml:11
+msgid ""
+"Fallen House Proteron was an Imperial Great House that decided to move and "
+"attack the Emperor himself. This caused the Incident and left the universe "
+"irreversibly ravaged."
+msgstr ""
+
+#: dat/factions/raven_clan.xml:2
+msgid "Raven Clan"
+msgstr ""
+
+#: dat/factions/raven_clan.xml:5
+#, fuzzy
+#| msgid "Pirate Phalanx"
+msgid "Raven Pirate Clan"
+msgstr "해적 지골"
+
+#: dat/factions/raven_clan.xml:12
+msgid ""
+"The Raven Pirate Clan is a band of pirates that lead over the widespread "
+"Qorel sector between the Empire and Dvaered systems."
+msgstr ""
+
+#: dat/factions/rogue_four_winds.xml:2
+msgid "Rogue Four Winds"
+msgstr ""
+
+#: dat/factions/shadow_pirates.xml:2
+msgid "Shadow_pirates"
+msgstr ""
+
+#: dat/factions/sirius.xml:7
+msgid "House Sirius"
+msgstr ""
+
+#: dat/factions/sirius.xml:12
+msgid ""
+"House Sirius is defined by its state religion more than anything else, with "
+"Sirichana as the focus of worship."
+msgstr ""
+
+#: dat/factions/soromid.xml:2 dat/ships/feral_bioship/kauweke.xml:23
+#: dat/ships/feral_bioship/nohinohi.xml:16
+#: dat/ships/feral_bioship/taitamariki.xml:18
+#: dat/ships/soromid/soromid_arx.xml:20
+#: dat/ships/soromid/soromid_brigand.xml:13
+#: dat/ships/soromid/soromid_copia.xml:20 dat/ships/soromid/soromid_ira.xml:18
+#: dat/ships/soromid/soromid_marauder.xml:14
+#: dat/ships/soromid/soromid_nyx.xml:14 dat/ships/soromid/soromid_odium.xml:15
+#: dat/ships/soromid/soromid_reaver.xml:13 dat/ships/soromid/soromid_vox.xml:17
+msgid "Soromid"
+msgstr ""
+
+#: dat/factions/soromid.xml:11
+msgid ""
+"The Soromid consists of individuals who were forced to genetically modify "
+"themselves in order to survive a pandemic. They now openly embrace their "
+"human transcendence as a sign of strength."
+msgstr ""
+
+#: dat/factions/strangelove.xml:2
+msgid "Strangelove"
+msgstr "Strangelove"
+
+#: dat/factions/thurion.xml:2
+msgid "Thurion"
+msgstr ""
+
+#: dat/factions/thurion.xml:10
+msgid ""
+"The Thurion are a mysterious faction located deep in the Nebula. They seem "
+"to be out of touch with the external world."
+msgstr ""
+
+#: dat/factions/trader.xml:2
+#: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:74
+#: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:76
+msgid "Trader"
+msgstr ""
+
+#: dat/factions/traders_guild.xml:2
+msgid "Traders Guild"
+msgstr ""
+
+#: dat/factions/traders_guild.xml:5
+msgid "Space Traders Guild"
+msgstr ""
+
+#: dat/factions/traders_guild.xml:10
+msgid "TODO we have to make these guys more interesting."
+msgstr ""
 
 #. Manage acceptance and refusal
 #.
@@ -1955,20 +1937,66 @@ msgstr "드 베어드 경계"
 #. choose 1 particular planet
 #. choose only Dvaered planets (and no stations)
 #. If no planet matches the specs...
-#: dat/faction.xml:800 dat/events/dvaered/warlords_battle.lua:66
+#: dat/factions/warlords.xml:2 dat/events/dvaered/warlords_battle.lua:66
 #: dat/events/dvaered/warlords_battle.lua:67
 msgid "Warlords"
 msgstr ""
 
-#: dat/faction.xml:804
+#: dat/factions/warlords.xml:7
 #, fuzzy
 #| msgid "Dvaered Patrol"
 msgid "Dvaered Warlords"
 msgstr "드바에레드 순찰대"
 
-#: dat/faction.xml:816
-msgid "Strangelove"
-msgstr "Strangelove"
+#: dat/factions/wild_ones.xml:2
+msgid "Wild Ones"
+msgstr ""
+
+#: dat/factions/wild_ones.xml:5
+msgid "Wild Ones Pirate Clan"
+msgstr ""
+
+#: dat/factions/wild_ones.xml:12
+msgid ""
+"The Wild Ones Pirate Clan is a violent and loosely organized band of pirates "
+"that control the Haven sector between Empire and Soromid territories."
+msgstr ""
+
+#. Gets reset on enter system
+#. Must be goal system
+#. Must be in mission mode (we allow the player to run away and come back)
+#. Clear pilots
+#. Main positions
+#. Define the routes
+#. We'll use a dynamic faction for some ships to lower faction standing damage
+#. Initialize state
+#. Temp faction
+#. general functions
+#. get nearest jumppoint
+#. basically the distance that the map can have at
+#. - create enemy ships
+#: dat/factions/zalek.xml:2 dat/ssys/zalek.xml:2
+#: dat/missions/minerva/pirate2.lua:179 dat/missions/minerva/pirate5.lua:245
+#: dat/missions/zalek/blackhole/zbh03.lua:155
+#: dat/missions/zalek/particlephysics/zpp03.lua:135
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:91
+#: dat/scripts/common/nebu_research.lua:35
+#: dat/scripts/common/sciencegonewrong.lua:6 dat/scripts/common/zalek.lua:11
+#: dat/scripts/common/zalek.lua:17 dat/scripts/common/zalek_blackhole.lua:61
+#: dat/scripts/common/zalek_blackhole.lua:89
+#: dat/scripts/common/zalek_physics.lua:32
+msgid "Za'lek"
+msgstr ""
+
+#: dat/factions/zalek.xml:7
+msgid "House Za'lek"
+msgstr ""
+
+#: dat/factions/zalek.xml:12
+msgid ""
+"House Za'lek is the scientific heart of the Empire. Until recently they were "
+"a secretive Great House, but they have recently become much more open."
+msgstr ""
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
@@ -1992,7 +2020,7 @@ msgstr ""
 #: dat/outfits/accessory/trading_card_rare.xml:5
 #: dat/outfits/accessory/trading_card_uncommon.xml:5
 #: dat/outfits/accessory/ugly_statue.xml:5
-#: dat/outfits/accessory/vacuum_cleaner.xml:5 dat/slots.xml:4
+#: dat/outfits/accessory/vacuum_cleaner.xml:5 dat/slots/accessory.xml:3
 msgid "Accessory"
 msgstr "엑세서리"
 
@@ -7910,7 +7938,7 @@ msgstr ""
 "Sting Corvette는 크기에 비해 다소 크지 만 고급 센서 제품군, 인상적인 무기로"
 "드 아웃 및 견고한 실드로 인해 House Za'lek 함대의 좋은 백본이됩니다."
 
-#: dat/slots.xml:5
+#: dat/slots/accessory.xml:4
 #, fuzzy
 msgid ""
 "This slot is used to equip accessories that can enhance the ship's "
@@ -7919,87 +7947,13 @@ msgid ""
 msgstr ""
 "이 슬롯은 선박의 성능을 향상시킬 수있는 액세서리를 장착하는 데 사용됩니다."
 
-#: dat/slots.xml:9
-msgid "Core Systems"
-msgstr "핵심 시스템"
-
-#: dat/slots.xml:10
-msgid ""
-"This slot is used for dedicated core systems of the ship. Other subsystems "
-"rely on this system to manage them, and the bulk of the ship's power and "
-"shield generation also happens here."
-msgstr ""
-"이 슬롯은 선박의 전용 코어 시스템에 사용됩니다. 다른 하위 시스템은이 시스템"
-"을 사용하여 관리하며 선박의 전력 및 실드 생성의 대부분도 여기서 발생합니다."
-
-#: dat/slots.xml:15
-#, fuzzy
-msgid "Hull Modifications"
-msgstr "선체 수정"
-
-#: dat/slots.xml:16
-msgid ""
-"This slot is used for structural modifications to the ship's hull. This slot "
-"represents the base layer of armour plating, and also greatly affects mass, "
-"cargo space and available weapon slots."
-msgstr ""
-"이 슬롯은 선박의 선체 구조를 수정하는 데 사용됩니다. 이 슬롯은 갑옷 도금의 기"
-"본 레이어를 나타내며 질량,화물 공간 및 사용 가능한 무기 슬롯에 큰 영향을 미칩"
-"니다."
-
-#: dat/slots.xml:21
-msgid "Engines"
-msgstr "엔지"
-
-#: dat/slots.xml:22
-msgid ""
-"This slot is used for engines. Engines propel the ship, which is kind of "
-"important. Engines require energy from the core system to function."
-msgstr ""
-"이 슬롯은 엔진에 사용됩니다. 엔진은 배를 추진하는데, 이것은 일종의 중요합니"
-"다. 엔진이 작동하려면 핵심 시스템의 에너지가 필요합니다."
-
-#: dat/slots.xml:27
-#, fuzzy
-#| msgid "Bioship Brain"
-msgid "Bioship Brains"
-msgstr "바이오십 뇌"
-
-#: dat/slots.xml:28
-msgid ""
-"This slot is used for the brain, the biological equivalent to Core Systems. "
-"The brain of an organism is responsible for managing the function of the "
-"rest of the organism and allocating energy reserves for the battery and "
-"shield."
-msgstr ""
-"이 슬롯은 Core Systems와 생물학적으로 동등한 두뇌에 사용됩니다. 유기체의 뇌"
-"는 나머지 유기체의 기능을 관리하고 배터리와 보호막을위한 에너지 비축량을 할당"
-"하는 역할을합니다."
-
-#: dat/slots.xml:34
-#, fuzzy
-#| msgid "Bioship Shell"
-msgid "Bioship Shells"
-msgstr "바이오십 셀"
-
-#: dat/slots.xml:35
-msgid ""
-"This slot is used for the shell, the biological equivalent to Hull "
-"Modifications. The shell is the last line of defence for the organism, "
-"protecting critical organs from damage. It is also helps determine the "
-"organism's cargo space."
-msgstr ""
-"이 슬롯은 선체 변형과 생물학적으로 동등한 쉘에 사용됩니다. 껍질은 유기체에 대"
-"한 마지막 방어선으로 중요한 장기를 손상으로부터 보호합니다. 또한 유기체의화"
-"물 공간을 결정하는 데 도움이됩니다."
-
-#: dat/slots.xml:41
+#: dat/slots/bio_engines.xml:3
 #, fuzzy
 #| msgid "Bioship Weapons"
 msgid "Bioship Gene Drives"
 msgstr "바이오십 무기"
 
-#: dat/slots.xml:42
+#: dat/slots/bio_engines.xml:4
 #, fuzzy
 #| msgid ""
 #| "This slot is used for the fins, the biological equivalent to Engines. "
@@ -8011,11 +7965,58 @@ msgstr ""
 "해당 슬롯은 엔진과 동등한 기체의 생물학적 수직 안정판에 사용됩니다. 수직 안정"
 "판은 유기체를 통해 우주에서 이동할 수 있게 해줍니다."
 
-#: dat/slots.xml:48
+#: dat/slots/bio_hull.xml:3
+#, fuzzy
+#| msgid "Bioship Shell"
+msgid "Bioship Shells"
+msgstr "바이오십 셀"
+
+#: dat/slots/bio_hull.xml:4
+msgid ""
+"This slot is used for the shell, the biological equivalent to Hull "
+"Modifications. The shell is the last line of defence for the organism, "
+"protecting critical organs from damage. It is also helps determine the "
+"organism's cargo space."
+msgstr ""
+"이 슬롯은 선체 변형과 생물학적으로 동등한 쉘에 사용됩니다. 껍질은 유기체에 대"
+"한 마지막 방어선으로 중요한 장기를 손상으로부터 보호합니다. 또한 유기체의화"
+"물 공간을 결정하는 데 도움이됩니다."
+
+#: dat/slots/bio_organ.xml:3
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Bioship Organs"
+msgstr "바이오십 뇌"
+
+#: dat/slots/bio_organ.xml:4
+msgid ""
+"Through biological synthesis, bioships are able to modify and adapt their "
+"organs for many different purposes without the need of any external "
+"equipment."
+msgstr ""
+
+#: dat/slots/bio_systems.xml:3
+#, fuzzy
+#| msgid "Bioship Brain"
+msgid "Bioship Brains"
+msgstr "바이오십 뇌"
+
+#: dat/slots/bio_systems.xml:4
+msgid ""
+"This slot is used for the brain, the biological equivalent to Core Systems. "
+"The brain of an organism is responsible for managing the function of the "
+"rest of the organism and allocating energy reserves for the battery and "
+"shield."
+msgstr ""
+"이 슬롯은 Core Systems와 생물학적으로 동등한 두뇌에 사용됩니다. 유기체의 뇌"
+"는 나머지 유기체의 기능을 관리하고 배터리와 보호막을위한 에너지 비축량을 할당"
+"하는 역할을합니다."
+
+#: dat/slots/bio_weapon.xml:3
 msgid "Bioship Weapons"
 msgstr "바이오십 무기"
 
-#: dat/slots.xml:49
+#: dat/slots/bio_weapon.xml:4
 #, fuzzy
 #| msgid ""
 #| "In addition to standard weapons, this slot can be used for special "
@@ -8033,28 +8034,55 @@ msgstr ""
 "한 사용 가능합니다. 바이오 무기는 일반적으로 합성 무기와 유사하지만 더 효율적"
 "이므로 합성 구조에 비해 뇌의 CPU 처리 부하가 감소하는 장점이 있습니다."
 
-#: dat/slots.xml:54
-#, fuzzy
-#| msgid "Bioship Brain"
-msgid "Bioship Organs"
-msgstr "바이오십 뇌"
+#: dat/slots/engines.xml:3
+msgid "Engines"
+msgstr "엔지"
 
-#: dat/slots.xml:55
+#: dat/slots/engines.xml:4
 msgid ""
-"Through biological synthesis, bioships are able to modify and adapt their "
-"organs for many different purposes without the need of any external "
-"equipment."
+"This slot is used for engines. Engines propel the ship, which is kind of "
+"important. Engines require energy from the core system to function."
 msgstr ""
+"이 슬롯은 엔진에 사용됩니다. 엔진은 배를 추진하는데, 이것은 일종의 중요합니"
+"다. 엔진이 작동하려면 핵심 시스템의 에너지가 필요합니다."
 
-#: dat/slots.xml:60
+#: dat/slots/fighter_bay.xml:3
 #, fuzzy
 #| msgid "Light "
 msgid "Fighter Bays"
 msgstr "빛 "
 
-#: dat/slots.xml:61
+#: dat/slots/fighter_bay.xml:4
 msgid "This slot can be used for fighter bays."
 msgstr ""
+
+#: dat/slots/hull.xml:3
+#, fuzzy
+msgid "Hull Modifications"
+msgstr "선체 수정"
+
+#: dat/slots/hull.xml:4
+msgid ""
+"This slot is used for structural modifications to the ship's hull. This slot "
+"represents the base layer of armour plating, and also greatly affects mass, "
+"cargo space and available weapon slots."
+msgstr ""
+"이 슬롯은 선박의 선체 구조를 수정하는 데 사용됩니다. 이 슬롯은 갑옷 도금의 기"
+"본 레이어를 나타내며 질량,화물 공간 및 사용 가능한 무기 슬롯에 큰 영향을 미칩"
+"니다."
+
+#: dat/slots/systems.xml:3
+msgid "Core Systems"
+msgstr "핵심 시스템"
+
+#: dat/slots/systems.xml:4
+msgid ""
+"This slot is used for dedicated core systems of the ship. Other subsystems "
+"rely on this system to manage them, and the bulk of the ship's power and "
+"shield generation also happens here."
+msgstr ""
+"이 슬롯은 선박의 전용 코어 시스템에 사용됩니다. 다른 하위 시스템은이 시스템"
+"을 사용하여 관리하며 선박의 전력 및 실드 생성의 대부분도 여기서 발생합니다."
 
 #: dat/spob/abacus.xml:2
 msgid "Abacus"
@@ -43039,7 +43067,7 @@ msgid ""
 "{player}. I guess they told you that I may have a solution to your little... "
 "problem.\" You look suspiciously at the agent and ask: \"What do you want in "
 "exchange?\" The agent smiles: \"Simple. I want to speak with the Dvaered "
-"captain. Give me 10 hecotseconds on the spacedock alone with him, not more, "
+"captain. Give me 10 hectoseconds on the spacedock alone with him, not more, "
 "and the commander of the fleet in Arcturus will forget to scan your ship "
 "when you jump to Goddard.\"\n"
 "   This is certainly an unusual request. You think of all the state secrets "
@@ -74014,7 +74042,12 @@ msgstr ""
 #. Store faction which will be used for next missions
 #. Update OSD
 #. Spawn new fleet
-#: dat/missions/taiomi/taiomi02.lua:229 dat/missions/taiomi/taiomi03.lua:83
+#.
+#. if mg.completed() then
+#. else
+#. end
+#. --
+#: dat/missions/taiomi/taiomi02.lua:229 dat/missions/taiomi/taiomi03.lua:85
 msgid "You board the Goddard and and find Scavenger waiting for you."
 msgstr ""
 
@@ -74063,11 +74096,11 @@ msgstr ""
 msgid "Infiltrate the laboratory at {spobname} ({spobsys})"
 msgstr ""
 
-#: dat/missions/taiomi/taiomi03.lua:84
+#: dat/missions/taiomi/taiomi03.lua:86
 msgid "\"TODO\""
 msgstr ""
 
-#: dat/missions/taiomi/taiomi03.lua:91
+#: dat/missions/taiomi/taiomi03.lua:93
 msgid ""
 "You stole some important documents detailing the inner workings of the "
 "hypergates for the inhabitants of Taiomi."
@@ -89446,8 +89479,6 @@ msgstr ""
 #. usually finishes in a few iterations
 #. --
 #. A visual novel character.
-#.
-#. @type Character
 #. --
 #. --
 #. Makes a character say something.
@@ -89461,7 +89492,7 @@ msgstr ""
 #. @tparam tab params Parameter table.
 #. @treturn Character New character.
 #. --
-#: dat/scripts/vn/core.lua:1134
+#: dat/scripts/vn/core.lua:1132
 #, fuzzy, lua-format
 msgid "vn: character image '%s' not found!"
 msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
@@ -89623,12 +89654,12 @@ msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 #.
 #. @tparam func updatefunc Update function to run every frame.
 #. --
-#: dat/scripts/vn/core.lua:1583
+#: dat/scripts/vn/core.lua:1581
 #, lua-format
 msgid "vn: unable to find label '%s'"
 msgstr "vn: '%s' 레이블을 찾을 수 없습니다"
 
-#: dat/scripts/vn/core.lua:1593
+#: dat/scripts/vn/core.lua:1591
 #, fuzzy, lua-format
 msgid "vn: character '%s' not found!"
 msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
@@ -89644,7 +89675,7 @@ msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 #. <em>Note</em> You have to set up the states first.
 #. <em>Note</em> This function doesn't return until the VN is done running.
 #. --
-#: dat/scripts/vn/core.lua:1627
+#: dat/scripts/vn/core.lua:1625
 msgid "vn: run without any states"
 msgstr ""
 
@@ -90427,7 +90458,7 @@ msgstr "상품 '%s'을 (를) 찾을 수 없습니다!"
 msgid "Trying to modify temporary commodity '%s'!"
 msgstr ""
 
-#: src/commodity.c:478 src/faction.c:1563 src/tech.c:106
+#: src/commodity.c:478
 #, c-format
 msgid "Malformed %s file: missing root element '%s'"
 msgstr ""
@@ -90948,25 +90979,35 @@ msgstr "네뷸라에 온것을 환영합니다"
 msgid "Lua Console"
 msgstr ""
 
-#: src/damagetype.c:100
+#: src/damagetype.c:73 src/difficulty.c:51 src/event.c:610 src/slots.c:63
+#: src/spfx.c:177 src/start.c:65
+#, c-format
+msgid "Malformed '%s' file: missing root element '%s'"
+msgstr ""
+
+#: src/damagetype.c:111
 #, fuzzy, c-format
 msgid "Unknown node of type '%s' in damage node '%s'."
 msgstr "임무 '%s' 의 알 수 없는 노드 '%s'"
 
-#: src/damagetype.c:104
+#: src/damagetype.c:115
 #, c-format
 msgid "DTYPE '%s' invalid '"
 msgstr ""
 
-#: src/damagetype.c:135
+#: src/damagetype.c:149
 #, fuzzy, c-format
 msgid "Damage type '%s' not found in stack."
 msgstr "스택에서 '%s' 미션을 찾지 못했습니다"
 
-#: src/damagetype.c:145
+#: src/damagetype.c:159
 #, fuzzy, c-format
 msgid "Damage type '%d' is invalid."
 msgstr "저장된 게임 '%s'이 잘못되었습니다!"
+
+#: src/damagetype.c:184
+msgid "normal"
+msgstr ""
 
 #: src/debris.c:54
 msgid "No debris special effects found."
@@ -91668,36 +91709,30 @@ msgstr[0] ""
 msgid "Dialogue counter not in sync!"
 msgstr ""
 
-#: src/difficulty.c:50 src/event.c:610 src/slots.c:59 src/spfx.c:177
-#: src/start.c:65
-#, c-format
-msgid "Malformed '%s' file: missing root element '%s'"
-msgstr ""
-
-#: src/difficulty.c:82
+#: src/difficulty.c:78
 #, fuzzy, c-format
 msgid "Difficulty '%s' has unknown node '%s'"
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
-#: src/difficulty.c:93
+#: src/difficulty.c:91
 msgid "More than one difficulty with default flag set!"
 msgstr ""
 
-#: src/difficulty.c:98
+#: src/difficulty.c:96
 msgid "No default difficulty set!"
 msgstr ""
 
-#: src/difficulty.c:161
+#: src/difficulty.c:158
 #, fuzzy, c-format
 msgid "Uknown difficulty setting '%s'"
 msgstr "알 수없는 Lua 데이터 유형!"
 
-#: src/difficulty.c:202
+#: src/difficulty.c:199
 #, c-format
 msgid "Difficulty %s"
 msgstr ""
 
-#: src/difficulty.c:206
+#: src/difficulty.c:203
 msgid "This difficulty applies the following effect to the player ships:"
 msgstr ""
 
@@ -91728,7 +91763,7 @@ msgstr ""
 msgid "Unable to create economy G Matrix."
 msgstr ""
 
-#: src/economy.c:532 src/gui.c:1610 src/ndata.c:213 src/nfile.c:479
+#: src/economy.c:532 src/gui.c:1610 src/ndata.c:214 src/nfile.c:479
 #: src/opengl_tex.c:133 src/opengl_tex.c:370 src/physics.c:289
 msgid "Out of Memory"
 msgstr ""
@@ -91747,8 +91782,9 @@ msgstr ""
 msgid "Spob '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
-#: src/effect.c:57 src/outfit.c:2162 src/outfit.c:2622 src/slots.c:66
-#: src/spfx.c:1181 src/start.c:71
+#: src/effect.c:57 src/faction.c:1262 src/faction.c:1445 src/outfit.c:2162
+#: src/outfit.c:2622 src/spfx.c:1132 src/start.c:71 src/tech.c:248
+#: src/tech.c:344
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr ""
@@ -92379,7 +92415,7 @@ msgid "Loaded %d Event"
 msgid_plural "Loaded %d Events"
 msgstr[0] ""
 
-#: src/event.c:578 src/faction.c:1359 src/mission.c:1094 src/nxml.c:85
+#: src/event.c:578 src/mission.c:1094 src/nxml.c:85
 #, c-format
 msgid "Unable to read data from '%s'"
 msgstr ""
@@ -92503,40 +92539,46 @@ msgid ""
 "reputation_max(...)'."
 msgstr ""
 
-#: src/faction.c:1307
+#: src/faction.c:1274
+#, fuzzy, c-format
+#| msgid "Mission file '%s' has missing XML header!"
+msgid "Faction from file '%s' has no name!"
+msgstr "임무 파일 '%s'에 XML 헤더가 없습니다!"
+
+#: src/faction.c:1320
 #, c-format
 msgid "Faction '%s' has duplicate 'logo' tag."
 msgstr ""
 
-#: src/faction.c:1331
+#: src/faction.c:1344
 #, fuzzy, c-format
 #| msgid "Mission '%s' has unknown flag node '%s'."
 msgid "Faction '%s' has duplicate '%s' node!"
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
-#: src/faction.c:1342
+#: src/faction.c:1355
 #, fuzzy, c-format
 #| msgid "Mission '%s' has unknown flag node '%s'."
 msgid "Faction '%s' has unknown node in tags '%s'."
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
-#: src/faction.c:1353
+#: src/faction.c:1366
 #, c-format
 msgid "Unknown node '%s' in faction '%s'"
 msgstr ""
 
-#: src/faction.c:1361
+#: src/faction.c:1372
 #, fuzzy, c-format
 #| msgid "Mission '%s' missing/invalid '%s' element"
 msgid "Faction '%s' missing 'player' tag."
 msgstr "임무 '%s'누락 / 잘못된 '%s'요소"
 
-#: src/faction.c:1363
+#: src/faction.c:1374
 #, c-format
 msgid "Faction '%s' is known but missing 'description' tag."
 msgstr ""
 
-#: src/faction.c:1385
+#: src/faction.c:1398
 #, c-format
 msgid ""
 "Failed to run standing script: %s\n"
@@ -92544,22 +92586,22 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/faction.c:1408
+#: src/faction.c:1421
 #, c-format
 msgid "Standing script did not set the \"standing\" variable: %s"
 msgstr ""
 
-#: src/faction.c:1458
+#: src/faction.c:1478
 #, c-format
 msgid "Faction '%s' has duplicate 'standing' tag."
 msgstr ""
 
-#: src/faction.c:1466
+#: src/faction.c:1486
 #, c-format
 msgid "Faction '%s' has duplicate 'spawn' tag."
 msgstr ""
 
-#: src/faction.c:1472
+#: src/faction.c:1492
 #, c-format
 msgid ""
 "Failed to run spawn script: %s\n"
@@ -92567,12 +92609,12 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/faction.c:1486
+#: src/faction.c:1506
 #, c-format
 msgid "Faction '%s' has duplicate 'equip' tag."
 msgstr ""
 
-#: src/faction.c:1492
+#: src/faction.c:1512
 #, c-format
 msgid ""
 "Failed to run equip script: %s\n"
@@ -92580,25 +92622,18 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/faction.c:1531
+#: src/faction.c:1551
 #, c-format
 msgid "Faction '%s' has no Lua and isn't static!"
 msgstr ""
 
-#: src/faction.c:1569 src/map.c:3092 src/outfit.c:1129 src/ship.c:532
-#: src/ship.c:1041 src/space.c:1719 src/space.c:1777 src/space.c:3191
-#: src/tech.c:113
-#, c-format
-msgid "Malformed %s file: does not contain elements"
-msgstr ""
-
-#: src/faction.c:1646
+#: src/faction.c:1659
 #, c-format
 msgid "Loaded %d Faction in %.3f s"
 msgid_plural "Loaded %d Factions in %.3f s"
 msgstr[0] ""
 
-#: src/faction.c:1649
+#: src/faction.c:1662
 #, c-format
 msgid "Loaded %d Faction"
 msgid_plural "Loaded %d Factions"
@@ -94242,7 +94277,7 @@ msgstr ""
 msgid "Unable to get child node of save '%s'."
 msgstr ""
 
-#: src/load.c:300 src/load.c:329 src/ndata.c:278
+#: src/load.c:300 src/load.c:329 src/ndata.c:279
 #, c-format
 msgid "PhysicsFS: Cannot stat %s: %s"
 msgstr ""
@@ -94590,34 +94625,29 @@ msgstr "시스템"
 msgid "Write a note about the #o%s#0 system:"
 msgstr ""
 
-#: src/map.c:3086
-#, fuzzy, c-format
-msgid "Malformed %s file: missing root element 'map'"
-msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
-
-#: src/map.c:3103 src/slots.c:78 src/start.c:125 src/tech.c:127
-#, c-format
-msgid "'%s' has unknown node '%s'."
-msgstr ""
-
-#: src/map.c:3110
+#: src/map.c:3085
 #, c-format
 msgid "Loaded %d map decorator in %.3f s"
 msgid_plural "Loaded %d map decorators in %.3f s"
 msgstr[0] ""
 
-#: src/map.c:3113
+#: src/map.c:3088
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
 msgstr[0] ""
 
-#: src/map.c:3139
+#: src/map.c:3104
+#, fuzzy, c-format
+msgid "Malformed %s file: missing root element 'decorator'"
+msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
+
+#: src/map.c:3125
 #, fuzzy, c-format
 msgid "Could not load map decorator texture '%s'."
 msgstr "텍스처 '%s'을 (를) 복제 할 수 없습니다."
 
-#: src/map.c:3143
+#: src/map.c:3129
 #, fuzzy, c-format
 msgid "Map decorator has unknown node '%s'."
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
@@ -95583,33 +95613,33 @@ msgstr ""
 msgid "Failed to mount plugin '%s': %s"
 msgstr "'%s'을 (를) '%s'에 복사하지 못했습니다. %s"
 
-#: src/ndata.c:180 src/ndata.c:194 src/nfile.c:442 src/nfile.c:456
+#: src/ndata.c:181 src/ndata.c:195 src/nfile.c:442 src/nfile.c:456
 #: src/nfile.c:550
 #, c-format
 msgid "Error occurred while opening '%s': %s"
 msgstr "'%s'을 (를) 여는 동안 오류 발생:%s"
 
-#: src/ndata.c:186 src/nfile.c:448
+#: src/ndata.c:187 src/nfile.c:448
 #, c-format
 msgid "Error occurred while opening '%s': It is not a regular file"
 msgstr "'%s'을 (를) 여는 동안 오류가 발생했습니다. 일반 파일이 아닙니다"
 
-#: src/ndata.c:203 src/nfile.c:463 src/nfile.c:470
+#: src/ndata.c:204 src/nfile.c:463 src/nfile.c:470
 #, c-format
 msgid "Error occurred while seeking '%s': %s"
 msgstr "'%s'검색 중 오류 발생: %s"
 
-#: src/ndata.c:225 src/nfile.c:491
+#: src/ndata.c:226 src/nfile.c:491
 #, c-format
 msgid "Error occurred while reading '%s': %s"
 msgstr "'%s'을 (를) 읽는 동안 오류 발생: %s"
 
-#: src/ndata.c:338 src/ndata.c:367 src/nfile.c:382 src/nfile.c:413
+#: src/ndata.c:339 src/ndata.c:369 src/nfile.c:382 src/nfile.c:413
 #, c-format
 msgid "Failure to copy '%s' to '%s': %s"
 msgstr "'%s'을 (를) '%s'에 복사하지 못했습니다. %s"
 
-#: src/ndata.h:63
+#: src/ndata.h:64
 #, fuzzy
 msgid ""
 "Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf,"
@@ -95617,7 +95647,7 @@ msgid ""
 msgstr "fonts/Cabin-SemiBold.otf,fonts/NanumBarunGothicBold.ttf"
 
 #. *< Default font path.
-#: src/ndata.h:64
+#: src/ndata.h:65
 #, fuzzy
 msgid "SourceCodePro-Semibold.ttf,D2CodingBold.ttf,IBMPlexSansJP-Medium.otf"
 msgstr "fonts/SourceCodePro-Semibold.ttf,fonts/D2CodingBold.ttf"
@@ -95654,7 +95684,7 @@ msgstr "현재 디렉터리를 사용하여 캐시 경로를 확인할 수 없�
 msgid "$XDG_CACHE_HOME isn't set, using current directory."
 msgstr "현재 디렉터리를 사용하여 $XDG_CACHE_HOMEE이 설정되지 않았습니다."
 
-#: src/nfile.c:283 src/save.c:149 src/save.c:155
+#: src/nfile.c:283 src/save.c:149 src/save.c:156
 #, c-format
 msgid "Dir '%s' does not exist and unable to create: %s"
 msgstr "디렉터리 '%s'이 (가) 존재하지 않아 만들 수 없습니다: %s"
@@ -96272,13 +96302,13 @@ msgstr ""
 msgid "Unable to get ship graphic for '%s'."
 msgstr ""
 
-#: src/nlua_spfx.c:137
+#: src/nlua_spfx.c:143
 #, fuzzy
 #| msgid "Small menu does not exist."
 msgid "Spfx does not exist."
 msgstr "작은 메뉴가 존재하지 않습니다."
 
-#: src/nlua_spfx.c:570
+#: src/nlua_spfx.c:577
 #, fuzzy, c-format
 #| msgid ""
 #| "Failed to run '%s':\n"
@@ -96290,7 +96320,7 @@ msgstr ""
 "'%s' 실행 실패:\n"
 "%s"
 
-#: src/nlua_spfx.c:603
+#: src/nlua_spfx.c:610
 #, fuzzy, c-format
 #| msgid ""
 #| "Failed to run '%s':\n"
@@ -96302,7 +96332,7 @@ msgstr ""
 "'%s' 실행 실패:\n"
 "%s"
 
-#: src/nlua_spfx.c:636
+#: src/nlua_spfx.c:643
 #, fuzzy, c-format
 #| msgid ""
 #| "Failed to run '%s':\n"
@@ -96314,7 +96344,7 @@ msgstr ""
 "'%s' 실행 실패:\n"
 "%s"
 
-#: src/nlua_spfx.c:669
+#: src/nlua_spfx.c:676
 #, fuzzy, c-format
 #| msgid ""
 #| "Failed to run '%s':\n"
@@ -97244,6 +97274,12 @@ msgid ""
 "%s xml collision polygon does not exist!\n"
 "                Please use the script 'polygon_from_sprite.py' that can be "
 "found in Naev's artwork repo."
+msgstr ""
+
+#: src/outfit.c:1129 src/ship.c:532 src/ship.c:1041 src/space.c:1719
+#: src/space.c:1777 src/space.c:3191
+#, c-format
+msgid "Malformed %s file: does not contain elements"
 msgstr ""
 
 #: src/outfit.c:1217 src/outfit.c:1562
@@ -98645,11 +98681,11 @@ msgstr[0] ""
 msgid "Trying to save game data"
 msgstr ""
 
-#: src/save.c:165
+#: src/save.c:167
 msgid "Aborting save..."
 msgstr ""
 
-#: src/save.c:177
+#: src/save.c:179
 msgid ""
 "Failed to write saved game!  You'll most likely have to restore it by "
 "copying your backup saved game over your current saved game."
@@ -99235,12 +99271,12 @@ msgstr ""
 msgid "Unknown ship stat type '%s'!"
 msgstr "알 수없는 Lua 데이터 유형!"
 
-#: src/slots.c:105
+#: src/slots.c:90
 #, c-format
 msgid "Slot Property '%s' has unknown node '%s'."
 msgstr ""
 
-#: src/slots.c:146
+#: src/slots.c:130
 #, c-format
 msgid "Slot property '%s' not found in array."
 msgstr ""
@@ -99927,28 +99963,23 @@ msgstr ""
 msgid "Rendering invalid SPFX layer."
 msgstr ""
 
-#: src/spfx.c:1145
+#: src/spfx.c:1156
+#, c-format
+msgid "Trail '%s' that inherits from '%s' has missing reference!"
+msgstr ""
+
+#: src/spfx.c:1195
 #, fuzzy, c-format
 msgid "Trail '%s' has unknown node '%s'."
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
-#: src/spfx.c:1149
+#: src/spfx.c:1199
 #, fuzzy, c-format
 #| msgid "Mission '%s' missing/invalid '%s' element"
 msgid "Trail '%s' missing '%s' element"
 msgstr "임무 '%s'누락 / 잘못된 '%s'요소"
 
-#: src/spfx.c:1174
-#, fuzzy, c-format
-msgid "Malformed '%s' file: missing root element 'Trail_types'"
-msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
-
-#: src/spfx.c:1226
-#, c-format
-msgid "Trail '%s' that inherits from '%s' has missing reference!"
-msgstr ""
-
-#: src/spfx.c:1262
+#: src/spfx.c:1250
 #, fuzzy, c-format
 msgid "Trail type '%s' not found in stack"
 msgstr "스택에서 '%s' 미션을 찾지 못했습니다"
@@ -99968,84 +99999,89 @@ msgstr ""
 msgid "'%s' has unknown date node '%s'."
 msgstr ""
 
+#: src/start.c:125
+#, c-format
+msgid "'%s' has unknown node '%s'."
+msgstr ""
+
 #. Safety checking.
 #: src/start.c:133
 #, c-format
 msgid "Module start data missing/invalid '%s' element"
 msgstr ""
 
-#: src/tech.c:162
+#: src/tech.c:127
 #, c-format
 msgid "Loaded %d tech group in %.3f s"
 msgid_plural "Loaded %d tech groups in %.3f s"
 msgstr[0] ""
 
-#: src/tech.c:165
+#: src/tech.c:130
 #, c-format
 msgid "Loaded %d tech group"
 msgid_plural "Loaded %d tech groups"
 msgstr[0] ""
 
-#: src/tech.c:285
+#: src/tech.c:258
 msgid "tech node does not have 'name' attribute"
 msgstr ""
 
-#: src/tech.c:310
+#: src/tech.c:282
 #, c-format
 msgid "Tech group '%s' has an item without a value."
 msgstr ""
 
-#: src/tech.c:327 src/tech.c:457
+#: src/tech.c:299 src/tech.c:454
 #, c-format
 msgid "Generic item '%s' not found in tech group '%s'"
 msgstr ""
 
-#: src/tech.c:332
+#: src/tech.c:304
 #, c-format
 msgid "Group item '%s' not found in tech group '%s'."
 msgstr ""
 
-#: src/tech.c:337
+#: src/tech.c:309
 #, c-format
 msgid "Outfit item '%s' not found in tech group '%s'."
 msgstr ""
 
-#: src/tech.c:342
+#: src/tech.c:314
 #, fuzzy, c-format
 msgid "Ship item '%s' not found in tech group '%s'."
 msgstr "스택에서 '%s' 미션을 찾지 못했습니다"
 
-#: src/tech.c:347
+#: src/tech.c:319
 #, fuzzy, c-format
 msgid "Commodity item '%s' not found in tech group '%s'."
 msgstr "상품 '%s'을 (를) 찾을 수 없습니다!"
 
-#: src/tech.c:353
+#: src/tech.c:325
 #, fuzzy, c-format
 msgid "Tech group '%s' has unknown node '%s'."
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
-#: src/tech.c:441
+#: src/tech.c:438
 #, fuzzy, c-format
 msgid "Trying to add item '%s' to non-existent tech '%s'."
 msgstr "존재하지 않는 시스템 '%s'을 (를) 로드하지 못했습니다."
 
-#: src/tech.c:478
+#: src/tech.c:475
 #, fuzzy, c-format
 msgid "Generic item '%s' not found in tech group"
 msgstr "스택에서 '%s' 미션을 찾지 못했습니다"
 
-#: src/tech.c:499
+#: src/tech.c:496
 #, fuzzy, c-format
 msgid "Item '%s' not found in tech group"
 msgstr "스택에서 '%s' 미션을 찾지 못했습니다"
 
-#: src/tech.c:514
+#: src/tech.c:511
 #, c-format
 msgid "Trying to remove item '%s' to non-existent tech '%s'."
 msgstr ""
 
-#: src/tech.c:531
+#: src/tech.c:528
 #, fuzzy, c-format
 msgid "Item '%s' not found in tech group '%s'"
 msgstr "스택에서 '%s' 미션을 찾지 못했습니다"
@@ -100781,6 +100817,10 @@ msgstr ""
 #: dat/outfits/bioship/generate.py:480
 msgid "Immanis Cortex III"
 msgstr ""
+
+#, fuzzy, c-format
+#~ msgid "Malformed '%s' file: missing root element 'Trail_types'"
+#~ msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
 
 #~ msgid ""
 #~ "\n"

@@ -13,19 +13,19 @@ local function _draw_bg( x, y, w, h, col, border_col, alpha )
    lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
 end
 
-function comm.nameboxUpdate( plt )
-   local fac = plt:faction()
+local function nameboxUpdateInternal( obj, bribed, hostile )
+   local fac = obj:faction()
    local nw, _nh = naev.gfx.dim()
    vn.menu_x = math.min( -1, 500 - nw/2 )
    vn.namebox_alpha = 0
    local namebox_font = vn.namebox_font
    local faction_str
-   if plt:flags("bribed") then
-      faction_str = string.format( "#g%s#0", _("Bribed") )
+   if bribed then
+      faction_str = "#g".._("Bribed").."#0"
    else
       local _std, str = fac:playerStanding()
-      if plt:hostile() then
-         faction_str = string.format( "#r%s#0", _("Hostile") )
+      if hostile then
+         faction_str = "#r".._("Hostile").."#0"
       elseif not fac:known() then
          faction_str = _("Unknown")
       else
@@ -33,7 +33,7 @@ function comm.nameboxUpdate( plt )
       end
    end
    local facname = (fac:known() and fac:name()) or _("Unknown")
-   local namebox_text = string.format("%s\n%s\n%s", facname, plt:name(), faction_str )
+   local namebox_text = string.format("%s\n%s\n%s", facname, obj:name(), faction_str )
    local namebox_col = fac:colour()
    if namebox_col then namebox_col = {namebox_col:rgb()}
    else namebox_col = {1,1,1}
@@ -75,6 +75,14 @@ function comm.nameboxUpdate( plt )
    vn.setForeground( render_namebox )
 end
 
+function comm.nameboxUpdate( plt )
+   return nameboxUpdateInternal( plt, plt:flags("bribed"), plt:hostile() )
+end
+
+function comm.nameboxUpdateSpob( spb, bribed )
+   return nameboxUpdateInternal( spb, bribed, false )
+end
+
 function comm.newCharacter( vn_in, plt )
    vn = vn_in
 
@@ -85,6 +93,18 @@ function comm.newCharacter( vn_in, plt )
    comm.nameboxUpdate( plt )
 
    return vn.newCharacter( plt:name(), { image=shipgfx } )
+end
+
+function comm.newCharacterSpob( vn_in, spb, bribed )
+   vn = vn_in
+
+   -- Graphics
+   local spbgfx = lg.newImage( spb:gfxSpace() )
+
+   -- Set up the namebox
+   comm.nameboxUpdateSpob( spb, bribed )
+
+   return vn.newCharacter( spb:name(), { image=spbgfx } )
 end
 
 return comm
