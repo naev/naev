@@ -27,6 +27,7 @@ function luaspob.setup( spb, params )
       _("Landing request denied."),
    }
    msg_notyet = params.msg_notyet or {
+      _("Landing request denied."),
    }
    msg_granted = params.msg_granted or {
       _("Permission to land granted."),
@@ -47,7 +48,7 @@ end
 function luaspob.can_land ()
    local s = land_spb:services()
    if not s.land then
-      return false
+      return false,msg_denied[ rnd.rnd(1,#msg_denied) ]
    end
    if land_spb:getLandOverride() then
       return true, msg_granted[ rnd.rnd(1,#msg_granted) ]
