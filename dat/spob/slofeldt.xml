@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Slofeldt">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="4984.101694" y="5176.465216"/>
  <GFX>
   <space>000.webp</space>
@@ -16,7 +17,7 @@
   <population>9874</population>
   <hide>2.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <bar/>
   </services>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Paxadon">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="-5698.032282" y="-2837.408368"/>
  <GFX>
   <space>G03.webp</space>
@@ -16,7 +17,7 @@
   <population>1e+10</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

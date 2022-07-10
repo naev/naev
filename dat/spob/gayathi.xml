@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Gayathi">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="29970.000000" y="-28268.000000"/>
  <GFX>
   <space>O02.webp</space>
@@ -16,7 +17,7 @@
   <population>1e+06</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <commodity/>
   </services>

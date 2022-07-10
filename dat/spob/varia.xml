@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Varia">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="-9713.888889" y="-290.555556"/>
  <GFX>
   <space>M04.webp</space>
@@ -16,7 +17,7 @@
   <population>5e+08</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

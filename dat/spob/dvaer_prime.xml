@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Dvaer Prime">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="-16120.928515" y="-12212.790161"/>
  <GFX>
   <space>L00.webp</space>
@@ -16,7 +17,7 @@
   <population>2.47484e+09</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>
