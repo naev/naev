@@ -72,9 +72,6 @@ end
 function create ()
    -- Save current system to return to
    mem.retpnt, mem.retsys = spob.cur()
-   if not misn.claim( {mem.retsys, "nelly"} ) then
-      misn.finish()
-   end
    -- Need commodity exchange and mission computer
    local rs = mem.retpnt:services()
    if rs.commodity == nil or rs.missions == nil then
@@ -98,7 +95,7 @@ function create ()
    if not mem.destpnt then
       misn.finish()
    end
-   if not misn.claim{ mem.retsys, mem.destsys } then
+   if not misn.claim{ mem.retsys, mem.destsys, "nelly" } then
       misn.finish()
    end
 
