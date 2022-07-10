@@ -233,13 +233,13 @@ void commodity_update( unsigned int wid, const char *str )
    tonnes2str( buf_tonnes_owned, owned );
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s", buf_tonnes_owned );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_purchase_price );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%s/t"), buf_local_price );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_tonnes_free );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", buf_credits );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%s/t ± %s/t"), buf_mean, buf_std );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", "" );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n" );
    l += scnprintf( &buf[l], sizeof(buf)-l, _("%s/t ± %s/t"), buf_globalmean, buf_globalstd );
 
    window_modifyText( wid, "txtDInfo", buf );

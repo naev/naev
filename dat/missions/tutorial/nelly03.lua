@@ -89,7 +89,7 @@ function accept ()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
    vn.transition( tutnel.nelly.transition )
    nel(_([[Nelly is covered in grease and smells a bit funny.
-"Hey, who's everything doing? You wouldn't happen to be free? I was trying to fix my ship following this 'Foolproof Guide to Ship Repairs' manual, but it turns out that hull plating I dug out of the trash is harder to use than I expected. However, in the appendix it mentions that mining is a free alternative to getting supplies, and I was wondering if you could help me get some supplies to repair my ship?"]]))
+"Hey, how's everything going? You wouldn't happen to be free? I was trying to fix my ship following this 'Foolproof Guide to Ship Repairs' manual, but it turns out that hull plating I dug out of the trash is harder to use than I expected. However, in the appendix it mentions that mining is a free alternative to getting supplies, and I was wondering if you could help me get some supplies to repair my ship?"]]))
    vn.menu{
       {_("Help them out"), "accept"},
       {_("Decline to help"), "decline"},
