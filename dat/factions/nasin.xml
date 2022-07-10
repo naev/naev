@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Nasin">
+ <!-- TODO make dynamic faction. -->
+ <ai>baddie</ai>
+ <invisible />
+ <logo>sirius</logo>
+ <standing>nasin</standing>
+ <allies />
+ <player>0</player>
+ <enemies>
+  <enemy>Sirius</enemy>
+ </enemies>
+</faction>

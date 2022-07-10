@@ -153,6 +153,7 @@ stds.API_spob = {globals={
    "land",     -- C function: player_land
    "render",   -- C function: space_renderSpob
    "update",   -- C function: space_updateSpob
+   "comm",     -- C function: comm_openSpob
 }}
 stds.API_effects = {globals={
    "add",      -- C function: effect_add
@@ -186,6 +187,7 @@ stds.PilotOutfit.globals={
    "onadd",
    "onhit",
    "onimpact",
+   "onmiss",
    "onload",
    "onremove",
    "onscan",

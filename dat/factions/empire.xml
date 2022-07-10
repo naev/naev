@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Empire">
+ <ai>empire</ai>
+ <known />
+ <logo>empire</logo>
+ <colour>green</colour>
+ <player>1</player>
+ <spawn>empire</spawn>
+ <standing>empire</standing>
+ <equip>empire</equip>
+ <description>The Empire is the bureaucratic heart of the universe that provides stability and cohesion, when possible.</description>
+ <generator weight="0.45">Independent</generator>
+ <generator weight="0.35">Trader</generator>
+ <allies>
+ </allies>
+ <enemies>
+  <enemy>Collective</enemy>
+  <enemy>Pirate</enemy>
+  <enemy>Marauder</enemy>
+  <enemy>Wild Ones</enemy>
+  <enemy>Dreamer Clan</enemy>
+  <enemy>Raven Clan</enemy>
+  <enemy>Black Lotus</enemy>
+ </enemies>
+ <lane_length_per_presence>300</lane_length_per_presence>
+ <lane_base_cost>50</lane_base_cost>
+ <tags>
+  <tag>greathouse</tag>
+  <tag>generic</tag>
+ </tags>
+</faction>

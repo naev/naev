@@ -24,8 +24,7 @@
 #include "rng.h"
 #include "shipstats.h"
 
-#define DTYPE_XML_ID     "dtypes"   /**< XML Document tag. */
-#define DTYPE_XML_TAG    "dtype"    /**< DTYPE XML node tag. */
+#define DTYPE_XML_ID     "dtype"   /**< XML Document tag. */
 
 /**
  * @struct DTYPE
@@ -46,21 +45,34 @@ static DTYPE* dtype_types  = NULL;  /**< Total damage types. */
 /*
  * prototypes
  */
-static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent );
+static int DTYPE_parse( DTYPE *temp, const char *file);
 static void DTYPE_free( DTYPE *damtype );
 static DTYPE* dtype_validType( int type );
 
 /**
- * @brief Parses an xml node containing a DTYPE.
+ * @brief Parses an XML file containing a DTYPE.
  *
  *    @param temp Address to load DTYPE into.
- *    @param parent XML Node containing the DTYPE data.
+ *    @param file File to parse.
  *    @return 0 on success.
  */
-static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
+static int DTYPE_parse( DTYPE *temp, const char *file )
 {
-   xmlNodePtr node;
+   xmlNodePtr node, parent;
+   xmlDocPtr doc;
    char *stat;
+
+   /* Load and read the data. */
+   doc = xml_parsePhysFS( file );
+   if (doc == NULL)
+      return -1;
+
+   /* Check to see if document exists. */
+   parent = doc->xmlChildrenNode;
+   if (!xml_isNode(parent,DTYPE_XML_ID)) {
+      WARN(_("Malformed '%s' file: missing root element '%s'"), file, DTYPE_XML_ID);
+      return -1;
+   }
 
    /* Clear data. */
    memset( temp, 0, sizeof(DTYPE) );
@@ -94,7 +106,6 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
 
          continue;
       }
-      xmlr_float(node, "armour", temp->adam);
       xmlr_float(node, "knockback", temp->knock);
 
       WARN(_("Unknown node of type '%s' in damage node '%s'."), node->name, temp->name);
@@ -106,6 +117,9 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
    MELEMENT(temp->adam<0.,"armour");
    MELEMENT(temp->knock<0.,"knockback");
 #undef MELEMENT
+
+   /* Clean up. */
+   xmlFreeDoc(doc);
 
    return 0;
 }
@@ -166,46 +180,28 @@ const char* dtype_damageTypeToStr( int type )
  */
 int dtype_load (void)
 {
-   xmlNodePtr node;
-   xmlDocPtr doc;
-
-   /* Load and read the data. */
-   doc = xml_parsePhysFS( DTYPE_DATA_PATH );
-   if (doc == NULL)
-      return -1;
-
-   /* Check to see if document exists. */
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,DTYPE_XML_ID)) {
-      ERR("Malformed '"DTYPE_DATA_PATH"' file: missing root element '"DTYPE_XML_ID"'");
-      return -1;
-   }
-
-   /* Check to see if is populated. */
-   node = node->xmlChildrenNode; /* first system node */
-   if (node == NULL) {
-      ERR("Malformed '"DTYPE_DATA_PATH"' file: does not contain elements");
-      return -1;
-   }
+   const DTYPE normal = {
+      .name = strdup(_("normal")),
+      .sdam = 1.,
+      .adam = 1.,
+      .knock = 0.,
+      .soffset = 0,
+      .aoffset = 0,
+   };
+   char **dtype_files = ndata_listRecursive( DTYPE_DATA_PATH );
 
    /* Load up the individual damage types. */
    dtype_types = array_create(DTYPE);
-   do {
-      xml_onlyNodes(node);
+   array_push_back( &dtype_types, normal );
 
-      if (!xml_isNode(node,DTYPE_XML_TAG)) {
-         WARN("'"DTYPE_DATA_PATH"' has unknown node '%s'.", node->name);
-         continue;
-      }
+   for (int i=0; i<array_size(dtype_files); i++) {
+      DTYPE_parse( &array_grow( &dtype_types ), dtype_files[i] );
+      free( dtype_files[i] );
+   }
+   array_free( dtype_files );
 
-      DTYPE_parse( &array_grow( &dtype_types ), node );
-
-   } while (xml_nextNode(node));
    /* Shrink back to minimum - shouldn't change ever. */
    array_shrink( &dtype_types );
-
-   /* Clean up. */
-   xmlFreeDoc(doc);
 
    return 0;
 }

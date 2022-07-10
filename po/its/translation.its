@@ -12,15 +12,15 @@
   <its:translateRule selector="/Start/player/ship/@acquired" translate="yes"/>
 
   <!-- Factions -->
-  <its:translateRule selector="/Factions/faction/display" translate="yes"/>
-  <its:translateRule selector="/Factions/faction/name" translate="yes"/>
-  <its:translateRule selector="/Factions/faction/longname" translate="yes"/>
-  <its:translateRule selector="/Factions/faction/mapname" translate="yes"/>
-  <its:translateRule selector="/Factions/faction/description" translate="yes"/>
+  <its:translateRule selector="/faction/@name" translate="yes"/>
+  <its:translateRule selector="/faction/display" translate="yes"/>
+  <its:translateRule selector="/faction/longname" translate="yes"/>
+  <its:translateRule selector="/faction/mapname" translate="yes"/>
+  <its:translateRule selector="/faction/description" translate="yes"/>
 
   <!-- Slots -->
-  <its:translateRule selector="/Slots/slot/display" translate="yes"/>
-  <its:translateRule selector="/Slots/slot/description" translate="yes"/>
+  <its:translateRule selector="/slot/display" translate="yes"/>
+  <its:translateRule selector="/slot/description" translate="yes"/>
 
   <!-- Commodities -->
   <its:translateRule selector="/commodity/name" translate="yes"/>
@@ -65,5 +65,6 @@
   <its:translateRule selector="/unidiff/spob/description" translate="yes"/>
 
   <!-- Difficulty -->
-  <its:translateRule selector="/difficulties/difficulty/@name" translate="yes"/>
+  <its:translateRule selector="/difficulty/@name" translate="yes"/>
+  <its:translateRule selector="/difficulty/description" translate="yes"/>
 </its:rules>

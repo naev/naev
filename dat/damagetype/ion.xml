@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dtype name="ion">
+ <shield>1.3</shield>
+ <armour>0.8</armour>
+ <knockback>0</knockback>
+</dtype>

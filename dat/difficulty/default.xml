@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<difficulty name="Default" default="1">
+ <description>Standard difficulty mode.</description>
+</difficulty>

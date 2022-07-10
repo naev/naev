@@ -20,8 +20,7 @@
 #include "ndata.h"
 #include "nxml.h"
 
-#define DIFFICULTY_XML_ID     "difficulties"
-#define DIFFICULTY_XML_NODE   "difficulty"
+#define DIFFICULTY_XML_ID   "difficulty"
 
 static Difficulty *difficulty_stack = NULL;
 static const Difficulty *difficulty_default = NULL;
@@ -34,28 +33,25 @@ static const Difficulty *difficulty_current = NULL;
  */
 int difficulty_load (void)
 {
-   xmlDocPtr doc;
-   xmlNodePtr node;
-   Difficulty d;
+   char **difficulty_files = ndata_listRecursive( DIFFICULTY_PATH );
    difficulty_stack = array_create( Difficulty );
+   for (int i=0; i<array_size(difficulty_files); i++) {
+      Difficulty d;
+      xmlDocPtr doc;
+      xmlNodePtr node, cur;
 
-   /* Load and read the data. */
-   doc = xml_parsePhysFS( DIFFICULTY_PATH );
-   if (doc == NULL)
-      return -1;
+      /* Load and read the data. */
+      doc = xml_parsePhysFS( difficulty_files[i] );
+      if (doc == NULL)
+         return -1;
 
-   /* Check to see if document exists. */
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,DIFFICULTY_XML_ID)) {
-      ERR( _("Malformed '%s' file: missing root element '%s'"), DIFFICULTY_PATH, DIFFICULTY_XML_ID);
-      xmlFreeDoc( doc );
-      return -1;
-   }
-
-   node = node->xmlChildrenNode;
-   do {
-      xmlNodePtr cur;
-      xml_onlyNodes(node);
+      /* Check to see if document exists. */
+      node = doc->xmlChildrenNode;
+      if (!xml_isNode(node,DIFFICULTY_XML_ID)) {
+         ERR( _("Malformed '%s' file: missing root element '%s'"), difficulty_files[i], DIFFICULTY_XML_ID);
+         xmlFreeDoc( doc );
+         return -1;
+      }
 
       /* Initialize. */
       memset( &d, 0, sizeof(Difficulty) );
@@ -82,8 +78,10 @@ int difficulty_load (void)
          WARN(_("Difficulty '%s' has unknown node '%s'"), d.name, cur->name);
       } while (xml_nextNode(cur));
 
+      xmlFreeDoc( doc );
+
       array_push_back( &difficulty_stack, d );
-   } while (xml_nextNode(node));
+   }
 
    /* Find out default. */
    for (int i=0; i<array_size(difficulty_stack); i++) {
@@ -104,7 +102,6 @@ int difficulty_load (void)
    if (conf.difficulty != NULL)
       difficulty_setGlobal( difficulty_get( conf.difficulty ) );
 
-   xmlFreeDoc( doc );
    return 0;
 }
 

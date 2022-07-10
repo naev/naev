@@ -2636,7 +2636,7 @@ static SysNode* A_rm( SysNode *first, StarSystem *cur );
 static SysNode* A_in( SysNode *first, StarSystem *cur );
 static SysNode* A_lowest( SysNode *first );
 static void A_freeList( SysNode *first );
-static int map_decorator_parse( MapDecorator *temp, xmlNodePtr parent );
+static int map_decorator_parse( MapDecorator *temp, const char *file );
 /** @brief Creates a new node link to star system. */
 static SysNode* A_newNode( StarSystem* sys )
 {
@@ -3070,40 +3070,15 @@ int map_center( int wid, const char *sys )
  */
 int map_load (void)
 {
-   xmlNodePtr node;
-   xmlDocPtr doc;
    Uint32 time = SDL_GetTicks();
+   char **decorator_files = ndata_listRecursive( MAP_DECORATOR_DATA_PATH );
 
    decorator_stack = array_create( MapDecorator );
-
-   /* Load the file. */
-   doc = xml_parsePhysFS( MAP_DECORATOR_DATA_PATH );
-   if (doc == NULL)
-      return -1;
-
-   node = doc->xmlChildrenNode; /* map node */
-   if (strcmp((char*)node->name,"map")) {
-      ERR(_("Malformed %s file: missing root element 'map'"), MAP_DECORATOR_DATA_PATH );
-      return -1;
+   for (int i=0; i<array_size(decorator_files); i++) {
+      map_decorator_parse( &array_grow(&decorator_stack), decorator_files[i] );
+      free( decorator_files[i] );
    }
-
-   node = node->xmlChildrenNode;
-   if (node == NULL) {
-      ERR(_("Malformed %s file: does not contain elements"), MAP_DECORATOR_DATA_PATH);
-      return -1;
-   }
-
-   do {
-      xml_onlyNodes(node);
-      if (xml_isNode(node, "decorator")) {
-         /* Load decorator. */
-         map_decorator_parse( &array_grow(&decorator_stack), node );
-         continue;
-      }
-      WARN(_("'%s' has unknown node '%s'."), MAP_DECORATOR_DATA_PATH, node->name);
-   } while (xml_nextNode(node));
-
-   xmlFreeDoc(doc);
+   array_free( decorator_files );
 
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
@@ -3115,9 +3090,20 @@ int map_load (void)
    return 0;
 }
 
-static int map_decorator_parse( MapDecorator *temp, xmlNodePtr parent )
+static int map_decorator_parse( MapDecorator *temp, const char *file )
 {
-   xmlNodePtr node;
+   xmlDocPtr doc;
+   xmlNodePtr node, parent;
+
+   doc = xml_parsePhysFS( file );
+   if (doc == NULL)
+      return -1;
+
+   parent = doc->xmlChildrenNode; /* map node */
+   if (strcmp((char*)parent->name,"decorator")) {
+      ERR(_("Malformed %s file: missing root element 'decorator'"), file );
+      return -1;
+   }
 
    /* Clear memory. */
    memset( temp, 0, sizeof(MapDecorator) );
@@ -3142,6 +3128,8 @@ static int map_decorator_parse( MapDecorator *temp, xmlNodePtr parent )
       }
       WARN(_("Map decorator has unknown node '%s'."), node->name);
    } while (xml_nextNode(node));
+
+   xmlFreeDoc(doc);
 
    return 0;
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tech name="Heavy Weapons 1">
+ <item>Laser Turret MK1</item>
+ <item>Turreted Gauss Gun</item>
+ <item>Plasma Turret MK1</item>
+ <item>Ion Cannon</item>
+ <item>Railgun</item>
+ <item>Ripper Cannon</item>
+ <item>EMP Grenade Launcher</item>
+ <item>Enygma Systems Spearhead Launcher</item>
+ <item>TeraCom Vengeance Launcher</item>
+ <item>TeraCom Headhunter Launcher</item>
+ <item>Medium Weapon License</item>
+ <item>Medium Combat Vessel License</item>
+ <item>Mercenary License</item>
+ <item>Weapons Ionizer</item>
+ <item>Hyena Dock</item>
+ <item>Hyena Bay</item>
+ <item>Mining Lance MK2</item>
+</tech>

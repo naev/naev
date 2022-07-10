@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Proteron">
+ <ai>proteron</ai>
+ <logo>proteron</logo>
+ <longname>Fallen House Proteron</longname>
+ <player>-50</player>
+ <colour>purple</colour>
+ <spawn>proteron</spawn>
+ <standing>proteron</standing>
+ <equip>proteron</equip>
+ <description>Fallen House Proteron was an Imperial Great House that decided to move and attack the Emperor himself. This caused the Incident and left the universe irreversibly ravaged.</description>
+ <allies>
+ </allies>
+ <enemies>
+  <enemy>Pirate</enemy>
+  <enemy>Marauder</enemy>
+  <enemy>Wild Ones</enemy>
+  <enemy>Dreamer Clan</enemy>
+  <enemy>Raven Clan</enemy>
+  <enemy>Black Lotus</enemy>
+ </enemies>
+ <lane_length_per_presence>250</lane_length_per_presence>
+ <lane_base_cost>50</lane_base_cost>
+</faction>

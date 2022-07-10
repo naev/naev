@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Independent">
+ <ai>independent</ai>
+ <static />
+ <invisible />
+ <known />
+ <player>3</player>
+ <colour>blue</colour>
+ <spawn>independent</spawn>
+ <standing>static</standing>
+ <generator weight="0.7">Trader</generator>
+ <allies>
+ </allies>
+ <enemies>
+  <enemy>Pirate</enemy>
+  <enemy>Marauder</enemy>
+  <enemy>Wild Ones</enemy>
+  <enemy>Dreamer Clan</enemy>
+  <enemy>Raven Clan</enemy>
+  <enemy>Black Lotus</enemy>
+  <enemy>Collective</enemy>
+ </enemies>
+</faction>

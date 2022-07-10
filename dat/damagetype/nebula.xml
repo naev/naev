@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dtype name="nebula">
+<!--
+   Any shield or armour element can specify a stat property, which will be
+   used as a multiplier for received damage. The stats must be doubles.
+
+  For example, a ship with a nebu_absor stat of 40 will take 40% less damage
+  when in volatile nebulae.
+-->
+ <shield stat="nebu_absorb">1</shield>
+ <armour stat="nebu_absorb">3</armour>
+ <knockback>0</knockback>
+</dtype>

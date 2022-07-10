@@ -213,6 +213,16 @@ int comm_openSpob( Spob *spob )
       return 0;
    }
 
+   /* Lua stuff. */
+   if (spob->lua_comm != LUA_NOREF) {
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_comm); /* f */
+      if (nlua_pcall( spob->lua_env, 0, 0 )) {
+         WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "comm", lua_tostring(naevL,-1));
+         lua_pop(naevL,1);
+      }
+      return 0;
+   }
+
    comm_spob = spob;
 
    /* Create the generic comm window. */

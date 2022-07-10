@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tech name="Engines Medium">
+ <item>Beat Up Small Engine</item>
+ <item>Beat Up Medium Engine</item>
+ <item>Beat Up Large Engine</item>
+ <item>Nexus Dart 150 Engine</item>
+ <item>Unicorp Hawk 350 Engine</item>
+ <item>Nexus Arrow 700 Engine</item>
+ <item>Unicorp Falcon 1300 Engine</item>
+ <item>Nexus Bolt 3500 Engine</item>
+ <item>Unicorp Eagle 7000 Engine</item>
+</tech>

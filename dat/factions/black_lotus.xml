@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Black Lotus">
+ <ai>pirate</ai>
+ <logo>blacklotus</logo>
+ <longname>Black Lotus Pirate Clan</longname>
+ <player>-20</player>
+ <colour>red</colour>
+ <spawn>pirate_black_lotus</spawn>
+ <standing>pirate_black_lotus</standing>
+ <equip>pirate</equip>
+ <useshiddenjumps/>
+ <description>The Black Lotus Pirate Clan is a fiercely organized pirate clan located between the Za'lek and Sirius space. Organized crime at its finest.</description>
+ <generator weight="0.65">Pirate</generator>
+ <generator weight="0.35">Marauder</generator>
+ <allies>
+  <ally>Pirate</ally>
+ </allies>
+ <enemies>
+  <enemy>Collective</enemy>
+  <enemy>Dvaered</enemy>
+  <enemy>Empire</enemy>
+  <enemy>Frontier</enemy>
+  <enemy>Goddard</enemy>
+  <enemy>Independent</enemy>
+  <enemy>Miner</enemy>
+  <enemy>Proteron</enemy>
+  <enemy>Sirius</enemy>
+  <enemy>Soromid</enemy>
+  <enemy>Thurion</enemy>
+  <enemy>DHC</enemy>
+  <enemy>Trader</enemy>
+  <enemy>Traders Guild</enemy>
+  <enemy>Za'lek</enemy>
+ </enemies>
+ <tags>
+  <tag>pirate</tag>
+ </tags>
+</faction>

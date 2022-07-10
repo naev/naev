@@ -126,16 +126,21 @@ LuaSpfx_t* luaL_checkspfx( lua_State *L, int ind )
    luaL_typerror(L, ind, SPFX_METATABLE);
    return NULL;
 }
-static LuaSpfxData_t* luaL_checkspfxdata( lua_State *L, int ind )
+static LuaSpfxData_t* luaL_checkspfxdataNoWarn( lua_State *L, int ind )
 {
    LuaSpfx_t *ls = luaL_checkspfx( L , ind );
    const LuaSpfxData_t key = { .id = *ls };
    LuaSpfxData_t *f = bsearch( &key, lua_spfx, array_size(lua_spfx), sizeof(LuaSpfxData_t), spfx_cmp );
    if (f == NULL) {
       f = bsearch( &key, lua_spfx_queue, array_size(lua_spfx_queue), sizeof(LuaSpfxData_t), spfx_cmp );
-      if (f == NULL)
-         NLUA_ERROR( L, _("Spfx does not exist.") );
    }
+   return f;
+}
+static LuaSpfxData_t* luaL_checkspfxdata( lua_State *L, int ind )
+{
+   LuaSpfxData_t *f = luaL_checkspfxdataNoWarn( L, ind );
+   if (f == NULL)
+      NLUA_ERROR( L, _("Spfx does not exist.") );
    return f;
 }
 /**
@@ -371,9 +376,11 @@ static int spfxL_new( lua_State *L )
  */
 static int spfxL_rm( lua_State *L )
 {
-   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
-   ls->flags &= SPFX_CLEANUP;
-   ls->ttl = -1.;
+   LuaSpfxData_t *ls = luaL_checkspfxdataNoWarn(L,1);
+   if (ls != NULL) {
+      ls->flags &= SPFX_CLEANUP;
+      ls->ttl = -1.;
+   }
    return 0;
 }
 

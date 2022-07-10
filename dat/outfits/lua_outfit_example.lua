@@ -84,6 +84,16 @@ end
 function jumpin( _p, _po )
 end
 
+--[[
+   Below are WEAPONS ONLY
+
+   Note that these are calculated with particles.
+--]]
+function onimpact( _p, _target, _pos, _vel )
+end
+function onmiss( _p, _pos, _vel ) -- _p may not exist
+end
+
 
 --[[
    Example of an activated outfit implemented fully in Lua

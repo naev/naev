@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<difficulty name="Masochist Mode">
+ <description>Makes the game significantly harder for the player.</description>
+ <armour_mod>-25</armour_mod>
+ <shield_mod>-25</shield_mod>
+ <energy_mod>-25</energy_mod>
+ <thrust_mod>-5</thrust_mod>
+ <speed_mod>-5</speed_mod>
+ <turn_mod>-5</turn_mod>
+ <fwd_damage>-10</fwd_damage>
+ <tur_damage>-10</tur_damage>
+ <launch_damage>-10</launch_damage>
+ <fbay_damage>-10</fbay_damage>
+</difficulty>

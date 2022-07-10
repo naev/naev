@@ -68,3 +68,9 @@ end
 --]]
 function update( _dt, _real_dt )
 end
+
+--[[
+   @brief Runs when hailed by the player.
+--]]
+function comm ()
+end

@@ -46,6 +46,7 @@
       * Revamped the star map to be large and more useful
       * Can add notes to the star map
    * Engine changes
+      * Basic plugin support
       * Simplified terminology with spob (space objects) replacing planet/asset
       * Support for tags in missions
       * Player ships can store their own variables now

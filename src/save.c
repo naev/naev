@@ -146,13 +146,15 @@ int save_all_with_name ( char *name )
    /* Write to file. */
    if (PHYSFS_mkdir("saves") == 0) {
       snprintf(file, sizeof(file), "%s/saves", PHYSFS_getWriteDir());
-      WARN(_( "Dir '%s' does not exist and unable to create: %s" ), file, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      WARN(_( "Dir '%s' does not exist and unable to create: %s" ), file,
+         _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
       goto err_writer;
    }
    snprintf(file, sizeof(file), "saves/%s", player.name);
    if (PHYSFS_mkdir(file) == 0) {
       snprintf(file, sizeof(file), "%s/saves/%s", PHYSFS_getWriteDir(), player.name);
-      WARN(_( "Dir '%s' does not exist and unable to create: %s" ), file, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      WARN(_( "Dir '%s' does not exist and unable to create: %s" ), file,
+         _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
       goto err_writer;
    }
 

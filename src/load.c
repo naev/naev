@@ -298,7 +298,7 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
    asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat ))
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
-            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+            _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
    else if (stat.filetype == PHYSFS_FILETYPE_REGULAR) {
       tmp = &array_grow( (filedata_t**)data );
       tmp->name = strdup( fname );
@@ -327,7 +327,7 @@ static int load_enumeratePlayerNamesCallback( void* data, const char* origdir, c
    asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat ))
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
-            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+            _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
    /* TODO remove this sometime in the future. Maybe 0.12.0 or 0.13.0? */
    else if (stat.filetype == PHYSFS_FILETYPE_REGULAR) {
       if ((name_len < 4 || strcmp( &fname[name_len-3], ".ns" )) && (name_len < 11 || strcmp( &fname[name_len-10], ".ns.backup" ))) {

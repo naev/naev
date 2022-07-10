@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Marauder">
+ <mapname>Pirate</mapname>
+ <longname>Pirate Marauders</longname>
+ <ai>marauder</ai>
+ <known />
+ <logo>marauder</logo>
+ <player>-50</player>
+ <colour>red</colour>
+ <spawn>marauder</spawn>
+ <standing>marauder</standing>
+ <equip>pirate</equip>
+ <useshiddenjumps/>
+ <description>Pirate Marauders are the lowest and most vile of pirates. They are extremely aggressive and will attack most vessels unprovoked. Even the pirate clans have difficulty in dealing with them.</description>
+ <allies>
+ </allies>
+ <enemies>
+  <enemy>Collective</enemy>
+  <enemy>Dvaered</enemy>
+  <enemy>Empire</enemy>
+  <enemy>Frontier</enemy>
+  <enemy>Goddard</enemy>
+  <enemy>Independent</enemy>
+  <enemy>Miner</enemy>
+  <enemy>Proteron</enemy>
+  <enemy>Sirius</enemy>
+  <enemy>Soromid</enemy>
+  <enemy>Thurion</enemy>
+  <enemy>DHC</enemy>
+  <enemy>Trader</enemy>
+  <enemy>Traders Guild</enemy>
+  <enemy>Za'lek</enemy>
+ </enemies>
+ <tags>
+  <tag>pirate</tag>
+ </tags>
+</faction>

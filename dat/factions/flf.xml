@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="FLF">
+ <ai>flf</ai>
+ <logo>flf</logo>
+ <longname>Frontier Liberation Front</longname>
+ <player>0</player>
+ <colour>yellow</colour>
+ <spawn>flf</spawn>
+ <standing>flf</standing>
+ <equip>pirate</equip>
+ <description>The Frontier Liberation Front is a group of terrorists advocating for the independence of the Frontier from Imperial tyranny.</description>
+ <enemies>
+  <enemy>Dvaered</enemy>
+  <enemy>DHC</enemy>
+ </enemies>
+</faction>

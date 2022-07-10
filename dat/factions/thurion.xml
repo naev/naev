@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faction name="Thurion">
+ <ai>thurion</ai>
+ <logo>thurion</logo>
+ <colour>grey50</colour>
+ <player>1</player>
+ <spawn>thurion</spawn>
+ <standing>thurion</standing>
+ <equip>thurion</equip>
+ <description>The Thurion are a mysterious faction located deep in the Nebula. They seem to be out of touch with the external world.</description>
+ <enemies>
+  <enemy>Pirate</enemy>
+  <enemy>Marauder</enemy>
+  <enemy>Wild Ones</enemy>
+  <enemy>Dreamer Clan</enemy>
+  <enemy>Raven Clan</enemy>
+  <enemy>Black Lotus</enemy>
+ </enemies>
+</faction>
