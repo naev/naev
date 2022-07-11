@@ -48,6 +48,7 @@ static int plugin_parse( plugin_t *plg, const char *file )
       xmlr_strd( node, "name", plg->name );
       xmlr_strd( node, "author", plg->author );
       xmlr_strd( node, "version", plg->version );
+      xmlr_strd( node, "description", plg->description );
       xmlr_strd( node, "compatibility", plg->compatibility );
    } while (xml_nextNode(node));
 
@@ -159,6 +160,8 @@ int plugin_check (void)
                break;
          }
       }
+      else
+         plugins[i].compatible = 1;
 
       pcre2_code_free( re );
    }
@@ -168,5 +171,14 @@ int plugin_check (void)
 
 const plugin_t *plugin_list (void)
 {
+   for (int i=0; i<array_size(plugins); i++) {
+      plugin_t *plg = &plugins[i];
+      free( plg->name );
+      free( plg->author );
+      free( plg->version );
+      free( plg->description );
+      free( plg->compatibility );
+      free( plg->mountpoint );
+   }
    return plugins;
 }

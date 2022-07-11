@@ -460,6 +460,7 @@ int main( int argc, char** argv )
    start_cleanup(); /* Cleanup from start.c, not the first cleanup step. :) */
 
    /* exit subsystems */
+   plugin_exit();
    cli_exit(); /* Clean up the console. */
    map_system_exit(); /* Destroys the solar system map. */
    map_exit(); /* Destroys the map. */
