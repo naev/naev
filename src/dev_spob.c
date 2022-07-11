@@ -94,12 +94,8 @@ int dpl_saveSpob( const Spob *p )
    xmlw_elem( writer, "population", "%g", (double)p->population );
    xmlw_elem( writer, "hide", "%f", p->hide );
    xmlw_startElem( writer, "services" );
-   if (spob_hasService( p, SPOB_SERVICE_LAND )) {
-      if (p->land_func == NULL)
-         xmlw_elemEmpty( writer, "land" );
-      else
-         xmlw_elem( writer, "land", "%s", p->land_func );
-   }
+   if (spob_hasService( p, SPOB_SERVICE_LAND ))
+      xmlw_elemEmpty( writer, "land" );
    if (spob_hasService( p, SPOB_SERVICE_REFUEL ))
       xmlw_elemEmpty( writer, "refuel" );
    if (spob_hasService( p, SPOB_SERVICE_BAR ))

@@ -4,8 +4,8 @@ local ccomm = require "common.comm"
 
 local luaspob = {}
 
-local land_spb, land_fct, bribed
-local msg_bribed, msg_denied, msg_granted, msg_notyet, msg_cantbribe, msg_trybribe, msg_dangerous
+local land_spb, land_fct, bribed, bribe_cost_function
+local msg_bribed, msg_denied, msg_granted, msg_notyet, msg_cantbribe, msg_trybribe, msg_didbribe, msg_dangerous
 local std_dangerous, std_land, std_bribe
 
 function luaspob.setup( spb, params )
@@ -15,6 +15,11 @@ function luaspob.setup( spb, params )
    land_spb = spb
    land_fct = spb:faction()
    bribed = false
+
+   bribe_cost_function = params.bribe_cost or function ()
+      local std = land_fct:playerStanding()
+      return (std_land-std) * 1e3 * player.pilot():ship():size() + 5e3
+   end
 
    std_land = params.std_land or 0
    std_bribe = params.std_bribe or -30
@@ -39,6 +44,9 @@ function luaspob.setup( spb, params )
       _([["I'll let you land for the modest price of {credits}."
 
 Pay {credits}?]]),
+   }
+   msg_didbribe = params.msg_didbribe or {
+      _([["Thank you for your contribution."]]),
    }
    msg_dangerous = params.msg_dangerous or {
       _([["I'm not dealing with dangerous criminals like you!"]]),
@@ -98,7 +106,7 @@ function luaspob.comm ()
          vn.jump("nobribe")
          return
       end
-      bribe_cost = (std_land-std) * 1e3 * player.pilot():ship():size() + 5e3
+      bribe_cost = bribe_cost_function( land_spb )
    end )
    spb( function ()
       return fmt.f( msg_trybribe[ rnd.rnd(1,#msg_trybribe) ], {credits=fmt.credits( bribe_cost )} )
@@ -120,6 +128,7 @@ function luaspob.comm ()
       bribed = true
       ccomm.nameboxUpdateSpob( land_spb, bribed )
    end )
+   spb( msg_didbribe[ rnd.rnd(1,#msg_didbribe) ] )
 
    vn.label("player_broke")
    vn.na( function ()

@@ -2611,7 +2611,6 @@ dat/gui/brushed.lua
 dat/gui/legacy.lua
 dat/gui/slim.lua
 dat/gui/slimv2.lua
-dat/landing.lua
 dat/loadscreen.lua
 dat/missions/baron/baron_baron.lua
 dat/missions/baron/baron_prince.lua

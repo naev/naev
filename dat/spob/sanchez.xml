@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sanchez">
+<lua>spob/lua/pirate_clanworld.lua</lua>
  <pos x="-7072.689032" y="12459.780596"/>
  <GFX>
   <space>moon-G01.webp</space>
@@ -16,7 +17,7 @@
   <population>12500</population>
   <hide>1.000000</hide>
   <services>
-   <land>pir_clanworld</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

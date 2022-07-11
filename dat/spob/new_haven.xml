@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="New Haven">
+<lua>spob/lua/pirate_clanworld.lua</lua>
  <pos x="-34532.161684" y="3671.278901"/>
  <GFX>
   <space>X01.webp</space>
@@ -16,7 +17,7 @@
   <population>9000</population>
   <hide>1.000000</hide>
   <services>
-   <land>pir_clanworld</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>
