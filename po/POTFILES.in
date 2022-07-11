@@ -3322,6 +3322,8 @@ src/player_fleet.c
 src/player_fleet.h
 src/player_gui.c
 src/player_gui.h
+src/plugin.c
+src/plugin.h
 src/queue.c
 src/queue.h
 src/render.c
