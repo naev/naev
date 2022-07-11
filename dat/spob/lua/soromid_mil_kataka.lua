@@ -5,13 +5,13 @@ function load( spb )
       std_land = 90,
       std_bribe = 100,
       msg_granted = {
-         _([["Permission to land granted, captain."]]),
+         _("Permission to land granted."),
       },
       msg_notyet = {
-         _([["Only high ranking personnel allowed. Landing request denied."]]),
+         _([["Only friends of the Soromid may set foot on Kataka."]]),
       },
       msg_cantbribe = {
-         _([["Money won't buy you access to our restricted facilities, citizen."]]),
+         _([["We don't need your money, outsider."]]),
       },
    } )
 end

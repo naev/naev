@@ -40,24 +40,6 @@ end
 -- Specialized landing functions: Planets may specify <land>funcname</land> under services in their XML data.
 -- The name will be looked up as a global function in this file. We declare each global to Luacheck to avoid warnings.
 
--- luacheck: globals srm_mil_restricted (Soromid military spobs.)
-function srm_mil_restricted( pnt )
-   return land_military(pnt, 50,
-         _("Permission to land granted."),
-         _("Permission denied. You're not truly one of us."),
-         _("Landing request denied."),
-         _("\"We don't need your money, outsider.\""))
-end
-
--- luacheck: globals srm_mil_kataka (Soromid Kataka.)
-function srm_mil_kataka( pnt )
-   return land_military(pnt, 75,
-         _("Permission to land granted."),
-         _("Only friends of the Soromid may set foot on Kataka."),
-         _("Landing request denied."),
-         _("\"We don't need your money, outsider.\""))
-end
-
 -- luacheck: globals zlk_mil_restricted (Za'lek's military spobs.)
 function zlk_mil_restricted( pnt )
    return land_military(pnt, 50,
