@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Culex">
+ <lua>spob/lua/lowclass.lua</lua>
  <pos x="-17337.694408" y="-16625.248069"/>
  <GFX>
   <space>moon-M06.webp</space>
@@ -16,7 +17,7 @@
   <population>6e+06</population>
   <hide>2.000000</hide>
   <services>
-   <land>land_lowclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

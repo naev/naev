@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Waldar">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="6726.246120" y="1637.860561"/>
  <GFX>
   <space>M02.webp</space>
@@ -16,7 +17,7 @@
   <population>2e+09</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

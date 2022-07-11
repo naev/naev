@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vao Vos">
+ <lua>spob/lua/lowclass.lua</lua>
  <pos x="-2875.319994" y="3105.345594"/>
  <GFX>
   <space>A04.webp</space>
@@ -16,7 +17,7 @@
   <population>10000</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_lowclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

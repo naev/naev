@@ -443,7 +443,7 @@ void commodity_renderMod( double bx, double by, double w, double h, void *data )
 
    q = commodity_getMod();
    if (q != commodity_mod) {
-      commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
+      //commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
       commodity_mod = q;
    }
    snprintf( buf, sizeof(buf), "%dx", q );

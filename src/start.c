@@ -36,6 +36,7 @@ typedef struct ndata_start_s {
    char *mission;    /**< Starting mission. */
    char *event;      /**< Starting event. */
    char *chapter;    /**< Starting chapter. */
+   char *spob_lua_default; /**< Default Lua script for spobs. */
 } ndata_start_t;
 static ndata_start_t start_data; /**< The actual starting data. */
 
@@ -117,6 +118,8 @@ int start_load (void)
          date_set = 1;
          continue;
       }
+
+      xmlr_strd( node, "spob_lua_default", start_data.spob_lua_default );
 
       WARN(_("'%s' has unknown node '%s'."), START_DATA_PATH, node->name);
    } while (xml_nextNode(node));
@@ -253,4 +256,13 @@ const char* start_event (void)
 const char* start_chapter (void)
 {
    return start_data.chapter;
+}
+
+/**
+ * @brief Gets the default spob Lua file.
+ *    @return The default spob lua file.
+ */
+const char* start_spob_lua_default (void)
+{
+   return start_data.spob_lua_default;
 }

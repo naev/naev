@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Eclipse Station">
+ <lua>spob/lua/dvaered_mil_restricted.lua</lua>
  <pos x="-9543.149055" y="-11138.579005"/>
  <GFX>
   <space>000.webp</space>
@@ -16,7 +17,7 @@
   <population>4000</population>
   <hide>2.000000</hide>
   <services>
-   <land>dv_mil_restricted</land>
+   <land/>
    <refuel/>
    <bar/>
    <outfits/>

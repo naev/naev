@@ -1606,9 +1606,9 @@ int player_land( int loud )
          if (spob->can_land || (spob->land_override > 0))
             player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
                   spob_name(spob), spob->land_msg );
-         else if (spob->bribed && (spob->land_override >= 0))
+         else if (spob->land_override >= 0)
             player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
-                  spob_name(spob), spob->bribe_ack_msg );
+                  spob_name(spob), _("Landing authorized.") );
          else { /* Hostile */
             player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
                   spob_name(spob), spob->land_msg );
@@ -1693,7 +1693,7 @@ void player_checkLandAck( void )
    p = cur_system->spobs[ player.p->nav_spob ];
 
    /* Player can still land. */
-   if (p->can_land || (p->land_override > 0) || p->bribed)
+   if (p->can_land || (p->land_override > 0))
       return;
 
    player_rmFlag(PLAYER_LANDACK);

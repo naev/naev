@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Dvaered High Command">
+ <lua>spob/lua/dvaered_mil_dhc.lua</lua>
  <pos x="-16173.088338" y="-11736.708576"/>
  <GFX>
   <space>000.webp</space>
@@ -16,7 +17,7 @@
   <population>500</population>
   <hide>2.000000</hide>
   <services>
-   <land>dv_mil_command</land>
+   <land/>
    <refuel/>
    <outfits/>
    <shipyard/>

@@ -77,7 +77,6 @@ Furthermore, the following files play a critical role:
 * `comm.lua`: used when the player hails a ship.
 * `common.lua`: changes to the Lua language that are applied to all scripts.
 * `intro`: the introduction text when starting a new game.
-* `landing.lua`: handles how spobs allow the player to land. TODO rewrite.
 * `loadscreen.lua`: renders the loading screen.
 * `rep.lua`: internal file for the console. Do not modify!!
 * `rescue.lua`: script run when the game detects the player is stranded, such as they have a non-spaceworthy ship and are stuck in an uninhabited spob.

@@ -336,13 +336,13 @@ static void sysedit_editPntClose( unsigned int wid, const char *unused )
    else
       p->class = strdup( inp );
 
-   inp = window_getInput( sysedit_widEdit, "inpLand" );
-   free( p->land_func );
+   inp = window_getInput( sysedit_widEdit, "inpLua" );
+   free( p->lua_file );
 
    if ((inp == NULL) || (strlen(inp) == 0))
-      p->land_func = NULL;
+      p->lua_file = NULL;
    else
-      p->land_func = strdup( inp );
+      p->lua_file = strdup( inp );
 
    p->presence.base  = atof(window_getInput( sysedit_widEdit, "inpPresenceBase" ));
    p->presence.bonus = atof(window_getInput( sysedit_widEdit, "inpPresenceBonus" ));
@@ -1391,11 +1391,11 @@ static void sysedit_editPnt (void)
    window_addInput( wid, x += l + 5, y, 30, 20, "inpClass", 1, 1, NULL );
    x += 30 + 10;
 
-   s = _("Land");
+   s = _("Lua");
    l = gl_printWidthRaw( NULL, s );
-   window_addText( wid, x, y, l, 20, 1, "txtLand",
+   window_addText( wid, x, y, l, 20, 1, "txtLua",
          NULL, NULL, s );
-   window_addInput( wid, x += l + 5, y, 150, 20, "inpLand", 20, 1, NULL );
+   window_addInput( wid, x += l + 5, y, 150, 20, "inpLua", 20, 1, NULL );
    y -= gl_defFont.h + 15;
 
    /* Second row. */
@@ -1463,7 +1463,7 @@ static void sysedit_editPnt (void)
    window_setInput( wid, "inpPop", buf );
    snprintf( buf, sizeof(buf), "%s", p->class );
    window_setInput( wid, "inpClass", buf );
-   window_setInput( wid, "inpLand", p->land_func );
+   window_setInput( wid, "inpLua", p->lua_file );
    snprintf( buf, sizeof(buf), "%g", p->presence.base );
    window_setInput( wid, "inpPresenceBase", buf );
    snprintf( buf, sizeof(buf), "%g", p->presence.bonus );

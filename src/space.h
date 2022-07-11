@@ -105,12 +105,7 @@ typedef struct Spob_ {
    /* Landing details. */
    int can_land;        /**< Whether or not the player can land. */
    int land_override;   /**< Forcibly allows the player to either be able to land or not (+1 is land, -1 is not, 0 otherwise). */
-   char *land_func;     /**< Landing function to execute. */
    char *land_msg;      /**< Message on landing. */
-   char *bribe_msg;     /**< Bribe message. */
-   char *bribe_ack_msg; /**< Bribe ACK message. */
-   credits_t bribe_price;/**< Cost of bribing. */
-   int bribed;          /**< If spob has been bribed. */
 
    /* Landed details. */
    char *description;      /**< Spob description. */

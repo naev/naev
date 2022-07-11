@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vuere">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="4053.695496" y="17341.104186"/>
  <GFX>
   <space>C01.webp</space>
@@ -16,7 +17,7 @@
   <population>5e+07</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

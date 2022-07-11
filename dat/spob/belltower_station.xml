@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Belltower Station">
+ <lua>spob/lua/soromid_mil_restricted.lua</lua>
  <pos x="-5392.086751" y="-5040.697911"/>
  <GFX>
   <space>station-fleetbase2.webp</space>
@@ -16,7 +17,7 @@
   <population>1000</population>
   <hide>2.000000</hide>
   <services>
-   <land>srm_mil_restricted</land>
+   <land/>
    <refuel/>
    <bar/>
    <outfits/>

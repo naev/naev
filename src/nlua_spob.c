@@ -60,7 +60,6 @@ static int spobL_shipsSold( lua_State *L );
 static int spobL_outfitsSold( lua_State *L );
 static int spobL_commoditiesSold( lua_State *L );
 static int spobL_isBlackMarket( lua_State *L );
-static int spobL_isRestricted( lua_State *L );
 static int spobL_isKnown( lua_State *L );
 static int spobL_setKnown( lua_State *L );
 static int spobL_recordCommodityPriceAtTime( lua_State *L );
@@ -93,7 +92,6 @@ static const luaL_Reg spob_methods[] = {
    { "outfitsSold", spobL_outfitsSold },
    { "commoditiesSold", spobL_commoditiesSold },
    { "blackmarket", spobL_isBlackMarket },
-   { "restricted", spobL_isRestricted },
    { "known", spobL_isKnown },
    { "setKnown", spobL_setKnown },
    { "recordCommodityPriceAtTime", spobL_recordCommodityPriceAtTime },
@@ -672,7 +670,6 @@ static int spobL_flags( lua_State *L )
  * @usage can_land, can_bribe = p:canLand()
  *    @luatparam Spob p Spob to get land and bribe status of.
  *    @luatreturn boolean The land status of the spob.
- *    @luatreturn boolean The bribability status of the spob.
  * @luafunc canLand
  */
 static int spobL_canland( lua_State *L )
@@ -680,8 +677,7 @@ static int spobL_canland( lua_State *L )
    Spob *p = luaL_validspob(L,1);
    spob_updateLand( p );
    lua_pushboolean( L, p->can_land );
-   lua_pushboolean( L, p->bribe_price > 0 );
-   return 2;
+   return 1;
 }
 
 /**
@@ -861,22 +857,6 @@ static int spobL_isBlackMarket( lua_State *L )
 {
    Spob *p = luaL_validspob(L,1);
    lua_pushboolean(L, spob_hasService(p, SPOB_SERVICE_BLACKMARKET));
-   return 1;
-}
-
-/**
- * @brief Checks to see if a spob is restricted (has complicated land condition).
- *
- * @usage b = p:restricted()
- *
- *    @luatparam Spob p Spob to check if it's restricted.
- *    @luatreturn boolean true if the spob is restricted.
- * @luafunc restricted
- */
-static int spobL_isRestricted( lua_State *L )
-{
-   Spob *s = luaL_validspob(L,1);
-   lua_pushboolean(L, s->land_func != NULL);
    return 1;
 }
 

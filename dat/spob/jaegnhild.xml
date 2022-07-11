@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Jaegnhild">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="19330.000000" y="-3515.000000"/>
  <GFX>
   <space>moon-O00.webp</space>
@@ -16,7 +17,7 @@
   <population>3e+07</population>
   <hide>2.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

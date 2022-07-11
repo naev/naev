@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Priscus">
+ <lua>spob/lua/soromid_mil_restricted.lua</lua>
  <pos x="2390.165223" y="9970.939191"/>
  <GFX>
   <space>A04.webp</space>
@@ -16,7 +17,7 @@
   <population>98000</population>
   <hide>1.000000</hide>
   <services>
-   <land>srm_mil_restricted</land>
+   <land/>
    <refuel/>
    <bar/>
    <outfits/>

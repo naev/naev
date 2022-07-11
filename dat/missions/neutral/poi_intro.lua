@@ -324,6 +324,7 @@ function heartbeat ()
          cutscene = 3
          broadcasted = 0
          hook.timer( 5, "heartbeat" )
+         player.autonavReset( 5 )
 
          misn.osdCreate( _("Point of Interest"), {
             _("Eliminate the hostiles"),
@@ -334,7 +335,12 @@ function heartbeat ()
       else
          broadcasted = (broadcasted or 0) - 1
          if broadcasted < 0 then
-            nelly:broadcast(_("Come over here!"))
+            local strlist = {
+               _("Come over here!"),
+               _("Get closer!"),
+               _("I'm ready, come here!"),
+            }
+            nelly:broadcast( strlist[ rnd.rnd(1,#strlist) ] )
             broadcasted = 15
          end
       end
@@ -350,6 +356,7 @@ function heartbeat ()
       else
          cutscene = 5
       end
+
    elseif cutscene == 4 then
       broadcasted = broadcasted - 1
       if broadcasted < 0 then
@@ -358,25 +365,41 @@ function heartbeat ()
             _("Get rid of them!"),
             _("Aaaaaaah!"),
          }
-         player.autonavReset( 5 )
          nelly:broadcast( strlist[ rnd.rnd(1,#strlist) ] )
          broadcasted = 15
       end
 
    elseif cutscene == 5 then
-      nelly:broadcast(_("Phew! Let me activate my pulse scanner!"))
-      hook.timer( 5, "heartbeat" )
+      nelly:broadcast(_("Phew! Come over here and I'll activate my pulse scanner!"))
       cutscene = 6
-      return
+      broadcasted = 15
 
    elseif cutscene == 6 then
+      if nelly:pos():dist( player.pos() ) < 1e3 then
+         nelly:broadcast(_("Time to activate my pulse scanner!"))
+         hook.timer( 3, "heartbeat" )
+         cutscene = 7
+         return
+      end
+      broadcasted = broadcasted - 1
+      if broadcasted < 0 then
+         local strlist = {
+            _("Come over here!"),
+            _("Get closer!"),
+            _("I'm ready, come here!"),
+         }
+         nelly:broadcast( strlist[ rnd.rnd(1,#strlist) ] )
+         broadcasted = 15
+      end
+
+   elseif cutscene == 7 then
       luaspfx.pulse( nelly:pos(), nelly:vel() )
       naev.trigger( "poi_scan" )
       hook.timer( 5, "heartbeat" )
-      cutscene = 7
+      cutscene = 8
       return
 
-   elseif cutscene == 7 then
+   elseif cutscene == 8 then
       nelly:broadcast(_("My engine stopped, you go on ahead!"))
       misn.osdCreate( _("Point of Interest"), {
          _("Follow the trail"),
