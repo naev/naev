@@ -143,9 +143,9 @@ You say a random Za'lek planet but it doesn't seem like they are very interested
       pd( function ()
          if lied then
             return _([["Oh, and you're a shitty liar."
-They walk away away as you stand there dumbstruck.]])
+They walk away as you stand there dumbstruck.]])
          else
-            return _([[They walk away away as you stand there dumbstruck.]])
+            return _([[They walk away as you stand there dumbstruck.]])
          end
       end )
       vn.run()
@@ -162,7 +162,7 @@ They walk away away as you stand there dumbstruck.]])
       vn.scene()
       local z = vn.newCharacter( zbh.vn_zach() )
       vn.transition( zbh.zach.transition )
-      vn.na(fmt.f(_("The first thing you notice as your ship approaches the station is the lack of debris floating around, which allows you to make a landing unhindered. You land and are first greeted by drones that quickly beginning to unpack the {cargo} from your ship. Zach appears shortly after the unloading process is underway,"),{cargo=cargo_name}))
+      vn.na(fmt.f(_("The first thing you notice as your ship approaches the station is the lack of debris floating around, which allows you to make a landing unhindered. You land and are first greeted by drones that quickly begin to unpack the {cargo} from your ship. Zach appears shortly after the unloading process is underway,"),{cargo=cargo_name}))
       z(fmt.f(_([["I see you were able to bring everything I asked for."
 They then notice your worried face and ask what is wrong. You explain the encounter with the individual at {pnt} with the thinly veiled threat made at Zach, and the weird ship you saw outside.]]),
          {pnt=mem.destpnt}))
