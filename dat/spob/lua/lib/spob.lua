@@ -89,7 +89,7 @@ function luaspob.comm ()
       }
       local std = land_fct:playerStanding()
       if std < std_land then
-         table.insert( opts, { _("Bribe"), "bribe" } )
+         table.insert( opts, 1, { _("Bribe"), "bribe" } )
       end
       return opts
    end )
