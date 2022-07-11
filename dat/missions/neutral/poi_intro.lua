@@ -335,7 +335,12 @@ function heartbeat ()
       else
          broadcasted = (broadcasted or 0) - 1
          if broadcasted < 0 then
-            nelly:broadcast(_("Come over here!"))
+            local strlist = {
+               _("Come over here!"),
+               _("Get closer!"),
+               _("I'm ready, come here!"),
+            }
+            nelly:broadcast( strlist[ rnd.rnd(1,#strlist) ] )
             broadcasted = 15
          end
       end
