@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Ruadan Bastion">
+ <lua>spob/lua/zalek_mil_ruadan.lua</lua>
  <pos x="11792.645737" y="7261.141426"/>
  <GFX>
   <space>station-battlestation.webp</space>
@@ -16,7 +17,7 @@
   <population>50000</population>
   <hide>2.000000</hide>
   <services>
-   <land>zlk_ruadan</land>
+   <land/>
    <refuel/>
    <outfits/>
    <shipyard/>

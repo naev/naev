@@ -40,20 +40,6 @@ end
 -- Specialized landing functions: Planets may specify <land>funcname</land> under services in their XML data.
 -- The name will be looked up as a global function in this file. We declare each global to Luacheck to avoid warnings.
 
--- luacheck: globals zlk_mil_restricted (Za'lek's military spobs.)
-function zlk_mil_restricted( pnt )
-   return land_military(pnt, 50,
-         _("Docking sequence transmitted."),
-         _("Authorization level too low to grant access."),
-         _("Authorization denied."),
-         _("Money is irrelevant."))
-end
-
--- luacheck: globals zlk_ruadan (Za'lek's military center.)
-function zlk_ruadan( _pnt )
-   return false, "Permission denied. Ruadan space is off-limits to you."
-end
-
 -- luacheck: globals ptn_mil_restricted (Proteron military spobs.)
 function ptn_mil_restricted( pnt )
    return land_military(pnt, 50,

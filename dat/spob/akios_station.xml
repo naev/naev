@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Akios Station">
+<lua>spob/lua/zalek_mil_restricted.lua</lua>
  <pos x="-7481.403716" y="12773.423776"/>
  <GFX>
   <space>zalek_station2.webp</space>
@@ -16,7 +17,7 @@
   <population>5500</population>
   <hide>2.000000</hide>
   <services>
-   <land>zlk_mil_restricted</land>
+   <land/>
    <refuel/>
    <outfits/>
    <shipyard/>
