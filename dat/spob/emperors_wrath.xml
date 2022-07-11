@@ -17,7 +17,7 @@
   <population>5000</population>
   <hide>1.600000</hide>
   <services>
-   <land>emp_mil_wrath</land>
+   <land/>
    <refuel/>
   </services>
   <commodities/>

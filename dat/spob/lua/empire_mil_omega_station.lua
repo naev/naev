@@ -12,10 +12,10 @@ function load( spb )
          _("Landing access authorized."),
       },
       msg_notyet = {
-         _("You are not authorized to land here."),
+         _([["You are not authorized to land here."]]),
       },
       msg_cantbribe = {
-         _("Don't attempt to bribe an Empire official, pilot."),
+         _([["Don't attempt to bribe an Empire official, pilot."]]),
       },
    } )
 end
