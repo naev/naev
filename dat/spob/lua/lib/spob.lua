@@ -51,27 +51,37 @@ Pay {credits}?]]),
    msg_dangerous = params.msg_dangerous or {
       _([["I'm not dealing with dangerous criminals like you!"]]),
    }
+
+   -- Randomly choose
+   msg_bribed     = msg_bribed[ rnd.rnd(1,#msg_bribed) ]
+   msg_denied     = msg_denied[ rnd.rnd(1,#msg_denied) ]
+   msg_notyet     = msg_notyet[ rnd.rnd(1,#msg_notyet) ]
+   msg_granted    = msg_granted[ rnd.rnd(1,#msg_granted) ]
+   msg_cantbribe  = msg_cantbribe[ rnd.rnd(1,#msg_cantbribe) ]
+   msg_trybribe   = msg_trybribe[ rnd.rnd(1,#msg_trybribe) ]
+   msg_didbribe   = msg_didbribe[ rnd.rnd(1,#msg_didbribe) ]
+   msg_dangerous  = msg_dangerous[ rnd.rnd(1,#msg_dangerous) ]
 end
 
 function luaspob.can_land ()
    local s = land_spb:services()
    if not s.land then
-      return false,msg_denied[ rnd.rnd(1,#msg_denied) ]
+      return false,msg_denied
    end
    if land_spb:getLandOverride() then
-      return true, msg_granted[ rnd.rnd(1,#msg_granted) ]
+      return true, msg_granted
    end
    if bribed then
-      return true, msg_bribed[ rnd.rnd(1,#msg_bribed) ]
+      return true, msg_bribed
    end
    local std = land_fct:playerStanding()
    if std < 0 then
-      return false, msg_denied[ rnd.rnd(1,#msg_denied) ]
+      return false, msg_denied
    end
    if std < std_land then
-      return false, msg_notyet[ rnd.rnd(1,#msg_notyet) ]
+      return false, msg_notyet
    end
-   return true, msg_granted[ rnd.rnd(1,#msg_granted) ]
+   return true, msg_granted
 end
 
 function luaspob.comm ()
@@ -109,7 +119,7 @@ function luaspob.comm ()
       bribe_cost = bribe_cost_function( land_spb )
    end )
    spb( function ()
-      return fmt.f( msg_trybribe[ rnd.rnd(1,#msg_trybribe) ], {credits=fmt.credits( bribe_cost )} )
+      return fmt.f( msg_trybribe, {credits=fmt.credits( bribe_cost )} )
    end )
    vn.menu( function ()
       return {
@@ -128,7 +138,7 @@ function luaspob.comm ()
       bribed = true
       ccomm.nameboxUpdateSpob( land_spb, bribed )
    end )
-   spb( msg_didbribe[ rnd.rnd(1,#msg_didbribe) ] )
+   spb( msg_didbribe )
 
    vn.label("player_broke")
    vn.na( function ()
@@ -143,11 +153,11 @@ function luaspob.comm ()
    vn.jump("menu")
 
    vn.label("nobribe")
-   spb( msg_cantbribe[ rnd.rnd(1,#msg_cantbribe) ] )
+   spb( msg_cantbribe )
    vn.jump("menu")
 
    vn.label("dangerous")
-   spb( msg_dangerous[ rnd.rnd(1,#msg_dangerous) ] )
+   spb( msg_dangerous )
    vn.jump("menu")
 
    vn.label("leave")
