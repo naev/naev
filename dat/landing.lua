@@ -30,7 +30,7 @@
 local fmt = require "format"
 
 -- Common utility functions, defined below.
-local land_civilian, land_military
+local land_civilian
 
 -- Default function. Any spob that has no landing script explicitly defined will use this.
 function land( pnt )
@@ -39,24 +39,6 @@ end
 
 -- Specialized landing functions: Planets may specify <land>funcname</land> under services in their XML data.
 -- The name will be looked up as a global function in this file. We declare each global to Luacheck to avoid warnings.
-
--- luacheck: globals ptn_mil_restricted (Proteron military spobs.)
-function ptn_mil_restricted( pnt )
-   return land_military(pnt, 50,
-         _("Permission to land granted."),
-         _("You are not authorized to land here."),
-         _("Landing request denied."),
-         _("We Proteron don't take kindly to bribery."))
-end
-
--- luacheck: globals thr_mil_restricted (Thurion military spobs.)
-function thr_mil_restricted( pnt )
-   return land_military(pnt, 50,
-         fmt.f(_("Welcome, friend {player}. You may dock when ready."), {player=player.name()}),
-         _("I'm sorry, we can't trust you to land here just yet."),
-         _("Landing request denied."),
-         _("We have no need for your credits."))
-end
 
 -- luacheck: globals pir_clanworld (Pirate clanworld.)
 function pir_clanworld( pnt )
@@ -131,24 +113,4 @@ function land_civilian( pnt, land_floor, bribe_floor )
        bribe_ack_msg  = _("Make it quick.")
    end
    return can_land, land_msg, bribe_price, bribe_msg, bribe_ack_msg
-end
-
--- Military planet landing logic.
--- Expects the planet, the lowest standing at which landing is allowed, and four strings:
--- Landing granted string, standing too low string, landing denied string, message upon bribe attempt.
-function land_military( pnt, land_floor, ok_msg, notyet_msg, no_msg, nobribe )
-   local fct = pnt:faction()
-   local standing = fct:playerStanding()
-   local can_land = standing >= land_floor or pnt:getLandOverride()
-
-   local land_msg
-   if can_land then
-      land_msg = ok_msg
-   elseif standing >= 0 then
-      land_msg = notyet_msg
-   else
-      land_msg = no_msg
-   end
-
-   return can_land, land_msg, nobribe
 end

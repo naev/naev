@@ -3014,10 +3014,12 @@ dat/spob/lua/lib/hypergate.lua
 dat/spob/lua/lib/spob.lua
 dat/spob/lua/lib/wormhole.lua
 dat/spob/lua/lowclass.lua
+dat/spob/lua/proteron_mil_restricted.lua
 dat/spob/lua/sirius_mil_mutris.lua
 dat/spob/lua/sirius_mil_restricted.lua
 dat/spob/lua/soromid_mil_kataka.lua
 dat/spob/lua/soromid_mil_restricted.lua
+dat/spob/lua/thurion_mil_restricted.lua
 dat/spob/lua/wormhole_ncg1931.lua
 dat/spob/lua/wormhole_ngc13674.lua
 dat/spob/lua/wormhole_ngc15670.lua
