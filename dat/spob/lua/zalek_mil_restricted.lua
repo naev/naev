@@ -9,6 +9,8 @@ function load( spb )
       },
       msg_notyet = {
          _([["Authorization level too low to grant access."]]),
+         _([["Authorization permissions insufficient for landing."]]),
+         _([["Landing permission not found in database."]]),
       },
       msg_cantbribe = {
          _([["Money is irrelevant."]]),
