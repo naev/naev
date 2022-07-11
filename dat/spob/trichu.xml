@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Trichu">
+ <lua>spob/lua/lowclass.lua</lua>
  <pos x="-14442.412852" y="11180.096085"/>
  <GFX>
   <space>moon-G00.webp</space>
@@ -16,7 +17,7 @@
   <population>30000</population>
   <hide>2.000000</hide>
   <services>
-   <land>land_lowclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

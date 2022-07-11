@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Polaris Prime">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="14060.037687" y="4973.423281"/>
  <GFX>
   <space>002.webp</space>
@@ -16,7 +17,7 @@
   <population>318000</population>
   <hide>2.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <commodity/>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Worscha">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="-3271.270726" y="-7117.605452"/>
  <GFX>
   <space>M00.webp</space>
@@ -16,7 +17,7 @@
   <population>2e+09</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Heronus Orbital">
+ <lua>spob/lua/soromid_mil_restricted.lua</lua>
  <pos x="-12991.493773" y="17143.680277"/>
  <GFX>
   <space>station-battlestation.webp</space>
@@ -16,7 +17,7 @@
   <population>500000</population>
   <hide>2.000000</hide>
   <services>
-   <land>srm_mil_restricted</land>
+   <land/>
    <refuel/>
    <bar/>
    <outfits/>

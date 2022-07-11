@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Dun Hill">
+ <lua>spob/lua/lowclass.lua</lua>
  <pos x="2810.240735" y="10261.076369"/>
  <GFX>
   <space>H02.webp</space>
@@ -16,7 +17,7 @@
   <population>464284</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_lowclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

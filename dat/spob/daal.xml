@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Daal">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="-10085.286858" y="-30267.838240"/>
  <GFX>
   <space>moon-M03.webp</space>
@@ -16,7 +17,7 @@
   <population>2e+07</population>
   <hide>2.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

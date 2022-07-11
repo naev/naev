@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Vino">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="-24839.302216" y="-9566.085831"/>
  <GFX>
   <space>M06.webp</space>
@@ -16,7 +17,7 @@
   <population>5.5e+08</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <commodity/>

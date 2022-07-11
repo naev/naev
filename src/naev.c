@@ -78,6 +78,7 @@
 #include "physics.h"
 #include "pilot.h"
 #include "player.h"
+#include "plugin.h"
 #include "render.h"
 #include "rng.h"
 #include "safelanes.h"
@@ -383,6 +384,9 @@ int main( int argc, char** argv )
     * creates button events that results in the player starting out acceling */
    while (SDL_PollEvent(&event));
 
+   /* Show plugin compatibility. */
+   plugin_check();
+
    /* Incomplete translation note (shows once if we pick an incomplete translation based on user's locale). */
    if ( !conf.translation_warning_seen && conf.language == NULL ) {
       const char* language = gettext_getLanguage();
@@ -456,6 +460,7 @@ int main( int argc, char** argv )
    start_cleanup(); /* Cleanup from start.c, not the first cleanup step. :) */
 
    /* exit subsystems */
+   plugin_exit();
    cli_exit(); /* Clean up the console. */
    map_system_exit(); /* Destroys the solar system map. */
    map_exit(); /* Destroys the map. */

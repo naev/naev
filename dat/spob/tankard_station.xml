@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Tankard Station">
+ <lua>spob/lua/sirius_mil_restricted.lua</lua>
  <pos x="-20551.681519" y="12636.184692"/>
  <GFX>
   <space>station-commerce3.webp</space>
@@ -16,7 +17,7 @@
   <population>3000</population>
   <hide>2.000000</hide>
   <services>
-   <land>srs_mil_restricted</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

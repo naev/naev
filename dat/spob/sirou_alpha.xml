@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Sirou Alpha">
+ <lua>spob/lua/empire_mil_restricted.lua</lua>
  <pos x="12600.778408" y="-199.793815"/>
  <GFX>
   <space>station-shipyard2.webp</space>
@@ -16,7 +17,7 @@
   <population>15000</population>
   <hide>2.000000</hide>
   <services>
-   <land>emp_mil_restricted</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

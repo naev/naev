@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="The Stinker">
+ <lua>spob/lua/lowclass.lua</lua>
  <pos x="-319.479999" y="-1022.335998"/>
  <GFX>
   <space>X01.webp</space>
@@ -16,7 +17,7 @@
   <population>1000</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_lowclass</land>
+   <land/>
    <refuel/>
   </services>
   <commodities/>

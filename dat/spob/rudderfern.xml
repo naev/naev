@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Rudderfern">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="-22830.899336" y="-7419.439987"/>
  <GFX>
   <space>moon-L00.webp</space>
@@ -16,7 +17,7 @@
   <population>9e+08</population>
   <hide>2.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <commodity/>

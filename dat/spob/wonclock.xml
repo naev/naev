@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Wonclock">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="-1241.524836" y="-16494.675692"/>
  <GFX>
   <space>M04.webp</space>
@@ -16,7 +17,7 @@
   <population>5e+07</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>
