@@ -39,7 +39,7 @@ Pay {credits}?]]),
       },
       msg_bribed = {
          _([["Heh heh, thanks. Now get off the comm, I'm busy!"]]),
-         _([["Please doing business with you. Now get moving."]]),
+         _([["Pleasure doing business with you. Now get moving."]]),
       },
    } )
 end
