@@ -139,7 +139,7 @@ end
 function _poi_heartbeat_nooutfit ()
    if player.pos():dist( pos ) < 3e3 then
       -- TODO ship AI message
-      player.msg(_("You lack an outfit no scan the point of interest."),true)
+      player.msg(_("You lack an outfit to scan the point of interest."),true)
       return
    end
    timer = hook.timer( 1, "_poi_heartbeat_nooutfit" )

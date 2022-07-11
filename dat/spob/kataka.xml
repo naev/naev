@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Kataka">
+ <lua>spob/lua/soromid_mil_kataka.lua</lua>
  <pos x="-5945.866695" y="8183.563291"/>
  <GFX>
   <space>K03.webp</space>
@@ -16,7 +17,7 @@
   <population>3e+06</population>
   <hide>1.000000</hide>
   <services>
-   <land>srm_mil_kataka</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

@@ -54,6 +54,7 @@
 #include "rng.h"
 #include "sound.h"
 #include "spfx.h"
+#include "start.h"
 #include "toolkit.h"
 #include "weapon.h"
 
@@ -96,7 +97,6 @@ static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
 glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
 static glTexture *jumpbuoy_gfx = NULL; /**< Jump buoy graphics. */
-static nlua_env landing_env = LUA_NOREF; /**< Landing lua env. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 static int space_simulating = 0; /**< Are we simulating space? */
 static int space_simulating_effects = 0; /**< Are we doing special effects? */
@@ -1527,7 +1527,6 @@ void space_init( const char* sysname, int do_simulate )
    /* Set up spobs. */
    for (int i=0; i<array_size(cur_system->spobs); i++) {
       Spob *pnt = cur_system->spobs[i];
-      pnt->bribed = 0;
       pnt->land_override = 0;
       spob_updateLand( pnt );
    }
@@ -1675,21 +1674,8 @@ const char *spob_name( const Spob *p )
  */
 static int spobs_load (void)
 {
-   size_t bufsize;
-   char *buf, **spob_files;
+   char **spob_files;
    Commodity **stdList;
-
-   /* Load landing stuff. */
-   landing_env = nlua_newEnv();
-   nlua_loadStandard(landing_env);
-   buf         = ndata_read( LANDING_DATA_PATH, &bufsize );
-   if (nlua_dobufenv(landing_env, buf, bufsize, LANDING_DATA_PATH) != 0) {
-      WARN( _("Failed to load landing file: %s\n"
-            "%s\n"
-            "Most likely Lua file has improper syntax, please check"),
-            LANDING_DATA_PATH, lua_tostring(naevL,-1));
-   }
-   free(buf);
 
    /* Initialize stack if needed. */
    if (spob_stack == NULL)
@@ -1824,7 +1810,7 @@ char spob_getColourChar( const Spob *p )
    if (!spob_hasService( p, SPOB_SERVICE_INHABITED ))
       return 'I';
 
-   if (p->can_land || p->bribed) {
+   if (p->can_land) {
       if (areAllies(FACTION_PLAYER,p->presence.faction))
          return 'F';
       return 'N';
@@ -1846,7 +1832,7 @@ const char *spob_getSymbol( const Spob *p )
       return "";
    }
 
-   if (p->can_land || p->bribed) {
+   if (p->can_land) {
       if (areAllies(FACTION_PLAYER,p->presence.faction))
          return "+ ";
       return "~ ";
@@ -1865,7 +1851,7 @@ const glColour* spob_getColour( const Spob *p )
    if (!spob_hasService( p, SPOB_SERVICE_INHABITED ))
       return &cInert;
 
-   if (p->can_land || p->bribed) {
+   if (p->can_land) {
       if (areAllies(FACTION_PLAYER,p->presence.faction))
          return &cFriend;
       return &cNeutral;
@@ -1883,17 +1869,10 @@ const glColour* spob_getColour( const Spob *p )
  */
 void spob_updateLand( Spob *p )
 {
-   char *str;
-
    /* Clean up old stuff. */
    free( p->land_msg );
-   free( p->bribe_msg );
-   free( p->bribe_ack_msg );
    p->can_land    = 0;
    p->land_msg    = NULL;
-   p->bribe_msg   = NULL;
-   p->bribe_ack_msg = NULL;
-   p->bribe_price = 0;
 
    /* Run custom Lua. */
    if (p->lua_can_land != LUA_NOREF) {
@@ -1910,61 +1889,6 @@ void spob_updateLand( Spob *p )
 
       return;
    }
-
-   /* Must be inhabited. */
-   if (!spob_hasService( p, SPOB_SERVICE_INHABITED ) ||
-         (player.p == NULL))
-      return;
-
-   /* Set up function. */
-   if (p->land_func == NULL)
-      str = "land";
-   else
-      str = p->land_func;
-   nlua_getenv( naevL, landing_env, str );
-   lua_pushspob( naevL, spob_index(p) );
-   if (nlua_pcall(landing_env, 1, 5)) { /* error has occurred */
-      WARN(_("Landing: '%s' : %s"), str, lua_tostring(naevL,-1));
-      lua_pop(naevL,1);
-      return;
-   }
-
-   /* Parse parameters. */
-   p->can_land = lua_toboolean(naevL,-5);
-   if (lua_isstring(naevL,-4))
-      p->land_msg = strdup( lua_tostring(naevL,-4) );
-   else {
-      WARN( _("%s: %s (%s) -> return parameter 2 is not a string!"), LANDING_DATA_PATH, str, p->name );
-      p->land_msg = strdup( _("Invalid land message") );
-   }
-   /* Parse bribing. */
-   if (!p->can_land && lua_isnumber(naevL,-3)) {
-      p->bribe_price = lua_tonumber(naevL,-3);
-      /* We need the bribe message. */
-      if (lua_isstring(naevL,-2))
-         p->bribe_msg = strdup( lua_tostring(naevL,-2) );
-      else {
-         WARN( _("%s: %s (%s) -> return parameter 4 is not a string!"), LANDING_DATA_PATH, str, p->name );
-         p->bribe_msg = strdup( _("Invalid bribe message") );
-      }
-      /* We also need the bribe ACK message. */
-      if (lua_isstring(naevL,-1))
-         p->bribe_ack_msg = strdup( lua_tostring(naevL,-1) );
-      else {
-         WARN( _("%s: %s (%s) -> return parameter 5 is not a string!"), LANDING_DATA_PATH, str, p->name );
-         p->bribe_ack_msg = strdup( _("Invalid bribe ack message") );
-      }
-   }
-   else if (lua_isstring(naevL,-3))
-      p->bribe_msg = strdup( lua_tostring(naevL,-3) );
-   else if (!lua_isnil(naevL,-3))
-      WARN( _("%s: %s (%s) -> return parameter 3 is not a number or string or nil!"), LANDING_DATA_PATH, str, p->name );
-
-   lua_pop(naevL,5);
-
-   /* Unset bribe status if bribing is no longer possible. */
-   if (p->bribed && p->bribe_ack_msg == NULL)
-      p->bribed = 0;
 }
 
 /**
@@ -2216,22 +2140,8 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
                do {
                   xml_onlyNodes(ccur);
 
-                  if (xml_isNode(ccur, "land")) {
-                     char *tmp = xml_get(ccur);
+                  if (xml_isNode(ccur, "land"))
                      spob->services |= SPOB_SERVICE_LAND;
-                     if (tmp != NULL) {
-                        spob->land_func = strdup(tmp);
-#ifdef DEBUGGING
-                        if (landing_env != LUA_NOREF) {
-                           nlua_getenv( naevL, landing_env, tmp );
-                           if (lua_isnil(naevL,-1))
-                              WARN(_("Spob '%s' has landing function '%s' which is not found in '%s'."),
-                                    spob->name, tmp, LANDING_DATA_PATH);
-                           lua_pop(naevL,1);
-                        }
-#endif /* DEBUGGING */
-                     }
-                  }
                   else if (xml_isNode(ccur, "refuel"))
                      spob->services |= SPOB_SERVICE_REFUEL | SPOB_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "bar"))
@@ -2306,6 +2216,13 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
 
    if (spob->radius > 0.)
       spob_setFlag(spob, SPOB_RADIUS);
+
+   /* Set defaults if not set. */
+   if (spob->lua_file == NULL) {
+      const char *str = start_spob_lua_default();
+      if (str != NULL)
+         spob->lua_file = strdup( str );
+   }
 /*
  * Verification
  */
@@ -3426,10 +3343,7 @@ void space_exit (void)
       }
 
       /* Landing. */
-      free(spb->land_func);
       free(spb->land_msg);
-      free(spb->bribe_msg);
-      free(spb->bribe_ack_msg);
 
       /* tech */
       if (spb->tech != NULL)
@@ -3495,10 +3409,6 @@ void space_exit (void)
       free(ms);
    }
    array_free( mapshaders );
-
-   /* Free landing lua. */
-   nlua_freeEnv( landing_env );
-   landing_env = LUA_NOREF;
 }
 
 /**

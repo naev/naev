@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Janus Station">
+ <lua>spob/lua/empire_mil_restricted.lua</lua>
  <pos x="-2258.544687" y="5008.117353"/>
  <GFX>
   <space>station-shipyard2.webp</space>
@@ -16,7 +17,7 @@
   <population>12000</population>
   <hide>2.000000</hide>
   <services>
-   <land>emp_mil_restricted</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

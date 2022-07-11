@@ -48,7 +48,6 @@
 #define SHIP_DATA_PATH           "ships/" /**< Path to ships. */
 
 #define LUA_COMMON_PATH          "common.lua" /**< Common Lua functions. */
-#define LANDING_DATA_PATH        "landing.lua" /**< Lua script containing landing data. */
 #define LOADSCREEN_DATA_PATH     "loadscreen.lua" /**< Script for the load screen. */
 
 #define MUSIC_PATH               "snd/music/" /**< Prefix of where to find musics. */

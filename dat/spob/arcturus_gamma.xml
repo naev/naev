@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Arcturus Gamma">
+ <lua>spob/lua/empire_mil_restricted.lua</lua>
  <pos x="11296.801928" y="6891.698934"/>
  <GFX>
   <space>station-fleetbase2.webp</space>
@@ -16,7 +17,7 @@
   <population>52000</population>
   <hide>2.000000</hide>
   <services>
-   <land>emp_mil_restricted</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

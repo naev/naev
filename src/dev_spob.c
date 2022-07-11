@@ -20,6 +20,7 @@
 #include "nstring.h"
 #include "nxml.h"
 #include "physics.h"
+#include "start.h"
 
 /**
  * @brief Saves a spob.
@@ -32,6 +33,7 @@ int dpl_saveSpob( const Spob *p )
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    char *file, *cleanName;
+   const char *lua_default = start_spob_lua_default();
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
@@ -55,7 +57,7 @@ int dpl_saveSpob( const Spob *p )
       xmlw_elem( writer, "display", "%s", p->display );
    if (p->feature!=NULL)
       xmlw_elem( writer, "feature", "%s", p->feature );
-   if (p->lua_file!=NULL)
+   if ((p->lua_file!=NULL) && ((lua_default==NULL) || strcmp(lua_default,p->lua_file)!=0))
       xmlw_elem( writer, "lua", "%s", p->lua_file );
    if (spob_isFlag(p,SPOB_RADIUS))
       xmlw_elem( writer, "radius", "%f", p->radius );
@@ -92,12 +94,8 @@ int dpl_saveSpob( const Spob *p )
    xmlw_elem( writer, "population", "%g", (double)p->population );
    xmlw_elem( writer, "hide", "%f", p->hide );
    xmlw_startElem( writer, "services" );
-   if (spob_hasService( p, SPOB_SERVICE_LAND )) {
-      if (p->land_func == NULL)
-         xmlw_elemEmpty( writer, "land" );
-      else
-         xmlw_elem( writer, "land", "%s", p->land_func );
-   }
+   if (spob_hasService( p, SPOB_SERVICE_LAND ))
+      xmlw_elemEmpty( writer, "land" );
    if (spob_hasService( p, SPOB_SERVICE_REFUEL ))
       xmlw_elemEmpty( writer, "refuel" );
    if (spob_hasService( p, SPOB_SERVICE_BAR ))

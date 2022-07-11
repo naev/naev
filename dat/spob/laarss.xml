@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Laarss">
+ <lua>spob/lua/highclass.lua</lua>
  <pos x="14354.175136" y="-15731.478785"/>
  <GFX>
   <space>G02.webp</space>
@@ -16,7 +17,7 @@
   <population>9e+08</population>
   <hide>1.000000</hide>
   <services>
-   <land>land_hiclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

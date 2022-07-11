@@ -1372,7 +1372,7 @@ int input_clickedSpob( int spob, int autonav )
       player_hyperspacePreempt(0);
       spob_updateLand( pnt );
       if (!spob_isFlag(pnt, SPOB_SERVICE_INHABITED) || pnt->can_land ||
-            pnt->bribed || (pnt->land_override > 0)) {
+            (pnt->land_override > 0)) {
          int ret = player_land(0);
          if (ret == PLAYER_LAND_AGAIN) {
             player_autonavSpob(pnt->name, 1);

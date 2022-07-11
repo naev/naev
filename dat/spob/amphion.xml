@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Amphion">
+ <lua>spob/lua/lowclass.lua</lua>
  <pos x="6123.453755" y="2327.102217"/>
  <GFX>
   <space>P01.webp</space>
@@ -16,7 +17,7 @@
   <population>1e+06</population>
   <hide>0.600000</hide>
   <services>
-   <land>land_lowclass</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

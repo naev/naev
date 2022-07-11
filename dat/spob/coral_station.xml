@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Coral Station">
+ <lua>spob/lua/sirius_mil_restricted.lua</lua>
  <pos x="-10376.000424" y="3007.726705"/>
  <GFX>
   <space>station-fleetbase.webp</space>
@@ -16,7 +17,7 @@
   <population>500</population>
   <hide>2.000000</hide>
   <services>
-   <land>srs_mil_restricted</land>
+   <land/>
    <refuel/>
   </services>
   <commodities/>
