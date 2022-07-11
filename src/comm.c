@@ -35,7 +35,6 @@
 #define GRAPHIC_HEIGHT 256 /**< Height of graphic. */
 
 static Spob *comm_spob         = NULL; /**< Spob currently talking to. */
-static glTexture *comm_graphic = NULL; /**< Pilot's graphic. */
 static int comm_commClose      = 0; /**< Close comm when done. */
 static nlua_env comm_env       = LUA_NOREF; /**< Comm Lua env. */
 

@@ -97,7 +97,6 @@ static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
 glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
 static glTexture *jumpbuoy_gfx = NULL; /**< Jump buoy graphics. */
-static nlua_env landing_env = LUA_NOREF; /**< Landing lua env. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 static int space_simulating = 0; /**< Are we simulating space? */
 static int space_simulating_effects = 0; /**< Are we doing special effects? */
@@ -1675,21 +1674,8 @@ const char *spob_name( const Spob *p )
  */
 static int spobs_load (void)
 {
-   size_t bufsize;
-   char *buf, **spob_files;
+   char **spob_files;
    Commodity **stdList;
-
-   /* Load landing stuff. */
-   landing_env = nlua_newEnv();
-   nlua_loadStandard(landing_env);
-   buf         = ndata_read( LANDING_DATA_PATH, &bufsize );
-   if (nlua_dobufenv(landing_env, buf, bufsize, LANDING_DATA_PATH) != 0) {
-      WARN( _("Failed to load landing file: %s\n"
-            "%s\n"
-            "Most likely Lua file has improper syntax, please check"),
-            LANDING_DATA_PATH, lua_tostring(naevL,-1));
-   }
-   free(buf);
 
    /* Initialize stack if needed. */
    if (spob_stack == NULL)
@@ -3423,10 +3409,6 @@ void space_exit (void)
       free(ms);
    }
    array_free( mapshaders );
-
-   /* Free landing lua. */
-   nlua_freeEnv( landing_env );
-   landing_env = LUA_NOREF;
 }
 
 /**
