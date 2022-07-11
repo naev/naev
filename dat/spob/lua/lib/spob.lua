@@ -5,7 +5,7 @@ local ccomm = require "common.comm"
 local luaspob = {}
 
 local land_spb, land_fct, bribed, bribe_cost_function
-local msg_bribed, msg_denied, msg_granted, msg_notyet, msg_cantbribe, msg_trybribe, msg_didbribe, msg_dangerous
+local msg_bribed, msg_denied, msg_granted, msg_notyet, msg_cantbribe, msg_trybribe, msg_dangerous
 local std_dangerous, std_land, std_bribe
 
 function luaspob.setup( spb, params )
@@ -45,9 +45,6 @@ function luaspob.setup( spb, params )
 
 Pay {credits}?]]),
    }
-   msg_didbribe = params.msg_didbribe or {
-      _([["Thank you for your contribution."]]),
-   }
    msg_dangerous = params.msg_dangerous or {
       _([["I'm not dealing with dangerous criminals like you!"]]),
    }
@@ -59,7 +56,6 @@ Pay {credits}?]]),
    msg_granted    = msg_granted[ rnd.rnd(1,#msg_granted) ]
    msg_cantbribe  = msg_cantbribe[ rnd.rnd(1,#msg_cantbribe) ]
    msg_trybribe   = msg_trybribe[ rnd.rnd(1,#msg_trybribe) ]
-   msg_didbribe   = msg_didbribe[ rnd.rnd(1,#msg_didbribe) ]
    msg_dangerous  = msg_dangerous[ rnd.rnd(1,#msg_dangerous) ]
 end
 
@@ -68,11 +64,8 @@ function luaspob.can_land ()
    if not s.land then
       return false,msg_denied
    end
-   if land_spb:getLandOverride() then
+   if bribed or land_spb:getLandOverride() then
       return true, msg_granted
-   end
-   if bribed then
-      return true, msg_bribed
    end
    local std = land_fct:playerStanding()
    if std < 0 then
@@ -138,7 +131,7 @@ function luaspob.comm ()
       bribed = true
       ccomm.nameboxUpdateSpob( land_spb, bribed )
    end )
-   spb( msg_didbribe )
+   spb( msg_bribed )
 
    vn.label("player_broke")
    vn.na( function ()

@@ -28,7 +28,7 @@ function load( spb )
       msg_trybribe = {
          _([["Well, I think you're scum, but I'm willing to look the other way for {credits}. Deal?"]]),
       },
-      msg_didbribe = {
+      msg_bribed = {
          _([["Heh heh, thanks. Now get off the comm, I'm busy!"]]),
       },
    } )
