@@ -27,21 +27,28 @@ function luaspob.setup( spb, params )
 
    msg_bribed = params.msg_bribed or {
       _([["Make it quick."]]),
+      _([["Don't let anyone see you."]]),
+      _([["Be quiet about this."]]),
    }
    msg_denied = params.msg_denied or {
-      _("Landing request denied."),
+      _([["Landing request denied."]]),
+      _([["Landing not authorized."]]),
+      _([["Landing denied."]]),
    }
-   msg_notyet = params.msg_notyet or {
-      _("Landing request denied."),
-   }
+   msg_notyet = params.msg_notyet or msg_denied
    msg_granted = params.msg_granted or {
-      _("Permission to land granted."),
+      _([["Permission to land granted."]]),
+      _([["You are clear to land."]]),
+      _([["Proceed to land."]]),
    }
    msg_cantbribe = params.msg_cantbribe or {
       _([["We do not accept bribes."]]),
    }
    msg_trybribe = params.msg_trybribe or {
       _([["I'll let you land for the modest price of {credits}."
+
+Pay {credits}?]]),
+      _([["Some {credits} would make me reconsider letting you land."
 
 Pay {credits}?]]),
    }

@@ -18,18 +18,28 @@ function load( spb )
       },
       msg_denied = {
          _([["Get out of here!"]]),
+         _([["Scram before I blast you to pieces myself."]]),
+         _([["Go away!"]]),
       },
       msg_notyet = {
-         _([["Small time pirates have no business on our clanworld!"]])
+         _([["Small time pirates have no business on our clanworld!"]]),
+         _([["Come back when you're a real pirate."]]),
+         _([["Didn't you read the 'Real Pirates Only' sign? Go away."]])
       },
       msg_cantbribe = {
-         _([["Money won't buy you access to our restricted facilities, citizen."]]),
+         _([["Your money isn't worth the trouble you bring."]]),
       },
       msg_trybribe = {
-         _([["Well, I think you're scum, but I'm willing to look the other way for {credits}. Deal?"]]),
+         _([["Well, I think you're scum, but I'm willing to look the other way for {credits}. Deal?"
+
+Pay {credits}?]]),
+         _([["I could use some more wax for my Pirate Hyena. I'll make a landing exception for your ship for {credits}."
+
+Pay {credits}?]]),
       },
       msg_bribed = {
          _([["Heh heh, thanks. Now get off the comm, I'm busy!"]]),
+         _([["Please doing business with you. Now get moving."]]),
       },
    } )
 end
