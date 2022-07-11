@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Socrates Military Academy">
+<lua>spob/lua/sirius_mil_restricted.lua</lua>
  <pos x="2760.307195" y="-7182.319320"/>
  <GFX>
   <space>000.webp</space>
@@ -16,7 +17,7 @@
   <population>10000</population>
   <hide>2.000000</hide>
   <services>
-   <land>srs_mil_restricted</land>
+   <land/>
    <refuel/>
    <bar/>
   </services>

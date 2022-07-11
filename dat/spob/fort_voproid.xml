@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Fort Voproid">
+<lua>spob/lua/sirius_mil_restricted.lua</lua>
  <pos x="8721.803983" y="-1214.023998"/>
  <GFX>
   <space>station-battlestation.webp</space>
@@ -16,7 +17,7 @@
   <population>15000</population>
   <hide>3.000000</hide>
   <services>
-   <land>srs_mil_restricted</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

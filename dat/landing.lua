@@ -40,15 +40,6 @@ end
 -- Specialized landing functions: Planets may specify <land>funcname</land> under services in their XML data.
 -- The name will be looked up as a global function in this file. We declare each global to Luacheck to avoid warnings.
 
--- luacheck: globals srs_mil_restricted (Sirius military spobs.)
-function srs_mil_restricted( pnt )
-   return land_military(pnt, 50,
-         _("Permission to land granted."),
-         _("Only the faithful may land here. Request denied."),
-         _("Landing request denied."),
-         _("\"The faithful will never be swayed by money.\""))
-end
-
 -- luacheck: globals srs_mil_mutris (Sirius Mutris.)
 function srs_mil_mutris( pnt )
    return land_military(pnt, 70,

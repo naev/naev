@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Shariff Station">
+<lua>spob/lua/sirius_mil_restricted.lua</lua>
  <pos x="8176.922812" y="-3831.949938"/>
  <GFX>
   <space>station-fleetbase.webp</space>
@@ -16,7 +17,7 @@
   <population>2000</population>
   <hide>2.000000</hide>
   <services>
-   <land>srs_mil_restricted</land>
+   <land/>
    <refuel/>
   </services>
   <commodities/>

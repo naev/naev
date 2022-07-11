@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Mutris">
+ <lua>spob/lua/sirius_mil_mutris.lua</lua>
  <pos x="33152.000000" y="30118.000000"/>
  <GFX>
   <space>L00.webp</space>
@@ -16,7 +17,7 @@
   <population>3e+09</population>
   <hide>1.000000</hide>
   <services>
-   <land>srs_mil_mutris</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>
