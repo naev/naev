@@ -312,7 +312,7 @@ local function getShipboardActivity( activity_type )
 	if not activity_type then
 		activity_type = pick_key(activities)
 	elseif not activities[activity_type] then
-		activity_type = basic
+		activity_type = "basic"
 	end
 	local choices = activities[activity_type]
 	return pick_one(choices)
@@ -1246,7 +1246,7 @@ local function analyze_spoken(spoken, speaker, listener)
 			analysis.question = "affirm"
 		elseif string.find(spoken, "When") then
 			-- asking about time
-			analysist.question = "time"
+			analysis.question = "time"
 		elseif string.find(spoken, "Why") then
 			-- asking something specific
 			analysis.question = "specific"
@@ -1324,7 +1324,7 @@ local function analyze_spoken(spoken, speaker, listener)
 		print(fmt.f("{listener} didn't understand when {speaker} said <{spoken}>.", {listener=listener.name, speaker=speaker.name, spoken = spoken }))
 		
         -- continue with smalltalk, or whatever this is and adjust the satisfaction slightly
-        local responses = {
+        responses = {
             _("Whatever."),
             _("Yeah, okay."),
             fmt.f(_("Okay, {name}."), speaker),
@@ -1412,7 +1412,7 @@ end
 
 local function speak(talker, other)
     local colour = "F"
-    local choices = {"I have nothing to say."}
+    local choices
     local last_sentiment = talker.conversation.sentiment
 	
     -- figure out what to say
@@ -1472,6 +1472,11 @@ local function speak(talker, other)
         end
     end
 
+	-- hopefully impossible safety branch
+	if not choices or #choices == 0 then
+	 choices = {"I have nothing to say."}
+	end
+	
 	-- we didn't start discussing a topic, say what's on our mind
 	print("about to select speech")
     local spoken = pick_one(choices)
@@ -1572,7 +1577,10 @@ function speak_to(arg)
 		{me = arg.responder, message = analyze_spoken(arg.message, arg.me, arg.responder) }
 	)
 	else
-		print("WARNING: Speak_to with no responder! args:", args)
+		print("WARNING: Speak_to with no responder! args:", arg)
+		for k,v in pairs(arg) do
+			print(fmt.f({k}, {v}), {k=k,v=v})
+		end
 	end
 end
 
@@ -3260,7 +3268,7 @@ local function createExplosivesEngineer(fac)
     character.satisfaction = rnd.rnd(1, 3)
     character.threshold = 100e3 -- how much they need to be happy after doing a paid job
     character.xp = math.floor(10 * (1 + rnd.sigma())) / 10
-    character.portrait = portrait_func(portrait_arg)
+    character.portrait = portrait_func()
     character.faction = fac
     character.chatter = 0.3 + rnd.threesigma() * 0.1 -- how likely I am to talk at any given opportunity (could be NEVER!)
     character.deposit = math.ceil(100e3 * character.satisfaction * character.xp + character.chatter * rnd.rnd() * 10e3)
@@ -4238,7 +4246,7 @@ local function startConversation(companion)
 end
 
 -- delete the crew member permanently
-function terminate_crew(crewmember, reason)
+local function terminate_crew(crewmember, reason)
 	if npcs then
 		for nn, cdata in pairs(npcs) do
 			if crewmember == cdata then
@@ -4456,8 +4464,6 @@ function approachGenericCrewmate(npc_id)
     if pdata.deposit then
         player.pay(-pdata.deposit, true)
     end
-
-    local num_crewmates = #mem.companions
 
     local i = #mem.companions + 1
     if i / 2 >= player.pilot():stats()["crew"] == "Crew" then
@@ -4890,7 +4896,6 @@ function smuggle_cargo(speaker)
 		
 		-- remove the commodities from the players cargo hold
 		-- and put them in the new ship
-		local removed = {}
 		for _, pair in ipairs(will_sell) do
 			local cc = pair[1]
 			local qty = pair[2]
@@ -4902,7 +4907,7 @@ function smuggle_cargo(speaker)
 		smuggler:land(chosen_spob)
 		hook.pilot(smuggler, "land", "smuggler_landed", { profit=profit, crewsheet=speaker })
 		hook.pilot(smuggler, "death", "terminate_crew", {speaker, _("Your smuggler was lost in combat.") })
-		local message = pick_one(speaker.conversation.message)
+		message = pick_one(speaker.conversation.message)
 		smuggler:comm(message)
 		if space == 0 then
 			speaker.xp = math.min(10, speaker.xp + 0.1)
@@ -4989,12 +4994,16 @@ function engineer_armour(engineer)
 	if (armour <= 2 and pp:energy() > 36) then
 		local health_bonus = engineer.xp * engineer.xp * engineer.xp * engineer.satisfaction * engineer.satisfaction
 		pp:addHealth(health_bonus, health_bonus / 8)
-		engineer.bonus = health_bouns
-		local message = fmt.f(_("Your engineer, {name}, was lost in space combat while maintaining hull integrity. As a final valiant act of heroism and ultimately leading to {article_object} death, {bonus} armor was repaired in a massive power surge."), engineer)
+		engineer.bonus = health_bonus
+		local message = fmt.f(_("Your engineer, {name}, was lost in space combat while maintaining hull integrity. As a final valiant act of heroism ultimately leading to {article_object} death, {bonus} armor was repaired in a massive power surge."), engineer)
 		vntk.msg(_("Heroic Sacrifice"), message)
 		terminate_crew(engineer, message)
+	elseif (armour <= 10 and pp:energy() > 20) then
+		-- "active situation" polling rate
+		engineer.hook.hook = hook.timer(16 - engineer.satisfaction, "engineer_armour", engineer)
 	end
 	
+	-- standard engineer duties
 	if (armour < math.min(100, 90 + engineer.xp)
 		and shield >= 100 - engineer.xp - engineer.satisfaction
 		and stress * stress < engineer.satisfaction * engineer.xp
@@ -5022,7 +5031,7 @@ function engineer_armour(engineer)
 			engineer.active = 1
 			local delay = math.max(2, 20 - engineer.xp - engineer.satisfaction)
 			engineer.hook.hook = hook.timer(delay, "engineer_armour", engineer)
-			print("engineer active, timer is, delay", engineer.hook.hook, delay)
+			
 			local message = pick_one(engineer.conversation.message)
 			pilot.comm(fmt.f("{typetitle} {name}", engineer), message .. fmt.f(" I need about {delay} more seconds... ", { delay = math.max(2, math.ceil(delay + rnd.threesigma() * 10)) }) .. add_special(engineer) )
 			engineer.satisfaction = math.min(10, engineer.satisfaction + 0.01)
