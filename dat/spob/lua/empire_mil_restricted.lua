@@ -10,7 +10,7 @@ function load( spb )
       },
       msg_notyet = {
          _([["You are not authorized to land here, citizen."]]),
-         _([["Landing is only for approved personal."]]),
+         _([["Landing is only for approved personnel."]]),
          _([["Military authorization required for landing access."]]),
       },
       msg_cantbribe = {
