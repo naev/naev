@@ -78,6 +78,7 @@
 #include "physics.h"
 #include "pilot.h"
 #include "player.h"
+#include "plugin.h"
 #include "render.h"
 #include "rng.h"
 #include "safelanes.h"
@@ -382,6 +383,9 @@ int main( int argc, char** argv )
    /* flushes the event loop since I noticed that when the joystick is loaded it
     * creates button events that results in the player starting out acceling */
    while (SDL_PollEvent(&event));
+
+   /* Show plugin compatibility. */
+   plugin_check();
 
    /* Incomplete translation note (shows once if we pick an incomplete translation based on user's locale). */
    if ( !conf.translation_warning_seen && conf.language == NULL ) {
