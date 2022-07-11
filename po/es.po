@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-07-10 21:19+0000\n"
+"PO-Revision-Date: 2022-07-11 21:15+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: dat/intro:2
 msgid ""
@@ -93725,16 +93725,16 @@ msgstr "Falta la mercancía '%s' '"
 #, c-format
 msgid "%d ton of %s gathered"
 msgid_plural "%d tons of %s gathered"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d tonelads de %s recogida"
+msgstr[1] "%d toneladas de %s recogidas"
 
 #: src/commodity.c:530
 msgid "No more cargo space available"
-msgstr ""
+msgstr "No hay más espacio de carga disponible"
 
 #: src/commodity.c:534
 msgid "Cannot gather material: no more cargo space available"
-msgstr ""
+msgstr "No se puede recoger material: no hay más espacio de carga disponible"
 
 #: src/commodity.c:604
 #, c-format
@@ -94895,7 +94895,7 @@ msgstr "¡El contador de diálogos no está sincronizado!"
 #: src/economy.c:127
 #, c-format
 msgid "Price for commodity '%s' not known."
-msgstr ""
+msgstr "Precio para la mercancía '%s' desconocido."
 
 #: src/economy.c:137 src/economy.c:186
 #, c-format
@@ -94905,29 +94905,29 @@ msgstr ""
 #: src/economy.c:174 src/economy.c:229
 #, c-format
 msgid "Average price for commodity '%s' not known."
-msgstr ""
+msgstr "Precio medio de la mercancía \"%s\" desconocido."
 
 #: src/economy.c:353
 msgid "Unable to create CSparse Matrix."
-msgstr ""
+msgstr "Incapaz de creat CSparse Matrix."
 
 #: src/economy.c:371 src/economy.c:374
 msgid "Unable to enter CSparse Matrix Cell."
-msgstr ""
+msgstr "Incapaz de entrar en Celda CSparse Matrix."
 
 #: src/economy.c:386
 msgid "Unable to create economy G Matrix."
-msgstr ""
+msgstr "Incapaz de crear economia G Matrix."
 
 #: src/economy.c:483 src/gui.c:1601 src/ndata.c:199 src/news.c:104
 #: src/nfile.c:492 src/opengl_tex.c:133 src/opengl_tex.c:370 src/perlin.c:399
 #: src/perlin.c:460 src/physics.c:456
 msgid "Out of Memory"
-msgstr ""
+msgstr "Fuera de Memoria"
 
 #: src/economy.c:504
 msgid "Failed to solve the Economy System."
-msgstr ""
+msgstr "Fallo al solucionar la Economía del Sistema."
 
 #: src/economy.c:584
 #, c-format
@@ -94942,210 +94942,210 @@ msgstr ""
 #: src/equipment.c:323 src/land.c:297 src/land.c:577 src/land.c:1266
 #: src/land_outfits.c:154 src/land_shipyard.c:91 src/land_trade.c:71
 msgid "Take Off"
-msgstr ""
+msgstr "Despegar"
 
 #. Check if player really wants to sell.
 #: src/equipment.c:327 src/equipment.c:2114
 msgid "Sell Ship"
-msgstr ""
+msgstr "Vender Nave"
 
 #: src/equipment.c:331
 msgid "Swap Ship"
-msgstr ""
+msgstr "Cambiar de Nave"
 
 #: src/equipment.c:335
 msgid "Unequip"
-msgstr ""
+msgstr "Desequipar"
 
 #: src/equipment.c:339
 msgid "Autoequip"
-msgstr ""
+msgstr "Autoequipar"
 
 #: src/equipment.c:364 src/info.c:468 src/land_shipyard.c:221
 #: src/map_system.c:656
 msgid "Model:"
-msgstr ""
+msgstr "Modelo:"
 
 #: src/equipment.c:365 src/info.c:469 src/land.c:1247 src/land_shipyard.c:223
 #: src/map_system.c:657
 msgid "Class:"
-msgstr ""
+msgstr "Clase:"
 
 #: src/equipment.c:366 src/info.c:470 src/land_shipyard.c:227
 #: src/map_system.c:660
 msgid "Crew:"
-msgstr ""
+msgstr "Tripulación:"
 
 #: src/equipment.c:367
 msgid "Value:"
-msgstr ""
+msgstr "Valor:"
 
 #: src/equipment.c:369 src/info.c:472 src/land_outfits.c:186
 #: src/land_shipyard.c:239 src/map_find.c:662 src/map_system.c:636
 #: src/map_system.c:663
 msgid "Mass:"
-msgstr ""
+msgstr "Masa:"
 
 #: src/equipment.c:370 src/info.c:473
 msgid "Jump Time:"
-msgstr ""
+msgstr "Tiempo de Salto:"
 
 #: src/equipment.c:371 src/info.c:474 src/land_shipyard.c:243
 #: src/map_system.c:664
 msgid "Thrust:"
-msgstr ""
+msgstr "Empuje:"
 
 #: src/equipment.c:372 src/info.c:475 src/land_shipyard.c:248
 #: src/map_system.c:666
 msgid "Speed:"
-msgstr ""
+msgstr "Velocidad:"
 
 #: src/equipment.c:373 src/info.c:476 src/land_shipyard.c:253
 #: src/map_system.c:668
 msgid "Turn:"
-msgstr ""
+msgstr "Giro:"
 
 #: src/equipment.c:374 src/info.c:477 src/land_shipyard.c:258
 #: src/map_system.c:670
 msgid "Time Constant:"
-msgstr ""
+msgstr "Constante de Tiempo:"
 
 #: src/equipment.c:375
 msgid "Detected at:"
-msgstr ""
+msgstr "Detectado en:"
 
 #: src/equipment.c:376
 msgid "Evasion:"
-msgstr ""
+msgstr "Evasión:"
 
 #: src/equipment.c:377
 msgid "Stealth:"
-msgstr ""
+msgstr "Sigilo:"
 
 #. Misc
 #: src/equipment.c:379 src/info.c:479 src/land_shipyard.c:263
 #: src/map_system.c:672
 msgid "Absorption:"
-msgstr ""
+msgstr "Absorción:"
 
 #: src/equipment.c:380 src/info.c:480 src/land_shipyard.c:268
 #: src/map_system.c:674
 msgid "Shield:"
-msgstr ""
+msgstr "Escudo:"
 
 #: src/equipment.c:381 src/info.c:481 src/land_shipyard.c:273
 #: src/map_system.c:676
 msgid "Armour:"
-msgstr ""
+msgstr "Blindaje:"
 
 #: src/equipment.c:382 src/info.c:482 src/land_shipyard.c:278
 #: src/map_system.c:678
 msgid "Energy:"
-msgstr ""
+msgstr "Energía:"
 
 #: src/equipment.c:383 src/info.c:483 src/land_shipyard.c:285
 #: src/map_system.c:680
 msgid "Cargo Space:"
-msgstr ""
+msgstr "Espacio de Carga:"
 
 #: src/equipment.c:386
 msgid "Ship Status:"
-msgstr ""
+msgstr "Estado de Nave:"
 
 #: src/equipment.c:397
 msgid "Available Ships"
-msgstr ""
+msgstr "Naves Disponibles"
 
 #: src/equipment.c:399
 msgid "Available Outfits"
-msgstr ""
+msgstr "Equipos Disponibles"
 
 #. Favourite checkbox, run before genLists.
 #: src/equipment.c:402
 msgid "Favourite"
-msgstr ""
+msgstr "Favorito"
 
 #: src/equipment.c:604 src/outfit.c:293
 msgid "Weapon"
-msgstr ""
+msgstr "Arma"
 
 #: src/equipment.c:612 src/outfit.c:291
 msgid "Utility"
-msgstr ""
+msgstr "Utilidad"
 
 #: src/equipment.c:620 src/outfit.c:289
 msgid "Structure"
-msgstr ""
+msgstr "Estructura"
 
 #: src/equipment.c:653
 msgid "CPU Free"
-msgstr ""
+msgstr "CPU Libre"
 
 #: src/equipment.c:665
 msgid "Mass Limit Left"
-msgstr ""
+msgstr "Límite de Masa Sobrante"
 
 #: src/equipment.c:680
 #, c-format
 msgid "!! %.0f%% Slower !!"
-msgstr ""
+msgstr "!! %.0f%% Más Despacio!!"
 
 #: src/equipment.c:724
 msgid "Right click to remove"
-msgstr ""
+msgstr "Click derecho para retirar"
 
 #: src/equipment.c:735
 msgid "Right click to add"
-msgstr ""
+msgstr "Click derecho para añadir"
 
 #: src/equipment.c:845 src/outfit.c:392
 #, c-format
 msgid "#%c%s #%c%s #0slot"
-msgstr ""
+msgstr "#%c%s #%c%s #0ranura"
 
 #: src/equipment.c:851
 msgid " [exclusive]"
-msgstr ""
+msgstr " [exclusivo]"
 
 #: src/equipment.c:1347
 #, c-format
 msgid "%.2f DPS [%.2f EPS]"
-msgstr ""
+msgstr "%.2f DPS [%.2f EPS]"
 
 #: src/equipment.c:1456
 #, c-format
 msgid "Ship Stats\n"
-msgstr ""
+msgstr "Estadísticas de Nave\n"
 
 #: src/equipment.c:1532 src/land_outfits.c:261 src/shiplog.c:489
 #: src/shiplog.c:534
 msgid "All"
-msgstr ""
+msgstr "Todo"
 
 #: src/equipment.c:1565
 msgid "Very little space on equipment outfit tabs!"
-msgstr ""
+msgstr "¡Muy poco espacio en las pestañas de los equipos!"
 
 #: src/equipment.c:1575 src/land_outfits.c:291
 msgid "Filter…"
-msgstr ""
+msgstr "Filtrar…"
 
 #. Movement.
 #: src/equipment.c:1716 src/equipment.c:1745 src/info.c:517 src/info.c:537
 msgid "tonne"
 msgid_plural "tonnes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "tonelada"
+msgstr[1] "toneladas"
 
 #: src/equipment.c:1718 src/info.c:519
 #, c-format
 msgid "%s average"
-msgstr ""
+msgstr "media %s"
 
 #: src/equipment.c:1720
 #, c-format
 msgid "#%c%s%.0f#0 kN/tonne"
-msgstr ""
+msgstr "#%c%s%.0f#0 kN/tonelada"
 
 #: src/equipment.c:1722
 #, c-format
@@ -95153,6 +95153,8 @@ msgid ""
 "\n"
 "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"
 msgstr ""
+"\n"
+"#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)"
 
 #: src/equipment.c:1725
 #, c-format
@@ -95160,44 +95162,46 @@ msgid ""
 "\n"
 "#%c%s%.0f#0 deg/s"
 msgstr ""
+"\n"
+"#%c%s%.0f#0 grad/s"
 
 #: src/equipment.c:1729
 #, c-format
 msgid "%s (%.1f secs for scan)"
-msgstr ""
+msgstr "%s (%.1f seg para escanear)"
 
 #: src/equipment.c:1734 src/equipment.c:1737 src/equipment.c:1740
 #, c-format
 msgid "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
-msgstr ""
+msgstr "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)"
 
 #. Misc.
 #: src/equipment.c:1744
 #, c-format
 msgid "%d / #%c%s%d#0 %s"
-msgstr ""
+msgstr "%d / #%c%s%d#0 %s"
 
 #: src/equipment.c:1747
 #, c-format
 msgid "%s %s (%d %s)"
-msgstr ""
+msgstr "%s %s (%d %s)"
 
 #: src/equipment.c:1748 src/info.c:539 src/land_shipyard.c:290
 #: src/land_shipyard.c:294 src/map_system.c:681 src/map_system.c:683
 msgid "unit"
 msgid_plural "units"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "unidad"
+msgstr[1] "unidades"
 
 #: src/equipment.c:1748 src/info.c:248 src/info.c:540
 msgid "jump"
 msgid_plural "jumps"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "salto"
+msgstr[1] "saltos"
 
 #: src/equipment.c:1827
 msgid "Show all outfits"
-msgstr ""
+msgstr "Mostrar todos los equipos"
 
 #: src/equipment.c:1828
 msgid "Show only equipable outfits"
@@ -95205,141 +95209,145 @@ msgstr ""
 
 #: src/equipment.c:1829
 msgid "Show only light outfits"
-msgstr ""
+msgstr "Mostrar solo los equipos ligeros"
 
 #: src/equipment.c:1830
 msgid "Show only medium outfits"
-msgstr ""
+msgstr "Mostrar solo los equipos medios"
 
 #: src/equipment.c:1831
 msgid "Show only heavy outfits"
-msgstr ""
+msgstr "Mostrar solo los equipos pesados"
 
 #: src/equipment.c:1968
 msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
+"¡No puedes desequipar tu barco cuando tienes más carga de la que puede "
+"contener sin modificaciones!"
 
 #: src/equipment.c:1971
 msgid "Unequip Ship"
-msgstr ""
+msgstr "Desequipar Nave"
 
 #. confirm
 #: src/equipment.c:1972
 msgid "Are you sure you want to remove all equipment from your ship?"
-msgstr ""
+msgstr "¿Estás seguro de que quieres eliminar todo el equipo de tu nave?"
 
 #: src/equipment.c:1975 src/land.c:193
 msgid "Recall Fighters"
-msgstr ""
+msgstr "Retirar Cazas"
 
 #: src/equipment.c:1975 src/land.c:193
 msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
+"Esta acción hará que se recuperen los cazas desplegados. ¿Estas de acuerdo?"
 
 #: src/equipment.c:2049 src/land.c:1494
 #, c-format
 msgid "File '%s' not found!"
-msgstr ""
+msgstr "¡Archivo '%s' no encontrado!"
 
 #: src/equipment.c:2057
 #, c-format
 msgid "Failed to run '%s': %s"
-msgstr ""
+msgstr "Fallo en la ejecución de '%s': %s"
 
 #: src/equipment.c:2069
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
-msgstr ""
+msgstr "¡'%s' no tiene la función válida requerida 'autoequipar'!"
 
 #: src/equipment.c:2075
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
-msgstr ""
+msgstr "'%s' no pudo ejecutar la función requerida 'autoequipar': %s"
 
 #: src/equipment.c:2115
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
-msgstr ""
+msgstr "¿Estás seguro de que quieres vender tu nave %s por %s?"
 
 #. Display widget.
 #: src/equipment.c:2132
 msgid "Ship Sold"
-msgstr ""
+msgstr "Nave Vendida"
 
 #: src/equipment.c:2133
 #, c-format
 msgid "You have sold your ship %s for %s."
-msgstr ""
+msgstr "Has vendido tu nave %s por %s."
 
 #: src/equipment.c:2158 src/player.c:403
 msgid "Ship Name"
-msgstr ""
+msgstr "Nombrar Nave"
 
 #: src/equipment.c:2159
 #, c-format
 msgid "Please enter a new name for your %s:"
-msgstr ""
+msgstr "Por favor inserta un nuevo nombre para tu %s:"
 
 #: src/equipment.c:2167
 msgid "Name Collision"
-msgstr ""
+msgstr "Colisión de Nombres"
 
 #: src/equipment.c:2168 src/player.c:430
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
+"Por favor no le des el mismo nombre a tu nave que a una de tus otras naves."
 
 #: src/escort.c:184
 #, c-format
 msgid "Pilot '%s' has escort '%s' docking error!"
-msgstr ""
+msgstr "¡El piloto '%s' tiene un error de acoplamiento '%s' de la escolta!"
 
 #: src/escort.c:241
 #, c-format
 msgid "#gEscorts: #0Destroying %s."
-msgstr ""
+msgstr "#gEscoltas: #0Destruyendo %s."
 
 #: src/escort.c:243
 #, c-format
 msgid "#gEscorts: #0Engaging %s."
-msgstr ""
+msgstr "#gEscoltas: #0Enfrentando %s."
 
 #: src/escort.c:257
 msgid "#gEscorts: #0Holding formation."
-msgstr ""
+msgstr "#gEscoltas: #0Manteniendo formación."
 
 #: src/escort.c:270
 msgid "#gEscorts: #0Returning to ship."
-msgstr ""
+msgstr "#gEscoltas: #0Volviendo a nave."
 
 #: src/escort.c:283
 msgid "#gEscorts: #0Clearing orders."
-msgstr ""
+msgstr "#gEscoltas: #0Limpiando ordenes."
 
 #: src/escort.c:300
 msgid "Hold Position"
-msgstr ""
+msgstr "Mantener Posición"
 
 #: src/escort.c:301
 msgid "Return To Ship"
-msgstr ""
+msgstr "Volver a Nave"
 
 #: src/escort.c:302
 msgid "Clear Orders"
-msgstr ""
+msgstr "Limpiar Ordenes"
 
 #: src/escort.c:311
 msgid "Escort Orders"
-msgstr ""
+msgstr "Ordenes de Escolta"
 
 #: src/escort.c:312
 msgid "Select the order to give to this escort."
-msgstr ""
+msgstr "Selecciona la orden a dar a este escolta."
 
 #: src/escort.c:355
 msgid "#gEscorts: #0Jumping."
-msgstr ""
+msgstr "#gEscoltas: #0Saltando."
 
 #: src/event.c:213
 #, c-format
@@ -95348,31 +95356,35 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Error al cargar el archivo de eventos: %s\n"
+"%s\n"
+"Lo más probable es que el archivo Lua tenga una sintaxis incorrecta, por "
+"favor compruebalo"
 
 #: src/event.c:270
 #, c-format
 msgid "Event ID '%u' not valid."
-msgstr ""
+msgstr "El ID de evento '%u' no es válido."
 
 #: src/event.c:330
 #, c-format
 msgid "Conditional for event '%s' failed to run."
-msgstr ""
+msgstr "La condición para el evento '%s' no se ha ejecutado."
 
 #: src/event.c:363
 #, c-format
 msgid "Event in %s has invalid or no name"
-msgstr ""
+msgstr "El evento en %s no tiene nombre o es inválido"
 
 #: src/event.c:376
 #, c-format
 msgid "Event '%s': Null trigger type."
-msgstr ""
+msgstr "Evento '%s': Tipo de disparador Null."
 
 #: src/event.c:386
 #, c-format
 msgid "Event '%s' has invalid 'trigger' parameter: %s"
-msgstr ""
+msgstr "El evento '%s' tiene un parámetro 'trigger' inválido: %s"
 
 #: src/event.c:400
 #, c-format
@@ -95382,39 +95394,40 @@ msgstr ""
 #: src/event.c:418
 #, c-format
 msgid "Unknown node '%s' in event '%s'"
-msgstr ""
+msgstr "Nodo desconocido '%s' en el evento '%s'"
 
 #: src/event.c:425
 #, c-format
 msgid "Event '%s' missing/invalid '%s' element"
-msgstr ""
+msgstr "Evento '%s' falta/elemento '%s' no válido"
 
 #: src/event.c:465
 #, c-format
 msgid "Loaded %d Event"
 msgid_plural "Loaded %d Events"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Evento %d Cargado"
+msgstr[1] "Eventos %d Cargados"
 
 #: src/event.c:492 src/faction.c:1282 src/mission.c:1021 src/nxml.c:82
 #, c-format
 msgid "Unable to read data from '%s'"
-msgstr ""
+msgstr "Incapaz de leer datos desde '%s'"
 
 #: src/event.c:501
 #, c-format
 msgid "Event '%s' has create function but no XML header!"
-msgstr ""
+msgstr "¡El evento '%s' tiene función de creación pero no tiene cabecera XML!"
 
 #: src/event.c:510
 #, c-format
 msgid "Event file '%s' has missing XML header!"
-msgstr ""
+msgstr "¡Archivo de eventos '%s' falta la cabecera XML!"
 
 #: src/event.c:517
 #, c-format
 msgid "Unable to parse document XML header for Event '%s'"
 msgstr ""
+"No se ha podido analizar la cabecera XML del documento para el Evento '%s'"
 
 #: src/event.c:524 src/slots.c:58 src/spfx.c:175 src/start.c:63
 #, c-format
@@ -95424,17 +95437,18 @@ msgstr "Archivo '%s' malformado: falta el elemento raíz '%s'"
 #: src/event.c:538
 #, c-format
 msgid "Event Lua '%s' syntax error: %s"
-msgstr ""
+msgstr "Evento Lua '%s' error de sintaxis: %s"
 
 #: src/event.c:605
 #, c-format
 msgid "No event data found matching name '%s'."
-msgstr ""
+msgstr "No se han encontrado datos de eventos que coincidan con el nombre '%s'."
 
 #: src/event.c:638
 #, c-format
 msgid "Trying to test claims of unknown event with id '%d'!"
 msgstr ""
+"¡Intentando probar las reclamaciones de un evento desconocido con id '%d'!"
 
 #. Must delete.
 #: src/event.c:658
@@ -95443,31 +95457,36 @@ msgid ""
 "Detected event '%s' without any hooks and is therefore invalid. Removing "
 "event."
 msgstr ""
+"Detectado el evento '%s' sin ningún gancho y por lo tanto no es válido. "
+"Eliminando evento."
 
 #: src/event.c:746
 msgid "Event has missing 'name' attribute, skipping."
-msgstr ""
+msgstr "Al evento le falta el atributo 'name', omitiendo."
 
 #: src/event.c:751
 #, c-format
 msgid ""
 "Event in save has name '%s' but event data not found matching name. Skipping."
 msgstr ""
+"El evento guardado tiene el nombre '%s' pero no se han encontrado datos del "
+"evento que coincidan con el nombre. Omitiendo."
 
 #: src/event.c:758
 #, c-format
 msgid "Event with data '%s' has invalid 'id' attribute, skipping."
 msgstr ""
+"El evento con los datos '%s' tiene el atributo 'id' inválido, omitiendo."
 
 #: src/event.c:766
 #, c-format
 msgid "Event with data '%s' was not created, skipping."
-msgstr ""
+msgstr "El evento con los datos '%s' no fue creado, omitiendo."
 
 #: src/faction.c:181 src/nlua_faction.c:171
 #, c-format
 msgid "Faction '%s' not found in stack."
-msgstr ""
+msgstr "Facción '%s' no encontrada en la pila."
 
 #. f is invalid
 #. o is invalid
@@ -95484,25 +95503,27 @@ msgstr ""
 #: src/faction.c:961
 #, c-format
 msgid "Faction id '%d' is invalid."
-msgstr ""
+msgstr "El id de facción '%d' no es válido."
 
 #: src/faction.c:556 src/faction.c:560 src/faction.c:649 src/faction.c:653
 #, c-format
 msgid "%d is the player faction"
-msgstr ""
+msgstr "%d es la facción del jugador"
 
 #. Call function.
 #. An error occurred.
 #: src/faction.c:766 src/faction.c:1054 src/faction.c:1105
 #, c-format
 msgid "Faction '%s': %s"
-msgstr ""
+msgstr "Facción '%s': %s"
 
 #: src/faction.c:773
 #, c-format
 msgid ""
 "Lua script for faction '%s' did not return a number from 'standing:hit(...)'."
 msgstr ""
+"El script Lua para la facción '%s' no devolvió un número de "
+"'standing:hit(...)'."
 
 #: src/faction.c:1061
 #, c-format
@@ -95510,6 +95531,8 @@ msgid ""
 "Lua script for faction '%s' did not return a string from 'standing:"
 "text_rank(...)'."
 msgstr ""
+"El script Lua para la facción '%s' no devolvió una cadena de "
+"'standing:text_rank(...)'."
 
 #: src/faction.c:1112
 #, c-format
@@ -95517,26 +95540,28 @@ msgid ""
 "Lua script for faction '%s' did not return a string from 'standing:"
 "text_broad(...)'."
 msgstr ""
+"El script Lua para la facción '%s' no devolvió una cadena de "
+"'standing:text_broad(...)'."
 
 #: src/faction.c:1249
 #, c-format
 msgid "Faction '%s' has duplicate 'logo' tag."
-msgstr ""
+msgstr "La facción '%s' tiene la etiqueta 'logo' duplicada."
 
 #: src/faction.c:1276
 #, c-format
 msgid "Unknown node '%s' in faction '%s'"
-msgstr ""
+msgstr "Nodo desconocido '%s' en la facción '%s'"
 
 #: src/faction.c:1284
 #, c-format
 msgid "Faction '%s' missing 'player' tag."
-msgstr ""
+msgstr "A la facción \"%s\" le falta la etiqueta \"player\"."
 
 #: src/faction.c:1286
 #, c-format
 msgid "Faction '%s' is known but missing 'description' tag."
-msgstr ""
+msgstr "La facción '%s' es conocida pero falta la etiqueta 'description'."
 
 #: src/faction.c:1308
 #, c-format
@@ -95545,21 +95570,26 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Fallo en la ejecución de la secuencia de comandos standing: %s\n"
+"%s\n"
+"Lo más probable es que el archivo Lua tenga una sintaxis incorrecta, por "
+"favor compruebelo"
 
 #: src/faction.c:1330
 #, c-format
 msgid "Standing script did not set the \"standing\" variable: %s"
 msgstr ""
+"La secuencia de comandos standing no estableció la variable \"standing\": %s"
 
 #: src/faction.c:1380
 #, c-format
 msgid "Faction '%s' has duplicate 'standing' tag."
-msgstr ""
+msgstr "Facción '%s' tiene la etiqueta 'standing' duplicada."
 
 #: src/faction.c:1388
 #, c-format
 msgid "Faction '%s' has duplicate 'spawn' tag."
-msgstr ""
+msgstr "Facción '%s' tiene la etiqueta 'spawn' duplicada."
 
 #: src/faction.c:1394
 #, c-format
@@ -95568,11 +95598,15 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Fallo en la ejecución del script de spawn: %s\n"
+"%s\n"
+"Lo más probable es que el archivo Lua tenga una sintaxis incorrecta, por "
+"favor compruebela"
 
 #: src/faction.c:1408
 #, c-format
 msgid "Faction '%s' has duplicate 'equip' tag."
-msgstr ""
+msgstr "Facción '%s' tiene la etiqueta 'equip' duplicada."
 
 #: src/faction.c:1414
 #, c-format
@@ -95581,11 +95615,15 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Fallo en la ejecución del script del equipo: %s\n"
+"%s\n"
+"Lo más probable es que el archivo Lua tenga una sintaxis incorrecta, por "
+"favor compruebelo"
 
 #: src/faction.c:1453
 #, c-format
 msgid "Faction '%s' has no Lua and isn't static!"
-msgstr ""
+msgstr "¡Facción '%s' no tiene Lua y no es estática!"
 
 #: src/faction.c:1490 src/map.c:2702 src/outfit.c:1151 src/ship.c:525
 #: src/ship.c:1006 src/space.c:1818 src/space.c:1876 src/space.c:3445
@@ -95598,67 +95636,69 @@ msgstr ""
 #, c-format
 msgid "Loaded %d Faction"
 msgid_plural "Loaded %d Factions"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Facción %d Cargada"
+msgstr[1] "Facciones %d Cargadas"
 
 #: src/font.c:1093
 #, c-format
 msgid ""
 "Font '%s' unicode character '%#x' not found in font! Using missing glyph."
 msgstr ""
+"El carácter unicode de la fuente '%s' '%#x' no se encuentra en la fuente. "
+"Utilizando el glifo que falta."
 
 #: src/font.c:1100
 msgid "FT_Load_Glyph failed."
-msgstr ""
+msgstr "FT_Load_Glyph falló."
 
 #: src/font.c:1107
 #, c-format
 msgid "Font '%s' not using FT_PIXEL_MODE_GRAY!"
-msgstr ""
+msgstr "¡Fuente '%s' no utiliza FT_PIXEL_MODE_GRAY!"
 
 #: src/font.c:1148
 #, c-format
 msgid "Unable to load character '%#x'!"
-msgstr ""
+msgstr "¡Incapaz de cargar el carácter '%#x'!"
 
 #: src/font.c:1374
 #, c-format
 msgid "Unable to find glyph '%d'!"
-msgstr ""
+msgstr "¡Incapaz de encontrar glifo '%d\"!"
 
 #: src/font.c:1459
 #, c-format
 msgid "FT_Init_FreeType failed with font %s."
-msgstr ""
+msgstr "FT_Init_FreeType falló con fuente %s."
 
 #: src/font.c:1607
 #, c-format
 msgid "Unable to read font: %s"
-msgstr ""
+msgstr "Incapaz de leer la fuente: %s"
 
 #: src/font.c:1615
 #, c-format
 msgid "FT_New_Memory_Face failed loading library from %s"
-msgstr ""
+msgstr "FT_New_Memory_Face falló al cargar la librería desde %s"
 
 #. Create at 96 DPI
 #. Create at 96 DPI
 #: src/font.c:1628
 msgid "FT_Set_Char_Size failed."
-msgstr ""
+msgstr "FT_Set_Char_Size falló."
 
 #: src/font.c:1634
 msgid "Font isn't resizable!"
-msgstr ""
+msgstr "¡La fuente no es redimensionable!"
 
 #: src/font.c:1638
 msgid "FT_Select_Charmap failed to change character mapping."
-msgstr ""
+msgstr "FT_Select_Charmap falló al cambiar el mapa de caracteres."
 
 #: src/gettext.c:135
 #, c-format
 msgid "Adding translations from %s"
-msgstr ""
+msgstr "Añadiendo traducciones desde %s"
 
 #: src/gui.c:401 src/input.c:1289
 msgid "Gfx index out of range"
@@ -95668,21 +95708,23 @@ msgstr ""
 #, c-format
 msgid "GUI '%s': Trying to run GUI func '%s' but no GUI is loaded!"
 msgstr ""
+"GUI '%s': ¡Intentando ejecutar la función GUI '%s' pero no hay ninguna GUI "
+"cargada!"
 
 #: src/gui.c:1687
 #, c-format
 msgid "GUI '%s': no function '%s' defined!"
-msgstr ""
+msgstr "GUI '%s': ¡no hay función '%s' definida!"
 
 #: src/gui.c:1708
 #, c-format
 msgid "GUI '%s' Lua -> '%s': %s"
-msgstr ""
+msgstr "GUI '%s' Lua -> '%s': %s"
 
 #: src/gui.c:1838
 #, c-format
 msgid "Unable to find GUI '%s'."
-msgstr ""
+msgstr "Incapaz de encontrar GUI '%s'."
 
 #: src/gui.c:1851
 #, c-format
@@ -95691,132 +95733,140 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Fallo al cargar GUI Lua: %s\n"
+"%s\n"
+"Lo más probable es que el archivo Lua tenga una sintaxis incorrecta, por "
+"favor compruebelo"
 
 #: src/gui.c:1998
 #, c-format
 msgid "#oRadar set to %.0fx.#0"
-msgstr ""
+msgstr "#oRadar ajustado a %.0fx.#0"
 
 #: src/gui_osd.c:212
 #, c-format
 msgid "OSD '%d' not found."
-msgstr ""
+msgstr "No se ha encontrado el OSD '%d'."
 
 #: src/gui_osd.c:264
 #, c-format
 msgid "OSD '%u' not found to destroy."
-msgstr ""
+msgstr "No se ha encontrado el OSD '%u' para destruir."
 
 #: src/gui_osd.c:282
 #, c-format
 msgid "OSD '%s' only has %d items (requested %d)"
-msgstr ""
+msgstr "El OSD '%s' sólo tiene %d elementos (solicitados %d)"
 
 #: src/hook.c:270
 msgid "Unknown Lua parameter type."
-msgstr ""
+msgstr "Tipo de parámetro Lua Desconocido."
 
 #: src/hook.c:299
 msgid "Trying to run hook with nonexistent parent: deleting"
-msgstr ""
+msgstr "Intentando ejecutar un gancho con un padre inexistente: borrando"
 
 #: src/hook.c:307
 msgid "Trying to run hook with parent not in player mission stack: deleting"
 msgstr ""
+"Intentando ejecutar un gancho con un padre que no está en la pila de "
+"misiones del jugador: borrando"
 
 #. error has occurred
 #: src/hook.c:331 src/hook.c:380
 #, c-format
 msgid "Hook [%s] '%d' -> '%s' failed"
-msgstr ""
+msgstr "Gancho [%s] '%d' -> '%s' falló"
 
 #: src/hook.c:361
 #, c-format
 msgid "Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting hook."
-msgstr ""
+msgstr "Gancho [%s] '%d' -> '%s' falló, evento no existe. Borrando gancho."
 
 #: src/hook.c:423
 #, c-format
 msgid "Invalid hook type '%d', deleting."
-msgstr ""
+msgstr "Tipo de gancho inválido '%d', borrando."
 
 #: src/hook.c:924
 #, c-format
 msgid "HOOK_MAX_PARAM is set too low (%d), need at least %d!"
 msgstr ""
+"¡HOOK_MAX_PARAM esta configurado con valor muy bajo (%d), necesita al menos "
+"%d!"
 
 #: src/hook.c:1023
 #, c-format
 msgid "Attempting to run hook of id '%d' which is not in the stack"
-msgstr ""
+msgstr "Intentando ejecutar un gancho de id '%d' que no está en la pila"
 
 #: src/hook.c:1080
 msgid "Running hook_cleanup while hook stack is being run!"
-msgstr ""
+msgstr "¡Ejecutando hook_cleanup mientras se ejecuta gancho de pila!"
 
 #: src/hook.c:1157
 msgid "Something has gone screwy here..."
-msgstr ""
+msgstr "Algo se ha estropeado aquí..."
 
 #: src/hook.c:1251
 #, c-format
 msgid "Hook of unknown type '%s' found, skipping."
-msgstr ""
+msgstr "Se ha encontrado un gancho de tipo desconocido '%s', saltando."
 
 #: src/hook.c:1280
 #, c-format
 msgid "Save has unknown hook node '%s'."
-msgstr ""
+msgstr "Guardar tiene un nodo gancho desconocido '%s'."
 
 #: src/hook.c:1285
 msgid "Invalid hook."
-msgstr ""
+msgstr "Gancho inváido."
 
 #: src/hook.c:1298
 msgid "Save has unsupported hook type."
-msgstr ""
+msgstr "Guardar tiene un tipo de gancho no soportado."
 
 #: src/info.c:57
 msgid "Main"
-msgstr ""
+msgstr "Principal"
 
 #: src/info.c:58 src/map_find.c:979
 msgid "Ship"
-msgstr ""
+msgstr "Nave"
 
 #: src/info.c:59
 msgid "Weapons"
-msgstr ""
+msgstr "Armas"
 
 #: src/info.c:60
 msgid "Cargo"
-msgstr ""
+msgstr "Carga"
 
 #: src/info.c:61 src/land.c:955 src/space.c:170
 msgid "Missions"
-msgstr ""
+msgstr "Misiones"
 
 #: src/info.c:62
 msgid "Standings"
-msgstr ""
+msgstr "Puntuaciones"
 
 #: src/info.c:63
 msgid "Ship log"
-msgstr ""
+msgstr "Registro de Nave"
 
 #. Create the window.
 #: src/info.c:145 src/menu.c:425
 msgid "Info"
-msgstr ""
+msgstr "Información"
 
 #: src/info.c:223 src/load.c:417
 msgid "Date:"
-msgstr ""
+msgstr "Fecha:"
 
 #: src/info.c:224 src/land.c:1251 src/land_outfits.c:188
 #: src/land_shipyard.c:299 src/land_trade.c:90 src/map_find.c:664
 msgid "Money:"
-msgstr ""
+msgstr "Dinero:"
 
 #: src/info.c:225
 msgid "Ship:"
@@ -95824,72 +95874,74 @@ msgstr ""
 
 #: src/info.c:227
 msgid "Time played:"
-msgstr ""
+msgstr "Tiempo jugado:"
 
 #: src/info.c:228
 msgid "Times died:"
-msgstr ""
+msgstr "Veces muerto:"
 
 #: src/info.c:229
 msgid "Times jumped:"
-msgstr ""
+msgstr "Saltos dados:"
 
 #: src/info.c:230
 msgid "Times landed:"
-msgstr ""
+msgstr "Aterrizajes hechos:"
 
 #: src/info.c:231
 msgid "Damage done:"
-msgstr ""
+msgstr "Daño hecho:"
 
 #: src/info.c:232
 msgid "Damage taken:"
-msgstr ""
+msgstr "Daño recibido:"
 
 #: src/info.c:233
 msgid "Ships destroyed:"
-msgstr ""
+msgstr "Naves destruidas:"
 
 #: src/info.c:250
 #, c-format
 msgid "%.1f hours"
-msgstr ""
+msgstr "%.1f horas"
 
 #: src/info.c:254 src/info.c:256
 #, c-format
 msgid "%s MJ"
-msgstr ""
+msgstr "%s MJ"
 
 #: src/info.c:269
 msgid "Set GUI"
-msgstr ""
+msgstr "Configurar GUI"
 
 #: src/info.c:287
 msgid "Licenses"
-msgstr ""
+msgstr "Licencias"
 
 #: src/info.c:324
 msgid "No GUI available."
-msgstr ""
+msgstr "No GUI disponibles."
 
 #: src/info.c:325
 msgid ""
 "There are no GUI available, this means something went wrong somewhere. "
 "Inform the Naev maintainer."
 msgstr ""
+"No hay GUI disponible, esto significa que algo salió mal en alguna parte. "
+"Informe al mantenedor de Naev."
 
 #. window
 #: src/info.c:330
 msgid "Select GUI"
-msgstr ""
+msgstr "Seleccionar GUI"
 
 #: src/info.c:348 src/load.c:371
 msgid "Load"
-msgstr ""
+msgstr "Cargar"
 
 #: src/info.c:352
 msgid "Override GUI"
-msgstr ""
+msgstr "Sobrescribir GUI"
 
 #: src/info.c:389
 #, c-format
@@ -95898,68 +95950,68 @@ msgstr ""
 
 #: src/info.c:412
 msgid "GUI Override is not set."
-msgstr ""
+msgstr "Sobrescritura Gui no establecida."
 
 #: src/info.c:413
 #, c-format
 msgid "Enable GUI Override and change GUI to '%s'?"
-msgstr ""
+msgstr "¿Activar la sobreescritura de la GUI y cambiar la GUI a '%s'?"
 
 #: src/info.c:486
 msgid "Stats:"
-msgstr ""
+msgstr "Estadísticas:"
 
 #: src/info.c:521 src/land_shipyard.c:245 src/map_system.c:665
 #, c-format
 msgid "%.0f kN/tonne"
-msgstr ""
+msgstr "%.0f kN/tonelada"
 
 #: src/info.c:523
 #, c-format
 msgid "%.0f m/s (max %.0f m/s)"
-msgstr ""
+msgstr "%.0f m/s (max %.0f m/s)"
 
 #: src/info.c:526 src/land_shipyard.c:255 src/map_system.c:669
 #, c-format
 msgid "%.0f deg/s"
-msgstr ""
+msgstr "%.0f grad/s"
 
 #: src/info.c:532 src/info.c:534 src/info.c:536
 #, c-format
 msgid "%.0f / %.0f MJ (%.1f MW)"
-msgstr ""
+msgstr "%.0f / %.0f MJ (%.1f MW)"
 
 #: src/info.c:574
 msgid "Current Weapon Set Settings"
-msgstr ""
+msgstr "Configuración Actual del Conjunto de Armas"
 
 #: src/info.c:577
 msgid "Enable instant Mode"
-msgstr ""
+msgstr "Activar Modo instantáneo"
 
 #: src/info.c:580
 msgid "(Weapons fire when this weapon set key is pressed)"
-msgstr ""
+msgstr "(Las armas disparan cuando se pulsa esta tecla de ajuste de armas)"
 
 #: src/info.c:583
 msgid "Only shoot weapons that are in range"
-msgstr ""
+msgstr "Disparar sólo las armas que están dentro del alcance"
 
 #: src/info.c:587
 msgid "Global Settings"
-msgstr ""
+msgstr "Configuración Global"
 
 #: src/info.c:590
 msgid "Automatically handle weapons"
-msgstr ""
+msgstr "Automaticamente manejar las armas"
 
 #: src/info.c:593
 msgid "Dogfight aiming helper"
-msgstr ""
+msgstr "Ayudante de puntería de combate"
 
 #: src/info.c:679
 msgid "Enable autoweapons?"
-msgstr ""
+msgstr "¿Activar autoarmas?"
 
 #: src/info.c:680
 msgid ""
@@ -95967,22 +96019,28 @@ msgid ""
 "\n"
 "This will overwrite all manually-tweaked weapons groups."
 msgstr ""
+"¿Estás seguro de que quieres habilitar los grupos de armas automáticos para "
+"la nave?\n"
+"\n"
+"Esto sobrescribirá todos los grupos de armas ajustados manualmente."
 
 #: src/info.c:722
 msgid "You can not set all your weapon sets to fire groups!"
 msgstr ""
+"¡No puedes configurar todos tus conjuntos de armas para que disparen en "
+"grupo!"
 
 #: src/info.c:767
 msgid "Outfit that can be activated"
-msgstr ""
+msgstr "Equipo que puede ser activado"
 
 #: src/info.c:771
 msgid "Secondary Weapon (Right click toggles)"
-msgstr ""
+msgstr "Armas Secundaria (Click derecho para alternar)"
 
 #: src/info.c:775
 msgid "Primary Weapon (Left click toggles)"
-msgstr ""
+msgstr "Arma Primaria (Click izquierdo para alternar)"
 
 #: src/info.c:794
 msgid "Jettison"
@@ -95990,11 +96048,11 @@ msgstr "Arrojar al Espacio"
 
 #: src/info.c:837
 msgid " (#rillegal#0)"
-msgstr ""
+msgstr " (#rilegal#0)"
 
 #: src/info.c:877
 msgid "Illegalized by the following factions:\n"
-msgstr ""
+msgstr "Ilegalizado por las siguientes facciones:\n"
 
 #: src/info.c:883
 #, c-format
@@ -96002,43 +96060,47 @@ msgid ""
 "\n"
 "   - %s"
 msgstr ""
+"\n"
+"   - %s"
 
 #: src/info.c:907 src/info.c:1203
 msgid "Abort Mission"
-msgstr ""
+msgstr "Abortar Misión"
 
 #: src/info.c:908 src/info.c:1204
 msgid "Are you sure you want to abort this mission?"
-msgstr ""
+msgstr "¿Estás seguro de que quieres abortar esta misión?"
 
 #: src/info.c:924
 #, c-format
 msgid "Cargo '%d' does not belong to any active mission."
-msgstr ""
+msgstr "La carga \"%d\" no pertenece a ninguna misión activa."
 
 #: src/info.c:1110
 msgid "Abort"
-msgstr ""
+msgstr "Abortar"
 
 #: src/info.c:1116
 msgid "#nReward:#0"
-msgstr ""
+msgstr "#nRecompensa:#0"
 
 #. no missions
 #. Make sure you have missions.
 #: src/info.c:1155 src/land.c:638 src/land.c:705 src/land.c:742
 msgid "No Missions"
-msgstr ""
+msgstr "Sin Misiones"
 
 #: src/info.c:1157
 msgid "You currently have no active missions."
-msgstr ""
+msgstr "Actualmente no tienes misiones activas."
 
 #: src/info.c:1357
 msgid ""
 "You are currently viewing all logs in the selected log type. Please select a "
 "log title to delete."
 msgstr ""
+"Actualmente estás viendo todos los registros del tipo de registro "
+"seleccionado. Selecciona un título de registro para eliminarlo."
 
 #: src/info.c:1362
 #, c-format
@@ -96046,35 +96108,37 @@ msgid ""
 "This will delete ALL \"%s\" log entries. This operation cannot be undone. "
 "Are you sure?"
 msgstr ""
+"Esto borrará TODAS las entradas de registro \"%s\". Esta operación no se "
+"puede deshacer. ¿Estás seguro?"
 
 #: src/info.c:1392
 msgid "Log message"
-msgstr ""
+msgstr "Mensaje de registro"
 
 #: src/info.c:1415 src/info.c:1423
 msgid "Add a log entry"
-msgstr ""
+msgstr "Añadir una entrada de registro"
 
 #: src/info.c:1415
 msgid "Add an entry to your diary:"
-msgstr ""
+msgstr "Añadir una entrada a tu diario:"
 
 #: src/info.c:1418
 msgid "Your Diary"
-msgstr ""
+msgstr "Tu Diario"
 
 #: src/info.c:1423
 #, c-format
 msgid "Add an entry to the log titled '%s':"
-msgstr ""
+msgstr "Añadir una entrada de registro titulado '%s':"
 
 #: src/info.c:1429
 msgid "Cannot add log"
-msgstr ""
+msgstr "No se puede añadir registro"
 
 #: src/info.c:1429
 msgid "Cannot find this log!  Something went wrong here!"
-msgstr ""
+msgstr "¡No puedes encontrar este registro! ¡Algo esta mal aquí!"
 
 #: src/info.c:1455 src/load.c:373
 msgid "Delete"
@@ -96082,119 +96146,120 @@ msgstr "Eliminar"
 
 #: src/info.c:1458
 msgid "View Entry"
-msgstr ""
+msgstr "Ver Entrada"
 
 #: src/info.c:1461
 msgid "Add Entry"
-msgstr ""
+msgstr "Añadir Entrada"
 
 #: src/info.c:1467
 msgid "Select log type:"
-msgstr ""
+msgstr "Seleccionar tipo de registro:"
 
 #: src/info.c:1471
 msgid "Select log title:"
-msgstr ""
+msgstr "Seleccionar título de registro:"
 
 #: src/info.c:1475
 msgid "Log entries:"
-msgstr ""
+msgstr "Entradas de registro:"
 
 #: src/info.c:1499
 #, c-format
 msgid "Invalid info tab ID: %d"
-msgstr ""
+msgstr "Pestaña ID de información inválida: %d"
 
 #. Movement
 #: src/input.c:54
 msgid "Accelerate"
-msgstr ""
+msgstr "Acelerar"
 
 #: src/input.c:54
 msgid "Makes your ship accelerate forward."
-msgstr ""
+msgstr "Hace que tu nave acelere hacia delante."
 
 #: src/input.c:55
 msgid "Turn Left"
-msgstr ""
+msgstr "Gira a la Izquierda"
 
 #: src/input.c:55
 msgid "Makes your ship turn left."
-msgstr ""
+msgstr "Hace que tu nave gire a la izquierda."
 
 #: src/input.c:56
 msgid "Turn Right"
-msgstr ""
+msgstr "Gira a la Derecha"
 
 #: src/input.c:56
 msgid "Makes your ship turn right."
-msgstr ""
+msgstr "Hace que tu nave gire a la derecha."
 
 #: src/input.c:57
 msgid "Reverse"
-msgstr ""
+msgstr "Invertir"
 
 #: src/input.c:57
 msgid ""
 "Makes your ship face the direction you're moving from. Useful for braking."
 msgstr ""
+"Hace que tu nave mire en la dirección en la que te mueves. Útil para frenar."
 
 #: src/input.c:58
 msgid "Tries to enter stealth mode."
-msgstr ""
+msgstr "Intenta entrar en modo sigilo."
 
 #. Targeting
 #: src/input.c:60
 msgid "Target Next"
-msgstr ""
+msgstr "Fijar al Siguiente"
 
 #: src/input.c:60
 msgid "Cycles through ship targets."
-msgstr ""
+msgstr "Cicla a través de las naves objetivo."
 
 #: src/input.c:61
 msgid "Target Previous"
-msgstr ""
+msgstr "Fijar al Anterior"
 
 #: src/input.c:61
 msgid "Cycles backwards through ship targets."
-msgstr ""
+msgstr "Ciclas hacia atras a través de las naves objetivo."
 
 #: src/input.c:62
 msgid "Target Nearest"
-msgstr ""
+msgstr "Fijar al Más Cercano"
 
 #: src/input.c:62
 msgid "Targets the nearest non-disabled ship."
-msgstr ""
+msgstr "Fija la nave no desactivada más cercana."
 
 #: src/input.c:63
 msgid "Target Next Hostile"
-msgstr ""
+msgstr "Fijar el Hostil Siguiente"
 
 #: src/input.c:63
 msgid "Cycles through hostile ship targets."
-msgstr ""
+msgstr "Cicla a través de las naves objetivo hostiles."
 
 #: src/input.c:64
 msgid "Target Previous Hostile"
-msgstr ""
+msgstr "Fijar el Hostil Previo"
 
 #: src/input.c:64
 msgid "Cycles backwards through hostile ship targets."
-msgstr ""
+msgstr "Cicla hacia atrá a través de las naves objetivo hostiles."
 
 #: src/input.c:65
 msgid "Target Nearest Hostile"
-msgstr ""
+msgstr "Fijar Hostil Más Cercano"
 
 #: src/input.c:65
 msgid "Targets the nearest hostile ship."
-msgstr ""
+msgstr "Fija la nave hostil más cercana."
 
 #: src/input.c:66
 msgid "Clear Target"
-msgstr ""
+msgstr "Limpiar Objetivo"
 
 #: src/input.c:66
 msgid "Clears the currently-targeted ship, planet or jump point."
@@ -96203,11 +96268,11 @@ msgstr ""
 #. Fighting
 #: src/input.c:68
 msgid "Fire Primary Weapon"
-msgstr ""
+msgstr "Dispara Arma Primaria"
 
 #: src/input.c:68
 msgid "Fires primary weapons."
-msgstr ""
+msgstr "Dispara armas primarias."
 
 #: src/input.c:69
 msgid "Face Target"
@@ -100089,7 +100154,7 @@ msgstr ""
 #: src/spfx.c:1162 src/start.c:69
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
-msgstr ""
+msgstr "Archivo '%s' malformado: no contiene elementos"
 
 #: src/outfit.c:2211
 #, c-format
