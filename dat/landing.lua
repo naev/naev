@@ -40,33 +40,6 @@ end
 -- Specialized landing functions: Planets may specify <land>funcname</land> under services in their XML data.
 -- The name will be looked up as a global function in this file. We declare each global to Luacheck to avoid warnings.
 
--- luacheck: globals srs_mil_mutris (Sirius Mutris.)
-function srs_mil_mutris( pnt )
-   return land_military(pnt, 70,
-         _("Welcome to Mutris, home of Sirichana."),
-         _("You may not approach the home of Sirichana yet."),
-         _("Landing request denied."),
-         _("\"The faithful will never be swayed by money.\""))
-end
-
--- luacheck: globals dv_mil_restricted (Dvaered military spobs.)
-function dv_mil_restricted( pnt )
-   return land_military(pnt, 50,
-         _("Permission to land granted."),
-         _("Your rank is too low, citizen. Access denied."),
-         _("Landing request denied."),
-         _("\"Money won't buy you access to our restricted facilities, citizen.\""))
-end
-
--- luacheck: globals dv_mil_command (Dvaered High Command.)
-function dv_mil_command( pnt )
-   return land_military(pnt, 70,
-         _("Permission to land granted, captain."),
-         _("Only high ranking personnel allowed. Landing request denied."),
-         _("Landing request denied."),
-         _("\"Money won't buy you access to our restricted facilities, citizen.\""))
-end
-
 -- luacheck: globals srm_mil_restricted (Soromid military spobs.)
 function srm_mil_restricted( pnt )
    return land_military(pnt, 50,

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Marauder Station">
+<lua>spob/lua/dvaered_mil_restricted.lua</lua>
  <pos x="4769.810832" y="3378.616006"/>
  <GFX>
   <space>002.webp</space>
@@ -16,7 +17,7 @@
   <population>15000</population>
   <hide>2.000000</hide>
   <services>
-   <land>dv_mil_restricted</land>
+   <land/>
    <refuel/>
    <bar/>
    <missions/>

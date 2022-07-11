@@ -2997,6 +2997,8 @@ dat/scripts/vn/transitions.lua
 dat/scripts/vntk.lua
 dat/snd/music.lua
 dat/spob/lua/default.lua
+dat/spob/lua/dvaered_mil_dhc.lua
+dat/spob/lua/dvaered_mil_restricted.lua
 dat/spob/lua/empire_mil_emperors_wrath.lua
 dat/spob/lua/empire_mil_omega_station.lua
 dat/spob/lua/empire_mil_restricted.lua

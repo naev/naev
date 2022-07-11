@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spob name="Stalwart Station">
+<lua>spob/lua/dvaered_mil_restricted.lua</lua>
  <pos x="24.688611" y="59.531501"/>
  <GFX>
   <space>station-fleetbase.webp</space>
@@ -16,7 +17,7 @@
   <population>12000</population>
   <hide>2.000000</hide>
   <services>
-   <land>dv_mil_restricted</land>
+   <land/>
    <refuel/>
    <outfits/>
    <shipyard/>
