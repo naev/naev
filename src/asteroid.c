@@ -414,7 +414,7 @@ void asteroids_computeInternals( AsteroidAnchor *a )
 }
 
 /**
- * @brief Loads the entire universe into ram - pretty big feat eh?
+ * @brief Loads the asteroids.
  *
  *    @return 0 on success.
  */
