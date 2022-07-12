@@ -2803,6 +2803,7 @@ static int system_parse( StarSystem *sys, const char *filename )
    }
 
    /* Clear memory for safe defaults. */
+   system_init( sys );
    flags          = 0;
    sys->presence  = array_create( SystemPresence );
    sys->ownerpresence = 0.;
@@ -3283,7 +3284,6 @@ int space_loadLua (void)
 static int systems_load (void)
 {
    char **system_files;
-   StarSystem *sys;
    Uint32 time = SDL_GetTicks();
 
    /* Allocate if needed. */
@@ -3296,16 +3296,21 @@ static int systems_load (void)
     * First pass - loads all the star systems_stack.
     */
    for (int i=0; i<array_size(system_files); i++) {
+      StarSystem sys;
+
       if (!ndata_matchExt( system_files[i], "xml" ))
          continue;
 
-      sys = system_new();
-      int ret = system_parse( sys, system_files[i] );
-      (void) ret;
-      sys->filename = system_files[i];
+      int ret = system_parse( &sys, system_files[i] );
+      if (ret == 0) {
+         sys.filename = system_files[i];
+         sys.id = array_size(systems_stack);
 
-      /* Update asteroid info. */
-      system_updateAsteroids( sys );
+         /* Update asteroid info. */
+         system_updateAsteroids( &sys );
+
+         array_push_back( &systems_stack, sys );
+      }
    }
    qsort( systems_stack, array_size(systems_stack), sizeof(StarSystem), system_cmp );
    for (int j=0; j<array_size(systems_stack); j++) {
