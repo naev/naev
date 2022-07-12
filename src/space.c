@@ -119,7 +119,7 @@ int space_spawn = 1; /**< Spawn enabled by default. */
  * Internal Prototypes.
  */
 /* spob load */
-static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList );
+static int spob_parse( Spob *spob, const char *filename, Commodity **stdList );
 static int space_parseSpobs( xmlNodePtr parent, StarSystem* sys );
 static int spob_parsePresence( xmlNodePtr node, SpobPresence *ap );
 /* system load */
@@ -1698,46 +1698,23 @@ static int spobs_load (void)
    stdList = standard_commodities();
 
    /* Load XML stuff. */
-   spob_files = PHYSFS_enumerateFiles( SPOB_DATA_PATH );
-   for (size_t i=0; spob_files[i]!=NULL; i++) {
-      xmlNodePtr node;
-      xmlDocPtr doc;
-      char *file;
-
-      if (!ndata_matchExt( spob_files[i], "xml" ))
-         continue;
-
-      asprintf( &file, "%s%s", SPOB_DATA_PATH, spob_files[i]);
-      doc = xml_parsePhysFS( file );
-      if (doc == NULL) {
-         free(file);
-         continue;
-      }
-
-      node = doc->xmlChildrenNode; /* first spob node */
-      if (node == NULL) {
-         WARN(_("Malformed %s file: does not contain elements"),file);
-         free(file);
-         xmlFreeDoc(doc);
-         continue;
-      }
-
-      if (xml_isNode(node,XML_SPOB_TAG)) {
+   spob_files = ndata_listRecursive( SPOB_DATA_PATH );
+   for (int i=0; i<array_size(spob_files); i++) {
+      if (ndata_matchExt( spob_files[i], "xml" )) {
          Spob *s = spob_new();
-         spob_parse( s, node, stdList );
+         spob_parse( s, spob_files[i], stdList );
       }
 
       /* Clean up. */
-      free(file);
-      xmlFreeDoc(doc);
+      free( spob_files[i] );
    }
    qsort( spob_stack, array_size(spob_stack), sizeof(Spob), spob_cmp );
    for (int j=0; j<array_size(spob_stack); j++)
       spob_stack[j].id = j;
 
    /* Clean up. */
-   PHYSFS_freeList( spob_files );
-   array_free(stdList);
+   array_free( spob_files );
+   array_free( stdList );
 
    return 0;
 }
@@ -2095,15 +2072,27 @@ static int spob_parsePresence( xmlNodePtr node, SpobPresence *ap )
  * @brief Parses a spob from an xml node.
  *
  *    @param spob Spob to fill up.
- *    @param parent Node that contains spob data.
+ *    @param filename Name of the file to parse.
  *    @param[in] stdList The array of standard commodities.
  *    @return 0 on success.
  */
-static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList )
+static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
 {
-   xmlNodePtr node;
+   xmlDocPtr doc;
+   xmlNodePtr node, parent;
    unsigned int flags;
    Commodity **comms;
+
+   doc = xml_parsePhysFS( filename );
+   if (doc == NULL)
+      return -1;
+
+   parent = doc->xmlChildrenNode; /* first spob node */
+   if (parent == NULL) {
+      WARN(_("Malformed %s file: does not contain elements"), filename);
+      xmlFreeDoc(doc);
+      return -1;
+   }
 
    /* Clear up memory for safe defaults. */
    flags             = 0;
@@ -2325,6 +2314,8 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
    }
    /* Free temporary comms list. */
    array_free(comms);
+
+   xmlFreeDoc(doc);
 
    return 0;
 }
