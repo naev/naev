@@ -11,18 +11,14 @@ local luatk_map = require "luatk.map"
 local prng = require "prng"
 local luaspfx = require "luaspfx"
 
-local pos, tex, mask, cvs, shader
-local tw, th
-
 local pixelcode = lf.read( "spob/lua/glsl/hypergate.frag" )
 local jumpsfx = audio.newSource( 'snd/sounds/hypergate.ogg' )
 
 local hypergate = {}
-local hypergate_spob
 
 local function update_canvas ()
    local oldcanvas = lg.getCanvas()
-   lg.setCanvas( cvs )
+   lg.setCanvas( mem.cvs )
    lg.clear( 0, 0, 0, 0 )
    lg.setColor( 1, 1, 1, 1 )
    --lg.setBlendMode( "alpha", "premultiplied" )
@@ -32,18 +28,16 @@ local function update_canvas ()
 
    -- Draw active overlay shader
    local oldshader = lg.getShader()
-   lg.setShader( shader )
-   mask:draw( 0, 0 )
+   lg.setShader( mem.shader )
+   mem.mask:draw( 0, 0 )
    lg.setShader( oldshader )
 
    --lg.setBlendMode( "alpha" )
    lg.setCanvas( oldcanvas )
 end
 
-local cost_flat, cost_mass, cost_mod, basecol
-
 function hypergate.init( spb )
-   hypergate_spob = spb
+   mem.spob = spb
 end
 
 function hypergate.load( opts )
@@ -51,16 +45,16 @@ function hypergate.load( opts )
 
    if tex==nil then
       -- Handle some options
-      basecol = opts.basecol or { 0.2, 0.8, 0.8 }
-      cost_flat = opts.cost_flat or 10e3
-      cost_mass = opts.cost_mass or 50
-      cost_mod = opts.cost_mod or 1
+      mem.basecol = opts.basecol or { 0.2, 0.8, 0.8 }
+      mem.cost_flat = opts.cost_flat or 10e3
+      mem.cost_mass = opts.cost_mass or 50
+      mem.cost_mod = opts.cost_mod or 1
       if type(opts.cost_mod)=="table" then
-         cost_mod = 1
-         local standing = hypergate_spob:faction():playerStanding()
+         mem.cost_mod = 1
+         local standing = mem.spob:faction():playerStanding()
          for k,v in ipairs(opts.cost_mod) do
             if standing >= k then
-               cost_mod = v
+               mem.cost_mod = v
                break
             end
          end
@@ -70,22 +64,22 @@ function hypergate.load( opts )
       local prefix = "gfx/spob/space/"
       local tex_filename = opts.tex or "hypergate_neutral_activated.webp"
       local mask_filename = opts.tex_mask or "hypergate_mask.webp"
-      tex  = lg.newImage( prefix..tex_filename )
-      mask = lg.newImage( prefix..mask_filename )
+      mem.tex  = lg.newImage( prefix..tex_filename )
+      mem.mask = lg.newImage( prefix..mask_filename )
 
       -- Position stuff
-      pos = hypergate_spob:pos()
-      tw, th = tex:getDimensions()
-      pos = pos + vec2.new( -tw/2, th/2 )
+      mem.pos = mem.spob:pos()
+      mem.tw, mem.th = tex:getDimensions()
+      mem.pos = mem.pos + vec2.new( -mem.tw/2, mem.th/2 )
 
       -- The canvas
-      cvs  = lg.newCanvas( tw, th, {dpiscale=1} )
+      mem.cvs  = lg.newCanvas( mem.tw, mem.th, {dpiscale=1} )
 
       -- Set up shader
-      local fragcode = string.format( pixelcode, basecol[1], basecol[2], basecol[3] )
-      shader = lg.newShader( fragcode, love_shaders.vertexcode )
-      shader._dt = -1000 * rnd.rnd()
-      shader.update = function( self, dt )
+      local fragcode = string.format( pixelcode, mem.basecol[1], mem.basecol[2], mem.basecol[3] )
+      mem.shader = lg.newShader( fragcode, love_shaders.vertexcode )
+      mem.shader._dt = -1000 * rnd.rnd()
+      mem.shader.update = function( self, dt )
          self._dt = self._dt + dt
          self:send( "u_time", self._dt )
       end
@@ -93,23 +87,23 @@ function hypergate.load( opts )
       update_canvas()
    end
 
-   return cvs.t.tex, tw/2
+   return mem.cvs.t.tex, mem.tw/2
 end
 
 function hypergate.unload ()
-   shader= nil
-   tex   = nil
-   mask  = nil
-   cvs   = nil
+   mem.shader= nil
+   mem.tex   = nil
+   mem.mask  = nil
+   mem.cvs   = nil
    --sfx   = nil
 end
 
 function hypergate.render ()
    update_canvas() -- We want to do this here or it gets slow in autonav
    local z = camera.getZoom()
-   local x, y = gfx.screencoords( pos, true ):get()
+   local x, y = gfx.screencoords( mem.pos, true ):get()
    z = 1/z
-   cvs:draw( x, y, 0, z, z )
+   mem.cvs:draw( x, y, 0, z, z )
 end
 
 function hypergate.update( dt )
@@ -131,7 +125,7 @@ function hypergate.land( _s, p )
       local target = hypergate_window()
       if target then
          var.push( "hypergate_target", target:nameRaw() )
-         naev.cache().hypergate_colour = basecol
+         naev.cache().hypergate_colour = mem.basecol
          naev.eventStart("Hypergate")
       end
    else
@@ -146,7 +140,7 @@ function hypergate_window ()
    local h = 600
    luatk.setDefaultFont( lg.newFont(12) )
    local wdw = luatk.newWindow( nil, nil, w, h )
-   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Hypergate ({sysname})"), {sysname=hypergate_spob:system()}), nil, "center", lg.newFont(14) )
+   luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Hypergate ({sysname})"), {sysname=mem.spob:system()}), nil, "center", lg.newFont(14) )
 
    -- Load shaders
    local path = "spob/lua/glsl/"
@@ -251,13 +245,13 @@ function hypergate_window ()
    for k,v in ipairs(pp:followers()) do
       totalmass = totalmass + v:mass()
    end
-   local totalcost = (cost_flat + cost_mass * totalmass) * cost_mod
-   local hgfact = hypergate_spob:faction()
+   local totalcost = (mem.cost_flat + mem.cost_mass * totalmass) * mem.cost_mod
+   local hgfact = mem.spob:faction()
    local standing_value, standing = hgfact:playerStanding()
-   local cost_mod_str = tostring(cost_mod*100)
-   if cost_mod < 1 then
+   local cost_mod_str = tostring(mem.cost_mod*100)
+   if mem.cost_mod < 1 then
       cost_mod_str = "#g"..cost_mod_str
-   elseif cost_mod > 1 then
+   elseif mem.cost_mod > 1 then
       cost_mod_str = "#r"..cost_mod_str
    end
    local standing_col = "#N"
@@ -282,8 +276,8 @@ function hypergate_window ()
       costmod = cost_mod_str,
       totalmass = fmt.tonnes(totalmass),
       totalcost = fmt.credits(totalcost),
-      flatcost = fmt.credits(cost_flat),
-      masscost = fmt.credits(cost_mass),
+      flatcost = fmt.credits(mem.cost_flat),
+      masscost = fmt.credits(mem.cost_mass),
    }) )
    local txth = txt:height()
    local lst = luatk.newList( wdw, w-260-20, 40+txth+10, 260, h-40-20-40-20-txth-10, destnames, map_center )

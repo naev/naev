@@ -147,6 +147,7 @@ stds.API_spawn = {globals={
    "spawn",                             -- C function: system_scheduler()
 }}
 stds.API_spob = {globals={
+   "mem",
    "init",     -- C function: spob_luaInit
    "load",     -- C function: spob_gfxLoad
    "unload",   -- C function: spob_gfxUnload
