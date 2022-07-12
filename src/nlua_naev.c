@@ -14,6 +14,7 @@
 
 #include "nlua_naev.h"
 
+#include "array.h"
 #include "console.h"
 #include "hook.h"
 #include "input.h"
@@ -25,6 +26,7 @@
 #include "nluadef.h"
 #include "nstring.h"
 #include "player.h"
+#include "plugin.h"
 #include "semver.h"
 
 static int cache_table = LUA_NOREF; /* No reference. */
@@ -52,6 +54,7 @@ static int naevL_confSet( lua_State *L );
 static int naevL_cache( lua_State *L );
 static int naevL_trigger( lua_State *L );
 static int naevL_claimTest( lua_State *L );
+static int naevL_plugins( lua_State *L );
 static const luaL_Reg naev_methods[] = {
    { "version", naevL_version },
    { "versionTest", naevL_versionTest },
@@ -75,6 +78,7 @@ static const luaL_Reg naev_methods[] = {
    { "cache", naevL_cache },
    { "trigger", naevL_trigger },
    { "claimTest", naevL_claimTest },
+   { "plugins", naevL_plugins },
    {0,0}
 }; /**< Naev Lua methods. */
 
@@ -576,5 +580,49 @@ static int naevL_claimTest( lua_State *L )
    /* Only test, but don't apply case. */
    lua_pushboolean( L, !claim_test( claim ) );
    claim_destroy( claim );
+   return 1;
+}
+
+/**
+ * @brief Gets the list of available plugins.
+ *
+ *    @luatreturn table Table containing the list of plugins.
+ * @luafunc plugins
+ */
+static int naevL_plugins( lua_State *L )
+{
+   const plugin_t *plugins = plugin_list();
+   lua_newtable(L);
+   for (int i=0; i<array_size(plugins); i++) {
+      const plugin_t *plg = &plugins[i];
+      lua_newtable(L);
+
+#define STRING(x) \
+   lua_pushstring(L,plg->x); \
+   lua_setfield(L,-2,#x)
+#define INTEGER(x) \
+   lua_pushinteger(L,plg->x); \
+   lua_setfield(L,-2,#x)
+#define BOOL(x) \
+   lua_pushboolean(L,plg->x); \
+   lua_setfield(L,-2,#x)
+
+      STRING(name);
+      STRING(author);
+      STRING(version);
+      STRING(description);
+      STRING(compatibility);
+      STRING(mountpoint);
+
+      INTEGER(priority);
+
+      BOOL(compatible);
+
+#undef BOOL
+#undef INTEGER
+#undef STRING
+
+      lua_rawseti(L,-2,i+1);
+   }
    return 1;
 }
