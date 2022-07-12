@@ -1737,26 +1737,26 @@ static int virtualspobs_load (void)
       vspob_stack = array_create_size(VirtualSpob, 64);
 
    /* Load XML stuff. */
-   spob_files = PHYSFS_enumerateFiles( VIRTUALSPOB_DATA_PATH );
-   for (size_t i=0; spob_files[i]!=NULL; i++) {
+   spob_files = ndata_listRecursive( VIRTUALSPOB_DATA_PATH );
+   for (int i=0; i<array_size(spob_files); i++) {
       xmlDocPtr doc;
       xmlNodePtr node;
-      char *file;
 
-      if (!ndata_matchExt( spob_files[i], "xml" ))
+      if (!ndata_matchExt( spob_files[i], "xml" )) {
+         free( spob_files[i] );
          continue;
+      }
 
-      asprintf( &file, "%s%s", VIRTUALSPOB_DATA_PATH, spob_files[i]);
-      doc = xml_parsePhysFS( file );
+      doc = xml_parsePhysFS( spob_files[i] );
       if (doc == NULL) {
-         free(file);
+         free( spob_files[i] );
          continue;
       }
 
       node = doc->xmlChildrenNode; /* first spob node */
       if (node == NULL) {
-         WARN(_("Malformed %s file: does not contain elements"),file);
-         free(file);
+         WARN(_("Malformed %s file: does not contain elements"), spob_files[i]);
+         free( spob_files[i] );
          xmlFreeDoc(doc);
          continue;
       }
@@ -1785,13 +1785,13 @@ static int virtualspobs_load (void)
       }
 
       /* Clean up. */
-      free(file);
+      free( spob_files[i] );
       xmlFreeDoc(doc);
    }
    qsort( vspob_stack, array_size(vspob_stack), sizeof(VirtualSpob), virtualspob_cmp );
 
    /* Clean up. */
-   PHYSFS_freeList( spob_files );
+   array_free( spob_files );
 
    return 0;
 }
