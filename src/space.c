@@ -72,6 +72,13 @@
 
 #define DEBRIS_BUFFER         1000 /**< Buffer to smooth appearance of debris */
 
+typedef struct spob_lua_file_s {
+   const char *filename;   /**< Name of the spob Lua file. */
+   int lua_chunk;          /**< Preloaded chunk. */
+} spob_lua_file;
+
+static spob_lua_file *spob_lua_stack = NULL; /**< Handles spob Lua chunks. */
+
 /*
  * spob <-> system name stack
  */
@@ -135,6 +142,9 @@ static void space_renderSpob( const Spob *p );
 static void space_updateSpob( const Spob *p, double dt, double real_dt );
 /* Map shaders. */
 static const MapShader *mapshader_get( const char *name );
+/* Lua stuff. */
+static int spob_lua_cmp( const void *a, const void *b );
+static int spob_lua_get( nlua_env env, const char *filename );
 /*
  * Externed prototypes.
  */
@@ -1935,8 +1945,9 @@ int spob_luaInit( Spob *spob )
    nlua_loadStandard( env );
    nlua_loadGFX( env );
    nlua_loadCamera( env );
-   if (nlua_dobufenv( env, dat, sz, spob->lua_file ) != 0) {
-      WARN(_("Spob '%s' Lua error:\n%s"), spob->name, lua_tostring(naevL,-1));
+
+   if (spob_lua_get( env, spob->lua_file ) != 0) {
+      WARN(_("Spob '%s' with script '%s' Lua error:\n%s"), spob->name, spob->lua_file, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
       nlua_freeEnv( env );
       free( dat );
@@ -4210,4 +4221,53 @@ static const MapShader *mapshader_get( const char *name )
    ms->alpha     = glGetUniformLocation( ms->program, "alpha" );
 
    return ms;
+}
+
+static int spob_lua_cmp( const void *a, const void *b )
+{
+   const spob_lua_file *la = (const spob_lua_file*) a;
+   const spob_lua_file *lb = (const spob_lua_file*) b;
+   return strcmp( la->filename, lb->filename );
+}
+
+static int spob_lua_get( nlua_env env, const char *filename )
+{
+   size_t sz;
+   char *dat;
+   spob_lua_file *lf;
+   const spob_lua_file key = { .filename=filename };
+
+   if (spob_lua_stack == NULL)
+      spob_lua_stack = array_create( spob_lua_file );
+
+   lf = bsearch( &key, spob_lua_stack, array_size(spob_lua_stack), sizeof(spob_lua_file), spob_lua_cmp );
+   if (lf != NULL) {
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, lf->lua_chunk );
+      nlua_pushenv(naevL, env);
+      lua_setfenv(naevL, -2);
+      return nlua_pcall(env, 0, LUA_MULTRET);
+   }
+
+   dat = ndata_read( filename, &sz );
+   if (dat==NULL) {
+      WARN(_("Failed to read spob Lua '%s'!"), filename );
+      return -1;
+   }
+
+   if (luaL_loadbuffer(naevL, dat, sz, filename) != 0) {
+      free(dat);
+      return -1;
+   }
+   free(dat);
+
+   /* Add new entry and sort. */
+   lua_pushvalue(naevL,-1);
+   lf = &array_grow( &spob_lua_stack );
+   lf->filename = strdup( filename );
+   lf->lua_chunk = luaL_ref( naevL, LUA_REGISTRYINDEX );
+   qsort( spob_lua_stack, array_size(spob_lua_stack), sizeof(spob_lua_file), spob_lua_cmp );
+
+   nlua_pushenv(naevL, env);
+   lua_setfenv(naevL, -2);
+   return nlua_pcall(env, 0, LUA_MULTRET);
 }
