@@ -42,9 +42,12 @@ end
 
 local cost_flat, cost_mass, cost_mod, basecol
 
-function hypergate.load( p, opts )
+function hypergate.init( spb )
+   hypergate_spob = spb
+end
+
+function hypergate.load( opts )
    opts = opts or {}
-   hypergate_spob = p
 
    if tex==nil then
       -- Handle some options
@@ -54,7 +57,7 @@ function hypergate.load( p, opts )
       cost_mod = opts.cost_mod or 1
       if type(opts.cost_mod)=="table" then
          cost_mod = 1
-         local standing = p:faction():playerStanding()
+         local standing = hypergate_spob:faction():playerStanding()
          for k,v in ipairs(opts.cost_mod) do
             if standing >= k then
                cost_mod = v
@@ -71,7 +74,7 @@ function hypergate.load( p, opts )
       mask = lg.newImage( prefix..mask_filename )
 
       -- Position stuff
-      pos = p:pos()
+      pos = hypergate_spob:pos()
       tw, th = tex:getDimensions()
       pos = pos + vec2.new( -tw/2, th/2 )
 
@@ -114,7 +117,7 @@ function hypergate.update( dt )
 end
 
 function hypergate.can_land ()
-   return true, "The hypergate is active."
+   return true, _("The hypergate is active.")
 end
 
 local hypergate_window

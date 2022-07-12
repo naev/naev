@@ -1,9 +1,11 @@
 local luaspob = require "spob.lua.lib.spob"
 
-function load( spb )
-   return luaspob.setup( spb, {
+function init( spb )
+   return luaspob.init( spb, {
    } )
 end
 
+load = luaspob.load
+unload = luaspob.unload
 can_land = luaspob.can_land
 comm = luaspob.comm

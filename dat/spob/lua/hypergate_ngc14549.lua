@@ -1,7 +1,9 @@
 local hypergate = require "spob.lua.lib.hypergate"
 
-function load( p )
-   return hypergate.load( p, {
+init     = hypergate.init
+
+function load ()
+   return hypergate.load{
          basecol = { 0.4, 0.2, 0.2 }, -- Pirate
          cost_mod = {
             [95]  = 0.1,
@@ -13,7 +15,7 @@ function load( p )
             [-20] = 2,
             [-50] = 4,
          },
-      } )
+      }
 end
 
 unload   = hypergate.unload

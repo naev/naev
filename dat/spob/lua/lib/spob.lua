@@ -4,16 +4,19 @@ local ccomm = require "common.comm"
 
 local luaspob = {}
 
-local land_spb, land_fct, bribed, bribe_cost_function
+local params, land_spb, land_fct, bribed, bribe_cost_function
 local msg_bribed, msg_denied, msg_granted, msg_notyet, msg_cantbribe, msg_trybribe, msg_dangerous
 local std_dangerous, std_land, std_bribe
 
-function luaspob.setup( spb, params )
-   params = params or {}
-
-   -- Basic stuff
+function luaspob.init( spb, init_params )
    land_spb = spb
-   land_fct = spb:faction()
+   params = init_params or {}
+   std_land = params.std_land or 0 -- Needed for can_land
+end
+
+function luaspob.load ()
+   -- Basic stuff
+   land_fct = land_spb:faction()
    bribed = false
 
    bribe_cost_function = params.bribe_cost or function ()
@@ -57,13 +60,24 @@ Pay {credits}?]]),
    }
 
    -- Randomly choose
-   msg_bribed     = msg_bribed[ rnd.rnd(1,#msg_bribed) ]
-   msg_denied     = msg_denied[ rnd.rnd(1,#msg_denied) ]
-   msg_notyet     = msg_notyet[ rnd.rnd(1,#msg_notyet) ]
-   msg_granted    = msg_granted[ rnd.rnd(1,#msg_granted) ]
-   msg_cantbribe  = msg_cantbribe[ rnd.rnd(1,#msg_cantbribe) ]
-   msg_trybribe   = msg_trybribe[ rnd.rnd(1,#msg_trybribe) ]
-   msg_dangerous  = msg_dangerous[ rnd.rnd(1,#msg_dangerous) ]
+   local function choose( tbl )
+      local msg = tbl[ rnd.rnd(1,#tbl) ]
+      if type(tbl)=='function' then
+         msg = msg()
+      end
+      return msg
+   end
+   msg_bribed     = choose( msg_bribed )
+   msg_denied     = choose( msg_denied )
+   msg_notyet     = choose( msg_notyet )
+   msg_granted    = choose( msg_granted )
+   msg_cantbribe  = choose( msg_cantbribe )
+   msg_trybribe   = choose( msg_trybribe )
+   msg_dangerous  = choose( msg_dangerous )
+end
+
+function luaspob.unload ()
+   bribed = false
 end
 
 function luaspob.can_land ()
@@ -74,7 +88,11 @@ function luaspob.can_land ()
    if bribed or land_spb:getLandOverride() then
       return true, msg_granted
    end
-   local std = land_fct:playerStanding()
+   local fct = land_spb:faction()
+   if not fct then
+      return false, msg_denied
+   end
+   local std = fct:playerStanding()
    if std < 0 then
       return false, msg_denied
    end

@@ -632,11 +632,12 @@ void load_all (void)
    loadscreen_render( ++stage/LOADING_STAGES, _("Calculating Patrols…") );
    safelanes_init();
 
-   loadscreen_render( ++stage/LOADING_STAGES, _("Initializing Details..") );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Initializing Details…") );
    difficulty_load();
    background_init();
    map_load();
    map_system_load();
+   space_loadLua();
    pilots_init();
    weapon_init();
    player_init(); /* Initialize player stuff. */

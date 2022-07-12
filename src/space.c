@@ -1639,6 +1639,7 @@ Spob *spob_new (void)
 
    /* Lua doesn't default to 0 as a safe value... */
    p->lua_env     = LUA_NOREF;
+   p->lua_init    = LUA_NOREF;
    p->lua_load    = LUA_NOREF;
    p->lua_unload  = LUA_NOREF;
    p->lua_land    = LUA_NOREF;
@@ -1896,13 +1897,16 @@ void spob_updateLand( Spob *p )
  *
  *    @param spob Spob to update.
  */
-void spob_updateLua( Spob *spob )
+int spob_luaInit( Spob *spob )
 {
-   /* Should get lazy loaded later, so jsut clear everything. */
+   size_t sz;
+   char *dat;
+
    if (spob->lua_env != LUA_NOREF)
       nlua_freeEnv( spob->lua_env );
 
    spob->lua_env     = LUA_NOREF;
+   spob->lua_init    = LUA_NOREF;
    spob->lua_load    = LUA_NOREF;
    spob->lua_unload  = LUA_NOREF;
    spob->lua_land    = LUA_NOREF;
@@ -1910,6 +1914,52 @@ void spob_updateLua( Spob *spob )
    spob->lua_render  = LUA_NOREF;
    spob->lua_update  = LUA_NOREF;
    spob->lua_comm    = LUA_NOREF;
+
+   /* Initialize. */
+   if (spob->lua_file == NULL)
+      return 0;
+
+   dat = ndata_read( spob->lua_file, &sz );
+   if (dat==NULL) {
+      WARN(_("Spob '%s' failed to read Lua '%s'!"), spob->name, spob->lua_file );
+      return -1;
+   }
+
+   nlua_env env = nlua_newEnv();
+   nlua_loadStandard( env );
+   nlua_loadGFX( env );
+   nlua_loadCamera( env );
+   if (nlua_dobufenv( env, dat, sz, spob->lua_file ) != 0) {
+      WARN(_("Spob '%s' Lua error:\n%s"), spob->name, lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
+      nlua_freeEnv( env );
+      free( dat );
+      return -1;
+   }
+
+   spob->lua_env = env;
+   free( dat );
+
+   /* Grab functions as applicable. */
+   spob->lua_init     = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
+   spob->lua_load     = nlua_refenvtype( env, "load",     LUA_TFUNCTION );
+   spob->lua_unload   = nlua_refenvtype( env, "unload",   LUA_TFUNCTION );
+   spob->lua_can_land = nlua_refenvtype( env, "can_land", LUA_TFUNCTION );
+   spob->lua_land     = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
+   spob->lua_render   = nlua_refenvtype( env, "render",   LUA_TFUNCTION );
+   spob->lua_update   = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
+   spob->lua_comm     = nlua_refenvtype( env, "comm",     LUA_TFUNCTION );
+
+   if (spob->lua_init) {
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_init); /* f */
+      lua_pushspob(naevL, spob_index(spob));
+      if (nlua_pcall( spob->lua_env, 1, 0 )) {
+         WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "init", lua_tostring(naevL,-1));
+         lua_pop(naevL,1);
+      }
+   }
+
+   return 0;
 }
 
 /**
@@ -1917,61 +1967,26 @@ void spob_updateLua( Spob *spob )
  */
 void spob_gfxLoad( Spob *spob )
 {
-   if (spob->lua_file) {
-      if (spob->lua_env==LUA_NOREF) {
-         nlua_env env;
-         size_t sz;
-         char *dat = ndata_read( spob->lua_file, &sz );
-         if (dat==NULL) {
-            WARN(_("Spob '%s' failed to read Lua '%s'!"), spob->name, spob->lua_file );
-            return;
-         }
-
-         env = nlua_newEnv();
-         nlua_loadStandard( env );
-         nlua_loadGFX( env );
-         nlua_loadCamera( env );
-         if (nlua_dobufenv( env, dat, sz, spob->lua_file ) != 0) {
-            WARN(_("Spob '%s' Lua error:\n%s"), spob->name, lua_tostring(naevL,-1));
-            lua_pop(naevL,1);
-            nlua_freeEnv( env );
-            free( dat );
-            return;
-         }
-         spob->lua_env = env;
-         free( dat );
-
-         /* Grab functions as applicable. */
-         spob->lua_load     = nlua_refenvtype( env, "load",     LUA_TFUNCTION );
-         spob->lua_unload   = nlua_refenvtype( env, "unload",   LUA_TFUNCTION );
-         spob->lua_can_land = nlua_refenvtype( env, "can_land", LUA_TFUNCTION );
-         spob->lua_land     = nlua_refenvtype( env, "land",     LUA_TFUNCTION );
-         spob->lua_render   = nlua_refenvtype( env, "render",   LUA_TFUNCTION );
-         spob->lua_update   = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
-         spob->lua_comm     = nlua_refenvtype( env, "comm",     LUA_TFUNCTION );
+   if (spob->lua_load) {
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_load); /* f */
+      if (nlua_pcall( spob->lua_env, 0, 2 )) {
+         WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "load", lua_tostring(naevL,-1));
+         lua_pop(naevL,1);
       }
-
-      if (spob->lua_load) {
-         lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_load); /* f */
-         lua_pushspob(naevL, spob_index(spob)); /* f, p */
-         if (nlua_pcall( spob->lua_env, 1, 2 )) {
-            WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "load", lua_tostring(naevL,-1));
-            lua_pop(naevL,1);
-         }
-         if (lua_istex(naevL,-2)) {
-            if (spob->gfx_space)
-               gl_freeTexture( spob->gfx_space );
-            spob->gfx_space = gl_dupTexture( lua_totex(naevL,-2) );
-         }
-         else if (lua_isnil(naevL,-2)) {
-            /* Have the engine handle it if nil. */
-         }
-         else
-            WARN(_("Spob '%s' ran '%s' but got non-texture or nil return value!"), spob->name, "load" );
-         spob->radius = luaL_optnumber(naevL,-1,-1.);
-         lua_pop(naevL,2);
+      if (lua_istex(naevL,-2)) {
+         if (spob->gfx_space)
+            gl_freeTexture( spob->gfx_space );
+         spob->gfx_space = gl_dupTexture( lua_totex(naevL,-2) );
       }
+      else if (lua_isnil(naevL,-2)) {
+         /* Have the engine handle it if nil. */
+      }
+      else
+         WARN(_("Spob '%s' ran '%s' but got non-texture or nil return value!"), spob->name, "load" );
+      spob->radius = luaL_optnumber(naevL,-1,-1.);
+      lua_pop(naevL,2);
    }
+
    if (spob->gfx_space==NULL) {
       if (spob->gfx_spaceName != NULL)
          spob->gfx_space = gl_newImage( spob->gfx_spaceName, OPENGL_TEX_MIPMAPS );
@@ -2060,6 +2075,7 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
    comms             = array_create( Commodity* );
    /* Lua stuff. */
    spob->lua_env     = LUA_NOREF;
+   spob->lua_init    = LUA_NOREF;
    spob->lua_load    = LUA_NOREF;
    spob->lua_unload  = LUA_NOREF;
    spob->lua_land    = LUA_NOREF;
@@ -2223,6 +2239,7 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
       if (str != NULL)
          spob->lua_file = strdup( str );
    }
+
 /*
  * Verification
  */
@@ -3071,6 +3088,17 @@ int space_load (void)
    economy_initialiseCommodityPrices();
 
    return 0;
+}
+
+/**
+ * @brief initializes the Lua for all the spobs.
+ */
+int space_loadLua (void)
+{
+   int ret = 0;
+   for (int i=0; i<array_size(spob_stack); i++)
+      ret |= spob_luaInit( &spob_stack[i] );
+   return ret;
 }
 
 /**

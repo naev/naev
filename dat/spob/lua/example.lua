@@ -3,7 +3,16 @@
    be used to override different core functionality.
 --]]
 local lg = require "love.graphics"
-local tex, pos, tw, th
+local lua_spb, tex, pos, tw, th
+
+--[[
+   @brief Run when spob is initialized during loading.
+
+      @luatparam spb Spob being initialized.
+--]]
+function init( spb )
+   lua_spb = spb
+end
 
 --[[
    @brief Run when system is getting loaded. Should return a texture that will
@@ -13,10 +22,10 @@ local tex, pos, tw, th
       @luatreturn Texture A texture to be used as the planet image.
       @luatreturn[opt] number The value to use for the radius of the planet (for targetting, etc...)
 --]]
-function load( s )
+function load ()
    if tex==nil then
       tex = lg.newImage( "path/to/image.png" )
-      pos = s:pos()
+      pos = lua_spb:pos()
       tw, th = tex:getDimensions()
       pos = pos + vec2.new( -tw/2, th/2 )
    end

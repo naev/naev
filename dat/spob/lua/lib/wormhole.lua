@@ -8,7 +8,7 @@ local luaspfx = require "luaspfx"
 local pixelcode = lf.read( "spob/lua/glsl/wormhole.frag" )
 local jumpsfx = audio.newSource( 'snd/sounds/wormhole.ogg' )
 
-local cvs, shader, pos, target, sfx
+local cvs, shader, pos, sfx
 local s = 256
 
 local wormhole = {}
@@ -27,9 +27,14 @@ local function update_canvas ()
    lg.setCanvas( oldcanvas )
 end
 
-function wormhole.load( p, wormhole_target )
+local wormhole_spb, wormhole_target
+function wormhole.init( spb, target )
+   wormhole_spb = spb
+   wormhole_target = target
+end
+
+function wormhole.load ()
    local _spob, sys = spob.getS( wormhole_target )
-   target = wormhole_target
    if shader==nil then
       -- Load shader
       shader = lg.newShader( pixelcode, love_shaders.vertexcode )
@@ -38,7 +43,7 @@ function wormhole.load( p, wormhole_target )
          self._dt = self._dt + dt
          self:send( "u_time", self._dt )
       end
-      pos = p:pos()
+      pos = wormhole_spb:pos()
       pos = pos + vec2.new( -s/2, s/2 )
       cvs = lg.newCanvas( s, s, {dpiscale=1} )
 
@@ -49,7 +54,7 @@ function wormhole.load( p, wormhole_target )
 
       sfx = audio.newSource( 'snd/sounds/loops/wormhole.ogg' )
       sfx:setRelative(false)
-      local px, py = p:pos():get()
+      local px, py = pos:get()
       sfx:setPosition( px, py, 0 )
       sfx:setAttenuationDistances( 500, 25e3 )
       sfx:setLooping(true)
@@ -93,7 +98,7 @@ function wormhole.land( _s, p )
       return
    end
 
-   var.push( "wormhole_target", target )
+   var.push( "wormhole_target", wormhole_target )
    naev.eventStart("Wormhole")
 end
 

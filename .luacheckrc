@@ -134,7 +134,7 @@ stds.API_equip = {globals={"equip", "equip_generic"}}   -- C function: ai_create
 stds.API_faction = {globals={
    "standing",                          -- C functions: faction_{modPlayerLua,isPlayerFriend,getStandingBroad,getStandingText}()
 }}
-stds.API_land = {globals={"land"}}      -- C function: planet_updateLand()
+stds.API_land = {globals={"land"}}      -- C function: spob_updateLand()
 stds.API_rescue = {globals={"rescue"}}  -- C function: land_stranded
 stds.API_save_updater = {globals={
    "license",                           -- C function: player_tryAddLicense
@@ -147,9 +147,10 @@ stds.API_spawn = {globals={
    "spawn",                             -- C function: system_scheduler()
 }}
 stds.API_spob = {globals={
-   "load",     -- C function: planet_gfxLoad
-   "unload",   -- C function: planet_gfxUnload
-   "can_land", -- C function: planet_updateLand
+   "init",     -- C function: spob_luaInit
+   "load",     -- C function: spob_gfxLoad
+   "unload",   -- C function: spob_gfxUnload
+   "can_land", -- C function: spob_updateLand
    "land",     -- C function: player_land
    "render",   -- C function: space_renderSpob
    "update",   -- C function: space_updateSpob

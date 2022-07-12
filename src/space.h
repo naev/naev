@@ -132,6 +132,7 @@ typedef struct Spob_ {
    /* Lua stuff. */
    char *lua_file;   /**,< Lua File. */
    nlua_env lua_env; /**< Lua environment. */
+   int lua_init;     /**< Run when initializing the spob. */
    int lua_load;     /**< Run when player enters system. */
    int lua_unload;   /**< Run when player exits system. */
    int lua_can_land; /**< Checks to see if the player can land on the spob. */
@@ -296,6 +297,7 @@ extern int space_spawn; /**< 1 if spawning is enabled. */
  */
 void space_init( const char* sysname, int do_simulate );
 int space_load (void);
+int space_loadLua (void);
 void space_exit (void);
 
 /*
@@ -303,7 +305,7 @@ void space_exit (void);
  */
 Spob *spob_new (void);
 const char *spob_name( const Spob *p );
-void spob_updateLua( Spob *spob );
+int spob_luaInit( Spob *spb );
 void spob_gfxLoad( Spob *p );
 int spob_hasSystem( const char* spobname );
 char* spob_getSystem( const char* spobname );
