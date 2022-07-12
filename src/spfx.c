@@ -347,7 +347,6 @@ int spfx_get( char* name )
  */
 int spfx_load (void)
 {
-   int n, ret;
    char **spfx_files;
    Uint32 time = SDL_GetTicks();
 
@@ -356,11 +355,10 @@ int spfx_load (void)
    spfx_files = ndata_listRecursive( SPFX_DATA_PATH );
    for (int i=0; i<array_size(spfx_files); i++) {
       if (ndata_matchExt( spfx_files[i], "xml" )) {
-         ret = spfx_base_parse( &array_grow(&spfx_effects), spfx_files[i] );
-         if (ret < 0) {
-            n = array_size(spfx_effects);
-            array_erase( &spfx_effects, &spfx_effects[n-1], &spfx_effects[n] );
-         }
+         SPFX_Base spfx;
+         int ret = spfx_base_parse( &spfx, spfx_files[i] );
+         if (ret ==  0)
+            array_push_back( &spfx_effects, spfx );
       }
       free( spfx_files[i] );
    }

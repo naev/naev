@@ -90,7 +90,7 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, const tech
  */
 int tech_load (void)
 {
-   int ret, s;
+   int s;
    Uint32 time = SDL_GetTicks();
    char **tech_files = ndata_listRecursive( TECH_DATA_PATH );
 
@@ -98,18 +98,18 @@ int tech_load (void)
    tech_groups = array_create( tech_group_t );
 
    /* First pass create the groups - needed to reference them later. */
-   ret   = 0;
    for (int i=0; i<array_size(tech_files); i++) {
-   tech_group_t *tech;
+      tech_group_t tech;
+      int ret;
 
       if (!ndata_matchExt( tech_files[i], "xml" ))
          continue;
 
-      if (ret==0) /* Write over failures. */
-         tech = &array_grow( &tech_groups );
-      ret = tech_parseFile( tech, tech_files[i] );
-      if (ret==0)
-         tech->filename = strdup( tech_files[i] );
+      ret = tech_parseFile( &tech, tech_files[i] );
+      if (ret==0) {
+         tech.filename = strdup( tech_files[i] );
+         array_push_back( &tech_groups, tech );
+      }
 
       free( tech_files[i] );
    }

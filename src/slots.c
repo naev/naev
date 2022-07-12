@@ -55,13 +55,13 @@ int sp_load (void)
       /* Load and read the data. */
       doc = xml_parsePhysFS( sp_files[i] );
       if (doc == NULL)
-         return -1;
+         continue;
 
       /* Check to see if document exists. */
       node = doc->xmlChildrenNode;
       if (!xml_isNode(node,SP_XML_ID)) {
-         ERR(_("Malformed '%s' file: missing root element '%s'"), sp_files[i], SP_XML_ID );
-         return -1;
+         WARN(_("Malformed '%s' file: missing root element '%s'"), sp_files[i], SP_XML_ID );
+         continue;
       }
 
       sp    = &array_grow( &sp_array );

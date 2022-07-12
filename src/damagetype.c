@@ -195,7 +195,10 @@ int dtype_load (void)
    array_push_back( &dtype_types, normal );
 
    for (int i=0; i<array_size(dtype_files); i++) {
-      DTYPE_parse( &array_grow( &dtype_types ), dtype_files[i] );
+      DTYPE dtype;
+      int ret = DTYPE_parse( &dtype, dtype_files[i] );
+      if (ret == 0)
+         array_push_back( &dtype_types, dtype );
       free( dtype_files[i] );
    }
    array_free( dtype_files );
