@@ -1117,12 +1117,6 @@ static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )
    xmlNodePtr parent, node;
    xmlDocPtr doc;
 
-   if (firstpass) {
-      memset( tc, 0, sizeof(TrailSpec) );
-      for(int i=0; i<MODE_MAX; i++)
-         tc->style[i].thick = 1.;
-   }
-
    /* Load the data. */
    doc = xml_parsePhysFS( file );
    if (doc == NULL)
@@ -1133,6 +1127,12 @@ static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )
    if (parent == NULL) {
       WARN( _("Malformed '%s' file: does not contain elements"), file );
       return -1;
+   }
+
+   if (firstpass) {
+      memset( tc, 0, sizeof(TrailSpec) );
+      for(int i=0; i<MODE_MAX; i++)
+         tc->style[i].thick = 1.;
    }
 
    xmlr_attr_strd( parent, "inherits", inherits );
