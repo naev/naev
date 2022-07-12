@@ -153,6 +153,7 @@ function luaspob.comm ()
       ccomm.nameboxUpdateSpob( mem.spob, mem.bribed )
    end )
    spb( mem.msg_bribed )
+   vn.jump("menu")
 
    vn.label("player_broke")
    vn.na( function ()
@@ -176,6 +177,8 @@ function luaspob.comm ()
 
    vn.label("leave")
    vn.run()
+
+   mem.spob:canLand() -- forcess a refresh of condition
 end
 
 return luaspob
