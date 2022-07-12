@@ -132,6 +132,7 @@ typedef struct Spob_ {
    /* Lua stuff. */
    char *lua_file;   /**,< Lua File. */
    nlua_env lua_env; /**< Lua environment. */
+   int lua_mem;      /**< Memory of the current instance. */
    int lua_init;     /**< Run when initializing the spob. */
    int lua_load;     /**< Run when player enters system. */
    int lua_unload;   /**< Run when player exits system. */
