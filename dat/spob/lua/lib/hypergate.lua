@@ -24,7 +24,7 @@ local function update_canvas ()
    --lg.setBlendMode( "alpha", "premultiplied" )
 
    -- Draw base hypergate
-   tex:draw( 0, 0 )
+   mem.tex:draw( 0, 0 )
 
    -- Draw active overlay shader
    local oldshader = lg.getShader()
@@ -43,7 +43,7 @@ end
 function hypergate.load( opts )
    opts = opts or {}
 
-   if tex==nil then
+   if mem.tex==nil then
       -- Handle some options
       mem.basecol = opts.basecol or { 0.2, 0.8, 0.8 }
       mem.cost_flat = opts.cost_flat or 10e3
@@ -69,7 +69,7 @@ function hypergate.load( opts )
 
       -- Position stuff
       mem.pos = mem.spob:pos()
-      mem.tw, mem.th = tex:getDimensions()
+      mem.tw, mem.th = mem.tex:getDimensions()
       mem.pos = mem.pos + vec2.new( -mem.tw/2, mem.th/2 )
 
       -- The canvas
@@ -107,7 +107,7 @@ function hypergate.render ()
 end
 
 function hypergate.update( dt )
-   shader:update( dt )
+   mem.shader:update( dt )
 end
 
 function hypergate.can_land ()

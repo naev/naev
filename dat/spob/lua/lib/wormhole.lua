@@ -33,7 +33,7 @@ end
 
 function wormhole.load ()
    local _spob, sys = spob.getS( mem.target )
-   if shader==nil then
+   if mem.shader==nil then
       -- Load shader
       mem.shader = lg.newShader( pixelcode, love_shaders.vertexcode )
       mem.shader._dt = -1000 * rnd.rnd()
@@ -69,7 +69,7 @@ function wormhole.unload ()
 end
 
 function wormhole.update( dt )
-   shader:update( dt )
+   mem.shader:update( dt )
 end
 
 function wormhole.render ()
