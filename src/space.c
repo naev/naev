@@ -143,6 +143,7 @@ static void space_updateSpob( const Spob *p, double dt, double real_dt );
 /* Map shaders. */
 static const MapShader *mapshader_get( const char *name );
 /* Lua stuff. */
+static void spob_luaInitMem( const Spob *spob );
 static int spob_lua_cmp( const void *a, const void *b );
 static nlua_env spob_lua_get( const char *filename );
 /*
@@ -1887,6 +1888,7 @@ void spob_updateLand( Spob *p )
 
    /* Run custom Lua. */
    if (p->lua_can_land != LUA_NOREF) {
+      spob_luaInitMem( p );
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->lua_can_land); /* f */
       if (nlua_pcall( p->lua_env, 0, 2 )) {
          WARN(_("Spob '%s' failed to run '%s':\n%s"), p->name, "can_land", lua_tostring(naevL,-1));
@@ -1908,6 +1910,14 @@ void spob_updateLand( Spob *p )
    }
 }
 
+static void spob_luaInitMem( const Spob *spob )
+{
+   if (spob->lua_mem != LUA_NOREF) {
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, spob->lua_mem );
+      nlua_setenv( naevL, spob->lua_env, "mem" );
+   }
+}
+
 /**
  * @brief Updatse the spob's internal Lua stuff.
  *
@@ -1916,21 +1926,28 @@ void spob_updateLand( Spob *p )
 int spob_luaInit( Spob *spob )
 {
    /* Just clear everything. */
+#define UNREF( x ) \
+   do { if ((x) != LUA_NOREF) { \
+      luaL_unref( naevL, LUA_REGISTRYINDEX, (x) ); \
+      (x) = LUA_NOREF; \
+   } } while (0)
    spob->lua_env     = LUA_NOREF;
-   spob->lua_env     = LUA_NOREF;
-   spob->lua_init    = LUA_NOREF;
-   spob->lua_load    = LUA_NOREF;
-   spob->lua_unload  = LUA_NOREF;
-   spob->lua_land    = LUA_NOREF;
-   spob->lua_can_land= LUA_NOREF;
-   spob->lua_render  = LUA_NOREF;
-   spob->lua_update  = LUA_NOREF;
-   spob->lua_comm    = LUA_NOREF;
+   UNREF( spob->lua_init );
+   UNREF( spob->lua_load );
+   UNREF( spob->lua_unload );
+   UNREF( spob->lua_land );
+   UNREF( spob->lua_can_land );
+   UNREF( spob->lua_render );
+   UNREF( spob->lua_update );
+   UNREF( spob->lua_comm );
+   UNREF( spob->lua_mem );
+#undef UNREF
 
    /* Initialize. */
    if (spob->lua_file == NULL)
       return 0;
 
+   /* Try to get the environment, will create a new one as necessary. */
    nlua_env env = spob_lua_get( spob->lua_file );
    if (env==LUA_NOREF)
       return -1;
@@ -1947,7 +1964,13 @@ int spob_luaInit( Spob *spob )
    spob->lua_update   = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
    spob->lua_comm     = nlua_refenvtype( env, "comm",     LUA_TFUNCTION );
 
+   /* Set up memory. */
+   lua_newtable( naevL );
+   spob->lua_mem = luaL_ref( naevL, LUA_REGISTRYINDEX );
+
+   /* Run init if applicable. */
    if (spob->lua_init) {
+      spob_luaInitMem( spob );
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_init); /* f */
       lua_pushspob(naevL, spob_index(spob));
       if (nlua_pcall( spob->lua_env, 1, 0 )) {
@@ -1965,6 +1988,7 @@ int spob_luaInit( Spob *spob )
 void spob_gfxLoad( Spob *spob )
 {
    if (spob->lua_load) {
+      spob_luaInitMem( spob );
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_load); /* f */
       if (nlua_pcall( spob->lua_env, 0, 2 )) {
          WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "load", lua_tostring(naevL,-1));
@@ -2015,6 +2039,7 @@ void space_gfxUnload( StarSystem *sys )
       Spob *spob = sys->spobs[i];
 
       if (spob->lua_unload != LUA_NOREF) {
+         spob_luaInitMem( spob );
          lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_unload); /* f */
          if (nlua_pcall( spob->lua_env, 0, 0 )) {
             WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "unload", lua_tostring(naevL,-1));
@@ -3298,6 +3323,7 @@ static void space_renderJumpPoint( const JumpPoint *jp, int i )
 static void space_renderSpob( const Spob *p )
 {
    if (p->lua_render != LUA_NOREF) {
+      spob_luaInitMem( p );
       /* TODO do a clip test first. */
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->lua_render); /* f */
       if (nlua_pcall( p->lua_env, 0, 0 )) {
@@ -3317,6 +3343,7 @@ static void space_updateSpob( const Spob *p, double dt, double real_dt )
    if (p->lua_update == LUA_NOREF)
       return;
    /* TODO do a clip test first. */
+   spob_luaInitMem( p );
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, p->lua_update); /* f */
    lua_pushnumber(naevL, dt); /* f, dt */
    lua_pushnumber(naevL, real_dt); /* f, real_dt */
