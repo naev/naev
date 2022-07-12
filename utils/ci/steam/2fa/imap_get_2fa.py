@@ -1,6 +1,6 @@
 #!/bin/python3
 
-# STEAM 2FA SCRIPT FOR NAEV
+# STEAM 2FA SCRIPT
 # Requires Python3
 # TFA_USER, TFA_PASS, TFA_IMAP should be exported before running
 #

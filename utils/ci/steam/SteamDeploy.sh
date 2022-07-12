@@ -51,6 +51,13 @@ while getopts dnpc:s:t:o: OPTION "$@"; do
     esac
 done
 
+configure_account() {
+    STEAMCMD_CONFDIR="$HOME/Steam"
+    mkdir -p "$STEAMCMD_CONFDIR"
+    echo "$STEAMCMD_SSFN" | base64 -d -i > "$STEAMCMD_CONFDIR/$STEAMCMD_SSFNFILENAME"
+    steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" +quit
+}
+
 retry() {
     local -r -i max_attempts="$1"; shift
     local -i attempt_num=1
@@ -95,29 +102,24 @@ tar -Jxf "$TEMPPATH/naev-ndata/steam-ndata.tar.xz" -C "$STEAMPATH/content/ndata"
 
 if [ "$DRYRUN" == "false" ]; then
 
-    # Trigger 2FA request and get 2FA code
-    steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" +quit || true
-
-    # Wait a bit for the email to arrive
-    sleep 60s
-    python3 "$SCRIPTROOT/2fa/get_2fa.py"
-    STEAMCMD_TFA="$(<"$SCRIPTROOT/2fa/2fa.txt")"
+    # Login to steam as builder service account.
+    configure_account
 
     if [ "$NIGHTLY" == "true" ]; then
-        # Run steam upload with 2fa key
-        retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" "$STEAMCMD_TFA" +run_app_build_http "$STEAMPATH/scripts/app_build_598530_nightly.vdf" +quit
+        # Run steam upload
+        retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" +run_app_build_http "$STEAMPATH/scripts/app_build_598530_nightly.vdf" +quit
     else
         if [ "$PRERELEASE" == "true" ]; then
-            # Run steam upload with 2fa key
-            retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" "$STEAMCMD_TFA" +run_app_build_http "$STEAMPATH/scripts/app_build_598530_prerelease.vdf" +quit
+            # Run steam upload
+            retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" +run_app_build_http "$STEAMPATH/scripts/app_build_598530_prerelease.vdf" +quit
 
         elif [ "$PRERELEASE" == "false" ]; then
             mkdir -p "$STEAMPATH"/content/soundtrack
             # Move soundtrack stuff to deployment area
             cp "$TEMPPATH"/naev-steam-soundtrack/*.* "$STEAMPATH/content/soundtrack"
 
-            # Run steam upload with 2fa key
-            retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" "$STEAMCMD_TFA" +run_app_build_http "$STEAMPATH/scripts/app_build_598530_release.vdf" +quit
+            # Run steam upload
+            retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" +run_app_build_http "$STEAMPATH/scripts/app_build_598530_release.vdf" +quit
             retry 5 steamcmd +login "$STEAMCMD_USER" "$STEAMCMD_PASS" +run_app_build_http "$STEAMPATH/scripts/app_build_1411430_soundtrack.vdf" +quit
 
         else
@@ -125,11 +127,8 @@ if [ "$DRYRUN" == "false" ]; then
         fi
     fi
 elif [ "$DRYRUN" == "true" ]; then
-    # Trigger 2FA request and get 2FA code
+    # Login to steam as builder service account.
     echo "steamcmd login"
-
-    #Wait a bit for the email to arrive
-    echo "2fa script"
 
     if [ "$NIGHTLY" == "true" ]; then
         # Run steam upload with 2fa key
