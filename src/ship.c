@@ -50,7 +50,7 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
  */
 static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine );
 static int ship_loadPLG( Ship *temp, const char *buf, int size_hint );
-static int ship_parse( Ship *temp, xmlNodePtr parent );
+static int ship_parse( Ship *temp, const char *filename );
 static void ship_freeSlot( ShipOutfitSlot* s );
 
 /**
@@ -642,17 +642,30 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
  * @brief Extracts the in-game ship from an XML node.
  *
  *    @param temp Ship to load data into.
- *    @param parent Node to get ship from.
+ *    @param filename File to load ship from.
  *    @return 0 on success.
  */
-static int ship_parse( Ship *temp, xmlNodePtr parent )
+static int ship_parse( Ship *temp, const char *filename )
 {
-   xmlNodePtr node;
+   xmlNodePtr parent, node;
+   xmlDocPtr doc;
    int sx, sy;
    char str[PATH_MAX];
    int noengine;
    ShipStatList *ll;
    ShipTrailEmitter trail;
+
+   /* Load the XML. */
+   doc  = xml_parsePhysFS( filename );
+   if (doc == NULL)
+      return -1;
+
+   parent = doc->xmlChildrenNode; /* First ship node */
+   if (parent == NULL) {
+      xmlFreeDoc(doc);
+      WARN(_("Malformed %s file: does not contain elements"), filename);
+      return -1;
+   }
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Ship) );
@@ -996,6 +1009,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->cpu==0.,"cpu");*/
 #undef MELEMENT
 
+   xmlFreeDoc(doc);
+
    return 0;
 }
 
@@ -1021,37 +1036,16 @@ int ships_load (void)
       ship_stack = array_create_size(Ship, nfiles);
 
    for (int i=0; i<nfiles; i++) {
-      xmlNodePtr node;
-      xmlDocPtr doc;
-
-      if (!ndata_matchExt( ship_files[i], "xml" )) {
-         free( ship_files[i] );
-         continue;
-      }
-
-      /* Load the XML. */
-      doc  = xml_parsePhysFS( ship_files[i] );
-
-      if (doc == NULL) {
-         free( ship_files[i] );
-         continue;
-      }
-
-      node = doc->xmlChildrenNode; /* First ship node */
-      if (node == NULL) {
-         xmlFreeDoc(doc);
-         free( ship_files[i] );
-         WARN(_("Malformed %s file: does not contain elements"), ship_files[i]);
-         continue;
-      }
-
-      if (xml_isNode(node, XML_SHIP))
+      if (ndata_matchExt( ship_files[i], "xml" )) {
          /* Load the ship. */
-         ship_parse( &array_grow(&ship_stack), node );
+         Ship s;
+         int ret = ship_parse( &s, ship_files[i] );
+         if (ret == 0)
+            array_push_back( &ship_stack, s );
+      }
 
       /* Clean up. */
       free( ship_files[i] );
-      xmlFreeDoc(doc);
    }
    qsort( ship_stack, array_size(ship_stack), sizeof(Ship), ship_cmp );
 
