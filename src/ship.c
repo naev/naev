@@ -414,9 +414,14 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
    surface = IMG_Load_RW( rw, 0 );
 
    /* Load the texture. */
-   temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,
-         OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
-         surface->w, surface->h, sx, sy, 0 );
+   if (temp->polygon != NULL)
+      temp->gfx_space = gl_loadImagePad( str, surface,
+            OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
+            surface->w, surface->h, sx, sy, 0 );
+   else
+      temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,
+            OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
+            surface->w, surface->h, sx, sy, 0 );
 
    /* Create the target graphic. */
    ret = ship_genTargetGFX( temp, surface, sx, sy );
@@ -521,10 +526,8 @@ static int ship_loadPLG( Ship *temp, const char *buf, int size_hint )
 
    /* Load the XML. */
    doc  = xml_parsePhysFS( file );
-
-   if (doc == NULL) {
+   if (doc == NULL)
       return 0;
-   }
 
    node = doc->xmlChildrenNode; /* First polygon node */
    if (node == NULL) {
@@ -698,11 +701,11 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
          xmlr_attr_int(node, "noengine", noengine );
 
-         /* Load the graphics. */
-         ship_loadGFX( temp, buf, sx, sy, !noengine );
-
          /* Load the polygon. */
          ship_loadPLG( temp, buf, sx*sy );
+
+         /* Load the graphics. */
+         ship_loadGFX( temp, buf, sx, sy, !noengine );
 
          /* Validity check: there must be 1 polygon per sprite. */
          if (array_size(temp->polygon) != sx*sy) {
