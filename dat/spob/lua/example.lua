@@ -3,7 +3,15 @@
    be used to override different core functionality.
 --]]
 local lg = require "love.graphics"
-local tex, pos, tw, th
+
+--[[
+   @brief Run when spob is initialized during loading.
+
+      @luatparam spb Spob being initialized.
+--]]
+function init( spb )
+   mem.spob = spb
+end
 
 --[[
    @brief Run when system is getting loaded. Should return a texture that will
@@ -13,14 +21,14 @@ local tex, pos, tw, th
       @luatreturn Texture A texture to be used as the planet image.
       @luatreturn[opt] number The value to use for the radius of the planet (for targetting, etc...)
 --]]
-function load( s )
+function load ()
    if tex==nil then
-      tex = lg.newImage( "path/to/image.png" )
-      pos = s:pos()
-      tw, th = tex:getDimensions()
-      pos = pos + vec2.new( -tw/2, th/2 )
+      mem.tex = lg.newImage( "path/to/image.png" )
+      mem.pos = mem.spob:pos()
+      mem.tw, mem.th = tex:getDimensions()
+      mem.pos = mem.pos + vec2.new( -mem.tw/2, mem.th/2 )
    end
-   return tex.tex, (tw+th)/4
+   return mem.tex.tex, (mem.tw+mem.th)/4
 end
 
 --[[
@@ -28,7 +36,7 @@ end
    anymore. Should free all textures and things that aren't necessary anymore.
 --]]
 function unload ()
-   tex = nil
+   mem.tex = nil -- Will be freed by garbage collector
 end
 
 --[[
@@ -56,8 +64,8 @@ end
 --]]
 function render ()
    local z = camera.getZoom()
-   local x, y = gfx.screencoords( pos, true ):get()
-   tex:draw( x, y, 0, 1/z )
+   local x, y = gfx.screencoords( mem.pos, true ):get()
+   mem.tex:draw( x, y, 0, 1/z )
 end
 
 --[[

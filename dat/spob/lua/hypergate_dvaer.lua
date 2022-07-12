@@ -1,7 +1,9 @@
 local hypergate = require "spob.lua.lib.hypergate"
 
-function load( p )
-   return hypergate.load( p, {
+init     = hypergate.init
+
+function load ()
+   return hypergate.load{
          basecol = { 0.8, 0.5, 0.2 }, -- Dvaered
          cost_mod = {
             [100] = 0,
@@ -11,7 +13,7 @@ function load( p )
             [20]  = 0.8,
          },
          tex = "hypergate_dvaered_activated.webp",
-      } )
+      }
 end
 
 unload   = hypergate.unload

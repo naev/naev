@@ -1,9 +1,10 @@
 local wormhole = require "spob.lua.lib.wormhole"
 
-function load( p )
-   return wormhole.load( p, "Wormhole NGC-13674" )
+function init( spb )
+   return wormhole.init( spb, "Wormhole NGC-13674" )
 end
 
+load     = wormhole.load
 unload   = wormhole.unload
 update   = wormhole.update
 render   = wormhole.render
