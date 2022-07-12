@@ -10,6 +10,7 @@ mem.guardreturndist = 6000 -- distance at which to return
 mem.enemyclose    = mem.guarddodist
 mem.atk_board = true
 mem.send_escort = true
+mem.autoleader =  false
 
 function create ()
    create_pre()

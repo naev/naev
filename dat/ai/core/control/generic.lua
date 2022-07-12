@@ -52,6 +52,7 @@ mem.form_pos      = nil -- Position in formation (for follower)
 mem.leadermaxdist = nil -- Distance from leader to run back to leader
 mem.gather_range  = 800 -- Radius in which the pilot looks for gatherables
 mem.lanes_useneutral = false -- Whether or not to use neutral lanes
+mem.autoleader    = true -- automatically find a leader
 
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates
 of the point the pilot has to follow when using follow_accurate.
@@ -525,7 +526,7 @@ function control ()
 
    -- Select new leader
    local l = p:leader()
-   if not mem.carried then -- carried ships don't change
+   if not mem.carried and mem.autoleader then -- carried ships don't change
       if l == nil then
          local candidate = ai.getBoss()
          if candidate ~= nil and candidate:exists() then
