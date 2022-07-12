@@ -1,4 +1,4 @@
-/*
+/**
  * See Licensing and Copyright notice in naev.h
  */
 /**
@@ -85,6 +85,9 @@ xmlDocPtr xml_parsePhysFS( const char* filename )
       WARN( _("Unable to read data from '%s'"), filename );
       return NULL;
    }
+   /* Empty file, we ignore these. */
+   if (bufsize==0)
+      return NULL;
    doc = xmlParseMemory( buf, bufsize );
    if (doc == NULL)
       WARN( _("Unable to parse document '%s'"), filename );
