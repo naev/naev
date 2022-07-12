@@ -1,11 +1,10 @@
 local pir = require "common.pirate"
 local luaspob = require "spob.lua.lib.spob"
 
-local lua_spb, std_land
-local params = {
+mem.params = {
    bribe_cost = function ()
-      local std = lua_spb:faction():playerStanding()
-      return (std_land - std) * 500 + 1000
+      local std = mem.spob:faction():playerStanding()
+      return (mem.std_land - std) * 500 + 1000
    end,
    std_land = 20,
    std_bribe = -50,
@@ -40,17 +39,17 @@ Pay {credits}?]]),
 }
 
 local function initparams ()
-   std_land = 20
+   mem.std_land = 20
    local pp = player.pilot()
    if pp:exists() and  pir.isPirateShip( pp ) then
-      std_land = 0
+      mem.std_land = 0
    end
-   params.std_land = std_land
-   return luaspob.init( lua_spb, params )
+   mem.params.std_land = mem.std_land
+   return luaspob.init( mem.spob, mem.params )
 end
 
 function init( spb )
-   lua_spb = spb
+   mem.spob = spb
    return initparams()
 end
 
