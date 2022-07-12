@@ -8,11 +8,11 @@
 --]]
 --[[
 
-   Escort Handler Event
+   Crewmate Handler Event
 
-   This event runs constantly in the background and manages escorts
+   This event runs constantly in the background and manages crewmates
    hired from the bar, including generating NPCs at the bar and managing
-   escort creation and behavior in space.
+   crewmate conversation and behavior in space.
 
 --]]
 local fmt = require "format"
@@ -20,6 +20,7 @@ local portrait = require "portrait"
 local pir = require "common.pirate"
 local pilotname = require "pilotname"
 local vntk = require "vntk"
+local vn = require "vn"
 
 local npcs  -- Non-persistent state
 
@@ -135,6 +136,43 @@ local function pick_word(str)
 	return pick_one(words)
 end
 
+-- sanitize a phrase before it gets compared with a lot of words
+local function sanitize_phrase(phrase)
+	-- blacklist some very basic and common words for the random word picker
+	local blacklist = {
+		_("a"),
+		_("is"),
+		_("was"),
+		_("I"),
+		_("quite"),
+		_("nice"),
+		_("your"),
+		_("that"),
+		_("this"),
+		_("my"),
+		_("his"),
+		_("her"),
+		_("about"),
+		_("to"),
+		_("the"),
+		_("their"),
+	}
+	local result
+	for word in phrase:gmatch("%w+") do
+		for _i, banned in ipairs(blacklist) do
+			if word ~= banned then
+				if result then
+					result = result .. " " .. word
+				else
+					result = word
+				end
+			end
+		end
+	end
+
+	return result
+end
+
 -- returns something that looks like the subject
 -- or a random word from the phrase
 local function extract_keyword(phrase)	
@@ -144,6 +182,7 @@ local function extract_keyword(phrase)
 	local articles = {
 		_("your"),
 		_("that"),
+		_("this"),
 		_("my"),
 		_("his"),
 		_("her"),
@@ -152,6 +191,7 @@ local function extract_keyword(phrase)
 		_("the"),
 		_("their"),
 	}
+
 	for _, article in ipairs(articles) do
 		local match = string.match(phrase, " " ..article .. " ([a-zA-Z]+)")
 		if match then
@@ -162,8 +202,8 @@ local function extract_keyword(phrase)
 	end
 	
 --	print("found no match in", phrase)
-	
-	return pick_word(phrase)
+
+	return pick_word(sanitize_phrase(phrase))
 end
 
 -- for adding a special kind of speech into an utterance
@@ -307,6 +347,7 @@ local function getShipboardActivity( activity_type )
 			_("gym"),
 			_("spa"),
 			_("sauna"),
+			_("holoball"),
 		}
 	end
 	if not activity_type then
@@ -646,7 +687,7 @@ local function getBarSituation(character_sheet)
                     _("drink"),
                     _("patron"),
                     _("person"),
-                    _("area"),
+                    _("corner"),
                     _("stranger"),
                     _("crowd"),
                     _("group")
@@ -717,7 +758,24 @@ local function create_memory(character, memory_type, params)
         -- we are just learning how to say a new sentence, which should be in our params
         -- NOTE: This isn't even being used yet
         new_memory = params.specific or tostring(params)
-    elseif memory_type == "friend" then
+    elseif memory_type == "underpaid" then
+	    topic = "credits"
+        local choices = {
+            _("The captain didn't calculate my salary correctly."),
+            fmt.f(_("{name} didn't calculate my salary correctly."), {name  = player.name() }),
+           _("The captain paid me the wrong salary."),
+            fmt.f(_("{name} didn't pay me my full salary."), {name  = player.name() }),
+            _("My salary wasn't calculated correctly."),
+			_("I didn't get my full salary."),
+			_("The captain makes a lot of mistakes when it comes to calculations.")
+        }
+		new_memory = pick_one(choices)
+	elseif memory_type == "friend" then
+		-- real quick, make sure we're not memorizing about ourselves
+		if character == params then
+			print(fmt.f("{name} tried to create a self-memory, but we don't know what to do with those yet", character))
+			return
+		end
         -- learn about the friend by fetching info from params, which must be a character sheet
         -- hopefully these will become catalysts for further conversation
         local actions = {
@@ -725,6 +783,7 @@ local function create_memory(character, memory_type, params)
             _("I was with {name} while {article_subject} was "),
             _("Was {name} really "),
             _("I saw {name} "),
+			_("{name}? I saw {article_object} "),
             _("I noticed that {name} was ")
         }
         local when = {
@@ -743,8 +802,8 @@ local function create_memory(character, memory_type, params)
             add_special(character) .. " " .. pick_one(actions) .. getBarSituation(params) .. pick_one(when),
             -- remembering that they like some topic (or dislike)
             pick_one(actions) ..
-                "talking a lot about things like the " .. pick_key(params.conversation.topics_liked) .. " or whatever.",
-            pick_one(actions) .. " talking about the " .. pick_key(params.conversation.topics_liked) .. " or whatever.",
+                "talking a lot about things like the err " .. pick_key(params.conversation.topics_liked) .. " or whatever.",
+            pick_one(actions) .. "talking about the um " .. pick_key(params.conversation.topics_liked) .. " or whatever.",
             pick_one(actions) ..
                 "expressing concern when the conversation was focused on the " ..
                      pick_one(params.conversation.topics_disliked) .. ".",
@@ -880,7 +939,7 @@ local function create_memory(character, memory_type, params)
     elseif memory_type == "hysteria" then
         -- we're having a nervous breakdown and are about to have an unreal experience
         local choices = {
-            _("Man, what a {ship], that {target} was a complete waste of {credits}. Am I right?"),
+            _("Man, what a {ship}, that {target} was a complete waste of {credits}. Am I right?"),
             add_special(character) .. " " .. getMadeUpName() .. " " .. add_special(character, "laugh"),
             add_special(character) .. "... " .. add_special(character) .. "... " .. add_special(character),
             getMadeUpName() .. " " .. getMadeUpName() .. " " .. add_special(character),
@@ -1289,12 +1348,13 @@ local function analyze_spoken(spoken, speaker, listener)
 	-- this will degrade performance as the memory table grows and
 	-- hopefully give us the kick we need to start pruning it
 	analysis.choices = {}
+	local brief = sanitize_phrase(spoken)
 	for my_topic, phrases in pairs(listener.conversation.topics_liked) do
 		if #analysis.choices == 0 then
 			for _, phrase in ipairs(phrases) do
 				local extracted = extract_keyword(phrase)
 				-- let's see if we think they might be talking about this
-				if string.find(spoken, extracted) then
+				if string.find(brief, extracted) then
 					table.insert(analysis.choices, my_topic)
 				end
 			end
@@ -2308,13 +2368,14 @@ local function generateTopics()
             liked[topic] = phrases
         elseif roll < 3 then -- ouch, we got a 2 or a 3
             table.insert(disliked, topic)
-        end
+        end -- 3 is indifferent
     end
     return liked, disliked
 end
 
 local function crewManagerAssessment()
     local troublemaker
+	local star
     local min_satisfaction = 0
     local max_satisfaction = 0
     local cumul_satisfaction = 0
@@ -2326,8 +2387,13 @@ local function crewManagerAssessment()
             min_satisfaction = crew.satisfaction
             troublemaker = crew
         end
+		if not star and crew.satisfaction > 3 and not crew.manager then
+			star = crew
+		elseif star and crew.satisfaction > star.satisfaction and not crew.manager then
+			star = crew
+		end
     end
-
+	
     -- if we aren't satisfied to at least 1, let's worry
     if (cumul_satisfaction / #mem.companions) < 1 then
         return "unsatisfied", troublemaker
@@ -2338,6 +2404,11 @@ local function crewManagerAssessment()
         return "troublemaker", troublemaker
     end
 
+	-- if someone is doing well, notify
+	if star then
+		return "promising", star
+	end
+	
     return "satisfied", troublemaker
 end
 
@@ -2398,6 +2469,9 @@ local function createGenericCrewManagerComponent()
         _("I don't want to point any fingers."),
         _("Don't say I didn't warn you. Can we leave it at that?")
     }
+	
+	-- default manager can't recognize exceptional crew
+	lines.promises = lines.satisfied
 
     manager.lines = lines
 
@@ -2434,15 +2508,16 @@ local function createGenericCrewmate(fac)
     character.firstname = firstname
 
     character.typetitle = "Crew"
-    character.skill = pick_one({"Cargo Bay", "Janitorial", "Maintenance", "General Duty"})
+    character.skill = pick_one({_("Cargo Bay"), _("Janitorial"), _("Maintenance"), _("General Duty")})
     character.satisfaction = rnd.rnd(1, 3)
     character.threshold = 1e3 -- how much they need to be happy after doing a paid job
     character.xp = math.floor(10 * (1 + rnd.sigma())) / 10
     character.portrait = portrait_func(portrait_arg)
+	character.vncharacter = "tutorial.webp" -- PLACEHOLDER >> TODO << (requires new artwork)
     character.faction = fac
     character.chatter = 0.5 + rnd.twosigma() * 0.2 -- how likely I am to talk at any given opportunity
     character.deposit = math.ceil(75e3 * character.satisfaction * character.xp + character.chatter * rnd.rnd() * 8e3)
-    character.salary = 0
+    character.salary = math.ceil(1 + character.xp * character.satisfaction) * 1000 * rnd.rnd() + math.ceil(character.chatter * 100)
     character.other_costs = "Water" -- if you don't have a cost factor, just cost water
     local liked, disliked = generateTopics()
     character.conversation = {
@@ -2747,14 +2822,18 @@ local function createGenericCrewmate(fac)
     return character
 end
 
+-- create a generic manager that only knows how to do payroll and assess the crew
 local function createGenericManager()
     local crewmate = createGenericCrewmate()
     crewmate.manager = createGenericCrewManagerComponent()
+	crewmate.manager.skill = "payroll"
     crewmate.skill = crewmate.manager.type
     crewmate.salary = math.ceil(2e3 * crewmate.xp) -- TODO: use this field somehow
     return crewmate
 end
 
+-- special escort companion doesn't do payroll but is a great satisfaction buffer for the crew
+-- basically the kind of crewmate that stands out a bit and is more helpful while the player learns to manage crew
 local function createEscortCompanion()
     local crewmate = createGenericCrewmate()
     crewmate.manager = createGenericCrewManagerComponent()
@@ -3142,6 +3221,16 @@ local function createEscortCompanion()
         _("With a captain like you, it's a wonder the situation is so dire.")
     )
 
+	crewmate.manager.lines.promising = {
+	    _("Perhaps you should speak with {firstname}."),
+        _("{name} has been showing signs of excellence."),
+        _("{name} has been performing exceptionally."),
+        _("{firstname} is being followed by good fortune."),
+        _("I've heard a lot of praise about {name}."),
+        _("You should keep an eye on {firstname}."),
+		_("On a scale of about ten, I'd put one of your {typetitle}'s happiness at around {satisfaction:.0f}."),
+		_("On a scale to around ten, I'd put one of your {typetitle}'s experience level at around {xp:.0f}."),
+	}
     crewmate.manager.lines.troublemaker = {
         _("Perhaps you should speak with {name}."),
         _("You need to listen to your crew."),
@@ -3163,6 +3252,8 @@ local function createEscortCompanion()
     return crewmate
 end
 
+-- smuggler hangs out in cargo bay and tries to smuggle commodities to a nearby world that sells them
+-- gets bonuses based on cargo bay workers
 local function createSmuggler()
 	local crewmate = createGenericCrewmate()
 	crewmate.typetitle = "Smuggler"
@@ -3211,12 +3302,17 @@ local function createSmuggler()
 	return crewmate
 end
 
+-- hull integrity engineer repairs armour when not under any stress at cost of energy and shields
+-- generates a lot of heat but can also repair when near death
+-- good for when you want to be able to take armour damage in a shield ship
+-- and if you have a lot of armour hitpoints (each uninterrupted healing cycle increases healing bonus)
+-- gets bonuses based on maintenance workers
 local function createArmorEngineer(fac)
 	local crewmate = createGenericCrewmate()
 	crewmate.faction = fac
 	crewmate.typetitle = "Engineer"
 	crewmate.skill = "Hull Integrity"
-	crewmate.salary = 1e3
+	crewmate.salary = 3e3 * (crewmate.xp * crewmate.satisfaction)
 	crewmate.other_costs = pick_one({"Diamond", "Ore", "Gold"})
 	crewmate.chatter = 0.4 + rnd.twosigma() * 0.2
 	crewmate.hook = {
@@ -3241,12 +3337,35 @@ local function createArmorEngineer(fac)
 		_("I'll get you out of a tough spot, or rather, I'll keep you in one piece for the trip back."),
 		_("Danger is my middle name! Well, within reasonable parameters."),
 	})
+	crewmate.conversation.special.engine = {
+		_("Easy does it..."),
+		_("Easy girl..."),
+		_("There, girl..."),
+		_("There we go..."),
+		_("You can do it, come on..."),
+		_("I know we can do this..."),
+		_("I got this."),
+		_("You got this."),
+		_("Trust the engine."),
+		_("Everything will be alright."),
+		fmt.f(_("Come on {made_up} engine don't fail me now."), { made_up = getMadeUpName() }),	
+	}
+	crewmate.conversation.special.worry = append_table(crewmate.conversation.special.worry, {
+		_("Probably."),
+		_("If my calculations are correct..."),
+		_("Did I double check those calculations?"),
+		_("Wait a minute..."),
+	})
 	
 	return crewmate
 end
-	
+
+-- It doesn't get much simpler than this for a custom character,
+-- plants explosives after the player boards a hostile natural ship
+-- usually it's enough to make sure it doesn't come back
+-- uses engineer slot (can only have 2 engineers by default)
 local function createExplosivesEngineer(fac)
-    local character = {}
+    local character = createGenericCrewmate()
     fac = fac or faction.get("Za'lek")
 
     local portrait_func = portrait.getMale
@@ -3260,13 +3379,10 @@ local function createExplosivesEngineer(fac)
         character.article_object = "her"
         character.article_subject = "she"
     end
-    local _lastname, firstname = pilotname.human()
     character.name = pilotname.generic()
-    character.firstname = firstname
     character.typetitle = "Engineer"
     character.skill = "Explosives Expert"
     character.satisfaction = rnd.rnd(1, 3)
-    character.threshold = 100e3 -- how much they need to be happy after doing a paid job
     character.xp = math.floor(10 * (1 + rnd.sigma())) / 10
     character.portrait = portrait_func()
     character.faction = fac
@@ -3594,6 +3710,7 @@ local function createExplosivesEngineer(fac)
     return character
 end
 
+--  decide what crew the player gets to encounter here
 local function createPilotNPCs()
     local fac = spob.cur():faction()
 
@@ -3608,7 +3725,7 @@ local function createPilotNPCs()
     local r = rnd.rnd(0, 3)
 
     -- the generic crewman disguised as a patron
-    if true or rnd.rnd(1, 5) == 3 then
+    if rnd.rnd(1, 5) == 3 then
         local crewmate = createGenericCrewmate()
         local id =
             evt.npcAdd(
@@ -3628,7 +3745,7 @@ local function createPilotNPCs()
     end
 
     -- the generic manager disguised as a patron
-    if true or rnd.rnd(1, 13) == 7 then
+    if rnd.rnd(1, 13) == 7 then
         local crewmate = createGenericManager()
         local id =
             evt.npcAdd(
@@ -3637,21 +3754,18 @@ local function createPilotNPCs()
             crewmate.portrait,
             fmt.f(
                 _(
-                    [[This person seems to be looking for work, but there are no obvious clues as to what they can do.
-
-		Name: {name}
-		]]
+                    [[This person seems to be looking for work, but there are no obvious clues as to what they can do.]]
                 ),
                 crewmate
             ),
-            8
+            9
         )
 
         npcs[id] = crewmate
     end
 
-	 -- the smuggler -- TODO maybe more likely on pirate planets
-    if true or rnd.rnd(1, 5) == 3  then
+	 -- the smuggler, more likely on pirate planets
+    if rnd.rnd(1, 5) == 3 or (pir.factionIsPirate(fac) and rnd.rnd(0,6) <= 4) then
 		-- TODO: only if this place sells commodities
         local crewmate = createSmuggler()
         local id =
@@ -3672,7 +3786,7 @@ local function createPilotNPCs()
     end
 	
     -- the special crewmate, pick 1 or none
-    -- the demolition man
+	-- the armor engineer
 	if r == 2 or (fac == faction.get("Za'lek") and r == 3) then
 		local character = createArmorEngineer()
 
@@ -3698,6 +3812,7 @@ local function createPilotNPCs()
         npcs[id] = character
 	end
 	
+	-- the demolition man
     if r == 1 or (fac == faction.get("Za'lek") and r == 0) then
         local character = createExplosivesEngineer()
 
@@ -3794,11 +3909,56 @@ function create()
     hook.land("land")
     hook.load("land")
     hook.enter("enter")
+	hook.takeoff("takeoff")
+end
+
+-- calculate any bonuses that we might want to calculate
+function takeoff()
+	local champions = {}
+	local workers = {}
+	workers.cargo = 0
+	workers.maintenance = 0
+	workers.janitorial = 0
+	
+	local max_crew = player.pilot():stats()["crew"]
+	-- count crew types and record champions
+	-- note that we only count the first hired crews that can fit
+	-- just in case the player was in a large ship with a large crew
+	-- but swapped into something small with less crew space
+	for ii, crewmate in ipairs(mem.companions) do
+		if ii <= max_crew then
+			if crewmate.skill == _("Cargo Bay") then
+				workers.cargo = workers.cargo + 1
+			elseif crewmate.skill == _("Maintenance") then
+				workers.maintenance = workers.maintenance + 1
+			elseif crewmate.skill == _("Janitorial") then
+				workers.janitorial = workers.janitorial + 1
+			end
+		end
+		-- record champion
+		if crewmate.typetitle == _("Engineer") then
+			if string.find(crewmate.skill, "Explosive") then
+				champions.demoman = ii
+			else
+				-- only one engineer can get the bonus as-is
+				champions.engineer = ii
+			end
+		elseif crewmate.typetitle == "Smuggler" then
+			champions.smuggler = ii
+		elseif crewmate.typetitle == "Companion" then
+			champions.escort = ii
+		end
+	end
+	
+	-- assign bonuses
+	mem.companions[champions.smuggler].bonus = workers.cargo
+	mem.companions[champions.engineer].bonus = workers.maintenance
 end
 
 function land()
     npcs = {}
     local paid = {}
+	local payroll
     for i, edata in ipairs(mem.companions) do
         -- natural satisfaction adjustment gravitates towards zero and adds
         -- a little bit of randomness based on how smooth the landing was or whatever
@@ -3811,7 +3971,8 @@ function land()
             local available_comms = spob.cur():commoditiesSold()
             for _i, ccom in ipairs(available_comms) do
                 local name = ccom:name()
-                if name == edata.other_costs then
+				-- don't pay for things we have on board, as a bonus
+                if name == edata.other_costs and not player.pilot():cargoHas(name) then
                     -- make the player pay the cost of 1/10th of a ton, which should be enough to last until we land again
                     local price = math.ceil(ccom:priceAt(spob.cur()) / 10)
                     player.pay(-price)
@@ -3821,11 +3982,11 @@ function land()
                         prev_paid = 0
                     end
                     paid[name] = prev_paid + price
-                -- found = true -- TODO: if we can't buy it here, incurr costs to some budget or something
                 end
             end
         end
 
+		-- dock any missing shuttles
 		if edata.shuttle then
 			edata.shuttle = "docked"
 		end
@@ -3836,6 +3997,9 @@ function land()
             (#mem.companions - edata.satisfaction) / (edata.xp + #mem.companions + math.abs(edata.satisfaction))
         if edata.manager then
             elsewhere_chance = 0
+			if edata.manager.skill == "payroll" then
+				payroll = edata
+			end
         end -- don't let managers go on holiday
         if mem.summon_crew or rnd.rnd() > elsewhere_chance or edata.manager then
             -- add the npc and figure out what he's doing
@@ -3872,10 +4036,41 @@ function land()
 	-- if we didn't pay salaries yet, do it now
 	-- TODO: also: captain makes mistakes: paid = salary - salary * (rnd.twosigma() + rnd.rnd())
 	-- 				and underpaid crew becomes unhappy and retain a memory (cap'n bad at maths) and get a sentiment (cap'n underpaid me)
-	
+
+	-- the captain pays salaries (incorrectly)
+	for _i, crewmate in ipairs(mem.companions) do
+		if crewmate.salary > 0 then
+			-- estimate an incorrect salary but allow captain's interactions with crew to affect it
+			local estimated = crewmate.salary - crewmate.salary * (rnd.twosigma() + rnd.rnd()) + FAKE_CAPTAIN.xp * FAKE_CAPTAIN.satisfaction
+			if payroll then -- fix the captain's mistakes
+				estimated = crewmate.salary
+			end
+
+			if not crewmate.last_paid then
+				crewmate.last_paid = time.get()
+			else
+				local dt = time.get() - crewmate.last_paid
+				if dt > time.create(1, 0, 0) then
+					if estimated < crewmate.salary then
+						-- the crewmate is unhappy
+						create_memory(crewmate, "underpaid")
+						crewmate.satisfaction = crewmate.satisfaction - 0.01
+						crewmate.xp = math.max(0, crewmate.xp - 0.01)
+						crewmate.sentiment = _("The captain miscalculated my salary.")
+					end
+					local cycle = time.create(1, 0, 0)
+					local multiplier = dt:tonumber() / cycle:tonumber()
+					local calculated = estimated * multiplier
+					local ttpaid = paid[crewmate.typetitle] or 0
+					paid[crewmate.typetitle] = ttpaid + calculated -- bookkkeeping
+					player.pay(-calculated)	-- player pays the crewmate
+					crewmate.last_paid = time.get()
+				end
+			end
+		end
+	end
 	
     -- pay for any other incurred costs
-
     for item, cost in pairs(mem.costs) do
         player.pay(-cost)
         paid[item] = cost
@@ -3883,6 +4078,8 @@ function land()
     end
 
     -- if we have a manager, give him the data here
+	-- could be used to figure out what crew is dead weight etc
+	-- so the conversation/dialog uses the paid table as a base
     for _i, crewmate in ipairs(mem.companions) do
         if crewmate.manager then
             -- check if the manager has the finance skill
@@ -4071,9 +4268,9 @@ local function startDiscussion(crewmate, skip_intro)
 	end
 	local title_choice = pick_one({
 		_("What do you say back?"),
-		_("What do you say back?"),
-		_("What do you say back?"),
-		_("What do you say back?"),
+		_("Your response?"),
+		_("Keep talking?"),
+		_("Anything to add?"),
 		
 	})
     local spoken = tk.input(_("Conversation"), 0, 64, title_choice)
@@ -4140,14 +4337,16 @@ local function startDiscussion(crewmate, skip_intro)
                 responses = append_table(responses, generate_responses(spoken, crewmate))
             end
 
-			-- finally, use our fancy analyzer to add a smart lucky response to surprise the player
+			-- finally, use our fancy analyzer to see if the player "scores" and can continue the conversation
 			local response, detected = analyze_spoken(spoken, FAKE_CAPTAIN, crewmate)
 			-- I don't know how many stack frames we can handle, but 10 sounds like a long conversation in case the player is trapped
 			-- which I guess is kind of likely if the just keeps saying the same stuff
 			if detected and (not skip_intro or skip_intro < 10) then
 				skip_intro = skip_intro or 0
-				vntk.msg(name_label, pick_one(crewmate.conversation.default_participation) .. "\n" .. fmt.f(response, FAKE_CAPTAIN))
+				vntk.msg(name_label, fmt.f(response, FAKE_CAPTAIN))
 				return startDiscussion(crewmate, skip_intro + 1)
+			elseif detected and skip_intro == 10 then
+				vntk.msg(name_label, fmt.f(response, FAKE_CAPTAIN))
 			else
 				table.insert(responses, response)
 				vntk.msg(name_label, fmt.f(pick_one(responses), FAKE_CAPTAIN))
@@ -4158,8 +4357,32 @@ local function startDiscussion(crewmate, skip_intro)
     end
 end
 
+-- TODO: fix this up so that you can open up a dialog and ask things
+-- "How can I help you" -> choices -> default choices + open dialog
+-- open dialog handler needs to somehow work generally
 -- starts a managementarial discussion
 local function startManagement(edata)
+	-- TODO QUICKFIX
+	if edata.skill == "Escort" then
+		edata.manager.lines.promising = {
+			_("Perhaps you should speak with {firstname}."),
+			_("{name} has been showing signs of excellence."),
+			_("{name} has been performing exceptionally."),
+			_("{firstname} is being followed by good fortune."),
+			_("I've heard a lot of praise about {name}."),
+			_("You should keep an eye on {firstname}."),
+			_("On a scale to ten, I'd put one of your {typetitle}'s happiness at around {satisfaction:.0f}."),
+			_("On a scale to ten, I'd put one of your {typetitle}'s experience level at around {xp:.0f}."),
+		}
+		edata.manager.lines.specfic = {
+			_("{firstname} has a satisfaction score around {satisfaction:.0f}."),
+			_("{name}'s experience level is around {xp:.1f}."),
+			_("{name} has an experience level of {xp:.0f} and a happiness score of {satisfaction:.0f}."),
+			_("I would put rate {article_object} at around {satisfaction:.0f}."),
+		}
+		edata.portrait = "neutral/female1.webp"
+		edata.vncharacter = "neutral/female1.webp"
+	end
     -- woah, we are a manager! lets do our manager thing
     local management = edata.manager
 
@@ -4177,45 +4400,183 @@ local function startManagement(edata)
         return
     end
 
-    -- we are a personnel manager, let's give a personnel assessment
-    if string.find(management.type, "Personnel") then
-        local key, troublemaker = crewManagerAssessment()
-        if not troublemaker then
-            troublemaker = {}
-        end
-        local message = fmt.f(pick_one(management.lines[key]), troublemaker)
-        vntk.msg(fmt.f("{name}", edata), message)
-    end
-    -- maybe we are an unknown kind of manager, then nothing happens
+	local chat = { _("Chat"), "chat" }
+	local summon = { _("Summon crew"), "summon" }
+	local drinks = { _("Buy a round of drinks"), "drinks" }
+	local dismiss = { _("Dismiss"), "end" }
+	
+	local choices = {}
+	if true then -- TODO: figure out if this character knows how to chat
+		table.insert(choices, chat)
+	end
 
-    if management.cost > 0 then
-        -- if we want to summon the crew with our manager it has to cost something
-        -- let the player how much he paid for this service
-        if
-            not mem.summon_crew and
-                vntk.yesno(
-                    fmt.f("{typetitle}", edata),
-                    fmt.f(
-                        _(
-                            "Would you like to summon the crew to be available for discussion at the bar at the next destination? This will cost {credits}."
-                        ),
-                        {credits = fmt.credits(management.cost)}
-                    )
-                )
-         then
-            mem.summon_crew = true
-            player.pay(-management.cost)
-            shiplog.append(
-                logidstr,
-                fmt.f(
-                    _("You paid {credits} in crew management fees."),
-                    {
-                        credits = fmt.credits(management.cost)
-                    }
-                )
-            )
-        end
-    end
+	-- buy the crew some drinks
+	if management.cost > 0 then
+		table.insert(choices, drinks)
+	end
+
+	-- summon the crew to the bar next time
+	if not mem.summon_crew and management.cost > 0 then
+		table.insert(choices, summon)
+	end	
+	
+	-- always put the dismiss option last
+	table.insert(choices, dismiss)
+	
+
+	-- default message in case we end up here without an appropriate management skill
+	local message = _("How can I help you?")
+		
+	-- figure out what kind of first message we want to give
+	-- we are a personnel manager, let's give a personnel assessment
+	if string.find(management.type, "Personnel") then
+		local key, troublemaker = crewManagerAssessment()
+		if not troublemaker then
+			troublemaker = {}
+		end
+		message = fmt.f(pick_one(management.lines[key]), troublemaker)
+	end
+	-- maybe we are an unknown kind of manager, then nothing happens
+	
+	-- open dialog part comes here
+	vn.clear()
+	vn.scene()
+	local escort = vn.newCharacter ( edata.name, {image = edata.vncharacter } )
+	vn.transition()
+	vn.label("start")
+	escort(message)
+	vn.menu(function () return choices end) -- makes us jump to a label
+	vn.done()
+	-- talk with the escort about something
+	vn.label("chat")
+	local chatting
+	local message
+	-- TODO: call an approriate function?
+	vn.func( function()
+		message = _("I'm not sure how to help you.")
+		chatting = false
+		-- we want to keep chatting as much as possible
+		local spoken = tk.input(_("Discussion"), 0, 32, _("Say:"))
+		if spoken then
+			spoken = spoken:lower()
+			-- for now, let's just do a basic personnel analysis in here to refactor later
+			-- find a name from the input
+			for _i, worker in ipairs(mem.companions) do
+				if string.find(spoken, worker.name:lower()) 
+				or string.find(spoken, worker.firstname:lower())
+				then
+					-- let's talk about this person
+					message = fmt.f(pick_one(management.lines.specfic), worker)
+					chatting = true
+				end
+			end
+		end
+		if not spoken or not chatting then
+			vn.jump("end")
+		end
+	end )
+	escort( function() return message end )
+	vn.jump("chat")
+	vn.done()
+	
+	vn.label("summon")
+	-- let the player to summon the crew for credits
+	escort(
+		fmt.f(
+			_(
+				"Would you like to summon the crew to be available for discussion at the next bar? This will cost {credits}."
+			),
+			{credits = fmt.credits(management.cost)}
+		)
+	)
+	vn.menu({
+		{ _("Yes"), "do_summon" },
+		{ _("No"), "end" },
+	})
+	vn.label("do_summon")
+	vn.func( function () 
+		mem.summon_crew = true
+		player.pay(-management.cost)
+		shiplog.append(
+			logidstr,
+			fmt.f(
+				_("You paid {credits} in crew management fees."),
+				{
+					credits = fmt.credits(management.cost)
+				}
+			)
+		)
+		
+		-- don't let the player summon twice
+		for index, choice in ipairs(choices) do
+			if choice == summon then
+				table.remove(choices, index)
+			end
+		end
+	end )
+
+	vn.jump("end")
+	
+	-- let the player buy drinks for the crew that is present
+	vn.label("drinks")
+	local drinks_price = math.max(3000, management.cost * #mem.companions - (edata.satisfaction * management.cost * 0.1 * edata.xp))
+	escort(
+		fmt.f(
+			_(
+				"Would you like to buy everyone a round of drinks? This will cost {credits}."
+			),
+			{credits = fmt.credits(drinks_price)}
+		)
+	)
+	vn.menu({
+		{ _("Yes"), "do_drinks" },
+		{ _("No"), "end" },
+	})
+	vn.label("do_drinks")
+	vn.func( function () 
+		player.pay(-drinks_price)
+		-- everyone at the bar gets a decent chance to enjoy their drink and actually like it
+		for _i, worker in ipairs(mem.companions) do
+			-- make sure this npc is at the bar, find it in the loop
+			for _j, cdata in pairs(npcs) do
+				-- buy everyone a drink, but not the person who bought the round
+				if cdata == worker and cdata ~= edata then
+					local enjoyment = rnd.rnd() + rnd.threesigma()
+					worker.satisfaction = math.min(10, worker.satisfaction + enjoyment * 0.1)
+					if enjoyment >= 1.25 then
+						worker.conversation.sentiment = _("I really enjoyed that drink.")
+					elseif enjoyment < 0 then
+						worker.conversation.sentiment = _("That drink I didn't ask for was nasty.")
+					elseif rnd.rnd() < worker.chatter then
+						insert_sentiment(worker, _("It was nice of the captain to buy us all drinks."))
+					end
+					print(fmt.f("{name} evaluated a free drink at {enjoyment}", {name = worker.name, enjoyment=enjoyment}))
+				elseif cdata == edata then
+					-- buy my own drink, I like it
+					edata.satisfaction = edata.satisfaction + 0.01
+				end
+			end
+		end
+		shiplog.append(
+			logidstr,
+			fmt.f(
+				_("You paid {credits} to treat your crew."),
+				{
+					credits = fmt.credits(management.cost)
+				}
+			)
+		)
+
+	end )
+
+	vn.jump("end")
+	
+	-- say goodbye
+	vn.label("end")
+	escort(pick_one(edata.conversation.default_participation))
+	vn.done()
+	vn.run()
+	
 end
 
 -- starts a conversation with the companion
@@ -4247,14 +4608,7 @@ end
 
 -- delete the crew member permanently
 local function terminate_crew(crewmember, reason)
-	if npcs then
-		for nn, cdata in pairs(npcs) do
-			if crewmember == cdata then
-				evt.npcRm(nn)
-				npcs[nn] = nil
-			end
-		end
-	end
+
 	
 	for k, v in ipairs(mem.companions) do
 		if crewmember.name == v.name then
@@ -4267,6 +4621,14 @@ local function terminate_crew(crewmember, reason)
 	end
 	
 	shiplog.append(logidstr, reason)
+		if npcs then
+		for nn, cdata in pairs(npcs) do
+			if crewmember == cdata then
+				evt.npcRm(nn)
+				npcs[nn] = nil
+			end
+		end
+	end
 end
 
 -- Asks the player whether or not they want to fire the pilot
@@ -4466,7 +4828,7 @@ function approachGenericCrewmate(npc_id)
     end
 
     local i = #mem.companions + 1
-    if i / 2 >= player.pilot():stats()["crew"] == "Crew" then
+    if i / 2 >= player.pilot():stats()["crew"] and pdata.typetitle == "Crew" then
         local params = {
             ["start"] = {
                 _("Oh hey,"),
@@ -4744,8 +5106,9 @@ function escort_landing(speaker)
         end
     end
 
-    -- check the dumps
-    if world_score < 0 then
+    -- check the dumps (make sure to check if the world is poor, because there are
+	-- e.g. poor rural worlds like Waterhole's Moon)
+    if world_score < 0 or tags.poor then
         for tag, choices in pairs(bad_tags) do
             if tags[tag] then
                 world_score = -5
@@ -4832,16 +5195,34 @@ function smuggle_cargo(speaker)
 	
 	if bay_strength == 0 then return end -- no bay to use, nothing for smuggler to do
 	
+	-- if we have a bay, calculate our bonuses based on our cargo bay workers
+	-- since we want to increase satisfaction and xp for active workers we do
+	-- the recalculation instead of using takeoff's calculation (we are on a UI screen anyway)
+	-- this CAN be abused by the player by repeatedly opening the cargo screen to
+	-- increase the smuggler and cargo worker satisfaction and xp, but honestly I
+	-- think that the player can be rewarded because they wouldn't know that they're
+	-- getting all these free bonuses from this anyway unless they read the source
+	-- in which case they know what they're doing anyway
+	for ii, worker in ipairs(mem.companions) do
+		if ii <= player.pilot():stats()["crew"] then
+			if worker.skill == "Cargo Bay" then
+				bay_strength = bay_strength + worker.xp * 0.1
+				worker.xp = worker.xp + 0.01
+				smuggler.satisfaction =  smuggler.satisfaction + 0.01
+			end
+		end
+	end
+	
 	-- decide the ship now because we'll need the cargo size
 	local bay_ship = "Llama" -- default with no strength
 	local space = 15
 	if bay_strength > 8 then -- a carrier
 		bay_ship = "Mule"
 		space = 230
-	elseif bay_strength > 5 then -- perhaps a cruiser or freighter
+	elseif bay_strength > 6 then -- perhaps a cruiser or freighter
 		bay_ship = "Rhino"
 		space = 150
-	elseif bay_strength > 3 then
+	elseif bay_strength > 4 then
 		bay_ship = "Koala"
 		space = 50
 	elseif bay_strength == 2 then
@@ -4879,13 +5260,12 @@ function smuggle_cargo(speaker)
 		end
 	end
 	
-	if chosen_spob and space > 0 and profit < 1e3 then
-		print("no profit??", bay_strength)
+	if chosen_spob and space > 0 and profit < 2e3  or #will_sell == 0 then
 		speaker.shuttle = "docked"
 		return -- not enough commodities to fill the smuggler, not worth going, don't even bother the player
 	end
 	-- we have everything we need, talk to player
-	
+
 	local message = fmt.f(_("Hey captain! I can smuggle some of these commodities to a nearby planet and sell at least {b} tons of {a} if you'd like for {profit}. It would spare you the effort of doing it yourself."), {a=will_sell[1][1],b=will_sell[1][2], profit=fmt.credits(profit)} )
 	
 	if vntk.yesno(fmt.f("{typetitle} {name}", speaker), message) then
@@ -4946,7 +5326,7 @@ function smuggler_check_dock_distance( args )
 		return
 	end
 	-- we're going to use square2, so we need to boost the base, we'll just double xp amount, docking range bonus is a nice bonus
-	local smuggler_docking_distance = 2 * args.crewsheet.xp + args.crewsheet.satisfaction + 35
+	local smuggler_docking_distance = 2 * args.crewsheet.xp + args.crewsheet.satisfaction + 35 + smuggler.bonus
 	if vec2.dist2(player.pilot():pos(), smuggler:pos()) < smuggler_docking_distance * smuggler_docking_distance then
 		smuggler:comm("Got it.")
 		-- SUCCESS, we docked, pay the player
@@ -4964,8 +5344,6 @@ function smuggler_check_dock_distance( args )
 		smuggler:rm()
 		args.crewsheet.shuttle = "docked"
 		return
-	else
-		print(vec2.dist2(player.pilot():pos(), smuggler:pos()), smuggler_docking_distance * smuggler_docking_distance)
 	end
 
 	smuggler:comm(pick_one(args.crewsheet.conversation.special.coming))
@@ -4990,12 +5368,12 @@ function engineer_armour(engineer)
 	
 --	print(fmt.f("{armour}, {shield}, {stress}", {armour=armour, shield=shield, stress=stress}))
 	
-	-- engineer hero sacrifice
-	if (armour <= 2 and pp:energy() > 36) then
+	-- engineer hero sacrifice (but not if the player already died)
+	if (armour <= 2 and pp:energy() > 36 and armour > 0) then
 		local health_bonus = engineer.xp * engineer.xp * engineer.xp * engineer.satisfaction * engineer.satisfaction
 		pp:addHealth(health_bonus, health_bonus / 8)
 		engineer.bonus = health_bonus
-		local message = fmt.f(_("Your engineer, {name}, was lost in space combat while maintaining hull integrity. As a final valiant act of heroism ultimately leading to {article_object} death, {bonus} armor was repaired in a massive power surge."), engineer)
+		local message = fmt.f(_("Your engineer, {name}, was lost in space combat while maintaining hull integrity. As a final valiant act of heroism, {bonus:.0f} armor was repaired in a massive power surge."), engineer)
 		vntk.msg(_("Heroic Sacrifice"), message)
 		terminate_crew(engineer, message)
 	elseif (armour <= 10 and pp:energy() > 20) then
@@ -5011,10 +5389,10 @@ function engineer_armour(engineer)
 		) or	-- engineer spits out his coffee and roll up his sleeves
 		(armour <= 16 + engineer.xp + engineer.satisfaction and pp:energy() >= 4)
 	then
-		print(engineer.active)
-		-- begin healing in a 10th of a period
+
+		-- begin healing after a slight delay
 		if engineer.active then
-			-- 10th of period has passed, healing stage begun
+			-- healing stage begun
 			engineer.hook.hook = hook.timer(
 				rnd.rnd(math.floor(11 - engineer.xp), math.ceil(22 - engineer.xp - engineer.satisfaction)),
 				"engineer_armour", engineer)
@@ -5026,9 +5404,8 @@ function engineer_armour(engineer)
 			local energy_used = heated * healed * engineer.xp
 			pp:setEnergy(pp:energy(true) - energy_used, true)
 			print(fmt.f("healed {healed} armour points and heated by {heat} K at cost of {mw} energy", { healed = healed, heat = heated, mw=energy_used }))
-			-- TODO: engineer says things like "easy girl", "easy does it", "there we go"...
 		else
-			engineer.active = 1
+			engineer.active = 1 + engineer.bonus * 0.1
 			local delay = math.max(2, 20 - engineer.xp - engineer.satisfaction)
 			engineer.hook.hook = hook.timer(delay, "engineer_armour", engineer)
 			
@@ -5040,24 +5417,26 @@ function engineer_armour(engineer)
 	elseif engineer.active then
 		-- experience gained while cooling down
 		local gained_xp = (engineer.active * 0.01)
+		engineer.xp = math.min(10, engineer.xp + gained_xp)
 		print(fmt.f("engineer cooldown and gained {xp} xp", {xp = gained_xp}))
-		local listener = pick_one(mem.companions)
-		if rnd.rnd(0, 1) == 0 then
-			-- act like an engineer
+		
+		if rnd.rnd() < engineer.chatter then
+			-- act like a weird engineer
+			local listener = pick_one(mem.companions)
 			speak_to( {me=engineer, responder=listener, message=add_special(engineer) .. " " .. add_special(engineer) })
-		else
+		elseif rnd.rnd() < engineer.chatter then
 			-- act normally
 			speak(engineer)
-		end
---		pilot.comm(fmt.f("{typetitle} {name}", engineer), add_special(engineer) .. " " .. add_special(engineer))
-		engineer.xp = math.min(10, engineer.xp + gained_xp)
+		end -- otherwise: just stay silent
+
 		-- cooldown
 		engineer.active = math.max(0, engineer.active / 2 - 3)
-		engineer.hook.hook = hook.timer(100 + 10 * engineer.xp + engineer.satisfaction, "engineer_armour", engineer)
+		engineer.hook.hook = hook.timer(20 * player.pilot():ship():size() + 10 * engineer.xp + engineer.satisfaction, "engineer_armour", engineer)
 	elseif not player.isLanded() then
-		-- polling rate to start the engineering logic
-		engineer.hook.hook = hook.timer(100 - engineer.xp * engineer.satisfaction, "engineer_armour", engineer)
+		-- polling rate to start the engineering logic 
+		engineer.hook.hook = hook.timer(math.max(6, 20 * player.pilot():ship():size() - engineer.xp * engineer.satisfaction), "engineer_armour", engineer)
 	end
+	-- engineer cooldown finished to reset
 	if engineer.active and engineer.active < 3 then
 		engineer.active = nil
 	end
