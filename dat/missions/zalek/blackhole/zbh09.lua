@@ -90,7 +90,7 @@ function accept ()
       {name=player.name()}))
 
    vn.label("cont")
-   z(_([["Normally I would stay behind and monitor, but I'm a bit worried about my safety here and will accompany you this time. It's not like I want to see the what's out there with my own eyes…
+   z(_([["Normally I would stay behind and monitor, but I'm a bit worried about my safety here and will accompany you this time. It's not like I want to see what's out there with my own eyes…
 OK, maybe a little. Let's get going!"]]))
 
    vn.done( zbh.zach.transition )
