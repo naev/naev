@@ -1890,6 +1890,12 @@ void spob_updateLand( Spob *p )
 
       return;
    }
+
+   /* Some defaults. */
+   if (spob_hasService( p, SPOB_SERVICE_LAND )) {
+      p->can_land = 1;
+      p->land_msg = strdup(_("Landing permission granted."));
+   }
 }
 
 /**
