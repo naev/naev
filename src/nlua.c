@@ -150,7 +150,9 @@ static int nlua_log2( lua_State *L )
    return 1;
 }
 
-/** @brief Implements the Lua function os.getenv. In the sandbox we only make a fake $HOME visible. */
+/**
+ * @brief Implements the Lua function os.getenv. In the sandbox we only make a fake $HOME visible.
+ */
 static int nlua_os_getenv( lua_State *L )
 {
    const char *var = luaL_checkstring(L, 1);
@@ -160,6 +162,18 @@ static int nlua_os_getenv( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Handles what to do when Lua panics.
+ *
+ * By default it uses exit( EXIT_FAILURE );, but we want to generate a backtrace or let gdb catch it if possible.
+ */
+static int nlua_panic( lua_State *L )
+{
+   DEBUG( _("LUA PANIC: %s"),  lua_tostring(L,-1) );
+   raise( SIGABRT );
+   return 0;
+}
+
 /*
  * @brief Initializes the global Lua state.
  */
@@ -167,6 +181,8 @@ void lua_init (void)
 {
    naevL = nlua_newState();
    nlua_loadBasic(naevL);
+
+   lua_atpanic( naevL, nlua_panic );
 }
 
 /**
