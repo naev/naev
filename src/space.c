@@ -1701,8 +1701,12 @@ static int spobs_load (void)
    spob_files = ndata_listRecursive( SPOB_DATA_PATH );
    for (int i=0; i<array_size(spob_files); i++) {
       if (ndata_matchExt( spob_files[i], "xml" )) {
-         Spob *s = spob_new();
-         spob_parse( s, spob_files[i], stdList );
+         Spob s;
+         int ret = spob_parse( &s, spob_files[i], stdList );
+         if (ret == 0) {
+            s.id = array_size( spob_stack );
+            array_push_back( &spob_stack, s );
+         }
       }
 
       /* Clean up. */
@@ -2095,6 +2099,7 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
    }
 
    /* Clear up memory for safe defaults. */
+   memset( spob, 0, sizeof(Spob) );
    flags             = 0;
    spob->hide        = 0.01;
    spob->radius      = -1.;
