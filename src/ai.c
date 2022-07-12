@@ -124,7 +124,7 @@ static nlua_env equip_env = LUA_NOREF; /**< Equipment enviornment. */
  */
 /* Internal C routines */
 static void ai_run( nlua_env env, int nargs );
-static int ai_loadProfile( const char* filename );
+static int ai_loadProfile( AI_Profile *prof, const char* filename );
 static void ai_setMemory (void);
 static void ai_create( Pilot* pilot );
 static int ai_loadEquip (void);
@@ -542,10 +542,15 @@ int ai_load (void)
       int flen = strlen(files[i]);
       if ((flen > suflen) &&
             strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
+         AI_Profile prof;
          char path[PATH_MAX];
+         int ret;
 
          snprintf( path, sizeof(path), AI_PATH"%s", files[i] );
-         if (ai_loadProfile(path)) /* Load the profile */
+         ret = ai_loadProfile(&prof,path); /* Load the profile */
+         if (ret == 0)
+            array_push_back( &profiles, prof );
+         else
             WARN( _("Error loading AI profile '%s'"), path);
       }
    }
@@ -598,20 +603,17 @@ static int ai_loadEquip (void)
 /**
  * @brief Initializes an AI_Profile and adds it to the stack.
  *
+ *    @param prof AI profile to load.
  *    @param[in] filename File to create the profile from.
  *    @return 0 on no error.
  */
-static int ai_loadProfile( const char* filename )
+static int ai_loadProfile( AI_Profile *prof, const char* filename )
 {
    char* buf = NULL;
    size_t bufsize = 0;
    nlua_env env;
-   AI_Profile *prof;
    size_t len;
    const char *str;
-
-   /* Grow array. */
-   prof = &array_grow(&profiles);
 
    /* Set name. */
    len = strlen(filename)-strlen(AI_PATH)-strlen(AI_SUFFIX);
@@ -640,7 +642,6 @@ static int ai_loadProfile( const char* filename )
           "%s\n"
           "Most likely Lua file has improper syntax, please check"),
             filename, lua_tostring(naevL,-1));
-      array_erase( &profiles, prof, &prof[1] );
       free(prof->name);
       nlua_freeEnv( env );
       free(buf);
