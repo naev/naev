@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-07-11 21:15+0000\n"
+"PO-Revision-Date: 2022-07-12 21:17+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -96276,7 +96276,7 @@ msgstr "Dispara armas primarias."
 
 #: src/input.c:69
 msgid "Face Target"
-msgstr ""
+msgstr "Afrontar Objectivo"
 
 #: src/input.c:69
 msgid ""
@@ -96286,158 +96286,158 @@ msgstr ""
 
 #: src/input.c:70
 msgid "Board Target"
-msgstr ""
+msgstr "Abordar Objetivo"
 
 #: src/input.c:70
 msgid "Attempts to board the targeted ship."
-msgstr ""
+msgstr "Intenta abordar la nave objectivo."
 
 #. Secondary Weapons
 #: src/input.c:72
 msgid "Fire Secondary Weapon"
-msgstr ""
+msgstr "Disparar Arma Secundaria"
 
 #: src/input.c:72
 msgid "Fires secondary weapons."
-msgstr ""
+msgstr "Dispara las armas secundarias."
 
 #: src/input.c:73
 msgid "Weapon Set 1"
-msgstr ""
+msgstr "Conjunto de Arma 1"
 
 #: src/input.c:73
 msgid "Activates weapon set 1."
-msgstr ""
+msgstr "Activa conjunto de arma 1."
 
 #: src/input.c:74
 msgid "Weapon Set 2"
-msgstr ""
+msgstr "Conjunto de Arma 2"
 
 #: src/input.c:74
 msgid "Activates weapon set 2."
-msgstr ""
+msgstr "Activar conjunto de arma 2."
 
 #: src/input.c:75
 msgid "Weapon Set 3"
-msgstr ""
+msgstr "Conjunto de Arma 3"
 
 #: src/input.c:75
 msgid "Activates weapon set 3."
-msgstr ""
+msgstr "Activar conjunto de arma 3."
 
 #: src/input.c:76
 msgid "Weapon Set 4"
-msgstr ""
+msgstr "Conjunto de Arma 4"
 
 #: src/input.c:76
 msgid "Activates weapon set 4."
-msgstr ""
+msgstr "Activar conjunto de arma 4."
 
 #: src/input.c:77
 msgid "Weapon Set 5"
-msgstr ""
+msgstr "Conjunto de Arma 5"
 
 #: src/input.c:77
 msgid "Activates weapon set 5."
-msgstr ""
+msgstr "Activar conjunto de arma 5."
 
 #: src/input.c:78
 msgid "Weapon Set 6"
-msgstr ""
+msgstr "Conjunto de Arma 6"
 
 #: src/input.c:78
 msgid "Activates weapon set 6."
-msgstr ""
+msgstr "Activar conjunto de arma 6."
 
 #: src/input.c:79
 msgid "Weapon Set 7"
-msgstr ""
+msgstr "Conjunto de Arma 7"
 
 #: src/input.c:79
 msgid "Activates weapon set 7."
-msgstr ""
+msgstr "Activar conjunto de arma 7."
 
 #: src/input.c:80
 msgid "Weapon Set 8"
-msgstr ""
+msgstr "Conjunto de Arma 8"
 
 #: src/input.c:80
 msgid "Activates weapon set 8."
-msgstr ""
+msgstr "Activar conjunto de arma 8."
 
 #: src/input.c:81
 msgid "Weapon Set 9"
-msgstr ""
+msgstr "Conjunto de Arma 9"
 
 #: src/input.c:81
 msgid "Activates weapon set 9."
-msgstr ""
+msgstr "Activar conjunto de arma 9."
 
 #: src/input.c:82
 msgid "Weapon Set 0"
-msgstr ""
+msgstr "Conjunto de Arma 0"
 
 #: src/input.c:82
 msgid "Activates weapon set 0."
-msgstr ""
+msgstr "Activar conjunto de arma 0."
 
 #. Escorts
 #: src/input.c:84
 msgid "Target Next Escort"
-msgstr ""
+msgstr "Fijar Siguiente Escolta"
 
 #: src/input.c:84
 msgid "Cycles through your escorts."
-msgstr ""
+msgstr "Ciclara través de tus escoltas."
 
 #: src/input.c:85
 msgid "Target Previous Escort"
-msgstr ""
+msgstr "Fijar Anterior Escolta"
 
 #: src/input.c:85
 msgid "Cycles backwards through your escorts."
-msgstr ""
+msgstr "Cicla hacia atrás a través de tus escoltas."
 
 #: src/input.c:86
 msgid "Escort Attack Command"
-msgstr ""
+msgstr "Orden a Escolta Atacar"
 
 #: src/input.c:86
 msgid "Orders escorts to attack your target."
-msgstr ""
+msgstr "Ordena a la escolta a atacar a tu objetivo."
 
 #: src/input.c:87
 msgid "Escort Hold Command"
-msgstr ""
+msgstr "Orden a Escolta Mantener"
 
 #: src/input.c:87
 msgid "Orders escorts to hold their formation."
-msgstr ""
+msgstr "Ordena a la escolta a mantener a tu objetivo."
 
 #: src/input.c:88
 msgid "Escort Return Command"
-msgstr ""
+msgstr "Ordena a Escolta Retornar"
 
 #: src/input.c:88
 msgid "Orders escorts to return to your ship hangars."
-msgstr ""
+msgstr "Ordena a la escolta a retornar a tus hangares ."
 
 #: src/input.c:89
 msgid "Escort Clear Commands"
-msgstr ""
+msgstr "Ordena a Escolta Limpiar"
 
 #: src/input.c:89
 msgid "Clears your escorts of commands."
-msgstr ""
+msgstr "Limpia las ordenes de tu escolta."
 
 #. Space Navigation
 #: src/input.c:91
 msgid "Autonavigation On"
-msgstr ""
+msgstr "Autonavegación Encendido"
 
 #: src/input.c:91
 msgid "Initializes the autonavigation system."
-msgstr ""
+msgstr "Inicializa el sistema de autonavegación."
 
 #: src/input.c:92
 msgid "Target Planet"
@@ -96455,419 +96455,430 @@ msgstr ""
 
 #: src/input.c:94
 msgid "Target Jumpgate"
-msgstr ""
+msgstr "Fijar Puerta de Salto"
 
 #: src/input.c:94
 msgid "Cycles through jump points."
-msgstr ""
+msgstr "Cicla a través de puntos de salto."
 
 #. create the window.
 #: src/input.c:95 src/map.c:257 src/outfit.c:899
 msgid "Star Map"
-msgstr ""
+msgstr "Mapa Estelar"
 
 #: src/input.c:95
 msgid "Opens the star map."
-msgstr ""
+msgstr "Abre el mapa estelar."
 
 #: src/input.c:96
 msgid "Initiate Jump"
-msgstr ""
+msgstr "Iniciar Salto"
 
 #: src/input.c:96
 msgid "Attempts to jump via a jump point."
-msgstr ""
+msgstr "Intenta saltar via punto de salto."
 
 #: src/input.c:97
 msgid "Overlay Map"
-msgstr ""
+msgstr "Mapa Superpuesto"
 
 #: src/input.c:97
 msgid "Opens the in-system overlay map."
-msgstr ""
+msgstr "Abre el mapa superpuerto del sistema."
 
 #: src/input.c:98
 msgid "Mouse Flight"
-msgstr ""
+msgstr "Vuelo de Ratón"
 
 #: src/input.c:98
 msgid "Toggles mouse flying."
-msgstr ""
+msgstr "Alterna el vuelo con el ratón."
 
 #: src/input.c:99
 msgid "Active Cooldown"
-msgstr ""
+msgstr "Activar Enfriamiento"
 
 #: src/input.c:99
 msgid "Begins active cooldown."
-msgstr ""
+msgstr "Empieza activar el enfriamiento."
 
 #. Communication
 #: src/input.c:101
 msgid "Log Scroll Up"
-msgstr ""
+msgstr "Desplazar Registro Arriba"
 
 #: src/input.c:101
 msgid "Scrolls the log upwards."
-msgstr ""
+msgstr "Desplaza el registro hacia arriba."
 
 #: src/input.c:102
 msgid "Log Scroll Down"
-msgstr ""
+msgstr "Desplaza Registro Abajo"
 
 #: src/input.c:102
 msgid "Scrolls the log downwards."
-msgstr ""
+msgstr "Desplaza el registro hacia abajo."
 
 #: src/input.c:103
 msgid "Hail Target"
-msgstr ""
+msgstr "Llamar a Objetivo"
 
 #: src/input.c:103
 msgid "Attempts to initialize communication with the targeted ship."
-msgstr ""
+msgstr "Intenta iniciar una comunicación con la nave objetivo."
 
 #: src/input.c:104
 msgid "Autohail"
-msgstr ""
+msgstr "Autollamada"
 
 #: src/input.c:104
 msgid "Automatically initialize communication with a ship that is hailing you."
 msgstr ""
+"Automaticamente inicia una comunicación con una nave que te esta llamando."
 
 #. Misc.
 #: src/input.c:106
 msgid "Radar Zoom In"
-msgstr ""
+msgstr "Ampliar Radar"
 
 #: src/input.c:106
 msgid "Zooms in on the radar."
-msgstr ""
+msgstr "Amplia el radar."
 
 #: src/input.c:107
 msgid "Radar Zoom Out"
-msgstr ""
+msgstr "Alejar Radar"
 
 #: src/input.c:107
 msgid "Zooms out on the radar."
-msgstr ""
+msgstr "Aleja el radar."
 
 #: src/input.c:108
 msgid "Screenshot"
-msgstr ""
+msgstr "Captura de pantalla"
 
 #: src/input.c:108
 msgid "Takes a screenshot."
-msgstr ""
+msgstr "Toma una captura de pantalla."
 
 #: src/input.c:109
 msgid "Toggle Fullscreen"
-msgstr ""
+msgstr "Alternar Pantalla Completa"
 
 #: src/input.c:109
 msgid "Toggles between windowed and fullscreen mode."
-msgstr ""
+msgstr "Alterna entre modo ventana y pantalla completa."
 
 #: src/input.c:110
 msgid "Pause"
-msgstr ""
+msgstr "Pausar"
 
 #: src/input.c:110
 msgid "Pauses the game."
-msgstr ""
+msgstr "Pausa el juego."
 
 #: src/input.c:111
 msgid "Toggle Speed"
-msgstr ""
+msgstr "Alternar Velocidad"
 
 #: src/input.c:111
 msgid "Toggles speed modifier."
-msgstr ""
+msgstr "Alterna el modificador de velocidad."
 
 #: src/input.c:112
 msgid "Small Menu"
-msgstr ""
+msgstr "Menú Pequeño"
 
 #: src/input.c:112
 msgid "Opens the small in-game menu."
-msgstr ""
+msgstr "Abre el menú pequeño del juego."
 
 #: src/input.c:113
 msgid "Information Menu"
-msgstr ""
+msgstr "Menú de Información"
 
 #: src/input.c:113
 msgid "Opens the information menu."
-msgstr ""
+msgstr "Abre el menú de información."
 
 #: src/input.c:114
 msgid "Opens the Lua console."
-msgstr ""
+msgstr "Abre la consola Lua."
 
 #: src/input.c:115
 msgid "Switch Tab 1"
-msgstr ""
+msgstr "Cambiar a Pestaña 1"
 
 #: src/input.c:115
 msgid "Switches to tab 1."
-msgstr ""
+msgstr "Cambia a la pestaña 1."
 
 #: src/input.c:116
 msgid "Switch Tab 2"
-msgstr ""
+msgstr "Cambiar a Pestaña 2"
 
 #: src/input.c:116
 msgid "Switches to tab 2."
-msgstr ""
+msgstr "Cambia a la pestaña 2."
 
 #: src/input.c:117
 msgid "Switch Tab 3"
-msgstr ""
+msgstr "Cambiar a Pestaña 3"
 
 #: src/input.c:117
 msgid "Switches to tab 3."
-msgstr ""
+msgstr "Cambia a la pestaña 3."
 
 #: src/input.c:118
 msgid "Switch Tab 4"
-msgstr ""
+msgstr "Cambiar a Pestaña 4"
 
 #: src/input.c:118
 msgid "Switches to tab 4."
-msgstr ""
+msgstr "Cambia a la pestaña 4."
 
 #: src/input.c:119
 msgid "Switch Tab 5"
-msgstr ""
+msgstr "Cambiar a Pestaña 5"
 
 #: src/input.c:119
 msgid "Switches to tab 5."
-msgstr ""
+msgstr "Cambia a la pestaña 5."
 
 #: src/input.c:120
 msgid "Switch Tab 6"
-msgstr ""
+msgstr "Cambiar a Pestaña 6"
 
 #: src/input.c:120
 msgid "Switches to tab 6."
-msgstr ""
+msgstr "Cambia a la pestaña 6."
 
 #: src/input.c:121
 msgid "Switch Tab 7"
-msgstr ""
+msgstr "Cambiar a Pestaña 7"
 
 #: src/input.c:121
 msgid "Switches to tab 7."
-msgstr ""
+msgstr "Cambia a la pestaña 7."
 
 #: src/input.c:122
 msgid "Switch Tab 8"
-msgstr ""
+msgstr "Cambiar a Pestaña 8"
 
 #: src/input.c:122
 msgid "Switches to tab 8."
-msgstr ""
+msgstr "Cambia a la pestaña 8."
 
 #: src/input.c:123
 msgid "Switch Tab 9"
-msgstr ""
+msgstr "Cambiar a Pestaña 9"
 
 #: src/input.c:123
 msgid "Switches to tab 9."
-msgstr ""
+msgstr "Cambia a la pestaña 9."
 
 #: src/input.c:124
 msgid "Switch Tab 0"
-msgstr ""
+msgstr "Cambiar a Pestaña 0"
 
 #: src/input.c:124
 msgid "Switches to tab 0."
-msgstr ""
+msgstr "Cambia a la pestaña 0."
 
 #: src/input.c:126
 msgid "Paste from the operating system's clipboard."
-msgstr ""
+msgstr "Pega desde el portapapeles del sistema operativo."
 
 #: src/input.c:401
 #, c-format
 msgid "Keyname '%s' doesn't match any key."
-msgstr ""
+msgstr "El nombre de la clave '%s' no coincide con ninguna tecla."
 
 #: src/input.c:425
 #, c-format
 msgid "Unable to set keybinding '%s', that command doesn't exist"
 msgstr ""
+"No se ha podido establecer la combinación de teclas '%s', ese comando no "
+"existe"
 
 #: src/input.c:447
 #, c-format
 msgid "Unable to get keybinding '%s', that command doesn't exist"
 msgstr ""
+"No se ha podido establecer la combinación de teclas '%s', ese comando no "
+"existe"
 
 #: src/input.c:468 src/options.c:737
 #, c-format
 msgid "Not bound"
-msgstr ""
+msgstr "No está configurado"
 
 #: src/input.c:486
 #, c-format
 msgid "joy button %d"
-msgstr ""
+msgstr "botón de joystick %d"
 
 #: src/input.c:490
 #, c-format
 msgid "joy hat %d up"
-msgstr ""
+msgstr "palanca de joystick arriba %d"
 
 #: src/input.c:494
 #, c-format
 msgid "joy hat %d down"
-msgstr ""
+msgstr "palanca de joystick abajo %d"
 
 #: src/input.c:498
 #, c-format
 msgid "joy hat %d left"
-msgstr ""
+msgstr "palanca de joystick izquierda %d"
 
 #: src/input.c:502
 #, c-format
 msgid "joy hat %d right"
-msgstr ""
+msgstr "palanca de joystick derecha %d"
 
 #: src/input.c:506
 #, c-format
 msgid "joy axis %d-"
-msgstr ""
+msgstr "eje de joystick %d-"
 
 #: src/input.c:510
 #, c-format
 msgid "joy axis %d+"
-msgstr ""
+msgstr "eje de joystick %d+"
 
 #: src/input.c:525
 msgid "Ctrl"
-msgstr ""
+msgstr "Ctrl"
 
 #: src/input.c:526
 msgid "Shift"
-msgstr ""
+msgstr "Shift"
 
 #: src/input.c:527
 msgid "Alt"
-msgstr ""
+msgstr "Alt"
 
 #: src/input.c:528
 msgid "Meta"
-msgstr ""
+msgstr "Meta"
 
 #: src/input.c:529
 msgid "Any"
-msgstr ""
+msgstr "Cualquiera"
 
 #: src/input.c:530 src/opengl_tex.c:644
 msgid "unknown"
-msgstr ""
+msgstr "desconocida"
 
 #: src/input.c:592
 #, c-format
 msgid "Unable to get keybinding description '%s', that command doesn't exist"
 msgstr ""
+"No se ha podido obtener la descripción de la combinación de teclas '%s', ese "
+"comando no existe"
 
 #. Scrolling is happening faster than fading...
 #: src/intro.c:189
 msgid "Intro scrolling too fast!"
-msgstr ""
+msgstr "¡La introducción se desplaza demasiado rápido!"
 
 #: src/intro.c:368
 msgid "Tried to fade out without an image."
-msgstr ""
+msgstr "Intento de desvanecimiento sin una imagen."
 
 #: src/joystick.c:46
 #, c-format
 msgid "Joystick '%s' not found, using default joystick '%s'"
-msgstr ""
+msgstr "Joystick '%s' no encontrado, usando joystick por defecto '%s'"
 
 #: src/joystick.c:63
 #, c-format
 msgid "Joystick of index number %d does not exist, switching to default 0"
 msgstr ""
+"El joystick del número de índice %d no existe, cambiando a 0 por defecto"
 
 #: src/joystick.c:78
 #, c-format
 msgid "Error opening joystick %d [%s]"
-msgstr ""
+msgstr "Error al abrir el joystick %d [%s]"
 
 #: src/joystick.c:81
 #, c-format
 msgid "Using joystick %d - %s"
-msgstr ""
+msgstr "Usando el joystick %d - %s"
 
 #: src/joystick.c:82
 #, c-format
 msgid "   with %d axes, %d buttons, %d balls and %d hats"
-msgstr ""
+msgstr "   con %d ejes, %d botones, %d bolas y %d palancas"
 
 #: src/joystick.c:112
 #, c-format
 msgid "Unable to initialize force feedback: %s"
-msgstr ""
+msgstr "No se pudo inicializar la retroalimentación de fuerza: %s"
 
 #: src/joystick.c:124
 msgid "   force feedback enabled"
-msgstr ""
+msgstr "   retroalimentación de fuerza habilitada"
 
 #: src/joystick.c:135
 #, c-format
 msgid "%d joystick detected"
 msgid_plural "%d joysticks detected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d joystick detectado"
+msgstr[1] "%d joystick detectados"
 
 #: src/joystick.c:152
 msgid "Unable to initialize the joystick subsystem"
-msgstr ""
+msgstr "No se ha podido inicializar el subsistema del joystick"
 
 #. Already onboard.
 #: src/land.c:180
 #, c-format
 msgid "You're already onboard the %s."
-msgstr ""
+msgstr "Ya estás a bordo del %s."
 
 #: src/land.c:186
 #, c-format
 msgid "You have %d tonne more cargo than the new ship can hold."
 msgid_plural "You have %d tonnes more cargo than the new ship can hold."
-msgstr[0] ""
+msgstr[0] "Tienes %d tonelada más de carga de la que puede contener la nueva nave."
 msgstr[1] ""
+"Tienes %d toneladas más de carga de la que puede contener la nueva nave."
 
 #: src/land.c:194
 msgid "You have deployed fighters."
-msgstr ""
+msgstr "Ha desplegado cazas."
 
 #: src/land.c:300
 msgid "Approach"
-msgstr ""
+msgstr "Acercarse"
 
 #: src/land.c:370 src/land.c:376
 msgid "News"
-msgstr ""
+msgstr "Noticias"
 
 #: src/land.c:580 src/land.c:649
 msgid "Accept Mission"
-msgstr ""
+msgstr "Aceptar Misión"
 
 #: src/land.c:587
 msgid ""
 "Date:\n"
 "Free Space:"
 msgstr ""
+"Fecha:\n"
+"Espacio Libre:"
 
 #: src/land.c:595 src/land.c:743
 msgid "#nReward:#0 None"
-msgstr ""
+msgstr "#nRecompensa:#0 Ninguna"
 
 #: src/land.c:650
 msgid "Are you sure you want to accept this mission?"
-msgstr ""
+msgstr "¿Estás seguro de que quieres aceptar esta misión?"
 
 #: src/land.c:736
 #, c-format
@@ -96878,77 +96889,81 @@ msgid_plural ""
 "%s\n"
 "%d Tonnes"
 msgstr[0] ""
+"%s\n"
+"%d Tonelada"
 msgstr[1] ""
+"%s\n"
+"%d Toneladas"
 
 #: src/land.c:745
 msgid "There are no missions available here."
-msgstr ""
+msgstr "No hay misiones disponibles aquí."
 
 #: src/land.c:754
 #, c-format
 msgid "#nReward:#0 %s"
-msgstr ""
+msgstr "#nRecompensa:#0 %s"
 
 #: src/land.c:798 src/land.c:853
 #, c-format
 msgid "Outfit '%s' does not exist!"
-msgstr ""
+msgstr "¡El equipo '%s' no existe!"
 
 #: src/land.c:831
 #, c-format
 msgid "%s (%s-class)"
-msgstr ""
+msgstr "%s (clase-%s)"
 
 #: src/land.c:835
 #, c-format
 msgid "roughly %s"
-msgstr ""
+msgstr "aproximadamente %s"
 
 #: src/land.c:842 src/map.c:695 src/map.c:702 src/map.c:726 src/map.c:741
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #: src/land.c:864
 #, c-format
 msgid "Buy Local Map (%s)"
-msgstr ""
+msgstr "Comprar Mapa Local (%s)"
 
 #: src/land.c:946
 msgid "Landing Main"
-msgstr ""
+msgstr "Aterrizaje Principal"
 
 #: src/land.c:960 src/map_find.c:1042 src/space.c:172
 msgid "Outfits"
-msgstr ""
+msgstr "Equipos"
 
 #: src/land.c:965 src/space.c:173
 msgid "Shipyard"
-msgstr ""
+msgstr "Astillero"
 
 #: src/land.c:976 src/space.c:171
 msgid "Commodity"
-msgstr ""
+msgstr "Mercancias"
 
 #. Player stats.
 #: src/land.c:1246
 msgid "Stationed at:"
-msgstr ""
+msgstr "Estacionado en:"
 
 #: src/land.c:1249
 msgid "Population:"
-msgstr ""
+msgstr "Población:"
 
 #: src/land.c:1250 src/land_trade.c:89
 msgid "Free Space:"
-msgstr ""
+msgstr "Espacio Libre:"
 
 #: src/land.c:1272
 msgid "No refueling services."
-msgstr ""
+msgstr "Sin serviciose de repostaje."
 
 #: src/land.c:1382
 msgid "Ship not fit for flight"
-msgstr ""
+msgstr "Nave no apta para vuelo"
 
 #. Only save when the player shouldn't get stranded.
 #. must be before cleaning up planet
@@ -96957,176 +96972,178 @@ msgid ""
 "Failed to save game! You should exit and check the log to see what happened "
 "and then file a bug report!"
 msgstr ""
+"¡Fallo al guardar la partida! ¡Deberías salir y comprobar el registro para "
+"ver qué ha pasado y luego presentar un reporte de error!"
 
 #: src/land.c:1444
 #, c-format
 msgid "#oTaking off from %s on %s."
-msgstr ""
+msgstr "#oDespegalhs de %s en %s."
 
 #. error has occurred
 #: src/land.c:1511
 #, c-format
 msgid "Rescue: 'rescue' : '%s'"
-msgstr ""
+msgstr "Rescate: 'rescate': '%s'"
 
 #: src/land_outfits.c:163 src/land_trade.c:69
 msgid "Sell"
-msgstr ""
+msgstr "Vender"
 
 #: src/land_outfits.c:166 src/land_shipyard.c:97 src/land_trade.c:67
 msgid "Buy"
-msgstr ""
+msgstr "Comprar"
 
 #: src/land_outfits.c:169
 msgid "Find Outfits"
-msgstr ""
+msgstr "Encontrar Equipos"
 
 #: src/land_outfits.c:185 src/map_find.c:661 src/map_system.c:635
 msgid "Owned:"
-msgstr ""
+msgstr "En propiedad:"
 
 #: src/land_outfits.c:187 src/land_shipyard.c:297 src/map_find.c:663
 #: src/map_system.c:637 src/map_system.c:684
 msgid "Price:"
-msgstr ""
+msgstr "Precio:"
 
 #: src/land_outfits.c:189 src/land_shipyard.c:301 src/map_find.c:665
 #: src/map_system.c:685
 msgid "License:"
-msgstr ""
+msgstr "Licencia:"
 
 #: src/land_outfits.c:261
 msgid "Other"
-msgstr ""
+msgstr "Otro"
 
 #: src/land_outfits.c:554
 msgid "#oUnique#0\n"
-msgstr ""
+msgstr "#oÚnico#0\n"
 
 #: src/land_outfits.c:556
 msgid "#rOnly 1 of type per ship#0\n"
-msgstr ""
+msgstr "#rSolo 1 de este tipo por nave#0\n"
 
 #: src/land_outfits.c:558
 #, c-format
 msgid "#o%s#0\n"
-msgstr ""
+msgstr "#o%s#0\n"
 
 #: src/land_outfits.c:645
 msgid "You can only own one of this outfit."
-msgstr ""
+msgstr "Solo puedes poseer un equipo de este tipo."
 
 #: src/land_outfits.c:652
 msgid "You already know of everything this map contains."
-msgstr ""
+msgstr "Ya conoces todo la información que este mapa contiene."
 
 #: src/land_outfits.c:657
 msgid "You already own this GUI."
-msgstr ""
+msgstr "Ya posees esta GUI."
 
 #: src/land_outfits.c:662
 msgid "You already have this license."
-msgstr ""
+msgstr "Ya tienes esta licencia."
 
 #: src/land_outfits.c:668 src/land_shipyard.c:435 src/land_shipyard.c:503
 #: src/land_trade.c:230
 #, c-format
 msgid "You need %s more."
-msgstr ""
+msgstr "Necesitas %s más."
 
 #: src/land_outfits.c:674
 #, c-format
 msgid "You need the '%s' license to buy this outfit."
-msgstr ""
+msgstr "Necesitas la licencia '%s' para comprar este equipo."
 
 #: src/land_outfits.c:748
 msgid "You can't sell a unique outfit."
-msgstr ""
+msgstr "No puedes vender un equipo único."
 
 #: src/land_outfits.c:754
 msgid "You can't sell a map."
-msgstr ""
+msgstr "No puedes vender un mapa."
 
 #: src/land_outfits.c:760
 msgid "You can't sell a GUI."
-msgstr ""
+msgstr "No puedes vender una GUI."
 
 #: src/land_outfits.c:766
 msgid "You can't sell a license."
-msgstr ""
+msgstr "No puedes vender una licencia."
 
 #: src/land_outfits.c:772 src/land_trade.c:245
 msgid "You can't sell something you don't have!"
-msgstr ""
+msgstr "¡No puedes vender algo que no tienes!"
 
 #: src/land_shipyard.c:94
 msgid "Trade-In"
-msgstr ""
+msgstr "Intercambiar"
 
 #: src/land_shipyard.c:100
 msgid "Find Ships"
-msgstr ""
+msgstr "Encontrar Naves"
 
 #: src/land_shipyard.c:225 src/map_system.c:659
 msgid "Fabricator:"
-msgstr ""
+msgstr "Fabricador:"
 
 #. Weapons & Manoeuvrability
 #: src/land_shipyard.c:230
 msgid "Base Properties"
-msgstr ""
+msgstr "Propiedades Base"
 
 #. Weapons & Manoeuvrability
 #: src/land_shipyard.c:233 src/map_system.c:662
 msgid "CPU:"
-msgstr ""
+msgstr "CPU:"
 
 #: src/land_shipyard.c:234 src/map_system.c:662
 msgid "teraflop"
 msgid_plural "teraflops"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "teraflop"
+msgstr[1] "teraflops"
 
 #: src/land_shipyard.c:250 src/map_system.c:667
 #, c-format
 msgid "%.0f m/s"
-msgstr ""
+msgstr "%.0f m/s"
 
 #: src/land_shipyard.c:265 src/map_system.c:673
 #, c-format
 msgid "%.0f%% damage"
-msgstr ""
+msgstr "%.0f%% daño"
 
 #: src/land_shipyard.c:270 src/land_shipyard.c:275 src/land_shipyard.c:280
 #: src/map_system.c:675 src/map_system.c:677 src/map_system.c:679
 #, c-format
 msgid "%.0f MJ (%.1f MW)"
-msgstr ""
+msgstr "%.0f MJ (%.1f MW)"
 
 #: src/land_shipyard.c:293 src/map_system.c:682
 msgid "Fuel Use:"
-msgstr ""
+msgstr "Uso de Combustible:"
 
 #: src/land_shipyard.c:392 src/land_shipyard.c:543 src/land_shipyard.c:549
 #: src/land_shipyard.c:555
 msgid "Are you sure?"
-msgstr ""
+msgstr "¿Estás seguro?"
 
 #. confirm
 #: src/land_shipyard.c:393
 #, c-format
 msgid "Do you really want to spend %s on a new ship?"
-msgstr ""
+msgstr "¿Quieres realmente gastar %s en una nueva nave?"
 
 #: src/land_shipyard.c:429 src/land_shipyard.c:496
 #, c-format
 msgid "You need the '%s' license to buy this ship."
-msgstr ""
+msgstr "Necesitas la licencia '%s' para comprar esta nave."
 
 #. Already on-board.
 #: src/land_shipyard.c:449
 msgid "You can't sell the ship you're piloting!"
-msgstr ""
+msgstr "¡No puedes vender la nave que estas pilotando!"
 
 #: src/land_shipyard.c:468
 #, c-format
@@ -97138,7 +97155,7 @@ msgstr[1] ""
 #. Escorts are in space.
 #: src/land_shipyard.c:475
 msgid "You can't strand your fighters in space."
-msgstr ""
+msgstr "No puedes abandonar a tus cazas en el espacio."
 
 #. confirm
 #: src/land_shipyard.c:544
@@ -97147,6 +97164,9 @@ msgid ""
 "Your %s is worth %s, exactly as much as the new ship, so no credits need be "
 "exchanged. Are you sure you want to trade your ship in?"
 msgstr ""
+"Tu %s vale %s, exactamente lo mismo que la nueva nave, así que no es "
+"necesario intercambiar créditos. ¿Estás seguro de que quieres intercambiar "
+"tu nave?"
 
 #. confirm
 #: src/land_shipyard.c:550
@@ -97155,6 +97175,8 @@ msgid ""
 "Your %s is worth %s, more than the new ship. For your ship, you will get the "
 "new %s and %s. Are you sure you want to trade your ship in?"
 msgstr ""
+"Tu %s vale %s, más que la nueva nave. Por tu nave, obtendrás los nuevos %s y "
+"%s. ¿Estás seguro de que quieres cambiar tu nave?"
 
 #. confirm
 #: src/land_shipyard.c:556
@@ -97163,69 +97185,71 @@ msgid ""
 "Your %s is worth %s, so the new ship will cost %s. Are you sure you want to "
 "trade your ship in?"
 msgstr ""
+"Tu %s vale %s, así que la nueva nave costará %s. ¿Estás seguro de que "
+"quieres cambiar tu nave?"
 
 #: src/land_shipyard.c:595
 msgid "Slots:"
-msgstr ""
+msgstr "Ranuras:"
 
 #: src/land_trade.c:86
 msgid "You have:"
-msgstr ""
+msgstr "Tienes:"
 
 #: src/land_trade.c:87
 msgid "Purchased for:"
-msgstr ""
+msgstr "Comprado por:"
 
 #: src/land_trade.c:88
 msgid "Market Price:"
-msgstr ""
+msgstr "Precio de Mercado:"
 
 #: src/land_trade.c:91
 msgid "Average price here:"
-msgstr ""
+msgstr "Precio medio aquí:"
 
 #: src/land_trade.c:92
 msgid "Average price all:"
-msgstr ""
+msgstr "Precio medio de todos:"
 
 #: src/land_trade.c:168
 msgid "No commodities available."
-msgstr ""
+msgstr "Mercancias no disponibles."
 
 #: src/land_trade.c:180 src/land_trade.c:183
 #, c-format
 msgid "%.1f ¤"
-msgstr ""
+msgstr "%.1f ¤"
 
 #: src/land_trade.c:194
 #, c-format
 msgid "%s/t"
-msgstr ""
+msgstr "%s/t"
 
 #: src/land_trade.c:198 src/land_trade.c:200 src/map_system.c:723
 #: src/map_system.c:725
 #, c-format
 msgid "%s/t ± %s/t"
-msgstr ""
+msgstr "%s/t ± %s/t"
 
 #: src/land_trade.c:234
 msgid "No cargo space available!"
-msgstr ""
+msgstr "¡No hay espacio de carga disponible!"
 
 #: src/load.c:107
 #, c-format
 msgid "Unable to parse save path '%s'."
-msgstr ""
+msgstr "No se ha podido analizar la ruta de guardado '%s'."
 
 #: src/load.c:112
 #, c-format
 msgid "Unable to get child node of save '%s'."
-msgstr ""
+msgstr "No se ha podido obtener el nodo hijo de la memoria '%s'."
 
 #: src/load.c:262 src/ndata.c:268
 #, c-format
 msgid "PhysicsFS: Cannot stat %s: %s"
-msgstr ""
+msgstr "PhysicsFS: No se puede establecer la estadística %s: %s"
 
 #. window
 #: src/load.c:330 src/menu.c:223
@@ -97239,7 +97263,7 @@ msgstr ""
 
 #: src/load.c:415
 msgid "Version:"
-msgstr ""
+msgstr "Versión:"
 
 #: src/load.c:419
 msgid "Planet:"
@@ -97247,15 +97271,15 @@ msgstr ""
 
 #: src/load.c:423
 msgid "Ship Name:"
-msgstr ""
+msgstr "Nombre de Nave:"
 
 #: src/load.c:425
 msgid "Ship Model:"
-msgstr ""
+msgstr "Modelo de Nave:"
 
 #: src/load.c:453
 msgid "Save game version mismatch"
-msgstr ""
+msgstr "La versión del juego guardado no coincide"
 
 #: src/load.c:454
 #, c-format
@@ -97265,66 +97289,70 @@ msgid ""
 "   Naev version: %s\n"
 "Are you sure you want to load this game? It may lose data."
 msgstr ""
+"La versión del juego guardado '%s' no coincide con la versión de Naev:\n"
+"   Guardar versión: #r%s#0\n"
+"   Versión Naev: %s\n"
+"¿Estás seguro de que quieres cargar este juego? Puedes perder datos."
 
 #: src/load.c:493
 msgid "Permanently Delete?"
-msgstr ""
+msgstr "¿Borrar permanentemente?"
 
 #: src/load.c:494
 #, c-format
 msgid "Are you sure you want to permanently delete '%s'?"
-msgstr ""
+msgstr "¿Estás seguro de que quieres eliminar permanentemente '%s'?"
 
 #: src/load.c:560 src/load.c:625
 msgid "Saved game file seems to have been deleted."
-msgstr ""
+msgstr "El archivo de la partida guardada parece haber sido borrado."
 
 #: src/load.c:583 src/load.c:707
 #, c-format
 msgid "Saved game '%s' invalid!"
-msgstr ""
+msgstr "¡La partida guardada '%s' no es válida!"
 
 #. Welcome message - must be before space_init.
 #: src/load.c:642 src/player.c:337
 #, c-format
 msgid "#gWelcome to %s!"
-msgstr ""
+msgstr "#g¡Bienvenido a %s!"
 
 #: src/load.c:655
 msgid "Old version detected. Sanitizing ships for slots"
-msgstr ""
+msgstr "Versión antigua detectada. Saneamiento de naves para ranuras"
 
 #: src/log.c:135
 msgid "Unable to redirect stdout to file"
-msgstr ""
+msgstr "Incapaz de redirigir stdout a archivo"
 
 #: src/log.c:139
 msgid "Unable to redirect stderr to file"
-msgstr ""
+msgstr "Incapaz de redirigir stderr a archivo"
 
 #: src/log.c:278
 #, c-format
 msgid "An error occurred while buffering %s!"
-msgstr ""
+msgstr "¡Un error se produjo mientras se almacenaba en buffer %s!"
 
 #: src/log.h:17
 #, c-format
 msgid "WARNING %s:%d [%s]: "
-msgstr ""
+msgstr "ADVERTENCIA %s:%d [%s]: "
 
 #: src/log.h:19
 #, c-format
 msgid "Warning: [%s] "
-msgstr ""
+msgstr "Advertencia: [%s] "
 
 #: src/log.h:21
 #, c-format
 msgid "ERROR %s:%d [%s]: "
-msgstr ""
+msgstr "ERROR %s:%d [%s]: "
 
 #: src/map.c:307
 msgid "Standing:"
-msgstr ""
+msgstr "Posición:"
 
 #: src/map.c:321
 msgid "Planets:"
@@ -97332,16 +97360,16 @@ msgstr ""
 
 #: src/map.c:328
 msgid "Services:"
-msgstr ""
+msgstr "Servicios:"
 
 #. Commodity button
 #: src/map.c:336
 msgid "Mode"
-msgstr ""
+msgstr "Modo"
 
 #: src/map.c:342
 msgid "Autonav"
-msgstr ""
+msgstr "Autonav"
 
 #: src/map.c:477
 #, c-format
@@ -97359,15 +97387,15 @@ msgstr ""
 #: src/map.c:559
 #, c-format
 msgid "Multiple"
-msgstr ""
+msgstr "Múltiples"
 
 #: src/map.c:706
 msgid "Dense "
-msgstr ""
+msgstr "Denso "
 
 #: src/map.c:708
 msgid "Light "
-msgstr ""
+msgstr "Ligero "
 
 #: src/map.c:715
 #, c-format
@@ -97387,7 +97415,7 @@ msgstr ""
 #: src/map.c:721
 #, c-format
 msgid "%sNebula"
-msgstr ""
+msgstr "Nebulosa%s"
 
 #: src/map.c:730
 #, c-format
@@ -97418,28 +97446,30 @@ msgid ""
 "No price info for\n"
 "%s here"
 msgstr ""
+"No hay información de precios para\n"
+"%s aquí"
 
 #: src/map.c:1853
 msgid "Travel (Default)"
-msgstr ""
+msgstr "Viaje (Por defecto)"
 
 #: src/map.c:1856
 #, c-format
 msgid "%s: Cost"
-msgstr ""
+msgstr "%s: Coste"
 
 #: src/map.c:1857
 #, c-format
 msgid "%s: Trade"
-msgstr ""
+msgstr "%s: Comercio"
 
 #: src/map.c:1912
 msgid "Normal View"
-msgstr ""
+msgstr "Vista Normal"
 
 #: src/map.c:1912
 msgid "Minimal View"
-msgstr ""
+msgstr "Vista Mínima"
 
 #: src/map.c:2696
 #, c-format
@@ -97455,65 +97485,65 @@ msgstr ""
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Cargado el decorador de mapa %d"
+msgstr[1] "Cargado los decoradores de mapa %d"
 
 #: src/map.c:2746
 #, c-format
 msgid "Could not load map decorator texture '%s'."
-msgstr ""
+msgstr "No se ha podido cargar la textura del decorador del mapa '%s'."
 
 #: src/map.c:2751
 #, c-format
 msgid "Map decorator has unknown node '%s'."
-msgstr ""
+msgstr "El decorador del mapa tiene un nodo desconocido '%s'."
 
 #. Create window.
 #: src/map_find.c:224 src/map_find.c:766 src/map_find.c:887
 msgid "Search Results"
-msgstr ""
+msgstr "Resultados de Búsqueda"
 
 #: src/map_find.c:238
 msgid "Select"
-msgstr ""
+msgstr "Seleccionar"
 
 #: src/map_find.c:321
 msgid "Jump to first system not found!"
-msgstr ""
+msgstr "¡Salto al primer sistema no encontrado!"
 
 #: src/map_find.c:357
 msgid "Matching jumps not found, something is up..."
-msgstr ""
+msgstr "No se han encontrado saltos que coincidan, algo pasa..."
 
 #: src/map_find.c:417
 msgid "unknown route"
-msgstr ""
+msgstr "ruta desconocida"
 
 #: src/map_find.c:421
 #, c-format
 msgid "%d jump, %.0fk distance"
 msgid_plural "%d jumps, %.0fk distance"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d salto, %.0fk distancia"
+msgstr[1] "%d saltos, %.0fk distancia"
 
 #: src/map_find.c:430
 #, c-format
 msgid "#%c%s%s (%s, %s)"
-msgstr ""
+msgstr "#%c%s%s (%s, %s)"
 
 #: src/map_find.c:768
 #, c-format
 msgid "Search results for outfits matching '%s':"
-msgstr ""
+msgstr "Resultados de la búsqueda de equipos que coinciden con '%s':"
 
 #: src/map_find.c:888
 #, c-format
 msgid "Search results for ships matching '%s':"
-msgstr ""
+msgstr "Resultados de la búsqueda de naves que coinciden con '%s':"
 
 #: src/map_find.c:967
 msgid "System"
-msgstr ""
+msgstr "Sistema"
 
 #: src/map_find.c:971
 msgid "Planet"
@@ -97521,12 +97551,12 @@ msgstr ""
 
 #: src/map_find.c:975
 msgid "Outfit"
-msgstr ""
+msgstr "Equipo"
 
 #: src/map_find.c:985
 #, c-format
 msgid "%s matching '%s' not found!"
-msgstr ""
+msgstr "¡%s que coincide con '%s' no se encuentra!"
 
 #: src/map_find.c:1010
 msgid "Find..."
@@ -97534,11 +97564,11 @@ msgstr ""
 
 #: src/map_find.c:1019
 msgid "Enter keyword to search for:"
-msgstr ""
+msgstr "Introduzca la palabra clave a buscar:"
 
 #: src/map_find.c:1036
 msgid "Systems"
-msgstr ""
+msgstr "Sistemas"
 
 #: src/map_find.c:1039
 msgid "Planets"
@@ -97546,11 +97576,11 @@ msgstr ""
 
 #: src/map_find.c:1045
 msgid "Ships"
-msgstr ""
+msgstr "Naves"
 
 #: src/map_overlay.c:702
 msgid "TARGET"
-msgstr ""
+msgstr "OBJETIVO"
 
 #. create the window.
 #: src/map_system.c:194
@@ -97559,7 +97589,7 @@ msgstr ""
 
 #: src/map_system.c:205
 msgid "Buy commodity price info"
-msgstr ""
+msgstr "Comprar información sobre el precio de las mercancías"
 
 #: src/map_system.c:311
 #, c-format
@@ -97569,73 +97599,73 @@ msgstr ""
 #. no nebula or star images - probably due to nebula
 #: src/map_system.c:356 src/map_system.c:358
 msgid "Obscured by the nebula"
-msgstr ""
+msgstr "Oculto por la nebulosa"
 
 #: src/map_system.c:396
 #, c-format
 msgid "System: %s\n"
-msgstr ""
+msgstr "Sistema: %s\n"
 
 #. display sun information
 #: src/map_system.c:398
 #, c-format
 msgid "%d-star system\n"
 msgid_plural "%d-star system\n"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "sistema estelar-%d\n"
+msgstr[1] "sistemas estelares-%d\n"
 
 #: src/map_system.c:404
 msgid "Nebula: Volatile, "
-msgstr ""
+msgstr "Nebulosa: Volatil, "
 
 #: src/map_system.c:406
 msgid "Nebula: Dangerous, "
-msgstr ""
+msgstr "Nebulosa: Peligrosa, "
 
 #: src/map_system.c:408
 msgid "Nebula: Unstable, "
-msgstr ""
+msgstr "Nebulosa: Inestable, "
 
 #: src/map_system.c:410
 msgid "Nebula: Stable, "
-msgstr ""
+msgstr "Nebulosa: Estable, "
 
 #: src/map_system.c:414
 msgid "Dense\n"
-msgstr ""
+msgstr "Densa\n"
 
 #: src/map_system.c:416
 msgid "Light\n"
-msgstr ""
+msgstr "Ligera\n"
 
 #: src/map_system.c:418
 msgid "Medium\n"
-msgstr ""
+msgstr "Media\n"
 
 #: src/map_system.c:420
 msgid "Nebula: None\n"
-msgstr ""
+msgstr "Nebulosa: Ninguna\n"
 
 #: src/map_system.c:425
 msgid "Interference: Dense\n"
-msgstr ""
+msgstr "Interferencia: Densa\n"
 
 #: src/map_system.c:427
 msgid "Interference: Light\n"
-msgstr ""
+msgstr "Interferencia: Ligera\n"
 
 #: src/map_system.c:436
 #, c-format
 msgid "Asteroid field density: %.2g\n"
-msgstr ""
+msgstr "Densidad de campo de asteroides: %.2g\n"
 
 #: src/map_system.c:445
 msgid "Faction: Multiple\n"
-msgstr ""
+msgstr "Facción: Multiple\n"
 
 #: src/map_system.c:451
 msgid "Faction: N/A\n"
-msgstr ""
+msgstr "Facción: N/A\n"
 
 #. saw them all and all the same
 #: src/map_system.c:454
@@ -97644,19 +97674,21 @@ msgid ""
 "Faction: %s\n"
 "Standing: %s\n"
 msgstr ""
+"Facción: %s\n"
+"Posición: %s\n"
 
 #: src/map_system.c:481
 msgid "Presence: N/A\n"
-msgstr ""
+msgstr "Presencia: N/A\n"
 
 #. First jump
 #: src/map_system.c:490
 msgid "   Jump points to:\n"
-msgstr ""
+msgstr "   Puntos de salto a:\n"
 
 #: src/map_system.c:494
 msgid "     Unknown system\n"
-msgstr ""
+msgstr "     Sistema desconocido\n"
 
 #: src/map_system.c:511
 #, c-format
@@ -97667,64 +97699,64 @@ msgstr ""
 
 #: src/map_system.c:513
 msgid "No space port here\n"
-msgstr ""
+msgstr "No hay puerto espacial aquí\n"
 
 #: src/map_system.c:515
 msgid "You can land here\n"
-msgstr ""
+msgstr "Puedes aterrizar aquí\n"
 
 #: src/map_system.c:517
 msgid "Not advisable to land here\n"
-msgstr ""
+msgstr "No es aconsejable aterrizar aquí\n"
 
 #: src/map_system.c:519
 msgid "You cannot land here\n"
-msgstr ""
+msgstr "No puedes aterrizar aquí\n"
 
 #. Add a description
 #: src/map_system.c:521
 msgid "No description available"
-msgstr ""
+msgstr "No hay descripción disponible"
 
 #: src/map_system.c:530
 msgid "This system is landable"
-msgstr ""
+msgstr "Este sistema es aterrizable"
 
 #: src/map_system.c:530
 msgid "This system is not landable"
-msgstr ""
+msgstr "Este sistema no es aterrizable"
 
 #: src/map_system.c:531
 msgid "This system is inhabited"
-msgstr ""
+msgstr "Este sistema está habitado"
 
 #: src/map_system.c:531
 msgid "This system is not inhabited"
-msgstr ""
+msgstr "Este sistema no está habitado"
 
 #: src/map_system.c:532
 msgid "You can refuel here"
-msgstr ""
+msgstr "Puedes repostar aquí"
 
 #: src/map_system.c:532
 msgid "You cannot refuel here"
-msgstr ""
+msgstr "No puedes repostar aquí"
 
 #: src/map_system.c:533
 msgid "This system has a bar"
-msgstr ""
+msgstr "Este sistema tiene una bar"
 
 #: src/map_system.c:533
 msgid "This system does not have a bar"
-msgstr ""
+msgstr "Este sistema no tiene un bar"
 
 #: src/map_system.c:534
 msgid "This system offers missions"
-msgstr ""
+msgstr "Este sistema ofrece misiones"
 
 #: src/map_system.c:534
 msgid "This system does not offer missions"
-msgstr ""
+msgstr "Este sistema no ofrece misiones"
 
 #: src/map_system.c:535
 msgid "This system has a trade outlet"
@@ -99039,7 +99071,7 @@ msgstr ""
 #: src/nlua_var.c:195
 #, c-format
 msgid "Unknown var type '%s'"
-msgstr ""
+msgstr "Tipo de var desconocido '%s'"
 
 #: src/nopenal.c:56
 msgid "a bad name (ID) was passed to an OpenAL function"
@@ -100926,7 +100958,7 @@ msgstr ""
 
 #: src/player.c:257
 msgid "Overwrite"
-msgstr ""
+msgstr "Sobrescribir"
 
 #: src/player.c:258
 #, c-format
