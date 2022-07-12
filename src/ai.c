@@ -502,8 +502,6 @@ void ai_destroy( Pilot* p )
    if (p->ai == NULL)
       return;
 
-   nlua_env env = p->ai->env;
-
    /* Get rid of pilot's memory. */
    if (!pilot_isPlayer(p)) { /* Player is an exception as more than one ship shares pilot id. */
       luaL_unref( naevL, LUA_REGISTRYINDEX, p->lua_mem );
@@ -516,8 +514,8 @@ void ai_destroy( Pilot* p )
 
 static int ai_sort( const void *p1, const void *p2 )
 {
-   AI_Profile *ai1 = (AI_Profile*) p1;
-   AI_Profile *ai2 = (AI_Profile*) p2;
+   const AI_Profile *ai1 = (const AI_Profile*) p1;
+   const AI_Profile *ai2 = (const AI_Profile*) p2;
    return strcmp( ai1->name, ai2->name );
 }
 
