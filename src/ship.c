@@ -678,17 +678,6 @@ static int ship_parse( Ship *temp, const char *filename )
    if (temp->name == NULL)
       WARN( _("Ship in %s has invalid or no name"), SHIP_DATA_PATH );
 
-   /* Data that must be loaded first. */
-   node = parent->xmlChildrenNode;
-   do { /* load all the data */
-      xml_onlyNodes(node);
-      if (xml_isNode(node,"class")) {
-         xmlr_attr_strd( node, "display", temp->class_display );
-         temp->class = ship_classFromString( xml_get(node) );
-         continue;
-      }
-   } while (xml_nextNode(node));
-
    /* Default offsets for the engine. */
    temp->trail_emitters = NULL;
 
@@ -699,6 +688,11 @@ static int ship_parse( Ship *temp, const char *filename )
       /* Only handle nodes. */
       xml_onlyNodes(node);
 
+      if (xml_isNode(node,"class")) {
+         xmlr_attr_strd( node, "display", temp->class_display );
+         temp->class = ship_classFromString( xml_get(node) );
+         continue;
+      }
       if (xml_isNode(node,"GFX")) {
          /* Get base graphic name. */
          char *buf = xml_get(node);
@@ -798,10 +792,6 @@ static int ship_parse( Ship *temp, const char *filename )
          continue;
       }
       xmlr_strd(node,"base_type",temp->base_type);
-      if (xml_isNode(node,"class")) {
-         /* Already preemptively loaded, avoids warning. */
-         continue;
-      }
       xmlr_float(node,"time_mod",temp->dt_default);
       xmlr_long(node,"price",temp->price);
       xmlr_strd(node,"license",temp->license);
