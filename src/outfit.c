@@ -2611,7 +2611,6 @@ int outfit_mapParse (void)
 
       doc = xml_parsePhysFS( file );
       if (doc == NULL) {
-         WARN(_("%s file is invalid xml!"), file);
          free(file);
          continue;
       }

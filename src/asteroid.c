@@ -631,11 +631,10 @@ static int asttype_load (void)
 
    for (int i=0; i<array_size( asteroid_files ); i++) {
       if (ndata_matchExt( asteroid_files[i], "xml" )) {
-         int ret = asttype_parse( &array_grow(&asteroid_types), asteroid_files[i] );
-         if (ret < 0) {
-            int n = array_size(asteroid_types);
-            array_erase( &asteroid_types, &asteroid_types[n-1], &asteroid_types[n] );
-         }
+         AsteroidType at;
+         int ret = asttype_parse( &at, asteroid_files[i] );
+         if (ret == 0)
+            array_push_back( &asteroid_types, at );
       }
       free( asteroid_files[i] );
    }
@@ -653,11 +652,10 @@ static int asttype_load (void)
    asteroid_files = ndata_listRecursive( ASTEROID_GROUPS_DATA_PATH );
    for (int i=0; i<array_size( asteroid_files ); i++) {
       if (ndata_matchExt( asteroid_files[i], "xml" )) {
-         int ret = astgroup_parse( &array_grow(&asteroid_groups), asteroid_files[i] );
-         if (ret < 0) {
-            int n = array_size(asteroid_groups);
-            array_erase( &asteroid_groups, &asteroid_groups[n-1], &asteroid_groups[n] );
-         }
+         AsteroidTypeGroup atg;
+         int ret = astgroup_parse( &atg, asteroid_files[i] );
+         if (ret == 0)
+            array_push_back( &asteroid_groups, atg );
       }
       free( asteroid_files[i] );
    }

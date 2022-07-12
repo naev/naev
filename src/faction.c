@@ -1591,14 +1591,12 @@ int factions_load (void)
    /* Add the base factions. */
    for (int i=0; i<array_size(faction_files); i++) {
       if (ndata_matchExt( faction_files[i], "xml" )) {
-         f = &array_grow( &faction_stack );
-         int ret = faction_parse( f, faction_files[i] );
-         if (ret < 0) {
-            int n = array_size( faction_stack );
-            array_erase( &faction_stack, &faction_stack[n-1], &faction_stack[n] );
+         Faction nf;
+         int ret = faction_parse( &nf, faction_files[i] );
+         if (ret == 0) {
+            nf.oflags = nf.flags;
+            array_push_back( &faction_stack, nf );
          }
-         else
-            f->oflags = f->flags;
       }
    }
 
