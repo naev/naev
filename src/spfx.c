@@ -435,6 +435,7 @@ void spfx_free (void)
    for (int i=0; i<array_size(trail_spfx_stack); i++)
       spfx_trail_free( trail_spfx_stack[i] );
    array_free( trail_spfx_stack );
+   trail_spfx_stack = NULL;
 
    /* Free the trail styles. */
    for (int i=0; i<array_size(trail_spec_stack); i++) {
@@ -442,6 +443,7 @@ void spfx_free (void)
       free( trail_spec_stack[i].filename );
    }
    array_free( trail_spec_stack );
+   trail_spec_stack = NULL;
 
    /* Get rid of Lua effects. */
    spfxL_exit();
@@ -1229,9 +1231,8 @@ static int trailSpec_load (void)
    }
 
    /* Second pass to complete inheritance. */
-   for (int i=0; i<array_size( trail_spec_stack ); i++) {
+   for (int i=0; i<array_size( trail_spec_stack ); i++)
       trailSpec_parse( &trail_spec_stack[i], trail_spec_stack[i].filename, 0 );
-   }
    array_free( ts_files );
 
    /* Set up thickness. */

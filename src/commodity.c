@@ -473,7 +473,7 @@ int commodity_load (void)
 
    gatherable_load();
 
-   for (size_t i=0; commodities[i]!=NULL; i++) {
+   for (int i=0; i<array_size(commodities); i++) {
       Commodity c;
       int ret = commodity_parse( &c, commodities[i] );
       if (ret == 0) {
