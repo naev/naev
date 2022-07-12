@@ -480,7 +480,7 @@ int ai_pinit( Pilot *p, const char *ai )
       lua_pushvalue(naevL,-2);       /* pm, nt, dt, k, v, k, v */
       lua_remove(naevL, -3);         /* pm, nt, dt, k, k, v */
       lua_settable(naevL,-5);        /* pm, nt, dt, k */
-   }                             /* pm, nt, dt */
+   }                                 /* pm, nt, dt */
    lua_pop(naevL,3);                 /* */
 
    /* Create the pilot. */

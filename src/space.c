@@ -75,6 +75,7 @@
 typedef struct spob_lua_file_s {
    const char *filename;   /**< Name of the spob Lua file. */
    nlua_env env;           /**< Lua environment. */
+   int lua_mem;            /**< Global memory. */
 } spob_lua_file;
 
 static spob_lua_file *spob_lua_stack = NULL; /**< Handles spob Lua chunks. */
@@ -145,7 +146,7 @@ static const MapShader *mapshader_get( const char *name );
 /* Lua stuff. */
 static void spob_luaInitMem( const Spob *spob );
 static int spob_lua_cmp( const void *a, const void *b );
-static nlua_env spob_lua_get( const char *filename );
+static nlua_env spob_lua_get( int *mem, const char *filename );
 /*
  * Externed prototypes.
  */
@@ -1925,6 +1926,8 @@ static void spob_luaInitMem( const Spob *spob )
  */
 int spob_luaInit( Spob *spob )
 {
+   int mem;
+
    /* Just clear everything. */
 #define UNREF( x ) \
    do { if ((x) != LUA_NOREF) { \
@@ -1948,7 +1951,7 @@ int spob_luaInit( Spob *spob )
       return 0;
 
    /* Try to get the environment, will create a new one as necessary. */
-   nlua_env env = spob_lua_get( spob->lua_file );
+   nlua_env env = spob_lua_get( &mem, spob->lua_file );
    if (env==LUA_NOREF)
       return -1;
 
@@ -1964,9 +1967,21 @@ int spob_luaInit( Spob *spob )
    spob->lua_update   = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
    spob->lua_comm     = nlua_refenvtype( env, "comm",     LUA_TFUNCTION );
 
-   /* Set up memory. */
-   lua_newtable( naevL );
-   spob->lua_mem = luaL_ref( naevL, LUA_REGISTRYINDEX );
+   /* Set up local memory. */
+   lua_newtable( naevL );        /* m */
+   lua_pushvalue( naevL, -1 );   /* m, m */
+   spob->lua_mem = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* m */
+
+   /* Copy over global memory. */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, mem ); /* m, d */
+   lua_pushnil( naevL );         /* m, d, nil */
+   while (lua_next(naevL,-2) != 0) { /* m, d, k, v */
+      lua_pushvalue( naevL, -2 );/* m, d, k, v, k */
+      lua_pushvalue( naevL, -2 );/* m, d, k, v, k, v */
+      lua_remove( naevL, -3 );   /* m, d, k, k, v */
+      lua_settable( naevL, -5 ); /* m, d, k */
+   }                             /* m, d */
+   lua_pop( naevL, 2 );          /* */
 
    /* Run init if applicable. */
    if (spob->lua_init) {
@@ -4237,7 +4252,7 @@ static int spob_lua_cmp( const void *a, const void *b )
    return strcmp( la->filename, lb->filename );
 }
 
-static nlua_env spob_lua_get( const char *filename )
+static nlua_env spob_lua_get( int *mem, const char *filename )
 {
    size_t sz;
    char *dat;
@@ -4248,8 +4263,10 @@ static nlua_env spob_lua_get( const char *filename )
       spob_lua_stack = array_create( spob_lua_file );
 
    lf = bsearch( &key, spob_lua_stack, array_size(spob_lua_stack), sizeof(spob_lua_file), spob_lua_cmp );
-   if (lf != NULL)
+   if (lf != NULL) {
+      *mem = lf->lua_mem;
       return lf->env;
+   }
 
    dat = ndata_read( filename, &sz );
    if (dat==NULL) {
@@ -4262,20 +4279,31 @@ static nlua_env spob_lua_get( const char *filename )
    nlua_loadGFX( env );
    nlua_loadCamera( env );
 
-   if (nlua_dobufenv(env, dat, sz, filename) != 0) {
-      WARN(_("Lua Spob '%s' error:\n%s"), filename, lua_tostring(naevL,-1));
-      lua_pop(naevL,1);
-      free( dat );
-      nlua_freeEnv( env );
-      return LUA_NOREF;
-   }
-   free(dat);
-
    /* Add new entry and sort. */
    lf = &array_grow( &spob_lua_stack );
    lf->filename = strdup( filename );
    lf->env = env;
-   qsort( spob_lua_stack, array_size(spob_lua_stack), sizeof(spob_lua_file), spob_lua_cmp );
 
+   /* Add the spob memory table. */
+   lua_newtable(naevL);              /* m */
+   lua_pushvalue(naevL, -1);         /* m, m */
+   lf->lua_mem = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* m */
+   nlua_setenv(naevL, env, "mem");   /* */
+   *mem = lf->lua_mem;
+
+   if (nlua_dobufenv(env, dat, sz, filename) != 0) {
+      int n;
+      WARN(_("Lua Spob '%s' error:\n%s"), filename, lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
+      free( dat );
+      nlua_freeEnv( env );
+      luaL_unref( naevL, LUA_REGISTRYINDEX, lf->lua_mem );
+      n = array_size( spob_lua_stack );
+      array_erase( &spob_lua_stack, &spob_lua_stack[n-1], &spob_lua_stack[n] );
+      return LUA_NOREF;
+   }
+   free(dat);
+
+   qsort( spob_lua_stack, array_size(spob_lua_stack), sizeof(spob_lua_file), spob_lua_cmp );
    return env;
 }
