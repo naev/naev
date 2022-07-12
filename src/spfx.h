@@ -41,12 +41,13 @@ typedef enum TrailMode_ {
  * @brief represents a set of styles for trails.
  */
 typedef struct TrailSpec_ {
-   char* name;      /**< Trail definition's name. */
-   double ttl;      /**< Time To Life (in seconds). */
-   float def_thick; /**< Default thickness, relevant while loading. */
-   GLuint type;     /**< Shader to use. */
+   char* name;       /**< Trail definition's name. */
+   char *filename;   /** File the the trail spec is loaded from. */
+   double ttl;       /**< Time To Life (in seconds). */
+   float def_thick;  /**< Default thickness, relevant while loading. */
+   GLuint type;      /**< Shader to use. */
    TrailStyle style[MODE_MAX]; /**< Appearance characteristics for each trail mode. */
-   int nebula;      /**< Whether or not the trail should be only active in the nebula. */
+   int nebula;       /**< Whether or not the trail should be only active in the nebula. */
 } TrailSpec;
 
 typedef struct TrailPoint {
