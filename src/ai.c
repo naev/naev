@@ -1002,15 +1002,15 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
  */
 static void ai_create( Pilot* pilot )
 {
-   nlua_env env = equip_env;
-   char *func = "equip_generic";
-
    /* Set creation mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
       aiL_status = AI_STATUS_CREATE;
 
    /* Create equipment first - only if creating for the first time. */
    if (!pilot_isFlag(pilot,PILOT_NO_OUTFITS) && (aiL_status==AI_STATUS_CREATE)) {
+      nlua_env env = equip_env;
+      char *func = "equip_generic";
+
       if  (faction_getEquipper( pilot->faction ) != LUA_NOREF) {
          env = faction_getEquipper( pilot->faction );
          func = "equip";
