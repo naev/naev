@@ -8,7 +8,6 @@ local luaspfx = require "luaspfx"
 local pixelcode = lf.read( "spob/lua/glsl/wormhole.frag" )
 local jumpsfx = audio.newSource( 'snd/sounds/wormhole.ogg' )
 
-local cvs, shader, pos, sfx
 local s = 256
 
 local wormhole = {}
@@ -16,8 +15,8 @@ local wormhole = {}
 local function update_canvas ()
    local oldcanvas = lg.getCanvas()
    local oldshader = lg.getShader()
-   lg.setShader( shader )
-   lg.setCanvas( cvs )
+   lg.setShader( mem.shader )
+   lg.setCanvas( mem.cvs )
    lg.clear( 0, 0, 0, 0 )
    lg.setColor( 1, 1, 1, 1 )
    lg.setBlendMode( "alpha", "premultiplied" )
@@ -27,47 +26,46 @@ local function update_canvas ()
    lg.setCanvas( oldcanvas )
 end
 
-local wormhole_spb, wormhole_target
 function wormhole.init( spb, target )
-   wormhole_spb = spb
-   wormhole_target = target
+   mem.spob = spb
+   mem.target = target
 end
 
 function wormhole.load ()
-   local _spob, sys = spob.getS( wormhole_target )
+   local _spob, sys = spob.getS( mem.target )
    if shader==nil then
       -- Load shader
-      shader = lg.newShader( pixelcode, love_shaders.vertexcode )
-      shader._dt = -1000 * rnd.rnd()
-      shader.update = function( self, dt )
+      mem.shader = lg.newShader( pixelcode, love_shaders.vertexcode )
+      mem.shader._dt = -1000 * rnd.rnd()
+      mem.shader.update = function( self, dt )
          self._dt = self._dt + dt
          self:send( "u_time", self._dt )
       end
-      pos = wormhole_spb:pos()
-      pos = pos + vec2.new( -s/2, s/2 )
-      cvs = lg.newCanvas( s, s, {dpiscale=1} )
+      mem.pos = mem.spob:pos()
+      mem.pos = mem.pos + vec2.new( -s/2, s/2 )
+      mem.cvs = lg.newCanvas( s, s, {dpiscale=1} )
 
       -- Set up background texture
       local _nw, _nh, ns = gfx.dim()
       starfield.init{ seed=sys:nameRaw(), static=true, nolocalstars=true, size=s*ns }
-      shader:send( "u_bgtex", starfield.canvas() )
+      mem.shader:send( "u_bgtex", starfield.canvas() )
 
-      sfx = audio.newSource( 'snd/sounds/loops/wormhole.ogg' )
-      sfx:setRelative(false)
-      local px, py = pos:get()
-      sfx:setPosition( px, py, 0 )
-      sfx:setAttenuationDistances( 500, 25e3 )
-      sfx:setLooping(true)
-      sfx:play()
+      mem.sfx = audio.newSource( 'snd/sounds/loops/wormhole.ogg' )
+      mem.sfx:setRelative(false)
+      local px, py = mem.pos:get()
+      mem.sfx:setPosition( px, py, 0 )
+      mem.sfx:setAttenuationDistances( 500, 25e3 )
+      mem.sfx:setLooping(true)
+      mem.sfx:play()
       update_canvas()
    end
-   return cvs.t.tex, s/2
+   return mem.cvs.t.tex, s/2
 end
 
 function wormhole.unload ()
-   shader= nil
-   cvs   = nil
-   sfx   = nil
+   mem.shader= nil
+   mem.cvs   = nil
+   mem.sfx   = nil
 end
 
 function wormhole.update( dt )
@@ -77,9 +75,9 @@ end
 function wormhole.render ()
    update_canvas() -- We want to do this here or it gets slow in autonav
    local z = camera.getZoom()
-   local x, y = gfx.screencoords( pos, true ):get()
+   local x, y = gfx.screencoords( mem.pos, true ):get()
    z = 1/z
-   cvs:draw( x, y, 0, z, z )
+   mem.cvs:draw( x, y, 0, z, z )
 end
 
 function wormhole.can_land ()
@@ -98,7 +96,7 @@ function wormhole.land( _s, p )
       return
    end
 
-   var.push( "wormhole_target", wormhole_target )
+   var.push( "wormhole_target", mem.target )
    naev.eventStart("Wormhole")
 end
 
