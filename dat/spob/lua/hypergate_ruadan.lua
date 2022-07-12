@@ -1,7 +1,9 @@
 local hypergate = require "spob.lua.lib.hypergate"
 
-function load( p )
-   return hypergate.load( p, {
+init  = hypergate.init
+
+function load ()
+   return hypergate.load{
          basecol = { 0.8, 0.2, 0.2 }, -- Za'lek
          cost_mod = {
             [100] = 0,
@@ -13,7 +15,7 @@ function load( p )
             [10]  = 0.9,
          },
          tex = "hypergate_zalek_activated.webp",
-      } )
+      }
 end
 
 unload   = hypergate.unload

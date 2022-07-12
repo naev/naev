@@ -1,7 +1,7 @@
 local luaspob = require "spob.lua.lib.spob"
 
-function load( spb )
-   return luaspob.setup( spb, {
+function init( spb )
+   return luaspob.init( spb, {
       std_land = 50,
       std_bribe = 100,
       msg_granted = {
@@ -20,5 +20,7 @@ function load( spb )
    } )
 end
 
+load = luaspob.load
+unload = luaspob.unload
 can_land = luaspob.can_land
 comm = luaspob.comm

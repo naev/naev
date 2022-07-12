@@ -1089,7 +1089,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
 
       /* Adding an spob. */
       case HUNK_TYPE_SPOB_ADD:
-         spob_updateLand( spob_get(hunk->u.name) );
+         spob_luaInit( spob_get(hunk->u.name) );
          diff_universe_changed = 1;
          return system_addSpob( system_get(hunk->target.u.name), hunk->u.name );
       /* Removing an spob. */
@@ -1328,7 +1328,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
             return -1;
          hunk->o.name = p->lua_file;
          p->lua_file = hunk->u.name;
-         spob_updateLua( p );
+         spob_luaInit( p );
          diff_universe_changed = 1;
          return 0;
       case HUNK_TYPE_SPOB_LUA_REVERT:
@@ -1336,7 +1336,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
          if (p==NULL)
             return -1;
          p->lua_file = (char*)hunk->o.name;
-         spob_updateLua( p );
+         spob_luaInit( p );
          diff_universe_changed = 1;
          return 0;
 

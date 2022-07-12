@@ -480,7 +480,7 @@ int ai_pinit( Pilot *p, const char *ai )
       lua_pushvalue(naevL,-2);       /* pm, nt, dt, k, v, k, v */
       lua_remove(naevL, -3);         /* pm, nt, dt, k, k, v */
       lua_settable(naevL,-5);        /* pm, nt, dt, k */
-   }                             /* pm, nt, dt */
+   }                                 /* pm, nt, dt */
    lua_pop(naevL,3);                 /* */
 
    /* Create the pilot. */
@@ -1002,15 +1002,15 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
  */
 static void ai_create( Pilot* pilot )
 {
-   nlua_env env = equip_env;
-   char *func = "equip_generic";
-
    /* Set creation mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
       aiL_status = AI_STATUS_CREATE;
 
    /* Create equipment first - only if creating for the first time. */
    if (!pilot_isFlag(pilot,PILOT_NO_OUTFITS) && (aiL_status==AI_STATUS_CREATE)) {
+      nlua_env env = equip_env;
+      char *func = "equip_generic";
+
       if  (faction_getEquipper( pilot->faction ) != LUA_NOREF) {
          env = faction_getEquipper( pilot->faction );
          func = "equip";

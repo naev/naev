@@ -541,7 +541,7 @@ function board_nelly ()
 "Let's see. This is an authentic infused sausage cheese matured cheese! The rumours were true!"]]))
    nel(_([["Here, take my Pulse Scanner, I'll take the cheese. I won't have to chase points of interest for a while with this beauty!"
 She rubs the cheese to her face.]]))
-   vn.na(_([[Seeing as it doesn't seem like you'll be able to change anything and the Pulse Scanner is probably more useful than the cheese. You take the outfit and head back to your ship. Now you can explore points of interest on your own!]]))
+   vn.na(_([[Seeing as it doesn't seem like you'll be able to change anything and the Pulse Scanner is probably more useful than the cheese, you take the outfit and head back to your ship. Now you can explore points of interest on your own!]]))
 
    vn.sfxVictory()
    vn.na( fmt.reward(o) )
