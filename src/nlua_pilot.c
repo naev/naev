@@ -702,28 +702,6 @@ static int pilotL_add( lua_State *L )
    lua_pushpilot(L,p);
    pplt = pilot_get( p );
 
-   /* Set the memory stuff. */
-   if (jump != NULL) {
-      LuaJump lj;
-      lj.srcid = jump->from->id;
-      lj.destid = cur_system->id;
-
-      if (pplt->ai != NULL) {
-         nlua_getenv( L, pplt->ai->env, AI_MEM );
-         lua_pushjump(L, lj);
-         lua_setfield(L,-2,"create_jump");
-         lua_pop(L,1);
-      }
-   }
-   else if (spob != NULL) {
-      if (pplt->ai != NULL) {
-         nlua_getenv( L, pplt->ai->env, AI_MEM );
-         lua_pushspob(L,spob->id);
-         lua_setfield(L,-2,"create_spob");
-         lua_pop(L,1);
-      }
-   }
-
    /* TODO don't have space_calcJumpInPos called twice when stealth creating. */
    if ((jump != NULL) && pilot_isFlagRaw( flags, PILOT_STEALTH )) {
       space_calcJumpInPos( cur_system, jump->from, &pplt->solid->pos, &pplt->solid->vel, &pplt->solid->dir, pplt );
@@ -4253,10 +4231,7 @@ static int pilotL_memory( lua_State *L )
       return 0;
    }
 
-   nlua_getenv( L, p->ai->env, AI_MEM );    /* pilotmem */
-   lua_rawgeti( L, -1, p->id );             /* pilotmem, table */
-   lua_remove( L, -2 );                     /* table */
-
+   lua_rawgeti( L, LUA_REGISTRYINDEX, p->lua_mem );
    return 1;
 }
 

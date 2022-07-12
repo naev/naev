@@ -10,8 +10,6 @@
 struct Pilot_;
 typedef struct Pilot_ Pilot;
 
-#define AI_MEM          "__mem" /**< Internal pilot memory. */
-
 #define MIN_DIR_ERR     5.0*M_PI/180. /**< Minimum direction error. */
 #define MAX_DIR_ERR     0.5*M_PI/180. /**< Maximum direction error. */
 #define MIN_VEL_ERR     5.0 /**< Minimum velocity error. */
@@ -41,11 +39,12 @@ typedef struct Task_ {
  * @brief Basic AI profile.
  */
 typedef struct AI_Profile_ {
-   char* name; /**< Name of the profile. */
-   nlua_env env; /**< Assosciated Lua Environment. */
-   int ref_control; /**< Profile control reference function. */
+   char* name;       /**< Name of the profile. */
+   nlua_env env;     /**< Assosciated Lua Environment. */
+   int lua_mem;      /**< Initial memory state. */
+   int ref_control;  /**< Profile control reference function. */
    int ref_control_manual; /**< Profile manual control reference function. */
-   int ref_refuel; /**< Profile refuel reference function. */
+   int ref_refuel;   /**< Profile refuel reference function. */
 } AI_Profile;
 
 /*

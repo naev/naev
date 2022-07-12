@@ -1284,9 +1284,8 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg )
             WARN(_("Pilot '%s' does not have an AI!"), p->name);
          else {
             double hit;
-            nlua_getenv( naevL, p->ai->env, AI_MEM ); /* pilotmem */
-            lua_rawgeti( naevL, -1, p->id );          /* pilotmem, table */
-            lua_getfield( naevL, -1, "distress_hit" );/* pilotmem, table, value */
+            lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->lua_mem ); /* m */
+            lua_getfield( naevL, -1, "distress_hit" );/* m, v */
             if (lua_isnil(naevL,-1))
                hit = (pow(p->base_mass, 0.2) - 1.);
             else if (lua_isnumber(naevL,-1))
@@ -1295,6 +1294,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg )
                WARN(_("Pilot '%s' has non-number mem.distress_hit!"),p->name);
                hit = 0.;
             }
+            lua_pop(naevL,2);
             faction_modPlayer( p->faction, -hit, "distress" );
          }
       }
@@ -2956,6 +2956,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    memset(pilot, 0, sizeof(Pilot));
 
    /* Defaults. */
+   pilot->lua_mem = LUA_NOREF;
    pilot->autoweap = 1;
    pilot->aimLines = 0;
    pilot->dockpilot = dockpilot;
