@@ -329,5 +329,6 @@ jobs:
         env:
           STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
           STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
-          STEAMCMD_SSFN: ${{ secrets.STEAMCMD_SSFN }}
-          STEAMCMD_SSFNFILENAME: ${{ secrets.STEAMCMD_SSFNFILENAME }}
+          TFA_IMAP: ${{ secrets.TFA_IMAP }}
+          TFA_PASS: ${{ secrets.TFA_PASS }}
+          TFA_USER: ${{ secrets.TFA_USER }}
