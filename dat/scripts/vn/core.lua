@@ -20,7 +20,7 @@ local luaspfx     = require "luaspfx"
 
 local vn = {
    speed = var.peek("vn_textspeed") or 0.025,
-   color = {1,1,1},
+   autoscroll = (var.peek("vn_autoscroll")==true),
 
    -- Internal usage
    _default = {
@@ -456,7 +456,7 @@ function vn.mousepressed( mx, my, button )
    end
 
    if vn.show_options and _inbox( mx, my, vn.options_x, vn.options_y, vn.options_w, vn.options_h ) then
-      opt.open()
+      opt.open( vn )
       vn._show_options = true
       return
    end
@@ -687,7 +687,11 @@ function vn.StateSay:_update( dt )
       local _maxw, wrappedtext = font:getWrap( self._text, vn.textbox_tw )
       local lh = font:getLineHeight()
       if (lh * #wrappedtext + bh + vn._buffer_y > vn.textbox_h) then
-         vn._buffer_y = vn._buffer_y - lh
+         if vn.autoscroll then
+            vn._buffer_y = vn._buffer_y - lh
+         else
+            self._finish()
+         end
       end
    end
 end
