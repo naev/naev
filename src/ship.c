@@ -50,7 +50,7 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
  */
 static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine );
 static int ship_loadPLG( Ship *temp, const char *buf, int size_hint );
-static int ship_parse( Ship *temp, xmlNodePtr parent );
+static int ship_parse( Ship *temp, const char *filename );
 static void ship_freeSlot( ShipOutfitSlot* s );
 
 /**
@@ -414,9 +414,14 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
    surface = IMG_Load_RW( rw, 0 );
 
    /* Load the texture. */
-   temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,
-         OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
-         surface->w, surface->h, sx, sy, 0 );
+   if (temp->polygon != NULL)
+      temp->gfx_space = gl_loadImagePad( str, surface,
+            OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
+            surface->w, surface->h, sx, sy, 0 );
+   else
+      temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,
+            OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS | OPENGL_TEX_VFLIP,
+            surface->w, surface->h, sx, sy, 0 );
 
    /* Create the target graphic. */
    ret = ship_genTargetGFX( temp, surface, sx, sy );
@@ -521,10 +526,8 @@ static int ship_loadPLG( Ship *temp, const char *buf, int size_hint )
 
    /* Load the XML. */
    doc  = xml_parsePhysFS( file );
-
-   if (doc == NULL) {
+   if (doc == NULL)
       return 0;
-   }
 
    node = doc->xmlChildrenNode; /* First polygon node */
    if (node == NULL) {
@@ -639,17 +642,30 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
  * @brief Extracts the in-game ship from an XML node.
  *
  *    @param temp Ship to load data into.
- *    @param parent Node to get ship from.
+ *    @param filename File to load ship from.
  *    @return 0 on success.
  */
-static int ship_parse( Ship *temp, xmlNodePtr parent )
+static int ship_parse( Ship *temp, const char *filename )
 {
-   xmlNodePtr node;
+   xmlNodePtr parent, node;
+   xmlDocPtr doc;
    int sx, sy;
    char str[PATH_MAX];
    int noengine;
    ShipStatList *ll;
    ShipTrailEmitter trail;
+
+   /* Load the XML. */
+   doc  = xml_parsePhysFS( filename );
+   if (doc == NULL)
+      return -1;
+
+   parent = doc->xmlChildrenNode; /* First ship node */
+   if (parent == NULL) {
+      xmlFreeDoc(doc);
+      WARN(_("Malformed %s file: does not contain elements"), filename);
+      return -1;
+   }
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Ship) );
@@ -662,17 +678,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    if (temp->name == NULL)
       WARN( _("Ship in %s has invalid or no name"), SHIP_DATA_PATH );
 
-   /* Data that must be loaded first. */
-   node = parent->xmlChildrenNode;
-   do { /* load all the data */
-      xml_onlyNodes(node);
-      if (xml_isNode(node,"class")) {
-         xmlr_attr_strd( node, "display", temp->class_display );
-         temp->class = ship_classFromString( xml_get(node) );
-         continue;
-      }
-   } while (xml_nextNode(node));
-
    /* Default offsets for the engine. */
    temp->trail_emitters = NULL;
 
@@ -683,6 +688,11 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       /* Only handle nodes. */
       xml_onlyNodes(node);
 
+      if (xml_isNode(node,"class")) {
+         xmlr_attr_strd( node, "display", temp->class_display );
+         temp->class = ship_classFromString( xml_get(node) );
+         continue;
+      }
       if (xml_isNode(node,"GFX")) {
          /* Get base graphic name. */
          char *buf = xml_get(node);
@@ -698,11 +708,11 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
          xmlr_attr_int(node, "noengine", noengine );
 
-         /* Load the graphics. */
-         ship_loadGFX( temp, buf, sx, sy, !noengine );
-
          /* Load the polygon. */
          ship_loadPLG( temp, buf, sx*sy );
+
+         /* Load the graphics. */
+         ship_loadGFX( temp, buf, sx, sy, !noengine );
 
          /* Validity check: there must be 1 polygon per sprite. */
          if (array_size(temp->polygon) != sx*sy) {
@@ -782,10 +792,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
       xmlr_strd(node,"base_type",temp->base_type);
-      if (xml_isNode(node,"class")) {
-         /* Already preemptively loaded, avoids warning. */
-         continue;
-      }
       xmlr_float(node,"time_mod",temp->dt_default);
       xmlr_long(node,"price",temp->price);
       xmlr_strd(node,"license",temp->license);
@@ -993,6 +999,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->cpu==0.,"cpu");*/
 #undef MELEMENT
 
+   xmlFreeDoc(doc);
+
    return 0;
 }
 
@@ -1018,37 +1026,16 @@ int ships_load (void)
       ship_stack = array_create_size(Ship, nfiles);
 
    for (int i=0; i<nfiles; i++) {
-      xmlNodePtr node;
-      xmlDocPtr doc;
-
-      if (!ndata_matchExt( ship_files[i], "xml" )) {
-         free( ship_files[i] );
-         continue;
-      }
-
-      /* Load the XML. */
-      doc  = xml_parsePhysFS( ship_files[i] );
-
-      if (doc == NULL) {
-         free( ship_files[i] );
-         continue;
-      }
-
-      node = doc->xmlChildrenNode; /* First ship node */
-      if (node == NULL) {
-         xmlFreeDoc(doc);
-         free( ship_files[i] );
-         WARN(_("Malformed %s file: does not contain elements"), ship_files[i]);
-         continue;
-      }
-
-      if (xml_isNode(node, XML_SHIP))
+      if (ndata_matchExt( ship_files[i], "xml" )) {
          /* Load the ship. */
-         ship_parse( &array_grow(&ship_stack), node );
+         Ship s;
+         int ret = ship_parse( &s, ship_files[i] );
+         if (ret == 0)
+            array_push_back( &ship_stack, s );
+      }
 
       /* Clean up. */
       free( ship_files[i] );
-      xmlFreeDoc(doc);
    }
    qsort( ship_stack, array_size(ship_stack), sizeof(Ship), ship_cmp );
 

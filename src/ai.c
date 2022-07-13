@@ -112,7 +112,6 @@
  * file info
  */
 #define AI_SUFFIX       ".lua" /**< AI file suffix. */
-#define AI_MEM_DEF      "def" /**< Default pilot memory. */
 
 /*
  * all the AI profiles
@@ -125,7 +124,7 @@ static nlua_env equip_env = LUA_NOREF; /**< Equipment enviornment. */
  */
 /* Internal C routines */
 static void ai_run( nlua_env env, int nargs );
-static int ai_loadProfile( const char* filename );
+static int ai_loadProfile( AI_Profile *prof, const char* filename );
 static void ai_setMemory (void);
 static void ai_create( Pilot* pilot );
 static int ai_loadEquip (void);
@@ -399,10 +398,8 @@ Task* ai_curTask( Pilot* pilot )
 static void ai_setMemory (void)
 {
    nlua_env env = cur_pilot->ai->env;
-   nlua_getenv(naevL, env, AI_MEM); /* pm */
-   lua_rawgeti(naevL, -1, cur_pilot->id); /* pm, t */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, cur_pilot->lua_mem );
    nlua_setenv(naevL, env, "mem"); /* pm */
-   lua_pop(naevL, 1); /* */
 }
 
 /**
@@ -461,27 +458,19 @@ int ai_pinit( Pilot *p, const char *ai )
    p->ai = prof;
 
    /* Adds a new pilot memory in the memory table. */
-   nlua_getenv(naevL, p->ai->env, AI_MEM);  /* pm */
-   lua_newtable(naevL);              /* pm, nt */
-   lua_pushvalue(naevL, -1);         /* pm, nt, nt */
-   lua_rawseti(naevL, -3, p->id);    /* pm, nt */
+   lua_newtable(naevL);              /* m  */
 
    /* Copy defaults over from the global memory table. */
-   lua_pushstring(naevL, AI_MEM_DEF);/* pm, nt, s */
-   lua_gettable(naevL, -3);          /* pm, nt, dt */
-#if DEBUGGING
-   if (lua_isnil(naevL,-1))
-      WARN( _("AI profile '%s' has no default memory for pilot '%s'."),
-            buf, p->name );
-#endif /* DEBUGGING */
-   lua_pushnil(naevL);               /* pm, nt, dt, nil */
-   while (lua_next(naevL,-2) != 0) { /* pm, nt, dt, k, v */
-      lua_pushvalue(naevL,-2);       /* pm, nt, dt, k, v, k */
-      lua_pushvalue(naevL,-2);       /* pm, nt, dt, k, v, k, v */
-      lua_remove(naevL, -3);         /* pm, nt, dt, k, k, v */
-      lua_settable(naevL,-5);        /* pm, nt, dt, k */
-   }                                 /* pm, nt, dt */
-   lua_pop(naevL,3);                 /* */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, prof->lua_mem ); /* m, d */
+   lua_pushnil(naevL);               /* m, d, nil */
+   while (lua_next(naevL,-2) != 0) { /* m, d, k, v */
+      lua_pushvalue(naevL,-2);       /* m, d, k, v, k */
+      lua_pushvalue(naevL,-2);       /* m, d, k, v, k, v */
+      lua_remove(naevL, -3);         /* m, d, k, k, v */
+      lua_settable(naevL,-5);        /* m, d, k */
+   }                                 /* m, d */
+   lua_pop(naevL,1);                 /* m */
+   p->lua_mem = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* */
 
    /* Create the pilot. */
    ai_create( p );
@@ -513,14 +502,10 @@ void ai_destroy( Pilot* p )
    if (p->ai == NULL)
       return;
 
-   nlua_env env = p->ai->env;
-
    /* Get rid of pilot's memory. */
    if (!pilot_isPlayer(p)) { /* Player is an exception as more than one ship shares pilot id. */
-      nlua_getenv(naevL, env, AI_MEM);  /* t */
-      lua_pushnil(naevL);        /* t, nil */
-      lua_rawseti(naevL,-2, p->id);/* t */
-      lua_pop(naevL, 1);         /* */
+      luaL_unref( naevL, LUA_REGISTRYINDEX, p->lua_mem );
+      p->lua_mem = LUA_NOREF;
    }
 
    /* Clear the tasks. */
@@ -529,8 +514,8 @@ void ai_destroy( Pilot* p )
 
 static int ai_sort( const void *p1, const void *p2 )
 {
-   AI_Profile *ai1 = (AI_Profile*) p1;
-   AI_Profile *ai2 = (AI_Profile*) p2;
+   const AI_Profile *ai1 = (const AI_Profile*) p1;
+   const AI_Profile *ai2 = (const AI_Profile*) p2;
    return strcmp( ai1->name, ai2->name );
 }
 
@@ -557,10 +542,15 @@ int ai_load (void)
       int flen = strlen(files[i]);
       if ((flen > suflen) &&
             strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
+         AI_Profile prof;
          char path[PATH_MAX];
+         int ret;
 
          snprintf( path, sizeof(path), AI_PATH"%s", files[i] );
-         if (ai_loadProfile(path)) /* Load the profile */
+         ret = ai_loadProfile(&prof,path); /* Load the profile */
+         if (ret == 0)
+            array_push_back( &profiles, prof );
+         else
             WARN( _("Error loading AI profile '%s'"), path);
       }
    }
@@ -613,20 +603,17 @@ static int ai_loadEquip (void)
 /**
  * @brief Initializes an AI_Profile and adds it to the stack.
  *
+ *    @param prof AI profile to load.
  *    @param[in] filename File to create the profile from.
  *    @return 0 on no error.
  */
-static int ai_loadProfile( const char* filename )
+static int ai_loadProfile( AI_Profile *prof, const char* filename )
 {
    char* buf = NULL;
    size_t bufsize = 0;
    nlua_env env;
-   AI_Profile *prof;
    size_t len;
    const char *str;
-
-   /* Grow array. */
-   prof = &array_grow(&profiles);
 
    /* Set name. */
    len = strlen(filename)-strlen(AI_PATH)-strlen(AI_SUFFIX);
@@ -642,17 +629,11 @@ static int ai_loadProfile( const char* filename )
    /* Register C functions in Lua */
    nlua_register(env, "ai", aiL_methods, 0);
 
-   /* Add the pilot memory table. */
-   lua_newtable(naevL);              /* pm */
-   lua_pushvalue(naevL, -1);         /* pm, pm */
-   nlua_setenv(naevL, env, AI_MEM);  /* pm */
-
    /* Set "mem" to be default template. */
-   lua_newtable(naevL);              /* pm, nt */
-   lua_pushvalue(naevL,-1);          /* pm, nt, nt */
-   lua_setfield(naevL,-3,AI_MEM_DEF);/* pm, nt */
-   nlua_setenv(naevL, env, "mem");   /* pm */
-   lua_pop(naevL, 1);                /*  */
+   lua_newtable(naevL);              /* m */
+   lua_pushvalue(naevL,-1);          /* m, m */
+   prof->lua_mem = luaL_ref( naevL, LUA_REGISTRYINDEX ); /* m */
+   nlua_setenv(naevL, env, "mem");   /*  */
 
    /* Now load the file since all the functions have been previously loaded */
    buf = ndata_read( filename, &bufsize );
@@ -661,7 +642,6 @@ static int ai_loadProfile( const char* filename )
           "%s\n"
           "Most likely Lua file has improper syntax, please check"),
             filename, lua_tostring(naevL,-1));
-      array_erase( &profiles, prof, &prof[1] );
       free(prof->name);
       nlua_freeEnv( env );
       free(buf);
