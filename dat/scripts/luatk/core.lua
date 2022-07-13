@@ -1,5 +1,8 @@
 --[[
--- Implementation of parts of the Naev toolkit... in Lua!
+   Implementation of parts of the Naev toolkit... in Lua!
+
+   Based on Love2D API
+   @module luatk
 --]]
 local lg = require 'love.graphics'
 local le = require 'love.event'
@@ -40,6 +43,9 @@ local luatk = {
 --[[
 -- Global functions
 --]]
+--[[--
+Runs the luatk. Should be used after the windows are set up.
+--]]
 function luatk.run ()
    luatk._love = true
    love.exec( 'scripts/luatk' )  -- luacheck: ignore
@@ -52,11 +58,22 @@ end
 --[[
 -- Important functions
 --]]
+--[[--
+Draws the luatk toolkit.
+
+Only to be used when running the toolkit outside of luatk.run.
+--]]
 function luatk.draw()
    for _k,wdw in ipairs(luatk._windows) do
       wdw:draw()
    end
 end
+--[[--
+Updates the luatk toolkit.
+
+Only to be used when running the toolkit outside of luatk.run.
+   @tparam number dt Number of seconds since last update.
+--]]
 function luatk.update(dt)
    for _k,wdw in ipairs(luatk._windows) do
       wdw:update(dt)
@@ -65,6 +82,15 @@ end
 local function _checkbounds( b, mx, my )
    return not (mx < b.x or mx > b.x+b.w or my < b.y or my > b.y+b.h)
 end
+--[[--
+Handles mouse clicks.
+
+Only to be used when running the toolkit outside of luatk.run.
+   @tparam number mx X coordinates of the mouse click.
+   @tparam number my Y coordinates of the mouse click.
+   @tparam integer button Number of the button pressed.
+   @treturn boolean true if the event was used, false otherwise.
+--]]
 function luatk.mousepressed( mx, my, button )
    local wdw = luatk._windows[ #luatk._windows ]
    if not wdw or not _checkbounds(wdw,mx,my) then return false end
@@ -81,6 +107,15 @@ function luatk.mousepressed( mx, my, button )
 
    return false
 end
+--[[--
+Handles mouse releases
+
+Only to be used when running the toolkit outside of luatk.run.
+   @tparam number mx X coordinates of the mouse released position.
+   @tparam number my Y coordinates of the mouse released position.
+   @tparam integer button Number of the button released.
+   @treturn boolean true if the event was used, false otherwise.
+--]]
 function luatk.mousereleased( mx, my, button )
    local wdw = luatk._windows[ #luatk._windows ]
    local x, y = mx-wdw.x, my-wdw.y
@@ -101,6 +136,14 @@ function luatk.mousereleased( mx, my, button )
 
    return false
 end
+--[[--
+Handles mouse motion.
+
+Only to be used when running the toolkit outside of luatk.run.
+   @tparam number mx X coordinates of the mouse released position.
+   @tparam number my Y coordinates of the mouse released position.
+   @treturn boolean true if the event was used, false otherwise.
+--]]
 function luatk.mousemoved( mx, my )
    local wdw = luatk._windows[ #luatk._windows ]
    if not wdw or not _checkbounds(wdw,mx,my) then return false end
@@ -118,6 +161,11 @@ function luatk.mousemoved( mx, my )
 
    return false
 end
+--[[--
+Handles key presses.
+
+   @treturn string key Name of the key pressed.
+--]]
 function luatk.keypressed( key )
    local wdw = luatk._windows[ #luatk._windows ]
    if not wdw then return false end
