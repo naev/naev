@@ -2,21 +2,24 @@
    * New Mechanics
       * Support for setting ships as escorts
       * Hypergates that allow for long distance travel
-      * Mining has been completely redone with a new mining mini-game and rarity mechanics
-      * Support for restrictions for outfits and ships
+      * Asteroid rework
+         * Asteroids no longer randomly explode
+         * Asteroid scanning is no longer binary, but distance-based
+         * New mini-game based mining
+         * More diversity in types with different rarity
+      * Support for restrictions for outfits and ships, such as minimum faction standing
       * Significantly improved how faction reputation caps are handled
       * Pilots can have intrinsic outfits
       * Bioships go rawr (new skill system)
-      * Weapons and outfits cause effects on ships
-      * Scripting support for space objects (spob)
+      * Weapons and outfits can cause effects on ships
+      * More complex space objects (spob)
       * Support for different difficulty settings
+      * New exploration mechanic with points of interest
    * Gameplay Changes
       * Weapon types are more differentiated
       * Removed nearly redundant launchers
       * Nerfed beams
       * Factional ships are more widely sold
-      * Asteroids no longer randomly explode with redone visuals
-      * Asteroid scanning is no longer binary, but distance-based
       * Schroedinger uses less fuel instead of getting a large bonus
       * Plasma has a burning effect
    * New Content
@@ -30,7 +33,6 @@
          * Continuation of the Za'lek story
          * Help the Dvaered do some tasks
          * Tutorial for new mechanics
-         * Explore points of interest
       * 7 New ships
       * Lots of new outfits and reworked old outfits
          * Use energy to avoid death
@@ -45,7 +47,10 @@
       * Engine sound volume is configurable
       * Revamped the star map to be large and more useful
       * Can add notes to the star map
+      * Autoscroll is now an option in the VN
+      * Spob communication window has been redone
    * Engine changes
+      * Work has begun on a development manual
       * Basic plugin support
       * Simplified terminology with spob (space objects) replacing planet/asset
       * Support for tags in missions
@@ -57,6 +62,8 @@
       * Minor transitions added to the toolkit
       * Asteroids redone to be more flexible and easy to add using groups
       * Asteroid field support in the editor
+      * Lua scripting for spob
+      * Lots of engine rewriting and modernization that should bring some improvements
 
 * 0.9.4 (unreleased)
    * Fixed "No error." log spam with certain video card drivers
