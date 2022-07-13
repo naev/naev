@@ -440,7 +440,7 @@ void spfx_free (void)
    /* Free the trail styles. */
    for (int i=0; i<array_size(trail_spec_stack); i++) {
       free( trail_spec_stack[i].name );
-      free( trail_spec_stack[i].filename );
+      //free( trail_spec_stack[i].filename );
    }
    array_free( trail_spec_stack );
    trail_spec_stack = NULL;
