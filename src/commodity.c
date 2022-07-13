@@ -50,7 +50,7 @@ extern int *econ_comm;
  */
 /* Commodity. */
 static void commodity_freeOne( Commodity* com );
-static int commodity_parse( Commodity *temp, xmlNodePtr parent );
+static int commodity_parse( Commodity *temp, const char *filename );
 
 /**
  * @brief Converts credits to a usable string for displaying.
@@ -254,12 +254,23 @@ Commodity ** standard_commodities (void)
  * @brief Loads a commodity.
  *
  *    @param temp Commodity to load data into.
- *    @param parent XML node to load from.
+ *    @param filename File to parse.
  *    @return Commodity loaded from parent.
  */
-static int commodity_parse( Commodity *temp, xmlNodePtr parent )
+static int commodity_parse( Commodity *temp, const char *filename )
 {
-   xmlNodePtr node;
+   xmlNodePtr node, parent;
+   xmlDocPtr doc;
+
+   doc = xml_parsePhysFS( filename );
+   if (doc == NULL)
+      return -1;
+
+   parent = doc->xmlChildrenNode; /* Commodities node */
+   if (strcmp((char*)parent->name,XML_COMMODITY_ID)) {
+      ERR(_("Malformed %s file: missing root element '%s'"), filename, XML_COMMODITY_ID);
+      return -1;
+   }
 
    /* Clear memory and set defaults. */
    memset( temp, 0, sizeof(Commodity) );
@@ -359,6 +370,8 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
 #undef MELEMENT
 #endif
 
+   xmlFreeDoc(doc);
+
    return 0;
 }
 
@@ -452,7 +465,7 @@ int commodity_tempIllegalto( Commodity *com, int faction )
  */
 int commodity_load (void)
 {
-   char **commodities = PHYSFS_enumerateFiles( COMMODITY_DATA_PATH );
+   char **commodities = ndata_listRecursive( COMMODITY_DATA_PATH );
    Uint32 time = SDL_GetTicks();
 
    commodity_stack = array_create( Commodity );
@@ -460,39 +473,21 @@ int commodity_load (void)
 
    gatherable_load();
 
-   for (size_t i=0; commodities[i]!=NULL; i++) {
-      xmlNodePtr node;
-      xmlDocPtr doc;
-      Commodity *c;
-      int *e;
-      char *file;
+   for (int i=0; i<array_size(commodities); i++) {
+      Commodity c;
+      int ret = commodity_parse( &c, commodities[i] );
+      if (ret == 0) {
+         array_push_back( &commodity_stack, c );
 
-      asprintf( &file, "%s%s", COMMODITY_DATA_PATH, commodities[i] );
-      doc = xml_parsePhysFS( file );
-      free( file );
-      if (doc == NULL)
-         return -1;
-
-      node = doc->xmlChildrenNode; /* Commodities node */
-      if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
-         ERR(_("Malformed %s file: missing root element '%s'"), COMMODITY_DATA_PATH, XML_COMMODITY_ID);
-         return -1;
+         /* See if should get added to commodity list. */
+         if (c.price > 0.) {
+            int *e = &array_grow( &econ_comm );
+            *e = array_size(commodity_stack)-1;
+         }
       }
-
-      /* Load commodity. */
-      c = &array_grow(&commodity_stack);
-      commodity_parse( c, node );
-
-      /* See if should get added to commodity list. */
-      if (c->price > 0.) {
-         e = &array_grow( &econ_comm );
-         *e = array_size(commodity_stack)-1;
-      }
-
-      xmlFreeDoc(doc);
+      free( commodities[i] );
    }
-
-   PHYSFS_freeList( commodities );
+   array_free( commodities );
 
    if (conf.devmode) {
       time = SDL_GetTicks() - time;

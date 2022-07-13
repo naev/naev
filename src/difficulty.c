@@ -43,14 +43,14 @@ int difficulty_load (void)
       /* Load and read the data. */
       doc = xml_parsePhysFS( difficulty_files[i] );
       if (doc == NULL)
-         return -1;
+         continue;
 
       /* Check to see if document exists. */
       node = doc->xmlChildrenNode;
       if (!xml_isNode(node,DIFFICULTY_XML_ID)) {
          ERR( _("Malformed '%s' file: missing root element '%s'"), difficulty_files[i], DIFFICULTY_XML_ID);
          xmlFreeDoc( doc );
-         return -1;
+         continue;
       }
 
       /* Initialize. */

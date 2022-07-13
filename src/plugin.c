@@ -26,6 +26,9 @@ static plugin_t *plugins;
 
 static const char *plugin_name( plugin_t *plg );
 
+/**
+ * @brief Parses a plugin description file.
+ */
 static int plugin_parse( plugin_t *plg, const char *file )
 {
    xmlNodePtr node, parent;
@@ -41,7 +44,7 @@ static int plugin_parse( plugin_t *plg, const char *file )
       return -1;
    }
 
-   node   = parent->xmlChildrenNode;
+   node = parent->xmlChildrenNode;
    do {
       xml_onlyNodes(node);
 
@@ -50,6 +53,7 @@ static int plugin_parse( plugin_t *plg, const char *file )
       xmlr_strd( node, "version", plg->version );
       xmlr_strd( node, "description", plg->description );
       xmlr_strd( node, "compatibility", plg->compatibility );
+      xmlr_int( node, "priority", plg->priority );
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
@@ -57,6 +61,27 @@ static int plugin_parse( plugin_t *plg, const char *file )
    return 0;
 }
 
+/**
+ * @brief For qsort on plugins.
+ */
+static int plugin_cmp( const void *a, const void *b )
+{
+   const plugin_t *pa = (const plugin_t *) a;
+   const plugin_t *pb = (const plugin_t *) b;
+
+   if (pa->priority < pb->priority)
+      return -1;
+   else if (pa->priority > pb->priority)
+      return 1;
+
+   return strcmp( pa->mountpoint, pb->mountpoint );
+}
+
+/**
+ * @brief Initialize and loads all the available plugins.
+ *
+ *    @return 0 on success.
+ */
 int plugin_init (void)
 {
    char buf[ PATH_MAX ];
@@ -84,6 +109,7 @@ int plugin_init (void)
          plg = &array_grow( &plugins );
          memset( plg, 0, sizeof(plugin_t) );
          plg->mountpoint = strdup( buf );
+         plg->priority = 5;
 
          PHYSFS_stat( "plugin.xml", &stat );
          realdir = PHYSFS_getRealDir( "plugin.xml" );
@@ -92,11 +118,22 @@ int plugin_init (void)
             plugin_parse( plg, "plugin.xml" );
       }
       PHYSFS_freeList(files);
-
       n = array_size(plugins);
+
+      /* Unmount all. */
+      for (int i=0; i<n; i++)
+         PHYSFS_unmount( plugins[i].mountpoint );
+
+      /* Sort by priority. */
+      qsort( plugins, n, sizeof(plugin_t), plugin_cmp );
+
+      /* Remount. */
+      for (int i=n-1; i>=0; i--) /* Reverse order as we prepend. */
+         PHYSFS_mount( plugins[i].mountpoint, NULL, 0 );
+
       if (n > 0) {
          DEBUG("Loaded plugins:");
-         for (int i=0; i<n; i++) {
+         for (int i=0; i<n; i++) { /* Reverse order. */
             DEBUG("   %s", plugin_name( &plugins[i] ) );
          }
       }
@@ -106,16 +143,33 @@ int plugin_init (void)
       nfile_dirMakeExist( buf );
    }
 
-
    return 0;
 }
 
+/**
+ * @brief Exits the plugin stuff.
+ */
 void plugin_exit (void)
 {
+   for (int i=0; i<array_size(plugins); i++) {
+      plugin_t *p = &plugins[i];
+      free( p->name );
+      free( p->author );
+      free( p->version );
+      free( p->description );
+      free( p->compatibility );
+      free( p->mountpoint );
+   }
    array_free(plugins);
    plugins = NULL;
 }
 
+/**
+ * @brief Tries to tget the name of a plugin.
+ *
+ *    @param plg Plugin to try to get name of.
+ *    @return Name of the plugin.
+ */
 static const char *plugin_name( plugin_t *plg )
 {
    if (plg->name != NULL)
@@ -123,6 +177,11 @@ static const char *plugin_name( plugin_t *plg )
    return plg->mountpoint;
 }
 
+/**
+ * @brief Checks to see if the plugins are self-declared compatible with Naev.
+ *
+ *    @return Number of incompatible plugins.
+ */
 int plugin_check (void)
 {
    int failed = 0;
@@ -169,16 +228,12 @@ int plugin_check (void)
    return failed;
 }
 
+/**
+ * @brief Returns the list of all the plugins.
+ *
+ *    @return List of the loaded plugins.
+ */
 const plugin_t *plugin_list (void)
 {
-   for (int i=0; i<array_size(plugins); i++) {
-      plugin_t *plg = &plugins[i];
-      free( plg->name );
-      free( plg->author );
-      free( plg->version );
-      free( plg->description );
-      free( plg->compatibility );
-      free( plg->mountpoint );
-   }
    return plugins;
 }

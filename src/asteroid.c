@@ -57,8 +57,6 @@ static int asttype_cmp( const void *p1, const void *p2 );
 static int asttype_parse( AsteroidType *at, const char *file );
 static int astgroup_cmp( const void *p1, const void *p2 );
 static int astgroup_parse( AsteroidTypeGroup *ag, const char *file );
-static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
-static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys );
 static int asttype_load (void);
 
 static void asteroid_renderSingle( const Asteroid *a );
@@ -396,83 +394,6 @@ static void debris_init( Debris *deb )
 }
 
 /**
- * @brief Parses a single asteroid field for a system.
- *
- *    @param node Parent node containing asteroid field information.
- *    @param sys System.
- *    @return 0 on success.
- */
-static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
-{
-   AsteroidAnchor *a;
-   xmlNodePtr cur;
-   int pos;
-
-   /* Allocate more space. */
-   a = &array_grow( &sys->asteroids );
-   memset( a, 0, sizeof(AsteroidAnchor) );
-
-   /* Initialize stuff. */
-   pos         = 1;
-   a->density  = ASTEROID_DEFAULT_DENSITY;
-   a->groups   = array_create( AsteroidTypeGroup* );
-   a->groupsw  = array_create( double );
-   a->radius   = 0.;
-   a->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
-   a->thrust   = ASTEROID_DEFAULT_THRUST;
-
-   /* Parse label if available. */
-   xmlr_attr_strd( node, "label", a->label );
-
-   /* Parse data. */
-   cur = node->xmlChildrenNode;
-   do {
-      xml_onlyNodes(cur);
-
-      xmlr_float( cur, "density", a->density );
-      xmlr_float( cur, "radius", a->radius );
-      xmlr_float( cur, "maxspeed", a->maxspeed );
-      xmlr_float( cur, "thrust", a->thrust );
-
-      /* Handle types of asteroids. */
-      if (xml_isNode(cur,"group")) {
-         double w;
-         const char *name = xml_get(cur);
-         xmlr_attr_float_def(cur,"weight",w,1.);
-         array_push_back( &a->groups, astgroup_getName(name) );
-         array_push_back( &a->groupsw, w );
-         continue;
-      }
-
-      /* Handle position. */
-      if (xml_isNode(cur,"pos")) {
-         double x, y;
-         pos = 1;
-         xmlr_attr_float( cur, "x", x );
-         xmlr_attr_float( cur, "y", y );
-
-         /* Set position. */
-         vec2_cset( &a->pos, x, y );
-         continue;
-      }
-
-      WARN(_("Asteroid Field in Star System '%s' has unknown node '%s'"), sys->name, node->name);
-   } while (xml_nextNode(cur));
-
-   /* Update internals. */
-   asteroids_computeInternals( a );
-
-#define MELEMENT(o,s) \
-if (o) WARN(_("Asteroid Field in Star System '%s' has missing/invalid '%s' element"), sys->name, s) /**< Define to help check for data errors. */
-   MELEMENT(!pos,"pos");
-   MELEMENT(a->radius<=0.,"radius");
-   MELEMENT(array_size(a->groups)==0,"groups");
-#undef MELEMENT
-
-   return 0;
-}
-
-/**
  * @brief Updates internal alues of an asteroid field.
  */
 void asteroids_computeInternals( AsteroidAnchor *a )
@@ -493,84 +414,7 @@ void asteroids_computeInternals( AsteroidAnchor *a )
 }
 
 /**
- * @brief Parses a single asteroid exclusion zone for a system.
- *
- *    @param node Parent node containing asteroid exclusion information.
- *    @param sys System.
- *    @return 0 on success.
- */
-static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys )
-{
-   AsteroidExclusion *a;
-   xmlNodePtr cur;
-   double x, y;
-   int pos;
-
-   /* Allocate more space. */
-   a = &array_grow( &sys->astexclude );
-   memset( a, 0, sizeof(*a) );
-
-   /* Initialize stuff. */
-   pos = 0;
-
-   /* Parse data. */
-   cur = node->xmlChildrenNode;
-   do {
-      xml_onlyNodes( cur );
-
-      xmlr_float( cur, "radius", a->radius );
-
-      /* Handle position. */
-      if (xml_isNode(cur,"pos")) {
-         pos = 1;
-         xmlr_attr_float( cur, "x", x );
-         xmlr_attr_float( cur, "y", y );
-
-         /* Set position. */
-         vec2_cset( &a->pos, x, y );
-         continue;
-      }
-      WARN(_("Asteroid Exclusion Zone in Star System '%s' has unknown node '%s'"), sys->name, node->name);
-   } while (xml_nextNode(cur));
-
-#define MELEMENT(o,s) \
-if (o) WARN(_("Asteroid Exclusion Zone in Star System '%s' has missing/invalid '%s' element"), sys->name, s) /**< Define to help check for data errors. */
-   MELEMENT(!pos,"pos");
-   MELEMENT(a->radius<=0.,"radius");
-#undef MELEMENT
-
-   return 0;
-}
-
-/**
- * @brief Loads the asteroid anchor into a system.
- *
- *    @param parent System parent node.
- *    @param sys System.
- */
-void asteroids_parse( const xmlNodePtr parent, StarSystem *sys )
-{
-   xmlNodePtr node = parent->xmlChildrenNode;
-   do { /* load all the data */
-      xml_onlyNodes(node);
-      if (xml_isNode(node,"asteroids")) {
-         xmlNodePtr cur = node->children;
-         do {
-            xml_onlyNodes(cur);
-            if (xml_isNode(cur,"asteroid"))
-               system_parseAsteroidField( cur, sys );
-            else if (xml_isNode(cur,"exclusion"))
-               system_parseAsteroidExclusion( cur, sys );
-         } while (xml_nextNode(cur));
-      }
-   } while (xml_nextNode(node));
-
-   array_shrink( &sys->asteroids );
-   array_shrink( &sys->astexclude );
-}
-
-/**
- * @brief Loads the entire universe into ram - pretty big feat eh?
+ * @brief Loads the asteroids.
  *
  *    @return 0 on success.
  */
@@ -631,11 +475,10 @@ static int asttype_load (void)
 
    for (int i=0; i<array_size( asteroid_files ); i++) {
       if (ndata_matchExt( asteroid_files[i], "xml" )) {
-         int ret = asttype_parse( &array_grow(&asteroid_types), asteroid_files[i] );
-         if (ret < 0) {
-            int n = array_size(asteroid_types);
-            array_erase( &asteroid_types, &asteroid_types[n-1], &asteroid_types[n] );
-         }
+         AsteroidType at;
+         int ret = asttype_parse( &at, asteroid_files[i] );
+         if (ret == 0)
+            array_push_back( &asteroid_types, at );
       }
       free( asteroid_files[i] );
    }
@@ -653,11 +496,10 @@ static int asttype_load (void)
    asteroid_files = ndata_listRecursive( ASTEROID_GROUPS_DATA_PATH );
    for (int i=0; i<array_size( asteroid_files ); i++) {
       if (ndata_matchExt( asteroid_files[i], "xml" )) {
-         int ret = astgroup_parse( &array_grow(&asteroid_groups), asteroid_files[i] );
-         if (ret < 0) {
-            int n = array_size(asteroid_groups);
-            array_erase( &asteroid_groups, &asteroid_groups[n-1], &asteroid_groups[n] );
-         }
+         AsteroidTypeGroup atg;
+         int ret = astgroup_parse( &atg, asteroid_files[i] );
+         if (ret == 0)
+            array_push_back( &asteroid_groups, atg );
       }
       free( asteroid_files[i] );
    }
