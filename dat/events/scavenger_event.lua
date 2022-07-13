@@ -2903,7 +2903,7 @@ function escort_barConversation( persona, npc_id )
 		persona.active = not persona.active
 		for _i, pers in ipairs(mem.persons) do
 			pers.active = persona.active
-			pers.portrait = persona.portrait_offduty
+			pers.portrait = pers.portrait_offduty
 			
 		end
 		persona.portrait = persona.portrait_offduty
