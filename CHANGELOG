@@ -63,7 +63,7 @@
       * Asteroids redone to be more flexible and easy to add using groups
       * Asteroid field support in the editor
       * Lua scripting for spob
-      * Lots of engine rewriting and modernization that should bring some improvements
+      * Lots of engine rewriting and modernization that should bring some speed improvements and more flexibility when modding
 
 * 0.9.4 (unreleased)
    * Fixed "No error." log spam with certain video card drivers
