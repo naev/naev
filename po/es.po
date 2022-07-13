@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-06-22 12:55-0400\n"
-"PO-Revision-Date: 2022-07-12 21:17+0000\n"
+"PO-Revision-Date: 2022-07-13 21:15+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -90329,7 +90329,7 @@ msgstr "Dardo"
 #: dat/scripts/pilotname/generic.lua:26 dat/scripts/pilotname/pirate.lua:283
 #: src/menu.c:541
 msgid "Death"
-msgstr ""
+msgstr "Muerte"
 
 #: dat/scripts/pilotname/generic.lua:27 dat/scripts/pilotname/pirate.lua:284
 msgid "Deity"
@@ -97254,7 +97254,7 @@ msgstr "PhysicsFS: No se puede establecer la estadística %s: %s"
 #. window
 #: src/load.c:330 src/menu.c:223
 msgid "Load Game"
-msgstr ""
+msgstr "Cargar Juego"
 
 #: src/load.c:345
 #, c-format
@@ -97760,182 +97760,183 @@ msgstr "Este sistema no ofrece misiones"
 
 #: src/map_system.c:535
 msgid "This system has a trade outlet"
-msgstr ""
+msgstr "Este sistema tiene un punto de venta"
 
 #: src/map_system.c:535
 msgid "This system does not have a trade outlet"
-msgstr ""
+msgstr "Este sistema no tiene un punto de venta"
 
 #: src/map_system.c:536
 msgid "This system sells ship equipment"
-msgstr ""
+msgstr "Este sistema vende equipos para naves"
 
 #: src/map_system.c:536
 msgid "This system does not sell ship equipment"
-msgstr ""
+msgstr "Este sistema novende equipos para naves"
 
 #: src/map_system.c:537
 msgid "This system sells ships"
-msgstr ""
+msgstr "Este sistema vende naves"
 
 #: src/map_system.c:537
 msgid "This system does not sell ships"
-msgstr ""
+msgstr "Este sistema no vende naves"
 
 #: src/map_system.c:712
 #, c-format
 msgid "#nYou have:#0 %d tonne, purchased at %s/t\n"
 msgid_plural "#nYou have:#0 %d tonnes, purchased at %s/t\n"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#nTienes:#0 %d tonelada, comprada a %s/t\n"
+msgstr[1] "#nTienes:#0 %d toneladas, compradas a %s/t\n"
 
 #: src/map_system.c:718
 #, c-format
 msgid "#nYou have:#0 %d tonne\n"
 msgid_plural "#nYou have:#0 %d tonnes\n"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#nTienes:#0 %d tonelada\n"
+msgstr[1] "#nTienes:#0 %d toneladas\n"
 
 #: src/map_system.c:722
 msgid "Average price seen here:"
-msgstr ""
+msgstr "Precio medio visto aquí:"
 
 #: src/map_system.c:724
 msgid "Average price seen everywhere:"
-msgstr ""
+msgstr "Precio medio visto en todas partes:"
 
 #: src/map_system.c:729
 msgid "Unexpected call to map_system_array_update\n"
-msgstr ""
+msgstr "Llamada inesperada a map_system_array_update\n"
 
 #. no route
 #: src/map_system.c:1025
 msgid "Unavailable"
-msgstr ""
+msgstr "No disponible"
 
 #: src/map_system.c:1025
 #, c-format
 msgid "Commodity prices for %s are not available here at the moment."
 msgstr ""
+"Precios de mercancías para %s no están disponibles aquí en este momento."
 
 #: src/map_system.c:1037
 #, c-format
 msgid "You need %s to purchase this information."
-msgstr ""
+msgstr "Necesita %s para comprar esta información."
 
 #: src/map_system.c:1039
 msgid "No commodities sold here"
-msgstr ""
+msgstr "No se venden mercancias aquí"
 
 #: src/map_system.c:1039
 msgid "There are no commodities sold here."
-msgstr ""
+msgstr "No se venden mercancías aquí."
 
 #: src/map_system.c:1041
 msgid "Already Up-to-date"
-msgstr ""
+msgstr "Ya Actualizado"
 
 #: src/map_system.c:1041
 msgid "You have newer information that what is available."
-msgstr ""
+msgstr "Tienes información más reciente que la disponible."
 
 #: src/map_system.c:1043
 msgid "Purchase commodity prices?"
-msgstr ""
+msgstr "¿Precios de compra de mercancías?"
 
 #: src/map_system.c:1043
 #, c-format
 msgid "Purchase %g period old pricing information for %s for %s?"
-msgstr ""
+msgstr "¿Comprar información de precios antigua del periodo %g para %s por %s?"
 
 #: src/menu.c:169
 msgid "Menu main is already open."
-msgstr ""
+msgstr "El menú principal ya esta abierto."
 
 #. create menu window
 #: src/menu.c:218 src/menu.c:555
 msgid "Main Menu"
-msgstr ""
+msgstr "Menú Principal"
 
 #: src/menu.c:226
 msgid "New Game"
-msgstr ""
+msgstr "Nuevo Juego"
 
 #: src/menu.c:230 src/menu.c:643
 msgid "Editors"
-msgstr ""
+msgstr "Editores"
 
 #. Create window and tabs.
 #: src/menu.c:234 src/menu.c:428 src/naev.c:391 src/options.c:130
 msgid "Options"
-msgstr ""
+msgstr "Opciones"
 
 #: src/menu.c:237
 msgctxt "Menu|"
 msgid "Credits"
-msgstr ""
+msgstr "Créditos"
 
 #: src/menu.c:240 src/menu.c:557
 msgid "Exit Game"
-msgstr ""
+msgstr "Salir del Juego"
 
 #: src/menu.c:325
 msgid "Main menu does not exist."
-msgstr ""
+msgstr "El Menú principal no existe."
 
 #: src/menu.c:416
 msgid "Menu"
-msgstr ""
+msgstr "Menú"
 
 #: src/menu.c:422
 msgid "Resume"
-msgstr ""
+msgstr "Reanudar"
 
 #: src/menu.c:430
 msgid "Exit to Title"
-msgstr ""
+msgstr "Salir a Título"
 
 #. Stop player sounds because sometimes they hang.
 #: src/menu.c:482
 msgid "Exited game."
-msgstr ""
+msgstr "Salió del juego."
 
 #: src/menu.c:548
 msgid "Continue"
-msgstr ""
+msgstr "Continuar"
 
 #: src/menu.c:551
 msgid "Restart"
-msgstr ""
+msgstr "Reiniciar"
 
 #: src/menu.c:610
 msgid "Quit Naev"
-msgstr ""
+msgstr "Abandonar Naev"
 
 #: src/menu.c:610
 msgid "Are you sure you want to quit Naev?"
-msgstr ""
+msgstr "¿Estás seguro de que quieres abandonar Naev?"
 
 #: src/menu.c:648
 msgid "Universe Map"
-msgstr ""
+msgstr "Mapa del Universo"
 
 #: src/menu.c:651
 msgid "Map Outfits"
-msgstr ""
+msgstr "Equipos del Mapa"
 
 #: src/menu.c:654
 msgid "Exit to Main Menu"
-msgstr ""
+msgstr "Salir del Menú Principal"
 
 #: src/mission.c:103 src/nlua_player.c:1179 src/nlua_player.c:1201
 #, c-format
 msgid "Mission '%s' not found in stack"
-msgstr ""
+msgstr "Mission '%s' no encontrada en la pila"
 
 #: src/mission.c:154
 msgid "No description."
-msgstr ""
+msgstr "Sin descripción."
 
 #: src/mission.c:168
 #, c-format
@@ -97944,22 +97945,26 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Error al cargar el archivo de la misión: %s\n"
+"%s\n"
+"Lo más probable es que el archivo Lua tenga una sintaxis incorrecta, por "
+"favor compruebelo"
 
 #: src/mission.c:254
 #, c-format
 msgid "Conditional for mission '%s' failed to run"
-msgstr ""
+msgstr "Condicional para la misión '%s' falló al ejecutarse"
 
 #: src/mission.c:350 src/mission.c:372 src/mission.c:394 src/mission.c:434
 #: src/mission.c:530 src/mission.c:578 src/space.c:3877 src/space.c:3931
 #: src/space.c:3962 src/space.c:4017
 msgid "Unknown marker type."
-msgstr ""
+msgstr "Tipo de marcador desconocido."
 
 #: src/mission.c:419
 #, c-format
 msgid "Mission Marker to system '%s' does not exist"
-msgstr ""
+msgstr "Marcador de Misión del sistema '%s' no existe"
 
 #: src/mission.c:429
 #, c-format
@@ -97975,17 +97980,17 @@ msgstr ""
 #: src/mission.c:618
 #, c-format
 msgid "Mission '%s' attempting to unlink nonexistent cargo %d."
-msgstr ""
+msgstr "Misión '%s' intentando desvincular una carga %d inexistente."
 
 #: src/mission.c:647
 #, c-format
 msgid "Failed to remove mission cargo '%d' for mission '%s'."
-msgstr ""
+msgstr "Error al eliminar la carga de la misión '%d' para la misión '%s'."
 
 #: src/mission.c:900
 #, c-format
 msgid "Mission in %s has invalid or no name"
-msgstr ""
+msgstr "La misión en %s no tiene nombre o es inválida "
 
 #: src/mission.c:916
 #, c-format
@@ -98001,89 +98006,94 @@ msgstr ""
 #: src/mission.c:946
 #, c-format
 msgid "Unknown node '%s' in mission '%s'"
-msgstr ""
+msgstr "Nodo desconocido '%s' en la misión '%s'"
 
 #: src/mission.c:950
 #, c-format
 msgid "Mission '%s' missing/invalid '%s' element"
-msgstr ""
+msgstr "Misión '%s' falta/elemento '%s' inválido"
 
 #: src/mission.c:999
 #, c-format
 msgid "Loaded %d Mission"
 msgid_plural "Loaded %d Missions"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Misión %d cargada"
+msgstr[1] "Misiones %d cargadas"
 
 #: src/mission.c:1030
 #, c-format
 msgid "Mission '%s' has create function but no XML header!"
-msgstr ""
+msgstr "¡La misión '%s' tiene función de creación pero no tiene cabecera XML!"
 
 #: src/mission.c:1039
 #, c-format
 msgid "Mission file '%s' has missing XML header!"
-msgstr ""
+msgstr "¡El archivo de la misión '%s' no tiene cabecera XML!"
 
 #: src/mission.c:1046
 #, c-format
 msgid "Unable to parse document XML header for Mission '%s'"
 msgstr ""
+"No se ha podido analizar la cabecera XML del documento para la Misión '%s'"
 
 #: src/mission.c:1052
 #, c-format
 msgid "Malformed XML header for '%s' mission: missing root element '%s'"
 msgstr ""
+"Cabecera XML malformada para la misión '%s': falta el elemento raíz '%s'"
 
 #: src/mission.c:1066
 #, c-format
 msgid "Mission Lua '%s' syntax error: %s"
-msgstr ""
+msgstr "Misión Lua '%s' error de sintaxis: %s"
 
 #: src/mission.c:1256
 msgid "Mission cargo without name!"
-msgstr ""
+msgstr "¡Misión de carga sin nombre!"
 
 #: src/mission.c:1268
 #, c-format
 msgid "Mission temporary cargo '%s' missing description!"
-msgstr ""
+msgstr "¡Falta la descripción de la carga temporal de la misión '%s'!"
 
 #: src/mission.c:1344
 #, c-format
 msgid "Mission '%s' from saved game not found in game - ignoring."
 msgstr ""
+"La misión '%s' de la partida guardada no se encuentra en el juego - ignorar."
 
 #: src/mission.c:1350
 #, c-format
 msgid "Mission '%s' from saved game failed to load properly - ignoring."
 msgstr ""
+"La misión '%s' de la partida guardada no se ha cargado correctamente - "
+"ignorar."
 
 #: src/mission.c:1397
 msgid "Inconsistency with 'nitems' in save file."
-msgstr ""
+msgstr "Inconsistencia con 'nitems' en el archivo de guardado."
 
 #. error has occurred
 #: src/music.c:136
 #, c-format
 msgid "Error while choosing music: %s"
-msgstr ""
+msgstr "Error al elegir la música: %s"
 
 #: src/music.c:168
 msgid "Music has invalid value, clamping to [0:1]."
-msgstr ""
+msgstr "La música tiene un valor inválido, ajustándose a [0:1]."
 
 #: src/music.c:246
 #, c-format
 msgid "Loaded %d Song"
 msgid_plural "Loaded %d Songs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Canción %d Cargada"
+msgstr[1] "Canciones %d Cargadas"
 
 #: src/music.c:320
 #, c-format
 msgid "Music '%s' not found."
-msgstr ""
+msgstr "Música '%s' no encontrada."
 
 #: src/music.c:469
 #, c-format
@@ -98092,6 +98102,10 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Error al cargar el archivo de música: %s\n"
+"%s\n"
+"Lo más probable es que el archivo Lua tenga una sintaxis incorrecta, por "
+"favor compruebelo"
 
 #: src/music.c:495
 #, c-format
@@ -98100,81 +98114,85 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Error al cargar el archivo de música: \n"
+"%s\n"
+"Lo más probable es que el archivo Lua tenga una sintaxis incorrecta, por "
+"favor compruebelo"
 
 #: src/music.c:606
 msgid "Trying to set music on repeat when no music is loaded!"
-msgstr ""
+msgstr "¡Intentando poner la música en repetición cuando no hay música cargada!"
 
 #: src/music_openal.c:496
 msgid "OGG: Vorbis hole detected in music!"
-msgstr ""
+msgstr "OGG: ¡Se ha detectado un agujero Vorbis en la música!"
 
 #: src/music_openal.c:502
 msgid "OGG: Invalid stream section or corrupt link in music!"
-msgstr ""
+msgstr "OGG: ¡Sección de streaming inválida o enlace corrupto en la música!"
 
 #: src/music_openal.c:617
 #, c-format
 msgid "Song '%s' does not appear to be a Vorbis bitstream."
-msgstr ""
+msgstr "La canción '%s' no parece ser un stream de bits Vorbis."
 
 #: src/music_openal.c:639
 #, c-format
 msgid "Song '%s' has no replaygain information."
-msgstr ""
+msgstr "La canción '%s' no tiene información de repetición."
 
 #: src/music_openal.c:787
 msgid "Unable to seek Vorbis file."
-msgstr ""
+msgstr "Incapaz de encontrar el archivo Vorbis."
 
 #: src/music_openal.c:825
 msgid "Music thread did not exit when asked, ignoring..."
-msgstr ""
+msgstr "El hilo musical no salió cuando se le pidió, ignorando..."
 
 #: src/naev.c:188 src/naev.c:1107 src/nlua_naev.c:129 src/nlua_naev.c:131
 #, c-format
 msgid "Failed to parse version string '%s'!"
-msgstr ""
+msgstr "¡Fallo en el análisis de la cadena de versión '%s'!"
 
 #: src/naev.c:200
 #, c-format
 msgid "Unable to initialize SDL: %s"
-msgstr ""
+msgstr "Incapaz de inicializar SDL: %s"
 
 #: src/naev.c:217 src/opengl.c:423
 #, c-format
 msgid "Unable to initialize SDL Video: %s"
-msgstr ""
+msgstr "Incapaz de inicializar SDL Video: %s"
 
 #: src/naev.c:241
 #, c-format
 msgid "Unable to create config directory '%s'"
-msgstr ""
+msgstr "Incapaz de crear el directorio de configuración '%s'"
 
 #. now that we can find translations
 #: src/naev.c:254
 #, c-format
 msgid "Loaded configuration: %s"
-msgstr ""
+msgstr "Configuración cargada: %s"
 
 #: src/naev.c:256
 msgid "Read locations, searched in order:"
-msgstr ""
+msgstr "Lugares de lectura, buscados en orden:"
 
 #. Logging the cache path is noisy, noisy is good at the DEBUG level.
 #: src/naev.c:261
 #, c-format
 msgid "Cache location: %s"
-msgstr ""
+msgstr "Localización de la caché: %s"
 
 #: src/naev.c:262
 #, c-format
 msgid "Write location: %s\n"
-msgstr ""
+msgstr "Localización de la escritura: %s\n"
 
 #: src/naev.c:270
 msgid "Failed to load module start data."
-msgstr ""
+msgstr "Fallo al cargar los datos de inicio del módulo."
 
 #.
 #. * OpenGL
@@ -98190,33 +98208,35 @@ msgstr ""
 
 #: src/naev.c:310
 msgid "Error initializing joystick input"
-msgstr ""
+msgstr "Error al inicializar la entrada del joystick"
 
 #: src/naev.c:313 src/naev.c:320
 msgid "Failure to open any joystick, falling back to default keybinds"
 msgstr ""
+"Fallo al abrir cualquier joystick, volviendo a las combinaciones de teclas "
+"por defecto"
 
 #: src/naev.c:329
 msgid "Sound is disabled!"
-msgstr ""
+msgstr "¡El sonido está desactivado!"
 
 #: src/naev.c:334
 msgid "Problem setting up sound!"
-msgstr ""
+msgstr "¡Problema para configurar el sonido!"
 
 #. Initializes the nebula
 #. An error has happened
 #: src/naev.c:344
 msgid "Unable to initialize the Nebula subsystem!"
-msgstr ""
+msgstr "¡No se ha podido inicializar el subsistema Nebulosa!"
 
 #: src/naev.c:366
 msgid "Reached main menu"
-msgstr ""
+msgstr "Alcanzado menú principal"
 
 #: src/naev.c:387
 msgid "Incomplete Translation"
-msgstr ""
+msgstr "Traducción Incompleta"
 
 #: src/naev.c:388
 #, c-format
@@ -98225,10 +98245,13 @@ msgid ""
 "remaining text will be English. Language settings are available in the \"%s"
 "\" screen."
 msgstr ""
+"%s está parcialmente traducido (%.0f%%) a tu idioma (%s), pero el texto "
+"pendiente será el inglés. La configuración del idioma está disponible en la "
+"pantalla \"%s\"."
 
 #: src/naev.c:400
 msgid "Welcome to Naev"
-msgstr ""
+msgstr "Bienvenido a Naev"
 
 #: src/naev.c:401
 #, c-format
@@ -98247,6 +98270,20 @@ msgid ""
 "look at naev.org; it has all the relevant links. And again, thank you for "
 "playing!"
 msgstr ""
+"Bienvenido a la versión %s de Naev, ¡y gracias por jugar! Esperamos que "
+"disfrutes de este juego y de todo lo que ofrece. Este es un proyecto de "
+"pasión desarrollado exclusivamente por voluntarios y nos da una gran alegría "
+"saber que hay otros que aman este juego tanto como nosotros.\n"
+"    Por supuesto, tened en cuenta que se trata de un juego incompleto. "
+"Encontrarás callejones sin salida en la historia, historias que faltan, y "
+"posiblemente incluso algunos errores, aunque tratamos de mantenerlos al "
+"mínimo, por supuesto. Así que prepárate para algunas asperezas por el "
+"momento. Dicho esto, estamos trabajando en este juego todos los días y "
+"esperamos terminar algún día este enorme proyecto que tenemos entre manos. "
+"Quizá puedas convertirte en uno de nosotros, ¿quién sabe?\n"
+"    Para más información sobre el juego y su estado de desarrollo, echa un "
+"vistazo a naev.org; tiene todos los enlaces relevantes. Y de nuevo, ¡gracias "
+"por jugar!"
 
 #: src/naev.c:517
 msgid "No loading screens found!"
@@ -98320,113 +98357,119 @@ msgstr ""
 
 #: src/naev.c:684
 msgid "Initializing Details.."
-msgstr ""
+msgstr "Iniciando Detalles..."
 
 #. Initialize player stuff.
 #: src/naev.c:691
 msgid "Loading Completed!"
-msgstr ""
+msgstr "¡Carga Completada!"
 
 #: src/naev.c:832
 msgid "clock_gettime failed, disabling POSIX time."
-msgstr ""
+msgstr "clock_gettime falló, desactivar tiempo POSIX."
 
 #: src/naev.c:857
 msgid "clock_gettime failed!"
-msgstr ""
+msgstr "¡clock_gettime falló!"
 
 #: src/naev.c:949
 msgid "PAUSED"
-msgstr ""
+msgstr "PAUSADO"
 
 #: src/naev.c:1047
 msgid "Icon (icon.webp) not found!"
-msgstr ""
+msgstr "¡Icon (icon.webp) no encontrado!"
 
 #: src/naev.c:1052
 msgid "Unable to load icon.webp!"
-msgstr ""
+msgstr "¡Incapaz de cargar icon.webp!"
 
 #: src/naev.c:1078
 msgid " debug"
-msgstr ""
+msgstr "-depuración"
 
 #: src/naev.c:1134
 #, c-format
 msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
-msgstr ""
+msgstr "SDL: %d.%d.%d [compilado: %d.%d.%d]"
 
 #: src/naev.c:1144
 msgid "SDL is newer than compiled version"
-msgstr ""
+msgstr "SDL es más nuevo que la versión compilada"
 
 #: src/naev.c:1146
 msgid "SDL is older than compiled version."
-msgstr ""
+msgstr "SDL es más viejo que la versión compilada."
 
 #: src/ndata.c:70
 msgid ""
 "Unable to find game data. You may need to install, specify a datapath, or "
 "run using naev.sh (if developing)."
 msgstr ""
+"Incapaz de encontrar los datos del juego. Puedes necesitar instalarlo, "
+"especificar una ruta de datos o ejecutar usando naev.sh (si estás "
+"desarrollando)."
 
 #: src/ndata.c:79
 msgid "ndata version inconsistency with this version of Naev!"
-msgstr ""
+msgstr "¡inconsistencia de la versión de datos con esta versión de Naev!"
 
 #: src/ndata.c:80
 #, c-format
 msgid "Expected ndata version %s got %s."
-msgstr ""
+msgstr "La versión de ndata esperada %s obtuvo %s."
 
 #: src/ndata.c:82
 msgid "Please get a compatible ndata version!"
-msgstr ""
+msgstr "¡Por favor, consiga una versión de ndata compatible!"
 
 #: src/ndata.c:84
 msgid ""
 "Naev will probably crash now as the versions are probably not compatible."
 msgstr ""
+"Naev probablement se cuelgue ahora, ya que las versiones son probablemente "
+"no compatibles."
 
 #: src/ndata.c:107
 msgid "Cannot determine data path, using current directory."
 msgstr ""
+"No se puede determinar la ruta de datos, utilizando el directorio actual."
 
 #: src/ndata.c:121
 #, c-format
 msgid "Added datapath from conf.lua file: %s"
-msgstr ""
+msgstr "Añadida la ruta de datos del archivo conf.lua: %s"
 
 #: src/ndata.c:125 src/ndata.c:131 src/ndata.c:136 src/ndata.c:141
 #, c-format
 msgid "Trying default datapath: %s"
-msgstr ""
+msgstr "Probando la ruta de datos por defecto: %s"
 
 #: src/ndata.c:166 src/ndata.c:180 src/nfile.c:455 src/nfile.c:469
 #: src/nfile.c:565
 #, c-format
 msgid "Error occurred while opening '%s': %s"
-msgstr ""
+msgstr "Se ha producido un error al abrir '%s': %s"
 
 #: src/ndata.c:172 src/nfile.c:461
 #, c-format
 msgid "Error occurred while opening '%s': It is not a regular file"
-msgstr ""
+msgstr "Se ha producido un error al abrir '%s': No es un archivo normal"
 
 #: src/ndata.c:189 src/nfile.c:476 src/nfile.c:483
 #, c-format
 msgid "Error occurred while seeking '%s': %s"
-msgstr ""
+msgstr "Se ha producido un error al buscar '%s': %s"
 
 #: src/ndata.c:211 src/nfile.c:504
 #, c-format
 msgid "Error occurred while reading '%s': %s"
-msgstr ""
+msgstr "Se ha producido un error al leer '%s': %s"
 
 #: src/ndata.c:330 src/ndata.c:359 src/nfile.c:394 src/nfile.c:425
 #, c-format
 msgid "Failure to copy '%s' to '%s': %s"
-msgstr ""
+msgstr "Fallo al copiar '%s' en '%s': %s"
 
 #: src/ndata.h:59
 msgid "Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf"
@@ -98461,57 +98504,61 @@ msgstr ""
 #: src/news.c:647
 #, c-format
 msgid "Event is missing '%s', skipping."
-msgstr ""
+msgstr "Al evento le falta '%s', saltando."
 
 #: src/nfile.c:131
 msgid "Cannot determine config path, using current directory."
 msgstr ""
+"No se puede determinar la ruta de configuración, utilizando el directorio "
+"actual."
 
 #: src/nfile.c:137
 msgid "$XDG_CONFIG_HOME isn't set, using current directory."
-msgstr ""
+msgstr "$XDG_CONFIG_HOME no esta configurado, usando directorio actual."
 
 #: src/nfile.c:146 src/nfile.c:190
 #, c-format
 msgid "%%APPDATA%% isn't set, using current directory."
-msgstr ""
+msgstr "%%APPDATA%% no esta configurado, usando directorio actual."
 
 #: src/nfile.c:175
 msgid "Cannot determine cache path, using current directory."
-msgstr ""
+msgstr "No se puede determinar la ruta de cache, usando directorio actual."
 
 #: src/nfile.c:181
 msgid "$XDG_CACHE_HOME isn't set, using current directory."
-msgstr ""
+msgstr "$XDG_CACHE_HOME no está configurado, usando el directorio actual."
 
 #: src/nfile.c:291 src/save.c:138
 #, c-format
 msgid "Dir '%s' does not exist and unable to create: %s"
-msgstr ""
+msgstr "Dir '%s' no existe y no se puede crear: %s"
 
 #: src/nfile.c:536
 #, c-format
 msgid "Unable to touch file '%s': %s"
-msgstr ""
+msgstr "Incapaz de tocar el archivo '%s': %s"
 
 #: src/nfile.c:574
 #, c-format
 msgid "Error occurred while writing '%s': %s"
-msgstr ""
+msgstr "Se ha producido un error al escribir '%s': %s"
 
 #: src/nfile.c:583
 #, c-format
 msgid "Error occurred while closing '%s': %s"
-msgstr ""
+msgstr "Se ha producido un error al cerrar '%s': %s"
 
 #: src/nfile.c:623
 msgid ""
 "First argument to nfile_concatPaths was NULL. This is probably an error."
 msgstr ""
+"El primer argumento de nfile_concatPaths era NULL. Esto es probablemente un "
+"error."
 
 #: src/nlua.c:324
 msgid "Failed to create new Lua state."
-msgstr ""
+msgstr "Fallo al crear un nuevo estado Lua."
 
 #: src/nlua.c:439 src/nlua.c:444
 msgid "require: package.path not found."
@@ -98528,38 +98575,39 @@ msgstr ""
 #, c-format
 msgid "Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"
 msgstr ""
+"¡Fuente de búsqueda desconocida '%s'! ¡Debería ser 'seconds' o 'samples'!"
 
 #: src/nlua_audio.c:980
 #, c-format
 msgid "Usupported audio effect type '%s'!"
-msgstr ""
+msgstr "¡Tipo de efecto de audio no soportado '%s'!"
 
 #: src/nlua_audio.c:1049
 #, c-format
 msgid "Unknown audio effect '%s'!"
-msgstr ""
+msgstr "¡Efecto de audio desconocido '%s'!"
 
 #: src/nlua_canvas.c:207 src/opengl_tex.c:227
 msgid "Error setting up framebuffer!"
-msgstr ""
+msgstr "¡Error al configurar el framebuffer!"
 
 #: src/nlua_canvas.c:244
 msgid "Unexpected parameter"
-msgstr ""
+msgstr "Parámetro inesperado"
 
 #: src/nlua_col.c:190
 #, c-format
 msgid "Colour '%s' does not exist!"
-msgstr ""
+msgstr "¡El color '%s' no existe!"
 
 #: src/nlua_commodity.c:132
 msgid "Commodity is invalid."
-msgstr ""
+msgstr "Mercancía inválida."
 
 #: src/nlua_commodity.c:217
 #, c-format
 msgid "Commodity '%s' not found!"
-msgstr ""
+msgstr "¡Mercancía '%s' no encontrada!"
 
 #: src/nlua_commodity.c:324 src/nlua_commodity.c:360 src/nlua_player.c:1295
 #: src/nlua_player.c:1315
@@ -98578,35 +98626,40 @@ msgid ""
 "Trying to create new cargo '%s' that would shadow existing non-temporary "
 "cargo!"
 msgstr ""
+"¡Intentando crear una nueva carga '%s' que haría sombra a una carga no "
+"temporal existente!"
 
 #: src/nlua_data.c:182
 #, c-format
 msgid "unknown data type '%s'"
-msgstr ""
+msgstr "tipo de datos desconocido '%s'"
 
 #: src/nlua_data.c:193
 msgid "position argument must be positive!"
-msgstr ""
+msgstr "¡el argumento de la posición debe ser positivo!"
 
 #: src/nlua_data.c:196
 #, c-format
 msgid "position argument out of bounds: %d of %d elements"
-msgstr ""
+msgstr "argumento de posición fuera de los límites: %d de %d elementos"
 
 #: src/nlua_data.c:292
 #, c-format
 msgid "size mismatch: out of bound access dest: %d of %d elements"
 msgstr ""
+"discrepancia de tamaño: acceso fuera de límites dest: %d de %d elementos"
 
 #: src/nlua_data.c:294
 #, c-format
 msgid "size mismatch: out of bound access of source: %d of %d elements"
 msgstr ""
+"discrepancia de tamaño: acceso fuera de los límites de la fuente: %d de %d "
+"elementos"
 
 #: src/nlua_data.c:328
 #, c-format
 msgid "size mismatch: A has %d elements but B has %d elements"
-msgstr ""
+msgstr "discrepancia de tamaño: A tiene %d elementos pero B tiene %d elementos"
 
 #: src/nlua_data.c:330 src/nlua_data.c:384
 #, c-format
