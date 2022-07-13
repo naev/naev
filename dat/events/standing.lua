@@ -9,19 +9,15 @@
    Handles the player's faction standing reputation caps
 --]]
 local fmt = require "format"
+local lf = require "love.filesystem"
 
 -- luacheck: globals mission_done (Hook functions passed by name)
 
-local factions = {
-   require("factions.empire"),
-   require("factions.soromid"),
-   require("factions.zalek"),
-   require("factions.dvaered"),
-   require("factions.sirius"),
-   require("factions.frontier"),
-   require("factions.goddard"),
-   require("factions.proteron"),
-}
+local factions = {}
+for k,v in ipairs(lf.enumerate("scripts/factions")) do
+   local e = require( "factions."..string.gsub(v,".lua","") )
+   table.insert( factions, e )
+end
 
 local cap_tags_list = {}
 for k, f in ipairs( factions ) do
