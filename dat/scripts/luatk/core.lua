@@ -51,6 +51,20 @@ function luatk.run ()
    love.exec( 'scripts/luatk' )  -- luacheck: ignore
    luatk._love = false
 end
+--[[--
+Closes the toolkit and all windows.
+--]]
+function luatk.close ()
+   luatk._windows = {}
+   if luatk._love then
+      le.quit()
+   end
+end
+--[[--
+Sets the default font to use for the toolkit.
+
+   @tparam font Font to set as default.
+--]]
 function luatk.setDefaultFont( font )
    luatk._deffont = font
 end
@@ -209,6 +223,15 @@ end
 --]]
 luatk.Window = {}
 local Window_mt = { __index=luatk.Window }
+--[[--
+Creates a new window.
+
+   @tparam number|nil x X position of the window or nil to center.
+   @tparam number|nil y Y position of the window or nil to center.
+   @tparam number w Width to set the window to.
+   @tparam number h Height to set the window to.
+   @treturn luatk.Window A new luatk window.
+--]]
 function luatk.newWindow( x, y, w, h )
    local nw, nh = naev.gfx.dim()
    x = x or ((nw-w)/2)
@@ -262,9 +285,17 @@ function luatk.Window:update(dt)
       self.custupdate( dt )
    end
 end
+--[[--
+Sets a custom function to be run each window update.
+
+   @tparam function|nil f Custom function to set. nil disables.
+--]]
 function luatk.Window:setUpdate( f )
    self.custupdate = f
 end
+--[[--
+Destroys a window.
+--]]
 function luatk.Window:destroy()
    for k,w in ipairs(luatk._windows) do
       if w==self then
@@ -273,21 +304,36 @@ function luatk.Window:destroy()
       end
    end
 end
-function luatk.close ()
-   luatk._windows = {}
-   if luatk._love then
-      le.quit()
-   end
-end
+--[[--
+Sets the accept function to be run when enter is pressed.
+
+   @tparam function func Function to set.
+--]]
 function luatk.Window:setAccept( func )
    self.accept = func
 end
+--[[--
+Sets the cancel function to be run when escape is pressed.
+
+   @tparam function func Function to set.
+--]]
 function luatk.Window:setCancel( func )
    self.cancel = func
 end
+--[[--
+Sets a function to handle key input to the window.
+
+   @tparam function func Function to set.
+--]]
 function luatk.Window:setKeypress( func )
    self.keypressed = func
 end
+--[[--
+Gets the dimensions of the window.
+
+   @treturn number Width of the window.
+   @treturn number Height of the window.
+--]]
 function luatk.Window:getDimensions()
    return self.w, self.h
 end
