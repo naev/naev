@@ -554,6 +554,50 @@ function luatk.Image:draw( bx, by )
 end
 
 --[[
+-- Checkbox widget
+--]]
+luatk.Checkbox = {}
+setmetatable( luatk.Checkbox, { __index = luatk.Widget } )
+luatk.Checkbox_mt = { __index = luatk.Checkbox }
+function luatk.newCheckbox( parent, x, y, w, h, text, handler, default )
+   local wgt   = luatk.newWidget( parent, x, y, w, h )
+   setmetatable( wgt, luatk.Checkbox_mt )
+   wgt.text    = text
+   wgt.handler = handler
+   wgt.state   = (default==true)
+   wgt.font    = luatk._deffont or lg.newFont( 12 )
+   wgt.fonth   = wgt.font:getHeight()
+   return wgt
+end
+function luatk.Checkbox:draw( bx, by )
+   bx = bx + self.x
+   by = by + self.y
+   local w, h = self.w, self.h
+
+   lg.setColor( luatk.colour.dark )
+   local s = 12
+   lg.rectangle( "fill", bx, by+(h-s)*0.5, s, s )
+   lg.setColor( luatk.colour.outline )
+   s = 10
+   lg.rectangle( "fill", bx+1, by+(h-s)*0.5, s, s )
+   if self.state then
+      lg.setColor( luatk.colour.dark )
+      s = 6
+      lg.rectangle( "fill", bx+3, by+(h-s)*0.5, s, s )
+   end
+   lg.setColor( luatk.colour.text )
+   lg.printf( self.text, self.font, bx+15, by+(h-self.fonth)*0.5, w-15 )
+end
+function luatk.Checkbox:clicked()
+   self.state = not self.state
+   if self.handler then
+      self.handler(self)
+   end
+end
+function luatk.Checkbox:get() return self.state end
+function luatk.Checkbox:set( state ) self.state = state end
+
+--[[
 -- Fader widget
 --]]
 luatk.Fader = {}
