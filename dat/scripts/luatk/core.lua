@@ -369,6 +369,17 @@ end
 luatk.Button = {}
 setmetatable( luatk.Button, { __index = luatk.Widget } )
 luatk.Button_mt = { __index = luatk.Button }
+--[[
+Creates a new button widget.
+
+   @tparam number x X position of the widget.
+   @tparam number y Y position of the widget.
+   @tparam number w Width of the widget.
+   @tparam number h Height of the widget.
+   @tparam string text Text to display on the widget.
+   @tparam function handler Function to run when the button widget is clicked.
+   @treturn luatk.Button The new button widget.
+]]--
 function luatk.newButton( parent, x, y, w, h, text, handler )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Button_mt )
@@ -428,9 +439,15 @@ function luatk.Button:clicked()
    end
    return false
 end
+--[[--
+Enables a button widget.
+--]]
 function luatk.Button:enable()
    self.disabled = false
 end
+--[[--
+Disables a button widget.
+--]]
 function luatk.Button:disable()
    self.disabled = true
 end
@@ -445,6 +462,15 @@ function luatk.Button:setFCol( col ) self.fcol = col end
 luatk.Text = {}
 setmetatable( luatk.Text, { __index = luatk.Widget } )
 luatk.Text_mt = { __index = luatk.Text }
+--[[
+Creates a new button widget.
+
+   @tparam number x X position of the widget.
+   @tparam number y Y position of the widget.
+   @tparam number w Width of the widget.
+   @tparam number h Height of the widget.
+   @tparam string text Text to display on the widget.
+--]]
 function luatk.newText( parent, x, y, w, h, text, col, align, font )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Text_mt )
@@ -459,9 +485,19 @@ function luatk.Text:draw( bx, by )
    lg.setColor( self.col )
    lg.printf( self.text, self.font, bx+self.x, by+self.y, self.w, self.align )
 end
+--[[--
+Changes the text of the text widget.
+
+   @tparam string text Text to set widget to.
+--]]
 function luatk.Text:set( text )
    self.text = text
 end
+--[[--
+Gets the height of the text widget text.
+
+   @treturn number Height of the text in the widget.
+--]]
 function luatk.Text:height ()
    local _maxw, wrap = self.font:getWrap( self.text, self.w )
    return self.font:getLineHeight() * #wrap
