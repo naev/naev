@@ -5305,12 +5305,12 @@ local function startCommandDiscussion()
 	vn.done()
 	-- talk with the officer about something they know about
 	vn.label("chat")
-	local message
+--	local message
 	
 	vn.func( function()
 		message = _("I'm not sure how to help you.")
 		local chatting = false
-		local more = false
+		local wmore = false
 		-- we want to keep chatting as much as possible
 		local spoken = tk.input(_("Discussion"), 0, 32, _("Say:"))
 		if spoken then
@@ -5404,7 +5404,7 @@ local function startCommandDiscussion()
 							vn.jump("end")
 						else -- we couldn't create a fruit crate from the food
 							message = _("I'm sorry, there's nothing I can do.")
-							insert_sentiment(worker, fmt.f(_("{firstname} won't be happy that I couldn't restock the fruit."), FAKE_CAPTAIN))
+							insert_sentiment(officer, fmt.f(_("{firstname} won't be happy that I couldn't restock the fruit."), FAKE_CAPTAIN))
 						end
 					end
 				end
@@ -5425,14 +5425,14 @@ local function startCommandDiscussion()
 					if string.find(spoken, more) then
 						print(fmt.f("found {more}", {more=more}))
 						vn.jump("start")
-						more = true
+						wmore = true
 						chatting = true
 						insert_sentiment(officer, fmt.f(_("{name} sure likes to chat."), FAKE_CAPTAIN))
 					end
 				end
 			end
 		end
-		if more then vn.jump("start") end
+		if wmore then vn.jump("start") end
 		if not spoken or not chatting then
 			vn.jump("end")
 		end
@@ -5642,12 +5642,12 @@ local function startManagement(edata)
 	vn.done()
 	-- talk with the escort about something
 	vn.label("chat")
-	local message
+--	local message
 	-- TODO: call an approriate function?
 	vn.func( function()
 		message = _("I'm not sure how to help you.")
 		local chatting = false
-		local more = false
+		local want_more = false
 		-- we want to keep chatting as much as possible
 		local spoken = tk.input(_("Discussion"), 0, 32, _("Say:"))
 		if spoken then
@@ -5678,13 +5678,13 @@ local function startManagement(edata)
 					if string.find(spoken, more) then
 						print(fmt.f("found {more}", {more=more}))
 						vn.jump("start")
-						more = true
+						want_more = true
 						chatting = true
 					end
 				end
 			end
 		end
-		if more then vn.jump("start") end
+		if want_more then vn.jump("start") end
 		if not spoken or not chatting then
 			vn.jump("end")
 		end
@@ -6672,7 +6672,7 @@ function engineer_shield(engineer)
 	end
 	engineer.hook.hook = nil
 	local pp = player.pilot()
-	local armour, shield, stress = pp:health()
+	local armour, shield, _stress = pp:health()
 	if armour == nil then return end
 	
 	if shield < math.min(50, 20 + engineer.xp) then
@@ -6711,7 +6711,7 @@ function engineer_power(engineer)
 	end
 	engineer.hook.hook = nil
 	local pp = player.pilot()
-	local armour, shield, stress = pp:health(true)
+	local armour, _shield, _stress = pp:health(true)
 	if armour == nil then return end
 	local current_power = pp:energy(true)
 --	print(fmt.f("armour {armour} points energy {cp} ({energy} %)", { energy=pp:energy(), cp = current_power, armour=armour }))
