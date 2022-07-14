@@ -43,6 +43,7 @@ static int spobL_system( lua_State *L );
 static int spobL_eq( lua_State *L );
 static int spobL_name( lua_State *L );
 static int spobL_nameRaw( lua_State *L );
+static int spobL_population( lua_State *L );
 static int spobL_radius( lua_State *L );
 static int spobL_faction( lua_State *L );
 static int spobL_colour( lua_State *L );
@@ -75,6 +76,7 @@ static const luaL_Reg spob_methods[] = {
    { "__tostring", spobL_name },
    { "name", spobL_name },
    { "nameRaw", spobL_nameRaw },
+   { "population", spobL_population },
    { "radius", spobL_radius },
    { "faction", spobL_faction },
    { "colour", spobL_colour },
@@ -512,6 +514,20 @@ static int spobL_nameRaw( lua_State *L )
 {
    Spob *p = luaL_validspob(L,1);
    lua_pushstring(L, p->name);
+   return 1;
+}
+
+/**
+ * @brief Gets the spob's population.
+ *
+ *    @luatparam Spob p Spob to get the population of.
+ *    @luatreturn number The spob's population.
+ * @luafunc population
+ */
+static int spobL_population( lua_State *L )
+{
+   Spob *p = luaL_validspob(L,1);
+   lua_pushnumber(L,p->population);
    return 1;
 }
 
