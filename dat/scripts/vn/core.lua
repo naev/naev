@@ -690,7 +690,7 @@ function vn.StateSay:_update( dt )
          if vn.autoscroll then
             vn._buffer_y = vn._buffer_y - lh
          else
-            self._finish()
+            vn.StateSay._finish( self )
          end
       end
    end
