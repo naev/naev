@@ -1490,7 +1490,10 @@ Plays a sound.
 --]]
 function vn.sfx( sfx, params )
    params = params or {}
-   vn._checkstarted()
+   if vn._started then
+      luaspfx.sfx( false, nil, sfx, params )
+      return
+   end
    local s = vn.State.new()
    s._init = function (state)
       local _sfx = sfx:clone()
