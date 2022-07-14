@@ -127,7 +127,7 @@ function land ()
       local z = vn.newCharacter( zbh.vn_zach() )
       vn.transition( zbh.zach.transition )
       vn.na(_([[Your ship lands on the station. The moment you and Zach get out of the ship, you hear a loud groan and amidst a shower of sparks, half the engine sputters and falls down onto the ground. As you take cover, your now imbalanced ship falls off to the side and slides on the metal floor in a cacophony of clangs and groans.]]))
-      z(_([["Maybe I should have increased the safety tolerance a bit more. Pretty lucky that this happened now and not while we were travelling through hyperspace. I guess we know know why the ships have the security jump mechanisms."]]))
+      z(_([["Maybe I should have increased the safety tolerance a bit more. Pretty lucky that this happened now and not while we were travelling through hyperspace. I guess we know know why the ships have security jump mechanisms."]]))
       vn.menu{
          {fmt.f(_([["{shipname}! My ship!"]]),{shipname=player.pilot()}), "01ship"},
          {_([["We're not doing that again are we…"]]), "01again"},
@@ -149,7 +149,7 @@ He gives a sign to the drones that start working like ants to lift the ship back
 Zach realizes that he lost you a while back.
 "Ummm, long story short, we may have a way of generating much more antimatter that was feasible up until now!"]]))
       vn.disappear( z, zbh.zach.transition )
-      vn.na(_([[Eventually he leads you to a room who don't recall seeing before, filled with experimental devices and drones flying around. He hands you a book titled "Black Holes for Non-Za'leks" and indicates you to take a seat. You sit down, book in hand, and wait for whatever he's going to do.]]))
+      vn.na(_([[Eventually he leads you to a room you don't recall seeing before, filled with experimental devices and drones flying around. He hands you a book titled "Black Holes for Non-Za'leks" and indicates you to take a seat. You sit down, book in hand, and wait for whatever he's going to do.]]))
       vn.appear( z, zbh.zach.transition )
       vn.na(_([[After what seems like an eternity of you trying to make sense of what is written in the book, which seems to be purposely written to be hard to understand, Zach appears once again and motions for you to follow. He leads you to a room separated by a curtain where there seems to be a large device, and beams a triumphant smile at your, eagerly waiting a reaction.]]))
       vn.menu{

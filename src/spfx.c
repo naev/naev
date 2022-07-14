@@ -347,7 +347,6 @@ int spfx_get( char* name )
  */
 int spfx_load (void)
 {
-   int n, ret;
    char **spfx_files;
    Uint32 time = SDL_GetTicks();
 
@@ -356,11 +355,10 @@ int spfx_load (void)
    spfx_files = ndata_listRecursive( SPFX_DATA_PATH );
    for (int i=0; i<array_size(spfx_files); i++) {
       if (ndata_matchExt( spfx_files[i], "xml" )) {
-         ret = spfx_base_parse( &array_grow(&spfx_effects), spfx_files[i] );
-         if (ret < 0) {
-            n = array_size(spfx_effects);
-            array_erase( &spfx_effects, &spfx_effects[n-1], &spfx_effects[n] );
-         }
+         SPFX_Base spfx;
+         int ret = spfx_base_parse( &spfx, spfx_files[i] );
+         if (ret ==  0)
+            array_push_back( &spfx_effects, spfx );
       }
       free( spfx_files[i] );
    }
@@ -437,11 +435,15 @@ void spfx_free (void)
    for (int i=0; i<array_size(trail_spfx_stack); i++)
       spfx_trail_free( trail_spfx_stack[i] );
    array_free( trail_spfx_stack );
+   trail_spfx_stack = NULL;
 
    /* Free the trail styles. */
-   for (int i=0; i<array_size(trail_spec_stack); i++)
+   for (int i=0; i<array_size(trail_spec_stack); i++) {
       free( trail_spec_stack[i].name );
+      //free( trail_spec_stack[i].filename );
+   }
    array_free( trail_spec_stack );
+   trail_spec_stack = NULL;
 
    /* Get rid of Lua effects. */
    spfxL_exit();
@@ -1115,12 +1117,6 @@ static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )
    xmlNodePtr parent, node;
    xmlDocPtr doc;
 
-   if (firstpass) {
-      memset( tc, 0, sizeof(TrailSpec) );
-      for(int i=0; i<MODE_MAX; i++)
-         tc->style[i].thick = 1.;
-   }
-
    /* Load the data. */
    doc = xml_parsePhysFS( file );
    if (doc == NULL)
@@ -1131,6 +1127,12 @@ static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )
    if (parent == NULL) {
       WARN( _("Malformed '%s' file: does not contain elements"), file );
       return -1;
+   }
+
+   if (firstpass) {
+      memset( tc, 0, sizeof(TrailSpec) );
+      for(int i=0; i<MODE_MAX; i++)
+         tc->style[i].thick = 1.;
    }
 
    xmlr_attr_strd( parent, "inherits", inherits );
@@ -1220,15 +1222,17 @@ static int trailSpec_load (void)
 
    /* First pass sets up and prepares inheritance. */
    for (int i=0; i<array_size(ts_files); i++) {
-      TrailSpec *tc = &array_grow( &trail_spec_stack );
-      trailSpec_parse( tc, ts_files[i], 1 );
+      TrailSpec tc;
+      int ret = trailSpec_parse( &tc, ts_files[i], 1 );
+      if (ret == 0) {
+         tc.filename = ts_files[i];
+         array_push_back( &trail_spec_stack, tc );
+      }
    }
 
    /* Second pass to complete inheritance. */
-   for (int i=0; i<array_size( trail_spec_stack ); i++) {
-      trailSpec_parse( &trail_spec_stack[i], ts_files[i], 0 );
-      free( ts_files[i] );
-   }
+   for (int i=0; i<array_size( trail_spec_stack ); i++)
+      trailSpec_parse( &trail_spec_stack[i], trail_spec_stack[i].filename, 0 );
    array_free( ts_files );
 
    /* Set up thickness. */

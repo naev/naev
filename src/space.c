@@ -119,16 +119,18 @@ int space_spawn = 1; /**< Spawn enabled by default. */
  * Internal Prototypes.
  */
 /* spob load */
-static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList );
+static int spob_parse( Spob *spob, const char *filename, Commodity **stdList );
 static int space_parseSpobs( xmlNodePtr parent, StarSystem* sys );
 static int spob_parsePresence( xmlNodePtr node, SpobPresence *ap );
 /* system load */
 static void system_init( StarSystem *sys );
 static int systems_load (void);
-static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
+static int system_parse( StarSystem *system, const char *filename );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys );
-static void system_parseJumps( const xmlNodePtr parent );
+static int system_parseJumps( StarSystem *sys );
+static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
+static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys );
 /* misc */
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void system_scheduler( double dt, int init );
@@ -1698,46 +1700,27 @@ static int spobs_load (void)
    stdList = standard_commodities();
 
    /* Load XML stuff. */
-   spob_files = PHYSFS_enumerateFiles( SPOB_DATA_PATH );
-   for (size_t i=0; spob_files[i]!=NULL; i++) {
-      xmlNodePtr node;
-      xmlDocPtr doc;
-      char *file;
-
-      if (!ndata_matchExt( spob_files[i], "xml" ))
-         continue;
-
-      asprintf( &file, "%s%s", SPOB_DATA_PATH, spob_files[i]);
-      doc = xml_parsePhysFS( file );
-      if (doc == NULL) {
-         free(file);
-         continue;
-      }
-
-      node = doc->xmlChildrenNode; /* first spob node */
-      if (node == NULL) {
-         WARN(_("Malformed %s file: does not contain elements"),file);
-         free(file);
-         xmlFreeDoc(doc);
-         continue;
-      }
-
-      if (xml_isNode(node,XML_SPOB_TAG)) {
-         Spob *s = spob_new();
-         spob_parse( s, node, stdList );
+   spob_files = ndata_listRecursive( SPOB_DATA_PATH );
+   for (int i=0; i<array_size(spob_files); i++) {
+      if (ndata_matchExt( spob_files[i], "xml" )) {
+         Spob s;
+         int ret = spob_parse( &s, spob_files[i], stdList );
+         if (ret == 0) {
+            s.id = array_size( spob_stack );
+            array_push_back( &spob_stack, s );
+         }
       }
 
       /* Clean up. */
-      free(file);
-      xmlFreeDoc(doc);
+      free( spob_files[i] );
    }
    qsort( spob_stack, array_size(spob_stack), sizeof(Spob), spob_cmp );
    for (int j=0; j<array_size(spob_stack); j++)
       spob_stack[j].id = j;
 
    /* Clean up. */
-   PHYSFS_freeList( spob_files );
-   array_free(stdList);
+   array_free( spob_files );
+   array_free( stdList );
 
    return 0;
 }
@@ -1756,26 +1739,26 @@ static int virtualspobs_load (void)
       vspob_stack = array_create_size(VirtualSpob, 64);
 
    /* Load XML stuff. */
-   spob_files = PHYSFS_enumerateFiles( VIRTUALSPOB_DATA_PATH );
-   for (size_t i=0; spob_files[i]!=NULL; i++) {
+   spob_files = ndata_listRecursive( VIRTUALSPOB_DATA_PATH );
+   for (int i=0; i<array_size(spob_files); i++) {
       xmlDocPtr doc;
       xmlNodePtr node;
-      char *file;
 
-      if (!ndata_matchExt( spob_files[i], "xml" ))
+      if (!ndata_matchExt( spob_files[i], "xml" )) {
+         free( spob_files[i] );
          continue;
+      }
 
-      asprintf( &file, "%s%s", VIRTUALSPOB_DATA_PATH, spob_files[i]);
-      doc = xml_parsePhysFS( file );
+      doc = xml_parsePhysFS( spob_files[i] );
       if (doc == NULL) {
-         free(file);
+         free( spob_files[i] );
          continue;
       }
 
       node = doc->xmlChildrenNode; /* first spob node */
       if (node == NULL) {
-         WARN(_("Malformed %s file: does not contain elements"),file);
-         free(file);
+         WARN(_("Malformed %s file: does not contain elements"), spob_files[i]);
+         free( spob_files[i] );
          xmlFreeDoc(doc);
          continue;
       }
@@ -1804,13 +1787,13 @@ static int virtualspobs_load (void)
       }
 
       /* Clean up. */
-      free(file);
+      free( spob_files[i] );
       xmlFreeDoc(doc);
    }
    qsort( vspob_stack, array_size(vspob_stack), sizeof(VirtualSpob), virtualspob_cmp );
 
    /* Clean up. */
-   PHYSFS_freeList( spob_files );
+   array_free( spob_files );
 
    return 0;
 }
@@ -2095,17 +2078,30 @@ static int spob_parsePresence( xmlNodePtr node, SpobPresence *ap )
  * @brief Parses a spob from an xml node.
  *
  *    @param spob Spob to fill up.
- *    @param parent Node that contains spob data.
+ *    @param filename Name of the file to parse.
  *    @param[in] stdList The array of standard commodities.
  *    @return 0 on success.
  */
-static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList )
+static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
 {
-   xmlNodePtr node;
+   xmlDocPtr doc;
+   xmlNodePtr node, parent;
    unsigned int flags;
    Commodity **comms;
 
+   doc = xml_parsePhysFS( filename );
+   if (doc == NULL)
+      return -1;
+
+   parent = doc->xmlChildrenNode; /* first spob node */
+   if (parent == NULL) {
+      WARN(_("Malformed %s file: does not contain elements"), filename);
+      xmlFreeDoc(doc);
+      return -1;
+   }
+
    /* Clear up memory for safe defaults. */
+   memset( spob, 0, sizeof(Spob) );
    flags             = 0;
    spob->hide        = 0.01;
    spob->radius      = -1.;
@@ -2326,6 +2322,8 @@ static int spob_parse( Spob *spob, const xmlNodePtr parent, Commodity **stdList 
    /* Free temporary comms list. */
    array_free(comms);
 
+   xmlFreeDoc(doc);
+
    return 0;
 }
 
@@ -2502,25 +2500,6 @@ int system_addJumpDiff( StarSystem *sys, xmlNodePtr node )
 }
 
 /**
- * @brief Adds a jump point to a star system.
- *
- * Note that economy_execQueued should always be run after this.
- *
- *    @param sys Star System to add jump point to.
- *    @param node Parent node containing jump point information.
- *    @return 0 on success.
- */
-int system_addJump( StarSystem *sys, xmlNodePtr node )
-{
-   if (system_parseJumpPoint(node, sys) <= -1)
-      return 0;
-   systems_reconstructJumps();
-   economy_refresh();
-
-   return 1;
-}
-
-/**
  * @brief Removes a jump point from a star system.
  *
  * Note that economy_execQueued should always be run after this.
@@ -2672,18 +2651,159 @@ void systems_reconstructSpobs (void)
 }
 
 /**
+ * @brief Parses a single asteroid field for a system.
+ *
+ *    @param node Parent node containing asteroid field information.
+ *    @param sys System.
+ *    @return 0 on success.
+ */
+static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
+{
+   AsteroidAnchor *a;
+   xmlNodePtr cur;
+   int pos;
+
+   /* Allocate more space. */
+   a = &array_grow( &sys->asteroids );
+   memset( a, 0, sizeof(AsteroidAnchor) );
+
+   /* Initialize stuff. */
+   pos         = 1;
+   a->density  = ASTEROID_DEFAULT_DENSITY;
+   a->groups   = array_create( AsteroidTypeGroup* );
+   a->groupsw  = array_create( double );
+   a->radius   = 0.;
+   a->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
+   a->thrust   = ASTEROID_DEFAULT_THRUST;
+
+   /* Parse label if available. */
+   xmlr_attr_strd( node, "label", a->label );
+
+   /* Parse data. */
+   cur = node->xmlChildrenNode;
+   do {
+      xml_onlyNodes(cur);
+
+      xmlr_float( cur, "density", a->density );
+      xmlr_float( cur, "radius", a->radius );
+      xmlr_float( cur, "maxspeed", a->maxspeed );
+      xmlr_float( cur, "thrust", a->thrust );
+
+      /* Handle types of asteroids. */
+      if (xml_isNode(cur,"group")) {
+         double w;
+         const char *name = xml_get(cur);
+         xmlr_attr_float_def(cur,"weight",w,1.);
+         array_push_back( &a->groups, astgroup_getName(name) );
+         array_push_back( &a->groupsw, w );
+         continue;
+      }
+
+      /* Handle position. */
+      if (xml_isNode(cur,"pos")) {
+         double x, y;
+         pos = 1;
+         xmlr_attr_float( cur, "x", x );
+         xmlr_attr_float( cur, "y", y );
+
+         /* Set position. */
+         vec2_cset( &a->pos, x, y );
+         continue;
+      }
+
+      WARN(_("Asteroid Field in Star System '%s' has unknown node '%s'"), sys->name, node->name);
+   } while (xml_nextNode(cur));
+
+   /* Update internals. */
+   asteroids_computeInternals( a );
+
+#define MELEMENT(o,s) \
+if (o) WARN(_("Asteroid Field in Star System '%s' has missing/invalid '%s' element"), sys->name, s) /**< Define to help check for data errors. */
+   MELEMENT(!pos,"pos");
+   MELEMENT(a->radius<=0.,"radius");
+   MELEMENT(array_size(a->groups)==0,"groups");
+#undef MELEMENT
+
+   return 0;
+}
+
+/**
+ * @brief Parses a single asteroid exclusion zone for a system.
+ *
+ *    @param node Parent node containing asteroid exclusion information.
+ *    @param sys System.
+ *    @return 0 on success.
+ */
+static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys )
+{
+   AsteroidExclusion *a;
+   xmlNodePtr cur;
+   double x, y;
+   int pos;
+
+   /* Allocate more space. */
+   a = &array_grow( &sys->astexclude );
+   memset( a, 0, sizeof(*a) );
+
+   /* Initialize stuff. */
+   pos = 0;
+
+   /* Parse data. */
+   cur = node->xmlChildrenNode;
+   do {
+      xml_onlyNodes( cur );
+
+      xmlr_float( cur, "radius", a->radius );
+
+      /* Handle position. */
+      if (xml_isNode(cur,"pos")) {
+         pos = 1;
+         xmlr_attr_float( cur, "x", x );
+         xmlr_attr_float( cur, "y", y );
+
+         /* Set position. */
+         vec2_cset( &a->pos, x, y );
+         continue;
+      }
+      WARN(_("Asteroid Exclusion Zone in Star System '%s' has unknown node '%s'"), sys->name, node->name);
+   } while (xml_nextNode(cur));
+
+#define MELEMENT(o,s) \
+if (o) WARN(_("Asteroid Exclusion Zone in Star System '%s' has missing/invalid '%s' element"), sys->name, s) /**< Define to help check for data errors. */
+   MELEMENT(!pos,"pos");
+   MELEMENT(a->radius<=0.,"radius");
+#undef MELEMENT
+
+   return 0;
+}
+
+/**
  * @brief Creates a system from an XML node.
  *
  *    @param sys System to set up.
- *    @param parent XML node to get system from.
- *    @return System matching parent data.
+ *    @param filename Name of the file to parse.
+ *    @return 0 on success.
  */
-static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
+static int system_parse( StarSystem *sys, const char *filename )
 {
-   xmlNodePtr node;
+   xmlNodePtr node, parent;
+   xmlDocPtr doc;
    uint32_t flags;
 
+   /* Load the file. */
+   doc = xml_parsePhysFS( filename );
+   if (doc == NULL)
+      return -1;
+
+   parent = doc->xmlChildrenNode; /* first spob node */
+   if (parent == NULL) {
+      WARN(_("Malformed %s file: does not contain elements"), filename);
+      xmlFreeDoc(doc);
+      return -1;
+   }
+
    /* Clear memory for safe defaults. */
+   system_init( sys );
    flags          = 0;
    sys->presence  = array_create( SystemPresence );
    sys->ownerpresence = 0.;
@@ -2749,6 +2869,17 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          continue;
       }
 
+      if (xml_isNode(node,"asteroids")) {
+         xmlNodePtr cur = node->children;
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"asteroid"))
+               system_parseAsteroidField( cur, sys );
+            else if (xml_isNode(cur,"exclusion"))
+               system_parseAsteroidExclusion( cur, sys );
+         } while (xml_nextNode(cur));
+      }
+
       if (xml_isNode(node, "stats")) {
          xmlNodePtr cur = node->children;
          do {
@@ -2790,6 +2921,8 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    ss_sort( &sys->stats );
    array_shrink( &sys->spobs );
    array_shrink( &sys->spobsid );
+   array_shrink( &sys->asteroids );
+   array_shrink( &sys->astexclude );
 
    /* Convert hue from 0 to 359 value to 0 to 1 value. */
    sys->nebu_hue /= 360.;
@@ -2805,6 +2938,8 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    MELEMENT(sys->radius==0.,"radius");
    MELEMENT((flags&FLAG_INTERFERENCESET)==0,"inteference");
 #undef MELEMENT
+
+   xmlFreeDoc( doc );
 
    return 0;
 }
@@ -3019,30 +3154,25 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 /**
  * @brief Loads the jumps into a system.
  *
- *    @param parent System parent node.
+ *    @param sys Star system to load jumps of.
+ *    @return 0 on success.
  */
-static void system_parseJumps( const xmlNodePtr parent )
+static int system_parseJumps( StarSystem *sys )
 {
-   StarSystem *sys;
-   char* name;
-   xmlNodePtr cur, node;
+   xmlNodePtr parent, cur, node;
+   xmlDocPtr doc;
 
-   xmlr_attr_strd( parent, "name", name );
-   sys = NULL;
-   for (int i=0; i<array_size(systems_stack); i++) {
-      if (strcmp( systems_stack[i].name, name)==0) {
-         sys = &systems_stack[i];
-         break;
-      }
+   doc = xml_parsePhysFS( sys->filename );
+   if (doc == NULL)
+      return -1;
+
+   parent = doc->xmlChildrenNode; /* first spob node */
+   if (parent == NULL) {
+      xmlFreeDoc(doc);
+      return -1;
    }
-   if (sys == NULL) {
-      WARN(_("System '%s' was not found in the stack for some reason"),name);
-      return;
-   }
-   free(name); /* no more need for it */
 
    node  = parent->xmlChildrenNode;
-
    do { /* load all the data */
       if (xml_isNode(node,"jumps")) {
          cur = node->children;
@@ -3054,6 +3184,9 @@ static void system_parseJumps( const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    array_shrink( &sys->jumps );
+
+   xmlFreeDoc(doc);
+   return 0;
 }
 
 /**
@@ -3150,48 +3283,34 @@ int space_loadLua (void)
  */
 static int systems_load (void)
 {
-   char **system_files, *file;
-   xmlNodePtr node;
-   xmlDocPtr doc;
-   StarSystem *sys;
+   char **system_files;
    Uint32 time = SDL_GetTicks();
 
    /* Allocate if needed. */
    if (systems_stack == NULL)
       systems_stack = array_create( StarSystem );
 
-   system_files = PHYSFS_enumerateFiles( SYSTEM_DATA_PATH );
+   system_files = ndata_listRecursive( SYSTEM_DATA_PATH );
 
    /*
     * First pass - loads all the star systems_stack.
     */
-   for (size_t i=0; system_files[i]!=NULL; i++) {
+   for (int i=0; i<array_size(system_files); i++) {
+      StarSystem sys;
+
       if (!ndata_matchExt( system_files[i], "xml" ))
          continue;
 
-      asprintf( &file, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
-      /* Load the file. */
-      doc = xml_parsePhysFS( file );
-      if (doc == NULL)
-         continue;
+      int ret = system_parse( &sys, system_files[i] );
+      if (ret == 0) {
+         sys.filename = system_files[i];
+         sys.id = array_size(systems_stack);
 
-      node = doc->xmlChildrenNode; /* first spob node */
-      if (node == NULL) {
-         WARN(_("Malformed %s file: does not contain elements"),file);
-         xmlFreeDoc(doc);
-         continue;
+         /* Update asteroid info. */
+         system_updateAsteroids( &sys );
+
+         array_push_back( &systems_stack, sys );
       }
-
-      sys = system_new();
-      system_parse( sys, node );
-      asteroids_parse(node, sys); /* load the asteroids anchors */
-
-      /* Update asteroid info. */
-      system_updateAsteroids( sys );
-
-      /* Clean up. */
-      xmlFreeDoc(doc);
-      free( file );
    }
    qsort( systems_stack, array_size(systems_stack), sizeof(StarSystem), system_cmp );
    for (int j=0; j<array_size(systems_stack); j++) {
@@ -3202,29 +3321,11 @@ static int systems_load (void)
    /*
     * Second pass - loads all the jump routes.
     */
-   for (size_t i=0; system_files[i]!=NULL; i++) {
-      asprintf( &file, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
-      /* Load the file. */
-      doc = xml_parsePhysFS( file );
-      free( file );
-      file = NULL;
-      if (doc == NULL)
-         continue;
-
-      node = doc->xmlChildrenNode; /* first spob node */
-      if (node == NULL) {
-         xmlFreeDoc(doc);
-         continue;
-      }
-
-      system_parseJumps(node); /* will automatically load the jumps into the system */
-
-      /* Clean up. */
-      xmlFreeDoc(doc);
-   }
+   for (int i=0; i<array_size(systems_stack); i++)
+      system_parseJumps( &systems_stack[i] );
 
    /* Clean up. */
-   PHYSFS_freeList( system_files );
+   array_free( system_files );
 
    if (conf.devmode) {
       time = SDL_GetTicks() - time;
@@ -3436,6 +3537,7 @@ void space_exit (void)
    for (int i=0; i < array_size(systems_stack); i++) {
       StarSystem *sys = &systems_stack[i];
 
+      free(sys->filename);
       free(sys->name);
       free(sys->background);
       free(sys->map_shader);

@@ -174,11 +174,10 @@ int effect_load (void)
 
    for (int i=0; i<array_size(effect_files); i++) {
       if (ndata_matchExt( effect_files[i], "xml" )) {
-         int ret = effect_parse( &array_grow(&effect_list), effect_files[i] );
-         if (ret < 0) {
-            int n = array_size( effect_list );
-            array_erase( &effect_list, &effect_list[n-1], &effect_list[n] );
-         }
+         EffectData ed;
+         int ret = effect_parse( &ed, effect_files[i] );
+         if (ret == 0)
+            array_push_back( &effect_list, ed );
       }
       free( effect_files[i] );
    }

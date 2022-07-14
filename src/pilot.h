@@ -338,8 +338,9 @@ typedef struct Pilot_ {
 
    /* AI */
    AI_Profile* ai;   /**< AI personality profile */
+   int lua_mem;      /**< AI memory. */
    double tcontrol;  /**< timer for control tick */
-   double timer[MAX_AI_TIMERS]; /**< timers for AI */
+   double timer[MAX_AI_TIMERS]; /**< Timers for AI */
    Task* task;       /**< current action */
    unsigned int shoot_indicator; /**< Indicator to inform the AI if a seeker has been shot recently. */
 

@@ -233,10 +233,11 @@ typedef struct MapShader_ {
  */
 struct StarSystem_ {
    int id;                 /**< Star system index. */
+   char *filename;         /** Name of the file loaded from. */
 
    /* General. */
    char* name;             /**< star system name */
-   vec2 pos;           /**< Position */
+   vec2 pos;               /**< Position */
    int stars;              /**< Amount of "stars" it has. */
    double interference;    /**< in % @todo implement interference. */
    double nebu_hue;        /**< Hue of the nebula (0. - 1.) */
@@ -360,7 +361,6 @@ int system_addSpob( StarSystem *sys, const char *spobname );
 int system_rmSpob( StarSystem *sys, const char *spobname );
 int system_addVirtualSpob( StarSystem *sys, const char *spobname );
 int system_rmVirtualSpob( StarSystem *sys, const char *spobname );
-int system_addJump( StarSystem *sys, xmlNodePtr node );
 int system_addJumpDiff( StarSystem *sys, xmlNodePtr node );
 int system_rmJump( StarSystem *sys, const char *jumpname );
 

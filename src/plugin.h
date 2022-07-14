@@ -10,6 +10,7 @@ typedef struct plugin_s {
    char *description;   /**< Decscription of the plugin. */
    char *compatibility; /**< Compatibility with Naev versions. */
    char *mountpoint;    /**< Where it is mounted. */
+   int priority;        /**< Loading priority of the mod. Lower is better, defaults to 5. */
    int compatible;      /**< Whether or not it is compatible with the current version of Naev. */
 } plugin_t;
 

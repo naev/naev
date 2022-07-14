@@ -2165,6 +2165,7 @@ static int outfit_parse( Outfit* temp, const char* file )
 
    /* Clear data. */
    memset( temp, 0, sizeof(Outfit) );
+   temp->filename = strdup( file );
    desc_extra = NULL;
 
    /* Defaults. */
@@ -2421,11 +2422,10 @@ static int outfit_loadDir( char *dir )
    char **outfit_files = ndata_listRecursive( dir );
    for (int i=0; i < array_size( outfit_files ); i++) {
       if (ndata_matchExt( outfit_files[i], "xml" )) {
-         int ret = outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
-         if (ret < 0) {
-            int n = array_size(outfit_stack);
-            array_erase( &outfit_stack, &outfit_stack[n-1], &outfit_stack[n] );
-         }
+         Outfit o;
+         int ret = outfit_parse( &o, outfit_files[i] );
+         if (ret == 0)
+            array_push_back( &outfit_stack, o );
       }
       free( outfit_files[i] );
    }
@@ -2600,36 +2600,21 @@ int outfit_loadPost (void)
  */
 int outfit_mapParse (void)
 {
-   char **map_files = PHYSFS_enumerateFiles( MAP_DATA_PATH );
-
-   for (size_t i=0; map_files[i]!=NULL; i++) {
+   for (int i=0; i<array_size(outfit_stack); i++) {
       xmlDocPtr doc;
       xmlNodePtr node, cur;
-      Outfit *o;
-      char *file, *n;
+      Outfit *o = &outfit_stack[i];
 
-      asprintf( &file, "%s%s", MAP_DATA_PATH, map_files[i] );
-
-      doc = xml_parsePhysFS( file );
-      if (doc == NULL) {
-         WARN(_("%s file is invalid xml!"), file);
-         free(file);
+      if (!outfit_isMap(o))
          continue;
-      }
+
+      doc = xml_parsePhysFS( o->filename );
+      if (doc == NULL)
+         continue;
 
       node = doc->xmlChildrenNode; /* first system node */
       if (node == NULL) {
-         WARN( _("Malformed '%s' file: does not contain elements"), OUTFIT_DATA_PATH );
-         free(file);
-         xmlFreeDoc(doc);
-         continue;
-      }
-
-      xmlr_attr_strd( node, "name", n );
-      o = (Outfit*) outfit_get( n ); /* Ugh :/ */
-      free(n);
-      if (!outfit_isMap(o)) { /* If its not a map, we don't care. */
-         free(file);
+         WARN( _("Malformed '%s' file: does not contain elements"), o->filename );
          xmlFreeDoc(doc);
          continue;
       }
@@ -2645,12 +2630,8 @@ int outfit_mapParse (void)
       } while (xml_nextNode(cur));
 
       /* Clean up. */
-      free(file);
       xmlFreeDoc(doc);
    }
-
-   /* Clean up. */
-   PHYSFS_freeList( map_files );
 
    return 0;
 }
@@ -2695,6 +2676,8 @@ void outfit_free (void)
 {
    for (int i=0; i < array_size(outfit_stack); i++) {
       Outfit *o = &outfit_stack[i];
+
+      free( o->filename );
 
       /* Free graphics */
       gl_freeTexture( (glTexture*) outfit_gfx(o)); /*< This is horrible and I should be ashamed. */

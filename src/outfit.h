@@ -304,6 +304,7 @@ typedef struct Outfit_ {
    char *name;       /**< Name of the outfit. */
    char *typename;   /**< Overrides the base type. */
    int rarity;       /**< Rarity of the outfit. */
+   char *filename;   /**< File data was loaded from. */
 
    /* General specs */
    OutfitSlot slot;  /**< Slot the outfit fits into. */

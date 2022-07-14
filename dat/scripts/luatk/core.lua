@@ -1,5 +1,8 @@
 --[[
--- Implementation of parts of the Naev toolkit... in Lua!
+   Implementation of parts of the Naev toolkit... in Lua!
+
+   Based on Love2D API
+   @module luatk
 --]]
 local lg = require 'love.graphics'
 local le = require 'love.event'
@@ -40,11 +43,28 @@ local luatk = {
 --[[
 -- Global functions
 --]]
+--[[--
+Runs the luatk. Should be used after the windows are set up.
+--]]
 function luatk.run ()
    luatk._love = true
    love.exec( 'scripts/luatk' )  -- luacheck: ignore
    luatk._love = false
 end
+--[[--
+Closes the toolkit and all windows.
+--]]
+function luatk.close ()
+   luatk._windows = {}
+   if luatk._love then
+      le.quit()
+   end
+end
+--[[--
+Sets the default font to use for the toolkit.
+
+   @tparam font Font to set as default.
+--]]
 function luatk.setDefaultFont( font )
    luatk._deffont = font
 end
@@ -52,11 +72,22 @@ end
 --[[
 -- Important functions
 --]]
+--[[--
+Draws the luatk toolkit.
+
+Only to be used when running the toolkit outside of luatk.run.
+--]]
 function luatk.draw()
    for _k,wdw in ipairs(luatk._windows) do
       wdw:draw()
    end
 end
+--[[--
+Updates the luatk toolkit.
+
+Only to be used when running the toolkit outside of luatk.run.
+   @tparam number dt Number of seconds since last update.
+--]]
 function luatk.update(dt)
    for _k,wdw in ipairs(luatk._windows) do
       wdw:update(dt)
@@ -65,6 +96,15 @@ end
 local function _checkbounds( b, mx, my )
    return not (mx < b.x or mx > b.x+b.w or my < b.y or my > b.y+b.h)
 end
+--[[--
+Handles mouse clicks.
+
+Only to be used when running the toolkit outside of luatk.run.
+   @tparam number mx X coordinates of the mouse click.
+   @tparam number my Y coordinates of the mouse click.
+   @tparam integer button Number of the button pressed.
+   @treturn boolean true if the event was used, false otherwise.
+--]]
 function luatk.mousepressed( mx, my, button )
    local wdw = luatk._windows[ #luatk._windows ]
    if not wdw or not _checkbounds(wdw,mx,my) then return false end
@@ -81,6 +121,15 @@ function luatk.mousepressed( mx, my, button )
 
    return false
 end
+--[[--
+Handles mouse releases
+
+Only to be used when running the toolkit outside of luatk.run.
+   @tparam number mx X coordinates of the mouse released position.
+   @tparam number my Y coordinates of the mouse released position.
+   @tparam integer button Number of the button released.
+   @treturn boolean true if the event was used, false otherwise.
+--]]
 function luatk.mousereleased( mx, my, button )
    local wdw = luatk._windows[ #luatk._windows ]
    local x, y = mx-wdw.x, my-wdw.y
@@ -101,6 +150,14 @@ function luatk.mousereleased( mx, my, button )
 
    return false
 end
+--[[--
+Handles mouse motion.
+
+Only to be used when running the toolkit outside of luatk.run.
+   @tparam number mx X coordinates of the mouse released position.
+   @tparam number my Y coordinates of the mouse released position.
+   @treturn boolean true if the event was used, false otherwise.
+--]]
 function luatk.mousemoved( mx, my )
    local wdw = luatk._windows[ #luatk._windows ]
    if not wdw or not _checkbounds(wdw,mx,my) then return false end
@@ -118,6 +175,11 @@ function luatk.mousemoved( mx, my )
 
    return false
 end
+--[[--
+Handles key presses.
+
+   @treturn string key Name of the key pressed.
+--]]
 function luatk.keypressed( key )
    local wdw = luatk._windows[ #luatk._windows ]
    if not wdw then return false end
@@ -161,6 +223,15 @@ end
 --]]
 luatk.Window = {}
 local Window_mt = { __index=luatk.Window }
+--[[--
+Creates a new window.
+
+   @tparam number|nil x X position of the window or nil to center.
+   @tparam number|nil y Y position of the window or nil to center.
+   @tparam number w Width to set the window to.
+   @tparam number h Height to set the window to.
+   @treturn luatk.Window A new luatk window.
+--]]
 function luatk.newWindow( x, y, w, h )
    local nw, nh = naev.gfx.dim()
    x = x or ((nw-w)/2)
@@ -214,9 +285,17 @@ function luatk.Window:update(dt)
       self.custupdate( dt )
    end
 end
+--[[--
+Sets a custom function to be run each window update.
+
+   @tparam function|nil f Custom function to set. nil disables.
+--]]
 function luatk.Window:setUpdate( f )
    self.custupdate = f
 end
+--[[--
+Destroys a window.
+--]]
 function luatk.Window:destroy()
    for k,w in ipairs(luatk._windows) do
       if w==self then
@@ -225,21 +304,36 @@ function luatk.Window:destroy()
       end
    end
 end
-function luatk.close ()
-   luatk._windows = {}
-   if luatk._love then
-      le.quit()
-   end
-end
+--[[--
+Sets the accept function to be run when enter is pressed.
+
+   @tparam function func Function to set.
+--]]
 function luatk.Window:setAccept( func )
    self.accept = func
 end
+--[[--
+Sets the cancel function to be run when escape is pressed.
+
+   @tparam function func Function to set.
+--]]
 function luatk.Window:setCancel( func )
    self.cancel = func
 end
+--[[--
+Sets a function to handle key input to the window.
+
+   @tparam function func Function to set.
+--]]
 function luatk.Window:setKeypress( func )
    self.keypressed = func
 end
+--[[--
+Gets the dimensions of the window.
+
+   @treturn number Width of the window.
+   @treturn number Height of the window.
+--]]
 function luatk.Window:getDimensions()
    return self.w, self.h
 end
@@ -275,6 +369,17 @@ end
 luatk.Button = {}
 setmetatable( luatk.Button, { __index = luatk.Widget } )
 luatk.Button_mt = { __index = luatk.Button }
+--[[
+Creates a new button widget.
+
+   @tparam number x X position of the widget.
+   @tparam number y Y position of the widget.
+   @tparam number w Width of the widget.
+   @tparam number h Height of the widget.
+   @tparam string text Text to display on the widget.
+   @tparam function handler Function to run when the button widget is clicked.
+   @treturn luatk.Button The new button widget.
+]]--
 function luatk.newButton( parent, x, y, w, h, text, handler )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Button_mt )
@@ -334,9 +439,15 @@ function luatk.Button:clicked()
    end
    return false
 end
+--[[--
+Enables a button widget.
+--]]
 function luatk.Button:enable()
    self.disabled = false
 end
+--[[--
+Disables a button widget.
+--]]
 function luatk.Button:disable()
    self.disabled = true
 end
@@ -351,6 +462,15 @@ function luatk.Button:setFCol( col ) self.fcol = col end
 luatk.Text = {}
 setmetatable( luatk.Text, { __index = luatk.Widget } )
 luatk.Text_mt = { __index = luatk.Text }
+--[[
+Creates a new button widget.
+
+   @tparam number x X position of the widget.
+   @tparam number y Y position of the widget.
+   @tparam number w Width of the widget.
+   @tparam number h Height of the widget.
+   @tparam string text Text to display on the widget.
+--]]
 function luatk.newText( parent, x, y, w, h, text, col, align, font )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Text_mt )
@@ -365,9 +485,19 @@ function luatk.Text:draw( bx, by )
    lg.setColor( self.col )
    lg.printf( self.text, self.font, bx+self.x, by+self.y, self.w, self.align )
 end
+--[[--
+Changes the text of the text widget.
+
+   @tparam string text Text to set widget to.
+--]]
 function luatk.Text:set( text )
    self.text = text
 end
+--[[--
+Gets the height of the text widget text.
+
+   @treturn number Height of the text in the widget.
+--]]
 function luatk.Text:height ()
    local _maxw, wrap = self.font:getWrap( self.text, self.w )
    return self.font:getLineHeight() * #wrap
@@ -422,6 +552,50 @@ function luatk.Image:draw( bx, by )
    lg.setColor( self.col )
    self.img:draw( bx+self.x, by+self.y, self.rot, self.w, self.h )
 end
+
+--[[
+-- Checkbox widget
+--]]
+luatk.Checkbox = {}
+setmetatable( luatk.Checkbox, { __index = luatk.Widget } )
+luatk.Checkbox_mt = { __index = luatk.Checkbox }
+function luatk.newCheckbox( parent, x, y, w, h, text, handler, default )
+   local wgt   = luatk.newWidget( parent, x, y, w, h )
+   setmetatable( wgt, luatk.Checkbox_mt )
+   wgt.text    = text
+   wgt.handler = handler
+   wgt.state   = (default==true)
+   wgt.font    = luatk._deffont or lg.newFont( 12 )
+   wgt.fonth   = wgt.font:getHeight()
+   return wgt
+end
+function luatk.Checkbox:draw( bx, by )
+   bx = bx + self.x
+   by = by + self.y
+   local w, h = self.w, self.h
+
+   lg.setColor( luatk.colour.dark )
+   local s = 12
+   lg.rectangle( "fill", bx, by+(h-s)*0.5, s, s )
+   lg.setColor( luatk.colour.outline )
+   s = 10
+   lg.rectangle( "fill", bx+1, by+(h-s)*0.5, s, s )
+   if self.state then
+      lg.setColor( luatk.colour.dark )
+      s = 6
+      lg.rectangle( "fill", bx+3, by+(h-s)*0.5, s, s )
+   end
+   lg.setColor( luatk.colour.text )
+   lg.printf( self.text, self.font, bx+15, by+(h-self.fonth)*0.5, w-15 )
+end
+function luatk.Checkbox:clicked()
+   self.state = not self.state
+   if self.handler then
+      self.handler(self)
+   end
+end
+function luatk.Checkbox:get() return self.state end
+function luatk.Checkbox:set( state ) self.state = state end
 
 --[[
 -- Fader widget

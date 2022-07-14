@@ -1094,6 +1094,8 @@ static int mission_parseFile( const char* file, MissionData *temp )
       WARN(_("Unable to read data from '%s'"), file);
       return -1;
    }
+   if (bufsize==0)
+      return -1;
 
    /* Skip if no XML. */
    pos = strnstr( filebuf, "</mission>", bufsize );
@@ -1102,7 +1104,7 @@ static int mission_parseFile( const char* file, MissionData *temp )
       if ((pos != NULL) && !strncmp(pos,"--common",bufsize))
          WARN(_("Mission '%s' has create function but no XML header!"), file);
       free(filebuf);
-      return 0;
+      return -1;
    }
 
    /* Separate XML header and Lua. */
@@ -1129,7 +1131,7 @@ static int mission_parseFile( const char* file, MissionData *temp )
    if (temp == NULL)
       temp = &array_grow(&mission_stack);
    mission_parseXML( temp, node );
-   temp->lua = strdup(filebuf);
+   temp->lua = filebuf;
    temp->sourcefile = strdup(file);
 
 #ifdef DEBUGGING
@@ -1145,7 +1147,6 @@ static int mission_parseFile( const char* file, MissionData *temp )
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(filebuf);
 
    return 0;
 }

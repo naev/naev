@@ -310,7 +310,7 @@ The communication software once more flickers and reboots.]]))
    z(fmt.f(_([["I guess we won't be able to do much more than this for now. Let me see if we can transmit something to get it to follow you back to {pnt}."]]),
       {pnt=mainpnt}))
    vn.sfx( zbh.sfx.spacewhale2 )
-   z(_([[Zach hits some buttons and tramsits something similar to what you heard coming from the feral bioship.
+   z(_([[Zach hits some buttons and transmits something similar to what you heard coming from the feral bioship.
 "Follow. Safe."]]))
    f(_([[Eventually, it seems like necessity overcomes fear, and the feral bioship begins to follow your ship.]]))
    z(fmt.f(_([["OK, it seems like it's following you. Try leading it back to {pnt}.]]),{pnt=mainpnt}))
