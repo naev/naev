@@ -13,7 +13,7 @@ return {
    -- Based on tribal hierarchy
    text = {
       [100] = _("Elder"),
-      [70]  = _("Warror"),
+      [70]  = _("Warrior"),
       [50]  = _("Hunter"),
       [30]  = _("Initiate"),
       [0]   = _("Neutral"),

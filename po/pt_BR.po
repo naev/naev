@@ -75356,7 +75356,7 @@ msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh04.lua:313
 msgid ""
-"Zach hits some buttons and tramsits something similar to what you heard "
+"Zach hits some buttons and transmits something similar to what you heard "
 "coming from the feral bioship.\n"
 "\"Follow. Safe.\""
 msgstr ""
@@ -83496,10 +83496,6 @@ msgstr ""
 #| msgid "Elderman"
 msgid "Elder"
 msgstr "Elderman"
-
-#: dat/scripts/factions/soromid.lua:16
-msgid "Warror"
-msgstr ""
 
 #: dat/scripts/factions/soromid.lua:17
 msgid "Hunter"
@@ -93151,7 +93147,7 @@ msgid "Calculating Patrols…"
 msgstr ""
 
 #: src/naev.c:630
-msgid "Initializing Details.."
+msgid "Initializing Details…"
 msgstr ""
 
 #. Initialize player stuff.
