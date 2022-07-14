@@ -1188,7 +1188,8 @@ local function create_pilot(fac)
     newpilot.spawning = false
     newpilot.portrait = portrait.get(portrait_arg)
 	newpilot.portrait_offduty = newpilot.portrait
-	newpilot.vncharacter = "escort_menu.png"
+	newpilot.portrait_onduty = pilot_portrait()
+	newpilot.vncharacter = portrait.getFullPath(newpilot.portrait)
     newpilot.chatter = math.min(0.96, math.max(0.04, 0.5 + 0.3 * rnd.threesigma())) -- add some personality flavour
     newpilot.dreamship = dream_choices[rnd.rnd(1, #dream_choices)]
     for _j, shipname in ipairs(big_dreams) do
@@ -1207,6 +1208,7 @@ local function create_pilot(fac)
 --				"neutral/female4.webp", -- this one has a baby, would need to be a kid that can stay "the same age" for a while
 			})
 			newpilot.portrait_offduty = string.gsub(string.gsub(newpilot.vncharacter, ".webp", "n.webp"), "_nogogn", "n_nogog")
+			newpilot.portrait_onduty = string.gsub(string.gsub(newpilot.vncharacter, ".webp", "n.webp"), "_nogogn", "n_nogog")
         end
     end
 	
@@ -2195,6 +2197,14 @@ function jumpout()
 end
 
 function land()
+	--[[
+	-- hack to fix portraits (should be safe to delete)
+	for _i, pers in ipairs(mem.persons) do
+		if not pers.portrait_onduty then pers.portrait_onduty = pilot_portrait(pers.commander) end
+		pers.portrait = pers.portrait_onduty
+		if not pers.active then pers.portrait = pers.portrait_offduty end
+	end
+	--]]
     mem.lastplanet = spob.cur()
 	mem.lastsys = system.cur()
 	local commander_exists = false
@@ -2887,7 +2897,7 @@ function escort_barConversation( persona, npc_id )
 		fmt.f(_([[Oh, you mean in that {dreamship} that I don't have?]]), persona),
 		fmt.f(_([[Listen pal, {name}'s not going back to work until {name} gets a {dreamship}, got it?]]), persona),
 	})
-	
+
 	vn.clear()
 	vn.scene()
 	local escort = vn.newCharacter ( persona.name, {image=persona.vncharacter } )
@@ -2904,10 +2914,12 @@ function escort_barConversation( persona, npc_id )
 		for _i, pers in ipairs(mem.persons) do
 			pers.active = persona.active
 			pers.portrait = pers.portrait_offduty
-			
+			if not pers.commander then
+				pers.vncharacter = portrait.getFullPath(pers.portrait)
+			end
 		end
+		-- commander takes off the uniform
 		persona.portrait = persona.portrait_offduty
-		
 	end )
 	escort(_([[Always nice to take a break for a little while. Just let me know when you need an eye on your back before you need it.]]))
 	vn.na(_([[You have placed your commander and the rest of the support fleet on temporary leave.]]))
@@ -2918,8 +2930,12 @@ function escort_barConversation( persona, npc_id )
 		persona.active = not persona.active
 		for _i, pers in ipairs(mem.persons) do
 			pers.active = persona.active
-			pers.portrait = pilot_portrait()
+			pers.portrait = pers.portrait_onduty
+			if not pers.commander then
+				pers.vncharacter = portrait.getFullPath(pers.portrait)
+			end
 		end
+		-- commander suits up
 		persona.portrait = pilot_portrait(persona.commander)
 	end )
 	escort(_([[It was nice while it lasted, but vacation doesn't bring in the credits. Point us to the ships and salvage and we'll watch your back and split the profits.]]))
@@ -2932,6 +2948,9 @@ function escort_barConversation( persona, npc_id )
 			persona.portrait_offduty = string.gsub(string.gsub(persona.vncharacter, ".webp", "n.webp"), "_nogogn", "n_nogog")
 		end
 		persona.portrait = persona.portrait_offduty
+		if not persona.commander then
+			persona.vncharacter = portrait.getFullPath(persona.portrait)
+		end
 		persona.active = false
 	end )
 	escort(_([[Yeah, sure, whatever.]]))
@@ -2946,7 +2965,8 @@ function escort_barConversation( persona, npc_id )
 			or string.find(pick_favorite_ship(persona), persona.ship:nameRaw())
 			or has_commander and rnd.rnd(1,3) == 3 -- having a commander can increase the odds though
 			then
-			persona.portrait = pilot_portrait(persona.commander)
+			persona.portrait = persona.portrait_onduty
+			persona.vncharacter = portrait.getFullPath(persona.portrait)
 			persona.active = true
 		else
 			vn.jump("disobedient")
@@ -2959,7 +2979,8 @@ function escort_barConversation( persona, npc_id )
 	vn.func( function ()
 		escort_buyUpgrade(persona, buy_ship)
 		-- the escort changes outfits after getting a new ship
-		persona.portrait = pilot_portrait(persona.commander)
+		persona.portrait_onduty = pilot_portrait(persona.commander)
+		persona.portrait = persona.portrait_onduty
 	end )
 	escort(_([["Always nice to get a change of pace. Hopefully I remember how to fly it!"]]))
 	vn.done()
@@ -2967,7 +2988,8 @@ function escort_barConversation( persona, npc_id )
 	vn.func( function ()
 		escort_buyUpgrade(persona, upgrade_ship)
 		-- the escort changes outfits after getting an upgrade
-		persona.portrait = pilot_portrait(persona.commander)
+		persona.portrait_onduty = pilot_portrait(persona.commander)
+		persona.portrait = persona.portrait_onduty
 	end )
 	escort(_([["Nice! It's about time I got an upgrade."]]))
 	vn.done()
@@ -3081,7 +3103,7 @@ Pilot credentials:]])
         tk.choice(
         "",
         getOfferText(approachtext, edata),
-        _(fmt.f("Commend efforts", {credits = fmt.credits(tip_amount)})),
+        _(commendation_label),
         _("Get to Work"),
         _("Call back"),
         _("Do nothing")
