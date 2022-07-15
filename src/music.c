@@ -36,9 +36,7 @@ int music_disabled = 0; /**< Whether or not music is disabled. */
  */
 static SDL_mutex *music_lock = NULL; /**< lock for music_runLua so it doesn't
                                           run twice in a row with weird
-                                          results.
-                                          DO NOT CALL MIX_* FUNCTIONS WHEN
-                                          LOCKED!!! */
+                                          results. */
 static int music_runchoose = 0; /**< Whether or not music should run the choose function. */
 static char *music_situation = NULL; /**< What situation music is in. */
 
@@ -561,8 +559,6 @@ int music_chooseDelay( const char* situation, double delay )
 
 /**
  * @brief Attempts to rechoose the music.
- *
- * DO NOT CALL MIX_* FUNCTIONS FROM WITHIN THE CALLBACKS!
  */
 void music_rechoose (void)
 {
