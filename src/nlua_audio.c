@@ -203,8 +203,7 @@ static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
 
    /* load the buffer up */
    soundLock();
-   alBufferData( buffer, la->format,
-         buf, size, la->info->rate );
+   alBufferData( buffer, la->format, buf, size, la->info->rate );
    al_checkErr();
    soundUnlock();
 
@@ -489,17 +488,44 @@ static int audioL_new( lua_State *L )
       la.buf->refcount = 1;
       alGenBuffers( 1, &la.buf->buffer );
       sound_al_buffer( &la.buf->buffer, rw, name );
+
+      /* Attach buffer. */
+      alSourcei( la.source, AL_BUFFER, la.buf->buffer );
    }
    else {
+      vorbis_comment *vc;
+      ALfloat track_gain_db, track_peak;
+      char *tag;
+
       la.type = LUA_AUDIO_STREAM;
       la.rw = rw;
+      if (ov_open_callbacks( la.rw, &la.stream, NULL, 0, sound_al_ovcall ) < 0) {
+         NLUA_ERROR(L,_("Audio '%s' does not appear to be a Vorbis bitstream."), name );
+      }
+      la.info = ov_info( &la.stream, -1 );
+
+      /* Replaygain information. */
+      vc             = ov_comment( &la.stream, -1 );
+      track_gain_db  = 0.;
+      track_peak     = 1.;
+      if ((tag = vorbis_comment_query(vc, "replaygain_track_gain", 0)))
+         track_gain_db  = atof(tag);
+      if ((tag = vorbis_comment_query(vc, "replaygain_track_peak", 0)))
+         track_peak     = atof(tag);
+      la.rg_scale_factor = pow(10.0, (track_gain_db + RG_PREAMP_DB)/20.0);
+      la.rg_max_scale  = 1.0 / track_peak;
+
+      /* Set the format */
+      if (la.info->channels == 1)
+         la.format = AL_FORMAT_MONO16;
+      else
+         la.format = AL_FORMAT_STEREO16;
+
       la.active = 0;
       la.cond = SDL_CreateCond();
       alGenBuffers( 2, la.stream_buffers );
+      /* Buffers get queued later. */
    }
-
-   /* Attach buffer. */
-   alSourcei( la.source, AL_BUFFER, la.buf->buffer );
 
    /* Defaults. */
    la.volume = 1.;
@@ -598,14 +624,14 @@ static int audioL_play( lua_State *L )
          int ret = stream_loadBuffer( la, la->stream_buffers[ la->active ] );
          soundLock();
 
-         if (ret==0) {
+         if (ret>=0) {
             alSourceQueueBuffers( la->source, 1, &la->stream_buffers[ la->active ] );
 
             soundUnlock();
 
             la->active = 1;
             ret = stream_loadBuffer( la, la->stream_buffers[ la->active ] );
-            if (ret==0) {
+            if (ret>=0) {
                la->active = 1-la->active;
                soundLock();
                alSourceQueueBuffers( la->source, 1, &la->stream_buffers[ la->active ] );
