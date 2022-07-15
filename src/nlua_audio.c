@@ -26,6 +26,10 @@
 #include "nstring.h"
 #include "sound.h"
 #include "sound_openal.h"
+/**
+ * @brief Default pre-amp in dB.
+ */
+#define RG_PREAMP_DB       0.0
 
 /**
  * @brief Handles the OpenAL effects that have been set up Lua side.
@@ -40,6 +44,10 @@ typedef struct LuaAudioEfx_s {
  * @brief List of effects handled by Lua. These are persistent throughout game runtime.
  */
 static LuaAudioEfx_t *lua_efx = NULL;
+
+static int stream_thread( void *la_data );
+static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer );
+static void rg_filter( float **pcm, long channels, long samples, void *filter_param );
 
 /* Audio methods. */
 static int audioL_gc( lua_State *L );
@@ -111,6 +119,134 @@ static const luaL_Reg audioL_methods[] = {
    { "soundPlay", audioL_soundPlay }, /* Old API */
    {0,0}
 }; /**< AudioLua methods. */
+
+static int stream_thread( void *la_data )
+{
+   LuaAudio_t *la = (LuaAudio_t*) la_data;
+   ALint alstate;
+
+   while (1) {
+      soundLock();
+
+      /* Case finished. */
+      if (la->active < 0) {
+         la->th = NULL;
+         SDL_CondBroadcast( la->cond );
+         soundUnlock();
+         return 0;
+      }
+
+      alGetSourcei( la->source, AL_BUFFERS_PROCESSED, &alstate );
+      if (alstate > 0) {
+         int ret;
+         /* Refill active buffer */
+         alSourceUnqueueBuffers( la->source, 1, la->stream_buffers );
+         ret = stream_loadBuffer( la, la->stream_buffers[ la->active ] );
+         if (ret < 0)
+            la->active = -1;
+         else {
+            alSourceQueueBuffers( la->source, 1, &la->stream_buffers[ la->active ] );
+            la->active = 1 - la->active;
+         }
+      }
+      soundUnlock();
+
+      SDL_Delay(0);
+   }
+}
+
+/**
+ * @brief Loads a buffer.
+ */
+static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
+{
+   int ret;
+   size_t size;
+   char buf[ 128 * 1024 ];
+
+   ret  = 0;
+   size = 0;
+   while (size < sizeof(buf)) { /* file up the entire data buffer */
+      int section;
+      int result = ov_read_filter(
+            &la->stream,   /* stream */
+            &buf[size],             /* data */
+            sizeof(buf) - size,    /* amount to read */
+            (SDL_BYTEORDER == SDL_BIG_ENDIAN),
+            2,                      /* 16 bit */
+            1,                      /* signed */
+            &section,               /* current bitstream */
+            rg_filter,              /* filter function */
+            la );                   /* filter parameter */
+
+      /* End of file. */
+      if (result == 0) {
+         if (size == 0) {
+            return -2;
+         }
+         ret = 1;
+         break;
+      }
+      /* Hole error. */
+      else if (result == OV_HOLE) {
+         WARN(_("OGG: Vorbis hole detected in music!"));
+         return 0;
+      }
+      /* Bad link error. */
+      else if (result == OV_EBADLINK) {
+         WARN(_("OGG: Invalid stream section or corrupt link in music!"));
+         return -1;
+      }
+
+      size += result;
+   }
+
+   /* load the buffer up */
+   soundLock();
+   alBufferData( buffer, la->format,
+         buf, size, la->info->rate );
+   al_checkErr();
+   soundUnlock();
+
+   return ret;
+}
+
+/**
+ * @brief This is the filter function for the decoded Ogg Vorbis stream.
+ *
+ * base on:
+ * vgfilter.c (c) 2007,2008 William Poetra Yoga Hadisoeseno
+ * based on:
+ * vgplay.c 1.0 (c) 2003 John Morton
+ */
+static void rg_filter( float **pcm, long channels, long samples, void *filter_param )
+{
+   LuaAudio_t *param    = filter_param;
+   float scale_factor   = param->rg_scale_factor;
+   float max_scale      = param->rg_max_scale;
+
+   /* Apply the gain, and any limiting necessary */
+   if (scale_factor > max_scale) {
+      for (int i=0; i < channels; i++)
+         for (int j=0; j < samples; j++) {
+            float cur_sample = pcm[i][j] * scale_factor;
+            /*
+             * This is essentially the scaled hard-limiting algorithm
+             * It looks like the soft-knee to me
+             * I haven't found a better limiting algorithm yet...
+             */
+            if (cur_sample < -0.5)
+               cur_sample = tanh((cur_sample + 0.5) / (1-0.5)) * (1-0.5) - 0.5;
+            else if (cur_sample > 0.5)
+               cur_sample = tanh((cur_sample - 0.5) / (1-0.5)) * (1-0.5) + 0.5;
+            pcm[i][j] = cur_sample;
+         }
+   }
+   else if (scale_factor > 0.0)
+      for (int i=0; i < channels; i++)
+         for (int j=0; j < samples; j++)
+            pcm[i][j] *= scale_factor;
+}
 
 /**
  * @brief Checks to see a boolean property of a source.
@@ -236,9 +372,25 @@ void audio_cleanup( LuaAudio_t *la )
          free( la->buf );
       }
    }
+
+   if (la->type == LUA_AUDIO_STREAM) {
+      if (la->th != NULL) {
+         la->active = -1;
+         SDL_CondWaitTimeout( la->cond, sound_lock, 3000 );
+      }
+      SDL_RWclose( la->rw );
+      alDeleteSources( 2, la->stream_buffers );
+      SDL_DestroyCond( la->cond );
+      ov_clear( &la->stream );
+   }
+
    /* Clean up. */
    al_checkErr();
    soundUnlock();
+
+   /* Close audio if applicable. */
+   if (la->rw)
+      SDL_RWclose( la->rw );
 }
 
 /**
@@ -280,6 +432,7 @@ static int audioL_eq( lua_State *L )
  * @brief Creates a new audio source.
  *
  *    @luatparam string|File data Data to load the audio from.
+ *    @luatparam[opt="static"] string  Either "static" to load the entire source at the start, or "stream" to load it in real time.
  *    @luatreturn Audio New audio corresponding to the data.
  * @luafunc new
  */
@@ -287,11 +440,12 @@ static int audioL_new( lua_State *L )
 {
    LuaAudio_t la;
    LuaFile_t *lf;
-   const char *name;
    double master;
+   int stream;
+   const char *name;
+   SDL_RWops *rw;
 
-   name = NULL;
-
+   /* First parameter. */
    if (lua_isstring(L,1))
       name = lua_tostring(L,1);
    else if (lua_isfile(L,1)) {
@@ -301,44 +455,71 @@ static int audioL_new( lua_State *L )
    else
       NLUA_INVALID_PARAMETER(L);
 
-   memset( &la, 0, sizeof(LuaAudio_t) );
-   if (sound_disabled)
-      la.nocleanup = 1; /* Not initialized so no need to clean up. */
+   /* Second parameter. */
+   if (lua_isnoneornil(L,2)) {
+      stream = 0;
+   }
    else {
-      SDL_RWops *rw = PHYSFSRWOPS_openRead( name );
-      if (rw==NULL)
-         NLUA_ERROR(L,"Unable to open '%s'", name );
+      const char *type = luaL_optstring(L,2,"static");
+      if (strcmp(type,"static")==0)
+         stream = 0;
+      else if (strcmp(type,"stream")==0)
+         stream = 1;
+      else
+         NLUA_INVALID_PARAMETER(L);
+   }
 
-      soundLock();
-      alGenSources( 1, &la.source );
+   memset( &la, 0, sizeof(LuaAudio_t) );
+   if (sound_disabled) {
+      la.nocleanup = 1; /* Not initialized so no need to clean up. */
+      lua_pushaudio(L, la);
+      return 1;
+   }
+   rw = PHYSFSRWOPS_openRead( name );
+   if (rw==NULL)
+      NLUA_ERROR(L,"Unable to open '%s'", name );
 
+   soundLock();
+   alGenSources( 1, &la.source );
+
+   /* Deal with stream. */
+   if (!stream) {
+      la.type = LUA_AUDIO_STATIC;
       la.buf = malloc( sizeof(LuaBuffer_t) );
       la.buf->refcount = 1;
       alGenBuffers( 1, &la.buf->buffer );
       sound_al_buffer( &la.buf->buffer, rw, name );
-
-      /* Attach buffer. */
-      alSourcei( la.source, AL_BUFFER, la.buf->buffer );
-
-      /* Defaults. */
-      la.volume = 1.;
-      master = sound_getVolumeLog();
-      alSourcef( la.source, AL_GAIN, master );
-      /* The behaviour of sources depends on whether or not they are mono or
-       * stereo. In the case they are stereo, no position stuff is actually
-       * done. However, if they are mono, they are played with absolute
-       * position and the sound heard depends on the listener. We can disable
-       * this by setting AL_SOURCE_RELATIVE which puts the listener always at
-       * the origin, and then setting the source at the same origin. It should
-       * be noted that depending on the sound model this can be bad if it is
-       * not bounded. */
-      alSourcei( la.source, AL_SOURCE_RELATIVE, AL_TRUE );
-      alSource3f( la.source, AL_POSITION, 0., 0., 0. );
-      al_checkErr();
-      soundUnlock();
-
-      SDL_RWclose( rw );
    }
+   else {
+      la.type = LUA_AUDIO_STREAM;
+      la.rw = rw;
+      la.active = 0;
+      la.cond = SDL_CreateCond();
+      alGenBuffers( 2, la.stream_buffers );
+   }
+
+   /* Attach buffer. */
+   alSourcei( la.source, AL_BUFFER, la.buf->buffer );
+
+   /* Defaults. */
+   la.volume = 1.;
+   master = sound_getVolumeLog();
+   alSourcef( la.source, AL_GAIN, master );
+   /* The behaviour of sources depends on whether or not they are mono or
+      * stereo. In the case they are stereo, no position stuff is actually
+      * done. However, if they are mono, they are played with absolute
+      * position and the sound heard depends on the listener. We can disable
+      * this by setting AL_SOURCE_RELATIVE which puts the listener always at
+      * the origin, and then setting the source at the same origin. It should
+      * be noted that depending on the sound model this can be bad if it is
+      * not bounded. */
+   alSourcei( la.source, AL_SOURCE_RELATIVE, AL_TRUE );
+   alSource3f( la.source, AL_POSITION, 0., 0., 0. );
+   al_checkErr();
+   soundUnlock();
+
+   if (!stream)
+      SDL_RWclose( rw );
 
    lua_pushaudio(L, la);
    return 1;
@@ -357,12 +538,19 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
    soundLock();
    alGenSources( 1, &la->source );
 
-   /* Attach source buffer. */
-   la->buf = source->buf;
-   la->buf->refcount++;
+   switch (la->type) {
+      case LUA_AUDIO_STATIC:
+         /* Attach source buffer. */
+         la->buf = source->buf;
+         la->buf->refcount++;
 
-   /* Attach buffer. */
-   alSourcei( la->source, AL_BUFFER, la->buf->buffer );
+         /* Attach buffer. */
+         alSourcei( la->source, AL_BUFFER, la->buf->buffer );
+         break;
+
+      case LUA_AUDIO_STREAM:
+         break;
+   }
 
    /* TODO this should probably set the same parameters as the original source
     * being cloned to be truly compatible with Love2D. */
@@ -406,7 +594,31 @@ static int audioL_play( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    if (!sound_disabled) {
-      soundLock();
+      if ((la->type == LUA_AUDIO_STREAM) && (la->th==NULL)) {
+         int ret = stream_loadBuffer( la, la->stream_buffers[ la->active ] );
+         soundLock();
+
+         if (ret==0) {
+            alSourceQueueBuffers( la->source, 1, &la->stream_buffers[ la->active ] );
+
+            soundUnlock();
+
+            la->active = 1;
+            ret = stream_loadBuffer( la, la->stream_buffers[ la->active ] );
+            if (ret==0) {
+               la->active = 1-la->active;
+               soundLock();
+               alSourceQueueBuffers( la->source, 1, &la->stream_buffers[ la->active ] );
+               la->th = SDL_CreateThread( stream_thread, "stream_thread", la );
+            }
+            else
+               soundLock();
+         }
+         else
+            la->active = -1;
+      }
+      else
+         soundLock();
       alSourcePlay( la->source );
       al_checkErr();
       soundUnlock();
