@@ -171,5 +171,5 @@ function endCutscene()
     player.pilot():setHide(false)
     player.cinematics(false)
     misn.osdActive(2)
-    music.delay("ambient", 0)
+    music.choose("ambient")
 end

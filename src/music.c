@@ -43,7 +43,9 @@ static char *music_situation = NULL; /**< What situation music is in. */
 /*
  * global music lua
  */
-static nlua_env music_env = LUA_NOREF; /**< The Lua music control env. */
+static nlua_env music_env     = LUA_NOREF; /**< The Lua music control env. */
+static int music_lua_update   = LUA_NOREF;
+static int music_lua_choose   = LUA_NOREF;
 /* functions */
 static int music_runLua( const char *situation );
 
@@ -52,7 +54,6 @@ static int music_runLua( const char *situation );
  */
 static char *music_name       = NULL; /**< Current music name. */
 static unsigned int music_start = 0; /**< Music start playing time. */
-static double music_timer     = 0.; /**< Music timer. */
 static int music_temp_disabled= 0; /**< Music is temporarily disabled. */
 static int music_temp_repeat  = 0; /**< Music is repeating. */
 static char *music_temp_repeatname = NULL; /**< Repeating song name. */
@@ -72,36 +73,21 @@ static void music_luaQuit (void);
  */
 void music_update( double dt )
 {
-   char *buf;
-
    if (music_disabled)
       return;
 
    if (music_temp_disabled)
       return;
 
-   /* Timer stuff. */
-   if (music_timer > 0.) {
-      music_timer -= dt;
-      if (music_timer <= 0.)
-         music_runchoose = 1;
-   }
-
-   /* Lock music and see if needs to update. */
+   /* Run the choose function in Lua. */
    SDL_mutexP(music_lock);
-   if (music_runchoose == 0) {
-      SDL_mutexV(music_lock);
-      return;
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_update );
+   lua_pushnumber( naevL, dt );
+   if (nlua_pcall(music_env, 1, 0)) { /* error has occurred */
+      WARN(_("Error while running music function '%s': %s"), "update", lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
    }
-   music_runchoose = 0;
-   buf = strdup( music_situation );
    SDL_mutexV(music_lock);
-   music_runLua( buf );
-   free( buf );
-
-   /* Make sure music is playing. */
-   if (!music_isPlaying())
-      music_choose("idle");
 }
 
 /**
@@ -125,13 +111,13 @@ static int music_runLua( const char *situation )
    }
 
    /* Run the choose function in Lua. */
-   nlua_getenv( naevL, music_env, "choose" );
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_choose );
    if (situation != NULL)
       lua_pushstring( naevL, situation );
    else
       lua_pushnil( naevL );
    if (nlua_pcall(music_env, 1, 0)) { /* error has occurred */
-      WARN(_("Error while choosing music: %s"), lua_tostring(naevL,-1));
+      WARN(_("Error while running music function '%s': %s"), "choose", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
 
@@ -425,76 +411,34 @@ void music_setPos( double sec )
  */
 static int music_luaInit (void)
 {
+   char *buf;
+   size_t bufsize;
+
    if (music_disabled)
       return 0;
 
    if (music_env != LUA_NOREF)
       music_luaQuit();
 
-   /* Load default file. */
-   music_luaFile( MUSIC_LUA_PATH );
-
-   return 0;
-}
-
-static int music_luaSetup (void)
-{
    /* Reset the environment. */
-   nlua_freeEnv(music_env);
    music_env = nlua_newEnv();
    nlua_loadStandard(music_env);
    nlua_loadMusic(music_env); /* write it */
-   return 0;
-}
-
-/**
- * @brief Loads the music Lua handler from a file.
- *
- *    @param filename File to load.
- *    @return 0 on success.
- */
-int music_luaFile( const char *filename )
-{
-   char *buf;
-   size_t bufsize;
-
-   music_luaSetup();
 
    /* load the actual Lua music code */
-   buf = ndata_read( filename, &bufsize );
-   if (nlua_dobufenv(music_env, buf, bufsize, filename) != 0) {
+   buf = ndata_read( MUSIC_LUA_PATH, &bufsize );
+   if (nlua_dobufenv(music_env, buf, bufsize, MUSIC_LUA_PATH) != 0) {
       ERR(_("Error loading music file: %s\n"
           "%s\n"
           "Most likely Lua file has improper syntax, please check"),
-            filename, lua_tostring(naevL,-1) );
+            MUSIC_LUA_PATH, lua_tostring(naevL,-1) );
       return -1;
    }
    free(buf);
 
-   /* Free repeatname. */
-   free( music_temp_repeatname );
-
-   return 0;
-}
-
-/**
- * @brief Loads the music Lua handler from a string
- *
- *    @param str String to load.
- *    @return 0 on success.
- */
-int music_luaString( const char *str )
-{
-   music_luaSetup();
-
-   /* load the actual Lua music code */
-   if (nlua_dobufenv(music_env, str, strlen(str), "string") != 0) {
-      ERR(_("Error loading music string:\n"
-          "%s\n"
-          "Most likely Lua file has improper syntax, please check"),
-            lua_tostring(naevL,-1) );
-      return -1;
-   }
+   /* Set up comfort functions. */
+   music_lua_choose = nlua_refenvtype( music_env, "choose", LUA_TFUNCTION );
+   music_lua_update = nlua_refenvtype( music_env, "update", LUA_TFUNCTION );
 
    /* Free repeatname. */
    free( music_temp_repeatname );
@@ -511,7 +455,9 @@ static void music_luaQuit (void)
       return;
 
    nlua_freeEnv(music_env);
-   music_env = LUA_NOREF;
+   music_env         = LUA_NOREF;
+   music_lua_choose  = LUA_NOREF;
+   music_lua_update  = LUA_NOREF;
 }
 
 /**
@@ -525,34 +471,9 @@ int music_choose( const char* situation )
    if (music_disabled)
       return 0;
 
-   music_timer = 0.;
    music_temp_repeat = 0;
    music_temp_disabled = 0;
    music_runLua( situation );
-
-   return 0;
-}
-
-/**
- * @brief Actually runs the music stuff, based on situation after a delay.
- *
- *    @param situation Choose a new music to play after delay.
- *    @param delay Delay in seconds to delay the rechoose.
- *    @return 0 on success.
- */
-int music_chooseDelay( const char* situation, double delay )
-{
-   if (music_disabled)
-      return 0;
-
-   /* Lock so it doesn't run in between an update. */
-   SDL_mutexP(music_lock);
-   music_timer       = delay;
-   music_temp_disabled = 0;
-   music_runchoose   = 0;
-   free(music_situation);
-   music_situation = strdup(situation);
-   SDL_mutexV(music_lock);
 
    return 0;
 }
@@ -570,7 +491,6 @@ void music_rechoose (void)
 
    /* Lock so it doesn't run in between an update. */
    SDL_mutexP(music_lock);
-   music_timer       = 0.;
    music_runchoose   = 1;
    music_temp_disabled = 0;
    free(music_situation);

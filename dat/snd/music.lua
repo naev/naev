@@ -45,46 +45,6 @@ local system_ambient_songs = {
 -- Stores all the available sound types and their functions
 local choose_table = {}
 
-function choose( str )
-   -- Don't change or play music if a mission or event doesn't want us to
-   if var.peek( "music_off" ) then
-      return
-   end
-
-   -- Allow restricting play of music until a song finishes
-   if var.peek( "music_wait" ) then
-      if music.isPlaying() then
-         return
-      else
-         var.pop( "music_wait" )
-      end
-   end
-
-   -- Means to only change song if needed
-   if str == nil then
-      str = "ambient"
-   end
-
-   -- If we are over idling then we do weird stuff
-   local changed
-   if str == "idle" and last ~= "idle" then
-      -- We'll play the same as last unless it was takeoff
-      if last == "takeoff" then
-         changed = choose_table.ambient()
-      else
-         changed = choose( last )
-      end
-
-   -- Normal case
-   else
-      changed = choose_table[ str ]()
-   end
-
-   if changed and str ~= "idle" then
-      last = str -- save the last string so we can use it
-   end
-end
-
 
 --[[--
 Checks to see if a song is being played, if it is it stops it.
@@ -225,9 +185,7 @@ function choose_table.ambient ()
       local _songname, songpos = music.current()
 
       -- Do not change songs so soon
-      if songpos < 10. then
-         music.delay( "ambient", 10. - songpos )
-         last = "ambient"  -- or else a periodic "idle" may stomp the change!
+      if songpos < 10 then
          return false
       end
    end
@@ -415,4 +373,55 @@ function choose_table.combat ()
    music.load( new_track )
    music.play()
    return true
+end
+
+function choose( str )
+   -- Don't change or play music if a mission or event doesn't want us to
+   if var.peek( "music_off" ) then
+      return
+   end
+
+   -- Allow restricting play of music until a song finishes
+   if var.peek( "music_wait" ) then
+      if music.isPlaying() then
+         return
+      else
+         var.pop( "music_wait" )
+      end
+   end
+
+   str = str or "ambient"
+
+   -- If we are over idling then we do weird stuff
+   local changed
+   if str == "idle" and last ~= "idle" then
+      -- We'll play the same as last unless it was takeoff
+      if last == "takeoff" then
+         changed = choose_table.ambient()
+      else
+         changed = choose( last )
+      end
+
+   -- Normal case
+   else
+      changed = choose_table[ str ]()
+   end
+
+   if changed and str ~= "idle" then
+      last = str -- save the last string so we can use it
+   end
+end
+
+local update_rate = 0.5
+local update_timer = 0
+function update( dt )
+   update_timer = update_timer - dt
+   if update_timer > 0 then
+      return
+   end
+   update_timer = update_rate
+
+   if not music.isPlaying() then
+      choose( "ambient" )
+   end
 end

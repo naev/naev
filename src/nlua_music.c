@@ -20,7 +20,7 @@
 #include "nluadef.h"
 
 /* Music methods. */
-static int musicL_delay( lua_State *L );
+static int musicL_choose( lua_State *L );
 static int musicL_load( lua_State *L );
 static int musicL_play( lua_State *L );
 static int musicL_pause( lua_State *L );
@@ -31,7 +31,7 @@ static int musicL_current( lua_State *L );
 static int musicL_setRepeat( lua_State *L );
 static int musicL_getVolume( lua_State *L );
 static const luaL_Reg music_methods[] = {
-   { "delay", musicL_delay },
+   { "choose", musicL_choose },
    { "load", musicL_load },
    { "play", musicL_play },
    { "pause", musicL_pause },
@@ -70,18 +70,15 @@ int nlua_loadMusic( nlua_env env )
 /**
  * @brief Delays a rechoose.
  *
- * @usage music.delay( "ambient", 5.0 ) -- Rechooses ambient in 5 seconds
+ * @usage music.choose( "ambient" ) -- Rechooses ambient in 5 seconds
  *
  *    @luatparam string situation Situation to choose.
- *    @luatparam number delay Delay in seconds.
- * @luafunc delay
+ * @luafunc choose
  */
-static int musicL_delay( lua_State* L )
+static int musicL_choose( lua_State* L )
 {
    const char *situation = luaL_checkstring(L,1);
-   double delay          = luaL_checknumber(L,2);
-   /* Delay. */
-   music_chooseDelay( situation, delay );
+   music_choose( situation );
    return 0;
 }
 
