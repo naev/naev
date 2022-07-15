@@ -123,9 +123,11 @@ static const luaL_Reg audioL_methods[] = {
 static int stream_thread( void *la_data )
 {
    LuaAudio_t *la = (LuaAudio_t*) la_data;
-   ALint alstate;
 
    while (1) {
+      ALint alstate;
+      ALuint removed;
+
       soundLock();
 
       /* Case finished. */
@@ -140,7 +142,7 @@ static int stream_thread( void *la_data )
       if (alstate > 0) {
          int ret;
          /* Refill active buffer */
-         alSourceUnqueueBuffers( la->source, 1, la->stream_buffers );
+         alSourceUnqueueBuffers( la->source, 1, &removed );
          ret = stream_loadBuffer( la, la->stream_buffers[ la->active ] );
          if (ret < 0)
             la->active = -1;
@@ -151,7 +153,7 @@ static int stream_thread( void *la_data )
       }
       soundUnlock();
 
-      SDL_Delay(0);
+      SDL_Delay(5);
    }
 }
 
@@ -162,7 +164,7 @@ static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
 {
    int ret;
    size_t size;
-   char buf[ 128 * 1024 ];
+   char buf[ 32 * 1024 ];
 
    ret  = 0;
    size = 0;
@@ -620,28 +622,24 @@ static int audioL_play( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    if (!sound_disabled) {
-      if ((la->type == LUA_AUDIO_STREAM) && (la->th==NULL)) {
-         int ret = stream_loadBuffer( la, la->stream_buffers[ la->active ] );
+      if ((la->type == LUA_AUDIO_STREAM) && (la->th == NULL)) {
+         int ret;
+         ALint alstate;
          soundLock();
-
-         if (ret>=0) {
-            alSourceQueueBuffers( la->source, 1, &la->stream_buffers[ la->active ] );
-
-            soundUnlock();
-
-            la->active = 1;
+         alGetSourcei( la->source, AL_BUFFERS_QUEUED, &alstate );
+         soundUnlock();
+         while (alstate < 2) {
             ret = stream_loadBuffer( la, la->stream_buffers[ la->active ] );
-            if (ret>=0) {
-               la->active = 1-la->active;
-               soundLock();
-               alSourceQueueBuffers( la->source, 1, &la->stream_buffers[ la->active ] );
-               la->th = SDL_CreateThread( stream_thread, "stream_thread", la );
-            }
-            else
-               soundLock();
+            if (ret < 0)
+               break;
+            soundLock();
+            alSourceQueueBuffers( la->source, 1, &la->stream_buffers[ la->active ] );
+            la->active = 1-la->active;
+            alGetSourcei( la->source, AL_BUFFERS_QUEUED, &alstate );
+            soundUnlock();
          }
-         else
-            la->active = -1;
+         if (ret == 0)
+            la->th = SDL_CreateThread( stream_thread, "stream_thread", la );
       }
       else
          soundLock();
