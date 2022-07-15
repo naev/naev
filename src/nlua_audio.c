@@ -382,16 +382,11 @@ void audio_cleanup( LuaAudio_t *la )
       alDeleteBuffers( 2, la->stream_buffers );
       SDL_DestroyCond( la->cond );
       ov_clear( &la->stream );
-      la->rw = NULL;
    }
 
    /* Clean up. */
    al_checkErr();
    soundUnlock();
-
-   /* Close audio if applicable. */
-   if (la->rw)
-      SDL_RWclose( la->rw );
 }
 
 /**
@@ -503,8 +498,8 @@ static int audioL_new( lua_State *L )
       char *tag;
 
       la.type = LUA_AUDIO_STREAM;
-      la.rw = rw;
-      if (ov_open_callbacks( la.rw, &la.stream, NULL, 0, sound_al_ovcall ) < 0) {
+      /* ov_clear will close rw for us. */
+      if (ov_open_callbacks( rw, &la.stream, NULL, 0, sound_al_ovcall ) < 0) {
          SDL_RWclose( rw );
          NLUA_ERROR(L,_("Audio '%s' does not appear to be a Vorbis bitstream."), name );
       }

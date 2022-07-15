@@ -34,7 +34,6 @@ typedef struct LuaAudio_s {
    /* When not streaming. */
    LuaBuffer_t *buf; /**< Shared buffer. */
    /* When streaming. */
-   SDL_RWops *rw;    /**< Buffer, only applicable if streaming. */
    OggVorbis_File stream; /**< Vorbis file stream. */
    vorbis_info *info; /**< Information of the tream. */
    ALenum format;    /**< Stream format. */
