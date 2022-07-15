@@ -379,10 +379,10 @@ void audio_cleanup( LuaAudio_t *la )
          la->active = -1;
          SDL_CondWaitTimeout( la->cond, sound_lock, 3000 );
       }
-      SDL_RWclose( la->rw );
-      alDeleteSources( 2, la->stream_buffers );
+      alDeleteBuffers( 2, la->stream_buffers );
       SDL_DestroyCond( la->cond );
       ov_clear( &la->stream );
+      la->rw = NULL;
    }
 
    /* Clean up. */
@@ -493,6 +493,9 @@ static int audioL_new( lua_State *L )
 
       /* Attach buffer. */
       alSourcei( la.source, AL_BUFFER, la.buf->buffer );
+
+      /* Clean up. */
+      SDL_RWclose( rw );
    }
    else {
       vorbis_comment *vc;
@@ -502,6 +505,7 @@ static int audioL_new( lua_State *L )
       la.type = LUA_AUDIO_STREAM;
       la.rw = rw;
       if (ov_open_callbacks( la.rw, &la.stream, NULL, 0, sound_al_ovcall ) < 0) {
+         SDL_RWclose( rw );
          NLUA_ERROR(L,_("Audio '%s' does not appear to be a Vorbis bitstream."), name );
       }
       la.info = ov_info( &la.stream, -1 );
@@ -545,9 +549,6 @@ static int audioL_new( lua_State *L )
    alSource3f( la.source, AL_POSITION, 0., 0., 0. );
    al_checkErr();
    soundUnlock();
-
-   if (!stream)
-      SDL_RWclose( rw );
 
    lua_pushaudio(L, la);
    return 1;
