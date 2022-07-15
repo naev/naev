@@ -5316,8 +5316,10 @@ function startDiscussion(crewmate)
 					responses = join_tables(responses, generate_responses(spoken, crewmate))
 				end
 
-				if not spoken then
-					vntk.msg(name_label, fmt.f(pick_one(responses), FAKE_CAPTAIN))
+				if not spoken or spoken.len() == 0 then
+					message = fmt.f(pick_one(responses), FAKE_CAPTAIN)
+					vn.jump("end")
+					return
 				end
 				
 				-- finally, use our fancy analyzer to see if the player "scores" and can continue the conversation
@@ -5810,7 +5812,7 @@ local function startCommandDiscussion()
 
 			-- buy everyone a drink, but not the person who bought the round
 			if worker ~= officer then
-				local enjoyment = rnd.sigma() + siphoned_xp
+				local enjoyment = rnd.sigma() + siphoned_xp - rnd.rnd()
 				worker.satisfaction = math.min(10, worker.satisfaction + enjoyment * 0.1)
 				if enjoyment >= 1.25 then
 					worker.conversation.sentiment = _("I really enjoyed that motivational speech.")
@@ -5856,8 +5858,13 @@ local function startCommandDiscussion()
 
 	-- summon a single crewmate for a conversation on the bridge
 	vn.label("summon_single")
-	vn.func( function () 
-		hook.timer(rnd.rnd(2, 6), "startDiscussion", command)
+	vn.func( function ()
+		-- TODO: check if this crew member is on board and implement all that jazz
+		if command.manager then
+			hook.timer(rnd.rnd(12, 16), "startManagement", command)
+		else
+			hook.timer(rnd.rnd(2, 6), "startDiscussion", command)
+		end
 	end )
 	escort(function () return fmt.f(_("You should expect {article_object} to arrive shortly."), command) end )
 	vn.done()
@@ -5980,7 +5987,7 @@ end
 -- "How can I help you" -> choices -> default choices + open dialog
 -- open dialog handler needs to somehow work generally
 -- starts a managementarial discussion
-local function startManagement(edata)
+function startManagement(edata)
     -- woah, we are a manager! lets do our manager thing
     local management = edata.manager
 
@@ -6098,9 +6105,19 @@ local function startManagement(edata)
 				if string.find(spoken, worker.name:lower()) 
 				or string.find(spoken, worker.firstname:lower())
 				then
-					-- let's talk about this person
-					message = fmt.f(pick_one(management.lines.specific), worker)
-					chatting = true
+					if string.find(spoken, _("sheet"))
+						or string.find(spoken, _("info"))
+						or string.find(spoken, _("detail"))
+					then
+						-- be a good manager and access the personnel files
+						message = getCrewSheet(worker)
+						vn.jump("crewsheet")
+						return
+					else
+						-- let's talk about this person
+						message = fmt.f(pick_one(management.lines.specific), worker)
+						chatting = true
+					end
 				end
 			end
 			if not chatting then
@@ -6161,6 +6178,22 @@ local function startManagement(edata)
 			mem.ship_interior.dirt = mem.ship_interior.dirt + 0.5 -- we aren't as clean as the officers
 		end
 	end )
+	vn.done()
+	
+	-- display a nice crew sheet
+	vn.label("crewsheet")
+	local textbox_font = vn.textbox_font
+	
+	vn.func( function()
+		vn.textbox_font = graphics.newFont( _("fonts/D2CodingBold.ttf"), 15 )
+	end)
+
+	escort( function () return message end )
+	escort(_("Anything else?"))
+	vn.func( function()
+		vn.textbox_font = textbox_font
+	end)
+	vn.jump("chat")
 	vn.done()
 	
 	vn.label("summon")
@@ -6887,7 +6920,7 @@ function sell_cargo_local( args )
 	mem.ship_interior.shuttle = shuttle
 		
 	-- create the ship
-	local active_pilot = pilot.add(shuttle.ship, "Escort", player.pilot():pos(), crewman.name, {ai="dummy"})
+	local active_pilot = pilot.add(shuttle.ship, crewman.faction, player.pilot():pos(), crewman.name, {ai="dummy"})
 	shuttle.out = true
 	active_pilot:credits(-active_pilot:credits()) -- remove any credits
 	local space = active_pilot:cargoFree()
@@ -7182,7 +7215,7 @@ function smuggler_landed( old_smuggler, planet, args )
 	args.crewsheet.manager.special.price = 0
 end
 
--- checks if it's alive and exists (otherwise player loses a smuggler)
+-- checks if it's alive and exists (otherwise player loses a pilot or smuggler)
 -- checks if the smuggler can dock
 -- if smuggler is too far, check again later
 function smuggler_check_dock_distance( args )
