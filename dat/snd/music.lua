@@ -30,7 +30,6 @@ local function tracks_add( name )
    end
 
    local m = audio.newSource( name, "stream" )
-   print("tracks_add: "..name_orig.." ("..name..")")
    m:setVolume( 0 )
    m:play()
    local t = {
@@ -310,17 +309,12 @@ function choose_table.ambient ()
          return true
       end
 
-      -- Load music and play
-      local new_track = ambient[ rnd.rnd(1,#ambient) ]
-
-      -- Make it very unlikely (but not impossible) for the same music
-      -- to play twice
-      for i=1, 3 do
-         if new_track == last_track then
-            new_track = ambient[ rnd.rnd(1,#ambient) ]
-         else
-            break
-         end
+      -- Avoid repetition
+      local new_track_id = rnd.rnd(1,#ambient)
+      local new_track = ambient[ new_track_id ]
+      if new_track == last_track then
+         new_track_id = math.fmod( new_track_id, #ambient )+1
+         new_track = ambient[ new_track_id ]
       end
 
       last_track = new_track
@@ -395,21 +389,14 @@ function choose_table.combat ()
             return true
          end
       end
-
-      tracks_stop()
-      return true
    end
 
-   local new_track = combat[ rnd.rnd(1,#combat) ]
-
-   -- Make it very unlikely (but not impossible) for the same music
-   -- to play twice
-   for i=1, 3 do
-      if new_track == last_track then
-         new_track = combat[ rnd.rnd(1,#combat) ]
-      else
-         break
-      end
+   -- Avoid repetition
+   local new_track_id = rnd.rnd(1,#combat)
+   local new_track = combat[ new_track_id ]
+   if new_track == last_track then
+      new_track_id = math.fmod( new_track_id, #combat )+1
+      new_track = combat[ new_track_id ]
    end
 
    last_track = new_track
@@ -418,7 +405,6 @@ function choose_table.combat ()
 end
 
 function choose( str )
-   print( "choose: "..str)
    -- Don't change or play music if a mission or event doesn't want us to
    if var.peek( "music_off" ) then
       return
