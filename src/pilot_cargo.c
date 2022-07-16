@@ -236,7 +236,7 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, const Commodity* cargo, int qu
    id = ++mission_cargo_id;
 
    /* Check for collisions with pilot and set ID generator to the max. */
-   max_id = 0;
+   max_id = 1;
    for (int i=0; i<array_size(pilot->commodities); i++)
       if (pilot->commodities[i].id > max_id)
          max_id = pilot->commodities[i].id;
