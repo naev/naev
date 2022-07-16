@@ -103,8 +103,6 @@ typedef struct Player_s {
 
    /* Player data. */
    PlayerFlags flags;/**< Player's flags. */
-   int enemies;      /**< Amount of enemies the player has. */
-   int disabled_enemies;/**< Amount of enemies that are disabled. */
    int autonav;      /**< Current autonav state. */
    vec2 autonav_pos;/**< Target autonav position. */
    char *autonavmsg; /**< String (allocated, may be NULL) to print on arrival. */

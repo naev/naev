@@ -1549,10 +1549,6 @@ void space_init( const char* sysname, int do_simulate )
    if (player.p != NULL)
       music_choose(NULL);
 
-   /* Reset player enemies. */
-   player.enemies = 0;
-   player.disabled_enemies = 0;
-
    /* Reset new trails. */
    pilots_newSystem();
 

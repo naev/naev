@@ -12,6 +12,8 @@ local last = "idle"
 local last_track
 local tracks = {}
 local music_stopped = false
+local music_situation = "idle"
+local music_played = 0
 local music_vol = naev.conf().music
 
 local function tracks_stop ()
@@ -20,8 +22,15 @@ local function tracks_stop ()
    end
 end
 
-local function tracks_add( name, params )
+local function tracks_add( name, situation, params )
    params = params or {}
+
+   if music_situation ~= situation then
+      music_played = 0
+   end
+   music_situation = situation
+   print( "tracks_add: "..tostring(name).." ("..tostring(situation)..")" )
+
    local name_orig = name
    if naev.file.filetype( name ) ~= "file" then
       name = "snd/music/"..name
@@ -130,42 +139,38 @@ end
 --[[--
 Play a song if it's not currently playing.
 --]]
-local function playIfNotPlaying( song, params )
+local function playIfNotPlaying( song, situation, params )
    if checkIfPlayingOrStop( song ) then
       return true
    end
-   tracks_add( song, params )
+   tracks_add( song, situation, params )
    return true
 end
 
 -- Stores all the available sound types and their functions
 local choose_table = {}
 
-
 --[[--
 Chooses Loading songs.
 --]]
 function choose_table.load ()
-   local ret = playIfNotPlaying( "machina", {nofade=true} )
+   local ret = playIfNotPlaying( "machina", "load", {nofade=true} )
    return ret
 end
-
 
 --[[--
 Chooses Intro songs.
 --]]
 function choose_table.intro ()
-   return playIfNotPlaying( "intro" )
+   return playIfNotPlaying( "intro", "intro" )
 end
-
 
 --[[--
 Chooses Credit songs.
 --]]
 function choose_table.credits ()
-   return playIfNotPlaying( "empire1" )
+   return playIfNotPlaying( "empire1", "credits" )
 end
-
 
 --[[--
 Chooses landing songs.
@@ -181,11 +186,11 @@ function choose_table.land ()
       if type(override)=="function" then
          local song = override()
          if song then
-            tracks_add( song )
+            tracks_add( song, "land" )
             return true
          end
       else
-         tracks_add( override[ rnd.rnd(1, #override) ] )
+         tracks_add( override[ rnd.rnd(1, #override) ], "land" )
          return true
       end
    end
@@ -205,7 +210,7 @@ function choose_table.land ()
       end
    end
 
-   tracks_add( mus[ rnd.rnd(1, #mus) ] )
+   tracks_add( mus[ rnd.rnd(1, #mus) ], "land" )
    return true
 end
 
@@ -217,7 +222,7 @@ function choose_table.takeoff ()
       return true
    end
    local takeoff = { "liftoff", "launch2", "launch3chatstart" }
-   tracks_add( takeoff[ rnd.rnd(1,#takeoff) ], {nofade=true} )
+   tracks_add( takeoff[ rnd.rnd(1,#takeoff) ], "takeoff", {nofade=true} )
    return true
 end
 
@@ -262,7 +267,7 @@ function choose_table.ambient ()
    -- System
    local override = system_ambient_songs[ sys:nameRaw() ]
    if override then
-      tracks_add( override[ rnd.rnd(1, #override) ] )
+      tracks_add( override[ rnd.rnd(1, #override) ], "ambient" )
       return true
    end
 
@@ -338,7 +343,7 @@ function choose_table.ambient ()
       end
 
       last_track = new_track
-      tracks_add( new_track )
+      tracks_add( new_track, "ambient" )
       return true
    end
 
@@ -420,7 +425,7 @@ function choose_table.combat ()
    end
 
    last_track = new_track
-   tracks_add( new_track )
+   tracks_add( new_track, "combat" )
    return true
 end
 
@@ -464,6 +469,7 @@ end
 local update_rate = 0.5
 local update_timer = 0
 local update_fade = 1/2
+local enemy_dist = 5e3
 function update( dt )
    local remove = {}
    for k,v in ipairs(tracks) do
@@ -495,6 +501,7 @@ function update( dt )
 
    -- Limit executions a bit
    update_timer = update_timer - dt
+   music_played = music_played + dt
    if update_timer > 0 then
       return
    end
@@ -502,19 +509,46 @@ function update( dt )
 
    -- If paused just wait
    local curtrack = tracks_playing()
-   if curtrack.paused then
+   if curtrack and curtrack.paused then
       return -- don't do anything while paused
+   end
+
+   -- See if we should spice up the music a bit
+   if not curtrack or music_played > 10 then
+      if music_situation == "ambient" then
+         if not player.autonav()  then
+            local pp = player.pilot()
+            if pp:lockon() then
+               choose( "combat" )
+               return
+            end
+            local enemies = pp:getHostiles( enemy_dist, nil, true )
+            for k,v in ipairs(enemies) do
+               if v:target() == pp then
+                  choose( "combat" )
+                  return
+               end
+            end
+         end
+      elseif music_situation == "combat" then
+         local pp = player.pilot()
+         local enemies = pp:getHostiles( enemy_dist, nil, true )
+         if #enemies <= 0 then
+            choose( "ambient" )
+            return
+         end
+      end
    end
 
    -- No track, so we choose a random ambient track
    if not curtrack then
-      choose()
+      choose( "ambient" )
    end
 end
 
 function play( song )
    music_stopped = false
-   tracks_add( song )
+   tracks_add( song, "custom" )
 end
 
 function stop ()
