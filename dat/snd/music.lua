@@ -22,14 +22,11 @@ local function tracks_stop ()
    end
 end
 
-local function tracks_add( name, situation, params )
-   params = params or {}
-
+local function tracks_add( name, situation )
    if music_situation ~= situation then
       music_played = 0
    end
    music_situation = situation
-   print( "tracks_add: "..tostring(name).." ("..tostring(situation)..")" )
 
    local name_orig = name
    if naev.file.filetype( name ) ~= "file" then
@@ -40,20 +37,12 @@ local function tracks_add( name, situation, params )
    end
 
    local m = audio.newSource( name, "stream" )
-   local fade, vol
-   if params.nofade then
-      vol = 1
-      fade = nil
-   else
-      vol = 1
-      fade = 1
-   end
-   m:setVolume( vol * music_vol )
+   m:setVolume( music_vol )
    m:play()
    local t = {
       m     = m,
-      fade  = fade,
-      vol   = vol,
+      fade  = nil,
+      vol   = 1,
       name  = name_orig,
    }
    tracks_stop () -- Only play one at a time
@@ -154,7 +143,7 @@ local choose_table = {}
 Chooses Loading songs.
 --]]
 function choose_table.load ()
-   local ret = playIfNotPlaying( "machina", "load", {nofade=true} )
+   local ret = playIfNotPlaying( "machina", "load" )
    return ret
 end
 
@@ -222,7 +211,7 @@ function choose_table.takeoff ()
       return true
    end
    local takeoff = { "liftoff", "launch2", "launch3chatstart" }
-   tracks_add( takeoff[ rnd.rnd(1,#takeoff) ], "takeoff", {nofade=true} )
+   tracks_add( takeoff[ rnd.rnd(1,#takeoff) ], "takeoff" )
    return true
 end
 
