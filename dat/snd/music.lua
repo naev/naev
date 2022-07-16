@@ -455,10 +455,35 @@ function choose( str )
    end
 end
 
+local enemy_dist = 5e3
+local function should_combat ()
+   if player.autonav() then
+      return false
+   end
+
+   local pp = player.pilot()
+   if pp:flags("stealth") then
+      return false
+   end
+
+   if pp:lockon() > 0 then
+      choose( "combat" )
+      return true
+   end
+
+   local enemies = pp:getHostiles( enemy_dist, nil, true )
+   for k,v in ipairs(enemies) do
+      if v:target() == pp then
+         choose( "combat" )
+         return true
+      end
+   end
+   return false
+end
+
 local update_rate = 0.5
 local update_timer = 0
 local update_fade = 1/2
-local enemy_dist = 5e3
 function update( dt )
    local remove = {}
    for k,v in ipairs(tracks) do
@@ -505,19 +530,8 @@ function update( dt )
    -- See if we should spice up the music a bit
    if not curtrack or music_played > 10 then
       if music_situation == "ambient" then
-         if not player.autonav()  then
-            local pp = player.pilot()
-            if pp:lockon() then
-               choose( "combat" )
-               return
-            end
-            local enemies = pp:getHostiles( enemy_dist, nil, true )
-            for k,v in ipairs(enemies) do
-               if v:target() == pp then
-                  choose( "combat" )
-                  return
-               end
-            end
+         if should_combat() then
+            return
          end
       elseif music_situation == "combat" then
          local pp = player.pilot()
