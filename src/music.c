@@ -48,6 +48,7 @@ static int music_lua_stop     = LUA_NOREF;
 static int music_lua_pause    = LUA_NOREF;
 static int music_lua_resume   = LUA_NOREF;
 static int music_lua_info     = LUA_NOREF;
+static int music_lua_volume   = LUA_NOREF;
 
 /* functions */
 static int music_runLua( const char *situation );
@@ -218,12 +219,24 @@ static int music_find (void)
  *    @param vol Volume to set to (between 0 and 1).
  *    @return 0 on success.
  */
-int music_volume( const double vol )
+int music_volume( double vol )
 {
    if (music_disabled)
       return 0;
 
-   return music_al_volume( vol );
+   /* Convert to log. */
+   /* Floor of -48 dB (0.00390625 amplitude) */
+   vol = 1. / pow(2., (1.-vol) * 8. );
+
+   /* Run the choose function in Lua. */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_volume );
+   lua_pushnumber( naevL, vol );
+   if (nlua_pcall(music_env, 1, 0)) { /* error has occurred */
+      WARN(_("Error while running music function '%s': %s"), "volume", lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
+      return -1;
+   }
+   return 0;
 }
 
 /**
@@ -233,10 +246,12 @@ int music_volume( const double vol )
  */
 double music_getVolume (void)
 {
+   double vol;
    if (music_disabled)
       return 0.;
-
-   return music_al_getVolume();
+   vol = music_getVolumeLog();
+   /* Convert to linear. */
+   return log(vol) * -8. / log(0.00390625);
 }
 
 /**
@@ -246,9 +261,19 @@ double music_getVolume (void)
  */
 double music_getVolumeLog(void)
 {
+   double vol;
    if (music_disabled)
       return 0.;
-   return music_al_getVolumeLog();
+
+   /* Run the choose function in Lua. */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_volume );
+   if (nlua_pcall(music_env, 0, 1)) { /* error has occurred */
+      WARN(_("Error while running music function '%s': %s"), "volume", lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
+   }
+   vol = luaL_checknumber(naevL,-1);
+   lua_pop(naevL,1);
+   return vol;
 }
 
 /**
@@ -414,19 +439,6 @@ double music_playingTime (void)
    return (double)(SDL_GetTicks() - music_start) / 1000.;
 }
 
-/**
- * @brief Sets the music to a position in seconds.
- *
- *    @param sec Position to go to in seconds.
- */
-void music_setPos( double sec )
-{
-   if (music_disabled)
-      return;
-
-   music_al_setPos( sec );
-}
-
 /*
  * music Lua stuff
  */
@@ -465,11 +477,12 @@ static int music_luaInit (void)
    /* Set up comfort functions. */
    music_lua_choose = nlua_refenvtype( music_env, "choose", LUA_TFUNCTION );
    music_lua_update = nlua_refenvtype( music_env, "update", LUA_TFUNCTION );
-   music_lua_play   = nlua_refenvtype( music_env, "play", LUA_TFUNCTION );
-   music_lua_stop   = nlua_refenvtype( music_env, "stop", LUA_TFUNCTION );
-   music_lua_pause  = nlua_refenvtype( music_env, "pause", LUA_TFUNCTION );
+   music_lua_play   = nlua_refenvtype( music_env, "play",   LUA_TFUNCTION );
+   music_lua_stop   = nlua_refenvtype( music_env, "stop",   LUA_TFUNCTION );
+   music_lua_pause  = nlua_refenvtype( music_env, "pause",  LUA_TFUNCTION );
    music_lua_resume = nlua_refenvtype( music_env, "resume", LUA_TFUNCTION );
-   music_lua_info   = nlua_refenvtype( music_env, "info", LUA_TFUNCTION );
+   music_lua_info   = nlua_refenvtype( music_env, "info",   LUA_TFUNCTION );
+   music_lua_volume = nlua_refenvtype( music_env, "volume", LUA_TFUNCTION );
 
    /* Free repeatname. */
    free( music_temp_repeatname );
@@ -494,6 +507,7 @@ static void music_luaQuit (void)
    music_lua_pause   = LUA_NOREF;
    music_lua_resume  = LUA_NOREF;
    music_lua_info    = LUA_NOREF;
+   music_lua_volume  = LUA_NOREF;
 }
 
 /**

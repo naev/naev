@@ -40,7 +40,6 @@ void music_play( const char *filename );
 void music_stop (void);
 void music_pause (void);
 void music_resume (void);
-void music_setPos( double sec );
 MusicInfo_t* music_info (void);
 int music_isPlaying (void);
 const char *music_playingName (void);
