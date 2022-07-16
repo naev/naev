@@ -2175,8 +2175,9 @@ static int pilotL_faction( lua_State *L )
  *
  * @usage spaceworthy = p:spaceworthy()
  *
- *    @luatparam Pilot p Pilot to get the spaceworthy status of
- *    @luatreturn boolean Whether the pilot's ship is spaceworthy
+ *    @luatparam Pilot p Pilot to get the spaceworthy status of.
+ *    @luatreturn boolean Whether the pilot's ship is spaceworthy.
+ *    @luatreturn string Reason why the pilot is not spaceworthy.
  * @luafunc spaceworthy
  */
 static int pilotL_spaceworthy( lua_State *L )
