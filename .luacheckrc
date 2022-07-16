@@ -188,6 +188,7 @@ stds.Music.globals={
    "pause",
    "resume",
    "info",
+   "volume",
 }
 stds.PilotOutfit.globals={
    "cleanup",
