@@ -29,10 +29,11 @@ local function tracks_add( name, situation )
    music_situation = situation
 
    local name_orig = name
+   name = "snd/music/"..name_orig..".ogg"
    if naev.file.filetype( name ) ~= "file" then
-      name = "snd/music/"..name
+      name = "snd/music/"..name_orig
       if naev.file.filetype( name ) ~= "file" then
-         name = name..".ogg"
+         name = name_orig
       end
    end
 
