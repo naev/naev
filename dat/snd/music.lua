@@ -1,4 +1,3 @@
-
 --[[
 -- music will get called with a string parameter indicating status
 -- valid parameters:
@@ -8,8 +7,51 @@
 --    combat - player just got a hostile onscreen
 --    idle - current playing music ran out
 ]]--
+--local lf = require "love.filesystem"
+local audio = require "love.audio"
 local last = "idle"
 local last_track
+local tracks = {}
+local music_vol = naev.conf().music
+
+local function tracks_stop ()
+   for k,v in ipairs( tracks ) do
+      v.fade = -1
+   end
+end
+
+local function tracks_add( name )
+   local name_orig = name
+   if naev.file.filetype( name ) ~= "file" then
+      name = "snd/music/"..name
+      if naev.file.filetype( name ) ~= "file" then
+         name = name..".ogg"
+      end
+   end
+
+   local m = audio.newSource( name, "stream" )
+   print("tracks_add: "..name_orig.." ("..name..")")
+   m:setVolume( 0 )
+   m:play()
+   local t = {
+      m = m,
+      fade = 1,
+      vol = 0,
+      name = name_orig,
+   }
+   tracks_stop () -- Only play one at a time
+   table.insert( tracks, t )
+   return t
+end
+
+local function tracks_playing ()
+   for k,v in ipairs( tracks ) do
+      if (not v.fade or v.fade > 0) and not v.m:isStopped() then
+         return v
+      end
+   end
+   return nil
+end
 
 -- Faction-specific songs.
 local factional = {
@@ -42,9 +84,6 @@ local system_ambient_songs = {
    Taiomi = { "/snd/sounds/songs/inca-spa.ogg" },
 }
 
--- Stores all the available sound types and their functions
-local choose_table = {}
-
 
 --[[--
 Checks to see if a song is being played, if it is it stops it.
@@ -52,9 +91,10 @@ Checks to see if a song is being played, if it is it stops it.
       @return true if music is playing.
 --]]
 local function checkIfPlayingOrStop( song )
-   if music.isPlaying() then
-      if music.current() ~= song then
-         music.stop()
+   local track = tracks_playing()
+   if track then
+      if track.name ~= song then
+         tracks_stop()
       end
       return true
    end
@@ -69,17 +109,26 @@ local function playIfNotPlaying( song )
    if checkIfPlayingOrStop( song ) then
       return true
    end
-   music.load( song )
-   music.play()
+   tracks_add( song )
    return true
 end
+
+-- Stores all the available sound types and their functions
+local choose_table = {}
 
 
 --[[--
 Chooses Loading songs.
 --]]
 function choose_table.load ()
-   return playIfNotPlaying( "machina" )
+   local ret = playIfNotPlaying( "machina" )
+   local t = tracks_playing()
+   if t then
+      t.m:setVolume( music_vol )
+      t.vol = 1
+      t.fade = nil
+   end
+   return ret
 end
 
 
@@ -113,13 +162,11 @@ function choose_table.land ()
       if type(override)=="function" then
          local song = override()
          if song then
-            music.load( song )
-            music.play()
+            tracks_add( song )
             return true
          end
       else
-         music.load( override[ rnd.rnd(1, #override) ] )
-         music.play()
+         tracks_add( override[ rnd.rnd(1, #override) ] )
          return true
       end
    end
@@ -139,8 +186,7 @@ function choose_table.land ()
       end
    end
 
-   music.load( mus[ rnd.rnd(1, #mus) ] )
-   music.play()
+   tracks_add( mus[ rnd.rnd(1, #mus) ] )
    return true
 end
 
@@ -148,12 +194,11 @@ end
 -- Takeoff songs
 function choose_table.takeoff ()
    -- No need to restart
-   if last == "takeoff" and music.isPlaying() then
+   if last == "takeoff" and tracks_playing() then
       return true
    end
    local takeoff = { "liftoff", "launch2", "launch3chatstart" }
-   music.load( takeoff[ rnd.rnd(1,#takeoff) ])
-   music.play()
+   tracks_add( takeoff[ rnd.rnd(1,#takeoff) ])
    return true
 end
 
@@ -174,7 +219,7 @@ function choose_table.ambient ()
    local ambient
 
    -- Check to see if we want to update
-   if music.isPlaying() then
+   if tracks_playing() then
       if last == "takeoff" then
          return true
       elseif last == "ambient" then
@@ -182,12 +227,12 @@ function choose_table.ambient ()
       end
 
       -- Get music information.
-      local _songname, songpos = music.current()
+      --local _songname, songpos = music.current()
 
       -- Do not change songs so soon
-      if songpos < 10 then
-         return false
-      end
+      --if songpos < 10 then
+      --   return false
+      --end
    end
 
    -- Get information about the current system
@@ -198,8 +243,7 @@ function choose_table.ambient ()
    -- System
    local override = system_ambient_songs[ sys:nameRaw() ]
    if override then
-      music.load( override[ rnd.rnd(1, #override) ] )
-      music.play()
+      tracks_add( override[ rnd.rnd(1, #override) ] )
       return true
    end
 
@@ -254,15 +298,15 @@ function choose_table.ambient ()
 
       -- Make sure it's not already in the list or that we have to stop the
       -- currently playing song.
-      if music.isPlaying() then
-         local cur = music.current()
+      local t = tracks_playing()
+      if t then
          for k,v in pairs(ambient) do
-            if cur == v then
+            if t.name == v then
                return false
             end
          end
 
-         music.stop()
+         tracks_stop()
          return true
       end
 
@@ -280,8 +324,7 @@ function choose_table.ambient ()
       end
 
       last_track = new_track
-      music.load( new_track )
-      music.play()
+      tracks_add( new_track )
       return true
    end
 
@@ -345,15 +388,15 @@ function choose_table.combat ()
 
    -- Make sure it's not already in the list or that we have to stop the
    -- currently playing song.
-   if music.isPlaying() then
-      local cur = music.current()
+   local t = tracks_playing()
+   if t then
       for k,v in pairs(combat) do
-         if cur == v then
+         if t.name == v then
             return true
          end
       end
 
-      music.stop()
+      tracks_stop()
       return true
    end
 
@@ -370,12 +413,12 @@ function choose_table.combat ()
    end
 
    last_track = new_track
-   music.load( new_track )
-   music.play()
+   tracks_add( new_track )
    return true
 end
 
 function choose( str )
+   print( "choose: "..str)
    -- Don't change or play music if a mission or event doesn't want us to
    if var.peek( "music_off" ) then
       return
@@ -383,7 +426,7 @@ function choose( str )
 
    -- Allow restricting play of music until a song finishes
    if var.peek( "music_wait" ) then
-      if music.isPlaying() then
+      if tracks_playing() then
          return
       else
          var.pop( "music_wait" )
@@ -414,30 +457,57 @@ end
 
 local update_rate = 0.5
 local update_timer = 0
+local update_fade = 1/3
 function update( dt )
+   local remove = {}
+   for k,v in ipairs(tracks) do
+      if v.fade then
+         v.vol = v.vol + v.fade * update_fade * dt
+         if v.vol > 1 then
+            v.vol = 1
+            v.fade = nil
+         elseif v.vol < 0 then
+            v.vol = 0
+            table.insert( remove, k )
+         end
+         v.m:setVolume( music_vol * v.vol )
+      end
+   end
+   for k=#remove, 1, -1 do
+      table.remove( tracks, k )
+   end
+
    update_timer = update_timer - dt
    if update_timer > 0 then
       return
    end
    update_timer = update_rate
 
-   if not music.isPlaying() then
+   if not tracks_playing() then
       choose( "ambient" )
    end
 end
 
-function play( _song )
+function play( song )
+   tracks_add( song )
 end
 
 function stop ()
+   tracks_stop()
 end
 
 function pause ()
+   print("TODO")
 end
 
 function resume ()
+   print("TODO")
 end
 
 function info ()
-   return false, "test", 5
+   local t = tracks_playing()
+   if not t then
+      return false
+   end
+   return true, t.name, 9 -- TODO length played
 end

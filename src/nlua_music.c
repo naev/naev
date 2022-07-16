@@ -93,12 +93,8 @@ static int musicL_choose( lua_State* L )
 static int musicL_load( lua_State *L )
 {
    const char *str = luaL_checkstring(L,1);
-   if (music_load( str )) {
-      NLUA_ERROR(L,_("Music '%s' invalid or failed to load."), str );
-      return 0;
-   }
+   music_play( str );
    music_tempDisable( 0 );
-
    return 0;
 }
 
@@ -113,7 +109,7 @@ static int musicL_play( lua_State *L )
 {
    (void) L;
    music_tempDisable( 0 );
-   music_play();
+   music_play( NULL );
    return 0;
 }
 

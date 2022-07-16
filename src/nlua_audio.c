@@ -740,17 +740,26 @@ static int audioL_seek( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double offset = luaL_checknumber(L,2);
    const char *unit = luaL_optstring(L,3,"seconds");
-   if (!sound_disabled) {
-      soundLock();
-      if (strcmp(unit,"seconds")==0)
-         alSourcef( la->source, AL_SEC_OFFSET, offset );
-      else if (strcmp(unit,"samples")==0)
-         alSourcef( la->source, AL_SAMPLE_OFFSET, offset );
-      else
-         NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
-      al_checkErr();
-      soundUnlock();
+
+   if (sound_disabled)
+      return 0;
+
+   soundLock();
+   switch (la->type) {
+      case LUA_AUDIO_STREAM:
+         // ov_time_seek( &la->stream, pos );
+      case LUA_AUDIO_STATIC:
+         if (strcmp(unit,"seconds")==0)
+            alSourcef( la->source, AL_SEC_OFFSET, offset );
+         else if (strcmp(unit,"samples")==0)
+            alSourcef( la->source, AL_SAMPLE_OFFSET, offset );
+         else
+            NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
+         break;
+
    }
+   al_checkErr();
+   soundUnlock();
    return 0;
 }
 
