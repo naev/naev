@@ -34,6 +34,8 @@ typedef struct LuaAudio_s {
    /* When not streaming. */
    LuaBuffer_t *buf; /**< Shared buffer. */
    /* When streaming. */
+   SDL_mutex *lock;  /**< Lock for vorbis file stream. This should be locked
+               only when stream is accessed and not while soundLock() is active. */
    OggVorbis_File stream; /**< Vorbis file stream. */
    vorbis_info *info; /**< Information of the tream. */
    ALenum format;    /**< Stream format. */
