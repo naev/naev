@@ -75,6 +75,7 @@ typedef struct InfoButton_s {
    /* Lua stuff .*/
    nlua_env env;  /**< Runtime environment. */
    int func;      /**< Function to call. */
+   SDL_Keycode key; /**< Hotkey (or SDLK_UNKNOWN==0 if none). */
 } InfoButton_t;
 static InfoButton_t *info_buttons = NULL;
 
@@ -161,9 +162,9 @@ static void info_buttonRegen (void)
       snprintf( btn->button, sizeof(btn->button), "btnExtra%d", i );
       if (widget_exists( wid, btn->button ))
          window_destroyWidget( wid, btn->button );
-      window_addButton( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
+      window_addButtonKey( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
             BUTTON_WIDTH, BUTTON_HEIGHT,
-            btn->button, btn->caption, info_buttonClick );
+            btn->button, btn->caption, info_buttonClick, btn->key );
    }
 }
 
@@ -172,9 +173,10 @@ static void info_buttonRegen (void)
  *
  *    @param caption Caption to give the button.
  *    @param priority Button priority, lower is more important.
+ *    @param key Hotkey for using the button without it being focused (or SDLK_UNKNOWN or 0 if none).
  *    @return Newly created button ID.
  */
-int info_buttonRegister( const char *caption, int priority )
+int info_buttonRegister( const char *caption, int priority, SDL_Keycode key )
 {
    static int button_idgen = 0;
    int id;
@@ -190,6 +192,7 @@ int info_buttonRegister( const char *caption, int priority )
    btn->priority = priority;
    btn->env    = __NLUA_CURENV;
    btn->func   = luaL_ref( naevL, LUA_REGISTRYINDEX );
+   btn->key    = key;
 
    id = btn->id;
    qsort( info_buttons, array_size(info_buttons), sizeof(InfoButton_t), sort_buttons );
@@ -414,9 +417,9 @@ static void info_openMain( unsigned int wid )
    for (int i=0; i<array_size(info_buttons); i++) {
       InfoButton_t *btn = &info_buttons[i];
       snprintf( btn->button, sizeof(btn->button), "btnExtra%d", i );
-      window_addButton( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
+      window_addButtonKey( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
             BUTTON_WIDTH, BUTTON_HEIGHT,
-            btn->button, btn->caption, info_buttonClick );
+            btn->button, btn->caption, info_buttonClick, btn->key );
    }
 
    buf = player_getLicenses();
