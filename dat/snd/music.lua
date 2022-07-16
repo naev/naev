@@ -61,6 +61,25 @@ local function tracks_playing ()
    return nil
 end
 
+local function tracks_pause ()
+   for k,v in ipairs( tracks ) do
+      if not v.fade or v.fade > 0 then
+         v.fade = -1
+         v.pause = true
+      end
+   end
+end
+
+local function tracks_resume ()
+   for k,v in ipairs( tracks ) do
+      if v.pause then
+         v.fade = 1
+         v.pause = nil
+         v.m:play()
+      end
+   end
+end
+
 -- Faction-specific songs.
 local factional = {
    Collective = { "collective1", "automat" },
@@ -446,7 +465,7 @@ end
 
 local update_rate = 0.5
 local update_timer = 0
-local update_fade = 1/3
+local update_fade = 1/2
 function update( dt )
    local remove = {}
    for k,v in ipairs(tracks) do
@@ -457,7 +476,12 @@ function update( dt )
             v.fade = nil
          elseif v.vol < 0 then
             v.vol = 0
-            table.insert( remove, k )
+            v.fade = nil
+            if v.pause then
+               v.m:pause()
+            else
+               table.insert( remove, k )
+            end
          end
          v.m:setVolume( music_vol * v.vol )
       end
@@ -486,11 +510,11 @@ function stop ()
 end
 
 function pause ()
-   print("TODO")
+   tracks_pause()
 end
 
 function resume ()
-   print("TODO")
+   tracks_resume()
 end
 
 function info ()
@@ -498,5 +522,5 @@ function info ()
    if not t then
       return false
    end
-   return true, t.name, 9 -- TODO length played
+   return true, t.name, t.m:tell()
 end
