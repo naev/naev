@@ -146,7 +146,7 @@ int music_init (void)
    /* Set the volume. */
    if ((conf.music > 1.) || (conf.music < 0.))
       WARN(_("Music has invalid value, clamping to [0:1]."));
-   music_volume(conf.music);
+   music_volume( conf.music );
 
    return 0;
 }
@@ -224,10 +224,6 @@ int music_volume( double vol )
    if (music_disabled)
       return 0;
 
-   /* Convert to log. */
-   /* Floor of -48 dB (0.00390625 amplitude) */
-   vol = 1. / pow(2., (1.-vol) * 8. );
-
    /* Run the choose function in Lua. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_volume );
    lua_pushnumber( naevL, vol );
@@ -249,9 +245,16 @@ double music_getVolume (void)
    double vol;
    if (music_disabled)
       return 0.;
-   vol = music_getVolumeLog();
-   /* Convert to linear. */
-   return log(vol) * -8. / log(0.00390625);
+
+   /* Run the choose function in Lua. */
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_volume );
+   if (nlua_pcall(music_env, 0, 1)) { /* error has occurred */
+      WARN(_("Error while running music function '%s': %s"), "volume", lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
+   }
+   vol = luaL_checknumber(naevL,-1);
+   lua_pop(naevL,1);
+   return vol;
 }
 
 /**
@@ -265,14 +268,10 @@ double music_getVolumeLog(void)
    if (music_disabled)
       return 0.;
 
-   /* Run the choose function in Lua. */
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_volume );
-   if (nlua_pcall(music_env, 0, 1)) { /* error has occurred */
-      WARN(_("Error while running music function '%s': %s"), "volume", lua_tostring(naevL,-1));
-      lua_pop(naevL,1);
-   }
-   vol = luaL_checknumber(naevL,-1);
-   lua_pop(naevL,1);
+   vol = music_getVolume();
+   /* Convert to logarithmic */
+   //vol = -48. / log(0.00390625);
+   vol = 1. / pow(2., (1.-vol) * 8. );
    return vol;
 }
 
