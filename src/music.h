@@ -12,6 +12,12 @@
 
 extern int music_disabled;
 
+typedef struct MusicInfo_e {
+   int playing;
+   char *name;
+   double pos;
+} MusicInfo_t;
+
 /*
  * updating
  */
@@ -35,6 +41,7 @@ void music_stop (void);
 void music_pause (void);
 void music_resume (void);
 void music_setPos( double sec );
+MusicInfo_t* music_info (void);
 int music_isPlaying (void);
 const char *music_playingName (void);
 double music_playingTime (void);

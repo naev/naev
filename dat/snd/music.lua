@@ -425,3 +425,19 @@ function update( dt )
       choose( "ambient" )
    end
 end
+
+function play( _song )
+end
+
+function stop ()
+end
+
+function pause ()
+end
+
+function resume ()
+end
+
+function info ()
+   return false, "test", 5
+end

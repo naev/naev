@@ -180,7 +180,15 @@ stds.GUI.globals = {
    "update_target",
 }
 stds.Misn.globals={"abort", "accept", "create", "mem"}
-stds.Music.globals={"choose", "update"}
+stds.Music.globals={
+   "choose",
+   "update",
+   "play",
+   "stop",
+   "pause",
+   "resume",
+   "info",
+}
 stds.PilotOutfit.globals={
    "cleanup",
    "cooldown",
