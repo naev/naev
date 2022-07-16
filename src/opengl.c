@@ -101,7 +101,7 @@ void gl_screenshot( const char *filename )
 
    /* Convert data. */
    for (int i=0; i<h; i++)
-      memcpy( (GLubyte*)surface->pixels + i * (3*w), &screenbuf[ (h - i - 1) * (3*w) ], 3*w );
+      memcpy( (GLubyte*)surface->pixels + i * surface->pitch, &screenbuf[ (h - i - 1) * (3*w) ], 3*w );
    free( screenbuf );
 
    /* Save PNG. */
