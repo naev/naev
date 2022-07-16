@@ -1254,7 +1254,7 @@ static void mission_menu_genList( unsigned int wid, int first )
    window_dimWindow( wid, &w, &h );
 
    /* list */
-   misn_names = malloc(sizeof(char*) * array_size(player_missions));
+   misn_names = malloc(sizeof(char*) * MAX(1, array_size(player_missions)));
    selectedMission = -1;
    j = 0;
    for (int i=0; i<array_size(player_missions); i++)
