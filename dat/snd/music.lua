@@ -1,17 +1,17 @@
 --[[
--- music will get called with a string parameter indicating status
--- valid parameters:
---    load - game is loading
---    land - player landed
---    takeoff - player took off
---    combat - player just got a hostile onscreen
---    idle - current playing music ran out
+choose will get called with a string parameter indicating status valid
+parameters:
+   load - game is loading
+   land - player landed
+   takeoff - player took off
+   combat - player just got a hostile onscreen
+   idle - current playing music ran out
 ]]--
---local lf = require "love.filesystem"
 local audio = require "love.audio"
 local last = "idle"
 local last_track
 local tracks = {}
+local music_stopped = false
 local music_vol = naev.conf().music
 
 local function tracks_stop ()
@@ -65,16 +65,16 @@ local function tracks_pause ()
    for k,v in ipairs( tracks ) do
       if not v.fade or v.fade > 0 then
          v.fade = -1
-         v.pause = true
+         v.paused = true
       end
    end
 end
 
 local function tracks_resume ()
    for k,v in ipairs( tracks ) do
-      if v.pause then
+      if v.paused then
          v.fade = 1
-         v.pause = nil
+         v.paused = nil
          v.m:play()
       end
    end
@@ -111,7 +111,6 @@ local system_ambient_songs = {
    Taiomi = { "/snd/sounds/songs/inca-spa.ogg" },
 }
 
-
 --[[--
 Checks to see if a song is being played, if it is it stops it.
 
@@ -127,7 +126,6 @@ local function checkIfPlayingOrStop( song )
    end
    return false
 end
-
 
 --[[--
 Play a song if it's not currently playing.
@@ -477,7 +475,7 @@ function update( dt )
          elseif v.vol < 0 then
             v.vol = 0
             v.fade = nil
-            if v.pause then
+            if v.paused then
                v.m:pause()
             else
                table.insert( remove, k )
@@ -490,23 +488,38 @@ function update( dt )
       table.remove( tracks, k )
    end
 
+   -- Not going to do anything
+   if music_stopped then
+      return
+   end
+
+   -- Limit executions a bit
    update_timer = update_timer - dt
    if update_timer > 0 then
       return
    end
    update_timer = update_rate
 
-   if not tracks_playing() then
-      choose( "ambient" )
+   -- If paused just wait
+   local curtrack = tracks_playing()
+   if curtrack.paused then
+      return -- don't do anything while paused
+   end
+
+   -- No track, so we choose a random ambient track
+   if not curtrack then
+      choose()
    end
 end
 
 function play( song )
+   music_stopped = false
    tracks_add( song )
 end
 
 function stop ()
    tracks_stop()
+   music_stopped = true
 end
 
 function pause ()
