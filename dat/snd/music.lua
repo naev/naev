@@ -459,7 +459,7 @@ end
 local enemy_dist = 5e3
 local function should_combat ()
    local pp = player.pilot()
-   if not pp then
+   if not pp or not pp:exists() then
       return false
    end
 
@@ -488,7 +488,7 @@ end
 
 local function should_ambient ()
    local pp = player.pilot()
-   if not pp then
+   if not pp or not pp:exists() then
       return false
    end
 
