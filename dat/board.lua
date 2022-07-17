@@ -424,6 +424,7 @@ local function board_close ()
 end
 
 function board( plt )
+   if not plt:exists() then return end
    der.sfx.board:play()
    board_plt = plt
    loot_mod = player.pilot():shipstat("loot_mod", true)
