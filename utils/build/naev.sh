@@ -22,6 +22,7 @@ done
 
 wrapper() {
    if [[ ! "$WITHGDB" =~ "NO" ]] && type "gdb" > /dev/null 2>&1; then
+      export ASAN_OPTIONS=abort_on_error=1
       exec gdb -x "@source_root@/.gdbinit" --args "$@"
    else
       exec "$@"
