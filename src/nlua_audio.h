@@ -26,6 +26,9 @@ typedef struct LuaBuffer_s {
 } LuaBuffer_t;
 
 typedef struct LuaAudio_s {
+#if DEBUGGING
+   char *name;       /**< Filename of the audio. */
+#endif /* DEBUGGING */
    LuaAudioType_t type; /**< Type of audio. */
    int nocleanup;    /**< No need to clean up this source. */
    ALuint source;    /**< Source to use. */
@@ -43,7 +46,7 @@ typedef struct LuaAudio_s {
    ALfloat rg_max_scale; /**< Replaygain maximum scale factor before clipping. */
    ALuint stream_buffers[2]; /**< Double buffering for streaming. */
    int active;       /**< Active buffer. */
-   SDL_Thread* th;   /**< Buffering thread. */
+   SDL_Thread *th;   /**< Buffering thread. */
    SDL_cond *cond;   /**< For message passing. */
 } LuaAudio_t;
 

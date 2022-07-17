@@ -382,7 +382,8 @@ void audio_cleanup( LuaAudio_t *la )
    if (la->type == LUA_AUDIO_STREAM) {
       if (la->th != NULL) {
          la->active = -1;
-         SDL_CondWaitTimeout( la->cond, sound_lock, 3000 );
+         if (SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) == SDL_MUTEX_TIMEDOUT)
+            WARN(_("Timed out while waiting for audio thread of '%s' to finish!"), la->name);
       }
       alDeleteBuffers( 2, la->stream_buffers );
       SDL_DestroyCond( la->cond );
@@ -393,6 +394,10 @@ void audio_cleanup( LuaAudio_t *la )
    /* Clean up. */
    al_checkErr();
    soundUnlock();
+
+#if DEBUGGING
+   free(la->name);
+#endif /* DEBUGGING */
 }
 
 /**
@@ -480,6 +485,9 @@ static int audioL_new( lua_State *L )
    rw = PHYSFSRWOPS_openRead( name );
    if (rw==NULL)
       NLUA_ERROR(L,"Unable to open '%s'", name );
+#if DEBUGGING
+   la.name = strdup( name );
+#endif /* DEBUGGING */
 
    soundLock();
    alGenSources( 1, &la.source );
