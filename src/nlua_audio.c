@@ -803,8 +803,8 @@ static int audioL_tell( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    const char *unit = luaL_optstring(L,2,"seconds");
+   double offset = -1.;
    float aloffset;
-   double offset;
    int seconds;
 
    if (strcmp(unit,"seconds")==0)
@@ -857,7 +857,7 @@ static int audioL_getDuration( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    const char *unit = luaL_optstring(L,2,"seconds");
-   float duration;
+   float duration = -1.;
    int seconds;
    ALint bytes, channels, bits, samples;
    ALuint buffer;
