@@ -458,11 +458,15 @@ end
 
 local enemy_dist = 5e3
 local function should_combat ()
+   local pp = player.pilot()
+   if not pp then
+      return false
+   end
+
    if player.autonav() then
       return false
    end
 
-   local pp = player.pilot()
    if pp:flags("stealth") then
       return false
    end
@@ -478,6 +482,20 @@ local function should_combat ()
          choose( "combat" )
          return true
       end
+   end
+   return false
+end
+
+local function should_ambient ()
+   local pp = player.pilot()
+   if not pp then
+      return false
+   end
+
+   local enemies = pp:getHostiles( enemy_dist, nil, true )
+   if #enemies <= 0 then
+      choose( "ambient" )
+      return true
    end
    return false
 end
@@ -535,10 +553,7 @@ function update( dt )
             return
          end
       elseif music_situation == "combat" then
-         local pp = player.pilot()
-         local enemies = pp:getHostiles( enemy_dist, nil, true )
-         if #enemies <= 0 then
-            choose( "ambient" )
+         if should_ambient() then
             return
          end
       end
