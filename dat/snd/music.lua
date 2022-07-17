@@ -115,13 +115,11 @@ Play a song if it's not currently playing.
 --]]
 local function playIfNotPlaying( song, situation, params )
    local track = tracks_playing()
-   if track then
-      if track.name ~= song then
-         tracks_add( song, situation, params )
-         return true
-      end
+   if track and track.name == song then
+      return false
    end
-   return false
+   tracks_add( song, situation, params )
+   return true
 end
 
 -- Stores all the available sound types and their functions
