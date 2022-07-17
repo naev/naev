@@ -626,7 +626,7 @@ static int audioL_play( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    if (!sound_disabled) {
       if ((la->type == LUA_AUDIO_STREAM) && (la->th == NULL)) {
-         int ret;
+         int ret = 0;
          ALint alstate;
          soundLock();
          alGetSourcei( la->source, AL_BUFFERS_QUEUED, &alstate );
@@ -904,7 +904,7 @@ static int audioL_getDuration( lua_State *L )
             duration = ov_pcm_total( &la->stream, -1 );
          SDL_mutexV( la->lock );
          break;
-      }
+   }
 
    lua_pushnumber(L, duration);
    return 1;
