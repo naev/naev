@@ -152,7 +152,7 @@ Chooses landing songs.
 function choose_table.land ()
    local pnt   = spob.cur()
    local class = pnt:class()
-   local mus
+   local music_list
 
    -- Planet override
    local override = planet_songs[ pnt:nameRaw() ]
@@ -171,20 +171,20 @@ function choose_table.land ()
 
    -- Standard to do it based on type of planet
    if class == "M" then
-      mus = { "agriculture" }
+      music_list = { "agriculture" }
    elseif class == "O" then
-      mus = { "ocean" }
+      music_list = { "ocean" }
    elseif class == "P" then
-      mus = { "snow" }
+      music_list = { "snow" }
    else
       if pnt:services()["inhabited"] then
-         mus = { "cosmostation", "upbeat" }
+         music_list = { "cosmostation", "upbeat" }
       else
-         mus = { "agriculture" }
+         music_list = { "agriculture" }
       end
    end
 
-   tracks_add( mus[ rnd.rnd(1, #mus) ], "land" )
+   tracks_add( music_list[ rnd.rnd(1, #music_list) ], "land" )
    return true
 end
 
@@ -217,20 +217,18 @@ function choose_table.ambient ()
    local ambient
 
    -- Check to see if we want to update
-   if tracks_playing() then
+   local track = tracks_playing()
+   if track then
       if music_situation == "takeoff" then
          return true
       elseif music_situation == "ambient" then
          force = false
       end
 
-      -- Get music information.
-      --local _songname, songpos = music.current()
-
-      -- Do not change songs so soon
-      --if songpos < 10 then
-      --   return false
-      --end
+      -- Do not change songs too soon
+      if track.m:tell() < 10 then
+         return false
+      end
    end
 
    -- Get information about the current system
