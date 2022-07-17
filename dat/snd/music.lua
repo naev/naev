@@ -8,11 +8,10 @@ parameters:
    idle - current playing music ran out
 ]]--
 local audio = require "love.audio"
-local last = "idle"
 local last_track
 local tracks = {}
 local music_stopped = false
-local music_situation = "idle"
+local music_situation = "load"
 local music_played = 0
 local music_vol = naev.conf().music
 
@@ -27,6 +26,7 @@ local function tracks_add( name, situation )
       music_played = 0
    end
    music_situation = situation
+   last_track = name
 
    local name_orig = name
    name = "snd/music/"..name_orig..".ogg"
@@ -111,30 +111,17 @@ local system_ambient_songs = {
 }
 
 --[[--
-Checks to see if a song is being played, if it is it stops it.
-
-      @return true if music is playing.
---]]
-local function checkIfPlayingOrStop( song )
-   local track = tracks_playing()
-   if track then
-      if track.name ~= song then
-         tracks_stop()
-      end
-      return true
-   end
-   return false
-end
-
---[[--
 Play a song if it's not currently playing.
 --]]
 local function playIfNotPlaying( song, situation, params )
-   if checkIfPlayingOrStop( song ) then
-      return true
+   local track = tracks_playing()
+   if track then
+      if track.name ~= song then
+         tracks_add( song, situation, params )
+         return true
+      end
    end
-   tracks_add( song, situation, params )
-   return true
+   return false
 end
 
 -- Stores all the available sound types and their functions
@@ -144,8 +131,7 @@ local choose_table = {}
 Chooses Loading songs.
 --]]
 function choose_table.load ()
-   local ret = playIfNotPlaying( "machina", "load" )
-   return ret
+   return playIfNotPlaying( "machina", "load" )
 end
 
 --[[--
@@ -208,7 +194,7 @@ end
 -- Takeoff songs
 function choose_table.takeoff ()
    -- No need to restart
-   if last == "takeoff" and tracks_playing() then
+   if music_situation == "takeoff" and tracks_playing() then
       return true
    end
    local takeoff = { "liftoff", "launch2", "launch3chatstart" }
@@ -234,9 +220,9 @@ function choose_table.ambient ()
 
    -- Check to see if we want to update
    if tracks_playing() then
-      if last == "takeoff" then
+      if music_situation == "takeoff" then
          return true
-      elseif last == "ambient" then
+      elseif music_situation == "ambient" then
          force = false
       end
 
@@ -332,7 +318,6 @@ function choose_table.ambient ()
          new_track = ambient[ new_track_id ]
       end
 
-      last_track = new_track
       tracks_add( new_track, "ambient" )
       return true
    end
@@ -414,7 +399,6 @@ function choose_table.combat ()
       new_track = combat[ new_track_id ]
    end
 
-   last_track = new_track
    tracks_add( new_track, "combat" )
    return true
 end
@@ -436,24 +420,7 @@ function choose( str )
 
    str = str or "ambient"
 
-   -- If we are over idling then we do weird stuff
-   local changed
-   if str == "idle" and last ~= "idle" then
-      -- We'll play the same as last unless it was takeoff
-      if last == "takeoff" then
-         changed = choose_table.ambient()
-      else
-         changed = choose( last )
-      end
-
-   -- Normal case
-   else
-      changed = choose_table[ str ]()
-   end
-
-   if changed and str ~= "idle" then
-      last = str -- save the last string so we can use it
-   end
+   choose_table[ str ]()
 end
 
 local enemy_dist = 5e3
