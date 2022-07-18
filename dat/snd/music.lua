@@ -29,12 +29,8 @@ local function tracks_add( name, situation )
    last_track = name
 
    local name_orig = name
-   name = "snd/music/"..name_orig..".ogg"
-   if naev.file.filetype( name ) ~= "file" then
+   if string.sub(name, 1, 1) ~= "/" then
       name = "snd/music/"..name_orig
-      if naev.file.filetype( name ) ~= "file" then
-         name = name_orig
-      end
    end
 
    local m = audio.newSource( name, "stream" )
