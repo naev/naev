@@ -28,6 +28,7 @@
 static int commodityL_eq( lua_State *L );
 static int commodityL_get( lua_State *L );
 static int commodityL_getStandard( lua_State *L );
+static int commodityL_flags( lua_State *L );
 static int commodityL_name( lua_State *L );
 static int commodityL_nameRaw( lua_State *L );
 static int commodityL_price( lua_State *L );
@@ -43,6 +44,7 @@ static const luaL_Reg commodityL_methods[] = {
    { "__eq", commodityL_eq },
    { "get", commodityL_get },
    { "getStandard", commodityL_getStandard },
+   { "flags", commodityL_flags },
    { "name", commodityL_name },
    { "nameRaw", commodityL_nameRaw },
    { "price", commodityL_price },
@@ -205,14 +207,11 @@ static int commodityL_eq( lua_State *L )
  */
 static int commodityL_get( lua_State *L )
 {
-   const char *name;
-   Commodity *commodity;
-
    /* Handle parameters. */
-   name = luaL_checkstring(L,1);
+   const char *name = luaL_checkstring(L,1);
 
    /* Get commodity. */
-   commodity = commodity_get( name );
+   Commodity *commodity = commodity_get( name );
    if (commodity == NULL) {
       NLUA_ERROR(L,_("Commodity '%s' not found!"), name);
       return 0;
@@ -226,7 +225,7 @@ static int commodityL_get( lua_State *L )
 /**
  * @brief Gets the list of standard commodities.
  *
- * @luatreturn table A table containing commodity objects, namely those which are standard (buyable/sellable anywhere).
+ *    @luatreturn table A table containing commodity objects, namely those which are standard (buyable/sellable anywhere).
  * @luafunc getStandard
  */
 static int commodityL_getStandard( lua_State *L )
@@ -240,6 +239,29 @@ static int commodityL_getStandard( lua_State *L )
       lua_rawseti( L, -2, i+1 );
    }
    array_free( standard );
+   return 1;
+}
+
+/**
+ * @brief Gets the flags that are set for a commodity.
+ *
+ *    @luatreturn table A table containing the flags as key and value as boolean.
+ * @luafunc flags
+ */
+static int commodityL_flags( lua_State *L )
+{
+   Commodity *c = luaL_validcommodity(L,1);
+   lua_newtable(L);
+
+   lua_pushboolean(L, commodity_isFlag(c,COMMODITY_FLAG_STANDARD));
+   lua_setfield(L, -2, "standard");
+
+   lua_pushboolean(L, commodity_isFlag(c,COMMODITY_FLAG_ALWAYS_CAN_SELL));
+   lua_setfield(L, -2, "always_can_sell");
+
+   lua_pushboolean(L, commodity_isFlag(c,COMMODITY_FLAG_PRICE_CONSTANT));
+   lua_setfield(L, -2, "price_constant");
+
    return 1;
 }
 
