@@ -418,7 +418,7 @@ int intro_display( const char *text, const char *mus )
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       /* Only thing we actually care about updating is music. */
-      music_update( 0. );
+      music_update( delta );
 
       /* TODO this is only here because the player.time_dt stuff leaves a window open otherwise.
        * Remove player.time_dt is removed. */
