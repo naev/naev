@@ -8,12 +8,13 @@ parameters:
    idle - current playing music ran out
 ]]--
 local audio = require "love.audio"
-local last_track
-local tracks = {}
-local music_stopped = false
-local music_situation = "load"
-local music_played = 0
-local music_vol = naev.conf().music
+local last_track -- last played track name
+local tracks = {} -- currently playing tracks (including fading)
+local music_stopped = false -- whether or not it is stopped
+local music_situation = "load" -- current running situation
+local music_choose_queue -- next situation to run if not set
+local music_played = 0 -- elapsed play time for the current situation
+local music_vol = naev.conf().music -- music global volume
 
 local function tracks_stop ()
    for k,v in ipairs( tracks ) do
@@ -189,10 +190,11 @@ end
 function choose_table.takeoff ()
    -- No need to restart
    if music_situation == "takeoff" and tracks_playing() then
-      return true
+      return false
    end
    local takeoff = { "liftoff.ogg", "launch2.ogg", "launch3chatstart.ogg" }
    tracks_add( takeoff[ rnd.rnd(1,#takeoff) ], "takeoff" )
+   music_choose_queue = "ambient" -- play ambient next
    return true
 end
 
@@ -215,9 +217,7 @@ function choose_table.ambient ()
    -- Check to see if we want to update
    local track = tracks_playing()
    if track then
-      if music_situation == "takeoff" then
-         return true
-      elseif music_situation == "ambient" then
+      if music_situation == "ambient" then
          force = false
       end
 
@@ -402,12 +402,19 @@ function choose( str )
       end
    end
 
-   str = str or "ambient"
-
-   choose_table[ str ]()
+   str = str or music_choose_queue or music_situation
+   music_choose_queue = nil
+   local choose_func = choose_table[ str ]
+   if not choose_func then
+      choose_func = "ambient"
+   end
+   choose_func()
 end
 
 local enemy_dist = 5e3
+--[[
+See if we should switch to playing combat music.
+--]]
 local function should_combat ()
    local pp = player.pilot()
    if not pp or not pp:exists() then
@@ -437,6 +444,9 @@ local function should_combat ()
    return false
 end
 
+--[[
+See if we should switch to playing ambient music again.
+--]]
 local function should_ambient ()
    local pp = player.pilot()
    if not pp or not pp:exists() then
