@@ -307,8 +307,7 @@ function heartbeat ()
       -- CUTSCENE END
       player.cinematics( false )
       player.allowLand( true )
-      music.load("ambient1")
-      music.play()
+      music.play("ambient1.ogg")
       cutscene = false
       mem.state = 2
       love.origin()

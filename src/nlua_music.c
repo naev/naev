@@ -21,10 +21,8 @@
 
 /* Music methods. */
 static int musicL_choose( lua_State *L );
-static int musicL_load( lua_State *L );
 static int musicL_play( lua_State *L );
 static int musicL_pause( lua_State *L );
-static int musicL_resume( lua_State *L );
 static int musicL_stop( lua_State *L );
 static int musicL_isPlaying( lua_State *L );
 static int musicL_current( lua_State *L );
@@ -32,10 +30,8 @@ static int musicL_setRepeat( lua_State *L );
 static int musicL_getVolume( lua_State *L );
 static const luaL_Reg music_methods[] = {
    { "choose", musicL_choose },
-   { "load", musicL_load },
    { "play", musicL_play },
    { "pause", musicL_pause },
-   { "resume", musicL_resume },
    { "stop", musicL_stop },
    { "isPlaying", musicL_isPlaying },
    { "current", musicL_current },
@@ -83,22 +79,6 @@ static int musicL_choose( lua_State* L )
 }
 
 /**
- * @brief Loads a song.
- *
- * Restores the music system if it was temporarily disabled.
- *
- *    @luatparam string name Name of the song to load.
- * @luafunc load
- */
-static int musicL_load( lua_State *L )
-{
-   const char *str = luaL_checkstring(L,1);
-   music_play( str );
-   music_tempDisable( 0 );
-   return 0;
-}
-
-/**
  * @brief Plays the loaded song.
  *
  * Restores the music system if it was temporarily disabled.
@@ -107,9 +87,9 @@ static int musicL_load( lua_State *L )
  */
 static int musicL_play( lua_State *L )
 {
-   (void) L;
+   const char *str = luaL_optstring(L,1,NULL);
    music_tempDisable( 0 );
-   music_play( NULL );
+   music_play( str );
    return 0;
 }
 
@@ -120,16 +100,6 @@ static int musicL_pause( lua_State* L )
 {
    (void) L;
    music_pause();
-   return 0;
-}
-
-/**
- * @brief Resumes the music engine.
- */
-static int musicL_resume( lua_State* L )
-{
-   (void) L;
-   music_resume();
    return 0;
 }
 

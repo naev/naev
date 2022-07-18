@@ -81,26 +81,26 @@ end
 
 -- Faction-specific songs.
 local factional = {
-   Collective = { "collective1", "automat" },
-   Pirate     = { "pirate1_theme1", "pirates_orchestra", "ambient4",
-                  "terminal" },
-   Empire     = { "empire1", "empire2"; add_neutral = true },
-   Sirius     = { "sirius1", "sirius2"; add_neutral = true },
-   Dvaered    = { "dvaered1", "dvaered2"; add_neutral = true },
-   ["Za'lek"] = { "zalek1", "zalek2"; add_neutral = true },
-   Thurion    = { "motherload", "dark_city", "ambient1", "ambient3" },
-   Proteron   = { "heartofmachine", "imminent_threat", "ambient4" },
+   Collective = { "collective1.ogg", "automat.ogg" },
+   Pirate     = { "pirate1_theme1.ogg", "pirates_orchestra.ogg", "ambient4.ogg",
+                  "terminal.ogg" },
+   Empire     = { "empire1.ogg", "empire2.ogg"; add_neutral = true },
+   Sirius     = { "sirius1.ogg", "sirius2.ogg"; add_neutral = true },
+   Dvaered    = { "dvaered1.ogg", "dvaered2.ogg"; add_neutral = true },
+   ["Za'lek"] = { "zalek1.ogg", "zalek2.ogg"; add_neutral = true },
+   Thurion    = { "motherload.ogg", "dark_city.ogg", "ambient1.ogg", "ambient3.ogg" },
+   Proteron   = { "heartofmachine.ogg", "imminent_threat.ogg", "ambient4.ogg" },
 }
 
 -- Planet-specific songs
 local planet_songs = {
-   ["Minerva Station"] = { "meeting_mtfox" },
-   ["Strangelove Lab"] = { "landing_sinister" },
+   ["Minerva Station"] = { "meeting_mtfox.ogg" },
+   ["Strangelove Lab"] = { "landing_sinister.ogg" },
    ["One-Wing Goddard"] = { "/snd/sounds/songs/inca-spa.ogg" },
    ["Research Post Sigma-13"] = function ()
          if not diff.isApplied("sigma13_fixed1") and
             not diff.isApplied("sigma13_fixed2") then
-            return "landing_sinister"
+            return "landing_sinister.ogg"
          end
       end,
 }
@@ -129,21 +129,21 @@ local choose_table = {}
 Chooses Loading songs.
 --]]
 function choose_table.load ()
-   return playIfNotPlaying( "machina", "load" )
+   return playIfNotPlaying( "machina.ogg", "load" )
 end
 
 --[[--
 Chooses Intro songs.
 --]]
 function choose_table.intro ()
-   return playIfNotPlaying( "intro", "intro" )
+   return playIfNotPlaying( "intro.ogg", "intro" )
 end
 
 --[[--
 Chooses Credit songs.
 --]]
 function choose_table.credits ()
-   return playIfNotPlaying( "empire1", "credits" )
+   return playIfNotPlaying( "empire1.ogg", "credits" )
 end
 
 --[[--
@@ -171,16 +171,16 @@ function choose_table.land ()
 
    -- Standard to do it based on type of planet
    if class == "M" then
-      music_list = { "agriculture" }
+      music_list = { "agriculture.ogg" }
    elseif class == "O" then
-      music_list = { "ocean" }
+      music_list = { "ocean.ogg" }
    elseif class == "P" then
-      music_list = { "snow" }
+      music_list = { "snow.ogg" }
    else
       if pnt:services()["inhabited"] then
-         music_list = { "cosmostation", "upbeat" }
+         music_list = { "cosmostation.ogg", "upbeat.ogg" }
       else
-         music_list = { "agriculture" }
+         music_list = { "agriculture.ogg" }
       end
    end
 
@@ -195,7 +195,7 @@ function choose_table.takeoff ()
    if music_situation == "takeoff" and tracks_playing() then
       return true
    end
-   local takeoff = { "liftoff", "launch2", "launch3chatstart" }
+   local takeoff = { "liftoff.ogg", "launch2.ogg", "launch3chatstart.ogg" }
    tracks_add( takeoff[ rnd.rnd(1,#takeoff) ], "takeoff" )
    return true
 end
@@ -204,11 +204,11 @@ end
 -- Save old data
 local last_sysFaction  = nil
 local last_sysNebuDens = nil
-local ambient_neutral  = { "ambient2", "mission",
-      "peace1", "peace2", "peace4", "peace6",
-      "void_sensor", "ambiphonic",
-      "ambient4", "terminal", "eureka",
-      "ambient2_5", "78pulse", "therewillbestars" }
+local ambient_neutral  = { "ambient2.ogg", "mission.ogg",
+      "peace1.ogg", "peace2.ogg", "peace4.ogg", "peace6.ogg",
+      "void_sensor.ogg", "ambiphonic.ogg",
+      "ambient4.ogg", "terminal.ogg", "eureka.ogg",
+      "ambient2_5.ogg", "78pulse.ogg", "therewillbestars.ogg", }
 --[[--
 Chooses ambient songs.
 --]]
@@ -279,7 +279,7 @@ function choose_table.ambient ()
          ambient = factional[strongest]
          add_neutral = factional[strongest].add_neutral
       elseif nebu then
-         ambient = { "ambient1", "ambient3" }
+         ambient = { "ambient1.ogg", "ambient3.ogg" }
          add_neutral = true
       else
          ambient = ambient_neutral
@@ -318,16 +318,16 @@ end
 
 -- Faction-specific combat songs
 local factional_combat = {
-   Collective = { "collective2", "galacticbattle", "battlesomething1", "combat3" },
-   Pirate     = { "battlesomething2", "blackmoor_tides", add_neutral = true },
-   Empire     = { "galacticbattle", "battlesomething2"; add_neutral = true },
-   Goddard    = { "flf_battle1", "battlesomething1"; add_neutral = true },
-   Dvaered    = { "flf_battle1", "battlesomething1", "battlesomething2"; add_neutral = true },
-   ["FLF"]    = { "flf_battle1", "battlesomething2"; add_neutral = true },
-   Frontier   = { "flf_battle1"; add_neutral = true },
-   Sirius     = { "galacticbattle", "battlesomething1"; add_neutral = true },
-   Soromid    = { "galacticbattle", "battlesomething2"; add_neutral = true },
-   ["Za'lek"] = { "collective2", "galacticbattle", "battlesomething1", add_neutral = true }
+   Collective = { "collective2.ogg", "galacticbattle.ogg", "battlesomething1.ogg", "combat3" },
+   Pirate     = { "battlesomething2.ogg", "blackmoor_tides.ogg", add_neutral = true },
+   Empire     = { "galacticbattle.ogg", "battlesomething2.ogg", add_neutral = true },
+   Goddard    = { "flf_battle1.ogg", "battlesomething1.ogg", add_neutral = true },
+   Dvaered    = { "flf_battle1.ogg", "battlesomething1.ogg", "battlesomething2.ogg", add_neutral = true },
+   ["FLF"]    = { "flf_battle1.ogg", "battlesomething2.ogg", add_neutral = true },
+   Frontier   = { "flf_battle1.ogg", add_neutral = true },
+   Sirius     = { "galacticbattle.ogg", "battlesomething1.ogg", add_neutral = true },
+   Soromid    = { "galacticbattle.ogg", "battlesomething2.ogg", add_neutral = true },
+   ["Za'lek"] = { "collective2.ogg", "galacticbattle.ogg", "battlesomething1.ogg", add_neutral = true }
 }
 
 --[[--
@@ -353,9 +353,9 @@ function choose_table.combat ()
 
    local nebu = nebu_dens > 0
    if nebu then
-      combat = { "nebu_battle1", "nebu_battle2", "combat1", "combat2" }
+      combat = { "nebu_battle1.ogg", "nebu_battle2.ogg", "combat1.ogg", "combat2.ogg", }
    else
-      combat = { "combat3", "combat1", "combat2" }
+      combat = { "combat3.ogg", "combat1.ogg", "combat2.ogg", }
    end
 
    if factional_combat[strongest] then
@@ -521,8 +521,16 @@ function update( dt )
 end
 
 function play( song )
-   music_stopped = false
-   tracks_add( song, "custom" )
+   if song then
+      music_stopped = false
+      tracks_add( song, "custom" )
+      return
+   end
+   tracks_resume()
+   local t = tracks_playing()
+   if not t then
+      choose()
+   end
 end
 
 function stop ()
@@ -532,10 +540,6 @@ end
 
 function pause ()
    tracks_pause()
-end
-
-function resume ()
-   tracks_resume()
 end
 
 function info ()

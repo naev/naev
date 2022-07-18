@@ -717,8 +717,7 @@ function ecc_feral_boss_attacked( _p )
       hook.timer( 2.0, "ecc_feral_boss_msg" )
 
       -- We go with nebula music
-      music.load("nebu_battle1")
-      music.play()
+      music.play("nebu_battle1.ogg")
       music.setRepeat(true)
    end
 end

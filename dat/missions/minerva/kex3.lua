@@ -573,8 +573,7 @@ function maikki_arrives_extra_real( pos )
    p:intrinsicSet( "tur_damage", 400 )
 end
 local function malik_music ()
-   music.load('battlesomething2')
-   music.play()
+   music.play('battlesomething2.ogg')
 end
 
 function malik_speech ()
