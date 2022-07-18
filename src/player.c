@@ -4290,7 +4290,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                int cid, quantity;
 
                xmlr_attr_int( cur, "quantity", quantity );
-               xmlr_attr_int( cur, "id", cid );
+               xmlr_attr_int_def( cur, "id", cid, 0 );
 
                /* Get the commodity. */
                com = commodity_get(xml_get(cur));
@@ -4301,9 +4301,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
                /* actually add the cargo with id hack
                 * Note that the player's cargo_free is ignored here. */
-               pilot_cargoAddRaw( ship, com, quantity, 0 );
-               if (cid != 0)
-                  array_back(ship->commodities).id = cid;
+               if ((quantity==0) && (cid==0))
+                  WARN(_("Adding cargo '%s' to ship '%s' that is not a mission cargo with quantity=0!"), com->name, ship->name );
+               pilot_cargoAddRaw( ship, com, quantity, cid );
             }
          } while (xml_nextNode(cur));
          continue;
