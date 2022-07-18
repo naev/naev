@@ -134,16 +134,20 @@ static void shipCargo( PilotCommodity **pclist, Pilot *p )
       int q = pc->quantity;
       int added;
 
-      /* Ignore mission cargo. */
-      if (pc->id > 0) {
+      /* Mission cargo gets added independently. */
+      if (pc->id > 0)
          array_push_back( pclist, *pc );
-      }
       else {
          /* See if it can be added. */
          added = 0;
          for (int j=0; j<array_size(*pclist); j++) {
             PilotCommodity *lc = &(*pclist)[j];
 
+            /* Ignore mission cargo. */
+            if (lc->id > 0)
+               continue;
+
+            /* Cargo must match. */
             if (pc->commodity != lc->commodity)
                continue;
 
