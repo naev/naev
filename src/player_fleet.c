@@ -356,7 +356,7 @@ int pfleet_cargoRm( const Commodity *com, int q, int jet )
  *
  *    @return List of all the cargo in the fleet (array.h). Individual elements do not have to be freed, but the list does.
  */
-PilotCommodity *pfleet_cargoList (void)
+PilotCommodity* pfleet_cargoList (void)
 {
    PilotCommodity *pclist = array_create( PilotCommodity );
    shipCargo( &pclist, player.p, 0 );
@@ -370,4 +370,34 @@ PilotCommodity *pfleet_cargoList (void)
       shipCargo( &pclist, pe, 0 );
    }
    return pclist;
+}
+
+/**
+ * @brief Gets the list of ships that are carry a certain commodity in the player fleet and the amount they are carrying.
+ *
+ *    @param com Commodity to see which ships have.
+ *    @return An array of ships and the amount they have (array.h). Must be freed with array_free.
+ */
+PFleetCargo* pfleet_cargoListShips( const Commodity *com )
+{
+   PFleetCargo *plist = array_create( PFleetCargo );
+   int q = pilot_cargoOwned( player.p, com );
+   if (q > 0) {
+      PFleetCargo fc = { .p=player.p, .q=q };
+      array_push_back( &plist, fc );
+   }
+   for (int i=0; i<array_size(player.p->escorts); i++) {
+      Escort_t *e = &player.p->escorts[i];
+      Pilot *pe = pilot_get( e->id );
+      if (pe == NULL)
+         continue;
+      if (e->type != ESCORT_TYPE_FLEET)
+         continue;
+      q = pilot_cargoOwned( pe, com );
+      if (q > 0) {
+         PFleetCargo fc = { .p=pe, .q=q };
+         array_push_back( &plist, fc );
+      }
+   }
+   return plist;
 }

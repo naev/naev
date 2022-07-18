@@ -994,6 +994,17 @@ static void cargo_update( unsigned int wid, const char *str )
       l = scnprintf( desc, sizeof(desc), "%s", _(com->name) );
    else
       l = scnprintf( desc, sizeof(desc), "%s\n\n%s", _(com->name), _(com->description) );
+
+   /* Only add fleet information with fleet capacity. */
+   if (player.fleet_capacity > 0) {
+      l += scnprintf( &desc[l], sizeof(desc)-l, "\n\n%s", _("Carried by the following ships in your fleet:\n") );
+      PFleetCargo *plist = pfleet_cargoListShips( com );
+      for (int i=0; i<array_size(plist); i++)
+         l += scnprintf( &desc[l], sizeof(desc)-l, _("\n   - %s (%d)"), plist[i].p->name, plist[i].q );
+      array_free(plist);
+   }
+
+   /* Add message on illegal outfits. */
    if (array_size(com->illegalto) > 0) {
       l += scnprintf( &desc[l], sizeof(desc)-l, "\n\n%s", _("Illegalized by the following factions:\n") );
       for (int i=0; i<array_size(com->illegalto); i++) {
