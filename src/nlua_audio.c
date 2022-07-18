@@ -159,6 +159,8 @@ static int stream_thread( void *la_data )
 
 /**
  * @brief Loads a buffer.
+ *
+ * Assumes that soundLock() is set.
  */
 static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
 {
@@ -166,12 +168,12 @@ static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
    size_t size;
    char buf[ 32 * 1024 ];
 
+   soundUnlock();
    ret  = 0;
    size = 0;
    while (size < sizeof(buf)) { /* file up the entire data buffer */
       int section, result;
 
-      soundUnlock();
       SDL_mutexP( la->lock );
       result = ov_read_filter(
             &la->stream,   /* stream */
@@ -184,7 +186,6 @@ static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
             rg_filter,              /* filter function */
             la );                   /* filter parameter */
       SDL_mutexV( la->lock );
-      soundLock();
 
       /* End of file. */
       if (result == 0) {
@@ -207,12 +208,11 @@ static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
 
       size += result;
    }
+   soundLock();
 
    /* load the buffer up */
-   soundLock();
    alBufferData( buffer, la->format, buf, size, la->info->rate );
    al_checkErr();
-   soundUnlock();
 
    return ret;
 }
@@ -367,28 +367,37 @@ void audio_cleanup( LuaAudio_t *la )
 {
    if ((la==NULL) || sound_disabled || la->nocleanup)
       return;
+
    soundLock();
    if (la->source > 0)
       alDeleteSources( 1, &la->source );
-   /* Check if buffers need freeing. */
-   if (la->buf != NULL) {
-      la->buf->refcount--;
-      if (la->buf->refcount <= 0) {
-         alDeleteBuffers( 1, &la->buf->buffer );
-         free( la->buf );
-      }
-   }
 
-   if (la->type == LUA_AUDIO_STREAM) {
-      if (la->th != NULL) {
-         la->active = -1;
-         if (SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) == SDL_MUTEX_TIMEDOUT)
-            WARN(_("Timed out while waiting for audio thread of '%s' to finish!"), la->name);
-      }
-      alDeleteBuffers( 2, la->stream_buffers );
-      SDL_DestroyCond( la->cond );
-      SDL_DestroyMutex( la->lock );
-      ov_clear( &la->stream );
+   switch (la->type) {
+      case LUA_AUDIO_STATIC:
+         /* Check if buffers need freeing. */
+         if (la->buf != NULL) {
+            la->buf->refcount--;
+            if (la->buf->refcount <= 0) {
+               alDeleteBuffers( 1, &la->buf->buffer );
+               free( la->buf );
+            }
+         }
+         break;
+
+      case LUA_AUDIO_STREAM:
+         if (la->th != NULL) {
+            la->active = -1;
+            if (SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) == SDL_MUTEX_TIMEDOUT)
+               WARN(_("Timed out while waiting for audio thread of '%s' to finish!"), la->name);
+         }
+         if (la->stream_buffers[0] > 0)
+            alDeleteBuffers( 2, la->stream_buffers );
+         if (la->cond != NULL)
+            SDL_DestroyCond( la->cond );
+         if (la->lock != NULL)
+            SDL_DestroyMutex( la->lock );
+         ov_clear( &la->stream );
+         break;
    }
 
    /* Clean up. */
