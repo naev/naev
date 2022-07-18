@@ -42,9 +42,10 @@ static int nxml_canWriteString( const char *buf, size_t len );
  *    @param writer XML Writer to use to persist stuff.
  *    @param name Name of the data to save.
  *    @param name_len Data size of name (which is an arbitrary Lua string).
+ *    @param keynum Whether the "name" is a numeric key, to be marked with keynum="1" in the XML.
  *    @return 0 on success.
  */
-static int nxml_saveNameAttribute( xmlTextWriterPtr writer, const char *name, size_t name_len )
+static int nxml_saveNameAttribute( xmlTextWriterPtr writer, const char *name, size_t name_len, int keynum )
 {
    if (nxml_canWriteString( name, name_len ))
       xmlw_attr( writer, "name", "%s", name );
@@ -53,6 +54,8 @@ static int nxml_saveNameAttribute( xmlTextWriterPtr writer, const char *name, si
       xmlw_attr( writer, "name_base64", "%s", encoded );
       free( encoded );
    }
+   if (keynum)
+      xmlw_attr(writer,"keynum","1");
    return 0;
 }
 
@@ -73,9 +76,7 @@ static int nxml_saveData( xmlTextWriterPtr writer, const char *type, const char 
    xmlw_startElem(writer,"data");
 
    xmlw_attr(writer,"type","%s",type);
-   nxml_saveNameAttribute( writer, name, name_len );
-   if (keynum)
-      xmlw_attr(writer,"keynum","1");
+   nxml_saveNameAttribute( writer, name, name_len, keynum );
    xmlw_str(writer,"%s",value);
 
    xmlw_endElem(writer); /* "data" */
@@ -90,9 +91,10 @@ static int nxml_saveData( xmlTextWriterPtr writer, const char *type, const char 
  *    @param name Name of the data to save.
  *    @param name_len Data size of name (which is an arbitrary Lua string).
  *    @param c Commodity to save.
+ *    @param keynum Whether the "name" is a numeric key, to be marked with keynum="1" in the XML.
  *    @return 0 on success.
  */
-static int nxml_saveCommodity( xmlTextWriterPtr writer, const char *name, size_t name_len, const Commodity* c )
+static int nxml_saveCommodity( xmlTextWriterPtr writer, const char *name, size_t name_len, const Commodity* c, int keynum )
 {
    int status = 0;
    if (c->name == NULL)
@@ -101,7 +103,7 @@ static int nxml_saveCommodity( xmlTextWriterPtr writer, const char *name, size_t
    xmlw_startElem( writer, "data" );
 
    xmlw_attr( writer, "type", COMMODITY_METATABLE );
-   nxml_saveNameAttribute( writer, name, name_len );
+   nxml_saveNameAttribute( writer, name, name_len, keynum );
    if (c->istemp) {
       xmlw_attr( writer, "temp", "%d", c->istemp );
       xmlw_startElem( writer, "commodity" );
@@ -145,15 +147,16 @@ static Commodity* nxml_loadCommodity( xmlNodePtr node )
  *    @param name_len Data size of name (which is an arbitrary Lua string).
  *    @param start System in which the jump is.
  *    @param dest Jump's destination system.
+ *    @param keynum Whether the "name" is a numeric key, to be marked with keynum="1" in the XML.
  *    @return 0 on success.
  */
 static int nxml_saveJump( xmlTextWriterPtr writer, const char *name, size_t name_len, const char *start,
-                          const char *dest )
+                          const char *dest, int keynum )
 {
    xmlw_startElem(writer,"data");
 
    xmlw_attr(writer,"type",JUMP_METATABLE);
-   nxml_saveNameAttribute( writer, name, name_len );
+   nxml_saveNameAttribute( writer, name, name_len, keynum );
    xmlw_attr(writer,"dest","%s",dest);
    xmlw_str(writer,"%s",start);
 
@@ -214,9 +217,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
          /* Start the table. */
          xmlw_startElem(writer,"data");
          xmlw_attr(writer,"type","table");
-         nxml_saveNameAttribute( writer, name, name_len );
-         if (keynum)
-            xmlw_attr(writer,"keynum","1");
+         nxml_saveNameAttribute( writer, name, name_len, keynum );
          lua_pushnil(L); /* key, value, nil */
          while (lua_next(L, -2) != 0) {
             /* key, value, key, value */
@@ -310,11 +311,11 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
             if ((ss == NULL) || (dest == NULL))
                WARN(_("Failed to save invalid jump."));
             else
-               nxml_saveJump( writer, name, name_len, ss->name, dest->name );
+               nxml_saveJump( writer, name, name_len, ss->name, dest->name, keynum );
          }
          else if (lua_iscommodity(L,-1)) {
             Commodity *com = lua_tocommodity(L,-1);
-            if( nxml_saveCommodity( writer, name, name_len, com ) != 0)
+            if( nxml_saveCommodity( writer, name, name_len, com, keynum ) != 0)
                WARN( _("Failed to save invalid commodity.") );
             /* key, value */
             break;
@@ -332,7 +333,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
             Vector2d *vec = lua_tovector( L, -1 );
             xmlw_startElem( writer, "data" );
             xmlw_attr( writer, "type", VECTOR_METATABLE );
-            nxml_saveNameAttribute( writer, name, name_len );
+            nxml_saveNameAttribute( writer, name, name_len, keynum );
             xmlw_attr( writer, "x", "%.16e", vec->x );
             xmlw_attr( writer, "y", "%.16e", vec->y );
             xmlw_attr( writer, "mod", "%.16e", vec->mod );
