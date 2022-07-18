@@ -942,10 +942,11 @@ static void cargo_genList( unsigned int wid )
       nbuf = 1;
    }
    else {
-      /* List the player's cargo */
+      /* List the player fleet's cargo. */
+      PilotCommodity *pclist = pfleet_cargoList();
       buf = malloc( sizeof(char*) * array_size(player.p->commodities) );
-      for (int i=0; i<array_size(player.p->commodities); i++) {
-         PilotCommodity *pc = &player.p->commodities[i];
+      for (int i=0; i<array_size(pclist); i++) {
+         PilotCommodity *pc = &pclist[i];
          int misn = pc->id != 0;
          int illegal = (array_size(pc->commodity->illegalto)>0);
 
@@ -956,6 +957,7 @@ static void cargo_genList( unsigned int wid )
                illegal ? _(" (#rillegal#0)") : "" );
       }
       nbuf = array_size(player.p->commodities);
+      array_free(pclist);
    }
    window_addList( wid, 20, -40,
          w - 40, 200,
@@ -972,9 +974,12 @@ static void cargo_update( unsigned int wid, const char *str )
    char desc[STRMAX];
    int pos, l;
    const Commodity *com;
+   PilotCommodity *pclist = pfleet_cargoList();
 
-   if (array_size(player.p->commodities)==0)
-      return; /* No cargo */
+   if (array_size(pclist) <= 0) {
+      array_free(pclist);
+      return; /* No cargo, redundant check */
+   }
 
    /* Can jettison all but mission cargo when not landed*/
    if (landed)
@@ -982,11 +987,8 @@ static void cargo_update( unsigned int wid, const char *str )
    else
       window_enableButton( wid, "btnJettisonCargo" );
 
-   if (array_size(player.p->commodities)==0)
-      return; /* No cargo, redundant check */
-
    pos = toolkit_getListPos( wid, "lstCargo" );
-   com = player.p->commodities[pos].commodity;
+   com = pclist[pos].commodity;
 
    if (!com->description)
       l = scnprintf( desc, sizeof(desc), "%s", _(com->name) );
@@ -1003,6 +1005,8 @@ static void cargo_update( unsigned int wid, const char *str )
       }
    }
    window_modifyText( wid, "txtCargoDesc", desc );
+
+   array_free(pclist);
 }
 /**
  * @brief Makes the player jettison the currently selected cargo.
@@ -1013,25 +1017,30 @@ static void cargo_jettison( unsigned int wid, const char *str )
    (void)str;
    int pos, ret;
    Mission *misn;
+   PilotCommodity *pclist = pfleet_cargoList();
 
-   if (array_size(player.p->commodities)==0)
+   if (array_size(pclist) <= 0) {
+      array_free(pclist);
       return; /* No cargo, redundant check */
+   }
 
    pos = toolkit_getListPos( wid, "lstCargo" );
 
    /* Special case mission cargo. */
-   if (player.p->commodities[pos].id != 0) {
+   if (pclist[pos].id != 0) {
       int f;
 
       if (!dialogue_YesNo( _("Abort Mission"),
-               _("Are you sure you want to abort this mission?") ))
+               _("Are you sure you want to abort this mission?") )) {
+         array_free(pclist);
          return;
+      }
 
       /* Get the mission. */
       f = -1;
       for (int i=0; i<array_size(player_missions); i++) {
          for (int j=0; j<array_size(player_missions[i]->cargo); j++) {
-            if (player_missions[i]->cargo[j] == player.p->commodities[pos].id) {
+            if (player_missions[i]->cargo[j] == pclist[pos].id) {
                f = i;
                break;
             }
@@ -1041,7 +1050,8 @@ static void cargo_jettison( unsigned int wid, const char *str )
       }
       if (f < 0) {
          WARN(_("Cargo '%d' does not belong to any active mission."),
-               player.p->commodities[pos].id);
+               pclist[pos].id);
+         array_free( pclist );
          return;
       }
       misn = player_missions[f];
@@ -1064,15 +1074,14 @@ static void cargo_jettison( unsigned int wid, const char *str )
       /* Regenerate list. */
       mission_menu_genList( info_windows[ INFO_WIN_MISN ], 0 );
    }
-   else {
+   else
       /* Remove the cargo */
-      pilot_cargoJet( player.p, player.p->commodities[pos].commodity,
-            player.p->commodities[pos].quantity, 0 );
-   }
+      pfleet_cargoRm( pclist[pos].commodity, pclist[pos].quantity, 1 );
 
    /* We reopen the menu to recreate the list now. */
    ship_update( info_windows[ INFO_WIN_SHIP ] );
    cargo_genList( wid );
+   array_free( pclist );
 }
 
 /**
