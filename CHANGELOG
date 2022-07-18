@@ -67,10 +67,11 @@
 
 * 0.9.4 (unreleased)
    * Fixed "No error." log spam with certain video card drivers
-   * Fixed Lua errors with tiny nebula such as Sarcophagus.
-   * Fixed fake transponder cheesing rehabilitation missions.
-   * Fixed errors in "Dead Or Alive Bounty", "Harja's Vengeance", and "The Lost Brother" missions.
-   * Fixed the in-game screenshot feature, in case of odd window dimensions.
+   * Fixed Lua errors with tiny nebula such as Sarcophagus
+   * Fixed fake transponder cheesing rehabilitation missions
+   * Fixed errors in "Anxious Merchant", "Dead Or Alive Bounty", "Harja's Vengeance", and "The Lost Brother" missions
+   * Fixed the in-game screenshot feature, in case of odd window dimensions
+   * Fixed at least "Dvaered Diplomacy" glitching when the game is saved/reloaded (thanks to "Duke" on the Steam forums)
 
 * 0.9.3
    * Bug fix: if the German translation was active, casino minigames' explanation (Erklärung) didn't work
