@@ -294,10 +294,9 @@ function choose_table.ambient ()
 
       -- Make sure it's not already in the list or that we have to stop the
       -- currently playing song.
-      local t = tracks_playing()
-      if t then
+      if track then
          for k,v in pairs(ambient) do
-            if t.name == v then
+            if track.name == v then
                return false
             end
          end
