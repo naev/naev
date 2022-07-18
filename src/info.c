@@ -945,11 +945,15 @@ static void cargo_genList( unsigned int wid )
       /* List the player's cargo */
       buf = malloc( sizeof(char*) * array_size(player.p->commodities) );
       for (int i=0; i<array_size(player.p->commodities); i++) {
-         asprintf(&buf[i], "%s%s %d%s",
-               _(player.p->commodities[i].commodity->name),
-               (player.p->commodities[i].id != 0) ? "*" : "",
-               player.p->commodities[i].quantity,
-               (array_size(player.p->commodities[i].commodity->illegalto)>0) ? _(" (#rillegal#0)") : "" );
+         PilotCommodity *pc = &player.p->commodities[i];
+         int misn = pc->id != 0;
+         int illegal = (array_size(pc->commodity->illegalto)>0);
+
+         asprintf(&buf[i], "%s %d%s%s",
+               _(pc->commodity->name),
+               pc->quantity,
+               misn ? _(" [#gMission#0]") : "",
+               illegal ? _(" (#rillegal#0)") : "" );
       }
       nbuf = array_size(player.p->commodities);
    }
