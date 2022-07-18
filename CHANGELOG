@@ -1,4 +1,4 @@
-* 0.9.4 (unreleased)
+* 0.9.4
    * Fixed "No error." log spam with certain video card drivers
    * Fixed Lua errors with tiny nebula such as Sarcophagus
    * Fixed fake transponder cheesing rehabilitation missions
