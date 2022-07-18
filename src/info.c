@@ -952,7 +952,7 @@ static void cargo_genList( unsigned int wid )
          asprintf(&buf[i], "%s %d%s%s",
                _(pc->commodity->name),
                pc->quantity,
-               misn ? _(" [#gMission#0]") : "",
+               misn ? _(" [#bMission#0]") : "",
                illegal ? _(" (#rillegal#0)") : "" );
       }
       nbuf = array_size(player.p->commodities);
