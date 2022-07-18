@@ -414,7 +414,7 @@ static int spob_hasCommodity( const Commodity *c, const Spob *s )
  * It does not check faction standings, only if it is possible to sell at a spob or a system (checking all spobs in the system).
  *
  *    @luatparam Commodity c Commodity to check.
- *    @luatparam Spob|System s Either a spob or a system to see if the commodity can be sold there.
+ *    @luatparam Spob|System where Either a spob or a system to see if the commodity can be sold there.
  * @luafunc canSell
  */
 static int commodityL_canSell( lua_State *L )
@@ -451,7 +451,7 @@ static int commodityL_canSell( lua_State *L )
  * It does not check faction standings, only if it is possible to buy at a spob or a system (checking all spobs in the system).
  *
  *    @luatparam Commodity c Commodity to check.
- *    @luatparam Spob|System s Either a spob or a system to see if the commodity is sold there.
+ *    @luatparam Spob|System where Either a spob or a system to see if the commodity is sold there.
  * @luafunc canBuy
  */
 static int commodityL_canBuy( lua_State *L )
