@@ -127,7 +127,7 @@ int pfleet_deploy( PlayerShip_t *ps )
    return 0;
 }
 
-static void shipCargo( PilotCommodity **pclist, Pilot *p )
+static void shipCargo( PilotCommodity **pclist, Pilot *p, int remove )
 {
    for (int i=array_size(p->commodities)-1; i>=0; i--) {
       const PilotCommodity *pc = &p->commodities[i];
@@ -160,11 +160,13 @@ static void shipCargo( PilotCommodity **pclist, Pilot *p )
       }
 
       /* Remove the cargo. TODO use pilot_cargoRm somehow.  */
-      array_erase( &p->commodities, &pc[0], &pc[1] );
+      if (remove)
+         array_erase( &p->commodities, &pc[0], &pc[1] );
    }
 
    /* Update cargo. */
-   pilot_cargoCalc( p );
+   if (remove)
+      pilot_cargoCalc( p );
 }
 
 /**
@@ -175,7 +177,7 @@ void pfleet_cargoRedistribute (void)
    PilotCommodity *pclist = array_create( PilotCommodity );
 
    /* First build up a list of all the potential cargo. */
-   shipCargo( &pclist, player.p );
+   shipCargo( &pclist, player.p, 1 );
    for (int i=0; i<array_size(player.p->escorts); i++) {
       Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
@@ -183,7 +185,7 @@ void pfleet_cargoRedistribute (void)
          continue;
       if (e->type != ESCORT_TYPE_FLEET)
          continue;
-      shipCargo( &pclist, pe );
+      shipCargo( &pclist, pe, 1 );
    }
 
    /* TODO sort based on something? */
@@ -347,4 +349,25 @@ int pfleet_cargoRm( const Commodity *com, int q, int jet )
          removed += pilot_cargoRm( player.p, com, q );
    }
    return removed;
+}
+
+/**
+ * @brief Gets a list of all the cargo in the fleet.
+ *
+ *    @return List of all the cargo in the fleet (array.h). Individual elements do not have to be freed, but the list does.
+ */
+PilotCommodity *pfleet_cargoList (void)
+{
+   PilotCommodity *pclist = array_create( PilotCommodity );
+   shipCargo( &pclist, player.p, 0 );
+   for (int i=0; i<array_size(player.p->escorts); i++) {
+      Escort_t *e = &player.p->escorts[i];
+      Pilot *pe = pilot_get( e->id );
+      if (pe == NULL)
+         continue;
+      if (e->type != ESCORT_TYPE_FLEET)
+         continue;
+      shipCargo( &pclist, pe, 0 );
+   }
+   return pclist;
 }
