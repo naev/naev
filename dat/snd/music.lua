@@ -245,13 +245,11 @@ function choose_table.ambient ()
 
    local strongest = var.peek("music_ambient_force")
    if strongest == nil then
-      if factions then
-         local strongest_amount = 0
-         for k, v in pairs( factions ) do
-            if v > strongest_amount then
-               strongest = k
-               strongest_amount = v
-            end
+      local strongest_amount = 0
+      for k, v in pairs( factions ) do
+         if v > strongest_amount then
+            strongest = k
+            strongest_amount = v
          end
       end
    end
@@ -347,13 +345,11 @@ function choose_table.combat ()
    local strongest = var.peek("music_combat_force")
    if strongest == nil then
       local presences = sys:presences()
-      if presences then
-         local strongest_amount = 0
-         for k, v in pairs( presences ) do
-            if faction.get(k):playerStanding() < 0 and v > strongest_amount then
-               strongest = k
-               strongest_amount = v
-            end
+      local strongest_amount = 0
+      for k, v in pairs( presences ) do
+         if faction.get(k):playerStanding() < 0 and v > strongest_amount then
+            strongest = k
+            strongest_amount = v
          end
       end
    end
