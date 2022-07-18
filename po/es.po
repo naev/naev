@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-06-22 12:55-0400\n"
+"POT-Creation-Date: 2022-07-18 00:22-0400\n"
 "PO-Revision-Date: 2022-07-13 21:15+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
@@ -17484,7 +17484,7 @@ msgstr ""
 #: dat/faction.xml:472 dat/events/dvaered/fwA_treason.lua:117
 #: dat/events/dvaered/fwA_treason.lua:138 dat/events/dvaered/fwB_repay.lua:44
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:256
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:521
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:522
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:162
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:604
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:165
@@ -30292,7 +30292,7 @@ msgstr ""
 
 #: dat/events/dvaered/fwA_treason.lua:117
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:256
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:521
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:522
 msgid "Dvaered Military Coordination"
 msgstr "Coordinación Militar Dvaered"
 
@@ -42564,7 +42564,7 @@ msgstr "Inhabilita a tu oponente; NO LO MATES"
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:136
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:246
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:252
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:395
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:396
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:115
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:516
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:659
@@ -44283,7 +44283,7 @@ msgstr "Se suponía que ibas a escoltar al Mayor Tam, ¿no es así?"
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:174
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:149
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:200
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:460
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:461
 msgid "Lord Battleaddict"
 msgstr "Señor AdictoABatalla"
 
@@ -44722,7 +44722,7 @@ msgstr "Céntrate en la misión, piloto."
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:90
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:179
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:293
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:395
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:396
 msgid "Dvaered Sabotage"
 msgstr "Sabotaje Dvaered"
 
@@ -44944,7 +44944,7 @@ msgstr "Informe sobre {pnt} en {sys}"
 #. Entering (Dvaer)
 #. Flowers
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:195
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:455
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:456
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:105
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:133
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:294
@@ -45205,14 +45205,15 @@ msgstr ""
 "ciudadano, me alegro de haberte conocido.\""
 
 #. Prevent the player form actually boarding the ship
+#. It's ours now!
 #. Mission failed: phalanx died
 #. Reset the zlk standing
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:379
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:380
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:464
 msgid "Mission Failed: target destroyed"
 msgstr "Misión Fallida: objetivo destruido"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:379
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:380
 msgid ""
 "You were supposed to disable that ship, not to destroy it. How are you "
 "supposed to transport the bomb now?"
@@ -45221,12 +45222,12 @@ msgstr ""
 "que vas a transportar la bomba ahora?"
 
 #. Mission failed: phalanx escaped
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:385
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:386
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:468
 msgid "Mission Failed: target escaped"
 msgstr "Misión Fallida: el objetivo ha escapado"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:385
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:386
 msgid ""
 "You were supposed to disable that ship, not to let it escape. How are you "
 "supposed to transport the bomb now?"
@@ -45234,11 +45235,11 @@ msgstr ""
 "Se suponía que debías desactivar esa nave, no dejarla escapar. ¿Cómo se "
 "supone que vas a transportar la bomba ahora?"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:390
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:391
 msgid "Ready to attend to the show?"
 msgstr "¿Listo para asistir al espectáculo?"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:390
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:391
 msgid ""
 "As you sit at the table, Tam starts to speak: \"I got a message from Captain "
 "Hamfresser. Apparently, everything went according to plan this time. They "
@@ -45268,16 +45269,16 @@ msgstr ""
 "que ya conoces, el Coronel Urnus. En aproximadamente un período, Señor "
 "AdictoABatalla debería llegar, así que si despegas pronto, verás el duelo.\""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:395
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:396
 msgid "Attend to the duel"
 msgstr "Atiende al duelo"
 
 #. Starts the duel
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:401
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:402
 msgid "Here we go"
 msgstr "Aquí vamos"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:401
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:402
 msgid ""
 "Colonel Urnus's ship broadcasts the message: \"I, Colonel Urnus, have been "
 "requested by both parties of this duel to be today's commissioner. I hereby "
@@ -45312,91 +45313,91 @@ msgstr ""
 "sobreviva el más virtuoso de vosotros.\""
 
 #. Actually it should not be necessary, but...
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:409
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:410
 msgid "Let the fight begin!"
 msgstr "¡Que comience la lucha!"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:410
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:466
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:411
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:467
 msgid "Come on, boss!"
 msgstr "¡Vamos, jefe!"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:411
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:467
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:412
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:468
 msgid "DESTROY HIM!"
 msgstr "¡DESTRÚYELO!"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:412
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:468
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:413
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:469
 msgid "You're the best, boss!"
 msgstr "¡Eres el mejor, jefe!"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:413
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:469
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:414
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:470
 msgid "Yeah!"
 msgstr "¡Sí!"
 
 #. Disables the ships
 #. Explosion and such
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:429
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:430
 msgid "Damn!"
 msgstr "¡Maldita sea!"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:430
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:494
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:431
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:495
 msgid "Oooooo..."
 msgstr "Oooooo..."
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:431
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:432
 msgid "What the?"
 msgstr "¿Qué?"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:432
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:433
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:206
 msgid "Come on!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:434
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:435
 msgid "Hey, they have put a bomb in the general's ship as well!"
 msgstr "¡Oye, también han puesto una bomba en la nave del general!"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:435
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:436
 msgid ""
 "The electricians! We've called electricians recently! They planted the bomb!"
 msgstr ""
 "¡Los electricistas! ¡Hemos llamado a los electricistas recientemente! ¡Ellos "
 "pusieron la bomba!"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:436
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:437
 msgid "Cheaters!"
 msgstr "¡Tramposos!"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:437
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:438
 msgid "Cheaters yourselves!"
 msgstr "¡Tramposos vosotros!"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:439
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:440
 msgid "Hey, Battleaddict, it seems we are both down..."
 msgstr "Hey, AdictoABatala, parece que ambos estamos caidos..."
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:440
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:441
 msgid "I still want to kill you!"
 msgstr "¡Todavía quiero matarte!"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:441
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:443
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:442
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:444
 msgid "So do I."
 msgstr "Yo también."
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:442
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:443
 msgid "Luckily enough, I've got my Vendetta in the fighter bay."
 msgstr "Por suerte, tengo mi Vendetta en la bahía de cazas."
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:464
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:465
 msgid "Shall we continue?"
 msgstr "¿Continuamos?"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:465
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:466
 msgid "Of course, we shall!"
 msgstr "¡Claro que sí!"
 
@@ -45405,28 +45406,28 @@ msgstr "¡Claro que sí!"
 #. Actually it should not be necessary, but...
 #. Prevent them from staying on the top of their ships
 #. camera.set(klank2)
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:492
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:493
 msgid "Aha! In your freaking ugly face!"
 msgstr "¡Ajá! ¡En tu maldita y fea cara!"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:493
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:494
 msgid "You're the best, general!"
 msgstr "¡Eres el mejor, general!"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:495
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:496
 msgid "Nooooo!"
 msgstr "¡Nooooo!"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:496
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:497
 msgid "General Klank won the duel!"
 msgstr "¡El General Klank ganó el duelo!"
 
 #. Epilogue
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:518
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:519
 msgid "A good thing done"
 msgstr "Una cosa bien hecha"
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:518
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:519
 msgid ""
 "As you approach, the major tells General Klank that you are the private "
 "pilot they hired recently. \"I see,\" says the general \"so you are one of "
@@ -45457,7 +45458,7 @@ msgstr ""
 "bomba. Y ahora ambas naves tienen sus sistemas arruinados. Bueno, de todos "
 "modos, gracias por tu ayuda, ¡aquí tienes {credits} para ti!\""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:522
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:523
 msgid ""
 "Major Tam's superior, General Klank, had a Goddard duel with Lord "
 "Battleaddict. You took part in an operation to sabotage Battleaddict's "
@@ -51627,7 +51628,7 @@ msgstr "Transporte Oficial de Carga del Imperio a {pnt} en el sistema {sys}."
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:99
 #: dat/missions/neutral/cargo_rush.lua:138
 #: dat/missions/pirate/contraband.lua:170 dat/missions/sirius/srs_ferry.lua:188
-#: dat/missions/trader/anxiousmerchant.lua:85
+#: dat/missions/trader/anxiousmerchant.lua:87
 msgid "Too slow"
 msgstr "Demasiado lento"
 
@@ -66851,14 +66852,14 @@ msgstr ""
 "para mí. Será bueno para todos. ¿Me ayudarás?\""
 
 #: dat/missions/neutral/drunkard.lua:54 dat/missions/neutral/drunkard.lua:86
-#: dat/missions/trader/anxiousmerchant.lua:78
+#: dat/missions/trader/anxiousmerchant.lua:80
 #: dat/missions/zalek/zlk_cargorun.lua:55
 #: dat/missions/zalek/zlk_cargorun.lua:87
 msgid "No Room"
 msgstr "Sin Espacio"
 
 #: dat/missions/neutral/drunkard.lua:54 dat/missions/neutral/drunkard.lua:86
-#: dat/missions/trader/anxiousmerchant.lua:78
+#: dat/missions/trader/anxiousmerchant.lua:80
 #: dat/missions/zalek/zlk_cargorun.lua:55
 #: dat/missions/zalek/zlk_cargorun.lua:87
 msgid "You don't have enough cargo space to accept this mission."
@@ -66949,7 +66950,7 @@ msgstr ""
 
 #. Not enough space
 #: dat/missions/neutral/drunkard.lua:91
-#: dat/missions/trader/anxiousmerchant.lua:112
+#: dat/missions/trader/anxiousmerchant.lua:114
 msgid "Deliver the Goods"
 msgstr "Entrega las Mercancias"
 
@@ -75785,8 +75786,8 @@ msgid ""
 msgstr ""
 "Rebina te asiente para reconocer tu existencia. \"Nos encontramos de nuevo. "
 "Me alegra ver que aún no te has matado.\" Sonríe significativamente. "
-"\"Resulta que aún no he encontrado a nadie que se ocupe de mis asuntos. ¿"
-"Quizás lo reconsideres? Permítame recordarte de qué se trata.\""
+"\"Resulta que aún no he encontrado a nadie que se ocupe de mis asuntos. "
+"¿Quizás lo reconsideres? Permítame recordarte de qué se trata.\""
 
 #: dat/missions/shadow/shadowrun.lua:56
 msgid ""
@@ -76382,9 +76383,9 @@ msgstr ""
 "ubicar, a pesar de que tú mismo eres un piloto experimentado. El resto del "
 "puente no es diferente. Todos los puestos y consolas habituales parecen "
 "estar ahí, pero hay otros cuya finalidad sólo puedes adivinar.\n"
-"    Rebina gira la silla y sonríe cuando te ve. \"Ah, {player}\", dice. \"Qué"
-" bien que hayas venido. Esperaba que recibieras mi invitación, ya que me "
-"gustó mucho tu actuación la última vez. Y no soy el único. Resulta que a "
+"    Rebina gira la silla y sonríe cuando te ve. \"Ah, {player}\", dice. "
+"\"Qué bien que hayas venido. Esperaba que recibieras mi invitación, ya que "
+"me gustó mucho tu actuación la última vez. Y no soy el único. Resulta que a "
 "Jorek también le has gustado. Puede parecer rudo, pero en el fondo es un "
 "buen hombre.\""
 
@@ -76483,8 +76484,8 @@ msgstr ""
 "La capitana Rebina suspira. \"Ya veo. No me importa admitir que esperaba que "
 "aceptaras, pero es tu decisión. No te obligaré a hacer nada con lo que te "
 "sientas incómodo. Sin embargo, aún mantengo la esperanza de que cambies de "
-"opinión. Si lo haces, vuelve a verme. Ya sabes dónde encontrar al Seiryuu.\""
-"\n"
+"opinión. Si lo haces, vuelve a verme. Ya sabes dónde encontrar al Seiryuu."
+"\"\n"
 "    Apenas unos hectosegundos después te encuentras de nuevo en tu cabina, y "
 "el Seiryuu se marcha. No te sorprende que no puedas encontrar ninguna "
 "referencia a tu encuentro con el Seiryuu en tus registros de vuelo..."
@@ -76741,8 +76742,8 @@ msgid ""
 "Shakar first, to grab some fuel. Just stick with us, okay?"
 msgstr ""
 "Por fin estás aquí. Bonito nave la que tienes. Vamos a dirigirnos a Nova "
-"Shakar primero, para conseguir algo de combustible. Quédate con nosotros, ¿"
-"de acuerdo?"
+"Shakar primero, para conseguir algo de combustible. Quédate con nosotros, "
+"¿de acuerdo?"
 
 #. Hyperspace toward the next destination system.
 #. The player has successfully rendezvoused with the diplomat. Now the real work begins.
@@ -76861,16 +76862,16 @@ msgstr ""
 "puente del Seiryuu. \"Pero eso no es lo peor. Ya has visto lo que ha pasado. "
 "Los diplomáticos fueron asesinados por sus propios escoltas, ¡por agentes de "
 "Cuatro Vientos! Esto es un escándalo.\"\n"
-"    La capitana Rebina vuelve a controlarse con un esfuerzo de voluntad. \""
-"{player}, esto no presagia nada bueno. Tenemos un problema, y me temo que "
+"    La capitana Rebina vuelve a controlarse con un esfuerzo de voluntad. "
+"\"{player}, esto no presagia nada bueno. Tenemos un problema, y me temo que "
 "voy a necesitar tu ayuda de nuevo antes del final. Pero todavía no. Tengo "
 "mucho que hacer. Tengo que llegar al fondo de esto, y tengo que tratar de "
 "evitar que esta situación se convierta en un desastre. Me pondré en contacto "
 "contigo de nuevo cuando sepa más. Mientras tanto, tendrás tiempo para gastar "
 "tu recompensa: ya está en tu cuenta.\"\n"
 "    Tras esto, te escoltan rápidamente fuera del Seiryuu. De vuelta a tu "
-"cabina, no puedes evitar sentirte un poco ansioso por estos Cuatro Vientos. ¿"
-"Quiénes son, qué quieren y cuál es tu papel en todo esto? El tiempo lo dirá."
+"cabina, no puedes evitar sentirte un poco ansioso por estos Cuatro Vientos. "
+"¿Quiénes son, qué quieren y cuál es tu papel en todo esto? El tiempo lo dirá."
 
 #: dat/missions/shadow/shadowvigil.lua:585
 msgid ""
@@ -76930,9 +76931,9 @@ msgstr ""
 "qué? Es incluso peor de lo que parece. Te lo garantizo. Gbf. Oh, me hace "
 "vomitar... Siento eso.\"\n"
 "   Te acercas al hombre y le preguntas por qué mató a los diplomáticos. \"No "
-"tienes ni idea de lo que está pasando, ¿verdad? Uh. Deja que te diga algo: ¡"
-"van a venir! Y no tendrán piedad. ¡Oooh! ¡Están tan cerca! ¡Son mucho peores "
-"que tus más oscuras pesadillas! Y un día te atraparán. Ese día, "
+"tienes ni idea de lo que está pasando, ¿verdad? Uh. Deja que te diga algo: "
+"¡van a venir! Y no tendrán piedad. ¡Oooh! ¡Están tan cerca! ¡Son mucho "
+"peores que tus más oscuras pesadillas! Y un día te atraparán. Ese día, "
 "envidiarás... ¡Envidiarás mi agonía devoradora de vómitos! ¡Taaaaanto!\"\n"
 "   El hombre deja de hablar y de moverse. Su cara de mala leche aún vuelta "
 "hacia ti te hace preguntarte si está completamente muerto, pero en ausencia "
@@ -77370,9 +77371,10 @@ msgstr ""
 "ellos, te explica la misión, haciendo bastante hincapié en la amenaza que "
 "conlleva; al fin y al cabo, sólo se trata de un Ancestro Pirata. No "
 "obstante, el Barón está intrigado.\n"
-"    Arnold Smith recibe una llamada. Después de contestar, se dirige a ti. \""
-"¡La hora perfecta! El pirata acaba de llegar a {sys}. Ahora ve a mostrarles "
-"lo que tu nave puede hacer.\" Es hora de volver a la nave, entonces."
+"    Arnold Smith recibe una llamada. Después de contestar, se dirige a ti. "
+"\"¡La hora perfecta! El pirata acaba de llegar a {sys}. Ahora ve a "
+"mostrarles lo que tu nave puede hacer.\" Es hora de volver a la nave, "
+"entonces."
 
 #. he went away
 #: dat/missions/shark/sh00_ancestorkill.lua:161
@@ -77718,8 +77720,8 @@ msgid ""
 "\"Fantastic! I have another mission for you; meet me in the bar when you are "
 "ready to bring me to {pnt} in the {sys} system.\""
 msgstr ""
-"Smith parece relajarse cuando le dices que todo ha ido según lo previsto. \"¡"
-"Fantástico! Tengo otra misión para ti; reúnete conmigo en el bar cuando "
+"Smith parece relajarse cuando le dices que todo ha ido según lo previsto. "
+"\"¡Fantástico! Tengo otra misión para ti; reúnete conmigo en el bar cuando "
 "estés listo para llevarme a {pnt} en el sistema {sys}.\""
 
 #: dat/missions/shark/sh03_hailing.lua:87
@@ -77889,8 +77891,8 @@ msgid ""
 "doesn't get out that we're supporting terrorists by selling them ships. What "
 "do you say? Can you help us once again?\""
 msgstr ""
-"\"¡Hola, {player}! ¿Estás preparado para participar en otra misión de venta?"
-"\n"
+"\"¡Hola, {player}! ¿Estás preparado para participar en otra misión de "
+"venta?\n"
 "    \"Como sabes, la FLF es una gran usuaria de nuestras naves, pero también "
 "lo es de las naves Dvaered, principalmente del diseño Vendetta. Dado que la "
 "Casa Dvaered es enemiga de la FLF, vemos esto como una oportunidad para "
@@ -79553,8 +79555,8 @@ msgid ""
 "Joanne, letting her know you're on your way with Harja in tow. Now you just "
 "have to hope it doesn't all fall to pieces again when you get back to {pnt}."
 msgstr ""
-"Harja levanta una ceja cuando se enfrenta de nuevo a ti. \"Bueno, bueno, ¿"
-"hemos vuelto? ¿Significa eso que te has ocupado de mi pequeño problema?\"\n"
+"Harja levanta una ceja cuando se enfrenta de nuevo a ti. \"Bueno, bueno, "
+"¿hemos vuelto? ¿Significa eso que te has ocupado de mi pequeño problema?\"\n"
 "    Le cuentas la pelea que tuviste con los cazarrecompensas. Harja parece "
 "bastante satisfecho con el resultado. \"Bien {player}, lo admito, eres un "
 "gran piloto\", sonríe. \"Sigo pensando que elegiste el bando equivocado, "
@@ -79660,8 +79662,8 @@ msgstr ""
 "    Él continúa impaciente. \"Parece que necesitas un par de créditos de "
 "sobra\", dice finalmente. \"Tengo, eh, un envío que necesita llegar a {pnt}. "
 "¿Te interesa? Sólo tiene que quedar entre bastidores, si sabes lo que quiero "
-"decir. Pero la paga es buena. {credits}. Eso es todo lo que necesitas saber\""
-". Hace una pausa por un momento. \"¿Qué te parece?\""
+"decir. Pero la paga es buena. {credits}. Eso es todo lo que necesitas saber"
+"\". Hace una pausa por un momento. \"¿Qué te parece?\""
 
 #: dat/missions/sirius/heretic/heretic0.lua:49
 msgid "\"Well, that's your choice. Be on your way now. I'm busy.\""
@@ -80080,10 +80082,10 @@ msgid ""
 "will certainly have another mission for you.\""
 msgstr ""
 "Aterrizas, habiendo derrotado a la pequeña fuerza de reconocimiento, y "
-"encuentras a Draga con una sonrisa en la cara. \"¡Gran trabajo!\", dice. \"¡"
-"Veo que realmente eres lo que se dice que eres y no un mercader exagerado!\" "
-"Te entrega un chip de crédito. \"Gracias por tus servicios. Vuelve a vernos "
-"en el bar algún día. Seguro que tenemos otra misión para ti.\""
+"encuentras a Draga con una sonrisa en la cara. \"¡Gran trabajo!\", dice. "
+"\"¡Veo que realmente eres lo que se dice que eres y no un mercader exagerado!"
+"\" Te entrega un chip de crédito. \"Gracias por tus servicios. Vuelve a "
+"vernos en el bar algún día. Seguro que tenemos otra misión para ti.\""
 
 #: dat/missions/sirius/heretic/heretic2.lua:122
 msgid ""
@@ -80415,8 +80417,8 @@ msgid ""
 msgstr ""
 "Aterrizas en {pnt} y abres las puertas de la bahía. Todavía te sorprende la "
 "cantidad de gente que Draga ha ayudado a entrar en la bodega de carga. "
-"Mientras ayudas a todos a salir de tu nave, un hombre se acerca a ti. \"Hola"
-", me llamo Jimmy. Gracias por ayudar a toda esta gente. Estoy muy "
+"Mientras ayudas a todos a salir de tu nave, un hombre se acerca a ti. "
+"\"Hola, me llamo Jimmy. Gracias por ayudar a toda esta gente. Estoy muy "
 "agradecido. He oído hablar de ti por Draga, y estaré siempre en deuda "
 "contigo. Aquí, por favor, toma esto.\" Él presiona un chip de crédito en tu "
 "mano justo cuando terminas de ayudar a todos a salir de tu nave. Parece que "
@@ -80805,8 +80807,8 @@ msgid ""
 "Since you were unexpectedly able to procure a Sirian ship for the journey, "
 "you find a few extra credits tucked in with the fare!"
 msgstr ""
-"Como inesperadamente has podido conseguir una nave Siria para el viaje, ¡"
-"encuentras unos cuantos créditos extra metidos en la tarifa!"
+"Como inesperadamente has podido conseguir una nave Siria para el viaje, "
+"¡encuentras unos cuantos créditos extra metidos en la tarifa!"
 
 #: dat/missions/sirius/srs_ferry.lua:340
 msgid "You drop the upset pilgrim off at the nearest spaceport."
@@ -81793,7 +81795,7 @@ msgstr ""
 #. <mission name="Anxious Merchant">
 #. <avail>
 #. <priority>3</priority>
-#. <chance>1</chance>
+#. <chance>5</chance>
 #. <location>Bar</location>
 #. <faction>Dvaered</faction>
 #. <faction>Empire</faction>
@@ -81858,7 +81860,7 @@ msgid ""
 "for the mission if you do it; it means a lot!\""
 msgstr ""
 
-#: dat/missions/trader/anxiousmerchant.lua:85
+#: dat/missions/trader/anxiousmerchant.lua:87
 msgid ""
 "The goods have to arrive in {time_limit} but it will take {time} for your "
 "ship to reach {pnt}. Accept the mission anyway?"
@@ -81867,11 +81869,11 @@ msgstr ""
 "llegar a {pnt}. ¿Aceptas la misión de todos modos?"
 
 #. mission details
-#: dat/missions/trader/anxiousmerchant.lua:93
+#: dat/missions/trader/anxiousmerchant.lua:95
 msgid "Anxious Merchant"
 msgstr "Comerciante Ansioso"
 
-#: dat/missions/trader/anxiousmerchant.lua:95
+#: dat/missions/trader/anxiousmerchant.lua:97
 msgid ""
 "You decided to help a fraught merchant by delivering some goods to {pnt}."
 msgstr ""
@@ -81882,11 +81884,11 @@ msgstr ""
 #. adds cargo
 #. 42STU per tick
 #. OSD
-#: dat/missions/trader/anxiousmerchant.lua:105
+#: dat/missions/trader/anxiousmerchant.lua:107
 msgid "Happy Day"
 msgstr "Día Feliz"
 
-#: dat/missions/trader/anxiousmerchant.lua:105
+#: dat/missions/trader/anxiousmerchant.lua:107
 msgid ""
 "The merchant sighs in relief. \"Thank you so much for this. Just bring the "
 "cargo to the cargo guy at {pnt}. They should pay you {credits} when you get "
@@ -81896,7 +81898,7 @@ msgstr ""
 "llevar la carga al cargador de {pnt}. Debería pagarte {credits} cuando "
 "llegues ahí. No llegues tarde, ¿OK?\""
 
-#: dat/missions/trader/anxiousmerchant.lua:112
+#: dat/missions/trader/anxiousmerchant.lua:114
 msgid ""
 "As you touch down at the spaceport you see the Traders Guild depot "
 "surrounded by a hustle and bustle. The cargo inspector looks at you with "
@@ -81909,14 +81911,14 @@ msgstr ""
 "Comerciantes rodeado de un ajetreo. El inspector de carga te mira con "
 "sorpresa y le explicas lo sucedido mientras se descarga la carga de tu nave. "
 "\"¡Vaya, gracias por la ayuda! Definitivamente nos has ahorrado un montón de "
-"disgustos. Aquí tienes tu pago. Quizá pueda invitarte a una copa alguna vez\""
-". Os reís y os despedís."
+"disgustos. Aquí tienes tu pago. Quizá pueda invitarte a una copa alguna vez"
+"\". Os reís y os despedís."
 
-#: dat/missions/trader/anxiousmerchant.lua:115
+#: dat/missions/trader/anxiousmerchant.lua:117
 msgid "Deliver the Goods... late"
 msgstr ""
 
-#: dat/missions/trader/anxiousmerchant.lua:115
+#: dat/missions/trader/anxiousmerchant.lua:117
 msgid ""
 "Landing at the spaceport you see the Traders Guild depot surrounded by a "
 "fraught hum of activity. The cargo inspector looks at you with surprise and "
@@ -81938,17 +81940,17 @@ msgid ""
 msgstr ""
 
 #. still in time
-#: dat/missions/trader/anxiousmerchant.lua:126
+#: dat/missions/trader/anxiousmerchant.lua:128
 msgid ""
 "Drop off the goods at {pnt} in the {sys} system (You have {time} remaining)"
 msgstr "Deje la mercancía en {pnt} en el sistema {sys} (Te queda {time})"
 
 #. missed deadline
-#: dat/missions/trader/anxiousmerchant.lua:128
+#: dat/missions/trader/anxiousmerchant.lua:130
 msgid "Drop off the goods at {pnt} in the {sys} system (You are late)"
 msgstr "Deje la mercancía en {pnt} en el sistema {sys} (Llegas tarde)"
 
-#: dat/missions/trader/anxiousmerchant.lua:132
+#: dat/missions/trader/anxiousmerchant.lua:134
 msgid "Help the Merchant"
 msgstr "Ayuda al comerciante"
 
@@ -82254,8 +82256,8 @@ msgstr ""
 "El solitario individuo se ilumina cuando te acercas.\n"
 "\"Oye, pareces un piloto con una nave que funciona. Estoy en un pequeño lío. "
 "Verás, se suponía que tenía que entregar una {cargo} a {pnt} en el sistema "
-"{sys}, pero mi nave se averió y no creo que pueda entregarla pronto. ¿"
-"Estarías dispuesto a ayudarme a llevar la carga hasta allí y volver? Te "
+"{sys}, pero mi nave se averió y no creo que pueda entregarla pronto. "
+"¿Estarías dispuesto a ayudarme a llevar la carga hasta allí y volver? Te "
 "pagaré tu justa parte.\""
 
 #: dat/missions/tutorial/nelly01.lua:132
@@ -82287,8 +82289,8 @@ msgid ""
 "\"Say, you wouldn't happen to be a novice pilot?\""
 msgstr ""
 "\"¡Genial! Me llamo Nelly. Me alegro de conocerte. Haré que los trabajadores "
-"del muelle carguen tu nave y podremos partir. Esto debería ser pan comido.\""
-"\n"
+"del muelle carguen tu nave y podremos partir. Esto debería ser pan comido."
+"\"\n"
 "Te mira un poco de reojo.\n"
 "\"Dime, ¿no serás por casualidad un piloto novato?\""
 
@@ -82364,8 +82366,8 @@ msgid ""
 "Tab#0 and make sure to equip it at the #oEquipment Tab#0 before taking off. "
 "Once you get that done, let's head back to {pnt} in {sys}.\""
 msgstr ""
-"\"¡Bien! Veo que tomas la iniciativa. Ve a comprar el {outfit} en la #"
-"oPestaña de Equipos#0 y asegúrate de equiparlo en la pestaña #oPestaña de "
+"\"¡Bien! Veo que tomas la iniciativa. Ve a comprar el {outfit} en la "
+"#oPestaña de Equipos#0 y asegúrate de equiparlo en la pestaña #oPestaña de "
 "Equipamiento#0 antes de despegar. Una vez que tengas eso hecho, volvamos a "
 "{pnt} en {sys}.\""
 
@@ -82565,8 +82567,8 @@ msgid ""
 "mission cargo will forfeit the mission.\""
 msgstr ""
 "\"Aquí, en la #oInformación de Carga0, puedes ver la carga que lleva. Esto "
-"incluye información importante como el estado legal. Además, puedes #"
-"oexpulsar por la compuerta#0 la carga de la que quieras deshacerte. Sin "
+"incluye información importante como el estado legal. Además, puedes "
+"#oexpulsar por la compuerta#0 la carga de la que quieras deshacerte. Sin "
 "embargo, ten cuidado: si te deshaces de la carga de una misión, perderás la "
 "misión.\""
 
@@ -82818,8 +82820,8 @@ msgid ""
 "disable my ship, not destroy it!\""
 msgstr ""
 "\"Parece que posees algunas armas incapacitantes pero no las tienes "
-"equipadas. ¿Por qué no intentas equipar #o{outfitname}#0 antes de salir? ¡"
-"Queremos inutilizar mi nave, no destruirla!\""
+"equipadas. ¿Por qué no intentas equipar #o{outfitname}#0 antes de salir? "
+"¡Queremos inutilizar mi nave, no destruirla!\""
 
 #: dat/missions/tutorial/nelly02.lua:178
 msgid ""
@@ -82831,8 +82833,8 @@ msgid ""
 msgstr ""
 "\"Parece que este planeta no tiene ni un #ooutfitter#0 ni un #oastillero#0 "
 "por lo que no podrás cambiar tu equipo actual. Intenta dirigirte a un "
-"planeta cercano con un #oequipador#0 o un #oastillero#0 como #o{nearplanet}#"
-"0. Puedes comprobar qué servicios están disponibles cuando selecciones el "
+"planeta cercano con un #oequipador#0 o un #oastillero#0 como #o{nearplanet}"
+"#0. Puedes comprobar qué servicios están disponibles cuando selecciones el "
 "planeta, o desde el mapa.\""
 
 #: dat/missions/tutorial/nelly02.lua:181
@@ -83054,7 +83056,8 @@ msgstr "Llama y soborna a los piratas"
 
 #: dat/missions/tutorial/nelly02.lua:481
 msgid "Nelly: \"Now we should be able to get out of here safely.\""
-msgstr "Nelly: \"Ahora deberíamos ser capaces de salir de aquí con seguridad.\""
+msgstr ""
+"Nelly: \"Ahora deberíamos ser capaces de salir de aquí con seguridad.\""
 
 #: dat/missions/tutorial/nelly02.lua:489
 msgid "Nelly: \"I guess that's another way of doing it.\""
@@ -83406,12 +83409,12 @@ msgid ""
 "screen, right? It's the planet right next to you.\""
 msgstr ""
 "\"Muy bien, ¡vamos a repasar cómo pilotar tu nueva nave de última "
-"generación! ¡Moverse es muy sencillo: gira tu nave con {leftkey} y {rightkey}"
-", y empuja tu nave hacia delante con {accelkey}! También puedes usar "
-"{reversekey} para girar tu nave en la dirección opuesta a la que te estás "
-"moviendo, o para invertir el empuje si compras e instalas un propulsor "
-"inverso en tu nave. ¡Pruébalo volando hacia {pnt}! Lo ves en tu pantalla, ¿"
-"verdad? Es el planeta que está al lado.\""
+"generación! ¡Moverse es muy sencillo: gira tu nave con {leftkey} y "
+"{rightkey}, y empuja tu nave hacia delante con {accelkey}! También puedes "
+"usar {reversekey} para girar tu nave en la dirección opuesta a la que te "
+"estás moviendo, o para invertir el empuje si compras e instalas un propulsor "
+"inverso en tu nave. ¡Pruébalo volando hacia {pnt}! Lo ves en tu pantalla, "
+"¿verdad? Es el planeta que está al lado.\""
 
 #: dat/missions/tutorial/tutorial.lua:142
 msgid "Fly to {startpnt} in the {sys} system with the movement keys"
@@ -83419,7 +83422,8 @@ msgstr "Vuela a {startpnt} en el sistema {sys} con las teclas de movimiento"
 
 #: dat/missions/tutorial/tutorial.lua:143
 msgid "Land on {startpnt} in the {sys} system by double-clicking on it"
-msgstr "Aterriza en {startpnt} en el sistema {sys} haciendo doble clic sobre él"
+msgstr ""
+"Aterriza en {startpnt} en el sistema {sys} haciendo doble clic sobre él"
 
 #: dat/missions/tutorial/tutorial.lua:144
 msgid ""
@@ -83487,10 +83491,10 @@ msgid ""
 msgstr ""
 "\"Para aterrizar en {pnt}, tienes que reducir la velocidad de tu nave sobre "
 "el planeta y activar el sistema de aterrizaje. Puedes hacer esto manualmente "
-"con las teclas de movimiento y activar el sistema de aterrizaje con {landkey}"
-", o todo esto se puede hacer automáticamente apuntando al planeta #bclicando#"
-"0 sobre él, o con {targetplanetkey}, y luego usando {landkey}. También "
-"puedes hacer #doble clic#0 en el planeta para conseguir el mismo "
+"con las teclas de movimiento y activar el sistema de aterrizaje con "
+"{landkey}, o todo esto se puede hacer automáticamente apuntando al planeta "
+"#bclicando#0 sobre él, o con {targetplanetkey}, y luego usando {landkey}. "
+"También puedes hacer #doble clic#0 en el planeta para conseguir el mismo "
 "comportamiento. ¡Inténtalo!\""
 
 #: dat/missions/tutorial/tutorial.lua:192
@@ -83572,8 +83576,8 @@ msgid ""
 "know? Not like me, ha ha. HUMOUR PROCEDURE TERMINATED\""
 msgstr ""
 "\"Se ha dicho que la IA del Dron es un poco extraña, pero no le hagas caso. "
-"Al ser una inteligencia artificial es incapaz de computar sentimientos ¿"
-"sabes? No como yo, ja, ja. PROCEDIMIENTO DE HUMOR TERMINADO\""
+"Al ser una inteligencia artificial es incapaz de computar sentimientos "
+"¿sabes? No como yo, ja, ja. PROCEDIMIENTO DE HUMOR TERMINADO\""
 
 #: dat/missions/tutorial/tutorial.lua:212
 msgid ""
@@ -83708,13 +83712,13 @@ msgstr ""
 "utilidades, \"E\" para estructuras, \"Núcleo\" para núcleos, y \"Otros\" "
 "para cualquier cosa fuera de esas categorías, sobre todo, mapas regionales y "
 "licencias. Cuando veas un equipo que te interese, haz clic en él para ver "
-"más información sobre él y, a continuación, haz clic en el botón \"#bComprar#"
-"0\" para comprarlo o en el botón \"#bVender#0\" para venderlo si tienes uno "
-"en tu poder. Los diferentes planetas tienen diferentes equipos disponibles; "
-"si no ves un equipo específico que estás buscando, puedes buscarlo a través "
-"del botón \"#bEncontrar equipos#0\" en la pantalla del mapa estelar. Después "
-"de comprar nuevos equipos, asegúrate de equiparlos en la ventana "
-"#oEquipamiento#0.\""
+"más información sobre él y, a continuación, haz clic en el botón "
+"\"#bComprar#0\" para comprarlo o en el botón \"#bVender#0\" para venderlo si "
+"tienes uno en tu poder. Los diferentes planetas tienen diferentes equipos "
+"disponibles; si no ves un equipo específico que estás buscando, puedes "
+"buscarlo a través del botón \"#bEncontrar equipos#0\" en la pantalla del "
+"mapa estelar. Después de comprar nuevos equipos, asegúrate de equiparlos en "
+"la ventana #oEquipamiento#0.\""
 
 #: dat/missions/tutorial/tutorial.lua:255
 msgid ""
@@ -83897,8 +83901,8 @@ msgstr ""
 "consumido combustible. Consumes combustible cada vez que haces un salto y "
 "puedes repostar aterrizando en un planeta amigo. Si te encuentras en apuros, "
 "también puedes comprar combustible a otros pilotos del sistema; llama a un "
-"piloto haciendo #doble-clic#0 sobre él, o seleccionándolo con {targetnextkey}"
-" y luego pulsando {hailkey}.\""
+"piloto haciendo #doble-clic#0 sobre él, o seleccionándolo con "
+"{targetnextkey} y luego pulsando {hailkey}.\""
 
 #: dat/missions/tutorial/tutorial.lua:325
 msgid ""
@@ -84682,8 +84686,8 @@ msgid ""
 "You have landed, abandoning your mission to escort the transport ship. You "
 "failed science miserably!"
 msgstr ""
-"Has aterrizado, abandonando tu misión de escoltar la nave de transporte. ¡"
-"Has fallado miserablemente a la ciencia!"
+"Has aterrizado, abandonando tu misión de escoltar la nave de transporte. "
+"¡Has fallado miserablemente a la ciencia!"
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:171
 msgid "A short break"
@@ -85471,9 +85475,9 @@ msgid ""
 "care.\"\n"
 "    Just how often is this going to happen?"
 msgstr ""
-"La ya conocida advertencia aparece de nuevo en la pantalla de tu nave. \"¡"
-"Precaución! ¡Un escuadrón de drones en el sistema {sys} se ha vuelto loco! "
-"Proceda con cuidado.\"\n"
+"La ya conocida advertencia aparece de nuevo en la pantalla de tu nave. "
+"\"¡Precaución! ¡Un escuadrón de drones en el sistema {sys} se ha vuelto "
+"loco! Proceda con cuidado.\"\n"
 "    ¿Con qué frecuencia va a ocurrir esto?"
 
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:177
@@ -86122,8 +86126,8 @@ msgid ""
 "face, it would be good for you to have bigger guns.\"\n"
 "Without giving you time to process what she yelled, she vanishes."
 msgstr ""
-"Justo antes de que desaparezca por la esquina, se vuelve hacia ti y te grita."
-"\n"
+"Justo antes de que desaparezca por la esquina, se vuelve hacia ti y te "
+"grita.\n"
 "\"Ah, y por cierto, he podido mover algunos hilos con mi amigo y ya deberías "
 "estar autorizado para la Licencia de Armas Pesadas. Viendo los peligros a "
 "los que te enfrentas, sería bueno que tuvieras armas más grandes.\"\n"
@@ -87835,8 +87839,8 @@ msgid ""
 "The engine has stopped working. It had better start working again soon; you "
 "don't want to die out here!"
 msgstr ""
-"El motor ha dejado de funcionar. Será mejor que vuelva a funcionar pronto; ¡"
-"no quieres morir aquí fuera!"
+"El motor ha dejado de funcionar. Será mejor que vuelva a funcionar pronto; "
+"¡no quieres morir aquí fuera!"
 
 #: dat/missions/zalek/zlk_test.lua:281
 msgid "Back to normal"
@@ -88593,8 +88597,8 @@ msgid ""
 "\"I'm here to keep you safe, Sam. I want to help you. Are you hungry? …Wait, "
 "what was that?\""
 msgstr ""
-"\"Estoy aquí para mantenerte a salvo, Sam. Quiero ayudarte. ¿Tienes hambre? "
-"...Espera, ¿qué fue eso?\""
+"\"Estoy aquí para mantenerte a salvo, Sam. Quiero ayudarte. ¿Tienes "
+"hambre? ...Espera, ¿qué fue eso?\""
 
 #. Moon
 #: dat/scripts/common/tutorial.lua:24
@@ -88602,8 +88606,8 @@ msgid ""
 "\"Patience, Sam Flynn. All of your questions will be answered soon. …Wait, "
 "what was that?\""
 msgstr ""
-"\"Paciencia, Sam Flynn. Todas tus preguntas serán respondidas pronto. "
-"...Espera, ¿qué fue eso?\""
+"\"Paciencia, Sam Flynn. Todas tus preguntas serán respondidas pronto. ..."
+"Espera, ¿qué fue eso?\""
 
 #. Tron (Legacy)
 #: dat/scripts/common/tutorial.lua:25
@@ -88611,8 +88615,8 @@ msgid ""
 "\"I could be chasing an untamed ornithoid without cause. …Wait, what was "
 "that?\""
 msgstr ""
-"\"Podría estar persiguiendo a un ornitoide indomable sin motivo. ...Espera, ¿"
-"qué fue eso?\""
+"\"Podría estar persiguiendo a un ornitoide indomable sin motivo. ...Espera, "
+"¿qué fue eso?\""
 
 #. Star Trek
 #: dat/scripts/common/tutorial.lua:26
@@ -88620,8 +88624,8 @@ msgid ""
 "\"For your convenience I am programmed to respond to the name Robby. …Wait, "
 "what was that?\""
 msgstr ""
-"\"Para su comodidad estoy programado para responder al nombre de Robby. "
-"...Espera, ¿qué fue eso?\""
+"\"Para su comodidad estoy programado para responder al nombre de Robby. ..."
+"Espera, ¿qué fue eso?\""
 
 #. Forbidden Planet
 #: dat/scripts/common/tutorial.lua:27
@@ -92593,8 +92597,8 @@ msgid ""
 "You do not have enough space to move your cargo to the new ship. Get rid of "
 "the following to make room?"
 msgstr ""
-"No tienes suficiente espacio para trasladar tu carga a la nueva nave. ¿"
-"Deshacerse de lo siguiente para hacer espacio?"
+"No tienes suficiente espacio para trasladar tu carga a la nueva nave. "
+"¿Deshacerse de lo siguiente para hacer espacio?"
 
 #. Get rid of the cargo
 #. Player abandoned attempting to free cargo
@@ -93597,7 +93601,8 @@ msgstr "Reclamación del Sistema tiene un sistema inexistente"
 #: src/claim.c:296
 #, c-format
 msgid "System Claim trying to load system '%s' which doesn't exist"
-msgstr "Reclamación del sistema intentando cargar el sistema '%s' que no existe"
+msgstr ""
+"Reclamación del sistema intentando cargar el sistema '%s' que no existe"
 
 #: src/collision.c:114 src/collision.c:118 src/collision.c:196
 #: src/collision.c:482
@@ -93741,12 +93746,12 @@ msgstr "No se puede recoger material: no hay más espacio de carga disponible"
 msgid "Trying to modify temporary commodity '%s'!"
 msgstr "¡Intentando modificar la mercancía temporal '%s'!"
 
-#: src/commodity.c:652 src/faction.c:1484 src/tech.c:105
+#: src/commodity.c:651 src/faction.c:1484 src/tech.c:105
 #, c-format
 msgid "Malformed %s file: missing root element '%s'"
 msgstr "Archivo %s malformado: falta el elemento raíz '%s'"
 
-#: src/commodity.c:671
+#: src/commodity.c:670
 #, c-format
 msgid "Loaded %d Commodity"
 msgid_plural "Loaded %d Commodities"
@@ -93921,7 +93926,8 @@ msgstr "¡El contenido de esta sección será reescrito por Naev!"
 #. ndata.
 #: src/conf.c:803
 msgid "The location of Naev's data pack, usually called 'ndata'"
-msgstr "La ubicación del paquete de datos de Naev, generalmente llamado 'ndata'"
+msgstr ""
+"La ubicación del paquete de datos de Naev, generalmente llamado 'ndata'"
 
 #. Language.
 #: src/conf.c:808
@@ -95442,7 +95448,8 @@ msgstr "Evento Lua '%s' error de sintaxis: %s"
 #: src/event.c:605
 #, c-format
 msgid "No event data found matching name '%s'."
-msgstr "No se han encontrado datos de eventos que coincidan con el nombre '%s'."
+msgstr ""
+"No se han encontrado datos de eventos que coincidan con el nombre '%s'."
 
 #: src/event.c:638
 #, c-format
@@ -95522,8 +95529,8 @@ msgstr "Facción '%s': %s"
 msgid ""
 "Lua script for faction '%s' did not return a number from 'standing:hit(...)'."
 msgstr ""
-"El script Lua para la facción '%s' no devolvió un número de "
-"'standing:hit(...)'."
+"El script Lua para la facción '%s' no devolvió un número de 'standing:"
+"hit(...)'."
 
 #: src/faction.c:1061
 #, c-format
@@ -95531,8 +95538,8 @@ msgid ""
 "Lua script for faction '%s' did not return a string from 'standing:"
 "text_rank(...)'."
 msgstr ""
-"El script Lua para la facción '%s' no devolvió una cadena de "
-"'standing:text_rank(...)'."
+"El script Lua para la facción '%s' no devolvió una cadena de 'standing:"
+"text_rank(...)'."
 
 #: src/faction.c:1112
 #, c-format
@@ -95540,8 +95547,8 @@ msgid ""
 "Lua script for faction '%s' did not return a string from 'standing:"
 "text_broad(...)'."
 msgstr ""
-"El script Lua para la facción '%s' no devolvió una cadena de "
-"'standing:text_broad(...)'."
+"El script Lua para la facción '%s' no devolvió una cadena de 'standing:"
+"text_broad(...)'."
 
 #: src/faction.c:1249
 #, c-format
@@ -95626,7 +95633,7 @@ msgid "Faction '%s' has no Lua and isn't static!"
 msgstr "¡Facción '%s' no tiene Lua y no es estática!"
 
 #: src/faction.c:1490 src/map.c:2702 src/outfit.c:1151 src/ship.c:525
-#: src/ship.c:1006 src/space.c:1818 src/space.c:1876 src/space.c:3445
+#: src/ship.c:1006 src/space.c:1819 src/space.c:1877 src/space.c:3446
 #: src/tech.c:112
 #, c-format
 msgid "Malformed %s file: does not contain elements"
@@ -95748,12 +95755,12 @@ msgstr "#oRadar ajustado a %.0fx.#0"
 msgid "OSD '%d' not found."
 msgstr "No se ha encontrado el OSD '%d'."
 
-#: src/gui_osd.c:264
+#: src/gui_osd.c:266
 #, c-format
 msgid "OSD '%u' not found to destroy."
 msgstr "No se ha encontrado el OSD '%u' para destruir."
 
-#: src/gui_osd.c:282
+#: src/gui_osd.c:284
 #, c-format
 msgid "OSD '%s' only has %d items (requested %d)"
 msgstr "El OSD '%s' sólo tiene %d elementos (solicitados %d)"
@@ -96844,7 +96851,8 @@ msgstr "Ya estás a bordo del %s."
 #, c-format
 msgid "You have %d tonne more cargo than the new ship can hold."
 msgid_plural "You have %d tonnes more cargo than the new ship can hold."
-msgstr[0] "Tienes %d tonelada más de carga de la que puede contener la nueva nave."
+msgstr[0] ""
+"Tienes %d tonelada más de carga de la que puede contener la nueva nave."
 msgstr[1] ""
 "Tienes %d toneladas más de carga de la que puede contener la nueva nave."
 
@@ -97956,8 +97964,8 @@ msgid "Conditional for mission '%s' failed to run"
 msgstr "Condicional para la misión '%s' falló al ejecutarse"
 
 #: src/mission.c:350 src/mission.c:372 src/mission.c:394 src/mission.c:434
-#: src/mission.c:530 src/mission.c:578 src/space.c:3877 src/space.c:3931
-#: src/space.c:3962 src/space.c:4017
+#: src/mission.c:530 src/mission.c:578 src/space.c:3878 src/space.c:3932
+#: src/space.c:3963 src/space.c:4018
 msgid "Unknown marker type."
 msgstr "Tipo de marcador desconocido."
 
@@ -98121,7 +98129,8 @@ msgstr ""
 
 #: src/music.c:606
 msgid "Trying to set music on repeat when no music is loaded!"
-msgstr "¡Intentando poner la música en repetición cuando no hay música cargada!"
+msgstr ""
+"¡Intentando poner la música en repetición cuando no hay música cargada!"
 
 #: src/music_openal.c:496
 msgid "OGG: Vorbis hole detected in music!"
@@ -99020,26 +99029,26 @@ msgstr ""
 msgid "Unknown standing type '%s'!"
 msgstr ""
 
-#: src/nlua_safelanes.c:136 src/safelanes.c:239 src/safelanes.c:860
-#: src/safelanes.c:876
+#: src/nlua_safelanes.c:136 src/safelanes.c:239 src/safelanes.c:859
+#: src/safelanes.c:875
 msgid "Safe-lane vertex type is invalid."
 msgstr ""
 
-#: src/nlua_shader.c:213
+#: src/nlua_shader.c:214
 msgid "shader failed to compile!"
 msgstr ""
 
-#: src/nlua_shader.c:346
+#: src/nlua_shader.c:347
 #, c-format
 msgid "Shader does not have uniform '%s'!"
 msgstr ""
 
-#: src/nlua_shader.c:394
+#: src/nlua_shader.c:395
 #, c-format
 msgid "Unsupported shader uniform type '%d' for uniform '%s'. Ignoring."
 msgstr ""
 
-#: src/nlua_shader.c:445
+#: src/nlua_shader.c:446
 #, c-format
 msgid "Layer was '%s', but must be one of 'final' or 'game'"
 msgstr ""
@@ -99227,33 +99236,33 @@ msgstr ""
 msgid "Unable to parse document '%s'"
 msgstr ""
 
-#: src/nxml_lua.c:266
+#: src/nxml_lua.c:267
 msgid "Failed to save invalid planet."
 msgstr ""
 
-#: src/nxml_lua.c:275
+#: src/nxml_lua.c:276
 msgid "Failed to save invalid system."
 msgstr ""
 
-#: src/nxml_lua.c:311
+#: src/nxml_lua.c:312
 msgid "Failed to save invalid jump."
 msgstr ""
 
-#: src/nxml_lua.c:318
+#: src/nxml_lua.c:319
 msgid "Failed to save invalid commodity."
 msgstr ""
 
-#: src/nxml_lua.c:448
+#: src/nxml_lua.c:449
 #, c-format
 msgid "Failed to load nonexistent planet '%s'"
 msgstr ""
 
-#: src/nxml_lua.c:455
+#: src/nxml_lua.c:456
 #, c-format
 msgid "Failed to load nonexistent system '%s'"
 msgstr ""
 
-#: src/nxml_lua.c:474
+#: src/nxml_lua.c:475
 #, c-format
 msgid "Failed to load nonexistent jump from '%s' to '%s'"
 msgstr ""
@@ -99261,7 +99270,7 @@ msgstr ""
 #. There are a few types knowingly left out above. Quoting the lua_{to,push} methods, as of 2021-11-13, they are:
 #. * article, audio, canvas, colour, data, file, font, linopt, pilot, pilotoutfit, shader, tex, transform.
 #. *
-#: src/nxml_lua.c:493
+#: src/nxml_lua.c:494
 msgid "Unknown Lua data type!"
 msgstr ""
 
@@ -100235,7 +100244,7 @@ msgstr ""
 msgid "GUI (Graphical User Interface)"
 msgstr ""
 
-#: src/outfit.c:2201 src/outfit.c:2644 src/slots.c:65 src/space.c:3346
+#: src/outfit.c:2201 src/outfit.c:2644 src/slots.c:65 src/space.c:3347
 #: src/spfx.c:1162 src/start.c:69
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
@@ -102314,61 +102323,61 @@ msgstr ""
 msgid "Ultragiants"
 msgstr ""
 
-#: src/space.c:460
+#: src/space.c:461
 #, c-format
 msgid "Unable to find jump in point for '%s' in '%s': not connected"
 msgstr ""
 
-#: src/space.c:874 src/space.c:884
+#: src/space.c:875 src/space.c:885
 #, c-format
 msgid "System '%s' not found in stack"
 msgstr ""
 
-#: src/space.c:935
+#: src/space.c:936
 #, c-format
 msgid "Planet '%s' is not placed in a system"
 msgstr ""
 
-#: src/space.c:959
+#: src/space.c:960
 msgid "Trying to find NULL planet…"
 msgstr ""
 
-#: src/space.c:968 src/space.c:978
+#: src/space.c:969 src/space.c:979
 #, c-format
 msgid "Planet '%s' not found in the universe"
 msgstr ""
 
-#: src/space.c:992
+#: src/space.c:993
 #, c-format
 msgid "Planet index '%d' out of range (max %d)"
 msgstr ""
 
-#: src/space.c:1112
+#: src/space.c:1113
 #, c-format
 msgid "Virtual Asset '%s' not found in the universe"
 msgstr ""
 
-#: src/space.c:1126
+#: src/space.c:1127
 msgid "Trying to find NULL jump point..."
 msgstr ""
 
-#: src/space.c:1136
+#: src/space.c:1137
 #, c-format
 msgid "Jump point '%s' not found in %s"
 msgstr ""
 
-#: src/space.c:1154
+#: src/space.c:1155
 #, c-format
 msgid "Jump point to '%s' not found in %s"
 msgstr ""
 
-#: src/space.c:1198
+#: src/space.c:1199
 #, c-format
 msgid ""
 "Lua Spawn script for faction '%s' missing obligatory entry point 'create'."
 msgstr ""
 
-#: src/space.c:1213
+#: src/space.c:1214
 #, c-format
 msgid ""
 "Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'."
@@ -102377,66 +102386,66 @@ msgstr ""
 #. f, [arg,], max
 #. Actually run the function.
 #. error has occurred
-#: src/space.c:1225
+#: src/space.c:1226
 #, c-format
 msgid "Lua Spawn script for faction '%s' : %s"
 msgstr ""
 
-#: src/space.c:1233 src/space.c:4567
+#: src/space.c:1234 src/space.c:4568
 #, c-format
 msgid "Lua spawn script for faction '%s' failed to return timer value."
 msgstr ""
 
-#: src/space.c:1247
+#: src/space.c:1248
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a table)."
 msgstr ""
 
-#: src/space.c:1255
+#: src/space.c:1256
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a pilot)."
 msgstr ""
 
-#: src/space.c:1268
+#: src/space.c:1269
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a number)."
 msgstr ""
 
-#: src/space.c:1276
+#: src/space.c:1277
 #, c-format
 msgid "Lua spawn script for faction '%s' actually spawned a '%s' pilot."
 msgstr ""
 
-#: src/space.c:1363
+#: src/space.c:1364
 #, c-format
 msgid "You discovered #%c%s#0."
 msgstr ""
 
-#: src/space.c:1390
+#: src/space.c:1391
 msgid "You discovered a Jump Point."
 msgstr ""
 
-#: src/space.c:1539
+#: src/space.c:1540
 msgid "Cannot reinit system if there is no system previously loaded"
 msgstr ""
 
-#: src/space.c:1544
+#: src/space.c:1545
 #, c-format
 msgid "#oEntering System %s on %s."
 msgstr ""
 
-#: src/space.c:1546
+#: src/space.c:1547
 #, c-format
 msgid "#rWARNING - Volatile nebula detected in %s! Taking %.1f MW damage!"
 msgstr ""
 
-#: src/space.c:1751
+#: src/space.c:1752
 msgid ""
 "Creating new planet in non-debugging mode. Things are probably going to "
 "break horribly."
 msgstr ""
 
-#: src/space.c:1785
+#: src/space.c:1786
 #, c-format
 msgid ""
 "Failed to load landing file: %s\n"
@@ -102444,60 +102453,60 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/space.c:1899
+#: src/space.c:1900
 #, c-format
 msgid "Unknown node '%s' in virtual asset '%s'"
 msgstr ""
 
 #. error has occurred
-#: src/space.c:2009
+#: src/space.c:2010
 #, c-format
 msgid "Landing: '%s' : %s"
 msgstr ""
 
-#: src/space.c:2019
+#: src/space.c:2020
 #, c-format
 msgid "%s: %s (%s) -> return parameter 2 is not a string!"
 msgstr ""
 
-#: src/space.c:2020
+#: src/space.c:2021
 msgid "Invalid land message"
 msgstr ""
 
-#: src/space.c:2029
+#: src/space.c:2030
 #, c-format
 msgid "%s: %s (%s) -> return parameter 4 is not a string!"
 msgstr ""
 
-#: src/space.c:2030
+#: src/space.c:2031
 msgid "Invalid bribe message"
 msgstr ""
 
-#: src/space.c:2036
+#: src/space.c:2037
 #, c-format
 msgid "%s: %s (%s) -> return parameter 5 is not a string!"
 msgstr ""
 
-#: src/space.c:2037
+#: src/space.c:2038
 msgid "Invalid bribe ack message"
 msgstr ""
 
-#: src/space.c:2043
+#: src/space.c:2044
 #, c-format
 msgid "%s: %s (%s) -> return parameter 3 is not a number or string or nil!"
 msgstr ""
 
-#: src/space.c:2158 src/space.c:2176 src/space.c:2280
+#: src/space.c:2159 src/space.c:2177 src/space.c:2281
 #, c-format
 msgid "Unknown node '%s' in planet '%s'"
 msgstr ""
 
-#: src/space.c:2213
+#: src/space.c:2214
 #, c-format
 msgid "Planet '%s' has landing function '%s' which is not found in '%s'."
 msgstr ""
 
-#: src/space.c:2239
+#: src/space.c:2240
 #, c-format
 msgid "Planet '%s' has unknown services tag '%s'"
 msgstr ""
@@ -102505,147 +102514,147 @@ msgstr ""
 #.
 #. * Verification
 #.
-#: src/space.c:2290
+#: src/space.c:2291
 #, c-format
 msgid "Planet '%s' missing '%s' element"
 msgstr ""
 
-#: src/space.c:2389
+#: src/space.c:2390
 #, c-format
 msgid "Unable to remove planet '%s' from NULL system."
 msgstr ""
 
-#: src/space.c:2401
+#: src/space.c:2402
 #, c-format
 msgid "Planet '%s' not found in system '%s' for removal."
 msgstr ""
 
-#: src/space.c:2422
+#: src/space.c:2423
 #, c-format
 msgid "Unable to find planet '%s' and system '%s' in planet<->system stack."
 msgstr ""
 
-#: src/space.c:2467
+#: src/space.c:2468
 #, c-format
 msgid "Unable to remove virtual asset '%s' from NULL system."
 msgstr ""
 
-#: src/space.c:2478
+#: src/space.c:2479
 #, c-format
 msgid "Virtual asset '%s' not found in system '%s' for removal."
 msgstr ""
 
-#: src/space.c:2547
+#: src/space.c:2548
 #, c-format
 msgid "Unable to remove jump point '%s' from NULL system."
 msgstr ""
 
-#: src/space.c:2559
+#: src/space.c:2560
 #, c-format
 msgid "Jump point '%s' not found in system '%s' for removal."
 msgstr ""
 
-#: src/space.c:2602
+#: src/space.c:2603
 msgid ""
 "Creating new system in non-debugging mode. Things are probably going to "
 "break horribly."
 msgstr ""
 
-#: src/space.c:2745 src/space.c:2762 src/space.c:2800
+#: src/space.c:2746 src/space.c:2763 src/space.c:2801
 #, c-format
 msgid "Unknown node '%s' in star system '%s'"
 msgstr ""
 
-#: src/space.c:2777
+#: src/space.c:2778
 #, c-format
 msgid "System '%s' has unknown stat '%s'."
 msgstr ""
 
-#: src/space.c:2809
+#: src/space.c:2810
 #, c-format
 msgid "Star System '%s' missing '%s' element"
 msgstr ""
 
-#: src/space.c:2810
+#: src/space.c:2811
 #, c-format
 msgid "Star System '%s' missing 'name' tag"
 msgstr ""
 
-#: src/space.c:2888 src/space.c:2962
+#: src/space.c:2889 src/space.c:2963
 #, c-format
 msgid "JumpPoint node for system '%s' has no target attribute."
 msgstr ""
 
-#: src/space.c:2893 src/space.c:2967
+#: src/space.c:2894 src/space.c:2968
 #, c-format
 msgid "JumpPoint node for system '%s' has invalid target '%s'."
 msgstr ""
 
-#: src/space.c:2905 src/space.c:2979
+#: src/space.c:2906 src/space.c:2980
 #, c-format
 msgid "Star System '%s' has duplicate jump point to '%s'."
 msgstr ""
 
-#: src/space.c:3023
+#: src/space.c:3024
 #, c-format
 msgid ""
 "JumpPoint in system '%s' is missing pos element but does not have autopos "
 "flag."
 msgstr ""
 
-#: src/space.c:3048
+#: src/space.c:3049
 #, c-format
 msgid "System '%s' was not found in the stack for some reason"
 msgstr ""
 
-#: src/space.c:3135
+#: src/space.c:3136
 #, c-format
 msgid "Asteroid field in %s has no position."
 msgstr ""
 
-#: src/space.c:3138
+#: src/space.c:3139
 #, c-format
 msgid "Asteroid field in %s has no radius."
 msgstr ""
 
-#: src/space.c:3198
+#: src/space.c:3199
 #, c-format
 msgid "Asteroid exclusion in %s has no position."
 msgstr ""
 
-#: src/space.c:3201
+#: src/space.c:3202
 #, c-format
 msgid "Asteroid exclusion in %s has no radius."
 msgstr ""
 
-#: src/space.c:3339
+#: src/space.c:3340
 #, c-format
 msgid "Malformed '%s' file: missing root element 'Asteroid_types'"
 msgstr ""
 
-#: src/space.c:3389
+#: src/space.c:3390
 msgid "Asteroid type's commodity lacks name or quantity."
 msgstr ""
 
-#: src/space.c:3394
+#: src/space.c:3395
 msgid "Asteroid type has no gfx associated."
 msgstr ""
 
-#: src/space.c:3486
+#: src/space.c:3487
 #, c-format
 msgid "Loaded %d Star System"
 msgid_plural "Loaded %d Star Systems"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/space.c:3487
+#: src/space.c:3488
 #, c-format
 msgid "       with %d Planet"
 msgid_plural "       with %d Planets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/space.c:3903
+#: src/space.c:3904
 #, c-format
 msgid "Marking planet '%s' that is not in any system!"
 msgstr ""
@@ -102655,7 +102664,7 @@ msgstr ""
 #. f, cur, max, timer
 #. Actually run the function.
 #. error has occurred
-#: src/space.c:4559
+#: src/space.c:4560
 #, c-format
 msgid "Lua decrease script for faction '%s' : %s"
 msgstr ""
