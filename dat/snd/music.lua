@@ -521,8 +521,8 @@ function update( dt )
 end
 
 function play( song )
+   music_stopped = false
    if song then
-      music_stopped = false
       tracks_add( song, "custom" )
       return
    end
@@ -540,6 +540,7 @@ end
 
 function pause ()
    tracks_pause()
+   music_stopped = true
 end
 
 function info ()
