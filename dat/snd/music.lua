@@ -298,9 +298,6 @@ function choose_table.ambient ()
                return false
             end
          end
-
-         tracks_stop()
-         return true
       end
 
       -- Avoid repetition
@@ -377,7 +374,7 @@ function choose_table.combat ()
    if t then
       for k,v in pairs(combat) do
          if t.name == v then
-            return true
+            return false
          end
       end
    end
