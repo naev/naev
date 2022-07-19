@@ -22,7 +22,6 @@
 #include "nlua_vec2.h"
 #include "nluadef.h"
 #include "sound.h"
-#include "sound_openal.h"
 #include "opengl.h"
 #include "nopenal.h"
 #include "player.h"

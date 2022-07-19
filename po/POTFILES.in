@@ -3344,8 +3344,6 @@ src/slots.c
 src/slots.h
 src/sound.c
 src/sound.h
-src/sound_openal.c
-src/sound_openal.h
 src/space.c
 src/space.h
 src/space_fdecl.h

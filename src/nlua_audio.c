@@ -25,7 +25,8 @@
 #include "nlua_file.h"
 #include "nstring.h"
 #include "sound.h"
-#include "sound_openal.h"
+#include "nopenal.h"
+
 /**
  * @brief Default pre-amp in dB.
  */
