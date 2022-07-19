@@ -1066,16 +1066,18 @@ void sound_stop( int voice )
       return;
 
    v = voice_get(voice);
-   if (v != NULL) {
+   if (v == NULL)
+      return;
+
+   if ((v->state == VOICE_STOPPED) || (v->state == VOICE_DESTROY))
+      return;
+
+   if (v->source != 0) {
       soundLock();
-
-      if (v->source != 0)
-         alSourceStop( v->source );
-
+      alSourceStop( v->source );
       soundUnlock();
-      v->state = VOICE_STOPPED;
    }
-
+   v->state = VOICE_STOPPED;
 }
 
 /**
