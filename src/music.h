@@ -41,9 +41,6 @@ void music_stop (void);
 void music_pause (void);
 void music_resume (void);
 MusicInfo_t* music_info (void);
-int music_isPlaying (void);
-const char *music_playingName (void);
-double music_playingTime (void);
 
 /*
  * Lua control
@@ -51,4 +48,3 @@ double music_playingTime (void);
 int music_choose( const char* situation );
 void music_rechoose (void);
 void music_tempDisable( int disable );
-void music_repeat( int repeat );

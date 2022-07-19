@@ -26,7 +26,6 @@ static int musicL_pause( lua_State *L );
 static int musicL_stop( lua_State *L );
 static int musicL_isPlaying( lua_State *L );
 static int musicL_current( lua_State *L );
-static int musicL_setRepeat( lua_State *L );
 static int musicL_getVolume( lua_State *L );
 static const luaL_Reg music_methods[] = {
    { "choose", musicL_choose },
@@ -35,7 +34,6 @@ static const luaL_Reg music_methods[] = {
    { "stop", musicL_stop },
    { "isPlaying", musicL_isPlaying },
    { "current", musicL_current },
-   { "setRepeat", musicL_setRepeat },
    { "getVolume", musicL_getVolume },
    {0,0}
 }; /**< Music specific methods. */
@@ -145,19 +143,6 @@ static int musicL_current( lua_State* L )
    lua_pushstring(L, minfo->name);
    lua_pushnumber(L, minfo->pos);
    return 2;
-}
-
-/**
- * @brief Makes the music repeat. This gets turned of when a new music is chosen, e.g., take-off or landing.
- *
- *    @luatparam boolean repeat Whether or not repeat should be set.
- * @luafunc setRepeat
- */
-static int musicL_setRepeat( lua_State* L )
-{
-   int b = lua_toboolean(L,1);
-   music_repeat( b );
-   return 0;
 }
 
 /**

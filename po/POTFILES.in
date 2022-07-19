@@ -3163,8 +3163,6 @@ src/msgcat.c
 src/msgcat.h
 src/music.c
 src/music.h
-src/music_openal.c
-src/music_openal.h
 src/naev.c
 src/naev.h
 src/ncompat.h

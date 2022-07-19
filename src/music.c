@@ -18,7 +18,6 @@
 
 #include "conf.h"
 #include "log.h"
-#include "music_openal.h"
 #include "ndata.h"
 #include "nlua.h"
 #include "nlua_audio.h"
@@ -53,14 +52,7 @@ static int music_lua_volume   = LUA_NOREF;
 /* functions */
 static int music_runLua( const char *situation );
 
-/*
- * The current music.
- */
-static char *music_name       = NULL; /**< Current music name. */
-static unsigned int music_start = 0; /**< Music start playing time. */
 static int music_temp_disabled= 0; /**< Music is temporarily disabled. */
-static int music_temp_repeat  = 0; /**< Music is repeating. */
-static char *music_temp_repeatname = NULL; /**< Repeating song name. */
 
 /*
  * prototypes
@@ -105,11 +97,6 @@ static int music_runLua( const char *situation )
 
    if (music_temp_disabled)
       return 0;
-
-   if (music_temp_repeat) {
-      music_load( music_temp_repeatname );
-      return 0;
-   }
 
    /* Run the choose function in Lua. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_choose );
@@ -276,41 +263,6 @@ double music_getVolumeLog(void)
 }
 
 /**
- * @brief Loads the music by name.
- *
- *    @param name Name of the file to load.
- */
-int music_load( const char* name )
-{
-   SDL_RWops *rw;
-   char filename[PATH_MAX];
-
-   if (music_disabled)
-      return 0;
-
-   /* Free current music if needed. */
-   music_free();
-
-   /* Determine the filename. */
-   if (name[0]=='/')
-      snprintf( filename, sizeof(filename), "%s", &name[1]);
-   else
-      snprintf( filename, sizeof(filename), MUSIC_PATH"%s"MUSIC_SUFFIX, name);
-
-   /* Load new music. */
-   music_name  = strdup(name);
-   music_start = SDL_GetTicks();
-   rw = PHYSFSRWOPS_openRead( filename );
-   if (rw == NULL) {
-      WARN(_("Music '%s' not found."), filename);
-      return -1;
-   }
-   music_al_load( name, rw );
-
-   return 0;
-}
-
-/**
  * @brief Plays the loaded music.
  */
 void music_play( const char *filename )
@@ -399,45 +351,6 @@ MusicInfo_t* music_info (void)
    return &minfo;
 }
 
-/**
- * @brief Checks to see if the music is playing.
- *
- *    @return 0 if music isn't playing, 1 if is playing.
- */
-int music_isPlaying (void)
-{
-   if (music_disabled)
-      return 0; /* Always not playing when music is off. */
-
-   return music_al_isPlaying();
-}
-
-/**
- * @brief Gets the name of the current playing song.
- *
- *    @return Name of the current playing song.
- */
-const char *music_playingName (void)
-{
-   if (music_disabled)
-      return NULL;
-
-   return music_name;
-}
-
-/**
- * @brief Gets the time since the music started playing.
- *
- *    @return The time since the music started playing.
- */
-double music_playingTime (void)
-{
-   if (music_disabled)
-      return 0.;
-
-   return (double)(SDL_GetTicks() - music_start) / 1000.;
-}
-
 /*
  * music Lua stuff
  */
@@ -483,9 +396,6 @@ static int music_luaInit (void)
    music_lua_info   = nlua_refenvtype( music_env, "info",   LUA_TFUNCTION );
    music_lua_volume = nlua_refenvtype( music_env, "volume", LUA_TFUNCTION );
 
-   /* Free repeatname. */
-   free( music_temp_repeatname );
-
    return 0;
 }
 
@@ -520,7 +430,6 @@ int music_choose( const char* situation )
    if (music_disabled || sound_disabled)
       return 0;
 
-   music_temp_repeat = 0;
    music_temp_disabled = 0;
    music_runLua( situation );
 
@@ -549,22 +458,4 @@ void music_rechoose (void)
 void music_tempDisable( int disable )
 {
    music_temp_disabled = disable;
-}
-
-/**
- * @brief Temporarily makse the music repeat.
- */
-void music_repeat( int repeat )
-{
-   if (music_disabled)
-      return;
-
-   if (music_name == NULL) {
-      WARN(_("Trying to set music on repeat when no music is loaded!"));
-      return;
-   }
-
-   music_temp_repeat = repeat;
-   free( music_temp_repeatname );
-   music_temp_repeatname = strdup( music_name );
 }

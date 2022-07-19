@@ -16,8 +16,6 @@
 
 #include "conf.h"
 #include "log.h"
-#include "music_openal.h"
-//#include "ndata.h"
 #include "sound.h"
 #include "nlua_spfx.h"
 

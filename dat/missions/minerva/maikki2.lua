@@ -718,7 +718,6 @@ function ecc_feral_boss_attacked( _p )
 
       -- We go with nebula music
       music.play("nebu_battle1.ogg")
-      music.setRepeat(true)
    end
 end
 
