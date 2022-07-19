@@ -11,7 +11,7 @@ local audio = require "love.audio"
 local last_track -- last played track name
 local tracks = {} -- currently playing tracks (including fading)
 local music_stopped = false -- whether or not it is stopped
-local music_situation = "load" -- current running situation
+local music_situation -- current running situation
 local music_choose_queue -- next situation to run if not set
 local music_played = 0 -- elapsed play time for the current situation
 local music_vol = naev.conf().music -- music global volume
@@ -22,7 +22,8 @@ local function tracks_stop ()
    end
 end
 
-local function tracks_add( name, situation )
+local function tracks_add( name, situation, params )
+   params = params or {}
    if music_situation ~= situation then
       music_played = 0
    end
@@ -36,11 +37,14 @@ local function tracks_add( name, situation )
 
    local m = audio.newSource( name, "stream" )
    m:setVolume( music_vol, true )
-   m:play()
+   if not params.delay then
+      m:play()
+   end
    local t = {
       m     = m,
       fade  = nil,
       vol   = 1,
+      delay = params.delay,
       name  = name_orig,
    }
    tracks_stop () -- Only play one at a time
@@ -126,7 +130,13 @@ local choose_table = {}
 Chooses Loading songs.
 --]]
 function choose_table.load ()
-   return playIfNotPlaying( "machina.ogg", "load" )
+   local params = {
+      delay = 0.5,
+   }
+   if not music_situation then
+      params.delay = nil
+   end
+   return playIfNotPlaying( "machina.ogg", "load", params )
 end
 
 --[[--
@@ -150,6 +160,9 @@ function choose_table.land ()
    local pnt   = spob.cur()
    local class = pnt:class()
    local music_list
+   local params = {
+      delay = 0.5,
+   }
 
    -- Planet override
    local override = planet_songs[ pnt:nameRaw() ]
@@ -157,11 +170,11 @@ function choose_table.land ()
       if type(override)=="function" then
          local song = override()
          if song then
-            tracks_add( song, "land" )
+            tracks_add( song, "land", params )
             return true
          end
       else
-         tracks_add( override[ rnd.rnd(1, #override) ], "land" )
+         tracks_add( override[ rnd.rnd(1, #override) ], "land", params )
          return true
       end
    end
@@ -489,7 +502,13 @@ local update_fade = 1 -- Inverse of the time to fade out
 function update( dt )
    local remove = {}
    for k,v in ipairs(tracks) do
-      if v.fade then
+      if v.delay then
+         v.delay = v.delay - dt
+         if v.delay < 0 then
+            v.delay = nil
+            v.m:play()
+         end
+      elseif v.fade then
          v.vol = v.vol + v.fade * update_fade * dt
          if v.vol > 1 then
             v.vol = 1
