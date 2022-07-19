@@ -29,6 +29,8 @@
 #define MUSIC_SUFFIX       ".ogg" /**< Suffix of musics. */
 
 int music_disabled = 0; /**< Whether or not music is disabled. */
+static double music_vol = 0.;
+static double music_vol_lin = 0.;
 
 /*
  * Handle if music should run Lua script.  Must be locked to ensure same
@@ -201,7 +203,7 @@ static int music_find (void)
 }
 
 /**
- * @brief Sets the music volume.
+ * @brief Sets the music volume from a linear value.
  *
  *    @param vol Volume to set to (between 0 and 1).
  *    @return 0 on success.
@@ -211,9 +213,15 @@ int music_volume( double vol )
    if (music_disabled)
       return 0;
 
+   music_vol_lin = vol;
+   if (vol > 0.)
+      music_vol = 1. / pow(2., (1.-vol) * 8. );
+   else
+      music_vol = 0.;
+
    /* Run the choose function in Lua. */
    lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_volume );
-   lua_pushnumber( naevL, vol );
+   lua_pushnumber( naevL, music_vol );
    if (nlua_pcall(music_env, 1, 0)) { /* error has occurred */
       WARN(_("Error while running music function '%s': %s"), "volume", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
@@ -229,19 +237,7 @@ int music_volume( double vol )
  */
 double music_getVolume (void)
 {
-   double vol;
-   if (music_disabled)
-      return 0.;
-
-   /* Run the choose function in Lua. */
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, music_lua_volume );
-   if (nlua_pcall(music_env, 0, 1)) { /* error has occurred */
-      WARN(_("Error while running music function '%s': %s"), "volume", lua_tostring(naevL,-1));
-      lua_pop(naevL,1);
-   }
-   vol = luaL_checknumber(naevL,-1);
-   lua_pop(naevL,1);
-   return vol;
+   return music_vol_lin;
 }
 
 /**
@@ -251,15 +247,7 @@ double music_getVolume (void)
  */
 double music_getVolumeLog(void)
 {
-   double vol;
-   if (music_disabled)
-      return 0.;
-
-   vol = music_getVolume();
-   /* Convert to logarithmic */
-   //vol = -48. / log(0.00390625);
-   vol = 1. / pow(2., (1.-vol) * 8. );
-   return vol;
+   return music_vol;
 }
 
 /**

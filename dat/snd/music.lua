@@ -558,9 +558,6 @@ function info ()
 end
 
 function volume( vol )
-   if not vol then
-      return music_vol
-   end
    music_vol = vol
    for k,v in ipairs( tracks ) do
       v.m:setVolume( music_vol * v.vol, true )
