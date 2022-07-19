@@ -265,33 +265,13 @@ static void sound_al_updateVoice( alVoice *v );
  * Sound management.
  */
 static void sound_al_stop( alVoice *v );
-static void sound_al_pause (void);
-static void sound_al_resume (void);
 static void sound_al_setSpeed( double s );
 static void sound_al_setSpeedVolume( double vol );
 
 /*
- * Listener.
- */
-static int sound_al_updateListener( double dir, double px, double py,
-      double vx, double vy );
-
-/*
  * Groups.
  */
-static int sound_al_playGroup( int group, alSound *s, int once );
-static void sound_al_stopGroup( int group );
-static void sound_al_pauseGroup( int group );
 static void sound_al_resumeGroup( int group );
-static void sound_al_speedGroup( int group, int enable );
-static void sound_al_volumeGroup( int group, double volume );
-static void sound_al_pitchGroup( int group, double pitch );
-
-/*
- * Env.
- */
-static void sound_al_setAbsorption( double value );
-static int sound_al_env( SoundEnv_t env, double param );
 
 /*
  * Vorbis stuff.
@@ -482,7 +462,7 @@ static int sound_al_init (void)
    /* Set up how sound works. */
    alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED ); /* Clamping is fundamental so it doesn't sound like crap. */
    alDopplerFactor( 1. );
-   sound_al_env( SOUND_ENV_NORMAL, 0. );
+   sound_env( SOUND_ENV_NORMAL, 0. );
 
    /* Check for errors. */
    al_checkErr();
@@ -999,10 +979,14 @@ void sound_pause (void)
    if (sound_disabled)
       return;
 
-   sound_al_pause();
+   soundLock();
+   al_pausev( source_ntotal, source_total );
+   /* Check for errors. */
+   al_checkErr();
+   soundUnlock();
 
    if (snd_compression >= 0)
-      sound_al_pauseGroup( snd_compressionG );
+      sound_pauseGroup( snd_compressionG );
 }
 
 /**
@@ -1013,7 +997,11 @@ void sound_resume (void)
    if (sound_disabled)
       return;
 
-   sound_al_resume();
+   soundLock();
+   al_resumev( source_ntotal, source_total );
+   /* Check for errors. */
+   al_checkErr();
+   soundUnlock();
 
    if (snd_compression >= 0)
       sound_al_resumeGroup( snd_compressionG );
@@ -1074,10 +1062,39 @@ void sound_stop( int voice )
 int sound_updateListener( double dir, double px, double py,
       double vx, double vy )
 {
+   ALfloat ori[6], pos[3], vel[3];
+   double c, s;
+
    if (sound_disabled)
       return 0;
 
-   return sound_al_updateListener( dir, px, py, vx, vy );
+   c = cos(dir);
+   s = sin(dir);
+
+   soundLock();
+
+   ori[0] = c;
+   ori[1] = s;
+   ori[2] = 0.;
+   ori[3] = 0.;
+   ori[4] = 0.;
+   ori[5] = 1.;
+   alListenerfv( AL_ORIENTATION, ori );
+   pos[0] = px;
+   pos[1] = py;
+   pos[2] = 100.;
+   alListenerfv( AL_POSITION, pos );
+   vel[0] = vx;
+   vel[1] = vy;
+   vel[2] = 0.;
+   alListenerfv( AL_VELOCITY, vel );
+
+   /* Check for errors. */
+   al_checkErr();
+
+   soundUnlock();
+
+   return 0;
 }
 
 /**
@@ -1323,13 +1340,72 @@ group_err:
  */
 int sound_playGroup( int group, int sound, int once )
 {
+   alSound *s;
+
    if (sound_disabled)
       return 0;
 
    if ((sound < 0) || (sound >= array_size(sound_list)))
       return -1;
 
-   return sound_al_playGroup( group, &sound_list[sound], once );
+   s = &sound_list[sound];
+   for (int i=0; i<al_ngroups; i++) {
+      alGroup_t *g;
+
+      /* Find group. */
+      if (al_groups[i].id != group)
+         continue;
+
+      g = &al_groups[i];
+      g->state = VOICE_PLAYING;
+      soundLock();
+      for (int j=0; j<g->nsources; j++) {
+         double v;
+         ALint state;
+         alGetSourcei( g->sources[j], AL_SOURCE_STATE, &state );
+
+         /* No free ones, just smash the last one. */
+         if (j == g->nsources-1) {
+            if (state != AL_STOPPED)
+               alSourceStop( g->sources[j] );
+         }
+         /* Ignore playing/paused. */
+         else if ((state == AL_PLAYING) || (state == AL_PAUSED))
+            continue;
+
+         /* Attach buffer. */
+         alSourcei( g->sources[j], AL_BUFFER, s->buf );
+
+         /* Do not do positional sound. */
+         alSourcei( g->sources[j], AL_SOURCE_RELATIVE, AL_TRUE );
+
+         /* See if should loop. */
+         alSourcei( g->sources[j], AL_LOOPING, (once) ? AL_FALSE : AL_TRUE );
+
+         /* Set volume. */
+         v = svolume * g->volume;
+         if (g->speed)
+            v *= svolume_speed;
+         alSourcef( g->sources[j], AL_GAIN, v );
+
+         /* Start playing. */
+         alSourcePlay( g->sources[j] );
+
+         /* Check for errors. */
+         al_checkErr();
+
+         soundUnlock();
+         return 0;
+      }
+      soundUnlock();
+
+      /* Group matched but no free source found.. */
+      WARN(_("Group '%d' has no free sounds."), group );
+      return -1;
+   }
+
+   WARN(_("Group '%d' not found."), group);
+   return -1;
 }
 
 /**
@@ -1339,10 +1415,17 @@ int sound_playGroup( int group, int sound, int once )
  */
 void sound_stopGroup( int group )
 {
+   alGroup_t *g;
+
    if (sound_disabled)
       return;
 
-   sound_al_stopGroup( group );
+   g = sound_al_getGroup( group );
+   if (g == NULL)
+      return;
+
+   g->state      = VOICE_FADEOUT;
+   g->fade_timer = SDL_GetTicks();
 }
 
 /**
@@ -1352,10 +1435,18 @@ void sound_stopGroup( int group )
  */
 void sound_pauseGroup( int group )
 {
+   alGroup_t *g;
+
    if (sound_disabled)
       return;
 
-   sound_al_pauseGroup( group );
+   g = sound_al_getGroup( group );
+   if (g == NULL)
+      return;
+
+   soundLock();
+   al_pausev( g->nsources, g->sources );
+   soundUnlock();
 }
 
 /**
@@ -1371,6 +1462,15 @@ void sound_resumeGroup( int group )
    sound_al_resumeGroup( group );
 }
 
+static void groupSpeedReset( alGroup_t *g )
+{
+   for (int i=0; i<g->nsources; i++) {
+      if (g->speed)
+         alSourcef( g->sources[i], AL_PITCH, sound_speed*g->pitch );
+      else
+         alSourcef( g->sources[i], AL_PITCH, 1. );
+   }
+}
 /**
  * @brief Sets whether or not the speed affects a group.
  *
@@ -1379,10 +1479,19 @@ void sound_resumeGroup( int group )
  */
 void sound_speedGroup( int group, int enable )
 {
+   alGroup_t *g;
+
    if (sound_disabled)
       return;
 
-   sound_al_speedGroup( group, enable );
+   g = sound_al_getGroup( group );
+   if (g == NULL)
+      return;
+
+   soundLock();
+   g->speed = enable;
+   groupSpeedReset(g);
+   soundUnlock();
 }
 
 /**
@@ -1393,10 +1502,16 @@ void sound_speedGroup( int group, int enable )
  */
 void sound_volumeGroup( int group, double volume )
 {
+   alGroup_t *g;
+
    if (sound_disabled)
       return;
 
-   sound_al_volumeGroup( group, volume );
+   g = sound_al_getGroup( group );
+   if (g == NULL)
+      return;
+
+   g->volume = volume;
 }
 
 /**
@@ -1407,10 +1522,19 @@ void sound_volumeGroup( int group, double volume )
  */
 void sound_pitchGroup( int group, double pitch )
 {
+   alGroup_t *g;
+
    if (sound_disabled)
       return;
 
-   sound_al_pitchGroup( group, pitch );
+   g = sound_al_getGroup( group );
+   if (g == NULL)
+      return;
+
+   soundLock();
+   g->pitch = pitch;
+   groupSpeedReset(g);
+   soundUnlock();
 }
 
 void sound_setAbsorption( double value )
@@ -1418,7 +1542,15 @@ void sound_setAbsorption( double value )
    if (sound_disabled)
       return;
 
-   sound_al_setAbsorption( value );
+   for (int i=0; i<source_ntotal; i++) {
+      ALuint s = source_total[i];
+      /* Value is from 0. (normal) to 10..
+      * It represents the attenuation per meter. In this case it decreases by
+      * 0.05*AB_FACTOR dB/meter where AB_FACTOR is the air absorption factor.
+      * In our case each pixel represents 5 meters.
+      */
+      alSourcef( s, AL_AIR_ABSORPTION_FACTOR, value );
+   }
 }
 
 /**
@@ -1430,10 +1562,56 @@ void sound_setAbsorption( double value )
  */
 int sound_env( SoundEnv_t env, double param )
 {
+   ALfloat f;
+
    if (sound_disabled)
       return 0;
 
-   return sound_al_env( env, param );
+   soundLock();
+   switch (env) {
+      case SOUND_ENV_NORMAL:
+         /* Set global parameters. */
+         alSpeedOfSound( 3433. );
+
+         if (al_info.efx == AL_TRUE) {
+            /* Disconnect the effect. */
+            nalAuxiliaryEffectSloti( sound_efx_directSlot,
+                  AL_EFFECTSLOT_EFFECT, AL_EFFECT_NULL );
+
+            /* Set per-source parameters. */
+            sound_setAbsorption( 0. );
+         }
+         break;
+
+      case SOUND_ENV_NEBULA:
+         f = param / 1000.;
+
+         /* Set global parameters. */
+         alSpeedOfSound( 3433./(1. + f*2.) );
+
+         if (al_info.efx == AL_TRUE) {
+            if (al_info.efx_reverb == AL_TRUE) {
+               /* Tweak the reverb. */
+               nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME,    10. );
+               nalEffectf( efx_reverb, AL_REVERB_DECAY_HFRATIO, 0.5 );
+
+               /* Connect the effect. */
+               nalAuxiliaryEffectSloti( sound_efx_directSlot,
+                     AL_EFFECTSLOT_EFFECT, efx_reverb );
+            }
+
+            /* Set per-source parameters. */
+            sound_setAbsorption( 3.*f );
+         }
+         break;
+   }
+
+   /* Check for errors. */
+   al_checkErr();
+
+   soundUnlock();
+
+   return 0;
 }
 
 /**
@@ -1590,97 +1768,6 @@ static alGroup_t *sound_al_getGroup( int group )
 }
 
 /**
- * @brief Plays a sound in a group.
- */
-int sound_al_playGroup( int group, alSound *s, int once )
-{
-   for (int i=0; i<al_ngroups; i++) {
-      alGroup_t *g;
-
-      /* Find group. */
-      if (al_groups[i].id != group)
-         continue;
-
-      g = &al_groups[i];
-      g->state = VOICE_PLAYING;
-      soundLock();
-      for (int j=0; j<g->nsources; j++) {
-         double v;
-         ALint state;
-         alGetSourcei( g->sources[j], AL_SOURCE_STATE, &state );
-
-         /* No free ones, just smash the last one. */
-         if (j == g->nsources-1) {
-            if (state != AL_STOPPED)
-               alSourceStop( g->sources[j] );
-         }
-         /* Ignore playing/paused. */
-         else if ((state == AL_PLAYING) || (state == AL_PAUSED))
-            continue;
-
-         /* Attach buffer. */
-         alSourcei( g->sources[j], AL_BUFFER, s->buf );
-
-         /* Do not do positional sound. */
-         alSourcei( g->sources[j], AL_SOURCE_RELATIVE, AL_TRUE );
-
-         /* See if should loop. */
-         alSourcei( g->sources[j], AL_LOOPING, (once) ? AL_FALSE : AL_TRUE );
-
-         /* Set volume. */
-         v = svolume * g->volume;
-         if (g->speed)
-            v *= svolume_speed;
-         alSourcef( g->sources[j], AL_GAIN, v );
-
-         /* Start playing. */
-         alSourcePlay( g->sources[j] );
-
-         /* Check for errors. */
-         al_checkErr();
-
-         soundUnlock();
-         return 0;
-      }
-      soundUnlock();
-
-      /* Group matched but no free source found.. */
-      WARN(_("Group '%d' has no free sounds."), group );
-      return -1;
-   }
-
-   WARN(_("Group '%d' not found."), group);
-   return -1;
-}
-
-/**
- * @brief Stops a group.
- */
-void sound_al_stopGroup( int group )
-{
-   alGroup_t *g = sound_al_getGroup( group );
-   if (g == NULL)
-      return;
-
-   g->state      = VOICE_FADEOUT;
-   g->fade_timer = SDL_GetTicks();
-}
-
-/**
- * @brief Pauses a group.
- */
-void sound_al_pauseGroup( int group )
-{
-   alGroup_t *g = sound_al_getGroup( group );
-   if (g == NULL)
-      return;
-
-   soundLock();
-   al_pausev( g->nsources, g->sources );
-   soundUnlock();
-}
-
-/**
  * @brief Resumes a group.
  */
 void sound_al_resumeGroup( int group )
@@ -1691,58 +1778,6 @@ void sound_al_resumeGroup( int group )
 
    soundLock();
    al_resumev( g->nsources, g->sources );
-   soundUnlock();
-}
-
-static void groupSpeedReset( alGroup_t *g )
-{
-   for (int i=0; i<g->nsources; i++) {
-      if (g->speed)
-         alSourcef( g->sources[i], AL_PITCH, sound_speed*g->pitch );
-      else
-         alSourcef( g->sources[i], AL_PITCH, 1. );
-   }
-}
-
-/**
- * @brief Sets the speed of the group.
- */
-void sound_al_speedGroup( int group, int enable )
-{
-   alGroup_t *g = sound_al_getGroup( group );
-   if (g == NULL)
-      return;
-
-   soundLock();
-   g->speed = enable;
-   groupSpeedReset(g);
-   soundUnlock();
-}
-
-/**
- * @brief Sets the volume of the group.
- */
-void sound_al_volumeGroup( int group, double volume )
-{
-   alGroup_t *g = sound_al_getGroup( group );
-   if (g == NULL)
-      return;
-
-   g->volume = volume;
-}
-
-/**
- * @brief Sets the pitch of the group.
- */
-void sound_al_pitchGroup( int group, double pitch )
-{
-   alGroup_t *g = sound_al_getGroup( group );
-   if (g == NULL)
-      return;
-
-   soundLock();
-   g->pitch = pitch;
-   groupSpeedReset(g);
    soundUnlock();
 }
 
@@ -2185,30 +2220,6 @@ void sound_al_stop( alVoice* voice )
 }
 
 /**
- * @brief Pauses all sounds.
- */
-void sound_al_pause (void)
-{
-   soundLock();
-   al_pausev( source_ntotal, source_total );
-   /* Check for errors. */
-   al_checkErr();
-   soundUnlock();
-}
-
-/**
- * @brief Resumes all sounds.
- */
-void sound_al_resume (void)
-{
-   soundLock();
-   al_resumev( source_ntotal, source_total );
-   /* Check for errors. */
-   al_checkErr();
-   soundUnlock();
-}
-
-/**
  * @brief Set the playing speed.
  */
 void sound_al_setSpeed( double s )
@@ -2238,108 +2249,4 @@ void sound_al_setSpeedVolume( double vol )
 {
    svolume_speed = vol;
    sound_al_volumeUpdate();
-}
-
-/**
- * @brief Updates the listener.
- */
-int sound_al_updateListener( double dir, double px, double py,
-      double vx, double vy )
-{
-   ALfloat ori[6], pos[3], vel[3];
-
-   double c = cos(dir);
-   double s = sin(dir);
-
-   soundLock();
-
-   ori[0] = c;
-   ori[1] = s;
-   ori[2] = 0.;
-   ori[3] = 0.;
-   ori[4] = 0.;
-   ori[5] = 1.;
-   alListenerfv( AL_ORIENTATION, ori );
-   pos[0] = px;
-   pos[1] = py;
-   pos[2] = 100.;
-   alListenerfv( AL_POSITION, pos );
-   vel[0] = vx;
-   vel[1] = vy;
-   vel[2] = 0.;
-   alListenerfv( AL_VELOCITY, vel );
-
-   /* Check for errors. */
-   al_checkErr();
-
-   soundUnlock();
-
-   return 0;
-}
-
-void sound_al_setAbsorption( double value )
-{
-   for (int i=0; i<source_ntotal; i++) {
-      ALuint s = source_total[i];
-      /* Value is from 0. (normal) to 10..
-      * It represents the attenuation per meter. In this case it decreases by
-      * 0.05*AB_FACTOR dB/meter where AB_FACTOR is the air absorption factor.
-      * In our case each pixel represents 5 meters.
-      */
-      alSourcef( s, AL_AIR_ABSORPTION_FACTOR, value );
-   }
-}
-
-/**
- * @brief Creates a sound environment.
- */
-int sound_al_env( SoundEnv_t env, double param )
-{
-   ALfloat f;
-
-   soundLock();
-   switch (env) {
-      case SOUND_ENV_NORMAL:
-         /* Set global parameters. */
-         alSpeedOfSound( 3433. );
-
-         if (al_info.efx == AL_TRUE) {
-            /* Disconnect the effect. */
-            nalAuxiliaryEffectSloti( sound_efx_directSlot,
-                  AL_EFFECTSLOT_EFFECT, AL_EFFECT_NULL );
-
-            /* Set per-source parameters. */
-            sound_al_setAbsorption( 0. );
-         }
-         break;
-
-      case SOUND_ENV_NEBULA:
-         f = param / 1000.;
-
-         /* Set global parameters. */
-         alSpeedOfSound( 3433./(1. + f*2.) );
-
-         if (al_info.efx == AL_TRUE) {
-            if (al_info.efx_reverb == AL_TRUE) {
-               /* Tweak the reverb. */
-               nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME,    10. );
-               nalEffectf( efx_reverb, AL_REVERB_DECAY_HFRATIO, 0.5 );
-
-               /* Connect the effect. */
-               nalAuxiliaryEffectSloti( sound_efx_directSlot,
-                     AL_EFFECTSLOT_EFFECT, efx_reverb );
-            }
-
-            /* Set per-source parameters. */
-            sound_al_setAbsorption( 3.*f );
-         }
-         break;
-   }
-
-   /* Check for errors. */
-   al_checkErr();
-
-   soundUnlock();
-
-   return 0;
 }
