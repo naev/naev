@@ -7,9 +7,6 @@
 #include <lua.h>
 /** @endcond */
 
-#define MUSIC_FADEOUT_DELAY   1000 /**< Time it takes to fade out. */
-#define MUSIC_FADEIN_DELAY    2000 /**< Time it takes to fade in. */
-
 extern int music_disabled;
 
 typedef struct MusicInfo_e {

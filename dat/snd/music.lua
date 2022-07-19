@@ -485,7 +485,7 @@ end
 
 local update_rate = 0.5
 local update_timer = 0
-local update_fade = 1/2
+local update_fade = 1 -- Inverse of the time to fade out
 function update( dt )
    local remove = {}
    for k,v in ipairs(tracks) do

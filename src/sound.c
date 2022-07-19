@@ -234,22 +234,16 @@ static void al_resumev( ALint n, ALuint *s );
  */
 static alGroup_t *al_getGroup( int group );
 /*
- * Misc.
- */
-static void al_volumeUpdate (void);
-
-/*
  * Voice management.
  */
 static alVoice* voice_new (void);
 static int voice_add( alVoice* v );
 static alVoice* voice_get( int id );
-
 /*
  * Sound playing.
  */
 static void al_updateVoice( alVoice *v );
-
+static void al_volumeUpdate (void);
 /*
  * Vorbis stuff.
  */
@@ -677,9 +671,10 @@ void sound_exit (void)
 
    /* Free groups. */
    for (int i=0; i<al_ngroups; i++) {
-      free(al_groups[i].sources);
-      al_groups[i].sources  = NULL;
-      al_groups[i].nsources = 0;
+      alGroup_t *g = &al_groups[i];
+      free(g->sources);
+      g->sources  = NULL;
+      g->nsources = 0;
    }
    free(al_groups);
    al_groups  = NULL;
@@ -795,7 +790,6 @@ int sound_play( int sound )
    v->state = VOICE_PLAYING;
    v->id = ++voice_genid;
    voice_add(v);
-
    return v->id;
 }
 
@@ -874,15 +868,14 @@ int sound_updatePos( int voice, double px, double py, double vx, double vy )
       return 0;
 
    v = voice_get(voice);
-   if (v != NULL) {
+   if (v == NULL)
+      return 0;
 
-      /* Update the voice. */
-      v->pos[0] = px;
-      v->pos[1] = py;
-      v->vel[0] = vx;
-      v->vel[1] = vy;
-   }
-
+   /* Update the voice. */
+   v->pos[0] = px;
+   v->pos[1] = py;
+   v->vel[0] = vx;
+   v->vel[1] = vy;
    return 0;
 }
 
@@ -1000,7 +993,6 @@ void sound_pause (void)
 
    soundLock();
    al_pausev( source_ntotal, source_total );
-   /* Check for errors. */
    al_checkErr();
    soundUnlock();
 
@@ -1018,7 +1010,6 @@ void sound_resume (void)
 
    soundLock();
    al_resumev( source_ntotal, source_total );
-   /* Check for errors. */
    al_checkErr();
    soundUnlock();
 
@@ -1043,6 +1034,7 @@ void sound_stopAll (void)
       if ((v->state == VOICE_STOPPED) || (v->state == VOICE_DESTROY))
          continue;
       if (v->source != 0) {
+         /* TODO not sure if we want to move the locks outside of the loop. Worried it might deadlock somewhere. */
          soundLock();
          alSourceStop( v->source );
          al_checkErr();
@@ -1075,6 +1067,7 @@ void sound_stop( int voice )
    if (v->source != 0) {
       soundLock();
       alSourceStop( v->source );
+      al_checkErr();
       soundUnlock();
    }
    v->state = VOICE_STOPPED;
