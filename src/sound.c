@@ -221,8 +221,9 @@ static int al_enableEFX (void);
  */
 static int al_playVoice( alVoice *v, alSound *s,
       ALfloat px, ALfloat py, ALfloat vx, ALfloat vy, ALint relative );
-static int sound_al_loadWav( ALuint *buf, SDL_RWops *rw );
-static int sound_al_loadOgg( ALuint *buf, OggVorbis_File *vf );
+static int al_load( alSound *snd, SDL_RWops *rw, const char *name );
+static int al_loadWav( ALuint *buf, SDL_RWops *rw );
+static int al_loadOgg( ALuint *buf, OggVorbis_File *vf );
 /*
  * Pausing.
  */
@@ -231,11 +232,11 @@ static void al_resumev( ALint n, ALuint *s );
 /*
  * Groups.
  */
-static alGroup_t *sound_al_getGroup( int group );
+static alGroup_t *al_getGroup( int group );
 /*
  * Misc.
  */
-static void sound_al_volumeUpdate (void);
+static void al_volumeUpdate (void);
 
 /*
  * Voice management.
@@ -245,33 +246,14 @@ static int voice_add( alVoice* v );
 static alVoice* voice_get( int id );
 
 /*
- * Creation.
- */
-int sound_al_init (void);
-void sound_al_free_sources_locked (void);
-void sound_al_exit_locked (void);
-
-/*
- * Sound creation.
- */
-static int sound_al_load( alSound *snd, SDL_RWops *rw, const char *name );
-
-/*
  * Sound playing.
  */
-static void sound_al_updateVoice( alVoice *v );
+static void al_updateVoice( alVoice *v );
 
 /*
  * Sound management.
  */
-static void sound_al_stop( alVoice *v );
-static void sound_al_setSpeed( double s );
-static void sound_al_setSpeedVolume( double vol );
-
-/*
- * Groups.
- */
-static void sound_al_resumeGroup( int group );
+static void al_stop( alVoice *v );
 
 /*
  * Vorbis stuff.
@@ -697,15 +679,57 @@ void sound_exit (void)
    }
 
    soundLock();
-   sound_al_free_sources_locked();
+
+   /* Free groups. */
+   for (int i=0; i<al_ngroups; i++) {
+      free(al_groups[i].sources);
+      al_groups[i].sources  = NULL;
+      al_groups[i].nsources = 0;
+   }
+   free(al_groups);
+   al_groups  = NULL;
+   al_ngroups = 0;
+
+   /* Free stacks. */
+   if (source_all != NULL) {
+      alSourceStopv(   source_nall, source_all );
+      alDeleteSources( source_nall, source_all );
+      free(source_all);
+   }
+   source_all        = NULL;
+   source_nall       = 0;
+   free(source_total);
+   source_total      = NULL;
+   source_ntotal     = 0;
+   free(source_stack);
+   source_stack      = NULL;
+   source_nstack     = 0;
+   source_mstack     = 0;
 
    /* free the sounds */
    for (int i=0; i<array_size(sound_list); i++)
       sound_free( &sound_list[i] );
    array_free( sound_list );
 
-   sound_al_exit_locked();
+   /* Clean up EFX stuff. */
+   if (al_info.efx == AL_TRUE) {
+      nalDeleteAuxiliaryEffectSlots( 1, &sound_efx_directSlot );
+      if (al_info.efx_reverb == AL_TRUE)
+         nalDeleteEffects( 1, &efx_reverb );
+      if (al_info.efx_echo == AL_TRUE)
+         nalDeleteEffects( 1, &efx_echo );
+   }
+
+   /* Clean up global stuff. */
+   if (al_context) {
+      alcMakeContextCurrent(NULL);
+      alcDestroyContext( al_context );
+   }
+   if (al_device)
+      alcCloseDevice( al_device );
+
    soundUnlock();
+
    SDL_DestroyMutex( sound_lock );
 
    /* Sound is done. */
@@ -935,7 +959,7 @@ int sound_update( double dt )
    for (alVoice *v=voice_active; v!=NULL; v=v->next) {
 
       /* Run first to clear in same iteration. */
-      sound_al_updateVoice( v );
+      al_updateVoice( v );
 
       /* Destroy and toss into pool. */
       if ((v->state == VOICE_STOPPED) || (v->state == VOICE_DESTROY)) {
@@ -1004,7 +1028,7 @@ void sound_resume (void)
    soundUnlock();
 
    if (snd_compression >= 0)
-      sound_al_resumeGroup( snd_compressionG );
+      sound_resumeGroup( snd_compressionG );
 }
 
 /**
@@ -1021,7 +1045,7 @@ void sound_stopAll (void)
 
    voiceLock();
    for (alVoice *v=voice_active; v!=NULL; v=v->next) {
-      sound_al_stop( v );
+      al_stop( v );
       v->state = VOICE_STOPPED;
    }
    voiceUnlock();
@@ -1041,7 +1065,7 @@ void sound_stop( int voice )
 
    v = voice_get(voice);
    if (v != NULL) {
-      sound_al_stop( v );
+      al_stop( v );
       v->state = VOICE_STOPPED;
    }
 
@@ -1123,19 +1147,33 @@ void sound_setSpeed( double s )
             sound_playGroup( snd_compressionG, snd_compression, 0 ); /* Start playing only if it's not playing. */
          sound_volumeGroup( snd_compressionG, v );
       }
-      sound_al_setSpeedVolume( 1.-v );
+      svolume_speed = 1.-v;
+      al_volumeUpdate();
    }
    else if (playing) {
       if (snd_compression >= 0)
          sound_stopGroup( snd_compressionG ); /* Stop compression sound. */
-      sound_al_setSpeedVolume( 1. ); /* Restore volume. */
+      svolume_speed = 1.;
+      al_volumeUpdate();
    }
    snd_compression_gain = v;
 
-   /* Set spfx speed. */
-   spfxL_setSpeed( s );
-
-   return sound_al_setSpeed( s );
+   soundLock();
+   sound_speed = s; /* Set the speed. */
+   /* Do all the groupless. */
+   for (int i=0; i<source_ntotal; i++)
+      alSourcef( source_total[i], AL_PITCH, s );
+   /* Do specific groups. */
+   for (int i=0; i<al_ngroups; i++) {
+      alGroup_t *g = &al_groups[i];
+      if (!g->speed)
+         continue;
+      for (int j=0; j<g->nsources; j++)
+         alSourcef( g->sources[j], AL_PITCH, s*g->pitch );
+   }
+   /* Check for errors. */
+   al_checkErr();
+   soundUnlock();
 }
 
 /**
@@ -1211,7 +1249,7 @@ int sound_volume( const double vol )
       svolume  = 0.;
 
    /* Update volume. */
-   sound_al_volumeUpdate();
+   al_volumeUpdate();
 
    return 0;
 }
@@ -1420,7 +1458,7 @@ void sound_stopGroup( int group )
    if (sound_disabled)
       return;
 
-   g = sound_al_getGroup( group );
+   g = al_getGroup( group );
    if (g == NULL)
       return;
 
@@ -1440,7 +1478,7 @@ void sound_pauseGroup( int group )
    if (sound_disabled)
       return;
 
-   g = sound_al_getGroup( group );
+   g = al_getGroup( group );
    if (g == NULL)
       return;
 
@@ -1456,10 +1494,18 @@ void sound_pauseGroup( int group )
  */
 void sound_resumeGroup( int group )
 {
+   alGroup_t *g;
+
    if (sound_disabled)
       return;
 
-   sound_al_resumeGroup( group );
+   g = al_getGroup( group );
+   if (g == NULL)
+      return;
+
+   soundLock();
+   al_resumev( g->nsources, g->sources );
+   soundUnlock();
 }
 
 static void groupSpeedReset( alGroup_t *g )
@@ -1484,7 +1530,7 @@ void sound_speedGroup( int group, int enable )
    if (sound_disabled)
       return;
 
-   g = sound_al_getGroup( group );
+   g = al_getGroup( group );
    if (g == NULL)
       return;
 
@@ -1507,7 +1553,7 @@ void sound_volumeGroup( int group, double volume )
    if (sound_disabled)
       return;
 
-   g = sound_al_getGroup( group );
+   g = al_getGroup( group );
    if (g == NULL)
       return;
 
@@ -1527,7 +1573,7 @@ void sound_pitchGroup( int group, double pitch )
    if (sound_disabled)
       return;
 
-   g = sound_al_getGroup( group );
+   g = al_getGroup( group );
    if (g == NULL)
       return;
 
@@ -1705,7 +1751,7 @@ int source_newRW( SDL_RWops *rw, const char *name, unsigned int flags )
       return -1;
 
    memset( &snd, 0, sizeof(alSound) );
-   ret = sound_al_load( &snd, rw, name );
+   ret = al_load( &snd, rw, name );
    if (ret)
       return -1;
 
@@ -1756,7 +1802,7 @@ static void al_resumev( ALint n, ALuint *s )
 /**
  * @brief Gets a group by ID.
  */
-static alGroup_t *sound_al_getGroup( int group )
+static alGroup_t *al_getGroup( int group )
 {
    for (int i=0; i<al_ngroups; i++) {
       if (al_groups[i].id != group)
@@ -1768,75 +1814,6 @@ static alGroup_t *sound_al_getGroup( int group )
 }
 
 /**
- * @brief Resumes a group.
- */
-void sound_al_resumeGroup( int group )
-{
-   alGroup_t *g = sound_al_getGroup( group );
-   if (g == NULL)
-      return;
-
-   soundLock();
-   al_resumev( g->nsources, g->sources );
-   soundUnlock();
-}
-
-/**
- * @brief Cleans up after the sound subsytem, part 1: sources. Call under soundLock().
- */
-void sound_al_free_sources_locked (void)
-{
-   /* Free groups. */
-   for (int i=0; i<al_ngroups; i++) {
-      free(al_groups[i].sources);
-      al_groups[i].sources  = NULL;
-      al_groups[i].nsources = 0;
-   }
-   free(al_groups);
-   al_groups  = NULL;
-   al_ngroups = 0;
-
-   /* Free stacks. */
-   if (source_all != NULL) {
-      alSourceStopv(   source_nall, source_all );
-      alDeleteSources( source_nall, source_all );
-      free(source_all);
-   }
-   source_all        = NULL;
-   source_nall       = 0;
-   free(source_total);
-   source_total      = NULL;
-   source_ntotal     = 0;
-   free(source_stack);
-   source_stack      = NULL;
-   source_nstack     = 0;
-   source_mstack     = 0;
-}
-
-/**
- * @brief Cleans up after the sound subsytem, part 2: de-init OpenAL. Call under soundLock().
- */
-void sound_al_exit_locked (void)
-{
-   /* Clean up EFX stuff. */
-   if (al_info.efx == AL_TRUE) {
-      nalDeleteAuxiliaryEffectSlots( 1, &sound_efx_directSlot );
-      if (al_info.efx_reverb == AL_TRUE)
-         nalDeleteEffects( 1, &efx_reverb );
-      if (al_info.efx_echo == AL_TRUE)
-         nalDeleteEffects( 1, &efx_echo );
-   }
-
-   /* Clean up global stuff. */
-   if (al_context) {
-      alcMakeContextCurrent(NULL);
-      alcDestroyContext( al_context );
-   }
-   if (al_device)
-      alcCloseDevice( al_device );
-}
-
-/**
  * @brief Loads a wav file from the rw if possible.
  *
  * @note Closes the rw.
@@ -1844,7 +1821,7 @@ void sound_al_exit_locked (void)
  *    @param buf Buffer to load wav into.
  *    @param rw Data for the wave.
  */
-static int sound_al_loadWav( ALuint *buf, SDL_RWops *rw )
+static int al_loadWav( ALuint *buf, SDL_RWops *rw )
 {
    SDL_AudioSpec wav_spec;
    Uint32 wav_length;
@@ -1918,7 +1895,7 @@ static const char* vorbis_getErr( int err )
  *    @param buf Buffer to load ogg into.
  *    @param vf Vorbisfile containing the song.
  */
-static int sound_al_loadOgg( ALuint *buf, OggVorbis_File *vf )
+static int al_loadOgg( ALuint *buf, OggVorbis_File *vf )
 {
    int ret;
    long i;
@@ -1986,7 +1963,7 @@ int sound_al_buffer( ALuint *buf, SDL_RWops *rw, const char *name )
 
    /* Check to see if it's an Ogg. */
    if (ov_test_callbacks( rw, &vf, NULL, 0, sound_al_ovcall_noclose )==0)
-      ret = sound_al_loadOgg( buf, &vf );
+      ret = al_loadOgg( buf, &vf );
 
    /* Otherwise try WAV. */
    else {
@@ -1994,7 +1971,7 @@ int sound_al_buffer( ALuint *buf, SDL_RWops *rw, const char *name )
       ov_clear(&vf);
 
       /* Try to load Wav. */
-      ret = sound_al_loadWav( buf, rw );
+      ret = al_loadWav( buf, rw );
    }
 
    /* Failed to load. */
@@ -2020,7 +1997,7 @@ int sound_al_buffer( ALuint *buf, SDL_RWops *rw, const char *name )
  *    @param rw File to load from.
  *    @param name Name for debugging purposes.
  */
-int sound_al_load( alSound *snd, SDL_RWops *rw, const char *name )
+int al_load( alSound *snd, SDL_RWops *rw, const char *name )
 {
    ALint freq, bits, channels, size;
    int ret = sound_al_buffer( &snd->buf, rw, name );
@@ -2055,7 +2032,7 @@ int sound_al_load( alSound *snd, SDL_RWops *rw, const char *name )
 /**
  * @brief Internal volume update function.
  */
-static void sound_al_volumeUpdate (void)
+static void al_volumeUpdate (void)
 {
    soundLock();
    /* Do generic ones. */
@@ -2158,7 +2135,7 @@ int sound_al_updatePos( alVoice *v,
  *
  *    @param v Voice to update.
  */
-void sound_al_updateVoice( alVoice *v )
+void al_updateVoice( alVoice *v )
 {
    ALint state;
 
@@ -2206,7 +2183,7 @@ void sound_al_updateVoice( alVoice *v )
 /**
  * @brief Stops playing sound.
  */
-void sound_al_stop( alVoice* voice )
+void al_stop( alVoice* voice )
 {
    soundLock();
 
@@ -2217,36 +2194,4 @@ void sound_al_stop( alVoice* voice )
    al_checkErr();
 
    soundUnlock();
-}
-
-/**
- * @brief Set the playing speed.
- */
-void sound_al_setSpeed( double s )
-{
-   soundLock();
-   sound_speed = s; /* Set the speed. */
-   /* Do all the groupless. */
-   for (int i=0; i<source_ntotal; i++)
-      alSourcef( source_total[i], AL_PITCH, s );
-   /* Do specific groups. */
-   for (int i=0; i<al_ngroups; i++) {
-      alGroup_t *g = &al_groups[i];
-      if (!g->speed)
-         continue;
-      for (int j=0; j<g->nsources; j++)
-         alSourcef( g->sources[j], AL_PITCH, s*g->pitch );
-   }
-   /* Check for errors. */
-   al_checkErr();
-   soundUnlock();
-}
-
-/**
- * @brief Set the speed volume.
- */
-void sound_al_setSpeedVolume( double vol )
-{
-   svolume_speed = vol;
-   sound_al_volumeUpdate();
 }
