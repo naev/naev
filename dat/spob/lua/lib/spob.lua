@@ -12,11 +12,11 @@ end
 
 function luaspob.load ()
    -- Basic stuff
-   mem.fct = mem.spob:faction()
+   local fct = mem.spob:faction()
    mem.bribed = false
 
    mem.bribe_cost_function = mem.params.bribe_cost or function ()
-      local std = mem.fct:playerStanding()
+      local std = fct:playerStanding()
       return (mem.std_land-std) * 1e3 * player.pilot():ship():size() + 5e3
    end
 
@@ -99,6 +99,7 @@ function luaspob.can_land ()
 end
 
 function luaspob.comm ()
+   local fct = mem.spob:faction()
    vn.clear()
    vn.scene()
    local spb = ccomm.newCharacterSpob( vn, mem.spob, mem.bribed )
@@ -111,7 +112,7 @@ function luaspob.comm ()
       local opts = {
          { _("Close"), "leave" }
       }
-      local std = mem.fct:playerStanding()
+      local std = fct:playerStanding()
       if std < mem.std_land then
          table.insert( opts, 1, { _("Bribe"), "bribe" } )
       end
@@ -121,7 +122,7 @@ function luaspob.comm ()
    local bribe_cost
    vn.label("bribe")
    vn.func( function ()
-      local std = mem.fct:playerStanding()
+      local std = fct:playerStanding()
       if std < mem.std_dangerous then
          vn.jump("dangerous")
          return
