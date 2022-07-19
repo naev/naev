@@ -113,10 +113,19 @@ typedef struct alVoice_ {
    ALuint buffer; /**< Buffer attached to the voice. */
 } alVoice;
 
-/*
- * Context info.
- */
-alInfo_t al_info;
+typedef struct alGroup_s {
+   int id; /**< Group ID. */
+
+   /* Sources. */
+   ALuint *sources; /**< Sources in the group. */
+   int nsources; /**< Number of sources in the group. */
+
+   voice_state_t state; /**< Currently global group state. */
+   int fade_timer; /**< Fadeout timer. */
+   int speed; /**< Whether or not pitch affects. */
+   double volume; /**< Volume of the group. */
+   double pitch; /**< Pitch of the group. */
+} alGroup_t;
 
 /*
  * Global sound properties.
@@ -191,19 +200,9 @@ static ALuint efx_echo        = 0; /**< Echo effect. */
  */
 static double sound_speed     = 1.; /**< Sound speed. */
 
-typedef struct alGroup_s {
-   int id; /**< Group ID. */
-
-   /* Sources. */
-   ALuint *sources; /**< Sources in the group. */
-   int nsources; /**< Number of sources in the group. */
-
-   voice_state_t state; /**< Currently global group state. */
-   int fade_timer; /**< Fadeout timer. */
-   int speed; /**< Whether or not pitch affects. */
-   double volume; /**< Volume of the group. */
-   double pitch; /**< Pitch of the group. */
-} alGroup_t;
+/*
+ * Group management.
+ */
 static alGroup_t *al_groups = NULL; /**< Created groups. */
 static int al_ngroups       = 0; /**< Number of created groups. */
 static int al_groupidgen    = 0; /**< Used to create group IDs. */
@@ -220,7 +219,6 @@ static int al_enableEFX (void);
 /*
  * General.
  */
-static ALuint sound_al_getSource (void);
 static int al_playVoice( alVoice *v, alSound *s,
       ALfloat px, ALfloat py, ALfloat vx, ALfloat vy, ALint relative );
 static int sound_al_loadWav( ALuint *buf, SDL_RWops *rw );
@@ -261,11 +259,6 @@ static int sound_al_load( alSound *snd, SDL_RWops *rw, const char *name );
 /*
  * Sound playing.
  */
-static int sound_al_play( alVoice *v, alSound *s );
-static int sound_al_playPos( alVoice *v, alSound *s,
-      double px, double py, double vx, double vy );
-static int sound_al_updatePos( alVoice *v,
-      double px, double py, double vx, double vy );
 static void sound_al_updateVoice( alVoice *v );
 
 /*
@@ -796,7 +789,7 @@ int sound_play( int sound )
    s = &sound_list[sound];
 
    /* Try to play the sound. */
-   if (sound_al_play( v, s ))
+   if (al_playVoice( v, s, 0., 0., 0., 0., AL_TRUE ))
       return -1;
 
    /* Set state and add to list. */
@@ -854,7 +847,7 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
    s = &sound_list[sound];
 
    /* Try to play the sound. */
-   if (sound_al_playPos( v, s, px, py, vx, vy ))
+   if (al_playVoice( v, s, px, py, vx, vy, AL_FALSE ))
       return -1;
 
    /* Actually add the voice to the list. */
@@ -885,8 +878,10 @@ int sound_updatePos( int voice, double px, double py, double vx, double vy )
    if (v != NULL) {
 
       /* Update the voice. */
-      if (sound_al_updatePos( v, px, py, vx, vy))
-         return -1;
+      v->pos[0] = px;
+      v->pos[1] = py;
+      v->vel[0] = vx;
+      v->vel[1] = vy;
    }
 
    return 0;
@@ -2048,9 +2043,10 @@ static void sound_al_volumeUpdate (void)
 }
 
 /**
- * @brief Gets a free OpenAL source.
+ * @brief Plays a voice.
  */
-static ALuint sound_al_getSource (void)
+static int al_playVoice( alVoice *v, alSound *s,
+      ALfloat px, ALfloat py, ALfloat vx, ALfloat vy, ALint relative )
 {
    ALuint source;
 
@@ -2062,17 +2058,9 @@ static ALuint sound_al_getSource (void)
    source_nstack--;
    source = source_stack[source_nstack];
 
-   return source;
-}
-
-/**
- * @brief Plays a voice.
- */
-static int al_playVoice( alVoice *v, alSound *s,
-      ALfloat px, ALfloat py, ALfloat vx, ALfloat vy, ALint relative )
-{
    /* Set up the source and buffer. */
-   v->source = sound_al_getSource();
+   v->source = source;
+
    if (v->source == 0)
       return -1;
    v->buffer = s->buf;
@@ -2115,35 +2103,6 @@ static int al_playVoice( alVoice *v, alSound *s,
    soundUnlock();
 
    return 0;
-}
-
-/**
- * @brief Plays a sound.
- *
- *    @param v Voice to play sound.
- *    @param s Sound to play.
- *    @return 0 on success.
- */
-int sound_al_play( alVoice *v, alSound *s )
-{
-   return al_playVoice( v, s, 0., 0., 0., 0., AL_TRUE );
-}
-
-/**
- * @brief Plays a sound at a position.
- *
- *    @param v Voice to play sound.
- *    @param s Sound to play.
- *    @param px X position of the sound.
- *    @param py Y position of the sound.
- *    @param vx X velocity of the sound.
- *    @param vy Y velocity of the sound.
- *    @return 0 on success.
- */
-int sound_al_playPos( alVoice *v, alSound *s,
-            double px, double py, double vx, double vy )
-{
-   return al_playVoice( v, s, px, py, vx, vy, AL_FALSE );
 }
 
 /**
