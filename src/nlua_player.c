@@ -817,6 +817,7 @@ static int playerL_land( lua_State *L )
 
    /* Do whatever the spob wants to do. */
    if (spob->lua_land != LUA_NOREF) {
+      spob_luaInitMem( spob );
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_land); /* f */
       lua_pushspob( naevL, spob_index(spob) );
       lua_pushpilot( naevL, player.p->id );
