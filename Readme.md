@@ -81,6 +81,7 @@ directory to see a list of all available options.
 **For macOS**, try adding: `--prefix="$(pwd)"/build/dist/Naev.app --bindir=Contents/MacOS -Dndata_path=Contents/Resources`
 
 **For normal development**, try adding: `--buildtype=debug -Db_sanitize=address` (adding `-Db_lundef=false` if compiling with Clang, substituting `-Ddebug_arrays=true` for `-Db_sanitize=...` on Windows if you can't use Clang).
+(If your system supports debuginfod, also add `set debuginfod enabled on` to a file named `.gdbinit` in your home directory!)
 
 **For faster debug builds** (but harder to trace with gdb/lldb), try `--buildtype=debugoptimized -Db_lto=true -Db_lto_mode=thin` in place of the corresponding values above.
 
