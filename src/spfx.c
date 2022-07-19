@@ -1158,8 +1158,10 @@ static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )
             WARN(_("Trail '%s' that inherits from '%s' has missing reference!"), tc->name, inherits );
          else {
             char *name = tc->name;
+            char *filename = tc->filename;
             memcpy( tc, tsparent, sizeof(TrailSpec) );
             tc->name = name;
+            tc->filename = filename;
          }
       }
    }
