@@ -453,6 +453,11 @@ local function should_ambient ()
       return false
    end
 
+   if player.autonav() then
+      choose( "ambient" )
+      return true
+   end
+
    local enemies = pp:getHostiles( enemy_dist, nil, true )
    if #enemies <= 0 then
       choose( "ambient" )
