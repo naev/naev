@@ -421,22 +421,32 @@ local function should_combat ()
       return false
    end
 
+   -- Enforce minimum play time
+   if music_played < 10 then
+      return false
+   end
+
+   -- Don't play combat music in autonav
    if player.autonav() then
       return false
    end
 
+   -- Don't play combat in stealth
+   -- TODO stealth effects or music?
    if pp:flags("stealth") then
       return false
    end
 
+   -- If locked in, time to switch
    if pp:lockon() > 0 then
       choose( "combat" )
       return true
    end
 
+   -- Nearby enemies targetting the player will also switch
    local enemies = pp:getHostiles( enemy_dist, nil, true )
    for k,v in ipairs(enemies) do
-      if v:target() == pp then
+      if v:target():withPlayer() then
          choose( "combat" )
          return true
       end
@@ -453,11 +463,18 @@ local function should_ambient ()
       return false
    end
 
+   -- Enforce minimum play time
+   if music_played < 10 then
+      return false
+   end
+
+   -- Go back to ambient with autonav
    if player.autonav() then
       choose( "ambient" )
       return true
    end
 
+   -- No enemies nearby
    local enemies = pp:getHostiles( enemy_dist, nil, true )
    if #enemies <= 0 then
       choose( "ambient" )
