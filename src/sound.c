@@ -251,11 +251,6 @@ static alVoice* voice_get( int id );
 static void al_updateVoice( alVoice *v );
 
 /*
- * Sound management.
- */
-static void al_stop( alVoice *v );
-
-/*
  * Vorbis stuff.
  */
 static size_t ovpack_read( void *ptr, size_t size, size_t nmemb, void *datasource )
@@ -1045,7 +1040,14 @@ void sound_stopAll (void)
 
    voiceLock();
    for (alVoice *v=voice_active; v!=NULL; v=v->next) {
-      al_stop( v );
+      if ((v->state == VOICE_STOPPED) || (v->state == VOICE_DESTROY))
+         continue;
+      if (v->source != 0) {
+         soundLock();
+         alSourceStop( v->source );
+         al_checkErr();
+         soundUnlock();
+      }
       v->state = VOICE_STOPPED;
    }
    voiceUnlock();
@@ -1065,7 +1067,12 @@ void sound_stop( int voice )
 
    v = voice_get(voice);
    if (v != NULL) {
-      al_stop( v );
+      soundLock();
+
+      if (v->source != 0)
+         alSourceStop( v->source );
+
+      soundUnlock();
       v->state = VOICE_STOPPED;
    }
 
@@ -2173,22 +2180,6 @@ void al_updateVoice( alVoice *v )
    alSourcef(  v->source, AL_GAIN, svolume*svolume_speed );
    alSourcefv( v->source, AL_POSITION, v->pos );
    alSourcefv( v->source, AL_VELOCITY, v->vel );
-
-   /* Check for errors. */
-   al_checkErr();
-
-   soundUnlock();
-}
-
-/**
- * @brief Stops playing sound.
- */
-void al_stop( alVoice* voice )
-{
-   soundLock();
-
-   if (voice->source != 0)
-      alSourceStop( voice->source );
 
    /* Check for errors. */
    al_checkErr();
