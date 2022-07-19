@@ -35,7 +35,7 @@ local function tracks_add( name, situation )
    end
 
    local m = audio.newSource( name, "stream" )
-   m:setVolume( music_vol )
+   m:setVolume( music_vol, true )
    m:play()
    local t = {
       m     = m,
@@ -481,7 +481,7 @@ function update( dt )
                table.insert( remove, k )
             end
          end
-         v.m:setVolume( music_vol * v.vol )
+         v.m:setVolume( music_vol * v.vol, true )
       end
    end
    for k=#remove, 1, -1 do
@@ -563,6 +563,6 @@ function volume( vol )
    end
    music_vol = vol
    for k,v in ipairs( tracks ) do
-      v.m:setVolume( music_vol * v.vol )
+      v.m:setVolume( music_vol * v.vol, true )
    end
 end
