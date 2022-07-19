@@ -146,7 +146,6 @@ static void space_updateSpob( const Spob *p, double dt, double real_dt );
 /* Map shaders. */
 static const MapShader *mapshader_get( const char *name );
 /* Lua stuff. */
-static void spob_luaInitMem( const Spob *spob );
 static int spob_lua_cmp( const void *a, const void *b );
 static nlua_env spob_lua_get( int *mem, const char *filename );
 /*
@@ -1890,7 +1889,7 @@ void spob_updateLand( Spob *p )
    }
 }
 
-static void spob_luaInitMem( const Spob *spob )
+void spob_luaInitMem( const Spob *spob )
 {
    if (spob->lua_mem != LUA_NOREF) {
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, spob->lua_mem );
