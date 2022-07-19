@@ -4353,7 +4353,7 @@ static int spob_lua_cmp( const void *a, const void *b )
 static nlua_env spob_lua_get( int *mem, const char *filename )
 {
    size_t sz;
-   char *dat;
+   char *dat, *dup_filename;
    spob_lua_file *lf;
    const spob_lua_file key = { .filename=filename };
 
@@ -4379,7 +4379,7 @@ static nlua_env spob_lua_get( int *mem, const char *filename )
 
    /* Add new entry and sort. */
    lf = &array_grow( &spob_lua_stack );
-   lf->filename = strdup( filename );
+   lf->filename = dup_filename = strdup( filename );
    lf->env = env;
 
    /* Add the spob memory table. */
@@ -4394,6 +4394,7 @@ static nlua_env spob_lua_get( int *mem, const char *filename )
       WARN(_("Lua Spob '%s' error:\n%s"), filename, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
       free( dat );
+      free( dup_filename );
       nlua_freeEnv( env );
       luaL_unref( naevL, LUA_REGISTRYINDEX, lf->lua_mem );
       n = array_size( spob_lua_stack );

@@ -1228,6 +1228,8 @@ static int trailSpec_load (void)
          tc.filename = ts_files[i];
          array_push_back( &trail_spec_stack, tc );
       }
+      else
+         free( ts_files[i] );
    }
 
    /* Second pass to complete inheritance. */
