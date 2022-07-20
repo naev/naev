@@ -564,7 +564,7 @@ function update( dt )
 
    -- No track, so we choose a random ambient track
    if not curtrack then
-      choose( "ambient" )
+      choose( music_situation )
    end
 end
 
