@@ -479,24 +479,19 @@ local function should_ambient ()
       return false
    end
 
+   -- Enemies nearby
+   local enemies = pp:getHostiles( enemy_dist, nil, true )
+   if #enemies > 0 then
+      return false
+   end
+
    -- Still locked on
    if pp:lockon() > 0 then
       return false
    end
 
-   -- Go back to ambient with autonav
-   if player.autonav() then
-      choose( "ambient" )
-      return true
-   end
-
-   -- No enemies nearby
-   local enemies = pp:getHostiles( enemy_dist, nil, true )
-   if #enemies <= 0 then
-      choose( "ambient" )
-      return true
-   end
-   return false
+   choose( "ambient" )
+   return true
 end
 
 local update_rate = 0.5
