@@ -47,6 +47,7 @@ static int cust_mouse( int type, int button, double x, double y, custom_function
 static int cust_event_window( SDL_WindowEventID event, Sint32 w, Sint32 h, custom_functions_t *cf );
 
 /* Toolkit methods. */
+static int tkL_isOpen( lua_State *L );
 static int tkL_query( lua_State *L );
 static int tkL_msg( lua_State *L );
 static int tkL_yesno( lua_State *L );
@@ -61,6 +62,7 @@ static int tkL_customResize( lua_State *L );
 static int tkL_customSize( lua_State *L );
 static int tkL_customDone( lua_State *L );
 static const luaL_Reg tkL_methods[] = {
+   { "isOpen", tkL_isOpen },
    { "query", tkL_query },
    { "msg", tkL_msg },
    { "yesno", tkL_yesno },
@@ -109,6 +111,18 @@ int nlua_loadTk( nlua_env env )
  *
  *  @luamod tk
  */
+
+/**
+ * @brief Gets if the toolkit is open. This include any love2d windows.
+ *
+ *    @luatreturn boolean Whether or not the toolkit is open.
+ */
+static int tkL_isOpen( lua_State *L )
+{
+   lua_pushboolean(L,toolkit_isOpen());
+   return 1;
+}
+
 /**
  * @brief Gets the position and dimensions of either a window or a widget.
  *

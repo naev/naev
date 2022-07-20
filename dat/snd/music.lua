@@ -550,7 +550,7 @@ function update( dt )
    end
 
    -- See if we should spice up the music a bit
-   if not curtrack or music_played > 10 then
+   if not tk.isOpen() and (not curtrack or music_played > 10) then
       if music_situation == "ambient" then
          if should_combat() then
             return
@@ -564,7 +564,7 @@ function update( dt )
 
    -- No track, so we choose a random ambient track
    if not curtrack then
-      choose( music_situation )
+      choose()
    end
 end
 

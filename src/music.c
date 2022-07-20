@@ -21,6 +21,7 @@
 #include "ndata.h"
 #include "nlua.h"
 #include "nlua_audio.h"
+#include "nlua_tk.h"
 #include "nlua_var.h"
 #include "nluadef.h"
 #include "nstring.h"
@@ -354,6 +355,7 @@ static int music_luaInit (void)
    music_env = nlua_newEnv();
    nlua_loadStandard(music_env);
    nlua_loadAudio(music_env);
+   nlua_loadTk(music_env);
 
    /* load the actual Lua music code */
    buf = ndata_read( MUSIC_LUA_PATH, &bufsize );
