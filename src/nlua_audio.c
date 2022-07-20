@@ -370,9 +370,6 @@ void audio_cleanup( LuaAudio_t *la )
       return;
 
    soundLock();
-   if (la->source > 0)
-      alDeleteSources( 1, &la->source );
-
    switch (la->type) {
       case LUA_AUDIO_STATIC:
          /* Check if buffers need freeing. */
@@ -400,6 +397,9 @@ void audio_cleanup( LuaAudio_t *la )
          ov_clear( &la->stream );
          break;
    }
+
+   if (la->source > 0)
+      alDeleteSources( 1, &la->source );
 
    /* Clean up. */
    al_checkErr();
