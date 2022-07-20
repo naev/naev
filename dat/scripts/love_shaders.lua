@@ -52,6 +52,8 @@ love_shaders.pixelcode = _pixelcode
 love_shaders.vertexcode = _vertexcode
 
 local function _shader2canvas( shader, image, w, h, sx, sy )
+   w = w or image.w
+   h = h or image.h
    sx = sx or 1
    sy = sy or sx
    -- Render to image
@@ -90,10 +92,10 @@ Renders an image with a shader to a canvas.
 
 @tparam Shader shader Shader to user
 @tparam Image image Image to render.
-@tparam number width Width of the canvas to create.
-@tparam number height Height of the canvas to create.
-@tparam number sx Scale factor for width.
-@tparam number sy Scale factor for height.
+@tparam[opt=image.w] number width Width of the canvas to create.
+@tparam[opt=image.h] number height Height of the canvas to create.
+@tparam[opt=1] number sx Scale factor for width.
+@tparam[opt=1] number sy Scale factor for height.
 @treturn Canvas Generated canvas.
 --]]
 love_shaders.shaderimage2canvas = _shader2canvas
