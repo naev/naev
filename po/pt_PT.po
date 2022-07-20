@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2022-07-18 00:22-0400\n"
+"POT-Creation-Date: 2022-07-20 00:21-0400\n"
 "PO-Revision-Date: 2021-08-30 16:38+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -25791,7 +25791,7 @@ msgstr ""
 
 #: dat/events/dvaered/totoran.lua:238 dat/events/minerva/station.lua:345
 #: dat/events/minerva/station.lua:372 dat/missions/dvaered/gauntlet/gui.lua:200
-#: dat/rescue.lua:304 dat/rescue.lua:315 src/dialogue.c:722 src/escort.c:303
+#: dat/rescue.lua:304 dat/rescue.lua:315 src/dialogue.c:722 src/escort.c:305
 #: src/map_find.c:240 src/options.c:265 src/options.c:793 src/options.c:896
 #: src/options.c:1147 src/options.c:1198
 msgid "Cancel"
@@ -77090,7 +77090,7 @@ msgstr ""
 msgid "Background -> 'background' : %s"
 msgstr ""
 
-#: src/background.c:437 src/gui.c:1709 src/nlua_evt.c:146 src/nlua_misn.c:243
+#: src/background.c:437 src/gui.c:1710 src/nlua_evt.c:146 src/nlua_misn.c:243
 #: src/nopenal.c:72
 msgid "unknown error"
 msgstr ""
@@ -78823,27 +78823,27 @@ msgstr ""
 msgid "#gEscorts: #0Clearing orders."
 msgstr ""
 
-#: src/escort.c:300
+#: src/escort.c:302
 msgid "Hold Position"
 msgstr ""
 
-#: src/escort.c:301
+#: src/escort.c:303
 msgid "Return To Ship"
 msgstr ""
 
-#: src/escort.c:302
+#: src/escort.c:304
 msgid "Clear Orders"
 msgstr ""
 
-#: src/escort.c:311
+#: src/escort.c:313
 msgid "Escort Orders"
 msgstr ""
 
-#: src/escort.c:312
+#: src/escort.c:314
 msgid "Select the order to give to this escort."
 msgstr ""
 
-#: src/escort.c:355
+#: src/escort.c:358
 msgid "#gEscorts: #0Jumping."
 msgstr ""
 
@@ -79170,27 +79170,27 @@ msgstr ""
 msgid "Gfx index out of range"
 msgstr ""
 
-#: src/gui.c:1678
+#: src/gui.c:1679
 #, c-format
 msgid "GUI '%s': Trying to run GUI func '%s' but no GUI is loaded!"
 msgstr ""
 
-#: src/gui.c:1687
+#: src/gui.c:1688
 #, c-format
 msgid "GUI '%s': no function '%s' defined!"
 msgstr ""
 
-#: src/gui.c:1708
+#: src/gui.c:1709
 #, c-format
 msgid "GUI '%s' Lua -> '%s': %s"
 msgstr ""
 
-#: src/gui.c:1838
+#: src/gui.c:1839
 #, c-format
 msgid "Unable to find GUI '%s'."
 msgstr ""
 
-#: src/gui.c:1851
+#: src/gui.c:1852
 #, c-format
 msgid ""
 "Failed to load GUI Lua: %s\n"
@@ -79198,7 +79198,7 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/gui.c:1998
+#: src/gui.c:1999
 #, c-format
 msgid "#oRadar set to %.0fx.#0"
 msgstr ""
