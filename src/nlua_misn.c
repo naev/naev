@@ -511,8 +511,7 @@ static int misn_markerRm( lua_State *L )
  */
 static int misn_setNPC( lua_State *L )
 {
-   char buf[PATH_MAX];
-   const char *name, *str, *desc;
+   const char *name, *desc;
    Mission *cur_mission;
 
    cur_mission = misn_getFromLua(L);
@@ -532,16 +531,12 @@ static int misn_setNPC( lua_State *L )
 
    /* Get parameters. */
    name = luaL_checkstring(L,1);
-   str  = luaL_checkstring(L,2);
+   cur_mission->portrait = luaL_validtex(L,2,GFX_PATH"portraits/");
    desc = luaL_checkstring(L,3);
 
    /* Set NPC name and description. */
    cur_mission->npc = strdup(name);
    cur_mission->npc_desc = strdup(desc);
-
-   /* Set portrait. */
-   snprintf( buf, sizeof(buf), GFX_PATH"portraits/%s", str );
-   cur_mission->portrait = gl_newImage( buf, 0 );
 
    return 0;
 }
@@ -907,29 +902,27 @@ static int misn_npcAdd( lua_State *L )
 {
    unsigned int id;
    int priority;
-   const char *func, *name, *gfx, *desc, *bg;
-   char portrait[PATH_MAX], background[PATH_MAX];
+   const char *func, *name, *desc;
+   glTexture *portrait, *bg;
    Mission *cur_mission;
 
    /* Handle parameters. */
    func = luaL_checkstring(L, 1);
    name = luaL_checkstring(L, 2);
-   gfx  = luaL_checkstring(L, 3);
+   portrait = luaL_validtex( L, 3, GFX_PATH"portraits/" );
    desc = luaL_checkstring(L, 4);
 
    /* Optional parameters. */
    priority = luaL_optinteger(L,5,5);
-   bg   = luaL_optstring(L,6,NULL);
-
-   /* Set path. */
-   ndata_getPathDefault( portrait, sizeof(portrait), GFX_PATH"portraits/", gfx );
-   if (bg!=NULL)
-      ndata_getPathDefault( background, sizeof(background), GFX_PATH"portraits/", bg );
+   if (!lua_isnoneornil(L,6))
+      bg = luaL_validtex( L, 6, GFX_PATH"portraits/" );
+   else
+      bg = NULL;
 
    cur_mission = misn_getFromLua(L);
 
    /* Add npc. */
-   id = npc_add_mission( cur_mission->id, func, name, priority, portrait, desc, (bg==NULL) ? bg :background );
+   id = npc_add_mission( cur_mission->id, func, name, priority, portrait, desc, bg );
 
    /* Regenerate bar. */
    bar_regen();
