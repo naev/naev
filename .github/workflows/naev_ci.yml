@@ -237,7 +237,7 @@ jobs:
               --cross-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=debug \
               -Dnightly=false \
-              -Db_lto=false \
+              -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
               -Ddocs_lua=disabled
