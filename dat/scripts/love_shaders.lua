@@ -86,6 +86,20 @@ end
 
 
 --[[--
+Renders an image with a shader to a canvas.
+
+@tparam Shader shader Shader to user
+@tparam Image image Image to render.
+@tparam number width Width of the canvas to create.
+@tparam number height Height of the canvas to create.
+@tparam number sx Scale factor for width.
+@tparam number sy Scale factor for height.
+@treturn Canvas Generated canvas.
+--]]
+love_shaders.shaderimage2canvas = _shader2canvas
+
+
+--[[--
 Generates a paper-like image.
 
 @tparam number width Width of the image to create.
