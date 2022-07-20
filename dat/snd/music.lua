@@ -419,7 +419,7 @@ function choose( str )
    music_choose_queue = nil
    local choose_func = choose_table[ str ]
    if not choose_func then
-      choose_func = "ambient"
+      choose_func = choose_table.ambient
    end
    choose_func()
 end
@@ -479,6 +479,11 @@ local function should_ambient ()
 
    -- Enforce minimum play time
    if music_played < 10 then
+      return false
+   end
+
+   -- Still locked on
+   if pp:lockon() > 0 then
       return false
    end
 
