@@ -59,7 +59,7 @@ The valid location parameters are as follows:
 | computer |   | ✔ | Available at mission computers. |
 | bar      |   | ✔ | Available at spaceport bars. |
 
-Note that availability differs between events and missions. Furthermore, there are two special cases for missions: `computer` and `bar` that both support an `accept` function. In the case of the mission computer, the `accept` function is run when the player tries to click on the accept button in the interface. On the other hand, the spaceport bar `accept` function is called when the NPC is approached. Note that this NPC must be defined with `misn.setNPC` to be approachable.
+Note that availability differs between events and missions. Furthermore, there are two special cases for missions: `computer` and `bar` that both support an `accept` function. In the case of the mission computer, the `accept` function is run when the player tries to click on the accept button in the interface. On the other hand, the spaceport bar `accept` function is called when the NPC is approached. This NPC must be defined with `misn.setNPC` to be approachable.
 
 Also notice that it is also possible to define arbitrary tags in the `<tags>` node. This can be accessed with `player.misnDoneList()` and can be used for things such as handling faction standing caps automatically.
 
@@ -339,7 +339,7 @@ There are additional useful functions in the `format` library. In particular the
 * `format.credits`: Displays a credit value with the credit symbol ¤.
 * `format.reward`: Used for displaying mission rewards.
 * `format.tonnes`: Used to convert tonne values to strings.
-* `format.list`: Displays a list of values with commas and the word "and". For example `{"one", "two", "three"}` becomes `"one, two, and three"`.
+* `format.list`: Displays a list of values with commas and the word "and". For example `fmt.list{"one", "two", "three"}` returns `"one, two, and three"`.
 * `format.humanize`: Converts a number string to a human readable rough string such as `"1.5 billion"`.
 
 More details can be found in the [generated documentation](https://naev.org/api/modules/format.html).
