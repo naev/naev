@@ -12,7 +12,6 @@ local last_track -- last played track name
 local tracks = {} -- currently playing tracks (including fading)
 local music_stopped = false -- whether or not it is stopped
 local music_situation -- current running situation
-local music_choose_queue -- next situation to run if not set
 local music_played = 0 -- elapsed play time for the current situation
 local music_vol = naev.conf().music -- music global volume
 
@@ -206,8 +205,7 @@ function choose_table.takeoff ()
       return false
    end
    local takeoff = { "liftoff.ogg", "launch2.ogg", "launch3chatstart.ogg" }
-   tracks_add( takeoff[ rnd.rnd(1,#takeoff) ], "takeoff" )
-   music_choose_queue = "ambient" -- play ambient next
+   tracks_add( takeoff[ rnd.rnd(1,#takeoff) ], "ambient" ) -- Don't want to repeat takeoff
    return true
 end
 
@@ -415,8 +413,7 @@ function choose( str )
       end
    end
 
-   str = str or music_choose_queue or music_situation
-   music_choose_queue = nil
+   str = str or music_situation
    local choose_func = choose_table[ str ]
    if not choose_func then
       choose_func = choose_table.ambient
