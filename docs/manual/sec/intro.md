@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to the Naev development manual! This manual is meant to cover all aspects of Naev development. It is currently a work in progress.
+Welcome to the Naev development manual! This manual is meant to cover all aspects of Naev development. It is currently a work in progress. The source code for the manual can be found on the [naev github](https://github.com/naev/naev/tree/main/docs/manual) with pull requests and issues being welcome.
 
 While this document does cover the Naev engine in general, many sections refer to customs and properties specific to the **Sea of Darkness** default Naev universe. These are marked with \naev.
 
