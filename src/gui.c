@@ -1673,6 +1673,7 @@ static int gui_doFunc( int func_ref, const char *func_name )
  */
 static int gui_prepFunc( int func_ref, const char *func_name )
 {
+   (void) func_name;
 #if DEBUGGING
    if (gui_env == LUA_NOREF) {
       WARN( _("GUI '%s': Trying to run GUI func '%s' but no GUI is loaded!"), gui_name, func_name );
