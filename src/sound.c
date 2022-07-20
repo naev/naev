@@ -295,7 +295,7 @@ static int sound_al_init (void)
    int ret;
    ALuint s;
    ALint freq;
-   ALint attribs[4] = { 0, 0, 0, 0 };
+   ALint attribs[6] = { 0, 0, 0, 0, 0, 0 };
 
    /* Default values. */
    ret = 0;
@@ -323,12 +323,27 @@ static int sound_al_init (void)
    else
       al_info.efx = AL_FALSE;
 
+   /* Check more extensions. */
+   al_info.output_limiter = alcIsExtensionPresent( al_device, "ALC_SOFT_output_limiter" );
+   if (al_info.output_limiter) {
+      attribs[2] = ALC_OUTPUT_LIMITER_SOFT;
+      attribs[3] = ALC_TRUE;
+   }
+
    /* Create the OpenAL context */
    al_context = alcCreateContext( al_device, attribs );
    if (al_context == NULL) {
       WARN(_("Unable to create OpenAL context"));
       ret = -2;
       goto snderr_ctx;
+   }
+
+   /* Query some extensions. */
+   if (al_info.output_limiter) {
+      ALint limiter;
+      alcGetIntegerv( al_device, ALC_OUTPUT_LIMITER_SOFT, 1, &limiter );
+      if (limiter != ALC_TRUE)
+         WARN(_("Failed to set ALC_OUTPUT_LIMITER_SOFT"));
    }
 
    /* Clear the errors */
