@@ -54,8 +54,6 @@ static int music_lua_volume   = LUA_NOREF;
 /* functions */
 static int music_runLua( const char *situation );
 
-static int music_temp_disabled= 0; /**< Music is temporarily disabled. */
-
 /*
  * prototypes
  */
@@ -72,9 +70,6 @@ static void music_luaQuit (void);
 void music_update( double dt )
 {
    if (music_disabled)
-      return;
-
-   if (music_temp_disabled)
       return;
 
    /* Run the choose function in Lua. */
@@ -95,9 +90,6 @@ void music_update( double dt )
 static int music_runLua( const char *situation )
 {
    if (music_disabled)
-      return 0;
-
-   if (music_temp_disabled)
       return 0;
 
    /* Run the choose function in Lua. */
@@ -418,7 +410,6 @@ int music_choose( const char* situation )
    if (music_disabled || sound_disabled)
       return 0;
 
-   music_temp_disabled = 0;
    music_runLua( situation );
 
    return 0;
@@ -432,18 +423,6 @@ void music_rechoose (void)
    if (music_disabled)
       return;
 
-   if (music_temp_disabled)
-      return;
-
    /* Lock so it doesn't run in between an update. */
    music_runchoose   = 1;
-   music_temp_disabled = 0;
-}
-
-/**
- * @brief Temporarily disables the music.
- */
-void music_tempDisable( int disable )
-{
-   music_temp_disabled = disable;
 }

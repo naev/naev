@@ -249,7 +249,7 @@ function heartbeat ()
       player.cinematics( true )
       player.allowLand( false )
       love.origin()
-      music.stop(true)
+      music.stop()
       stage = 6
    elseif stage==6 then
       -- pulse

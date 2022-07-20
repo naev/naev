@@ -79,14 +79,11 @@ static int musicL_choose( lua_State* L )
 /**
  * @brief Plays the loaded song.
  *
- * Restores the music system if it was temporarily disabled.
- *
  * @luafunc play
  */
 static int musicL_play( lua_State *L )
 {
    const char *str = luaL_optstring(L,1,NULL);
-   music_tempDisable( 0 );
    music_play( str );
    return 0;
 }
@@ -104,14 +101,12 @@ static int musicL_pause( lua_State* L )
 /**
  * @brief Stops playing the current song.
  *
- *    @luatparam[opt=false] boolean disable Whether or not to disable the music system temporarily after stopping.
  * @luafunc stop
  */
 static int musicL_stop( lua_State *L )
 {
-   int disable = lua_toboolean(L,1);
+   (void) L;
    music_stop();
-   music_tempDisable( disable );
    return 0;
 }
 
