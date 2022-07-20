@@ -116,6 +116,7 @@ int nlua_loadTk( nlua_env env )
  * @brief Gets if the toolkit is open. This include any love2d windows.
  *
  *    @luatreturn boolean Whether or not the toolkit is open.
+ * @luafunc isOpen
  */
 static int tkL_isOpen( lua_State *L )
 {
