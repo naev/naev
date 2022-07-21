@@ -94,8 +94,10 @@ static int blk_enumerateCallback( void* data, const char* origdir, const char* f
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
    asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat )) {
-      WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
-            _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
+       PHYSFS_ErrorCode err = PHYSFS_getLastErrorCode();
+      if (err!=PHYSFS_ERR_BAD_FILENAME)
+         WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
+               _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
       free( path );
    }
    else if (stat.filetype == PHYSFS_FILETYPE_REGULAR) {
