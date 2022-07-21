@@ -191,8 +191,13 @@ static int load_load( nsave_t *save, const char *path )
          do {
             xml_onlyNodes(node);
 
-            if (xml_isNode(node, "plugin"))
-               array_push_back( &save->plugins, xml_get(node) );
+            if (xml_isNode(node, "plugin")) {
+               const char *name = xml_get(node);
+               if (name != NULL)
+                  array_push_back( &save->plugins, strdup(name) );
+               else
+                  WARN(_("Save '%s' has unnamed plugin node!"), path);
+            }
          } while (xml_nextNode(node));
          continue;
       }
