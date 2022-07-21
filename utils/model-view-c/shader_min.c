@@ -259,7 +259,7 @@ GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile, const c
    GLuint vertex_shader, fragment_shader, program;
 
    strncpy( prepend, GLSL_VERSION, sizeof(prepend)-1 );
-   if (prepend != NULL)
+   if (prependtext != NULL)
       strncat( prepend, prependtext, sizeof(prepend)-strlen(prepend)-1 );
    //if (gl_has( OPENGL_SUBROUTINES ))
    //   strncat( prepend, GLSL_SUBROUTINE, sizeof(prepend)-strlen(prepend)-1 );
