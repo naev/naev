@@ -23,6 +23,9 @@ typedef struct nsave_s {
    char *version; /**< Naev version. */
    char *data; /**< Data name. */
 
+   /* Plugins. */
+   char **plugins; /**< Plugins used in the game. */
+
    /* Player info. */
    char *spob; /**< Spob player is at. */
    ntime_t date; /**< Date. */
