@@ -16,6 +16,8 @@
 #include "array.h"
 #include "log.h"
 
+#define BLACKLIST_FILENAME    "naev.BLACKLIST"
+
 /**
  * @brief Represents a file in a directory. Used to enumerate files.
  */
@@ -241,7 +243,7 @@ int blacklist_init (void)
 
    /* Register archiver and load it from memory. */
    PHYSFS_registerArchiver( &blk_archiver );
-   int ret = PHYSFS_mountMemory( &blk_archiver, 0, NULL, "naev.BLACKLIST", NULL, 0 );
+   int ret = PHYSFS_mountMemory( &blk_archiver, 0, NULL, BLACKLIST_FILENAME, NULL, 0 );
    if (!ret)
       WARN( _("PhysicsFS: %s"), _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
    return !ret;
@@ -317,7 +319,7 @@ static void *blk_openArchive( PHYSFS_Io *io, const char *name, int forWrite, int
 {
    (void) io;
    (void) forWrite;
-   if (strcmp(name,"naev.BLACKLIST")==0) {
+   if (strcmp(name,BLACKLIST_FILENAME)==0) {
       *claimed = 1;
       return &blk_re; /* Has to be non-NULL. */
    }
