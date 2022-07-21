@@ -35,7 +35,7 @@ static void blk_closeArchive( void *opaque );
 static const PHYSFS_Archiver blk_archiver = {
    .version = 0,
    .info = {
-      .extension  = "blacklist",
+      .extension  = "BLACKLIST",
       .description = "Naev blacklist archiver.",
       .author     = "Naev DevTeam",
       .url        = "https://naev.org",
@@ -97,7 +97,7 @@ static int blk_enumerateCallback( void* data, const char* origdir, const char* f
        PHYSFS_ErrorCode err = PHYSFS_getLastErrorCode();
       if (err!=PHYSFS_ERR_BAD_FILENAME)
          WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
-               _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
+               _(PHYSFS_getErrorByCode( err ) ) );
       free( path );
    }
    else if (stat.filetype == PHYSFS_FILETYPE_REGULAR) {
@@ -164,7 +164,11 @@ int blacklist_init (void)
    pcre2_code_free( blk_re );
    pcre2_match_data_free( blk_match );
 
-   return PHYSFS_registerArchiver( &blk_archiver );
+   PHYSFS_registerArchiver( &blk_archiver );
+   int ret = PHYSFS_mountMemory( &blk_archiver, 0, NULL, "naev.BLACKLIST", NULL, 0 );
+   if (!ret)
+      WARN( _("PhysicsFS: %s"), _(PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
+   return !ret;
 }
 
 int blacklist_append( const char *path )
@@ -194,7 +198,7 @@ int blacklist_exit (void)
 
 static int blk_matches( const char *filename )
 {
-   const char *str = bsearch( filename, blk_blacklists, array_size(blk_blacklists), sizeof(const char*), strsort );
+   const char *str = bsearch( &filename, blk_blacklists, array_size(blk_blacklists), sizeof(const char*), strsort );
    return (str!=NULL);
 }
 
@@ -209,7 +213,7 @@ static int blk_unsupported( void *opaque, const char *filename )
 {
    (void) opaque;
    (void) filename;
-   return -1;
+   return 0;
 }
 
 static void *blk_openArchive( PHYSFS_Io *io, const char *name, int forWrite, int *claimed )
@@ -217,9 +221,8 @@ static void *blk_openArchive( PHYSFS_Io *io, const char *name, int forWrite, int
    (void) io;
    (void) name;
    (void) forWrite;
-   (void) claimed;
-
-   return NULL;
+   *claimed = 1;
+   return &blk_re; /* Has to be non-NULL. */
 }
 
 static PHYSFS_EnumerateCallbackResult blk_enumerate( void *opaque, const char *dirname, PHYSFS_EnumerateCallback cb, const char *origdir, void *callbackdata )
@@ -248,9 +251,9 @@ static int blk_stat( void *opaque, const char *fn, PHYSFS_Stat *stat )
    (void) opaque;
    if (blk_matches( fn )) {
       *stat = blk_emptystat;
-      return 0;
+      return 1;
    }
-   return -1;
+   return 0;
 }
 
 static void blk_closeArchive( void *opaque )
