@@ -81,6 +81,7 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path )
          };
          for (int i=0; blk[i]!=NULL; i++)
             blacklist_append( blk[i] );
+         plg->total_conversion = 1;
          continue;
       }
       WARN(_("Plugin '%s' has unknown metadata node '%s'!"),path,xml_get(node));

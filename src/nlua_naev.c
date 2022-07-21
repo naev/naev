@@ -617,6 +617,7 @@ static int naevL_plugins( lua_State *L )
       INTEGER(priority);
 
       BOOL(compatible);
+      BOOL(total_conversion);
 
 #undef BOOL
 #undef INTEGER
