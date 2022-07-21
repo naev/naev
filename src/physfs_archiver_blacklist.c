@@ -279,10 +279,12 @@ static int blk_unsupported( void *opaque, const char *filename )
 static void *blk_openArchive( PHYSFS_Io *io, const char *name, int forWrite, int *claimed )
 {
    (void) io;
-   (void) name;
    (void) forWrite;
-   *claimed = 1;
-   return &blk_re; /* Has to be non-NULL. */
+   if (strcmp(name,"naev.BLACKLIST")==0) {
+      *claimed = 1;
+      return &blk_re; /* Has to be non-NULL. */
+   }
+   return NULL;
 }
 
 static PHYSFS_EnumerateCallbackResult blk_enumerate( void *opaque, const char *dirname, PHYSFS_EnumerateCallback cb, const char *origdir, void *callbackdata )
