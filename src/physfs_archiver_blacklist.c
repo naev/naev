@@ -107,7 +107,7 @@ static int blk_enumerateCallback( void* data, const char* origdir, const char* f
    PHYSFS_Stat stat;
 
    dir_len = strlen( origdir );
-   fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
+   fmt = ((dir_len && origdir[dir_len-1]=='/') || dir_len==0) ? "%s%s" : "%s/%s";
    asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat )) {
        PHYSFS_ErrorCode err = PHYSFS_getLastErrorCode();
@@ -192,7 +192,7 @@ int blacklist_init (void)
    blk_blacklists = array_create( char * );
    blk_dirnames = array_create( char * );
    blk_fs = array_create( BlkFile );
-   PHYSFS_enumerate( "/", blk_enumerateCallback, NULL );
+   PHYSFS_enumerate( "", blk_enumerateCallback, NULL );
    qsort( blk_blacklists, array_size(blk_blacklists), sizeof(char*), strsort );
    qsort( blk_dirnames, array_size(blk_dirnames), sizeof(char*), strsort );
 
@@ -279,8 +279,6 @@ static PHYSFS_EnumerateCallbackResult blk_enumerate( void *opaque, const char *d
    (void) dirname;
    PHYSFS_EnumerateCallbackResult retval = PHYSFS_ENUM_OK;
    int offset = 0;
-
-   DEBUG("dirname = %s, origdir = %s", dirname, origdir );
 
    /* Find initial file. */
    do {
