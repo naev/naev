@@ -999,7 +999,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
       int errornumber;
       PCRE2_SIZE erroroffset;
       temp->avail.chapter_re = pcre2_compile( (PCRE2_SPTR)temp->avail.chapter, PCRE2_ZERO_TERMINATED, 0, &errornumber, &erroroffset, NULL );
-      if (temp->avail.chapter_re == NULL){
+      if (temp->avail.chapter_re == NULL) {
          PCRE2_UCHAR buffer[256];
          pcre2_get_error_message( errornumber, buffer, sizeof(buffer) );
          WARN(_("Mission '%s' chapter PCRE2 compilation failed at offset %d: %s"), temp->name, (int)erroroffset, buffer );

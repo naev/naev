@@ -66,8 +66,7 @@ The `plugin.xml` file is specific to plugins and does not exist in the base game
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin>
- <name>My Plugin</name>
+<plugin name="My Plugin">
  <author>Me</author>
  <version>1.0</version>
  <description>A cool example plugin.</description>
@@ -78,7 +77,7 @@ The `plugin.xml` file is specific to plugins and does not exist in the base game
 
 The important fields are listed below:
 
-* `name`: contains the name of the plugin. This is what the player and other mods will see and use to reference the plugin.
+* `name`: attribute that contains the name of the plugin. This is what the player and other mods will see and use to reference the plugin.
 * `author`: contains the name of the author(s) of the plugin.
 * `version`: contains the version of the plugin. This can be any arbitrary string.
 * `description`: contains the description of the plugin. This should be easy to understand for players when searching for plugins.
