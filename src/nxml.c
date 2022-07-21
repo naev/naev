@@ -86,8 +86,10 @@ xmlDocPtr xml_parsePhysFS( const char* filename )
       return NULL;
    }
    /* Empty file, we ignore these. */
-   if (bufsize==0)
+   if (bufsize==0) {
+      free(buf);
       return NULL;
+   }
    doc = xmlParseMemory( buf, bufsize );
    if (doc == NULL)
       WARN( _("Unable to parse document '%s'"), filename );
