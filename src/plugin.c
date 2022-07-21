@@ -148,6 +148,8 @@ int plugin_init (void)
          if ((stat.filetype == PHYSFS_FILETYPE_REGULAR) &&
                realdir && strcmp(realdir,buf)==0)
             plugin_parse( plg, "plugin.xml", *f );
+         else
+            WARN(_("Plugin '%s' does not have a valid '%s'!"), buf, "plugin.xml");
       }
       PHYSFS_freeList(files);
       n = array_size(plugins);
