@@ -133,6 +133,7 @@ static int blk_enumerateCallback( void* data, const char* origdir, const char* f
       else if (rc == 0)
          free( path );
       else {
+         int *added = data;
          int f = -1;
          BlkFile bf = {
             .filename= strdup(fname),
@@ -147,13 +148,24 @@ static int blk_enumerateCallback( void* data, const char* origdir, const char* f
                break;
             }
          }
-
          if (f<0)
             array_push_back( &blk_dirnames, strdup(origdir) );
+
+         if (added)
+            *added = 1;
       }
    }
    else if (stat.filetype == PHYSFS_FILETYPE_DIRECTORY ) {
-      PHYSFS_enumerate( path, blk_enumerateCallback, data );
+      int added;
+      PHYSFS_enumerate( path, blk_enumerateCallback, &added );
+      if (added) {
+         BlkFile bf = {
+            .filename = strdup(fname),
+            .dirname = strdup(origdir),
+         };
+         array_push_back( &blk_fs, bf );
+         array_push_back( &blk_dirnames, strdup(origdir) );
+      }
       free( path );
    }
    else
@@ -275,25 +287,20 @@ static void *blk_openArchive( PHYSFS_Io *io, const char *name, int forWrite, int
 
 static PHYSFS_EnumerateCallbackResult blk_enumerate( void *opaque, const char *dirname, PHYSFS_EnumerateCallback cb, const char *origdir, void *callbackdata )
 {
-   (void) opaque;
    (void) dirname;
+   (void) opaque;
    PHYSFS_EnumerateCallbackResult retval = PHYSFS_ENUM_OK;
-   int offset = 0;
 
-   /* Find initial file. */
-   do {
-      /* Try to find first file. */
-      for ( ; offset<array_size(blk_fs); offset++)
-         if (strcmp( blk_fs[offset].dirname, origdir )==0)
-            break;
-      if (offset >= array_size(blk_fs)) /* Out of files. */
-         return PHYSFS_ENUM_OK;
+   for (int i=0; i<array_size(blk_fs); i++) {
+      if (strcmp( blk_fs[i].dirname, origdir )!=0)
+         continue;
 
-      retval = cb( callbackdata, origdir, blk_fs[offset].filename );
+      retval = cb( callbackdata, origdir, blk_fs[i].filename );
       if (retval == PHYSFS_ENUM_ERROR)
          PHYSFS_setErrorCode(PHYSFS_ERR_APP_CALLBACK);
-
-   } while (retval == PHYSFS_ENUM_OK);
+      if (retval != PHYSFS_ENUM_OK)
+         break;
+   }
 
    return retval;
 }
