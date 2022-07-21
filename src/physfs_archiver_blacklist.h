@@ -5,4 +5,4 @@
 
 int blacklist_append( const char *path );
 int blacklist_init (void);
-int blacklist_exit (void);
+void blacklist_exit (void);

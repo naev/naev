@@ -195,6 +195,8 @@ void plugin_exit (void)
    }
    array_free(plugins);
    plugins = NULL;
+
+   blacklist_exit();
 }
 
 /**

@@ -16,17 +16,20 @@
 #include "array.h"
 #include "log.h"
 
+/**
+ * @brief Represents a file in a directory. Used to enumerate files.
+ */
 typedef struct BlkFile_ {
-   char *dirname;
-   char *filename;
+   char *dirname;    /**< Directory name. */
+   char *filename;   /**< File name. */
 } BlkFile;
 
-static pcre2_code *blk_re        = NULL;
-static pcre2_match_data *blk_match = NULL;
-static char **blk_blacklists_re  = NULL;
-static char **blk_blacklists     = NULL;
-static char **blk_dirnames       = NULL;
-static BlkFile *blk_fs           = NULL;
+static pcre2_code *blk_re        = NULL;  /**< Stores the compiled regex. */
+static pcre2_match_data *blk_match = NULL; /**< Stores the matching structure of the regex (for speed). */
+static char **blk_blacklists_re  = NULL;  /**< Original regex strings. */
+static char **blk_blacklists     = NULL;  /**< List of blacklisted files (for direct access). */
+static char **blk_dirnames       = NULL;  /**< List of blacklisted directories (for direct access, necessary to enumerate). */
+static BlkFile *blk_fs           = NULL;  /**< Fake filesystem structure of directory-file pairs. */
 
 /*
  * Prototypes.
@@ -39,6 +42,9 @@ static PHYSFS_Io *blk_openRead(void *opaque, const char *fnm);
 static int blk_stat( void *opaque, const char *fn, PHYSFS_Stat *stat );
 static void blk_closeArchive( void *opaque );
 
+/**
+ * @brief The archiver for blacklists.
+ */
 static const PHYSFS_Archiver blk_archiver = {
    .version = 0,
    .info = {
@@ -68,6 +74,9 @@ static struct PHYSFS_Io *blk_duplicate( struct PHYSFS_Io *io );
 static int blk_flush( struct PHYSFS_Io *io );
 static void blk_destroy( struct PHYSFS_Io *io );
 
+/**
+ * @brief Mimicks an empty file.
+ */
 static const PHYSFS_Io blk_emptyio = {
    .version = 0,
    .opaque  = NULL,
@@ -81,6 +90,9 @@ static const PHYSFS_Io blk_emptyio = {
    .destroy = blk_destroy,
 };
 
+/**
+ * @brief Stat for an empty regular file.
+ */
 static const PHYSFS_Stat blk_emptystat = {
    .filesize      = 0,
    .modtime       = 0,
@@ -90,6 +102,9 @@ static const PHYSFS_Stat blk_emptystat = {
    .readonly      = 1,
 };
 
+/**
+ * @brief Stat for a fake directory.
+ */
 static const PHYSFS_Stat blk_emptystatdir = {
    .filesize      = 0,
    .modtime       = 0,
@@ -99,6 +114,9 @@ static const PHYSFS_Stat blk_emptystatdir = {
    .readonly      = 1,
 };
 
+/**
+ * @brief Used to build the blacklist and pseudo filesystem when iterating over real files.
+ */
 static int blk_enumerateCallback( void* data, const char* origdir, const char* fname )
 {
    char *path;
@@ -173,6 +191,11 @@ static int blk_enumerateCallback( void* data, const char* origdir, const char* f
    return PHYSFS_ENUM_OK;
 }
 
+/**
+ * @brief Initializes the blacklist system if necessary. If no plugin is blacklisting, it will not do anything.
+ *
+ *    @return 0 on success.
+ */
 int blacklist_init (void)
 {
    char buf[STRMAX];
@@ -212,6 +235,11 @@ int blacklist_init (void)
    pcre2_code_free( blk_re );
    pcre2_match_data_free( blk_match );
 
+   /* Check to see we actually have stuff to blacklist. */
+   if (array_size(blk_blacklists) <= 0)
+      return 0;
+
+   /* Register archiver and load it from memory. */
    PHYSFS_registerArchiver( &blk_archiver );
    int ret = PHYSFS_mountMemory( &blk_archiver, 0, NULL, "naev.BLACKLIST", NULL, 0 );
    if (!ret)
@@ -219,6 +247,9 @@ int blacklist_init (void)
    return !ret;
 }
 
+/**
+ * @brief Appends a regex string to be blacklisted.
+ */
 int blacklist_append( const char *path )
 {
    if (blk_blacklists_re == NULL)
@@ -231,15 +262,20 @@ int blacklist_append( const char *path )
    return 0;
 }
 
-int blacklist_exit (void)
+/**
+ * @brief Exits the blacklist system and cleans up as necessary.
+ */
+void blacklist_exit (void)
 {
    for (int i=0; i<array_size(blk_blacklists_re); i++)
       free( blk_blacklists_re[i] );
    array_free( blk_blacklists_re );
    blk_blacklists_re = NULL;
 
-   for (int i=0; i<array_size(blk_fs); i++)
+   for (int i=0; i<array_size(blk_fs); i++) {
+      free( blk_fs[i].filename );
       free( blk_fs[i].dirname );
+   }
    array_free( blk_fs );
    blk_fs = NULL;
 
@@ -252,10 +288,11 @@ int blacklist_exit (void)
       free( blk_dirnames[i] );
    array_free( blk_dirnames );
    blk_dirnames = NULL;
-
-   return 0;
 }
 
+/**
+ * @brief Tries to match a string in an array of strings that are sorted.
+ */
 static int blk_matches( char **lst, const char *filename )
 {
    const char *str = bsearch( &filename, lst, array_size(lst), sizeof(const char*), strsort );
