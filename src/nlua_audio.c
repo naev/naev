@@ -372,6 +372,8 @@ void audio_cleanup( LuaAudio_t *la )
    soundLock();
    switch (la->type) {
       case LUA_AUDIO_STATIC:
+         if (la->source > 0)
+            alDeleteSources( 1, &la->source );
          /* Check if buffers need freeing. */
          if (la->buf != NULL) {
             la->buf->refcount--;
@@ -388,6 +390,8 @@ void audio_cleanup( LuaAudio_t *la )
             if (SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) == SDL_MUTEX_TIMEDOUT)
                WARN(_("Timed out while waiting for audio thread of '%s' to finish!"), la->name);
          }
+         if (la->source > 0)
+            alDeleteSources( 1, &la->source );
          if (la->stream_buffers[0] > 0)
             alDeleteBuffers( 2, la->stream_buffers );
          if (la->cond != NULL)
@@ -397,9 +401,6 @@ void audio_cleanup( LuaAudio_t *la )
          ov_clear( &la->stream );
          break;
    }
-
-   if (la->source > 0)
-      alDeleteSources( 1, &la->source );
 
    /* Clean up. */
    al_checkErr();
