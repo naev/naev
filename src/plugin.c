@@ -62,6 +62,27 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path )
          blacklist_append( xml_get(node) );
          continue;
       }
+      if (xml_isNode( node, "total_conversion" )) {
+         const char *blk[] = {
+            "^ssys/.*\\.xml",
+            "^spob/.*\\.xml",
+            "^spob_virtual/.*\\.xml",
+            "^factions/.*\\.xml",
+            "^commodities/.*\\.xml",
+            "^ships/.*\\.xml",
+            "^outfits/.*\\.xml",
+            "^missions/.*\\.lua",
+            "^events/.*\\.lua",
+            "^tech/.*\\.xml",
+            "^asteroids/.*\\.xml",
+            "^unidiff/.*\\.xml",
+            "^map_decorator/.*\\.xml",
+            NULL
+         };
+         for (int i=0; blk[i]!=NULL; i++)
+            blacklist_append( blk[i] );
+         continue;
+      }
       WARN(_("Plugin '%s' has unknown metadata node '%s'!"),path,xml_get(node));
    } while (xml_nextNode(node));
 
