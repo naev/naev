@@ -578,8 +578,10 @@ static int event_parseFile( const char* file, EventData *temp )
       WARN(_("Unable to read data from '%s'"), file);
       return -1;
    }
-   if (bufsize == 0)
+   if (bufsize == 0) {
+      free( filebuf );
       return -1;
+   }
 
    /* Skip if no XML. */
    pos = strnstr( filebuf, "</event>", bufsize );

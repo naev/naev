@@ -424,5 +424,5 @@ static int blk_flush( struct PHYSFS_Io *io )
 
 static void blk_destroy( struct PHYSFS_Io *io )
 {
-   (void) io;
+   free( io );
 }
