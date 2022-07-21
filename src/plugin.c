@@ -77,6 +77,7 @@ static int plugin_parse( plugin_t *plg, const char *file, const char *path )
             "^asteroids/.*\\.xml",
             "^unidiff/.*\\.xml",
             "^map_decorator/.*\\.xml",
+            "^intro",
             NULL
          };
          for (int i=0; blk[i]!=NULL; i++)
