@@ -130,7 +130,7 @@ Chooses Loading songs.
 --]]
 function choose_table.load ()
    local params = {
-      delay = 0.5,
+      delay = 0.8,
    }
    if not music_situation then
       params.delay = nil
@@ -160,7 +160,7 @@ function choose_table.land ()
    local class = pnt:class()
    local music_list
    local params = {
-      delay = 0.5,
+      delay = 0.8,
    }
 
    -- Planet override
@@ -193,7 +193,7 @@ function choose_table.land ()
       end
    end
 
-   tracks_add( music_list[ rnd.rnd(1, #music_list) ], "land" )
+   tracks_add( music_list[ rnd.rnd(1, #music_list) ], "land", params )
    return true
 end
 
@@ -498,6 +498,7 @@ local update_rate = 0.5
 local update_timer = 0
 local update_fade = 1 -- Inverse of the time to fade out
 function update( dt )
+   dt = math.min( dt, 0.1 ) -- Take smaller steps when lagging
    local remove = {}
    for k,v in ipairs(tracks) do
       if v.delay then
