@@ -1502,6 +1502,10 @@ void space_init( const char* sysname, int do_simulate )
       ERR(_("Cannot reinit system if there is no system previously loaded"));
    else if (sysname!=NULL) {
       cur_system = system_get( sysname );
+      if (cur_system == NULL) {
+         WARN(_("System '%s' not found, trying random system!"),sysname);
+         cur_system = &systems_stack[ RNG(0,array_size(systems_stack)-1) ];
+      }
       char *nt = ntime_pretty(0, 2);
 
       player_message(_("#oEntering System %s on %s."), _(sysname), nt);
