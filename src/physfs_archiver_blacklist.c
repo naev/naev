@@ -16,10 +16,17 @@
 #include "array.h"
 #include "log.h"
 
+typedef struct BlkFile_ {
+   char *dirname;
+   char *filename;
+} BlkFile;
+
 static pcre2_code *blk_re        = NULL;
 static pcre2_match_data *blk_match = NULL;
 static char **blk_blacklists_re  = NULL;
 static char **blk_blacklists     = NULL;
+static char **blk_dirnames       = NULL;
+static BlkFile *blk_fs           = NULL;
 
 /*
  * Prototypes.
@@ -83,6 +90,15 @@ static const PHYSFS_Stat blk_emptystat = {
    .readonly      = 1,
 };
 
+static const PHYSFS_Stat blk_emptystatdir = {
+   .filesize      = 0,
+   .modtime       = 0,
+   .createtime    = 0,
+   .accesstime    = 0,
+   .filetype      = PHYSFS_FILETYPE_DIRECTORY,
+   .readonly      = 1,
+};
+
 static int blk_enumerateCallback( void* data, const char* origdir, const char* fname )
 {
    char *path;
@@ -116,8 +132,25 @@ static int blk_enumerateCallback( void* data, const char* origdir, const char* f
       }
       else if (rc == 0)
          free( path );
-      else
+      else {
+         int f = -1;
+         BlkFile bf = {
+            .filename= strdup(fname),
+            .dirname = strdup(origdir),
+         };
+         array_push_back( &blk_fs, bf );
          array_push_back( &blk_blacklists, path );
+
+         for (int i=0; i<array_size(blk_dirnames); i++) {
+            if (strcmp(blk_dirnames[i],origdir)==0) {
+               f = i;
+               break;
+            }
+         }
+
+         if (f<0)
+            array_push_back( &blk_dirnames, strdup(origdir) );
+      }
    }
    else if (stat.filetype == PHYSFS_FILETYPE_DIRECTORY ) {
       PHYSFS_enumerate( path, blk_enumerateCallback, data );
@@ -157,8 +190,11 @@ int blacklist_init (void)
 
    /* Find the files and match. */
    blk_blacklists = array_create( char * );
+   blk_dirnames = array_create( char * );
+   blk_fs = array_create( BlkFile );
    PHYSFS_enumerate( "/", blk_enumerateCallback, NULL );
    qsort( blk_blacklists, array_size(blk_blacklists), sizeof(char*), strsort );
+   qsort( blk_dirnames, array_size(blk_dirnames), sizeof(char*), strsort );
 
    /* Free stuff up. */
    pcre2_code_free( blk_re );
@@ -189,16 +225,28 @@ int blacklist_exit (void)
       free( blk_blacklists_re[i] );
    array_free( blk_blacklists_re );
    blk_blacklists_re = NULL;
+
+   for (int i=0; i<array_size(blk_fs); i++)
+      free( blk_fs[i].dirname );
+   array_free( blk_fs );
+   blk_fs = NULL;
+
    for (int i=0; i<array_size(blk_blacklists); i++)
       free( blk_blacklists[i] );
    array_free( blk_blacklists );
    blk_blacklists = NULL;
+
+   for (int i=0; i<array_size(blk_dirnames); i++)
+      free( blk_dirnames[i] );
+   array_free( blk_dirnames );
+   blk_dirnames = NULL;
+
    return 0;
 }
 
-static int blk_matches( const char *filename )
+static int blk_matches( char **lst, const char *filename )
 {
-   const char *str = bsearch( &filename, blk_blacklists, array_size(blk_blacklists), sizeof(const char*), strsort );
+   const char *str = bsearch( &filename, lst, array_size(lst), sizeof(const char*), strsort );
    return (str!=NULL);
 }
 
@@ -229,16 +277,33 @@ static PHYSFS_EnumerateCallbackResult blk_enumerate( void *opaque, const char *d
 {
    (void) opaque;
    (void) dirname;
-   (void) cb;
-   (void) origdir;
-   (void) callbackdata;
-   return 0;
+   PHYSFS_EnumerateCallbackResult retval = PHYSFS_ENUM_OK;
+   int offset = 0;
+
+   DEBUG("dirname = %s, origdir = %s", dirname, origdir );
+
+   /* Find initial file. */
+   do {
+      /* Try to find first file. */
+      for ( ; offset<array_size(blk_fs); offset++)
+         if (strcmp( blk_fs[offset].dirname, origdir )==0)
+            break;
+      if (offset >= array_size(blk_fs)) /* Out of files. */
+         return PHYSFS_ENUM_OK;
+
+      retval = cb( callbackdata, origdir, blk_fs[offset].filename );
+      if (retval == PHYSFS_ENUM_ERROR)
+         PHYSFS_setErrorCode(PHYSFS_ERR_APP_CALLBACK);
+
+   } while (retval == PHYSFS_ENUM_OK);
+
+   return retval;
 }
 
 static PHYSFS_Io *blk_openRead( void *opaque, const char *fnm )
 {
    (void) opaque;
-   if (blk_matches( fnm )) {
+   if (blk_matches( blk_blacklists, fnm )) {
       PHYSFS_Io *io = malloc( sizeof(PHYSFS_Io) );
       *io = blk_emptyio;
       return io;
@@ -249,7 +314,11 @@ static PHYSFS_Io *blk_openRead( void *opaque, const char *fnm )
 static int blk_stat( void *opaque, const char *fn, PHYSFS_Stat *stat )
 {
    (void) opaque;
-   if (blk_matches( fn )) {
+   if (blk_matches( blk_dirnames, fn )) {
+      *stat = blk_emptystatdir;
+      return 1;
+   }
+   if (blk_matches( blk_blacklists, fn )) {
       *stat = blk_emptystat;
       return 1;
    }
