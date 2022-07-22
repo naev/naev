@@ -156,6 +156,9 @@ end
 Chooses landing songs.
 --]]
 function choose_table.land ()
+   if not player.isLanded() then
+      return choose_table.ambient()
+   end
    local pnt   = spob.cur()
    local class = pnt:class()
    local music_list
