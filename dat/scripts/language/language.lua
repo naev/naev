@@ -108,12 +108,120 @@ nouns.facilities.cruiser = {
 	_("training simulator")
 }
 
+-- nouns to describe some actor
+nouns.actors = {}
+nouns.actors.animals = {}
+nouns.actors.animals.mammals.domestic = {
+	_("cat"),
+	_("dog"),
+	_("horse"),
+	_("cow"),
+	_("anthropod"), -- yeah... slaves?
+	_("donkey"),
+	_("equine"),
+	_("rabbit"),
+	_("mule"),
+	_("hamster"),
+	_("rat"),
+}
+
+nouns.actors.animals.mammals.wild = {
+	_("monkey"),
+	_("koala"),
+	_("bear"),
+	_("lion"),
+	_("tiger"),
+	_("cougar"),
+	_("pathner"),
+	_("jaguar"),
+	_("racoon"),
+	_("kangaroo"),
+	_("pangolin"),
+	_("rat"),
+}
+
+nouns.actors.animals.aquatic = {
+	_("penguin"),
+	_("whale"),
+	_("dolphin"),
+	_("sea lion"),
+	_("sea cow"),
+	_("orca"),
+	_("seal"),
+	_("otter"),
+	_("porpoise"),
+	_("manatee"),
+	_("walrus"),
+	_("polar bear"),
+	-- various kinds of fish below, I think... I'm not a marine biologist or anything so these could be incorrect
+	_("tetra"),
+	_("danio"),
+	_("raspbora"),
+	_("cichlid"),
+	_("eel"),
+	_("sardine"),
+	_("pleco"),
+	_("darter"),
+}
+
+nouns.actors.animals.reptiles = {
+	_("alligator"),
+	_("crocodile"),
+	_("dinosaur"),
+	_("snake"),
+	_("lizard"),
+	_("turtle"),
+	_("dragon"),
+	_("iguana"),
+	_("gecko"),
+	_("skink"),
+	_("cobra"),
+	_("python"),
+	_("boa constrictor"),
+	_("viper"),
+	_("cottonmouth"),
+}
+
+nouns.actors.animals.birds = {
+	_("duck"),
+	_("chicken"),
+	_("hen"),
+	_("rooster"),
+	_("chick"),
+	_("condor"),
+	_("kestrel"),
+	_("caracal"),
+	_("seagull"),
+	_("gull"),
+	_("raven"),
+	_("eagle"),
+	_("crow"),
+	_("sparrow"),
+	_("tit"),
+}
+
+nouns.actors.animals.insects = {
+	_("ant"),
+	_("bee"),
+	_("wasp"),
+	_("cricket"),
+	_("grasshopper"),
+	_("beetle"),
+	_("spider"),
+	_("arachnid"),
+	_("centipede"),
+	_("millipede"),
+	_("locust"),
+	_("moth"),
+	_("cockroach"),
+}
+
 -- nouns to describe a person or person-like object
-nouns.people = {}
+nouns.actors.people = {}
 
 -- when we refer to someone who is a hero in a friendly manner
 -- or if we want a toy of a "hero" kind, it would be a <adjective> <hero> <toy> or something like that
-nouns.people.hero = {
+nouns.actors.people.hero = {
 	_("warrior"),
 	_("killer"),
 	_("captain"),
@@ -130,7 +238,7 @@ nouns.people.hero = {
 }
 
 -- same as hero, but with an implied and deliberate negative connotation
-nouns.people.villain = {
+nouns.actors.people.villain = {
 	_("warrior"),
 	_("killer"),
 	_("slaver"),
@@ -182,6 +290,10 @@ nouns.objects.accessories = {
 	_("hairpiece"),
 	_("virtual bracelet"),
 	_("synthetic snakeskin applicator"),
+	_("chapstick"),
+	_("earring"),
+	_("necklace"),
+	_("ring"),
 }
 
 -- something to wear TODO MOVE ADJECTIVES!
@@ -195,7 +307,7 @@ nouns.objects.clothes = {
 	_("uniform"),
 	_("shirt"),
 	_("neckpiece"),
-	_("glove")
+	_("glove"),
 }
 
 -- generic items
@@ -216,23 +328,31 @@ nouns.objects.items = {
 	_("plate"), -- like a dish to put food on
 	_("pen"),
 	_("helmet"),
+	_("cap"),
+	_("chapeau"),
+	_("tophat"),
 	_("hat"),
 	_("apron"),
 	_("spoon"),
+	_("fork"),
+	_("spork"),
+	_("chopstick"),
 	_("broom"),
 	_("mop"),
 	_("bucket"),
 	_("sculpture"),
+	_("figurine"),
 	_("painting"),
 	_("photograph"),
 	_("polaroid"),
+	_("orchid"),
 	_("rose"),
 	_("flower"),
 	_("tulip"),
 	_("archive"),
 	_("spanner"),
-	_("fork"),
 	_("screwdriver"),
+	_("sword"),
 }
 
 -- things that fit in your hand, pocket or belt/jacket
@@ -329,16 +449,19 @@ nouns.gifts = {
 	_("ceremonial pen"),
 	_("ceremonial hat"),
 	_("chef's hat and apron"),
-	_("set of hunting knives"),
+	_("hunting blade"),
 	_("golden ornamental spoon"),
 	_("rose or two"),
 	_("flower or four"),
 	_("tulip or three"),
 	_("historical archive"),
+	_("adorned ornamental sword"),
+	_("decorated vanity blade")
 }
 
 adjectives.positive = {}
 adjectives.positive.nice = {
+	_("adorned"),
 	_("elegant"),
 	_("artistic"),
 	_("colorful"),
@@ -347,11 +470,11 @@ adjectives.positive.nice = {
 	_("beautiful"),
 	_("good"),
 	_("commemorative"),
-	_("decorated"),
 	_("nice"),
 	_("new"),
 	_("hand-bound"),
 	_("decorative"),
+	_("decorated"),
 	_("ceremonial"),
 	_("golden"),
 	_("ornamental"),
@@ -456,6 +579,7 @@ adjectives.negative.boring = {
 }
 
 adjectives.negative.dated = {
+	_("aged"),
 	_("old"),
 	_("worn"),
 	_("rotten"),
@@ -488,6 +612,7 @@ adjectives.violent = {
 	_("wild"),
 	_("savage"),
 	_("fearless"),
+	_("dangerous"),
 }
 
 -- describes the look of something, so any kind of visible pattern or
