@@ -2175,8 +2175,9 @@ static int pilotL_faction( lua_State *L )
  *
  * @usage spaceworthy = p:spaceworthy()
  *
- *    @luatparam Pilot p Pilot to get the spaceworthy status of
- *    @luatreturn boolean Whether the pilot's ship is spaceworthy
+ *    @luatparam Pilot p Pilot to get the spaceworthy status of.
+ *    @luatreturn boolean Whether the pilot's ship is spaceworthy.
+ *    @luatreturn string Reason why the pilot is not spaceworthy.
  * @luafunc spaceworthy
  */
 static int pilotL_spaceworthy( lua_State *L )
@@ -3923,6 +3924,7 @@ static int pilotL_cargoJet( lua_State *L )
  * The list has the following members:<br />
  * <ul>
  * <li><b>name:</b> raw (untranslated) name of the cargo (equivalent to the output of commodity.nameRaw()).</li>
+ * <li><b>c:</b> the cargo commodity.</li>
  * <li><b>q:</b> quantity of the cargo.</li>
  * <li><b>m:</b> true if cargo is for a mission.</li>
  * </ul>
@@ -3938,16 +3940,25 @@ static int pilotL_cargoList( lua_State *L )
    Pilot *p = luaL_validpilot(L,1);
    lua_newtable(L); /* t */
    for (int i=0; i<array_size(p->commodities); i++) {
+      PilotCommodity *pc = &p->commodities[i];
+
       /* Represents the cargo. */
       lua_newtable(L); /* t, t */
+
       lua_pushstring(L, "name"); /* t, t, i */
-      lua_pushstring(L, p->commodities[i].commodity->name); /* t, t, i, s */
+      lua_pushstring(L, pc->commodity->name); /* t, t, i, s */
       lua_rawset(L,-3); /* t, t */
+
+      lua_pushstring(L, "c"); /* t, t, i */
+      lua_pushcommodity(L, (Commodity*)pc->commodity); /* t, t, i, s */
+      lua_rawset(L,-3); /* t, t */
+
       lua_pushstring(L, "q"); /* t, t, i */
-      lua_pushnumber(L, p->commodities[i].quantity); /* t, t, i, s */
+      lua_pushnumber(L, pc->quantity); /* t, t, i, s */
       lua_rawset(L,-3); /* t, t */
+
       lua_pushstring(L, "m"); /* t, t, i */
-      lua_pushboolean(L, p->commodities[i].id); /* t, t, i, s */
+      lua_pushboolean(L, pc->id); /* t, t, i, s */
       lua_rawset(L,-3); /* t, t */
 
       lua_rawseti(L,-2,i+1); /* t */

@@ -102,6 +102,9 @@ int difficulty_load (void)
    if (conf.difficulty != NULL)
       difficulty_setGlobal( difficulty_get( conf.difficulty ) );
 
+   for (int i=0; i<array_size(difficulty_files); i++)
+      free( difficulty_files[i] );
+   array_free( difficulty_files );
    return 0;
 }
 

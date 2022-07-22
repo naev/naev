@@ -424,6 +424,7 @@ local function board_close ()
 end
 
 function board( plt )
+   if not plt:exists() then return end
    der.sfx.board:play()
    board_plt = plt
    loot_mod = player.pilot():shipstat("loot_mod", true)
@@ -553,8 +554,7 @@ function board_lootOne( wgt, nomsg )
       player.msg(fmt.f(_("You looted a {outfit} from {plt}."),{outfit=o, plt=board_plt}))
    elseif l.type=="cargo" then
       local c = l.data
-      local pp = player.pilot()
-      local cf = pp:cargoFree()
+      local cf = player.fleetCargoFree()
       local q = math.min( l.q, cf )
       -- Unable to loot anything
       if q <= 0 then
@@ -563,8 +563,8 @@ function board_lootOne( wgt, nomsg )
          end
          return false
       end
-      local qr = board_plt:cargoRm( c, q ) -- Might be a misaligned here with loot_mod, but we sort of ignore it :/
-      player.fleetCargoAdd( c, qr )
+      board_plt:cargoRm( c, q ) -- Might be a misaligned here with loot_mod, but we sort of ignore it :/
+      player.fleetCargoAdd( c, q ) -- We just use the original bonus computed with loot_mod
       player.msg(fmt.f(_("You looted {amount} of {cargo} from {plt}."),{amount=fmt.tonnes(q), cargo=c, plt=board_plt}))
       board_updateFreespace()
       looted = true

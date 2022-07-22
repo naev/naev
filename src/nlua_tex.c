@@ -105,6 +105,22 @@ glTexture* luaL_checktex( lua_State *L, int ind )
    return NULL;
 }
 /**
+ * @brief Gets texture directly or from a filename (string) at index or raises error if there is no texture at index.
+ *
+ *    @param L Lua state to get texture from.
+ *    @param ind Index position to find texture.
+ *    @param searchpath Path to search for files.
+ *    @return Texture found at the index in the state.
+ */
+glTexture* luaL_validtex( lua_State *L, int ind, const char *searchpath )
+{
+   char path[PATH_MAX];
+   if (lua_istex(L,ind))
+      return gl_dupTexture( luaL_checktex(L,ind) );
+   ndata_getPathDefault( path, sizeof(path), searchpath, luaL_checkstring(L,ind) );
+   return gl_newImage( path, 0 );
+}
+/**
  * @brief Pushes a texture on the stack.
  *
  *    @param L Lua state to push texture into.

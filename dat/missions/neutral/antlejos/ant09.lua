@@ -133,7 +133,7 @@ He takes a long swig and finishes his mug.
             lg.setColor( 0, 0, 0, 1 )
             lg.rectangle( "fill", 0, 0, lw, lh )
          end )
-         music.stop(true)
+         music.stop()
       end )
       vn.transition( "circleopen" )
       vn.na(_([[Time stops. You try to move your body, but nothing responds, you are lost in darkness.]]))

@@ -249,7 +249,7 @@ function heartbeat ()
       player.cinematics( true )
       player.allowLand( false )
       love.origin()
-      music.stop(true)
+      music.stop()
       stage = 6
    elseif stage==6 then
       -- pulse
@@ -307,8 +307,7 @@ function heartbeat ()
       -- CUTSCENE END
       player.cinematics( false )
       player.allowLand( true )
-      music.load("ambient1")
-      music.play()
+      music.play("ambient1.ogg")
       cutscene = false
       mem.state = 2
       love.origin()

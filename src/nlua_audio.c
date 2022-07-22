@@ -25,7 +25,12 @@
 #include "nlua_file.h"
 #include "nstring.h"
 #include "sound.h"
-#include "sound_openal.h"
+#include "nopenal.h"
+
+/**
+ * @brief Default pre-amp in dB.
+ */
+#define RG_PREAMP_DB       0.0
 
 /**
  * @brief Handles the OpenAL effects that have been set up Lua side.
@@ -40,6 +45,10 @@ typedef struct LuaAudioEfx_s {
  * @brief List of effects handled by Lua. These are persistent throughout game runtime.
  */
 static LuaAudioEfx_t *lua_efx = NULL;
+
+static int stream_thread( void *la_data );
+static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer );
+static void rg_filter( float **pcm, long channels, long samples, void *filter_param );
 
 /* Audio methods. */
 static int audioL_gc( lua_State *L );
@@ -111,6 +120,140 @@ static const luaL_Reg audioL_methods[] = {
    { "soundPlay", audioL_soundPlay }, /* Old API */
    {0,0}
 }; /**< AudioLua methods. */
+
+static int stream_thread( void *la_data )
+{
+   LuaAudio_t *la = (LuaAudio_t*) la_data;
+
+   while (1) {
+      ALint alstate;
+      ALuint removed;
+
+      soundLock();
+
+      /* Case finished. */
+      if (la->active < 0) {
+         la->th = NULL;
+         SDL_CondBroadcast( la->cond );
+         soundUnlock();
+         return 0;
+      }
+
+      alGetSourcei( la->source, AL_BUFFERS_PROCESSED, &alstate );
+      if (alstate > 0) {
+         int ret;
+         /* Refill active buffer */
+         alSourceUnqueueBuffers( la->source, 1, &removed );
+         ret = stream_loadBuffer( la, la->stream_buffers[ la->active ] );
+         if (ret < 0)
+            la->active = -1;
+         else {
+            alSourceQueueBuffers( la->source, 1, &la->stream_buffers[ la->active ] );
+            la->active = 1 - la->active;
+         }
+      }
+      soundUnlock();
+
+      SDL_Delay(5);
+   }
+}
+
+/**
+ * @brief Loads a buffer.
+ *
+ * Assumes that soundLock() is set.
+ */
+static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer )
+{
+   int ret;
+   size_t size;
+   char buf[ 32 * 1024 ];
+
+   soundUnlock();
+   ret  = 0;
+   size = 0;
+   while (size < sizeof(buf)) { /* file up the entire data buffer */
+      int section, result;
+
+      SDL_mutexP( la->lock );
+      result = ov_read_filter(
+            &la->stream,   /* stream */
+            &buf[size],             /* data */
+            sizeof(buf) - size,    /* amount to read */
+            (SDL_BYTEORDER == SDL_BIG_ENDIAN),
+            2,                      /* 16 bit */
+            1,                      /* signed */
+            &section,               /* current bitstream */
+            rg_filter,              /* filter function */
+            la );                   /* filter parameter */
+      SDL_mutexV( la->lock );
+
+      /* End of file. */
+      if (result == 0) {
+         if (size == 0) {
+            return -2;
+         }
+         ret = 1;
+         break;
+      }
+      /* Hole error. */
+      else if (result == OV_HOLE) {
+         WARN(_("OGG: Vorbis hole detected in music!"));
+         return 0;
+      }
+      /* Bad link error. */
+      else if (result == OV_EBADLINK) {
+         WARN(_("OGG: Invalid stream section or corrupt link in music!"));
+         return -1;
+      }
+
+      size += result;
+   }
+   soundLock();
+
+   /* load the buffer up */
+   alBufferData( buffer, la->format, buf, size, la->info->rate );
+   al_checkErr();
+
+   return ret;
+}
+
+/**
+ * @brief This is the filter function for the decoded Ogg Vorbis stream.
+ *
+ * base on:
+ * vgfilter.c (c) 2007,2008 William Poetra Yoga Hadisoeseno
+ * based on:
+ * vgplay.c 1.0 (c) 2003 John Morton
+ */
+static void rg_filter( float **pcm, long channels, long samples, void *filter_param )
+{
+   LuaAudio_t *param    = filter_param;
+   float scale_factor   = param->rg_scale_factor;
+   float max_scale      = param->rg_max_scale;
+
+   /* Apply the gain, and any limiting necessary */
+   if (scale_factor > max_scale) {
+      for (int i=0; i < channels; i++)
+         for (int j=0; j < samples; j++) {
+            float cur_sample = pcm[i][j] * scale_factor;
+            /*
+             * This is essentially the scaled hard-limiting algorithm
+             * It looks like the soft-knee to me
+             * I haven't found a better limiting algorithm yet...
+             */
+            if (cur_sample < -0.5)
+               cur_sample = tanh((cur_sample + 0.5) / (1-0.5)) * (1-0.5) - 0.5;
+            else if (cur_sample > 0.5)
+               cur_sample = tanh((cur_sample - 0.5) / (1-0.5)) * (1-0.5) + 0.5;
+            pcm[i][j] = cur_sample;
+         }
+   }
+   else if (scale_factor > 0.0)
+      for (int i=0; i < channels; i++)
+         for (int j=0; j < samples; j++)
+            pcm[i][j] *= scale_factor;
+}
 
 /**
  * @brief Checks to see a boolean property of a source.
@@ -225,20 +368,47 @@ void audio_cleanup( LuaAudio_t *la )
 {
    if ((la==NULL) || sound_disabled || la->nocleanup)
       return;
+
    soundLock();
-   if (la->source > 0)
-      alDeleteSources( 1, &la->source );
-   /* Check if buffers need freeing. */
-   if (la->buf != NULL) {
-      la->buf->refcount--;
-      if (la->buf->refcount <= 0) {
-         alDeleteBuffers( 1, &la->buf->buffer );
-         free( la->buf );
-      }
+   switch (la->type) {
+      case LUA_AUDIO_STATIC:
+         if (la->source > 0)
+            alDeleteSources( 1, &la->source );
+         /* Check if buffers need freeing. */
+         if (la->buf != NULL) {
+            la->buf->refcount--;
+            if (la->buf->refcount <= 0) {
+               alDeleteBuffers( 1, &la->buf->buffer );
+               free( la->buf );
+            }
+         }
+         break;
+
+      case LUA_AUDIO_STREAM:
+         if (la->th != NULL) {
+            la->active = -1;
+            if (SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) == SDL_MUTEX_TIMEDOUT)
+               WARN(_("Timed out while waiting for audio thread of '%s' to finish!"), la->name);
+         }
+         if (la->source > 0)
+            alDeleteSources( 1, &la->source );
+         if (la->stream_buffers[0] > 0)
+            alDeleteBuffers( 2, la->stream_buffers );
+         if (la->cond != NULL)
+            SDL_DestroyCond( la->cond );
+         if (la->lock != NULL)
+            SDL_DestroyMutex( la->lock );
+         ov_clear( &la->stream );
+         break;
    }
+
    /* Clean up. */
    al_checkErr();
    soundUnlock();
+
+#if DEBUGGING
+   free(la->name);
+#endif /* DEBUGGING */
 }
 
 /**
@@ -280,6 +450,7 @@ static int audioL_eq( lua_State *L )
  * @brief Creates a new audio source.
  *
  *    @luatparam string|File data Data to load the audio from.
+ *    @luatparam[opt="static"] string  Either "static" to load the entire source at the start, or "stream" to load it in real time.
  *    @luatreturn Audio New audio corresponding to the data.
  * @luafunc new
  */
@@ -287,11 +458,12 @@ static int audioL_new( lua_State *L )
 {
    LuaAudio_t la;
    LuaFile_t *lf;
-   const char *name;
    double master;
+   int stream;
+   const char *name;
+   SDL_RWops *rw;
 
-   name = NULL;
-
+   /* First parameter. */
    if (lua_isstring(L,1))
       name = lua_tostring(L,1);
    else if (lua_isfile(L,1)) {
@@ -301,17 +473,39 @@ static int audioL_new( lua_State *L )
    else
       NLUA_INVALID_PARAMETER(L);
 
-   memset( &la, 0, sizeof(LuaAudio_t) );
-   if (sound_disabled)
-      la.nocleanup = 1; /* Not initialized so no need to clean up. */
+   /* Second parameter. */
+   if (lua_isnoneornil(L,2)) {
+      stream = 0;
+   }
    else {
-      SDL_RWops *rw = PHYSFSRWOPS_openRead( name );
-      if (rw==NULL)
-         NLUA_ERROR(L,"Unable to open '%s'", name );
+      const char *type = luaL_optstring(L,2,"static");
+      if (strcmp(type,"static")==0)
+         stream = 0;
+      else if (strcmp(type,"stream")==0)
+         stream = 1;
+      else
+         NLUA_INVALID_PARAMETER(L);
+   }
 
-      soundLock();
-      alGenSources( 1, &la.source );
+   memset( &la, 0, sizeof(LuaAudio_t) );
+   if (sound_disabled) {
+      la.nocleanup = 1; /* Not initialized so no need to clean up. */
+      lua_pushaudio(L, la);
+      return 1;
+   }
+   rw = PHYSFSRWOPS_openRead( name );
+   if (rw==NULL)
+      NLUA_ERROR(L,"Unable to open '%s'", name );
+#if DEBUGGING
+   la.name = strdup( name );
+#endif /* DEBUGGING */
 
+   soundLock();
+   alGenSources( 1, &la.source );
+
+   /* Deal with stream. */
+   if (!stream) {
+      la.type = LUA_AUDIO_STATIC;
       la.buf = malloc( sizeof(LuaBuffer_t) );
       la.buf->refcount = 1;
       alGenBuffers( 1, &la.buf->buffer );
@@ -320,25 +514,62 @@ static int audioL_new( lua_State *L )
       /* Attach buffer. */
       alSourcei( la.source, AL_BUFFER, la.buf->buffer );
 
-      /* Defaults. */
-      la.volume = 1.;
-      master = sound_getVolumeLog();
-      alSourcef( la.source, AL_GAIN, master );
-      /* The behaviour of sources depends on whether or not they are mono or
-       * stereo. In the case they are stereo, no position stuff is actually
-       * done. However, if they are mono, they are played with absolute
-       * position and the sound heard depends on the listener. We can disable
-       * this by setting AL_SOURCE_RELATIVE which puts the listener always at
-       * the origin, and then setting the source at the same origin. It should
-       * be noted that depending on the sound model this can be bad if it is
-       * not bounded. */
-      alSourcei( la.source, AL_SOURCE_RELATIVE, AL_TRUE );
-      alSource3f( la.source, AL_POSITION, 0., 0., 0. );
-      al_checkErr();
-      soundUnlock();
-
+      /* Clean up. */
       SDL_RWclose( rw );
    }
+   else {
+      vorbis_comment *vc;
+      ALfloat track_gain_db, track_peak;
+      char *tag;
+
+      la.type = LUA_AUDIO_STREAM;
+      /* ov_clear will close rw for us. */
+      if (ov_open_callbacks( rw, &la.stream, NULL, 0, sound_al_ovcall ) < 0) {
+         SDL_RWclose( rw );
+         NLUA_ERROR(L,_("Audio '%s' does not appear to be a Vorbis bitstream."), name );
+      }
+      la.info = ov_info( &la.stream, -1 );
+
+      /* Replaygain information. */
+      vc             = ov_comment( &la.stream, -1 );
+      track_gain_db  = 0.;
+      track_peak     = 1.;
+      if ((tag = vorbis_comment_query(vc, "replaygain_track_gain", 0)))
+         track_gain_db  = atof(tag);
+      if ((tag = vorbis_comment_query(vc, "replaygain_track_peak", 0)))
+         track_peak     = atof(tag);
+      la.rg_scale_factor = pow(10.0, (track_gain_db + RG_PREAMP_DB)/20.0);
+      la.rg_max_scale  = 1.0 / track_peak;
+
+      /* Set the format */
+      if (la.info->channels == 1)
+         la.format = AL_FORMAT_MONO16;
+      else
+         la.format = AL_FORMAT_STEREO16;
+
+      la.active = 0;
+      la.lock = SDL_CreateMutex();
+      la.cond = SDL_CreateCond();
+      alGenBuffers( 2, la.stream_buffers );
+      /* Buffers get queued later. */
+   }
+
+   /* Defaults. */
+   la.volume = 1.;
+   master = sound_getVolumeLog();
+   alSourcef( la.source, AL_GAIN, master );
+   /* The behaviour of sources depends on whether or not they are mono or
+      * stereo. In the case they are stereo, no position stuff is actually
+      * done. However, if they are mono, they are played with absolute
+      * position and the sound heard depends on the listener. We can disable
+      * this by setting AL_SOURCE_RELATIVE which puts the listener always at
+      * the origin, and then setting the source at the same origin. It should
+      * be noted that depending on the sound model this can be bad if it is
+      * not bounded. */
+   alSourcei( la.source, AL_SOURCE_RELATIVE, AL_TRUE );
+   alSource3f( la.source, AL_POSITION, 0., 0., 0. );
+   al_checkErr();
+   soundUnlock();
 
    lua_pushaudio(L, la);
    return 1;
@@ -357,12 +588,19 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
    soundLock();
    alGenSources( 1, &la->source );
 
-   /* Attach source buffer. */
-   la->buf = source->buf;
-   la->buf->refcount++;
+   switch (la->type) {
+      case LUA_AUDIO_STATIC:
+         /* Attach source buffer. */
+         la->buf = source->buf;
+         la->buf->refcount++;
 
-   /* Attach buffer. */
-   alSourcei( la->source, AL_BUFFER, la->buf->buffer );
+         /* Attach buffer. */
+         alSourcei( la->source, AL_BUFFER, la->buf->buffer );
+         break;
+
+      case LUA_AUDIO_STREAM:
+         break;
+   }
 
    /* TODO this should probably set the same parameters as the original source
     * being cloned to be truly compatible with Love2D. */
@@ -406,7 +644,25 @@ static int audioL_play( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    if (!sound_disabled) {
-      soundLock();
+      if ((la->type == LUA_AUDIO_STREAM) && (la->th == NULL)) {
+         int ret = 0;
+         ALint alstate;
+         soundLock();
+         alGetSourcei( la->source, AL_BUFFERS_QUEUED, &alstate );
+         while (alstate < 2) {
+            ret = stream_loadBuffer( la, la->stream_buffers[ la->active ] );
+            if (ret < 0)
+               break;
+            alSourceQueueBuffers( la->source, 1, &la->stream_buffers[ la->active ] );
+            la->active = 1-la->active;
+            alGetSourcei( la->source, AL_BUFFERS_QUEUED, &alstate );
+            soundUnlock();
+         }
+         if (ret == 0)
+            la->th = SDL_CreateThread( stream_thread, "stream_thread", la );
+      }
+      else
+         soundLock();
       alSourcePlay( la->source );
       al_checkErr();
       soundUnlock();
@@ -486,11 +742,21 @@ static int audioL_isStopped( lua_State *L )
 static int audioL_rewind( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (!sound_disabled) {
-      soundLock();
-      alSourceRewind( la->source );
-      al_checkErr();
-      soundUnlock();
+   if (sound_disabled)
+      return 0;
+
+   switch (la->source) {
+      case LUA_AUDIO_STATIC:
+         soundLock();
+         alSourceRewind( la->source );
+         al_checkErr();
+         soundUnlock();
+         break;
+      case LUA_AUDIO_STREAM:
+         SDL_mutexP( la->lock );
+         ov_raw_seek( &la->stream, 0 );
+         SDL_mutexV( la->lock );
+         break;
    }
    return 0;
 }
@@ -508,16 +774,38 @@ static int audioL_seek( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double offset = luaL_checknumber(L,2);
    const char *unit = luaL_optstring(L,3,"seconds");
-   if (!sound_disabled) {
-      soundLock();
-      if (strcmp(unit,"seconds")==0)
-         alSourcef( la->source, AL_SEC_OFFSET, offset );
-      else if (strcmp(unit,"samples")==0)
-         alSourcef( la->source, AL_SAMPLE_OFFSET, offset );
-      else
-         NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
-      al_checkErr();
-      soundUnlock();
+   int seconds;
+
+   if (strcmp(unit,"seconds")==0)
+      seconds = 1;
+   else if (strcmp(unit,"samples")==0)
+      seconds = 0;
+   else
+      NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
+
+   if (sound_disabled)
+      return 0;
+
+   switch (la->type) {
+      case LUA_AUDIO_STATIC:
+         soundLock();
+         if (seconds)
+            alSourcef( la->source, AL_SEC_OFFSET, offset );
+         else
+            alSourcef( la->source, AL_SAMPLE_OFFSET, offset );
+         al_checkErr();
+         soundUnlock();
+         break;
+
+      case LUA_AUDIO_STREAM:
+         SDL_mutexP( la->lock );
+         if (seconds)
+            ov_time_seek( &la->stream, offset );
+         else
+            ov_pcm_seek( &la->stream, offset );
+         SDL_mutexV( la->lock );
+         /* TODO force a reset of the buffers. */
+         break;
    }
    return 0;
 }
@@ -534,18 +822,44 @@ static int audioL_tell( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    const char *unit = luaL_optstring(L,2,"seconds");
-   float offset = -1.0;
-   if (!sound_disabled) {
-      soundLock();
-      if (strcmp(unit,"seconds")==0)
-         alGetSourcef( la->source, AL_SEC_OFFSET, &offset );
-      else if (strcmp(unit,"samples")==0)
-         alGetSourcef( la->source, AL_SAMPLE_OFFSET, &offset );
-      else
-         NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
-      al_checkErr();
-      soundUnlock();
+   double offset = -1.;
+   float aloffset;
+   int seconds;
+
+   if (strcmp(unit,"seconds")==0)
+      seconds = 1;
+   else if (strcmp(unit,"samples")==0)
+      seconds = 0;
+   else
+      NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
+
+   if (sound_disabled) {
+      lua_pushnumber(L, -1.);
+      return 1;
    }
+
+   switch (la->type) {
+      case LUA_AUDIO_STATIC:
+         soundLock();
+         if (seconds)
+            alGetSourcef( la->source, AL_SEC_OFFSET, &aloffset );
+         else
+            alGetSourcef( la->source, AL_SAMPLE_OFFSET, &aloffset );
+         offset = aloffset;
+         al_checkErr();
+         soundUnlock();
+         break;
+
+      case LUA_AUDIO_STREAM:
+         SDL_mutexP( la->lock );
+         if (seconds)
+            offset = ov_time_tell( &la->stream );
+         else
+            offset = ov_pcm_tell( &la->stream );
+         SDL_mutexV( la->lock );
+         break;
+   }
+
    lua_pushnumber(L, offset);
    return 1;
 }
@@ -562,40 +876,55 @@ static int audioL_getDuration( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    const char *unit = luaL_optstring(L,2,"seconds");
-   float duration = -1.0;
+   float duration = -1.;
+   int seconds;
+   ALint bytes, channels, bits, samples;
+   ALuint buffer;
+
+   if (strcmp(unit,"seconds")==0)
+      seconds = 1;
+   else if (strcmp(unit,"samples")==0)
+      seconds = 0;
+   else
+      NLUA_ERROR(L, _("Unknown duration source '%s'! Should be either 'seconds' or 'samples'!"), unit );
 
    if (sound_disabled) {
-      lua_pushnumber(L, 0.);
+      lua_pushnumber(L, -1.);
       return 1;
    }
 
-   if (!sound_disabled) {
-      soundLock();
 
-      ALint bytes, channels, bits, samples;
-      ALuint buffer = la->buf->buffer;
+   switch (la->type) {
+      case LUA_AUDIO_STATIC:
+         soundLock();
+         buffer = la->buf->buffer;
+         alGetBufferi( buffer, AL_SIZE, &bytes );
+         alGetBufferi( buffer, AL_CHANNELS, &channels );
+         alGetBufferi( buffer, AL_BITS, &bits );
 
-      alGetBufferi( buffer, AL_SIZE, &bytes );
-      alGetBufferi( buffer, AL_CHANNELS, &channels );
-      alGetBufferi( buffer, AL_BITS, &bits );
+         samples = bytes * 8 / (channels * bits);
 
-      samples = bytes * 8 / (channels * bits);
+         if (seconds) {
+            ALint freq;
+            alGetBufferi( buffer, AL_FREQUENCY, &freq );
+            duration = (float) samples / (float) freq;
+         }
+         else
+            duration = samples;
+         al_checkErr();
+         soundUnlock();
+         break;
 
-      if (strcmp(unit,"seconds")==0) {
-         ALint freq;
-
-         alGetBufferi( buffer, AL_FREQUENCY, &freq );
-
-         duration = (float) samples / (float) freq;
-      }
-      else if (strcmp(unit,"samples")==0) {
-         duration = samples;
-      }
-      else
-         NLUA_ERROR(L, _("Unknown duration source '%s'! Should be either 'seconds' or 'samples'!"), unit );
-      al_checkErr();
-      soundUnlock();
+      case LUA_AUDIO_STREAM:
+         SDL_mutexP( la->lock );
+         if (seconds)
+            duration = ov_time_total( &la->stream, -1 );
+         else
+            duration = ov_pcm_total( &la->stream, -1 );
+         SDL_mutexV( la->lock );
+         break;
    }
+
    lua_pushnumber(L, duration);
    return 1;
 }

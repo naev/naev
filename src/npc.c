@@ -166,7 +166,7 @@ static unsigned int npc_add_giver( Mission *misn )
  * @brief Adds a mission NPC to the mission computer.
  */
 unsigned int npc_add_mission( unsigned int mid, const char *func, const char *name,
-      int priority, const char *portrait, const char *desc, const char *background )
+      int priority, glTexture *portrait, const char *desc, glTexture *background )
 {
    NPC_t npc;
 
@@ -174,11 +174,8 @@ unsigned int npc_add_mission( unsigned int mid, const char *func, const char *na
    npc.type       = NPC_TYPE_MISSION;
    npc.name       = strdup( name );
    npc.priority   = priority;
-   npc.portrait   = gl_newImage( portrait, 0 );
-   if (background != NULL)
-      npc.background = gl_newImage( background, 0 );
-   else
-      npc.background = NULL;
+   npc.portrait   = portrait;
+   npc.background = background;
    npc.desc       = strdup( desc );
    npc.u.m.id     = mid;
    npc.u.m.func   = strdup( func );
@@ -190,7 +187,7 @@ unsigned int npc_add_mission( unsigned int mid, const char *func, const char *na
  * @brief Adds a event NPC to the mission computer.
  */
 unsigned int npc_add_event( unsigned int evt, const char *func, const char *name,
-      int priority, const char *portrait, const char *desc, const char *background )
+      int priority, glTexture *portrait, const char *desc, glTexture *background )
 {
    NPC_t npc;
 
@@ -198,11 +195,8 @@ unsigned int npc_add_event( unsigned int evt, const char *func, const char *name
    npc.type       = NPC_TYPE_EVENT;
    npc.name       = strdup( name );
    npc.priority   = priority;
-   npc.portrait   = gl_newImage( portrait, 0 );
-   if (background != NULL)
-      npc.background = gl_newImage( background, 0 );
-   else
-      npc.background = NULL;
+   npc.portrait   = portrait;
+   npc.background = background;
    npc.desc       = strdup( desc );
    npc.u.e.id     = evt;
    npc.u.e.func   = strdup( func );

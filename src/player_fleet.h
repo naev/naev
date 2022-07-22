@@ -4,6 +4,12 @@
 #pragma once
 
 #include "player.h"
+#include "pilot.h"
+
+typedef struct PFleetCargo_ {
+   Pilot *p;
+   int q;
+} PFleetCargo;
 
 void pfleet_update (void);
 void pfleet_cargoRedistribute (void);
@@ -14,3 +20,5 @@ int pfleet_cargoFree (void);
 int pfleet_cargoOwned( const Commodity *com );
 int pfleet_cargoAdd( const Commodity *com, int q );
 int pfleet_cargoRm( const Commodity *com, int q, int jet );
+PilotCommodity* pfleet_cargoList (void);
+PFleetCargo* pfleet_cargoListShips( const Commodity *com );

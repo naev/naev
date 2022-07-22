@@ -75,6 +75,7 @@ typedef struct InfoButton_s {
    /* Lua stuff .*/
    nlua_env env;  /**< Runtime environment. */
    int func;      /**< Function to call. */
+   SDL_Keycode key; /**< Hotkey (or SDLK_UNKNOWN==0 if none). */
 } InfoButton_t;
 static InfoButton_t *info_buttons = NULL;
 
@@ -161,9 +162,9 @@ static void info_buttonRegen (void)
       snprintf( btn->button, sizeof(btn->button), "btnExtra%d", i );
       if (widget_exists( wid, btn->button ))
          window_destroyWidget( wid, btn->button );
-      window_addButton( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
+      window_addButtonKey( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
             BUTTON_WIDTH, BUTTON_HEIGHT,
-            btn->button, btn->caption, info_buttonClick );
+            btn->button, btn->caption, info_buttonClick, btn->key );
    }
 }
 
@@ -172,9 +173,10 @@ static void info_buttonRegen (void)
  *
  *    @param caption Caption to give the button.
  *    @param priority Button priority, lower is more important.
+ *    @param key Hotkey for using the button without it being focused (or SDLK_UNKNOWN or 0 if none).
  *    @return Newly created button ID.
  */
-int info_buttonRegister( const char *caption, int priority )
+int info_buttonRegister( const char *caption, int priority, SDL_Keycode key )
 {
    static int button_idgen = 0;
    int id;
@@ -190,6 +192,7 @@ int info_buttonRegister( const char *caption, int priority )
    btn->priority = priority;
    btn->env    = __NLUA_CURENV;
    btn->func   = luaL_ref( naevL, LUA_REGISTRYINDEX );
+   btn->key    = key;
 
    id = btn->id;
    qsort( info_buttons, array_size(info_buttons), sizeof(InfoButton_t), sort_buttons );
@@ -414,9 +417,9 @@ static void info_openMain( unsigned int wid )
    for (int i=0; i<array_size(info_buttons); i++) {
       InfoButton_t *btn = &info_buttons[i];
       snprintf( btn->button, sizeof(btn->button), "btnExtra%d", i );
-      window_addButton( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
+      window_addButtonKey( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
             BUTTON_WIDTH, BUTTON_HEIGHT,
-            btn->button, btn->caption, info_buttonClick );
+            btn->button, btn->caption, info_buttonClick, btn->key );
    }
 
    buf = player_getLicenses();
@@ -939,16 +942,22 @@ static void cargo_genList( unsigned int wid )
       nbuf = 1;
    }
    else {
-      /* List the player's cargo */
+      /* List the player fleet's cargo. */
+      PilotCommodity *pclist = pfleet_cargoList();
       buf = malloc( sizeof(char*) * array_size(player.p->commodities) );
-      for (int i=0; i<array_size(player.p->commodities); i++) {
-         asprintf(&buf[i], "%s%s %d%s",
-               _(player.p->commodities[i].commodity->name),
-               (player.p->commodities[i].id != 0) ? "*" : "",
-               player.p->commodities[i].quantity,
-               (array_size(player.p->commodities[i].commodity->illegalto)>0) ? _(" (#rillegal#0)") : "" );
+      for (int i=0; i<array_size(pclist); i++) {
+         PilotCommodity *pc = &pclist[i];
+         int misn = pc->id != 0;
+         int illegal = (array_size(pc->commodity->illegalto)>0);
+
+         asprintf(&buf[i], "%s %d%s%s",
+               _(pc->commodity->name),
+               pc->quantity,
+               misn ? _(" [#bMission#0]") : "",
+               illegal ? _(" (#rillegal#0)") : "" );
       }
       nbuf = array_size(player.p->commodities);
+      array_free(pclist);
    }
    window_addList( wid, 20, -40,
          w - 40, 200,
@@ -965,9 +974,12 @@ static void cargo_update( unsigned int wid, const char *str )
    char desc[STRMAX];
    int pos, l;
    const Commodity *com;
+   PilotCommodity *pclist = pfleet_cargoList();
 
-   if (array_size(player.p->commodities)==0)
-      return; /* No cargo */
+   if (array_size(pclist) <= 0) {
+      array_free(pclist);
+      return; /* No cargo, redundant check */
+   }
 
    /* Can jettison all but mission cargo when not landed*/
    if (landed)
@@ -975,16 +987,24 @@ static void cargo_update( unsigned int wid, const char *str )
    else
       window_enableButton( wid, "btnJettisonCargo" );
 
-   if (array_size(player.p->commodities)==0)
-      return; /* No cargo, redundant check */
-
    pos = toolkit_getListPos( wid, "lstCargo" );
-   com = player.p->commodities[pos].commodity;
+   com = pclist[pos].commodity;
 
    if (!com->description)
       l = scnprintf( desc, sizeof(desc), "%s", _(com->name) );
    else
       l = scnprintf( desc, sizeof(desc), "%s\n\n%s", _(com->name), _(com->description) );
+
+   /* Only add fleet information with fleet capacity. */
+   if (player.fleet_capacity > 0) {
+      l += scnprintf( &desc[l], sizeof(desc)-l, "\n\n%s", _("Carried by the following ships in your fleet:\n") );
+      PFleetCargo *plist = pfleet_cargoListShips( com );
+      for (int i=0; i<array_size(plist); i++)
+         l += scnprintf( &desc[l], sizeof(desc)-l, _("\n   - %s (%d)"), plist[i].p->name, plist[i].q );
+      array_free(plist);
+   }
+
+   /* Add message on illegal outfits. */
    if (array_size(com->illegalto) > 0) {
       l += scnprintf( &desc[l], sizeof(desc)-l, "\n\n%s", _("Illegalized by the following factions:\n") );
       for (int i=0; i<array_size(com->illegalto); i++) {
@@ -996,6 +1016,8 @@ static void cargo_update( unsigned int wid, const char *str )
       }
    }
    window_modifyText( wid, "txtCargoDesc", desc );
+
+   array_free(pclist);
 }
 /**
  * @brief Makes the player jettison the currently selected cargo.
@@ -1006,25 +1028,30 @@ static void cargo_jettison( unsigned int wid, const char *str )
    (void)str;
    int pos, ret;
    Mission *misn;
+   PilotCommodity *pclist = pfleet_cargoList();
 
-   if (array_size(player.p->commodities)==0)
+   if (array_size(pclist) <= 0) {
+      array_free(pclist);
       return; /* No cargo, redundant check */
+   }
 
    pos = toolkit_getListPos( wid, "lstCargo" );
 
    /* Special case mission cargo. */
-   if (player.p->commodities[pos].id != 0) {
+   if (pclist[pos].id != 0) {
       int f;
 
       if (!dialogue_YesNo( _("Abort Mission"),
-               _("Are you sure you want to abort this mission?") ))
+               _("Are you sure you want to abort this mission?") )) {
+         array_free(pclist);
          return;
+      }
 
       /* Get the mission. */
       f = -1;
       for (int i=0; i<array_size(player_missions); i++) {
          for (int j=0; j<array_size(player_missions[i]->cargo); j++) {
-            if (player_missions[i]->cargo[j] == player.p->commodities[pos].id) {
+            if (player_missions[i]->cargo[j] == pclist[pos].id) {
                f = i;
                break;
             }
@@ -1034,7 +1061,8 @@ static void cargo_jettison( unsigned int wid, const char *str )
       }
       if (f < 0) {
          WARN(_("Cargo '%d' does not belong to any active mission."),
-               player.p->commodities[pos].id);
+               pclist[pos].id);
+         array_free( pclist );
          return;
       }
       misn = player_missions[f];
@@ -1057,15 +1085,14 @@ static void cargo_jettison( unsigned int wid, const char *str )
       /* Regenerate list. */
       mission_menu_genList( info_windows[ INFO_WIN_MISN ], 0 );
    }
-   else {
+   else
       /* Remove the cargo */
-      pilot_cargoJet( player.p, player.p->commodities[pos].commodity,
-            player.p->commodities[pos].quantity, 0 );
-   }
+      pfleet_cargoRm( pclist[pos].commodity, pclist[pos].quantity, 1 );
 
    /* We reopen the menu to recreate the list now. */
    ship_update( info_windows[ INFO_WIN_SHIP ] );
    cargo_genList( wid );
+   array_free( pclist );
 }
 
 /**
@@ -1254,7 +1281,7 @@ static void mission_menu_genList( unsigned int wid, int first )
    window_dimWindow( wid, &w, &h );
 
    /* list */
-   misn_names = malloc(sizeof(char*) * array_size(player_missions));
+   misn_names = malloc(sizeof(char*) * MAX(1, array_size(player_missions)));
    selectedMission = -1;
    j = 0;
    for (int i=0; i<array_size(player_missions); i++)
