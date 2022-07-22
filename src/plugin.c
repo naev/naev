@@ -25,8 +25,6 @@
 
 static plugin_t *plugins;
 
-static const char *plugin_name( plugin_t *plg );
-
 /**
  * @brief Parses a plugin description file.
  */
@@ -209,7 +207,7 @@ void plugin_exit (void)
  *    @param plg Plugin to try to get name of.
  *    @return Name of the plugin.
  */
-static const char *plugin_name( plugin_t *plg )
+const char *plugin_name( const plugin_t *plg )
 {
    if (plg->name != NULL)
       return plg->name;
