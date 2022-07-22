@@ -138,10 +138,8 @@ int save_all_with_name ( char *name )
 
    /* Save plugins. */
    xmlw_startElem(writer,"plugins");
-   for (int i=0; i<array_size(plugins); i++) {
-      const plugin_t *plg = &plugins[i];
-      xmlw_elem( writer, "plugin", "%s", (plg->name != NULL) ? plg->name : plg->mountpoint );
-   }
+   for (int i=0; i<array_size(plugins); i++)
+      xmlw_elem( writer, "plugin", "%s", plugin_name( &plugins[i] ) );
    xmlw_endElem(writer); /* "plugins" */
 
    /* Save the data. */
