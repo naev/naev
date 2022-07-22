@@ -388,21 +388,7 @@ static int load_sortComparePlayers( const void *p1, const void *p2 )
    const player_saves_t *ps1, *ps2;
    ps1 = (const player_saves_t*) p1;
    ps2 = (const player_saves_t*) p2;
-
-   /* Sort by compatibility first. */
-   if (!ps1->saves[0].compatible && ps2->saves[0].compatible)
-      return -1;
-   else if (ps1->saves[0].compatible && !ps2->saves[0].compatible)
-      return +1;
-
-   /* Search by file modification date. */
-   if (ps1->saves[0].modtime > ps2->saves[0].modtime)
-      return -1;
-   else if (ps1->saves[0].modtime < ps2->saves[0].modtime)
-      return +1;
-
-   /* Finally sort by name. */
-   return strcmp( ps1->name, ps2->name );
+   return load_sortCompare( &ps1->saves[0], &ps2->saves[0] );
 }
 
 /**
