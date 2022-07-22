@@ -34,6 +34,7 @@
 #include "nxml.h"
 #include "outfit.h"
 #include "player.h"
+#include "plugin.h"
 #include "save.h"
 #include "shiplog.h"
 #include "start.h"
@@ -103,6 +104,7 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
 static int load_enumeratePlayerNamesCallback( void* data, const char* origdir, const char* fname );
 static int load_sortCompare( const void *p1, const void *p2 );
 static xmlDocPtr load_xml_parsePhysFS( const char* filename );
+static SaveCompatibility load_compatibility( const nsave_t *ns );
 
 /**
  * @brief Loads an individual save.
@@ -207,6 +209,8 @@ static int load_load( nsave_t *save, const char *path )
    if (save->chapter==NULL)
       save->chapter = strdup( start_chapter() );
 
+   save->compatible = load_compatibility( save );
+
    /* Clean up. */
    xmlFreeDoc(doc);
 
@@ -250,8 +254,6 @@ int load_refresh ( const char *name )
 {
    char buf[PATH_MAX];
    filedata_t *files;
-   int ok;
-   nsave_t *ns;
 
    if (load_saves != NULL)
       load_free();
@@ -268,22 +270,19 @@ int load_refresh ( const char *name )
    }
 
    /* Allocate and parse. */
-   ok = 0;
-   ns = NULL;
    load_saves = array_create_size( nsave_t, array_size(files) );
    for (int i=0; i<array_size(files); i++) {
-      if (!ok)
-         ns = &array_grow( &load_saves );
+      nsave_t ns;
+      int ret;
       snprintf( buf, sizeof(buf), "saves/%s/%s", name, files[i].name );
-      ok = load_load( ns, buf );
-      ns->save_name = strdup( files[i].name );
-      ns->save_name[ strlen(ns->save_name)-3 ] = '\0';
-      ns->modtime = files[i].stat.modtime;
+      ret = load_load( &ns, buf );
+      if (ret==0) {
+         ns.save_name = strdup( files[i].name );
+         ns.save_name[ strlen(ns.save_name)-3 ] = '\0';
+         ns.modtime = files[i].stat.modtime;
+         array_push_back( &load_saves, ns );
+      }
    }
-
-   /* If the save was invalid, array is 1 member too large. */
-   if (ok)
-      array_resize( &load_saves, array_size(load_saves)-1 );
 
    /* Clean up memory. */
    for (int i=0; i<array_size(files); i++)
@@ -1148,4 +1147,30 @@ static xmlDocPtr load_xml_parsePhysFS( const char* filename )
    char buf[PATH_MAX];
    snprintf( buf, sizeof(buf), "%s/%s", PHYSFS_getWriteDir(), filename );
    return xmlParseFile( buf );
+}
+
+/**
+ * @brief Checks to see if a save is compatible with current Naev.
+ */
+static SaveCompatibility load_compatibility( const nsave_t *ns )
+{
+   int diff = naev_versionCompare( ns->version );
+   const plugin_t *plugins = plugin_list();
+
+   if (ABS(diff) >= 2)
+      return SAVE_COMPATIBILITY_NAEV_VERSION;
+
+   for (int i=0; i<array_size(ns->plugins); i++) {
+      int found = 0;
+      for (int j=0; j<array_size(plugins); j++) {
+         if (strcmp( ns->plugins[i], plugin_name(&plugins[j]) )==0) {
+            found = 1;
+            break;
+         }
+      }
+      if (!found)
+         return SAVE_COMPATIBILITY_PLUGINS;
+   }
+
+   return SAVE_COMPATIBILITY_OK;
 }
