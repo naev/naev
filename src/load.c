@@ -108,6 +108,7 @@ static int load_gameInternal( const char* file, const char* version );
 static int load_enumerateCallback( void* data, const char* origdir, const char* fname );
 static int load_enumerateCallbackPlayer( void* data, const char* origdir, const char* fname );
 static SaveCompatibility load_compatibility( const nsave_t *ns );
+static int load_sortComparePlayers( const void *p1, const void *p2 );
 static int load_sortCompare( const void *p1, const void *p2 );
 static xmlDocPtr load_xml_parsePhysFS( const char* filename );
 
@@ -234,7 +235,7 @@ int load_refresh (void)
    /* load the saves */
    load_saves = array_create( player_saves_t );
    PHYSFS_enumerate( "saves", load_enumerateCallback, NULL );
-   //qsort( load_saves, array_size(load_saves), sizeof(nsave_t), load_sortCompare );
+   qsort( load_saves, array_size(load_saves), sizeof(player_saves_t), load_sortComparePlayers );
 
    return 0;
 }
@@ -323,6 +324,36 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
    return PHYSFS_ENUM_OK;
 }
 
+static int load_compatibilityTest( const nsave_t *ns )
+{
+   switch (ns->compatible) {
+      case SAVE_COMPATIBILITY_NAEV_VERSION:
+         if (!dialogue_YesNo( _("Save game version mismatch"),
+               _("Save game '%s' version does not match Naev version:\n"
+               "   Save version: #r%s#0\n"
+               "   Naev version: %s\n"
+               "Are you sure you want to load this game? It may lose data."),
+               ns->name, ns->version, VERSION ))
+            return -1;
+         break;
+
+      case SAVE_COMPATIBILITY_PLUGINS:
+         if (!dialogue_YesNo( _("Save game plugin mismatch"),
+               _("Save game '%s' plugins do not match loaded plugins:\n"
+               "   Save plugins: %s\n"
+               "   Naev plugins: %s\n"
+               "Are you sure you want to load this game? It may lose data."),
+               ns->name, "#rTODO#0", "TODO" ))
+            return -1;
+         break;
+
+      case SAVE_COMPATIBILITY_OK:
+         break;
+   }
+
+   return 0;
+}
+
 /**
  * @brief Checks to see if a save is compatible with current Naev.
  */
@@ -352,18 +383,50 @@ static SaveCompatibility load_compatibility( const nsave_t *ns )
 /**
  * @brief qsort compare function for files.
  */
+static int load_sortComparePlayers( const void *p1, const void *p2 )
+{
+   const player_saves_t *ps1, *ps2;
+   ps1 = (const player_saves_t*) p1;
+   ps2 = (const player_saves_t*) p2;
+
+   /* Sort by compatibility first. */
+   if (!ps1->saves[0].compatible && ps2->saves[0].compatible)
+      return -1;
+   else if (ps1->saves[0].compatible && !ps2->saves[0].compatible)
+      return +1;
+
+   /* Search by file modification date. */
+   if (ps1->saves[0].modtime > ps2->saves[0].modtime)
+      return -1;
+   else if (ps1->saves[0].modtime < ps2->saves[0].modtime)
+      return +1;
+
+   /* Finally sort by name. */
+   return strcmp( ps1->name, ps2->name );
+}
+
+/**
+ * @brief qsort compare function for files.
+ */
 static int load_sortCompare( const void *p1, const void *p2 )
 {
    const nsave_t *ns1, *ns2;
-
    ns1 = (const nsave_t*) p1;
    ns2 = (const nsave_t*) p2;
 
+   /* Sort by compatibility first. */
+   if (!ns1->compatible && ns2->compatible)
+      return -1;
+   else if (ns1->compatible && !ns2->compatible)
+      return +1;
+
+   /* Search by file modification date. */
    if (ns1->modtime > ns2->modtime)
       return -1;
    else if (ns1->modtime < ns2->modtime)
       return +1;
 
+   /* Finally sort by name. */
    return strcmp( ns1->name, ns2->name );
 }
 
@@ -737,7 +800,7 @@ static void load_snapshot_menu_update( unsigned int wid, const char *str )
 static void load_menu_load( unsigned int wdw, const char *str )
 {
    (void) str;
-   int pos, diff;
+   int pos;
    unsigned int wid;
    nsave_t *ns;
 
@@ -750,17 +813,8 @@ static void load_menu_load( unsigned int wdw, const char *str )
    ns = &load_saves[pos].saves[0];
 
    /* Check version. */
-   /* TODO use compatibility. */
-   diff = naev_versionCompare( ns->version );
-   if (ABS(diff) >= 2) {
-      if (!dialogue_YesNo( _("Save game version mismatch"),
-            _("Save game '%s' version does not match Naev version:\n"
-            "   Save version: #r%s#0\n"
-            "   Naev version: %s\n"
-            "Are you sure you want to load this game? It may lose data."),
-            ns->name, ns->version, VERSION ))
-         return;
-   }
+   if (load_compatibilityTest( ns ))
+      return;
 
    /* Close menus before loading for proper rendering. */
    load_menu_close(wdw, NULL);
@@ -786,7 +840,6 @@ static void load_snapshot_menu_load( unsigned int wdw, const char *str )
    (void) str;
    const char *save;
    int wid, pos;
-   int diff;
 
    wid = window_get( "wdwLoadSnapshotMenu" );
    save = toolkit_getList( wid, "lstSaves" );
@@ -797,16 +850,8 @@ static void load_snapshot_menu_load( unsigned int wdw, const char *str )
    pos = toolkit_getListPos( wid, "lstSaves" );
 
    /* Check version. */
-   diff = naev_versionCompare( load_player->saves[pos].version );
-   if (ABS(diff) >= 2) {
-      if (!dialogue_YesNo( _("Save game version mismatch"),
-            _("Save game '%s' version does not match Naev version:\n"
-            "   Save version: #r%s#0\n"
-            "   Naev version: %s\n"
-            "Are you sure you want to load this game? It may lose data."),
-            save, load_player->saves[pos].version, VERSION ))
-         return;
-   }
+   if (load_compatibilityTest( &load_player->saves[pos]  ))
+      return;
 
    /* Close menus before loading for proper rendering. */
    load_snapshot_menu_close(wdw, NULL);
