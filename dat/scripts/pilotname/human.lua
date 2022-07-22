@@ -1,5 +1,11 @@
 local fmt = require "format"
 
+-- pick a random letter out of a string
+local function pick_str(str)
+    local ii = rnd.rnd(1, str:len()) -- pick a random index from string length
+    return string.sub(str, ii, ii) -- returns letter at ii
+end
+
 local prefixes = {
 	_("B'"),
 	_("Be"),
@@ -377,14 +383,20 @@ local suffixes = {
 	_("am"),
 	_("an"),
 	_("bad"),
+	_("bar"),
 	_("be"),
+	_("ber"),
 	_("belt"),
 	_("bon"),
 	_("bone"),
 	_("bolg"),
+	_("cald"),
+	_("calf"),
 	_("dab"),
 	_("dad"),
 	_("daph"),
+	_("dan"),
+	_("don"),
 	_("ee"),
 	_("en"),
 	_("elia"),
@@ -425,37 +437,49 @@ local suffixes = {
 	_("ison"),
 	_("isen"),
 	_("ist"),
-	
+	_("jon"),
 	_("karl"),
 	
 	_("le"),
-	
+	_("men"),
+	_("mon"),
+	_("mist"),
+	_("musk"),
+	_("man"),
+	_("mann"),
+	_("nem"),
+	_("nim"),
+	_("nom"),
 	_("o"),
 	_("oid"),
 	_("on"),
 	_("otten"),
+	_("oxy"),
+	_("oxxy"),
 	
 	_("phne"),
-	
-	_("man"),
-	_("mann"),
-	
+
 	_("rap"),
 	_("red"),
 	_("ress"),
 	_("roid"),
 	_("sen"),
+	_("sin"),
+	_("son"),
 	_("ster"),
 	_("ston"),
 	_("stone"),
-	_("son"),
 	_("sus"),
 	_("suz"),
 	_("ter"),
+	_("tin"),
 	_("tt"),
-	_("tty"),
+	_("ty"),
 	_("ton"),
 	_("uzi"),
+	_("vin"),
+	_("win"),
+	_("xer"),
 	_("zer"),
 	_("zi"),
 	_("zor"),
@@ -467,35 +491,35 @@ local suffixes = {
 		{ found="iii", replace="i" },
 		{ found="ooo", replace="oo" },
 		{ found="ooi", replace="oi" },
-		{ found="sss", replace="ss" },
+		{ found="rrr", replace="rdr" },
+		{ found="sss", replace="sz" },
 		{ found="uuu", replace="u" },
 		{ found="ttt", replace="t" },
 		{ found="yyy", replace="y" },
-		{ found="''", replace="'tk" },
+		{ found="''", replace="'" .. pick_str("tkczpdn") },
    }
 
 --[[
 -- @brief Generates somewhat human sounding names
 --]]
 local function human ()
-
    local prefix = prefixes[ rnd.rnd(1, #prefixes) ]
    local anchor = anchors[ rnd.rnd(1, #anchors) ]
    local first_name_part = anchors[ rnd.rnd(1, #anchors) ]
    local suffix = suffixes[ rnd.rnd(1, #suffixes) ]
    local suffix2 = suffixes[ rnd.rnd(1, #suffixes) ]
-   
+
    local vowels = { "a", "e", "i", "o", "u", "y" }
-   
+
    local vowel = vowels[rnd.rnd(1, #vowels)]
    local vowel2= vowels[rnd.rnd(1, #vowels)]
-   
+
    local first_name_alt = fmt.f("{prefix}{suffix}", {prefix=prefixes[ rnd.rnd(1, #prefixes) ], suffix=suffixes[ rnd.rnd(1, #suffixes) ]})
-   
+
    if rnd.rnd(0, 1) == 0 then
 	first_name_part = first_name_alt
    end
-   
+
    local params = {
 		first_name_part = first_name_part,
 		first_name_alt = first_name_alt,
@@ -506,10 +530,10 @@ local function human ()
 		vowel=vowel,
 		vowel2=vowel2,
    }
-   
-   local result = "Unnamed"
-   local firstname = "Unknown"
-   
+
+   local result
+   local firstname
+
    local r = rnd.rnd()
    if r < 0.0166 then
       firstname = fmt.f(_("{first_name_part}{suffix2}"), params)
@@ -530,13 +554,13 @@ local function human ()
 	firstname = fmt.f(_("{prefix}{first_name_part}"), params)
       result = fmt.f(_("{anchor}{suffix}{suffix2}"), params)
    end
-   
+
    -- remove ugly duplicate letters
    for found, replacement in pairs(ugly_duplicates) do
 	result = string.gsub( result, found, replacement )
 	firstname = string.gsub( firstname, found, replacement )
 	end
-   
+
    -- final safety check, give the human a generic gender neutral name
    -- just in case we deleted everything
    if firstname:len() == 0 then
