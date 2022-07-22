@@ -113,7 +113,7 @@ function luaspob.comm ()
          { _("Close"), "leave" }
       }
       local std = fct:playerStanding()
-      if std < mem.std_land then
+      if std < mem.std_land and not mem.bribed then
          table.insert( opts, 1, { _("Bribe"), "bribe" } )
       end
       return opts
