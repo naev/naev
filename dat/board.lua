@@ -452,9 +452,10 @@ function board( plt )
    luatk.newButton( wdw, w-20-80, h-20-30, 80, 30, _("Close"), board_close )
    luatk.newButton( wdw, w-20-80-100, h-20-30, 80, 30, _("Loot"), board_lootSel )
    luatk.newButton( wdw, w-20-80-200, h-20-30, 80, 30, _("Loot All"), board_lootAll )
-   luatk.newButton( wdw, w-20-80-300, h-20-30, 80, 30, _("Attempt Capture"), board_tryCapture )
    if can_cannibalize() then
       luatk.newButton( wdw, w-20-80-350, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
+   else
+      luatk.newButton( wdw, w-20-80-360, h-20-30, 130, 30, _("Attempt Capture"), board_tryCapture )
    end
 
    -- Add manage cargo button if applicable
