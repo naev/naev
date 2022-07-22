@@ -3075,7 +3075,10 @@ int map_load (void)
 
    decorator_stack = array_create( MapDecorator );
    for (int i=0; i<array_size(decorator_files); i++) {
-      map_decorator_parse( &array_grow(&decorator_stack), decorator_files[i] );
+      MapDecorator temp;
+      int ret = map_decorator_parse( &temp, decorator_files[i] );
+      if (ret == 0)
+         array_push_back( &decorator_stack, temp );
       free( decorator_files[i] );
    }
    array_free( decorator_files );

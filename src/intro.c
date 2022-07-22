@@ -418,12 +418,7 @@ int intro_display( const char *text, const char *mus )
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       /* Only thing we actually care about updating is music. */
-      music_update( 0. );
-
-      /* TODO this is only here because the player.time_dt stuff leaves a window open otherwise.
-       * Remove player.time_dt is removed. */
-      toolkit_render( delta );
-      toolkit_update();
+      music_update( delta );
 
       /* Draw text. */
       stop = intro_draw_text( sb_arr, lines_per_screen, sb_index, offset, line_height );

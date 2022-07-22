@@ -1107,13 +1107,8 @@ double pilot_aimAngle( Pilot *p, const Pilot *target )
 void pilot_setHostile( Pilot* p )
 {
    if (pilot_isFriendly( p ) || pilot_isFlag( p, PILOT_BRIBED )
-         || !pilot_isFlag( p, PILOT_HOSTILE )) {
-      /* Time to play combat music. */
-      music_choose("combat");
-
-      player.enemies++;
+         || !pilot_isFlag( p, PILOT_HOSTILE ))
       pilot_setFlag( p, PILOT_HOSTILE );
-   }
    pilot_rmFriendly( p );
    pilot_rmFlag( p, PILOT_BRIBED );
 }
@@ -1314,18 +1309,8 @@ void pilot_rmHostile( Pilot* p )
    if (!pilot_isHostile(p))
       return;
 
-   if (pilot_isFlag(p, PILOT_HOSTILE)) {
-      player.enemies--;
-      if (pilot_isDisabled(p))
-         player.disabled_enemies--;
-
-      /* Change music back to ambient if no more enemies. */
-      if (player.enemies <= player.disabled_enemies) {
-         music_choose("ambient");
-      }
-
+   if (pilot_isFlag(p, PILOT_HOSTILE))
       pilot_rmFlag(p, PILOT_HOSTILE);
-   }
 
    /* Set "bribed" flag if faction has poor reputation */
    if (areEnemies( FACTION_PLAYER, p->faction ))
@@ -1662,10 +1647,6 @@ void pilot_updateDisable( Pilot* p, unsigned int shooter )
       pilot_rmFlag(p, PILOT_HYP_BRAKE);
       pilot_rmFlag(p, PILOT_HYPERSPACE);
 
-      /* If hostile, must add counter. */
-      if (pilot_isHostile(p))
-         player.disabled_enemies++;
-
       /* Disabled ships don't use up presence. */
       if (p->presence > 0) {
          system_rmCurrentPresence( cur_system, p->faction, p->presence );
@@ -1698,13 +1679,6 @@ void pilot_updateDisable( Pilot* p, unsigned int shooter )
       pilot_rmFlag( p, PILOT_DISABLED ); /* Undisable. */
       pilot_rmFlag( p, PILOT_DISABLED_PERM ); /* Clear perma-disable flag if necessary. */
       pilot_rmFlag( p, PILOT_BOARDING ); /* Can get boarded again. */
-
-      /* If hostile, must remove counter. */
-      if (pilot_isHostile(p)) {
-         player.disabled_enemies--;
-         /* Time to play combat music. */
-         music_choose("combat");
-      }
 
       /* Reset the accumulated disable time. */
       p->dtimer_accum = 0.;

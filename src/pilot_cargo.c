@@ -27,11 +27,11 @@ static unsigned int mission_cargo_id = 0; /**< ID generator for special mission 
                                                only unique for each pilot. */
 
 /**
- * @brief Gets how many of the commodity the player.p has.
+ * @brief Gets how many of the commodity a pilot has.
  *
- * @param pilot Pilot to check.
- * @param cargo Commodity to check how many the player.p owns.
- * @return The number of commodities owned matching commodityname.
+ *    @param pilot Pilot to check.
+ *    @param cargo Commodity to check how many the player.p owns.
+ *    @return The number of commodities owned matching cargo.
  */
 int pilot_cargoOwned( const Pilot* pilot, const Commodity* cargo )
 {

@@ -94,6 +94,9 @@ int sp_load (void)
       xmlFreeDoc(doc);
    }
 
+   for (int i=0; i<array_size(sp_files); i++)
+      free( sp_files[i] );
+   array_free( sp_files );
    return 0;
 }
 

@@ -219,7 +219,7 @@ function enter ()
 
    elseif mem.state==1 and system.cur() == targetsys then
 
-      music.stop(true) -- No music to make more omnious
+      music.stop() -- No music to make more omnious
       camera.shake()
       local pp = player.pilot()
       pp:control(false)

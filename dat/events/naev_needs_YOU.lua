@@ -51,13 +51,8 @@ function create()
 
       -- Create an eerie atmosphere by cutting off the background music and substituting something spooky
       --disabled until difficulties with the music API are sorted out
-      local background_music
-      if music.isPlaying() then
-         background_music = music.current()
-         music.stop()
-      end
-      music.load( "sirius1")
-      music.play()
+      music.pause()
+      music.play( "sirius1.ogg" )
 
       -- The big programmer in the sky looks in to ask the player a question
       if tk.yesno( _("Naev received SIGSEGV (address not mapped to object)!"), text[1]) then
@@ -75,10 +70,7 @@ function create()
 
       -- everything returns to normal
       music.stop()
-      if background_music ~= nil then
-         music.load( background_music )
-         music.play()
-      end
+      music.choose()
 
       evt.finish( true)
 end

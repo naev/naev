@@ -21,6 +21,7 @@
 #include "array.h"
 #include "nfile.h"
 #include "nxml.h"
+#include "physfs_archiver_blacklist.h"
 
 static plugin_t *plugins;
 
@@ -29,7 +30,7 @@ static const char *plugin_name( plugin_t *plg );
 /**
  * @brief Parses a plugin description file.
  */
-static int plugin_parse( plugin_t *plg, const char *file )
+static int plugin_parse( plugin_t *plg, const char *file, const char *path )
 {
    xmlNodePtr node, parent;
    xmlDocPtr doc = xml_parsePhysFS( file );
@@ -44,16 +45,47 @@ static int plugin_parse( plugin_t *plg, const char *file )
       return -1;
    }
 
+   xmlr_attr_strd( parent, "name", plg->name );
+   if (plg->name == NULL)
+      WARN(_("Plugin '%s' has no name!"), path);
+
    node = parent->xmlChildrenNode;
    do {
       xml_onlyNodes(node);
 
-      xmlr_strd( node, "name", plg->name );
       xmlr_strd( node, "author", plg->author );
       xmlr_strd( node, "version", plg->version );
       xmlr_strd( node, "description", plg->description );
       xmlr_strd( node, "compatibility", plg->compatibility );
       xmlr_int( node, "priority", plg->priority );
+      if (xml_isNode( node, "blacklist" )) {
+         blacklist_append( xml_get(node) );
+         continue;
+      }
+      if (xml_isNode( node, "total_conversion" )) {
+         const char *blk[] = {
+            "^ssys/.*\\.xml",
+            "^spob/.*\\.xml",
+            "^spob_virtual/.*\\.xml",
+            "^factions/.*\\.xml",
+            "^commodities/.*\\.xml",
+            "^ships/.*\\.xml",
+            "^outfits/.*\\.xml",
+            "^missions/.*\\.lua",
+            "^events/.*\\.lua",
+            "^tech/.*\\.xml",
+            "^asteroids/.*\\.xml",
+            "^unidiff/.*\\.xml",
+            "^map_decorator/.*\\.xml",
+            "^intro",
+            NULL
+         };
+         for (int i=0; blk[i]!=NULL; i++)
+            blacklist_append( blk[i] );
+         plg->total_conversion = 1;
+         continue;
+      }
+      WARN(_("Plugin '%s' has unknown metadata node '%s'!"),path,xml_get(node));
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
@@ -115,7 +147,9 @@ int plugin_init (void)
          realdir = PHYSFS_getRealDir( "plugin.xml" );
          if ((stat.filetype == PHYSFS_FILETYPE_REGULAR) &&
                realdir && strcmp(realdir,buf)==0)
-            plugin_parse( plg, "plugin.xml" );
+            plugin_parse( plg, "plugin.xml", *f );
+         else
+            WARN(_("Plugin '%s' does not have a valid '%s'!"), buf, "plugin.xml");
       }
       PHYSFS_freeList(files);
       n = array_size(plugins);
@@ -126,6 +160,9 @@ int plugin_init (void)
 
       /* Sort by priority. */
       qsort( plugins, n, sizeof(plugin_t), plugin_cmp );
+
+      /* Initialize blacklist. */
+      blacklist_init();
 
       /* Remount. */
       for (int i=n-1; i>=0; i--) /* Reverse order as we prepend. */
@@ -162,6 +199,8 @@ void plugin_exit (void)
    }
    array_free(plugins);
    plugins = NULL;
+
+   blacklist_exit();
 }
 
 /**

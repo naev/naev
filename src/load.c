@@ -184,6 +184,23 @@ static int load_load( nsave_t *save, const char *path )
          } while (xml_nextNode(node));
          continue;
       }
+      else if (xml_isNode(parent, "plugins")) {
+         save->plugins = array_create( char* );
+         /* Parse rest. */
+         node = parent->xmlChildrenNode;
+         do {
+            xml_onlyNodes(node);
+
+            if (xml_isNode(node, "plugin")) {
+               const char *name = xml_get(node);
+               if (name != NULL)
+                  array_push_back( &save->plugins, strdup(name) );
+               else
+                  WARN(_("Save '%s' has unnamed plugin node!"), path);
+            }
+         } while (xml_nextNode(node));
+         continue;
+      }
    } while (xml_nextNode(parent));
 
    /* Defaults. */
@@ -385,6 +402,9 @@ void load_free (void)
 {
    for (int i=0; i<array_size(load_saves); i++) {
       nsave_t *ns = &load_saves[i];
+      for (int j=0; j<array_size(ns->plugins); j++)
+         free( ns->plugins[j] );
+      array_free( ns->plugins );
       free(ns->save_name);
       free(ns->path);
       free(ns->name);

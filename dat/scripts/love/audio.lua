@@ -3,9 +3,9 @@
 --]]
 
 local love_audio = {}
-function love_audio.newSource( filename, _type )
+function love_audio.newSource( filename, type )
    -- We actually have most of the API implemented on a C level.
-   return naev.audio.new( filename )
+   return naev.audio.new( filename, type )
 end
 function love_audio.setVolume( _volume ) end -- Don't allow setting master volume
 function love_audio.getVolume()

@@ -1449,9 +1449,10 @@ static int faction_parseSocial( const char *file )
    /* Get name. */
    base = NULL;
    xmlr_attr_strd(parent, "name", name);
-   if (name != NULL) {
+   if (name != NULL)
       base = &faction_stack[ faction_get( name ) ];
-   }
+   free( name );
+   name = NULL;
 
    assert( base != NULL );
 
