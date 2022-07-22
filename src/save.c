@@ -204,5 +204,10 @@ err:
  */
 void save_reload (void)
 {
-   load_gameFile( load_getList()[0].path );
+   const nsave_t *ns = load_getList( player.name );
+   if (array_size(ns) <= 0) {
+      WARN(_("Unable to reload save for '%s'!"),player.name);
+      return;
+   }
+   load_gameFile( ns[0].path );
 }

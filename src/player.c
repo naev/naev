@@ -249,8 +249,8 @@ void player_new (void)
       return;
    }
 
-   load_refresh( player.name );
-   if (array_size( load_getList() ) > 0) {
+   load_refresh();
+   if (array_size( load_getList( player.name ) ) > 0) {
       int r = dialogue_YesNo(_("Overwrite"),
             _("You already have a pilot named %s. Their autosave and backup save will be overwritten. Do you wish to continue?"), player.name);
       if (r==0) { /* no */

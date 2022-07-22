@@ -31,7 +31,7 @@ typedef struct nsave_s {
 
    /* Plugins. */
    char **plugins; /**< Plugins used in the game. */
-   SaveCompatibility compatible; /**< Compatibility. */
+   SaveCompatibility compatible; /**< Compatibility status. */
 
    /* Player info. */
    char *spob; /**< Spob player is at. */
@@ -51,12 +51,6 @@ void load_loadSnapshotMenu ( const char *name );
 int load_gameDiff( const char* file );
 int load_gameFile( const char* file );
 
-int load_refresh ( const char *name );
+int load_refresh (void);
 void load_free (void);
-const nsave_t *load_getList (void);
-
-int load_refreshPlayerNames (void);
-void load_freePlayerNames (void);
-const char **load_getPlayerNames (void);
-
-void load_freeSelectedPlayerName (void);
+const nsave_t *load_getList( const char *name );
