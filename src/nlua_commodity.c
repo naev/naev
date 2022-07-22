@@ -19,6 +19,7 @@
 #include "ndata.h"
 #include "nlua_faction.h"
 #include "nlua_spob.h"
+#include "nlua_system.h"
 #include "nlua_time.h"
 #include "nlua_tex.h"
 #include "nluadef.h"
@@ -28,11 +29,14 @@
 static int commodityL_eq( lua_State *L );
 static int commodityL_get( lua_State *L );
 static int commodityL_getStandard( lua_State *L );
+static int commodityL_flags( lua_State *L );
 static int commodityL_name( lua_State *L );
 static int commodityL_nameRaw( lua_State *L );
 static int commodityL_price( lua_State *L );
 static int commodityL_priceAt( lua_State *L );
 static int commodityL_priceAtTime( lua_State *L );
+static int commodityL_canSell( lua_State *L );
+static int commodityL_canBuy( lua_State *L );
 static int commodityL_icon( lua_State *L );
 static int commodityL_description( lua_State *L );
 static int commodityL_new( lua_State *L );
@@ -43,11 +47,14 @@ static const luaL_Reg commodityL_methods[] = {
    { "__eq", commodityL_eq },
    { "get", commodityL_get },
    { "getStandard", commodityL_getStandard },
+   { "flags", commodityL_flags },
    { "name", commodityL_name },
    { "nameRaw", commodityL_nameRaw },
    { "price", commodityL_price },
    { "priceAt", commodityL_priceAt },
    { "priceAtTime", commodityL_priceAtTime },
+   { "canSell", commodityL_canSell },
+   { "canBuy", commodityL_canBuy },
    { "icon", commodityL_icon },
    { "description", commodityL_description },
    { "new", commodityL_new },
@@ -205,14 +212,11 @@ static int commodityL_eq( lua_State *L )
  */
 static int commodityL_get( lua_State *L )
 {
-   const char *name;
-   Commodity *commodity;
-
    /* Handle parameters. */
-   name = luaL_checkstring(L,1);
+   const char *name = luaL_checkstring(L,1);
 
    /* Get commodity. */
-   commodity = commodity_get( name );
+   Commodity *commodity = commodity_get( name );
    if (commodity == NULL) {
       NLUA_ERROR(L,_("Commodity '%s' not found!"), name);
       return 0;
@@ -226,7 +230,7 @@ static int commodityL_get( lua_State *L )
 /**
  * @brief Gets the list of standard commodities.
  *
- * @luatreturn table A table containing commodity objects, namely those which are standard (buyable/sellable anywhere).
+ *    @luatreturn table A table containing commodity objects, namely those which are standard (buyable/sellable anywhere).
  * @luafunc getStandard
  */
 static int commodityL_getStandard( lua_State *L )
@@ -240,6 +244,29 @@ static int commodityL_getStandard( lua_State *L )
       lua_rawseti( L, -2, i+1 );
    }
    array_free( standard );
+   return 1;
+}
+
+/**
+ * @brief Gets the flags that are set for a commodity.
+ *
+ *    @luatreturn table A table containing the flags as key and value as boolean.
+ * @luafunc flags
+ */
+static int commodityL_flags( lua_State *L )
+{
+   Commodity *c = luaL_validcommodity(L,1);
+   lua_newtable(L);
+
+   lua_pushboolean(L, commodity_isFlag(c,COMMODITY_FLAG_STANDARD));
+   lua_setfield(L, -2, "standard");
+
+   lua_pushboolean(L, commodity_isFlag(c,COMMODITY_FLAG_ALWAYS_CAN_SELL));
+   lua_setfield(L, -2, "always_can_sell");
+
+   lua_pushboolean(L, commodity_isFlag(c,COMMODITY_FLAG_PRICE_CONSTANT));
+   lua_setfield(L, -2, "price_constant");
+
    return 1;
 }
 
@@ -367,6 +394,86 @@ static int commodityL_priceAtTime( lua_State *L )
    }
 
    lua_pushnumber( L, spob_commodityPriceAtTime( p, c, t ) );
+   return 1;
+}
+
+static int spob_hasCommodity( const Commodity *c, const Spob *s )
+{
+   for (int i=0; i<array_size(s->commodities); i++) {
+      const Commodity *sc = s->commodities[i];
+      if (sc==c)
+         return 1;
+   }
+
+   return 0;
+}
+
+/**
+ * @brief Sees if a commodity can be sold at either a spob or system.
+ *
+ * It does not check faction standings, only if it is possible to sell at a spob or a system (checking all spobs in the system).
+ *
+ *    @luatparam Commodity c Commodity to check.
+ *    @luatparam Spob|System where Either a spob or a system to see if the commodity can be sold there.
+ * @luafunc canSell
+ */
+static int commodityL_canSell( lua_State *L )
+{
+   Commodity *c = luaL_validcommodity(L,1);
+
+   if (commodity_isFlag( c, COMMODITY_FLAG_ALWAYS_CAN_SELL )) {
+      lua_pushboolean(L,1);
+      return 1;
+   }
+
+   if (lua_issystem(L,2)) {
+      StarSystem *s = luaL_validsystem(L,2);
+      for (int i=0; i<array_size(s->spobs); i++) {
+         if (spob_hasCommodity( c, s->spobs[i] )) {
+            lua_pushboolean(L,1);
+            return 1;
+         }
+      }
+   }
+   else {
+      Spob *s = luaL_validspob(L,2);
+      lua_pushboolean(L, spob_hasCommodity( c, s ) );
+      return 1;
+   }
+
+   lua_pushboolean(L,0);
+   return 1;
+}
+
+/**
+ * @brief Sees if a commodity can be bought at either a spob or system.
+ *
+ * It does not check faction standings, only if it is possible to buy at a spob or a system (checking all spobs in the system).
+ *
+ *    @luatparam Commodity c Commodity to check.
+ *    @luatparam Spob|System where Either a spob or a system to see if the commodity is sold there.
+ * @luafunc canBuy
+ */
+static int commodityL_canBuy( lua_State *L )
+{
+   Commodity *c = luaL_validcommodity(L,1);
+
+   if (lua_issystem(L,2)) {
+      StarSystem *s = luaL_validsystem(L,2);
+      for (int i=0; i<array_size(s->spobs); i++) {
+         if (spob_hasCommodity( c, s->spobs[i] )) {
+            lua_pushboolean(L,1);
+            return 1;
+         }
+      }
+   }
+   else {
+      Spob *s = luaL_validspob(L,2);
+      lua_pushboolean(L, spob_hasCommodity( c, s ) );
+      return 1;
+   }
+
+   lua_pushboolean(L,0);
    return 1;
 }
 

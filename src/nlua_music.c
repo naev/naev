@@ -20,26 +20,20 @@
 #include "nluadef.h"
 
 /* Music methods. */
-static int musicL_delay( lua_State *L );
-static int musicL_load( lua_State *L );
+static int musicL_choose( lua_State *L );
 static int musicL_play( lua_State *L );
 static int musicL_pause( lua_State *L );
-static int musicL_resume( lua_State *L );
 static int musicL_stop( lua_State *L );
 static int musicL_isPlaying( lua_State *L );
 static int musicL_current( lua_State *L );
-static int musicL_setRepeat( lua_State *L );
 static int musicL_getVolume( lua_State *L );
 static const luaL_Reg music_methods[] = {
-   { "delay", musicL_delay },
-   { "load", musicL_load },
+   { "choose", musicL_choose },
    { "play", musicL_play },
    { "pause", musicL_pause },
-   { "resume", musicL_resume },
    { "stop", musicL_stop },
    { "isPlaying", musicL_isPlaying },
    { "current", musicL_current },
-   { "setRepeat", musicL_setRepeat },
    { "getVolume", musicL_getVolume },
    {0,0}
 }; /**< Music specific methods. */
@@ -70,53 +64,27 @@ int nlua_loadMusic( nlua_env env )
 /**
  * @brief Delays a rechoose.
  *
- * @usage music.delay( "ambient", 5.0 ) -- Rechooses ambient in 5 seconds
+ * @usage music.choose( "ambient" ) -- Rechooses ambient in 5 seconds
  *
  *    @luatparam string situation Situation to choose.
- *    @luatparam number delay Delay in seconds.
- * @luafunc delay
+ * @luafunc choose
  */
-static int musicL_delay( lua_State* L )
+static int musicL_choose( lua_State* L )
 {
    const char *situation = luaL_checkstring(L,1);
-   double delay          = luaL_checknumber(L,2);
-   /* Delay. */
-   music_chooseDelay( situation, delay );
-   return 0;
-}
-
-/**
- * @brief Loads a song.
- *
- * Restores the music system if it was temporarily disabled.
- *
- *    @luatparam string name Name of the song to load.
- * @luafunc load
- */
-static int musicL_load( lua_State *L )
-{
-   const char *str = luaL_checkstring(L,1);
-   if (music_load( str )) {
-      NLUA_ERROR(L,_("Music '%s' invalid or failed to load."), str );
-      return 0;
-   }
-   music_tempDisable( 0 );
-
+   music_choose( situation );
    return 0;
 }
 
 /**
  * @brief Plays the loaded song.
  *
- * Restores the music system if it was temporarily disabled.
- *
  * @luafunc play
  */
 static int musicL_play( lua_State *L )
 {
-   (void) L;
-   music_tempDisable( 0 );
-   music_play();
+   const char *str = luaL_optstring(L,1,NULL);
+   music_play( str );
    return 0;
 }
 
@@ -131,26 +99,14 @@ static int musicL_pause( lua_State* L )
 }
 
 /**
- * @brief Resumes the music engine.
- */
-static int musicL_resume( lua_State* L )
-{
-   (void) L;
-   music_resume();
-   return 0;
-}
-
-/**
  * @brief Stops playing the current song.
  *
- *    @luatparam[opt=false] boolean disable Whether or not to disable the music system temporarily after stopping.
  * @luafunc stop
  */
 static int musicL_stop( lua_State *L )
 {
-   int disable = lua_toboolean(L,1);
+   (void) L;
    music_stop();
-   music_tempDisable( disable );
    return 0;
 }
 
@@ -162,7 +118,8 @@ static int musicL_stop( lua_State *L )
  */
 static int musicL_isPlaying( lua_State* L )
 {
-   lua_pushboolean(L, music_isPlaying());
+   MusicInfo_t *minfo = music_info();
+   lua_pushboolean(L, minfo->playing);
    return 1;
 }
 
@@ -177,23 +134,10 @@ static int musicL_isPlaying( lua_State* L )
  */
 static int musicL_current( lua_State* L )
 {
-   const char *music_name = music_playingName();
-   lua_pushstring(L, (music_name != NULL) ? music_name : "none" );
-   lua_pushnumber(L, music_playingTime() );
+   MusicInfo_t *minfo = music_info();
+   lua_pushstring(L, minfo->name);
+   lua_pushnumber(L, minfo->pos);
    return 2;
-}
-
-/**
- * @brief Makes the music repeat. This gets turned of when a new music is chosen, e.g., take-off or landing.
- *
- *    @luatparam boolean repeat Whether or not repeat should be set.
- * @luafunc setRepeat
- */
-static int musicL_setRepeat( lua_State* L )
-{
-   int b = lua_toboolean(L,1);
-   music_repeat( b );
-   return 0;
 }
 
 /**

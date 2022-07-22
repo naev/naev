@@ -24,6 +24,7 @@
 #include "nlua.h"
 #include "nlua_hook.h"
 #include "nlua_system.h"
+#include "nlua_tex.h"
 #include "nluadef.h"
 #include "npc.h"
 #include "nstring.h"
@@ -182,29 +183,27 @@ static int evtL_npcAdd( lua_State *L )
 {
    unsigned int id;
    int priority;
-   const char *func, *name, *gfx, *desc, *bg;
-   char portrait[PATH_MAX], background[PATH_MAX];
+   const char *func, *name, *desc;
+   glTexture *portrait, *bg;
    Event_t *cur_event;
 
    /* Handle parameters. */
    func = luaL_checkstring(L, 1);
    name = luaL_checkstring(L, 2);
-   gfx  = luaL_checkstring(L, 3);
+   portrait = luaL_validtex(L, 3, GFX_PATH"portraits/");
    desc = luaL_checkstring(L, 4);
 
    /* Optional parameters. */
    priority = luaL_optinteger(L,5,5);
-   bg   = luaL_optstring(L,6,NULL);
-
-   /* Set path. */
-   ndata_getPathDefault( portrait, sizeof(portrait), GFX_PATH"portraits/", gfx );
-   if (bg!=NULL)
-      ndata_getPathDefault( background, sizeof(background), GFX_PATH"portraits/", bg );
+   if (!lua_isnoneornil(L,6))
+      bg = luaL_validtex(L,6,GFX_PATH"portraits/");
+   else
+      bg = NULL;
 
    cur_event = event_getFromLua(L);
 
    /* Add npc. */
-   id = npc_add_event( cur_event->id, func, name, priority, portrait, desc, (bg==NULL) ? bg : background );
+   id = npc_add_event( cur_event->id, func, name, priority, portrait, desc, bg );
 
    bar_regen();
 

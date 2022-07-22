@@ -274,7 +274,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    Spob *p;
    static int phase=0;
    glColour ccol;
-   char buf[STRMAX_SHORT];
+   char buf[STRMAX];
    int cnt;
    double ast_nb, ast_area;
    double f;

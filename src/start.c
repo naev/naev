@@ -154,6 +154,7 @@ void start_cleanup (void)
    free( start_data.mission );
    free( start_data.event );
    free( start_data.chapter );
+   free( start_data.spob_lua_default );
    memset( &start_data, 0, sizeof(start_data) );
 }
 

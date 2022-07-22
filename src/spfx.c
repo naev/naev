@@ -440,7 +440,7 @@ void spfx_free (void)
    /* Free the trail styles. */
    for (int i=0; i<array_size(trail_spec_stack); i++) {
       free( trail_spec_stack[i].name );
-      //free( trail_spec_stack[i].filename );
+      free( trail_spec_stack[i].filename );
    }
    array_free( trail_spec_stack );
    trail_spec_stack = NULL;
@@ -1158,8 +1158,10 @@ static int trailSpec_parse( TrailSpec *tc, const char *file, int firstpass )
             WARN(_("Trail '%s' that inherits from '%s' has missing reference!"), tc->name, inherits );
          else {
             char *name = tc->name;
+            char *filename = tc->filename;
             memcpy( tc, tsparent, sizeof(TrailSpec) );
             tc->name = name;
+            tc->filename = filename;
          }
       }
    }
@@ -1228,6 +1230,8 @@ static int trailSpec_load (void)
          tc.filename = ts_files[i];
          array_push_back( &trail_spec_stack, tc );
       }
+      else
+         free( ts_files[i] );
    }
 
    /* Second pass to complete inheritance. */

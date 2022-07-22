@@ -6,6 +6,10 @@ Please click on the following links to access different parts of the document.
 
 ## [Introduction](sec/intro.md)
 
+## [Plugin Framework](sec/plugins.md)
+
+### [Extending Naev Functionality](sec/plugins.md)
+
 ## [Missions and Events](sec/misn.md)
 
 ### [Basics](sec/misn-basics.md)

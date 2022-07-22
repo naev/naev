@@ -22,6 +22,6 @@ void menu_info( int window );
 void info_update (void);
 
 /* Custom buttons. */
-int info_buttonRegister( const char *caption, int priority );
+int info_buttonRegister( const char *caption, int priority, SDL_Keycode key );
 int info_buttonUnregister( int id );
 void info_buttonClear (void);
