@@ -259,7 +259,7 @@ static int load_enumerateCallbackPlayer( void* data, const char* origdir, const 
       nsave_t ns;
       int ret = load_load( &ns, path );
       if (ret == 0) {
-         ns.save_name = strdup( path );
+         ns.save_name = strdup( fname );
          ns.save_name[ strlen(ns.save_name)-3 ] = '\0';
          ns.modtime = stat.modtime;
          array_push_back( &ps->saves, ns );
@@ -311,8 +311,12 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
       psave.name = NULL;
       psave.saves = array_create( nsave_t );
       PHYSFS_enumerate( path, load_enumerateCallbackPlayer, &psave );
-      qsort( psave.saves, array_size(psave.saves), sizeof(nsave_t), load_sortCompare );
-      array_push_back( &load_saves, psave );
+      if (psave.name!=NULL) {
+         qsort( psave.saves, array_size(psave.saves), sizeof(nsave_t), load_sortCompare );
+         array_push_back( &load_saves, psave );
+      }
+      else
+         array_free( psave.saves );
    }
 
    free( path );
@@ -551,7 +555,7 @@ static void load_menu_snapshots( unsigned int wdw, const char *str )
    name = toolkit_getList( wdw, "lstNames" );
    if (strcmp(name,_("None")) == 0)
       return;
-   load_loadSnapshotMenu( load_player->saves[pos].name );
+   load_loadSnapshotMenu( load_saves[pos].name );
 }
 
 /**
@@ -577,6 +581,7 @@ static void load_snapshot_menu_save( unsigned int wdw, const char *str )
    if (save_all_with_name(save_name) < 0)
       dialogue_alert( _("Failed to save the game! You should exit and check the log to see what happened and then file a bug report!") );
    else {
+      load_refresh();
       load_snapshot_menu_close( wdw, str );
       load_loadSnapshotMenu( player.name );
    }
@@ -692,8 +697,10 @@ static void load_menu_update( unsigned int wid, const char *str )
    /* Get position. */
    pos = toolkit_getListPos( wid, "lstNames" );
 
-   load_refresh();
    ns = &load_saves[pos].saves[0];
+   if (selected_player != NULL)
+      free( selected_player );
+   selected_player = strdup( load_saves[pos].name );
 
    display_save_info( wid, ns );
 }
@@ -846,6 +853,8 @@ static void load_menu_delete( unsigned int wdw, const char *str )
    if (!PHYSFS_delete( path ))
       dialogue_alert( _("Unable to delete '%s' directory"), load_saves[pos].name );
 
+   load_refresh();
+
    /* need to reload the menu */
    load_menu_close( wdw, str );
    load_loadGameMenu();
@@ -875,6 +884,8 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
    /* Remove it. */
    pos = toolkit_getListPos( wid, "lstSaves" );
    PHYSFS_delete( load_player->saves[pos].path );
+
+   load_refresh();
 
    /* need to reload the menu */
    load_snapshot_menu_close( wdw, str );
