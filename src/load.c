@@ -598,11 +598,9 @@ static void load_menu_snapshots( unsigned int wdw, const char *str )
 {
    (void) str;
    int pos;
-   const char *name;
 
    pos = toolkit_getListPos( wdw, "lstNames" );
-   name = toolkit_getList( wdw, "lstNames" );
-   if (strcmp(name,_("None")) == 0)
+   if (array_size(load_saves) <= 0)
       return;
    load_loadSnapshotMenu( load_saves[pos].name );
 }
@@ -736,11 +734,9 @@ static void load_menu_update( unsigned int wid, const char *str )
    (void) str;
    int pos;
    const nsave_t *ns;
-   const char *save;
 
    /* Make sure list is ok. */
-   save = toolkit_getList( wid, "lstNames" );
-   if (strcmp(save,_("None")) == 0)
+   if (array_size( load_saves ) <= 0)
       return;
 
    /* Get position. */
@@ -764,11 +760,9 @@ static void load_snapshot_menu_update( unsigned int wid, const char *str )
    (void) str;
    int pos;
    nsave_t *ns;
-   const char *save;
 
    /* Make sure list is ok. */
-   save = toolkit_getList( wid, "lstSaves" );
-   if (strcmp(save,_("None")) == 0)
+   if (array_size( load_player->saves ) <= 0)
       return;
 
    /* Get position. */
@@ -824,13 +818,11 @@ static void load_menu_load( unsigned int wdw, const char *str )
 static void load_snapshot_menu_load( unsigned int wdw, const char *str )
 {
    (void) str;
-   const char *save;
    int wid, pos;
 
    wid = window_get( "wdwLoadSnapshotMenu" );
-   save = toolkit_getList( wid, "lstSaves" );
 
-   if (strcmp(save,_("None")) == 0)
+   if (array_size( load_player->saves ) <= 0)
       return;
 
    pos = toolkit_getListPos( wid, "lstSaves" );
@@ -901,18 +893,16 @@ static void load_menu_delete( unsigned int wdw, const char *str )
  */
 static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
 {
-   const char *save;
    unsigned int wid;
    int pos;
 
    wid = window_get( "wdwLoadSnapshotMenu" );
-   save = toolkit_getList( wid, "lstSaves" );
 
-   if (strcmp(save,"None") == 0)
+   if (array_size(load_player->saves) <= 0)
       return;
 
    if (dialogue_YesNo( _("Permanently Delete?"),
-      _("Are you sure you want to permanently delete '%s'?"), save) == 0)
+      _("Are you sure you want to permanently delete '%s'?"), load_player->name) == 0)
       return;
 
    /* Remove it. */
