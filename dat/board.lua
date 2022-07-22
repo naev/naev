@@ -495,6 +495,9 @@ function board_tryCapture ( wgt, nomsg )
 		vtnk.msg(_("Insufficient Cargo Space"), _("You are unable to attempt to capture this vessel as you would be unable to transfer all of your important mission cargo to the new ship."))
 		return
 	end
+	
+	-- decide here if the player can capture it
+	--[[ todo ]]--
 	pp = player.pilot()
 	-- store the player ship important information
 	local ghost = {}
@@ -503,8 +506,7 @@ function board_tryCapture ( wgt, nomsg )
 	ghost.dir = pp:dir()
 	ghost.vel = pp:vel()
 	ghost.outfits = pp:outfits()
-
-
+	
 	-- until we plug crewmate logic into this so that a commander on your ship takes your ship,
 	-- I think we can just add a little easter-egg where the old ship is controlled by the captured captain
 	local fakefac = faction.dynAdd(board_plt:faction(), _("Mothership"), board_plt:name(), { ai = "escort_guardian", clear_enemies = true})
