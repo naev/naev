@@ -49,9 +49,14 @@
       * Can add notes to the star map
       * Autoscroll is now an option in the VN
       * Spob communication window has been redone
+      * Limit sound output volume when lots of sounds are playing jointly
+      * Redid the music engine to be less prone to play combat music
+   * Bug Fixes
+      * Too many to list, but we'll try
+      * Fixed looting cargo when boarding giving less than expected
    * Engine changes
       * Work has begun on a development manual
-      * Basic plugin support
+      * Plugin support with explicit support for total conversions
       * Simplified terminology with spob (space objects) replacing planet/asset
       * Support for tags in missions
       * Player ships can store their own variables now
