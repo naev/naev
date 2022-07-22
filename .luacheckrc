@@ -180,7 +180,16 @@ stds.GUI.globals = {
    "update_target",
 }
 stds.Misn.globals={"abort", "accept", "create", "mem"}
-stds.Music.globals={"choose"}
+stds.Music.globals={
+   "choose",
+   "update",
+   "play",
+   "stop",
+   "pause",
+   "resume",
+   "info",
+   "volume",
+}
 stds.PilotOutfit.globals={
    "cleanup",
    "cooldown",
@@ -224,7 +233,7 @@ files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
 files["dat/rep.lua"].std = STANDARD .. TK .. "+Tex+Col+Background+CLI+Camera+Music+Audio+LinOpt"
 files["dat/save_updater.lua"].std = "API_save_updater"
 files["dat/shipai.lua"].std = STANDARD .. TK .. "+API_shipai"
-files["dat/snd/music.lua"].std = STANDARD .. "+Music"
+files["dat/snd/music.lua"].std = STANDARD .. TK .. "+Music"
 files["dat/spob/**/*.lua"].std = STANDARD .. GFX .."+Camera+API_spob"
 files["dat/effects/**/*.lua"].std = STANDARD .. "+API_effects"
 

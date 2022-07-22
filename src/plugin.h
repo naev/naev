@@ -12,6 +12,7 @@ typedef struct plugin_s {
    char *mountpoint;    /**< Where it is mounted. */
    int priority;        /**< Loading priority of the mod. Lower is better, defaults to 5. */
    int compatible;      /**< Whether or not it is compatible with the current version of Naev. */
+   int total_conversion;/**< Whether or not it is a total conversion. */
 } plugin_t;
 
 int plugin_init (void);

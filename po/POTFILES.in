@@ -3163,8 +3163,6 @@ src/msgcat.c
 src/msgcat.h
 src/music.c
 src/music.h
-src/music_openal.c
-src/music_openal.h
 src/naev.c
 src/naev.h
 src/ncompat.h
@@ -3295,6 +3293,8 @@ src/pause.c
 src/pause.h
 src/perlin.c
 src/perlin.h
+src/physfs_archiver_blacklist.c
+src/physfs_archiver_blacklist.h
 src/physfsrwops.c
 src/physfsrwops.h
 src/physics.c
@@ -3346,8 +3346,6 @@ src/slots.c
 src/slots.h
 src/sound.c
 src/sound.h
-src/sound_openal.c
-src/sound_openal.h
 src/space.c
 src/space.h
 src/space_fdecl.h

@@ -12,6 +12,7 @@ int pilot_cargoUsed( const Pilot* pilot ); /* gets how much cargo it has onboard
 int pilot_cargoUsedMission( const Pilot* pilot ); /* For mission cargo. */
 int pilot_cargoFree( const Pilot* p ); /* cargo space */
 int pilot_cargoOwned( const Pilot* pilot, const Commodity* cargo );
+int pilot_cargoOwnedMission( const Pilot* pilot, int id );
 int pilot_cargoAdd( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id );
 int pilot_cargoRm( Pilot* pilot, const Commodity* cargo, int quantity );

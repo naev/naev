@@ -6,17 +6,26 @@
 /** @cond */
 #include "SDL_mutex.h"
 #include "SDL_rwops.h"
+#include "al.h"
+#include <vorbis/vorbisfile.h>
 /** @endcond */
 
+/*
+ * Some OpenAL extension defines.
+ */
+#ifndef ALC_OUTPUT_LIMITER_SOFT
+#define ALC_OUTPUT_LIMITER_SOFT  0x199A
+#endif /* ALC_OUTPUT_LIMITER_SOFT */
+
 extern int sound_disabled;
+
+#define SOUND_REFERENCE_DISTANCE    500.  /**< OpenAL reference distance. */
+#define SOUND_MAX_DISTANCE          25e3  /**< OpenAL max distance. */
 
 /*
  * Static configuration.
  */
-#define SOUND_FADEOUT         100
-#define SOUND_VOICES          128   /**< Maximum number of simultaneous sounds to play, must be at least 16. */
 #define SOUND_PILOT_RELATIVE  1     /**< Whether the sound is relative to the pilot (as opposed to the camera). */
-#define SOUND_BUFFER_SIZE     128   /**< Size of the buffer (in KiB) to use for music. */
 
 /*
  * Environmental features.
@@ -25,6 +34,26 @@ typedef enum SoundEnv_e {
    SOUND_ENV_NORMAL, /**< Normal space. */
    SOUND_ENV_NEBULA /**< Nebula space. */
 } SoundEnv_t; /**< Type of environment. */
+
+typedef struct alInfo_s {
+   ALint output_limiter; /**< Whether or not context has output limiter. */
+   ALint efx; /**< Whether or not context has efx extension. */
+   ALint efx_major; /**< EFX major version. */
+   ALint efx_minor; /**< EFX minor version. */
+   ALint efx_auxSends; /**< Number of auxiliary sends of the context. */
+   /* Effect types. */
+   ALint efx_reverb; /**< Reverb effect supported. */
+   ALint efx_echo; /**< Echo effect supported. */
+} alInfo_t;
+extern alInfo_t al_info;
+
+extern ALuint sound_efx_directSlot; /**< Direct 3d source slot. */
+
+/*
+ * Vorbis stuff.
+ */
+extern ov_callbacks sound_al_ovcall;
+extern ov_callbacks sound_al_ovcall_noclose;
 
 /*
  * sound subsystem
@@ -82,6 +111,7 @@ void sound_setAbsorption( double value );
 int sound_env( SoundEnv_t env, double param );
 
 /* Lock for OpenAL operations. */
+int sound_al_buffer( ALuint *buf, SDL_RWops *rw, const char *name );
 extern SDL_mutex *sound_lock; /**< Global sound lock, used for all OpenAL calls. */
 #define soundLock()        SDL_mutexP(sound_lock)
 #define soundUnlock()      SDL_mutexV(sound_lock)

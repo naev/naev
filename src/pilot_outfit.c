@@ -274,6 +274,7 @@ int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
    const Outfit *o;
 
    /* Set the outfit. */
+   s->state    = PILOT_OUTFIT_OFF;
    s->outfit   = outfit;
 
    /* Set some default parameters. */

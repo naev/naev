@@ -690,7 +690,7 @@ function vn.StateSay:_update( dt )
          if vn.autoscroll then
             vn._buffer_y = vn._buffer_y - lh
          else
-            self._finish()
+            vn.StateSay._finish( self )
          end
       end
    end
@@ -1358,7 +1358,7 @@ function vn.music( filename, params, dontstop )
    else
       vn.func( function ()
          if not dontstop then
-            music.stop(true)
+            music.stop()
             lmusic.stop()
          end
          vn._handle_music = true
@@ -1490,7 +1490,10 @@ Plays a sound.
 --]]
 function vn.sfx( sfx, params )
    params = params or {}
-   vn._checkstarted()
+   if vn._started then
+      luaspfx.sfx( false, nil, sfx, params )
+      return
+   end
    local s = vn.State.new()
    s._init = function (state)
       local _sfx = sfx:clone()

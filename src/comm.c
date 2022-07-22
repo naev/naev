@@ -210,6 +210,7 @@ int comm_openSpob( Spob *spob )
 
    /* Lua stuff. */
    if (spob->lua_comm != LUA_NOREF) {
+      spob_luaInitMem( spob );
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_comm); /* f */
       if (nlua_pcall( spob->lua_env, 0, 0 )) {
          WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "comm", lua_tostring(naevL,-1));

@@ -29,8 +29,7 @@ def main():
 
 
 def trace(f, *args, **kwargs):
-    """ Run the given function on the given arguments. In debug mode, print the function call.
-        (Indent if we trace while running a traced function.) """
+    """ Run the given function on the given arguments. In debug mode, print the function call. """
 
     if os.getenv('MESON_INSTALL_QUIET') is None:
         # HACK: when tracing a function call, use unittest.mock to construct a pretty-printable version.
@@ -45,10 +44,13 @@ def trace(f, *args, **kwargs):
     return f(*args, **kwargs)
 
 
-def copy_with_deps(bin_src, app_path, dest='Contents/Frameworks', exe_rpaths=None):
+def copy_with_deps(bin_src, app_path, dest='Contents/Frameworks'):
+    """ Copy the binary into the bundle destination, while resolving and rewriting dependencies. """
+
     loader_path = os.path.dirname(bin_src)
     bin_name = os.path.basename(bin_src)
     bin_dst = os.path.join(app_path, dest, bin_name)
+    rpaths_to_delete = set()
 
     os.makedirs(os.path.dirname(bin_dst), exist_ok=True)
     trace(shutil.copy, bin_src, bin_dst)
@@ -56,9 +58,6 @@ def copy_with_deps(bin_src, app_path, dest='Contents/Frameworks', exe_rpaths=Non
     dylibs, rpaths = otool_results(bin_src)
     # Now we have a "dylibs" list, where some entries may be "@rpath/" relative,
     # and we have a "rpaths" list, where some entries may be "@loader_path/" relative.
-    # The "rpaths" list only matters when it comes from the Naev executable, so record that result
-    if exe_rpaths is None:
-        exe_rpaths = list(rpaths)
 
     change_cmd = [host_program('install_name_tool')]
     if bin_dst.endswith('/naev'):
@@ -68,13 +67,15 @@ def copy_with_deps(bin_src, app_path, dest='Contents/Frameworks', exe_rpaths=Non
 
     for dylib in dylibs:
         dylib_name = os.path.basename(dylib)
-        dylib_path = search_and_pop_rpath(dylib, exe_rpaths, loader_path)
+        dylib_path, matching_rpath = find_dylib_dependency(dylib, rpaths, loader_path)
         if dylib_path:
             if not os.path.exists(os.path.join(app_path, dest, dylib_name)):
                 trace(copy_with_deps, dylib_path, app_path)
             change_cmd.extend(['-change', dylib, f'@rpath/{dylib_name}'])
+        if matching_rpath:
+            rpaths_to_delete.add(matching_rpath)
 
-    for rpath in set(rpaths).difference(exe_rpaths):
+    for rpath in rpaths_to_delete:
         change_cmd.extend(['-delete_rpath', rpath])
 
     change_cmd.append(bin_dst)
@@ -82,6 +83,10 @@ def copy_with_deps(bin_src, app_path, dest='Contents/Frameworks', exe_rpaths=Non
 
 
 def otool_results(bin_src):
+    """ Look at a host binary's load instructions using "otool", and return
+    (0) the list of dylibs it says to load,
+    (1) the list of rpaths it says to search. """
+
     operands = {'LC_LOAD_DYLIB': [], 'LC_RPATH': []}
     operand_list = unwanted = []
     for line in subprocess.check_output([host_program('otool'), '-l', bin_src]).decode().splitlines():
@@ -93,25 +98,27 @@ def otool_results(bin_src):
     return operands['LC_LOAD_DYLIB'], operands['LC_RPATH']
 
 
-def search_and_pop_rpath(dylib, rpaths, loader_path):
-    dylib_path = None
+def find_dylib_dependency(dylib, rpaths, loader_path):
+    """ Return the path to the dependency "dylib", and the value from "rpaths" that found it. """
+
     if dylib.startswith(LOCAL_LIB_ROOTS):
-        dylib_path = dylib
         lib_dir = os.path.realpath(os.path.dirname(dylib))
         for rpath in list(rpaths):
             if os.path.realpath(rpath) == lib_dir:
-                rpaths.remove(rpath)
+                return dylib, rpath
+        return dylib, None
     elif dylib.startswith('@rpath/'):
         lib_base = dylib.replace('@rpath/', '', 1)
         for rpath in list(rpaths):
             trial_path = os.path.join(rpath.replace('@loader_path', loader_path), lib_base)
             if os.path.exists(trial_path):
-                dylib_path = dylib_path or trial_path  # We should bundle the first matching lib.
-                rpaths.remove(rpath)
-    return dylib_path
+                return trial_path, rpath
+    return None, None
 
 
 def host_program(name):
+    """ Turn a program name like 'gcc' into one like 'x86_64-apple-darwin17-gcc'. """
+
     try:
         return os.environ['HOST'] + '-' + name
     except KeyError:

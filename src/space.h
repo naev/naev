@@ -336,6 +336,8 @@ char spob_getColourChar( const Spob *p );
 const char *spob_getSymbol( const Spob *p );
 const glColour* spob_getColour( const Spob *p );
 void spob_updateLand( Spob *p );
+/* Lua stuff. */
+void spob_luaInitMem( const Spob *spob );
 
 /*
  * Virtual spob stuff.

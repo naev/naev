@@ -52,9 +52,7 @@ function enter_bar ()
    if not lmisn.anyMissionActive( flf_missions ) then
       hook.rm( mem.bar_hook )
       hook.rm( mem.abort_hook )
-      music.stop()
-      music.load( "tension" )
-      music.play()
+      music.play( "tension.ogg" )
       var.push( "music_off", true )
       tk.msg( _("Catastrophe Looms"), _([[As you enter the bar on Sindbad, you immediately know that something is wrong. Everyone is frantic and you sense dread around your comrades. You are about to ask around when Benito approaches.]]) )
       tk.msg( _("Catastrophe Looms"), fmt.f( _([["{player}, it's horrible," she says with a look of dread in her eyes. "They found us. The damn Empire found us! I'm going to be frank, I don't even know if we can survive this." You stammer for a moment. No, it can't be true! It has to be some mistake! How can the FLF be defeated like this? Now the commotion makes perfect sense.
@@ -222,9 +220,7 @@ function pilot_death_sindbad( pilot, attacker, _arg )
       evt.finish( true )
    end
 
-   music.stop()
-   music.load( "machina" )
-   music.play()
+   music.play( "machina.ogg" )
    var.push( "music_wait", true )
 
    player.pilot():setInvincible()
@@ -260,8 +256,7 @@ end
 function jumpin ()
    if not mem.found_thurion and system.cur() == system.get("Oriantis") then
       music.stop()
-      music.load( "intro" )
-      music.play()
+      music.play( "intro.ogg" )
       var.push( "music_wait", true )
       hook.timer( 5.0, "timer_thurion" )
    elseif mem.found_thurion and system.cur() == system.get("Metsys") then

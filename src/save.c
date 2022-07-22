@@ -15,6 +15,7 @@
 
 #include "save.h"
 
+#include "array.h"
 #include "conf.h"
 #include "dialogue.h"
 #include "event.h"
@@ -30,6 +31,7 @@
 #include "nstring.h"
 #include "nxml.h"
 #include "player.h"
+#include "plugin.h"
 #include "shiplog.h"
 #include "start.h"
 #include "unidiff.h"
@@ -103,6 +105,7 @@ int save_all (void)
 int save_all_with_name ( char *name )
 {
    char file[PATH_MAX], backup[PATH_MAX];
+   const plugin_t *plugins = plugin_list();
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
 
@@ -132,6 +135,14 @@ int save_all_with_name ( char *name )
 
    /* Save last played. */
    xmlw_saveTime( writer, "last_played", time(NULL) );
+
+   /* Save plugins. */
+   xmlw_startElem(writer,"plugins");
+   for (int i=0; i<array_size(plugins); i++) {
+      const plugin_t *plg = &plugins[i];
+      xmlw_elem( writer, "plugin", "%s", (plg->name != NULL) ? plg->name : plg->mountpoint );
+   }
+   xmlw_endElem(writer); /* "plugins" */
 
    /* Save the data. */
    if (save_data(writer) < 0) {

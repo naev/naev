@@ -817,6 +817,7 @@ static int playerL_land( lua_State *L )
 
    /* Do whatever the spob wants to do. */
    if (spob->lua_land != LUA_NOREF) {
+      spob_luaInitMem( spob );
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_land); /* f */
       lua_pushspob( naevL, spob_index(spob) );
       lua_pushpilot( naevL, player.p->id );
@@ -1801,17 +1802,20 @@ static int playerL_chapterSet( lua_State *L )
  *
  *    @luatparam string caption Caption of the button.
  *    @luatparam function func Function to run when clicked.
+ *    @luatparam[opt] number priority Button priority, lower is more important.
+ *    @luatparam[opt] string key Hotkey for using the button without it being focused.
  *    @luatreturn number ID of the info window button for use with player.infoButtonUnregister.
  * @luafunc infoButtonRegister
  */
 static int playerL_infoButtonRegister( lua_State *L )
 {
-   int id, priority;
+   int id;
    const char *caption = luaL_checkstring( L, 1 );
+   int priority = luaL_optinteger( L, 3, 5 );
+   const char *key = luaL_optstring( L, 4, "" );
    luaL_checktype( L, 2, LUA_TFUNCTION );
-   priority = luaL_optinteger(L,3,5);
    lua_pushvalue( L, 2 );
-   id = info_buttonRegister( caption, priority );
+   id = info_buttonRegister( caption, priority, SDL_GetKeyFromName( key ) );
    lua_pushinteger( L, id );
    return 1;
 }

@@ -10,9 +10,9 @@
  * Adding.
  */
 unsigned int npc_add_mission( unsigned int mid, const char *func, const char *name,
-      int priority, const char *portrait, const char *desc, const char *background );
+      int priority, glTexture *portrait, const char *desc, glTexture *background );
 unsigned int npc_add_event( unsigned int evt, const char *func, const char *name,
-      int priority, const char *portrait, const char *desc, const char *background );
+      int priority, glTexture *portrait, const char *desc, glTexture *background );
 
 /*
  * Removing.

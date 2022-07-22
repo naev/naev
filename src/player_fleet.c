@@ -127,23 +127,27 @@ int pfleet_deploy( PlayerShip_t *ps )
    return 0;
 }
 
-static void shipCargo( PilotCommodity **pclist, Pilot *p )
+static void shipCargo( PilotCommodity **pclist, Pilot *p, int remove )
 {
    for (int i=array_size(p->commodities)-1; i>=0; i--) {
       const PilotCommodity *pc = &p->commodities[i];
       int q = pc->quantity;
       int added;
 
-      /* Ignore mission cargo. */
-      if (pc->id > 0) {
+      /* Mission cargo gets added independently. */
+      if (pc->id > 0)
          array_push_back( pclist, *pc );
-      }
       else {
          /* See if it can be added. */
          added = 0;
          for (int j=0; j<array_size(*pclist); j++) {
             PilotCommodity *lc = &(*pclist)[j];
 
+            /* Ignore mission cargo. */
+            if (lc->id > 0)
+               continue;
+
+            /* Cargo must match. */
             if (pc->commodity != lc->commodity)
                continue;
 
@@ -156,11 +160,13 @@ static void shipCargo( PilotCommodity **pclist, Pilot *p )
       }
 
       /* Remove the cargo. TODO use pilot_cargoRm somehow.  */
-      array_erase( &p->commodities, &pc[0], &pc[1] );
+      if (remove)
+         array_erase( &p->commodities, &pc[0], &pc[1] );
    }
 
    /* Update cargo. */
-   pilot_cargoCalc( p );
+   if (remove)
+      pilot_cargoCalc( p );
 }
 
 /**
@@ -171,7 +177,7 @@ void pfleet_cargoRedistribute (void)
    PilotCommodity *pclist = array_create( PilotCommodity );
 
    /* First build up a list of all the potential cargo. */
-   shipCargo( &pclist, player.p );
+   shipCargo( &pclist, player.p, 1 );
    for (int i=0; i<array_size(player.p->escorts); i++) {
       Escort_t *e = &player.p->escorts[i];
       Pilot *pe = pilot_get( e->id );
@@ -179,7 +185,7 @@ void pfleet_cargoRedistribute (void)
          continue;
       if (e->type != ESCORT_TYPE_FLEET)
          continue;
-      shipCargo( &pclist, pe );
+      shipCargo( &pclist, pe, 1 );
    }
 
    /* TODO sort based on something? */
@@ -343,4 +349,55 @@ int pfleet_cargoRm( const Commodity *com, int q, int jet )
          removed += pilot_cargoRm( player.p, com, q );
    }
    return removed;
+}
+
+/**
+ * @brief Gets a list of all the cargo in the fleet.
+ *
+ *    @return List of all the cargo in the fleet (array.h). Individual elements do not have to be freed, but the list does.
+ */
+PilotCommodity* pfleet_cargoList (void)
+{
+   PilotCommodity *pclist = array_create( PilotCommodity );
+   shipCargo( &pclist, player.p, 0 );
+   for (int i=0; i<array_size(player.p->escorts); i++) {
+      Escort_t *e = &player.p->escorts[i];
+      Pilot *pe = pilot_get( e->id );
+      if (pe == NULL)
+         continue;
+      if (e->type != ESCORT_TYPE_FLEET)
+         continue;
+      shipCargo( &pclist, pe, 0 );
+   }
+   return pclist;
+}
+
+/**
+ * @brief Gets the list of ships that are carry a certain commodity in the player fleet and the amount they are carrying.
+ *
+ *    @param com Commodity to see which ships have.
+ *    @return An array of ships and the amount they have (array.h). Must be freed with array_free.
+ */
+PFleetCargo* pfleet_cargoListShips( const Commodity *com )
+{
+   PFleetCargo *plist = array_create( PFleetCargo );
+   int q = pilot_cargoOwned( player.p, com );
+   if (q > 0) {
+      PFleetCargo fc = { .p=player.p, .q=q };
+      array_push_back( &plist, fc );
+   }
+   for (int i=0; i<array_size(player.p->escorts); i++) {
+      Escort_t *e = &player.p->escorts[i];
+      Pilot *pe = pilot_get( e->id );
+      if (pe == NULL)
+         continue;
+      if (e->type != ESCORT_TYPE_FLEET)
+         continue;
+      q = pilot_cargoOwned( pe, com );
+      if (q > 0) {
+         PFleetCargo fc = { .p=pe, .q=q };
+         array_push_back( &plist, fc );
+      }
+   }
+   return plist;
 }

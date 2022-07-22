@@ -160,7 +160,7 @@ function heartbeat ()
       pp:comm(_([[Zach: "I hope they're all right."]]))
       msg = 2
    elseif msg==2 and d < 3e3 then
-      music.stop(true)
+      music.stop()
       player.autonavReset(3)
       pp:comm(_([[Zach: "Everything looks too quiet."]]))
       msg = 3

@@ -146,7 +146,6 @@ static void space_updateSpob( const Spob *p, double dt, double real_dt );
 /* Map shaders. */
 static const MapShader *mapshader_get( const char *name );
 /* Lua stuff. */
-static void spob_luaInitMem( const Spob *spob );
 static int spob_lua_cmp( const void *a, const void *b );
 static nlua_env spob_lua_get( int *mem, const char *filename );
 /*
@@ -1503,6 +1502,10 @@ void space_init( const char* sysname, int do_simulate )
       ERR(_("Cannot reinit system if there is no system previously loaded"));
    else if (sysname!=NULL) {
       cur_system = system_get( sysname );
+      if (cur_system == NULL) {
+         WARN(_("System '%s' not found, trying random system!"),sysname);
+         cur_system = &systems_stack[ RNG(0,array_size(systems_stack)-1) ];
+      }
       char *nt = ntime_pretty(0, 2);
 
       player_message(_("#oEntering System %s on %s."), _(sysname), nt);
@@ -1548,10 +1551,6 @@ void space_init( const char* sysname, int do_simulate )
    /* See if we should get a new music song. */
    if (player.p != NULL)
       music_choose(NULL);
-
-   /* Reset player enemies. */
-   player.enemies = 0;
-   player.disabled_enemies = 0;
 
    /* Reset new trails. */
    pilots_newSystem();
@@ -1894,7 +1893,7 @@ void spob_updateLand( Spob *p )
    }
 }
 
-static void spob_luaInitMem( const Spob *spob )
+void spob_luaInitMem( const Spob *spob )
 {
    if (spob->lua_mem != LUA_NOREF) {
       lua_rawgeti( naevL, LUA_REGISTRYINDEX, spob->lua_mem );
@@ -4357,7 +4356,7 @@ static int spob_lua_cmp( const void *a, const void *b )
 static nlua_env spob_lua_get( int *mem, const char *filename )
 {
    size_t sz;
-   char *dat;
+   char *dat, *dup_filename;
    spob_lua_file *lf;
    const spob_lua_file key = { .filename=filename };
 
@@ -4383,7 +4382,7 @@ static nlua_env spob_lua_get( int *mem, const char *filename )
 
    /* Add new entry and sort. */
    lf = &array_grow( &spob_lua_stack );
-   lf->filename = strdup( filename );
+   lf->filename = dup_filename = strdup( filename );
    lf->env = env;
 
    /* Add the spob memory table. */
@@ -4398,6 +4397,7 @@ static nlua_env spob_lua_get( int *mem, const char *filename )
       WARN(_("Lua Spob '%s' error:\n%s"), filename, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
       free( dat );
+      free( dup_filename );
       nlua_freeEnv( env );
       luaL_unref( naevL, LUA_REGISTRYINDEX, lf->lua_mem );
       n = array_size( spob_lua_stack );

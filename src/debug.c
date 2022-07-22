@@ -219,5 +219,9 @@ void debug_sigClose (void)
 {
 #if LINUX && HAS_BFD && DEBUGGING
    bfd_close( abfd );
+   abfd = NULL;
+   signal( SIGSEGV, SIG_DFL );
+   signal( SIGFPE, SIG_DFL );
+   signal( SIGABRT, SIG_DFL );
 #endif /* LINUX && HAS_BFD && DEBUGGING */
 }
