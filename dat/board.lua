@@ -5,6 +5,7 @@ local luatk = require 'luatk'
 local lg = require 'love.graphics'
 local fmt = require 'format'
 local der = require "common.derelict"
+local swapship = require "swapship"
 
 local board_lootOne -- forward-declared function, defined at bottom of file
 local loot_mod
@@ -451,6 +452,7 @@ function board( plt )
    luatk.newButton( wdw, w-20-80, h-20-30, 80, 30, _("Close"), board_close )
    luatk.newButton( wdw, w-20-80-100, h-20-30, 80, 30, _("Loot"), board_lootSel )
    luatk.newButton( wdw, w-20-80-200, h-20-30, 80, 30, _("Loot All"), board_lootAll )
+   luatk.newButton( wdw, w-20-80-300, h-20-30, 80, 30, _("Attempt Capture"), board_tryCapture )
    if can_cannibalize() then
       luatk.newButton( wdw, w-20-80-350, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
    end
@@ -485,6 +487,41 @@ function board( plt )
    wdw:setCancel( board_close )
 
    luatk.run()
+end
+
+function board_tryCapture ( wgt, nomsg )
+	if not swapship.test(board_plt) then
+		vtnk.msg(_("Insufficient Cargo Space"), _("You are unable to attempt to capture this vessel as you would be unable to transfer all of your important mission cargo to the new ship."))
+		return
+	end
+	pp = player.pilot()
+	-- store the player ship important information
+	local ghost = {}
+	ghost.ship = pp:ship()
+	ghost.pos = pp:pos()
+	ghost.dir = pp:dir()
+	ghost.vel = pp:vel()
+	ghost.outfits = pp:outfits()
+
+
+	-- until we plug crewmate logic into this so that a commander on your ship takes your ship,
+	-- I think we can just add a little easter-egg where the old ship is controlled by the captured captain
+	local fakefac = faction.dynAdd(board_plt:faction(), _("Mothership"), board_plt:name(), { ai = "escort_guardian", clear_enemies = true})
+	-- ready to swap
+	swapship.swap(board_plt, fmt.f(_("This ship was captured in {system} on {thedate}."), { system = system.cur(), thedate = time.str(time.get()) } ))
+	
+	-- create a ghost escort that will follow the player for a bit but eventually disappear (jump, land, etc)
+	ghost.pilot = pilot.add(commander.ghost.ship, fakefac, commander.ghost.pos, fmt.f("{skill} {typetitle} {name}", commander), { naked = true })
+	-- match old speed and velocity just in case we are drifting a bit
+	ghost.pilot:setDir(commander.ghost.dir)
+	ghost.pilot:setVel(commander.ghost.vel)
+	-- ghost escort has same outfits as player had
+	for _j, o in ipairs(commander.ghost.outfits) do
+		ghost.pilot:outfitAdd(o)
+	end
+
+	-- is this necessary? I'm anal about it, let's close it.
+	board_close()
 end
 
 function board_lootOne( wgt, nomsg )
