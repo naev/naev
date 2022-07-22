@@ -1,6 +1,6 @@
 * 0.10.0 (unreleased)
    * New Mechanics
-      * Support for setting ships as escorts
+      * Support for setting ships as escorts and thus player fleets
       * Hypergates that allow for long distance travel
       * Asteroid rework
          * Asteroids no longer randomly explode
@@ -34,6 +34,7 @@
          * Help the Dvaered do some tasks
          * Tutorial for new mechanics
       * 7 New ships
+      * New spob graphics
       * Lots of new outfits and reworked old outfits
          * Use energy to avoid death
          * Create scanning pulses
@@ -54,6 +55,7 @@
    * Engine changes
       * Work has begun on a development manual
       * Plugin support with explicit support for total conversions
+      * All monolithic files have been split up
       * Simplified terminology with spob (space objects) replacing planet/asset
       * Support for tags in missions
       * Player ships can store their own variables now
@@ -64,11 +66,20 @@
       * Minor transitions added to the toolkit
       * Asteroids redone to be more flexible and easy to add using groups
       * Asteroid field support in the editor
+      * Allow for soft claims instead of only hard claims
+      * Unified the event and mission headers
+      * Implemented per-pilot variables
       * Lua scripting for spob
       * Lots of engine rewriting and modernization that should bring some speed improvements and more flexibility when modding
    * Bug Fixes
       * Too many to list, but we'll try
       * Fixed looting cargo when boarding giving less than expected
+      * Fixed all asteroid graphics being used as debris
+      * Fixed some hooks not properly passing arguments
+      * Block certain inputs during cinematics
+      * Fixed disabling saving and forcing the pilot to take off not working as expected
+      * Fixed sounds getting stopped in many cases due to garbage collection
+      * Many typo fixes
 
 * 0.9.4
    * Fix "No error." log spam with certain video card drivers
