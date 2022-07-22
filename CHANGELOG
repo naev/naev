@@ -51,9 +51,6 @@
       * Spob communication window has been redone
       * Limit sound output volume when lots of sounds are playing jointly
       * Redid the music engine to be less prone to play combat music
-   * Bug Fixes
-      * Too many to list, but we'll try
-      * Fixed looting cargo when boarding giving less than expected
    * Engine changes
       * Work has begun on a development manual
       * Plugin support with explicit support for total conversions
@@ -69,6 +66,9 @@
       * Asteroid field support in the editor
       * Lua scripting for spob
       * Lots of engine rewriting and modernization that should bring some speed improvements and more flexibility when modding
+   * Bug Fixes
+      * Too many to list, but we'll try
+      * Fixed looting cargo when boarding giving less than expected
 
 * 0.9.4
    * Fix "No error." log spam with certain video card drivers
