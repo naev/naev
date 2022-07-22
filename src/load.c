@@ -737,25 +737,28 @@ static void load_snapshot_menu_update( unsigned int wid, const char *str )
 static void load_menu_load( unsigned int wdw, const char *str )
 {
    (void) str;
-   const char *save;
-   int diff;
+   int pos, diff;
    unsigned int wid;
+   nsave_t *ns;
 
    wid = window_get( "wdwLoadGameMenu" );
-   save = toolkit_getList( wid, "lstNames" );
+   pos = toolkit_getListPos( wid, "lstNames" );
 
-   if (strcmp(save,_("None")) == 0 || array_size(load_saves) == 0)
+   if (array_size(load_saves) <= 0)
       return;
 
+   ns = &load_saves[pos].saves[0];
+
    /* Check version. */
-   diff = naev_versionCompare( load_saves[0].saves[0].version );
+   /* TODO use compatibility. */
+   diff = naev_versionCompare( ns->version );
    if (ABS(diff) >= 2) {
       if (!dialogue_YesNo( _("Save game version mismatch"),
             _("Save game '%s' version does not match Naev version:\n"
             "   Save version: #r%s#0\n"
             "   Naev version: %s\n"
             "Are you sure you want to load this game? It may lose data."),
-            save, load_saves[0].saves[0].version, VERSION ))
+            ns->name, ns->version, VERSION ))
          return;
    }
 
@@ -766,7 +769,7 @@ static void load_menu_load( unsigned int wdw, const char *str )
    menu_main_close();
 
    /* Try to load the game. */
-   if (load_game( &load_saves[0].saves[0] )) {
+   if (load_game( ns )) {
       /* Failed so reopen both. */
       menu_main();
       load_loadGameMenu();
