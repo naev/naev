@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-07-13 21:15+0000\n"
+"PO-Revision-Date: 2022-07-22 21:20+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -65114,15 +65114,15 @@ msgstr "Voluntarios y Equipos"
 #. these missions can be done at once
 #: dat/missions/neutral/antlejos/ant_supplies.lua:63 src/outfit.c:308
 msgid "Small"
-msgstr ""
+msgstr "Pequeño"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:65 src/outfit.c:310
 msgid "Medium"
-msgstr ""
+msgstr "Medio"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:67 src/outfit.c:312
 msgid "Large"
-msgstr ""
+msgstr "Grande"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:69
 msgid "#oANTLEJOS:#0 {adj} delivery of supplies from {pnt} ({sys} system)"
@@ -75008,8 +75008,8 @@ msgid ""
 "Congratulations, you have successfully worked your way back into good "
 "standing with this faction. Try not to relapse into your life of crime!"
 msgstr ""
-"Enhorabuena, has conseguido volver a estar bien con esta facción. ¡Intenta "
-"no recaer en tu vida delictiva!"
+"Enhorabuena, has conseguido volver a tener buen estatus con esta facción. ¡"
+"Intenta no recaer en tu vida delictiva!"
 
 #. On abort, reset reputation.
 #. Remove the standing hook prior to modifying reputation.
@@ -80670,8 +80670,8 @@ msgid ""
 "The passenger looks at your credentials and remarks, \"Someone of your "
 "standing will not be allowed to set foot on the holy ground. "
 msgstr ""
-"El pasajero mira tus credenciales y comenta: \"A alguien de tu categoría no "
-"se le permitirá pisar la tierra sagrada\". "
+"El pasajero mira tus credenciales y comenta: \"A alguien de tu estatus no se "
+"te permitirá pisar la tierra sagrada\". "
 
 #: dat/missions/sirius/srs_ferry.lua:243 dat/missions/sirius/srs_ferry.lua:245
 msgid "Deficient clearance"
@@ -82605,9 +82605,9 @@ msgid ""
 "different known factions in the universe. Not everyone is as friendly as me "
 "out there!\""
 msgstr ""
-"\" La#oFama#0 te informa de tu posición actual con las diferentes facciones "
-"conocidas en el universo. ¡No todo el mundo es tan amistoso como yo ahí "
-"fuera!\""
+"\"El #oEstatus#0 te informa de tu estatus actual con las diferentes "
+"facciones conocidas en el universo. ¡No todo el mundo es tan amistoso como "
+"yo ahí fuera!\""
 
 #: dat/missions/tutorial/nelly01.lua:468
 msgid ""
@@ -94233,7 +94233,7 @@ msgstr "Rutas para guardar diferentes archivos desde el editor"
 
 #: src/conf.c:1047
 msgid "Keybindings"
-msgstr "Combinaciones de teclas"
+msgstr "Atajos de Teclas"
 
 #: src/conf.c:1116
 msgid ""
@@ -95230,7 +95230,7 @@ msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
-"¡No puedes desequipar tu barco cuando tienes más carga de la que puede "
+"¡No puedes desequipar tu nave cuando tienes más carga de la que puede "
 "contener sin modificaciones!"
 
 #: src/equipment.c:1971
@@ -95577,7 +95577,7 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
-"Fallo en la ejecución de la secuencia de comandos standing: %s\n"
+"Fallo en la ejecución de la secuencia de comandos de estatus: %s\n"
 "%s\n"
 "Lo más probable es que el archivo Lua tenga una sintaxis incorrecta, por "
 "favor compruebelo"
@@ -95586,7 +95586,8 @@ msgstr ""
 #, c-format
 msgid "Standing script did not set the \"standing\" variable: %s"
 msgstr ""
-"La secuencia de comandos standing no estableció la variable \"standing\": %s"
+"La secuencia de comandos de estatus no estableció la variable \"standing\": "
+"%s"
 
 #: src/faction.c:1380
 #, c-format
@@ -95637,7 +95638,7 @@ msgstr "¡Facción '%s' no tiene Lua y no es estática!"
 #: src/tech.c:112
 #, c-format
 msgid "Malformed %s file: does not contain elements"
-msgstr ""
+msgstr "Archivo %s malformado: no contiene elementos"
 
 #: src/faction.c:1565
 #, c-format
@@ -95855,7 +95856,7 @@ msgstr "Misiones"
 
 #: src/info.c:62
 msgid "Standings"
-msgstr "Puntuaciones"
+msgstr "Estatus"
 
 #: src/info.c:63
 msgid "Ship log"
@@ -97360,7 +97361,7 @@ msgstr "ERROR %s:%d [%s]: "
 
 #: src/map.c:307
 msgid "Standing:"
-msgstr "Posición:"
+msgstr "Estatus:"
 
 #: src/map.c:321
 msgid "Planets:"
@@ -97683,7 +97684,7 @@ msgid ""
 "Standing: %s\n"
 msgstr ""
 "Facción: %s\n"
-"Posición: %s\n"
+"Estatus: %s\n"
 
 #: src/map_system.c:481
 msgid "Presence: N/A\n"
@@ -98673,85 +98674,92 @@ msgstr "discrepancia de tamaño: A tiene %d elementos pero B tiene %d elementos"
 #: src/nlua_data.c:330 src/nlua_data.c:384
 #, c-format
 msgid "%s is only implemented for number types"
-msgstr ""
+msgstr "%s sólo se implementa para los tipos de números"
 
 #: src/nlua_data.c:380 src/nlua_data.c:382
 #, c-format
 msgid "size mismatch for data: got %dx%dx4x%d, expected %d"
-msgstr ""
+msgstr "error de tamaño de los datos: obtuvo %dx%dx4x%d, esperaba %d"
 
 #: src/nlua_debug.c:76
 msgid "Requires a debug build."
-msgstr ""
+msgstr "Requiere una construcción de depuración."
 
 #: src/nlua_evt.c:145
 #, c-format
 msgid "Event '%s' -> '%s': %s"
-msgstr ""
+msgstr "Evento '%s' -> '%s': %s"
 
 #: src/nlua_evt.c:241 src/nlua_misn.c:955
 msgid "Invalid NPC ID!"
-msgstr ""
+msgstr "¡ID de PNJ inválido!"
 
 #: src/nlua_evt.c:320
 msgid "Event trying to claim but already has."
-msgstr ""
+msgstr "Evento que intenta reclamar pero ya lo ha hecho."
 
 #: src/nlua_faction.c:593
 #, c-format
 msgid "Trying to overwrite existing faction '%s' with dynamic faction!"
 msgstr ""
+"¡Intentando sobrescribir la facción existente '%s' con la facción dinámica!"
 
 #: src/nlua_faction.c:647 src/nlua_faction.c:672
 msgid "Can only add allies to dynamic factions"
-msgstr ""
+msgstr "Sólo se pueden añadir aliados a las facciones dinámicas"
 
 #: src/nlua_file.c:258 src/nlua_file.c:290
 msgid "file not open!"
-msgstr ""
+msgstr "¡archivo no abierto!"
 
 #: src/nlua_file.c:443
 #, c-format
 msgid "Directory '%s' enumerate error: %s"
-msgstr ""
+msgstr "Error de enumeración del directorio '%s': %s"
 
 #: src/nlua_font.c:183
 #, c-format
 msgid "failed to load font '%s'"
-msgstr ""
+msgstr "fallo al cargar la fuente '%s'"
 
 #: src/nlua_gfx.c:216 src/nlua_gfx.c:274 src/nlua_gfx.c:339
 #, c-format
 msgid ""
 "Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."
 msgstr ""
+"Textura '%s' intentando renderizar fuera de límites (posición X) sprite: %d "
+"> %d."
 
 #: src/nlua_gfx.c:219 src/nlua_gfx.c:277 src/nlua_gfx.c:342
 #, c-format
 msgid ""
 "Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."
 msgstr ""
+"Textura '%s' intentando renderizar fuera de límites (posición Y) sprite: %d "
+"> %d."
 
 #: src/nlua_gfx.c:653
 msgid "width has to be a positive value."
-msgstr ""
+msgstr "ancho tiene que ser un valor positivo."
 
 #: src/nlua_gui.c:373
 #, c-format
 msgid "Invalid window info name '%s'."
-msgstr ""
+msgstr "Nombre de información de ventana inválida '%s'."
 
 #: src/nlua_hook.c:277
 msgid "Mission not in stack trying to hook, forgot to run misn.accept()?"
 msgstr ""
+"La misión no está en la pila tratando de enganchar, ¿se olvidó de ejecutar "
+"misn.accept()?"
 
 #: src/nlua_hook.c:297
 msgid "Attempting to set a hook outside of a mission or event."
-msgstr ""
+msgstr "Intentar poner un gancho fuera de una misión o evento."
 
 #: src/nlua_hook.c:302
 msgid "No hook target was set."
-msgstr ""
+msgstr "No se ha fijado ningún objetivo de enganche."
 
 #: src/nlua_hook.c:928
 #, c-format
@@ -98760,67 +98768,69 @@ msgstr ""
 
 #: src/nlua_hook.c:1017
 msgid "Invalid parameter #1 for hook.pilot, expecting pilot or nil."
-msgstr ""
+msgstr "Parámetro inválido #1 para hook.pilot, esperando piloto o nil."
 
 #. hook_type not valid
 #: src/nlua_hook.c:1041
 #, c-format
 msgid "Invalid pilot hook type: '%s'"
-msgstr ""
+msgstr "Tipo de gancho piloto inválido: '%s'"
 
 #: src/nlua_jump.c:156 src/nlua_safelanes.c:131
 msgid "Jump is invalid"
-msgstr ""
+msgstr "Salto es inválido"
 
 #: src/nlua_jump.c:235
 msgid "No matching jump points found."
-msgstr ""
+msgstr "No se han encontrado puntos de salto coincidentes."
 
 #: src/nlua_linopt.c:197
 msgid ""
 "Number of columns in a linear optimization problem must be greater than 0!"
 msgstr ""
+"¡El número de columnas en un problema de optimización lineal debe ser mayor "
+"que 0!"
 
 #: src/nlua_linopt.c:312
 #, c-format
 msgid "Unknown column kind '%s'!"
-msgstr ""
+msgstr "¡Tipo de columna desconocido '%s'!"
 
 #: src/nlua_linopt.c:384
 msgid "Table lengths don't match!"
-msgstr ""
+msgstr "¡Las longitudes de las tablas no coinciden!"
 
 #: src/nlua_misn.c:242
 #, c-format
 msgid "Mission '%s' -> '%s': %s"
-msgstr ""
+msgstr "Misión '%s' -> '%s': %s"
 
 #: src/nlua_misn.c:379
 #, c-format
 msgid "Unknown marker type: %s"
-msgstr ""
+msgstr "Tipo de marcador desconocido: %s"
 
 #: src/nlua_misn.c:437
 #, c-format
 msgid "Mission does not have a marker with id '%d'"
-msgstr ""
+msgstr "La misión no tiene un marcador con id '%d'"
 
 #: src/nlua_misn.c:596
 msgid "Mission already accepted!"
-msgstr ""
+msgstr "¡Misión ya aceptada!"
 
 #: src/nlua_misn.c:751
 msgid "Can't create an OSD on an unaccepted mission!"
-msgstr ""
+msgstr "¡No se puede crear un OSD en una misión no aceptada!"
 
 #: src/nlua_misn.c:990
 msgid "Mission trying to claim but already has."
-msgstr ""
+msgstr "Misión intenta reclamar pero que ya lo ha hecho."
 
 #: src/nlua_music.c:100
 #, c-format
 msgid "Music '%s' invalid or failed to load."
-msgstr ""
+msgstr "La música '%s' es inválida o no se ha podido cargar."
 
 #: src/nlua_news.c:93
 msgid "Article is old"
@@ -98828,11 +98838,11 @@ msgstr ""
 
 #: src/nlua_news.c:100
 msgid "Article is invalid."
-msgstr ""
+msgstr "El artículo es inválido."
 
 #: src/nlua_news.c:202 src/nlua_news.c:256
 msgid "Bad arguments"
-msgstr ""
+msgstr "Argumentos malos"
 
 #: src/nlua_news.c:229
 msgid ""
@@ -98840,6 +98850,9 @@ msgid ""
 "Bad arguments, use addArticle(\"Faction\",\"Title\",\"Content\",[date,"
 "[date_to_rm]])"
 msgstr ""
+"\n"
+"Malos argumentos, utilice addArticle(\"Faction\", \"Title\", \"Content\""
+",[date,[date_to_rm]])"
 
 #: src/nlua_news.c:408 src/nlua_news.c:430 src/nlua_news.c:452
 #: src/nlua_news.c:474
@@ -98862,72 +98875,79 @@ msgstr ""
 #: src/nlua_news.c:516 src/nlua_news.c:533
 msgid "Bad argument to news.date(), must be article or a table of articles"
 msgstr ""
+"Argumento erróneo para news.date(), debe ser un artículo o una tabla de "
+"artículos"
 
 #: src/nlua_outfit.c:146
 msgid "Outfit is invalid."
-msgstr ""
+msgstr "Equipo es inválido."
 
 #: src/nlua_outfit.c:527
 msgid "Outfit has invalid damage type."
-msgstr ""
+msgstr "El equipo tiene un tipo de daño inválido."
 
 #: src/nlua_pilot.c:398
 msgid "Pilot is invalid."
-msgstr ""
+msgstr "El piloto es inválido."
 
 #: src/nlua_pilot.c:597
 #, c-format
 msgid "Ship '%s' jumping in from non-adjacent system '%s' to '%s'."
-msgstr ""
+msgstr "Nave '%s' saltando desde el sistema no adyacente '%s' a '%s'."
 
 #: src/nlua_pilot.c:602
 #, c-format
 msgid "Ship '%s' attempting to jump in from '%s', but '%s' has no jump points."
 msgstr ""
+"Nave '%s' intentando saltar desde '%s', pero '%s' no tiene puntos de salto."
 
 #: src/nlua_pilot.c:611
 msgid "'parameters' should be a table of options or omitted!"
-msgstr ""
+msgstr "¡'parámetros' debería ser una tabla de opciones u omitirse!"
 
 #: src/nlua_pilot.c:689
 msgid "Trying to remove the bloody player!"
-msgstr ""
+msgstr "¡Intentando quitar el maldito reproductor!"
 
 #: src/nlua_pilot.c:1828
 #, c-format
 msgid "Unknown slot type '%s'"
-msgstr ""
+msgstr "Tipo de ranura desconocido '%s'"
 
 #: src/nlua_pilot.c:1865
 #, c-format
 msgid "Pilot '%s' outfit ID '%d' is out of range!"
-msgstr ""
+msgstr "¡El piloto '%s' ID de equipo '%d' está fuera de rango!"
 
 #: src/nlua_pilot.c:2135 src/pilot.c:1194
 #, c-format
 msgid "#%cBroadcast %s>#0 \"%s\""
-msgstr ""
+msgstr "#%cDifusión %s>#0 \"%s\""
 
 #. Broadcast message.
 #: src/nlua_pilot.c:2193 src/pilot.c:1167
 #, c-format
 msgid "#%cComm %s>#0 \"%s\""
-msgstr ""
+msgstr "#%cCom %s>#0 \"%s\""
 
 #: src/nlua_pilot.c:3410
 msgid ""
 "Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)"
 msgstr ""
+"La cantidad debe ser positiva para pilot.cargoAdd (si se elimina, utilice "
+"pilot.cargoRm)"
 
 #: src/nlua_pilot.c:3463
 msgid ""
 "Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)"
 msgstr ""
+"La cantidad debe ser positiva para pilot.cargoRm (si se añade, utilice pilot."
+"cargoAdd)"
 
 #: src/nlua_pilot.c:3644
 #, c-format
 msgid "Tried to access unknown flag '%s' for pilot '%s'!"
-msgstr ""
+msgstr "¡Intentó acceder a la bandera desconocida '%s' para el piloto '%s'!"
 
 #: src/nlua_pilot.c:3785
 msgid "Pilot does not have AI."
@@ -98935,32 +98955,32 @@ msgstr ""
 
 #: src/nlua_pilot.c:3981
 msgid "Pilot is not on manual control."
-msgstr ""
+msgstr "El piloto no está en control manual."
 
 #: src/nlua_pilot.c:4326
 #, c-format
 msgid "Pilot '%s' can't jump out exit only jump '%s'"
-msgstr ""
+msgstr "El piloto '%s' no puede saltar fuera de la salida sólo saltar '%s'"
 
 #. Not found.
 #: src/nlua_pilot.c:4338
 #, c-format
 msgid "System '%s' is not adjacent to current system '%s'"
-msgstr ""
+msgstr "El sistema '%s' no es adyacente al sistema actual '%s'"
 
 #: src/nlua_pilot.c:4451
 #, c-format
 msgid "#%c%s#0 is hailing you."
-msgstr ""
+msgstr "#%c%s#0 te está llamando."
 
 #: src/nlua_pilotoutfit.c:101
 msgid "Pilot Outfit is invalid."
-msgstr ""
+msgstr "El Equipo de Piloto es inválido."
 
 #: src/nlua_pilotoutfit.c:180
 #, c-format
 msgid "Unknown PilotOutfit state '%s'!"
-msgstr ""
+msgstr "¡Estado de PilotOutfit desconocido '%s'!"
 
 #: src/nlua_planet.c:180 src/nlua_safelanes.c:120
 msgid "Planet is invalid"
@@ -98978,10 +98998,12 @@ msgstr ""
 #: src/nlua_player.c:603
 msgid "Second parameter to cinematics should be a table of options or omitted!"
 msgstr ""
+"¡El segundo parámetro de las cinemáticas debería ser una tabla de opciones u "
+"omitirse!"
 
 #: src/nlua_player.c:723
 msgid "Player must be landed to force takeoff."
-msgstr ""
+msgstr "El jugador debe aterrizar para forzar el despegue."
 
 #: src/nlua_player.c:748
 #, c-format
@@ -98990,95 +99012,98 @@ msgstr ""
 
 #: src/nlua_player.c:837
 msgid "Must be landed to set the active land window."
-msgstr ""
+msgstr "Debe aterrizarse para establecer la ventana de tierra activa."
 
 #: src/nlua_player.c:944
 #, c-format
 msgid "Player does not own a ship named '%s'"
-msgstr ""
+msgstr "El jugador no posee una nave llamada '%s'"
 
 #: src/nlua_player.c:1222 src/nlua_player.c:1244
 #, c-format
 msgid "Event '%s' not found in stack"
-msgstr ""
+msgstr "Evento '%s' no encontrado en la pila"
 
 #: src/nlua_player.c:1278
 msgid "Can not teleport the player while landed!"
-msgstr ""
+msgstr "¡No se puede teletransportar al jugador mientras está aterrizado!"
 
 #: src/nlua_player.c:1280
 msgid "Can not teleport the player while the comm is open!"
 msgstr ""
+"¡No se puede teletransportar al jugador mientras una comunicación está "
+"abierta!"
 
 #: src/nlua_player.c:1282
 msgid "Can not teleport the player while they are boarded!"
-msgstr ""
+msgstr "¡No se puede teletransportar al jugador mientras está abordando!"
 
 #: src/nlua_player.c:1310
 #, c-format
 msgid "'%s' is not a valid teleportation target."
-msgstr ""
+msgstr "'%s' no es un objetivo de teletransporte válido."
 
 #: src/nlua_player.c:1329
 #, c-format
 msgid "System '%s' does not exist."
-msgstr ""
+msgstr "El sistema '%s' no existe."
 
 #: src/nlua_safelanes.c:106
 #, c-format
 msgid "Unknown standing type '%s'!"
-msgstr ""
+msgstr "¡Tipo de estatus desconocido '%s'!"
 
 #: src/nlua_safelanes.c:136 src/safelanes.c:239 src/safelanes.c:859
 #: src/safelanes.c:875
 msgid "Safe-lane vertex type is invalid."
-msgstr ""
+msgstr "El tipo de vértice safe-line es inválido."
 
 #: src/nlua_shader.c:214
 msgid "shader failed to compile!"
-msgstr ""
+msgstr "¡El shader no se ha podido compilar!"
 
 #: src/nlua_shader.c:347
 #, c-format
 msgid "Shader does not have uniform '%s'!"
-msgstr ""
+msgstr "¡El shader no tiene uniform '%s'!"
 
 #: src/nlua_shader.c:395
 #, c-format
 msgid "Unsupported shader uniform type '%d' for uniform '%s'. Ignoring."
 msgstr ""
+"Tipo de uniform de shader no soportado '%d' para el uniform '%s'. Ignorando."
 
 #: src/nlua_shader.c:446
 #, c-format
 msgid "Layer was '%s', but must be one of 'final' or 'game'"
-msgstr ""
+msgstr "La capa era '%s', pero debe ser una de 'final' o 'juego'"
 
 #: src/nlua_ship.c:153
 msgid "Ship is invalid."
-msgstr ""
+msgstr "Nave es inválida."
 
 #: src/nlua_ship.c:560
 #, c-format
 msgid "Unable to get ship comm graphic for '%s'."
-msgstr ""
+msgstr "No se puede obtener el gráfico de comunicación de la nave para '%s'."
 
 #: src/nlua_ship.c:583
 #, c-format
 msgid "Unable to get ship target graphic for '%s'."
-msgstr ""
+msgstr "No se puede obtener el gráfico objectivo de la nave para '%s'."
 
 #: src/nlua_ship.c:606
 #, c-format
 msgid "Unable to get ship graphic for '%s'."
-msgstr ""
+msgstr "Incapaz de obtener el gráfico de la nave para '%s'."
 
 #: src/nlua_system.c:176
 msgid "System is invalid"
-msgstr ""
+msgstr "Sistema es inválido"
 
 #: src/nlua_system.c:266
 msgid "No matching systems found."
-msgstr ""
+msgstr "No se han encontrado sistemas que coincidan."
 
 #: src/nlua_system.c:711 src/nlua_system.c:742
 #, c-format
@@ -99091,43 +99116,44 @@ msgstr ""
 
 #: src/nlua_tex.c:214
 msgid "Texture dimensions must be positive"
-msgstr ""
+msgstr "Las dimensiones de la textura deben ser positivas"
 
 #: src/nlua_tex.c:218 src/nlua_tex.c:239
 msgid "Spritesheet dimensions must be positive"
-msgstr ""
+msgstr "Las dimensiones de la hoja de sprites deben ser positivas"
 
 #: src/nlua_tex.c:220
 msgid "Data has invalid type for texture"
-msgstr ""
+msgstr "Los datos tienen un tipo inválido para la textura"
 
 #: src/nlua_tex.c:222
 msgid "Texture dimensions don't match data size!"
 msgstr ""
+"¡Las dimensiones de las texturas no coinciden con el tamaño de los datos!"
 
 #: src/nlua_tex.c:324
 #, c-format
 msgid "problem opening file '%s' for reading"
-msgstr ""
+msgstr "problema al abrir el archivo '%s' para su lectura"
 
 #: src/nlua_tex.c:329
 msgid "problem opening image for reading"
-msgstr ""
+msgstr "problema al abrir la imagen para lectura"
 
 #: src/nlua_tex.c:401
 #, c-format
 msgid "Unable to open '%s' for writing!"
-msgstr ""
+msgstr "¡No se puede abrir '%s' para escribir!"
 
 #: src/nlua_tk.c:449 src/nlua_tk.c:465 src/nlua_tk.c:482 src/nlua_tk.c:501
 #: src/nlua_tk.c:516
 msgid "custom dialogue not open"
-msgstr ""
+msgstr "el diálogo personalizado no se abre"
 
 #: src/nlua_tk.c:554
 #, c-format
 msgid "Custom dialogue internal error: %s"
-msgstr ""
+msgstr "Error interno del diálogo personalizado: %s"
 
 #. super error checking
 #: src/nlua_var.c:195
@@ -99137,104 +99163,110 @@ msgstr "Tipo de var desconocido '%s'"
 
 #: src/nopenal.c:56
 msgid "a bad name (ID) was passed to an OpenAL function"
-msgstr ""
+msgstr "se ha pasado un nombre (ID) incorrecto a una función OpenAL"
 
 #: src/nopenal.c:59
 msgid "an invalid enum value was passed to an OpenAL function"
-msgstr ""
+msgstr "se ha pasado un valor de enum inválido a una función de OpenAL"
 
 #: src/nopenal.c:62
 msgid "an invalid value was passed to an OpenAL function"
-msgstr ""
+msgstr "se ha pasado un valor inválido a una función de OpenAL"
 
 #: src/nopenal.c:65
 msgid "the requested operation is not valid"
-msgstr ""
+msgstr "la operación solicitada es inválida"
 
 #: src/nopenal.c:68
 msgid "the requested operation resulted in OpenAL running out of memory"
-msgstr ""
+msgstr "la operación solicitada ha hecho que OpenAL se quede sin memoria"
 
 #: src/nopenal.c:75
 #, c-format
 msgid "OpenAL error [%s:%d]: %s"
-msgstr ""
+msgstr "Error OpenAL [%s:%d]: %s"
 
 #: src/npc.c:140
 #, c-format
 msgid "Mission '%s' trying to create NPC with no name!"
-msgstr ""
+msgstr "¡Misión '%s' intentando crear PNJ sin nombre!"
 
 #: src/npc.c:144
 #, c-format
 msgid "Mission '%s' trying to create NPC with no portrait!"
-msgstr ""
+msgstr "¡Misión '%s' tratando de crear un PNJ sin retrato!"
 
 #: src/npc.c:148
 #, c-format
 msgid "Mission '%s' trying to create NPC with no description!"
-msgstr ""
+msgstr "¡Misión '%s' intentando crear PNJ sin descripción!"
 
 #: src/npc.c:405
 #, c-format
 msgid ""
 "Mission '%s' was created at the spaceport bar but didn't create any NPC!"
 msgstr ""
+"¡La misión '%s' fue creada en el bar del puerto espacial pero no creó ningún "
+"PNJ!"
 
 #: src/npc.c:465
 msgid "Freeing NPC of invalid type."
-msgstr ""
+msgstr "Liberación de PNJ de tipo inválido."
 
 #: src/npc.c:593
 #, c-format
 msgid "Unable to find mission '%d' in npc_missions for giver npc '%s'!"
 msgstr ""
+"¡No se ha podido encontrar la misión '%d' en npc_missions para el pnj dador "
+"'%s'!"
 
 #: src/npc.c:635
 #, c-format
 msgid "Unable to find mission '%d' in npc_missions for mission npc '%s'!"
 msgstr ""
+"¡No se ha podido encontrar la misión '%d' en npc_missions para la misión pnj "
+"'%s'!"
 
 #: src/npc.c:650
 msgid "Unknown NPC type!"
-msgstr ""
+msgstr "¡Tipo de PNJ desconocido!"
 
 #: src/nstring.c:205
 #, c-format
 msgid "%.0f,%03.0f,%03.0f,%03.*f"
-msgstr ""
+msgstr "%.0f,%03.0f,%03.0f,%03.*f"
 
 #: src/nstring.c:212
 #, c-format
 msgid "%.0f,%03.0f,%03.*f"
-msgstr ""
+msgstr "%.0f,%03.0f,%03.*f"
 
 #: src/nstring.c:218
 #, c-format
 msgid "%.0f,%03.*f"
-msgstr ""
+msgstr "%.0f,%03.*f"
 
 #. only seconds
 #: src/ntime.c:203
 #, c-format
 msgid "%04d s"
-msgstr ""
+msgstr "%04d s"
 
 #: src/ntime.c:205
 #, c-format
 msgid "%.*f p"
-msgstr ""
+msgstr "%.*f p"
 
 #. UST format
 #: src/ntime.c:207
 #, c-format
 msgid "UST %d:%.*f"
-msgstr ""
+msgstr "UST %d:%.*f"
 
 #: src/nxml.c:87
 #, c-format
 msgid "Unable to parse document '%s'"
-msgstr ""
+msgstr "No se ha podido parsear el documento '%s'"
 
 #: src/nxml_lua.c:267
 msgid "Failed to save invalid planet."
@@ -99242,15 +99274,15 @@ msgstr ""
 
 #: src/nxml_lua.c:276
 msgid "Failed to save invalid system."
-msgstr ""
+msgstr "Fallo al guardar el sistema inválido."
 
 #: src/nxml_lua.c:312
 msgid "Failed to save invalid jump."
-msgstr ""
+msgstr "Fallo al guardar el salto inválido."
 
 #: src/nxml_lua.c:319
 msgid "Failed to save invalid commodity."
-msgstr ""
+msgstr "Fallo al guardar el producto inválido."
 
 #: src/nxml_lua.c:449
 #, c-format
@@ -99260,174 +99292,175 @@ msgstr ""
 #: src/nxml_lua.c:456
 #, c-format
 msgid "Failed to load nonexistent system '%s'"
-msgstr ""
+msgstr "Fallo al cargar un sistema inexistente '%s'"
 
 #: src/nxml_lua.c:475
 #, c-format
 msgid "Failed to load nonexistent jump from '%s' to '%s'"
-msgstr ""
+msgstr "Fallo al cargar un salto inexistente de '%s' a '%s'"
 
 #. There are a few types knowingly left out above. Quoting the lua_{to,push} methods, as of 2021-11-13, they are:
 #. * article, audio, canvas, colour, data, file, font, linopt, pilot, pilotoutfit, shader, tex, transform.
 #. *
 #: src/nxml_lua.c:494
 msgid "Unknown Lua data type!"
-msgstr ""
+msgstr "¡Tipo de datos Lua desconocido!"
 
 #: src/object.c:72
 msgid "No name for current part"
-msgstr ""
+msgstr "No hay nombre para la parte actual"
 
 #: src/object.c:74
 msgid "No material for current part"
-msgstr ""
+msgstr "No hay material para la parte actual"
 
 #: src/object.c:116
 #, c-format
 msgid "Loading material from %s"
-msgstr ""
+msgstr "Cargando material de %s"
 
 #: src/object.c:120 src/object.c:237
 #, c-format
 msgid "Cannot open object file %s"
-msgstr ""
+msgstr "No se puede abrir el archivo de objetos %s"
 
 #: src/object.c:141
 #, c-format
 msgid "Reading new material %s"
-msgstr ""
+msgstr "Leyendo nuevo material %s"
 
 #. TODO Ignore s (smoothing), l (line) with no regrets?
 #: src/object.c:167 src/object.c:207 src/object.c:329
 #, c-format
 msgid "Can't understand token %s"
-msgstr ""
+msgstr "No puedo interpretar el token %s"
 
 #: src/object.c:182
 #, c-format
 msgid "-s (texture scaling) option ignored for %s"
-msgstr ""
+msgstr "La opción -s (escalado de textura) se ignora para %s"
 
 #: src/object.c:190
 #, c-format
 msgid "Options not supported for %s"
-msgstr ""
+msgstr "Opciones no soportadas para %s"
 
 #: src/object.c:238
 #, c-format
 msgid "Loading object file %s"
-msgstr ""
+msgstr "Cargando archivo de objetos %s"
 
 #: src/object.c:322
 #, c-format
 msgid "No such material %s"
-msgstr ""
+msgstr "No hay tal material %s"
 
 #: src/opengl.c:109 src/player.c:2204
 msgid "Aborting screenshot"
-msgstr ""
+msgstr "Abortar la captura de pantalla"
 
 #: src/opengl.c:154
 msgid "GL invalid enum"
-msgstr ""
+msgstr "GL enum inválido"
 
 #: src/opengl.c:157
 msgid "GL invalid value"
-msgstr ""
+msgstr "GL valor inválido"
 
 #: src/opengl.c:160
 msgid "GL invalid operation"
-msgstr ""
+msgstr "GL operación inválida"
 
 #: src/opengl.c:163
 msgid "GL invalid framebuffer operation"
-msgstr ""
+msgstr "GL operación de framebuffer inválido"
 
 #: src/opengl.c:166
 msgid "GL out of memory"
-msgstr ""
+msgstr "GL fuera de memoria"
 
 #: src/opengl.c:170
 msgid "GL unknown error"
-msgstr ""
+msgstr "GL error desconocido"
 
 #: src/opengl.c:173
 #, c-format
 msgid "OpenGL error [%s:%d]: %s"
-msgstr ""
+msgstr "Error OpenGL [%s:%d]: %s"
 
 #: src/opengl.c:261
 #, c-format
 msgid "Unable to create window! %s"
-msgstr ""
+msgstr "¡Incapaz de crear ventana! %s"
 
 #: src/opengl.c:275
 #, c-format
 msgid "Unable to create OpenGL context! %s"
-msgstr ""
+msgstr "¡Incapaz de crear un contexto OpenGL! %s"
 
 #. Debug happiness
 #: src/opengl.c:324
 #, c-format
 msgid "OpenGL Drawable Created: %dx%d@%dbpp"
-msgstr ""
+msgstr "Dibujable OpenGL creado: %dx%d@%dbpp"
 
 #: src/opengl.c:325
 #, c-format
 msgid "r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d"
-msgstr ""
+msgstr "r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d"
 
 #: src/opengl.c:327 src/opengl.c:329
 msgid "yes"
-msgstr ""
+msgstr "si"
 
 #: src/opengl.c:327 src/opengl.c:329
 msgid "no"
-msgstr ""
+msgstr "no"
 
 #: src/opengl.c:329
 #, c-format
 msgid "vsync: %s"
-msgstr ""
+msgstr "vsync: %s"
 
 #: src/opengl.c:330 src/sound_openal.c:338
 #, c-format
 msgid "Renderer: %s"
-msgstr ""
+msgstr "Renderizador: %s"
 
 #: src/opengl.c:331
 #, c-format
 msgid "Version: %s"
-msgstr ""
+msgstr "Versión: %s"
 
 #: src/opengl.c:335
 #, c-format
 msgid "Missing texture units (%d required, %d found)"
-msgstr ""
+msgstr "Faltan unidades de textura (%d requerido, %d encontrado)"
 
 #: src/opengl.c:338
 #, c-format
 msgid "Unable to get requested FSAA level (%d requested, got %d)"
-msgstr ""
+msgstr "No se pudo obtener el nivel de FSAA (solicitado %d, obtuvo %d)"
 
 #: src/opengl.c:387
 msgid "Screen size too small, upscaling..."
-msgstr ""
+msgstr "El tamaño de la pantalla es demasiado pequeño, aumentando la escala..."
 
 #: src/opengl_shader.c:50
 #, c-format
 msgid "Shader '%s' not found."
-msgstr ""
+msgstr "Shader '%s' no encontrado."
 
 #: src/opengl_shader.c:99 src/opengl_shader.c:108
 #, c-format
 msgid "Invalid #include syntax in '%s%s'!"
-msgstr ""
+msgstr "¡Sintaxis #include inválida en '%s%s'!"
 
 #: src/opengl_shader.c:248
 #, c-format
 msgid "Failed to link vertex shader '%s' and fragment shader '%s'!"
 msgstr ""
+"¡Fallo al enlazar el shader de vertex '%s' y el shader de fragmentos '%s'!"
 
 #. We could hash raw pixel data here, but that's slower than just
 #. * generating the map from scratch.
@@ -99435,256 +99468,256 @@ msgstr ""
 #: src/opengl_tex.c:405
 #, c-format
 msgid "Texture '%s' has no RWops"
-msgstr ""
+msgstr "La textura '%s' no tiene RWops"
 
 #: src/opengl_tex.c:612
 msgid "Trying to load image from NULL path."
-msgstr ""
+msgstr "Intentando cargar la imagen desde una ruta NULL."
 
 #: src/opengl_tex.c:619
 #, c-format
 msgid "Failed to load surface '%s' from ndata."
-msgstr ""
+msgstr "Fallo al cargar la superficie '%s' de ndata."
 
 #: src/opengl_tex.c:649
 #, c-format
 msgid "Unable to load image '%s'."
-msgstr ""
+msgstr "Incapaz de cargar la imagen '%s'."
 
 #: src/opengl_tex.c:654
 #, c-format
 msgid "'%s' could not be opened"
-msgstr ""
+msgstr "'%s' no se ha podido abrir"
 
 #. Not found
 #. Surfaces will have NULL names
 #: src/opengl_tex.c:783
 #, c-format
 msgid "Attempting to free texture '%s' not found in stack!"
-msgstr ""
+msgstr "¡Intentando liberar la textura '%s' no se encuentra en la pila!"
 
 #. Invalid texture.
 #: src/opengl_tex.c:819
 #, c-format
 msgid "Unable to duplicate texture '%s'."
-msgstr ""
+msgstr "Incapaz de duplicar la textura '%s'."
 
 #: src/opengl_tex.c:857
 #, c-format
 msgid "Angle not between 0 and 2.*M_PI [%f]."
-msgstr ""
+msgstr "Ángulo no comprendido entre 0 y 2.*M_PI [%f]."
 
 #: src/opengl_tex.c:917
 msgid "Texture leak detected!"
-msgstr ""
+msgstr "¡Se ha detectado una fuga de textura!"
 
 #: src/opengl_tex.c:919
 #, c-format
 msgid "   '%s' opened %d time"
 msgid_plural "   '%s' opened %d times"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "   '%s' abierto %d vez"
+msgstr[1] "   '%s' abierto %d veces"
 
 #: src/options.c:49
 msgid "Gameplay"
-msgstr ""
+msgstr "Jugabilidad"
 
 #: src/options.c:50
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #: src/options.c:51
 msgid "Audio"
-msgstr ""
+msgstr "Audio"
 
 #: src/options.c:52
 msgid "Input"
-msgstr ""
+msgstr "Entrada"
 
 #: src/options.c:166 src/options.c:1364
 msgid "#rRestart Naev for changes to take effect.#0"
-msgstr ""
+msgstr "#rReinicia Naev para que los cambios surtan efecto.#0"
 
 #: src/options.c:228
 msgid "system"
-msgstr ""
+msgstr "sistema"
 
 #: src/options.c:268 src/options.c:594 src/options.c:899 src/options.c:1201
 msgid "Defaults"
-msgstr ""
+msgstr "Por Defecto"
 
 #: src/options.c:282
 #, c-format
 msgid "ndata: %s"
-msgstr ""
+msgstr "ndata: %s"
 
 #: src/options.c:297
 msgid "Language:"
-msgstr ""
+msgstr "Lenguaje:"
 
 #: src/options.c:313
 msgid "Compilation Flags:"
-msgstr ""
+msgstr "Banderas de Compilación:"
 
 #: src/options.c:351
 msgid "Stop Speedup At:"
-msgstr ""
+msgstr "Detener Modo Acelerado en:"
 
 #: src/options.c:363
 msgid "Settings:"
-msgstr ""
+msgstr "Configuración:"
 
 #: src/options.c:367
 msgid "Enable manual zoom control"
-msgstr ""
+msgstr "Activar control de zoom manual"
 
 #: src/options.c:370
 msgid "Enable double-tap afterburn/cooldown"
-msgstr ""
+msgstr "Habilitar doble-toque postquemador/enfriamiento"
 
 #: src/options.c:373
 msgid "Enable mouse-flying (toggle with middle click)"
-msgstr ""
+msgstr "Habilitar el vuelo del ratón (alternar con el clic del medio)"
 
 #: src/options.c:376
 msgid "Enable mouse-flying thrust control"
-msgstr ""
+msgstr "Habilitar el control de empuje de vuelo con el ratón"
 
 #: src/options.c:379
 msgid "Enable saved game compression"
-msgstr ""
+msgstr "Activar la compresión de partidas guardadas"
 
 #: src/options.c:381
 msgid "Visible Messages"
-msgstr ""
+msgstr "Mensajes Visibles"
 
 #: src/options.c:387
 msgid "Max Time Compression Factor"
-msgstr ""
+msgstr "Factor de Compresión de Tiempo Máximo"
 
 #: src/options.c:546
 #, c-format
 msgid "Enemy Presence"
-msgstr ""
+msgstr "Presencia Enemiga"
 
 #: src/options.c:548
 #, c-format
 msgid "Enemy within %s distance"
-msgstr ""
+msgstr "Enemigo a una distancia de %s"
 
 #: src/options.c:550
 #, c-format
 msgid "%.0f%% Shield"
-msgstr ""
+msgstr "%.0f%% Escudo"
 
 #: src/options.c:552
 #, c-format
 msgid "Armour Damage"
-msgstr ""
+msgstr "Daño de Blindaje"
 
 #: src/options.c:597
 msgid "Set Key"
-msgstr ""
+msgstr "Configurar tecla"
 
 #: src/options.c:742
 #, c-format
 msgid "keyboard:   %s%s%c"
-msgstr ""
+msgstr "teclado: %s%s%c"
 
 #: src/options.c:747
 #, c-format
 msgid "keyboard:   %s%s%s"
-msgstr ""
+msgstr "teclado:   %s%s%s"
 
 #: src/options.c:753
 #, c-format
 msgid "joy axis pos:   <%d>"
-msgstr ""
+msgstr "eje pos joy:   <%d>"
 
 #: src/options.c:756
 #, c-format
 msgid "joy axis neg:   <%d>"
-msgstr ""
+msgstr "eje neg joy:   <%d>"
 
 #: src/options.c:759
 #, c-format
 msgid "joy button:   <%d>"
-msgstr ""
+msgstr "botón joy:   <%d>"
 
 #: src/options.c:762
 #, c-format
 msgid "joy hat up:   <%d>"
-msgstr ""
+msgstr "palanca de joy arriba:   <%d>"
 
 #: src/options.c:765
 #, c-format
 msgid "joy hat down: <%d>"
-msgstr ""
+msgstr "palanca de joy abajo: <%d>"
 
 #: src/options.c:768
 #, c-format
 msgid "joy hat left: <%d>"
-msgstr ""
+msgstr "palanca de joy izquierda: <%d>"
 
 #: src/options.c:771
 #, c-format
 msgid "joy hat right:<%d>"
-msgstr ""
+msgstr "palanca de joy derecha: <%d>"
 
 #: src/options.c:791
 msgid "WASD"
-msgstr ""
+msgstr "WASD"
 
 #: src/options.c:792
 msgid "Arrow Keys"
-msgstr ""
+msgstr "Teclas de Flechas"
 
 #: src/options.c:796
 msgid "Restore Defaults"
-msgstr ""
+msgstr "Restaurar Valores Por Defecto"
 
 #: src/options.c:797
 msgid "Which layout do you want to use?"
-msgstr ""
+msgstr "¿Qué disposición de teclas deseas utilizar?"
 
 #. Alert user it worked.
 #: src/options.c:826
 msgid "Defaults Restored"
-msgstr ""
+msgstr "Restaurado Valores Por Defecto"
 
 #: src/options.c:826
 msgid "Keybindings restored to defaults."
-msgstr ""
+msgstr "Atajos de teclas restaurados por defecto."
 
 #: src/options.c:868
 msgid "Music Volume"
-msgstr ""
+msgstr "Volumen de Música"
 
 #: src/options.c:868
 msgid "Sound Volume"
-msgstr ""
+msgstr "Volumen de Sonidos"
 
 #: src/options.c:872
 msgid "Muted"
-msgstr ""
+msgstr "Sin Sonido"
 
 #. -48 dB minimum divided by logarithm of volume floor.
 #: src/options.c:875
 #, c-format
 msgid "%s: %.2f (%.0f dB)"
-msgstr ""
+msgstr "%s: %.2f (%.0f dB)"
 
 #: src/options.c:905
 msgid "Disable all sound/music"
-msgstr ""
+msgstr "Desactivar todo el sonido/música"
 
 #: src/options.c:909
 msgid "EFX (More CPU)"
-msgstr ""
+msgstr "EFX (Más CPU)"
 
 #: src/options.c:915
 msgid "Volume Levels:"
-msgstr ""
+msgstr "Niveles de Volumen:"
 
 #: src/options.c:1102
 #, c-format
@@ -99692,147 +99725,152 @@ msgid ""
 "Key '%s' overlaps with key '%s' that was just set. You may want to correct "
 "this."
 msgstr ""
+"La tecla '%s' se solapa con la tecla '%s' que se acaba de establecer. Es "
+"posible que quieras corregir esto."
 
 #: src/options.c:1135
 msgid "Set Keybinding"
-msgstr ""
+msgstr "Configurar Atajos de Teclado"
 
 #: src/options.c:1142
 msgid ""
 "To use a modifier key hit that key twice in a row, otherwise it will "
 "register as a modifier. To set with any modifier click the checkbox."
 msgstr ""
+"Para utilizar una tecla modificadora pulsa esa tecla dos veces seguidas, de "
+"lo contrario se registrará como modificador. Para establecer con cualquier "
+"modificador haz clic en la casilla de check."
 
 #: src/options.c:1151
 msgid "Unset"
-msgstr ""
+msgstr "Desactivar"
 
 #: src/options.c:1155
 msgid "Set any modifier"
-msgstr ""
+msgstr "Establecer cualquier modificador"
 
 #: src/options.c:1208
 msgid "Resolution:"
-msgstr ""
+msgstr "Resolución:"
 
 #: src/options.c:1213
 msgid "Fullscreen"
-msgstr ""
+msgstr "Pantalla Completa"
 
 #: src/options.c:1279
 msgid "FPS Control:"
-msgstr ""
+msgstr "Control de FPS:"
 
 #: src/options.c:1281
 msgid "FPS Limit"
-msgstr ""
+msgstr "Límite de FPS"
 
 #: src/options.c:1291
 msgid "Show FPS"
-msgstr ""
+msgstr "Mostrar FPS"
 
 #: src/options.c:1300
 msgid "OpenGL:"
-msgstr ""
+msgstr "OpenGL:"
 
 #: src/options.c:1303
 msgid "Vertical Sync"
-msgstr ""
+msgstr "Sincronización Vertical"
 
 #: src/options.c:1308
 msgid "Features:"
-msgstr ""
+msgstr "Características:"
 
 #: src/options.c:1318
 msgid "Fancy and expensive background shaders"
-msgstr ""
+msgstr "Shaders de fondo elegantes y costosos"
 
 #: src/options.c:1345
 msgid "GUI:"
-msgstr ""
+msgstr "GUI:"
 
 #: src/options.c:1348
 msgid "Bigger icons"
-msgstr ""
+msgstr "Iconos Más Grandes"
 
 #: src/options.c:1394
 msgid "Height/Width invalid. Should be formatted like 1024x768."
-msgstr ""
+msgstr "Altura/Ancho inválido. Debe tener un formato de 1024x768."
 
 #: src/options.c:1487
 msgid "Resolution can't be changed while maximized."
-msgstr ""
+msgstr "La resolución no se puede cambiar mientras está maximizada."
 
 #: src/options.c:1491
 msgid "Keep Video Settings"
-msgstr ""
+msgstr "Mantener Configuración de Video"
 
 #: src/options.c:1492
 #, c-format
 msgid "Do you want to keep running at %dx%d %s?"
-msgstr ""
+msgstr "¿Quieres seguir corriendo a %dx%d %s?"
 
 #: src/options.c:1493 src/options.c:1499
 msgid "fullscreen"
-msgstr ""
+msgstr "pantalla completa"
 
 #: src/options.c:1493 src/options.c:1499
 msgid "windowed"
-msgstr ""
+msgstr "en ventana"
 
 #: src/options.c:1497
 msgid "Video Settings Restored"
-msgstr ""
+msgstr "Configuración de Video Restaurada"
 
 #: src/options.c:1498
 #, c-format
 msgid "Resolution reset to %dx%d %s."
-msgstr ""
+msgstr "Resolución reiniciada a %dx%d %s."
 
 #: src/options.c:1576
 #, c-format
 msgid "Scaling: %.1fx"
-msgstr ""
+msgstr "Escalado: %.1fx"
 
 #: src/options.c:1594
 #, c-format
 msgid "Far Zoom: %.1fx"
-msgstr ""
+msgstr "Zoom Lejano: %.1fx"
 
 #: src/options.c:1616
 #, c-format
 msgid "Near Zoom: %.1fx"
-msgstr ""
+msgstr "Zoom Cercano: %.1fx"
 
 #: src/options.c:1637
 #, c-format
 msgid "Gamma: %.1f"
-msgstr ""
+msgstr "Gamma: %.1f"
 
 #: src/options.c:1653
 #, c-format
 msgid "BG (Stars, etc.) brightness: %.0f%%"
-msgstr ""
+msgstr "BG (Estrellas, etc.) luminosidad: %.0f%%"
 
 #: src/options.c:1668
 #, c-format
 msgid "Nebula brightness: %.0f%%"
-msgstr ""
+msgstr "Iluminación de Nebulosa: %.0f%%"
 
 #: src/options.c:1683
 #, c-format
 msgid "Map Overlay Opacity: %.0f%%"
-msgstr ""
+msgstr "Opacidad de Capa de Mapa: %.0f%%"
 
 #: src/outfit.c:122
 #, c-format
 msgid "Outfit '%s' not found in stack."
-msgstr ""
+msgstr "Equipo '%s' no encontrado en pila."
 
 #: src/outfit.c:420
 #, c-format
 msgid "'%s' does not match any outfit slot sizes."
-msgstr ""
+msgstr "'%s' no coincide con ningún tamaño de ranura de equipo."
 
 #: src/outfit.c:435
 #, c-format
@@ -99841,27 +99879,27 @@ msgstr ""
 
 #: src/outfit.c:887
 msgid "NULL"
-msgstr ""
+msgstr "NULL"
 
 #: src/outfit.c:888
 msgid "Bolt Cannon"
-msgstr ""
+msgstr "Cañón de Pernos"
 
 #: src/outfit.c:889
 msgid "Beam Cannon"
-msgstr ""
+msgstr "Cañón de Rayo"
 
 #: src/outfit.c:890
 msgid "Bolt Turret"
-msgstr ""
+msgstr "Torreta de Pernos"
 
 #: src/outfit.c:891
 msgid "Beam Turret"
-msgstr ""
+msgstr "Torreta de Rayo"
 
 #: src/outfit.c:892 src/outfit.c:921
 msgid "Launcher"
-msgstr ""
+msgstr "Lanzador"
 
 #: src/outfit.c:893
 msgid "Ammunition"
@@ -99869,11 +99907,11 @@ msgstr ""
 
 #: src/outfit.c:894
 msgid "Turret Launcher"
-msgstr ""
+msgstr "Torreta Lanzador"
 
 #: src/outfit.c:895
 msgid "Ship Modification"
-msgstr ""
+msgstr "Modificación de Nave"
 
 #: src/outfit.c:896 src/outfit.c:925
 msgid "Afterburner"
@@ -99881,7 +99919,7 @@ msgstr "Postquemador"
 
 #: src/outfit.c:897 src/outfit.c:926
 msgid "Fighter Bay"
-msgstr ""
+msgstr "Bahia de Cazas"
 
 #: src/outfit.c:898 src/outfit.c:927 src/ship.c:190
 msgid "Fighter"
@@ -99889,23 +99927,23 @@ msgstr ""
 
 #: src/outfit.c:900 src/outfit.c:929
 msgid "Local Map"
-msgstr ""
+msgstr "Mapa Local"
 
 #: src/outfit.c:901 src/outfit.c:930
 msgid "GUI"
-msgstr ""
+msgstr "GUI"
 
 #: src/outfit.c:902 src/outfit.c:931
 msgid "License"
-msgstr ""
+msgstr "Licencia"
 
 #: src/outfit.c:919
 msgid "Bolt Weapon"
-msgstr ""
+msgstr "Arma de Pernos"
 
 #: src/outfit.c:920
 msgid "Beam Weapon"
-msgstr ""
+msgstr "Arma de Rayo"
 
 #: src/outfit.c:922
 msgid "Ammo"
@@ -99914,23 +99952,23 @@ msgstr ""
 #. else if (outfit_isTurret(o))     return N_("Turret");
 #: src/outfit.c:924
 msgid "Modification"
-msgstr ""
+msgstr "Modificación"
 
 #: src/outfit.c:928
 msgid "Map"
-msgstr ""
+msgstr "Mapa"
 
 #: src/outfit.c:943
 msgid "Unguided"
-msgstr ""
+msgstr "Sin guia"
 
 #: src/outfit.c:944
 msgid "Seek"
-msgstr ""
+msgstr "Buscar"
 
 #: src/outfit.c:945
 msgid "Smart"
-msgstr ""
+msgstr "Inteligente"
 
 #: src/outfit.c:949
 #, c-format
@@ -99940,17 +99978,17 @@ msgstr ""
 #: src/outfit.c:1060
 #, c-format
 msgid "Invalid outfit type: '%s'"
-msgstr ""
+msgstr "tipo de equipo inválido: '%s'"
 
 #: src/outfit.c:1102
 #, c-format
 msgid "Unknown damage type '%s'"
-msgstr ""
+msgstr "tipo de daño desconocido '%s'"
 
 #: src/outfit.c:1105
 #, c-format
 msgid "Damage has unknown node '%s'"
-msgstr ""
+msgstr "Daño tiene un nodo desconocido '%s'"
 
 #: src/outfit.c:1133
 #, c-format
@@ -99959,11 +99997,14 @@ msgid ""
 "                Please use the script 'polygon_from_sprite.py' that can be "
 "found in Naev's artwork repo."
 msgstr ""
+"¡%s polígono de colisión xml no existe!\n"
+"                Por favor, utiliza el script 'polygon_from_sprite.py' que "
+"puedes encontrar en el repo de arte de Naev."
 
 #: src/outfit.c:1233 src/outfit.c:1610
 #, c-format
 msgid "Outfit '%s' has invalid blowup property: '%s'"
-msgstr ""
+msgstr "Equipo '%s' tiene una propiedad blowup inválida: '%s'"
 
 #: src/outfit.c:1259 src/outfit.c:1637
 #, c-format
@@ -99971,6 +100012,8 @@ msgid ""
 "Outfit '%s': the number of collision polygons is wrong.\n"
 "                     npolygon = %i and sx*sy = %i"
 msgstr ""
+"Equipo '%s': el número de polígonos de colisión es incorrecto.\n"
+"                     npolygon = %i y sx*sy = %i"
 
 #: src/outfit.c:1303 src/outfit.c:1464 src/outfit.c:1555 src/outfit.c:1685
 #: src/outfit.c:1775 src/outfit.c:1846 src/outfit.c:1913 src/outfit.c:1955
@@ -99978,12 +100021,12 @@ msgstr ""
 #: src/outfit.c:2157 src/outfit.c:2312 src/outfit.c:2408
 #, c-format
 msgid "Outfit '%s' has unknown node '%s'"
-msgstr ""
+msgstr "Equipo '%s' tiene un nodo desconocido '%s'"
 
 #: src/outfit.c:1332 src/outfit.c:2699
 #, c-format
 msgid "%s [%s]"
-msgstr ""
+msgstr "%s [%s]"
 
 #: src/outfit.c:1335
 #, c-format
@@ -99991,6 +100034,8 @@ msgid ""
 "\n"
 "     %.0f%% vs armour"
 msgstr ""
+"\n"
+"     %.0f%% vs blindaje"
 
 #: src/outfit.c:1336
 #, c-format
@@ -99998,13 +100043,17 @@ msgid ""
 "\n"
 "     %.0f%% vs shield"
 msgstr ""
+"\n"
+"     %.0f%% vs escudo"
 
 #: src/outfit.c:1337
-#, c-format
+#, c-format, fuzzy
 msgid ""
 "\n"
 "     %.0f%% knockback"
 msgstr ""
+"\n"
+"     %.0f%% knockback"
 
 #: src/outfit.c:1338 src/outfit.c:1484 src/outfit.c:1854 src/outfit.c:1924
 #: src/outfit.c:2701
@@ -100013,6 +100062,8 @@ msgid ""
 "\n"
 "%.0f CPU"
 msgstr ""
+"\n"
+"%.0f CPU"
 
 #: src/outfit.c:1339 src/outfit.c:1485 src/outfit.c:2719
 #, c-format
@@ -100020,6 +100071,8 @@ msgid ""
 "\n"
 "%.0f%% Penetration"
 msgstr ""
+"\n"
+"%.0f%% Penetración"
 
 #: src/outfit.c:1340 src/outfit.c:2720
 #, c-format
@@ -100027,6 +100080,8 @@ msgid ""
 "\n"
 "%.2f DPS [%.0f Damage]"
 msgstr ""
+"\n"
+"%.2f DPS [%.0f Daño]"
 
 #: src/outfit.c:1342
 #, c-format
@@ -100034,6 +100089,8 @@ msgid ""
 "\n"
 "%.2f Disable/s [%.0f Disable]"
 msgstr ""
+"\n"
+"%.2f Desactivado/s [%.0f Desactivar]"
 
 #: src/outfit.c:1344 src/outfit.c:2724
 #, c-format
@@ -100041,6 +100098,8 @@ msgid ""
 "\n"
 "%.1f Shots Per Second"
 msgstr ""
+"\n"
+"%.1f Disparos Por Segundo"
 
 #: src/outfit.c:1345 src/outfit.c:2736
 #, c-format
@@ -100048,6 +100107,8 @@ msgid ""
 "\n"
 "%.1f EPS [%.0f Energy]"
 msgstr ""
+"\n"
+"%.1f EPS [%.0f Energía]"
 
 #: src/outfit.c:1347 src/outfit.c:1494
 #, c-format
@@ -100055,6 +100116,8 @@ msgid ""
 "\n"
 "%s Range"
 msgstr ""
+"\n"
+"%s Rango"
 
 #: src/outfit.c:1348 src/outfit.c:2733
 #, c-format
@@ -100062,6 +100125,8 @@ msgid ""
 "\n"
 "%.0f Speed"
 msgstr ""
+"\n"
+"%.0f Velocidad"
 
 #: src/outfit.c:1349 src/outfit.c:1495
 #, c-format
@@ -100069,6 +100134,8 @@ msgid ""
 "\n"
 "%.1f second heat up"
 msgstr ""
+"\n"
+"%.1f segundo de calentamiento"
 
 #: src/outfit.c:1351 src/outfit.c:1497 src/outfit.c:2714
 #, c-format
@@ -100076,6 +100143,8 @@ msgid ""
 "\n"
 "%.1f Degree Swivel"
 msgstr ""
+"\n"
+"%.1f Grados de Giro"
 
 #: src/outfit.c:1352 src/outfit.c:2706 src/outfit.c:2712
 #, c-format
@@ -100083,6 +100152,8 @@ msgid ""
 "\n"
 "%s Optimal Tracking"
 msgstr ""
+"\n"
+"%s Rastreo Óptimo"
 
 #: src/outfit.c:1353 src/outfit.c:2707 src/outfit.c:2713
 #, c-format
@@ -100090,13 +100161,15 @@ msgid ""
 "\n"
 "%s Minimal Tracking"
 msgstr ""
+"\n"
+"%s Rastreo Mínimo"
 
 #: src/outfit.c:1356 src/outfit.c:1500 src/outfit.c:1699 src/outfit.c:1876
 #: src/outfit.c:1930 src/outfit.c:1965 src/outfit.c:2064 src/outfit.c:2101
 #: src/outfit.c:2133 src/outfit.c:2174 src/outfit.c:2412
 #, c-format
 msgid "Outfit '%s' missing/invalid '%s' element"
-msgstr ""
+msgstr "Equipo '%s' falta/inválido elemento '%s'"
 
 #: src/outfit.c:1486
 #, c-format
@@ -100104,6 +100177,8 @@ msgid ""
 "\n"
 "%.2f DPS [%s]"
 msgstr ""
+"\n"
+"%.2f DPS [%s]"
 
 #: src/outfit.c:1489
 #, c-format
@@ -100111,6 +100186,8 @@ msgid ""
 "\n"
 "%.0f Disable/s"
 msgstr ""
+"\n"
+"%.0f Desactivado/s"
 
 #: src/outfit.c:1490 src/outfit.c:1859
 #, c-format
@@ -100118,6 +100195,8 @@ msgid ""
 "\n"
 "%.1f EPS"
 msgstr ""
+"\n"
+"%.1f EPS"
 
 #: src/outfit.c:1491
 #, c-format
@@ -100125,11 +100204,13 @@ msgid ""
 "\n"
 "%.1f Duration"
 msgstr ""
+"\n"
+"%.1f Duración"
 
 #: src/outfit.c:1492
 #, c-format
 msgid " (%.1f minimum)"
-msgstr ""
+msgstr " (%.1f mínimo)"
 
 #: src/outfit.c:1493
 #, c-format
@@ -100137,6 +100218,8 @@ msgid ""
 "\n"
 "%.1f Cooldown"
 msgstr ""
+"\n"
+"%.1f Enfriamiento"
 
 #: src/outfit.c:1568
 #, c-format
@@ -100146,7 +100229,7 @@ msgstr ""
 #: src/outfit.c:1681
 #, c-format
 msgid "Ammo '%s' has unknown ai type '%s'."
-msgstr ""
+msgstr "La munición '%s' tiene un tipo de ia desconocido '%s'."
 
 #: src/outfit.c:1717
 #, c-format
@@ -100387,6 +100470,8 @@ msgid ""
 "\n"
 "%.1f Second Lock-on"
 msgstr ""
+"\n"
+"%.1f Seg para Fijar Obj"
 
 #: src/outfit.c:2705
 #, c-format
