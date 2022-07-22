@@ -492,7 +492,7 @@ end
 
 function board_tryCapture ( wgt, nomsg )
 	if not swapship.test(board_plt) then
-		vtnk.msg(_("Insufficient Cargo Space"), _("You are unable to attempt to capture this vessel as you would be unable to transfer all of your important mission cargo to the new ship."))
+		luatk.msg(_("Insufficient Cargo Space"), _("You are unable to attempt to capture this vessel as you would be unable to transfer all of your important mission cargo to the new ship."))
 		return
 	end
 	
