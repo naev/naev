@@ -22,11 +22,8 @@ copyright_holder = 'Naev Dev Team'
 
 # Tools
 cc = meson.get_compiler('c')
-foreach arg: ['-Wextra', '-Wshadow']
-   if cc.has_argument(arg)
-      add_project_arguments(arg, language : 'c')
-   endif
-endforeach
+c_args = cc.get_supported_arguments(['-Wextra', '-Wshadow'])
+add_project_arguments(c_args, language: 'c')
 
 # Python module checks (For AUTHORS generation and soundtrack generation)
 python_module = import('python')

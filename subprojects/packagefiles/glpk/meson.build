@@ -1,18 +1,13 @@
 project('glpk', 'c', version: '5.0')
 
 cc = meson.get_compiler('c')
-foreach arg: [
-              '-Wno-array-compare',
-              '-Wno-clobbered', '-Wno-implicit-fallthrough', '-Wno-misleading-indentation', '-Wno-macro-redefined',
-              '-Wno-parentheses', '-Wno-return-type', '-Wno-self-assign', '-Wno-sign-compare', '-Wno-sometimes-uninitialized',
-              '-Wno-strict-aliasing', '-Wno-stringop-overflow',  # No way these will come back to bite us!
-              '-Wno-uninitialized', '-Wno-unused-but-set-variable', '-Wno-unused-function', '-Wno-unused-parameter',
-              '-Wno-unused-value', '-Wno-unused-variable',
-             ]
-   if cc.has_argument(arg)
-      add_project_arguments(arg, language : 'c')
-   endif
-endforeach
+c_args = cc.get_supported_arguments([
+   '-Wno-array-compare', '-Wno-clobbered', '-Wno-implicit-fallthrough', '-Wno-misleading-indentation', '-Wno-macro-redefined',
+   '-Wno-parentheses', '-Wno-return-type', '-Wno-self-assign', '-Wno-sign-compare', '-Wno-sometimes-uninitialized',
+   '-Wno-strict-aliasing', '-Wno-stringop-overflow',  # No way these will come back to bite us!
+   '-Wno-uninitialized', '-Wno-unused-but-set-variable', '-Wno-unused-function', '-Wno-unused-parameter', '-Wno-unused-value', '-Wno-unused-variable',
+])
+add_project_arguments(c_args, language: 'c')
 
 subdir('src')
 
