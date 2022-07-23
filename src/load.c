@@ -480,7 +480,13 @@ void load_loadGameMenu (void)
    if (n > 0) {
       names = malloc( sizeof(char*)*n );
       for (int i=0; i<n; i++) {
-         names[i] = strdup( load_saves[i].name );
+         if (load_saves[i].saves[0].compatible) {
+            char buf[STRMAX_SHORT];
+            snprintf( buf, sizeof(buf), "#r%s#0", load_saves[i].name );
+            names[i] = strdup( buf );
+         }
+         else
+            names[i] = strdup( load_saves[i].name );
          if (selected_player != NULL && !strcmp( names[i], selected_player ))
             pos = i;
       }
@@ -552,7 +558,13 @@ void load_loadSnapshotMenu( const char *name )
       names = malloc( sizeof(char*)*n );
       for (int i=0; i<n; i++) {
          nsave_t *ns = &ps->saves[i];
-         names[i] = strdup( ns->save_name );
+         if (ns->compatible) {
+            char buf[STRMAX_SHORT];
+            snprintf( buf, sizeof(buf), "#r%s#0", load_saves[i].name );
+            names[i] = strdup( buf );
+         }
+         else
+            names[i] = strdup( ns->save_name );
       }
    }
    /* case there are no files */
