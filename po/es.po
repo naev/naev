@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-07-22 21:20+0000\n"
+"PO-Revision-Date: 2022-07-23 21:24+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -24549,10 +24549,10 @@ msgid ""
 msgstr ""
 "Aunque la Casa Za'lek confía en los drones para casi todo, su limitado "
 "combustible los hace inadecuados para realizar transportes de larga "
-"distancia. Para superar esta limitación, se desarrolló el carguero Avaricia. "
-"Tiene un gran espacio de almacenamiento, capaz de albergar centros de "
-"investigación móviles enteros en su interior. Como la mayoría de las naves "
-"de la Casa Za'lek, el blindaje es bastante débil, aunque se compensa "
+"distancia. Para superar esta limitación, se desarrolló el Gran Carguero "
+"Avaricia. Tiene un gran espacio de almacenamiento, capaz de albergar centros "
+"de investigación móviles enteros en su interior. Como la mayoría de las "
+"naves de la Casa Za'lek, el blindaje es bastante débil, aunque se compensa "
 "parcialmente con la avanzada tecnología de escudos. Sin embargo, la "
 "estrategia estándar es confiar en los drones para luchar mientras se produce "
 "la huida."
@@ -99923,7 +99923,7 @@ msgstr "Bahia de Cazas"
 
 #: src/outfit.c:898 src/outfit.c:927 src/ship.c:190
 msgid "Fighter"
-msgstr ""
+msgstr "Caza"
 
 #: src/outfit.c:900 src/outfit.c:929
 msgid "Local Map"
@@ -100047,13 +100047,13 @@ msgstr ""
 "     %.0f%% vs escudo"
 
 #: src/outfit.c:1337
-#, c-format, fuzzy
+#, c-format
 msgid ""
 "\n"
 "     %.0f%% knockback"
 msgstr ""
 "\n"
-"     %.0f%% knockback"
+"     %.0f%% retroceso"
 
 #: src/outfit.c:1338 src/outfit.c:1484 src/outfit.c:1854 src/outfit.c:1924
 #: src/outfit.c:2701
@@ -100224,7 +100224,7 @@ msgstr ""
 #: src/outfit.c:1568
 #, c-format
 msgid "Outfit '%s' missing '%s' element"
-msgstr ""
+msgstr "Al equipo '%s' le falta el elemento '%s'"
 
 #: src/outfit.c:1681
 #, c-format
@@ -100234,18 +100234,20 @@ msgstr "La munición '%s' tiene un tipo de ia desconocido '%s'."
 #: src/outfit.c:1717
 #, c-format
 msgid "Outfit '%s' has no speed nor thrust set!"
-msgstr ""
+msgstr "¡El equipo '%s' no tiene velocidad ni empuje!"
 
 #: src/outfit.c:1787 src/outfit.c:1853
 msgid ""
 "\n"
 "#rActivated Outfit#0"
 msgstr ""
+"\n"
+"#rEquipo Activado#0"
 
 #: src/outfit.c:1789
 #, c-format
 msgid " #r(%.1f s Cooldown)#0"
-msgstr ""
+msgstr " #r(%.1f s enfriamiento)#0"
 
 #: src/outfit.c:1790
 #, c-format
@@ -100257,6 +100259,8 @@ msgid ""
 "\n"
 "Only one can be equipped"
 msgstr ""
+"\n"
+"Solo uno puede ser equipado"
 
 #: src/outfit.c:1856
 #, c-format
@@ -100264,6 +100268,8 @@ msgid ""
 "\n"
 "%.0f Maximum Effective Mass"
 msgstr ""
+"\n"
+"%.0f Masa Efectiva Máxima"
 
 #: src/outfit.c:1857
 #, c-format
@@ -100271,6 +100277,8 @@ msgid ""
 "\n"
 "%.0f%% Thrust"
 msgstr ""
+"\n"
+"%.0f%% Empuje"
 
 #: src/outfit.c:1858
 #, c-format
@@ -100278,13 +100286,17 @@ msgid ""
 "\n"
 "%.0f%% Maximum Speed"
 msgstr ""
+"\n"
+"%.0f%% Velocidad Máxima"
 
 #: src/outfit.c:1860
-#, c-format
+#, c-format, fuzzy
 msgid ""
 "\n"
 "%.1f Rumble"
 msgstr ""
+"\n"
+"%.1f Rumble"
 
 #: src/outfit.c:1925
 #, c-format
@@ -100292,6 +100304,8 @@ msgid ""
 "\n"
 "%.1f Seconds Per Launch"
 msgstr ""
+"\n"
+"%.1f Segundos Por Lanzamiento"
 
 #: src/outfit.c:1926 src/outfit.c:2718
 #, c-format
@@ -100306,6 +100320,8 @@ msgid ""
 "\n"
 "%.1f Seconds to Reload"
 msgstr ""
+"\n"
+"%.1f Segundos Para Recargar"
 
 #: src/outfit.c:2015
 #, c-format
@@ -100315,17 +100331,17 @@ msgstr ""
 #: src/outfit.c:2023
 #, c-format
 msgid "Map '%s' has invalid jump point '%s'"
-msgstr ""
+msgstr "El mapa '%s' tiene un punto de salto inválido '%s'"
 
 #: src/outfit.c:2030
 #, c-format
 msgid "Map '%s' has invalid system '%s'"
-msgstr ""
+msgstr "El mapa '%s' tiene un sistema inválido '%s'"
 
 #: src/outfit.c:2130
 #, c-format
 msgid "GUI (Graphical User Interface)"
-msgstr ""
+msgstr "GUI( Interfaz Gráfica de Usuario)"
 
 #: src/outfit.c:2201 src/outfit.c:2644 src/slots.c:65 src/space.c:3347
 #: src/spfx.c:1162 src/start.c:69
@@ -100341,42 +100357,42 @@ msgstr ""
 #: src/outfit.c:2257
 #, c-format
 msgid "Outfit '%s' has an slot type invalid."
-msgstr ""
+msgstr "El equipo '%s' tiene un tipo de ranura inválido."
 
 #: src/outfit.c:2265
 #, c-format
 msgid "Outfit '%s' has unknown slot type '%s'."
-msgstr ""
+msgstr "El equipo '%s' tiene un tipo de ranura desconocido '%s'."
 
 #: src/outfit.c:2286
 #, c-format
 msgid "Empty faction string for outfit '%s' legality!"
-msgstr ""
+msgstr "¡Cadena de facción vacía para la legalidad del equipo '%s'!"
 
 #: src/outfit.c:2292
 #, c-format
 msgid "Outfit '%s' has no factions defined in <illegalto> block!"
-msgstr ""
+msgstr "¡El equipo '%s' no tiene facciones definidas en el bloque <illegalto>!"
 
 #: src/outfit.c:2295
 #, c-format
 msgid "Outfit '%s' has unknown general node '%s'"
-msgstr ""
+msgstr "El equipo '%s' tiene un nodo general desconocido '%s'"
 
 #: src/outfit.c:2337
 #, c-format
 msgid "Outfit '%s' element 'specific' missing property 'type'"
-msgstr ""
+msgstr "Equipo '%s' elemento 'específico' falta propiedad 'tipo'"
 
 #: src/outfit.c:2353
 #, c-format
 msgid "Outfit '%s' has group '%d', should be in the 1-%d range"
-msgstr ""
+msgstr "El equipo '%s' tiene el grupo '%d', debería estar en el rango 1-%d"
 
 #: src/outfit.c:2364
 #, c-format
 msgid "Outfit '%s' is of type NONE"
-msgstr ""
+msgstr "El equipo '%s' es de tipo NONE"
 
 #: src/outfit.c:2478
 #, c-format
@@ -100402,11 +100418,12 @@ msgstr ""
 #, c-format
 msgid "Outfit '%s' has longer 'iflockon' than ammo 'duration'"
 msgstr ""
+"El equipo '%s' tiene un 'iflockon' más largo que la 'duración' de munición"
 
 #: src/outfit.c:2502
 #, c-format
 msgid "Outfit '%s' failed to read Lua '%s'!"
-msgstr ""
+msgstr "¡El equipo '%s' no ha podido leer '%s' Lua!"
 
 #: src/outfit.c:2515
 #, c-format
@@ -100414,26 +100431,30 @@ msgid ""
 "Outfit '%s' Lua error:\n"
 "%s"
 msgstr ""
+"Equipo '%s' error Lua:\n"
+"%s"
 
 #: src/outfit.c:2559
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "¡Colisión de nombres! El equipo %d se llama '%s'"
+msgstr[1] "¡Colisión de nombres! Equipos %d se llaman '%s'"
 
 #: src/outfit.c:2566
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Equipo Cargado %d"
+msgstr[1] "Equipos Cargados %d"
 
 #: src/outfit.c:2593
 msgid ""
 "\n"
 "#rIllegal to:#0"
 msgstr ""
+"\n"
+"#rIlegal a:#0"
 
 #: src/outfit.c:2595
 #, c-format
@@ -100441,6 +100462,8 @@ msgid ""
 "\n"
 "#r- %s#0"
 msgstr ""
+"\n"
+"#r- %s#0"
 
 #: src/outfit.c:2605
 #, c-format
@@ -100448,11 +100471,13 @@ msgid ""
 "Outfit '%s' lua load error -> 'load':\n"
 "%s"
 msgstr ""
+"Error de carga lua del equipo '%s' -> 'load':\n"
+"%s"
 
 #: src/outfit.c:2613
 #, c-format
 msgid "Outfit '%s' has inexistent license requirement '%s'!"
-msgstr ""
+msgstr "¡El equipo '%s' tiene un requisito de licencia inexistente '%s'!"
 
 #: src/outfit.c:2637
 #, c-format
@@ -100479,12 +100504,16 @@ msgid ""
 "\n"
 "%.1f Second In-Flight Calibration"
 msgstr ""
+"\n"
+"%.1f Segundos de Calibración En Vuelo"
 
 #: src/outfit.c:2710
 msgid ""
 "\n"
 "No Seeking"
 msgstr ""
+"\n"
+"Sin Buscar"
 
 #: src/outfit.c:2722
 #, c-format
@@ -100492,6 +100521,8 @@ msgid ""
 "\n"
 "%.1f Disable/s [%.0f Disable]"
 msgstr ""
+"\n"
+"%.1f Deshabilitar/s [%.0f Disable]"
 
 #: src/outfit.c:2725
 #, c-format
@@ -100499,6 +100530,8 @@ msgid ""
 "\n"
 "%s Range [%.1f duration]"
 msgstr ""
+"\n"
+"%s Rango [%.1f duración]"
 
 #: src/outfit.c:2728
 #, c-format
@@ -100506,6 +100539,8 @@ msgid ""
 "\n"
 "%.0f Initial Speed (%.0f Thrust)"
 msgstr ""
+"\n"
+"%.0f Velocidad inicial (%.0f Empuje)"
 
 #: src/outfit.c:2730
 #, c-format
@@ -100513,6 +100548,8 @@ msgid ""
 "\n"
 "%.0f Thrust"
 msgstr ""
+"\n"
+"%.0f Empuje"
 
 #: src/outfit.c:2734
 #, c-format
@@ -100520,6 +100557,8 @@ msgid ""
 "\n"
 "%.0f Maximum Speed"
 msgstr ""
+"\n"
+"%.0f Velocidad Máxima"
 
 #: src/outfit.c:2737
 #, c-format
@@ -100527,6 +100566,8 @@ msgid ""
 "\n"
 "%.0f%% Jam Resistance"
 msgstr ""
+"\n"
+"%.0f%% Resistencia a Inhibición"
 
 #.
 #. * properties
@@ -100544,30 +100585,31 @@ msgstr ""
 #. * Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title.
 #: src/outfit.h:29
 msgid "#p W "
-msgstr ""
+msgstr "#p A "
 
 #. * Color-coded abbreviation for "Utility [outfit]", short enough to use as a tab/column title.
 #: src/outfit.h:31
 msgid "#g U "
-msgstr ""
+msgstr "#g U "
 
 #. * Color-coded abbreviation for "Structure [outfit]", short enough to use as a tab/column title.
 #: src/outfit.h:33
 msgid "#n S "
-msgstr ""
+msgstr "#n E "
 
 #. * Color-coded abbreviation for "Core [outfit]", short enough to use as a tab/column title.
 #: src/outfit.h:35
 msgid "#oCore"
-msgstr ""
+msgstr "#oBase"
 
 #: src/physics.c:436
 msgid "Solid initialization did not specify correct update function!"
 msgstr ""
+"¡La inicialización sólida no especificó la función de actualización correcta!"
 
 #: src/pilot.c:944
 msgid "#oActive cooldown engaged."
-msgstr ""
+msgstr "#oActivo enfriamiento comprometido."
 
 #: src/pilot.c:1001
 msgid "#oActive cooldown completed."
@@ -100576,7 +100618,7 @@ msgstr ""
 #: src/pilot.c:1004
 #, c-format
 msgid "#rActive cooldown aborted: %s!"
-msgstr ""
+msgstr "#r¡Enfriamiento activo abortado: %s!"
 
 #: src/pilot.c:1006
 msgid "#rActive cooldown aborted!"
@@ -100594,20 +100636,21 @@ msgstr ""
 #, c-format
 msgid "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
 msgstr ""
+"Piloto '%s' intentando saltar a través del salto de salida de '%s' a '%s'"
 
 #: src/pilot.c:2853
 #, c-format
 msgid "Pilot '%s' failed safety check: %s"
-msgstr ""
+msgstr "El piloto '%s' ha fallado la comprobación de seguridad: %s"
 
 #: src/pilot.c:2856
 #, c-format
 msgid "   [%d] %s"
-msgstr ""
+msgstr "   [%d] %s"
 
 #: src/pilot.c:2945 src/pilot.c:2980
 msgid "Unable to allocate memory"
-msgstr ""
+msgstr "Incapaz de asignar memoria"
 
 #: src/pilot.c:3068
 msgid "Creating pilot in system with no jumps nor planets to take off from!"
@@ -100617,97 +100660,101 @@ msgstr ""
 #, c-format
 msgid "Unable to copy cargo over from pilot '%s' to '%s'. Leaving cargo as is."
 msgstr ""
+"No se ha podido copiar la carga del piloto '%s' a '%s'. Dejando la carga "
+"como está."
 
 #: src/pilot_ew.c:503
 msgid "You have been uncovered!"
-msgstr ""
+msgstr "¡Has sido descubierto!"
 
 #: src/pilot_ew.c:505
 #, c-format
 msgid "You have uncovered '#%c%s#0'!"
-msgstr ""
+msgstr "¡Has descubierto '#%c%s#0'!"
 
 #: src/pilot_hook.c:71 src/pilot_hook.c:83
 #, c-format
 msgid "Pilot '%s' failed to run hook type %d"
-msgstr ""
+msgstr "El piloto '%s' no pudo ejecutar el gancho de tipo %d"
 
 #: src/pilot_outfit.c:344
 #, c-format
 msgid ""
 "Pilot '%s': trying to add outfit '%s' to slot that already has an outfit"
 msgstr ""
+"Piloto '%s': intentando añadir el equipo '%s' a una ranura que ya tiene un "
+"equipo"
 
 #: src/pilot_outfit.c:351
 #, c-format
 msgid "Pilot '%s': Not enough CPU to add outfit '%s'"
-msgstr ""
+msgstr "Piloto '%s': No hay suficiente CPU para añadir el equipo '%s'"
 
 #: src/pilot_outfit.c:357
 #, c-format
 msgid "Pilot '%s': Trying to add outfit but %s"
-msgstr ""
+msgstr "Piloto '%s': Intentando añadir un equipo pero %s"
 
 #: src/pilot_outfit.c:450
 #, c-format
 msgid "Pilot '%s': Trying to remove outfit but %s"
-msgstr ""
+msgstr "Piloto '%s': Intentando eliminar el equipo pero %s"
 
 #: src/pilot_outfit.c:501
 msgid "Doesn't fit slot"
-msgstr ""
+msgstr "No se ajusta a la ranura"
 
 #: src/pilot_outfit.c:505
 msgid "Insufficient CPU"
-msgstr ""
+msgstr "CPU Insuficiente"
 
 #: src/pilot_outfit.c:509
 msgid "Insufficient Thrust"
-msgstr ""
+msgstr "Empuje Insuficiente"
 
 #: src/pilot_outfit.c:511
 msgid "Insufficient Speed"
-msgstr ""
+msgstr "Velocidad Insuficiente"
 
 #: src/pilot_outfit.c:513
 msgid "Insufficient Turn"
-msgstr ""
+msgstr "Giro Insuficiente"
 
 #: src/pilot_outfit.c:517
 msgid "Insufficient Armour"
-msgstr ""
+msgstr "Blindaje Insuficiente"
 
 #: src/pilot_outfit.c:519
 msgid "Insufficient Armour Regeneration"
-msgstr ""
+msgstr "Regeneración de Blindaje Insuficiente"
 
 #: src/pilot_outfit.c:521
 msgid "Insufficient Shield"
-msgstr ""
+msgstr "Escudo Insuficiente"
 
 #: src/pilot_outfit.c:523
 msgid "Insufficient Shield Regeneration"
-msgstr ""
+msgstr "Regeneración de Escudo Insuficiente"
 
 #: src/pilot_outfit.c:525
 msgid "Insufficient Energy"
-msgstr ""
+msgstr "Energía Insuficiente"
 
 #: src/pilot_outfit.c:527
 msgid "Insufficient Energy Regeneration"
-msgstr ""
+msgstr "Regeneración de Energía Insuficiente"
 
 #: src/pilot_outfit.c:531
 msgid "Insufficient Fuel Maximum"
-msgstr ""
+msgstr "Combustible Máximo Insuficiente"
 
 #: src/pilot_outfit.c:533
 msgid "Insufficient Fuel Consumption"
-msgstr ""
+msgstr "Consumo de Combustible Insuficiente"
 
 #: src/pilot_outfit.c:535
 msgid "Insufficient Free Cargo Space"
-msgstr ""
+msgstr "Espacio de Carga Libre Insuficiente"
 
 #: src/pilot_outfit.c:539
 msgid "Not All Core Slots are equipped"
@@ -100782,32 +100829,32 @@ msgstr ""
 #: src/pilot_outfit.c:595
 #, c-format
 msgid "Spaceworthy"
-msgstr ""
+msgstr "Solo Para Espacio"
 
 #: src/pilot_outfit.c:633
 msgid "Nothing selected."
-msgstr ""
+msgstr "Nada seleccionado."
 
 #: src/pilot_outfit.c:638
 msgid "Does not fit slot."
-msgstr ""
+msgstr "No encaja en la ranura."
 
 #: src/pilot_outfit.c:641
 msgid "Already have an outfit of this type installed"
-msgstr ""
+msgstr "Ya tienes un equipo de este tipo instalado"
 
 #: src/pilot_outfit.c:644
 msgid "Can only install unique outfit once."
-msgstr ""
+msgstr "Solo puedes instalar un equipo único a la vez."
 
 #: src/pilot_outfit.c:649
 msgid "Recall the fighters first"
-msgstr ""
+msgstr "Reclama a los cazas primero"
 
 #: src/pilot_outfit.c:670
 #, c-format
 msgid "Pilot '%s': Trying to add ammo to unequipped slot."
-msgstr ""
+msgstr "Piloto '%s': Intentando añadir munición a una ranura sin equipar."
 
 #: src/pilot_outfit.c:674
 #, c-format
@@ -100838,7 +100885,7 @@ msgstr ""
 #: src/pilot_outfit.c:729
 #, c-format
 msgid "Pilot '%s': Trying to remove ammo from unequipped slot."
-msgstr ""
+msgstr "Piloto '%s': Intentando eliminar la munición de la ranura no equipada."
 
 #: src/pilot_outfit.c:733
 #, c-format
@@ -101067,24 +101114,24 @@ msgstr ""
 
 #: src/pilot_weapon.c:366
 msgid "Unused"
-msgstr ""
+msgstr "Sin usar"
 
 #: src/pilot_weapon.c:368
 msgid "Weapons - Switched"
-msgstr ""
+msgstr "Armas - Commutadas"
 
 #: src/pilot_weapon.c:369
 msgid "Weapons - Instant"
-msgstr ""
+msgstr "Armas - Instantáneas"
 
 #: src/pilot_weapon.c:370
 msgid "Abilities - Toggled"
-msgstr ""
+msgstr "Habilidades - Alternadas"
 
 #: src/pilot_weapon.c:1163
 #, c-format
 msgid "Shooting unknown weapon type: %s"
-msgstr ""
+msgstr "Disparo de tipo de arma desconocida: %s"
 
 #: src/player.c:235
 msgid "Normal Speed"
@@ -101097,11 +101144,11 @@ msgstr ""
 #. Get the name.
 #: src/player.c:246
 msgid "Player Name"
-msgstr ""
+msgstr "Nombre de Jugador"
 
 #: src/player.c:247
 msgid "Please write your name:"
-msgstr ""
+msgstr "Por favor, escribe tu nombre:"
 
 #: src/player.c:257
 msgid "Overwrite"
@@ -101129,24 +101176,24 @@ msgstr ""
 #: src/player.c:300
 #, c-format
 msgid "Failed to run start mission '%s'."
-msgstr ""
+msgstr "Fallo en la ejecución de la misión de inicio '%s'."
 
 #: src/player.c:306
 #, c-format
 msgid "Failed to run start event '%s'."
-msgstr ""
+msgstr "Fallo en la ejecución del evento de inicio '%s'."
 
 #: src/player.c:344
 msgid "Ship not properly set by module."
-msgstr ""
+msgstr "La nave no está bien configurada por el módulo."
 
 #: src/player.c:404
 msgid "Please name your new ship:"
-msgstr ""
+msgstr "Por favor, ponle nombre a tu nave:"
 
 #: src/player.c:429
 msgid "Name collision"
-msgstr ""
+msgstr "Colisión de nombres"
 
 #: src/player.c:440
 msgid "Player ship isn't valid... This shouldn't happen!"
@@ -101157,16 +101204,21 @@ msgid ""
 "Something seriously wonky went on, newly created player does not exist, "
 "bailing!"
 msgstr ""
+"Algo muy raro ha ocurrido, el jugador recién creado no existe, ¡se está "
+"perdiendo!"
 
 #: src/player.c:603
 #, c-format
 msgid "Unable to swap player.p with ship '%s': ship does not exist!"
 msgstr ""
+"No se ha podido intercambiar player.p con la nave '%s': ¡la nave no existe!"
 
 #: src/player.c:630
 #, c-format
 msgid "Unable to find price for player's ship '%s': ship does not exist!"
 msgstr ""
+"No se ha podido encontrar el precio de la nave del jugador '%s': ¡la nave no "
+"existe!"
 
 #: src/player.c:1376
 #, c-format
@@ -101202,17 +101254,17 @@ msgstr ""
 #: src/player.c:1561
 #, c-format
 msgid "#oReady to land on %s."
-msgstr ""
+msgstr "#oPreparado para aterrizar en %s."
 
 #: src/player.c:1571
 #, c-format
 msgid "#rYou are too far away to land on %s."
-msgstr ""
+msgstr "#rEstás demasiado lejos para aterrizar en %s."
 
 #: src/player.c:1577
 #, c-format
 msgid "#rYou are going too fast to land on %s."
-msgstr ""
+msgstr "#rVas demasiado rápido para aterrizar en %s."
 
 #: src/player.c:1619
 msgid "Player has landing permission, but no valid planet targeted."
@@ -101221,21 +101273,23 @@ msgstr ""
 #: src/player.c:1630
 #, c-format
 msgid "#%c%s>#0 Landing permission revoked."
-msgstr ""
+msgstr "#%c%s>#0 Permiso de aterrizaje revocado."
 
 #: src/player.c:1655
 msgid "You are not allowed to land at this moment."
-msgstr ""
+msgstr "No te está permitido aterrizar en este momento."
 
 #: src/player.c:1701
 #, c-format
 msgid "Trying to set player's hyperspace target to invalid ID '%d'"
 msgstr ""
+"Intentando establecer el objetivo hiperespacial del jugador en un ID "
+"inválido '%d'"
 
 #: src/player.c:1803
 #, c-format
 msgid "#rReceiving hail! Press #b%s#0 to respond."
-msgstr ""
+msgstr "#r¡Recibiendo llamada! Pulsa #b%s#0 para responderla."
 
 #: src/player.c:1856
 msgid "#rAborting hyperspace sequence."
@@ -101247,7 +101301,7 @@ msgstr ""
 
 #: src/player.c:1865 src/player_autonav.c:84
 msgid "#rHyperspace drive is offline."
-msgstr ""
+msgstr "#rMotor Hiperespacial está desconectado."
 
 #: src/player.c:1867
 msgid "#rYou do not have enough fuel to hyperspace jump."
@@ -101260,30 +101314,31 @@ msgstr ""
 #: src/player.c:1961
 #, c-format
 msgid "#oAutonav arrived at the %s system."
-msgstr ""
+msgstr "#oAutonav llegó al sistema %s."
 
 #: src/player.c:1967
 #, c-format
 msgid "#oAutonav continuing until %s (%d jump left)."
 msgid_plural "#oAutonav continuing until %s (%d jumps left)."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "#oAutonav continúa hasta %s (queda %d salto)."
+msgstr[1] "#oAutonav continúa hasta %s (quedan %d saltos)."
 
 #. in case the crap system breaks :)
 #: src/player.c:2216
 msgid "You have reached the maximum amount of screenshots [999]"
-msgstr ""
+msgstr "Has alcanzado la cantidad máxima de capturas de pantalla [999]"
 
 #. now proceed to take the screenshot
 #: src/player.c:2221
 #, c-format
 msgid "Taking screenshot [%03d]..."
-msgstr ""
+msgstr "Tomando captura de pantalla [%03d]..."
 
 #: src/player.c:2250
 #, c-format
 msgid "#r%s is out of comm range, unable to contact."
 msgstr ""
+"#r%s está fuera del alcance de las comunicaciones, incapaz de contactar."
 
 #: src/player.c:2273 src/player.c:2295
 msgid "#rNo target selected to hail."
@@ -101304,62 +101359,66 @@ msgstr ""
 #: src/player.c:2563 src/player.c:2582
 #, c-format
 msgid "Player ship '%s' not found in stack"
-msgstr ""
+msgstr "Nave de jugador '%s' no encontrada en la pila"
 
 #: src/player.c:2977
 msgid "Escort is undeployed, removing."
-msgstr ""
+msgstr "La escolta está sin desplegar, quitando."
 
 #: src/player.c:3193
 msgid "Found mission cargo without associated mission."
-msgstr ""
+msgstr "Carga de misión encontrada sin misión asociada."
 
 #: src/player.c:3194
 msgid "Please reload save game to remove the dead cargo."
-msgstr ""
+msgstr "Por favor, recargue la partida guardada para eliminar la carga muerta."
 
 #: src/player.c:3420
 #, c-format
 msgid "Saved license does not exist and could not be found or updated: '%s'!"
 msgstr ""
+"¡La licencia guardada no existe y no pudo ser encontrada o actualizada: '%s'!"
 
 #: src/player.c:3489
 msgid "Malformed time in save game!"
-msgstr ""
+msgstr "¡Tiempo malformado en la partida guardada!"
 
 #: src/player.c:3526
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
-msgstr ""
+msgstr "¡El equipo '%s' fue guardado sin cantidad!"
 
 #: src/player.c:3550
 msgid "Player ship does not exist!"
-msgstr ""
+msgstr "¡La nave del jugador no existe!"
 
 #: src/player.c:3553
 msgid "Player has no other ships, giving starting ship."
-msgstr ""
+msgstr "El jugador no tiene otras naves, dando la nave inicial."
 
 #: src/player.c:3564
 #, c-format
 msgid "Giving player ship '%s'."
-msgstr ""
+msgstr "Dando la nave del jugador '%s'."
 
 #: src/player.c:3570
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
+"Algo ha ido terriblemente mal, el jugador no existe después de la carga..."
 
 #: src/player.c:3580
 msgid "Save has no time information, setting to start information."
 msgstr ""
+"Guardado no tiene información de tiempo, ajustando a la información de "
+"inicio."
 
 #: src/player.c:3586
 msgid "Player save was updated!"
-msgstr ""
+msgstr "¡Se ha actualizado el guardado del jugador!"
 
 #: src/player.c:3587
 msgid "Save Game Updated"
-msgstr ""
+msgstr "Juego Guardado Actualizado"
 
 #: src/player.c:3587
 msgid ""
@@ -101368,6 +101427,10 @@ msgid ""
 "changed. In the case no equivalent outfit or ship was found, you have been "
 "refunded the cost in credits."
 msgstr ""
+"Las partidas guardadas cargadas han tenido equipos y naves actualizados a la "
+"versión actual de Naev. Encontrarás que algunos equipos y naves que has "
+"tenido han sido cambiados. En el caso de que no hayas encontrado un equipo o "
+"nave equivalente, se te devolverá el coste en créditos."
 
 #: src/player.c:3595
 #, c-format
@@ -101388,26 +101451,26 @@ msgstr ""
 #: src/player.c:3676
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
-msgstr ""
+msgstr "Parece que la misión '%s' ya no existe, se ha eliminado de la memoria."
 
 #: src/player.c:3698
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
-msgstr ""
+msgstr "Parece que el evento '%s' ya no existe, se ha eliminado de la memoria."
 
 #: src/player.c:3720
 msgid "License node is missing name attribute."
-msgstr ""
+msgstr "Al nodo de licencia le falta el atributo nombre."
 
 #: src/player.c:3747
 #, c-format
 msgid "Escort has invalid type '%s'."
-msgstr ""
+msgstr "El escolta tiene un tipo inválido '%s'."
 
 #: src/player.c:3808
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
-msgstr ""
+msgstr "¡Clase de nave desconocida '%s' al analizar el nodo 'ships_destroyed'!"
 
 #: src/player.c:3827
 #, c-format
@@ -101415,33 +101478,37 @@ msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
+"El equipo '%s' no encaja en la ranura designada en el piloto del jugador "
+"'%s', añadiendo a las existencias."
 
 #: src/player.c:3835
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
+"El equipo '%s' no encaja en el piloto del jugador '%s', añadiendo a las "
+"existencias."
 
 #: src/player.c:3856
 msgid "Empty ship slot node found, skipping."
-msgstr ""
+msgstr "Nodo de ranura de nave vacía encontrado, saltando."
 
 #: src/player.c:3922
 #, c-format
 msgid "Player ship '%s' not found!"
-msgstr ""
+msgstr "¡Nave de jugador '%s' no encontrada!"
 
 #: src/player.c:3969
 msgid "Outfit slot out of range, not adding to ship."
-msgstr ""
+msgstr "Ranura de equipo fuera de rango, no se añade a la nave."
 
 #: src/player.c:3982 src/player.c:3995
 msgid "Outfit slot out of range, not adding."
-msgstr ""
+msgstr "Ranura del equipo fuera de rango, no añadir."
 
 #: src/player.c:4014
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
-msgstr ""
+msgstr "Se ha detectado un producto desconocido '%s', eliminando."
 
 #: src/player.c:4038
 #, c-format
@@ -101449,6 +101516,8 @@ msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
+"La nave del jugador '%s' ha fallado en la comprobación de la validez de las "
+"ranuras, eliminando todos los equipos y añadiéndolos a las existencias."
 
 #: src/player.c:4088
 #, c-format
@@ -101456,41 +101525,53 @@ msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
+"La nave del jugador '%s' tiene un nodo desconocido '%s' en 'weaponsets' (se "
+"esperaba 'weaponset')."
 
 #: src/player.c:4096
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
+"A la nave del jugador '%s' le falta la etiqueta 'id' para el conjunto de "
+"armas."
 
 #: src/player.c:4100
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
+"La nave del jugador '%s' tiene un id de conjunto de armas inválido '%d' ["
+"máx. %d]."
 
 #: src/player.c:4116
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
+"A la nave del jugador '%s' le falta la etiqueta 'type' para el conjunto de "
+"armas."
 
 #: src/player.c:4129
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
+"La nave del jugador '%s' tiene un nodo hijo '%s' desconocido (se esperaba "
+"'arma')."
 
 #: src/player.c:4137
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
+"A la nave del jugador '%s' le falta la etiqueta 'nivel' para el conjunto de "
+"armas."
 
 #: src/player.c:4142
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
-msgstr ""
+msgstr "La nave del jugador '%s' tiene un id de arma inválida %d [max %d]."
 
 #: src/player.c:4181
 msgid "You have destealthed."
-msgstr ""
+msgstr "Has sacado del modo sigilo."
 
 #: src/player.c:4187
 msgid "#gYou have entered stealth mode."
@@ -101506,86 +101587,86 @@ msgstr ""
 
 #: src/player_autonav.c:79
 msgid "#rNot enough fuel to jump for autonav."
-msgstr ""
+msgstr "#rNo hay suficiente combustible para saltar por el autonav."
 
 #: src/player_autonav.c:92
 #, c-format
 msgid "#oAutonav: travelling to %s."
-msgstr ""
+msgstr "#oAutonav: viajando a %s."
 
 #: src/player_autonav.c:175
 msgid "#oAutonav: heading to target position."
-msgstr ""
+msgstr "#oAutonav: rumbo a la posición objetivo."
 
 #: src/player_autonav.c:177
 msgid "position"
-msgstr ""
+msgstr "posición"
 
 #: src/player_autonav.c:198
 #, c-format
 msgid "#oAutonav: landing on #%c%s#0."
-msgstr ""
+msgstr "#oAutonav: aterrizando en #%c%s#0."
 
 #: src/player_autonav.c:202
 #, c-format
 msgid "#oAutonav: approaching #%c%s#0."
-msgstr ""
+msgstr "#oAutonav: aproximándose a #%c%s#0."
 
 #: src/player_autonav.c:217
 #, c-format
 msgid "#oAutonav: following %s."
-msgstr ""
+msgstr "#oAutonav: siguiendo a %s."
 
 #: src/player_autonav.c:239
 #, c-format
 msgid "#oAutonav: boarding %s."
-msgstr ""
+msgstr "#oAutonav: abordando %s."
 
 #: src/player_autonav.c:303
 #, c-format
 msgid "#rAutonav: aborted due to '%s'!"
-msgstr ""
+msgstr "#rAutonav: ¡abortado debido a '%s'!"
 
 #: src/player_autonav.c:305
 msgid "#rAutonav: aborted!"
-msgstr ""
+msgstr "#r¡Autonav: abortado!"
 
 #: src/player_autonav.c:314
 msgid "#oAutonav: aborting hyperspace sequence."
-msgstr ""
+msgstr "#oAutonav: abortando secuencia de hiperespacio."
 
 #: src/player_autonav.c:400
 msgid "#oAutonav: arrived at position."
-msgstr ""
+msgstr "#oAutonav: llegó a la posición."
 
 #: src/player_autonav.c:410
 #, c-format
 msgid "#oAutonav: arrived at #%c%s#0."
-msgstr ""
+msgstr "#oAutonav: llegó a #%c%s#0."
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
 #: src/player_autonav.c:459
 #, c-format
 msgid "#oAutonav: following target %s has been lost."
-msgstr ""
+msgstr "#oAutonav: el objetivo siguiente %s se ha perdido."
 
 #: src/player_autonav.c:747
 msgid "Target changed to current system"
-msgstr ""
+msgstr "El objetivo se ha cambiado al sistema actual"
 
 #: src/player_autonav.c:751
 msgid "Not enough fuel for autonav to continue"
-msgstr ""
+msgstr "No hay suficiente combustible para que el autonav continúe"
 
 #: src/player_gui.c:71
 #, c-format
 msgid "GUI '%s' does not exist as a file: '%s' not found."
-msgstr ""
+msgstr "GUI '%s' no existe como archivo: '%s' no se encuentra."
 
 #: src/render.c:274
 #, c-format
 msgid "Unknown post-processing shader layer '%d'!"
-msgstr ""
+msgstr "¡Capa de shader de postprocesamiento desconocida '%d'!"
 
 #: src/render.c:330
 #, c-format
@@ -101601,89 +101682,92 @@ msgstr[1] ""
 
 #: src/save.c:127
 msgid "Trying to save game data"
-msgstr ""
+msgstr "Intentado guardar los datos del juego"
 
 #: src/save.c:146
 msgid "Aborting save..."
-msgstr ""
+msgstr "Abortando guardado..."
 
 #: src/save.c:157
 msgid ""
 "Failed to write saved game!  You'll most likely have to restore it by "
 "copying your backup saved game over your current saved game."
 msgstr ""
+"¡Fallo al escribir la partida guardada!  Lo más probable es que tengas que "
+"restaurarla copiando tu partida guardada de respaldo sobre tu partida "
+"guardada actual."
 
 #: src/ship.c:76
 #, c-format
 msgid "Ship %s does not exist"
-msgstr ""
+msgstr "La nave %s no existe"
 
 #: src/ship.c:175
 msgid "Yacht"
-msgstr ""
+msgstr "Yate"
 
 #: src/ship.c:177
 msgid "Courier"
-msgstr ""
+msgstr "Mensajero"
 
 #: src/ship.c:179
 msgid "Freighter"
-msgstr ""
+msgstr "Carguero"
 
 #: src/ship.c:181
 msgid "Armoured Transport"
-msgstr ""
+msgstr "Transporte Armado"
 
 #: src/ship.c:183
 msgid "Bulk Freighter"
-msgstr ""
+msgstr "Gran Carguero"
 
 #: src/ship.c:186
 msgid "Scout"
-msgstr ""
+msgstr "Explorador"
 
 #: src/ship.c:188
 msgid "Interceptor"
-msgstr ""
+msgstr "Interceptor"
 
 #: src/ship.c:192
 msgid "Bomber"
-msgstr ""
+msgstr "Bombardero"
 
 #: src/ship.c:194
 msgid "Corvette"
-msgstr ""
+msgstr "Corbeta"
 
 #: src/ship.c:196
 msgid "Destroyer"
-msgstr ""
+msgstr "Destructor"
 
 #: src/ship.c:198
 msgid "Cruiser"
-msgstr ""
+msgstr "Crucero"
 
 #: src/ship.c:200
 msgid "Battleship"
-msgstr ""
+msgstr "Nave de Batalla"
 
 #: src/ship.c:202
 msgid "Carrier"
-msgstr ""
+msgstr "Portanaves"
 
 #: src/ship.c:353
 #, c-format
 msgid "Unable to create ship '%s' targeting surface."
-msgstr ""
+msgstr "No se ha podido crear la superficie de destino de la nave '%s'."
 
 #: src/ship.c:404
 #, c-format
 msgid "Unable to open '%s' for reading!"
-msgstr ""
+msgstr "¡No se ha podido abrir '%s' para su lectura!"
 
 #: src/ship.c:480
 #, c-format
 msgid "Ship '%s' does not have an engine sprite (%s)."
-msgstr ""
+msgstr "La nave '%s' no tiene un sprite de motor (%s)."
 
 #: src/ship.c:508
 #, c-format
@@ -101694,31 +101778,37 @@ msgid ""
 "                And 'polygonSTL.py' if 3D model is used in game.\n"
 "                These files can be found in Naev's artwork repo."
 msgstr ""
+"¡%s polígono de colisión xml no existe!\n"
+"                Por favor, utilice el script 'polygon_from_sprite.py' si se "
+"utilizan sprites,\n"
+"                Y 'polygonSTL.py' si se utiliza el modelo 3D en el juego.\n"
+"                Estos archivos se pueden encontrar en el repo de arte de "
+"Naev."
 
 #: src/ship.c:568
 #, c-format
 msgid "Ship '%s' has undefined slot size, setting to '%s'"
-msgstr ""
+msgstr "La nave '%s' tiene un tamaño de ranura no definido, ajusta a '%s'"
 
 #: src/ship.c:610
 #, c-format
 msgid "Ship '%s' has default outfit '%s' which does not exist."
-msgstr ""
+msgstr "La nave '%s' tiene un equipo por defecto '%s' que no existe."
 
 #: src/ship.c:620
 #, c-format
 msgid "Ship '%s' has required slot without a default outfit."
-msgstr ""
+msgstr "La nave '%s' tiene una ranura requerida sin un equipo por defecto."
 
 #: src/ship.c:650
 #, c-format
 msgid "Ship in %s has invalid or no name"
-msgstr ""
+msgstr "La nave en %s no tiene nombre o es inválida"
 
 #: src/ship.c:677
 #, c-format
 msgid "Ship '%s': GFX element is NULL"
-msgstr ""
+msgstr "Nave '%s': elemento GFX es NULL"
 
 #: src/ship.c:696
 #, c-format
@@ -101726,244 +101816,247 @@ msgid ""
 "Ship '%s': the number of collision polygons is wrong.\n"
 "                     npolygon = %i and sx*sy = %i"
 msgstr ""
+"Nave '%s': el número de polígonos de colisión es incorrecto.\n"
+"                     npolygon = %i y sx*sy = %i"
 
 #: src/ship.c:708
 #, c-format
 msgid "Ship '%s': gfx_space element is NULL"
-msgstr ""
+msgstr "Nave '%s': elemento gfx_space es NULL"
 
 #: src/ship.c:727
 #, c-format
 msgid "Ship '%s': gfx_engine element is NULL"
-msgstr ""
+msgstr "Nave '%s': elemento gfx_engine es NULL"
 
 #: src/ship.c:746
 #, c-format
 msgid "Ship '%s': gfx_comm element is NULL"
-msgstr ""
+msgstr "Nave '%s': elemento gfx_comm es NULL"
 
 #. All the xmlr_ stuff have continue cases.
 #: src/ship.c:809
 #, c-format
 msgid "Ship '%s' has unknown movement node '%s'."
-msgstr ""
+msgstr "Nave '%s' tiene nodo de movimiento desconocido '%s'."
 
 #. All the xmlr_ stuff have continue cases.
 #: src/ship.c:825
 #, c-format
 msgid "Ship '%s' has unknown health node '%s'."
-msgstr ""
+msgstr "Nave '%s' tiene nodo de salud desconocido '%s'."
 
 #. All the xmlr_ stuff have continue cases.
 #: src/ship.c:840
 #, c-format
 msgid "Ship '%s' has unknown characteristic node '%s'."
-msgstr ""
+msgstr "Nave '%s' tiene un nodo característico desconocido '%s'."
 
 #: src/ship.c:861
 #, c-format
 msgid "Ship '%s' has unknown slot node '%s'."
-msgstr ""
+msgstr "Nave '%s' tiene un nodo de ranura desconocido '%s'."
 
 #: src/ship.c:880
 #, c-format
 msgid "Ship '%s' has unknown stat '%s'."
-msgstr ""
+msgstr "Nave '%s' tiene una estadística desconocida '%s'."
 
 #: src/ship.c:913 src/ship.c:922
 #, c-format
 msgid "Ship '%s' has unknown node '%s'."
-msgstr ""
+msgstr "Nave '%s' tiene un nodo desconocido '%s'."
 
 #: src/ship.c:931
 #, c-format
 msgid "Ship '%s' has inexistent license requirement '%s'!"
-msgstr ""
+msgstr "¡La nave '%s' tiene un requisito de licencia inexistente '%s'!"
 
 #. ship validator
 #: src/ship.c:934
 #, c-format
 msgid "Ship '%s' missing '%s' element"
-msgstr ""
+msgstr "Nave '%s' falta '%s' elemento"
 
 #: src/ship.c:1024
 #, c-format
 msgid "Loaded %d Ship"
 msgid_plural "Loaded %d Ships"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Nave Cargada %d"
+msgstr[1] "Naves Cargadas %d"
 
 #: src/shiplog.c:185
 msgid "Warning - log not found: creating it"
-msgstr ""
+msgstr "Advertencia - registro no encontrado: creándolo"
 
 #: src/shiplog.c:186
 msgid "Please report this log as an error to github.com/naev"
-msgstr ""
+msgstr "Por favor, informe de este registro como un error a github.com/naev"
 
 #: src/shiplog.c:225
 msgid "Error creating new log entry - crash imminent!\n"
 msgstr ""
+"Error al crear una nueva entrada en el registro - ¡Colisión inminente!\n"
 
 #: src/shiplog.c:456
 msgid "No ID in shipLog entry"
-msgstr ""
+msgstr "Sin ID en entrada de Log de nave"
 
 #: src/shiplog.c:657
 msgid "Empty"
-msgstr ""
+msgstr "Vacío"
 
 #: src/shipstats.c:84
 msgid "Speed"
-msgstr ""
+msgstr "Velocidad"
 
 #: src/shipstats.c:85
 msgid "Turn"
-msgstr ""
+msgstr "Giro"
 
 #: src/shipstats.c:86
 msgid "Thrust"
-msgstr ""
+msgstr "Empuje"
 
 #: src/shipstats.c:87
 msgid "Cargo Space"
-msgstr ""
+msgstr "Espacio de Carga"
 
 #: src/shipstats.c:88
 msgid "Armour Strength"
-msgstr ""
+msgstr "Fuerza de Blindaje"
 
 #: src/shipstats.c:89
 msgid "Armour Regeneration"
-msgstr ""
+msgstr "Regeneración de Blindaje"
 
 #: src/shipstats.c:90
 msgid "Shield Strength"
-msgstr ""
+msgstr "Fuerza de Escudo"
 
 #: src/shipstats.c:91
 msgid "Shield Regeneration"
-msgstr ""
+msgstr "Regeneración de Escudo"
 
 #: src/shipstats.c:92
 msgid "Energy Capacity"
-msgstr ""
+msgstr "Capacidad de Energía"
 
 #: src/shipstats.c:93
 msgid "Energy Regeneration"
-msgstr ""
+msgstr "Regeneración de Energía"
 
 #: src/shipstats.c:94 src/shipstats.c:161
 msgid "CPU Capacity"
-msgstr ""
+msgstr "Capacidad de CPU"
 
 #: src/shipstats.c:96
 msgid "Jump Time"
-msgstr ""
+msgstr "Tiempo de Salto"
 
 #: src/shipstats.c:97
 msgid "Landing Time"
-msgstr ""
+msgstr "Tiempo de Aterrizaje"
 
 #: src/shipstats.c:98
 msgid "Cargo Inertia"
-msgstr ""
+msgstr "Inercia de Carga"
 
 #: src/shipstats.c:100
 msgid "Concealment"
-msgstr ""
+msgstr "Ocultación"
 
 #: src/shipstats.c:101
 msgid "Evasion"
-msgstr ""
+msgstr "Evasión"
 
 #: src/shipstats.c:103
 msgid "Detection"
-msgstr ""
+msgstr "Detección"
 
 #: src/shipstats.c:104
 msgid "Tracking"
-msgstr ""
+msgstr "Rastreo"
 
 #: src/shipstats.c:105
 msgid "Jump Detection"
-msgstr ""
+msgstr "Detección de Salto"
 
 #: src/shipstats.c:106
 msgid "Stealth Discovered Speed"
-msgstr ""
+msgstr "Velocidad de Descubrimiento del Sigilo"
 
 #: src/shipstats.c:107
 msgid "Scanned Speed"
-msgstr ""
+msgstr "Velocidad de Escaneo"
 
 #: src/shipstats.c:109
 msgid "Fire Rate (Launcher)"
-msgstr ""
+msgstr "Tasa de Disparo (Lanzador)"
 
 #: src/shipstats.c:110
 msgid "Launch Range"
-msgstr ""
+msgstr "Rango de Lanzamiento"
 
 #: src/shipstats.c:111
 msgid "Damage (Launcher)"
-msgstr ""
+msgstr "Daño (Lanzador)"
 
 #: src/shipstats.c:112
 msgid "Ammo Capacity"
-msgstr ""
+msgstr "Capacidad de Munición"
 
 #: src/shipstats.c:113
 msgid "Launch Lock-on"
-msgstr ""
+msgstr "Lanzamiento de Fijación"
 
 #: src/shipstats.c:114
 msgid "Ammo Reload Rate"
-msgstr ""
+msgstr "Tasa de Recarga de Munición"
 
 #: src/shipstats.c:116
 msgid "Fighter Damage"
-msgstr ""
+msgstr "Daño de Caza"
 
 #: src/shipstats.c:117
 msgid "Fighter Health"
-msgstr ""
+msgstr "Salud Caza"
 
 #: src/shipstats.c:118
 msgid "Fighter Movement"
-msgstr ""
+msgstr "Movimiento de Caza"
 
 #: src/shipstats.c:119
 msgid "Fighter Bay Capacity"
-msgstr ""
+msgstr "Capacidad de Bahía de Cazas"
 
 #: src/shipstats.c:120
 msgid "Fighter Bay Launch Rate"
-msgstr ""
+msgstr "Tasa de Lanzamiento de Bahia de Cazas"
 
 #: src/shipstats.c:121
 msgid "Fighter Reload Rate"
-msgstr ""
+msgstr "Tasa de Recarga de Cazas"
 
 #: src/shipstats.c:123
 msgid "Heat (Cannon)"
-msgstr ""
+msgstr "Calor (Cañón)"
 
 #: src/shipstats.c:124
 msgid "Damage (Cannon)"
-msgstr ""
+msgstr "Daño (Cañón)"
 
 #: src/shipstats.c:125
 msgid "Fire Rate (Cannon)"
-msgstr ""
+msgstr "Tasa de Disparo (Cañón)"
 
 #: src/shipstats.c:126
 msgid "Energy Usage (Cannon)"
-msgstr ""
+msgstr "Uso de Energía (Cañón)"
 
 #: src/shipstats.c:127
 msgid "Damage as Disable (Cannon)"
-msgstr ""
+msgstr "Daño para Desactivar (Cañón)"
 
 #: src/shipstats.c:129
 msgid "Heat (Turret)"
