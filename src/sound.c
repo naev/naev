@@ -338,14 +338,6 @@ static int sound_al_init (void)
       goto snderr_ctx;
    }
 
-   /* Query some extensions. */
-   if (al_info.output_limiter) {
-      ALint limiter;
-      alcGetIntegerv( al_device, ALC_OUTPUT_LIMITER_SOFT, 1, &limiter );
-      if (limiter != ALC_TRUE)
-         WARN(_("Failed to set ALC_OUTPUT_LIMITER_SOFT"));
-   }
-
    /* Clear the errors */
    alGetError();
 
@@ -354,6 +346,14 @@ static int sound_al_init (void)
       WARN(_("Failure to set default context"));
       ret = -4;
       goto snderr_act;
+   }
+
+   /* Query some extensions. */
+   if (al_info.output_limiter) {
+      ALint limiter;
+      alcGetIntegerv( al_device, ALC_OUTPUT_LIMITER_SOFT, 1, &limiter );
+      if (limiter != ALC_TRUE)
+         WARN(_("Failed to set ALC_OUTPUT_LIMITER_SOFT"));
    }
 
    /* Get context information. */
