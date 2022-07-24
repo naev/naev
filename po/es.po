@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-07-23 21:24+0000\n"
+"PO-Revision-Date: 2022-07-24 21:27+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -127,7 +127,7 @@ msgstr ""
 
 #: dat/intro:27
 msgid "It tore the heart out of the Empire."
-msgstr ""
+msgstr "Hizo trizas el corazón del Imperio."
 
 #: dat/intro:29
 msgid ""
@@ -144,7 +144,7 @@ msgstr ""
 
 #: dat/intro:32
 msgid "What else remains? Questions."
-msgstr ""
+msgstr "¿Qué otra cosa nos queda? Preguntas."
 
 #: dat/intro:34
 msgid ""
@@ -152,10 +152,13 @@ msgid ""
 "decaying empire. After the Incident, corruption and piracy run rampant, but "
 "where there is chaos, there is also opportunity."
 msgstr ""
+"Diez Ciclos Estándar han pasado en un universo gobernado por los fragmentos "
+"de un imperio en decadencia. Tras el Incidente, la corrupción y la piratería "
+"campan a sus anchas, pero donde hay caos, también hay oportunidades."
 
 #: dat/intro:36
 msgid "Welcome to the universe of Naev..."
-msgstr ""
+msgstr "Bienvenido al universo de Naev..."
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
@@ -172,7 +175,7 @@ msgstr "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
 
 #: dat/AUTHORS:5
 msgid "   * Lead Developer"
-msgstr ""
+msgstr "   * Jefe de Desarrollo"
 
 #: dat/AUTHORS:7
 msgid "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
@@ -180,7 +183,7 @@ msgstr "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
 
 #: dat/AUTHORS:8
 msgid "   * Story Writer and Misc. Development"
-msgstr ""
+msgstr "   * Desarrollo de Historia y Otros Desarrollos"
 
 #: dat/AUTHORS:10
 msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
@@ -188,7 +191,7 @@ msgstr "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 
 #: dat/AUTHORS:11
 msgid "   * Misc. Development and Lua unifier"
-msgstr ""
+msgstr "   * Otros Desarrollos y unificador Lua"
 
 #: dat/AUTHORS:13
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
@@ -196,7 +199,7 @@ msgstr "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
 
 #: dat/AUTHORS:14
 msgid "   * Code Carnage and Bug Beating"
-msgstr ""
+msgstr "   * Picador de Código y Eliminador de Bugs"
 
 #: dat/AUTHORS:16
 msgid "nenau"
@@ -204,7 +207,7 @@ msgstr "nenau"
 
 #: dat/AUTHORS:17
 msgid "   * Misc. Development and Dvaered aficionado"
-msgstr ""
+msgstr "   * Otros Desarrollos y aficionado Dvaered"
 
 #: dat/AUTHORS:19
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
@@ -220,11 +223,11 @@ msgstr "Viktor Hahn <viktor.hahn@web.de>"
 
 #: dat/AUTHORS:23
 msgid "   * 3D modelling"
-msgstr ""
+msgstr "   * Modelado 3D"
 
 #: dat/AUTHORS:25
 msgid "Past Development Team"
-msgstr ""
+msgstr "Equipo de Desarrollo Pasado"
 
 #: dat/AUTHORS:28
 msgid "Nikola Whallon <6.saturn.6@gmail.com>"
@@ -232,7 +235,7 @@ msgstr "Nikola Whallon <6.saturn.6@gmail.com>"
 
 #: dat/AUTHORS:29
 msgid "   * Bringer of Sound"
-msgstr ""
+msgstr "   * Portador del Sonido"
 
 #: dat/AUTHORS:31
 msgid "Deiz"
@@ -240,7 +243,7 @@ msgstr "Deiz"
 
 #: dat/AUTHORS:32 dat/AUTHORS:35
 msgid "   * Misc. Development"
-msgstr ""
+msgstr "   * Otros Desarrollos"
 
 #: dat/AUTHORS:34
 msgid "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
@@ -248,7 +251,7 @@ msgstr "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
 
 #: dat/AUTHORS:37
 msgid "Major Contributors"
-msgstr ""
+msgstr "Principales Colaboradores"
 
 #: dat/AUTHORS:40
 msgid "Josiah Schwartfeger"
@@ -256,7 +259,7 @@ msgstr "Josiah Schwartfeger"
 
 #: dat/AUTHORS:41
 msgid "   * Graphic Designer and Modeller"
-msgstr ""
+msgstr "   * Diseñador Gráfico y Modelador"
 
 #: dat/AUTHORS:43
 msgid "Elderman"
@@ -264,7 +267,7 @@ msgstr "Elderman"
 
 #: dat/AUTHORS:44
 msgid "   * Mission Development"
-msgstr ""
+msgstr "   * Desarrollo de Misiones"
 
 #: dat/AUTHORS:45
 msgid "   The first non-bobbens mission developer!"
@@ -276,7 +279,7 @@ msgstr "Ingo Ruhnke <grumbel@gmx.de>"
 
 #: dat/AUTHORS:48
 msgid "   * NPC Portrait Artist"
-msgstr ""
+msgstr "   * Retratista de NPCs"
 
 #: dat/AUTHORS:50
 msgid "Enigmatic"
@@ -284,7 +287,7 @@ msgstr "Enigmatic"
 
 #: dat/AUTHORS:51
 msgid "   * Ships for the Sirius, many other models and faction logos"
-msgstr ""
+msgstr "   * Naves para Sirio, muchos otros modelos y logotipos de facciones"
 
 #: dat/AUTHORS:53
 msgid "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
@@ -293,6 +296,7 @@ msgstr "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
 #: dat/AUTHORS:54
 msgid "   * Naev logo, Lua GUI development"
 msgstr ""
+"   * Logotipo de Naev, desarrollo de Interfaz Gráfica de Usuario (GUI) en Lua"
 
 #: dat/AUTHORS:56
 msgid "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
@@ -300,7 +304,7 @@ msgstr "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
 
 #: dat/AUTHORS:57
 msgid "   * Ships for the Soromid and the Za'lek"
-msgstr ""
+msgstr "   * Naves para los Soromida y los Za'lek"
 
 #: dat/AUTHORS:59
 msgid "Askyel"
@@ -308,11 +312,11 @@ msgstr "Askyel"
 
 #: dat/AUTHORS:60
 msgid "   * Composer of nearly an hour of Naev-exclusive music."
-msgstr ""
+msgstr "   * Compositor de casi una hora de música exclusiva de Naev."
 
 #: dat/AUTHORS:62
 msgid "Contributions"
-msgstr ""
+msgstr "Contribuidores"
 
 #: dat/AUTHORS:65
 msgid "Vega Strike <http://vegastrike.sf.net>"
@@ -328,11 +332,11 @@ msgstr ""
 
 #: dat/AUTHORS:68
 msgid "   * Sounds"
-msgstr ""
+msgstr "   * Sonidos"
 
 #: dat/AUTHORS:69
 msgid "   * Planet images"
-msgstr ""
+msgstr "   * Imágenes de planetas"
 
 #: dat/AUTHORS:70
 msgid ""
@@ -340,6 +344,9 @@ msgid ""
 "didn't actively participate, by allowing me to use their data they did me a "
 "great favour and let me concentrate on the coding."
 msgstr ""
+"   No habría sido posible sin el equipo de Vega Strike porque aunque no "
+"participaron activamente, al permitirme utilizar sus datos, me hicieron un "
+"gran favor y me permitieron concentrarme en el código."
 
 #: dat/AUTHORS:72
 msgid "Joel Hans <wolorf@gmail.com>"
@@ -347,15 +354,17 @@ msgstr "Joel Hans <wolorf@gmail.com>"
 
 #: dat/AUTHORS:73
 msgid "   * Planet Graphics"
-msgstr ""
+msgstr "   * Gráficos de Planeta"
 
 #: dat/AUTHORS:74
 msgid "   * Render Script"
-msgstr ""
+msgstr "   * Scripts de Renderizados"
 
 #: dat/AUTHORS:75
 msgid "   Helped out when the project was starting. Great morale booster."
 msgstr ""
+"   Ayudó cuando el proyecto estaba en sus inicios. Una gran inyección de "
+"moral."
 
 #: dat/AUTHORS:77
 msgid "Amir Taaki <genjix@gmail.com>"
@@ -367,13 +376,15 @@ msgstr "Rob Loach <http://robloach.net>"
 
 #: dat/AUTHORS:79
 msgid "   * SDL_collide"
-msgstr ""
+msgstr "    * SDL_collide"
 
 #: dat/AUTHORS:80
 msgid ""
 "   Although we don't use the SDL_collide library itself, it was "
 "inspirational for Naev's own collision routines."
 msgstr ""
+"   Aunque no utilizamos la biblioteca SDL_collide en sí, fue inspiradora "
+"para las propias rutinas de colisión de Naev."
 
 #: dat/AUTHORS:82
 msgid "Pete Shinners <pete@shinners.org>"
@@ -393,13 +404,15 @@ msgstr "Aurore D. \"Rore\" <aurore.d@gmail.com>"
 
 #: dat/AUTHORS:87
 msgid "   * Planet gimp script"
-msgstr ""
+msgstr "   * Script de planeta gimp"
 
 #: dat/AUTHORS:88
 msgid ""
 "   Saved a lot of trouble by allowing us to quickly create space planet "
 "graphics."
 msgstr ""
+"   Nos ahorró muchos problemas al permitirnos crear rápidamente gráficos de "
+"planetas espaciales."
 
 #: dat/AUTHORS:90
 msgid "Andrew Mustun"
@@ -407,11 +420,13 @@ msgstr "Andrew Mustun"
 
 #: dat/AUTHORS:91
 msgid "   * Sprite gimp script"
-msgstr ""
+msgstr "   * Script de sprites gimp"
 
 #: dat/AUTHORS:92
 msgid "   Although not used directly, it helped create our own sprite script."
 msgstr ""
+"   Aunque no se utiliza directamente, ayudó a crear nuestro propio script de "
+"sprites."
 
 #: dat/AUTHORS:94
 msgid "J.C. Wilk"
@@ -419,7 +434,7 @@ msgstr "J.C. Wilk"
 
 #: dat/AUTHORS:95
 msgid "   * Turbulence noise"
-msgstr ""
+msgstr "   * Ruido de turbulencia"
 
 #: dat/AUTHORS:96
 msgid ""
@@ -427,6 +442,10 @@ msgid ""
 "turbulence noise seemed to do everything perfectly where we screwed up. With "
 "heavy optimization the code was introduced to Naev."
 msgstr ""
+"   Tras el horrible fracaso de nuestro propio intento de fractal de plasma, "
+"el ruido de turbulencia de TCOD parecía hacerlo todo a la perfección allí "
+"donde lo habíamos fastidiado. Con una fuerte optimización se introdujo en el "
+"código en Naev."
 
 #: dat/AUTHORS:98
 msgid "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
@@ -434,7 +453,7 @@ msgstr "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
 
 #: dat/AUTHORS:99
 msgid "   * Mace Rocket model"
-msgstr ""
+msgstr "   * Modelo de Cohete Maza"
 
 #: dat/AUTHORS:101
 msgid "Brian J. Cameron"
@@ -442,7 +461,7 @@ msgstr "Brian J. Cameron"
 
 #: dat/AUTHORS:102
 msgid "   * Much artwork"
-msgstr ""
+msgstr "   * Mucho trabajo artístico"
 
 #: dat/AUTHORS:103
 msgid "   Talented artist, one of the first in creating custom Naev content."
@@ -454,12 +473,14 @@ msgstr "Camilo Polymeris <cpolymeris@gmx.net>"
 
 #: dat/AUTHORS:106
 msgid "   * Art and code"
-msgstr ""
+msgstr "   * Arte y código"
 
 #: dat/AUTHORS:107
 msgid ""
 "   Great to see someone else working on Naev code and Lua documentation."
 msgstr ""
+"   Es genial ver a alguien más trabajando en el código de Naev y en la "
+"documentación con Lua."
 
 #: dat/AUTHORS:109
 msgid "Dimitry Marakasov"
@@ -467,11 +488,11 @@ msgstr "Dimitry Marakasov"
 
 #: dat/AUTHORS:110
 msgid "   * FreeBSD port and CMake"
-msgstr ""
+msgstr "   * Portabilidad a FreeBSD y CMake"
 
 #: dat/AUTHORS:111
 msgid "   Talented coder who did the first official port of Naev."
-msgstr ""
+msgstr "   Talentoso codificador que hizo el primer port oficial de Naev."
 
 #: dat/AUTHORS:113
 msgid "Alexandru Mosoi <brtzsnr@gmail.com>"
@@ -479,13 +500,16 @@ msgstr "Alexandru Mosoi <brtzsnr@gmail.com>"
 
 #: dat/AUTHORS:114
 msgid "   * Coded cool features"
-msgstr ""
+msgstr "   * Características geniales codificadas"
 
 #: dat/AUTHORS:115
 msgid ""
 "   First non-bobbens coder to make serious commits! Like the reason the maps "
 "are all over or the faction in the maps."
 msgstr ""
+"   ¡El primer codificador que no es Bobbens que hace commits grandes!. Como "
+"la razón por la que los mapas están por todas partes o las facciones en los "
+"mapas."
 
 #: dat/AUTHORS:117
 msgid "Peter Johnson <zid@zid.yggdrasil.sk>"
@@ -493,7 +517,7 @@ msgstr "Peter Johnson <zid@zid.yggdrasil.sk>"
 
 #: dat/AUTHORS:118
 msgid "   * Sped up nebula generation by a lot"
-msgstr ""
+msgstr "   * Aceleró mucho la generación de nebulosas"
 
 #: dat/AUTHORS:120
 msgid "Unavowed <unavowed@vexillium.org>"
@@ -501,11 +525,12 @@ msgstr "Unavowed <unavowed@vexillium.org>"
 
 #: dat/AUTHORS:121
 msgid "   * Ported Naev's build system to autotools."
-msgstr ""
+msgstr "   * Adaptó el sistema de build de Naev a autotools."
 
 #: dat/AUTHORS:122
 msgid "   Probably the cleanest autotools implementation I've ever seen."
 msgstr ""
+"   Probablemente la implementación de autotools más limpia que he visto."
 
 #: dat/AUTHORS:124
 msgid "Cypher3c <cypher3c@gmail.com>"
@@ -513,7 +538,7 @@ msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
 msgid "   * Spiced up the boring generic cargo missions."
-msgstr ""
+msgstr "   * Ha amenizado las aburridas misiones de carga genéricas."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
@@ -521,11 +546,11 @@ msgstr "Nathan Loewen <loewen.nathan@gmail.com>"
 
 #: dat/AUTHORS:128
 msgid "   * Missions"
-msgstr ""
+msgstr "   * Misiones"
 
 #: dat/AUTHORS:129
 msgid "   * Misc coding support"
-msgstr ""
+msgstr "   * Soporte de otros códigos"
 
 #: dat/AUTHORS:131
 msgid "Fisherman"
@@ -536,6 +561,8 @@ msgid ""
 "   * Threading code to speed up nebula generation (and in the future who "
 "knows?)"
 msgstr ""
+"   * Código de hilos para acelerar la generación de nebulosas (y en el "
+"futuro ¿quién sabe?)"
 
 #: dat/AUTHORS:133
 msgid "   * Hot dog mission"
@@ -547,11 +574,11 @@ msgstr "Ludovic Bellière \"xrogaan\""
 
 #: dat/AUTHORS:136
 msgid "   * Python programmer extraordinaire"
-msgstr ""
+msgstr "   * Extraordinario programador de Python"
 
 #: dat/AUTHORS:137
 msgid "His utilities save gray hairs for everyone."
-msgstr ""
+msgstr "Sus herramientas ahorran canas a todo el mundo."
 
 #: dat/AUTHORS:139
 msgid "Josh Combs"
@@ -559,7 +586,7 @@ msgstr "Josh Combs"
 
 #: dat/AUTHORS:140
 msgid "   * Artist of most of the nebulae."
-msgstr ""
+msgstr "   * Artista de la mayoría de las nebulosas."
 
 #: dat/AUTHORS:142
 msgid "Galileus"
@@ -567,7 +594,7 @@ msgstr "Galileus"
 
 #: dat/AUTHORS:143
 msgid "   * Modeller of the Shark and Rhino"
-msgstr ""
+msgstr "   * Modelador de Shark y Rhino"
 
 #: dat/AUTHORS:145
 msgid "Devin Khan"
@@ -575,7 +602,7 @@ msgstr "Devin Khan"
 
 #: dat/AUTHORS:146
 msgid "   * Modeller of the Phalanx"
-msgstr ""
+msgstr "   * Modelador de Falange"
 
 #: dat/AUTHORS:148
 msgid "Areze"
@@ -583,7 +610,7 @@ msgstr "Areze"
 
 #: dat/AUTHORS:149
 msgid "   * Junior assistant galaxy creator"
-msgstr ""
+msgstr "   * Asistente junior de creación de galaxias"
 
 #: dat/AUTHORS:151
 msgid "Old Man <oldtopman@gmail.com>"
@@ -591,7 +618,7 @@ msgstr "Old Man <oldtopman@gmail.com>"
 
 #: dat/AUTHORS:152
 msgid "   * Desura Maintainer"
-msgstr ""
+msgstr "   * Mantenedor Desura"
 
 #: dat/AUTHORS:154
 msgid "NeD"
@@ -599,7 +626,7 @@ msgstr "NeD"
 
 #: dat/AUTHORS:155 dat/AUTHORS:161
 msgid "   * Mission contributor"
-msgstr ""
+msgstr "   * Contribuyente de misiones"
 
 #: dat/AUTHORS:157
 msgid "Sudarshan S"
@@ -607,7 +634,7 @@ msgstr "Sudarshan S"
 
 #: dat/AUTHORS:158
 msgid "   * Event contributor"
-msgstr ""
+msgstr "   * Contribuidor de eventos"
 
 #: dat/AUTHORS:160 dat/AUTHORS:178
 msgid "PhoenixRiver"
@@ -615,7 +642,7 @@ msgstr "PhoenixRiver"
 
 #: dat/AUTHORS:162
 msgid "   * Misc fixes and typos"
-msgstr ""
+msgstr "   * Correcciones varias y errores tipográficos"
 
 #: dat/AUTHORS:164
 msgid "Alastair Basden"
@@ -623,19 +650,19 @@ msgstr "Alastair Basden"
 
 #: dat/AUTHORS:165
 msgid "   * Economy development"
-msgstr ""
+msgstr "   * Desarrollo de Economía"
 
 #: dat/AUTHORS:166
 msgid "   * Ship log"
-msgstr ""
+msgstr "   * Registro de nave"
 
 #: dat/AUTHORS:167
 msgid "   * Solar system information screen"
-msgstr ""
+msgstr "   * Pantalla de información del sistema solar"
 
 #: dat/AUTHORS:169
 msgid "Music by Matthew Pablo"
-msgstr ""
+msgstr "Música de Matthew Pablo"
 
 #: dat/AUTHORS:170
 msgid "http://www.matthewpablo.com"
@@ -643,7 +670,7 @@ msgstr "http://www.matthewpablo.com"
 
 #: dat/AUTHORS:172
 msgid "Testers"
-msgstr ""
+msgstr "Testers"
 
 #: dat/AUTHORS:175
 msgid "John Schwartfeger"
@@ -659,23 +686,23 @@ msgstr "EvanR"
 
 #: dat/AUTHORS:180
 msgid "Artwork Contributors"
-msgstr ""
+msgstr "Contribuidores Artísticos"
 
 #: artwork/gfx/loading/admonisher.webp.txt:1
 msgid "ADMONISHER"
-msgstr ""
+msgstr "AMONESTADOR"
 
 #: artwork/gfx/loading/admonisher_pirate.webp.txt:1
 msgid "PIRATE ADMONISHER"
-msgstr ""
+msgstr "AMONESTADOR PIRATA"
 
 #: artwork/gfx/loading/ancestor.webp.txt:1
 msgid "ANCESTOR"
-msgstr ""
+msgstr "ANCESTRO"
 
 #: artwork/gfx/loading/ancestor_pirate.webp.txt:1
 msgid "PIRATE ANCESTOR"
-msgstr ""
+msgstr "ANCESTRO PIRATA"
 
 #: artwork/gfx/loading/archimedes.webp.txt:1
 msgid "ARCHIMEDES"
@@ -683,15 +710,15 @@ msgstr "ARQUÍMEDES"
 
 #: artwork/gfx/loading/derivative.webp.txt:1
 msgid "DERIVATIVE"
-msgstr ""
+msgstr "DERIVATIVO"
 
 #: artwork/gfx/loading/diablo.webp.txt:1
 msgid "ZA'LEK DIABLO"
-msgstr ""
+msgstr "DIABLO ZA'LEK"
 
 #: artwork/gfx/loading/drone.webp.txt:1
 msgid "DRONE"
-msgstr ""
+msgstr "DRON"
 
 #: artwork/gfx/loading/fidelity.webp.txt:1
 msgid "SIRIUS FIDELITY"
@@ -731,7 +758,7 @@ msgstr "LLAMA"
 
 #: artwork/gfx/loading/mule.webp.txt:1
 msgid "MULE"
-msgstr ""
+msgstr "MULA"
 
 #: artwork/gfx/loading/pacifier.webp.txt:1
 msgid "PACIFIER"
@@ -747,11 +774,11 @@ msgstr "PREDICADOR DE SIRIO"
 
 #: artwork/gfx/loading/quicksilver.webp.txt:1
 msgid "QUICKSILVER"
-msgstr ""
+msgstr "AZOGUE"
 
 #: artwork/gfx/loading/rhino.webp.txt:1
 msgid "RHINO"
-msgstr ""
+msgstr "RINO"
 
 #: artwork/gfx/loading/rhino_pirate.webp.txt:1
 msgid "PIRATE RHINO"
@@ -767,19 +794,19 @@ msgstr ""
 
 #: artwork/gfx/loading/shark.webp.txt:1
 msgid "SHARK"
-msgstr ""
+msgstr "TIBURÓN"
 
 #: artwork/gfx/loading/shark_empire.webp.txt:1
 msgid "EMPIRE SHARK"
-msgstr ""
+msgstr "TIBURÓN IMPERIO"
 
 #: artwork/gfx/loading/shark_pirate.webp.txt:1
 msgid "PIRATE SHARK"
-msgstr ""
+msgstr "TIBURÓN PIRATA"
 
 #: artwork/gfx/loading/sting.webp.txt:1
 msgid "ZA'LEK STING"
-msgstr ""
+msgstr "AGUIJÓN ZA'LEK"
 
 #: artwork/gfx/loading/vendetta.webp.txt:1
 msgid "VENDETTA"
@@ -787,11 +814,11 @@ msgstr "VENDETTA"
 
 #: artwork/gfx/loading/vendetta_pirate.webp.txt:1
 msgid "PIRATE VENDETTA"
-msgstr ""
+msgstr "VENDETTA PIRATA"
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
 msgid "VIGILANCE"
-msgstr ""
+msgstr "VIGILANCIA"
 
 #: dat/assets/abacus.xml:2
 msgid "Abacus"
@@ -1506,10 +1533,10 @@ msgid ""
 msgstr ""
 "Anecu es un planeta completamente acuático. Su superficie está cubierta "
 "completamente por agua, pero en las zonas poco profundas se construyen "
-"grandes ciudades submarinas. El clima sobre el agua puede ser muy duro; se "
-"han registrado olas de hasta dos kilómetros de altura. El planeta cuenta con "
-"amplias instalaciones de diseño de naves que utilizan la alta presión del "
-"agua como baremo para medirlas."
+"grandes ciudades submarinas. El clima sobre el agua puede ser muy extremo; "
+"se han registrado olas de hasta dos kilómetros de altura. El planeta cuenta "
+"con amplias instalaciones de diseño de naves que utilizan la alta presión "
+"del agua como test para sus capacidades."
 
 #: dat/assets/anecu.xml:32
 msgid ""
@@ -2604,7 +2631,7 @@ msgstr ""
 "Aunque no es tan bonito como Varia en el sistema Piedraoscura, Buritt es, "
 "sin embargo, un mundo razonablemente habitable. Aquí encontrarás gran parte "
 "de la clase media Dvaered, tal y como es. También encontrarás una "
-"contaminación a gran escala del entorno natural pero, siendo los Dvaered "
+"contaminación a gran escala del entorno natural pero, Dvaered siendo "
 "Dvaered, no se hace ningún intento de solucionar esto."
 
 #: dat/assets/buritt.xml:31
@@ -8447,13 +8474,12 @@ msgid ""
 "continue to be a unicum."
 msgstr ""
 "Mannannan es uno de los mundos Dvaered más visitados. Inusualmente para un "
-"planeta Dvaered, sus políticas políticas y su economía han permanecido "
-"bastante estables, ya que ninguno de los Señores de la Guerra que controlan "
-"el planeta se ha molestado en cambiar las leyes locales de manera "
-"importante. Esto ha hecho que Mannannan sea un lugar favorable para el "
-"comercio para los extranjeros. Por supuesto, los Señores de la Guerra de "
-"Dvaered parecen ser ajenos a esto, por lo que Mannannan probablemente "
-"seguirá siendo un único."
+"planeta Dvaered, sus políticas y su economía han permanecido bastante "
+"estables, ya que ninguno de los Señores de la Guerra que controlan el "
+"planeta se ha molestado en cambiar las leyes locales de manera importante. "
+"Esto ha hecho que Mannannan sea un lugar favorable para el comercio para "
+"extranjeros. Por supuesto, los Señores de la Guerra Dvaered parecen ser "
+"ajenos a esto, por lo que Mannannan probablemente seguirá siendo un único."
 
 #: dat/assets/mannannan.xml:32
 msgid ""
@@ -10681,12 +10707,12 @@ msgid ""
 "alone offers the various utilities that many need in everyday space life. "
 "The spaceport bar is one such utility."
 msgstr ""
-"Este es el bar principal del puerto espacial de Paxadon. Paxadon tiene "
-"varios puertos espaciales secundarios, porque el tráfico hacia y desde el "
-"mundo es bastante intenso. Sin embargo, el puerto espacial principal sigue "
-"siendo el puerto elegido por la mayoría de los espaciales, ya que es el "
-"único que ofrece las diversas utilidades que muchos necesitan en la vida "
-"espacial cotidiana. El bar del puerto espacial es uno de esos servicios."
+"Este es el bar principal del puerto espacial de Paxadon. Tiene varios "
+"puertos espaciales secundarios, porque el tráfico hacia y desde este mundo "
+"es bastante intenso. Sin embargo, el puerto espacial principal sigue siendo "
+"el puerto elegido por la mayoría de los espaciales, ya que es el único que "
+"ofrece las diversas utilidades que muchos necesitan en la vida espacial "
+"cotidiana. El bar del puerto espacial es uno de esos servicios."
 
 #: dat/assets/paxsor.xml:2
 msgid "Paxsor"
@@ -17128,7 +17154,7 @@ msgstr "Inexistencia Za'lek (Rango 1)"
 
 #: dat/commodities/diamond.xml:3 dat/scripts/pilotname/generic.lua:29
 msgid "Diamond"
-msgstr ""
+msgstr "Diamante"
 
 #: dat/commodities/diamond.xml:4
 msgid ""
@@ -17139,6 +17165,12 @@ msgid ""
 "enough to produce synthetically that it is not as sought after as much as it "
 "once was."
 msgstr ""
+"El diamante es otra forma de grafito que se ha cristalizado debido a la "
+"intensa presión y el calor en las profundidades de la superficie de algunos "
+"tipos de planetas. El material es útil en algunas aplicaciones de corte "
+"debido a su dureza, y se utiliza comúnmente en aplicaciones decorativas, "
+"pero el diamante es ahora lo suficientemente fácil de producir "
+"sintéticamente con lo que ya no esta tan solicitado como antes."
 
 #: dat/commodities/food.xml:3
 msgid "Food"
@@ -17150,10 +17182,13 @@ msgid ""
 "meals are rich in nutrients and able to last many cycles in their vacuum-"
 "sealed packaging."
 msgstr ""
+"Evolucionando desde las raciones militares del pasado, las comidas envasadas "
+"modernas son ricas en nutrientes y capaces de durar muchos ciclos en su "
+"envase sellado al vacío."
 
 #: dat/commodities/gold.xml:3 dat/ssys/gold.xml:2
 msgid "Gold"
-msgstr ""
+msgstr "Oro"
 
 #: dat/commodities/gold.xml:4
 msgid ""
@@ -17162,20 +17197,26 @@ msgid ""
 "its most demanding application is as a component in decorative articles, "
 "such as jewelry."
 msgstr ""
+"El oro es apreciado por su combinación de resistencia a la corrosión y "
+"conductividad, el cual se utiliza para aumentar la vida útil de los aparatos "
+"electrónicos, aunque su aplicación más exigente es como componente de "
+"artículos decorativos, tales como joyas."
 
 #: dat/commodities/industrial_goods.xml:3
 msgid "Industrial Goods"
-msgstr ""
+msgstr "Bienes Industriales"
 
 #: dat/commodities/industrial_goods.xml:4
 msgid ""
 "An assortment of industrial goods, ranging from cutting lasers to processed "
 "metals."
 msgstr ""
+"Un surtido de productos industriales, que van desde los láseres de corte "
+"hasta metales procesados."
 
 #: dat/commodities/luxury_goods.xml:3
 msgid "Luxury Goods"
-msgstr ""
+msgstr "Artículos de Lujo"
 
 #: dat/commodities/luxury_goods.xml:4
 msgid "All sorts of high quality luxury goods."
@@ -17187,7 +17228,7 @@ msgstr "Medicinas"
 
 #: dat/commodities/medicine.xml:4
 msgid "An assortment of medicines suitable for curing all sorts of ailments."
-msgstr ""
+msgstr "Un abanico de medicamentos idóneos para curar todo tipo de dolencias."
 
 #: dat/commodities/ore.xml:3
 msgid "Ore"
@@ -17243,7 +17284,7 @@ msgstr "Clan Cuervo"
 
 #: dat/faction.xml:86
 msgid "Raven Pirate Clan"
-msgstr "Clan del cuervo pirata"
+msgstr "Clan Pirata Cuervo"
 
 #: dat/faction.xml:93
 msgid ""
@@ -17272,7 +17313,7 @@ msgstr ""
 
 #: dat/faction.xml:153
 msgid "Black Lotus"
-msgstr ""
+msgstr "Loto Negro"
 
 #: dat/faction.xml:156
 msgid "Black Lotus Pirate Clan"
@@ -18376,7 +18417,7 @@ msgstr ""
 #: dat/outfits/biocore_brain/ultralight_brain_stage_2.xml:5
 #: dat/outfits/biocore_brain/ultralight_brain_stage_x.xml:5
 msgid "Bioship Brain"
-msgstr ""
+msgstr "Cerebro de Bionave"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_1.xml:10
 #: dat/outfits/biocore_brain/heavy_brain_stage_2.xml:10
@@ -18412,6 +18453,11 @@ msgid ""
 "undeveloped, but over time, just like the ships themselves, they grow and "
 "improve."
 msgstr ""
+"El cerebro es el equivalente de una bionave Sorómida a los sistemas básicos "
+"de las naves sintéticas. Posiblemente el órgano más importante, el cerebro "
+"proporciona capacidad de procesamiento y asigna energía al resto del "
+"organismo. Todos los cerebros comienzan sin desarrollar, pero con el tiempo, "
+"al igual que las propias naves, crecen y mejoran."
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_2.xml:2
 msgid "Heavy Brain Stage 2"
@@ -18625,7 +18671,7 @@ msgstr ""
 #: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_2.xml:5
 #: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_x.xml:4
 msgid "Bioship Gene Drive"
-msgstr ""
+msgstr "Motor Genético de Bionave"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_1.xml:9
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_2.xml:9
@@ -19006,7 +19052,7 @@ msgstr ""
 #: dat/outfits/biocore_shell/ultralight_shell_stage_2.xml:5
 #: dat/outfits/biocore_shell/ultralight_shell_stage_x.xml:4
 msgid "Bioship Shell"
-msgstr ""
+msgstr "Caparazón de Bionave"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_1.xml:9
 #: dat/outfits/biocore_shell/heavy_shell_stage_2.xml:9
@@ -19042,6 +19088,12 @@ msgid ""
 "detected by hostiles. All shells start off undeveloped, but over time, just "
 "like the ships themselves, they grow and improve."
 msgstr ""
+"El caparazón es la protección natural de una bionave Soromida, equivalente a "
+"los cascos de las naves sintéticas. El caparazón se encarga tanto de "
+"proteger los órganos internos del organismo como de crear un camuflaje para "
+"reducir el riesgo de ser detectado por los hostiles. Todos los caparazones "
+"comienzan sin desarrollar, pero con el tiempo, al igual que las propias "
+"naves, crecen y mejoran."
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_2.xml:2
 msgid "Heavy Shell Stage 2"
@@ -24973,7 +25025,7 @@ msgstr "Corvus"
 #: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:134
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:83
 msgid "Crimson Gauntlet"
-msgstr ""
+msgstr "Guantelete Carmesí"
 
 #: dat/ssys/cygnus.xml:2
 msgid "Cygnus"
@@ -26677,8 +26729,8 @@ msgid ""
 "Not filing your EE-91726 for unauthorized pet iguanas is a crime. Report to "
 "your Empire Animal Bureau now."
 msgstr ""
-"No presentar tu EE-91726 para las iguanas mascotas no autorizadas es un "
-"delito. Informe a tu Oficina de Animales del Imperio ahora."
+"No presentar tu EE-91726 para mascotas iguanas sin autorización es un "
+"delito. Informe a su Oficina de Animales del Imperio ahora."
 
 #: dat/ai/advertiser.lua:28
 msgid "Keep your documents properly filed. Unicorp Filing Cabinets."
@@ -26718,7 +26770,7 @@ msgid ""
 "Bitterfly. "
 msgstr ""
 "Una historia de éxito Dvaered: Compre la extraordinaria autobiografía de "
-"Lady Bitterfly."
+"Dama MoscaAmarga. "
 
 #: dat/ai/advertiser.lua:39
 msgid "Remember Sorom."
@@ -26978,7 +27030,7 @@ msgstr "Señor Jim"
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:171
 #: dat/scripts/common/frontier_war.lua:20
 msgid "Lady Bitterfly"
-msgstr "Dama Bitterfly"
+msgstr "Dama MoscaAmarga"
 
 #: dat/ai/advertiser.lua:111 dat/scripts/common/frontier_war.lua:21
 msgid "Lady Pointblank"
@@ -30220,17 +30272,17 @@ msgstr ""
 "trata y que, por lo que sabe, Señor AdictoABatalla ha sido asesinado en un "
 "duelo honesto por el General Klank. El interlocutor se ríe \"Estás haciendo "
 "tu papel, ¿eh? Puedo entenderte, después de todo, te pagan bien... Espera, "
-"no, no pagan bien. En absoluto. ¿Cuánto fue por arriesgar tu vida dos veces "
+"no te pagan bien. En absoluto. ¿Cuánto fue por arriesgar tu vida dos veces "
 "con ese truco de la bomba EMP? {credits_01}? ¡Haw haw haw! ¡Puedes ganar más "
 "dinero con una misión de carga!\n"
 "   \"¡Incluso he oído que una vez te pagaron con armas gauss! Esos tipos son "
 "tan lamentables, ¿no?\n"
-"   \"Ahora, hablemos en serio: tú quieres dinero y yo quiero un piloto. "
-"¡Estamos hechos para llevarnos bien, tú y yo! Te necesito para una tarea "
+"   \"Ahora, hablemos en serio: tú quieres dinero y yo quiero un piloto. ¡"
+"Estamos hechos para llevarnos bien, tú y yo! Te necesito para una tarea "
 "especial. No voy a negar que implica ir en contra de los intereses del "
 "General Klank y del Mayor Tam y compañía, pero si lo haces bien, ellos nunca "
-"sabrán que estás implicado, y recibirás {credits} en el proceso. Oh sí, "
-"¡bastante diferente a lo que estás acostumbrado! ¿Qué me dices?\""
+"sabrán que estás implicado, y recibirás {credits} en el proceso. Oh sí, ¡"
+"bastante diferente a lo que estás acostumbrado! ¿Qué me dices?\""
 
 #: dat/events/dvaered/fwA_treason.lua:85 dat/missions/flf/flf_pre02.lua:173
 msgid "Accept the offer"
@@ -31496,8 +31548,8 @@ msgstr ""
 "desconocidos de la nebulosa interior y te dijo que utilizaras el mapa para "
 "encontrar lo que había dentro con la esperanza de que un día pudieras ayudar "
 "a la FLF a levantarse de nuevo y derrotar a los Dvaereds de una vez por "
-"todas. Sus últimas palabras fueron cortas, pero memorables: \"Adiós, "
-"{player}. Mantente alerta\"."
+"todas. Sus últimas palabras fueron cortas, pero memorables: \"Adiós, {player}"
+". Mantente alerta.\""
 
 #: dat/events/flf/flf_catastrophe.lua:277
 #: dat/events/flf/flf_catastrophe.lua:279
@@ -37245,7 +37297,7 @@ msgid ""
 msgstr ""
 "Alguien te ha invitado a reunirte con una supuestamente conocida tuya en el "
 "sistema {sys}. El piloto que te lo ha dicho te ha dicho que no hay prisa, "
-"\"pero sugerido que vayas a verla lo antes posible.\""
+"\"pero sugerido que vayas a verla lo antes posible\"."
 
 #. Clean up
 #.
@@ -37373,8 +37425,8 @@ msgstr ""
 "jugado mi prueba conmigo durante tanto tiempo. Supongo que tengo que "
 "conmemorar esto de una manera especial. Toma, coge una de las cartas más "
 "raras de mi colección. Sólo tengo una copia de ésta, así que asegúrate de "
-"cuidarla bien. ¡No! ¡No la saques de la lámina de la tarjeta! ¡Podría "
-"dañarse de esa manera!\""
+"cuidarla bien. ¡No! ¡Ni se te ocurra sacarla de la lámina de la tarjeta! ¡"
+"Podría dañarse de esa forma!\""
 
 #: dat/events/neutral/shiplover.lua:263
 msgid ""
@@ -44906,9 +44958,9 @@ msgstr ""
 "Therus, nuestro apoyo médico. Ah, y el tipo de la esquina es el teniente "
 "Strafer. Es un piloto de Operaciones Especiales. Está aquí en caso de que "
 "necesitemos cambiar al plan B\". Al preguntar cuál es el plan B, Hamfresser "
-"se limita a responder: \"no querrás cambiar al plan B.\"\n"
+"se limita a responder: \"no querrás cambiar al plan B.\n"
 "   \"Como siempre, el crucero del Señor AdictoABatalla debería estar en "
-"órbita alrededor del {pnt} en {sys}.\""
+"órbita alrededor del {pnt} en {sys}\"."
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:127
 msgid "Bomb"
@@ -46001,9 +46053,9 @@ msgstr ""
 "acuerdo. Me encargaré del pago, para que no te maten, pero tendrás que "
 "devolvernos el dinero, ¡no lo olvides! Ah, y por cierto, me aseguré de que "
 "los Za'lek no te culparan personalmente de lo ocurrido. Ahora deberían "
-"aceptarte en tu espacio\".\n"
+"aceptarte en tu espacio.\"\n"
 "   El mayor comienza a alejarse, pero luego vuelve \"Oh, casi me olvido de "
-"pagaros. Jeje. Aquí tienes {credits}\"."
+"pagaros. Jeje. Aquí tienes {credits}.\""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:174
 msgid ""
@@ -60939,7 +60991,7 @@ msgstr ""
 "\" Verás, cuanto más grande es el proyecto de investigación, más quiere el "
 "director y los codirectores del proyecto tener reuniones y objetivos y "
 "paquetes de trabajo.\"\n"
-"Se estremece cuando dice la palabra \"paquetes de trabajo.\""
+"Se estremece cuando dice la palabra \"paquetes de trabajo\"."
 
 #: dat/missions/minerva/maikki2.lua:407
 msgid ""
@@ -61158,7 +61210,7 @@ msgstr ""
 "Después de lo que parece ser una eternidad de un concurso de miradas entre "
 "tú y la gamba, oyes un fuerte pitido y el altavoz de la gamba empieza a "
 "hacer ruido.\n"
-"\"PERSONA. PERSONA\"."
+"\"PERSONA. PERSONA.\""
 
 #: dat/missions/minerva/maikki2.lua:469
 msgid ""
@@ -61182,7 +61234,7 @@ msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:474
 msgid "\"PERSON. PERSON. PERSON.\""
-msgstr "\"PERSONA\". PERSONA. PERSONA\"."
+msgstr "\"PERSONA\". PERSONA. PERSONA.\""
 
 #: dat/missions/minerva/maikki2.lua:475
 msgid "\"C'mon Calliope, I already know that. Here, have a pellet.\""
@@ -70776,7 +70828,7 @@ msgid ""
 "look there; that's where that outlaw was last time I heard.\""
 msgstr ""
 "\"Si buscas a {plt}, te sugeriría que fueras a {sys} y echaras un vistazo "
-"allí; allí es donde estaba ese forajido la última vez que lo oí.\""
+"allí; que es donde estaba ese forajido la última vez que lo oí.\""
 
 #: dat/missions/neutral/seek_n_destroy.lua:52
 msgid ""
@@ -76091,7 +76143,7 @@ msgstr ""
 "esto iba a ser un paseo por el parque, ¿no? Pero cuando las cosas se ponen "
 "feas, te echas atrás. No querríamos meternos con un Imperio que da miedo, "
 "¿verdad?\" Para ello levanta la voz, burlándose del personal militar del "
-"bar. No muestran ningún signo de haber oído hablar a Jorek. Jorek resopla y "
+"bar. No muestran ningún signo de haber oído hablar de Jorek. Este resopla y "
 "vuelve a centrar su atención en ti.\n"
 "    \"No me sirven los cobardes como tú. Vamos, sal de aquí. Vuelve a tu "
 "nave y lárgate de esta roca. Tal vez deberías considerar la posibilidad de "
@@ -76626,14 +76678,14 @@ msgstr[0] ""
 "Mientras te encargas de las operaciones posteriores al aterrizaje y el "
 "repostaje, recibes una comunicación del jefe de vuelo, sólo de audio. Te "
 "dice que este será el último lugar donde podrás repostar, y que debes "
-"asegurarte de tener al menos %d de combustible a bordo para la siguiente "
-"etapa del viaje. Te quedarás atrás si no puedes mantener el ritmo."
+"asegurarte de tener al menos %d salto de combustible a bordo para la "
+"siguiente etapa del viaje. Te quedarás atrás si no puedes mantener el ritmo."
 msgstr[1] ""
 "Mientras te encargas de las operaciones posteriores al aterrizaje y el "
 "repostaje, recibes una comunicación del jefe de vuelo, sólo de audio. Te "
 "dice que este será el último lugar donde podrás repostar, y que debes "
-"asegurarte de tener al menos %d de combustible a bordo para la siguiente "
-"etapa del viaje. Te quedarás atrás si no puedes mantener el ritmo."
+"asegurarte de tener al menos %d saltos de combustible a bordo para la "
+"siguiente etapa del viaje. Te quedarás atrás si no puedes mantener el ritmo."
 
 #: dat/missions/shadow/shadowvigil.lua:160
 msgid "Preparing for the job"
@@ -80225,11 +80277,11 @@ msgstr ""
 "saluda. \"Hola, {player}\", dice. \"Tenemos una situación y necesitamos tu "
 "ayuda.\n"
 "    \"Los Sirii están empezando a tomarnos en serio como una amenaza. Esto "
-"no es lo que esperábamos; esperábamos poder estar un poco más de tiempo bajo "
-"tierra, pero parece que nos están obligando a entrar en batalla. Por ello, "
-"necesitamos que nos ayuden a defender nuestro sistema. Nuestro objetivo no "
-"es eliminar por completo la amenaza Sirio, sino más bien ahuyentarlos y "
-"mostrarles que vamos en serio. Queremos que lo sientan.\n"
+"no es lo que esperábamos; pensabamos poder estar un poco más de tiempo bajo "
+"escondidos, pero parece que nos están obligando a entrar en batalla. Por "
+"ello, necesitamos que nos ayuden a defender nuestro sistema. Nuestro "
+"objetivo no es eliminar por completo la amenaza Sirio, sino más bien "
+"ahuyentarlos y mostrarles que vamos en serio. Queremos que lo sientan.\n"
 "    \"Serás superado en número, en armas, y oficialmente declarado enemigo "
 "del estado. ¿Nos ayudarás?\""
 
@@ -88812,7 +88864,7 @@ msgstr "Masa: %.3f / %.3f [%.3f < %.3f (%.1f)]"
 #: dat/scripts/equipopt/optimize.lua:225
 #, lua-format
 msgid "Shield Regen: %.3f [%.3f > %.3f (%.1f)]"
-msgstr "Reg. Escudo  %.3f [%.3f > %.3f (%.1f)]"
+msgstr "Reg. Escudo: %.3f [%.3f > %.3f (%.1f)]"
 
 #. --
 #. Equips a pilot with cores and outfits chosen from a list through optimization.
@@ -90926,7 +90978,7 @@ msgstr "Iónico"
 
 #: dat/scripts/pilotname/pirate.lua:87
 msgid "Iron"
-msgstr ""
+msgstr "Hierro"
 
 #: dat/scripts/pilotname/pirate.lua:88
 msgid "Justice"
@@ -91706,7 +91758,7 @@ msgstr "Electricidad"
 
 #: dat/scripts/pilotname/pirate.lua:303
 msgid "Emperor"
-msgstr ""
+msgstr "Emperador"
 
 #: dat/scripts/pilotname/pirate.lua:304
 msgid "Energy-Volt"
@@ -97488,7 +97540,7 @@ msgstr ""
 #: src/map.c:2714 src/slots.c:77 src/start.c:121 src/tech.c:126
 #, c-format
 msgid "'%s' has unknown node '%s'."
-msgstr ""
+msgstr "'%s' tiene un nodo desconocido '%s'."
 
 #: src/map.c:2719
 #, c-format
@@ -100290,7 +100342,7 @@ msgstr ""
 "%.0f%% Velocidad Máxima"
 
 #: src/outfit.c:1860
-#, c-format, fuzzy
+#, c-format
 msgid ""
 "\n"
 "%.1f Rumble"
@@ -102060,55 +102112,55 @@ msgstr "Daño para Desactivar (Cañón)"
 
 #: src/shipstats.c:129
 msgid "Heat (Turret)"
-msgstr ""
+msgstr "Calor (Torreta)"
 
 #: src/shipstats.c:130
 msgid "Damage (Turret)"
-msgstr ""
+msgstr "Daño (Torreta)"
 
 #: src/shipstats.c:131
 msgid "Tracking (Turret)"
-msgstr ""
+msgstr "Rastreo (Torreta)"
 
 #: src/shipstats.c:132
 msgid "Fire Rate (Turret)"
-msgstr ""
+msgstr "Tasa de Fuego (Torreta)"
 
 #: src/shipstats.c:133
 msgid "Energy Usage (Turret)"
-msgstr ""
+msgstr "Uso de Energía (Torreta)"
 
 #: src/shipstats.c:134
 msgid "Damage as Disable (Turret)"
-msgstr ""
+msgstr "Daño como Desactivar (Torreta)"
 
 #: src/shipstats.c:136
 msgid "Heat Dissipation"
-msgstr ""
+msgstr "Disipación de Calor"
 
 #: src/shipstats.c:137
 msgid "Stress Dissipation"
-msgstr ""
+msgstr "Disipación de Stress"
 
 #: src/shipstats.c:138
 msgid "Crew"
-msgstr ""
+msgstr "Tripulación"
 
 #: src/shipstats.c:139
 msgid "Ship Mass"
-msgstr ""
+msgstr "Masa de Nave"
 
 #: src/shipstats.c:140 src/shipstats.c:162
 msgid "Engine Mass Limit"
-msgstr ""
+msgstr "Límite de Masa del Motor"
 
 #: src/shipstats.c:141
 msgid "Boarding Bonus"
-msgstr ""
+msgstr "Bonificación de Abordaje"
 
 #: src/shipstats.c:142
 msgid "Time Constant"
-msgstr ""
+msgstr "Constante de Tiempo"
 
 #: src/shipstats.c:143
 msgid "Speed-Up"
@@ -102116,276 +102168,282 @@ msgstr ""
 
 #: src/shipstats.c:144
 msgid "Ship Cooldown Time"
-msgstr ""
+msgstr "Tiempo de Enfriamiento de Nave"
 
 #: src/shipstats.c:145
 msgid "Jump Distance"
-msgstr ""
+msgstr "Distancia de Salto"
 
 #: src/shipstats.c:147
 msgid "kN/tonne Thrust"
-msgstr ""
+msgstr "kN/Toneladas Empuje"
 
 #: src/shipstats.c:148
 msgid "deg/s Turn Rate"
-msgstr ""
+msgstr "grad/s Tasa de Giro"
 
 #: src/shipstats.c:149
 msgid "m/s Maximum Speed"
-msgstr ""
+msgstr "m/s Velocidad Máxima"
 
 #: src/shipstats.c:150
 msgid "MJ Energy Capacity"
-msgstr ""
+msgstr "MJ Capacidad de Energía"
 
 #: src/shipstats.c:151
 msgid "MW Energy Regeneration"
-msgstr ""
+msgstr "MW Regeneración de Energía"
 
 #: src/shipstats.c:152 src/shipstats.c:153
 msgid "MW Energy Usage"
-msgstr ""
+msgstr "MW Uso de Energía"
 
 #: src/shipstats.c:154
 msgid "MJ Shield Capacity"
-msgstr ""
+msgstr "MJ Capacidad de Escudo"
 
 #: src/shipstats.c:155
 msgid "MW Shield Regeneration"
-msgstr ""
+msgstr "MW Regeneración de Escudo"
 
 #: src/shipstats.c:156
 msgid "MW Shield Usage"
-msgstr ""
+msgstr "MW Uso de Escudo"
 
 #: src/shipstats.c:157
 msgid "MJ Armour"
-msgstr ""
+msgstr "MJ Blindaje"
 
 #: src/shipstats.c:158
 msgid "MW Armour Regeneration"
-msgstr ""
+msgstr "MW Regeneración de Blindaje"
 
 #: src/shipstats.c:159
 msgid "MW Armour Damage"
-msgstr ""
+msgstr "MW Daño de Blindaje"
 
 #: src/shipstats.c:163
 msgid "Fuel Regeneration"
-msgstr ""
+msgstr "Regeneración de Combustible"
 
 #: src/shipstats.c:165
 msgid "Damage Absorption"
-msgstr ""
+msgstr "Absorción de Daño"
 
 #: src/shipstats.c:167
 msgid "Nebula Resistance"
-msgstr ""
+msgstr "Resistencia a Nebulosa"
 
 #: src/shipstats.c:168
 msgid "Missile jamming chance"
-msgstr ""
+msgstr "Oportunidad de inhibir misiles"
 
 #: src/shipstats.c:170
 msgid "units Fuel"
-msgstr ""
+msgstr "Combustible en unidades"
 
 #: src/shipstats.c:171
 msgid "tonnes Cargo Space"
-msgstr ""
+msgstr "toneladas Espacio de Carga"
 
 #: src/shipstats.c:172
 msgid "crew"
-msgstr ""
+msgstr "tripulación"
 
 #: src/shipstats.c:174
 msgid "Hidden Jump Detection"
-msgstr ""
+msgstr "Detección de Saltos Ocultos"
 
 #: src/shipstats.c:175
 msgid "Instant Jump"
-msgstr ""
+msgstr "Salto Instantáneo"
 
 #: src/shipstats.c:176
 msgid "Reverse Thrusters"
-msgstr ""
+msgstr "Impulsores Inversos"
 
 #: src/shipstats.c:279
 #, c-format
 msgid "ss_lookup: %s should have id %d but has %d"
-msgstr ""
+msgstr "ss_lookup: %s debería tener id %d pero tiene %d"
 
 #: src/shipstats.c:483
 #, c-format
 msgid "ss_typeFromName: No ship stat matching '%s'"
-msgstr ""
+msgstr "ss_typeFromName: No hay estadísticas de naves que coincidan con '%s'"
 
 #: src/shipstats.c:711 src/shipstats.c:838 src/shipstats.c:857
 #, c-format
 msgid "Unknown ship stat type '%s'!"
-msgstr ""
+msgstr "¡Tipo de estadísticas de nave desconocido '%s'!"
 
 #: src/slots.c:100
 #, c-format
 msgid "Slot Property '%s' has unknown node '%s'."
-msgstr ""
+msgstr "La propiedad \"%s\" tiene un nodo desconocido \"%s\"."
 
 #: src/slots.c:141
 #, c-format
 msgid "Slot property '%s' not found in array."
-msgstr ""
+msgstr "La propiedad de la ranura '%s' no se encuentra en el array."
 
 #: src/sound.c:98
 msgid "Sound disabled."
-msgstr ""
+msgstr "Sonido desactivado."
 
 #: src/sound.c:105
 msgid "Unable to create voice mutex."
-msgstr ""
+msgstr "Incapaz de crear un voice mutex."
 
 #: src/sound.c:116
 msgid "Music disabled."
-msgstr ""
+msgstr "Música desactivada."
 
 #: src/sound.c:121
 msgid "Sound has invalid value, clamping to [0:1]."
-msgstr ""
+msgstr "El sonido tiene un valor inválido, que se ajusta a [0:1]."
 
 #: src/sound.c:202
 #, c-format
 msgid "Sound '%s' not found in sound list"
-msgstr ""
+msgstr "Sonido '%s' no se encuentra en la lista de sonidos"
 
 #: src/sound.c:574
 #, c-format
 msgid "Loaded %d Sound"
 msgid_plural "Loaded %d Sounds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sonido %d cargado"
+msgstr[1] "Sonidos %d cargados"
 
 #: src/sound_openal.c:202
 msgid "Unable to open default sound device"
-msgstr ""
+msgstr "Incapaz de abrir el dispositivo de sonido por defecto"
 
 #: src/sound_openal.c:221
 msgid "Unable to create OpenAL context"
-msgstr ""
+msgstr "Incapaz de crear un contexto OpenAL"
 
 #: src/sound_openal.c:231
 msgid "Failure to set default context"
-msgstr ""
+msgstr "Fallo en la configuración del contexto por defecto"
 
 #: src/sound_openal.c:305
 msgid "OpenAL failed to initialize sources"
-msgstr ""
+msgstr "OpenAL falló al inicializar las fuentes"
 
 #. debug magic
 #: src/sound_openal.c:337
 #, c-format
 msgid "OpenAL started: %d Hz"
-msgstr ""
+msgstr "OpenAL iniciado: %d Hz"
 
 #: src/sound_openal.c:340
 #, c-format
 msgid "Version: %s with EFX %d.%d"
-msgstr ""
+msgstr "Versión: %s con EFX %d.%d"
 
 #: src/sound_openal.c:343
 #, c-format
 msgid "Version: %s without EFX"
-msgstr ""
+msgstr "Versión: %s sin EFX"
 
 #: src/sound_openal.c:374
 msgid "Crashing ALSOFT version detected, disabling EFX"
 msgstr ""
+"Se ha detectado una versión de ALSOFT que esta fallando y se ha desactivado "
+"EFX"
 
 #: src/sound_openal.c:418
 msgid "OpenAL EFX functions not found, disabling EFX."
-msgstr ""
+msgstr "No se han encontrado las funciones de OpenAL EFX, desactivando EFX."
 
 #: src/sound_openal.c:430
 msgid "OpenAL Reverb not found, disabling."
-msgstr ""
+msgstr "Reverberación OpenAL no encontrada, desactivada."
 
 #: src/sound_openal.c:445
 msgid "OpenAL Echo not found, disabling."
-msgstr ""
+msgstr "OpenAL Echo no se encuentra, desactivando."
 
 #: src/sound_openal.c:539
 #, c-format
 msgid "SDL_LoadWav_RW failed: %s"
-msgstr ""
+msgstr "SDL_LoadWav_RW falló: %s"
 
 #: src/sound_openal.c:555
 msgid "Big endian WAVs unsupported!"
-msgstr ""
+msgstr "¡Los WAVs Big Endian no son compatibles!"
 
 #: src/sound_openal.c:558
 msgid "Invalid WAV format!"
-msgstr ""
+msgstr "¡Formato WAV inválido!"
 
 #: src/sound_openal.c:582
 msgid "A read from media returned an error."
-msgstr ""
+msgstr "Una lectura de la media devolvió un error."
 
 #: src/sound_openal.c:583
 msgid "Internal logic fault; indicates a bug or heap/stack corruption."
-msgstr ""
+msgstr "Fallo lógico interno; indica un error o una corrupción del heap/stack."
 
 #: src/sound_openal.c:584
 msgid "Feature not implemented."
-msgstr ""
+msgstr "Característica no implementada."
 
 #: src/sound_openal.c:585
 msgid ""
 "Either an invalid argument, or incompletely initialized argument passed to "
 "libvorbisfile call"
 msgstr ""
+"Un argumento no válido, o un argumento incompletamente inicializado pasado a "
+"la llamada de libvorbisfile"
 
 #: src/sound_openal.c:586
 msgid "Bitstream is not Vorbis data."
-msgstr ""
+msgstr "Bitstream no son datos Vorbis."
 
 #: src/sound_openal.c:587
 msgid "Invalid Vorbis bitstream header."
-msgstr ""
+msgstr "Cabecera bitstream Vorbis inválida."
 
 #: src/sound_openal.c:588
 msgid "Vorbis version mismatch."
-msgstr ""
+msgstr "Incompatible versión Vorbis."
 
 #: src/sound_openal.c:589
 msgid ""
 "The given link exists in the Vorbis data stream, but is not decipherable due "
 "to garbage or corruption."
 msgstr ""
+"El enlace dado existe en el flujo de datos Vorbis, pero no es descifrable "
+"debido a basura o a corrupción."
 
 #: src/sound_openal.c:590
 msgid "The given stream is not seekable."
-msgstr ""
+msgstr "El flujo dado no se puede buscar."
 
 #: src/sound_openal.c:592
 msgid "Unknown vorbisfile error."
-msgstr ""
+msgstr "Error vorbisfile desconocido."
 
 #: src/sound_openal.c:616
 #, c-format
 msgid "Failed to finish loading Ogg file: %s"
-msgstr ""
+msgstr "Fallo al terminar de cargar Ogg file: %s"
 
 #: src/sound_openal.c:635
 msgid "Error reading from OGG file!"
-msgstr ""
+msgstr "¡Error de lectura del archivo OGG!"
 
 #: src/sound_openal.c:683 src/sound_openal.c:709
 #, c-format
 msgid "Failed to load sound file '%s'."
-msgstr ""
+msgstr "Fallo al cargar el archivo de sonido '%s'."
 
 #: src/sound_openal.c:721
 #, c-format
 msgid "Something went wrong when loading sound file '%s'."
-msgstr ""
+msgstr "Algo salió mal al cargar el archivo de sonido '%s'."
 
 #: src/sound_openal.c:846
 #, c-format
@@ -102393,123 +102451,127 @@ msgid ""
 "Sound '%s' has %d channels but is being played as positional. It should be "
 "mono!"
 msgstr ""
+"El sonido '%s' tiene %d canales pero se está reproduciendo como posicional. ¡"
+"Debería ser mono!"
 
 #: src/sound_openal.c:1216 src/sound_openal.c:1280
 #, c-format
 msgid "Group '%d' not found."
-msgstr ""
+msgstr "Grupo '%d' no encontrado."
 
 #. Group matched but no free source found..
 #: src/sound_openal.c:1276
 #, c-format
 msgid "Group '%d' has no free sounds."
-msgstr ""
+msgstr "El grupo '%d' no tiene sonidos libres."
 
 #: src/space.c:167
 msgid "Inhabited"
-msgstr ""
+msgstr "Habitado"
 
 #: src/space.c:168
 msgid "Refuel"
-msgstr ""
+msgstr "Repostar"
 
 #: src/space.c:174
 msgid "Blackmarket"
-msgstr ""
+msgstr "Mercado Negro"
 
 #: src/space.c:214
 msgid "Civilian Station"
-msgstr ""
+msgstr "Estación Civil"
 
 #: src/space.c:216
 msgid "Military Station"
-msgstr ""
+msgstr "Estación Militar"
 
 #: src/space.c:218
 msgid "Pirate Station"
-msgstr ""
+msgstr "Estación Pirata"
 
 #: src/space.c:220
 msgid "Robotic Station"
-msgstr ""
+msgstr "Estación Robótica"
 
 #: src/space.c:222
 msgid "Geothermal"
-msgstr ""
+msgstr "Geotérmico"
 
 #: src/space.c:224
 msgid "Geomorteus"
-msgstr ""
+msgstr "Geomuerto"
 
 #: src/space.c:226
 msgid "Geoinactive"
-msgstr ""
+msgstr "Geoinactivo"
 
 #: src/space.c:228
 msgid "Asteroid/Moon"
-msgstr ""
+msgstr "Asteroide/Luna"
 
 #: src/space.c:230
 msgid "Geoplastic"
-msgstr ""
+msgstr "Geoplástico"
 
 #: src/space.c:232
 msgid "Geometallic"
-msgstr ""
+msgstr "Geometálico"
 
 #: src/space.c:234
 msgid "Geocrystaline"
-msgstr ""
+msgstr "Geocristalino"
 
 #: src/space.c:236
 msgid "Desert"
-msgstr ""
+msgstr "Desierto"
 
 #: src/space.c:238
 msgid "Gas Supergiant"
-msgstr ""
+msgstr "Supergigante Gaseoso"
 
 #: src/space.c:240
 msgid "Gas Giant"
-msgstr ""
+msgstr "Gigante Gaseoso"
 
 #: src/space.c:242
 msgid "Adaptable"
-msgstr ""
+msgstr "Adaptable"
 
 #: src/space.c:244
 msgid "Marginal"
-msgstr ""
+msgstr "Marginal"
 
 #: src/space.c:246
 msgid "Terrestrial"
-msgstr ""
+msgstr "Terrestre"
 
 #: src/space.c:248
 msgid "Reducing"
-msgstr ""
+msgstr "Reduciendo"
 
 #: src/space.c:250
 msgid "Pelagic"
-msgstr ""
+msgstr "Pelágico"
 
 #: src/space.c:252
 msgid "Glaciated"
-msgstr ""
+msgstr "Glaciado"
 
 #: src/space.c:258
 msgid "Ultragiants"
-msgstr ""
+msgstr "Ultragigantes"
 
 #: src/space.c:461
 #, c-format
 msgid "Unable to find jump in point for '%s' in '%s': not connected"
 msgstr ""
+"No se ha podido encontrar el punto de salto para '%s' en '%s': no está "
+"conectado"
 
 #: src/space.c:875 src/space.c:885
 #, c-format
 msgid "System '%s' not found in stack"
-msgstr ""
+msgstr "Sistema '%s' no encontrado en la pila"
 
 #: src/space.c:936
 #, c-format
@@ -102537,29 +102599,33 @@ msgstr ""
 
 #: src/space.c:1127
 msgid "Trying to find NULL jump point..."
-msgstr ""
+msgstr "Tratando de encontrar el punto de salto NULL..."
 
 #: src/space.c:1137
 #, c-format
 msgid "Jump point '%s' not found in %s"
-msgstr ""
+msgstr "Punto de salto '%s' no encontrado en %s"
 
 #: src/space.c:1155
 #, c-format
 msgid "Jump point to '%s' not found in %s"
-msgstr ""
+msgstr "Punto de salto a '%s' no encontrado en %s"
 
 #: src/space.c:1199
 #, c-format
 msgid ""
 "Lua Spawn script for faction '%s' missing obligatory entry point 'create'."
 msgstr ""
+"El script de aparición de Lua para la facción '%s' falta el punto de entrada "
+"obligatorio 'create'."
 
 #: src/space.c:1214
 #, c-format
 msgid ""
 "Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'."
 msgstr ""
+"El script de aparición de Lua para la facción '%s' falta el punto de entrada "
+"obligatorio 'spawn'."
 
 #. f, [arg,], max
 #. Actually run the function.
@@ -102567,55 +102633,67 @@ msgstr ""
 #: src/space.c:1226
 #, c-format
 msgid "Lua Spawn script for faction '%s' : %s"
-msgstr ""
+msgstr "El script de aparición de Lua para la facción '%s' : %s"
 
 #: src/space.c:1234 src/space.c:4568
 #, c-format
 msgid "Lua spawn script for faction '%s' failed to return timer value."
 msgstr ""
+"El script de aparición de Lua para la facción '%s' no pudo devolver el valor "
+"del temporizador."
 
 #: src/space.c:1248
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a table)."
 msgstr ""
+"El script de aparición de Lua para la facción '%s' devuelve datos no válidos "
+"(no una tabla)."
 
 #: src/space.c:1256
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a pilot)."
 msgstr ""
+"El script de aparición de Lua para la facción '%s' devuelve datos no válidos "
+"(no es un piloto)."
 
 #: src/space.c:1269
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a number)."
 msgstr ""
+"El script de aparición de Lua para la facción '%s' devuelve datos no válidos "
+"(no un número)."
 
 #: src/space.c:1277
 #, c-format
 msgid "Lua spawn script for faction '%s' actually spawned a '%s' pilot."
 msgstr ""
+"El script de generación de Lua para la facción '%s' ha generado un piloto "
+"'%s'."
 
 #: src/space.c:1364
 #, c-format
 msgid "You discovered #%c%s#0."
-msgstr ""
+msgstr "Has descubierto #%c%s#0."
 
 #: src/space.c:1391
 msgid "You discovered a Jump Point."
-msgstr ""
+msgstr "Has descubierto un Punto de Salto."
 
 #: src/space.c:1540
 msgid "Cannot reinit system if there is no system previously loaded"
 msgstr ""
+"No se puede reiniciar el sistema si no hay ningún sistema cargado previamente"
 
 #: src/space.c:1545
 #, c-format
 msgid "#oEntering System %s on %s."
-msgstr ""
+msgstr "#oEntrando en el Sistema %s en %s."
 
 #: src/space.c:1547
 #, c-format
 msgid "#rWARNING - Volatile nebula detected in %s! Taking %.1f MW damage!"
 msgstr ""
+"#rAVISO - ¡Nebulosa volátil detectada en %s! ¡Recibiendo un daño de %.1f MW!"
 
 #: src/space.c:1752
 msgid ""
@@ -102725,53 +102803,57 @@ msgstr ""
 #: src/space.c:2548
 #, c-format
 msgid "Unable to remove jump point '%s' from NULL system."
-msgstr ""
+msgstr "No se ha podido eliminar el punto de salto '%s' del sistema NULL."
 
 #: src/space.c:2560
 #, c-format
 msgid "Jump point '%s' not found in system '%s' for removal."
 msgstr ""
+"No se ha encontrado el punto de salto '%s' en el sistema '%s' para su "
+"eliminación."
 
 #: src/space.c:2603
 msgid ""
 "Creating new system in non-debugging mode. Things are probably going to "
 "break horribly."
 msgstr ""
+"Creando un nuevo sistema en modo de no depuración. Es probable que las cosas "
+"se rompan horriblemente."
 
 #: src/space.c:2746 src/space.c:2763 src/space.c:2801
 #, c-format
 msgid "Unknown node '%s' in star system '%s'"
-msgstr ""
+msgstr "Nodo desconocido '%s' en el sistema estelar '%s'"
 
 #: src/space.c:2778
 #, c-format
 msgid "System '%s' has unknown stat '%s'."
-msgstr ""
+msgstr "El sistema '%s' tiene una estadística desconocida '%s'."
 
 #: src/space.c:2810
 #, c-format
 msgid "Star System '%s' missing '%s' element"
-msgstr ""
+msgstr "Sistema Estelar '%s' falta elemento '%s'"
 
 #: src/space.c:2811
 #, c-format
 msgid "Star System '%s' missing 'name' tag"
-msgstr ""
+msgstr "Falta la etiqueta \"name\" del Sistema Estelar \"%s\""
 
 #: src/space.c:2889 src/space.c:2963
 #, c-format
 msgid "JumpPoint node for system '%s' has no target attribute."
-msgstr ""
+msgstr "El nodo JumpPoint para el sistema '%s' no tiene atributo de destino."
 
 #: src/space.c:2894 src/space.c:2968
 #, c-format
 msgid "JumpPoint node for system '%s' has invalid target '%s'."
-msgstr ""
+msgstr "El nodo JumpPoint para el sistema '%s' tiene un objetivo inválido '%s'."
 
 #: src/space.c:2906 src/space.c:2980
 #, c-format
 msgid "Star System '%s' has duplicate jump point to '%s'."
-msgstr ""
+msgstr "El Sistema Estelar '%s' tiene un punto de salto duplicado a '%s'."
 
 #: src/space.c:3024
 #, c-format
@@ -102779,6 +102861,8 @@ msgid ""
 "JumpPoint in system '%s' is missing pos element but does not have autopos "
 "flag."
 msgstr ""
+"Al punto de salto en el sistema '%s' le falta el elemento pos pero no tiene "
+"la bandera autopos."
 
 #: src/space.c:3049
 #, c-format
@@ -102822,8 +102906,8 @@ msgstr ""
 #, c-format
 msgid "Loaded %d Star System"
 msgid_plural "Loaded %d Star Systems"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sistema Estelar %d Cargado"
+msgstr[1] "Sistemas Estelares %d Cargados"
 
 #: src/space.c:3488
 #, c-format
@@ -102845,61 +102929,62 @@ msgstr ""
 #: src/space.c:4560
 #, c-format
 msgid "Lua decrease script for faction '%s' : %s"
-msgstr ""
+msgstr "Script de disminución de Lua para la facción '%s' : %s"
 
 #: src/spfx.c:214
 #, c-format
 msgid "SPFX '%s' has unknown node '%s'."
-msgstr ""
+msgstr "SPFX '%s' tiene un nodo desconocido '%s'."
 
 #: src/spfx.c:239
 #, c-format
 msgid "SPFX '%s' is trying to set uniform '%s' not in shader!"
 msgstr ""
+"¡SPFX '%s' está tratando de establecer el uniforme '%s' no en el shader!"
 
 #: src/spfx.c:298
 #, c-format
 msgid "SPFX '%s' missing/invalid '%s' element"
-msgstr ""
+msgstr "SPFX '%s' falta/inválido elemento '%s'"
 
 #: src/spfx.c:398
 #, c-format
 msgid "Loaded %d Special Effect"
 msgid_plural "Loaded %d Special Effects"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Efecto Especial %d Cargado"
+msgstr[1] "Efectos Especiales %d Cargados"
 
 #: src/spfx.c:459
 msgid "Trying to add spfx with invalid effect!"
-msgstr ""
+msgstr "¡Tratando de añadir spfx con efecto inválido!"
 
 #: src/spfx.c:473
 msgid "Invalid SPFX layer."
-msgstr ""
+msgstr "Capa de SPFX inválida."
 
 #: src/spfx.c:917
 #, c-format
 msgid "Unable to upload haptic effect: %s."
-msgstr ""
+msgstr "No se ha podido cargar el efecto háptico: %s."
 
 #: src/spfx.c:955
 #, c-format
 msgid "Failed to update haptic effect: %s."
-msgstr ""
+msgstr "Fallo al actualizar el efecto háptico: %s."
 
 #: src/spfx.c:1003
 msgid "Rendering invalid SPFX layer."
-msgstr ""
+msgstr "Renderización de la capa SPFX inválida."
 
 #: src/spfx.c:1125
 #, c-format
 msgid "Trail '%s' has unknown node '%s'."
-msgstr ""
+msgstr "La ruta '%s' tiene un nodo desconocido '%s'."
 
 #: src/spfx.c:1129
 #, c-format
 msgid "Trail '%s' missing '%s' element"
-msgstr ""
+msgstr "Falta el elemento '%s' de la ruta '%s'"
 
 #: src/spfx.c:1155
 #, c-format
@@ -102909,22 +102994,22 @@ msgstr ""
 #: src/spfx.c:1204
 #, c-format
 msgid "Trail '%s' that inherits from '%s' has missing reference!"
-msgstr ""
+msgstr "¡El rastro '%s' que hereda de '%s' tiene una referencia perdida!"
 
 #: src/spfx.c:1238
 #, c-format
 msgid "Trail type '%s' not found in stack"
-msgstr ""
+msgstr "El Tipo de rastro '%s' no se encuentra en la pila"
 
 #: src/start.c:99
 #, c-format
 msgid "'%s' has unknown system node '%s'."
-msgstr ""
+msgstr "'%s' tiene un nodo de sistema desconocido '%s'."
 
 #: src/start.c:103
 #, c-format
 msgid "'%s' has unknown player node '%s'."
-msgstr ""
+msgstr "'%s' tiene un nodo de jugador desconocido '%s'."
 
 #: src/start.c:116
 #, c-format
@@ -102935,87 +103020,88 @@ msgstr ""
 #: src/start.c:129
 #, c-format
 msgid "Module start data missing/invalid '%s' element"
-msgstr ""
+msgstr "Faltan datos de inicio del módulo/elemento '%s' inválido"
 
 #. Info.
 #: src/tech.c:159
 #, c-format
 msgid "Loaded %d tech group"
 msgid_plural "Loaded %d tech groups"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Grupo tecnológico %d cargado"
+msgstr[1] "Grupos tecnológicos %d cargados"
 
 #: src/tech.c:285
 msgid "tech node does not have 'name' attribute"
-msgstr ""
+msgstr "El nodo tecnológico no tiene el atributo \"name\""
 
 #: src/tech.c:310
 #, c-format
 msgid "Tech group '%s' has an item without a value."
-msgstr ""
+msgstr "El grupo tecnológico '%s' tiene un elemento sin valor."
 
 #: src/tech.c:327 src/tech.c:457
 #, c-format
 msgid "Generic item '%s' not found in tech group '%s'"
-msgstr ""
+msgstr "El elemento genérico '%s' no se encuentra en el grupo tecnológico '%s'"
 
 #: src/tech.c:332
 #, c-format
 msgid "Group item '%s' not found in tech group '%s'."
-msgstr ""
+msgstr "El elemento de grupo '%s' no se encuentra en el grupo tecnológico '%s'."
 
 #: src/tech.c:337
 #, c-format
 msgid "Outfit item '%s' not found in tech group '%s'."
-msgstr ""
+msgstr "El objeto equipo '%s' no se encuentra en el grupo tecnológico '%s'."
 
 #: src/tech.c:342
 #, c-format
 msgid "Ship item '%s' not found in tech group '%s'."
-msgstr ""
+msgstr "El objeto de la nave '%s' no se encuentra en el grupo tecnológico '%s'."
 
 #: src/tech.c:347
 #, c-format
 msgid "Commodity item '%s' not found in tech group '%s'."
 msgstr ""
+"El objeto producto \"%s\" no se encuentra en el grupo tecnológico \"%s\"."
 
 #: src/tech.c:353
 #, c-format
 msgid "Tech group '%s' has unknown node '%s'."
-msgstr ""
+msgstr "El grupo tecnológico '%s' tiene un nodo desconocido '%s'."
 
 #: src/tech.c:441
 #, c-format
 msgid "Trying to add item '%s' to non-existent tech '%s'."
-msgstr ""
+msgstr "Intentando añadir el elemento '%s' a una tecnología inexistente '%s'."
 
 #: src/tech.c:478
 #, c-format
 msgid "Generic item '%s' not found in tech group"
-msgstr ""
+msgstr "El elemento genérico '%s' no se encuentra en el grupo tecnológico"
 
 #: src/tech.c:499
 #, c-format
 msgid "Item '%s' not found in tech group"
-msgstr ""
+msgstr "Objeto '%s' no encontrado en el grupo tecnológico"
 
 #: src/tech.c:514
 #, c-format
 msgid "Trying to remove item '%s' to non-existent tech '%s'."
-msgstr ""
+msgstr "Intentando eliminar el elemento '%s' a una tecnología inexistente '%s'."
 
 #: src/tech.c:531
 #, c-format
 msgid "Item '%s' not found in tech group '%s'"
-msgstr ""
+msgstr "Objeto '%s' no encontrado en el grupo tecnológico '%s'"
 
 #: src/threadpool.c:201
 msgid "Tried to dequeue while the queue was empty!"
-msgstr ""
+msgstr "¡Intentando retirar la cola de espera mientras estaba vacía!"
 
 #: src/threadpool.c:263
 msgid "Threadpool has not been initialized yet!"
-msgstr ""
+msgstr "¡Todavía no se ha inicializado el grupo de hilos!"
 
 #. Putting this in a while-loop is probably a really bad idea, but I
 #. * don't have any better ideas.
@@ -103025,108 +103111,112 @@ msgstr ""
 #: src/threadpool.c:591
 #, c-format
 msgid "SDL_SemWait failed! Error: %s"
-msgstr ""
+msgstr "¡SDL_SemWait falló! Error: %s"
 
 #: src/threadpool.c:479
 msgid "Threadpool has already been initialized!"
-msgstr ""
+msgstr "¡El grupo de hilos ya ha sido inicializado!"
 
 #: src/threadpool.c:488
 #, c-format
 msgid "Threadpool init failed: %s"
-msgstr ""
+msgstr "Fallo en el inicio del grupo de hilos: %s"
 
 #: src/tk/widget/tabwin.c:104
 #, c-format
 msgid "Tab position '%d' parameter does not make sense"
-msgstr ""
+msgstr "El parámetro de la posición del tabulador '%d' no tiene sentido"
 
 #: src/tk/widget/tabwin.c:196
 #, c-format
 msgid "Active window in window '%s' not found in stack."
-msgstr ""
+msgstr "La ventana activa en la ventana '%s' no se encuentra en la pila."
 
 #: src/tk/widget/tabwin.c:362 src/tk/widget/tabwin.c:412
 #, c-format
 msgid "Active window in widget '%s' not found in stack."
-msgstr ""
+msgstr "La ventana activa en el widget '%s' no se encuentra en la pila."
 
 #: src/tk/widget/tabwin.c:445
 #, c-format
 msgid "Widget '%s' not found"
-msgstr ""
+msgstr "Widget '%s' no encontrado"
 
 #: src/tk/widget/tabwin.c:451
 #, c-format
 msgid "Widget '%s' is not an image array."
-msgstr ""
+msgstr "Widget '%s' no es un array de imágenes."
 
 #: src/toolkit.c:244
 #, c-format
 msgid ""
 "Trying to create widget '%s' over existing one that hasn't been destroyed"
 msgstr ""
+"Intentando crear el widget '%s' sobre uno existente que no ha sido destruido"
 
 #: src/toolkit.c:298 src/toolkit.c:304
 #, c-format
 msgid "Window '%u' not found in list!"
-msgstr ""
+msgstr "¡Ventana '%u' no encontrada en la lista!"
 
 #: src/toolkit.c:320 src/toolkit.c:329
 #, c-format
 msgid "Widget '%s' not found in window '%u'!"
-msgstr ""
+msgstr "¡Widget '%s' no encontrado en la ventana '%u'!"
 
 #: src/toolkit.c:690
 #, c-format
 msgid "Window with name '%s' already exists!"
-msgstr ""
+msgstr "¡La ventana con el nombre '%s' ya existe!"
 
 #: src/toolkit.c:1016
 #, c-format
 msgid "window '%d' does not exist"
-msgstr ""
+msgstr "la ventana '%d' no existe"
 
 #: src/toolkit.c:1050
 #, c-format
 msgid "Widget '%s' not found in window '%s'"
-msgstr ""
+msgstr "Widget '%s' no encontrado en la ventana '%s'"
 
 #: src/toolkit.c:1766
 #, c-format
 msgid "Toolkit: Button '%s' of Window '%s' doesn't have a function trigger"
 msgstr ""
+"Kit de herramientas: El botón '%s' de la ventana '%s' no tiene un disparador "
+"de función"
 
 #: src/unidiff.c:195
 #, c-format
 msgid "Malformed XML header for '%s' UniDiff: missing root element '%s'"
-msgstr ""
+msgstr "Cabecera XML malformada para '%s' UniDiff: falta el elemento raíz '%s'"
 
 #: src/unidiff.c:207
 #, c-format
 msgid "Loaded %d UniDiff"
 msgid_plural "Loaded %d UniDiffs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "UniDiff %d Cargado"
+msgstr[1] "UniDiffs %d Cargados"
 
 #: src/unidiff.c:279
 #, c-format
 msgid "UniDiff '%s' not found in %s!"
-msgstr ""
+msgstr "¡UniDiff '%s' no se encuentra en %s!"
 
 #: src/unidiff.c:287
 msgid "Malformed unidiff file: missing root element 'unidiff'"
-msgstr ""
+msgstr "Archivo unidiff malformado: falta el elemento raíz 'unidiff'"
 
 #: src/unidiff.c:321
 #, c-format
 msgid "Unidiff '%s' has a system node without a 'name' tag, not applying."
 msgstr ""
+"Unidiff '%s' tiene un nodo del sistema sin etiqueta 'nombre', no se aplica."
 
 #: src/unidiff.c:332 src/unidiff.c:364 src/unidiff.c:392 src/unidiff.c:741
 #, c-format
 msgid "Unidiff '%s': Null hunk type."
-msgstr ""
+msgstr "Unidiff '%s': Tipo de trozo nulo."
 
 #: src/unidiff.c:352
 #, c-format
@@ -103141,30 +103231,30 @@ msgstr ""
 #: src/unidiff.c:408
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for jump '%s'."
-msgstr ""
+msgstr "Unidificio '%s': Tipo de trozo desconocido '%s' para el salto '%s'."
 
 #: src/unidiff.c:445 src/unidiff.c:514 src/unidiff.c:668 src/unidiff.c:768
 #: src/unidiff.c:813
 #, c-format
 msgid "Unidiff '%s' has unknown node '%s'."
-msgstr ""
+msgstr "Unidiff '%s' tiene un nodo desconocido '%s'."
 
 #: src/unidiff.c:472 src/unidiff.c:541 src/unidiff.c:696
 #, c-format
 msgid "Unidiff '%s' has an target node without a 'name' tag"
-msgstr ""
+msgstr "Unidiff '%s' tiene un nodo de destino sin etiqueta 'name'"
 
 #: src/unidiff.c:759
 #, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for faction '%s'."
-msgstr ""
+msgstr "Unidiff '%s': Tipo de trozo desconocido '%s' para la facción '%s'."
 
 #: src/unidiff.c:819
 #, c-format
 msgid "Unidiff '%s' failed to apply %d hunk."
 msgid_plural "Unidiff '%s' failed to apply %d hunks."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Unidiff '%s' falló al aplicar trozo %d."
+msgstr[1] "Unidiff '%s' falló al aplicar trozos %d."
 
 #: src/unidiff.c:826
 #, c-format
@@ -103199,22 +103289,22 @@ msgstr ""
 #: src/unidiff.c:844
 #, c-format
 msgid "   [%s] jump add: '%s'"
-msgstr ""
+msgstr "   [%s] salto añadido: '%s'"
 
 #: src/unidiff.c:847
 #, c-format
 msgid "   [%s] jump remove: '%s'"
-msgstr ""
+msgstr "   [%s] salto eliminado: '%s'"
 
 #: src/unidiff.c:850
 #, c-format
 msgid "   [%s] tech add: '%s'"
-msgstr ""
+msgstr "   [%s] tecnología añadido: '%s'"
 
 #: src/unidiff.c:854
 #, c-format
 msgid "   [%s] tech remove: '%s'"
-msgstr ""
+msgstr "   [%s] tecnología eliminada: '%s'"
 
 #: src/unidiff.c:858
 #, c-format
@@ -103289,93 +103379,96 @@ msgstr ""
 #: src/unidiff.c:914
 #, c-format
 msgid "   [%s] faction visible: '%s'"
-msgstr ""
+msgstr "   [%s] facción visible: '%s'"
 
 #: src/unidiff.c:918
 #, c-format
 msgid "   [%s] faction invisible: '%s'"
-msgstr ""
+msgstr "   [%s] facción invisible: '%s'"
 
 #: src/unidiff.c:922
 #, c-format
 msgid "   [%s] faction set ally: '%s'"
-msgstr ""
+msgstr "   [%s] facción colocada aliada: '%s'"
 
 #: src/unidiff.c:926
 #, c-format
 msgid "   [%s] faction set enemy: '%s'"
-msgstr ""
+msgstr "   [%s] facción colocada enemigo: '%s'"
 
 #: src/unidiff.c:930
 #, c-format
 msgid "   [%s] faction set neutral: '%s'"
-msgstr ""
+msgstr "   [%s] facción colocada neutral: '%s'"
 
 #: src/unidiff.c:934
 #, c-format
 msgid "   [%s] faction alignment reset: '%s'"
-msgstr ""
+msgstr "   [%s] facción alineaminto reiniciado: '%s'"
 
 #: src/unidiff.c:939
 #, c-format
 msgid "   unknown hunk '%d'"
-msgstr ""
+msgstr "   trozo desconocido '%d'"
 
 #: src/unidiff.c:1219
 #, c-format
 msgid "Unknown hunk type '%d'."
-msgstr ""
+msgstr "Tipo de trozo desconocido '%d'."
 
 #: src/unidiff.c:1417
 #, c-format
 msgid "Unknown Hunk type '%d'."
-msgstr ""
+msgstr "Tipo de Trozo Desconocido '%d'."
 
 #: src/unidiff.c:1422
 #, c-format
 msgid "Failed to remove hunk type '%d'."
-msgstr ""
+msgstr "Fallo al eliminar el tipo de trozo '%d'."
 
 #: src/unidiff.c:1542
 msgid "Expected node \"diff\" to contain the name of a unidiff. Was empty."
 msgstr ""
+"Se esperaba que el nodo \"diff\" contuviera el nombre de un unidiff. Estaba "
+"vacío."
 
 #: src/weapon.c:401
 #, c-format
 msgid "Unknown weapon status for '%s'"
-msgstr ""
+msgstr "Estado del arma desconocido para '%s'"
 
 #: src/weapon.c:562 src/weapon.c:711 src/weapon.c:1776
 msgid "Unknown weapon layer!"
-msgstr ""
+msgstr "¡Capa de arma desconocida!"
 
 #: src/weapon.c:665
 #, c-format
 msgid "Weapon of type '%s' has no update implemented yet!"
-msgstr ""
+msgstr "¡El arma de tipo '%s' aún no tiene una actualización implementada!"
 
 #: src/weapon.c:850
 #, c-format
 msgid "Weapon of type '%s' has no render implemented yet!"
-msgstr ""
+msgstr "¡El arma de tipo '%s' aún no tiene un render implementado!"
 
 #: src/weapon.c:1725
 #, c-format
 msgid "Weapon of type '%s' has no create implemented yet!"
-msgstr ""
+msgstr "¡El arma de tipo '%s' aún no tiene implementada la creación!"
 
 #: src/weapon.c:1759
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
-msgstr ""
+msgstr "Intentar crear un Arma a partir de un Equipo que no es de tipo Arma"
 
 #: src/weapon.c:1819
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
 msgstr ""
+"Intentando crear un Arma de Rayo a partir de un equipo que no es de rayo."
 
 #: src/weapon.c:1839 src/weapon.c:1881 src/weapon.c:2023
 msgid "Invalid WEAPON_LAYER specified"
-msgstr ""
+msgstr "Se ha especificado un WEAPON_LAYER inválido"
 
 #: src/weapon.c:1887
 msgid "Trying to remove beam with ID 0!"
-msgstr ""
+msgstr "¡Intentando eliminar el rayo con ID 0!"
