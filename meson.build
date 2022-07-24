@@ -229,6 +229,7 @@ if buildExec.disabled() == false
    # strndup() detectin must work around this bug: https://github.com/mesonbuild/meson/issues/3672
    config_data.set10('HAVE_STRNDUP', cc.has_header_symbol('string.h', 'strndup') and cc.has_function('strndup'))
    config_data.set10('HAVE_STRNSTR', cc.has_function('strnstr'))
+   config_data.set10('HAVE_STRSIGNAL', cc.has_function('strsignal'))
    config_data.set10('HAVE_VASPRINTF', cc.has_function('vasprintf'))
    # BLAS include tests
    cblas_test = '\nint main (void) { double x = 0; return (int)cblas_ddot( 1, &x, 1, &x, 1 ); }'
