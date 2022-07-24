@@ -107,6 +107,8 @@ static int load_game( nsave_t *ns );
 static int load_gameInternal( const char* file, const char* version );
 static int load_enumerateCallback( void* data, const char* origdir, const char* fname );
 static int load_enumerateCallbackPlayer( void* data, const char* origdir, const char* fname );
+static int load_compatibilityTest( const nsave_t *ns );
+static const char* load_compatibilityString( const nsave_t *ns );
 static SaveCompatibility load_compatibility( const nsave_t *ns );
 static int load_sortComparePlayers( const void *p1, const void *p2 );
 static int load_sortCompare( const void *p1, const void *p2 );
@@ -354,6 +356,21 @@ static int load_compatibilityTest( const nsave_t *ns )
    return 0;
 }
 
+static const char* load_compatibilityString( const nsave_t *ns )
+{
+   switch (ns->compatible) {
+      case SAVE_COMPATIBILITY_NAEV_VERSION:
+         return _("version mismatch");
+
+      case SAVE_COMPATIBILITY_PLUGINS:
+         return _("plugins mismatch");
+
+      case SAVE_COMPATIBILITY_OK:
+         return _("compatible");
+   }
+   return NULL;
+}
+
 /**
  * @brief Checks to see if a save is compatible with current Naev.
  */
@@ -480,13 +497,18 @@ void load_loadGameMenu (void)
    if (n > 0) {
       names = malloc( sizeof(char*)*n );
       for (int i=0; i<n; i++) {
-         if (load_saves[i].saves[0].compatible) {
+         nsave_t *ns = &load_saves[i].saves[0];
+         if (ns->compatible) {
             char buf[STRMAX_SHORT];
-            snprintf( buf, sizeof(buf), "#r%s#0", load_saves[i].name );
+            int l = 0;
+            l += snprintf( &buf[l], sizeof(buf)-l, "#r" );
+            l += snprintf( buf, sizeof(buf), _("%s (%s)"),
+               load_saves[i].name, load_compatibilityString( ns ) );
+            l += snprintf( &buf[l], sizeof(buf)-l, "#0" );
             names[i] = strdup( buf );
          }
          else
-            names[i] = strdup( load_saves[i].name );
+            names[i] = strdup( ns->name );
          if (selected_player != NULL && !strcmp( names[i], selected_player ))
             pos = i;
       }
@@ -560,7 +582,11 @@ void load_loadSnapshotMenu( const char *name )
          nsave_t *ns = &ps->saves[i];
          if (ns->compatible) {
             char buf[STRMAX_SHORT];
-            snprintf( buf, sizeof(buf), "#r%s#0", load_saves[i].name );
+            int l = 0;
+            l += snprintf( &buf[l], sizeof(buf)-l, "#r" );
+            l += snprintf( buf, sizeof(buf), _("%s (%s)"),
+               load_saves[i].name, load_compatibilityString( ns ) );
+            l += snprintf( &buf[l], sizeof(buf)-l, "#0" );
             names[i] = strdup( buf );
          }
          else
