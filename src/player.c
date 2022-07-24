@@ -3377,10 +3377,15 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
          }
 
          if (!found) {
-            WARN(_("Found mission cargo without associated mission."));
+            WARN(_("Found mission cargo '%s' without associated mission."),pc->commodity->name);
             WARN(_("Please reload save game to remove the dead cargo."));
             continue;
          }
+      }
+      else if (pc->quantity==0) {
+         WARN(_("Found cargo '%s' with 0 quantity.",pc->commodity->name);
+         WARN(_("Please reload save game to remove the dead cargo."));
+         continue;
       }
 
       xmlw_startElem(writer,"commodity");
