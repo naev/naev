@@ -338,15 +338,15 @@ static int sound_al_init (void)
       goto snderr_ctx;
    }
 
-   /* Clear the errors */
-   alGetError();
-
    /* Set active context */
    if (alcMakeContextCurrent( al_context )==AL_FALSE) {
       WARN(_("Failure to set default context"));
       ret = -4;
       goto snderr_act;
    }
+
+   /* Clear the errors */
+   alGetError();
 
    /* Query some extensions. */
    if (al_info.output_limiter) {
