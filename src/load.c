@@ -714,7 +714,10 @@ static void display_save_info( unsigned int wid, const nsave_t *ns )
    l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s", _("Name:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->name );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Version:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->version );
+   if (ns->compatible == SAVE_COMPATIBILITY_NAEV_VERSION)
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n   #r%s#0", ns->version );
+   else
+      l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->version );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Difficulty:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", difficulty );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Date:") );
