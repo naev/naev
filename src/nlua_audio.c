@@ -134,6 +134,7 @@ static int stream_thread( void *la_data )
       /* Case finished. */
       if (la->active < 0) {
          la->th = NULL;
+         al_checkErr(); /* XXX - good or bad idea to log from the thread? */
          SDL_CondBroadcast( la->cond );
          soundUnlock();
          return 0;
@@ -152,6 +153,7 @@ static int stream_thread( void *la_data )
             la->active = 1 - la->active;
          }
       }
+      al_checkErr(); /* XXX - good or bad idea to log from the thread? */
       soundUnlock();
 
       SDL_Delay(5);
