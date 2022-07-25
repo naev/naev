@@ -501,10 +501,8 @@ void load_loadGameMenu (void)
          if (ns->compatible) {
             char buf[STRMAX_SHORT];
             int l = 0;
-            l += snprintf( &buf[l], sizeof(buf)-l, "#r" );
-            l += snprintf( buf, sizeof(buf), _("%s (%s)"),
+            l += snprintf( &buf[l], sizeof(buf)-l, _("%s (#r%s#0)"),
                load_saves[i].name, load_compatibilityString( ns ) );
-            l += snprintf( &buf[l], sizeof(buf)-l, "#0" );
             names[i] = strdup( buf );
          }
          else
