@@ -294,7 +294,7 @@ int pfleet_cargoAdd( const Commodity *com, int q )
    if (player.p == NULL)
       return 0;
    int added = pilot_cargoAdd( player.p, com, q, 0 );
-   if (player.fleet_capacity <= 0)
+   if ((player.fleet_capacity <= 0) || (q-added <= 0))
       return added;
    for (int i=0; i<array_size(player.p->escorts); i++) {
       Escort_t *e = &player.p->escorts[i];
