@@ -1377,11 +1377,13 @@ int sound_createGroup( int size )
       }
    }
 
+   al_checkErr();
    return id;
 
 group_err:
    free(g->sources);
    al_ngroups--;
+   al_checkErr();
    return 0;
 }
 
@@ -1452,6 +1454,7 @@ int sound_playGroup( int group, int sound, int once )
          soundUnlock();
          return 0;
       }
+      al_checkErr();
       soundUnlock();
 
       /* Group matched but no free source found.. */
@@ -1501,6 +1504,7 @@ void sound_pauseGroup( int group )
 
    soundLock();
    al_pausev( g->nsources, g->sources );
+   al_checkErr();
    soundUnlock();
 }
 
@@ -1522,6 +1526,7 @@ void sound_resumeGroup( int group )
 
    soundLock();
    al_resumev( g->nsources, g->sources );
+   al_checkErr();
    soundUnlock();
 }
 
@@ -1554,6 +1559,7 @@ void sound_speedGroup( int group, int enable )
    soundLock();
    g->speed = enable;
    groupSpeedReset(g);
+   al_checkErr();
    soundUnlock();
 }
 
@@ -1597,6 +1603,7 @@ void sound_pitchGroup( int group, double pitch )
    soundLock();
    g->pitch = pitch;
    groupSpeedReset(g);
+   al_checkErr();
    soundUnlock();
 }
 
@@ -1878,11 +1885,11 @@ static int al_loadWav( ALuint *buf, SDL_RWops *rw )
    alGenBuffers( 1, buf );
    /* Put into the buffer. */
    alBufferData( *buf, format, wav_buffer, wav_length, wav_spec.freq );
+   al_checkErr();
    soundUnlock();
 
    /* Clean up. */
    free( wav_buffer );
-   al_checkErr();
    return 0;
 }
 
