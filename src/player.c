@@ -3383,7 +3383,7 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
          }
       }
       else if (pc->quantity==0) {
-         WARN(_("Found cargo '%s' with 0 quantity.",pc->commodity->name);
+         WARN(_("Found cargo '%s' with 0 quantity."),pc->commodity->name);
          WARN(_("Please reload save game to remove the dead cargo."));
          continue;
       }
