@@ -148,6 +148,14 @@ int plugin_init (void)
             plugin_parse( plg, "plugin.xml", *f );
          else
             WARN(_("Plugin '%s' does not have a valid '%s'!"), buf, "plugin.xml");
+
+         /* Set some defaults. */
+         if (plg->author == NULL)
+            plg->author = strdup(_("Unknown"));
+         if (plg->version == NULL)
+            plg->version = strdup(_("Unknown"));
+         if (plg->description == NULL)
+            plg->description = strdup(_("Unknown"));
       }
       PHYSFS_freeList(files);
       n = array_size(plugins);
