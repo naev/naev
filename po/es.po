@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-07-24 21:27+0000\n"
+"PO-Revision-Date: 2022-07-25 21:22+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -69,6 +69,11 @@ msgid ""
 "food, and distrust sowed the seeds of discord. Once begun, the fever of war "
 "spread from world to world and became a holocaust."
 msgstr ""
+"Sin embargo, la época heroica de los descubrimientos sólo duró el tiempo que "
+"la curiosidad humana superó a la codicia. Rápidamente estalló el conflicto "
+"en las colonias. La tierra, el combustible, los alimentos y la desconfianza "
+"sembraron las semillas de la discordia. Una vez comenzada, la fiebre de la "
+"guerra se expandió de mundo en mundo y se convirtió en un holocausto."
 
 #: dat/intro:15
 msgid ""
@@ -162,7 +167,7 @@ msgstr "Bienvenido al universo de Naev..."
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
-msgstr ""
+msgstr "Equipo Actual de Desarrollo del Núcleo"
 
 #: dat/AUTHORS:2 dat/AUTHORS:26 dat/AUTHORS:38 dat/AUTHORS:63 dat/AUTHORS:173
 #: dat/AUTHORS:181
@@ -215,7 +220,7 @@ msgstr "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 
 #: dat/AUTHORS:20
 msgid "   * CI dude and Bringer of automated releases"
-msgstr ""
+msgstr "   * El tío del CI y el Portador de las versiones automatizadas"
 
 #: dat/AUTHORS:22
 msgid "Viktor Hahn <viktor.hahn@web.de>"
@@ -271,7 +276,7 @@ msgstr "   * Desarrollo de Misiones"
 
 #: dat/AUTHORS:45
 msgid "   The first non-bobbens mission developer!"
-msgstr ""
+msgstr "   ¡El primer desarrollador de misiones que no es Bobbens!"
 
 #: dat/AUTHORS:47
 msgid "Ingo Ruhnke <grumbel@gmx.de>"
@@ -324,11 +329,11 @@ msgstr "Vega Strike <http://vegastrike.sf.net>"
 
 #: dat/AUTHORS:66
 msgid "   * Ship Models"
-msgstr ""
+msgstr "   * Modelado de Naves"
 
 #: dat/AUTHORS:67
 msgid "   * Music"
-msgstr ""
+msgstr "   * Música"
 
 #: dat/AUTHORS:68
 msgid "   * Sounds"
@@ -397,6 +402,7 @@ msgstr "   * SavePNG"
 #: dat/AUTHORS:84
 msgid "   Great function ripped straight out of pygame. Works marvelously!"
 msgstr ""
+"   Gran función arrancada directamente de pygame. ¡Funciona maravillosamente!"
 
 #: dat/AUTHORS:86
 msgid "Aurore D. \"Rore\" <aurore.d@gmail.com>"
@@ -466,6 +472,8 @@ msgstr "   * Mucho trabajo artístico"
 #: dat/AUTHORS:103
 msgid "   Talented artist, one of the first in creating custom Naev content."
 msgstr ""
+"   Artista de talento, uno de los primeros en crear contenidos "
+"personalizados de Naev."
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
@@ -566,7 +574,7 @@ msgstr ""
 
 #: dat/AUTHORS:133
 msgid "   * Hot dog mission"
-msgstr ""
+msgstr "   * Misión del perro caliente"
 
 #: dat/AUTHORS:135
 msgid "Ludovic Bellière \"xrogaan\""
@@ -762,11 +770,11 @@ msgstr "MULA"
 
 #: artwork/gfx/loading/pacifier.webp.txt:1
 msgid "PACIFIER"
-msgstr "Pacificador"
+msgstr "PACIFICADOR"
 
 #: artwork/gfx/loading/peacemaker.webp.txt:1
 msgid "EMPIRE PEACEMAKER"
-msgstr "PACIFICADOR DEL IMPERIO"
+msgstr "MEDIADOR IMPERIO"
 
 #: artwork/gfx/loading/preacher.webp.txt:1
 msgid "SIRIUS PREACHER"
@@ -782,7 +790,7 @@ msgstr "RINO"
 
 #: artwork/gfx/loading/rhino_pirate.webp.txt:1
 msgid "PIRATE RHINO"
-msgstr ""
+msgstr "RINO PIRATA"
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
 msgid "SCHROEDINGER"
@@ -790,7 +798,7 @@ msgstr "SCHROEDINGER"
 
 #: artwork/gfx/loading/shaman.webp.txt:1
 msgid "SIRIUS SHAMAN"
-msgstr ""
+msgstr "CHAMÁN DE SIRIO"
 
 #: artwork/gfx/loading/shark.webp.txt:1
 msgid "SHARK"
@@ -2253,7 +2261,7 @@ msgstr ""
 
 #: dat/assets/behemoth.xml:2
 msgid "Behemoth"
-msgstr "Behemoth"
+msgstr "Mastodonte"
 
 #: dat/assets/belltower_station.xml:2
 msgid "Belltower Station"
@@ -3529,7 +3537,7 @@ msgstr "Delta Polaris VI"
 
 #: dat/assets/diabolos.xml:2
 msgid "Diabolos"
-msgstr "Diabolos"
+msgstr "Diábolos"
 
 #: dat/assets/diabolos.xml:26
 msgid ""
@@ -6873,7 +6881,7 @@ msgid ""
 msgstr ""
 "La EENI-2, o Estación Espacial de Nutrición Imperial 2, se construyó en esta "
 "sección remota del espacio para compensar la falta de producción agrícola en "
-"el sector. Los alimentos no son una mercancía muy rentable para comerciar a "
+"el sector. Los alimentos no son un producto muy rentable para comerciar a "
 "larga distancia, y las colonias de Nartur se vieron limitadas en su "
 "crecimiento debido a la escasez crónica. La EENI-2 les ha permitido crecer."
 
@@ -10953,9 +10961,9 @@ msgstr ""
 "El bar de la Estación Punto Cero, que recuerda a los mercados de valores de "
 "la Tierra anterior a la Federación, es una de las instalaciones más grandes "
 "e importantes a bordo. La gente viene aquí tanto para hacer negocios como "
-"para socializar. Los tipos de cambio de las materias primas se muestran en "
-"grandes pantallas a lo largo de las paredes, y por una pequeña cuota un "
-"piloto puede hacer uso de una cabina comercial privada."
+"para socializar. Los tipos de cambio de los productos se muestran en grandes "
+"pantallas a lo largo de las paredes, y por una pequeña cuota un piloto puede "
+"hacer uso de una cabina comercial privada."
 
 #: dat/assets/pokyos_station.xml:2
 msgid "Pokyos Station"
@@ -17220,7 +17228,7 @@ msgstr "Artículos de Lujo"
 
 #: dat/commodities/luxury_goods.xml:4
 msgid "All sorts of high quality luxury goods."
-msgstr ""
+msgstr "Todo tipo de artículos de lujo de alta calidad."
 
 #: dat/commodities/medicine.xml:3
 msgid "Medicine"
@@ -19403,10 +19411,10 @@ msgid ""
 "most other destroyers due to their higher mass."
 msgstr ""
 "El Patagio es un motor destructor desarrollado por Industrias Krain para ser "
-"utilizado en el Starbridge. Aunque sus prestaciones superan a las de otros "
-"motores de destructor en términos de velocidad máxima y maniobrabilidad, el "
-"motor no es apropiado para la mayoría de los otros destructores debido a su "
-"gran peso."
+"utilizado en el Puente Estelar. Aunque sus prestaciones superan a las de "
+"otros motores de destructor en términos de velocidad máxima y "
+"maniobrabilidad, el motor no es apropiado para la mayoría de los otros "
+"destructores debido a su gran peso."
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:2
 msgid "Melendez Buffalo XL Engine"
@@ -23676,7 +23684,7 @@ msgstr ""
 
 #: dat/ships/empire_pacifier.xml:2
 msgid "Empire Pacifier"
-msgstr "Calma del Imperio"
+msgstr "Pacificador del Imperio"
 
 #: dat/ships/empire_pacifier.xml:18
 msgid ""
@@ -23684,13 +23692,13 @@ msgid ""
 "to a standard Pacifier, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
-"Esta versión de grado militar del Calma es parcialmente idéntica a un Calma "
-"estándar, pero con un blindaje, escudos y disipación de calor ligeramente "
-"mejores."
+"Esta versión de grado militar del Pacificador es parcialmente idéntica a un "
+"Pacificador estándar, pero con un blindaje, escudos y disipación de calor "
+"ligeramente mejores."
 
 #: dat/ships/empire_peacemaker.xml:2
 msgid "Empire Peacemaker"
-msgstr "Pacificador del Imperio"
+msgstr "Mediador Imperio"
 
 #: dat/ships/empire_peacemaker.xml:20
 msgid ""
@@ -23700,10 +23708,10 @@ msgid ""
 "provide the fighter and bomber squadrons with much needed resupplies. Like "
 "most capital ships, however, it is vulnerable to attack from enemy bombers."
 msgstr ""
-"Construido por encargo del Imperio por los Astilleros Nexus, el Pacificador "
-"es una de las naves más grandes de la galaxia, empequeñeciendo incluso al "
-"poderoso Goddard. Los Pacificadores suelen funcionar como naves de bandera "
-"en las flotas imperiales, y pueden proporcionar a los escuadrones de cazas y "
+"Construido por encargo del Imperio por los Astilleros Nexus, el Mediador es "
+"una de las naves más grandes de la galaxia, empequeñeciendo incluso al "
+"poderoso Goddard. Los Mediadores suelen funcionar como naves de bandera en "
+"las flotas imperiales, y pueden proporcionar a los escuadrones de cazas y "
 "bombarderos los tan necesarios reabastecimientos. Sin embargo, como la "
 "mayoría de las naves capitales, es vulnerable a los ataques de los "
 "bombarderos enemigos."
@@ -23881,7 +23889,7 @@ msgstr ""
 
 #: dat/ships/pacifier.xml:2
 msgid "Pacifier"
-msgstr "Calma"
+msgstr "Pacificador"
 
 #: dat/ships/pacifier.xml:17
 msgid ""
@@ -24011,7 +24019,7 @@ msgstr ""
 
 #: dat/ships/pirate_starbridge.xml:2
 msgid "Pirate Starbridge"
-msgstr "Starbridge Pirata"
+msgstr "Puente Estelar Pirata"
 
 #: dat/ships/pirate_starbridge.xml:17
 msgid ""
@@ -24082,8 +24090,8 @@ msgid ""
 msgstr ""
 "La Kahan es una nave de vanguardia. Su diseño se completó poco antes del "
 "Incidente, y estaba en camino de convertirse en la principal nave de combate "
-"del ejército Proteron. Aunque posee menos soportes de armas que el Calma, lo "
-"compensa con su menor masa y su mayor espacio estructural."
+"del ejército Proteron. Aunque posee menos soportes de armas que el "
+"Pacificador, lo compensa con su menor masa y su mayor espacio estructural."
 
 #: dat/ships/proteron_watson.xml:2
 msgid "Proteron Watson"
@@ -24378,7 +24386,7 @@ msgid ""
 "comparable maximum speed. It's low mass comes at the cost of reduced "
 "structural space."
 msgstr ""
-"El Starbridge es la última nave diseñada por Industrias Krain. Es un "
+"El Puente Estelar es la última nave diseñada por Industrias Krain. Es un "
 "destructor ligero que alcanza la misma maniobrabilidad que una corbeta y una "
 "velocidad máxima comparable. Su baja masa tiene como contrapartida una "
 "reducción del espacio estructural."
@@ -26691,7 +26699,7 @@ msgstr "La vida es corta, ¡pásala en la Estación Minerva del Sistema Limbo!"
 #: dat/ai/advertiser.lua:19
 msgid "Insuperable Sleekness. Introducing the Krain Industries Starbridge."
 msgstr ""
-"Una elegancia insuperable. Presentamos el Starbridge de Industrias Krain."
+"Una elegancia insuperable. Presentamos el Puente Estelar de Industrias Krain."
 
 #: dat/ai/advertiser.lua:20
 msgid ""
@@ -30015,7 +30023,7 @@ msgstr "Recordando a Sorom"
 
 #: dat/events/discovery.lua:85
 msgid "Crater City"
-msgstr ""
+msgstr "Ciudad Crater"
 
 #: dat/events/discovery.lua:86
 msgid "Touching the Universe"
@@ -35429,7 +35437,7 @@ msgstr ""
 
 #: dat/events/neutral/news.lua:440
 msgid "Young Pilot Buys Their First Commodity"
-msgstr "Un Joven Piloto Compra su Primera Mercancía"
+msgstr "Un Joven Piloto Compra su Primer Producto"
 
 #: dat/events/neutral/news.lua:441
 msgid ""
@@ -35443,11 +35451,11 @@ msgid ""
 msgstr ""
 "Un joven piloto ha comprado una {cargo} como forma de introducirse en el "
 "negocio del pilotaje autónomo. Nacidos y criados en {pnt}, donde compraron "
-"su primera mercancía, hablan con entusiasmo de la nueva carrera. \"¡Es "
-"realmente emocionante! Incluso en mi planeta natal el precio de los "
-"{credits} por tonelada no es estático, pero cuando miras a tu alrededor, hay "
-"tanta variación de precios, ¡tanto potencial de beneficio! Estoy emocionado "
-"por empezar por fin.\""
+"su primer producto, hablan con entusiasmo de la nueva carrera. \"¡Es "
+"realmente emocionante! Incluso en mi planeta natal el precio de los {credits}"
+" por tonelada no es estático, pero cuando miras a tu alrededor, hay tanta "
+"variación de precios, ¡tanto potencial de beneficio! Estoy emocionado por "
+"empezar por fin.\""
 
 #: dat/events/neutral/news.lua:444
 msgid "Corporate Scandal Rips Through the Galaxy"
@@ -35467,7 +35475,7 @@ msgstr ""
 
 #: dat/events/neutral/news.lua:448
 msgid "Commodity Trading Likened to Gambling"
-msgstr "El Comercio de Materias Primas se Compara con los Juegos de Azar"
+msgstr "El Comercio de Productos se Compara con los Juegos de Azar"
 
 #: dat/events/neutral/news.lua:449
 msgid ""
@@ -35479,12 +35487,12 @@ msgid ""
 "destructive and needs to stop.\""
 msgstr ""
 "En una polémica declaración, un activista ha comparado el comercio de "
-"materias primas con el juego. \"¡Es un juego legalizado, simple y "
-"llanamente! Ahora mismo el precio de {cargo} en {pnt} es de {credits} por "
-"tonelada, por ejemplo, pero todo el mundo sabe que el precio fluctúa. Mañana "
-"podría ser más bajo, o podría ser más alto. ¿Quién lo sabe? Francamente, "
-"tengo la firme opinión de que este \"comercio de productos básicos\" es "
-"autodestructivo y debe detenerse.\""
+"productos con el juego. \"¡Es un juego legalizado, simple y llanamente! "
+"Ahora mismo el precio de {cargo} en {pnt} es de {credits} por tonelada, por "
+"ejemplo, pero todo el mundo sabe que el precio fluctúa. Mañana podría ser "
+"más bajo, o podría ser más alto. ¿Quién lo sabe? Francamente, tengo la firme "
+"opinión de que este \"comercio de productos básicos\" es autodestructivo y "
+"debe detenerse.\""
 
 #: dat/events/neutral/news.lua:452
 msgid "Leadership Decision Disrupts Prices"
@@ -35504,7 +35512,7 @@ msgstr ""
 
 #: dat/events/neutral/news.lua:456
 msgid "Five Cycle Old Child Starts Commodity Trading"
-msgstr "Un Niño de Cinco Ciclos Empieza a Comerciar con Materias Primas"
+msgstr "Un Niño de Cinco Ciclos Empieza a Comerciar con Productos"
 
 #: dat/events/neutral/news.lua:457
 msgid ""
@@ -35834,8 +35842,8 @@ msgid ""
 "could stand up to one.\""
 msgstr ""
 "\"No hagas caso a los detractores. El Imperio sigue siendo fuerte. ¿Has "
-"visto alguna vez un Pacificador de cerca? Dudo que cualquier nave de "
-"cualquier otra potencia pueda enfrentarse a uno.\""
+"visto alguna vez un Mediador de cerca? Dudo que cualquier nave de cualquier "
+"otra potencia pueda enfrentarse a uno.\""
 
 #: dat/events/neutral/npc.lua:114
 msgid ""
@@ -54266,7 +54274,7 @@ msgid ""
 "can buy this commodity and bring as much of it back as possible."
 msgstr ""
 "Es necesario suministrar a {pnt} más {cargo}. Busca un planeta en el que "
-"puedas comprar esta mercancía y trae la mayor cantidad posible."
+"puedas comprar este producto y trae la mayor cantidad posible."
 
 #: dat/missions/flf/flf_commodity_run.lua:29
 msgid ""
@@ -54445,7 +54453,7 @@ msgstr[1] ""
 
 #: dat/missions/flf/flf_empatrol.lua:54
 msgid " There is a Pacifier among them, so you must proceed with caution."
-msgstr " Hay una Calma entre ellos, así que debes proceder con precaución."
+msgstr " Hay un Pacificador entre ellos, así que debes proceder con precaución."
 
 #: dat/missions/flf/flf_empatrol.lua:57
 msgid " There is a Hawking among them, so you must be very careful."
@@ -64639,7 +64647,7 @@ msgstr "Terraformando Antlejos V"
 #: dat/missions/neutral/antlejos/ant04.lua:93
 #: dat/missions/neutral/antlejos/ant_supplies.lua:94
 msgid "Pick up the {cargo} at {pnt} ({sys} system)"
-msgstr "Recoge la {carga} en {pnt} (sistema {sys})"
+msgstr "Recoge la {cargo} en {pnt} (sistema {sys})"
 
 #: dat/missions/neutral/antlejos/ant02.lua:88
 #: dat/missions/neutral/antlejos/ant03.lua:86
@@ -65962,7 +65970,7 @@ msgid ""
 "possible."
 msgstr ""
 "{pnt} tiene un suministro insuficiente de {cargo} para satisfacer la demanda "
-"actual. Ve a cualquier planeta que venda esta mercancía y trae la mayor "
+"actual. Ve a cualquier planeta que venda este producto y trae la mayor "
 "cantidad posible."
 
 #: dat/missions/neutral/commodity_run.lua:41
@@ -66146,7 +66154,7 @@ msgstr "Admonisher Asociado"
 
 #: dat/missions/neutral/crimelord.lua:82
 msgid "Associate Pacifier"
-msgstr "Calma Asociada"
+msgstr "Pacificador Asociado"
 
 #: dat/missions/neutral/crimelord.lua:84
 msgid "Associate Hawking"
@@ -77596,9 +77604,9 @@ msgstr ""
 "la Frontera es el principal objetivo. Si tienen éxito, el diseño del "
 "Lancelot podría ser expulsado por completo del espacio Fronter, y nos "
 "veríamos aplastados en ese mercado entre la Casa Dvaered y la Casa Sirio. "
-"Claro que la FLF seguiría utilizando algunos Calma, pero sería un negocio "
-"simbólico en el mejor de los casos, y sin mencionar que las autoridades "
-"empezarían a asociarnos con el terrorismo.\n"
+"Claro que la FLF seguiría utilizando algunos Pacificadores, pero sería un "
+"negocio simbólico en el mejor de los casos, y sin mencionar que las "
+"autoridades empezarían a asociarnos con el terrorismo.\n"
 "    \"Así que hemos realizado un poco de espionaje. Tenemos un agente que ha "
 "grabado algunas conversaciones, esperemos que reveladoras, entre un gerente "
 "de ventas de la Casa Sirio y representantes de la Frontera. Todo lo que "
@@ -78132,7 +78140,7 @@ msgstr "Llamar"
 msgid ""
 "The Pacifier commander answers you and stops his ship, waiting to be boarded."
 msgstr ""
-"El comandante del Calma te responde y detiene su nave, esperando ser "
+"El comandante del Pacificador te responde y detiene su nave, esperando ser "
 "abordado."
 
 #: dat/missions/shark/sh06_arandon.lua:134
@@ -82468,7 +82476,7 @@ msgid ""
 "commodity exchange!\""
 msgstr ""
 "\"¡Ah, y no te olvides de vender el mineral que obtuviste del derrelicto en "
-"el mercado de productos!\""
+"la bolsa de productos!\""
 
 #: dat/missions/tutorial/nelly01.lua:261
 msgid "You helped Nelly complete a delivery mission."
@@ -82558,7 +82566,7 @@ msgid ""
 "that should be nearby now.\""
 msgstr ""
 "\"Parece que has conseguido un montón de mineral ahí. Eso debería hacerte "
-"ganar un buen dinero en un planeta con intercambio de productos. Abordar los "
+"ganar un buen dinero en un planeta con bolsa de productos. Abordar los "
 "derelictos no siempre es tan fácil y a veces pueden pasar cosas malas. "
 "Deberíamos dirigirnos a {pnt} que debería estar cerca ahora.\""
 
@@ -82932,7 +82940,7 @@ msgstr "Laminador MK2"
 
 #: dat/missions/tutorial/nelly02.lua:277
 msgid "Noisy Pacifier"
-msgstr "Calma Ruidosa"
+msgstr "Pacificador Ruidoso"
 
 #: dat/missions/tutorial/nelly02.lua:307
 msgid ""
@@ -83165,7 +83173,7 @@ msgid ""
 "\"Looks like we're going to have to avoid her for now. You know how "
 "electronic warfare works?\""
 msgstr ""
-"Nelly parece ponerse un poco nerviosa al ver aparecer la calma en la "
+"Nelly parece ponerse un poco nerviosa al ver aparecer el pacificador en la "
 "pantalla.\n"
 "\"Espera, ese parece Robin. Mierda, nunca le devolví el dinero, ¿verdad?\"\n"
 "Frunce el ceño.\n"
@@ -83867,11 +83875,11 @@ msgstr ""
 "dinero comprando a bajo precio y vendiendo a alto precio. Haz clic en un "
 "producto para ver información sobre él, sobre todo su precio medio por "
 "tonelada, y haz clic en los botones \"#bComprar#0\" y \"#bVender#0\" para "
-"comprar o vender parte del producto, respectivamente. Aquí, es útil mantener "
-"las teclas #bMayúsculas#0 y/o #bCtrl#0 para ajustar el modificador de "
-"cuántas toneladas de la mercancía estás comprando o vendiendo a la vez. Esto "
-"reducirá el número de veces que tienes que pulsar los botones de Compra y "
-"Venta.\""
+"comprar o vender parte de los productos, respectivamente. Aquí, es útil "
+"mantener las teclas #bMayúsculas#0 y/o #bCtrl#0 para ajustar el modificador "
+"de cuántas toneladas de la mercancía estás comprando o vendiendo a la vez. "
+"Esto reducirá el número de veces que tienes que pulsar los botones de Compra "
+"y Venta.\""
 
 #: dat/missions/tutorial/tutorial.lua:274
 msgid ""
@@ -89992,7 +90000,7 @@ msgstr "fallo al establecer la fuente de reserva"
 #: src/dialogue.c:329 src/dialogue.c:720 src/options.c:262 src/options.c:591
 #: src/options.c:893 src/options.c:1195
 msgid "OK"
-msgstr "Bien"
+msgstr "Aceptar"
 
 #. Transparent background in Naev
 #. --
@@ -93748,35 +93756,35 @@ msgstr "%.*f k¤"
 #, c-format
 msgid "%d tonne"
 msgid_plural "%d tonnes"
-msgstr[0] "tonelada %d"
-msgstr[1] "toneladas %d"
+msgstr[0] "%d tonelada"
+msgstr[1] "%d toneladas"
 
 #: src/commodity.c:130 src/commodity.c:571
 #, c-format
 msgid "Commodity '%s' not found in stack"
-msgstr "Mercancía '%s' no se encuentra en la pila"
+msgstr "Producto '%s' no se encuentra en la pila"
 
 #: src/commodity.c:170
 #, c-format
 msgid "Commodity with index %d not found"
-msgstr "Mercancía con índice %d no encontrada"
+msgstr "Producto con índice %d no encontrado"
 
 #: src/commodity.c:322
 #, c-format
 msgid "Commodity from %s has invalid or no name"
-msgstr "Bercancía de %s no es válida o no tiene nombre"
+msgstr "Producto de %s no es válido o no tiene nombre"
 
 #: src/commodity.c:325
 #, c-format
 msgid "No <gfx_store> node found, using default texture for commodity \"%s\""
 msgstr ""
 "No se ha encontrado ningún nodo <gfx_store>, utilizando la textura por "
-"defecto para la mercancía \"%s\""
+"defecto para el producto \"%s\""
 
 #: src/commodity.c:333
 #, c-format
 msgid "Commodity '%s' missing '"
-msgstr "Falta la mercancía '%s' '"
+msgstr "Falta el producto '%s' '"
 
 #: src/commodity.c:514
 #, c-format
@@ -93796,7 +93804,7 @@ msgstr "No se puede recoger material: no hay más espacio de carga disponible"
 #: src/commodity.c:604
 #, c-format
 msgid "Trying to modify temporary commodity '%s'!"
-msgstr "¡Intentando modificar la mercancía temporal '%s'!"
+msgstr "¡Intentando modificar el producto temporal '%s'!"
 
 #: src/commodity.c:651 src/faction.c:1484 src/tech.c:105
 #, c-format
@@ -93807,8 +93815,8 @@ msgstr "Archivo %s malformado: falta el elemento raíz '%s'"
 #, c-format
 msgid "Loaded %d Commodity"
 msgid_plural "Loaded %d Commodities"
-msgstr[0] "Cargado %d Mercancia"
-msgstr[1] "Cargado %d Mercancias"
+msgstr[0] "Cargado %d Producto"
+msgstr[1] "Cargado %d Productos"
 
 #: src/cond.c:31
 msgid "Failed to load standard Lua libraries."
@@ -94953,7 +94961,7 @@ msgstr "¡El contador de diálogos no está sincronizado!"
 #: src/economy.c:127
 #, c-format
 msgid "Price for commodity '%s' not known."
-msgstr "Precio para la mercancía '%s' desconocido."
+msgstr "Precio para el producto '%s' desconocido."
 
 #: src/economy.c:137 src/economy.c:186
 #, c-format
@@ -94963,7 +94971,7 @@ msgstr ""
 #: src/economy.c:174 src/economy.c:229
 #, c-format
 msgid "Average price for commodity '%s' not known."
-msgstr "Precio medio de la mercancía \"%s\" desconocido."
+msgstr "Precio medio del producto \"%s\" desconocido."
 
 #: src/economy.c:353
 msgid "Unable to create CSparse Matrix."
@@ -95066,7 +95074,7 @@ msgstr "Giro:"
 #: src/equipment.c:374 src/info.c:477 src/land_shipyard.c:258
 #: src/map_system.c:670
 msgid "Time Constant:"
-msgstr "Constante de Tiempo:"
+msgstr "Cons. Tiempo:"
 
 #: src/equipment.c:375
 msgid "Detected at:"
@@ -95104,7 +95112,7 @@ msgstr "Energía:"
 #: src/equipment.c:383 src/info.c:483 src/land_shipyard.c:285
 #: src/map_system.c:680
 msgid "Cargo Space:"
-msgstr "Espacio de Carga:"
+msgstr "Espacio Carga:"
 
 #: src/equipment.c:386
 msgid "Ship Status:"
@@ -96978,7 +96986,7 @@ msgstr "%s (clase-%s)"
 #: src/land.c:835
 #, c-format
 msgid "roughly %s"
-msgstr "aproximadamente %s"
+msgstr "%s aproximadamente"
 
 #: src/land.c:842 src/map.c:695 src/map.c:702 src/map.c:726 src/map.c:741
 msgid ", "
@@ -97003,7 +97011,7 @@ msgstr "Astillero"
 
 #: src/land.c:976 src/space.c:171
 msgid "Commodity"
-msgstr "Mercancias"
+msgstr "Producto"
 
 #. Player stats.
 #: src/land.c:1246
@@ -97650,7 +97658,7 @@ msgstr ""
 
 #: src/map_system.c:205
 msgid "Buy commodity price info"
-msgstr "Comprar información sobre el precio de las mercancías"
+msgstr "Comprar info precios prod"
 
 #: src/map_system.c:311
 #, c-format
@@ -97877,8 +97885,7 @@ msgstr "No disponible"
 #: src/map_system.c:1025
 #, c-format
 msgid "Commodity prices for %s are not available here at the moment."
-msgstr ""
-"Precios de mercancías para %s no están disponibles aquí en este momento."
+msgstr "Precios de productos para %s no están disponibles aquí en este momento."
 
 #: src/map_system.c:1037
 #, c-format
@@ -97903,7 +97910,7 @@ msgstr "Tienes información más reciente que la disponible."
 
 #: src/map_system.c:1043
 msgid "Purchase commodity prices?"
-msgstr "¿Precios de compra de mercancías?"
+msgstr "¿Comprar precios de productos?"
 
 #: src/map_system.c:1043
 #, c-format
@@ -97955,7 +97962,7 @@ msgstr "Reanudar"
 
 #: src/menu.c:430
 msgid "Exit to Title"
-msgstr "Salir a Título"
+msgstr "Salir a Menú Principal"
 
 #. Stop player sounds because sometimes they hang.
 #: src/menu.c:482
@@ -97988,7 +97995,7 @@ msgstr "Equipos del Mapa"
 
 #: src/menu.c:654
 msgid "Exit to Main Menu"
-msgstr "Salir del Menú Principal"
+msgstr "Salir al Menú Principal"
 
 #: src/mission.c:103 src/nlua_player.c:1179 src/nlua_player.c:1201
 #, c-format
@@ -98664,12 +98671,12 @@ msgstr "¡El color '%s' no existe!"
 
 #: src/nlua_commodity.c:132
 msgid "Commodity is invalid."
-msgstr "Mercancía inválida."
+msgstr "El producto es inválido."
 
 #: src/nlua_commodity.c:217
 #, c-format
 msgid "Commodity '%s' not found!"
-msgstr "¡Mercancía '%s' no encontrada!"
+msgstr "¡Producto '%s' no encontrado!"
 
 #: src/nlua_commodity.c:324 src/nlua_commodity.c:360 src/nlua_player.c:1295
 #: src/nlua_player.c:1315
@@ -99334,7 +99341,7 @@ msgstr "Fallo al guardar el salto inválido."
 
 #: src/nxml_lua.c:319
 msgid "Failed to save invalid commodity."
-msgstr "Fallo al guardar el producto inválido."
+msgstr "Fallo al guardar producto inválido."
 
 #: src/nxml_lua.c:449
 #, c-format
@@ -99613,7 +99620,7 @@ msgstr "Banderas de Compilación:"
 
 #: src/options.c:351
 msgid "Stop Speedup At:"
-msgstr "Detener Modo Acelerado en:"
+msgstr "Detener Modo Acelerado Si:"
 
 #: src/options.c:363
 msgid "Settings:"
@@ -99629,11 +99636,11 @@ msgstr "Habilitar doble-toque postquemador/enfriamiento"
 
 #: src/options.c:373
 msgid "Enable mouse-flying (toggle with middle click)"
-msgstr "Habilitar el vuelo del ratón (alternar con el clic del medio)"
+msgstr "Habilitar vuelo del ratón (alternar clic del medio)"
 
 #: src/options.c:376
 msgid "Enable mouse-flying thrust control"
-msgstr "Habilitar el control de empuje de vuelo con el ratón"
+msgstr "Habilitar control empuje vuelo con ratón"
 
 #: src/options.c:379
 msgid "Enable saved game compression"
@@ -99645,7 +99652,7 @@ msgstr "Mensajes Visibles"
 
 #: src/options.c:387
 msgid "Max Time Compression Factor"
-msgstr "Factor de Compresión de Tiempo Máximo"
+msgstr "Factor Compresión Tiempo Máx"
 
 #: src/options.c:546
 #, c-format
@@ -99807,7 +99814,7 @@ msgstr "Resolución:"
 
 #: src/options.c:1213
 msgid "Fullscreen"
-msgstr "Pantalla Completa"
+msgstr "Completa"
 
 #: src/options.c:1279
 msgid "FPS Control:"
@@ -100342,7 +100349,7 @@ msgstr ""
 "%.0f%% Velocidad Máxima"
 
 #: src/outfit.c:1860
-#, c-format
+#, c-format, fuzzy
 msgid ""
 "\n"
 "%.1f Rumble"
