@@ -9,15 +9,14 @@
  */
 
 /** @cond */
+#include <assert.h>
+#include <signal.h>
+
 #include "naev.h"
 
 #if LINUX && HAS_BFD && DEBUGGING
-#include <signal.h>
 #include <execinfo.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <bfd.h>
-#include <assert.h>
 #endif /* LINUX && HAS_BFD && DEBUGGING */
 /** @endcond */
 
@@ -48,32 +47,66 @@ const char* debug_sigCodeToStr( int sig, int sig_code )
 {
    if (sig == SIGFPE)
       switch (sig_code) {
+#ifdef SI_USER
          case SI_USER: return _("SIGFPE (raised by program)");
+#endif /* SI_USER */
+#ifdef FPE_INTDIV
          case FPE_INTDIV: return _("SIGFPE (integer divide by zero)");
+#endif /* FPE_INTDIV */
+#ifdef FPE_INTOVF
          case FPE_INTOVF: return _("SIGFPE (integer overflow)");
+#endif /* FPE_INTOVF */
+#ifdef FPE_FLTDIV
          case FPE_FLTDIV: return _("SIGFPE (floating-point divide by zero)");
+#endif /* FPE_FLTDIV */
+#ifdef FPE_FLTOVF
          case FPE_FLTOVF: return _("SIGFPE (floating-point overflow)");
+#endif /* FPE_FLTOVF */
+#ifdef FPE_FLTUND
          case FPE_FLTUND: return _("SIGFPE (floating-point underflow)");
+#endif /* FPE_FLTUND */
+#ifdef FPE_FLTRES
          case FPE_FLTRES: return _("SIGFPE (floating-point inexact result)");
+#endif /* FPE_FLTRES */
+#ifdef FPE_FLTINV
          case FPE_FLTINV: return _("SIGFPE (floating-point invalid operation)");
+#endif /* FPE_FLTINV */
+#ifdef FPE_FLTSUB
          case FPE_FLTSUB: return _("SIGFPE (subscript out of range)");
+#endif /* FPE_FLTSUB */
          default: return _("SIGFPE");
       }
    else if (sig == SIGSEGV)
       switch (sig_code) {
+#ifdef SI_USER
          case SI_USER: return _("SIGSEGV (raised by program)");
+#endif /* SI_USER */
+#ifdef SEGV_MAPERR
          case SEGV_MAPERR: return _("SIGSEGV (address not mapped to object)");
+#endif /* SEGV_MAPERR */
+#ifdef SEGV_ACCERR
          case SEGV_ACCERR: return _("SIGSEGV (invalid permissions for mapped object)");
+#endif /* SEGV_ACCERR */
          default: return _("SIGSEGV");
       }
    else if (sig == SIGABRT)
       switch (sig_code) {
+#ifdef SI_USER
          case SI_USER: return _("SIGABRT (raised by program)");
+#endif /* SI_USER */
          default: return _("SIGABRT");
       }
 
    /* No suitable code found. */
+#if HAVE_STRSIGNAL
    return strsignal(sig);
+#else /* HAVE_STRSIGNAL */
+   {
+      static char buf[128];
+      snprintf( buf, sizeof(buf), _("signal %d"), sig );
+      return buf;
+   }
+#endif /* HAVE_STRSIGNAL */
 }
 
 /**

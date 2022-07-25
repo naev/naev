@@ -328,7 +328,7 @@ end
 
 -- Faction-specific combat songs
 local factional_combat = {
-   Collective = { "collective2.ogg", "galacticbattle.ogg", "battlesomething1.ogg", "combat3" },
+   Collective = { "collective2.ogg", "galacticbattle.ogg", "battlesomething1.ogg", "combat3.ogg" },
    Pirate     = { "battlesomething2.ogg", "blackmoor_tides.ogg", add_neutral = true },
    Empire     = { "galacticbattle.ogg", "battlesomething2.ogg", add_neutral = true },
    Goddard    = { "flf_battle1.ogg", "battlesomething1.ogg", add_neutral = true },
