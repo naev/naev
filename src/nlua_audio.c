@@ -895,7 +895,6 @@ static int audioL_getDuration( lua_State *L )
       return 1;
    }
 
-
    switch (la->type) {
       case LUA_AUDIO_STATIC:
          soundLock();
@@ -1543,8 +1542,10 @@ static int audioL_setEffect( lua_State *L )
    soundLock();
    if (enable) {
       lae = audio_getEffectByName( name );
-      if (lae == NULL)
+      if (lae == NULL) {
+         soundUnlock();
          return 0;
+      }
       /* TODO allow more effect slots. */
       alSource3i( la->source, AL_AUXILIARY_SEND_FILTER, lae->slot, 0, AL_FILTER_NULL );
    }
