@@ -153,19 +153,27 @@ static void info_buttonFree( InfoButton_t *btn )
 
 static void info_buttonRegen (void)
 {
-   int wid;
+   int wid, w, h, rows, cols;
    if (info_wid == 0)
       return;
+
    wid = info_windows[ INFO_WIN_MAIN ];
+   window_dimWindow( wid, &w, &h );
+   cols = (w-20) / (20+BUTTON_WIDTH);
+   rows = 1 + (array_size(info_buttons) + 1) / cols;
+
    for (int i=0; i<array_size(info_buttons); i++) {
       InfoButton_t *btn = &info_buttons[i];
+      int r = (i+2)/cols, c = (i+2)%cols;
       snprintf( btn->button, sizeof(btn->button), "btnExtra%d", i );
       if (widget_exists( wid, btn->button ))
          window_destroyWidget( wid, btn->button );
-      window_addButtonKey( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
+      window_addButtonKey( wid, -20 - c*(20+BUTTON_WIDTH), 20 + r*(20+BUTTON_HEIGHT),
             BUTTON_WIDTH, BUTTON_HEIGHT,
             btn->button, btn->caption, info_buttonClick, btn->key );
    }
+   window_resizeWidget( wid, "lstLicenses", w-80-240-40-40, h-90 - rows*(20+BUTTON_HEIGHT) );
+   window_moveWidget( wid, "lstLicenses", -20, -70 );
 }
 
 /**
@@ -414,14 +422,6 @@ static void info_openMain( unsigned int wid )
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSetGUI", _("Set GUI"), info_setGui, SDLK_g );
 
-   for (int i=0; i<array_size(info_buttons); i++) {
-      InfoButton_t *btn = &info_buttons[i];
-      snprintf( btn->button, sizeof(btn->button), "btnExtra%d", i );
-      window_addButtonKey( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
-            BUTTON_WIDTH, BUTTON_HEIGHT,
-            btn->button, btn->caption, info_buttonClick, btn->key );
-   }
-
    buf = player_getLicenses();
    nlicenses = array_size( buf );
    /* List. */
@@ -439,6 +439,8 @@ static void info_openMain( unsigned int wid )
    window_addList( wid, -20, -70, w-80-240-40-40, h-110-BUTTON_HEIGHT,
          "lstLicenses", licenses, MAX(nlicenses, 1), 0, NULL, NULL );
    window_setFocus( wid, "lstLicenses" );
+
+   info_buttonRegen();
 }
 
 /**
