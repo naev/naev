@@ -70,7 +70,7 @@ static const char *info_names[INFO_WINDOWS] = {
 typedef struct InfoButton_s {
    int id;        /**< Unique ID. */
    char *caption; /**< Button caption. */
-   char button[32]; /**< Current button caption. */
+   char *button; /**< Button widget name. */
    int priority;  /**< Button priority. */
    /* Lua stuff .*/
    nlua_env env;  /**< Runtime environment. */
@@ -148,6 +148,7 @@ static int sort_buttons( const void *p1, const void *p2 )
 static void info_buttonFree( InfoButton_t *btn )
 {
    free( btn->caption );
+   free( btn->button );
    luaL_unref( naevL, LUA_REGISTRYINDEX, btn->func );
 }
 
@@ -165,7 +166,6 @@ static void info_buttonRegen (void)
    for (int i=0; i<array_size(info_buttons); i++) {
       InfoButton_t *btn = &info_buttons[i];
       int r = (i+2)/cols, c = (i+2)%cols;
-      snprintf( btn->button, sizeof(btn->button), "btnExtra%d", i );
       if (widget_exists( wid, btn->button ))
          window_destroyWidget( wid, btn->button );
       window_addButtonKey( wid, -20 - c*(20+BUTTON_WIDTH), 20 + r*(20+BUTTON_HEIGHT),
@@ -196,7 +196,7 @@ int info_buttonRegister( const char *caption, int priority, SDL_Keycode key )
    btn = &array_grow( &info_buttons );
    btn->id     = ++button_idgen;
    btn->caption= strdup( caption );
-   btn->button[0] = '\0';
+   asprintf( &btn->button, "btnExtra::%s", caption );
    btn->priority = priority;
    btn->env    = __NLUA_CURENV;
    btn->func   = luaL_ref( naevL, LUA_REGISTRYINDEX );
@@ -235,7 +235,7 @@ int info_buttonUnregister( int id )
 }
 
 /**
- * @brief Clears all te registered buttons.
+ * @brief Clears all the registered buttons.
  */
 void info_buttonClear (void)
 {
