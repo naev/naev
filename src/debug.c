@@ -160,7 +160,6 @@ static void debug_translateAddress( const char *symbol, bfd_vma address )
    DEBUG("%s %s(...):%u %s", symbol, "??", 0, "??");
 }
 
-
 /**
  * @brief Backtrace signal handler for Linux.
  *
@@ -170,9 +169,9 @@ static void debug_translateAddress( const char *symbol, bfd_vma address )
  */
 static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
 {
-   (void)sig;
-   (void)unused;
-   int i, num;
+   (void) sig;
+   (void) unused;
+   int num;
    void *buf[64];
    char **symbols;
 
@@ -181,7 +180,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
 
    DEBUG( _("Naev received %s!"),
          debug_sigCodeToStr(info->si_signo, info->si_code) );
-   for (i=0; i<num; i++) {
+   for (int i=0; i<num; i++) {
       if (abfd != NULL)
          debug_translateAddress(symbols[i], (bfd_vma) (bfd_hostptr_t) buf[i]);
       else
@@ -194,28 +193,27 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
 }
 #endif /* LINUX && HAS_BFD && DEBUGGING */
 
-
 /**
  * @brief Sets up the SignalHandler for Linux.
  */
 void debug_sigInit (void)
 {
 #if LINUX && HAS_BFD && DEBUGGING
-   char **matching;
    const char *str;
    struct sigaction sa, so;
-   long symcount;
-   unsigned int size;
 
    bfd_init();
 
    /* Read the executable */
    abfd = bfd_openr("/proc/self/exe", NULL);
    if (abfd != NULL) {
+      char **matching;
       bfd_check_format_matches(abfd, bfd_object, &matching);
 
       /* Read symbols */
       if (bfd_get_file_flags(abfd) & HAS_SYMS) {
+         unsigned int size;
+         long symcount;
 
          /* static */
          symcount = bfd_read_minisymbols (abfd, FALSE, (void **)&syms, &size);
