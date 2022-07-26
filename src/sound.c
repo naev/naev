@@ -47,6 +47,7 @@
 #include "array.h"
 #include "camera.h"
 #include "conf.h"
+#include "env.h"
 #include "log.h"
 #include "music.h"
 #include "ndata.h"
@@ -299,6 +300,13 @@ static int sound_al_init (void)
 
    /* Default values. */
    ret = 0;
+
+   /* Log verbosity (if not specified). */
+#if DEBUG_PARANOID
+   nsetenv( "ALSOFT_LOGLEVEL", "3", 0 );
+#elif DEBUGGING
+   nsetenv( "ALSOFT_LOGLEVEL", "2", 0 );
+#endif
 
    /* we'll need a mutex */
    sound_lock = SDL_CreateMutex();
@@ -1629,11 +1637,11 @@ void sound_setAbsorption( double value )
 /**
  * @brief Sets up the sound environment.
  *
- *    @param env Type of environment to set up.
+ *    @param env_type Type of environment to set up.
  *    @param param Environment parameter.
  *    @return 0 on success.
  */
-int sound_env( SoundEnv_t env, double param )
+int sound_env( SoundEnv_t env_type, double param )
 {
    ALfloat f;
 
@@ -1641,7 +1649,7 @@ int sound_env( SoundEnv_t env, double param )
       return 0;
 
    soundLock();
-   switch (env) {
+   switch (env_type) {
       case SOUND_ENV_NORMAL:
          /* Set global parameters. */
          alSpeedOfSound( 3433. );
