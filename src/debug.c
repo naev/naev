@@ -202,6 +202,7 @@ void debug_sigInit (void)
 {
 #if LINUX && HAS_BFD && DEBUGGING
    char **matching;
+   const char *str;
    struct sigaction sa, so;
    long symcount;
    unsigned int size;
@@ -231,18 +232,19 @@ void debug_sigInit (void)
    sa.sa_flags     = SA_SIGINFO;
 
    /* Attach signals. */
+   str = _("Unable to set up %s signal handler.");
    sigaction(SIGSEGV, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG( _("Unable to set up %s signal handler."), "SIGSEGV" );
+      DEBUG( str, "SIGSEGV" );
    sigaction(SIGFPE, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG( _("Unable to set up %s signal handler."), "SIGFPE" );
+      DEBUG( str, "SIGFPE" );
    sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG( _("Unable to set up %s signal handler."), "SIGABRT" );
+      DEBUG( str, "SIGABRT" );
    sigaction(SIGTRAP, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG( _("Unable to set up %s signal handler."), "SIGTRAP" );
+      DEBUG( str, "SIGTRAP" );
    DEBUG( _("BFD backtrace catching enabled.") );
 #endif /* LINUX && HAS_BFD && DEBUGGING */
 }
