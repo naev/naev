@@ -633,6 +633,10 @@ void load_all (void)
    safelanes_init();
 
    loadscreen_render( ++stage/LOADING_STAGES, _("Initializing Details…") );
+#if DEBUGGING
+   if (stage > LOADING_STAGES)
+      WARN(_("Too many loading stages, please increase LOADING_STAGES"));
+#endif /* DEBUGGING */
    difficulty_load();
    background_init();
    map_load();
