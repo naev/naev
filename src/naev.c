@@ -470,12 +470,13 @@ int main( int argc, char** argv )
    joystick_exit(); /* Releases joystick */
    input_exit(); /* Cleans up keybindings */
    nebu_exit(); /* Destroys the nebula */
-   lua_exit(); /* Closes Lua state. */
    render_exit(); /* Cleans up post-processing. */
-   gl_exit(); /* Kills video output */
-   sound_exit(); /* Kills the sound */
    news_exit(); /* Destroys the news. */
    difficulty_free(); /* Clean up difficulties. */
+   music_exit(); /* Kills Lua state. */
+   lua_exit(); /* Closes Lua state, and invalidates all Lua. */
+   sound_exit(); /* Kills the sound */
+   gl_exit(); /* Kills video output */
 
    /* Has to be run last or it will mess up sound settings. */
    conf_cleanup(); /* Free some memory the configuration allocated. */

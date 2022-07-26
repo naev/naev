@@ -632,13 +632,6 @@ int sound_init (void)
    if (ret != 0)
       return ret;
 
-   /* Initialize music. */
-   ret = music_init();
-   if (ret != 0) {
-      music_disabled = 1;
-      WARN(_("Music disabled."));
-   }
-
    /* Set volume. */
    if ((conf.sound > 1.) || (conf.sound < 0.)) {
       WARN(_("Sound has invalid value, clamping to [0:1]."));
@@ -648,6 +641,13 @@ int sound_init (void)
 
    /* Initialized. */
    sound_initialized = 1;
+
+   /* Initialize music. */
+   ret = music_init();
+   if (ret != 0) {
+      music_disabled = 1;
+      WARN(_("Music disabled."));
+   }
 
    /* Load compression noise. */
    snd_compression = sound_get( "compression" );
@@ -667,9 +667,6 @@ void sound_exit (void)
    /* Nothing to disable. */
    if (sound_disabled || !sound_initialized)
       return;
-
-   /* Exit music subsystem. */
-   music_exit();
 
    if (voice_mutex != NULL) {
       voiceLock();
