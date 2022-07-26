@@ -304,6 +304,7 @@ static int sound_al_init (void)
    /* Log verbosity (if not specified). */
 #if DEBUG_PARANOID
    nsetenv( "ALSOFT_LOGLEVEL", "3", 0 );
+   nsetenv( "ALSOFT_TRAP_AL_ERROR", "1", 0 );
 #elif DEBUGGING
    nsetenv( "ALSOFT_LOGLEVEL", "2", 0 );
 #endif

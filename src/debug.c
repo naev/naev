@@ -233,13 +233,16 @@ void debug_sigInit (void)
    /* Attach signals. */
    sigaction(SIGSEGV, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG( _("Unable to set up SIGSEGV signal handler.") );
+      DEBUG( _("Unable to set up %s signal handler."), "SIGSEGV" );
    sigaction(SIGFPE, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG( _("Unable to set up SIGFPE signal handler.") );
+      DEBUG( _("Unable to set up %s signal handler."), "SIGFPE" );
    sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG( _("Unable to set up SIGABRT signal handler.") );
+      DEBUG( _("Unable to set up %s signal handler."), "SIGABRT" );
+   sigaction(SIGTRAP, &sa, &so);
+   if (so.sa_handler == SIG_IGN)
+      DEBUG( _("Unable to set up %s signal handler."), "SIGTRAP" );
    DEBUG( _("BFD backtrace catching enabled.") );
 #endif /* LINUX && HAS_BFD && DEBUGGING */
 }
@@ -254,7 +257,8 @@ void debug_sigClose (void)
    bfd_close( abfd );
    abfd = NULL;
    signal( SIGSEGV, SIG_DFL );
-   signal( SIGFPE, SIG_DFL );
+   signal( SIGFPE,  SIG_DFL );
    signal( SIGABRT, SIG_DFL );
+   signal( SIGTRAP, SIG_DFL );
 #endif /* LINUX && HAS_BFD && DEBUGGING */
 }
