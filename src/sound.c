@@ -1612,6 +1612,7 @@ void sound_setAbsorption( double value )
    if (sound_disabled)
       return;
 
+   soundLock();
    for (int i=0; i<source_ntotal; i++) {
       ALuint s = source_total[i];
       /* Value is from 0. (normal) to 10..
@@ -1621,6 +1622,7 @@ void sound_setAbsorption( double value )
       */
       alSourcef( s, AL_AIR_ABSORPTION_FACTOR, value );
    }
+   soundUnlock();
 }
 
 /**
