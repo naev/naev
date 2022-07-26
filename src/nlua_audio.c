@@ -510,7 +510,6 @@ static int audioL_new( lua_State *L )
       la.type = LUA_AUDIO_STATIC;
       la.buf = malloc( sizeof(LuaBuffer_t) );
       la.buf->refcount = 1;
-      alGenBuffers( 1, &la.buf->buffer );
       sound_al_buffer( &la.buf->buffer, rw, name );
 
       /* Attach buffer. */
