@@ -1622,6 +1622,7 @@ void sound_setAbsorption( double value )
       */
       alSourcef( s, AL_AIR_ABSORPTION_FACTOR, value );
    }
+   al_checkErr();
    soundUnlock();
 }
 
