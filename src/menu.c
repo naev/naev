@@ -466,6 +466,7 @@ static void menu_small_load( unsigned int wid, const char *str )
    (void) wid;
    (void) str;
 
+   load_refresh(); /* FIXME: Substitute proper cache invalidation in case of save_all() etc. */
    load_loadSnapshotMenu( player.name );
 }
 
