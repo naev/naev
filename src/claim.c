@@ -58,16 +58,13 @@ Claim_t *claim_create( int exclusive )
  */
 int claim_addStr( Claim_t *claim, const char *str )
 {
-   char **s;
-
    assert( !claim->active );
    /* Allocate if necessary. */
    if (claim->strs == NULL)
       claim->strs = array_create( char* );
 
    /* New ID. */
-   s = &array_grow( &claim->strs );
-   *s = strdup( str );
+   array_push_back( &claim->strs, strdup( str ) );
    return 0;
 }
 
@@ -79,16 +76,13 @@ int claim_addStr( Claim_t *claim, const char *str )
  */
 int claim_addSys( Claim_t *claim, int ss_id )
 {
-   int *id;
-
    assert( !claim->active );
    /* Allocate if necessary. */
    if (claim->ids == NULL)
       claim->ids = array_create( int );
 
    /* New ID. */
-   id  = &array_grow( &claim->ids );
-   *id = ss_id;
+   array_push_back( &claim->ids, ss_id );
    return 0;
 }
 
@@ -205,8 +199,8 @@ void claim_destroy( Claim_t *claim )
    }
    array_free( claim->ids );
 
-   if (claim->active) {
-      for (int i=0; i<array_size(claim->strs); i++) {
+   for (int i=0; i<array_size(claim->strs); i++) {
+      if (claim->active) {
          for (int j=0; j<array_size(claimed_strs); j++) {
             if (strcmp(claim->strs[i], claimed_strs[j])==0) {
                free( claimed_strs[j] );
@@ -214,8 +208,8 @@ void claim_destroy( Claim_t *claim )
                break;
             }
          }
-         free( claim->strs[i] );
       }
+      free( claim->strs[i] );
    }
    array_free( claim->strs );
    free(claim);
@@ -268,10 +262,8 @@ void claim_activate( Claim_t *claim )
    /* Add strings. */
    if ((claimed_strs == NULL) && (array_size(claim->strs) > 0))
       claimed_strs = array_create( char* );
-   for (int i=0; i<array_size(claim->strs); i++) {
-      char **s = &array_grow( &claimed_strs );
-      *s = strdup( claim->strs[i] );
-   }
+   for (int i=0; i<array_size(claim->strs); i++)
+      array_push_back( &claimed_strs, strdup( claim->strs[i] ) );
    claim->active = 1;
 }
 
