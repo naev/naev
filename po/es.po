@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-07-26 21:25+0000\n"
+"PO-Revision-Date: 2022-07-27 21:21+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -18529,6 +18529,11 @@ msgid ""
 "allowing the crew to man it past damage that would usually incapacitate "
 "normal ships?"
 msgstr ""
+"Una carta del juego de cartas coleccionables #oVigilancia Dvaered#0 de "
+"rareza #bno común#0. Describe con detalle todas las estadísticas importantes "
+"de la Vigilancia Dvaered. ¿Sabías que la Vigilancia tiene sistemas de "
+"soporte vital triplemente redundante, lo que permite a la tripulación "
+"superar daños que normalmente incapacitarían a las naves normales?"
 
 #: dat/outfits/accessory/ugly_statue.xml:2
 msgid "Ugly Statue"
@@ -18566,7 +18571,7 @@ msgstr ""
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_1.xml:2
 msgid "BioPlasma Claw Stage 1"
-msgstr ""
+msgstr "Garra BioPlasma Fase 1"
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_1.xml:9
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_2.xml:9
@@ -18578,22 +18583,26 @@ msgid ""
 "in return. As with all organs, it starts out weak, but over time it grows "
 "and improves."
 msgstr ""
+"La Garra de BioPlasma, un primo más potente del Aguijón de Bioplasma, "
+"utiliza una capacidad cerebral más elevada, pero a cambio presenta una "
+"producción de daño notablemente mayor. Como todos los órganos, empieza "
+"siendo débil, pero con el tiempo crece y mejora."
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_2.xml:2
 msgid "BioPlasma Claw Stage 2"
-msgstr ""
+msgstr "Garra BioPlasma Fase 2"
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_3.xml:2
 msgid "BioPlasma Claw Stage 3"
-msgstr ""
+msgstr "Garra BioPlasma Fase 3"
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_4.xml:2
 msgid "BioPlasma Claw Stage 4"
-msgstr ""
+msgstr "Garra BioPlasma Fase 4"
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_x.xml:2
 msgid "BioPlasma Claw Stage X"
-msgstr ""
+msgstr "Garra BioPlasma Fase X"
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_x.xml:9
 msgid ""
@@ -18601,10 +18610,14 @@ msgid ""
 "more precious brain capacity, but features markedly increased damage output "
 "in return. This organ has reached Stage X, its full potential."
 msgstr ""
+"Primo más potente del Aguijón de Bioplasma, la Garra de Bioplasma utiliza "
+"una capacidad cerebral más valiosa, pero a cambio presenta una producción de "
+"daño notablemente mayor. Este órgano ha alcanzado la fase X, su máximo "
+"potencial."
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_1.xml:2
 msgid "BioPlasma Fang Stage 1"
-msgstr ""
+msgstr "Colmillo BioPlasma Fase 1"
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_1.xml:9
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_2.xml:9
@@ -18619,26 +18632,33 @@ msgid ""
 "the damage upgrade worthwhile. As with all organs, it starts out weak, but "
 "over time it grows and improves."
 msgstr ""
+"El Colmillo de Bioplasma lleva la mejora de la Garra de Bioplasma aún más "
+"lejos. Aunque sus requisitos cognitivos son relativamente altos, siguen "
+"siendo lo suficientemente bajos como para que los organismos de tamaño medio "
+"puedan manejarlos. Es habitual encontrarlos en los Odio Soromida, que suelen "
+"tener suficiente capacidad cerebral para que la mejora de daño merezca la "
+"pena. Como todos los órganos, empieza siendo débil, pero con el tiempo crece "
+"y mejora."
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_2.xml:2
 msgid "BioPlasma Fang Stage 2"
-msgstr ""
+msgstr "Colmillo BioPlasma Fase 2"
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_3.xml:2
 msgid "BioPlasma Fang Stage 3"
-msgstr ""
+msgstr "Colmillo BioPlasma Fase 3"
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_4.xml:2
 msgid "BioPlasma Fang Stage 4"
-msgstr ""
+msgstr "Colmillo BioPlasma Fase 4"
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_5.xml:2
 msgid "BioPlasma Fang Stage 5"
-msgstr ""
+msgstr "Colmillo BioPlasma Fase 5"
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_x.xml:2
 msgid "BioPlasma Fang Stage X"
-msgstr ""
+msgstr "Colmillo BioPlasma Fase X"
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_x.xml:9
 msgid ""
@@ -18647,10 +18667,17 @@ msgid ""
 "enough for medium-sized organisms to handle. They are commonly found on "
 "Soromid Odiums. This organ has reached Stage X, its full potential."
 msgstr ""
+"El Colmillo de Bioplasma lleva la mejora de la Garra de Bioplasma aún más "
+"lejos. Aunque sus requisitos cognitivos son relativamente altos, siguen "
+"siendo lo suficientemente bajos como para que los organismos de tamaño medio "
+"puedan manejarlos. Es habitual encontrarlos en los Odio Soromida, que suelen "
+"tener suficiente capacidad cerebral para que la mejora de daño merezca la "
+"pena. Como todos los órganos, empieza siendo débil, pero con el tiempo crece "
+"y mejora."
 
 #: dat/outfits/bio_weapons/bioplasma_stinger_stage_1.xml:2
 msgid "BioPlasma Stinger Stage 1"
-msgstr ""
+msgstr "Aguijón BioPlasma Fase 1"
 
 #: dat/outfits/bio_weapons/bioplasma_stinger_stage_1.xml:9
 #: dat/outfits/bio_weapons/bioplasma_stinger_stage_2.xml:10
@@ -18661,18 +18688,22 @@ msgid ""
 "its reliability and low cognitive requirements. As with all organs, it "
 "starts out weak, but over time it grows and improves."
 msgstr ""
+"El Aguijón de Bioplasma es el arma orgánica más básica disponible, y una de "
+"las más comunes. Aunque no es especialmente potente, es apreciada por su "
+"fiabilidad y sus bajos requisitos cognitivos. Como todos los órganos, "
+"empieza siendo débil, pero con el tiempo crece y mejora."
 
 #: dat/outfits/bio_weapons/bioplasma_stinger_stage_2.xml:2
 msgid "BioPlasma Stinger Stage 2"
-msgstr ""
+msgstr "Aguijón BioPlasma Fase 2"
 
 #: dat/outfits/bio_weapons/bioplasma_stinger_stage_3.xml:2
 msgid "BioPlasma Stinger Stage 3"
-msgstr ""
+msgstr "Aguijón BioPlasma Fase 3"
 
 #: dat/outfits/bio_weapons/bioplasma_stinger_stage_x.xml:2
 msgid "BioPlasma Stinger Stage X"
-msgstr ""
+msgstr "Aguijón BioPlasma Fase X"
 
 #: dat/outfits/bio_weapons/bioplasma_stinger_stage_x.xml:10
 msgid ""
@@ -18681,10 +18712,14 @@ msgid ""
 "its reliability and low cognitive requirements. This organ has reached Stage "
 "X, its full potential."
 msgstr ""
+"El Aguijón Bioplasma es el arma orgánica más básica disponible, y una de las "
+"más comunes. Aunque no es especialmente potente, es apreciada por su "
+"fiabilidad y sus bajos requisitos cognitivos. Este órgano ha alcanzado la "
+"fase X, su máximo potencial."
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_1.xml:2
 msgid "BioPlasma Talon Stage 1"
-msgstr ""
+msgstr "Talon BioPlasma Fase 1"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_1.xml:10
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_2.xml:10
@@ -18699,30 +18734,35 @@ msgid ""
 "damage output, Soromid ships equipped with this weapon are rightly feared. "
 "As with all organs, it starts out weak, but over time it grows and improves."
 msgstr ""
+"El Talon BioPlasma es el arma orgánica más potente que existe. Con un daño "
+"que lo sitúa a la altura de algunas de las armas más potentes de la galaxia "
+"y con unos requisitos cognitivos increíblemente bajos para su producción de "
+"daño, las naves Soromida equipadas con esta arma son temidas con razón. Como "
+"todos los órganos, empieza siendo débil, pero con el tiempo crece y mejora."
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_2.xml:2
 msgid "BioPlasma Talon Stage 2"
-msgstr ""
+msgstr "Talon BioPlasma Fase 2"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_3.xml:2
 msgid "BioPlasma Talon Stage 3"
-msgstr ""
+msgstr "Talon BioPlasma Fase 3"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_4.xml:2
 msgid "BioPlasma Talon Stage 4"
-msgstr ""
+msgstr "Talon BioPlasma Fase 4"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_5.xml:2
 msgid "BioPlasma Talon Stage 5"
-msgstr ""
+msgstr "Talon BioPlasma Fase 5"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_6.xml:2
 msgid "BioPlasma Talon Stage 6"
-msgstr ""
+msgstr "Talon BioPlasma Fase 6"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_x.xml:2
 msgid "BioPlasma Talon Stage X"
-msgstr ""
+msgstr "Talon BioPlasma Fase X"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_x.xml:10
 msgid ""
@@ -18732,10 +18772,15 @@ msgid ""
 "damage output, Soromid ships equipped with this weapon are rightly feared. "
 "This organ has reached Stage X, its full potential."
 msgstr ""
+"El Talon Bioplasma es el arma orgánica más potente que existe. Con un daño "
+"que la pone a la altura de algunas de las armas más potentes de la galaxia y "
+"con unos requisitos cognitivos increíblemente bajos para su producción de "
+"daños, las naves Soromida equipadas con esta arma son temidas con razón. "
+"Este órgano ha alcanzado la Fase X, su máximo potencial."
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_1.xml:2
 msgid "BioPlasma Tentacle Stage 1"
-msgstr ""
+msgstr "Tentáculo BioPlasma Fase 1"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_1.xml:10
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_2.xml:10
@@ -18751,34 +18796,39 @@ msgid ""
 "by most weaponry found throughout the galaxy once fully developed. As with "
 "all organs, it starts out weak, but over time it grows and improves."
 msgstr ""
+"El Tentáculo Bioplasma es, sin lugar a dudas, el arma orgánica más potente y "
+"versátil cultivada por los Soromida. Se distingue por ser la única arma "
+"orgánica giratoria y por tener una potencia incomparable con la de la "
+"mayoría de las armas de la galaxia una vez desarrollada. Como todos los "
+"órganos, empieza siendo débil, pero con el tiempo crece y mejora."
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_2.xml:2
 msgid "BioPlasma Tentacle Stage 2"
-msgstr ""
+msgstr "Tentáculo BioPlasma Fase 2"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_3.xml:2
 msgid "BioPlasma Tentacle Stage 3"
-msgstr ""
+msgstr "Tentáculo BioPlasma Fase 3"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_4.xml:2
 msgid "BioPlasma Tentacle Stage 4"
-msgstr ""
+msgstr "Tentáculo BioPlasma Fase 4"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_5.xml:2
 msgid "BioPlasma Tentacle Stage 5"
-msgstr ""
+msgstr "Tentáculo BioPlasma Fase 5"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_6.xml:2
 msgid "BioPlasma Tentacle Stage 6"
-msgstr ""
+msgstr "Tentáculo BioPlasma Fase 6"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_7.xml:2
 msgid "BioPlasma Tentacle Stage 7"
-msgstr ""
+msgstr "Tentáculo BioPlasma Fase 7"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_x.xml:2
 msgid "BioPlasma Tentacle Stage X"
-msgstr ""
+msgstr "Tentáculo BioPlasma Fase X"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_x.xml:10
 msgid ""
@@ -18788,10 +18838,15 @@ msgid ""
 "by most weaponry found throughout the galaxy once fully developed. This "
 "organ has reached Stage X, its full potential."
 msgstr ""
+"El Tentáculo Bioplasma es, sin lugar a dudas, el arma orgánica más potente y "
+"versátil cultivada por los Soromida. Se distingue por ser la única arma "
+"orgánica giratoria y por tener una potencia incomparable con la mayoría de "
+"las armas de la galaxia una vez desarrollada. Este órgano ha alcanzado la "
+"Fase X, su máximo potencial."
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_1.xml:2
 msgid "Heavy Brain Stage 1"
-msgstr ""
+msgstr "Cerebro Pesado Fase 1"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_1.xml:4
 #: dat/outfits/biocore_brain/heavy_brain_stage_2.xml:4
@@ -18871,27 +18926,27 @@ msgstr ""
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_2.xml:2
 msgid "Heavy Brain Stage 2"
-msgstr ""
+msgstr "Cerebro Pesado Fase 2"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_3.xml:2
 msgid "Heavy Brain Stage 3"
-msgstr ""
+msgstr "Cerebro Pesado Fase 3"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_4.xml:2
 msgid "Heavy Brain Stage 4"
-msgstr ""
+msgstr "Cerebro Pesado Fase 4"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_5.xml:2
 msgid "Heavy Brain Stage 5"
-msgstr ""
+msgstr "Cerebro Pesado Fase 5"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_6.xml:2
 msgid "Heavy Brain Stage 6"
-msgstr ""
+msgstr "Cerebro Pesado Fase 6"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_x.xml:2
 msgid "Heavy Brain Stage X"
-msgstr ""
+msgstr "Cerebro Pesado Fase X"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_x.xml:10
 #: dat/outfits/biocore_brain/light_brain_stage_x.xml:11
@@ -18905,114 +18960,118 @@ msgid ""
 "power and allocates energy to the rest of the organism. This brain has "
 "reached Stage X, its full potential."
 msgstr ""
+"El cerebro es el equivalente de una BioNave Sorómida a los sistemas básicos "
+"de las naves sintéticas. Posiblemente el órgano más importante, el cerebro "
+"proporciona poder de procesamiento y asigna energía al resto del organismo. "
+"Este cerebro ha alcanzado la fase X, su máximo potencial."
 
 #: dat/outfits/biocore_brain/light_brain_stage_1.xml:2
 msgid "Light Brain Stage 1"
-msgstr ""
+msgstr "Cerebro Ligero Fase 1"
 
 #: dat/outfits/biocore_brain/light_brain_stage_2.xml:2
 msgid "Light Brain Stage 2"
-msgstr ""
+msgstr "Cerebro Ligero Fase 2"
 
 #: dat/outfits/biocore_brain/light_brain_stage_3.xml:2
 msgid "Light Brain Stage 3"
-msgstr ""
+msgstr "Cerebro Ligero Fase 3"
 
 #: dat/outfits/biocore_brain/light_brain_stage_x.xml:2
 msgid "Light Brain Stage X"
-msgstr ""
+msgstr "Cerebro Ligero Fase X"
 
 #: dat/outfits/biocore_brain/medium_brain_stage_1.xml:2
 msgid "Medium Brain Stage 1"
-msgstr ""
+msgstr "Cerebro Medio Fase 1"
 
 #: dat/outfits/biocore_brain/medium_brain_stage_2.xml:2
 msgid "Medium Brain Stage 2"
-msgstr ""
+msgstr "Cerebro Medio Fase 2"
 
 #: dat/outfits/biocore_brain/medium_brain_stage_3.xml:2
 msgid "Medium Brain Stage 3"
-msgstr ""
+msgstr "Cerebro Medio Fase 3"
 
 #: dat/outfits/biocore_brain/medium_brain_stage_4.xml:2
 msgid "Medium Brain Stage 4"
-msgstr ""
+msgstr "Cerebro Medio Fase 4"
 
 #: dat/outfits/biocore_brain/medium_brain_stage_x.xml:2
 msgid "Medium Brain Stage X"
-msgstr ""
+msgstr "Cerebro Medio Fase X"
 
 #: dat/outfits/biocore_brain/mediumheavy_brain_stage_1.xml:2
 msgid "Medium-Heavy Brain Stage 1"
-msgstr ""
+msgstr "Cerebro Medio-Pesado Fase 1"
 
 #: dat/outfits/biocore_brain/mediumheavy_brain_stage_2.xml:2
 msgid "Medium-Heavy Brain Stage 2"
-msgstr ""
+msgstr "Cerebro Medio-Pesado Fase 2"
 
 #: dat/outfits/biocore_brain/mediumheavy_brain_stage_3.xml:2
 msgid "Medium-Heavy Brain Stage 3"
-msgstr ""
+msgstr "Cerebro Medio-Pesado Fase 3"
 
 #: dat/outfits/biocore_brain/mediumheavy_brain_stage_4.xml:2
 msgid "Medium-Heavy Brain Stage 4"
-msgstr ""
+msgstr "Cerebro Medio-Pesado Fase 4"
 
 #: dat/outfits/biocore_brain/mediumheavy_brain_stage_5.xml:2
 msgid "Medium-Heavy Brain Stage 5"
-msgstr ""
+msgstr "Cerebro Medio-Pesado Fase 5"
 
 #: dat/outfits/biocore_brain/mediumheavy_brain_stage_x.xml:2
 msgid "Medium-Heavy Brain Stage X"
-msgstr ""
+msgstr "Cerebro Medio-Pesado Fase X"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_1.xml:2
 msgid "Superheavy Brain Stage 1"
-msgstr ""
+msgstr "Cerebro Superpesado Fase 1"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_2.xml:2
 msgid "Superheavy Brain Stage 2"
-msgstr ""
+msgstr "Cerebro Superpesado Fase 2"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_3.xml:2
 msgid "Superheavy Brain Stage 3"
-msgstr ""
+msgstr "Cerebro Superpesado Fase 3"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_4.xml:2
 msgid "Superheavy Brain Stage 4"
-msgstr ""
+msgstr "Cerebro Superpesado Fase 4"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_5.xml:2
 msgid "Superheavy Brain Stage 5"
-msgstr ""
+msgstr "Cerebro Superpesado Fase 5"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_6.xml:2
 msgid "Superheavy Brain Stage 6"
-msgstr ""
+msgstr "Cerebro Superpesado Fase 6"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_7.xml:2
 msgid "Superheavy Brain Stage 7"
-msgstr ""
+msgstr "Cerebro Superpesado Fase 7"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_x.xml:2
 msgid "Superheavy Brain Stage X"
-msgstr ""
+msgstr "Cerebro Superpesado Fase X"
 
 #: dat/outfits/biocore_brain/ultralight_brain_stage_1.xml:2
 msgid "Ultralight Brain Stage 1"
-msgstr ""
+msgstr "Cerebro Ultraligero Fase 1"
 
 #: dat/outfits/biocore_brain/ultralight_brain_stage_2.xml:2
 msgid "Ultralight Brain Stage 2"
-msgstr ""
+msgstr "Cerebro Ultraligero Fase 2"
 
 #: dat/outfits/biocore_brain/ultralight_brain_stage_x.xml:2
 msgid "Ultralight Brain Stage X"
-msgstr ""
+msgstr "Cerebro Ultraligero Fase X"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_1.xml:2
 msgid "Heavy Fast Gene Drive Stage 1"
-msgstr ""
+msgstr "Motor Genético Rápido Pesado Fase 1"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_1.xml:4
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_2.xml:4
@@ -19144,30 +19203,36 @@ msgid ""
 "agility). All gene drives start off undeveloped, but over time, just like "
 "the ships themselves, they grow and improve."
 msgstr ""
+"El propulsor genético es el equivalente de una BioNave Sorómida a los "
+"motores de las naves sintéticas. Se encarga de mover el organismo por el "
+"espacio y viene en una forma fuerte (para cargas pesadas) o en una forma "
+"rápida (para mayor velocidad y agilidad). Todos los impulsores genéticos "
+"comienzan sin desarrollar, pero con el tiempo, al igual que las propias "
+"naves, crecen y mejoran."
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_2.xml:2
 msgid "Heavy Fast Gene Drive Stage 2"
-msgstr ""
+msgstr "Motor Genético Rápido Pesado Fase 2"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_3.xml:2
 msgid "Heavy Fast Gene Drive Stage 3"
-msgstr ""
+msgstr "Motor Genético Rápido Pesado Fase 3"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_4.xml:2
 msgid "Heavy Fast Gene Drive Stage 4"
-msgstr ""
+msgstr "Motor Genético Rápido Pesado Fase 4"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_5.xml:2
 msgid "Heavy Fast Gene Drive Stage 5"
-msgstr ""
+msgstr "Motor Genético Rápido Pesado Fase 5"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_6.xml:2
 msgid "Heavy Fast Gene Drive Stage 6"
-msgstr ""
+msgstr "Motor Genético Rápido Pesado Fase 6"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_x.xml:2
 msgid "Heavy Fast Gene Drive Stage X"
-msgstr ""
+msgstr "Motor Genético Rápido Pesado Fase X"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_x.xml:10
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_x.xml:10
@@ -19187,246 +19252,251 @@ msgid ""
 "either a strong form (for heavy loads) or a fast form (for greater speed and "
 "agility). This gene drive has reached Stage X, its full potential."
 msgstr ""
+"El motor genético es el equivalente de la bionave Sorómida a los motores de "
+"las naves sintéticas. Se encarga de mover el organismo por el espacio y "
+"viene en una forma fuerte (para cargas pesadas) o en una forma rápida (para "
+"mayor velocidad y agilidad). Este motor genético ha alcanzado el estadio X, "
+"su máximo potencial."
 
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_1.xml:2
 msgid "Heavy Strong Gene Drive Stage 1"
-msgstr ""
+msgstr "Motor Genético Fuerte Pesado Fase 1"
 
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_2.xml:2
 msgid "Heavy Strong Gene Drive Stage 2"
-msgstr ""
+msgstr "Motor Genético Fuerte Pesado Fase 2"
 
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_3.xml:2
 msgid "Heavy Strong Gene Drive Stage 3"
-msgstr ""
+msgstr "Motor Genético Fuerte Pesado Fase 3"
 
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_4.xml:2
 msgid "Heavy Strong Gene Drive Stage 4"
-msgstr ""
+msgstr "Motor Genético Fuerte Pesado Fase 4"
 
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_5.xml:2
 msgid "Heavy Strong Gene Drive Stage 5"
-msgstr ""
+msgstr "Motor Genético Fuerte Pesado Fase 5"
 
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_6.xml:2
 msgid "Heavy Strong Gene Drive Stage 6"
-msgstr ""
+msgstr "Motor Genético Fuerte Pesado Fase 6"
 
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_x.xml:2
 msgid "Heavy Strong Gene Drive Stage X"
-msgstr ""
+msgstr "Motor Genético Fuerte Pesado Fase X"
 
 #: dat/outfits/biocore_drive/light_fast_gene_drive_stage_1.xml:2
 msgid "Light Fast Gene Drive Stage 1"
-msgstr ""
+msgstr "Motor Genético Rápido Ligero Fase 1"
 
 #: dat/outfits/biocore_drive/light_fast_gene_drive_stage_2.xml:2
 msgid "Light Fast Gene Drive Stage 2"
-msgstr ""
+msgstr "Motor Genético Rápido Ligero Fase 2"
 
 #: dat/outfits/biocore_drive/light_fast_gene_drive_stage_3.xml:2
 msgid "Light Fast Gene Drive Stage 3"
-msgstr ""
+msgstr "Motor Genético Rápido Ligero Fase 3"
 
 #: dat/outfits/biocore_drive/light_fast_gene_drive_stage_x.xml:2
 msgid "Light Fast Gene Drive Stage X"
-msgstr ""
+msgstr "Motor Genético Rápido Ligero Fase X"
 
 #: dat/outfits/biocore_drive/light_strong_gene_drive_stage_1.xml:2
 msgid "Light Strong Gene Drive Stage 1"
-msgstr ""
+msgstr "Motor Genético Fuerte Ligero Fase 1"
 
 #: dat/outfits/biocore_drive/light_strong_gene_drive_stage_2.xml:2
 msgid "Light Strong Gene Drive Stage 2"
-msgstr ""
+msgstr "Motor Genético Fuerte Ligero Fase 2"
 
 #: dat/outfits/biocore_drive/light_strong_gene_drive_stage_3.xml:2
 msgid "Light Strong Gene Drive Stage 3"
-msgstr ""
+msgstr "Motor Genético Fuerte Ligero Fase 3"
 
 #: dat/outfits/biocore_drive/light_strong_gene_drive_stage_x.xml:2
 msgid "Light Strong Gene Drive Stage X"
-msgstr ""
+msgstr "Motor Genético Fuerte Ligero Fase X"
 
 #: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_1.xml:2
 msgid "Medium Fast Gene Drive Stage 1"
-msgstr ""
+msgstr "Motor Genético Rápido Medio Fase 1"
 
 #: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_2.xml:2
 msgid "Medium Fast Gene Drive Stage 2"
-msgstr ""
+msgstr "Motor Genético Rápido Medio Fase 2"
 
 #: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_3.xml:2
 msgid "Medium Fast Gene Drive Stage 3"
-msgstr ""
+msgstr "Motor Genético Rápido Medio Fase 3"
 
 #: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_4.xml:2
 msgid "Medium Fast Gene Drive Stage 4"
-msgstr ""
+msgstr "Motor Genético Rápido Medio Fase 4"
 
 #: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_x.xml:2
 msgid "Medium Fast Gene Drive Stage X"
-msgstr ""
+msgstr "Motor Genético Rápido Medio Fase X"
 
 #: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_1.xml:2
 msgid "Medium Strong Gene Drive Stage 1"
-msgstr ""
+msgstr "Motor Genético Fuerte Medio Fase 1"
 
 #: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_2.xml:2
 msgid "Medium Strong Gene Drive Stage 2"
-msgstr ""
+msgstr "Motor Genético Fuerte Medio Fase 2"
 
 #: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_3.xml:2
 msgid "Medium Strong Gene Drive Stage 3"
-msgstr ""
+msgstr "Motor Genético Fuerte Medio Fase 3"
 
 #: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_4.xml:2
 msgid "Medium Strong Gene Drive Stage 4"
-msgstr ""
+msgstr "Motor Genético Fuerte Medio Fase 4"
 
 #: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_x.xml:2
 msgid "Medium Strong Gene Drive Stage X"
-msgstr ""
+msgstr "Motor Genético Fuerte Medio Fase X"
 
 #: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_1.xml:2
 msgid "Medium-Heavy Fast Gene Drive Stage 1"
-msgstr ""
+msgstr "Motor Genético Rápido Pesado-Medio Fase 1"
 
 #: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_2.xml:2
 msgid "Medium-Heavy Fast Gene Drive Stage 2"
-msgstr ""
+msgstr "Motor Genético Rápido Pesado-Medio Fase 2"
 
 #: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_3.xml:2
 msgid "Medium-Heavy Fast Gene Drive Stage 3"
-msgstr ""
+msgstr "Motor Genético Rápido Pesado-Medio Fase 3"
 
 #: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_4.xml:2
 msgid "Medium-Heavy Fast Gene Drive Stage 4"
-msgstr ""
+msgstr "Motor Genético Rápido Pesado-Medio Fase 4"
 
 #: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_5.xml:2
 msgid "Medium-Heavy Fast Gene Drive Stage 5"
-msgstr ""
+msgstr "Motor Genético Rápido Pesado-Medio Fase 5"
 
 #: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_x.xml:2
 msgid "Medium-Heavy Fast Gene Drive Stage X"
-msgstr ""
+msgstr "Motor Genético Rápido Pesado-Medio Fase X"
 
 #: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_1.xml:2
 msgid "Medium-Heavy Strong Gene Drive Stage 1"
-msgstr ""
+msgstr "Motor Genético Fuerte Pesado-Medio Fase 1"
 
 #: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_2.xml:2
 msgid "Medium-Heavy Strong Gene Drive Stage 2"
-msgstr ""
+msgstr "Motor Genético Fuerte Pesado-Medio Fase 2"
 
 #: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_3.xml:2
 msgid "Medium-Heavy Strong Gene Drive Stage 3"
-msgstr ""
+msgstr "Motor Genético Fuerte Pesado-Medio Fase 3"
 
 #: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_4.xml:2
 msgid "Medium-Heavy Strong Gene Drive Stage 4"
-msgstr ""
+msgstr "Motor Genético Fuerte Pesado-Medio Fase 4"
 
 #: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_5.xml:2
 msgid "Medium-Heavy Strong Gene Drive Stage 5"
-msgstr ""
+msgstr "Motor Genético Fuerte Pesado-Medio Fase 5"
 
 #: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_x.xml:2
 msgid "Medium-Heavy Strong Gene Drive Stage X"
-msgstr ""
+msgstr "Motor Genético Fuerte Pesado-Medio Fase X"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_1.xml:2
 msgid "Superheavy Fast Gene Drive Stage 1"
-msgstr ""
+msgstr "Motor Genético Rápido Superpesado Fase 1"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_2.xml:2
 msgid "Superheavy Fast Gene Drive Stage 2"
-msgstr ""
+msgstr "Motor Genético Rápido Superpesado Fase 2"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_3.xml:2
 msgid "Superheavy Fast Gene Drive Stage 3"
-msgstr ""
+msgstr "Motor Genético Rápido Superpesado Fase 3"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_4.xml:2
 msgid "Superheavy Fast Gene Drive Stage 4"
-msgstr ""
+msgstr "Motor Genético Rápido Superpesado Fase 4"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_5.xml:2
 msgid "Superheavy Fast Gene Drive Stage 5"
-msgstr ""
+msgstr "Motor Genético Rápido Superpesado Fase 5"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_6.xml:2
 msgid "Superheavy Fast Gene Drive Stage 6"
-msgstr ""
+msgstr "Motor Genético Rápido Superpesado Fase 6"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_7.xml:2
 msgid "Superheavy Fast Gene Drive Stage 7"
-msgstr ""
+msgstr "Motor Genético Rápido Superpesado Fase 7"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_x.xml:2
 msgid "Superheavy Fast Gene Drive Stage X"
-msgstr ""
+msgstr "Motor Genético Rápido Superpesado Fase X"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_1.xml:2
 msgid "Superheavy Strong Gene Drive Stage 1"
-msgstr ""
+msgstr "Motor Genético Fuerte Superpesado Fase 1"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_2.xml:2
 msgid "Superheavy Strong Gene Drive Stage 2"
-msgstr ""
+msgstr "Motor Genético Fuerte Superpesado Fase 2"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_3.xml:2
 msgid "Superheavy Strong Gene Drive Stage 3"
-msgstr ""
+msgstr "Motor Genético Fuerte Superpesado Fase 3"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_4.xml:2
 msgid "Superheavy Strong Gene Drive Stage 4"
-msgstr ""
+msgstr "Motor Genético Fuerte Superpesado Fase 4"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_5.xml:2
 msgid "Superheavy Strong Gene Drive Stage 5"
-msgstr ""
+msgstr "Motor Genético Fuerte Superpesado Fase 5"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_6.xml:2
 msgid "Superheavy Strong Gene Drive Stage 6"
-msgstr ""
+msgstr "Motor Genético Fuerte Superpesado Fase 6"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_7.xml:2
 msgid "Superheavy Strong Gene Drive Stage 7"
-msgstr ""
+msgstr "Motor Genético Fuerte Superpesado Fase 7"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_x.xml:2
 msgid "Superheavy Strong Gene Drive Stage X"
-msgstr ""
+msgstr "Motor Genético Fuerte Superpesado Fase X"
 
 #: dat/outfits/biocore_drive/ultralight_fast_gene_drive_stage_1.xml:2
 msgid "Ultralight Fast Gene Drive Stage 1"
-msgstr ""
+msgstr "Motor Genético Rápido Ultraligero Fase 1"
 
 #: dat/outfits/biocore_drive/ultralight_fast_gene_drive_stage_2.xml:2
 msgid "Ultralight Fast Gene Drive Stage 2"
-msgstr ""
+msgstr "Motor Genético Rápido Ultraligero Fase 2"
 
 #: dat/outfits/biocore_drive/ultralight_fast_gene_drive_stage_x.xml:2
 msgid "Ultralight Fast Gene Drive Stage X"
-msgstr ""
+msgstr "Motor Genético Rápido Ultraligero Fase X"
 
 #: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_1.xml:2
 msgid "Ultralight Strong Gene Drive Stage 1"
-msgstr ""
+msgstr "Motor Genético Fuerte Ultraligero Fase 1"
 
 #: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_2.xml:2
 msgid "Ultralight Strong Gene Drive Stage 2"
-msgstr ""
+msgstr "Motor Genético Fuerte Ultraligero Fase 2"
 
 #: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_x.xml:2
 msgid "Ultralight Strong Gene Drive Stage X"
-msgstr ""
+msgstr "Motor Genético Fuerte Ultraligero Fase X"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_1.xml:2
 msgid "Heavy Shell Stage 1"
-msgstr ""
+msgstr "Caparazón Pesado Fase 1"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_1.xml:4
 #: dat/outfits/biocore_shell/heavy_shell_stage_2.xml:4
@@ -19507,27 +19577,27 @@ msgstr ""
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_2.xml:2
 msgid "Heavy Shell Stage 2"
-msgstr ""
+msgstr "Caparazón Pesado Fase 2"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_3.xml:2
 msgid "Heavy Shell Stage 3"
-msgstr ""
+msgstr "Caparazón Pesado Fase 3"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_4.xml:2
 msgid "Heavy Shell Stage 4"
-msgstr ""
+msgstr "Caparazón Pesado Fase 4"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_5.xml:2
 msgid "Heavy Shell Stage 5"
-msgstr ""
+msgstr "Caparazón Pesado Fase 5"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_6.xml:2
 msgid "Heavy Shell Stage 6"
-msgstr ""
+msgstr "Caparazón Pesado Fase 6"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_x.xml:2
 msgid "Heavy Shell Stage X"
-msgstr ""
+msgstr "Caparazón Pesado Fase X"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_x.xml:10
 #: dat/outfits/biocore_shell/light_shell_stage_x.xml:11
@@ -19541,110 +19611,115 @@ msgid ""
 "internal organs and for creating camouflage to reduce the risk of being "
 "detected by hostiles. This shell has reached stage X, its full potential."
 msgstr ""
+"El caparazón es la protección natural de una bionave Soromida, equivalente a "
+"los cascos de las naves sintéticas. El caparazón se encarga tanto de "
+"proteger los órganos internos del organismo como de crear un camuflaje para "
+"reducir el riesgo de ser detectado por los hostiles. Este caparazón ha "
+"alcanzado la fase X, su máximo potencial."
 
 #: dat/outfits/biocore_shell/light_shell_stage_1.xml:2
 msgid "Light Shell Stage 1"
-msgstr ""
+msgstr "Caparazón Ligero Fase 1"
 
 #: dat/outfits/biocore_shell/light_shell_stage_2.xml:2
 msgid "Light Shell Stage 2"
-msgstr ""
+msgstr "Caparazón Ligero Fase 2"
 
 #: dat/outfits/biocore_shell/light_shell_stage_3.xml:2
 msgid "Light Shell Stage 3"
-msgstr ""
+msgstr "Caparazón Ligero Fase 3"
 
 #: dat/outfits/biocore_shell/light_shell_stage_x.xml:2
 msgid "Light Shell Stage X"
-msgstr ""
+msgstr "Caparazón Ligero Fase X"
 
 #: dat/outfits/biocore_shell/medium_shell_stage_1.xml:2
 msgid "Medium Shell Stage 1"
-msgstr ""
+msgstr "Caparazón Medio Fase 1"
 
 #: dat/outfits/biocore_shell/medium_shell_stage_2.xml:2
 msgid "Medium Shell Stage 2"
-msgstr ""
+msgstr "Caparazón Medio Fase 2"
 
 #: dat/outfits/biocore_shell/medium_shell_stage_3.xml:2
 msgid "Medium Shell Stage 3"
-msgstr ""
+msgstr "Caparazón Medio Fase 3"
 
 #: dat/outfits/biocore_shell/medium_shell_stage_4.xml:2
 msgid "Medium Shell Stage 4"
-msgstr ""
+msgstr "Caparazón Medio Fase 4"
 
 #: dat/outfits/biocore_shell/medium_shell_stage_x.xml:2
 msgid "Medium Shell Stage X"
-msgstr ""
+msgstr "Caparazón Medio Fase X"
 
 #: dat/outfits/biocore_shell/mediumheavy_shell_stage_1.xml:2
 msgid "Medium-Heavy Shell Stage 1"
-msgstr ""
+msgstr "Caparazón Medio-Pesado Fase 1"
 
 #: dat/outfits/biocore_shell/mediumheavy_shell_stage_2.xml:2
 msgid "Medium-Heavy Shell Stage 2"
-msgstr ""
+msgstr "Caparazón Medio-Pesado Fase 2"
 
 #: dat/outfits/biocore_shell/mediumheavy_shell_stage_3.xml:2
 msgid "Medium-Heavy Shell Stage 3"
-msgstr ""
+msgstr "Caparazón Medio-Pesado Fase 3"
 
 #: dat/outfits/biocore_shell/mediumheavy_shell_stage_4.xml:2
 msgid "Medium-Heavy Shell Stage 4"
-msgstr ""
+msgstr "Caparazón Medio-Pesado Fase 4"
 
 #: dat/outfits/biocore_shell/mediumheavy_shell_stage_5.xml:2
 msgid "Medium-Heavy Shell Stage 5"
-msgstr ""
+msgstr "Caparazón Medio-Pesado Fase 5"
 
 #: dat/outfits/biocore_shell/mediumheavy_shell_stage_x.xml:2
 msgid "Medium-Heavy Shell Stage X"
-msgstr ""
+msgstr "Caparazón Medio-Pesado Fase X"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_1.xml:2
 msgid "Superheavy Shell Stage 1"
-msgstr ""
+msgstr "Caparazón Superpesado Fase 1"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_2.xml:2
 msgid "Superheavy Shell Stage 2"
-msgstr ""
+msgstr "Caparazón Superpesado Fase 2"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_3.xml:2
 msgid "Superheavy Shell Stage 3"
-msgstr ""
+msgstr "Caparazón Superpesado Fase 3"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_4.xml:2
 msgid "Superheavy Shell Stage 4"
-msgstr ""
+msgstr "Caparazón Superpesado Fase 4"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_5.xml:2
 msgid "Superheavy Shell Stage 5"
-msgstr ""
+msgstr "Caparazón Superpesado Fase 5"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_6.xml:2
 msgid "Superheavy Shell Stage 6"
-msgstr ""
+msgstr "Caparazón Superpesado Fase 6"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_7.xml:2
 msgid "Superheavy Shell Stage 7"
-msgstr ""
+msgstr "Caparazón Superpesado Fase 7"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_x.xml:2
 msgid "Superheavy Shell Stage X"
-msgstr ""
+msgstr "Caparazón Superpesado Fase X"
 
 #: dat/outfits/biocore_shell/ultralight_shell_stage_1.xml:2
 msgid "Ultralight Shell Stage 1"
-msgstr ""
+msgstr "Caparazón Ultraligero Fase 1"
 
 #: dat/outfits/biocore_shell/ultralight_shell_stage_2.xml:2
 msgid "Ultralight Shell Stage 2"
-msgstr ""
+msgstr "Caparazón Ultraligero Fase 2"
 
 #: dat/outfits/biocore_shell/ultralight_shell_stage_x.xml:2
 msgid "Ultralight Shell Stage X"
-msgstr ""
+msgstr "Caparazón Ultraligero Fase X"
 
 #: dat/outfits/core_engine/dummy_engine.xml:2
 msgid "Dummy Engine"
@@ -20637,7 +20712,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/drone_fighter_bay.xml:2
 msgid "Drone Fighter Bay"
-msgstr ""
+msgstr "Bahía de Cazas Dron"
 
 #: dat/outfits/fighter_bays/drone_fighter_bay.xml:11
 msgid ""
@@ -20655,7 +20730,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/empire_lancelot_fighter_bay.xml:2
 msgid "Empire Lancelot Fighter Bay"
-msgstr ""
+msgstr "Bahía de Cazas Lancelot Imperio"
 
 #: dat/outfits/fighter_bays/empire_lancelot_fighter_bay.xml:11
 msgid ""
@@ -20669,7 +20744,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/fidelity_fighter_bay.xml:2
 msgid "Fidelity Fighter Bay"
-msgstr ""
+msgstr "Bahía de Cazas Fidelidad"
 
 #: dat/outfits/fighter_bays/fidelity_fighter_bay.xml:11
 msgid ""
@@ -20683,7 +20758,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/hyena_fighter_bay.xml:2
 msgid "Hyena Fighter Bay"
-msgstr ""
+msgstr "Bahía de Cazas Hiena"
 
 #: dat/outfits/fighter_bays/hyena_fighter_bay.xml:10
 msgid ""
@@ -20691,10 +20766,13 @@ msgid ""
 "with all the amenities necessary for the maintenance and operation of the "
 "interceptors."
 msgstr ""
+"Esta bahía de cazas permite a tu nave llevar dos interceptores Hiena. Viene "
+"con todas las comodidades necesarias para el mantenimiento y el "
+"funcionamiento de los interceptores."
 
 #: dat/outfits/fighter_bays/hyena_fighter_dock.xml:2
 msgid "Hyena Fighter Dock"
-msgstr ""
+msgstr "Muelle de Cazas Hiena"
 
 #: dat/outfits/fighter_bays/hyena_fighter_dock.xml:10
 msgid ""
@@ -20702,10 +20780,13 @@ msgid ""
 "Hyena interceptors that can be operated. It comes with all the amenities "
 "necessary for the maintenance and operation of the interceptors."
 msgstr ""
+"Este muelle amplía la popular Bahía de Cazas Hiena, duplicando la cantidad "
+"de interceptores Hiena que se pueden operar. Viene con todas las comodidades "
+"necesarias para el mantenimiento y el funcionamiento de los interceptores."
 
 #: dat/outfits/fighter_bays/lancelot_fighter_bay.xml:2
 msgid "Lancelot Fighter Bay"
-msgstr ""
+msgstr "Bahía de Cazas Lancelot"
 
 #: dat/outfits/fighter_bays/lancelot_fighter_bay.xml:10
 msgid ""
@@ -20719,7 +20800,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/pirate_hyena_fighter_bay.xml:2
 msgid "Pirate Hyena Fighter Bay"
-msgstr ""
+msgstr "Bahía de Cazas Pirata Hiena"
 
 #: dat/outfits/fighter_bays/pirate_hyena_fighter_bay.xml:10
 msgid ""
@@ -25057,7 +25138,7 @@ msgstr ""
 
 #: dat/slots.xml:9
 msgid "Core Systems"
-msgstr "Sistema Central"
+msgstr "Sistemas Básicos"
 
 #: dat/slots.xml:10
 msgid ""
