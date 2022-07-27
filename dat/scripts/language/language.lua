@@ -1,3 +1,6 @@
+local fmt = require "format"
+
+
 -- simple language stuff
 
 local language = {}
@@ -18,9 +21,22 @@ local function _joined_table(t1, t2)
     return copy
 end
 
+-- pick a random letter out of a string
+local function pick_str(str)
+    local ii = rnd.rnd(1, str:len()) -- pick a random index from string length
+    return string.sub(str, ii, ii) -- returns letter at ii
+end
+
+-- pick a random item from the collection
+local function pick_one(target)
+    local r = rnd.rnd(1, #target)
+    return target[r]
+end
+
 
 -- Note: most of these will use a simple form like {fruit}s for the plural, add/adjust/translate accordingly
 nouns.food = {}
+nouns.actors = {}
 -- Used like I want to eat a {fruit} or let's restock the {fruit}s
 nouns.food.fruit = {
 	_("banana"),
@@ -67,6 +83,8 @@ nouns.food.fruit = {
 
 -- same as fruit, but more general and not fruit... should fit in lore-wise somehow TODO NOTE for someone
 nouns.food.general = {
+	_("egg"),
+	_("noodle"),
 	_("luxury sub"),
 	_("slice"),
 	_("pie"),
@@ -78,8 +96,39 @@ nouns.food.general = {
 	_("cake"),
 	_("synthetic pizza"),
 	_("organic pastry bundle"),
+	_("meat"),
+	_("steak"),
 }
 
+nouns.food.drink = {}
+
+nouns.food.drink.regular = {
+	_("tea"),
+	_("coffee"),
+	_("water"),
+	_("juice"),
+	_("extract"),
+	_("elixir"),
+	_("concoction"),
+}
+
+nouns.food.drink.alcoholic = {
+	_("Soromid special elixir"),
+	_("wine"),
+	_("ale"),
+	_("brew"),
+	_("beer"),
+	_("liquor"),
+	_("cognac"),
+	_("liqueur"),
+	_("Dvaer duelling drink"),
+	_("Caladan ice crush"),
+	_("Captain Lordan"),
+	_("Wringer's Wrench"),
+	_("Greenberg green drink"),
+}
+
+-- todo nouns.abstract?
 -- for finding an activity of type
 nouns.activities = {}
 nouns.activities.games = {
@@ -109,14 +158,17 @@ nouns.facilities.cruiser = {
 }
 
 -- nouns to describe some actor
-nouns.actors = {}
-nouns.actors.animals = {}
-nouns.actors.animals.mammals.domestic = {
+
+animals = {}
+animals.mammals = {}
+
+animals.mammals.domestic = {
 	_("cat"),
 	_("dog"),
 	_("horse"),
 	_("cow"),
-	_("anthropod"), -- yeah... slaves?
+	_("slave"), -- yeah... slaves? I figure maybe it fits with the lore...
+	_("prisoner"),
 	_("donkey"),
 	_("equine"),
 	_("rabbit"),
@@ -125,22 +177,26 @@ nouns.actors.animals.mammals.domestic = {
 	_("rat"),
 }
 
-nouns.actors.animals.mammals.wild = {
+animals.mammals.wild = {
 	_("monkey"),
 	_("koala"),
 	_("bear"),
+	_("elephant"),
+	_("polar bear"),
 	_("lion"),
 	_("tiger"),
 	_("cougar"),
-	_("pathner"),
+	_("panther"),
 	_("jaguar"),
 	_("racoon"),
 	_("kangaroo"),
 	_("pangolin"),
+	_("porcupine"),
 	_("rat"),
+	_("zebra"),
 }
 
-nouns.actors.animals.aquatic = {
+animals.aquatic = {
 	_("penguin"),
 	_("whale"),
 	_("dolphin"),
@@ -164,7 +220,7 @@ nouns.actors.animals.aquatic = {
 	_("darter"),
 }
 
-nouns.actors.animals.reptiles = {
+animals.reptiles = {
 	_("alligator"),
 	_("crocodile"),
 	_("dinosaur"),
@@ -182,7 +238,7 @@ nouns.actors.animals.reptiles = {
 	_("cottonmouth"),
 }
 
-nouns.actors.animals.birds = {
+animals.birds = {
 	_("duck"),
 	_("chicken"),
 	_("hen"),
@@ -197,10 +253,11 @@ nouns.actors.animals.birds = {
 	_("eagle"),
 	_("crow"),
 	_("sparrow"),
+	_("swan"),
 	_("tit"),
 }
 
-nouns.actors.animals.insects = {
+animals.insects = {
 	_("ant"),
 	_("bee"),
 	_("wasp"),
@@ -214,14 +271,18 @@ nouns.actors.animals.insects = {
 	_("locust"),
 	_("moth"),
 	_("cockroach"),
+	_("arthropod"),
 }
 
+
+nouns.actors.animals = animals
+
 -- nouns to describe a person or person-like object
-nouns.actors.people = {}
+people = {}
 
 -- when we refer to someone who is a hero in a friendly manner
 -- or if we want a toy of a "hero" kind, it would be a <adjective> <hero> <toy> or something like that
-nouns.actors.people.hero = {
+people.hero = {
 	_("warrior"),
 	_("killer"),
 	_("captain"),
@@ -238,7 +299,7 @@ nouns.actors.people.hero = {
 }
 
 -- same as hero, but with an implied and deliberate negative connotation
-nouns.actors.people.villain = {
+people.villain = {
 	_("warrior"),
 	_("killer"),
 	_("slaver"),
@@ -252,6 +313,8 @@ nouns.actors.people.villain = {
 	_("drifter"),
 	_("villain"),
 }
+
+nouns.actors.people = people
 
 -- common objects
 nouns.objects = {}
@@ -294,25 +357,37 @@ nouns.objects.accessories = {
 	_("earring"),
 	_("necklace"),
 	_("ring"),
+	_("nose ring"),
+	_("ocular implant"),
+	_("cybernetic appendage"),
 }
 
--- something to wear TODO MOVE ADJECTIVES!
 nouns.objects.clothes = {
-	_("leather jacket"),
-	_("vintage coat"),
+	_("jacket"),
+	_("coat"),
 	_("baseball hat"),
 	_("sock"),
 	_("frock"),
+	_("dress"),
 	_("trenchcoat"),
 	_("uniform"),
 	_("shirt"),
 	_("neckpiece"),
 	_("glove"),
+	_("cap"),
+	_("helmet"),
+	_("apron"),
+	_("chapeau"),
+	_("tophat"),
+	_("hat"),
+	_("shoe"),
+	_("boot"),
+	_("stiletto"),
 }
 
 -- generic items
 nouns.objects.items = {
-	_("bouquet of flowers"),
+	_("bouquet"),
 	_("letter"),
 	_("emblem"),
 	_("piece of paper"),
@@ -327,12 +402,6 @@ nouns.objects.items = {
 	_("diary"),
 	_("plate"), -- like a dish to put food on
 	_("pen"),
-	_("helmet"),
-	_("cap"),
-	_("chapeau"),
-	_("tophat"),
-	_("hat"),
-	_("apron"),
 	_("spoon"),
 	_("fork"),
 	_("spork"),
@@ -342,6 +411,7 @@ nouns.objects.items = {
 	_("bucket"),
 	_("sculpture"),
 	_("figurine"),
+	_("statue"),
 	_("painting"),
 	_("photograph"),
 	_("polaroid"),
@@ -353,6 +423,9 @@ nouns.objects.items = {
 	_("spanner"),
 	_("screwdriver"),
 	_("sword"),
+	_("ornament"),
+	_("decoration"),
+	
 }
 
 -- things that fit in your hand, pocket or belt/jacket
@@ -384,7 +457,7 @@ nouns.objects.spaceship_parts = {
 	_("deflector plate"),
 	_("coupling motivator"),
 	_("coolant coil"),
-	_("conversiot module"),
+	_("conversion module"),
 	_("power modulator"),
 	_("escape pod"),
 	_("diagnostic computer"),
@@ -503,6 +576,8 @@ adjectives.positive.precious = {
 	_("loved"),
 	_("heartwarming"),	
 	_("sentimental"),
+	_("poetic"),
+	_("poignant"),
 }
 
 adjectives.positive.magical = {
@@ -568,7 +643,7 @@ adjectives.negative.broken = {
 	_("broken"),
 	_("cracked"),
 	_("smashed"),
-	_("destoryed"),
+	_("destroyed"),
 	_("ruined"),
 }
 
@@ -580,14 +655,26 @@ adjectives.negative.boring = {
 
 adjectives.negative.dated = {
 	_("aged"),
+	_("ancient"),
 	_("old"),
 	_("worn"),
 	_("rotten"),
 	_("dated"),
 	_("expired"),
 	_("mature"),
+	_("dusty"),
 }
 
+adjectives.negative.smelly = {
+	_("pungent"),
+	_("smelly"),
+	_("vile"),
+	_("funky"),
+	_("rancid"),
+	_("stinking"),
+	_("foul"),
+	_("fetid"),
+}
 
 adjectives.negative.nasty = {
 	_("disgusting"),
@@ -597,6 +684,7 @@ adjectives.negative.nasty = {
 	_("unpleasant"),
 	_("unappealing"),
 	_("rotten"),
+	_("vile"),
 }
 
 adjectives.violent = {
@@ -615,6 +703,17 @@ adjectives.violent = {
 	_("dangerous"),
 }
 
+adjectives.neutral = {
+	_("okay"),
+	_("fine"),
+	_("decent"),
+	_("acceptable"),
+	_("passing"),
+	_("interesting"),
+	_("passable"),
+}
+
+-- not concrete but abstract color... 
 -- describes the look of something, so any kind of visible pattern or
 -- any kind of color or color-like adjective, even if it's a homonym
 -- in fact, that's better because it triggers cointeraction
@@ -665,11 +764,69 @@ adjectives.colors = {
 	_("striped"),
 	_("spotted"),
 	_("textured"),
+	_("leather"),
+	_("glazed"),
+	_("stained"),
+	_("fur"),
+	_("hairy"),
+	_("fuzzy"),
+	_("mossy"),
+}
+
+-- verbs are special and come in groups of conjugations
+local verbs = {}
+verbs.being = {}
+verbs.being.present = {}
+verbs.being.past = {}
+
+verbs.being.present.singular = _("is")
+verbs.being.present.plural = _("are")
+verbs.being.past.singular = _("was")
+verbs.being.past.plural = _("were")
+
+local conjunctions = {}
+conjunctions.that = {
+	_("that"),
+}
+
+-- parts of speech that can probably be completely ignored safely
+local interjections = {}
+interjections.general = {
+	_("hey"),
+	_("yo"),
+	_("bloody hell"),
+	_("umm"),
+	_("um"),
+	_("eh"),
+	_("ehh"),
+	_("erm"),
+	_("err"),
+	_("er"),
+	_("well"),
+	_("so"),
 }
 
 language.adjectives = adjectives
+language.conjunctions = conjunctions
+language.interjections = interjections
 -- language.descriptors = descriptors  -- TODO
 language.nouns = nouns
+language.verbs = verbs
+
+-- gets the plural of some noun
+language.getPlural = function ( noun )
+	-- TODO (defer): implement this so that it can be translatable
+	-- which also means covering irregular plurals in English
+	
+	-- default regular: word has a plural ending
+	-- this is a placeholder
+	if not noun:sub(-1) == _("s") then
+		return fmt.f("{noun}s", { noun = noun } )
+	end
+
+	-- default irregular: plural is like singular
+	return noun
+end
 
 language.getAll = function ( collection )
 	local aggregated = {}
@@ -684,5 +841,194 @@ language.getAll = function ( collection )
 	
 	return aggregated
 end
+
+
+-- generates a short, made-up capitalized Noun with limited imagination, usually 2-3 syllables or around 7 letters
+language.getMadeUpName = function ()
+    -- bias some letters to introduce slight consistency for a little depth
+    local start = "BCCDDDFGGHJKKLMMNNPPRRRSTTVWX"
+    local middle = string.lower(start)
+    local vowel = "aeiouy"
+
+    local middle_part = pick_str(middle) .. pick_str(middle)
+    if rnd.rnd(0, 1) == 1 then
+        -- add an extra syllable
+        middle_part = middle_part .. pick_str(vowel) .. pick_str(middle)
+        -- maybe add an extra letter
+        if rnd.rnd(0, 1) == 0 then
+            middle_part = middle_part .. pick_str(middle)
+        end
+    end
+
+    -- something like Gartok or Termengix or whatever
+    return pick_str(start) .. pick_str(vowel) .. middle_part .. pick_str(vowel) .. pick_str(middle)
+end
+
+-- a picks a random "fruit", or a made up fruit name
+language.getRandomFruit = function ()
+	-- must end with an s in plural in English, at least how it's being used now
+	local fruits = _joined_table(nouns.food.fruit, {
+		language.getMadeUpName():lower(), -- a made up food with a made up name
+		-- a made up nut that the player might think is a testicle for comedic effect
+		fmt.f(_("{ntype} nut"), { ntype = language.getMadeUpName() }),
+		-- some fairly unappealing foods to try to get the player to discard stuff sometimes for the side effects
+		_("synthetic food"),
+		_("insect block"),
+		_("cricket crisp"),
+	})
+	
+	return pick_one(fruits)
+end
+
+
+-- returns some kind of statement describing an insulting proper noun
+-- i.e. something you would say about a ship or person that's in disorder
+language.getInsultingProperNoun = function ()
+    -- things that you can put in the structured syntax and get away with
+    -- "smelly smelly momma's boy sniffer" is a perfectly good insult, for instance
+    -- as would be "dortetak jarryk Gorkok lebbeler!" because who knows where this person gets their insults from
+    local adject2s = {
+        _("smelly"),
+        _("dirty"),
+        _("rusty"),
+        _("dated"),
+        _("faded"),
+        _("outdated"),
+        _("expired"),
+        _("deprecated"),
+        _("overappreciated"),
+        _("rotten"),
+        _("slow,"), -- that comma is not a typo! it's for the emphasis on the slowness, like a person would do
+        _("untrustworthy"),
+        _("thieving"),
+        _("tiny"),
+        _("fat"),
+        _("ugly"),
+        _("insane"),
+        _("senile"),
+        _("angry"),
+        _("dubious"),
+        _("insufferable"),
+        _("devious"),
+        _("repugnant"),
+        language.getMadeUpName():lower()
+    }
+    local adjectives = {
+        _("old"),
+        _("boring"),
+        _("inglorious"),
+        _("irrational"),
+        _("stupid"),
+        _("daft"),
+        _("thick"),
+        _("little"),
+        _("demoralizing"),
+        _("bloody"),
+        _("blue"),
+        _("boring"),
+        _("ugly"),
+        _("fat"),
+        _("juice thirsty"),
+        _("thirsty"),
+        _("bloodthirsty"),
+        _("insufferable"),
+        language.getMadeUpName():lower()
+    }
+    local nouns = {
+        _("momma's boy"),
+        _("demon"),
+        _("angel"),
+        _("ass"),
+        _("donkey"),
+        _("butt"),
+        _("fool"),
+        _("mouth breather"),
+        _("daddy's little angel"),
+        _("terrorist"),
+        _("violator"),
+        _("jerk"),
+        _("hat"),
+        _("hat stand"),
+        _("coat rack"),
+        _("miner"),
+        _("scientamologist"), -- an idiot saying "scientist" or someone being sarcastic to one
+        _("cargo container"),
+        _("hyena"),
+        _("brick"),
+        _("satan"),
+        _("shit"),
+        _("bucket"),
+        _("square"),
+        _("child"),
+        _("dinosaur"),
+        _("mule"),
+        _("rhinoceros"),
+        _("kangaroo"),
+        _("bear"),
+        _("sunken dream"),
+        _("pirate"), -- insane boring pirate killer... sure, why not!
+        _("prawn"),
+        _("lobster"),
+        _("dishwasher"),
+        _("planet"),
+        _("seed"),
+        _("weed"),
+        _("seaweed"),
+        _("paper"),
+        _("asteroid"),
+        _("cinderblock"),
+        _("clock"),
+        _("hammock"),
+        _("rock"),
+        _("sock"),
+        _("wrench"),
+        _("document"),
+        language.getMadeUpName()
+    }
+    -- these all get the '-er' suffix and don't have to be real, they are used by angry people who say strange things
+    local verbs = {
+        _("sniff"),
+        _("smell"),
+        _("lov"),
+        _("eat"),
+        _("lick"),
+        _("huff"),
+        _("idoliz"),
+        _("smok"),
+        _("slay"),
+        _("crav"),
+        _("sympathiz"),
+        _("glorializ"),
+        _("slay"),
+        _("slay"),
+        _("munch"),
+        _("slap"),
+        _("spit"),
+        _("lurk"),
+        _("fil"), -- lol, you FILER! LOL'd at IRL for real.
+        _("kiss"),
+        _("kill"),
+        language.getMadeUpName():lower()
+    }
+
+    local params = {}
+    params.noun = pick_one(nouns)
+    params.adjective = pick_one(adjectives)
+    params.adject2 = pick_one(adject2s)
+    params.verb = pick_one(verbs)
+    local r = rnd.uniform()
+    if r < 0.33 then
+        return fmt.f("{adjective} {noun}", params)
+    elseif r < 0.5 then
+        return fmt.f("{noun}", params)
+    elseif r < 0.66 then
+        return fmt.f("{adject2} {adjective} {noun}", params)
+    elseif r < 0.88 then
+        return fmt.f("{adjective} {noun} {verb}er", params)
+    else
+        return fmt.f("{adject2} {adjective} {noun} {verb}er", params)
+    end
+end
+
 
 return language
