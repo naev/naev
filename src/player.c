@@ -2915,6 +2915,9 @@ void player_missionFinished( int id )
  */
 int player_missionAlreadyDone( int id )
 {
+   if (missions_done == NULL)
+      return 0;
+
    const int *i = bsearch( &id, missions_done, array_size(missions_done), sizeof(int), cmp_int );
    return i!=NULL;
 }
@@ -2956,6 +2959,9 @@ void player_eventFinished( int id )
  */
 int player_eventAlreadyDone( int id )
 {
+   if (events_done == NULL)
+      return 0;
+
    const int *i = bsearch( &id, events_done, array_size(events_done), sizeof(int), cmp_int );
    return i!=NULL;
 }
@@ -2980,6 +2986,8 @@ int player_hasLicense( const char *license )
 {
    if (license == NULL)
       return 1;
+   if (player_licenses == NULL)
+      return 0;
 
    const char *s = bsearch( &license, player_licenses, array_size(player_licenses), sizeof(char*), strsort );
    return s!=NULL;
