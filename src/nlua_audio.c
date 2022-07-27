@@ -134,6 +134,7 @@ static int stream_thread( void *la_data )
       /* Case finished. */
       if (la->active < 0) {
          la->th = NULL;
+         al_checkErr(); /* XXX - good or bad idea to log from the thread? */
          SDL_CondBroadcast( la->cond );
          soundUnlock();
          return 0;
@@ -152,6 +153,7 @@ static int stream_thread( void *la_data )
             la->active = 1 - la->active;
          }
       }
+      al_checkErr(); /* XXX - good or bad idea to log from the thread? */
       soundUnlock();
 
       SDL_Delay(5);
@@ -508,7 +510,6 @@ static int audioL_new( lua_State *L )
       la.type = LUA_AUDIO_STATIC;
       la.buf = malloc( sizeof(LuaBuffer_t) );
       la.buf->refcount = 1;
-      alGenBuffers( 1, &la.buf->buffer );
       sound_al_buffer( &la.buf->buffer, rw, name );
 
       /* Attach buffer. */
@@ -892,7 +893,6 @@ static int audioL_getDuration( lua_State *L )
       lua_pushnumber(L, -1.);
       return 1;
    }
-
 
    switch (la->type) {
       case LUA_AUDIO_STATIC:
@@ -1541,8 +1541,10 @@ static int audioL_setEffect( lua_State *L )
    soundLock();
    if (enable) {
       lae = audio_getEffectByName( name );
-      if (lae == NULL)
+      if (lae == NULL) {
+         soundUnlock();
          return 0;
+      }
       /* TODO allow more effect slots. */
       alSource3i( la->source, AL_AUXILIARY_SEND_FILTER, lae->slot, 0, AL_FILTER_NULL );
    }

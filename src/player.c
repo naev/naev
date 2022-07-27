@@ -249,8 +249,8 @@ void player_new (void)
       return;
    }
 
-   load_refresh( player.name );
-   if (array_size( load_getList() ) > 0) {
+   load_refresh();
+   if (array_size( load_getList( player.name ) ) > 0) {
       int r = dialogue_YesNo(_("Overwrite"),
             _("You already have a pilot named %s. Their autosave and backup save will be overwritten. Do you wish to continue?"), player.name);
       if (r==0) { /* no */
@@ -2915,6 +2915,9 @@ void player_missionFinished( int id )
  */
 int player_missionAlreadyDone( int id )
 {
+   if (missions_done == NULL)
+      return 0;
+
    const int *i = bsearch( &id, missions_done, array_size(missions_done), sizeof(int), cmp_int );
    return i!=NULL;
 }
@@ -2956,6 +2959,9 @@ void player_eventFinished( int id )
  */
 int player_eventAlreadyDone( int id )
 {
+   if (events_done == NULL)
+      return 0;
+
    const int *i = bsearch( &id, events_done, array_size(events_done), sizeof(int), cmp_int );
    return i!=NULL;
 }
@@ -2980,6 +2986,8 @@ int player_hasLicense( const char *license )
 {
    if (license == NULL)
       return 1;
+   if (player_licenses == NULL)
+      return 0;
 
    const char *s = bsearch( &license, player_licenses, array_size(player_licenses), sizeof(char*), strsort );
    return s!=NULL;
@@ -3377,10 +3385,15 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
          }
 
          if (!found) {
-            WARN(_("Found mission cargo without associated mission."));
+            WARN(_("Found mission cargo '%s' without associated mission."),pc->commodity->name);
             WARN(_("Please reload save game to remove the dead cargo."));
             continue;
          }
+      }
+      else if (pc->quantity==0) {
+         WARN(_("Found cargo '%s' with 0 quantity."),pc->commodity->name);
+         WARN(_("Please reload save game to remove the dead cargo."));
+         continue;
       }
 
       xmlw_startElem(writer,"commodity");

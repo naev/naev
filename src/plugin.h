@@ -19,3 +19,4 @@ int plugin_init (void);
 void plugin_exit (void);
 int plugin_check (void);
 const plugin_t *plugin_list (void);
+const char *plugin_name( const plugin_t *plg );

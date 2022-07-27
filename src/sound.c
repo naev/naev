@@ -47,6 +47,7 @@
 #include "array.h"
 #include "camera.h"
 #include "conf.h"
+#include "env.h"
 #include "log.h"
 #include "music.h"
 #include "ndata.h"
@@ -300,6 +301,14 @@ static int sound_al_init (void)
    /* Default values. */
    ret = 0;
 
+   /* Log verbosity (if not specified). */
+#if DEBUG_PARANOID
+   nsetenv( "ALSOFT_LOGLEVEL", "3", 0 );
+   nsetenv( "ALSOFT_TRAP_AL_ERROR", "1", 0 );
+#elif DEBUGGING
+   nsetenv( "ALSOFT_LOGLEVEL", "2", 0 );
+#endif
+
    /* we'll need a mutex */
    sound_lock = SDL_CreateMutex();
    soundLock();
@@ -338,22 +347,22 @@ static int sound_al_init (void)
       goto snderr_ctx;
    }
 
+   /* Set active context */
+   if (alcMakeContextCurrent( al_context )==AL_FALSE) {
+      WARN(_("Failure to set default context"));
+      ret = -4;
+      goto snderr_act;
+   }
+
+   /* Clear the errors */
+   alGetError();
+
    /* Query some extensions. */
    if (al_info.output_limiter) {
       ALint limiter;
       alcGetIntegerv( al_device, ALC_OUTPUT_LIMITER_SOFT, 1, &limiter );
       if (limiter != ALC_TRUE)
          WARN(_("Failed to set ALC_OUTPUT_LIMITER_SOFT"));
-   }
-
-   /* Clear the errors */
-   alGetError();
-
-   /* Set active context */
-   if (alcMakeContextCurrent( al_context )==AL_FALSE) {
-      WARN(_("Failure to set default context"));
-      ret = -4;
-      goto snderr_act;
    }
 
    /* Get context information. */
@@ -623,13 +632,6 @@ int sound_init (void)
    if (ret != 0)
       return ret;
 
-   /* Initialize music. */
-   ret = music_init();
-   if (ret != 0) {
-      music_disabled = 1;
-      WARN(_("Music disabled."));
-   }
-
    /* Set volume. */
    if ((conf.sound > 1.) || (conf.sound < 0.)) {
       WARN(_("Sound has invalid value, clamping to [0:1]."));
@@ -639,6 +641,13 @@ int sound_init (void)
 
    /* Initialized. */
    sound_initialized = 1;
+
+   /* Initialize music. */
+   ret = music_init();
+   if (ret != 0) {
+      music_disabled = 1;
+      WARN(_("Music disabled."));
+   }
 
    /* Load compression noise. */
    snd_compression = sound_get( "compression" );
@@ -658,9 +667,6 @@ void sound_exit (void)
    /* Nothing to disable. */
    if (sound_disabled || !sound_initialized)
       return;
-
-   /* Exit music subsystem. */
-   music_exit();
 
    if (voice_mutex != NULL) {
       voiceLock();
@@ -1377,11 +1383,13 @@ int sound_createGroup( int size )
       }
    }
 
+   al_checkErr();
    return id;
 
 group_err:
    free(g->sources);
    al_ngroups--;
+   al_checkErr();
    return 0;
 }
 
@@ -1452,6 +1460,7 @@ int sound_playGroup( int group, int sound, int once )
          soundUnlock();
          return 0;
       }
+      al_checkErr();
       soundUnlock();
 
       /* Group matched but no free source found.. */
@@ -1501,6 +1510,7 @@ void sound_pauseGroup( int group )
 
    soundLock();
    al_pausev( g->nsources, g->sources );
+   al_checkErr();
    soundUnlock();
 }
 
@@ -1522,6 +1532,7 @@ void sound_resumeGroup( int group )
 
    soundLock();
    al_resumev( g->nsources, g->sources );
+   al_checkErr();
    soundUnlock();
 }
 
@@ -1554,6 +1565,7 @@ void sound_speedGroup( int group, int enable )
    soundLock();
    g->speed = enable;
    groupSpeedReset(g);
+   al_checkErr();
    soundUnlock();
 }
 
@@ -1597,6 +1609,7 @@ void sound_pitchGroup( int group, double pitch )
    soundLock();
    g->pitch = pitch;
    groupSpeedReset(g);
+   al_checkErr();
    soundUnlock();
 }
 
@@ -1605,6 +1618,7 @@ void sound_setAbsorption( double value )
    if (sound_disabled)
       return;
 
+   soundLock();
    for (int i=0; i<source_ntotal; i++) {
       ALuint s = source_total[i];
       /* Value is from 0. (normal) to 10..
@@ -1614,16 +1628,18 @@ void sound_setAbsorption( double value )
       */
       alSourcef( s, AL_AIR_ABSORPTION_FACTOR, value );
    }
+   al_checkErr();
+   soundUnlock();
 }
 
 /**
  * @brief Sets up the sound environment.
  *
- *    @param env Type of environment to set up.
+ *    @param env_type Type of environment to set up.
  *    @param param Environment parameter.
  *    @return 0 on success.
  */
-int sound_env( SoundEnv_t env, double param )
+int sound_env( SoundEnv_t env_type, double param )
 {
    ALfloat f;
 
@@ -1631,7 +1647,7 @@ int sound_env( SoundEnv_t env, double param )
       return 0;
 
    soundLock();
-   switch (env) {
+   switch (env_type) {
       case SOUND_ENV_NORMAL:
          /* Set global parameters. */
          alSpeedOfSound( 3433. );
@@ -1878,11 +1894,11 @@ static int al_loadWav( ALuint *buf, SDL_RWops *rw )
    alGenBuffers( 1, buf );
    /* Put into the buffer. */
    alBufferData( *buf, format, wav_buffer, wav_length, wav_spec.freq );
+   al_checkErr();
    soundUnlock();
 
    /* Clean up. */
    free( wav_buffer );
-   al_checkErr();
    return 0;
 }
 

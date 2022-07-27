@@ -138,10 +138,8 @@ int save_all_with_name ( char *name )
 
    /* Save plugins. */
    xmlw_startElem(writer,"plugins");
-   for (int i=0; i<array_size(plugins); i++) {
-      const plugin_t *plg = &plugins[i];
-      xmlw_elem( writer, "plugin", "%s", (plg->name != NULL) ? plg->name : plg->mountpoint );
-   }
+   for (int i=0; i<array_size(plugins); i++)
+      xmlw_elem( writer, "plugin", "%s", plugin_name( &plugins[i] ) );
    xmlw_endElem(writer); /* "plugins" */
 
    /* Save the data. */
@@ -206,5 +204,10 @@ err:
  */
 void save_reload (void)
 {
-   load_gameFile( load_getList()[0].path );
+   const nsave_t *ns = load_getList( player.name );
+   if (array_size(ns) <= 0) {
+      WARN(_("Unable to reload save for '%s'!"),player.name);
+      return;
+   }
+   load_gameFile( ns[0].path );
 }

@@ -103,8 +103,7 @@ static void menu_options_button( unsigned int wid, const char *str );
  */
 static int menu_main_bkg_system (void)
 {
-   const char **pn;
-   const nsave_t *ns;
+   const nsave_t *saves;
    const char *sys;
    double cx, cy;
 
@@ -112,33 +111,28 @@ static int menu_main_bkg_system (void)
    pilots_cleanAll();
    sys = NULL;
 
-   load_refreshPlayerNames();
-   load_refreshPlayerNames();
-   pn = load_getPlayerNames();
+   load_refresh();
+   saves = load_getList(NULL);
 
-   if (array_size( pn ) > 0) {
-      load_refresh ( pn[0] );
-
-      /* Load saves. */
-      ns = load_getList();
+   if (array_size( saves ) > 0) {
+      const nsave_t *ns = &saves[0];
 
       /* Try to apply unidiff. */
-      if (array_size( ns ) > 0) {
-         load_gameDiff( ns[0].path );
+      load_gameDiff( ns[0].path );
 
-         /* Get start position. */
-         if (spob_exists( ns[0].spob )) {
-            Spob *pnt = spob_get( ns[0].spob );
-            if (pnt != NULL) {
-               sys = spob_getSystem( ns[0].spob );
-               if (sys != NULL) {
-                  cx = pnt->pos.x;
-                  cy = pnt->pos.y;
-               }
+      /* Get start position. */
+      if (spob_exists( ns[0].spob )) {
+         Spob *pnt = spob_get( ns[0].spob );
+         if (pnt != NULL) {
+            sys = spob_getSystem( ns[0].spob );
+            if (sys != NULL) {
+               cx = pnt->pos.x;
+               cy = pnt->pos.y;
             }
          }
       }
    }
+
    /* In case save game has no diff. */
    if (!safelanes_calculated())
       safelanes_recalculate();
@@ -254,7 +248,7 @@ void menu_main (void)
          "btnExit", _("Exit Game"), menu_exit, SDLK_x );
 
    /* Disable load button if there are no saves. */
-   if (array_size( load_getPlayerNames() ) == 0) {
+   if (array_size( load_getList(NULL) ) == 0) {
       window_disableButton( wid, "btnLoad" );
       window_setFocus( wid, "btnNew" );
    }
@@ -472,6 +466,7 @@ static void menu_small_load( unsigned int wid, const char *str )
    (void) wid;
    (void) str;
 
+   load_refresh(); /* FIXME: Substitute proper cache invalidation in case of save_all() etc. */
    load_loadSnapshotMenu( player.name );
 }
 
@@ -598,8 +593,8 @@ void menu_death (void)
    window_onClose( wid, menu_death_close );
 
    /* Allow the player to continue if the saved game exists, if not, propose to restart */
-   load_refresh ( player.name );
-   if (array_size( load_getList() ) > 0)
+   load_refresh();
+   if (array_size( load_getList( player.name ) ) > 0)
       window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnContinue", _("Continue"), menu_death_continue, SDLK_c );
    else

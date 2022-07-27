@@ -461,6 +461,7 @@ void spfxL_setSpeed( double s )
 
       alSourcef( ls->sfx.source, AL_PITCH, s );
    }
+   al_checkErr();
    soundUnlock();
 }
 
@@ -486,6 +487,7 @@ void spfxL_setSpeedVolume( double v )
 
       alSourcef( ls->sfx.source, AL_GAIN, ls->sfx.volume * v );
    }
+   al_checkErr();
    soundUnlock();
 }
 
@@ -560,6 +562,7 @@ void spfxL_update( double dt )
             alf[1] = ls->pos.y;
             alf[2] = 0.;
             alSourcefv( ls->sfx.source, AL_POSITION, alf );
+	    al_checkErr();
             soundUnlock();
          }
       }

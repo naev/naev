@@ -28,6 +28,7 @@
 #include "ndata.h"
 #include "nstring.h"
 #include "player.h"
+#include "plugin.h"
 #include "render.h"
 #include "sound.h"
 #include "toolkit.h"
@@ -39,7 +40,8 @@
 #define OPT_WIN_VIDEO      1
 #define OPT_WIN_AUDIO      2
 #define OPT_WIN_INPUT      3
-#define OPT_WINDOWS        4
+#define OPT_WIN_PLUGINS    4
+#define OPT_WINDOWS        5
 
 #define AUTONAV_RESET_DIST_MAX  10e3
 #define LANG_CODE_START 7 /**< Length of a language-list item's prefix, like the "[ 81%] " in "[ 81%] de". */
@@ -50,7 +52,8 @@ static const char *opt_names[] = {
    N_("Gameplay"),
    N_("Video"),
    N_("Audio"),
-   N_("Input")
+   N_("Input"),
+   N_("Plugins"),
 };
 static const glColour *cHeader = &cFontGrey;
 
@@ -112,6 +115,9 @@ static void opt_keyDefaults( unsigned int wid, const char *str );
 static int opt_setKeyEvent( unsigned int wid, SDL_Event *event );
 static void opt_setKey( unsigned int wid, const char *str );
 static void opt_unsetKey( unsigned int wid, const char *str );
+/* Plugins menu. */
+static void opt_plugins( unsigned int wid );
+static void opt_plugins_update( unsigned int wid, const char *name );
 
 /**
  * @brief Creates the options menu thingy.
@@ -145,6 +151,7 @@ void opt_menu (void)
    opt_video(     opt_windows[ OPT_WIN_VIDEO ] );
    opt_audio(     opt_windows[ OPT_WIN_AUDIO ] );
    opt_keybinds(  opt_windows[ OPT_WIN_INPUT ] );
+   opt_plugins(   opt_windows[ OPT_WIN_PLUGINS ] );
 
    /* Set as need restart if needed. */
    if (opt_restart)
@@ -1768,4 +1775,69 @@ static void opt_setMapOverlayOpacity( unsigned int wid, const char *str )
    conf.map_overlay_opacity = fad;
    snprintf( buf, sizeof(buf), _("Map Overlay Opacity: %.0f%%"), 100.*fad );
    window_modifyText( wid, "txtMOpacity", buf );
+}
+
+/**
+ * @brief Opens the keybindings menu.
+ */
+static void opt_plugins( unsigned int wid )
+{
+   int w, h, lw, lh, bw, bh, n;
+   char **str;
+   const plugin_t *plgs = plugin_list();
+
+   /* Get dimensions. */
+   bw = BUTTON_WIDTH;
+   bh = BUTTON_HEIGHT;
+   window_dimWindow( wid, &w, &h );
+   lw = w - bw - 100;
+   lh = h - 60;
+
+   /* Close button. */
+   window_addButton( wid, -20, 20, bw, bh,
+         "btnClose", _("OK"), opt_OK );
+
+   /* Text stuff. */
+   window_addText( wid, -20, -40, w-(20+lw+20+20), h-100,
+         0, "txtDesc", NULL, NULL, NULL );
+
+   /* Create the list. */
+   n = array_size(plgs);
+   if (n <= 0) {
+      str = malloc( sizeof(char *) * 1 );
+      str[0] = strdup(_("No Active Plugins"));
+      n = 1;
+   }
+   else {
+      str = malloc( sizeof(char *) * n );
+      for (int i=0; i<n; i++)
+         str[i] = strdup( plugin_name(&plgs[i]) );
+   }
+
+   window_addList( wid, 20, -40, lw, lh, "lstPlugins", str, n, 0, opt_plugins_update, NULL );
+}
+
+static void opt_plugins_update( unsigned int wid, const char *name )
+{
+   char buf[STRMAX];
+   const plugin_t *plg, *plgs;
+   int pos = toolkit_getListPos( wid, name );
+   int l = 0;
+
+   plgs = plugin_list();
+   if (array_size(plgs)<=0)
+      return;
+   plg = &plgs[pos];
+   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0\n", p_("plugins", "Name:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "   %s\n", _(plugin_name(plg)) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0\n", p_("plugins", "Author(s):") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "   %s\n", _(plg->author) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0\n", p_("plugins", "Version:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "   %s\n", plg->version );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0\n", p_("plugins", "Description:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "   %s\n", _(plg->description) );
+   if (plg->total_conversion)
+      l += scnprintf( &buf[l], sizeof(buf)-l, "#g%s#0", _("Total Conversion") );
+
+   window_modifyText( wid, "txtDesc", buf );
 }

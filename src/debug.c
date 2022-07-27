@@ -9,15 +9,14 @@
  */
 
 /** @cond */
+#include <assert.h>
+#include <signal.h>
+
 #include "naev.h"
 
 #if LINUX && HAS_BFD && DEBUGGING
-#include <signal.h>
 #include <execinfo.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <bfd.h>
-#include <assert.h>
 #endif /* LINUX && HAS_BFD && DEBUGGING */
 /** @endcond */
 
@@ -48,32 +47,66 @@ const char* debug_sigCodeToStr( int sig, int sig_code )
 {
    if (sig == SIGFPE)
       switch (sig_code) {
+#ifdef SI_USER
          case SI_USER: return _("SIGFPE (raised by program)");
+#endif /* SI_USER */
+#ifdef FPE_INTDIV
          case FPE_INTDIV: return _("SIGFPE (integer divide by zero)");
+#endif /* FPE_INTDIV */
+#ifdef FPE_INTOVF
          case FPE_INTOVF: return _("SIGFPE (integer overflow)");
+#endif /* FPE_INTOVF */
+#ifdef FPE_FLTDIV
          case FPE_FLTDIV: return _("SIGFPE (floating-point divide by zero)");
+#endif /* FPE_FLTDIV */
+#ifdef FPE_FLTOVF
          case FPE_FLTOVF: return _("SIGFPE (floating-point overflow)");
+#endif /* FPE_FLTOVF */
+#ifdef FPE_FLTUND
          case FPE_FLTUND: return _("SIGFPE (floating-point underflow)");
+#endif /* FPE_FLTUND */
+#ifdef FPE_FLTRES
          case FPE_FLTRES: return _("SIGFPE (floating-point inexact result)");
+#endif /* FPE_FLTRES */
+#ifdef FPE_FLTINV
          case FPE_FLTINV: return _("SIGFPE (floating-point invalid operation)");
+#endif /* FPE_FLTINV */
+#ifdef FPE_FLTSUB
          case FPE_FLTSUB: return _("SIGFPE (subscript out of range)");
+#endif /* FPE_FLTSUB */
          default: return _("SIGFPE");
       }
    else if (sig == SIGSEGV)
       switch (sig_code) {
+#ifdef SI_USER
          case SI_USER: return _("SIGSEGV (raised by program)");
+#endif /* SI_USER */
+#ifdef SEGV_MAPERR
          case SEGV_MAPERR: return _("SIGSEGV (address not mapped to object)");
+#endif /* SEGV_MAPERR */
+#ifdef SEGV_ACCERR
          case SEGV_ACCERR: return _("SIGSEGV (invalid permissions for mapped object)");
+#endif /* SEGV_ACCERR */
          default: return _("SIGSEGV");
       }
    else if (sig == SIGABRT)
       switch (sig_code) {
+#ifdef SI_USER
          case SI_USER: return _("SIGABRT (raised by program)");
+#endif /* SI_USER */
          default: return _("SIGABRT");
       }
 
    /* No suitable code found. */
+#if HAVE_STRSIGNAL
    return strsignal(sig);
+#else /* HAVE_STRSIGNAL */
+   {
+      static char buf[128];
+      snprintf( buf, sizeof(buf), _("signal %d"), sig );
+      return buf;
+   }
+#endif /* HAVE_STRSIGNAL */
 }
 
 /**
@@ -127,7 +160,6 @@ static void debug_translateAddress( const char *symbol, bfd_vma address )
    DEBUG("%s %s(...):%u %s", symbol, "??", 0, "??");
 }
 
-
 /**
  * @brief Backtrace signal handler for Linux.
  *
@@ -137,9 +169,9 @@ static void debug_translateAddress( const char *symbol, bfd_vma address )
  */
 static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
 {
-   (void)sig;
-   (void)unused;
-   int i, num;
+   (void) sig;
+   (void) unused;
+   int num;
    void *buf[64];
    char **symbols;
 
@@ -148,7 +180,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
 
    DEBUG( _("Naev received %s!"),
          debug_sigCodeToStr(info->si_signo, info->si_code) );
-   for (i=0; i<num; i++) {
+   for (int i=0; i<num; i++) {
       if (abfd != NULL)
          debug_translateAddress(symbols[i], (bfd_vma) (bfd_hostptr_t) buf[i]);
       else
@@ -161,27 +193,27 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
 }
 #endif /* LINUX && HAS_BFD && DEBUGGING */
 
-
 /**
  * @brief Sets up the SignalHandler for Linux.
  */
 void debug_sigInit (void)
 {
 #if LINUX && HAS_BFD && DEBUGGING
-   char **matching;
+   const char *str;
    struct sigaction sa, so;
-   long symcount;
-   unsigned int size;
 
    bfd_init();
 
    /* Read the executable */
    abfd = bfd_openr("/proc/self/exe", NULL);
    if (abfd != NULL) {
+      char **matching;
       bfd_check_format_matches(abfd, bfd_object, &matching);
 
       /* Read symbols */
       if (bfd_get_file_flags(abfd) & HAS_SYMS) {
+         unsigned int size;
+         long symcount;
 
          /* static */
          symcount = bfd_read_minisymbols (abfd, FALSE, (void **)&syms, &size);
@@ -198,15 +230,19 @@ void debug_sigInit (void)
    sa.sa_flags     = SA_SIGINFO;
 
    /* Attach signals. */
+   str = _("Unable to set up %s signal handler.");
    sigaction(SIGSEGV, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG( _("Unable to set up SIGSEGV signal handler.") );
+      DEBUG( str, "SIGSEGV" );
    sigaction(SIGFPE, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG( _("Unable to set up SIGFPE signal handler.") );
+      DEBUG( str, "SIGFPE" );
    sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG( _("Unable to set up SIGABRT signal handler.") );
+      DEBUG( str, "SIGABRT" );
+   sigaction(SIGTRAP, &sa, &so);
+   if (so.sa_handler == SIG_IGN)
+      DEBUG( str, "SIGTRAP" );
    DEBUG( _("BFD backtrace catching enabled.") );
 #endif /* LINUX && HAS_BFD && DEBUGGING */
 }
@@ -221,7 +257,8 @@ void debug_sigClose (void)
    bfd_close( abfd );
    abfd = NULL;
    signal( SIGSEGV, SIG_DFL );
-   signal( SIGFPE, SIG_DFL );
+   signal( SIGFPE,  SIG_DFL );
    signal( SIGABRT, SIG_DFL );
+   signal( SIGTRAP, SIG_DFL );
 #endif /* LINUX && HAS_BFD && DEBUGGING */
 }
