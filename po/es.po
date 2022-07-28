@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-07-27 21:21+0000\n"
+"PO-Revision-Date: 2022-07-28 16:23+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -20809,10 +20809,14 @@ msgid ""
 "and operation of the interceptors. The Pirate Hyenas can assist in ship "
 "scavenging and looting."
 msgstr ""
+"Esta bahía de cazas permite a tu nave llevar un par de interceptores Hiena "
+"Pirata. Viene con todas las comodidades necesarias para el mantenimiento y "
+"funcionamiento de los interceptores. Las Hienas Piratas pueden ayudar en el "
+"ataque y el saqueo de naves."
 
 #: dat/outfits/fighter_bays/pirate_hyena_fighter_dock.xml:2
 msgid "Pirate Hyena Fighter Dock"
-msgstr ""
+msgstr "Muelle de Cazas Hiena Pirata"
 
 #: dat/outfits/fighter_bays/pirate_hyena_fighter_dock.xml:10
 msgid ""
@@ -20821,10 +20825,15 @@ msgid ""
 "necessary for the maintenance and operation of the interceptors. The Pirate "
 "Hyenas can also assist in ship scavenging and looting."
 msgstr ""
+"Este muelle amplía la popular Bahía de Cazas Hiena Pirata, duplicando la "
+"cantidad de interceptores que se pueden operar. Viene con todas las "
+"comodidades necesarias para el mantenimiento y funcionamiento de los "
+"interceptores. Las Hienas Piratas también pueden ayudar en el ataque y el "
+"saqueo de naves."
 
 #: dat/outfits/fighter_bays/proteron_derivative_fighter_bay.xml:2
 msgid "Proteron Derivative Fighter Bay"
-msgstr ""
+msgstr "Bahía de Cazas Derivativo Proteron"
 
 #: dat/outfits/fighter_bays/proteron_derivative_fighter_bay.xml:11
 msgid ""
@@ -20838,7 +20847,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/soromid_brigand_fighter_bay.xml:2
 msgid "Soromid Brigand Fighter Bay"
-msgstr ""
+msgstr "Bahía de Cazas Forajido Soromida"
 
 #: dat/outfits/fighter_bays/soromid_brigand_fighter_bay.xml:11
 msgid ""
@@ -20852,7 +20861,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_fighter_bay.xml:2
 msgid "Thurion Perspicacity Fighter Bay"
-msgstr ""
+msgstr "Bahía de Cazas Perspicacia Turion"
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_fighter_bay.xml:11
 msgid ""
@@ -20860,10 +20869,13 @@ msgid ""
 "fighters. It comes with all the devices required for the maintenance and "
 "flight of the fighters."
 msgstr ""
+"Esta bahía de cazas permite a tu nave llevar cuatro cazas de la clase "
+"Perspicacia Turion. Viene con todos los dispositivos necesarios para el "
+"mantenimiento y el vuelo de los cazas."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_fighter_bay.xml:2
 msgid "Za'lek Bomber Drone Fighter Bay"
-msgstr ""
+msgstr "Bahía de Cazas Dron Bombardero Za'lek"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_fighter_bay.xml:11
 msgid ""
@@ -20871,10 +20883,13 @@ msgid ""
 "bombarding enemy capital ships into submission without the mothership ever "
 "coming into danger."
 msgstr ""
+"Esta instalación de acoplamiento puede lanzar un ala de drones bombarderos "
+"capaces de bombardear las naves capitales enemigas hasta la sumisión sin que "
+"la nave nodriza llegue a estar en peligro."
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_fighter_dock.xml:2
 msgid "Za'lek Bomber Drone Fighter Dock"
-msgstr ""
+msgstr "Muelle de Cazas Dron Bombardero Za'lek"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_fighter_dock.xml:11
 msgid ""
@@ -20884,10 +20899,15 @@ msgid ""
 "careful maintenance. All the tools needed to take care of them are provided "
 "with the bay."
 msgstr ""
+"Este dron relativamente voluminoso está construido para abrir grandes naves "
+"desde lejos. Cumple esta tarea de forma admirable. Los Cazas Dron no "
+"necesitan piloto, por lo que son más seguros en situaciones de peligro. Sin "
+"embargo, necesitan un mantenimiento cuidadoso. Todas las herramientas "
+"necesarias para cuidarlos se proporcionan con la bahía."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_fighter_bay.xml:2
 msgid "Za'lek Heavy Drone Fighter Bay"
-msgstr ""
+msgstr "Bahía de Cazas Dron Pesado Za'lek"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_fighter_bay.xml:11
 msgid ""
@@ -20895,10 +20915,14 @@ msgid ""
 "to be able to pilot itself. Three heavy drones can be operated from this "
 "bay, giving the mothership a good deal of punch."
 msgstr ""
+"El Dron Pesado Za'lek es una nave temible que utiliza técnicas de IA muy "
+"avanzadas para poder pilotarse a sí mismo. Desde esta bahía se pueden "
+"manejar tres drones pesados, lo que da a la nave nodriza una buena dosis de "
+"potencia."
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_fighter_dock.xml:2
 msgid "Za'lek Heavy Drone Fighter Dock"
-msgstr ""
+msgstr "Muelle de Cazas Dron Pesado Za'lek"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_fighter_dock.xml:11
 msgid ""
@@ -20907,20 +20931,26 @@ msgid ""
 "disposal. The drones are capable of fighting all but the biggest ships in "
 "packs."
 msgstr ""
+"Sólo las naves más grandes pueden soportar cómodamente este muelle de "
+"drones, pero las que lo hacen tienen un escuadrón mortal y versátil de "
+"drones pesados a su disposición. Los drones son capaces de luchar en manada "
+"contra todas las naves, excepto las más grandes."
 
 #: dat/outfits/fighter_bays/zalek_light_drone_fighter_bay.xml:2
 msgid "Za'lek Light Drone Fighter Bay"
-msgstr ""
+msgstr "Bahía de Cazas Dron Ligero Za'lek"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_fighter_bay.xml:11
 msgid ""
 "A quartet of light drones are maintained and launched from this bay. The "
 "Drones themselves are frail, but very cheap."
 msgstr ""
+"Un cuarteto de drones ligeros es mantenido y lanzado desde esta bahía. Los "
+"propios drones son frágiles, pero muy baratos."
 
 #: dat/outfits/fighter_bays/zalek_light_drone_fighter_dock.xml:2
 msgid "Za'lek Light Drone Fighter Dock"
-msgstr ""
+msgstr "Muelle de Cazas Dron Ligero Za'lek"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_fighter_dock.xml:11
 msgid ""
@@ -20928,10 +20958,13 @@ msgid ""
 "Za'lek light drones. The drones are expendable, but in numbers they excel at "
 "clearing enemy light craft."
 msgstr ""
+"Esta gran instalación en la nave está construida para mantener y lanzar un "
+"enjambre de drones ligeros Za'lek. Los drones son prescindibles, pero en "
+"número son excelentes para eliminar naves ligeras enemigas."
 
 #: dat/outfits/fighters/drone_fighter.xml:2
 msgid "Drone Fighter"
-msgstr ""
+msgstr "Caza Dron"
 
 #: dat/outfits/fighters/drone_fighter.xml:8
 msgid ""
@@ -20939,10 +20972,14 @@ msgid ""
 "to pilot itself. The fact it doesn't need a pilot nor life support systems "
 "makes it a much smaller and compact vessel."
 msgstr ""
+"El Dron es una nave temible que utiliza técnicas de IA muy avanzadas para "
+"poder pilotarse a sí mismo. El hecho de que no necesite un piloto ni "
+"sistemas de soporte vital lo convierte en una nave mucho más pequeña y "
+"compacta."
 
 #: dat/outfits/fighters/empire_lancelot_fighter.xml:2
 msgid "Empire Lancelot Fighter"
-msgstr ""
+msgstr "Caza Lancelot Imperio"
 
 #: dat/outfits/fighters/empire_lancelot_fighter.xml:8
 msgid ""
@@ -20950,28 +20987,34 @@ msgid ""
 "Fighter Bay. It contains all the features of the standalone Empire Lancelot "
 "with improved encrypted communication."
 msgstr ""
+"Este es un Lancelot Imperio clase caza adaptado para su uso en la Bahía de "
+"Cazas Lancelot. Contiene todas las características del Lancelot Imperio "
+"autónomo con una comunicación cifrada mejorada."
 
 #: dat/outfits/fighters/fidelity_fighter.xml:2
 msgid "Fidelity Fighter"
-msgstr ""
+msgstr "Caza Fidelidad"
 
 #: dat/outfits/fighters/fidelity_fighter.xml:8
 msgid ""
 "The Sirius may not be the greatest fighter ever fielded by the Sirii, but "
 "they have strength in numbers and the faith of their pilots."
 msgstr ""
+"Puede que el Sirio no sea el mejor caza que hayan tenido los Sirios, pero "
+"tienen fuerza en número y en la fe de sus pilotos."
 
 #: dat/outfits/fighters/hyena_fighter.xml:2
 msgid "Hyena Fighter"
-msgstr ""
+msgstr "Caza Hiena"
 
 #: dat/outfits/fighters/hyena_fighter.xml:8
 msgid "This is a Hyena class fighter adapted for usage in fighter bays."
 msgstr ""
+"Este es una Hiena clase caza adaptado para su uso en las bahías de cazas."
 
 #: dat/outfits/fighters/lancelot_fighter.xml:2
 msgid "Lancelot Fighter"
-msgstr ""
+msgstr "Caza Lancelot"
 
 #: dat/outfits/fighters/lancelot_fighter.xml:8
 msgid ""
@@ -20979,58 +21022,70 @@ msgid ""
 "Bay. It contains all the features of the standalone Lancelot with improved "
 "encrypted communication."
 msgstr ""
+"Este es un Lancelot de clase caza adaptado para su uso en la Bahía de Cazas "
+"Lancelot. Contiene todas las características del Lancelot autónomo con una "
+"comunicación cifrada mejorada."
 
 #: dat/outfits/fighters/pirate_hyena_fighter.xml:2
 msgid "Pirate Hyena Fighter"
-msgstr ""
+msgstr "Caza Hiena Pirata"
 
 #: dat/outfits/fighters/pirate_hyena_fighter.xml:8
 msgid "This is a Pirate Hyena fighter adapted for usage in fighter bays."
 msgstr ""
+"Este es un caza Hiena Pirata adaptado para su uso en las bahías de cazas."
 
 #: dat/outfits/fighters/proteron_derivative_fighter.xml:2
 msgid "Proteron Derivative Fighter"
-msgstr ""
+msgstr "Caza Derivativo Proteron"
 
 #: dat/outfits/fighters/proteron_derivative_fighter.xml:8
 msgid ""
 "This is a Proteron Derivative class fighter adapted for usage in fighter "
 "bays."
 msgstr ""
+"Este es un caza de la clase Derivativo Proteron adaptado para su uso en las "
+"bahías de cazas."
 
 #: dat/outfits/fighters/soromid_brigand_fighter.xml:2
 msgid "Soromid Brigand Fighter"
-msgstr ""
+msgstr "Caza Forajido Soromida"
 
 #: dat/outfits/fighters/soromid_brigand_fighter.xml:8
 msgid ""
 "This is a Soromid Brigand class fighter adapted for usage in the Soromid "
 "Brigand Fighter Bay."
 msgstr ""
+"Este es un Forajido Soromida de clase caza adaptado para su uso en la bahía "
+"de caza Forajido Soromida."
 
 #: dat/outfits/fighters/thurion_perspicacity_fighter.xml:2
 msgid "Thurion Perspicacity Fighter"
-msgstr ""
+msgstr "Caza Perspicacia Turion"
 
 #: dat/outfits/fighters/thurion_perspicacity_fighter.xml:8
 msgid ""
 "This is an Thurion Perspicacity class fighter adapted for usage in fighter "
 "bays."
 msgstr ""
+"Este es un caza de la clase Perspicacia Turion adaptado para su uso en las "
+"bahías de combate."
 
 #: dat/outfits/fighters/zalek_bomber_drone_fighter.xml:2
 msgid "Za'lek Bomber Drone Fighter"
-msgstr ""
+msgstr "Caza Dron Bombardero Za'lek"
 
 #: dat/outfits/fighters/zalek_bomber_drone_fighter.xml:8
 msgid ""
 "This relatively bulky drone is built to crack open large ships from afar. It "
 "accomplishes this task admirably"
 msgstr ""
+"Este dron relativamente voluminoso está construido para destrozar grandes "
+"naves desde lejos. Cumple esta tarea admirablemente"
 
 #: dat/outfits/fighters/zalek_heavy_drone_fighter.xml:2
 msgid "Za'lek Heavy Drone Fighter"
-msgstr ""
+msgstr "Caza Dron Pesado Za'lek"
 
 #: dat/outfits/fighters/zalek_heavy_drone_fighter.xml:8
 msgid ""
@@ -21038,16 +21093,23 @@ msgid ""
 "to be able to pilot itself. The fact it doesn't need a pilot nor life "
 "support systems makes it a much smaller and compact vessel."
 msgstr ""
+"El Dron Pesado Za'lek es una nave temible que utiliza técnicas de IA muy "
+"avanzadas para poder pilotarse a sí mismo. El hecho de que no necesite un "
+"piloto ni sistemas de soporte vital lo convierte en una nave mucho más "
+"pequeña y compacta."
 
 #: dat/outfits/fighters/zalek_light_drone_fighter.xml:2
 msgid "Za'lek Light Drone Fighter"
-msgstr ""
+msgstr "Caza Dron Ligero Zalek"
 
 #: dat/outfits/fighters/zalek_light_drone_fighter.xml:8
 msgid ""
 "This tiny robotic drone built by the Za'lek is very weak by itself. However, "
 "they are compact and cheap, allowing them to be massed very easily."
 msgstr ""
+"Este diminuto dron robótico construido por los Za'lek es muy débil por sí "
+"mismo. Sin embargo, son compactos y baratos, lo que permite masificarlos muy "
+"fácilmente."
 
 #: dat/outfits/launchers/convulsion_launcher.xml:2
 msgid "Convulsion Launcher"
@@ -21076,6 +21138,12 @@ msgid ""
 "developed by the Za'lek to be used by their heavier droness to supplement "
 "the short range and high damage of their beams."
 msgstr ""
+"Esta poderosa arma de energía está construida para bombardear un objetivo "
+"desde gran distancia con ráfagas de iones, causando un daño debilitante en "
+"los escudos y sistemas eléctricos del objetivo, que puede dejar una nave "
+"efectivamente indefensa. Fue desarrollada por los Za'lek para ser utilizada "
+"por sus drones más pesados para complementar el corto alcance y el alto daño "
+"de sus rayos."
 
 #: dat/outfits/launchers/emp_grenade_launcher.xml:2
 msgid "EMP Grenade Launcher"
@@ -21327,6 +21395,15 @@ msgid ""
 "TeraCom's patented launcher hardware considerably reduces the time it takes "
 "to achieve a lock. Sometimes, those few seconds can make all the difference."
 msgstr ""
+"Los misiles interceptores de la clase Venganza son los más pesados que se "
+"fabrican actualmente. Casi la mitad del casco del misil se utiliza para la "
+"carga útil, lo que disminuye su capacidad para alcanzar objetivos rápidos. "
+"Está diseñado para matar a los objetivos blindados a expensas de que resulte "
+"pobre contra escudos. Es mejor combinarlo con armas anti-escudo.\n"
+"\n"
+"El hardware del lanzador, patentado por TeraCom, reduce considerablemente el "
+"tiempo que se tarda en alcanzar un objetivo. A veces, esos pocos segundos "
+"pueden marcar la diferencia."
 
 #: dat/outfits/launchers/turreted_convulsion_launcher.xml:2
 msgid "Turreted Convulsion Launcher"
@@ -21350,7 +21427,7 @@ msgstr ""
 
 #: dat/outfits/launchers/unicorp_banshee_launcher.xml:2
 msgid "Unicorp Banshee Launcher"
-msgstr ""
+msgstr "Unicorp Banshee, Lanzador"
 
 #: dat/outfits/launchers/unicorp_banshee_launcher.xml:10
 msgid ""
@@ -21359,10 +21436,15 @@ msgid ""
 "punch that can do respectable damage even to fairly large ships. The "
 "launcher is small and light enough to be usable by even small fighters."
 msgstr ""
+"El cohete pesado no guiado de la clase Banshee es a veces etiquetado como el "
+"\"torpedo del piloto pobre\". Tiene un motor relativamente débil, pero tiene "
+"una gran potencia que puede causar un daño respetable incluso a naves "
+"bastante grandes. El lanzador es lo suficientemente pequeño y ligero como "
+"para ser utilizado incluso por cazas pequeños."
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:2
 msgid "Unicorp Caesar IV Launcher"
-msgstr "Cesar IV Unicorp, Lanzador "
+msgstr "Cesar IV Unicorp, Lanzador"
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:10
 #: dat/outfits/rockets/caesar_iv_torpedo.xml:7
@@ -21371,10 +21453,14 @@ msgid ""
 "available. Though much slower than missiles and useless against mobile "
 "targets, they remain manoeuvrable enough to chase down light cruisers."
 msgstr ""
+"Los torpedos de la clase César IV se encuentran entre las armas de torpedo "
+"más comunes disponibles. Aunque son mucho más lentos que los misiles y "
+"resultan inútiles contra objetivos móviles, siguen siendo lo suficientemente "
+"maniobrables como para perseguir cruceros ligeros."
 
 #: dat/outfits/launchers/unicorp_fury_launcher.xml:2
 msgid "Unicorp Fury Launcher"
-msgstr ""
+msgstr "Furia Unicorp, Lanzador"
 
 #: dat/outfits/launchers/unicorp_fury_launcher.xml:9
 msgid ""
@@ -21383,10 +21469,14 @@ msgid ""
 "efficiently. Its high agility comes at the cost of destructive power, "
 "however, limiting its effectiveness to light, nimble fighters."
 msgstr ""
+"El misil interceptor de la clase Furia es un misil ligero propulsado por un "
+"potente motor, que entrega su carga útil a su objetivo con rapidez y "
+"eficacia. Sin embargo, su gran agilidad se produce a costa de su poder "
+"destructivo, lo que limita su eficacia a los cazas ligeros y ágiles."
 
 #: dat/outfits/launchers/unicorp_headhunter_launcher.xml:2
 msgid "Unicorp Headhunter Launcher"
-msgstr ""
+msgstr "Cazacabezas Unicorp, Lanzador"
 
 #: dat/outfits/launchers/unicorp_headhunter_launcher.xml:9
 #: dat/outfits/rockets/headhunter_missile.xml:7
@@ -21396,10 +21486,14 @@ msgid ""
 "remaining reasonably fast and agile. Most effective when launched at distant "
 "enemies."
 msgstr ""
+"El misil interceptor de la clase Cazacabezas es un misil de calibre medio "
+"que puede infligir daños devastadores a objetivos pequeños y medianos, a la "
+"vez que es razonablemente rápido y ágil. Es más eficaz cuando se lanza "
+"contra enemigos lejanos."
 
 #: dat/outfits/launchers/unicorp_mace_launcher.xml:2
 msgid "Unicorp Mace Launcher"
-msgstr ""
+msgstr "Maza Unicorp, Lanzador"
 
 #: dat/outfits/launchers/unicorp_mace_launcher.xml:9
 #: dat/outfits/rockets/mace_rocket.xml:7
@@ -21409,10 +21503,15 @@ msgid ""
 "light targets than most fighter sized energy cannons, but comes with the "
 "disadvantage of running out of ammunition after only a short time of fire."
 msgstr ""
+"El cohete no guiado de la clase Maza es un arma barata y prescindible que se "
+"utiliza para aumentar la potencia de fuego máxima en situaciones difíciles. "
+"Es mucho mejor para infligir daño a los objetivos ligeros que la mayoría de "
+"los cañones de energía del tamaño de un caza, pero tiene la desventaja de "
+"que se queda sin munición después de un corto periodo de disparos."
 
 #: dat/outfits/launchers/unicorp_medusa_launcher.xml:2
 msgid "Unicorp Medusa Launcher"
-msgstr ""
+msgstr "Medusa Unicorp, Lanzador"
 
 #: dat/outfits/launchers/unicorp_medusa_launcher.xml:9
 #: dat/outfits/rockets/medusa_missile.xml:6
@@ -21423,10 +21522,15 @@ msgid ""
 "effectively be disabled with this weapon. However, the Medusa is not the "
 "most agile missile on the market."
 msgstr ""
+"El misil de crucero EMP de la clase Medusa es un arma no letal diseñada para "
+"inutilizar los sistemas internos de una nave, dejándola inofensiva y lista "
+"para el abordaje. La ojiva sólo causa daños limitados, por lo que incluso "
+"los objetivos poco blindados pueden ser inutilizados eficazmente con esta "
+"arma. Sin embargo, el Medusa no es el misil más ágil del mercado."
 
 #: dat/outfits/launchers/unicorp_vengeance_launcher.xml:2
 msgid "Unicorp Vengeance Launcher"
-msgstr ""
+msgstr "Venganza Unicorp, Lanzador"
 
 #: dat/outfits/launchers/unicorp_vengeance_launcher.xml:9
 msgid ""
@@ -21436,6 +21540,11 @@ msgid ""
 "killing armoured targets at the expense of making it poor against shields. "
 "Best paired with anti-shield weapons."
 msgstr ""
+"Los misiles interceptores de la clase Venganza son los más pesados que se "
+"fabrican actualmente. Casi la mitad del casco del misil se utiliza para la "
+"carga útil, lo que disminuye su capacidad para alcanzar objetivos rápidos. "
+"Está diseñado para destacar en la destrucción de objetivos blindados a costa "
+"de ser pobre contra los escudos. Es mejor emparejarlo con armas antiescudo."
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:2
 msgid "Za'lek Hunter Launcher"
@@ -21452,6 +21561,15 @@ msgid ""
 "The Za'lek do not share the secrets of their 'missile' drones lightly. Only "
 "trusted allies of the Za'lek are trusted with these weapons."
 msgstr ""
+"Los Za'lek empezaron a encontrar que los misiles y torpedos convencionales "
+"eran lamentablemente primitivos en comparación con su tecnología de drones "
+"miniaturizados. Por ello, comenzaron a trabajar en la fabricación de drones "
+"kamikaze para sustituirlos. Los resultados han dado un fruto mortal con el "
+"dron cazador-asesino. Acelera hacia su objetivo y libera su carga "
+"ferromagnética-hidráulica con un efecto mortal.\n"
+"\n"
+"Los Za'lek no comparten los secretos de sus drones \"misiles\" a la ligera. "
+"Sólo a los aliados de confianza de los Za'lek se les confían estas armas."
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:2
 msgid "Za'lek Reaper Launcher"
@@ -21468,6 +21586,14 @@ msgid ""
 "The Za'lek do not share the secrets of their 'missile' drones lightly. Only "
 "trusted allies of the Za'lek are trusted with these weapons."
 msgstr ""
+"Esta arma lleva el término \"dron miniaturizado\" casi hasta su punto de "
+"ruptura. En efecto, se trata de una plataforma de avión no tripulado "
+"estándar reducida, a la que se le ha sustituido casi todo en favor de una "
+"enorme bomba ferromagnética-hidráulica. Es la respuesta de los Za'lek a los "
+"torpedos de las naciones menos avanzadas, y es una respuesta elocuente.\n"
+"\n"
+"Los Za'lek no comparten los secretos de sus drones \"misiles\" a la ligera. "
+"Sólo a los aliados de confianza de los Za'lek se les confían estas armas."
 
 #: dat/outfits/maps/localmap.xml:2
 msgid "Local System Map"
@@ -21505,13 +21631,15 @@ msgstr ""
 
 #: dat/outfits/maps/map_dvaeredsoromid_trade_route.xml:2
 msgid "Map: Dvaered-Soromid trade route"
-msgstr ""
+msgstr "Dvaered-Soromida ruta comercial, Mapa"
 
 #: dat/outfits/maps/map_dvaeredsoromid_trade_route.xml:7
 msgid ""
 "This map contains the main route between Dvaered and Soromid controlled "
 "space."
 msgstr ""
+"Este mapa contiene la ruta principal entre Dvaered y el espacio controlado "
+"por Soromida."
 
 #: dat/outfits/maps/map_empire_core.xml:2
 msgid "Map: Empire Core"
@@ -21563,7 +21691,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_kretogg_hidden_jumps.xml:2
 msgid "Map: Kretogg's hidden jump points"
-msgstr ""
+msgstr "Kretogg nuevos puntos de salto, Mapa"
 
 #: dat/outfits/maps/map_kretogg_hidden_jumps.xml:7
 msgid ""
@@ -21588,17 +21716,20 @@ msgstr ""
 
 #: dat/outfits/maps/map_new_haven_hidden_jumps.xml:2
 msgid "Map: New Haven's hidden jump points"
-msgstr ""
+msgstr "Nuevo Refugio puntos de salto ocultos, Mapa"
 
 #: dat/outfits/maps/map_new_haven_hidden_jumps.xml:7
 msgid ""
 "This map contains the position of a set of hidden jump points in and around "
 "the New Haven system. Only a minority of pirates have access to this map."
 msgstr ""
+"Este mapa contiene la posición de un conjunto de puntos de salto ocultos en "
+"el sistema de Nuevo Refugio y sus alrededores. Sólo una minoría de piratas "
+"tiene acceso a este mapa."
 
 #: dat/outfits/maps/map_pirate_strongholds.xml:2
 msgid "Map: Pirate strongholds"
-msgstr ""
+msgstr "Baluartes Pirata, Mapa"
 
 #: dat/outfits/maps/map_pirate_strongholds.xml:7
 msgid ""
@@ -21628,7 +21759,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_sirian_border_systems.xml:2
 msgid "Map: Sirian border systems"
-msgstr ""
+msgstr "Sirio sistemas fronterizos, Mapa"
 
 #: dat/outfits/maps/map_sirian_border_systems.xml:6
 msgid "This map contains the systems that lead to Sirius controlled space."
@@ -21684,6 +21815,8 @@ msgid ""
 "This map provides the hidden route to the Thurion core systems outside of "
 "the nebula."
 msgstr ""
+"Este mapa proporciona la ruta oculta a los sistemas principales Turion fuera "
+"de la nebulosa."
 
 #: dat/outfits/maps/map_zalek_core.xml:2
 msgid "Map: Za'lek Core"
@@ -21717,6 +21850,11 @@ msgid ""
 "license will authorize you to buy cruiser and carrier-class ships on worlds "
 "that perform background checks."
 msgstr ""
+"Gracias a la maestría, los ingenieros de software piratas son capaces de "
+"crear réplicas casi perfectas de la Licencia de Nave de Combate Pesada. Sin "
+"embargo, esta licencia tiene un precio muy superior al de las licencias "
+"estándar. Esta licencia te autorizará a comprar naves de clase crucero y "
+"portanaves en los mundos que realicen comprobaciones de antecedentes."
 
 #: dat/outfits/misc/counterfeit_heavy_combat_vessel_license.xml:11
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:12
@@ -21735,6 +21873,11 @@ msgid ""
 "will authorize you to buy and use heavy weapons like the heavy ion turret on "
 "worlds that perform background checks."
 msgstr ""
+"Gracias a la maestría, los ingenieros de software piratas son capaces de "
+"crear réplicas casi perfectas de la Licencia de Armas Pesadas. Sin embargo, "
+"esta licencia tiene un precio muy superior al de las licencias estándar. "
+"Esta licencia te autoriza a comprar y utilizar armas pesadas como la torreta "
+"de iones pesada en los mundos que realizan controles de antecedentes."
 
 #: dat/outfits/misc/counterfeit_heavy_weapon_license.xml:11
 #: dat/outfits/misc/heavy_weapon_license.xml:12
@@ -21858,10 +22001,12 @@ msgid ""
 "This license will authorize you to do mercenary missions and collect "
 "bounties."
 msgstr ""
+"Esta licencia te autorizará a realizar misiones mercenarias y a cobrar "
+"recompensas."
 
 #: dat/outfits/rockets/banshee_rocket.xml:2
 msgid "Banshee Rocket"
-msgstr ""
+msgstr "Cohete Banshee"
 
 #: dat/outfits/rockets/banshee_rocket.xml:7
 msgid ""
@@ -21869,18 +22014,22 @@ msgid ""
 "torpedo\". It has a relatively weak engine, but packs a powerful punch that "
 "can do respectable damage even to fairly large ships."
 msgstr ""
+"El cohete pesado de la clase Banshee es a veces etiquetado como el \"torpedo "
+"del piloto pobre\". Tiene un motor relativamente débil, pero tiene una gran "
+"potencia que puede causar un daño respetable incluso a naves bastante "
+"grandes."
 
 #: dat/outfits/rockets/caesar_iv_torpedo.xml:2
 msgid "Caesar IV Torpedo"
-msgstr ""
+msgstr "Torpedo Cesar IV"
 
 #: dat/outfits/rockets/convulsion_missile.xml:2
 msgid "Convulsion Missile"
-msgstr ""
+msgstr "Misil Convulsivo"
 
 #: dat/outfits/rockets/electron_energy_cell.xml:2
 msgid "Electron Energy Cell"
-msgstr ""
+msgstr "Célula de Energía de Electrones"
 
 #: dat/outfits/rockets/electron_energy_cell.xml:7
 msgid ""
@@ -21889,10 +22038,14 @@ msgid ""
 "them ideal for softening up a target for shorter-ranged beams to finish the "
 "target off."
 msgstr ""
+"Estas Células de Energía se utilizan como una forma de \"munición\" para un "
+"cañón de descarga de largo alcance utilizado por los Za'lek. Tienen un "
+"alcance decente y un buen daño, lo que las hace ideales para ablandar un "
+"objetivo para que los rayos de menor alcance acaben con él."
 
 #: dat/outfits/rockets/emp_grenade.xml:2
 msgid "EMP Grenade"
-msgstr ""
+msgstr "Granada PEM"
 
 #: dat/outfits/rockets/emp_grenade.xml:7
 msgid ""
@@ -21901,10 +22054,15 @@ msgid ""
 "alive, as the EM pulses rarely destroy the ship; leaving it floating "
 "disabled in space."
 msgstr ""
+"Esta es una granada que puede lanzarse para desatar un pulso "
+"electromagnético que inutiliza rápidamente la electrónica de las naves "
+"enemigas. Resulta útil para capturar naves con vida, ya que los pulsos "
+"electromagnéticos rara vez destruyen la nave; dejándola flotando inutilizada "
+"en el espacio."
 
 #: dat/outfits/rockets/fury_missile.xml:2
 msgid "Fury Missile"
-msgstr ""
+msgstr "Misil Furia"
 
 #: dat/outfits/rockets/fury_missile.xml:6
 msgid ""
@@ -21913,36 +22071,43 @@ msgid ""
 "efficiently. Its high agility come at the cost of destructive power, "
 "however, limiting its effectiveness to light, nimble fighters."
 msgstr ""
+"El misil interceptor de la clase Furia es un misil ligero propulsado por un "
+"potente motor, que entrega su carga útil a su objetivo con rapidez y "
+"eficacia. Sin embargo, su gran agilidad se produce a costa de su poder "
+"destructivo, lo que limita su eficacia a los cazas ligeros y ágiles."
 
 #: dat/outfits/rockets/headhunter_missile.xml:2
 msgid "Headhunter Missile"
-msgstr ""
+msgstr "Misil Cazacabezas"
 
 #: dat/outfits/rockets/huntsman_torpedo.xml:2
 msgid "Huntsman Torpedo"
-msgstr ""
+msgstr "Torpedo Cazahombres"
 
 #: dat/outfits/rockets/huntsman_torpedo.xml:7
 msgid ""
 "Based on the Caesar torpedo platform, Huntsman EMP torpedoes are designed to "
 "disable large warships, where smaller weapons would fail."
 msgstr ""
+"Basados en la plataforma del torpedo César, los torpedos Cazahombres PEM "
+"están diseñados para inutilizar grandes naves de guerra, donde las armas más "
+"pequeñas fracasarían."
 
 #: dat/outfits/rockets/imperator_torpedo.xml:2
 msgid "Imperator Torpedo"
-msgstr ""
+msgstr "Torpedo Emperador"
 
 #: dat/outfits/rockets/mace_rocket.xml:2
 msgid "Mace Rocket"
-msgstr ""
+msgstr "Cohete Maza"
 
 #: dat/outfits/rockets/medusa_missile.xml:2
 msgid "Medusa Missile"
-msgstr ""
+msgstr "Misil Medusa"
 
 #: dat/outfits/rockets/shatterer_missile.xml:2
 msgid "Shatterer Missile"
-msgstr ""
+msgstr "Misil Trizas"
 
 #: dat/outfits/rockets/shatterer_missile.xml:7
 msgid ""
@@ -21950,14 +22115,18 @@ msgid ""
 "puncture heavy warships and leave them vulnerable. It has very poor "
 "tracking, but has excellent speed and armour piercing."
 msgstr ""
+"Este cohete modificado fue utilizado por los drones pesados del Colectivo "
+"como medio para perforar naves de guerra pesadas y dejarlas vulnerables. "
+"Tiene un seguimiento muy pobre, pero tiene una velocidad y una perforación "
+"de blindaje excelentes."
 
 #: dat/outfits/rockets/spearhead_missile.xml:2
 msgid "Spearhead Missile"
-msgstr ""
+msgstr "Misil Cabeza de Lanza"
 
 #: dat/outfits/rockets/vengeance_missile.xml:2
 msgid "Vengeance Missile"
-msgstr ""
+msgstr "Misil Venganza"
 
 #: dat/outfits/rockets/vengeance_missile.xml:7
 msgid ""
@@ -21967,26 +22136,36 @@ msgid ""
 "killing armoured targets at the expense of making it poor against shields. "
 "Best paired with anti-shield weapons."
 msgstr ""
+"Los misiles interceptores de la clase Venganza son los más pesados que se "
+"fabrican actualmente. Casi la mitad del casco del misil se utiliza para la "
+"carga útil, lo que disminuye su capacidad para alcanzar objetivos rápidos. "
+"Está diseñado para matar a los objetivos blindados a expensas de que resulte "
+"pobre contra los escudos. Lo mejor es combinarlo con armas antiescudo."
 
 #: dat/outfits/rockets/zalek_hunter.xml:2
 msgid "Za'lek Hunter-Killer"
-msgstr ""
+msgstr "Cazador-Asesino Za'lek"
 
 #: dat/outfits/rockets/zalek_hunter.xml:7
 msgid ""
 "This little drone is little more than a guidance computer with bare-bones "
 "AI, a propulsion system, and a bomb wrapped in an armoured shell."
 msgstr ""
+"Este pequeño avión no tripulado es poco más que un ordenador de orientación "
+"con una IA básica, un sistema de propulsión y una bomba envuelta en un "
+"caparazón blindado."
 
 #: dat/outfits/rockets/zalek_reaper.xml:2
 msgid "Za'lek Reaper Drone"
-msgstr ""
+msgstr "Dron Segador Za'lek"
 
 #: dat/outfits/rockets/zalek_reaper.xml:7
 msgid ""
 "Reaper drones are the Za'lek version of other nations' torpedoes. They are "
 "reasonably fast, and hit with shattering force."
 msgstr ""
+"Los drones Segador son la versión Za'lek de los torpedos de otras naciones. "
+"Son razonablemente rápidos y golpean con una fuerza demoledora."
 
 #: dat/outfits/structure/active_plating.xml:2
 msgid "Active Plating"
@@ -22119,6 +22298,11 @@ msgid ""
 "that the engines can now also be run in reverse to allow braking with a "
 "small loss in reverse thrust capability."
 msgstr ""
+"Esta mejora dirige la energía de los suministros de energía de la nave al "
+"motor, proporcionando a la nave un mayor empuje. No aumenta directamente la "
+"velocidad máxima de la nave ni su capacidad de giro, pero un efecto curioso "
+"es que ahora los motores también pueden funcionar en reversa para permitir "
+"el frenado con una pequeña pérdida de capacidad de empuje en reversa."
 
 #: dat/outfits/structure/improved_stabilizer.xml:2
 msgid "Improved Stabilizer"
@@ -22131,6 +22315,11 @@ msgid ""
 "keeping the ship stable. As another side effect, the improved stabilizers "
 "allowing reversing the thrusters with a small loss of thrust."
 msgstr ""
+"Al mejorar drásticamente los sistemas de estabilización de tu nave, esta "
+"modificación te permitirá alcanzar mayores velocidades y giros manteniendo "
+"la estabilidad de la nave. Como otro efecto secundario, los estabilizadores "
+"mejorados permiten invertir los propulsores con una pequeña pérdida de "
+"empuje."
 
 #: dat/outfits/structure/large_cargo_pod.xml:2
 msgid "Large Cargo Pod"
@@ -22370,6 +22559,8 @@ msgid ""
 "The pinnacle in shield boosting technology, reinforcing the defenses of "
 "ships fighting on the front lines."
 msgstr ""
+"La cúspide de la tecnología de aumento de escudos, que refuerza las defensas "
+"de las naves que luchan en el frente."
 
 #: dat/outfits/structure/small_cargo_pod.xml:2
 msgid "Small Cargo Pod"
@@ -22394,6 +22585,8 @@ msgid ""
 "A fake transponder to make ship appear like a non-descript and harmless "
 "independent ship."
 msgstr ""
+"Un transpondedor falso para hacer que la nave aparezca como una nave "
+"independiente indescriptible e inofensiva."
 
 #: dat/outfits/unique/fake_transponder.xml:12
 msgid ""
@@ -22433,6 +22626,11 @@ msgid ""
 "a tendency to leave the ship as a sitting duck if it is unable to destroy "
 "the target in a single swipe."
 msgstr ""
+"El Rayo Valquiria es una versión muy modificada del Rayo Ragnarok, en la que "
+"los escudos de la nave se desvían significativamente hacia el arma del rayo "
+"para aumentar el daño de salida. El resultado es un rayo increíblemente "
+"potente que tiende a dejar la nave como un blanco fácil si no puede destruir "
+"el objetivo de un solo golpe."
 
 #: dat/outfits/utility/asteroid_scanner.xml:2 src/shipstats.c:177
 msgid "Asteroid Scanner"
@@ -22705,6 +22903,11 @@ msgid ""
 "to increase both the range and the lock-on speed of all missile launchers on "
 "the ship."
 msgstr ""
+"Desarrollada para resolver problemas del tipo \"aguja en el pajar\", la IA "
+"de combate Preciso destaca en la búsqueda y fijación de pequeños objetos en "
+"la inmensidad del espacio. Al fusionarla con los sistemas de lanzamiento de "
+"misiles de la nave, la IA es capaz de aumentar tanto el alcance como la "
+"velocidad de fijación de todos los lanzadores de misiles de la nave."
 
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:2
 msgid "Scanning Combat AI"
@@ -22826,6 +23029,12 @@ msgid ""
 "damage. It is not entirely clear how this effect is created, however, "
 "doctors do not recommend prolonged usage."
 msgstr ""
+"El inductor de estasis de emergencia funciona creando un fuerte campo "
+"electromagnético alrededor de la nave que hace que parezca que el tiempo se "
+"mueve más despacio, al tiempo que acelera significativamente la acción de la "
+"nave, y se activa al sufrir daños en el blindaje. No está del todo claro "
+"cómo se crea este efecto, sin embargo, los médicos no recomiendan su uso "
+"prolongado."
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:10
 msgid "Triggered on armour damage. Lasts 3 seconds with 8 seconds cooldown."
@@ -22865,6 +23074,11 @@ msgid ""
 "needing to recharge, this scanner is capable of discovering jump points that "
 "regular sensors can't detect."
 msgstr ""
+"Una pieza especializada de tecnología de sensores que puede escanear su "
+"entorno inmediato en busca de anomalías inusuales en el tejido del espacio. "
+"Aunque es de corto alcance y solo es capaz de escanear durante un tiempo "
+"limitado antes de tener que recargarse, este escáner es capaz de descubrir "
+"puntos de salto que los sensores normales no pueden detectar."
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:2
 msgid "Faraday Tempest Coating"
@@ -22937,6 +23151,12 @@ msgid ""
 "to the nebula effects, this hull coating does make a ship significantly more "
 "resistant, although prolonged exposure is still not recommended."
 msgstr ""
+"Proteger las naves de la radiación de la nebulosa no es una tarea fácil, "
+"dadas las fluctuaciones y los parámetros de los diferentes tipos de "
+"radiación que se emiten, que aún no se conocen del todo. Aunque no hace que "
+"una nave sea inmune a los efectos de la nebulosa, este revestimiento del "
+"casco hace que una nave sea significativamente más resistente, aunque no se "
+"recomienda una exposición prolongada."
 
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:2
 msgid "Nexus Stealth Coating"
@@ -22949,6 +23169,11 @@ msgid ""
 "developed a breakthrough hull coating that using quantum entangled self-"
 "projections that can confuse gravitational readings."
 msgstr ""
+"Los sensores modernos de las naves se basan en la detección de anormalidades "
+"gravitacionales para detectar las naves y son muy robustos en la mayoría de "
+"las situaciones. Los astilleros Nexus han desarrollado un innovador "
+"revestimiento para el casco que utiliza autoproyecciones cuánticas "
+"entrelazadas que pueden confundir las lecturas gravitacionales."
 
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:2
 msgid "Photo-Voltaic Nanobot Coating"
@@ -23258,6 +23483,11 @@ msgid ""
 "weaknesses in enemy ships. The more ships it is able to analyse and "
 "extrapolate from, the stronger the effect."
 msgstr ""
+"Esta es una mejora de los sistemas de sensores que es capaz de aprender de "
+"las debilidades comunes de las naves hostiles cercanas. La IA es capaz de "
+"extraer rasgos sutiles que el ojo humano pasa por alto y extrapolar con gran "
+"detalle para señalar los puntos débiles de las naves enemigas. Cuantas más "
+"naves sea capaz de analizar y extrapolar, mayor será el efecto."
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:12
 msgid ""
@@ -23516,6 +23746,10 @@ msgid ""
 "point-defense capabilities. With a full 360 degrees of rotation, laser "
 "turrets provide affordable, energy-efficient firepower to courier vessels."
 msgstr ""
+"Un par de cañones láser montados en una torreta giratoria, que proporcionan "
+"una excelente capacidad de defensa puntual. Con una rotación completa de 360 "
+"grados, las torretas láser proporcionan una potencia de fuego asequible y de "
+"bajo consumo a las naves de transporte."
 
 #: dat/outfits/weapons/laser_turret_mk2.xml:2
 msgid "Laser Turret MK2"
@@ -23710,6 +23944,11 @@ msgid ""
 "among inexperienced mercenaries who are not as well-practiced at aiming as "
 "the pros."
 msgstr ""
+"La torreta de plasma básicamente toma un blaster de plasma y lo monta en una "
+"torreta. Su corto alcance la hace poco adecuada para la defensa, por lo que "
+"no es especialmente popular entre comerciantes y mercaderes, pero ha "
+"encontrado un nicho entre mercenarios inexpertos que no tienen tanta "
+"práctica en la puntería como los profesionales."
 
 #: dat/outfits/weapons/plasma_turret_mk2.xml:2
 msgid "Plasma Turret MK2"
@@ -23944,6 +24183,10 @@ msgid ""
 "ships, the turret version of the Gauss Gun provides basic defense against "
 "lone pirates. A more determined attacker is unlikely to be deterred, however."
 msgstr ""
+"Una de las contramedidas más comunes empleadas por las naves mercantes de "
+"bajo presupuesto, la versión de torreta del cañón Gauss proporciona una "
+"defensa básica contra los piratas solitarios. Sin embargo, es poco probable "
+"que un atacante más decidido sea disuadido."
 
 #: dat/outfits/weapons/turreted_vulcan_gun.xml:2
 msgid "Turreted Vulcan Gun"
@@ -23996,6 +24239,9 @@ msgid ""
 "between the ruggedness of the Pacifier and the agility of the Lancelot. "
 "Overall a very solid fighter."
 msgstr ""
+"Una nave de combate muy versátil. Nexus define al Amonestador como un "
+"compromiso entre la robustez del Pacificador y la agilidad del Lancelot. En "
+"general, es un caza muy sólido."
 
 #: dat/ships/ancestor.xml:2
 msgid "Ancestor"
@@ -24008,6 +24254,11 @@ msgid ""
 "Goddard though, the electronics are done by House Dvaered, making it "
 "considerably inferior in that area."
 msgstr ""
+"Conocido comúnmente como el pequeño Goddard, el Ancestro también tiene sus "
+"raíces en las primitivas máquinas voladoras utilizadas por los hombres hace "
+"muchos años. Sin embargo, a diferencia del Goddard, la electrónica está "
+"hecha por la Casa Dvaered, lo que lo hace considerablemente inferior en esa "
+"área."
 
 #: dat/ships/drone.xml:2 dat/missions/minerva/pirate1.lua:175
 msgid "Drone"
@@ -24023,6 +24274,8 @@ msgid ""
 "This is a modified version of the robotic drone that includes a life support "
 "system for humans."
 msgstr ""
+"Esta es una versión modificada del dron robótico que incluye un sistema de "
+"soporte vital para humanos."
 
 #: dat/ships/drone_heavy.xml:2
 msgid "Heavy Drone"
@@ -24033,6 +24286,8 @@ msgid ""
 "This Collective heavy drone has been modified by engineers to support a "
 "human pilot."
 msgstr ""
+"Este pesado dron Colectivo ha sido modificado por los ingenieros para "
+"soportar un piloto humano."
 
 #: dat/ships/drone_hyena.xml:2
 msgid "Drone (Hyena)"
@@ -24043,6 +24298,8 @@ msgid ""
 "This is a modified version of the robotic drone that includes a life support "
 "system for humans, disguised as a Hyena."
 msgstr ""
+"Esta es una versión modificada del dron robótico que incluye un sistema de "
+"soporte vital para humanos, disfrazado de Hiena."
 
 #: dat/ships/dvaered_ancestor.xml:2
 msgid "Dvaered Ancestor"
@@ -24054,6 +24311,9 @@ msgid ""
 "armour than its standard counterpart, which improves the integrity of its "
 "hull at the cost of slightly increased base mass."
 msgstr ""
+"Esta versión de grado militar del Ancestro está equipada con un blindaje "
+"ligeramente superior al de su homólogo estándar, lo que mejora la integridad "
+"de su casco a costa de un ligero aumento de la masa base."
 
 #: dat/ships/dvaered_arsenal.xml:2
 msgid "Dvaered Arsenal"
@@ -24069,6 +24329,13 @@ msgid ""
 "even basic necessities. Colloquially they have been also been known to be "
 "called Dvaered Gunboxes."
 msgstr ""
+"El Arsenal es un Gran Carguero fuertemente armado, utilizado por la Casa "
+"Dvaered para transportar grandes cantidades de suministros y tropas siempre "
+"que dicha tarea sea demasiado peligrosa para los cargueros más ligeros. El "
+"nombre deriva del hecho de que las naves de transporte de la Casa Dvaered "
+"suelen centrarse en la distribución y el despliegue de armas y tropas con "
+"preferencia a las materias primas, las mercancías o incluso las necesidades "
+"básicas. Coloquialmente, también se les conoce como Armerias Dvaered."
 
 #: dat/ships/dvaered_goddard.xml:2
 msgid "Dvaered Goddard"
@@ -24084,6 +24351,14 @@ msgid ""
 "developed which features better armour and weapon damage at the cost of "
 "increased mass and energy consumption."
 msgstr ""
+"En su día, el Crucero de Batalla Goddard fue encargado por el Imperio para "
+"el servicio militar. Sin embargo, durante las revueltas Dvaered, la mayoría "
+"de los capitanes Goddard se pusieron del lado de los insurgentes y, tras el "
+"establecimiento de la Casa Dvaered, el Imperio les cedió la licencia de la "
+"envejecida nave. En la actualidad, la Casa Dvaered es el mayor cliente de la "
+"Casa Goddard, y se ha desarrollado esta versión de grado militar que "
+"presenta un mejor blindaje y daño de las armas a costa de un mayor consumo "
+"de masa y energía."
 
 #: dat/ships/dvaered_phalanx.xml:2
 msgid "Dvaered Phalanx"
@@ -24096,6 +24371,10 @@ msgid ""
 "chamber for its forward-mounted weapons that doubles as additional cargo "
 "space."
 msgstr ""
+"Esta versión de grado militar del Falanje tiene un blindaje ligeramente más "
+"fuerte en comparación con su homólogo estándar, y también cuenta con una "
+"cámara de refrigeración especial para sus armas montadas en la parte "
+"delantera que dobla como espacio de carga adicional."
 
 #: dat/ships/dvaered_vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:220
@@ -24110,6 +24389,12 @@ msgid ""
 "space for the improved weapon cooling facilities, reducing the ship's "
 "turning rate slightly."
 msgstr ""
+"Esta versión de grado militar de la Vendetta tiene un blindaje más fuerte y "
+"mejores instalaciones de refrigeración de armas que la Vendetta estándar, "
+"pero sus propulsores de giro están colocados de forma menos óptima que los "
+"de su homóloga estándar para dejar espacio a las instalaciones de "
+"refrigeración de armas mejoradas, lo que reduce ligeramente la velocidad de "
+"giro de la nave."
 
 #: dat/ships/dvaered_vigilance.xml:2
 msgid "Dvaered Vigilance"
@@ -24122,6 +24407,10 @@ msgid ""
 "counterpart, resulting in increased damage at the cost of slightly increased "
 "power consumption and heat production."
 msgstr ""
+"Esta versión de grado militar de la Vigilancia tiene un blindaje más fuerte "
+"y desvía más de su energía a sus armas montadas en la parte delantera que su "
+"contraparte estándar, lo que resulta en un mayor daño a costa de un consumo "
+"de energía y una producción de calor ligeramente mayor."
 
 #: dat/ships/empire_admonisher.xml:2
 msgid "Empire Admonisher"
@@ -24909,7 +25198,7 @@ msgstr ""
 
 #: dat/ships/thurion_perspicacity.xml:2
 msgid "Thurion Perspicacity"
-msgstr "Sagacidad de Turion"
+msgstr "Perspicacia Turion"
 
 #: dat/ships/thurion_perspicacity.xml:20
 msgid ""
@@ -92113,7 +92402,7 @@ msgstr "Novia"
 
 #: dat/scripts/pilotname/pirate.lua:259
 msgid "Brigand"
-msgstr "Bandido"
+msgstr "Forajido"
 
 #: dat/scripts/pilotname/pirate.lua:260
 msgid "Bulk"
