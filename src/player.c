@@ -56,6 +56,7 @@
 #include "pilot.h"
 #include "player_gui.h"
 #include "player_fleet.h"
+#include "player_inventory.h"
 #include "rng.h"
 #include "shiplog.h"
 #include "sound.h"
@@ -695,6 +696,7 @@ void player_cleanup (void)
    land_cleanup();
    map_cleanup();
    factions_clearDynamic();
+   player_inventoryClear();
 
    /* Reset controls. */
    player_accelOver();
