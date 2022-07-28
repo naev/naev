@@ -146,7 +146,12 @@ static int stream_thread( void *la_data )
          /* Refill active buffer */
          alSourceUnqueueBuffers( la->source, 1, &removed );
          ret = stream_loadBuffer( la, la->stream_buffers[ la->active ] );
-         if (ret < 0)
+         if (la->active < 0) {
+            /* stream_loadBuffer unlocks the sound lock internally, which can
+             * lead to the thread being gc'd and having active = -1. We have to
+             * add a check here to not mess around with stuff. */
+         }
+         else if (ret < 0)
             la->active = -1;
          else {
             alSourceQueueBuffers( la->source, 1, &la->stream_buffers[ la->active ] );
@@ -156,7 +161,7 @@ static int stream_thread( void *la_data )
       al_checkErr(); /* XXX - good or bad idea to log from the thread? */
       soundUnlock();
 
-      SDL_Delay(5);
+      SDL_Delay(10);
    }
 }
 
