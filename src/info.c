@@ -31,6 +31,7 @@
 #include "player.h"
 #include "player_fleet.h"
 #include "player_gui.h"
+#include "player_inventory.h"
 #include "shiplog.h"
 #include "space.h"
 #include "tk/toolkit_priv.h"
@@ -172,8 +173,8 @@ static void info_buttonRegen (void)
             BUTTON_WIDTH, BUTTON_HEIGHT,
             btn->button, btn->caption, info_buttonClick, btn->key );
    }
-   window_resizeWidget( wid, "lstLicenses", w-80-240-40-40, h-90 - rows*(20+BUTTON_HEIGHT) );
-   window_moveWidget( wid, "lstLicenses", -20, -70 );
+   window_resizeWidget( wid, "lstInventory", w-80-240-40-40, h-90 - rows*(20+BUTTON_HEIGHT) );
+   window_moveWidget( wid, "lstInventory", -20, -70 );
 }
 
 /**
@@ -356,13 +357,13 @@ void info_update (void)
  */
 static void info_openMain( unsigned int wid )
 {
-   const char **buf;
+   const char **lic;
    char str[STRMAX_SHORT], creds[ECON_CRED_STRLEN];
-   char **licenses;
-   int nlicenses;
+   char **inventory;
    char *nt;
-   int w, h, cargo_used, cargo_total;
+   int w, h, cargo_used, cargo_total, n;
    unsigned int destroyed;
+   const PlayerItem *inv;
    size_t k = 0, l = 0;
 
    /* Get the dimensions. */
@@ -422,23 +423,37 @@ static void info_openMain( unsigned int wid )
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSetGUI", _("Set GUI"), info_setGui, SDLK_g );
 
-   buf = player_getLicenses();
-   nlicenses = array_size( buf );
+   /* TODO probably add alt text with descriptions. */
+   lic = player_getLicenses();
+   inv = player_inventory();
+   n   = array_size(lic) + array_size(inv);
    /* List. */
-   if (nlicenses == 0) {
-     licenses = malloc(sizeof(char*));
-     licenses[0] = strdup(_("None"));
-   } else {
-     licenses = malloc(sizeof(char*) * nlicenses);
-     for (int i=0; i<nlicenses; i++)
-        licenses[i] = strdup( _(buf[i]) );
-      qsort( licenses, nlicenses, sizeof(char*), strsort );
+   if (n == 0) {
+     inventory = malloc(sizeof(char*));
+     inventory[0] = strdup(_("None"));
+     n = 1;
+   }
+   else {
+      int nlic = array_size(lic);
+      int ninv = array_size(inv);
+      inventory = malloc(sizeof(char*) * n);
+      for (int i=0; i<nlic; i++)
+         asprintf( &inventory[i], "#n%s#0%s", _("License: "), _(lic[i]) );
+      qsort( inventory, nlic, sizeof(char*), strsort );
+      for (int i=0; i<ninv; i++) {
+         const PlayerItem *pi = &inv[i];
+         if (pi->quantity == 0)
+            asprintf( &inventory[nlic+i], "%s", _(pi->name) );
+         else
+            asprintf( &inventory[nlic+i], _("%s (%d)"), _(pi->name), pi->quantity );
+      }
+      qsort( &inventory[nlic], ninv, sizeof(char*), strsort );
    }
    window_addText( wid, -20, -40, w-80-240-40-40, 20, 1, "txtList",
-         NULL, NULL, _("Licenses") );
+         NULL, NULL, _("Inventory") );
    window_addList( wid, -20, -70, w-80-240-40-40, h-110-BUTTON_HEIGHT,
-         "lstLicenses", licenses, MAX(nlicenses, 1), 0, NULL, NULL );
-   window_setFocus( wid, "lstLicenses" );
+         "lstInventory", inventory, n, 0, NULL, NULL );
+   window_setFocus( wid, "lstInventory" );
 
    info_buttonRegen();
 }
