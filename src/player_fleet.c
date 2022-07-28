@@ -169,6 +169,15 @@ static void shipCargo( PilotCommodity **pclist, Pilot *p, int remove )
       pilot_cargoCalc( p );
 }
 
+static int pc_cmp( const void *pa, const void *pb )
+{
+   const PilotCommodity *pca, *pcb;
+   pca = (const PilotCommodity*) pa;
+   pcb = (const PilotCommodity*) pb;
+
+   return pcb->commodity->price - pca->commodity->price;
+}
+
 /**
  * @brief Redistributes the cargo in the player's fleet.
  */
@@ -188,7 +197,8 @@ void pfleet_cargoRedistribute (void)
       shipCargo( &pclist, pe, 1 );
    }
 
-   /* TODO sort based on something? */
+   /* Sort based on base price. */
+   qsort( pclist, array_size(pclist), sizeof(PilotCommodity), pc_cmp );
 
    /* Re-add the cargo. */
    for (int i=0; i<array_size(pclist); i++) {
