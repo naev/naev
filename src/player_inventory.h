@@ -14,6 +14,7 @@ typedef struct PlayerItem_ {
 } PlayerItem;
 
 void player_inventoryClear (void);
-PlayerItem* player_inventory (void);
+const PlayerItem* player_inventory (void);
+int player_inventoryAmount( const char *name );
 int player_inventoryAdd( const char *name, int amount );
 int player_inventoryRemove( const char *name, int amount );
