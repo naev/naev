@@ -928,6 +928,7 @@ static void cargo_genList( unsigned int wid )
    char **buf;
    int nbuf;
    int w, h;
+   PilotCommodity *pclist = pfleet_cargoList();
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -937,7 +938,7 @@ static void cargo_genList( unsigned int wid )
       window_destroyWidget( wid, "lstCargo" );
 
    /* List */
-   if (array_size(player.p->commodities)==0) {
+   if (array_size(pclist)==0) {
       /* No cargo */
       buf = malloc(sizeof(char*));
       buf[0] = strdup(_("None"));
@@ -945,11 +946,10 @@ static void cargo_genList( unsigned int wid )
    }
    else {
       /* List the player fleet's cargo. */
-      PilotCommodity *pclist = pfleet_cargoList();
-      buf = malloc( sizeof(char*) * array_size(player.p->commodities) );
+      buf = malloc( sizeof(char*) * array_size(pclist) );
       for (int i=0; i<array_size(pclist); i++) {
          PilotCommodity *pc = &pclist[i];
-         int misn = pc->id != 0;
+         int misn = (pc->id != 0);
          int illegal = (array_size(pc->commodity->illegalto)>0);
 
          asprintf(&buf[i], "%s %d%s%s",
@@ -958,11 +958,10 @@ static void cargo_genList( unsigned int wid )
                misn ? _(" [#bMission#0]") : "",
                illegal ? _(" (#rillegal#0)") : "" );
       }
-      nbuf = array_size(player.p->commodities);
-      array_free(pclist);
+      nbuf = array_size(pclist);
    }
-   window_addList( wid, 20, -40,
-         w - 40, 200,
+   array_free(pclist);
+   window_addList( wid, 20, -40, w - 40, 200,
          "lstCargo", buf, nbuf, 0, cargo_update, NULL );
    window_setFocus( wid, "lstCargo" );
 }
