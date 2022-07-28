@@ -430,7 +430,7 @@ static int load_sortCompare( const void *p1, const void *p2 )
       return +1;
 
    /* Finally sort by name. */
-   return strcmp( ns1->name, ns2->name );
+   return strcmp( ns1->save_name, ns2->save_name );
 }
 
 /**
