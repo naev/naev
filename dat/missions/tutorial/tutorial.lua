@@ -156,9 +156,6 @@ They stare at you for a few seconds.
 end
 
 function timer ()
-   hook.rm( mem.timer_hook )
-   mem.timer_hook = hook.timer( 1.0, "timer" )
-
    -- Have to be in the mission system
    if system.cur() ~= missys then return end
 
@@ -176,6 +173,7 @@ function timer ()
       sai(fmt.f(_([["To land on {pnt}, you need to slow down your ship on top of the planet, and engage the landing system. You can do this manually with the movement keys and engage your landing gears with {landkey}, or this can all be done automatically by targeting the planet with either #bclicking#0 on it, or with {targetplanetkey}, and then using the {landkey}. You can also #bdouble click#0 on the planet to engage the same behaviour. Give it a try!"]]),{pnt=start_planet, targetplanetkey=tut.getKey("target_spob"), landkey=tut.getKey("land")}))
       vn.done( tut.shipai.transition )
       vn.run()
+      return
 
    elseif mem.stage==4 and player.pos():dist(dest_planet:pos()) <= dest_planet_r then
       mem.stage = 5
@@ -197,12 +195,21 @@ function timer ()
       spawn_captain_tp ()
 
       misn.markerRm( mem.misnmarker )
+      return
    end
+
+   mem.timer_hook = hook.timer( 1.0, "timer" )
 end
 
 function land ()
-   hook.rm(mem.timer_hook)
+   if mem.timer_hook then
+      hook.rm(mem.timer_hook)
+   end
    mem.timer_hook = nil
+   if mem.enter_timer_hook then
+      hook.rm(mem.enter_timer_hook)
+   end
+   mem.enter_timer_hook = nil
    if mem.stage == 2 then
       mem.stage = 3
       msg_info{_([["Excellent! The landing was successful. As your Ship AI, I am in charge of guiding your ship and performing the landing procedure, which has cut down significantly on misfortunes during human-controlled manual landing procedures. When you land, your ship is refueled automatically and you can do things such as talk to civilians at the bar, buy new ship components, configure your ship, and most importantly, accept missions from the Mission Computer. Why don't we look around? As you can see, we are currently on the Landing Main tab, where you can learn about the planet and buy a local map. Click all the other tabs below and I'll give you a tour through what else you can do on a planet. When you are done, click the '#bTake Off#0' button so we can continue."]])}
@@ -289,10 +296,11 @@ end
 function enter ()
    hook.rm( mem.timer_hook )
    mem.timer_hook = hook.timer( 5.0, "timer" )
-   hook.timer( 2.0, "enter_timer" )
+   mem.enter_timer_hook = hook.timer( 2.0, "enter_timer" )
 end
 
 function enter_timer ()
+   mem.enter_timer_hook = nil
    if mem.stage == 3 then
       mem.stage = 4
       misn.osdActive( 3 )
