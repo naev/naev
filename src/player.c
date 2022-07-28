@@ -3968,6 +3968,12 @@ static int player_parseLicenses( xmlNodePtr parent )
    return 0;
 }
 
+/**
+ * @brief Parses player's inventory.
+ *
+ *    @param parent Node of the inventory.
+ *    @return 0 on success.
+ */
 static int player_parseInventory( xmlNodePtr parent )
 {
    xmlNodePtr node = parent->xmlChildrenNode;
