@@ -134,7 +134,6 @@ static int stream_thread( void *la_data )
       /* Case finished. */
       if (la->active < 0) {
          la->th = NULL;
-         al_checkErr(); /* XXX - good or bad idea to log from the thread? */
          SDL_CondBroadcast( la->cond );
          soundUnlock();
          return 0;
@@ -150,6 +149,10 @@ static int stream_thread( void *la_data )
             /* stream_loadBuffer unlocks the sound lock internally, which can
              * lead to the thread being gc'd and having active = -1. We have to
              * add a check here to not mess around with stuff. */
+            la->th = NULL;
+            SDL_CondBroadcast( la->cond );
+            soundUnlock();
+            return 0;
          }
          else if (ret < 0)
             la->active = -1;
