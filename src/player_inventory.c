@@ -51,7 +51,7 @@ int player_inventoryAmount( const char *name )
    for (int i=0; i<array_size(inventory); i++) {
       PlayerItem *pi = &inventory[i];
       if (strcmp( pi->name, name )==0)
-         return 1;
+         return pi->quantity;
    }
    return 0;
 }
