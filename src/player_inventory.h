@@ -9,7 +9,7 @@
  * @brief Represents an item in the player inventory.
  */
 typedef struct PlayerItem_ {
-   char *name;    /**< Name of the item. */
+   char *name;    /**< Name of the item (untranslated). */
    int quantity;  /**< Amount. */
 } PlayerItem;
 
