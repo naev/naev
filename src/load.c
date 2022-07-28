@@ -328,6 +328,10 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
 
 static int load_compatibilityTest( const nsave_t *ns )
 {
+   char buf[STRMAX], buf2[STRMAX];
+   const plugin_t *plugins = plugin_list();
+   int l;
+
    switch (ns->compatible) {
       case SAVE_COMPATIBILITY_NAEV_VERSION:
          if (!dialogue_YesNo( _("Save game version mismatch"),
@@ -340,12 +344,19 @@ static int load_compatibilityTest( const nsave_t *ns )
          break;
 
       case SAVE_COMPATIBILITY_PLUGINS:
+         l = 0;
+         for (int i=0; i<array_size(ns->plugins); i++)
+            l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?_(", "):"#r", ns->plugins[i] );
+         l += scnprintf( &buf[l], sizeof(buf)-l, "#0" );
+         l = 0;
+         for (int i=0; i<array_size(plugins); i++)
+            l += scnprintf( &buf2[l], sizeof(buf2)-l, "%s%s", (l>0)?_(", "):"", plugin_name(&plugins[i]) );
          if (!dialogue_YesNo( _("Save game plugin mismatch"),
                _("Save game '%s' plugins do not match loaded plugins:\n"
                "   Save plugins: %s\n"
                "   Naev plugins: %s\n"
                "Are you sure you want to load this game? It may lose data."),
-               ns->name, "#rTODO#0", "TODO" ))
+               ns->name, buf, buf2 ) )
             return -1;
          break;
 
