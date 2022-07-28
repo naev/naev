@@ -210,9 +210,8 @@ void pfleet_cargoRedistribute (void)
       else
          q = pfleet_cargoAdd( pc->commodity, pc->quantity );
 #ifdef DEBUGGING
-      if (q != pc->quantity) {
+      if (q != pc->quantity)
          WARN(_("Failure to add cargo '%s' to player fleeet. Only %d of %d added."), pc->commodity->name, q, pc->quantity );
-      }
 #endif /* DEBUGGING */
    }
 
