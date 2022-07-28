@@ -1602,7 +1602,7 @@ static int playerL_fleetCargoList( lua_State *L )
  *
  * Note that this does not get licenses.
  *
- *    @treturn table A table containing inventory items in the form of subtables with a "name" and "quantity" field.
+ *    @luatreturn table A table containing inventory items in the form of subtables with a "name" and "quantity" field.
  * @luafunc inventory
  */
 static int playerL_inventory( lua_State *L )
@@ -1627,9 +1627,9 @@ static int playerL_inventory( lua_State *L )
 /**
  * @brief Adds an item to the player's in-game inventory.
  *
- *    @tparam string name The name of the item to add.
- *    @tparam integer quantity The amount of the item to add.
- *    @treturn integer The amount of the item added.
+ *    @luatparam string name The name of the item to add.
+ *    @luatparam integer quantity The amount of the item to add.
+ *    @luatreturn integer The amount of the item added.
  * @luafunc inventoryAdd
  */
 static int playerL_inventoryAdd( lua_State *L )
@@ -1643,9 +1643,9 @@ static int playerL_inventoryAdd( lua_State *L )
 /**
  * @brief Removes an item to the player's in-game inventory.
  *
- *    @tparam string name The name of the item to remove.
- *    @tparam integer quantity The amount of the item to remove.
- *    @treturn integer The amount of the item removed.
+ *    @luatparam string name The name of the item to remove.
+ *    @luatparam integer quantity The amount of the item to remove.
+ *    @luatreturn integer The amount of the item removed.
  * @luafunc inventoryAdd
  */
 static int playerL_inventoryRm( lua_State *L )
@@ -1659,8 +1659,8 @@ static int playerL_inventoryRm( lua_State *L )
 /**
  * @brief Checks to see how much of an item the player has in their inventory.
  *
- *    @tparam string name The name of the item to check.
- *    @treturn integer The amount of the item the player has (0 if none).
+ *    @luatparam string name The name of the item to check.
+ *    @luatreturn integer The amount of the item the player has (0 if none).
  * @luafunc inventoryAdd
  */
 static int playerL_inventoryOwned( lua_State *L )
