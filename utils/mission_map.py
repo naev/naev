@@ -132,8 +132,7 @@ for missionfile in glob.glob( prefix+'/dat/missions/**/*.lua', recursive=True ):
     names.append(name)
     namdict[name] = i
 
-    avail = misn.find('avail')
-    done = avail.find('done') # TODO: I guess findall is needed if there are more than one
+    done = misn.find('done')  # TODO: I guess findall is needed if there are more than one
     dones.append(done)
 
     flags = misn.find('flags')
