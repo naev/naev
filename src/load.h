@@ -21,7 +21,7 @@ typedef enum SaveCompatibility_ {
  */
 typedef struct nsave_s {
    char *save_name; /** Snapshot name. */
-   char *name; /**< Player name. */
+   char *player_name; /**< Player name. */
    char *path; /**< File path relative to PhysicsFS write directory. */
    PHYSFS_sint64 modtime;
 

@@ -161,7 +161,7 @@ static int load_load( nsave_t *save, const char *path )
 
       else if (xml_isNode(parent, "player")) {
          /* Get name. */
-         xmlr_attr_strd(parent, "name", save->name);
+         xmlr_attr_strd(parent, "name", save->player_name);
          /* Parse rest. */
          node = parent->xmlChildrenNode;
          do {
@@ -267,7 +267,7 @@ static int load_enumerateCallbackPlayer( void* data, const char* origdir, const 
          ns.modtime = stat.modtime;
          array_push_back( &ps->saves, ns );
          if (ps->name == NULL)
-            ps->name = strdup( ns.name );
+            ps->name = strdup( ns.player_name );
       }
    }
 
@@ -328,6 +328,10 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
 
 static int load_compatibilityTest( const nsave_t *ns )
 {
+   char buf[STRMAX], buf2[STRMAX];
+   const plugin_t *plugins = plugin_list();
+   int l;
+
    switch (ns->compatible) {
       case SAVE_COMPATIBILITY_NAEV_VERSION:
          if (!dialogue_YesNo( _("Save game version mismatch"),
@@ -335,17 +339,24 @@ static int load_compatibilityTest( const nsave_t *ns )
                "   Save version: #r%s#0\n"
                "   Naev version: %s\n"
                "Are you sure you want to load this game? It may lose data."),
-               ns->name, ns->version, VERSION ))
+               ns->player_name, ns->version, VERSION ))
             return -1;
          break;
 
       case SAVE_COMPATIBILITY_PLUGINS:
+         l = 0;
+         for (int i=0; i<array_size(ns->plugins); i++)
+            l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?_(", "):"#r", ns->plugins[i] );
+         l += scnprintf( &buf[l], sizeof(buf)-l, "#0" );
+         l = 0;
+         for (int i=0; i<array_size(plugins); i++)
+            l += scnprintf( &buf2[l], sizeof(buf2)-l, "%s%s", (l>0)?_(", "):"", plugin_name(&plugins[i]) );
          if (!dialogue_YesNo( _("Save game plugin mismatch"),
                _("Save game '%s' plugins do not match loaded plugins:\n"
                "   Save plugins: %s\n"
                "   Naev plugins: %s\n"
                "Are you sure you want to load this game? It may lose data."),
-               ns->name, "#rTODO#0", "TODO" ))
+               ns->player_name, buf, buf2 ) )
             return -1;
          break;
 
@@ -430,7 +441,7 @@ static int load_sortCompare( const void *p1, const void *p2 )
       return +1;
 
    /* Finally sort by name. */
-   return strcmp( ns1->name, ns2->name );
+   return strcmp( ns1->save_name, ns2->save_name );
 }
 
 /**
@@ -447,8 +458,8 @@ void load_free (void)
             free( ns->plugins[k] );
          array_free( ns->plugins );
          free(ns->save_name);
+         free(ns->player_name);
          free(ns->path);
-         free(ns->name);
          free(ns->version);
          free(ns->data);
          free(ns->spob);
@@ -506,7 +517,7 @@ void load_loadGameMenu (void)
             names[i] = strdup( buf );
          }
          else
-            names[i] = strdup( ns->name );
+            names[i] = strdup( ns->player_name );
          if (selected_player != NULL && !strcmp( names[i], selected_player ))
             pos = i;
       }
@@ -712,7 +723,7 @@ static void display_save_info( unsigned int wid, const nsave_t *ns )
    credits2str( credits, ns->credits, 2 );
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
    l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s", _("Name:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->name );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->player_name );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Version:") );
    if (ns->compatible == SAVE_COMPATIBILITY_NAEV_VERSION)
       l += scnprintf( &buf[l], sizeof(buf)-l, "\n   #r%s#0", ns->version );

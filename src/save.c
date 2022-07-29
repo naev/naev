@@ -204,6 +204,7 @@ err:
  */
 void save_reload (void)
 {
+   /* Should be refreshed already when menu is opened (load_refresh). */
    const nsave_t *ns = load_getList( player.name );
    if (array_size(ns) <= 0) {
       WARN(_("Unable to reload save for '%s'!"),player.name);
