@@ -59,7 +59,7 @@ static int outfits_getMod (void);
 static void outfits_renderMod( double bx, double by, double w, double h, void *data );
 static void outfits_rmouse( unsigned int wid, const char* widget_name );
 static void outfits_find( unsigned int wid, const char *str );
-static credits_t outfit_getPrice( const Outfit *outfit );
+static const char *outfit_getPrice( const Outfit *outfit, credits_t *price, int *canbuy, int *cansell );
 static void outfit_Popdown( unsigned int wid, const char* str );
 static void outfits_genList( unsigned int wid );
 static void outfits_changeTab( unsigned int wid, const char *wgt, int old, int tab );
@@ -408,10 +408,12 @@ void outfits_update( unsigned int wid, const char *str )
    (void) str;
    int i, active;
    Outfit* outfit;
-   char buf[STRMAX], lbl[STRMAX], buf_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN], buf_mass[ECON_MASS_STRLEN];
+   char buf[STRMAX], lbl[STRMAX], buf_credits[ECON_CRED_STRLEN], buf_mass[ECON_MASS_STRLEN];
+   const char *buf_price;
+   credits_t price;
    size_t l = 0, k = 0;
    double th;
-   int iw, ih, w, h, blackmarket;
+   int iw, ih, w, h, blackmarket, canbuy, cansell;
    double mass;
 
    /* Get dimensions. */
@@ -454,21 +456,21 @@ void outfits_update( unsigned int wid, const char *str )
    /* new image */
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 256, 256 );
 
-   if (outfit_canBuy(outfit->name, land_spob) > 0)
-      window_enableButton( wid, "btnBuyOutfit" );
-   else
-      window_disableButtonSoft( wid, "btnBuyOutfit" );
+   /* new text */
+   window_modifyText( wid, "txtDescription", _(outfit->description) );
+   buf_price = outfit_getPrice( outfit, &price, &canbuy, &cansell );
+   credits2str( buf_credits, player.p->credits, 2 );
 
    /* gray out sell button */
-   if (outfit_canSell(outfit->name) > 0)
+   if ((outfit_canSell(outfit->name) > 0) && cansell)
       window_enableButton( wid, "btnSellOutfit" );
    else
       window_disableButtonSoft( wid, "btnSellOutfit" );
 
-   /* new text */
-   window_modifyText( wid, "txtDescription", _(outfit->description) );
-   price2str( buf_price, outfit_getPrice(outfit), player.p->credits, 2 );
-   credits2str( buf_credits, player.p->credits, 2 );
+   if ((outfit_canBuy(outfit->name, land_spob) > 0) && canbuy)
+      window_enableButton( wid, "btnBuyOutfit" );
+   else
+      window_disableButtonSoft( wid, "btnBuyOutfit" );
 
    mass = outfit->mass;
    if (outfit_isLauncher(outfit))
@@ -610,11 +612,18 @@ static void outfits_find( unsigned int wid, const char *str )
 /**
  * @brief Returns the price of an outfit (subject to quantity modifier)
  */
-static credits_t outfit_getPrice( const Outfit *outfit )
+static const char *outfit_getPrice( const Outfit *outfit, credits_t *price, int *canbuy, int *cansell )
 {
+   static char pricestr[STRMAX_SHORT];
    unsigned int q = outfits_getMod();
-   credits_t price = outfit->price * q;
-   return price;
+   if (outfit->lua_price == LUA_NOREF) {
+      price2str( pricestr, outfit->price * q, player.p->credits, 2 );
+      *price = outfit->price * q;
+      *canbuy = 1;
+      *cansell = 1;
+      return pricestr;
+   }
+   return pricestr;
 }
 
 /**
@@ -764,14 +773,14 @@ static void outfit_Popdown( unsigned int wid, const char* str )
  */
 int outfit_canBuy( const char *name, const Spob *spob )
 {
-   int failure, blackmarket;
+   int failure, blackmarket, canbuy, cansell;
    credits_t price;
    const Outfit *outfit;
    char buf[ECON_CRED_STRLEN];
 
    failure = 0;
    outfit  = outfit_get(name);
-   price   = outfit_getPrice(outfit);
+   outfit_getPrice( outfit, &price, &canbuy, &cansell );
    blackmarket = ((spob!=NULL) && spob_hasService(spob, SPOB_SERVICE_BLACKMARKET));
 
    /* Unique. */
@@ -811,6 +820,11 @@ int outfit_canBuy( const char *name, const Spob *spob )
    /* Needs requirements. */
    if (!blackmarket && (outfit->cond!=NULL) && !cond_check(outfit->cond)) {
       land_errDialogueBuild( "%s", _(outfit->condstr) );
+      failure = 1;
+   }
+   /* Custom condition failed. */
+   if (!canbuy) {
+      land_errDialogueBuild( _("You lack the resources to buy this outfit.") );
       failure = 1;
    }
 
@@ -877,36 +891,41 @@ static void outfits_buy( unsigned int wid, const char *str )
  */
 int outfit_canSell( const char *name )
 {
-   int failure = 0;;
-   const Outfit *outfit = outfit_get(name);;
+   int failure = 0;
+   int canbuy, cansell;
+   credits_t price;
+   const Outfit *outfit = outfit_get(name);
+
+   outfit_getPrice( outfit, &price, &canbuy, &cansell );
 
    /* Unique item. */
    if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE)) {
       land_errDialogueBuild(_("You can't sell a unique outfit."));
       failure = 1;
    }
-
    /* Map check. */
    if (outfit_isMap(outfit) || outfit_isLocalMap(outfit)) {
       land_errDialogueBuild(_("You can't sell a map."));
       failure = 1;
    }
-
    /* GUI check. */
    if (outfit_isGUI(outfit)) {
       land_errDialogueBuild(_("You can't sell a GUI."));
       failure = 1;
    }
-
    /* License check. */
    if (outfit_isLicense(outfit)) {
       land_errDialogueBuild(_("You can't sell a license."));
       failure = 1;
    }
-
    /* has no outfits to sell */
    if (player_outfitOwned(outfit) <= 0) {
       land_errDialogueBuild( _("You can't sell something you don't have!") );
+      failure = 1;
+   }
+   /* Custom condition failed. */
+   if (!cansell) {
+      land_errDialogueBuild(_("You are unable to sell this outfit!"));
       failure = 1;
    }
 

@@ -354,6 +354,9 @@ typedef struct Outfit_ {
    int lua_land;     /**< Run when the player lands. */
    int lua_takeoff;  /**< Run when the player takes off. */
    int lua_jumpin;   /**< Run when the player jumps in. */
+   int lua_price;    /**< Determines the "cost" string and whether or not the player can buy or sell the outfit when available. */
+   int lua_buy;      /**< Run when the outfit is boughten. */
+   int lua_sell;     /**< Run when the outfit is sold. */
    /* Weapons only. */
    int lua_onimpact; /**< Run when weapon hits the enemy. */
    int lua_onmiss;   /**< Run when weapon particle expires. */
