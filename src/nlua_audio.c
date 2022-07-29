@@ -1370,7 +1370,29 @@ static int audioL_setEffectGlobal( lua_State *L )
    lua_pop(L,1);
 
    soundLock();
-   nalGenEffects(1, &effect);
+
+   /* Find or add to array as necessary. */
+   if (lua_efx == NULL)
+      lua_efx = array_create( LuaAudioEfx_t );
+   lae = NULL;
+   for (int i=0; i<array_size(lua_efx); i++) {
+      if (strcmp(name,lua_efx[i].name)==0) {
+         lae = &lua_efx[i];
+         break;
+      }
+   }
+   if (lae == NULL) {
+      lae = &array_grow( &lua_efx );
+      nalGenEffects(1, &effect);
+      nalGenAuxiliaryEffectSlots( 1, &slot );
+      lae->name   = strdup( name );
+      lae->effect = effect;
+      lae->slot   = slot;
+   }
+   else {
+      effect   = lae->effect;
+      slot     = lae->slot;
+   }
 
    /* Handle types. */
    if (strcmp(type,"reverb")==0) {
@@ -1482,31 +1504,12 @@ static int audioL_setEffectGlobal( lua_State *L )
       NLUA_ERROR(L, _("Usupported audio effect type '%s'!"), type);
    }
 
-   al_checkErr();
-
-   nalGenAuxiliaryEffectSlots( 1, &slot );
    if (volume > 0.)
       nalAuxiliaryEffectSlotf( slot, AL_EFFECTSLOT_GAIN, volume );
    nalAuxiliaryEffectSloti( slot, AL_EFFECTSLOT_EFFECT, effect );
 
    al_checkErr();
    soundUnlock();
-
-   /* Find or add to array as necessary. */
-   if (lua_efx == NULL)
-      lua_efx = array_create( LuaAudioEfx_t );
-   lae = NULL;
-   for (int i=0; i<array_size(lua_efx); i++) {
-      if (strcmp(name,lua_efx[i].name)==0) {
-         lae = &lua_efx[i];
-         break;
-      }
-   }
-   if (lae == NULL)
-      lae = &array_grow( &lua_efx );
-   lae->name   = strdup( name );
-   lae->effect = effect;
-   lae->slot   = slot;
 
    return 0;
 }
