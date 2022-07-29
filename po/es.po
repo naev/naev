@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-07-29 16:34+0000\n"
+"PO-Revision-Date: 2022-07-29 16:38+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -102024,7 +102024,7 @@ msgstr "No todas las ranuras base están equipadas"
 #. Core Slots
 #: src/pilot_outfit.c:562
 msgid "!! Not All Core Slots are equipped\n"
-msgstr "¡¡!! No todas las Ranuras Básicas están equipadas"
+msgstr "¡¡ No todas las Ranuras Básicas están equipadas\n"
 
 #. CPU.
 #: src/pilot_outfit.c:564
