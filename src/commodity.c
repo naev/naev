@@ -89,15 +89,18 @@ void credits2str( char *str, credits_t credits, int decimals )
  */
 void price2str(char *str, credits_t price, credits_t credits, int decimals )
 {
-   char *buf;
+   char buf[ ECON_CRED_STRLEN ];
 
-   credits2str(str, price, decimals);
-   if (price <= credits)
+   if (price <= credits) {
+      credits2str( str, price, decimals );
       return;
+   }
 
-   buf = strdup(str);
-   snprintf(str, ECON_CRED_STRLEN, "#r%s#0", buf);
-   free(buf);
+   credits2str( buf, price, decimals );
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-truncation"
+   snprintf( str, ECON_CRED_STRLEN, "#r%s#0", (char*)buf );
+#pragma GCC diagnostic pop
 }
 
 /**
