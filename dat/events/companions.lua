@@ -92,6 +92,7 @@ local FAKE_CAPTAIN = {
 	["article_of_thought"] = player.pilot():ship():name(),
 }
 local SHIP_OFFICERS = {}
+local LOADED = {}		-- characters that have been "vitalized"
 local mothership
 local ghost_commander
 mem.conversation_hook = nil
@@ -529,6 +530,9 @@ local function pruneCrewMate( crewmate )
 	crewmate.conversation.topics_disliked = nil
 	
 	-- forget old habits
+	if not crewmate.memories then
+		crewmate.memories = {}
+	end
 	if crewmate.memories.fatigue then
 		crewmate.memories.fatigue = pick_some(crewmate.memories.fatigue, 5)
 	end
@@ -627,11 +631,20 @@ local function getCrewmateOnboard()
 	end
 
 	-- we found at least one present crewmate, pick one
+	local candidate = mem.companions[1]
+	local choice
 	if lind > 0 then
-		return mem.companions[rnd.rnd(1, lind)]
+		choice = rnd.rnd(1, lind)
+		candidate = mem.companions[choice]
 	end
 
-	return nil
+	-- make sure our candidate is loaded
+	if not LOADED[candidate.name] then
+		-- pick a loaded candidate instead
+		return mem.companions[pick_one(LOADED)]
+	end
+	
+	return candidate
 end
 
 local function getSpaceThing()
@@ -1697,7 +1710,7 @@ local function generate_memory(character)
 	
 	local construct_params = {}
 	local rndchoice = rnd.rnd(1, 5)
-	
+	local other = getCrewmateOnboard()
 	if rndchoice == 1 then -- first person
 		-- talk about myself, something like " I feel ripe "
 		construct_params.subject = _("I")
@@ -1724,9 +1737,9 @@ local function generate_memory(character)
 		})
 		construct_params.state_subj = pick_one(lang.getAll(lang.adjectives))
 		return construct_phrase_statement(character, construct_params)
-	elseif rndchoice == 3 then -- third person
+	elseif rndchoice == 3 and other then -- third person
 		-- talk about someone else
-		local other = getCrewmateOnboard()
+		
 		-- how do we describe them
 		if rnd.rnd(0, 1) == 1 then
 			construct_params.subject = other.firstname
@@ -1989,6 +2002,13 @@ local function create_memory(character, memory_type, params)
             _(" recently."),
             _(", but it feels like ages ago.")
         }
+		local topics = getTopics(params)
+		if not topics.liked then
+			topics.liked = { _("things") }
+		end
+		if not topics.disliked then
+			topics.disliked = { _("things") }
+		end
         local choices = {
             -- some random memories from the bar
             pick_one(actions) .. getBarSituation(params) .. pick_one(when),
@@ -1996,14 +2016,14 @@ local function create_memory(character, memory_type, params)
             add_special(character, "laugh") .. " " .. pick_one(actions) .. getBarSituation(params) .. pick_one(when),
             -- remembering that they like some topic (or dislike)
             pick_one(actions) ..
-                "talking a lot about things like the err " .. pick_key(getTopics(params).liked) .. " or whatever.",
-            pick_one(actions) .. "talking about the um " .. pick_key(getTopics(params).liked) .. " or whatever.",
+                "talking a lot about things like the err " .. pick_key(topics.liked) .. " or whatever.",
+            pick_one(actions) .. "talking about the um " .. pick_key(topics.liked) .. " or whatever.",
             pick_one(actions) ..
                 "expressing concern when the conversation was focused on " ..
-                     pick_one(getTopics(params).disliked) .. ".",
+                     pick_one(topics.disliked) .. ".",
             pick_one(actions) ..
                 "expressing concern when the conversation was focused on " ..
-                    pick_one(getTopics(params).disliked) .. pick_one(when),
+                    pick_one(topics.disliked) .. pick_one(when),
             -- remembering that we had a special moment in this solar system
             fmt.f(_("{name} and I had a special moment in {system}."), {name = params.firstname, system = system.cur()}),
             fmt.f(_("I had a nice time with {name} in {system}."), {name = params.name, system = system.cur()}),
@@ -2348,15 +2368,16 @@ function crewmate_use_item(character)
 	local favor = evaluate_item_haste(character, character.item)
 	character.satisfaction = character.satisfaction + favor
 	
-	if favor > 1 then
-		-- remember enjoying this item
-		create_memory(character, "gift")
-	end
+	
 	
 	if favor > 2 then
 		-- we really liked this item a lot, this item makes our satisfaction influence our xp
 		-- at the same time, we cap xp at 2 here because being this happy is a baseline mood
 		character.xp = math.max(2, math.min(100, character.xp + character.satisfaction * 0.01))
+		create_memory(character, "gift")
+	elseif favor > 1 and rnd.twosigma() > 1.5 then
+		-- remember enjoying this item
+		create_memory(character, "gift")
 	elseif favor < 0 then
 		local yuck = {
 			_("That was something."),
@@ -2410,6 +2431,9 @@ local function give_item( character, item )
 end
 
 local function has_interest(character, interest)
+	if not LOADED[character] then
+		return false
+	end
     for topic, _phrases in pairs(getTopics(character).liked) do
         if topic == interest then
             return true
@@ -2929,7 +2953,7 @@ local function speak(talker, other)
 				{me = talker, message = analyze_spoken(response, other, talker)}
 			)
         end
-    elseif listener ~= talker then
+    elseif listener and listener ~= talker then
         -- check if we can appreciate something that was spoken
         local appreciation, interest = appreciate_spoken(spoken, listener)
 
@@ -2978,7 +3002,7 @@ function speak_to(arg)
 	else
 		print("WARNING: Speak_to with no responder! args:", arg)
 		for k,v in pairs(arg) do
-			print(fmt.f({k}, {v}), {k=k,v=v})
+			print(fmt.f("{k}, {v}"), {k=k,v=v})
 		end
 	end
 end
@@ -5255,7 +5279,7 @@ local function createSmuggler()
 		_("We're in."),
 		_("I'm back."),
 	}
-	crewmate.conversation.special.going = crewmate.conversation.message
+	crewmate.conversation.special.going = conversation.basic().message
 	
 	return crewmate
 end
@@ -6213,24 +6237,7 @@ local function firstOfficerPreflight( first_officer )
 					min_cadet_xp = math.floor(crewman.xp)
 				end
 			end
-			if crewman == first_officer then
-				-- give me slot 1 please
-				mem.companions[ii] = mem.companions[1]
-				mem.companions[1] = crewman
-			elseif	-- make sure that engineers are on board, since they are pretty special
-				string.find(crewman.skill, _("Engineer"))
-				or string.find(crewman.skill, _("Chief"))
-				or string.find(crewman.skill, _("Officer"))
-			then	-- move this one to the front
-				findex = math.min(#mem.companions, findex + 1)
-				mem.companions[ii] = mem.companions[findex]
-				mem.companions[findex] = crewman
-			elseif string.find(crewman.skill, _("Sr.")) then
-				-- the player promoted this crew member and wants him on the ship
-				local sindex = math.min(#mem.companions, findex + 2)
-				mem.companions[ii] = mem.companions[sindex]
-				mem.companions[sindex] = crewman
-			elseif string.find(crewman.skill, _("Janitor")) then
+			if string.find(crewman.skill, _("Janitor")) then
 				-- try to find a spot for janitors (sanitations don't get moved around explicitly)
 				local jindex = math.min(#mem.companions, math.max(findex + 3, math.floor(ii / 2)))
 				mem.companions[ii] = mem.companions[jindex]
@@ -6246,6 +6253,23 @@ local function firstOfficerPreflight( first_officer )
 				lindex = lindex - 1
 				print(fmt.f("swapped AWAY {loser} with {other} @ {ii}", {ii = ii, loser = crewman.name, other = mem.companions[ii].name}))
 			end
+		elseif crewman == first_officer then
+				-- give me slot 1 please
+				mem.companions[ii] = mem.companions[1]
+				mem.companions[1] = crewman
+		elseif	-- make sure that engineers are on board, since they are pretty special
+			string.find(crewman.typetitle, _("Engineer"))
+			or string.find(crewman.skill, _("Chief"))
+			or string.find(crewman.skill, _("Officer"))
+		then	-- move this one to the front
+			findex = math.min(#mem.companions, findex + 1)
+			mem.companions[ii] = mem.companions[findex]
+			mem.companions[findex] = crewman
+		elseif string.find(crewman.typetitle, _("Sr.")) then
+			-- the player promoted this crew member and wants him on the ship
+			local sindex = math.min(#mem.companions, findex + 2)
+			mem.companions[ii] = mem.companions[sindex]
+			mem.companions[sindex] = crewman
 		end
 	end
 end
@@ -6599,11 +6623,16 @@ function land()
     npcs = {}
     local paid = {}
 	local payroll
+	local loads = 0
     for i, edata in ipairs(mem.companions) do
 		-- create stuff if we have to now so that we don't have to do it in space
-		_discard = getTopics(edata)
-		_discard = getConversation(edata)
-		_discard = nil
+		if loads < 3 and not LOADED[edata.name] then
+			_discard = getTopics(edata)
+			_discard = getConversation(edata)
+			_discard = nil
+			loads = loads + 1
+			LOADED[edata.name] = i
+		end
         -- natural satisfaction adjustment gravitates towards zero and adds
         -- a little bit of randomness based on how smooth the landing was or whatever
         local sss = math.max(-10, math.min(10, edata.satisfaction))
@@ -6632,7 +6661,7 @@ function land()
 
 		-- dock any missing smuggler shuttles
 		if edata.shuttle and string.find(edata.skill, _("Smuggler")) then
-			edata.shuttle = "docked"
+			edata.shuttle = { } 
 		end
 		
 		if edata.away and not edata.away.ship then
@@ -6823,9 +6852,17 @@ function enter()
     hook.rm(mem.conversation_hook)
     mem.conversation_hook = hook.timer(rnd.rnd(10, 30), "start_conversation")
 
-    for _i, companion in ipairs(mem.companions) do
+	local loads = 0
+    for i, companion in ipairs(mem.companions) do
         -- reset any hooks
         register_hook_crewmate(companion)
+		if loads < 3 and not LOADED[companion.name] then
+			_discard = getTopics(companion)
+			_discard = getConversation(companion)
+			_discard = nil
+			loads = loads + 1
+			LOADED[companion.name] = i
+		end
     end
 
     -- set the fatigue hook
@@ -6862,6 +6899,7 @@ function period_fatigue()
     
 	-- only one crewmate can get hysteria per period
 	local hysteria = false
+	local travel_memories = 0
 	-- calculate how each crew member is affected by the time that passed
     for _i, companion in ipairs(pick_some(mem.companions)) do
 		-- calculate ship atmosphere interaction
@@ -6931,7 +6969,7 @@ function period_fatigue()
                     companion.conversation.sentiment = nil
                 end
             end
-        elseif rnd.threesigma() > 2.66 and not hysteria then
+        elseif rnd.threesigma() > 2.66 and not hysteria and LOADED[companion.name] then
             -- we get a mild case of space hysteria that affects us more the more experienced we are
             companion.satisfaction = companion.satisfaction - companion.xp / (companion.xp + 6)
             print(fmt.f("{name} has hysteria.", companion))
@@ -6944,7 +6982,7 @@ function period_fatigue()
             -- start rambling about something
             local ramblings
 
-            if rnd.rnd(0, 1) == 0 then
+            if rnd.rnd(0, 1) == 0 and travel_memories < 1 then
                 -- we get lucky, we realize we're just tired, but we're still going to ramble
                 ramblings = pick_one(getConversation(companion).fatigue)
                 -- create a random memory about this scary place
@@ -6953,7 +6991,7 @@ function period_fatigue()
                 -- decide how to ramble
                 if rnd.rnd(0, 1) == 0 then
                     -- we'll call the victim bad company for no reason
-                    ramblings = fmt.f(pick_one(companion.conversation.bad_talker), victim)
+                    ramblings = fmt.f(pick_one(getConversation(companion).bad_talker), victim)
                 else -- oh we're really gonna ramble
                     if rnd.rnd(0, 1) == 0 then
                         -- we'll pick anything from our special choices and just say that
@@ -6985,7 +7023,7 @@ function period_fatigue()
             companion.conversation.sentiment = ramblings
             -- start talking to the victim (remember, could be ourselves, and we could start a conversation with ourselves)
             speak(companion, victim)
-        elseif rnd.rnd(0, 17) >= 13 then -- control for creating random travel memories
+        elseif rnd.rnd(0, 27) == 0 and travel_memories < 1 and not hysteria then -- control for creating random travel memories
 			create_memory(companion)
 		end
     end
@@ -7954,7 +7992,7 @@ function startCommandDiscussion()
 							witness.xp = math.min(99, witness.xp + xp_bonus)
 							-- TODO: create sacrifice memory :)
 						end
-						local executioner = getCrewmateOnboard()
+						local executioner = getCrewmateOnboard() or officer
 						executioner.xp = executioner.xp + 2
 						executioner.satisfaction = executioner.satisfaction - 1
 						vn.jump("end")
@@ -10108,23 +10146,25 @@ function morale_officer( officer )
 	
 	-- officer checks in on a random crewmate
 	local pal = getCrewmateOnboard()
-	if pal.satisfaction < 1 then
-		-- give him something he might want
-		give_item( pal, findSuitableGift(pal) )
-		officer.xp = officer.xp + 0.06
-	elseif not pal.item then
-		-- give him a random thing
-		local random_item = pick_one(
-			join_tables(
-				join_tables(lang.nouns.objects.items, lang.nouns.objects.tools),
-				lang.nouns.objects.wearables
+	if pal then
+		if pal.satisfaction < 1 then
+			-- give him something he might want
+			give_item( pal, findSuitableGift(pal) )
+			officer.xp = officer.xp + 0.06
+		elseif not pal.item then
+			-- give him a random thing
+			local random_item = pick_one(
+				join_tables(
+					join_tables(lang.nouns.objects.items, lang.nouns.objects.tools),
+					lang.nouns.objects.wearables
+				)
 			)
-		)
-		give_item( pal, random_item )
-		officer.xp = officer.xp + 0.01
-	else	-- xp becomes capped at current satisfaction (can go up) but otherwise some xp is lost out of boredom
-		officer.xp = math.max(officer.satisfaction, officer.xp - 0.01)
-		officer.satisfaction = officer.satisfaction - 0.002
+			give_item( pal, random_item )
+			officer.xp = officer.xp + 0.01
+		else	-- xp becomes capped at current satisfaction (can go up) but otherwise some xp is lost out of boredom
+			officer.xp = math.max(officer.satisfaction, officer.xp - 0.01)
+			officer.satisfaction = officer.satisfaction - 0.002
+		end
 	end
 	
 	-- officer schedules another round
@@ -10411,7 +10451,7 @@ function mission_idle_return_to_player( plt, args )
 			if peep.pilot and peep.pilot == plt then
 				args = {
 					crewsheet = peep,
-					mission = crewsheet.away,
+					mission = peep.away,
 					shuttle = mem.ship_interior.shuttle -- "incorrect", but we need one and args isn't being passed
 				}
 				return mission_return_to_player(args)
@@ -10819,7 +10859,7 @@ function smuggler_cargobay(speaker)
 		smuggler:land(chosen_spob)
 		hook.pilot(smuggler, "land", "mission_away_landed", { profit = profit, crewsheet = speaker, shuttle = speaker.shuttle.ship, mission = speaker.away })
 		hook.pilot(smuggler, "death", "terminate_crew_death", {crewman = speaker, reason = fmt.f(_("Your smuggler was lost in combat along with a deposit of {amount}"), { amount = fmt.credits(speaker.deposit)}) })
-		message = pick_one(speaker.conversation.special.going)
+		message = pick_one(getConversation(speaker).special.going)
 		smuggler:comm(message)
 		if space == 0 then
 			speaker.xp = math.min(10, speaker.xp + 0.1)
@@ -11164,6 +11204,7 @@ function engineer_armour(engineer)
 		local message = fmt.f(_("Your engineer, {name}, was lost in space combat while maintaining hull integrity. As a final valiant act of heroism, {bonus:.0f} armor was repaired in a massive power surge."), engineer)
 		vntk.msg(_("Heroic Sacrifice"), message)
 		terminate_crew(engineer, message)
+		SHIP_ENGINEERS = {} -- someone died, let's not do the bookkeeping about it now though
 		return -- no new hook
 	elseif (armour <= 10 and pp:energy() > 20) then
 		-- "active situation" polling rate
@@ -11206,7 +11247,7 @@ function engineer_armour(engineer)
 	elseif engineer.active then
 		-- experience gained while cooling down
 		local gained_xp = (engineer.active * 0.01)
-		engineer.xp = math.min(10, engineer.xp + gained_xp)
+		engineer.xp = math.min(100, engineer.xp + gained_xp)
 --		print(fmt.f("engineer cooldown and gained {xp} xp", {xp = gained_xp}))
 		-- entering cooldown distributes residue dirt everywhere around the ship
 		mem.ship_interior.dirt = mem.ship_interior.dirt + engineer.xp * 0.06
@@ -11302,7 +11343,7 @@ function detonate_c4(target)
         end
         mem.costs["equipment"] = current_cost + prices["equipment"]
         -- an explosion just happened, if we like violence, we are thrilled
-        for _i, person in ipairs(mem.companions) do
+        for _i, person in ipairs(pick_some(mem.companions, 3)) do
             if has_interest(person, "violence") then
                 person.satisfaction = math.min(10, person.satisfaction + 0.01)
             end
