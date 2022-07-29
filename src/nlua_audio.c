@@ -665,7 +665,6 @@ static int audioL_play( lua_State *L )
          alSourceQueueBuffers( la->source, 1, &la->stream_buffers[ la->active ] );
          la->active = 1-la->active;
          alGetSourcei( la->source, AL_BUFFERS_QUEUED, &alstate );
-         soundUnlock();
       }
       if (ret == 0)
          la->th = SDL_CreateThread( stream_thread, "stream_thread", la );
