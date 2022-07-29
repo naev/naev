@@ -308,4 +308,31 @@ function poi.nearNebula( mem )
    return true
 end
 
+local conduit = N_("Corrupted Data Matrix")
+--[[
+Gets the amount of data collected by the player.
+   @treturn integer Amount of data collected by the player.
+--]]
+function poi.data_get()
+   return player.inventoryOwned( conduit )
+end
+
+--[[
+Gives data to the player.
+   @tparam integer amount Amount to give to the player.
+   @treturn integer Amount actually added.
+--]]
+function poi.data_give( amount )
+   return player.inventoryAdd( conduit, amount )
+end
+
+--[[
+Takes data to the player.
+   @tparam integer amount Amount to give to the player.
+   @treturn integer Amount actually added.
+--]]
+function poi.data_take( amount )
+   return player.inventoryRm( conduit, amount )
+end
+
 return poi
