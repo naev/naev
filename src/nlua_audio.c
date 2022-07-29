@@ -376,7 +376,7 @@ int lua_isaudio( lua_State *L, int ind )
 
 void audio_cleanup( LuaAudio_t *la )
 {
-   if ((la==NULL) || sound_disabled || la->nocleanup)
+   if ((la==NULL) || (la->nocleanup))
       return;
 
    soundLock();
