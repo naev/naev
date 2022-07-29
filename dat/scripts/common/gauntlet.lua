@@ -27,18 +27,18 @@ end
 
 
 -- Emblem stuff
+local emblems = N_("Totoran Emblem")
 function totoran.emblems_get()
-   return var.peek( "totoran_emblems" ) or 0
+   return player.inventoryOwned( emblems )
 end
 function totoran.emblems_get_gained()
    return var.peek( "totoran_emblems_gained" ) or 0
 end
 function totoran.emblems_pay( amount )
-   local v = totoran.emblems_get()
-   var.push( "totoran_emblems", v+amount )
+   player.inventoryAdd( emblems, amount )
    -- Store lifetime earnings
    if amount > 0 then
-      v = var.peek( "totoran_emblems_gained" ) or 0
+      local v = var.peek( "totoran_emblems_gained" ) or 0
       var.push( "totoran_emblems_gained", v+amount )
    end
 end

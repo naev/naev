@@ -214,18 +214,18 @@ end
 
 -- Token stuff
 -- Roughly 1 token is 1000 credits
+local tokens = N_("Minerva Token")
 function minerva.tokens_get()
-   return var.peek( "minerva_tokens" ) or 0
+   return player.inventoryOwned( tokens )
 end
 function minerva.tokens_get_gained()
    return var.peek( "minerva_tokens_gained" ) or 0
 end
 function minerva.tokens_pay( amount )
-   local v = minerva.tokens_get()
-   var.push( "minerva_tokens", v+amount )
+   player.inventoryAdd( tokens, amount )
    -- Store lifetime earnings
    if amount > 0 then
-      v = var.peek( "minerva_tokens_gained" ) or 0
+      local v = var.peek( "minerva_tokens_gained" ) or 0
       var.push( "minerva_tokens_gained", v+amount )
    end
 end
