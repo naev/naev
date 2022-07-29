@@ -43,10 +43,10 @@ function totoran.emblems_pay( amount )
    end
 end
 function totoran.emblems_str( amount )
-   return gettext.ngettext(
-      "#r%s Crimson Emblems#0",
-      "#r%s Crimson Emblems#0", amount ):format(
-         fmt.number(amount) )
+   return "#r"..gettext.ngettext(
+      "%s Crimson Emblems",
+      "%s Crimson Emblems", amount ):format(
+         fmt.number(amount) ).."#0"
 end
 
 function totoran.clear_pilots ()
