@@ -35,17 +35,21 @@ local function tracks_add( name, situation, params )
    end
 
    local m = audio.newSource( name, "stream" )
-   m:setVolume( music_vol, true )
-   if not params.delay then
-      m:play()
+   if params.fade then
+      m:setVolume( 0, true )
+   else
+      m:setVolume( music_vol, true )
    end
    local t = {
       m     = m,
-      fade  = nil,
+      fade  = params.fade,
       vol   = 1,
       delay = params.delay,
       name  = name_orig,
    }
+   if not params.delay then
+      m:play()
+   end
    tracks_stop () -- Only play one at a time
    table.insert( tracks, t )
    return t
