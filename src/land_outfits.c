@@ -25,6 +25,7 @@
 #include "map.h"
 #include "map_find.h"
 #include "nstring.h"
+#include "nlua.h"
 #include "outfit.h"
 #include "player.h"
 #include "player_gui.h"
@@ -623,6 +624,21 @@ static const char *outfit_getPrice( const Outfit *outfit, credits_t *price, int 
       *cansell = 1;
       return pricestr;
    }
+   const char *str;
+
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, outfit->lua_price);
+   if (nlua_pcall( outfit->lua_env, 0, 3 )) {   /* */
+      WARN(_("Outfit '%s' failed to run '%s':\n%s"),outfit->name,"price",lua_tostring(naevL,-1));
+      lua_pop(naevL, 1);
+   }
+
+   str = luaL_checkstring( naevL, -3 );
+   strncpy( pricestr, str, sizeof(pricestr) );
+   *price = 0;
+   *canbuy = lua_toboolean( naevL, -2 );
+   *cansell = lua_toboolean( naevL, -1 );
+   lua_pop(naevL, 3);
+
    return pricestr;
 }
 
