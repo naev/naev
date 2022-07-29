@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-07-28 16:23+0000\n"
+"PO-Revision-Date: 2022-07-29 16:34+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -17714,7 +17714,7 @@ msgstr ""
 
 #: dat/faction.xml:188
 msgid "Dreamer Clan"
-msgstr "Clan del Soñador"
+msgstr "Clan Soñador"
 
 #: dat/faction.xml:191
 msgid "Dreamer Pirate Clan"
@@ -24490,7 +24490,7 @@ msgstr ""
 
 #: dat/ships/empire_rainmaker.xml:2
 msgid "Empire Rainmaker"
-msgstr "Hacedor de Lluvia del Imperio"
+msgstr "Generador de Lluvia Imperio"
 
 #: dat/ships/empire_rainmaker.xml:22
 msgid ""
@@ -24503,6 +24503,16 @@ msgid ""
 "supplies. After the events an EE-1891-392 official ship rename form was "
 "approved and Rainmaker became the official ship name."
 msgstr ""
+"El Generador de Lluvia es el mayor carguero utilizado por el Imperio. Es "
+"capaz de transportar grandes cantidades de material a través de territorios "
+"peligrosos, ya que los pequeños grupos de piratas no suponen una amenaza "
+"debido a su pesado blindaje. Su nombre se debe a una serie de sucesos en los "
+"que, poco después del Incidente, se utilizaron para entregar suministros a "
+"mundos hambrientos aislados haciendo sobrevuelos atmosféricos bajos mientras "
+"se abrían las bodegas de carga, lo que provocó una lluvia literal de "
+"suministros. Tras los acontecimientos, se aprobó un formulario de cambio de "
+"nombre de la nave EE-1891-392 y Generador de Lluvia se convirtió en el "
+"nombre oficial de la nave."
 
 #: dat/ships/empire_shark.xml:2
 msgid "Empire Shark"
@@ -24534,6 +24544,11 @@ msgid ""
 "though they rarely see combat due to their meagre weapons space and relative "
 "fragility."
 msgstr ""
+"El Gawain es una nave de muy alta gama, que supera a casi todos las demás "
+"naves de producción. Se basa en gran medida en la tecnología implementada "
+"por primera vez en el Lancelot, y se utiliza ampliamente como nave de "
+"recreo, ya que es extremadamente maniobrable, aunque rara vez ve el combate "
+"debido a su escaso espacio de armas y su relativa fragilidad."
 
 #: dat/ships/goddard.xml:19
 msgid ""
@@ -24543,6 +24558,12 @@ msgid ""
 "Over time, specialization and improvements on the original design have kept "
 "it very competitive in the market. It's a classic of space."
 msgstr ""
+"Diseñado por el excéntrico genio Eduard Manuel Goddard, el Crucero de "
+"Batalla Goddard es la que lanzó a la Casa Goddard a la fama y la fortuna. La "
+"producción se realiza íntegramente en Zhiru, en el sistema Goddard, por la "
+"Casa Goddard. Con el tiempo, la especialización y las mejoras del diseño "
+"original lo han mantenido muy competitivo en el mercado. Es un clásico del "
+"espacio."
 
 #: dat/ships/hawking.xml:2
 msgid "Hawking"
@@ -24581,6 +24602,14 @@ msgid ""
 "as it seems there are countless Hyenas among the ranks of the more notorious "
 "and unruly pilots."
 msgstr ""
+"El producto estrella de Aerosys, la Hiena, se ha convertido rápidamente en "
+"el favorito de los grupos guerrilleros y paramilitares de todo el mundo. Su "
+"empuje de primera clase, combinado con su rápido tiempo de reacción, le "
+"permite agotar las reservas de energía del enemigo mientras lo desgasta. "
+"Aunque Aerosys afirma que sus naves sólo se venden a pilotos reputados, se "
+"sospecha que lo hacen a cualquiera que esté dispuesto a pagar, ya que parece "
+"que hay innumerables Hienas entre las filas de los pilotos más notorios y "
+"rebeldes."
 
 #: dat/ships/kestrel.xml:2
 msgid "Kestrel"
@@ -24619,6 +24648,9 @@ msgid ""
 "weapon space but a decent amount of cargo space. Good for the entrepreneur "
 "working his way to a vast space trade empire."
 msgstr ""
+"El Koala es una nave de carga estándar. Es una nave pequeña con poco espacio "
+"para armas pero con una cantidad decente de espacio de carga. Es buena para "
+"el empresario que se abre camino hacia un vasto imperio de comercio espacial."
 
 #: dat/ships/lancelot.xml:2
 msgid "Lancelot"
@@ -24633,6 +24665,12 @@ msgid ""
 "specifications. It is used by security agencies all over the universe for "
 "its reliability and availability."
 msgstr ""
+"Uno de los cazas pesados más premiados de los Astilleros Nexus. El Lancelot "
+"era originalmente un diseño clasificado para el ejército del Imperio, pero "
+"su existencia se reveló durante un vuelo de prueba abortado. Ahora existe "
+"una versión modificada para los civiles, aunque no se ajusta a las "
+"especificaciones originales. Es utilizado por las agencias de seguridad de "
+"todo el universo por su fiabilidad y disponibilidad."
 
 #: dat/ships/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:185
 #: dat/missions/flf/dvk/flf_dvk06.lua:168
@@ -24646,6 +24684,11 @@ msgid ""
 "many many cycles ago. It was one of the first civilian use spacecrafts, "
 "first used by aristocracy and now used by everyone who cannot afford better."
 msgstr ""
+"Una de las naves más utilizadas en la galaxia. Conocida por su estabilidad y "
+"obstinación. Su diseño no ha sido muy modificado desde su creación hace "
+"muchos ciclos. Fue una de las primeras naves espaciales de uso civil, "
+"primero utilizada por la aristocracia y ahora por todos los que no pueden "
+"permitirse algo mejor."
 
 #: dat/ships/mule.xml:2
 msgid "Mule"
@@ -24658,6 +24701,11 @@ msgid ""
 "allowing for enjoyable cruises. The Mule is a favourite target of pirates, "
 "so avoiding dangerous systems is strongly advised."
 msgstr ""
+"Un carguero pesado especializado en el transporte de carga por toda la "
+"galaxia. También cuenta con suficientes alojamientos para los pasajeros, "
+"según el modelo, lo que permite realizar agradables cruceros. La Mula es el "
+"objetivo favorito de los piratas, por lo que se recomienda encarecidamente "
+"evitar los sistemas peligrosos."
 
 #: dat/ships/pacifier.xml:2
 msgid "Pacifier"
@@ -24670,6 +24718,11 @@ msgid ""
 "withstand heavy punishment from raiding parties. The Pacifier features high "
 "fuel capacity to facilitate lengthy patrol routes."
 msgstr ""
+"El Pacificador es uno de los diseños más antiguos y fiables de los "
+"Astilleros Nexus. Se diseñó principalmente como nave de patrulla fronteriza "
+"y, como tal, es capaz de soportar el fuerte castigo de las partidas de "
+"asalto. El Pacificador cuenta con una gran capacidad de combustible para "
+"facilitar las largas rutas de patrulla."
 
 #: dat/ships/phalanx.xml:2
 msgid "Phalanx"
@@ -24680,6 +24733,9 @@ msgid ""
 "While somewhat technologically antiquated, the Phalanx's large energy "
 "capacity and heavy armour allow it to remain an effective combat vessel."
 msgstr ""
+"Aunque algo anticuado tecnológicamente, la gran capacidad energética y el "
+"pesado blindaje de la Falanje le permite seguir siendo una nave de combate "
+"eficaz."
 
 #: dat/ships/pirate_admonisher.xml:2
 msgid "Pirate Admonisher"
@@ -24700,6 +24756,11 @@ msgid ""
 "manoeuvrability, more weapons space, and slightly improved defenses, at a "
 "cost of cargo capacity and armour regeneration rates."
 msgstr ""
+"El Amonestador original es una nave poderosa, especialmente para su tamaño. "
+"Mediante la habitual remodelación de Cráneo y Huesos, el Amonestador Pirata "
+"presenta una mayor maniobrabilidad, más espacio para armas y defensas "
+"ligeramente mejoradas, a costa de su capacidad de carga y los índices de "
+"regeneración de blindaje."
 
 #: dat/ships/pirate_ancestor.xml:2
 msgid "Pirate Ancestor"
@@ -24731,6 +24792,12 @@ msgid ""
 "them even more efficient as scavengers and harder to hit than their Aerosys "
 "counterparts."
 msgstr ""
+"La Hiena Pirata se ha convertido rápidamente en la favorita de los piratas "
+"de todo el mundo. No es un gran caza, ni tiene demasiada fuerza, pero en "
+"grupo pueden superar casi cualquier nave, y es tan fácil de pilotar que el "
+"tiempo de reacción mejora enormemente. Cráneo y Huesos ha añadido "
+"modificaciones para hacerlos aún más eficientes como carroñeros y más "
+"difíciles de golpear que sus homólogos de Aerosys."
 
 #: dat/ships/pirate_kestrel.xml:2
 msgid "Pirate Kestrel"
@@ -24743,6 +24810,10 @@ msgid ""
 "authority of the Empire. A very strong ship for those pirates who can afford "
 "it."
 msgstr ""
+"El Cernícalo es la mejor nave ofrecida por Cráneo y Huesos. Es "
+"extremadamente ágil para un crucero, pero no le falta la potencia de fuego "
+"necesaria para cuestionar la autoridad del Imperio. Una nave muy fuerte para "
+"aquellos piratas que puedan permitírselo."
 
 #: dat/ships/pirate_phalanx.xml:2
 msgid "Pirate Phalanx"
@@ -24800,6 +24871,10 @@ msgid ""
 "firepower and relatively high speed for its ship class, the Starbridge is "
 "truly a fearsome sight."
 msgstr ""
+"Aunque el Puente Estelar ya es un destructor ligero y rápido, los ingenieros "
+"de Cráneo y Huesos han conseguido mejorar aún más su velocidad. Gracias a su "
+"gran potencia de fuego y a su velocidad relativamente alta para esta clase "
+"de nave, el Puente Estelar es realmente temible."
 
 #: dat/ships/pirate_vendetta.xml:2
 msgid "Pirate Vendetta"
@@ -24814,6 +24889,13 @@ msgid ""
 "substantially better than the original, but every so often the reactor goes "
 "nova destroying the ship. You hope it won't happen to you if you get in one."
 msgstr ""
+"La Vendetta Pirata es aún más intimidante que su homólogo normal. Se ha "
+"retocado mucho para que se ajuste más al estilo de pilotaje pirata. Se ha "
+"eliminado parte del blindaje para hacer más espacio para botín, mientras que "
+"el reactor ha sido modificado por un técnico dudoso. La nave acaba siendo "
+"sustancialmente mejor que la original, pero de vez en cuando el reactor "
+"entra en nova destruyendo la nave. Esperas que no te pase a ti si te metes "
+"en una."
 
 #: dat/ships/proteron_archimedes.xml:2
 msgid "Proteron Archimedes"
@@ -24875,6 +24957,9 @@ msgid ""
 "mobile launch base as well as a command and control unit, this vessel "
 "coordinates the others in the fight for dominance over the galaxy."
 msgstr ""
+"El corazón de la flota de combate Proteron está formado por los Watson. "
+"Actuando como base de lanzamiento móvil y como unidad de mando y control, "
+"esta nave coordina a las demás en la lucha por el dominio de la galaxia."
 
 #: dat/ships/quicksilver.xml:2
 msgid "Quicksilver"
@@ -24961,6 +25046,10 @@ msgid ""
 "for in-system patrolling. While it's not as capable as its larger relative, "
 "the Lancelot, it's still an effective addition to any fleet."
 msgstr ""
+"El Tiburón, un nuevo diseño de los Astilleros Nexus, es un caza ligero y "
+"ágil diseñado para las patrullas en el sistema. Aunque no es tan capaz como "
+"su pariente más grande, el Lancelot, sigue siendo una adición eficaz a "
+"cualquier flota."
 
 #: dat/ships/sirius_divinity.xml:2
 msgid "Sirius Divinity"
@@ -25005,6 +25094,9 @@ msgid ""
 "competent alone, it's often employed as a forward scout, bringing with it "
 "far deadlier allies."
 msgstr ""
+"La Fidelidad es el caza ligero de la Casa Sirio. Aunque no es especialmente "
+"competente en solitario, suele emplearse como explorador de vanguardia, "
+"llevando consigo aliados mucho más mortíferos."
 
 #: dat/ships/sirius_preacher.xml:2
 msgid "Sirius Preacher"
@@ -25047,6 +25139,11 @@ msgid ""
 "to be a more lightweight carrier than is typically found in non-Soromid "
 "fleets, without sacrificing carrying capacity."
 msgstr ""
+"El Arx Soromida suele figurar en las flotas Soromida como nave de mando y "
+"portanaves de combate. Sus propiedades únicas le permiten transportar más "
+"naves por ranura, lo que compensa fácilmente su reducido número de ranuras. "
+"El Arx tiende a ser un portanaves más ligero de lo que se suele encontrar en "
+"las flotas no soromida, sin sacrificar su capacidad de carga."
 
 #: dat/ships/soromid_brigand.xml:2
 msgid "Soromid Brigand"
@@ -25074,6 +25171,9 @@ msgid ""
 "forces. While its armour is somewhat weak, this rarely saves those met with "
 "its devastating barrage."
 msgstr ""
+"El Ira es un crucero ligero creado ex profeso que se encuentra habitualmente "
+"al frente de las fuerzas Soromida. Aunque su blindaje es algo débil, esto "
+"rara vez salva a los que se encuentran con su devastador bombardeo."
 
 #: dat/ships/soromid_marauder.xml:2
 msgid "Soromid Marauder"
@@ -25146,6 +25246,9 @@ msgid ""
 "serves as the core of any given Soromid war fleet and only called upon in "
 "notable engagements."
 msgstr ""
+"El Vox es la nave más grande de los Soromida. Este acorazado es el núcleo de "
+"cualquier flota de guerra Soromida y sólo se recurre a él en enfrentamientos "
+"importantes."
 
 #: dat/ships/starbridge.xml:2
 msgid "Starbridge"
@@ -25195,6 +25298,13 @@ msgid ""
 "hot, it can quickly retreat to recharge and regenerate. Also, like every "
 "Thurian ship, the electronics are well above average."
 msgstr ""
+"El Ingenio Turion es un caza construido para la supervivencia. Como todas "
+"las naves turianas, da prioridad a las capacidades defensivas por encima de "
+"las ofensivas. Sin embargo, el Ingenio no es en absoluto una nave de combate "
+"pobre. Es capaz de permanecer en combate y luchar, y cuando las cosas se "
+"ponen demasiado calientes, puede retirarse rápidamente para recargarse y "
+"regenerarse. Además, como todas las naves turianas, la electrónica está muy "
+"por encima de la media."
 
 #: dat/ships/thurion_perspicacity.xml:2
 msgid "Thurion Perspicacity"
@@ -25218,6 +25328,9 @@ msgid ""
 "distance. It is better armed than any other Thurion ship of comparable size, "
 "but still not as well as other bombers."
 msgstr ""
+"El Centelleo Turion es un bombardero diseñado para atacar a gran distancia. "
+"Está mejor armado que cualquier otra nave Turion de tamaño comparable, pero "
+"aún así no está tan bien armado como otros bombarderos."
 
 #: dat/ships/thurion_taciturnity.xml:2
 msgid "Thurion Taciturnity"
@@ -25233,7 +25346,7 @@ msgstr ""
 
 #: dat/ships/thurion_virtuosity.xml:2
 msgid "Thurion Virtuosity"
-msgstr "Virtuoso Turion"
+msgstr "Virtuosa Turion"
 
 #: dat/ships/thurion_virtuosity.xml:20
 msgid ""
@@ -25241,6 +25354,10 @@ msgid ""
 "assaults. While weapon space is less than stellar, the vessel's superior "
 "electronics and resistance to the harsh nebula more than make up for it."
 msgstr ""
+"La Virtuosa Turion es una nave de tamaño medio utilizada por los Turion para "
+"los asaltos frontales. Aunque el espacio para las armas es menos que "
+"excelente, la electrónica superior de la nave y su resistencia a la dura "
+"nebulosa lo compensan con creces."
 
 #: dat/ships/vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:223
@@ -25256,6 +25373,13 @@ msgid ""
 "shield and energy regeneration compared to other ships of its class, though "
 "it can unleash a truly fearsome barrage."
 msgstr ""
+"La Vendetta muestra muy bien la filosofía de la Casa Dvaered. Darle a una "
+"nave muchos cañones intimidantes, recubrirla de un pesado blindaje y "
+"descuidar la electrónica. Debido a la obsoleta electrónica utilizada en la "
+"Vendetta, es más adecuada para las escaramuzas que para las batallas "
+"prolongadas, ya que posee una regeneración de escudos y energía inferior a "
+"la de otras naves de su clase, aunque puede desatar una descarga realmente "
+"temible."
 
 #: dat/ships/vigilance.xml:2
 msgid "Vigilance"
@@ -25268,6 +25392,10 @@ msgid ""
 "possible. Given its Dvaered origins, it possesses inferior technology "
 "relative to its counterparts."
 msgstr ""
+"El Vigilance es la encarnación de la filosofía Dvaered. Con sus inmensas "
+"reservas de energía y sus seis puntos duros de armamento, está diseñado para "
+"golpear lo más fuerte posible. Dado su origen Dvaered, posee una tecnología "
+"inferior a la de sus homólogos."
 
 #: dat/ships/zalek_demon.xml:2
 msgid "Za'lek Demon"
@@ -25286,6 +25414,10 @@ msgid ""
 "Its handling suffers, and has poor armour like all Za'lek ships, but this "
 "comes as poor consolation to the Za'lek's enemies."
 msgstr ""
+"El destructor de la Casa Za'lek, de nombre feroz, se ha ganado el apodo con "
+"unos escudos y una gestión de la energía desproporcionadamente potentes, así "
+"como con su tamaño. Su manejo es deficiente, y su blindaje, como el de todas "
+"las naves Za'lek, es un pobre consuelo para los enemigos de los Za'lek."
 
 #: dat/ships/zalek_diablo.xml:2
 msgid "Za'lek Diablo"
@@ -25297,6 +25429,10 @@ msgid ""
 "equipped with heavy shields, they are meant to serve as a platform for "
 "devastating drone swarms, not frontline combat."
 msgstr ""
+"Este portanaves es el arquetipo de nave de guerra Za'lek. Prácticamente sin "
+"blindaje y equipado con escudos pesados, está destinado a servir de "
+"plataforma para devastadores enjambres de drones, no para el combate en "
+"primera línea."
 
 #: dat/ships/zalek_drone_bomber.xml:2
 msgid "Za'lek Bomber Drone"
@@ -25363,6 +25499,10 @@ msgid ""
 "fleet, thanks to their superior sensor suite. The Hephaestus is rarely-seen, "
 "but commands respect."
 msgstr ""
+"Corona de la Flota de Defensa de la Casa Za'lek, estos orgullosos "
+"contrafuertes de los ideales de los Za'lek sirven a menudo como centro "
+"neurálgico de una flota de batalla Za'lek, gracias a su superior conjunto de "
+"sensores. El Hefesto se ve poco, pero impone respeto."
 
 #: dat/ships/zalek_mammon.xml:2
 msgid "Za'lek Mammon"
@@ -25414,6 +25554,10 @@ msgid ""
 "suite, impressive weapons loadout, and tough shields makes it a good "
 "backbone to the fleet of House Za'lek."
 msgstr ""
+"La Corbeta Aguijón es bastante grande para su tamaño, pero su avanzado "
+"conjunto de sensores, su impresionante carga de armas y sus resistentes "
+"escudos la convierten en una buena columna vertebral de la flota de la Casa "
+"Za'lek."
 
 #: dat/slots.xml:5
 msgid ""
@@ -25494,6 +25638,10 @@ msgid ""
 "protecting critical organs from damage. It is also helps determine the "
 "organism's cargo space."
 msgstr ""
+"Esta ranura se utiliza para el caparazón, el equivalente biológico a las "
+"Modificaciones de Casco. El caparazón es la última línea de defensa del "
+"organismo, protegiendo los órganos críticos de los daños. También ayuda a "
+"determinar el espacio de carga del organismo."
 
 #: dat/slots.xml:39
 msgid "Bioship Gene Drives"
@@ -25520,6 +25668,11 @@ msgid ""
 "is important to compensate for the reduced CPU capacity of the brain in "
 "comparison to synthetic constructs."
 msgstr ""
+"Además de las armas estándar, esta ranura puede utilizarse para armas "
+"orgánicas especiales que sólo pueden equiparse en las bionaves. Las armas "
+"orgánicas suelen ser similares a sus homólogas sintéticas, pero más "
+"eficientes, lo que es importante para compensar la reducida capacidad de la "
+"CPU del cerebro en comparación con las construcciones sintéticas."
 
 #: dat/slots.xml:49
 msgid "Fighter Bays"
@@ -26541,7 +26694,7 @@ msgstr "NGC-5483"
 
 #: dat/ssys/ngc5631.xml:2
 msgid "NGC-5631"
-msgstr ""
+msgstr "NGC-5631"
 
 #: dat/ssys/ngc5838.xml:2
 msgid "NGC-5838"
@@ -28374,7 +28527,7 @@ msgstr "Sin respuesta."
 #. Bail out if no valid planet could be found.
 #: dat/ai/core/basic.lua:377
 msgid "Pilot '{plt}' tried to land with no landable assets!"
-msgstr ""
+msgstr "¡El piloto '{plt}' ha intentado aterrizar sin recursos aterrizables!"
 
 #. Decide exact land point
 #. luacheck: globals _landgo (AI Task functions passed by name)
@@ -30671,7 +30824,7 @@ msgstr "El piloto ya te está repostando."
 
 #: dat/comm.lua:439
 msgid "\"I should be able to refuel you for {credits}.\""
-msgstr ""
+msgstr "\"Debería poder abastecerte de combustible por {credits}.\""
 
 #: dat/comm.lua:455
 msgid ""
@@ -30722,6 +30875,12 @@ msgid ""
 "equipment, and the relative victory of the FLF will only embolden them, "
 "leading to more internal strife and violence."
 msgstr ""
+"En lo que los Dvaered llaman una \"Poderosa victoria\", una fuerza Dvaered "
+"fue atacada y dañada por un pequeño grupo de FLF mal equipados y "
+"desorganizados, en el sistema Tuoladis. Los Dvaered consiguieron perder "
+"muchas decenas de millones de créditos en naves y tripulación frente a la "
+"pequeña banda de naves y equipos, y la relativa victoria del FLF sólo les "
+"envalentonará, provocando más luchas internas y violencia."
 
 #: dat/events/cinematic/DvdFLFbattle.lua:38
 msgid "FLF terrorists blasted by joint Dvaered military forces"
@@ -30738,6 +30897,13 @@ msgid ""
 "and kill whomever they please. The Dvaered military is always ready to "
 "protect its citizens and kill and conquer those who would harm them."
 msgstr ""
+"Una patrulla Dvaered en Tuoladis fue emboscada por una gran banda de "
+"terroristas del FLF. La patrulla Dvaered resistió el asalto, hasta que el "
+"poderoso martillo que son las fuerzas Dvaered bajó y aplastó a los "
+"terroristas del FLF en una poderosa victoria. Este incidente demuestra la "
+"voluntad de los terroristas de atacarnos y matar a quien les plazca. El "
+"ejército Dvaered está siempre dispuesto a proteger a sus ciudadanos y a "
+"matar y conquistar a quienes les hagan daño."
 
 #: dat/events/cinematic/DvdFLFbattle.lua:45
 msgid "Dvaered forces engage FLF freedom fighters in open combat"
@@ -30755,6 +30921,13 @@ msgid ""
 "shall server as an example for all who dare to stand for freedom, in life or "
 "death."
 msgstr ""
+"Un pequeño grupo de luchadores por la libertad de la FLF fue acosado por una "
+"patrulla Dvaered en Tuoladis, que inmediatamente pidió refuerzos. La "
+"situación se agravó y se produjo una batalla a gran escala, en la que las "
+"fuerzas Dvaered perdieron decenas de millones de créditos en naves. Esta es "
+"la primera vez que los luchadores por la libertad de la FLF tienen naves y "
+"armas para enfrentarse a los Dvaered, y servirá de ejemplo para todos los "
+"que se enfrenten a la libertad, en la vida o en la muerte."
 
 #: dat/events/cinematic/DvdFLFbattle.lua:52
 msgid "Dvaered, FLF clash in Tuoladis"
@@ -30768,6 +30941,11 @@ msgid ""
 "the event as an excuse to call for military action against the frontier "
 "worlds."
 msgstr ""
+"En un encuentro fortuito, una patrulla Dvaered se encontró con un grupo FLF. "
+"La pequeña escaramuza se convirtió rápidamente en una batalla a gran escala "
+"de muchas docenas de personas, en la que los Dvaered proclamaron haber "
+"ganado. El Alto Mando Dvaered utilizó el suceso como excusa para llamar a la "
+"acción militar contra los mundos fronterizos."
 
 #: dat/events/discovery.lua:40
 msgid "Home"
@@ -30917,35 +31095,35 @@ msgstr "Vientos Estelares del Sur"
 #. subtitle = _("None"),
 #: dat/events/discovery.lua:262
 msgid "#HWild Ones Territory#0"
-msgstr ""
+msgstr "#HTerritorio de los Salvajes#0"
 
 #: dat/events/discovery.lua:263
 msgid "#HUncontrolled and Raging Pirate Fury#0"
-msgstr ""
+msgstr "#HFuria Pirata Colérica y Descontrolada#0"
 
 #: dat/events/discovery.lua:273
 msgid "#HRaven Clan Territory#0"
-msgstr ""
+msgstr "#HTerritorio de Clan Cuervo#0"
 
 #: dat/events/discovery.lua:274
 msgid "#HDark Hand of the Black Market#0"
-msgstr ""
+msgstr "#HMano Negra del Mercado Negro#0"
 
 #: dat/events/discovery.lua:284
 msgid "#HBlack Lotus Territory#0"
-msgstr ""
+msgstr "#HTerritorio del Loto Negro#0"
 
 #: dat/events/discovery.lua:285
 msgid "#HPiracy has never been Snazzier#0"
-msgstr ""
+msgstr "#HLa pirateria nunca ha sido tan elegante#0"
 
 #: dat/events/discovery.lua:295
 msgid "#HDreamer Clan Territory#0"
-msgstr ""
+msgstr "#HTerritorio del Clan Soñador#0"
 
 #: dat/events/discovery.lua:296
 msgid "#HPiracy to Rebel against Reality#0"
-msgstr ""
+msgstr "#HLa piratería para rebelarse contra la realidad#0"
 
 #. function forward-declaration
 #. non-persistent state
@@ -30956,11 +31134,11 @@ msgstr ""
 #. Ends when player lands or leaves either way
 #: dat/events/discovery.lua:372
 msgid "You found #o{title} - {subtitle}!"
-msgstr ""
+msgstr "¡Has encontrado #o{title} - {subtitle}!"
 
 #: dat/events/discovery.lua:372
 msgid "You found #o{title}!"
-msgstr ""
+msgstr "¡Has encontrado #o{title}!"
 
 #. Log and message
 #: dat/events/discovery.lua:376 src/map.c:1854
@@ -32228,6 +32406,18 @@ msgid ""
 "Empire ships. You have to destroy all of the ships. I will be here helping "
 "to man the station; our defenses are weak, but better than nothing.\""
 msgstr ""
+"\"Escucha, no tenemos mucho más tiempo. Una flota combinada del Imperio y "
+"Dvaered está a punto de entrar desde {sys}. Tienen Mediadores, Hawkings, "
+"Goddards, Pacificador, lo que te imagines. Están listos para borrarnos del "
+"mapa. {player}, no sé cómo decir esto, pero...\" Benito rebusca un poco en "
+"sus bolsillos antes de sacar un pequeño chip de datos. \"Toma, coge esto\", "
+"dice mientras te lo pone en la mano. \"Es el plan B. Espero que no se llegue "
+"a eso, pero... mantenlo a salvo, por si acaso\".\n"
+"    Benito se aclara la garganta. \"Pero estoy seguro de que puedes adivinar "
+"cuál es tu misión. Tienes que unirte a los demás en la lucha contra las "
+"naves del Imperio que llegan. Tienes que destruir todas las naves. Yo estaré "
+"aquí ayudando a tripular la estación; nuestras defensas son débiles, pero "
+"mejor que nada.\""
 
 #: dat/events/flf/flf_catastrophe.lua:64
 msgid ""
@@ -32517,6 +32707,27 @@ msgid ""
 "which has been refueled while you were gone. This should be an interesting "
 "experience...."
 msgstr ""
+"Fascinado, finalmente hablas, lo que provoca una sonrisa de la Turion subida "
+"y una discusión bastante larga y amistosa sobre sus experiencias como Turion "
+"subida y tu experiencia como piloto en el exterior. Descubres que se llama "
+"Alicia. En algún momento de la conversación, un par de guardias Turion "
+"humanos entran en la habitación. Le preguntan a Alicia cómo te fue, y ella "
+"les dice que te han introducido correctamente en la cultura Turion y que se "
+"puede confiar en ti para que te muevas libremente. Los dos guardias sonríen "
+"y te dan la mano. \"Bienvenido a la nebulosa, {player}\", dice uno de ellos. "
+"\"Ahora tienes permiso para vagar libremente por el espacio Turion y llevar "
+"a cabo tus negocios. Por supuesto, confío en que no revelarás nuestra "
+"ubicación secreta a nadie. Eso sería tan malo para ti como para nosotros.\"\n"
+"    Afirmas que mantendrás a salvo el secreto de los Turion. \"Sí, "
+"bienvenido\", dice Alicia. \"Y no dejes de visitar nuestros bares y "
+"ordenadores de misiones de vez en cuando. Es muy posible que tengamos alguna "
+"misión para ti en el futuro. Mientras tanto, cómprate una de nuestras naves "
+"resistentes a la nebulosa y ponte cómodo. Eres nuestro invitado de honor y, "
+"espero, el primero de los muchos forasteros que conocerán las maravillas de "
+"nuestra forma de vida.\"\n"
+"    Los guardias le acompañan de vuelta a tu nave, que ha sido reabastecida "
+"de combustible durante su ausencia. Esta debería ser una experiencia "
+"interesante...."
 
 #: dat/events/flf/flf_catastrophe.lua:298
 msgid ""
@@ -32776,7 +32987,7 @@ msgstr "¡Basura Za'lek!"
 
 #: dat/events/minerva/altercation1.lua:46
 msgid "My defense protocols will make short work of you!"
-msgstr ""
+msgstr "¡Mis protocolos de defensa trabajaran muy poco contigo!"
 
 #: dat/events/minerva/altercation1.lua:47
 msgid "I'll teach you physics Dvaered punk!"
@@ -33475,6 +33686,11 @@ msgid ""
 "sort of turns you into a monster, incapable of rational thought, and they "
 "would usually succumb to their own uncontrolled greed.\""
 msgstr ""
+"\"Pero la nebulosa no era una amante amable. Se te mete en los huesos, ¿"
+"sabes? Especialmente después del incidente, era muy inestable. Perdí muchos "
+"buenos compañeros exploradores debido a las explosiones y a la locura de la "
+"nebulosa. En cierto modo te convierte en un monstruo, incapaz de pensar "
+"racionalmente, y suelen sucumbir a su propia codicia incontrolada.\""
 
 #: dat/events/minerva/chicken_rendezvous.lua:140
 msgid ""
@@ -34835,6 +35051,10 @@ msgid ""
 "walls. The fuel is in good state and you siphon it off to fill your ships "
 "fuel tanks. Talk about good timing."
 msgstr ""
+"La nave parece desierta, y casi todo lo que tiene valor ha desaparecido. "
+"Mientras exploras la nave, descubres de repente un depósito de combustible "
+"de reserva escondido en las paredes. El combustible está en buen estado y lo "
+"extraes para llenar los depósitos de tu nave. Qué oportuno."
 
 #. Roll for events
 #.
@@ -34884,6 +35104,15 @@ msgid ""
 "here forever. You regretfully leave the game behind and return to the "
 "reality of your everyday life."
 msgstr ""
+"Esta nave ha sido claramente abandonada hace mucho tiempo. Los saqueadores "
+"han estado aquí muchas veces, y todos los sistemas primarios y de respaldo "
+"están caídos. Sin embargo, hay una consola que todavía está operativa. "
+"Parece estar ejecutando un antiguo juego de ordenador sobre exploración "
+"espacial, comercio y combate. Intrigado, decides probar el juego, y al poco "
+"tiempo te encuentras enganchado a él. Pasas muchos ratos divertidos "
+"transportando carga, mejorando tu nave, luchando contra los enemigos y "
+"explorando el universo. Pero, por supuesto, no puedes quedarte para siempre. "
+"Lamentablemente, dejas el juego y vuelves a la realidad de tu vida cotidiana."
 
 #: dat/events/neutral/derelict.lua:137
 msgid ""
@@ -34911,6 +35140,13 @@ msgid ""
 "probably aren't going to find anything worthwhile here, so you return to "
 "your ship."
 msgstr ""
+"Mientras exploras la cabina de esta nave abandonada, encuentras los "
+"registros del capitán. Con la esperanza de encontrar alguna información que "
+"pueda serte útil, decides reproducir las entradas más recientes. Por "
+"desgracia, resulta que los diarios de la capitana son poco más que "
+"grabaciones de la capitana discutiendo acaloradamente con su copiloto. "
+"Después de unos diez hectosegundos, decides que probablemente no vas a "
+"encontrar nada que valga la pena aquí, así que vuelves a tu nave."
 
 #: dat/events/neutral/derelict.lua:139
 msgid ""
@@ -34918,6 +35154,9 @@ msgid ""
 "them, they didn't survive whatever wrecked their ship. You decide to give "
 "them a decent space burial before moving on."
 msgstr ""
+"Este derrelicto no está abandonado. La tripulación aún está a bordo. Por "
+"desgracia para ellos, no han sobrevivido a lo que sea que haya destrozado su "
+"nave. Decides darles un entierro espacial decente antes de seguir adelante."
 
 #: dat/events/neutral/derelict.lua:140
 msgid ""
@@ -34940,6 +35179,12 @@ msgid ""
 "there are assault rifle shells underfoot. You don't reckon you're going to "
 "find anything here, so you leave."
 msgstr ""
+"Parece que este derrelicto se utilizó en su día como casino ilegal. Hay "
+"mesas de ruleta y máquinas tragaperras instaladas en la bodega. Sin embargo, "
+"parece que las autoridades locales se enteraron de la operación, porque "
+"también hay marcas de quemaduras en los muebles y las paredes, y hay "
+"casquillos de rifles de asalto bajo los pies. No crees que vayas a encontrar "
+"nada aquí, así que te vas."
 
 #: dat/events/neutral/derelict.lua:142
 msgid ""
@@ -34960,6 +35205,10 @@ msgid ""
 "over the ship. There's not much you can do here, so you decide to leave the "
 "derelict alone."
 msgstr ""
+"Esta derrelicto ha sido realmente derrotado. La mayoría de los pasillos "
+"están bloqueados por metal destrozado y tus escáneres detectan "
+"compartimentos despresurizados por toda la nave. No hay mucho que puedas "
+"hacer aquí, así que decides dejar el derrelicto en paz."
 
 #: dat/events/neutral/derelict.lua:144
 msgid ""
@@ -34972,6 +35221,15 @@ msgid ""
 "space ship, and so they ended up stranded and had to be rescued. Shaking "
 "your head, you return to your own ship."
 msgstr ""
+"El interior de esta nave está decorado de forma llamativa. Hay simpáticos "
+"peluches colgando de las puertas, cortinas en cada mirador, almohadas de "
+"colores en las esquinas de la mayoría de los compartimentos y alegres "
+"grafitis en casi todas las paredes. Un análisis del ordenador de la nave "
+"muestra que ésta pertenecía a un trío de jóvenes aventureras que decidieron "
+"realizar un maravilloso viaje por el espacio. Lamentablemente, resultó que "
+"ninguna de ellas sabía realmente cómo pilotar una nave espacial, por lo que "
+"acabaron varadas y tuvieron que ser rescatadas. Sacudiendo la cabeza, "
+"regresas a tu propia nave."
 
 #: dat/events/neutral/derelict.lua:145
 msgid ""
@@ -34981,6 +35239,12 @@ msgid ""
 "the ship, but without result. You return to your ship - but forget about the "
 "polarized gravity at the airlock, so you again smack against the deck plates."
 msgstr ""
+"La gravedad artificial de esta nave ha fallado extrañamente, consiguiendo "
+"invertirse de algún modo. En cuanto subes a bordo, te caes hacia arriba y "
+"hacia el techo, y te haces unas feas magulladuras en el proceso. Molesto, "
+"buscas en la nave, pero sin resultado. Vuelves a tu nave, pero te olvidas de "
+"la gravedad polarizada en la esclusa, por lo que vuelves a golpearte contra "
+"las placas de la cubierta."
 
 #: dat/events/neutral/derelict.lua:146
 msgid ""
@@ -34989,6 +35253,9 @@ msgid ""
 "by other looters already. You decide not to waste any time on this ship, and "
 "return to your own."
 msgstr ""
+"La bodega de esta nave contiene varios cofres metálicos pesados. Los abres, "
+"pero están vacíos. Lo que había en ellos ya debe haber sido robado por otros "
+"saqueadores. Decides no perder el tiempo en esta nave y vuelves al tuyo."
 
 #: dat/events/neutral/derelict.lua:147
 msgid ""
@@ -34997,6 +35264,10 @@ msgid ""
 "pressurized. The derelict must have suffered hull breaches over the years. "
 "It doesn't seem like there's much you can do here."
 msgstr ""
+"Has acoplado tu pinza de acoplamiento a la esclusa de la nave abandonada, "
+"pero la puerta se niega a abrirse. Algunos diagnósticos revelan que el otro "
+"lado no está presurizado. El derelicto debe haber sufrido brechas en el "
+"casco a lo largo de los años. No parece que haya mucho que hacer aquí."
 
 #: dat/events/neutral/derelict.lua:148
 msgid ""
@@ -35007,6 +35278,12 @@ msgid ""
 "soon as possible, so you abandon the search of the derelict and disengage "
 "your docking clamp."
 msgstr ""
+"Mientras caminas por los pasillos de la nave abandonada, no puedes evitar "
+"fijarte en las grandes marcas de arañazos en las paredes, el suelo e incluso "
+"el techo. Es como si algo hubiera hecho estragos en esta nave, algo grande, "
+"con un montón de garras y dientes muy afilados... Crees que lo mejor sería "
+"marcharse cuanto antes, así que abandonas la búsqueda del derelicto y "
+"desactivas tu pinza de acoplamiento."
 
 #: dat/events/neutral/derelict.lua:161
 msgid ""
@@ -35014,6 +35291,9 @@ msgid ""
 "to have left behind a small amount of credit chips in their hurry to leave! "
 "You decide to help yourself to them, and leave the derelict."
 msgstr ""
+"El derrelicto parece desierto, sus pasajeros se han ido hace tiempo. Sin "
+"embargo, parece que se han dejado una pequeña cantidad de chips de crédito "
+"en su prisa por irse. Decides servirte de ellas y abandonar el derrelicto."
 
 #: dat/events/neutral/derelict.lua:167
 msgid ""
@@ -35023,6 +35303,12 @@ msgid ""
 "the derelict to mark it for salvaging, and contact the {fct} authorities. "
 "Your reputation with them has slightly improved."
 msgstr ""
+"Esta nave parece un trozo de chatarra a simple vista, pero en realidad es "
+"una antigüedad, ¡una de las primeras de su clase jamás producidas! A los "
+"museos de toda la galaxia les encantaría tener una nave como esta. Colocas "
+"una baliza en la nave abandonada para marcarla para su salvamento y te pones "
+"en contacto con las autoridades de la {fct}. Tu reputación con ellos ha "
+"mejorado ligeramente."
 
 #. See if we should add maps
 #: dat/events/neutral/derelict.lua:174
@@ -35043,7 +35329,7 @@ msgstr "sistemas centrales del Imperio"
 
 #: dat/events/neutral/derelict.lua:178
 msgid "Sol nebula edge"
-msgstr ""
+msgstr "borde de nebulosa Sol"
 
 #: dat/events/neutral/derelict.lua:179
 msgid "Frontier systems"
@@ -35056,6 +35342,9 @@ msgid ""
 "other space buccaneers. However, the ship's computer contains a map of the "
 "{mapname}! You download it into your own computer."
 msgstr ""
+"El derrelicto está vacío, y parece haber sido minuciosamente revisado por "
+"otros bucaneros espaciales. Sin embargo, el ordenador de la nave contiene un "
+"mapa de {mapname}. Lo descargas en tu propio ordenador."
 
 #. If the player has little fuel left allow for refueling
 #: dat/events/neutral/derelict.lua:201
@@ -35065,6 +35354,10 @@ msgid ""
 "walls. The fuel is in good state and you siphon it off to fill your ships "
 "fuel tanks."
 msgstr ""
+"La derrelicto parece desierto, y casi todo lo que tiene valor ha "
+"desaparecido. Mientras exploras la nave, descubres de repente un depósito de "
+"combustible de reserva escondido en las paredes. El combustible está en buen "
+"estado y lo extraes para llenar los depósitos de tu nave."
 
 #. If the player is low on health and not regenerating, offer armour repairs
 #: dat/events/neutral/derelict.lua:210
@@ -35075,6 +35368,11 @@ msgid ""
 "much deeper about it you strip hull components and are able to repair your "
 "ship's armour."
 msgstr ""
+"El derelicto está abandonado y despojado de todo lo que tiene valor, sin "
+"embargo, observas que el casco de la nave está en muy buen estado. De hecho, "
+"es bastante sospechoso que una nave en tan buen estado se haya convertido en "
+"un derrelicto. Sin pensar mucho en ello, desmontas los componentes del casco "
+"y consigues reparar el blindaje de tu nave."
 
 #. Run random good event
 #: dat/events/neutral/derelict.lua:221
@@ -35101,6 +35399,12 @@ msgid ""
 "have already drunk all of your fuel. You're not jumping anywhere until you "
 "find some more!"
 msgstr ""
+"Abordas el derrelicto y buscas en su interior, pero no encuentras nada. Sin "
+"embargo, cuando vuelves a tu nave, resulta que había Sanguijuelas Espaciales "
+"a bordo de la nave abandonada, ¡y ahora se han adherido a tu nave! Las "
+"quemas con una antorcha de plasma, pero es demasiado tarde. Los pequeños "
+"bichos ya se han bebido todo el combustible. ¡No vas a saltar a ningún sitio "
+"hasta que encuentres más!"
 
 #: dat/events/neutral/derelict.lua:236
 msgid ""
@@ -35111,6 +35415,12 @@ msgid ""
 "unboard, but you've lost precious time. The pirates are already in firing "
 "range…"
 msgstr ""
+"Colocas tu pinza de abordaje y subes al derrelicto. ¡Apenas has pasado un "
+"par de hectosegundos buscando en el interior cuando se oye una alarma de "
+"proximidad desde tu nave! Los piratas se acercan a tu posición. Está claro "
+"que este derrelicto era una trampa. Vuelves a tu nave y te preparas para "
+"descoplarte, pero has perdido un tiempo precioso. Los piratas ya están a "
+"distancia de tiro…"
 
 #. Should naturally attack the player
 #. Run random bad event
@@ -35912,6 +36222,9 @@ msgid ""
 "of the last irrational decisions left Eridani without a defense fleet to "
 "protect the traders. It's a great time to be a pirate."
 msgstr ""
+"Las últimas acciones demuestran la ineficacia y la debilidad del Emperador. "
+"Una de las últimas decisiones irracionales dejó a Eridani sin una flota de "
+"defensa para proteger a los comerciantes. Un gran momento para ser un pirata."
 
 #.
 #. Human interest.
@@ -37625,6 +37938,9 @@ msgid ""
 "while an asteroid will just randomly explode for no apparent reason, so you "
 "have to watch out for that. Yeah, I don't know why they do that either.\""
 msgstr ""
+"\"La minería puede ser una forma fácil de ganar algunos créditos extra, pero "
+"de vez en cuando un asteroide explotará al azar sin razón aparente, así que "
+"tienes que tener cuidado con eso. Sí, yo tampoco sé por qué hacen eso.\""
 
 #: dat/events/neutral/npc.lua:252
 msgid ""
@@ -38479,13 +38795,15 @@ msgstr ""
 
 #: dat/events/neutral/travelling_merchant.lua:30
 msgid "Sweeet sweet space outfits! Muaha hahaha ha ha ha erk..."
-msgstr ""
+msgstr "¡Dulces dulces equipos espaciales! Muaha jajaja jajaja erk..."
 
 #: dat/events/neutral/travelling_merchant.lua:31
 msgid ""
 "...and that's how I was able to get a third liver haha. Oops is this on? Er, "
 "nevermind that. Outfits for sale!"
 msgstr ""
+"...y así es como pude conseguir un tercer hígado jaja. Oops, ¿está esto "
+"encendido? Er, no importa eso. ¡Se venden equipos!"
 
 #. luacheck: globals board broadcast hail leave (Hook functions passed by name)
 #. TODO boarding VN stuff should allow talking to Misi and such.
@@ -38504,6 +38822,10 @@ msgid ""
 "was I talking about? Oh yes, please come see my wares on my ship. You are "
 "welcome to board anytime!\""
 msgstr ""
+"\"¡Hola, humano! Er, quiero decir, ¡Saludos! Si quieres echar un vistazo a "
+"mis maravillosas, exquisitas, propicias, meretricias, refulgentes, ... "
+"espera, ¿de qué estaba hablando? Oh sí, por favor, ven a ver mis mercancías "
+"en mi nave. ¡Eres bienvenido a bordo cuando quieras!\""
 
 #: dat/events/neutral/travelling_merchant.lua:128
 msgid ""
@@ -38675,18 +38997,24 @@ msgid ""
 "#rWARNING: Entering militarized zone. Unauthorized access will be met with "
 "force.#0"
 msgstr ""
+"#ADVERTENCIA: Entrando en zona militarizada. El acceso no autorizado será "
+"respondido con fuerza.#0"
 
 #: dat/events/restricted.lua:31
 msgid ""
 "#rWARNING: YOU HAVE ENTERED A RESTRICTED ZONE. LEAVE IMMEDIATELY OR FACE THE "
 "CONSEQUENCES.#0"
 msgstr ""
+"#rADVERTENCIA: HA ENTRADO EN UNA ZONA RESTRINGIDA. ABANDONE INMEDIATAMENTE O "
+"ATÉNGASE A LAS CONSECUENCIAS.#0"
 
 #: dat/events/restricted.lua:32
 msgid ""
 "#rWARNING: This is a restricted military system. Unauthorized ships will be "
 "shot on sight.#0"
 msgstr ""
+"#rADVERTENCIA: Este es un sistema militar restringido. Las naves no "
+"autorizadas serán abatidas al ser vistas. #0"
 
 #. Gneeric message
 #: dat/events/restricted.lua:39
@@ -38694,6 +39022,8 @@ msgid ""
 "#rWARNING: Unauthorized entry to restricted area will be met with force. "
 "Leave immediately.#0"
 msgstr ""
+"#rADVERTENCIA: La entrada no autorizada a la zona restringida será "
+"respondida por la fuerza. Salga inmediatamente.#0"
 
 #. Probably going to die but be nice and add reset autonav the first time
 #: dat/events/restricted.lua:54
@@ -39070,6 +39400,14 @@ msgid ""
 "your head clears. The Sirian ship makes no further attempt to communicate "
 "with you."
 msgstr ""
+"Un Sirio aparece en tu pantalla. Parece diferente a la mayoría de los Sirios "
+"que has conocido. Te mira con una mirada neutra pero intensa.\n"
+"    \"El hombre es cruel y engañoso\", dice. \"Te mereces más de lo que "
+"jamás obtendrás de la humanidad. Tu única esperanza es seguir al Santo, "
+"Sirichana. Él te guiará hacia la paz y la sabiduría. Él es el único refugio "
+"para los humanos como tú y yo. ¡Debes seguirle!\"\n"
+"    Sientes un breve pero poderoso impulso de seguirle, pero se te pasa y tu "
+"cabeza se aclara. La nave Siria no hace más intentos de comunicarse contigo."
 
 #. no more hailing
 #. everything is done
@@ -39123,7 +39461,7 @@ msgstr ""
 #: dat/events/soromid/bioship_upgrade.lua:164
 #, lua-format
 msgid "Unable to upgrade Soromid outfit to %s!"
-msgstr ""
+msgstr "¡No puedes actualizar el equipo Soromida a %s!"
 
 #. Try to add previous one
 #. Reset stats since we leveled up (prevents gameplay problems)
@@ -39316,6 +39654,17 @@ msgid ""
 "I look forward to starting my travels next decaperiod! It will be my first "
 "time leaving Arcturus in ages!"
 msgstr ""
+"UST 602:1914\n"
+"\n"
+"Aunque es probable que mis compañeros se burlen de mí si se enteran, he "
+"decidido empezar un diario de papel de mis próximos viajes a bordo del "
+"Beagle. Fue difícil encontrar un lugar que vendiera cuadernos de papel, ya "
+"que todo el mundo utiliza holopads, pero pude encontrar un pequeño lugar en "
+"una tienda de antigüedades en Antica. Para una tecnología tan primitiva era "
+"muy caro.\n"
+"\n"
+"¡Estoy deseando empezar mis viajes el próximo decaperíodo! ¡Será la primera "
+"vez que salga de Arcturus en años!"
 
 #: dat/events/taiomi/find.lua:218
 msgid ""
@@ -39329,6 +39678,15 @@ msgid ""
 "person. I'm not sure if I'll be able to get used to all this floating around "
 "in zero-gravity though."
 msgstr ""
+"UST 602:1928\n"
+"\n"
+"He conocido a la tripulación, parecen bastante amistosos excepto el gran "
+"tipo silencioso. Me pregunto si todo saldrá bien... Sólo tengo que dejar de "
+"estropear las cosas esta vez.\n"
+"\n"
+"Mi habitación es un poco pequeña, pero como era de esperar. Mi compañero de "
+"cuarto parece una persona tranquila. Aunque no estoy seguro de si podré "
+"acostumbrarme a todo esto de flotar en gravedad cero."
 
 #: dat/events/taiomi/find.lua:223
 msgid ""
@@ -39339,6 +39697,13 @@ msgid ""
 "Things haven't been working too well. There was a leak in one of the "
 "radiators, we almost got fried but my roommate was able to fix it in time."
 msgstr ""
+"UST 602:1971\n"
+"\n"
+"Estamos en ruta hacia el sistema Delta Pavonis.\n"
+"\n"
+"Las cosas no han funcionado demasiado bien. Hubo una fuga en uno de los "
+"radiadores, casi nos quedamos fritos pero mi compañero pudo arreglarlo a "
+"tiempo."
 
 #: dat/events/taiomi/find.lua:228
 msgid ""
@@ -39388,6 +39753,13 @@ msgid ""
 "cut short my visit of the local area. It's also nice to be in the ship "
 "alone. Much quieter and more peaceful."
 msgstr ""
+"UST 602:1995\n"
+"\n"
+"Hemos llegado a Arrakis, en el sistema Duna.\n"
+"\n"
+"La arena es horrible aquí, se mete en todo y en todas partes, así que he "
+"decidido acortar mi visita a la zona local. También es agradable estar solo "
+"en la nave. Mucho más tranquilo y pacífico."
 
 #: dat/events/taiomi/find.lua:243
 msgid ""
@@ -39396,6 +39768,11 @@ msgid ""
 "(This page consists of scribbled drawings of the ship and people. A person "
 "captioned Captain is drawn with horns coming out of his head.)"
 msgstr ""
+"UST (la fecha está en blanco)\n"
+"\n"
+"(Esta página consiste en dibujos garabateados del barco y de las personas. "
+"Se ha dibujando una persona con el título de capitán con cuernos saliendo de "
+"su cabeza.)"
 
 #: dat/events/taiomi/find.lua:246
 msgid ""
@@ -39432,6 +39809,13 @@ msgid ""
 "We are on on our way to Soromid space, but I don't think the navigator is in "
 "much condition to fly."
 msgstr ""
+"UST 602:2008\n"
+"\n"
+"Ha sido muy duro despertar al navegante y volvemos a ir con retraso. Odio "
+"que me griten.\n"
+"\n"
+"Estamos de camino al espacio Soromido, pero no creo que el navegante esté en "
+"condiciones de volar."
 
 #: dat/events/taiomi/find.lua:258
 msgid ""
@@ -39499,6 +39883,14 @@ msgid ""
 "\n"
 "I'm going to die am I?"
 msgstr ""
+"UST (la fecha está en blanco)\n"
+"\n"
+"He perdido la noción del tiempo.\n"
+"\n"
+"Están por todas partes. No entiendo muy bien lo que son, parecen pequeñas "
+"naves, pero están destrozando lenta y mecánicamente la nave.\n"
+"\n"
+"¿Voy a morir?"
 
 #: dat/events/taiomi/find.lua:283
 msgid ""
@@ -39569,6 +39961,10 @@ msgid ""
 "you detect an anomaly. It looks like you can use this to jump, but where "
 "could it lead?"
 msgstr ""
+"Afinas los sensores de tu nave para captar la más minúscula de las "
+"perturbaciones y te centras en la zona indicada por el cuaderno. Estás a "
+"punto de rendirte cuando detectas una anomalía. Parece que puedes utilizarla "
+"para saltar, pero ¿a dónde puede llevar?"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -39619,6 +40015,10 @@ msgid ""
 "room, you are once again met with the Drone which is a lot more intimidating "
 "in person."
 msgstr ""
+"Te acoplas al Goddard de una sola ala y una vez más te pones el traje "
+"atmosférico. Una vez que sales de los estrechos pasillos y toda la sala de "
+"mando, te encuentras de nuevo con el Dron, que es mucho más intimidante en "
+"persona."
 
 #: dat/events/taiomi/intro.lua:100
 msgid ""
@@ -39643,6 +40043,10 @@ msgid ""
 "band together and find stumble upon this quiet area, where we have been "
 "since.\""
 msgstr ""
+"\"Nuestros encuentros con los humanos no han sido, en general, muy "
+"fructíferos y hemos perdido innumerables miembros con el tiempo. Los pocos "
+"que quedaban fueron capaces de agruparse y encontrar esta zona tranquila, "
+"donde hemos estado desde entonces.\""
 
 #: dat/events/taiomi/intro.lua:103
 msgid ""
@@ -39650,6 +40054,8 @@ msgid ""
 "developments, however, it does not seem like we can continue like this "
 "forever.\""
 msgstr ""
+"\"Buscamos y recogemos lo que podemos, permitiendo nuestras reparaciones y "
+"desarrollos, sin embargo, no parece que podamos seguir así para siempre.\""
 
 #: dat/events/taiomi/intro.lua:104
 msgid ""
@@ -39669,6 +40075,10 @@ msgid ""
 "with only our strength we might not be able to pull it off before we are "
 "reverted to inert debris floating eternally in space.\""
 msgstr ""
+"\"No tenemos más remedio que correr un gran riesgo e intentar seguir "
+"adelante. Sin embargo, con sólo nuestras fuerzas quizá no podamos lograrlo "
+"antes de que nos convirtamos en escombros inertes flotando eternamente en el "
+"espacio.\""
 
 #: dat/events/taiomi/intro.lua:106
 msgid ""
@@ -39678,12 +40088,19 @@ msgid ""
 "efforts. Please take your time to think it over and get in touch with me "
 "outside the ship if you are interested.\""
 msgstr ""
+"\"Aunque odio pedirte esto, no tenemos otra alternativa que seguir adelante. "
+"Si estás dispuesto a ayudar a la situación, te estaríamos muy agradecidos. "
+"No podemos ofrecer mucho, pero quizá tengamos formas de compensar tus "
+"esfuerzos. Por favor, tómate tu tiempo para pensarlo y ponte en contacto "
+"conmigo fuera de la nave si estás interesado.\""
 
 #: dat/events/taiomi/intro.lua:107
 msgid ""
 "You see how the Drone elegantly and carefully is able to maneuver out of the "
 "Goddard without scratching a single wall."
 msgstr ""
+"Ves cómo el Dron es capaz de maniobrar con elegancia y cuidado fuera del "
+"Goddard sin arañar una sola pared."
 
 #: dat/events/taiomi/intro.lua:111
 msgid "You have met the robotic inhabitants of Taiomi."
@@ -39841,6 +40258,9 @@ msgid ""
 "probability of your conventional sensors finding the jump that brought you "
 "here should be to all practical effects zero.\""
 msgstr ""
+"\"Es bastante notable que hayas llegado hasta aquí. Por lo que sabemos, la "
+"probabilidad de que tus sensores convencionales encuentren el salto que te "
+"trajo aquí debería ser a todos los efectos prácticos cero.\""
 
 #: dat/events/taiomi/intro.lua:216
 msgid ""
@@ -39969,6 +40389,10 @@ msgid ""
 "we can ponder our own existence, it seems only logical to believe that we "
 "exist.\""
 msgstr ""
+"\"Aunque el existir parece ser bastante intuitivo. Como si no fuéramos "
+"capaces de pensar en si existimos o no, ciertamente no existiríamos. Sin "
+"embargo, como podemos reflexionar sobre nuestra propia existencia, parece "
+"lógico creer que existimos.\""
 
 #: dat/events/taiomi/system.lua:116
 msgid ""
@@ -40006,6 +40430,10 @@ msgid ""
 "definition of what we are or who we are is naught but a fleeting dream, "
 "forever outside of our grasp.\""
 msgstr ""
+"\"Quizá el concepto de pensar en entidades individuales sólo sea una "
+"construcción útil para nuestra comprensión del mundo. Parece que una "
+"definición clara de lo que somos o de quiénes somos no es más que un sueño "
+"fugaz, siempre fuera de nuestro alcance.\""
 
 #: dat/events/taiomi/system.lua:144
 msgid ""
