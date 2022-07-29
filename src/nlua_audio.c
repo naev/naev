@@ -135,6 +135,7 @@ static int stream_thread( void *la_data )
       if (la->active < 0) {
          la->th = NULL;
          SDL_CondBroadcast( la->cond );
+         alSourceStop( la->source );
          soundUnlock();
          return 0;
       }
@@ -151,6 +152,7 @@ static int stream_thread( void *la_data )
              * add a check here to not mess around with stuff. */
             la->th = NULL;
             SDL_CondBroadcast( la->cond );
+            alSourceStop( la->source );
             soundUnlock();
             return 0;
          }
