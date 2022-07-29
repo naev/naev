@@ -125,7 +125,7 @@ function create()
    end
 
    -- If they player never had tokens, it is probably their first time
-   if not var.peek( "minerva_tokens" ) then
+   if not var.peek( "minerva_tokens_gained" ) then
       mem.greeterhook = hook.land( "bargreeter", "bar" )
    end
    -- End event on takeoff.
