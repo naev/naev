@@ -1545,11 +1545,10 @@ static int audioL_setEffect( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    const char *name = luaL_checkstring(L,2);
    int enable = (lua_isnoneornil(L,3)) ? 1 : lua_toboolean(L,3);
-   LuaAudioEfx_t *lae;
 
    soundLock();
    if (enable) {
-      lae = audio_getEffectByName( name );
+      LuaAudioEfx_t *lae = audio_getEffectByName( name );
       if (lae == NULL) {
          soundUnlock();
          return 0;
