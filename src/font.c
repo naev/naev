@@ -44,8 +44,7 @@
  * we can be lazy and use global variables.
  */
 static mat4 font_projection_mat; /**< Projection matrix. */
-static FT_Library font_library = NULL; /**< Global, reference-counted FreeType library. */
-static int        font_library_refs = 0; /**< Our refcount for font_library, because FreeType inexplicably hides its own. */
+static FT_Library font_library = NULL; /**< Global FreeType library. */
 static FT_UInt    prev_glyph_index; /**< Index of last character drawn (for kerning). */
 static int        prev_glyph_ft_index; /**< HACK: Index into which stsh->ft[_].face? */
 
@@ -1522,7 +1521,7 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
    char fullname[PATH_MAX];
 
    /* Initialize FreeType. */
-   if (font_library_refs++ == 0) {
+   if (font_library == NULL) {
       if (FT_Init_FreeType( &font_library )) {
          WARN(_("FT_Init_FreeType failed with font %s."), fname);
          return -1;
@@ -1736,11 +1735,6 @@ void gl_freeFont( glFont* font )
       gl_fontstashftDestroy( &stsh->ft[i] );
    array_free( stsh->ft );
 
-   if (--font_library_refs == 0) {
-      FT_Done_FreeType( font_library );
-      font_library = NULL;
-   }
-
    free( stsh->fname );
    for (int i=0; i<array_size(stsh->tex); i++)
       glDeleteTextures( 1, &stsh->tex->id );
@@ -1767,4 +1761,16 @@ static void gl_fontstashftDestroy( glFontStashFreetype *ft )
       free(ft->file);
    }
    FT_Done_Face(ft->face);
+}
+
+/**
+ * @brief Frees all resources associated with the font system.
+ *        This also resets font ID tracking, so there's no going back.
+ */
+void gl_fontExit (void)
+{
+   FT_Done_FreeType( font_library );
+   font_library = NULL;
+   array_free( avail_fonts );
+   avail_fonts = NULL;
 }

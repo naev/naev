@@ -497,7 +497,10 @@ int main( int argc, char** argv )
    /* Delete logs if empty. */
    log_clean();
 
+   /* Really turn the lights off. */
    PHYSFS_deinit();
+   gl_fontExit();
+   gettext_exit();
 
    /* all is well */
    debug_enableLeakSanitizer();
