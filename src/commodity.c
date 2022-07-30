@@ -37,6 +37,7 @@
 #include "spfx.h"
 
 #define XML_COMMODITY_ID      "commodity" /**< XML document identifier */
+#define CRED_TEXT_MAX         (ECON_CRED_STRLEN-4) /* Maximum length of just credits2str text, no markup */
 
 /* commodity stack */
 Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
@@ -62,21 +63,21 @@ static int commodity_parse( Commodity *temp, const char *filename );
 void credits2str( char *str, credits_t credits, int decimals )
 {
    if (decimals < 0)
-      snprintf( str, ECON_CRED_STRLEN, _("%.*f ¤"), 0, (double)credits );
+      snprintf( str, CRED_TEXT_MAX, _("%.*f ¤"), 0, (double)credits );
    else if (credits >= 1000000000000000000LL)
-      snprintf( str, ECON_CRED_STRLEN, _("%.*f E¤"), decimals, (double)credits / 1e18 );
+      snprintf( str, CRED_TEXT_MAX, _("%.*f E¤"), decimals, (double)credits / 1e18 );
    else if (credits >= 1000000000000000LL)
-      snprintf( str, ECON_CRED_STRLEN, _("%.*f P¤"), decimals, (double)credits / 1e15 );
+      snprintf( str, CRED_TEXT_MAX, _("%.*f P¤"), decimals, (double)credits / 1e15 );
    else if (credits >= 1000000000000LL)
-      snprintf( str, ECON_CRED_STRLEN, _("%.*f T¤"), decimals, (double)credits / 1e12 );
+      snprintf( str, CRED_TEXT_MAX, _("%.*f T¤"), decimals, (double)credits / 1e12 );
    else if (credits >= 1000000000L)
-      snprintf( str, ECON_CRED_STRLEN, _("%.*f G¤"), decimals, (double)credits / 1e9 );
+      snprintf( str, CRED_TEXT_MAX, _("%.*f G¤"), decimals, (double)credits / 1e9 );
    else if (credits >= 1000000)
-      snprintf( str, ECON_CRED_STRLEN, _("%.*f M¤"), decimals, (double)credits / 1e6 );
+      snprintf( str, CRED_TEXT_MAX, _("%.*f M¤"), decimals, (double)credits / 1e6 );
    else if (credits >= 1000)
-      snprintf( str, ECON_CRED_STRLEN, _("%.*f k¤"), decimals, (double)credits / 1e3 );
+      snprintf( str, CRED_TEXT_MAX, _("%.*f k¤"), decimals, (double)credits / 1e3 );
    else
-      snprintf (str, ECON_CRED_STRLEN, _("%.*f ¤"), decimals, (double)credits );
+      snprintf (str, CRED_TEXT_MAX, _("%.*f ¤"), decimals, (double)credits );
 }
 
 /**
@@ -89,7 +90,7 @@ void credits2str( char *str, credits_t credits, int decimals )
  */
 void price2str(char *str, credits_t price, credits_t credits, int decimals )
 {
-   char buf[ ECON_CRED_STRLEN ];
+   char buf[ CRED_TEXT_MAX ];
 
    if (price <= credits) {
       credits2str( str, price, decimals );
@@ -97,10 +98,7 @@ void price2str(char *str, credits_t price, credits_t credits, int decimals )
    }
 
    credits2str( buf, price, decimals );
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wformat-truncation"
    snprintf( str, ECON_CRED_STRLEN, "#r%s#0", (char*)buf );
-#pragma GCC diagnostic pop
 }
 
 /**
