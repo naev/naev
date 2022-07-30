@@ -997,8 +997,8 @@ static void outfits_sell( unsigned int wid, const char *str )
       return;
 
    /* Try Lua. */
-   if (outfit->lua_buy != LUA_NOREF) {
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, outfit->lua_buy);
+   if (outfit->lua_sell != LUA_NOREF) {
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, outfit->lua_sell);
       lua_pushinteger(naevL, q);
       if (nlua_pcall( outfit->lua_env, 1, 2 )) {   /* */
          WARN(_("Outfit '%s' failed to run '%s':\n%s"),outfit->name,"price",lua_tostring(naevL,-1));
