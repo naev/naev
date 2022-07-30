@@ -262,3 +262,11 @@ void debug_sigClose (void)
    signal( SIGTRAP, SIG_DFL );
 #endif /* LINUX && HAS_BFD && DEBUGGING */
 }
+
+
+/**
+ * @brief Does nothing. Calling this tells our debug scripts to stop tracing.
+ */
+void debug_enableLeakSanitizer (void)
+{
+}

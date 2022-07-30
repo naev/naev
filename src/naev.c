@@ -500,7 +500,8 @@ int main( int argc, char** argv )
    PHYSFS_deinit();
 
    /* all is well */
-   exit(EXIT_SUCCESS);
+   debug_enableLeakSanitizer();
+   return 0;
 }
 
 /**
