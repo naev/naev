@@ -85,8 +85,24 @@
                s, str, xml_raw(n) ); } \
       str = ((xml_get(n) == NULL) ? NULL : strdup(xml_raw(n))); continue; }}
 
-#define xmlr_attr_strd(n,s,a) \
-   a = (char*)xmlGetProp(n,(xmlChar*)s)
+/* Hack for better leak tracing: tools like LeakSanitizer can't trace past xmlGetProp(),
+ * but there's no issue if we duplicate the string ourselves. */
+
+#if DEBUGGING
+static inline char* nxml_trace_strdup( void* ptr )
+{
+   void *pointer_from_libxml2 = ptr;
+   char *ret = (ptr == NULL) ? NULL : strdup(ptr);
+   free( pointer_from_libxml2 );
+   return ret;
+}
+#else
+#define nxml_trace_strdup(ptr)         ((char*) (ptr))
+#endif /* DEBUGGING */
+
+/* Attribute reader (allocates memory). */
+#define xmlr_attr_strd(n,s,a)          a = nxml_trace_strdup( xmlGetProp( n, (xmlChar*)s ) )
+
 /* Attribute readers with defaults. */
 #define xmlr_attr_int_def(n,s,a,def)   do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def: strtol( T, NULL, 10); free(T);} while(0)
 #define xmlr_attr_uint_def(n,s,a,def)  do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def:strtoul( T, NULL, 10); free(T);} while(0)
