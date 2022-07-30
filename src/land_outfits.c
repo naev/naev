@@ -627,9 +627,11 @@ static const char *outfit_getPrice( const Outfit *outfit, credits_t *price, int 
    const char *str;
 
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, outfit->lua_price);
-   if (nlua_pcall( outfit->lua_env, 0, 3 )) {   /* */
+   lua_pushinteger(naevL, q);
+   if (nlua_pcall( outfit->lua_env, 1, 3 )) {   /* */
       WARN(_("Outfit '%s' failed to run '%s':\n%s"),outfit->name,"price",lua_tostring(naevL,-1));
       lua_pop(naevL, 1);
+      return pricestr;
    }
 
    str = luaL_checkstring( naevL, -3 );
@@ -883,12 +885,33 @@ static void outfits_buy( unsigned int wid, const char *str )
          outfit_isGUI(outfit) || outfit_isLicense(outfit))
       q = MIN(q,1);
 
-   /* can buy the outfit? */
+   /* Can buy the outfit? */
    if (land_errDialogue( outfit->name, "buyOutfit" ))
       return;
 
+   /* Try Lua. */
+   if (outfit->lua_buy != LUA_NOREF) {
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, outfit->lua_buy);
+      lua_pushinteger(naevL, q);
+      if (nlua_pcall( outfit->lua_env, 1, 2 )) {   /* */
+         WARN(_("Outfit '%s' failed to run '%s':\n%s"),outfit->name,"price",lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+
+      int bought = lua_toboolean(naevL,-2);
+
+      if (!bought) {
+         dialogue_alert( "%s", lua_tostring(naevL,-1) );
+         lua_pop(naevL, 2);
+         return;
+      }
+
+      lua_pop(naevL, 2);
+   }
+   else
+      player_modCredits( -outfit->price * player_addOutfit( outfit, q ) );
+
    /* Actually buy the outfit. */
-   player_modCredits( -outfit->price * player_addOutfit( outfit, q ) );
    outfits_updateEquipmentOutfits();
    hparam[0].type    = HOOK_PARAM_STRING;
    hparam[0].u.str   = outfit->name;
@@ -973,7 +996,28 @@ static void outfits_sell( unsigned int wid, const char *str )
    if (land_errDialogue( outfit->name, "sellOutfit" ))
       return;
 
-   player_modCredits( outfit->price * player_rmOutfit( outfit, q ) );
+   /* Try Lua. */
+   if (outfit->lua_buy != LUA_NOREF) {
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, outfit->lua_buy);
+      lua_pushinteger(naevL, q);
+      if (nlua_pcall( outfit->lua_env, 1, 2 )) {   /* */
+         WARN(_("Outfit '%s' failed to run '%s':\n%s"),outfit->name,"price",lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+
+      int bought = lua_toboolean(naevL,-2);
+
+      if (!bought) {
+         dialogue_alert( "%s", lua_tostring(naevL,-1) );
+         lua_pop(naevL, 2);
+         return;
+      }
+
+      lua_pop(naevL, 2);
+   }
+   else
+      player_modCredits( outfit->price * player_rmOutfit( outfit, q ) );
+
    outfits_updateEquipmentOutfits();
    hparam[0].type    = HOOK_PARAM_STRING;
    hparam[0].u.str   = outfit->name;

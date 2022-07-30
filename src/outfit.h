@@ -455,6 +455,7 @@ double outfit_ammoMass( const Outfit *o );
 /* Active outfits. */
 double outfit_duration( const Outfit* o );
 double outfit_cooldown( const Outfit* o );
+
 /*
  * Loading and freeing outfit stack.
  */
