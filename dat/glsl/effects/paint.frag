@@ -1,6 +1,4 @@
-#include "lib/simplex.glsl"
 #include "lib/blend.glsl"
-#include "lib/blur.glsl"
 
 uniform vec3 dimensions;
 uniform sampler2D u_tex;
