@@ -635,7 +635,7 @@ static const char *outfit_getPrice( const Outfit *outfit, credits_t *price, int 
    }
 
    str = luaL_checkstring( naevL, -3 );
-   strncpy( pricestr, str, sizeof(pricestr) );
+   strncpy( pricestr, str, sizeof(pricestr)-1 );
    *price = 0;
    *canbuy = lua_toboolean( naevL, -2 );
    *cansell = lua_toboolean( naevL, -1 );
