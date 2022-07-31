@@ -308,7 +308,7 @@ function poi.nearNebula( mem )
    return true
 end
 
-local conduit = N_("Corrupted Data Matrix")
+local conduit = N_("Encrypted Data Matrix")
 --[[
 Gets the amount of data collected by the player.
    @treturn integer Amount of data collected by the player.
