@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Scary Paint">
+ <general>
+  <rarity>6</rarity>
+  <unique />
+  <typename>Scary War Paint</typename>
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>1</mass>
+  <price>1000000</price>
+  <description>Scary war paint can be used to strike fear in those that lay their eyes upon the ship that wears it.</description>
+  <desc_extra>Paints the ship a scary colour, causing pirates to respect you and bounty hunters to hunt you.</desc_extra>
+  <gfx_store>black_cat_doll.webp</gfx_store>
+  <limit>fake_transponder</limit>
+  <illegalto>
+   <faction>Empire</faction>
+   <faction>Dvaered</faction>
+   <faction>Soromid</faction>
+   <faction>Sirius</faction>
+   <faction>Za'lek</faction>
+   <faction>Goddard</faction>
+   <faction>Frontier</faction>
+  </illegalto>
+ </general>
+ <specific type="modification">
+  <lua>outfits/unique/scary_paint.lua</lua>
+ </specific>
+</outfit>
