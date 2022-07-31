@@ -24,7 +24,7 @@ local function turnon( p, po )
 
    -- apply nice shader effect
    p:effectAdd("Shield Boost")
-   
+
    return true
 end
 
