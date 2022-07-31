@@ -905,7 +905,7 @@ static void outfits_buy( unsigned int wid, const char *str )
          lua_pop(naevL, 2);
          return;
       }
-      q = luaL_checkinteger(L,-1);
+      q = luaL_checkinteger(naevL,-1);
 
       lua_pop(naevL, 2);
    }
@@ -1013,7 +1013,7 @@ static void outfits_sell( unsigned int wid, const char *str )
          lua_pop(naevL, 2);
          return;
       }
-      q = luaL_checkinteger(L,-1);
+      q = luaL_checkinteger(naevL,-1);
 
       lua_pop(naevL, 2);
    }
