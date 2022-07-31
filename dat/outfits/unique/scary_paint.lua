@@ -3,25 +3,29 @@
 
    Makes the player feared by pirates and bounty hunters.
 --]]
-local fmt = require "format"
 local pir
 
 function onload( _o )
    pir = require "common.pirate"
 end
 
-function init( p, po )
+function init( p, _po )
    p:effectAdd("Paint", math.huge)
 end
 
-function onremove( p, po )
+function onremove( p, _po )
    p:effectRm("Paint")
 end
 
-function onscanned( p, po, scanner )
+-- TODONOTE: when independents start scanning, change the else branch!
+function onscanned( p, _po, scanner )
    if pir.factionIsPirate(scanner:faction()) then
-      scanner:setFriendly(p)
-   elseif scanner:name() == _("Bounty Hunter") then
+      if pir.maxClanStanding() > 20 then
+         scanner:setFriendly(p)
+      else
+         scanner.setHostile(p, false)
+      end
+   else -- if scanner:name() == _("Bounty Hunter") then
 	-- unfortunately, bounty hunters don't scan yet I think
       scanner:setHostile(p)
    end
