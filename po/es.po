@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.2\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-07-29 16:38+0000\n"
+"PO-Revision-Date: 2022-07-31 18:16+0000\n"
 "Last-Translator: paco <pacosoftfree@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "es/>\n"
@@ -40511,6 +40511,13 @@ msgid ""
 "they are prone to overheating and use a lot of energy, so it is bes to use "
 "afterburners only when necessary.\""
 msgstr ""
+"\"Parece que acabas de comprar un equipo #oPostquemador#0. Los "
+"postquemadores son conjuntos activos de los que sólo puedes equipar uno en "
+"una nave específica. Puedes configurarlos para que se ajusten a un conjunto "
+"de armas en el menú de información (que se abre con {infokey}, o tocar dos "
+"veces {accelkey} para activarlos. Ten en cuenta que son propensos a "
+"sobrecalentarse y utilizan mucha energía, por lo que es mejor utilizar los "
+"postquemadores sólo cuando sea necesario.\""
 
 #: dat/events/tutorial/tut_land.lua:46
 msgid ""
@@ -40573,6 +40580,12 @@ msgid ""
 "refill the ammunition when necessary. Launchers can be very useful if you "
 "master them, please try them out with different configurations!\""
 msgstr ""
+"\"Por último, la munición de los lanzadores se regenera con el tiempo: no es "
+"necesario comprar munición. Realizando un enfriamiento con {cooldownkey} o "
+"tocando dos veces {reversekey}, o aterrizando en un planeta o estación, "
+"puedes rellenar la munición al instante cuando sea necesario. Los lanzadores "
+"pueden ser muy útiles si los dominas, ¡pruébalos con diferentes "
+"configuraciones!\""
 
 #: dat/events/tutorial/tut_land.lua:59
 msgid ""
@@ -40584,6 +40597,13 @@ msgid ""
 "#ohold position#0 with {eholdkey}, and #oreturn to ship#0 with {ereturnkey}."
 "\""
 msgstr ""
+"\"¡Parece que estás avanzando en el mundo con tu primer equipo #oBahía de "
+"Cazas#0! Como puedes esperar, las bahías de cazas te permiten lanzar y "
+"controlar escoltas de clase interceptora o de combate. Defenderán tu nave de "
+"forma autónoma cuando se desplieguen, y se les pueden dar órdenes "
+"particulares. Puedes decirles que #oAtaquen#0 a tu objetivo con {eattackey}, "
+"que #olimpien sus órdenes#0 con {eclearkey}, que #mantengan la posición#0 "
+"con {eholdkey}, y que #vuelvan a la nave#0 con {ereturnkey}.\""
 
 #: dat/events/tutorial/tut_land.lua:60
 msgid ""
@@ -40594,6 +40614,12 @@ msgid ""
 "inside your ship and only deploy as necessary. You should try to see "
 "whatever works best for you!\""
 msgstr ""
+"\"Al igual que la munición de los lanzadores, los cazas perdidos se "
+"regeneran lentamente con el tiempo, y puedes reponerlos realizando una "
+"operación de enfriamiento con {cooldownkey} o pulsando dos veces {reversekey}"
+", o aterrizando en un planeta o estación. Puedes volar con los cazas "
+"desplegados o mantenerlos dentro de tu nave y desplegarlos sólo cuando sea "
+"necesario. ¡Prueba a ver qué te funciona mejor!\""
 
 #: dat/events/tutorial/tut_land.lua:70
 msgid ""
@@ -40684,6 +40710,12 @@ msgid ""
 "There are mainly three classes of light combat vessels: #oFighters#0, "
 "#oBombers#0, and #oInterceptors#0.\""
 msgstr ""
+"\"¡Parece que por fin puedes hacerte con naves de combate con la Licencia de "
+"Nave de Combate Ligera#0! Las naves de combate se diferencian de las civiles "
+"en que están intrínsecamente preparadas para el combate. Esto, en general, "
+"se traduce en una mayor movilidad y potencia de fuego, a costa de la "
+"capacidad de carga y la utilidad. Hay principalmente tres clases de naves de "
+"combate ligeras: #oCazas#0, #oBombarderos#0 e #oInterceptores#0.\""
 
 #: dat/events/tutorial/tut_land.lua:91
 msgid ""
@@ -40709,6 +40741,12 @@ msgid ""
 "than #oFighter#0-class ships. Be sure to experiment with set ups to see what "
 "works well for you.\""
 msgstr ""
+"\"Para sacar el máximo partido a las naves de combate se recomienda tener en "
+"cuenta sus puntos fuertes y débiles. Equipar sólo armas delanteras en una "
+"nave de clase #oBombardero#0 no contribuirá a que sea una nave de combate "
+"eficaz. Las ranuras también juegan un papel importante, ya que las naves de "
+"clase #oInterceptor#0 son más limitadas que las de clase #oCaza#0. Asegúrate "
+"de experimentar con las configuraciones para ver qué te funciona bien.\""
 
 #: dat/events/tutorial/tut_land.lua:98
 msgid ""
@@ -40797,6 +40835,13 @@ msgid ""
 "They can be fairly challenging at the beginning so make sure your ship is "
 "properly equipped for combat.\""
 msgstr ""
+"\"Parece que tienes una #Licencia de Mercenario#0. Esto habilitará las "
+"misiones de recolección de recompensas que deberían empezar a aparecer en "
+"las pantallas de tu ordenador de misiones a partir de ahora. Estas misiones "
+"suelen estar orientadas al combate y requerirán que tengas una nave de "
+"combate adecuada para tener éxito en ellas. Pueden ser bastante desafiantes "
+"al principio, así que asegúrate de que tu nave está bien equipada para el "
+"combate.\""
 
 #: dat/events/tutorial/tut_land.lua:140
 msgid ""
@@ -40862,6 +40907,15 @@ msgid ""
 "Tracking#0', your turrets will be able to perfectly track them. It is best "
 "to try out different turrets and see what feels best for your ship.\""
 msgstr ""
+"\"En general, debido a la baja maniobrabilidad de las naves grandes, "
+"deberías considerar el uso de armas de torreta y/o bahías de combate para la "
+"autodefensa. Te permiten preocuparte menos de la puntería y más de hacer el "
+"trabajo. Las torretas dependen en gran medida de sus valores de rastreo. El "
+"\"#oRastreo Mínimo#0\" se refiere al valor \"#oEvasion#0\" de una nave "
+"objetivo a la que la torreta no podrá seguir. Por otro lado, si la nave "
+"objetivo está por encima del '#oRastreo Óptimo#0', tus torretas serán "
+"capaces de rastrearlas perfectamente. Lo mejor es que pruebes diferentes "
+"torretas y veas cuál es la mejor para tu nave.\""
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -40902,6 +40956,13 @@ msgid ""
 "\"Say, now that I can see you, you look very familiar. You wouldn't be "
 "related my late previous owner? Terrible what happened…\""
 msgstr ""
+"\"¡Hola, {playername}! Soy la IA de tu Nave. Hasta ahora he residido en tu "
+"nave controlando tu Autonav y otras funcionalidades, pero con las nuevas "
+"actualizaciones, ahora puedo materializarme y comunicarme directamente "
+"contigo como un holograma.\"\n"
+"Te mira fijamente durante unos segundos.\n"
+"\"Oye, ahora que puedo verte, me resultas muy familiar. ¿No serás pariente "
+"de mi anterior dueño? Es terrible lo que le pasó...\""
 
 #: dat/events/updater.lua:68
 msgid ""
@@ -40982,6 +41043,10 @@ msgid ""
 "do things throughout the game? Some might refer to things you are already "
 "familiar with, but it could help learn new things.\""
 msgstr ""
+"\"Dicho esto, ¿te gustaría que te diera pequeños consejos en el juego "
+"mientras haces cosas a lo largo del mismo? Algunos podrían referirse a cosas "
+"con las que ya estás familiarizado, pero podría ayudarte a aprender cosas "
+"nuevas.\""
 
 #: dat/events/updater.lua:94 dat/shipai.lua:42
 msgid "Enable tutorial hints"
@@ -42972,6 +43037,9 @@ msgid ""
 "\"I'll try to find someone else. But maybe we'll run into each other again, "
 "so if you change your mind...\""
 msgstr ""
+"\"De acuerdo, es justo\", dice el hombre con una mirada de decepción. "
+"\"Intentaré encontrar a otra persona. Pero tal vez nos encontremos de nuevo, "
+"así que si cambias de opinión...\""
 
 #: dat/missions/baron/baron_prince.lua:79
 #: dat/missions/baron/baron_prince.lua:81
@@ -43321,6 +43389,16 @@ msgid ""
 "    You dispose of the counterfeit artefact. Hopefully the next one will be "
 "what Sauterfeldt is looking for..."
 msgstr ""
+"Flintley estudia el objeto sobre la mesa durante un rato, consultando varias "
+"veces la base de datos en línea. Luego, finalmente, se dirige a ti. \"Odio "
+"decir esto, pero parece que has comprado una falsificación. Pero es una "
+"buena. El vendedor de {pnt} debía saber lo que hacía. Verás, esto es muy "
+"similar a una matrícula utilizada por los aerodeslizadores en Marte en la "
+"época del Segundo Crecimiento. Sin embargo, le faltan algunas "
+"características vitales, y algunos detalles delatan su reciente fabricación. "
+"Cerca, {player}, cerca. Pero no hay cigarro.\"\n"
+"    Te deshaces del artefacto falsificado. Esperemos que el próximo sea lo "
+"que Sauterfeldt está buscando..."
 
 #: dat/missions/baron/baron_prince.lua:189
 msgid "From days long gone"
@@ -43523,7 +43601,7 @@ msgstr ""
 #: dat/missions/dvaered/assault_on_unicorn.lua:40
 #: dat/missions/dvaered/assault_on_unicorn.lua:47
 msgid "DV: Assault on Unicorn"
-msgstr ""
+msgstr "DV: Asalto al Unicornio"
 
 #: dat/missions/dvaered/assault_on_unicorn.lua:48 src/space.c:254
 msgid "Variable"
@@ -45200,6 +45278,19 @@ msgid ""
 "\"To protect himself and the Hawk, Khan will have deployed a substantial "
 "fleet of escort fighters fleet to defend against any surprise attacks.\""
 msgstr ""
+"\"Mi General acaba de retirarse del Alto Mando y ahora quiere convertirse en "
+"el Señor de la Guerra de un sistema planetario. Por desgracia, nuestras "
+"fuerzas leales parecen insuficientes para enfrentarse a cualquier fuerza de "
+"defensa planetaria existente.\n"
+"      \"Sin embargo, parece que puede haber una oportunidad para nosotros en "
+"{sys}. El Señor de la Guerra Khan de {pnt} ha estado construyendo su nueva "
+"nave insignia, el Halcón, y estará a bordo del Halcón mientras prueba sus "
+"capacidades hiperespaciales. Como sus motores y armas aún no han sido "
+"instalados completamente, será sustancialmente más lento de lo normal y no "
+"podrá defenderse.\n"
+"\"Para protegerse a sí mismo y al Halcón, Khan habrá desplegado una "
+"importante flota de cazas de escolta para defenderse de cualquier ataque "
+"sorpresa.\""
 
 #: dat/missions/dvaered/dv_diversion.lua:58
 msgid ""
@@ -46615,7 +46706,7 @@ msgstr "¿Qué?"
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:433
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:206
 msgid "Come on!"
-msgstr ""
+msgstr "¡Vamos!"
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:435
 msgid "Hey, they have put a bomb in the general's ship as well!"
@@ -50426,6 +50517,10 @@ msgid ""
 "Llamas) and you have to hit them in the shortest time. The quickest pilot "
 "wins. Are you ready? Make sure you only have Unicorp Mace Launchers equipped."
 msgstr ""
+"La primera prueba es el \" Lanzamiento de Maza \". Hay una serie de "
+"objetivos (viejas Llamas) y tienes que golpearlos en el menor tiempo "
+"posible. El piloto más rápido gana. ¿Estás preparado? Asegúrate de que sólo "
+"tienes equipados los Lanzadores Maza Unicorp."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:350
 msgid ""
@@ -50452,6 +50547,11 @@ msgid ""
 "7 points. Your adversary is {name}. Killing is, of course, not allowed. Are "
 "you ready? Make sure you only have Unicorp Mace Launchers equipped."
 msgstr ""
+"La tercera y última prueba es el \"Pancracio Maza\". Cada competidor debe "
+"luchar contra otro competidor y desactivar sus escudos. Los ganadores "
+"reciben 7 puntos. Tu adversario es {name}. Matar, por supuesto, no está "
+"permitido. ¿Estás preparado? Asegúrate de que sólo tienes equipados los "
+"Lanzadores Maza Unicorp."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:368
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:416
@@ -50780,7 +50880,7 @@ msgstr "Combatiente"
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:351
 #, lua-format
 msgid "#pWAVE %d#0"
-msgstr ""
+msgstr "#pOLA %d#0"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:363
 #, lua-format
@@ -50801,7 +50901,7 @@ msgstr "TOTAL %d (#g+%d#0)"
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:466
 #, lua-format
 msgid "#pWAVE %d CLEAR#0"
-msgstr ""
+msgstr "#pOLA %d LIMPIADA#0"
 
 #. TODO play sound and cooler text
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:478
@@ -50814,11 +50914,11 @@ msgstr "¡ERES VICTORIOSO!"
 #. --
 #: dat/missions/dvaered/gauntlet/gui.lua:12
 msgid "Double Damage Enemies (#g+50%#0)"
-msgstr ""
+msgstr "Enemigos de Doble Daño (#g+50%#0)"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:13
 msgid "No Healing Between Waves (#g+25%#0)"
-msgstr ""
+msgstr "Sin Curación Entre Olas (#g+25%#0)"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:14
 msgid "Double Enemies"
@@ -52874,7 +52974,7 @@ msgstr "#nRiesgo Pirata:#0 Alto"
 #. TRANSLATOR NOTE: "ES" stands for "Empire Shipping".
 #: dat/missions/empire/es_cargo.lua:88
 msgid "#gES:#0 Cargo transport to {pnt} in {sys} ({tonnes})"
-msgstr ""
+msgstr "#gTI:#0 Transporte de carga a {pnt} en {sys} ({tonnes})"
 
 #: dat/missions/empire/es_cargo.lua:90
 msgid "Official Empire cargo transport to {pnt} in the {sys} system."
@@ -53464,7 +53564,7 @@ msgstr ""
 #. TRANSLATOR NOTE: "ES" stands for "Empire Shipping".
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:88
 msgid "#gES:#0 Long distance cargo transport ({tonnes} of {cargo})"
-msgstr ""
+msgstr "#gTI:#0 Transporte de carga de larga distancia ({tonnes} de {cargo})"
 
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:91
 msgid ""
@@ -58430,7 +58530,7 @@ msgstr "Te acercas al Mayor Malik que parece estar disfrutando de una bebida."
 #: dat/missions/minerva/kex3.lua:312 dat/missions/minerva/maikki2.lua:479
 #: dat/missions/minerva/maikki2.lua:760
 msgid "\"What do you want?\""
-msgstr ""
+msgstr "\"¿Qué quieres?\""
 
 #: dat/missions/minerva/kex3.lua:313
 msgid ""
@@ -58516,7 +58616,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex3.lua:334
 msgid "\"OK. I'll be here if you change your mind.\""
-msgstr ""
+msgstr "\"De acuerdo. Estaré aquí si cambias de opinión.\""
 
 #.
 #. Common Teleporting Functions
@@ -58756,7 +58856,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex4.lua:157
 msgid "\"What?\""
-msgstr ""
+msgstr "\"¿Qué?\""
 
 #: dat/missions/minerva/kex4.lua:161
 msgid ""
@@ -61837,6 +61937,10 @@ msgid ""
 "from the nebula. Most of it is classified so I wasn't able to get much "
 "information.\""
 msgstr ""
+"\"Los investigadores de los que te hablé estaban involucrados en una especie "
+"de proyecto que intentaba averiguar los orígenes del incidente analizando "
+"artefactos extraídos de la nebulosa. La mayor parte está clasificada, así "
+"que no pude obtener mucha información.\""
 
 #: dat/missions/minerva/maikki2.lua:244
 msgid ""
@@ -61880,6 +61984,11 @@ msgid ""
 "thrusters making them point the wrong way and he had to fly backwards "
 "through five systems in the nebula while chased by pirates? Sounds crazy!\""
 msgstr ""
+"Sus ojos se iluminan.\n"
+"\"¿Sabías que mientras buscaba en la basura cerca del incidente, un "
+"asteroide golpeó sus propulsores haciéndolos apuntar en la dirección "
+"equivocada y tuvo que volar hacia atrás a través de cinco sistemas en la "
+"nebulosa mientras era perseguido por piratas? ¡Parece una locura!\""
 
 #: dat/missions/minerva/maikki2.lua:255
 msgid ""
@@ -61888,6 +61997,10 @@ msgid ""
 "parts of the last emperor's flagship stopped him from going back and back to "
 "the nebula.\""
 msgstr ""
+"\"Dicen que también fue el primer piloto en cartografiar todos los sistemas "
+"de la nebulosa después del incidente. Ni siquiera el hecho de que le "
+"aplastaran una pierna mientras recuperaba partes de la última nave insignia "
+"del emperador le impidió volver y regresar a la nebulosa.\""
 
 #: dat/missions/minerva/maikki2.lua:256
 msgid ""
@@ -62189,6 +62302,8 @@ msgid ""
 "\"I was part of a really ambitious project to try to track down the origin "
 "of the incident, which just end up being a bureaucratic nightmare.\""
 msgstr ""
+"\"Formé parte de un proyecto realmente ambicioso para intentar rastrear el "
+"origen del incidente, que acabó siendo una pesadilla burocrática.\""
 
 #: dat/missions/minerva/maikki2.lua:405
 msgid ""
@@ -63020,6 +63135,9 @@ msgid ""
 "since the incident destroyed my university. Destruction is so pretty, is it "
 "not?\""
 msgstr ""
+"\"Ah sí, la nebulosa. ¡La cúspide de la creación humana! ¿No es simplemente "
+"hipnotizante y hermosa de ver? Siempre me ha atraído desde que el incidente "
+"destruyó mi universidad. La destrucción es tan bonita, ¿no?\""
 
 #: dat/missions/minerva/maikki2.lua:778
 msgid ""
@@ -64407,6 +64525,9 @@ msgid ""
 "might be allergic them anyway.\"\n"
 "He coughs nervously."
 msgstr ""
+"\"En realidad, nadar junto un pollo suena como un poco aburrido. Creo que "
+"podría ser alérgico a ellos de todos modos.\"\n"
+"Tose nerviosamente."
 
 #. Player can theoretically board to loot it back
 #: dat/missions/minerva/pirate3.lua:423 dat/missions/minerva/pirate3.lua:553
@@ -64562,6 +64683,8 @@ msgid ""
 "\"Actually, swimming in a chicken sounds like a bit of a drag. I think I "
 "might be allergic them anyway.\""
 msgstr ""
+"\"En realidad, nadar junto un pollo suena como un poco aburrido. Creo que "
+"podría ser alérgico a ellos de todos modos.\""
 
 #: dat/missions/minerva/pirate3.lua:564
 msgid ""
@@ -64693,6 +64816,12 @@ msgid ""
 "They should you a crumpled up dirty piece of paper that has '10k¤ 5-6-3-1' "
 "on it and hands it to you."
 msgstr ""
+"\"La mala noticia es que no sabemos exactamente quién es el topo. Sin "
+"embargo, la buena noticia es que pudimos interceptar a un mensajero. Fue "
+"después de una entrega, así que no pudimos captar nada muy interesante. Pero "
+"encontramos un pequeño memorándum que podría ser una pista.\"\n"
+"Te dan un trozo de papel arrugado y sucio en el que pone '10k¤ 5-6-3-1' y te "
+"lo entregan."
 
 #: dat/missions/minerva/pirate4.lua:118
 msgid "Crumpled Up Note"
@@ -65833,7 +65962,7 @@ msgstr "Terraformando Antlejos"
 msgid ""
 "Pick up the {cargo} at {pnt} in the {sys} system and deliver it to {retpnt}."
 msgstr ""
-"Recoger la {cargo} en {pnt} en el sistema {sys} y entregarla en {retpnt}."
+"Recoge {cargo} en {pnt} en el sistema {sys} y haz la entrega en {retpnt}."
 
 #: dat/missions/neutral/antlejos/ant02.lua:86
 #: dat/missions/neutral/antlejos/ant03.lua:84
@@ -65847,7 +65976,7 @@ msgstr "Terraformando Antlejos V"
 #: dat/missions/neutral/antlejos/ant04.lua:93
 #: dat/missions/neutral/antlejos/ant_supplies.lua:94
 msgid "Pick up the {cargo} at {pnt} ({sys} system)"
-msgstr "Recoge la {cargo} en {pnt} (sistema {sys})"
+msgstr "Recoge {cargo} en {pnt} (sistema {sys})"
 
 #: dat/missions/neutral/antlejos/ant02.lua:88
 #: dat/missions/neutral/antlejos/ant03.lua:86
@@ -67417,6 +67546,9 @@ msgid ""
 "them, they didn't survive whatever wrecked their ship. You decide to give "
 "them a proper space burial before moving on."
 msgstr ""
+"Este derrelicto no está abandonado. La tripulación aún está a bordo. Por "
+"desgracia para ellos, no han sobrevivido a lo que sea que haya destrozado su "
+"nave. Decides darles un entierro espacial adecuado antes de seguir adelante."
 
 #: dat/missions/neutral/derelict_rescue.lua:44
 msgid ""
@@ -67425,6 +67557,11 @@ msgid ""
 "finding the entire crew of the ship locked up in a dormitory room. They "
 "offer you {credits} to take them to safety to {pnt} in the {sys} system."
 msgstr ""
+"Entras y empiezas a registrar la nave en busca de cualquier cosa de valor. "
+"Mientras recorres los pasillos oyes un ruido. Tras investigar, acabas "
+"encontrando a toda la tripulación de la nave encerrada en un dormitorio. Te "
+"ofrecen {credits} para que los lleves a un lugar seguro a {pnt} en el "
+"sistema {sys}."
 
 #: dat/missions/neutral/derelict_rescue.lua:46
 #: dat/missions/tutorial/nelly01.lua:127
@@ -67479,10 +67616,13 @@ msgid ""
 "ship in joy. After a while, the captain comes over you and gives you the "
 "credits you were promised."
 msgstr ""
+"Poco después de desembarcar, la tripulación que has rescatado del derrelicto "
+"sale de tu nave llena de alegría. Al cabo de un rato, el capitán se acerca a "
+"ti y te da los créditos prometidos."
 
 #: dat/missions/neutral/derelict_rescue.lua:102
 msgid "You rescued the crew of a derelict ship."
-msgstr ""
+msgstr "Has rescatado a la tripulación de un derrelicto."
 
 #: dat/missions/neutral/derelict_rescue.lua:110
 msgid ""
@@ -68527,6 +68667,20 @@ msgid ""
 "thanks of a grateful planet and the pride of serving the Empire.\n"
 "    \"Are you brave enough?\""
 msgstr ""
+"El bar está lleno de gente cuando entras. Todos los pilotos están hablando a "
+"la vez. Todas las pantallas muestran las mismas noticias: imágenes en "
+"directo de una batalla espacial en órbita alrededor de {pnt}.\n"
+"    \"Una gran flota de piratas acaba de invadir el sistema\", explica una "
+"mujer con llevando una insignia de Nexus. \"Acribillan a cualquier nave que "
+"intenta despegar. El transporte navel está paralizado. Es un desastre.\"\n"
+"    Se oye un grito y te giras para ver al jefe de puerto en la puerta. "
+"\"Escuchen\", grita. \"Los matones de ahí fuera nos han pillado sin flota de "
+"defensa en el sistema y, de alguna manera, han bloqueado nuestro enlace con "
+"el resto del Imperio. Así que estoy aquí buscando voluntarios. Todos los que "
+"den un paso al frente recibirán cuarenta mil créditos a su regreso, y por "
+"supuesto el agradecimiento de un planeta agradecido y el orgullo de servir "
+"al Imperio.\n"
+"    \"¿Sois lo suficientemente valiente?\""
 
 #: dat/missions/neutral/dts_00.lua:72 dat/missions/neutral/dts_01.lua:70
 #: dat/missions/neutral/dts_02.lua:72
@@ -68751,6 +68905,17 @@ msgid ""
 "I will arrange a reward for everyone who volunteers. We'll need as many "
 "pilots as possible. Follow me.\""
 msgstr ""
+"El camarero acaba de preguntar por tu pedido cuando el capitán del puerto "
+"irrumpe por la puerta, sin aliento. \"¡Piratas, por todo el sistema!  La "
+"armada está de maniobras. Rápido, tenemos que organizar una defensa.\"\n"
+"    Todos los pilotos de la sala se ponen en pie. \"¿Cuántos hay?\", "
+"pregunta alguien. \"¿Cuánto tiempo llevan en el sistema?\", grita otro.\n"
+"    En medio de la confusión aparece una figura de pelo duro, erguida y "
+"uniformada. Sus galones la identifican como Comodoro de la Marina.\n"
+"    \"Soy de la marina y voy a organizar la defensa\", dice su voz en medio "
+"de la conmoción. \"¿Quién es aquí un piloto?  Debemos contraatacar "
+"rápidamente. Organizaré una recompensa para todos los que se ofrezcan como "
+"voluntarios. Necesitaremos tantos pilotos como sea posible. Síganme.\""
 
 #: dat/missions/neutral/dts_01.lua:70
 msgid ""
@@ -70149,16 +70314,16 @@ msgstr ""
 #. --
 #: dat/missions/neutral/nebu_satellite.lua:126
 msgid "Preparing to launch space probe..."
-msgstr ""
+msgstr "Preparando el lanzamiento de la sonda espacial..."
 
 #: dat/missions/neutral/nebu_satellite.lua:132
 msgid "Launch in 5..."
-msgstr ""
+msgstr "Lanzamiento en 5..."
 
 #: dat/missions/neutral/nebu_satellite.lua:140
 #, lua-format
 msgid "%d..."
-msgstr ""
+msgstr "%d..."
 
 #: dat/missions/neutral/nebu_satellite.lua:149
 msgid "Space probe launch successful!"
@@ -73051,6 +73216,10 @@ msgid ""
 "ship. After a lot of annoying complaints, the man and his family finally "
 "left your ship, the man's wife leaving a generous payment for the trouble."
 msgstr ""
+"Has rescatado a un hombre malhumorado y a su familia que estaban varados a "
+"bordo de su nave. Tras un montón de molestas quejas, el hombre y su familia "
+"abandonan finalmente tu nave, dejando la mujer del hombre un generoso pago "
+"por las molestias."
 
 #. Only gets landable systems
 #: dat/missions/neutral/spacefamily.lua:145
@@ -73514,6 +73683,11 @@ msgid ""
 "\n"
 "It's right on top of you!"
 msgstr ""
+"Finalmente llegas a la sala de mando cuando tu nave te informa de repente de "
+"que hay una forma de vida presente en la nave. Y no sólo eso, ¡está muy "
+"cerca! Preparas frenéticamente tus armas y te preparas para lo peor...\n"
+"\n"
+"¡Está justo encima de ti!"
 
 #: dat/missions/pirate/blackcat.lua:59
 msgid ""
@@ -73533,6 +73707,11 @@ msgid ""
 "After what seems an eternity with you holding your breath, the cat stands "
 "up, and walks past you."
 msgstr ""
+"Frente a ti está lo que {shipai} confirma ser un Felis catus o gato "
+"doméstico. Te mira con ojos inexpresivos con una mirada que parece atravesar "
+"tu alma.\n"
+"Después de lo que parece una eternidad en la que aguantas la respiración, el "
+"gato se levanta y pasa junto a ti."
 
 #: dat/missions/pirate/blackcat.lua:63
 msgid ""
@@ -73540,6 +73719,9 @@ msgid ""
 "came in from.\n"
 "It seems like it wants to come back with you. What do you do?"
 msgstr ""
+"Sigues al gato por toda la nave mientras te lleva a... la esclusa por la que "
+"entraste.\n"
+"Parece que quiere volver contigo. ¿Qué haces?"
 
 #: dat/missions/pirate/blackcat.lua:66
 msgid "Take the cat with you"
@@ -73571,12 +73753,16 @@ msgid ""
 "have to figure out what to do with it. Your ship is no place for a cat to "
 "live in."
 msgstr ""
+"El gato se pavonea y se comporta como si fuera el dueño del lugar. Vas a "
+"tener que pensar qué hacer con él. Tu nave no es lugar para que viva un gato."
 
 #: dat/missions/pirate/blackcat.lua:78
 msgid ""
 "Are you sure you want to abandon the cat to its fate aboard the sinister "
 "derelict ship?"
 msgstr ""
+"¿Estás seguro de que quieres abandonar al gato a su suerte a bordo del "
+"siniestro derrelicto?"
 
 #: dat/missions/pirate/blackcat.lua:80
 msgid "Take the cute cat with you"
@@ -73668,7 +73854,7 @@ msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:153
 msgid "The black cat shows you its belly, but bites you when you pet it."
-msgstr ""
+msgstr "El gato negro te enseña su barriga, pero te muerde cuando lo acaricias."
 
 #: dat/missions/pirate/blackcat.lua:154
 msgid "The black cat uses the commander chair as a scratching post."
@@ -73707,11 +73893,11 @@ msgstr "\"H-h-hola ahí. ¿No t-t-tendrás por casualidad un g-gato a bordo?\""
 
 #: dat/missions/pirate/blackcat.lua:243
 msgid "\"Yes.\""
-msgstr ""
+msgstr "\"Si.\""
 
 #: dat/missions/pirate/blackcat.lua:244
 msgid "\"No (lie).\""
-msgstr ""
+msgstr "\"No (mentir).\""
 
 #: dat/missions/pirate/blackcat.lua:249
 msgid ""
@@ -73719,6 +73905,9 @@ msgid ""
 "a resonating \"meow\", that is clearly heard on the other side of the "
 "communication channel."
 msgstr ""
+"Justo cuando pronuncias la palabra \"No\", el gato negro ahoga su respuesta "
+"con un resonante \"miau\", que se oye claramente al otro lado del canal de "
+"comunicación."
 
 #: dat/missions/pirate/blackcat.lua:253
 msgid ""
@@ -73752,6 +73941,9 @@ msgid ""
 "bring it over. Funny how it always seems to be where you don't want it and "
 "when you need it you can't find it."
 msgstr ""
+"Te das cuenta de que el gato no está en ningún sitio y empiezas a buscarlo "
+"para traerlo. Es curioso que siempre parece estar donde no lo quieres y "
+"cuando lo necesitas no lo encuentras."
 
 #: dat/missions/pirate/blackcat.lua:279
 msgid ""
@@ -73792,6 +73984,10 @@ msgid ""
 "black cat doll. It's like a tiny version of the real thing without the "
 "assholeness."
 msgstr ""
+"Entonces te pones a limpiar las copiosas cantidades de pelo de gato que "
+"invaden hasta el último rincón de tu nave. Con la cantidad recogida haces un "
+"simpático muñeco de gato negro. Es como una versión en miniatura del gato "
+"real, pero sin la hosquedad."
 
 #: dat/missions/pirate/blackcat.lua:290
 msgid ""
@@ -73811,6 +74007,9 @@ msgid ""
 "long search you reach the only logical conclusion that it vanished. Guess "
 "you can forget about it for now."
 msgstr ""
+"Vas a deshacerte del gato negro, pero no lo encuentras a la vista. Tras una "
+"larga búsqueda llegas a la única conclusión lógica de que ha desaparecido. "
+"Supongo que puedes olvidarte de él por ahora."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -74238,11 +74437,11 @@ msgstr ""
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 #: dat/missions/pirate/contraband.lua:149
 msgid "#rPIRACY:#0 Smuggle {tonnes} of {cargo} ({fct})"
-msgstr ""
+msgstr "#rPIRATERÍA:#0 Contrabando de {tonnes} de {cargo} ({fct})"
 
 #: dat/missions/pirate/contraband.lua:153
 msgid "#rPIRACY:#0 Smuggle {tonnes} of {cargo}"
-msgstr ""
+msgstr "#rPIRATERÍA:#0 Contrabando de {tonnes} de {cargo}"
 
 #: dat/missions/pirate/contraband.lua:158
 #: dat/missions/pirate/contraband.lua:160
@@ -74793,6 +74992,11 @@ msgid ""
 "\"This will be somewhat bloodier than last time, but I'll pay you more for "
 "your trouble. Are you up for it?\""
 msgstr ""
+"Cuando te acercas, el hombre se gira para mirarte y su ansiedad parece "
+"disminuir un poco. Cuando tomas asiento, te saluda: \"Ah, así que nos "
+"encontramos de nuevo. Mi, digamos... problema, ha reaparecido\". "
+"Inclinándose más, continúa: \"Esto será algo más sangriento que la última "
+"vez, pero te pagaré más por las molestias. ¿Estás dispuesto a ello?\""
 
 #. Some variables for keeping track of the mission
 #. Set mission details
@@ -74925,7 +75129,7 @@ msgstr ""
 #. Mission details
 #: dat/missions/pirate/patrol.lua:44
 msgid "#rPIRACY:#0 Patrol of the {sys} System ({fct})"
-msgstr ""
+msgstr "#rPIRATERÍA:#0 Patrulla de {sys} Sistema ({fct})"
 
 #: dat/missions/pirate/patrol.lua:45
 msgid ""
@@ -75094,27 +75298,27 @@ msgstr ""
 #. Mission details
 #: dat/missions/pirate/pir_hit.lua:39
 msgid "#rPIRACY:#0: Quick Assassination Job in {sys}{msg}"
-msgstr ""
+msgstr "#rPIRATERIA:#0: Trabajo de asesinato rápido en {sys}{msg}"
 
 #: dat/missions/pirate/pir_hit.lua:40
 msgid "#rPIRACY:#0: Small Assassination Job in {sys}{msg}"
-msgstr ""
+msgstr "#rPIRATERIA:#0: Pequeño trabajo de asesinato en {sys}{msg}"
 
 #: dat/missions/pirate/pir_hit.lua:41
 msgid "#rPIRACY:#0: Moderate Assassination Job in {sys}{msg}"
-msgstr ""
+msgstr "#rPIRATERIA:#0: Trabajo de asesinato moderado en {sys}{msg}"
 
 #: dat/missions/pirate/pir_hit.lua:42
 msgid "#rPIRACY:#0: Big Assassination Job in {sys}{msg}"
-msgstr ""
+msgstr "#rPIRATERIA:#0: Gran trabajo de asesinato en {sys}{msg}"
 
 #: dat/missions/pirate/pir_hit.lua:43
 msgid "#rPIRACY:#0: Dangerous Assassination Job in {sys}{msg}"
-msgstr ""
+msgstr "#rPIRATERIA:#0: Trabajo de asesinato peligroso en {sys}{msg}"
 
 #: dat/missions/pirate/pir_hit.lua:44
 msgid "#rPIRACY:#0: Highly Dangerous Assassination Job in {sys}{msg}"
-msgstr ""
+msgstr "#rPIRATERIA:#0: Trabajo de asesinato altamente peligroso en {sys}{msg}"
 
 #. Lower probability on non-pirate places
 #. Determine paying faction probabilistic
@@ -75128,7 +75332,7 @@ msgstr ""
 #. Set up rewards
 #: dat/missions/pirate/pir_hit.lua:120 dat/missions/pirate/raid.lua:166
 msgid " ({fct})"
-msgstr ""
+msgstr " ({fct})"
 
 #: dat/missions/pirate/pir_hit.lua:125
 msgid ""
@@ -75888,6 +76092,7 @@ msgstr ""
 #: dat/missions/pirate/raid.lua:169
 msgid "#rPIRACY#0: Raid a {adjective} {name} convoy in the {sys} system{msg}"
 msgstr ""
+"#rPIRATERIA#0: Asalto a un convoy {adjetive} {name} en el sistema {sys}{msg}"
 
 #: dat/missions/pirate/raid.lua:170
 msgid ""
@@ -76405,6 +76610,23 @@ msgid ""
 "few outside our ranks know of our existence, and now you're one of those few."
 "\""
 msgstr ""
+"Te abres paso por los ya familiares pasillos del Seiryuu. Apenas notas ya el "
+"extraño entorno. Parece poco importante comparado con los extraños "
+"acontecimientos que rodean cada uno de tus encuentros con estos Cuatro "
+"Vientos.\n"
+"    Entras en el puente, donde te espera la capitana Rebina. \"Bienvenido, "
+"{player}\", dice. \"Me alegra ver que has decidido responder a nuestra "
+"comunicación. Dudo que hubieras venido aquí si no estuvieras dispuesto a "
+"seguir ayudándonos. Tu presencia aquí confirma que eres un compañero fiable, "
+"así que te trataré como tal.\"\n"
+"El capitán te indica que tomes asiento en lo que parece una holomesa en el "
+"centro del puente. \"Antes de decirte para qué te he llamado, creo que debo "
+"explicarte con todo detalle quiénes somos, qué hacemos y cuál es tu papel en "
+"todo esto\". Toma asiento frente al tuyo y se apoya en la holomesa. \"Como "
+"he dicho antes, somos los Cuatro Vientos. Nuestra organización es muy "
+"secreta, como has podido comprobar de primera mano. Muy pocos fuera de "
+"nuestras filas conocen nuestra existencia, y ahora tú eres uno de esos pocos."
+"\""
 
 #: dat/missions/shadow/darkshadow.lua:92
 msgid ""
@@ -76425,6 +76647,24 @@ msgid ""
 "most recent failure is the Incident - we should have seen it coming, but we "
 "were completely taken by surprise.\""
 msgstr ""
+"\"Los Cuatro Vientos son viejos, {player}. Muy antiguos. El movimiento se "
+"remonta a la antigua Tierra, incluso antes de la Era Espacial. Hemos estado "
+"con la civilización humana a lo largo de los tiempos, al principio sólo en "
+"las naciones orientales, para luego establecer un punto de apoyo en todo el "
+"mundo. Nuestro propósito era guiar a la humanidad, evitar que cometiera "
+"errores que no podía permitirse. Nunca salimos a la luz, siempre trabajamos "
+"entre bastidores, desde las sombras. Éramos diplomáticos, científicos, "
+"periodistas, cónyuges de políticos, a veces incluso asesinos. Utilizábamos "
+"cualquier medio necesario para reunir información y evitar el desastre, "
+"cuando podíamos.\n"
+"    \"Por supuesto, no siempre tuvimos éxito. No pudimos evitar los ataques "
+"nucleares en Japón, aunque conseguimos evitar varios otros. Frustramos los "
+"intentos de sabotaje de varias de las naves coloniales lanzadas durante el "
+"Primer Crecimiento, pero lamentablemente no pudimos hacerlo en el caso de "
+"Maelstrom. No pudimos detener las Guerras de Facción, aunque conseguimos "
+"ayudar al Imperio a ganar la partida. Nuestro fracaso más reciente es el "
+"Incidente: deberíamos haberlo visto venir, pero nos cogió completamente por "
+"sorpresa.\""
 
 #: dat/missions/shadow/darkshadow.lua:94
 msgid ""
@@ -76449,6 +76689,30 @@ msgid ""
 "most recent failure is the Incident - we should have seen it coming, but we "
 "were completely taken by surprise.\""
 msgstr ""
+"La capitana Rebina ha explicado con más detalle la organización para la que "
+"trabaja.\n"
+"    \"Como he dicho antes, somos los Cuatro Vientos. Nuestra organización es "
+"muy secreta, como has podido comprobar de primera mano. Muy pocos fuera de "
+"nuestras filas conocen nuestra existencia, y ahora tú eres uno de esos pocos."
+"\n"
+"    \"Los Cuatro Vientos son viejos, {player}. Muy antiguos. El movimiento "
+"se remonta a la antigua Tierra, incluso antes de la Era Espacial. Hemos "
+"estado con la civilización humana a lo largo de los tiempos, al principio "
+"sólo en las naciones orientales, para luego establecer un punto de apoyo en "
+"todo el mundo. Nuestro propósito era guiar a la humanidad, evitar que "
+"cometiera errores que no podía permitirse. Nunca salimos a la luz, siempre "
+"trabajamos entre bastidores, desde las sombras. Éramos diplomáticos, "
+"científicos, periodistas, cónyuges de políticos, a veces incluso asesinos. "
+"Utilizábamos cualquier medio necesario para reunir información y evitar el "
+"desastre, cuando podíamos.\n"
+"    \"Por supuesto, no siempre tuvimos éxito. No pudimos evitar los ataques "
+"nucleares en Japón, aunque conseguimos evitar varios otros. Frustramos los "
+"intentos de sabotaje de varias de las naves coloniales lanzadas durante el "
+"Primer Crecimiento, pero lamentablemente no pudimos hacerlo en el caso de "
+"Maelstrom. No pudimos detener las Guerras de Facción, aunque conseguimos "
+"ayudar al Imperio a ganar la partida. Nuestro fracaso más reciente es el "
+"Incidente: deberíamos haberlo visto venir, pero nos cogió completamente por "
+"sorpresa.\""
 
 #: dat/missions/shadow/darkshadow.lua:98
 msgid ""
@@ -76899,6 +77163,27 @@ msgid ""
 "your ship, wondering whether your armaments will be enough to deal with "
 "whatever trouble Jorek is in."
 msgstr ""
+"Te encuentras con la mirada del camarero. Duda un momento y luego habla.\n"
+"    \"Oye... ¿Eres {player} por casualidad?\"\n"
+"    Le dices que sí, que eres tú, y le preguntas cómo sabe tu nombre.\n"
+"    \"Bueno, tu descripción me la dio un viejo amigo mío. Se llama Jarek. ¿"
+"Lo conoces?\"\n"
+"    Le dices que no conoces a nadie con el nombre de Jarek, pero sí a un "
+"hombre llamado Jorek. El camarero se relaja visiblemente al escuchar ese "
+"nombre.\n"
+"    \"Ah, bien. Entonces eres el auténtico. No se puede ser demasiado "
+"cuidadoso en tiempos como estos, ya sabes. De todos modos, el viejo Jorek "
+"estuvo aquí, pero no pudo quedarse. Me dijo que te vigilara, que vendrías a "
+"buscarlo\". El camarero mira a su alrededor para asegurarse de que no hay "
+"nadie al alcance del oído, aunque la música del bar hace difícil escuchar a "
+"alguien que no esté al lado. \"Tengo un mensaje para ti. Ve al sistema {sys} "
+"y aterriza en {pnt}. Jorek te estará esperando allí. Pero será mejor que "
+"estés preparado para algunos problemas. No sé qué tipo de problemas son, "
+"pero Jorek nunca está en problemas menores. No digas que no te lo advertí.\""
+"\n"
+"    Le das las gracias al camarero, pagas tu bebida y te preparas para "
+"volver a tu nave, preguntándote si tu armamento será suficiente para hacer "
+"frente a cualquier problema que tenga Jorek."
 
 #. NPC hook
 #: dat/missions/shadow/darkshadow.lua:415
@@ -77067,6 +77352,19 @@ msgid ""
 "\"I am here to talk business, and I've got a proposition for you, if you're "
 "interested.\""
 msgstr ""
+"La mujer te observa tranquilamente mientras te acercas a ella, sin parecer "
+"sorprendida de verte. Vestida con un sencillo pero caro vestido negro y "
+"sorbiendo su martini, emite un aura de clase que resulta casi intimidante.\n"
+"    \"Hola\", te saluda. \"Tenía la sensación de que querrías hablar "
+"conmigo. Eres diferente a la mayoría...\", señala a los demás clientes del "
+"bar, \"Y yo también. Pero dónde están mis modales, no me he presentado. Me "
+"llamo Rebina. Soy lo que podríamos llamar una cazadora de talentos. Visito "
+"lugares como éste para encontrar gente con un talento excepcional. Gente "
+"como tú.\"\n"
+"    Empiezas a presentarte, pero Rebina lo rechaza, quizás porque tu nombre "
+"no le interesa, o posiblemente porque ya sabe quién eres. \"No malgastemos "
+"las palabras en formalidades inútiles\", dice. \"Estoy aquí para hablar de "
+"negocios, y tengo una propuesta para ti, si te interesa.\""
 
 #: dat/missions/shadow/shadowrun.lua:60
 msgid "Rebina's proposition"
@@ -77094,6 +77392,25 @@ msgid ""
 "you at this point. You'll get more details only once you accept this job. If "
 "you accept this job. What say you?\""
 msgstr ""
+"\"Lo que necesito es un piloto y una nave. Específicamente, necesito un "
+"piloto hábil y una nave capaz. ¿Encajas en esa descripción? Tengo la "
+"sensación de que sí. Verás, lo que te voy a sugerir que hagas es tan "
+"rentable como peligroso\". Rebina da otro sorbo a su bebida antes de "
+"continuar, dejando que lo que acaba de decir se registre por completo. \"No "
+"te voy a mentir. Hay... rivalidades ahí fuera, y trabajar para mí "
+"significará que tomarás partido en algunas de ellas. La gente se fijará en "
+"ti, y algunos intentarán matarte.\"\n"
+"    Le explicas que asumir riesgos es propio de un piloto independiente y "
+"que tomaste la silla de capitán con la resolución adecuada, pero Rebina te "
+"clava una mirada penetrante. \"No estamos hablando de asaltos piratas "
+"ordinarios\", te amonesta. \"Si aceptas esta misión, serás un objetivo "
+"pintado. Quiero que seas muy consciente de ello\". Hay otra pausa, pero "
+"luego continúa con un tono de voz más suave. \"Dicho esto, puedo asegurarte "
+"que la recompensa bien vale el riesgo. Si lo consigues, serás mucho más rico "
+"de lo que eras.\"\n"
+"    Rebina se echa hacia atrás y te mira fijamente. \"Eso es todo lo que "
+"puedo decirte en este momento. Recibirás más detalles sólo cuando aceptes "
+"este trabajo. Si aceptas este trabajo. ¿Qué dices?\""
 
 #. Translator note: If the plural forms are a problem, assume the numbers here are 20 and 50.
 #: dat/missions/shadow/shadowrun.lua:64 dat/missions/shadow/shadowrun.lua:70
@@ -87156,7 +87473,7 @@ msgid ""
 "Pick up some {cargo} from {pnt} in the {sys} system and deliver them to "
 "{retpnt}."
 msgstr ""
-"Recoge algunas {cargo} de {pnt} en el sistema {sys} y entrégalas en {retpnt}."
+"Recoge {cargo} de {pnt} en el sistema {sys} y haz la entrega en {retpnt}."
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:92
 #: dat/missions/zalek/particlephysics/zpp04.lua:90
