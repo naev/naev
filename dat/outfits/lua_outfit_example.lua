@@ -32,7 +32,7 @@ end
 -- for not being able to buy the outfit.
 function buy( q )
    player.pay( -500*q, "outfit_buy" )
-   return true
+   return true, q
    --return false, reason
 end
 
@@ -41,7 +41,7 @@ end
 -- for not being able to sell the outfit.
 function sell( q )
    player.pay( 500*q, "outfit_sell" )
-   return true
+   return true, q
    --return false, reason
 end
 
