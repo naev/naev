@@ -23,7 +23,7 @@ function onscanned( p, _po, scanner )
       if pir.maxClanStanding() > 20 then
          scanner:setFriendly(p)
       else
-         scanner.setHostile(p, false)
+         scanner:setHostile(p, false)
       end
    else -- if scanner:name() == _("Bounty Hunter") then
 	-- unfortunately, bounty hunters don't scan yet I think
