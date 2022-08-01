@@ -240,9 +240,6 @@ void debug_sigInit (void)
    sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
       DEBUG( str, "SIGABRT" );
-   sigaction(SIGTRAP, &sa, &so);
-   if (so.sa_handler == SIG_IGN)
-      DEBUG( str, "SIGTRAP" );
    DEBUG( _("BFD backtrace catching enabled.") );
 #endif /* LINUX && HAS_BFD && DEBUGGING */
 }
@@ -259,7 +256,6 @@ void debug_sigClose (void)
    signal( SIGSEGV, SIG_DFL );
    signal( SIGFPE,  SIG_DFL );
    signal( SIGABRT, SIG_DFL );
-   signal( SIGTRAP, SIG_DFL );
 #endif /* LINUX && HAS_BFD && DEBUGGING */
 }
 
