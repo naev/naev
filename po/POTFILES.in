@@ -74,6 +74,7 @@ dat/effects/paralyzing_plasma.xml
 dat/effects/plasma_burn.xml
 dat/effects/plasma_burn_ii.xml
 dat/effects/ride_of_the_valkyries.xml
+dat/effects/shieldboost.xml
 dat/effects/wormhole_enter.xml
 dat/effects/wormhole_exit.xml
 dat/factions/achack_sirius.xml

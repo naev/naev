@@ -20,8 +20,7 @@ void main(void)
    if (blur.a <= 0.0) /* assume u_tex will also have .a <= 0.0 */
       discard;
 
-	  
-   float intensity = max(0.02, 1 - u_elapsed*0.2);
+   float intensity = max(0.02, 1.0 - u_elapsed*0.2);
    colour_out = texture( u_tex, tex_coord );
    vec3 coord = vec3( 0.12 * tex_coord * dimensions.xy / dimensions.z, u_elapsed*0.67 + u_r );
    blur.rgb = blendReflect( blur.rgb, COLOUR, min(intensity, 0.06+0.4*snoise(coord)) );
