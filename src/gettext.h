@@ -14,7 +14,8 @@ typedef struct LanguageOption_ {
    double coverage;     /**< The fraction of strings which have a translation. */
 } LanguageOption;
 
-void gettext_init();
+void gettext_init (void);
+void gettext_exit (void);
 const char* gettext_getLanguage (void);
 void gettext_setLanguage( const char* lang );
 LanguageOption* gettext_languageOptions (void);

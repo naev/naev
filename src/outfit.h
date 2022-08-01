@@ -357,6 +357,10 @@ typedef struct Outfit_ {
    /* Weapons only. */
    int lua_onimpact; /**< Run when weapon hits the enemy. */
    int lua_onmiss;   /**< Run when weapon particle expires. */
+   /* Independent of slots and pilots. */
+   int lua_price;    /**< Determines the "cost" string and whether or not the player can buy or sell the outfit when available. */
+   int lua_buy;      /**< Run when the outfit is boughten. */
+   int lua_sell;     /**< Run when the outfit is sold. */
 
    /* Type dependent */
    OutfitType type; /**< Type of the outfit. */
@@ -451,6 +455,7 @@ double outfit_ammoMass( const Outfit *o );
 /* Active outfits. */
 double outfit_duration( const Outfit* o );
 double outfit_cooldown( const Outfit* o );
+
 /*
  * Loading and freeing outfit stack.
  */

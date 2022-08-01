@@ -518,6 +518,8 @@ function timer_spotter ()
 end
 
 function timer_spotter_start ()
+   if not spotter:exists() then return end
+
    vn.clear()
    vn.scene()
    local nel = vn.newCharacter( tutnel.vn_nelly() )

@@ -135,6 +135,7 @@ static int stream_thread( void *la_data )
       if (la->active < 0) {
          la->th = NULL;
          SDL_CondBroadcast( la->cond );
+         alSourceStop( la->source );
          soundUnlock();
          return 0;
       }
@@ -145,16 +146,25 @@ static int stream_thread( void *la_data )
          /* Refill active buffer */
          alSourceUnqueueBuffers( la->source, 1, &removed );
          ret = stream_loadBuffer( la, la->stream_buffers[ la->active ] );
-         if (ret < 0)
-            la->active = -1;
+         if ((la->active < 0) || (ret < 0)) {
+            /* stream_loadBuffer unlocks the sound lock internally, which can
+             * lead to the thread being gc'd and having active = -1. We have to
+             * add a check here to not mess around with stuff. */
+            la->th = NULL;
+            SDL_CondBroadcast( la->cond );
+            alSourceStop( la->source );
+            soundUnlock();
+            return 0;
+         }
          else {
             alSourceQueueBuffers( la->source, 1, &la->stream_buffers[ la->active ] );
             la->active = 1 - la->active;
          }
       }
+      al_checkErr(); /* XXX - good or bad idea to log from the thread? */
       soundUnlock();
 
-      SDL_Delay(5);
+      SDL_Delay(10);
    }
 }
 
@@ -366,7 +376,7 @@ int lua_isaudio( lua_State *L, int ind )
 
 void audio_cleanup( LuaAudio_t *la )
 {
-   if ((la==NULL) || sound_disabled || la->nocleanup)
+   if ((la==NULL) || (la->nocleanup))
       return;
 
    soundLock();
@@ -508,7 +518,6 @@ static int audioL_new( lua_State *L )
       la.type = LUA_AUDIO_STATIC;
       la.buf = malloc( sizeof(LuaBuffer_t) );
       la.buf->refcount = 1;
-      alGenBuffers( 1, &la.buf->buffer );
       sound_al_buffer( &la.buf->buffer, rw, name );
 
       /* Attach buffer. */
@@ -643,30 +652,31 @@ static int audioL_clone( lua_State *L )
 static int audioL_play( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (!sound_disabled) {
-      if ((la->type == LUA_AUDIO_STREAM) && (la->th == NULL)) {
-         int ret = 0;
-         ALint alstate;
-         soundLock();
+   if (sound_disabled)
+      return 0;
+
+   if ((la->type == LUA_AUDIO_STREAM) && (la->th == NULL)) {
+      int ret = 0;
+      ALint alstate;
+      soundLock();
+      alGetSourcei( la->source, AL_BUFFERS_QUEUED, &alstate );
+      while (alstate < 2) {
+         ret = stream_loadBuffer( la, la->stream_buffers[ la->active ] );
+         if (ret < 0)
+            break;
+         alSourceQueueBuffers( la->source, 1, &la->stream_buffers[ la->active ] );
+         la->active = 1-la->active;
          alGetSourcei( la->source, AL_BUFFERS_QUEUED, &alstate );
-         while (alstate < 2) {
-            ret = stream_loadBuffer( la, la->stream_buffers[ la->active ] );
-            if (ret < 0)
-               break;
-            alSourceQueueBuffers( la->source, 1, &la->stream_buffers[ la->active ] );
-            la->active = 1-la->active;
-            alGetSourcei( la->source, AL_BUFFERS_QUEUED, &alstate );
-            soundUnlock();
-         }
-         if (ret == 0)
-            la->th = SDL_CreateThread( stream_thread, "stream_thread", la );
       }
-      else
-         soundLock();
-      alSourcePlay( la->source );
-      al_checkErr();
-      soundUnlock();
+      if (ret == 0)
+         la->th = SDL_CreateThread( stream_thread, "stream_thread", la );
    }
+   else
+      soundLock();
+   alSourcePlay( la->source );
+   al_checkErr();
+   soundUnlock();
+
    lua_pushboolean(L,1);
    return 1;
 }
@@ -892,7 +902,6 @@ static int audioL_getDuration( lua_State *L )
       lua_pushnumber(L, -1.);
       return 1;
    }
-
 
    switch (la->type) {
       case LUA_AUDIO_STATIC:
@@ -1361,7 +1370,29 @@ static int audioL_setEffectGlobal( lua_State *L )
    lua_pop(L,1);
 
    soundLock();
-   nalGenEffects(1, &effect);
+
+   /* Find or add to array as necessary. */
+   if (lua_efx == NULL)
+      lua_efx = array_create( LuaAudioEfx_t );
+   lae = NULL;
+   for (int i=0; i<array_size(lua_efx); i++) {
+      if (strcmp(name,lua_efx[i].name)==0) {
+         lae = &lua_efx[i];
+         break;
+      }
+   }
+   if (lae == NULL) {
+      lae = &array_grow( &lua_efx );
+      nalGenEffects(1, &effect);
+      nalGenAuxiliaryEffectSlots( 1, &slot );
+      lae->name   = strdup( name );
+      lae->effect = effect;
+      lae->slot   = slot;
+   }
+   else {
+      effect   = lae->effect;
+      slot     = lae->slot;
+   }
 
    /* Handle types. */
    if (strcmp(type,"reverb")==0) {
@@ -1473,31 +1504,12 @@ static int audioL_setEffectGlobal( lua_State *L )
       NLUA_ERROR(L, _("Usupported audio effect type '%s'!"), type);
    }
 
-   al_checkErr();
-
-   nalGenAuxiliaryEffectSlots( 1, &slot );
    if (volume > 0.)
       nalAuxiliaryEffectSlotf( slot, AL_EFFECTSLOT_GAIN, volume );
    nalAuxiliaryEffectSloti( slot, AL_EFFECTSLOT_EFFECT, effect );
 
    al_checkErr();
    soundUnlock();
-
-   /* Find or add to array as necessary. */
-   if (lua_efx == NULL)
-      lua_efx = array_create( LuaAudioEfx_t );
-   lae = NULL;
-   for (int i=0; i<array_size(lua_efx); i++) {
-      if (strcmp(name,lua_efx[i].name)==0) {
-         lae = &lua_efx[i];
-         break;
-      }
-   }
-   if (lae == NULL)
-      lae = &array_grow( &lua_efx );
-   lae->name   = strdup( name );
-   lae->effect = effect;
-   lae->slot   = slot;
 
    return 0;
 }
@@ -1536,13 +1548,14 @@ static int audioL_setEffect( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    const char *name = luaL_checkstring(L,2);
    int enable = (lua_isnoneornil(L,3)) ? 1 : lua_toboolean(L,3);
-   LuaAudioEfx_t *lae;
 
    soundLock();
    if (enable) {
-      lae = audio_getEffectByName( name );
-      if (lae == NULL)
+      LuaAudioEfx_t *lae = audio_getEffectByName( name );
+      if (lae == NULL) {
+         soundUnlock();
          return 0;
+      }
       /* TODO allow more effect slots. */
       alSource3i( la->source, AL_AUXILIARY_SEND_FILTER, lae->slot, 0, AL_FILTER_NULL );
    }

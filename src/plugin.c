@@ -25,8 +25,6 @@
 
 static plugin_t *plugins;
 
-static const char *plugin_name( plugin_t *plg );
-
 /**
  * @brief Parses a plugin description file.
  */
@@ -150,6 +148,14 @@ int plugin_init (void)
             plugin_parse( plg, "plugin.xml", *f );
          else
             WARN(_("Plugin '%s' does not have a valid '%s'!"), buf, "plugin.xml");
+
+         /* Set some defaults. */
+         if (plg->author == NULL)
+            plg->author = strdup(_("Unknown"));
+         if (plg->version == NULL)
+            plg->version = strdup(_("Unknown"));
+         if (plg->description == NULL)
+            plg->description = strdup(_("Unknown"));
       }
       PHYSFS_freeList(files);
       n = array_size(plugins);
@@ -209,7 +215,7 @@ void plugin_exit (void)
  *    @param plg Plugin to try to get name of.
  *    @return Name of the plugin.
  */
-static const char *plugin_name( plugin_t *plg )
+const char *plugin_name( const plugin_t *plg )
 {
    if (plg->name != NULL)
       return plg->name;

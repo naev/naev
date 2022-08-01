@@ -1734,9 +1734,12 @@ static void pilot_dead( Pilot* p, unsigned int killer )
    pilot_runHookParam( p, PILOT_HOOK_DEATH, &hparam, 1 );
 
    /* Need a check here in case the hook "regenerates" the pilot. */
-   if (p->armour <= 0.)
+   if (p->armour <= 0.) {
+      if (p->parent == PLAYER_ID)
+         player_message( _("#rShip under command '%s' was destroyed!#0"), p->name );
       /* PILOT R OFFICIALLY DEADZ0R */
       pilot_setFlag( p, PILOT_DEAD );
+   }
 }
 
 /**

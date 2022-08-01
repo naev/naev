@@ -9,7 +9,7 @@
 
 #include "opengl.h"
 
-#define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str string can reach. */
+#define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str/price2str string can reach. */
 #define ECON_MASS_STRLEN      32 /**< Maximum length a tonnes2str string can reach. */
 
 typedef int64_t credits_t;
