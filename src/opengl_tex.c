@@ -689,7 +689,7 @@ glTexture* gl_newSprite( const char* path, const int sx, const int sy,
    if (texture == NULL)
       return NULL;
 
-   /* will possibly overwrite an existing textur properties
+   /* will possibly overwrite an existing texture properties
     * so we have to load same texture always the same sprites */
    texture->sx    = (double) sx;
    texture->sy    = (double) sy;
@@ -727,7 +727,7 @@ glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
    if (texture == NULL)
       return NULL;
 
-   /* will possibly overwrite an existing textur properties
+   /* will possibly overwrite an existing texture properties
     * so we have to load same texture always the same sprites */
    texture->sx    = (double) sx;
    texture->sy    = (double) sy;

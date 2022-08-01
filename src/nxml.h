@@ -47,11 +47,11 @@
 /* get data different ways */
 #define xml_raw(n)            ((char*)(n)->children->content)
 #define xml_get(n)            (((n)->children == NULL) ? NULL : (char*)(n)->children->content)
-#define xml_getInt(n)         ((xml_get(n) == NULL) ? 0  : strtol(  xml_raw(n), (char**)NULL, 10))
-#define xml_getUInt(n)        ((xml_get(n) == NULL) ? 0  : strtoul( xml_raw(n), (char**)NULL, 10))
-#define xml_getLong(n)        ((xml_get(n) == NULL) ? 0  : strtoll( xml_raw(n), (char**)NULL, 10))
-#define xml_getULong(n)       ((xml_get(n) == NULL) ? 0  : strtoull(xml_raw(n), (char**)NULL, 10))
-#define xml_getFloat(n)       ((xml_get(n) == NULL) ? 0. : atof(xml_raw(n)))
+#define xml_getInt(n)         ((xml_get(n) == NULL) ? 0  :   strtol( xml_raw(n), NULL, 10 ))
+#define xml_getUInt(n)        ((xml_get(n) == NULL) ? 0  :  strtoul( xml_raw(n), NULL, 10 ))
+#define xml_getLong(n)        ((xml_get(n) == NULL) ? 0  :  strtoll( xml_raw(n), NULL, 10 ))
+#define xml_getULong(n)       ((xml_get(n) == NULL) ? 0  : strtoull( xml_raw(n), NULL, 10 ))
+#define xml_getFloat(n)       ((xml_get(n) == NULL) ? 0. :   strtod( xml_raw(n), NULL ))
 #define xml_getStrd(n)        ((xml_get(n) == NULL) ? NULL : strdup(xml_raw(n)))
 
 /*
@@ -104,11 +104,11 @@ static inline char* nxml_trace_strdup( void* ptr )
 #define xmlr_attr_strd(n,s,a)          a = nxml_trace_strdup( xmlGetProp( n, (xmlChar*)s ) )
 
 /* Attribute readers with defaults. */
-#define xmlr_attr_int_def(n,s,a,def)   do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def: strtol( T, NULL, 10); free(T);} while(0)
-#define xmlr_attr_uint_def(n,s,a,def)  do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def:strtoul( T, NULL, 10); free(T);} while(0)
-#define xmlr_attr_long_def(n,s,a,def)  do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def:strtoll( T, NULL, 10); free(T);} while(0)
-#define xmlr_attr_ulong_def(n,s,a,def) do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def:strtoull(T, NULL, 10); free(T);} while(0)
-#define xmlr_attr_float_def(n,s,a,def) do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def:    atof(T          ); free(T);} while(0)
+#define xmlr_attr_int_def(n,s,a,def)   do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def:  strtol( T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_uint_def(n,s,a,def)  do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def: strtoul( T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_long_def(n,s,a,def)  do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def: strtoll( T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_ulong_def(n,s,a,def) do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def:strtoull( T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_float_def(n,s,a,def) do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def:  strtod( T, NULL    ); free(T);} while(0)
 /* Attribute readers defaulting to zero. */
 #define xmlr_attr_int(n,s,a)     xmlr_attr_int_def(n,s,a,0)
 #define xmlr_attr_uint(n,s,a)    xmlr_attr_uint_def(n,s,a,0)
