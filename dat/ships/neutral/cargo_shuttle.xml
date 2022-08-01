@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Cargo Shuttle">
+ <points>10</points>
+ <base_type>Cargo Shuttle</base_type>
+ <GFX size="40">cargo_shuttle</GFX>
+ <GUI>brushed</GUI>
+ <sound>engine</sound>
+ <class display="Auxiliary Ship">Yacht</class>
+ <price>48000</price>
+ <time_mod>0.85</time_mod>
+ <trail_generator x="-2" y="-9" h="1">fire</trail_generator>
+ <trail_generator x="-2" y="9" h="1">fire</trail_generator>
+ <fabricator>Melendez Corp.</fabricator>
+ <description>The Cargo Shuttle is your standard auxiliary ship. It's a small vessel with no weapon space but a fair amount of space for utility. Some ship dealers even include a free Cargo Shuttle when purchasing carriers or fighter-capable warships.</description>
+ <health>
+  <armour>80</armour>
+  <armour_regen>1</armour_regen>
+ </health>
+ <characteristics>
+  <crew>2</crew>
+  <mass>90</mass>
+  <fuel_consumption>90</fuel_consumption>
+  <cargo>20</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="small" prop="fighter_bay" x="0" y="0" exclusive="1" />
+  <utility size="small" prop="systems">Unicorp PT-68 Core System</utility>
+  <utility size="small" prop="accessory" />
+  <utility size="medium" />
+  <utility size="small" />
+  <structure size="small" prop="engines">Nexus Dart 150 Engine</structure>
+  <structure size="small" prop="hull">Nexus Light Stealth Plating</structure>
+  <structure size="small" />
+  <structure size="small" />
+ </slots>
+ <stats>
+  <thrust_mod>-10</thrust_mod>
+  <speed_mod>-5</speed_mod>
+  <turn_mod>-10</turn_mod>
+  <cargo_mod>10</cargo_mod>
+  <cargo_inertia>-20</cargo_inertia>
+  <ew_hide>80</ew_hide>
+ </stats>
+ <tags>
+  <tag>transport</tag>
+ </tags>
+</ship>

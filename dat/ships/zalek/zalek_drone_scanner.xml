@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Za'lek Scanner Drone">
+ <points>24</points>
+ <base_type>Za'lek Scout Drone</base_type>
+ <GFX size="38">zalek_drone_scout</GFX>
+ <GUI>brushed</GUI>
+ <sound>engine_zalek</sound>
+ <class display="Robotic Scout">Scout</class>
+ <price>220000</price>
+ <time_mod>0.75</time_mod>
+ <trail_generator x="-11" y="0" h="0">nebula</trail_generator>
+ <trail_generator x="-11" y="0" h="0">zalekXS</trail_generator>
+ <fabricator>Za'lek Robotics</fabricator>
+ <description>This is the Za'lek Scanning Drone. Built for scanning, not for battle. Not to be flown by the player.</description>
+ <movement>
+  <thrust>240</thrust>
+  <speed>460</speed>
+  <turn>210</turn>
+ </movement>
+ <health>
+  <absorb>0</absorb>
+  <armour>20</armour>
+  <shield>60</shield>
+  <shield_regen>6</shield_regen>
+  <energy>40</energy>
+  <energy_regen>4</energy_regen>
+ </health>
+ <characteristics>
+  <crew>1</crew>
+  <mass>50</mass>
+  <fuel>300</fuel>
+  <cargo>0</cargo>
+  <fuel_consumption>1</fuel_consumption>
+  <cpu>10</cpu>
+ </characteristics>
+ <slots>
+  <weapon size="small" x="0" y="0" h="-2" />
+  <utility size="small" />
+  <structure size="small" />
+ </slots>
+ <stats>
+  <ew_hide>20</ew_hide>
+  <ew_detect>25</ew_detect>
+ </stats>
+ <tags>
+  <tag>noplayer</tag>
+  <tag>noequip</tag>
+  <tag>zalek</tag>
+  <tag>drone</tag>
+ </tags>
+</ship>
