@@ -142,6 +142,7 @@ static int pilotL_intrinsicSet( lua_State *L );
 static int pilotL_intrinsicGet( lua_State *L );
 static int pilotL_effectClear( lua_State *L );
 static int pilotL_effectAdd( lua_State *L );
+static int pilotL_effectRm( lua_State *L );
 static int pilotL_effectGet( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setTemp( lua_State *L );
@@ -312,6 +313,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "intrinsicGet", pilotL_intrinsicGet },
    { "effectClear", pilotL_effectClear },
    { "effectAdd", pilotL_effectAdd },
+   { "effectRm", pilotL_effectRm },
    { "effectGet", pilotL_effectGet },
    /* Ship. */
    { "ship", pilotL_ship },
@@ -3271,6 +3273,27 @@ static int pilotL_effectAdd( lua_State *L )
    else
       lua_pushboolean(L,0);
    return 1;
+}
+
+/**
+ * @brief Removes an effect from the pilot.
+ *
+ *    @luatparam Pilot p Pilot to remove effect from.
+ *    @luatparam string name Name of the effect to add.
+ *    @luatparam boolean all Remove all instances of the effect or only the most first instance.
+ * @luafunc effectRm
+ */
+static int pilotL_effectRm( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   const char *effectname = luaL_checkstring(L,2);
+   int all = lua_toboolean(L,3);
+   const EffectData *efx = effect_get( effectname );
+   if (efx != NULL) {
+      if (effect_rm( &p->effects, efx, all ))
+         pilot_calcStats( p );
+   }
+   return 0;
 }
 
 /**

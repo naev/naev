@@ -311,7 +311,7 @@ MusicInfo_t* music_info (void)
    }
 
    minfo.playing  = lua_toboolean(naevL,-3);
-   minfo.name     = strdup(luaL_optstring(naevL,-2,NULL));
+   minfo.name     = strdup(luaL_optstring(naevL,-2,""));
    minfo.pos      = luaL_optnumber(naevL,-1,-1);
 
    lua_pop(naevL,3);

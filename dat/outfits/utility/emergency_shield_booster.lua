@@ -22,10 +22,13 @@ local function turnon( p, po )
 
    mem.timer = active
 
+   -- apply nice shader effect
+   p:effectAdd("Shield Boost")
+
    return true
 end
 
-local function turnoff( _p, po )
+local function turnoff( p, po )
    if not mem.active then
       return false
    end
@@ -34,6 +37,7 @@ local function turnoff( _p, po )
    po:clear() -- clear stat modifications
    mem.timer = cooldown
    mem.active = false
+   p:effectAdd("Shield Boost", 1)
    return true
 end
 

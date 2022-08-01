@@ -3,7 +3,7 @@
 <event name="Travelling Merchant">
  <location>enter</location>
  <chance>5</chance>
- <cond>require("common.pirate").systemPresence() &gt; 100 and system.cur():presence("Independent") &gt; 100 and player.credits() >= 1e6 and not system.cur():tags().restricted</cond>
+ <cond>require("common.pirate").systemPresence() &gt; 100 and system.cur():presence("Independent") &gt; 100 and player.credits() &gt;= 1e6 and not system.cur():tags().restricted</cond>
 </event>
 --]]
 --[[

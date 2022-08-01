@@ -60,6 +60,7 @@ const EffectData *effect_get( const char *name );
  */
 int effect_update( Effect **efxlist, double dt );
 int effect_add( Effect **efxlist, const EffectData *efx, double duration, double scale, unsigned int parent );
+int effect_rm( Effect **efxlist, const EffectData *efx, int all );
 void effect_clear( Effect **efxlist );
 void effect_compute( ShipStats *s, const Effect *efxlist );
 void effect_cleanup( Effect *efxlist );

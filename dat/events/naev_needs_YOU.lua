@@ -1,11 +1,12 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Naev Needs You!">
-  <location>land</location>
-  <chance>8</chance>
-  <unique />
- </event>
- --]]
+ <location>land</location>
+ <chance>8</chance>
+ <cond>player.credits() &gt; 237451</cond>
+ <unique />
+</event>
+--]]
 --[[
 
 EVENT TITLE: Naev Needs You!
@@ -44,11 +45,6 @@ text[3] = _([["Oh sorry about that. We're working hard on improving life, the un
 
 
 function create()
-      -- Event should only occur if player has played a bit.
-      if player.credits() < 237451 then
-         evt.finish( false )
-      end
-
       -- Create an eerie atmosphere by cutting off the background music and substituting something spooky
       --disabled until difficulties with the music API are sorted out
       music.pause()

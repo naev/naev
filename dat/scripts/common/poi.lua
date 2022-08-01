@@ -318,11 +318,21 @@ function poi.data_get()
 end
 
 --[[
+Gets the amount of total data collected by the player.
+   @treturn integer Amount of total data collected by the player.
+--]]
+function poi.data_get_gained()
+   return var.peek( "poi_data_gained" ) or 0
+end
+
+--[[
 Gives data to the player.
    @tparam integer amount Amount to give to the player.
    @treturn integer Amount actually added.
 --]]
 function poi.data_give( amount )
+   local v = var.peek( "poi_data_gained" ) or 0
+   var.push( "poi_data_gained", v+amount )
    return player.inventoryAdd( conduit, amount )
 end
 
