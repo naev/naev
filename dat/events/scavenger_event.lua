@@ -21,7 +21,7 @@
    happen (at least, I hope…) he’ll be pursued by a few fighters.
 --]]
 -- luacheck: globals enter jumpout land player_rescue player_attacked scavenger_arrives scav_attacked scav_boarding setup_support_fleet scavenger_death fall_in enlist_followers scav_hail detonate_c4 (Hook functions passed by name)
--- luacheck: globals approachScavenger escort_barConversation (NPC functions passed by name)
+-- luacheck: globals approachScavenger approachHiredScav escort_barConversation (NPC functions passed by name)
 
 local pir = require "common.pirate"
 local fmt = require "format"
@@ -542,7 +542,7 @@ local function speak(persona, sentiment, arg)
          -- also favors picking this kind of chitchat less for smaller crews
          -- use the experience difference as a reason to critcize the subordinate
          for _i, other in ipairs(mem.persons) do
-            if other ~= persona and rnd.rnd(0, 1) == 0 and persona.experience > other.experience then               
+            if other ~= persona and rnd.rnd(0, 1) == 0 and persona.experience > other.experience then
                some_subordinate = other
             end
          end
@@ -554,7 +554,7 @@ local function speak(persona, sentiment, arg)
          else
             spoken = pick_one(chitchat_commander)
          end
-            
+
       elseif   -- if this looks like a favourite ship
             string.find(myship, favourite) or
             string.find(favourite, myship)
@@ -1353,7 +1353,7 @@ function approachScavenger(npc_id)
    vn.clear()
    vn.scene()
 
-      
+
    local stranger_choices = {
       "neutral/bartender_m1.webp",
       "neutral/bartender_f1.webp",
@@ -1458,7 +1458,7 @@ If they lose a ship in battle, don't expect them to come back without some motiv
 They will always like their certified ship, but I'm sure that they will start liking whatever you give them as long as you can keep their wallets happy.]]))
 --      stranger(_([[Now, if you have any questions, please open an issue on github or comment on the pull request that contains this event so that it can be made more clear in the future.]]))
       vn.na(_([[The zealous eavesdropper pats you on the elbow and leaves you to digest everything that has been said.
-      
+
       You ponder if anything important was said as your focus is shifted back to your immediate surroundings.]]))
 
       -- don't show this annoying stranger again
@@ -1537,7 +1537,7 @@ As you conduct your affairs on the spaceport, you notice your new {sidekick} in 
                _("that has seen its fair share of violence over the years"),
                _("doesn't look like it has very long left, but you can only hope for the best"),
                _("has seen better days"),
-            }),         
+            }),
             }
         )
     )
@@ -2041,9 +2041,9 @@ function scavenger_arrives(arg)
       -- I'll catch up with you later
       if rnd.rnd() < lead_chance then
          speak(mem.persons[i], "brb")
-         
+
          plt:changeAI( "escort_guardian" )
-         
+
          aimem = plt:memory()
          aimem.stealth = true
          aimem.atk_board = true
@@ -2072,7 +2072,7 @@ function scavenger_arrives(arg)
             hook.rm(mem.persons[i].commander.hook)
          end
          mem.persons[i].commander.hook = hook.pilot(player.pilot(), "attacked", "player_attacked", mem.persons[i].pilot)
-         
+
          return -- sometimes don't means must not continue down default path
       end
     end
@@ -2327,7 +2327,7 @@ function land()
          if edata.ship:nameRaw() ~= edata.dreamship then
             this_desc = this_desc .. _("\nThis pilot was last seen flying a {ship} at a cover fee of {replacement_text}, which will be added to the pilot's personal account of ") .. fmt.f("{credits} towards a replacement.", { credits = fmt.credits(edata.wallet) } )
          end
-         
+
          this_desc = fmt.f(this_desc, edata)
          -- only the commander goes to the bar, unless if there is no commander (player might need to manage escorts)
          -- also give the unimportant escorts a random chance of appearing even if they are off duty, it's a bar after all
@@ -2749,7 +2749,7 @@ function escort_barConversation( persona, npc_id )
    if persona.commander then pilotlabel = "Commander" end
    table.insert(choices, { fmt.f(_("Fire {pilot}"), {pilot=pilotlabel} ), "fire" } )
    table.insert(choices, { _("Dismiss"), "end" })
-      
+
    -- non commander pilots might be disobedient
    local disobedience = pick_one({
       _([[Actually, I think I'll hang back for a bit and read the instruction manual.]]),
@@ -3012,7 +3012,7 @@ Pilot credentials:]])
                 )
          return
       end
-      
+
       shiplog.append(
             logidstr,
             fmt.f(
