@@ -88,7 +88,7 @@ function scan_drone_update( dt, _rdt, _args )
 	end
 end
 
-function use_drone( p )
+local function use_drone( p )
 	if mem.scanner_drone and mem.scanner_drone:exists() then
 		local t = p:target()
 		if not t then return false end
