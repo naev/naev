@@ -13,23 +13,14 @@
    Allows the player to fly an auxiliary ship from the bay
 --]]
 
+-- luacheck: globals auxiliary_ship_mission auxiliary_ship_return check_aux_bay spawn_ghost (Hook functions passed by name)
+
+
 local fmt = require "format"
 local der = require "common.derelict"
+local vntk = require "vntk"
 
-
-local infobtn
-
-local function hideButton()
-   if infobtn then
-      player.infoButtonUnregister( infobtn )
-      infobtn = nil
-   end
-end
-
-local function showButton()
-	hideButton()
-	infobtn = player.infoButtonRegister( _("Launch Auxiliary Ship"), auxiliary_ship_mission, 3, "S" )
-end
+local joyride
 
 function create()
 	hook.takeoff("check_aux_bay")
@@ -86,21 +77,21 @@ local function configure_outfits()
 		end
 		-- if we have unlocked the pulse scanner, we definitely want one!
 		add_outfit("Pulse Scanner")
-		
+
 		-- if we didn't already fill our slots, try to increase stealth
 		add_outfit("Veil of Penelope")
 		add_outfit("Nexus Stealth Coating")
 		-- structure slots, no use for anything else since we don't allow landing or jumping
 		add_outfit("Small Cargo Pod")
 		add_outfit("Small Cargo Pod")
-		
+
 		-- accessory slot
 		accessories = get_accessories()
 		local accessory = accessories[rnd.rnd(1, #accessories)]
 		if accessory then
 			add_outfit(accessory)
 		end
-		
+
 		-- tiny drone slot
 		add_outfit("Za'lek Scanning Drone Interface")
 	end
@@ -121,7 +112,7 @@ end
 
 -- if the player swapped out of his own ship in space, or if
 -- the player despawned his own ship while landing, we need to respawn it
-function spawn_ghost()
+local function spawn_ghost()
 	if
 		joyride
 	then
@@ -257,7 +248,7 @@ function auxiliary_ship_return()
 			player.commClose()
 			return false -- pun not intended
 		end
-		
+
 		-- we are redocking, save the current outfit layout
 		shuttle_outfits = {}
 		for j, o in ipairs(player.pilot():outfits()) do
@@ -271,7 +262,7 @@ function auxiliary_ship_return()
 		player.pilot():setDir(joyride.pilot:dir())
 		player.pilot():setVel(joyride.pilot:vel())
 		player.pilot():setFuel(player.pilot():stats().fuel + carried_fuel)
-		
+
 		-- put the cargo back
 		local cl = joyride.pilot:cargoList()
 		-- goes back into the player
@@ -286,4 +277,18 @@ function auxiliary_ship_return()
 		showButton()
 	end
 	joyride = nil
+end
+
+local infobtn
+
+local function hideButton()
+   if infobtn then
+      player.infoButtonUnregister( infobtn )
+      infobtn = nil
+   end
+end
+
+local function showButton()
+	hideButton()
+	infobtn = player.infoButtonRegister( _("Launch Auxiliary Ship"), auxiliary_ship_mission, 3, "S" )
 end

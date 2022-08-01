@@ -13,6 +13,8 @@
    To be deprecated and replaced in outfit/scanner_drone_bay.lua instead or with something even better!
 --]]
 
+-- luacheck: globals scan_drone_enter scan_drone_update find_drone (Hook functions passed by name)
+
 function create()
 	hook.enter("scan_drone_enter")
 end
@@ -20,14 +22,6 @@ end
 local DRONE_SEARCH_INTERVAL = 6
 function scan_drone_enter()
 	hook.timer(DRONE_SEARCH_INTERVAL, "find_drone")
-end
-
-local function scan_target( t )
-	local fakefac = faction.dynAdd(player.pilot():faction():name(), player.ship(), player.ship(), { ai = "dummy", clear_enemies = true})
-	mem.scanner_drone = pilot.add("Za'lek Scanner Drone", fakefac, player.pilot():pos(), _("Scanning Drone"))
-	mem.scanner_drone:outfitRm( "all" ) -- remove the weapons
-	mem.scanner_drone:control(true)
-	mem.scanner_drone:follow( t )
 end
 
 local function enable( t )
@@ -62,7 +56,7 @@ local function get_target_outfit()
 		local to = mem.target:outfits()
 		return to[rnd.rnd(1, #to)]
 	end
-	return { name = function () return _("No signatures disrupted") end } 
+	return { name = function () return _("No signatures disrupted") end }
 end
 
 local SCAN_TIME = 8
@@ -80,7 +74,6 @@ local function do_scan( dt )
 end
 
 local SCAN_RANGE_2 = 750 * 750
-local DOCK_RANGE_2 = 30 * 30
 function scan_drone_update( dt, _rdt, _args )
 	if mem.scanner_drone and mem.scanner_drone:exists() then
 		if
@@ -88,8 +81,6 @@ function scan_drone_update( dt, _rdt, _args )
 			and vec2.dist2(mem.scanner_drone:pos(), mem.target:pos()) < SCAN_RANGE_2
 		then
 			do_scan(dt)
---		elseif vec2.dist2(mem.scanner_drone:pos(), player.pilot():pos()) < DOCK_RANGE_2 then
---			dock_drone()
 		end
 	elseif mem.scanner_drone then
 		-- the drone died
@@ -97,32 +88,15 @@ function scan_drone_update( dt, _rdt, _args )
 	end
 end
 
-function find_drone()
-	if mem.scanning_hook then
-		hook.rm(mem.scanning_hook)
-		mem.scanning_hook = nil
-	end
-	for _i, follower in ipairs(player.pilot():followers()) do
-		if follower:name() == _("Za'lek Scanner Drone") then
-			mem.scanner_drone = follower
-			mem.scanning_hook = hook.update("scan_drone_update")
-			
-			return use_drone(player.pilot())
-		end
-	end
-	hook.timer(DRONE_SEARCH_INTERVAL, "find_drone")
-	return false
-end
-
 function use_drone( p )
 	if mem.scanner_drone and mem.scanner_drone:exists() then
 		local t = p:target()
 		if not t then return false end
-		local detected, scanned = p:inrange(t)
+		local _detected, scanned = p:inrange(t)
 		if not scanned then
 		 return false
 		end
-		
+
 		if not mem.target then
 			return enable(t)
 		elseif mem.target ~= t then
@@ -135,4 +109,21 @@ function use_drone( p )
 	end
 
 	return true
+end
+
+function find_drone()
+	if mem.scanning_hook then
+		hook.rm(mem.scanning_hook)
+		mem.scanning_hook = nil
+	end
+	for _i, follower in ipairs(player.pilot():followers()) do
+		if follower:name() == _("Za'lek Scanner Drone") then
+			mem.scanner_drone = follower
+			mem.scanning_hook = hook.update("scan_drone_update")
+
+			return use_drone(player.pilot())
+		end
+	end
+	hook.timer(DRONE_SEARCH_INTERVAL, "find_drone")
+	return false
 end
