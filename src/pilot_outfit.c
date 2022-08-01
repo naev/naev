@@ -1014,6 +1014,10 @@ void pilot_calcStats( Pilot* pilot )
    pilot->shield_regen *= s->shield_regen_mod;
    pilot->energy_max   *= s->energy_mod;
    pilot->energy_regen *= s->energy_regen_mod;
+   /* Enforce health to be at least 0 after mods, so that something like -1000% would just set it to 0 instead of negative. */
+   pilot->armour_regen = MAX( 0., pilot->armour_regen );
+   pilot->shield_regen = MAX( 0., pilot->shield_regen );
+   pilot->energy_regen = MAX( 0., pilot->energy_regen );
    /* cpu */
    pilot->cpu_max       = (int)floor((float)(pilot->ship->cpu + s->cpu_max)*s->cpu_mod);
    pilot->cpu          += pilot->cpu_max; /* CPU is negative, this just sets it so it's based off of cpu_max. */
