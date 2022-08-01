@@ -12,20 +12,23 @@
 #include <assert.h>
 #include <signal.h>
 
-#include "naev.h"
-
-#if LINUX && HAS_BFD && DEBUGGING
-#include <execinfo.h>
+#if HAVE_BFD_H
 #include <bfd.h>
-#endif /* LINUX && HAS_BFD && DEBUGGING */
+#endif /* HAVE_BFD_H */
+
+#if HAVE_EXECINFO_H
+#include <execinfo.h>
+#endif /* HAVE_EXECINFO_H */
+
+#include "naev.h"
 /** @endcond */
 
 #include "log.h"
 
-#if LINUX && HAS_BFD && DEBUGGING
+#if HAVE_BFD_H && DEBUGGING
 static bfd *abfd      = NULL;
 static asymbol **syms = NULL;
-#endif /* LINUX && HAS_BFD && DEBUGGING */
+#endif /* HAVE_BFD_H && DEBUGGING */
 
 #ifdef bfd_get_section_flags
 /* We're dealing with a binutils version prior to 2.34 (2020-02-01) and must adapt the API as follows: */
@@ -42,7 +45,7 @@ DebugFlags debug_flags;
 #endif /* DEBUGGING */
 
 
-#if LINUX && HAS_BFD && DEBUGGING
+#if DEBUGGING
 /**
  * @brief Gets the string related to the signal code.
  *
@@ -115,7 +118,9 @@ const char* debug_sigCodeToStr( int sig, int sig_code )
    }
 #endif /* HAVE_STRSIGNAL */
 }
+#endif /* DEBUGGING */
 
+#if HAVE_BFD_H && DEBUGGING
 /**
  * @brief Translates and displays the address as something humans can enjoy.
  */
@@ -151,52 +156,64 @@ static void debug_translateAddress( const char *symbol, bfd_vma address )
 
    DEBUG("%s %s(...):%u %s", symbol, "??", 0, "??");
 }
+#endif /* HAVE_BFD_H && DEBUGGING */
 
-/**
- * @brief Backtrace signal handler for Linux.
- *
- *    @param sig Signal.
- *    @param info Signal information.
- *    @param unused Unused.
- */
+#if DEBUGGING
+#if HAVE_SIGACTION
 static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
+#else /* HAVE_SIGACTION */
+static void debug_sigHandler( int sig )
+#endif /* HAVE_SIGACTION */
 {
    (void) sig;
+#if HAVE_SIGACTION
    (void) unused;
+#endif /* HAVE_SIGACTION */
+
+   LOG( _("Naev received %s!"),
+#if HAVE_SIGACTION
+         debug_sigCodeToStr( info->si_signo, info->si_code )
+#else /* HAVE_SIGACTION */
+         debug_sigCodeToStr( sig, 0 )
+#endif /* HAVE_SIGACTION */
+	);
+
+#if HAVE_EXECINFO_H
    int num;
    void *buf[64];
    char **symbols;
 
    num      = backtrace(buf, 64);
    symbols  = backtrace_symbols(buf, num);
-
-   DEBUG( _("Naev received %s!"),
-         debug_sigCodeToStr(info->si_signo, info->si_code) );
    for (int i=0; i<num; i++) {
-      if (abfd != NULL)
+#if HAVE_BFD_H
+      if (abfd != NULL) {
          debug_translateAddress(symbols[i], (bfd_vma) (bfd_hostptr_t) buf[i]);
-      else
-         DEBUG("   %s", symbols[i]);
+	 continue;
+      }
+#endif /* HAVE_BFD_H */
+      DEBUG("   %s", symbols[i]);
    }
    DEBUG( _("Report this to project maintainer with the backtrace.") );
+#endif /* HAVE_EXECINFO_H */
 
    /* Always exit. */
    exit(1);
 }
-#endif /* LINUX && HAS_BFD && DEBUGGING */
+#endif /* DEBUGGING */
 
 /**
  * @brief Sets up the SignalHandler for Linux.
  */
 void debug_sigInit (void)
 {
-#if LINUX && HAS_BFD && DEBUGGING
-   const char *str;
-   struct sigaction sa, so;
+#if DEBUGGING
+   const char *str = _("Unable to set up %s signal handler.");
 
+#if HAVE_BFD_H
    bfd_init();
 
-   /* Read the executable */
+   /* Read the executable. TODO: in case libbfd exists on platforms without procfs, try env.argv0 from "env.h"? */
    abfd = bfd_openr("/proc/self/exe", NULL);
    if (abfd != NULL) {
       char **matching;
@@ -208,21 +225,20 @@ void debug_sigInit (void)
          long symcount;
 
          /* static */
-         symcount = bfd_read_minisymbols (abfd, FALSE, (void **)&syms, &size);
+         symcount = bfd_read_minisymbols( abfd, FALSE, (void **)&syms, &size );
          if ( symcount == 0 && abfd != NULL ) /* dynamic */
-            symcount = bfd_read_minisymbols (abfd, TRUE, (void **)&syms, &size);
+            symcount = bfd_read_minisymbols( abfd, TRUE, (void **)&syms, &size );
          assert(symcount >= 0);
       }
    }
+#endif /* HAVE_BFD_H */
 
    /* Set up handler. */
-   sa.sa_handler   = NULL;
+#if HAVE_SIGACTION
+   struct sigaction so, sa = { .sa_handler = NULL, .sa_flags = SA_SIGINFO };
    sa.sa_sigaction = debug_sigHandler;
    sigemptyset(&sa.sa_mask);
-   sa.sa_flags     = SA_SIGINFO;
 
-   /* Attach signals. */
-   str = _("Unable to set up %s signal handler.");
    sigaction(SIGSEGV, &sa, &so);
    if (so.sa_handler == SIG_IGN)
       DEBUG( str, "SIGSEGV" );
@@ -232,8 +248,12 @@ void debug_sigInit (void)
    sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
       DEBUG( str, "SIGABRT" );
-   DEBUG( _("BFD backtrace catching enabled.") );
-#endif /* LINUX && HAS_BFD && DEBUGGING */
+#else /* HAVE_SIGACTION */
+   signal( SIGSEGV, debug_sigHandler );
+   signal( SIGFPE,  debug_sigHandler );
+   signal( SIGABRT, debug_sigHandler );
+#endif /* HAVE_SIGACTION */
+#endif /* DEBUGGING */
 }
 
 
@@ -242,13 +262,15 @@ void debug_sigInit (void)
  */
 void debug_sigClose (void)
 {
-#if LINUX && HAS_BFD && DEBUGGING
+#if DEBUGGING
+#if HAVE_BFD_H
    bfd_close( abfd );
    abfd = NULL;
+#endif /* HAVE_BFD_H */
    signal( SIGSEGV, SIG_DFL );
    signal( SIGFPE,  SIG_DFL );
    signal( SIGABRT, SIG_DFL );
-#endif /* LINUX && HAS_BFD && DEBUGGING */
+#endif /* DEBUGGING */
 }
 
 

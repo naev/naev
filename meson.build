@@ -200,7 +200,6 @@ if buildExec.disabled() == false
    summary('BFD', bfd.found(), section: 'Debug', bool_yn: true)
 
    naev_deps += bfd
-   config_data.set10('HAS_BFD', bfd.found())
 
    # Appstream (Used for generating desktop files and verifying metadata)
    ascli_exe = find_program('appstreamcli', version: '>=0.12.9', required: false)
@@ -223,6 +222,8 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept', prefix: '#define _GNU_SOURCE'))
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
+   config_data.set10('HAVE_BFD_H', bfd.found())
+   config_data.set10('HAVE_EXECINFO_H', cc.has_header('execinfo.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
    config_data.set10('HAVE_STRCASESTR', cc.has_function('strcasestr'))
