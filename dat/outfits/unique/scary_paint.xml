@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Ship Paint">
+<outfit name="Crimson Holo-Disfigurator">
  <general>
   <rarity>6</rarity>
   <unique />
-  <typename>Crimson Holo-Disfigurator</typename>
+  <typename>Ship Paint</typename>
   <slot>utility</slot>
   <size>small</size>
   <mass>1</mass>
@@ -12,15 +12,6 @@
   <desc_extra>Projects an unsettling visual appearance onto the ship's hull, causing a mild shock to those that lay their eyes upon it. Pirates tend to respect those that go the extra mile just for appearance's sake.</desc_extra>
   <gfx_store>black_cat_doll.webp</gfx_store>
   <limit>fake_transponder</limit>
-  <illegalto>
-   <faction>Empire</faction>
-   <faction>Dvaered</faction>
-   <faction>Soromid</faction>
-   <faction>Sirius</faction>
-   <faction>Za'lek</faction>
-   <faction>Goddard</faction>
-   <faction>Frontier</faction>
-  </illegalto>
  </general>
  <specific type="modification">
   <lua>outfits/unique/scary_paint.lua</lua>
