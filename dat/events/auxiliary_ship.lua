@@ -18,6 +18,7 @@
 
 local fmt = require "format"
 local der = require "common.derelict"
+local pir = require "common.pirate"
 local vntk = require "vntk"
 
 local joyride
@@ -60,16 +61,25 @@ local function get_accessories()
 end
 
 local function configure_outfits()
-	if not shuttle_outfits then
+	local needs_transponder
+	local cf = system.cur():faction()
+	if cf:playerStanding() < 0 and not pir.factionIsPirate(cf) then
+		needs_transponder = "Fake Transponder"
+	elseif cf:playerStanding() <= 30 and not player.pilot():ship():tags().pirate then
+		needs_transponder = "Crimson Holo-Disfigurator"
+	end
+	if
+		not shuttle_outfits
+		or needs_transponder
+	then
 		shuttle_outfits = {}
 
 		-- add a plasma drill if we own one
 		if not add_outfit("S&K Plasma Drill") then
 			-- if we don't have a plasma drill, maybe we are pirates
 			-- so fit a transponder if we need one
-			local sys = system.cur()
-			if sys:presence("friendly") < sys:presence("hostile") then
-				add_outfit("Fake Transponder")
+			if needs_transponder then
+				add_outfit(needs_transponder)
 			else
 				-- couldn't find anything useful, let's try to put a blink drive in the medium slot
 				add_outfit("Blink Drive")
@@ -97,6 +107,9 @@ local function configure_outfits()
 	end
 end
 
+local showButton
+local hideButton
+
 function check_aux_bay()
 	if has_bay() then
 		mem.last_ship = player.ship()
@@ -104,7 +117,8 @@ function check_aux_bay()
 		configure_outfits()
 	else
 		hideButton()
-		-- allows the player to reload outfits by removing and adding the bay back to the ship
+		-- allows the player to reload outfits by removing, taking off
+		-- then readding the bay back to the ship, or taking off once in another ship
 		shuttle_outfits = nil
 		accessories     = nil
 	end
@@ -236,6 +250,9 @@ function auxiliary_ship_mission()
 		pp:setFuel(0)	-- don't start with free fuel
 	end
 
+	local c = naev.cache()
+	c.player_mothership = joyride.mothership
+
 	return true
 end
 
@@ -277,18 +294,19 @@ function auxiliary_ship_return()
 		showButton()
 	end
 	joyride = nil
+	naev.cache().player_mothership = nil
 end
 
 local infobtn
 
-local function hideButton()
+hideButton = function ()
    if infobtn then
       player.infoButtonUnregister( infobtn )
       infobtn = nil
    end
 end
 
-local function showButton()
+showButton = function ()
 	hideButton()
 	infobtn = player.infoButtonRegister( _("Launch Auxiliary Ship"), auxiliary_ship_mission, 3, "S" )
 end
