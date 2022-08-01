@@ -16,6 +16,12 @@
 #include <bfd.h>
 #endif /* HAVE_BFD_H */
 
+#if HAVE_DLADDR
+#define __USE_GNU /* Grrr... */
+#include <dlfcn.h>
+#undef __USE_GNU
+#endif /* HAVE_DLADDR */
+
 #if HAVE_EXECINFO_H
 #include <execinfo.h>
 #endif /* HAVE_EXECINFO_H */
@@ -124,22 +130,32 @@ const char* debug_sigCodeToStr( int sig, int sig_code )
 /**
  * @brief Translates and displays the address as something humans can enjoy.
  */
-static void debug_translateAddress( const char *symbol, bfd_vma address )
+static void debug_translateAddress( const char *symbol, void *address )
 {
    const char *file, *func;
    unsigned int line;
    asection *section;
 
    for (section = abfd->sections; section != NULL; section = section->next) {
+      bfd_vma func_vma = (bfd_hostptr_t) address, base_vma = 0;
+#if HAVE_DLADDR
+      Dl_info addr;
+      if (dladdr( address, &addr ))
+         base_vma = (bfd_hostptr_t) addr.dli_fbase;
+#endif /* HAVE_DLADDR */
+
       if ((bfd_section_flags(section) & SEC_ALLOC) == 0)
          continue;
 
       bfd_vma vma = bfd_section_vma(section);
       bfd_size_type size = bfd_section_size(section);
-      if (address < vma || address >= vma + size)
-         continue;
+      if (func_vma < vma || func_vma >= vma + size) {
+         func_vma -= base_vma;
+         if (func_vma < vma || func_vma >= vma + size)
+            continue;
+      }
 
-      if (!bfd_find_nearest_line(abfd, section, syms, address - vma,
+      if (!bfd_find_nearest_line(abfd, section, syms, func_vma - vma,
             &file, &func, &line))
          continue;
 
@@ -188,7 +204,7 @@ static void debug_sigHandler( int sig )
    for (int i=0; i<num; i++) {
 #if HAVE_BFD_H
       if (abfd != NULL) {
-         debug_translateAddress(symbols[i], (bfd_vma) (bfd_hostptr_t) buf[i]);
+         debug_translateAddress( symbols[i], buf[i] );
 	 continue;
       }
 #endif /* HAVE_BFD_H */
