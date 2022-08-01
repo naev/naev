@@ -27,6 +27,13 @@ static bfd *abfd      = NULL;
 static asymbol **syms = NULL;
 #endif /* LINUX && HAS_BFD && DEBUGGING */
 
+#ifdef bfd_get_section_flags
+/* We're dealing with a binutils version prior to 2.34 (2020-02-01) and must adapt the API as follows: */
+#define bfd_section_flags( section )    bfd_get_section_flags( abfd, section )
+#define bfd_section_vma( section )      bfd_get_section_vma( abfd, section )
+#define bfd_section_size( section )     bfd_get_section_size( section )
+#endif /* bfd_get_section_flags */
+
 
 #ifdef DEBUGGING
 /* Initialize debugging flags. */
@@ -111,8 +118,6 @@ const char* debug_sigCodeToStr( int sig, int sig_code )
 
 /**
  * @brief Translates and displays the address as something humans can enjoy.
- *
- * @TODO Remove the conditional defines which are to support old BFD (namely Ubuntu 16.04).
  */
 static void debug_translateAddress( const char *symbol, bfd_vma address )
 {
@@ -121,24 +126,11 @@ static void debug_translateAddress( const char *symbol, bfd_vma address )
    asection *section;
 
    for (section = abfd->sections; section != NULL; section = section->next) {
-#ifdef bfd_get_section_flags
-      if ((bfd_get_section_flags(abfd, section) & SEC_ALLOC) == 0)
-#else /* bfd_get_section_flags */
       if ((bfd_section_flags(section) & SEC_ALLOC) == 0)
-#endif /* bfd_get_section_flags */
          continue;
 
-#ifdef bfd_get_section_vma
-      bfd_vma vma = bfd_get_section_vma(abfd, section);
-#else /* bfd_get_section_vma */
       bfd_vma vma = bfd_section_vma(section);
-#endif /* bfd_get_section_vma */
-
-#ifdef bfd_get_section_size
-      bfd_size_type size = bfd_get_section_size(section);
-#else /* bfd_get_section_size */
       bfd_size_type size = bfd_section_size(section);
-#endif /* bfd_get_section_size */
       if (address < vma || address >= vma + size)
          continue;
 
