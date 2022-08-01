@@ -60,7 +60,6 @@ static int music_runLua( const char *situation );
  */
 /* music stuff */
 static int music_find (void);
-static void music_free (void);
 /* Lua stuff */
 static int music_luaInit (void);
 static void music_luaQuit (void);
@@ -141,20 +140,8 @@ void music_exit (void)
    if (music_disabled)
       return;
 
-   /* Free the music. */
-   music_free();
-
    /* Clean up Lua. */
    music_luaQuit();
-}
-
-/**
- * @brief Frees the current playing music.
- */
-static void music_free (void)
-{
-   if (music_disabled)
-      return;
 }
 
 /**

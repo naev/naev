@@ -2821,6 +2821,7 @@ dat/outfits/structure/nebular_shielding_prototype.lua
 dat/outfits/unique/bioship_pheromone_emitter.lua
 dat/outfits/unique/fake_transponder.lua
 dat/outfits/unique/fuel_recycler.lua
+dat/outfits/unique/poi_data.lua
 dat/outfits/unique/pulse_scanner.lua
 dat/outfits/unique/valkyrie_beam.lua
 dat/outfits/unique/zd5_guardian_unit.lua
@@ -3322,6 +3323,8 @@ src/player_fleet.c
 src/player_fleet.h
 src/player_gui.c
 src/player_gui.h
+src/player_inventory.c
+src/player_inventory.h
 src/plugin.c
 src/plugin.h
 src/queue.c

@@ -191,6 +191,9 @@ stds.Music.globals={
    "volume",
 }
 stds.PilotOutfit.globals={
+   "price",
+   "buy",
+   "sell",
    "cleanup",
    "cooldown",
    "init",

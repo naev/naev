@@ -35,17 +35,21 @@ local function tracks_add( name, situation, params )
    end
 
    local m = audio.newSource( name, "stream" )
-   m:setVolume( music_vol, true )
-   if not params.delay then
-      m:play()
+   if params.fade then
+      m:setVolume( 0, true )
+   else
+      m:setVolume( music_vol, true )
    end
    local t = {
       m     = m,
-      fade  = nil,
+      fade  = params.fade,
       vol   = 1,
       delay = params.delay,
       name  = name_orig,
    }
+   if not params.delay then
+      m:play()
+   end
    tracks_stop () -- Only play one at a time
    table.insert( tracks, t )
    return t
@@ -156,6 +160,9 @@ end
 Chooses landing songs.
 --]]
 function choose_table.land ()
+   if not player.isLanded() then
+      return choose_table.ambient()
+   end
    local pnt   = spob.cur()
    local class = pnt:class()
    local music_list
@@ -325,7 +332,7 @@ end
 
 -- Faction-specific combat songs
 local factional_combat = {
-   Collective = { "collective2.ogg", "galacticbattle.ogg", "battlesomething1.ogg", "combat3" },
+   Collective = { "collective2.ogg", "galacticbattle.ogg", "battlesomething1.ogg", "combat3.ogg" },
    Pirate     = { "battlesomething2.ogg", "blackmoor_tides.ogg", add_neutral = true },
    Empire     = { "galacticbattle.ogg", "battlesomething2.ogg", add_neutral = true },
    Goddard    = { "flf_battle1.ogg", "battlesomething1.ogg", add_neutral = true },

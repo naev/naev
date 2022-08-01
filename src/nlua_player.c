@@ -46,6 +46,7 @@
 #include "pause.h"
 #include "player.h"
 #include "player_fleet.h"
+#include "player_inventory.h"
 
 #define PLAYER_CHECK() if (player.p == NULL) return 0
 
@@ -115,6 +116,11 @@ static int playerL_fleetCargoAdd( lua_State *L );
 static int playerL_fleetCargoRm( lua_State *L );
 static int playerL_fleetCargoJet( lua_State *L );
 static int playerL_fleetCargoList( lua_State *L );
+/* Inventory. */
+static int playerL_inventory( lua_State *L );
+static int playerL_inventoryAdd( lua_State *L );
+static int playerL_inventoryRm( lua_State *L );
+static int playerL_inventoryOwned( lua_State *L );
 /* Misc stuff. */
 static int playerL_teleport( lua_State *L );
 static int playerL_dt_mod( lua_State *L );
@@ -181,6 +187,10 @@ static const luaL_Reg playerL_methods[] = {
    { "fleetCargoRm", playerL_fleetCargoRm },
    { "fleetCargoJet", playerL_fleetCargoJet },
    { "fleetCargoList", playerL_fleetCargoList },
+   { "inventory", playerL_inventory },
+   { "inventoryAdd", playerL_inventoryAdd },
+   { "inventoryRm", playerL_inventoryRm },
+   { "inventoryOwned", playerL_inventoryOwned },
    { "teleport", playerL_teleport },
    { "dt_mod", playerL_dt_mod },
    { "fleetCapacity", playerL_fleetCapacity },
@@ -1584,6 +1594,79 @@ static int playerL_fleetCargoList( lua_State *L )
 
       lua_rawseti( L, -2, ++n );    /* t */
    }
+   return 1;
+}
+
+/**
+ * @brief Gets the contents of the player's inventory.
+ *
+ * Note that this does not get licenses.
+ *
+ *    @luatreturn table A table containing inventory items in the form of subtables with a "name" and "quantity" field.
+ * @luafunc inventory
+ */
+static int playerL_inventory( lua_State *L )
+{
+   const PlayerItem *inv = player_inventory();
+   lua_newtable(L);
+   for (int i=0; i<array_size(inv); i++) {
+      const PlayerItem *pi = &inv[i];
+      lua_newtable(L);
+
+      lua_pushstring(L,pi->name);
+      lua_setfield(L,-2,"name");
+
+      lua_pushinteger(L,pi->quantity);
+      lua_setfield(L,-2,"quantity");
+
+      lua_rawseti(L,-2,i+1);
+   }
+   return 1;
+}
+
+/**
+ * @brief Adds an item to the player's in-game inventory.
+ *
+ *    @luatparam string name The name of the item to add.
+ *    @luatparam integer quantity The amount of the item to add.
+ *    @luatreturn integer The amount of the item added.
+ * @luafunc inventoryAdd
+ */
+static int playerL_inventoryAdd( lua_State *L )
+{
+   const char *name = luaL_checkstring(L,1);
+   int q = luaL_optinteger(L,2,1);
+   lua_pushinteger( L, player_inventoryAdd( name, q ) );
+   return 1;
+}
+
+/**
+ * @brief Removes an item to the player's in-game inventory.
+ *
+ *    @luatparam string name The name of the item to remove.
+ *    @luatparam integer quantity The amount of the item to remove.
+ *    @luatreturn integer The amount of the item removed.
+ * @luafunc inventoryAdd
+ */
+static int playerL_inventoryRm( lua_State *L )
+{
+   const char *name = luaL_checkstring(L,1);
+   int q = luaL_optinteger(L,2,1);
+   lua_pushinteger( L, player_inventoryRemove( name, q ) );
+   return 1;
+}
+
+/**
+ * @brief Checks to see how much of an item the player has in their inventory.
+ *
+ *    @luatparam string name The name of the item to check.
+ *    @luatreturn integer The amount of the item the player has (0 if none).
+ * @luafunc inventoryAdd
+ */
+static int playerL_inventoryOwned( lua_State *L )
+{
+   const char *name = luaL_checkstring(L,1);
+   lua_pushinteger( L, player_inventoryAmount( name ) );
    return 1;
 }
 

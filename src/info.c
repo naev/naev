@@ -31,6 +31,7 @@
 #include "player.h"
 #include "player_fleet.h"
 #include "player_gui.h"
+#include "player_inventory.h"
 #include "shiplog.h"
 #include "space.h"
 #include "tk/toolkit_priv.h"
@@ -70,7 +71,7 @@ static const char *info_names[INFO_WINDOWS] = {
 typedef struct InfoButton_s {
    int id;        /**< Unique ID. */
    char *caption; /**< Button caption. */
-   char button[32]; /**< Current button caption. */
+   char *button; /**< Button widget name. */
    int priority;  /**< Button priority. */
    /* Lua stuff .*/
    nlua_env env;  /**< Runtime environment. */
@@ -148,24 +149,32 @@ static int sort_buttons( const void *p1, const void *p2 )
 static void info_buttonFree( InfoButton_t *btn )
 {
    free( btn->caption );
+   free( btn->button );
    luaL_unref( naevL, LUA_REGISTRYINDEX, btn->func );
 }
 
 static void info_buttonRegen (void)
 {
-   int wid;
+   int wid, w, h, rows, cols;
    if (info_wid == 0)
       return;
+
    wid = info_windows[ INFO_WIN_MAIN ];
+   window_dimWindow( wid, &w, &h );
+   cols = (w-20) / (20+BUTTON_WIDTH);
+   rows = 1 + (array_size(info_buttons) + 1) / cols;
+
    for (int i=0; i<array_size(info_buttons); i++) {
       InfoButton_t *btn = &info_buttons[i];
-      snprintf( btn->button, sizeof(btn->button), "btnExtra%d", i );
+      int r = (i+2)/cols, c = (i+2)%cols;
       if (widget_exists( wid, btn->button ))
          window_destroyWidget( wid, btn->button );
-      window_addButtonKey( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
+      window_addButtonKey( wid, -20 - c*(20+BUTTON_WIDTH), 20 + r*(20+BUTTON_HEIGHT),
             BUTTON_WIDTH, BUTTON_HEIGHT,
             btn->button, btn->caption, info_buttonClick, btn->key );
    }
+   window_resizeWidget( wid, "lstInventory", w-80-240-40-40, h-90 - rows*(20+BUTTON_HEIGHT) );
+   window_moveWidget( wid, "lstInventory", -20, -70 );
 }
 
 /**
@@ -188,7 +197,7 @@ int info_buttonRegister( const char *caption, int priority, SDL_Keycode key )
    btn = &array_grow( &info_buttons );
    btn->id     = ++button_idgen;
    btn->caption= strdup( caption );
-   btn->button[0] = '\0';
+   asprintf( &btn->button, "btnExtra::%s", caption );
    btn->priority = priority;
    btn->env    = __NLUA_CURENV;
    btn->func   = luaL_ref( naevL, LUA_REGISTRYINDEX );
@@ -227,7 +236,7 @@ int info_buttonUnregister( int id )
 }
 
 /**
- * @brief Clears all te registered buttons.
+ * @brief Clears all the registered buttons.
  */
 void info_buttonClear (void)
 {
@@ -348,13 +357,13 @@ void info_update (void)
  */
 static void info_openMain( unsigned int wid )
 {
-   const char **buf;
+   const char **lic;
    char str[STRMAX_SHORT], creds[ECON_CRED_STRLEN];
-   char **licenses;
-   int nlicenses;
+   char **inventory;
    char *nt;
-   int w, h, cargo_used, cargo_total;
+   int w, h, cargo_used, cargo_total, n;
    unsigned int destroyed;
+   const PlayerItem *inv;
    size_t k = 0, l = 0;
 
    /* Get the dimensions. */
@@ -414,31 +423,39 @@ static void info_openMain( unsigned int wid )
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSetGUI", _("Set GUI"), info_setGui, SDLK_g );
 
-   for (int i=0; i<array_size(info_buttons); i++) {
-      InfoButton_t *btn = &info_buttons[i];
-      snprintf( btn->button, sizeof(btn->button), "btnExtra%d", i );
-      window_addButtonKey( wid, -20 - (i+2)*(20+BUTTON_WIDTH), 20,
-            BUTTON_WIDTH, BUTTON_HEIGHT,
-            btn->button, btn->caption, info_buttonClick, btn->key );
-   }
-
-   buf = player_getLicenses();
-   nlicenses = array_size( buf );
+   /* TODO probably add alt text with descriptions. */
+   lic = player_getLicenses();
+   inv = player_inventory();
+   n   = array_size(lic) + array_size(inv);
    /* List. */
-   if (nlicenses == 0) {
-     licenses = malloc(sizeof(char*));
-     licenses[0] = strdup(_("None"));
-   } else {
-     licenses = malloc(sizeof(char*) * nlicenses);
-     for (int i=0; i<nlicenses; i++)
-        licenses[i] = strdup( _(buf[i]) );
-      qsort( licenses, nlicenses, sizeof(char*), strsort );
+   if (n == 0) {
+     inventory = malloc(sizeof(char*));
+     inventory[0] = strdup(_("None"));
+     n = 1;
+   }
+   else {
+      int nlic = array_size(lic);
+      int ninv = array_size(inv);
+      inventory = malloc(sizeof(char*) * n);
+      for (int i=0; i<nlic; i++)
+         asprintf( &inventory[i], "#n%s#0%s", _("License: "), _(lic[i]) );
+      qsort( inventory, nlic, sizeof(char*), strsort );
+      for (int i=0; i<ninv; i++) {
+         const PlayerItem *pi = &inv[i];
+         if (pi->quantity == 0)
+            asprintf( &inventory[nlic+i], "%s", _(pi->name) );
+         else
+            asprintf( &inventory[nlic+i], _("%s (%d)"), _(pi->name), pi->quantity );
+      }
+      qsort( &inventory[nlic], ninv, sizeof(char*), strsort );
    }
    window_addText( wid, -20, -40, w-80-240-40-40, 20, 1, "txtList",
-         NULL, NULL, _("Licenses") );
+         NULL, NULL, _("Inventory") );
    window_addList( wid, -20, -70, w-80-240-40-40, h-110-BUTTON_HEIGHT,
-         "lstLicenses", licenses, MAX(nlicenses, 1), 0, NULL, NULL );
-   window_setFocus( wid, "lstLicenses" );
+         "lstInventory", inventory, n, 0, NULL, NULL );
+   window_setFocus( wid, "lstInventory" );
+
+   info_buttonRegen();
 }
 
 /**
@@ -926,6 +943,7 @@ static void cargo_genList( unsigned int wid )
    char **buf;
    int nbuf;
    int w, h;
+   PilotCommodity *pclist = pfleet_cargoList();
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -935,7 +953,7 @@ static void cargo_genList( unsigned int wid )
       window_destroyWidget( wid, "lstCargo" );
 
    /* List */
-   if (array_size(player.p->commodities)==0) {
+   if (array_size(pclist)==0) {
       /* No cargo */
       buf = malloc(sizeof(char*));
       buf[0] = strdup(_("None"));
@@ -943,11 +961,10 @@ static void cargo_genList( unsigned int wid )
    }
    else {
       /* List the player fleet's cargo. */
-      PilotCommodity *pclist = pfleet_cargoList();
-      buf = malloc( sizeof(char*) * array_size(player.p->commodities) );
+      buf = malloc( sizeof(char*) * array_size(pclist) );
       for (int i=0; i<array_size(pclist); i++) {
          PilotCommodity *pc = &pclist[i];
-         int misn = pc->id != 0;
+         int misn = (pc->id != 0);
          int illegal = (array_size(pc->commodity->illegalto)>0);
 
          asprintf(&buf[i], "%s %d%s%s",
@@ -956,11 +973,10 @@ static void cargo_genList( unsigned int wid )
                misn ? _(" [#bMission#0]") : "",
                illegal ? _(" (#rillegal#0)") : "" );
       }
-      nbuf = array_size(player.p->commodities);
-      array_free(pclist);
+      nbuf = array_size(pclist);
    }
-   window_addList( wid, 20, -40,
-         w - 40, 200,
+   array_free(pclist);
+   window_addList( wid, 20, -40, w - 40, 200,
          "lstCargo", buf, nbuf, 0, cargo_update, NULL );
    window_setFocus( wid, "lstCargo" );
 }

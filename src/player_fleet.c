@@ -169,6 +169,15 @@ static void shipCargo( PilotCommodity **pclist, Pilot *p, int remove )
       pilot_cargoCalc( p );
 }
 
+static int pc_cmp( const void *pa, const void *pb )
+{
+   const PilotCommodity *pca, *pcb;
+   pca = (const PilotCommodity*) pa;
+   pcb = (const PilotCommodity*) pb;
+
+   return pcb->commodity->price - pca->commodity->price;
+}
+
 /**
  * @brief Redistributes the cargo in the player's fleet.
  */
@@ -188,7 +197,8 @@ void pfleet_cargoRedistribute (void)
       shipCargo( &pclist, pe, 1 );
    }
 
-   /* TODO sort based on something? */
+   /* Sort based on base price. */
+   qsort( pclist, array_size(pclist), sizeof(PilotCommodity), pc_cmp );
 
    /* Re-add the cargo. */
    for (int i=0; i<array_size(pclist); i++) {
@@ -200,9 +210,8 @@ void pfleet_cargoRedistribute (void)
       else
          q = pfleet_cargoAdd( pc->commodity, pc->quantity );
 #ifdef DEBUGGING
-      if (q != pc->quantity) {
+      if (q != pc->quantity)
          WARN(_("Failure to add cargo '%s' to player fleeet. Only %d of %d added."), pc->commodity->name, q, pc->quantity );
-      }
 #endif /* DEBUGGING */
    }
 
@@ -294,7 +303,7 @@ int pfleet_cargoAdd( const Commodity *com, int q )
    if (player.p == NULL)
       return 0;
    int added = pilot_cargoAdd( player.p, com, q, 0 );
-   if (player.fleet_capacity <= 0)
+   if ((player.fleet_capacity <= 0) || (q-added <= 0))
       return added;
    for (int i=0; i<array_size(player.p->escorts); i++) {
       Escort_t *e = &player.p->escorts[i];

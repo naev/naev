@@ -6,9 +6,10 @@
 void debug_sigInit (void);
 void debug_sigClose (void);
 void debug_enableFPUExcept (void);
+void debug_enableLeakSanitizer (void);
 
 enum {
-   DEBUG_MARK_EMITTER,        /**< Mark the trail emitters with a cross. */
+   DEBUG_MARK_EMITTER,  /**< Mark the trail emitters with a cross. */
    /* Sentinel. */
    DEBUG_FLAGS_MAX      /**< Maximum number of flags. */
 };

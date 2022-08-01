@@ -148,6 +148,7 @@ static const MapShader *mapshader_get( const char *name );
 /* Lua stuff. */
 static int spob_lua_cmp( const void *a, const void *b );
 static nlua_env spob_lua_get( int *mem, const char *filename );
+static void spob_lua_free( spob_lua_file *lf );
 /*
  * Externed prototypes.
  */
@@ -3525,6 +3526,10 @@ void space_exit (void)
    }
    array_free(spob_stack);
 
+   for (int i=0; i < array_size(spob_lua_stack); i++)
+      spob_lua_free( &spob_lua_stack[i] );
+   array_free(spob_lua_stack);
+
    for (int i=0; i<array_size(vspob_stack); i++) {
       VirtualSpob *va = &vspob_stack[i];
       free( va->name );
@@ -4356,7 +4361,7 @@ static int spob_lua_cmp( const void *a, const void *b )
 static nlua_env spob_lua_get( int *mem, const char *filename )
 {
    size_t sz;
-   char *dat, *dup_filename;
+   char *dat;
    spob_lua_file *lf;
    const spob_lua_file key = { .filename=filename };
 
@@ -4382,7 +4387,7 @@ static nlua_env spob_lua_get( int *mem, const char *filename )
 
    /* Add new entry and sort. */
    lf = &array_grow( &spob_lua_stack );
-   lf->filename = dup_filename = strdup( filename );
+   lf->filename = strdup( filename );
    lf->env = env;
 
    /* Add the spob memory table. */
@@ -4396,10 +4401,8 @@ static nlua_env spob_lua_get( int *mem, const char *filename )
       int n;
       WARN(_("Lua Spob '%s' error:\n%s"), filename, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
+      spob_lua_free( lf );
       free( dat );
-      free( dup_filename );
-      nlua_freeEnv( env );
-      luaL_unref( naevL, LUA_REGISTRYINDEX, lf->lua_mem );
       n = array_size( spob_lua_stack );
       array_erase( &spob_lua_stack, &spob_lua_stack[n-1], &spob_lua_stack[n] );
       return LUA_NOREF;
@@ -4408,4 +4411,11 @@ static nlua_env spob_lua_get( int *mem, const char *filename )
 
    qsort( spob_lua_stack, array_size(spob_lua_stack), sizeof(spob_lua_file), spob_lua_cmp );
    return env;
+}
+
+static void spob_lua_free( spob_lua_file *lf )
+{
+   free( (char *) lf->filename );
+   nlua_freeEnv( lf->env );
+   luaL_unref( naevL, LUA_REGISTRYINDEX, lf->lua_mem );
 }

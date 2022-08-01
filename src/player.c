@@ -56,6 +56,7 @@
 #include "pilot.h"
 #include "player_gui.h"
 #include "player_fleet.h"
+#include "player_inventory.h"
 #include "rng.h"
 #include "shiplog.h"
 #include "sound.h"
@@ -149,6 +150,7 @@ static Spob* player_parse( xmlNodePtr parent );
 static int player_parseDoneMissions( xmlNodePtr parent );
 static int player_parseDoneEvents( xmlNodePtr parent );
 static int player_parseLicenses( xmlNodePtr parent );
+static int player_parseInventory( xmlNodePtr parent );
 static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot *slot );
 static int player_parseShip( xmlNodePtr parent, int is_player );
 static int player_parseEscorts( xmlNodePtr parent );
@@ -249,8 +251,8 @@ void player_new (void)
       return;
    }
 
-   load_refresh( player.name );
-   if (array_size( load_getList() ) > 0) {
+   load_refresh();
+   if (array_size( load_getList( player.name ) ) > 0) {
       int r = dialogue_YesNo(_("Overwrite"),
             _("You already have a pilot named %s. Their autosave and backup save will be overwritten. Do you wish to continue?"), player.name);
       if (r==0) { /* no */
@@ -695,6 +697,7 @@ void player_cleanup (void)
    land_cleanup();
    map_cleanup();
    factions_clearDynamic();
+   player_inventoryClear();
 
    /* Reset controls. */
    player_accelOver();
@@ -2915,6 +2918,9 @@ void player_missionFinished( int id )
  */
 int player_missionAlreadyDone( int id )
 {
+   if (missions_done == NULL)
+      return 0;
+
    const int *i = bsearch( &id, missions_done, array_size(missions_done), sizeof(int), cmp_int );
    return i!=NULL;
 }
@@ -2956,6 +2962,9 @@ void player_eventFinished( int id )
  */
 int player_eventAlreadyDone( int id )
 {
+   if (events_done == NULL)
+      return 0;
+
    const int *i = bsearch( &id, events_done, array_size(events_done), sizeof(int), cmp_int );
    return i!=NULL;
 }
@@ -2980,6 +2989,8 @@ int player_hasLicense( const char *license )
 {
    if (license == NULL)
       return 1;
+   if (player_licenses == NULL)
+      return 0;
 
    const char *s = bsearch( &license, player_licenses, array_size(player_licenses), sizeof(char*), strsort );
    return s!=NULL;
@@ -3172,6 +3183,7 @@ int player_save( xmlTextWriterPtr writer )
    char **guis;
    int cycles, periods, seconds;
    double rem;
+   const PlayerItem *inventory;
 
    xmlw_startElem(writer,"player");
 
@@ -3232,6 +3244,18 @@ int player_save( xmlTextWriterPtr writer )
    for (int i=0; i<array_size(player_licenses); i++)
       xmlw_elem(writer, "license", "%s", player_licenses[i]);
    xmlw_endElem(writer); /* "licenses" */
+
+   /* Inventory. */
+   xmlw_startElem(writer, "inventory");
+   inventory = player_inventory();
+   for (int i=0; i<array_size(inventory); i++) {
+      const PlayerItem *pi = &inventory[i];
+      xmlw_startElem(writer, "item");
+      xmlw_attr(writer, "quantity", "%d", pi->quantity);
+      xmlw_str(writer, "%s", pi->name);
+      xmlw_endElem(writer); /* "item" */
+   }
+   xmlw_endElem(writer); /* "inventory" */
 
    xmlw_endElem(writer); /* "player" */
 
@@ -3377,10 +3401,15 @@ static int player_saveShip( xmlTextWriterPtr writer, PlayerShip_t *pship )
          }
 
          if (!found) {
-            WARN(_("Found mission cargo without associated mission."));
+            WARN(_("Found mission cargo '%s' without associated mission."),pc->commodity->name);
             WARN(_("Please reload save game to remove the dead cargo."));
             continue;
          }
+      }
+      else if (pc->quantity==0) {
+         WARN(_("Found cargo '%s' with 0 quantity."),pc->commodity->name);
+         WARN(_("Please reload save game to remove the dead cargo."));
+         continue;
       }
 
       xmlw_startElem(writer,"commodity");
@@ -3740,6 +3769,9 @@ static Spob* player_parse( xmlNodePtr parent )
       else if (xml_isNode(node,"licenses"))
          player_parseLicenses(node);
 
+      else if (xml_isNode(node,"inventory"))
+         player_parseInventory(node);
+
    } while (xml_nextNode(node));
 
    /* Handle cases where ship is missing. */
@@ -3928,10 +3960,37 @@ static int player_parseLicenses( xmlNodePtr parent )
 
       char *name = xml_get( node );
       if (name == NULL) {
-         WARN( _( "License node is missing name attribute." ) );
+         WARN( _( "License node is missing name." ) );
          continue;
       }
       player_tryAddLicense( name );
+   } while (xml_nextNode(node));
+   return 0;
+}
+
+/**
+ * @brief Parses player's inventory.
+ *
+ *    @param parent Node of the inventory.
+ *    @return 0 on success.
+ */
+static int player_parseInventory( xmlNodePtr parent )
+{
+   xmlNodePtr node = parent->xmlChildrenNode;
+   do {
+      int q;
+      xml_onlyNodes(node);
+
+      if (!xml_isNode( node, "item" ))
+         continue;
+
+      xmlr_attr_int_def( node, "quantity", q, 1 );
+      char *name = xml_get( node );
+      if (name == NULL) {
+         WARN( _( "Inventory item node is missing name." ) );
+         continue;
+      }
+      player_inventoryAdd( name, q );
    } while (xml_nextNode(node));
    return 0;
 }

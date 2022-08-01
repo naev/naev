@@ -158,6 +158,8 @@ int pilot_cargoAddRaw( Pilot* pilot, const Commodity* cargo,
 /**
  * @brief Tries to add quantity of cargo to pilot.
  *
+ * Note that the commodity will not be added as 0 quantity unless 0 is explicitly specified, or it is mission cargo.
+ *
  *    @param pilot Pilot to add cargo to.
  *    @param cargo Cargo to add.
  *    @param quantity Quantity to add.
@@ -169,8 +171,11 @@ int pilot_cargoAdd( Pilot* pilot, const Commodity* cargo,
 {
    /* Check to see how much to add. */
    int freespace = pilot_cargoFree(pilot);
-   if (freespace < quantity)
+   if (freespace < quantity) {
       quantity = freespace;
+      if ((quantity==0) && (id==0))
+         return 0;
+   }
 
    return pilot_cargoAddRaw( pilot, cargo, quantity, id );
 }
