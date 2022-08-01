@@ -98,13 +98,11 @@ function scan_drone_update( dt, _rdt, _args )
 end
 
 function find_drone()
-	print("find drone...")
 	if mem.scanning_hook then
 		hook.rm(mem.scanning_hook)
 		mem.scanning_hook = nil
 	end
 	for _i, follower in ipairs(player.pilot():followers()) do
-		print(follower:name())
 		if follower:name() == _("Za'lek Scanner Drone") then
 			mem.scanner_drone = follower
 			mem.scanning_hook = hook.update("scan_drone_update")

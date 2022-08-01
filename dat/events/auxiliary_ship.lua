@@ -164,8 +164,8 @@ function auxiliary_ship_mission()
 	if shuttle_outfits then
 		template:outfitRm("all")
 --		template:outfitRm("cores")
-		template.outfitRm( "Unicorp PT-16 Core System")
-		template.outfitAdd("Unicorp PT-68 Core System")
+		template:outfitRm( "Unicorp PT-16 Core System")
+		template:outfitAdd("Unicorp PT-68 Core System")
 		for _j, o in ipairs(shuttle_outfits) do
 			template:outfitAdd(o, 1 , true, false)
 		end
