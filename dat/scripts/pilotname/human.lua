@@ -33,7 +33,7 @@ local prefixes = {
 	_("zi"),
 	_("Ze"),
 	_("Zed"),
-	
+
 }
 
 local anchors = {
@@ -172,8 +172,8 @@ local anchors = {
 	_("Kord"),
 	_("Kort"),
 	_("Kott"),
-	
-	_("Lance"),	
+
+	_("Lance"),
 	_("Lanz"),
     _("Lantern"),
     _("Law"),
@@ -185,11 +185,11 @@ local anchors = {
 	_("Lund"),
 	_("Lun"),
 	_("Lunn"),
-	
-	
+
+
    
    _("Lust"),
-	
+
 	_("Mass"),
 	_("Mel"),
 	_("Metal"),
@@ -201,10 +201,10 @@ local anchors = {
 	_("Min"),
 	_("Mind"),
 	_("Mint"),
-	
+
 	_("Nickel"),
 	_("Nil"),
-	
+
 	_("Old"),
 	_("Olden"),
 	_("Oldest"),
@@ -213,7 +213,7 @@ local anchors = {
 	_("Orl"),
 	_("Orph"),
 	_("Ost"),
-	
+
 	_("Pad"),
 	_("Pam"),
 	_("Pan"),
@@ -232,11 +232,11 @@ local anchors = {
 	_("Pog"),
 	_("Pond"),
 	_("Pondif"),
-	
+
 	_("Qaas"),
 	_("Qald"),
 	_("Quick"),
-	
+
 	_("Rand"),
 	_("Res"),
 	_("Ress"),
@@ -244,7 +244,7 @@ local anchors = {
 	_("Round"),
 	_("Rover"),
 	_("Rock"),
-	
+
 	   _("Seltsam"),
    _("Serial"),
    _("Sharing"),
@@ -253,7 +253,7 @@ local anchors = {
 	_("Somal"),
 	_("Ston"),
 	_("Straw"),
-	
+
 	_("Ton"),
 	_("Thon"),
 	_("Thor"),
@@ -261,13 +261,13 @@ local anchors = {
 	_("Thun"),
 	_("Thund"),
 	_("Thunder"),
-	
+
 	_("Uli"),
 	_("Ull"),
 	_("Ullys"),
 	_("Under"),
 	_("Ungv"),
-	
+
 	_("Van"),
 	_("Vander"),
 	_("Vanst"),
@@ -281,7 +281,7 @@ local anchors = {
 	_("Window"),
 	_("Winston"),
 	_("Wu"),
-	
+
 	_("Xer"),
 	_("Xi"),
 	_("Xu"),
@@ -295,7 +295,7 @@ local anchors = {
 	_("Zend"),
 	_("Zi"),
 	_("Zor"),
-	
+
 	   _("Akai"),
    _("Amarillo"),
    _("Aoi"),
@@ -439,7 +439,7 @@ local suffixes = {
 	_("ist"),
 	_("jon"),
 	_("karl"),
-	
+
 	_("le"),
 	_("men"),
 	_("mon"),
@@ -456,7 +456,7 @@ local suffixes = {
 	_("otten"),
 	_("oxy"),
 	_("oxxy"),
-	
+
 	_("phne"),
 
 	_("rap"),
@@ -566,7 +566,7 @@ local function human ()
    if firstname:len() == 0 then
 	firstname = "Ollie"
 	end
-	
+
 	if result:len() == 0 then
 		result = "Doe"
 	end

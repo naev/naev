@@ -9,7 +9,7 @@ local escort_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Lancelot Bay",
    "Hyena Dock",
-   "Pirate Hyena Bay",
+   "Hyena Bay",
    "Turbolaser", "Heavy Ripper Turret", "Railgun Turret", "Ragnarok Beam",
    "Railgun", "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
    "Heavy Laser Turret",
@@ -35,15 +35,16 @@ local escort_outfits = eoutfits.merge{{
    "TeraCom Banshee Launcher",
    -- Utility
    "Unicorp Scrambler", "Unicorp Light Afterburner",
-   "Sensor Array", "Hellburner", "Emergency Shield Booster",
+   "Sensor Array", "Hellburner", -- "Emergency Shield Booster",
    "Unicorp Medium Afterburner", "Droid Repair Crew",
    "Scanning Combat AI", "Hunting Combat AI",
    "Photo-Voltaic Nanobot Coating",
    "Adaptive Stealth Plating",
-   "Blink Drive",
+--   "Blink Drive",
    "Milspec Scrambler",
    "Targeting Array", "Agility Combat AI",
-   "Milspec Jammer", "Weapons Ionizer",
+   "Milspec Jammer",
+   "Weapons Ionizer",
    "Faraday Tempest Coating", "Hive Combat AI",
    -- Heavy Structural
    "Biometal Armour",
@@ -153,8 +154,8 @@ local escort_params_overwrite = {
 		[ "TeraCom Medusa Launcher"] = 6 ,
 		[ "Enygma Systems Spearhead Launcher"] = 4, ["TeraCom Headhunter Launcher"] = 10, ["Large Shield Booster"] = 2,
 		[ "Shield Capacitor IV"] = 2, ["Biometal Armour"] = 2
-   },
-   
+	},
+
    -- not too much diversity, but some
    max_same_stru = 2,
    max_same_util = 1,
