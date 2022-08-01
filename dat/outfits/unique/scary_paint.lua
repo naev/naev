@@ -14,7 +14,8 @@ function init( p, _po )
 end
 
 function onremove( p, _po )
-   p:effectRm("Paint")
+--   p:effectRm("Paint")
+	p:effectClear()
 end
 
 -- TODONOTE: when independents start scanning, change the else branch!
@@ -25,9 +26,14 @@ function onscanned( p, _po, scanner )
       else
          scanner:setHostile(p, false)
       end
-   else -- if scanner:name() == _("Bounty Hunter") then
+   else
 	-- unfortunately, bounty hunters don't scan yet I think
-      scanner:setHostile(p)
+	-- but there is an edge case here if the scanner is the
+	-- player's main ship piloted by a AI and the player is in an auxiliary ship
+      local c = naev.cache()
+      if c.player_mothership ~= scanner:name() then
+         scanner:setHostile(p)
+	  end
    end
 end
 
