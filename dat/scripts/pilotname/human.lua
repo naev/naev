@@ -187,7 +187,7 @@ local anchors = {
 	_("Lunn"),
 
 
-   
+
    _("Lust"),
 
 	_("Mass"),
@@ -245,7 +245,7 @@ local anchors = {
 	_("Rover"),
 	_("Rock"),
 
-	   _("Seltsam"),
+   _("Seltsam"),
    _("Serial"),
    _("Sharing"),
    _("Sill"),
@@ -328,7 +328,7 @@ local anchors = {
    _("Silver"),
    _("Violet"),
    _("Yellow"),
-   
+
       _("Tallman"),
    _("Tanoshimi"),
    _("Tatsumaki"),

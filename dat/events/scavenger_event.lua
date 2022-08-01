@@ -20,6 +20,9 @@
    Then, when the player wants to leave the planet, and that will eventually
    happen (at least, I hope…) he’ll be pursued by a few fighters.
 --]]
+-- luacheck: globals enter jumpout land player_rescue player_attacked scavenger_arrives scav_attacked scav_boarding setup_support_fleet scavenger_death fall_in enlist_followers scav_hail detonate_c4 (Hook functions passed by name)
+-- luacheck: globals approachScavenger escort_barConversation (NPC functions passed by name)
+
 local pir = require "common.pirate"
 local fmt = require "format"
 local portrait = require "portrait"
@@ -38,36 +41,36 @@ local chitchat_idle = {
     _("Let's have an adventure, shall we?"),
     _("I'm with you."),
     _("Reporting for duty."),
-	_("Reporting in."),
-	_("I'm ready."),
-	_("Let's go."),
-	_("Let's do this."),
-	_("Let's get started, shall we?"),
+   _("Reporting in."),
+   _("I'm ready."),
+   _("Let's go."),
+   _("Let's do this."),
+   _("Let's get started, shall we?"),
     _("Where are we going again?"),
     _("I'm here."),
     _("{name} reporting for duty."),
-	_("{rank} {name} reporting for duty."),
-	_("{rank} {name} at your service."),
-	_("{rank} in position."),
+   _("{rank} {name} reporting for duty."),
+   _("{rank} {name} at your service."),
+   _("{rank} in position."),
     _("Greetings."),
-	_("Hello."),
-	_("Hey."),
-	_("Ahoy."),
-	_("Ahoy!"),
-	_("Hey there."),
-	_("Did you miss me?"),
-	_("Did I miss anything?"),
-	_("It's too quiet here."),
+   _("Hello."),
+   _("Hey."),
+   _("Ahoy."),
+   _("Ahoy!"),
+   _("Hey there."),
+   _("Did you miss me?"),
+   _("Did I miss anything?"),
+   _("It's too quiet here."),
     _("It's pretty silent in space. Makes you thankful for all the electronics."),
     _("What's that buzzing noise?"),
     _("Do you hear drumming?"),
-	_("Do you hear that beat?"),
+   _("Do you hear that beat?"),
     _("I hope my {ship} is up to code."),
-	_("I can feel it."),
-	_("Let's see what this {ship} can do."),
-	_("Please, don't let my {ship} fail me today."),
-	_("Today we'll find out what this {ship} is made of."),
-	_("{rank} {ship}son reporting for duty, commander!"),
+   _("I can feel it."),
+   _("Let's see what this {ship} can do."),
+   _("Please, don't let my {ship} fail me today."),
+   _("Today we'll find out what this {ship} is made of."),
+   _("{rank} {ship}son reporting for duty, commander!"),
 }
 
 local chitchat_commander = {
@@ -80,14 +83,14 @@ local chitchat_commander = {
     _("{name} of the {dreamship}. Got a ring to it, doesn't it?"),
     _("Nothing like flying with a {dreamship} in your fleet, am I right?"),
     _("I hope you don't mind, I have an extra passenger in my cargo hold."),
-	_("Have I ever told you any stories of my time at Zabween?"),
-	_("Have I told you the story about the Cakkak on Taxumi IIIa?"),
-	_("You know I used to be a bartender, right? I think this suits me more."),
-	_("My mother escaped from Stutee, and well, I don't think I have to tell you what that means, but she'd be stuck at Leszec today."),
+   _("Have I ever told you any stories of my time at Zabween?"),
+   _("Have I told you the story about the Cakkak on Taxumi IIIa?"),
+   _("You know I used to be a bartender, right? I think this suits me more."),
+   _("My mother escaped from Stutee, and well, I don't think I have to tell you what that means, but she'd be stuck at Leszec today."),
     _("I've got to tell you what my medical officer told me earlier the next time we grab a drink."),
-	_("Remind me to tell you what my medical officer told me earlier the next time we grab a drink."),
-	_("Remind me to tell you what one of my officers told me the next time we grab a drink."),
-	_("Remind me to tell you what one of my crew told me the next time we have a minute."),
+   _("Remind me to tell you what my medical officer told me earlier the next time we grab a drink."),
+   _("Remind me to tell you what one of my officers told me the next time we grab a drink."),
+   _("Remind me to tell you what one of my crew told me the next time we have a minute."),
     _("Sometimes I think I'm the only fool to have ever loved Jayne."),
     _("The lawlessness on Mannannan is getting way out of hand."),
     _(
@@ -101,37 +104,37 @@ local chitchat_commander = {
     _("{rank} {name}. That's me."),
     _("The name's {name}, {rank} {name}."),
     _("I hope my {ship} will make you happy."),
-	_("What we all really want is our fair share of the action."),
+   _("What we all really want is our fair share of the action."),
 }
 
 -- in this one, the argument (spoken subject) is a random non-commander subordinate
 local chitchat_commandleader = {
-	_("{rank} {name} has been showing some promise recently."),
-	_("{rank} {name}'s recent exploits haven't gone unnoticed."),
-	_("I had a talk with the {rank}s earlier about that indicent I told you about."),
-	_("I don't know how many {ship}s we need in our fleet, but I trust your judgment."),
-	_("I don't know If I should tell you what happened in {name}'s {ship} earlier."),
-	_("{name} told me something I never want to repeat. I just wanted to get that off my chest."),
-	_("{name} told me a secret I didn't need to know. Had to get that off my heart."),
-	_("I don't what can be so complicated about the {ship}, it's such a simple ship to fly."),
-	_("I remember when I flew a {ship}."),
-	_("Come on everyone, let's go."),
-	_("Come on crew, let's hustle."),
-	_("Come on squad, let's go. That means you too {name}."),
-	_("Come on {name}, quit fooling around."),
-	_("Settle down kids."),
-	_("Sometimes I feel like these fools are my children."),
-	_("Come on {name}, even my daughter could keep up in a {ship}."),
-	_("Come on {rank}, my daughter could fly that {ship} better than you."),
-	_("My kid could fly that {ship} better than you."),
-	_("{rank} {name}'s {ship} will cost {replacement_text} to replace."),
-	_("{rank} {name}'s performance in a {dreamship} above average."),
-	_("When a {rank} is flying around in a {ship} and wants {replacement_text} to cover, do we really need that {rank}?"),
-	_("Thanks for that thing I asked for. If anyone asks, it was for {name}."),
-	_("One of the {rank}s on the roster can be quite irritating."),
-	_("I won't say who did what, but I just wanted to let you all know that I definitely saw that."),
-	_("I won't say what happened, but somebody keep an eye on {name}."),
-	_("I should be a bit harder on {name}."),
+   _("{rank} {name} has been showing some promise recently."),
+   _("{rank} {name}'s recent exploits haven't gone unnoticed."),
+   _("I had a talk with the {rank}s earlier about that indicent I told you about."),
+   _("I don't know how many {ship}s we need in our fleet, but I trust your judgment."),
+   _("I don't know If I should tell you what happened in {name}'s {ship} earlier."),
+   _("{name} told me something I never want to repeat. I just wanted to get that off my chest."),
+   _("{name} told me a secret I didn't need to know. Had to get that off my heart."),
+   _("I don't what can be so complicated about the {ship}, it's such a simple ship to fly."),
+   _("I remember when I flew a {ship}."),
+   _("Come on everyone, let's go."),
+   _("Come on crew, let's hustle."),
+   _("Come on squad, let's go. That means you too {name}."),
+   _("Come on {name}, quit fooling around."),
+   _("Settle down kids."),
+   _("Sometimes I feel like these fools are my children."),
+   _("Come on {name}, even my daughter could keep up in a {ship}."),
+   _("Come on {rank}, my daughter could fly that {ship} better than you."),
+   _("My kid could fly that {ship} better than you."),
+   _("{rank} {name}'s {ship} will cost {replacement_text} to replace."),
+   _("{rank} {name}'s performance in a {dreamship} above average."),
+   _("When a {rank} is flying around in a {ship} and wants {replacement_text} to cover, do we really need that {rank}?"),
+   _("Thanks for that thing I asked for. If anyone asks, it was for {name}."),
+   _("One of the {rank}s on the roster can be quite irritating."),
+   _("I won't say who did what, but I just wanted to let you all know that I definitely saw that."),
+   _("I won't say what happened, but somebody keep an eye on {name}."),
+   _("I should be a bit harder on {name}."),
 }
 
 local chitchat_rare = {
@@ -146,16 +149,16 @@ local chitchat_rare = {
     _(
         "In this cold, vast emptiness I often reminisce of my adolescent years, the cycle we spent at Zhang Lu climbing the mountains. I fell in love with the nature. Then I fell in love with Jayne."
     ),
-	_("In case I haven't told you, my first name is {first_name}."),
+   _("In case I haven't told you, my first name is {first_name}."),
     _("Would you believe my distant aunt used to keep her kid as a pet on Mannannan? Nobody cared back then either."),
     _("I thought I'd try piracy for a while. That's how I lost my first Shark."),
     _("I feel like we are on a quest for fire, but the land is all swamp."),
     _("If we stop at Janus Station, let me know a few jumps in advance so that I can go clean my ship or something."),
     _("I have some friends at Kramer I'd like to catch up with. Maybe we can go there sometime?"),
     _("I once had an escort of my own, but I could only pay for one cycle."),
-	_("I could have sworn I saw a picture of one of the pilots in our fleet at the spaceport bar in Zabween."),
-	_("I think we might have a rodent problem on my {ship}."),
-	_("I feel like there's always something new."),
+   _("I could have sworn I saw a picture of one of the pilots in our fleet at the spaceport bar in Zabween."),
+   _("I think we might have a rodent problem on my {ship}."),
+   _("I feel like there's always something new."),
 }
 
 local chitchat_content = {
@@ -164,7 +167,7 @@ local chitchat_content = {
     _("The last bounty we got was pretty good."),
     _("That last bounty was alright."),
     _("This ship is not bad."),
-	_("This is a good {ship}."),
+   _("This is a good {ship}."),
     _("Where to?"),
     _("It's a good day to be gay. In the literal sort of way."),
     _("{name} at your service."),
@@ -181,11 +184,11 @@ local chitchat_content = {
     _("Who's up for round two?"),
     _("Shall we go again?"),
     _("Let's do that again."),
-	_("Let's do that again?"),
-	_("Some more?"),
+   _("Let's do that again?"),
+   _("Some more?"),
     _("I have to admit, things could have gone worse."),
     _("Starry night."),
-	_("I'm a happy {rank}, that's for sure.")
+   _("I'm a happy {rank}, that's for sure.")
 }
 
 local chitchat_negative = {
@@ -211,10 +214,10 @@ local chitchat_negative = {
     _("Well, chop chop! Do a cargo run or something, let's get ambushed."),
     _("I'll be a lot generous with the bounty once I'm sitting in my {dreamship}."),
     _("I hope we don't get ambushed."),
-	_("{rank}s like me always get into the most trouble."),
-	_("A {dreamship} would be fitting for a {rank}."),
-	_("I always miss the best action, or lose my ship trying to get in on it."),
-	_("I always miss out on the best action."),
+   _("{rank}s like me always get into the most trouble."),
+   _("A {dreamship} would be fitting for a {rank}."),
+   _("I always miss the best action, or lose my ship trying to get in on it."),
+   _("I always miss out on the best action."),
 }
 
 -- positive chatter
@@ -226,8 +229,8 @@ local chitchat_dreamship = {
     _("Have I told you how much I appreciate my {ship}?"),
     _("This is the life."),
     _("Ahhh, this is the life. I owe it all to the {ship}."),
-	_("Ah, this is the life. I owe it all to my {ship}."),
-	_("This is the life. And I owe it all to this {ship}."),
+   _("Ah, this is the life. I owe it all to my {ship}."),
+   _("This is the life. And I owe it all to this {ship}."),
     _("Everything will be okay, as long as I have my {dreamship}."),
     _(
         "I figure you've probably spent a lot on me by now, but it was all worth it. I'm thankful for every day I get with my {dreamship}."
@@ -240,7 +243,7 @@ local chitchat_dreamship = {
     _("You know, you're insane but I like it."),
     _("Let's not scratch the paint on my {ship} today."),
     _("I just had this {dreamship} cleaned, can you notice?"),
-	_("This {ship} is perfect for a {rank} like me.")
+   _("This {ship} is perfect for a {rank} like me.")
 }
 
 local chitchat_favoured = {
@@ -251,8 +254,8 @@ local chitchat_favoured = {
     _("Have I told you how much I appreciate my {ship}?"),
     _("This is the life."),
     _("Ahhh, this is the life. I owe it all to this {ship}."),
-	_("Ah, this is the life. I owe it all to my {ship}."),
-	_("This is the life. And I owe it all to this {ship}."),
+   _("Ah, this is the life. I owe it all to my {ship}."),
+   _("This is the life. And I owe it all to this {ship}."),
     _("Everything will be okay, as long as I have my {ship}."),
     _(
         "You know, this {ship} has actually kind of grown on me."
@@ -265,19 +268,19 @@ local chitchat_favoured = {
     _("You know you're a bit bonkers but I can dig it."),
     _("Let's not scratch the paint on my {ship} today."),
     _("I just had this {ship} cleaned, can you notice?"),
-	_("This {ship} is perfect for a {rank} like me.")
+   _("This {ship} is perfect for a {rank} like me.")
 }
 
 local chitchat_broken_dreams = {
-	_("I had a {dreamship}. Now I'm in a {ship}."),
-	_("I don't even like this {ship}. I miss the {dreamship}."),
-	_("I miss my {dreamship}."),
-	_("I can't believe I had to eject from that {dreamship}... Damn it!"),
-	_("I can't believe I had to eject from that {dreamship}."),
-	_("Why am I flying a {ship}?"),
-	_("Maybe if you take me to a shipyard that sells the {dreamship} I'll stop being so negative all the time."),
-	_("Oh, what I'd do for the chance to fly a {dreamship} again..."),
-	_("Surely a new {dreamship} would be fitting for a {rank}...")
+   _("I had a {dreamship}. Now I'm in a {ship}."),
+   _("I don't even like this {ship}. I miss the {dreamship}."),
+   _("I miss my {dreamship}."),
+   _("I can't believe I had to eject from that {dreamship}... Damn it!"),
+   _("I can't believe I had to eject from that {dreamship}."),
+   _("Why am I flying a {ship}?"),
+   _("Maybe if you take me to a shipyard that sells the {dreamship} I'll stop being so negative all the time."),
+   _("Oh, what I'd do for the chance to fly a {dreamship} again..."),
+   _("Surely a new {dreamship} would be fitting for a {rank}...")
 }
 
 local chitchat_affirm = {
@@ -313,32 +316,32 @@ local chitchat_join = {
 local chitchat_brb = {
     _("I'm going to take a look around for a bit."),
     _("I'll catch up with you later."),
-	_("I'll catch up with you."),
-	_("I'll be around."),
-	_("Go on without me."),
+   _("I'll catch up with you."),
+   _("I'll be around."),
+   _("Go on without me."),
     _("I'll be back."),
     _("Call me if you need me."),
     _("I shouldn't be hard to find if you need me..."),
     _("Let's see if there's anything interesting around..."),
-	_("I'm on the watch."),
-	_("I'm on duty."),
-	_("We're rolling."),
-	_("Let's board something large."),
-	_("Time to show you what I can really do."),
-	_("Let's see what this {ship} can do."),
-	_("Let's see what I can get done with this {ship}."),
-	_("Let's get the crew going."),
-	_("Second in command {name}, reporting for duty."),
-	_("Second in command {rank} {name}, reporting in."),
-	_("{rank} {name} activating combat protocols."),
-	_("Alright, let's gear up."),
-	_("Ready up."),
-	_("Look alive, everyone."),
-	_("Look alive, people."),
-	_("Look alive, pilots."),
-	_("On me."),
-	_("I'm on patrol."),
-	_("I'm on salvage duty."),
+   _("I'm on the watch."),
+   _("I'm on duty."),
+   _("We're rolling."),
+   _("Let's board something large."),
+   _("Time to show you what I can really do."),
+   _("Let's see what this {ship} can do."),
+   _("Let's see what I can get done with this {ship}."),
+   _("Let's get the crew going."),
+   _("Second in command {name}, reporting for duty."),
+   _("Second in command {rank} {name}, reporting in."),
+   _("{rank} {name} activating combat protocols."),
+   _("Alright, let's gear up."),
+   _("Ready up."),
+   _("Look alive, everyone."),
+   _("Look alive, people."),
+   _("Look alive, pilots."),
+   _("On me."),
+   _("I'm on patrol."),
+   _("I'm on salvage duty."),
 }
 
 local chitchat_beating = {
@@ -366,18 +369,18 @@ local chitchat_beating = {
 }
 
 local chitchat_closecall = {
-	_("You know about earlier... That was really close."),
-	_("I thought you were gonna let me lose this {ship}."),
-	_("That was really close back there. Let's not do that again."),
-	_("Let's not do that again."),
-	_("That was really close back there."),
-	_("For a minute there, I thought we were toast."),
-	_("A little close for comfort."),
-	_("I've seen quieter days."),
-	_("Let's not go back there for a while."),
-	_("My {ship} is looking a little ill-equipped."),
-	_("I think it's time to upgrade my {ship}."),
-	_("For a minute there I thought you were going to pay the {replacement_text} and leave me."),
+   _("You know about earlier... That was really close."),
+   _("I thought you were gonna let me lose this {ship}."),
+   _("That was really close back there. Let's not do that again."),
+   _("Let's not do that again."),
+   _("That was really close back there."),
+   _("For a minute there, I thought we were toast."),
+   _("A little close for comfort."),
+   _("I've seen quieter days."),
+   _("Let's not go back there for a while."),
+   _("My {ship} is looking a little ill-equipped."),
+   _("I think it's time to upgrade my {ship}."),
+   _("For a minute there I thought you were going to pay the {replacement_text} and leave me."),
 }
 
 local chitchat_goodhaul = {
@@ -387,12 +390,12 @@ local chitchat_goodhaul = {
     _("Made a nice profit today."),
     _("One step closer to my {dreamship}."),
     _("If you check your logs, you'll find that I sold some plunder recently."),
-	_("Nothing like finally selling off your haul."),
-	_("Nothing like selling off some loot."),
-	_("Nothing like selling some plunder."),
-	_("I love it when we manage to unload the cargo."),
-	_("An empty cargohold makes for a smoother ride."),
-	_("Next time we're full of loot and plunder, let's come back here."),
+   _("Nothing like finally selling off your haul."),
+   _("Nothing like selling off some loot."),
+   _("Nothing like selling some plunder."),
+   _("I love it when we manage to unload the cargo."),
+   _("An empty cargohold makes for a smoother ride."),
+   _("Next time we're full of loot and plunder, let's come back here."),
 }
 
 local chitchat_cargofull = {
@@ -402,12 +405,12 @@ local chitchat_cargofull = {
     _("Made a nice profit today... If we manage to drop it off somewhere."),
     _("I'll be one step closer to my {dreamship} once I sell these commodities."),
     _("Can we drop this stuff off anywhere?"),
-	_("I really want to sell off my haul."),
-	_("I need to get rid of this loot."),
-	_("I need to sell all this plunder."),
-	_("I'd love it if we managed to unload all this cargo."),
-	_("An empty cargohold makes for a smoother ride. My cargohold is stuffed."),
-	_("We're full of loot and plunder, let's go sell it somewhere."),
+   _("I really want to sell off my haul."),
+   _("I need to get rid of this loot."),
+   _("I need to sell all this plunder."),
+   _("I'd love it if we managed to unload all this cargo."),
+   _("An empty cargohold makes for a smoother ride. My cargohold is stuffed."),
+   _("We're full of loot and plunder, let's go sell it somewhere."),
 }
 
 local chitchat_malfunction = {
@@ -421,33 +424,33 @@ local chitchat_malfunction = {
     _("One of my panels is fried."),
     _("Most of my crew is busy performing ship repairs."),
     _("What do you do when a {thing} malfunctions?"),
-	_("What do you do when a {thing} is malfunctioning?"),
+   _("What do you do when a {thing} is malfunctioning?"),
     _("I've had it with all these malfunctions!"),
     _("I really need to get settled into one ship."),
     _("I don't know how to fix the {thing} on my ship."),
     _("I shouldn't have {thing} problems on a {dreamship}."),
     _("I'm still a bit beat mentally from that last bout."),
     _("I need more time to complete repairs."),
-	_("I need more time to get used to this ship."),
-	_("I need some time to get used to the controls on this ship."),
-	_("I need some time to configure the navigation equipment on this ship."),
-	_("I need to reconfigure the targeting equipment on this ship."),
-	_("I need time to reroute the engines on my ship."),
-	_("My sensors are giving me incorrect readings."),
-	_("Huh, how about that, this screen is broken."),
-	_("You don't want to know what the previous owner did in here."),
-	_("You don't want to know what the last owner did to this ship."),
-	_("Don't ask what happened in here. Frankly, I don't want to know."),
-	_("This shield emitter isn't even plugged into power, what else is wrong with this ship?"),
-	_("I don't know how, but my {thing} is keeping my docking clamps locked for some reason."),
-	_("I am never going to get used to this thing, am I?"),
-	_("I haven't been able to configure everything properly on this ship yet."),
+   _("I need more time to get used to this ship."),
+   _("I need some time to get used to the controls on this ship."),
+   _("I need some time to configure the navigation equipment on this ship."),
+   _("I need to reconfigure the targeting equipment on this ship."),
+   _("I need time to reroute the engines on my ship."),
+   _("My sensors are giving me incorrect readings."),
+   _("Huh, how about that, this screen is broken."),
+   _("You don't want to know what the previous owner did in here."),
+   _("You don't want to know what the last owner did to this ship."),
+   _("Don't ask what happened in here. Frankly, I don't want to know."),
+   _("This shield emitter isn't even plugged into power, what else is wrong with this ship?"),
+   _("I don't know how, but my {thing} is keeping my docking clamps locked for some reason."),
+   _("I am never going to get used to this thing, am I?"),
+   _("I haven't been able to configure everything properly on this ship yet."),
     _("Some of the second hand equipment in here is useless."),
     _("The next time we land, remind me do something about these failures."),
     _("This {thing} is a bad counterfeit. It doesn't even work as advertised."),
-	_("My {thing} is counterfeit. I wonder if it even works."),
-	_("Oh man, not again... This useless hunk of junk."),
-	_("What the... Damn it! This useless second hand space coffin..."),
+   _("My {thing} is counterfeit. I wonder if it even works."),
+   _("Oh man, not again... This useless hunk of junk."),
+   _("What the... Damn it! This useless second hand space coffin..."),
     _("This second hand hunk of junk, please don't fail me now..."),
     _("Whoever rewired this ship had no idea what they were doing."),
     _("How many {thing}s do I need to get one that just works?")
@@ -459,21 +462,21 @@ local function pick_one(target)
 end
 
 local function pilot_portrait( commander )
-	local choices = {
-		"neutral/pilot4.webp",
-		"neutral/pilot5.webp",
-		"neutral/pilot6.webp",
-		"neutral/pilot7.webp",
-	}
-	if commander then
-		choices = {
-		"neutral/pilot1.webp",
-		"neutral/pilot2.webp",
-		"neutral/pilot3.webp",
-	}
-	end
+   local choices = {
+      "neutral/pilot4.webp",
+      "neutral/pilot5.webp",
+      "neutral/pilot6.webp",
+      "neutral/pilot7.webp",
+   }
+   if commander then
+      choices = {
+      "neutral/pilot1.webp",
+      "neutral/pilot2.webp",
+      "neutral/pilot3.webp",
+   }
+   end
 
-	return pick_one(choices)
+   return pick_one(choices)
 end
 
 local function pick_favorite_ship(me)
@@ -524,8 +527,8 @@ local function speak(persona, sentiment, arg)
     end
 
     if ss == "idle" then
-		local favourite = pick_favorite_ship(persona)
-		local myship = persona.ship:nameRaw()
+      local favourite = pick_favorite_ship(persona)
+      local myship = persona.ship:nameRaw()
         if persona.last_sentiment then
             local last = persona.last_sentiment
             persona.last_sentiment = nil
@@ -533,34 +536,34 @@ local function speak(persona, sentiment, arg)
         elseif rnd.rnd() < 0.042 then
             spoken = pick_one(chitchat_rare)
         elseif persona.commander then
-			-- if we have subordinates, also pick from chitchat_commandleader (basically, "I have a reason to criticize my crew")
-			local some_subordinate = nil
-			-- use randomness here to favor picking persons with a higher index (probably newer crew, but it can be sorted in land() )
-			-- also favors picking this kind of chitchat less for smaller crews
-			-- use the experience difference as a reason to critcize the subordinate
-			for _i, other in ipairs(mem.persons) do
-				if other ~= persona and rnd.rnd(0, 1) == 0 and persona.experience > other.experience then					
-					some_subordinate = other
-				end
-			end
-			-- usually we talk to the player, but sometimes we talk to or about the subordinates
-			-- use the chatter variable since a quiet type would rather say hello than try to rally everyone
-			if some_subordinate and rnd.rnd() > 0.3 + persona.chatter then
-				spoken = pick_one(chitchat_commandleader)
-				persona = some_subordinate
-			else
-				spoken = pick_one(chitchat_commander)
-			end
-				
-		elseif	-- if this looks like a favourite ship
-				string.find(myship, favourite) or
-				string.find(favourite, myship)
-			then
-			if rnd.rnd(0, 1) == 0 then
-				spoken = pick_one(chitchat_idle)
-			else
-				spoken = pick_one(chitchat_favoured)
-			end
+         -- if we have subordinates, also pick from chitchat_commandleader (basically, "I have a reason to criticize my crew")
+         local some_subordinate = nil
+         -- use randomness here to favor picking persons with a higher index (probably newer crew, but it can be sorted in land() )
+         -- also favors picking this kind of chitchat less for smaller crews
+         -- use the experience difference as a reason to critcize the subordinate
+         for _i, other in ipairs(mem.persons) do
+            if other ~= persona and rnd.rnd(0, 1) == 0 and persona.experience > other.experience then               
+               some_subordinate = other
+            end
+         end
+         -- usually we talk to the player, but sometimes we talk to or about the subordinates
+         -- use the chatter variable since a quiet type would rather say hello than try to rally everyone
+         if some_subordinate and rnd.rnd() > 0.3 + persona.chatter then
+            spoken = pick_one(chitchat_commandleader)
+            persona = some_subordinate
+         else
+            spoken = pick_one(chitchat_commander)
+         end
+            
+      elseif   -- if this looks like a favourite ship
+            string.find(myship, favourite) or
+            string.find(favourite, myship)
+         then
+         if rnd.rnd(0, 1) == 0 then
+            spoken = pick_one(chitchat_idle)
+         else
+            spoken = pick_one(chitchat_favoured)
+         end
         else
             spoken = pick_one(chitchat_idle)
         end
@@ -572,14 +575,14 @@ local function speak(persona, sentiment, arg)
         if string.find(persona.ship:nameRaw(), persona.dreamship) then
             spoken = pick_one(chitchat_dreamship)
         else
-			spoken = pick_one(chitchat_negative)
+         spoken = pick_one(chitchat_negative)
         end
-	elseif ss == "broken_dreams" then
-		-- make sure you don't complain if you replaced your dream ship with a new dream ship
-	    if string.find(persona.ship:nameRaw(), persona.dreamship) then
+   elseif ss == "broken_dreams" then
+      -- make sure you don't complain if you replaced your dream ship with a new dream ship
+       if string.find(persona.ship:nameRaw(), persona.dreamship) then
             spoken = pick_one(chitchat_dreamship)
         else
-			spoken = pick_one(chitchat_broken_dreams)
+         spoken = pick_one(chitchat_broken_dreams)
         end
     elseif ss == "malfunction" then
         -- if this is the sentiment but there is no argument, that's because we want to stay silent since last time this was our sentiment
@@ -599,16 +602,16 @@ local function speak(persona, sentiment, arg)
         spoken = pick_one(chitchat_beating)
     elseif ss == "goodhaul" then
         spoken = pick_one(chitchat_goodhaul)
-		-- stay happy for a while
-		persona.last_sentiment = "content"
-	elseif ss == "cargofull" then
-		spoken = pick_one(chitchat_cargofull)
-		-- it's a good thing our cargo was full, but now that we've notified the player we can be happy about it
-		persona.last_sentiment = "content"
-	elseif ss == "closecall" then
-		spoken = pick_one(chitchat_closecall)
-		-- deescalate our feelings of almost dying and contemplate the beating we just received
-		persona.last_sentiment = "beating"
+      -- stay happy for a while
+      persona.last_sentiment = "content"
+   elseif ss == "cargofull" then
+      spoken = pick_one(chitchat_cargofull)
+      -- it's a good thing our cargo was full, but now that we've notified the player we can be happy about it
+      persona.last_sentiment = "content"
+   elseif ss == "closecall" then
+      spoken = pick_one(chitchat_closecall)
+      -- deescalate our feelings of almost dying and contemplate the beating we just received
+      persona.last_sentiment = "beating"
     end
 
     if not spoken then
@@ -652,41 +655,41 @@ local function remember_ship(me, ship, points)
         return
     end
 
-    
+
     local current_score = me.favorite_ships[ship]
 
-	-- if we really really love this ship, we should recalculate favorites
-	-- we halve every score except our own, but subtract the biggest penalty from ourselves aswell
-	-- this way, we still like our 2nd favourite just as much compared to our current favourite until we forget it
-	-- seems complicated but allows the player to have the commander switch ships without having to grind the favour back as much
-	if current_score > 36 then
-		local max_penalty = 5
-		for fship, score in pairs(me.favorite_ships) do
-			print(fmt.f(
-			"adjusting {ship} from {score}",
-			{ ship = fship, score = score }
-			))
-			if ship ~= fship then
-				local spenalty = math.ceil(score / 2)
-				me.favorite_ships[fship] = score - spenalty
-				if 1 == me.favorite_ships[fship] then
-					me.favorite_ships[fship] = nil
-				elseif spenalty > max_penalty then
-					max_penalty = spenalty
-				end
-			end
-		end
-		me.favorite_ships[ship] = current_score + points - max_penalty
-	else
-		-- default: increase
-		me.favorite_ships[ship] = current_score + points
-		print(
-			fmt.f(
-				"{name} remembers {ship} is worth {points} points.",
-				{name = me.name, ship = ship, points = points + current_score}
-			)
-		)
-	end
+   -- if we really really love this ship, we should recalculate favorites
+   -- we halve every score except our own, but subtract the biggest penalty from ourselves aswell
+   -- this way, we still like our 2nd favourite just as much compared to our current favourite until we forget it
+   -- seems complicated but allows the player to have the commander switch ships without having to grind the favour back as much
+   if current_score > 36 then
+      local max_penalty = 5
+      for fship, score in pairs(me.favorite_ships) do
+         print(fmt.f(
+         "adjusting {ship} from {score}",
+         { ship = fship, score = score }
+         ))
+         if ship ~= fship then
+            local spenalty = math.ceil(score / 2)
+            me.favorite_ships[fship] = score - spenalty
+            if 1 == me.favorite_ships[fship] then
+               me.favorite_ships[fship] = nil
+            elseif spenalty > max_penalty then
+               max_penalty = spenalty
+            end
+         end
+      end
+      me.favorite_ships[ship] = current_score + points - max_penalty
+   else
+      -- default: increase
+      me.favorite_ships[ship] = current_score + points
+      print(
+         fmt.f(
+            "{name} remembers {ship} is worth {points} points.",
+            {name = me.name, ship = ship, points = points + current_score}
+         )
+      )
+   end
     return
 end
 
@@ -702,7 +705,7 @@ Deposit: {deposit_text}
 Cover fee: {royalty_percent:.1f}% of deposit]]
     )
 
-	return fmt.f(credentials, edata)
+   return fmt.f(credentials, edata)
 end
 
 local function getFinances(edata)
@@ -714,27 +717,27 @@ Escort debt: {debt}
 Escort profits: {profits}
 Escort paid tribute: {tribute} ]]
     )
-	return fmt.f(
-		finances,
-		{
-			credits = fmt.credits(edata.wallet),
-			total = fmt.credits(edata.total_cost),
-			debt = fmt.credits(edata.debt),
-			profits = fmt.credits(edata.total_profit),
-			goal = edata.dreamship,
-			tribute = fmt.credits(edata.tribute)
-		}
-	)
+   return fmt.f(
+      finances,
+      {
+         credits = fmt.credits(edata.wallet),
+         total = fmt.credits(edata.total_cost),
+         debt = fmt.credits(edata.debt),
+         profits = fmt.credits(edata.total_profit),
+         goal = edata.dreamship,
+         tribute = fmt.credits(edata.tribute)
+      }
+   )
 end
 
 local function getOfferText(approachtext, edata)
     return (
-		approachtext ..
+      approachtext ..
         "\n\n" ..
-		getCredentials(edata) ..
-		"\n\n" ..
-		getFinances(edata)
-	)
+      getCredentials(edata) ..
+      "\n\n" ..
+      getFinances(edata)
+   )
 end
 
 -- note : the pilot doesn't change, but some data might
@@ -755,7 +758,7 @@ local function _createReplacementShip(persona, limit_ships)
     if persona.pilot then
         local pmem = persona.pilot:memory()
         local boarded = pmem.boarded or 0
-        --		persona.pilot:broadcast(fmt.f("I have boarded {boarded} times and made {profit} total.", { boarded=boarded, profit=persona.total_profit } ))
+        --      persona.pilot:broadcast(fmt.f("I have boarded {boarded} times and made {profit} total.", { boarded=boarded, profit=persona.total_profit } ))
         if boarded > 0 then
             persona.experience = persona.experience + 1
             remember_ship(persona, persona.ship:nameRaw(), boarded)
@@ -779,7 +782,7 @@ local function _createReplacementShip(persona, limit_ships)
             local price = ship:price()
             rate = math.min(0.95, 0.19 + 0.07 * ship:size())
             -- don't buy the ship if it's much more expensive than our dream ship
-			-- unless if we are the commander, we want the player to be able to give the commander whatever he wants
+         -- unless if we are the commander, we want the player to be able to give the commander whatever he wants
             if budget > price and (dream_budget > price - 500e3 or persona.commander) then
                 table.insert(ship_choices, {ship = ship:nameRaw(), royalty = rate})
                 if price > most_cost then
@@ -787,22 +790,22 @@ local function _createReplacementShip(persona, limit_ships)
                     most_expensive = ship:nameRaw()
                 end
             end
-			-- finally if this looks like our dream ship, add it more to increase our chances of buying it if we can afford it
-			if string.find(ship:nameRaw(), persona.dreamship) then
-				table.insert(ship_choices, {ship = ship:nameRaw(), royalty = 0.21})
-				table.insert(ship_choices, {ship = ship:nameRaw(), royalty = 0.25})
-			end
-			-- same if this looks like a favorite ship, increase our chances a lot since it's sold at this shipyard
-			-- e.g. if we pick a favorite vigilance, we'll want the dvaered vigilance but not vice versa
-			local some_favorite = pick_favorite_ship(persona)
-			if string.find(ship:nameRaw(), some_favorite) then
-				table.insert(ship_choices, {ship = ship:nameRaw(), royalty = 0.22})
-				table.insert(ship_choices, {ship = ship:nameRaw(), royalty = 0.24})
-				table.insert(ship_choices, {ship = ship:nameRaw(), royalty = 0.27})
-			end
+         -- finally if this looks like our dream ship, add it more to increase our chances of buying it if we can afford it
+         if string.find(ship:nameRaw(), persona.dreamship) then
+            table.insert(ship_choices, {ship = ship:nameRaw(), royalty = 0.21})
+            table.insert(ship_choices, {ship = ship:nameRaw(), royalty = 0.25})
+         end
+         -- same if this looks like a favorite ship, increase our chances a lot since it's sold at this shipyard
+         -- e.g. if we pick a favorite vigilance, we'll want the dvaered vigilance but not vice versa
+         local some_favorite = pick_favorite_ship(persona)
+         if string.find(ship:nameRaw(), some_favorite) then
+            table.insert(ship_choices, {ship = ship:nameRaw(), royalty = 0.22})
+            table.insert(ship_choices, {ship = ship:nameRaw(), royalty = 0.24})
+            table.insert(ship_choices, {ship = ship:nameRaw(), royalty = 0.27})
+         end
         end
-		-- add the most expensive ship again
-		table.insert(ship_choices, {ship = most_expensive, royalty = 0.50})
+      -- add the most expensive ship again
+      table.insert(ship_choices, {ship = most_expensive, royalty = 0.50})
         -- if we are the commander, just buy the most expensive ship we can afford at a good rate
         if persona.commander then
             ship_choices = {
@@ -826,14 +829,14 @@ local function _createReplacementShip(persona, limit_ships)
             end
             -- maybe the dream ship
             table.insert(ship_choices, {ship = persona.dreamship, royalty = 0.10})
-			-- maybe a favorite ship
-			table.insert(ship_choices, {ship = pick_favorite_ship(persona), royalty = 0.15 + rnd.sigma() * 0.05})
+         -- maybe a favorite ship
+         table.insert(ship_choices, {ship = pick_favorite_ship(persona), royalty = 0.15 + rnd.sigma() * 0.05})
         elseif budget > 20e6 then
-			-- we have so much money, spend it on something like a zebra or a dream ship
+         -- we have so much money, spend it on something like a zebra or a dream ship
             table.insert(ship_choices, {ship = "Zebra", royalty = 0.50})
             table.insert(ship_choices, {ship = "Zebra", royalty = 0.69})
             table.insert(ship_choices, {ship = persona.dreamship, royalty = 0.14})
-			table.insert(ship_choices, {ship = pick_favorite_ship(persona), royalty = 0.25 + rnd.twosigma() * 0.05})
+         table.insert(ship_choices, {ship = pick_favorite_ship(persona), royalty = 0.25 + rnd.twosigma() * 0.05})
         end
         if budget > 8e6 then
             -- hopefully a starbridge
@@ -853,8 +856,8 @@ local function _createReplacementShip(persona, limit_ships)
             if rnd.rnd() > 0.66 then
                 table.insert(ship_choices, {ship = persona.dreamship, royalty = 0.25})
             end
-			-- favorite ship chance, decent rate
-			table.insert(ship_choices, {ship = pick_favorite_ship(persona), royalty = 0.3 + rnd.threesigma() * 0.05})
+         -- favorite ship chance, decent rate
+         table.insert(ship_choices, {ship = pick_favorite_ship(persona), royalty = 0.3 + rnd.threesigma() * 0.05})
         elseif budget > 5e6 then
             -- only get the cargos if you can't afford a starbridge
             if persona.faction == faction.get("Pirate") then
@@ -884,8 +887,8 @@ local function _createReplacementShip(persona, limit_ships)
             else
                 table.insert(ship_choices, {ship = "Shark", royalty = 0.22})
             end
-			-- also always allow the favorite ship at this budget at a reasonable rate
-			table.insert(ship_choices, {ship = pick_favorite_ship(persona), royalty = 0.35 + rnd.twosigma() * 0.05})
+         -- also always allow the favorite ship at this budget at a reasonable rate
+         table.insert(ship_choices, {ship = pick_favorite_ship(persona), royalty = 0.35 + rnd.twosigma() * 0.05})
         end
     end
 
@@ -900,7 +903,7 @@ local function _createReplacementShip(persona, limit_ships)
 
     local shipchoice = ship_choices[rnd.rnd(1, #ship_choices)]
     -- if we have "enough" then roll the dice for a dream ship (1/3 chance)
-	-- if our dreamship is a starbridge and we got a random favorite pirate starbridge, we keep the pirate one
+   -- if our dreamship is a starbridge and we got a random favorite pirate starbridge, we keep the pirate one
     if budget > dream_budget and not string.find(shipchoice.ship, persona.dreamship) and rnd.rnd() < 0.33 then
         if shipchoice.dreamship ~= "Shark" then
             shipchoice = {ship = persona.dreamship, royalty = 0.15}
@@ -916,10 +919,10 @@ local function _createReplacementShip(persona, limit_ships)
     persona.ship = ship.get(shipchoice.ship)
     local _n, deposit = persona.ship:price()
     persona.outfits = {}
-	local used_faction = persona.faction
-	if persona.ship:tags("pirate") then
-		used_faction = faction.get("Pirate")
-	end
+   local used_faction = persona.faction
+   if persona.ship:tags("pirate") then
+      used_faction = faction.get("Pirate")
+   end
     local pppp = pilot.add(shipchoice.ship, used_faction)
     for j, o in ipairs(pppp:outfits()) do
         deposit = deposit + o:price()
@@ -928,12 +931,12 @@ local function _createReplacementShip(persona, limit_ships)
     pppp:rm()
     persona.royalty = (shipchoice.royalty + 0.05 * shipchoice.royalty * rnd.sigma())
     persona.deposit = math.floor(deposit - (deposit * persona.royalty)) / 3
-	if string.find(shipchoice.ship, persona.dreamship) then
-		-- a discount for dream livers
+   if string.find(shipchoice.ship, persona.dreamship) then
+      -- a discount for dream livers
         persona.deposit = math.max(100e3, persona.deposit - 1e6)
         persona.royalty = math.min(persona.royalty, 0.25 + 0.05 * shipchoice.royalty * rnd.threesigma())
     elseif #mem.persons > 3 and persona then
-		-- punish larger fleet additions if we're dreamy
+      -- punish larger fleet additions if we're dreamy
         persona.deposit = persona.deposit + #mem.persons * 37500 * persona.ship:size()
     end
     -- if we are good money makers, we don't want as much deposit
@@ -948,7 +951,7 @@ local function _createReplacementShip(persona, limit_ships)
     -- we pay 2/3 of the price at most and sometimes we get a bigger loan
     local payment = math.floor(math.min(rnd.rnd(1, 2) * deposit * persona.royalty, deposit * 0.67))
     -- only pay for it if we can afford it and if it was significant
-	-- unless we are filthy rich...
+   -- unless we are filthy rich...
     if deposit > 3e6 and persona.wallet > payment then
         -- and of course, we don't pay for the whole thing in cash now that we have credit
         if persona.pilot ~= nil then
@@ -970,11 +973,11 @@ local function _createReplacementShip(persona, limit_ships)
         end
     end
 
-	-- check if we were filthy rich and pay off debt
-	if persona.wallet > persona.debt * 2 + deposit * 3 then
-		persona.wallet = persona.wallet - persona.debt
-		persona.debt = 0
-	end
+   -- check if we were filthy rich and pay off debt
+   if persona.wallet > persona.debt * 2 + deposit * 3 then
+      persona.wallet = persona.wallet - persona.debt
+      persona.debt = 0
+   end
 
     if persona.pilot ~= nil then
         persona.pilot:broadcast(
@@ -1056,10 +1059,10 @@ local function create_pilot(fac)
     local portrait_arg = nil
     local name_func = pilotname.human
 
-	if rnd.rnd() < 0.3 then
-		-- create a random non-faction pilot
-		pf = fac
-	end
+   if rnd.rnd() < 0.3 then
+      -- create a random non-faction pilot
+      pf = fac
+   end
 
     if pir.factionIsPirate(pf) then
         ship_choices = {
@@ -1111,11 +1114,11 @@ local function create_pilot(fac)
         fac = faction.get("Dvaered")
         portrait_arg = "Dvaered"
     elseif pf == faction.get("Goddard") then
-		-- random chance for a Goddard commander if the player has high standings
+      -- random chance for a Goddard commander if the player has high standings
        if can_dream and fac:playerStanding() >= 30 then
             table.insert(dream_choices, "Goddard")
         end
-	elseif pf == faction.get("Thurion") then
+   elseif pf == faction.get("Thurion") then
         ship_choices = {
             {ship = "Thurion Ingenuity", royalty = 0.15},
             {ship = "Thurion Scintillation", royalty = 0.25},
@@ -1137,17 +1140,17 @@ local function create_pilot(fac)
         end
     end
 
-	local lastname
-	local firstname
-	lastname, firstname = name_func()
-	if not firstname then
-		firstname = "The"
-		local delim_ind = string.find(lastname, " ")
-		if delim_ind then
-			firstname = string.sub(lastname, 0, delim_ind - 1)
-			lastname = string.sub(lastname, delim_ind + 1)
-		end
-	end
+   local lastname
+   local firstname
+   lastname, firstname = name_func()
+   if not firstname then
+      firstname = "The"
+      local delim_ind = string.find(lastname, " ")
+      if delim_ind then
+         firstname = string.sub(lastname, 0, delim_ind - 1)
+         lastname = string.sub(lastname, delim_ind + 1)
+      end
+   end
 
     local shipchoice = ship_choices[rnd.rnd(1, #ship_choices)]
     local p = pilot.add(shipchoice.ship, fac)
@@ -1171,7 +1174,7 @@ local function create_pilot(fac)
     newpilot.ship = ship.get(shipchoice.ship)
     newpilot.deposit_text = fmt.credits(newpilot.deposit)
     newpilot.name = lastname
-	newpilot.first_name = firstname
+   newpilot.first_name = firstname
     newpilot.faction = fac
     newpilot.replacement_fee = deposit * shipchoice.royalty
     newpilot.replacement_text = fmt.credits(newpilot.deposit * shipchoice.royalty)
@@ -1186,28 +1189,28 @@ local function create_pilot(fac)
     newpilot.alive = true
     newpilot.spawning = false
     newpilot.portrait = portrait.get(portrait_arg)
-	newpilot.portrait_offduty = newpilot.portrait
-	newpilot.portrait_onduty = pilot_portrait()
-	newpilot.vncharacter = portrait.getFullPath(newpilot.portrait)
+   newpilot.portrait_offduty = newpilot.portrait
+   newpilot.portrait_onduty = pilot_portrait()
+   newpilot.vncharacter = portrait.getFullPath(newpilot.portrait)
     newpilot.chatter = math.min(0.96, math.max(0.04, 0.5 + 0.3 * rnd.threesigma())) -- add some personality flavour
     newpilot.dreamship = dream_choices[rnd.rnd(1, #dream_choices)]
     for _j, shipname in ipairs(big_dreams) do
         -- check if we are a commander
         if newpilot.dreamship == shipname then
             newpilot.commander = {}
-			-- we need a new portrait then, possibly even a new name
-			newpilot.portrait = pilot_portrait(true)
-			newpilot.vncharacter = pick_one({
-				"placeholder.png",
-				"scavenger1.png",
-				"neutral/female1.webp",
-				"neutral/female2.webp",
-				"neutral/female2_nogog.webp",
-				"neutral/female3.webp",
---				"neutral/female4.webp", -- this one has a baby, would need to be a kid that can stay "the same age" for a while
-			})
-			newpilot.portrait_offduty = string.gsub(string.gsub(newpilot.vncharacter, ".webp", "n.webp"), "_nogogn", "n_nogog")
-			newpilot.portrait_onduty = string.gsub(string.gsub(newpilot.vncharacter, ".webp", "n.webp"), "_nogogn", "n_nogog")
+         -- we need a new portrait then, possibly even a new name
+         newpilot.portrait = pilot_portrait(true)
+         newpilot.vncharacter = pick_one({
+            "placeholder.png",
+            "scavenger1.png",
+            "neutral/female1.webp",
+            "neutral/female2.webp",
+            "neutral/female2_nogog.webp",
+            "neutral/female3.webp",
+--            "neutral/female4.webp", -- this one has a baby, would need to be a kid that can stay "the same age" for a while
+         })
+         newpilot.portrait_offduty = string.gsub(string.gsub(newpilot.vncharacter, ".webp", "n.webp"), "_nogogn", "n_nogog")
+         newpilot.portrait_onduty = string.gsub(string.gsub(newpilot.vncharacter, ".webp", "n.webp"), "_nogogn", "n_nogog")
         end
     end
 
@@ -1223,7 +1226,7 @@ local function createScavNpcs()
         if newpilot.commander then
             cmdr_fudge = 2
         end
-        --		print(fmt.f("created a pilot named {name}", newpilot ) )
+        --      print(fmt.f("created a pilot named {name}", newpilot ) )
         local id =
             evt.npcAdd(
             "approachScavenger",
@@ -1297,88 +1300,88 @@ function approachScavenger(npc_id)
         _("Let's board some enemies together and split the profits.")
     }
 
-	local companions = {
-		_("faithful companion"),
-		_("fearsome apprentice"),
-		_("generous henchman"),
-		_("fearless sidekick"),
-		_("feared escort"),
-		_("dangerous company"),
-		_("gruesome warrior"),
-	}
+   local companions = {
+      _("faithful companion"),
+      _("fearsome apprentice"),
+      _("generous henchman"),
+      _("fearless sidekick"),
+      _("feared escort"),
+      _("dangerous company"),
+      _("gruesome warrior"),
+   }
 
-	-- IF YOU WANT A QUIET ESCORT, he has to say "Well, I am eager to fly..."
-	-- on the first conversation part, you're welcome :-)
-	local random_quote1 = "Well,"	-- said by the strong silent type
-	local random_quote2 = "Anyway," -- said by the strong silent type and regular ones
+   -- IF YOU WANT A QUIET ESCORT, he has to say "Well, I am eager to fly..."
+   -- on the first conversation part, you're welcome :-)
+   local random_quote1 = "Well,"   -- said by the strong silent type
+   local random_quote2 = "Anyway," -- said by the strong silent type and regular ones
 
-	if pdata.chatter > 0.33 then
-		random_quote1 = rand_quotes[rnd.rnd(1, #rand_quotes)] -- said by regular ones and chatterboxes
-		if pdata.chatter >= 0.67 then
-			random_quote2 = rand_quotes[rnd.rnd(1, #rand_quotes)] -- said only by chatterboxes
-		end
-	end
+   if pdata.chatter > 0.33 then
+      random_quote1 = rand_quotes[rnd.rnd(1, #rand_quotes)] -- said by regular ones and chatterboxes
+      if pdata.chatter >= 0.67 then
+         random_quote2 = rand_quotes[rnd.rnd(1, #rand_quotes)] -- said only by chatterboxes
+      end
+   end
 
-	local has_commander = nil
-	local anim_msg
-	for _i, other in ipairs(mem.persons) do
-		if other.commander then
-			has_commander = other
-			anim_msg = fmt.f(
-				_(
-					[[I can't fly with {name}. We used to work together at Janus Station. All the talking about dreams of flying a brand new {dreamship}, when clearly a beat-up old {ship} with gigantic bite marks all over it would be a much more appropriate career choice. Maybe someone else will tolerate that insufferable chatterbox.]]
-				),
-				has_commander
-			)
-		end
-	end
+   local has_commander = nil
+   local anim_msg
+   for _i, other in ipairs(mem.persons) do
+      if other.commander then
+         has_commander = other
+         anim_msg = fmt.f(
+            _(
+               [[I can't fly with {name}. We used to work together at Janus Station. All the talking about dreams of flying a brand new {dreamship}, when clearly a beat-up old {ship} with gigantic bite marks all over it would be a much more appropriate career choice. Maybe someone else will tolerate that insufferable chatterbox.]]
+            ),
+            has_commander
+         )
+      end
+   end
 
-	local hired = false
-	local params = {
+   local hired = false
+   local params = {
                     credits = fmt.credits(pdata.deposit),
                     name = player.name(),
-					myname = pdata.first_name .. " " .. pdata.name,
+               myname = pdata.first_name .. " " .. pdata.name,
                     ship = player.ship(),
                     shipname = player.pilot():ship():name(),
                     random_quote = random_quote1,
-					random_quote2 = random_quote2,
+               random_quote2 = random_quote2,
                     part1 = part1[rnd.rnd(1, #part1)],
                     part2 = part2[rnd.rnd(1, #part2)],
                     dreamship = pdata.dreamship,
-					companion = companions[rnd.rnd(1, #companions)]
+               companion = companions[rnd.rnd(1, #companions)]
                 }
-	vn.clear()
-	vn.scene()
+   vn.clear()
+   vn.scene()
 
-		
-	local stranger_choices = {
-		"neutral/bartender_m1.webp",
-		"neutral/bartender_f1.webp",
-		"neutral/female4.webp",
-		"old_man.png",
-		"scavenger1.png",
-		"shiplover.webp",
-	}
-	vn.transition()
+      
+   local stranger_choices = {
+      "neutral/bartender_m1.webp",
+      "neutral/bartender_f1.webp",
+      "neutral/female4.webp",
+      "old_man.png",
+      "scavenger1.png",
+      "shiplover.webp",
+   }
+   vn.transition()
 
-	local escort = vn.newCharacter ( pdata.name, {image=pdata.vncharacter } )
-	vn.transition()
-	escort(
+   local escort = vn.newCharacter ( pdata.name, {image=pdata.vncharacter } )
+   vn.transition()
+   escort(
             fmt.f(
                 _(
                     [[Greetings Commodore {name} of the {shipname}. My name is {myname} -- I've heard so much about you and your {ship} and your skill in battle. {random_quote} I am eager to fly alongside you, but my dream is to pilot a {dreamship} one day. Help me reach this goal and I will be your most {companion}.]]
                 ),
                 params
             )
-	)
+   )
 
-	if pdata.commander and not has_commander then
-		escort(
-			_([[You might have noticed that working with seasoned drifters such as myself isn't always exactly easy. A lot of the folk in this trade lack discipline; they are washed up military personnel, retired pirates or aspiring young fools... I used to be a commander myself, and should have no problems managing a small squad on your behalf, up to five destroyers in size.]])
-		)
-	end
+   if pdata.commander and not has_commander then
+      escort(
+         _([[You might have noticed that working with seasoned drifters such as myself isn't always exactly easy. A lot of the folk in this trade lack discipline; they are washed up military personnel, retired pirates or aspiring young fools... I used to be a commander myself, and should have no problems managing a small squad on your behalf, up to five destroyers in size.]])
+      )
+   end
 
-	escort(
+   escort(
             fmt.f(
                 _(
                     [[The arrangement is simple: you pay an initial deposit and cover a percentage of my replacements and maintenance fees. {part1} {part2}
@@ -1388,84 +1391,84 @@ Will you pay {credits} to kickstart my career as your apprentice?]]
                 ),
                 params
             )
-	)
+   )
 
-	vn.menu( {
-		{ _("You're hired!"), "yes" },
-		{ _("No thanks"), "end" },
-	})
+   vn.menu( {
+      { _("You're hired!"), "yes" },
+      { _("No thanks"), "end" },
+   })
 
-	vn.label("yes")
-	vn.func( function ()
-	    if pdata.deposit and pdata.deposit > player.credits() then
-			vn.jump("no_money")
-		end
-		if has_commander and pdata.commander then
-			vn.jump("animosity")
-		end
-		if pdata.commander and #mem.persons >= max_escorts then
-			vn.jump("toomany") -- wait, how could this happen? leaving the branch here just in case...
-		elseif not pdata.commander and( #mem.persons >= max_escorts or #mem.persons >= max_scavengers and not has_commander) then
-			vn.jump("toomany")
-		end
-	end )
-	vn.func( function()
-		hired = true
-	end )
-	escort(_([[You won't regret it!]])) -- TODO: Generate this
-	vn.jump("end")
-	vn.label("no_money")
-	escort(_([[I can't fly on dreams and steam. Come back when you have enough money.]]))
-	vn.jump("end")
-	vn.label("animosity")
-	vn.na(fmt.f(_([[Before you are able to present payment to {name}, your actions are interrupted by an unexpectedly forceful impact on your left shoulder.
-	You look up...]]), pdata))
-	escort(anim_msg)
-	vn.jump("end")
-	vn.label("toomany")
-	escort(
-		_(
-			[[You look like you've got enough problems on your hands already. I think I'll stay out of your way for now.]]
-		)
-	)
-	if not has_commander then
-		vn.disappear(escort)
-		vn.na(fmt.f(_([[You realize that not even the vagabonds themselves think you can handle more than {number} of them under your wing. If only you had one of those commanding types that was mentioned by the stranger...]]), { number=#mem.persons } ))
-	end
-	vn.jump("end")
-	vn.label("end")
-	-- show a helpful stranger the first time the player has spoken to a hired escort
-	if not mem.escort_tutorial then
-		vn.disappear(escort)
-		vn.na(fmt.f(_([[As you finish your conversation with {name}, your attention is captured by a stranger who seems to have been waiting for the conversation to end.]]), pdata))
-		local stranger = vn.newCharacter ( _("Eavesdropper"), { image = pick_one(stranger_choices) } )
-		vn.appear(stranger)
-		stranger(_([[Hey there. I couldn't help but notice you talking to one of those vagabonds. You should be wary of them.
+   vn.label("yes")
+   vn.func( function ()
+       if pdata.deposit and pdata.deposit > player.credits() then
+         vn.jump("no_money")
+      end
+      if has_commander and pdata.commander then
+         vn.jump("animosity")
+      end
+      if pdata.commander and #mem.persons >= max_escorts then
+         vn.jump("toomany") -- wait, how could this happen? leaving the branch here just in case...
+      elseif not pdata.commander and( #mem.persons >= max_escorts or #mem.persons >= max_scavengers and not has_commander) then
+         vn.jump("toomany")
+      end
+   end )
+   vn.func( function()
+      hired = true
+   end )
+   escort(_([[You won't regret it!]])) -- TODO: Generate this
+   vn.jump("end")
+   vn.label("no_money")
+   escort(_([[I can't fly on dreams and steam. Come back when you have enough money.]]))
+   vn.jump("end")
+   vn.label("animosity")
+   vn.na(fmt.f(_([[Before you are able to present payment to {name}, your actions are interrupted by an unexpectedly forceful impact on your left shoulder.
+   You look up...]]), pdata))
+   escort(anim_msg)
+   vn.jump("end")
+   vn.label("toomany")
+   escort(
+      _(
+         [[You look like you've got enough problems on your hands already. I think I'll stay out of your way for now.]]
+      )
+   )
+   if not has_commander then
+      vn.disappear(escort)
+      vn.na(fmt.f(_([[You realize that not even the vagabonds themselves think you can handle more than {number} of them under your wing. If only you had one of those commanding types that was mentioned by the stranger...]]), { number=#mem.persons } ))
+   end
+   vn.jump("end")
+   vn.label("end")
+   -- show a helpful stranger the first time the player has spoken to a hired escort
+   if not mem.escort_tutorial then
+      vn.disappear(escort)
+      vn.na(fmt.f(_([[As you finish your conversation with {name}, your attention is captured by a stranger who seems to have been waiting for the conversation to end.]]), pdata))
+      local stranger = vn.newCharacter ( _("Eavesdropper"), { image = pick_one(stranger_choices) } )
+      vn.appear(stranger)
+      stranger(_([[Hey there. I couldn't help but notice you talking to one of those vagabonds. You should be wary of them.
 While hiring these drifters as escorts does allow you to command a larger fleet than you normally would be able to, this comes at a rather hidden cost.
 Most importantly, they need considerable micromanagement and you'd be wise to hire someone to command them on your behalf.]]))
-		stranger(_([[You are unlikely to be able to command the necessary level of respect needed to control these pilots, especially with pilots with whom you have no prior relationship.
+      stranger(_([[You are unlikely to be able to command the necessary level of respect needed to control these pilots, especially with pilots with whom you have no prior relationship.
 Another thing to consider is that they each have their own personality, some of them will talk a lot, and I mean really a lot, while others are relatively quiet.]]))
-		stranger(_([[These vagabonds are trained combat personnel, but they aren't working. Do I need to tell you why? Well, the important thing is that they will attempt to eject from their ship to avoid death and may even run away from an active combat situation in some cases.
+      stranger(_([[These vagabonds are trained combat personnel, but they aren't working. Do I need to tell you why? Well, the important thing is that they will attempt to eject from their ship to avoid death and may even run away from an active combat situation in some cases.
 The good news is, you don't need to hire new pilots if you keep geting into scuffles.]]))
-		stranger(_([[As your escort crew and your escort commander successfully board enemy ships and sell plundered commodities, they will earn credits and gain experience.
+      stranger(_([[As your escort crew and your escort commander successfully board enemy ships and sell plundered commodities, they will earn credits and gain experience.
 Experienced escorts generally perform better at their duties, but most importantly they are more likely to buy an appropriate ship on their own as their budget increases with experience.]]))
-		stranger(_([[You can help your escorts finance new ships at any shipyard, otherwise they will purchase what they consider a suitable replacement when necessary.
+      stranger(_([[You can help your escorts finance new ships at any shipyard, otherwise they will purchase what they consider a suitable replacement when necessary.
 If they lose a ship in battle, don't expect them to come back without some motivation, but a good commander at a shipyard will usually do the trick.]]))
-		stranger(_([[One thing you might want to remember is that each one of these pilots is usually only certified to fly a single ship. These hustlers will be stingy about profit sharing and charge excessive replacement rates when they are in ships they don't like.
+      stranger(_([[One thing you might want to remember is that each one of these pilots is usually only certified to fly a single ship. These hustlers will be stingy about profit sharing and charge excessive replacement rates when they are in ships they don't like.
 They will always like their certified ship, but I'm sure that they will start liking whatever you give them as long as you can keep their wallets happy.]]))
---		stranger(_([[Now, if you have any questions, please open an issue on github or comment on the pull request that contains this event so that it can be made more clear in the future.]]))
-		vn.na(_([[The zealous eavesdropper pats you on the elbow and leaves you to digest everything that has been said.
-		
-		You ponder if anything important was said as your focus is shifted back to your immediate surroundings.]]))
+--      stranger(_([[Now, if you have any questions, please open an issue on github or comment on the pull request that contains this event so that it can be made more clear in the future.]]))
+      vn.na(_([[The zealous eavesdropper pats you on the elbow and leaves you to digest everything that has been said.
+      
+      You ponder if anything important was said as your focus is shifted back to your immediate surroundings.]]))
 
-		-- don't show this annoying stranger again
-		vn.func( function()
-			mem.escort_tutorial = true
-		end)
-		vn.done()
-	end
-	vn.done()
-	vn.run()
+      -- don't show this annoying stranger again
+      vn.func( function()
+         mem.escort_tutorial = true
+      end)
+      vn.done()
+   end
+   vn.done()
+   vn.run()
 
     if not hired then
         return -- player rejected offer or was unable to hire
@@ -1482,59 +1485,59 @@ As you conduct your affairs on the spaceport, you notice your new {sidekick} in 
             ),
             {
                 ship = fmt.f("{ship}", pdata),
-				vagabond = pick_one({
-					_("vagabond"),
-					_("drifter"),
-					_("pilot"),
-					_("eager pilot"),
-					_("lonesome drifter"),
-					_("rugged vagabond"),
-					_("lonesome mercenary"),
-				}),
-				sidekick = pick_one({
-					_("friend"),
-					_("understudy"),
-					_("buddy"),
-					_("sidekick"),
-					_("follower"),
-					_("henchman"),
-					_("assistant"),
-					_("troublemaker"),
-					_("and eager disciple"),
-					_("drifter friend"),
-					_("and fearsome vagabond"),
-					_("and lonesome mercenary"),
-				}),
-				scurries = pick_one({
-					_("scurries"),
-					_("hustles"),
-					_("bustles"),
-					_("runs"),
-					_("skips"),
-					_("jogs"),
-					_("hops"),
-					_("gets up to pay for some drink and heads"),
-					_("heads"),
-					_([[gets up to leave before turning around, grabbing you by the hand, exclaiming "You're not going to regret this!". The surprising charmer then smoothly exits, probably]]),
-					_("inspects the credit chip meticulously before hurrying"),
-				}),
-				action = pick_one({
-					_("shuffling through the pages of what looks like a manual"),
-					_("performing some peculiar manoeuvers"),
-					_("come pretty close to a disasterous takeoff while performing a safety check"),
-					_("struggling with the controls and visibly cursing"),
-					_("with bite marks all over it"),
-					_("with such discoloration that you can only assume it has been partly repaired several times"),
-					_("with bunny ears attached to the top of the cockpit"),
-					-- TODO for these: use the nice generators from companions
-					fmt.f(_("but it kind of looks like a {thing}"), { thing = _("cargo container") }),
-					fmt.f(_("with the letters {thing} written in crimson red on the hull"), { thing = _("Darker") }),
-					fmt.f(_("with {thing} written in safety orange on the hull"), { thing = _("cargo container") }),
-					fmt.f(_("with {thing} master written in bright yellow on the hull above a rather sizeable decal of a {thing}"), { thing = _("banana") }),
-					_("that has seen its fair share of violence over the years"),
-					_("doesn't look like it has very long left, but you can only hope for the best"),
-					_("has seen better days"),
-				}),			
+            vagabond = pick_one({
+               _("vagabond"),
+               _("drifter"),
+               _("pilot"),
+               _("eager pilot"),
+               _("lonesome drifter"),
+               _("rugged vagabond"),
+               _("lonesome mercenary"),
+            }),
+            sidekick = pick_one({
+               _("friend"),
+               _("understudy"),
+               _("buddy"),
+               _("sidekick"),
+               _("follower"),
+               _("henchman"),
+               _("assistant"),
+               _("troublemaker"),
+               _("and eager disciple"),
+               _("drifter friend"),
+               _("and fearsome vagabond"),
+               _("and lonesome mercenary"),
+            }),
+            scurries = pick_one({
+               _("scurries"),
+               _("hustles"),
+               _("bustles"),
+               _("runs"),
+               _("skips"),
+               _("jogs"),
+               _("hops"),
+               _("gets up to pay for some drink and heads"),
+               _("heads"),
+               _([[gets up to leave before turning around, grabbing you by the hand, exclaiming "You're not going to regret this!". The surprising charmer then smoothly exits, probably]]),
+               _("inspects the credit chip meticulously before hurrying"),
+            }),
+            action = pick_one({
+               _("shuffling through the pages of what looks like a manual"),
+               _("performing some peculiar manoeuvers"),
+               _("come pretty close to a disasterous takeoff while performing a safety check"),
+               _("struggling with the controls and visibly cursing"),
+               _("with bite marks all over it"),
+               _("with such discoloration that you can only assume it has been partly repaired several times"),
+               _("with bunny ears attached to the top of the cockpit"),
+               -- TODO for these: use the nice generators from companions
+               fmt.f(_("but it kind of looks like a {thing}"), { thing = _("cargo container") }),
+               fmt.f(_("with the letters {thing} written in crimson red on the hull"), { thing = _("Darker") }),
+               fmt.f(_("with {thing} written in safety orange on the hull"), { thing = _("cargo container") }),
+               fmt.f(_("with {thing} master written in bright yellow on the hull above a rather sizeable decal of a {thing}"), { thing = _("banana") }),
+               _("that has seen its fair share of violence over the years"),
+               _("doesn't look like it has very long left, but you can only hope for the best"),
+               _("has seen better days"),
+            }),         
             }
         )
     )
@@ -1546,7 +1549,7 @@ As you conduct your affairs on the spaceport, you notice your new {sidekick} in 
     local i = #mem.persons + 1
 
     pdata.alive = true
-	pdata.active = true
+   pdata.active = true
     mem.persons[i] = pdata
     evt.npcRm(npc_id)
     npcs[npc_id] = nil
@@ -1569,10 +1572,10 @@ end
 -- player boards an escort, repair the armor and undisable it
 -- give it 25% shields regardless of previous shield, maximum restored at this point in time "because of repairs"
 function player_rescue(target, _playerpilot, i)
-	target:setHealth(100, 25, 99)
-	mem.persons[i].last_sentiment = "closecall"
+   target:setHealth(100, 25, 99)
+   mem.persons[i].last_sentiment = "closecall"
 
-	-- TODO: close the boarding dialog
+   -- TODO: close the boarding dialog
 end
 
 function scav_boarding(plt, target, i)
@@ -1623,16 +1626,16 @@ function scav_boarding(plt, target, i)
         "If I didn't have to give {your_share} to the {flagship} I'd be rich!",
         "Your cut is {your_share}.",
         "You get {your_share}.",
-		"You get {your_share} from the {target}.",
+      "You get {your_share} from the {target}.",
         "You can have {your_share}.",
         "{your_share} for {flagship}.",
         "The {flagshipt} gets {your_share}.",
         "Here's your cut.",
-		"Here's your cut from the {target}.",
+      "Here's your cut from the {target}.",
         "That comes down to {your_share} for {player}, {my_share} for me.",
         "I'm keeping {my_share}, that sound about right?",
         "I hope you're happy with {your_share}.",
-		"I hope you're happy with the {your_share} from that {target}.",
+      "I hope you're happy with the {your_share} from that {target}.",
         "I hope you're happy with your share of {your_share}."
     }
     local notbad_choices = {
@@ -1652,7 +1655,7 @@ function scav_boarding(plt, target, i)
         _("It'll do."),
         _("Could be better."),
         _("It's alright."),
-		_("Not so bad for a {target}."),
+      _("Not so bad for a {target}."),
     }
     local cargo_options = {
         _("{cargo}..."),
@@ -1678,9 +1681,9 @@ function scav_boarding(plt, target, i)
         _("It's random cargo such as {cargo}."),
         _("It had some commodities."),
         _("It had some commodities like {cargo}."),
-		_("This {target} was full of cargo.")
+      _("This {target} was full of cargo.")
     }
-	    local cargo_full = {
+       local cargo_full = {
         _("I had to leave the {cargo}..."),
         _("What did I leave behind, {cargo}?"),
         _("Oh great, we had to leave behind all that {cargo}."),
@@ -1704,7 +1707,7 @@ function scav_boarding(plt, target, i)
         _("It's random cargo such as {cargo} but I don't have space."),
         _("There are some commodities. Forget 'em."),
         _("There were some commodities like {cargo} that we left behind."),
-		_("This {target} was full of cargo that we had to leave behind.")
+      _("This {target} was full of cargo that we had to leave behind.")
     }
     local bounty = target:credits()
     local speak_chance = mem.persons[i].chatter or 0.5
@@ -1713,22 +1716,22 @@ function scav_boarding(plt, target, i)
     -- try to loot cargo
     local cargofree = plt:cargoFree()
     if cargofree then
-		local new_choices = {}
+      local new_choices = {}
         local clist = target:cargoList()
         for _k, c in ipairs(clist) do
             local n = plt:cargoAdd(c.name, c.q)
-			if n > 0 then
-				exp_boost = exp_boost + math.floor(c.q / 10) * 0.01
-				table.insert(payout_choices, fmt.f(pick_one(cargo_options), {cargo = c.name, target = target}))
-			else
-				table.insert(new_choices, fmt.f(pick_one(cargo_full), {cargo = c.name, target = target}))
-				mem.persons[i].last_sentiment = "cargofull" -- also make sure to pester the player soon
-			end
+         if n > 0 then
+            exp_boost = exp_boost + math.floor(c.q / 10) * 0.01
+            table.insert(payout_choices, fmt.f(pick_one(cargo_options), {cargo = c.name, target = target}))
+         else
+            table.insert(new_choices, fmt.f(pick_one(cargo_full), {cargo = c.name, target = target}))
+            mem.persons[i].last_sentiment = "cargofull" -- also make sure to pester the player soon
+         end
         end
-		if #new_choices > 0 then
-			speak_chance = 1 -- we definitely want to say something, we had to leave cargo behind!
-			payout_choices = new_choices
-		end
+      if #new_choices > 0 then
+         speak_chance = 1 -- we definitely want to say something, we had to leave cargo behind!
+         payout_choices = new_choices
+      end
     end
 
     if bounty < 2e3 then
@@ -1756,15 +1759,15 @@ function scav_boarding(plt, target, i)
             table.insert(payout_choices, _("I got the cargo."))
             table.insert(payout_choices, _("At least I took the cargo."))
             table.insert(payout_choices, _("At least we got some cargo."))
-			table.insert(payout_choices, _("At least there was cargo in this {target}."))
+         table.insert(payout_choices, _("At least there was cargo in this {target}."))
         end
         speak_chance = speak_chance + 0.1
     elseif bounty > 60e3 then
         table.insert(payout_choices, "Actually, that's not bad, you get {your_share}!")
         table.insert(payout_choices, "Woah! Well I'm keeping {my_share}.")
-		table.insert(payout_choices, "We should definitely hunt more {target}s.")
-		table.insert(payout_choices, "We should hunt more of these {target}s.")
-		table.insert(payout_choices, "This {target} had {amount} in it!")
+      table.insert(payout_choices, "We should definitely hunt more {target}s.")
+      table.insert(payout_choices, "We should hunt more of these {target}s.")
+      table.insert(payout_choices, "This {target} had {amount} in it!")
         -- we will want to speak about this unless we are really experienced
         local experience_fudge = mem.persons[i].experience / (2 * mem.persons[i].experience + 100)
         speak_chance = speak_chance + math.max(0, 0.5 - experience_fudge)
@@ -1772,15 +1775,15 @@ function scav_boarding(plt, target, i)
     elseif bounty > 35e3 then
         table.insert(payout_choices, "Not too shabby, check your logs.")
         table.insert(payout_choices, "I'm happy with {my_share}, here's {your_share}.")
-		table.insert(payout_choices, "I've seen worse on a {target}.")
+      table.insert(payout_choices, "I've seen worse on a {target}.")
         speak_chance = speak_chance + 0.1
         exp_boost = exp_boost + 0.01
     end
 
     local choice = choices[rnd.rnd(1, #choices)] .. " " .. payout_choices[rnd.rnd(1, #payout_choices)]
 
-	-- if we got a nice bounty and we're excited about it, let's talk about it
-	-- don't change speech for this if we're worried about our cargo
+   -- if we got a nice bounty and we're excited about it, let's talk about it
+   -- don't change speech for this if we're worried about our cargo
     if bounty > 20e3 and mem.persons[i].last_sentiment ~= "cargofull" then
         if bounty < 50e3 then
             choice = choice .. " " .. notbad_choices[rnd.rnd(1, #notbad_choices)]
@@ -1795,25 +1798,25 @@ function scav_boarding(plt, target, i)
     if mem.persons[i].commander then
         commanders_greed = mem.persons[i].experience * 24
     end
-	local your_share = math.max(0, math.floor(bounty * mem.persons[i].royalty) - commanders_greed)
-	local myship = mem.persons[i].ship:nameRaw()
-	-- before we make up our mind, let's decide if we are happy with our current ship
-	local favourite = pick_favorite_ship(mem.persons[i])
-	if
-			string.find(myship, favourite) or
-			string.find(favourite, myship)
-	then
-		-- if this is a favorite ship, let's be more generous because
-		-- we chose this ship ourselves even if it isn't the dream ship
-		-- note that if we have many favorites, we might not pick what we're flying now
-		your_share = math.floor(math.max(bounty / 4, (bounty  * (1 - mem.persons[i].royalty)) - 2e3))
-		-- allow a small bounty to give us the chance to resist negativity at the next boarding
-		if bounty > 5e3 and mem.persons[i].last_sentiment ~= "cargofull" then
-			mem.persons[i].last_sentiment = "content"
-		end
-	end
-    
-	-- obviously, if our ship looks like our dream ship then we are very happy
+   local your_share = math.max(0, math.floor(bounty * mem.persons[i].royalty) - commanders_greed)
+   local myship = mem.persons[i].ship:nameRaw()
+   -- before we make up our mind, let's decide if we are happy with our current ship
+   local favourite = pick_favorite_ship(mem.persons[i])
+   if
+         string.find(myship, favourite) or
+         string.find(favourite, myship)
+   then
+      -- if this is a favorite ship, let's be more generous because
+      -- we chose this ship ourselves even if it isn't the dream ship
+      -- note that if we have many favorites, we might not pick what we're flying now
+      your_share = math.floor(math.max(bounty / 4, (bounty  * (1 - mem.persons[i].royalty)) - 2e3))
+      -- allow a small bounty to give us the chance to resist negativity at the next boarding
+      if bounty > 5e3 and mem.persons[i].last_sentiment ~= "cargofull" then
+         mem.persons[i].last_sentiment = "content"
+      end
+   end
+
+   -- obviously, if our ship looks like our dream ship then we are very happy
     if string.find(myship, mem.persons[i].dreamship) then
         -- no greed in a dreamship, generosity instead
         your_share = math.min(bounty, math.floor(bounty * (1 - mem.persons[i].royalty) + commanders_greed))
@@ -1840,7 +1843,7 @@ function scav_boarding(plt, target, i)
                 {
                     name = mem.persons[i].name,
                     ship = mem.persons[i].ship,
-					target = target:ship(),
+               target = target:ship(),
                     credits = fmt.credits(your_share),
                     total = fmt.credits(bounty)
                 }
@@ -1868,68 +1871,68 @@ function scav_boarding(plt, target, i)
             flagshipt = player.pilot():ship():name(),
             your_share = fmt.credits(your_share),
             my_share = fmt.credits(bounty - your_share),
-			target = target
+         target = target
         }
         plt:comm(fmt.f(choice, info))
     end
 
-	-- if we are a commander or high ranked, ruthlessly destroy it
-	-- with C4, because we probably have ion cannons
-	if mem.persons[i].experience > 32 then
-		-- plant extra explosives if we are skilled and have enough time
-		for i=1, 5 do
-			local chance = math.min(100, mem.persons[i].experience) / 200
-			if rnd.rnd() < chance then
-				hook.timer(math.max(20, 135 - (chance * 200)), "detonate_c4", target)
-			end
-		end
-		-- plant some explosives
-		hook.timer(rnd.rnd(30, 35), "detonate_c4", target)
-		hook.timer(rnd.rnd(30, 35), "detonate_c4", target)
-		hook.timer(rnd.rnd(30, mem.persons[i].experience), "detonate_c4", target)
-	end
+   -- if we are a commander or high ranked, ruthlessly destroy it
+   -- with C4, because we probably have ion cannons
+   if mem.persons[i].experience > 32 then
+      -- plant extra explosives if we are skilled and have enough time
+      for _i=1, 5 do
+         local chance = math.min(100, mem.persons[i].experience) / 200
+         if rnd.rnd() < chance then
+            hook.timer(math.max(20, 135 - (chance * 200)), "detonate_c4", target)
+         end
+      end
+      -- plant some explosives
+      hook.timer(rnd.rnd(30, 35), "detonate_c4", target)
+      hook.timer(rnd.rnd(30, 35), "detonate_c4", target)
+      hook.timer(rnd.rnd(30, mem.persons[i].experience), "detonate_c4", target)
+   end
 
-	-- if we are a commander, plant deadly C4
-	if mem.persons[i].commander then
-		-- plant a lot of explosives in a specific pattern
-		hook.timer(10, "detonate_c4", target)
-		hook.timer(12, "detonate_c4", target)
-		hook.timer(15, "detonate_c4", target)
-		hook.timer(16, "detonate_c4", target)
-		hook.timer(16, "detonate_c4", target)
-		hook.timer(17, "detonate_c4", target)
-		hook.timer(17, "detonate_c4", target)
-		hook.timer(18, "detonate_c4", target)
-	end
+   -- if we are a commander, plant deadly C4
+   if mem.persons[i].commander then
+      -- plant a lot of explosives in a specific pattern
+      hook.timer(10, "detonate_c4", target)
+      hook.timer(12, "detonate_c4", target)
+      hook.timer(15, "detonate_c4", target)
+      hook.timer(16, "detonate_c4", target)
+      hook.timer(16, "detonate_c4", target)
+      hook.timer(17, "detonate_c4", target)
+      hook.timer(17, "detonate_c4", target)
+      hook.timer(18, "detonate_c4", target)
+   end
 
-    --	target:broadcast(fmt.f("I was boarded by {name} and I had {credits}.", {name = mem.persons[i].name, credits=fmt.credits(bounty)}), true)
+    --   target:broadcast(fmt.f("I was boarded by {name} and I had {credits}.", {name = mem.persons[i].name, credits=fmt.credits(bounty)}), true)
 end
 
-function detonate_c4( target ) 
-	if target and target:exists() then 
-		local sound_choices = {
-			"medexp1", "medexp0", "crash1", "grenade",
-			"explosion0", "explosion1", "explosion2", "tesla"
-		}
-		local dir_vec = vec2.new(math.floor(rnd.threesigma() * 30), math.floor(rnd.twosigma() * 20))
-		target:knockback(800, dir_vec, target:pos()-dir_vec)
-		target:setDir(target:dir() + rnd.threesigma() * 0.07)
-		local expl_pos = vec2.add(target:pos(), rnd.threesigma() * 2, rnd.twosigma() * 2)
-		-- apply the damage (the player gets the credit)
-		target:damage(300, 0, 100, "impact", player.pilot())
-		-- visual and audio effects?
-		audio.soundPlay(pick_one(sound_choices), expl_pos)
-	end
+function detonate_c4( target )
+   if target and target:exists() then
+      local sound_choices = {
+         "medexp1", "medexp0", "crash1", "grenade",
+         "explosion0", "explosion1", "explosion2", "tesla"
+      }
+      local dir_vec = vec2.new(math.floor(rnd.threesigma() * 30), math.floor(rnd.twosigma() * 20))
+      target:knockback(800, dir_vec, target:pos()-dir_vec)
+      target:setDir(target:dir() + rnd.threesigma() * 0.07)
+      local expl_pos = vec2.add(target:pos(), rnd.threesigma() * 2, rnd.twosigma() * 2)
+      -- apply the damage (the player gets the credit)
+      target:damage(300, 0, 100, "impact", player.pilot())
+      -- visual and audio effects?
+      audio.soundPlay(pick_one(sound_choices), expl_pos)
+   end
 end
 
 function scavenger_arrives(arg)
-	if var.peek( "hired_escorts_disabled" ) then return end
-	if system.cur() == system.get("Crimson Gauntlet") then return end
+   if var.peek( "hired_escorts_disabled" ) then return end
+   if system.cur() == system.get("Crimson Gauntlet") then return end
 
     local i = arg.i
-	if not mem.persons[i].active then
-		return
-	end
+   if not mem.persons[i].active then
+      return
+   end
     local f = mem.persons[i].faction
     -- if we are already with the player, don't respawn
     if mem.persons[i].pilot ~= nil and mem.persons[i].pilot:exists() then -- pilot still exist
@@ -1994,8 +1997,8 @@ function scavenger_arrives(arg)
     aimem.atk_board = true
     aimem.aggressive = false
     aimem.careful = true
-	aimem.leadermaxdist = 500 * plt:ship():size()
-	aimem.enemyclose = 300 * plt:ship():size()
+   aimem.leadermaxdist = 500 * plt:ship():size()
+   aimem.enemyclose = 300 * plt:ship():size()
 
     plt:setVisplayer(true)
     plt:setNoClear(true)
@@ -2005,9 +2008,9 @@ function scavenger_arrives(arg)
     hook.pilot(plt, "hail", "scav_hail", i)
     hook.pilot(plt, "attacked", "scav_attacked", i)
     hook.pilot(plt, "boarding", "scav_boarding", i)
-	hook.pilot(plt, "board", "player_rescue", i)
+   hook.pilot(plt, "board", "player_rescue", i)
 
-    --	plt:broadcast(fmt.f("I'm number {i}, had to pay off {credits}.", { i=i , credits=fmt.credits(arg.debt / 2) } ))
+    --   plt:broadcast(fmt.f("I'm number {i}, had to pay off {credits}.", { i=i , credits=fmt.credits(arg.debt / 2) } ))
 
     if mem.persons[i].spawning then
         hook.rm(mem.persons[i].spawning)
@@ -2022,86 +2025,86 @@ function scavenger_arrives(arg)
         end
     end
 
-	-- vocal leaders will seem to perform slightly better
-	local lead_chance = math.min(0.4, math.floor(mem.persons[i].experience + mem.persons[i].chatter) * 0.01)
+   -- vocal leaders will seem to perform slightly better
+   local lead_chance = math.min(0.4, math.floor(mem.persons[i].experience + mem.persons[i].chatter) * 0.01)
 
     -- usually, we set the leader, but sometimes, don't
     if mem.persons[i].commander then
-		aimem.whiteknight = true
-		-- if we are a good leader, set up the existing support fleet, it becomes a lazy routine
-		if rnd.rnd() < lead_chance * 3 then
-			hook.timer(20, "setup_support_fleet", mem.persons[i].pilot)
-			hook.timer(60 * mem.persons[i].chatter, "setup_support_fleet", mem.persons[i].pilot)
-			hook.timer(60, "setup_support_fleet", mem.persons[i].pilot)
-			hook.timer(mem.persons[i].experience, "setup_support_fleet", mem.persons[i].pilot)
-		end
-		-- I'll catch up with you later
-		if rnd.rnd() < lead_chance then
-			speak(mem.persons[i], "brb")
-			
-			plt:changeAI( "escort_guardian" )
-			
-			aimem = plt:memory()
-			aimem.stealth = true
-			aimem.atk_board = true
---			aimem.atk_kill = true -- this might be bad
-			aimem.aggressive = true
-			aimem.formation = "wedge"
-			plt:memory().atk_board = true -- do we need this??
-			-- if I'm in a dream ship (or close), enlist help
-			if string.find(mem.persons[i].ship:nameRaw(), mem.persons[i].dreamship) then
-				for j, pers in ipairs(mem.persons) do
-					if i ~= j and pers.pilot ~= nil then
-						if pers.pilot:exists() then
-							pers.pilot:setLeader(plt)
-							speak(mem.persons[j], "affirm")
-							local mymem = pers.pilot:memory()
-							mymem.leadermaxdist = 225 * pers.pilot:ship():size()
-							mymem.aggressive = true
-	--                        mymem.stealth = aimem.stealth
-						end
-					end
-				end
-			end
-			-- since we are actively guarding the player, let's make sure we pick up player attacked
-			if mem.persons[i].commander == true then mem.persons[i].commander = {} end
-			if mem.persons[i].commander.hook then
-				hook.rm(mem.persons[i].commander.hook)
-			end
-			mem.persons[i].commander.hook = hook.pilot(player.pilot(), "attacked", "player_attacked", mem.persons[i].pilot)
-			
-			return -- sometimes don't means must not continue down default path
-		end
+      aimem.whiteknight = true
+      -- if we are a good leader, set up the existing support fleet, it becomes a lazy routine
+      if rnd.rnd() < lead_chance * 3 then
+         hook.timer(20, "setup_support_fleet", mem.persons[i].pilot)
+         hook.timer(60 * mem.persons[i].chatter, "setup_support_fleet", mem.persons[i].pilot)
+         hook.timer(60, "setup_support_fleet", mem.persons[i].pilot)
+         hook.timer(mem.persons[i].experience, "setup_support_fleet", mem.persons[i].pilot)
+      end
+      -- I'll catch up with you later
+      if rnd.rnd() < lead_chance then
+         speak(mem.persons[i], "brb")
+         
+         plt:changeAI( "escort_guardian" )
+         
+         aimem = plt:memory()
+         aimem.stealth = true
+         aimem.atk_board = true
+--         aimem.atk_kill = true -- this might be bad
+         aimem.aggressive = true
+         aimem.formation = "wedge"
+         plt:memory().atk_board = true -- do we need this??
+         -- if I'm in a dream ship (or close), enlist help
+         if string.find(mem.persons[i].ship:nameRaw(), mem.persons[i].dreamship) then
+            for j, pers in ipairs(mem.persons) do
+               if i ~= j and pers.pilot ~= nil then
+                  if pers.pilot:exists() then
+                     pers.pilot:setLeader(plt)
+                     speak(mem.persons[j], "affirm")
+                     local mymem = pers.pilot:memory()
+                     mymem.leadermaxdist = 225 * pers.pilot:ship():size()
+                     mymem.aggressive = true
+   --                        mymem.stealth = aimem.stealth
+                  end
+               end
+            end
+         end
+         -- since we are actively guarding the player, let's make sure we pick up player attacked
+         if mem.persons[i].commander == true then mem.persons[i].commander = {} end
+         if mem.persons[i].commander.hook then
+            hook.rm(mem.persons[i].commander.hook)
+         end
+         mem.persons[i].commander.hook = hook.pilot(player.pilot(), "attacked", "player_attacked", mem.persons[i].pilot)
+         
+         return -- sometimes don't means must not continue down default path
+      end
     end
-	plt:setLeader(player.pilot())
-	-- always speak less and less with experience
-	local speak_chance = mem.persons[i].chatter - (math.min(300, mem.persons[i].experience) / 1000)
-	if rnd.rnd() > speak_chance then -- if I'm a chatterbox
-		if rnd.rnd() > 0.5 then -- be positive
-			speak(mem.persons[i], "idle")
-		else -- be negative
-			speak(mem.persons[i], "negative")
-		end
-	else
-		-- I didn't say anything, let's fall in like a good soldier
-		hook.timer(rnd.rnd(4, 32), "fall_in", mem.persons[i])
-	end
-    
+   plt:setLeader(player.pilot())
+   -- always speak less and less with experience
+   local speak_chance = mem.persons[i].chatter - (math.min(300, mem.persons[i].experience) / 1000)
+   if rnd.rnd() > speak_chance then -- if I'm a chatterbox
+      if rnd.rnd() > 0.5 then -- be positive
+         speak(mem.persons[i], "idle")
+      else -- be negative
+         speak(mem.persons[i], "negative")
+      end
+   else
+      -- I didn't say anything, let's fall in like a good soldier
+      hook.timer(rnd.rnd(4, 32), "fall_in", mem.persons[i])
+   end
+
 
 end
 
 function player_attacked ( player_pilot, attacker, dmg, leader )
-	local armor, shield, stress = player_pilot:health()
-	if leader and (shield < 80) and leader:exists() then
-		local subordinates = leader:followers()
-		if #subordinates > 0 then
-			leader:msg(pick_one(subordinates), "l_attacked", attacker)
-			-- make sure to respond more when appropriate
-			if dmg > 100 or armor < 45 or stress > 50 then
-				leader:msg(pick_one(subordinates), "e_attack", attacker)
-			end
-		end
-	end
+   local armor, shield, stress = player_pilot:health()
+   if leader and (shield < 80) and leader:exists() then
+      local subordinates = leader:followers()
+      if #subordinates > 0 then
+         leader:msg(pick_one(subordinates), "l_attacked", attacker)
+         -- make sure to respond more when appropriate
+         if dmg > 100 or armor < 45 or stress > 50 then
+            leader:msg(pick_one(subordinates), "e_attack", attacker)
+         end
+      end
+   end
 end
 
 local function scav_hook_spawner(plt, i, spawnpoint)
@@ -2111,12 +2114,12 @@ local function scav_hook_spawner(plt, i, spawnpoint)
     arg.spawnpoint = spawnpoint or pilot.choosePoint(faction.get("Escort"), true)
 
     if plt.spawning then
-        --			player.pilot():comm(fmt.f("Can't spawn {person} because {spawning} {alive}", { person = v.name, spawning=v.spawning, alive=v.alive} ))
+        --         player.pilot():comm(fmt.f("Can't spawn {person} because {spawning} {alive}", { person = v.name, spawning=v.spawning, alive=v.alive} ))
         -- delete the old hook first
         hook.rm(plt.spawning)
     end
     plt.debt = plt.debt - plt.debt / 16 -- decrease the debt
-    --		player.pilot():broadcast(fmt.f("{name} arrives in approximately {time} s", {name=plt.name, time=delay}))
+    --      player.pilot():broadcast(fmt.f("{name} arrives in approximately {time} s", {name=plt.name, time=delay}))
     plt.spawning = hook.timer(delay, "scavenger_arrives", arg)
 end
 
@@ -2150,11 +2153,11 @@ local function update_wallet(i)
         print("update wallet pilot not exists")
         return
     end
-    local difference = mem.persons[i].pilot:credits() - mem.persons[i].wallet
-    --	mem.persons[i].pilot:broadcast(fmt.f("I currently have {credits}", { credits = mem.persons[i].wallet }))
-    --	mem.persons[i].total_profit = mem.persons[i].total_profit + difference
+--    local difference = mem.persons[i].pilot:credits() - mem.persons[i].wallet
+    --   mem.persons[i].pilot:broadcast(fmt.f("I currently have {credits}", { credits = mem.persons[i].wallet }))
+    --   mem.persons[i].total_profit = mem.persons[i].total_profit + difference
     mem.persons[i].wallet = mem.persons[i].pilot:credits() -- update wallet
-    --	mem.persons[i].pilot:broadcast(fmt.f("I updated my wallet to {credits}", { credits = mem.persons[i].wallet }))
+    --   mem.persons[i].pilot:broadcast(fmt.f("I updated my wallet to {credits}", { credits = mem.persons[i].wallet }))
 
     -- disable the comment to prevent double counting
     -- mem.persons[i].wallet = mem.persons[i].pilot:credits() -- update wallet
@@ -2163,15 +2166,15 @@ end
 function jumpout()
     mem.lastsys = system.cur()
     for i, persona in ipairs(mem.persons) do
-		if persona.commander and persona.commander.hook then
-			hook.rm(persona.commander.hook)
-			persona.commander.hook = nil
-		end
+      if persona.commander and persona.commander.hook then
+         hook.rm(persona.commander.hook)
+         persona.commander.hook = nil
+      end
         if persona.pilot ~= nil then
             if persona.pilot:exists() then
                 local pmem = persona.pilot:memory()
                 local boarded = pmem.boarded or 0
-                --			persona.pilot:broadcast(fmt.f("I have boarded {boarded} times and made {profit} total.", { boarded=boarded, profit=persona.total_profit } ))
+                --         persona.pilot:broadcast(fmt.f("I have boarded {boarded} times and made {profit} total.", { boarded=boarded, profit=persona.total_profit } ))
                 if boarded > 0 then
                     persona.experience = persona.experience + 1
                     remember_ship(persona, persona.ship:nameRaw(), boarded)
@@ -2183,47 +2186,47 @@ function jumpout()
                 mem.persons[i].energy = mem.persons[i].pilot:energy()
                 mem.persons[i].cargo = persona.pilot:cargoList()
             end
-            --			mem.persons[i].pilot:rm()
-            --			mem.persons[i].pilot = nil
-			if mem.persons[i].spawning then
-				hook.rm(mem.persons[i].spawning)
-			end
+            --         mem.persons[i].pilot:rm()
+            --         mem.persons[i].pilot = nil
+         if mem.persons[i].spawning then
+            hook.rm(mem.persons[i].spawning)
+         end
             mem.persons[i].spawning = false
-        --		else
-        --			print(fmt.f("person {i} is nil pilot", {i=i}))
+        --      else
+        --         print(fmt.f("person {i} is nil pilot", {i=i}))
         end
     end
 end
 
 function land()
-	--[[
-	-- hack to fix portraits (should be safe to delete)
-	for _i, pers in ipairs(mem.persons) do
-		if not pers.portrait_onduty then pers.portrait_onduty = pilot_portrait(pers.commander) end
-		pers.portrait = pers.portrait_onduty
-		if not pers.active then pers.portrait = pers.portrait_offduty end
-	end
-	--]]
+   --[[
+   -- hack to fix portraits (should be safe to delete)
+   for _i, pers in ipairs(mem.persons) do
+      if not pers.portrait_onduty then pers.portrait_onduty = pilot_portrait(pers.commander) end
+      pers.portrait = pers.portrait_onduty
+      if not pers.active then pers.portrait = pers.portrait_offduty end
+   end
+   --]]
     mem.lastplanet = spob.cur()
-	mem.lastsys = system.cur()
-	local commander_exists = false
-	local commander_active = false
+   mem.lastsys = system.cur()
+   local commander_exists = false
+   local commander_active = false
     for i, persona in ipairs(mem.persons) do
-		if persona.commander then
-			commander_exists = true
-			if persona.active then
-				commander_active = true
-			end
-			if persona.commander.hook then
-				hook.rm(persona.commander.hook)
-				persona.commander.hook = nil
-			end
-		end
+      if persona.commander then
+         commander_exists = true
+         if persona.active then
+            commander_active = true
+         end
+         if persona.commander.hook then
+            hook.rm(persona.commander.hook)
+            persona.commander.hook = nil
+         end
+      end
         if persona.alive and persona.pilot ~= nil and persona.pilot:exists() then
             update_wallet(i)
             local pmem = persona.pilot:memory()
             local boarded = pmem.boarded or 0
-            --			persona.pilot:broadcast(fmt.f("I have boarded {boarded} times and made {profit} total.", { boarded=boarded, profit=persona.total_profit } ))
+            --         persona.pilot:broadcast(fmt.f("I have boarded {boarded} times and made {profit} total.", { boarded=boarded, profit=persona.total_profit } ))
             if boarded > 0 then
                 persona.experience = persona.experience + 1
                 remember_ship(persona, persona.ship:nameRaw(), boarded)
@@ -2236,37 +2239,37 @@ function land()
             -- sell any cargo
             local price
             local profits = 0
-			local available_comms = spob.cur():commoditiesSold()
+         local available_comms = spob.cur():commoditiesSold()
             for _i, cc in ipairs(persona.pilot:cargoList()) do
                 -- does this station even buy this cargo??
-				-- ugly extra loop to squash warnings... could be optimized to 2N instead of N^2 but this is tiny and we are landing so I'm lazy
-				for _j, dd in ipairs(available_comms) do
-					if cc.name == dd:name() then
-						price = commodity.get(cc.name):priceAt(spob.cur())
-						if price > 0 then -- sell the commodity
-							local gain = math.floor(cc.q * price)
-							profits = profits + gain
-							persona.pilot:cargoRm(cc.name, cc.q)
---							print( fmt.f("sold {q} units of {name}", cc) )
-						end
-					end
-				end
+            -- ugly extra loop to squash warnings... could be optimized to 2N instead of N^2 but this is tiny and we are landing so I'm lazy
+            for _j, dd in ipairs(available_comms) do
+               if cc.name == dd:name() then
+                  price = commodity.get(cc.name):priceAt(spob.cur())
+                  if price > 0 then -- sell the commodity
+                     local gain = math.floor(cc.q * price)
+                     profits = profits + gain
+                     persona.pilot:cargoRm(cc.name, cc.q)
+--                     print( fmt.f("sold {q} units of {name}", cc) )
+                  end
+               end
             end
-			persona.cargo = persona.pilot:cargoList()
+            end
+         persona.cargo = persona.pilot:cargoList()
             -- share some profit with the player
             if profits > 0 then
                 local your_share = math.floor(profits * persona.royalty)
-				local currents = persona.ship:nameRaw()
-				-- if we like our current ship, give the player more
+            local currents = persona.ship:nameRaw()
+            -- if we like our current ship, give the player more
                 if string.find(currents, persona.dreamship) or string.find(currents, pick_favorite_ship(persona)) then
-					-- if we got a ship that is a favorite but we got it for another reason, then hopefully the royalty is low
+               -- if we got a ship that is a favorite but we got it for another reason, then hopefully the royalty is low
                    your_share = math.floor(profits * (1 - persona.royalty))
                 else
-					 if profits > 10e3 then
+                if profits > 10e3 then
                         persona.last_sentiment = "goodhaul"
-					elseif persona.last_sentiment == "cargofull" then
-						-- ah, well it's always nice to have space after having stuffed it full
-						persona.last_sentiment = "content"
+               elseif persona.last_sentiment == "cargofull" then
+                  -- ah, well it's always nice to have space after having stuffed it full
+                  persona.last_sentiment = "content"
                     end
                 end
 
@@ -2293,16 +2296,16 @@ function land()
         end
     end
     local pnt = spob.cur()
-	local services = pnt:services()
+   local services = pnt:services()
     -- Clean up dead escorts so it doesn't build up, and create NPCs for
     -- existing escorts.
     npcs = {}
     local new_escorts = {}
     for i, edata in ipairs(mem.persons) do
-		-- if we are inactive because we died, allow the commander to resurrect us if there's a shipyard here
-		if commander_active and services.shipyard then
-			edata.active = true
-		end
+      -- if we are inactive because we died, allow the commander to resurrect us if there's a shipyard here
+      if commander_active and services.shipyard then
+         edata.active = true
+      end
         if edata.spawning then
             hook.rm(edata.spawning)
             edata.spawning = false
@@ -2316,22 +2319,22 @@ function land()
             edata.stress = nil
             edata.energy = nil
             local this_desc = _("This is one of the {dreamship} pilots currently under your wing.")
-			local prio = 8
+         local prio = 8
             if edata.commander then
                 this_desc = _("This is the most capable pilot currently under your wing and is certified to fly a {dreamship}.")
-				prio = 7
+            prio = 7
             end
-			if edata.ship:nameRaw() ~= edata.dreamship then
-				this_desc = this_desc .. _("\nThis pilot was last seen flying a {ship} at a cover fee of {replacement_text}, which will be added to the pilot's personal account of ") .. fmt.f("{credits} towards a replacement.", { credits = fmt.credits(edata.wallet) } )
-			end
-			
-			this_desc = fmt.f(this_desc, edata)
-			-- only the commander goes to the bar, unless if there is no commander (player might need to manage escorts)
-			-- also give the unimportant escorts a random chance of appearing even if they are off duty, it's a bar after all
-			if (edata.active or not commander_exists) or edata.commander or rnd.rnd(1, 6) >= 5 then
-				local id = evt.npcAdd("approachHiredScav", edata.rank .. " " .. edata.name, edata.portrait, this_desc, prio)
-				npcs[id] = edata
-			end
+         if edata.ship:nameRaw() ~= edata.dreamship then
+            this_desc = this_desc .. _("\nThis pilot was last seen flying a {ship} at a cover fee of {replacement_text}, which will be added to the pilot's personal account of ") .. fmt.f("{credits} towards a replacement.", { credits = fmt.credits(edata.wallet) } )
+         end
+         
+         this_desc = fmt.f(this_desc, edata)
+         -- only the commander goes to the bar, unless if there is no commander (player might need to manage escorts)
+         -- also give the unimportant escorts a random chance of appearing even if they are off duty, it's a bar after all
+         if (edata.active or not commander_exists) or edata.commander or rnd.rnd(1, 6) >= 5 then
+            local id = evt.npcAdd("approachHiredScav", edata.rank .. " " .. edata.name, edata.portrait, this_desc, prio)
+            npcs[id] = edata
+         end
             new_escorts[j] = edata
         end
     end
@@ -2345,7 +2348,7 @@ function land()
 
     -- Ignore on uninhabited and planets without bars
 
-    
+
     local flags = pnt:flags()
     if not services.inhabited or not services.bar or flags.nomissionspawn then
         return
@@ -2380,47 +2383,47 @@ function scav_attacked(p, attacker, _dmg, i)
         _("Hey {name}, give us a hand will you?"),
         _("I might lose it here."),
         _("Oh shoot."),
-		_("I need some help here."),
-		_("I need help here!"),
-		_("I need some help here..."),
-		_("I could use a hand."),
-		_("We could use a hand over here."),
-		_("We aren't winning this."),
-		_("We are being defeated."),
-		_("We are being destroyed!"),
-		_("We should back off."),
-		_("Backing off."),
-		_("Oh no..."),
-		_("Let's get out of here."),
-		_("Let's get outta here!"),
-		_("Let's vamoose!"),
-		_("Let's scram!"),
-		_("Let's buzz off already!"),
+      _("I need some help here."),
+      _("I need help here!"),
+      _("I need some help here..."),
+      _("I could use a hand."),
+      _("We could use a hand over here."),
+      _("We aren't winning this."),
+      _("We are being defeated."),
+      _("We are being destroyed!"),
+      _("We should back off."),
+      _("Backing off."),
+      _("Oh no..."),
+      _("Let's get out of here."),
+      _("Let's get outta here!"),
+      _("Let's vamoose!"),
+      _("Let's scram!"),
+      _("Let's buzz off already!"),
     }
     local help_choices = {
         _("Help me, {name}!"),
         _("Where's the {flagship} when you need it?"),
         _("Mayday, we are getting pulverized over here!"),
-		_("I'm with you {name}, but I need your help here!"),
-		_("We need you {name}!"),
-		_("Now is the time to use the {flagship}!"),
-		_("Show us what the {flagship} can do!"),
-		_("Aren't there any weapons on that {flagship}?")
+      _("I'm with you {name}, but I need your help here!"),
+      _("We need you {name}!"),
+      _("Now is the time to use the {flagship}!"),
+      _("Show us what the {flagship} can do!"),
+      _("Aren't there any weapons on that {flagship}?")
     }
 
-	local armor, shield, stress = p:health()
+   local armor, shield, stress = p:health()
 
     -- check if we should change states
     if rnd.rnd() > 0.98 and shield < 30 then
         if p:leader() then
-			if mem.persons[i].experience < 7 or rnd.rnd() < 0.01 then
-				p:setLeader(nil)
-			end
-			p:changeAI("pirate")
-			local aimem = p:memory()
-			aimem.atk_board = true
-			aimem.leadermaxdist = 500 * p:ship():size()
-			p:pushtask("runaway", attacker)
+         if mem.persons[i].experience < 7 or rnd.rnd() < 0.01 then
+            p:setLeader(nil)
+         end
+         p:changeAI("pirate")
+         local aimem = p:memory()
+         aimem.atk_board = true
+         aimem.leadermaxdist = 500 * p:ship():size()
+         p:pushtask("runaway", attacker)
             p:broadcast(
                 fmt.f(
                     leave_choices[rnd.rnd(1, #leave_choices)],
@@ -2428,10 +2431,10 @@ function scav_attacked(p, attacker, _dmg, i)
                 )
             )
             mem.persons[i].last_sentiment = "beating"
-			-- really low armor
-			if armor < 20 then
-				mem.persons[i].last_sentiment = "closecall"
-			end
+         -- really low armor
+         if armor < 20 then
+            mem.persons[i].last_sentiment = "closecall"
+         end
         else
             p:setLeader(player.pilot())
             p:broadcast(
@@ -2440,55 +2443,55 @@ function scav_attacked(p, attacker, _dmg, i)
                     {name = player.name(), flagship = player.pilot():ship():name()}
                 )
             )
-			p:memory().leadermaxdist = 500 * p:ship():size()
+         p:memory().leadermaxdist = 500 * p:ship():size()
         end
     elseif shield > 60 and armor > 98 and stress < 20 and mem.persons[i].commander or mem.persons[i].experience > 20 and rnd.rnd() < 0.06 then
-		-- just maybe, let's start guarding the player more actively
---		print("changing to escort guardian:", mem.persons[i].name)
-		p:changeAI("escort_guardian")
-		local aimem = p:memory()
-		aimem.atk_board = true
-		aimem.leadermaxdist = 500 * p:ship():size()
-	end
+      -- just maybe, let's start guarding the player more actively
+--      print("changing to escort guardian:", mem.persons[i].name)
+      p:changeAI("escort_guardian")
+      local aimem = p:memory()
+      aimem.atk_board = true
+      aimem.leadermaxdist = 500 * p:ship():size()
+   end
 end
 
 -- setup the support fleet properly so it doesn't run
 -- currently just regroups
 function setup_support_fleet( leader )
-	if not leader or not leader:exists()then
-		return
-	end
-	for _i, pers in ipairs(mem.persons) do
-		if pers.pilot ~= nil then
-			if pers.pilot:exists() then
-				pers.pilot:pushtask("hold")
-				leader:msg(pers.pilot, "e_hold")
-				player.pilot():msg(pers.pilot, "e_hold")
-			end
-		end
-	end
+   if not leader or not leader:exists()then
+      return
+   end
+   for _i, pers in ipairs(mem.persons) do
+      if pers.pilot ~= nil then
+         if pers.pilot:exists() then
+            pers.pilot:pushtask("hold")
+            leader:msg(pers.pilot, "e_hold")
+            player.pilot():msg(pers.pilot, "e_hold")
+         end
+      end
+   end
 end
 
 -- Escort got killed
 function scavenger_death(p, _attacker, i)
     local edata = mem.persons[i]
-	if string.find(edata.ship:nameRaw(), edata.dreamship) then
-		edata.last_sentiment = "broken_dreams"
-	end
+   if string.find(edata.ship:nameRaw(), edata.dreamship) then
+      edata.last_sentiment = "broken_dreams"
+   end
 
-	-- special commander stuff
-	if edata.commander then
-		if edata.commander.hook then
-			hook.rm(edata.commander.hook)
-			edata.commander.hook = nil
-		end
-		-- send the followers to the player
---		if false then -- let's test without first
-		for _i, under in edata.pilot:followers() do
-			under:setLeader(player.pilot())
---		end
-		end
-	end
+   -- special commander stuff
+   if edata.commander then
+      if edata.commander.hook then
+         hook.rm(edata.commander.hook)
+         edata.commander.hook = nil
+      end
+      -- send the followers to the player
+--      if false then -- let's test without first
+      for _i, under in edata.pilot:followers() do
+         under:setLeader(player.pilot())
+--      end
+      end
+   end
 
     edata.cargo = nil
     -- check what's going on and if we are dead yet
@@ -2516,8 +2519,8 @@ function scavenger_death(p, _attacker, i)
             createReplacementShip(i)
             -- spawn a new one soon NOTE: Don't actually keep making new ships until the player jumps or lands.
 --          scav_hook_spawner(mem.persons[i], i)
-			-- we lost our ship, don't come back until the cap'n calls us back
-			edata.active = false
+         -- we lost our ship, don't come back until the cap'n calls us back
+         edata.active = false
         end
     else
         p:comm(player:pilot(), "Wait a minute, why isn't it ejecting? Oh sh--", true)
@@ -2525,495 +2528,378 @@ function scavenger_death(p, _attacker, i)
     end
 end
 
--- Asks the player whether or not they want to fire the pilot or upgrade him or whatever
-local function pilot_askUpgrades(edata, npc_id)
-    local approachtext = _([[Would you like to do something with this scavenger?
-
-Pilot credentials:]])
-    local upgradechoice = _("Settle debts")
-    local upgradequery = _("Are you sure you want to settle {name}'s debt of {credits}?")
-	local abandon_label = _("Fire Pilot")
-    local upgrade_amount = 250e3 -- negligible effect, a red herring and credit sink, but the escort changes ships/outfits
-    local limit_ships = spob.cur():shipsSold()
-
-	-- if we don't need to pay off debt, allow upgrades
-    if edata.debt < 1e6 then
-        upgradechoice = _("Sponsor ugrades")
-        upgradequery = _("Are you sure you want to sponsor {name} for upgrades, costing you up to {upgrade_amount}?")
-	end
-	-- if there is a shipyard, upgrade for more to buy a new ship from this shipyard
-    -- (the player is hoping for a dream ship or a favorite, let's have the odds favorable)
-    if next(limit_ships) ~= nil and edata.debt < 1e6 then
-        upgrade_amount = 1e6 -- should be enough for a dreamship after a couple of tries with few experience points
-		upgradechoice = _("Upgrade at shipyard")
-		upgradequery = _("Are you sure you want to encourage {name} to buy a new ship, costing you up to {upgrade_amount}?")
-    end
-
-	local n, _s
-	-- special commander rules apply
-	if edata.commander then
-		upgrade_amount = upgrade_amount + 350e3 + math.floor(upgrade_amount / 20)
-		abandon_label = _("Fire Commander")
-		local vacation_label = _("Begin leave")
-		if not edata.active then
-			vacation_label = _("Terminate leave")
-		end
-		n, _s =
-        tk.choice("", getOfferText(approachtext, edata), upgradechoice, vacation_label, abandon_label, _("Do nothing"))
-	else
-		n, _s =
-        tk.choice("", getOfferText(approachtext, edata), upgradechoice, abandon_label, _("Do nothing"))
-	end
-    if
-        n == 1 and
-            vntk.yesno(
-                "",
-                fmt.f(
-                    upgradequery,
-                    {name = edata.name, credits = fmt.credits(edata.debt), upgrade_amount = fmt.credits(upgrade_amount)}
-                )
-            )
-     then
-        if edata.debt >= 1e6 then
-            if player.pilot():credits() < edata.debt then
-                -- not enough credits
-                vntk.msg(
-                    _("Not Enough Money"),
-                    _([["I can't fly on dreams and steam. Try again when you have enough money."]])
-                )
-                return
-            end
-            player.pay(-edata.debt)
-            edata.total_cost = edata.total_cost + edata.debt
-            edata.debt = 0
-        else
-            -- upgrade the escort
-            if player.pilot():credits() < upgrade_amount then
-                -- not enough credits, upgrade for less
-                upgrade_amount = math.floor(player.pilot():credits() / 2)
-            end
-            -- pay
-            player.pay(-upgrade_amount)
-            edata.total_cost = edata.total_cost + upgrade_amount
-            -- sell current ship
-            local _n, ship_escrow = edata.ship:price()
-			local old_ship = edata.ship:name()
-            -- do the balancing
-            edata.wallet = edata.wallet + upgrade_amount + ship_escrow - edata.debt
-            edata.debt = 0
-            -- get a new ship
-            _createReplacementShip(edata, limit_ships)
-            -- apply upgrade experience bonus
-            edata.wallet = edata.wallet + math.floor(upgrade_amount * math.min(20, edata.experience) * 0.05)
-            edata.last_sentiment = "content"
-        end
-    elseif
-        n == 2 or (n == 3 and edata.commander)
-     then
-		if edata.commander and n == 2 then
-			-- we chose to go on leave, not to fire the guy, so return from in here
-			edata.active = not edata.active
-			for _i, pers in ipairs(mem.persons) do
-				pers.active = edata.active
-			end
-			local feedback = _("You have placed your commander and the rest of the support fleet on temporary leave.")
-			if edata.active then
-				feedback = _("The temporary leave you issued your commander and the support fleet has been terminated.")
-			end
-			vntk.msg(
-                    _("Support Fleet Activity Update"),
-                    feedback
-                )
-			return
-		end
-		if tk.yesno("", fmt.f(_("Are you sure you want to get rid of {name}? This cannot be undone."), edata)) then
-			for k, v in ipairs(mem.persons) do
-				if edata.name == v.name then
-					mem.persons[k] = mem.persons[#mem.persons]
-					mem.persons[#mem.persons] = nil
-				end
-			end
-			if npc_id and npcs[npc_id] == edata then
-				evt.npcRm(npc_id)
-				npcs[npc_id] = nil
-			end
-			shiplog.append(logidstr, fmt.f(_("You abandoned '{name}' ({ship})."), edata))
-		end
-    end
-end
-
 local function fireEscort(edata, npc_id)
-	for k, v in ipairs(mem.persons) do
-		if edata.name == v.name then
-			mem.persons[k] = mem.persons[#mem.persons]
-			mem.persons[#mem.persons] = nil
-		end
-	end
-	if npc_id and npcs[npc_id] == edata then
-		evt.npcRm(npc_id)
-		npcs[npc_id] = nil
-	end
-	shiplog.append(logidstr, fmt.f(_("You abandoned '{name}' ({ship})."), edata))
+   for k, v in ipairs(mem.persons) do
+      if edata.name == v.name then
+         mem.persons[k] = mem.persons[#mem.persons]
+         mem.persons[#mem.persons] = nil
+      end
+   end
+   if npc_id and npcs[npc_id] == edata then
+      evt.npcRm(npc_id)
+      npcs[npc_id] = nil
+   end
+   shiplog.append(logidstr, fmt.f(_("You abandoned '{name}' ({ship})."), edata))
 end
 
 -- calculates how much the player has to pay for an upgrade on this character if the thing to buy costs newprice
 local function calculateUpgrade( character, newprice )
-	-- current balance
-	local balance = character.ship:price() + character.wallet - character.debt
+   -- current balance
+   local balance = character.ship:price() + character.wallet - character.debt
 
-	-- how much the player would normally have to cover
-	local remaining = balance - newprice
-	local upgrade_amount = math.min(newprice / 2, 1475e3) -- minimum cost is half price or 375, whichever is less
-	if remaining < 0 then
-		return upgrade_amount
-	end
+   -- how much the player would normally have to cover
+   local remaining = balance - newprice
+   local upgrade_amount = math.min(newprice / 2, 1475e3) -- minimum cost is half price or 375, whichever is less
+   if remaining < 0 then
+      return upgrade_amount
+   end
 
-	-- this scaling formula makes the player pay more if the escort is poor
-	-- so if you're missing 1 out of 5 million you pay 200k (or the minimum), but if you're missing 2 out of 5 you pay 800k
-	-- this is to incentivize paying for the cheaper ship if you can't really afford an upgrade
-	local rounding_factor = 5e3	-- get nice even numbers
+   -- this scaling formula makes the player pay more if the escort is poor
+   -- so if you're missing 1 out of 5 million you pay 200k (or the minimum), but if you're missing 2 out of 5 you pay 800k
+   -- this is to incentivize paying for the cheaper ship if you can't really afford an upgrade
+   local rounding_factor = 5e3   -- get nice even numbers
 
-	-- otherwise it will cost as much as is proportionately missing from the balance to cover
-	return math.floor(math.min( newprice,
-		(math.abs(remaining * (remaining / newprice)) / rounding_factor
-	) * rounding_factor))
+   -- otherwise it will cost as much as is proportionately missing from the balance to cover
+   return math.floor(math.min( newprice,
+      (math.abs(remaining * (remaining / newprice)) / rounding_factor
+   ) * rounding_factor))
 end
 
 -- pay for an upgrade for the escort
 -- shipchoice should be a { ship: <string>, credits: <full_price> } and can have a royalty field
 local function escort_buyUpgrade( persona, shipchoice)
-	-- calculate the money
-	local the_price = calculateUpgrade( persona, shipchoice.price )
+   -- calculate the money
+   local the_price = calculateUpgrade( persona, shipchoice.price )
 
-	-- take the money
-	player.pay(-the_price)
-	-- reset escort debt and reduce funds
-	persona.debt = 0
-	persona.wallet = persona.wallet / 2
-	-- calculate a standard royalty on the ship if none provided
-	shipchoice.royalty = shipchoice.royalty or math.min(0.95, 0.19 + 0.07 * shipchoice.actual:size())
+   -- take the money
+   player.pay(-the_price)
+   -- reset escort debt and reduce funds
+   persona.debt = 0
+   persona.wallet = persona.wallet / 2
+   -- calculate a standard royalty on the ship if none provided
+   shipchoice.royalty = shipchoice.royalty or math.min(0.95, 0.19 + 0.07 * shipchoice.actual:size())
 
-	-- get the ship and create a fitting
-	persona.ship = ship.get(shipchoice.ship)
-	local _n, deposit = persona.ship:price()
-	persona.outfits = {}
-	local used_faction = persona.faction
-	-- pirates have different fittings than regular escorts
-	if persona.ship:tags("pirate") then
-		used_faction = faction.get("Pirate")
-	end
-	local pppp = pilot.add(shipchoice.ship, used_faction)
-	for j, o in ipairs(pppp:outfits()) do
-		deposit = deposit + o:price()
-		persona.outfits[#persona.outfits + 1] = o:nameRaw()
-	end
-	pppp:rm()
-	-- adjust the royalty and deposit
-	persona.royalty = (shipchoice.royalty + 0.05 * shipchoice.royalty * rnd.sigma())
-	persona.deposit = math.floor(deposit - (deposit * persona.royalty)) / 3
-	-- additional adjustments based on fleet "success" and synergy
-	if string.find(shipchoice.ship, persona.dreamship) then
-		-- a discount for dream livers
-		persona.deposit = math.max(100e3, persona.deposit - 1e6)
-		persona.royalty = math.min(persona.royalty, 0.25 + 0.05 * shipchoice.royalty * rnd.threesigma())
-	elseif #mem.persons > 3 and persona then
-		-- punish larger fleet additions if we're dreamy
-		persona.deposit = persona.deposit + #mem.persons * 37500 * persona.ship:size()
-	end
-	-- if we are good money makers, we don't want too much deposit even if the rest of the fleet is in disarray
-	if persona.total_cost - persona.total_profit * persona.experience >= deposit then
-		persona.deposit = math.floor(math.max(persona.deposit, 250e3))
-	end
+   -- get the ship and create a fitting
+   persona.ship = ship.get(shipchoice.ship)
+   local _n, deposit = persona.ship:price()
+   persona.outfits = {}
+   local used_faction = persona.faction
+   -- pirates have different fittings than regular escorts
+   if persona.ship:tags("pirate") then
+      used_faction = faction.get("Pirate")
+   end
+   local pppp = pilot.add(shipchoice.ship, used_faction)
+   for j, o in ipairs(pppp:outfits()) do
+      deposit = deposit + o:price()
+      persona.outfits[#persona.outfits + 1] = o:nameRaw()
+   end
+   pppp:rm()
+   -- adjust the royalty and deposit
+   persona.royalty = (shipchoice.royalty + 0.05 * shipchoice.royalty * rnd.sigma())
+   persona.deposit = math.floor(deposit - (deposit * persona.royalty)) / 3
+   -- additional adjustments based on fleet "success" and synergy
+   if string.find(shipchoice.ship, persona.dreamship) then
+      -- a discount for dream livers
+      persona.deposit = math.max(100e3, persona.deposit - 1e6)
+      persona.royalty = math.min(persona.royalty, 0.25 + 0.05 * shipchoice.royalty * rnd.threesigma())
+   elseif #mem.persons > 3 and persona then
+      -- punish larger fleet additions if we're dreamy
+      persona.deposit = persona.deposit + #mem.persons * 37500 * persona.ship:size()
+   end
+   -- if we are good money makers, we don't want too much deposit even if the rest of the fleet is in disarray
+   if persona.total_cost - persona.total_profit * persona.experience >= deposit then
+      persona.deposit = math.floor(math.max(persona.deposit, 250e3))
+   end
 
-	persona.royalty_percent = persona.royalty * 100
-	persona.deposit_text = fmt.credits(persona.deposit)
-	persona.replacement_text = fmt.credits(persona.deposit * persona.royalty)
+   persona.royalty_percent = persona.royalty * 100
+   persona.deposit_text = fmt.credits(persona.deposit)
+   persona.replacement_text = fmt.credits(persona.deposit * persona.royalty)
 end
 
 function escort_barConversation( persona, npc_id )
-	-- if we have a shipyard, we can buy a ship from here
-	-- if we will be able to buy a ship, we will have to remember
-	-- what ships we chose so that the labels make sense
-	local buy_ship, upgrade_ship
-	local shipyardextra = "" -- we don't want to put nil in formatter
-	if spob.cur():services().shipyard then
-		shipyardextra = _("There's a shipyard here, maybe we can take a look?")
-		-- pick an upgrade
-		local ssold = spob.cur():shipsSold()
-		local esp = persona.ship:price()
-		for ii, sship in ipairs(ssold) do
-			if sship ~= persona.ship then
-				local ssp = sship:price()
-				-- only consider true upgrades or the dream ship
-				if ssp > esp or string.find(sship:nameRaw(), persona.dreamship) then
-					-- always prefer upgrading to the dream ship
-					if string.find(sship:nameRaw(), persona.dreamship) or string.find(persona.dreamship, sship:nameRaw()) then
-						upgrade_ship = { ship = sship:name(), price = sship:price(), actual = sship, index = ii }
-					end
-					-- don't allow upgrades far past our current ship size
-					if not upgrade_ship and ssp > esp and ssp < esp + 1e6 then
-						-- we haven't picked a ship yet, pick this one because it costs more than our ship
-						upgrade_ship = { ship = sship:name(), price = sship:price(), actual = sship, index = ii }
-					elseif upgrade_ship and upgrade_ship.price > ssp and ssp > esp then
-						-- that last ship we picked was too expensive, pick this one instead for the upgrade
-						upgrade_ship = { ship = sship:name(), price = sship:price(), actual = sship, index = ii }
-					end
-				end
+   -- if we have a shipyard, we can buy a ship from here
+   -- if we will be able to buy a ship, we will have to remember
+   -- what ships we chose so that the labels make sense
+   local buy_ship, upgrade_ship
+   local shipyardextra = "" -- we don't want to put nil in formatter
+   if spob.cur():services().shipyard then
+      shipyardextra = _("There's a shipyard here, maybe we can take a look?")
+      -- pick an upgrade
+      local ssold = spob.cur():shipsSold()
+      local esp = persona.ship:price()
+      for ii, sship in ipairs(ssold) do
+         if sship ~= persona.ship then
+            local ssp = sship:price()
+            -- only consider true upgrades or the dream ship
+            if ssp > esp or string.find(sship:nameRaw(), persona.dreamship) then
+               -- always prefer upgrading to the dream ship
+               if string.find(sship:nameRaw(), persona.dreamship) or string.find(persona.dreamship, sship:nameRaw()) then
+                  upgrade_ship = { ship = sship:name(), price = sship:price(), actual = sship, index = ii }
+               end
+               -- don't allow upgrades far past our current ship size
+               if not upgrade_ship and ssp > esp and ssp < esp + 1e6 then
+                  -- we haven't picked a ship yet, pick this one because it costs more than our ship
+                  upgrade_ship = { ship = sship:name(), price = sship:price(), actual = sship, index = ii }
+               elseif upgrade_ship and upgrade_ship.price > ssp and ssp > esp then
+                  -- that last ship we picked was too expensive, pick this one instead for the upgrade
+                  upgrade_ship = { ship = sship:name(), price = sship:price(), actual = sship, index = ii }
+               end
+            end
 
-			end
-		end
-		-- we found a ship but it still looks full price, adjust it here
-		-- technically it looks nil because we aren't reusing the same variable
-		if upgrade_ship then
-			upgrade_ship.credits = fmt.credits(calculateUpgrade(persona, upgrade_ship.price))
-			table.remove(ssold, upgrade_ship.index) -- remove the upgrade from the purchase options
-		end
-		-- hopefully we have an upgrade ship, but we can always get a buy ship if there is a shipyard
-		-- PSYCHE! The shipyard might not sell anything else (or anything at all)
-		-- so let's at least check that first
-		if #ssold > 0 then -- now we're talking, but we're not there yet
-			local sship = pick_one(ssold) -- pick a random ship from the shipyard
-			-- make sure we're not buying the same ship that the escort has,
-			-- the same ship as the upgrade ship, or something that's too expensive
-			if sship:price() < esp + 1e6 and sship ~= persona.ship then
-				-- I know we don't need to nest this but my readability was hurting
-				if not upgrade_ship or sship:nameRaw() ~= upgrade_ship.name then
-					buy_ship = { ship = sship:name(), credits = fmt.credits(calculateUpgrade(persona, sship:price())), price = sship:price(), actual=sship }
-				end
-			end
-		end
-	end
+         end
+      end
+      -- we found a ship but it still looks full price, adjust it here
+      -- technically it looks nil because we aren't reusing the same variable
+      if upgrade_ship then
+         upgrade_ship.credits = fmt.credits(calculateUpgrade(persona, upgrade_ship.price))
+         table.remove(ssold, upgrade_ship.index) -- remove the upgrade from the purchase options
+      end
+      -- hopefully we have an upgrade ship, but we can always get a buy ship if there is a shipyard
+      -- PSYCHE! The shipyard might not sell anything else (or anything at all)
+      -- so let's at least check that first
+      if #ssold > 0 then -- now we're talking, but we're not there yet
+         local sship = pick_one(ssold) -- pick a random ship from the shipyard
+         -- make sure we're not buying the same ship that the escort has,
+         -- the same ship as the upgrade ship, or something that's too expensive
+         if sship:price() < esp + 1e6 and sship ~= persona.ship then
+            -- I know we don't need to nest this but my readability was hurting
+            if not upgrade_ship or sship:nameRaw() ~= upgrade_ship.name then
+               buy_ship = { ship = sship:name(), credits = fmt.credits(calculateUpgrade(persona, sship:price())), price = sship:price(), actual=sship }
+            end
+         end
+      end
+   end
 
-	local message = ""
+   local message = ""
 
-	-- check if everyone is in their dream ship or at least a favorite ship
-	for _i, pers in ipairs(mem.persons) do
-		local myship = pers.ship:nameRaw()
-		local favourite = pick_favorite_ship(pers)
-		if
-				not string.find(myship, favourite)
-				and not string.find(favourite, myship)
-				and not string.find(myship, pers.dreamship)
-		then
-			if pers == persona and rnd.rnd(0, 1) == 1 then -- commander is more likely to complain about his own dream ship
-				message = fmt.f(_("You know, I'd really love a {dreamship}."), persona) .. " " .. shipyardextra
-			elseif rnd.rnd(1,3) == 2 and pers ~= persona then -- don't always say it, and randomly pick who is complaining
-				message = fmt.f(_("{name} really wants a {dreamship} and isn't very happy with the {ship}, at least not as it stands. "), pers) .. shipyardextra
-			end
-		end
-	end
+   -- check if everyone is in their dream ship or at least a favorite ship
+   for _i, pers in ipairs(mem.persons) do
+      local myship = pers.ship:nameRaw()
+      local favourite = pick_favorite_ship(pers)
+      if
+            not string.find(myship, favourite)
+            and not string.find(favourite, myship)
+            and not string.find(myship, pers.dreamship)
+      then
+         if pers == persona and rnd.rnd(0, 1) == 1 then -- commander is more likely to complain about his own dream ship
+            message = fmt.f(_("You know, I'd really love a {dreamship}."), persona) .. " " .. shipyardextra
+         elseif rnd.rnd(1,3) == 2 and pers ~= persona then -- don't always say it, and randomly pick who is complaining
+            message = fmt.f(_("{name} really wants a {dreamship} and isn't very happy with the {ship}, at least not as it stands. "), pers) .. shipyardextra
+         end
+      end
+   end
 
-	-- now figure out which choices to show
-	local choices = {}
-	local approachtext = fmt.f(_([[Hi {name}. What do you need?]]), {name = player.name()})
-	if persona.commander then -- the commander is chummy
-		approachtext = fmt.f(_([[Hello {captain}. How can I be of service? {message}]]),
-		{
-			message = message,
-			captain = pick_one({
-				_("Captain"),_("Captain"),_("Captain"),_("captain"),_("captain"),
-				_("Commander"),_("Commander"),_("commander"),_("commander"),_("commander"),
-				_("Commodore"),_("commodore"),_("commodore"),_("commodore"),_("commodore"),
-				_("admiral"),
-				_("general"),
-				_("chief"),_("chief"),_("Chief"),
-				_("chief commander"),
-				fmt.f(_([["the Legend" of {shipname}]]), {shipname = player.pilot():name()}),
-				fmt.f(_("{name}"), {name = player.name()}),
-				_("cap'n"),_("cap'n"),_("Cap'n"),
-				_("captian"),
-				_("captiain"),
-				_("captiaine"),
-				_("cap'n Hook"),
-				_("supreme leader"),
-				_("supreme commander"),
-				_("you generous general"),
-				_("you admirable admiral"),
-				_("you cheeky little bugger"),
-				_("you heroic slayer"),
-				_("you brave lion"),
-				_("glorious bastard"),
-				_("fearsome fiend"),
-				_("fearsome friend"),
-			})
-		})
-		if persona.active then
-			table.insert(choices, { _("Take a break"), 	"leave_begin" } )
-		else
-			table.insert(choices, { _("Return to duty"), "leave_end" } )
-		end
-	else
-		if persona.active then
-			table.insert(choices, { _("Take a break"), "despawn" } )
-		else
-			table.insert(choices, { _("Return to duty"), "respawn" } )
-		end
-	end
-	-- don't let the player buy the upgrades if he can't afford a whole new ship
-	-- since the escort is going to probably die soon anyway and ask for reimbursement
-	if buy_ship and player.credits() > buy_ship.price then
-		table.insert(choices, { fmt.f(_("Buy {ship} ({credits})"), buy_ship ), "purchase" })
-	end
-	if upgrade_ship and player.credits() > upgrade_ship.price then
-		table.insert(choices, { fmt.f(_("Upgrade to {ship} ({credits})"), upgrade_ship), "upgrade" })
-	end
+   -- now figure out which choices to show
+   local choices = {}
+   local approachtext = fmt.f(_([[Hi {name}. What do you need?]]), {name = player.name()})
+   if persona.commander then -- the commander is chummy
+      approachtext = fmt.f(_([[Hello {captain}. How can I be of service? {message}]]),
+      {
+         message = message,
+         captain = pick_one({
+            _("Captain"),_("Captain"),_("Captain"),_("captain"),_("captain"),
+            _("Commander"),_("Commander"),_("commander"),_("commander"),_("commander"),
+            _("Commodore"),_("commodore"),_("commodore"),_("commodore"),_("commodore"),
+            _("admiral"),
+            _("general"),
+            _("chief"),_("chief"),_("Chief"),
+            _("chief commander"),
+            fmt.f(_([["the Legend" of {shipname}]]), {shipname = player.pilot():name()}),
+            fmt.f(_("{name}"), {name = player.name()}),
+            _("cap'n"),_("cap'n"),_("Cap'n"),
+            _("captian"),
+            _("captiain"),
+            _("captiaine"),
+            _("cap'n Hook"),
+            _("supreme leader"),
+            _("supreme commander"),
+            _("you generous general"),
+            _("you admirable admiral"),
+            _("you cheeky little bugger"),
+            _("you heroic slayer"),
+            _("you brave lion"),
+            _("glorious bastard"),
+            _("fearsome fiend"),
+            _("fearsome friend"),
+         })
+      })
+      if persona.active then
+         table.insert(choices, { _("Take a break"),    "leave_begin" } )
+      else
+         table.insert(choices, { _("Return to duty"), "leave_end" } )
+      end
+   else
+      if persona.active then
+         table.insert(choices, { _("Take a break"), "despawn" } )
+      else
+         table.insert(choices, { _("Return to duty"), "respawn" } )
+      end
+   end
+   -- don't let the player buy the upgrades if he can't afford a whole new ship
+   -- since the escort is going to probably die soon anyway and ask for reimbursement
+   if buy_ship and player.credits() > buy_ship.price then
+      table.insert(choices, { fmt.f(_("Buy {ship} ({credits})"), buy_ship ), "purchase" })
+   end
+   if upgrade_ship and player.credits() > upgrade_ship.price then
+      table.insert(choices, { fmt.f(_("Upgrade to {ship} ({credits})"), upgrade_ship), "upgrade" })
+   end
 
-	-- standard choices
-	local pilotlabel = "Pilot"
-	if persona.commander then pilotlabel = "Commander" end
-	table.insert(choices, { fmt.f(_("Fire {pilot}"), {pilot=pilotlabel} ), "fire" } )
-	table.insert(choices, { _("Dismiss"), "end" })
-		
-	-- non commander pilots might be disobedient
-	local disobedience = pick_one({
-		_([[Actually, I think I'll hang back for a bit and read the instruction manual.]]),
-		_([[Actually, I think I'll hang back for a bit and read the news.]]),
-		_([[Actually, I think I'll hang back a bit.]]),
-		_([[I'm on a break.]]),
-		_([[What part of "I'm on a break" don't you understand?]]),
-		_([[What part of me being on a break don't you understand?]]),
-		_([[I'm actually kind of enjoying this break.]]),
-		_([[Now that I'm not cooped up in a ship, I think I'll relax for a little while.]]),
-		_([[Why don't you come back later, I'm busy.]]),
-		_([[Why don't you ask me again later, I'm tired.]]),
-		_([[Come back later, I have a video call with someone soon and it's going to be expensive.]]),
-		_([[Ask me later, I don't feel like it right now.]]),
-		_([[Come back later, my left phalange is defective and needs to be replaced.]]),
-		_([[You know, I'd love to help you, but I don't want to.]]),
-		_([[Don't you think I could use some time to read the instruction manual?]]),
-		_([[You know, I'm actually feeling pretty good over here. I think I'll hang back.]]),
-		_([[You're not the boss of me!]]),
-		fmt.f(_([[Where's my {dreamship}?]]), persona),
-		fmt.f(_([[Did you get my {dreamship}?]]), persona),
-		fmt.f(_([[Did you buy me a {dreamship} yet?]]), persona),
-		fmt.f(_([[Sure, let me just get in my {dreamship}...]]), persona),
-		fmt.f(_([[Sure, let me just get in my {dreamship}... Oh wait a minute, I don't have one.]]), persona),
-		fmt.f(_([[Oh, you mean in that {dreamship} that I don't have?]]), persona),
-		fmt.f(_([[Listen pal, {name}'s not going back to work until {name} gets a {dreamship}, got it?]]), persona),
-	})
+   -- standard choices
+   local pilotlabel = "Pilot"
+   if persona.commander then pilotlabel = "Commander" end
+   table.insert(choices, { fmt.f(_("Fire {pilot}"), {pilot=pilotlabel} ), "fire" } )
+   table.insert(choices, { _("Dismiss"), "end" })
+      
+   -- non commander pilots might be disobedient
+   local disobedience = pick_one({
+      _([[Actually, I think I'll hang back for a bit and read the instruction manual.]]),
+      _([[Actually, I think I'll hang back for a bit and read the news.]]),
+      _([[Actually, I think I'll hang back a bit.]]),
+      _([[I'm on a break.]]),
+      _([[What part of "I'm on a break" don't you understand?]]),
+      _([[What part of me being on a break don't you understand?]]),
+      _([[I'm actually kind of enjoying this break.]]),
+      _([[Now that I'm not cooped up in a ship, I think I'll relax for a little while.]]),
+      _([[Why don't you come back later, I'm busy.]]),
+      _([[Why don't you ask me again later, I'm tired.]]),
+      _([[Come back later, I have a video call with someone soon and it's going to be expensive.]]),
+      _([[Ask me later, I don't feel like it right now.]]),
+      _([[Come back later, my left phalange is defective and needs to be replaced.]]),
+      _([[You know, I'd love to help you, but I don't want to.]]),
+      _([[Don't you think I could use some time to read the instruction manual?]]),
+      _([[You know, I'm actually feeling pretty good over here. I think I'll hang back.]]),
+      _([[You're not the boss of me!]]),
+      fmt.f(_([[Where's my {dreamship}?]]), persona),
+      fmt.f(_([[Did you get my {dreamship}?]]), persona),
+      fmt.f(_([[Did you buy me a {dreamship} yet?]]), persona),
+      fmt.f(_([[Sure, let me just get in my {dreamship}...]]), persona),
+      fmt.f(_([[Sure, let me just get in my {dreamship}... Oh wait a minute, I don't have one.]]), persona),
+      fmt.f(_([[Oh, you mean in that {dreamship} that I don't have?]]), persona),
+      fmt.f(_([[Listen pal, {name}'s not going back to work until {name} gets a {dreamship}, got it?]]), persona),
+   })
 
-	vn.clear()
-	vn.scene()
-	local escort = vn.newCharacter ( persona.name, {image=persona.vncharacter } )
-	vn.transition()
-	vn.na(getCredentials(persona))
-	escort(approachtext)
-	-- maybe here the escort can say something like "I saw <ship> in the shipyard"
-	vn.na(approachtext .. "\n" .. getFinances(persona))
-	vn.menu( choices )
+   vn.clear()
+   vn.scene()
+   local escort = vn.newCharacter ( persona.name, {image=persona.vncharacter } )
+   vn.transition()
+   vn.na(getCredentials(persona))
+   escort(approachtext)
+   -- maybe here the escort can say something like "I saw <ship> in the shipyard"
+   vn.na(approachtext .. "\n" .. getFinances(persona))
+   vn.menu( choices )
 
-	vn.label("leave_begin")
-	vn.func( function ()
-		persona.active = not persona.active
-		for _i, pers in ipairs(mem.persons) do
-			pers.active = persona.active
-			pers.portrait = pers.portrait_offduty
-			if not pers.commander then
-				pers.vncharacter = portrait.getFullPath(pers.portrait)
-			end
-		end
-		-- commander takes off the uniform
-		persona.portrait = persona.portrait_offduty
-	end )
-	escort(_([[Always nice to take a break for a little while. Just let me know when you need an eye on your back before you need it.]]))
-	vn.na(_([[You have placed your commander and the rest of the support fleet on temporary leave.]]))
-	vn.done()
+   vn.label("leave_begin")
+   vn.func( function ()
+      persona.active = not persona.active
+      for _i, pers in ipairs(mem.persons) do
+         pers.active = persona.active
+         pers.portrait = pers.portrait_offduty
+         if not pers.commander then
+            pers.vncharacter = portrait.getFullPath(pers.portrait)
+         end
+      end
+      -- commander takes off the uniform
+      persona.portrait = persona.portrait_offduty
+   end )
+   escort(_([[Always nice to take a break for a little while. Just let me know when you need an eye on your back before you need it.]]))
+   vn.na(_([[You have placed your commander and the rest of the support fleet on temporary leave.]]))
+   vn.done()
 
-	vn.label("leave_end")
-	vn.func( function ()
-		persona.active = not persona.active
-		for _i, pers in ipairs(mem.persons) do
-			pers.active = persona.active
-			pers.portrait = pers.portrait_onduty
-			if not pers.commander then
-				pers.vncharacter = portrait.getFullPath(pers.portrait)
-			end
-		end
-		-- commander suits up
-		persona.portrait = pilot_portrait(persona.commander)
-	end )
-	escort(_([[It was nice while it lasted, but vacation doesn't bring in the credits. Point us to the ships and salvage and we'll watch your back and split the profits.]]))
-	vn.na(_([[Your commander and the support fleet has been ordered back to active duty.]]))
-	vn.done()
+   vn.label("leave_end")
+   vn.func( function ()
+      persona.active = not persona.active
+      for _i, pers in ipairs(mem.persons) do
+         pers.active = persona.active
+         pers.portrait = pers.portrait_onduty
+         if not pers.commander then
+            pers.vncharacter = portrait.getFullPath(pers.portrait)
+         end
+      end
+      -- commander suits up
+      persona.portrait = pilot_portrait(persona.commander)
+   end )
+   escort(_([[It was nice while it lasted, but vacation doesn't bring in the credits. Point us to the ships and salvage and we'll watch your back and split the profits.]]))
+   vn.na(_([[Your commander and the support fleet has been ordered back to active duty.]]))
+   vn.done()
 
-	vn.label("despawn")
-	vn.func( function()
-		if not persona.portrait_offduty and persona.commander then
-			persona.portrait_offduty = string.gsub(string.gsub(persona.vncharacter, ".webp", "n.webp"), "_nogogn", "n_nogog")
-		end
-		persona.portrait = persona.portrait_offduty
-		if not persona.commander then
-			persona.vncharacter = portrait.getFullPath(persona.portrait)
-		end
-		persona.active = false
-	end )
-	escort(_([[Yeah, sure, whatever.]]))
-	vn.done()
+   vn.label("despawn")
+   vn.func( function()
+      if not persona.portrait_offduty and persona.commander then
+         persona.portrait_offduty = string.gsub(string.gsub(persona.vncharacter, ".webp", "n.webp"), "_nogogn", "n_nogog")
+      end
+      persona.portrait = persona.portrait_offduty
+      if not persona.commander then
+         persona.vncharacter = portrait.getFullPath(persona.portrait)
+      end
+      persona.active = false
+   end )
+   escort(_([[Yeah, sure, whatever.]]))
+   vn.done()
 
-	vn.label("respawn")
-	vn.func( function()
-		local has_commander = nil
-		for _i, other in ipairs(mem.persons) do
-			if other.commander then
-				has_commander = other
-			end
-		end
-		-- if we're not in a nice ship, we don't really wanna work, do we?
-		if rnd.rnd(1, 7) == 7
-			or string.find(persona.ship:nameRaw(), persona.dreamship)
-			or string.find(persona.ship:nameRaw(), pick_favorite_ship(persona))
-			or string.find(pick_favorite_ship(persona), persona.ship:nameRaw())
-			or has_commander and rnd.rnd(1,3) == 3 -- having a commander can increase the odds though
-			then
-			persona.portrait = persona.portrait_onduty
-			persona.vncharacter = portrait.getFullPath(persona.portrait)
-			persona.active = true
-		else
-			vn.jump("disobedient")
-		end
-	end )
-	escort(_([[Oh, okay... You got it, boss.]]))
-	vn.done()
+   vn.label("respawn")
+   vn.func( function()
+      local has_commander = nil
+      for _i, other in ipairs(mem.persons) do
+         if other.commander then
+            has_commander = other
+         end
+      end
+      -- if we're not in a nice ship, we don't really wanna work, do we?
+      if rnd.rnd(1, 7) == 7
+         or string.find(persona.ship:nameRaw(), persona.dreamship)
+         or string.find(persona.ship:nameRaw(), pick_favorite_ship(persona))
+         or string.find(pick_favorite_ship(persona), persona.ship:nameRaw())
+         or has_commander and rnd.rnd(1,3) == 3 -- having a commander can increase the odds though
+         then
+         persona.portrait = persona.portrait_onduty
+         persona.vncharacter = portrait.getFullPath(persona.portrait)
+         persona.active = true
+      else
+         vn.jump("disobedient")
+      end
+   end )
+   escort(_([[Oh, okay... You got it, boss.]]))
+   vn.done()
 
-	vn.label("purchase")
-	vn.func( function ()
-		escort_buyUpgrade(persona, buy_ship)
-		-- the escort changes outfits after getting a new ship
-		persona.portrait_onduty = pilot_portrait(persona.commander)
-		persona.portrait = persona.portrait_onduty
-	end )
-	escort(_([["Always nice to get a change of pace. Hopefully I remember how to fly it!"]]))
-	vn.done()
-	vn.label("upgrade")
-	vn.func( function ()
-		escort_buyUpgrade(persona, upgrade_ship)
-		-- the escort changes outfits after getting an upgrade
-		persona.portrait_onduty = pilot_portrait(persona.commander)
-		persona.portrait = persona.portrait_onduty
-	end )
-	escort(_([["Nice! It's about time I got an upgrade."]]))
-	vn.done()
-	vn.label("fire")
-	escort(_([[Are you sure you want to do that? You know that once I'm gone, I'm never working for you again.]]))
-	vn.menu( {
-		{ _("Fire Pilot") , "fire_yes" },
-		{ _("Nevermind") , "end" }
-	} )
-	vn.done()
-	vn.label("fire_yes")
-	escort(_([[I can't believe it. So ungrateful. I'm better off without you.]]))
-	vn.na(fmt.f(_([[{name}'s employment has been terminated.]]), persona))
-	vn.func( function ()
-		fireEscort(persona, npc_id)
-	end )
-	vn.done()
-	vn.label("disobedient")
-	escort(disobedience)
-	vn.done()
-	vn.label("end")
-	escort(_([[Alright Captain. Nice talking to you.]]))
-	vn.done()
-	vn.run()
+   vn.label("purchase")
+   vn.func( function ()
+      escort_buyUpgrade(persona, buy_ship)
+      -- the escort changes outfits after getting a new ship
+      persona.portrait_onduty = pilot_portrait(persona.commander)
+      persona.portrait = persona.portrait_onduty
+   end )
+   escort(_([["Always nice to get a change of pace. Hopefully I remember how to fly it!"]]))
+   vn.done()
+   vn.label("upgrade")
+   vn.func( function ()
+      escort_buyUpgrade(persona, upgrade_ship)
+      -- the escort changes outfits after getting an upgrade
+      persona.portrait_onduty = pilot_portrait(persona.commander)
+      persona.portrait = persona.portrait_onduty
+   end )
+   escort(_([["Nice! It's about time I got an upgrade."]]))
+   vn.done()
+   vn.label("fire")
+   escort(_([[Are you sure you want to do that? You know that once I'm gone, I'm never working for you again.]]))
+   vn.menu( {
+      { _("Fire Pilot") , "fire_yes" },
+      { _("Nevermind") , "end" }
+   } )
+   vn.done()
+   vn.label("fire_yes")
+   escort(_([[I can't believe it. So ungrateful. I'm better off without you.]]))
+   vn.na(fmt.f(_([[{name}'s employment has been terminated.]]), persona))
+   vn.func( function ()
+      fireEscort(persona, npc_id)
+   end )
+   vn.done()
+   vn.label("disobedient")
+   escort(disobedience)
+   vn.done()
+   vn.label("end")
+   escort(_([[Alright Captain. Nice talking to you.]]))
+   vn.done()
+   vn.run()
 end
 
 function approachHiredScav(npc_id)
@@ -3025,80 +2911,80 @@ function approachHiredScav(npc_id)
     end
 
 --    pilot_askUpgrades(edata, npc_id)
-	escort_barConversation(edata, npc_id)
+   escort_barConversation(edata, npc_id)
 end
 
 
 -- searches for a valid leader type in the field
 -- returns the leader if found
 function fall_in( edata )
-	if not edata.pilot or not edata.pilot:exists() then return nil end
-	-- find a leader
-	for i, persona in ipairs(mem.persons) do
-		local candidate = persona.pilot
-		if persona.commander and candidate and candidate:exists() and not candidate:leader() and candidate ~= edata.pilot and candidate:leader() ~= edata.pilot then
-			-- this "candidate" is our leader, already on a mission, join them
-			edata.pilot:setLeader(candidate)
---			speak(edata, "join", persona)
-			local candmem = candidate:memory()
-			candmem.aggressive = true
-			return candidate
-		end
-	end
+   if not edata.pilot or not edata.pilot:exists() then return nil end
+   -- find a leader
+   for i, persona in ipairs(mem.persons) do
+      local candidate = persona.pilot
+      if persona.commander and candidate and candidate:exists() and not candidate:leader() and candidate ~= edata.pilot and candidate:leader() ~= edata.pilot then
+         -- this "candidate" is our leader, already on a mission, join them
+         edata.pilot:setLeader(candidate)
+--         speak(edata, "join", persona)
+         local candmem = candidate:memory()
+         candmem.aggressive = true
+         return candidate
+      end
+   end
 
-	-- we didn't find a leader
-	return nil
+   -- we didn't find a leader
+   return nil
 end
 
 function enlist_followers( edata )
-	local enlisted = 0
-	-- no other leader found (or we are the commander), let's enlist help ourselves from lower ranks
-	for i, persona in ipairs(mem.persons) do
-		local follower = persona.pilot
-		if follower and rnd.rnd() > 0.5 and follower ~= edata.pilot and follower:exists() and follower:leader() ~= edata.pilot and (edata.commander or edata.experience >= persona.experience) then
-			speak(persona, "join", edata)
-			follower:setLeader(edata.pilot)
-			enlisted = enlisted + 1
-		end
-	end
+   local enlisted = 0
+   -- no other leader found (or we are the commander), let's enlist help ourselves from lower ranks
+   for i, persona in ipairs(mem.persons) do
+      local follower = persona.pilot
+      if follower and rnd.rnd() > 0.5 and follower ~= edata.pilot and follower:exists() and follower:leader() ~= edata.pilot and (edata.commander or edata.experience >= persona.experience) then
+         speak(persona, "join", edata)
+         follower:setLeader(edata.pilot)
+         enlisted = enlisted + 1
+      end
+   end
 
-	-- we aren't a real commander, so we need anything we can get
-	if not edata.commander then
-		-- we aren't qualified to lead, request more reinforcements
-		for _i, follower in ipairs(player.pilot():followers()) do
-			-- we don't enlist fighters and enlistment depends on our experience up to max 2/3 chance
-			if not follower:flags("carried") and rnd.rnd() < math.floor(math.min(0.67, edata.experience / 100)) then
-				follower:setLeader(edata.pilot)
-				enlisted = enlisted + 1
-			end
-		end
-		if enlisted > 0 then
-			edata.pilot:comm(fmt.f(_("I'll take these {number} with me then."), {number = enlisted}))
-		else
-			edata.pilot:comm(fmt.f(_("Oh... Okay."), {number = enlisted}))
-		end
-	end
+   -- we aren't a real commander, so we need anything we can get
+   if not edata.commander then
+      -- we aren't qualified to lead, request more reinforcements
+      for _i, follower in ipairs(player.pilot():followers()) do
+         -- we don't enlist fighters and enlistment depends on our experience up to max 2/3 chance
+         if not follower:flags("carried") and rnd.rnd() < math.floor(math.min(0.67, edata.experience / 100)) then
+            follower:setLeader(edata.pilot)
+            enlisted = enlisted + 1
+         end
+      end
+      if enlisted > 0 then
+         edata.pilot:comm(fmt.f(_("I'll take these {number} with me then."), {number = enlisted}))
+      else
+         edata.pilot:comm(fmt.f(_("Oh... Okay."), {number = enlisted}))
+      end
+   end
 end
 
 local function escort_spaceMenu(edata, index)
     local approachtext = _([[Would you like to do something with this pilot?
 
 Pilot credentials:]])
-	-- so it costs around 3 million to commend a junior lieutenant in a destroyer
-	local tip_amount = edata.ship:size() * 5e3 * math.ceil(3 + edata.experience * (0.11 + (edata.experience * 0.0667)))
-	local tip_max = 10e6
+   -- so it costs around 3 million to commend a junior lieutenant in a destroyer
+   local tip_amount = edata.ship:size() * 5e3 * math.ceil(3 + edata.experience * (0.11 + (edata.experience * 0.0667)))
+   local tip_max = 10e6
     tip_amount = math.min(tip_amount, tip_max)
 
     if player.pilot():credits() < tip_amount then
         return
     end
-	local commendation_label = _("Commend efforts")
-	local commendation_prompt = _("An effective commendation of a {rank} of this calibre will cost {price} and increase this {rank}s favor with the {ship}. Are you sure you want to commend the efforts of {rank} {name} of {ship}?")
-	if edata.experience < 10 then
-		commendation_label = _("Compliment ship")
-		commendation_prompt = _("An effective compliment for a {rank} of this calibre will require a symbolic gift worth {price}. This will increase this {rank}s favor with the {ship}, increasing the likelihood of this {rank} purchasing this ship as a replacement. Flying a favorite ship will make the {rank} more happy and generous. Are you sure you want to compliment {rank} {name}'s {ship}, thereby increasing the favor of this ship for this pilot?")
-	end
-	local aimem = edata.pilot:memory()
+   local commendation_label = _("Commend efforts")
+   local commendation_prompt = _("An effective commendation of a {rank} of this calibre will cost {price} and increase this {rank}s favor with the {ship}. Are you sure you want to commend the efforts of {rank} {name} of {ship}?")
+   if edata.experience < 10 then
+      commendation_label = _("Compliment ship")
+      commendation_prompt = _("An effective compliment for a {rank} of this calibre will require a symbolic gift worth {price}. This will increase this {rank}s favor with the {ship}, increasing the likelihood of this {rank} purchasing this ship as a replacement. Flying a favorite ship will make the {rank} more happy and generous. Are you sure you want to compliment {rank} {name}'s {ship}, thereby increasing the favor of this ship for this pilot?")
+   end
+   local aimem = edata.pilot:memory()
     local n, _s =
         tk.choice(
         "",
@@ -3118,24 +3004,24 @@ Pilot credentials:]])
                 )
             )
      then
-        --	  mem.persons[index].total_profit = mem.persons[index].total_profit - tip_amount -- do the credit side now since debit comes later
+        --     mem.persons[index].total_profit = mem.persons[index].total_profit - tip_amount -- do the credit side now since debit comes later
         if player.credits() < tip_amount * 1.25 then
-			vntk.msg(
+         vntk.msg(
                     _("Not Enough Money"),
                     _("It would be financially irresponsible to commend this pilot, as you risk not being able to cover the replacement fee which is necessary to ensure the retrieval of your pilot after emergency ejection.")
                 )
-			return
-		end
-		
-		shiplog.append(
+         return
+      end
+      
+      shiplog.append(
             logidstr,
             fmt.f(
                 _("You commended '{name}' {credits} ({ship})."),
                 {name = edata.name, ship = edata.ship, credits = fmt.credits(tip_amount)}
             )
         )
-		edata.experience = edata.experience + 0.25
-		remember_ship(edata, edata.ship:nameRaw(), 3)
+      edata.experience = edata.experience + 0.25
+      remember_ship(edata, edata.ship:nameRaw(), 3)
         player.pilot():credits(-tip_amount)
         edata.wallet = edata.wallet + tip_amount
         if edata.pilot ~= nil and edata.pilot:exists() then
@@ -3143,61 +3029,61 @@ Pilot credentials:]])
         end
         mem.persons[index].total_cost = mem.persons[index].total_cost + tip_amount
     elseif n == 2 then
-		edata.pilot:setLeader(nil)
-		local allow_leadership = edata.experience > edata.ship:size() * 16 and rnd.rnd(0, 1) == 1
-		-- try to assume leadership, depends on random chance and our experience level unless we are a commander
-		if edata.commander or allow_leadership then
-			edata.pilot:changeAI("escort_guardian")
-			aimem = edata.pilot:memory()
-			aimem.aggressive = true
-			if edata.experience > 50 then
-				aimem.formation = "circle"
-			elseif edata.experience > 30 then
-				aimem.formation = "wedge"
-			elseif edata.experience > 20 then
-				aimem.formation = "cross"
-			elseif edata.experience > 10 then
-				aimem.formation = "vee"
-			elseif edata.experience > 2 then
-				aimem.formation = "wall"
-			else
-				aimem.formation = nil
-			end
-			-- since we are actively guarding the player, let's make sure we pick up player attacked
-			-- only the commander can remove a hook manually
-			if edata.commander and edata.commander.hook then
-				hook.rm(edata.commander.hook)
-			end
-			-- we can only set a hook if none exists, since the commander may have set one already
-			if edata.commander and edata.commander.hook == nil then
-				edata.commander.hook = hook.pilot(player.pilot(), "attacked", "player_attacked", edata.pilot)
-			end
-			-- if we are the chosen commander of our squadron then enlist followers
-			if (fall_in(edata)) == nil and edata.pilot and edata.pilot:exists() then
-				hook.timer(2, "enlist_followers", edata)
-			end
-		else
-			if fall_in(edata) == nil then
-				edata.pilot:setLeader(player.pilot())
-			end
-			edata.pilot:changeAI("pirate")
-			edata.pilot:memory().leadermaxdist = 500 * edata.pilot:ship():size()
-		end
-		edata.pilot:memory().atk_board = true
+      edata.pilot:setLeader(nil)
+      local allow_leadership = edata.experience > edata.ship:size() * 16 and rnd.rnd(0, 1) == 1
+      -- try to assume leadership, depends on random chance and our experience level unless we are a commander
+      if edata.commander or allow_leadership then
+         edata.pilot:changeAI("escort_guardian")
+         aimem = edata.pilot:memory()
+         aimem.aggressive = true
+         if edata.experience > 50 then
+            aimem.formation = "circle"
+         elseif edata.experience > 30 then
+            aimem.formation = "wedge"
+         elseif edata.experience > 20 then
+            aimem.formation = "cross"
+         elseif edata.experience > 10 then
+            aimem.formation = "vee"
+         elseif edata.experience > 2 then
+            aimem.formation = "wall"
+         else
+            aimem.formation = nil
+         end
+         -- since we are actively guarding the player, let's make sure we pick up player attacked
+         -- only the commander can remove a hook manually
+         if edata.commander and edata.commander.hook then
+            hook.rm(edata.commander.hook)
+         end
+         -- we can only set a hook if none exists, since the commander may have set one already
+         if edata.commander and edata.commander.hook == nil then
+            edata.commander.hook = hook.pilot(player.pilot(), "attacked", "player_attacked", edata.pilot)
+         end
+         -- if we are the chosen commander of our squadron then enlist followers
+         if (fall_in(edata)) == nil and edata.pilot and edata.pilot:exists() then
+            hook.timer(2, "enlist_followers", edata)
+         end
+      else
+         if fall_in(edata) == nil then
+            edata.pilot:setLeader(player.pilot())
+         end
+         edata.pilot:changeAI("pirate")
+         edata.pilot:memory().leadermaxdist = 500 * edata.pilot:ship():size()
+      end
+      edata.pilot:memory().atk_board = true
     elseif n == 3 then
-		local pp = player.pilot()
-		for _i, follower in ipairs(edata.pilot:followers()) do
-			follower:setLeader(pp)
-			follower:changeAI("pirate")
-			aimem.leadermaxdist = 500 * follower:ship():size()
-		end
-		edata.pilot:changeAI("pirate")
+      local pp = player.pilot()
+      for _i, follower in ipairs(edata.pilot:followers()) do
+         follower:setLeader(pp)
+         follower:changeAI("pirate")
+         aimem.leadermaxdist = 500 * follower:ship():size()
+      end
+      edata.pilot:changeAI("pirate")
         edata.pilot:setLeader(pp)
-		aimem.atk_board = true
-		aimem.aggressive = false
-		aimem.careful = true
-		aimem.leadermaxdist = 500 * edata.pilot:ship():size()
-		aimem.enemyclose = 300 * edata.pilot:ship():size()
+      aimem.atk_board = true
+      aimem.aggressive = false
+      aimem.careful = true
+      aimem.leadermaxdist = 500 * edata.pilot:ship():size()
+      aimem.enemyclose = 300 * edata.pilot:ship():size()
     end
 end
 
