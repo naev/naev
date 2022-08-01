@@ -406,7 +406,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
          /* Check to see if key is a number. */
          xmlr_attr_strd(node,"keynum",num);
          if (num != NULL) {
-            lua_pushnumber(L, atof(name));
+            lua_pushnumber(L, strtod( name, NULL ));
             free(num);
          }
          else if ( name != NULL )

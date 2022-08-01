@@ -17,6 +17,34 @@ API and must be set in the XML file. This only works for *Modifier* outfits!
 function onload( _o )
 end
 
+-- Called when the price of the outfit for the player is check
+-- Returns 3 values, the cost string, whether the player can buy it, and
+-- whether the player can sell it
+function price( q )
+   local pricestr = string.format("%d credits",500*q) -- Use format library instead
+   local canbuy = true
+   local cansell = true
+   return pricestr, canbuy, cansell
+end
+
+-- Run when the player tries to buy an outfit. Should determine whether the
+-- outfit was bought or not (deducting costs), or return false and the reason
+-- for not being able to buy the outfit.
+function buy( q )
+   player.pay( -500*q, "outfit_buy" )
+   return true, q
+   --return false, reason
+end
+
+-- Run when the player tries to sell an outfit. Should determine whether the
+-- outfit was sold or not (deducting costs), or return false and the reason
+-- for not being able to sell the outfit.
+function sell( q )
+   player.pay( 500*q, "outfit_sell" )
+   return true, q
+   --return false, reason
+end
+
 -- The init is run when the pilot is created
 function init( _p, _po )
 end

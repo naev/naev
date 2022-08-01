@@ -3,7 +3,7 @@
 <event name="Travelling Merchant">
  <location>enter</location>
  <chance>5</chance>
- <cond>require("common.pirate").systemPresence() &gt; 100 and system.cur():presence("Independent") &gt; 100 and player.credits() >= 1e6</cond>
+ <cond>require("common.pirate").systemPresence() &gt; 100 and system.cur():presence("Independent") &gt; 100 and player.credits() >= 1e6 and not system.cur():tags().restricted</cond>
 </event>
 --]]
 --[[
@@ -37,9 +37,6 @@ local broadcastmsg = {
 
 function create ()
    local scur = system.cur()
-
-   -- Must not be restricted
-   if scur:tags().restricted then evt.finish() end
 
    -- Inclusive claim
    if not evt.claim( scur, nil, true ) then evt.finish() end

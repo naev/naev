@@ -22,6 +22,17 @@ local function updater0100 ()
       var.push( "nelly_met", true )
    end
 
+   -- Update mission-variable based items to inventory-based
+   local function update_inv( mvar, item )
+      local amount = var.peek( mvar )
+      if amount then
+         player.inventoryAdd( item, amount )
+         var.pop( mvar )
+      end
+   end
+   update_inv( "minerva_tokens", N_("Minerva Token") )
+   update_inv( "totoran_emblems", N_("Totoran Emblem") )
+
    --[[
    Important new features we should probably introduce:
    1. Notes in the star map

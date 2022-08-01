@@ -1473,6 +1473,8 @@ void diff_clear (void)
 {
    while (array_size(diff_stack) > 0)
       diff_removeDiff(&diff_stack[array_size(diff_stack)-1]);
+   array_free( diff_stack );
+   diff_stack = NULL;
 
    diff_checkUpdateUniverse();
 }

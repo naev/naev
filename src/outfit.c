@@ -236,6 +236,12 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
    else if (o1->priority > o2->priority)
       return -1;
 
+   /* Special prices are listed first. */
+   if ((o1->lua_price != LUA_NOREF) && (o2->lua_price == LUA_NOREF))
+      return -1;
+   else if ((o1->lua_price == LUA_NOREF) && (o2->lua_price != LUA_NOREF))
+      return +1;
+
    /* Compare price. */
    if (o1->price < o2->price)
       return +1;
@@ -2188,6 +2194,9 @@ static int outfit_parse( Outfit* temp, const char* file )
    temp->lua_jumpin     = LUA_NOREF;
    temp->lua_onimpact   = LUA_NOREF;
    temp->lua_onmiss     = LUA_NOREF;
+   temp->lua_price      = LUA_NOREF;
+   temp->lua_buy        = LUA_NOREF;
+   temp->lua_sell       = LUA_NOREF;
 
    xmlr_attr_strd(parent,"name",temp->name);
    if (temp->name == NULL)
@@ -2507,6 +2516,9 @@ int outfit_load (void)
       o->lua_jumpin     = nlua_refenvtype( env, "jumpin",   LUA_TFUNCTION );
       o->lua_onimpact   = nlua_refenvtype( env, "onimpact", LUA_TFUNCTION );
       o->lua_onmiss     = nlua_refenvtype( env, "onmiss",   LUA_TFUNCTION );
+      o->lua_price      = nlua_refenvtype( env, "price",    LUA_TFUNCTION );
+      o->lua_buy        = nlua_refenvtype( env, "buy",      LUA_TFUNCTION );
+      o->lua_sell       = nlua_refenvtype( env, "sell",     LUA_TFUNCTION );
    }
 
 #ifdef DEBUGGING

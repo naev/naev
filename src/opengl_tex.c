@@ -210,8 +210,8 @@ int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height )
    glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
    glBindTexture(GL_TEXTURE_2D, 0);
 
    /* Create the frame buffer. */
@@ -689,7 +689,7 @@ glTexture* gl_newSprite( const char* path, const int sx, const int sy,
    if (texture == NULL)
       return NULL;
 
-   /* will possibly overwrite an existing textur properties
+   /* will possibly overwrite an existing texture properties
     * so we have to load same texture always the same sprites */
    texture->sx    = (double) sx;
    texture->sy    = (double) sy;
@@ -727,7 +727,7 @@ glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
    if (texture == NULL)
       return NULL;
 
-   /* will possibly overwrite an existing textur properties
+   /* will possibly overwrite an existing texture properties
     * so we have to load same texture always the same sprites */
    texture->sx    = (double) sx;
    texture->sy    = (double) sy;

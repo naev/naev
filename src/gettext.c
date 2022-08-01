@@ -41,10 +41,9 @@ static const char* gettext_matchLanguage( const char* lang, size_t lang_len, cha
 /**
  * @brief Initialize the translation system.
  * There's no presumption that PhysicsFS is available, so this doesn't actually load translations.
- * There is no gettext_exit() because invalidating pointers to translated strings would be too dangerous.
  * We loosely follow: https://www.gnu.org/software/gettext/manual/html_node/Locale-Environment-Variables.html
  */
-void gettext_init()
+void gettext_init (void)
 {
    const char *env_vars[] = {"LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG"};
 
@@ -62,6 +61,28 @@ void gettext_init()
       }
    }
    gettext_systemLanguage = strdup( "" );
+}
+
+/**
+ * @brief Free resources associated with the translation system.
+ * This invalidates previously returned pointers to translated strings; be sure to actually exit after calling!
+ */
+void gettext_exit (void)
+{
+   free( gettext_systemLanguage );
+   gettext_systemLanguage = NULL;
+   while (gettext_translations != NULL) {
+      for (int i = 0; i < array_size(gettext_translations->chain_lang); i++)
+         free( gettext_translations->chain_lang[i] );
+      array_free( gettext_translations->chain_lang );
+      for (int i = 0; i < array_size(gettext_translations->chain); i++)
+         free( (void*) gettext_translations->chain[i].map );
+      array_free( gettext_translations->chain );
+      free( gettext_translations->language );
+      gettext_activeTranslation = gettext_translations->next;
+      free( gettext_translations );
+      gettext_translations = gettext_activeTranslation;
+   }
 }
 
 /**

@@ -57,6 +57,7 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
 int gl_fontAddFallback( glFont* font, const char *fname, const char *prefix );
 int gl_fontAddFallbackFont( glFont* font, const glFont *f );
 void gl_freeFont( glFont* font );
+void gl_fontExit (void);
 
 /*
  * const char printing
