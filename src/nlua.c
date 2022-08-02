@@ -45,6 +45,9 @@
 #include "nluadef.h"
 #include "nstring.h"
 
+/* From lua-enet, which doesn't bother with header files. What a king? */
+extern int luaopen_enet(lua_State *l);
+
 lua_State *naevL = NULL;
 nlua_env __NLUA_CURENV = LUA_NOREF;
 static char *common_script; /**< Common script to run when creating environments. */
@@ -614,6 +617,8 @@ static int nlua_package_loader_c( lua_State* L )
    /* Hardcoded libraries only: we DO NOT honor package.cpath. */
    if (strcmp( name, "utf8" ) == 0)
       lua_pushcfunction( L, luaopen_utf8 );
+   else if (strcmp( name, "enet" ) == 0)
+      lua_pushcfunction( L, luaopen_enet );
    else
       lua_pushnil( L );
    return 1;
