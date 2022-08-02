@@ -8,6 +8,10 @@ local function turnon( p, po )
    if mem.timer > 0 then
       return false
    end
+   local _a, s = p:health()
+   if s > 99 then
+      return false -- Don't activate at full health
+   end
    po:state("on")
    po:progress(1)
    mem.active = true
