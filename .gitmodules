@@ -8,3 +8,6 @@
 [submodule "dat/lua-repl"]
 	path = dat/lua-repl
 	url = https://github.com/hoelzro/lua-repl.git
+[submodule "src/lua-enet"]
+	path = src/lua-enet
+	url = https://github.com/leafo/lua-enet.git
