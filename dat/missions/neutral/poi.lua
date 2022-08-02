@@ -57,18 +57,9 @@ function create ()
          value = (100e3 + 100e3*rnd.rnd()) * (mem.rewardrisk*0.5+1),
       },
    }
-   --[=[
-   local function add_unique_reward( oname, msg )
-      if player.numOutfit( oname ) <= 0 then
-         table.insert( reward_list, {
-            type = "outfit",
-            value = oname,
-            msg = msg,
-         } )
-      end
+   if poi.data_get_gained() > 0 then
+      table.insert( reward_list, { type="data" } )
    end
-   add_unique_reward( "Daphne's Leap", _([[You explore the ship, and while most things seem like they aren't of any use to you, one thing catches your eye. It seems like there is a weird module attached to the navigation console. Upon closer inspection it seems like it overrides some core jump behaviour of the ships. You don't know if it will be of use to you, but pocket it just in case.]]) )
-   --]=]
 
    -- Parse directory to add potential rewards
    for k,v in ipairs(lf.enumerate("missions/neutral/poi")) do
@@ -141,6 +132,15 @@ function board( p )
       vn.func( function ()
          player.pay( mem.reward.value )
          poi.log(fmt.f(_([[You found a pristine derelict with large amounts of credits in the {sys} system..]]),
+            {sys=mem.sys}))
+      end )
+   elseif mem.reward.type == "data" then
+      local msg = _([[You access the main computer and are able to extract some Encrypted Data Matrices. It does not seem like you can de-encrypt them without damaging them, but they may have some other use.]])
+      msg = msg .. "\n\n" .. fmt.reward(_("Encrypted Data Matrix"))
+      vn.na( msg )
+      vn.func( function ()
+         poi.data_give( 1 )
+         poi.log(fmt.f(_([[You found a pristine derelict with an Encrypted Data Matrix in the {sys} system..]]),
             {sys=mem.sys}))
       end )
    elseif mem.reward.type == "outfit" then

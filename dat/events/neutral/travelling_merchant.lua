@@ -16,6 +16,7 @@ Spawns a travelling merchant that can sell the player if interested.
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'
 local der = require "common.derelict"
+local poi = require "common.poi"
 
 local p, broadcastid, hailed_player, timerdelay -- Non-persistent state
 
@@ -214,6 +215,17 @@ function board ()
       local o = r[2]
       if player.evtDone(e) and player.numOutfit(o)<1 then
          table.insert( outfits, o )
+      end
+   end
+
+   -- Special items when POI are done
+   if poi.data_get_gained() > 0 then
+      local olist = {
+         "Veil of Penelope",
+         "Daphne's Leap",
+      }
+      for k,v in ipairs(olist) do
+         table.insert( outfits, v )
       end
    end
 
