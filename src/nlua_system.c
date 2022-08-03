@@ -678,12 +678,14 @@ static int systemL_asteroidFields( lua_State *L )
  *    @luatparam[opt=vec2.new(0,0)] Vec2 pos position of the gatherable.
  *    @luatparam[opt=vec2.new(0,0)] Vec2 vel velocity of the gatherable.
  *    @luatparam[opt] number lifelength Lifelength of the gatherable in seconds.
+ *    @luatparam[opt=false] boolean If true, the gatherable can only be gathered by player.
  *    @luatreturn int i Id of the created gatherable object.
  * @luafunc addGatherable
  */
 static int systemL_addGatherable( lua_State *L )
 {
    int nb;
+   unsigned int player_only;
    Commodity *commodity;
    vec2 *pos, *vel;
    vec2 zero = { .x = 0., .y = 0., .mod = 0., .angle = 0. };
@@ -695,8 +697,9 @@ static int systemL_addGatherable( lua_State *L )
    pos = luaL_optvector(L,3,&zero);
    vel = luaL_optvector(L,4,&zero);
    lifelength = luaL_optnumber(L,5, -1.); /* -1. means random life length. */
+   player_only = lua_toboolean(L,6);
 
-   lua_pushnumber( L, gatherable_init( commodity, *pos, *vel, lifelength, nb ) );
+   lua_pushnumber( L, gatherable_init( commodity, *pos, *vel, lifelength, nb, player_only ) );
    return 1;
 }
 
