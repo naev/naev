@@ -92,9 +92,9 @@ local FAKE_CAPTAIN = {
 	["article_of_thought"] = player.pilot():ship():name(),
 }
 local SHIP_OFFICERS = {}
-local LOADED = {}		-- characters that have been "vitalized"
-local mothership
-local ghost_commander
+local LOADED = {}		-- characters that have been "vitalized", maps name to true (indices would get stale)
+local mothership		-- name of the player's active ship, for when swapping ships in space
+local ghost_commander	-- used to store the pilot of the player's ship when the player is "joyriding" in a shuttle
 mem.conversation_hook = nil
 mem.ship_interior = {
 	["dirt"] = 0,
@@ -616,8 +616,47 @@ local function addCommanderInterface()
 	mem.hail_hook = hook.input( "hail_hook" )
 end
 
+-- pun slightly intended, we shift crew members around when organizing roster so these guys are "on shift"...
+local SHIFT_DUTY = {}
+
+-- fdecl func
+local getTopics = function () end
+local getConversation = function () end
+local function loadCrewmate(index)
+	local cmate = mem.companions[index]
+	_discard = getTopics(cmate)
+	_discard = getConversation(cmate)
+	_discard = nil
+	LOADED[cmate.name] = true
+	if not cmate.away and #SHIFT_DUTY < player.pilot():stats().crew / 2 then
+		table.insert(SHIFT_DUTY, cmate)
+	end
+end
+
+-- loads 5 crewmates onto "the shift", or picks a random loaded crewmate from the shift
+local function loadOnShift()
+	local min_loads = 5
+	local loads = 0
+	if #SHIFT_DUTY < min_loads then
+		for ii, worker in ipairs( mem.companions) do
+			if loads <= min_loads then
+				loadCrewmate(ii)
+				table.insert(SHIFT_DUTY, worker)
+				loads = loads + 1
+			end
+		end
+	end
+	
+	local picked = rnd.rnd(math.min(#mem.companions, 2), #SHIFT_DUTY)
+	
+	return pick_one(SHIFT_DUTY)
+end
+
 -- checks what crewmates are actually on board and returns one of them or nil if none found
-local function getCrewmateOnboard()
+local function getCrewmateOnboard( on_shift )
+	if on_shift then
+		return loadOnShift()
+	end
 	local lind = math.min(#mem.companions, player.pilot():stats()["crew"])
 	for ii, worker in ipairs(mem.companions) do
 		if ii < lind then
@@ -627,6 +666,8 @@ local function getCrewmateOnboard()
 				mem.companions[lind] = worker
 				lind = lind - 1
 			end
+		else
+			break
 		end
 	end
 
@@ -639,9 +680,18 @@ local function getCrewmateOnboard()
 	end
 
 	-- make sure our candidate is loaded
-	if not LOADED[candidate.name] then
+	if not LOADED[candidate.name] and #LOADED > 0 then
 		-- pick a loaded candidate instead
-		return mem.companions[pick_one(LOADED)]
+		cname = pick_key(LOADED)
+		for _i, crew in ipairs(mem.companions) do
+			if crew.name == cname then
+				return crew
+			end
+		end 
+	elseif LOADED[candidate.name] then
+		table.insert(SHIFT_DUTY, candidate)
+	else
+		return loadOnShift()
 	end
 	
 	return candidate
@@ -2098,8 +2148,8 @@ local function create_memory(character, memory_type, params)
 		
 		if params.topic then
 				topic = params.topic
-				local topicsss = tostring(string.gsub(topic, "s+$", ""))
-				punctuation = fmt.f(_(" always blabbers about {topic}s."), { topic = topicsss })
+				local topicsss = tostring(string.gsub(topic, "s+$", ""))	-- not as good as I expected
+				punctuation = fmt.f(_(" always blabbers about {topic}."), { topic = params.topic })
 		else
 			-- this is an aggressive thought, let's classify it as violence
 			topic = "violence"
@@ -2547,7 +2597,7 @@ local function generate_responses(spoken, crewmate)
             _("*inaudible*"),
             _("*expletive*"),
             lang.getMadeUpName(),
-			extract_keyword(spoken)
+			extract_keyword(spoken) or _("nonsense")
         }
     )
 
@@ -2687,7 +2737,7 @@ local function analyze_spoken(spoken, speaker, listener)
 	local liked, disliked = getTopics(listener)
 	analysis.choices = {}
 	local brief = sanitize_phrase(spoken)
-	for my_topic, phrases in pairs(liked) do
+	for my_topic, phrases in pairs(pick_some(liked)) do
 --		print("checking liked topic with phrases", my_topic, phrases)
 		if #analysis.choices == 0 then
 			for _, phrase in ipairs(pick_some(phrases)) do
@@ -2778,7 +2828,14 @@ local function analyze_spoken(spoken, speaker, listener)
             listener.satisfaction = listener.satisfaction + math.floor(10 * rnd.threesigma()) / 1000 - 0.0075
         end
 		-- retain having not understood this
-		insert_sentiment(listener, fmt.f([[I didn't really get it when {speaker} said "{spoken}".]], {speaker=speaker.name, spoken = spoken }))
+		local sentiment_options = {
+			[[I didn't really get it when {speaker} said "{spoken}".]],
+			[[I don't really listen to {speaker} much.]],
+			[[{speaker} says stuff all the time, but I don't pay much attention to it.]],
+			[[{speaker} says stuff all the time, but I don't pay much attention to it. Should I?]],
+			[[{spoken} *chuckles*]],
+		}
+		insert_sentiment(listener, fmt.f(pick_one(sentiment_options), {speaker=speaker.name, spoken = spoken }))
 		return fmt.f(pick_one(responses), speaker), nil
 	end
 end
@@ -4440,8 +4497,7 @@ local function promoteToOfficer( crewmate, officer_type, hook_func )
 		-- steal the lines from a crew manager
 		crewmate.manager.lines = component_manager.lines
 		-- promoted pilot owns his own shuttle
-		-- TODO: replace Llama with cargo shuttle
-		crewmate.shuttle = { ship = ship.get("Llama") }
+		crewmate.shuttle = { ship = ship.get("Cargo Shuttle") }
 
 	else
 		-- replace the manager component
@@ -4630,7 +4686,7 @@ local function createFirstOfficer()
 	crewmate.typetitle = _("Commander")
     crewmate.salary = math.ceil(6e3 * crewmate.xp) + 20e3
 	crewmate.deposit = math.ceil(2e6 + (1 - crewmate.chatter) * 3e6)
-	crewmate.shuttle = { ship = ship.get("Gawain") } -- later get upgraded to shark or lancelot maybe
+	crewmate.shuttle = { ship = ship.get("Cargo Shuttle") }
 
 	crewmate.conversation.special.going = append_table({
 		_("The goose is loose."),
@@ -6627,11 +6683,8 @@ function land()
     for i, edata in ipairs(mem.companions) do
 		-- create stuff if we have to now so that we don't have to do it in space
 		if loads < 3 and not LOADED[edata.name] then
-			_discard = getTopics(edata)
-			_discard = getConversation(edata)
-			_discard = nil
+			loadCrewmate(i)
 			loads = loads + 1
-			LOADED[edata.name] = i
 		end
         -- natural satisfaction adjustment gravitates towards zero and adds
         -- a little bit of randomness based on how smooth the landing was or whatever
@@ -6856,18 +6909,16 @@ function enter()
     for i, companion in ipairs(mem.companions) do
         -- reset any hooks
         register_hook_crewmate(companion)
+		-- load unloaded crew
 		if loads < 3 and not LOADED[companion.name] then
-			_discard = getTopics(companion)
-			_discard = getConversation(companion)
-			_discard = nil
 			loads = loads + 1
-			LOADED[companion.name] = i
+			loadCrewmate(i)
 		end
     end
 
     -- set the fatigue hook
     hook.rm(mem.fatigue_hook)
-    mem.fatigue_hook = hook.date(time.create(0, 1, 0), "period_fatigue", nil)
+    mem.fatigue_hook = hook.date(time.create(0, 2, 0), "period_fatigue", nil)
 end
 
 function register_hook_crewmate( crewmate )
@@ -6901,7 +6952,7 @@ function period_fatigue()
 	local hysteria = false
 	local travel_memories = 0
 	-- calculate how each crew member is affected by the time that passed
-    for _i, companion in ipairs(pick_some(mem.companions)) do
+    for _i, companion in ipairs(pick_some(SHIFT_DUTY, 4)) do
 		-- calculate ship atmosphere interaction
 		-- how occupied this worker was on this pass (busy or restless)
 		local occupation = 0
@@ -7048,7 +7099,7 @@ function period_fatigue()
     local next_fatigue = rnd.rnd(7500, 9950)
     -- set the next period fatigue timer
     hook.rm(mem.fatigue_hook)
-    mem.fatigue_hook = hook.date(time.create(0, 0, next_fatigue), "period_fatigue", nil)
+    mem.fatigue_hook = hook.date(time.create(0, 1, next_fatigue), "period_fatigue", nil)
 end
 
 -- remove the crewmember from the ship
@@ -7810,6 +7861,17 @@ local function salaryReport( command )
 	return response
 end
 
+-- returns whether or not the chosen shuttle can exit and dock with the player ship
+local function check_shuttle(chosen_shuttle)
+	if chosen_shuttle.ship:size() <= math.floor(mem.ship_interior.bay_strength / 3) then
+		return true
+	end
+	if chosen_shuttle.ship:nameRaw() == "Cargo Shuttle" and mem.ship_interior.bay_strength > 0 then
+		return true
+	end
+	return false
+end
+
 -- NOTE: Any officer that can do a command discussion is going to have a shuttle bay requirement
 -- if you don't have any bay_strength on the ship, those features should be disabled
 -- (e.g. buy <commodity> from nearby spob or "command the ship while I take the shark for a quick spin")
@@ -7907,7 +7969,11 @@ function startCommandDiscussion()
 		if not troublemaker then
 			troublemaker = {}
 		end
-		message = fmt.f(pick_one(mlines[key]), troublemaker)
+		if mlines[key] then
+			message = fmt.f(pick_one(mlines[key]), troublemaker)
+		else
+			message = _("Oh hey, what's up?")
+		end
 	end )
 	-- maybe we are an unknown kind of manager, then nothing happens
 
@@ -8309,7 +8375,17 @@ function startCommandDiscussion()
 				local enjoyment = rnd.sigma() + siphoned_xp - rnd.rnd()
 				worker.satisfaction = math.min(10, worker.satisfaction + enjoyment * 0.1)
 				if enjoyment >= 1.25 then
-					worker.conversation.sentiment = _("I really enjoyed that motivational speech.")
+					local touches = {
+						_("I really enjoyed that motivational speech."),
+						_("I was touched by that motivational speech."),
+						_("I believed in that motivational speech."),
+						_("That motivational speech was powerful."),
+						fmt.f(_("I trust {skill} {name}. Listen to {article_object}."), officer),
+						fmt.f(_("I trust the {skill} because {article_subject} always gives such good advice."), officer),
+						fmt.f(_("I trust {skill} {name}."), officer),
+						-- TODO HERE: Create a random memory? !!
+					}
+					worker.conversation.sentiment = pick_one(touches)
 				elseif enjoyment < 0 then
 					insert_sentiment(worker, _("That motivational meeting was a waste of time."))
 				elseif rnd.rnd() < worker.chatter then
@@ -8436,7 +8512,7 @@ function startCommandDiscussion()
 		-- check if we actually have access to a shuttle
 		local shuttle = officer.shuttle or mem.ship_interior.shuttle
 		-- check the bay strength first
-		if shuttle.ship:size() > math.floor(mem.ship_interior.bay_strength / 3) then
+		if not check_shuttle(shuttle) then
 			response = fmt.f(_("The {name} isn't spaceworthy because it wouldn't fit in the docking bays. We need a bigger ship, more fighter bays or a smaller shuttle ship."), { name = shuttle.ship:name() } )
 			return
 		end
@@ -8491,9 +8567,9 @@ You can trust my capable hands with the ship while you're gone.]]), officer)
 			-- we probably chose the pilot's shuttle and it's out, weirdly?
 			chosen_shuttle = officer.shuttle
 		end
-
+		
 		-- check the bay strength first
-		if chosen_shuttle.ship:size() > math.floor(mem.ship_interior.bay_strength / 3) then
+		if not check_shuttle(chosen_shuttle) then
 			response = fmt.f(_("The {name} isn't spaceworthy because it wouldn't fit in the docking bays. We need a bigger ship, more fighter bays or a smaller shuttle ship."), { name = chosen_shuttle.ship:name() } )
 			return
 		end
@@ -8539,7 +8615,7 @@ You can trust my capable hands with the ship while you're gone.]]), officer)
 			chosen_shuttle = officer.shuttle
 		end
 		-- check the bay strength first
-		if chosen_shuttle.ship:size() > math.floor(mem.ship_interior.bay_strength / 3) then
+		if not check_shuttle(chosen_shuttle) then
 			response = fmt.f(_("The {name} isn't spaceworthy because it wouldn't fit in the docking bays. We need a bigger ship, more fighter bays or a smaller shuttle ship."), { name = chosen_shuttle.ship:name() } )
 			return
 		end
@@ -9118,6 +9194,13 @@ You'll be charged for the parts immediately, but you won't be charged for the wo
 				shuttle_candidate = sship
 			end
 		end
+		-- check if the player wanted a reset
+		if
+			string.find(desired_ship:lower(), _("reset"))
+			or string.find(desired_ship:lower(), _("cargo shuttle"))
+		then
+			shuttle_candidate = ship.get("Cargo Shuttle")
+		end
 		
 		-- find a reason to stop the player
 		local reason
@@ -9131,13 +9214,17 @@ You'll be charged for the parts immediately, but you won't be charged for the wo
 		elseif player.credits() < shuttle_candidate:price() then -- budget issue, can't afford
 			reason = _("I'll be laughed at for not having the credits. I need you to be able to authorize a payment of at least ") .. fmt.credits(shuttle_candidate:price()) .. _(" in order to buy a ") .. shuttle_candidate:name() .. (" here.")
 		elseif
-			shuttle_candidate:size() > 2					  -- too big for a private shuttle
+			(shuttle_candidate:size() > 2					  -- too big for a private shuttle
 			or shuttle_candidate:size() > math.floor(mem.ship_interior.bay_strength / 3) -- doesn't fit in bays
 			or shuttle_candidate:tags().bioship				-- no inspace refit
+			) and not shuttle_candidate:nameRaw() == "Cargo Shuttle"
 		then
 			reason = _("I'll be stuck with a ship without a hyperdrive, and I won't even be able to squeeze it into your fighter bays.")
-		elseif (mem.ship_interior.shuttle and mem.ship_interior.shuttle.ship == shuttle_candidate
-					and not mem.ship_interior.shuttle.out)-- already have this on board
+		elseif	-- already have this on board and we aren't an officer pilot
+			(
+			mem.ship_interior.shuttle and mem.ship_interior.shuttle.ship == shuttle_candidate
+			and not mem.ship_interior.shuttle.out
+			) and not string.find(edata.skill, _("Officer"))
 		then
 			feedback = fmt.f(_("Well... it looks to me like we already have a {ship}, what's wrong with the old one? I guess I'll restore it to the default configuration for now."), { ship = shuttle_candidate } )
 			vn.jump("sman_clear_outfits")
@@ -9146,7 +9233,7 @@ You'll be charged for the parts immediately, but you won't be charged for the wo
 		
 		-- check if we prevented the player from buying it
 		if  				
-			reason 	
+			reason
 		then
 			message = fmt.f(_("Well, I can tell you now that I'm not going to get that authorized, if I try to buy a {ship} now "), { ship = shuttle_candidate } ) .. reason
 			shuttle_candidate = nil
@@ -11408,6 +11495,63 @@ function player_swaps_from_shuttle(args)
 	ghost_commander = nil
 end
 
+-- if the player swapped out of his own ship in space, or if
+-- the player despawned his own ship while landing, we need to respawn it
+function spawn_ghost_commander2( commander )
+	if	commander.ghost and
+		(
+			not commander.pilot
+			or (
+				not commander.pilot:exists()
+				-- anything else?
+			)
+		)
+		and
+		mothership ~= player:ship()
+	then
+		if commander.ghost.hook then
+			hook.rm(commander.ghost.hook)
+			commander.ghost.hook = nil
+		end
+		print("spawning commander because mothership is %s != %s", mothership, player.ship())
+		local fakefac = faction.dynAdd(commander.faction, commander.skill, commander.typetitle, { ai = "escort_guardian", clear_enemies = true})
+
+		-- add the commander in the players ship
+		commander.pilot = pilot.add(commander.ghost.ship, fakefac, commander.ghost.pos, fmt.f("{skill} {typetitle} {name}", commander), { naked = true })
+		-- match speed and velocity
+		commander.pilot:setDir(commander.ghost.dir)
+		commander.pilot:setVel(commander.ghost.vel)
+		-- commander has same outfits as player had
+		for _j, o in ipairs(commander.ghost.outfits) do
+			commander.pilot:outfitAdd(o)
+		end
+		-- put the cargo back
+		for k, v in pairs(commander.ghost.cargo) do
+			-- the player took the mision cargo
+			if not v.m then
+				commander.pilot:cargoAdd( v.name, v.q )
+			end
+		end
+		commander.pilot:setVisplayer(true)
+--		commander.pilot:setNoClear(true)
+		commander.pilot:setNoLand(true)
+		commander.pilot:setNoJump(true)
+		commander.pilot:setActiveBoard(true)
+		commander.pilot:setHilight(true)
+		commander.pilot:setFriendly(true)
+		commander.pilot:setInvincPlayer(true)
+
+		-- reinstate the regular hooks
+		hook.pilot(commander.pilot, "board", "player_swaps_from_shuttle", args)
+		hook.pilot(commander.pilot, "hail", "startCommandDiscussion")
+		if commander.ghost.hook then
+			hook.rm(commander.ghost.hook)
+			commander.ghost.hook = nil
+		end
+		commander.ghost.hook = hook.takeoff("spawn_ghost_commander2", commander)
+	end
+end
+
 -- crazy method that puts the player in the shuttle
 -- and puts the commander at the helm of the player's ship
 -- returns success
@@ -11517,63 +11661,6 @@ function player_swaps_to_shuttle ( args )
 	end
 	
 	return true
-end
-
--- if the player swapped out of his own ship in space, or if
--- the player despawned his own ship while landing, we need to respawn it
-function spawn_ghost_commander2( commander )
-	if	commander.ghost and
-		(
-			not commander.pilot
-			or (
-				not commander.pilot:exists()
-				-- anything else?
-			)
-		)
-		and
-		mothership ~= player:ship()
-	then
-		if commander.ghost.hook then
-			hook.rm(commander.ghost.hook)
-			commander.ghost.hook = nil
-		end
-		print("spawning commander because mothership is %s != %s", mothership, player.ship())
-		local fakefac = faction.dynAdd(commander.faction, commander.skill, commander.typetitle, { ai = "escort_guardian", clear_enemies = true})
-
-		-- add the commander in the players ship
-		commander.pilot = pilot.add(commander.ghost.ship, fakefac, commander.ghost.pos, fmt.f("{skill} {typetitle} {name}", commander), { naked = true })
-		-- match speed and velocity
-		commander.pilot:setDir(commander.ghost.dir)
-		commander.pilot:setVel(commander.ghost.vel)
-		-- commander has same outfits as player had
-		for _j, o in ipairs(commander.ghost.outfits) do
-			commander.pilot:outfitAdd(o)
-		end
-		-- put the cargo back
-		for k, v in pairs(commander.ghost.cargo) do
-			-- the player took the mision cargo
-			if not v.m then
-				commander.pilot:cargoAdd( v.name, v.q )
-			end
-		end
-		commander.pilot:setVisplayer(true)
---		commander.pilot:setNoClear(true)
-		commander.pilot:setNoLand(true)
-		commander.pilot:setNoJump(true)
-		commander.pilot:setActiveBoard(true)
-		commander.pilot:setHilight(true)
-		commander.pilot:setFriendly(true)
-		commander.pilot:setInvincPlayer(true)
-
-		-- reinstate the regular hooks
-		hook.pilot(commander.pilot, "board", "player_swaps_from_shuttle", args)
-		hook.pilot(commander.pilot, "hail", "startCommandDiscussion")
-		if commander.ghost.hook then
-			hook.rm(commander.ghost.hook)
-			commander.ghost.hook = nil
-		end
-		commander.ghost.hook = hook.takeoff("spawn_ghost_commander2", commander)
-	end
 end
 
 -- method to intercept the player trying to hail nothing,
