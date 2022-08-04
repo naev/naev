@@ -1384,8 +1384,8 @@ void pilot_weaponSafe( Pilot *p )
  */
 int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
 {
-   /* Must not be disabled or cooling down. */
-   if ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
+   /* Must be equipped, not disabled, not cooling down. */
+   if (o->outfit == NULL || (pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
       return 0;
 
    if (outfit_isAfterburner( o->outfit )) { /* Afterburners */
@@ -1427,6 +1427,8 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
  */
 int pilot_outfitOn( Pilot *p, PilotOutfitSlot *o )
 {
+   if (o->outfit == NULL)
+      return;
    if (outfit_isAfterburner(o->outfit))
       pilot_afterburn( p );
    else if (o->outfit->lua_ontoggle != LUA_NOREF)
