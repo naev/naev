@@ -101,7 +101,7 @@ function accept()
    end
 
    misn.accept()
-   misn.osdCreate(_("Convey Escort"), {
+   misn.osdCreate(_("Convoy Escort"), {
       fmt.f(_("Escort a convoy of traders to {pnt} ({sys} system)"), {pnt=mem.destspob, sys=mem.destsys}),
    })
    misn.markerAdd( mem.destspob )
