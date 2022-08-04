@@ -345,4 +345,13 @@ function poi.data_take( amount )
    return player.inventoryRm( conduit, amount )
 end
 
+--[[
+Returns a human-readable string for an amount of data.
+   @tparam integer amount Amount of data to convert to string.
+   @treturn string Human-readable string corresponding to the amount of data.
+--]]
+function poi.data_str( amount )
+   return fmt.f(n_("{amount} Encrypted Data Matrix","{amount} Encrypted Data Matrices"),{amount=amount})
+end
+
 return poi
