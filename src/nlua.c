@@ -49,6 +49,7 @@ lua_State *naevL = NULL;
 nlua_env __NLUA_CURENV = LUA_NOREF;
 static char *common_script; /**< Common script to run when creating environments. */
 static size_t common_sz; /**< Common script size. */
+static int nlua_envs = LUA_NOREF;
 
 /*
  * prototypes
@@ -182,13 +183,19 @@ void lua_init (void)
    naevL = nlua_newState();
    nlua_loadBasic(naevL);
 
+   /* Environment table. */
+   lua_newtable( naevL );
+   nlua_envs = luaL_ref(naevL, LUA_REGISTRYINDEX);
+
+   /* Better clean up. */
    lua_atpanic( naevL, nlua_panic );
 }
 
 /**
  * @brief Replacement for the internal Lua loadstring().
  */
-static int luaB_loadstring( lua_State *L ) {
+static int luaB_loadstring( lua_State *L )
+{
    size_t l;
    const char *s = luaL_checklstring(L, 1, &l);
    const char *chunkname = luaL_optstring(L, 2, s);
@@ -262,6 +269,13 @@ nlua_env nlua_newEnv (void)
    lua_pushvalue(naevL, -1);
    ref = luaL_ref(naevL, LUA_REGISTRYINDEX);
 
+   /* Store in the environment table. */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, nlua_envs);
+   lua_pushvalue(naevL, -2);
+   lua_pushboolean(naevL, 1);
+   lua_rawset(naevL, -3);
+   lua_pop(naevL,1);
+
    /* Metatable */
    lua_newtable(naevL);
    lua_pushvalue(naevL, LUA_GLOBALSINDEX);
@@ -333,8 +347,17 @@ nlua_env nlua_newEnv (void)
  *    @param env Enviornment to free.
  */
 void nlua_freeEnv(nlua_env env) {
-   if (naevL != NULL && env != LUA_NOREF)
+   if ((naevL != NULL) && (env != LUA_NOREF)) {
+      /* Remove from the environment table. */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, nlua_envs);
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+      lua_pushboolean(naevL, 1);
+      lua_rawset(naevL, -3);
+      lua_pop(naevL,1);
+
+      /* Unref. */
       luaL_unref(naevL, LUA_REGISTRYINDEX, env);
+   }
 }
 
 /*
