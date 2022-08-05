@@ -47,8 +47,9 @@ void gatherable_cleanup (void)
  *    @param vel Velocity.
  *    @param lifeleng Duration in seconds.
  *    @param qtt Quantity to add.
+ *    @param player_only Whether the gatherable can only be gathered by the player.
  */
-int gatherable_init( const Commodity* com, vec2 pos, vec2 vel, double lifeleng, int qtt )
+int gatherable_init( const Commodity* com, vec2 pos, vec2 vel, double lifeleng, int qtt, unsigned int player_only )
 {
    Gatherable *g = &array_grow( &gatherable_stack );
    g->type = com;
@@ -58,6 +59,7 @@ int gatherable_init( const Commodity* com, vec2 pos, vec2 vel, double lifeleng, 
    g->quantity = qtt;
    g->sx = RNG( 0, com->gfx_space->sx );
    g->sy = RNG( 0, com->gfx_space->sy );
+   g->player_only = player_only;
 
    if (lifeleng < 0.)
       g->lifeleng = RNGF()*100. + 50.;
@@ -167,6 +169,10 @@ void gatherable_gather( Pilot *p )
 {
    for (int i=0; i < array_size(gatherable_stack); i++) {
       Gatherable *gat = &gatherable_stack[i];
+
+      /* Only player can gather player only stuff. */
+      if (gat->player_only && !pilot_isPlayer(p))
+         continue;
 
       if (vec2_dist( &p->solid->pos, &gat->pos ) < GATHER_DIST ) {
          /* Add cargo to pilot. */

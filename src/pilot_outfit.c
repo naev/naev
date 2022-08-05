@@ -437,6 +437,8 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
          pilot->nturrets--;
       else if (outfit_isBolt(s->outfit))
          pilot->ncannons--;
+      else if (outfit_isAfterburner(s->outfit))
+         pilot->nafterburners--;
       else if (outfit_isFighterBay(s->outfit))
          pilot->nfighterbays--;
       if (outfit_isBeam(s->outfit))

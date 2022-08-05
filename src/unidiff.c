@@ -993,7 +993,7 @@ static int diff_patch( xmlNodePtr parent )
                      fail->u.name );
                break;
             case HUNK_TYPE_SPOB_SPACE_REVERT:
-               WARN(_("   [%s] spob sipace revert: '%s'"), target,
+               WARN(_("   [%s] spob space revert: '%s'"), target,
                      fail->u.name );
                break;
             case HUNK_TYPE_SPOB_EXTERIOR:
