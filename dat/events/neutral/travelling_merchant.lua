@@ -14,6 +14,7 @@ Spawns a travelling merchant that can sell the player if interested.
 
 --]]
 local vn = require 'vn'
+local fmt = require "format"
 local love_shaders = require 'love_shaders'
 local der = require "common.derelict"
 local poi = require "common.poi"
@@ -55,7 +56,6 @@ function create ()
    -- Find uninhabited planet
    local planets = {}
    for _k,pk in ipairs(scur:spobs()) do
-      -- TODO add check to make sure no inhabited spob is nearby
       if not pk:services().inhabited and not nearby_spob( pk:pos() ) then
          table.insert( planets, pk )
       end
@@ -82,11 +82,8 @@ function create ()
       spawn_pos = pnt:pos() + vec2.newP( pnt:radius()+100*rnd.rnd(), rnd.angle() )
    end
 
-   local fctmisi = faction.exists("fmisi")
-   if not fctmisi then
-      fctmisi = faction.dynAdd( "Independent", "fmisi", _("???"),
-            {clear_enemies=true, clear_allies=true} )
-   end
+   local fctmisi = faction.dynAdd( "Independent", "fmisi", _("???"),
+         {clear_enemies=true, clear_allies=true} )
 
    -- Create pilot
    p = pilot.add( "Mule", fctmisi, spawn_pos, trader_name )
@@ -153,15 +150,6 @@ function hail ()
 end
 
 function board ()
-   -- Boarding sound
-   der.sfx.board:play()
-
-   vn.clear()
-   vn.scene()
-   vn.transition()
-   vn.na( _("You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold that has been re-adapted as a sort of bazaar. It is a mess of different wares and most don't seem of much value, there might be some interesting find.") )
-   vn.run()
-
    --[[
       Ideas
    * Vampiric weapon that removes shield regen, but regenerates shield by doing damage.
@@ -228,9 +216,108 @@ function board ()
          table.insert( outfits, v )
       end
    end
+   -- Boarding sound
+   der.sfx.board:play()
 
-   -- Start the merchant and unboard.
-   tk.merchantOutfit( store_name, outfits )
+   vn.clear()
+   vn.scene()
+   local mm = vn.newCharacter( trader_name, { image=trader_image, color=trader_colour } )
+   vn.transition()
+   if not var.peek('travelling_trader_boarded') then
+      vn.na(_([[You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold that has been re-adapted as a sort of bazaar. As you look around the mess of different wares, most seemingly to be garbage, you suddenly notice a mysterious figure standing infront of you. You're surprised at how you didn't notice them getting so close to you, almost like a ghost.]]))
+      mm(_([[You stare dumbfounded at the figure who seems to be capturing your entire essence with a piercing gaze, when suddenly you can barely make out what seems to be a large grin.
+"You look a bit funky for a human, but all are welcome at Misi's Fabulous Bazaar!"
+They throw their hands up in the air, tossing what seems to be some sort of confetti. Wait, is that ship mold?]]))
+      mm(_([["In my travels, I've collected quite a fair amount of rare and expensive jun… I mean trinkets from all over the galaxy. Not many appreciate my fine wares, so I peddle them as I travel around. If you see anything you fancy, I'll let it go for a fair price. You won't find such a good bargain anywhere else!"]]))
+      var.push( "travelling_trader_boarded", true )
+   else
+      vn.na(_([[You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold bazaar where Misi is waiting for you.]]))
+      --[=[
+      if poi.data_get_gained() > 0 and not var.peek("travelling_trader_data") then
+         mm(_([[]]))
+         vn.func( function ()
+            var.push("travelling_trader_data",true)
+         end )
+      end
+      --]=]
+   end
+
+   vn.label("menu")
+   vn.na(_("What do you wish to do?"))
+   vn.label("menu_direct")
+   vn.menu( function ()
+      local opts = {
+         { _("Shop"), "bazaar" },
+         { _("Leave"), "leave" },
+      }
+      if var.peek("travelling_trader_data") then
+         table.insert( opts, 2, { _("Special Services"), "service" } )
+      end
+      return opts
+   end )
+
+   vn.label("bazaar")
+   vn.func( function ()
+      tk.merchantOutfit( store_name, outfits )
+   end )
+   vn.jump("menu")
+
+   local upgrade_list = {
+      special_necessity = "Machiavellian Necessity",
+      special_fortune   = "Machiavellian Fortune",
+      special_virtue    = "Machiavellian Virtue",
+   }
+   vn.label("special")
+   mm(_(""))
+   vn.menu( function ()
+      local opts = {
+         { _("Info"), "special_info" },
+         { _("Back"), "menu" },
+      }
+      for s,o in pairs( upgrade_list ) do
+         table.insert( opts, 1, { fmt.f(_("{intrinsic} Service"),{intrinsic=_(o)}), s } )
+      end
+      return opts
+   end )
+   vn.jump("menu")
+
+   local upgrade_cost = 2
+   for s,o in pairs( upgrade_list ) do
+      vn.label( s )
+      local upgrade = outfit.get(o)
+      vn.func( function ()
+         local pp = player.pilot()
+         for k,v in ipairs(pp:outfits("intrinsic")) do
+            if v == upgrade then
+               vn.jump( s.."_exists" )
+            end
+         end
+      end )
+      mm(fmt.f(_([["I would be able to provide my special services for, let's say, 2 Encrypted Data Matrices, how does that sound?"
+
+You have {amount}. Pay {cost} for {upgrade}?]]),
+         {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade} ))
+      vn.menu{
+         { _("Pay"), s.."_yes" },
+         { _("Back"), s.."_no" },
+      }
+      vn.jump("special")
+
+      vn.label( s.."_exists" )
+      mm(fmt.f(_("It seems like I have already upgraded your current ship with {upgradename}."),
+            {upgradename=upgrade}))
+      vn.jump("special")
+
+      vn.label( s.."_yes" )
+
+      vn.label( s.."_no" )
+   end
+
+   vn.label("special_info")
+   vn.jump("special")
+
+   vn.label("leave")
+   vn.run()
    player.unboard()
 
    -- Boarding sound
