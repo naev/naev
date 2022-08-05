@@ -259,6 +259,9 @@ dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml
 dat/outfits/fighter_bays/zalek_light_drone_bay.xml
 dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml
 dat/outfits/intrinsic/gauntlet_deluxe.xml
+dat/outfits/intrinsic/machiavellian_fortune.xml
+dat/outfits/intrinsic/machiavellian_necessity.xml
+dat/outfits/intrinsic/machiavellian_virtue.xml
 dat/outfits/intrinsic/port_and_polish.xml
 dat/outfits/launchers/convulsion_launcher.xml
 dat/outfits/launchers/electron_burst_cannon.xml
