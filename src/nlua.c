@@ -907,8 +907,10 @@ void nlua_resize (void)
          lua_pushinteger( naevL, SCREEN_W ); /* t, k, v, f, w */
          lua_pushinteger( naevL, SCREEN_H ); /* t, k, v, f, w, h */
          nlua_pcall( env, 2, 0 ); /* t, k, v */
+         lua_pop(naevL,1); /* t, k */
       }
-      lua_pop(naevL,2); /* t, k */
+      else
+         lua_pop(naevL,2); /* t, k */
    } /* t */
    lua_pop(naevL,1); /* */
 }
