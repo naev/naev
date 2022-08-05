@@ -351,7 +351,7 @@ Returns a human-readable string for an amount of data.
    @treturn string Human-readable string corresponding to the amount of data.
 --]]
 function poi.data_str( amount )
-   return fmt.f(n_("{amount} Encrypted Data Matrix","{amount} Encrypted Data Matrices"),{amount=amount})
+   return fmt.f(n_("{amount} Encrypted Data Matrix","{amount} Encrypted Data Matrices",amount),{amount=amount})
 end
 
 return poi
