@@ -272,7 +272,7 @@ nlua_env nlua_newEnv (void)
    /* Store in the environment table. */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, nlua_envs);
    lua_pushvalue(naevL, -2);
-   lua_pushboolean(naevL, 1);
+   lua_pushinteger(naevL, ref);
    lua_rawset(naevL, -3);
    lua_pop(naevL,1);
 
@@ -891,4 +891,24 @@ void nlua_unref( lua_State *L, int idx )
 {
    if (idx != LUA_NOREF)
       luaL_unref( L, LUA_REGISTRYINDEX, idx );
+}
+
+/**
+ * @brief Propagates a resize event to all the environments forcibly.
+ */
+void nlua_resize (void)
+{
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, nlua_envs); /* t */
+   lua_pushnil(naevL); /* t, n */
+   while (lua_next(naevL, -2) != 0) { /* t, k, v */
+      int env = lua_tointeger(naevL,-1); /* t, k, v */
+      lua_getfield(naevL, -2, "__resize"); /* t, k, v, f */
+      if (!lua_isnil(naevL,-1)) {
+         lua_pushinteger( naevL, SCREEN_W ); /* t, k, v, f, w */
+         lua_pushinteger( naevL, SCREEN_H ); /* t, k, v, f, w, h */
+         nlua_pcall( env, 2, 0 ); /* t, k, v */
+      }
+      lua_pop(naevL,2); /* t, k */
+   } /* t */
+   lua_pop(naevL,1); /* */
 }
