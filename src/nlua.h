@@ -46,3 +46,6 @@ int nlua_reffield( int objref, const char *name );
 /* Reference stuff. */
 int nlua_ref( lua_State *L, int idx );
 void nlua_unref( lua_State *L, int idx );
+
+/* Hack to handle resizes. */
+void nlua_resize (void);
