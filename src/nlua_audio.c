@@ -379,9 +379,11 @@ void audio_cleanup( LuaAudio_t *la )
    if ((la==NULL) || (la->nocleanup))
       return;
 
-   soundLock();
    switch (la->type) {
+      case LUA_AUDIO_NULL:
+         break;
       case LUA_AUDIO_STATIC:
+         soundLock();
          if (la->source > 0)
             alDeleteSources( 1, &la->source );
          /* Check if buffers need freeing. */
@@ -392,9 +394,12 @@ void audio_cleanup( LuaAudio_t *la )
                free( la->buf );
             }
          }
+         al_checkErr();
+         soundUnlock();
          break;
 
       case LUA_AUDIO_STREAM:
+         soundLock();
          if (la->th != NULL) {
             la->active = -1;
             if (SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) == SDL_MUTEX_TIMEDOUT)
@@ -409,12 +414,10 @@ void audio_cleanup( LuaAudio_t *la )
          if (la->lock != NULL)
             SDL_DestroyMutex( la->lock );
          ov_clear( &la->stream );
+         al_checkErr();
+         soundUnlock();
          break;
    }
-
-   /* Clean up. */
-   al_checkErr();
-   soundUnlock();
 
 #if DEBUGGING
    free(la->name);
@@ -607,6 +610,7 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
          alSourcei( la->source, AL_BUFFER, la->buf->buffer );
          break;
 
+      case LUA_AUDIO_NULL:
       case LUA_AUDIO_STREAM:
          break;
    }
@@ -767,6 +771,8 @@ static int audioL_rewind( lua_State *L )
          ov_raw_seek( &la->stream, 0 );
          SDL_mutexV( la->lock );
          break;
+      case LUA_AUDIO_NULL:
+         break;
    }
    return 0;
 }
@@ -815,6 +821,9 @@ static int audioL_seek( lua_State *L )
             ov_pcm_seek( &la->stream, offset );
          SDL_mutexV( la->lock );
          /* TODO force a reset of the buffers. */
+         break;
+
+      case LUA_AUDIO_NULL:
          break;
    }
    return 0;
@@ -867,6 +876,9 @@ static int audioL_tell( lua_State *L )
          else
             offset = ov_pcm_tell( &la->stream );
          SDL_mutexV( la->lock );
+         break;
+
+      case LUA_AUDIO_NULL:
          break;
    }
 
@@ -931,6 +943,9 @@ static int audioL_getDuration( lua_State *L )
          else
             duration = ov_pcm_total( &la->stream, -1 );
          SDL_mutexV( la->lock );
+         break;
+
+      case LUA_AUDIO_NULL:
          break;
    }
 
