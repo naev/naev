@@ -1310,9 +1310,10 @@ static void land_createMainTab( unsigned int wid )
     * Pretty display.
     */
    window_addImage( wid, 20, -40, 400, 400, "imgSpob", gfx_exterior, 1 );
-   window_addText( wid, 440, -20-offset,
-         w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
-         "txtSpobDesc", &gl_defFont, NULL, _(land_spob->description) );
+   if (land_spob->description != NULL)
+      window_addText( wid, 440, -20-offset,
+            w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
+            "txtSpobDesc", &gl_defFont, NULL, _(land_spob->description) );
 
    /* Player stats. */
    l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s", _("Stationed at:") );
