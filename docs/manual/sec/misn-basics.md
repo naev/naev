@@ -459,7 +459,16 @@ You would use the function to quickly add log messages with `addlog(_("This is a
 
 The Visual Novel framework is based on the Love2D API and allows for displaying text, characters, and other effects to the player. It can be thought of as a graph representing the choices and messages the player can engage with. The core API is in the [`vn` module](https://naev.org/api/modules/vn.html).
 
-The VN is based around creating scenes, and adding nodes which represent things like displaying text or giving the player options. Once the conversation graph is set up, `vn.run()` will begin execution and *it won't return until the dialogue is done*. Let us start by looking at a simple example.
+The VN API is similar to existing frameworks such as [Ren'Py](https://renpy.org), in which conversations are divided into scenes with characters. In particular, the flow of engaging the player with the VN framework consists roughly of the following:
+
+1. Clear internal variables (recommended)
+1. Start a new scene
+1. Define all the characters that should appear in the scene (they can still be added and removed in the scene with `vn.appear` and `vn.disappear`)
+1. Run the transition to make the characters and scene appear
+1. Display text
+1. Jump to 2. as needed or end the `vn`
+
+For most purposes, all you will need is a single scene, however, you are not limited to that. The VN is based around adding nodes which represent things like displaying text or giving the player options. Once the conversation graph defined by the nodes is set up, `vn.run()` will begin execution and *it won't return until the dialogue is done*. Nodes are run in consecutive order unless `vn.jump` is used to jump to a label node defined with `vn.label`. Let us start by looking at a simple example:
 
 ```lua
 local vn = require "vn" -- Load the library
