@@ -55,11 +55,11 @@ local civilPort = "neutral/female2.webp"
 local silent_taunts = { _("Poor lone little Llama!"),
                         _("I am the 'Silent Death'!"),
                         _("I'm as silent as silence itself!"),
-                        _("I'm as deadly as... er... death!"),
-                        _("Enjoy your last moments as they are your... er... last moments!"),
+                        _("I'm as deadly as… er… death!"),
+                        _("Enjoy your last moments as they are your… er… last moments!"),
                         _("Ahahahahah!"),
                         _("I know no mercy!"),
-                        _("I am cruel and ruthless! And heartless! And... and unkind!"),
+                        _("I am cruel and ruthless! And heartless! And… and unkind!"),
                         _("Your destiny is sealed!"),}
 
 local silent_beg = { _("Hey? Stop shooting at me!"),
@@ -131,7 +131,7 @@ function accept()
       {_("That is a very Dvaered kind of negotiation."), "congratulate"},
       {_("This plan is very subtle Indeed."), "congratulate"},
       {_("I think it is a shitty plan."), "dontcare"},
-      {_("Isn't it kind of... illegal?"), "illegal"},
+      {_("Isn't it kind of… illegal?"), "illegal"},
    }
 
    vn.label("congratulate")
@@ -139,10 +139,10 @@ function accept()
    vn.jump("illegal")
 
    vn.label("illegal")
-   sol(_([[Actually, my plan is totally legal... Mwell, not totally. Let's say... mostly legal.]]))
+   sol(_([[Actually, my plan is totally legal… Mwell, not totally. Let's say… mostly legal.]]))
    sol(fmt.f(_([[Let me explain: Grosjean has a very special hobby that consists in flying a Pirate Shark in {sys} and killing lone traders under the name 'Silent Death'. Dvaered patrols in the system are under the responsibility of her friend, the dishonourable Lord Richthofen. We have collected data on her habits, and we know she should be cruising in the system soon. So we need you to go there, pretend you are a harmless trader, wait for her to attack, and kill her.]]), {sys=mem.sharksys}))
    sol(_([[The problem is that she tends to only attack Llamas as it is probably the less dangerous ship that exists. This means that you will have to fly such a ship for her to engage you. Now, you may wonder how you are supposed to catch her in a Llama if she decides to run away, and that is where the less legal part of the mission comes into play.]]))
-   sol(fmt.f(_([[Before entering {sharksys}, we will have to sabotage her ship's engine. We know that she has purchased a new engine that will be delivered to her soon. This engine will transit in the main warehouse of Tricon on {enginpnt}. Your first task will be to shuttle a group of... hem... special... workers to that planet for them to infiltrate the warehouse and sabotage the engine. You will then deposit them back on {pnt}.]]),{sharksys=mem.sharksys, enginpnt=mem.enginpnt, pnt=mem.paypnt}))
+   sol(fmt.f(_([[Before entering {sharksys}, we will have to sabotage her ship's engine. We know that she has purchased a new engine that will be delivered to her soon. This engine will transit in the main warehouse of Tricon on {enginpnt}. Your first task will be to shuttle a group of… hem… special… workers to that planet for them to infiltrate the warehouse and sabotage the engine. You will then deposit them back on {pnt}.]]),{sharksys=mem.sharksys, enginpnt=mem.enginpnt, pnt=mem.paypnt}))
    sol(_([[And only afterwards, you will go and encounter the target. Her engine will malfunction at the very moment you will hit her ship with whatever weapon, and she won't be able to run away anymore. Moreover, as you know, the combat ability of an interceptor like the Shark is closely linked to its maneuverability, which means that this sabotage will make the target much less dangerous for your own safety. So, what do you say? Are you in?]]))
    vn.menu{
       {_("Agree"), "agree"},
@@ -151,7 +151,7 @@ function accept()
 
    vn.label("agree")
    sol(fmt.f(_([[Hehe. I knew you would accept. It's time for you to finally work for someone really important! The first part of your mission is really straightforward: my special team will fly in your ship to {pnt} in {sys} where they will take care of the engine. Let me guide you to them.]]), {sys=mem.enginsys, pnt=mem.enginpnt}))
-   vn.na(_([[Colonel Okran guides you through narrow gangways. You arrive into a large hall and cross a checkpoint guarded by spider-cyborgs and Okran tells you: "those are the soldiers of the 26th multi-terrain assault regiment (ground forces), they are deployed on this spaceport because our intelligence detected a high risk of FLF terrorist attack this sector in the close future. They look a bit odd with their biologically-grown and mechanically-enhanced pawns, but they are friendly... I mean mostly."]]))
+   vn.na(_([[Colonel Okran guides you through narrow gangways. You arrive into a large hall and cross a checkpoint guarded by spider-cyborgs and Okran tells you: "those are the soldiers of the 26th multi-terrain assault regiment (ground forces), they are deployed on this spaceport because our intelligence detected a high risk of FLF terrorist attack this sector in the close future. They look a bit odd with their biologically-grown and mechanically-enhanced pawns, but they are friendly… I mean mostly."]]))
    vn.na(_([[You finally arrive in a tiny ill-enlightened room, where a strange group is waiting for you. Two of them are much higher than average, wear an intimidating amount of implants on their skin, and carry impressive guns while the two other seem unarmed. All of them wear an incoherent assortment of colourful civilian clothes.]]))
    sol(_([[Sergeant Krakadak! Why are you all wearing ridiculous outfits? What happened here?]]))
    cyb(_([[My Colonel! You ordered us to dress like civilians. Private Krokodok told us the brother of the neighbour of his sister-in-law is a civilian, but he does not really know how this guy dresses. So we let our imagination do the work.]]))
