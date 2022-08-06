@@ -162,8 +162,6 @@ static void debug_translateAddress( const char *symbol, void *address )
       do {
          if (func == NULL || func[0] == '\0')
             func = "??";
-         if (file == NULL || file[0] == '\0')
-            file = "??";
          DEBUG("%s %s(...):%u %s", symbol, func, line, file);
       } while (bfd_find_inliner_info(abfd, &file, &func, &line));
 
@@ -224,8 +222,6 @@ static void debug_sigHandler( int sig )
 void debug_sigInit (void)
 {
 #if DEBUGGING
-   const char *str = _("Unable to set up %s signal handler.");
-
 #if HAVE_BFD_H
    bfd_init();
 
@@ -238,12 +234,9 @@ void debug_sigInit (void)
       /* Read symbols */
       if (bfd_get_file_flags(abfd) & HAS_SYMS) {
          unsigned int size;
-         long symcount;
-
-         /* static */
-         symcount = bfd_read_minisymbols( abfd, FALSE, (void **)&syms, &size );
-         if ( symcount == 0 && abfd != NULL ) /* dynamic */
-            symcount = bfd_read_minisymbols( abfd, TRUE, (void **)&syms, &size );
+         long symcount = bfd_read_minisymbols( abfd, /*dynamic:*/ FALSE, (void **)&syms, &size );
+         if ( symcount == 0 && abfd != NULL )
+            symcount = bfd_read_minisymbols( abfd, /*dynamic:*/ TRUE, (void **)&syms, &size );
          assert(symcount >= 0);
       }
    }
@@ -251,6 +244,7 @@ void debug_sigInit (void)
 
    /* Set up handler. */
 #if HAVE_SIGACTION
+   const char *str = _("Unable to set up %s signal handler.");
    struct sigaction so, sa = { .sa_handler = NULL, .sa_flags = SA_SIGINFO };
    sa.sa_sigaction = debug_sigHandler;
    sigemptyset(&sa.sa_mask);
