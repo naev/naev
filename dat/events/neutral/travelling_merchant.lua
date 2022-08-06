@@ -96,7 +96,7 @@ function create ()
    p:brake()
 
    -- Set up hooks
-   timerdelay = 5
+   timerdelay = 10
    broadcastid = 1
    broadcastmsg = rnd.permutation( broadcastmsg )
    hook.timer( timerdelay, "broadcast" )
@@ -124,7 +124,7 @@ function broadcast ()
    if broadcastid > #broadcastmsg then broadcastid = 1 end
    p:broadcast( broadcastmsg[broadcastid], true )
    broadcastid = broadcastid+1
-   timerdelay = timerdelay * 2
+   timerdelay = timerdelay * 1.5
    hook.timer( timerdelay, "broadcast" )
 
    if not hailed_player and not var.peek('travelling_trader_hailed') then
@@ -234,7 +234,7 @@ They throw their hands up in the air, tossing what seems to be some sort of conf
       vn.na(_([[You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold bazaar where Misi is waiting for you.]]))
       --[=[
       if poi.data_get_gained() > 0 and not var.peek("travelling_trader_data") then
-         mm(_([[]]))
+         mm(_([[""]]))
          vn.func( function ()
             var.push("travelling_trader_data",true)
          end )
