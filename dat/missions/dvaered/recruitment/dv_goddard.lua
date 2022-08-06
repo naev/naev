@@ -53,13 +53,13 @@ local cyborPort = "neutral/male12.webp"
 local civilPort = "neutral/female2.webp"
 
 local silent_taunts = { _("Poor lone little Llama!"),
-                        _("I am the 'Silend Death'!"),
+                        _("I am the 'Silent Death'!"),
                         _("I'm as silent as silence itself!"),
-                        _("I'm as deadly as... er... death!"),
-                        _("Enjoy your last moments as they are your... er... last moments!"),
+                        _("I'm as deadly as… er… death!"),
+                        _("Enjoy your last moments as they are your… er… last moments!"),
                         _("Ahahahahah!"),
                         _("I know no mercy!"),
-                        _("I am cruel and ruthless! And heartless! And... and unkind!"),
+                        _("I am cruel and ruthless! And heartless! And… and unkind!"),
                         _("Your destiny is sealed!"),}
 
 local silent_beg = { _("Hey? Stop shooting at me!"),
@@ -118,7 +118,7 @@ function accept()
    vn.label("task")
    sol(_([[So, as you may think, Lord Fatgun is very successful, and many lesser Warlords envy him and dream of invading his planets. For that reason, we are in need of more weapons of all kinds. I have recently bought two hundred armored ground vehicles that will help us finally kick off the troops of Lady Proserpina on Golem in Palin, where the war is raging for two cycles.]]))
    sol(_([[But before definitely bringing peace to this planet, we need to deliver those weapons there. And Lord Richthofen, who has been humiliated by his recent defeats, tends to ambush our convoys. This is why we need our transport to be escorted by a complete fleet, including a battlecruiser.]]))
-   sol(_([[As you probably know, most warlords only own one Goddard battlecruiser. This is due to both the High Command being reluctant to give the authorization, and to House Goddard often refusing to sell a second battlecruiser. However, in our particuliar situation, having a second Goddard battlecruiser would ease our logistics by a lot.]]))
+   sol(_([[As you probably know, most warlords only own one Goddard battlecruiser. This is due to both the High Command being reluctant to give the authorization, and to House Goddard often refusing to sell a second battlecruiser. However, in our particular situation, having a second Goddard battlecruiser would ease our logistics by a lot.]]))
    sol(_([[And I managed to get the special authorization from the High Command. I should soon present my request for the ship to House Goddard, but before doing so, we need to make sure that Goddard shareholders are on our side. And that is why we need you.]]))
    vn.menu{
       {_("What can I do for you?"), "continue"},
@@ -131,7 +131,7 @@ function accept()
       {_("That is a very Dvaered kind of negotiation."), "congratulate"},
       {_("This plan is very subtle Indeed."), "congratulate"},
       {_("I think it is a shitty plan."), "dontcare"},
-      {_("Isn't it kind of... illegal?"), "illegal"},
+      {_("Isn't it kind of… illegal?"), "illegal"},
    }
 
    vn.label("congratulate")
@@ -139,10 +139,10 @@ function accept()
    vn.jump("illegal")
 
    vn.label("illegal")
-   sol(_([[Actually, my plan is totally legal... Mwell, not totally. Let's say... mostly legal.]]))
-   sol(fmt.f(_([[Let me explain: grosjean has a very special hobby that consists in flying a Pirate Shark in {sys} and killing lone traders under the name 'Silent Death'. Dvaered patrols in the system are under the responsability of her friend, the dishonourable Lord Richthofen. We have collected data on her habits, and we know she should be cruising in the system soon. So we need you to go there, pretend you are a harmless trader, wait for her to attack, and kill her.]]), {sys=mem.sharksys}))
+   sol(_([[Actually, my plan is totally legal… Mwell, not totally. Let's say… mostly legal.]]))
+   sol(fmt.f(_([[Let me explain: Grosjean has a very special hobby that consists in flying a Pirate Shark in {sys} and killing lone traders under the name 'Silent Death'. Dvaered patrols in the system are under the responsibility of her friend, the dishonourable Lord Richthofen. We have collected data on her habits, and we know she should be cruising in the system soon. So we need you to go there, pretend you are a harmless trader, wait for her to attack, and kill her.]]), {sys=mem.sharksys}))
    sol(_([[The problem is that she tends to only attack Llamas as it is probably the less dangerous ship that exists. This means that you will have to fly such a ship for her to engage you. Now, you may wonder how you are supposed to catch her in a Llama if she decides to run away, and that is where the less legal part of the mission comes into play.]]))
-   sol(fmt.f(_([[Before entering {sharksys}, we will have to sabotage her ship's engine. We know that she has purchased a new engine that will be delivered to her soon. This engine will transit in the main warehouse of Tricon on {enginpnt}. Your first task will be to shuttle a group of... hem... special... workers to that planet for them to infiltrate the warehouse and sabotage the engine. You will then deposit them back on {pnt}.]]),{sharksys=mem.sharksys, enginpnt=mem.enginpnt, pnt=mem.paypnt}))
+   sol(fmt.f(_([[Before entering {sharksys}, we will have to sabotage her ship's engine. We know that she has purchased a new engine that will be delivered to her soon. This engine will transit in the main warehouse of Tricon on {enginpnt}. Your first task will be to shuttle a group of… hem… special… workers to that planet for them to infiltrate the warehouse and sabotage the engine. You will then deposit them back on {pnt}.]]),{sharksys=mem.sharksys, enginpnt=mem.enginpnt, pnt=mem.paypnt}))
    sol(_([[And only afterwards, you will go and encounter the target. Her engine will malfunction at the very moment you will hit her ship with whatever weapon, and she won't be able to run away anymore. Moreover, as you know, the combat ability of an interceptor like the Shark is closely linked to its maneuverability, which means that this sabotage will make the target much less dangerous for your own safety. So, what do you say? Are you in?]]))
    vn.menu{
       {_("Agree"), "agree"},
@@ -151,11 +151,11 @@ function accept()
 
    vn.label("agree")
    sol(fmt.f(_([[Hehe. I knew you would accept. It's time for you to finally work for someone really important! The first part of your mission is really straightforward: my special team will fly in your ship to {pnt} in {sys} where they will take care of the engine. Let me guide you to them.]]), {sys=mem.enginsys, pnt=mem.enginpnt}))
-   vn.na(_([[Colonel Okran guides you through narrow gangways. You arrive into a large hall and cross a checkpoint guarded by spider-cyborgs and Okran tells you: "those are the soldiers of the 26th multi-terrain assault regiment (ground forces), they are deployed on this spaceport because our intelligence detected a high risk of FLF terrorist attack this sector in the close future. They look a bit odd with their biologically-grown and mechanically-enhanced pawns, but they are friendly... I mean mostly."]]))
+   vn.na(_([[Colonel Okran guides you through narrow gangways. You arrive into a large hall and cross a checkpoint guarded by spider-cyborgs and Okran tells you: "those are the soldiers of the 26th multi-terrain assault regiment (ground forces), they are deployed on this spaceport because our intelligence detected a high risk of FLF terrorist attack this sector in the close future. They look a bit odd with their biologically-grown and mechanically-enhanced pawns, but they are friendly… I mean mostly."]]))
    vn.na(_([[You finally arrive in a tiny ill-enlightened room, where a strange group is waiting for you. Two of them are much higher than average, wear an intimidating amount of implants on their skin, and carry impressive guns while the two other seem unarmed. All of them wear an incoherent assortment of colourful civilian clothes.]]))
-   sol(_([[Sergeant Krakadak! Why are you all wearing ridiculous outfits? What happends here?]]))
+   sol(_([[Sergeant Krakadak! Why are you all wearing ridiculous outfits? What happened here?]]))
    cyb(_([[My Colonel! You ordered us to dress like civilians. Private Krokodok told us the brother of the neighbour of his sister-in-law is a civilian, but he does not really know how this guy dresses. So we let our imagination do the work.]]))
-   vn.na(_([[Colonel Okran presents you the members of the team: Sergeant Krakadak and Private Krokodok are both gamma-class cyborgs, who were detached from Dvaered High Command's Space Infantry to the personnal multirole commando company of Lord Fatgun. The two others are light engine specialists from Lord Fatgun's interception squadrons, whose role will be to actually sabotage the target.]]))
+   vn.na(_([[Colonel Okran presents you the members of the team: Sergeant Krakadak and Private Krokodok are both gamma-class cyborgs, who were detached from Dvaered High Command's Space Infantry to the personnel multirole commando company of Lord Fatgun. The two others are light engine specialists from Lord Fatgun's interception squadrons, whose role will be to actually sabotage the target.]]))
    vn.na(fmt.f(_([[Okran finally guides you to the spacedocks, where you find your ship back. The four soldiers enter it, carrying large backpacks. Before leaving, Okran tells you to meet him on {pnt} once the mission is completed. It is time to fly to {sys}.]]), {pnt=mem.paypnt, sys=mem.enginsys}))
    vn.func( function () doaccept = true end )
    vn.done()
@@ -243,7 +243,7 @@ function land()
       vn.jump("menu")
 
       vn.label("independent")
-      civ(_([[It is of the responsability of Nexus docks to do all that is needed to satisfy their clients. And this includes providing us workers (who actually do the work) with suitable wages. Nowadays, with our current remuneration, we had to work about 5 periods per decaperiod, and at this rhythm, non-modified workers start having severe health issues at the age of 20 cycles, while cyborgs tend to fall apart even earlier. This is why Nexus docks is the only one to blame for this situation and we workers have not to be accused to defend our right to live longer than 25 cycles and to feed our children without having to force them to work.]]))
+      civ(_([[It is of the responsibility of Nexus docks to do all that is needed to satisfy their clients. And this includes providing us workers (who actually do the work) with suitable wages. Nowadays, with our current remuneration, we had to work about 5 periods per decaperiod, and at this rhythm, non-modified workers start having severe health issues at the age of 20 cycles, while cyborgs tend to fall apart even earlier. This is why Nexus docks is the only one to blame for this situation and we workers have not to be accused to defend our right to live longer than 25 cycles and to feed our children without having to force them to work.]]))
       vn.jump("menu")
 
       vn.label("legal")
@@ -258,7 +258,7 @@ function land()
       vn.label("leave")
       vn.na(_([[You leave the workers and head to the bar, where you were supposed to meet the saboteurs once they have completed their mission. You soon notice the two gamma-class cyborgs and approach them.]]))
       cyb(fmt.f(_([[Unexpected event, {player}. Some lazy workers are on strike, and the engine in question was not delivered to the warehouse. We managed to contact Colonel Okran and he got the information that it was sent to a secondary warehouse in Mural to avoid the strike. It is too late to get it there, but it will soon be transferred again. Let us go back to the ship: we will intercept it in {sys}.]]), {player=player.name(),sys=mem.koalasys}))
-      cyb(_([[The new plan is the following: you will find and hail that transport ship, whose name is the 'Siren of Halir'. You will pretend you're in need of fuel and they will board you. Meanwhile, we are going to make a small smacewalk and infiltrate the ship. Once we have done what is planned, we will evacuate the 'Siren of Halir'.]]))
+      cyb(_([[The new plan is the following: you will find and hail that transport ship, whose name is the 'Siren of Halir'. You will pretend you're in need of fuel and they will board you. Meanwhile, we are going to do a small spacewalk and infiltrate the ship. Once we have done what is planned, we will evacuate the 'Siren of Halir'.]]))
       cyb(_([[That is actually the tricky part: you are going to have to recover us in space (like when a miner gathers ore). In the Space Forces, the officers call that kind of stunt an "extra-vehicular recovery operation", but I prefer to refer to it as "one of the stupid stunts I would refuse to do if half my brain had not been amputated before birth in that damn embryo factory". So please, please don't miss us when we will be helplessly floating out there.]]))
 
       vn.done()
@@ -291,7 +291,7 @@ function land()
       vn.transition( )
       vn.na(_([[After landing, you notice Colonel Okran waiting for you on the dock.]]))
       local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort) } )
-      sol(fmt.f(_([[Hello again, citizen {name}. We have been informed by House Goddard of the tragic death of Mrs Grosjean. Lord Fatgun sent flowers to her family, and I believe you may have come to recieve your reward. We will re-contact you in case we need your services again in the future.]]),{name=player.name()}))
+      sol(fmt.f(_([[Hello again, citizen {name}. We have been informed by House Goddard of the tragic death of Mrs Grosjean. Lord Fatgun sent flowers to her family, and I believe you may have come to receive your reward. We will re-contact you in case we need your services again in the future.]]),{name=player.name()}))
       vn.na(fmt.f(_([[Colonel Okran pays you {credits}.]]), {credits=fmt.credits(mem.credits)}))
 
       vn.done()
