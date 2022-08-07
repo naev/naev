@@ -4,12 +4,14 @@
   <slot>intrinsic</slot>
   <mass>0</mass>
   <price>0</price>
-  <description>TODO</description>
+  <description>In order to achieve goals, decisiveness becomes a necessity. A quick strike can determine the outcome of an encounter.</description>
   <gfx_store>placeholder.webp</gfx_store>
   <rarity>6</rarity>
  </general>
  <specific type="modification">
-  <ew_track>5</ew_track>
-  <ew_stealth_timer>5</ew_stealth_timer>
+  <launch_rate>5</launch_rate>
+  <fwd_firerate>5</fwd_firerate>
+  <tur_firerate>5</tur_firerate>
+  <fbay_rate>10</fbay_rate>
  </specific>
 </outfit>
