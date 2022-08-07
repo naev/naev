@@ -36,15 +36,8 @@ return function ( mem )
          local v02 = vn.newCharacter( poi.vn_soundonly( _("02"), {color={0.4,0.2,0.9}, pos="right"} ) )
          vn.transition()
 
-         local noise_list = {
-            _("*CRACKLE*"),
-            _("*HISS*"),
-            _("*CLICK*"),
-            _("*RASPING*"),
-            _("*NOISE*"),
-         }
          local function noise ()
-            return "#n"..noise_list[ rnd.rnd(1,#noise_list) ].."#0"
+            return "#n"..poi.noise().."#0"
          end
 
          vn.na(_([[BEGIN PLAYBACK OF AUDIO DATA ##1892]]))

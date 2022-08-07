@@ -282,6 +282,17 @@ function poi.vn_soundonly( id, params )
          tmerge( {image=c, flip=false}, params ) )
 end
 
+local noise_list = {
+   _("*CRACKLE*"),
+   _("*HISS*"),
+   _("*CLICK*"),
+   _("*RASPING*"),
+   _("*NOISE*"),
+}
+function poi.noise ()
+   return noise_list[ rnd.rnd(1,#noise_list) ]
+end
+
 --[[--
 Logs a point of interest message.
    @tparam string msg Message to log.
