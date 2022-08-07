@@ -2,7 +2,7 @@
 <ship name="Taitamariki">
  <points>60</points>
  <base_type>Odium</base_type>
- <GFX>odium</GFX>
+ <GFX>odium_feral</GFX>
  <rarity>5</rarity>
  <GUI>brushed</GUI>
  <flags>
