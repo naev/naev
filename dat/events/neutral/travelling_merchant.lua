@@ -232,14 +232,40 @@ They throw their hands up in the air, tossing what seems to be some sort of conf
       var.push( "travelling_trader_boarded", true )
    else
       vn.na(_([[You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold bazaar where Misi is waiting for you.]]))
-      --[=[
       if poi.data_get_gained() > 0 and not var.peek("travelling_trader_data") then
-         mm(_([[""]]))
+         mm(_([[Suddenly they starts sniffing the air.
+"Wait is that…?"
+They get uncomfortably close
+"Say, you smell like… something odd…]]))
+         mm(_([[They seem to mutter something under their breath as the pace around trying to remember. Suddenly, they stop, turn around and point at you and exclaim:
+"Data Matrices!"]]))
+         mm(_([["You wouldn't have happened to come about some Data Matrices?"]]))
+         vn.menu{
+            {_([["No"]]), "matrices_yes"},
+            {_([["Yes"]]), "matrices_yes"},
+            {_([["…"]]), "matrices_silent"},
+         }
+
+         vn.label("matrices_yes")
+         mm(_([["I knew it! I would never forget that smell in a lifetime."]]))
+         vn.jump("matrices_cont01")
+
+         vn.label("matrices_no")
+         mm(_([["Hah, I can clearly see through your lies. You can't fool my nose!"]]))
+         vn.jump("matrices_cont01")
+
+         vn.label("matrices_silent")
+         mm(_([["Cat's got your tongue? No point in wasting breath when the answer is clear."]]))
+         vn.jump("matrices_cont01")
+
+         vn.label("matrices_cont01")
+         mm(_([[They sniff the air as to confirm their findings.
+"You haven't been able to de-encrypt them have you? Old technology is a bugger, and most of the cipher codes have been lost, not making it an easy task. I don't think the Encrypted Data Matrices will be of any use to you. However, if you're willing to trade, I have some better offerings that may pique your interest."]]))
+         mm(_([["If you aren't interested in material goods, I also have some special services up my sleeves that should suit any of your ships. Just ask me about them."]]))
          vn.func( function ()
             var.push("travelling_trader_data",true)
          end )
       end
-      --]=]
    end
 
    vn.label("menu")
@@ -262,13 +288,15 @@ They throw their hands up in the air, tossing what seems to be some sort of conf
    end )
    vn.jump("menu")
 
+   local upgrade_cost = 2
    local upgrade_list = {
-      special_necessity = "Machiavellian Necessity",
-      special_fortune   = "Machiavellian Fortune",
-      special_virtue    = "Machiavellian Virtue",
+      special_necessity = outfit.get("Machiavellian Necessity"),
+      special_fortune   = outfit.get("Machiavellian Fortune"),
+      special_virtue    = outfit.get("Machiavellian Virtue"),
    }
    vn.label("special")
-   mm(_(""))
+   mm(fmt.f(_("So you're interested in my special services. Quite a bargain might I say. Each services costs only {cost}.")
+      {cost=poi.data_str(upgrade_cost)}))
    vn.menu( function ()
       local opts = {
          { _("Info"), "special_info" },
@@ -281,19 +309,28 @@ They throw their hands up in the air, tossing what seems to be some sort of conf
    end )
    vn.jump("menu")
 
-   local upgrade_cost = 2
+   local replacement = nil
    for s,o in pairs( upgrade_list ) do
       vn.label( s )
-      local upgrade = outfit.get(o)
+      local upgrade = o
       vn.func( function ()
          local pp = player.pilot()
+         replacement = nil
          for k,v in ipairs(pp:outfits("intrinsic")) do
             if v == upgrade then
                vn.jump( s.."_exists" )
+               return
+            end
+            for i,uo in pairs(upgrade_list) do
+               if uo == v then
+                  replacement = uo
+                  vn.jump( s.."_replace" )
+                  return
+               end
             end
          end
       end )
-      mm(fmt.f(_([["I would be able to provide my special services for, let's say, 2 Encrypted Data Matrices, how does that sound?"
+      mm(fmt.f(_([["I would be able to provide my special services for, let's say, {cost}, how does that sound?"
 
 You have {amount}. Pay {cost} for {upgrade}?]]),
          {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade} ))
@@ -304,16 +341,47 @@ You have {amount}. Pay {cost} for {upgrade}?]]),
       vn.jump("special")
 
       vn.label( s.."_exists" )
-      mm(fmt.f(_("It seems like I have already upgraded your current ship with {upgradename}."),
+      mm(fmt.f(_([["It seems like I have already upgraded your current ship with {upgradename}."]]),
             {upgradename=upgrade}))
       vn.jump("special")
 
+      vn.label( s.."_replace" )
+      mm( function ()
+         return fmt.f(_([["It seems like I have already upgraded your current ship with {replacement}. Would you like to replace it with {upgrade} for 2 Encrypted Data Matrices?"
+
+You have {amount}. Pay {cost} for replacing {replacement} with {upgrade}?]]),
+            {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade, replacement=replacement} )
+      end )
+      vn.menu{
+         { _("Pay"), s.."_yes" },
+         { _("Back"), s.."_no" },
+      }
+
       vn.label( s.."_yes" )
+      mm(_([["This will take a second."
+They grab a toolbox and rush over to your boarded ship. You decide not to follow as somethings are best left not known. At least they know what they are doing right?]]))
+      mm(_([[Eventually, they come back covered in what seems to be fish parts and slime.
+"That was fun! However, when I put it back together, I found some extra screws. Oh well, it does seem to hold together fairly well. Hope you enjoy the upgrades!"]]))
+      vn.func( function ()
+         local pp = player.pilot()
+         -- Remove old and add new
+         for k,v in pairs(upgrade_list) do
+            pp:outfitRmIntrinsic( v )
+         end
+         pp:outfitAddIntrinsic( upgrade )
+      end )
+      vn.jump("special")
 
       vn.label( s.."_no" )
+      mm(_([["OK, tell me if you change your mind."]]))
+      vn.jump("special")
    end
 
    vn.label("special_info")
+   mm(_([["Throughout my travels, I've been in many a tight spot. I remember getting stuck with a broken engine capacitor in a lost asteroid field, no food, no equipment, and a hull leaking solar radiation. It was either adapt or perish, and me being here is a testament to my ship modification skills acquired under pressure."]]))
+   mm(fmt.f(_([["Or it could be the Toni's Discount Ship Repair Certification Course I did for {cost} in a back-alley on Darkshed. Still never really understood why we need to slap fish skin on the radiators. Bug juice would work much better, but anyway, I got my license and I get spruce up your ship for all your space needs!"]]),
+      {cost=fmt.credits(99)}))
+   mm(_([["I can offer you three different services, however, you can only have one active at a time on your ship. It is possible to change them if you wish though."]]))
    vn.jump("special")
 
    vn.label("leave")
