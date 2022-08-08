@@ -137,11 +137,11 @@ static void debug_translateAddress( const char *symbol, void *address )
    asection *section;
 
    for (section = abfd->sections; section != NULL; section = section->next) {
-      bfd_vma func_vma = (bfd_hostptr_t) address, base_vma = 0;
+      bfd_vma func_vma = (uintptr_t) address, base_vma = 0;
 #if HAVE_DLADDR
       Dl_info addr;
       if (dladdr( address, &addr ))
-         base_vma = (bfd_hostptr_t) addr.dli_fbase;
+         base_vma = (uintptr_t) addr.dli_fbase;
 #endif /* HAVE_DLADDR */
 
       if ((bfd_section_flags(section) & SEC_ALLOC) == 0)
