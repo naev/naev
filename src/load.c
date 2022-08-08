@@ -479,6 +479,8 @@ void load_free (void)
  */
 const nsave_t *load_getList( const char *name )
 {
+   if (!array_size(load_saves))
+      return NULL;
    if (name==NULL)
       return load_saves[0].saves;
    for (int i=0; i<array_size(load_saves); i++)
