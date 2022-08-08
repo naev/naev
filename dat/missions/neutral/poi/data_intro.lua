@@ -23,7 +23,7 @@ return function ( mem )
          vn.disappear( sai, tut.shipai.transition )
 
          vn.scene()
-         local v01 = vn.newCharacter( poi.vn_soundonly( _("01"), {color={0.9,0.2,0.2}, pos="left"} ) )
+         local v01 = vn.newCharacter( poi.vn_soundonly( _("01"), {color={0.9,0.2,0.2}} ) )
          vn.transition()
 
          vn.na(_([[BEGIN PLAYBACK OF AUDIO DATA]]))
