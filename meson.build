@@ -195,15 +195,13 @@ if buildExec.disabled() == false
    glad_requires_libdl = not cc.has_header('windows.h')
    libdl = cc.find_library('dl', required: glad_requires_libdl)
 
-   # BFD
    if get_option('debug')
       bfd = cc.find_library('bfd', required: false)
-   else
-      bfd = dependency('', required: false)
+      if not bfd.found() or 'bfd' in forced_fallbacks or get_option('wrap_mode') == 'forcefallback'
+         bfd = dependency('bfd', fallback: ['binutils', 'libbfd_dep'], required: true)
+      endif
+      naev_deps += bfd
    endif
-   summary('BFD', bfd.found(), section: 'Debug', bool_yn: true)
-
-   naev_deps += bfd
 
    # Appstream (Used for generating desktop files and verifying metadata)
    ascli_exe = find_program('appstreamcli', version: '>=0.12.9', required: false)
@@ -226,7 +224,6 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept', prefix: '#define _GNU_SOURCE'))
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
-   config_data.set10('HAVE_BFD_H', bfd.found())
    config_data.set10('HAVE_DLADDR', cc.has_function('dladdr') and libdl.found())
    config_data.set10('HAVE_EXECINFO_H', cc.has_header('execinfo.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
@@ -317,7 +314,7 @@ if buildExec.disabled() == false
       naev_source,
       include_directories: include_dirs,
       dependencies: naev_deps,
-      export_dynamic: bfd.found(),
+      export_dynamic: get_option('debug'),
       install: true)
 
    gen_authors = find_program('utils/build/gen_authors.py')

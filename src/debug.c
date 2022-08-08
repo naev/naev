@@ -12,9 +12,8 @@
 #include <assert.h>
 #include <signal.h>
 
-#if HAVE_BFD_H
+#if DEBUGGING
 #include <bfd.h>
-#endif /* HAVE_BFD_H */
 
 #if HAVE_DLADDR
 #define __USE_GNU /* Grrr... */
@@ -25,16 +24,17 @@
 #if HAVE_EXECINFO_H
 #include <execinfo.h>
 #endif /* HAVE_EXECINFO_H */
+#endif /* DEBUGGING */
 
 #include "naev.h"
 /** @endcond */
 
 #include "log.h"
 
-#if HAVE_BFD_H && DEBUGGING
+#if DEBUGGING
 static bfd *abfd      = NULL;
 static asymbol **syms = NULL;
-#endif /* HAVE_BFD_H && DEBUGGING */
+#endif /* DEBUGGING */
 
 #ifdef bfd_get_section_flags
 /* We're dealing with a binutils version prior to 2.34 (2020-02-01) and must adapt the API as follows: */
@@ -126,7 +126,7 @@ const char* debug_sigCodeToStr( int sig, int sig_code )
 }
 #endif /* DEBUGGING */
 
-#if HAVE_BFD_H && DEBUGGING
+#if DEBUGGING && HAVE_EXECINFO_H
 /**
  * @brief Translates and displays the address as something humans can enjoy.
  */
@@ -170,7 +170,7 @@ static void debug_translateAddress( const char *symbol, void *address )
 
    DEBUG("%s %s(...):%u %s", symbol, "??", 0, "??");
 }
-#endif /* HAVE_BFD_H && DEBUGGING */
+#endif /* DEBUGGING && HAVE_EXECINFO_H */
 
 #if DEBUGGING
 #if HAVE_SIGACTION
@@ -200,12 +200,10 @@ static void debug_sigHandler( int sig )
    num      = backtrace(buf, 64);
    symbols  = backtrace_symbols(buf, num);
    for (int i=0; i<num; i++) {
-#if HAVE_BFD_H
       if (abfd != NULL) {
          debug_translateAddress( symbols[i], buf[i] );
 	 continue;
       }
-#endif /* HAVE_BFD_H */
       DEBUG("   %s", symbols[i]);
    }
    DEBUG( _("Report this to project maintainer with the backtrace.") );
@@ -222,7 +220,6 @@ static void debug_sigHandler( int sig )
 void debug_sigInit (void)
 {
 #if DEBUGGING
-#if HAVE_BFD_H
    bfd_init();
 
    /* Read the executable. TODO: in case libbfd exists on platforms without procfs, try env.argv0 from "env.h"? */
@@ -240,7 +237,6 @@ void debug_sigInit (void)
          assert(symcount >= 0);
       }
    }
-#endif /* HAVE_BFD_H */
 
    /* Set up handler. */
 #if HAVE_SIGACTION
@@ -273,10 +269,8 @@ void debug_sigInit (void)
 void debug_sigClose (void)
 {
 #if DEBUGGING
-#if HAVE_BFD_H
    bfd_close( abfd );
    abfd = NULL;
-#endif /* HAVE_BFD_H */
    signal( SIGSEGV, SIG_DFL );
    signal( SIGFPE,  SIG_DFL );
    signal( SIGABRT, SIG_DFL );
