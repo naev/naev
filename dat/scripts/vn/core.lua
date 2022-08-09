@@ -57,7 +57,6 @@ local function _setdefaults()
    vn._default.textbox_font = graphics.newFont(16)
    vn._default.textbox_font:setOutline( 0.5 )
    vn._default.textbox_w = 800
-   vn._default.textbox_tw = vn._default.textbox_w-60
    local fonth = vn._default.textbox_font:getLineHeight()
    vn._default.textbox_h = math.floor(200 / fonth) * fonth + 20*2
    vn._default.textbox_x = ox + (mw-vn._default.textbox_w)/2
@@ -637,7 +636,7 @@ function vn.StateSay:_init()
    self._textbuf = self.what
    -- Parse for line breaks and insert newlines
    local font = vn.textbox_font
-   local _maxw, wrappedtext = font:getWrap( self._textbuf, vn.textbox_tw )
+   local _maxw, wrappedtext = font:getWrap( self._textbuf, vn.textbox_tw-60 )
    self._textbuf = table.concat( wrappedtext, "\n" )
    -- Set up initial buffer
    self._timer = vn.speed
@@ -684,7 +683,7 @@ function vn.StateSay:_update( dt )
       -- Checks to see if we should scroll down
       local bh = 20
       local font = vn.textbox_font
-      local _maxw, wrappedtext = font:getWrap( self._text, vn.textbox_tw )
+      local _maxw, wrappedtext = font:getWrap( self._text, vn.textbox_tw-60 )
       local lh = font:getLineHeight()
       if (lh * #wrappedtext + bh + vn._buffer_y > vn.textbox_h) then
          if vn.autoscroll then
