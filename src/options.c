@@ -172,7 +172,7 @@ static void opt_OK( unsigned int wid, const char *str )
    ret |= opt_videoSave(    opt_windows[ OPT_WIN_VIDEO ], str);
 
    if (opt_restart && !prompted_restart)
-      dialogue_msgRaw( _("Warning"), _("#rRestart Naev for changes to take effect.#0") );
+      dialogue_msg( _("Warning"), "#r%s#0", _("Restart Naev for changes to take effect.") );
 
    /* Close window if no errors occurred. */
    if (!ret) {
