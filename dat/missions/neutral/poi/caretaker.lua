@@ -17,7 +17,7 @@ return function ( mem )
 
    -- Already finished
    local mvar = var.peek( misnvar )  or 0
-   if mvar >= 1 then
+   if mvar >= 3 then
       return
    end
 
