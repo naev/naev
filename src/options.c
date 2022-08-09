@@ -289,9 +289,9 @@ static void opt_gameplay( unsigned int wid )
    for (i=l=0; paths[i]!=NULL && (size_t)l < sizeof(buf); i++)
    {
       if (i == 0)
-         l = scnprintf( buf, sizeof(buf), _("ndata: %s"), paths[i] );
+         l = scnprintf( buf, sizeof(buf), "#n%s#0%s", _("ndata: "), paths[i] );
       else
-         l += scnprintf( &buf[l], sizeof(buf)-l, ":%s", paths[i] );
+         l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0%s", p_("path_separator",":"), paths[i] );
    }
    PHYSFS_freeList(paths);
    paths = NULL;
@@ -318,7 +318,7 @@ static void opt_gameplay( unsigned int wid )
          i = 0;
    }
    window_addList( wid, x+l+20, y, cw-l-50, 100, "lstLanguage", ls, n, i, NULL, NULL );
-   y -= 120;
+   y -= 110;
 
    /* Game difficulty. */
    difficulty = difficulty_getAll();
@@ -349,7 +349,7 @@ static void opt_gameplay( unsigned int wid )
    /* Compilation flags. */
    window_addText( wid, x, y, cw, 20, 0, "txtCompile",
          NULL, cHeader, _("Compilation Flags:") );
-   y -= 30;
+   y -= 20;
    window_addText( wid, x, y, cw, h+y-20, 0, "txtFlags",
          NULL, &cFontOrange,
          ""
