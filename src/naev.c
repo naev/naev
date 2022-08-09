@@ -95,7 +95,6 @@
 #include "unidiff.h"
 #include "weapon.h"
 
-#define CONF_FILE       "conf.lua" /**< Configuration file by default. */
 #define VERSION_FILE    "VERSION" /**< Version file by default. */
 
 static int quit               = 0; /**< For primary loop */
