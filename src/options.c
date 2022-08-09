@@ -26,6 +26,7 @@
 #include "log.h"
 #include "music.h"
 #include "ndata.h"
+#include "nfile.h"
 #include "nstring.h"
 #include "player.h"
 #include "plugin.h"
@@ -256,7 +257,6 @@ static void opt_gameplay( unsigned int wid )
 {
    (void) wid;
    char buf[STRMAX];
-   char **paths;
    int cw;
    int w, h, y, x, by, l, n, i, p;
    const char *s;
@@ -285,18 +285,8 @@ static void opt_gameplay( unsigned int wid )
          NULL, NULL, naev_version(1) );
    y -= 20;
 
-   paths = PHYSFS_getSearchPath();
-   for (i=l=0; paths[i]!=NULL && (size_t)l < sizeof(buf); i++)
-   {
-      if (i == 0)
-         l = scnprintf( buf, sizeof(buf), "#n%s#0%s", _("ndata: "), paths[i] );
-      else
-         l += scnprintf( &buf[l], sizeof(buf)-l, "#n%s#0%s", p_("path_separator",":"), paths[i] );
-   }
-   PHYSFS_freeList(paths);
-   paths = NULL;
-   window_addText( wid, x, y, cw, 20, 1, "txtNdata",
-         NULL, NULL, buf );
+   snprintf( buf, sizeof(buf), "#n%s#0%s"CONF_FILE, _("Config Path: "), nfile_configPath() );
+   window_addText( wid, x, y, cw, 20, 1, "txtConfPath", NULL, NULL, buf );
    y -= 40;
    by = y;
 
