@@ -1783,7 +1783,7 @@ static void opt_setMapOverlayOpacity( unsigned int wid, const char *str )
 static void opt_plugins( unsigned int wid )
 {
    int w, h, lw, lh, bw, bh, n;
-   char **str;
+   char **str, buf[STRMAX_SHORT];
    const plugin_t *plgs = plugin_list();
 
    /* Get dimensions. */
@@ -1791,14 +1791,16 @@ static void opt_plugins( unsigned int wid )
    bh = BUTTON_HEIGHT;
    window_dimWindow( wid, &w, &h );
    lw = w - bw - 100;
-   lh = h - 60;
+   lh = h - 90;
 
    /* Close button. */
    window_addButton( wid, -20, 20, bw, bh,
          "btnClose", _("OK"), opt_OK );
 
    /* Text stuff. */
-   window_addText( wid, -20, -40, w-(20+lw+20+20), h-100,
+   snprintf( buf, sizeof(buf), "#nPlugins Directory:#0 %s%s", PHYSFS_getRealDir("plugins"), "plugins" );
+   window_addText( wid, 20, -40, w-40, 30, 0, "txtPath", NULL, NULL, buf );
+   window_addText( wid, -20, -70, w-(20+lw+20+20), h-100,
          0, "txtDesc", NULL, NULL, NULL );
 
    /* Create the list. */
@@ -1814,7 +1816,7 @@ static void opt_plugins( unsigned int wid )
          str[i] = strdup( plugin_name(&plgs[i]) );
    }
 
-   window_addList( wid, 20, -40, lw, lh, "lstPlugins", str, n, 0, opt_plugins_update, NULL );
+   window_addList( wid, 20, -70, lw, lh, "lstPlugins", str, n, 0, opt_plugins_update, NULL );
 }
 
 static void opt_plugins_update( unsigned int wid, const char *name )
