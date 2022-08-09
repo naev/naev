@@ -1788,8 +1788,8 @@ static void opt_plugins( unsigned int wid )
          "btnClose", _("OK"), opt_OK );
 
    /* Text stuff. */
-   snprintf( buf, sizeof(buf), "#nPlugins Directory:#0 %s%s", PHYSFS_getRealDir("plugins"), "plugins" );
-   window_addText( wid, 20, -40, w-40, 30, 0, "txtPath", NULL, NULL, buf );
+   snprintf( buf, sizeof(buf), "#n%s#0%s%s", _("Plugins Directory: "), PHYSFS_getRealDir("plugins"), "plugins" );
+   window_addText( wid, 20, -30, w-40, 30, 1, "txtPath", NULL, NULL, buf );
    window_addText( wid, -20, -70, w-(20+lw+20+20), h-100,
          0, "txtDesc", NULL, NULL, NULL );
 
