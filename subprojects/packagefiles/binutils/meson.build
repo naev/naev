@@ -1,7 +1,13 @@
 project('binutils', 'c', version: '2.39', meson_version: '>=0.57.0')
 
 mod = import('unstable_external_project')
-host = run_command(meson.get_compiler('c'), '-dumpmachine', check: true).stdout()
+host = run_command(meson.get_compiler('c'), '-dumpmachine', check: true).stdout().strip()
+
+if get_option('steamruntime')
+   # Two build systems are 100% sure of where libiberty.a is going to go. Their answers are not the same. Unless...
+   run_command(['mkdir', '-p', meson.current_build_dir() / 'dist/usr/local/lib'])
+   run_command(['ln', '-s', meson.current_build_dir() / 'dist/usr/local/lib' / host, meson.current_build_dir() / 'dist/usr/local/lib/lib'])
+endif
 
 p = mod.add_project('configure',
    configure_options: [
