@@ -403,7 +403,11 @@ void audio_cleanup( LuaAudio_t *la )
          if (la->th != NULL) {
             la->active = -1;
             if (SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) == SDL_MUTEX_TIMEDOUT)
+#if DEBUGGING
                WARN(_("Timed out while waiting for audio thread of '%s' to finish!"), la->name);
+#else /* DEBUGGING */
+               WARN(_("Timed out while waiting for audio thread to finish!"));
+#endif /* DEBUGGING */
          }
          if (la->source > 0)
             alDeleteSources( 1, &la->source );

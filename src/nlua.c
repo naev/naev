@@ -170,9 +170,7 @@ static int nlua_os_getenv( lua_State *L )
  */
 static int nlua_panic( lua_State *L )
 {
-   DEBUG( _("LUA PANIC: %s"),  lua_tostring(L,-1) );
-   raise( SIGABRT );
-   return 0;
+   ERR( _("LUA PANIC: %s"),  lua_tostring(L,-1) );
 }
 
 /*
