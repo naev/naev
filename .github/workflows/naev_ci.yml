@@ -36,10 +36,13 @@ jobs:
         include:
           - image: naev-linux-latest
             config: linux.ini
+            wrap_mode: forcefallback
           - image: naev-linux-lts
             config: linux.ini
+            wrap_mode: default
           - image: naev-steamruntime
             config: linux_steamruntime.ini
+            wrap_mode: forcefallback
 
     runs-on: ubuntu-latest
     container:
@@ -62,7 +65,8 @@ jobs:
           meson setup build source \
               --native-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=debug \
-              --wrap-mode=forcefallback \
+              --wrap-mode=${{ matrix.wrap_mode }} \
+              --force-fallback-for=SuiteSparse,glpk \
               -Dnightly=false \
               -Db_lto=true \
               -Dauto_features=enabled \
