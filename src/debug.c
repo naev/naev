@@ -19,6 +19,11 @@
 #define __USE_GNU /* Grrr... */
 #include <dlfcn.h>
 #undef __USE_GNU
+#else /* HAVE_DLADDR */
+typedef struct {
+   const char *dli_fname; void *dli_fbase;
+   const char *dli_sname; void *dli_saddr;
+} Dl_info;
 #endif /* HAVE_DLADDR */
 
 #if HAVE_EXECINFO_H
@@ -130,45 +135,38 @@ const char* debug_sigCodeToStr( int sig, int sig_code )
 /**
  * @brief Translates and displays the address as something humans can enjoy.
  */
-static void debug_translateAddress( const char *symbol, void *address )
+static void debug_translateAddress( void *address )
 {
-   const char *file, *func;
-   unsigned int line;
+   const char *file = NULL, *func = NULL;
+   unsigned int line = 0;
    asection *section;
+   Dl_info addr = {0};
 
-   for (section = abfd->sections; section != NULL; section = section->next) {
-      bfd_vma func_vma = (uintptr_t) address, base_vma = 0;
 #if HAVE_DLADDR
-      Dl_info addr;
-      if (dladdr( address, &addr ))
-         base_vma = (uintptr_t) addr.dli_fbase;
+   (void) dladdr( address, &addr );
 #endif /* HAVE_DLADDR */
 
+   for (section = abfd==NULL?NULL:abfd->sections; section != NULL; section = section->next) {
       if ((bfd_section_flags(section) & SEC_ALLOC) == 0)
          continue;
 
-      bfd_vma vma = bfd_section_vma(section);
+      bfd_vma vma = bfd_section_vma(section), func_vma = (uintptr_t) address;
       bfd_size_type size = bfd_section_size(section);
-      if (func_vma < vma || func_vma >= vma + size) {
-         func_vma -= base_vma;
-         if (func_vma < vma || func_vma >= vma + size)
-            continue;
-      }
-
-      if (!bfd_find_nearest_line(abfd, section, syms, func_vma - vma,
-            &file, &func, &line))
+      if (func_vma < vma || func_vma >= vma + size)
+         func_vma = (bfd_vma) (address - addr.dli_fbase);
+      if (func_vma < vma || func_vma >= vma + size)
          continue;
 
-      do {
-         if (func == NULL || func[0] == '\0')
-            func = "??";
-         DEBUG("%s %s(...):%u %s", symbol, func, line, file);
-      } while (bfd_find_inliner_info(abfd, &file, &func, &line));
-
-      return;
+      (void) bfd_find_nearest_line(abfd, section, syms, func_vma - vma, &file, &func, &line);
+      break;
    }
 
-   DEBUG("%s %s(...):%u %s", symbol, "??", 0, "??");
+   do {
+      bfd_vma offset = address - (addr.dli_saddr ? addr.dli_saddr : addr.dli_fbase);
+#define TRY( str ) ((str != NULL && str[0]) ? str : "??")
+#define OPT( str ) ((str != NULL && str[0]) ? str : "")
+      DEBUG( "%s(%s+%#" BFD_VMA_FMT "x) [%p] %s(...):%u %s", TRY(addr.dli_fname), OPT(addr.dli_sname), offset, address, TRY(func), line, TRY(file) );
+   } while (section!=NULL && bfd_find_inliner_info(abfd, &file, &func, &line));
 }
 #endif /* DEBUGGING && HAVE_EXECINFO_H */
 
@@ -195,16 +193,10 @@ static void debug_sigHandler( int sig )
 #if HAVE_EXECINFO_H
    int num;
    void *buf[64];
-   char **symbols;
 
    num      = backtrace(buf, 64);
-   symbols  = backtrace_symbols(buf, num);
    for (int i=0; i<num; i++) {
-      if (abfd != NULL) {
-         debug_translateAddress( symbols[i], buf[i] );
-	 continue;
-      }
-      DEBUG("   %s", symbols[i]);
+      debug_translateAddress( buf[i] );
    }
    DEBUG( _("Report this to project maintainer with the backtrace.") );
 #endif /* HAVE_EXECINFO_H */
