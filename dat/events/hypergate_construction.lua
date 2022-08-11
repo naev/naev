@@ -136,7 +136,11 @@ function boss_hail ()
       b(_([["We don't deal with the likes of you!"]]))
    else
       if not var.peek( talked_check ) then
-         b(fmt.f(_([["We are looking for miners to obtain valuable minerals such as {minerals}. Given the difficulty of acquiring them, we are willing to pay {markup}% of the market price. If you are interested, please bring the minerals and board to do the transaction."]]),{minerals=fmt.list(mineral_list),markup=markup*100}))
+         local mineral_name_list = {}
+         for i,m in ipairs(mineral_list) do
+            mineral_name_list[i] = _(mineral_list[i])
+         end
+         b(fmt.f(_([["We are looking for miners to obtain valuable minerals such as {minerals}. Given the difficulty of acquiring them, we are willing to pay {markup}% of the market price. If you are interested, please bring the minerals and board to do the transaction."]]),{minerals=fmt.list(mineral_name_list),markup=markup*100}))
          vn.func( function ()
             boss:setActiveBoard(true)
             hook.pilot( boss, "board", "boss_board" )

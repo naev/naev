@@ -32,6 +32,7 @@
 #include "slots.h"
 #include "space.h"
 #include "toolkit.h"
+#include "utf8.h"
 
 #define  OUTFITS_IAR    "iarOutfits"
 #define  OUTFITS_TAB    "tabOutfits"
@@ -491,16 +492,16 @@ void outfits_update( unsigned int wid, const char *str )
    if (outfit->license) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("License:") );
       if (blackmarket || player_hasLicense( outfit->license ))
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", outfit->license );
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(outfit->license) );
       else
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", outfit->license );
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", _(outfit->license) );
    }
    if (outfit->cond) {
       k += scnprintf( &lbl[k], sizeof(lbl)-k, "\n%s", _("Requires:") );
       if (cond_check(outfit->cond))
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", outfit->condstr );
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _(outfit->condstr) );
       else
-         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", outfit->condstr );
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#r%s#0", _(outfit->condstr) );
    }
    window_modifyText( wid, "txtSDesc", lbl );
    window_modifyText( wid, "txtDDesc", buf );
@@ -717,10 +718,12 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits )
          /* Slot type. */
          if ( (strcmp(outfit_slotName(o), "N/A") != 0)
                && (strcmp(outfit_slotName(o), "NULL") != 0) ) {
-            typename       = outfit_slotName(o);
-            coutfits[i].slottype = malloc(2);
-            coutfits[i].slottype[0] = typename[0];
-            coutfits[i].slottype[1] = '\0';
+            size_t sz = 0;
+            typename       = _(outfit_slotName(o));
+            u8_inc( typename, &sz );
+            coutfits[i].slottype = malloc( sz+1 );
+            memcpy( coutfits[i].slottype, typename, sz );
+            coutfits[i].slottype[sz] = '\0';
          }
 
          /* Layers. */

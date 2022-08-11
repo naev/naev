@@ -114,7 +114,7 @@ Once you have seen enough ships, you can land on any Dvaered-controlled planet t
    misn.setTitle(fmt.f(_("Monitoring of Warlords activity in {sys}"), {sys=mem.sys}))
    misn.setReward( fmt.credits( mem.credits ) )
    misn.setDesc( fmt.f(_("Dvaered High Command requires a pilot to go to {sys} and detect {nb} Dvaered ships"), {sys=mem.sys, nb=mem.nbships}))
-   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, 0, "Dvaered", "Dvaered" )
+   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, 0, _("Dvaered"), _("Dvaered") )
 
    hook.enter("enter")
    hook.land("land")
@@ -158,7 +158,7 @@ function testInRange()
       player.msg( _("You have acquired data on enough Dvaered ships") )
       return
    end
-   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, #detected, "Dvaered", "Dvaered" )
+   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, #detected, _("Dvaered"), _("Dvaered") )
    hook.timer(1, "testInRange") -- Recursivity 1 s
 end
 

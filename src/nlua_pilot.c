@@ -594,7 +594,7 @@ static int pilotL_add( lua_State *L )
    /* Get faction from string or number. */
    lf = luaL_validfaction(L,2);
    /* Get pilotname argument if provided. */
-   pilotname = luaL_optstring( L, 4, ship->name );
+   pilotname = luaL_optstring( L, 4, _(ship->name) );
 
    /* Handle position/origin argument. */
    if (lua_isvector(L,3)) {

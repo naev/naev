@@ -889,7 +889,7 @@ static void opt_setEngineLevel( unsigned int wid, const char *str )
    char buf[32];
    double vol = window_getFaderValue(wid, str);
    conf.engine_vol = vol;
-   snprintf( buf, sizeof(buf), "Engine Volume: %.0f%%", vol*100. );
+   snprintf( buf, sizeof(buf), _("Engine Volume: %.0f%%"), vol*100. );
    window_modifyText( wid, "txtEngine", buf );
 }
 

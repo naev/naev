@@ -193,7 +193,7 @@ local function pir_discovery( fname, disc, subtitle )
       end,
       type = "enter",
       name = disc,
-      title = "#H"..fmt.f(_("{fname} Territory"),{fname=fname}).."#0",
+      title = "#H"..fmt.f(_("{fname} Territory"),{fname=_(fname)}).."#0",
       subtitle = "#H"..subtitle.."#0",
       func = function()
          local fpir = faction.get(fname)

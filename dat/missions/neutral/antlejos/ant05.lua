@@ -234,7 +234,7 @@ function supply5 ()
    add_supplyship( "Koala" )
    add_supplyship( "Koala" )
    add_supplyship( "Koala" )
-   player.msg("The last supply ships have entered the system!")
+   player.msg(_("The last supply ships have entered the system!"))
    system.mrkRm( sysmrk )
 end
 

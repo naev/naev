@@ -181,7 +181,7 @@ const char* dtype_damageTypeToStr( int type )
 int dtype_load (void)
 {
    const DTYPE normal = {
-      .name = strdup(_("normal")),
+      .name = strdup(N_("normal")),
       .sdam = 1.,
       .adam = 1.,
       .knock = 0.,

@@ -240,8 +240,8 @@ They get uncomfortably close
 "Data Matrices!"]]))
          mm(_([["You wouldn't have happened to come about some Data Matrices?"]]))
          vn.menu{
-            {_([["No"]]), "matrices_yes"},
-            {_([["Yes"]]), "matrices_yes"},
+            {p_("not to come", [["No"]]), "matrices_no"},
+            {p_("not to come", [["Yes"]]), "matrices_yes"},
             {_([["…"]]), "matrices_silent"},
          }
 
@@ -294,7 +294,7 @@ They get uncomfortably close
       special_virtue    = outfit.get("Machiavellian Virtue"),
    }
    vn.label("special")
-   mm(fmt.f(_("So you're interested in my special services. Quite a bargain might I say. Each services costs only {cost}.")
+   mm(fmt.f(_("So you're interested in my special services. Quite a bargain might I say. Each services costs only {cost}."),
       {cost=poi.data_str(upgrade_cost)}))
    vn.menu( function ()
       local opts = {

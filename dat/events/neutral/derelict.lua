@@ -360,9 +360,10 @@ function goodevent()
                table.insert( fcts, f )
             end
          end
-         local rndfact = fcts[ rnd.rnd(1, #fcts) ]
+         local rndfactRaw = fcts[ rnd.rnd(1, #fcts) ]
+         local rndfact = _(rndfactRaw)
          derelict_msg(gtitle, fmt.f(_([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced according to your ship AI, {shipai}! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging and contact the {fct} authorities. Your reputation with them has slightly improved.]]), {shipai=tut.ainame(), fct=rndfact}), fmt.f(_([[In the {sys} system you found a very rare antique derelict {shp} and reported it to the, happy to hear from you, {fct} authorities.]]), {sys=system.cur(), shp=derelict:ship(), fct=rndfact}))
-         faction.modPlayerSingle(rndfact, 2, "script")
+         faction.modPlayerSingle(rndfactRaw, 2, "script")
       end,
    }
 
