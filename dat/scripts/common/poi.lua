@@ -274,7 +274,7 @@ function poi.vn_soundonly( id, params )
    lg.clear{ 0, 0, 0, 0.8 }
    lg.setColor( col )
    lg.printf( id, fl, 0, 200, 1000, "center" )
-   lg.printf( "SOUND ONLY", fs, 0, 550, 1000, "center" )
+   lg.printf( p_("poi", "SOUND ONLY"), fs, 0, 550, 1000, "center" )
    lg.setCanvas( oc )
 
    return vn.Character.new(

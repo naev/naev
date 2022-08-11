@@ -396,8 +396,8 @@ size_t outfit_getNameWithClass( const Outfit* outfit, char* buf, size_t size )
    size_t p = scnprintf( &buf[0], size, "%s\n", _(outfit->name) );
    if (outfit->slot.type != OUTFIT_SLOT_NA) {
       p += scnprintf( &buf[p], size-p, _("#%c%s #%c%s #0slot"),
-            outfit_slotSizeColourFont( &outfit->slot ), outfit_slotSize( outfit ),
-            outfit_slotTypeColourFont( &outfit->slot ), outfit_slotName( outfit ) );
+            outfit_slotSizeColourFont( &outfit->slot ), _(outfit_slotSize( outfit )),
+            outfit_slotTypeColourFont( &outfit->slot ), _(outfit_slotName( outfit )) );
       p += scnprintf( &buf[p], size-p, "\n" );
    }
    return p;
@@ -2390,7 +2390,7 @@ static int outfit_parse( Outfit* temp, const char* file )
             /* Add extra description task if available. */
             if (desc_extra != NULL) {
                l = strlen(temp->desc_short);
-               snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l, "\n%s", desc_extra );
+               snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l, "\n%s", _(desc_extra) );
                free( desc_extra );
                desc_extra = NULL;
             }

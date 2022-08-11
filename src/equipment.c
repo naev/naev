@@ -848,8 +848,8 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       else
          pos = 0;
       pos += scnprintf( &alt[pos], sizeof(alt)-pos, _( "#%c%s #%c%s #0slot" ),
-            outfit_slotSizeColourFont( &slot->sslot->slot ), slotSize( slot->sslot->slot.size ),
-            outfit_slotTypeColourFont( &slot->sslot->slot ), slotName( slot->sslot->slot.type ) );
+            outfit_slotSizeColourFont( &slot->sslot->slot ), _(slotSize( slot->sslot->slot.size )),
+            outfit_slotTypeColourFont( &slot->sslot->slot ), _(slotName( slot->sslot->slot.type )) );
       if (slot->sslot->exclusive && (pos < (int)sizeof(alt)))
          pos += scnprintf( &alt[pos], sizeof(alt)-pos,
                _(" [exclusive]") );

@@ -183,7 +183,7 @@ function approach_guide ()
          description=_("Unlocks the Double Damage Enemies Perk, which causes all enemies to double the amount of damage. While this increases the challenge difficulty, it also immensely increases the rewards.")},
       {name=_("Unlock No Healing Perk"), cost=2500, type="var", var="gauntlet_unlock_nohealing",
          description=_("Unlocks the No Healing Perk, which makes it so you don't get healed between waves. While this increases the challenge difficulty, it also increases the rewards.")},
-      {name=("Gauntlet Deluxe"), cost=2500, type="intrinsic", outfit=outfit.get("Gauntlet Deluxe")},
+      {name=_("Gauntlet Deluxe"), cost=2500, type="intrinsic", outfit=outfit.get("Gauntlet Deluxe")},
    }
    local tradein_item = nil
    local handler = function (idx)

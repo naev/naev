@@ -346,11 +346,11 @@ function koalaHailed()
    end
 end
 function koalaEscaped()
-   vntk.msg("",[[It appears the Siren of Halir did leave the system. Your mission is a failure!]])
+   vntk.msg("",_([[It appears the Siren of Halir did leave the system. Your mission is a failure!]]))
    misn.finish(false)
 end
 function koalaBoard()
-   vntk.msg("",[[When the 'Siren of Halir' is close enough, the members of the team leave your ship by the airlock and you wish them to safely reach the target. Once fuel transfer is finished, it is time for you to follow the Siren, waiting for the team to jump out of the ship.]])
+   vntk.msg("",_([[When the 'Siren of Halir' is close enough, the members of the team leave your ship by the airlock and you wish them to safely reach the target. Once fuel transfer is finished, it is time for you to follow the Siren, waiting for the team to jump out of the ship.]]))
    misn.cargoRm( mem.cid )
    hook.timer( 15, "spreadCommando" )
    misn.osdActive(3)
