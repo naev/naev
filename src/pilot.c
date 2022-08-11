@@ -3284,10 +3284,7 @@ Pilot* pilot_setPlayer( Pilot* after )
 
    /* Set up stuff. */
    player.p = after;
-   for (int j=0; j<array_size(after->trail); j++)
-      spfx_trail_remove( after->trail[j] );
-   array_erase( &after->trail, array_begin(after->trail), array_end(after->trail) );
-   pilot_init_trails( after );
+   pilot_clearTrails( after );
 
    /* Initialize AI as necessary. */
    ai_pinit( after, "player" );
