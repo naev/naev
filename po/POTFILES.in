@@ -3035,6 +3035,7 @@ dat/spob/lua/wormhole_ngc15670.lua
 dat/spob/lua/wormhole_ngc4087.lua
 dat/spob/lua/zalek_mil_restricted.lua
 dat/spob/lua/zalek_mil_ruadan.lua
+src/SDL_keynames.h
 src/ai.c
 src/ai.h
 src/array.c

@@ -478,7 +478,7 @@ void input_getKeybindDisplay( const char *keybind, char *buf, int len )
          if (key < 0x100 && isalpha(key))
             p += scnprintf( &buf[p], len-p, "%c", toupper(key) );
          else
-            p += scnprintf( &buf[p], len-p, "%s", SDL_GetKeyName(key) );
+            p += scnprintf( &buf[p], len-p, "%s", _(SDL_GetKeyName(key)) );
          break;
       }
 
