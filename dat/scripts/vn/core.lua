@@ -636,7 +636,7 @@ function vn.StateSay:_init()
    self._textbuf = self.what
    -- Parse for line breaks and insert newlines
    local font = vn.textbox_font
-   local _maxw, wrappedtext = font:getWrap( self._textbuf, vn.textbox_tw-60 )
+   local _maxw, wrappedtext = font:getWrap( self._textbuf, vn.textbox_w-60 )
    self._textbuf = table.concat( wrappedtext, "\n" )
    -- Set up initial buffer
    self._timer = vn.speed
@@ -683,7 +683,7 @@ function vn.StateSay:_update( dt )
       -- Checks to see if we should scroll down
       local bh = 20
       local font = vn.textbox_font
-      local _maxw, wrappedtext = font:getWrap( self._text, vn.textbox_tw-60 )
+      local _maxw, wrappedtext = font:getWrap( self._text, vn.textbox_w-60 )
       local lh = font:getLineHeight()
       if (lh * #wrappedtext + bh + vn._buffer_y > vn.textbox_h) then
          if vn.autoscroll then
