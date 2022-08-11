@@ -31,6 +31,10 @@ typedef struct {
 #endif /* HAVE_EXECINFO_H */
 #endif /* DEBUGGING */
 
+#if DEBUGGING && !HAVE_STRSIGNAL
+extern const char *strsignal (int); /* From libiberty */
+#endif /* DEBUGGING && !HAVE_STRSIGNAL */
+
 #include "naev.h"
 /** @endcond */
 
@@ -119,15 +123,7 @@ const char* debug_sigCodeToStr( int sig, int sig_code )
       }
 
    /* No suitable code found. */
-#if HAVE_STRSIGNAL
    return strsignal(sig);
-#else /* HAVE_STRSIGNAL */
-   {
-      static char buf[128];
-      snprintf( buf, sizeof(buf), _("signal %d"), sig );
-      return buf;
-   }
-#endif /* HAVE_STRSIGNAL */
 }
 #endif /* DEBUGGING */
 
