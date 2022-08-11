@@ -35,11 +35,15 @@ extern const char *strsignal (int); /* From libiberty */
 #include "naev.h"
 /** @endcond */
 
+#include "debug.h"
+
 #include "log.h"
 
 #if DEBUGGING
 static bfd *abfd      = NULL;
 static asymbol **syms = NULL;
+/* Initialize debugging flags. */
+DebugFlags debug_flags;
 #endif /* DEBUGGING */
 
 #ifdef bfd_get_section_flags
@@ -48,13 +52,6 @@ static asymbol **syms = NULL;
 #define bfd_section_vma( section )      bfd_get_section_vma( abfd, section )
 #define bfd_section_size( section )     bfd_get_section_size( section )
 #endif /* bfd_get_section_flags */
-
-
-#ifdef DEBUGGING
-/* Initialize debugging flags. */
-#include "debug.h"
-DebugFlags debug_flags;
-#endif /* DEBUGGING */
 
 
 #if DEBUGGING
@@ -207,7 +204,7 @@ static void debug_sigHandler( int sig )
 #endif /* DEBUGGING */
 
 /**
- * @brief Sets up the SignalHandler for Linux.
+ * @brief Sets up the back-tracing signal handler.
  */
 void debug_sigInit (void)
 {
@@ -256,7 +253,7 @@ void debug_sigInit (void)
 
 
 /**
- * @brief Closes the SignalHandler for Linux.
+ * @brief Closes the back-tracing signal handler.
  */
 void debug_sigClose (void)
 {
