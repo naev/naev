@@ -3581,7 +3581,6 @@ void pilots_clean( int persist )
          for (int g=0; g<array_size(p->trail); g++)
             spfx_trail_remove( p->trail[g] );
          array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) );
-         p->trail = NULL;
          /* All done. */
          persist_count++;
       }
