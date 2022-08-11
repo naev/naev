@@ -14,6 +14,7 @@
 
 #if DEBUGGING
 #include <bfd.h>
+#include <unwind.h>
 
 #if HAVE_DLADDR
 #define __USE_GNU /* Grrr... */
@@ -25,10 +26,6 @@ typedef struct {
    const char *dli_sname; void *dli_saddr;
 } Dl_info;
 #endif /* HAVE_DLADDR */
-
-#if HAVE_EXECINFO_H
-#include <execinfo.h>
-#endif /* HAVE_EXECINFO_H */
 #endif /* DEBUGGING */
 
 #if DEBUGGING && !HAVE_STRSIGNAL
@@ -127,7 +124,7 @@ const char* debug_sigCodeToStr( int sig, int sig_code )
 }
 #endif /* DEBUGGING */
 
-#if DEBUGGING && HAVE_EXECINFO_H
+#if DEBUGGING
 /**
  * @brief Translates and displays the address as something humans can enjoy.
  */
@@ -164,9 +161,24 @@ static void debug_translateAddress( void *address )
       DEBUG( "%s(%s+%#" BFD_VMA_FMT "x) [%p] %s(...):%u %s", TRY(addr.dli_fname), OPT(addr.dli_sname), offset, address, TRY(func), line, TRY(file) );
    } while (section!=NULL && bfd_find_inliner_info(abfd, &file, &func, &line));
 }
-#endif /* DEBUGGING && HAVE_EXECINFO_H */
 
-#if DEBUGGING
+/**
+ * @brief Translates and displays the address as something humans can enjoy.
+ */
+static _Unwind_Reason_Code debug_unwindTrace( struct _Unwind_Context* ctx, void* data )
+{
+   (void) data;
+   int ip_before_insn = 0;
+   uintptr_t ip = _Unwind_GetIPInfo( ctx, &ip_before_insn );
+
+   if (!ip)
+      return _URC_END_OF_STACK;
+   if (!ip_before_insn)
+      ip -= 1;
+   debug_translateAddress( (void*) ip );
+   return _URC_NO_REASON;
+}
+
 #if HAVE_SIGACTION
 static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
 #else /* HAVE_SIGACTION */
@@ -186,16 +198,8 @@ static void debug_sigHandler( int sig )
 #endif /* HAVE_SIGACTION */
 	);
 
-#if HAVE_EXECINFO_H
-   int num;
-   void *buf[64];
-
-   num      = backtrace(buf, 64);
-   for (int i=0; i<num; i++) {
-      debug_translateAddress( buf[i] );
-   }
+   _Unwind_Backtrace( debug_unwindTrace, NULL );
    DEBUG( _("Report this to project maintainer with the backtrace.") );
-#endif /* HAVE_EXECINFO_H */
 
    /* Always exit. */
    exit(1);
