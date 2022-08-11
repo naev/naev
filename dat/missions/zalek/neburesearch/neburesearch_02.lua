@@ -98,7 +98,7 @@ But before I forget, there's some issue..."]]))
     misn.setDesc(fmt.f(_("Take Dr. Mensing to {pnt} in the {sys} system as fast as possible!"), {pnt=homeworld, sys=homeworld_sys}))
     mem.misn_marker = misn.markerAdd(homeworld, "low")
 
-    local c = commodity.new( N_("Dr. Mensing"), fmt.f(N_("You need to bring Dr. Mensing to {sys} but the Empire will assume you have kidnapped her if they scan you!"), {sys=homeworld_sys}) )
+    local c = commodity.new( N_("Dr. Mensing"), fmt.f(_("You need to bring Dr. Mensing to {sys} but the Empire will assume you have kidnapped her if they scan you!"), {sys=homeworld_sys}) )
     c:illegalto( {"Empire"} )
     mem.carg_id = misn.cargoAdd( c, 0 )
 

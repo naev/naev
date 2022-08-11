@@ -42,7 +42,7 @@ function create()
       abort()
    end
 
-   misn.setNPC("Dvaered liaison", portrait.getMaleMil("Dvaered"), _("A high ranking Dvaered officer. It looks like he might have a job offer for you."))
+   misn.setNPC(_("Dvaered liaison"), portrait.getMaleMil("Dvaered"), _("A high ranking Dvaered officer. It looks like he might have a job offer for you."))
 end
 
 function accept()

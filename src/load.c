@@ -738,13 +738,13 @@ static void display_save_info( unsigned int wid, const nsave_t *ns )
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Chapter:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->chapter );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Spob:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->spob );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", _(ns->spob) );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Credits:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", credits );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Name:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->shipname );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n#n%s", _("Ship Model:") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", ns->shipmodel );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "\n#0   %s", _(ns->shipmodel) );
    window_modifyText( wid, "txtPilot", buf );
 }
 
