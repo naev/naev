@@ -2441,6 +2441,7 @@ dat/ai/mercenary.lua
 dat/ai/miner.lua
 dat/ai/noidle.lua
 dat/ai/pers.lua
+dat/ai/pers_patrol.lua
 dat/ai/pirate.lua
 dat/ai/pirate_norun.lua
 dat/ai/player.lua
@@ -2539,6 +2540,7 @@ dat/events/news/thurion.lua
 dat/events/news/zalek.lua
 dat/events/news/zalek_campaign.lua
 dat/events/pers.lua
+dat/events/pers/empire.lua
 dat/events/pers/indep.lua
 dat/events/pirate/fake_transponder.lua
 dat/events/pirate/shipcheck.lua
