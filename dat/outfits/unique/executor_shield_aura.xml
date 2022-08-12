@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Executor Shield Aura">
  <general>
+  <rarity>6</rarity>
+  <unique />
   <typename>Aura</typename>
   <slot>utility</slot>
   <size>large</size>
