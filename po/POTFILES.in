@@ -2440,6 +2440,7 @@ dat/ai/marauder.lua
 dat/ai/mercenary.lua
 dat/ai/miner.lua
 dat/ai/noidle.lua
+dat/ai/pers.lua
 dat/ai/pirate.lua
 dat/ai/pirate_norun.lua
 dat/ai/player.lua
@@ -2452,7 +2453,6 @@ dat/ai/soromid.lua
 dat/ai/stationary.lua
 dat/ai/thurion.lua
 dat/ai/trader.lua
-dat/ai/unique.lua
 dat/ai/zalek.lua
 dat/autoequip.lua
 dat/bkg/blackhole.lua
