@@ -61,7 +61,7 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
 /** Height of console box */
 #define CLI_CONSOLE_HEIGHT  (CLI_HEIGHT-50-BUTTON_HEIGHT)
 /** Number of lines displayed at once */
-#define CLI_MAX_LINES (CLI_CONSOLE_HEIGHT/(cli_font->h+5)-1)
+#define CLI_MAX_LINES (CLI_CONSOLE_HEIGHT/(cli_font->h+5)-2)
 static char **cli_buffer; /**< CLI buffer. */
 static char *cli_prompt; /**< Prompt string (allocated). */
 static int cli_history     = 0; /**< Position in history. */
