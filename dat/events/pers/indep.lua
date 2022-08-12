@@ -1,17 +1,14 @@
 local equipopt = require "equipopt"
 
 return function ()
-   local pers = {}
-
    local scur = system.cur()
    local pres = scur:presences()["Independent"] or 0
    if pres <= 0 then
       return nil -- Need at least some presence
    end
 
-   -- Larger ships can be there
-   if pres > 0 then
-      table.insert( pers, {
+   return {
+      {
          spawn = function ()
             local p = pilot.add("Mule", "Trader", nil, _("Trader Drake"), {naked=true, ai="unique"})
             local c = equipopt.cores.get( p, { class="Destroyer", all="elite" } )
@@ -23,8 +20,24 @@ return function ()
             m.taunt = _("Say hello to my little friends!")
             return p
          end
-      } )
-   end
-
-   return pers
+      }, {
+         spawn = function ()
+            local p = pilot.add("Pacifier", "Mercenary", nil, _("Jeanne d'Arc"), {naked=true, ai="unique"})
+            p:intrinsicSet( "shield_mod", 25 )
+            p:intrinsicSet( "shield_regen_mod", 25 )
+            p:intrinsicSet( "armour_mod", 25 )
+            equipopt.generic( p, {beam=10}, "elite" )
+            local m = p:memory()
+            m.comm_great = _([["Children say that people are hanged sometimes for speaking the truth."]])
+            m.taunt = _("I am not afraid… I was born to do this.")
+            m.bribe_no = _("You must be reprimanded for your sins!")
+            m.formation = "cross"
+            for i=1,3 do
+               local e = pilot.add("Shark", "Mercenary", nil, _("Follower of Jeanne"), {naked=true})
+               equipopt.generic( e, {beam=10}, "elite" )
+               e:setLeader( p )
+            end
+         end
+      }
+   }
 end
