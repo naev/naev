@@ -95,6 +95,9 @@ function atk_generic.atk( target, dokill )
    target = atk.com_think( target, dokill )
    if target == nil then return end
 
+   -- Always launch fighters for now
+   ai.weapset( 5 )
+
    ai.hostile(target) -- Mark as hostile
 
    -- See if the enemy is still seeable
