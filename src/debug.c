@@ -16,16 +16,9 @@
 #include <bfd.h>
 #include <unwind.h>
 
-#if HAVE_DLADDR
 #define __USE_GNU /* Grrr... */
 #include <dlfcn.h>
 #undef __USE_GNU
-#else /* HAVE_DLADDR */
-typedef struct {
-   const char *dli_fname; void *dli_fbase;
-   const char *dli_sname; void *dli_saddr;
-} Dl_info;
-#endif /* HAVE_DLADDR */
 #endif /* DEBUGGING */
 
 #if DEBUGGING && !HAVE_STRSIGNAL
@@ -132,9 +125,7 @@ static void debug_translateAddress( void *address )
    asection *section;
    Dl_info addr = {0};
 
-#if HAVE_DLADDR
    (void) dladdr( address, &addr );
-#endif /* HAVE_DLADDR */
 
    for (section = abfd==NULL?NULL:abfd->sections; section != NULL; section = section->next) {
       if ((bfd_section_flags(section) & SEC_ALLOC) == 0)
