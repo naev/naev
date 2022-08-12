@@ -14,7 +14,9 @@ return function ()
       local function spawn_executor( name, ad, taunt )
          return function ()
             local p = pilot.add("Empire Peacemaker", "Empire", nil, name, {naked=true, ai="pers_patrol"})
-            equipopt.empire( p )
+            equipopt.empire( p, {
+               outfits_add={"Executor Shield Aura"},
+               prefer={["Executor Shield Aura"] = 100}} )
             local m = p:memory()
             m.ad = ad
             m.comm_greet = ad

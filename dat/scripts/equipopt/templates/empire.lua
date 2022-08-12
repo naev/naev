@@ -113,6 +113,9 @@ local function equip_empire( p, opt_params )
    else
       emp_out = empire_outfits
    end
+   if opt_params.outfits_add then
+      emp_out = eoutfits.merge{ emp_out, opt_params.outfits_add }
+   end
 
    local sname = p:ship():nameRaw()
    --if empire_skip[sname] then return end
