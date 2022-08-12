@@ -18,7 +18,6 @@ mem.atk_board     = false -- Whether or not to board the target
 mem.atk_kill      = true -- Whether or not to finish off the target
 mem.atk_minammo   = 0.1 -- Percent of ammo necessary to do ranged attacks
 mem.ranged_ammo   = 0 -- How much ammo is left, we initialize to 0 here just in case
-mem.aggressive    = true --whether to take the more aggressive or more evasive option when given
 mem.recharge      = false --whether to hold off shooting to avoid running dry of energy
 mem.enemyclose    = nil -- Distance at which an enemy is considered close
 mem.armour_run    = -1 -- At which damage to run at
