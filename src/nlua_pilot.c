@@ -144,6 +144,7 @@ static int pilotL_effectClear( lua_State *L );
 static int pilotL_effectAdd( lua_State *L );
 static int pilotL_effectRm( lua_State *L );
 static int pilotL_effectGet( lua_State *L );
+static int pilotL_ai( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setTemp( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
@@ -264,6 +265,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "clearSelect", pilotL_clearSelect },
    { "toggleSpawn", pilotL_toggleSpawn },
    /* Modify. */
+   { "ai", pilotL_ai },
    { "changeAI", pilotL_changeAI },
    { "setTemp", pilotL_setTemp },
    { "setHealth", pilotL_setHealth },
@@ -3329,24 +3331,37 @@ static int pilotL_effectGet( lua_State *L )
 }
 
 /**
+ * @brief Gets the pilot's AI.
+ *
+ *    @luatparam Pilot p Pilot to get AI of.
+ *    @luatreturn string Name of the AI being used.
+ * @luafunc ai
+ */
+static int pilotL_ai( lua_State *L )
+{
+   /* Get parameters. */
+   Pilot *p = luaL_validpilot(L,1);
+   if (p->ai == NULL)
+      return 0;
+   lua_pushstring( L, p->ai->name );
+   return 1;
+}
+
+/**
  * @brief Changes the pilot's AI.
  *
  * @usage p:changeAI( "empire" ) -- set the pilot to use the Empire AI
  *
  *    @luatparam Pilot p Pilot to change AI of.
  *    @luatparam string newai Name of Ai to use.
- *
  * @luafunc changeAI
  */
 static int pilotL_changeAI( lua_State *L )
 {
-   Pilot *p;
-   const char *str;
    int ret;
-
    /* Get parameters. */
-   p     = luaL_validpilot(L,1);
-   str   = luaL_checkstring(L,2);
+   Pilot *p = luaL_validpilot(L,1);
+   const char *str = luaL_checkstring(L,2);
 
    /* Get rid of current AI. */
    ai_destroy(p);
