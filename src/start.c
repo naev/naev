@@ -164,7 +164,7 @@ void start_cleanup (void)
  */
 const char* start_name (void)
 {
-   return _(start_data.name);
+   return start_data.name;
 }
 
 /**
@@ -182,7 +182,7 @@ const char* start_ship (void)
  */
 const char* start_shipname (void)
 {
-   return _(start_data.shipname);
+   return start_data.shipname;
 }
 
 /**
@@ -191,7 +191,7 @@ const char* start_shipname (void)
  */
 const char* start_acquired (void)
 {
-   return _(start_data.acquired);
+   return start_data.acquired;
 }
 
 /**

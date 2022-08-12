@@ -319,12 +319,12 @@ static int player_newMake (void)
 
    /* Try to create the pilot, if fails reask for player name. */
    ship = ship_get( start_ship() );
-   shipname = start_shipname();
+   shipname = _(start_shipname());
    if (ship==NULL) {
       WARN(_("Ship not properly set by module."));
       return -1;
    }
-   acquired = start_acquired();
+   acquired = _(start_acquired());
    /* Setting a default name in the XML prevents naming prompt. */
    ps = player_newShip( ship, shipname, 0, acquired, (shipname==NULL) ? 0 : 1 );
    if (ps == NULL) {
