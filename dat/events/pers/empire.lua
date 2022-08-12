@@ -11,7 +11,7 @@ return function ()
 
    -- Larger ships can be there
    if pres > 100 then
-      local function spawn_executor( name, ad, taunt )
+      local function executor_spawn( name, ad, taunt )
          return function ()
             local p = pilot.add("Empire Peacemaker", "Empire", nil, name, {naked=true, ai="pers_patrol"})
             equipopt.empire( p, {
@@ -28,22 +28,22 @@ return function ()
       end
       for k,v in ipairs{
          {
-            spawn = spawn_executor( _("Executor Lee"),
+            spawn = executor_spawn( _("Executor Lee"),
                _([["Justice is swift and decisive."]]),
                _("It is time for your execution!") ),
             w = 0.5,
          }, {
-            spawn = spawn_executor( _("Executor Bismuth"),
+            spawn = executor_spawn( _("Executor Bismuth"),
                _([["The justice of the Empire is swift and merciless."]]),
                _("You will be swiftly executed!") ),
             w = 0.5,
          }, {
-            spawn = spawn_executor( _("Executor Jadiker"),
+            spawn = executor_spawn( _("Executor Jadiker"),
                _([["Nobody escapes the Emperor's judgement!"]]),
                _("Your time of judgement has come!") ),
             w = 0.5,
          }, {
-            spawn = spawn_executor( _("Executor Spizza"),
+            spawn = executor_spawn( _("Executor Spizza"),
                _([["We are all but vermin in the shadow of the Emperor."]]),
                _("You made a dire mistake, vermin!") ),
             w = 0.5,
