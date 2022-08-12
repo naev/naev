@@ -90,12 +90,14 @@ local function equip_thurion( p, opt_params )
    params = tmerge( params, opt_params )
 
    -- See cores
-   local cores
-   local thucor = thurion_cores[ sname ]
-   if thucor then
-      cores = thucor()
-   else
-      cores = ecores.get( p, { all="elite" } )
+   local cores = opt_params.cores
+   if not cores then
+      local thucor = thurion_cores[ sname ]
+      if thucor then
+         cores = thucor()
+      else
+         cores = ecores.get( p, { all="elite" } )
+      end
    end
 
    -- Set some meta-data

@@ -128,12 +128,14 @@ local function equip_empire( p, opt_params )
    params = tmerge( params, opt_params )
 
    -- See cores
-   local cores
-   local empcor = empire_cores[ sname ]
-   if empcor then
-      cores = empcor()
-   else
-      cores = ecores.get( p, { all="elite" } )
+   local cores = opt_params.cores
+   if not cores then
+      local empcor = empire_cores[ sname ]
+      if empcor then
+         cores = empcor()
+      else
+         cores = ecores.get( p, { all="elite" } )
+      end
    end
 
    -- Set some pilot meta-data

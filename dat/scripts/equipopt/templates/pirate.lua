@@ -106,12 +106,14 @@ local function equip_pirate( p, opt_params )
    params = tmerge( params, opt_params )
 
    -- See cores
-   local cores
-   local pircor = pirate_cores[ sname ]
-   if pircor then
-      cores = pircor( p )
-   else
-      cores = ecores.get( p, { all=pirate_class } )
+   local cores = opt_params.cores
+   if not cores then
+      local pircor = pirate_cores[ sname ]
+      if pircor then
+         cores = pircor( p )
+      else
+         cores = ecores.get( p, { all=pirate_class } )
+      end
    end
 
    local mem = p:memory()
