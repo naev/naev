@@ -74,6 +74,7 @@ dat/effects/paralyzing_plasma.xml
 dat/effects/plasma_burn.xml
 dat/effects/plasma_burn_ii.xml
 dat/effects/ride_of_the_valkyries.xml
+dat/effects/shieldaura.xml
 dat/effects/shieldboost.xml
 dat/effects/wormhole_enter.xml
 dat/effects/wormhole_exit.xml
@@ -353,6 +354,7 @@ dat/outfits/structure/small_fuel_pod.xml
 dat/outfits/structure/small_shield_booster.xml
 dat/outfits/unique/bioship_pheromone_emitter.xml
 dat/outfits/unique/daphnes_leap.xml
+dat/outfits/unique/executor_shield_aura.xml
 dat/outfits/unique/fake_transponder.xml
 dat/outfits/unique/fuel_recycler.xml
 dat/outfits/unique/hades_torch.xml
@@ -2832,6 +2834,7 @@ dat/outfits/bioship/skills/tunnelling_organ.lua
 dat/outfits/lua_outfit_example.lua
 dat/outfits/structure/nebular_shielding_prototype.lua
 dat/outfits/unique/bioship_pheromone_emitter.lua
+dat/outfits/unique/executor_shield_aura.lua
 dat/outfits/unique/fake_transponder.lua
 dat/outfits/unique/fuel_recycler.lua
 dat/outfits/unique/poi_data.lua
