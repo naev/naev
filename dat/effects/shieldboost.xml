@@ -3,6 +3,6 @@
  <description>Shields are being boosted.</description>
  <duration>8</duration>
  <overwrite>shields</overwrite>
- <icon>/gfx/misc/icons/star-cycle.webp</icon>
+ <icon>/gfx/misc/icons/bolt-shield.webp</icon>
  <shader vertex="effect15x.vert">effects/shieldboost.frag</shader>
 </effect>
