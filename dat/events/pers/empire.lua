@@ -18,6 +18,7 @@ return function ()
                outfits_add={"Executor Shield Aura"},
                prefer={["Executor Shield Aura"] = 100}} )
             local m = p:memory()
+            m.lootable_outfit = outfit.get("Executor Shield Aura")
             m.ad = ad
             m.comm_greet = ad
             m.taunt = taunt
