@@ -10,7 +10,7 @@ return function ()
    return {
       {
          spawn = function ()
-            local p = pilot.add("Mule", "Trader", nil, _("Trader Drake"), {naked=true, ai="unique"})
+            local p = pilot.add("Mule", "Trader", nil, _("Trader Drake"), {naked=true, ai="pers"})
             local c = equipopt.cores.get( p, { class="Destroyer", all="elite" } )
             equipopt.zalek( p, {cores=c, fighterbay=20} )
             p:cargoAdd( "Nebula Crystals", p:cargoFree() )
@@ -22,7 +22,7 @@ return function ()
          end
       }, {
          spawn = function ()
-            local p = pilot.add("Pacifier", "Mercenary", nil, _("Jeanne d'Arc"), {naked=true, ai="unique"})
+            local p = pilot.add("Pacifier", "Mercenary", nil, _("Jeanne d'Arc"), {naked=true, ai="pers"})
             p:intrinsicSet( "shield_mod", 25 )
             p:intrinsicSet( "shield_regen_mod", 25 )
             p:intrinsicSet( "armour_mod", 25 )
