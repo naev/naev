@@ -5,7 +5,7 @@ host = run_command(meson.get_compiler('c'), '-dumpmachine', check: true).stdout(
 
 if get_option('steamruntime')
    # Two build systems are 100% sure of where libiberty.a is going to go. Their answers are not the same. Unless...
-   parent = meson.current_build_dir() / 'dist' / get_option('prefix') / 'lib'
+   parent = meson.project_build_root() + '/dist' + get_option('prefix') + '/lib'
    run_command(['mkdir', '-p', parent])
    run_command(['ln', '-s', parent / host, parent / 'lib'])
 endif
