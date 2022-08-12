@@ -61,3 +61,7 @@ FORMAT_ARG(1) static inline const char* n_( const char* msgid, const char* msgid
  * The letter 'p' stands for 'particular' or 'special'.
  */
 #define p_( msgctxt, msgid )          gettext_pgettext_impl( msgctxt GETTEXT_CONTEXT_GLUE msgid, msgid )
+
+/** The function is almost the same as p_() but \p msgctxt and \p msgid can be string variables.
+ */
+const char* pgettext_var( const char* msgctxt, const char* msgid );

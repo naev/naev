@@ -686,6 +686,7 @@ static void menuKeybinds_genList( unsigned int wid )
    /* Create the list. */
    str = malloc( sizeof( char * ) * input_numbinds );
    for (int j = 0; j < input_numbinds; j++) {
+      const char *short_desc = _(keybind_info[j][1]);
       l = 128; /* GCC deduces 68 because we have a format string "%s <%s%c>"
                 * where "char mod_text[64]" is one of the "%s" args.
                 * (that plus brackets plus %c + null gets to 68.
@@ -696,50 +697,50 @@ static void menuKeybinds_genList( unsigned int wid )
          case KEYBIND_KEYBOARD:
             /* Generate mod text. */
             if (mod == NMOD_ANY)
-               snprintf( mod_text, sizeof(mod_text), "any+" );
+               snprintf( mod_text, sizeof(mod_text), _("any+") );
             else {
                p = 0;
                mod_text[0] = '\0';
                if (mod & NMOD_SHIFT)
-                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "shift+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, _("shift+") );
                if (mod & NMOD_CTRL)
-                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "ctrl+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, _("ctrl+") );
                if (mod & NMOD_ALT)
-                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "alt+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, _("alt+") );
                if (mod & NMOD_META)
-                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "meta+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, _("meta+") );
                (void)p;
             }
 
             /* Print key. Special-case ASCII letters (use uppercase, unlike SDL_GetKeyName.). */
             if (key < 0x100 && isalpha(key))
-               snprintf(str[j], l, "%s <%s%c>", keybind_info[j][1], mod_text, toupper(key) );
+               snprintf(str[j], l, "%s <%s%c>", short_desc, mod_text, toupper(key) );
             else
-               snprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, SDL_GetKeyName(key) );
+               snprintf(str[j], l, "%s <%s%s>", short_desc, mod_text, pgettext_var("keyname", SDL_GetKeyName(key)) );
             break;
          case KEYBIND_JAXISPOS:
-            snprintf(str[j], l, "%s <ja+%d>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <ja+%d>", short_desc, key);
             break;
          case KEYBIND_JAXISNEG:
-            snprintf(str[j], l, "%s <ja-%d>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <ja-%d>", short_desc, key);
             break;
          case KEYBIND_JBUTTON:
-            snprintf(str[j], l, "%s <jb%d>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <jb%d>", short_desc, key);
             break;
          case KEYBIND_JHAT_UP:
-            snprintf(str[j], l, "%s <jh%d-up>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <jh%d-up>", short_desc, key);
             break;
          case KEYBIND_JHAT_DOWN:
-            snprintf(str[j], l, "%s <jh%d-down>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <jh%d-down>", short_desc, key);
             break;
          case KEYBIND_JHAT_LEFT:
-            snprintf(str[j], l, "%s <jh%d-left>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <jh%d-left>", short_desc, key);
             break;
          case KEYBIND_JHAT_RIGHT:
-            snprintf(str[j], l, "%s <jh%d-right>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <jh%d-right>", short_desc, key);
             break;
          default:
-            snprintf(str[j], l, "%s", keybind_info[j][1]);
+            snprintf(str[j], l, "%s", short_desc);
             break;
       }
    }
@@ -783,7 +784,7 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
    /* Remove the excess. */
    keybind = keybind_info[selected][0];
    opt_selectedKeybind = keybind;
-   window_modifyText( wid, "txtName", keybind );
+   window_modifyText( wid, "txtName", _(keybind_info[selected][1]) );
 
    /* Get information. */
    desc = input_getKeybindDescription( keybind );
@@ -805,7 +806,7 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
             snprintf(binding, sizeof(binding), _("keyboard:   %s%s%s"),
                   (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
-                  SDL_GetKeyName(key));
+                  pgettext_var("keyname", SDL_GetKeyName(key)));
          break;
       case KEYBIND_JAXISPOS:
          snprintf(binding, sizeof(binding), _("joy axis pos:   <%d>"), key );
