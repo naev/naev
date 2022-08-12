@@ -61,12 +61,16 @@ local function outfit_loot( o, price )
            slotsize=slotSizeColour(size),
            sprop=sprop,
            stype=stype})
+   local col = nil
+   if o:unique() then
+      col = special_col
+   end
    return {
       image = lg.newImage( o:icon() ),
       text = o:name(),
       q = nil,
       type = "outfit",
-      bg = nil, -- special_col, -- TODO new special condition
+      bg = col,
       alt = desc,
       data = o,
       price = price,
@@ -148,7 +152,7 @@ local function compute_lootables ( plt )
          local _name, _size, _prop, req = o:slot()
          local ot = o:tags()
          -- Don't allow looting required outfits
-         if not req and not ot.noplayer and (not oloot or o~=oloot) then
+         if not req and not ot.noplayer and o~=oloot then
             table.insert( ocand, o )
          end
       end
