@@ -506,7 +506,7 @@ function control_funcs.generic_attack( si )
    end
 
    -- Handle distress
-   gen_distress()
+   gen_distress( target )
    return false
 end
 
@@ -726,7 +726,7 @@ function control_funcs.runaway ()
    end
 
    -- Handle distress
-   gen_distress()
+   gen_distress( target )
    return true
 end
 function control_funcs.board ()
@@ -1033,7 +1033,7 @@ end
 
 
 -- Handles generating distress messages
-function gen_distress( _target )
+function gen_distress( target )
    if not mem.distress then return end
 
    -- Must have a valid distress rate
@@ -1057,7 +1057,7 @@ function gen_distress( _target )
    -- See if it's time to trigger distress
    if mem.distressed > mem.distressrate then
       if mem.distressmsgfunc then
-         mem.distressmsgfunc()
+         mem.distressmsgfunc( target )
       else
          ai.distress( mem.distressmsg )
       end
@@ -1065,14 +1065,14 @@ function gen_distress( _target )
    end
 end
 
-function gen_distress_attacked( _attacker )
+function gen_distress_attacked( attacker )
    if not mem.distress then return end
 
    -- Already attacked so ignore new hits (should reset)
    if mem.attacked then return end
 
    if mem.distressmsgfunc then
-      mem.distressmsgfunc()
+      mem.distressmsgfunc( attacker )
    else
       ai.distress( mem.distressmsg )
    end
