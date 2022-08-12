@@ -4,6 +4,10 @@ mem.adspamdelayalpha = 15
 mem.adspamdelaybeta = 30
 
 control_funcs.loiter = function ()
+   if not mem.ad then
+      return
+   end
+
    local lastspammed = mem.adspamlast or 0
    local curtime = naev.ticks()
    local delay = mem.adspamdelay or (mem.adspamdelayalpha + mem.adspamdelaybeta*rnd.rnd())

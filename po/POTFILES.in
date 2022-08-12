@@ -2452,6 +2452,7 @@ dat/ai/soromid.lua
 dat/ai/stationary.lua
 dat/ai/thurion.lua
 dat/ai/trader.lua
+dat/ai/unique.lua
 dat/ai/zalek.lua
 dat/autoequip.lua
 dat/bkg/blackhole.lua
@@ -2537,6 +2538,8 @@ dat/events/news/soromid.lua
 dat/events/news/thurion.lua
 dat/events/news/zalek.lua
 dat/events/news/zalek_campaign.lua
+dat/events/pers.lua
+dat/events/pers/indep.lua
 dat/events/pirate/fake_transponder.lua
 dat/events/pirate/shipcheck.lua
 dat/events/proteron/blockade.lua
