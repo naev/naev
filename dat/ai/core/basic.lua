@@ -538,6 +538,9 @@ function __shoot_turret( target )
       return
    end
 
+   -- Always launch fighters while running away
+   ai.weapset( 5 )
+
    -- Shoot the target
    ai.hostile(target)
    ai.settarget(target)
