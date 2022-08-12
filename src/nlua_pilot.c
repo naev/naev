@@ -3183,6 +3183,8 @@ static int pilotL_intrinsicReset( lua_State *L )
 /**
  * @brief Allows setting intrinsic stats of a pilot.
  *
+ * @usage p:intrinsicSet( "turn", -50 ) -- Lowers p's turn by 50%
+ *
  *    @luatparam Pilot p Pilot to set stat of.
  *    @luatparam string name Name of the stat to set. It is the same as in the xml.
  *    @luatparam number value Value to set the stat to.
