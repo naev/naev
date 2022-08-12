@@ -6,7 +6,7 @@ mem.adspamdelaybeta = 30
 control_funcs.loiter = function ()
    local lastspammed = mem.adspamlast or 0
    local curtime = naev.ticks()
-   local delay = mem.adspamdelay or (mem.adpamdelayalpha + mem.adspamdelaybeta*rnd.rnd())
+   local delay = mem.adspamdelay or (mem.adspamdelayalpha + mem.adspamdelaybeta*rnd.rnd())
 
    if curtime - lastspammed > delay then
       ai.pilot():broadcast(mem.ad)
