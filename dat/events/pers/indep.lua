@@ -5,12 +5,12 @@ return function ()
 
    local scur = system.cur()
    local pres = scur:presences()["Independent"] or 0
-   if pres <= 0 then
+   if pers <= 0 then
       return nil -- Need at least some presence
    end
 
    -- Larger ships can be there
-   if pres > 0 then
+   if pers > 0 then
       table.insert( pers, {
          spawn = function ()
             local p = pilot.add("Mule", "Trader", nil, _("Trader Drake"), {naked=true, ai="unique"})
