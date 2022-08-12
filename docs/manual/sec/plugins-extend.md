@@ -17,3 +17,7 @@ TODO add engine support
 ### Adding Points of Interest \naev
 
 TODO
+
+### Adding Personalities \naev
+
+TODO
