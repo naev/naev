@@ -63,7 +63,10 @@ local function equip_proteron( p, opt_params )
    params = tmerge( params, opt_params )
 
    -- See cores
-   local cores = ecores.get( p, { all="elite" } )
+   local cores = opt_params.cores
+   if not cores then
+      cores = ecores.get( p, { all="elite" } )
+   end
 
    -- Set some meta-data
    local mem = p:memory()
