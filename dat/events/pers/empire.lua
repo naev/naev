@@ -55,6 +55,29 @@ return function ()
                _("You made a dire mistake, vermin!") ),
             ondeath = executor_killed,
             w = 0.5,
+         }, {
+            spawn = function ()
+               local p = pilot.add("Empire Pacifier", "Empire", nil, _("ECB Bolten"), {naked=true, ai="pers_patrol"})
+               p:intrinsicSet( "fwd_damage", 10 )
+               p:intrinsicSet( "shield_mod", 25 )
+               equipopt.empire( p, {turret=0, beam=0, launcher=0} )
+               local m = p:memory()
+               m.ad = _("Empire is recruiting new Combat Bureaucrats. Inquiry at your nearest Bureau.")
+               m.comm_greet = _([["You wouldn't be interested in becoming an Empire Combat Bureaucrat, would you?"]])
+               m.taunt = _("I shall enjoy the paperwork of your death!")
+               m.bribe_no = _("You didn't fill in the EB-2781 request for bribe form!")
+               local pos = p:pos()
+               local vel = p:vel()
+               for i=1,3 do
+                  local e = pilot.add("Empire Lancelot", "Empire", pos, _("ECB Intern") )
+                  local em = p:memory()
+                  em.comm_no = _("I don't have the authority to talk to you.")
+                  e:setVel(vel)
+                  e:setLeader(p)
+               end
+               return p
+            end,
+            w = 1,
          }
       } do
          table.insert( pers, v )
