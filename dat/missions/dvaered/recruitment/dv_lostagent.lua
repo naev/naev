@@ -17,7 +17,7 @@
 --[[
    Dvaered Delivery
    This is the mission of the Dvaered Recruitment arc when the player starts to commit with Dvaered.
-   The player has to transmit a parcel to an other private pilot on Zhiru. The destination of the parcel is the Empire.
+   The player has to transmit a parcel to another private pilot on Zhiru. The destination of the parcel is the Empire.
    But the other pilot is missing and the player has to do a series of tasks.
    At some point, the FLF is suspected to have abducted the agent (pretext to get the player enemy with them)
 
@@ -266,7 +266,7 @@ And again, be ensured that your initial reward will be dramatically increased fr
       agent(fmt.f(_([[Hi, {name}. How do you do?]]),{name=player.name()}))
       vn.menu{
          {_("Very well for someone who met a guy named 'The Death Dealer'."), "well"},
-         {_("Well... Unless there is an other bastard I need to fight before you accept to pay me."), "meh"},
+         {_("Well... Unless there is another bastard I need to fight before you accept to pay me."), "meh"},
          {_("Am I going to get paid some day?"), "bad"},
       }
 
@@ -358,7 +358,7 @@ Your task will be to approach, engage and disable his ship. Only afterwards, squ
    agent(_([[That were teddy bears, of course. Didn't you read the sticker on it?]]))
    vn.menu{
       {_("Oh, thanks for the information!"), "lore_menu"},
-      {_("Actually, there was an other sticker on the box, where it was written 'bio-hazard, do not open without protection'. So I doubt there are really teddy bears in it."), "teddy"},
+      {_("Actually, there was another sticker on the box, where it was written 'bio-hazard, do not open without protection'. So I doubt there are really teddy bears in it."), "teddy"},
    }
 
    vn.label("teddy")

@@ -89,7 +89,7 @@ function accept()
 
    vn.label("accept")
    sol(_([[I knew you would say that.
-So, as the negotiations with Goddard shareholders is making progress, we identified an other private person that needs to be… worked on. It is the very famous Baron Sauterfeldt, President of the recently-created Hereditary Democratic Republic of Ulios.]]))
+So, as the negotiations with Goddard shareholders is making progress, we identified another private person that needs to be… worked on. It is the very famous Baron Sauterfeldt, President of the recently-created Hereditary Democratic Republic of Ulios.]]))
    vn.func( function () doaccept = true end )
    vn.menu{
       {_("Shall I exert some negotiation on him with my cannons?"), "negotiate"},

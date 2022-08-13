@@ -18,7 +18,7 @@
 -- This is the mission of the Dvaered Recruitment arc when the player has to help a Warlord getting a second Goddard Battleship.
 -- The player has to transport commandos to sabotage a ship's engine in a hangar.
 -- Things don't go as expected and player has to intercept a ship (pretending to need fuel) and let the commandos board.
--- Afterwards, the player needs to kill a pirate shark with a Llama. Rem: if an other dummy yacht gets added in the future, it could be added
+-- Afterwards, the player needs to kill a pirate shark with a Llama. Rem: if another dummy yacht gets added in the future, it could be added
 
    Stages :
    0) Way to Halir to search for the engine
