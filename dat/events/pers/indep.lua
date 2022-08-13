@@ -28,7 +28,7 @@ return function ()
             p:intrinsicSet( "armour_mod", 25 )
             equipopt.generic( p, {beam=10}, "elite" )
             local m = p:memory()
-            m.comm_great = _([["Children say that people are hanged sometimes for speaking the truth."]])
+            m.comm_greet = _([["Children say that people are hanged sometimes for speaking the truth."]])
             m.taunt = _("I am not afraid… I was born to do this.")
             m.bribe_no = _("You must be reprimanded for your sins!")
             m.formation = "cross"
