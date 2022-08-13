@@ -210,8 +210,8 @@ function board ()
       end
    end
 
-   -- Special items when POI are done
-   if poi.data_get_gained() > 0 then
+   -- Special items when POI are done, has to be boarded to do the data message
+   if poi.data_get_gained() > 0 and var.peek("travelling_trader_boarded") then
       local olist = {
          "Veil of Penelope",
          "Daphne's Leap",
