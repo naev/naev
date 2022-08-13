@@ -156,9 +156,9 @@ static void debug_translateAddress( void *address )
       bfd_vma offset = address - (addr.dli_saddr ? addr.dli_saddr : addr.dli_fbase);
       int width = snprintf( NULL, 0, "%s at %s:%u", TRY(func), TRY(file), line );
       int pad = MAX( 0, 80 - width );
-      DEBUG( "[%#14"BFD_VMA_FMT"x] %s at %s:%u %*s| %s(%s+%#"BFD_VMA_FMT"x)",
-            vma, TRY(func), TRY(file), line, pad, "",
-            TRY(addr.dli_fname), OPT(addr.dli_sname), offset );
+      LOGERR( "[%#14"BFD_VMA_FMT"x] %s at %s:%u %*s| %s(%s+%#"BFD_VMA_FMT"x)",
+              vma, TRY(func), TRY(file), line, pad, "",
+              TRY(addr.dli_fname), OPT(addr.dli_sname), offset );
    } while (section!=NULL && bfd_find_inliner_info(abfd, &file, &func, &line));
 }
 
@@ -190,7 +190,7 @@ static void debug_sigHandler( int sig )
    (void) unused;
 #endif /* HAVE_SIGACTION */
 
-   LOG( _("Naev received %s!"),
+   LOGERR( _("Naev received %s!"),
 #if HAVE_SIGACTION
          debug_sigCodeToStr( info->si_signo, info->si_code )
 #else /* HAVE_SIGACTION */
@@ -199,7 +199,7 @@ static void debug_sigHandler( int sig )
 	);
 
    _Unwind_Backtrace( debug_unwindTrace, NULL );
-   DEBUG( _("Report this to project maintainer with the backtrace.") );
+   LOGERR( _("Report this to project maintainer with the backtrace.") );
 
    /* Always exit. */
    exit(1);
