@@ -299,7 +299,7 @@ They get uncomfortably close
       special_virtue    = outfit.get("Machiavellian Virtue"),
    }
    vn.label("special")
-   mm(fmt.f(_("So you're interested in my special services. Quite a bargain might I say. Each services costs only {cost}."),
+   mm(fmt.f(_([["So you're interested in my special services. Quite a bargain might I say. Each services costs only {cost}."]]),
       {cost=poi.data_str(upgrade_cost)}))
    vn.menu( function ()
       local opts = {
@@ -307,7 +307,7 @@ They get uncomfortably close
          { _("Back"), "menu" },
       }
       for s,o in pairs( upgrade_list ) do
-         table.insert( opts, 1, { fmt.f(_("{intrinsic} Service"),{intrinsic=_(o)}), s } )
+         table.insert( opts, 1, { fmt.f(_("{intrinsic} Service"),{intrinsic=o}), s } )
       end
       return opts
    end )
