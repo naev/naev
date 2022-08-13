@@ -143,10 +143,12 @@ static void debug_translateAddress( void *address )
    }
 
    do {
-      bfd_vma offset = address - (addr.dli_saddr ? addr.dli_saddr : addr.dli_fbase);
 #define TRY( str ) ((str != NULL && str[0]) ? str : "??")
 #define OPT( str ) ((str != NULL && str[0]) ? str : "")
-      DEBUG( "%s(%s+%#" BFD_VMA_FMT "x) [%p] %s(...):%u %s", TRY(addr.dli_fname), OPT(addr.dli_sname), offset, address, TRY(func), line, TRY(file) );
+      bfd_vma offset = address - (addr.dli_saddr ? addr.dli_saddr : addr.dli_fbase);
+      int width = snprintf( NULL, 0, "%s at %s:%u", TRY(func), TRY(file), line );
+      int pad = MAX( 0, 80 - width );
+      DEBUG( "[%14p] %s at %s:%u %*s| %s(%s+%#"BFD_VMA_FMT"x)", address, TRY(func), TRY(file), line, pad, "", TRY(addr.dli_fname), OPT(addr.dli_sname), offset );
    } while (section!=NULL && bfd_find_inliner_info(abfd, &file, &func, &line));
 }
 
