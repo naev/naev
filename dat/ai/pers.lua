@@ -22,7 +22,7 @@ function create ()
 
    -- Credits.
    local price = ai.pilot():ship():price()
-   ai.setcredits( rnd.rnd(price/180, price/40) )
+   ai.setcredits( rnd.rnd(price/60, price/15) )
 
    -- Refuel
    mem.refuel = rnd.rnd( 1000, 3000 )
