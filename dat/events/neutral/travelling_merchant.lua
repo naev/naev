@@ -281,7 +281,7 @@ They get uncomfortably close
          { _("Leave"), "leave" },
       }
       if var.peek("travelling_trader_data") then
-         table.insert( opts, 2, { _("Special Services"), "service" } )
+         table.insert( opts, 2, { _("Special Services"), "special" } )
       end
       return opts
    end )
