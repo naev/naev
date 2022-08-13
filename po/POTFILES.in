@@ -2642,6 +2642,7 @@ dat/missions/dvaered/frontier_war/fw05_triathlon.lua
 dat/missions/dvaered/gauntlet/gauntlet.lua
 dat/missions/dvaered/gauntlet/gui.lua
 dat/missions/dvaered/gauntlet/tables.lua
+dat/missions/dvaered/recruitment/dv_bikers.lua
 dat/missions/dvaered/recruitment/dv_census.lua
 dat/missions/dvaered/recruitment/dv_census_00.lua
 dat/missions/dvaered/recruitment/dv_goddard.lua
