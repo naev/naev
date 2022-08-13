@@ -40,12 +40,34 @@ return function ()
                return p
             end,
             w = 0.5,
-         }, --[[ { -- Sardine Sisters
-         "Addy",
-         "Milli",
-         "Alva",
+         }, { -- Sardine Sisters
+            spawn = function ()
+               local function sardine_spawn( name, greet, taunt )
+                  local p = pilot.add("Pirate Vendetta", "Pirate", nil, name, {naked=true, ai="pers_pirate"})
+                  equipopt.pirate( p, {
+                     outfits_add={"Emergency Stasis Inducer"},
+                     prefer={["Emergency Stasis Inducer"] = 100}} )
+                  local m = p:memory()
+                  m.comm_greet = greet
+                  m.taunt = taunt
+                  return p
+               end
+               local p = {}
+               p[1] = sardine_spawn( _("Sardine Addy"),
+                  _([["Never underestimate the power of a determined school of sardines!"]]),
+                  _("Sardine Sisters, attack!") )
+               p[2] = sardine_spawn( _("Sardine Milli"),
+                  _([["The Sardine Sisters bow down to no one!"]]),
+                  _("Prepare to become fish food!") )
+               p[3] = sardine_spawn( _("Sardine Alva"),
+                  _([["Enough sardines together can take down any big fish!"]]),
+                  _("Feel our sardine wrath!") )
+               p[2]:setLeader( p[1] )
+               p[3]:setLeader( p[1] )
+               return p
+            end,
             w = 0.5,
-         }, --]]
+         },
       } do
          table.insert( pers, v )
       end
