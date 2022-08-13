@@ -320,7 +320,7 @@ You deserve your reward. Please receive {credits}.]]), {credits=fmt.credits(pay)
 
       vn.label("talk")
       sol(_([[Hopefully, we should now have a sufficient number of supporters inside The Goddard Company to ensure we will get our ship. I will not be annoyed not to have to take part anymore to those shenanigans with that decadent galactic oligarchy.]]))
-      sol(_([[You know, as a Dvaered, I have been raised in a much simpler environment, far from all those sophistications. Everything in a place like Ulios seems to have been made te make me feel uncomfortable. Look for example at this first-class suburban shuttle we took to go from spaceport to the palace, and back. This kind of service is an insult to the regular workers who have to use crowded, hot and clammy trains. No Dvaered in their right mind would endorse such a thing. Except for the decadent Warlords like Lady Bitterfly or Lord Chainsaw, of course.]]))
+      sol(_([[You know, as a Dvaered, I have been raised in a much simpler environment, far from all those sophistications. Everything in a place like Ulios seems to have been made to make me feel uncomfortable. Look for example at this first-class suburban shuttle we took to go from spaceport to the palace, and back. This kind of service is an insult to the regular workers who have to use crowded, hot and clammy trains. No Dvaered in their right mind would endorse such a thing. Except for the decadent Warlords like Lady Bitterfly or Lord Chainsaw, of course.]]))
       -- Okran talks about the fact that Dvaered ideology is based on egalitarianism. But with time, an increasing number of Warlords and generals manage to obtain special privileges. Dvaered society is also haunted by the fear of decadence
       vn.jump("shutup")
 
