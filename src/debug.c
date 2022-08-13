@@ -202,8 +202,14 @@ void debug_sigInit (void)
 #if DEBUGGING
    bfd_init();
 
-   /* Read the executable. TODO: in case libbfd exists on platforms without procfs, try env.argv0 from "env.h"? */
-   abfd = bfd_openr("/proc/self/exe", NULL);
+   /* Read the executable. We need its full path, which Linux provides via procfs and Darwin/dlfcn-win32 dladdr() happens to provide. */
+#if LINUX
+   abfd = bfd_openr( "/proc/self/exe", NULL );
+#else
+   Dl_info addr = {0};
+   (void) dladdr( debug_sigInit, &addr );
+   abfd = bfd_openr( addr.dli_fname, NULL );
+#endif
    if (abfd != NULL) {
       char **matching;
       bfd_check_format_matches(abfd, bfd_object, &matching);
