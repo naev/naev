@@ -4,13 +4,13 @@ return function ()
    local pers = {}
 
    local scur = system.cur()
-   local pres = scur:presences()["Empire"] or 0
-   if pres <= 0 then
+   local presence = scur:presences()["Empire"] or 0
+   if presence <= 0 then
       return nil -- Need at least some presence
    end
 
    -- Larger ships can be there
-   if pres > 100 then
+   if presence > 200 then
       local function executor_spawn( name, ad, taunt )
          return function ()
             local p = pilot.add("Empire Peacemaker", "Empire", nil, name, {naked=true, ai="pers_patrol"})
@@ -55,7 +55,16 @@ return function ()
                _("You made a dire mistake, vermin!") ),
             ondeath = executor_killed,
             w = 0.5,
-         }, {
+         },
+      } do
+         table.insert( pers, v )
+      end
+   end
+
+   -- Medium ships here
+   if presence > 100 then
+      for k,v in ipairs{
+         {
             spawn = function ()
                local p = pilot.add("Empire Pacifier", "Empire", nil, _("ECB Bolten"), {naked=true, ai="pers_patrol"})
                p:intrinsicSet( "fwd_damage", 10 )
@@ -78,7 +87,7 @@ return function ()
                return p
             end,
             w = 1,
-         }
+         },
       } do
          table.insert( pers, v )
       end
