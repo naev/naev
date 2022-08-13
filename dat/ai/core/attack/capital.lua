@@ -46,6 +46,10 @@ function __atk_g_capital( target, dist )
    -- Always launch fighters for now
    ai.weapset( 5 )
 
+   -- Also try to shoot missiles
+   aimdir = ai.aim(target)
+   atk.dogfight_seekers( dist, aimdir )
+
    -- Set main weapon set
    ai.weapset( mem.weapset )
 
@@ -70,7 +74,6 @@ function __atk_g_capital( target, dist )
    elseif dist > 0.6* range then
       --drifting away from target, so emphasize intercept
       --course facing and accelerate to close
-      aimdir = ai.aim(target)
       dir    = ai.iface(target)
       if dir < math.rad(10) and dir > -math.rad(10) then
          ai.accel()
@@ -80,7 +83,6 @@ function __atk_g_capital( target, dist )
    elseif dist > 0.3*range then
       --capital ship turning is slow
       --emphasize facing for being able to close quickly
-      aimdir = ai.aim(target)
       dir    = ai.iface(target)
       -- Only accelerate if the target is getting away.
       if dir < math.rad(10) and dir > -math.rad(10) and ai.relvel(target) > -math.rad(10) then
@@ -91,9 +93,8 @@ function __atk_g_capital( target, dist )
 
    --within close range; aim and blast away with everything
    else
-      dir = ai.aim(target)
       -- At point-blank range, we ignore recharge.
-      if dir < math.rad(10) then
+      if aimdir < math.rad(10) then
          ai.shoot()
       end
       ai.shoot(true)
@@ -107,9 +108,6 @@ function __atk_g_capital( target, dist )
          end
          ai.shoot(true)
       end
-
-      -- Also try to shoot missiles
-      atk.dogfight_seekers( dist, aimdir )
    end
 end
 
