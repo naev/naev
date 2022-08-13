@@ -8,7 +8,7 @@
 --]]
 local lf = require "love.filesystem"
 
--- luacheck: globals enter timer (Hook funtions passed by name)
+-- luacheck: globals enter timer pers_attacked pers_death (Hook funtions passed by name)
 
 -- Parse directory to add personas
 local pers_func_list = {}
@@ -22,7 +22,7 @@ function create ()
    hook.enter("enter")
 end
 
-local htimer, pers_list, wtotal
+local htimer, pers_list, wtotal, spawned
 function enter ()
    if htimer then
       hook.rm( htimer )
@@ -59,7 +59,27 @@ function enter ()
    end )
 
    -- Time start timer
+   spawned = {} -- Initialize spawned list
    htimer = hook.timer( rnd.rnd()*30, "timer" )
+end
+
+function pers_attacked( _p, attacker, dmg, pt )
+   if attacker:withPlayer() then
+      pt.dmgp = pt.dmgp + dmg
+      if pt.onattack then
+         pt.onattack( attacker, dmg )
+      end
+   else
+      pt.dmgo = pt.dmgo + dmg
+   end
+end
+
+function pers_death( _p, attacker, pt )
+   if pt.dmgp > pt.dmgo or attacker:withPlayer() then
+      if pt.ondeath then
+         pt.ondeath( attacker, pt )
+      end
+   end
 end
 
 local function spawn_pers ()
@@ -68,9 +88,28 @@ local function spawn_pers ()
    for k,v in ipairs(pers_list) do
       w = w + v.w
       if r < w then
-         v.spawn()
+         local p = v.spawn()
+         if type(p) ~= "table" then
+            p = {p}
+         end
+
+         -- Set hooks and such as necessary
+         for i,pp in ipairs(p) do
+            local pt = {
+               p = pp,
+               dmgp = 0,
+               dmgo = 0,
+               onattack = pp.onattack,
+               ondeath = pp.ondeath,
+            }
+            hook.pilot( pp, "attacked", "pers_attacked", pt )
+            hook.pilot( pp, "death", "pers_death", pt )
+            table.insert( spawned, pt )
+         end
+
          table.remove( pers_list, k ) -- only spawn once per system
-         break
+         wtotal = wtotal - v.w
+         return
       end
    end
 end
