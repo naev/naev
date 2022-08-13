@@ -168,6 +168,11 @@ function board ()
       'Hades Torch',
    }
 
+   -- Bonus for killing executors
+   if player.numOutfit("Executor Shield Aura")<1 and (var.peek("executors_killed") or 0) >= 3 then
+      table.insert( outfits, "Executor Shield Aura" )
+   end
+
    -- TODO add randomly chosen outfits, maybe conditioned on the current system or something?
 
    -- Give mission rewards the player might not have for a reason
