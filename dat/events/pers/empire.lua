@@ -26,26 +26,34 @@ return function ()
             return p
          end
       end
+      local function executor_killed ()
+         local k = var.peek("executors_killed") or 0
+         var.push("executors_killed",k+1)
+      end
       for k,v in ipairs{
          {
             spawn = executor_spawn( _("Executor Lee"),
                _([["Justice is swift and decisive."]]),
                _("It is time for your execution!") ),
+            ondeath = executor_killed,
             w = 0.5,
          }, {
             spawn = executor_spawn( _("Executor Bismuth"),
                _([["The justice of the Empire is swift and merciless."]]),
                _("You will be swiftly executed!") ),
+            ondeath = executor_killed,
             w = 0.5,
          }, {
             spawn = executor_spawn( _("Executor Jadiker"),
                _([["Nobody escapes the Emperor's judgement!"]]),
                _("Your time of judgement has come!") ),
+            ondeath = executor_killed,
             w = 0.5,
          }, {
             spawn = executor_spawn( _("Executor Spizza"),
                _([["We are all but vermin in the shadow of the Emperor."]]),
                _("You made a dire mistake, vermin!") ),
+            ondeath = executor_killed,
             w = 0.5,
          }
       } do
