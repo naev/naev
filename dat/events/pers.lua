@@ -55,7 +55,7 @@ function enter ()
 
    -- Sort by weight (larger first!)
    table.sort( pers_list, function( a, b )
-      return a.w >= b.w
+      return a.w > b.w
    end )
 
    -- Time start timer
