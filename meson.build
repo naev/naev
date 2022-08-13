@@ -193,7 +193,14 @@ if buildExec.disabled() == false
 
    # libdl can be used for debugging stack traces. On non-Windows platforms, GLAD relies on dlopen().
    glad_requires_libdl = not cc.has_header('windows.h')
-   libdl = cc.find_library('dl', required: glad_requires_libdl)
+   if glad_requires_libdl or debug
+     libdl = cc.find_library('dl', required: host_machine.system()!='windows')
+     if libdl.found()
+       naev_deps += libdl
+     else
+       naev_deps += subproject('dlfcn-win32').get_variable('dl_dep')
+     endif
+   endif
 
    if get_option('debug')
       bfd = cc.find_library('bfd', required: false)
@@ -210,12 +217,12 @@ if buildExec.disabled() == false
    luacheck = find_program('luacheck', required: false)
 
    # Audio
-   openal    = dependency('openal', required: true)
+   openal = dependency('openal', required: true)
    vorbis = dependency('vorbis', required: true)
    vorbisfile = dependency('vorbisfile', required: true)
    ogg = dependency('ogg', required: true)  # Transitive dependency. At least some MSYS2 build envs may miss it.
 
-   naev_deps += [libdl, openal, ogg, vorbis, vorbisfile]
+   naev_deps += [openal, ogg, vorbis, vorbisfile]
 
    # Standard library feature tests
    config_data.set10('HAVE_ASPRINTF', cc.has_function('asprintf'))
@@ -224,7 +231,6 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept', prefix: '#define _GNU_SOURCE'))
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
-   config_data.set10('HAVE_DLADDR', cc.has_function('dladdr') and libdl.found())
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
    config_data.set10('HAVE_STRCASESTR', cc.has_function('strcasestr'))

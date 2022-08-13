@@ -16,16 +16,9 @@
 #include <bfd.h>
 #include <unwind.h>
 
-#if HAVE_DLADDR
 #define __USE_GNU /* Grrr... */
 #include <dlfcn.h>
 #undef __USE_GNU
-#else /* HAVE_DLADDR */
-typedef struct {
-   const char *dli_fname; void *dli_fbase;
-   const char *dli_sname; void *dli_saddr;
-} Dl_info;
-#endif /* HAVE_DLADDR */
 #endif /* DEBUGGING */
 
 #if DEBUGGING && !HAVE_STRSIGNAL
@@ -132,9 +125,7 @@ static void debug_translateAddress( void *address )
    asection *section;
    Dl_info addr = {0};
 
-#if HAVE_DLADDR
    (void) dladdr( address, &addr );
-#endif /* HAVE_DLADDR */
 
    for (section = abfd==NULL?NULL:abfd->sections; section != NULL; section = section->next) {
       if ((bfd_section_flags(section) & SEC_ALLOC) == 0)
@@ -152,10 +143,12 @@ static void debug_translateAddress( void *address )
    }
 
    do {
-      bfd_vma offset = address - (addr.dli_saddr ? addr.dli_saddr : addr.dli_fbase);
 #define TRY( str ) ((str != NULL && str[0]) ? str : "??")
 #define OPT( str ) ((str != NULL && str[0]) ? str : "")
-      DEBUG( "%s(%s+%#" BFD_VMA_FMT "x) [%p] %s(...):%u %s", TRY(addr.dli_fname), OPT(addr.dli_sname), offset, address, TRY(func), line, TRY(file) );
+      bfd_vma offset = address - (addr.dli_saddr ? addr.dli_saddr : addr.dli_fbase);
+      int width = snprintf( NULL, 0, "%s at %s:%u", TRY(func), TRY(file), line );
+      int pad = MAX( 0, 80 - width );
+      DEBUG( "[%14p] %s at %s:%u %*s| %s(%s+%#"BFD_VMA_FMT"x)", address, TRY(func), TRY(file), line, pad, "", TRY(addr.dli_fname), OPT(addr.dli_sname), offset );
    } while (section!=NULL && bfd_find_inliner_info(abfd, &file, &func, &line));
 }
 
@@ -211,8 +204,14 @@ void debug_sigInit (void)
 #if DEBUGGING
    bfd_init();
 
-   /* Read the executable. TODO: in case libbfd exists on platforms without procfs, try env.argv0 from "env.h"? */
-   abfd = bfd_openr("/proc/self/exe", NULL);
+   /* Read the executable. We need its full path, which Linux provides via procfs and Darwin/dlfcn-win32 dladdr() happens to provide. */
+#if LINUX
+   abfd = bfd_openr( "/proc/self/exe", NULL );
+#else
+   Dl_info addr = {0};
+   (void) dladdr( debug_sigInit, &addr );
+   abfd = bfd_openr( addr.dli_fname, NULL );
+#endif
    if (abfd != NULL) {
       char **matching;
       bfd_check_format_matches(abfd, bfd_object, &matching);

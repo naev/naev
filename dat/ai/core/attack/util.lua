@@ -319,6 +319,8 @@ local function ___atk_g_ranged_strafe( target, dist )
    local goal = ai.follow_accurate(target, range * 0.8, 0, 10, 20, "keepangle")
    local mod = vec2.mod(goal - p:pos())
 
+   local shoot4 = false -- Flag to see if we shoot with all seekers
+
    --Must approach or stabilize
    if mod > 3000 then
       -- mustapproach allows a hysteretic behaviour
@@ -355,6 +357,15 @@ local function ___atk_g_ranged_strafe( target, dist )
          if ai.shoot_indicator() and not ai.timeup(1) then
             ai.settimer(1, 13.0)
          end
+      end
+   end
+
+   -- We didn't shoot with all seekers: see if it's appropriate to use turreted ones
+   if (not shoot4) then
+      range = ai.getweaprange( 9 )
+      range = math.min ( range - dist * radial_vel / ( ai.getweapspeed( 9 ) - radial_vel ), range )
+      if dist < range*0.95 then
+         ai.weapset( 9 )
       end
    end
 
