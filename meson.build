@@ -427,11 +427,13 @@ if buildExec.disabled() == false
    subdir('test')
 
    if host_machine.system() == 'windows'
-     meson.add_install_script('extras/windows/packageWindows.sh', '-n', get_option('nightly').to_string())
+      meson.add_install_script('extras/windows/packageWindows.sh', '-n', get_option('nightly').to_string())
    endif
    if host_machine.system() == 'darwin'
-     meson.add_install_script('extras/macos/bundle.py')
-     meson.add_install_script('extras/macos/createDMG.sh', '-s', meson.source_root() , '-b', meson.current_build_dir())
+      meson.add_install_script('extras/macos/bundle.py')
+      if get_option('dmg')
+	 meson.add_install_script('extras/macos/createDMG.sh', '-s', meson.source_root() , '-b', meson.current_build_dir())
+      endif
    endif
 endif
 
