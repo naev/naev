@@ -15,14 +15,21 @@ return function ()
       for k,v in ipairs{
          { -- Anchovy Brothers
             spawn = function ()
+               local pos, vel
                local function anchovy_spawn( name, greet, taunt )
-                  local p = pilot.add("Pirate Shark", "Pirate", nil, name, {naked=true, ai="pers_pirate"})
+                  local p = pilot.add("Pirate Shark", "Pirate", pos, name, {naked=true, ai="pers_pirate"})
                   equipopt.pirate( p, {
                      outfits_add={"Emergency Stasis Inducer"},
                      prefer={["Emergency Stasis Inducer"] = 100}} )
                   local m = p:memory()
                   m.comm_greet = greet
                   m.taunt = taunt
+                  if not pos then
+                     pos = p:pos()
+                     vel = p:vel()
+                  else
+                     p:setVel( vel )
+                  end
                   return p
                end
                local p = {}
@@ -42,14 +49,21 @@ return function ()
             w = 0.5,
          }, { -- Sardine Sisters
             spawn = function ()
+               local pos, vel
                local function sardine_spawn( name, greet, taunt )
-                  local p = pilot.add("Pirate Vendetta", "Pirate", nil, name, {naked=true, ai="pers_pirate"})
+                  local p = pilot.add("Pirate Vendetta", "Pirate", pos, name, {naked=true, ai="pers_pirate"})
                   equipopt.pirate( p, {
                      outfits_add={"Emergency Stasis Inducer"},
                      prefer={["Emergency Stasis Inducer"] = 100}} )
                   local m = p:memory()
                   m.comm_greet = greet
                   m.taunt = taunt
+                  if not pos then
+                     pos = p:pos()
+                     vel = p:vel()
+                  else
+                     p:setVel( vel )
+                  end
                   return p
                end
                local p = {}

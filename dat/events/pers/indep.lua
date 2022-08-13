@@ -32,10 +32,13 @@ return function ()
             m.taunt = _("I am not afraid… I was born to do this.")
             m.bribe_no = _("You must be reprimanded for your sins!")
             m.formation = "cross"
+            local pos = p:pos()
+            local vel = p:vel()
             for i=1,3 do
-               local e = pilot.add("Shark", "Mercenary", nil, _("Follower of Jeanne"), {naked=true})
+               local e = pilot.add("Shark", "Mercenary", pos, _("Follower of Jeanne"), {naked=true})
                equipopt.generic( e, {beam=10}, "elite" )
                e:setLeader( p )
+               e:setVel( vel )
             end
          end
       }
