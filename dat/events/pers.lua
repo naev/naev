@@ -76,7 +76,9 @@ local function spawn_pers ()
 end
 
 function timer ()
-   if rnd.rnd()*100 < 0.1 then
+   -- Value gives a 50% chance of meeting one every 10 minutes of game time
+   -- (more often with time compression)
+   if rnd.rnd() < 0.034064 then
       spawn_pers()
    end
    htimer = hook.timer( 30, "timer" )
