@@ -2545,6 +2545,7 @@ dat/events/news/zalek_campaign.lua
 dat/events/pers.lua
 dat/events/pers/empire.lua
 dat/events/pers/indep.lua
+dat/events/pers/minerva.lua
 dat/events/pers/pirate.lua
 dat/events/pirate/fake_transponder.lua
 dat/events/pirate/shipcheck.lua
