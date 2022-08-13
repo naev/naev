@@ -5,8 +5,9 @@ return function ()
    local pers = {}
    local scur = system.cur()
    local spres = scur:presences()
+   local pirates = pir.systemPresence( scur )
 
-   if pir.systemPresence( scur ) > 300 then
+   if pirates > 300 then
       table.insert( pers, {
          spawn = function ()
             local p = pilot.add( "Pirate Kestrel", "Wild Ones", nil, _("Pink Demon"), {naked=true, ai="pers_pirate"} )
@@ -55,6 +56,20 @@ return function ()
             end
             return p
          end,
+      } )
+   end
+
+   if player.misnDone("Maikki's Father 2") and (spres["Za'lek"] or 0) > 30 and pirates < 30 then
+      table.insert( pers, {
+         spawn = function ()
+            local p = pilot.add("Za'lek Sting", "Za'lek", nil, _("Dr. Cayne"), {naked=true, ai="pers"} )
+            equipopt.zalek( p, {fighterbay=20} )
+            p:intrinsicSet( "fbay_reload", 100 ) -- More drones!
+            local m = p:memory()
+            m.taunt = _("Why are you doing this to me!?")
+            m.comm_greet = _([["Shrimp are so fascinating. I can never get enough of them!"]])
+         end,
+         w = 0.5,
       } )
    end
 
