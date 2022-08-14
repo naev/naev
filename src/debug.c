@@ -19,11 +19,15 @@
 #define __USE_GNU /* Grrr... */
 #include <dlfcn.h>
 #undef __USE_GNU
-#endif /* DEBUGGING */
 
-#if DEBUGGING && !HAVE_STRSIGNAL
+#if !HAVE_STRSIGNAL
 extern const char *strsignal (int); /* From libiberty */
-#endif /* DEBUGGING && !HAVE_STRSIGNAL */
+#endif /* !HAVE_STRSIGNAL */
+
+#if MACOS
+#include <mach-o/dyld.h>
+#endif /* MACOS */
+#endif /* DEBUGGING */
 
 #include "naev.h"
 /** @endcond */
@@ -123,22 +127,26 @@ static void debug_translateAddress( void *address )
    const char *file = NULL, *func = NULL;
    unsigned int line = 0;
    asection *section;
+   bfd_vma vma = (uintptr_t) address;
    Dl_info addr = {0};
 
    (void) dladdr( address, &addr );
+#if MACOS
+   vma -= (bfd_vma) _dyld_get_image_vmaddr_slide(0);
+#endif
 
    for (section = abfd==NULL?NULL:abfd->sections; section != NULL; section = section->next) {
       if ((bfd_section_flags(section) & SEC_ALLOC) == 0)
          continue;
 
-      bfd_vma vma = bfd_section_vma(section), func_vma = (uintptr_t) address;
+      bfd_vma vma_sec = bfd_section_vma(section);
       bfd_size_type size = bfd_section_size(section);
-      if (func_vma < vma || func_vma >= vma + size)
-         func_vma = (bfd_vma) (address - addr.dli_fbase);
-      if (func_vma < vma || func_vma >= vma + size)
+      if (vma_sec > vma || vma >= vma_sec + size)
+         vma = (bfd_vma) (address - addr.dli_fbase);
+      if (vma_sec > vma || vma >= vma_sec + size)
          continue;
 
-      (void) bfd_find_nearest_line(abfd, section, syms, func_vma - vma, &file, &func, &line);
+      (void) bfd_find_nearest_line(abfd, section, syms, vma - vma_sec, &file, &func, &line);
       break;
    }
 
@@ -148,7 +156,9 @@ static void debug_translateAddress( void *address )
       bfd_vma offset = address - (addr.dli_saddr ? addr.dli_saddr : addr.dli_fbase);
       int width = snprintf( NULL, 0, "%s at %s:%u", TRY(func), TRY(file), line );
       int pad = MAX( 0, 80 - width );
-      DEBUG( "[%14p] %s at %s:%u %*s| %s(%s+%#"BFD_VMA_FMT"x)", address, TRY(func), TRY(file), line, pad, "", TRY(addr.dli_fname), OPT(addr.dli_sname), offset );
+      LOGERR( "[%#14"BFD_VMA_FMT"x] %s at %s:%u %*s| %s(%s+%#"BFD_VMA_FMT"x)",
+              vma, TRY(func), TRY(file), line, pad, "",
+              TRY(addr.dli_fname), OPT(addr.dli_sname), offset );
    } while (section!=NULL && bfd_find_inliner_info(abfd, &file, &func, &line));
 }
 
@@ -180,7 +190,7 @@ static void debug_sigHandler( int sig )
    (void) unused;
 #endif /* HAVE_SIGACTION */
 
-   LOG( _("Naev received %s!"),
+   LOGERR( _("Naev received %s!"),
 #if HAVE_SIGACTION
          debug_sigCodeToStr( info->si_signo, info->si_code )
 #else /* HAVE_SIGACTION */
@@ -189,7 +199,7 @@ static void debug_sigHandler( int sig )
 	);
 
    _Unwind_Backtrace( debug_unwindTrace, NULL );
-   DEBUG( _("Report this to project maintainer with the backtrace.") );
+   LOGERR( _("Report this to project maintainer with the backtrace.") );
 
    /* Always exit. */
    exit(1);
