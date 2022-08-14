@@ -28,7 +28,7 @@ function create()
 end
 
 local function has_bay()
-	local po = player.pilot():outfits()
+	local po = player.pilot():outfitsList()
 	for _i, oo in ipairs(po) do
 		if string.find(oo:nameRaw(), "Auxiliary Ship Bay") then
 			return true
@@ -50,7 +50,7 @@ local accessories
 local function get_accessories()
 	if not accessories then
 		accessories = {}
-		local po = player.pilot():outfits()
+		local po = player.pilot():outfitsList()
 		for _i, oo in ipairs(po) do
 			if oo:type() == "Accessory" then
 				table.insert(accessories, oo:nameRaw())
@@ -184,7 +184,7 @@ function auxiliary_ship_mission()
 	joyride.pos = pp:pos()
 	joyride.dir = pp:dir()
 	joyride.vel = pp:vel()
-	joyride.outfits = pp:outfits()
+	joyride.outfits = pp:outfitsList()
 	joyride.cargo = pp:cargoList()
 
 	local cl = pp:cargoList()
@@ -221,7 +221,7 @@ function auxiliary_ship_mission()
 	pp:outfitRm( "all" )
 	pp:outfitRm( "cores" )
 
-	for _j, o in ipairs( template:outfits() ) do
+	for _j, o in ipairs( template:outfitsList() ) do
 		pp = player.pilot() -- not sure why I'm doing this, but swapship.swap#116 does this
 		pp:outfitAdd(o, 1 , true)
 	end
@@ -268,7 +268,7 @@ function auxiliary_ship_return()
 
 		-- we are redocking, save the current outfit layout
 		shuttle_outfits = {}
-		for j, o in ipairs(player.pilot():outfits()) do
+		for j, o in ipairs(player.pilot():outfitsList()) do
 			shuttle_outfits[#shuttle_outfits + 1] = o:nameRaw()
 		end
 		local carried_fuel = player.pilot():stats().fuel

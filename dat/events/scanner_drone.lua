@@ -52,8 +52,8 @@ end
 
 -- gets a random outfit from the mem.target
 local function get_target_outfit()
-	if mem.target and #mem.target:outfits() > 0 then
-		local to = mem.target:outfits()
+	if mem.target and #mem.target:outfitsList() > 0 then
+		local to = mem.target:outfitsList()
 		return to[rnd.rnd(1, #to)]
 	end
 	return { name = function () return _("No signatures disrupted") end }
