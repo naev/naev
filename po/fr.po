@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-13 21:14-0400\n"
-"PO-Revision-Date: 2022-01-01 22:53+0000\n"
+"PO-Revision-Date: 2022-08-14 21:21+0000\n"
 "Last-Translator: Étienne Girard <etienne.g.girard@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
@@ -18,62 +18,60 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: physfs.c:1
 msgid "no error"
-msgstr ""
+msgstr "aucune erreur"
 
 #: physfs.c:2 src/background.c:472 src/gui.c:1718 src/nlua_evt.c:146
 #: src/nlua_misn.c:240 src/nopenal.c:72
 msgid "unknown error"
-msgstr ""
+msgstr "erreur inconnue"
 
 #: physfs.c:3
-#, fuzzy
-#| msgid "I'm out of here."
 msgid "out of memory"
-msgstr "Je m'en vais."
+msgstr "mémoire insuffisante"
 
 #: physfs.c:4
 msgid "not initialized"
-msgstr ""
+msgstr "non initialisé"
 
 #: physfs.c:5
 msgid "already initialized"
-msgstr ""
+msgstr "déjà initialisé"
 
 #: physfs.c:6
 msgid "argv[0] is NULL"
-msgstr ""
+msgstr "argv[0] est NULL"
 
 #: physfs.c:7
 msgid "unsupported"
-msgstr ""
+msgstr "non supporté"
 
 #: physfs.c:8
 msgid "past end of file"
-msgstr ""
+msgstr "fin du fichier dépassée"
 
 #: physfs.c:9
 msgid "files still open"
-msgstr ""
+msgstr "fichiers toujours ouverts"
 
 #: physfs.c:10
 msgid "invalid argument"
-msgstr ""
+msgstr "argument invalide"
 
 #: physfs.c:11
 msgid "not mounted"
-msgstr ""
+msgstr "non monté"
 
 #: physfs.c:12
 msgid "not found"
-msgstr ""
+msgstr "non trouvé"
 
 #: physfs.c:13
 msgid "symlinks are forbidden"
-msgstr ""
+msgstr "les liens symboliques sont interdits"
 
 #: physfs.c:14
 msgid "write directory is not set"
@@ -81,35 +79,35 @@ msgstr ""
 
 #: physfs.c:15
 msgid "file open for reading"
-msgstr ""
+msgstr "fichier ouvert en lecture"
 
 #: physfs.c:16
 msgid "file open for writing"
-msgstr ""
+msgstr "fichier ouvert en écriture"
 
 #: physfs.c:17
 msgid "not a file"
-msgstr ""
+msgstr "pas un fichier"
 
 #: physfs.c:18
 msgid "read-only filesystem"
-msgstr ""
+msgstr "système de fichier en lecture seule"
 
 #: physfs.c:19
 msgid "corrupted"
-msgstr ""
+msgstr "corrompu"
 
 #: physfs.c:20
 msgid "infinite symbolic link loop"
-msgstr ""
+msgstr "boucle infinie de liens symboliques"
 
 #: physfs.c:21
 msgid "i/o error"
-msgstr ""
+msgstr "erreur entrée/sortie"
 
 #: physfs.c:22
 msgid "permission denied"
-msgstr ""
+msgstr "permission refusée"
 
 #: physfs.c:23
 msgid "no space available for writing"
@@ -125,7 +123,7 @@ msgstr ""
 
 #: physfs.c:26
 msgid "directory isn't empty"
-msgstr ""
+msgstr "le dossier n'est pas vide"
 
 #: physfs.c:27
 msgid "OS reported an error"
@@ -137,7 +135,7 @@ msgstr ""
 
 #: physfs.c:29
 msgid "bad password"
-msgstr ""
+msgstr "mot de passe invalide"
 
 #: physfs.c:30
 msgid "app callback reported error"
@@ -334,14 +332,10 @@ msgid "nenau"
 msgstr "nenau"
 
 #: dat/AUTHORS:17
-#, fuzzy
-#| msgid "   * Misc. Development"
 msgid "   * Misc. Development and Dvaered aficionado"
-msgstr "   * Développement divers"
+msgstr "   * Développement divers et amateur de Dvaered"
 
 #: dat/AUTHORS:19
-#, fuzzy
-#| msgid "Jack Greiner <jack@emoss.org>"
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 msgstr "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 
@@ -354,10 +348,8 @@ msgid "Viktor Hahn <viktor.hahn@web.de>"
 msgstr "Viktor Hahn <viktor.hahn@web.de>"
 
 #: dat/AUTHORS:23
-#, fuzzy
-#| msgid "   * Ship Models"
 msgid "   * 3D modelling"
-msgstr "   * Modèles de vaisseau"
+msgstr "   * Modélisation 3D"
 
 #: dat/AUTHORS:25
 msgid "Past Development Team"
@@ -602,13 +594,10 @@ msgid "   * Much artwork"
 msgstr "   * Beaucoup d'illustrations"
 
 #: dat/AUTHORS:103
-#, fuzzy
-#| msgid ""
-#| "   Talented artist, one of the first in creating custom naev content."
 msgid "   Talented artist, one of the first in creating custom Naev content."
 msgstr ""
-"   Artiste talentueux, l'un des premiers à créer du contenu personnalisé "
-"pour naev."
+"   Artiste talentueux, l'un des premiers à avoir créé du contenu "
+"personnalisé pour Naev."
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
@@ -681,8 +670,6 @@ msgid "Cypher3c <cypher3c@gmail.com>"
 msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
-#, fuzzy
-#| msgid "   * Spiced up the boring generic cargo missios."
 msgid "   * Spiced up the boring generic cargo missions."
 msgstr "   * A pimenté les missions de fret génériques et ennuyeuses."
 
@@ -831,10 +818,8 @@ msgid "EvanR"
 msgstr "EvanR"
 
 #: dat/AUTHORS:180
-#, fuzzy
-#| msgid "Major Contributors"
 msgid "Artwork Contributors"
-msgstr "Contributeurs majeurs"
+msgstr "Contributeurs d'illustrations"
 
 #: artwork/gfx/loading/admonisher.webp.txt:1
 msgid "ADMONISHER"
@@ -1000,7 +985,7 @@ msgstr "VIGILANCE"
 
 #: dat/commodities/clay.xml:3
 msgid "Clay"
-msgstr ""
+msgstr "Argile"
 
 #: dat/commodities/clay.xml:4
 msgid ""
@@ -1009,6 +994,11 @@ msgid ""
 "shielding material or construction. Depending on the precedence of the clay "
 "it can have many different compositions and material properties."
 msgstr ""
+"L'argile miné dans les astéroïdes a des propriétés différentes de celui "
+"trouvé sur les corps planétaires ; il a des usages divers dans la "
+"construction et en tant que matériau de construction. Le processus de "
+"formation de l'argile influe fortement sur sa composition finale et sur ses "
+"propriétés."
 
 #: dat/commodities/diamond.xml:3 dat/scripts/pilotname/generic.lua:29
 msgid "Diamond"
@@ -1075,7 +1065,7 @@ msgstr ""
 
 #: dat/commodities/iron.xml:3
 msgid "Iron"
-msgstr ""
+msgstr "Fer"
 
 #: dat/commodities/iron.xml:4
 msgid ""
@@ -1083,10 +1073,13 @@ msgid ""
 "production processes. Despite the wide availability in asteroids, there is "
 "always significant demand for more."
 msgstr ""
+"Le fer joue un rôle fondamental dans de nombreux processus de production de "
+"matériaux et fabrications chimiques. Malgré son abondance dans les "
+"astéroïdes, c'est une ressource toujours en forte demande."
 
 #: dat/commodities/kermite.xml:3
 msgid "Kermite"
-msgstr ""
+msgstr "Kermite"
 
 #: dat/commodities/kermite.xml:4
 msgid ""
@@ -1097,6 +1090,11 @@ msgid ""
 "generators, practically ensuring their widespread demand throughout the "
 "universe."
 msgstr ""
+"Un des matériaux les plus rares trouvé dans les astéroïdes. La Kermite "
+"permet de déformer l'espace-temps dans certaines conditions de pression et "
+"de radiation, ce qui la rend essentielle pour de nombreuses technologies. "
+"Elle est notamment utilisée pour certains types de générateurs de boucliers, "
+"garantissant une forte demande aux quatre coins de l'univers."
 
 #: dat/commodities/luxury_goods.xml:3
 msgid "Luxury Goods"
@@ -1117,10 +1115,8 @@ msgstr ""
 "maladies."
 
 #: dat/commodities/nebula_crystals.xml:3
-#, fuzzy
-#| msgid "Nebula Artifact?"
 msgid "Nebula Crystals"
-msgstr "Artefact de Nébuleuse ?"
+msgstr "Cristaux nébulaires"
 
 #: dat/commodities/nebula_crystals.xml:4
 msgid ""
@@ -1129,10 +1125,14 @@ msgid ""
 "you think you can hear noises coming from them. However, your scanners don't "
 "show anything out of the ordinary."
 msgstr ""
+"On ne sait rien de la formation de ces cristaux qui peuvent être trouvés "
+"quand on s'enfonce profondément dans la nébuleuse. Il sont étrangement chaud "
+"au toucher et des bruits semblent en émaner. Cependant vos scanners ne "
+"détectent rien sortant de l'ordinaire."
 
 #: dat/commodities/neodymium.xml:3
 msgid "Neodymium"
-msgstr ""
+msgstr "Néodyme"
 
 #: dat/commodities/neodymium.xml:4
 msgid ""
@@ -1142,10 +1142,15 @@ msgid ""
 "technologies, the demand for Neodymium remains relatively high and constant "
 "throughout the galaxy."
 msgstr ""
+"Le Néodyme est utile pour ses capacités magnétiques et de résistance à la "
+"chaleur, jouant un rôle critique dans des applications cryogéniques et dans "
+"les chambres de stase. À cause de la croissance de la population après "
+"l'Incident et l'utilisation généralisée de ces technologies, la demande en "
+"Néodyme reste haute et constante dans toute la galaxie."
 
 #: dat/commodities/nickel.xml:3
 msgid "Nickel"
-msgstr ""
+msgstr "Nickel"
 
 #: dat/commodities/nickel.xml:4
 msgid ""
@@ -1153,10 +1158,13 @@ msgid ""
 "quite common among asteroids like Iron, the wide applicability makes it so "
 "there is a constant and steady demand throughout the galaxy."
 msgstr ""
+"Le Nickel est couramment utilisé dans des alliages et pour créer des champs "
+"magnétiques. Bien qu'abondant dans les astéroïdes, comme le fer, ses "
+"nombreuses applications génèrent une demande stable dans toute la galaxie."
 
 #: dat/commodities/olivine.xml:3
 msgid "Olivine"
-msgstr ""
+msgstr "Olivine"
 
 #: dat/commodities/olivine.xml:4
 msgid ""
@@ -1164,6 +1172,9 @@ msgid ""
 "is steadly increasing for it's usefulness in enhanced weathering and "
 "terraforming, for which immense amounts are needed."
 msgstr ""
+"Autrefois utilisé uniquement de manière décorative, l'Olivine est maintenant "
+"recherchée pour le contrôle du climat et la terraformation, qui en "
+"nécessitent des quantités considérables."
 
 #: dat/commodities/ore.xml:3
 msgid "Ore"
@@ -1179,10 +1190,8 @@ msgstr ""
 "d'autres s'arrêteraient."
 
 #: dat/commodities/platinum.xml:3
-#, fuzzy
-#| msgid "Faction:"
 msgid "Platinum"
-msgstr "Faction :"
+msgstr "Platine"
 
 #: dat/commodities/platinum.xml:4
 msgid ""
@@ -1190,10 +1199,13 @@ msgid ""
 "equipment. Although there is high demand for it, it is rather uncommonly "
 "found throughout space."
 msgstr ""
+"Le platine est un métal noble précieux, souvent utilisé pour des équipements "
+"de haute qualité. Il est très recherché car les gisements connus sont assez "
+"rares."
 
 #: dat/commodities/rhodium.xml:3
 msgid "Rhodium"
-msgstr ""
+msgstr "Rhodium"
 
 #: dat/commodities/rhodium.xml:4
 msgid ""
@@ -1203,6 +1215,12 @@ msgid ""
 "older technologies still require Rhodium and are the backbone of the market "
 "demand."
 msgstr ""
+"Traditionnellement important dans de nombreux alliages pour sa résistance à "
+"la corrosion, la généralisation de matières céramiques modernes et de "
+"matériaux renforcés par radiation a causé une baisse de la demande en "
+"Rhodium. Certaines technologies bas de gamme ou vieillissantes utilisent "
+"toujours ce métal toutefois, et garantissent une demande minimale sur les "
+"marchés."
 
 #: dat/commodities/silicate.xml:3
 msgid "Silicate"
