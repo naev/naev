@@ -1856,7 +1856,7 @@ local function generate_memory(character)
 		return construct_phrase_statement(character, construct_params)
 	else -- standard choices
 		local problem_items = join_tables(
-			player.pilot():outfits(),
+			player.pilot():outfitsList(),
 			lang.getAll(lang.nouns.objects.spaceship_parts)
 		)
 		-- a bunch of random memories that will start to sound repetitive eventually and cause the crew member to seem senile
@@ -6331,7 +6331,7 @@ local function firstOfficerPreflight( first_officer )
 end
 
 local function calculateBayStrength( cargo_workers )
-	local po = player.pilot():outfits()
+	local po = player.pilot():outfitsList()
 	local bay_strength = 0
 	for _i, oo in ipairs(po) do
 		if string.find(oo:nameRaw(), "Bay") then
@@ -7428,7 +7428,7 @@ local function doSpecialManagementFunc(edata)
 			-- save the fitting, it's good
 			edata.manager.outfits = {}
 			print("final")
-			for j, o in ipairs(pppp:outfits()) do
+			for j, o in ipairs(pppp:outfitsList()) do
 				edata.manager.outfits[#edata.manager.outfits + 1] = o:nameRaw()
 				print(o)
 			end
@@ -7437,7 +7437,7 @@ local function doSpecialManagementFunc(edata)
 			edata.sentiment = _("I wonder if the captain will notice that I couldn't fit the shuttle to the requested specifications.")
 			edata.satisfaction = edata.satisfaction - 0.08
 			print("saved a garbage fitting:")
-			for j, o in ipairs(pppp:outfits()) do
+			for j, o in ipairs(pppp:outfitsList()) do
 				print(o)
 			end
 			local _, reason = pppp:spaceworthy()
@@ -11455,7 +11455,7 @@ function player_swaps_from_shuttle(args)
 		
 		-- we are redocking, save the current outfit layout
 		shuttle_manager.manager.outfits = {}
-		for j, o in ipairs(player.pilot():outfits()) do
+		for j, o in ipairs(player.pilot():outfitsList()) do
 			shuttle_manager.manager.outfits[#shuttle_manager.manager.outfits + 1] = o:nameRaw()
 		end
 		local carried_fuel = player.pilot():stats().fuel
@@ -11591,7 +11591,7 @@ function player_swaps_to_shuttle ( args )
 	commander.ghost.pos = pp:pos()
 	commander.ghost.dir = pp:dir()
 	commander.ghost.vel = pp:vel()
-	commander.ghost.outfits = pp:outfits()
+	commander.ghost.outfits = pp:outfitsList()
 	commander.ghost.cargo = pp:cargoList()
 	local cl = pp:cargoList()
 
@@ -11624,7 +11624,7 @@ function player_swaps_to_shuttle ( args )
 	pp:outfitRm( "all" )
 	pp:outfitRm( "cores" )
 	
-	for _j, o in ipairs( template:outfits() ) do
+	for _j, o in ipairs( template:outfitsList() ) do
 		pp = player.pilot() -- not sure why I'm doing this, but swapship.swap#116 does this
 		local ret = pp:outfitAdd(o, 1 , true)
 		print("adding outfit " .. o:name() .. ":\t " .. tostring(ret))
