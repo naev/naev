@@ -924,7 +924,7 @@ local function _createReplacementShip(persona, limit_ships)
       used_faction = faction.get("Pirate")
    end
     local pppp = pilot.add(shipchoice.ship, used_faction)
-    for j, o in ipairs(pppp:outfits()) do
+    for j, o in ipairs(pppp:outfitsList()) do
         deposit = deposit + o:price()
         persona.outfits[#persona.outfits + 1] = o:nameRaw()
     end
@@ -1159,7 +1159,7 @@ local function create_pilot(fac)
     local newpilot = {}
 
     newpilot.outfits = {}
-    for j, o in ipairs(p:outfits()) do
+    for j, o in ipairs(p:outfitsList()) do
         deposit = deposit + o:price()
         newpilot.outfits[#newpilot.outfits + 1] = o:nameRaw()
     end
@@ -2589,7 +2589,7 @@ local function escort_buyUpgrade( persona, shipchoice)
       used_faction = faction.get("Pirate")
    end
    local pppp = pilot.add(shipchoice.ship, used_faction)
-   for j, o in ipairs(pppp:outfits()) do
+   for j, o in ipairs(pppp:outfitsList()) do
       deposit = deposit + o:price()
       persona.outfits[#persona.outfits + 1] = o:nameRaw()
    end
