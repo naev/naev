@@ -6,7 +6,8 @@ local atk = {}
 -- Generic function to choose what attack functions match the ship best.
 -- ]]
 function atk.choose ()
-   local class = ai.pilot():ship():class()
+   local p = ai.pilot()
+   local class = p:ship():class()
 
    -- Set initial variables
    mem.ranged_ammo = ai.getweapammo(4)
@@ -44,6 +45,19 @@ function atk.think( target, si )
 
    -- Update some high level stats
    mem.ranged_ammo = ai.getweapammo(4)
+
+   -- Use special outfits
+   if mem._o then
+      -- Use shield booster if applicable
+      if mem._o.shield_booster then
+         local p = ai.pilot()
+         local _a, s = p:health()
+         local e = p:energy()
+         if s < 50 and e > 20 then
+            p:outfitToggle( mem._o.shield_booster, true )
+         end
+      end
+   end
 
    local lib = (mem.atk or atk_generic)
    local func = (lib.think or atk_generic.think)
