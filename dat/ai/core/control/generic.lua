@@ -1,3 +1,4 @@
+local atk = require "ai.core.attack"
 local atk_generic = require "ai.core.attack.generic"
 local fmt = require "format"
 local formation = require "formation"
@@ -18,7 +19,6 @@ mem.atk_board     = false -- Whether or not to board the target
 mem.atk_kill      = true -- Whether or not to finish off the target
 mem.atk_minammo   = 0.1 -- Percent of ammo necessary to do ranged attacks
 mem.ranged_ammo   = 0 -- How much ammo is left, we initialize to 0 here just in case
-mem.aggressive    = true --whether to take the more aggressive or more evasive option when given
 mem.recharge      = false --whether to hold off shooting to avoid running dry of energy
 mem.enemyclose    = nil -- Distance at which an enemy is considered close
 mem.armour_run    = -1 -- At which damage to run at
@@ -135,23 +135,6 @@ end
    Attack wrappers for calling the correct attack functions.
 --]]
 
-
---[[
--- Wrapper for the think functions.
---]]
-local function attack_think( target, si )
-   -- Ignore other enemies
-   if si.noattack then return end
-
-   -- Update some high level stats
-   mem.ranged_ammo = ai.getweapammo(4)
-
-   local lib = (mem.atk or atk_generic)
-   local func = (lib.think or atk_generic.think)
-   func( target, si )
-end
-
-
 --[[
 -- Wrapper for the attack functions.
 --]]
@@ -182,49 +165,6 @@ end
 function attack_forced_kill( target )
    local lib = (mem.atk or atk_generic)
    lib.atk( target, true )
-end
-
---[[
--- Wrapper for the attacked function. Only called from "attack" tasks (i.e., under "if si.attack").
---]]
-local function attack_attacked( attacker )
-   local lib = (mem.atk or atk_generic)
-   local func = (lib.attacked or atk_generic.attacked)
-   func( attacker )
-end
-
-
--- [[
--- Generic function to choose what attack functions match the ship best.
--- ]]
-local function attack_choose ()
-   local class = ai.pilot():ship():class()
-
-   -- Set initial variables
-   mem.ranged_ammo = ai.getweapammo(4)
-
-   -- Lighter ships
-   if class == "Bomber" then
-      mem.atk = require "ai.core.attack.bomber"
-
-   elseif class == "Interceptor" then
-      mem.atk = require "ai.core.attack.drone"
-
-   elseif class == "Fighter" then
-      mem.atk = require "ai.core.attack.fighter"
-
-   -- Medium ships
-   elseif class == "Corvette" then
-      mem.atk = require "ai.core.attack.corvette"
-
-   -- Capital ships
-   elseif class == "Destroyer" or class == "Cruiser" or class == "Battleship" or class == "Carrier" then
-      mem.atk = require "ai.core.attack.capital"
-
-    -- Generic AI
-   else
-      mem.atk = atk_generic
-   end
 end
 
 function lead_fleet( p )
@@ -504,11 +444,11 @@ function control_funcs.generic_attack( si )
       -- Cool down, if necessary.
       should_cooldown()
 
-      attack_think( target, si )
+      atk.think( target, si )
    end
 
    -- Handle distress
-   gen_distress()
+   gen_distress( target )
    return false
 end
 
@@ -728,7 +668,7 @@ function control_funcs.runaway ()
    end
 
    -- Handle distress
-   gen_distress()
+   gen_distress( target )
    return true
 end
 function control_funcs.board ()
@@ -742,7 +682,7 @@ function control_funcs.board ()
       return true
    end
    -- We want to think in case another attacker gets close
-   attack_think( target, si )
+   atk.think( target, si )
    return true
 end
 function control_funcs.attack ()
@@ -872,7 +812,7 @@ function attacked( attacker )
 
    -- Let attacker profile handle it.
    elseif si.attack then
-      attack_attacked( attacker )
+      atk.attacked( attacker )
 
    elseif task == "runaway" then
       if ai.taskdata() ~= attacker and not mem.norun then
@@ -915,7 +855,7 @@ function create_pre ()
    end
 
    -- Choose attack algorithm
-   attack_choose()
+   atk.choose()
 end
 
 -- Finishes create stuff like choose attack and prepare plans
@@ -1035,7 +975,7 @@ end
 
 
 -- Handles generating distress messages
-function gen_distress( _target )
+function gen_distress( target )
    if not mem.distress then return end
 
    -- Must have a valid distress rate
@@ -1059,7 +999,7 @@ function gen_distress( _target )
    -- See if it's time to trigger distress
    if mem.distressed > mem.distressrate then
       if mem.distressmsgfunc then
-         mem.distressmsgfunc()
+         mem.distressmsgfunc( target )
       else
          ai.distress( mem.distressmsg )
       end
@@ -1067,14 +1007,14 @@ function gen_distress( _target )
    end
 end
 
-function gen_distress_attacked( _attacker )
+function gen_distress_attacked( attacker )
    if not mem.distress then return end
 
    -- Already attacked so ignore new hits (should reset)
    if mem.attacked then return end
 
    if mem.distressmsgfunc then
-      mem.distressmsgfunc()
+      mem.distressmsgfunc( attacker )
    else
       ai.distress( mem.distressmsg )
    end

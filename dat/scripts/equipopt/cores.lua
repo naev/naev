@@ -327,7 +327,7 @@ function cores.get( p, params )
    if s:tags().bioship then
       return
    end
-   local shipclass = s:class()
+   local shipclass = params.class or s:class()
    local shipname = s:nameRaw()
 
    -- Find out what type to use for each slot

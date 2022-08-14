@@ -26,6 +26,7 @@
 #include "log.h"
 #include "music.h"
 #include "ndata.h"
+#include "nfile.h"
 #include "nstring.h"
 #include "player.h"
 #include "plugin.h"
@@ -172,7 +173,7 @@ static void opt_OK( unsigned int wid, const char *str )
    ret |= opt_videoSave(    opt_windows[ OPT_WIN_VIDEO ], str);
 
    if (opt_restart && !prompted_restart)
-      dialogue_msgRaw( _("Warning"), _("#rRestart Naev for changes to take effect.#0") );
+      dialogue_msg( _("Warning"), "#r%s#0", _("Restart Naev for changes to take effect.") );
 
    /* Close window if no errors occurred. */
    if (!ret) {
@@ -256,7 +257,6 @@ static void opt_gameplay( unsigned int wid )
 {
    (void) wid;
    char buf[STRMAX];
-   char **paths;
    int cw;
    int w, h, y, x, by, l, n, i, p;
    const char *s;
@@ -285,18 +285,8 @@ static void opt_gameplay( unsigned int wid )
          NULL, NULL, naev_version(1) );
    y -= 20;
 
-   paths = PHYSFS_getSearchPath();
-   for (i=l=0; paths[i]!=NULL && (size_t)l < sizeof(buf); i++)
-   {
-      if (i == 0)
-         l = scnprintf( buf, sizeof(buf), _("ndata: %s"), paths[i] );
-      else
-         l += scnprintf( &buf[l], sizeof(buf)-l, ":%s", paths[i] );
-   }
-   PHYSFS_freeList(paths);
-   paths = NULL;
-   window_addText( wid, x, y, cw, 20, 1, "txtNdata",
-         NULL, NULL, buf );
+   snprintf( buf, sizeof(buf), "#n%s#0%s"CONF_FILE, _("Config Path: "), nfile_configPath() );
+   window_addText( wid, x, y, cw, 20, 1, "txtConfPath", NULL, NULL, buf );
    y -= 40;
    by = y;
 
@@ -318,7 +308,7 @@ static void opt_gameplay( unsigned int wid )
          i = 0;
    }
    window_addList( wid, x+l+20, y, cw-l-50, 100, "lstLanguage", ls, n, i, NULL, NULL );
-   y -= 120;
+   y -= 110;
 
    /* Game difficulty. */
    difficulty = difficulty_getAll();
@@ -349,7 +339,7 @@ static void opt_gameplay( unsigned int wid )
    /* Compilation flags. */
    window_addText( wid, x, y, cw, 20, 0, "txtCompile",
          NULL, cHeader, _("Compilation Flags:") );
-   y -= 30;
+   y -= 20;
    window_addText( wid, x, y, cw, h+y-20, 0, "txtFlags",
          NULL, &cFontOrange,
          ""
@@ -696,6 +686,7 @@ static void menuKeybinds_genList( unsigned int wid )
    /* Create the list. */
    str = malloc( sizeof( char * ) * input_numbinds );
    for (int j = 0; j < input_numbinds; j++) {
+      const char *short_desc = _(keybind_info[j][1]);
       l = 128; /* GCC deduces 68 because we have a format string "%s <%s%c>"
                 * where "char mod_text[64]" is one of the "%s" args.
                 * (that plus brackets plus %c + null gets to 68.
@@ -706,50 +697,50 @@ static void menuKeybinds_genList( unsigned int wid )
          case KEYBIND_KEYBOARD:
             /* Generate mod text. */
             if (mod == NMOD_ANY)
-               snprintf( mod_text, sizeof(mod_text), "any+" );
+               snprintf( mod_text, sizeof(mod_text), _("any+") );
             else {
                p = 0;
                mod_text[0] = '\0';
                if (mod & NMOD_SHIFT)
-                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "shift+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, _("shift+") );
                if (mod & NMOD_CTRL)
-                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "ctrl+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, _("ctrl+") );
                if (mod & NMOD_ALT)
-                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "alt+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, _("alt+") );
                if (mod & NMOD_META)
-                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "meta+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, _("meta+") );
                (void)p;
             }
 
             /* Print key. Special-case ASCII letters (use uppercase, unlike SDL_GetKeyName.). */
             if (key < 0x100 && isalpha(key))
-               snprintf(str[j], l, "%s <%s%c>", keybind_info[j][1], mod_text, toupper(key) );
+               snprintf(str[j], l, "%s <%s%c>", short_desc, mod_text, toupper(key) );
             else
-               snprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, SDL_GetKeyName(key) );
+               snprintf(str[j], l, "%s <%s%s>", short_desc, mod_text, pgettext_var("keyname", SDL_GetKeyName(key)) );
             break;
          case KEYBIND_JAXISPOS:
-            snprintf(str[j], l, "%s <ja+%d>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <ja+%d>", short_desc, key);
             break;
          case KEYBIND_JAXISNEG:
-            snprintf(str[j], l, "%s <ja-%d>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <ja-%d>", short_desc, key);
             break;
          case KEYBIND_JBUTTON:
-            snprintf(str[j], l, "%s <jb%d>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <jb%d>", short_desc, key);
             break;
          case KEYBIND_JHAT_UP:
-            snprintf(str[j], l, "%s <jh%d-up>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <jh%d-up>", short_desc, key);
             break;
          case KEYBIND_JHAT_DOWN:
-            snprintf(str[j], l, "%s <jh%d-down>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <jh%d-down>", short_desc, key);
             break;
          case KEYBIND_JHAT_LEFT:
-            snprintf(str[j], l, "%s <jh%d-left>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <jh%d-left>", short_desc, key);
             break;
          case KEYBIND_JHAT_RIGHT:
-            snprintf(str[j], l, "%s <jh%d-right>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <jh%d-right>", short_desc, key);
             break;
          default:
-            snprintf(str[j], l, "%s", keybind_info[j][1]);
+            snprintf(str[j], l, "%s", short_desc);
             break;
       }
    }
@@ -793,7 +784,7 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
    /* Remove the excess. */
    keybind = keybind_info[selected][0];
    opt_selectedKeybind = keybind;
-   window_modifyText( wid, "txtName", keybind );
+   window_modifyText( wid, "txtName", _(keybind_info[selected][1]) );
 
    /* Get information. */
    desc = input_getKeybindDescription( keybind );
@@ -815,7 +806,7 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
             snprintf(binding, sizeof(binding), _("keyboard:   %s%s%s"),
                   (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
-                  SDL_GetKeyName(key));
+                  pgettext_var("keyname", SDL_GetKeyName(key)));
          break;
       case KEYBIND_JAXISPOS:
          snprintf(binding, sizeof(binding), _("joy axis pos:   <%d>"), key );
@@ -899,7 +890,7 @@ static void opt_setEngineLevel( unsigned int wid, const char *str )
    char buf[32];
    double vol = window_getFaderValue(wid, str);
    conf.engine_vol = vol;
-   snprintf( buf, sizeof(buf), "Engine Volume: %.0f%%", vol*100. );
+   snprintf( buf, sizeof(buf), _("Engine Volume: %.0f%%"), vol*100. );
    window_modifyText( wid, "txtEngine", buf );
 }
 
@@ -1783,7 +1774,7 @@ static void opt_setMapOverlayOpacity( unsigned int wid, const char *str )
 static void opt_plugins( unsigned int wid )
 {
    int w, h, lw, lh, bw, bh, n;
-   char **str;
+   char **str, buf[STRMAX_SHORT];
    const plugin_t *plgs = plugin_list();
 
    /* Get dimensions. */
@@ -1791,14 +1782,16 @@ static void opt_plugins( unsigned int wid )
    bh = BUTTON_HEIGHT;
    window_dimWindow( wid, &w, &h );
    lw = w - bw - 100;
-   lh = h - 60;
+   lh = h - 90;
 
    /* Close button. */
    window_addButton( wid, -20, 20, bw, bh,
          "btnClose", _("OK"), opt_OK );
 
    /* Text stuff. */
-   window_addText( wid, -20, -40, w-(20+lw+20+20), h-100,
+   snprintf( buf, sizeof(buf), "#n%s#0%s%s", _("Plugins Directory: "), PHYSFS_getRealDir("plugins"), "plugins" );
+   window_addText( wid, 20, -30, w-40, 30, 1, "txtPath", NULL, NULL, buf );
+   window_addText( wid, -20, -70, w-(20+lw+20+20), h-100,
          0, "txtDesc", NULL, NULL, NULL );
 
    /* Create the list. */
@@ -1814,7 +1807,7 @@ static void opt_plugins( unsigned int wid )
          str[i] = strdup( plugin_name(&plgs[i]) );
    }
 
-   window_addList( wid, 20, -40, lw, lh, "lstPlugins", str, n, 0, opt_plugins_update, NULL );
+   window_addList( wid, 20, -70, lw, lh, "lstPlugins", str, n, 0, opt_plugins_update, NULL );
 }
 
 static void opt_plugins_update( unsigned int wid, const char *name )

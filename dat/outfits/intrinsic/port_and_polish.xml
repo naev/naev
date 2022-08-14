@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Port &amp; Polish">
+ <general>
+  <slot>intrinsic</slot>
+  <mass>0</mass>
+  <price>0</price>
+  <description>TODO</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <rarity>6</rarity>
+ </general>
+ <specific type="modification">
+  <speed_mod>5</speed_mod>
+  <turn_mod>5</turn_mod>
+  <thrust_mod>5</thrust_mod>
+ </specific>
+</outfit>

@@ -766,7 +766,7 @@ static void map_update( unsigned int wid )
             continue;
          if (buf[0] != '\0')
             p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
-         p += scnprintf(&buf[p], sizeof(buf)-p, "%s", spob->feature);
+         p += scnprintf(&buf[p], sizeof(buf)-p, "%s", _(spob->feature));
       }
 
       /* Mention trade lanes if applicable. */

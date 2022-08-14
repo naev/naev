@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Executor Shield Aura">
+ <general>
+  <rarity>6</rarity>
+  <unique />
+  <typename>Aura</typename>
+  <slot>utility</slot>
+  <size>large</size>
+  <mass>0</mass>
+  <price>5000000</price>
+  <description>TODO</description>
+  <desc_extra>Gives +30% shield regen to all friendly ships within 3000 units.</desc_extra>
+  <gfx_store>placeholder.webp</gfx_store>
+  <limit>aura</limit>
+ </general>
+ <specific type="modification">
+  <lua>outfits/unique/executor_shield_aura.lua</lua>
+ </specific>
+</outfit>

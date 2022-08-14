@@ -74145,8 +74145,10 @@ msgid ""
 msgstr ""
 
 #: dat/missions/trader/trader_escort.lua:104
-msgid "Convey Escort"
-msgstr ""
+#, fuzzy
+#| msgid "Dvaered Ancestor"
+msgid "Convoy Escort"
+msgstr "드 베어드 조상"
 
 #: dat/missions/trader/trader_escort.lua:105
 #, fuzzy
@@ -100561,7 +100563,7 @@ msgstr ""
 
 #: src/unidiff.c:996
 #, c-format
-msgid "   [%s] spob sipace revert: '%s'"
+msgid "   [%s] spob space revert: '%s'"
 msgstr ""
 
 #: src/unidiff.c:1000

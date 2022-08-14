@@ -114,7 +114,7 @@ Once you have seen enough ships, you can land on any Dvaered-controlled planet t
    misn.setTitle(fmt.f(_("Monitoring of Warlords activity in {sys}"), {sys=mem.sys}))
    misn.setReward( fmt.credits( mem.credits ) )
    misn.setDesc( fmt.f(_("Dvaered High Command requires a pilot to go to {sys} and detect {nb} Dvaered ships"), {sys=mem.sys, nb=mem.nbships}))
-   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, 0, "Dvaered", "Dvaered" )
+   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, 0, _("Dvaered"), _("Dvaered") )
 
    hook.enter("enter")
    hook.land("land")
@@ -158,7 +158,7 @@ function testInRange()
       player.msg( _("You have acquired data on enough Dvaered ships") )
       return
    end
-   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, #detected, "Dvaered", "Dvaered" )
+   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, #detected, _("Dvaered"), _("Dvaered") )
    hook.timer(1, "testInRange") -- Recursivity 1 s
 end
 
@@ -183,14 +183,21 @@ Nelly raises her eyes and lets her gaze wander on the filthy ceiling.
 "I had just landed on Brooks, in Arcturus, you know? For some reason, there are often children playing soccer on the spaceport, there. While workers were unloading goods from my ship, I was wondering why there had never been an accident with those children. And suddenly, an accident occurred!
 "A kid shot the ball in the wrong direction, and it crashed into the side of my poor Llama, breaking through the plating!"]]))
    vn.menu{
-      {_("If a soccer ball can break through your ship, what will happen with a blaster?"), "blaster"}
-   --   {_("Was it easy to repair?"), "repair"}, TODO Uncomment when this is actually written :boar:
+      {_("If a soccer ball can break through your ship, what will happen with a blaster?"), "blaster"},
+      {_("Was it easy to repair?"), "repair"}
    }
 
    vn.label("blaster")
    nel(_([[Nelly looks at you, surprised.
 "That's exactly what that cyber-grandpa told me. And then, he said the problem was that my ship's absorption was not high enough. He spoke about a coating that is only used by Dvaered pilots, the 'Impacto-Plastic Coating', that can make your ship's armor much more resilient.
 "So, after the reparations were completed, I went to Dvaered space. But I didn't find anybody who could install this coating on my ship yet. And what is more, I suspect this will cost much more that I can afford. So I do missions for the Dvaered in order to make money and explore a bit."]]))
+   vn.menu{ warlord, sausage, leave }
+
+   vn.label("repair")
+   nel(_([["Well. The problem is that my hull's architecture is a bit… uncommon. Front and back are from the original Llama Mk IV-BM version from UST-599, but on the sides, I have adapted parts of the Llama Mk II-O version (from the batch of UST-567, not the more mainstream batch of UST-568). As they cannot be adapted together by default, I got a friend on Em5 to machine a special adaptor.
+"Anyway, so the repairman on Brooks didn't have the needed parts to repair my hull and I had to get someone to transport me to Darkshed. You know, it's the best place to find spare parts for older models of ships as nebula scavengers often sell their findings there. But once there, I met Robin. Do you know Robin?
+"She is small, wants to kill me, has curly brunette hair and a smiling round head. You are sure you don't know her? she talked a lot about killing me lately. Anyway, I managed to hide in a trash can, but unfortunately, I got loaded by mistake on a garbage ship heading to that stinky planet in Soromid space, you know? I got lucky I was in a pressurized compartment, and I managed to get out in Father's Pride.
+"And after that I got an inter-system call from the repairman in Brooks who actually found the needed set of parts (it was in a crate he was using to wedge his desk). So I returned, took a bath and got my repaired ship!"]]))
    vn.menu{ warlord, sausage, leave }
 
    vn.label("warlords")

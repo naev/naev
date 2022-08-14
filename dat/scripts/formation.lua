@@ -12,8 +12,12 @@ local function count_classes( pilots )
 end
 
 local formations = {}
+local keys = {}
+local names = {}
 
-function formations.cross(leader)
+keys[#keys + 1] = "cross"
+names[#names + 1] = p_("formation", "Cross")
+formations[keys[#keys]] = function (leader)
    local pilots = leader:followers()
    -- Cross logic. Forms an X.
    local angle = math.pi/4 -- Spokes start rotated at a 45 degree angle.
@@ -25,7 +29,9 @@ function formations.cross(leader)
    end
 end
 
-function formations.buffer(leader)
+keys[#keys + 1] = "buffer"
+names[#names + 1] = p_("formation", "Buffer")
+formations[keys[#keys]] = function (leader)
    -- Buffer logic. Consecutive arcs emanating from the fleader. Stored as polar coordinates.
    local pilots = leader:followers()
    local class_count = count_classes(pilots)
@@ -72,7 +78,9 @@ function formations.buffer(leader)
    end
 end
 
-function formations.vee(leader)
+keys[#keys + 1] = "vee"
+names[#names + 1] = p_("formation", "Vee")
+formations[keys[#keys]] = function (leader)
    -- The vee formation forms a v, with the fleader at the apex, and the arms extending in front.
    local pilots = leader:followers()
    local angle = math.pi/4 -- Arms start at a 45 degree angle.
@@ -84,7 +92,9 @@ function formations.vee(leader)
    end
 end
 
-function formations.wedge(leader)
+keys[#keys + 1] = "wedge"
+names[#names + 1] = p_("formation", "Wedge")
+formations[keys[#keys]] = function (leader)
    -- The wedge formation forms a v, with the fleader at the apex, and the arms extending out back.
    local pilots = leader:followers()
    local flip = -1
@@ -98,7 +108,9 @@ function formations.wedge(leader)
    end
 end
 
-function formations.echelon_left(leader)
+keys[#keys + 1] = "echelon_left"
+names[#names + 1] = p_("formation", "Echelon Left")
+formations[keys[#keys]] = function (leader)
    --This formation forms a "/", with the fleader in the middle.
    local pilots = leader:followers()
    local radius = 100
@@ -112,7 +124,9 @@ function formations.echelon_left(leader)
    end
 end
 
-function formations.echelon_right(leader)
+keys[#keys + 1] = "echelon_right"
+names[#names + 1] = p_("formation", "Echelon Right")
+formations[keys[#keys]] = function (leader)
    --This formation forms a "\", with the fleader in the middle.
    local pilots = leader:followers()
    local radius = 100
@@ -126,7 +140,9 @@ function formations.echelon_right(leader)
    end
 end
 
-function formations.column(leader)
+keys[#keys + 1] = "column"
+names[#names + 1] = p_("formation", "Column")
+formations[keys[#keys]] = function (leader)
    --This formation is a simple "|", with fleader in the middle.
    local pilots = leader:followers()
    local radius = 100
@@ -140,7 +156,9 @@ function formations.column(leader)
    end
 end
 
-function formations.wall(leader)
+keys[#keys + 1] = "wall"
+names[#names + 1] = p_("formation", "Wall")
+formations[keys[#keys]] = function (leader)
    --This formation is a "-", with the fleader in the middle.
    local pilots = leader:followers()
    local radius = 100
@@ -154,7 +172,9 @@ function formations.wall(leader)
    end
 end
 
-function formations.fishbone(leader)
+keys[#keys + 1] = "fishbone"
+names[#names + 1] = p_("formation", "Fishbone")
+formations[keys[#keys]] = function (leader)
    local pilots = leader:followers()
    local radius = 500
    local flip = -1
@@ -175,7 +195,9 @@ function formations.fishbone(leader)
    end
 end
 
-function formations.chevron(leader)
+keys[#keys + 1] = "chevron"
+names[#names + 1] = p_("formation", "Chevron")
+formations[keys[#keys]] = function (leader)
    local pilots = leader:followers()
    local radius = 500
    local flip = -1
@@ -196,7 +218,9 @@ function formations.chevron(leader)
    end
 end
 
-function formations.circle(leader)
+keys[#keys + 1] = "circle"
+names[#names + 1] = p_("formation", "Circle")
+formations[keys[#keys]] = function (leader)
    -- Default to circle.
    local pilots = leader:followers()
    local angle = 2*math.pi / #pilots -- The angle between each ship, in radians.
@@ -206,12 +230,11 @@ function formations.circle(leader)
    end
 end
 
-local keys = {}
-for k, _ in pairs(formations) do
-   keys[#keys+1] = k
-end
-
 formations.keys = keys
+formations.names = names
+if #keys ~= #names then
+   warn(_("The size of formation.keys doesn't match the size of formation.names!"))
+end
 
 -- Clear formation; not really a 'formation' so it is not in keys
 function formations.clear(leader)

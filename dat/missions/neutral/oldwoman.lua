@@ -71,7 +71,7 @@ function accept ()
       misn.cargoAdd(c, 0)
 
       misn.accept()
-      misn.setTitle("The Old Woman")
+      misn.setTitle(_("The Old Woman"))
       misn.setDesc(fmt.f(_("An aging lady has asked you to ferry her to {pnt} in the {sys} system."), {pnt=mem.destplanet, sys=mem.destsys}))
       misn.setReward(_("Fair monetary compensation"))
       misn.osdCreate(_("The Old Woman"), {

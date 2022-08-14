@@ -113,6 +113,9 @@ local function equip_empire( p, opt_params )
    else
       emp_out = empire_outfits
    end
+   if opt_params.outfits_add then
+      emp_out = eoutfits.merge{ emp_out, opt_params.outfits_add }
+   end
 
    local sname = p:ship():nameRaw()
    --if empire_skip[sname] then return end
@@ -128,12 +131,14 @@ local function equip_empire( p, opt_params )
    params = tmerge( params, opt_params )
 
    -- See cores
-   local cores
-   local empcor = empire_cores[ sname ]
-   if empcor then
-      cores = empcor()
-   else
-      cores = ecores.get( p, { all="elite" } )
+   local cores = opt_params.cores
+   if not cores then
+      local empcor = empire_cores[ sname ]
+      if empcor then
+         cores = empcor()
+      else
+         cores = ecores.get( p, { all="elite" } )
+      end
    end
 
    -- Set some pilot meta-data

@@ -169,7 +169,7 @@ function enter()
    mem.playerclass = ship.class(pilot.ship(player.pilot()))
 
    --Launchers are forbidden
-   local listofoutfits = player.pilot():outfits()
+   local listofoutfits = player.pilot():outfitsList()
    local haslauncher = false
    for i, j in ipairs(listofoutfits) do
       if j:type() == "Launcher" then

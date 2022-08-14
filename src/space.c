@@ -2105,6 +2105,7 @@ static int spob_parse( Spob *spob, const char *filename, Commodity **stdList )
    flags             = 0;
    spob->hide        = 0.01;
    spob->radius      = -1.;
+   spob->presence.faction = -1;
    comms             = array_create( Commodity* );
    /* Lua stuff. */
    spob->lua_env     = LUA_NOREF;

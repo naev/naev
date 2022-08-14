@@ -498,7 +498,7 @@ end
 
 -- Test wether the player only has mace rockets
 function checkMace()
-   local weap = player.pilot():outfits("weapon")
+   local weap = player.pilot():outfitsList("weapon")
    for i, w in ipairs(weap) do
       if w ~= outfit.get("TeraCom Mace Launcher") then
          return false

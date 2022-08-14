@@ -14,8 +14,10 @@ Spawns a travelling merchant that can sell the player if interested.
 
 --]]
 local vn = require 'vn'
+local fmt = require "format"
 local love_shaders = require 'love_shaders'
 local der = require "common.derelict"
+local poi = require "common.poi"
 
 local p, broadcastid, hailed_player, timerdelay -- Non-persistent state
 
@@ -33,7 +35,6 @@ local broadcastmsg = {
 }
 
 -- luacheck: globals board broadcast hail leave (Hook functions passed by name)
--- TODO boarding VN stuff should allow talking to Misi and such.
 
 function create ()
    local scur = system.cur()
@@ -54,7 +55,6 @@ function create ()
    -- Find uninhabited planet
    local planets = {}
    for _k,pk in ipairs(scur:spobs()) do
-      -- TODO add check to make sure no inhabited spob is nearby
       if not pk:services().inhabited and not nearby_spob( pk:pos() ) then
          table.insert( planets, pk )
       end
@@ -81,11 +81,8 @@ function create ()
       spawn_pos = pnt:pos() + vec2.newP( pnt:radius()+100*rnd.rnd(), rnd.angle() )
    end
 
-   local fctmisi = faction.exists("fmisi")
-   if not fctmisi then
-      fctmisi = faction.dynAdd( "Independent", "fmisi", _("???"),
-            {clear_enemies=true, clear_allies=true} )
-   end
+   local fctmisi = faction.dynAdd( "Independent", "fmisi", _("???"),
+         {clear_enemies=true, clear_allies=true} )
 
    -- Create pilot
    p = pilot.add( "Mule", fctmisi, spawn_pos, trader_name )
@@ -98,7 +95,7 @@ function create ()
    p:brake()
 
    -- Set up hooks
-   timerdelay = 5
+   timerdelay = 10
    broadcastid = 1
    broadcastmsg = rnd.permutation( broadcastmsg )
    hook.timer( timerdelay, "broadcast" )
@@ -126,7 +123,7 @@ function broadcast ()
    if broadcastid > #broadcastmsg then broadcastid = 1 end
    p:broadcast( broadcastmsg[broadcastid], true )
    broadcastid = broadcastid+1
-   timerdelay = timerdelay * 2
+   timerdelay = timerdelay * 1.5
    hook.timer( timerdelay, "broadcast" )
 
    if not hailed_player and not var.peek('travelling_trader_hailed') then
@@ -152,15 +149,6 @@ function hail ()
 end
 
 function board ()
-   -- Boarding sound
-   der.sfx.board:play()
-
-   vn.clear()
-   vn.scene()
-   vn.transition()
-   vn.na( _("You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold that has been re-adapted as a sort of bazaar. It is a mess of different wares and most don't seem of much value, there might be some interesting find.") )
-   vn.run()
-
    --[[
       Ideas
    * Vampiric weapon that removes shield regen, but regenerates shield by doing damage.
@@ -179,6 +167,11 @@ function board ()
       'Valkyrie Beam',
       'Hades Torch',
    }
+
+   -- Bonus for killing executors
+   if player.numOutfit("Executor Shield Aura")<1 and (var.peek("executors_killed") or 0) >= 3 then
+      table.insert( outfits, "Executor Shield Aura" )
+   end
 
    -- TODO add randomly chosen outfits, maybe conditioned on the current system or something?
 
@@ -217,8 +210,190 @@ function board ()
       end
    end
 
-   -- Start the merchant and unboard.
-   tk.merchantOutfit( store_name, outfits )
+   -- Special items when POI are done, has to be boarded to do the data message
+   if poi.data_get_gained() > 0 and var.peek("travelling_trader_boarded") then
+      local olist = {
+         "Veil of Penelope",
+         "Daphne's Leap",
+      }
+      for k,v in ipairs(olist) do
+         table.insert( outfits, v )
+      end
+   end
+   -- Boarding sound
+   der.sfx.board:play()
+
+   vn.clear()
+   vn.scene()
+   local mm = vn.newCharacter( trader_name, { image=trader_image, color=trader_colour } )
+   vn.transition()
+   if not var.peek('travelling_trader_boarded') then
+      vn.na(_([[You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold that has been re-adapted as a sort of bazaar. As you look around the mess of different wares, most seemingly to be garbage, you suddenly notice a mysterious figure standing infront of you. You're surprised at how you didn't notice them getting so close to you, almost like a ghost.]]))
+      mm(_([[You stare dumbfounded at the figure who seems to be capturing your entire essence with a piercing gaze, when suddenly you can barely make out what seems to be a large grin.
+"You look a bit funky for a human, but all are welcome at Misi's Fabulous Bazaar!"
+They throw their hands up in the air, tossing what seems to be some sort of confetti. Wait, is that ship mold?]]))
+      mm(_([["In my travels, I've collected quite a fair amount of rare and expensive jun… I mean trinkets from all over the galaxy. Not many appreciate my fine wares, so I peddle them as I travel around. If you see anything you fancy, I'll let it go for a fair price. You won't find such a good bargain anywhere else!"]]))
+      var.push( "travelling_trader_boarded", true )
+   else
+      vn.na(_([[You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold bazaar where Misi is waiting for you.]]))
+      if poi.data_get_gained() > 0 and not var.peek("travelling_trader_data") then
+         mm(_([[Suddenly they starts sniffing the air.
+"Wait is that…?"
+They get uncomfortably close
+"Say, you smell like… something odd…]]))
+         mm(_([[They seem to mutter something under their breath as the pace around trying to remember. Suddenly, they stop, turn around and point at you and exclaim:
+"Data Matrices!"]]))
+         mm(_([["You wouldn't have happened to come about some Data Matrices?"]]))
+         vn.menu{
+            {p_("not to come", [["No"]]), "matrices_no"},
+            {p_("not to come", [["Yes"]]), "matrices_yes"},
+            {_([["…"]]), "matrices_silent"},
+         }
+
+         vn.label("matrices_yes")
+         mm(_([["I knew it! I would never forget that smell in a lifetime."]]))
+         vn.jump("matrices_cont01")
+
+         vn.label("matrices_no")
+         mm(_([["Hah, I can clearly see through your lies. You can't fool my nose!"]]))
+         vn.jump("matrices_cont01")
+
+         vn.label("matrices_silent")
+         mm(_([["Cat's got your tongue? No point in wasting breath when the answer is clear."]]))
+         vn.jump("matrices_cont01")
+
+         vn.label("matrices_cont01")
+         mm(_([[They sniff the air as to confirm their findings.
+"You haven't been able to de-encrypt them have you? Old technology is a bugger, and most of the cipher codes have been lost, not making it an easy task. I don't think the Encrypted Data Matrices will be of any use to you. However, if you're willing to trade, I have some better offerings that may pique your interest."]]))
+         mm(_([["If you aren't interested in material goods, I also have some special services up my sleeves that should suit any of your ships. Just ask me about them."]]))
+         vn.func( function ()
+            var.push("travelling_trader_data",true)
+         end )
+      end
+   end
+
+   vn.label("menu")
+   vn.na(_("What do you wish to do?"))
+   vn.label("menu_direct")
+   vn.menu( function ()
+      local opts = {
+         { _("Shop"), "bazaar" },
+         { _("Leave"), "leave" },
+      }
+      if var.peek("travelling_trader_data") then
+         table.insert( opts, 2, { _("Special Services"), "special" } )
+      end
+      return opts
+   end )
+
+   vn.label("bazaar")
+   vn.func( function ()
+      tk.merchantOutfit( store_name, outfits )
+   end )
+   vn.jump("menu")
+
+   local upgrade_cost = 2
+   local upgrade_list = {
+      special_necessity = outfit.get("Machiavellian Necessity"),
+      special_fortune   = outfit.get("Machiavellian Fortune"),
+      special_virtue    = outfit.get("Machiavellian Virtue"),
+   }
+   vn.label("special")
+   mm(fmt.f(_([["So you're interested in my special services. Quite a bargain might I say. Each services costs only {cost}."]]),
+      {cost=poi.data_str(upgrade_cost)}))
+   vn.menu( function ()
+      local opts = {
+         { _("Info"), "special_info" },
+         { _("Back"), "menu" },
+      }
+      for s,o in pairs( upgrade_list ) do
+         table.insert( opts, 1, { fmt.f(_("{intrinsic} Service"),{intrinsic=o}), s } )
+      end
+      return opts
+   end )
+   vn.jump("menu")
+
+   local replacement = nil
+   for s,o in pairs( upgrade_list ) do
+      vn.label( s )
+      local upgrade = o
+      vn.func( function ()
+         local pp = player.pilot()
+         replacement = nil
+         for k,v in ipairs(pp:outfitsList("intrinsic")) do
+            if v == upgrade then
+               vn.jump( s.."_exists" )
+               return
+            end
+            for i,uo in pairs(upgrade_list) do
+               if uo == v then
+                  replacement = uo
+                  vn.jump( s.."_replace" )
+                  return
+               end
+            end
+         end
+      end )
+      mm(fmt.f(_([["I would be able to provide my special services for, let's say, {cost}, how does that sound?"
+
+You have {amount}. Pay {cost} for {upgrade}?]]),
+         {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade} ))
+      vn.menu{
+         { _("Pay"), s.."_yes" },
+         { _("Back"), s.."_no" },
+      }
+      vn.jump("special")
+
+      -- TODO better visualization of the stats and details, maybe an outfit that on mouse over shows all the stats or something?
+      vn.label( s.."_exists" )
+      mm(fmt.f(_([["It seems like I have already upgraded your current ship with {upgradename}."]]),
+            {upgradename=upgrade}))
+      vn.jump("special")
+
+      vn.label( s.."_replace" )
+      mm( function ()
+         return fmt.f(_([["It seems like I have already upgraded your current ship with {replacement}. Would you like to replace it with {upgrade} for 2 Encrypted Data Matrices?"
+
+You have {amount}. Pay {cost} for replacing {replacement} with {upgrade}?]]),
+            {amount=poi.data_str(poi.data_get()), cost=poi.data_str(upgrade_cost), upgrade=upgrade, replacement=replacement} )
+      end )
+      vn.menu{
+         { _("Pay"), s.."_yes" },
+         { _("Back"), s.."_no" },
+      }
+
+      vn.label( s.."_yes" )
+      mm(_([["This will take a second."
+They grab a toolbox and rush over to your boarded ship. You decide not to follow as somethings are best left not known. At least they know what they are doing right?]]))
+      mm(_([[Eventually, they come back covered in what seems to be fish parts and slime.
+"That was fun! However, when I put it back together, I found some extra screws. Oh well, it does seem to hold together fairly well. Hope you enjoy the upgrades! The fish smell will go away in a few periods hopefully."]]))
+      vn.func( function ()
+         local pp = player.pilot()
+         -- Remove old and add new
+         for k,v in pairs(upgrade_list) do
+            pp:outfitRmIntrinsic( v )
+         end
+         pp:outfitAddIntrinsic( upgrade )
+      end )
+      vn.jump("special")
+
+      vn.label( s.."_no" )
+      mm(_([["OK, tell me if you change your mind."]]))
+      vn.jump("special")
+   end
+
+   vn.label("special_info")
+   mm(_([["Throughout my travels, I've been in many a tight spot. I remember getting stuck with a broken engine capacitor in a lost asteroid field, no food, no equipment, and a hull leaking solar radiation. It was either adapt or perish, and me being here is a testament to my ship modification skills acquired under pressure."]]))
+   mm(fmt.f(_([["Or it could be the Toni's Discount Ship Repair Certification Course I did for {cost} in a back-alley on Darkshed. Still never really understood why we need to slap fish skin on the radiators. Bug juice would work much better, but anyway, I got my license and I get spruce up your ship for all your space needs!"]]),
+      {cost=fmt.credits(99)}))
+   mm(_([["I can offer you three different services, however, you can only have one active at a time on your ship. It is possible to change them if you wish though. In particular, I offer three services: Machiavellian Necessity, Machiavellian Fortune, and Machiavellian Virtue."]]))
+   mm(_([["Machiavellian Necessity focuses on tweaking your weapon systems to be able to take decisive action when necessary."
+"Machiavellian Fortune will help you minimize the risks fickleness of fortune."
+"Finally, Machiavellian Virtue will make you a bulwark against unforeseen mishaps."]]))
+   vn.jump("special")
+
+   vn.label("leave")
+   vn.run()
    player.unboard()
 
    -- Boarding sound

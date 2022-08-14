@@ -141,16 +141,16 @@ function create ()
    mod = math.max( 0.5, mod ) -- Limit it so that 50% are large
    if r < 0.5*mod then
       mem.tier = 1
-      mem.adjective = "tiny"
+      mem.adjective = p_("raid", "tiny")
    elseif r < 1.0*mod then
       mem.tier = 2
-      mem.adjective = "small"
+      mem.adjective = p_("raid", "small")
    elseif r < 1.2*mod then
       mem.tier = 3
-      mem.adjective = "medium"
+      mem.adjective = p_("raid", "medium")
    else
       mem.tier = 4
-      mem.adjective = "large"
+      mem.adjective = p_("raid", "large")
    end
 
    -- Set up rewards

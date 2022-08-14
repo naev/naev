@@ -213,6 +213,7 @@ void pfleet_cargoRedistribute (void)
       if (q != pc->quantity)
          WARN(_("Failure to add cargo '%s' to player fleeet. Only %d of %d added."), pc->commodity->name, q, pc->quantity );
 #endif /* DEBUGGING */
+      (void) q;
    }
 
    array_free( pclist );

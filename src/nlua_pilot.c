@@ -31,6 +31,7 @@
 #include "nlua_commodity.h"
 #include "nlua_faction.h"
 #include "nlua_jump.h"
+#include "nlua_pilotoutfit.h"
 #include "nlua_outfit.h"
 #include "nlua_spob.h"
 #include "nlua_ship.h"
@@ -88,8 +89,10 @@ static int pilotL_activeWeapset( lua_State *L );
 static int pilotL_weapset( lua_State *L );
 static int pilotL_weapsetHeat( lua_State *L );
 static int pilotL_actives( lua_State *L );
+static int pilotL_outfitsList( lua_State *L );
 static int pilotL_outfits( lua_State *L );
-static int pilotL_outfitByID( lua_State *L );
+static int pilotL_outfitGet( lua_State *L );
+static int pilotL_outfitToggle( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
@@ -144,6 +147,7 @@ static int pilotL_effectClear( lua_State *L );
 static int pilotL_effectAdd( lua_State *L );
 static int pilotL_effectRm( lua_State *L );
 static int pilotL_effectGet( lua_State *L );
+static int pilotL_ai( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setTemp( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
@@ -237,8 +241,10 @@ static const luaL_Reg pilotL_methods[] = {
    { "weapset", pilotL_weapset },
    { "weapsetHeat", pilotL_weapsetHeat },
    { "actives", pilotL_actives },
+   { "outfitsList", pilotL_outfitsList },
    { "outfits", pilotL_outfits },
-   { "outfitByID", pilotL_outfitByID },
+   { "outfitGet", pilotL_outfitGet },
+   { "outfitToggle", pilotL_outfitToggle },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -264,6 +270,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "clearSelect", pilotL_clearSelect },
    { "toggleSpawn", pilotL_toggleSpawn },
    /* Modify. */
+   { "ai", pilotL_ai },
    { "changeAI", pilotL_changeAI },
    { "setTemp", pilotL_setTemp },
    { "setHealth", pilotL_setHealth },
@@ -594,7 +601,7 @@ static int pilotL_add( lua_State *L )
    /* Get faction from string or number. */
    lf = luaL_validfaction(L,2);
    /* Get pilotname argument if provided. */
-   pilotname = luaL_optstring( L, 4, ship->name );
+   pilotname = luaL_optstring( L, 4, _(ship->name) );
 
    /* Handle position/origin argument. */
    if (lua_isvector(L,3)) {
@@ -1955,9 +1962,9 @@ static int outfit_compareActive( const void *slot1, const void *slot2 )
  *    @luatparam[opt=nil] string What slot type to get outfits of. Can be either nil, "weapon", "utility", "structure", or "intrinsic".
  *    @luatparam[opt=false] boolean skip_locked Whether or not locked outfits should be ignored.
  *    @luatreturn table The outfits of the pilot in an ordered list.
- * @luafunc outfits
+ * @luafunc outfitsList
  */
-static int pilotL_outfits( lua_State *L )
+static int pilotL_outfitsList( lua_State *L )
 {
    int normal = 1;
    int intrinsics = 0;
@@ -2016,14 +2023,35 @@ static int pilotL_outfits( lua_State *L )
 }
 
 /**
+ * @brief Gets a mapping of outfit slot IDs and outfits of a pilot.
+ *
+ *    @luatparam Pilot p Pilot to get outfits of.
+ *    @luatreturn table Ordered table of outfits. If an outfit is not equipped at slot it sets the value to false.
+ * @luafunc outfits
+ */
+static int pilotL_outfits( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_newtable( L );
+   for (int i=0; i<array_size(p->outfits); i++) {
+      if (p->outfits[i]->outfit == NULL)
+         lua_pushboolean( L, 0 );
+      else
+         lua_pushoutfit( L, p->outfits[i]->outfit );
+      lua_rawseti( L, -2, i+1 );
+   }
+   return 1;
+}
+
+/**
  * @brief Gets a pilot's outfit by ID.
  *
  *    @luatparam Pilot p Pilot to get outf of.
  *    @luatparam number id ID of the outfit to get.
  *    @luatreturn Outfit|nil Outfit equipped in the slot or nil otherwise.
- * @luafunc outfitByID
+ * @luafunc outfitGet
  */
-static int pilotL_outfitByID( lua_State *L )
+static int pilotL_outfitGet( lua_State *L )
 {
    /* Parse parameters */
    Pilot *p  = luaL_validpilot(L,1);
@@ -2035,6 +2063,52 @@ static int pilotL_outfitByID( lua_State *L )
       lua_pushoutfit( L, p->outfits[id]->outfit );
    else
       lua_pushnil( L );
+   return 1;
+}
+
+/**
+ * @brief Toggles an outfit.
+ *
+ *    @luatparam Pilot p Pilot to toggle outfit of.
+ *    @luatparam integer id ID of the pilot outfit.
+ *    @luatparam[opt=false] boolean activate Whether or not to activate or deactivate the outfit.
+ * @luafunc outfitToggle
+ */
+static int pilotL_outfitToggle( lua_State *L )
+{
+   int isstealth, n = 0;
+   Pilot *p = luaL_validpilot(L,1);
+   int id   = luaL_checkinteger(L,2)-1;
+   int activate = lua_toboolean(L,3);
+   if (id < 0 || id >= array_size(p->outfits))
+      NLUA_ERROR(L, _("Pilot '%s' outfit ID '%d' is out of range!"), p->name, id);
+   PilotOutfitSlot *po = p->outfits[id];
+   const Outfit *o = po->outfit;
+
+   /* Ignore NULL outfits. */
+   if (o == NULL)
+      return 0;
+
+   /* Can't do a thing. */
+   if ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
+      return 0;
+
+   if ((activate && (po->state != PILOT_OUTFIT_OFF)) ||
+         (!activate && (po->state != PILOT_OUTFIT_ON)))
+      return 0;
+
+   if (activate)
+      n = pilot_outfitOn( p, po );
+   else
+      n = pilot_outfitOff( p, po );
+
+   isstealth = pilot_isFlag( p, PILOT_STEALTH );
+   if (n>0 && isstealth)
+      pilot_destealth( p ); /* pilot_destealth should run calcStats already. */
+   else if (n>0 || pilotoutfit_modified)
+      pilot_calcStats( p );
+
+   lua_pushboolean(L,n);
    return 1;
 }
 
@@ -2071,7 +2145,7 @@ static int pilotL_rename( lua_State *L )
  */
 static int pilotL_position( lua_State *L )
 {
-   Pilot *p  = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushvector(L, p->solid->pos);
    return 1;
 }
@@ -2087,7 +2161,7 @@ static int pilotL_position( lua_State *L )
  */
 static int pilotL_velocity( lua_State *L )
 {
-   Pilot *p  = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushvector(L, p->solid->vel);
    return 1;
 }
@@ -2103,7 +2177,7 @@ static int pilotL_velocity( lua_State *L )
  */
 static int pilotL_ew( lua_State *L )
 {
-   Pilot *p  = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushnumber( L, p->ew_evasion );
    return 1;
 }
@@ -2119,7 +2193,7 @@ static int pilotL_ew( lua_State *L )
  */
 static int pilotL_dir( lua_State *L )
 {
-   Pilot *p  = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushnumber( L, p->solid->dir );
    return 1;
 }
@@ -2135,7 +2209,7 @@ static int pilotL_dir( lua_State *L )
  */
 static int pilotL_temp( lua_State *L )
 {
-   Pilot *p  = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushnumber( L, p->heat_T );
    return 1;
 }
@@ -3181,6 +3255,8 @@ static int pilotL_intrinsicReset( lua_State *L )
 /**
  * @brief Allows setting intrinsic stats of a pilot.
  *
+ * @usage p:intrinsicSet( "turn", -50 ) -- Lowers p's turn by 50%
+ *
  *    @luatparam Pilot p Pilot to set stat of.
  *    @luatparam string name Name of the stat to set. It is the same as in the xml.
  *    @luatparam number value Value to set the stat to.
@@ -3329,24 +3405,37 @@ static int pilotL_effectGet( lua_State *L )
 }
 
 /**
+ * @brief Gets the pilot's AI.
+ *
+ *    @luatparam Pilot p Pilot to get AI of.
+ *    @luatreturn string Name of the AI being used.
+ * @luafunc ai
+ */
+static int pilotL_ai( lua_State *L )
+{
+   /* Get parameters. */
+   Pilot *p = luaL_validpilot(L,1);
+   if (p->ai == NULL)
+      return 0;
+   lua_pushstring( L, p->ai->name );
+   return 1;
+}
+
+/**
  * @brief Changes the pilot's AI.
  *
  * @usage p:changeAI( "empire" ) -- set the pilot to use the Empire AI
  *
  *    @luatparam Pilot p Pilot to change AI of.
  *    @luatparam string newai Name of Ai to use.
- *
  * @luafunc changeAI
  */
 static int pilotL_changeAI( lua_State *L )
 {
-   Pilot *p;
-   const char *str;
    int ret;
-
    /* Get parameters. */
-   p     = luaL_validpilot(L,1);
-   str   = luaL_checkstring(L,2);
+   Pilot *p = luaL_validpilot(L,1);
+   const char *str = luaL_checkstring(L,2);
 
    /* Get rid of current AI. */
    ai_destroy(p);

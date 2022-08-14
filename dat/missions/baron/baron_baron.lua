@@ -174,7 +174,7 @@ function takeoff_delay ()
    for k,v in ipairs{vendetta1, vendetta2} do
       v:setHostile(true)
    end
-   vendetta1:broadcast(fmt.f(_("All troops, engage {ship_type} {ship_name}! It has broken {pnt} law!"), {ship_type=player.pilot():ship():baseType(), ship_name=player.ship(), pnt=pnt}), true)
+   vendetta1:broadcast(fmt.f(_("All troops, engage {ship_type} {ship_name}! It has broken {pnt} law!"), {ship_type=_(player.pilot():ship():baseType()), ship_name=player.ship(), pnt=pnt}), true)
 end
 
 function abort()

@@ -95,7 +95,6 @@
 #include "unidiff.h"
 #include "weapon.h"
 
-#define CONF_FILE       "conf.lua" /**< Configuration file by default. */
 #define VERSION_FILE    "VERSION" /**< Version file by default. */
 
 static int quit               = 0; /**< For primary loop */
@@ -767,6 +766,9 @@ void naev_resize (void)
    menu_main_resize();
    nebu_resize();
 
+   /* Lua stuff. */
+   nlua_resize();
+
    /* Finally do a render pass to avoid half-rendered stuff. */
    render_all( 0., 0. );
    SDL_GL_SwapWindow( gl_screen.window );
@@ -1016,7 +1018,7 @@ static void window_caption (void)
    }
 
    /* Set caption. */
-   asprintf( &buf, APPNAME" - %s", start_name() );
+   asprintf( &buf, APPNAME" - %s", _(start_name()) );
    SDL_SetWindowTitle( gl_screen.window, buf );
    SDL_SetWindowIcon( gl_screen.window, naev_icon );
    free( buf );

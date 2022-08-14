@@ -80,13 +80,15 @@ local function equip_soromid( p, opt_params  )
    params = tmerge( params, opt_params )
 
    -- Set cores
-   local cores
-   if ps:tags().bioship then
-      local maxstage = bioship.maxstage( p )
-      local stage = math.max( 1, maxstage - prob.poisson_sample( 1 ) )
-      bioship.simulate( p, stage )
-   else
-      cores = ecores.get( p, { all="elite" } )
+   local cores = opt_params.cores
+   if not cores then
+      if ps:tags().bioship then
+         local maxstage = bioship.maxstage( p )
+         local stage = math.max( 1, maxstage - prob.poisson_sample( 1 ) )
+         bioship.simulate( p, stage )
+      else
+         cores = ecores.get( p, { all="elite" } )
+      end
    end
 
    -- Set some meta-data

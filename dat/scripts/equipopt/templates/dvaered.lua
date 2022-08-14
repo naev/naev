@@ -117,12 +117,14 @@ local function equip_dvaered( p, opt_params )
    params = tmerge( params, opt_params )
 
    -- See cores
-   local cores
-   local dvrcor = dvaered_cores[ sname ]
-   if dvrcor then
-      cores = dvrcor()
-   else
-      cores = ecores.get( p, { hulls="elite" } )
+   local cores = opt_params.cores
+   if not cores then
+      local dvrcor = dvaered_cores[ sname ]
+      if dvrcor then
+         cores = dvrcor()
+      else
+         cores = ecores.get( p, { hulls="elite" } )
+      end
    end
 
    -- Set some pilot meta-data

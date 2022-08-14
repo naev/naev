@@ -80,7 +80,7 @@ function standing( hookfac, delta )
             local pp = player.pilot()
             local hasft = false
             local ft = outfit.get("Fake Transponder")
-            for k,v in ipairs(pp:outfits()) do
+            for k,v in ipairs(pp:outfitsList()) do
                if v==ft then
                   hasft = true
                   break

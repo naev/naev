@@ -319,12 +319,12 @@ static int player_newMake (void)
 
    /* Try to create the pilot, if fails reask for player name. */
    ship = ship_get( start_ship() );
-   shipname = start_shipname();
+   shipname = _(start_shipname());
    if (ship==NULL) {
       WARN(_("Ship not properly set by module."));
       return -1;
    }
-   acquired = start_acquired();
+   acquired = _(start_acquired());
    /* Setting a default name in the XML prevents naming prompt. */
    ps = player_newShip( ship, shipname, 0, acquired, (shipname==NULL) ? 0 : 1 );
    if (ps == NULL) {
@@ -1600,8 +1600,17 @@ int player_land( int loud )
 
    /* attempt to land at selected spob */
    spob = cur_system->spobs[player.p->nav_spob];
+   spob_updateLand( spob ); /* Update if necessary. */
    if ((spob->lua_can_land==LUA_NOREF) && !spob_hasService(spob, SPOB_SERVICE_LAND)) {
       player_message( "#r%s", _("You can't land here.") );
+      return PLAYER_LAND_DENIED;
+   }
+   else if ((spob->lua_can_land!=LUA_NOREF) && !spob->can_land) {
+      if (spob->land_msg)
+         player_message( "#%c%s>#0 %s", spob_getColourChar(spob),
+               spob_name(spob), spob->land_msg );
+      else
+         player_message( "#r%s", _("You can't land here.") );
       return PLAYER_LAND_DENIED;
    }
    else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */

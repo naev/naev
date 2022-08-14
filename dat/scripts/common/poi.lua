@@ -125,7 +125,7 @@ function _poi_enter ()
    -- If the player has no scanning outfit we have to help them out
    local pp = player.pilot()
    local haspoi = false
-   for k,v in ipairs(pp:outfits()) do
+   for k,v in ipairs(pp:outfitsList()) do
       if v:tags().poi_scan then
          haspoi = true
          break
@@ -274,12 +274,23 @@ function poi.vn_soundonly( id, params )
    lg.clear{ 0, 0, 0, 0.8 }
    lg.setColor( col )
    lg.printf( id, fl, 0, 200, 1000, "center" )
-   lg.printf( "SOUND ONLY", fs, 0, 550, 1000, "center" )
+   lg.printf( p_("poi", "SOUND ONLY"), fs, 0, 550, 1000, "center" )
    lg.setCanvas( oc )
 
    return vn.Character.new(
          fmt.f(_("VOICE {id}"),{id=id}),
          tmerge( {image=c, flip=false}, params ) )
+end
+
+local noise_list = {
+   _("*CRACKLE*"),
+   _("*HISS*"),
+   _("*CLICK*"),
+   _("*RASPING*"),
+   _("*NOISE*"),
+}
+function poi.noise ()
+   return noise_list[ rnd.rnd(1,#noise_list) ]
 end
 
 --[[--
@@ -343,6 +354,15 @@ Takes data to the player.
 --]]
 function poi.data_take( amount )
    return player.inventoryRm( conduit, amount )
+end
+
+--[[
+Returns a human-readable string for an amount of data.
+   @tparam integer amount Amount of data to convert to string.
+   @treturn string Human-readable string corresponding to the amount of data.
+--]]
+function poi.data_str( amount )
+   return fmt.f(n_("{amount} Encrypted Data Matrix","{amount} Encrypted Data Matrices",amount),{amount=amount})
 end
 
 return poi

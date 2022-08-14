@@ -167,9 +167,9 @@ function comm( plt )
       }
       if hostile and not plt:flags("bribed") then
          if mem.bribe_no then
-            table.insert( opts, 1, {"Bribe", "bribe_no"} )
+            table.insert( opts, 1, {_("Bribe"), "bribe_no"} )
          elseif (mem.bribe and mem.bribe == 0) or mem.bribed_once then
-            table.insert( opts, 1, {"Bribe", "bribe_0"} )
+            table.insert( opts, 1, {_("Bribe"), "bribe_0"} )
          else
             bribe_group = bribe_fleet( plt )
             bribeable = nearby_bribeable( plt ) -- global
@@ -207,7 +207,7 @@ function comm( plt )
          end
       end
       if not hostile then
-         table.insert( opts, 1, {"Request Fuel", "refuel"} )
+         table.insert( opts, 1, {_("Request Fuel"), "refuel"} )
       end
       return opts
    end )

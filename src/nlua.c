@@ -49,6 +49,7 @@ lua_State *naevL = NULL;
 nlua_env __NLUA_CURENV = LUA_NOREF;
 static char *common_script; /**< Common script to run when creating environments. */
 static size_t common_sz; /**< Common script size. */
+static int nlua_envs = LUA_NOREF;
 
 /*
  * prototypes
@@ -120,10 +121,7 @@ static int nlua_pgettext( lua_State *L )
 {
    const char *msgctxt = luaL_checkstring(L, 1);
    const char *msgid = luaL_checkstring(L, 2);
-   char *lookup = NULL;
-   asprintf( &lookup, "%s" GETTEXT_CONTEXT_GLUE "%s", msgctxt, msgid );
-   lua_pushstring(L, gettext_pgettext_impl( lookup, msgid ) );
-   free( lookup );
+   lua_pushstring(L, pgettext_var( msgctxt, msgid ) );
    return 1;
 }
 
@@ -169,9 +167,7 @@ static int nlua_os_getenv( lua_State *L )
  */
 static int nlua_panic( lua_State *L )
 {
-   DEBUG( _("LUA PANIC: %s"),  lua_tostring(L,-1) );
-   raise( SIGABRT );
-   return 0;
+   ERR( _("LUA PANIC: %s"),  lua_tostring(L,-1) );
 }
 
 /*
@@ -182,13 +178,19 @@ void lua_init (void)
    naevL = nlua_newState();
    nlua_loadBasic(naevL);
 
+   /* Environment table. */
+   lua_newtable( naevL );
+   nlua_envs = luaL_ref(naevL, LUA_REGISTRYINDEX);
+
+   /* Better clean up. */
    lua_atpanic( naevL, nlua_panic );
 }
 
 /**
  * @brief Replacement for the internal Lua loadstring().
  */
-static int luaB_loadstring( lua_State *L ) {
+static int luaB_loadstring( lua_State *L )
+{
    size_t l;
    const char *s = luaL_checklstring(L, 1, &l);
    const char *chunkname = luaL_optstring(L, 2, s);
@@ -262,6 +264,13 @@ nlua_env nlua_newEnv (void)
    lua_pushvalue(naevL, -1);
    ref = luaL_ref(naevL, LUA_REGISTRYINDEX);
 
+   /* Store in the environment table. */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, nlua_envs);
+   lua_pushvalue(naevL, -2);
+   lua_pushinteger(naevL, ref);
+   lua_rawset(naevL, -3);
+   lua_pop(naevL,1);
+
    /* Metatable */
    lua_newtable(naevL);
    lua_pushvalue(naevL, LUA_GLOBALSINDEX);
@@ -333,8 +342,17 @@ nlua_env nlua_newEnv (void)
  *    @param env Enviornment to free.
  */
 void nlua_freeEnv(nlua_env env) {
-   if (naevL != NULL && env != LUA_NOREF)
+   if ((naevL != NULL) && (env != LUA_NOREF)) {
+      /* Remove from the environment table. */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, nlua_envs);
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+      lua_pushboolean(naevL, 1);
+      lua_rawset(naevL, -3);
+      lua_pop(naevL,1);
+
+      /* Unref. */
       luaL_unref(naevL, LUA_REGISTRYINDEX, env);
+   }
 }
 
 /*
@@ -868,4 +886,26 @@ void nlua_unref( lua_State *L, int idx )
 {
    if (idx != LUA_NOREF)
       luaL_unref( L, LUA_REGISTRYINDEX, idx );
+}
+
+/**
+ * @brief Propagates a resize event to all the environments forcibly.
+ */
+void nlua_resize (void)
+{
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, nlua_envs); /* t */
+   lua_pushnil(naevL); /* t, n */
+   while (lua_next(naevL, -2) != 0) { /* t, k, v */
+      int env = lua_tointeger(naevL,-1); /* t, k, v */
+      lua_getfield(naevL, -2, "__resize"); /* t, k, v, f */
+      if (!lua_isnil(naevL,-1)) {
+         lua_pushinteger( naevL, SCREEN_W ); /* t, k, v, f, w */
+         lua_pushinteger( naevL, SCREEN_H ); /* t, k, v, f, w, h */
+         nlua_pcall( env, 2, 0 ); /* t, k, v */
+         lua_pop(naevL,1); /* t, k */
+      }
+      else
+         lua_pop(naevL,2); /* t, k */
+   } /* t */
+   lua_pop(naevL,1); /* */
 }

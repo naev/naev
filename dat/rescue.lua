@@ -74,7 +74,7 @@ local function check_stranded()
    if services["shipyard"] then
       -- Get value of player's ship.
       local _basevalue, playervalue = pp:ship():price()
-      for k,v in ipairs( pp:outfits() ) do
+      for k,v in ipairs( pp:outfitsList() ) do
          playervalue = playervalue + v:price()
       end
 
@@ -89,7 +89,7 @@ local function check_stranded()
    -- When all cores are equipped along with non-cores, it's nearly impossible
    -- to determine where the problem lies, so let the player sort it out.
    if #missing == 0 then
-      for k,v in ipairs( pp:outfits() ) do
+      for k,v in ipairs( pp:outfitsList() ) do
          local _name, _size, prop = v:slot()
          if not prop then
             return false
@@ -155,7 +155,7 @@ end
 -- Builds the tables of required, equipped, and missing outfits.
 local function buildTables()
    local slots   = player.pilot():ship():getSlots()
-   local outfits = player.pilot():outfits()
+   local outfits = player.pilot():outfitsList()
 
    -- Clear tables.
    required = {}
@@ -195,7 +195,7 @@ end
 local function removeNonCores( slottype )
    local pp = player.pilot() -- Convenience.
 
-   for k,v in pairs( pp:outfits() ) do
+   for k,v in pairs( pp:outfitsList() ) do
       local slot, _size, prop = v:slot()
       if not prop and (not slottype or slot == slottype) then
          -- Store and remove old
@@ -211,7 +211,7 @@ local function removeEquipDefaults()
    local pp = player.pilot() -- Convenience.
 
    -- Store and remove old outfits
-   for k,v in ipairs( pp:outfits() ) do
+   for k,v in ipairs( pp:outfitsList() ) do
       player.outfitAdd(v:nameRaw())
       pp:outfitRm(v:nameRaw())
    end
@@ -236,7 +236,7 @@ end
 local function equipDefaults( defaults )
    local pp = player.pilot() -- Convenience.
 
-   for k,v in ipairs( pp:outfits() ) do
+   for k,v in ipairs( pp:outfitsList() ) do
       local _name, _size, prop, is_required = v:slot()
 
       -- Remove if required but not default.
@@ -280,7 +280,7 @@ local function assessOutfits()
       end
    end
 
-   for k,o in ipairs( player.pilot():outfits() ) do
+   for k,o in ipairs( player.pilot():outfitsList() ) do
       local s, _size, prop = o:slot()
       if not prop and s == "Weapon" then
          weapons = true

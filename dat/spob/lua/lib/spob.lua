@@ -79,7 +79,7 @@ end
 function luaspob.can_land ()
    local s = mem.spob:services()
    if not s.land then
-      return false,mem.msg_denied
+      return false,nil -- Use default landing message
    end
    if mem.bribed or mem.spob:getLandOverride() then
       return true, mem.msg_granted

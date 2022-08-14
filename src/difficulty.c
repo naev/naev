@@ -202,7 +202,7 @@ char *difficulty_display( const Difficulty *d )
    l = scnprintf( display, STRMAX, _("Difficulty %s"), _(d->name) );
    l += scnprintf( &display[l], STRMAX-l, "\n" );
    if (d->description != NULL)
-      l += scnprintf( &display[l], STRMAX-l, "%s\n", d->description );
+      l += scnprintf( &display[l], STRMAX-l, "%s\n", _(d->description) );
    l += scnprintf( &display[l], STRMAX-l, _("This difficulty applies the following effect to the player ships:") );
    ss_statsListDesc( d->stats, &display[l], STRMAX-l, 1 );
    return display;

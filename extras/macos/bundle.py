@@ -9,6 +9,7 @@
 import os
 import shutil
 import subprocess
+import sys
 
 
 LOCAL_LIB_ROOTS = ('/opt/local', '/usr/lib/osxcross', '/usr/local')
@@ -24,6 +25,8 @@ def main():
 
     # Gather Naev and dependencies.
     trace(copy_with_deps, f'{os.environ["MESON_BUILD_ROOT"]}/naev', app_path, dest='Contents/MacOS')
+    if '-d' in sys.argv:
+        trace(subprocess.check_call, ['dsymutil', f'{app_path}/Contents/MacOS/naev'])
 
     print(f'Successfully created {app_path}')
 

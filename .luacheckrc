@@ -23,6 +23,7 @@ stds.Basic={
          fields={"unpack", "pack"}
       },
       "_LOADED", -- NLUA_LOAD_TABLE
+      "__resize",
       "inlist",
       "tcopy",
       "tmerge",
