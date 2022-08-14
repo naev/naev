@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-01-01 22:53+0000\n"
+"PO-Revision-Date: 2022-08-14 20:21+0000\n"
 "Last-Translator: Étienne Girard <etienne.g.girard@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev-0-9-x/"
 "fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: dat/intro:2
 msgid ""
@@ -210,14 +210,10 @@ msgid "nenau"
 msgstr "nenau"
 
 #: dat/AUTHORS:17
-#, fuzzy
-#| msgid "   * Misc. Development"
 msgid "   * Misc. Development and Dvaered aficionado"
-msgstr "   * Développement divers"
+msgstr "   * Développement divers et amateur de Dvaered"
 
 #: dat/AUTHORS:19
-#, fuzzy
-#| msgid "Jack Greiner <jack@emoss.org>"
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 msgstr "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 
@@ -230,10 +226,8 @@ msgid "Viktor Hahn <viktor.hahn@web.de>"
 msgstr "Viktor Hahn <viktor.hahn@web.de>"
 
 #: dat/AUTHORS:23
-#, fuzzy
-#| msgid "   * Ship Models"
 msgid "   * 3D modelling"
-msgstr "   * Modèles de vaisseau"
+msgstr "   * Modélisation 3D"
 
 #: dat/AUTHORS:25
 msgid "Past Development Team"
@@ -478,13 +472,10 @@ msgid "   * Much artwork"
 msgstr "   * Beaucoup d'illustrations"
 
 #: dat/AUTHORS:103
-#, fuzzy
-#| msgid ""
-#| "   Talented artist, one of the first in creating custom naev content."
 msgid "   Talented artist, one of the first in creating custom Naev content."
 msgstr ""
-"   Artiste talentueux, l'un des premiers à créer du contenu personnalisé "
-"pour naev."
+"   Artiste talentueux, l'un des premiers à avoir créé du contenu "
+"personnalisé pour Naev."
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
@@ -557,8 +548,6 @@ msgid "Cypher3c <cypher3c@gmail.com>"
 msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
-#, fuzzy
-#| msgid "   * Spiced up the boring generic cargo missios."
 msgid "   * Spiced up the boring generic cargo missions."
 msgstr "   * A pimenté les missions de fret génériques et ennuyeuses."
 
@@ -707,10 +696,8 @@ msgid "EvanR"
 msgstr "EvanR"
 
 #: dat/AUTHORS:180
-#, fuzzy
-#| msgid "Major Contributors"
 msgid "Artwork Contributors"
-msgstr "Contributeurs majeurs"
+msgstr "Contributeurs d'illustrations"
 
 #: artwork/gfx/loading/admonisher.webp.txt:1
 msgid "ADMONISHER"
@@ -75963,7 +75950,7 @@ msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:87
 msgid "Iron"
-msgstr ""
+msgstr "Fer"
 
 #: dat/scripts/pilotname/pirate.lua:88
 msgid "Justice"
@@ -78484,7 +78471,7 @@ msgstr ""
 #: src/background.c:437 src/gui.c:1710 src/nlua_evt.c:146 src/nlua_misn.c:243
 #: src/nopenal.c:72
 msgid "unknown error"
-msgstr ""
+msgstr "erreur inconnue"
 
 #. error has occurred
 #: src/board.c:92 src/player.c:3365
