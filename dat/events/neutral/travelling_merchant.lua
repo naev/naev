@@ -320,7 +320,7 @@ They get uncomfortably close
       vn.func( function ()
          local pp = player.pilot()
          replacement = nil
-         for k,v in ipairs(pp:outfits("intrinsic")) do
+         for k,v in ipairs(pp:outfitsList("intrinsic")) do
             if v == upgrade then
                vn.jump( s.."_exists" )
                return

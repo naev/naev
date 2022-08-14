@@ -23,7 +23,7 @@ local function turnon( p, po )
    np:setNoDeath( true ) -- Dosen't die
    -- Copy outfits
    np:outfitRm("all")
-   for k,v in ipairs(p:outfits()) do
+   for k,v in ipairs(p:outfitsList()) do
       -- We don't want holograms
       if v ~= hologram then
          np:outfitAdd( v, 1, true )

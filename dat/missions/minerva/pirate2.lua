@@ -137,13 +137,13 @@ local function dvaered_weapons()
          table.insert( allowed, v:nameRaw() )
       end
    end
-   for k,o in ipairs(pp:outfits("weapon")) do
+   for k,o in ipairs(pp:outfitsList("weapon")) do
       if not inlist( allowed, o:nameRaw() ) then
          table.insert( baditems, o:name() )
       end
    end
    for i,p in ipairs(pp:followers()) do
-      for k,o in ipairs(p:outfits("weapon")) do
+      for k,o in ipairs(p:outfitsList("weapon")) do
          if not inlist( allowed, o:nameRaw() ) then
             table.insert( baditems, o:name()..fmt.f(_(" ({ship})"),{ship=p:name()}) )
          end

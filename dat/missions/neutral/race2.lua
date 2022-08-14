@@ -74,7 +74,7 @@ function takeoff()
       misn.finish(false)
    end
    if mem.choice ~= 1 then
-      for k,v in ipairs(player.pilot():outfits()) do
+      for k,v in ipairs(player.pilot():outfitsList()) do
          if v:type() == "Afterburner" then
             tk.msg(_("Illegal ship!"), _([["You have outfits on your ship which is not allowed in this race in hard mode. Mission failed."]]))
             misn.finish(false)

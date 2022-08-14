@@ -13,7 +13,7 @@ local mapping = {
    ["Corrosion II"] = "corrosion_ii",
 }
 function init( p, _po )
-   for k,o in ipairs(p:outfits("intrinsic")) do
+   for k,o in ipairs(p:outfitsList("intrinsic")) do
       local m = mapping[ o:nameRaw() ]
       if m then
          mem[m] = true
