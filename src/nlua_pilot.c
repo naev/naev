@@ -2145,7 +2145,7 @@ static int pilotL_rename( lua_State *L )
  */
 static int pilotL_position( lua_State *L )
 {
-   Pilot *p  = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushvector(L, p->solid->pos);
    return 1;
 }
@@ -2161,7 +2161,7 @@ static int pilotL_position( lua_State *L )
  */
 static int pilotL_velocity( lua_State *L )
 {
-   Pilot *p  = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushvector(L, p->solid->vel);
    return 1;
 }
@@ -2177,7 +2177,7 @@ static int pilotL_velocity( lua_State *L )
  */
 static int pilotL_ew( lua_State *L )
 {
-   Pilot *p  = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushnumber( L, p->ew_evasion );
    return 1;
 }
@@ -2193,7 +2193,7 @@ static int pilotL_ew( lua_State *L )
  */
 static int pilotL_dir( lua_State *L )
 {
-   Pilot *p  = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushnumber( L, p->solid->dir );
    return 1;
 }
@@ -2209,7 +2209,7 @@ static int pilotL_dir( lua_State *L )
  */
 static int pilotL_temp( lua_State *L )
 {
-   Pilot *p  = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushnumber( L, p->heat_T );
    return 1;
 }
