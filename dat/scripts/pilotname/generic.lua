@@ -68,7 +68,7 @@ local names = {
    _("Raptor"),
    _("Rex"),
    _("Rocket"),
-   _("Rogue"),
+   p_("name", "Rogue"),
    _("Saber"),
    _("Scorpion"),
    _("Scythe"),

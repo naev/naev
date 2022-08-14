@@ -12,29 +12,36 @@
 #include <assert.h>
 #include <signal.h>
 
-#if HAVE_BFD_H
+#if DEBUGGING
 #include <bfd.h>
-#endif /* HAVE_BFD_H */
+#include <unwind.h>
 
-#if HAVE_DLADDR
 #define __USE_GNU /* Grrr... */
 #include <dlfcn.h>
 #undef __USE_GNU
-#endif /* HAVE_DLADDR */
 
-#if HAVE_EXECINFO_H
-#include <execinfo.h>
-#endif /* HAVE_EXECINFO_H */
+#if !HAVE_STRSIGNAL
+extern const char *strsignal (int); /* From libiberty */
+#endif /* !HAVE_STRSIGNAL */
+
+#if MACOS
+#include <mach-o/dyld.h>
+#endif /* MACOS */
+#endif /* DEBUGGING */
 
 #include "naev.h"
 /** @endcond */
 
+#include "debug.h"
+
 #include "log.h"
 
-#if HAVE_BFD_H && DEBUGGING
+#if DEBUGGING
 static bfd *abfd      = NULL;
 static asymbol **syms = NULL;
-#endif /* HAVE_BFD_H && DEBUGGING */
+/* Initialize debugging flags. */
+DebugFlags debug_flags;
+#endif /* DEBUGGING */
 
 #ifdef bfd_get_section_flags
 /* We're dealing with a binutils version prior to 2.34 (2020-02-01) and must adapt the API as follows: */
@@ -42,13 +49,6 @@ static asymbol **syms = NULL;
 #define bfd_section_vma( section )      bfd_get_section_vma( abfd, section )
 #define bfd_section_size( section )     bfd_get_section_size( section )
 #endif /* bfd_get_section_flags */
-
-
-#ifdef DEBUGGING
-/* Initialize debugging flags. */
-#include "debug.h"
-DebugFlags debug_flags;
-#endif /* DEBUGGING */
 
 
 #if DEBUGGING
@@ -114,67 +114,71 @@ const char* debug_sigCodeToStr( int sig, int sig_code )
       }
 
    /* No suitable code found. */
-#if HAVE_STRSIGNAL
    return strsignal(sig);
-#else /* HAVE_STRSIGNAL */
-   {
-      static char buf[128];
-      snprintf( buf, sizeof(buf), _("signal %d"), sig );
-      return buf;
-   }
-#endif /* HAVE_STRSIGNAL */
 }
 #endif /* DEBUGGING */
 
-#if HAVE_BFD_H && DEBUGGING
+#if DEBUGGING
 /**
  * @brief Translates and displays the address as something humans can enjoy.
  */
-static void debug_translateAddress( const char *symbol, void *address )
+static void debug_translateAddress( void *address )
 {
-   const char *file, *func;
-   unsigned int line;
+   const char *file = NULL, *func = NULL;
+   unsigned int line = 0;
    asection *section;
+   bfd_vma vma = (uintptr_t) address;
+   Dl_info addr = {0};
 
-   for (section = abfd->sections; section != NULL; section = section->next) {
-      bfd_vma func_vma = (bfd_hostptr_t) address, base_vma = 0;
-#if HAVE_DLADDR
-      Dl_info addr;
-      if (dladdr( address, &addr ))
-         base_vma = (bfd_hostptr_t) addr.dli_fbase;
-#endif /* HAVE_DLADDR */
+   (void) dladdr( address, &addr );
+#if MACOS
+   vma -= (bfd_vma) _dyld_get_image_vmaddr_slide(0);
+#endif
 
+   for (section = abfd==NULL?NULL:abfd->sections; section != NULL; section = section->next) {
       if ((bfd_section_flags(section) & SEC_ALLOC) == 0)
          continue;
 
-      bfd_vma vma = bfd_section_vma(section);
+      bfd_vma vma_sec = bfd_section_vma(section);
       bfd_size_type size = bfd_section_size(section);
-      if (func_vma < vma || func_vma >= vma + size) {
-         func_vma -= base_vma;
-         if (func_vma < vma || func_vma >= vma + size)
-            continue;
-      }
-
-      if (!bfd_find_nearest_line(abfd, section, syms, func_vma - vma,
-            &file, &func, &line))
+      if (vma_sec > vma || vma >= vma_sec + size)
+         vma = (bfd_vma) (address - addr.dli_fbase);
+      if (vma_sec > vma || vma >= vma_sec + size)
          continue;
 
-      do {
-         if (func == NULL || func[0] == '\0')
-            func = "??";
-         if (file == NULL || file[0] == '\0')
-            file = "??";
-         DEBUG("%s %s(...):%u %s", symbol, func, line, file);
-      } while (bfd_find_inliner_info(abfd, &file, &func, &line));
-
-      return;
+      (void) bfd_find_nearest_line(abfd, section, syms, vma - vma_sec, &file, &func, &line);
+      break;
    }
 
-   DEBUG("%s %s(...):%u %s", symbol, "??", 0, "??");
+   do {
+#define TRY( str ) ((str != NULL && str[0]) ? str : "??")
+#define OPT( str ) ((str != NULL && str[0]) ? str : "")
+      bfd_vma offset = address - (addr.dli_saddr ? addr.dli_saddr : addr.dli_fbase);
+      int width = snprintf( NULL, 0, "%s at %s:%u", TRY(func), TRY(file), line );
+      int pad = MAX( 0, 80 - width );
+      LOGERR( "[%#14"BFD_VMA_FMT"x] %s at %s:%u %*s| %s(%s+%#"BFD_VMA_FMT"x)",
+              vma, TRY(func), TRY(file), line, pad, "",
+              TRY(addr.dli_fname), OPT(addr.dli_sname), offset );
+   } while (section!=NULL && bfd_find_inliner_info(abfd, &file, &func, &line));
 }
-#endif /* HAVE_BFD_H && DEBUGGING */
 
-#if DEBUGGING
+/**
+ * @brief Translates and displays the address as something humans can enjoy.
+ */
+static _Unwind_Reason_Code debug_unwindTrace( struct _Unwind_Context* ctx, void* data )
+{
+   (void) data;
+   int ip_before_insn = 0;
+   uintptr_t ip = _Unwind_GetIPInfo( ctx, &ip_before_insn );
+
+   if (!ip)
+      return _URC_END_OF_STACK;
+   if (!ip_before_insn)
+      ip -= 1;
+   debug_translateAddress( (void*) ip );
+   return _URC_NO_REASON;
+}
+
 #if HAVE_SIGACTION
 static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
 #else /* HAVE_SIGACTION */
@@ -186,7 +190,7 @@ static void debug_sigHandler( int sig )
    (void) unused;
 #endif /* HAVE_SIGACTION */
 
-   LOG( _("Naev received %s!"),
+   LOGERR( _("Naev received %s!"),
 #if HAVE_SIGACTION
          debug_sigCodeToStr( info->si_signo, info->si_code )
 #else /* HAVE_SIGACTION */
@@ -194,24 +198,8 @@ static void debug_sigHandler( int sig )
 #endif /* HAVE_SIGACTION */
 	);
 
-#if HAVE_EXECINFO_H
-   int num;
-   void *buf[64];
-   char **symbols;
-
-   num      = backtrace(buf, 64);
-   symbols  = backtrace_symbols(buf, num);
-   for (int i=0; i<num; i++) {
-#if HAVE_BFD_H
-      if (abfd != NULL) {
-         debug_translateAddress( symbols[i], buf[i] );
-	 continue;
-      }
-#endif /* HAVE_BFD_H */
-      DEBUG("   %s", symbols[i]);
-   }
-   DEBUG( _("Report this to project maintainer with the backtrace.") );
-#endif /* HAVE_EXECINFO_H */
+   _Unwind_Backtrace( debug_unwindTrace, NULL );
+   LOGERR( _("Report this to project maintainer with the backtrace.") );
 
    /* Always exit. */
    exit(1);
@@ -219,18 +207,21 @@ static void debug_sigHandler( int sig )
 #endif /* DEBUGGING */
 
 /**
- * @brief Sets up the SignalHandler for Linux.
+ * @brief Sets up the back-tracing signal handler.
  */
 void debug_sigInit (void)
 {
 #if DEBUGGING
-   const char *str = _("Unable to set up %s signal handler.");
-
-#if HAVE_BFD_H
    bfd_init();
 
-   /* Read the executable. TODO: in case libbfd exists on platforms without procfs, try env.argv0 from "env.h"? */
-   abfd = bfd_openr("/proc/self/exe", NULL);
+   /* Read the executable. We need its full path, which Linux provides via procfs and Darwin/dlfcn-win32 dladdr() happens to provide. */
+#if LINUX
+   abfd = bfd_openr( "/proc/self/exe", NULL );
+#else
+   Dl_info addr = {0};
+   (void) dladdr( debug_sigInit, &addr );
+   abfd = bfd_openr( addr.dli_fname, NULL );
+#endif
    if (abfd != NULL) {
       char **matching;
       bfd_check_format_matches(abfd, bfd_object, &matching);
@@ -238,19 +229,16 @@ void debug_sigInit (void)
       /* Read symbols */
       if (bfd_get_file_flags(abfd) & HAS_SYMS) {
          unsigned int size;
-         long symcount;
-
-         /* static */
-         symcount = bfd_read_minisymbols( abfd, FALSE, (void **)&syms, &size );
-         if ( symcount == 0 && abfd != NULL ) /* dynamic */
-            symcount = bfd_read_minisymbols( abfd, TRUE, (void **)&syms, &size );
+         long symcount = bfd_read_minisymbols( abfd, /*dynamic:*/ FALSE, (void **)&syms, &size );
+         if ( symcount == 0 && abfd != NULL )
+            symcount = bfd_read_minisymbols( abfd, /*dynamic:*/ TRUE, (void **)&syms, &size );
          assert(symcount >= 0);
       }
    }
-#endif /* HAVE_BFD_H */
 
    /* Set up handler. */
 #if HAVE_SIGACTION
+   const char *str = _("Unable to set up %s signal handler.");
    struct sigaction so, sa = { .sa_handler = NULL, .sa_flags = SA_SIGINFO };
    sa.sa_sigaction = debug_sigHandler;
    sigemptyset(&sa.sa_mask);
@@ -274,15 +262,13 @@ void debug_sigInit (void)
 
 
 /**
- * @brief Closes the SignalHandler for Linux.
+ * @brief Closes the back-tracing signal handler.
  */
 void debug_sigClose (void)
 {
 #if DEBUGGING
-#if HAVE_BFD_H
    bfd_close( abfd );
    abfd = NULL;
-#endif /* HAVE_BFD_H */
    signal( SIGSEGV, SIG_DFL );
    signal( SIGFPE,  SIG_DFL );
    signal( SIGABRT, SIG_DFL );

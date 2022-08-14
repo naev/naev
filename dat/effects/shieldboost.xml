@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<effect name="Shield Boost">
+ <description>Shields are being boosted.</description>
+ <duration>8</duration>
+ <overwrite>shieldboost</overwrite>
+ <icon>/gfx/misc/icons/bolt-shield.webp</icon>
+ <shader vertex="effect15x.vert">effects/shieldboost.frag</shader>
+</effect>

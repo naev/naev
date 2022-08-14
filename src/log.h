@@ -13,6 +13,7 @@
 #include "nstring.h"
 
 #define LOG(str, args...)  (logprintf(stdout, 1, str, ## args))
+#define LOGERR(str, args...)  (logprintf(stderr, 1, str, ## args))
 #ifdef DEBUG_PARANOID /* Will cause WARNs to blow up */
 #define WARN(str, args...) (logprintf(stderr, 0, _("WARNING %s:%d [%s]: "), __FILE__, __LINE__, __func__), logprintf( stderr, 1, str, ## args), raise(SIGINT))
 #else /* DEBUG_PARANOID */

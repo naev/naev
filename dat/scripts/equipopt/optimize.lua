@@ -6,6 +6,7 @@
 local optimize = {}
 local eparams = require 'equipopt.params'
 local bioship = require 'bioship'
+local ai_atk = require "ai.core.attack.setup"
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 -- Create caches and stuff
@@ -197,7 +198,7 @@ local function print_debug( p, st, ss, outfit_list, params, constraints, energyg
       end
    end
    print(_("Equipment:"))
-   for j,o in ipairs(p:outfits()) do
+   for j,o in ipairs(p:outfitsList()) do
       print( "   "..o:name() )
    end
    local stn = p:stats()
@@ -686,6 +687,9 @@ function optimize.optimize( p, cores, outfit_list, params )
 
    -- Fill ammo
    p:fillAmmo()
+
+   -- Set up useful outfits
+   ai_atk.setup(p)
 
    -- Check
    if __debugging then

@@ -16,6 +16,7 @@
 #define AUDIO_METATABLE      "audio" /**< Audio metatable identifier. */
 
 typedef enum LuaAudioType_e {
+   LUA_AUDIO_NULL=0,
    LUA_AUDIO_STATIC,
    LUA_AUDIO_STREAM,
 } LuaAudioType_t;

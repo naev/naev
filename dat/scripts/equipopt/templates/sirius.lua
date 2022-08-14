@@ -78,12 +78,14 @@ local function equip_sirius( p, opt_params )
    params = tmerge( params, opt_params )
 
    -- See cores
-   local cores
-   local srscor = sirius_cores[ sname ]
-   if srscor then
-      cores = srscor()
-   else
-      cores = ecores.get( p, { all="elite" } )
+   local cores = opt_params.cores
+   if not cores then
+      local srscor = sirius_cores[ sname ]
+      if srscor then
+         cores = srscor()
+      else
+         cores = ecores.get( p, { all="elite" } )
+      end
    end
 
    -- Set some meta-data

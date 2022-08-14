@@ -313,7 +313,7 @@ end
 
 --Check if the player has an outfit mounted
 function isMounted( itemName, outfits )
-   outfits = outfits or player.pilot():outfits()
+   outfits = outfits or player.pilot():outfitsList()
    for i, j in ipairs(outfits) do
       if j == outfit.get(itemName) then
          return true

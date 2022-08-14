@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Machiavellian Virtue">
+ <general>
+  <slot>intrinsic</slot>
+  <mass>0</mass>
+  <price>0</price>
+  <description>Virtue is the bulwark against the fickle whims of fortune. One can master their own will by mastering their own character.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <rarity>6</rarity>
+ </general>
+ <specific type="modification">
+  <armour_mod>7</armour_mod>
+  <shield_mod>7</shield_mod>
+  <shield_regen_mod>5</shield_regen_mod>
+  <energy_mod>7</energy_mod>
+  <energy_regen_mod>5</energy_regen_mod>
+ </specific>
+</outfit>

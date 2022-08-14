@@ -2528,6 +2528,10 @@ void pilot_sample_trails( Pilot* p, int none )
    if (!space_isSimulationEffects())
       return;
 
+   /* No trails to sample. */
+   if (p->trail == NULL)
+      return;
+
    /* Skip if far away (pretty heuristic-based but seems to work). */
    cam_getPos( &cx, &cy );
    d2 = pow2(cx-p->solid->pos.x) + pow2(cy-p->solid->pos.y);
@@ -2553,25 +2557,26 @@ void pilot_sample_trails( Pilot* p, int none )
 
    /* Compute the engine offset and decide where to draw the trail. */
    for (int i=0, g=0; g<array_size(p->ship->trail_emitters); g++) {
-      if (pilot_trail_generated( p, g )) {
-         double dx, dy, prod;
+      double dx, dy, prod;
 
-         p->trail[i]->ontop = 0;
-         if (!(p->ship->trail_emitters[g].always_under) && (dirsin > 0)) {
-            /* See if the trail's front (tail) is in front of the ship. */
-            prod = (trail_front( p->trail[i] ).x - p->solid->pos.x) * dircos +
-                   (trail_front( p->trail[i] ).y - p->solid->pos.y) * dirsin;
+      if (!pilot_trail_generated( p, g ))
+         continue;
 
-            p->trail[i]->ontop = (prod < 0);
-         }
+      p->trail[i]->ontop = 0;
+      if (!(p->ship->trail_emitters[g].always_under) && (dirsin > 0)) {
+         /* See if the trail's front (tail) is in front of the ship. */
+         prod = (trail_front( p->trail[i] ).x - p->solid->pos.x) * dircos +
+                  (trail_front( p->trail[i] ).y - p->solid->pos.y) * dirsin;
 
-         dx = p->ship->trail_emitters[g].x_engine * dircos -
-              p->ship->trail_emitters[g].y_engine * dirsin;
-         dy = p->ship->trail_emitters[g].x_engine * dirsin +
-              p->ship->trail_emitters[g].y_engine * dircos +
-              p->ship->trail_emitters[g].h_engine;
-         spfx_trail_sample( p->trail[i++], p->solid->pos.x + dx, p->solid->pos.y + dy*M_SQRT1_2, mode, mode==MODE_NONE );
+         p->trail[i]->ontop = (prod < 0);
       }
+
+      dx = p->ship->trail_emitters[g].x_engine * dircos -
+            p->ship->trail_emitters[g].y_engine * dirsin;
+      dy = p->ship->trail_emitters[g].x_engine * dirsin +
+            p->ship->trail_emitters[g].y_engine * dircos +
+            p->ship->trail_emitters[g].h_engine;
+      spfx_trail_sample( p->trail[i++], p->solid->pos.x + dx, p->solid->pos.y + dy*M_SQRT1_2, mode, mode==MODE_NONE );
    }
 }
 
@@ -2942,7 +2947,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
 
    /* Basic information. */
    pilot->ship = ship;
-   pilot->name = strdup( (name==NULL) ? ship->name : name );
+   pilot->name = strdup( (name==NULL) ? _(ship->name) : name );
 
    /* faction */
    pilot->faction = faction;
@@ -3283,10 +3288,7 @@ Pilot* pilot_setPlayer( Pilot* after )
 
    /* Set up stuff. */
    player.p = after;
-   for (int j=0; j<array_size(after->trail); j++)
-      spfx_trail_remove( after->trail[j] );
-   array_erase( &after->trail, array_begin(after->trail), array_end(after->trail) );
-   pilot_init_trails( after );
+   pilot_clearTrails( after );
 
    /* Initialize AI as necessary. */
    ai_pinit( after, "player" );

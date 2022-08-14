@@ -331,7 +331,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
 glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWops *rw,
       unsigned int flags, int w, int h, int sx, int sy, int freesur )
 {
-   glTexture *texture;
+   glTexture *texture = NULL;
    size_t filesize, cachesize;
    uint8_t *trans;
    char *cachefile;
@@ -339,7 +339,7 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
 
    if ((name != NULL) && !(flags & OPENGL_TEX_SKIPCACHE)) {
       texture = gl_texExists( name, sx, sy );
-      if (texture != NULL) {
+      if ((texture != NULL) && (texture->trans != NULL)) {
          if (freesur)
             SDL_FreeSurface( surface );
          return texture;
@@ -420,7 +420,10 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
       }
    }
 
-   texture = gl_loadImagePad( name, surface, flags, w, h, sx, sy, freesur );
+   if (texture == NULL)
+      texture = gl_loadImagePad( name, surface, flags, w, h, sx, sy, freesur );
+   else if (freesur)
+      SDL_FreeSurface( surface );
    texture->trans = trans;
    return texture;
 }
@@ -509,14 +512,20 @@ static glTexture* gl_texExists( const char* path, int sx, int sy )
       return NULL;
 
    /* check to see if it already exists */
-   if (texture_list != NULL) {
-      for (glTexList *cur=texture_list; cur!=NULL; cur=cur->next) {
-         if ((strcmp(path,cur->tex->name)==0) &&
-               (cur->sx==sx) && (cur->sy==sy)) {
-            cur->used++;
-            return cur->tex;
-         }
-      }
+   if (texture_list == NULL)
+      return NULL;
+
+   for (glTexList *cur=texture_list; cur!=NULL; cur=cur->next) {
+      /* Must match filename. */
+      if (strcmp(path,cur->tex->name)!=0)
+         continue;
+      /* Must match size. */
+      if ((cur->sx!=sx) || (cur->sy!=sy))
+         continue;
+
+      /* Use new texture. */
+      cur->used++;
+      return cur->tex;
    }
 
    return NULL;

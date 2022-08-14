@@ -348,6 +348,38 @@ int effect_add( Effect **efxlist, const EffectData *efx, double duration, double
 }
 
 /**
+ * @brief Removes an effect from an effect list.
+ *
+ *    @param efxlist List of effects.
+ *    @param efx Effect to remove.
+ *    @param all Whether or not to remove all instances.
+ *    @return Number of instances removed.
+ */
+int effect_rm( Effect **efxlist, const EffectData *efx, int all )
+{
+   int ret = 0;
+   for (int i=array_size(*efxlist)-1; i>=0; i++) {
+      const Effect *e = &(*efxlist)[i];
+      if (e->data != efx)
+         continue;
+      /* Run Lua if necessary. */
+      if (e->data->lua_remove != LUA_NOREF) {
+         lua_rawgeti(naevL, LUA_REGISTRYINDEX, e->data->lua_remove); /* f */
+         lua_pushpilot(naevL, e->parent);
+         if (nlua_pcall( e->data->lua_env, 1, 0 )) {
+            WARN(_("Effect '%s' failed to run '%s':\n%s"), e->data->name, "remove", lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+         }
+      }
+      array_erase( efxlist, &e[0], &e[1] );
+      if (!all)
+         return 1;
+      ret++;
+   }
+   return ret;
+}
+
+/**
  * @brief Clears an effect list, removing all active effects.
  *
  *    @param efxlist List of effects.

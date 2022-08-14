@@ -116,7 +116,7 @@ function swapship.swap( template, acquired )
    pp:outfitRm( "cores" )
 
    -- Copy equipment
-   for k,v in ipairs( template:outfits() ) do
+   for k,v in ipairs( template:outfitsList() ) do
       pp = player.pilot()
       pp:outfitAdd( v, 1, false )
    end

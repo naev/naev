@@ -193,17 +193,22 @@ if buildExec.disabled() == false
 
    # libdl can be used for debugging stack traces. On non-Windows platforms, GLAD relies on dlopen().
    glad_requires_libdl = not cc.has_header('windows.h')
-   libdl = cc.find_library('dl', required: glad_requires_libdl)
+   if glad_requires_libdl or debug
+     libdl = cc.find_library('dl', required: host_machine.system()!='windows')
+     if libdl.found()
+       naev_deps += libdl
+     else
+       naev_deps += subproject('dlfcn-win32').get_variable('dl_dep')
+     endif
+   endif
 
-   # BFD
    if get_option('debug')
       bfd = cc.find_library('bfd', required: false)
-   else
-      bfd = dependency('', required: false)
+      if not bfd.found() or 'bfd' in forced_fallbacks or get_option('wrap_mode') == 'forcefallback'
+         bfd = dependency('bfd', fallback: ['binutils', 'libbfd_dep'], required: true)
+      endif
+      naev_deps += bfd
    endif
-   summary('BFD', bfd.found(), section: 'Debug', bool_yn: true)
-
-   naev_deps += bfd
 
    # Appstream (Used for generating desktop files and verifying metadata)
    ascli_exe = find_program('appstreamcli', version: '>=0.12.9', required: false)
@@ -212,12 +217,12 @@ if buildExec.disabled() == false
    luacheck = find_program('luacheck', required: false)
 
    # Audio
-   openal    = dependency('openal', required: true)
+   openal = dependency('openal', required: true)
    vorbis = dependency('vorbis', required: true)
    vorbisfile = dependency('vorbisfile', required: true)
    ogg = dependency('ogg', required: true)  # Transitive dependency. At least some MSYS2 build envs may miss it.
 
-   naev_deps += [libdl, openal, ogg, vorbis, vorbisfile]
+   naev_deps += [openal, ogg, vorbis, vorbisfile]
 
    # Standard library feature tests
    config_data.set10('HAVE_ASPRINTF', cc.has_function('asprintf'))
@@ -226,9 +231,6 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept', prefix: '#define _GNU_SOURCE'))
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
-   config_data.set10('HAVE_BFD_H', bfd.found())
-   config_data.set10('HAVE_DLADDR', cc.has_function('dladdr') and libdl.found())
-   config_data.set10('HAVE_EXECINFO_H', cc.has_header('execinfo.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
    config_data.set10('HAVE_STRCASESTR', cc.has_function('strcasestr'))
@@ -317,7 +319,7 @@ if buildExec.disabled() == false
       naev_source,
       include_directories: include_dirs,
       dependencies: naev_deps,
-      export_dynamic: bfd.found(),
+      export_dynamic: get_option('debug'),
       install: true)
 
    gen_authors = find_program('utils/build/gen_authors.py')
@@ -425,11 +427,13 @@ if buildExec.disabled() == false
    subdir('test')
 
    if host_machine.system() == 'windows'
-     meson.add_install_script('extras/windows/packageWindows.sh', '-n', get_option('nightly').to_string())
+      meson.add_install_script('extras/windows/packageWindows.sh', '-n', get_option('nightly').to_string())
    endif
    if host_machine.system() == 'darwin'
-     meson.add_install_script('extras/macos/bundle.py')
-     meson.add_install_script('extras/macos/createDMG.sh', '-s', meson.source_root() , '-b', meson.current_build_dir())
+      meson.add_install_script('extras/macos/bundle.py', debug ? '-d' : [])
+      if get_option('dmg')
+	 meson.add_install_script('extras/macos/createDMG.sh', '-s', meson.source_root() , '-b', meson.current_build_dir())
+      endif
    endif
 endif
 

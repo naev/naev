@@ -8,6 +8,10 @@ local function turnon( p, po )
    if mem.timer > 0 then
       return false
    end
+   local _a, s = p:health()
+   if s > 99 then
+      return false -- Don't activate at full health
+   end
    po:state("on")
    po:progress(1)
    mem.active = true
@@ -22,10 +26,13 @@ local function turnon( p, po )
 
    mem.timer = active
 
+   -- apply nice shader effect
+   p:effectAdd("Shield Boost")
+
    return true
 end
 
-local function turnoff( _p, po )
+local function turnoff( p, po )
    if not mem.active then
       return false
    end
@@ -34,6 +41,7 @@ local function turnoff( _p, po )
    po:clear() -- clear stat modifications
    mem.timer = cooldown
    mem.active = false
+   p:effectAdd("Shield Boost", 1)
    return true
 end
 

@@ -21,7 +21,7 @@ local function slotTypeColour( stype )
    else
       c = "0"
    end
-   return "#"..c..stype
+   return "#"..c.._(stype)
 end
 
 local function slotSizeColour( size )
@@ -35,13 +35,13 @@ local function slotSizeColour( size )
    else
       c = "0"
    end
-   return "#"..c..size
+   return "#"..c.._(size)
 end
 
 local function outfit_loot( o, price )
    local name, size, prop = o:slot()
-   local sprop = (prop and "\n#o"..prop.."#0") or ""
-   local stype = o:type()
+   local sprop = (prop and "\n#o".._(prop).."#0") or ""
+   local stype = _(o:type())
    local sprice = ""
    if price and price > 0 then
       local bonus = price / o:price()
@@ -61,12 +61,16 @@ local function outfit_loot( o, price )
            slotsize=slotSizeColour(size),
            sprop=sprop,
            stype=stype})
+   local col = nil
+   if o:unique() then
+      col = special_col
+   end
    return {
       image = lg.newImage( o:icon() ),
       text = o:name(),
       q = nil,
       type = "outfit",
-      bg = nil, -- special_col, -- TODO new special condition
+      bg = col,
       alt = desc,
       data = o,
       price = price,
@@ -77,7 +81,7 @@ local cargo_image_generic = nil
 local function cargo_loot( c, q, m )
    local icon = c:icon()
    local ispecial = m or c:price()==0
-   local desc = fmt.f(_("{name}\n{desc}"), {name=c:name(),desc=c:description()})
+   local desc = fmt.f(_("{name}\n{desc}"), {name=c:name(),desc=_(c:description())})
    local illegalto = c:illegality()
    if #illegalto > 0 then
       desc = desc.._("\n#rIllegalized by the following factions:\n")
@@ -144,11 +148,11 @@ local function compute_lootables ( plt )
       end
 
       local ocand = {}
-      for _k,o in ipairs(plt:outfits(nil,true)) do -- Skips locked outfits
+      for _k,o in ipairs(plt:outfitsList(nil,true)) do -- Skips locked outfits
          local _name, _size, _prop, req = o:slot()
          local ot = o:tags()
          -- Don't allow looting required outfits
-         if not req and not ot.noplayer and (not oloot or o~=oloot) then
+         if not req and not ot.noplayer and o~=oloot then
             table.insert( ocand, o )
          end
       end
@@ -310,7 +314,7 @@ local function can_cannibalize ()
    if player.shipvarPeek("cannibal") then
       return true
    end
-   for _k,o in ipairs(pp:outfits()) do
+   for _k,o in ipairs(pp:outfitsList()) do
       if o:tags().cannibal then
          return true
       end

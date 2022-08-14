@@ -258,7 +258,7 @@ function mg.draw ()
    s = 40
    b = 10
    setcol( colours.text )
-   lg.printf( "Codes", font, bx+x, by+y, s+40+b, "center" )
+   lg.printf( p_("stringguess", "Codes"), font, bx+x, by+y, s+40+b, "center" )
    y = y+25
    x = x+20
    drawbox( bx+x, by+y, s+b, s*#keyset+b )
@@ -324,7 +324,7 @@ Guess the sequence of codes
    b = 10
    boxw = s*#sol+b+40
    setcol( colours.text )
-   lg.printf( "Attempts", font, bx+x, by+y, boxw, "center" )
+   lg.printf( p_("stringguess", "Attempts"), font, bx+x, by+y, boxw, "center" )
    y = y+25
    x = x
    drawbox( bx+x, by+y, boxw, s*(max_tries-1)+b )

@@ -74,6 +74,8 @@ dat/effects/paralyzing_plasma.xml
 dat/effects/plasma_burn.xml
 dat/effects/plasma_burn_ii.xml
 dat/effects/ride_of_the_valkyries.xml
+dat/effects/shieldaura.xml
+dat/effects/shieldboost.xml
 dat/effects/wormhole_enter.xml
 dat/effects/wormhole_exit.xml
 dat/factions/achack_sirius.xml
@@ -258,6 +260,10 @@ dat/outfits/fighter_bays/zalek_heavy_drone_mini_bay.xml
 dat/outfits/fighter_bays/zalek_light_drone_bay.xml
 dat/outfits/fighter_bays/zalek_light_drone_mini_bay.xml
 dat/outfits/intrinsic/gauntlet_deluxe.xml
+dat/outfits/intrinsic/machiavellian_fortune.xml
+dat/outfits/intrinsic/machiavellian_necessity.xml
+dat/outfits/intrinsic/machiavellian_virtue.xml
+dat/outfits/intrinsic/port_and_polish.xml
 dat/outfits/launchers/convulsion_launcher.xml
 dat/outfits/launchers/electron_burst_cannon.xml
 dat/outfits/launchers/emp_grenade_launcher.xml
@@ -348,6 +354,7 @@ dat/outfits/structure/small_fuel_pod.xml
 dat/outfits/structure/small_shield_booster.xml
 dat/outfits/unique/bioship_pheromone_emitter.xml
 dat/outfits/unique/daphnes_leap.xml
+dat/outfits/unique/executor_shield_aura.xml
 dat/outfits/unique/fake_transponder.xml
 dat/outfits/unique/fuel_recycler.xml
 dat/outfits/unique/hades_torch.xml
@@ -2390,12 +2397,14 @@ dat/ai/baddiepos.lua
 dat/ai/civilian.lua
 dat/ai/collective.lua
 dat/ai/collective_norun.lua
+dat/ai/core/attack.lua
 dat/ai/core/attack/bomber.lua
 dat/ai/core/attack/capital.lua
 dat/ai/core/attack/corvette.lua
 dat/ai/core/attack/drone.lua
 dat/ai/core/attack/fighter.lua
 dat/ai/core/attack/generic.lua
+dat/ai/core/attack/setup.lua
 dat/ai/core/attack/util.lua
 dat/ai/core/basic.lua
 dat/ai/core/control/escort.lua
@@ -2435,6 +2444,10 @@ dat/ai/marauder.lua
 dat/ai/mercenary.lua
 dat/ai/miner.lua
 dat/ai/noidle.lua
+dat/ai/pers.lua
+dat/ai/pers_patrol.lua
+dat/ai/pers_pirate.lua
+dat/ai/pers_runaway.lua
 dat/ai/pirate.lua
 dat/ai/pirate_norun.lua
 dat/ai/player.lua
@@ -2532,6 +2545,11 @@ dat/events/news/soromid.lua
 dat/events/news/thurion.lua
 dat/events/news/zalek.lua
 dat/events/news/zalek_campaign.lua
+dat/events/pers.lua
+dat/events/pers/empire.lua
+dat/events/pers/indep.lua
+dat/events/pers/minerva.lua
+dat/events/pers/pirate.lua
 dat/events/pirate/fake_transponder.lua
 dat/events/pirate/shipcheck.lua
 dat/events/proteron/blockade.lua
@@ -2630,8 +2648,10 @@ dat/missions/dvaered/frontier_war/fw05_triathlon.lua
 dat/missions/dvaered/gauntlet/gauntlet.lua
 dat/missions/dvaered/gauntlet/gui.lua
 dat/missions/dvaered/gauntlet/tables.lua
+dat/missions/dvaered/recruitment/dv_bikers.lua
 dat/missions/dvaered/recruitment/dv_census.lua
 dat/missions/dvaered/recruitment/dv_census_00.lua
+dat/missions/dvaered/recruitment/dv_goddard.lua
 dat/missions/dvaered/recruitment/dv_intelligence.lua
 dat/missions/dvaered/recruitment/dv_lostagent.lua
 dat/missions/dvaered/recruitment/dv_propaganda.lua
@@ -2716,6 +2736,8 @@ dat/missions/neutral/patrol.lua
 dat/missions/neutral/pirbounty_alive.lua
 dat/missions/neutral/pirbounty_dead.lua
 dat/missions/neutral/poi.lua
+dat/missions/neutral/poi/caretaker.lua
+dat/missions/neutral/poi/data_intro.lua
 dat/missions/neutral/poi/nebula_crystals.lua
 dat/missions/neutral/poi/proteron_agent.lua
 dat/missions/neutral/poi/soromid_biologist.lua
@@ -2819,6 +2841,7 @@ dat/outfits/bioship/skills/tunnelling_organ.lua
 dat/outfits/lua_outfit_example.lua
 dat/outfits/structure/nebular_shielding_prototype.lua
 dat/outfits/unique/bioship_pheromone_emitter.lua
+dat/outfits/unique/executor_shield_aura.lua
 dat/outfits/unique/fake_transponder.lua
 dat/outfits/unique/fuel_recycler.lua
 dat/outfits/unique/poi_data.lua
@@ -3027,6 +3050,7 @@ dat/spob/lua/wormhole_ngc15670.lua
 dat/spob/lua/wormhole_ngc4087.lua
 dat/spob/lua/zalek_mil_restricted.lua
 dat/spob/lua/zalek_mil_ruadan.lua
+src/SDL_keynames.h
 src/ai.c
 src/ai.h
 src/array.c

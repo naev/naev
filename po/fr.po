@@ -73319,7 +73319,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/trader/trader_escort.lua:104
-msgid "Convey Escort"
+msgid "Convoy Escort"
 msgstr ""
 
 #: dat/missions/trader/trader_escort.lua:105
@@ -99783,7 +99783,7 @@ msgstr ""
 
 #: src/unidiff.c:996
 #, c-format
-msgid "   [%s] spob sipace revert: '%s'"
+msgid "   [%s] spob space revert: '%s'"
 msgstr ""
 
 #: src/unidiff.c:1000

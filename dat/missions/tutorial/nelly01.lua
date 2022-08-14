@@ -517,7 +517,7 @@ end
 function equip ()
    local pp = player.pilot()
    local hasoutfit = false
-   for k,o in ipairs(pp:outfits()) do
+   for k,o in ipairs(pp:outfitsList()) do
       if o == outfit_tobuy then
          hasoutfit = true
          break

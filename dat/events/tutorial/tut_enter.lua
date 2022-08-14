@@ -44,7 +44,7 @@ end
 function tut_illegal ()
    local pp = player.pilot()
    local badstuff = {}
-   for k,o in ipairs(pp:outfits()) do
+   for k,o in ipairs(pp:outfitsList()) do
       if #o:illegality() > 0 then
          table.insert( badstuff, o )
       end

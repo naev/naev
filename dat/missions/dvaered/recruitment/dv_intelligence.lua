@@ -89,7 +89,7 @@ end
 function accept()
    misn.accept()
    mem.misn_state = 0
-   cens.osd( _("Dvaered Intelligence"), mem.sys, mem.nbships, 0, "Dvaered", "Pirate" )
+   cens.osd( _("Dvaered Intelligence"), mem.sys, mem.nbships, 0, _("Dvaered"), _("Pirate") )
    hook.enter("enter")
    hook.land("land")
 end
@@ -132,6 +132,6 @@ function testInRange()
       player.msg( _("You have acquired data on enough Pirate ships") )
       return
    end
-   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, #detected, "Dvaered", "Pirate" )
+   cens.osd( _("Dvaered Census"), mem.sys, mem.nbships, #detected, _("Dvaered"), _("Pirate") )
    hook.timer(1, "testInRange") -- Recursivity 1 s
 end

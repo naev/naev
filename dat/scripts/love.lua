@@ -172,6 +172,9 @@ local function _resize( w, h )
       return love.resize( w, h )
    end
 end
+function __resize( _w, _h )
+   love.origin()
+end
 
 
 --[[

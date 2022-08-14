@@ -133,7 +133,7 @@ function accept ()
    local has_dis = false
    local has_dis_owned = false
    local owned = {}
-   for k,o in ipairs(pp:outfits()) do
+   for k,o in ipairs(pp:outfitsList()) do
       has_dis = has_dis or has_disable(o)
    end
    for k,o in ipairs(player.outfits()) do
@@ -210,7 +210,7 @@ end
 
 function equip ()
    local pp = player.pilot()
-   for k,o in ipairs(pp:outfits()) do
+   for k,o in ipairs(pp:outfitsList()) do
       if has_disable(o) then
          info_msg(fmt.f(_([["You have equipped a #o{outfitname}#0 with disable damage. Looks like you'll be able to safely disable my rampant ship!"]]),{outfitname=o}))
          mem.misn_state = 0

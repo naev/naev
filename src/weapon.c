@@ -946,7 +946,7 @@ static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
    int b, psx, psy, n;
-   unsigned int coll, usePoly=1;
+   unsigned int coll, usePoly, usePolyW = 1;
    const glTexture *gfx;
    const CollPoly *plg, *polygon;
    vec2 crash[2];
@@ -969,11 +969,11 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       /* See if the outfit has a collision polygon. */
       if (outfit_isBolt(w->outfit)) {
          if (array_size(w->outfit->u.blt.polygon) == 0)
-            usePoly = 0;
+            usePolyW = 0;
       }
       else if (outfit_isLauncher(w->outfit)) {
          if (array_size(w->outfit->u.lau.polygon) == 0)
-            usePoly = 0;
+            usePolyW = 0;
       }
    }
    else {
@@ -1006,6 +1006,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       psy = pilot_stack[i]->tsy;
 
       /* See if the ship has a collision polygon. */
+      usePoly = usePolyW;
       if (array_size(p->ship->polygon) == 0)
          usePoly = 0;
 

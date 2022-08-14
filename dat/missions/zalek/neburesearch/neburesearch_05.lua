@@ -199,7 +199,7 @@ function arrive_at_testing_sys()
 end
 
 function hasShieldingPrototypeEquipped()
-   local o = player.pilot():outfits("structure")
+   local o = player.pilot():outfitsList("structure")
    for i=1,#o do
       if o[i]:nameRaw()=="Nebular Shielding Prototype" then
         return true
