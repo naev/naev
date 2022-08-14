@@ -72,7 +72,7 @@ local pilot_messages = {
 }
 
 local function hasIntrinsic( p, o )
-   for k,v in ipairs( p:outfits("intrinsic") ) do
+   for k,v in ipairs( p:outfitsList("intrinsic") ) do
       if v==o then
          return true
       end

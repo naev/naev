@@ -89,9 +89,9 @@ static int pilotL_activeWeapset( lua_State *L );
 static int pilotL_weapset( lua_State *L );
 static int pilotL_weapsetHeat( lua_State *L );
 static int pilotL_actives( lua_State *L );
+static int pilotL_outfitsList( lua_State *L );
 static int pilotL_outfits( lua_State *L );
-static int pilotL_outfitsID( lua_State *L );
-static int pilotL_outfitByID( lua_State *L );
+static int pilotL_outfitGet( lua_State *L );
 static int pilotL_outfitToggle( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
@@ -241,9 +241,9 @@ static const luaL_Reg pilotL_methods[] = {
    { "weapset", pilotL_weapset },
    { "weapsetHeat", pilotL_weapsetHeat },
    { "actives", pilotL_actives },
+   { "outfitsList", pilotL_outfitsList },
    { "outfits", pilotL_outfits },
-   { "outfitsID", pilotL_outfitsID },
-   { "outfitByID", pilotL_outfitByID },
+   { "outfitGet", pilotL_outfitGet },
    { "outfitToggle", pilotL_outfitToggle },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
@@ -1962,9 +1962,9 @@ static int outfit_compareActive( const void *slot1, const void *slot2 )
  *    @luatparam[opt=nil] string What slot type to get outfits of. Can be either nil, "weapon", "utility", "structure", or "intrinsic".
  *    @luatparam[opt=false] boolean skip_locked Whether or not locked outfits should be ignored.
  *    @luatreturn table The outfits of the pilot in an ordered list.
- * @luafunc outfits
+ * @luafunc outfitsList
  */
-static int pilotL_outfits( lua_State *L )
+static int pilotL_outfitsList( lua_State *L )
 {
    int normal = 1;
    int intrinsics = 0;
@@ -2027,9 +2027,9 @@ static int pilotL_outfits( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to get outfits of.
  *    @luatreturn table Ordered table of outfits. If an outfit is not equipped at slot it sets the value to false.
- * @luafunc outfitsID
+ * @luafunc outfits
  */
-static int pilotL_outfitsID( lua_State *L )
+static int pilotL_outfits( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    lua_newtable( L );
@@ -2049,9 +2049,9 @@ static int pilotL_outfitsID( lua_State *L )
  *    @luatparam Pilot p Pilot to get outf of.
  *    @luatparam number id ID of the outfit to get.
  *    @luatreturn Outfit|nil Outfit equipped in the slot or nil otherwise.
- * @luafunc outfitByID
+ * @luafunc outfitGet
  */
-static int pilotL_outfitByID( lua_State *L )
+static int pilotL_outfitGet( lua_State *L )
 {
    /* Parse parameters */
    Pilot *p  = luaL_validpilot(L,1);

@@ -179,7 +179,7 @@ local function islucky ()
    if pp:ship():tags().lucky then
       return true
    end
-   for k,o in ipairs(pp:outfits("all")) do
+   for k,o in ipairs(pp:outfitsList("all")) do
       if o:tags().lucky then
          return true
       end

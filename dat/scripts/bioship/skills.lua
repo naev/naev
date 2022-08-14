@@ -69,7 +69,7 @@ skills.set.move = {
       outfit = "Adrenal Gland I",
       desc = _("The ship is able to generate an overflow of adrenaline from energy, allowing for accelerated motion for a short time."),
       test = function( p )
-         for k,o in ipairs(p:outfits()) do
+         for k,o in ipairs(p:outfitsList()) do
             if o:typeBroad()=="Afterburner" then
                --if luatk.yesno( _("Remove Afterburner?"), _("Your ship already has an afterburner. Remove to learn the new skill?")A)
                luatk.msg(_("Afterburner"),_("Your ship already has an afterburner equipped! Please remove to be able to learn this skill."))

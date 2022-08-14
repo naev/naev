@@ -197,7 +197,7 @@ local function print_debug( p, st, ss, outfit_list, params, constraints, energyg
       end
    end
    print(_("Equipment:"))
-   for j,o in ipairs(p:outfits()) do
+   for j,o in ipairs(p:outfitsList()) do
       print( "   "..o:name() )
    end
    local stn = p:stats()

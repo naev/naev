@@ -125,7 +125,7 @@ function _poi_enter ()
    -- If the player has no scanning outfit we have to help them out
    local pp = player.pilot()
    local haspoi = false
-   for k,v in ipairs(pp:outfits()) do
+   for k,v in ipairs(pp:outfitsList()) do
       if v:tags().poi_scan then
          haspoi = true
          break

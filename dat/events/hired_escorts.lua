@@ -98,7 +98,7 @@ local function createPilotNPCs ()
       local _n, deposit = p:ship():price()
       newpilot.outfits = {}
 
-      for j, o in ipairs(p:outfits()) do
+      for j, o in ipairs(p:outfitsList()) do
          deposit = deposit + o:price()
          newpilot.outfits[#newpilot.outfits + 1] = o:nameRaw()
       end
