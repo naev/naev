@@ -2445,6 +2445,7 @@ dat/ai/noidle.lua
 dat/ai/pers.lua
 dat/ai/pers_patrol.lua
 dat/ai/pers_pirate.lua
+dat/ai/pers_runaway.lua
 dat/ai/pirate.lua
 dat/ai/pirate_norun.lua
 dat/ai/player.lua
