@@ -31,6 +31,7 @@
 #include "nlua_commodity.h"
 #include "nlua_faction.h"
 #include "nlua_jump.h"
+#include "nlua_pilotoutfit.h"
 #include "nlua_outfit.h"
 #include "nlua_spob.h"
 #include "nlua_ship.h"
@@ -89,7 +90,9 @@ static int pilotL_weapset( lua_State *L );
 static int pilotL_weapsetHeat( lua_State *L );
 static int pilotL_actives( lua_State *L );
 static int pilotL_outfits( lua_State *L );
+static int pilotL_outfitsID( lua_State *L );
 static int pilotL_outfitByID( lua_State *L );
+static int pilotL_outfitToggle( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
@@ -239,7 +242,9 @@ static const luaL_Reg pilotL_methods[] = {
    { "weapsetHeat", pilotL_weapsetHeat },
    { "actives", pilotL_actives },
    { "outfits", pilotL_outfits },
+   { "outfitsID", pilotL_outfitsID },
    { "outfitByID", pilotL_outfitByID },
+   { "outfitToggle", pilotL_outfitToggle },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -2018,6 +2023,27 @@ static int pilotL_outfits( lua_State *L )
 }
 
 /**
+ * @brief Gets a mapping of outfit slot IDs and outfits of a pilot.
+ *
+ *    @luatparam Pilot p Pilot to get outfits of.
+ *    @luatreturn table Ordered table of outfits. If an outfit is not equipped at slot it sets the value to false.
+ * @luafunc outfitsID
+ */
+static int pilotL_outfitsID( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_newtable( L );
+   for (int i=0; i<array_size(p->outfits); i++) {
+      if (p->outfits[i]->outfit == NULL)
+         lua_pushboolean( L, 0 );
+      else
+         lua_pushoutfit( L, p->outfits[i]->outfit );
+      lua_rawseti( L, -2, i+1 );
+   }
+   return 1;
+}
+
+/**
  * @brief Gets a pilot's outfit by ID.
  *
  *    @luatparam Pilot p Pilot to get outf of.
@@ -2037,6 +2063,52 @@ static int pilotL_outfitByID( lua_State *L )
       lua_pushoutfit( L, p->outfits[id]->outfit );
    else
       lua_pushnil( L );
+   return 1;
+}
+
+/**
+ * @brief Toggles an outfit.
+ *
+ *    @luatparam Pilot p Pilot to toggle outfit of.
+ *    @luatparam integer id ID of the pilot outfit.
+ *    @luatparam[opt=false] boolean activate Whether or not to activate or deactivate the outfit.
+ * @luafunc outfitToggle
+ */
+static int pilotL_outfitToggle( lua_State *L )
+{
+   int isstealth, n = 0;
+   Pilot *p = luaL_validpilot(L,1);
+   int id   = luaL_checkinteger(L,2)-1;
+   int activate = lua_toboolean(L,3);
+   if (id < 0 || id >= array_size(p->outfits))
+      NLUA_ERROR(L, _("Pilot '%s' outfit ID '%d' is out of range!"), p->name, id);
+   PilotOutfitSlot *po = p->outfits[id];
+   const Outfit *o = po->outfit;
+
+   /* Ignore NULL outfits. */
+   if (o == NULL)
+      return 0;
+
+   /* Can't do a thing. */
+   if ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
+      return 0;
+
+   if ((activate && (po->state != PILOT_OUTFIT_OFF)) ||
+         (!activate && (po->state != PILOT_OUTFIT_ON)))
+      return 0;
+
+   if (activate)
+      n = pilot_outfitOn( p, po );
+   else
+      n = pilot_outfitOff( p, po );
+
+   isstealth = pilot_isFlag( p, PILOT_STEALTH );
+   if (n>0 && isstealth)
+      pilot_destealth( p ); /* pilot_destealth should run calcStats already. */
+   else if (n>0 || pilotoutfit_modified)
+      pilot_calcStats( p );
+
+   lua_pushboolean(L,n);
    return 1;
 }
 
