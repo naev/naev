@@ -1,7 +1,12 @@
 local atk = {}
 
 local usable_outfits = {
-   ["Emergency Shield Booster"] = "shield_booster",
+   ["Emergency Shield Booster"]  = "shield_booster",
+   ["Berserk Chip"]              = "berserk_chip",
+   ["Combat Hologram Projector"] = "hologram_projector",
+   ["Neural Accelerator Interface"] = "neural_interface",
+   ["Blink Drive"]               = "blink_drive",
+   ["Hyperbolic Blink Engine"]   = "blink_drive",
 }
 
 function atk.setup( p )
