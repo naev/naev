@@ -32,6 +32,7 @@ return function ()
             m.taunt = _("I am not afraid… I was born to do this.")
             m.bribe_no = _("You must be reprimanded for your sins!")
             m.formation = "cross"
+            m.norun = true
             local pos = p:pos()
             local vel = p:vel()
             for i=1,3 do
@@ -41,6 +42,28 @@ return function ()
                e:setVel( vel )
             end
          end
-      }
+      }, {
+         spawn = function ()
+            local p = pilot.add("Starbridge", "Mercenary", nil, _("Bloodhound"), {naked=true, ai="pers_patrol"})
+            p:intrinsicSet( "ew_detect", 50 )
+            equipopt.sirius( p )
+            local m = p:memory()
+            m.comm_greet = _([["Space seems much less vast when you can track like a bloodhound."]])
+            m.taunt = _("And now for your death!")
+            return p
+         end
+      }, {
+         spawn = function ()
+            local p = pilot.add("Sirius Dogma", "Mercenary", nil, _("White Shield"), {naked=true, ai="pers_patrol"})
+            equipopt.sirius( p )
+            local m = p:memory()
+            m.comm_greet = _([["The White Shield brings justice for al!"]])
+            m.taunt = _("Prepare to face justice!")
+            m.whiteknight = true
+            m.norun = true
+            m.atk_kill = false
+            return p
+         end
+      },
    }
 end
