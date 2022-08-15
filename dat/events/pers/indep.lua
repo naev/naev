@@ -59,6 +59,7 @@ return function ()
             local m = p:memory()
             m.comm_greet = _([["The White Shield brings justice for al!"]])
             m.taunt = _("Prepare to face justice!")
+            m.bribe_no = _("There is nothing but justice!")
             m.whiteknight = true
             m.norun = true
             m.atk_kill = false
