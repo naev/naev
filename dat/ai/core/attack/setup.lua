@@ -7,7 +7,17 @@ local usable_outfits = {
    ["Neural Accelerator Interface"] = "neural_interface",
    ["Blink Drive"]               = "blink_drive",
    ["Hyperbolic Blink Engine"]   = "blink_drive",
+   ["Unicorp Jammer"]            = "jammer",
+   ["Milspec Jammer"]            = "jammer",
 }
+
+if __debugging then
+   for k,v in pairs(usable_outfits) do
+      if not outfit.get(k) then
+         warn(_("Unknown outfit"))
+      end
+   end
+end
 
 function atk.setup( p )
    local added = false
