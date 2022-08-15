@@ -72,6 +72,11 @@ function atk.think( target, si )
             p:outfitToggle( mem._o.neural_interface, true )
          end
       end
+
+      -- Combat holograms
+      if mem._o.hologram_projector then
+         p:outfitToggle( mem._o.hologram_projector )
+      end
    end
 
    local lib = (mem.atk or atk_generic)
