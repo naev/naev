@@ -653,14 +653,14 @@ static int linoptL_solve( lua_State *L )
    /* Optimization. */
    if (!ismip || !parm_iocp.presolve) {
       ret = glp_simplex( lp->prob, &parm_smcp );
-      if (ret != 0) {
+      if ((ret != 0) && (ret != GLP_ETMLIM)) {
          lua_pushnil(L);
          lua_pushstring(L, linopt_error(ret));
          return 2;
       }
       /* Check for optimality of continuous problem. */
       ret = glp_get_status(lp->prob);
-      if (ret != GLP_OPT) {
+      if ((ret != GLP_OPT) && (ret != GLP_FEAS)) {
          lua_pushnil(L);
          lua_pushstring(L, linopt_status(ret));
          return 2;
@@ -668,14 +668,14 @@ static int linoptL_solve( lua_State *L )
    }
    if (ismip) {
       ret = glp_intopt( lp->prob, &parm_iocp );
-      if (ret != 0) {
+      if ((ret != 0) && (ret != GLP_ETMLIM)) {
          lua_pushnil(L);
          lua_pushstring(L, linopt_error(ret));
          return 2;
       }
       /* Check for optimality of discrete problem. */
       ret = glp_get_status(lp->prob);
-      if (ret != GLP_OPT) {
+      if ((ret != GLP_OPT) && (ret != GLP_FEAS)) {
          lua_pushnil(L);
          lua_pushstring(L, linopt_status(ret));
          return 2;
