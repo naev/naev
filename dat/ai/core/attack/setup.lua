@@ -6,7 +6,7 @@ local usable_outfits = {
    ["Combat Hologram Projector"] = "hologram_projector",
    ["Neural Accelerator Interface"] = "neural_interface",
    ["Blink Drive"]               = "blink_drive",
-   ["Hyperbolic Blink Engine"]   = "blink_drive",
+   ["Hyperbolic Blink Engine"]   = "blink_engine",
    ["Unicorp Jammer"]            = "jammer",
    ["Milspec Jammer"]            = "jammer",
 }
