@@ -62,6 +62,12 @@ local function equip_proteron( p, opt_params )
    end
    params = tmerge( params, opt_params )
 
+   -- Outfits
+   local outfits = proteron_outfits
+   if opt_params.outfits_add then
+      outfits = eoutfits.merge{ outfits, opt_params.outfits_add }
+   end
+
    -- See cores
    local cores = opt_params.cores
    if not cores then
@@ -73,7 +79,7 @@ local function equip_proteron( p, opt_params )
    mem.equip = { type="proteron", level="elite" }
 
    -- Try to equip
-   return optimize.optimize( p, cores, proteron_outfits, params )
+   return optimize.optimize( p, cores, outfits, params )
 end
 
 
