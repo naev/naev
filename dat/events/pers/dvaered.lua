@@ -12,7 +12,6 @@ return function ()
 
    -- Medium ships here
    if presence > 100 then
-      local packleader
       for k,v in ipairs{
          {
             spawn = function ()
@@ -34,14 +33,15 @@ return function ()
                   local e = pilot.add("Dvaered Vendetta", "Dvaered", pos )
                   local em = p:memory()
                   em.comm_no = _("*BARK*")
+                  em.__packleader = p
                   e:setVel(vel)
                   e:setLeader(p)
                   table.insert( pack, p )
                end
-               packleader = p
                return pack
             end,
-            ondeathany = function ()
+            ondeathany = function( _attacker, pt )
+               local packleader = pt.p:memory().__packleader
                if packleader and packleader:exists() then
                   packleader:intrinsicSet( "armour_mod", -50 )
                   packleader:intrinsicSet( "absorb", -10 )
