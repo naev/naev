@@ -24,7 +24,20 @@ return function ()
                m.bribe_no = _([["You must be eliminated. For science!"]])
                return p
             end,
-         },
+         }, {
+            spawn = function ()
+               -- PI = principal investigator
+               local p = pilot.add("Za'lek Diablo", "Za'lek", nil, _("PI Newton"), {naked=true, ai="pers_patrol"})
+               equipopt.zalek( p, {
+                  outfits_add={"Neural Accelerator Interface"},
+                  prefer={["Neural Accelerator Interface"] = 100}} )
+               local m = p:memory()
+               m.comm_greet = _([["What do you want? Can't you see I'm busy writing a grant?"]])
+               m.taunt = _("Do not get in the way of science!")
+               m.bribe_prompt = _([["I could use {credits} more in funding."]])
+               return p
+            end,
+         }
       } do
          table.insert( pers, v )
       end
@@ -43,7 +56,6 @@ return function ()
                m.comm_greet = _([["Hello! I mean *BEEP* COMMUNICATION AUTHORIZED. *BEEP*"]])
                m.taunt = _("Die, scum! I mean *BEEP* EXTERMINATING *BEEP*")
                m.bribe_prompt = _([["I'll pretend to malfunction for {credits}, deal?"]])
-               m.bribe_prompt_nearby = m.bribe_prompt
                local pos = p:pos()
                local vel = p:vel()
                for i=1,3 do
@@ -53,7 +65,23 @@ return function ()
                end
                return p
             end,
-         },
+         }, {
+            spawn = function ()
+               -- Ananka is a female name that apparently stands for countless or infinite, like a postdoc
+               local p = pilot.add("Za'lek Sting", "Za'lek", nil, _("Postdoc Ananka"), {naked=true, ai="pers"})
+               equipopt.zalek( p, {
+                  outfits_add={"Combat Hologram Projector"},
+                  prefer={["Combat Hologram Projector"] = 100}} )
+               local m = p:memory()
+               m.ad = { _("Oh shit, did I miss another deadline?"),
+                        _("I'll never get into tenure track with my current Z-index…"),
+                        _("Seventh time in a row my papers was rejected…"), }
+               m.comm_greet = _([["Even when I close my ends, the endless deadlines haunt my dreams."]])
+               m.taunt = _("Just put me out of this misery.")
+               m.bribe_prompt = _([["If you pay off {credits} of my student loans, I'll go back to my deadlines."]])
+               return p
+            end,
+         }
       } do
          table.insert( pers, v )
       end
