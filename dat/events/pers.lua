@@ -22,14 +22,15 @@ function create ()
    hook.enter("enter")
 end
 
-local htimer, pers_list, wtotal, spawned
+local htimer, pers_list, wtotal, spawned, spawn_chance
 function enter ()
    if htimer then
       hook.rm( htimer )
    end
 
    -- Must not be exclusively claimed
-   if not naev.claimTest( system.cur(), true ) then
+   local scur = system.cur()
+   if not naev.claimTest( scur, true ) then
       return
    end
 
@@ -57,6 +58,13 @@ function enter ()
    table.sort( pers_list, function( a, b )
       return a.w > b.w
    end )
+
+   -- Value gives a 50% chance of meeting one every 10 minutes of game time
+   -- (more often with time compression)
+   spawn_chance =  0.034064
+   if scur == system.get("Zied") then
+      spawn_chance = 0.3
+   end
 
    -- Time start timer
    spawned = {} -- Initialize spawned list
@@ -115,9 +123,8 @@ local function spawn_pers ()
 end
 
 function timer ()
-   -- Value gives a 50% chance of meeting one every 10 minutes of game time
-   -- (more often with time compression)
-   if rnd.rnd() < 0.034064 then
+   -- Spawn more in Zied
+   if rnd.rnd() < spawn_chance then
       spawn_pers()
    end
    htimer = hook.timer( 30, "timer" )
