@@ -9,10 +9,32 @@ return function ()
       return nil -- Need at least some presence
    end
 
+   if presence > 100 then
+      for k,v in ipairs{
+         {
+            spawn = function ()
+               -- ZS stands for Za'lek ship
+               local p = pilot.add("Za'lek Diablo", "Za'lek", nil, _("ZS Curie"), {naked=true, ai="pers_patrol"})
+               equipopt.zalek( p, {
+                  outfits_add={"Emergency Shield Booster"},
+                  prefer={["Emergency Shield Booster"] = 100}} )
+               local m = p:memory()
+               m.comm_greet = _([["Nothing in life is to be feared; it is only to be understood."]])
+               m.taunt = _("Your death shall be swift and easy!")
+               m.bribe_no = _([["You must be eliminated. For science!"]])
+               return p
+            end,
+         },
+      } do
+         table.insert( pers, v )
+      end
+   end
+
    if presence > 0 then
       for k,v in ipairs{
          {
             spawn = function ()
+               -- ZHD stands for Za'lek Heavy Drone
                local p = pilot.add("Za'lek Heavy Drone", "Za'lek", nil, _("ZHD-08-5820"), {naked=true, ai="pers_patrol"})
                p:intrinsicSet( "shield_mod", 100 )
                equipopt.zalek( p )
