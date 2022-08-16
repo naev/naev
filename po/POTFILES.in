@@ -2546,6 +2546,7 @@ dat/events/news/thurion.lua
 dat/events/news/zalek.lua
 dat/events/news/zalek_campaign.lua
 dat/events/pers.lua
+dat/events/pers/dvaered.lua
 dat/events/pers/empire.lua
 dat/events/pers/indep.lua
 dat/events/pers/minerva.lua
