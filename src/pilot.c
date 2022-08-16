@@ -1030,7 +1030,7 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
 }
 
 /**
- * @brief Returns the angle for a pilot to aim at an other pilot
+ * @brief Returns the angle for a pilot to aim at another pilot
  *
  *    @param p Pilot that aims.
  *    @param target Pilot that is being aimed at.

@@ -10,7 +10,7 @@
 # 4: Heavy ship needed or tricky combat
 # Above: plot-related
 
-# A mission that requires an other mission to be done must be of > tier, or no indicated tier at all
+# A mission that requires another mission to be done must be of > tier, or no indicated tier at all
 
 import xml.etree.ElementTree as ET
 import pygraphviz as pgv

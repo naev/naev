@@ -47,7 +47,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(_("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[The Nexus employee seems to be looking for pilots. Maybe he has an other task for you.]]))
+   misn.setNPC(_("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[The Nexus employee seems to be looking for pilots. Maybe he has another task for you.]]))
 end
 
 function accept()

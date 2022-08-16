@@ -26492,7 +26492,7 @@ msgstr ""
 #: dat/events/dvaered/fwA_treason.lua:89
 msgid ""
 "\"Very good choice, colleague!\" The pilot answers. \"Go to {system}, and "
-"you will be hailed by an other Vendetta for your briefing.\""
+"you will be hailed by another Vendetta for your briefing.\""
 msgstr ""
 
 #: dat/events/dvaered/fwA_treason.lua:93
@@ -43782,7 +43782,7 @@ msgstr ""
 #.
 #. Dvaered Delivery
 #. This is the mission of the Dvaered Recruitment arc when the player starts to commit with Dvaered.
-#. The player has to transmit a parcel to an other private pilot on Zhiru. The destination of the parcel is the Empire.
+#. The player has to transmit a parcel to another private pilot on Zhiru. The destination of the parcel is the Empire.
 #. But the other pilot is missing and the player has to do a series of tasks.
 #. At some point, the FLF is suspected to have abducted the agent (pretext to get the player enemy with them)
 #.
@@ -44164,7 +44164,7 @@ msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:269
 msgid ""
-"Well... Unless there is an other bastard I need to fight before you accept "
+"Well... Unless there is another bastard I need to fight before you accept "
 "to pay me."
 msgstr ""
 
@@ -44312,7 +44312,7 @@ msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:361
 msgid ""
-"Actually, there was an other sticker on the box, where it was written 'bio-"
+"Actually, there was another sticker on the box, where it was written 'bio-"
 "hazard, do not open without protection'. So I doubt there are really teddy "
 "bears in it."
 msgstr ""
@@ -68474,7 +68474,7 @@ msgstr ""
 
 #: dat/missions/shark/sh01_corvette.lua:50
 msgid ""
-"The Nexus employee seems to be looking for pilots. Maybe he has an other "
+"The Nexus employee seems to be looking for pilots. Maybe he has another "
 "task for you."
 msgstr ""
 

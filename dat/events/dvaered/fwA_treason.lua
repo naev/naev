@@ -86,7 +86,7 @@ function hail()
       tk.msg(
          _("Your task"),
          fmt.f(
-            _([["Very good choice, colleague!" The pilot answers. "Go to {system}, and you will be hailed by an other Vendetta for your briefing."]]),
+            _([["Very good choice, colleague!" The pilot answers. "Go to {system}, and you will be hailed by another Vendetta for your briefing."]]),
             {system=targetsys} ) )
       stage = 1
    elseif c == 2 then

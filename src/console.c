@@ -434,7 +434,6 @@ void cli_tabComplete( unsigned int wid )
 static int cli_initLua (void)
 {
    int status;
-   char *buf;
    size_t blen;
    /* Already loaded. */
    if (cli_env != LUA_NOREF)
@@ -458,8 +457,9 @@ static int cli_initLua (void)
    lua_settop( naevL, 0 );
 
    if (conf.lua_repl) {
-      buf = ndata_read( "rep.lua", &blen );
+      char *buf = ndata_read( "rep.lua", &blen );
       status = nlua_dobufenv( cli_env, buf, blen, "@rep.lua" );
+      free( buf );
       if (status) {
          lua_settop( naevL, 0 );
          return status;
