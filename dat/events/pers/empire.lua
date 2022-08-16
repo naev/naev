@@ -66,6 +66,7 @@ return function ()
       for k,v in ipairs{
          {
             spawn = function ()
+               -- ECB stands for Empire Combat Bureaucrat
                local p = pilot.add("Empire Pacifier", "Empire", nil, _("ECB Bolten"), {naked=true, ai="pers_patrol"})
                p:intrinsicSet( "fwd_damage", 10 )
                p:intrinsicSet( "shield_mod", 25 )
@@ -86,7 +87,6 @@ return function ()
                end
                return p
             end,
-            w = 1,
          },
       } do
          table.insert( pers, v )

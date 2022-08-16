@@ -88,6 +88,9 @@ function pers_death( _p, attacker, pt )
          pt.ondeath( attacker, pt )
       end
    end
+   if pt.ondeathany then
+      pt.ondeathany( attacker, pt )
+   end
 end
 
 local function spawn_pers ()
@@ -109,6 +112,7 @@ local function spawn_pers ()
                dmgo = 0,
                onattack = pp.onattack,
                ondeath = pp.ondeath,
+               ondeathany = pp.ondeathany,
             }
             hook.pilot( pp, "attacked", "pers_attacked", pt )
             hook.pilot( pp, "death", "pers_death", pt )
