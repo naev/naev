@@ -123,7 +123,7 @@ local function bribe_msg( plt, group )
    local mem = plt:memory()
    if group then
       local cost = bribe_cost( group )
-      local str = mem.bribe_prompt_nearby
+      local str = mem.bribe_prompt_nearby or mem.bribe_prompt
       local cstr = fmt.credits(cost)
       local chave = fmt.credits(player.credits())
       if not str then
