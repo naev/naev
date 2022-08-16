@@ -7,7 +7,7 @@ return function ()
       return nil -- Need at least some presence
    end
 
-   return {
+   local pers = {
       {
          spawn = function ()
             local p = pilot.add("Mule", "Trader", nil, _("Trader Drake"), {naked=true, ai="pers"})
@@ -67,4 +67,29 @@ return function ()
          end
       },
    }
+
+   if scur == system.get("Zied") then
+      table.insert( pers, {
+         spawn = function ()
+            local p = pilot.add("Starbridge", "Independent", nil, _("Cap'n Lector"), {naked=true, ai="pers"})
+            p:intrinsicSet( "shield_mod", 50 )
+            p:intrinsicSet( "shield_regen_mod", 50 )
+            p:intrinsicSet( "armour_mod", 50 )
+            p:intrinsicSet( "launch_damage", 50 )
+            p:intrinsicSet( "fwd_damage", 50 )
+            p:intrinsicSet( "tur_damage", 50 )
+            equipopt.pirate( p, {
+               outfits_add={"Emergency Stasis Inducer"},
+               prefer={["Emergency Stasis Inducer"] = 100}} )
+            local m = p:memory()
+            m.ad = _([["Don't forget to pay your shareware registration fee!"]])
+            m.taunt = _("Prepare to pay your shareware registration fee!")
+            m.bribe_no = _("You can't pay your shareware registration fee with credits, only blood!")
+            m.norun = true
+         end,
+         w = 100, -- Almost ensured in Zied
+      } )
+   end
+
+   return pers
 end
