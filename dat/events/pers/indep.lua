@@ -65,7 +65,19 @@ return function ()
             m.atk_kill = false
             return p
          end
-      },
+      }, {
+         spawn = function ()
+            local p = pilot.add("Goddard", "Mercenary", nil, _("Iron Curtain"), {naked=true, ai="pers"})
+            p:intrinsicSet( "armour_mod", 50 )
+            equipopt.dvaered( p )
+            local m = p:memory()
+            m.comm_greet = _([["…"]])
+            m.taunt = _("…")
+            m.bribe_no = _("…")
+            m.norun = true
+            return p
+         end
+      }
    }
 
    if scur == system.get("Zied") then
