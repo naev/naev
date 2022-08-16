@@ -216,7 +216,7 @@ She cackles maniacally.]]))
 She cackles maniacally.
 "Nice to meet you! My name is Nelly!"]]))
       vn.func( function ()
-         vn.push( "nelly_met", true )
+         var.push( "nelly_met", true )
       end )
    end
 
