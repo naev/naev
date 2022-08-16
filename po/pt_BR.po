@@ -44471,8 +44471,8 @@ msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:269
 msgid ""
-"Well... Unless there is another bastard I need to fight before you accept "
-"to pay me."
+"Well... Unless there is another bastard I need to fight before you accept to "
+"pay me."
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:270
@@ -68785,8 +68785,8 @@ msgstr ""
 
 #: dat/missions/shark/sh01_corvette.lua:50
 msgid ""
-"The Nexus employee seems to be looking for pilots. Maybe he has another "
-"task for you."
+"The Nexus employee seems to be looking for pilots. Maybe he has another task "
+"for you."
 msgstr ""
 
 #: dat/missions/shark/sh01_corvette.lua:56
