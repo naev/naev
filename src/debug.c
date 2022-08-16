@@ -20,10 +20,6 @@
 #include <dlfcn.h>
 #undef __USE_GNU
 
-#if !HAVE_STRSIGNAL
-extern const char *strsignal (int); /* From libiberty */
-#endif /* !HAVE_STRSIGNAL */
-
 #if MACOS
 #include <mach-o/dyld.h>
 #endif /* MACOS */
