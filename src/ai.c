@@ -2094,7 +2094,6 @@ static int aiL_drift_facing( lua_State *L )
  *    @luatreturn boolean Whether braking is finished.
  *    @luafunc brake
  */
-
 static int aiL_brake( lua_State *L )
 {
    int ret = pilot_brake( cur_pilot );
