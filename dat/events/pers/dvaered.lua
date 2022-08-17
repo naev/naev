@@ -9,7 +9,6 @@ return function ()
       return nil -- Need at least some presence
    end
 
-
    -- Medium ships here
    if presence > 100 then
       for k,v in ipairs{
@@ -20,7 +19,7 @@ return function ()
                local p = pilot.add("Dvaered Vigilance", "Dvaered", nil, _("Packleader"), {naked=true, ai="pers_patrol"})
                p:intrinsicSet( "armour_mod", 50*(npack-1) )
                p:intrinsicSet( "absorb", 10*(npack-1) )
-               equipopt.empire( p, {turret=0} )
+               equipopt.dvaered( p, {turret=0} )
                local m = p:memory()
                m.comm_greet = _([["Think not of what the pack will do for you, but only what you can do for the pack."]])
                m.taunt = _("The pack will tear you limb from limb!")
