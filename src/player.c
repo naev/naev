@@ -3568,6 +3568,9 @@ Spob* player_load( xmlNodePtr parent )
    /* Updates the fleet internals. */
    pfleet_update();
 
+   /* Update weapon set. */
+   pilot_weaponSetDefault( player.p );
+
    return pnt;
 }
 
