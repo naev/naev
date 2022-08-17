@@ -429,6 +429,12 @@ function luatk.Button:draw( bx, by )
       self.render( x, y, w, h )
    end
 end
+function luatk.Button:drawover( bx, by )
+   if self.mouseover and self.alt then
+      local x, y, w, _h = self:getDimensions()
+      luatk.drawAltText( bx+x+w, by+y, self.alt, 300 )
+   end
+end
 function luatk.Button:clicked()
    if self.disabled then
       return false
@@ -450,6 +456,12 @@ Disables a button widget.
 --]]
 function luatk.Button:disable()
    self.disabled = true
+end
+--[[--
+Sets the alt text of a button.
+--]]
+function luatk.Button:setAlt( alt )
+   self.alt = alt
 end
 function luatk.Button:getCol () return self.col end
 function luatk.Button:setCol( col ) self.col = col end
