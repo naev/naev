@@ -22,7 +22,6 @@ return function ()
                m.comm_greet = _([["Nothing in life is to be feared; it is only to be understood."]])
                m.taunt = _("Your death shall be swift and easy!")
                m.bribe_no = _([["You must be eliminated. For science!"]])
-               m.loner = true
                return p
             end,
          }, {
@@ -36,7 +35,6 @@ return function ()
                m.comm_greet = _([["What do you want? Can't you see I'm busy writing a grant?"]])
                m.taunt = _("Do not get in the way of science!")
                m.bribe_prompt = _([["I could use {credits} more in funding."]])
-               m.loner = true
                return p
             end,
          }
@@ -58,7 +56,6 @@ return function ()
                m.comm_greet = _([["Hello! I mean *BEEP* COMMUNICATION AUTHORIZED. *BEEP*"]])
                m.taunt = _("Die, scum! I mean *BEEP* EXTERMINATING *BEEP*")
                m.bribe_prompt = _([["I'll pretend to malfunction for {credits}, deal?"]])
-               m.loner = true
                local pos = p:pos()
                local vel = p:vel()
                for i=1,3 do
@@ -82,7 +79,6 @@ return function ()
                m.comm_greet = _([["Even when I close my ends, the endless deadlines haunt my dreams."]])
                m.taunt = _("Just put me out of this misery.")
                m.bribe_prompt = _([["If you pay off {credits} of my student loans, I'll go back to my deadlines."]])
-               m.loner = true
                return p
             end,
          }
