@@ -285,6 +285,7 @@ function bioship.window ()
    local pp = player.pilot()
    local ps = pp:ship()
    local island = player.isLanded()
+   local recreate = false
 
    -- Only bioships are good for now
    if not ps:tags().bioship then
@@ -569,7 +570,9 @@ function bioship.window ()
    local stagetxt
    local maxstage = bioship.maxstage(pp)
    if stage==maxstage then
+      local exp = player.shipvarPeek("bioshipexp") or 0
       stagetxt = "#g".._("Max Stage!").."#0"
+      stagetxt = stagetxt..fmt.f(_(" ({exp} points)"),{exp=exp})
    else
       local exp = player.shipvarPeek("bioshipexp") or 0
       local nextexp = bioship.exptostage( stage+1 )
@@ -597,6 +600,8 @@ function bioship.window ()
             player.shipvarPush("bioshipexp", curexp-exp)
             bioship.setstage( resetstage )
             skill_reset()
+            wdw:destroy()
+            recreate = true
          end )
    end )
    luatk.newButton( wdw, w-100-20, h-40-20, 100, 40, _("OK"), function( wgt )
@@ -649,6 +654,10 @@ function bioship.window ()
    end
 
    luatk.run()
+
+   if recreate then
+      bioship.window()
+   end
 end
 
 return bioship
