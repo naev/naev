@@ -25,7 +25,6 @@ return function ()
                m.taunt = _("The pack will tear you limb from limb!")
                m.bribe_no = _("We only wish for blood!")
                m.formation = "wedge"
-               m.loner = true
                local pos = p:pos()
                local vel = p:vel()
                local pack = {p}

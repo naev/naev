@@ -466,7 +466,7 @@ function control ()
    -- Select new leader
    local l = p:leader()
    if not mem.carried then -- carried ships don't change
-      if l == nil and not mem.loner then
+      if l == nil and mem.autoleader then
          local candidate = ai.getBoss()
          if candidate ~= nil and candidate:exists() then
             p:setLeader( candidate )
