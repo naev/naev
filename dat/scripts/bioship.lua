@@ -571,7 +571,7 @@ function bioship.window ()
       end
    end
    luatk.newText( wdw, 30, 40, w-60, 20, stagetxt, nil, 'center' )
-   luatk.newButton( wdw, w-120-100-20, h-40-20, 100, 40, _("Reset"), function ()
+   local btn_reset = luatk.newButton( wdw, w-120-100-20, h-40-20, 100, 40, _("Reset"), function ()
       skill_reset()
    end )
    luatk.newButton( wdw, w-100-20, h-40-20, 100, 40, _("OK"), function( wgt )
@@ -615,6 +615,12 @@ function bioship.window ()
       local x = bx + ((k-1)%3)*sw
       local y = by + math.floor((k-1)/3)*sh + sh
       newSkillIcon( wdw, x, y, sw, sh, s )
+   end
+
+   -- Disable stuff when not landed
+   if not island then
+      btn_reset:disable()
+      btn_reset:setAlt( "#r".._("You must be landed to reset skills!").."#0" )
    end
 
    luatk.run()
