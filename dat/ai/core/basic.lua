@@ -921,6 +921,11 @@ function mine( ast )
 end
 -- luacheck: globals mine_drill (AI Task functions passed by name)
 function mine_drill( ast )
+   if not ast:exists() then
+      ai.poptask()
+      return
+   end
+
    local p         = ai.pilot()
    local mbd       = ai.minbrakedist()
 
@@ -954,6 +959,11 @@ function mine_drill_brake( ast )
 end
 -- luacheck: globals mine_shoot (AI Task functions passed by name)
 function mine_shoot( ast )
+   if not ast:exists() then
+      ai.poptask()
+      return
+   end
+
    ai.weapset( 1 )
    local p         = ai.pilot()
    local wrange    = ai.getweaprange(nil, 0)
