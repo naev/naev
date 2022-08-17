@@ -9,6 +9,11 @@ local usable_outfits = {
    ["Hyperbolic Blink Engine"]   = "blink_engine",
    ["Unicorp Jammer"]            = "jammer",
    ["Milspec Jammer"]            = "jammer",
+   -- Bioships
+   ["Feral Rage III"]            = "feral_rage",
+   ["The Bite"]                  = "bite",
+   ["The Bite - Improved"]       = "bite",
+   ["The Bite - Blood Lust"]     = {"bite", "bite_lust"},
 }
 
 if __debugging then
@@ -32,7 +37,13 @@ function atk.setup( p )
       if v then
          local var = usable_outfits[ v:nameRaw() ]
          if var then
-            o[var] = k
+            if type(var)=="table" then
+               for i,t in ipairs(var) do
+                  o[t] = k
+               end
+            else
+               o[var] = k
+            end
             added = true
          end
       end
