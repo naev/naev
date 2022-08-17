@@ -35,7 +35,7 @@ return function ()
             m.norun = true
             local pos = p:pos()
             local vel = p:vel()
-            for i=1,3 do
+            for i=1,4 do
                local e = pilot.add("Shark", "Mercenary", pos, _("Follower of Jeanne"), {naked=true})
                equipopt.generic( e, {beam=10}, "elite" )
                e:setLeader( p )
