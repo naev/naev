@@ -89,9 +89,12 @@ local function equip_soromid( p, opt_params  )
    local cores = opt_params.cores
    if not cores then
       if ps:tags().bioship then
-         local maxstage = bioship.maxstage( p )
-         local stage = math.max( 1, maxstage - prob.poisson_sample( 1 ) )
-         bioship.simulate( p, stage )
+         local stage = params.bioship_stage
+         if not stage then
+            local maxstage = bioship.maxstage( p )
+            stage = math.max( 1, maxstage - prob.poisson_sample( 1 ) )
+         end
+         bioship.simulate( p, stage, params.bioship_skills )
       else
          cores = ecores.get( p, { all="elite" } )
       end

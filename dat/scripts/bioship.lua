@@ -239,10 +239,11 @@ function bioship.skillpointsfree( p )
    return stage - bioship.skillpointsused( p )
 end
 
-function bioship.simulate( p, stage )
+function bioship.simulate( p, stage, setskills )
    if not p:ship():tags().bioship then
       return
    end
+   setskills = setskills or {}
 
    local skills, intrinsics, _maxtier = _getskills( p )
 
@@ -265,8 +266,13 @@ function bioship.simulate( p, stage )
       return true
    end
 
+   -- Forcibly set these skills
+   for k,s in ipairs(setskills) do
+      skill_enable( p, s )
+   end
+
    -- Simulate adding one by one randomly
-   for i=1,stage do
+   for i=#setskills+1,stage do
       local a = {}
       for k,s in pairs(skills) do
          if skill_canEnable( s ) then
