@@ -54,46 +54,50 @@ function drill.ontoggle( p, _po, on )
       return false
    end
 
+   -- Try to figure out difficulty
+   local max_rarity = -1
+   local mat = a:materials()
+   for k,m in ipairs(mat) do
+      max_rarity = math.max( max_rarity, m.rarity )
+   end
+
+   -- Handles giving the function
+   local function reward( bonus )
+      local r = max_rarity
+      if bonus < rnd.rnd() then
+         r = math.max(r-1,0)
+      end
+      local rwd = {}
+      for k,m in ipairs(mat) do
+         if m.rarity==r then
+            table.insert( rwd, m )
+         end
+      end
+      if #rwd > 0 then
+         local rget = rwd[ rnd.rnd(1,#rwd) ]
+         local rwd_bonus = p:shipstat("mining_bonus",true)
+         local c = rget.commodity
+         local q = math.floor(rget.quantity * (rwd_bonus*rnd.rnd()+0.5) + 0.5)
+         p:cargoAdd( c, q )
+         if mem.isp then
+            player.msg("#g"..fmt.f(_("You obtained {amount} of {cargo}"),{amount=fmt.tonnes(q),cargo=c}))
+         end
+         return c, q
+      end
+   end
+
    -- Only player gets minigame
    if mem.isp then
-      -- Try to figure out difficulty
-      local max_rarity = -1
-      local mat = a:materials()
-      for k,m in ipairs(mat) do
-         max_rarity = math.max( max_rarity, m.rarity )
-      end
-
-      -- Handles giving the function
-      local function reward( bonus )
-         local r = max_rarity
-         if bonus < rnd.rnd() then
-            r = math.max(r-1,0)
-         end
-         local rwd = {}
-         for k,m in ipairs(mat) do
-            if m.rarity==r then
-               table.insert( rwd, m )
-            end
-         end
-         if #rwd > 0 then
-            local rget = rwd[ rnd.rnd(1,#rwd) ]
-            local rwd_bonus = p:shipstat("mining_bonus",true)
-            local c = rget.commodity
-            local q = math.floor(rget.quantity * (rwd_bonus*rnd.rnd()+0.5) + 0.5)
-            p:cargoAdd( c, q )
-            player.msg("#g"..fmt.f(_("You obtained {amount} of {cargo}"),{amount=fmt.tonnes(q),cargo=c}))
-            return c, q
-         end
-      end
-
       local time_mod = p:shipstat("time_mod",true)
-
       mining.love{
          speed = drill.speed * time_mod,
          shots_max = drill.shots_max,
          difficulty = max_rarity,
          reward_func = reward,
       }
+   else
+      -- AI doesn't actually have to mine
+      reward( 0 )
    end
 
    for k,s in ipairs( pilot.getInrange( a:pos(), a:alertRange() ) ) do
