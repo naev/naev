@@ -268,7 +268,7 @@ function bioship.simulate( p, stage, setskills )
 
    -- Forcibly set these skills
    for k,s in ipairs(setskills) do
-      skill_enable( p, s )
+      skill_enable( p, skills[s] )
    end
 
    -- Simulate adding one by one randomly
