@@ -199,6 +199,14 @@ function bioship.setstage( stage )
    local pp = player.pilot()
    local _skills, intrinsics, _maxtier = _getskills( pp )
 
+   -- Reset biostage as necessary
+   local curstage = player.shipvarPeek("biostage") or 1
+   if stage < curstage then
+      for k,s in ipairs(intrinsics) do
+         skill_disable( pp, s )
+      end
+   end
+
    -- Make sure to enable intrinsics if applicable
    for k,s in ipairs(intrinsics) do
       if stage >= s.stage then
@@ -479,6 +487,7 @@ function bioship.window ()
 
    -- Case ship not initialized
    if not player.shipvarPeek( "bioship" ) then
+      bioship.setstage(1)
       skill_reset()
       player.shipvarPush( "bioship", true )
    end
@@ -572,7 +581,22 @@ function bioship.window ()
    end
    luatk.newText( wdw, 30, 40, w-60, 20, stagetxt, nil, 'center' )
    local btn_reset = luatk.newButton( wdw, w-120-100-20, h-40-20, 100, 40, _("Reset"), function ()
-      skill_reset()
+      local curexp = player.shipvarPeek("bioshipexp") or 0
+      local exp = math.floor(curexp * 0.2) -- Cost 20% of total exp
+      local desc = fmt.f(_("Resetting skills will cost {exp} experience points."),{exp=exp})
+      local curstage = bioship.curstage( curexp, maxstage )
+      local resetstage = bioship.curstage( curexp-exp, maxstage )
+      if curstage ~= resetstage then
+         desc = desc .. fmt.f(_(" Your loss of experience will also lower your bioship from stage #g{curstage}#0 to #r{resetstage}#0."),
+               {curstage=curstage, resetstage=resetstage} )
+      end
+      desc = desc .. "\n\n" .. _("Are you sure you want to reset your ship skills?")
+      luatk.yesno( _("Reset Skills"), desc,
+         function ()
+            player.shipvarPush("bioshipexp", curexp-exp)
+            bioship.setstage( resetstage )
+            skill_reset()
+         end )
    end )
    luatk.newButton( wdw, w-100-20, h-40-20, 100, 40, _("OK"), function( wgt )
       wgt.parent:destroy()
