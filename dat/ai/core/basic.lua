@@ -913,6 +913,47 @@ end
 --]]
 -- luacheck: globals mine (AI Task functions passed by name)
 function mine( ast )
+   if mem._o and mem._o.plasma_drill then
+      ai.pushsubtask("mine_drill", ast)
+   else
+      ai.pushsubtask("mine_shoot", ast)
+   end
+end
+-- luacheck: globals mine_drill (AI Task functions passed by name)
+function mine_drill( ast )
+   local p         = ai.pilot()
+   local mbd       = ai.minbrakedist()
+
+   ai.setasterotarget( ast )
+
+   local target = ast:pos()
+   local vel = ast:vel()
+   local _dist, angle = vec2.polar( p:pos() - target )
+
+   -- First task : place the ship close to the asteroid
+   local goal = ai.face_accurate( target, vel, 0, angle, mem.Kp, mem.Kd )
+
+   local dir  = ai.face(goal)
+   local mod  = ai.dist(goal)
+
+   if dir < math.rad(10) and mod > mbd then
+      ai.accel()
+   elseif mod < mbd then
+      ai.pushsubtask( "mine_drill_brake", ast )
+   end
+end
+-- luacheck: globals mine_drill_brake (AI Task functions passed by name)
+function mine_drill_brake( ast )
+   if ai.isstopped() then
+      ai.popsubtask()
+      return
+   end
+   ai.setasterotarget( ast )
+   ai.brake()
+   ai.pilot():outfitToggle( mem._o.plasma_drill, true )
+end
+-- luacheck: globals mine_shoot (AI Task functions passed by name)
+function mine_shoot( ast )
    ai.weapset( 1 )
    local p         = ai.pilot()
    local wrange    = ai.getweaprange(nil, 0)
