@@ -291,14 +291,20 @@ function land()
       vn.transition( )
       vn.na(_([[After landing, you notice Colonel Okran waiting for you on the dock.]]))
       local sol = vn.newCharacter( _("Colonel Okran"), { image=portrait.getFullPath(agentPort) } )
-      sol(fmt.f(_([[Hello again, citizen {name}. We have been informed by House Goddard of the tragic death of Mrs Grosjean. Lord Fatgun sent flowers to her family, and I believe you may have come to receive your reward. We will re-contact you in case we need your services again in the future.]]),{name=player.name()}))
+      sol(fmt.f(_([[Hello again, citizen {name}. We have been informed by House Goddard of the tragic death of Mrs Grosjean. Lord Fatgun sent flowers to her family, and I believe you may have come to receive your reward. We will re-contact you in case we need your services again in the future.
+Oh, and as an additional reward, I made sure you can now purchase the Heavy Weapon License in case you don't already have it.]]),{name=player.name()}))
       vn.na(fmt.f(_([[Colonel Okran pays you {credits}.]]), {credits=fmt.credits(mem.credits)}))
 
       vn.done()
       vn.run()
 
       -- TODO once the whole recruitment campaign is stabilized: faction.get("Dvaered"):modPlayerRaw(someQuantity)
-      dv.addStandardLog( _([[You performed a negotiation mission for Lord Fatgun, who needs to purchase a second Goddard battlecruiser. This mission consisted in killing a shareholder of Goddard who was opposed to this contract.]]) )
+      if diff.isApplied( "heavy_weapons_license" ) then
+         dv.addStandardLog( _([[You performed a negotiation mission for Lord Fatgun, who needs to purchase a second Goddard battlecruiser. This mission consisted in killing a shareholder of Goddard who was opposed to this contract.]]) )
+      else -- Player does not have the license
+         dv.addStandardLog( _([[You performed a negotiation mission for Lord Fatgun, who needs to purchase a second Goddard battlecruiser. This mission consisted in killing a shareholder of Goddard who was opposed to this contract. Completing this mission has granted you access to the Heavy Weapon License.]]) )
+         diff.apply("heavy_weapons_license")
+      end
       player.pay(mem.credits)
       misn.finish(true)
    end
