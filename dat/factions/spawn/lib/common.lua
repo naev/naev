@@ -177,6 +177,9 @@ function scom.spawn( pilots )
             p:setLeader(leader)
          end
       end
+      if #pilots==1 then
+         mem.loner = true
+      end
       if pilots.__doscans then
          mem.doscans = true
       end

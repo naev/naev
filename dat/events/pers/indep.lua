@@ -18,6 +18,7 @@ return function ()
             --m.ad = _("")
             m.comm_greet = _([["Business with the Za'lek is booming!"]])
             m.taunt = _("Say hello to my little friends!")
+            m.loner = true
             return p
          end
       }, {
@@ -50,6 +51,7 @@ return function ()
             local m = p:memory()
             m.comm_greet = _([["Space seems much less vast when you can track like a bloodhound."]])
             m.taunt = _("And now for your death!")
+            m.loner = true
             return p
          end
       }, {
@@ -63,6 +65,7 @@ return function ()
             m.whiteknight = true
             m.norun = true
             m.atk_kill = false
+            m.loner = true
             return p
          end
       }, {
@@ -75,6 +78,7 @@ return function ()
             m.taunt = _("…")
             m.bribe_no = _("…")
             m.norun = true
+            m.loner = true
             return p
          end
       }
@@ -98,6 +102,7 @@ return function ()
             m.taunt = _("Prepare to pay your shareware registration fee!")
             m.bribe_no = _("You can't pay your shareware registration fee with credits, only blood!")
             m.norun = true
+            m.loner = true
          end,
          w = 100, -- Almost ensured in Zied
       } )

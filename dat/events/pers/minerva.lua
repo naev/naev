@@ -24,6 +24,7 @@ return function ()
             local m = p:memory()
             m.taunt = _("Ho ho ho and a bottle of rum!")
             m.comm_greet = _([["What are you doing here?"]])
+            m.loner = true
             return p
          end,
       } )
@@ -47,6 +48,7 @@ return function ()
             }
             m.taunt = _("Get out of my way punk!")
             m.comm_greet = _([["Can't you see I'm busy complaining, whippersnap!"]])
+            m.loner = true
             local pos = p:pos()
             local vel = p:vel()
             for i=1,4 do
@@ -68,6 +70,7 @@ return function ()
             local m = p:memory()
             m.taunt = _("Why are you doing this to me!?")
             m.comm_greet = _([["Shrimp are so fascinating. I can never get enough of them!"]])
+            m.loner = true
          end,
          w = 0.5,
       } )
