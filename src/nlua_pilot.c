@@ -5478,7 +5478,6 @@ static int pilotL_shipvarPeek( lua_State *L )
  *    @luatparam Pilot p Pilot whose ship variable is being manipulated.
  *    @luatparam string varname Name of the variable to set value of.
  *    @luaparam val Value to push.
- *    @luatparam[opt] string shipname Name of the ship to push variable to. Defaults to pilot's current ship.
  * @luafunc shipvarPush
  */
 static int pilotL_shipvarPush( lua_State *L )
@@ -5497,7 +5496,6 @@ static int pilotL_shipvarPush( lua_State *L )
  *
  *    @luatparam Pilot p Pilot whose ship variable is being manipulated.
  *    @luatparam string varname Name of the variable to pop.
- *    @luatparam[opt] string shipname Name of the ship to pop variable from. Defaults to pilot's current ship.
  * @luafunc shipvarPop
  */
 static int pilotL_shipvarPop( lua_State *L )
