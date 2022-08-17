@@ -282,6 +282,10 @@ function bioship.simulate( p, stage, setskills )
       local s = a[ rnd.rnd(1,#a) ]
       skill_enable( p, s )
    end
+
+   -- Heal up
+   p:setHealth( 100, 100 )
+   p:setEnergy( 100 )
 end
 
 local stage, skills, intrinsics, skillpoints, skilltxt
