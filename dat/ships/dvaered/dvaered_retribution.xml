@@ -9,8 +9,8 @@
  <class>Cruiser</class>
  <price>5000000</price>
  <time_mod>1.375</time_mod>
- <trail_generator x="-44" y="20" h="0" />
- <trail_generator x="-44" y="-20" h="0" />
+ <trail_generator x="-44" y="20" h="0">fire</trail_generator>
+ <trail_generator x="-44" y="-20" h="0">fire</trail_generator>
  <trail_generator x="-28" y="32" h="0">nebula</trail_generator>
  <trail_generator x="-28" y="-32" h="0">nebula</trail_generator>
  <fabricator>House Dvaered</fabricator>
