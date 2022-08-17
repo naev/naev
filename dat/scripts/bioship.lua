@@ -581,14 +581,15 @@ function bioship.window ()
    end
    luatk.newText( wdw, 30, 40, w-60, 20, stagetxt, nil, 'center' )
    local btn_reset = luatk.newButton( wdw, w-120-100-20, h-40-20, 100, 40, _("Reset"), function ()
+      -- Player pays EXP cost when resetting ship. Can lower their ship's stage.
       local curexp = player.shipvarPeek("bioshipexp") or 0
       local exp = math.floor(curexp * 0.2) -- Cost 20% of total exp
       local desc = fmt.f(_("Resetting skills will cost {exp} experience points."),{exp=exp})
       local curstage = bioship.curstage( curexp, maxstage )
       local resetstage = bioship.curstage( curexp-exp, maxstage )
       if curstage ~= resetstage then
-         desc = desc .. fmt.f(_(" Your loss of experience will also lower your bioship from stage #g{curstage}#0 to #r{resetstage}#0."),
-               {curstage=curstage, resetstage=resetstage} )
+         desc = desc .. fmt.f(_(" Your loss of experience will also lower your bioship from stage {curstage} to {resetstage}."),
+               {curstage="#g"..tostring(curstage).."#0", resetstage="#r"..tostring(resetstage).."#0"} )
       end
       desc = desc .. "\n\n" .. _("Are you sure you want to reset your ship skills?")
       luatk.yesno( _("Reset Skills"), desc,
