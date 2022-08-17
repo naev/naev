@@ -3236,12 +3236,14 @@ unsigned int pilot_addStack( Pilot *p )
 {
    p->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
    pilot_setFlag( p, PILOT_NOFREE );
+
+   array_push_back( &pilot_stack, p );
+
+   /* Have to reset after adding to stack, as some Lua functions will run code on the pilot. */
    pilot_reset( p );
 
    /* Animated trail. */
    pilot_init_trails( p );
-
-   array_push_back( &pilot_stack, p );
 
 #if DEBUGGING
    for (int i=1; i<array_size(pilot_stack); i++)
