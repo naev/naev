@@ -77,8 +77,8 @@ function bioship_land ()
    local exp = player.shipvarPeek("bioshipexp") or 0
    local stage = player.shipvarPeek("biostage")
    local maxstage = bioship.maxstage( player.pilot() )
-   local expstage =  bioship.curstage( exp, maxstage )
-   if expstage > stage then
+   local expstage = bioship.curstage( exp, maxstage )
+   if expstage >= stage then
       bioship.setstage( expstage )
    end
 end
@@ -102,6 +102,7 @@ function bioship_pay( amount, _reason )
 
    -- Add exp
    exp = exp + math.floor(amount / 1e3)
+   exp = math.min( exp, bioship.exptostage( maxstage ) )
    player.shipvarPush("bioshipexp",exp)
 
    -- Stage up!

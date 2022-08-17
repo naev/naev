@@ -26,7 +26,7 @@ local _mult = 1.2
 function bioship.exptostage( stage )
    local exp = 0
    for i=1,stage-1 do
-      exp = exp + _base * math.pow(_mult,i-1)
+      exp = exp + math.floor( _base * math.pow(_mult,i-1) )
    end
    return math.floor(exp)
 end
@@ -36,7 +36,7 @@ function bioship.curstage( exp, maxstage )
    local nextstage = 0
    for i=1,maxstage do
       curstage = i
-      nextstage = nextstage + _base * math.pow(_mult,i-1)
+      nextstage = nextstage + math.floor( _base * math.pow(_mult,i-1) )
       if exp < nextstage then
          break
       end
