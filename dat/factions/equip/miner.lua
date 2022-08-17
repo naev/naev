@@ -13,6 +13,9 @@ local miner_outfits = eoutfits.merge{
       "Mining Lance MK1",
       "Laser Turret MK1", "Turreted Gauss Gun", "Plasma Turret MK1",
       "Laser Cannon MK1", "Gauss Gun", "Plasma Blaster MK1",
+      -- Other mining stuff
+      "S&K Heavy Plasma Drill",
+      "S&K Plasma Drill",
    },
    eoutfits.standard.set,
 }
@@ -31,6 +34,10 @@ function equip( p )
    params.beam = 1.5
    params.prefer["Mining Lance MK1"] = 2
    params.prefer["Mining Lance MK2"] = 2
+   if rnd.rnd() < 0.2 then
+      params.prefer["S&K Heavy Plasma Drill"] = 2
+      params.prefer["S&K Plasma Drill"] = 2
+   end
 
    -- See cores
    local cores = ecores.get( p, { all="standard" } )
