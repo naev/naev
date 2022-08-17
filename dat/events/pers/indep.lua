@@ -98,7 +98,7 @@ return function ()
                outfits_add={"Emergency Stasis Inducer"},
                prefer={["Emergency Stasis Inducer"] = 100}} )
             local m = p:memory()
-            m.ad = _([["Don't forget to pay your shareware registration fee!"]])
+            m.ad = _("Don't forget to pay your shareware registration fee!")
             m.taunt = _("Prepare to pay your shareware registration fee!")
             m.bribe_no = _("You can't pay your shareware registration fee with credits, only blood!")
             m.norun = true
