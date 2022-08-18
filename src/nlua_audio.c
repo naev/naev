@@ -526,7 +526,9 @@ static int audioL_new( lua_State *L )
             break;
          case AL_OUT_OF_MEMORY:
             /* Assume that we need to collect audio stuff. */
+            soundUnlock();
             lua_gc( naevL, LUA_GCCOLLECT, 0 );
+            soundLock();
             /* Try to create source again. */
             alGenSources( 1, &la.source );
             al_checkErr();
