@@ -384,7 +384,7 @@ void audio_cleanup( LuaAudio_t *la )
          break;
       case LUA_AUDIO_STATIC:
          soundLock();
-         if (la->source > 0)
+         if (alIsSource( la->source ))
             alDeleteSources( 1, &la->source );
          /* Check if buffers need freeing. */
          if (la->buf != NULL) {
@@ -409,9 +409,9 @@ void audio_cleanup( LuaAudio_t *la )
                WARN(_("Timed out while waiting for audio thread to finish!"));
 #endif /* DEBUGGING */
          }
-         if (la->source > 0) /* Strictly speaking, this is an OpenAL only thing. Implementation doesn't guarantee that 0 is an invalid source ID... */
+         if (alIsSource( la->source ))
             alDeleteSources( 1, &la->source );
-         if (la->stream_buffers[0] > 0)
+         if (alIsBuffer( la->stream_buffers[0] ))
             alDeleteBuffers( 2, la->stream_buffers );
          if (la->cond != NULL)
             SDL_DestroyCond( la->cond );
