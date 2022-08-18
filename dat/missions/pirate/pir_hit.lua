@@ -151,6 +151,19 @@ function jumpin ()
       return
    end
 
+   -- Make sure system is adjacent to the previous one (system tour)
+   local found = false
+   for k,v in ipairs(system.cur():adjacentSystems()) do
+      if v==mem.last_sys then
+         found = true
+         break
+      end
+   end
+   if not found then
+      spawn_target()
+      return
+   end
+
    local pos = jump.pos( system.cur(), mem.last_sys )
    local offset_ranges = { { -2500, -1500 }, { 1500, 2500 } }
    local xrange = offset_ranges[ rnd.rnd( 1, #offset_ranges ) ]
