@@ -73,7 +73,7 @@ static void ndata_testVersion (void)
    diff = naev_versionCompare( cbuf );
    if (diff != 0) {
       WARN( _("ndata version inconsistency with this version of Naev!") );
-      WARN( _("Expected ndata version %s got %s."), VERSION, cbuf );
+      WARN( _("Expected ndata version %s got %s."), naev_version( 0 ), cbuf );
       if (ABS(diff) > 2)
          ERR( _("Please get a compatible ndata version!") );
       if (ABS(diff) > 1)

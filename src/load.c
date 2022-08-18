@@ -339,7 +339,7 @@ static int load_compatibilityTest( const nsave_t *ns )
                "   Save version: #r%s#0\n"
                "   Naev version: %s\n"
                "Are you sure you want to load this game? It may lose data."),
-               ns->player_name, ns->version, VERSION ))
+               ns->player_name, ns->version, naev_version( 0 ) ))
             return -1;
          break;
 

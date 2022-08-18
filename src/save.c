@@ -129,7 +129,7 @@ int save_all_with_name ( char *name )
 
    /* Save the version and such. */
    xmlw_startElem(writer,"version");
-   xmlw_elem( writer, "naev", "%s", VERSION );
+   xmlw_elem( writer, "naev", "%s", naev_version( 0 ) );
    xmlw_elem( writer, "data", "%s", start_name() );
    xmlw_endElem(writer); /* "version" */
 

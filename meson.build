@@ -259,14 +259,9 @@ if buildExec.disabled() == false
 
    ### Generated sources
 
-   # VERSION
-   config_data.set_quoted('VERSION', version)
-
-   # config.h
-   configure_file(
-      output: 'config.h',
-      configuration: config_data
-   )
+   # Generated headers
+   configure_file(output: 'config.h', configuration: config_data)
+   configure_file(output: 'naev_build_version.h', configuration: {'VERSION': '"'+version+'"'})
    add_project_arguments('-include', 'config.h', language: 'c')
 
    include_dirs = [include_directories(
