@@ -519,7 +519,7 @@ static int audioL_new( lua_State *L )
 
    soundLock();
    alGenSources( 1, &la.source );
-   if (!alIsSource( la.source )==AL_TRUE) {
+   if (alIsSource( la.source )!=AL_TRUE) {
       ALenum err = alGetError();
       switch (err) {
          case AL_NO_ERROR:
