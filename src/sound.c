@@ -58,8 +58,7 @@
 #include "nlua_spfx.h"
 
 #define SOUND_FADEOUT         100
-#define SOUND_VOICES          128   /**< Maximum number of simultaneous sounds to play, must be at least 16. */
-#define SOUND_BUFFER_SIZE     128   /**< Size of the buffer (in KiB) to use for music. */
+#define SOUND_VOICES           64   /**< Maximum number of simultaneous sounds to play, must be at least 16. */
 
 #define SOUND_SUFFIX_WAV   ".wav" /**< Suffix of sounds. */
 #define SOUND_SUFFIX_OGG   ".ogg" /**< Suffix of sounds. */
