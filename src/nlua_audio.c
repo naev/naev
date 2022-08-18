@@ -479,7 +479,6 @@ static int audioL_new( lua_State *L )
    int stream;
    const char *name;
    SDL_RWops *rw;
-   ALenum err;
 
    /* First parameter. */
    if (lua_isstring(L,1))
@@ -520,23 +519,25 @@ static int audioL_new( lua_State *L )
 
    soundLock();
    alGenSources( 1, &la.source );
-   err = alGetError();
-   switch (err) {
-      case AL_NO_ERROR:
-         break;
-      case AL_OUT_OF_MEMORY:
-         /* Assume that we need to collect audio stuff. */
-         lua_gc( naevL, LUA_GCCOLLECT, 0 );
-         /* Try to create source again. */
-         alGenSources( 1, &la.source );
-         al_checkErr();
-         break;
+   if (!alIsSource( la.source )) {
+      ALenum err = alGetError();
+      switch (err) {
+         case AL_NO_ERROR:
+            break;
+         case AL_OUT_OF_MEMORY:
+            /* Assume that we need to collect audio stuff. */
+            lua_gc( naevL, LUA_GCCOLLECT, 0 );
+            /* Try to create source again. */
+            alGenSources( 1, &la.source );
+            al_checkErr();
+            break;
 
-      default:
+         default:
 #if DEBUGGING
-         al_checkHandleError( err, __func__, __LINE__ );
+            al_checkHandleError( err, __func__, __LINE__ );
 #endif /* DEBUGGING */
-         break;
+            break;
+      }
    }
 
    /* Deal with stream. */
@@ -633,9 +634,11 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
          alSourcei( la->source, AL_BUFFER, la->buf->buffer );
          break;
 
-      case LUA_AUDIO_NULL:
       case LUA_AUDIO_STREAM:
          WARN(_("Unimplemented"));
+         break;
+
+      case LUA_AUDIO_NULL:
          break;
    }
 
