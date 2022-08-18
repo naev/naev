@@ -128,6 +128,16 @@ local claimed
 function theFunBegins()
    if claimed then evt.finish(false) end -- Case player jumps out in under 5 seconds
 
+   -- Make sure system is adjacent to the previous one (system tour)
+   local found = false
+   for k,v in ipairs(system.cur():adjacentSystems()) do
+      if v==curr then
+         found = true
+         break
+      end
+   end
+   if not found then evt.finish(false) end
+
    -- Make sure system is not claimed
    if not evt.claim({system.cur()}) then evt.finish(false) end
    claimed = true
