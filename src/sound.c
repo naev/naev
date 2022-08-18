@@ -292,10 +292,9 @@ ov_callbacks sound_al_ovcall_noclose = {
  */
 static int sound_al_init (void)
 {
-   int ret;
+   int ret, nattribs = 0;
    ALuint s;
-   ALint freq;
-   ALint attribs[6] = { 0, 0, 0, 0, 0, 0 };
+   ALint attribs[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
    /* Default values. */
    ret = 0;
@@ -306,7 +305,7 @@ static int sound_al_init (void)
    nsetenv( "ALSOFT_TRAP_AL_ERROR", "1", 0 );
 #elif DEBUGGING
    nsetenv( "ALSOFT_LOGLEVEL", "2", 0 );
-#endif
+#endif /* DEBUGGING */
 
    /* we'll need a mutex */
    sound_lock = SDL_CreateMutex();
@@ -320,12 +319,20 @@ static int sound_al_init (void)
       goto snderr_dev;
    }
 
+   /* Set good default for sources. */
+   attribs[0] = ALC_MONO_SOURCES;
+   attribs[1] = 1024;
+   attribs[2] = ALC_STEREO_SOURCES;
+   attribs[3] = 128;
+   nattribs = 4;
+
    /* Query EFX extension. */
    if (conf.al_efx) {
       al_info.efx = alcIsExtensionPresent( al_device, "ALC_EXT_EFX" );
       if (al_info.efx == AL_TRUE) {
-         attribs[0] = ALC_MAX_AUXILIARY_SENDS;
-         attribs[1] = 4;
+         attribs[nattribs+0] = ALC_MAX_AUXILIARY_SENDS;
+         attribs[nattribs+1] = 4;
+         nattribs += 2;
       }
    }
    else
@@ -334,8 +341,9 @@ static int sound_al_init (void)
    /* Check more extensions. */
    al_info.output_limiter = alcIsExtensionPresent( al_device, "ALC_SOFT_output_limiter" );
    if (al_info.output_limiter) {
-      attribs[2] = ALC_OUTPUT_LIMITER_SOFT;
-      attribs[3] = ALC_TRUE;
+      attribs[nattribs+0] = ALC_OUTPUT_LIMITER_SOFT;
+      attribs[nattribs+1] = ALC_TRUE;
+      nattribs += 2;
    }
 
    /* Create the OpenAL context */
@@ -365,7 +373,9 @@ static int sound_al_init (void)
    }
 
    /* Get context information. */
-   alcGetIntegerv( al_device, ALC_FREQUENCY, sizeof(freq), &freq );
+   alcGetIntegerv( al_device, ALC_FREQUENCY, 1, &al_info.freq );
+   alcGetIntegerv( al_device, ALC_MONO_SOURCES, 1, &al_info.nmono );
+   alcGetIntegerv( al_device, ALC_STEREO_SOURCES, 1, &al_info.nstereo );
 
    /* Try to enable EFX. */
    if (al_info.efx == AL_TRUE) {
@@ -465,7 +475,7 @@ static int sound_al_init (void)
    soundUnlock();
 
    /* debug magic */
-   DEBUG(_("OpenAL started: %d Hz"), freq);
+   DEBUG(_("OpenAL started: %d Hz"), al_info.freq);
    DEBUG(_("Renderer: %s"), alGetString(AL_RENDERER));
    if (al_info.efx)
       DEBUG(_("Version: %s with EFX %d.%d"), alGetString(AL_VERSION),
