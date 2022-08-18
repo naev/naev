@@ -409,7 +409,7 @@ void audio_cleanup( LuaAudio_t *la )
                WARN(_("Timed out while waiting for audio thread to finish!"));
 #endif /* DEBUGGING */
          }
-         if (la->source > 0)
+         if (la->source > 0) /* Strictly speaking, this is an OpenAL only thing. Implementation doesn't guarantee that 0 is an invalid source ID... */
             alDeleteSources( 1, &la->source );
          if (la->stream_buffers[0] > 0)
             alDeleteBuffers( 2, la->stream_buffers );
@@ -616,6 +616,7 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
 
       case LUA_AUDIO_NULL:
       case LUA_AUDIO_STREAM:
+         WARN(_("Unimplemented"));
          break;
    }
 
@@ -728,12 +729,46 @@ static int audioL_isPaused( lua_State *L )
  */
 static int audioL_stop( lua_State *L )
 {
+   ALint alstate;
+   ALuint removed[2];
    LuaAudio_t *la = luaL_checkaudio(L,1);
    if (sound_disabled)
       return 0;
 
    soundLock();
-   alSourceStop( la->source );
+   switch (la->type) {
+      case LUA_AUDIO_NULL:
+         break;
+      case LUA_AUDIO_STATIC:
+         alSourceStop( la->source );
+         break;
+
+      case LUA_AUDIO_STREAM:
+         /* Kill the thread first. */
+         if (la->th != NULL) {
+            la->active = -1;
+            if (SDL_CondWaitTimeout( la->cond, sound_lock, 3000 ) == SDL_MUTEX_TIMEDOUT)
+#if DEBUGGING
+               WARN(_("Timed out while waiting for audio thread of '%s' to finish!"), la->name);
+#else /* DEBUGGING */
+               WARN(_("Timed out while waiting for audio thread to finish!"));
+#endif /* DEBUGGING */
+         }
+         la->th = NULL;
+
+         /* Stopping a source will make all buffers become processed. */
+         alSourceStop( la->source );
+
+         /* Unqueue the buffers. */
+         alGetSourcei( la->source, AL_BUFFERS_PROCESSED, &alstate );
+         alSourceUnqueueBuffers( la->source, alstate, removed );
+
+         /* Seek the stream to the beginning. */
+         SDL_mutexP( la->lock );
+         ov_pcm_seek( &la->stream, 0 );
+         SDL_mutexV( la->lock );
+         break;
+   }
    al_checkErr();
    soundUnlock();
    return 0;
