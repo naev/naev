@@ -44,10 +44,10 @@ function create ()
    -- Compute some sort of progress value
    local progress = traded_total * 100 / 2000 -- Would need 2000 to trigger the change by this itself
    for k,m in ipairs(player.misnDoneList()) do
-      progress = progress + 100 / 25 -- Needs 25 missions to complete by itself
+      progress = progress + 100 / 40 -- Needs 40 missions to complete by itself
    end
    if has_license then
-      progress = progress + 50
+      progress = progress + 40
    end
 
    -- Determine what to do
