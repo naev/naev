@@ -384,7 +384,7 @@ void audio_cleanup( LuaAudio_t *la )
          break;
       case LUA_AUDIO_STATIC:
          soundLock();
-         if (alIsSource( la->source ))
+         if (alIsSource( la->source )==AL_TRUE)
             alDeleteSources( 1, &la->source );
          /* Check if buffers need freeing. */
          if (la->buf != NULL) {
@@ -409,9 +409,9 @@ void audio_cleanup( LuaAudio_t *la )
                WARN(_("Timed out while waiting for audio thread to finish!"));
 #endif /* DEBUGGING */
          }
-         if (alIsSource( la->source ))
+         if (alIsSource( la->source )==AL_TRUE)
             alDeleteSources( 1, &la->source );
-         if (alIsBuffer( la->stream_buffers[0] ))
+         if (alIsBuffer( la->stream_buffers[0] )==AL_TRUE)
             alDeleteBuffers( 2, la->stream_buffers );
          if (la->cond != NULL)
             SDL_DestroyCond( la->cond );
@@ -519,7 +519,7 @@ static int audioL_new( lua_State *L )
 
    soundLock();
    alGenSources( 1, &la.source );
-   if (!alIsSource( la.source )) {
+   if (!alIsSource( la.source )==AL_TRUE) {
       ALenum err = alGetError();
       switch (err) {
          case AL_NO_ERROR:
