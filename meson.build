@@ -41,9 +41,6 @@ meson.add_dist_script(add_to_package, 'dat/VERSION')
 summary('tag', version)
 
 # Initialization
-config_data = configuration_data()
-naev_deps = []
-
 ndata_path = get_option('ndata_path')
 if ndata_path == ''
    ndata_path = get_option('datadir') / 'naev'
@@ -62,19 +59,23 @@ subdir('po')
 ####
 buildExec = get_option('executable')
 if buildExec.disabled() == false
+   config_data = configuration_data()
+   app_metadata = configuration_data()  # For Info.plist, resource.rc, etc.
+   naev_deps = []
    debug = get_option('debug')
    debug_arrays = get_option('debug_arrays')
    paranoid = get_option('paranoid')
+   # The next three are sometimes expected by GNU tools and headers, sometimes for mere existence. Provide stable values.
    config_data.set_quoted('PACKAGE', meson.project_name())
    config_data.set_quoted('PACKAGE_NAME', meson.project_name())
-   config_data.set_quoted('PACKAGE_VERSION', meson.project_version())
+   config_data.set_quoted('PACKAGE_VERSION', '0')
    config_data.set_quoted('PKGDATADIR', get_option('prefix') / ndata_path)
    config_data.set_quoted('HOST', host_machine.system() + '-' + host_machine.cpu_family())
    # Cut out the numeric fields from our SemVer <major>.<minor>.<rev>[-pre_release][+build] for OS versioning.
-   config_data.set('VMAJOR', meson.project_version().split('.')[0])
-   config_data.set('VMINOR', meson.project_version().split('.')[1])
-   config_data.set('YEAR', copyright_year)
-   config_data.set('VREV', meson.project_version().split('.')[2].split('-')[0].split('+')[0])
+   app_metadata.set('VMAJOR', meson.project_version().split('.')[0])
+   app_metadata.set('VMINOR', meson.project_version().split('.')[1])
+   app_metadata.set('VREV', meson.project_version().split('.')[2].split('-')[0].split('+')[0])
+   app_metadata.set('YEAR', copyright_year)
    config_data.set('DEBUG', debug ? 1 : false)
    config_data.set('DEBUG_ARRAYS', debug_arrays ? 1 : false)
    config_data.set('DEBUGGING', debug ? 1 : false)
@@ -184,9 +185,6 @@ if buildExec.disabled() == false
       blas = cc.find_library(get_option('blas'), required: true)
    endif
 
-   # It would be nice to detect the functions and just embed the prototypes. Problem is, we might not know the int width to use...
-   #config_data.set10('HAVE_BLAS_CBLAS_FUNC', cc.has_function('cblas_ddot', dependencies: blas))
-   #config_data.set10('HAVE_BLAS_FUNC_', cc.has_function('ddot_', dependencies: blas))
    naev_deps += blas
 
    ### Soft deps (required: false)
@@ -282,7 +280,7 @@ if buildExec.disabled() == false
 
    if host_machine.system() == 'darwin'
       add_languages('objc', native: false)
-      configure_file(input: 'extras/macos/Info.plist.in', output: 'Info.plist', configuration: config_data,
+      configure_file(input: 'extras/macos/Info.plist.in', output: 'Info.plist', configuration: app_metadata,
          install: true, install_dir: 'Contents')
       install_data('extras/logos/naev.icns', install_dir: ndata_path)
       naev_source += mac_source
@@ -294,8 +292,8 @@ if buildExec.disabled() == false
       icon = files('extras/logos/logo.ico')
       install_data(icon, install_dir: '.')
       res_include = include_directories('extras/logos')
-      win_manifest = configure_file(input: 'extras/windows/naev.exe.manifest.in', output: 'naev.exe.manifest', configuration: config_data)
-      win_rc = configure_file(input: 'extras/windows/resource.rc.in', output: 'resource.rc', configuration: config_data)
+      win_manifest = configure_file(input: 'extras/windows/naev.exe.manifest.in', output: 'naev.exe.manifest', configuration: app_metadata)
+      win_rc = configure_file(input: 'extras/windows/resource.rc.in', output: 'resource.rc', configuration: app_metadata)
       naev_source += windows.compile_resources(win_rc, depend_files: [win_manifest, icon], include_directories: res_include)
    endif
 
