@@ -44,11 +44,11 @@ local nongeneric_factions = {
 -- List to treat special factions differently
 local override_list = {
    -- Treat pirate clans the same (at least for now)
-   ["Wild Ones"] = "Pirate",
-   ["Raven Clan"] = "Pirate",
-   ["Dreamer Clan"] = "Pirate",
-   ["Black Lotus"] = "Pirate",
-   ["Marauder"] = "Pirate",
+   ["Wild Ones"]     = "Pirate",
+   ["Raven Clan"]    = "Pirate",
+   ["Dreamer Clan"]  = "Pirate",
+   ["Black Lotus"]   = "Pirate",
+   ["Marauder"]      = "Pirate",
 }
 
 -- Civilian descriptions for the spaceport bar.
