@@ -2524,7 +2524,6 @@ dat/events/neutral/baron_flintley.lua
 dat/events/neutral/baron_prowl.lua
 dat/events/neutral/derelict.lua
 dat/events/neutral/kidnapped.lua
-dat/events/neutral/npc.lua
 dat/events/neutral/shadow_comm.lua
 dat/events/neutral/shadow_comm2.lua
 dat/events/neutral/shiplover.lua
@@ -2546,6 +2545,7 @@ dat/events/news/soromid.lua
 dat/events/news/thurion.lua
 dat/events/news/zalek.lua
 dat/events/news/zalek_campaign.lua
+dat/events/npc.lua
 dat/events/pers.lua
 dat/events/pers/dvaered.lua
 dat/events/pers/empire.lua
