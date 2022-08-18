@@ -28,7 +28,6 @@ graphics card and driver supporting at least OpenGL 3.1, Naev requires:
 * OpenAL
 * OpenBLAS
 * libvorbis
-* binutils
 * intltool
 * libunibreak (included)
 * pyyaml
