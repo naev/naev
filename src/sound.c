@@ -321,9 +321,9 @@ static int sound_al_init (void)
 
    /* Set good default for sources. */
    attribs[0] = ALC_MONO_SOURCES;
-   attribs[1] = 1024;
+   attribs[1] = 256;
    attribs[2] = ALC_STEREO_SOURCES;
-   attribs[3] = 128;
+   attribs[3] = 16;
    nattribs = 4;
 
    /* Query EFX extension. */
