@@ -601,6 +601,7 @@ static int misn_accept( lua_State *L )
    else { /* copy it over */
       *new_misn = *cur_mission;
       memset( cur_mission, 0, sizeof(Mission) );
+      cur_mission->env = LUA_NOREF;
       cur_mission->accepted = 1; /* Propagated to the mission computer. */
       cur_mission = new_misn;
       cur_mission->accepted = 1; /* Mark as accepted. */

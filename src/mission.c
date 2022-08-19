@@ -142,6 +142,7 @@ static int mission_init( Mission* mission, const MissionData* misn, int genid, i
 {
    /* clear the mission */
    memset( mission, 0, sizeof(Mission) );
+   mission->env = LUA_NOREF;
 
    /* Create id if needed. */
    mission->id    = (genid) ? mission_genID() : 0;
@@ -698,7 +699,7 @@ void mission_cleanup( Mission* misn )
     * Mission struct of all zeros. Looking at the implementation, luaL_ref()
     * never returns 0, but this is probably undefined behavior.
     */
-   if (misn->env != 0)
+   if (misn->env != LUA_NOREF)
       nlua_freeEnv(misn->env);
 
    /* Data. */
@@ -718,6 +719,7 @@ void mission_cleanup( Mission* misn )
 
    /* Clear the memory. */
    memset( misn, 0, sizeof(Mission) );
+   misn->env = LUA_NOREF;
 }
 
 /**
