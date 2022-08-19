@@ -364,7 +364,7 @@ void nlua_freeEnv( nlua_env env )
    /* Remove from the environment table. */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, nlua_envs);
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
-   lua_pushboolean(naevL, 1);
+   lua_pushnil(naevL);
    lua_rawset(naevL, -3);
    lua_pop(naevL,1);
 
