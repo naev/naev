@@ -121,11 +121,11 @@ function land ()
       for i, article in ipairs( news.get( "header" ) ) do
          article:rm()
       end
-      evt.finish(false)
+      return
    end
    -- Needs a faction for there to be news
    local f = p:faction()
-   if f == nil then evt.finish(false) end
+   if f == nil then return end
    local my_faction = f:nameRaw()
 
    local t = override_list[my_faction]
