@@ -252,6 +252,13 @@ int nlua_dofileenv( nlua_env env, const char *filename )
    return 0;
 }
 
+#if DEBUGGING
+void nlua_pushEnvTable( lua_State *L )
+{
+   lua_rawgeti( L, LUA_REGISTRYINDEX, nlua_envs );
+}
+#endif /* DEBBUGING */
+
 /*
  * @brief Create an new environment in global Lua state.
  *

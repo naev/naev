@@ -55,6 +55,9 @@ static int naevL_cache( lua_State *L );
 static int naevL_trigger( lua_State *L );
 static int naevL_claimTest( lua_State *L );
 static int naevL_plugins( lua_State *L );
+#if DEBUGGING
+static int naevL_envs( lua_State *L );
+#endif /* DEBUGGING */
 static const luaL_Reg naev_methods[] = {
    { "version", naevL_version },
    { "versionTest", naevL_versionTest },
@@ -79,6 +82,9 @@ static const luaL_Reg naev_methods[] = {
    { "trigger", naevL_trigger },
    { "claimTest", naevL_claimTest },
    { "plugins", naevL_plugins },
+#if DEBUGGING
+   { "envs", naevL_envs },
+#endif /* DEBUGGING */
    {0,0}
 }; /**< Naev Lua methods. */
 
@@ -627,3 +633,11 @@ static int naevL_plugins( lua_State *L )
    }
    return 1;
 }
+
+#if DEBUGGING
+static int naevL_envs( lua_State *L )
+{
+   nlua_pushEnvTable( L );
+   return 1;
+}
+#endif /* DEBUGGING */
