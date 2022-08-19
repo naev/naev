@@ -260,58 +260,58 @@ int nlua_dofileenv( nlua_env env, const char *filename )
 nlua_env nlua_newEnv (void)
 {
    nlua_env ref;
-   lua_newtable(naevL);
-   lua_pushvalue(naevL, -1);
-   ref = luaL_ref(naevL, LUA_REGISTRYINDEX);
+   lua_newtable(naevL);       /* t */
+   lua_pushvalue(naevL, -1);  /* t, t */
+   ref = luaL_ref(naevL, LUA_REGISTRYINDEX); /* t */
 
    /* Store in the environment table. */
-   lua_rawgeti(naevL, LUA_REGISTRYINDEX, nlua_envs);
-   lua_pushvalue(naevL, -2);
-   lua_pushinteger(naevL, ref);
-   lua_rawset(naevL, -3);
-   lua_pop(naevL,1);
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, nlua_envs); /* t, e */
+   lua_pushvalue(naevL, -2);  /* t, e, t */
+   lua_pushinteger(naevL, ref); /* t, e, t, r */
+   lua_rawset(naevL, -3);     /* t, e */
+   lua_pop(naevL,1);          /* t */
 
    /* Metatable */
-   lua_newtable(naevL);
-   lua_pushvalue(naevL, LUA_GLOBALSINDEX);
-   lua_setfield(naevL, -2, "__index");
-   lua_setmetatable(naevL, -2);
+   lua_newtable(naevL);       /* t, m */
+   lua_pushvalue(naevL, LUA_GLOBALSINDEX); /* t, m, g */
+   lua_setfield(naevL, -2, "__index"); /* t, m */
+   lua_setmetatable(naevL, -2); /* t */
 
    /* Replace require() function with one that considers fenv */
-   lua_pushvalue(naevL, -1);
-   lua_pushcclosure(naevL, nlua_require, 1);
-   lua_setfield(naevL, -2, "require");
+   lua_pushvalue(naevL, -1); /* t, t, */
+   lua_pushcclosure(naevL, nlua_require, 1); /* t, t, c */
+   lua_setfield(naevL, -2, "require"); /* t, t */
 
    /* Set up paths.
     * "package.path" to look in the data.
     * "package.cpath" unset */
-   lua_getglobal(naevL, "package");
-   lua_pushstring(naevL, "?.lua;"LUA_INCLUDE_PATH"?.lua");
-   lua_setfield(naevL, -2, "path");
-   lua_pushstring(naevL, "");
-   lua_setfield(naevL, -2, "cpath");
-   lua_getfield(naevL, -1, "loaders");
-   lua_pushcfunction(naevL, nlua_package_loader_lua);
-   lua_rawseti(naevL, -2, 2);
-   lua_pushcfunction(naevL, nlua_package_loader_c);
-   lua_rawseti(naevL, -2, 3);
-   lua_pushcfunction(naevL, nlua_package_loader_croot);
-   lua_rawseti(naevL, -2, 4);
-   lua_pop(naevL, 2);
+   lua_getglobal(naevL, "package"); /* t, t, p */
+   lua_pushstring(naevL, "?.lua;"LUA_INCLUDE_PATH"?.lua"); /* t, t, p, s */
+   lua_setfield(naevL, -2, "path"); /* t, t, p */
+   lua_pushstring(naevL, "");    /* t, t, p, s */
+   lua_setfield(naevL, -2, "cpath"); /* t, t, p */
+   lua_getfield(naevL, -1, "loaders"); /* t, t, p, l */
+   lua_pushcfunction(naevL, nlua_package_loader_lua); /* t, t, p, l, f */
+   lua_rawseti(naevL, -2, 2); /* t, t, p, l */
+   lua_pushcfunction(naevL, nlua_package_loader_c); /* t, t, p, l, f */
+   lua_rawseti(naevL, -2, 3); /* t, t, p, l */
+   lua_pushcfunction(naevL, nlua_package_loader_croot); /* t, t, p, l, f */
+   lua_rawseti(naevL, -2, 4); /* t, t, p, l */
+   lua_pop(naevL, 2); /* t, t */
 
    /* The global table _G should refer back to the environment. */
-   lua_pushvalue(naevL, -1);
-   lua_setfield(naevL, -2, "_G");
+   lua_pushvalue(naevL, -1); /* t, t, t */
+   lua_setfield(naevL, -2, "_G"); /* t, t */
 
    /* Push if naev is built with debugging. */
 #if DEBUGGING
-   lua_pushboolean(naevL, 1);
-   lua_setfield(naevL, -2, "__debugging");
+   lua_pushboolean(naevL, 1); /* t, t, b */
+   lua_setfield(naevL, -2, "__debugging"); /* t, t, */
 #endif /* DEBUGGING */
 
    /* Set up naev namespace. */
-   lua_newtable(naevL);
-   lua_setfield(naevL, -2, "naev");
+   lua_newtable(naevL); /* t, t, n */
+   lua_setfield(naevL, -2, "naev"); /* t, t */
 
    /* Run common script. */
    if (conf.loaded && common_script==NULL) {
@@ -332,7 +332,7 @@ nlua_env nlua_newEnv (void)
       }
    }
 
-   lua_pop(naevL, 1);
+   lua_pop(naevL, 1); /* t */
    return ref;
 }
 
@@ -341,18 +341,22 @@ nlua_env nlua_newEnv (void)
  *
  *    @param env Enviornment to free.
  */
-void nlua_freeEnv(nlua_env env) {
-   if ((naevL != NULL) && (env != LUA_NOREF)) {
-      /* Remove from the environment table. */
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, nlua_envs);
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
-      lua_pushboolean(naevL, 1);
-      lua_rawset(naevL, -3);
-      lua_pop(naevL,1);
+void nlua_freeEnv( nlua_env env )
+{
+   if (naevL==NULL)
+      return;
+   if (env == LUA_NOREF)
+      return;
 
-      /* Unref. */
-      luaL_unref(naevL, LUA_REGISTRYINDEX, env);
-   }
+   /* Remove from the environment table. */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, nlua_envs);
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
+   lua_pushboolean(naevL, 1);
+   lua_rawset(naevL, -3);
+   lua_pop(naevL,1);
+
+   /* Unref. */
+   luaL_unref(naevL, LUA_REGISTRYINDEX, env);
 }
 
 /*
@@ -360,7 +364,8 @@ void nlua_freeEnv(nlua_env env) {
  *
  *    @param env Environment.
  */
-void nlua_pushenv(lua_State* L, nlua_env env) {
+void nlua_pushenv( lua_State* L, nlua_env env )
+{
    lua_rawgeti(L, LUA_REGISTRYINDEX, env);
 }
 
@@ -372,7 +377,8 @@ void nlua_pushenv(lua_State* L, nlua_env env) {
  *    @param env Environment.
  *    @param name Name of variable.
  */
-void nlua_getenv(lua_State* L, nlua_env env, const char *name) {
+void nlua_getenv( lua_State* L, nlua_env env, const char *name )
+{
    nlua_pushenv(L, env);            /* env */
    lua_getfield(L, -1, name);       /* env, value */
    lua_remove(L, -2);               /* value */
@@ -386,7 +392,8 @@ void nlua_getenv(lua_State* L, nlua_env env, const char *name) {
  *    @param env Environment.
  *    @param name Name of variable.
  */
-void nlua_setenv(lua_State* L, nlua_env env, const char *name) {
+void nlua_setenv( lua_State* L, nlua_env env, const char *name )
+{
                                 /* value */
    nlua_pushenv(L, env);        /* value, env */
    lua_insert(L, -2);           /* env, value */
@@ -404,8 +411,9 @@ void nlua_setenv(lua_State* L, nlua_env env, const char *name) {
  *    @param l Array of functions to register.
  *    @param metatable Library will be used as metatable (so register __index).
  */
-void nlua_register(nlua_env env, const char *libname,
-                   const luaL_Reg *l, int metatable) {
+void nlua_register( nlua_env env, const char *libname,
+                   const luaL_Reg *l, int metatable )
+{
    if (luaL_newmetatable(naevL, libname)) {
       if (metatable) {
          lua_pushvalue(naevL,-1);
