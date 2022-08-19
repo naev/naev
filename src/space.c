@@ -3527,7 +3527,7 @@ void space_exit (void)
    }
    array_free(spob_stack);
 
-   for (int i=0; i < array_size(spob_lua_stack); i++)
+   for (int i=0; i<array_size(spob_lua_stack); i++)
       spob_lua_free( &spob_lua_stack[i] );
    array_free(spob_lua_stack);
 
