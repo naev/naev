@@ -49,6 +49,7 @@ static LuaAudioEfx_t *lua_efx = NULL;
 static int stream_thread( void *la_data );
 static int stream_loadBuffer( LuaAudio_t *la, ALuint buffer );
 static void rg_filter( float **pcm, long channels, long samples, void *filter_param );
+static int audio_genSource( ALuint *source );
 
 /* Audio methods. */
 static int audioL_gc( lua_State *L );
@@ -464,6 +465,38 @@ static int audioL_eq( lua_State *L )
 }
 
 /**
+ * @brief Tries to generate a single openal source, running GC if necessary.
+ */
+static int audio_genSource( ALuint *source )
+{
+   ALenum err;
+   alGenSources( 1, source );
+   if (alIsSource( *source)==AL_TRUE)
+      return 0;
+   err = alGetError();
+   switch (err) {
+      case AL_NO_ERROR:
+         break;
+      case AL_OUT_OF_MEMORY:
+         /* Assume that we need to collect audio stuff. */
+         soundUnlock();
+         lua_gc( naevL, LUA_GCCOLLECT, 0 );
+         soundLock();
+         /* Try to create source again. */
+         alGenSources( 1, source );
+         al_checkErr();
+         break;
+
+      default:
+#if DEBUGGING
+         al_checkHandleError( err, __func__, __LINE__ );
+#endif /* DEBUGGING */
+         return -1;
+   }
+   return 0;
+}
+
+/**
  * @brief Creates a new audio source.
  *
  *    @luatparam string|File data Data to load the audio from.
@@ -518,29 +551,7 @@ static int audioL_new( lua_State *L )
 #endif /* DEBUGGING */
 
    soundLock();
-   alGenSources( 1, &la.source );
-   if (alIsSource( la.source )!=AL_TRUE) {
-      ALenum err = alGetError();
-      switch (err) {
-         case AL_NO_ERROR:
-            break;
-         case AL_OUT_OF_MEMORY:
-            /* Assume that we need to collect audio stuff. */
-            soundUnlock();
-            lua_gc( naevL, LUA_GCCOLLECT, 0 );
-            soundLock();
-            /* Try to create source again. */
-            alGenSources( 1, &la.source );
-            al_checkErr();
-            break;
-
-         default:
-#if DEBUGGING
-            al_checkHandleError( err, __func__, __LINE__ );
-#endif /* DEBUGGING */
-            break;
-      }
-   }
+   audio_genSource( &la.source );
 
    /* Deal with stream. */
    if (!stream) {
@@ -624,7 +635,7 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
    }
 
    soundLock();
-   alGenSources( 1, &la->source );
+   audio_genSource( &la->source );
 
    switch (la->type) {
       case LUA_AUDIO_STATIC:
