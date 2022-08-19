@@ -416,7 +416,7 @@ int gl_init (void)
 
    /* Defaults. */
    memset( &gl_screen, 0, sizeof(gl_screen) );
-
+   SDL_SetHint( "SDL_WINDOWS_DPI_SCALING", "1" );
    flags = SDL_WINDOW_OPENGL | gl_getFullscreenMode();
 
    /* Initializes Video */
