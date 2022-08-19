@@ -10,8 +10,9 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-13 21:14-0400\n"
-"PO-Revision-Date: 2022-03-05 05:58+0000\n"
-"Last-Translator: Thiago Oliveira <thiagodaqui@gmail.com>\n"
+"PO-Revision-Date: 2022-08-19 08:17+0000\n"
+"Last-Translator: Anthony Gregory Souza dos Santos "
+"<antonigregorysouza123@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -19,28 +20,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: physfs.c:1
 msgid "no error"
-msgstr ""
+msgstr "sem erro"
 
 #: physfs.c:2 src/background.c:472 src/gui.c:1718 src/nlua_evt.c:146
 #: src/nlua_misn.c:240 src/nopenal.c:72
 msgid "unknown error"
-msgstr ""
+msgstr "erro desconhecido"
 
 #: physfs.c:3
 msgid "out of memory"
-msgstr ""
+msgstr "fora da memória"
 
 #: physfs.c:4
 msgid "not initialized"
-msgstr ""
+msgstr "não inicializado"
 
 #: physfs.c:5
 msgid "already initialized"
-msgstr ""
+msgstr "já inicializado"
 
 #: physfs.c:6
 msgid "argv[0] is NULL"
@@ -48,11 +49,11 @@ msgstr ""
 
 #: physfs.c:7
 msgid "unsupported"
-msgstr ""
+msgstr "sem suporte"
 
 #: physfs.c:8
 msgid "past end of file"
-msgstr ""
+msgstr "fim do arquivo passado"
 
 #: physfs.c:9
 msgid "files still open"
@@ -663,41 +664,42 @@ msgstr ""
 
 #: dat/AUTHORS:124
 msgid "Cypher3c <cypher3c@gmail.com>"
-msgstr ""
+msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
 msgid "   * Spiced up the boring generic cargo missions."
-msgstr ""
+msgstr "* Apimentado as missões de carga genéricas chatas."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
-msgstr ""
+msgstr "Nathan Loewen <loewen.nathan@gmail.com>"
 
 #: dat/AUTHORS:128
 msgid "   * Missions"
-msgstr ""
+msgstr "* Missões"
 
 #: dat/AUTHORS:129
 msgid "   * Misc coding support"
-msgstr ""
+msgstr "* Suporte de codificação variada"
 
 #: dat/AUTHORS:131
 msgid "Fisherman"
-msgstr ""
+msgstr "Pescador"
 
 #: dat/AUTHORS:132
 msgid ""
 "   * Threading code to speed up nebula generation (and in the future who "
 "knows?)"
 msgstr ""
+"* Threading code para acelerar a geração da nebulosa (e no futuro quem sabe?)"
 
 #: dat/AUTHORS:133
 msgid "   * Hot dog mission"
-msgstr ""
+msgstr "* Missão do cachorro-quente"
 
 #: dat/AUTHORS:135
 msgid "Ludovic Bellière \"xrogaan\""
-msgstr ""
+msgstr "Ludovic Bellière \"xrogaan\""
 
 #: dat/AUTHORS:136
 msgid "   * Python programmer extraordinaire"
@@ -1876,7 +1878,7 @@ msgstr ""
 
 #: dat/factions/strangelove.xml:2
 msgid "Strangelove"
-msgstr ""
+msgstr "Strangelove"
 
 #: dat/factions/thurion.xml:2
 msgid "Thurion"
@@ -20955,7 +20957,7 @@ msgstr ""
 #: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:143
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:81
 msgid "Crimson Gauntlet"
-msgstr ""
+msgstr "Manopla Carmesim"
 
 #: dat/ssys/cygnus.xml:2
 msgid "Cygnus"
@@ -42094,94 +42096,99 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:65
 msgid "Look down, you weaklings."
-msgstr ""
+msgstr "Olhe para baixo, seus fracos."
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:66
 msgid "Only submission will save you from my anger!"
-msgstr ""
+msgstr "Somente a submissão o salvará da minha raiva!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:67
 msgid "Kneel, for I am destined to rule you all!"
-msgstr ""
+msgstr "Ajoelhe-se, pois estou destinado a governar todos vocês!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:68
 msgid "Worship my strength, or burn by my railguns."
-msgstr ""
+msgstr "Adore minha força, ou queime por minhas armas de ferro."
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:69
 msgid "Here comes Daddy!"
-msgstr ""
+msgstr "Aí vem papai!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:70
 msgid ""
 "I am an artist of Pain and Destruction. Who wants to be part of my next "
 "masterpiece?"
 msgstr ""
+"Eu sou um artista de Dor e Destruição. Quem quer fazer parte da minha "
+"próxima obra-prima?"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:71
 msgid "Make way for the supplier of Hell!"
-msgstr ""
+msgstr "Abram caminho para o fornecedor do Inferno!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:72
 msgid ""
 "Death is everyone's ultimate destination. Pissing me off means taking a "
 "shortcut."
 msgstr ""
+"A morte é o destino final de todos. Me irritar significa pegar um atalho."
 
 #. This might be hard to translate, but that is not a problem IMHO as it is actually supposed to be an automatically generated message.
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:76
 msgid "caterer"
-msgstr ""
+msgstr "fornecedor"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:77
 msgid "butcher"
-msgstr ""
+msgstr "açougueiro"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:78
 msgid "brewer"
-msgstr ""
+msgstr "cervejeiro"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:79
 msgid "waiter"
-msgstr ""
+msgstr "garçom"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:80
 msgid "vigil"
-msgstr ""
+msgstr "vigília"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:81
 msgid "gladiator"
-msgstr ""
+msgstr "gladiador"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:82
 msgid "rat exterminator"
-msgstr ""
+msgstr "exterminador de ratos"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:83
 msgid "emergency doctor"
-msgstr ""
+msgstr "médico de emergência"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:84
 msgid "weapons dealer"
-msgstr ""
+msgstr "traficante de armas"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:85
 msgid "drug dealer"
-msgstr ""
+msgstr "traficante de drogas"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:86
 msgid "torturer"
-msgstr ""
+msgstr "torturador"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:97
 msgid ""
 "Judging by how he looks at you, Strafer needs you for another mission along "
 "with the Dvaered Space Force."
 msgstr ""
+"A julgar por como ele olha para você, Strafer precisa de você para outra "
+"missão junto com a Força Espacial Dvaered."
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:101
 msgid "We need you once more"
-msgstr ""
+msgstr "Precisamos de você mais uma vez"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:101
 msgid ""
@@ -42196,16 +42203,28 @@ msgid ""
 "action against us.\"\n"
 "   \"Do you want to help us against this threat?\""
 msgstr ""
+"Enquanto você se senta à mesa dele, o piloto Dvaered claramente ansioso para "
+"de roer as unhas e explica por que ele está aqui.\n"
+"   \"O Alto Comando convocou, a pedido do General Klank, uma reunião "
+"especial do Alto Conselho de Senhores da Guerra, e todos eles concordaram em "
+"vir...\" Você franze a testa, e antes que tenha a chance de perguntar por "
+"que isso é um problema, ele continua: \"... mas recebemos um relatório de "
+"inteligência segundo o qual o ex-coronel Hamelsen, que já tentou assassinar "
+"o major Tam várias vezes, vai aproveitar esta reunião para agir contra nós\"."
+"\n"
+"   \"Você quer nos ajudar contra essa ameaça?\""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:104
 msgid ""
 "Mm. I see. you probably have much more interesting things to do than being "
 "loyal to the Dvaered Nation..."
 msgstr ""
+"Milímetros. Eu vejo. você provavelmente tem coisas muito mais interessantes "
+"para fazer do que ser leal à Nação Dvaered..."
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:107
 msgid "Here is the situation"
-msgstr ""
+msgstr "Aqui está a situação"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:107
 msgid ""
@@ -82686,6 +82705,8 @@ msgid ""
 "\"Patience, Sam Flynn. All of your questions will be answered soon. …Wait, "
 "what was that?\""
 msgstr ""
+"\"Paciência, Sam Flynn. Todas as suas perguntas serão respondidas em "
+"breve... Espere, o que foi isso?\""
 
 #. Tron (Legacy)
 #: dat/scripts/common/tutorial.lua:24
@@ -82700,6 +82721,8 @@ msgid ""
 "\"For your convenience I am programmed to respond to the name Robby. …Wait, "
 "what was that?\""
 msgstr ""
+"\"Para sua conveniência, estou programado para responder pelo nome Robby. "
+"... Espere, o que foi isso?\""
 
 #. Forbidden Planet
 #: dat/scripts/common/tutorial.lua:26
@@ -82742,6 +82765,7 @@ msgstr "ZA'LEK STING"
 msgid ""
 "Zach looks like he is idle at the bar. You wonder what he's thinking about."
 msgstr ""
+"Zach parece estar ocioso no bar. Você se pergunta no que ele está pensando."
 
 #. TODO change image to proper one when Nohinohi graphics are changed
 #: dat/scripts/common/zalek_blackhole.lua:32
@@ -82762,7 +82786,7 @@ msgstr ""
 
 #: dat/scripts/common/zalek_physics.lua:20
 msgid "You see Noona who looks like she might have a job for you."
-msgstr ""
+msgstr "Você vê Noona que parece ter um emprego para você."
 
 #. + "Heavy Weapons Combat License" permission
 #. zpp05 = 0, -- No payment, reall small flashback really
