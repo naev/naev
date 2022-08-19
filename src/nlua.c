@@ -221,17 +221,23 @@ void lua_exit (void)
  *    @param buff Pointer to buffer.
  *    @param sz Size of buffer.
  *    @param name Name to use in error messages.
+ *    @return 0 on success.
  */
 int nlua_dobufenv( nlua_env env,
                    const char *buff,
                    size_t sz,
-                   const char *name) {
+                   const char *name )
+{
    if (luaL_loadbuffer(naevL, buff, sz, name) != 0)
       return -1;
    nlua_pushenv(naevL, env);
    lua_setfenv(naevL, -2);
    if (nlua_pcall(env, 0, LUA_MULTRET) != 0)
       return -1;
+#if DEBUGGING
+   lua_pushstring( naevL, name );
+   nlua_setenv( naevL, env, "__name" );
+#endif /* DEBUGGING */
    return 0;
 }
 
