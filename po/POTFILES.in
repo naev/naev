@@ -2546,6 +2546,7 @@ dat/events/news/thurion.lua
 dat/events/news/zalek.lua
 dat/events/news/zalek_campaign.lua
 dat/events/npc.lua
+dat/events/npc/empire.lua
 dat/events/npc/generic.lua
 dat/events/pers.lua
 dat/events/pers/dvaered.lua
