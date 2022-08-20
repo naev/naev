@@ -411,16 +411,16 @@ static void menu_main_cleanBG( unsigned int wid, const char *str )
 /**
  * @brief Opens the small in-game menu.
  */
-void menu_small (void)
+void menu_small( int docheck, int info, int options )
 {
    int can_save;
    unsigned int wid;
-   int y;
+   int y, h;
 
    /* Check if menu should be openable. */
-   if (player_isFlag(PLAYER_DESTROYED) ||
+   if (docheck && (player_isFlag(PLAYER_DESTROYED) ||
          dialogue_isOpen() || /* Shouldn't open over dialogues. */
-         (menu_isOpen(MENU_MAIN) || menu_isOpen(MENU_DEATH) ))
+         (menu_isOpen(MENU_MAIN) || menu_isOpen(MENU_DEATH) )))
       return;
 
    if (menu_isOpen( MENU_SMALL ))
@@ -428,8 +428,9 @@ void menu_small (void)
 
    can_save = landed && !player_isFlag(PLAYER_NOSAVE);
 
-   y = 20 + (BUTTON_HEIGHT+20)*4;
-   wid = window_create( "wdwMenuSmall", _("Menu"), -1, -1, MENU_WIDTH, MENU_HEIGHT + BUTTON_HEIGHT + 20 );
+   h = MENU_HEIGHT - (BUTTON_HEIGHT+20)*(!info+!options);
+   y = 20 + (BUTTON_HEIGHT+20)*(2+!!info+!!options);
+   wid = window_create( "wdwMenuSmall", _("Menu"), -1, -1, MENU_WIDTH, h + BUTTON_HEIGHT + 20 );
 
    window_setCancel( wid, menu_small_resume );
 
@@ -437,18 +438,22 @@ void menu_small (void)
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnResume", _("Resume"), menu_small_resume, SDLK_r );
    y -= BUTTON_HEIGHT+20;
-   window_addButtonKey( wid, 20, y,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnInfo", _("Info"), menu_small_info, SDLK_i );
-   y -= BUTTON_HEIGHT+20;
+   if (info) {
+      window_addButtonKey( wid, 20, y,
+            BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnInfo", _("Info"), menu_small_info, SDLK_i );
+      y -= BUTTON_HEIGHT+20;
+   }
    window_addButtonKey( wid, 20, y,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSave", can_save ? _("Load / Save") : _("Load"), menu_small_load, SDLK_l );
    y -= BUTTON_HEIGHT+20;
-   window_addButtonKey( wid, 20, y,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOptions", _("Options"), menu_options_button, SDLK_o );
-   y -= BUTTON_HEIGHT+20;
+   if (options) {
+      window_addButtonKey( wid, 20, y,
+            BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnOptions", _("Options"), menu_options_button, SDLK_o );
+      y -= BUTTON_HEIGHT+20;
+   }
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", _("Exit to Title"), menu_small_exit, SDLK_x );
 

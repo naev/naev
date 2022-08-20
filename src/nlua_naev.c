@@ -705,14 +705,13 @@ static int naevL_menuInfo( lua_State *L )
  *
  * @usage naev.menuSmall()
  *
+ *    @luatparam[opt=false] boolean info Show the info button.
+ *    @luatparam[opt=false] boolean options Show the options button.
  * @luafunc menuSmall
  */
 static int naevL_menuSmall( lua_State *L )
 {
-   (void) L;
-   if (menu_open)
-      return 0;
-   menu_small();
+   menu_small( 0, lua_toboolean(L,1), lua_toboolean(L,2) );
    return 0;
 }
 
