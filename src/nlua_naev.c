@@ -707,11 +707,12 @@ static int naevL_menuInfo( lua_State *L )
  *
  *    @luatparam[opt=false] boolean info Show the info button.
  *    @luatparam[opt=false] boolean options Show the options button.
+ *    @luatparam[opt=false] boolean allowsave Allow saving the game from the menu (either directly or by exiting the game from the menu).
  * @luafunc menuSmall
  */
 static int naevL_menuSmall( lua_State *L )
 {
-   menu_small( 0, lua_toboolean(L,1), lua_toboolean(L,2) );
+   menu_small( 0, lua_toboolean(L,1), lua_toboolean(L,2), lua_toboolean(L,3) );
    return 0;
 }
 

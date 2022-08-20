@@ -1004,7 +1004,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       }
    /* opens a small menu */
    } else if (KEY("menu") && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) menu_small( 1, 1, 1 );
+      if (value==KEY_PRESS) menu_small( 1, 1, 1, 1 );
 
    /* shows pilot information */
    } else if (KEY("info") && NOHYP() && NODEAD() && !repeat) {

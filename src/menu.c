@@ -67,6 +67,7 @@
 int menu_open = 0; /**< Stores the opened/closed menus. */
 
 static glTexture *main_naevLogo = NULL; /**< Naev Logo texture. */
+static int menu_small_allowsave = 1; /** Can save with small menu. */
 
 /*
  * prototypes
@@ -412,7 +413,7 @@ static void menu_main_cleanBG( unsigned int wid, const char *str )
 /**
  * @brief Opens the small in-game menu.
  */
-void menu_small( int docheck, int info, int options )
+void menu_small( int docheck, int info, int options, int allowsave )
 {
    int can_save;
    unsigned int wid;
@@ -427,7 +428,8 @@ void menu_small( int docheck, int info, int options )
    if (menu_isOpen( MENU_SMALL ))
       return;
 
-   can_save = landed && !player_isFlag(PLAYER_NOSAVE);
+   can_save = allowsave && landed && !player_isFlag(PLAYER_NOSAVE);
+   menu_small_allowsave = allowsave;
 
    h = MENU_HEIGHT - (BUTTON_HEIGHT+20)*(!info+!options);
    y = 20 + (BUTTON_HEIGHT+20)*(2+!!info+!!options);
@@ -472,7 +474,7 @@ static void menu_small_load( unsigned int wid, const char *str )
    (void) str;
 
    load_refresh(); /* FIXME: Substitute proper cache invalidation in case of save_all() etc. */
-   load_loadSnapshotMenu( player.name );
+   load_loadSnapshotMenu( player.name, !menu_small_allowsave );
 }
 
 /**
@@ -520,7 +522,7 @@ static int menu_small_exit_hook( void* unused )
    /* Still stuck in a dialogue, so we have to do another hook pass. */
    if (dialogue_isOpen()) {
       hook_addFunc( menu_small_exit_hook, NULL, "safe" );
-      return;
+      return 0;
    }
 
    /* if landed we must save anyways */
@@ -556,6 +558,11 @@ static void menu_small_exit( unsigned int wid, const char *str )
 {
    (void) wid;
    (void) str;
+
+   if (!menu_small_allowsave && landed && land_canSave()) {
+      if (!dialogue_YesNoRaw(_("Exit to Menu?"),_("Are you sure you wish to exit to menu right now? The game #rwill not be saved#0 since last time you landed!") ))
+         return;
+   }
 
    /* Break out of potential inner loops. */
    SDL_Event event;

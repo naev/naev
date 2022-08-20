@@ -559,8 +559,9 @@ void load_loadGameMenu (void)
 /**
  * @brief Opens the load snapshot menu.
  *    @param name Player's name.
+ *    @param disablesave Forcibly disable saving.
  */
-void load_loadSnapshotMenu( const char *name )
+void load_loadSnapshotMenu( const char *name, int disablesave )
 {
    unsigned int wid;
    char **names;
@@ -629,7 +630,7 @@ void load_loadSnapshotMenu( const char *name )
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDelete", _("Delete"), load_snapshot_menu_delete );
 
-   if (window_exists( "wdwLoadGameMenu" ))
+   if (disablesave || window_exists( "wdwLoadGameMenu" ))
       window_disableButton( wid, "btnSave" );
    else {
       can_save = landed && !player_isFlag(PLAYER_NOSAVE);
@@ -651,7 +652,7 @@ static void load_menu_snapshots( unsigned int wdw, const char *str )
    pos = toolkit_getListPos( wdw, "lstNames" );
    if (array_size(load_saves) <= 0)
       return;
-   load_loadSnapshotMenu( load_saves[pos].name );
+   load_loadSnapshotMenu( load_saves[pos].name, 1 );
 }
 
 /**
@@ -679,7 +680,7 @@ static void load_snapshot_menu_save( unsigned int wdw, const char *str )
    else {
       load_refresh();
       load_snapshot_menu_close( wdw, str );
-      load_loadSnapshotMenu( player.name );
+      load_loadSnapshotMenu( player.name, 1 );
    }
 }
 
@@ -970,7 +971,7 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
       load_menu_close( wid, str );
       load_loadGameMenu();
    }
-   load_loadSnapshotMenu( selected_player );
+   load_loadSnapshotMenu( selected_player, 1 );
 }
 
 static void load_compatSlots (void)
