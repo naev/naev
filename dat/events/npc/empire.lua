@@ -213,7 +213,7 @@ return function ()
       -- Append the faction to the civilian name, unless there is no faction.
       local fct = "Empire"
       local name = _("Empire Civilian")
-      local desc = desc_list[ rnd.rnd(1,#desc_list) ]
+      local desc = descriptions[ rnd.rnd(1,#descriptions) ]
       local prt  = portrait.get( fct )
       local image = portrait.getFullPath( prt )
       local msg, func

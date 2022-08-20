@@ -98,7 +98,7 @@ function land ()
             npcdata.name = npcdata.name()
          end
          if type(npcdata.desc)=="function" then
-            npcdata.desc= npcdata.desc()
+            npcdata.desc = npcdata.desc()
          end
          local id = evt.npcAdd( "npc_talk", npcdata.name, npcdata.portrait, npcdata.desc, 10 )
          npcs[id] = npcdata
