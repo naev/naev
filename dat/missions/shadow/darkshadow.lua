@@ -21,7 +21,7 @@ require "proximity"
 
 local genbu, joe, leader, leaderdest, leaderstart, seiryuu, squads -- Non-persistent state
 local spawnGenbu, spawnSquads -- Forward-declared functions
--- luacheck: globals attacked continueAmbush enter invProximity joeBoard jumpout land leaderIdle leaderVis patrolPoll playerControl seiryuuBoard showMsg showText spawnInterceptors squadVis startAmbush zoomTo (Hook functions passed by name)
+-- luacheck: globals attacked continueAmbush enter invProximity joeBoard jumpout land spobNpcs leaderIdle leaderVis patrolPoll playerControl seiryuuBoard showMsg showText spawnInterceptors squadVis startAmbush zoomTo (Hook functions passed by name)
 -- luacheck: globals barman jorek (NPC functions passed by name)
 
 -- Mission constants
@@ -73,6 +73,7 @@ local function accept2()
    misn.setDesc(_([[You have been tasked by Captain Rebina of the Four Winds to assist Jorek McArthy.]]))
    misn.setReward(_("A sum of money."))
    mem.landhook = hook.land("land")
+   mem.loadhook = hook.load("spobNpcs") -- Ensure NPCs appear at loading
    mem.jumpouthook = hook.jumpout("jumpout")
 end
 
@@ -386,6 +387,13 @@ function land()
    if spob.cur() == jorekplanet1 and mem.stage == 2 then
       -- Thank you player, but our SHITMAN is in another castle.
       tk.msg(_("No Jorek"), _([[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]]))
+   end
+   spobNpcs()
+end
+
+-- Get the NPCs to appear
+function spobNpcs()
+   if spob.cur() == jorekplanet1 and mem.stage == 2 then
       mem.barmanNPC = misn.npcAdd("barman", _("Barman"), "neutral/barman.webp", _("The barman seems to be eyeing you in particular."), 4)
    elseif spob.cur() == jorekplanet2 and mem.stage == 3 then
       mem.joreknpc = misn.npcAdd("jorek", _("Jorek"), "neutral/unique/jorek.webp", _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."), 4)
