@@ -83,7 +83,7 @@ return function ()
    local tags = cur:tags()
 
    -- Need presence in the system
-   if presence < 0 then
+   if presence <= 0 then
       return nil
    end
 

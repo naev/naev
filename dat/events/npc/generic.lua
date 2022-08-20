@@ -220,7 +220,7 @@ return function ()
    local presence = scur:presences()["Independent"] or 0
 
    -- Need independent presence in the system
-   if presence < 0 then
+   if presence <= 0 then
       return nil
    end
 
