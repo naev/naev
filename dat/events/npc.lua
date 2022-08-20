@@ -72,15 +72,22 @@ function land ()
          w = w+v.w
          if r < w then
             npcdata = v.create()
-            local npcrep = false
-            for j,n in pairs(npcs) do
-               if n.msg == npcdata.msg then
-                  npcrep = true
+            -- Only do 5 tries to not overlap
+            for nrep = 1,5 do
+               -- Make sure NPC doesn't overlap with new NPCs
+               local npcrep = false
+               for j,n in pairs(npcs) do
+                  if n.msg == npcdata.msg then
+                     npcrep = true
+                     break
+                  end
+               end
+               -- Also try make sure it's not a message e have seen before
+               if npcrep or npccache[ npcdata.msg ] then
+                  npcdata = v.create() -- Try to recreate
+               else
                   break
                end
-            end
-            if npcrep or npccache[ npcdata.msg ] then
-               npcdata = v.create() -- Try to recreate
             end
             break
          end
