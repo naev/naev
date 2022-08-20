@@ -220,14 +220,6 @@ end
 
 -- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
 local function getMissionLikeMessage( fct )
-   if not msg_combined then
-      msg_combined = {}
-      for k,msg in ipairs( npc.msg_cond ) do
-         if msg[1]() then
-            table.insert( msg_combined, msg[2] )
-         end
-      end
-   end
 
    if #msg_combined == 0 then
       return getLoreMessage( fct )
@@ -274,6 +266,14 @@ return function ()
    -- Don't appear on restricted assets
    if cur:tags().restricted then
       return nil
+   end
+
+   -- Create a list of conditional messages
+   msg_combined = {}
+   for k,msg in ipairs( npc.msg_cond ) do
+      if msg[1]() then
+         table.insert( msg_combined, msg[2] )
+      end
    end
 
    local function gen_npc()
