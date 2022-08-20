@@ -53,7 +53,14 @@ function land ()
       return a.w > b.w
    end )
 
-   local num_npc = rnd.rnd(1, 5)
+   local num_npc
+   if t.urban then
+      num_npc = rnd.rnd(2, 7)
+   elseif t.rural then
+      num_npc = rnd.rnd(1, 3)
+   else
+      num_npc = rnd.rnd(1, 5)
+   end
    local w = 0
    npcs = {}
    for i=0, num_npc do
