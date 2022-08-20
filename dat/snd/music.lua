@@ -91,7 +91,7 @@ local factional = {
    Empire     = { "empire1.ogg", "empire2.ogg"; add_neutral = true },
    Sirius     = { "sirius1.ogg", "sirius2.ogg"; add_neutral = true },
    Dvaered    = { "dvaered1.ogg", "dvaered2.ogg"; add_neutral = true },
-   ["Za'lek"] = { "zalek1.ogg", "zalek2.ogg"; add_neutral = true },
+   ["Za'lek"] = { "zalek1.ogg", "zalek2.ogg", "approach.ogg"; add_neutral = true },
    Thurion    = { "motherload.ogg", "dark_city.ogg", "ambient1.ogg", "ambient3.ogg" },
    Proteron   = { "heartofmachine.ogg", "imminent_threat.ogg", "ambient4.ogg" },
 }
