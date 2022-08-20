@@ -32,15 +32,6 @@ msg_lore["Independent"] = {
    _([["Sometimes I worry that our lack of a standing military leaves us vulnerable to attack. I hope nobody will get any ideas about conquering us!"]]),
 }
 
-msg_lore["Empire"] = {
-   _([["Things are getting worse by the cycle. What happened to the Empire? We used to be the lords and masters over the whole galaxy!"]]),
-   _([["Did you know that House Za'lek was originally a Great Project initiated by the Empire? Well, now you do! There was also a Project Proteron, but that didn't go so well."]]),
-   _([["The Emperor lives on a giant supercruiser in Gamma Polaris. It's said to be the biggest ship in the galaxy! I totally want one."]]),
-   _([["I'm still waiting for my pilot license application to get through. Oh well, it's only been half a cycle, I just have to be patient."]]),
-   _([["Between you and me, the laws the Council passes can get really ridiculous! Most planets find creative ways of ignoring them…"]]),
-   _([["Don't pay attention to the naysayers. The Empire is still strong. Have you ever seen a Peacemaker up close? I doubt any ship fielded by any other power could stand up to one."]]),
-}
-
 msg_lore["Dvaered"] = {
    _([["Our Warlord is currently fighting for control over another planet. We all support him unconditionally, of course! Of course…"]]),
    _([["My great-great-great-grandfather fought in the Dvaered Revolts! We still have the holovids he made. I'm proud to be a Dvaered!"]]),
@@ -228,47 +219,21 @@ local function getTipMessage( fac )
 end
 
 -- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
-local function getMissionLikeMessage( fac )
+local function getMissionLikeMessage( fct )
    if not msg_combined then
       msg_combined = {}
-
-      -- Hints.
-      -- Hint messages are only valid if the relevant mission has not been completed and is not currently active.
-      for i, j in pairs(npc.msg_mhint) do
-         if not (player.misnDone(j[1]) or player.misnActive(j[1])) then
-            msg_combined[#msg_combined + 1] = j[2]
-         end
-      end
-      for i, j in pairs(npc.msg_ehint) do
-         if not(player.evtDone(j[1]) or player.evtActive(j[1])) then
-            msg_combined[#msg_combined + 1] = j[2]
-         end
-      end
-
-      -- After-care.
-      -- After-care messages are only valid if the relevant mission has been completed.
-      for i, j in pairs(npc.msg_mdone) do
-         if player.misnDone(j[1]) then
-            msg_combined[#msg_combined + 1] = j[2]
-         end
-      end
-      for i, j in pairs(npc.msg_edone) do
-         if player.evtDone(j[1]) then
-            msg_combined[#msg_combined + 1] = j[2]
+      for k,msg in ipairs( npc.msg_cond ) do
+         if msg[1]() then
+            table.insert( msg_combined, msg[2] )
          end
       end
    end
 
    if #msg_combined == 0 then
-      return getLoreMessage(fac)
-   else
-      -- Select a string, then remove it from the list of valid strings. This ensures all NPCs have something different to say.
-      local sel = rnd.rnd(1, #msg_combined)
-      local pick
-      pick = msg_combined[sel]
-      table.remove(msg_combined, sel)
-      return pick
+      return getLoreMessage( fct )
    end
+
+   return rnd.rnd(1, #msg_combined)
 end
 
 -- Factions which will NOT get generic texts if possible.  Factions

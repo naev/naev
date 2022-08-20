@@ -6,6 +6,30 @@ local tut = require "common.tutorial"
 
 local npc = {}
 
+function npc.test_misnHint( misnname )
+   return function ()
+      return not (player.misnDone(misnname) or player.misnActive(misnname))
+   end
+end
+
+function npc.test_evtHint( evtname )
+   return function ()
+      return not (player.evtDone(evtname) or player.evtActive(evtname))
+   end
+end
+
+function npc.test_misnDone( misnname )
+   return function ()
+      return player.misnDone(misnname)
+   end
+end
+
+function npc.test_evtDone( evtname )
+   return function ()
+      return player.evtDone(evtname)
+   end
+end
+
 --[[
 Civilian descriptions for the spaceport bar.
 These descriptions will be picked at random, and may be picked multiple times
@@ -109,73 +133,24 @@ npc.msg_jmp = {
 }
 
 --[[
-Mission hint messages.
-Each element should be a table containing the mission name and the
-corresponding hint.  ALL NPCs have a chance to say one of these lines instead
-of a lore message.  So, make sure the hints are always faction neutral.
+Conditional messages.
 --]]
-npc.msg_mhint = {
-   {"Shadowrun", _([["Apparently there's a woman who regularly turns up on planets in and around the Klantar system. I wonder what she's looking for?"]])},
-   {"Hitman", _([["There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"]])},
-   {"Za'lek Shipping Delivery", _([["So there's some Za'lek scientist looking for a cargo jockey out on Niflheim in the Dohriabi system. I hear it's pretty good money."]])},
+npc.msg_cond = {
+   -- Mission Hints
+   {npc.test_misnHint("Shadowrun"), _([["Apparently there's a woman who regularly turns up on planets in and around the Klantar system. I wonder what she's looking for?"]])},
+   {npc.test_misnHint("Hitman"), _([["There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"]])},
+   {npc.test_misnHint("Za'lek Shipping Delivery"), _([["So there's some Za'lek scientist looking for a cargo jockey out on Niflheim in the Dohriabi system. I hear it's pretty good money."]])},
+   -- Event hints
+   {npc.test_evtHint("FLF/DV Derelicts"), _([["The FLF and the Dvaered sometimes clash in Surano. If you go there, you might find something of interest… Or not."]])},
+   -- Mission Completion
+   {npc.test_misnDone("Nebula Satellite"), _([["Heard some reckless scientists got someone to put a satellite inside the nebula for them. I thought everyone with half a brain knew to stay out of there, but oh well."]])},
+   {npc.test_misnDone("Shadow Vigil"), _([["Did you hear? There was some big incident during a diplomatic meeting between the Empire and the Dvaered. Nobody knows what exactly happened, but both diplomats died. Now both sides are accusing the other of foul play. Could get ugly."]])},
+   {npc.test_misnDone("Baron"), _([["Some thieves broke into a museum on Varia and stole a holopainting! Most of the thieves were caught, but the one who carried the holopainting offworld is still at large. No leads. Damn criminals…"]])},
+   {npc.test_misnDone("Destroy the FLF base!"), _([["The Dvaered scored a major victory against the FLF recently. They went into Sigur and blew the hidden base there to bits! I bet that was a serious setback for the FLF."]])},
+   -- Event Completion
+   {npc.test_evtDone("Animal trouble"), _([["What? You had rodents sabotage your ship? Man, you're lucky to be alive. If it had hit the wrong power line…"]])},
+   {npc.test_evtDone("Naev Needs You!"), _([["What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on?"]])},
 }
-
---[[
-Event hint messages.
-Each element should be a table containing the event name and the corresponding
-hint. Make sure the hints are always faction neutral.
---]]
-npc.msg_ehint = {
-   {"FLF/DV Derelicts", _([["The FLF and the Dvaered sometimes clash in Surano. If you go there, you might find something of interest… Or not."]])},
-}
-
---[[
-Mission after-care messages.
-Each element should be a table containing the mission name and a line of text.
-This text will be said by NPCs once the player has completed the mission in
-question. Make sure the messages are always faction neutral.
---]]
-npc.msg_mdone = {
-   {"Nebula Satellite", _([["Heard some reckless scientists got someone to put a satellite inside the nebula for them. I thought everyone with half a brain knew to stay out of there, but oh well."]])},
-   {"Shadow Vigil", _([["Did you hear? There was some big incident during a diplomatic meeting between the Empire and the Dvaered. Nobody knows what exactly happened, but both diplomats died. Now both sides are accusing the other of foul play. Could get ugly."]])},
-   {"Baron", _([["Some thieves broke into a museum on Varia and stole a holopainting! Most of the thieves were caught, but the one who carried the holopainting offworld is still at large. No leads. Damn criminals…"]])},
-   {"Destroy the FLF base!", _([["The Dvaered scored a major victory against the FLF recently. They went into Sigur and blew the hidden base there to bits! I bet that was a serious setback for the FLF."]])},
-}
-
---[[
-Event after-care messages.
-Each element should be a table containing the event name and a line of text.
-This text will be said by NPCs once the player has completed the event in
-question. Make sure the messages are always faction neutral.
---]]
-npc.msg_edone = {
-   {"Animal trouble", _([["What? You had rodents sabotage your ship? Man, you're lucky to be alive. If it had hit the wrong power line…"]])},
-   {"Naev Needs You!", _([["What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on?"]])},
-}
-
-function npc.test_misnHint( misnname )
-   return function ()
-      return not (player.misnDone(misnname) or player.misnActive(misnname))
-   end
-end
-
-function npc.test_evtHint( evtname )
-   return function ()
-      return not (player.evtDone(evtname) or player.evtActive(evtname))
-   end
-end
-
-function npc.test_misnDone( misnname )
-   return function ()
-      return player.misnDone(misnname)
-   end
-end
-
-function npc.test_evtDone( evtname )
-   return function ()
-      return player.evtDone(evtname)
-   end
-end
 
 function npc.cache ()
    -- Create a cache, unique per player
