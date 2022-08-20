@@ -134,7 +134,6 @@ return function ()
       local image = portrait.getFullPath( prt )
       local msg
       local r = rnd.rnd()
-
       if r <= 0.45 then
          msg = getMessageLore()
       elseif r <= 0.7 then

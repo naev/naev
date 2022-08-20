@@ -1064,19 +1064,19 @@ function mouse_move( x, y )
 end
 
 function actions.missions()
-   gui.menuInfo( "missions" )
+   naev.menuInfo( "missions" )
 end
 
 function actions.cargo()
-   gui.menuInfo( "cargo" )
+   naev.menuInfo( "cargo" )
 end
 
 function actions.ship()
-   gui.menuInfo( "ship" )
+   naev.menuInfo( "ship" )
 end
 
 function actions.weapons()
-   gui.menuInfo( "weapons" )
+   naev.menuInfo( "weapons" )
 end
 
 function render_cooldown( _percent, seconds )

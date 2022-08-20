@@ -20,6 +20,8 @@
 #include "input.h"
 #include "land.h"
 #include "log.h"
+#include "info.h"
+#include "menu.h"
 #include "nlua_evt.h"
 #include "nlua_misn.h"
 #include "nlua_system.h"
@@ -55,6 +57,8 @@ static int naevL_cache( lua_State *L );
 static int naevL_trigger( lua_State *L );
 static int naevL_claimTest( lua_State *L );
 static int naevL_plugins( lua_State *L );
+static int naevL_menuInfo( lua_State *L );
+static int naevL_menuSmall( lua_State *L );
 #if DEBUGGING
 static int naevL_envs( lua_State *L );
 #endif /* DEBUGGING */
@@ -82,6 +86,8 @@ static const luaL_Reg naev_methods[] = {
    { "trigger", naevL_trigger },
    { "claimTest", naevL_claimTest },
    { "plugins", naevL_plugins },
+   { "menuInfo", naevL_menuInfo },
+   { "menuSmall", naevL_menuSmall },
 #if DEBUGGING
    { "envs", naevL_envs },
 #endif /* DEBUGGING */
@@ -635,6 +641,79 @@ static int naevL_plugins( lua_State *L )
       lua_rawseti(L,-2,i+1);
    }
    return 1;
+}
+
+/**
+ * @brief Opens the info menu window.
+ *
+ * Possible window targets are: <br />
+ *  - "main" : Main window.<br />
+ *  - "ship" : Ship info window.<br />
+ *  - "weapons" : Weapon configuration window.<br />
+ *  - "cargo" : Cargo view window.<br />
+ *  - "missions" : Mission view window.<br />
+ *  - "standings" : Standings view window.<br />
+ *
+ * @usage naev.menuInfo( "ship" ) -- Opens ship tab
+ *
+ *    @luatparam[opt="main"] string window parameter indicating the tab to open at.
+ * @luafunc menuInfo
+ */
+static int naevL_menuInfo( lua_State *L )
+{
+   const char *str;
+   int window;
+
+
+   if (menu_open)
+      return 0;
+
+   if (lua_gettop(L) > 0)
+      str = luaL_checkstring(L,1);
+   else {
+      /* No parameter. */
+      menu_info( INFO_DEFAULT );
+      return 0;
+   }
+
+   /* Parse string. */
+   if (strcasecmp( str, "main" )==0)
+      window = INFO_MAIN;
+   else if (strcasecmp( str, "ship" )==0)
+      window = INFO_SHIP;
+   else if (strcasecmp( str, "weapons" )==0)
+      window = INFO_WEAPONS;
+   else if (strcasecmp( str, "cargo" )==0)
+      window = INFO_CARGO;
+   else if (strcasecmp( str, "missions" )==0)
+      window = INFO_MISSIONS;
+   else if (strcasecmp( str, "standings" )==0)
+      window = INFO_STANDINGS;
+   else {
+      NLUA_ERROR(L,_("Invalid window info name '%s'."), str);
+      return 0;
+   }
+
+   /* Open window. */
+   menu_info( window );
+
+   return 0;
+}
+
+/**
+ * @brief Opens the small menu window.
+ *
+ * @usage naev.menuSmall()
+ *
+ * @luafunc menuSmall
+ */
+static int naevL_menuSmall( lua_State *L )
+{
+   (void) L;
+   if (menu_open)
+      return 0;
+   menu_small();
+   return 0;
 }
 
 #if DEBUGGING
