@@ -153,6 +153,7 @@ typedef struct PlayerConf_s {
    int nosave; /**< Disables conf saving. */
    int devmode; /**< Developer mode. */
    int devautosave; /**< Developer mode autosave. */
+   int lua_enet; /**< Enable the lua-enet library. */
    int lua_repl; /**< Enable the experimental CLI based on lua-repl. */
    char *lastversion; /**< The last version the game was ran in. */
    int translation_warning_seen; /**< No need to warn about incomplete game translations again. */
