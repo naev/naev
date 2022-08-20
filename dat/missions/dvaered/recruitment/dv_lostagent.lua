@@ -145,7 +145,6 @@ function enter()
       pilot.clear()
       mem.misn_state = 4
       hook.timer(3.0,"spawnSwan")
-      misn.osdActive(2)
 
    -- Player jump in Dvaered system to intercept Chilperic Duchmol
    elseif mem.misn_state == 6 and system.cur() == mem.duchsys then
@@ -174,7 +173,7 @@ But it is too risky to wait for them here. This means that we have to take the c
       }
 
       vn.label("no")
-      agent(_([[Well, pilot, I have two answers to that:
+      agent(_([[Well, pilot, I have three answers to that:
 1) The cargo is of the highest importance and has to be transported to a safe destination at all costs
 2) You have not been paid yet and if you want to, you'll have to do what I say
 3) You will be rewarded for that]]))
@@ -252,7 +251,7 @@ And again, be ensured that your initial reward will be dramatically increased fr
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Delivery (gone wild)"), {
          fmt.f(_("Go to {sys} and kill Chilperic Duchmol."), {sys=mem.duchsys} ),
-         fmt.f(_("Go back to {sys} and (hopefully) get your reward."), {sys=mem.sys2} ),
+         fmt.f(_("Go back to {pnt} and (hopefully) get your reward."), {pnt=mem.spob2} ),
       } )
 
    -- Player gets finally paid
@@ -419,7 +418,7 @@ Then you would have to bare that monstrous responsibility on your shoulders. Jus
    misn.osdCreate( _("Dvaered Delivery (not going as expected)"), {
       fmt.f(_("Go to {sys} and disable Shaky Swan. Target is supposed to come from {syso}."), {sys=mem.flfsys, syso=mem.flfoys} ),
       _("Wait for squadron 138 to jump in to arrest Shaky Swan. DO NOT BOARD THE SHIP YOURSELF!"),
-      fmt.f(_("Go back to {sys} to get your reward."), {sys=mem.sys2} ),
+      fmt.f(_("Go back to {pnt} to get your reward."), {pnt=mem.spob2} ),
    } )
    misn.setReward( fmt.f(_("Hopefully more than {credits}"), {credits=fmt.credits( mem.credits )}) )
    misn.setDesc( _("You are helping the Empire investigate the disappearance of one of their agents") )
@@ -445,6 +444,7 @@ function swanDisabled()
    faction.modPlayerRaw(faction.get("FLF"), -5) -- Faction loss with the FLF.
    hook.rm(dhook)
    hook.timer(1.0,"spawnSquad")
+   misn.osdActive(2)
 end
 
 -- All ways to get Shaky Swan's interception to fail
