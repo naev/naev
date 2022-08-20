@@ -45,8 +45,8 @@ local function turnoff( p, po )
    return true
 end
 
-function init( _p, po )
-   turnoff()
+function init( p, po )
+   turnoff( p, po )
    mem.timer = 0
    po:state("off")
 end
