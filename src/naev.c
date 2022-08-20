@@ -182,6 +182,7 @@ int main( int argc, char** argv )
             _( PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) ) );
       return -1;
    }
+   PHYSFS_permitSymbolicLinks( 1 );
 
    /* Set up locales. */
    gettext_init();
