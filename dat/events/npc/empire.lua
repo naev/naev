@@ -40,7 +40,7 @@ desc_list["trade"] = {
    _("The person has a bag labelled commercial samples on the floor."),
 }
 desc_list["old"] = {
-   _("The person has an air of never having left here."),
+   function () return fmt.f(_("The person has an air of never having left {spob}."),{spob=spob.cur()}) end,
 }
 desc_list["immigration"] = {
    _("The individual has a lot of luggage next to them."),
