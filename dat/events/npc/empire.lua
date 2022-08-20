@@ -69,33 +69,13 @@ local msg_lore = {
    _([["Doing shipping for the Empire pays much better than other cargo missions. It is also a good way to curry favour with the Empire!"]]),
 }
 
-local function test_misn( misnname )
-   return function ()
-      return not (player.misnDone(misnname) or player.misnActive(misnname))
-   end
-end
-
---[[
-local function test_evt( evtname )
-   return function ()
-      return not (player.evtDone(evtname) or player.evtActive(evtname))
-   end
-end
---]]
-
-local function test_misnDone( misnname )
-   return function ()
-      return player.misnDone(misnname)
-   end
-end
-
 local msg_cond = {
-   { test_misn("Empire Recruitment"), _([["Have you thought about doing shipping for the Empire? It's great work! You just need to find a recruiter to teach you the ropes."]])},
-   { test_misn("Empire Shipping 2"), _([["I hear you can get a Heavy Weapons License if you help out the Empire doing special shipping missions."]])},
-   { test_misn("Collective Espionage 1"), _([["The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station."]])},
+   { npc.test_misnHint("Empire Recruitment"), _([["Have you thought about doing shipping for the Empire? It's great work! You just need to find a recruiter to teach you the ropes."]])},
+   { npc.test_misnHint("Empire Shipping 2"), _([["I hear you can get a Heavy Weapons License if you help out the Empire doing special shipping missions."]])},
+   { npc.test_misnHint("Collective Espionage 1"), _([["The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station."]])},
    { function () return (player.chapter()=="0") end,
       _([["I hear the Empire is looking for rare minerals in Gamma Polaris. What could they be building?"]])},
-   { test_misnDone("Operation Cold Metal"), _([["Hey, remember the Collective? They got wiped out! I feel so much better now that there aren't a bunch of robot ships out there to get me anymore."]])},
+   { npc.test_misnDone("Operation Cold Metal"), _([["Hey, remember the Collective? They got wiped out! I feel so much better now that there aren't a bunch of robot ships out there to get me anymore."]])},
 }
 
 -- Returns a lore message for the given faction.

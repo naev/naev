@@ -153,6 +153,30 @@ npc.msg_edone = {
    {"Naev Needs You!", _([["What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on?"]])},
 }
 
+function npc.test_misnHint( misnname )
+   return function ()
+      return not (player.misnDone(misnname) or player.misnActive(misnname))
+   end
+end
+
+function npc.test_evtHint( evtname )
+   return function ()
+      return not (player.evtDone(evtname) or player.evtActive(evtname))
+   end
+end
+
+function npc.test_misnDone( misnname )
+   return function ()
+      return player.misnDone(misnname)
+   end
+end
+
+function npc.test_evtDone( evtname )
+   return function ()
+      return player.evtDone(evtname)
+   end
+end
+
 function npc.cache ()
    -- Create a cache, unique per player
    local c = naev.cache()
