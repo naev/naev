@@ -1698,6 +1698,8 @@ static int playerL_teleport( lua_State *L )
    /* Must not be landed. */
    if (landed)
       NLUA_ERROR(L,_("Can not teleport the player while landed!"));
+   if (comm_isOpen())
+      NLUA_ERROR(L,_("Can not teleport the player while the comm is open!"));
    if (player_isBoarded())
       NLUA_ERROR(L,_("Can not teleport the player while they are boarded!"));
    pnt = NULL;

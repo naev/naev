@@ -34,15 +34,24 @@
 #define GRAPHIC_WIDTH  256 /**< Width of graphic. */
 #define GRAPHIC_HEIGHT 256 /**< Height of graphic. */
 
-static Spob *comm_spob         = NULL; /**< Spob currently talking to. */
-static int comm_commClose      = 0; /**< Close comm when done. */
-static nlua_env comm_env       = LUA_NOREF; /**< Comm Lua env. */
+static Spob *comm_spob     = NULL; /**< Spob currently talking to. */
+static int comm_commClose  = 0; /**< Close comm when done. */
+static nlua_env comm_env   = LUA_NOREF; /**< Comm Lua env. */
+static int comm_open       = 0;
 
 /*
  * Prototypes.
  */
 /* Static. */
 static const char* comm_getString( const Pilot *p, const char *str );
+
+/**
+ * @brief Check to see if the comm window is open.
+ */
+int comm_isOpen (void)
+{
+   return comm_open;
+}
 
 /**
  * @brief Queues a close command when possible.
@@ -156,6 +165,8 @@ int comm_openPilot( unsigned int pilot )
       free(buf);
    }
 
+   comm_open = 1;
+
    /* Run Lua. */
    nlua_getenv(naevL, comm_env,"comm");
    lua_pushpilot(naevL, p->id);
@@ -163,6 +174,8 @@ int comm_openPilot( unsigned int pilot )
       WARN( _("Comm: '%s'"), lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
+
+   comm_open = 0;
 
    return 0;
 }
@@ -183,12 +196,14 @@ int comm_openSpob( Spob *spob )
 
    /* Lua stuff. */
    if (spob->lua_comm != LUA_NOREF) {
+      comm_open = 1;
       spob_luaInitMem( spob );
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, spob->lua_comm); /* f */
       if (nlua_pcall( spob->lua_env, 0, 0 )) {
          WARN(_("Spob '%s' failed to run '%s':\n%s"), spob->name, "comm", lua_tostring(naevL,-1));
          lua_pop(naevL,1);
       }
+      comm_open = 0;
       return 0;
    }
 
