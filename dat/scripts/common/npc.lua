@@ -155,4 +155,13 @@ npc.msg_edone = {
    {"Naev Needs You!", _([["What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on?"]])},
 }
 
+function npc.cache ()
+   -- Create a cache, unique per player
+   local c = naev.cache()
+   local pn = player.name()
+   c.npc_msg = c.npc_msg or {}
+   c.npc_msg[ pn ] = c.npc_msg[ pn ] or {}
+   return c.npc_msg[ pn ]
+end
+
 return npc

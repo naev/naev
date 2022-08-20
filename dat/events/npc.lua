@@ -13,6 +13,7 @@ about their faction, or about the game itself.
 --]]
 local vn = require 'vn'
 local lf = require "love.filesystem"
+local npc = require "common.npc"
 
 -- luacheck: globals land npc_talk (NPC functions passed by name)
 
@@ -53,6 +54,7 @@ function land ()
       return a.w > b.w
    end )
 
+   local npccache = npc.cache()
    local num_npc
    if t.urban then
       num_npc = rnd.rnd(2, 7)
@@ -65,24 +67,27 @@ function land ()
    npcs = {}
    for i=0, num_npc do
       local r = rnd.rnd() * total_w
-      local npc
+      local npcdata
       for k,v in ipairs(npc_spawners) do
          w = w+v.w
          if r < w then
-            npc = v.create()
+            npcdata = v.create()
+            if npccache[ npcdata.msg ] then
+               npcdata = v.create() -- Try to recreate
+            end
             break
          end
       end
 
-      if npc then
-         if type(npc.name)=="function" then
-            npc.name = npc.name()
+      if npcdata then
+         if type(npcdata.name)=="function" then
+            npcdata.name = npcdata.name()
          end
-         if type(npc.desc)=="function" then
-            npc.desc= npc.desc()
+         if type(npcdata.desc)=="function" then
+            npcdata.desc= npcdata.desc()
          end
-         local id = evt.npcAdd( "npc_talk", npc.name, npc.portrait, npc.desc, 10 )
-         npcs[id] = npc
+         local id = evt.npcAdd( "npc_talk", npcdata.name, npcdata.portrait, npcdata.desc, 10 )
+         npcs[id] = npcdata
       else
          warn(_("NPC spawner failed to spawn NPC!"))
       end
@@ -94,13 +99,19 @@ function npc_talk( id )
 
    vn.clear()
    vn.scene()
-   local npc = vn.newCharacter( npcdata.name, { image=npcdata.image } )
+   local n = vn.newCharacter( npcdata.name, { image=npcdata.image } )
    vn.transition()
    if npcdata.func then
       vn.func( function ()
          npcdata.func( npcdata )
       end )
    end
-   npc( npcdata.msg )
+   n( npcdata.msg )
+   if type(npcdata.msg)~="function" then
+      vn.func( function ()
+         local c = npc.cache()
+         c[ npcdata.msg ] = true
+      end )
+   end
    vn.run()
 end
