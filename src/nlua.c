@@ -17,6 +17,7 @@
 
 #include "log.h"
 #include "conf.h"
+#include "lua_enet.h"
 #include "lutf8lib.h"
 #include "ndata.h"
 #include "nfile.h"
@@ -44,9 +45,6 @@
 #include "nlua_vec2.h"
 #include "nluadef.h"
 #include "nstring.h"
-
-/* From lua-enet, which doesn't bother with header files. What a king? */
-extern int luaopen_enet(lua_State *l);
 
 lua_State *naevL = NULL;
 nlua_env __NLUA_CURENV = LUA_NOREF;

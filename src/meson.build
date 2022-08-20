@@ -53,7 +53,7 @@ source = files(
    'land_trade.c',
    'load.c',
    'log.c',
-   'lua-enet/enet.c',
+   'lua_enet.c',
    'lutf8lib.c',
    'lvar.c',
    'map.c',
