@@ -57,11 +57,11 @@ function land ()
    local npccache = npc.cache()
    local num_npc
    if t.urban then
-      num_npc = rnd.rnd(2, 7)
+      num_npc = rnd.rnd(3, 7)
    elseif t.rural then
       num_npc = rnd.rnd(1, 3)
    else
-      num_npc = rnd.rnd(1, 5)
+      num_npc = rnd.rnd(2, 5)
    end
    local w = 0
    npcs = {}
