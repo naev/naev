@@ -15,6 +15,7 @@ desc_list["generic"] = {
    _("An individual reading a 500 page proof while drinking hard liquor."),
    _("A slightly tipsy individual who seems to be trying to do peer review."),
    _("A person idly writing a proof using non-Euclidean algebras."),
+   _("This individual seems to be reading the latest issue of Nanoconductors Monthly."),
 }
 desc_list["agriculture"] = {
    _("The person seems to have a small beaker of algae in front of hem."),
@@ -57,12 +58,18 @@ local msg_lore = {
    _([["I am worried about my sister. She's on trial for 'abusive self-citing' and the public prosecutor has requested a life sentence."]]),
    _([["They opened two professor positions on precision machining in Atryssa Central Manufacturing Lab, and none in Bedimann Advanced Process Lab, but everyone knows that the BAPL needs reinforcement ever since three of its professors retired last cycle. People say it's because a member of Atryssa's lab posted a positive review of the president of the Za'lek central scientific recruitment committee."]]),
    _([["Even if our labs are the best in the galaxy, other factions have their own labs as well. For example, Dvaer Prime Lab for Advanced Mace Rocket Studies used to be very successful until it was nuked by mistake by a warlord during an invasion of the planet."]]),
+   _([["I"m glad the Za'lek Council decided to open up to the rest of the galaxy. Although science is great, it is also nice to meet people who don't care about research impact metrics."]]),
+   _([["Lately the drone software updates have been full of bugs. It's because the engineers are more interested in trying new research techniques rather than trying to reduce the accumulated technical debt."]]),
+   _([["High energy particle physics experiments are so cliché. Theoretical quantum hyperconductors is where the inderesting stuff happens!"]]),
 }
 
 local msg_cond = {
    { npc.test_misnHint("Za'lek Black Hole 1"), _([["Did you know there's a ton of tiny Za'lek research outposts throughout the galaxy? Since they have few or no staff, it is common for them to run into trouble."]]) },
    { npc.test_misnHint("Za'lek Black Hole 1"), _([["I heard that there have been some weird electromagnetic emissions recorded near the Anubis black hole. It is probably just poorly calibrated instruments."]]) },
    { npc.test_misnHint("Za'lek Particle Physics 1"), _([["It seems like Chairwoman Noona has run away to do science again. Nobody takes the Chairwoman job seriously anymore."]]) },
+   { function () return (player.chapter()=="0") end, _([["It seems like they are looking for rare minerals in Ruadan. It is hard to get drones to mine things without blowing everything up."]]) },
+   { function () return (player.chapter()=="0") end, _([["The Za'lek Council is spending too much resources on the gigantic hyper-whatchamacallit in Ruadan. They should invest more in basic research like Hyperbolian Lie algebras!"]]) },
+   { function () return (player.chapter()~="0") end, _([["Have you seen the hypergate at Ruadan? It is truly fascinating. Theoretically, it does not seem like it should work, but it does!"]]) },
 }
 
 -- Returns a lore message for the given faction.
