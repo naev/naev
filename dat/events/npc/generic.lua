@@ -151,20 +151,16 @@ msg_lore["Trader"] = {
 
 
 -- Returns a lore message for the given faction.
-local function getLoreMessage( fct )
-   -- Select the faction messages for this NPC's faction, if it exists.
+local function getMessageLore( fct )
    local fctmsg = msg_lore[fct]
    if fctmsg == nil or #fctmsg == 0 then
       fctmsg = msg_lore["generic"]
-      if fctmsg == nil or #fctmsg == 0 then
-         return
-      end
    end
    return fctmsg[ rnd.rnd(1, #fctmsg) ]
 end
 
 -- Returns a jump point message and updates jump point known status accordingly. If all jumps are known by the player, defaults to a lore message.
-local function getJmpMessage( fac )
+local function getMessageJump( fct )
    -- Collect a table of jump points in the system the player does NOT know.
    local mytargets = {}
    seltargets = seltargets or {} -- We need to keep track of jump points NPCs will tell the player about so there are no duplicates.
@@ -174,26 +170,24 @@ local function getJmpMessage( fac )
       end
    end
 
-   if #mytargets == 0 then -- The player already knows all jumps in this system.
-      return getLoreMessage(fac), nil
+   -- The player already knows all jumps in this system or no messages
+   if #mytargets == 0 or #npc.msg_jmp==0 then
+      return getMessageLore( fct )
    end
 
-   -- All jump messages are valid always.
-   if #npc.msg_jmp == 0 then
-      return getLoreMessage(fac), nil
-   end
    local retmsg =  npc.msg_jmp[rnd.rnd(1, #npc.msg_jmp)]
    local sel = rnd.rnd(1, #mytargets)
    local myfunc = function( npcdata )
-      if not npcdata.talked then
-         mytargets[sel]:setKnown(true)
-         mytargets[sel]:dest():setKnown(true, false)
-
-         -- Reduce jump message chance
-         local jm_chance = var.peek("npc_jm_chance") or jm_chance_max
-         var.push( "npc_jm_chance", math.max( jm_chance - 0.025, jm_chance_min ) )
-         npcdata.talked = true
+      if npcdata.talked then
+         return
       end
+      mytargets[sel]:setKnown(true)
+      mytargets[sel]:dest():setKnown(true, false)
+
+      -- Reduce jump message chance
+      local jm_chance = var.peek("npc_jm_chance") or jm_chance_max
+      var.push( "npc_jm_chance", math.max( jm_chance - 0.025, jm_chance_min ) )
+      npcdata.talked = true
    end
 
    -- Don't need to remove messages from tables here, but add whatever jump point we selected to the "selected" table.
@@ -201,21 +195,11 @@ local function getJmpMessage( fac )
    return fmt.f( retmsg, {jmp=mytargets[sel]:dest()} ), myfunc
 end
 
--- Returns a tip message.
-local function getTipMessage( fct )
-   -- All tip messages are valid always.
-   if #npc.msg_tip == 0 then
-      return getLoreMessage( fct )
+local function getMessage( lst, fct )
+   if #lst == 0 then
+      return getMessageLore( fct )
    end
-   return npc.msg_tip[ rnd.rnd(1, #npc.msg_tip) ]
-end
-
--- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
-local function getMissionLikeMessage( fct )
-   if #msg_combined == 0 then
-      return getLoreMessage( fct )
-   end
-   return msg_combined[ rnd.rnd(1, #msg_combined) ]
+   return lst[ rnd.rnd(1, #lst) ]
 end
 
 -- Factions which will NOT get generic texts if possible.  Factions
@@ -307,19 +291,19 @@ return function ()
 
       if r < (var.peek("npc_jm_chance") or jm_chance_max) then
          -- Jump point message.
-         msg, func = getJmpMessage(fct)
+         msg, func = getMessageJump(fct)
       elseif r <= 0.55 then
          -- Lore message.
-         msg = getLoreMessage(fct)
+         msg = getMessageLore(fct)
       elseif r <= 0.8 then
          -- Gameplay tip message.
-         msg = getTipMessage(fct)
+         msg = getMessage( npc.msg_tip, fct )
       else
          -- Mission hint message.
          if not nongeneric then
-            msg = getMissionLikeMessage(fct)
+            msg = getMessage( msg_combined, fct )
          else
-            msg = getLoreMessage(fct)
+            msg = getMessageLore(fct)
          end
       end
       return { name=name, desc=desc, portrait=prt, image=image, msg=msg, func=func }
