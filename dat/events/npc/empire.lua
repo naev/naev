@@ -69,21 +69,33 @@ local msg_lore = {
    _([["Doing shipping for the Empire pays much better than other cargo missions. It is also a good way to curry favour with the Empire!"]]),
 }
 
-local msg_mhint = {
-   {"Empire Recruitment", _([["Have you thought about doing shipping for the Empire? It's great work! You just need to find a recruiter to teach you the ropes."]])},
-   {"Empire Shipping 2", _([["I hear you can get a Heavy Weapons License if you help out the Empire doing special shipping missions."]])},
-   {"Collective Espionage 1", _([["The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station."]])},
-}
+local function test_misn( misnname )
+   return function ()
+      return not (player.misnDone(misnname) or player.misnActive(misnname))
+   end
+end
 
-local msg_ehint = {
-   {function () return (player.chapter()=="0") end, _([["I hear the Empire is looking for rare minerals in Gamma Polaris. What could they be building?"]])},
-}
+--[[
+local function test_evt( evtname )
+   return function ()
+      return not (player.evtDone(evtname) or player.evtActive(evtname))
+   end
+end
+--]]
 
-local msg_mdone = {
-   {"Operation Cold Metal", _([["Hey, remember the Collective? They got wiped out! I feel so much better now that there aren't a bunch of robot ships out there to get me anymore."]])},
-}
+local function test_misnDone( misnname )
+   return function ()
+      return player.misnDone(misnname)
+   end
+end
 
-local msg_edone = {
+local msg_cond = {
+   { test_misn("Empire Recruitment"), _([["Have you thought about doing shipping for the Empire? It's great work! You just need to find a recruiter to teach you the ropes."]])},
+   { test_misn("Empire Shipping 2"), _([["I hear you can get a Heavy Weapons License if you help out the Empire doing special shipping missions."]])},
+   { test_misn("Collective Espionage 1"), _([["The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station."]])},
+   { function () return (player.chapter()=="0") end,
+      _([["I hear the Empire is looking for rare minerals in Gamma Polaris. What could they be building?"]])},
+   { test_misnDone("Operation Cold Metal"), _([["Hey, remember the Collective? They got wiped out! I feel so much better now that there aren't a bunch of robot ships out there to get me anymore."]])},
 }
 
 -- Returns a lore message for the given faction.
@@ -103,57 +115,22 @@ local function getTipMessage( fct )
    return pick
 end
 
--- Tests some conditions
-local function test_cond( msg, donefunc, activefunc )
-   local c = msg[1]
-   if type(c)=="function" then
-      return c()
-   end
-   return not (donefunc(c) or activefunc(c))
-end
-
 -- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
-local function getMissionLikeMessage( fct )
+local function getMissionLikeMessage ()
    if not msg_combined then
       msg_combined = {}
-
-      -- Hints.
-      -- Hint messages are only valid if the relevant mission has not been completed and is not currently active.
-      for i, j in pairs(msg_mhint) do
-         if test_cond( j, player.misnDone, player.misnActive ) then
-            msg_combined[#msg_combined + 1] = j[2]
-         end
-      end
-      for i, j in pairs(msg_ehint) do
-         if test_cond( j, player.evtDone, player.evtActive ) then
-            msg_combined[#msg_combined + 1] = j[2]
-         end
-      end
-
-      -- After-care.
-      -- After-care messages are only valid if the relevant mission has been completed.
-      for i, j in pairs(msg_mdone) do
-         if player.misnDone(j[1]) then
-            msg_combined[#msg_combined + 1] = j[2]
-         end
-      end
-      for i, j in pairs(msg_edone) do
-         if player.evtDone(j[1]) then
-            msg_combined[#msg_combined + 1] = j[2]
+      for k,msg in ipairs(msg_cond) do
+         if msg[1]() then
+            table.insert( msg_combined, msg[2] )
          end
       end
    end
 
    if #msg_combined == 0 then
-      return getLoreMessage(fct)
-   else
-      -- Select a string, then remove it from the list of valid strings. This ensures all NPCs have something different to say.
-      local sel = rnd.rnd(1, #msg_combined)
-      local pick
-      pick = msg_combined[sel]
-      table.remove(msg_combined, sel)
-      return pick
+      return getLoreMessage()
    end
+
+   return rnd.rnd(1, #msg_combined)
 end
 
 return function ()
