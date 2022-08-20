@@ -9,7 +9,54 @@ local jm_chance_max = 0.25
 -- State. Nothing persists.
 local msg_combined, seltargets
 
-local desc_list = npc.desc_list
+local desc_list = {}
+desc_list["generic"] = {
+   _("A civilian is filling out paperwork."),
+   _("An individual looks like they are dealing with Empire paperwork."),
+   _("You see a civilian staring blankly at a table."),
+   _("A civilian is swishing their drink."),
+   _("An individual is sitting idly at the bar."),
+}
+desc_list["agriculture"] = {
+   _("A civilian that smells of algae is drinking alone."),
+   _("There is a civilian wearing heavy-duty boots caked in mud."),
+}
+desc_list["industrial"] = {
+   _("A civilian with heavy duty boots."),
+   _("There is a person that seems of industrial compounds."),
+   _("This person seems to have a factory badge on their clothes."),
+}
+desc_list["mining"] = {
+   _("An individual that seems covered in a fine layer of sparkling dust."),
+   _("You see a person that has taken off protective mining gear and left it on the table."),
+}
+desc_list["tourism"] = {
+   _("This individual seems to be here on tourism."),
+   _("A civilian is perusing a travel guide book."),
+}
+--desc_list["medical"]
+desc_list["trade"] = {
+   _("This civilian seems to be filling out tax forms."),
+   _("The person has a bag labelled commercial samples on the floor."),
+}
+desc_list["old"] = {
+   _("The person has an air of never having left here."),
+}
+desc_list["immigration"] = {
+   _("The individual has a lot of luggage next to them."),
+}
+desc_list["prison"] = {
+   _("The person seems to have a stungun holstered."),
+}
+desc_list["station"] = {
+   _("The person seems very used to the low gravity of the station."),
+}
+desc_list["government"] = {
+   _("There is a civilian with an Empire issued document bag."),
+   _("A civilian with an Empire issued bureaucrat ID tag."),
+   _("This person seems to be distracted with a graphing holocalculator."),
+   _("The individual seems to be preparing holoslides for a presentation."),
+}
 
 local msg_lore = {}
 msg_lore["general"] = npc.msg_lore
@@ -138,6 +185,7 @@ end
 return function ()
    local cur, scur = spob.cur()
    local presence = scur:presences()["Empire"] or 0
+   local tags = cur:tags()
 
    -- Need presence in the system
    if presence < 0 then
@@ -145,9 +193,20 @@ return function ()
    end
 
    -- Don't appear on restricted assets
-   if cur:tags().restricted then
+   if tags.restricted then
       -- TODO military personnel
       return nil
+   end
+
+   -- Add tag-appropriate descriptions
+   local descriptions = tcopy( desc_list["generic"] )
+   for t,v in pairs(tags) do
+      local dl = desc_list[t]
+      if dl then
+         for k,d in ipairs(dl) do
+            table.insert( descriptions, d )
+         end
+      end
    end
 
    local function gen_npc()
