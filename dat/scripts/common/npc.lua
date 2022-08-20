@@ -43,14 +43,14 @@ npc.msg_lore = {
    _([["I don't believe in those nebula ghost stories. The people who talk about it are just trying to scare you."]]),
    _([["I heard the Soromid lost their homeworld Sorom in the Incident. Its corpse can still be found in Basel."]]),
    _([["The Soromid fly organic ships! I heard some of their ships can even repair themselves. That's so weird."]]),
-   _([["Have you seen that ship the Emperor lives on? It's huge! But if you ask me, it looks a bit like a... No, never mind."]]),
+   _([["Have you seen that ship the Emperor lives on? It's huge! But if you ask me, it looks a bit like a… No, never mind."]]),
    _([["I wonder why the Sirii are all so devout? I heard they have these special priesty people walking around. I wonder what's so special about them."]]),
-   _([["They say Eduard Manual Goddard is drifting in space somewhere, entombed amidst a cache of his inventions! What I wouldn't give to rummage through there..."]]),
+   _([["They say Eduard Manual Goddard is drifting in space somewhere, entombed amidst a cache of his inventions! What I wouldn't give to rummage through there…"]]),
    _([["Ah man, I lost all my money on Totoran. I love the fights they stage there, but the guys I bet on always lose. What am I doing wrong?"]]),
    _([["Don't try to fly into the inner nebula. I've known people who tried, and none of them came back."]]),
    _([["Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!"]]),
    _([["I wouldn't travel north from Alteris if I were you, unless you're a good fighter! That area of space has really gone down the drain since the Incident."]]),
-   _([["Sometimes I look at the stars and wonder... are we the only sentient species in the universe?"]]),
+   _([["Sometimes I look at the stars and wonder… are we the only sentient species in the universe?"]]),
    _([["Hey, you ever wonder why we're here?" You respond that it's one of the great mysteries of the universe. Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? You don't know, but it sometimes keeps you up at night. As you say this, the citizen stares at you incredulously. "What?? No, I mean why are we in here, in this bar?"]]),
    _([["Life is so boring here. I would love to go gamble with all the famous people at Minerva Station."]]),
 }
@@ -127,7 +127,7 @@ Each element should be a table containing the event name and the corresponding
 hint. Make sure the hints are always faction neutral.
 --]]
 npc.msg_ehint = {
-   {"FLF/DV Derelicts", _([["The FLF and the Dvaered sometimes clash in Surano. If you go there, you might find something of interest... Or not."]])},
+   {"FLF/DV Derelicts", _([["The FLF and the Dvaered sometimes clash in Surano. If you go there, you might find something of interest… Or not."]])},
 }
 
 --[[
@@ -140,7 +140,7 @@ npc.msg_mdone = {
    {"Nebula Satellite", _([["Heard some reckless scientists got someone to put a satellite inside the nebula for them. I thought everyone with half a brain knew to stay out of there, but oh well."]])},
    {"Shadow Vigil", _([["Did you hear? There was some big incident during a diplomatic meeting between the Empire and the Dvaered. Nobody knows what exactly happened, but both diplomats died. Now both sides are accusing the other of foul play. Could get ugly."]])},
    {"Operation Cold Metal", _([["Hey, remember the Collective? They got wiped out! I feel so much better now that there aren't a bunch of robot ships out there to get me anymore."]])},
-   {"Baron", _([["Some thieves broke into a museum on Varia and stole a holopainting! Most of the thieves were caught, but the one who carried the holopainting offworld is still at large. No leads. Damn criminals..."]])},
+   {"Baron", _([["Some thieves broke into a museum on Varia and stole a holopainting! Most of the thieves were caught, but the one who carried the holopainting offworld is still at large. No leads. Damn criminals…"]])},
    {"Destroy the FLF base!", _([["The Dvaered scored a major victory against the FLF recently. They went into Sigur and blew the hidden base there to bits! I bet that was a serious setback for the FLF."]])},
 }
 
@@ -151,7 +151,7 @@ This text will be said by NPCs once the player has completed the event in
 question. Make sure the messages are always faction neutral.
 --]]
 npc.msg_edone = {
-   {"Animal trouble", _([["What? You had rodents sabotage your ship? Man, you're lucky to be alive. If it had hit the wrong power line..."]])},
+   {"Animal trouble", _([["What? You had rodents sabotage your ship? Man, you're lucky to be alive. If it had hit the wrong power line…"]])},
    {"Naev Needs You!", _([["What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on?"]])},
 }
 

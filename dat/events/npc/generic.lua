@@ -15,14 +15,14 @@ msg_lore["general"] = {
    _([["I don't believe in those nebula ghost stories. The people who talk about it are just trying to scare you."]]),
    _([["I heard the Soromid lost their homeworld Sorom in the Incident. Its corpse can still be found in Basel."]]),
    _([["The Soromid fly organic ships! I heard some of their ships can even repair themselves. That's so weird."]]),
-   _([["Have you seen that ship the Emperor lives on? It's huge! But if you ask me, it looks a bit like a... No, never mind."]]),
+   _([["Have you seen that ship the Emperor lives on? It's huge! But if you ask me, it looks a bit like a… No, never mind."]]),
    _([["I wonder why the Sirii are all so devout? I heard they have these special priesty people walking around. I wonder what's so special about them."]]),
-   _([["They say Eduard Manual Goddard is drifting in space somewhere, entombed amidst a cache of his inventions! What I wouldn't give to rummage through there..."]]),
+   _([["They say Eduard Manual Goddard is drifting in space somewhere, entombed amidst a cache of his inventions! What I wouldn't give to rummage through there…"]]),
    _([["Ah man, I lost all my money on Totoran. I love the fights they stage there, but the guys I bet on always lose. What am I doing wrong?"]]),
    _([["Don't try to fly into the inner nebula. I've known people who tried, and none of them came back."]]),
    _([["Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!"]]),
    _([["I wouldn't travel north from Alteris if I were you, unless you're a good fighter! That area of space has really gone down the drain since the Incident."]]),
-   _([["Sometimes I look at the stars and wonder... are we the only sentient species in the universe?"]]),
+   _([["Sometimes I look at the stars and wonder… are we the only sentient species in the universe?"]]),
    _([["Hey, you ever wonder why we're here?" You respond that it's one of the great mysteries of the universe. Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? You don't know, but it sometimes keeps you up at night. As you say this, the citizen stares at you incredulously. "What?? No, I mean why are we in here, in this bar?"]]),
    _([["Life is so boring here. I would love to go gamble with all the famous people at Minerva Station."]]),
 }
@@ -37,12 +37,12 @@ msg_lore["Empire"] = {
    _([["Did you know that House Za'lek was originally a Great Project initiated by the Empire? Well, now you do! There was also a Project Proteron, but that didn't go so well."]]),
    _([["The Emperor lives on a giant supercruiser in Gamma Polaris. It's said to be the biggest ship in the galaxy! I totally want one."]]),
    _([["I'm still waiting for my pilot license application to get through. Oh well, it's only been half a cycle, I just have to be patient."]]),
-   _([["Between you and me, the laws the Council passes can get really ridiculous! Most planets find creative ways of ignoring them..."]]),
+   _([["Between you and me, the laws the Council passes can get really ridiculous! Most planets find creative ways of ignoring them…"]]),
    _([["Don't pay attention to the naysayers. The Empire is still strong. Have you ever seen a Peacemaker up close? I doubt any ship fielded by any other power could stand up to one."]]),
 }
 
 msg_lore["Dvaered"] = {
-   _([["Our Warlord is currently fighting for control over another planet. We all support him unconditionally, of course! Of course..."]]),
+   _([["Our Warlord is currently fighting for control over another planet. We all support him unconditionally, of course! Of course…"]]),
    _([["My great-great-great-grandfather fought in the Dvaered Revolts! We still have the holovids he made. I'm proud to be a Dvaered!"]]),
    _([["I've got lots of civilian commendations! It's important to have commendations if you're a Dvaered."]]),
    _([["You better not mess with House Dvaered. Our military is the largest and strongest in the galaxy. Nobody can stand up to us!"]]),
@@ -54,9 +54,9 @@ msg_lore["Dvaered"] = {
 
 msg_lore["Sirius"] = {
    _([["Greetings, traveler. May Sirichana's wisdom guide you as it guides me."]]),
-   _([["I once met one of the Touched in person. Well, it wasn't really a meeting, our eyes simply met... But that instant alone was awe-inspiring."]]),
+   _([["I once met one of the Touched in person. Well, it wasn't really a meeting, our eyes simply met… But that instant alone was awe-inspiring."]]),
    _([["They say Sirichana lives and dies like any other man, but each new Sirichana is the same as the last. How is that possible?"]]),
-   _([["My cousin was called to Mutris a cycle ago... He must be in Crater City by now. And one day, he will become one of the Touched!"]]),
+   _([["My cousin was called to Mutris a cycle ago… He must be in Crater City by now. And one day, he will become one of the Touched!"]]),
    _([["Some people say Sirius society is unfair because our echelons are determined by birth. But even though we are different, we are all followers of Sirichana. Spiritually, we are equal."]]),
    _([["House Sirius is officially part of the Empire, but everyone knows that's only true on paper. The Emperor has nothing to say in these systems. We follow Sirichana, and no-one else."]]),
    _([["You can easily tell the different echelons apart. Every Sirian citizen and soldier wears clothing appropriate to his or her echelon."]]),
@@ -64,7 +64,7 @@ msg_lore["Sirius"] = {
 }
 
 msg_lore["Soromid"] = {
-   _("Hello. Can I interest you in one of our galaxy famous cosmetic gene treatments? You look like you could use them..."),
+   _("Hello. Can I interest you in one of our galaxy famous cosmetic gene treatments? You look like you could use them…"),
    _([["Can you believe it? I was going to visit Sorom to find my roots, and then boom! It got burnt to a crisp! Even now, cycles later, I still can't believe it."]]),
    _([["Yes, it's true, our military ships are alive. Us normal folk don't get to own bioships though, we have to make do with synthetic constructs just like everyone else."]]),
    _([["Everyone knows that we Soromid altered ourselves to survive the deadly conditions on Sorom during the Great Quarantine. What you don't hear so often is that billions of us died from the therapy itself. We paid a high price for survival."]]),
@@ -112,7 +112,7 @@ msg_lore["Proteron"] = {
 }
 
 msg_lore["Frontier"] = {
-   _([["We value our autonomy. We don't want to be ruled by those Dvaered Warlords! Can't they just shoot at each other instead of threatening us? If it wasn't for the Liberation Front..."]]),
+   _([["We value our autonomy. We don't want to be ruled by those Dvaered Warlords! Can't they just shoot at each other instead of threatening us? If it wasn't for the Liberation Front…"]]),
    _([["Have you studied your galactic history? The Frontier worlds were the first to be colonized by humans. That makes our worlds the oldest human settlements in the galaxy, now that Earth is gone."]]),
    _([["We have the Dvaered encroaching on our territory on one side, and the Sirius zealots on the other. Sometimes I worry that in a few decacycles, the Frontier will no longer exist."]]),
    _([["Have you visited the Frontier Museum? They've got a scale model of a First Growth colony ship on display in one of the big rooms. Even scaled down like that, it's massive! Imagine how overwhelming the real ones must have been."]]),
@@ -125,7 +125,7 @@ msg_lore["FLF"] = {
    _([["I can't stand Dvaereds. I just want to wipe them all off the map. Don't you?"]]),
    _([["One of these days, we will completely rid the Frontier of Dvaered oppressors. Mark my words!"]]),
    _([["Have you ever wondered about our chances of actually winning over the Dvaereds? Sometimes I worry a little."]]),
-   _([["I was in charge of a bombing run recently. The mission was a success, but I lost a lot of comrades. Oh well... this is the sacrifice we must make to resist the oppressors."]]),
+   _([["I was in charge of a bombing run recently. The mission was a success, but I lost a lot of comrades. Oh well… this is the sacrifice we must make to resist the oppressors."]]),
    _([["What after we beat the Dvaereds, you say? Well, our work is never truly done until the Frontier is completely safe from oppression. Even if the Dvaered threat is ended, we'll still have those Sirius freaks to worry about. I don't think our job will ever end in our lifetimes."]]),
    _([["Yeah, it's true, lots of Frontier officials fund our operations. If they didn't, we'd have a really hard time landing on Frontier planets, what with the kinds of operations we perform against the Dvaereds."]]),
    _([["Yeah, some civilians die because of our efforts, but that's just a sacrifice we have to make. It's for the greater good."]]),
@@ -137,12 +137,12 @@ msg_lore["FLF"] = {
 msg_lore["Pirate"] = {
    _([["Hi mate. Money or your life! Heh heh, just messing with you."]]),
    _([["Hey, look at these new scars I got!"]]),
-   _([["Have you heard of the Pirates' Code? They're more guidelines than rules..."]]),
+   _([["Have you heard of the Pirates' Code? They're more guidelines than rules…"]]),
    _([["My gran once said to me, 'Never trust a pirate.' Well, she was right! I got a pretty credit chip outta her wallet last time I saw her, and I'd do it again."]]),
    _([["I don't understand why some pirates talk like 16th-century Earth pirates even though that planet is literally dead."]]),
    _([["I may be a pirate who blows up ships and steals for a living, but that inner nebula still kind of freaks me out."]]),
-   _([["Damn Empire stopped my heist a few decaperiods ago. Just wait'll they see me again..."]]),
-   _([["There's a pirate clanworld I really wanted to get to, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work..."]]),
+   _([["Damn Empire stopped my heist a few decaperiods ago. Just wait'll they see me again…"]]),
+   _([["There's a pirate clanworld I really wanted to get to, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work…"]]),
    _([["Just caught an old mate ferrying tourists for credits. Nearly puked out my grog! Your reputation won't survive for long working for our victims."]]),
    _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]]),
    _([["Y'know, I got into this business by accident to tell the truth. But what can you do? I could get a fake ID and pretend to be someone else but I'd get caught eventually and I'd lose my fame as a pirate."]]),
@@ -334,6 +334,8 @@ return function ()
             fct = planfaction
          end
       end
+      -- Empire is handled differently now
+      if fct == "Empire" then fct = nil end
 
       -- Append the faction to the civilian name, unless there is no faction.
       local name
