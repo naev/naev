@@ -260,8 +260,9 @@ return function ()
             fct = planfaction
          end
       end
-      -- Empire is handled differently now
+      -- Some factions are handled differently now
       if fct == "Empire" then fct = nil end
+      if fct == "Za'lek" then fct = nil end
 
       -- Append the faction to the civilian name, unless there is no faction.
       local name
