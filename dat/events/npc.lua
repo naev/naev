@@ -72,7 +72,14 @@ function land ()
          w = w+v.w
          if r < w then
             npcdata = v.create()
-            if npccache[ npcdata.msg ] then
+            local npcrep = false
+            for j,n in pairs(npcs) do
+               if n.msg == npcdata.msg then
+                  npcrep = true
+                  break
+               end
+            end
+            if npcrep or npccache[ npcdata.msg ] then
                npcdata = v.create() -- Try to recreate
             end
             break
