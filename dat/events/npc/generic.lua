@@ -10,7 +10,7 @@ local jm_chance_max = 0.25
 local msg_combined, seltargets
 
 local msg_lore = npc.msg_lore
-msg_lore["general"] = {
+msg_lore["generic"] = {
    _([["I heard the nebula is haunted! My uncle Bobby told me he saw one of the ghost ships himself over in Arandon!"]]),
    _([["I don't believe in those nebula ghost stories. The people who talk about it are just trying to scare you."]]),
    _([["I heard the Soromid lost their homeworld Sorom in the Incident. Its corpse can still be found in Basel."]]),
@@ -164,9 +164,9 @@ local function getLoreMessage( fac )
    -- Select the faction messages for this NPC's faction, if it exists.
    local facmsg = msg_lore[fac]
    if facmsg == nil or #facmsg == 0 then
-      facmsg = msg_lore["general"]
+      facmsg = msg_lore["generic"]
       if facmsg == nil or #facmsg == 0 then
-         evt.finish(false)
+         return
       end
    end
 

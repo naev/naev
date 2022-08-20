@@ -2,12 +2,8 @@ local fmt = require "format"
 local portrait = require "portrait"
 local npc = require "common.npc"
 
--- Chance of a jump point message showing up. As this gradually goes
--- down, it is replaced by lore messages. See spawnNPC function.
-local jm_chance_min = 0
-local jm_chance_max = 0.25
 -- State. Nothing persists.
-local msg_combined, seltargets
+local msg_combined
 
 local desc_list = {}
 desc_list["generic"] = {
@@ -70,6 +66,20 @@ msg_lore["Empire"] = {
    _([["Don't pay attention to the naysayers. The Empire is still strong. Have you ever seen a Peacemaker up close? I doubt any ship fielded by any other power could stand up to one."]]),
 }
 
+local msg_mhint = {
+   {"Collective Espionage 1", _([["The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station."]])},
+}
+
+local msg_ehint = {
+}
+
+local msg_mdone = {
+   {"Operation Cold Metal", _([["Hey, remember the Collective? They got wiped out! I feel so much better now that there aren't a bunch of robot ships out there to get me anymore."]])},
+}
+
+local msg_edone = {
+}
+
 -- Returns a lore message for the given faction.
 local function getLoreMessage( fac )
    -- Select the faction messages for this NPC's faction, if it exists.
@@ -77,7 +87,7 @@ local function getLoreMessage( fac )
    if facmsg == nil or #facmsg == 0 then
       facmsg = msg_lore["general"]
       if facmsg == nil or #facmsg == 0 then
-         evt.finish(false)
+         return
       end
    end
 
@@ -88,49 +98,11 @@ local function getLoreMessage( fac )
    return pick
 end
 
--- Returns a jump point message and updates jump point known status accordingly. If all jumps are known by the player, defaults to a lore message.
-local function getJmpMessage( fac )
-   -- Collect a table of jump points in the system the player does NOT know.
-   local mytargets = {}
-   seltargets = seltargets or {} -- We need to keep track of jump points NPCs will tell the player about so there are no duplicates.
-   for _, j in ipairs(system.cur():jumps(true)) do
-      if not j:known() and not j:hidden() and not seltargets[j] then
-         table.insert(mytargets, j)
-      end
-   end
-
-   if #mytargets == 0 then -- The player already knows all jumps in this system.
-      return getLoreMessage(fac), nil
-   end
-
-   -- All jump messages are valid always.
-   if #npc.msg_jmp == 0 then
-      return getLoreMessage(fac), nil
-   end
-   local retmsg = npc.msg_jmp[rnd.rnd(1, #npc.msg_jmp)]
-   local sel = rnd.rnd(1, #mytargets)
-   local myfunc = function( npcdata )
-      if not npcdata.talked then
-         mytargets[sel]:setKnown(true)
-         mytargets[sel]:dest():setKnown(true, false)
-
-         -- Reduce jump message chance
-         local jm_chance = var.peek("npc_jm_chance") or jm_chance_max
-         var.push( "npc_jm_chance", math.max( jm_chance - 0.025, jm_chance_min ) )
-         npcdata.talked = true
-      end
-   end
-
-   -- Don't need to remove messages from tables here, but add whatever jump point we selected to the "selected" table.
-   seltargets[mytargets[sel]] = true
-   return fmt.f( retmsg, {jmp=mytargets[sel]:dest()} ), myfunc
-end
-
 -- Returns a tip message.
-local function getTipMessage( fac )
+local function getTipMessage( fct )
    -- All tip messages are valid always.
    if #npc.msg_tip == 0 then
-      return getLoreMessage(fac)
+      return getLoreMessage(fct)
    end
    local sel = rnd.rnd(1, #npc.msg_tip)
    local pick = npc.msg_tip[sel]
@@ -139,18 +111,18 @@ local function getTipMessage( fac )
 end
 
 -- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
-local function getMissionLikeMessage( fac )
+local function getMissionLikeMessage( fct )
    if not msg_combined then
       msg_combined = {}
 
       -- Hints.
       -- Hint messages are only valid if the relevant mission has not been completed and is not currently active.
-      for i, j in pairs(npc.msg_mhint) do
+      for i, j in pairs(msg_mhint) do
          if not (player.misnDone(j[1]) or player.misnActive(j[1])) then
             msg_combined[#msg_combined + 1] = j[2]
          end
       end
-      for i, j in pairs(npc.msg_ehint) do
+      for i, j in pairs(msg_ehint) do
          if not(player.evtDone(j[1]) or player.evtActive(j[1])) then
             msg_combined[#msg_combined + 1] = j[2]
          end
@@ -158,12 +130,12 @@ local function getMissionLikeMessage( fac )
 
       -- After-care.
       -- After-care messages are only valid if the relevant mission has been completed.
-      for i, j in pairs(npc.msg_mdone) do
+      for i, j in pairs(msg_mdone) do
          if player.misnDone(j[1]) then
             msg_combined[#msg_combined + 1] = j[2]
          end
       end
-      for i, j in pairs(npc.msg_edone) do
+      for i, j in pairs(msg_edone) do
          if player.evtDone(j[1]) then
             msg_combined[#msg_combined + 1] = j[2]
          end
@@ -171,7 +143,7 @@ local function getMissionLikeMessage( fac )
    end
 
    if #msg_combined == 0 then
-      return getLoreMessage(fac)
+      return getLoreMessage(fct)
    else
       -- Select a string, then remove it from the list of valid strings. This ensures all NPCs have something different to say.
       local sel = rnd.rnd(1, #msg_combined)
@@ -216,16 +188,14 @@ return function ()
       local desc = descriptions[ rnd.rnd(1,#descriptions) ]
       local prt  = portrait.get( fct )
       local image = portrait.getFullPath( prt )
-      local msg, func
+      local msg
+      local func = nil
       local r = rnd.rnd()
 
-      if r < (var.peek("npc_jm_chance") or jm_chance_max) then
-         -- Jump point message.
-         msg, func = getJmpMessage(fct)
-      elseif r <= 0.55 then
+      if r <= 0.45 then
          -- Lore message.
          msg = getLoreMessage(fct)
-      elseif r <= 0.8 then
+      elseif r <= 0.7 then
          -- Gameplay tip message.
          msg = getTipMessage(fct)
       else
