@@ -418,13 +418,12 @@ void menu_small (void)
    int y;
 
    /* Check if menu should be openable. */
-   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED) ||
-         pilot_isFlag(player.p,PILOT_DEAD) ||
-         comm_isOpen() ||
+   if (player_isFlag(PLAYER_DESTROYED) ||
          dialogue_isOpen() || /* Shouldn't open over dialogues. */
-         (menu_isOpen(MENU_MAIN) ||
-            menu_isOpen(MENU_SMALL) ||
-            menu_isOpen(MENU_DEATH) ))
+         (menu_isOpen(MENU_MAIN) || menu_isOpen(MENU_DEATH) ))
+      return;
+
+   if (menu_isOpen( MENU_SMALL ))
       return;
 
    can_save = landed && !player_isFlag(PLAYER_NOSAVE);
