@@ -42,6 +42,7 @@
          * Blinking has animations
          * Advanced mining techniques
       * News revamped to be more flexible and relate more with current events
+      * NPCs revamped to be more flexible with many new messages
       * New commodities that are only available from mining
    * Quality of Life
       * Support for save snapshots for each pilot
@@ -73,6 +74,7 @@
       * Lua scripting for spob
       * AI can use special outfits
       * Lots of engine rewriting and modernization that should bring some speed improvements and more flexibility when modding
+      * Added lua-enet library to allow for networking in plugins (off by default, requires setting in configuration file)
    * Bug Fixes
       * Too many to list, but we'll try
       * Fixed looting cargo when boarding giving less than expected
