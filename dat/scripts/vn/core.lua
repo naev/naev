@@ -376,6 +376,11 @@ Key press handler.
    @tparam string key Name of the key pressed.
 --]]
 function vn.keypressed( key )
+   if string.lower(naev.keyGet( "menu" )) == key then
+      naev.menuSmall()
+      return true
+   end
+
    if vn._show_options then
       opt.keypressed( key )
       return true
