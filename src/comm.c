@@ -45,16 +45,6 @@ static nlua_env comm_env       = LUA_NOREF; /**< Comm Lua env. */
 static const char* comm_getString( const Pilot *p, const char *str );
 
 /**
- * @brief Checks to see if comm is open.
- *
- *    @return 1 if comm is open.
- */
-int comm_isOpen (void)
-{
-   return window_exists( "wdwComm" );
-}
-
-/**
  * @brief Queues a close command when possible.
  */
 void comm_queueClose (void)
@@ -72,7 +62,6 @@ int comm_openPilot( unsigned int pilot )
 {
    const char *msg;
    char c;
-   unsigned int wid;
    Pilot *p;
    Pilot *const* pltstk;
 
@@ -89,13 +78,6 @@ int comm_openPilot( unsigned int pilot )
          pilot_inRangePilot( player.p, p, NULL ) <= 0) {
       player_message(_("#rTarget is out of communications range"));
       return -1;
-   }
-
-   /* Destroy the window if it's already present. */
-   wid = window_get( "wdwComm" );
-   if (wid > 0) {
-      window_destroy( wid );
-      return 0;
    }
 
    /* Must not be jumping. */
@@ -193,15 +175,6 @@ int comm_openPilot( unsigned int pilot )
  */
 int comm_openSpob( Spob *spob )
 {
-   unsigned int wid;
-
-   /* Destroy the window if it's already present. */
-   wid = window_get( "wdwComm" );
-   if (wid > 0) {
-      window_destroy( wid );
-      return 0;
-   }
-
    /* Must not be disabled. */
    if (!spob_hasService(spob, SPOB_SERVICE_INHABITED)) {
       player_message(_("%s does not respond."), spob_name(spob));
