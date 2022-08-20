@@ -87,6 +87,7 @@ if buildExec.disabled() == false
 
    naev_deps += cc.find_library('m', required : false)
 
+   enet = dependency('libenet', required: true)
    pcre2 = dependency('libpcre2-8', fallback : ['pcre2', 'libpcre2_8'], static: get_option('steamruntime'))
    sdl = dependency('sdl2', required: true)
    sdl_image = dependency('SDL2_image', required: true, fallback: ['sdl2_image', 'sdl2_image_dep'])
@@ -108,6 +109,7 @@ if buildExec.disabled() == false
    naev_deps += use_system_physfs ? system_physfs : subproject('physfs').get_variable('physfs_dep')
 
    naev_deps += [
+      enet,
       dependency('freetype2', required: true),
       libunibreak,
       libxml2,

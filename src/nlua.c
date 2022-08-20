@@ -17,6 +17,7 @@
 
 #include "log.h"
 #include "conf.h"
+#include "lua_enet.h"
 #include "lutf8lib.h"
 #include "ndata.h"
 #include "nfile.h"
@@ -614,6 +615,8 @@ static int nlua_package_loader_c( lua_State* L )
    /* Hardcoded libraries only: we DO NOT honor package.cpath. */
    if (strcmp( name, "utf8" ) == 0)
       lua_pushcfunction( L, luaopen_utf8 );
+   else if (strcmp( name, "enet" ) == 0 && conf.lua_enet)
+      lua_pushcfunction( L, luaopen_enet );
    else
       lua_pushnil( L );
    return 1;
