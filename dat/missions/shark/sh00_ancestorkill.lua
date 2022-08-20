@@ -157,4 +157,5 @@ function pirate_dead()  --wou win
    misn.markerRm(mem.marker1)
    mem.marker2 = misn.markerAdd(mispla, "low")
    misn.osdActive(3)
+   pilot.toggleSpawn()
 end
