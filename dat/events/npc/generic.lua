@@ -220,12 +220,11 @@ end
 
 -- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
 local function getMissionLikeMessage( fct )
-
    if #msg_combined == 0 then
       return getLoreMessage( fct )
    end
 
-   return rnd.rnd(1, #msg_combined)
+   return msg_combined[ rnd.rnd(1, #msg_combined) ]
 end
 
 -- Factions which will NOT get generic texts if possible.  Factions

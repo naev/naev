@@ -102,7 +102,7 @@ local function getMissionLikeMessage ()
       return getLoreMessage()
    end
 
-   return rnd.rnd(1, #msg_combined)
+   return msg_combined[ rnd.rnd(1, #msg_combined) ]
 end
 
 return function ()
