@@ -128,10 +128,9 @@ return function ()
 
    local function gen_npc()
       -- Append the faction to the civilian name, unless there is no faction.
-      local fct = "Empire"
       local name = _("Empire Civilian")
       local desc = descriptions[ rnd.rnd(1,#descriptions) ]
-      local prt  = portrait.get( fct )
+      local prt  = portrait.get( "Empire" )
       local image = portrait.getFullPath( prt )
       local msg
       local r = rnd.rnd()

@@ -31,7 +31,7 @@ desc_list["tourism"] = {
    function () return fmt.f(_("The person is looking at a {spob} guidebook full of notes and bookmarks intensely."),{spob=spob.cur()}) end,
    _("A civilian with an expensive looking holo-recorder and a backpack."),
 }
---desc_list["medical"]
+--desc_list["medical"] = {}
 --desc_list["trade"] = {}
 --desc_list["old"] = {}
 desc_list["immigration"] = {
@@ -121,10 +121,9 @@ return function ()
 
    local function gen_npc()
       -- Append the faction to the civilian name, unless there is no faction.
-      local fct = "Za'lek"
       local name = _("Za'lek Civilian")
       local desc = descriptions[ rnd.rnd(1,#descriptions) ]
-      local prt  = portrait.get( fct )
+      local prt  = portrait.get( "Za'lek" )
       local image = portrait.getFullPath( prt )
       local msg
       local r = rnd.rnd()
