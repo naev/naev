@@ -98,6 +98,7 @@
 #define VERSION_FILE    "VERSION" /**< Version file by default. */
 
 static int quit               = 0; /**< For primary loop */
+Uint32 SDL_LOOPDONE           = 0; /**< For custom event to exit loops. */
 static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
@@ -204,6 +205,7 @@ int main( int argc, char** argv )
       return -1;
    }
    starttime = SDL_GetTicks();
+   SDL_LOOPDONE = SDL_RegisterEvents(1);
 
    /* Initialize the threadpool */
    threadpool_init();

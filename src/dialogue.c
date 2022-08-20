@@ -1018,6 +1018,11 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
                break;
             }
          }
+         else if (event.type == SDL_LOOPDONE) {
+            *loop_done = 1;
+            SDL_PushEvent( &event ); /* Replicate event until out of all loops. */
+            break;
+         }
          else if (event.type == SDL_WINDOWEVENT &&
                event.window.event == SDL_WINDOWEVENT_RESIZED)
             naev_resize();

@@ -24,6 +24,7 @@
 #include "dev_uniedit.h"
 #include "dialogue.h"
 #include "gui.h"
+#include "hook.h"
 #include "info.h"
 #include "intro.h"
 #include "land.h"
@@ -511,14 +512,16 @@ static void menu_small_info( unsigned int wid, const char *str )
    menu_info( INFO_MAIN );
 }
 
-/**
- * @brief Closes the small in-game menu and goes back to the main menu.
- *    @param str Unused.
- */
-static void menu_small_exit( unsigned int wid, const char *str )
+static int menu_small_exit_hook( void* unused )
 {
-   (void) str;
-   unsigned int info_wid;
+   (void) unused;
+   unsigned int wid;
+
+   /* Still stuck in a dialogue, so we have to do another hook pass. */
+   if (dialogue_isOpen()) {
+      hook_addFunc( menu_small_exit_hook, NULL, "safe" );
+      return;
+   }
 
    /* if landed we must save anyways */
    if (landed && land_canSave()) {
@@ -528,7 +531,7 @@ static void menu_small_exit( unsigned int wid, const char *str )
 
    /* Close info menu if open. */
    if (menu_isOpen(MENU_INFO)) {
-      info_wid = window_get("wdwInfo");
+      unsigned int info_wid = window_get("wdwInfo");
       window_destroy( info_wid );
       menu_Close(MENU_INFO);
    }
@@ -538,9 +541,29 @@ static void menu_small_exit( unsigned int wid, const char *str )
    player_soundStop();
 
    /* Clean up. */
+   wid = window_get("wdwMenuSmall");
    window_destroy( wid );
    menu_Close(MENU_SMALL);
    menu_main();
+   return 0;
+}
+
+/**
+ * @brief Closes the small in-game menu and goes back to the main menu.
+ *    @param str Unused.
+ */
+static void menu_small_exit( unsigned int wid, const char *str )
+{
+   (void) wid;
+   (void) str;
+
+   /* Break out of potential inner loops. */
+   SDL_Event event;
+   SDL_memset( &event, 0, sizeof(event) );
+   event.type = SDL_LOOPDONE;
+   SDL_PushEvent( &event );
+
+   hook_addFunc( menu_small_exit_hook, NULL, "safe" );
 }
 
 /**
