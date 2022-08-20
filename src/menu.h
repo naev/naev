@@ -22,7 +22,6 @@ extern int menu_open; /**< Used internally by menu_isOpen() */
 void menu_main (void);
 void menu_small (void);
 void menu_death (void);
-void menu_options (void);
 int menu_askQuit (void);
 
 /*
