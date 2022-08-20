@@ -63,19 +63,6 @@ msg_lore["Soromid"] = {
    _([["We have been rebuilding and enhancing our bodies for so long, I say we've become a new species, one above human."]]),
 }
 
-msg_lore["Za'lek"] =       {
-   _([["It's not easy, dancing to those scientists' tunes. They give you the most impossible tasks! Like, where am I supposed to get a triple redundant helitron converter? Honestly."]]),
-   _([["The Soromids? Hah! We Za'lek are the only true scientists in this galaxy."]]),
-   _([["I don't understand why we bother sending our research results to the Empire. These asshats can't understand the simplest formulas!"]]),
-   _([["Do you know why many optimization algorithms require your objective function to be convex? It's not only because of the question of local minima, but also because if your function is locally concave around the current iterate, the next one will lead to a greater value of your objective function. There are still too many people who don't know this!"]]),
-   _([["There are so many algorithms for solving the non-linear eigenvalues problem, I never know which one to choose. Which one do you prefer?"]]),
-   _([["I recently attended a very interesting conference about the history of applied mathematics before the space age. Even in those primitive times, people used to do numerical algebra. They didn't even have quantic computers back at that time! Imagine: they had to wait for hours to solve a problem with only a dozen billion degrees of freedom!"]]),
-   _([["Last time I had to solve a deconvolution problem, its condition number was so high that its inverse reached numerical zero on Octuple Precision!"]]),
-   _([["I am worried about my sister. She's on trial for 'abusive self-citing' and the public prosecutor has requested a life sentence."]]),
-   _([["They opened two professor positions on precision machining in Atryssa Central Manufacturing Lab, and none in Bedimann Advanced Process Lab, but everyone knows that the BAPL needs reinforcement ever since three of its professors retired last cycle. People say it's because a member of Atryssa's lab posted a positive review of the president of the Za'lek central scientific recruitment committee."]]),
-   _([["Even if our labs are the best in the galaxy, other factions have their own labs as well. For example, Dvaer Prime Lab for Advanced Mace Rocket Studies used to be very successful until it was nuked by mistake by a warlord during an invasion of the planet."]]),
-}
-
 msg_lore["Thurion"] = {
    _([["Did you know that even the slightest bit of brain damage can lead to death during the upload process? That's why we're very careful to not allow our brains to be damaged, even a little."]]),
    _([["My father unfortunately hit his head when he was young, so he couldn't be safely uploaded. It's okay, though; he had a long and fulfilling life, for a non-uploaded human, that is."]]),
@@ -291,10 +278,10 @@ return function ()
 
       if r < (var.peek("npc_jm_chance") or jm_chance_max) then
          -- Jump point message.
-         msg, func = getMessageJump(fct)
+         msg, func = getMessageJump( fct )
       elseif r <= 0.55 then
          -- Lore message.
-         msg = getMessageLore(fct)
+         msg = getMessageLore( fct )
       elseif r <= 0.8 then
          -- Gameplay tip message.
          msg = getMessage( npc.msg_tip, fct )
@@ -303,7 +290,7 @@ return function ()
          if not nongeneric then
             msg = getMessage( msg_combined, fct )
          else
-            msg = getMessageLore(fct)
+            msg = getMessageLore( fct )
          end
       end
       return { name=name, desc=desc, portrait=prt, image=image, msg=msg, func=func }

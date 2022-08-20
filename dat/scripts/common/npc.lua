@@ -139,7 +139,6 @@ npc.msg_cond = {
    -- Mission Hints
    {npc.test_misnHint("Shadowrun"), _([["Apparently there's a woman who regularly turns up on planets in and around the Klantar system. I wonder what she's looking for?"]])},
    {npc.test_misnHint("Hitman"), _([["There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"]])},
-   {npc.test_misnHint("Za'lek Shipping Delivery"), _([["So there's some Za'lek scientist looking for a cargo jockey out on Niflheim in the Dohriabi system. I hear it's pretty good money."]])},
    -- Event hints
    {npc.test_evtHint("FLF/DV Derelicts"), _([["The FLF and the Dvaered sometimes clash in Surano. If you go there, you might find something of interest… Or not."]])},
    -- Mission Completion
