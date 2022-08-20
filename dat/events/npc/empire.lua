@@ -54,23 +54,29 @@ desc_list["government"] = {
    _("The individual seems to be preparing holoslides for a presentation."),
 }
 
-local msg_lore = {}
-msg_lore["general"] = npc.msg_lore
-
-msg_lore["Empire"] = {
+local msg_lore = {
    _([["Things are getting worse by the cycle. What happened to the Empire? We used to be the lords and masters over the whole galaxy!"]]),
    _([["Did you know that House Za'lek was originally a Great Project initiated by the Empire? Well, now you do! There was also a Project Proteron, but that didn't go so well."]]),
    _([["The Emperor lives on a giant supercruiser in Gamma Polaris. It's said to be the biggest ship in the galaxy! I totally want one."]]),
    _([["I'm still waiting for my pilot license application to get through. Oh well, it's only been half a cycle, I just have to be patient."]]),
    _([["Between you and me, the laws the Council passes can get really ridiculous! Most planets find creative ways of ignoring them…"]]),
    _([["Don't pay attention to the naysayers. The Empire is still strong. Have you ever seen a Peacemaker up close? I doubt any ship fielded by any other power could stand up to one."]]),
+   _([["I've been studying to become an Empire Combat Beaurocrat, but I keep on failing the paperwork exam. It's more fun to blow ships up than fill forms!"]]),
+   _([["Have you ever seen an Executor up close? I heard they use special technology to create a shield aura around Imperial ships!"]]),
+   _([["I really want to meet the Emperor's Iguana. It's supposed to be 3 times bigger than a human and breathe fire!"]]),
+   _([["I'm fed up with all the paper work. I want to move to someplace more simple. Maybe a Dvaered planet would be good."]]),
+   _([["Lasers are very fast and have long range. Other Houses wish they had such good weapon technology!"]]),
+   _([["Doing shipping for the Empire pays much better than other cargo missions. It is also a good way to curry favour with the Empire!"]]),
 }
 
 local msg_mhint = {
+   {"Empire Recruitment", _([["Have you thought about doing shipping for the Empire? It's great work! You just need to find a recruiter to teach you the ropes."]])},
+   {"Empire Shipping 2", _([["I hear you can get a Heavy Weapons License if you help out the Empire doing special shipping missions."]])},
    {"Collective Espionage 1", _([["The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station."]])},
 }
 
 local msg_ehint = {
+   {function () return (player.chapter()=="0") end, _([["I hear the Empire is looking for rare minerals in Gamma Polaris. What could they be building?"]])},
 }
 
 local msg_mdone = {
@@ -81,21 +87,8 @@ local msg_edone = {
 }
 
 -- Returns a lore message for the given faction.
-local function getLoreMessage( fac )
-   -- Select the faction messages for this NPC's faction, if it exists.
-   local facmsg = msg_lore[fac]
-   if facmsg == nil or #facmsg == 0 then
-      facmsg = msg_lore["general"]
-      if facmsg == nil or #facmsg == 0 then
-         return
-      end
-   end
-
-   -- Select a string, then remove it from the list of valid strings. This ensures all NPCs have something different to say.
-   local r = rnd.rnd(1, #facmsg)
-   local pick = facmsg[r]
-   table.remove(facmsg, r)
-   return pick
+local function getLoreMessage ()
+   return msg_lore[ rnd.rnd(1,#msg_lore) ]
 end
 
 -- Returns a tip message.
@@ -110,6 +103,15 @@ local function getTipMessage( fct )
    return pick
 end
 
+-- Tests some conditions
+local function test_cond( msg, donefunc, activefunc )
+   local c = msg[1]
+   if type(c)=="function" then
+      return c()
+   end
+   return not (donefunc(c) or activefunc(c))
+end
+
 -- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
 local function getMissionLikeMessage( fct )
    if not msg_combined then
@@ -118,12 +120,12 @@ local function getMissionLikeMessage( fct )
       -- Hints.
       -- Hint messages are only valid if the relevant mission has not been completed and is not currently active.
       for i, j in pairs(msg_mhint) do
-         if not (player.misnDone(j[1]) or player.misnActive(j[1])) then
+         if test_cond( j, player.misnDone, player.misnActive ) then
             msg_combined[#msg_combined + 1] = j[2]
          end
       end
       for i, j in pairs(msg_ehint) do
-         if not(player.evtDone(j[1]) or player.evtActive(j[1])) then
+         if test_cond( j, player.evtDone, player.evtActive ) then
             msg_combined[#msg_combined + 1] = j[2]
          end
       end
