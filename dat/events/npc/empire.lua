@@ -90,10 +90,7 @@ local function getTipMessage( fct )
    if #npc.msg_tip == 0 then
       return getLoreMessage(fct)
    end
-   local sel = rnd.rnd(1, #npc.msg_tip)
-   local pick = npc.msg_tip[sel]
-   table.remove(npc.msg_tip, sel)
-   return pick
+   return npc.msg_tip[ rnd.rnd(1, #npc.msg_tip) ]
 end
 
 -- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
@@ -101,7 +98,6 @@ local function getMissionLikeMessage ()
    if #msg_combined == 0 then
       return getLoreMessage()
    end
-
    return msg_combined[ rnd.rnd(1, #msg_combined) ]
 end
 

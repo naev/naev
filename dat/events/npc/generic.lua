@@ -151,21 +151,16 @@ msg_lore["Trader"] = {
 
 
 -- Returns a lore message for the given faction.
-local function getLoreMessage( fac )
+local function getLoreMessage( fct )
    -- Select the faction messages for this NPC's faction, if it exists.
-   local facmsg = msg_lore[fac]
-   if facmsg == nil or #facmsg == 0 then
-      facmsg = msg_lore["generic"]
-      if facmsg == nil or #facmsg == 0 then
+   local fctmsg = msg_lore[fct]
+   if fctmsg == nil or #fctmsg == 0 then
+      fctmsg = msg_lore["generic"]
+      if fctmsg == nil or #fctmsg == 0 then
          return
       end
    end
-
-   -- Select a string, then remove it from the list of valid strings. This ensures all NPCs have something different to say.
-   local r = rnd.rnd(1, #facmsg)
-   local pick = facmsg[r]
-   table.remove(facmsg, r)
-   return pick
+   return fctmsg[ rnd.rnd(1, #fctmsg) ]
 end
 
 -- Returns a jump point message and updates jump point known status accordingly. If all jumps are known by the player, defaults to a lore message.
@@ -207,15 +202,12 @@ local function getJmpMessage( fac )
 end
 
 -- Returns a tip message.
-local function getTipMessage( fac )
+local function getTipMessage( fct )
    -- All tip messages are valid always.
    if #npc.msg_tip == 0 then
-      return getLoreMessage(fac)
+      return getLoreMessage( fct )
    end
-   local sel = rnd.rnd(1, #npc.msg_tip)
-   local pick = npc.msg_tip[sel]
-   table.remove(npc.msg_tip, sel)
-   return pick
+   return npc.msg_tip[ rnd.rnd(1, #npc.msg_tip) ]
 end
 
 -- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
@@ -223,7 +215,6 @@ local function getMissionLikeMessage( fct )
    if #msg_combined == 0 then
       return getLoreMessage( fct )
    end
-
    return msg_combined[ rnd.rnd(1, #msg_combined) ]
 end
 
