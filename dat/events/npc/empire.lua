@@ -80,25 +80,15 @@ local msg_cond = {
 }
 
 -- Returns a lore message for the given faction.
-local function getLoreMessage ()
+local function getMessageLore ()
    return msg_lore[ rnd.rnd(1,#msg_lore) ]
 end
 
--- Returns a tip message.
-local function getTipMessage( fct )
-   -- All tip messages are valid always.
-   if #npc.msg_tip == 0 then
-      return getLoreMessage(fct)
+local function getMessage( lst )
+   if #lst == 0 then
+      return getMessageLore()
    end
-   return npc.msg_tip[ rnd.rnd(1, #npc.msg_tip) ]
-end
-
--- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
-local function getMissionLikeMessage ()
-   if #msg_combined == 0 then
-      return getLoreMessage()
-   end
-   return msg_combined[ rnd.rnd(1, #msg_combined) ]
+   return lst[ rnd.rnd(1, #lst) ]
 end
 
 return function ()
@@ -144,24 +134,16 @@ return function ()
       local prt  = portrait.get( fct )
       local image = portrait.getFullPath( prt )
       local msg
-      local func = nil
       local r = rnd.rnd()
 
       if r <= 0.45 then
-         -- Lore message.
-         msg = getLoreMessage(fct)
+         msg = getMessageLore()
       elseif r <= 0.7 then
-         -- Gameplay tip message.
-         msg = getTipMessage(fct)
+         msg = getMessage( npc.msg_tip )
       else
-         -- Mission hint message.
-         if rnd.rnd() < 0.5 then
-            msg = getMissionLikeMessage(fct)
-         else
-            msg = getLoreMessage(fct)
-         end
+         msg = getMessage( msg_combined )
       end
-      return { name=name, desc=desc, portrait=prt, image=image, msg=msg, func=func }
+      return { name=name, desc=desc, portrait=prt, image=image, msg=msg }
    end
 
    return { create=gen_npc }
