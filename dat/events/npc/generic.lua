@@ -219,12 +219,7 @@ return function ()
    end
 
    -- Create a list of conditional messages
-   msg_combined = {}
-   for k,msg in ipairs( npc.msg_cond ) do
-      if msg[1]() then
-         table.insert( msg_combined, msg[2] )
-      end
-   end
+   msg_combined = npc.combine_cond( npc.msg_cond )
 
    local function gen_npc()
       -- Choose faction, overriding if necessary

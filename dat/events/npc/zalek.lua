@@ -101,23 +101,10 @@ return function ()
    end
 
    -- Create a list of conditional messages
-   msg_combined = {}
-   for k,msg in ipairs( msg_cond ) do
-      if msg[1]() then
-         table.insert( msg_combined, msg[2] )
-      end
-   end
+   msg_combined = npc.combine_cond( msg_cond )
 
    -- Add tag-appropriate descriptions
-   local descriptions = tcopy( desc_list["generic"] )
-   for t,v in pairs(tags) do
-      local dl = desc_list[t]
-      if dl then
-         for k,d in ipairs(dl) do
-            table.insert( descriptions, d )
-         end
-      end
-   end
+   local descriptions = npc.combine_desc( desc_list, tags )
 
    local function gen_npc()
       -- Append the faction to the civilian name, unless there is no faction.

@@ -6,6 +6,29 @@ local tut = require "common.tutorial"
 
 local npc = {}
 
+function npc.combine_cond( msglist )
+   local msg_combined = {}
+   for k,msg in ipairs( msglist ) do
+      if msg[1]() then
+         table.insert( msg_combined, msg[2] )
+      end
+   end
+   return msg_combined
+end
+
+function npc.combine_desc( desclist, tags )
+   local descriptions = tcopy( desclist["generic"] )
+   for t,v in pairs(tags) do
+      local dl = desclist[t]
+      if dl then
+         for k,d in ipairs(dl) do
+            table.insert( descriptions, d )
+         end
+      end
+   end
+   return descriptions
+end
+
 function npc.test_misnHint( misnname )
    return function ()
       return not (player.misnDone(misnname) or player.misnActive(misnname))
