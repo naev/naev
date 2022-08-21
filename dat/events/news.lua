@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Generic News">
- <location>land</location>
+ <location>load</location>
  <chance>100</chance>
 </event>
 --]]
@@ -107,8 +107,8 @@ local function get_econ_article( cargo, pnt, credits )
 end
 
 function create()
+   hook.load( "land" )
    hook.land( "land" )
-   land()
 end
 
 -- create news

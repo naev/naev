@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="NPC">
- <location>land</location>
+ <location>load</location>
  <chance>100</chance>
 </event>
 --]]
@@ -26,8 +26,8 @@ function create()
       table.insert( npc_list, require( "events.npc."..string.gsub(v,".lua","") ) )
    end
 
+   hook.load( "land" )
    hook.land( "land" )
-   land()
 end
 
 function land ()
@@ -65,7 +65,7 @@ function land ()
    end
    local w = 0
    npcs = {}
-   for i=0, num_npc do
+   for i=1, num_npc do
       local r = rnd.rnd() * total_w
       local npcdata
       for k,v in ipairs(npc_spawners) do
