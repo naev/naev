@@ -1,6 +1,7 @@
 local fmt = require "format"
 local portrait = require "portrait"
 local npc = require "common.npc"
+local pir = require "common.pirate"
 
 -- Chance of a jump point message showing up. As this gradually goes
 -- down, it is replaced by lore messages. See spawnNPC function.
@@ -101,23 +102,6 @@ msg_lore["FLF"] = {
    _([["Well, no, the Dvaereds never actually attacked Frontier ships, but that's not the point. They have their ships in Frontier territory. What other reason could they possibly have them there for if not to set up an invasion?"]]),
 }
 
-msg_lore["Pirate"] = {
-   _([["Hi mate. Money or your life! Heh heh, just messing with you."]]),
-   _([["Hey, look at these new scars I got!"]]),
-   _([["Have you heard of the Pirates' Code? They're more guidelines than rules…"]]),
-   _([["My gran once said to me, 'Never trust a pirate.' Well, she was right! I got a pretty credit chip outta her wallet last time I saw her, and I'd do it again."]]),
-   _([["I don't understand why some pirates talk like 16th-century Earth pirates even though that planet is literally dead."]]),
-   _([["I may be a pirate who blows up ships and steals for a living, but that inner nebula still kind of freaks me out."]]),
-   _([["Damn Empire stopped my heist a few decaperiods ago. Just wait'll they see me again…"]]),
-   _([["There's a pirate clanworld I really wanted to get to, but they wouldn't let me in because I'm a 'small-time pirate'! Sometimes I think I'll never make it in this line of work…"]]),
-   _([["Just caught an old mate ferrying tourists for credits. Nearly puked out my grog! Your reputation won't survive for long working for our victims."]]),
-   _([["I was around before Haven was destroyed, you know! Funny times. All the pirates were panicking and the Empire was cheering thinking that we were done for. Ha! As if! It barely even made a difference. We just relocated to New Haven and resumed business as usual."]]),
-   _([["Y'know, I got into this business by accident to tell the truth. But what can you do? I could get a fake ID and pretend to be someone else but I'd get caught eventually and I'd lose my fame as a pirate."]]),
-   _([["One of my favourite things to do is buy a fake ID and then deliver as much contraband as I can before I get caught. It's great fun, and finding out that my identity's been discovered gives me a rush!"]]),
-   _([["Back when I started out in this business all you could do was go around delivering packages for other people. Becoming a pirate was real hard back then, but I got so bored I spent several decaperiods doing it. Nowadays things are way more exciting for normies, but I don't regret my choice one bit!"]]),
-   _([["Flying a real big ship is impressive, but it's still no pirate ship. I mean, I respect ya more if you're flying a Goddard than if you're flying a civilian Lancelot, but the best pirates fly the good old Pirate Kestrel!"]]),
-}
-
 msg_lore["Trader"] = {
    _([["Just another link in the Great Chain, right?"]]),
    _([["You win some, you lose some, but if you don't try you're never going to win."]]),
@@ -194,16 +178,6 @@ local nongeneric_factions = {
    "Proteron"
 }
 
--- List to treat special factions differently
-local override_list = {
-   -- Treat pirate clans the same (at least for now)
-   ["Wild Ones"]     = "Pirate",
-   ["Raven Clan"]    = "Pirate",
-   ["Dreamer Clan"]  = "Pirate",
-   ["Black Lotus"]   = "Pirate",
-   ["Marauder"]      = "Pirate",
-}
-
 return function ()
    local cur, scur = spob.cur()
    local presence = scur:presences()["Independent"] or 0
@@ -225,8 +199,6 @@ return function ()
       -- Choose faction, overriding if necessary
       local f = cur:faction()
       if not f then return nil end
-      local of = override_list[f:nameRaw()]
-      if of then f = faction.get(of) end
 
       local nongeneric = false
       local planfaction = (f ~= nil and f:nameRaw()) or nil
@@ -248,6 +220,7 @@ return function ()
       if fct == "Empire" then fct = nil end
       if fct == "Za'lek" then fct = nil end
       if fct == "Dvaered" then fct = nil end
+      if pir.factionIsPirate( fct ) then return nil end
 
       -- Append the faction to the civilian name, unless there is no faction.
       local name
