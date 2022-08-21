@@ -32,17 +32,6 @@ msg_lore["Independent"] = {
    _([["Sometimes I worry that our lack of a standing military leaves us vulnerable to attack. I hope nobody will get any ideas about conquering us!"]]),
 }
 
-msg_lore["Dvaered"] = {
-   _([["Our Warlord is currently fighting for control over another planet. We all support him unconditionally, of course! Of course…"]]),
-   _([["My great-great-great-grandfather fought in the Dvaered Revolts! We still have the holovids he made. I'm proud to be a Dvaered!"]]),
-   _([["I've got lots of civilian commendations! It's important to have commendations if you're a Dvaered."]]),
-   _([["You better not mess with House Dvaered. Our military is the largest and strongest in the galaxy. Nobody can stand up to us!"]]),
-   _([["House Dvaered? House? The Empire is weak and useless, we don't need them anymore! I say we declare ourselves an independent faction today. What are they going to do, subjugate us? We all know how well that went last time! Ha!"]]),
-   _([["I'm thinking about joining the military. Every time I see or hear news about those rotten FLF bastards, it makes my blood boil! They should all be pounded into space dust!"]]),
-   _([["FLF terrorists? I'm not too worried about them. You'll see, High Command will have smoked them out of their den soon enough, and then the Frontier will be ours."]]),
-   _([["Did you know that House Dvaered was named after a hero of the revolt? At least that's what my grandparents told me."]]),
-}
-
 msg_lore["Sirius"] = {
    _([["Greetings, traveler. May Sirichana's wisdom guide you as it guides me."]]),
    _([["I once met one of the Touched in person. Well, it wasn't really a meeting, our eyes simply met… But that instant alone was awe-inspiring."]]),
@@ -263,6 +252,7 @@ return function ()
       -- Some factions are handled differently now
       if fct == "Empire" then fct = nil end
       if fct == "Za'lek" then fct = nil end
+      if fct == "Dvaered" then fct = nil end
 
       -- Append the faction to the civilian name, unless there is no faction.
       local name
