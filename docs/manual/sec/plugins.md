@@ -85,3 +85,7 @@ The important fields are listed below:
 * `priority`: indicates the loading order of the plugin. The default value is 5 and a lower value indicates higher priority. Higher priority allows the plugin to overwrite files of lower priority plugins. For example, if two plugins have a file `missions/test.lua`, the one with the lower priority would take preference and overwrite the file of the other plugin.
 
 Furthermore, it is also possible to use regex to hide files from the base game with `<blacklist>` nodes. For example, `<blacklist>^ssys/.*\.xml</blacklist>` would hide all the XML files in the `ssys` directory. This is especially useful when planning total conversions or plugins that modify significantly the bas egame, and you don't want updates to add new files you have to hide. By using the appropriate blacklists, you increase compatibility with future versions of Naev. Furthermore, given the popularity of *total conversion*-type plugins, you can use the `<total_conversion/>` tag to apply a large set of blacklist rules which will remove all explicity content from Naev. This means you will have to define at least a star system, a spob, and a flyable ship for the game to run.
+
+## Plugin Repository
+
+Naev has a [plugin repository](https://github.com/naev/naev-plugins) which tries to centralize know plugins. To add your plugin, please create a pull request on the repository. This repository contains only the minimum information of the plugins necessary to be able to download and look up the rest of the information.
