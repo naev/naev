@@ -8,7 +8,7 @@ TODO
 
 ### Adding Bar NPCs \naev
 
-TODO add engine support
+TODO
 
 ### Adding Derelict Events \naev
 
