@@ -107,7 +107,6 @@ return function ()
    local descriptions = npc.combine_desc( desc_list, tags )
 
    local function gen_npc()
-      -- Append the faction to the civilian name, unless there is no faction.
       local name = _("Za'lek Civilian")
       local desc = descriptions[ rnd.rnd(1,#descriptions) ]
       local prt  = portrait.get( "Za'lek" )
