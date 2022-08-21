@@ -112,7 +112,7 @@ So, as the negotiations with Goddard shareholders is making progress, we identif
 
    -- Mission details
    misn.setTitle(_("Dvaered Negotiation 2"))
-   misn.setReward( "They did not tell you" )
+   misn.setReward( _("They did not tell you") )
    misn.setDesc( fmt.f(_("A Dvaered Warlord needs you to perform a tiny special task for the Baron Sauterfeldt. Only the Baron knows what that task is.")))
    mem.misn_marker = misn.markerAdd( mem.baronpnt )
    mem.misn_state = 0
@@ -290,7 +290,7 @@ The man on your right answers: "Certainly, your Lordship."]]))
          fmt.f(_("Go back to {pnt} in {sys}"), {pnt=mem.baronpnt,sys=mem.baronsys} ),
       } )
       misn.markerMove( mem.misn_marker, mem.convpnt )
-      misn.setReward( "They still did not tell you" )
+      misn.setReward( _("They still did not tell you") )
       misn.setDesc( fmt.f(_("The Baron Sauterfeldt wants you to defy a Hyena biker to steal her left nozzle hubcap, that happens to be sort of a piece of fine art.")))
 
    -- Player arrives at Hyena festival
@@ -361,12 +361,12 @@ end
 function escape()
    -- Player quits in the middle of the Hallway to Hell
    if mem.misn_state == 2 then
-      vntk.msg("Mission Failure",_([[You were supposed to cross the Hallway to Hell, not to cowardly run away.]]))
+      vntk.msg(_("Mission Failure"),_([[You were supposed to cross the Hallway to Hell, not to cowardly run away.]]))
       misn.finish(false)
 
    -- Player escapes the fight with BBB
    elseif mem.misn_state == 5 then
-      vntk.msg("Mission Failure",_([[You were supposed to defeat Blue Belly Billy, not to run away.]]))
+      vntk.msg(_("Mission Failure"),_([[You were supposed to defeat Blue Belly Billy, not to run away.]]))
       misn.finish(false)
    end
 end
@@ -611,7 +611,7 @@ end
 -- Player failed the Hallway to Hell because time is over
 function timeOver()
    player.omsgChange(mem.omsg, _("Time Over!"), 3)
-   vntk.msg( "Mission Failure", [[Too late: you failed the Challenge.]] )
+   vntk.msg( _("Mission Failure"), _([[Too late: you failed the Challenge.]]) )
    mem.pla1:taskClear()
    mem.pla2:taskClear()
    mem.pla3:taskClear()
@@ -620,19 +620,19 @@ end
 
 -- Player destroys a target (Hallway to Hell)
 function killPil1()
-   player.omsgAdd("Target 1 Destroyed", 3, 50)
+   player.omsgAdd(_("Target 1 Destroyed"), 3, 50)
    hook.pilot( mem.pil2, "death", "killPil2" )
    mem.pil2:setHilight()
    player.pilot():setTarget(mem.pil2)
 end
 function killPil2()
-   player.omsgAdd("Target 2 Destroyed", 3, 50)
+   player.omsgAdd(_("Target 2 Destroyed"), 3, 50)
    hook.pilot( mem.pil3, "death", "killPil3" )
    mem.pil3:setHilight()
    player.pilot():setTarget(mem.pil3)
 end
 function killPil3()
-   player.omsgAdd("Target 3 Destroyed: you won!\n(Provided you dodge the remaining missiles)", 3, 50)
+   player.omsgAdd(_("Target 3 Destroyed: you won!\n(Provided you dodge the remaining missiles)"), 3, 50)
    mem.misn_state = 3
    misn.osdActive(2)
    hook.rm(mem.loseH) -- One can not lose once one won
@@ -686,21 +686,21 @@ end
 
 -- Player killed BBB
 function killBBB()
-   vntk.msg("",[[You feel satisfaction while watching the remains of Billy's ship being scattered in all directions by the final explosion of her ship…
+   vntk.msg("",_([[You feel satisfaction while watching the remains of Billy's ship being scattered in all directions by the final explosion of her ship…
 Then, you remember you had to disable and board her ship in order to recover a nozzle hubcap.
-Your mission failed!]])
+Your mission failed!]]))
    misn.finish(false)
 end
 
 -- Player boards BBB
 function boardBBB()
-   vntk.msg("",[[Once your ship is docked with Billy's interceptor, you send your extra-vehicular android to recover the left nozzle hubcap. Soon, the robot comes back with what indeed looks like a very primitive trash top. Before undocking, you realize it might be an occasion to loot a bit around in Billy's ship.]])
+   vntk.msg("",_([[Once your ship is docked with Billy's interceptor, you send your extra-vehicular android to recover the left nozzle hubcap. Soon, the robot comes back with what indeed looks like a very primitive trash top. Before undocking, you realize it might be an occasion to loot a bit around in Billy's ship.]]))
    -- We don't de-board the player: looting the ship is allowed
    mem.misn_state = 6
    misn.osdActive(3)
    misn.markerMove( mem.misn_marker, mem.baronpnt )
    pilot.toggleSpawn()
 
-   local c = commodity.new( "Nozzle Hubcap", "This looks like a prehistoric trash top." )
+   local c = commodity.new( N_("Nozzle Hubcap"), N_("This looks like a prehistoric trash top.") )
    misn.cargoAdd( c, 0 )
 end
