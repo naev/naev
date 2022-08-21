@@ -93,7 +93,7 @@ I would like you to specially take the anti-bomber role. For that, I recommend y
    mem.misn_marker = misn.markerAdd( system.cur() )
    mem.misn_state = 0
    misn.osdCreate( _("Dvaered Shopping"), {
-      ("Protect the Dvared cruiser."),
+      _("Protect the Dvared cruiser."),
       fmt.f(_("Jump to {sys}."), {sys=nextsys} ),
       fmt.f(_("Land on {pnt}."), {pnt=mem.godpnt} ),
    } )
@@ -128,7 +128,7 @@ function enter()
             mem.conv_leader:hyperspace( nextsys )
             misn.osdDestroy()
             misn.osdCreate( _("Dvaered Shopping"), {
-               ("Protect the Dvared cruiser."),
+               _("Protect the Dvared cruiser."),
                fmt.f(_("Jump to {sys}."), {sys=nextsys} ),
                fmt.f(_("Land on {pnt}."), {pnt=mem.godpnt} ),
             } )
@@ -141,7 +141,7 @@ function enter()
          hook.pilot( mem.conv_leader, "jump", "OkranMoves" )
          hook.pilot( mem.conv_leader, "land", "OkranMoves" )
       else -- Player went to the wrong system
-         vntk.msg("Wrong system","It appears you jumped in the wrong system somehow. you lost your convoy and failed your mission.")
+         vntk.msg(_("Wrong system"),_("It appears you jumped in the wrong system somehow. you lost your convoy and failed your mission."))
          misn.finish(false)
       end
 
@@ -156,7 +156,7 @@ function enter()
       mem.conv_leader:control()
       mem.conv_leader:hyperspace( target )
       misn.osdCreate( _("Dvaered Shopping"), {
-         ("Protect the Dvared battleship."),
+         _("Protect the Dvared battleship."),
          fmt.f(_("Jump to {sys}."), {sys=target} ),
       } )
       misn.markerMove( mem.misn_marker, target )
@@ -233,7 +233,7 @@ end
 -- Tests to determine if the player is running away
 function escape()
    if (mem.misn_state == 0 and not mem.convLeft) or mem.misn_state == 1 then
-      vntk.msg("You left the convoy",[[You were supposed to escort the convoy, not to go away. You failed your mission!]])
+      vntk.msg(_("You left the convoy"),_([[You were supposed to escort the convoy, not to go away. You failed your mission!]]))
       misn.finish(false)
    end
 end
@@ -268,11 +268,11 @@ end
 function OkranDeath()
    -- Mission failure (not sure how it can happend that way)
    if mem.misn_state == 0 or mem.misn_state == 1 then
-      vntk.msg("Mission Failure", [[You're not sure how this routine escort mission came to the point where a cruiser was lost, but the result is there: you failed.]])
+      vntk.msg(_("Mission Failure"), _([[You're not sure how this routine escort mission came to the point where a cruiser was lost, but the result is there: you failed.]]))
       misn.finish(false)
    else
-      vntk.msg("Finally got him", [[The destruction of a battlecruiser is certainly an impressive sight. It is like a small town being annihilated before your eyes, irradiating the whole star system with light and heat. This is the Dvaered way of life, apparently.
-Now, it's time to land on a Dvaered planet to get recognized as the pilot who killed Colonel Okran.]])
+      vntk.msg(_("Finally got him"), _([[The destruction of a battlecruiser is certainly an impressive sight. It is like a small town being annihilated before your eyes, irradiating the whole star system with light and heat. This is the Dvaered way of life, apparently.
+Now, it's time to land on a Dvaered planet to get recognized as the pilot who killed Colonel Okran.]]))
       mem.misn_state = 3
       misn.osdCreate( _("Dvaered Shopping"), {
          _("Land on any Dvaered planet"),
@@ -338,7 +338,7 @@ Bye, mate!"]]), {pnt=mem.tripnt,sys=mem.trisys}))
       fmt.f(_("Meet and hail the Trickster in orbit of {pnt} in {sys}"), {pnt=mem.tripnt,sys=mem.trisys} ),
    } )
    misn.markerMove( mem.misn_marker, mem.tripnt )
-   misn.setReward( "Staying alive?" )
+   misn.setReward( _("Staying alive?") )
    misn.setDesc( fmt.f(_("The shopping mission has gone wild: you have to try to survive and encounter a shady Imperial pilot who apparently might give you information")))
    mem.misn_state = 2
 
@@ -444,7 +444,7 @@ And as they teach at school, an unescorted capship is a dead capship. I recommen
       fmt.f(_("Encounter and kill Okran in {sys}"), {sys=mem.godsys} ),
    } )
    misn.markerMove( mem.misn_marker, mem.godsys )
-   misn.setReward( "Staying alive?" )
+   misn.setReward( _("Staying alive?") )
    misn.setDesc( fmt.f(_("The shopping mission has gone wild: you have to destroy the freshly bought Goddard battlecruiser.")))
 
    mem.trickster:taskClear(false)
@@ -453,10 +453,10 @@ end
 
 -- Just get pple tell things
 function OkranTalks()
-   mem.conv_leader:broadcast( "Aaah. I feel so good! Nothing is like flying a Goddard." )
+   mem.conv_leader:broadcast( _("Aaah. I feel so good! Nothing is like flying a Goddard.") )
 end
 function Hewhewhew()
-   mem.trickster:broadcast( "Hewhewhew!" )
+   mem.trickster:broadcast( _("Hewhewhew!") )
 end
 
 -- Remove the Pirates form the equation
