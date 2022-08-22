@@ -65,6 +65,9 @@ local msg_lore = {
    _([["Have you ever seen an Executor up close? I heard they use special technology to create a shield aura around Imperial ships!"]]),
    _([["I really want to meet the Emperor's Iguana. It's supposed to be 3 times bigger than a human and breathe fire!"]]),
    _([["I'm fed up with all the paper work. I want to move to someplace more simple. Maybe a Dvaered planet would be good."]]),
+}
+
+local msg_tip = {
    _([["Lasers are very fast and have long range. Other Houses wish they had such good weapon technology!"]]),
    _([["Doing shipping for the Empire pays much better than other cargo missions. It is also a good way to curry favour with the Empire!"]]),
 }
@@ -123,7 +126,11 @@ return function ()
       if r <= 0.45 then
          msg = getMessageLore()
       elseif r <= 0.7 then
-         msg = getMessage( npc.msg_tip )
+         if rnd.rnd() < 0.5 then
+            msg = getMessage( msg_tip )
+         else
+            msg = getMessage( npc.msg_tip )
+         end
       else
          msg = getMessage( msg_combined )
       end
