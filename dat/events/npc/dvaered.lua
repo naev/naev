@@ -89,7 +89,12 @@ return function ()
    local descriptions = npc.combine_desc( desc_list, tags )
 
    local function gen_npc()
-      local name = _("Dvaered Civilian")
+      local name
+      if rnd.rnd() < 0.5 then
+         name = _("Dvaered Civilian")
+      else
+         name = _("Dvaered Worker")
+      end
       local desc = descriptions[ rnd.rnd(1,#descriptions) ]
       local prt  = portrait.get( "Dvaered" )
       local image = portrait.getFullPath( prt )
