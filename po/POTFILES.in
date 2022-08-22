@@ -3031,6 +3031,7 @@ dat/scripts/vn/main.lua
 dat/scripts/vn/options.lua
 dat/scripts/vn/sdf.lua
 dat/scripts/vn/transitions.lua
+dat/scripts/vnimage.lua
 dat/scripts/vntk.lua
 dat/snd/music.lua
 dat/spob/lua/default.lua
