@@ -411,6 +411,8 @@ static int gl_defState (void)
 #if DEBUG_GL
    glEnable(  GL_DEBUG_OUTPUT ); /* Log errors immediately.. */
    glDebugMessageCallback( gl_debugCallback, 0 );
+   glDebugMessageControl( GL_DONT_CARE, GL_DEBUG_TYPE_PERFORMANCE, GL_DONT_CARE, 0, NULL, GL_FALSE );
+   glDebugMessageControl( GL_DONT_CARE, GL_DEBUG_TYPE_OTHER, GL_DONT_CARE, 0, NULL, GL_FALSE );
 #endif /* DEBUG_GL */
 
    /* Set the blending/shading model to use. */
