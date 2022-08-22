@@ -75,14 +75,7 @@ local msg_lore_researcher_only = {
 
 -- Organize civilian / researcher text
 local function merge( tbla, tblb )
-   local t = {}
-   for k,v in ipairs(tbla) do
-      table.insert( t, v )
-   end
-   for k,v in ipairs(tblb) do
-      table.insert( t, v )
-   end
-   return t
+   return tmergei( tmergei( {}, tbla ), tblb )
 end
 local msg_lore_researcher = merge( msg_lore, msg_lore_researcher_only )
 local msg_lore_civilian = merge( msg_lore, msg_lore_civilian_only )
