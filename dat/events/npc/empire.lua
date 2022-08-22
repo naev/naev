@@ -124,7 +124,7 @@ return function ()
    local descriptions = npc.combine_desc( desc_list, tags )
 
    local function gen_npc()
-      local name = _("Empire Civilian")
+      local name = _("Empire Citizen")
       local desc = descriptions[ rnd.rnd(1,#descriptions) ]
       local prt  = portrait.get( "Empire" )
       local image = portrait.getFullPath( prt )
