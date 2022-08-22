@@ -108,6 +108,9 @@ const char* debug_sigCodeToStr( int sig, int sig_code )
 #if DEBUGGING
 typedef struct { void* data; uintptr_t pc; const char* file; int line; const char* func; } FrameInfo;
 
+/**
+ * @brief Callback for handling one frame of a backtrace, after function lookup has succeeded (or it failed but we supplied null data).
+ */
 static void debug_backtrace_syminfo_callback( void* data, uintptr_t pc, const char* symname, uintptr_t symval, uintptr_t symsize )
 {
    (void) symsize;
@@ -125,6 +128,10 @@ static void debug_backtrace_syminfo_callback( void* data, uintptr_t pc, const ch
    LOGERR( "[%#14"PRIxPTR"] %s at %s:%u %*s| %s(%s+%#"PRIxPTR")", pc, fi->func, fi->file, fi->line, pad, "", addr.dli_fname, symval ? symname : "", offset );
 }
 
+
+/**
+ * @brief Callback for handling one frame of a backtrace, after function lookup has failed.
+ */
 static void debug_backtrace_error_callback( void* data, const char* msg, int errnum )
 {
    FrameInfo *fi = data;
@@ -134,7 +141,7 @@ static void debug_backtrace_error_callback( void* data, const char* msg, int err
 }
 
 /**
- * @brief Translates and displays the address as something humans can enjoy.
+ * @brief Callback for handling one frame of a backtrace.
  */
 static int debug_backtrace_full_callback( void* data, uintptr_t pc, const char* file, int line, const char* func )
 {
@@ -143,6 +150,13 @@ static int debug_backtrace_full_callback( void* data, uintptr_t pc, const char* 
       backtrace_syminfo( debug_bs, pc, debug_backtrace_syminfo_callback, debug_backtrace_error_callback, &fi );
 
    return 0;
+}
+
+/**
+ * @brief Logs a backtrace to stderr.
+ */
+void debug_logBacktrace (void) {
+   backtrace_full( debug_bs, 1, debug_backtrace_full_callback, NULL, NULL );
 }
 
 #if HAVE_SIGACTION
@@ -164,7 +178,7 @@ static void debug_sigHandler( int sig )
 #endif /* HAVE_SIGACTION */
 	);
 
-   backtrace_full( debug_bs, 0, debug_backtrace_full_callback, NULL, NULL );
+   debug_logBacktrace();
    LOGERR( _("Report this to project maintainer with the backtrace.") );
 
    /* Always exit. */

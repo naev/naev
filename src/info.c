@@ -267,6 +267,7 @@ static void info_buttonClick( unsigned int wid, const char *str )
          WARN( _("Failure to run info button with id '%d':\n%s"), btn->id, lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
       }
+      land_needsTakeoff( 1 ); /* Script said so? */
       return;
    }
 }
