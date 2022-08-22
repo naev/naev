@@ -2675,6 +2675,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    a->groupsw  = array_create( double );
    a->radius   = 0.;
    a->maxspeed = ASTEROID_DEFAULT_MAXSPEED;
+   a->maxspin  = ASTEROID_DEFAULT_MAXSPIN;
    a->thrust   = ASTEROID_DEFAULT_THRUST;
 
    /* Parse label if available. */

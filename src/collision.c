@@ -316,6 +316,41 @@ int CollidePolygon( const CollPoly* at, const vec2* ap,
 }
 
 /**
+ * @brief Rotates a polygon.
+ *
+ *    @param[out] rpolygon Rotated polygon.
+ *    @param[in] ipolygon Imput polygon.
+ *    @param[in] theta Rotation angle (radian).
+ */
+void RotatePolygon( CollPoly* rpolygon, CollPoly* ipolygon, float theta )
+{
+   float ct, st, d;
+
+   rpolygon->npt = ipolygon->npt;
+   rpolygon->x = malloc( ipolygon->npt*sizeof(float) );
+   rpolygon->y = malloc( ipolygon->npt*sizeof(float) );
+   rpolygon->xmin = 0;
+   rpolygon->xmax = 0;
+   rpolygon->ymin = 0;
+   rpolygon->ymax = 0;
+
+   ct = cos( theta );
+   st = sin( theta );
+
+   for (int i=0; i<=rpolygon->npt-1; i++) {
+      d = ipolygon->x[i] * ct - ipolygon->y[i] * st;
+      rpolygon->x[i] = d;
+      rpolygon->xmin = MIN( rpolygon->xmin, d );
+      rpolygon->xmax = MAX( rpolygon->xmax, d );
+
+      d = ipolygon->x[i] * st + ipolygon->y[i] * ct ;
+      rpolygon->y[i] = d;
+      rpolygon->ymin = MIN( rpolygon->ymin, d );
+      rpolygon->ymax = MAX( rpolygon->ymax, d );
+   }
+}
+
+/**
  * @brief Checks whether or not a point is inside a polygon.
  *
  *    @param[in] at Polygon a.
