@@ -13,7 +13,7 @@ local msg_combined, seltargets
 local gfx_list = {
    "neutral/female1.webp",
    "neutral/female2.webp",
-   --"neutral/female2_nogog.webp", -- Doesn't seem to load for some reason
+   "neutral/female2n_nogog.webp",
    "neutral/female3.webp",
    "neutral/female4.webp",
    "neutral/male1n.webp",
