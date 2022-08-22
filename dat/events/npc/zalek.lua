@@ -61,13 +61,15 @@ local msg_lore = {
    _([["High energy particle physics experiments are so cliché. Theoretical quantum hyperconductors is where the inderesting stuff happens!"]]),
    _([["House Za'lek is for researchers, run by researchers. Council members are chosen randomly and forced to fill their obligations to argue and decide about the future of House Za'lek. Lots of people complain, but this is the best way to avoid neopotism and corruption that is rampant in the Empire and other Houses!"]]),
    _([["Stochastic meritocracy is the best way to run a Great House. House Za'lek randomly choses the council members from rsearchers to rule in the Za'lek Council."]]),
-   _([[""]]),
 }
 local msg_lore_civilian_only = {
    _([["It's not easy, dancing to those scientists' tunes. They give you the most impossible tasks! Like, where am I supposed to get a triple redundant helitron converter? Honestly."]]),
+   _([["Life isn't too bad at House Za'lek. Sure I'm not in the spotlight like the researchers, but as long as I stay underfoot I can do whatever I want."]]),
+   _([["I used to be a researcher, but it's much nicer now that I don't have to worry about research metrics and funding!"]]),
 }
 local msg_lore_researcher_only = {
    _([["I"m glad the Za'lek Council decided to open up to the rest of the galaxy. Although science is great, it is also nice to meet people who don't care about research impact metrics."]]),
+   _([["I was on the Za'lek Council onces. The meetings are endless and people get into fights over trivial things. The food and the bonus salary are great though, but I'm not sure if I would do it again."]]),
 }
 
 -- Organize civilian / researcher text
