@@ -62,6 +62,8 @@ local msg_lore = {
    _([["House Za'lek is for researchers, run by researchers. Council members are chosen randomly and forced to fill their obligations to argue and decide about the future of House Za'lek. Lots of people complain, but this is the best way to avoid neopotism and corruption that is rampant in the Empire and other Houses!"]]),
    _([["Stochastic meritocracy is the best way to run a Great House. House Za'lek randomly choses the council members from rsearchers to rule in the Za'lek Council. No sociology researcher has found a better system yet!"]]),
    _([["I think I'm getting overweight… Having drones around means I never have to do manual labour."]]),
+   _([["Za'leks are a special kind of lazy. We would rather spend 100 periods programming drones to automate a process than spend 1 period doing it manually."]]),
+   _([["Not many people want to join the military these days. Luckily we have all the drones to fill in!"]]),
 }
 local msg_lore_civilian_only = {
    _([["It's not easy, dancing to those scientists' tunes. They give you the most impossible tasks! Like, where am I supposed to get a triple redundant helitron converter? Honestly."]]),
