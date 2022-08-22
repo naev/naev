@@ -65,6 +65,12 @@ local msg_lore = {
    _([["Have you ever seen an Executor up close? I heard they use special technology to create a shield aura around Imperial ships!"]]),
    _([["I really want to meet the Emperor's Iguana. It's supposed to be 3 times bigger than a human and breathe fire!"]]),
    _([["I'm fed up with all the paper work. I want to move to someplace more simple. Maybe a Dvaered planet would be good."]]),
+   _([["I don't understand how the Soromid can live outside of the Empire. They should subjugate as a Great House or be eliminated!"]]),
+   _([["House Za'lek used to be closed to the outside world. I wonder what made them change their mind?"]]),
+   _([["The Dvaered are very boisterous and violent, however, their loyalty to the Empire is second to none!"]]),
+   _([["Why can't the Empire do more against pirates? We have the best armada in the galaxy!"]]),
+   _([["They tell us that if we work hard enough, we too can become nobles in the Imperial Court, but nobody I know has made it in!"]]),
+   _([["In the Empire, the teach us to do paperwork as soon as we learn to read! Since it's so important, I think they should teach it even sooner!"]]),
 }
 
 local msg_tip = {
