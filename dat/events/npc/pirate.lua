@@ -50,6 +50,8 @@ local msg_tip = {
    _([["Just caught an old mate ferrying tourists for credits. Nearly puked out my grog! Your reputation won't survive for long working for our victims."]]),
    _([["There is nothing more off-putting to other pirates than normal work. It's the best way to tank your reputation with pirates!"]]),
    _([["Marauders don't list much to other pirates. If it's too much of a hassle to blast them to bits, you can always pay them to go away."]]),
+   _([["Stealth works best when you have a ship equipped for the job. Try to keep your mass low and use stealth improving outfits."]]),
+   _([["If you get caught with contraband, you can try to bribe your way out of it. Credits talk!"]]),
 }
 
 local msg_cond = {
