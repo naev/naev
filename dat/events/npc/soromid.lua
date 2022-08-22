@@ -40,6 +40,12 @@ local msg_lore = {
    _([["The Empire laughs at our bioships and calls us brutish cattle herders. However, they seem to laugh a lot less when their cruisers get bitten in half by a Soromid capship!"]]),
    _([["I've heard of some bioships going missing during creation. It must be the will of the universe."]]),
    _([["We Soromid are split into tribes, each with their own traditions and customs. Tribes are mainly independent, but  Elder convene with each other periodically to decide what to do with things that affect us all."]]),
+   _([["I have no idea how the Great Houses can organize them as they do. How can a single person manage and be in charge of billions and billions of humans? It makes no sense!"]]),
+   _([["There are those who wished we had all perished on Sorom, however, the Soromid do not go down without a fight!"]]),
+   _([["We never meant to become new humans, but when you are faced with the annihilation of your people, you have to take decisive action to save as many as you can."]]),
+   _([["We do not easily forget the treatment the Empire gave us during the Great Quarantine. We will make sure that does not happen again."]]),
+   _([["We have many stories about the Great Quarantine. It is important to not forget our past as we strive for a better future."]]),
+   _([["Some thing that making the Soromid inhabit the barely inhabitable is a sign of inferiority to the Great Houses. However, we see it as a pride and accomplishment. Let the Great Houses fight over their few worlds while we live harmonious with nature!"]]),
 }
 
 local msg_tip = {
