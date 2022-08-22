@@ -42,17 +42,6 @@ msg_lore["Independent"] = {
    _([["Sometimes I worry that our lack of a standing military leaves us vulnerable to attack. I hope nobody will get any ideas about conquering us!"]]),
 }
 
-msg_lore["Sirius"] = {
-   _([["Greetings, traveler. May Sirichana's wisdom guide you as it guides me."]]),
-   _([["I once met one of the Touched in person. Well, it wasn't really a meeting, our eyes simply met… But that instant alone was awe-inspiring."]]),
-   _([["They say Sirichana lives and dies like any other man, but each new Sirichana is the same as the last. How is that possible?"]]),
-   _([["My cousin was called to Mutris a cycle ago… He must be in Crater City by now. And one day, he will become one of the Touched!"]]),
-   _([["Some people say Sirius society is unfair because our echelons are determined by birth. But even though we are different, we are all followers of Sirichana. Spiritually, we are equal."]]),
-   _([["House Sirius is officially part of the Empire, but everyone knows that's only true on paper. The Emperor has nothing to say in these systems. We follow Sirichana, and no-one else."]]),
-   _([["You can easily tell the different echelons apart. Every Sirian citizen and soldier wears clothing appropriate to his or her echelon."]]),
-   _([["I hope to meet one of the Touched one day!"]]),
-}
-
 msg_lore["Thurion"] = {
    _([["Did you know that even the slightest bit of brain damage can lead to death during the upload process? That's why we're very careful to not allow our brains to be damaged, even a little."]]),
    _([["My father unfortunately hit his head when he was young, so he couldn't be safely uploaded. It's okay, though; he had a long and fulfilling life, for a non-uploaded human, that is."]]),
@@ -221,6 +210,7 @@ return function ()
       if fct == "Za'lek" then fct = nil end
       if fct == "Dvaered" then fct = nil end
       if fct == "Soromid" then fct = nil end
+      if fct == "Sirius" then fct = nil end
       if pir.factionIsPirate( fct ) then return nil end
 
       -- Append the faction to the civilian name, unless there is no faction.

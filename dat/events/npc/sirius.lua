@@ -1,0 +1,95 @@
+--local fmt = require "format"
+local portrait = require "portrait"
+local npc = require "common.npc"
+
+-- State. Nothing persists.
+local msg_combined
+
+local desc_list = {}
+desc_list["generic"] = {
+   _("A Sirius civilian."),
+}
+--desc_list["agriculture"] = {}
+--desc_list["industrial"] = {}
+--desc_list["mining"] = {}
+--desc_list["tourism"] = {}
+--desc_list["medical"]
+--desc_list["trade"] = {}
+--desc_list["old"] = {}
+--desc_list["immigration"] = {}
+--desc_list["prison"] = {}
+--desc_list["station"] = {}
+--desc_list["government"] = {}
+
+local msg_lore = {
+   _([["Greetings, traveler. May Sirichana's wisdom guide you as it guides me."]]),
+   _([["I once met one of the Touched in person. Well, it wasn't really a meeting, our eyes simply met… But that instant alone was awe-inspiring."]]),
+   _([["They say Sirichana lives and dies like any other man, but each new Sirichana is the same as the last. How is that possible?"]]),
+   _([["My cousin was called to Mutris a cycle ago… He must be in Crater City by now. And one day, he will become one of the Touched!"]]),
+   _([["Some people say Sirius society is unfair because our echelons are determined by birth. But even though we are different, we are all followers of Sirichana. Spiritually, we are equal."]]),
+   _([["House Sirius is officially part of the Empire, but everyone knows that's only true on paper. The Emperor has nothing to say in these systems. We follow Sirichana, and no-one else."]]),
+   _([["You can easily tell the different echelons apart. Every Sirian citizen and soldier wears clothing appropriate to his or her echelon."]]),
+   _([["I hope to meet one of the Touched one day!"]]),
+}
+
+local msg_tip = {
+}
+
+local msg_cond = {
+}
+
+-- Returns a lore message for the given faction.
+local function getMessageLore ()
+   return msg_lore[ rnd.rnd(1,#msg_lore) ]
+end
+
+local function getMessage( lst )
+   if #lst == 0 then
+      return getMessageLore()
+   end
+   return lst[ rnd.rnd(1, #lst) ]
+end
+
+return function ()
+   local cur, scur = spob.cur()
+   local presence = scur:presences()["Sirius"] or 0
+   local tags = cur:tags()
+
+   -- Need presence in the system
+   if presence <= 0 then
+      return nil
+   end
+
+   -- Don't appear on restricted assets
+   if tags.restricted then
+      -- TODO military personnel
+      return nil
+   end
+
+   -- Create a list of conditional messages
+   msg_combined = npc.combine_cond( msg_cond )
+
+   -- Add tag-appropriate descriptions
+   local descriptions = npc.combine_desc( desc_list, tags )
+
+   local function gen_npc()
+      local name = _("Sirius Civilian")
+      local desc = descriptions[ rnd.rnd(1,#descriptions) ]
+      local prt  = portrait.get( "Sirius" )
+      local image = portrait.getFullPath( prt )
+      local msg
+      local r = rnd.rnd()
+      if r <= 0.45 then
+         msg = getMessageLore()
+      elseif r <= 0.7 then
+         if rnd.rnd() < 0.5 then
+            msg = getMessage( msg_tip )
+         end
+      else
+         msg = getMessage( msg_combined )
+      end
+      return { name=name, desc=desc, portrait=prt, image=image, msg=msg }
+   end
+
+   return { create=gen_npc }
+end
