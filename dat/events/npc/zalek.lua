@@ -60,7 +60,8 @@ local msg_lore = {
    _([["Lately the drone software updates have been full of bugs. It's because the engineers are more interested in trying new research techniques rather than trying to reduce the accumulated technical debt."]]),
    _([["High energy particle physics experiments are so cliché. Theoretical quantum hyperconductors is where the inderesting stuff happens!"]]),
    _([["House Za'lek is for researchers, run by researchers. Council members are chosen randomly and forced to fill their obligations to argue and decide about the future of House Za'lek. Lots of people complain, but this is the best way to avoid neopotism and corruption that is rampant in the Empire and other Houses!"]]),
-   _([["Stochastic meritocracy is the best way to run a Great House. House Za'lek randomly choses the council members from rsearchers to rule in the Za'lek Council."]]),
+   _([["Stochastic meritocracy is the best way to run a Great House. House Za'lek randomly choses the council members from rsearchers to rule in the Za'lek Council. No sociology researcher has found a better system yet!"]]),
+   _([["I think I'm getting overweight… Having drones around means I never have to do manual labour."]]),
 }
 local msg_lore_civilian_only = {
    _([["It's not easy, dancing to those scientists' tunes. They give you the most impossible tasks! Like, where am I supposed to get a triple redundant helitron converter? Honestly."]]),
