@@ -48,7 +48,7 @@ local msg_tip = {
    _([["Y'know, I got into this business by accident to tell the truth. But what can you do? I could get a fake transponder and pretend to be someone else but I'd get caught eventually and I'd lose my fame as a pirate."]]),
    _([["One of my favourite things to do is buy a fake transponder and then deliver as much contraband as I can before I get caught. It's great fun, and finding out that my identity's been discovered gives me a rush!"]]),
    _([["Just caught an old mate ferrying tourists for credits. Nearly puked out my grog! Your reputation won't survive for long working for our victims."]]),
-   _([["There is nothing more off-putting to other pirates than normal work. It's the best way to tank your reputation with pirates!"]]),
+   _([["There is nothing more off-putting to other pirates than normal work. It's the best way to tank your reputation with all pirates!"]]),
    _([["Marauders don't list much to other pirates. If it's too much of a hassle to blast them to bits, you can always pay them to go away."]]),
    _([["Stealth works best when you have a ship equipped for the job. Try to keep your mass low and use stealth improving outfits."]]),
    _([["If you get caught with contraband, you can try to bribe your way out of it. Credits talk!"]]),

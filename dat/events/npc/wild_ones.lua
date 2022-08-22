@@ -25,6 +25,8 @@ local msg_lore = {
    _([["My sibling is in the Black Lotus clan. When we meet up at a pirate assembly, all they talk about is money until I can get them nice and drunk."]]),
    _([["Sometimes it's almost like pillaging is too easy. Like, you know, the Empire is letting us instead of being an incompetent mess of a bureaucracy."]]),
    _([["I'm looking forward to the next pirate assembly. Time to party!"]]),
+   _([["It's not easy to get into raiding convoys, but in this eat-or-be-eaten world, you gotta do what you gotta do to survive. Ya'know?"]]),
+   _([["Hey, I have a confession to make. I once got my hands on a Dreame Clan pineapple pizza. They're quite delicious. Don't tell anyone I told you!"]]),
 }
 
 local msg_tip = {
