@@ -33,14 +33,14 @@ local msg_lore = {
    _([["Flying a real big ship is impressive, but it's still no pirate ship. I mean, I respect ya more if you're flying a Goddard than if you're flying a civilian Lancelot, but the best pirates fly the good old Pirate Kestrel!"]]),
    _([["I swear I saw a bunch of cats in a trench coat pretending to be a pirate once. Must have been a weird dream. I should quite drinking…"]]),
    _([["There are four major pirate clans: the Wild Ones, the Ravens, the Dreamers, and the Black Lotus. It's sometimes hard for them to get along."]]),
-   _([["Pirate assemblies are the pinacle of pirate society. Booze! Grog! Fights! Jigs! Dance! More Grog! It's great fun, just don't drink as much to forget it all!"]]),
-   -- This is the 'space pirate jig'
+   _([["Pirate assemblies are the pinacle of pirate society. Booze! Grog! Fights! Shanties! Jigs! More Grog! It's great fun, just don't drink as much to forget it all!"]]),
+   -- This is the 'space pirate shanty'
    _([["With me bottle of grog, I sail to the Sun
 there be nobody stoppin' me!
 For I was naught but a frog layin' in the bog
 dreaming of the wide black sea!
 Hey ho! Space pirates! Rum-dee Rum Rum!"]]),
-   _([["I love the space pirate jig but every time I learn the lyrics I end up getting piss drunk and forget them the next morning…"]]),
+   _([["I love the space pirate shantyebut every time I learn the lyrics I end up getting piss drunk and forget them the next morning…"]]),
 }
 
 local msg_tip = {
