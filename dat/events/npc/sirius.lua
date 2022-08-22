@@ -1,25 +1,20 @@
 --local fmt = require "format"
-local portrait = require "portrait"
+--local portrait = require "portrait"
 local npc = require "common.npc"
+local vni = require "vnimage"
 
 -- State. Nothing persists.
 local msg_combined
 
-local desc_list = {}
-desc_list["generic"] = {
-   _("A Sirius civilian."),
+local desc_fyrra = {
+   _("A Sirius civilian of the low Fyrra echelon."),
 }
---desc_list["agriculture"] = {}
---desc_list["industrial"] = {}
---desc_list["mining"] = {}
---desc_list["tourism"] = {}
---desc_list["medical"]
---desc_list["trade"] = {}
---desc_list["old"] = {}
---desc_list["immigration"] = {}
---desc_list["prison"] = {}
---desc_list["station"] = {}
---desc_list["government"] = {}
+local desc_shiara = {
+   _("A Sirius civilian of the mid Shiara echelon."),
+}
+local desc_serra = {
+   _("A Sirius civilian of the high Serra echelon."),
+}
 
 local msg_lore = {
    _([["Greetings, traveler. May Sirichana's wisdom guide you as it guides me."]]),
@@ -68,16 +63,25 @@ return function ()
    -- Create a list of conditional messages
    msg_combined = npc.combine_cond( msg_cond )
 
-   -- Add tag-appropriate descriptions
-   local descriptions = npc.combine_desc( desc_list, tags )
-
    local function gen_npc()
-      local name = _("Sirius Civilian")
-      local desc = descriptions[ rnd.rnd(1,#descriptions) ]
-      local prt  = portrait.get( "Sirius" )
-      local image = portrait.getFullPath( prt )
-      local msg
+      -- TODO better way of choosing echelon, maybe spob tags?
+      local name, desc, image, prt
       local r = rnd.rnd()
+      if r < 0.6 then
+         name = _("Fyrra Civilian")
+         desc = desc_fyrra[ rnd.rnd(1,#desc_fyrra) ]
+         image, prt = vni.sirius.fyrra()
+      elseif r < 0.9 then
+         name = _("Shiara Civilian")
+         desc = desc_shiara[ rnd.rnd(1,#desc_shiara) ]
+         image, prt = vni.sirius.shiara()
+      else
+         name = _("Serra Civilian")
+         image, prt = vni.sirius.serra()
+         desc = desc_serra[ rnd.rnd(1,#desc_serra) ]
+      end
+      local msg
+      r = rnd.rnd()
       if r <= 0.45 then
          msg = getMessageLore()
       elseif r <= 0.7 then
