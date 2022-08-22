@@ -44,15 +44,6 @@ msg_lore["Sirius"] = {
    _([["I hope to meet one of the Touched one day!"]]),
 }
 
-msg_lore["Soromid"] = {
-   _("Hello. Can I interest you in one of our galaxy famous cosmetic gene treatments? You look like you could use them…"),
-   _([["Can you believe it? I was going to visit Sorom to find my roots, and then boom! It got burnt to a crisp! Even now, cycles later, I still can't believe it."]]),
-   _([["Yes, it's true, our military ships are alive. Us normal folk don't get to own bioships though, we have to make do with synthetic constructs just like everyone else."]]),
-   _([["Everyone knows that we Soromid altered ourselves to survive the deadly conditions on Sorom during the Great Quarantine. What you don't hear so often is that billions of us died from the therapy itself. We paid a high price for survival."]]),
-   _([["Our cosmetic gene treatments are even safer now for non-Soromids, with a rate of survival of 99.4%!"]]),
-   _([["We have been rebuilding and enhancing our bodies for so long, I say we've become a new species, one above human."]]),
-}
-
 msg_lore["Thurion"] = {
    _([["Did you know that even the slightest bit of brain damage can lead to death during the upload process? That's why we're very careful to not allow our brains to be damaged, even a little."]]),
    _([["My father unfortunately hit his head when he was young, so he couldn't be safely uploaded. It's okay, though; he had a long and fulfilling life, for a non-uploaded human, that is."]]),
@@ -220,6 +211,7 @@ return function ()
       if fct == "Empire" then fct = nil end
       if fct == "Za'lek" then fct = nil end
       if fct == "Dvaered" then fct = nil end
+      if fct == "Soromid" then fct = nil end
       if pir.factionIsPirate( fct ) then return nil end
 
       -- Append the faction to the civilian name, unless there is no faction.
