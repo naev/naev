@@ -34,6 +34,7 @@ local msg_lore = {
    _([["I swear I saw a bunch of cats in a trench coat pretending to be a pirate once. Must have been a weird dream. I should quite drinking…"]]),
    _([["There are four major pirate clans: the Wild Ones, the Ravens, the Dreamers, and the Black Lotus. It's sometimes hard for them to get along."]]),
    _([["Pirate assemblies are the pinacle of pirate society. Booze! Grog! Fights! Jigs! Dance! More Grog! It's great fun, just don't drink as much to forget it all!"]]),
+   -- This is the 'space pirate jig'
    _([["With me bottle of grog, I sail to the Sun
 there be nobody stoppin' me!
 For I was naught but a frog layin' in the bog
