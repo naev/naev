@@ -245,7 +245,7 @@ static int gl_setupAttributes( int fallback )
    }
    SDL_GL_SetAttribute(SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, 1);
 #if DEBUG_GL
-   SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG|SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
 #endif /* DEBUG_GL */
 
    return 0;
