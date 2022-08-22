@@ -22,6 +22,11 @@ desc_list["generic"] = {
 --desc_list["station"] = {}
 --desc_list["government"] = {}
 
+local gfx_list = {
+   "soromid/soromid_heavy_civilian_1.webp",
+   "soromid/soromid_heavy_civilian_2.webp",
+}
+
 local msg_lore = {
    _("Hello. Can I interest you in one of our galaxy famous cosmetic gene treatments? You look like you could use them…"),
    _([["Can you believe it? I was going to visit Sorom to find my roots, and then boom! It got burnt to a crisp! Even now, cycles later, I still can't believe it."]]),
@@ -73,6 +78,11 @@ return function ()
       local desc = descriptions[ rnd.rnd(1,#descriptions) ]
       local prt  = portrait.get( "Soromid" )
       local image = portrait.getFullPath( prt )
+      -- TODO probably use tags to control what portraits get used
+      if rnd.rnd() < 0.3 then
+         prt = gfx_list[ rnd.rnd(1,#gfx_list) ]
+         image = prt
+      end
       local msg
       local r = rnd.rnd()
       if r <= 0.45 then

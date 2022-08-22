@@ -10,6 +10,15 @@ local jm_chance_max = 0.25
 -- State. Nothing persists.
 local msg_combined, seltargets
 
+local gfx_list = {
+   "neutral/female1.webp",
+   "neutral/female2.webp",
+   --"neutral/female2_nogog.webp", -- Doesn't seem to load for some reason
+   "neutral/female3.webp",
+   "neutral/female4.webp",
+   "neutral/male1n.webp",
+}
+
 local msg_lore = npc.msg_lore
 msg_lore["generic"] = {
    _([["I heard the nebula is haunted! My uncle Bobby told me he saw one of the ghost ships himself over in Arandon!"]]),
@@ -224,6 +233,11 @@ return function ()
       local desc = npc.desc_list[ rnd.rnd(1,#npc.desc_list) ]
       local prt  = portrait.get( fct )
       local image = portrait.getFullPath( prt )
+      -- TODO make this more proper
+      if not fct and rnd.rnd() < 0.3 then
+         prt = gfx_list[ rnd.rnd(1,#gfx_list) ]
+         image = prt
+      end
       local msg, func
       local r = rnd.rnd()
 
