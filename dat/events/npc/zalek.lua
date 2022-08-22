@@ -8,10 +8,10 @@ local msg_combined
 local desc_list = {}
 desc_list["generic"] = {
    _("You see a person casually solving some partial differential equations on a napkin."),
-   _("A civilian who seems to be studying an ancient dialect."),
+   _("An individual who seems to be studying an ancient dialect."),
    _("This person is using a portable spectrometer to analyze their fizzy drink."),
-   _("This civilian is staring blankly at the ceiling, while absentmindedly stirring their drink."),
-   _("A civilian with three drinks in front of them who seems to be taking notes of the experience."),
+   _("This individual is staring blankly at the ceiling, while absentmindedly stirring their drink."),
+   _("A person with three drinks in front of them who seems to be taking notes of the experience."),
    _("An individual reading a 500 page proof while drinking hard liquor."),
    _("A slightly tipsy individual who seems to be trying to do peer review."),
    _("A person idly writing a proof using non-Euclidean algebras."),
@@ -29,7 +29,7 @@ desc_list["mining"] = {
 }
 desc_list["tourism"] = {
    function () return fmt.f(_("The person is looking at a {spob} guidebook full of notes and bookmarks intensely."),{spob=spob.cur()}) end,
-   _("A civilian with an expensive looking holo-recorder and a backpack."),
+   _("A person with an expensive looking holo-recorder and a backpack."),
 }
 --desc_list["medical"] = {}
 --desc_list["trade"] = {}
@@ -41,7 +41,7 @@ desc_list["prison"] = {
    _("A Za'lek citizen who is studying a sociology textbook on persuasive techniques."),
 }
 desc_list["station"] = {
-   _("A civilian that seems to have never set foot on a planet."),
+   _("A person that seems to have never set foot on a planet."),
 }
 desc_list["government"] = {
    _("An individual who seems to be using Za'lek documents as a coaster."),
