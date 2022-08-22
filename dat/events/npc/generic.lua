@@ -11,11 +11,11 @@ local jm_chance_max = 0.25
 local msg_combined, seltargets
 
 local gfx_list = {
-   "neutral/female1.webp",
-   "neutral/female2.webp",
+   "neutral/female1n.webp",
+   "neutral/female2n.webp",
    "neutral/female2n_nogog.webp",
-   "neutral/female3.webp",
-   "neutral/female4.webp",
+   "neutral/female3n.webp",
+   "neutral/female4n.webp",
    "neutral/male1n.webp",
 }
 
