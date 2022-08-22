@@ -37,7 +37,7 @@ function tcopy( tbl, copy )
 end
 
 --[[--
-   Merges src table into dest. Does not recurse into subtables.
+   Merges src table into dest. Does not recurse into subtables. This functino is for unordered tables.
 
    @tparam table dest Destination table. Must not be nil.
    @tparam[opt={}] table src Source table to be merged into dest.
@@ -47,6 +47,21 @@ function tmerge( dest, src )
    src = src or {}
    for k,v in pairs(src) do
       dest[k] = v
+   end
+   return dest
+end
+
+--[[--
+   Merges src table into dest. Does not recurse into subtables. This function is for ordered tables.
+
+   @tparam table dest Destination table. Must not be nil.
+   @tparam[opt={}] table src Source table to be merged into dest.
+   @treturn table Returns dest.
+--]]
+function tmergei( dest, src )
+   src = src or {}
+   for k,v in ipairs(src) do
+      table.insert( dest, v )
    end
    return dest
 end

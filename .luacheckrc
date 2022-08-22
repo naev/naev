@@ -28,6 +28,7 @@ stds.Basic={
       "tcopy",
       "tmerge",
       "tmerge_r",
+      "tmergei",
       "trepeat",
       "treverse",
    },
