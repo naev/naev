@@ -43,7 +43,9 @@ local msg_lore = {
    _([["I don't understand why other houses call us brutes. Nobody honours their fallen heroes like our Mace Rocket Ballets! The true brutes are those who don't respect the dead!"]]),
    _([["The best way to solve our economic crisis is destruction! More things destroyed means more things have to be built, right? I am a genius."]]),
    _([["Warlords like mace rockets so much that they decided to make really big ones for their capships. They're called Super-Fast Colliders or SFC for short!"]]),
-   -- Tips should be split out eventually
+}
+
+local msg_tip = {
    _([["Kinetic weapons cause impact damage which is more effective against armour than shields. It also has incredible knocking back power!"]]),
    _([["House Dvaered is the only Great House that doesn't use fighter bays. It's much more honourable to do the job yourself!"]]),
 }
@@ -103,7 +105,7 @@ return function ()
       if r <= 0.45 then
          msg = getMessageLore()
       elseif r <= 0.7 then
-         msg = getMessage( npc.msg_tip )
+         msg = getMessage( msg_tip )
       else
          msg = getMessage( msg_combined )
       end
