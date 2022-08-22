@@ -82,7 +82,7 @@ function create ()
          {credits=fmt.credits(mem.refuel)})
 
    -- Set up potential advertiser messages in msg variable
-   local msg = tmerge( {}, ads_generic )
+   local msg = tmergei( {}, ads_generic )
 
    -- Faction specific messages
    local fpres = system.cur():presences()
@@ -90,14 +90,14 @@ function create ()
    -- Empire messages
    local fem = fpres["Empire"] or 0
    if fem > 1 then
-      msg = tmerge( msg, ads_empire )
-      msg = tmerge( msg, ads_cyber )
+      msg = tmergei( msg, ads_empire )
+      msg = tmergei( msg, ads_cyber )
    end
 
    -- Dvaered messages
    local fdv = fpres["Dvaered"] or 0
    if fdv > 1 then
-      msg = tmerge( msg, ads_dvaered )
+      msg = tmergei( msg, ads_dvaered )
       local badwords = {
          _("Butthead"),
          _("Nincompoop"),
@@ -134,7 +134,7 @@ function create ()
    -- Soromid messages
    local fsr = fpres["Soromid"] or 0
    if fsr > 1 then
-      msg = tmerge( msg, ads_soromid )
+      msg = tmergei( msg, ads_soromid )
    end
 
    -- Soromid+Empire messages
@@ -145,8 +145,8 @@ function create ()
    -- Za'lek messages
    local fzl = fpres["Za'lek"] or 0
    if fzl > 1 then
-      msg = tmerge( msg, ads_zalek )
-      msg = tmerge( msg, ads_cyber )
+      msg = tmergei( msg, ads_zalek )
+      msg = tmergei( msg, ads_cyber )
       -- Note that when running in the main menu background, player.name() might not exist (==nil), so
       -- we need to add a check for that.
       local pn = player.name()
@@ -158,7 +158,7 @@ function create ()
    -- Sirius messages
    local fsi = fpres["Sirius"] or 0
    if fsi > 1 then
-      msg = tmerge( msg, ads_sirius )
+      msg = tmergei( msg, ads_sirius )
    end
 
    mem.ad = msg[rnd.rnd(1,#msg)]
