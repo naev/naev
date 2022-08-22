@@ -89,7 +89,7 @@ return function ()
    local descriptions = npc.combine_desc( desc_list, tags )
 
    local function gen_npc()
-      local name = _("Soromid Civilian")
+      local name = _("Soromid Tribesperson")
       local desc = descriptions[ rnd.rnd(1,#descriptions) ]
       local prt  = portrait.get( "Soromid" )
       local image = portrait.getFullPath( prt )
