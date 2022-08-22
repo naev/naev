@@ -32,8 +32,7 @@ local msg_lore = {
    _([["I hope to meet one of the Touched one day!"]]),
 }
 
-local msg_tip = {
-}
+--local msg_tip = {}
 
 local msg_cond = {
 }
@@ -82,9 +81,7 @@ return function ()
       if r <= 0.45 then
          msg = getMessageLore()
       elseif r <= 0.7 then
-         if rnd.rnd() < 0.5 then
-            msg = getMessage( msg_tip )
-         end
+         msg = getMessage( npc.msg_tip )
       else
          msg = getMessage( msg_combined )
       end
