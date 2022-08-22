@@ -30,10 +30,16 @@ local gfx_list = {
 local msg_lore = {
    _("Hello. Can I interest you in one of our galaxy famous cosmetic gene treatments? You look like you could use them…"),
    _([["Can you believe it? I was going to visit Sorom to find my roots, and then boom! It got burnt to a crisp! Even now, cycles later, I still can't believe it."]]),
-   _([["Yes, it's true, our military ships are alive. Us normal folk don't get to own bioships though, we have to make do with synthetic constructs just like everyone else."]]),
    _([["Everyone knows that we Soromid altered ourselves to survive the deadly conditions on Sorom during the Great Quarantine. What you don't hear so often is that billions of us died from the therapy itself. We paid a high price for survival."]]),
    _([["Our cosmetic gene treatments are even safer now for non-Soromids, with a rate of survival of 99.4%!"]]),
    _([["We have been rebuilding and enhancing our bodies for so long, I say we've become a new species, one above human."]]),
+}
+
+local msg_tip = {
+   _([["Soromid Bioships are living creatures. If you train them properly they can learn to do all sorts of new tricks!"]]),
+   _([["If you screw up training your bioship you can always reset the skills. This comes at an experience penalty though."]]),
+   _([["Plasma weapons are not like other weapons. Instead of only directly damaging ships, most of the damage comes from a corrosive effect that takes place over a few seconds!"]]),
+   _([["If used properly, plasma weapons are really good at taking down enemy ships. They do lack range and are hard to hit with, but if you get up close, the corrosion will melt your enemies away!"]]),
 }
 
 local msg_cond = {
@@ -88,7 +94,7 @@ return function ()
       if r <= 0.45 then
          msg = getMessageLore()
       elseif r <= 0.7 then
-         msg = getMessage( npc.msg_tip )
+         msg = getMessage( msg_tip )
       else
          msg = getMessage( msg_combined )
       end
