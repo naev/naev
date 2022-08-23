@@ -121,17 +121,17 @@ function vni.sirius.fyrra()
    end
    return vni.sirius.fyrraMale()
 end
-function vni.sirius.Shiara()
+function vni.sirius.shiara()
    if rnd.rnd() < 0.5 then
-      return vni.sirius.ShiaraFemale()
+      return vni.sirius.shiaraFemale()
    end
-   return vni.sirius.ShiaraMale()
+   return vni.sirius.shiaraMale()
 end
-function vni.sirius.Serra()
+function vni.sirius.serra()
    if rnd.rnd() < 0.5 then
-      return vni.sirius.SerraFemale()
+      return vni.sirius.serraFemale()
    end
-   return vni.sirius.SerraMale()
+   return vni.sirius.serraMale()
 end
 
 return vni

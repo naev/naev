@@ -2552,6 +2552,7 @@ dat/events/npc/flf.lua
 dat/events/npc/frontier.lua
 dat/events/npc/generic.lua
 dat/events/npc/pirate.lua
+dat/events/npc/proteron.lua
 dat/events/npc/sirius.lua
 dat/events/npc/soromid.lua
 dat/events/npc/wild_ones.lua

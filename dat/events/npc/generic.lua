@@ -56,18 +56,6 @@ msg_lore["Thurion"] = {
    _([["The Soromid have a rough history. Have you read up on it? First the Empire confined them to a deadly planet and doomed them to extinction. Then, when they overcame those odds, the Incident blew up their homeworld. The fact that they're still thriving now despite that is phenomenal, I must say."]]),
 }
 
-msg_lore["Proteron"] = {
-   _([["Our system of government is clearly superior to all others. Nothing could be more obvious."]]),
-   _([["The Incident really set back our plan for galactic dominance, but that was only temporary."]]),
-   _([["We don't have time for fun and games. The whole reason we're so great is because we're more productive than any other society."]]),
-   _([["We are superior, so of course we deserve control over the galaxy. It's our destiny."]]),
-   _([["The Empire is weak, obsolete. That is why we must replace them."]]),
-   _([["Slaves? Of course we're not slaves. Slaves are beaten and starved. We are in top shape so we can serve our country better."]]),
-   _([["I can't believe the Empire continues to allow families. So primitive. Obviously, all this does is make them less productive."]]),
-   _([["The exact cause of the Incident is a tightly-kept secret, but the government says it was caused by the Empire's inferiority. I would expect nothing less."]]),
-   _([["I came across some heathen a few months back who claimed, get this, that we Proterons were the cause of the Incident! What slanderous nonsense. Being the perfect society we are, of course we would never cause such a massive catastrophe."]]),
-}
-
 msg_lore["Trader"] = {
    _([["Just another link in the Great Chain, right?"]]),
    _([["You win some, you lose some, but if you don't try you're never going to win."]]),
@@ -185,7 +173,7 @@ return function ()
       -- Some factions are handled differently now
       if pir.factionIsPirate( fct ) then return nil end
       if fct == "FLF" then return nil end
-      if inlist( {"Empire", "Za'lek", "Dvaered", "Soromid", "Sirius", "Frontier"}, fct ) then fct = nil end
+      if inlist( {"Empire", "Za'lek", "Dvaered", "Soromid", "Sirius", "Frontier", "Proteron"}, fct ) then fct = nil end
 
       -- Append the faction to the civilian name, unless there is no faction.
       local name
