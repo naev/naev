@@ -68,16 +68,6 @@ msg_lore["Proteron"] = {
    _([["I came across some heathen a few months back who claimed, get this, that we Proterons were the cause of the Incident! What slanderous nonsense. Being the perfect society we are, of course we would never cause such a massive catastrophe."]]),
 }
 
-msg_lore["Frontier"] = {
-   _([["We value our autonomy. We don't want to be ruled by those Dvaered Warlords! Can't they just shoot at each other instead of threatening us? If it wasn't for the Liberation Front…"]]),
-   _([["Have you studied your galactic history? The Frontier worlds were the first to be colonized by humans. That makes our worlds the oldest human settlements in the galaxy, now that Earth is gone."]]),
-   _([["We have the Dvaered encroaching on our territory on one side, and the Sirius zealots on the other. Sometimes I worry that in a few decacycles, the Frontier will no longer exist."]]),
-   _([["Have you visited the Frontier Museum? They've got a scale model of a First Growth colony ship on display in one of the big rooms. Even scaled down like that, it's massive! Imagine how overwhelming the real ones must have been."]]),
-   _([["There are twelve true Frontier worlds, because twelve colony ships successfully completed their journey in the First Growth. But did you know that there were twenty colony ships to begin with? Eight of them never made it. Some are said to have mysteriously disappeared. I wonder what happened to them?"]]),
-   _([["We don't have much here in the Frontier, other than our long history leading directly back to Earth. But I don't mind. I'm happy living here, and I wouldn't want to move anywhere else."]]),
-   _([["You know the Frontier Liberation Front? They're the guerilla movement that fights for the Frontier. Not to be confused with the Liberation Front of the Frontier, the Frontier Front for Liberation, or the Liberal Frontier's Front!"]]),
-}
-
 msg_lore["FLF"] = {
    _([["I can't stand Dvaereds. I just want to wipe them all off the map. Don't you?"]]),
    _([["One of these days, we will completely rid the Frontier of Dvaered oppressors. Mark my words!"]]),
@@ -206,12 +196,8 @@ return function ()
          end
       end
       -- Some factions are handled differently now
-      if fct == "Empire" then fct = nil end
-      if fct == "Za'lek" then fct = nil end
-      if fct == "Dvaered" then fct = nil end
-      if fct == "Soromid" then fct = nil end
-      if fct == "Sirius" then fct = nil end
       if pir.factionIsPirate( fct ) then return nil end
+      if inlist( {"Empire", "Za'lek", "Dvaered", "Soromid", "Sirius", "Frontier"}, fct ) then fct = nil end
 
       -- Append the faction to the civilian name, unless there is no faction.
       local name
