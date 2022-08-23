@@ -66,6 +66,7 @@ static int pilotL_clone( lua_State *L );
 static int pilotL_remove( lua_State *L );
 static int pilotL_clear( lua_State *L );
 static int pilotL_clearSelect( lua_State *L );
+static int pilotL_canSpawn( lua_State *L );
 static int pilotL_toggleSpawn( lua_State *L );
 static int pilotL_getPilots( lua_State *L );
 static int pilotL_getAllies( lua_State *L );
@@ -268,6 +269,7 @@ static const luaL_Reg pilotL_methods[] = {
    /* System. */
    { "clear", pilotL_clear },
    { "clearSelect", pilotL_clearSelect },
+   { "canSpawn", pilotL_canSpawn },
    { "toggleSpawn", pilotL_toggleSpawn },
    /* Modify. */
    { "ai", pilotL_ai },
@@ -798,6 +800,19 @@ static int pilotL_clear( lua_State *L )
    weapon_clear();
    return 0;
 }
+
+/**
+ * @brief Returns if pilots can can spawn naturally in the current system.
+ *
+ *    @luatreturn boolean The current spawn state.
+ * @luafunc canSpawn
+ */
+static int pilotL_canSpawn( lua_State *L )
+{
+   lua_pushboolean( L, space_spawn );
+   return 1;
+}
+
 /**
  * @brief Disables or enables pilot spawning in the current system.
  *
