@@ -77,8 +77,15 @@ return function ()
    local presence = scur:presences()["Soromid"] or 0
    local tags = cur:tags()
 
-   -- Need presence in the system
-   if presence <= 0 then
+   local w = 0
+   if cur:faction() == faction.get("Soromid") then
+      w = 2
+   elseif presence>0 then
+      w = 0.1 -- Fewer NPC
+   end
+
+   -- Need positive weight
+   if w <= 0 then
       return nil
    end
 
@@ -116,5 +123,5 @@ return function ()
       return { name=name, desc=desc, portrait=prt, image=image, msg=msg }
    end
 
-   return { create=gen_npc, w=2 }
+   return { create=gen_npc, w=w }
 end

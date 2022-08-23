@@ -1,7 +1,6 @@
 local fmt = require "format"
-local portrait = require "portrait"
 local npc = require "common.npc"
-local pir = require "common.pirate"
+local vni = require "vnimage"
 
 -- Chance of a jump point message showing up. As this gradually goes
 -- down, it is replaced by lore messages. See spawnNPC function.
@@ -102,25 +101,15 @@ local function getMessage( lst, fct )
    return lst[ rnd.rnd(1, #lst) ]
 end
 
--- Factions which will NOT get generic texts if possible.  Factions
--- listed here not spawn generic civilian NPCs or get aftercare texts.
--- Meant for factions which are either criminal (FLF, Pirate) or unaware
--- of the main universe (Thurion, Proteron).
-local nongeneric_factions = {
-   "Pirate",
-   "Marauder",
-   "Wild Ones",
-   "Raven Clan",
-   "Dreamer Clan",
-   "Black Lotus",
-   "FLF",
-   "Thurion",
-   "Proteron"
-}
-
 return function ()
    local cur, scur = spob.cur()
    local presence = scur:presences()["Independent"] or 0
+   local fct = cur:faction()
+
+   -- Need a generic faction
+   if not fct or not fct:tags().generic then
+      return nil
+   end
 
    -- Need independent presence in the system
    if presence <= 0 then
@@ -136,41 +125,10 @@ return function ()
    msg_combined = npc.combine_cond( npc.msg_cond )
 
    local function gen_npc()
-      -- Choose faction, overriding if necessary
-      local f = cur:faction()
-      if not f then return nil end
-
-      local nongeneric = false
-      local planfaction = (f ~= nil and f:nameRaw()) or nil
-      local fct = nil
-      local sel = rnd.rnd()
-      if planfaction ~= nil then
-         for i, j in ipairs(nongeneric_factions) do
-            if j == planfaction then
-               nongeneric = true
-               break
-            end
-         end
-
-         if nongeneric or sel >= 0.5 then
-            fct = planfaction
-         end
-      end
-      -- Some factions are handled differently now
-      if pir.factionIsPirate( fct ) then return nil end
-      if fct == "FLF" then return nil end
-      if inlist( {"Empire", "Za'lek", "Dvaered", "Soromid", "Sirius", "Frontier", "Proteron", "Thurion"}, fct ) then fct = nil end
-
       -- Append the faction to the civilian name, unless there is no faction.
-      local name
-      if not fct then
-         name = _("Civilian")
-      else
-         name = fmt.f( _("{fct} Civilian"), {fct=_(fct)} )
-      end
+      local name = _("Civilian")
       local desc = npc.desc_list[ rnd.rnd(1,#npc.desc_list) ]
-      local prt  = portrait.get( fct )
-      local image = portrait.getFullPath( prt )
+      local image, prt = vni.generic()
       -- TODO make this more proper
       if not fct and rnd.rnd() < 0.3 then
          prt = gfx_list[ rnd.rnd(1,#gfx_list) ]
@@ -190,11 +148,7 @@ return function ()
          msg = getMessage( npc.msg_tip, fct )
       else
          -- Mission hint message.
-         if not nongeneric then
-            msg = getMessage( msg_combined, fct )
-         else
-            msg = getMessageLore( fct )
-         end
+         msg = getMessage( msg_combined, fct )
       end
       return { name=name, desc=desc, portrait=prt, image=image, msg=msg, func=func }
    end

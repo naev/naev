@@ -52,12 +52,11 @@ local function getMessage( lst )
 end
 
 return function ()
-   local cur, scur = spob.cur()
-   local presence = scur:presences()["Empire"] or 0
+   local cur, _scur = spob.cur()
    local tags = cur:tags()
 
-   -- Need presence in the system
-   if presence <= 0 then
+   -- Need spob faction
+   if cur:faction() ~= faction.get("Thurion") then
       return nil
    end
 

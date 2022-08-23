@@ -54,11 +54,12 @@ return function ()
    local cur, scur = spob.cur()
    local tags = cur:tags()
    local presence = scur:presences()["Wild Ones"] or 0
+
    local w = 0
    if cur:faction() == faction.get("Wild Ones") then
       w = 1
    elseif presence>0 then
-      w = 0.2 -- Fewer pirates
+      w = 0.2 -- Fewer NPC
    end
 
    -- Need presence

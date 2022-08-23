@@ -110,9 +110,18 @@ return function ()
    local cur, scur = spob.cur()
    local presence = scur:presences()["Za'lek"] or 0
    local tags = cur:tags()
+   local iszlk = false
 
-   -- Need presence in the system
-   if presence <= 0 then
+   local w = 0
+   if cur:faction() == faction.get("Za'lek") then
+      w = 1
+      iszlk = true
+   elseif presence>0 then
+      w = 0.15
+   end
+
+   -- Need positive weight
+   if w <= 0 then
       return nil
    end
 
@@ -131,7 +140,7 @@ return function ()
    local function gen_npc()
       local name
       local researcher
-      if (tags.research and rnd.rnd() < 0.2) or
+      if not iszlk or (tags.research and rnd.rnd() < 0.2) or
             (not tags.research and rnd.rnd() < 0.7) then
          name = _("Za'lek Civilian")
          researcher = false
@@ -154,5 +163,5 @@ return function ()
       return { name=name, desc=desc, portrait=prt, image=image, msg=msg }
    end
 
-   return { create=gen_npc }
+   return { create=gen_npc, w=w }
 end

@@ -64,12 +64,10 @@ local function getMessage( lst )
 end
 
 return function ()
-   local cur, scur = spob.cur()
-   local presence = scur:presences()["Frontier"] or 0
+   local cur, _scur = spob.cur()
    local tags = cur:tags()
 
-   -- Need presence in the system
-   if presence <= 0 then
+   if cur:faction() ~= faction.get("Frontier") then
       return nil
    end
 
