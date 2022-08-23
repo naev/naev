@@ -75,15 +75,15 @@ return function ()
       local name, desc, image, prt
       local r = rnd.rnd()
       if r < 0.6 then
-         name = _("Fyrra Civilian")
+         name = _("Fyrra Acolyte")
          desc = desc_fyrra[ rnd.rnd(1,#desc_fyrra) ]
          image, prt = vni.sirius.fyrra()
       elseif r < 0.9 then
-         name = _("Shiara Civilian")
+         name = _("Shiara Acolyte")
          desc = desc_shiara[ rnd.rnd(1,#desc_shiara) ]
          image, prt = vni.sirius.shiara()
       else
-         name = _("Serra Civilian")
+         name = _("Serra Acolyte")
          image, prt = vni.sirius.serra()
          desc = desc_serra[ rnd.rnd(1,#desc_serra) ]
       end
