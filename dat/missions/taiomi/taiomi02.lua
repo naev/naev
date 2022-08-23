@@ -218,7 +218,7 @@ function heartbeat ()
 end
 
 function land ()
-   if mem.state < N or not spob.cur()==base then
+   if mem.state < N or spob.cur()~=base then
       return
    end
 
