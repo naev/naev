@@ -23,6 +23,7 @@
 
 /* Asteroid methods. */
 static int asteroidL_eq( lua_State *L );
+static int asteroidL_getAll( lua_State *L );
 static int asteroidL_get( lua_State *L );
 static int asteroidL_exists( lua_State *L );
 static int asteroidL_field( lua_State *L );
@@ -39,6 +40,7 @@ static int asteroidL_setArmour( lua_State *L );
 static int asteroidL_materials( lua_State *L );
 static const luaL_Reg asteroidL_methods[] = {
    { "__eq", asteroidL_eq },
+   { "getAll", asteroidL_getAll },
    { "get", asteroidL_get },
    { "exists", asteroidL_exists },
    { "field", asteroidL_field },
@@ -184,6 +186,33 @@ static int asteroidL_eq( lua_State *L )
    a1 = luaL_checkasteroid(L,1);
    a2 = luaL_checkasteroid(L,2);
    lua_pushboolean( L, (memcmp( a1, a2, sizeof(LuaAsteroid_t) )==0) );
+   return 1;
+}
+
+/**
+ * @brief Gets all the asteroids in the system.
+ *
+ *    @luatreturn table t A list of all asteroids in the system.
+ * @luafunc getAll
+ */
+static int asteroidL_getAll( lua_State *L )
+{
+   int n = 1;
+   lua_newtable(L);
+   for (int i=0; i<array_size(cur_system->asteroids); i++) {
+      AsteroidAnchor *ast = &cur_system->asteroids[i];
+      for (int j=0; j<ast->nb; j++) {
+         Asteroid *a = &ast->asteroids[j];
+         LuaAsteroid_t la = {
+            .parent = a->parent,
+            .id = a->id,
+         };
+
+         lua_pushasteroid( L, la );
+         lua_rawseti( L, -2, n++ );
+      }
+   }
+
    return 1;
 }
 
