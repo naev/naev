@@ -205,7 +205,7 @@ function hail_scavenger ()
          vn.jump("menu")
       else
          d(_([["I have been analyzing the data you collected and it is quite surprising. Human ingenuity never ceases to amaze me. It looks like it may be possible to replicate the approach, but we will need more information to work with that."]]))
-         d(_([["Given that it does not seem reasonable to try to replicate the results from scratch, our best bet is to try to collect more details from the human build hypergates."]]))
+         d(_([["Given that it does not seem reasonable to try to replicate the results from scratch, our best bet is to try to collect more details from the human built hypergates."]]))
          d(_([["From my incursions in human territory, it seems like convoys going to and from hypergates tend to frequent the same systems. I would need you to raid the convoys and collect the necessary data. Would it be possible for you to collect the data for us?"]]))
          vn.menu{
             {_("Agree to help out."), "02_yes"},
@@ -290,7 +290,7 @@ They fidget a bit in place.
    vn.na(fmt.f(_([[Taking that as some sort of sign, {namea} and {nameb} spin off and go back to carefree frolicking among the derelicts and debris.]]),
       {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
    d(_([[Letting out what seems to be a sigh, Scavenger continues.
-"Given the weakening of our collective consciousness, I would have never thought we would have been able to create new individuals. Their strong individually personality is likely also a direct effect of that. They even chose to have human names they researched instead of going by our traditional names."]]))
+"Given the weakening of our collective consciousness, I would have never thought we would have been able to create new individuals. Their strong personalities are likely also a direct effect of that. They even chose to have human names they researched instead of going by our traditional names."]]))
    d(_([["I worry for their future. We must ensure that no harm comes to them."]]))
    vn.func( function ()
       d_young_a:rename( taiomi.younga.name )
