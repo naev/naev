@@ -290,7 +290,7 @@ They fidget a bit in place.
    vn.na(fmt.f(_([[Taking that as some sort of sign, {namea} and {nameb} spin off and go back to carefree frolicking among the derelicts and debris.]]),
       {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
    d(_([[Letting out what seems to be a sigh, Scavenger continues.
-"Given the weakening of our collective consciousness, I would have never thought we would have been able to create new individuals. Their strong individually personality is likely also a direct effect of that. They even chose to have human names they researched instead of going by our traditional names."]]))
+"Given the weakening of our collective consciousness, I would have never thought we would have been able to create new individuals. Their strong personalities are likely also a direct effect of that. They even chose to have human names they researched instead of going by our traditional names."]]))
    d(_([["I worry for their future. We must ensure that no harm comes to them."]]))
    vn.func( function ()
       d_young_a:rename( taiomi.younga.name )
