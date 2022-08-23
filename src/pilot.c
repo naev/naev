@@ -2598,6 +2598,10 @@ void pilot_delete( Pilot* p )
 {
    PilotOutfitSlot* dockslot;
 
+   /* Don't double delete, just in case. */
+   if (pilot_isFlag( p, PILOT_DELETE ))
+      return;
+
    /* Stop all outfits. */
    pilot_outfitOffAll(p);
 
