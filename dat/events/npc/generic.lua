@@ -92,18 +92,13 @@ msg_lore["Trader"] = {
 }
 --]=]
 
-
--- Returns a lore message for the given faction.
-local function getMessageLore( fct )
-   local fctmsg = msg_lore[fct]
-   if fctmsg == nil or #fctmsg == 0 then
-      fctmsg = msg_lore["generic"]
-   end
-   return fctmsg[ rnd.rnd(1, #fctmsg) ]
+-- Get a lore message
+local function getMessageLore ()
+   return msg_lore[ rnd.rnd(1, #msg_lore) ]
 end
 
 -- Returns a jump point message and updates jump point known status accordingly. If all jumps are known by the player, defaults to a lore message.
-local function getMessageJump( fct )
+local function getMessageJump ()
    -- Collect a table of jump points in the system the player does NOT know.
    local mytargets = {}
    seltargets = seltargets or {} -- We need to keep track of jump points NPCs will tell the player about so there are no duplicates.
@@ -115,7 +110,7 @@ local function getMessageJump( fct )
 
    -- The player already knows all jumps in this system or no messages
    if #mytargets == 0 or #msg_jump==0 then
-      return getMessageLore( fct )
+      return getMessageLore()
    end
 
    local retmsg =  msg_jump[rnd.rnd(1, #msg_jump)]
@@ -138,9 +133,9 @@ local function getMessageJump( fct )
    return fmt.f( retmsg, {jmp=mytargets[sel]:dest()} ), myfunc
 end
 
-local function getMessage( lst, fct )
+local function getMessage( lst )
    if #lst == 0 then
-      return getMessageLore( fct )
+      return getMessageLore()
    end
    return lst[ rnd.rnd(1, #lst) ]
 end
@@ -183,16 +178,16 @@ return function ()
 
       if r < (var.peek("npc_jm_chance") or jm_chance_max) then
          -- Jump point message.
-         msg, func = getMessageJump( fct )
+         msg, func = getMessageJump()
       elseif r <= 0.55 then
          -- Lore message.
-         msg = getMessageLore( fct )
+         msg = getMessageLore()
       elseif r <= 0.8 then
          -- Gameplay tip message.
-         msg = getMessage( npc.msg_tip, fct )
+         msg = getMessage( npc.msg_tip )
       else
          -- Mission hint message.
-         msg = getMessage( msg_combined, fct )
+         msg = getMessage( msg_combined )
       end
       return { name=name, desc=desc, portrait=prt, image=image, msg=msg, func=func }
    end
