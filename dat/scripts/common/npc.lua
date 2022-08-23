@@ -54,31 +54,6 @@ function npc.test_evtDone( evtname )
 end
 
 --[[
-Lore messages. These come in general and factional varieties.
-General lore messages will be said by non-faction NPCs, OR by faction NPCs if
-they have no factional text to say. When adding factional text, make sure to
-add it to the table of the appropriate faction. Does your faction not have a
-table? Then just add it. The script will find and use it if it exists. Make
-sure you spell the faction name exactly the same as in faction.xml though!
---]]
-npc.msg_lore = {
-   _([["I heard the nebula is haunted! My uncle Bobby told me he saw one of the ghost ships himself over in Arandon!"]]),
-   _([["I don't believe in those nebula ghost stories. The people who talk about it are just trying to scare you."]]),
-   _([["I heard the Soromid lost their homeworld Sorom in the Incident. Its corpse can still be found in Basel."]]),
-   _([["The Soromid fly organic ships! I heard some of their ships can even repair themselves. That's so weird."]]),
-   _([["Have you seen that ship the Emperor lives on? It's huge! But if you ask me, it looks a bit like a… No, never mind."]]),
-   _([["I wonder why the Sirii are all so devout? I heard they have these special priesty people walking around. I wonder what's so special about them."]]),
-   _([["They say Eduard Manual Goddard is drifting in space somewhere, entombed amidst a cache of his inventions! What I wouldn't give to rummage through there…"]]),
-   _([["Ah man, I lost all my money on Totoran. I love the fights they stage there, but the guys I bet on always lose. What am I doing wrong?"]]),
-   _([["Don't try to fly into the inner nebula. I've known people who tried, and none of them came back."]]),
-   _([["Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!"]]),
-   _([["I wouldn't travel north from Alteris if I were you, unless you're a good fighter! That area of space has really gone down the drain since the Incident."]]),
-   _([["Sometimes I look at the stars and wonder… are we the only sentient species in the universe?"]]),
-   _([["Hey, you ever wonder why we're here?" You respond that it's one of the great mysteries of the universe. Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? You don't know, but it sometimes keeps you up at night. As you say this, the citizen stares at you incredulously. "What?? No, I mean why are we in here, in this bar?"]]),
-   _([["Life is so boring here. I would love to go gamble with all the famous people at Minerva Station."]]),
-}
-
---[[
 Gameplay tip messages.
 ALL NPCs have a chance to say one of these lines instead of a lore message.
 So, make sure the tips are always faction neutral.
