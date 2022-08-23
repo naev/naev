@@ -1075,50 +1075,51 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    }
 
    /* Collide with asteroids*/
-   if (outfit_isLauncher(w->outfit)) {
+   if (outfit_isLauncher(w->outfit) || outfit_isBolt(w->outfit)) {
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
          AsteroidAnchor *ast = &cur_system->asteroids[i];
 
-         /* Early in-range check. */
-         if (vec2_dist2( &w->solid->pos, &ast->pos ) >
-            pow2( ast->radius + ast->margin + gfx->sw/2. ))
+         /* Early in-range check with the asteroid field. */
+         if ( vec2_dist2( &w->solid->pos, &ast->pos ) >
+              pow2( ast->radius + ast->margin + gfx->sw/2. ))
             continue;
 
          for (int j=0; j<ast->nb; j++) {
             Asteroid *a = &ast->asteroids[j];
             if (a->state != ASTEROID_FG)
                continue;
-            if (CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
-                     a->gfx, 0, 0, &a->pos,
-                     &crash[0] )) {
-               weapon_hitAst( w, a, layer, &crash[0] );
-               return; /* Weapon is destroyed. */
-            }
-         }
-      }
-   }
-   else if (outfit_isBolt(w->outfit)) {
-      for (int i=0; i<array_size(cur_system->asteroids); i++) {
-         AsteroidAnchor *ast = &cur_system->asteroids[i];
 
-         /* Early in-range check. */
-         if (vec2_dist2( &w->solid->pos, &ast->pos ) >
-            pow2( ast->radius + ast->margin + gfx->sw/2. ))
-            continue;
-
-         for (int j=0; j<ast->nb; j++) {
-            Asteroid *a = &ast->asteroids[j];
-            if (a->state != ASTEROID_FG)
+            /* In-range check with the actual asteroid. */
+            /* This is advantageous because we are going to rotate the polygon afterwards. */
+            if ( vec2_dist2( &w->solid->pos, &a->pos ) > pow2( gfx->sw/2. + a->gfx->sw/2. ) )
                continue;
-            if (CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
-                     a->gfx, 0, 0, &a->pos,
-                     &crash[0] ) ) {
+
+            /* See if the asteroid has a collision polygon. */
+            usePoly = usePolyW;
+            if (a->polygon->npt == 0)
+               usePoly = 0;
+
+            if (usePoly) {
+               CollPoly rpoly;
+               RotatePolygon( &rpoly, a->polygon, (float) a->ang );
+               coll = CollidePolygon( &rpoly, &a->pos,
+                        polygon, &w->solid->pos, &crash[0] );
+               free(rpoly.x);
+               free(rpoly.y);
+            }
+            else {
+               coll = CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
+                                     a->gfx, 0, 0, &a->pos, &crash[0] );
+            }
+
+            if (coll) {
                weapon_hitAst( w, a, layer, &crash[0] );
                return; /* Weapon is destroyed. */
             }
          }
       }
    }
+
    else if (b) { /* Beam */
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
          AsteroidAnchor *ast = &cur_system->asteroids[i];
@@ -1132,10 +1133,32 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
             Asteroid *a = &ast->asteroids[j];
             if (a->state != ASTEROID_FG)
                continue;
-            if (CollideLineSprite( &w->solid->pos, w->solid->dir,
-                     w->outfit->u.bem.range,
-                     a->gfx, 0, 0, &a->pos,
-                     crash ) ) {
+
+            /* In-range check with the actual asteroid. */
+            if ( vec2_dist2( &w->solid->pos, &a->pos ) > pow2( w->outfit->u.bem.range + a->gfx->sw/2. ) )
+               continue;
+
+            /* See if the asteroid has a collision polygon. */
+            usePoly = usePolyW;
+            if (a->polygon->npt == 0)
+               usePoly = 0;
+
+            if (usePoly) {
+               CollPoly rpoly;
+               RotatePolygon( &rpoly, a->polygon, (float) a->ang );
+               coll = CollideLinePolygon( &w->solid->pos, w->solid->dir,
+                                    w->outfit->u.bem.range,
+                                    &rpoly, &a->pos, crash );
+               free(rpoly.x);
+               free(rpoly.y);
+            }
+            else {
+               coll = CollideLineSprite( &w->solid->pos, w->solid->dir,
+                                    w->outfit->u.bem.range,
+                                    a->gfx, 0, 0, &a->pos, crash );
+            }
+
+            if (coll) {
                weapon_hitAstBeam( w, a, layer, crash, dt );
                /* No return because beam can still think, it's not
                 * destroyed like the other weapons.*/
