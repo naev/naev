@@ -55,14 +55,20 @@ function land ()
    end )
 
    local npccache = npc.cache()
-   local num_npc
+   local num_npc = rnd.rnd(2, 5)
    if t.urban then
-      num_npc = rnd.rnd(3, 7)
-   elseif t.rural then
-      num_npc = rnd.rnd(1, 3)
-   else
-      num_npc = rnd.rnd(2, 5)
+      num_npc = num_npc + rnd.rnd(1, 2)
    end
+   if t.rural then
+      num_npc = num_npc - rnd.rnd(1, 2)
+   end
+   local pop = cur:population() -- Add/remove some more based on population
+   if pop < 1e4 then
+      num_npc = num_npc - 1
+   elseif pop > 1e7 then
+      num_npc = num_npc + 1
+   end
+   num_npc = math.max( 1, num_npc ) -- At least one npc
    local w = 0
    npcs = {}
    for i=1, num_npc do
