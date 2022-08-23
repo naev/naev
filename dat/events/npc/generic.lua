@@ -18,6 +18,24 @@ local gfx_list = {
    "neutral/male1n.webp",
 }
 
+local desc_list = {
+   _("This person seems to be here to relax."),
+   _("There is a civilian sitting on one of the tables."),
+   _("There is a civilian sitting there, looking somewhere else."),
+   _("A worker sits at one of the tables, wearing a name tag saying \"Go away\"."),
+   _("A civilian sits at the bar, seemingly serious about the cocktails on offer."),
+   _("A civilian wearing a shirt saying: \"Ask me about Jaegnhild\""),
+   _("There is a civilian sitting in the corner."),
+   _("A civilian feverishly concentrating on a fluorescing drink."),
+   _("A civilian drinking alone."),
+   _("This person seems friendly enough."),
+   _("A civilian sitting at the bar."),
+   _("This person is idly browsing a news terminal."),
+   _("A worker sips a cold drink after a hard shift."),
+   _("A worker slouched against the bar, nursing a drink."),
+   _("This worker seems bored with everything but their drink."),
+}
+
 local msg_lore = npc.msg_lore
 msg_lore["generic"] = {
    _([["I heard the nebula is haunted! My uncle Bobby told me he saw one of the ghost ships himself over in Arandon!"]]),
@@ -36,6 +54,15 @@ msg_lore["generic"] = {
    _([["Life is so boring here. I would love to go gamble with all the famous people at Minerva Station."]]),
 }
 
+local msg_jump = {
+   _([["Hi there, traveler. Is your system map up to date? Just in case you didn't know already, let me give you the location of the jump from here to {jmp}. I hope that helps."]]),
+   _([["Quite a lot of people who come in here complain that they don't know how to get to {jmp}. I travel there often, so I know exactly where the jump point is. Here, let me show you."]]),
+   _([["So you're still getting to know about this area, huh? Tell you what, I'll give you the coordinates of the jump to {jmp}. Check your map next time you take off!"]]),
+   _([["True fact, there's a direct jump from here to {jmp}. Want to know where it is? It'll cost you! Ha ha, just kidding. Here you go, I've added it to your map."]]),
+   _([["There's a system just one jump away by the name of {jmp}. I can tell you where the jump point is. There, I've updated your map. Don't mention it."]]),
+}
+
+--[=[
 msg_lore["Independent"] = {
    _([["We're not part of any of the galactic superpowers. We can take care of ourselves!"]]),
    _([["Sometimes I worry that our lack of a standing military leaves us vulnerable to attack. I hope nobody will get any ideas about conquering us!"]]),
@@ -47,6 +74,7 @@ msg_lore["Trader"] = {
    _([["If you don't watch the markets then you'll be hopping between planets in a jury-rigged ship in no time."]]),
    _([["Them blimming pirates, stopping honest folk from making an honest living - it's not like we're exploiting the needy!"]]),
 }
+--]=]
 
 
 -- Returns a lore message for the given faction.
@@ -70,11 +98,11 @@ local function getMessageJump( fct )
    end
 
    -- The player already knows all jumps in this system or no messages
-   if #mytargets == 0 or #npc.msg_jmp==0 then
+   if #mytargets == 0 or #msg_jump==0 then
       return getMessageLore( fct )
    end
 
-   local retmsg =  npc.msg_jmp[rnd.rnd(1, #npc.msg_jmp)]
+   local retmsg =  msg_jump[rnd.rnd(1, #msg_jump)]
    local sel = rnd.rnd(1, #mytargets)
    local myfunc = function( npcdata )
       if npcdata.talked then
@@ -127,7 +155,7 @@ return function ()
    local function gen_npc()
       -- Append the faction to the civilian name, unless there is no faction.
       local name = _("Civilian")
-      local desc = npc.desc_list[ rnd.rnd(1,#npc.desc_list) ]
+      local desc = desc_list[ rnd.rnd(1,#desc_list) ]
       local image, prt = vni.generic()
       -- TODO make this more proper
       if not fct and rnd.rnd() < 0.3 then

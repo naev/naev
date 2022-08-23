@@ -54,30 +54,6 @@ function npc.test_evtDone( evtname )
 end
 
 --[[
-Civilian descriptions for the spaceport bar.
-These descriptions will be picked at random, and may be picked multiple times
-in one generation. Remember that any description can end up with any
-portrait, so don't make any assumptions about the appearance of the NPC!
---]]
-npc.desc_list = {
-   _("This person seems to be here to relax."),
-   _("There is a civilian sitting on one of the tables."),
-   _("There is a civilian sitting there, looking somewhere else."),
-   _("A worker sits at one of the tables, wearing a name tag saying \"Go away\"."),
-   _("A civilian sits at the bar, seemingly serious about the cocktails on offer."),
-   _("A civilian wearing a shirt saying: \"Ask me about Jaegnhild\""),
-   _("There is a civilian sitting in the corner."),
-   _("A civilian feverishly concentrating on a fluorescing drink."),
-   _("A civilian drinking alone."),
-   _("This person seems friendly enough."),
-   _("A civilian sitting at the bar."),
-   _("This person is idly browsing a news terminal."),
-   _("A worker sips a cold drink after a hard shift."),
-   _("A worker slouched against the bar, nursing a drink."),
-   _("This worker seems bored with everything but their drink."),
-}
-
---[[
 Lore messages. These come in general and factional varieties.
 General lore messages will be said by non-faction NPCs, OR by faction NPCs if
 they have no factional text to say. When adding factional text, make sure to
@@ -138,21 +114,6 @@ npc.msg_tip = {
    _([["I've heard rumours that a pirate's reputations depends on flying pirate ships, but I think they only loathe peaceful honest work."]]),
    function () return fmt.f(_([["These computer symbols can be confusing sometimes! I've figured it out, though: '{F}' means friendly, '{N}' means neutral, '{H}' means hostile, '{R}' means restricted, and '{U}' means uninhabited but landable. I wish someone had told me that!"]]), {F="#F+#0", N="#N~#0", H="#H!!#0", R="#R*#0", U="#I=#0"} ) end,
    _([["Trade Lanes are the safest bet to travel around the universe. They have many patrols to keep you safe from pirates."]]),
-}
-
---[[
-Jump point messages.
-For giving the location of a jump point in the current system to the player
-for free. All messages must contain '{jmp}', this is the name of the target
-system. ALL NPCs have a chance to say one of these lines instead of a lore
-message. So, make sure the tips are always faction neutral.
---]]
-npc.msg_jmp = {
-   _([["Hi there, traveler. Is your system map up to date? Just in case you didn't know already, let me give you the location of the jump from here to {jmp}. I hope that helps."]]),
-   _([["Quite a lot of people who come in here complain that they don't know how to get to {jmp}. I travel there often, so I know exactly where the jump point is. Here, let me show you."]]),
-   _([["So you're still getting to know about this area, huh? Tell you what, I'll give you the coordinates of the jump to {jmp}. Check your map next time you take off!"]]),
-   _([["True fact, there's a direct jump from here to {jmp}. Want to know where it is? It'll cost you! Ha ha, just kidding. Here you go, I've added it to your map."]]),
-   _([["There's a system just one jump away by the name of {jmp}. I can tell you where the jump point is. There, I've updated your map. Don't mention it."]]),
 }
 
 --[[
