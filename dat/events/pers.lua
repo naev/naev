@@ -94,6 +94,10 @@ function pers_death( _p, attacker, pt )
 end
 
 local function spawn_pers ()
+   if not pilot.canSpawn() then
+      return
+   end
+
    local r = rnd.rnd() * wtotal
    local w = 0
    for k,v in ipairs(pers_list) do
