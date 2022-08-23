@@ -71,6 +71,7 @@ static void pilot_init( Pilot* dest, const Ship* ship, const char* name, int fac
 static void pilot_hyperspace( Pilot* pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
 /* Clean up. */
+static void pilot_erase( Pilot *p );
 static void pilot_dead( Pilot* p, unsigned int killer );
 /* Misc. */
 static int pilot_getStackPos( unsigned int id );
@@ -3478,11 +3479,9 @@ void pilot_free( Pilot *p )
  *
  *    @param p Pilot to destroy.
  */
-void pilot_destroy( Pilot *p )
+static void pilot_erase( Pilot *p )
 {
    int i = pilot_getStackPos( p->id );
-
-   /* pilot is eliminated */
    pilot_free(p);
    array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] );
 }
@@ -3639,7 +3638,7 @@ void pilots_update( double dt )
 
       /* Destroy pilot and go on. */
       if (pilot_isFlag(p, PILOT_DELETE))
-         pilot_destroy(p);
+         pilot_erase( p );
    }
 
    /* Have all the pilots think. */
