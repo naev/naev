@@ -28,6 +28,8 @@ static int asteroidL_exists( lua_State *L );
 static int asteroidL_field( lua_State *L );
 static int asteroidL_pos( lua_State *L );
 static int asteroidL_vel( lua_State *L );
+static int asteroidL_setPos( lua_State *L );
+static int asteroidL_setVel( lua_State *L );
 static int asteroidL_scanned( lua_State *L );
 static int asteroidL_timer( lua_State *L );
 static int asteroidL_setTimer( lua_State *L );
@@ -42,6 +44,8 @@ static const luaL_Reg asteroidL_methods[] = {
    { "field", asteroidL_field },
    { "pos", asteroidL_pos },
    { "vel", asteroidL_vel },
+   { "setPos", asteroidL_setPos },
+   { "setVel", asteroidL_setVel },
    { "scanned", asteroidL_scanned },
    { "timer", asteroidL_timer },
    { "setTimer", asteroidL_setTimer },
@@ -348,6 +352,36 @@ static int asteroidL_vel( lua_State *L )
    Asteroid *a = luaL_validasteroid(L,1);
    lua_pushvector(L,a->vel);
    return 1;
+}
+
+/**
+ * @brief Sets the position of an asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to set position of.
+ *    @luatparam vec2 v Position to set to.
+ * @luafunc setPos
+ */
+static int asteroidL_setPos( lua_State *L )
+{
+   Asteroid *a = luaL_validasteroid(L,1);
+   vec2 *v = luaL_checkvector(L,2);
+   a->pos = *v;
+   return 0;
+}
+
+/**
+ * @brief Sets the velocity of an asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to set velocity of.
+ *    @luatparam vec2 v Velocity to set to.
+ * @luafunc setVel
+ */
+static int asteroidL_setVel( lua_State *L )
+{
+   Asteroid *a = luaL_validasteroid(L,1);
+   vec2 *v = luaL_checkvector(L,2);
+   a->vel = *v;
+   return 0;
 }
 
 /**
