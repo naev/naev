@@ -909,6 +909,7 @@ static void outfits_buy( unsigned int wid, const char *str )
          return;
       }
       q = luaL_checkinteger(naevL,-1);
+      player_addOutfit( outfit, q );
 
       lua_pop(naevL, 2);
    }
