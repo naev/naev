@@ -2597,11 +2597,23 @@ void pilot_delete( Pilot* p )
 {
    PilotOutfitSlot* dockslot;
 
+   /* Stop all outfits. */
+   pilot_outfitOffAll(p);
+
+   /* Handle Lua outfits. */
+   pilot_outfitLCleanup(p);
+
    /* Remove from parent's escort list */
    if (p->parent != 0) {
       Pilot *leader = pilot_get(p->parent);
       if (leader != NULL)
          escort_rmList(leader, p->id);
+   }
+
+   /* Remove faction if necessary. */
+   if (p->presence > 0) {
+      system_rmCurrentPresence( cur_system, p->faction, p->presence );
+      p->presence = 0;
    }
 
    /* Unmark as deployed if necessary */
@@ -3468,28 +3480,7 @@ void pilot_free( Pilot *p )
  */
 void pilot_destroy( Pilot *p )
 {
-   PilotOutfitSlot* dockslot;
    int i = pilot_getStackPos( p->id );
-
-   /* Stop all outfits. */
-   pilot_outfitOffAll(p);
-
-   /* Handle Lua outfits. */
-   pilot_outfitLCleanup(p);
-
-   /* Remove faction if necessary. */
-   if (p->presence > 0) {
-      system_rmCurrentPresence( cur_system, p->faction, p->presence );
-      p->presence = 0;
-   }
-
-   /* Unmark as deployed if necessary */
-   dockslot = pilot_getDockSlot( p );
-   if (dockslot != NULL) {
-      dockslot->u.ammo.deployed--;
-      p->dockpilot = 0;
-      p->dockslot = -1;
-   }
 
    /* pilot is eliminated */
    pilot_free(p);
