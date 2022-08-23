@@ -116,5 +116,5 @@ return function ()
       return { name=name, desc=desc, portrait=prt, image=image, msg=msg }
    end
 
-   return { create=gen_npc }
+   return { create=gen_npc, w=2 }
 end
