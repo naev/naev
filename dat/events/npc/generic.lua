@@ -42,20 +42,6 @@ msg_lore["Independent"] = {
    _([["Sometimes I worry that our lack of a standing military leaves us vulnerable to attack. I hope nobody will get any ideas about conquering us!"]]),
 }
 
-msg_lore["Thurion"] = {
-   _([["Did you know that even the slightest bit of brain damage can lead to death during the upload process? That's why we're very careful to not allow our brains to be damaged, even a little."]]),
-   _([["My father unfortunately hit his head when he was young, so he couldn't be safely uploaded. It's okay, though; he had a long and fulfilling life, for a non-uploaded human, that is."]]),
-   _([["One great thing once you're uploaded is that you can choose to forget things you don't want to remember. My great-grandfather had a movie spoiled for him before he could watch it, so once he got uploaded, he deleted that memory and watched it with a fresh perspective. Cool, huh?"]]),
-   _([["The best part of our lives is after we're uploaded, but that doesn't mean we lead boring lives before then. We have quite easy and satisfying biological lives before uploading."]]),
-   _([["Being uploaded allows you to live forever, but that doesn't mean you're forced to. Any uploaded Thurion can choose to end their own life if they want, though few have chosen to do so."]]),
-   _([["Uploading is a choice in our society. No one is forced to do it. It's just that, well, what kind of person would turn down the chance to live a second life on the network?"]]),
-   _([["We were lucky to not get touched by the Incident. In fact, we kind of benefited from it. The nebula that resulted gave us a great cover and sealed off the Empire from us. It also got rid of those dangerous Proterons."]]),
-   _([["We don't desire galactic dominance. That being said, we do want to spread our way of life to the rest of the galaxy, so that everyone can experience the joy of being uploaded."]]),
-   _([["I think you're from the outside, aren't you? That's awesome! I've never met a foreigner before. What's it like outside the nebula?"]]),
-   _([["We actually make occasional trips outside of the nebula, though only rarely, and we always make sure to not get discovered by the Empire."]]),
-   _([["The Soromid have a rough history. Have you read up on it? First the Empire confined them to a deadly planet and doomed them to extinction. Then, when they overcame those odds, the Incident blew up their homeworld. The fact that they're still thriving now despite that is phenomenal, I must say."]]),
-}
-
 msg_lore["Trader"] = {
    _([["Just another link in the Great Chain, right?"]]),
    _([["You win some, you lose some, but if you don't try you're never going to win."]]),
@@ -173,7 +159,7 @@ return function ()
       -- Some factions are handled differently now
       if pir.factionIsPirate( fct ) then return nil end
       if fct == "FLF" then return nil end
-      if inlist( {"Empire", "Za'lek", "Dvaered", "Soromid", "Sirius", "Frontier", "Proteron"}, fct ) then fct = nil end
+      if inlist( {"Empire", "Za'lek", "Dvaered", "Soromid", "Sirius", "Frontier", "Proteron", "Thurion"}, fct ) then fct = nil end
 
       -- Append the faction to the civilian name, unless there is no faction.
       local name
