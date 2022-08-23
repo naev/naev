@@ -67,33 +67,33 @@ local function __getenemy( p )
          table.insert( pv, {p=v, d=d, F=F, H=H} )
       end
    end
+   if #pv==0 then
+      return nil
+   end
+
    -- Attack nearest for now, would have to incorporate some other criteria here
    table.sort( pv, function(a,b)
       return a.d < b.d
    end )
-
-   if #pv==0 then
-      return nil
-   end
    return pv[1].p, pv[1].F, pv[1].H
 end
 
 -- Sees if there is an enemy nearby to engage
 local function __tryengage( p )
    local enemy, F, H = __getenemy(p)
-   local stealth = p:flags("stealth")
-   if enemy ~= nil then
-      -- Some criterion to determine whether to rambo or try to attack from
-      -- stealth
-      if not stealth or F*mem.vulnrambo > H then
-         ai.stealth(false)
-         ai.pushtask( "attack", enemy )
-      else
-         ai.pushtask( "ambush_stalk", enemy )
-      end
-      return true
+   if not enemy then
+      return false
    end
-   return false
+   local stealth = p:flags("stealth")
+   -- Some criterion to determine whether to rambo or try to attack from
+   -- stealth
+   if not stealth or F*mem.vulnrambo > H then
+      ai.stealth(false)
+      ai.pushtask( "attack", enemy )
+   else
+      ai.pushtask( "ambush_stalk", enemy )
+   end
+   return true
 end
 
 
