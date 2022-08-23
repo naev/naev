@@ -36,8 +36,7 @@ local desc_list = {
    _("This worker seems bored with everything but their drink."),
 }
 
-local msg_lore = npc.msg_lore
-msg_lore["generic"] = {
+local msg_lore = {
    _([["I heard the nebula is haunted! My uncle Bobby told me he saw one of the ghost ships himself over in Arandon!"]]),
    _([["I don't believe in those nebula ghost stories. The people who talk about it are just trying to scare you."]]),
    _([["I heard the Soromid lost their homeworld Sorom in the Incident. Its corpse can still be found in Basel."]]),
