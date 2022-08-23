@@ -8,4 +8,4 @@ Meant to be pretty flexible. You probably want to define the following:
 --]]
 require 'ai.core.core'
 require 'ai.core.idle.advertiser'
-require 'ai.pers_common'
+require 'ai.common.pers'
