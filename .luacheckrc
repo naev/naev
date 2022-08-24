@@ -246,6 +246,8 @@ files["dat/effects/**/*.lua"].std = STANDARD .. "+API_effects"
 files["dat/scripts/**/*.lua"].std = STANDARD .. TK .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
 
 files["docs/ai/**/*.lua"].std = files["dat/ai/**/*.lua"].std
+-- TODO: Enable when no one is likely to invoke a pre-1.0 Luacheck manually.
+-- files["docs/lua/config.ld"].std = 'ldoc'
 files["docs/missions/**/*.lua"].std = files["dat/missions/**/*.lua"].std
 
 files["extras/autotests.lua"].std = STANDARD

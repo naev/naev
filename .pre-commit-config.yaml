@@ -16,7 +16,7 @@ repos:
     - id: mixed-line-ending
     - id: pretty-format-json
 - repo: https://github.com/lunarmodules/luacheck
-  rev: v0.26.0
+  rev: v1.0.0
   hooks:
     - id: luacheck
 - repo: https://github.com/shellcheck-py/shellcheck-py
