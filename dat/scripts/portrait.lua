@@ -85,11 +85,11 @@ portraits_m["Sirius"] = {
    "sirius/sirius_fyrra_m3.webp",
    "sirius/sirius_fyrra_m4.webp",
    "sirius/sirius_fyrra_m5.webp",
-   "sirius/sirius_shiara_m1.webp",
-   "sirius/sirius_shiara_m2.webp",
-   "sirius/sirius_shiara_m3.webp",
-   "sirius/sirius_shiara_m4.webp",
-   "sirius/sirius_shiara_m5.webp",
+   "sirius/sirius_shaira_m1.webp",
+   "sirius/sirius_shaira_m2.webp",
+   "sirius/sirius_shaira_m3.webp",
+   "sirius/sirius_shaira_m4.webp",
+   "sirius/sirius_shaira_m5.webp",
 }
 portraits_f["Sirius"] = {
    "sirius/sirius_fyrra_f1.webp",
@@ -97,11 +97,11 @@ portraits_f["Sirius"] = {
    "sirius/sirius_fyrra_f3.webp",
    "sirius/sirius_fyrra_f4.webp",
    "sirius/sirius_fyrra_f5.webp",
-   "sirius/sirius_shiara_f1.webp",
-   "sirius/sirius_shiara_f2.webp",
-   "sirius/sirius_shiara_f3.webp",
-   "sirius/sirius_shiara_f4.webp",
-   "sirius/sirius_shiara_f5.webp",
+   "sirius/sirius_shaira_f1.webp",
+   "sirius/sirius_shaira_f2.webp",
+   "sirius/sirius_shaira_f3.webp",
+   "sirius/sirius_shaira_f4.webp",
+   "sirius/sirius_shaira_f5.webp",
 }
 
 portraits_m["Pirate"] = {
