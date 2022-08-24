@@ -21,12 +21,17 @@ local msg_lore = {
       _([["I hope to meet one of the Touched one day!"]]),
       _([["They say Sirichana lives and dies like any other man, but each new Sirichana is the same as the last. How is that possible?"]]),
       _([["My cousin was called to Mutris a cycle ago… He must be in Crater City by now. And one day, he will become one of the Touched!"]]),
+      _([["The Shaira echelon is the backbone of House Sirius. We keep the ships flying and the economy running. It is an honour to play such an important role for Sirichana!"]]),
+      _([["Manual labour fulfils me. I try to make everything with as much care as would be necessary for the Sirichana."]]),
    },
    fyrra = {
       _([["I once met one of the Touched in person. Well, it wasn't really a meeting, our eyes simply met… But that instant alone was awe-inspiring."]]),
+      _([["We, the Fyrra echelon, maintain the social order and run most of the commercial operations. It is such to be blessed by the Sirichana."]]),
+      _([["Commercial among the Sirius is always prosperous. I wish I could say the same about striking business deals with the Dvaered or Za'lek."]]),
    },
    serra = {
       _([["Some people say Sirius society is unfair because our echelons are determined by birth. But even though we are different, we are all followers of Sirichana. Spiritually, we are equal."]]),
+      _([["There is no such greater honour than to serve the Sirichana in the Serra echelon."]]),
    },
 }
 -- Common stuff added to all echelons
