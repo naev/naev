@@ -99,7 +99,7 @@ function vni.sirius.serraMale()
    -- TODO
    --local p = sirius_serra_m[ rnd.rnd(1,#sirius_serra_m) ]
    --return portrait.getFullPath(p), p
-   return vni.sirius.shairaMale()
+   return vni.sirius.fyrraMale()
 end
 function vni.sirius.shairaFemale()
    local p = sirius_shaira_f[ rnd.rnd(1,#sirius_shaira_f) ]
@@ -113,7 +113,7 @@ function vni.sirius.serraFemale()
    -- TODO
    --local p = sirius_serra_f[ rnd.rnd(1,#sirius_serra_f) ]
    --return portrait.getFullPath(p), p
-   return vni.sirius.shairaFemale()
+   return vni.sirius.fyrraFemale()
 end
 function vni.sirius.shaira()
    if rnd.rnd() < 0.5 then
