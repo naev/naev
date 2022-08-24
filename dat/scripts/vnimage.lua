@@ -65,12 +65,12 @@ local sirius_fyrra_m = {
    "sirius/sirius_fyrra_m4.webp",
    "sirius/sirius_fyrra_m5.webp",
 }
-local sirius_shiara_m = {
-   "sirius/sirius_shiara_m1.webp",
-   "sirius/sirius_shiara_m2.webp",
-   "sirius/sirius_shiara_m3.webp",
-   "sirius/sirius_shiara_m4.webp",
-   "sirius/sirius_shiara_m5.webp",
+local sirius_shaira_m = {
+   "sirius/sirius_shaira_m1.webp",
+   "sirius/sirius_shaira_m2.webp",
+   "sirius/sirius_shaira_m3.webp",
+   "sirius/sirius_shaira_m4.webp",
+   "sirius/sirius_shaira_m5.webp",
 }
 local sirius_fyrra_f = {
    "sirius/sirius_fyrra_f1.webp",
@@ -79,53 +79,53 @@ local sirius_fyrra_f = {
    "sirius/sirius_fyrra_f4.webp",
    "sirius/sirius_fyrra_f5.webp",
 }
-local sirius_shiara_f = {
-   "sirius/sirius_shiara_f1.webp",
-   "sirius/sirius_shiara_f2.webp",
-   "sirius/sirius_shiara_f3.webp",
-   "sirius/sirius_shiara_f4.webp",
-   "sirius/sirius_shiara_f5.webp",
+local sirius_shaira_f = {
+   "sirius/sirius_shaira_f1.webp",
+   "sirius/sirius_shaira_f2.webp",
+   "sirius/sirius_shaira_f3.webp",
+   "sirius/sirius_shaira_f4.webp",
+   "sirius/sirius_shaira_f5.webp",
 }
 vni.sirius = {}
-function vni.sirius.fyrraMale()
-   local p = sirius_fyrra_m[ rnd.rnd(1,#sirius_fyrra_m) ]
+function vni.sirius.shairaMale()
+   local p = sirius_shaira_m[ rnd.rnd(1,#sirius_shaira_m) ]
    return portrait.getFullPath(p), p
 end
-function vni.sirius.shiaraMale()
-   local p = sirius_shiara_m[ rnd.rnd(1,#sirius_shiara_m) ]
+function vni.sirius.fyrraMale()
+   local p = sirius_fyrra_m[ rnd.rnd(1,#sirius_fyrra_m) ]
    return portrait.getFullPath(p), p
 end
 function vni.sirius.serraMale()
    -- TODO
    --local p = sirius_serra_m[ rnd.rnd(1,#sirius_serra_m) ]
    --return portrait.getFullPath(p), p
-   return vni.sirius.shiaraMale()
+   return vni.sirius.shairaMale()
+end
+function vni.sirius.shairaFemale()
+   local p = sirius_shaira_f[ rnd.rnd(1,#sirius_shaira_f) ]
+   return portrait.getFullPath(p), p
 end
 function vni.sirius.fyrraFemale()
    local p = sirius_fyrra_f[ rnd.rnd(1,#sirius_fyrra_f) ]
-   return portrait.getFullPath(p), p
-end
-function vni.sirius.shiaraFemale()
-   local p = sirius_shiara_f[ rnd.rnd(1,#sirius_shiara_f) ]
    return portrait.getFullPath(p), p
 end
 function vni.sirius.serraFemale()
    -- TODO
    --local p = sirius_serra_f[ rnd.rnd(1,#sirius_serra_f) ]
    --return portrait.getFullPath(p), p
-   return vni.sirius.shiaraFemale()
+   return vni.sirius.shairaFemale()
+end
+function vni.sirius.shaira()
+   if rnd.rnd() < 0.5 then
+      return vni.sirius.shairaFemale()
+   end
+   return vni.sirius.shairaMale()
 end
 function vni.sirius.fyrra()
    if rnd.rnd() < 0.5 then
       return vni.sirius.fyrraFemale()
    end
    return vni.sirius.fyrraMale()
-end
-function vni.sirius.shiara()
-   if rnd.rnd() < 0.5 then
-      return vni.sirius.shiaraFemale()
-   end
-   return vni.sirius.shiaraMale()
 end
 function vni.sirius.serra()
    if rnd.rnd() < 0.5 then
