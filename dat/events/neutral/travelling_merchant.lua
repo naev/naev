@@ -374,6 +374,7 @@ They grab a toolbox and rush over to your boarded ship. You decide not to follow
             pp:outfitRmIntrinsic( v )
          end
          pp:outfitAddIntrinsic( upgrade )
+         poi.data_take( upgrade_cost )
       end )
       vn.jump("special")
 
