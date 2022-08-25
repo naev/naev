@@ -17,6 +17,10 @@ function love.mousemoved( mx, my, dx, dy )
    luatk.mousemoved( mx, my, dx, dy )
 end
 
+function love.textinput( str )
+   return luatk.textinput( str )
+end
+
 function love.draw()
    luatk.draw()
 end

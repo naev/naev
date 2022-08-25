@@ -6,7 +6,6 @@
 --]]
 local lg = require 'love.graphics'
 local le = require 'love.event'
-local lk = require "love.keyboard"
 local utf8 = require 'utf8'
 
 local luatk = {
@@ -202,13 +201,29 @@ function luatk.keypressed( key )
    end
 
    for _k,wgt in ipairs(wdw._widgets) do
-      -- TODO proper focus model...
+      -- TODO proper focus model
       if wgt.keypressed then
          wgt:keypressed( key )
       end
    end
 
    return false
+end
+--[[--
+Handles text input.
+
+   @treturn string key Name of the key pressed.
+--]]
+function luatk.textinput( str )
+   local wdw = luatk._windows[ #luatk._windows ]
+   if not wdw then return false end
+
+   for _k,wgt in ipairs(wdw._widgets) do
+      -- TODO proper focus model
+      if wgt.textinput then
+         wgt:textinput( str )
+      end
+   end
 end
 
 --[[
@@ -825,40 +840,27 @@ function luatk.Input:get ()
 end
 function luatk.Input:set( str )
    self.str = ""
-   for c in str:gmatch(".") do
+   for c in utf8.gmatch( str, "." ) do
       if not self.filter[ c ] then
          self.str = self.str .. c
       end
    end
 end
-local convert = {
-   ["space"] = " "
-}
 function luatk.Input:keypressed( key )
-   self.str = self.str or ""
-
-   -- TODO turn key into a character c
-   local c = convert[ key ]
    if key == "backspace" then
       local l = utf8.len(self.str)
       if l > 0 then
          self.str = utf8.sub( self.str, 1, l-1 )
       end
       return
-   elseif not c and #key > 1 then
-      return
    end
-
-   if not c then
-      local isshift = lk.isDown("left shift") or lk.isDown("right shift")
-      c = key
-      if isshift then
-         c = utf8.upper( c )
+end
+function luatk.Input:textinput( str )
+   self.str = self.str or ""
+   for c in utf8.gmatch( str, "." ) do
+      if not self.filter[ c ] then
+         self.str = self.str .. c
       end
-   end
-
-   if not self.filter[ c ] then
-      self.str = (self.str or "") .. c
    end
 end
 
