@@ -809,10 +809,10 @@ function luatk.newInput( parent, x, y, w, h, max, params )
    local wgt = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Input_mt )
    params = params or {}
-   wgt.max = max
-   wgt.params = params
-   wgt.font = params.font or luatk._deffont or lg.newFont( 12 )
-   wgt.filter = params.filter or {}
+   wgt.max     = max
+   wgt.params  = params
+   wgt.font    = params.font or luatk._deffont or lg.newFont( 12 )
+   wgt.filter  = params.filter or {}
    if params.str then
       wgt:set( params.str )
    end
@@ -838,13 +838,17 @@ function luatk.Input:get ()
    end
    return self.str
 end
-function luatk.Input:set( str )
-   self.str = ""
+function luatk.Input:_addStr( str )
    for c in utf8.gmatch( str, "." ) do
       if not self.filter[ c ] then
          self.str = self.str .. c
       end
    end
+   self.str = utf8.sub( self.str, 1, self.max )
+end
+function luatk.Input:set( str )
+   self.str = ""
+   self:_addStr( str )
 end
 function luatk.Input:keypressed( key )
    if key == "backspace" then
@@ -857,11 +861,7 @@ function luatk.Input:keypressed( key )
 end
 function luatk.Input:textinput( str )
    self.str = self.str or ""
-   for c in utf8.gmatch( str, "." ) do
-      if not self.filter[ c ] then
-         self.str = self.str .. c
-      end
-   end
+   self:_addStr( str )
 end
 
 --[[
