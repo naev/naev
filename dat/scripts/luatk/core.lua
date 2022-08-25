@@ -199,6 +199,13 @@ function luatk.keypressed( key )
       end
    end
 
+   for _k,wgt in ipairs(wdw._widgets) do
+      -- TODO proper focus model...
+      if wgt.keypressed then
+         wgt:keypressed( key )
+      end
+   end
+
    return false
 end
 
@@ -776,6 +783,59 @@ function luatk.List:setPos( pos )
 end
 
 --[[
+-- Input widget
+--]]
+luatk.Input = {}
+setmetatable( luatk.Input, { __index = luatk.Widget } )
+luatk.Input_mt = { __index = luatk.Input }
+function luatk.newInput( parent, x, y, w, h, max, params )
+   local wgt = luatk.newWidget( parent, x, y, w, h )
+   setmetatable( wgt, luatk.Input_mt )
+   params = params or {}
+   wgt.max = max
+   wgt.params = params
+   wgt.font = params.font or luatk._deffont or lg.newFont( 12 )
+   wgt.filter = params.filter or {}
+   if params.str then
+      wgt:set( params.str )
+   end
+   return wgt
+end
+function luatk.Input:draw( bx, by )
+   local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
+
+   -- Background
+   lg.setColor( luatk.colour.outline )
+   lg.rectangle( "fill", x-2, y-2, w+4, h+4 )
+   lg.setColor( luatk.colour.dark )
+   lg.rectangle( "fill", x, y, w, h )
+
+   if self.str then
+      lg.setColor( luatk.colour.text )
+      lg.printf( self.str, self.font, x+5, y+5, w-10 )
+   end
+end
+function luatk.Input:get ()
+   return self.str
+end
+function luatk.Input:set( str )
+   self.str = ""
+   for c in str:gmatch(".") do
+      if not self.filter[ c ] then
+         self.str = self.str .. c
+      end
+   end
+end
+function luatk.Input:keypressed( key )
+   -- TODO turn key into a character c
+   -- TODO support special keys
+   local c = key
+   if not self.filter[ c ] then
+      self.str = (self.str or "") .. c
+   end
+end
+
+--[[
    High Level dialogue stuff
 --]]
 local function msgbox_size( title, msg )
@@ -869,6 +929,43 @@ function luatk.msgFader( title, msg, minval, maxval, def, funcdone )
    end
    local function wdw_done_accept( dying_wdw )
       return wdw_done( dying_wdw, fad:get() )
+   end
+   local function wdw_done_cancel( dying_wdw )
+      return wdw_done( dying_wdw, nil )
+   end
+   wdw:setAccept( wdw_done_accept )
+   wdw:setCancel( wdw_done_cancel )
+end
+function luatk.msgInput( title, msg, max, params, funcdone )
+   local w, h = msgbox_size( title, msg )
+
+   local wdw = luatk.newWindow( nil, nil, w, 160 + h )
+   luatk.newText( wdw, 0, 10, w, 20, title, nil, "center" )
+   luatk.newText( wdw, 20, 40, w-40, h, msg )
+   local inp = luatk.newInput( wdw, 20, h+105-20-30, w-40, 35, max, params )
+   local bw = 120
+   local y = h+110-20-30+50
+   luatk.newButton( wdw, (w-2*bw)/2-10, y, bw, 30, _("Accept"), function( wgt )
+      wgt.parent:destroy()
+      if funcdone then
+         funcdone( inp:get() )
+      end
+   end )
+   luatk.newButton( wdw, (w+0*bw)/2+10, y, bw, 30, _("Cancel"), function( wgt )
+      wgt.parent:destroy()
+      if funcdone then
+         funcdone( nil )
+      end
+   end )
+   local function wdw_done( dying_wdw, val )
+      if funcdone then
+         funcdone( val )
+      end
+      dying_wdw:destroy()
+      return true
+   end
+   local function wdw_done_accept( dying_wdw )
+      return wdw_done( dying_wdw, inp:get() )
    end
    local function wdw_done_cancel( dying_wdw )
       return wdw_done( dying_wdw, nil )
