@@ -1323,6 +1323,7 @@ static int pilotL_setTargetAsteroid( lua_State *L )
 
    /* Untarget pilot. */
    p->target = p->id;
+   p->ptarget = NULL;
 
    return 0;
 }
