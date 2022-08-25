@@ -2749,6 +2749,7 @@ static int aiL_setasterotarget( lua_State *L )
 
    /* Untarget pilot. */
    cur_pilot->target = cur_pilot->id;
+   cur_pilot->ptarget = NULL;
 
    return 0;
 }
