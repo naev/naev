@@ -60,6 +60,7 @@ static int naevL_claimTest( lua_State *L );
 static int naevL_plugins( lua_State *L );
 static int naevL_menuInfo( lua_State *L );
 static int naevL_menuSmall( lua_State *L );
+static int naevL_isPaused( lua_State *L );
 static int naevL_pause( lua_State *L );
 static int naevL_unpause( lua_State *L );
 #if DEBUGGING
@@ -91,6 +92,7 @@ static const luaL_Reg naev_methods[] = {
    { "plugins", naevL_plugins },
    { "menuInfo", naevL_menuInfo },
    { "menuSmall", naevL_menuSmall },
+   { "isPaused", naevL_isPaused },
    { "pause", naevL_pause },
    { "unpause", naevL_unpause },
 #if DEBUGGING
@@ -719,6 +721,18 @@ static int naevL_menuSmall( lua_State *L )
 {
    menu_small( 0, lua_toboolean(L,1), lua_toboolean(L,2), lua_toboolean(L,3) );
    return 0;
+}
+
+/**
+ * @brief Checks to see if the game is paused.
+ *
+ *    @luatreturn boolean Whether or not the game is currently paused.
+ * @luafunc pause
+ */
+static int naevL_isPaused( lua_State *L )
+{
+   lua_pushboolean( L, paused );
+   return 1;
 }
 
 /**
