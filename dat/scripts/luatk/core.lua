@@ -6,6 +6,8 @@
 --]]
 local lg = require 'love.graphics'
 local le = require 'love.event'
+local lk = require "love.keyboard"
+local utf8 = require 'utf8'
 
 local luatk = {
    _windows = {},
@@ -816,6 +818,9 @@ function luatk.Input:draw( bx, by )
    end
 end
 function luatk.Input:get ()
+   if not self.str or self.str=="" then
+      return nil
+   end
    return self.str
 end
 function luatk.Input:set( str )
@@ -826,10 +831,32 @@ function luatk.Input:set( str )
       end
    end
 end
+local convert = {
+   ["space"] = " "
+}
 function luatk.Input:keypressed( key )
+   self.str = self.str or ""
+
    -- TODO turn key into a character c
-   -- TODO support special keys
-   local c = key
+   local c = convert[ key ]
+   if key == "backspace" then
+      local l = utf8.len(self.str)
+      if l > 0 then
+         self.str = utf8.sub( self.str, 1, l-1 )
+      end
+      return
+   elseif not c and #key > 1 then
+      return
+   end
+
+   if not c then
+      local isshift = lk.isDown("left shift") or lk.isDown("right shift")
+      c = key
+      if isshift then
+         c = utf8.upper( c )
+      end
+   end
+
    if not self.filter[ c ] then
       self.str = (self.str or "") .. c
    end
