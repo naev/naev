@@ -50,6 +50,9 @@ function land ()
          table.insert( npc_spawners, s )
       end
    end
+   if #npc_spawners <= 0 then
+      return
+   end
    table.sort( npc_spawners, function( a, b )
       return a.w > b.w
    end )
