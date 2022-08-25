@@ -39,6 +39,11 @@ local luatk = {
          outline  = { 0.05, 0.05, 0.05 },
       },
    },
+   input = {
+      colour = {
+         text     = { 0.2,  0.8,  0.1  },
+      },
+   },
    _deffont = nil,
 }
 
@@ -832,7 +837,7 @@ function luatk.Input:draw( bx, by )
    local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
 
    -- Background
-   lg.setColor( luatk.colour.outline )
+   lg.setColor( luatk.colour.selected )
    lg.rectangle( "fill", x-2, y-2, w+4, h+4 )
    lg.setColor( luatk.colour.dark )
    lg.rectangle( "fill", x, y, w, h )
@@ -844,7 +849,7 @@ function luatk.Input:draw( bx, by )
       else
          stry = y+5
       end
-      lg.setColor( luatk.colour.text )
+      lg.setColor( luatk.input.colour.text )
       lg.printf( self.str, self.font, x+5, stry, w-10 )
    end
 end
