@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file input.c
  *
  * @brief Input widget.
  */
-
-
 /** @cond */
 #include <stdlib.h>
 #include <assert.h>
@@ -18,7 +15,6 @@
 #include "tk/toolkit_priv.h"
 #include "utf8.h"
 #include "font.h"
-
 
 static void inp_render( Widget* inp, double bx, double by );
 static int inp_isBreaker(char c);
@@ -31,7 +27,6 @@ static void inp_clampView( Widget *inp );
 static void inp_cleanup( Widget* inp );
 static void inp_focusGain( Widget* inp );
 static void inp_focusLose( Widget* inp );
-
 
 /**
  * @brief Adds an input widget to a window.
@@ -85,7 +80,6 @@ void window_addInput( unsigned int wid,
    wgt->h = (double) h;
    toolkit_setPos( wdw, wgt, x, y );
 }
-
 
 /**
  * @brief Renders a input widget.
@@ -176,7 +170,6 @@ static void inp_render( Widget* inp, double bx, double by )
          &cGrey20, NULL );
 }
 
-
 /**
  * @brief Handles input text.
  *
@@ -186,12 +179,9 @@ static void inp_render( Widget* inp, double bx, double by )
  */
 static int inp_text( Widget* inp, const char *buf )
 {
-   size_t i;
-   int ret;
    uint32_t ch;
-
-   i = 0;
-   ret = 0;
+   size_t i = 0;
+   int ret = 0;
    while ((ch = u8_nextchar( buf, &i )))
       ret |= inp_addKey( inp, ch );
 
@@ -200,7 +190,6 @@ static int inp_text( Widget* inp, const char *buf )
 
    return ret;
 }
-
 
 /**
  * @brief Adds a single key to the input.
@@ -211,13 +200,13 @@ static int inp_text( Widget* inp, const char *buf )
  */
 static int inp_addKey( Widget* inp, uint32_t ch )
 {
-   size_t i, len;
-   uint32_t c;
+   size_t len;
    char buf[8];
 
    /* Check to see if is in filter to ignore. */
    if (inp->dat.inp.filter != NULL) {
-      i = 0;
+      uint32_t c;
+      size_t i = 0;
       while ((c = u8_nextchar( inp->dat.inp.filter, &i )))
          if (c == ch)
             return 1; /* Ignored. */
@@ -238,7 +227,7 @@ static int inp_addKey( Widget* inp, uint32_t ch )
    memmove( &inp->dat.inp.input[ inp->dat.inp.pos+len ],
          &inp->dat.inp.input[ inp->dat.inp.pos ],
          inp->dat.inp.byte_max-1 - inp->dat.inp.pos - len );
-   for (i=0; i<len; i++)
+   for (size_t i=0; i<len; i++)
       inp->dat.inp.input[ inp->dat.inp.pos++ ] = buf[i];
    assert(inp->dat.inp.input[ inp->dat.inp.byte_max-1 ] == '\0');
 
@@ -258,7 +247,6 @@ static int inp_isBreaker(char c)
    return strchr(";:.-_ \n", c) != NULL;
 }
 
-
 /**
  * @brief Handles input for an input widget.
  *
@@ -271,7 +259,6 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
    int w;
-   size_t curpos, len, prev_line_start, curr_line_start, line_end, next_line_start;
 
    /*
     * Handle arrow keys.
@@ -299,7 +286,7 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
          }
       }
       else if (key == SDLK_RIGHT) {
-         len = strlen(inp->dat.inp.input);
+         size_t len = strlen(inp->dat.inp.input);
          if (inp->dat.inp.pos < len) {
             if (mod & KMOD_CTRL) {
                /* We want to position the cursor at the start of the next word. */
@@ -323,8 +310,9 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
             return 0;
 
          /* Keep a running list of the 3 most recent line-start positions found. SIZE_MAX is a sentinel. */
-         curr_line_start = SIZE_MAX;
-         next_line_start = 0;
+         size_t prev_line_start, line_end;
+         size_t curr_line_start = SIZE_MAX;
+         size_t next_line_start = 0;
          do {
             prev_line_start = curr_line_start;
             curr_line_start = next_line_start;
@@ -355,7 +343,6 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
       return 1;
    }
 
-
    /* Don't use, but don't eat, either. */
    if ((key == SDLK_TAB) || (key == SDLK_ESCAPE))
       return 0;
@@ -378,7 +365,7 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
          return 1; /* We still catch the event. */
 
       /* We want to move inp->dat.inp.pos backward and delete all characters caught between it and curpos at the end. */
-      curpos = inp->dat.inp.pos;
+      size_t curpos = inp->dat.inp.pos;
       if (inp->dat.inp.pos > 0) {
          if (mod & KMOD_CTRL) {
             /* We want to delete up to the start of the previous or current word. */
@@ -409,9 +396,9 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
    }
    /* delete -> delete text */
    else if (key == SDLK_DELETE) {
-      len = (int)strlen(inp->dat.inp.input);
+      size_t len = (int)strlen(inp->dat.inp.input);
       /* We want to move curpos forward and delete all characters caught between it and inp->dat.inp.pos at the end. */
-      curpos = inp->dat.inp.pos;
+      size_t curpos = inp->dat.inp.pos;
       if (inp->dat.inp.pos < len) {
          if (mod & KMOD_CTRL) {
             /* We want to delete up until the start of the next word. */
@@ -481,7 +468,6 @@ static int inp_key( Widget* inp, SDL_Keycode key, SDL_Keymod mod )
    return 0;
 }
 
-
 /*
  * @brief Returns the width required to fit the text from byte positions \p start_pos to \p end_pos.
  *
@@ -506,7 +492,6 @@ static int inp_rangeToWidth( Widget *inp, int start_pos, int end_pos )
    return w;
 }
 
-
 /*
  * @brief Returns the byte-size of the text we can fit within \p width starting at \p start_pos.
  *        Note: "for convenience" this function accounts for word-wrap if the widget is word-wrapping
@@ -527,7 +512,6 @@ static int inp_rangeFromWidth( Widget *inp, int start_pos, int width )
    return iter.l_end - iter.l_begin;
 }
 
-
 /*
  * @brief Keeps the input widget's view in sync with its cursor
  *
@@ -535,8 +519,6 @@ static int inp_rangeFromWidth( Widget *inp, int start_pos, int width )
  */
 static void inp_clampView( Widget *inp )
 {
-   size_t v;
-
    /* @todo Handle multiline input widgets. */
    if (!inp->dat.inp.oneline)
       return;
@@ -551,14 +533,13 @@ static void inp_clampView( Widget *inp )
 
    /* If possible, shift the view left without hiding text on the right. */
    while (inp->dat.inp.view > 0) {
-      v = inp->dat.inp.view;
+      size_t v = inp->dat.inp.view;
       u8_dec( inp->dat.inp.input, &v );
       if (inp_rangeToWidth( inp, v, -1 ) > inp->w-10)
          break;
       inp->dat.inp.view = v;
    }
 }
-
 
 /**
  * @brief Clean up function for the input widget.
@@ -571,7 +552,6 @@ static void inp_cleanup( Widget* inp )
    free(inp->dat.inp.input);
    free(inp->dat.inp.empty_text);
 }
-
 
 /**
  * @brief Gets the input from an input widget.
@@ -630,7 +610,6 @@ const char* window_setInput( unsigned int wid, const char* name, const char *msg
    return wgt->dat.inp.input;
 }
 
-
 /**
  * @brief Sets the empty text to be displayed (when nothing is input) for an input widget.
  *
@@ -656,7 +635,6 @@ void inp_setEmptyText( unsigned int wid, const char* name, const char *str )
    else
       wgt->dat.inp.empty_text = NULL;
 }
-
 
 /**
  * @brief Sets the input filter.
