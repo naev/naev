@@ -6,6 +6,7 @@
 --]]
 local lg = require 'love.graphics'
 local le = require 'love.event'
+local lk = require 'love.keyboard'
 local utf8 = require 'utf8'
 
 local luatk = {
@@ -57,6 +58,7 @@ Closes the toolkit and all windows.
 --]]
 function luatk.close ()
    luatk._windows = {}
+   lk.setTextInput( false ) -- Hack as we can't use __gc
    if luatk._love then
       le.quit()
    end
@@ -326,6 +328,9 @@ function luatk.Window:destroy()
          table.remove(luatk._windows,k)
          return
       end
+   end
+   if #luatk._widgets <= 0 then
+      lk.setTextInput( false ) -- Hack as we can't use __gc
    end
 end
 --[[--
@@ -820,6 +825,7 @@ function luatk.newInput( parent, x, y, w, h, max, params )
    if params.str then
       wgt:set( params.str )
    end
+   lk.setTextInput( true, parent.x+x, parent.y+y, w, h )
    return wgt
 end
 function luatk.Input:draw( bx, by )
