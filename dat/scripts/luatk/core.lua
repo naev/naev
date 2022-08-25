@@ -916,6 +916,7 @@ function luatk.msg( title, msg )
    luatk.newButton( wdw, (w-50)/2, h+110-20-30, 50, 30, _("OK"), function( wgt )
       wgt.parent:destroy()
    end )
+   return wdw
 end
 function luatk.yesno( title, msg, funcyes, funcno )
    local w, h = msgbox_size( title, msg )
@@ -935,6 +936,7 @@ function luatk.yesno( title, msg, funcyes, funcno )
          funcno()
       end
    end )
+   return wdw
 end
 function luatk.msgFader( title, msg, minval, maxval, def, funcdone )
    local w, h = msgbox_size( title, msg )
@@ -974,8 +976,9 @@ function luatk.msgFader( title, msg, minval, maxval, def, funcdone )
    end
    wdw:setAccept( wdw_done_accept )
    wdw:setCancel( wdw_done_cancel )
+   return wdw
 end
-function luatk.msgInput( title, msg, max, params, funcdone )
+function luatk.msgInput( title, msg, max, funcdone, params )
    local w, h = msgbox_size( title, msg )
 
    local wdw = luatk.newWindow( nil, nil, w, 160 + h )
@@ -1011,6 +1014,7 @@ function luatk.msgInput( title, msg, max, params, funcdone )
    end
    wdw:setAccept( wdw_done_accept )
    wdw:setCancel( wdw_done_cancel )
+   return wdw
 end
 
 function luatk.drawAltText( bx, by, alt, w )
