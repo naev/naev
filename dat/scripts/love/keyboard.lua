@@ -12,5 +12,4 @@ function keyboard.setKeyRepeat( enable )
    keyboard._repeat = enable
 end
 
-
 return keyboard
