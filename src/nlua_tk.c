@@ -415,7 +415,6 @@ static int tkL_merchantOutfit( lua_State *L )
  */
 static int tkL_custom( lua_State *L )
 {
-   Uint8 prevstate;
    int w = luaL_checkinteger(L, 2);
    int h = luaL_checkinteger(L, 3);
    const char *caption = luaL_checkstring(L, 1);
@@ -441,10 +440,7 @@ static int tkL_custom( lua_State *L )
    lua_setglobal(L, TK_CUSTOMDONE );
 
    /* Create the dialogue. */
-   prevstate = SDL_EventState( SDL_TEXTINPUT, SDL_QUERY );
-   SDL_EventState( SDL_TEXTINPUT, SDL_ENABLE);
    dialogue_custom( caption, w, h, cust_update, cust_render, cust_event, cf, 1 );
-   SDL_EventState( SDL_TEXTINPUT, prevstate);
 
    /* Clean up. */
    cf->done = 1;

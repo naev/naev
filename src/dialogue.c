@@ -871,6 +871,7 @@ void dialogue_custom( const char* caption, int width, int height,
    unsigned int wid;
    int done, fullscreen;
    int wx, wy, wgtx, wgty;
+   Uint8 prevstate;
 
    fullscreen = ((width < 0) && (height < 0));
 
@@ -915,7 +916,10 @@ void dialogue_custom( const char* caption, int width, int height,
    du.update = update;
    du.data   = data;
    du.wid    = wid;
+   prevstate = SDL_EventState( SDL_TEXTINPUT, SDL_QUERY );
+   SDL_EventState( SDL_TEXTINPUT, SDL_ENABLE);
    toolkit_loop( &done, &du );
+   SDL_EventState( SDL_TEXTINPUT, prevstate);
 }
 
 /**
