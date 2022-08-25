@@ -83,7 +83,7 @@ function pers_attacked( _p, attacker, dmg, pt )
 end
 
 function pers_death( _p, attacker, pt )
-   if pt.dmgp > pt.dmgo or attacker and attacker:withPlayer() then
+   if pt.dmgp > pt.dmgo or (attacker and attacker:withPlayer()) then
       if pt.ondeath then
          pt.ondeath( attacker, pt )
       end
