@@ -1011,7 +1011,7 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
       double dt;
 
       /* Loop first so exit condition is checked before next iteration. */
-      main_loop( 0 );
+      main_loop( 1 );
 
       while (!naev_isQuit() && SDL_PollEvent(&event)) { /* event loop */
          if (event.type == SDL_QUIT) {
