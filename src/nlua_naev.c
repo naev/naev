@@ -27,6 +27,7 @@
 #include "nlua_system.h"
 #include "nluadef.h"
 #include "nstring.h"
+#include "pause.h"
 #include "player.h"
 #include "plugin.h"
 #include "semver.h"
@@ -59,6 +60,8 @@ static int naevL_claimTest( lua_State *L );
 static int naevL_plugins( lua_State *L );
 static int naevL_menuInfo( lua_State *L );
 static int naevL_menuSmall( lua_State *L );
+static int naevL_pause( lua_State *L );
+static int naevL_unpause( lua_State *L );
 #if DEBUGGING
 static int naevL_envs( lua_State *L );
 #endif /* DEBUGGING */
@@ -88,6 +91,8 @@ static const luaL_Reg naev_methods[] = {
    { "plugins", naevL_plugins },
    { "menuInfo", naevL_menuInfo },
    { "menuSmall", naevL_menuSmall },
+   { "pause", naevL_pause },
+   { "unpause", naevL_unpause },
 #if DEBUGGING
    { "envs", naevL_envs },
 #endif /* DEBUGGING */
@@ -716,7 +721,39 @@ static int naevL_menuSmall( lua_State *L )
    return 0;
 }
 
+/**
+ * @brief Pauses the game.
+ *
+ * @luafunc pause
+ */
+static int naevL_pause( lua_State *L )
+{
+   (void) L;
+   pause_game();
+   return 0;
+}
+
+/**
+ * @brief Unpauses the game.
+ *
+ * @luafunc unpause
+ */
+static int naevL_unpause( lua_State *L )
+{
+   (void) L;
+   unpause_game();
+   return 0;
+}
+
 #if DEBUGGING
+/**
+ * @brief Gets a table with all the active Naev environments.
+ *
+ * Only available only debug builds.
+ *
+ *    @luatreturn table Unordered table containing all the environments.
+ * @luafunc envs
+ */
 static int naevL_envs( lua_State *L )
 {
    nlua_pushEnvTable( L );
