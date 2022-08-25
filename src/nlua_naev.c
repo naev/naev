@@ -63,6 +63,8 @@ static int naevL_menuSmall( lua_State *L );
 static int naevL_isPaused( lua_State *L );
 static int naevL_pause( lua_State *L );
 static int naevL_unpause( lua_State *L );
+static int naevL_hasTextInput( lua_State *L );
+static int naevL_setTextInput( lua_State *L );
 #if DEBUGGING
 static int naevL_envs( lua_State *L );
 #endif /* DEBUGGING */
@@ -95,6 +97,8 @@ static const luaL_Reg naev_methods[] = {
    { "isPaused", naevL_isPaused },
    { "pause", naevL_pause },
    { "unpause", naevL_unpause },
+   { "hasTextInput", naevL_hasTextInput },
+   { "setTextInput", naevL_setTextInput },
 #if DEBUGGING
    { "envs", naevL_envs },
 #endif /* DEBUGGING */
@@ -756,6 +760,47 @@ static int naevL_unpause( lua_State *L )
 {
    (void) L;
    unpause_game();
+   return 0;
+}
+
+/**
+ * @brief Checks to see if text inputting is enabled.
+ *
+ *    @luatreturn boolean Whether or not text inputting is enabled.
+ * @luafunc hasTextInput
+ */
+static int naevL_hasTextInput( lua_State *L )
+{
+   lua_pushboolean( L, SDL_EventState( SDL_TEXTINPUT, SDL_QUERY ) == SDL_TRUE );
+   return 1;
+}
+
+/**
+ * @brief Enables or disables text inputting.
+ *
+ *    @luatparam boolean enable Whether text input events should be enabled.
+ *    @luatparam integer Text rectangle x position.
+ *    @luatparam integer Text rectangle y position.
+ *    @luatparam integer Text rectangle width.
+ *    @luatparam integer Text rectangle height.
+ * @luafunc setTextInput
+ */
+static int naevL_setTextInput( lua_State *L )
+{
+   if (lua_toboolean(L,1)) {
+      SDL_Rect input_pos;
+      input_pos.x = luaL_checkinteger(L,2);
+      input_pos.y = luaL_checkinteger(L,3);
+      input_pos.w = luaL_checkinteger(L,4);
+      input_pos.h = luaL_checkinteger(L,5);
+      SDL_EventState( SDL_TEXTINPUT, SDL_ENABLE );
+      SDL_StartTextInput();
+      SDL_SetTextInputRect( &input_pos );
+   }
+   else {
+      SDL_StopTextInput();
+      SDL_EventState( SDL_TEXTINPUT, SDL_DISABLE );
+   }
    return 0;
 }
 
