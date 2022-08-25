@@ -830,8 +830,10 @@ function luatk.newInput( parent, x, y, w, h, max, params )
    if params.str then
       wgt:set( params.str )
    end
-   lk.setTextInput( true, parent.x+x, parent.y+y, w, h )
    return wgt
+end
+function luatk.Input:focus ()
+   lk.setTextInput( true, self.parent.x+self.x, self.parent.y+self.y, self.w, self.h )
 end
 function luatk.Input:draw( bx, by )
    local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
