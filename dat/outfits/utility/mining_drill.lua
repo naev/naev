@@ -38,6 +38,11 @@ function drill.ontoggle( p, _po, on )
       p:setTargetAsteroid( a )
    end
 
+   -- Make sure it exists (should do a foreground check)
+   if not a:exists() then
+      return
+   end
+
    -- Check if in range
    if a:pos():dist2( p:pos() ) > dist_threshold then
       if mem.isp then
