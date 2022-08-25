@@ -26,6 +26,8 @@ static int asteroidL_eq( lua_State *L );
 static int asteroidL_getAll( lua_State *L );
 static int asteroidL_get( lua_State *L );
 static int asteroidL_exists( lua_State *L );
+static int asteroidL_state( lua_State *L );
+static int asteroidL_setState( lua_State *L );
 static int asteroidL_field( lua_State *L );
 static int asteroidL_pos( lua_State *L );
 static int asteroidL_vel( lua_State *L );
@@ -43,6 +45,8 @@ static const luaL_Reg asteroidL_methods[] = {
    { "getAll", asteroidL_getAll },
    { "get", asteroidL_get },
    { "exists", asteroidL_exists },
+   { "state", asteroidL_state },
+   { "setState", asteroidL_setState },
    { "field", asteroidL_field },
    { "pos", asteroidL_pos },
    { "vel", asteroidL_vel },
@@ -339,6 +343,79 @@ static int asteroidL_exists( lua_State *L )
    Asteroid *a = &field->asteroids[ la->id ];
    lua_pushboolean(L, (a->state==ASTEROID_FG));
    return 1;
+}
+
+/**
+ * @brief Gets the state of an asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to check state of.
+ *    @luatreturn string State of the asteroid. Can be one of "FG", "XB", "BX", "XX_TO_BG", "FG_TO_BG", "BG_TO_FG", "BG_TO_XX", or "XX".
+ * @luafunc state
+ */
+static int asteroidL_state( lua_State *L )
+{
+   Asteroid *ast = luaL_validasteroid(L,1);
+   const char *state = NULL;
+   switch (ast->state) {
+         case ASTEROID_FG:
+            state = "FG";
+            break;
+         case ASTEROID_XB:
+            state = "XB";
+            break;
+         case ASTEROID_BX:
+            state = "BX";
+            break;
+         case ASTEROID_XX_TO_BG:
+            state = "XX_TO_BG";
+            break;
+         case ASTEROID_FG_TO_BG:
+            state = "FG_TO_BG";
+            break;
+         case ASTEROID_BG_TO_FG:
+            state = "BG_TO_FG";
+            break;
+         case ASTEROID_BG_TO_XX:
+            state = "BG_TO_XX";
+            break;
+         case ASTEROID_XX:
+            state = "XX";
+            break;
+   }
+   lua_pushstring( L, state );
+   return 1;
+}
+
+/**
+ * @brief Sets the state of an asteroid.
+ *
+ *    @luatparam Asteroid a Asteroid to set state of.
+ *    @luatparam string s State to set. Has to be one of "FG", "XB", "BX", "XX_TO_BG", "FG_TO_BG", "BG_TO_FG", "BG_TO_XX", or "XX".
+ * @luafunc state
+ */
+static int asteroidL_setState( lua_State *L )
+{
+   Asteroid *ast = luaL_validasteroid(L,1);
+   const char *state = luaL_checkstring(L,2);
+   if (strcmp(state,"FG")==0)
+      ast->state = ASTEROID_FG;
+   else if (strcmp(state,"XB")==0)
+      ast->state = ASTEROID_XB;
+   else if (strcmp(state,"BX")==0)
+      ast->state = ASTEROID_BX;
+   else if (strcmp(state,"XX_TO_BG")==0)
+      ast->state = ASTEROID_XX_TO_BG;
+   else if (strcmp(state,"FG_TO_BG")==0)
+      ast->state = ASTEROID_FG_TO_BG;
+   else if (strcmp(state,"BG_TO_FG")==0)
+      ast->state = ASTEROID_BG_TO_FG;
+   else if (strcmp(state,"BG_TO_XX")==0)
+      ast->state = ASTEROID_BG_TO_XX;
+   else if (strcmp(state,"XX")==0)
+      ast->state = ASTEROID_XX;
+   else
+      NLUA_INVALID_PARAMETER(L);
+   return 0;
 }
 
 /**
