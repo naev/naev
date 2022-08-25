@@ -1387,7 +1387,7 @@ void pilot_setTarget( Pilot* p, unsigned int id )
       return;
 
    p->target = id;
-   p->ptarget = NULL;
+   p->ptarget = NULL; /* Gets recomputed later in pilot_getTarget. */
    pilot_lockClear( p );
 
    /* Set the scan timer. */
