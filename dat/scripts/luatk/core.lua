@@ -812,6 +812,10 @@ function luatk.newInput( parent, x, y, w, h, max, params )
    wgt.max     = max
    wgt.params  = params
    wgt.font    = params.font or luatk._deffont or lg.newFont( 12 )
+   wgt.fonth   = wgt.font:getHeight()
+   if (wgt.h-10) / wgt.font:getLineHeight() < 2 then
+      wgt.oneline = true
+   end
    wgt.filter  = params.filter or {}
    if params.str then
       wgt:set( params.str )
@@ -828,8 +832,14 @@ function luatk.Input:draw( bx, by )
    lg.rectangle( "fill", x, y, w, h )
 
    if self.str then
+      local stry
+      if self.oneline then
+         stry = y+(h-self.fonth)*0.5
+      else
+         stry = y+5
+      end
       lg.setColor( luatk.colour.text )
-      lg.printf( self.str, self.font, x+5, y+5, w-10 )
+      lg.printf( self.str, self.font, x+5, stry, w-10 )
    end
 end
 function luatk.Input:get ()
