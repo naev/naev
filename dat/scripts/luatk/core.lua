@@ -990,19 +990,13 @@ function luatk.msgInput( title, msg, max, funcdone, params )
    local wdw = luatk.newWindow( nil, nil, w, 160 + h )
    luatk.newText( wdw, 0, 10, w, 20, title, nil, "center" )
    luatk.newText( wdw, 20, 40, w-40, h, msg )
-   local inp = luatk.newInput( wdw, 20, h+105-20-30, w-40, 35, max, params )
+   local inp = luatk.newInput( wdw, 20, h+100-20-20, w-40, 35, max, params )
    local bw = 120
    local y = h+110-20-30+50
-   luatk.newButton( wdw, (w-2*bw)/2-10, y, bw, 30, _("Accept"), function( wgt )
+   luatk.newButton( wdw, w-10-bw, y, bw, 30, _("Done"), function( wgt )
       wgt.parent:destroy()
       if funcdone then
          funcdone( inp:get() )
-      end
-   end )
-   luatk.newButton( wdw, (w+0*bw)/2+10, y, bw, 30, _("Cancel"), function( wgt )
-      wgt.parent:destroy()
-      if funcdone then
-         funcdone( nil )
       end
    end )
    local function wdw_done( dying_wdw, val )
