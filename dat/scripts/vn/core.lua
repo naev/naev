@@ -428,7 +428,7 @@ end
 --[[--
 Mouse move handler.
 --]]
-function vn.mousemoved( mx, my )
+function vn.mousemoved( mx, my, dx, dy )
    if vn._show_options then
       opt.mousemoved( mx, my )
       return true
@@ -436,10 +436,14 @@ function vn.mousemoved( mx, my )
 
    if vn.show_options and _inbox( mx, my, vn.options_x, vn.options_y, vn.options_w, vn.options_h ) then
       vn._options_over = true
+      return true
    else
       vn._options_over = false
    end
-   return true
+
+   if vn.isDone() then return false end
+   local s = vn._states[ vn._state ]
+   return s:mousemoved( mx, my, dx, dy )
 end
 
 --[[--
@@ -479,8 +483,21 @@ Mouse released handler.
 function vn.mousereleased( mx, my, button )
    if vn._show_options then
       opt.mousereleased( mx, my, button )
+      return true
    end
-   return true
+
+   if vn.isDone() then return false end
+   local s = vn._states[ vn._state ]
+   return s:mousereleased( mx, my, button )
+end
+
+--[[--
+Text input handler.
+--]]
+function vn.textinput( str )
+   if vn.isDone() then return false end
+   local s = vn._states[ vn._state ]
+   return s:textinput( str )
 end
 
 -- Helpers
@@ -514,7 +531,10 @@ function vn.State.new()
    s._draw = _dummy
    s._update = _dummy
    s._mousepressed = _dummy
+   s._mousereleased = _dummy
+   s._mousemoved = _dummy
    s._keypressed = _dummy
+   s._textinput = _dummy
    s.done = false
    return s
 end
@@ -536,8 +556,23 @@ function vn.State:mousepressed( mx, my, button )
    vn._checkDone()
    return ret
 end
+function vn.State:mousereleased( mx, my, button )
+   local ret = self:_mousereleased( mx, my, button )
+   vn._checkDone()
+   return ret
+end
+function vn.State:mousemoved( mx, my, dx, dy )
+   local ret = self:_mousemoved( mx, my, dx, dy )
+   vn._checkDone()
+   return ret
+end
 function vn.State:keypressed( key )
    local ret = self:_keypressed( key )
+   vn._checkDone()
+   return ret
+end
+function vn.State:textinput( key )
+   local ret = self:_textinput( key )
    vn._checkDone()
    return ret
 end

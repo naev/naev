@@ -18,6 +18,10 @@ function love.mousemoved( mx, my, dx, dy )
    vn.mousemoved( mx, my, dx, dy )
 end
 
+function love.textinput( str )
+   vn.textinput( str )
+end
+
 function love.draw()
    vn.draw()
 end
