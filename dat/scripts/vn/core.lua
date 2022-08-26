@@ -17,6 +17,7 @@ local log         = require "vn.log"
 local sdf         = require "vn.sdf"
 local opt         = require "vn.options"
 local luaspfx     = require "luaspfx"
+local luatk       = require "luatk"
 
 local vn = {
    speed = var.peek("vn_textspeed") or 0.025,
@@ -376,7 +377,8 @@ Key press handler.
    @tparam string key Name of the key pressed.
 --]]
 function vn.keypressed( key )
-   if string.lower(naev.keyGet( "menu" )) == key then
+   local tkopen = luatk.isOpen()
+   if not tkopen and string.lower(naev.keyGet( "menu" )) == key then
       naev.menuSmall()
       return true
    end
@@ -404,7 +406,7 @@ function vn.keypressed( key )
    end
 
    if not vn._show_log then
-      if key=="tab" or key=="escape" then
+      if not tkopen and (key=="tab" or key=="escape") then
          vn._show_log = not vn._show_log
          log.open( vn.textbox_font )
          return true

@@ -52,6 +52,12 @@ local luatk = {
 -- Global functions
 --]]
 --[[--
+Gets whether or not the luatk has a window open.
+--]]
+function luatk.isOpen ()
+   return #luatk._windows>0
+end
+--[[--
 Runs the luatk. Should be used after the windows are set up.
 --]]
 function luatk.run ()
