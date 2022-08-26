@@ -9,7 +9,10 @@
    local count = 0
    for i, p in pairs(system.cur():spobs()) do
       if p:services()["inhabited"] then
-         return true
+         count=count+1
+      end
+      if count == 2 then
+          return true
       end
    end
    return false
