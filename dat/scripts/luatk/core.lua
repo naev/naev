@@ -899,15 +899,19 @@ function luatk.Input:keypressed( key )
          self.str = utf8.sub( self.str, 1, l-1 )
          self.cursor = math.max( 0, self.cursor-1 )
       end
-      return
+      self.timer = 0
    elseif key == "left" then
       self.cursor = math.max( 0, self.cursor-1 )
+      self.timer = 0
    elseif key == "right" then
       self.cursor = math.min( utf8.len(self.str), self.cursor+1 )
+      self.timer = 0
    elseif key == "home" then
       self.cursor = 0
+      self.timer = 0
    elseif key == "end" then
       self.cursor = utf8.len(self.str)
+      self.timer = 0
    end
 end
 function luatk.Input:textinput( str )
