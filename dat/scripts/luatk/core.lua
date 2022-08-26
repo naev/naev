@@ -823,13 +823,16 @@ function luatk.newInput( parent, x, y, w, h, max, params )
    wgt.params  = params
    wgt.font    = params.font or luatk._deffont or lg.newFont( 12 )
    wgt.fonth   = wgt.font:getHeight()
+   wgt.fontlh  = wgt.font:getLineHeight()
    if (wgt.h-10) / wgt.font:getLineHeight() < 2 then
       wgt.oneline = true
    end
    wgt.filter  = params.filter or {}
+   wgt.str     = ""
    if params.str then
       wgt:set( params.str )
    end
+   wgt.cursor = 0
    return wgt
 end
 function luatk.Input:focus ()
@@ -844,16 +847,22 @@ function luatk.Input:draw( bx, by )
    lg.setColor( luatk.colour.dark )
    lg.rectangle( "fill", x, y, w, h )
 
-   if self.str then
-      local stry
-      if self.oneline then
-         stry = y+(h-self.fonth)*0.5
-      else
-         stry = y+5
-      end
-      lg.setColor( luatk.input.colour.text )
-      lg.printf( self.str, self.font, x+5, stry, w-10 )
+   lg.setColor( luatk.input.colour.text )
+   local stry
+   if self.oneline then
+      stry = y+(h-self.fonth)*0.5
+   else
+      stry = y+5
    end
+   lg.printf( self.str, self.font, x+5, stry, w-10 )
+
+   local fw = self.font:getWidth( utf8.sub( self.str, 1, self.cursor ) )
+   if self.oneline then
+      stry = y+(h-self.fontlh)*0.5
+   else
+      stry = y+5
+   end
+   lg.rectangle( "fill", x+5+fw+1, stry, 1, self.fontlh )
 end
 function luatk.Input:get ()
    if not self.str or self.str=="" then
@@ -862,12 +871,16 @@ function luatk.Input:get ()
    return self.str
 end
 function luatk.Input:_addStr( str )
+   local head = utf8.sub( self.str, 1, self.cursor )
+   local tail = utf8.sub( self.str, self.cursor+1, utf8.len(self.str) )
+   local body = ""
    for c in utf8.gmatch( str, "." ) do
       if not self.filter[ c ] then
-         self.str = self.str .. c
+         body = body..c
+         self.cursor = self.cursor+1
       end
    end
-   self.str = utf8.sub( self.str, 1, self.max )
+   self.str = utf8.sub( head..body..tail, 1, self.max )
 end
 function luatk.Input:set( str )
    self.str = ""
@@ -878,8 +891,17 @@ function luatk.Input:keypressed( key )
       local l = utf8.len(self.str)
       if l > 0 then
          self.str = utf8.sub( self.str, 1, l-1 )
+         self.cursor = math.max( 0, self.cursor-1 )
       end
       return
+   elseif key == "left" then
+      self.cursor = math.max( 0, self.cursor-1 )
+   elseif key == "right" then
+      self.cursor = math.min( utf8.len(self.str), self.cursor+1 )
+   elseif key == "home" then
+      self.cursor = 0
+   elseif key == "end" then
+      self.cursor = utf8.len(self.str)
    end
 end
 function luatk.Input:textinput( str )
