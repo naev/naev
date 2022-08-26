@@ -8,6 +8,7 @@ local lg = require 'love.graphics'
 local le = require 'love.event'
 local lk = require 'love.keyboard'
 local utf8 = require 'utf8'
+local vn = require "vn"
 
 local luatk = {
    _windows = {},
@@ -57,6 +58,54 @@ function luatk.run ()
    luatk._love = true
    love.exec( 'scripts/luatk' )  -- luacheck: ignore
    luatk._love = false
+end
+function luatk.vn( setup )
+   local s = vn.custom()
+   s._init = function ()
+      setup()
+   end
+   s._draw = function ()
+      return luatk.draw()
+   end
+   s._mousepressed = function( _self, mx, my, button )
+      return luatk.mousepressed( mx, my, button )
+   end
+   s._mousereleased = function( _self, mx, my, button )
+      return luatk.mousereleased( mx, my, button )
+   end
+   s._mousemoved = function( _self, mx, my, dx, dy )
+      return luatk.mousemoved( mx, my, dx, dy )
+   end
+   s._keypressed = function( _self, key )
+      return luatk.keypressed( key )
+   end
+   s._textinput = function( _self, str )
+      return luatk.textinput( str )
+   end
+   local function _update( self, dt )
+      if #luatk._windows<=0 then
+         self.done = true
+         return
+      end
+      luatk.update( dt )
+   end
+   -- See reason for this hack in dat/scripts/luatk/main.lua
+   s._update = function( self, dt )
+      -- Start focus
+      local wdw = luatk._windows[ #luatk._windows ]
+      if not wdw then
+         return
+      end
+      for _k,wgt in ipairs(wdw._widgets) do
+         if wgt.focus then
+            wgt:focus()
+         end
+      end
+
+      s._update = _update
+      _update( self, dt )
+   end
+   return s
 end
 --[[--
 Closes the toolkit and all windows.
