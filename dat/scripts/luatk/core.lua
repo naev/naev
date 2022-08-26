@@ -833,10 +833,14 @@ function luatk.newInput( parent, x, y, w, h, max, params )
       wgt:set( params.str )
    end
    wgt.cursor = 0
+   wgt.timer = 0
    return wgt
 end
 function luatk.Input:focus ()
    lk.setTextInput( true, self.parent.x+self.x, self.parent.y+self.y, self.w, self.h )
+end
+function luatk.Input:update( dt )
+   self.timer = self.timer + dt
 end
 function luatk.Input:draw( bx, by )
    local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
@@ -856,13 +860,15 @@ function luatk.Input:draw( bx, by )
    end
    lg.printf( self.str, self.font, x+5, stry, w-10 )
 
-   local fw = self.font:getWidth( utf8.sub( self.str, 1, self.cursor ) )
-   if self.oneline then
-      stry = y+(h-self.fontlh)*0.5
-   else
-      stry = y+5
+   if math.fmod( math.floor(self.timer*1.1), 2 )==0 then
+      local fw = self.font:getWidth( utf8.sub( self.str, 1, self.cursor ) )
+      if self.oneline then
+         stry = y+(h-self.fontlh)*0.5
+      else
+         stry = y+5
+      end
+      lg.rectangle( "fill", x+5+fw+1, stry, 1, self.fontlh )
    end
-   lg.rectangle( "fill", x+5+fw+1, stry, 1, self.fontlh )
 end
 function luatk.Input:get ()
    if not self.str or self.str=="" then
