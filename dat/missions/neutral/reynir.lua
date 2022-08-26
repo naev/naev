@@ -7,12 +7,12 @@
  <location>Bar</location>
  <cond>
    local count = 0
-   for i, p in pairs(system.cur():spobs()) do
+   for i, p in ipairs(system.cur():spobs()) do
       if p:services()["inhabited"] then
-         count=count+1
-      end
-      if count == 2 then
-          return true
+         count = count+1
+         if count >= 2 then -- Needs at least 2 unninhabited spobs
+            return true
+         end
       end
    end
    return false
