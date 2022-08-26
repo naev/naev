@@ -827,7 +827,8 @@ function luatk.newInput( parent, x, y, w, h, max, params )
    if (wgt.h-10) / wgt.font:getLineHeight() < 2 then
       wgt.oneline = true
    end
-   wgt.filter  = params.filter or {}
+   wgt.whitelist = params.whitelist
+   wgt.blacklist = params.blacklist
    wgt.str     = ""
    if params.str then
       wgt:set( params.str )
@@ -881,7 +882,14 @@ function luatk.Input:_addStr( str )
    local tail = utf8.sub( self.str, self.cursor+1, utf8.len(self.str) )
    local body = ""
    for c in utf8.gmatch( str, "." ) do
-      if not self.filter[ c ] then
+      local doadd = true
+      if self.whitelist and not self.whitelist[ c ] then
+         doadd = false
+      end
+      if self.blacklist and self.blacklist[ c ] then
+         doadd = false
+      end
+      if doadd then
          body = body..c
          self.cursor = self.cursor+1
       end
