@@ -754,11 +754,14 @@ static int naevL_pause( lua_State *L )
 /**
  * @brief Unpauses the game.
  *
+ * Can not be run while landed.
+ *
  * @luafunc unpause
  */
 static int naevL_unpause( lua_State *L )
 {
-   (void) L;
+   if (landed)
+      NLUA_ERROR(L, _("Unable to unpause the game when landed!"));
    unpause_game();
    return 0;
 }
