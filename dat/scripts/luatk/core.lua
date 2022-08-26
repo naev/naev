@@ -59,6 +59,26 @@ function luatk.run ()
    love.exec( 'scripts/luatk' )  -- luacheck: ignore
    luatk._love = false
 end
+--[[--
+Creates a custom state inside a vn state.
+
+A full example is shown below.
+@code
+vn.clear()
+vn.scene()
+vn.transition()
+vn.na("This is a test")
+luatk.vn( function ()
+   local wdw = luatk.msgInput( "Test", "Just a test", 50, function( str )
+      print( str )
+   end )
+end )
+vn.na("That was all!")
+vn.run()
+@endcode
+
+   @tparam function setup Function to set up the luatk.
+--]]
 function luatk.vn( setup )
    local s = vn.custom()
    s._init = function ()
