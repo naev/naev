@@ -229,7 +229,11 @@ function optimize.optimize( p, cores, outfit_list, params )
    -- Naked ship
    local ps = p:ship()
    local pt = ps:tags()
-   if pt.noequip then return end -- Don't equip
+   if pt.noequip then -- Don't equip
+      -- Set up useful outfits
+      ai_setup.setup(p)
+      return
+   end
    p:outfitRm( "all" )
 
    -- Special ships used fixed outfits
@@ -243,6 +247,8 @@ function optimize.optimize( p, cores, outfit_list, params )
          end
          return false
       end
+      -- Set up useful outfits
+      ai_setup.setup(p)
       return true
    end
 
