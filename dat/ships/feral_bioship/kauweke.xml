@@ -38,7 +38,7 @@
   <weapon size="large" prop="bio_weapon" x="20" y="0" h="0" name="weapn4">Tentacle Organ IV</weapon>
   <weapon size="large" prop="bio_weapon" x="-40" y="0" h="0" name="weap5">Tentacle Organ IV</weapon>
   <utility size="large" prop="bio_systems" name="brain">Immane Cerebrum III</utility>
-  <utility size="large" prop="bio_organ" name="the_bite" />
+  <utility size="large" prop="bio_organ" name="the_bite">The Bite</utility>
   <utility size="large" prop="bio_organ" name="feral_rage" />
   <utility size="large" prop="bio_organ" name="primal_yell" />
   <utility size="large" prop="accessory" />
