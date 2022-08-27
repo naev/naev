@@ -82,11 +82,11 @@ function atk.think( target, si )
 
       -- The bite
       if mem._o.bite then
-         local dtime = 3
-         if mem._o.bite_lust then
-            dtime = dtime+2
-         end
          if ai.dir( target ) < math.rad(20) then
+            local dtime = 3
+            if mem._o.bite_lust then
+               dtime = dtime+2
+            end
             local s = p:stats()
             if ai.dist( target ) < (s.speed + (s.thrust+800)/3)*dtime then
                p:outfitToggle( mem._o.bite, true )
