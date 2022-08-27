@@ -123,7 +123,7 @@ function update( p, po, dt )
             end
             t:setArmour( ta-dmg )
             -- TODO better calculation of asteroid mass
-            p:knockback( 100, t:vel(), t:pos(), 0.5 )
+            p:knockback( 1000, t:vel(), t:pos(), 0.5 )
             -- Do the healing
             if mem.improved then
                local heal = 0.25 * dmg
