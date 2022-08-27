@@ -1850,7 +1850,7 @@ static int aiL_careful_face( lua_State *L )
  *
  * This method uses a polar UV decomposition to get a more accurate time-of-flight
  *
- *    @luatparam Pilot target The pilot to aim at
+ *    @luatparam Pilot|Asteroid target The pilot to aim at
  *    @luatreturn number The offset from the target aiming position (in radians).
  * @luafunc aim
  */
