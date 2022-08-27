@@ -1856,15 +1856,16 @@ static int aiL_careful_face( lua_State *L )
  */
 static int aiL_aim( lua_State *L )
 {
-   Pilot *p;
-   double diff;
-   double mod;
-   double angle;
+   double diff, mod, angle;
 
-   /* Only acceptable parameter is pilot */
-   p = luaL_validpilot(L,1);
-
-   angle = pilot_aimAngle( cur_pilot, &p->solid->pos, &p->solid->vel );
+   if (lua_isasteroid(L,1)) {
+      Asteroid *a = luaL_validasteroid(L,1);
+      angle = pilot_aimAngle( cur_pilot, &a->pos, &a->vel );
+   }
+   else {
+      Pilot *p = luaL_validpilot(L,1);
+      angle = pilot_aimAngle( cur_pilot, &p->solid->pos, &p->solid->vel );
+   }
 
    /* Calculate what we need to turn */
    mod = 10.;
