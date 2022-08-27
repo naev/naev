@@ -26,8 +26,16 @@ local function turnon( p, po )
    end
    -- Needs a target
    local t = p:target()
+   mem.isasteroid = false
    if t==nil then
-      return false
+      t = p:targetAsteroid()
+      if t==nil then
+         if mem.isp then
+            player.msg("#r".._("You need a target to bite!"))
+         end
+         return false
+      end
+      mem.isasteroid = true
    end
    -- Must be roughly infront
    local tp = t:pos()
@@ -39,6 +47,7 @@ local function turnon( p, po )
    po:progress(1)
    mem.timer = mem.duration
    mem.active = true
+   mem.target = t
 
    p:control(true)
    p:pushtask( "lunge", t )
@@ -98,13 +107,37 @@ function update( p, po, dt )
       if mem.timer <= 0 then
          return turnoff( p, po )
       else
-         local t = p:target()
-         if t==nil then
+         local t = mem.target
+         if t==nil or not t:exists() then
             return turnoff( p, po )
          end
          local c = p:collisionTest( t )
          if not c then
             po:progress( mem.timer / mem.duration )
+         elseif mem.isasteroid then
+            -- Hit the enemy!
+            local dmg = 10*math.sqrt(p:mass())
+            local ta = t:armour()
+            if mem.improved then
+               dmg = dmg*1.5
+            end
+            t:setArmour( ta-dmg )
+            -- TODO better calculation of asteroid mass
+            p:knockback( 100, t:vel(), t:pos(), 0.5 )
+            -- Do the healing
+            if mem.improved then
+               local heal = 0.25 * dmg
+               p:addHealth( heal )
+            end
+            -- Player effects
+            mem.spfx_start:rm()
+            if mem.isp then
+               luaspfx.sfx( true, nil, sfx_bite )
+               camera.shake( 0.8 )
+            else
+               luaspfx.sfx( p:pos(), p:vel(), sfx_bite )
+            end
+            return turnoff( p, po )
          else
             -- Hit the enemy!
             local dmg = 10*math.sqrt(p:mass())
