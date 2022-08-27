@@ -5282,7 +5282,7 @@ static const CollPoly *getCollPoly( const Pilot *p )
  * @brief Tests to see if two ships collide.
  *
  *    @luatparam Pilot p First pilot to check.
- *    @luatparam Pilot t Second pilot to check.
+ *    @luatparam Pilot|Asteroid t Second object to check.
  *    @luatreturn Vec2|nil nil if no collision, or Vec2 with collision point if collided.
  * @luafunc collisionTest
  */
@@ -5290,6 +5290,22 @@ static int pilotL_collisionTest( lua_State *L )
 {
    vec2 crash;
    Pilot *p = luaL_validpilot(L,1);
+
+   /* Asteroid treated separately. */
+   if (lua_isasteroid(L,2)) {
+      Asteroid *a = luaL_validasteroid( L, 2 );
+      CollPoly rpoly;
+      RotatePolygon( &rpoly, a->polygon, (float) a->ang );
+      int ret = CollidePolygon( getCollPoly(p), &p->solid->pos,
+            &rpoly, &a->pos, &crash );
+      free(rpoly.x);
+      free(rpoly.y);
+      if (!ret)
+         return 0;
+      lua_pushvector( L, crash );
+      return 1;
+   }
+
    Pilot *t = luaL_validpilot(L,2);
 
    /* Shouldn't be invincible. */
