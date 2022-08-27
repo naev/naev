@@ -1034,9 +1034,10 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
  * @brief Returns the angle for a pilot to aim at another pilot
  *
  *    @param p Pilot that aims.
- *    @param target Pilot that is being aimed at.
+ *    @param pos Posiion of the target being aimed at.
+ *    @param vel Velocity of the target being aimed at.
  */
-double pilot_aimAngle( Pilot *p, const Pilot *target )
+double pilot_aimAngle( Pilot *p, const vec2* pos, const vec2* vel )
 {
    double x, y;
    double t;
@@ -1047,7 +1048,7 @@ double pilot_aimAngle( Pilot *p, const Pilot *target )
    double orthoradial_speed;
 
    /* Get the distance */
-   dist = vec2_dist( &p->solid->pos, &target->solid->pos );
+   dist = vec2_dist( &p->solid->pos, pos );
 
    /* Check if should recalculate weapon speed with secondary weapon. */
    speed = pilot_weapSetSpeed( p, p->active_set, -1 );
@@ -1062,9 +1063,9 @@ double pilot_aimAngle( Pilot *p, const Pilot *target )
     *
     *Va dot Vr + ShotSpeed is the net closing velocity for the shot, and is used to compute the time of flight for the shot.
     */
-   vec2_cset(&approach_vector, VX(p->solid->vel) - VX(target->solid->vel), VY(p->solid->vel) - VY(target->solid->vel) );
-   vec2_cset(&relative_location, VX(target->solid->pos) -  VX(p->solid->pos),  VY(target->solid->pos) - VY(p->solid->pos) );
-   vec2_cset(&orthoradial_vector, VY(p->solid->pos) - VY(target->solid->pos), VX(target->solid->pos) -  VX(p->solid->pos) );
+   vec2_cset(&approach_vector, VX(p->solid->vel) - VX(*vel), VY(p->solid->vel) - VY(*vel) );
+   vec2_cset(&relative_location, VX(*pos) -  VX(p->solid->pos),  VY(*pos) - VY(p->solid->pos) );
+   vec2_cset(&orthoradial_vector, VY(p->solid->pos) - VY(*pos), VX(*pos) -  VX(p->solid->pos) );
 
    radial_speed = vec2_dot(&approach_vector, &relative_location);
    radial_speed = radial_speed / VMOD(relative_location);
@@ -1091,10 +1092,8 @@ double pilot_aimAngle( Pilot *p, const Pilot *target )
       t = 0;
 
    /* Position is calculated on where it should be */
-   x = target->solid->pos.x + target->solid->vel.x*t
-      - (p->solid->pos.x + p->solid->vel.x*t);
-   y = target->solid->pos.y + target->solid->vel.y*t
-      - (p->solid->pos.y + p->solid->vel.y*t);
+   x = pos->x + vel->x*t - (p->solid->pos.x + p->solid->vel.x*t);
+   y = pos->y + vel->y*t - (p->solid->pos.y + p->solid->vel.y*t);
    vec2_cset( &tv, x, y );
 
    return VANGLE(tv);

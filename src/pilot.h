@@ -419,7 +419,7 @@ double pilot_brakeDist( Pilot *p, vec2 *pos );
 int pilot_interceptPos( Pilot *p, double x, double y );
 void pilot_cooldown( Pilot *p, int dochecks );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
-double pilot_aimAngle( Pilot *p, const Pilot *target );
+double pilot_aimAngle( Pilot *p, const vec2* pos, const vec2* vel );
 
 /*
  * Faction stuff.

@@ -1068,7 +1068,7 @@ static void player_renderAimHelper( double dt )
    r = 200.;
    gl_gameToScreenCoords( &x1, &y1, player.p->solid->pos.x, player.p->solid->pos.y );
 
-   b = pilot_aimAngle( player.p, target );
+   b = pilot_aimAngle( player.p, &target->solid->pos, &target->solid->vel );
 
    theta = 22.*M_PI/180.;
 
