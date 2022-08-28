@@ -48,13 +48,25 @@ end
 local idle_old = idle
 function idle ()
    if not mem._o or not mem._o.bite then
-      return idle_old()
+      if rnd.rnd() < 0.6 then
+         return idle_old()
+      else
+         ai.settimer( 0, 2.0 )
+         ai.pushtask( "brake" )
+         ai.pushtask( "idle_wait" )
+         return
+      end
    end
 
-   if rnd.rnd() < 0.5 then
+   local r = rnd.rnd()
+   if r < 0.3 then
       local ast = asteroid.get( mem.mining_field ) -- Get a random asteroid in the system (or current mining field)
       mem.mining_field = ast:field()
       ai.pushtask( "mine_bite", ast )
+   elseif r < 0.6 then
+      ai.settimer( 0, 2.0 )
+      ai.pushtask( "brake" )
+      ai.pushtask( "idle_wait" )
    else
       return idle_old()
    end
