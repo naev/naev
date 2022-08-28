@@ -240,6 +240,7 @@ local function land_lab ()
    vn.na(_([[While keeping your momentum, you make a beeline to your ship with security personal close in pursuit. You take off hot, but it looks like they're going to be on your tail. You're not in the clear yet!]]))
    vn.func( function ()
       hook.timer(9, "spawn_baddies")
+      mem.toughtime = true
    end )
    vn.done()
 
@@ -251,7 +252,7 @@ local function land_lab ()
    vn.na(_([[You fail to access the system and it locks down. Seeing as it is likely that you're going to get in trouble if you stay here, you discretely walk out of the laboratory complex, and make a break for your ship. Best to try again when things calm down.]]))
    vn.run()
 
-   vn.takeoff()
+   player.takeoff()
    player.allowSave(true)
    player.allowLand( false, _("You're going to have to leave the system before you can land.") )
 end
@@ -284,7 +285,17 @@ local function land_done ()
    local s = vn.newCharacter( taiomi.vn_scavenger() )
    vn.transition( taiomi.scavenger.transition )
    vn.na(_([[You board the Goddard and and find Scavenger waiting for you.]]))
-   s(_([["TODO"]]))
+   s(_([["How did it go?"]]))
+   if mem.toughtime then
+      vn.na(_([[You explain the ordeal you went through to get the data, without sparing details of your heroic last sprint out of the laboratory complex.]]))
+      s(_([["I think the human saying goes, 'all's well that end's well'."]]))
+   else
+      vn.na(_([[You explain how easily it was for you to go through the laboratory complex and get the data for a professional saboteur such as yourself.]]))
+      s(_([["You are exceeding all expectations!"]]))
+   end
+   s(_([["Let me analyze the documents and finish matching the correspondences with all the collected data. I believe this should be sufficient to design something useful."]]))
+   s(_([["I shall be waiting for you outside."
+Scavenger backs out of the Goddard and returns to space.]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.done( taiomi.scavenger.transition )

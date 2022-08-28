@@ -44,6 +44,7 @@ local taiomi = {
       taiomi01 = 300e3,
       taiomi02 = 300e3,
       taiomi03 = 350e3,
+      taiomi04 = 300e3,
    },
 }
 

@@ -231,8 +231,7 @@ function land ()
    s(_([[Scavenger takes the data and there is a brief flicker of their lights.]]))
    s(_([["Very interesting. While the documents contain mainly mundane details that aren't particularly of importance to us, there is a lead to one of the experimental locations. I believe it should be possible to find more in-depth construction details there."]]))
    s(_([["I will be outside preparing our next steps."
-Scavenger backs out of the Goddard and returns to space.
-]]))
+Scavenger backs out of the Goddard and returns to space.]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.done( taiomi.scavenger.transition )
