@@ -420,20 +420,21 @@ static int tkL_custom( lua_State *L )
    const char *caption = luaL_checkstring(L, 1);
    custom_functions_t *cf = calloc( 1, sizeof(custom_functions_t) );
 
-   /* Set up custom function pointers (working backward from top of stack). */
+   /* Set up custom function pointers. */
    cf->L = L;
-   luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf->textinput= luaL_ref(L, LUA_REGISTRYINDEX);
-   luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf->resize   = luaL_ref(L, LUA_REGISTRYINDEX);
-   luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf->mouse    = luaL_ref(L, LUA_REGISTRYINDEX);
-   luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf->keyboard = luaL_ref(L, LUA_REGISTRYINDEX);
-   luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf->draw     = luaL_ref(L, LUA_REGISTRYINDEX);
-   luaL_checktype(L, -1, LUA_TFUNCTION);
-   cf->update   = luaL_ref(L, LUA_REGISTRYINDEX);
+#define GETFUNC( address, pos ) \
+do { \
+   lua_pushvalue( L, (pos) ); \
+   luaL_checktype(L, -1, LUA_TFUNCTION); \
+   (address) = luaL_ref(L, LUA_REGISTRYINDEX); \
+} while (0)
+   GETFUNC( cf->update,    4 );
+   GETFUNC( cf->draw,      5 );
+   GETFUNC( cf->keyboard,  6 );
+   GETFUNC( cf->mouse,     7 );
+   GETFUNC( cf->resize,    8 );
+   GETFUNC( cf->textinput, 9 );
+#undef GETFUNC
 
    /* Set done condition. */
    lua_pushboolean(L, 0);
