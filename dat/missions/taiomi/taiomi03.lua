@@ -86,7 +86,7 @@ function talk_ai ()
    local sai = vn.newCharacter( tut.vn_shipai() )
    vn.transition( tut.shipai.transition )
    sai(fmt.f(_([[
-Your Ship AI {shipai} materializes suddenly infront of you.
+Your Ship AI {shipai} materializes suddenly in front of you.
 "{playername}, do you have a moment?"]]),{shipai=tut.ainame(), playername=player.name()}))
    vn.menu{
       {_([["Of course."]]), "yes"},
@@ -143,6 +143,7 @@ end
 
 local function land_lab ()
    player.allowSave(false)
+   local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
    local entry
    local wait = 1
    local function mg_func( label_success, label_failure )
@@ -150,7 +151,6 @@ local function land_lab ()
          if mg.completed() then
             mem.state = 1
             local c = commodity.new( N_("Important Files"), N_("Important files regarding the construction and theory behind the hypergates.") )
-            local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
             c:illegalto( {fct} )
             misn.cargoAdd( c, 0 )
             vn.jump( label_success )
@@ -164,17 +164,22 @@ local function land_lab ()
    vn.scene()
    local sai = tut.vn_shipai()
    vn.transition()
-   vn.na(fmt.f(_([[You discrete land on {spob} and make your way to the laboratory, acting as you belong here. Now how to enter the complex?]]),
+   vn.na(fmt.f(_([[You discreetly land on {spob} and are able to locate what seems to be the laboratory you have to enter."]]),
       {spob=spob.cur()}))
+   if fct=="Empire" then
+      vn.na(_([[The laboratory is easily accessible from the docks and doesn't seem to have any indicative markings. It could easily be confused with a generic warehouse if it didn't match the description given to you by Scavenger. Now, how to enter the complex?]]))
+   else
+      vn.na(_([[The laboratory is tucked away from the main Gene Databanks and is quite nondescript. It could easily be confused with any other government installation. Now, how to enter the complex?]]))
+   end
    vn.na(_([[The main gate seems to have lax security, however, you notice some discrete ventilation grates that may also need to the interior of the complex. It may be possible to enter either way.]]))
    vn.menu{
-      {_([[Sneak in the main gate.]]), "01_main"},
+      {_([[Try to sneak in the main gate.]]), "01_main"},
       {_([[Try to go through a ventilation grate.]]), "01_grate"},
    }
 
    vn.label("01_main")
    vn.func( function() entry = "main" end )
-   vn.na(_([[You notice a researcher heading towards the main gate and you bein to follow them. When they use their card key you slip in quickly behind them. The researcher seems to be absentminded enough to not notice. It looks like you made it to the interior of the laboratory.]]))
+   vn.na(_([[You notice a researcher heading towards the main gate and you begin to follow them. When they use their card key you slip in quickly behind them. The researcher seems to be absentminded enough to not notice. It looks like you made it to the interior of the laboratory.]]))
    vn.jump("01_cont")
 
    vn.label("02_grate")
@@ -287,7 +292,7 @@ local function land_done ()
    vn.scene()
    local s = vn.newCharacter( taiomi.vn_scavenger() )
    vn.transition( taiomi.scavenger.transition )
-   vn.na(_([[You board the Goddard and and find Scavenger waiting for you.]]))
+   vn.na(_([[You board the Goddard and find Scavenger waiting for you.]]))
    s(_([["How did it go?"]]))
    if mem.toughtime then
       vn.na(_([[You explain the ordeal you went through to get the data, without sparing details of your heroic last sprint out of the laboratory complex.]]))
