@@ -66,7 +66,7 @@ function enter ()
 
    local scur = system.cur()
 
-   if mem.state == 0 and not naev.claimTest( scur, true ) then
+   if mem.state == 0 and scur ~= basesys and rnd.rnd() < 0.5 and naev.claimTest( scur, true ) then
       mem.timer = hook.timer( 10+rnd.rnd()*10, "talk_ai" )
    end
 
