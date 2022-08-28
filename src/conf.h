@@ -43,7 +43,7 @@
 #define MINIMIZE_DEFAULT               1     /**< Whether to minimize on focus loss. */
 #define COLORBLIND_DEFAULT             0     /**< Whether to enable colorblindness simulation. */
 #define BG_BRIGHTNESS_DEFAULT          0.7   /**< How much to darken (or lighten) the backgrounds. */
-#define NEBU_BRIGHTNESS_DEFAULT        1.    /**< How much to darken (or lighten) the nebula stuff. */
+#define NEBU_UNIFORMITY_DEFAULT        1.    /**< How much to darken (or lighten) the nebula stuff. */
 #define GAMMA_CORRECTION_DEFAULT       1.    /**< How much gamma correction to do. */
 #define BACKGROUND_FANCY_DEFAULT       0     /**< Default fancy background. */
 #define BIG_ICONS_DEFAULT              0     /**< Whether to display BIGGER icons. */
@@ -94,7 +94,7 @@ typedef struct PlayerConf_s {
    int minimize; /**< Whether to minimize on focus loss. */
    int colorblind; /**< Whether to enable colorblindness simulation. */
    double bg_brightness; /**< How much to darken the background stuff. */
-   double nebu_brightness; /**< How much to darken the nebula stuff. */
+   double nebu_uniformity; /**< How much to darken the nebula stuff. */
    double gamma_correction; /**< How much gamma correction to do. */
    int background_fancy; /**< High quality moving, but slow background. */
 

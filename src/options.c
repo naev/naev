@@ -93,7 +93,7 @@ static void opt_setScalefactor( unsigned int wid, const char *str );
 static void opt_setZoomFar( unsigned int wid, const char *str );
 static void opt_setZoomNear( unsigned int wid, const char *str );
 static void opt_setBGBrightness( unsigned int wid, const char *str );
-static void opt_setNebuBrightness( unsigned int wid, const char *str );
+static void opt_setNebuUniformity( unsigned int wid, const char *str );
 static void opt_checkColorblind( unsigned int wid, const char *str );
 static void opt_checkBGFancy( unsigned int wid, const char *str );
 /* Audio. */
@@ -1403,12 +1403,12 @@ static void opt_video( unsigned int wid )
          conf.bg_brightness, opt_setBGBrightness );
    opt_setBGBrightness( wid, "fadBGBrightness" );
    y -= 20;
-   window_addText( wid, x, y-3, cw-20, 20, 0, "txtNebuBrightness",
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtNebuUniformity",
          NULL, NULL, NULL );
    y -= 20;
-   window_addFader( wid, x+20, y, cw-60, 20, "fadNebuBrightness", 0., 1.,
-         conf.nebu_brightness, opt_setNebuBrightness );
-   opt_setNebuBrightness( wid, "fadNebuBrightness" );
+   window_addFader( wid, x+20, y, cw-60, 20, "fadNebuUniformity", 0., 1.,
+         conf.nebu_uniformity, opt_setNebuUniformity );
+   opt_setNebuUniformity( wid, "fadNebuUniformity" );
    y -= 20;
    window_addText( wid, x, y-3, cw-20, 20, 0, "txtMOpacity",
          NULL, NULL, NULL );
@@ -1641,7 +1641,7 @@ static void opt_videoDefaults( unsigned int wid, const char *str )
    window_faderSetBoundedValue( wid, "fadZoomNear", log(ZOOM_NEAR_DEFAULT+1.) );
    window_faderSetBoundedValue( wid, "fadGammaCorrection", log(GAMMA_CORRECTION_DEFAULT) /* a.k.a. 0. */ );
    window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
-   window_faderSetBoundedValue( wid, "fadNebuBrightness", NEBU_BRIGHTNESS_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadNebuUniformity", NEBU_UNIFORMITY_DEFAULT );
    window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
 }
 
@@ -1744,13 +1744,13 @@ static void opt_setBGBrightness( unsigned int wid, const char *str )
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
  */
-static void opt_setNebuBrightness( unsigned int wid, const char *str )
+static void opt_setNebuUniformity( unsigned int wid, const char *str )
 {
    char buf[STRMAX_SHORT];
    double fad = window_getFaderValue(wid, str);
-   conf.nebu_brightness = fad;
+   conf.nebu_uniformity = fad;
    snprintf( buf, sizeof(buf), _("Nebula uniformity: %.0f%%"), 100.*fad );
-   window_modifyText( wid, "txtNebuBrightness", buf );
+   window_modifyText( wid, "txtNebuUniformity", buf );
 }
 
 /**
