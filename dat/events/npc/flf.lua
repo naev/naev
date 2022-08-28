@@ -7,6 +7,7 @@ local msg_combined
 
 local desc_list = {}
 desc_list["generic"] = {
+   _("A FLF fighter."),
 }
 --desc_list["agriculture"] = {}
 --desc_list["industrial"] = {}
