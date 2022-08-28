@@ -1749,7 +1749,7 @@ static void opt_setNebuBrightness( unsigned int wid, const char *str )
    char buf[STRMAX_SHORT];
    double fad = window_getFaderValue(wid, str);
    conf.nebu_brightness = fad;
-   snprintf( buf, sizeof(buf), _("Nebula brightness: %.0f%%"), 100.*fad );
+   snprintf( buf, sizeof(buf), _("Nebula uniformity: %.0f%%"), 100.*fad );
    window_modifyText( wid, "txtNebuBrightness", buf );
 }
 

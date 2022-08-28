@@ -6,11 +6,14 @@ uniform mat4 projection;
 uniform float eddy_scale;
 uniform float time;
 uniform float volatility;
-out vec4 color_out;
+out vec4 colour_out;
 
 void main(void) {
    vec2 rel_pos = gl_FragCoord.xy + projection[3].xy;
    rel_pos /= eddy_scale;
-   color_out = nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, time, hue, 1.0, volatility, 0.1 );
-   color_out.rgb *= brightness;
+   colour_out = nebula( vec4(0.0, 0.0, 0.0, 1.0), rel_pos, time, hue, 1.0, volatility, 0.1 );
+   if (brightness < 1.0) {
+      vec4 base = vec4( hsv2rgb( vec3(hue, 1.0, 1.0) ), 1.0 );
+      colour_out = mix( base, colour_out, brightness );
+   }
 }

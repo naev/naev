@@ -8,12 +8,12 @@ uniform mat4 projection;
 uniform float horizon;
 uniform float eddy_scale;
 uniform float time;
-out vec4 color_out;
+out vec4 colour_out;
 
 void main(void) {
    float dist, f, hhue;
    vec3 uv;
-   vec4 color;
+   vec4 colour;
    vec2 rel_pos;
 
    /* Compute coordinates for the noise */
@@ -31,11 +31,16 @@ void main(void) {
    /* Do very simple two iteration noise */
    f = abs( cnoise( uv * pow(SCALAR, 0.0) ) );
    f += abs( cnoise( uv * pow(SCALAR, 1.0) ) );
-   color = vec4( brightness * hsv2rgb( vec3( hhue, 1.0, 1.0 ) ), 1.0 );
-   color_out = color * (0.1+0.9*f);
+   colour = vec4( hsv2rgb( vec3( hhue, 1.0, 1.0 ) ), 1.0 );
+   colour_out = colour * (0.1+0.9*f);
+
+   if (brightness < 1.0) {
+      vec4 base = vec4( hsv2rgb( vec3(hue, 1.0, 1.0) ), 1.0 );
+      colour_out = mix( base, colour_out, brightness );
+   }
 
    /* Compute dist and interpolate */
    dist = length(rel_pos);
-   color_out = mix( color_out, color, smoothstep( 0.0, 2.0*horizon, dist ) );
-   color_out.a *= smoothstep( 0.0, horizon, dist );
+   colour_out = mix( colour_out, colour, smoothstep( 0.0, 2.0*horizon, dist ) );
+   colour_out.a *= smoothstep( 0.0, horizon, dist );
 }
