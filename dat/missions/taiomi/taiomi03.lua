@@ -44,7 +44,7 @@ function create ()
    misn.setTitle( title )
    misn.setDesc(fmt.f(_("You have been asked to fly to {lab} in the {labsys} system to recover important documents regarding the technical details of the hypergates.."),{lab=mem.lab,labsys=mem.labsys}))
    misn.setReward( fmt.credits(reward) )
-   misn.markerAdd( mem.lab )
+   mem.marker = misn.markerAdd( mem.lab )
 
    misn.osdCreate( title, {
       fmt.f(_("Infiltrate the laboratory at {spobname} ({spobsys})"),{spobname=mem.lab, spobsys=mem.labsys}),
@@ -220,6 +220,9 @@ local function land_lab ()
    vn.na(_([[You deftly deactivate the security protocol and are able to run Scavenger's program. The terminal screen briefly flickers as it works its magic gathering the necessary data from the system. It looks like you got what you were looking for.]]))
    vn.func( function ()
       mem.state = 2
+      mem.osdActive(2)
+      misn.markerMove( mem.marker, base )
+
       local badness = 0
       if entry == "grate" then
          badness = 1
@@ -308,7 +311,7 @@ end
 
 function land ()
    local c = spob.cur()
-   if mem.state == 0 and c == mem.lab then
+   if mem.state < 2 and c == mem.lab then
       land_lab()
    elseif mem.state >= 2 and c == base then
       land_done()
