@@ -881,6 +881,9 @@ void gui_radarRender( double x, double y )
    mat4 view_matrix_prev;
    Pilot *const* pilot_stack;
 
+   if (!conf.always_radar && ovr_isOpen())
+      return;
+
    /* The global radar. */
    radar = &gui_radar;
    gui_radar.x = x;

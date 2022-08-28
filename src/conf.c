@@ -124,6 +124,7 @@ void conf_setDefaults (void)
    conf.mesg_visible = 5;
    conf.map_overlay_opacity = MAP_OVERLAY_OPACITY_DEFAULT;
    conf.big_icons = BIG_ICONS_DEFAULT;
+   conf.always_radar = 0;
 
    /* Repeat. */
    conf.repeat_delay = 500;
@@ -373,6 +374,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "map_overlay_opacity", conf.map_overlay_opacity );
       conf.map_overlay_opacity = CLAMP(0, 1, conf.map_overlay_opacity);
       conf_loadBool( lEnv, "big_icons", conf.big_icons );
+      conf_loadBool( lEnv, "always_radar", conf.always_radar );
 
       /* Key repeat. */
       conf_loadInt( lEnv, "repeat_delay", conf.repeat_delay );
@@ -953,7 +955,10 @@ int conf_saveConfig ( const char* file )
    conf_saveInt("mesg_visible",conf.mesg_visible);
    conf_saveComment(_("Opacity fraction (0-1) for the overlay map."));
    conf_saveFloat("map_overlay_opacity", conf.map_overlay_opacity);
+   conf_saveComment(_("Use bigger icons in the outfit, shipyard, and other lists."));
    conf_saveBool("big_icons", conf.big_icons);
+   conf_saveComment(_("Always show the radar and don't hide it when the overlay is active."));
+   conf_saveBool("always_radar", conf.always_radar);
    conf_saveEmptyLine();
 
    /* Key repeat. */
