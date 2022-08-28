@@ -463,7 +463,7 @@ function board( p )
    vn.na(_([[You attempt to go through the airlock when an authorization prompt opens up. Looking at the make of the ship, it seems heavily reinforced. It looks like you're going to have to break the code to gain complete access to the ship.]]))
 
    local sai = tut.vn_shipai{ pos="right" }
-   vn.appear( sai, "electric" )
+   vn.appear( sai, tut.shipai.transition )
    local fuzzy = "#o?#0"
    local exact = "#b!#0"
    sai(_([[Your ship AI materializes in front of you.
@@ -478,7 +478,7 @@ They turn quickly to you.
 "Remember, {exact} for exact matches and {fuzzy} for correct symbol but not position. Best of luck!"
 They dematerialize in a hurry.]]),
       {player=player.name(), exact=exact, fuzzy=fuzzy}))
-   vn.disappear( sai, "electric" )
+   vn.disappear( sai, tut.shipai.transition )
    nel(_([[Thinking deeply to herself she murmurs "I definitely know them…".]]))
    nel(_([[She turns again to you.
 "Try to crack the password, we need to see what's on the ship!"]]))
