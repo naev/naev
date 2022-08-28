@@ -994,6 +994,7 @@ static void cargo_update( unsigned int wid, const char *str )
    PilotCommodity *pclist = pfleet_cargoList();
 
    if (array_size(pclist) <= 0) {
+      window_modifyText( wid, "txtCargoDesc", NULL );
       array_free(pclist);
       return; /* No cargo, redundant check */
    }
@@ -1109,6 +1110,7 @@ static void cargo_jettison( unsigned int wid, const char *str )
    /* We reopen the menu to recreate the list now. */
    ship_update( info_windows[ INFO_WIN_SHIP ] );
    cargo_genList( wid );
+   cargo_update( wid, NULL );
    array_free( pclist );
 }
 
