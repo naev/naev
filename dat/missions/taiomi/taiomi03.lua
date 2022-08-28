@@ -174,7 +174,7 @@ local function land_lab ()
 
    vn.label("01_main")
    vn.func( function() entry = "main" end )
-   vn.na(_([[You notice a researcher heading towards the main gate and you follow him. When they use their card key you slip in quickly behind them. The researcher seems to be absentminded enough to not notice. It looks like you made it to the interior of the laboratory.]]))
+   vn.na(_([[You notice a researcher heading towards the main gate and you bein to follow them. When they use their card key you slip in quickly behind them. The researcher seems to be absentminded enough to not notice. It looks like you made it to the interior of the laboratory.]]))
    vn.jump("01_cont")
 
    vn.label("02_grate")
@@ -214,13 +214,13 @@ local function land_lab ()
    vn.label("02_wait_more")
    vn.func( function () wait = wait + 1 end )
    vn.na(_([[You keep on drinking and eating while you try to wait out the researchers. Eventually, they all leave and you finally find yourself alone in the break room. Seeing this as an opportunity, you go and plug Scavenger's program into the terminal.]]))
-   vn.jupm("02_terminal_only")
+   vn.jump("02_terminal_only")
 
    vn.label("success")
    vn.na(_([[You deftly deactivate the security protocol and are able to run Scavenger's program. The terminal screen briefly flickers as it works its magic gathering the necessary data from the system. It looks like you got what you were looking for.]]))
    vn.func( function ()
       mem.state = 2
-      mem.osdActive(2)
+      misn.osdActive(2)
       misn.markerMove( mem.marker, base )
 
       local badness = 0
