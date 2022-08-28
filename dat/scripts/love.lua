@@ -321,7 +321,7 @@ function love.run()
    end
    love._focus = true
    love._started = true
-   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize )
+   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _resize, _textinput )
    -- Doesn't actually get here until the dialogue is closed
    love._started = false
 
