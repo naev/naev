@@ -108,7 +108,8 @@ static int playerL_misnDone( lua_State *L );
 static int playerL_misnDoneList( lua_State *L );
 static int playerL_evtActive( lua_State *L );
 static int playerL_evtDone( lua_State *L );
-/* Cargo space. */
+/* Fleet stuff. */
+static int playerL_fleetList( lua_State *L );
 static int playerL_fleetCargoFree( lua_State *L );
 static int playerL_fleetCargoUsed( lua_State *L );
 static int playerL_fleetCargoOwned( lua_State *L );
@@ -180,6 +181,7 @@ static const luaL_Reg playerL_methods[] = {
    { "misnDoneList", playerL_misnDoneList },
    { "evtActive", playerL_evtActive },
    { "evtDone", playerL_evtDone },
+   { "fleetList", playerL_fleetList },
    { "fleetCargoFree", playerL_fleetCargoFree },
    { "fleetCargoUsed", playerL_fleetCargoUsed },
    { "fleetCargoOwned", playerL_fleetCargoOwned },
@@ -1476,6 +1478,34 @@ static int playerL_evtDone( lua_State *L )
       return 0;
    }
    lua_pushboolean( L, player_eventAlreadyDone( id ) );
+   return 1;
+}
+
+/**
+ * @brief Lists the ships in the player's fleet.
+ *
+ *    @luatreturn table Table containing the pilots in the player fleet or false if they are not spawned yet.
+ * @luafunc fleetList
+ */
+static int playerL_fleetList( lua_State *L )
+{
+   int n = 1;
+   const PlayerShip_t* pstack = player_getShipStack();
+   lua_newtable(L);
+   for (int i=0; i<array_size(pstack); i++) {
+      const PlayerShip_t *ps = &pstack[i];
+      if (!ps->deployed)
+         continue;
+      /* We can avoid the spaceWorthy check as they will be set to false due to not having a pilot. */
+      /*if (!!pilot_checkSpaceworthy(ps->p))
+         continue;*/
+
+      if (ps->p==NULL)
+         lua_pushboolean( L, 0 );
+      else
+         lua_pushpilot( L, ps->p->id );
+      lua_rawseti( L, -2, n++ );
+   }
    return 1;
 }
 
