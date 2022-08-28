@@ -3595,6 +3595,7 @@ void space_clearKnown (void)
       StarSystem *sys = &systems_stack[i];
       sys_rmFlag(sys,SYSTEM_KNOWN);
       sys_rmFlag(sys,SYSTEM_HIDDEN);
+      sys_rmFlag(sys,SYSTEM_PMARKED);
       for (int j=0; j<array_size(sys->jumps); j++)
          jp_rmFlag(&sys->jumps[j],JP_KNOWN);
       free(sys->note);
