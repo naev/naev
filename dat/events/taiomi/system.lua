@@ -220,7 +220,7 @@ function hail_scavenger ()
          end )
          vn.jump("menu_ask")
       end
-   elseif progress == math.huge then --progress == 2 then
+   elseif progress == 2 then
       if inprogress then
          d(_([["How is the progress on collecting the hypergate information going?"]]))
          vn.jump("menu")
