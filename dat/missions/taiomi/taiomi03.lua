@@ -182,7 +182,7 @@ local function land_lab ()
    vn.na(_([[You notice a researcher heading towards the main gate and you begin to follow them. When they use their card key you slip in quickly behind them. The researcher seems to be absentminded enough to not notice. It looks like you made it to the interior of the laboratory.]]))
    vn.jump("01_cont")
 
-   vn.label("02_grate")
+   vn.label("01_grate")
    vn.func( function() entry = "grate" end )
    vn.na(_([[When nobody is nearby you force a grate open. It seems to be just enough for you to squeeze through. You take a deep breath and start making your way through the vents. You end up getting lost and having to backtrack several time. After a long trip, you end up finding an exit grate to a quiet area.]]))
    vn.na(_([[You manage to kick the grate open, making a dangerous amount of sound. After waiting a while just in case, you jump out and find yourself in what seems to be a storage room, seems that you were not noticed. It looks like you made it to the interior of the laboratory, albeit covered in dust.]]))
@@ -213,7 +213,7 @@ local function land_lab ()
    vn.na(_([[Time goes by and the researchers don't seem to be going anywhere. Don't they have work to do?]]))
    vn.menu{
       {_([[Access the terminal.]]), "02_terminal"},
-      {_([[Sit down and wait for the researchers to leave.]]), "02_wait_more"},
+      {_([[Keep waiting for the researchers to leave.]]), "02_wait_more"},
    }
 
    vn.label("02_wait_more")
