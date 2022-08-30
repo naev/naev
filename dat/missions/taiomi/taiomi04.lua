@@ -111,8 +111,8 @@ function enter ()
 
    -- Create small convoy that tries to leave
    local pos = vec2.new( 6000, 6000 ) -- Center of asteroid field
-   local fct = faction.dynAdd( nil, "shady_miners", _("Shady Miners"), {ai="baddie"} )
-   local l = pilot.add( "Rhino", fct, pos )
+   local fct = faction.dynAdd( nil, "shady_miners", _("Shady Miners"), {ai="independent"} )
+   local l = pilot.add( "Rhino", fct, pos, _("Shady Miner"), {naked=true} )
    equipopt.pirate( l )
    l:setHilight( l )
    l:intrinsicSet( "speed_mod", -30 ) -- Slower than normal and should be heavily loaded
@@ -122,13 +122,13 @@ function enter ()
       if rnd.rnd() < 0.5 then
          s = "Vendetta"
       end
-      local p = pilot.add( s, fct, pos )
+      local p = pilot.add( s, fct, pos, nil, {naked=true} )
       equipopt.pirate( p )
       p:setLeader( l )
    end
 
    -- Just try to get out of the system
-   pilotai.hyperspace( l )
+   pilotai.hyperspace( l, jump.get(system.get("Gamel"),minesys) )
 end
 
 local pilot_ya, pilot_yb

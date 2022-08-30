@@ -8,6 +8,8 @@ local pilotai = {}
 --[[
    Makes a pilot try to hyperspace to target while not disabling most functionality.
 
+   Clears current task.
+
       @tparam Pilot p Pilot to command.
       @tparam Jump|nil target Target jump point. If nil, tries to find a random hyperspace.
 --]]
@@ -33,6 +35,7 @@ function pilotai.hyperspace( p, target )
    m.goal_hyperspace = target
    m.goal_pos = target:pos()
    m.route = lanes.getRouteP( p, m.goal_pos )
+   p:taskClear() -- Should run idle and the stuff above
 end
 
 --[[
