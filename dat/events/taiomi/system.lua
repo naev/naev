@@ -175,9 +175,6 @@ function hail_scavenger ()
    local opts = {
       {_("Leave."),"leave"},
    }
-   if progress == 0 then
-      table.insert( opts, 1, {_([["Who are you?"]]), "who"} )
-   end
 
    -- Progress-based text
    if progress == 0 then
@@ -247,7 +244,7 @@ function hail_scavenger ()
          end )
          vn.jump("menu_ask")
       end
-   elseif progress == math.huge and naev.claimTest( system.get("Bastion"), true ) then -- 3
+   elseif progress == 3 and naev.claimTest( system.get("Bastion"), true ) then
       -- Note that we need to do a soft claim on bastion before starting the mission
       -- These details are the same as taiomi04, probably should be centralized
       local resource = commodity.get("Therite")
@@ -323,9 +320,12 @@ Scavenger goes silent for a second, as if thinking.
    vn.menu( function ()
       local o = tcopy( opts )
       -- TOOD manipulate stuff as needed here
-      if var.peek( "taiomi_scav_who" ) and not var.peek( "taiomi_drone_names" ) then
+      if var.peek( "taiomi_scav_who" ) then --and not var.peek( "taiomi_drone_names" ) then
          table.insert( o, 1, {_("Ask about the drones following you around"), "curious_drones"} )
       end
+      --if progress == 0 then
+         table.insert( opts, 1, {_([["Who are you?"]]), "who"} )
+      --end
       return o
    end )
 
