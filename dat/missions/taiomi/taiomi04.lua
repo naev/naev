@@ -207,6 +207,7 @@ function scene02 ()
    vn.na(_([[Chattering amongst themselves, they begin to hide themselves along the stars.]]))
    vn.func( function ()
       for k,p in ipairs{pilot_ya, pilot_yb} do
+         -- Shouldn't be targetted by other enemies since they are invincible
          p:control()
          p:stealth()
       end
@@ -248,8 +249,7 @@ function land ()
    vn.transition( taiomi.scavenger.transition )
    vn.na(fmt.f(_([[You bring the {resource} aboard the Goddard and find Scavenger waiting for you.]]),
       {resource=resource}))
-   s(_([["How did it go?"]]))
-   s(_([["I shall be waiting for you outside."
+   s(_([["I see you managed to bring all the needed resources. This will be enough enough for us to start working on our project. I will be outside getting things set up. We may still need something else so make sure to check in after you get some rest."
 Scavenger backs out of the Goddard and returns to space.]]))
    vn.sfxVictory()
    vn.na( fmt.reward(reward) )
