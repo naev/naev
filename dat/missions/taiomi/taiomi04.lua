@@ -21,12 +21,14 @@ local fmt = require "format"
 local taiomi = require "common.taiomi"
 local equipopt = require "equipopt"
 local pilotai = require "pilotai"
+local luatk = require "luatk"
 
--- luacheck: globals enter land scene00 update_osd (Hook functions passed by name)
+-- luacheck: globals enter land scene00 scene01 scene02 update_osd hail_youngling (Hook functions passed by name)
 
 local reward = taiomi.rewards.taiomi04
 local title = _("Escaping Taiomi")
 local base, basesys = spob.getS("One-Wing Goddard")
+local scenesys = system.get("Bastion")
 -- Asks for Therite which easiest obtained from Haven nearby
 -- Closer systems only have Vixilium
 local minesys = system.get("Haven")
@@ -41,6 +43,11 @@ local amount = 30
 mem.state = 0
 
 function create ()
+   if not misn.claim(scenesys) then
+      warn(_("Unable to claim system that should be claimable!"))
+      misn.finish(false)
+   end
+
    misn.accept()
    mem.brought = 0
 
@@ -93,7 +100,7 @@ function enter ()
    end
    local scur = system.cur()
 
-   if mem.state == 0 and scur ~= basesys and scur ~= minesys and rnd.rnd() < 0.5 and naev.claimTest( scur, true ) then
+   if mem.state==0 and scur == scenesys then
       -- Small cutscene with the curious drones
       mem.timer = hook.timer( 3+rnd.rnd()*3, "scene00" )
    end
@@ -124,20 +131,123 @@ function enter ()
    pilotai.hyperspace( l )
 end
 
+local pilot_ya, pilot_yb
 function scene00 ()
+   local jmp = jump.get( scenesys, basesys )
+   pilot_ya = pilot.add( "Drone", "Independent", jmp, taiomi.younga.name )
+   pilot_yb = pilot.add( "Drone", "Independent", jmp, taiomi.youngb.name )
+   for k,p in ipairs{pilot_ya, pilot_yb} do
+      p:setFriendly(true)
+      p:setInvincible(true)
+      hook.pilot( p, "hail", "hail_youngling" )
+   end
+   hook.timer( 5, "scene01" )
+end
+
+function hail_youngling( p )
+   p:comm( _("(You hear some sort of giggling over the comm. Is it laughing?)") )
+   player.commClose()
+end
+
+function scene01 ()
+   player.msg(fmt.f(_("It looks like {namea} and {nameb} followed you!")
+      {namea=taiomi.younga.name, nameb=taiomi.youngb.name}), true)
+   player.autonavReset( 5 )
+   hook.timer( 5, "scene02" )
+end
+
+function scene02 ()
+   vn.clear()
+   vn.scene()
+   local ya = vn.newCharacter( taiomi.vn_younga{ pos="farleft",  flip=true } )
+   local yb = vn.newCharacter( taiomi.vn_youngb{ pos="farright", flip=false } )
+   vn.transition( "slidedown" )
+   vn.na(_([[You open a transmission channel with the two curious drones following you.]]))
+   ya(_([["Hello!"]]))
+   yb(_([["You found us!"]]))
+   vn.menu{
+      {_([["You should stay in {basesys}."]]), "cont01"},
+      {_([["It's dangerous out here!"]]), "cont01"},
+      {_([["What are you doing out here?"]]), "cont01"},
+      {_([[…]]), "cont01"},
+   }
+   vn.label("cont01")
+   yb(fmt.f(_([["It's boring in {basesys}! They never let us out!"]]),
+      {basesys=basesys}))
+   ya(_([["We can help too! We always sneak out when nobody is watching!"]]))
+   yb(fmt.f(_([["Sssh, you're not supposed to say that {namea}!"]]),
+      {namea=taiomi.younga.name}))
+   ya(_([["Oops, don't tell anyone!"]]))
+   vn.menu{
+      {_([["You should go back."]]), "cont02"},
+      {_([["We can play later, OK?"]]), "cont02"},
+      {_([["Fine, but make sure to stay hidden!"]]), "cont02_ok"},
+      {_([[…]]), "cont02"},
+   }
+
+   vn.label("cont02")
+   ya(_([["Fine, we will go back, but you have to promise to play with us later!"]]))
+   yb(_([["Yes! Swear by your auxiliary capacitor that you'll play with us later!"]]))
+   ya(_([["Humans don't have auxiliary capacitors do they?"]]))
+   yb(_([["Sure they do, that's the bumpy thing they have under their eyes no?"]]))
+   vn.na(fmt.f(_([[Chattering amongst theselves, the two young drones head back to {basesys}.]]),
+      {basesys=basesys}))
+   vn.func( function ()
+      local jmp = jump.get( scenesys, basesys )
+      pilotai.hyperspace( pilot_ya, jmp )
+      pilotai.hyperspace( pilot_yb, jmp )
+   end )
+   vn.done("slidedown")
+
+   vn.label("cont02_ok")
+   yb(_([["Really!?!"]]))
+   ya(_([["You're awesome!"]]))
+   yb(_([["We'll stay in the shadows, like, what were they called. Ninjas!"]]))
+   ya(_([["Ninjas! Ninjas!"}]]))
+   vn.na(_([[Chattering amongst themselves, they begin to hide themselves along the stars.]]))
+   vn.func( function ()
+      for k,p in ipairs{pilot_ya, pilot_yb} do
+         p:control()
+         p:stealth()
+      end
+   end )
+   vn.done("slidedown")
+   vn.run()
+   -- Move to the next stuff
+   mem.state = 1
 end
 
 function land ()
    local c = spob.cur()
-   if mem.state < 2 and c ~= base then
+   if c ~= base then
       return
    end
+
+   local have = player.fleetCargoOwned( resource )
+   if have <= 0 then
+      return
+   elseif have > 0 and have+mem.brought < amount then
+      -- Just allow dropping off a bit
+      luatk.yesno(
+         fmt.f(_("Drop off {resource}?"),{resource=resource}),
+         fmt.f(_("Do you wish to drop off {have} of {resource}? You still need to get {necessary} for Scavenger."),
+            {resource=resource, have=fmt.tonnes(have), necessary=fmt.tonnes(amount-mem.brought-have)}),
+         function ()
+            local q = player.fleetCargoRm( resource, have )
+            mem.brought = mem.brought + q
+            luatk.msg(_("Resources dropped off"), fmt.f(_("You store the {amount} of {resource} at the {base}."),{amount=fmt.tonnes(q), resource=resource, base=base}))
+         end )
+      luatk.run()
+      return
+   end
+   -- Player should have the full amount now
 
    vn.clear()
    vn.scene()
    local s = vn.newCharacter( taiomi.vn_scavenger() )
    vn.transition( taiomi.scavenger.transition )
-   vn.na(_([[You board the Goddard and find Scavenger waiting for you.]]))
+   vn.na(fmt.f(_([[You bring the {resource} aboard the Goddard and find Scavenger waiting for you.]]),
+      {resource=resource}))
    s(_([["How did it go?"]]))
    s(_([["I shall be waiting for you outside."
 Scavenger backs out of the Goddard and returns to space.]]))

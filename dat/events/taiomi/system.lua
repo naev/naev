@@ -245,7 +245,9 @@ function hail_scavenger ()
          end )
          vn.jump("menu_ask")
       end
-   elseif progress == math.huge then -- 3
+   elseif progress == math.huge and naev.claimTest( system.get("Bastion"), true ) then -- 3
+      -- Note that we need to do a soft claim on bastion before starting the mission
+      -- These details are the same as taiomi04, probably should be centralized
       local resource = commodity.get("Therite")
       local amount = 30
       local minesys = system.get("Haven")
