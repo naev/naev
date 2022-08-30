@@ -117,7 +117,7 @@ function spawn_ferals ()
 
    lastsys = (#jumps==1)
 
-   mem.mrk = system.mrkAdd( vec2.newP( 2000*rnd.rnd(), rnd.angle() ), _("Signal"), 4000 )
+   mem.mrk = system.mrkAdd( pos+vec2.newP( 2000*rnd.rnd(), rnd.angle() ), _("Signal"), 4000 )
    player.msg(_("You have detected an unknown signal!"), true)
    player.autonavReset( 1 )
 
@@ -153,6 +153,7 @@ function ferals_discovered ()
          p:control(false)
       end
    end
+   player.autonavReset( 5 )
    if plts[1]:exists() then
       -- Just try to go to the next system
       pilotai.hyperspace( plts[1], nextjump )
