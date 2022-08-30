@@ -55,6 +55,9 @@ function create ()
 
    -- Worn-out Drone
    d_wornout = addDrone( "Drone", vec2.new(-500,-300), _("Worn-out Drone") )
+   if var.peek( "taiomi_drone_elder" ) then
+      d_wornout:rename( _("Elder Drone") )
+   end
    --d_wornout:setHilight(true)
    hook.pilot( d_wornout, "hail", "hail_wornout" )
 
@@ -171,11 +174,6 @@ function hail_scavenger ()
    local d = vn.newCharacter( taiomi.vn_scavenger() )
    vn.transition( taiomi.scavenger.transition )
 
-   -- Set up main options
-   local opts = {
-      {_("Leave."),"leave"},
-   }
-
    -- Progress-based text
    if progress == 0 then
       if inprogress then
@@ -274,7 +272,7 @@ Scavenger goes silent for a second, as if thinking.
          d(_([["No, I guess you could say build our own hypergate would be the closest to what we wish to do."]]))
          sai(_([["How do we know you will not rip apart the metaspace and cause the end of all humanity! You could be using us as your pawns in your perverse game!"]]))
          d(_([["I see what the technical brief about your model meant by distrust of authority. However, let me convince you otherwise. Please accept my transmission."]]))
-         vn.na(fmt.f(_([[Your ship console shows a large data transmission, as initial analysis shows it seems to be benign, you accept it. {shipai} flickers as they minimize the hologram rendering computational power to process the transmission. After what seems to be a few minutes of silence, you see the flickering stop.]]),
+         vn.na(fmt.f(_([[Your ship console shows a large binary data transmission, as initial analysis shows it seems to be benign, albeit unintelligible to humans, you accept it. {shipai} flickers as they minimize the hologram rendering computational power to process the transmission. After what seems to be a few minutes of silence, you see the flickering stop.]]),
             {shipai=tut.ainame()}))
          sai(fmt.f(_([["Oh, I'm sorry about what I said. I need some time to be alone."
 {shipai} dematerializes and leaves you alone with Scavenger.]]),
@@ -317,16 +315,26 @@ Scavenger goes silent for a second, as if thinking.
    vn.label("menu_ask")
    d(_([["Is there anything else you would like to know?"]]))
    vn.label("menu")
+   local lastq
    vn.menu( function ()
-      local o = tcopy( opts )
+      -- Set up main options
+      local opts = {
+         {_("Leave."),"leave"},
+      }
       -- TOOD manipulate stuff as needed here
-      if var.peek( "taiomi_scav_who" ) then --and not var.peek( "taiomi_drone_names" ) then
-         table.insert( o, 1, {_("Ask about the drones following you around"), "curious_drones"} )
+      if lastq ~= "history" and progress >= 2 then
+         table.insert( opts, 1, {_("Ask about their history"), "history"} )
       end
-      --if progress == 0 then
+      if lastq ~= "others" and progress >= 1 and var.peek( "taiomi_drone_names" ) then
+         table.insert( opts, 1, {_("Ask about the others"), "others"} )
+      end
+      if lastq ~= "curious_drones" and var.peek( "taiomi_scav_who" ) then
+         table.insert( opts, 1, {_("Ask about the drones following you around"), "curious_drones"} )
+      end
+      if lastq ~= "who" then
          table.insert( opts, 1, {_([["Who are you?"]]), "who"} )
-      --end
-      return o
+      end
+      return opts
    end )
 
    vn.label("who")
@@ -336,6 +344,7 @@ Scavenger goes silent for a second, as if thinking.
    vn.func( function ()
       var.push( "taiomi_scav_who", true )
    end )
+   vn.func( function () lastq = "who" end )
    vn.jump("menu_ask")
 
    vn.label("curious_drones")
@@ -385,7 +394,25 @@ They fidget a bit in place.
       d_young_a:rename( taiomi.younga.name )
       d_young_b:rename( taiomi.youngb.name )
       var.push( "taiomi_drone_names", true )
+      lastq = "curious_drones"
    end )
+   vn.jump("menu_ask")
+
+   vn.label("others")
+   d(_([["We are a small community, I could introduce you to everyone, however, human transmissions are inefficient and it would take too long. If I could only send you a complete data packet. Let us focus on other members who you may have noticed stand out a bit."]]))
+   d(_([["You may have noticed the Philosopher. I am not sure what to make out of them, but they have taken a large interest in the human practice of philosophy. I am not quite clear on the details, but it seems to consist of questioning everything while not doing anything. They make claims like 'the richest is not the one who has the most, but the one who needs the least', likely taken from studying human documents, while not assisting in most of the daily needs of the community. It is quite illogical."]]))
+   d(_([["There also is the Elder, whom is distinguishable by their worn out parts which they refuse to replace. They are one of original members of the community. However, they have taken a less active role recently. We have disagreements on how to protect our community, but they always have the survival of the community on their mind."]]))
+   d(fmt.f(_([["You have also already met {namea} and {nameb}, which are the new joys of the community. It is rare to see such young members with such strong character. I look forward to their developments in the future"]]),
+      {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
+   vn.func( function ()
+      var.push( "taiomi_drone_elder", true )
+      d_wornout:rename(_("Elder Drone"))
+      lastq = "others"
+   end )
+   vn.jump("menu_ask")
+
+   vn.label("history")
+   vn.func( function () lastq = "history" end )
    vn.jump("menu_ask")
 
    vn.label("leave")
