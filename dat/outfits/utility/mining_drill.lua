@@ -111,6 +111,9 @@ function drill.ontoggle( p, _po, on )
 
    a:setTimer( -1 ) -- Get rid of the asteroid
 
+   if mem.isp then
+      naev.trigger( "mine_drill" ) -- So we can catch it
+   end
    return false
 end
 
