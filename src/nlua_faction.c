@@ -504,7 +504,7 @@ static int factionL_allies( lua_State *L )
 static int factionL_usesHiddenJumps( lua_State *L )
 {
    int f = luaL_validfaction(L,1);
-   lua_pushboolean( L, faction_usesHiddenJumps(lf) );
+   lua_pushboolean( L, faction_usesHiddenJumps(f) );
    return 1;
 }
 
