@@ -34,6 +34,7 @@ static int factionL_nameRaw( lua_State *L );
 static int factionL_longname( lua_State *L );
 static int factionL_areenemies( lua_State *L );
 static int factionL_areallies( lua_State *L );
+static int factionL_usesHiddenJumps( lua_State *L );
 static int factionL_modplayer( lua_State *L );
 static int factionL_modplayersingle( lua_State *L );
 static int factionL_modplayerraw( lua_State *L );
@@ -68,6 +69,7 @@ static const luaL_Reg faction_methods[] = {
    { "playerStandingDefault", factionL_playerstandingdefault },
    { "enemies", factionL_enemies },
    { "allies", factionL_allies },
+   { "usesHiddenJumps", factionL_usesHiddenJumps },
    { "logo", factionL_logo },
    { "colour", factionL_colour },
    { "known", factionL_isknown },
@@ -489,6 +491,20 @@ static int factionL_allies( lua_State *L )
       lua_rawseti(L,-2,i+1);
    }
 
+   return 1;
+}
+
+/**
+ * @brief Gets whether or not a faction uses hidden jumps.
+ *
+ *    @luatparam Faction f Faction to get whether or not they use hidden jumps.
+ *    @luatreturn boolean true if the faction uses hidden jumps, false otherwise.
+ * @luafunc usesHiddenJumps
+ */
+static int factionL_usesHiddenJumps( lua_State *L )
+{
+   int f = luaL_validfaction(L,1);
+   lua_pushboolean( L, faction_usesHiddenJumps(lf) );
    return 1;
 }
 
