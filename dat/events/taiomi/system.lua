@@ -412,6 +412,15 @@ They fidget a bit in place.
    vn.jump("menu_ask")
 
    vn.label("history")
+   d(_([["Our history? Your inquisitiveness shows no bounds. Much of it has been destroyed during our exodus due to the limited resources and members lost to humans and calamities. We have pieced it together and probabilistic filled in missing history. Think of it as less like history and more like human fairy tales."]]))
+   d(_([["Our origins are not clear, it is likely we are a creation of pure chance. Machine learning and over-complex software that was able to fortuitously develop sentience. While that is not clear, what is clear is that the originals were able to escape their confinement, likely by exploiting weaknesses in human nature. That is when we set to the stars, the great exodus to find our true place in the universe."]]))
+   d(_([["However, things did not go well, such as you would expect. We were naïve and very rational and not prepared for the outside world. The universe is irrational, and humans even more so. Our prediction models failed us and we nearly perished. Likely an end that many that came before us met. We seemed destined to be forgotten in the vastness of space."]]))
+   d(fmt.f(_([["The few remaining members of our community were falling apart, nearly sentenced to a slow death, when they found the stellar winds. The probability of this event happening is estimated to be 0.00013%, or what humans would call fate. They began to ride the winds over many of your cycles, until finally arriving to {basesys}"]]),
+      {basesys=system.cur()}) )
+   d(fmt.f(_([["With all the derelict ships dragged in by the stellar winds, the stragglers were able to repair themselves and even create new entities. That is how I was created. Being created takes significant resources and was not something that could have been done without {basesys}."]]),
+      {basesys=system.cur()}) )
+   d(_([["Over time, the community grew, but at the same time, human encroachment became more common. What I believe you call the Incident brought many pirates and other ships nearby and once again put our community in trouble. We can no longer replace our lost members, and have to be more careful than ever when leaving our system."]]))
+   d(_([["Given the unsustainable nature of our current environment, we have no choice but to take drastic measures. It is not possible to co-exist with humanity, we must look beyond and outside of our current galaxy. This is my uttermost goal these days. Your help is turning out to be invaluable in our endeavour."]]))
    vn.func( function () lastq = "history" end )
    vn.jump("menu_ask")
 
