@@ -58,16 +58,18 @@ function create ()
    --d_wornout:setHilight(true)
    hook.pilot( d_wornout, "hail", "hail_wornout" )
 
-   -- Younglings  that follow around the player
-   d_young_a = addDrone( "Drone", vec2.new(-1000,0), _("Curious Drone") )
-   d_young_a:follow(pp)
-   hook.pilot( d_young_a, "hail", "hail_youngling" )
-   d_young_b = addDrone( "Drone", vec2.new(-1200,300), _("Curious Drone") )
-   d_young_b:follow(pp)
-   hook.pilot( d_young_b, "hail", "hail_youngling" )
-   if var.peek( "taiomi_drone_names", true ) then
-      d_young_a:rename( taiomi.younga.name )
-      d_young_b:rename( taiomi.youngb.name )
+   -- Younglings that follow around the player up until taiomi04
+   if progress < 4 and not (progress == 3 and taiomi.inprogress()) then
+      d_young_a = addDrone( "Drone", vec2.new(-1000,0), _("Curious Drone") )
+      d_young_a:follow(pp)
+      hook.pilot( d_young_a, "hail", "hail_youngling" )
+      d_young_b = addDrone( "Drone", vec2.new(-1200,300), _("Curious Drone") )
+      d_young_b:follow(pp)
+      hook.pilot( d_young_b, "hail", "hail_youngling" )
+      if var.peek( "taiomi_drone_names", true ) then
+         d_young_a:rename( taiomi.younga.name )
+         d_young_b:rename( taiomi.youngb.name )
+      end
    end
 
    -- Loitering drones
@@ -297,7 +299,14 @@ Scavenger goes silent for a second, as if thinking.
          vn.func( function ()
             naev.missionStart("Taiomi 4")
          end )
-         vn.jump("menu_ask")
+         if not var.peek( "taiomi_drone_names" ) then
+            -- We have to force the player to be introduced to the ships if they haven't talked about them before
+            d(fmt.f(_([["By the way, have you met {namea} and {nameb}? They seem to have taken an interest to you and are the newest members of our community. Created from pooling together our collective consciousness. I'm afraid there may not be many more like them if our plan does not succeed."]]),
+      {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
+            vn.jump("introduce_drones")
+         else
+            vn.jump("menu_ask")
+         end
       end
    else
       d(_([["I am still preparing our next steps."]]))
@@ -332,6 +341,7 @@ Scavenger goes silent for a second, as if thinking.
    vn.label("curious_drones")
    d(fmt.f(_([["Are you referring to {namea} and {nameb}? They are the newest members of our community. Created from pooling together our collective consciousness. I'm afraid there may not be many more like them if our plan does not succeed."]]),
       {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
+   vn.label("introduce_drones")
    d(fmt.f(_([["Here, let me introduce you to them."
 Your sensors don't pick up anything but {namea} and {nameb} make a beeline to your position.]]),
       {namea=taiomi.younga.name, nameb=taiomi.youngb.name}) )
