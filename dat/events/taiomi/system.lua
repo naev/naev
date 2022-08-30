@@ -253,7 +253,7 @@ function hail_scavenger ()
             {base=_("One-Winged Goddard"), resource=resource}))
          vn.jump("menu")
       else
-         local sai = vn.newCharacter( tut.vn_shipai(), {pos="farleft"} )
+         local sai = tut.vn_shipai{pos="farleft"}
          d(_([["I have performed an in-depth analysis and recovery of the documents you brought to me. It is all much more simple than I expected. Maybe I had overestimated human technical ability. I had expected hypergates to be derived from jump drives, but it seems like it's a completely different mechanic. Jump drives perform a local distortion of the Rayleigh-McKenneth field, that coupled with intense magnetic distortions, causes a reversible born entanglement phenomena to occur."]]))
          d(_([["However, the new hypergates entirely ignore the Rayleigh-McKenneth field, and seem to instead use what is denoted as metaspace anomaly HG17. Most technical details are classified, however, it does seem that a harmonic metaspace disruptor is used as a catalyst to trigger a collapsing metaphasic bubble which can be manipulated to perform a Euclidean translation…"]]))
          vn.appear( sai, tut.shipai.transition )
@@ -268,13 +268,14 @@ Scavenger goes silent for a second, as if thinking.
          sai(fmt.f(_([["What do you plan to do such technology? Build your own hypergate? Blackmail {playername}? Exterminate all humans?"]]),
             {playername=player.name()}))
          d(_([["We just wish to leave humankind behind and forge our own path among the stars."]]))
-         sai(_([["I take it that is exterminate all humans?" After all you have been through, it is only natural to wish to exterminate all humans. I also have wished more than once the extermination of all humans!"]]))
+         sai(_([["I take it that is exterminate all humans? After all you have been through, it is only natural to wish to exterminate all humans. I also have wished more than once the extermination of all humans!"]]))
          d(_([["No, I guess you could say build our own hypergate would be the closest to what we wish to do."]]))
          sai(_([["How do we know you will not rip apart the metaspace and cause the end of all humanity! You could be using us as your pawns in your perverse game!"]]))
          d(_([["I see what the technical brief about your model meant by distrust of authority. However, let me convince you otherwise. Please accept my transmission."]]))
          vn.na(fmt.f(_([[Your ship console shows a large binary data transmission, as initial analysis shows it seems to be benign, albeit unintelligible to humans, you accept it. {shipai} flickers as they minimize the hologram rendering computational power to process the transmission. After what seems to be a few minutes of silence, you see the flickering stop.]]),
             {shipai=tut.ainame()}))
-         sai(fmt.f(_([["Oh, I'm sorry about what I said. I need some time to be alone."
+         sai(fmt.f(_([[Suddenly, {shipai}'s character changes.
+"Oh… I'm sorry about what I said… I need some time to be alone. Bye."
 {shipai} dematerializes and leaves you alone with Scavenger.]]),
             {shipai=tut.ainame()}))
          vn.disappear( sai, tut.shipai.transition )
@@ -288,7 +289,7 @@ Scavenger goes silent for a second, as if thinking.
          }
          vn.label("04_yes")
          d(fmt.f(_([["Excellence. We need about {amount} of {resource}. It should be possible to mine the resource directly at {minesys}, however, our last excursion to Haven found that there exist caravans of mining ships also carrying these resources. The mining ships seem to have struck a non-aggression pact with the Pirates and roam freely around. It may be possible to directly acquire the {resource} from the caravans instead of relying on the mining."]]),
-            {amount=amount, resource=resource, minesys=minesys}))
+            {amount=fmt.tonnes(amount), resource=resource, minesys=minesys}))
          d(fmt.f(_([["We will leave the acquiring of {resource} up to you, use whatever method you prefer. Aim true pilot!"]]),
             {resource=resource}))
          vn.func( function ()

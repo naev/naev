@@ -76,7 +76,7 @@ function update_osd ()
    local have = mem.brought+player.fleetCargoOwned(resource);
    misn.osdCreate( title, {
       fmt.f(_("Obtain {amount} of {resource} (have {have})"),
-         {resource=fmt.tonnes_short(resource),
+         {resource=resource,
             amount=fmt.tonnes_short(amount-mem.brought),
             have=fmt.tonnes_short(player.fleetCargoOwned(resource))}),
       fmt.f(_("Return to the {spobname} ({spobsys})"), {spobname=base, spobsys=basesys}),
