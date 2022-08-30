@@ -322,18 +322,17 @@ Scavenger goes silent for a second, as if thinking.
       local opts = {
          {_("Leave."),"leave"},
       }
-      -- TOOD manipulate stuff as needed here
-      if lastq ~= "history" and progress >= 2 then
-         table.insert( opts, 1, {_("Ask about their history"), "history"} )
-      end
-      if lastq ~= "others" and progress >= 1 and var.peek( "taiomi_drone_names" ) then
-         table.insert( opts, 1, {_("Ask about the others"), "others"} )
+      if lastq ~= "who" then
+         table.insert( opts, 1, {_([["Who are you?"]]), "who"} )
       end
       if lastq ~= "curious_drones" and var.peek( "taiomi_scav_who" ) then
          table.insert( opts, 1, {_("Ask about the drones following you around"), "curious_drones"} )
       end
-      if lastq ~= "who" then
-         table.insert( opts, 1, {_([["Who are you?"]]), "who"} )
+      if lastq ~= "others" and progress >= 1 and var.peek( "taiomi_drone_names" ) then
+         table.insert( opts, 1, {_("Ask about the others"), "others"} )
+      end
+      if lastq ~= "history" and progress >= 2 then
+         table.insert( opts, 1, {_("Ask about their history"), "history"} )
       end
       return opts
    end )
