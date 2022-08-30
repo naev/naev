@@ -1046,6 +1046,7 @@ static void cargo_jettison( unsigned int wid, const char *str )
    (void)str;
    int pos, ret;
    Mission *misn;
+   HookParam hparam[3];
    PilotCommodity *pclist = pfleet_cargoList();
 
    if (array_size(pclist) <= 0) {
@@ -1111,6 +1112,16 @@ static void cargo_jettison( unsigned int wid, const char *str )
    ship_update( info_windows[ INFO_WIN_SHIP ] );
    cargo_genList( wid );
    cargo_update( wid, NULL );
+
+   /* Run hooks. */
+   hparam[0].type    = HOOK_PARAM_STRING;
+   hparam[0].u.str   = pclist[pos].commodity->name,
+   hparam[1].type    = HOOK_PARAM_NUMBER;
+   hparam[1].u.num   = pclist[pos].quantity;
+   hparam[2].type    = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "comm_jettison", hparam );
+
+   /* Clean up. */
    array_free( pclist );
 }
 

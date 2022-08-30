@@ -45,6 +45,7 @@ static int hookL_timer( lua_State *L );
 static int hookL_date( lua_State *L );
 static int hookL_commbuy( lua_State *L );
 static int hookL_commsell( lua_State *L );
+static int hookL_commjettison( lua_State *L );
 static int hookL_gather( lua_State *L );
 static int hookL_outfitbuy( lua_State *L );
 static int hookL_outfitsell( lua_State *L );
@@ -79,9 +80,10 @@ static const luaL_Reg hookL_methods[] = {
    { "board", hookL_board },
    { "timer", hookL_timer },
    { "date", hookL_date },
-   { "comm_buy", hookL_commbuy },
    { "gather", hookL_gather },
+   { "comm_buy", hookL_commbuy },
    { "comm_sell", hookL_commsell },
+   { "comm_jettison", hookL_commjettison },
    { "outfit_buy", hookL_outfitbuy },
    { "outfit_sell", hookL_outfitsell },
    { "equip", hookL_equip },
@@ -574,6 +576,23 @@ static int hookL_commbuy( lua_State *L )
 static int hookL_commsell( lua_State *L )
 {
    unsigned int h = hookL_generic( L, "comm_sell", 0., 1, 0, 2 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+
+/**
+ * @brief Hooks the function to the player jettisoning any sort of commodity.
+ *
+ * The hook receives the name of the commodity and the quantity jettisoned.
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc comm_jettison
+ */
+static int hookL_commjettison( lua_State *L )
+{
+   unsigned int h = hookL_generic( L, "comm_jettison", 0., 1, 0, 2 );
    lua_pushnumber( L, h );
    return 1;
 }
