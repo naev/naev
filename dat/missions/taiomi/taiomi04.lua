@@ -111,7 +111,7 @@ function enter ()
 
    -- Create small convoy that tries to leave
    local pos = vec2.new( 6000, 6000 ) -- Center of asteroid field
-   local fct = faction.dynAdd( nil, "shady_miners", _("Shady Miners") )
+   local fct = faction.dynAdd( nil, "shady_miners", _("Shady Miners"), {ai="baddie"} )
    local l = pilot.add( "Rhino", fct, pos )
    equipopt.pirate( l )
    l:setHilight( l )
@@ -141,7 +141,7 @@ function scene00 ()
       p:setInvincible(true)
       hook.pilot( p, "hail", "hail_youngling" )
    end
-   hook.timer( 5, "scene01" )
+   hook.timer( 4, "scene01" )
 end
 
 function hail_youngling( p )
@@ -150,23 +150,24 @@ function hail_youngling( p )
 end
 
 function scene01 ()
-   player.msg(fmt.f(_("It looks like {namea} and {nameb} followed you!")
+   player.msg(fmt.f(_("It looks like {namea} and {nameb} followed you!"),
       {namea=taiomi.younga.name, nameb=taiomi.youngb.name}), true)
    player.autonavReset( 5 )
-   hook.timer( 5, "scene02" )
+   hook.timer( 4, "scene02" )
 end
 
 function scene02 ()
    vn.clear()
    vn.scene()
-   local ya = vn.newCharacter( taiomi.vn_younga{ pos="farleft",  flip=true } )
-   local yb = vn.newCharacter( taiomi.vn_youngb{ pos="farright", flip=false } )
-   vn.transition( "slidedown" )
+   local ya = taiomi.vn_younga{ pos="farleft",  flip=true }
+   local yb = taiomi.vn_youngb{ pos="farright", flip=false }
+   vn.transition()
+   vn.appear( {ya,yb}, "slidedown" )
    vn.na(_([[You open a transmission channel with the two curious drones following you.]]))
    ya(_([["Hello!"]]))
    yb(_([["You found us!"]]))
    vn.menu{
-      {_([["You should stay in {basesys}."]]), "cont01"},
+      {fmt.f(_([["You should stay in {basesys}."]]),{basesys=basesys}), "cont01"},
       {_([["It's dangerous out here!"]]), "cont01"},
       {_([["What are you doing out here?"]]), "cont01"},
       {_([[…]]), "cont01"},
@@ -197,7 +198,7 @@ function scene02 ()
       pilotai.hyperspace( pilot_ya, jmp )
       pilotai.hyperspace( pilot_yb, jmp )
    end )
-   vn.done("slidedown")
+   vn.jump("done")
 
    vn.label("cont02_ok")
    yb(_([["Really!?!"]]))
@@ -212,7 +213,11 @@ function scene02 ()
          p:stealth()
       end
    end )
-   vn.done("slidedown")
+   vn.jump("done")
+
+   vn.label("done")
+   vn.disappear( {ya,yb}, "slidedown" )
+   vn.done()
    vn.run()
    -- Move to the next stuff
    mem.state = 1
