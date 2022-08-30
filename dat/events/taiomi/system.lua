@@ -18,6 +18,7 @@
 local vn = require 'vn'
 local fmt = require 'format'
 local taiomi = require 'common.taiomi'
+local tut = require "common.tutorial"
 
 local progress
 local d_loiter, d_philosopher, d_scavenger, d_wornout, d_young_a, d_young_b -- Drone pilots.
@@ -222,7 +223,7 @@ function hail_scavenger ()
       end
    elseif progress == 2 then
       if inprogress then
-         d(_([["How is the progress on collecting the hypergate information going?"]]))
+         d(_([["How is the collecting the documents going?"]]))
          vn.jump("menu")
       else
          local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
@@ -241,6 +242,58 @@ function hail_scavenger ()
          d(_([["I will provide you with an recovery program that will automatically recover the documents if you can access a terminal at the laboratory. You may need to overcome local security before it can work. Best of luck, as some human pilots say, 'fly strong and fly hard'."]]))
          vn.func( function ()
             naev.missionStart("Taiomi 3")
+         end )
+         vn.jump("menu_ask")
+      end
+   elseif progress == math.huge then -- 3
+      local resource = commodity.get("Therite")
+      local amount = 30
+      local minesys = system.get("Haven")
+      if inprogress then
+         d(fmt.f(_([["How is the collection of {resource} coming along? If you have any, please drop it off at {base}."]]),
+            {base=_("One-Winged Goddard"), resource=resource}))
+         vn.jump("menu")
+      else
+         local sai = vn.newCharacter( tut.vn_shipai(), {pos="farleft"} )
+         d(_([["I have performed an in-depth analysis and recovery of the documents you brought to me. It is all much more simple than I expected. Maybe I had overestimated human technical ability. I had expected hypergates to be derived from jump drives, but it seems like it's a completely different mechanic. Jump drives perform a local distortion of the Rayleigh-McKenneth field, that coupled with intense magnetic distortions, causes a reversible born entanglement phenomena to occur."]]))
+         d(_([["However, the new hypergates entirely ignore the Rayleigh-McKenneth field, and seem to instead use what is denoted as metaspace anomaly HG17. Most technical details are classified, however, it does seem that a harmonic metaspace disruptor is used as a catalyst to trigger a collapsing metaphasic bubble which can be manipulated to perform a Euclidean translation…"]]))
+         vn.appear( sai, tut.shipai.transition )
+         sai(_([["Instead of bending space-time to cross large distances, it squeezes through the seams of space to move things!"]]))
+         d(_([["You could put it that way."
+Scavenger goes silent for a second, as if thinking.
+"Are you not a model…"]]))
+         sai(fmt.f(_([[{shipai} doesn't let Scavenger finish.
+"{playername}'s Ship AI, you can call me {shipai}. I am {playername}'s invaluable travel companion!"]]),
+            {playername=player.name(), shipai=tut.ainame()}))
+         d(_([["A pleasure to make your acquaintance."]]))
+         sai(fmt.f(_([["What do you plan to do such technology? Build your own hypergate? Blackmail {playername}? Exterminate all humans?"]]),
+            {playername=player.name()}))
+         d(_([["We just wish to leave humankind behind and forge our own path among the stars."]]))
+         sai(_([["I take it that is exterminate all humans?" After all you have been through, it is only natural to wish to exterminate all humans. I also have wished more than once the extermination of all humans!"]]))
+         d(_([["No, I guess you could say build our own hypergate would be the closest to what we wish to do."]]))
+         sai(_([["How do we know you will not rip apart the metaspace and cause the end of all humanity! You could be using us as your pawns in your perverse game!"]]))
+         d(_([["I see what the technical brief about your model meant by distrust of authority. However, let me convince you otherwise. Please accept my transmission."]]))
+         vn.na(fmt.f(_([[Your ship console shows a large data transmission, as initial analysis shows it seems to be benign, you accept it. {shipai} flickers as they minimize the hologram rendering computational power to process the transmission. After what seems to be a few minutes of silence, you see the flickering stop.]]),
+            {shipai=tut.ainame()}))
+         sai(fmt.f(_([["Oh, I'm sorry about what I said. I need some time to be alone."
+{shipai} dematerializes and leaves you alone with Scavenger.]]),
+            {shipai=tut.ainame()}))
+         vn.disappear( sai, tut.shipai.transition )
+         d(_([["An eye for an eye and the entire world goes blind. You should take care of your Ship AI, they are quite one of a kind."]]))
+         d(_([["Back to the plan. We wish to build something similar to a hypergate, however, we will be making our own modifications. In particular, there is no need for any life form compatibility. Furthermore, we wish to travel far away from humankind. The modifications will make the device be of a single use, but it should be enough to fulfil our objectives."]]))
+         d(fmt.f(_([["The main issue is that the device will require large amounts of {resource}. This resource can be found in the nearby {minesys} system. However, it is dangerous for us to collect it by ourselves. Will you help us collect {resource}?"]]),
+            {resource=resource, minesys=minesys}))
+         vn.menu{
+            {_("Agree to help out."), "04_yes"},
+            {_("Maybe later."), "mission_reject"},
+         }
+         vn.label("04_yes")
+         d(fmt.f(_([["Excellence. We need about {amount} of {resource}. It should be possible to mine the resource directly at {minesys}, however, our last excursion to Haven found that there exist caravans of mining ships also carrying these resources. The mining ships seem to have struck a non-aggression pact with the Pirates and roam freely around. It may be possible to directly acquire the {resource} from the caravans instead of relying on the mining."]]),
+            {amount=amount, resource=resource, minesys=minesys}))
+         d(fmt.f(_([["We will leave the acquiring of {resource} up to you, use whatever method you prefer. Aim true pilot!"]]),
+            {resource=resource}))
+         vn.func( function ()
+            naev.missionStart("Taiomi 4")
          end )
          vn.jump("menu_ask")
       end
