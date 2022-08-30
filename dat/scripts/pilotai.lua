@@ -9,9 +9,24 @@ local pilotai = {}
    Makes a pilot try to hyperspace to target while not disabling most functionality.
 
       @tparam Pilot p Pilot to command.
-      @tparam Jump target Target jump point.
+      @tparam Jump|nil target Target jump point. If nil, tries to find a random hyperspace.
 --]]
 function pilotai.hyperspace( p, target )
+   if not target then
+      local jmps = {}
+      local usehidden = p:faction():usesHiddenJumps()
+      for k,v in ipairs(system.cur():jumps()) do
+         if usehidden or not v:hidden() then
+            table.insert( jmps, v )
+         end
+      end
+      if #jmps==0 then
+         warn(_("Trying to run 'pilotai.hyperspace' without a target in a system without valid jump points!"))
+         return
+      end
+      target = jmps[ rnd.rnd(1,#jmps) ]
+   end
+
    local m = p:memory()
    m.loiter = 0
    m.goal = "hyperspace"
