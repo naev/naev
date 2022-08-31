@@ -247,6 +247,7 @@ function land ()
       return
    end
    -- Player should have the full amount now
+   player.fleetCargoRm( resource, amount-mem.brought )
 
    vn.clear()
    vn.scene()
