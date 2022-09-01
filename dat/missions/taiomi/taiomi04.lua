@@ -204,7 +204,7 @@ function scene02 ()
    yb(_([["Really!?!"]]))
    ya(_([["You're awesome!"]]))
    yb(_([["We'll stay in the shadows, like, what were they called. Ninjas!"]]))
-   ya(_([["Ninjas! Ninjas!"}]]))
+   ya(_([["Ninjas! Ninjas!"]]))
    vn.na(_([[Chattering amongst themselves, they begin to hide themselves along the stars.]]))
    vn.func( function ()
       for k,p in ipairs{pilot_ya, pilot_yb} do
