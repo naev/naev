@@ -2369,6 +2369,9 @@ static int aiL_hyperspace( lua_State *L )
    /* Find the target jump. */
    if (!lua_isnoneornil(L,1)) {
       JumpPoint *jp = luaL_validjump( L, 1 );
+      LuaJump *lj = luaL_checkjump( L, 1 );
+      if (lj->srcid != cur_system->id)
+         NLUA_ERROR(L, _("Jump point must be in current system."));
       cur_pilot->nav_hyperspace = jp - cur_system->jumps;
    }
 
