@@ -128,7 +128,7 @@ function enter ()
    end
 
    -- Just try to get out of the system
-   pilotai.hyperspace( l, jump.get(system.get("Gamel"),minesys) )
+   pilotai.hyperspace( l, jump.get( minesys, system.get("Gamel") ) )
 end
 
 local pilot_ya, pilot_yb
