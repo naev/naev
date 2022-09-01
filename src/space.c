@@ -421,7 +421,7 @@ int space_canHyperspace( const Pilot* p )
       return 0;
 
    /* Must have hyperspace target. */
-   if (p->nav_hyperspace < 0)
+   if (0 > p->nav_hyperspace || p->nav_hyperspace >= array_size(cur_system->jumps))
       return 0;
 
    /* Get the jump. */
