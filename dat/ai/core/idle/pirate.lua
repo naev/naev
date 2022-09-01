@@ -37,18 +37,18 @@ end
 
 -- See if a target is vulnerable
 local function __vulnerable( p, plt, threshold, r )
-   if mem.vulnignore or not mem.natural then return true end
+   local always_yes = (mem.vulnignore or not mem.natural)
    local pos = plt:pos()
    r = r or math.pow( mem.lanedistance, 2 )
    -- Make sure not in safe lanes
-   if lanes.getDistance2P( p, pos ) > r then
+   if always_yes or lanes.getDistance2P( p, pos ) > r then
       -- Check to see vulnerability
       local H = 1+__estimate_strength( p:getHostiles( mem.vulnrange, pos, true ) )
       local F = 1+__estimate_strength( __join_tables(
             p:getAllies( mem.vulnrange, pos, true ),
             p:getAllies( mem.vulnrange, nil, true ) ) )
 
-      if F*threshold >= H then
+      if always_yes or F*threshold >= H then
          return true, F, H
       end
    end
