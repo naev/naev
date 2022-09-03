@@ -169,7 +169,7 @@ function spir.create ( fpirate, max, params )
    weights[ spir.spawn_capship ] = math.max(0, capship_base + 1.70 * max)
 
    -- Allow reweighting
-   if params.reweight( weights ) then
+   if params.reweight then
       weights = params.reweight( weights )
    end
 
