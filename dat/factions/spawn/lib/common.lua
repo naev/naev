@@ -82,7 +82,7 @@ function scom.createSpawnTable( weights )
    for k,v in pairs(weights) do
       if v > 0 then
          max = max + v
-         table.insert( spawn_table, { chance = max, func = k } )
+         table.insert( spawn_table, { w = v, func = k } )
       end
    end
 
@@ -90,11 +90,12 @@ function scom.createSpawnTable( weights )
    if max == 0 then
       error(_("No weight specified"))
    end
+   spawn_table._maxw = max
 
-   -- Normalize
-   for _k,v in ipairs(spawn_table) do
-      v.chance = v.chance / max
-   end
+   -- Sort so it's a wee bit faster
+   table.sort( spawn_table, function( a, b )
+      return a.w > b.w
+   end )
 
    -- Job done
    return spawn_table
@@ -102,9 +103,11 @@ end
 
 -- @brief Chooses what to spawn
 function scom.choose ()
-   local r = rnd.rnd()
+   local r = rnd.rnd() * scom._weight_table._maxw
+   local m = 0
    for _k,v in ipairs( scom._weight_table ) do
-      if r < v.chance then
+      m = m + v.w
+      if r < m then
          scom._spawn_data = v.func()
          return true
       end
