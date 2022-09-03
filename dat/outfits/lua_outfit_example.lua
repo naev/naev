@@ -17,6 +17,14 @@ API and must be set in the XML file. This only works for *Modifier* outfits!
 function onload( _o )
 end
 
+-- Called to get the extra description of the outfit. This gets appended to the
+-- summary and description, and should be short. The function receives the
+-- pilot p if applicable, and the current outfit o. The function should return
+-- a translated string.
+function descextra( _p, _o )
+   return _("This outfit is very cool.")
+end
+
 -- Called when the price of the outfit for the player is check
 -- Returns 3 values, the cost string, whether the player can buy it, and
 -- whether the player can sell it
@@ -117,11 +125,14 @@ end
 
    Note that these are calculated with particles.
 --]]
+-- Triggered when a particle shot by p impacts the target. p may not exist if
+-- the pilot that shot the weapon ceased to exist.
 function onimpact( _p, _target, _pos, _vel )
 end
-function onmiss( _p, _pos, _vel ) -- _p may not exist
+--- Triggered when a particle times out without hitting a target. p may not
+--exist if the pilot that shot the weapon ceased to exist.
+function onmiss( _p, _pos, _vel )
 end
-
 
 --[[
    Example of an activated outfit implemented fully in Lua
