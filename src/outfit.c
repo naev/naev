@@ -59,7 +59,7 @@ static char **license_stack = NULL; /**< Stack of available licenses. */
  * Helper stuff for setting up short descriptions for outfits.
  */
 #define SDESC_ADD( l, temp, txt, args... ) \
-(l) += scnprintf( &(temp)->desc_short[l], OUTFIT_SHORTDESC_MAX-(l), (txt), ## args )
+(l) += scnprintf( &(temp)->summary_raw[l], OUTFIT_SHORTDESC_MAX-(l), (txt), ## args )
 #define SDESC_COLOUR( l, temp, txt, val, args... ) \
 SDESC_ADD( l, temp, "#%c", ((val)>0)?'g':(((val)<0)?'r':'0') ); \
 SDESC_ADD( l, temp, txt, (val), ## args ); \
@@ -928,6 +928,32 @@ const char* outfit_getAmmoAI( const Outfit *o )
 }
 
 /**
+ * @brief Gets the description of an outfit.
+ *
+ * Subsequent calls will change the memory, strdup if necessary.
+ *
+ *    @param o Outfit to get description of.
+ *    @return Description of the outfit.
+ */
+const char* outfit_description( const Outfit *o )
+{
+   return pilot_outfitDescription( NULL, o );
+}
+
+/**
+ * @brief Gets the summary of an outfit.
+ *
+ * Subsequent calls will change the memory, strdup if necessary.
+ *
+ *    @param o Outfit to get summary of.
+ *    @return Summary of the outfit.
+ */
+const char* outfit_summary( const Outfit *o )
+{
+   return pilot_outfitSummary( NULL, o );
+}
+
+/**
  * @brief Checks to see if an outfit fits a slot.
  *
  *    @param o Outfit to see if fits in a slot.
@@ -1314,7 +1340,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          temp->u.blt.heatup * temp->u.blt.delay;
 
    /* Set short description. */
-   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
    SDESC_ADD(  l, temp, _("%s [%s]"), _(outfit_getType(temp)),
          _(dtype_damageTypeToStr(temp->u.blt.dmg.type)) );
@@ -1466,7 +1492,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          temp->u.bem.heatup * (temp->u.bem.delay+temp->u.bem.warmup+temp->u.bem.duration) / temp->u.bem.delay;
 
    /* Set short description. */
-   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
    SDESC_ADD(  l, temp, _("%s [%s]"), _(outfit_getType(temp)),
          _(dtype_damageTypeToStr(temp->u.bem.dmg.type)) );
@@ -1665,7 +1691,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    temp->u.lau.resist /= 100.;
 
    /* Short description. */
-   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
    SDESC_ADD(  l, temp, _("%s [%s]"), _(outfit_getType(temp)),
          _(dtype_damageTypeToStr(temp->u.lau.dmg.type)) );
@@ -1785,7 +1811,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Set short description. */
-   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
    SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
    if (temp->u.mod.active || temp->lua_ontoggle != LUA_NOREF)
@@ -1853,7 +1879,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Set short description. */
-   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
    SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
    SDESC_ADD( l, temp, _("\n#rActivated Outfit#0") );
@@ -1918,7 +1944,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Set short description. */
-   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
    SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
    SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
@@ -1999,8 +2025,8 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
          } while (xml_nextNode(cur));
       }
       else if (xml_isNode(node,"short_desc")) {
-         temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-         snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX, "%s", xml_get(node) );
+         temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+         snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX, "%s", xml_get(node) );
       }
       else if (xml_isNode(node,"all")) { /* Add everything to the map */
          system_stack = system_getAll();
@@ -2020,10 +2046,10 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    array_shrink( &temp->u.map->spobs  );
    array_shrink( &temp->u.map->jumps   );
 
-   if (temp->desc_short == NULL) {
+   if (temp->summary_raw == NULL) {
       /* Set short description based on type. */
-      temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-      snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+      temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+      snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX,
             "%s", _(outfit_getType(temp)) );
    }
 
@@ -2059,8 +2085,8 @@ static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent )
    temp->u.lmap.jump_detect  = pow2( temp->u.lmap.jump_detect );
 
    /* Set short description. */
-   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX,
          "%s",
          _(outfit_getType(temp)) );
 
@@ -2092,8 +2118,8 @@ static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Set short description. */
-   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX,
          _("GUI (Graphical User Interface)") );
 
 #define MELEMENT(o,s) \
@@ -2132,8 +2158,8 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
    array_push_back( &license_stack, temp->u.lic.provides );
 
    /* Set short description. */
-   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   temp->summary_raw = malloc( OUTFIT_SHORTDESC_MAX );
+   snprintf( temp->summary_raw, OUTFIT_SHORTDESC_MAX,
          "%s",
          _(outfit_getType(temp)) );
 
@@ -2176,6 +2202,7 @@ static int outfit_parse( Outfit* temp, const char* file )
 
    /* Defaults. */
    temp->lua_env        = LUA_NOREF;
+   temp->lua_descextra  = LUA_NOREF;
    temp->lua_onadd      = LUA_NOREF;
    temp->lua_onremove   = LUA_NOREF;
    temp->lua_init       = LUA_NOREF;
@@ -2221,7 +2248,7 @@ static int outfit_parse( Outfit* temp, const char* file )
             xmlr_float(cur,"cpu",temp->cpu);
             xmlr_long(cur,"price",temp->price);
             xmlr_strd(cur,"limit",temp->limit);
-            xmlr_strd(cur,"description",temp->description);
+            xmlr_strd(cur,"description",temp->desc_raw);
             xmlr_strd(cur,"desc_extra",desc_extra);
             xmlr_strd(cur,"typename",temp->typename);
             xmlr_int(cur,"priority",temp->priority);
@@ -2384,13 +2411,13 @@ static int outfit_parse( Outfit* temp, const char* file )
             outfit_parseSLicense( temp, node );
 
          /* We add the ship stats to the description here. */
-         if (temp->desc_short != NULL) {
-            l = strlen(temp->desc_short);
-            ss_statsListDesc( temp->stats, &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l, 1 );
+         if (temp->summary_raw != NULL) {
+            l = strlen(temp->summary_raw);
+            ss_statsListDesc( temp->stats, &temp->summary_raw[l], OUTFIT_SHORTDESC_MAX-l, 1 );
             /* Add extra description task if available. */
             if (desc_extra != NULL) {
-               l = strlen(temp->desc_short);
-               snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l, "\n%s", _(desc_extra) );
+               l = strlen(temp->summary_raw);
+               snprintf( &temp->summary_raw[l], OUTFIT_SHORTDESC_MAX-l, "\n%s", _(desc_extra) );
                free( desc_extra );
                desc_extra = NULL;
             }
@@ -2410,7 +2437,7 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
    /*MELEMENT(temp->mass==0,"mass"); Not really needed */
    MELEMENT(temp->type==0,"type");
    /*MELEMENT(temp->price==0,"price");*/
-   MELEMENT(temp->description==NULL,"description");
+   MELEMENT(temp->desc_raw==NULL,"description");
    MELEMENT((temp->cond!=NULL) && (temp->condstr==NULL), "condstr");
    MELEMENT((temp->cond==NULL) && (temp->condstr!=NULL), "cond");
 #undef MELEMENT
@@ -2578,7 +2605,7 @@ int outfit_loadPost (void)
          array_free( o->illegaltoS );
          o->illegaltoS = NULL;
 
-         int l = strlen( o->desc_short );
+         int l = strlen( o->summary_raw );
          SDESC_ADD( l, o, _("\n#rIllegal to:#0") );
          for (int j=0; j<array_size(o->illegalto); j++)
             SDESC_ADD( l, o, _("\n#r- %s#0"), _(faction_name(o->illegalto[j])) );
@@ -2741,9 +2768,9 @@ void outfit_free (void)
 
       /* strings */
       free(o->typename);
-      free(o->description);
+      free(o->desc_raw);
       free(o->limit);
-      free(o->desc_short);
+      free(o->summary_raw);
       free(o->license);
       free(o->cond);
       free(o->condstr);

@@ -617,12 +617,12 @@ static void map_system_array_update( unsigned int wid, const char* str )
       snprintf( buf_mass, sizeof(buf_mass), n_( "%d t", "%d t", (int)round( mass ) ), (int)round( mass ) );
 
       l += outfit_getNameWithClass( outfit, &infobuf[l], sizeof(infobuf)-l );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", _(outfit->description) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", pilot_outfitDescription( player.p, outfit ) );
 
       /* FIXME: The point of this misery is to split desc_short into a 2-column layout.
        * It works poorly, but if we don't do this, check out e.g. the TeraCom Medusa Launcher in a 720p window. */
       char *desc_start = &infobuf[l];
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", outfit->desc_short );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", pilot_outfitSummary( player.p, outfit ) );
       while ( (desc_start = strchr( desc_start, '\n' )) != NULL ) {
          char *tab_pos = desc_start;
          desc_start = strchr( &tab_pos[1], '\n' );
@@ -872,7 +872,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
 
    if (noutfits <= 0)
       return;
-   coutfits = outfits_imageArrayCells( (const Outfit**)cur_spob_sel_outfits, &noutfits );
+   coutfits = outfits_imageArrayCells( (const Outfit**)cur_spob_sel_outfits, &noutfits, player.p );
 
    xw = ( w - nameWidth - pitch - 60 ) / 2;
    xpos = 35 + pitch + nameWidth + xw;

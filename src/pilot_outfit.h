@@ -7,6 +7,10 @@
 
 #define PILOT_OUTFIT_LUA_UPDATE_DT     (1.0/10.0)   /* How often the Lua outfits run their update script (in seconds).  */
 
+/* Augmentations of normal pilot API. */
+const char* pilot_outfitDescription( const Pilot *pilot, const Outfit *o );
+const char* pilot_outfitSummary( const Pilot *pilot, const Outfit *o );
+
 /* Raw changes. */
 int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s );
 int pilot_addOutfitTest( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s, int warn );

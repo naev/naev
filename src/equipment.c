@@ -864,9 +864,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    }
 
    /* Get text. */
-   if (o->desc_short == NULL)
-      return;
-   outfit_altText( alt, sizeof(alt), o );
+   outfit_altText( alt, sizeof(alt), o, p );
 
    /* Display temporary bonuses. */
    if (slot->lua_mem != LUA_NOREF) {
@@ -1576,10 +1574,10 @@ static void equipment_genOutfitList( unsigned int wid )
    const char *tabnames[] = {
       _("All"), _(OUTFIT_LABEL_WEAPON), _(OUTFIT_LABEL_UTILITY), _(OUTFIT_LABEL_STRUCTURE), _(OUTFIT_LABEL_CORE)
    };
-
    int noutfits, active;
    ImageArrayCell *coutfits;
    int iconsize;
+   Pilot *p = eq_wgt.selected;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, NULL, NULL, &ow, &oh,
@@ -1642,7 +1640,7 @@ static void equipment_genOutfitList( unsigned int wid )
 
    /* Get the outfits. */
    noutfits = player_getOutfitsFiltered( (const Outfit**)iar_outfits[active], tabfilters[active], filtertext );
-   coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits );
+   coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits, (p==NULL) ? player.p : p );
 
    /* Create the actual image array. */
    iw = ow - 6;

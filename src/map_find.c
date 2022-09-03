@@ -584,9 +584,9 @@ static char **map_fuzzyOutfits( Outfit **o, const char *name )
          array_push_back( &names, o[i]->name );
       else if ((o[i]->condstr != NULL) && strcasestr( o[i]->condstr, name ) != NULL)
          array_push_back( &names, o[i]->name );
-      else if (strcasestr( o[i]->description, name ) != NULL)
+      else if (strcasestr( outfit_description(o[i]), name ) != NULL)
          array_push_back( &names, o[i]->name );
-      else if (strcasestr( o[i]->desc_short, name ) != NULL)
+      else if (strcasestr( outfit_summary(o[i]), name ) != NULL)
          array_push_back( &names, o[i]->name );
    }
 
@@ -675,7 +675,7 @@ static void map_showOutfitDetail( unsigned int wid, const char* wgtname, int x, 
 
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 128, 128 );
    l = outfit_getNameWithClass( outfit, buf, sizeof(buf) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", outfit->desc_short );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", pilot_outfitSummary( player.p, outfit ) );
    window_modifyText( wid, "txtDescShort", buf );
    th = gl_printHeightRaw( &gl_smallFont, 280, buf );
 
@@ -684,7 +684,7 @@ static void map_showOutfitDetail( unsigned int wid, const char* wgtname, int x, 
    else if (outfit_isFighterBay(outfit))
       mass += outfit_amount(outfit) * outfit->u.bay.ship_mass;
 
-   window_modifyText( wid, "txtDescription", _(outfit->description) );
+   window_modifyText( wid, "txtDescription", pilot_outfitDescription( player.p, outfit ) );
    credits2str( buf_price, outfit->price, 2 );
    credits2str( buf_money, player.p->credits, 2 );
    tonnes2str( buf_mass, (int)round( mass ) );

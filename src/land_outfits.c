@@ -383,7 +383,7 @@ static void outfits_genList( unsigned int wid )
    /* Use custom list; default to landed outfits. */
    iar_outfits[active] = data!=NULL ? array_copy( Outfit*, data->outfits ) : tech_getOutfit( land_spob->tech );
    noutfits = outfits_filter( (const Outfit**)iar_outfits[active], array_size(iar_outfits[active]), tabfilters[active], filtertext );
-   coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits );
+   coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits, player.p );
 
    iconsize = 128;
    if (!conf.big_icons) {
@@ -417,6 +417,7 @@ void outfits_update( unsigned int wid, const char *str )
    double th;
    int iw, ih, w, h, blackmarket, canbuy, cansell;
    double mass;
+   const char *summary;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
@@ -459,7 +460,7 @@ void outfits_update( unsigned int wid, const char *str )
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 256, 256 );
 
    /* new text */
-   window_modifyText( wid, "txtDescription", _(outfit->description) );
+   window_modifyText( wid, "txtDescription", pilot_outfitDescription( player.p, outfit ) );
    buf_price = outfit_getPrice( outfit, &price, &canbuy, &cansell );
    credits2str( buf_credits, player.p->credits, 2 );
 
@@ -505,9 +506,10 @@ void outfits_update( unsigned int wid, const char *str )
    }
    window_modifyText( wid, "txtSDesc", lbl );
    window_modifyText( wid, "txtDDesc", buf );
-   window_modifyText( wid, "txtDescShort", outfit->desc_short );
+   summary = pilot_outfitSummary( player.p, outfit );
+   window_modifyText( wid, "txtDescShort", summary );
    window_moveWidget( wid, "txtDescShort", 20+iw+20, -40-th );
-   th += gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 264 - 40, outfit->desc_short );
+   th += gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 264 - 40, summary );
    th = MAX( th, 230 );
    window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-gl_defFont.h );
    window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-gl_defFont.h );
@@ -648,7 +650,7 @@ static const char *outfit_getPrice( const Outfit *outfit, credits_t *price, int 
 /**
  * @brief Computes the alt text for an outfit.
  */
-int outfit_altText( char *buf, int n, const Outfit *o )
+int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt )
 {
    int p;
    double mass;
@@ -668,7 +670,7 @@ int outfit_altText( char *buf, int n, const Outfit *o )
    if (o->slot.spid != 0)
       p += scnprintf( &buf[p], n-p, _("#o%s#0\n"),
             _( sp_display( o->slot.spid ) ) );
-   p += scnprintf( &buf[p], n-p, "%s", o->desc_short );
+   p += scnprintf( &buf[p], n-p, "%s", pilot_outfitSummary( plt, o ) );
    if ((o->mass > 0.) && (p < n)) {
       char buf_mass[ECON_MASS_STRLEN];
       tonnes2str( buf_mass, (int)round( mass ) );
@@ -680,7 +682,7 @@ int outfit_altText( char *buf, int n, const Outfit *o )
 /**
  * @brief Generates image array cells corresponding to outfits.
  */
-ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits )
+ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits, const Pilot *p )
 {
    ImageArrayCell *coutfits = calloc( MAX(1,*noutfits), sizeof(ImageArrayCell) );
 
@@ -708,12 +710,7 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits )
          col_blend( &coutfits[i].bg, c, &cGrey70, 1 );
 
          /* Short description. */
-         if (o->desc_short == NULL)
-            coutfits[i].alt = NULL;
-         else {
-            coutfits[i].alt = malloc( STRMAX );
-            outfit_altText( coutfits[i].alt, STRMAX, o );
-         }
+         coutfits[i].alt = strdup( pilot_outfitSummary( p, o ) );
 
          /* Slot type. */
          if ( (strcmp(outfit_slotName(o), "N/A") != 0)
