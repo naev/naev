@@ -25,8 +25,37 @@ function init( p, _po )
    end
 end
 
-function descextra( _p )
-   return fmt.f(_("Plasma burns deal an extra {damage:.1f} of damage over 5 seconds on the target."),{damage=damage})
+function descextra( p )
+   local dmg = damage
+   local dur = 5
+   local cor = ""
+
+   if p then
+      local map = {}
+      for k,o in ipairs(p:outfitsList("intrinsic")) do
+         local m = mapping[ o:nameRaw() ]
+         if m then
+            map[m] = true
+         end
+      end
+
+      if map.corrosion_ii then
+         cor = _(" [Corrosion II]")
+         dmg = dmg * 2
+         dur = 10
+      elseif map.corrosion_i then
+         cor = _(" [Corrosion I]")
+         dmg = dmg * 1.5
+         dur = 7.5
+      end
+      if map.crippling then -- Learned at 3
+         return fmt.f(_("Plasma burns deal an extra {damage:.1f} of damage over {duration} seconds on the target{corrosion}, while reducing the targets turn, speed, and thrust by 25% [Paralyzing Plasma], and lowering fire rate by 20% [Crippling Plasma]."),{damage=dmg, duration=dur, corrosion=cor})
+      elseif map.paralyzing then -- Learned at 2
+         return fmt.f(_("Plasma burns deal an extra {damage:.1f} of damage over {duration} seconds on the target{corrosion}, while reducing the targets turn, speed, and thrust by 25% [Paralyzing Plasma]."),{damage=dmg, duration=dur, corrosion=cor})
+      end
+   end
+
+   return fmt.f(_("Plasma burns deal an extra {damage:.1f} of damage over {duration} seconds on the target{corrosion}."),{damage=dmg, duration=dur, corrosion=cor})
 end
 
 function onimpact( p, target )
