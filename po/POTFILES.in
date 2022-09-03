@@ -2860,6 +2860,7 @@ dat/outfits/bioship/skills/hunters_instinct.lua
 dat/outfits/bioship/skills/the_bite.lua
 dat/outfits/bioship/skills/tunnelling_organ.lua
 dat/outfits/lib/bioplasma.lua
+dat/outfits/lib/mining_drill.lua
 dat/outfits/lua_outfit_example.lua
 dat/outfits/structure/nebular_shielding_prototype.lua
 dat/outfits/unique/bioship_pheromone_emitter.lua
@@ -2881,7 +2882,6 @@ dat/outfits/utility/emergency_shield_booster.lua
 dat/outfits/utility/emergency_stasis_inducer.lua
 dat/outfits/utility/hyperbolic_blink_engine.lua
 dat/outfits/utility/low_radiation_sensor_modulator.lua
-dat/outfits/utility/mining_drill.lua
 dat/outfits/utility/neural_accelerator_interface.lua
 dat/outfits/utility/sk_heavy_plasma_drill.lua
 dat/outfits/utility/sk_plasma_drill.lua
