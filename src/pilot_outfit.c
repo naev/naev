@@ -1240,6 +1240,12 @@ static const char* pilot_outfitLDescExtra( const Pilot *p, const Outfit *o )
 
 /**
  * @brief Gets the description of an outfit for a given pilot.
+ *
+ * Note: the returned string can get overwritten by subsequent calls.
+ *
+ *    @param p Pilot to get the outfit description of (or NULL for no pilot).
+ *    @param o Outfit to get description of.
+ *    @return The description of the outfit.
  */
 const char* pilot_outfitDescription( const Pilot *p, const Outfit *o )
 {
@@ -1251,6 +1257,16 @@ const char* pilot_outfitDescription( const Pilot *p, const Outfit *o )
    return o_description;
 
 }
+
+/**
+ * @brief Gets the summary of an outfit for a give pilot.
+ *
+ * Note: the returned string can get overwritten by subsequent calls.
+ *
+ *    @param p Pilot to get the outfit summary of (or NULL for no pilot).
+ *    @param o Outfit to get summary of.
+ *    @return The summary of the outfit.
+ */
 const char* pilot_outfitSummary( const Pilot *p, const Outfit *o )
 {
    static char o_summary[STRMAX];
