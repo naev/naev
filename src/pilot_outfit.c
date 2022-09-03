@@ -1211,7 +1211,7 @@ static void pilot_outfitLmem( PilotOutfitSlot *po, nlua_env env )
    nlua_setenv( naevL, env, "mem" ); /* */
 }
 
-static const char* pilot_outfitLDescExtra( const Pilot *pilot, const Outfit *o )
+static const char* pilot_outfitLDescExtra( const Pilot *p, const Outfit *o )
 {
    static char descextra[STRMAX];
    const char *de;
@@ -1220,12 +1220,12 @@ static const char* pilot_outfitLDescExtra( const Pilot *pilot, const Outfit *o )
 
    /* Set up the function: init( p, po ) */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, o->lua_descextra); /* f */
-   if (pilot != NULL)
-      lua_pushpilot( naevL, pilot->id ); /* f, p */
+   if (p != NULL)
+      lua_pushpilot( naevL, p->id ); /* f, p */
    else
       lua_pushnil( naevL ); /* f, p */
    if (nlua_pcall( o->lua_env, 1, 1 )) { /* */
-      outfitLRunWarning( pilot, o, "descextra", lua_tostring(naevL,-1) );
+      outfitLRunWarning( p, o, "descextra", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
       descextra[0] = '\0';
       return descextra;

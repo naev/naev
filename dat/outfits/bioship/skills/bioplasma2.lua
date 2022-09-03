@@ -1,3 +1,5 @@
+local fmt = require "format"
+
 local damage, penetration, isturret
 function onload( o )
    local s     = o:specificstats()
@@ -19,6 +21,10 @@ function init( p, _po )
          mem[m] = true
       end
    end
+end
+
+function descextra( _p )
+   return fmt.f(_("Plasma burns deal an extra {damage:.1f} of damage over 5 seconds on the target."),{damage=damage})
 end
 
 function onimpact( p, target )

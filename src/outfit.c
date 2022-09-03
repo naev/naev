@@ -2525,6 +2525,7 @@ int outfit_load (void)
       free( dat );
 
       /* Check functions as necessary. */
+      o->lua_descextra  = nlua_refenvtype( env, "descextra",LUA_TFUNCTION );
       o->lua_onadd      = nlua_refenvtype( env, "onadd",    LUA_TFUNCTION );
       o->lua_onremove   = nlua_refenvtype( env, "onremove", LUA_TFUNCTION );
       o->lua_init       = nlua_refenvtype( env, "init",     LUA_TFUNCTION );

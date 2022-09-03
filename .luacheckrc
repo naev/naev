@@ -200,6 +200,7 @@ stds.PilotOutfit.globals={
    "cooldown",
    "init",
    "land",
+   "descextra",
    "onadd",
    "onhit",
    "onimpact",
