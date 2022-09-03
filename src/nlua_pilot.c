@@ -1116,7 +1116,8 @@ static int pilotL_getVisible( lua_State *L )
 /**
  * @brief Gets visible pilots to a pilot within a certain distance.
  *
- *    @luatparam Pilot pilot Pilot to get visible pilots of.
+ *    @luatparam vec2 pos Position to get pilots in range of.
+ *    @luatparam number d Distance to get pilots in.
  *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
  *    @luatreturn {Pilot,...} A table containing the pilots.
  * @luafunc getInrange
