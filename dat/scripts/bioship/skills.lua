@@ -248,7 +248,7 @@ skills.set.plasma = {
       name = _("Corrosion I"),
       tier = 1,
       outfit = "Corrosion I",
-      desc = _("Plasma burn duration increased by 50%."),
+      desc = _("Plasma burn duration increased by 50%. Bonus is halved for non-organ weapons."),
       icon = "acid-blob.webp",
    },
    ["plasma2"] = {
@@ -272,7 +272,7 @@ skills.set.plasma = {
       tier = 4,
       outfit = "Corrosion II",
       requires = { "plasma3" },
-      desc = _("Plasma burn duration further increased by 50%."),
+      desc = _("Plasma burn duration further increased by 50%. Bonus is halved for non-organ weapons."),
       icon = "acid-blob.webp",
    },
    ["plasma5"] = {

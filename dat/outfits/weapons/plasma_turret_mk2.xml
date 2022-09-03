@@ -11,6 +11,7 @@
   <cpu>-50</cpu>
  </general>
  <specific type="turret bolt">
+  <lua>outfits/weapons/plasma2.lua</lua>
   <gfx>plasma2.png</gfx>
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
@@ -26,7 +27,7 @@
   <damage>
    <type>impact</type>
    <penetrate>36</penetrate>
-   <physical>32</physical>
+   <physical>24</physical>
   </damage>
  </specific>
 </outfit>

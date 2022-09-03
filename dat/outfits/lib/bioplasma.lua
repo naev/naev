@@ -1,7 +1,8 @@
 -- Need to set effect_name before requiring
--- luacheck: globals effect_name damage_mod base_duration
+-- luacheck: globals effect_name damage_mod base_duration bonus_mod
 local fmt = require "format"
 
+bonus_mod = bonus_mod or 1
 effect_name = effect_name or "Plasma Burn"
 damage_mod = damage_mod or 1
 base_duration = base_duration or 5
@@ -45,12 +46,12 @@ function descextra( p )
 
       if map.corrosion_ii then
          cor = _(" [Corrosion II]")
-         dmg = dmg * 2
-         dur = 10
+         dmg = dmg + dmg * bonus_mod
+         dur = dur + dur * bonus_mod
       elseif map.corrosion_i then
          cor = _(" [Corrosion I]")
-         dmg = dmg * 1.5
-         dur = 7.5
+         dmg = dmg + 0.5 * dmg * bonus_mod
+         dur = dur + 0.5 * dur * bonus_mod
       end
       if map.crippling then -- Learned at 3
          return fmt.f(_("Plasma burns deal an extra {damage:.1f} of damage over {duration} seconds on the target{corrosion}, while reducing the targets turn, speed, and thrust by 25% [Paralyzing Plasma], and lowering fire rate by 20% [Crippling Plasma]."),{damage=dmg, duration=dur, corrosion=cor})
@@ -79,12 +80,12 @@ function onimpact( p, target )
    end
 
    if mem.corrosion_ii then
-      dur = dur * 2
+      dur = dur + dur * bonus_mod
       target:effectAdd( effect_name, dur, dmg )
       target:effectAdd( "Paralyzing Plasma", dur )
       target:effectAdd( "Crippling Plasma", dur )
    elseif mem.corrosion_i then
-      dur = dur * 1.5
+      dur = dur + 0.5 * dur * bonus_mod
       target:effectAdd( effect_name, dur, dmg )
       if mem.paralyzing then
          target:effectAdd( "Paralyzing Plasma", dur )
