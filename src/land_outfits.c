@@ -664,7 +664,7 @@ int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt )
 
    p  = outfit_getNameWithClass( o, buf, n );
    if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-      p += scnprintf( &buf[p], n-p, "#o%s#0\n"_("Unique") );
+      p += scnprintf( &buf[p], n-p, "#o%s#0\n", _("Unique") );
    if (o->limit != NULL)
       p += scnprintf( &buf[p], n-p, "#r%s#0\n", _("Only 1 of type per ship") );
    if (o->slot.spid != 0)
