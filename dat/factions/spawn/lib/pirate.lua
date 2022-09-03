@@ -36,26 +36,36 @@ function spir.spawn_patrol ()
    return pilots
 end
 
-
-function spir.spawn_loner ()
+function spir.spawn_loner_weak ()
    local pilots = {}
    pilots.__nofleet = true
    pilots.__stealth = hostile_system or (rnd.rnd() < 0.7)
 
    local r = rnd.rnd()
-   if r < 0.2 then
+   if r < 0.3 then
       scom.addPilot( pilots, shyena )
-   elseif r < 0.3 then
+   elseif r < 0.5 then
       scom.addPilot( pilots, sshark )
-   elseif r < 0.4 then
+   elseif r < 0.65 then
       scom.addPilot( pilots, svendetta )
-   elseif r < 0.55 then
+   elseif r < 0.85 then
       scom.addPilot( pilots, sancestor )
-   elseif r < 0.7 then
+   else
       scom.addPilot( pilots, sphalanx )
-   elseif r < 0.8 then
+   end
+
+   return pilots
+end
+
+function spir.spawn_loner_strong ()
+   local pilots = {}
+   pilots.__nofleet = true
+   pilots.__stealth = hostile_system or (rnd.rnd() < 0.7)
+
+   local r = rnd.rnd()
+   if r < 0.4 then
       scom.addPilot( pilots, srhino )
-   elseif r < 0.9 then
+   elseif r < 0.7 then
       scom.addPilot( pilots, sadmonsher )
    else
       scom.addPilot( pilots, sstarbridge )
@@ -63,7 +73,6 @@ function spir.spawn_loner ()
 
    return pilots
 end
-
 
 -- @brief Spawns a medium sized squadron.
 function spir.spawn_squad ()
@@ -99,7 +108,6 @@ function spir.spawn_squad ()
 
    return pilots
 end
-
 
 -- @brief Spawns a capship with escorts.
 function spir.spawn_capship ()
@@ -153,10 +161,11 @@ function spir.create ( fpirate, max )
    end
 
    -- Create weights for spawn table
-   weights[ spir.spawn_patrol  ] = 100
-   weights[ spir.spawn_loner   ] = 100
-   weights[ spir.spawn_squad   ] = math.max(1, -80 + 0.80 * max)
-   weights[ spir.spawn_capship ] = math.max(1, capship_base + 1.70 * max)
+   weights[ spir.spawn_patrol  ] = max
+   weights[ spir.spawn_loner_weak ] = max
+   weights[ spir.spawn_loner_strong ] = math.max(0, -80 + 1.0 * max )
+   weights[ spir.spawn_squad   ] = math.max(0, -120 + 0.80 * max)
+   weights[ spir.spawn_capship ] = math.max(0, capship_base + 1.70 * max)
 
    return scom.init( fpirate, weights, max )
 end
