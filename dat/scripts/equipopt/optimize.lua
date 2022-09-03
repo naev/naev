@@ -85,6 +85,13 @@ local goodness_special = {
    ["TeraCom Medusa Launcher"] = 0.5,           -- really high disable
    ["Droid Repair Crew"] = 0.5, -- Only work until 50%
    ["Electron Burst Cannon"] = 0.7, -- Shieldbreaker damage
+   -- Plasma do a lot of damage over time
+   ["Plasma Blaster MK1"] = 1 / 0.75,
+   ["Plasma Blaster MK2"] = 1 / 0.75,
+   ["Plasma Cannon"] = 1 / 0.75,
+   ["Plasma Cluster Cannon"] = 1 / 0.75,
+   ["Plasma Turret MK1"] = 1 / 0.75,
+   ["Plasma Turret MK2"] = 1 / 0.75,
 }
 
 
