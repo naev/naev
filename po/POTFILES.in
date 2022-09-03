@@ -2854,12 +2854,12 @@ dat/outfits/accessory/black_cat_doll.lua
 dat/outfits/bioship/skills/ambush_hunter.lua
 dat/outfits/bioship/skills/bioplasma.lua
 dat/outfits/bioship/skills/bioplasma2.lua
-dat/outfits/bioship/skills/bioplasma_common.lua
 dat/outfits/bioship/skills/feral_rage_i.lua
 dat/outfits/bioship/skills/feral_rage_iii.lua
 dat/outfits/bioship/skills/hunters_instinct.lua
 dat/outfits/bioship/skills/the_bite.lua
 dat/outfits/bioship/skills/tunnelling_organ.lua
+dat/outfits/lib/bioplasma.lua
 dat/outfits/lua_outfit_example.lua
 dat/outfits/structure/nebular_shielding_prototype.lua
 dat/outfits/unique/bioship_pheromone_emitter.lua
