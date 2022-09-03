@@ -15,16 +15,17 @@ Checks to see if a position is good for a pilot, considering both lanes and spob
 --]]
 function careful.posIsGood( p, pos )
    local lanedist = lanes.getDistance2P( p, pos )
-   if lanedist > math.pow( mem.lanedistance, 2 ) then
+   if lanedist < math.pow( mem.lanedistance, 2 ) then
       return false
    end
 
    local pf = p:faction()
+   local pp = p:pos()
    local spobdist2 = math.pow( mem.spobdistance, 2 )
    for k,v in ipairs(system.cur():spobs()) do
       local f = v:faction()
       if f and f:areEnemies( pf ) then
-         if v:pos():dist2( p:pos() ) < spobdist2 then
+         if v:pos():dist2( pp ) < spobdist2 then
             return false
          end
       end
