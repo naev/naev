@@ -26,6 +26,7 @@
 #include "nlua.h"
 #include "nlua_pilot.h"
 #include "nlua_pilotoutfit.h"
+#include "nlua_outfit.h"
 
 /*
  * Prototypes.
@@ -1224,7 +1225,8 @@ static const char* pilot_outfitLDescExtra( const Pilot *p, const Outfit *o )
       lua_pushpilot( naevL, p->id ); /* f, p */
    else
       lua_pushnil( naevL ); /* f, p */
-   if (nlua_pcall( o->lua_env, 1, 1 )) { /* */
+   lua_pushoutfit( naevL, o ); /* f, p, o */
+   if (nlua_pcall( o->lua_env, 2, 1 )) { /* */
       outfitLRunWarning( p, o, "descextra", lua_tostring(naevL,-1) );
       lua_pop(naevL, 1);
       descextra[0] = '\0';
