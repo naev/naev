@@ -6,6 +6,7 @@ local lanes = require 'ai.core.misc.lanes'
 if __ai then
    mem.lanedistance = mem.lanedistance or 2e3
    mem.spobdistance = mem.spobdistance or 3e3
+   mem.jumpdistance = mem.jumpdistance or 1e3
 end
 
 local careful = {}
@@ -19,13 +20,24 @@ function careful.posIsGood( p, pos )
       return false
    end
 
+   local scur = system.cur()
    local pf = p:faction()
    local pp = p:pos()
    local spobdist2 = math.pow( mem.spobdistance, 2 )
-   for k,v in ipairs(system.cur():spobs()) do
+   for k,v in ipairs(scur:spobs()) do
       local f = v:faction()
       if f and f:areEnemies( pf ) then
          if v:pos():dist2( pp ) < spobdist2 then
+            return false
+         end
+      end
+   end
+
+   local jumpdist2 = math.pow( mem.jumpdistance, 2 )
+   for k,v in ipairs(scur:jumps()) do
+      local f = v:dest():faction()
+      if f and f:areEnemies( pf ) then
+         if v:pos():dist2( pp ) < jumpdist2 then
             return false
          end
       end
@@ -92,10 +104,11 @@ function careful.getSafePoint( p, pos, rad, margin, biasdir )
    end
 
    -- Bias away from spobs
+   local scur = system.cur()
    local pf = p:faction()
    local pp = p:pos()
    local spobdist2 = math.pow( mem.spobdistance, 2 )
-   for k,v in ipairs(system.cur():spobs()) do
+   for k,v in ipairs(scur:spobs()) do
       local f = v:faction()
       if f and f:areEnemies( pf ) then
          local vp = v:pos()
@@ -104,6 +117,20 @@ function careful.getSafePoint( p, pos, rad, margin, biasdir )
             local mod, dir = off:polar()
             -- This is a really lazy approach, has to be done better
             candidate = candidate + vec2.newP( mem.spobdistance-mod, dir )
+         end
+      end
+   end
+
+   local jumpdist2 = math.pow( mem.jumpdistance, 2 )
+   for k,v in ipairs(scur:jumps()) do
+      local f = v:dest():faction()
+      if f and f:areEnemies( pf ) then
+         local vp = v:pos()
+         if vp:dist2( pp ) < jumpdist2 then
+            local off = pp-vp
+            local mod, dir = off:polar()
+            -- This is a really lazy approach, has to be done better
+            candidate = candidate + vec2.newP( mem.jumpdistance-mod, dir )
          end
       end
    end
