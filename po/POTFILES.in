@@ -2854,6 +2854,7 @@ dat/outfits/accessory/black_cat_doll.lua
 dat/outfits/bioship/skills/ambush_hunter.lua
 dat/outfits/bioship/skills/bioplasma.lua
 dat/outfits/bioship/skills/bioplasma2.lua
+dat/outfits/bioship/skills/bioplasma_common.lua
 dat/outfits/bioship/skills/feral_rage_i.lua
 dat/outfits/bioship/skills/feral_rage_iii.lua
 dat/outfits/bioship/skills/hunters_instinct.lua
