@@ -98,7 +98,7 @@ static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
 static int pilotL_dir( lua_State *L );
-static int pilotL_ew( lua_State *L );
+static int pilotL_evasion( lua_State *L );
 static int pilotL_temp( lua_State *L );
 static int pilotL_mass( lua_State *L );
 static int pilotL_faction( lua_State *L );
@@ -250,7 +250,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
-   { "ew", pilotL_ew },
+   { "evasion", pilotL_evasion },
    { "temp", pilotL_temp },
    { "mass", pilotL_mass },
    { "cooldown", pilotL_cooldown },
@@ -2185,13 +2185,13 @@ static int pilotL_velocity( lua_State *L )
 /**
  * @brief Gets the pilot's evasion.
  *
- * @usage d = p:ew()
+ * @usage d = p:evasion()
  *
  *    @luatparam Pilot p Pilot to get the evasion of.
  *    @luatreturn number The pilot's current evasion value.
- * @luafunc ew
+ * @luafunc evasion
  */
-static int pilotL_ew( lua_State *L )
+static int pilotL_evasion( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    lua_pushnumber( L, p->ew_evasion );
