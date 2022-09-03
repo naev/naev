@@ -2419,6 +2419,7 @@ dat/ai/core/idle/miner.lua
 dat/ai/core/idle/pirate.lua
 dat/ai/core/idle/trader.lua
 dat/ai/core/idle/wait.lua
+dat/ai/core/misc/careful.lua
 dat/ai/core/misc/distress.lua
 dat/ai/core/misc/lanes.lua
 dat/ai/core/misc/scans.lua

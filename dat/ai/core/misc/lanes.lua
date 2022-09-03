@@ -381,7 +381,6 @@ function lanes.getNonPointP( p, pos, rad, margin, biasdir )
    return lanes.getNonPoint( L, pos, rad, margin, biasdir )
 end
 
-
 --[[
 -- Gets a random point of interest
 --]]

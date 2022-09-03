@@ -1,59 +1,8 @@
-local lanes = require 'ai.core.misc.lanes'
+local careful = require "ai.core.misc.careful"
 require 'ai.core.idle.generic'
 
 -- Keep generic as backup
 local idle_generic = idle
-
--- Fuses t2 into t1 avoiding duplicates
-local function __join_tables( t1, t2 )
-   local t = t1
-   for k,v in ipairs(t2) do
-      local found = false
-      for i,u in ipairs(t1) do
-         if u==v then
-            found = true
-            break
-         end
-      end
-      if not found then
-         table.insert( t, v )
-      end
-   end
-   return t
-end
-
--- Estimate the strength of a group of pilots
-local function __estimate_strength( pilots )
-   local str = 0
-   for k,p in ipairs(pilots) do
-      str = str + p:ship():points()
-   end
-   -- Diminishing returns for large strengths
-   -- ((x+1)**(1-n) - 1)/(1-n)
-   local n = 0.3
-   return (math.pow(str+1, 1-n) - 1) / (1-n)
-   --return str
-end
-
--- See if a target is vulnerable
-local function __vulnerable( p, plt, threshold, r )
-   local always_yes = (mem.vulnignore or not mem.natural)
-   local pos = plt:pos()
-   r = r or math.pow( mem.lanedistance, 2 )
-   -- Make sure not in safe lanes
-   if always_yes or lanes.getDistance2P( p, pos ) > r then
-      -- Check to see vulnerability
-      local H = 1+__estimate_strength( p:getHostiles( mem.vulnrange, pos, true ) )
-      local F = 1+__estimate_strength( __join_tables(
-            p:getAllies( mem.vulnrange, pos, true ),
-            p:getAllies( mem.vulnrange, nil, true ) ) )
-
-      if always_yes or F*threshold >= H then
-         return true, F, H
-      end
-   end
-   return false
-end
 
 -- Get a nearby enemy using pirate heuristics
 local function __getenemy( p )
@@ -61,7 +10,7 @@ local function __getenemy( p )
    local r = math.pow( mem.lanedistance, 2 )
    -- Need to consider fighters here
    for k,v in ipairs(p:getHostiles( mem.ambushclose, nil, true, false, true )) do
-      local vuln, F, H = __vulnerable( p, v, mem.vulnattack, r )
+      local vuln, F, H = careful.checkVulnerable( p, v, mem.vulnattack, r )
       if vuln then
          local d = ai.dist2( v )
          table.insert( pv, {p=v, d=d, F=F, H=H} )
@@ -108,7 +57,7 @@ local function __loiter( p, taskname )
          targetdir = targetdir + rnd.sigma() * math.rad(15)
       end
    end
-   local target = lanes.getNonPointP( p, nil, nil, nil, targetdir )
+   local target = careful.getSafePoint( p, nil, nil, nil, targetdir )
    if target then
       local _m, a = (target - p:pos()):polar()
       mem.lastdirection = a -- bias towards moving in a straight line
@@ -286,8 +235,7 @@ control_funcs.ambush_stalk = function ()
       return
    end
    -- Ignore enemies that are in safe zone again
-   local r = math.pow( mem.lanedistance, 2 )
-   if lanes.getDistance2P( p, target:pos() ) < r then
+   if not careful.posIsGood( p, target:pos() ) then
       ai.poptask()
       return
    end
@@ -301,7 +249,7 @@ control_funcs.attack = function ()
    end
 
    local p = ai.pilot()
-   if not __vulnerable( p, target, mem.vulnabort ) then
+   if not careful.checkVulnerable( p, target, mem.vulnabort ) then
       ai.poptask()
 
       -- Try to get a new enemy
@@ -319,8 +267,7 @@ end
 control_funcs.inspect_moveto = function ()
    local p = ai.pilot()
    local target = ai.taskdata()
-   local r = mem.lanedistance
-   if mem.natural and target and lanes.getDistance2P( p, target ) < r*r then
+   if mem.natural and target and not careful.posIsGood( p, target ) then
       ai.poptask()
       return false
    end
@@ -342,7 +289,7 @@ function should_attack( enemy, si )
    if not res then return false end
 
    -- Make sure vulnerable
-   if not __vulnerable( p, enemy, mem.vulnattack ) then
+   if not careful.checkVulnerable( p, enemy, mem.vulnattack ) then
       return false
    end
    return true
@@ -350,11 +297,9 @@ end
 
 -- Try to investigate
 function should_investigate( pos, _si )
-   local d = ai.dist2( pos )
-   local ec = mem.enemyclose or math.huge
-   if d < lanes.getDistance2P( ai.pilot(), pos ) then
+   if careful.posIsGood( ai.pilot(), pos ) then
       return false
-   elseif d < ec then
+   elseif ai.dist2(pos) < (mem.enemyclose or math.huge) then
       return true
    end
    return false
