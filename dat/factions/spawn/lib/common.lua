@@ -80,8 +80,10 @@ function scom.createSpawnTable( weights )
    local spawn_table = {}
    local max = 0
    for k,v in pairs(weights) do
-      max = max + v
-      table.insert( spawn_table, { chance = max, func = k } )
+      if v > 0 then
+         max = max + v
+         table.insert( spawn_table, { chance = max, func = k } )
+      end
    end
 
    -- Safety check
