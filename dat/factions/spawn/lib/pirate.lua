@@ -11,12 +11,13 @@ local sstarbridge = ship.get("Pirate Starbridge")
 local skestrel    = ship.get("Pirate Kestrel")
 
 local spir = {}
+local hostile_system = false
 
 -- @brief Spawns a small patrol fleet.
 function spir.spawn_patrol ()
    local pilots = {}
    pilots.__nofleet = (rnd.rnd() < 0.7)
-   pilots.__stealth = (rnd.rnd() < 0.9)
+   pilots.__stealth = hostile_system or (rnd.rnd() < 0.9)
    local r = rnd.rnd()
 
    if r < 0.3 then
@@ -39,7 +40,7 @@ end
 function spir.spawn_loner ()
    local pilots = {}
    pilots.__nofleet = true
-   pilots.__stealth = (rnd.rnd() < 0.7)
+   pilots.__stealth = hostile_system or (rnd.rnd() < 0.7)
 
    local r = rnd.rnd()
    if r < 0.2 then
@@ -68,7 +69,7 @@ end
 function spir.spawn_squad ()
    local pilots = {}
    pilots.__nofleet = (rnd.rnd() < 0.6)
-   pilots.__stealth = (rnd.rnd() < 0.7)
+   pilots.__stealth = hostile_system or (rnd.rnd() < 0.7)
    local r = rnd.rnd()
 
    if r < 0.3 then
@@ -104,7 +105,7 @@ end
 function spir.spawn_capship ()
    local pilots = {}
    pilots.__nofleet = (rnd.rnd() < 0.5)
-   pilots.__stealth = (rnd.rnd() < 0.5)
+   pilots.__stealth = hostile_system or (rnd.rnd() < 0.5)
    local r = rnd.rnd()
 
    -- Generate the capship
@@ -135,11 +136,27 @@ end
 function spir.create ( fpirate, max )
    local weights = {}
 
+   -- Check to see if it's a hostile system
+   hostile_system = false
+   for k,v in ipairs(system.cur():spobs()) do
+      local f = v:faction()
+      if f and f:areEnemies( fpirate ) then
+         hostile_system = true
+         break
+      end
+   end
+
+   -- Make it harder for large ships to spawn in hostile territory
+   local capship_base = -500
+   if hostile_system then
+      capship_base = -700
+   end
+
    -- Create weights for spawn table
    weights[ spir.spawn_patrol  ] = 100
    weights[ spir.spawn_loner   ] = 100
    weights[ spir.spawn_squad   ] = math.max(1, -80 + 0.80 * max)
-   weights[ spir.spawn_capship ] = math.max(1, -500 + 1.70 * max)
+   weights[ spir.spawn_capship ] = math.max(1, capship_base + 1.70 * max)
 
    return scom.init( fpirate, weights, max )
 end
