@@ -3,7 +3,7 @@ Library to handle avoiding enemies and not being suicidal in general.
 --]]
 local lanes = require 'ai.core.misc.lanes'
 
-if mem then
+if __ai then
    mem.lanedistance = mem.lanedistance or 2e3
    mem.spobdistance = mem.spobdistance or 3e3
 end

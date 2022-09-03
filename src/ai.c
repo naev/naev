@@ -629,6 +629,10 @@ static int ai_loadProfile( AI_Profile *prof, const char* filename )
    /* Register C functions in Lua */
    nlua_register(env, "ai", aiL_methods, 0);
 
+   /* Mark as an ai. */
+   lua_pushboolean( naevL, 1 );
+   nlua_setenv( naevL, env, "__ai" );
+
    /* Set "mem" to be default template. */
    lua_newtable(naevL);              /* m */
    lua_pushvalue(naevL,-1);          /* m, m */
@@ -991,7 +995,7 @@ static void ai_create( Pilot* pilot )
       nlua_env env = equip_env;
       char *func = "equip_generic";
 
-      if  (faction_getEquipper( pilot->faction ) != LUA_NOREF) {
+      if (faction_getEquipper( pilot->faction ) != LUA_NOREF) {
          env = faction_getEquipper( pilot->faction );
          func = "equip";
       }

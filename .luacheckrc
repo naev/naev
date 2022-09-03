@@ -34,7 +34,7 @@ stds.Basic={
    },
    read_globals={"N_", "_", "__debugging", "gettext", "n_", "p_", "warn"},
 }
-stds.AI = {read_globals={"ai"}} -- the C function is ai_loadProfile() in this case
+stds.AI = {read_globals={"ai","__ai"}} -- the C function is ai_loadProfile() in this case
 stds.Audio = {read_globals={"audio"}}
 stds.Asteroid = {read_globals={"asteroid"}}
 stds.Background = {read_globals={"bkg"}}
