@@ -1,11 +1,15 @@
 -- Need to set effect_name before requiring
--- luacheck: globals effect_name
+-- luacheck: globals effect_name damage_mod base_duration
 local fmt = require "format"
+
+effect_name = effect_name or "Plasma Burn"
+damage_mod = damage_mod or 1
+base_duration = base_duration or 5
 
 local damage, penetration, isturret
 function onload( o )
    local s     = o:specificstats()
-   damage      = s.damage
+   damage      = s.damage * damage_mod
    penetration = s.penetration
    isturret    = s.isturret
 end
@@ -27,7 +31,7 @@ end
 
 function descextra( p )
    local dmg = damage
-   local dur = 5
+   local dur = base_duration
    local cor = ""
 
    if p then
@@ -61,6 +65,7 @@ end
 function onimpact( p, target )
    local ts = target:stats()
    local dmg = damage * (1 - math.min( 1, math.max( 0, ts.absorb - penetration ) ))
+   local dur = base_duration
 
    -- Modify by damage
    if p:exists() then
@@ -74,18 +79,20 @@ function onimpact( p, target )
    end
 
    if mem.corrosion_ii then
-      target:effectAdd( effect_name, 10, dmg )
-      target:effectAdd( "Paralyzing Plasma", 10 )
-      target:effectAdd( "Crippling Plasma", 10 )
+      dur = dur * 2
+      target:effectAdd( effect_name, dur, dmg )
+      target:effectAdd( "Paralyzing Plasma", dur )
+      target:effectAdd( "Crippling Plasma", dur )
    elseif mem.corrosion_i then
-      target:effectAdd( effect_name, 7.5, dmg )
+      dur = dur * 1.5
+      target:effectAdd( effect_name, dur, dmg )
       if mem.paralyzing then
-         target:effectAdd( "Paralyzing Plasma", 7.5 )
+         target:effectAdd( "Paralyzing Plasma", dur )
       end
       if mem.crippling then
-         target:effectAdd( "Crippling Plasma", 7.5 )
+         target:effectAdd( "Crippling Plasma", dur )
       end
    else
-      target:effectAdd( effect_name, 5, dmg )
+      target:effectAdd( effect_name, dur, dmg )
    end
 end
