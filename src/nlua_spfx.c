@@ -66,6 +66,8 @@ static int spfxL_new( lua_State *L );
 static int spfxL_rm( lua_State *L );
 static int spfxL_pos( lua_State *L );
 static int spfxL_vel( lua_State *L );
+static int spfxL_setPos( lua_State *L );
+static int spfxL_setVel( lua_State *L );
 static int spfxL_sfx( lua_State *L );
 static int spfxL_data( lua_State *L );
 static const luaL_Reg spfxL_methods[] = {
@@ -75,6 +77,8 @@ static const luaL_Reg spfxL_methods[] = {
    { "rm", spfxL_rm },
    { "pos", spfxL_pos },
    { "vel", spfxL_vel },
+   { "setPos", spfxL_setPos },
+   { "setVel", spfxL_setVel },
    { "sfx", spfxL_sfx },
    { "data", spfxL_data },
    {0,0}
@@ -409,6 +413,36 @@ static int spfxL_vel( lua_State *L )
    LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
    lua_pushvector( L, ls->pos );
    return 1;
+}
+
+/**
+ * @brief Sets the position of a spfx.
+ *
+ *    @luatparam spfx s Spfx to set the position of.
+ *    @luatparam vec2 p Position to set to.
+ * @luafunc setPos
+ */
+static int spfxL_setPos( lua_State *L )
+{
+   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
+   vec2 *v = luaL_checkvector(L,2);
+   ls->pos = *v;
+   return 0;
+}
+
+/**
+ * @brief Sets the velocity of a spfx.
+ *
+ *    @luatparam spfx s Spfx to set the velocity of.
+ *    @luatparam vec2 v Velocity to set to.
+ * @luafunc setVel
+ */
+static int spfxL_setVel( lua_State *L )
+{
+   LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
+   vec2 *v = luaL_checkvector(L,2);
+   ls->vel = *v;
+   return 0;
 }
 
 /**
