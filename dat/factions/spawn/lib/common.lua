@@ -70,7 +70,6 @@ function scom.calcNextSpawn( cur )
    return math.min(stddelay * fleetratio * delayweight * penaltyweight, maxdelay)
 end
 
-
 --[[
    @brief Creates the spawn table based on a weighted spawn function table.
       @param weights Weighted spawn function table to use to generate the spawn table.
@@ -99,7 +98,6 @@ function scom.createSpawnTable( weights )
    return spawn_table
 end
 
-
 -- @brief Chooses what to spawn
 function scom.choose ()
    local r = rnd.rnd()
@@ -111,7 +109,6 @@ function scom.choose ()
    end
    error(_("No spawn function found"))
 end
-
 
 -- @brief Actually spawns the pilots
 function scom.spawn( pilots )
@@ -210,7 +207,6 @@ function scom.spawn( pilots )
    return spawned
 end
 
-
 -- @brief adds a pilot to the table
 function scom.addPilot( pilots, s, params )
    local presence = s:points()
@@ -218,11 +214,9 @@ function scom.addPilot( pilots, s, params )
    pilots.__presence = (pilots.__presence or 0) + presence
 end
 
-
 -- @brief Gets the presence value of a group of pilots
 function scom.presence( pilots )
    return (pilots and pilots.__presence) or 0
 end
-
 
 return scom

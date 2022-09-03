@@ -141,7 +141,8 @@ function spir.spawn_capship ()
 end
 
 -- @brief Creation hook.
-function spir.create ( fpirate, max )
+function spir.create ( fpirate, max, params )
+   params = params or {}
    local weights = {}
 
    -- Check to see if it's a hostile system
@@ -166,6 +167,11 @@ function spir.create ( fpirate, max )
    weights[ spir.spawn_loner_strong ] = math.max(0, -80 + 1.0 * max )
    weights[ spir.spawn_squad   ] = math.max(0, -120 + 0.80 * max)
    weights[ spir.spawn_capship ] = math.max(0, capship_base + 1.70 * max)
+
+   -- Allow reweighting
+   if params.reweight( weights ) then
+      weights = params.reweight( weights )
+   end
 
    return scom.init( fpirate, weights, max )
 end
