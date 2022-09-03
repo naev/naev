@@ -411,7 +411,7 @@ static int spfxL_pos( lua_State *L )
 static int spfxL_vel( lua_State *L )
 {
    LuaSpfxData_t *ls = luaL_checkspfxdata(L,1);
-   lua_pushvector( L, ls->pos );
+   lua_pushvector( L, ls->vel );
    return 1;
 }
 
