@@ -8,7 +8,6 @@
   <price>0</price>
   <description>TODO</description>
   <gfx_store>/gfx/misc/icons/gluttonous-smile.webp</gfx_store>
-  <desc_extra>Makes the ship lunge at the target to take a bite out of it. Damage is based on ship's mass. On bite all weapon damage output is increased by 25% for 10 seconds, and 25% of armour damage is restored as armour.</desc_extra>
  </general>
  <specific type="modification">
   <lua>outfits/bioship/skills/the_bite.lua</lua>

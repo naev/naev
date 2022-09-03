@@ -1,3 +1,4 @@
+local fmt   = require "format"
 local osh   = require 'outfits.shaders'
 local audio = require 'love.audio'
 local luaspfx = require 'luaspfx'
@@ -97,6 +98,34 @@ function init( p, po )
    else
       mem.duration = 3
    end
+end
+
+function descextra( p, o )
+   if p then
+      local mass = p:mass()
+      local dmg = 10*math.sqrt(mass)
+      local dur = 3
+      local improved = (o==o_improved)
+      local lust = improved or (o==o_lust)
+      if lust then
+         dur = 5
+      end
+      if improved then
+         dmg = dmg * 1.5
+      end
+
+      if improved then
+         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage:.0f} damage ({mass}) [Strong Jaws]. On succesful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust], and 25% of bitten armour is restored to the ship [Strong Jaws]."),
+            {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
+      elseif lust then
+         return fmt.f(_("Makes the ship lunge for {duration} seconds at the target to take a bite out of it for {damage:.0f} damage ({mass}). On succesful bite, weapon damage is increased by 25% for 10 seconds [Blood Lust]."),
+            {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
+      else
+         return fmt.f(_("Makes the ship lunge at the target for {duration} seconds to take a bite out of it for {damage:.0f} damage ({mass})."),
+            {damage=dmg, mass=fmt.tonnes_short(mass), duration=dur } )
+      end
+   end
+   return _("Makes the ship lunge at the target to take a bite out of it. Damage is based on ship's mass.")
 end
 
 function update( p, po, dt )
