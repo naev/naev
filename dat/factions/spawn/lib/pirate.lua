@@ -157,7 +157,7 @@ function spir.create ( fpirate, max )
    -- Make it harder for large ships to spawn in hostile territory
    local capship_base = -500
    if hostile_system then
-      capship_base = -700
+      capship_base = -800
    end
 
    -- Create weights for spawn table
