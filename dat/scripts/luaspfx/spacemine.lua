@@ -5,7 +5,7 @@ local love_shaders = require 'love_shaders'
 local explosion = require 'luaspfx.explosion'
 
 local spacemine_shader_frag = lf.read( "scripts/luaspfx/shaders/pulse.frag" )
-local highlight_shader_frag = lf.read( "scripts/luaspfx/shaders/pulse.frag" )
+local highlight_shader_frag = lf.read( "scripts/luaspfx/shaders/spacemine_highlight.frag" )
 local spacemine_shader, highlight_shader
 
 local function explode( s, d )
@@ -58,21 +58,23 @@ end
 local function render( sp, x, y, z )
    local d = sp:data()
    local old_shader = lg.getShader()
+   highlight_shader:send( "u_time", d.timer )
+   spacemine_shader:send( "u_time", d.timer )
 
    -- Render for player
    local pp = player.pilot()
    local ew = pp:evasion()
-   if ew > d.trackmin then
+   if (not d.fct or d.fct:areEnemies(pp:faction())) and ew > d.trackmin then
       local r = math.min( (ew - d.trackmin) / (d.trackmax - d.trackmin), 1 ) * d.range * z
       lg.setShader( highlight_shader )
-      lg.setColor( {1, 0, 0, 0.3} )
+      lg.setColor( {1, 0, 0, 0.1} )
       love_shaders.img:draw( x-r, y-r, 0, 2*r )
    end
 
    -- TODO render something nice that blinks
-   spacemine_shader:send( "u_time", d.timer )
    local s = d.size * z
    --lg.setShader( spacemine_shader )
+   lg.setShader( nil )
    lg.setColor( {1, 1, 1, 1} )
    love_shaders.img:draw( x-s*0.5, y-s*0.5, 0, s )
 
