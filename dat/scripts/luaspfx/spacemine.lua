@@ -101,7 +101,7 @@ local function spacemine( pos, vel, fct, params )
    d.trackmax  = params.trackmax or 10e3
    d.trackmin = params.trackmin or 3e3
    d.pilot  = params.pilot
-   d.primed = params.primed or 0
+   d.primed = params.primed or 5
    return s
 end
 
