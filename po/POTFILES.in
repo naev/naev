@@ -274,6 +274,7 @@ dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml
 dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml
 dat/outfits/launchers/repeating_banshee_launcher.xml
 dat/outfits/launchers/shatterer_launcher.xml
+dat/outfits/launchers/space_mine_layer.xml
 dat/outfits/launchers/superfast_collider_launcher.xml
 dat/outfits/launchers/teracom_banshee_launcher.xml
 dat/outfits/launchers/teracom_fury_launcher.xml
@@ -2859,6 +2860,7 @@ dat/outfits/bioship/skills/feral_rage_iii.lua
 dat/outfits/bioship/skills/hunters_instinct.lua
 dat/outfits/bioship/skills/the_bite.lua
 dat/outfits/bioship/skills/tunnelling_organ.lua
+dat/outfits/launchers/space_mine_layer.lua
 dat/outfits/lib/bioplasma.lua
 dat/outfits/lib/mining_drill.lua
 dat/outfits/lua_outfit_example.lua
