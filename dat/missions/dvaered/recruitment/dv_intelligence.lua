@@ -110,7 +110,7 @@ function land()
    --Pay the player
    if spob.cur():faction() == faction.get( "Dvaered" ) and mem.misn_state == 1 then
       vntk.msg( _("Mission Complete"), fmt.f(_([[You land and transmit a datapad to the local Dvaered liaison officer.
-You recieve {reward}.]]),{reward=fmt.reward(mem.credits)}) )
+{reward}]]),{reward=fmt.reward(mem.credits)}) )
       player.pay( mem.credits )
       faction.modPlayerSingle("Dvaered", rnd.rnd(1, 2))
       pir.reputationNormalMission(rnd.rnd(2,3))
