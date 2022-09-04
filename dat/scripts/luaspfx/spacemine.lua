@@ -45,7 +45,7 @@ local function update( s, dt )
          explode( s, d )
          return
       end
-      local mod = (ew - d.trackmin) / (d.trackmax - d.trackmin)
+      mod = (ew - d.trackmin) / (d.trackmax - d.trackmin)
       -- Have to see if it triggers now
       local dst = p:pos():dist( sp )
       if d.range < dst * mod then
@@ -58,13 +58,13 @@ end
 local function render( sp, x, y, z )
    local d = sp:data()
    local old_shader = lg.getShader()
-     
+
    -- Render for player
    local pp = player.pilot()
    local ew = pp:evasion()
    if ew > d.trackmin then
       local r = math.min( (ew - d.trackmin) / (d.trackmax - d.trackmin), 1 ) * d.range * z
-      --lg.setShader( highlight_shader )
+      lg.setShader( highlight_shader )
       lg.setColor( {1, 0, 0, 0.3} )
       love_shaders.img:draw( x-r, y-r, 0, 2*r )
    end
@@ -75,7 +75,7 @@ local function render( sp, x, y, z )
    --lg.setShader( spacemine_shader )
    lg.setColor( {1, 1, 1, 1} )
    love_shaders.img:draw( x-s*0.5, y-s*0.5, 0, s )
-   
+
    lg.setShader( old_shader )
 end
 
