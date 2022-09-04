@@ -8,18 +8,12 @@ local msg_combined
 local desc_list = {}
 desc_list["generic"] = {
    _("A FLF fighter."),
+   _("A FLF combatant."),
+   _("A tired-looking FLF combatant."),
+   _("An exhausted FLF fighter."),
+   _("An FLF combatant that smells like ship oil."),
+   _("A grease-covered FLF militant."),
 }
---desc_list["agriculture"] = {}
---desc_list["industrial"] = {}
---desc_list["mining"] = {}
---desc_list["tourism"] = {}
---desc_list["medical"] = {}
---desc_list["trade"] = {}
---desc_list["old"] = {}
---desc_list["immigration"] = {}
---desc_list["prison"] = {}
---desc_list["station"] = {}
---desc_list["government"] = {}
 
 local msg_lore = {
    _([["I can't stand Dvaereds. I just want to wipe them all off the map. Don't you?"]]),
