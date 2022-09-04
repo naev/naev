@@ -595,6 +595,12 @@ void player_swapShip( const char *shipname, int move_cargo )
    if (landed)
       land_refuel();
 
+   /* Clear targets. */
+   pilot_setTarget( player.p, player.p->id );
+   player_targetSpobSet( -1 );
+   player.p->nav_hyperspace = -1;
+   player_hyperspacePreempt(0);
+
    /* Set some gui stuff. */
    gui_load( gui_pick() );
 
