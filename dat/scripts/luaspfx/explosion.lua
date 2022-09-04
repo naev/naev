@@ -56,8 +56,8 @@ local function spfx_explosion( pos, vel, size )
    d.steps  = math.min( math.floor(0.0111688 * size + 8.16463 + 0.5), 16 )
 end
 
-local function explosion( pos, vel, radius, damage, parent, params )
-   params = params or {}
+local function explosion( pos, vel, radius, damage, parent, _params )
+   -- params = params or {}
    -- Lazy loading shader / sound
    if not explosion_shader then
       explosion_shader = lg.newShader( explosion_shader_frag )
