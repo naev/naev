@@ -61,7 +61,7 @@ local function render( sp, x, y, z )
    local s = d.size * z
    local old_shader = lg.getShader()
    --lg.setShader( spacemine_shader )
-   lg.setColor( d.col )
+   lg.setColor( {1, 1, 1, 1} )
    love_shaders.img:draw( x-s*0.5, y-s*0.5, 0, s )
    lg.setShader( old_shader )
 end
