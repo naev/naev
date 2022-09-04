@@ -87,8 +87,11 @@ local function spacemine( pos, vel, fct, params )
       highlight_shader = lg.newShader( highlight_shader_frag )
    end
 
+   -- Other params
+   local ttl = params.ttl or 90
+
    -- Sound is handled separately in outfit
-   local s  = spfx.new( 90, update, render, nil, nil, pos, vel )
+   local s  = spfx.new( ttl, update, render, nil, nil, pos, vel )
    local d  = s:data()
    d.timer  = 0
    d.size   = 100 -- TODO replace with sprite
