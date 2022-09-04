@@ -47,7 +47,7 @@ end
 local function spfx_explosion( pos, vel, size )
    local speed  = math.max( -0.000940296 * size + 0.719132, 0.2 )
    local sfx = explosion_sfx[ rnd.rnd(1,#explosion_sfx) ]
-   local s  = spfx.new( 1/speed, update, nil, nil, render, pos, vel, sfx )
+   local s  = spfx.new( 1/speed, update, nil, render, nil, pos, vel, sfx )
    local d  = s:data()
    d.timer  = 0
    d.size   = size
