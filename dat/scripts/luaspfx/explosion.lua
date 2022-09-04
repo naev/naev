@@ -45,14 +45,14 @@ local function render( sp, x, y, z )
 end
 
 local function spfx_explosion( pos, vel, size )
-   local length = 0.00486483 * size + 1.26438
+   local speed  = math.max( -0.000940296 * size + 0.719132, 0.2 )
    local sfx = explosion_sfx[ rnd.rnd(1,#explosion_sfx) ]
-   local s  = spfx.new( length, update, nil, nil, render, pos, vel, sfx )
+   local s  = spfx.new( 1/speed, update, nil, nil, render, pos, vel, sfx )
    local d  = s:data()
    d.timer  = 0
    d.size   = size
    d.grain  = 0.0016265 * size + 0.0944304
-   d.speed  = math.max( -0.000940296 * size + 0.719132, 0.2 )
+   d.speed  = speed
    d.steps  = math.min( math.floor(0.0111688 * size + 8.16463 + 0.5), 16 )
 end
 
