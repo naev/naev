@@ -1746,9 +1746,9 @@ if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to
    MELEMENT(temp->u.lau.amount==0.,"amount");
    MELEMENT(temp->u.lau.reload_time==0.,"reload_time");
    MELEMENT(temp->u.lau.ammo_mass==0.,"mass");
-   MELEMENT(temp->u.lau.gfx_space==NULL,"gfx");
-   MELEMENT(temp->u.lau.spfx_shield==-1,"spfx_shield");
-   MELEMENT(temp->u.lau.spfx_armour==-1,"spfx_armour");
+   MELEMENT(!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.gfx_space==NULL,"gfx");
+   MELEMENT(!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.spfx_shield==-1,"spfx_shield");
+   MELEMENT(!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.spfx_armour==-1,"spfx_armour");
    MELEMENT((sound_disabled!=0) && (temp->u.lau.sound<0),"sound");
    /* MELEMENT(temp->u.lau.thrust==0,"thrust"); */
    /* Unguided missiles don't need everything */
@@ -1759,14 +1759,14 @@ if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to
       MELEMENT(temp->u.lau.lockon<0,"lockon");
       MELEMENT(!outfit_isTurret(temp) && (temp->u.lau.arc==0.),"arc");
    }
-   MELEMENT(temp->u.lau.speed_max==0,"speed_max");
-   MELEMENT(temp->u.lau.duration==0,"duration");
+   MELEMENT(!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.speed_max==0,"speed_max");
+   MELEMENT(!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.duration==0,"duration");
    MELEMENT(temp->u.lau.dmg.damage==0,"damage");
    /*MELEMENT(temp->u.lau.energy==0.,"energy");*/
 #undef MELEMENT
-   if (temp->u.lau.speed==0. && temp->u.lau.thrust==0.)
+   if (!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.speed==0. && temp->u.lau.thrust==0.)
       WARN(_("Outfit '%s' has no speed nor thrust set!"), temp->name);
-   if (temp->u.lau.iflockon >= temp->u.lau.duration)
+   if (!outfit_isProp(temp,OUTFIT_PROP_SHOOT_DRY)&&temp->u.lau.iflockon >= temp->u.lau.duration)
       WARN(_("Outfit '%s' has longer 'iflockon' than ammo 'duration'"), temp->name);
 }
 
