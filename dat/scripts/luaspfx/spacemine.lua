@@ -40,13 +40,14 @@ local function update( s, dt )
    for k,p in ipairs(triggers) do
       local ew = p:evasion()
       -- if perfectly tracked, we don't have to do fancy computations
-      if ew <= d.track then
+      if ew > d.trackmax then
          explode( s, d )
          return
       end
+      local mod = (ew - d.trackmin) / (d.trackmax - d.trackmin)
       -- Have to see if it triggers now
       local dst = p:pos():dist( sp )
-      if d.range * d.track < dst * ew then
+      if d.range < dst * mod then
          explode( s, d )
          return
       end
@@ -81,7 +82,8 @@ local function spacemine( pos, vel, fct, params )
    d.range  = 300
    d.explosion = 500
    d.fct    = fct
-   d.track  = params.track or 3000
+   d.trackmax  = params.trackmax or 10e3
+   d.trackmin = params.trackmin or 3e3
    d.pilot  = params.pilot
    d.primed = params.primed or 0
    return s
