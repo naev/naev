@@ -11,15 +11,16 @@ local function do_damage( pos, radius, damage, parent )
    for k,p in ipairs(pilot.getInrange( pos, radius )) do
       local norm, angle = (p:pos() - pos):polar()
       local mod = 1 - norm / radius
-      local mass = math.pow( damage / 30, 2 )
+      local dmg = damage*(0.5 + 0.5*mod)
+      local mass = math.pow( dmg / 15, 2 )
 
       -- Damage and knockback
-      p:damage( damage, 0, 50, "normal", parent )
-      p:knockback( mass, vec2.new( mod*radius, angle ), nil, 0.5 )
+      p:damage( dmg, 0, 50, "normal", parent )
+      p:knockback( mass, vec2.newP( mod*radius, angle ), pos, 1 )
 
       -- Shake the screen for the player
       if p == pp then
-         camera.shake( mass * 0.09 )
+         camera.shake( mass / p:mass() )
       end
    end
 end
