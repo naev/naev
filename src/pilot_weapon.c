@@ -1045,9 +1045,11 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
       energy      = outfit_energy(w->outfit)*energy_mod;
       p->energy  -= energy;
       pilot_heatAddSlot( p, w );
-      for (int i=0; i<w->outfit->u.blt.shots; i++)
-         weapon_add( w, w->heat_T, p->solid->dir,
-               &vp, &vv, p, p->target, time );
+      if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
+         for (int i=0; i<w->outfit->u.blt.shots; i++)
+            weapon_add( w, w->heat_T, p->solid->dir,
+                  &vp, &vv, p, p->target, time );
+      }
    }
 
    /*
@@ -1069,8 +1071,10 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
 
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
-      w->u.beamid = beam_start( w, p->solid->dir,
-            &vp, &p->solid->vel, p, p->target );
+      if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
+         w->u.beamid = beam_start( w, p->solid->dir,
+               &vp, &p->solid->vel, p, p->target );
+      }
 
       w->timer = w->outfit->u.bem.duration;
 
@@ -1104,9 +1108,11 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
       energy      = outfit_energy(w->outfit)*energy_mod;
       p->energy  -= energy;
       pilot_heatAddSlot( p, w );
-      for (int i=0; i<w->outfit->u.lau.shots; i++)
-         weapon_add( w, w->heat_T, p->solid->dir,
-               &vp, &vv, p, p->target, time );
+      if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY )) {
+         for (int i=0; i<w->outfit->u.lau.shots; i++)
+            weapon_add( w, w->heat_T, p->solid->dir,
+                  &vp, &vv, p, p->target, time );
+      }
 
       pilot_rmAmmo( p, w, 1 );
 
@@ -1142,8 +1148,9 @@ static int pilot_shootWeapon( Pilot *p, PilotOutfitSlot *w, double time )
       }
 
       /* Create the escort. */
-      escort_create( p, w->outfit->u.bay.ship,
-            &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1, dockslot );
+      if (!outfit_isProp( w->outfit, OUTFIT_PROP_SHOOT_DRY ))
+         escort_create( p, w->outfit->u.bay.ship,
+               &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1, dockslot );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
       p->mass_outfit     -= w->outfit->u.bay.ship_mass;

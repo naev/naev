@@ -2256,6 +2256,10 @@ static int outfit_parse( Outfit* temp, const char* file )
                outfit_setProp(temp, OUTFIT_PROP_UNIQUE);
                continue;
             }
+            if (xml_isNode(cur,"shoot_dry")) {
+               outfit_setProp(temp, OUTFIT_PROP_SHOOT_DRY);
+               continue;
+            }
             else if (xml_isNode(cur,"gfx_store")) {
                temp->gfx_store = xml_parseTexture( cur,
                      OUTFIT_GFX_PATH"store/%s", 1, 1, OPENGL_TEX_MIPMAPS );
