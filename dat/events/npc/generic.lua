@@ -54,6 +54,9 @@ local msg_lore = {
 }
 
 local msg_cond = {
+   -- Chapter stuff
+   { function () return (player.chapter()=="0") end, _([["There's talk about all these megastructures built around the universe. I call bollocks, there's no way people could work together to build something so impressive. Everyone is always fighting!"]]) },
+   { function () return (player.chapter()=="1") end, _([["Have you seen the new hypergates? Maybe this is the start of all the Great houses putting their differences aside and a new future for a unified humanity!"]]) }, -- Narrator: it was not
    -- Mission Hints
    {npc.test_misnHint("Shadowrun"), _([["Apparently there's a woman who regularly turns up on planets in and around the Klantar system. I wonder what she's looking for?"]])},
    {npc.test_misnHint("Hitman"), _([["There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"]])},
