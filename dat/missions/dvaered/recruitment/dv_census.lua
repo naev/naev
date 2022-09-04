@@ -67,7 +67,8 @@ end
 function land()
    --Pay the player
    if spob.cur():faction() == faction.get( "Dvaered" ) and mem.misn_state == 1 then
-      vntk.msg( _("Reward"), _("You land and transmit a datapad to the local Dvaered liaison officer.") )
+      vntk.msg( _("Mission Complete"), fmt.f(_([[You land and transmit a datapad to the local Dvaered liaison officer.
+You recieve {reward}.]]),{reward=fmt.reward(mem.credits)}) )
       player.pay( mem.credits )
 
       -- Manage counting of missions
@@ -95,6 +96,7 @@ function testInRange()
    if mem.nbships <= #detected then
       misn.osdActive(2)
       mem.misn_state = 1
+      misn.markerRm( mem.misn_marker )
       player.msg( _("You have acquired data on enough Dvaered ships") )
       return
    end
