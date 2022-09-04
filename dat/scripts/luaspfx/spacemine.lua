@@ -4,8 +4,9 @@ local lf = require 'love.filesystem'
 local love_shaders = require 'love_shaders'
 local explosion = require 'luaspfx.explosion'
 
-local spacemine_bg_shader_frag = lf.read( "scripts/luaspfx/shaders/pulse.frag" )
-local spacemine_shader
+local spacemine_shader_frag = lf.read( "scripts/luaspfx/shaders/pulse.frag" )
+local highlight_shader_frag = lf.read( "scripts/luaspfx/shaders/pulse.frag" )
+local spacemine_shader, highlight_shader
 
 local function explode( s, d )
    local damage = 1000
@@ -56,14 +57,25 @@ end
 
 local function render( sp, x, y, z )
    local d = sp:data()
-   spacemine_shader:send( "u_time", d.timer )
+   local old_shader = lg.getShader()
+     
+   -- Render for player
+   local pp = player.pilot()
+   local ew = pp:evasion()
+   if ew > d.trackmin then
+      local r = math.min( (ew - d.trackmin) / (d.trackmax - d.trackmin), 1 ) * d.range * z
+      --lg.setShader( highlight_shader )
+      lg.setColor( {1, 0, 0, 0.3} )
+      love_shaders.img:draw( x-r, y-r, 0, 2*r )
+   end
 
    -- TODO render something nice that blinks
+   spacemine_shader:send( "u_time", d.timer )
    local s = d.size * z
-   local old_shader = lg.getShader()
    --lg.setShader( spacemine_shader )
    lg.setColor( {1, 1, 1, 1} )
    love_shaders.img:draw( x-s*0.5, y-s*0.5, 0, s )
+   
    lg.setShader( old_shader )
 end
 
@@ -71,11 +83,12 @@ local function spacemine( pos, vel, fct, params )
    params = params or {}
    -- Lazy loading shader / sound
    if not spacemine_shader then
-      spacemine_shader = lg.newShader( spacemine_bg_shader_frag )
+      spacemine_shader = lg.newShader( spacemine_shader_frag )
+      highlight_shader = lg.newShader( highlight_shader_frag )
    end
 
    -- Sound is handled separately in outfit
-   local s  = spfx.new( 90, update, nil, nil, render, pos, vel )
+   local s  = spfx.new( 90, update, render, nil, nil, pos, vel )
    local d  = s:data()
    d.timer  = 0
    d.size   = 100 -- TODO replace with sprite
