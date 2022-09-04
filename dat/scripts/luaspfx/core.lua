@@ -9,5 +9,6 @@ luaspfx.sfx   = require "luaspfx.sfx"
 luaspfx.trail = require "luaspfx.trail"
 luaspfx.pulse = require "luaspfx.pulse"
 luaspfx.pheromones = require "luaspfx.pheromones"
+luaspfx.explosion = require "luaspfx.explosion"
 
 return luaspfx
