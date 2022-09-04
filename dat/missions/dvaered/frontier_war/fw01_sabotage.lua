@@ -314,7 +314,7 @@ function spawn_phalanx()
    p:control()
 
    mem.nextsys = lmisn.getNextSystem(system.cur(), sabotsys)
-   p:hyperspace( mem.nextsys ) -- Go towards Battleaddict's place
+   p:hyperspace( mem.nextsys, true ) -- Go towards Battleaddict's place
 
    p:outfitRm("all")
    p:outfitRm("cores")
