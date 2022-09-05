@@ -668,8 +668,8 @@ int outfit_altText( char *buf, int n, const Outfit *o, const Pilot *plt )
    if (o->limit != NULL)
       p += scnprintf( &buf[p], n-p, "#r%s#0\n", _("Only 1 of type per ship") );
    if (o->slot.spid != 0)
-      p += scnprintf( &buf[p], n-p, _("#o%s#0\n"),
-            _( sp_display( o->slot.spid ) ) );
+      p += scnprintf( &buf[p], n-p, "#o%s#0\n",
+            _(sp_display( o->slot.spid) ) );
    p += scnprintf( &buf[p], n-p, "%s", pilot_outfitSummary( plt, o ) );
    if ((o->mass > 0.) && (p < n)) {
       char buf_mass[ECON_MASS_STRLEN];
