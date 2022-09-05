@@ -44,9 +44,12 @@ local function render( sp, x, y, z )
    lg.setShader( old_shader )
 end
 
-local function spfx_explosion( pos, vel, size )
+local function spfx_explosion( pos, vel, size, params )
    local speed  = math.max( -0.000940296 * size + 0.719132, 0.2 )
-   local sfx = explosion_sfx[ rnd.rnd(1,#explosion_sfx) ]
+   local sfx
+   if not params.silent then
+      sfx = explosion_sfx[ rnd.rnd(1,#explosion_sfx) ]
+   end
    local s  = spfx.new( 1/speed, update, nil, render, nil, pos, vel, sfx )
    local d  = s:data()
    d.timer  = 0
@@ -56,8 +59,9 @@ local function spfx_explosion( pos, vel, size )
    d.steps  = math.min( math.floor(0.0111688 * size + 8.16463 + 0.5), 16 )
 end
 
-local function explosion( pos, vel, radius, damage, parent, _params )
-   -- params = params or {}
+local function explosion( pos, vel, radius, damage, parent, params )
+   params = params or {}
+
    -- Lazy loading shader / sound
    if not explosion_shader then
       explosion_shader = lg.newShader( explosion_shader_frag )
@@ -70,11 +74,11 @@ local function explosion( pos, vel, radius, damage, parent, _params )
 
    -- Do damage if applicable
    if damage then
-      do_damage( pos, radius, damage, parent )
+      do_damage( pos, radius, damage, params.penetration, parent )
    end
 
    -- Create the explosions
-   spfx_explosion( pos, vel, radius )
+   spfx_explosion( pos, vel, radius, params )
 end
 
 return explosion
