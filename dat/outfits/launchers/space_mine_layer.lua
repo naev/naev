@@ -13,6 +13,7 @@ function ontoggle( p, _po, on )
       penetration = ss.penetration,
       trackmax    = ss.trackmin,
       trackmin    = ss.trackmax,
+      duration    = ss.duration,
       pilot       = p,
    } )
 

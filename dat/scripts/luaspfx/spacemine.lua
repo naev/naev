@@ -92,10 +92,10 @@ local function spacemine( pos, vel, fct, params )
    end
 
    -- Other params
-   local ttl = params.ttl or 90
+   local duration = params.duration or 90
 
    -- Sound is handled separately in outfit
-   local s  = spfx.new( ttl, update, render, nil, nil, pos, vel )
+   local s  = spfx.new( duration, update, render, nil, nil, pos, vel )
    local d  = s:data()
    d.timer  = 0
    d.range  = 300

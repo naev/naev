@@ -19,8 +19,7 @@
   <trackmax>10000</trackmax>
   <ammo_mass>10</ammo_mass>
   <sound>grenadefire</sound>
-  <thrust>0</thrust>
-  <speed>0</speed>
+  <duration>90</duration>
   <damage>
    <type>emp</type>
    <penetrate>50</penetrate>
