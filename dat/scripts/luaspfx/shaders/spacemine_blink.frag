@@ -1,5 +1,5 @@
 uniform float u_time = 0.0;
-const float PERIOD = 3.14;
+const float PERIOD = 4.0;
 
 vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 {

@@ -1,4 +1,6 @@
-const float PERIOD   = 2.0;
+#include "lib/math.glsl"
+
+const float PERIOD   = M_PI;
 uniform float u_time = 0.0;
 
 vec4 effect( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
