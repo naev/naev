@@ -590,8 +590,7 @@ vec4 bg( vec2 uv )
    return vec4( c, 1.0 );
 }
 
-const float PERIOD   = 10.0;
-
+const float PERIOD   = 2.0;
 vec4 sm_highlight( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    float progress = mod( u_time, PERIOD ) / PERIOD;
@@ -603,6 +602,17 @@ vec4 sm_highlight( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coor
    float d = abs(length(uv)-r);
    colour.a *= smoothstep( -0.1, 0.0, -d );
    colour.a *= min( 1.0,  10.0*(1.0-progress) );
+   return colour;
+}
+
+vec4 sm( vec4 colour, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   colour.a *= clamp( 10.0*sin( u_time * 1.5 ), 0.0, 1.0 );
+   if (colour.a <= 0.0)
+      discard;
+   vec2 uv = texture_coords*2.0-1.0;
+   float d = length(uv)-0.3;
+   colour.a *= smoothstep( -0.7, 0.0, -d );
    return colour;
 }
 
@@ -632,7 +642,8 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_vncont( colour, uv_rel );
    //col_out = sdf_vndone( colour, uv_rel );
    //col_out = sdf_notemarker( colour, uv_rel );
-   col_out = sm_highlight( colour, tex, uv, px );
+   //col_out = sm_highlight( colour, tex, uv, px );
+   col_out = sm( colour, tex, uv, px );
 
    return mix( bg(uv), col_out, col_out.a );
 }
