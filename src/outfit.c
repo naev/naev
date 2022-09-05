@@ -1349,6 +1349,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    SDESC_COLOURT(  l, temp, _("\n     %.0f%% vs shield"), 100., dshield*100. );
    SDESC_COND( l, temp, _("\n     %.0f%% knockback"), dknockback*100. );
    SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
+   SDESC_COND( l, temp, _("\n%.0f Mass"), temp->mass );
    SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.blt.dmg.penetration*100. );
    SDESC_COND( l, temp, _("\n%.2f DPS [%.0f Damage]"),
          1./temp->u.blt.delay * temp->u.blt.dmg.damage * (double)temp->u.blt.shots, temp->u.blt.dmg.damage * (double)temp->u.blt.shots );
@@ -1501,6 +1502,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    SDESC_COLOURT(  l, temp, _("\n     %.0f%% vs shield"), 100., dshield*100. );
    SDESC_COND( l, temp, _("\n     %.0f%% knockback"), dknockback*100. );
    SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
+   SDESC_COND( l, temp, _("\n%.0f Mass"), temp->mass );
    SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.bem.dmg.penetration*100 );
    SDESC_ADD(  l, temp, _("\n%.2f DPS [%s]"),
          temp->u.bem.dmg.damage * temp->u.bem.duration / (temp->u.bem.duration + temp->u.bem.delay),
@@ -1700,6 +1702,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    SDESC_COLOURT(  l, temp, _("\n     %.0f%% vs shield"), 100., dshield*100. );
    SDESC_COND( l, temp, _("\n     %.0f%% knockback"), dknockback*100. );
    SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
+   SDESC_COND( l, temp, _("\n%.0f Mass"), temp->mass );
 
    if (outfit_isSeeker(temp)) {
       SDESC_ADD(  l, temp, _("\n%.1f Second Lock-on"), temp->u.lau.lockon );
@@ -1819,6 +1822,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    if (temp->u.mod.active && temp->u.mod.cooldown > 0.)
       SDESC_ADD( l, temp, _(" #r(%.1f s Cooldown)#0"), temp->u.mod.cooldown );
    SDESC_COND_COLOUR( l, temp, _("\n%+.0f CPU"), temp->cpu );
+   SDESC_COND( l, temp, _("\n%.0f Mass"), temp->mass );
 }
 
 /**
@@ -1884,6 +1888,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
    SDESC_ADD( l, temp, _("\n#rActivated Outfit#0") );
    SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
+   SDESC_COND( l, temp, _("\n%.0f Mass"), temp->mass );
    SDESC_ADD( l, temp, _("\nOnly one can be equipped") );
    SDESC_ADD( l, temp, _("\n%.0f Maximum Effective Mass"), temp->u.afb.mass_limit );
    SDESC_ADD( l, temp, _("\n%.0f%% Thrust"), temp->u.afb.thrust + 100. );
@@ -1948,6 +1953,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    l = 0;
    SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
    SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
+   SDESC_COND( l, temp, _("\n%.0f Mass"), temp->mass );
    SDESC_COND( l, temp, _("\n%.1f Seconds Per Launch"), temp->u.bay.delay );
    SDESC_ADD( l, temp, _("\nHolds %d ships"), temp->u.bay.amount );
    SDESC_COND( l, temp, _("\n%.1f Seconds to Reload"), temp->u.bay.reload_time );
