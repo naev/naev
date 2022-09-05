@@ -9,8 +9,7 @@ local highlight_shader_frag = lf.read( "scripts/luaspfx/shaders/spacemine_highli
 local spacemine_shader, highlight_shader
 
 local function explode( s, d )
-   local damage = 1000
-   explosion( s:pos(), s:vel(), d.explosion, damage, d.pilot )
+   explosion( s:pos(), s:vel(), d.explosion, d.damage, d.pilot )
    s:rm() -- Remove
 end
 
@@ -102,6 +101,7 @@ local function spacemine( pos, vel, fct, params )
    d.range  = 300
    d.explosion = 500
    d.fct    = fct
+   d.damage = params.damage or 1000
    d.trackmax  = params.trackmax or 10e3
    d.trackmin = params.trackmin or 3e3
    d.pilot  = params.pilot
