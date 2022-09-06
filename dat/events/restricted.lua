@@ -26,8 +26,9 @@ function create ()
    -- Add space mines
    local L = lanes.get( sysfct, "non-hostile" )
    for i = 1,rnd.rnd(10,30) do
-      local pos = careful.getSafePointL( L, sysfct, vec2.new(), csys:radius()*0.9, 500 )
-      print( pos )
+      -- The sqrt here makes it so the samples are uniform in Euclidean coordinates
+      local rad = system.cur():radius()*0.9*math.sqrt(rnd.rnd())
+      local pos = careful.getSafePointL( L, nil, vec2.new(), rad, 2e3, 2e3, 2e3 )
       if pos then
          sm( pos, nil, sysfct, {
             hostile = true,
