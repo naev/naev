@@ -85,7 +85,12 @@ local function render( sp, x, y, z )
    local d = sp:data()
    local old_shader = lg.getShader()
    highlight_shader:send( "u_time", d.timer )
-   spacemine_shader:send( "u_time", d.timer )
+   if d.triggered then
+      -- Basically speeds up animation by a constant factor
+      spacemine_shader:send( "u_time", d.timer + 2*(d.timer - d.triggered + ACTIVATE_DELAY)  )
+   else
+      spacemine_shader:send( "u_time", d.timer )
+   end
 
    -- Render for player
    local pp = player.pilot()
@@ -99,7 +104,11 @@ local function render( sp, x, y, z )
       end
       lg.setColor( {1, 0, 0, 1} )
    else
-      lg.setColor( {0, 1, 0, 1} )
+      if d.triggered then
+         lg.setColor( {1, 0, 0, 1} )
+      else
+         lg.setColor( {0, 1, 0, 1} )
+      end
    end
 
    -- TODO render something nice that blinks
