@@ -3,7 +3,6 @@ local lf = require 'love.filesystem'
 --local audio = require 'love.audio'
 local love_shaders = require 'love_shaders'
 
-local pheromones_bg_shader_frag = lf.read( "scripts/luaspfx/shaders/pheromones.frag" )
 local pheromones_shader
 
 local function update( s, dt )
@@ -27,6 +26,7 @@ local function pheromones( pos, vel, params )
    params = params or {}
    -- Lazy loading shader / sound
    if not pheromones_shader then
+      local pheromones_bg_shader_frag = lf.read( "scripts/luaspfx/shaders/pheromones.frag" )
       pheromones_shader = lg.newShader( pheromones_bg_shader_frag )
    end
 

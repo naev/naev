@@ -3,7 +3,6 @@ local lf = require 'love.filesystem'
 local audio = require 'love.audio'
 local love_shaders = require 'love_shaders'
 
-local alert_bg_shader_frag = lf.read( "scripts/luaspfx/shaders/alert.frag" )
 local alert_shader, alert_sound
 
 local function update( s, dt )
@@ -31,6 +30,7 @@ local function alert( pos, params )
       alert_sound = audio.newSource('snd/sounds/alarm_warning.ogg')
    end
    if not alert_shader then
+      local alert_bg_shader_frag = lf.read( "scripts/luaspfx/shaders/alert.frag" )
       alert_shader = lg.newShader( alert_bg_shader_frag )
    end
 

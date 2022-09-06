@@ -3,7 +3,6 @@ local lf = require 'love.filesystem'
 --local audio = require 'love.audio'
 local love_shaders = require 'love_shaders'
 
-local pulse_bg_shader_frag = lf.read( "scripts/luaspfx/shaders/pulse.frag" )
 local pulse_shader
 
 local function update( s, dt )
@@ -27,6 +26,7 @@ local function pulse( pos, vel, params )
    params = params or {}
    -- Lazy loading shader / sound
    if not pulse_shader then
+      local pulse_bg_shader_frag = lf.read( "scripts/luaspfx/shaders/pulse.frag" )
       pulse_shader = lg.newShader( pulse_bg_shader_frag )
    end
 

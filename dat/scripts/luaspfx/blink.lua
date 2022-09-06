@@ -1,7 +1,6 @@
 local lg = require 'love.graphics'
 local lf = require 'love.filesystem'
 
-local blink_shader_frag = lf.read( "scripts/luaspfx/shaders/blink.frag" )
 local blink_shader
 local ttl = 2
 
@@ -29,6 +28,7 @@ end
 
 local function blink( pos, vel )
    if not blink_shader then
+      local blink_shader_frag = lf.read( "scripts/luaspfx/shaders/blink.frag" )
       blink_shader = lg.newShader( blink_shader_frag )
    end
 
