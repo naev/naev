@@ -3,7 +3,6 @@ local lf = require 'love.filesystem'
 --local audio = require 'love.audio'
 local love_shaders = require 'love_shaders'
 
-local explosion_shader_frag = lf.read( "glsl/explosion.frag" )
 local explosion_shader, explosion_sfx
 
 local function do_damage( pos, radius, damage, penetration, parent )
@@ -64,6 +63,7 @@ local function explosion( pos, vel, radius, damage, params )
 
    -- Lazy loading shader / sound
    if not explosion_shader then
+      local explosion_shader_frag = lf.read( "glsl/explosion.frag" )
       explosion_shader = lg.newShader( explosion_shader_frag )
       explosion_sfx = {
          audio.new( "snd/sounds/explosion0.wav" ),
