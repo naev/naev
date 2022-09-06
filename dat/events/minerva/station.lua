@@ -351,7 +351,7 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
             player.outfitAdd( ti[1] )
             player.msg( _("Gambling Bounty"), fmt.reward(ti[1]))
          elseif ti[2][2]=="ship" then
-            player.addShip( ti[1] )
+            player.shipAdd( ti[1] )
          else
             error(_("unknown tradein type"))
          end
