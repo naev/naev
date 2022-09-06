@@ -105,7 +105,7 @@ function careful.checkVulnerable( p, plt, threshold )
    return false
 end
 
-local function correctSafePoint( candidate, fct, pos, spobdistance, jumpdistance )
+local function correctSafePoint( candidate, fct, spobdistance, jumpdistance )
    spobdistance = spobdistance or 3e3
    jumpdistance = jumpdistance or 1e3
 
@@ -114,13 +114,13 @@ local function correctSafePoint( candidate, fct, pos, spobdistance, jumpdistance
    local spobdist2 = math.pow( spobdistance, 2 )
    for k,v in ipairs(scur:spobs()) do
       local f = v:faction()
-      if f and f:areEnemies( fct ) then
+      if not fct or (f and f:areEnemies( fct )) then
          local vp = v:pos()
-         if vp:dist2( pos ) < spobdist2 then
-            local off = pos-vp
-            local mod, dir = off:polar()
+         if vp:dist2( candidate ) < spobdist2 then
+            local off = candidate-vp
+            local mod, _dir = off:polar()
             -- This is a really lazy approach, has to be done better
-            candidate = candidate + vec2.newP( spobdistance-mod, dir )
+            candidate = candidate + off * spobdistance / mod
          end
       end
    end
@@ -128,13 +128,13 @@ local function correctSafePoint( candidate, fct, pos, spobdistance, jumpdistance
    local jumpdist2 = math.pow( jumpdistance, 2 )
    for k,v in ipairs(scur:jumps()) do
       local f = v:dest():faction()
-      if f and f:areEnemies( fct ) then
+      if not fct or (f and f:areEnemies( fct )) then
          local vp = v:pos()
-         if vp:dist2( pos ) < jumpdist2 then
-            local off = pos-vp
-            local mod, dir = off:polar()
+         if vp:dist2( candidate ) < jumpdist2 then
+            local off = candidate-vp
+            local mod, _dir = off:polar()
             -- This is a really lazy approach, has to be done better
-            candidate = candidate + vec2.newP( jumpdistance-mod, dir )
+            candidate = candidate + off * jumpdistance / mod
          end
       end
    end
@@ -150,18 +150,18 @@ function careful.getSafePoint( p, pos, rad, margin, biasdir )
    end
 
    -- Bias away from spobs
-   return correctSafePoint( candidate, p:faction(), p:pos(), mem.spobdistance, mem.jumpdistance )
+   return correctSafePoint( candidate, p:faction(), mem.spobdistance, mem.jumpdistance )
 end
 
-function careful.getSafePointL( L, fct, pos, rad, margin )
+function careful.getSafePointL( L, fct, pos, rad, marginlane, marginspob, marginjump )
    -- Try to find a non-lane point
-   local candidate = lanes.getNonPoint( L, pos, rad, margin )
+   local candidate = lanes.getNonPoint( L, pos, rad, marginlane )
    if not candidate then
       return nil
    end
 
    -- Bias away from spobs
-   return correctSafePoint( candidate, fct, pos )
+   return correctSafePoint( candidate, fct, marginspob, marginjump )
 end
 
 return careful
