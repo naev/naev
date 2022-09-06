@@ -45,7 +45,10 @@ local function update( s, dt )
       triggers = pilot.getInrange( sp, d.range )
    end
    if d.hostile then
-      table.insert( triggers, player.pilot() )
+      local pp = player.pilot()
+      if pp:pos():dist2( sp ) < d.range*d.range then
+         table.insert( triggers, player.pilot() )
+      end
    end
 
    -- Detect nearby enemies
