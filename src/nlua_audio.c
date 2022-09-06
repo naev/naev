@@ -83,6 +83,7 @@ static int audioL_getRolloff( lua_State *L );
 static int audioL_setEffect( lua_State *L );
 static int audioL_setGlobalEffect( lua_State *L );
 static int audioL_setGlobalAirAbsorption( lua_State *L );
+static int audioL_setGlobaDopplerFactor( lua_State *L );
 /* Deprecated stuff. */
 static int audioL_soundPlay( lua_State *L ); /* Obsolete API, to get rid of. */
 static const luaL_Reg audioL_methods[] = {
@@ -117,6 +118,7 @@ static const luaL_Reg audioL_methods[] = {
    { "setEffect", audioL_setEffect },
    { "setGlobalEffect", audioL_setGlobalEffect },
    { "setGlobalAirAbsorption", audioL_setGlobalAirAbsorption },
+   { "setGlobalDopplerFactor", audioL_setGlobaDopplerFactor },
    /* Deprecated. */
    { "soundPlay", audioL_soundPlay }, /* Old API */
    {0,0}
@@ -1717,6 +1719,23 @@ static int audioL_setGlobalAirAbsorption( lua_State *L )
    alSpeedOfSound( speed );
    if (absorption > 0.)
       sound_setAbsorption( absorption );
+   al_checkErr();
+   soundUnlock();
+   return 0;
+}
+
+/**
+ * @brief Sets the doppler effect factor.
+ *
+ * Defaults to 0.3 outside of the nebula and 1.0 in the nebula.
+ *
+ *    @luatparam number factor Factor to set doppler effect to. Must be positive.
+ * @luafunc setGlobalDopplerFactor
+ */
+static int audioL_setGlobaDopplerFactor( lua_State *L )
+{
+   soundLock();
+   alDopplerFactor( luaL_checknumber(L,1) );
    al_checkErr();
    soundUnlock();
    return 0;
