@@ -6,7 +6,7 @@ local love_shaders = require 'love_shaders'
 local explosion_shader_frag = lf.read( "glsl/explosion.frag" )
 local explosion_shader, explosion_sfx
 
-local function do_damage( pos, radius, damage, parent )
+local function do_damage( pos, radius, damage, penetration, parent )
    local pp = player.pilot()
    for k,p in ipairs(pilot.getInrange( pos, radius )) do
       local norm, angle = (p:pos() - pos):polar()
@@ -15,7 +15,7 @@ local function do_damage( pos, radius, damage, parent )
       local mass = math.pow( dmg / 15, 2 )
 
       -- Damage and knockback
-      p:damage( dmg, 0, 50, "normal", parent )
+      p:damage( dmg, 0, penetration, "normal", parent )
       p:knockback( mass, vec2.newP( mod*radius, angle ), pos, 1 )
 
       -- Shake the screen for the player
