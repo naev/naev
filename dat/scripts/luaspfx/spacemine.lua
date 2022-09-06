@@ -37,6 +37,9 @@ local function update( s, dt )
    else
       triggers = pilot.getInrange( sp, d.range )
    end
+   if d.hostile then
+      table.insert( triggers, player.pilot() )
+   end
 
    -- Detect nearby enemies
    for k,p in ipairs(triggers) do
@@ -65,7 +68,7 @@ local function render( sp, x, y, z )
    -- Render for player
    local pp = player.pilot()
    local ew = pp:evasion()
-   if not d.fct or d.fct:areEnemies(pp:faction()) then
+   if d.hostile or not d.fct or d.fct:areEnemies(pp:faction()) then
       if ew > d.trackmin then
          local r = math.min( (ew - d.trackmin) / (d.trackmax - d.trackmin), 1 ) * d.range * z
          lg.setShader( highlight_shader )
@@ -109,6 +112,7 @@ local function spacemine( pos, vel, fct, params )
    d.trackmin = params.trackmin or 3e3
    d.pilot  = params.pilot
    d.primed = params.primed or 5
+   d.hostile = params.hostile
    return s
 end
 
