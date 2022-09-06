@@ -31,6 +31,12 @@ local function update( s, dt )
       return
    end
 
+   -- Only check once per second
+   if d.timer < d.check then
+      return
+   end
+   d.check = math.ceil( d.timer + 0.5 )
+
    -- See what can trigger it
    local triggers
    if d.fct then
@@ -104,6 +110,7 @@ local function spacemine( pos, vel, fct, params )
    local s  = spfx.new( duration, update, render, nil, nil, pos, vel )
    local d  = s:data()
    d.timer  = 0
+   d.check  = 1
    d.range  = 300
    d.explosion = 500
    d.fct    = fct
