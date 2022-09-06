@@ -465,7 +465,6 @@ static int sound_al_init (void)
 
    /* Set up how sound works. */
    alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED ); /* Clamping is fundamental so it doesn't sound like crap. */
-   alDopplerFactor( 1. );
    sound_env( SOUND_ENV_NORMAL, 0. );
 
    /* Check for errors. */
@@ -1660,6 +1659,7 @@ int sound_env( SoundEnv_t env_type, double param )
       case SOUND_ENV_NORMAL:
          /* Set global parameters. */
          alSpeedOfSound( 3433. );
+         alDopplerFactor( 0.3 );
 
          if (al_info.efx == AL_TRUE) {
             /* Disconnect the effect. */
@@ -1676,6 +1676,7 @@ int sound_env( SoundEnv_t env_type, double param )
 
          /* Set global parameters. */
          alSpeedOfSound( 3433./(1. + f*2.) );
+         alDopplerFactor( 1.0 );
 
          if (al_info.efx == AL_TRUE) {
             if (al_info.efx_reverb == AL_TRUE) {
