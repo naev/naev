@@ -78,7 +78,7 @@ stds.Var = {read_globals={"var"}}
 stds.Vector = {read_globals={"vec2"}}
 
 PILOT = "+_Pilot+Ship+Asteroid"
-STANDARD = "+Naev+Var+Spob+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+LinOpt+Safelanes+Spfx"
+STANDARD = "+Naev+Var+Spob+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+LinOpt+Safelanes+Spfx+Audio"
 GFX = "+_GFX+Col+Tex+Font+Transform+Shader+Canvas"
 TK = "+_Tk+Col" .. GFX
 
@@ -221,22 +221,22 @@ stds.PilotOutfit.globals={
 
 files["dat/ai/**/*.lua"].std = STANDARD .. "+AI"
 files["dat/autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
-files["dat/bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera+Audio" .. GFX
+files["dat/bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera"
 files["dat/board.lua"].std = STANDARD .. "+API_board"
 files["dat/comm.lua"].std = STANDARD .. "+API_comm"
 files["dat/common.lua"].std = STANDARD
 files["dat/loadscreen.lua"].std = STANDARD .."+API_loadscreen"
-files["dat/events/**/*.lua"].std = STANDARD .. "+Evt+Hook+Camera+Tex+Background+Music+Audio" .. TK
+files["dat/events/**/*.lua"].std = STANDARD .. "+Evt+Hook+Camera+Tex+Background+Music" .. TK
 files["dat/factions/equip/*.lua"].std = STANDARD .. "+API_equip"
 files["dat/factions/spawn/**/*.lua"].std = STANDARD .. "+API_spawn"
 files["dat/factions/standing/**/*.lua"].std = STANDARD .. "+API_faction"
 files["dat/gui/*.lua"].std = STANDARD .. GFX .. "+GUI" .. TK
 files["dat/landing.lua"].std = STANDARD .. "+API_land"
 files["dat/lua-repl/**/*.lua"].only = {}  -- not our code, so shut up, please
-files["dat/missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
+files["dat/missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Background+Music" .. TK
 files["dat/outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit+Camera+Hook" -- TODO doesn't really support the full API
 files["dat/rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
-files["dat/rep.lua"].std = STANDARD .. TK .. "+Tex+Col+Background+CLI+Camera+Music+Audio+LinOpt"
+files["dat/rep.lua"].std = STANDARD .. TK .. "+Tex+Col+Background+CLI+Camera+Music+LinOpt"
 files["dat/save_updater.lua"].std = "API_save_updater"
 files["dat/shipai.lua"].std = STANDARD .. TK .. "+API_shipai"
 files["dat/snd/music.lua"].std = STANDARD .. TK .. "+Music"
@@ -244,7 +244,7 @@ files["dat/spob/**/*.lua"].std = STANDARD .. GFX .."+Camera+API_spob"
 files["dat/effects/**/*.lua"].std = STANDARD .. "+API_effects"
 
 -- No way to be sure what type of environment will load these.
-files["dat/scripts/**/*.lua"].std = STANDARD .. TK .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
+files["dat/scripts/**/*.lua"].std = STANDARD .. TK .. "+Misn+Hook+Camera+Tex+Background+Music" .. TK
 
 files["docs/ai/**/*.lua"].std = files["dat/ai/**/*.lua"].std
 -- TODO: Enable when no one is likely to invoke a pre-1.0 Luacheck manually.

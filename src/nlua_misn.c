@@ -121,7 +121,6 @@ int misn_loadLibs( nlua_env env )
    nlua_loadTex(env);
    nlua_loadBackground(env);
    nlua_loadMusic(env);
-   nlua_loadAudio(env);
    nlua_loadTk(env);
    return 0;
 }

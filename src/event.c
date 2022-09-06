@@ -210,7 +210,6 @@ static int event_create( int dataid, unsigned int *id )
    nlua_loadTex(ev->env);
    nlua_loadBackground(ev->env);
    nlua_loadMusic(ev->env);
-   nlua_loadAudio(ev->env);
    nlua_loadTk(ev->env);
 
    /* Create the "mem" table for persistence. */

@@ -22,6 +22,7 @@
 #include "ndata.h"
 #include "nfile.h"
 #include "nlua_cli.h"
+#include "nlua_audio.h"
 #include "nlua_commodity.h"
 #include "nlua_data.h"
 #include "nlua_diff.h"
@@ -777,6 +778,7 @@ int nlua_loadStandard( nlua_env env )
    r |= nlua_loadLinOpt(env);
    r |= nlua_loadSafelanes(env);
    r |= nlua_loadSpfx(env);
+   r |= nlua_loadAudio(env);
 
    return r;
 }

@@ -341,7 +341,6 @@ static int music_luaInit (void)
    /* Reset the environment. */
    music_env = nlua_newEnv();
    nlua_loadStandard(music_env);
-   nlua_loadAudio(music_env);
    nlua_loadTk(music_env);
 
    /* load the actual Lua music code */

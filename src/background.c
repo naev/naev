@@ -405,7 +405,6 @@ static nlua_env background_create( const char *name )
    nlua_loadBackground(env);
    nlua_loadCamera(env);
    nlua_loadGFX(env);
-   nlua_loadAudio(env);
 
    /* Open file. */
    buf = ndata_read( path, &bufsize );

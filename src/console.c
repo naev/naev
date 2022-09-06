@@ -448,7 +448,6 @@ static int cli_initLua (void)
    nlua_loadCLI( cli_env );
    nlua_loadCamera( cli_env );
    nlua_loadMusic( cli_env );
-   nlua_loadAudio( cli_env );
    nlua_loadTk( cli_env );
    nlua_loadLinOpt( cli_env );
 
