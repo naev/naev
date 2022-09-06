@@ -10,6 +10,9 @@
    Establishes zones that are off limits to the player unless they are friendly with the faction.
 --]]
 local fmt = require "format"
+local sm = require "luaspfx.spacemine"
+local careful = require "ai.core.misc.careful"
+local lanes = require "ai.core.misc.lanes"
 
 local sysfct
 -- luacheck: globals endevent make_hostile msg_buoy (Hook functions passed by name)
@@ -19,6 +22,18 @@ function create ()
 
    -- We assume dominant faction is the one we want here
    sysfct = csys:faction()
+
+   -- Add space mines
+   local L = lanes.get( sysfct, "non-hostile" )
+   for i = 1,rnd.rnd(10,30) do
+      local pos = careful.getSafePointL( L, sysfct, vec2.new(), csys:radius()*0.9, 500 )
+      print( pos )
+      if pos then
+         sm( pos, nil, sysfct, {
+            hostile = true,
+         } )
+      end
+   end
 
    hook.timer( 20, "make_hostile" )
    hook.timer( 5, "msg_buoy" )
