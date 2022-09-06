@@ -59,7 +59,7 @@ local function spfx_explosion( pos, vel, size, params )
    d.steps  = math.min( math.floor(0.0111688 * size + 8.16463 + 0.5), 16 )
 end
 
-local function explosion( pos, vel, radius, damage, parent, params )
+local function explosion( pos, vel, radius, damage, params )
    params = params or {}
 
    -- Lazy loading shader / sound
@@ -74,7 +74,7 @@ local function explosion( pos, vel, radius, damage, parent, params )
 
    -- Do damage if applicable
    if damage then
-      do_damage( pos, radius, damage, params.penetration, parent )
+      do_damage( pos, radius, damage, params.penetration, params.parent )
    end
 
    -- Create the explosions

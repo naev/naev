@@ -9,7 +9,8 @@ local highlight_shader_frag = lf.read( "scripts/luaspfx/shaders/spacemine_highli
 local spacemine_shader, highlight_shader
 
 local function explode( s, d )
-   explosion( s:pos(), s:vel(), d.explosion, d.damage, d.pilot, {
+   explosion( s:pos(), s:vel(), d.explosion, d.damage, {
+      parent = d.pilot,
       penetration = d.penetration,
    } )
    s:rm() -- Remove
