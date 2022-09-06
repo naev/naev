@@ -620,7 +620,7 @@ void spfxL_update( double dt )
             alf[1] = ls->pos.y;
             alf[2] = 0.;
             alSourcefv( ls->sfx.source, AL_POSITION, alf );
-	    al_checkErr();
+            al_checkErr();
             soundUnlock();
          }
       }
