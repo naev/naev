@@ -8,14 +8,11 @@ local spacemine_shader_frag = lf.read( "scripts/luaspfx/shaders/spacemine_blink.
 local highlight_shader_frag = lf.read( "scripts/luaspfx/shaders/spacemine_highlight.frag" )
 local spacemine_shader, highlight_shader
 
-local CHECK_INTERVAL = 0.1
+local CHECK_INTERVAL = 0.1 -- How often to check activations in seconds
+local ACTIVATE_DELAY = 1.5 -- Time to blow up once activated in seconds
 
-local function explode( s, d )
-   explosion( s:pos(), s:vel(), d.explosion, d.damage, {
-      parent = d.pilot,
-      penetration = d.penetration,
-   } )
-   s:rm() -- Remove
+local function trigger( _s, d )
+   d.triggered = d.timer + ACTIVATE_DELAY
 end
 
 local function update( s, dt )
@@ -30,6 +27,19 @@ local function update( s, dt )
 
    -- Not primed yet
    if d.timer < d.primed then
+      return
+   end
+
+   -- Has been triggered
+   if d.triggered then
+      -- Time to go boom
+      if d.timer > d.triggered then
+         explosion( s:pos(), s:vel(), d.explosion, d.damage, {
+            parent = d.pilot,
+            penetration = d.penetration,
+         } )
+         s:rm() -- Remove
+      end
       return
    end
 
@@ -58,14 +68,14 @@ local function update( s, dt )
       local ew = p:evasion()
       -- if perfectly tracked, we don't have to do fancy computations
       if ew > d.trackmax then
-         explode( s, d )
+         trigger( s, d )
          return
       end
       mod = (ew - d.trackmin) / (d.trackmax - d.trackmin)
       -- Have to see if it triggers now
       local dst = p:pos():dist( sp )
       if d.range < dst * mod then
-         explode( s, d )
+         trigger( s, d )
          return
       end
    end
