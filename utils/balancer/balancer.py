@@ -29,14 +29,15 @@ class Balancer:
         # parse the xml files
         fields  = set()
         data    = {}
-        for filename in glob.glob( searchpath, recursive=True ):
-            print(filename)
-            root = ET.parse( filename ).getroot()
+        for s in searchpath.split(','):
+            for filename in glob.glob( s, recursive=True ):
+                print(filename)
+                root = ET.parse( filename ).getroot()
 
-            name = root.get('name')
-            d = {'name':name}
-            self.__tags_recursive( root, d, fields, ignore, '' )
-            data[name] = d
+                name = root.get('name')
+                d = {'name':name}
+                self.__tags_recursive( root, d, fields, ignore, '' )
+                data[name] = d
 
         fields = list(fields)
         fields.sort()
@@ -109,7 +110,7 @@ class ShipBalancer(Balancer):
 class OutfitBalancer(Balancer):
     def __init__(self):
         super().__init__()
-        self.searchpath = "dat/outfits/**/*.xml"
+        self.searchpath = "dat/outfits/**/*.xml,build/dat/outfits/**/*.xml"
 
 
 if __name__ == '__main__':
