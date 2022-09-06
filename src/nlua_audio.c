@@ -637,7 +637,7 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
    soundLock();
    audio_genSource( &la->source );
 
-   switch (la->type) {
+   switch (source->type) {
       case LUA_AUDIO_STATIC:
          /* Attach source buffer. */
          la->buf = source->buf;
@@ -654,6 +654,7 @@ void audio_clone( LuaAudio_t *la, const LuaAudio_t *source )
       case LUA_AUDIO_NULL:
          break;
    }
+   la->type = source->type;
 
    /* TODO this should probably set the same parameters as the original source
     * being cloned to be truly compatible with Love2D. */
