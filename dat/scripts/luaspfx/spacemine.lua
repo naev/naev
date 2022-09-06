@@ -3,16 +3,16 @@ local lf = require 'love.filesystem'
 --local audio = require 'love.audio'
 local love_shaders = require 'love_shaders'
 local explosion = require 'luaspfx.explosion'
+local luasfx = require "luaspfx.sfx"
 
-local spacemine_shader_frag = lf.read( "scripts/luaspfx/shaders/spacemine_blink.frag" )
-local highlight_shader_frag = lf.read( "scripts/luaspfx/shaders/spacemine_highlight.frag" )
-local spacemine_shader, highlight_shader
+local spacemine_shader, highlight_shader, spacemine_sfx
 
 local CHECK_INTERVAL = 0.1 -- How often to check activations in seconds
 local ACTIVATE_DELAY = 1.5 -- Time to blow up once activated in seconds
 
-local function trigger( _s, d )
+local function trigger( s, d )
    d.triggered = d.timer + ACTIVATE_DELAY
+   luasfx( s:pos(), s:vel(), spacemine_sfx )
 end
 
 local function update( s, dt )
@@ -123,8 +123,11 @@ local function spacemine( pos, vel, fct, params )
    params = params or {}
    -- Lazy loading shader / sound
    if not spacemine_shader then
+      local spacemine_shader_frag = lf.read( "scripts/luaspfx/shaders/spacemine_blink.frag" )
+      local highlight_shader_frag = lf.read( "scripts/luaspfx/shaders/spacemine_highlight.frag" )
       spacemine_shader = lg.newShader( spacemine_shader_frag )
       highlight_shader = lg.newShader( highlight_shader_frag )
+      spacemine_sfx = audio.new( "snd/sounds/detonation_alarm.ogg" )
    end
 
    -- Other params
