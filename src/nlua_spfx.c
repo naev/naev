@@ -62,6 +62,7 @@ static int lua_spfx_lock = 0;
 /* Spfx methods. */
 static int spfxL_gc( lua_State *L );
 static int spfxL_eq( lua_State *L );
+static int spfxL_getAll( lua_State *L );
 static int spfxL_new( lua_State *L );
 static int spfxL_rm( lua_State *L );
 static int spfxL_pos( lua_State *L );
@@ -73,6 +74,7 @@ static int spfxL_data( lua_State *L );
 static const luaL_Reg spfxL_methods[] = {
    { "__gc", spfxL_gc },
    { "__eq", spfxL_eq },
+   { "getAll", spfxL_getAll },
    { "new", spfxL_new },
    { "rm", spfxL_rm },
    { "pos", spfxL_pos },
@@ -246,6 +248,28 @@ static int spfxL_eq( lua_State *L )
    s1 = luaL_checkspfx(L,1);
    s2 = luaL_checkspfx(L,2);
    lua_pushboolean( L, (memcmp( s1, s2, sizeof(LuaSpfx_t) )==0) );
+   return 1;
+}
+
+/**
+ * @brief Gets all the active spfx.
+ *
+ *    @luatreturn table A table containing all the spfx.
+ * @luafunc getAll
+ */
+static int spfxL_getAll( lua_State *L )
+{
+   int n=1;
+   lua_newtable(L);
+   for (int i=0; i<array_size(lua_spfx); i++) {
+      LuaSpfxData_t *ls = &lua_spfx[i];
+
+      if (ls->flags & (SPFX_GLOBAL | SPFX_CLEANUP))
+         continue;
+
+      lua_pushspfx( L, ls->id );
+      lua_rawseti( L, -2, n++ );
+   }
    return 1;
 }
 
