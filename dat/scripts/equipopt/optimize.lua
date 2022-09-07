@@ -631,7 +631,7 @@ function optimize.optimize( p, cores, outfit_list, params )
          -- Mass constraint
          mmod = mmod * 2
          massgoal = mmod * params.max_mass * ss.engine_limit - st.mass
-         lp:set_row( 2, "mass", nil, massgoal )
+         lp:set_row( 3, "mass", nil, massgoal )
          -- Energy constraint
          energygoal = energygoal / 1.5
          lp:set_row( 2, "energy_regen", nil, st.energy_regen - emod*energygoal )
