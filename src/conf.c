@@ -246,7 +246,7 @@ void conf_setVideoDefaults (void)
    conf.minimize     = MINIMIZE_DEFAULT;
    conf.colorblind   = COLORBLIND_DEFAULT;
    conf.bg_brightness = BG_BRIGHTNESS_DEFAULT;
-   conf.nebu_uniformity = NEBU_UNIFORMITY_DEFAULT;
+   conf.nebu_nonuniformity = NEBU_NONUNIFORMITY_DEFAULT;
    conf.gamma_correction = GAMMA_CORRECTION_DEFAULT;
    conf.background_fancy = BACKGROUND_FANCY_DEFAULT;
 
@@ -298,7 +298,6 @@ int conf_loadConfig ( const char* file )
    int type;
    int w,h;
    SDL_Keymod m;
-   double nebu_uniformity;
 
    /* Check to see if file exists. */
    if (!nfile_fileExists(file)) {
@@ -341,11 +340,9 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "minimize", conf.minimize );
       conf_loadBool( lEnv, "colorblind", conf.colorblind );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
-      /* Load old values and invert to keep compatibility. */
-      conf_loadFloat( lEnv, "nebu_brightness", nebu_uniformity ); /* Old conf name. */
-      conf_loadFloat( lEnv, "nebu_uniformity", nebu_uniformity );
-      conf.nebu_uniformity = 1. - nebu_uniformity;
-      conf_loadFloat( lEnv, "nebula_uniformity", conf.nebu_uniformity ); /* Renamed to copy over. */
+      conf_loadFloat( lEnv, "nebu_brightness", conf.nebu_nonuniformity ); /* Old conf name. */
+      conf_loadFloat( lEnv, "nebu_uniformity", conf.nebu_nonuniformity );
+      conf_loadFloat( lEnv, "nebu_nonuniformity", conf.nebu_nonuniformity );
       conf_loadFloat( lEnv, "gamma_correction", conf.gamma_correction );
       conf_loadBool( lEnv, "background_fancy", conf.background_fancy );
 
@@ -898,8 +895,8 @@ int conf_saveConfig ( const char* file )
    conf_saveFloat("bg_brightness",conf.bg_brightness);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Nebula uniformity. 1 is normal nebula while setting it to 0 would make the nebula a solid colour."));
-   conf_saveFloat("nebu_uniformity",conf.nebu_uniformity);
+   conf_saveComment(_("Nebula non-uniformity. 1 is normal nebula while setting it to 0 would make the nebula a solid colour."));
+   conf_saveFloat("nebu_nonuniformity",conf.nebu_nonuniformity);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Gamma correction parameter. A value of 1 disables it (no curve)."))
