@@ -221,7 +221,7 @@ stds.PilotOutfit.globals={
 
 files["dat/ai/**/*.lua"].std = STANDARD .. "+AI"
 files["dat/autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
-files["dat/bkg/**/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera"
+files["dat/bkg/**/*.lua"].std = STANDARD .. GFX .. "+Background+Camera"
 files["dat/board.lua"].std = STANDARD .. "+API_board"
 files["dat/comm.lua"].std = STANDARD .. "+API_comm"
 files["dat/common.lua"].std = STANDARD
