@@ -674,7 +674,7 @@ static int linoptL_solve( lua_State *L )
          return 2;
       }
       /* Check for optimality of discrete problem. */
-      ret = glp_get_status(lp->prob);
+      ret = glp_mip_status(lp->prob);
       if ((ret != GLP_OPT) && (ret != GLP_FEAS)) {
          lua_pushnil(L);
          lua_pushstring(L, linopt_status(ret));
