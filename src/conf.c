@@ -298,6 +298,7 @@ int conf_loadConfig ( const char* file )
    int type;
    int w,h;
    SDL_Keymod m;
+   double nebu_uniformity;
 
    /* Check to see if file exists. */
    if (!nfile_fileExists(file)) {
@@ -340,7 +341,11 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "minimize", conf.minimize );
       conf_loadBool( lEnv, "colorblind", conf.colorblind );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
-      conf_loadFloat( lEnv, "nebula_uniformity", conf.nebu_uniformity );
+      /* Load old values and invert to keep compatibility. */
+      conf_loadFloat( lEnv, "nebu_brightness", nebu_uniformity ); /* Old conf name. */
+      conf_loadFloat( lEnv, "nebu_uniformity", nebu_uniformity );
+      conf.nebu_uniformity = 1. - nebu_uniformity;
+      conf_loadFloat( lEnv, "nebula_uniformity", conf.nebu_uniformity ); /* Renamed to copy over. */
       conf_loadFloat( lEnv, "gamma_correction", conf.gamma_correction );
       conf_loadBool( lEnv, "background_fancy", conf.background_fancy );
 
