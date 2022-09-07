@@ -8,19 +8,24 @@ local scans = {}
 -- Assumes the pilot exists!
 --]]
 function scans.check_visible( target )
-   local self   = ai.pilot()
-   if not target:flags("invisible") then
-      -- Pilot still sees the target: continue attack
-      if self:inrange( target ) then
-         return true
-      end
+   if target:flags("invisible") then
+      return false
+   end
+   local self = ai.pilot()
 
-      -- Pilots on manual control (in missions or events) never loose target
-      -- /!\ This is not necessary desirable all the time /!\
-      -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control
-      if self:flags("manualcontrol") then
-         return true
-      end
+   -- Carried ships depend on the visibility of their parent
+   local checker = (mem.carried and self:leader()) or self
+
+   -- Pilot still sees the target: continue attack
+   if checker:inrange( target ) then
+      return true
+   end
+
+   -- Pilots on manual control (in missions or events) never loose target
+   -- /!\ This is not necessary desirable all the time /!\
+   -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control
+   if self:flags("manualcontrol") then
+      return true
    end
    return false
 end
