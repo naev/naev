@@ -23,16 +23,21 @@ void main(void) {
 
    /* Compute hue as in lib/nebula.glsl. */
    hhue = nebula_hue( hue, uv );
+   colour = vec4( hsv2rgb( vec3( hhue, 1.0, 1.0 ) ), 1.0 );
 
    /* Modify coordinates to be larger and slower. */
    uv.xy = 3.0 * uv.xy + 1000.0; // Scaled/offset from nebula_background
    uv.z *= 1.5;
 
    /* Do very simple two iteration noise */
-   f = abs( cnoise( uv * pow(SCALAR, 0.0) ) );
-   f += abs( cnoise( uv * pow(SCALAR, 1.0) ) );
-   colour = vec4( hsv2rgb( vec3( hhue, 1.0, 1.0 ) ), 1.0 );
-   colour_out = colour * (0.1+0.9*f);
+   if (brightness > 0.0) {
+      f = abs( cnoise( uv * pow(SCALAR, 0.0) ) );
+      f += abs( cnoise( uv * pow(SCALAR, 1.0) ) );
+      colour_out = colour * (0.1+0.9*f);
+   }
+   else {
+      colour_out = vec4(1.0);
+   }
 
    if (brightness < 1.0) {
       vec4 base = vec4( hsv2rgb( vec3(hue, 1.0, 1.0) ), 1.0 );
