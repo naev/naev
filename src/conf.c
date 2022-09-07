@@ -340,8 +340,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "minimize", conf.minimize );
       conf_loadBool( lEnv, "colorblind", conf.colorblind );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
-      conf_loadFloat( lEnv, "nebu_brightness", conf.nebu_uniformity ); /* Old conf name. */
-      conf_loadFloat( lEnv, "nebu_uniformity", conf.nebu_uniformity );
+      conf_loadFloat( lEnv, "nebula_uniformity", conf.nebu_uniformity );
       conf_loadFloat( lEnv, "gamma_correction", conf.gamma_correction );
       conf_loadBool( lEnv, "background_fancy", conf.background_fancy );
 
