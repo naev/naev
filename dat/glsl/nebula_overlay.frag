@@ -3,15 +3,14 @@
 #include "lib/nebula.glsl"
 
 uniform float hue;
-uniform float uniformity;
+uniform float brightness;
 uniform mat4 projection;
 uniform float horizon;
 uniform float eddy_scale;
 uniform float time;
 out vec4 colour_out;
 
-void main (void)
-{
+void main(void) {
    float dist, f, hhue;
    vec3 uv;
    vec4 colour;
@@ -31,7 +30,7 @@ void main (void)
    uv.z *= 1.5;
 
    /* Do very simple two iteration noise */
-   if (uniformity < 1.0) {
+   if (brightness > 0.0) {
       f = abs( cnoise( uv * pow(SCALAR, 0.0) ) );
       f += abs( cnoise( uv * pow(SCALAR, 1.0) ) );
       colour_out = colour * (0.1+0.9*f);
@@ -40,9 +39,9 @@ void main (void)
       colour_out = vec4(1.0);
    }
 
-   if (uniformity > 0.0) {
+   if (brightness < 1.0) {
       vec4 base = vec4( hsv2rgb( vec3(hue, 1.0, 1.0) ), 1.0 );
-      colour_out = mix( colour_out, base, uniformity );
+      colour_out = mix( base, colour_out, brightness );
    }
 
    /* Compute dist and interpolate */
