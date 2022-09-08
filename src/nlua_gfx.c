@@ -786,7 +786,6 @@ static int gfxL_print( lua_State *L )
    glColour *col;
    int max, mid;
 
-
    /* Parse parameters. */
    font  = lua_toboolean(L,1) ? &gl_smallFont : &gl_defFont;
    str   = luaL_checkstring(L,2);
