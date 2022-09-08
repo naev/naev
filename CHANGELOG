@@ -57,6 +57,7 @@
       * Limit sound output volume when lots of sounds are playing jointly
       * Redid the music engine to be less prone to play combat music
       * Hide radar when overlay is open (with option to revert to old behaviour)
+      * Duplicate effects get collapsed into stacks in the GUI
    * Engine changes
       * Work has begun on a development manual
       * Plugin support with explicit support for total conversions
