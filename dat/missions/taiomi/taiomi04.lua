@@ -26,7 +26,7 @@ local luatk = require "luatk"
 -- luacheck: globals enter land scene00 scene01 scene02 update_osd hail_youngling (Hook functions passed by name)
 
 local reward = taiomi.rewards.taiomi04
-local title = _("Escaping Taiomi")
+local title = _("Therite for Scavenger")
 local base, basesys = spob.getS("One-Wing Goddard")
 local scenesys = system.get("Bastion")
 -- Asks for Therite which easiest obtained from Haven nearby

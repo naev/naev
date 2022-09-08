@@ -25,7 +25,7 @@ local mg = require "minigames.flip"
 -- luacheck: globals enter land talk_ai spawn_baddies (Hook functions passed by name)
 
 local reward = taiomi.rewards.taiomi03
-local title = _("Escaping Taiomi")
+local title = _("Laboratory Raid")
 local base, basesys = spob.getS("One-Wing Goddard")
 
 --[[

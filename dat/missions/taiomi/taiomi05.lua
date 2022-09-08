@@ -26,7 +26,7 @@ local taiomi = require "common.taiomi"
 -- luacheck: globals enter land scene_spawn scene00 scene01 scene02 fight_spawn fight00 hail_scavenger (Hook functions passed by name)
 
 local reward = taiomi.rewards.taiomi05
-local title = _("Escaping Taiomi")
+local title = _("Missing Drones")
 local base, basesys = spob.getS("One-Wing Goddard")
 local scenesys = system.get("Bastion")
 local fightsys = system.get("Gamel")
