@@ -112,6 +112,32 @@ function taiomi.vn_youngb( params )
          }, params) )
 end
 
+local function choose_young ()
+   if not var.peek( "taiomi_died" ) then
+      var.push( "taiomi_died", rnd.rnd(1,2) )
+   end
+end
+
+function taiomi.young_died ()
+   choose_young()
+   local died = var.peek( "taiomi_died" )
+   if died == 1 then
+      return taiomi.younga.name
+   else
+      return taiomi.youngb.name
+   end
+end
+
+function taiomi.young_alive ()
+   choose_young()
+   local died = var.peek( "taiomi_died" )
+   if died == 2 then
+      return taiomi.younga.name
+   else
+      return taiomi.youngb.name
+   end
+end
+
 function taiomi.laboratory ()
    local fct = var.peek( "taiomi_convoy_fct" ) or "Empire"
    if fct == "Soromid" then

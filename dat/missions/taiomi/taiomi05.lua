@@ -47,20 +47,15 @@ function create ()
 
    misn.accept()
 
-   -- Choose who died
-   local opts = rnd.permutation{ taiomi.younga.name, taiomi.youngb.name }
-   mem.died = opts[1]
-   mem.alive = opts[2]
-
    -- Mission details
    misn.setTitle( title )
    misn.setDesc(fmt.f(_("You have been asked to help find {name}, who went missing."),
-      {name = mem.died} ) )
+      {name = taiomi.young_died()} ) )
    misn.setReward( fmt.credits(reward) )
    mem.marker = misn.markerAdd( scenesys )
 
    misn.osdCreate( title, {
-      fmt.f(_("Search for {name} ({sys})"),{name=mem.died, sys=scenesys})
+      fmt.f(_("Search for {name} ({sys})"),{name=taiomi.young_died(), sys=scenesys})
    } )
 
    hook.enter( "enter" )

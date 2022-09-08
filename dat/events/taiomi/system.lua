@@ -308,8 +308,9 @@ Scavenger goes silent for a second, as if thinking.
             vn.jump("menu_ask")
          end
       end
-   elseif progress == 4 and naev.claimTest( {system.get("Bastion"), system.get("Gamel")}, true ) then
-      d(_([["I am still preparing our next steps."]]))
+   elseif progress == 4+math.huge and naev.claimTest( {system.get("Bastion"), system.get("Gamel")}, true ) then
+      vn.na(_([[]]))
+      d(_([[""]]))
       vn.jump("menu")
    else
       d(_([["I am still preparing our next steps."]]))
