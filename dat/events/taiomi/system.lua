@@ -38,6 +38,9 @@ function create ()
       d:setInvincible(true)
       d:setVel( vec2.new(0,0) )
       d:control()
+      if progress > 3 then
+         d:setFriendly(true)
+      end
       return d
    end
 
@@ -58,6 +61,7 @@ function create ()
    if var.peek( "taiomi_drone_elder" ) then
       d_wornout:rename( _("Elder Drone") )
    end
+   d_wornout:setFriendly(false) -- Always neutral
    --d_wornout:setHilight(true)
    hook.pilot( d_wornout, "hail", "hail_wornout" )
 
