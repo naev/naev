@@ -33,9 +33,10 @@ local fightsys = system.get("Gamel")
 
 --[[
    0: mission started
-   1: first cutscene
-   2: scavenger goes berserk
-   3: return time
+   1: landed on one-winged goddard
+   2: first cutscene
+   3: scavenger goes berserk
+   4: return time
 --]]
 mem.state = 0
 
@@ -52,10 +53,11 @@ function create ()
    misn.setDesc(fmt.f(_("You have been asked to help find {name}, who went missing."),
       {name = taiomi.young_died()} ) )
    misn.setReward( fmt.credits(reward) )
-   mem.marker = misn.markerAdd( scenesys )
+   mem.marker = misn.markerAdd( base )
 
    misn.osdCreate( title, {
-      fmt.f(_("Search for {name} ({sys})"),{name=taiomi.young_died(), sys=scenesys})
+      fmt.f(_("Land on {base}"),{base=base}),
+      fmt.f(_("Search for {name}"),{name=taiomi.young_died()})
    } )
 
    hook.enter( "enter" )
@@ -121,6 +123,28 @@ end
 function land ()
    local c = spob.cur()
    if c ~= base then
+      return
+   end
+
+   if mem.state==0 then
+      local dead = taiomi.young_died()
+      --local alive = taiomi.young_alive()
+
+      vn.clear()
+      vn.scene()
+      local s = vn.newCharacter( taiomi.vn_scavenger() )
+      vn.transition( taiomi.scavenger.transition )
+      vn.na(_([[You disembark and are soon met with a Scavenger you can only describe as solemn.]]))
+      s(_([[""]]))
+      vn.done( taiomi.scavenger.transition )
+      vn.run()
+
+      mem.marker = misn.markerMove( base )
+
+      misn.osdCreate( title, {
+         fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=scenesys}),
+         _("Scavenger must survive"),
+      } )
       return
    end
 
