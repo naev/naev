@@ -20,7 +20,7 @@ local fmt = require 'format'
 local taiomi = require 'common.taiomi'
 local tut = require "common.tutorial"
 
-local progress
+local progress, scavenger_missing
 local d_loiter, d_philosopher, d_scavenger, d_wornout, d_young_a, d_young_b -- Drone pilots.
 -- luacheck: globals hail_philosopher hail_scavenger hail_wornout hail_youngling (Hook functions passed by name)
 
@@ -44,11 +44,15 @@ function create ()
       return d
    end
 
+   scavenger_missing = (progress > 4) or (progress==4 and taiomi.inprogress())
+
    -- Scavenger
-   d_scavenger = addDrone( "Drone (Hyena)", vec2.new(500,200), _("Scavenger Drone") )
-   d_scavenger:face(pp)
-   d_scavenger:setHilight(true)
-   hook.pilot( d_scavenger, "hail", "hail_scavenger" )
+   if not scavenger_missing then
+      d_scavenger = addDrone( "Drone (Hyena)", vec2.new(500,200), _("Scavenger Drone") )
+      d_scavenger:face(pp)
+      d_scavenger:setHilight(true)
+      hook.pilot( d_scavenger, "hail", "hail_scavenger" )
+   end
 
    -- Philosopher
    d_philosopher = addDrone( "Drone", vec2.new(1000,-500), _("Philosopher Drone") )
@@ -309,8 +313,27 @@ Scavenger goes silent for a second, as if thinking.
          end
       end
    elseif progress == 4+math.huge and naev.claimTest( {system.get("Bastion"), system.get("Gamel")}, true ) then
-      vn.na(_([[]]))
-      d(_([[""]]))
+      local dead = taiomi.young_died()
+      local alive = taiomi.young_alive()
+      vn.na(_([[You initiate a communication channel and immediately notice that something feels… off.]]))
+      d(fmt.f(_([["A problem has arisen. It seems like {younga} and {youngb} followed you out to help collect Therite. However, it seems like they were separated on the way back. {alive} made it back, however, {dead} is still missing. It is imperative that we set out to find {dead}. Time is of essence."]]),
+         {younga=taiomi.younga.name, youngb=taiomi.youngb.name, alive=alive, dead=dead}))
+      d(fmt.f(_([["Will you help us search for {dead}?"]]),
+         {dead=dead}))
+      vn.menu{
+         {_("Agree to help out."), "05_yes"},
+         {_("Not right now."), "05_no"},
+      }
+      vn.label("05_yes")
+      d(_([["Appreciations. We must set off at once. Please land on the One-Winged Goddard and let us depart. I shall come with you."]]))
+      vn.func( function ()
+         naev.missionStart("Taiomi 5")
+      end )
+      vn.jump("menu")
+
+      vn.label("05_no")
+      d(fmt.f(_([["As time increases, the probability of finding {dead} decreases."]]),
+         {dead=dead}))
       vn.jump("menu")
    else
       d(_([["I am still preparing our next steps."]]))
