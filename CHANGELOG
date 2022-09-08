@@ -24,6 +24,7 @@
       * Schroedinger uses less fuel instead of getting a large bonus
       * Plasma has a burning effect
       * Changed spawning and behaviour of pirates to be less dangerous in populated systems
+      * Fighters only attack enemies visible by tehir carrier
    * New Content
       * Added a gigantic black hole
       * Added new space anomalies such as plasma storms
@@ -79,6 +80,7 @@
       * Added lua-enet library to allow for networking in plugins (off by default, requires setting in configuration file)
    * Bug Fixes
       * Too many to list, but we'll try
+      * Fixed pilots not getting equipped at all in some cases
       * Fixed looting cargo when boarding giving less than expected
       * Fixed all asteroid graphics being used as debris
       * Fixed some hooks not properly passing arguments
