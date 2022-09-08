@@ -427,9 +427,20 @@ end
 function update_system()
 end
 
-local effects
+local effects = {}
 function update_effects()
-   effects = pp:effectGet()
+   effects = {}
+   local effects_added = {}
+   for k,e in ipairs(pp:effectGet()) do
+      local a = effects_added[ e.name ]
+      if not a then
+         a = #effects+1
+         effects[ a ] = e
+         e.n = 1
+         effects_added[ e.name ] = a
+      end
+      effects[ a ].n = effects[ a ].n + 1
+   end
 end
 
 local function renderBar( name, value, light, locked, prefix, mod_x, mod_y, heat, stress )
@@ -887,6 +898,9 @@ function render( _dt )
    local ex, ey = sysx-60, sysy+20
    for k,e in ipairs(effects) do
       gfx.renderTexRaw( e.icon, ex, ey, 32, 32 )
+      if e.n > 1 then
+         gfx.print( true, tostring(e.n), ex+24, ey+24, col_text )
+      end
       ex = ex - 48
    end
 

@@ -426,9 +426,20 @@ function update_system()
    sysname = system.cur():name()
 end
 
-local effects
+local effects = {}
 function update_effects()
-   effects = pp:effectGet()
+   effects = {}
+   local effects_added = {}
+   for k,e in ipairs(pp:effectGet()) do
+      local a = effects_added[ e.name ]
+      if not a then
+         a = #effects+1
+         effects[ a ] = e
+         e.n = 1
+         effects_added[ e.name ] = a
+      end
+      effects[ a ].n = effects[ a ].n + 1
+   end
 end
 
 local function update_wset()
@@ -652,6 +663,9 @@ function render( dt, dt_mod )
    local ex, ey = radar_x-48, screen_h-32-32
    for k,e in ipairs(effects) do
       gfx.renderTexRaw( e.icon, ex, ey, 32, 32 )
+      if e.n > 1 then
+         gfx.print( true, tostring(e.n), ex+24, ey+24, cols.txt_bar )
+      end
       ex = ex - 48
    end
 
