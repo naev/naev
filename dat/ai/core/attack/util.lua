@@ -1,10 +1,14 @@
 --[[
 --    Attack utilitiesGeneric attack functions
 --]]
-
 local scans = require "ai.core.misc.scans"
+local careful = require "ai.core.misc.careful"
 
 local atk = {}
+
+mem.lanedistance = mem.lanedistance or 2e3
+mem.atk_pref_range = 5e3
+mem.atk_pref_wdist = 50
 
 --[[
 --Attempts to maintain a constant distance from nearby things
@@ -45,7 +49,6 @@ function atk.check_seeable( target )
    return false
 end
 
-
 --[[
 -- Decides if zigzag is a good option
 --]]
@@ -67,7 +70,6 @@ function atk.decide_zz( target, dist )
            and (dir < math.rad(10)) and (dir > -math.rad(10)) and (d < math.rad(10)) and (d > -math.rad(10)) )
 end
 
-
 --[[
 -- Tries to shoot seekers at close range
 --]]
@@ -80,7 +82,6 @@ function atk.dogfight_seekers( dist, dir )
       end
    end
 end
-
 
 --[[
 -- Common control stuff
@@ -143,7 +144,6 @@ function atk.heuristic_big_game_think( target, _si )
    end
 end
 
-
 --[[
 -- Execute a sequence of close-in flyby attacks
 -- Uses a combination of facing and distance to determine what action to take
@@ -204,7 +204,6 @@ function atk.flyby( target, dist )
       atk.dogfight_seekers( dist, dir )
    end
 end
-
 
 --[[
 -- Attack Profile for a maneuverable ship engaging a maneuverable target
@@ -269,7 +268,6 @@ function atk.space_sup( target, dist )
       ai.shoot(true)
    end
 end
-
 
 local function ___atk_g_ranged_dogfight( target, dist )
    local dir
@@ -439,6 +437,32 @@ function atk.ranged( target, dist )
 
    -- Always launch fighters for now
    ai.weapset( 5 )
+end
+
+function atk.preferred_enemy ()
+   local p = ai.pilot()
+   local r = math.pow( mem.lanedistance, 2 )
+   local maxrange = mem.atk_pref_range
+   local rangen = 1 / math.pow( maxrange, 2 )
+   local aip = p:pos()
+   local aipts = p:points()
+   local targets = {}
+   for k,h in ipairs( p:getHostiles( maxrange, nil, nil, false, true ) ) do
+      local w = h:memory().vulnerability or 0
+      w = w + math.abs( aipts - h:points() ) -- Similar in points
+      w = w + mem.atk_pref_wdist * rangen * aip:dist2( h:pos() ) -- Squared distance normalized to 1
+      -- Bring down vulnerability a bit
+      if not careful.checkVulnerable( p, h, mem.vulnattack, r ) then
+         w = w - 100
+      end
+      table.insert( targets, { p=h, priority=w } )
+   end
+   if #targets <= 0 then return nil end
+   table.sort( targets, function(a,b)
+      return a.priority < b.priority
+   end )
+   -- TODO statistical sampling instead of determinism?
+   return targets[1].p
 end
 
 return atk

@@ -18,6 +18,7 @@ mem.atk_aim       = 1.0 -- Distance that marks aim
 mem.atk_board     = false -- Whether or not to board the target
 mem.atk_kill      = true -- Whether or not to finish off the target
 mem.atk_minammo   = 0.1 -- Percent of ammo necessary to do ranged attacks
+mem.vulnattack    = 1.5 -- Vulnerability threshold
 mem.ranged_ammo   = 0 -- How much ammo is left, we initialize to 0 here just in case
 mem.recharge      = false --whether to hold off shooting to avoid running dry of energy
 mem.enemyclose    = nil -- Distance at which an enemy is considered close
