@@ -6,13 +6,7 @@ local atk = require "ai.core.attack.util"
 local idle_generic = idle
 
 -- Get a nearby enemy using pirate heuristics
-local function __getenemy ()
-   local e = atk.preferred_enemy()
-   if not e then
-      return e
-   end
-   return e.p, e.F, e.H
-end
+local __getenemy = atk.preferred_enemy
 
 -- Sees if there is an enemy nearby to engage
 local function __tryengage( p )
