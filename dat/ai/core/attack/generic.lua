@@ -10,7 +10,7 @@ local atk_generic = {}
 --]]
 function atk_generic.think( target, _si )
    -- Get new target if it's closer
-   local enemy = atk.preferred_enemy ()
+   local enemy = atk.preferred_enemy().p
    if enemy ~= target and enemy ~= nil then
       local dist  = ai.dist( target )
       local range = ai.getweaprange( 3 )

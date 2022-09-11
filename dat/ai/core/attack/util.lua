@@ -452,17 +452,18 @@ function atk.preferred_enemy ()
       w = w + math.abs( aipts - h:points() ) -- Similar in points
       w = w + mem.atk_pref_wdist * rangen * aip:dist2( h:pos() ) -- Squared distance normalized to 1
       -- Bring down vulnerability a bit
-      if not careful.checkVulnerable( p, h, mem.vulnattack, r ) then
+      local v, F, H = careful.checkVulnerable( p, h, mem.vulnattack, r )
+      if not v then
          w = w - 100
       end
-      table.insert( targets, { p=h, priority=w } )
+      table.insert( targets, { p=h, priority=w, F=F, H=H } )
    end
    if #targets <= 0 then return nil end
    table.sort( targets, function(a,b)
       return a.priority < b.priority
    end )
    -- TODO statistical sampling instead of determinism?
-   return targets[1].p
+   return targets[1]
 end
 
 return atk
