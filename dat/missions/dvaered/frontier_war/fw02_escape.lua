@@ -28,7 +28,7 @@
    3) Goto an hospital
    4) Runaway
    5) Player has been hailed by Captain HewHew
-   6) Player has met the Empire and Pirate agent, but did not accept any of their offers
+   6) Player has met the Empire and Pirate agent, but did not accept any of their offers (yet?)
    7) Accepted Empire solution: can cross blockade of Arcturus->Goddard
    8) Accepted Pirate solution: can cross any blockade
    9) Accepted Pirate solution: can cross any blockade, but has paid cash
@@ -41,7 +41,7 @@ local fmt = require "format"
 local pir = require "common.pirate"
 
 local athooks, escort, hewhew, scanHooks, squad, strafer, target, zlkPilots, zlk_list -- Non-persistent state
-local rmScanHooksRaw, spawnEmpSquadron, spawnZlkSquadron -- Forward-declared functions
+local rmScanHooksRaw, spawnEmpSquadron, spawnZlkSquadron, barAgents -- Forward-declared functions
 -- luacheck: globals backDialog convoyEnter enter escort_died escort_hailed gather hailMe killed_zlk land landBar loading rmScanHooks scanBloc spawnDrones spawnHewHew spawnStrafer straferDiscuss takeoff targetAttacked targetBoarded targetDied targetEscaped tick weNeed2land (Hook functions passed by name)
 -- luacheck: globals discussHam discussNik discussStr discussThe discussTro fireSteal imperialAgent pirateDealer (NPC functions passed by name)
 
@@ -144,9 +144,11 @@ function land()
       tk.msg(_("Other help offer"), fmt.f(_([[As you land, someone is waiting for you at the spaceport. "Hello, friend! Seems like you're having some trouble with the authorities out there. Looks like the Za'lek have even enlisted the help of the Imperials. There are blockades everywhere on the borders of Imperial space. Even the paths to the secret jumps are impassable. It looks like the Empire wants to catch you at all costs, but luckily enough, I have the solution. I imagine you already have a fake transponder, but they seem to have identified it.  I bet you could use a replacement. I can sell you an genuine, fake transponder fresh from the Skulls and Bones factory."
    Clearly this is a pirate looking to make a few credits off your dire situation. But, the idea is not a bad one. The Imperial ships wouldn't be looking for a ship with a Skulls and Bones fake transponder. So you ask him how many credits he wants. "{number}" is the answer. "Sounds like a lot, right? But maybe it's a bargain in exchange for your life and the success of whatever unscrupulous mission you're trying to carry out. Maybe you don't have that many credits on you right now. That's ok.  I'll accept your word to pay me at some point. Well, your word and your DNA signature. That way I can find you if you try to cheat me."
    You know that if you agree, you will have to pay, no matter what happens, otherwise you will be hounded by hit men until the end of your, probably very short, life. However, paying {credits} might allow you to avoid the otherwise messy and compromising deal you would have to make with the Imperial secret services. Meet the fake transponder dealer at the bar if interested.]]), {number=fmt.number(fw.pirate_price), credits=fmt.credits(fw.pirate_price)}))
-      mem.pirag = misn.npcAdd("pirateDealer", _("Fake transponder dealer"), portrait.get("Pirate"), _("This shifty person is for sure one of the pirates that wants to sell you a fake transponder."))
-      mem.impag = misn.npcAdd("imperialAgent", _("Feather-hat agent"), portrait.get(), _("The Imperial agent looks like a non-descript trader, as there are so many in Imperial space."))
+      barAgents()
       mem.stage = 6
+
+   elseif mem.stage == 6 and spob.cur():faction() == faction.get("Empire") then
+      barAgents()
 
    -- Land to end the mission
    elseif mem.stage >= 4 and spob.cur() == reppla then
@@ -203,6 +205,8 @@ function loading()
       misn.npcAdd("fireSteal", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_des2)
    --elseif mem.stage == 4 then -- TODO: decide if we do that
       --player.takeoff()
+   elseif mem.stage == 6 and spob.cur():faction() == faction.get("Empire") then
+      barAgents()
    end
 end
 
@@ -654,6 +658,12 @@ function rmScanHooksRaw()
       end
       scanHooks = nil
    end
+end
+
+-- Put Agents at the bar when landing/loading
+function barAgents()
+   mem.pirag = misn.npcAdd("pirateDealer", _("Fake transponder dealer"), portrait.get("Pirate"), _("This shifty person is for sure one of the pirates that wants to sell you a fake transponder."))
+   mem.impag = misn.npcAdd("imperialAgent", _("Feather-hat agent"), portrait.get(), _("The Imperial agent looks like a non-descript trader, as there are so many in Imperial space."))
 end
 
 -- Spawns the odd imperial pilot
