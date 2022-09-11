@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
-"PO-Revision-Date: 2022-08-14 21:21+0000\n"
+"PO-Revision-Date: 2022-09-12 01:20+0000\n"
 "Last-Translator: Étienne Girard <etienne.g.girard@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: physfs.c:1
 msgid "no error"
@@ -1224,7 +1224,7 @@ msgstr ""
 
 #: dat/commodities/silicate.xml:3
 msgid "Silicate"
-msgstr ""
+msgstr "Silicate"
 
 #: dat/commodities/silicate.xml:4
 msgid ""
@@ -1232,12 +1232,13 @@ msgid ""
 "to their versalitility they are commonly used in manufacturing of many "
 "different fundamental components to space-faring life."
 msgstr ""
+"Le terme silicate regroupe de nombreux minéraux comprenant la silice et le "
+"quartz. Grâce à leur polyvalence ils sont couramment utilisés pour la "
+"fabrication de nombreux composants fondamentaux des équipements spatiaux."
 
 #: dat/commodities/space_moss.xml:3
-#, fuzzy
-#| msgid "Spaceworthy"
 msgid "Space Moss"
-msgstr "Capable d'aller dans l'espace"
+msgstr ""
 
 #. Some useful variable names
 #. Add the head guy
@@ -1277,7 +1278,7 @@ msgstr ""
 
 #: dat/commodities/therite.xml:3
 msgid "Therite"
-msgstr ""
+msgstr "Thérite"
 
 #: dat/commodities/therite.xml:4
 msgid ""
@@ -1289,6 +1290,13 @@ msgid ""
 "applications, from sub-space sensors to reinforced armours, leading to a "
 "constant and large demand for it."
 msgstr ""
+"La thérite est un composé extrêmement rare et sa formation nécessite un "
+"niveau extrême de radiations. La théorie la plus communémment acceptée "
+"explique son existence comme une projection quasi-matérielle d'une radiation "
+"auto-interférante. Même sans consensus sur la physique de ce matériau, des "
+"ingénieurs ont trouvés de nombreuses applications dans diverses technologies "
+"de pointes allant de senseurs subspatiaux à des armures renforcées, donnant "
+"lieu à une demande forte et constante."
 
 #: dat/commodities/vixilium.xml:3
 msgid "Vixilium"
