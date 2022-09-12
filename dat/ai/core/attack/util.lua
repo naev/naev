@@ -441,6 +441,9 @@ function atk.ranged( target, dist )
    ai.weapset( 5 )
 end
 
+--[[
+Tries to find a preferred enemy.
+--]]
 function atk.preferred_enemy ()
    local p = ai.pilot()
    local r = math.pow( mem.lanedistance, 2 )
@@ -456,13 +459,13 @@ function atk.preferred_enemy ()
       -- Bring down vulnerability a bit
       local v, F, H = careful.checkVulnerable( p, h, mem.vulnattack, r )
       if not v then
-         w = w - 100
+         w = w + 100
       end
       table.insert( targets, { p=h, priority=w, F=F, H=H } )
    end
    if #targets <= 0 then return nil end
    table.sort( targets, function(a,b)
-      return a.priority < b.priority
+      return a.priority < b.priority -- minimizing
    end )
    -- TODO statistical sampling instead of determinism?
    return targets[1]
