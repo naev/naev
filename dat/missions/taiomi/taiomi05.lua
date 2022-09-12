@@ -29,7 +29,7 @@ local reward = taiomi.rewards.taiomi05
 local title = _("Missing Drones")
 local base, basesys = spob.getS("One-Wing Goddard")
 -- The systems below backtrack from Taiomi to Haven
-local scenesys = system.get("Bastion")
+local firstsys = system.get("Bastion")
 local fightsys = system.get("Gamel")
 local lastsys = system.get("Haven")
 
@@ -43,7 +43,7 @@ local lastsys = system.get("Haven")
 mem.state = 0
 
 function create ()
-   if not misn.claim({scenesys, fightsys}) then
+   if not misn.claim({firstsys, fightsys}) then
       warn(_("Unable to claim system that should be claimable!"))
       misn.finish(false)
    end
@@ -74,10 +74,10 @@ function enter ()
    end
 
    local scur = system.cur()
-   if mem.state==0 and scur == scenesys and prevsys==basesys then
+   if mem.state==0 and scur == firstsys and prevsys==basesys then
       mem.timer = hook.timer( 3, "scene_spawn" )
 
-   elseif mem.state==1 and scur == fightsys and prevsys==scenesys then
+   elseif mem.state==1 and scur == fightsys and prevsys==firstsys then
       mem.timer = hook.timer( 3, "fight_spawn" )
 
    end
@@ -94,7 +94,7 @@ local function spawn_scavenger( pos )
 end
 
 function scene_spawn ()
-   local jmp = jump.get( scenesys, basesys )
+   local jmp = jump.get( firstsys, basesys )
    spawn_scavenger( jmp )
 end
 
@@ -118,7 +118,7 @@ function scene02 ()
 end
 
 function fight00 ()
-   local jmp = jump.get( scenesys, basesys )
+   local jmp = jump.get( firstsys, basesys )
    spawn_scavenger( jmp )
 end
 
@@ -164,8 +164,8 @@ function land ()
          {alive=alive, dead=dead}))
       s(fmt.f(_([["I have simulated the most likely situations and devised a plan that maximizes the chance of recovering {dead} safely by minimizing the amount of time to find them, however, this will come at a risk for us."]]),
          {dead=dead}))
-      s(fmt.f(_([["The core idea is to backtrack the most probably path, starting with {scenesys}, then {fightsys}, and finally {lastsys}. At each system, we will make a run to an optimal position, and I will begin broadcasting a special code while listening to possible answers."]]),
-         {scenesys=scenesys, fightsys=fightsys, lastsys=lastsys}))
+      s(fmt.f(_([["The core idea is to backtrack the most probably path, starting with {firstsys}, then {fightsys}, and finally {lastsys}. At each system, we will make a run to an optimal position, and I will begin broadcasting a special code while listening to possible answers."]]),
+         {firstsys=firstsys, fightsys=fightsys, lastsys=lastsys}))
       s(fmt.f(_([["There is no time to explain the details, but this code will allow detecting {dead}. However, I will remain largely immobile, and it is likely that it will attract unwanted attention in the system. I will need you to protect me for the duration of the signal."]]),
          {dead=dead}))
 
@@ -181,15 +181,15 @@ function land ()
 
       vn.label("cont02")
       s(fmt.f(_([["When you are ready, we shall make route to {nextsys}. Combat is anticipated, so be prepared."]]),
-         {nextsys=scenesys}))
+         {nextsys=firstsys}))
 
       vn.done( taiomi.scavenger.transition )
       vn.run()
 
-      mem.marker = misn.markerMove( scenesys )
+      mem.marker = misn.markerMove( firstsys )
 
       misn.osdCreate( title, {
-         fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=scenesys}),
+         fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=firstsys}),
          fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=fightsys}),
          fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=lastsys}),
          _("Scavenger must survive"),
