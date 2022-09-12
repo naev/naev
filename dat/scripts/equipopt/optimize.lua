@@ -232,6 +232,8 @@ function optimize.optimize( p, cores, outfit_list, params )
    params = params or eparams.default()
    params.goodness = params.goodness or optimize.goodness_default
    local sparams = optimize.sparams
+   local pm = p:memory()
+   pm.equipopt_params = params
 
    -- Naked ship
    local ps = p:ship()
