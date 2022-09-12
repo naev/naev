@@ -36,7 +36,7 @@ local lastsys = system.get("Haven")
 local firstpos = vec2.new( -2500, -2000 )
 local fightpos = vec2.new( -2000, 3000 )
 local DIST_THRESHOLD = 2000 -- Distance in units
-local BROADCAST_LENGTH = 90 -- Length in seconds
+local BROADCAST_LENGTH = 150 -- Length in seconds
 
 --[[
    0: mission started
@@ -163,10 +163,10 @@ end
 
 local broadcast_timer
 function scavenger_pos( pos )
-   if pos:dist( player.pos() ) < DIST_THRESHOLD then
+   if pos:dist( scavenger:pos() ) < 100 then
       broadcast_timer = 0
       scavenger:comm(_("Commencing broadcast!"))
-      scavenger_broadcast ()
+      scavenger_broadcast()
       return
    end
    hook.timer( 1, "scavenger_pos", pos )
