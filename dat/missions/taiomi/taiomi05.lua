@@ -19,11 +19,12 @@
 local vn = require "vn"
 local fmt = require "format"
 local taiomi = require "common.taiomi"
+local lmisn = require "lmisn"
 --local equipopt = require "equipopt"
 --local pilotai = require "pilotai"
 --local luatk = require "luatk"
 
--- luacheck: globals enter land scene_spawn scene00 scene01 scene02 fight_spawn fight00 hail_scavenger (Hook functions passed by name)
+-- luacheck: globals enter land scavenger_enter scavenger_hail scavenger_death (Hook functions passed by name)
 
 local reward = taiomi.rewards.taiomi05
 local title = _("Missing Drones")
@@ -75,10 +76,10 @@ function enter ()
 
    local scur = system.cur()
    if mem.state==0 and scur == firstsys and prevsys==basesys then
-      mem.timer = hook.timer( 3, "scene_spawn" )
+      mem.timer = hook.timer( 3, "scavenger_enter" )
 
    elseif mem.state==1 and scur == fightsys and prevsys==firstsys then
-      mem.timer = hook.timer( 3, "fight_spawn" )
+      mem.timer = hook.timer( 3, "scavenger_enter" )
 
    end
 
@@ -89,20 +90,12 @@ local scavenger
 local function spawn_scavenger( pos )
    scavenger = pilot.add( "Drone (Hyena)", "Independent", pos, _("Scavenger Drone") )
    scavenger:setFriendly(true)
-   hook.pilot( scavenger, "hail", "hail_scavenger" )
+   hook.pilot( scavenger, "hail", "scavenger_hail" )
+   hook.pilot( scavenger, "death", "scavenger_death" )
    return scavenger
 end
 
-function scene_spawn ()
-   local jmp = jump.get( firstsys, basesys )
-   spawn_scavenger( jmp )
-end
-
-function scene00 ()
-   hook.timer( 4, "scene01" )
-end
-
-function hail_scavenger( p )
+function scavenger( p )
    if mem.state < 2 then
       p:comm(_("Our task is of uttermost importance!"))
    else
@@ -111,15 +104,20 @@ function hail_scavenger( p )
    player.commClose()
 end
 
-function scene01 ()
+function scavenger_death ()
+   lmisn.fail( "Scavenger died! You were supposed to protect them!" )
 end
 
-function scene02 ()
-end
-
-function fight00 ()
-   local jmp = jump.get( firstsys, basesys )
-   spawn_scavenger( jmp )
+function scavenger_enter ()
+   local jmp
+   if mem.state==0 then
+      jmp = jump.get( firstsys, basesys )
+   else
+      jmp = jump.get( firstsys, basesys )
+   end
+   local s = spawn_scavenger( jmp )
+   s:control()
+   s:follow( player.pilot() )
 end
 
 function land ()
