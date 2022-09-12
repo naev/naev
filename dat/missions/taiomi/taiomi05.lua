@@ -134,6 +134,7 @@ function land ()
 
       vn.clear()
       vn.scene()
+      --vn.music("") -- TODO some anticipation music or something
       local s = vn.newCharacter( taiomi.vn_scavenger() )
       vn.transition( taiomi.scavenger.transition )
       vn.na(_([[You disembark and are soon met with a Scavenger you can only describe as solemn.]]))
@@ -179,7 +180,8 @@ function land ()
          {dead=dead}))
 
       vn.label("cont02")
-      s(_([[""]]))
+      s(fmt.f(_([["When you are ready, we shall make route to {nextsys}. Combat is anticipated, so be prepared."]]),
+         {nextsys=scenesys}))
 
       vn.done( taiomi.scavenger.transition )
       vn.run()
@@ -188,6 +190,8 @@ function land ()
 
       misn.osdCreate( title, {
          fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=scenesys}),
+         fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=fightsys}),
+         fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=lastsys}),
          _("Scavenger must survive"),
       } )
       return
