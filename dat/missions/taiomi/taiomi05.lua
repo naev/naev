@@ -24,7 +24,7 @@ local lmisn = require "lmisn"
 --local pilotai = require "pilotai"
 --local luatk = require "luatk"
 
--- luacheck: globals enter land scavenger_enter scavenger_hail scavenger_death (Hook functions passed by name)
+-- luacheck: globals enter land scavenger_enter scavenger_hail scavenger_death scavenger_msg check_location scavenger_pos scavenger_broadcast (Hook functions passed by name)
 
 local reward = taiomi.rewards.taiomi05
 local title = _("Missing Drones")
@@ -33,13 +33,18 @@ local base, basesys = spob.getS("One-Wing Goddard")
 local firstsys = system.get("Bastion")
 local fightsys = system.get("Gamel")
 local lastsys = system.get("Haven")
+local firstpos = vec2.new( -2500, -2000 )
+local fightpos = vec2.new( -2000, 3000 )
+local DIST_THRESHOLD = 2000 -- Distance in units
+local BROADCAST_LENGTH = 90 -- Length in seconds
 
 --[[
    0: mission started
    1: landed on one-winged goddard
-   2: first cutscene
-   3: scavenger goes berserk
-   4: return time
+   2: first broadcast
+   3: second broadcast
+   4: scavenger goes berserk
+   5: return time
 --]]
 mem.state = 0
 
@@ -75,10 +80,10 @@ function enter ()
    end
 
    local scur = system.cur()
-   if mem.state==0 and scur == firstsys and prevsys==basesys then
+   if mem.state==1 and scur == firstsys and prevsys==basesys then
       mem.timer = hook.timer( 3, "scavenger_enter" )
 
-   elseif mem.state==1 and scur == fightsys and prevsys==firstsys then
+   elseif mem.state==2 and scur == fightsys and prevsys==firstsys then
       mem.timer = hook.timer( 3, "scavenger_enter" )
 
    end
@@ -109,15 +114,83 @@ function scavenger_death ()
 end
 
 function scavenger_enter ()
-   local jmp
+   local dead = taiomi.young_died()
+   local osd = {
+      fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=firstsys}),
+      fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=fightsys}),
+      fmt.f(_("Search for {name} ({sys})"),{name=dead, sys=lastsys}),
+      _("Scavenger must survive"),
+   }
+
+   local jmp, pos, msg
    if mem.state==0 then
       jmp = jump.get( firstsys, basesys )
+      pos = firstpos
+      msg = _("I have marked the first location.")
+      osd[1] = _("Go to the marked location")
    else
       jmp = jump.get( firstsys, basesys )
+      pos = fightpos
+      msg = _("Let us make haste to the next location.")
+      table.remove( osd, 1 )
+      osd[1] = _("Go to the marked location")
    end
    local s = spawn_scavenger( jmp )
    s:control()
-   s:follow( player.pilot() )
+   s:follow( player.pilot() ) -- TODO probably something better than just following
+
+   -- Highlight position
+   system.mrkAdd( pos )
+   misn.osdCreate( title, osd )
+
+   hook.timer( 5, "scavenger_msg", msg )
+   hook.timer( 1, "check_location", pos )
+end
+
+function scavenger_msg( msg )
+   scavenger:comm(msg)
+end
+
+function check_location( pos )
+   if pos:dist( player.pos() ) < DIST_THRESHOLD then
+      scavenger:moveto( pos )
+      scavenger:comm(_("Let me get in position."))
+      hook.timer( 10, "scavenger_pos", pos )
+      return
+   end
+   hook.timer( 1, "check_location", pos )
+end
+
+local broadcast_timer
+function scavenger_pos( pos )
+   if pos:dist( player.pos() ) < DIST_THRESHOLD then
+      broadcast_timer = 0
+      scavenger:comm(_("Commencing broadcast!"))
+      scavenger_broadcast ()
+      return
+   end
+   hook.timer( 1, "scavenger_pos", pos )
+end
+
+function scavenger_broadcast ()
+   broadcast_timer = broadcast_timer + 1
+   if broadcast_timer > BROADCAST_LENGTH then
+      scavenger:follow( player.pilot() )
+      if mem.state==2 then
+         scavenger:comm(_("Nothing… Let us move on."))
+      --else
+      end
+      mem.state = mem.state + 1
+      return
+   end
+
+   -- Update OSD
+   local osdtitle, osd = misn.osdGet()
+   osd[1] = fmt.f(_("Protect Scavenger ({left} s remaining)"),
+      {left=BROADCAST_LENGTH-broadcast_timer})
+   misn.osdCreate( osdtitle, osd )
+
+   hook.timer( 1, "scavenger_broadcast" )
 end
 
 function land ()
