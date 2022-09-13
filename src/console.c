@@ -59,9 +59,9 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
 #define CLI_WIDTH          (SCREEN_W - 100) /**< Console width. */
 #define CLI_HEIGHT         (SCREEN_H - 100) /**< Console height. */
 /** Height of console box */
-#define CLI_CONSOLE_HEIGHT  (CLI_HEIGHT-50-BUTTON_HEIGHT)
+#define CLI_CONSOLE_HEIGHT  (CLI_HEIGHT-70-BUTTON_HEIGHT)
 /** Number of lines displayed at once */
-#define CLI_MAX_LINES (CLI_CONSOLE_HEIGHT/(cli_font->h+5)-2)
+#define CLI_MAX_LINES (CLI_CONSOLE_HEIGHT/(cli_font->h+5))
 static char **cli_buffer; /**< CLI buffer. */
 static char *cli_prompt; /**< Prompt string (allocated). */
 static int cli_history     = 0; /**< Position in history. */
@@ -276,6 +276,9 @@ static void cli_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
    int start;
+   const glColour col = COL_ALPHA( cBlack, 0.5 );
+
+   gl_renderRect( bx, by, w, h, &col );
 
    if (cli_scroll_pos == -1)
       start = MAX(0, array_size(cli_buffer) - CLI_MAX_LINES);
