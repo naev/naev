@@ -463,7 +463,7 @@ function atk.preferred_enemy ()
          F = 1
          H = 1
       end
-      table.insert( targets, { p=h, priority=w, F=F, H=H } )
+      table.insert( targets, { p=h, priority=w, v=v, F=F, H=H } )
    end
    if #targets <= 0 then return nil end
    table.sort( targets, function(a,b)
