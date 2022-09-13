@@ -460,6 +460,8 @@ function atk.preferred_enemy ()
       local v, F, H = careful.checkVulnerable( p, h, mem.vulnattack, r )
       if not v then
          w = w + 100
+         F = 1
+         H = 1
       end
       table.insert( targets, { p=h, priority=w, F=F, H=H } )
    end
@@ -468,7 +470,7 @@ function atk.preferred_enemy ()
       return a.priority < b.priority -- minimizing
    end )
    -- TODO statistical sampling instead of determinism?
-   return targets[1]
+   return targets[1].p, targets[1]
 end
 
 return atk

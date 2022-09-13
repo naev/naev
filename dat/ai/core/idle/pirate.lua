@@ -7,9 +7,9 @@ local idle_generic = idle
 
 -- Get a nearby enemy using pirate heuristics
 local function __getenemy ()
-   local p = atk.preferred_enemy()
+   local p, d = atk.preferred_enemy()
    if p then
-      return p.p, p.F, p.H
+      return p, d.F, d.H
    end
 end
 
