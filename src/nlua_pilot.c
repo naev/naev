@@ -172,6 +172,7 @@ static int pilotL_cargoJet( lua_State *L );
 static int pilotL_cargoList( lua_State *L );
 static int pilotL_credits( lua_State *L );
 static int pilotL_ship( lua_State *L );
+static int pilotL_points( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
@@ -326,6 +327,8 @@ static const luaL_Reg pilotL_methods[] = {
    { "effectGet", pilotL_effectGet },
    /* Ship. */
    { "ship", pilotL_ship },
+   { "points", pilotL_points },
+   /* Cargo and moolah. */
    { "cargoFree", pilotL_cargoFree },
    { "cargoHas", pilotL_cargoHas },
    { "cargoAdd", pilotL_cargoAdd },
@@ -4268,6 +4271,22 @@ static int pilotL_ship( lua_State *L )
 {
    Pilot *p  = luaL_validpilot(L,1);
    lua_pushship(L, p->ship);
+   return 1;
+}
+
+/**
+ * @brief Gets the points the pilot costs.
+ *
+ * Note currently equivalent to p:ship():points().
+ *
+ *    @luatparam Pilot p Pilot to get points of.
+ *    @luatreturn number The points of the pilot.
+ * @luafunc points
+ */
+static int pilotL_points( lua_State *L )
+{
+   Pilot *p  = luaL_validpilot(L,1);
+   lua_pushinteger(L, p->ship->points);
    return 1;
 }
 

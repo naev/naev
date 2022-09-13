@@ -11,6 +11,7 @@ function atk.choose ()
 
    -- Set initial variables
    mem.ranged_ammo = ai.getweapammo(4)
+   mem.equipopt_params = mem.equipopt_params or {}
 
    -- Lighter ships
    if class == "Bomber" then

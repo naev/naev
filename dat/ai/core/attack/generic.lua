@@ -1,7 +1,6 @@
 --[[
 --    Generic attack functions
 --]]
-
 local atk = require "ai.core.attack.util"
 
 local atk_generic = {}
@@ -11,7 +10,7 @@ local atk_generic = {}
 --]]
 function atk_generic.think( target, _si )
    -- Get new target if it's closer
-   local enemy  = ai.getenemy()
+   local enemy = atk.preferred_enemy()
    if enemy ~= target and enemy ~= nil then
       local dist  = ai.dist( target )
       local range = ai.getweaprange( 3 )
@@ -22,7 +21,6 @@ function atk_generic.think( target, _si )
       end
    end
 end
-
 
 --[[
 -- Attacked function.  Only called from "attack" tasks (i.e., under "if si.attack").
@@ -47,7 +45,6 @@ function atk_generic.attacked( attacker )
    end
 end
 
-
 --[[
 -- Approaches the target
 --]]
@@ -62,7 +59,6 @@ local function __atk_g_approach( target, _dist )
       ai.accel()
    end
 end
-
 
 --[[
 -- Melees the target
@@ -86,7 +82,6 @@ local function __atk_g_melee( target, dist )
    -- Also try to shoot missiles
    atk.dogfight_seekers( dist, dir )
 end
-
 
 --[[
 -- Generic "brute force" attack.  Doesn't really do anything interesting.

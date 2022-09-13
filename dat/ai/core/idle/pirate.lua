@@ -1,35 +1,21 @@
 local careful = require "ai.core.misc.careful"
 require 'ai.core.idle.generic'
+local atk = require "ai.core.attack.util"
 
 -- Keep generic as backup
 local idle_generic = idle
 
 -- Get a nearby enemy using pirate heuristics
-local function __getenemy( p )
-   local pv = {}
-   local r = math.pow( mem.lanedistance, 2 )
-   -- Need to consider fighters here
-   for k,v in ipairs(p:getHostiles( mem.ambushclose, nil, true, false, true )) do
-      local vuln, F, H = careful.checkVulnerable( p, v, mem.vulnattack, r )
-      if vuln then
-         local d = ai.dist2( v )
-         table.insert( pv, {p=v, d=d, F=F, H=H} )
-      end
+local function __getenemy ()
+   local p, d = atk.preferred_enemy()
+   if p and d.v then -- Must be vulnerable
+      return p, d.F, d.H
    end
-   if #pv==0 then
-      return nil
-   end
-
-   -- Attack nearest for now, would have to incorporate some other criteria here
-   table.sort( pv, function(a,b)
-      return a.d < b.d
-   end )
-   return pv[1].p, pv[1].F, pv[1].H
 end
 
 -- Sees if there is an enemy nearby to engage
 local function __tryengage( p )
-   local enemy, F, H = __getenemy(p)
+   local enemy, F, H = __getenemy()
    if not enemy then
       return false
    end
@@ -106,7 +92,7 @@ local function idle_nostealth ()
    local p = ai.pilot()
 
    if mem.aggressive then
-      local enemy = __getenemy(p)
+      local enemy = __getenemy()
       if enemy ~= nil then
          ai.pushtask( "attack", enemy )
          return
@@ -147,7 +133,7 @@ function idle ()
 
    -- Just be an asshole if not stealthed and aggressive
    if not stealth and mem.aggressive then
-      local enemy = __getenemy(p)
+      local enemy = __getenemy()
       if enemy ~= nil then
          ai.pushtask( "attack", enemy )
          return
@@ -253,7 +239,7 @@ control_funcs.attack = function ()
       ai.poptask()
 
       -- Try to get a new enemy
-      local enemy = __getenemy(p)
+      local enemy = __getenemy()
       if enemy ~= nil then
          ai.pushtask( "attack", enemy )
       else

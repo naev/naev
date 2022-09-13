@@ -1,10 +1,14 @@
 --[[
 --    Attack utilitiesGeneric attack functions
 --]]
-
 local scans = require "ai.core.misc.scans"
+local careful = require "ai.core.misc.careful"
 
 local atk = {}
+
+mem.lanedistance = mem.lanedistance or 2e3
+mem.atk_pref_range = 5e3
+mem.atk_pref_wdist = 50
 
 --[[
 --Attempts to maintain a constant distance from nearby things
@@ -45,7 +49,6 @@ function atk.check_seeable( target )
    return false
 end
 
-
 --[[
 -- Decides if zigzag is a good option
 --]]
@@ -67,7 +70,6 @@ function atk.decide_zz( target, dist )
            and (dir < math.rad(10)) and (dir > -math.rad(10)) and (d < math.rad(10)) and (d > -math.rad(10)) )
 end
 
-
 --[[
 -- Tries to shoot seekers at close range
 --]]
@@ -80,7 +82,6 @@ function atk.dogfight_seekers( dist, dir )
       end
    end
 end
-
 
 --[[
 -- Common control stuff
@@ -122,8 +123,7 @@ end
 -- big game hunter attack pattern using heuristic target identification.
 --]]
 function atk.heuristic_big_game_think( target, _si )
-   local enemy         = ai.getenemy_heuristic(0.9, 0.9, 0.9, 20000)
-   local nearest_enemy = ai.getenemy()
+   local enemy = atk.preferred_enemy()
 
    local dist = ai.dist(target)
    local range = ai.getweaprange(3, 0)
@@ -134,15 +134,17 @@ function atk.heuristic_big_game_think( target, _si )
       if dist > range * mem.atk_changetarget then
          ai.pushtask("attack", enemy )
       end
+      return
+   end
 
-   elseif nearest_enemy ~= target and nearest_enemy ~= nil then
+   local nearest_enemy = ai.getenemy()
+   if nearest_enemy ~= target and nearest_enemy ~= nil then
       -- Shouldn't switch targets if close
       if dist > range * mem.atk_changetarget then
          ai.pushtask("attack", nearest_enemy )
       end
    end
 end
-
 
 --[[
 -- Execute a sequence of close-in flyby attacks
@@ -204,7 +206,6 @@ function atk.flyby( target, dist )
       atk.dogfight_seekers( dist, dir )
    end
 end
-
 
 --[[
 -- Attack Profile for a maneuverable ship engaging a maneuverable target
@@ -269,7 +270,6 @@ function atk.space_sup( target, dist )
       ai.shoot(true)
    end
 end
-
 
 local function ___atk_g_ranged_dogfight( target, dist )
    local dir
@@ -439,6 +439,38 @@ function atk.ranged( target, dist )
 
    -- Always launch fighters for now
    ai.weapset( 5 )
+end
+
+--[[
+Tries to find a preferred enemy.
+--]]
+function atk.preferred_enemy ()
+   local p = ai.pilot()
+   local r = math.pow( mem.lanedistance, 2 )
+   local maxrange = mem.atk_pref_range
+   local rangen = 1 / math.pow( maxrange, 2 )
+   local aip = p:pos()
+   local aipts = p:points()
+   local targets = {}
+   for k,h in ipairs( p:getHostiles( maxrange, nil, nil, false, true ) ) do
+      local w = h:memory().vulnerability or 0
+      w = w + math.abs( aipts - h:points() ) -- Similar in points
+      w = w + mem.atk_pref_wdist * rangen * aip:dist2( h:pos() ) -- Squared distance normalized to 1
+      -- Bring down vulnerability a bit
+      local v, F, H = careful.checkVulnerable( p, h, mem.vulnattack, r )
+      if not v then
+         w = w + 100
+         F = 1
+         H = 1
+      end
+      table.insert( targets, { p=h, priority=w, v=v, F=F, H=H } )
+   end
+   if #targets <= 0 then return nil end
+   table.sort( targets, function(a,b)
+      return a.priority < b.priority -- minimizing
+   end )
+   -- TODO statistical sampling instead of determinism?
+   return targets[1].p, targets[1]
 end
 
 return atk

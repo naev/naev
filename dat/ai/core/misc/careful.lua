@@ -11,9 +11,9 @@ end
 
 local careful = {}
 
-local function checkSpobJumps( fct, pos )
+local function checkSpobJumps( fct, pos, spobdistance, jumpdistance )
    local scur = system.cur()
-   local spobdist2 = math.pow( mem.spobdistance, 2 )
+   local spobdist2 = math.pow( spobdistance, 2 )
    for k,v in ipairs(scur:spobs()) do
       local f = v:faction()
       if f and f:areEnemies( fct ) then
@@ -23,7 +23,7 @@ local function checkSpobJumps( fct, pos )
       end
    end
 
-   local jumpdist2 = math.pow( mem.jumpdistance, 2 )
+   local jumpdist2 = math.pow( jumpdistance, 2 )
    for k,v in ipairs(scur:jumps()) do
       local f = v:dest():faction()
       if f and f:areEnemies( fct ) then
@@ -32,27 +32,30 @@ local function checkSpobJumps( fct, pos )
          end
       end
    end
+   return true
 end
 
 --[[--
 Checks to see if a position is good for a pilot, considering both lanes and spobs.
 --]]
 function careful.posIsGood( p, pos )
+   local m = p:memory()
    local lanedist = lanes.getDistance2P( p, pos )
-   if lanedist < math.pow( mem.lanedistance, 2 ) then
+   if lanedist < math.pow( m.lanedistance, 2 ) then
       return false
    end
-
-   return checkSpobJumps( p:faction(), p:pos() )
+   return checkSpobJumps( p:faction(), p:pos(), m.spobdistance, m.jumpdistance )
 end
 
-function careful.posIsGoodL( L, fct, pos )
+function careful.posIsGoodL( L, fct, pos, lanedistance, spobdistance, jumpdistance )
+   lanedistance = lanedistance or 2e3
+   spobdistance = spobdistance or lanedistance
+   jumpdistance = jumpdistance or spobdistance
    local lanedist = lanes.getDistance2( L, pos )
-   if lanedist < math.pow( mem.lanedistance, 2 ) then
+   if lanedist < math.pow( lanedistance, 2 ) then
       return false
    end
-
-   return checkSpobJumps( fct, pos )
+   return checkSpobJumps( fct, pos, lanedistance, spobdistance, jumpdistance )
 end
 
 -- Fuses t2 into t1 avoiding duplicates
@@ -91,7 +94,7 @@ function careful.checkVulnerable( p, plt, threshold )
    local always_yes = (mem.vulnignore or not mem.natural)
    local pos = plt:pos()
    -- Make sure not in safe lanes
-   if always_yes or careful.posIsGood( p, pos ) then
+   if always_yes or careful.posIsGood( plt, pos ) then
       -- Check to see vulnerability
       local H = 1+__estimate_strength( p:getHostiles( mem.vulnrange, pos, true ) )
       local F = 1+__estimate_strength( __join_tables(
