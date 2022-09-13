@@ -53,14 +53,30 @@ end
 --[[
    Makes the pilot go to a certain position and guard it. Note that this changes the AI of the pilot.
 
-      @tparam p Pilot to make guard.
-      @tparam Vec2 Position to guard.
+      @tparam Pilot p Pilot to make guard.
+      @tparam Vec2 pos Position to guard.
 --]]
 function pilotai.guard( p, pos )
    -- TODO try to figure out how to do this without having to change the AI. Probably a special task could handle it
    p:changeAI( "guard" )
    local m = p:memory()
    m.guardpos = pos
+end
+
+--[[
+   Tries to clear the system by making all the AI pilots go away. Soft alternative to pilot.clear()
+
+      @tparam[opt=false] boolean allpilots Wether or not to affect all non-player pilots, or just natural pilots.
+--]]
+function pilotai.clear( allpilots )
+   for k,p in ipairs(pilot.get()) do
+      local m = p:memory()
+      if not p:withPlayer() and (m.natural or allpilots) then
+         m.loiter = 0 -- for generic AI
+         m.boarded = 1 -- for pirate AI
+         p:taskClear()
+      end
+   end
 end
 
 return pilotai
