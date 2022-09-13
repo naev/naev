@@ -20,8 +20,9 @@ local vn = require "vn"
 local fmt = require "format"
 local taiomi = require "common.taiomi"
 local lmisn = require "lmisn"
+local pilotai = require "pilotai"
+local fleet = require "fleet"
 --local equipopt = require "equipopt"
---local pilotai = require "pilotai"
 --local luatk = require "luatk"
 
 -- luacheck: globals enter land scavenger_enter scavenger_hail scavenger_death scavenger_msg check_location scavenger_pos scavenger_broadcast (Hook functions passed by name)
@@ -37,6 +38,18 @@ local firstpos = vec2.new( -2500, -2000 )
 local fightpos = vec2.new( -2000, 3000 )
 local DIST_THRESHOLD = 2000 -- Distance in units
 local BROADCAST_LENGTH = 150 -- Length in seconds
+local SPAWNLIST_FIRST = {
+   { p={"Pirate Hyena", "Pirate Hyena"}, t=0 },
+   { p={"Pirate Shark", "Pirate Shark"}, t=10 },
+   { p={"Pirate Admonisher"}, t=20 },
+   { p={"Pirate Hyena", "Pirate Hyena"}, t=30 },
+   { p={"Pirate Ancestor"}, t=50 },
+   { p={"Pirate Vendetta","Pirate Vendetta"}, t=60 },
+   { p={"Pirate Starbridge"}, 90 },
+   { p={"Pirate Hyena", "Pirate Hyena", "Pirate Hyena"}, t=120 },
+}
+local SPAWNLIST_FIGHT = {
+}
 
 --[[
    0: mission started
@@ -161,21 +174,42 @@ function check_location( pos )
    hook.timer( 1, "check_location", pos )
 end
 
-local broadcast_timer
+local broadcast_timer, broadcast_spawned, broadcast_spawnlist
 function scavenger_pos( pos )
    if pos:dist( scavenger:pos() ) < 100 then
+      broadcast_spawned = 0
       broadcast_timer = 0
+      if mem.state==2 then
+         broadcast_spawnlist = SPAWNLIST_FIRST
+      else
+         broadcast_spawnlist = SPAWNLIST_FIGHT
+      end
       scavenger:comm(_("Commencing broadcast!"))
-      scavenger_broadcast()
+      scavenger_broadcast( pos )
+
+      pilotai.clear() -- Get rid of all natural pilots if possible
+      pilot.toggleSpawn(false)
       return
    end
    hook.timer( 1, "scavenger_pos", pos )
 end
 
-function scavenger_broadcast ()
+function scavenger_broadcast( pos )
    broadcast_timer = broadcast_timer + 1
+
+   local spawn = broadcast_spawnlist[ broadcast_spawned+1 ]
+   if spawn and broadcast_timer > spawn.t then
+      local fct = faction.get("Marauder")
+      for k,p in ipairs( fleet.add( 1, spawn.p, fct ) ) do
+         pilotai.guard( p, pos )
+         p:setHostile()
+      end
+      broadcast_spawned = broadcast_spawned+1
+   end
+
    if broadcast_timer > BROADCAST_LENGTH then
       scavenger:follow( player.pilot() )
+      pilot.toggleSpawn(true)
       if mem.state==2 then
          scavenger:comm(_("Nothing… Let us move on."))
       --else
@@ -190,7 +224,7 @@ function scavenger_broadcast ()
       {left=BROADCAST_LENGTH-broadcast_timer})
    misn.osdCreate( osdtitle, osd )
 
-   hook.timer( 1, "scavenger_broadcast" )
+   hook.timer( 1, "scavenger_broadcast", pos )
 end
 
 function land ()
