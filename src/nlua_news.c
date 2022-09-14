@@ -125,7 +125,6 @@ int lua_isnews( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Makes sure the news is valid or raises a Lua error.
  *
@@ -172,9 +171,9 @@ int newsL_add( lua_State *L )
    ntime_t date, date_to_rm;
    int priority;
 
-   title   = NULL;
-   body = NULL;
-   faction = NULL;
+   title    = NULL;
+   body     = NULL;
+   faction  = NULL;
    priority = 5;
 
    date = ntime_get();
