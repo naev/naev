@@ -194,6 +194,7 @@ function scavenger_pos( pos )
    hook.timer( 1, "scavenger_pos", pos )
 end
 
+local enemies = {}
 function scavenger_broadcast( pos )
    broadcast_timer = broadcast_timer + 1
 
@@ -203,6 +204,7 @@ function scavenger_broadcast( pos )
       for k,p in ipairs( fleet.add( 1, spawn.p, fct ) ) do
          pilotai.guard( p, pos )
          p:setHostile()
+         table.insert( enemies, p )
       end
       broadcast_spawned = broadcast_spawned+1
    end

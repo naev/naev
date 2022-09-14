@@ -91,6 +91,10 @@ end
 local function idle_nostealth ()
    local p = ai.pilot()
 
+   if mem.force_leave then
+      if idle_leave() then return end
+   end
+
    if mem.aggressive then
       local enemy = __getenemy()
       if enemy ~= nil then

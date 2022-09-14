@@ -72,8 +72,10 @@ function pilotai.clear( allpilots )
    for k,p in ipairs(pilot.get()) do
       local m = p:memory()
       if not p:withPlayer() and (m.natural or allpilots) then
-         m.loiter = 0 -- for generic AI
-         m.boarded = 1 -- for pirate AI
+         m.force_leave  = true -- for most AI
+         m.loiter       = -1 -- for generic AI
+         m.boarded      = 1 -- for pirate AI
+         m.doscans      = false
          p:taskClear()
       end
    end
