@@ -491,8 +491,7 @@ int newsL_bind( lua_State *L )
    else {
       const char *tag;
       if (!(a = luaL_checknews(L, 1))) {
-         WARN(_("Bad argument to news.date(), must be article or a table of "
-              "articles"));
+         WARN(_("Bad argument to news.date(), must be article or a table of articles"));
          return 0;
       }
       article_ptr = news_get(*a);
