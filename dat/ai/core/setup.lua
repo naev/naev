@@ -52,6 +52,13 @@ function setup.setup( p )
       end
    end
 
+   -- Some tweaks to default AI for certain cases
+   -- TODO probably move atk.choose here if we use this in all cases we initialize pilots (see issue #2197)
+
+   -- Set up some ammo variables
+   mem.ranged_ammo = ai.getweapammo(4)
+   mem.equipopt_params = mem.equipopt_params or {}
+
    -- Actually added an outfit, so we set the list
    if added then
       m._o = o
