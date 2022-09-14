@@ -9,6 +9,7 @@ local escort = {}
 local lmisn = require "lmisn"
 local fmt = require "format"
 local vntk = require "vntk"
+local aisetup = require "ai.core.setup"
 
 --[[--
 Initializes the library by setting all the necessary hooks.
@@ -235,6 +236,7 @@ function escort.spawn( pos )
 
       if fcreate then
          fcreate( p )
+         aisetup.setup( p )
       end
 
       minspeed = math.min( p:stats().speed_max, minspeed )
