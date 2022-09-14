@@ -7,8 +7,8 @@ local careful = require "ai.core.misc.careful"
 local atk = {}
 
 mem.lanedistance = mem.lanedistance or 2e3
+--mem.atk_pref_func = nil
 mem.atk_pref_range = 5e3
-mem.atk_pref_wdist = 50
 
 --[[
 --Attempts to maintain a constant distance from nearby things
@@ -123,7 +123,7 @@ end
 -- big game hunter attack pattern using heuristic target identification.
 --]]
 function atk.heuristic_big_game_think( target, _si )
-   local enemy = atk.preferred_enemy()
+   local enemy = atk.preferred_enemy( atk.prefer_capship )
 
    local dist = ai.dist(target)
    local range = ai.getweaprange(3, 0)
@@ -441,28 +441,54 @@ function atk.ranged( target, dist )
    ai.weapset( 5 )
 end
 
+function atk.prefer_similar( p, h, v )
+   local w = math.abs( p:points() - h:points() ) -- Similar in points
+   w = w + 50 / math.pow( mem.atk_pref_range, 2 ) * p:pos():dist2( h:pos() ) -- Squared distance normalized to 1
+   -- Bring down vulnerability a bit
+   if not v then
+      w = w + 100
+   end
+   return w
+end
+
+function atk.prefer_capship( p, h, v )
+   local w = -math.min( 100, h:points() ) -- Random threshold
+   -- distance is less important to capships
+   w = w + 10 / math.pow( mem.atk_pref_range, 2 ) * p:pos():dist2( h:pos() )
+   -- Bring down vulnerability a bit
+   if not v then
+      w = w + 100
+   end
+   return w
+end
+
+function atk.prefer_weaker( p, h, v )
+   local w = math.max( 0, h:points() - p:points() ) -- penalize if h has more points
+   w = w + 50 / math.pow( mem.atk_pref_range, 2 ) * p:pos():dist2( h:pos() ) -- Squared distance normalized to 1
+   -- Bring down vulnerability a bit
+   if not v then
+      w = w + 100
+   end
+   return w
+end
+
 --[[
 Tries to find a preferred enemy.
 --]]
-function atk.preferred_enemy ()
+function atk.preferred_enemy( pref_func )
+   pref_func = mem.atk_pref_func or pref_func or atk.prefer_similar
    local p = ai.pilot()
    local r = math.pow( mem.lanedistance, 2 )
    local maxrange = mem.atk_pref_range
-   local rangen = 1 / math.pow( maxrange, 2 )
-   local aip = p:pos()
-   local aipts = p:points()
    local targets = {}
    for k,h in ipairs( p:getHostiles( maxrange, nil, nil, false, true ) ) do
       local w = h:memory().vulnerability or 0
-      w = w + math.abs( aipts - h:points() ) -- Similar in points
-      w = w + mem.atk_pref_wdist * rangen * aip:dist2( h:pos() ) -- Squared distance normalized to 1
-      -- Bring down vulnerability a bit
       local v, F, H = careful.checkVulnerable( p, h, mem.vulnattack, r )
       if not v then
-         w = w + 100
          F = 1
          H = 1
       end
+      w = w + pref_func( p, h, v, F, H ) -- Compute pref function
       table.insert( targets, { p=h, priority=w, v=v, F=F, H=H } )
    end
    if #targets <= 0 then return nil end
