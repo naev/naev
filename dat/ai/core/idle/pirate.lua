@@ -304,3 +304,4 @@ mem.vulnrambo     = 1.0
 mem.vulnattack    = 1.5 -- Vulnerability threshold to attack (higher is less vulnerable)
 mem.vulnabort     = 2.0 -- Vulnerability threshold to break off attack (lower is more vulnerable)
 mem.vulnignore    = false
+mem.atk_pref_func = atk.prefer_weaker -- Pirates prefer weaker targets
