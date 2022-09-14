@@ -353,6 +353,7 @@ int newsL_get( lua_State *L )
    ntime_t date  = -1;
    const char *characteristic = NULL;
    int print_all = 0;
+   int narticle = 1;
 
    if (lua_isnoneornil(L, 1)) /* Case no argument */
       print_all = 1;
@@ -378,7 +379,7 @@ int newsL_get( lua_State *L )
                      || (strcmp( n->faction, characteristic ) == 0)
                      || (n->tag != NULL && strcmp( n->tag, characteristic ) == 0 )))) {
          lua_pushnews(L, n->id); /* value */
-         lua_rawseti(L, -2, i+1);
+         lua_rawseti(L, -2, narticle++);
       }
    }
 
