@@ -7,7 +7,7 @@ function idle ()
    local p = ai.pilot()
    -- Aggressives will try to find enemies first, before falling back on
    -- loitering, to avoid weird stuff starting to scan before attacking
-   if not mem.force_leave and  mem.aggressive then
+   if not mem.force_leave and mem.aggressive then
       local enemy  = ai.getenemy()
       if should_attack( enemy ) then
          ai.pushtask( "attack", enemy )

@@ -77,6 +77,46 @@ function pilotai.clear( allpilots )
          m.boarded      = 1 -- for pirate AI
          m.doscans      = false
          p:taskClear()
+
+         -- Try to make them leave from the closest place
+         local pp = p:pos()
+         local pfct = p:faction()
+         local dist = math.huge
+         local candspob, candjump
+         for i,s in ipairs(system.cur():spobs()) do
+            local sfct = s:faction()
+            if s:services().land and sfct and not pfct:areEnemies(sfct) then
+               local d = s:pos():dist2( pp )
+               if d < dist then
+                  candspob = s
+                  dist = d
+               end
+            end
+         end
+         for i,j in ipairs(system.cur():jumps()) do
+            local jfct = j:dest():faction()
+            if jfct and not pfct:areEnemies(jfct) then
+               local d = j:pos():dist2( pp )
+               if d < dist then
+                  candspob = nil
+                  candjump = j
+                  dist = d
+               end
+            end
+         end
+
+         -- Try to get them out
+         if candspob then
+            m.goal = "planet"
+            m.goal_planet = candspob
+            m.goal_pos = candspob:pos()
+            p:pushtask("land", m.goal_planet)
+         elseif candjump then
+            m.goal = "hyperspace"
+            m.goal_hyperspace = candjump
+            m.goal_pos = candjump:pos()
+            p:pushtask("hyperspace",m.goal_hyperspace)
+         end
       end
    end
 end
