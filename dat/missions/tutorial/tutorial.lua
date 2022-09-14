@@ -361,12 +361,13 @@ function pilot_death_timer ()
 end
 
 function spawn_captain_tp ()
-   local p = pilot.add( "Hyena", "Dummy", dest_planet, _("Captain T. Practice"), {ai="baddie_norun"} )
+   local p = pilot.add( "Hyena", "Dummy", dest_planet, _("Captain T. Practice"), {ai="baddie_norun", naked=true} )
    p:outfitRm( "all" )
    p:outfitRm( "cores" )
    p:outfitAdd( "Previous Generation Small Systems" )
    p:outfitAdd( "Patchwork Light Plating" )
    p:outfitAdd( "Beat Up Small Engine" )
+   require("ai.core.setup").setup( p )
 
    p:setHealth( 100, 100 )
    p:setEnergy( 100 )
