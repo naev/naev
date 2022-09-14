@@ -1,7 +1,10 @@
+local aisetup = require "ai.core.setup"
+
 local cooldown = 20
 local active = 15
 local dist = 3000 -- Distance to possible change target of hostiles
 local hologram = outfit.get("Combat Hologram Projector")
+
 
 local function turnon( p, po )
    -- Make sure pilot has a target
@@ -17,18 +20,19 @@ local function turnon( p, po )
    -- TODO hologram-specific AI?
    local s = p:ship()
    local pos = p:pos() + vec2.newP( 0.1, rnd.angle() )
-   local np = pilot.add( s:nameRaw(), p:faction(), pos, p:name(), {ai="escort"} )
+   local np = pilot.add( s:nameRaw(), p:faction(), pos, p:name(), {ai="escort", naked=true} )
    mem.p = np
    np:setHealth( p:health() ) -- Copy health
    np:setNoDeath( true ) -- Dosen't die
    -- Copy outfits
    np:outfitRm("all")
    for k,v in ipairs(p:outfitsList()) do
-      -- We don't want holograms
+      -- We don't want recursive holograms
       if v ~= hologram then
          np:outfitAdd( v, 1, true )
       end
    end
+   aisetup( np ) -- Initialize AI
    -- No damage and low health
    np:intrinsicSet( {
       launch_damage  = -1000,
