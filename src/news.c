@@ -210,7 +210,9 @@ int *generate_news( int faction )
 {
    const char* fname;
    ntime_t curtime = ntime_get();
+   int want_generic = 0;
    int p = 0;
+   const char **tags;
 
    fname = (faction >= 0) ? faction_name( faction ) : NULL;
 
@@ -223,12 +225,21 @@ int *generate_news( int faction )
          news_rm( n->id );
    }
 
+   /* Check to see if we want generic tags. */
+   tags = faction_tags( faction );
+   for (int i=0; i<array_size(tags); i++) {
+      if (strcmp( tags[i], "generic" )==0) {
+         want_generic = 1;
+         break;
+      }
+   }
+
    /* Put all acceptable news into buf */
    for (int i=0; i<array_size(news_list); i++) {
       news_t *n = &news_list[i];
 
       /* if article is okay */
-      if ((strcmp(n->faction, "Generic") == 0)
+      if ((want_generic && (strcmp(n->faction, "Generic") == 0))
             || ((fname != NULL)
                && (strcmp(n->faction, fname) == 0))) {
          if (n->date && (n->date != 0)) {
