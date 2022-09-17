@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
-"PO-Revision-Date: 2022-09-17 22:09+0000\n"
-"Last-Translator: Jirka Justra <jjustra@seznam.cz>\n"
+"PO-Revision-Date: 2022-09-18 01:34+0000\n"
+"Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -100431,9 +100431,9 @@ msgstr "neznámá cesta"
 #, c-format
 msgid "%d jump, %.0fk distance"
 msgid_plural "%d jumps, %.0fk distance"
-msgstr[0] "%d skok, %.0fk vzdálenost"
-msgstr[1] "%d skoky, %.0fk vzdálenost"
-msgstr[2] "%d skoků, %.0fk vzdálenost"
+msgstr[0] "%d skok, vzdálenost %.0fk"
+msgstr[1] "%d skoky, vzdálenost %.0fk"
+msgstr[2] "%d skoků, vzdálenost %.0fk"
 
 #: src/map_find.c:399
 #, c-format
@@ -100448,11 +100448,11 @@ msgstr ""
 #: src/map_find.c:874
 #, c-format
 msgid "Search results for ships matching '%s':"
-msgstr ""
+msgstr "Výsledky hledání ‚%s‘ mezi loděmi:"
 
 #: src/map_find.c:958
 msgid "System"
-msgstr ""
+msgstr "Systém"
 
 #: src/map_find.c:962 src/map_find.c:1030
 msgid "Space Objects"
@@ -100473,15 +100473,15 @@ msgstr ""
 
 #: src/map_find.c:1010
 msgid "Enter keyword to search for:"
-msgstr ""
+msgstr "Zadejte vyhledávací kritérium:"
 
 #: src/map_find.c:1027
 msgid "Systems"
-msgstr ""
+msgstr "Systémy"
 
 #: src/map_find.c:1036
 msgid "Ships"
-msgstr ""
+msgstr "Lodě"
 
 #: src/map_overlay.c:708
 msgid "TARGET"
@@ -100504,16 +100504,16 @@ msgstr ""
 #: src/map_system.c:396
 #, c-format
 msgid "System: %s\n"
-msgstr ""
+msgstr "Systém: %s\n"
 
 #. display sun information
 #: src/map_system.c:398
 #, c-format
 msgid "%d-star system\n"
 msgid_plural "%d-star system\n"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d-hvězdný systém"
+msgstr[1] "%d-hvězdný systém"
+msgstr[2] "%d-hvězdný systém"
 
 #: src/map_system.c:404
 msgid "Nebula: Volatile, "
@@ -100521,19 +100521,19 @@ msgstr ""
 
 #: src/map_system.c:406
 msgid "Nebula: Dangerous, "
-msgstr ""
+msgstr "Mlhovina: nebezpečí,"
 
 #: src/map_system.c:408
 msgid "Nebula: Unstable, "
-msgstr ""
+msgstr "Mlhovina: nestabilní, "
 
 #: src/map_system.c:410
 msgid "Nebula: Stable, "
-msgstr ""
+msgstr "Mlhovina: stabilní, "
 
 #: src/map_system.c:414
 msgid "Dense\n"
-msgstr ""
+msgstr "Hustá\n"
 
 #: src/map_system.c:416
 msgid "Light\n"
@@ -100545,28 +100545,28 @@ msgstr ""
 
 #: src/map_system.c:420
 msgid "Nebula: None\n"
-msgstr ""
+msgstr "Mlhovina: žádná\n"
 
 #: src/map_system.c:425
 msgid "Interference: Dense\n"
-msgstr ""
+msgstr "Interference: velká\n"
 
 #: src/map_system.c:427
 msgid "Interference: Light\n"
-msgstr ""
+msgstr "Interference: nízká\n"
 
 #: src/map_system.c:436
 #, c-format
 msgid "Asteroid field density: %.2g\n"
-msgstr ""
+msgstr "Hustota pásu asteroidů: %.2g\n"
 
 #: src/map_system.c:445
 msgid "Faction: Multiple\n"
-msgstr ""
+msgstr "Frakce: vícero"
 
 #: src/map_system.c:451
 msgid "Faction: N/A\n"
-msgstr ""
+msgstr "Frakce: žádné"
 
 #. saw them all and all the same
 #: src/map_system.c:454
@@ -100575,6 +100575,8 @@ msgid ""
 "Faction: %s\n"
 "Standing: %s\n"
 msgstr ""
+"Frakce: %s\n"
+"Postavení: %s\n"
 
 #: src/map_system.c:481
 msgid "Presence: N/A\n"
@@ -100583,11 +100585,11 @@ msgstr ""
 #. First jump
 #: src/map_system.c:490
 msgid "   Jump points to:\n"
-msgstr ""
+msgstr " Skokové body vedou na:\n"
 
 #: src/map_system.c:494
 msgid "     Unknown system\n"
-msgstr ""
+msgstr " Neznámý systém\n"
 
 #: src/map_system.c:511
 #, c-format
@@ -100598,11 +100600,11 @@ msgstr ""
 
 #: src/map_system.c:513
 msgid "No space port here\n"
-msgstr ""
+msgstr "Není tu žádná přistávací plocha"
 
 #: src/map_system.c:515
 msgid "You can land here\n"
-msgstr ""
+msgstr "Zde se dá přistát\n"
 
 #: src/map_system.c:517
 msgid "Not advisable to land here\n"
@@ -100610,12 +100612,12 @@ msgstr ""
 
 #: src/map_system.c:519
 msgid "You cannot land here\n"
-msgstr ""
+msgstr "Zde se nedá přistát\n"
 
 #. Add a description
 #: src/map_system.c:521
 msgid "No description available"
-msgstr ""
+msgstr "Žádný popis"
 
 #: src/map_system.c:530
 msgid "This system is landable"
@@ -100627,75 +100629,75 @@ msgstr ""
 
 #: src/map_system.c:531
 msgid "This system is inhabited"
-msgstr ""
+msgstr "Tento systém je obydlený"
 
 #: src/map_system.c:531
 msgid "This system is not inhabited"
-msgstr ""
+msgstr "Tento systém není obydlený"
 
 #: src/map_system.c:532
 msgid "You can refuel here"
-msgstr ""
+msgstr "Zde můžete dotankovat"
 
 #: src/map_system.c:532
 msgid "You cannot refuel here"
-msgstr ""
+msgstr "Zde se nedá dotankovat"
 
 #: src/map_system.c:533
 msgid "This system has a bar"
-msgstr ""
+msgstr "V tomto systému je bar"
 
 #: src/map_system.c:533
 msgid "This system does not have a bar"
-msgstr ""
+msgstr "V tomto systému není žádný bar"
 
 #: src/map_system.c:534
 msgid "This system offers missions"
-msgstr ""
+msgstr "V tomto systému můžete přijmout mise"
 
 #: src/map_system.c:534
 msgid "This system does not offer missions"
-msgstr ""
+msgstr "V tomto systému nelze přijmout mise"
 
 #: src/map_system.c:535
 msgid "This system has a trade outlet"
-msgstr ""
+msgstr "V systému se dá obchodovat"
 
 #: src/map_system.c:535
 msgid "This system does not have a trade outlet"
-msgstr ""
+msgstr "V tomto systému se nedá obchodovat"
 
 #: src/map_system.c:536
 msgid "This system sells ship equipment"
-msgstr ""
+msgstr "Zde můžete nakoupit vybavení lodi"
 
 #: src/map_system.c:536
 msgid "This system does not sell ship equipment"
-msgstr ""
+msgstr "Zde nemůžete nakoupit vybavení lodi"
 
 #: src/map_system.c:537
 msgid "This system sells ships"
-msgstr ""
+msgstr "V systému můžete nakoupit lodě"
 
 #: src/map_system.c:537
 msgid "This system does not sell ships"
-msgstr ""
+msgstr "V systému se nedají nakoupit lodě"
 
 #: src/map_system.c:712
 #, c-format
 msgid "#nYou have:#0 %d tonne, purchased at %s/t\n"
 msgid_plural "#nYou have:#0 %d tonnes, purchased at %s/t\n"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "#nVlastníte:#0 %d tunu, nakoupenu za  %s/t\n"
+msgstr[1] "#nVlastníte:#0 %d tuny, nakoupeny za  %s/t\n"
+msgstr[2] "#nVlastníte:#0 %d tun, nakoupené za  %s/t\n"
 
 #: src/map_system.c:718
 #, c-format
 msgid "#nYou have:#0 %d tonne\n"
 msgid_plural "#nYou have:#0 %d tonnes\n"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "#nVlastníte:#0 %d tunu\n"
+msgstr[1] "#nVlastníte:#0 %d tuny\n"
+msgstr[2] "#nVlastníte:#0 %d tun\n"
 
 #: src/map_system.c:722
 msgid "Average price seen here:"
@@ -100760,7 +100762,7 @@ msgstr "Hlavní nabídka"
 
 #: src/menu.c:233
 msgid "Load Game"
-msgstr ""
+msgstr "Nahrát hru"
 
 #: src/menu.c:236
 msgid "New Game"
@@ -104017,7 +104019,7 @@ msgstr ""
 #: src/player.c:2055
 #, c-format
 msgid "#oAutonav arrived at the %s system."
-msgstr ""
+msgstr "#oAutopilot přilétá do systému %s."
 
 #: src/player.c:2061
 #, c-format
@@ -104314,7 +104316,7 @@ msgstr ""
 
 #: src/player_autonav.c:79
 msgid "#rNot enough fuel to jump for autonav."
-msgstr ""
+msgstr "#rNedostatek paliva - autopilot vypnutý."
 
 #: src/player_autonav.c:84
 msgid "#rHyperspace drive is offline."
@@ -104346,7 +104348,7 @@ msgstr ""
 #: src/player_autonav.c:217
 #, c-format
 msgid "#oAutonav: following %s."
-msgstr ""
+msgstr "#oAutopilot: následovat %s."
 
 #: src/player_autonav.c:239
 #, c-format
@@ -104356,24 +104358,24 @@ msgstr ""
 #: src/player_autonav.c:303
 #, c-format
 msgid "#rAutonav: aborted due to '%s'!"
-msgstr ""
+msgstr "#rAutopilot: vyřazen kvůli „%s“!"
 
 #: src/player_autonav.c:305
 msgid "#rAutonav: aborted!"
-msgstr ""
+msgstr "#rAutopilot: vyřazen!"
 
 #: src/player_autonav.c:314
 msgid "#oAutonav: aborting hyperspace sequence."
-msgstr ""
+msgstr "#oAutopilot: odpočet do hyperskoku byl přerušen."
 
 #: src/player_autonav.c:400
 msgid "#oAutonav: arrived at position."
-msgstr ""
+msgstr "#oAutopilot: dorazili jste do cíle."
 
 #: src/player_autonav.c:410
 #, c-format
 msgid "#oAutonav: arrived at #%c%s#0."
-msgstr ""
+msgstr "#oAutopilot: přílet na #c%s#0."
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
 #: src/player_autonav.c:459
@@ -104393,7 +104395,7 @@ msgstr ""
 
 #: src/player_autonav.c:768
 msgid "Not enough fuel for autonav to continue"
-msgstr ""
+msgstr "Autopilot nemůže pilotovat: nedostatek paliva."
 
 #: src/player_fleet.c:58
 msgid "Not Enough Cargo Space"
