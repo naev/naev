@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
-"PO-Revision-Date: 2022-09-17 20:22+0000\n"
+"PO-Revision-Date: 2022-09-17 21:50+0000\n"
 "Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -311,10 +311,8 @@ msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 msgstr "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 
 #: dat/AUTHORS:11
-#, fuzzy
-#| msgid "   * Misc. Development"
 msgid "   * Misc. Development and Lua unifier"
-msgstr "   * Vývojářský tým"
+msgstr "   * Vývoj a sjednocení jazyka Lua"
 
 #: dat/AUTHORS:13
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
@@ -329,32 +327,24 @@ msgid "nenau"
 msgstr "nenau"
 
 #: dat/AUTHORS:17
-#, fuzzy
-#| msgid "   * Misc. Development"
 msgid "   * Misc. Development and Dvaered aficionado"
-msgstr "   * Vývojářský tým"
+msgstr "   * Vývojář a milovník frakce Dvaered"
 
 #: dat/AUTHORS:19
-#, fuzzy
-#| msgid "Jack Greiner <jack@emoss.org>"
 msgid "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
-msgstr "Jack Greiner <jack@emoss.org>"
+msgstr "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 
 #: dat/AUTHORS:20
-#, fuzzy
-#| msgid "   * Bringer of automated releases"
 msgid "   * CI dude and Bringer of automated releases"
-msgstr "   * Zprostředkovatel automatických vydání"
+msgstr "* CI frajer a nositel automatizovaných verzí"
 
 #: dat/AUTHORS:22
 msgid "Viktor Hahn <viktor.hahn@web.de>"
 msgstr "Viktor Hahn <viktor.hahn@web.de>"
 
 #: dat/AUTHORS:23
-#, fuzzy
-#| msgid "   * Ship Models"
 msgid "   * 3D modelling"
-msgstr "   * Modely lodí"
+msgstr "   * 3D modeling"
 
 #: dat/AUTHORS:25
 msgid "Past Development Team"
@@ -590,12 +580,8 @@ msgid "   * Much artwork"
 msgstr "   * Mnoho uměleckých děl"
 
 #: dat/AUTHORS:103
-#, fuzzy
-#| msgid ""
-#| "   Talented artist, one of the first in creating custom naev content."
 msgid "   Talented artist, one of the first in creating custom Naev content."
-msgstr ""
-"   Talentovaný umělec, jeden z prvních ve vytváření vlastního obsahu Naev."
+msgstr "   Talentovaný umělec, jeden z prvních v tvorbě vlastního obsahu Naev."
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
@@ -666,10 +652,8 @@ msgid "Cypher3c <cypher3c@gmail.com>"
 msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
-#, fuzzy
-#| msgid "   * Spiced up the boring generic cargo missios."
 msgid "   * Spiced up the boring generic cargo missions."
-msgstr "   * Oživil nudné generické nákladní mise."
+msgstr "   * Zpestřil nudné generické nákladní mise."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
@@ -100687,7 +100671,7 @@ msgstr ""
 #. create menu window
 #: src/menu.c:224 src/menu.c:640
 msgid "Main Menu"
-msgstr ""
+msgstr "Hlavní nabídka"
 
 #: src/menu.c:233
 msgid "Load Game"
@@ -100695,37 +100679,37 @@ msgstr ""
 
 #: src/menu.c:236
 msgid "New Game"
-msgstr ""
+msgstr "Nová hra"
 
 #: src/menu.c:240 src/menu.c:728
 msgid "Editors"
-msgstr ""
+msgstr "Editoři"
 
 #. Create window and tabs.
 #: src/menu.c:244 src/menu.c:457 src/naev.c:403 src/options.c:139
 msgid "Options"
-msgstr ""
+msgstr "Nastavení"
 
 #: src/menu.c:247
 msgctxt "Menu|"
 msgid "Credits"
-msgstr ""
+msgstr "Zásluhy"
 
 #: src/menu.c:250 src/menu.c:642
 msgid "Exit Game"
-msgstr ""
+msgstr "Opustit hru"
 
 #: src/menu.c:337
 msgid "Main menu does not exist."
-msgstr ""
+msgstr "Hlavní nabídka neexistuje."
 
 #: src/menu.c:436
 msgid "Menu"
-msgstr ""
+msgstr "Nabídka"
 
 #: src/menu.c:442
 msgid "Resume"
-msgstr ""
+msgstr "Obnovit"
 
 #: src/menu.c:452
 msgid "Load / Save"
@@ -100733,7 +100717,7 @@ msgstr ""
 
 #: src/menu.c:461
 msgid "Exit to Title"
-msgstr ""
+msgstr "Návrat do úvodní nabídky"
 
 #: src/menu.c:499
 msgid "Small menu does not exist."
@@ -100742,7 +100726,7 @@ msgstr ""
 #. Stop player sounds because sometimes they hang.
 #: src/menu.c:542
 msgid "Exited game."
-msgstr ""
+msgstr "Hra opuštěna."
 
 #: src/menu.c:563
 msgid "Exit to Menu?"
@@ -100760,40 +100744,40 @@ msgstr ""
 
 #: src/menu.c:633
 msgid "Continue"
-msgstr ""
+msgstr "Pokračovat"
 
 #: src/menu.c:636
 msgid "Restart"
-msgstr ""
+msgstr "Restartovat"
 
 #: src/menu.c:695
 msgid "Quit Naev"
-msgstr ""
+msgstr "Ukončit Naev"
 
 #: src/menu.c:695
 msgid "Are you sure you want to quit Naev?"
-msgstr ""
+msgstr "Opravdu chcete ukončit Naev?"
 
 #: src/menu.c:733
 msgid "Universe Map"
-msgstr ""
+msgstr "Mapa vesmíru"
 
 #: src/menu.c:736
 msgid "Map Outfits"
-msgstr ""
+msgstr "Vybavení map"
 
 #: src/menu.c:739
 msgid "Exit to Main Menu"
-msgstr ""
+msgstr "Návrat do hlavní nabídky"
 
 #: src/mission.c:103 src/nlua_player.c:1389 src/nlua_player.c:1415
 #, c-format
 msgid "Mission '%s' not found in stack"
-msgstr ""
+msgstr "Mise '%s' nebyla v zásobníku nalezena"
 
 #: src/mission.c:155
 msgid "No description."
-msgstr ""
+msgstr "Žádný popis."
 
 #: src/mission.c:169
 #, c-format
@@ -100802,22 +100786,26 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Chyba při načítání souboru mise: %s\n"
+"%s\n"
+"Soubor Lua má s největší pravděpodobností nesprávnou syntaxi, zkontrolujte "
+"ji prosím"
 
 #: src/mission.c:277
 #, c-format
 msgid "Conditional for mission '%s' failed to run"
-msgstr ""
+msgstr "Podmínka pro misi '%s' se nepodařila spustit"
 
 #: src/mission.c:376 src/mission.c:398 src/mission.c:420 src/mission.c:478
 #: src/mission.c:574 src/mission.c:622 src/space.c:3661 src/space.c:3715
 #: src/space.c:3746 src/space.c:3801
 msgid "Unknown marker type."
-msgstr ""
+msgstr "Neznámý typ označení."
 
 #: src/mission.c:463
 #, c-format
 msgid "Mission Marker to system '%s' does not exist"
-msgstr ""
+msgstr "Označení mise do systému '%s' neexistuje"
 
 #: src/mission.c:473
 #, c-format
@@ -100833,17 +100821,17 @@ msgstr ""
 #: src/mission.c:662
 #, c-format
 msgid "Mission '%s' attempting to unlink nonexistent cargo %d."
-msgstr ""
+msgstr "Mise '%s' se pokouší odpojit neexistující náklad %d."
 
 #: src/mission.c:691
 #, c-format
 msgid "Failed to remove mission cargo '%d' for mission '%s'."
-msgstr ""
+msgstr "Nepodařilo se odstranit náklad mise '%d' pro misi '%s'."
 
 #: src/mission.c:948
 #, c-format
 msgid "Mission in %s has invalid or no name"
-msgstr ""
+msgstr "Mise v %s má neplatné nebo žádné jméno"
 
 #: src/mission.c:963
 #, c-format
@@ -100859,12 +100847,12 @@ msgstr ""
 #: src/mission.c:997
 #, c-format
 msgid "Unknown node '%s' in mission '%s'"
-msgstr ""
+msgstr "Neznámý uzel '%s' v misi '%s'"
 
 #: src/mission.c:1012
 #, c-format
 msgid "Mission '%s' missing/invalid '%s' element"
-msgstr ""
+msgstr "Chybějící/neplatný prvek '%s' mise '%s'"
 
 #: src/mission.c:1071
 #, c-format
@@ -100878,44 +100866,43 @@ msgstr[2] ""
 #, c-format
 msgid "Loaded %d Mission"
 msgid_plural "Loaded %d Missions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Nahrána %d mise"
+msgstr[1] "Nahráno %d misí"
+msgstr[2] "Nahráno %d misí"
 
 #: src/mission.c:1109
 #, c-format
 msgid "Mission '%s' has create function but no XML header!"
-msgstr ""
+msgstr "Mise '%s' má funkci create, ale nemá hlavičku XML!"
 
 #: src/mission.c:1118
 #, c-format
 msgid "Mission file '%s' has missing XML header!"
-msgstr ""
+msgstr "V souboru mise '%s' chybí hlavička XML!"
 
 #: src/mission.c:1125
 #, c-format
 msgid "Unable to parse document XML header for Mission '%s'"
-msgstr ""
+msgstr "Nelze analyzovat záhlaví dokumentu XML pro misi '%s'"
 
 #: src/mission.c:1131
 #, c-format
 msgid "Malformed XML header for '%s' mission: missing root element '%s'"
-msgstr ""
+msgstr "Chybné záhlaví XML pro misi '%s': chybí kořenový element '%s'"
 
 #: src/mission.c:1145
 #, c-format
 msgid "Mission Lua '%s' syntax error: %s"
-msgstr ""
+msgstr "Chyba syntaxe jazyka Lua '%s': %s"
 
 #: src/mission.c:1337
-#, fuzzy
 msgid "Mission cargo without name!"
-msgstr "Pilot '%s' se pokusil přistát bez přistávacích aktiv!"
+msgstr "Náklad mise beze jména!"
 
 #: src/mission.c:1349
 #, c-format
 msgid "Mission temporary cargo '%s' missing description!"
-msgstr ""
+msgstr "Chybí popis dočasného nákladu mise '%s'!"
 
 #: src/mission.c:1426
 #, c-format
