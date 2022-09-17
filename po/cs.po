@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
 "PO-Revision-Date: 2022-09-18 01:34+0000\n"
-"Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
+"Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -730,7 +730,7 @@ msgstr "Old Man <oldtopman@gmail.com>"
 
 #: dat/AUTHORS:152
 msgid "   * Desura Maintainer"
-msgstr "   * Desura Maintainer"
+msgstr "   * Správce platformy Desura"
 
 #: dat/AUTHORS:154
 msgid "NeD"
@@ -797,10 +797,8 @@ msgid "EvanR"
 msgstr "EvanR"
 
 #: dat/AUTHORS:180
-#, fuzzy
-#| msgid "Major Contributors"
 msgid "Artwork Contributors"
-msgstr "Hlavní přispěvatelé"
+msgstr "Přispěvatelé výtvarných děl"
 
 #: artwork/gfx/loading/admonisher.webp.txt:1
 msgid "ADMONISHER"
@@ -832,7 +830,7 @@ msgstr "ZA'LEK DIABLO"
 
 #: artwork/gfx/loading/drone.webp.txt:1
 msgid "DRONE"
-msgstr ""
+msgstr "DRON"
 
 #: artwork/gfx/loading/fidelity.webp.txt:1
 msgid "SIRIUS FIDELITY"
@@ -872,7 +870,7 @@ msgstr "LLAMA"
 
 #: artwork/gfx/loading/mule.webp.txt:1
 msgid "MULE"
-msgstr ""
+msgstr "MULE"
 
 #: artwork/gfx/loading/pacifier.webp.txt:1
 msgid "PACIFIER"
@@ -9130,34 +9128,32 @@ msgstr ""
 "kuchyně."
 
 #: dat/spob/antlejos_iii.xml:2
-#, fuzzy
-#| msgid "Allous II"
 msgid "Antlejos III"
-msgstr "Allous II"
+msgstr "Antlejos III"
 
 #: dat/spob/antlejos_iii.xml:9
 msgid "B"
 msgstr ""
 
 #: dat/spob/antlejos_iv.xml:2
-#, fuzzy
-#| msgid "Alteris IV"
 msgid "Antlejos IV"
-msgstr "Alteris IV"
+msgstr "Antlejos IV"
 
 #: dat/spob/antlejos_prime.xml:2
+#, fuzzy
 msgid "Antlejos Prime"
-msgstr ""
+msgstr "Antlejos Prime"
 
 #. Use default
 #. Function for adding log entries for miscellaneous one-off missions.
 #: dat/spob/antlejos_v.xml:2 dat/scripts/common/antlejos.lua:29
+#, fuzzy
 msgid "Antlejos V"
-msgstr ""
+msgstr "Antlejos V"
 
 #: dat/spob/antlejos_v.xml:15
 msgid "A cold and barren inhospitable moon devoid of all life."
-msgstr ""
+msgstr "Chladný a pustý nehostinný měsíc zbavený veškerého života."
 
 #: dat/spob/anubis.xml:2
 msgid "Anubis"
@@ -9378,7 +9374,7 @@ msgid ""
 msgstr ""
 "Tento bar je klidné místo. Ačkoliv tu štamgasti nechybí, nezdá se, že by "
 "kvůli čemukoliv chtěli dělat rozruch. Jejich postoj je natolik nakažlivý, že "
-"nově příchozí následují příklad štamgastů téměř instinktivně. "
+"nově příchozí následují příklad štamgastů téměř instinktivně."
 
 #: dat/spob/arck.xml:2
 msgid "Arck"
@@ -10446,7 +10442,7 @@ msgstr "Castellan VI"
 
 #: dat/spob/cerberus.xml:2 dat/ssys/cerberus.xml:2
 msgid "Cerberus"
-msgstr "Cerberus"
+msgstr "Kerberos"
 
 #: dat/spob/cerberus.xml:26
 msgid ""
@@ -10705,7 +10701,7 @@ msgstr ""
 "použití. Z planet Wagenni a Sollebor se dovážejí surové materiály a ven ze "
 "systému se vyvážejí finální výrobky, a to se slušným ziskem. Cornwal "
 "sympatizuje s obyvateli nehostinných světů, jako je například Undergate, a "
-"vždycky se osobně postará, aby zásilky tam směující byly štědře naceněny. "
+"vždycky se osobně postará, aby zásilky tam směující byly štědře naceněny."
 
 #: dat/spob/cornwal_ordinance.xml:26
 msgid ""
@@ -100193,7 +100189,7 @@ msgstr "Standardní výstup nelze přesměrovat do souboru"
 
 #: src/log.c:128
 msgid "Unable to redirect stderr to file"
-msgstr "Chybový výstup nelze přesměrovat do souboru\n"
+msgstr "Nelze přesměrovat stderr do souboru"
 
 #: src/log.c:267
 #, c-format
@@ -100342,7 +100338,7 @@ msgid ""
 "%s here"
 msgstr ""
 "Nejsou dostupné žádné informace\n"
-"o ceně komodity %s."
+"o ceně komodity %s"
 
 #: src/map.c:2114
 msgid "Travel (Default)"
@@ -100399,7 +100395,7 @@ msgstr ""
 #: src/map.c:3128
 #, c-format
 msgid "Could not load map decorator texture '%s'."
-msgstr "Nelze načíst texturu '%s' dekorátoru mapy "
+msgstr "Nelze načíst texturu '%s' dekorátoru mapy."
 
 #: src/map.c:3132
 #, c-format
@@ -100994,16 +100990,16 @@ msgstr "Chybí popis dočasného nákladu mise '%s'!"
 #: src/mission.c:1426
 #, c-format
 msgid "Mission '%s' from saved game not found in game - ignoring."
-msgstr ""
+msgstr "Mise '%s' z uložené hry nebyla ve hře nalezena - ignorováno."
 
 #: src/mission.c:1432
 #, c-format
 msgid "Mission '%s' from saved game failed to load properly - ignoring."
-msgstr ""
+msgstr "Misi '%s' z uložené hry se nepodařilo správně načíst - ignorováno."
 
 #: src/mission.c:1479
 msgid "Inconsistency with 'nitems' in save file."
-msgstr ""
+msgstr "Nesoulad s 'nitems' v souboru s uloženou hrou."
 
 #. error has occurred
 #: src/music.c:79 src/music.c:102 src/music.c:206 src/music.c:247
@@ -101014,15 +101010,15 @@ msgstr ""
 
 #: src/music.c:129
 msgid "Music has invalid value, clamping to [0:1]."
-msgstr ""
+msgstr "Hudba má neplatnou hodnotu, upíná se na [0:1]."
 
 #: src/music.c:177
 #, c-format
 msgid "Loaded %d Song"
 msgid_plural "Loaded %d Songs"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Načteno %d skladba"
+msgstr[1] "Načteno %d skladby"
+msgstr[2] "Načteno %d skladeb"
 
 #: src/music.c:350
 #, c-format
@@ -101031,51 +101027,55 @@ msgid ""
 "%s\n"
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
+"Chyba při načítání hudebního souboru: %s\n"
+"%s\n"
+"Soubor Lua má s největší pravděpodobností nesprávnou syntaxi, zkontrolujte "
+"ji prosím"
 
 #: src/naev.c:193 src/naev.c:1046 src/nlua_naev.c:158 src/nlua_naev.c:160
 #, c-format
 msgid "Failed to parse version string '%s'!"
-msgstr ""
+msgstr "Nepodařilo se parsovat verzi řetězce '%s'!"
 
 #: src/naev.c:205
 #, c-format
 msgid "Unable to initialize SDL: %s"
-msgstr ""
+msgstr "Nelze inicializovat SDL: %s"
 
 #: src/naev.c:224 src/opengl.c:487
 #, c-format
 msgid "Unable to initialize SDL Video: %s"
-msgstr ""
+msgstr "Nelze inicializovat SDL: %s"
 
 #: src/naev.c:248
 #, c-format
 msgid "Unable to create config directory '%s'"
-msgstr ""
+msgstr "Nelze vytvořit konfigurační adresář '%s'"
 
 #. now that we can find translations
 #: src/naev.c:261
 #, c-format
 msgid "Loaded configuration: %s"
-msgstr ""
+msgstr "Načtená konfigurace: %s"
 
 #: src/naev.c:263
 msgid "Read locations, searched in order:"
-msgstr ""
+msgstr "Přečtené lokality, vyhledané v pořadí:"
 
 #. Logging the cache path is noisy, noisy is good at the DEBUG level.
 #: src/naev.c:268
 #, c-format
 msgid "Cache location: %s"
-msgstr ""
+msgstr "Umístění mezipaměti: %s"
 
 #: src/naev.c:269
 #, c-format
 msgid "Write location: %s\n"
-msgstr ""
+msgstr "Umístění zápisu: %s\n"
 
 #: src/naev.c:277
 msgid "Failed to load module start data."
-msgstr ""
+msgstr "Nepodařilo se načíst data pro spuštění modulu."
 
 #.
 #. * OpenGL
@@ -101091,25 +101091,25 @@ msgstr ""
 
 #: src/naev.c:317
 msgid "Error initializing joystick input"
-msgstr ""
+msgstr "Chyba inicializace vstupu joysticku"
 
 #: src/naev.c:320 src/naev.c:327
 msgid "Failure to open any joystick, falling back to default keybinds"
-msgstr ""
+msgstr "Selhání otevření jakéhokoli joysticku, návrat k výchozím klávesám"
 
 #: src/naev.c:336
 msgid "Sound is disabled!"
-msgstr ""
+msgstr "Zvuk je vypnut!"
 
 #: src/naev.c:341
 msgid "Problem setting up sound!"
-msgstr ""
+msgstr "Problém s nastavením zvuku!"
 
 #. Initializes the nebula
 #. An error has happened
 #: src/naev.c:351
 msgid "Unable to initialize the Nebula subsystem!"
-msgstr ""
+msgstr "Nelze inicializovat subsystém Nebula!"
 
 #: src/naev.c:374
 #, c-format
@@ -101118,11 +101118,11 @@ msgstr ""
 
 #: src/naev.c:376
 msgid "Reached main menu"
-msgstr ""
+msgstr "Dosaženo hlavní nabídky"
 
 #: src/naev.c:399
 msgid "Incomplete Translation"
-msgstr ""
+msgstr "Neúplný překlad"
 
 #: src/naev.c:400
 #, c-format
@@ -101131,10 +101131,12 @@ msgid ""
 "remaining text will be English. Language settings are available in the \"%s"
 "\" screen."
 msgstr ""
+"%s je částečně přeloženo (%.0f%%) do vašeho jazyka (%s), ale zbývající text "
+"bude v angličtině. Nastavení jazyka je k dispozici na obrazovce \"%s\"."
 
 #: src/naev.c:412
 msgid "Welcome to Naev"
-msgstr ""
+msgstr "Vítejte v Naev"
 
 #: src/naev.c:413
 #, c-format
@@ -101153,6 +101155,18 @@ msgid ""
 "look at naev.org; it has all the relevant links. And again, thank you for "
 "playing!"
 msgstr ""
+"Vítejte ve verzi Naev %s a děkujeme vám za hru! Doufáme, že se vám tato hra "
+"bude líbit a že vám nabídne vše, co nabízí. Jedná se o vášnivý projekt "
+"vyvíjený výhradně dobrovolníky a nám všem dělá velkou radost vědět, že "
+"existují další, kteří tuto hru milují stejně jako my!\n"
+"    Samozřejmě berte na vědomí, že se jedná o nedokončenou hru. Setkáte se "
+"se slepými uličkami příběhu, chybějícími dějovými liniemi a možná i s "
+"nějakými chybami, i když ty se samozřejmě snažíme omezit na minimum. Takže "
+"se prozatím připravte na některé hrubky. Přesto na této hře pracujeme každý "
+"den a doufáme, že jednou tento rozsáhlý projekt, který máme v rukou, "
+"dokončíme. Možná byste se mohli stát jedním z nás, kdo ví?\n"
+"    Více informací o hře a stavu jejího vývoje najdete na webu naev.org; "
+"jsou tam všechny důležité odkazy. A ještě jednou vám děkujeme, že hrajete!"
 
 #: src/naev.c:529
 #, c-format
@@ -101246,108 +101260,112 @@ msgstr ""
 #. Initialize player stuff.
 #: src/naev.c:654
 msgid "Loading Completed!"
-msgstr ""
+msgstr "Načítání dokončeno!"
 
 #: src/naev.c:803
 msgid "clock_gettime failed, disabling POSIX time."
-msgstr ""
+msgstr "clock_gettime se nezdařilo, deaktivuje se čas POSIX."
 
 #: src/naev.c:828
 msgid "clock_gettime failed!"
-msgstr ""
+msgstr "clock_gettime selhalo!"
 
 #: src/naev.c:915
 msgid "PAUSED"
-msgstr ""
+msgstr "POZASTAVENO"
 
 #: src/naev.c:1013
 msgid "Icon (icon.webp) not found!"
-msgstr ""
+msgstr "Ikona (icon.webp) nebyla nalezena!"
 
 #: src/naev.c:1018
 msgid "Unable to load icon.webp!"
-msgstr ""
+msgstr "Nelze načíst icon.webp!"
 
 #: src/naev.c:1073
 #, c-format
 msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
-msgstr ""
+msgstr "SDL: %d.%d.%d [zkompilováno: %d.%d.%d]"
 
 #: src/naev.c:1083
 msgid "SDL is newer than compiled version"
-msgstr ""
+msgstr "SDL je novější než zkompilovaná verze"
 
 #: src/naev.c:1085
 msgid "SDL is older than compiled version."
-msgstr ""
+msgstr "SDL je starší než zkompilovaná verze."
 
 #: src/naev_version.c:33
 msgid " debug"
-msgstr ""
+msgstr "ladění"
 
 #: src/ndata.c:66
 msgid ""
 "Unable to find game data. You may need to install, specify a datapath, or "
 "run using naev.sh (if developing)."
 msgstr ""
+"Nelze najít herní data. Možná bude nutné nainstalovat, zadat cestu k "
+"souborům nebo spustit pomocí souboru naev.sh (pokud vyvíjíte)."
 
 #: src/ndata.c:75
 msgid "ndata version inconsistency with this version of Naev!"
-msgstr ""
+msgstr "nesoulad verze ndata s touto verzí Naev!"
 
 #: src/ndata.c:76
 #, c-format
 msgid "Expected ndata version %s got %s."
-msgstr ""
+msgstr "Očekávaná verze ndata %s má %s."
 
 #: src/ndata.c:78
 msgid "Please get a compatible ndata version!"
-msgstr ""
+msgstr "Prosím, pořiďte si kompatibilní verzi ndata!"
 
 #: src/ndata.c:80
 msgid ""
 "Naev will probably crash now as the versions are probably not compatible."
 msgstr ""
+"Naev nyní pravděpodobně spadne, protože verze pravděpodobně nejsou "
+"kompatibilní."
 
 #: src/ndata.c:102
 msgid "Cannot determine data path, using current directory."
-msgstr ""
+msgstr "Nelze určit cestu k souborům, používá se aktuální adresář."
 
 #: src/ndata.c:115
 #, c-format
 msgid "Added datapath from conf.lua file: %s"
-msgstr ""
+msgstr "Přidána datová cesta ze souboru conf.lua: %s"
 
 #: src/ndata.c:119 src/ndata.c:125 src/ndata.c:130 src/ndata.c:135
 #, c-format
 msgid "Trying default datapath: %s"
-msgstr ""
+msgstr "Zkouška výchozí cesty k souborům: %s"
 
 #: src/ndata.c:163 src/ndata.c:177 src/nfile.c:442 src/nfile.c:456
 #: src/nfile.c:550
 #, c-format
 msgid "Error occurred while opening '%s': %s"
-msgstr ""
+msgstr "Při otevírání souboru '%s' došlo k chybě: %s"
 
 #: src/ndata.c:169 src/nfile.c:448
 #, c-format
 msgid "Error occurred while opening '%s': It is not a regular file"
-msgstr ""
+msgstr "Při otevírání souboru '%s' došlo k chybě: Není to běžný soubor"
 
 #: src/ndata.c:186 src/nfile.c:463 src/nfile.c:470
 #, c-format
 msgid "Error occurred while seeking '%s': %s"
-msgstr ""
+msgstr "Při hledání '%s' došlo k chybě: %s"
 
 #: src/ndata.c:208 src/nfile.c:491
 #, c-format
 msgid "Error occurred while reading '%s': %s"
-msgstr ""
+msgstr "Při čtení '%s' došlo k chybě: %s"
 
 #: src/ndata.c:321 src/ndata.c:351 src/nfile.c:382 src/nfile.c:413
 #, c-format
 msgid "Failure to copy '%s' to '%s': %s"
-msgstr ""
+msgstr "Nepodařilo se zkopírovat '%s' do '%s': %s"
 
 #: src/ndata.h:64
 msgid ""
@@ -101367,53 +101385,55 @@ msgstr ""
 #: src/news.c:510
 #, c-format
 msgid "Event is missing '%s', skipping."
-msgstr ""
+msgstr "V události chybí '%s', vynechává se."
 
 #: src/nfile.c:126
 msgid "Cannot determine config path, using current directory."
-msgstr ""
+msgstr "Nelze určit cestu ke konfiguraci, používá se aktuální adresář."
 
 #: src/nfile.c:132
 msgid "$XDG_CONFIG_HOME isn't set, using current directory."
-msgstr ""
+msgstr "$XDG_CONFIG_HOME není nastaveno, používá se aktuální adresář."
 
 #: src/nfile.c:141 src/nfile.c:184
 #, c-format
 msgid "%%APPDATA%% isn't set, using current directory."
-msgstr ""
+msgstr "%%APPDATA%% není nastaveno, používá se aktuální adresář."
 
 #: src/nfile.c:169
 msgid "Cannot determine cache path, using current directory."
-msgstr ""
+msgstr "Nelze určit cestu k mezipaměti, používá se aktuální adresář."
 
 #: src/nfile.c:175
 msgid "$XDG_CACHE_HOME isn't set, using current directory."
-msgstr ""
+msgstr "$XDG_CACHE_HOME není nastaveno, používá se aktuální adresář."
 
 #: src/nfile.c:283 src/save.c:158 src/save.c:165
 #, c-format
 msgid "Dir '%s' does not exist and unable to create: %s"
-msgstr ""
+msgstr "Umístění '%s' neexistuje a nelze vytvořit: %s"
 
 #: src/nfile.c:522
 #, c-format
 msgid "Unable to touch file '%s': %s"
-msgstr ""
+msgstr "Nelze se dotknout souboru '%s': %s"
 
 #: src/nfile.c:559
 #, c-format
 msgid "Error occurred while writing '%s': %s"
-msgstr ""
+msgstr "Při zápisu '%s' došlo k chybě: %s"
 
 #: src/nfile.c:568
 #, c-format
 msgid "Error occurred while closing '%s': %s"
-msgstr ""
+msgstr "Při uzavírání souboru '%s' došlo k chybě: %s"
 
 #: src/nfile.c:606
 msgid ""
 "First argument to nfile_concatPaths was NULL. This is probably an error."
 msgstr ""
+"První argument příkazu nfile_concatPaths byl NULL. Pravděpodobně se jedná o "
+"chybu."
 
 #: src/nlua.c:171
 #, c-format
@@ -101441,7 +101461,7 @@ msgstr ""
 
 #: src/nlua.c:455
 msgid "Failed to create new Lua state."
-msgstr ""
+msgstr "Nepodařilo se vytvořit nový stav Lua."
 
 #: src/nlua.c:545 src/nlua.c:551
 msgid " package.path not found."
@@ -101483,11 +101503,11 @@ msgstr ""
 
 #: src/nlua_audio.c:212
 msgid "OGG: Vorbis hole detected in music!"
-msgstr ""
+msgstr "OGG: V hudbě je detekována díra Vorbis!"
 
 #: src/nlua_audio.c:217
 msgid "OGG: Invalid stream section or corrupt link in music!"
-msgstr ""
+msgstr "OGG: Neplatná část streamu nebo poškozený odkaz v hudbě!"
 
 #: src/nlua_audio.c:408 src/nlua_audio.c:787
 #, c-format
@@ -101511,6 +101531,7 @@ msgstr ""
 #, c-format
 msgid "Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"
 msgstr ""
+"Neznámý zdroj hledání '%s'! Mělo by být buď \"seconds\", nebo \"samples\"!"
 
 #: src/nlua_audio.c:985
 #, c-format
@@ -101520,34 +101541,34 @@ msgstr ""
 #: src/nlua_audio.c:1593
 #, c-format
 msgid "Usupported audio effect type '%s'!"
-msgstr ""
+msgstr "Nepodporovaný typ zvukového efektu '%s'!"
 
 #: src/nlua_audio.c:1611
 #, c-format
 msgid "Unknown audio effect '%s'!"
-msgstr ""
+msgstr "Neznámý zvukový efekt '%s'!"
 
 #: src/nlua_canvas.c:218 src/nlua_pilot.c:5543 src/opengl_tex.c:227
 msgid "Error setting up framebuffer!"
-msgstr ""
+msgstr "Chyba při nastavování framebufferu!"
 
 #: src/nlua_canvas.c:255
 msgid "Unexpected parameter"
-msgstr ""
+msgstr "Neočekávaný parametr"
 
 #: src/nlua_col.c:185
 #, c-format
 msgid "Colour '%s' does not exist!"
-msgstr ""
+msgstr "Barva '%s' neexistuje!"
 
 #: src/nlua_commodity.c:139
 msgid "Commodity is invalid."
-msgstr ""
+msgstr "Komodita je neplatná."
 
 #: src/nlua_commodity.c:221
 #, c-format
 msgid "Commodity '%s' not found!"
-msgstr ""
+msgstr "Komodita '%s' nenalezena!"
 
 #: src/nlua_commodity.c:351 src/nlua_commodity.c:387 src/nlua_player.c:1717
 #: src/nlua_player.c:1737
@@ -101566,141 +101587,147 @@ msgid ""
 "Trying to create new cargo '%s' that would shadow existing non-temporary "
 "cargo!"
 msgstr ""
+"Pokus o vytvoření nového nákladu '%s', který by zastínil existující "
+"nedočasný náklad!"
 
 #: src/nlua_data.c:181
 #, c-format
 msgid "unknown data type '%s'"
-msgstr ""
+msgstr "neznámý datový typ '%s'"
 
 #: src/nlua_data.c:192
 msgid "position argument must be positive!"
-msgstr ""
+msgstr "argument pozice musí být pozitivní!"
 
 #: src/nlua_data.c:195
 #, c-format
 msgid "position argument out of bounds: %d of %d elements"
-msgstr ""
+msgstr "argument pozice mimo meze: %d z %d prvků"
 
 #: src/nlua_data.c:291
 #, c-format
 msgid "size mismatch: out of bound access dest: %d of %d elements"
-msgstr ""
+msgstr "nesoulad velikosti: mimo vázaný přístup cíl: %d z %d prvků"
 
 #: src/nlua_data.c:293
 #, c-format
 msgid "size mismatch: out of bound access of source: %d of %d elements"
-msgstr ""
+msgstr "nesoulad velikosti: mimo vázaný přístup zdroje: %d z %d prvků"
 
 #: src/nlua_data.c:327
 #, c-format
 msgid "size mismatch: A has %d elements but B has %d elements"
-msgstr ""
+msgstr "nesoulad velikosti: A má %d prvků, ale B má %d prvků"
 
 #: src/nlua_data.c:329 src/nlua_data.c:383
 #, c-format
 msgid "%s is only implemented for number types"
-msgstr ""
+msgstr "%s je implementováno pouze pro číselné typy"
 
 #: src/nlua_data.c:379 src/nlua_data.c:381
 #, c-format
 msgid "size mismatch for data: got %dx%dx4x%d, expected %d"
-msgstr ""
+msgstr "neshoda velikosti dat: dostal jsem %dx%dx4x%d, očekával jsem %d"
 
 #: src/nlua_evt.c:146
 #, c-format
 msgid "Event '%s' -> '%s': %s"
-msgstr ""
+msgstr "Událost '%s' -> '%s': %s"
 
 #: src/nlua_evt.c:240 src/nlua_misn.c:957
 msgid "Invalid NPC ID!"
-msgstr ""
+msgstr "Neplatné ID NPC!"
 
 #: src/nlua_evt.c:321
 msgid "Event trying to claim but already has."
-msgstr ""
+msgstr "Událost se snaží tvrdit, ale již má."
 
 #: src/nlua_faction.c:611
 #, c-format
 msgid "Trying to overwrite existing faction '%s' with dynamic faction!"
-msgstr ""
+msgstr "Pokus o přepsání existující frakce '%s' dynamickou frakcí!"
 
 #: src/nlua_faction.c:664 src/nlua_faction.c:688
 msgid "Can only add allies to dynamic factions"
-msgstr ""
+msgstr "Spojence lze přidávat pouze do dynamických frakcí"
 
 #: src/nlua_file.c:259 src/nlua_file.c:290
 msgid "file not open!"
-msgstr ""
+msgstr "soubor nelze otevřít!"
 
 #: src/nlua_file.c:443
 #, c-format
 msgid "Directory '%s' enumerate error: %s"
-msgstr ""
+msgstr "Chyba výčtu adresáře '%s': %s"
 
 #: src/nlua_font.c:182
 #, c-format
 msgid "failed to load font '%s'"
-msgstr ""
+msgstr "nepodařilo se načíst písmo '%s'"
 
 #: src/nlua_gfx.c:215 src/nlua_gfx.c:272 src/nlua_gfx.c:336
 #, c-format
 msgid ""
 "Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."
 msgstr ""
+"Textura '%s' se pokouší vykreslit sprite mimo hranice (pozice X): %d > %d."
 
 #: src/nlua_gfx.c:218 src/nlua_gfx.c:275 src/nlua_gfx.c:339
 #, c-format
 msgid ""
 "Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."
 msgstr ""
+"Textura '%s' se pokouší vykreslit sprite mimo hranice (pozice Y): %d > %d."
 
 #: src/nlua_gfx.c:645
 msgid "width has to be a positive value."
-msgstr ""
+msgstr "šířka musí mít kladnou hodnotu."
 
 #: src/nlua_hook.c:281
 msgid "Mission not in stack trying to hook, forgot to run misn.accept()?"
 msgstr ""
+"Mise není v zásobníku, pokous o připojení, zapomněli jste spustit misn."
+"accept()?"
 
 #: src/nlua_hook.c:301
 msgid "Attempting to set a hook outside of a mission or event."
-msgstr ""
+msgstr "Pokus o nastavení připojení mimo misi nebo událost."
 
 #: src/nlua_hook.c:306
 msgid "No hook target was set."
-msgstr ""
+msgstr "Nebyla stanovena žádná cílová hodnota připojení."
 
 #: src/nlua_hook.c:1003
 msgid "Invalid parameter #1 for hook.pilot, expecting pilot or nil."
-msgstr ""
+msgstr "Nesprávný parametr #1 pro hook.pilot, očekává se pilot nebo nil."
 
 #. hook_type not valid
 #: src/nlua_hook.c:1027
 #, c-format
 msgid "Invalid pilot hook type: '%s'"
-msgstr ""
+msgstr "Neplatný typ pilotního připojení: '%s'"
 
 #: src/nlua_jump.c:156 src/nlua_safelanes.c:131
 msgid "Jump is invalid"
-msgstr ""
+msgstr "Skok je neplatný"
 
 #: src/nlua_jump.c:235
 msgid "No matching jump points found."
-msgstr ""
+msgstr "Nebyly nalezeny žádné odpovídající body skoku."
 
 #: src/nlua_linopt.c:202
 msgid ""
 "Number of columns in a linear optimization problem must be greater than 0!"
-msgstr ""
+msgstr "Počet sloupců v lineárním optimalizačním problému musí být větší než 0!"
 
 #: src/nlua_linopt.c:317
 #, c-format
 msgid "Unknown column kind '%s'!"
-msgstr ""
+msgstr "Neznámý typ sloupce '%s'!"
 
 #: src/nlua_linopt.c:389
 msgid "Table lengths don't match!"
-msgstr ""
+msgstr "Délky tabulek se neshodují!"
 
 #: src/nlua_linopt.c:714
 msgid "glpk: too over 1 second to optimize!"
@@ -101714,25 +101741,25 @@ msgstr ""
 #: src/nlua_misn.c:239
 #, c-format
 msgid "Mission '%s' -> '%s': %s"
-msgstr ""
+msgstr "Mise '%s' -> '%s': %s"
 
 #: src/nlua_misn.c:376
 #, c-format
 msgid "Unknown marker type: %s"
-msgstr ""
+msgstr "Neznámý typ značky: %s"
 
 #: src/nlua_misn.c:434
 #, c-format
 msgid "Mission does not have a marker with id '%d'"
-msgstr ""
+msgstr "Mise nemá značku s id '%d'"
 
 #: src/nlua_misn.c:600
 msgid "Mission already accepted!"
-msgstr ""
+msgstr "Mise již byla přijata!"
 
 #: src/nlua_misn.c:755
 msgid "Can't create an OSD on an unaccepted mission!"
-msgstr ""
+msgstr "Nelze vytvořit OSD na nepřijatou misi!"
 
 #: src/nlua_misn.c:994
 msgid "Mission trying to claim but already has."
@@ -101741,15 +101768,15 @@ msgstr ""
 #: src/nlua_naev.c:693
 #, c-format
 msgid "Invalid window info name '%s'."
-msgstr ""
+msgstr "Neplatný informační název okna '%s'."
 
 #: src/nlua_news.c:141
 msgid "Article is invalid."
-msgstr ""
+msgstr "Článek je neplatný."
 
 #: src/nlua_news.c:237 src/nlua_news.c:288
 msgid "Bad arguments"
-msgstr ""
+msgstr "Špatné argumenty"
 
 #: src/nlua_news.c:261
 msgid ""
@@ -101757,10 +101784,13 @@ msgid ""
 "Bad arguments, use addArticle(\"Faction\",\"Title\",\"Content\",[date,"
 "[date_to_rm]])"
 msgstr ""
+"\n"
+"Špatné argumenty, použijte addArticle(\"Faction\", \"Title\", \"Content\""
+",[date,[date_to_rm]])"
 
 #: src/nlua_news.c:478 src/nlua_news.c:494
 msgid "Bad argument to news.date(), must be article or a table of articles"
-msgstr ""
+msgstr "Špatný argument pro news.date(), musí to být článek nebo tabulka článků"
 
 #: src/nlua_news.c:484 src/nlua_news.c:500
 msgid "Article not valid"
@@ -101768,55 +101798,54 @@ msgstr ""
 
 #: src/nlua_outfit.c:146
 msgid "Outfit is invalid."
-msgstr ""
+msgstr "Výbava je neplatná."
 
 #: src/nlua_outfit.c:527
 msgid "Outfit has invalid damage type."
-msgstr ""
+msgstr "Výbava má neplatný typ poškození."
 
 #: src/nlua_pilot.c:471
 msgid "Pilot is invalid."
-msgstr ""
+msgstr "Pilot je neplatný."
 
 #: src/nlua_pilot.c:668
 #, c-format
 msgid "Ship '%s' jumping in from non-adjacent system '%s' to '%s'."
-msgstr ""
+msgstr "Loď '%s' přeskakuje z nesousedního systému '%s' do '%s'."
 
 #: src/nlua_pilot.c:673
 #, c-format
 msgid "Ship '%s' attempting to jump in from '%s', but '%s' has no jump points."
-msgstr ""
+msgstr "Loď '%s' se pokouší skočit z '%s', ale '%s' nemá žádné body skoku."
 
 #: src/nlua_pilot.c:682
 msgid "'parameters' should be a table of options or omitted!"
-msgstr ""
+msgstr "'parameters' by měla být tabulka možností nebo vynechána!"
 
 #: src/nlua_pilot.c:752
 msgid "Trying to remove the bloody player!"
-msgstr ""
+msgstr "Snaha odstranit ten zatracený přehrávač!"
 
 #: src/nlua_pilot.c:2006
 #, c-format
 msgid "Unknown slot type '%s'"
-msgstr ""
+msgstr "Neznámý typ slotu '%s'"
 
 #: src/nlua_pilot.c:2075 src/nlua_pilot.c:2099
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid "Pilot '%s' outfit ID '%d' is out of range!"
-msgstr "Formace '%s' nebyla nalezena"
+msgstr "ID výstroje pilota '%s' '%d' je mimo rozsah!"
 
 #: src/nlua_pilot.c:2376 src/pilot.c:1199
 #, c-format
 msgid "#%cBroadcast %s>#0 \"%s\""
-msgstr ""
+msgstr "#%cVysílání %s>#0 \"%s\""
 
 #. Broadcast message.
 #: src/nlua_pilot.c:2432 src/pilot.c:1172
 #, c-format
 msgid "#%cComm %s>#0 \"%s\""
-msgstr ""
+msgstr "#%cComm %s>#0 \"%s\""
 
 #: src/nlua_pilot.c:2992 src/nlua_pilot.c:3030 src/nlua_pilot.c:3158
 #, c-format
@@ -101827,16 +101856,20 @@ msgstr ""
 msgid ""
 "Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)"
 msgstr ""
+"Množství musí být kladné pro pilot.cargoAdd (pokud odebíráte, použijte pilot."
+"cargoRm)"
 
 #: src/nlua_pilot.c:3996
 msgid ""
 "Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)"
 msgstr ""
+"Množství musí být kladné pro pilot.cargoRm (pokud přidáváte, použijte pilot."
+"cargoAdd)"
 
 #: src/nlua_pilot.c:4227
 #, c-format
 msgid "Tried to access unknown flag '%s' for pilot '%s'!"
-msgstr ""
+msgstr "Pokus o přístup k neznámému příznaku '%s' pro pilota '%s'!"
 
 #: src/nlua_pilot.c:4368 src/pilot.c:1280
 #, c-format
@@ -101845,23 +101878,23 @@ msgstr ""
 
 #: src/nlua_pilot.c:4568
 msgid "Pilot is not on manual control."
-msgstr ""
+msgstr "Pilot nemá ruční řízení."
 
 #: src/nlua_pilot.c:4928
 #, c-format
 msgid "Pilot '%s' can't jump out exit only jump '%s'"
-msgstr ""
+msgstr "Pilot '%s' nemůže opustit výstup, pouze skok '%s'"
 
 #. Not found.
 #: src/nlua_pilot.c:4940
 #, c-format
 msgid "System '%s' is not adjacent to current system '%s'"
-msgstr ""
+msgstr "Systém '%s' nesousedí s aktuálním systémem '%s'"
 
 #: src/nlua_pilot.c:5061
 #, c-format
 msgid "#%c%s#0 is hailing you."
-msgstr ""
+msgstr "#%c%s#0 vás volá."
 
 #: src/nlua_pilot.c:5162
 #, c-format
@@ -101883,7 +101916,7 @@ msgstr ""
 
 #: src/nlua_pilot.c:5464
 msgid "Requires a debug build."
-msgstr ""
+msgstr "Vyžaduje odladěné sestavení."
 
 #: src/nlua_pilot.c:5568
 #, c-format
@@ -101892,7 +101925,7 @@ msgstr ""
 
 #: src/nlua_pilotoutfit.c:101
 msgid "Pilot Outfit is invalid."
-msgstr ""
+msgstr "Výstroj pilota je neplatná."
 
 #: src/nlua_pilotoutfit.c:171 src/nlua_pilotoutfit.c:203
 #, c-format
@@ -101902,15 +101935,16 @@ msgstr ""
 #: src/nlua_pilotoutfit.c:182
 #, c-format
 msgid "Unknown PilotOutfit state '%s'!"
-msgstr ""
+msgstr "Neznámý stav pilotního vybavení '%s'!"
 
 #: src/nlua_player.c:664
 msgid "Second parameter to cinematics should be a table of options or omitted!"
 msgstr ""
+"Druhým parametrem kinematiky by měla být tabulka možností nebo vynechána!"
 
 #: src/nlua_player.c:783
 msgid "Player must be landed to force takeoff."
-msgstr ""
+msgstr "Hráč musí přistát, aby byl nucen vzlétnout."
 
 #: src/nlua_player.c:807
 #, c-format
@@ -101919,39 +101953,39 @@ msgstr ""
 
 #: src/nlua_player.c:907
 msgid "Must be landed to set the active land window."
-msgstr ""
+msgstr "Pro nastavení aktivního okna přistání je třeba přistát."
 
 #: src/nlua_player.c:1076 src/nlua_player.c:1120
 #, c-format
 msgid "Player does not own a ship named '%s'"
-msgstr ""
+msgstr "Hráč nevlastní loď s názvem '%s'"
 
 #: src/nlua_player.c:1453 src/nlua_player.c:1475
 #, c-format
 msgid "Event '%s' not found in stack"
-msgstr ""
+msgstr "Událost '%s' nebyla nalezena v zásobníku"
 
 #: src/nlua_player.c:1700
 msgid "Can not teleport the player while landed!"
-msgstr ""
+msgstr "Nelze teleportovat hráče při přistání!"
 
 #: src/nlua_player.c:1702
 msgid "Can not teleport the player while the comm is open!"
-msgstr ""
+msgstr "Nelze teleportovat hráče, když je otevřená komunikace!"
 
 #: src/nlua_player.c:1704
 msgid "Can not teleport the player while they are boarded!"
-msgstr ""
+msgstr "Nelze teleportovat hráče, když je na palubě!"
 
 #: src/nlua_player.c:1732
 #, c-format
 msgid "'%s' is not a valid teleportation target."
-msgstr ""
+msgstr "'%s' není platný teleportační cíl."
 
 #: src/nlua_player.c:1752
 #, c-format
 msgid "System '%s' does not exist."
-msgstr ""
+msgstr "Systém '%s' neexistuje."
 
 #: src/nlua_player.c:1917
 #, c-format
@@ -101961,7 +101995,7 @@ msgstr ""
 #: src/nlua_safelanes.c:106
 #, c-format
 msgid "Unknown standing type '%s'!"
-msgstr ""
+msgstr "Neznámý typ stání '%s'!"
 
 #: src/nlua_safelanes.c:120 src/nlua_spob.c:180
 msgid "Spob is invalid"
@@ -101970,35 +102004,35 @@ msgstr ""
 #: src/nlua_safelanes.c:136 src/safelanes.c:239 src/safelanes.c:859
 #: src/safelanes.c:875
 msgid "Safe-lane vertex type is invalid."
-msgstr ""
+msgstr "Typ vrcholu bezpečného pruhu je neplatný."
 
 #: src/nlua_shader.c:211
 msgid "shader failed to compile!"
-msgstr ""
+msgstr "shader se nepodařilo zkompilovat!"
 
 #: src/nlua_shader.c:346
 #, c-format
 msgid "Shader does not have uniform '%s'!"
-msgstr ""
+msgstr "Shader nemá jednotný '%s'!"
 
 #: src/nlua_shader.c:394
 #, c-format
 msgid "Unsupported shader uniform type '%d' for uniform '%s'. Ignoring."
-msgstr ""
+msgstr "Nepodporovaný typ uniformy shaderu '%d' pro uniformu '%s'. Ignorováno."
 
 #: src/nlua_shader.c:445
 #, c-format
 msgid "Layer was '%s', but must be one of 'final' or 'game'"
-msgstr ""
+msgstr "Vrstva byla '%s', ale musí to být jedna z možností 'final' nebo 'game'"
 
 #: src/nlua_ship.c:153
 msgid "Ship is invalid."
-msgstr ""
+msgstr "Loď je neplatná."
 
 #: src/nlua_ship.c:574
 #, c-format
 msgid "Unable to get ship comm graphic for '%s'."
-msgstr ""
+msgstr "Nelze získat grafiku lodní komunikace pro '%s'."
 
 #: src/nlua_ship.c:597
 #, c-format
