@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
-"PO-Revision-Date: 2022-09-17 21:50+0000\n"
+"PO-Revision-Date: 2022-09-17 22:09+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -336,7 +336,7 @@ msgstr "Jack Greiner \"ProjectSynchro\" <jack@emoss.org>"
 
 #: dat/AUTHORS:20
 msgid "   * CI dude and Bringer of automated releases"
-msgstr "* CI frajer a nositel automatizovaných verzí"
+msgstr " * Chlápek přes CI a Zprostředkovatel automatických vydání"
 
 #: dat/AUTHORS:22
 msgid "Viktor Hahn <viktor.hahn@web.de>"
@@ -364,7 +364,7 @@ msgstr "Deiz"
 
 #: dat/AUTHORS:32 dat/AUTHORS:35
 msgid "   * Misc. Development"
-msgstr "   * Vývojářský tým"
+msgstr " * Různé příspěvky k vývoji"
 
 #: dat/AUTHORS:34
 msgid "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
@@ -559,9 +559,9 @@ msgid ""
 "turbulence noise seemed to do everything perfectly where we screwed up. With "
 "heavy optimization the code was introduced to Naev."
 msgstr ""
-"   Po strašlivém neúspěchu našeho vlastního pokusu o fraktální plazmu se "
-"zdálo, že TCODův turbulentní šum funguje perfektně tam, kde jsme to "
-"pokazili. S těžkou optimalizací byl kód představen Naevovi."
+"Po tom, jak katastroficky dopadl náš skript pro fraktální plasmu, "
+"turbulentní šum od TCOD uspěl, kde my selhali. Kód jsme zoptimalizovali a "
+"začlenili do Naevu."
 
 #: dat/AUTHORS:98
 msgid "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
@@ -643,9 +643,7 @@ msgstr "   * Přenesení systému sestavení hry Naev do autotools."
 
 #: dat/AUTHORS:122
 msgid "   Probably the cleanest autotools implementation I've ever seen."
-msgstr ""
-"   Pravděpodobně nejčistší implementace automatických nástrojů, jakou jsem "
-"kdy viděl."
+msgstr " Pravděpodobně nejčistší použití autotools, jaké jsem kdy viděl."
 
 #: dat/AUTHORS:124
 msgid "Cypher3c <cypher3c@gmail.com>"
@@ -669,7 +667,7 @@ msgstr "   * Podpora různých kódování"
 
 #: dat/AUTHORS:131
 msgid "Fisherman"
-msgstr "Rybář"
+msgstr "Fisherman"
 
 #: dat/AUTHORS:132
 msgid ""
@@ -680,7 +678,7 @@ msgstr ""
 
 #: dat/AUTHORS:133
 msgid "   * Hot dog mission"
-msgstr "   * Hot dog mise"
+msgstr " * Mise s hot-dogy"
 
 #: dat/AUTHORS:135
 msgid "Ludovic Bellière \"xrogaan\""
@@ -700,7 +698,7 @@ msgstr "Josh Combs"
 
 #: dat/AUTHORS:140
 msgid "   * Artist of most of the nebulae."
-msgstr "   * Umělec většiny mlhovin."
+msgstr " * Nakreslil většinu mlhovin."
 
 #: dat/AUTHORS:142
 msgid "Galileus"
@@ -7778,10 +7776,10 @@ msgid ""
 "researchers on site at any one time. Tourism is out of the question, so is a "
 "bar."
 msgstr ""
-"Abacus je podle standardů skalnatých planet velmi velká planeta. Soromidové "
-"zde založili výzkumnou základnu, která má zjistit více o struktuře planety. "
-"Základna je docela malá a na místě může být jen několik desítek výzkumníků. "
-"Turismus zde nepřichází v úvahu, stejně jako bar."
+"Abacus je mezi kamennými světy obrem. Soromidové zde založili výzkumnou "
+"základnu, která má zjistit více o struktuře planety. Základna je docela malá "
+"a na místě může být jen několik desítek výzkumníků. Není tu místo pro "
+"turisty, dokonce ani pro bar."
 
 #: dat/spob/abacus.xml:28 dat/spob/astana.xml:49 dat/spob/curie.xml:48
 #: dat/spob/dono.xml:30 dat/spob/excelcior.xml:56 dat/spob/gastan.xml:32
@@ -7856,9 +7854,9 @@ msgid ""
 msgstr ""
 "Adham je chladná planeta bez života. Jediným důvodem, proč je zde přistávací "
 "dráha, je že planeta hostí tři arény s arktickou tematikou pro gladiátorské "
-"hry Totoranu. Zatímco přistávací zóna a malý nárazník kolem ní jsou "
-"považovány za neutrální území, většina povrchu planety podléhá "
-"destruktivnímu sportu, který je mezi návštěvníky Totoranu tak populární."
+"hry Totoranu. Zatímco přistávací zóna a úzké pásmo kolem ní jsou považovány "
+"za neutrální území, většina povrchu planety podléhá destruktivnímu sportu, "
+"který je mezi návštěvníky Totoranu tak populární."
 
 #: dat/spob/adius.xml:2
 msgid "Adius"
@@ -7876,10 +7874,10 @@ msgid ""
 "it was a matter of a few cycles before the Sirii came to power. Today Adrian "
 "persists, despite having served its only purpose."
 msgstr ""
-"Chladný a nepříjemný svět, Sirius založil svou kolonii na Adrianovi ve "
-"dnech, kdy se právě rozšiřovali do Eiderdownu. V té době byl systém řízen "
-"Impériem, ale s pevným předmostím v systému to bylo otázkou několika cyklů, "
-"než se Siriané dostali k moci. Dnes Adrian přetrvává, přestože splnil svůj "
+"Chladný a nepříjemný svět, Sirius založil svou kolonii na Adrianu ve dnech, "
+"kdy se právě rozšiřovali do Eiderdownu. V té době byla soustava pod vládou "
+"Impéria, ale s pevným předmostím v systému bylo otázkou několika cyklů, než "
+"se Siriané dostali k moci. Dnes Adrian přetrvává, přestože splnil svůj "
 "jediný účel."
 
 #: dat/spob/adrian.xml:26
@@ -7888,9 +7886,9 @@ msgid ""
 "kept at an acceptable, though uncomfortable, low. Most patrons of this "
 "spaceport bar are in full winter gear."
 msgstr ""
-"Vytápění na světech třídy P je často nákladná záležitost, takže teplota se "
-"udržuje na přijatelné, i když nepříjemné, nízké hodnotě. Většina patronů "
-"tohoto kosmodromu je v plné zimní výbavě."
+"Vytápění na planetách třídy P je často nákladná záležitost, takže teplota se "
+"udržuje na přijatelné, i když nepříjemné, nízké hodnotě. Většina štamgastů v "
+"baru u kosmoportu sedí v zimní variantě plné polní."
 
 #: dat/spob/aera.xml:2
 msgid "Aera"
@@ -8546,8 +8544,8 @@ msgid ""
 "either."
 msgstr ""
 "Vzduch v kosmodromu je dusný. Všude na této planetě je vzduch dusný. Žádné "
-"množství klimatizace a filtrování úplně tento problém neřeší. Nápoje také od "
-"dusnosti nepomáhají."
+"množství klimatizace a filtrování úplně tento problém neřeší. Ani nápoje od "
+"dušnosti příliš nepomáhají."
 
 #: dat/spob/allan.xml:2
 msgid "Allan"
@@ -8562,8 +8560,8 @@ msgid ""
 msgstr ""
 "Allan byl kdysi hlídkovou stanicí vyslanou k hlídkování jižních oblastí "
 "vesmíru. S Incidentem a úpadkem imperiální moci zůstal Allan opuštěn. Nyní "
-"je sotva udržován malým kontingentem Dvaeredských vojáků a inženýrů pro "
-"použití obchodníků."
+"je sotva udržován malým kontingentem Dvaeredských vojáků a inženýrů jako "
+"obchodní stanice."
 
 #: dat/spob/allan.xml:26
 msgid ""
@@ -8597,9 +8595,10 @@ msgid ""
 "merchants and gamblers. Fights often break out and it's hard to tell who to "
 "trust, so most people keep to themselves and avoid eye contact with others."
 msgstr ""
-"Bar je kombinací převážně pirátů a lovců odměn s hrstkou obchodníků a hráčů. "
-"Často zde propuknou boje a je těžké říct, komu věřit, takže většina lidí se "
-"drží stranou a vyhýbá se očnímu kontaktu s ostatními."
+"Osazenstvo je tvořené piráty a lovci odměn, jen občas se tu objeví obchodník "
+"nebo hazardní hráč. Rvačky jsou tu na denním pořádku. Nikdo neví, komu se dá "
+"věřit, takže lidé se jeden druhého straní a oční kontakt je tu opravdovou "
+"vzácností."
 
 #: dat/spob/alleyway.xml:29 dat/spob/darkshed.xml:49 dat/spob/efferey.xml:36
 #: dat/spob/foundation_station.xml:36 dat/spob/fury_station.xml:63
@@ -8657,12 +8656,12 @@ msgid ""
 "need for them to pay for it as numerous warlords, with dreams of "
 "intellectualism, are happy to offer their patronage."
 msgstr ""
-"Navzdory jménu není Stanice Allous vojenskou základnou, je to spíše vědecké "
-"pozorovací středisko a observatoř hlubokého vesmíru. Původně měla být "
-"pozorovatelnou vysoce interferenční mlhoviny PSO. Dokonce i Dvaeredové mají "
-"vědeckou komunitu a tuto stanici platili ze svých kapes. Jakmile byla "
-"postavena, samozřejmě už za ni nebylo třeba platit, protože řada válečníků "
-"se sny o intelektualismu jim ráda nabídne patronát."
+"Navzdory jménu není stanice Allous vojenskou základnou, je to spíše vědecká "
+"observatoř pro pozorování hlubokého vesmíru. Původně měla být pozorovatelnou "
+"vysoce interferenční mlhoviny PSO. Dokonce i Dvaeredové mají vědeckou "
+"komunitu a tuto stanici zaplatili z vlastních kapes. Samozřejmě s provozem "
+"už rozpočet nepočítal - stanici si pod svá křídla vezme některý z válečných "
+"magnátů, snící o intelektualismu."
 
 #: dat/spob/allous_station.xml:25
 msgid ""
@@ -8759,12 +8758,12 @@ msgid ""
 "This was one of the important reasons the Emperor granted House Dvaered its "
 "independence."
 msgstr ""
-"Ambre byl jednou z planet, které hrály klíčovou roli v dělnických vzpourách, "
-"které nakonec vedly ke vzniku rodu Dvaeredů. V té době byla planeta domovem "
-"značného procenta imperiální pracovní síly v tomto sektoru vesmíru. Bez "
-"dělníků, kteří by pracovali v dolech a na staveništích, říše každý cyklus "
-"ztrácela astronomické částky peněz. To byl jeden z důležitých důvodů, proč "
-"císař udělil rodu Dvaeredům jeho nezávislost."
+"Ambre byla jednou z planet, které hrály klíčovou roli v dělnických "
+"vzpourách, které nakonec vedly k vzestupu rodu Dvaeredů. V té době byla "
+"planeta domovem značného procenta imperiální pracovní síly místního sektoru "
+"vesmíru. Bez dělníků, kteří by pracovali v dolech a na staveništích, říše "
+"každý cyklus ztrácela astronomické částky peněz. To byl jeden z důležitých "
+"důvodů, proč císař udělil rodu Dvaeredů jeho nezávislost."
 
 #: dat/spob/ambre.xml:28
 msgid ""
@@ -8778,10 +8777,10 @@ msgid ""
 msgstr ""
 "Bar na Ambre není nikdy tichý. V pravidelných intervalech je veškerý další "
 "hluk v baru přehlušen zvukem nákladních zásobníků, které se stáčejí podél "
-"železnice těsně pod ním. Bar byl postaven relativně pozdě ve vývoji planety; "
-"imperiální vláda neviděla potřebu, když byl Ambre něco víc než pracovní "
-"tábor. Po získání nezávislosti byl bar vtěsnaný do jednoho z mála "
-"zbývajících dostupných prostor, který byl přímo nad nákladními linkami."
+"železnice těsně pod ním. Bar byl postaven teprve v nedávné planetární "
+"historii; imperiální vláda neviděla důvod dělat z Ambre něco víc než "
+"pracovní tábor. Po získání nezávislosti byl bar vtěsnaný do jednoho z mála "
+"zbývajících dostupných prostor. Přímo nad nákladní linky."
 
 #: dat/spob/amhurst.xml:2
 msgid "Amhurst"
@@ -8819,8 +8818,8 @@ msgid ""
 msgstr ""
 "Tato planeta je oslavovaným světem těžby a obchodování a je jednou z obětí "
 "odlivu mozků ovlivňující jižní hranici Za'leku. I když nebyla zasažena tak "
-"silně jako mnohé, v posledních cyklech zaznamenala pokles populace. Většina "
-"populace jsou horníci a další příslušníci dělnické třídy."
+"silně jako mnohé jiné, v posledních cyklech zaznamenala pokles populace. "
+"Většina populace jsou horníci a další příslušníci dělnické třídy."
 
 #: dat/spob/amhurst.xml:29
 msgid ""
@@ -8828,9 +8827,9 @@ msgid ""
 "rough aesthetic, the clientele, almost everything. There is little sign of "
 "the usual Za'lek trappings here."
 msgstr ""
-"Pokud by to někdo nevěděl lépe, předpokládali byste, že se jedná o "
-"dvaeredský bar. Drsná estetika, klientela, téměř všechno. Po obvyklé "
-"Za'lekské výzdobě je tu jen málo známek."
+"Kdybyste nevěděli své, předpokládali byste, že se jedná o dvaeredský bar. "
+"Drsná estetika, klientela, téměř všechno. Po obvyklé Za'lekské výzdobě je tu "
+"jen málo známek."
 
 #: dat/spob/amhurst.xml:46 dat/spob/antica.xml:43 dat/spob/brooks.xml:39
 #: dat/spob/cantina_station.xml:31 dat/spob/crow.xml:53
@@ -9062,7 +9061,7 @@ msgstr ""
 "Bar kosmodromu je přibližně tři kilometry pod povrchem planety. Stěny jsou "
 "vyrobeny z tvrzeného, průhledného polymeru, který vám umožní vidět do "
 "temnoty vody. Každou chvíli můžete vidět po nich klouzat želatinové tvory, "
-"sotva osvětlené barovým osvětlením."
+"kteří jsou sotva k zahlédnutí jen díky barovým světlům."
 
 #: dat/spob/anger_i.xml:2
 msgid "Anger I"
@@ -9377,13 +9376,13 @@ msgid ""
 "effect is contagious making newcomers follow the example of those who are "
 "already there, almost instinctively."
 msgstr ""
-"Tento bar je klidné místo. Ačkoli tu rozhodně nechybí patronát, zdá se, že "
-"lidé, kteří sem přicházejí, si z ničeho nic nedělají. Efekt je nakažlivý, "
-"takže nováčci téměř instinktivně následují příklad těch, kteří tu již jsou."
+"Tento bar je klidné místo. Ačkoliv tu štamgasti nechybí, nezdá se, že by "
+"kvůli čemukoliv chtěli dělat rozruch. Jejich postoj je natolik nakažlivý, že "
+"nově příchozí následují příklad štamgastů téměř instinktivně. "
 
 #: dat/spob/arck.xml:2
 msgid "Arck"
-msgstr "Arck"
+msgstr "Ark"
 
 #: dat/spob/arck.xml:26
 msgid ""
@@ -9394,11 +9393,11 @@ msgid ""
 "doing here is a form of reverse terraforming - an attempt to turn Arck into "
 "an X class planet."
 msgstr ""
-"S devíti miliardami obyvatel je Arck jedním z nejhustěji obydlených světů v "
+"S devíti miliardami obyvatel je Ark jedním z nejhustěji obydlených světů v "
 "galaxii. Většinu povrchu planety pokrývá obrovské, rozlehlé město. "
-"Přirozeně, s tolika obyvateli přichází ii obrovské znečištění životního "
-"prostředí, mnoho skeptiků věří, že to, co zde Dvaered dělají, je forma "
-"reverzního terraformingu - pokus proměnit Arck na planetu třídy X."
+"Přirozeně, s tolika obyvateli přichází i obrovské znečištění životního "
+"prostředí. Mnoho skeptiků věří, že to, co tu Dvaeredové provádí je jistou "
+"formou reverzní terraformace - pokus o proměnu Arku v planetu typu X."
 
 #: dat/spob/arck.xml:27
 msgid ""
@@ -9408,11 +9407,11 @@ msgid ""
 "often irritates traders who come here to do business, only to find "
 "themselves in the middle of a Dvaered Turborave party."
 msgstr ""
-"Kosmodrom na Arcku se nachází přímo uprostřed obzvlášť hustě osídleného "
-"městského uzlu. Přidružený bar byl rozšířen a přeměněn na obecné zařízení "
-"pro volný čas pro místní obyvatele, něco, co často dráždí obchodníky, kteří "
-"sem přicházejí podnikat, jen aby se ocitli uprostřed dvaeredské Turborave "
-"párty."
+"Kosmodrom na Arku se nachází přímo uprostřed obzvlášť hustě osídleného "
+"městského uzlu. Přidružený bar byl rozšířen a přeměněn na všeobecné zařízení "
+"pro trávení volného času, určené pro místní obyvatele, což často dráždí "
+"obchodníky, kteří sem přicházejí podnikat. Místo obchodní zóny se ocitnou "
+"uprostřed dvaeredské turborave párty."
 
 #: dat/spob/arcturus_gamma.xml:2
 msgid "Arcturus Gamma"
@@ -9466,9 +9465,9 @@ msgid ""
 "meticulously maintained and full of off-duty Empire soldiers - not a place "
 "to get into a fight."
 msgstr ""
-"Bar na Arcturus Gamma, který je skutečně užitečným místem, je kovově šedý, "
-"pečlivě udržovaný a plný vojáků říše mimo službu - není to místo, kde byste "
-"se mohli dostat do šarvátky."
+"Bar na Arcturu Gamma je čistě užitkové místo. Je kovově šedý, pečlivě "
+"udržovaný a plný vojáků říše mimo službu - není to místo, kde byste se mohli "
+"dostat do šarvátky."
 
 #: dat/spob/arcturus_i.xml:2
 msgid "Arcturus I"
@@ -9538,10 +9537,10 @@ msgid ""
 "mercenaries can be found plying their trade. \"The spice must flow\", they "
 "say, it may not, but at least the rum does."
 msgstr ""
-"Arrakenská jídelna je jedním ze stinnějších barů v říšském prostoru. Z "
-"důvodu že se nachází na hranici Impéria, tudy prochází jen několik hlídek a "
-"bylo zde nalezeno mnoho darebáků a žoldáků, kteří zde provozují své obchody. "
-"„Koření musí téct,“ říkají, že nemusí, ale alespoň rum ano."
+"Arrakenská jídelna je jedním z těch špinavějších barů v říšském prostoru. "
+"Protože se nachází na hranici Říše, je tu jen málo hlídek, zato dost žoldáků "
+"a darebáků, kteří zde uzavírají své „obchody“. Místní říkají, že „koření "
+"musí proudit,“ a když ne koření, tak aspoň rum."
 
 #: dat/spob/arrentil.xml:2
 msgid "Arrentil"
@@ -9579,11 +9578,11 @@ msgid ""
 "but here in Soromid space it has given it a more organic feel, so much so "
 "that it almost feels like it is growing."
 msgstr ""
-"Při budování stanovišť tohoto nehostinného světa se uvažovalo o méně "
-"základním vybavení. Tento bar byl vybudován \"naroubováním\" na stranu "
+"Při budování stanovišť tohoto nehostinného světa se uvažovalo jen o naprosto "
+"nezbytném vybavení. Tento bar byl vybudován \"naroubováním\" na stranu "
 "kosmodromu. Kdekoli jinde v galaxii by takový nápad pravděpodobně vyústil v "
 "poněkud stísněný, zchátralý bar, ale tady v Soromidském prostoru mu to "
-"dodalo organičtější pocit, a to téměř tak, že téměř cítíte, že roste."
+"dodalo organičtější pocit, dokonce do té míry, že téměř cítíte, že roste."
 
 #: dat/spob/astana.xml:2 dat/ssys/astana.xml:2
 msgid "Astana"
@@ -9617,9 +9616,9 @@ msgid ""
 "than the IEWTF there is little reason to remain on the world for very long "
 "apart from the bar."
 msgstr ""
-"V baru je místo, kde si mnoho pracovníků IEZTT chvilku odpočine, několik z "
-"nich mluví o projektu, který vás nechá zmateného. Kromě IEZTT není žádný "
-"důvod zůstat na tomto světě příliš dlouho kromě baru."
+"Bar je místem, kde si mnoho pracovníků střelnice na chvilku odpočine. "
+"Několik z nich mluví o projektu, kterému vůbec nerozumíte. Kromě střelnice "
+"je bar snad jediným místem, kvůli kterému stojí za to zůstávat na povrchu."
 
 #: dat/spob/astana_iiv.xml:2
 msgid "Astana IIV"
@@ -9636,10 +9635,9 @@ msgid ""
 "making a decent enough living thanks to the caches of heavy elements trapped "
 "under the ice."
 msgstr ""
-"Atalanta je pojmenována přímo po koloniální lodi, která ji osídlila, "
-"Atalanta. Přestože je planeta příliš studená na to, aby měla skutečnou "
-"hodnotu, obyvatelstvo si díky ložiskům těžkých prvků uvězněných pod ledem "
-"vydělává dost slušně."
+"Atalanta je pojmenována přímo po své kolonizační lodi, Atalantě. Přestože je "
+"planeta příliš studená na to, aby měla skutečnou hodnotu, obyvatelstvo si "
+"díky ložiskům těžkých prvků uvězněných pod ledem vydělává dost slušně."
 
 #: dat/spob/atalanta.xml:28
 msgid ""
@@ -9649,10 +9647,10 @@ msgid ""
 "Atalanta's orbit makes this a rare occurrence but the bar's profits soar "
 "every cycle."
 msgstr ""
-"Stejně jako všechny struktury na planetě je bar Atalanty postaven pod ledem, "
-"ale je docela blízko povrchu. Je to proto, že efekt velkého osvětlení lze "
-"pozorovat nad hlavou, když slunce svítí přímo na led. Na oběžné dráze "
-"Atalanty je tento jev vzácný, ale zisky baru stoupají každým cyklem."
+"Stejně jako všechny budovy na planetě je místní bar postaven pod ledem, ale "
+"je docela blízko povrchu, a to kvůli světelným efektům, které slunce na ledě "
+"vytváří, když svítí přímo na něj. Na oběžné dráze Atalanty je tento jev "
+"vzácný, ale zisky baru stoupají každým cyklem."
 
 #: dat/spob/atalanta.xml:40 dat/spob/avoss.xml:28 dat/spob/cetrat.xml:38
 #: dat/spob/dawn.xml:31 dat/spob/jaegnhild.xml:35 dat/spob/jorlan.xml:40
@@ -9682,9 +9680,9 @@ msgid ""
 "of these may, at least, be plenty enough)."
 msgstr ""
 "Atryssa je díky technologii Za'leků ekonomicky bohatým světem. Je to také "
-"nejbližší pozoruhodná planeta Za'leků, kde mohou přistát cizinci, k Ruadanu. "
-"Kromě těchto dvou věcí lze doporučit jen málo (i když alespoň jedna z nich "
-"může stačit)."
+"planeta nejblíže Ruadanu, na které ještě mohou přístát cizinci. Kromě těchto "
+"dvou věcí lze doporučit jen málo (i když alespoň jedna z nich by důvodem pro "
+"návštěvu být mohla)."
 
 #: dat/spob/atryssa.xml:29
 msgid ""
@@ -9694,7 +9692,7 @@ msgid ""
 "everyone goes quiet when they approach."
 msgstr ""
 "Archetyp Za'lekského baru, i když velmi přeplněný. Dav se zdá být rozdělen "
-"do skupin lidí diskutujících o věcech tlumenými tóny. Také se zde potuluje "
+"do skupin lidí diskutujících o věcech tlumenými hlasy. Také se zde potuluje "
 "jeden nebo dva lidé s poznámkovými bloky, i když každý ztichne, když se "
 "přiblíží."
 
@@ -9731,18 +9729,18 @@ msgid ""
 "residential world, primarily for the scientists working on Warnecke who, "
 "after a hard week's work, don't want to see another lab for a while."
 msgstr ""
-"August je celkem standardní, i když chladný svět. Výjmečně na planetu "
-"Za'leků na ní není tolik výzkumných stanic. Je to téměř čistě obytný svět, "
+"August je celkem standardní, i když chladný svět. Na planetu Za'leků se zde "
+"nachází netypicky málo výzkumných stanic. Je to téměř čistě obytný svět, "
 "především pro vědce pracující na Warnecke, kteří po náročném týdnu práce "
-"nechtějí na chvíli vidět jinou laboratoř."
+"nechtějí aspoň na chvíli vidět jinou laboratoř."
 
 #: dat/spob/august.xml:27
 msgid ""
 "This bar has the feel of an old-world pub, with plenty of wood furnishing on "
 "display, good food and better beer. A great place to relax and unwind."
 msgstr ""
-"Tento bar má atmosféru starosvětské hospody se spoustou vystaveného "
-"dřevěného nábytku, dobrým jídlem a lepším pivem. Skvělé místo k uvolnění a "
+"Tento bar má atmosféru starozemské hospody se spoustou vystaveného dřevěného "
+"nábytku, dobrým jídlem a ještě lepším pivem. Skvělé místo k uvolnění a "
 "odpočinku."
 
 #: dat/spob/avoss.xml:2
@@ -9760,13 +9758,13 @@ msgid ""
 "devastated, a mere shadow of its former self. The colonists have managed to "
 "survive, however, and the hardy remain even today."
 msgstr ""
-"Avoss byl původně průměrný, ale obyvatelný svět. Když dorazila čtrnáctá loď "
-"kolonií, Petrovsk, považovali se její kolonisté za docela šťastné, že našli "
-"místo, které by mohli nazvat domovem. Asi padesát let poté, co se expedice "
-"vylodila, se svět začal měnit. Seismická aktivita všude začala eskalovat z "
-"grafů a způsobovala zemětřesení a sopečné erupce po celém světě. Svět je "
-"nyní zpustošen, pouhý stín jeho bývalého já. Kolonistům se však podařilo "
-"přežít a houževnatě zde setrvávají dodnes."
+"Avoss byl původně průměrný, ale obyvatelný svět. Když dorazila čtrnáctá "
+"kolonizační loď, Petrovsk, považovali se její kolonisté za docela šťastné, "
+"že našli místo, které by mohli nazvat domovem. Asi padesát let poté, co se "
+"expedice vylodila, se svět začal měnit. Seismická aktivita všude začala "
+"přesahovat stupnice a způsobovala zemětřesení a sopečné erupce po celém "
+"světě. Svět je nyní zpustošen, pouhý stín jeho bývalého já. Kolonistům se "
+"však podařilo přežít a houževnatě zde setrvávají dodnes."
 
 #: dat/spob/awowa_iv.xml:2
 msgid "Awowa IV"
@@ -9856,7 +9854,7 @@ msgstr ""
 "Beene je bohatý na nejrůznější běžné minerály, takže Soromidé využívají "
 "tento svět stejným způsobem jako kdokoli jiný: jako zdroj surovin. Zde "
 "vytěžené prvky jsou zpracovány do standardních balíčků, které využívají "
-"Soromidské biologické lodě. Tato zásoba minerálů znamená, že Beene je pro "
+"Soromidské organické lodě. Tato zásoba minerálů znamená, že Beene je pro "
 "flotily Soromidů velmi důležitým strategickým místem."
 
 #: dat/spob/beene.xml:30
@@ -9867,11 +9865,11 @@ msgid ""
 "population. As such, having a drink in Beene's bar is a bit of an ordeal. "
 "It's one of the less popular places among traders looking for a drink."
 msgstr ""
-"Pilotům se doporučuje, aby při návštěvě baru na Beene nosili vzduchotěsné "
-"obleky. Atmosféra planety může běžným lidem způsobit vážné problémy a "
-"Soromidé se neobtěžovali instalovat dekontaminační filtry pro místní "
-"obyvatelstvo. Proto je pití v baru trochu utrpení. Je to jedno z těch méně "
-"populárních míst mezi obchodníky, kteří hledají drink."
+"Pilotům se doporučuje, aby při návštěvě baru na Beene nosili skafandry. "
+"Atmosféra planety může běžným lidem způsobit vážné problémy a Soromidé se "
+"neobtěžovali instalovat dekontaminační filtry pro místní obyvatelstvo. Proto "
+"je pití v baru trochu utrpení. Je to jedno z těch méně populárních míst mezi "
+"obchodníky, kteří hledají drink."
 
 #: dat/spob/behemoth.xml:2
 msgid "Behemoth"
@@ -9890,10 +9888,11 @@ msgid ""
 "Belltower is here to remind them that they are."
 msgstr ""
 "Stanice Belltower je malá Soromidská vojenská základna, jejímž hlavním "
-"účelem je udržovat systém Adiadus v souladu. Někteří obyvatelé systémů, "
-"které jsou tak daleko od jádra Soromidů a mají malý mezihvězdný provoz, si "
-"občas začnou klást otázku, zda jsou vůbec ještě součástí Soromidského "
-"kolektivu. Belltower je tu, aby jim připomněla, že jsou."
+"účelem je udržovat řád v systém Adiadus. Systém je dost daleko od jádra "
+"soromidského prostoru a to s sebou nese malý objem mezihvězdného provozu. "
+"Někteří obyvatelé si občas kladou otázku, zda jsou vůbec ještě součástí "
+"Soromidského kolektivu. Belltower je tu, aby jim připomněla, že ano, stále "
+"jsou."
 
 #: dat/spob/belltower_station.xml:28
 msgid ""
@@ -9905,8 +9904,9 @@ msgid ""
 msgstr ""
 "Bar má dveře, které vedou přímo do vězeňského bloku. Vězni zde obvykle "
 "nezůstávají příliš dlouho. Belltower nemá ani kapacitu, ani pravomoc "
-"individuálně jednat s více než drobnými zločinci. Vážnější pachatelé jsou "
-"převezeni do trestních zařízení na Agino v systému Zintar."
+"individuálně jednat s kýmkoliv větším, než jsou ti nejdrobnější zločinci. "
+"Vážnější pachatelé jsou převezeni do trestních zařízení na Agino v systému "
+"Zintar."
 
 #: dat/spob/belltower_station.xml:51 dat/spob/finn.xml:28
 #: dat/spob/tanulwa.xml:29 dat/spob/trinel.xml:27 dat/spob/vercingetorix.xml:44
@@ -9926,10 +9926,10 @@ msgid ""
 "elements used to produce them, this makes it an, almost literal, gold mine "
 "for Soromid building materials."
 msgstr ""
-"Další plynový gigant, další základna Soromidů. Tato konkrétní základna je "
-"spíše větší než ostatní kvůli velkému množství těžby minerálů a prvků, která "
-"se zde provádí. Planeta má vysoký obsah organické hmoty i prvků použitých k "
-"jejich výrobě, což z ní dělá téměř doslovný zlatý důl pro stavební materiály "
+"Další plynový obr, další základna Soromidů. Tato konkrétní základna je větší "
+"než obvykle, a to kvůli velkému množství těžby minerálů a prvků, která se "
+"zde koná. Planeta má vysoký obsah organické hmoty i prvků použitých k jejich "
+"výrobě, což z ní dělá téměř doslovný zlatý důl pro stavební materiály "
 "Soromidů."
 
 #: dat/spob/benedict.xml:29
@@ -9940,9 +9940,9 @@ msgid ""
 "with straws, which is a thoughtful touch for those traders who are forced to "
 "wear air-breathers."
 msgstr ""
-"Pokud jde o mnoho Soromidských barů na méně než pohostinných místech, "
-"atmosféra v tomto baru je poměrně dusná s prvkem nebezpečí pro nesoromidy, "
-"vzduch také není příliš skvělý. Většina nápojů se zde podává s brčky, což je "
+"Jak je pravidlem Soromidských barů na těch méně pohostinných místech, "
+"atmosféra zde je poměrně dusná, s prvkem nebezpečí pro nesoromidy. Vzduch "
+"také není příliš skvělý. Většina nápojů se zde podává s brčky, což je "
 "promyšlená vychytávka pro ty obchodníky, kteří jsou nuceni nosit dýchací "
 "přístroje."
 
@@ -9972,7 +9972,7 @@ msgid ""
 "is fine and the locals seem friendly enough. Mostly harmless."
 msgstr ""
 "Bar je místem k odpočinku po dlouhé cestě nebo náročném pracovním dni. Pivo "
-"je v pořádku a místní se zdají dost přátelští. Většinou neškodní."
+"je v pořádku a místní se zdají dost přátelští. Převážně neškodní."
 
 #: dat/spob/berkhere.xml:2
 msgid "Berkhere"
@@ -9986,8 +9986,8 @@ msgid ""
 "food has to be imported."
 msgstr ""
 "Většina povrchu Berkhere je kámen, prach a písek. Ale pod tímto povrchem "
-"leží vzácné a cenné drahokamy a minerály. Kolonie zde spoléhá na toto "
-"minerální bohatství pro přežití. Na této vyprahlé planetě nebudou růst "
+"leží vzácné a cenné drahokamy a minerály. Přežití místní kolonie stojí a "
+"padá s místním minerálním bohatstvím. Na této vyprahlé planetě nebudou růst "
 "plodiny, takže je nutné veškeré jídlo dovážet."
 
 #: dat/spob/berkhere.xml:28
@@ -10002,9 +10002,9 @@ msgstr ""
 "Bar kosmodromu je uspořádán kolem centrální oblasti, která slouží jako "
 "výkladní skříň největšího neopracovaného drahokamu, jaký se kdy našel pod "
 "pískem Berkhere. Návštěvníkům i místním obyvatelům připomíná, že Berkhere je "
-"stále bohatý. Dokud drahokam na displeji nemusí být prodáván, znamená to, že "
-"budoucnost Berkhere není ohrožena. Není třeba říkat, že klenot je silně "
-"chráněn bezpečnostními systémy."
+"stále bohatým světem. Dokud drahokam zůstává vystavený a nemusí být prodán, "
+"znamená to, že budoucnost Berkhere není ohrožena. Není třeba říkat, že "
+"klenot je silně chráněn všemožnými bezpečnostními systémy."
 
 #: dat/spob/beth.xml:2
 msgid "Beth"
@@ -10028,7 +10028,7 @@ msgstr "Blackwell VII"
 
 #: dat/spob/blunderbuss_ii.xml:2
 msgid "Blunderbuss II"
-msgstr "Blunderbuss II"
+msgstr "Mušketa II"
 
 #: dat/spob/bolero.xml:2
 msgid "Bolero"
@@ -10083,10 +10083,10 @@ msgid ""
 "gigantic junk yard, known as the \"Junkle\", where the locals \"hunt\" for "
 "useful equipment they can sell to each other, or to passing travellers."
 msgstr ""
-"Bon Sebb je tajemné místo. Objekty z celé galaxie mají ve zvyku se sem "
-"otáčet. Ve skutečnosti je velkou částí povrchu planety gigantické haraburdí, "
-"známý jako „Junkle“, kde místní obyvatelé „loví“ užitečné vybavení, které si "
-"mohou navzájem prodat nebo předat cestujícím."
+"Bon Sebb je tajemné místo. Věci z celé galaxie se nakonec objeví i tady. "
+"Velkou část povrchu planety vlastně tvoří obří skládka, známá jako „tržiště“ "
+"kde místní obyvatelé „nakupují“ užitečné vybavení, které pak prodávají ať už "
+"mezi sebou, nebo mimoplanetárním návštěvníkům."
 
 #: dat/spob/bon_sebb.xml:30
 msgid ""
@@ -10095,8 +10095,8 @@ msgid ""
 "only somewhat symmetrical feature of the bar is a holoportrait of the "
 "Creator of the Universe, hanging over the lopsided bar."
 msgstr ""
-"Bar na Bon Sebb je postaven z věcí vyrabovaných z \"Junkle\". Stěny a "
-"nábytek jsou patchwork různých designů a materiálů. Jediným poněkud "
+"Bar na Bon Sebb je postaven z věcí „nakoupených“ na „tržnici“. Stěny a "
+"nábytek jsou slepencem různých designů a materiálů. Jediným poněkud "
 "symetrickým rysem baru je holoportrét Stvořitele vesmíru, visícího nad "
 "šikmým barem."
 
@@ -10120,11 +10120,11 @@ msgid ""
 "the planet's ecosystem has been terminally disrupted, causing most of the "
 "surface to erode into desert."
 msgstr ""
-"Boowoy nikdy nebyl velmi úctyhodnou kolonií. Byl osídlen v naději, že svět "
+"Boowoy nikdy nebyl zrovna úctyhodnou kolonií. Byl osídlen v naději, že svět "
 "bude možné terraformovat na pěknou obytnou planetu třídy M. Ale "
-"přetrvávající korupce a špatné vedení způsobily, že se snaha zhoršila. Nyní "
-"byl ekosystém planety terminálně narušen, což způsobilo, že většina povrchu "
-"erodovala do pouště."
+"přetrvávající korupce a špatné vedení způsobily, že ze snahy sešlo. V "
+"současné době je ekosystém planety nevyléčitelně narušený, což působí "
+"postupné šíření planetárních pouští."
 
 #: dat/spob/boowoy.xml:29
 msgid ""
@@ -10136,8 +10136,8 @@ msgid ""
 msgstr ""
 "Místní nemají rádi cizince, ale udržují kosmodrom v chodu, protože odříznutí "
 "od galaxie by bylo pro svět tak závislý na dovozu fatální. Pohledy, které "
-"získáte od pracovního personálu a místních patronů, nicméně jasně ukazují, "
-"že by to upřednostňovali, kdybyste tu vůbec nebyli dlouho."
+"získáte od personálu i štamgastů nicméně jasně ukazují, že by "
+"upřednostňovali, kdybyste se tu příliš nezdrželi."
 
 #: dat/spob/botarn_i.xml:2
 msgid "Botarn I"
@@ -10154,9 +10154,9 @@ msgid ""
 "and Anarbalis. The ships here, however, are not equipped to handle the "
 "stress of the border conflicts with the Dvaered at Eye of Night."
 msgstr ""
-"Stanice Brandt slouží jako místní bezpečnostní kontrolní stanoviště a "
-"provozuje dvě lehké letky lodí. Stanice je zodpovědná hlavně za Niger, "
-"Lazuli a Anarbalis. Lodě zde však nejsou vybaveny, aby zvládly stres z "
+"Stanice Brandt slouží jako místní bezpečnostně-kontrolní stanoviště a "
+"základnu zde mají dvě letky lehkých lodí. Stanice je zodpovědná hlavně za "
+"Niger, Lazuli a Anarbalis. Lodě zde však nejsou vybaveny na zvládnutí "
 "hraničních konfliktů s Dvaeredy v Eye of Night."
 
 #: dat/spob/brandt_station.xml:26
@@ -10166,7 +10166,7 @@ msgid ""
 "Brandt Station all know their place and treat each other accordingly."
 msgstr ""
 "Kupodivu se zdá, že tento dokovací bar s nijak nerozlišuje mezi třemi "
-"sirianskými vrstvami. Vojáci a námořníci umístění na stanici Brandt však "
+"sirianskými vrstvami. Vojáci a kosmoplavci umístění na stanici Brandt však "
 "všichni znají své místo a podle toho se k sobě chovají."
 
 #: dat/spob/brendon_i.xml:2
@@ -10204,10 +10204,9 @@ msgid ""
 "for this purpose and no other, comfort was the last thing on the designers' "
 "minds."
 msgstr ""
-"Zde se nachází jedna z těžařských operací Dvaered. Plyn je rafinován a "
-"přeměněn na palivo pro Dvaeredské lodě. Zařízení zde jsou postavena výhradně "
-"pro tento účel a nic jiného, pohodlí bylo to poslední, na co designéři "
-"mysleli."
+"Dvaeredští sem umístili zařízení k těžbě plynu. Ten je rafinován a přeměněn "
+"na palivo pro Dvaeredské lodě. Rafinerie je postavena čistě účelově - vyrábí "
+"palivo a nějaké pohodlí návrhářům ani nepřišlo na mysl."
 
 #: dat/spob/brock.xml:28
 msgid ""
@@ -10216,10 +10215,9 @@ msgid ""
 "bars. Unlike most Dvaered bars, this one is small and rather clean. Rather "
 "shocking, especially for outsiders."
 msgstr ""
-"Bar je plný horníků a posádkových jednotek, jako většina Dvaeredských barů. "
-"Bohaté pití je také zcela jistě na kartách, jako u většiny Dvaeredských "
-"barů. Na rozdíl od většiny je tento malý a poměrně čistý. Spíše šokující, "
-"zejména pro cizince."
+"Bar je plný horníků a posádkových jednotek, jako většina dvaeredských barů. "
+"I tady mají bohatý výběr nápojů. Na rozdíl od většiny dvaeredských barů je "
+"tento malý a poměrně čistý. Což je dost šokující, zejména pro cizince."
 
 #: dat/spob/brooks.xml:2
 msgid "Brooks"
@@ -10233,11 +10231,11 @@ msgid ""
 "economic and political weight within the Empire, the Imperial Navy protects "
 "Arcturus for Brooks' sake, as much as for the Imperial core systems."
 msgstr ""
-"Brooks je rušná, vysoce osídlená imperiální civilní planeta. S úpadkem "
-"Impéria se ocitla na hranici nebezpečného prostoru, což je docela nepohodlné "
-"postavení. Jelikož je Brooks bohatá planeta s velkou ekonomickou a "
-"politickou váhou v říši, chrání císařské námořnictvo Arcturus právě kvůli "
-"planetě Brooks, stejně důkladně jako imperiální centrální systémy."
+"Brooks je rušná Říšská planeta s vysokým počtem civilního obyvatelstva. S "
+"úpadkem Říše se ocitla na hranici nebezpečného prostoru, což je docela "
+"nepohodlné postavení. Jelikož je Brooks bohatá planeta s velkou ekonomickou "
+"a politickou váhou v Říši, chrání Říšské námořnictvo soustavu Arcturus právě "
+"kvůli Brooksu, a to stejně dobře jako kterýkoliv centrální svět Říše."
 
 #: dat/spob/brooks.xml:27
 #, fuzzy
@@ -10273,7 +10271,7 @@ msgstr ""
 "Buritt není tak pěkný jako Varia v systému Darkstone, přesto je rozumně "
 "obyvatelným světem. Najdete zde hodně příslušníků střední třídy Dvaeredů. "
 "Najdete zde také rozsáhlé znečištění přírodního prostředí, ale vzhledem k "
-"tomu, že Dvaeredé jsou Dvaeredé, nepokouší se to řešit."
+"tomu, že Dvaeredé jsou už takoví, nikdo se to nepokouší řešit.."
 
 #: dat/spob/buritt.xml:28
 msgid ""
@@ -10281,9 +10279,9 @@ msgid ""
 "brain-melting music, it would be quite a comfortable place to be. But it "
 "does, so it isn't."
 msgstr ""
-"Pokud by tento kosmodrom nehrál lokálně produkovanou, nepřetržitou hlučnou "
-"hudbu, která ničí mozek, bylo by to docela pohodlné místo. Nic ale "
-"nenasvědčuje tomu že by se to mělo změnit, takže není."
+"Pokud by tento kosmodrom nehrál místní nepřetržitou dunící a hlučnou hudbu, "
+"která ničí mozek, bylo by to docela pohodlné místo. Nic ale nenasvědčuje "
+"tomu, že by se to mělo změnit, takže není."
 
 #: dat/spob/burnan.xml:2
 msgid "Burnan"
@@ -10296,11 +10294,11 @@ msgid ""
 "hyperspace jumps. Burnan has a large political district in its primary city, "
 "this also houses one of the largest Sirian temples in all of Sirius space."
 msgstr ""
-"Burnan se počítá jako neoficiální hlavní planeta. Aesir je daleko a mnoho "
-"vládních služeb je lépe poskytováno lokálně než na vzdálenost mnoha "
+"Burnan je de facto neoficiální hlavní planeta. Aesir je daleko a mnoho "
+"vládních služeb lépe poskytnou místní, než je řešit na vzdálenost mnoha "
 "hyperprostorových skoků. Burnan má ve svém hlavním městě velkou politickou "
 "čtvrť, kde se také nachází jeden z největších sirianských chrámů v celém "
-"prostoru Sirius."
+"prostoru Sirianů."
 
 #: dat/spob/burnan.xml:30
 msgid ""
@@ -10311,15 +10309,15 @@ msgid ""
 "elevated area that has tables for visitors to sit down at, where they won't "
 "get in the way of the bustle and traffic of the main floor."
 msgstr ""
-"Burnan nemá samostatný bar tak jako mnoho jiných světů. Bar a hlavní hala "
-"kosmodromu jsou místo toho jedna a ta samá věc. Na všech stranách jsou "
+"Burnan nemá u kosmoportu samostatný bar jako mnoho jiných světů. Bar a "
+"hlavní hala kosmodromu jsou místo toho jedním místem. Na všech stranách jsou "
 "východy k terminálům a centrální oblasti dominuje ostrov servisních rozhraní "
 "a přepážek. K dispozici je vyvýšená oblast se stoly, kde si návštěvníci "
-"mohou sednout, kde jim nebude překážet ruch a provoz v hlavním patře."
+"mohou sednout, aby jim nepřekážel ruch a provoz v hlavním patře."
 
 #: dat/spob/burnans_moon.xml:2
 msgid "Burnan's moon"
-msgstr "Burnan's moon"
+msgstr "Burnanův měsíc"
 
 #: dat/spob/caladan.xml:2
 msgid "Caladan"
@@ -10338,13 +10336,13 @@ msgid ""
 "livestock, most prominently cattle."
 msgstr ""
 "Povrch planety je převážně pokryt vodou a planetární klima se vyznačuje "
-"bohatými srážkami a silným větrem, i když dostatečně snesitelným, aby "
-"zbytečně nepotřebovalo nákladné zařízení pro úpravu počasí. Obyvatelnou půdu "
-"často charakterizují měkké louky, bažiny a husté lesy. Zdrojovou základnu "
-"Caladanu tvoří hlavně zemědělství a biomasa, jejímž hlavním vývozem je "
-"místně chovaná a pěstovaná rýže pundi a rybolov, který je pro její obyvatele "
-"tradičním zdrojem obživy. Mezi další tradiční produkty patří víno a různá "
-"hospodářská zvířata, zejména dobytek."
+"bohatými srážkami a silným větrem, i když natolik snesitelným, aby nákladné "
+"zařízení pro úpravu počasí nebylo nezbytné. Obyvatelnou souš často "
+"charakterizují měkké louky, bažiny a husté lesy. Zdrojovou základnu Caladanu "
+"tvoří hlavně zemědělství a biomasa. Hlavním vývozním artiklem je místní rýže "
+"pundi a dále produkty rybolovu, který je pro místní obyvatele tradičním "
+"zdrojem obživy. Mezi další tradiční produkty patří víno a různá hospodářská "
+"zvířata, zejména dobytek."
 
 #: dat/spob/caladan.xml:29
 msgid ""
@@ -10353,10 +10351,10 @@ msgid ""
 "You could also tuck into some of the local cuisine which is rather refined, "
 "with most dishes containing meat."
 msgstr ""
-"Bar je hned vedle hvězdného přístavu se skvělým výhledem na přístav. Mohli "
-"by jste hodiny sledovat, jak rybáři zběsile utíkají a plní své povinnosti. "
-"Dalo by se také zdrhnout do některé z místních kuchyní, které jsou poměrně "
-"rafinované, přičemž většina pokrmů obsahuje maso."
+"Bar je hned vedle kosmodromu se skvělým výhledem na vodní přístav. Mohli "
+"byste hodiny sledovat, jak rybáři zběsile utíkají a plní své povinnosti. "
+"Dalo by se také zajít do některé z místních kuchyní, které jsou poměrně "
+"rafinované. Většina místních pokrmů obsahuje maso."
 
 #: dat/spob/calvin.xml:2
 msgid "Calvin"
@@ -10385,12 +10383,11 @@ msgid ""
 "technology and the fact that at least half of the populace look like "
 "scientists, researchers, or engineers."
 msgstr ""
-"Tento bar odpovídá názvu samotné stanice. Ve skutečnosti se zdá, že je to "
-"hlavní atrakce, masivní prstenovitá místnost kasína s mnoha barmany, kteří "
-"se starají o patrony, hudba v pozadí a dobré jídlo. Jediným znakem původu "
-"Za'leku je neformální používání nepochopitelně pokročilé technologie a "
-"skutečnost, že alespoň polovina populace vypadá jako vědci, výzkumníci nebo "
-"inženýři."
+"Tento bar odpovídá názvu stanice. Zdá se, že bar sám je hlavní atrakcí. "
+"Masivní kruhová místnost kasína s mnoha barmany, kteří se starají o "
+"štamgasty, hudba v pozadí a dobré jídlo. Jedinými znaky za'lekského původu "
+"je neformální používání nepochopitelně pokročilé technologie a skutečnost, "
+"že alespoň polovina populace vypadá jako vědci, výzkumníci nebo inženýři."
 
 #: dat/spob/capricorn_ii.xml:2
 msgid "Capricorn II"
@@ -10424,6 +10421,10 @@ msgid ""
 "support it. The majority of these are food and medical supplies for the "
 "miners."
 msgstr ""
+"Castellan III je jako většina Dvaereadských světů: obývaný horníky, kteří "
+"žijí v pekelných podmínkách. Planeta sama krátce řečeno nedokáže sama udržet "
+"život, a tak je potřeba všechno dovážet. Zejména se dováží jídlo a lékařské "
+"zásoby pro horníky."
 
 #: dat/spob/castellan_iii.xml:26
 msgid ""
@@ -10433,6 +10434,11 @@ msgid ""
 "and recuperate was a good way to show off their philanthropy. Either way, "
 "it's appreciated."
 msgstr ""
+"Bar na Castellanu III je až překvapivě dobrý. Možná proto, že je používaný "
+"Dvaereadskými důstojníky jako útočiště. Anebo někdo s trochou moci nebo "
+"vlivu rozhodl, že dát horníkům místo pro odpočinek a rekreaci je hezký "
+"způsob, jak dát najevo svou filantropii. Tak jako tak, návštěvníci si bar "
+"pochvalují."
 
 #: dat/spob/castellan_vi.xml:2
 msgid "Castellan VI"
@@ -10440,7 +10446,7 @@ msgstr "Castellan VI"
 
 #: dat/spob/cerberus.xml:2 dat/ssys/cerberus.xml:2
 msgid "Cerberus"
-msgstr ""
+msgstr "Cerberus"
 
 #: dat/spob/cerberus.xml:26
 msgid ""
@@ -10460,26 +10466,29 @@ msgid ""
 "and has a minuscule selection of beverages. There's little ambient noise; it "
 "seems as though boredom has gotten the best of most of the souls aboard."
 msgstr ""
+"O bar se starají vědci ve volném čase i vojáci mimo službu. Je menší, než na "
+"co je člověk zvyklý a výběr nápojů je vskutku miniaturní. Je tu opravdu "
+"klid, vypadá to, jako kdyby nuda pronikla do všech koutů."
 
 #: dat/spob/cerberus_i.xml:2
 msgid "Cerberus I"
-msgstr ""
+msgstr "Kerberos I"
 
 #: dat/spob/cerberus_ii.xml:2
 msgid "Cerberus II"
-msgstr "Cerberus II"
+msgstr "Kerberos II"
 
 #: dat/spob/cerberus_iia.xml:2
 msgid "Cerberus IIa"
-msgstr "Cerberus IIa"
+msgstr "Kerberos IIa"
 
 #: dat/spob/cerberus_iv.xml:2
 msgid "Cerberus IV"
-msgstr "Cerberus IV"
+msgstr "Kerberos IV"
 
 #: dat/spob/cetrat.xml:2
 msgid "Cetrat"
-msgstr ""
+msgstr "Cetrat"
 
 #: dat/spob/cetrat.xml:27
 msgid ""
@@ -10489,10 +10498,10 @@ msgid ""
 "that field. Cetrat was colonized by the eighth colony ship launched during "
 "the First Growth, Brooklyn."
 msgstr ""
-"Cetrat je vodní svět, známý pro řasy, co našly použití v medicíně. Ještě se "
-"je nepodařilo pěstovat v umělém prostředí, ale protože se jim daří v celém "
-"planetárním oceánu, na pokrok není žádný velký tlak. Cerat byl kolonizován "
-"osmou z kolonizačních lodí První diaspory, Brooklynem."
+"Cetrat je vodní svět, známý pro řasy, které se používají v medicíně. Ještě "
+"se je nepodařilo pěstovat v umělém prostředí, ale protože se jim daří v "
+"celém planetárním oceánu, na pokrok není žádný velký tlak. Cerat byl "
+"kolonizován osmou z kolonizačních lodí První diaspory, Brooklynem."
 
 #: dat/spob/cetrat.xml:28
 msgid ""
@@ -10503,9 +10512,9 @@ msgid ""
 "go, Cetrat is among the stranger."
 msgstr ""
 "Bar je opravdu rozlehlý, ale štamgastů je tu málo. Na nápojovém lístku je "
-"stránka s \"Živými drinky\". Když se zeptáš barmana, odpoví, že takové "
+"stránka s \"Živými drinky\". Když se zeptáte barmana, odpoví, že takové "
 "drinky míchají s živými tvory. Většinou s medůzami, ale používají se také "
-"malí hlavonožci a další, ještě exotičtější \"přísady\". Jsou různé exotické "
+"malí hlavonožci a další, ještě exotičtější „přísady“. Jsou různé exotické "
 "kultury, Cerat zjevně patří ke světům na divnější straně spektra."
 
 #: dat/spob/cetrat.xml:41 dat/spob/soromid_databank.xml:32
@@ -10520,7 +10529,7 @@ msgstr "Dřevěné uhlí"
 
 #: dat/spob/charred.xml:2
 msgid "Charred"
-msgstr ""
+msgstr "Ohořelý"
 
 #: dat/spob/chriik.xml:2
 msgid "Chriik"
@@ -10535,6 +10544,11 @@ msgid ""
 "planet for heavy industries to set up shop since they can pollute all they "
 "want without repercussions."
 msgstr ""
+"Chriik je mrtvý svět. Jako většina pouštních planet nemá vodní plochy, zato "
+"se chlubí horkým klimatem. Na rozdíl od všetšiny pouštních planet tu ale "
+"není žádný původní život. Na Chriiku není o co stát. Díky tomu je planeta "
+"perfektním místem pro těžký průmysl - nikoho nezajímají takové věci, jako "
+"znečišťování."
 
 #: dat/spob/chriik.xml:28
 msgid ""
@@ -10542,6 +10556,9 @@ msgid ""
 "complexes the air is so dry it will parch you out in record time. The large "
 "number of manual workers also contributes to the busy crowd."
 msgstr ""
+"Bar u kosmoportu je na Chriiku velmi oblíbeným místem. Dokonce i v obytném "
+"komplexu je vzduch tak suchý, že cítíš, jak ti z úst vysává vlhkost. K "
+"obsazenosti baru velkou měrou přispívají dělníci."
 
 #: dat/spob/churchill_i.xml:2
 msgid "Churchill I"
@@ -10549,19 +10566,19 @@ msgstr "Churchill I"
 
 #: dat/spob/churchill_ii.xml:2
 msgid "Churchill II"
-msgstr ""
+msgstr "Churchill II"
 
 #: dat/spob/churchill_iia.xml:2
 msgid "Churchill IIa"
-msgstr ""
+msgstr "Churchill IIa"
 
 #: dat/spob/claudius_mehan.xml:2
 msgid "Claudius Mehan"
-msgstr ""
+msgstr "Claudius Mehan"
 
 #: dat/spob/cole_station.xml:2
 msgid "Cole Station"
-msgstr ""
+msgstr "Coleho stanice"
 
 #: dat/spob/cole_station.xml:24
 msgid ""
@@ -10573,7 +10590,7 @@ msgstr ""
 
 #: dat/spob/colley.xml:2
 msgid "Colley"
-msgstr ""
+msgstr "Colley"
 
 #: dat/spob/colley.xml:27
 msgid ""
@@ -10581,6 +10598,9 @@ msgid ""
 "unassuming nature. The world has mild weather and is ideally closeted away "
 "from the cares and worries of the wider galaxy."
 msgstr ""
+"Colley je svět, kde se tráví dovolené a výslužby, protože je tichý a "
+"nenáročný. Počasí je mírné planeta je hezky uzavřená od starostí a strastí "
+"běžného dne v galaxii."
 
 #: dat/spob/colley.xml:28
 #, fuzzy
@@ -10599,7 +10619,7 @@ msgstr ""
 
 #: dat/spob/coral_station.xml:2
 msgid "Coral Station"
-msgstr ""
+msgstr "Korálová stanice"
 
 #: dat/spob/coral_station.xml:24
 msgid ""
@@ -10611,11 +10631,11 @@ msgstr ""
 
 #: dat/spob/coran.xml:2
 msgid "Coran"
-msgstr ""
+msgstr "Coran"
 
 #: dat/spob/corax.xml:2
 msgid "Corax"
-msgstr ""
+msgstr "Corax"
 
 #: dat/spob/corax.xml:27
 msgid ""
@@ -10625,6 +10645,10 @@ msgid ""
 "environmental discomfort has given them a head start on this world in terms "
 "of resource extraction. Other life, it seems, will have to wait its turn."
 msgstr ""
+"I když se Corax může - ve vzdálené budoucnosti - proměnit v napůl "
+"neobyvatelnou planetu, už tu nebude moc cenných rud a minerálů, snad až na "
+"železo. Schopnosti soromidů zvládnout silně znečištěné prostředí jim daly "
+"náskok v těžbě zdrojů. Ostaní život si musí počkat."
 
 #: dat/spob/corax.xml:28
 msgid ""
@@ -10635,14 +10659,19 @@ msgid ""
 "you ask for a cocktail though, you'll likely be directed to one of the local "
 "sulphurous hot-water geysers."
 msgstr ""
+"Díky relativní stabilitě tohoto světa vypadá místní bar jako vystřižený z "
+"Říšského světa, vůbec se na soromidský svět nehodí. Jsou tu stoly, židle, "
+"automaty, barman a, což je nejdůležitější, pití. Pití je spousta, ale výběr "
+"je malý, i když přiměřený velikosti světa. Koktejl ale bude lepší si "
+"neobjednat - nejspíš by vás poslali k jednomu z místních sirných gejzírů."
 
 #: dat/spob/corinth_1.xml:2
 msgid "Corinth 1"
-msgstr ""
+msgstr "Corinth 1"
 
 #: dat/spob/corinth_2.xml:2
 msgid "Corinth 2"
-msgstr ""
+msgstr "Corinth 2"
 
 #: dat/spob/corinth_foods.xml:2
 msgid "Corinth Foods"
@@ -10659,7 +10688,7 @@ msgstr ""
 
 #: dat/spob/cornwal_ordinance.xml:2
 msgid "Cornwal Ordinance"
-msgstr ""
+msgstr "Cornwal Ordinance"
 
 #: dat/spob/cornwal_ordinance.xml:25
 msgid ""
@@ -10671,6 +10700,12 @@ msgid ""
 "on the harsh worlds in Undergate and always makes sure they receive a "
 "generous price for their exports."
 msgstr ""
+"Tohle je zbrojovka provozovaná pod hlavičkou místního magnáta, Fredericka "
+"Cornwala. Cornwal vydělává na sériové výrobě munice a zbraní pro civilní "
+"použití. Z planet Wagenni a Sollebor se dovážejí surové materiály a ven ze "
+"systému se vyvážejí finální výrobky, a to se slušným ziskem. Cornwal "
+"sympatizuje s obyvateli nehostinných světů, jako je například Undergate, a "
+"vždycky se osobně postará, aby zásilky tam směující byly štědře naceněny. "
 
 #: dat/spob/cornwal_ordinance.xml:26
 msgid ""
@@ -10679,22 +10714,26 @@ msgid ""
 "of his merchandise so widely throughout Sirius space. The regular shipments "
 "required to keep business going helps too, so it is with the bar too."
 msgstr ""
+"Na to, jak odlehlá stanice Cornwal Ordinance je, ji navštěvuje celkem dost "
+"obchodníků. Frederick Cornwal je talentovaný byznysmen a jeho značka je "
+"známá napříč siriuským prostorem. Pravidelné dodávky surovin a vývoz zboží "
+"znamenají, že se obchod hýbe, a bar se samozřejmě hýbe s ním."
 
 #: dat/spob/corvus_i.xml:2
 msgid "Corvus I"
-msgstr ""
+msgstr "Corvus I"
 
 #: dat/spob/corvus_vi.xml:2
 msgid "Corvus VI"
-msgstr ""
+msgstr "Corvus VI"
 
 #: dat/spob/corvus_via.xml:2
 msgid "Corvus VI-a"
-msgstr ""
+msgstr "Corvus VI-a"
 
 #: dat/spob/corvus_vib.xml:2
 msgid "Corvus VI-b"
-msgstr ""
+msgstr "Corvus VI-b"
 
 #: dat/spob/corvus_vib.xml:24
 msgid ""
@@ -10704,6 +10743,10 @@ msgid ""
 "inadvertently, provide protection by being more important, juicier and more "
 "obvious targets."
 msgstr ""
+"Mnoho kolonistů nevěnovalo pozornost malému měsíci ve vzkvétajícímu systému -"
+" a jméno Corvu VI-b také nepřidalo. Kolonisté na měsíci si ale pochvalují "
+"svoje rozvinutější sousedy, kteří, ač nechtěně, chrání měsíc zkrátka tím, že "
+"jsou šťavnatější sousto, zatímco Corvus VI-b je nevýznamný cíl."
 
 #: dat/spob/corvus_vib.xml:25
 msgid ""
@@ -10712,10 +10755,14 @@ msgid ""
 "given how crowded it is. Then again, given the interesting position this "
 "system occupies in space, maybe caution is the better part of valour."
 msgstr ""
+"Bar je malý, ale místa kolem je dost. Majitelé už určitě nad rozšířením "
+"uvažují, díky poloze v systému je v baru mnoho návštěvníků. Ale na druhou "
+"stranu, výhodná poloha v systému znamená, že bar je celkem na ráně, takže "
+"opatrnosti nezbývá."
 
 #: dat/spob/cristen.xml:2
 msgid "Cristen"
-msgstr ""
+msgstr "Cristen"
 
 #: dat/spob/cristen.xml:25
 msgid ""
@@ -10725,6 +10772,10 @@ msgid ""
 "Due to this the settlement on Cristen is one giant complex, isolated from "
 "the outside environment."
 msgstr ""
+"Všechna voda na Cristenu je jedovatá a tak je planeta obyvatelná jen pro ty "
+"nejpřizpůsobivější formy života. Toxická hydrosféra ale na druhou stranu "
+"znamená, že určité látky jsou zde velmi snadno dostupné. Osídlení Cristenu "
+"je proto jeden obrovský komplex, zcela izolovaný od vnějšího prostředí."
 
 #: dat/spob/cristen.xml:26
 msgid ""
@@ -10734,11 +10785,16 @@ msgid ""
 "get to wear hazard suits outside of the main domes and they get a rather "
 "nice bar too - certainly not something many Dvaereds can claim."
 msgstr ""
+"Bar, přiléhající ke kosmoportu je jednou z nejlépe chráněných budov na "
+"planetě. Místní vláda považuje životy potenciálních obchodních partnerů za "
+"cennější, než životy vlastních lidí. Přesto všichni nosí mimo hlavní dómy "
+"obleky do toxického prostředí a navíc tu mají i hezký bar - není mnoho "
+"dvaerdenů, kteří by mohli tvrdit totéž."
 
 #: dat/spob/crow.xml:2 dat/scripts/pilotname/generic.lua:24
 #: dat/scripts/pilotname/pirate.lua:277
 msgid "Crow"
-msgstr ""
+msgstr "Vrána"
 
 #: dat/spob/crow.xml:28
 msgid ""
@@ -10756,10 +10812,14 @@ msgid ""
 "those at another. Given some of the newer customs cropping up here a lot of "
 "out-of-system traders are thankful for this."
 msgstr ""
+"Tenhle bar navrhl stavitel s citem pro akustiku. Hudba na pozadí je tichá a "
+"nevtíravá, rozhovor u stolu ostatní stoly neruší. Spousta jinosystémových "
+"obchodníků je za to zvlášť vděčná - vzpomeňte na všechna nová cla, která se "
+"zavádí."
 
 #: dat/spob/crylo.xml:2
 msgid "Crylo"
-msgstr ""
+msgstr "Crylo"
 
 #: dat/spob/crylo.xml:27
 msgid ""
@@ -10778,10 +10838,14 @@ msgid ""
 "creature. Some of the more experimental drinks might also be better avoided "
 "unless you like your ingredients very fresh indeed."
 msgstr ""
+"Tady na Crylu je rybaření vším, a tak i bar u kosmoportu drží v partě. Skoro "
+"vše je tu navrženo v rybím a rybářském stylu, a to včetně barpultu, který je "
+"udělaný z páteře nějaké obří mořské potvory. Radši se vyhněte drinkům, které "
+"jsou opravdu experimentální, pokud nemáte rádi opravdu velmi čerstvé přísady."
 
 #: dat/spob/culex.xml:2
 msgid "Culex"
-msgstr ""
+msgstr "Culex"
 
 #: dat/spob/culex.xml:26
 msgid ""
@@ -10792,6 +10856,11 @@ msgid ""
 "habitat with no economy of its own. It's fairly uninteresting to most people "
 "who don't actually live here."
 msgstr ""
+"Culex je měsíc, který obíhá planetu Myonei. Myonei sama je průmyslová "
+"planeta, ale dokonce ani geneticky upravení soromidové na ní nechtějí žít. "
+"Culex je k obydlení vhodný a tak se zde usídlily rodiny dělníků, kteří "
+"dojíždějí na povrch za prací. Culex je skutečné satelitní stanoviště. Pokud "
+"tu nežijete, není Culex opravdu ničím zajímavý."
 
 #: dat/spob/culex.xml:27
 msgid ""
@@ -10801,10 +10870,15 @@ msgid ""
 "fashion. Most of the facility is filled with recreational facilities and "
 "even a dance floor."
 msgstr ""
+"Culex zná jen velmi málo dopravního ruchu, který nemá za cíl Myonei, a tak "
+"se baru u kosmoportu dostal nový účel, jako místní komunitní centrum. "
+"Všechno standardní vybavení tu stále je, a dokonce je funkční, ale není ho "
+"tu mnoho. Většina prostoru je věnovanána odpočinkové zóně a dokonce se tu "
+"nachází taneční parket."
 
 #: dat/spob/curie.xml:2
 msgid "Curie"
-msgstr ""
+msgstr "Curie"
 
 #: dat/spob/curie.xml:28
 msgid ""
@@ -10822,10 +10896,13 @@ msgid ""
 "phenomena on the planet that those whose interests in geology might find "
 "interesting."
 msgstr ""
+"V baru jsou vystavené portréty slavných vědců, podle kterých je planeta "
+"pojmenována, a dále také obrazy a holoobrazy fenoménů, které mohou přijít "
+"zajímavé těm, co se o geologii zajímají."
 
 #: dat/spob/cutha.xml:2
 msgid "Cutha"
-msgstr ""
+msgstr "Cutha"
 
 #: dat/spob/cutha.xml:27
 msgid ""
@@ -23499,7 +23576,7 @@ msgstr ""
 
 #: dat/start.xml:3
 msgid "Sea of Darkness"
-msgstr ""
+msgstr "Temné moře"
 
 #: dat/start.xml:5
 msgid "El Ego de Deiz"
@@ -23638,7 +23715,7 @@ msgstr "Letět bezpečně, letět s MilSpec."
 
 #: dat/ai/advertiser.lua:11
 msgid "Reynir's Hot Dogs: enjoy the authentic taste of tradition."
-msgstr "Reynirovi Hot Dogy: užijte si autentickou chuť tradice."
+msgstr "Reynirovy Hot Dogy: užijte si autentickou chuť tradice."
 
 #: dat/ai/advertiser.lua:12
 msgid ""
@@ -26338,7 +26415,7 @@ msgstr "Přepadení! Braňte se!"
 
 #: dat/ai/soromid.lua:30
 msgid "You should have picked easier prey!"
-msgstr "Měli jsi si vybrat snadnější kořist!"
+msgstr "Měli jste si vybrat snadnější kořist!"
 
 #. See if it's a transport ship
 #. Credits, and other transport-specific stuff
@@ -56675,10 +56752,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:239 dat/missions/minerva/pirate3.lua:174
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Ask about Minerva Station"
-msgstr "Stanice Cantina"
+msgstr "Zeptat se na stanici Minerva"
 
 #: dat/missions/minerva/kex4.lua:240
 #, fuzzy
@@ -68825,7 +68900,7 @@ msgstr ""
 #: dat/missions/neutral/reynir.lua:75 dat/missions/neutral/reynir.lua:96
 #: dat/missions/neutral/reynir.lua:102 dat/missions/neutral/reynir.lua:106
 msgid "Reynir"
-msgstr ""
+msgstr "Reynir"
 
 #: dat/missions/neutral/reynir.lua:44
 msgid ""
@@ -68859,7 +68934,7 @@ msgstr ""
 
 #: dat/missions/neutral/reynir.lua:70
 msgid "Reynir wants to travel to space and will reward you richly."
-msgstr ""
+msgstr "Reynir se chce podívat do vesmíru. A dobře zaplatí."
 
 #: dat/missions/neutral/reynir.lua:73
 msgid ""
@@ -88654,6 +88729,10 @@ msgid ""
 "it. Really handy if you want to ignore enemies that aren't actually hitting "
 "you.\""
 msgstr ""
+"„Všimli jste si, že když zapnete autopilota, tak čas běží rychleji, ale když "
+"se objeví útočník, znovu se zpomalí? Ten návrat na normální rychlost se nedá "
+"úplně potlačit, ale dá se nastavit, kolik poškození lodi ho vyvolá. Hodí se "
+"to vědět, když chce člověk ignorovat nepřátele, kteří vás přímo neohrožují.“"
 
 #: dat/scripts/common/npc.lua:77
 msgid ""
@@ -88727,6 +88806,10 @@ msgid ""
 "your target to follow! I like to use this feature for escort missions. It "
 "makes them a lot less tedious.\""
 msgstr ""
+"„Věděli jste, že s autopilotem můžete sledovat jinou loď? Opravdu! Stačí #"
+"bklikout levým myšítkem#0, což vybere cíl, a potom #bpravým myšítkem#0 a "
+"autopilot začne cíl sledovat. Používám to, když letím jako doprovod. Ty mise "
+"jsou pak o tolik snazší.“"
 
 #: dat/scripts/common/npc.lua:86
 msgid ""
@@ -96850,7 +96933,7 @@ msgstr ""
 
 #: src/dev_sysedit.c:1370 src/land.c:1321 src/map.c:340
 msgid "Faction:"
-msgstr ""
+msgstr "Příslušnost:"
 
 #: src/dev_sysedit.c:1379
 msgid "Population"
@@ -99458,7 +99541,7 @@ msgstr ""
 
 #: src/land.c:619 src/map.c:383
 msgid "Autonav"
-msgstr ""
+msgstr "Autopilot"
 
 #: src/land.c:626
 msgid ""
@@ -99855,12 +99938,12 @@ msgstr ""
 
 #: src/land_trade.c:211
 msgid "No commodities available."
-msgstr ""
+msgstr "Zde nelze obchodovat se zbožím."
 
 #: src/land_trade.c:223 src/land_trade.c:226 src/map.c:1759 src/map.c:1830
 #, c-format
 msgid "%.1f ¤"
-msgstr ""
+msgstr "%.1f ¤"
 
 #: src/land_trade.c:237
 #, c-format
@@ -100077,7 +100160,7 @@ msgstr ""
 #: src/load.c:923 src/load.c:958
 #, c-format
 msgid "Are you sure you want to permanently delete '%s'?"
-msgstr "Určitě chcete permanentně odstranit '%s'?"
+msgstr "Opravdu chcete navždy smazat '%s'?"
 
 #: src/load.c:933
 #, c-format
@@ -100086,7 +100169,7 @@ msgstr ""
 
 #: src/load.c:1031 src/load.c:1096
 msgid "Saved game file seems to have been deleted."
-msgstr "Zdá se, že soubor uložené hry byl odstraněn."
+msgstr "Tato uložená hra je nejspíš smazaná."
 
 #: src/load.c:1054 src/load.c:1178
 #, c-format
@@ -100106,11 +100189,11 @@ msgstr "Rozpoznána stará verze. Čistím sloty lodí"
 
 #: src/log.c:124
 msgid "Unable to redirect stdout to file"
-msgstr "Stdout nejde přesměrovat do souboru"
+msgstr "Standardní výstup nelze přesměrovat do souboru"
 
 #: src/log.c:128
 msgid "Unable to redirect stderr to file"
-msgstr "Stderr nejde přesměrovat do souboru"
+msgstr "Chybový výstup nelze přesměrovat do souboru\n"
 
 #: src/log.c:267
 #, c-format
@@ -100145,7 +100228,7 @@ msgstr "Neznámý var typ '%s'"
 
 #: src/map.c:347
 msgid "Standing:"
-msgstr "Reputace:"
+msgstr "Postavení:"
 
 #: src/map.c:361
 msgid "Space Objects:"
@@ -100153,12 +100236,12 @@ msgstr ""
 
 #: src/map.c:368
 msgid "Services:"
-msgstr ""
+msgstr "Služby:"
 
 #. Commodity button
 #: src/map.c:377
 msgid "Mode"
-msgstr ""
+msgstr "Typ mapy"
 
 #. create the window.
 #: src/map.c:390 src/map_system.c:193
@@ -100258,20 +100341,22 @@ msgid ""
 "No price info for\n"
 "%s here"
 msgstr ""
+"Nejsou dostupné žádné informace\n"
+"o ceně komodity %s."
 
 #: src/map.c:2114
 msgid "Travel (Default)"
-msgstr ""
+msgstr "Cestovní mapa (výchozí)"
 
 #: src/map.c:2117
 #, c-format
 msgid "%s: Cost"
-msgstr ""
+msgstr "%s: cena"
 
 #: src/map.c:2118
 #, c-format
 msgid "%s: Trade"
-msgstr ""
+msgstr "%s: výnos"
 
 #: src/map.c:2174
 msgid "Normal View"
@@ -100302,9 +100387,9 @@ msgstr[2] ""
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Načten %d dekorátor mapy"
+msgstr[1] "Načteny %d dekorátory mapy"
+msgstr[2] "Načteno %d dekorátorů mapy"
 
 #: src/map.c:3107
 #, c-format
@@ -100314,17 +100399,17 @@ msgstr ""
 #: src/map.c:3128
 #, c-format
 msgid "Could not load map decorator texture '%s'."
-msgstr ""
+msgstr "Nelze načíst texturu '%s' dekorátoru mapy "
 
 #: src/map.c:3132
 #, c-format
 msgid "Map decorator has unknown node '%s'."
-msgstr ""
+msgstr "Dekorátor mapy má neznámý uzel '%s'."
 
 #. Create window.
 #: src/map_find.c:197 src/map_find.c:740 src/map_find.c:873
 msgid "Search Results"
-msgstr ""
+msgstr "Výsledky hledání"
 
 #: src/map_find.c:211
 msgid "Select"
@@ -100332,7 +100417,7 @@ msgstr ""
 
 #: src/map_find.c:291
 msgid "Jump to first system not found!"
-msgstr ""
+msgstr "Skokový bod do prvního systému nebyl nalezen!"
 
 #: src/map_find.c:327
 msgid "Matching jumps not found, something is up..."
@@ -100340,7 +100425,7 @@ msgstr ""
 
 #: src/map_find.c:386
 msgid "unknown route"
-msgstr ""
+msgstr "neznámá cesta"
 
 #: src/map_find.c:390
 #, c-format
