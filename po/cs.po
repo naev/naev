@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
 "PO-Revision-Date: 2022-09-18 18:17+0000\n"
-"Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
+"Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -263,7 +263,7 @@ msgstr ""
 
 #: dat/intro:32
 msgid "What else remains? Questions."
-msgstr "Co ještě zbývá? Dotazy."
+msgstr "Co ještě zbývá? Otázky."
 
 #: dat/intro:34
 msgid ""
@@ -7743,10 +7743,10 @@ msgid ""
 "researchers on site at any one time. Tourism is out of the question, so is a "
 "bar."
 msgstr ""
-"Abacus je mezi kamennými světy obrem. Soromidové zde založili výzkumnou "
-"základnu, která má zjistit více o struktuře planety. Základna je docela malá "
-"a na místě může být jen několik desítek výzkumníků. Není tu místo pro "
-"turisty, dokonce ani pro bar."
+"Abacus na kamenné světy obří. Soromidové zde založili výzkumnou základnu, "
+"která má zjistit více o struktuře planety. Základna je docela malá a na "
+"místě může být jen několik desítek výzkumníků. Není tu místo pro turisty, "
+"dokonce ani pro bar."
 
 #: dat/spob/abacus.xml:28 dat/spob/astana.xml:49 dat/spob/curie.xml:48
 #: dat/spob/dono.xml:30 dat/spob/excelcior.xml:56 dat/spob/gastan.xml:32
@@ -96287,7 +96287,7 @@ msgstr ""
 
 #: src/dev_sysedit.c:1370 src/land.c:1321 src/map.c:340
 msgid "Faction:"
-msgstr "Příslušnost:"
+msgstr "Frakce:"
 
 #: src/dev_sysedit.c:1379
 msgid "Population"
@@ -99500,7 +99500,7 @@ msgstr ""
 
 #: src/load.c:922 src/load.c:957
 msgid "Permanently Delete?"
-msgstr "Permanentně Odstranit?"
+msgstr "Navždy smazat?"
 
 #: src/load.c:923 src/load.c:958
 #, c-format
