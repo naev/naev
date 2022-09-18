@@ -7,7 +7,6 @@
  <done>Taiomi 3</done>
  <notes>
   <campaign>Taiomi</campaign>
-  <tier>2</tier>
  </notes>
 </mission>
 --]]
