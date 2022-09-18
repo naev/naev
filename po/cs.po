@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
-"PO-Revision-Date: 2022-09-18 01:34+0000\n"
+"PO-Revision-Date: 2022-09-18 18:17+0000\n"
 "Last-Translator: David Doubek <David.Doubek42@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -30,10 +30,8 @@ msgid "unknown error"
 msgstr ""
 
 #: physfs.c:3
-#, fuzzy
-#| msgid "I'm out of here."
 msgid "out of memory"
-msgstr "Mizím odsud."
+msgstr "nedostatek paměti"
 
 #: physfs.c:4
 msgid "not initialized"
@@ -234,10 +232,10 @@ msgid ""
 "the imperium went awry. In some regions, administration fell into the hands "
 "of other powers. The Great Houses now policed the space lanes."
 msgstr ""
-"Po Daedrisovi, pod jeho nástupci, světlo říše sláblo. Občanské spory a "
-"náboženské rozdělení oslabily sociální vazby. Velké projekty imperia se "
-"zhoršily. V některých regionech se správa dostala do rukou jiných mocností. "
-"Velké domy nyní hlídaly vesmírné cesty."
+"Po Daedrisovi, za jeho nástupců, světlo říše sláblo. Občanské spory a "
+"náboženské rozpory oslabily společenské vazby. Velké projekty císařství "
+"ztroskotaly. V některých oblastech se správa dostala do rukou jiných "
+"mocností. Velké rody nyní dohlížely na vesmírné cesty."
 
 #: dat/intro:23
 msgid "Rise and fall, the rhythm of history."
@@ -881,17 +879,14 @@ msgid "EMPIRE PEACEMAKER"
 msgstr "ŘÍŠSKÝ PEACEMAKER"
 
 #: artwork/gfx/loading/preacher.webp.txt:1
-#, fuzzy
 msgid "SIRIUS PREACHER"
 msgstr "SIRIUS PREACHER"
 
 #: artwork/gfx/loading/quicksilver.webp.txt:1
-#, fuzzy
 msgid "QUICKSILVER"
 msgstr "QUICKSILVER"
 
 #: artwork/gfx/loading/rhino.webp.txt:1
-#, fuzzy
 msgid "RHINO"
 msgstr "RHINO"
 
@@ -1287,10 +1282,8 @@ msgid "Makes the game significantly harder for the player."
 msgstr ""
 
 #: dat/difficulty/slow_mode.xml:2
-#, fuzzy
-#| msgid "Ship Model:"
 msgid "Slow Mode"
-msgstr "Model lodi:"
+msgstr "Zpomalený režim"
 
 #: dat/difficulty/slow_mode.xml:3
 msgid ""
@@ -1484,10 +1477,8 @@ msgid "Associates"
 msgstr ""
 
 #: dat/factions/black_lotus.xml:2
-#, fuzzy
-#| msgid "Back so soon?"
 msgid "Black Lotus"
-msgstr "Zpátky tak brzy?"
+msgstr "Černý Lotos"
 
 #: dat/factions/black_lotus.xml:5
 msgid "Black Lotus Pirate Clan"
@@ -1750,10 +1741,8 @@ msgid "Pirate"
 msgstr ""
 
 #: dat/factions/marauder.xml:4
-#, fuzzy
-#| msgid "Brandt Station"
 msgid "Pirate Marauders"
-msgstr "Stanice Brandt"
+msgstr "Pirátští nájezdníci"
 
 #: dat/factions/marauder.xml:14
 msgid ""
@@ -3508,10 +3497,8 @@ msgid "Sirius Shaman Bay"
 msgstr ""
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:8
-#, fuzzy
-#| msgid "You are a loyal citizen of House Dvaered"
 msgid "You need at least 50 reputation with the Sirius."
-msgstr "Jste věrným občanem rodu Dvaeredů"
+msgstr "Potřebujete alespoň 50 reputace u Siria."
 
 #: dat/outfits/fighter_bays/sirius_shaman_bay.xml:13
 msgid ""
@@ -6264,10 +6251,8 @@ msgstr ""
 
 #: dat/ships/dvaered/dvaered_ancestor.xml:18
 #: dat/ships/dvaered/dvaered_vendetta.xml:19
-#, fuzzy
-#| msgid "You are a loyal citizen of House Dvaered"
 msgid "You need at least 30 reputation with House Dvaered."
-msgstr "Jste věrným občanem rodu Dvaeredů"
+msgstr "Potřebujete alespoň 30 reputace u klanu Dvaered."
 
 #: dat/ships/dvaered/dvaered_ancestor.xml:19
 msgid ""
@@ -6277,17 +6262,13 @@ msgid ""
 msgstr ""
 
 #: dat/ships/dvaered/dvaered_arsenal.xml:2
-#, fuzzy
-#| msgid "Dvaered"
 msgid "Dvaered Arsenal"
-msgstr "Dvaered"
+msgstr "Dvaeredský Arsenál"
 
 #: dat/ships/dvaered/dvaered_arsenal.xml:21
 #: dat/ships/dvaered/dvaered_retribution.xml:19
-#, fuzzy
-#| msgid "You are a loyal citizen of House Dvaered"
 msgid "You need at least 60 reputation with House Dvaered."
-msgstr "Jste věrným občanem rodu Dvaeredů"
+msgstr "Potřebujete alespoň 60 reputace u klanu Dvaered."
 
 #: dat/ships/dvaered/dvaered_arsenal.xml:22
 msgid ""
@@ -6305,10 +6286,8 @@ msgid "Dvaered Goddard"
 msgstr ""
 
 #: dat/ships/dvaered/dvaered_goddard.xml:21
-#, fuzzy
-#| msgid "You are a loyal citizen of House Dvaered"
 msgid "You need at least 70 reputation with House Dvaered."
-msgstr "Jste věrným občanem rodu Dvaeredů"
+msgstr "Potřebujete alespoň 70 reputace u klanu Dvaered."
 
 #: dat/ships/dvaered/dvaered_goddard.xml:22
 msgid ""
@@ -6326,10 +6305,8 @@ msgid "Dvaered Phalanx"
 msgstr ""
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:19
-#, fuzzy
-#| msgid "You are a loyal citizen of House Dvaered"
 msgid "You need at least 40 reputation with House Dvaered."
-msgstr "Jste věrným občanem rodu Dvaeredů"
+msgstr "Potřebujete alespoň 40 reputace u klanu Dvaered."
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:20
 msgid ""
@@ -6371,10 +6348,8 @@ msgid "Dvaered Vigilance"
 msgstr ""
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:18
-#, fuzzy
-#| msgid "You are a loyal citizen of House Dvaered"
 msgid "You need at least 50 reputation with House Dvaered."
-msgstr "Jste věrným občanem rodu Dvaeredů"
+msgstr "Potřebujete alespoň 50 reputace u klanu Dvaered."
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:19
 msgid ""
@@ -6958,10 +6933,8 @@ msgid ""
 msgstr ""
 
 #: dat/ships/pirate/pirate_starbridge.xml:2
-#, fuzzy
-#| msgid "Brandt Station"
 msgid "Pirate Starbridge"
-msgstr "Stanice Brandt"
+msgstr "Pirátský hvězdný most"
 
 #: dat/ships/pirate/pirate_starbridge.xml:17
 msgid ""
@@ -7096,10 +7069,8 @@ msgid "Sirius Providence"
 msgstr ""
 
 #: dat/ships/sirius/sirius_providence.xml:21
-#, fuzzy
-#| msgid "You are a loyal citizen of House Dvaered"
 msgid "You need at least 60 reputation with House Sirius."
-msgstr "Jste věrným občanem rodu Dvaeredů"
+msgstr "Potřebujete alespoň 60 reputace u klanu Sirius."
 
 #: dat/ships/sirius/sirius_providence.xml:22
 msgid ""
@@ -7480,10 +7451,8 @@ msgid ""
 msgstr ""
 
 #: dat/ships/zalek/zalek_mammon.xml:2
-#, fuzzy
-#| msgid "Za'lek trash!"
 msgid "Za'lek Mammon"
-msgstr "Za'lekský odpad!"
+msgstr "Za'lekský Mammon"
 
 #: dat/ships/zalek/zalek_mammon.xml:24
 msgid ""
@@ -9103,17 +9072,16 @@ msgid "Antica"
 msgstr "Antica"
 
 #: dat/spob/antica.xml:28
-#, fuzzy
 msgid ""
 "Though the orbiting military installation is all business, Antica mixes "
 "business and pleasure quite readily. Given its location, a vast number of "
 "transports stop at Antica to sell their wares before venturing deeper into "
 "Empire space."
 msgstr ""
-"I když je na oběžné dráze vojenská instalace hlavní obchodní byznys, Antica "
-"mísí podnikání a potěšení docela snadno. Vzhledem k jeho poloze se v Antice "
-"zastaví obrovské množství transportů, aby prodaly své zboží, než se pustí "
-"hlouběji do Imperiálního vesmíru."
+"Ačkoli je vojenské zařízení na oběžné dráze zaměřeno výhradně na práci, "
+"Antica snadno kombinuje příjemné s užitečným. Vzhledem k její poloze se na "
+"Antice zastavuje velké množství transportů, aby prodaly své zboží, než se "
+"vydají hlouběji do prostoru Impéria."
 
 #: dat/spob/antica.xml:29
 msgid ""
@@ -9140,14 +9108,12 @@ msgid "Antlejos IV"
 msgstr "Antlejos IV"
 
 #: dat/spob/antlejos_prime.xml:2
-#, fuzzy
 msgid "Antlejos Prime"
 msgstr "Antlejos Prime"
 
 #. Use default
 #. Function for adding log entries for miscellaneous one-off missions.
 #: dat/spob/antlejos_v.xml:2 dat/scripts/common/antlejos.lua:29
-#, fuzzy
 msgid "Antlejos V"
 msgstr "Antlejos V"
 
@@ -9353,17 +9319,16 @@ msgid "Arch Arai"
 msgstr "Arch Arai"
 
 #: dat/spob/arch_arai.xml:28
-#, fuzzy
 msgid ""
 "Once an independent world, home to pirates and black market traders, Arch "
 "Arai has long since fallen under the spell of the Touched. Now it is a "
 "fairly law-abiding Sirius world, earning its existence through trade and "
 "industry like almost every other planet."
 msgstr ""
-"Kdysi nezávislý svět, který je domovem pirátů a obchodníků na černém trhu, "
-"Arch Arai již dávno propadl kouzlu Dotknutých. Nyní je to svět Sirius, který "
-"dodržuje zákony a vydělává na své existenci obchodem a průmyslem jako téměř "
-"každá jiná planeta."
+"Kdysi nezávislý svět, domov pirátů a obchodníků na černém trhu, Arch Arai už "
+"dávno propadl kouzlu Dotčených. Nyní je to poměrně zákonný svět Siria, který "
+"si na svou existenci vydělává obchodem a průmyslem jako téměř každá jiná "
+"planeta."
 
 #: dat/spob/arch_arai.xml:29
 msgid ""
@@ -10031,12 +9996,6 @@ msgid "Bolero"
 msgstr "Bolero"
 
 #: dat/spob/bolero.xml:29
-#, fuzzy
-#| msgid ""
-#| "Bolero is one of the empire's most successful planets. The population is "
-#| "prosperous and successful, and the planet's conditions are mild. Although "
-#| "it is still treated as something of a backwater, it is becoming "
-#| "increasingly important in Imperial politics."
 msgid ""
 "Bolero is one of the Empire's most successful planets. The population is "
 "prosperous and successful, and the planet's conditions are mild. Although it "
@@ -10046,16 +10005,15 @@ msgid ""
 "nostalgia to all those who were able to visit Earth before the Incident. "
 "However, some people avoid it for exactly the same reason…"
 msgstr ""
-"Bolero je jednou z nejúspěšnějších planet říše. Populace je prosperující "
-"úspěšná a podmínky planety jsou mírné. Přestože se s ním stále zachází jako "
-"se vzdutím, v imperiální politice je stále důležitější."
+"Bolero je jednou z nejúspěšnějších planet Impéria. Obyvatelstvo je "
+"prosperující a úspěšné a podmínky na planetě jsou mírné. Ačkoli je vzhledem "
+"ke své poloze stále považována za jakýsi zapadákov, nabývá stále většího "
+"významu v císařské politice. Velká část popularity Bolera pochází z jeho "
+"klimatu podobného pozemskému, což dává uklidňující pocit nostalgie všem, "
+"kteří měli možnost navštívit Zemi před Incidentem. Někteří lidé se mu však "
+"vyhýbají přesně ze stejného důvodu…"
 
 #: dat/spob/bolero.xml:30
-#, fuzzy
-#| msgid ""
-#| "The bar here is an old-Earth style pub, with a low ceiling, warm beer and "
-#| "good food. The atmosphere is warm and welcoming, the clients are all "
-#| "polite and cheerful and the bouncers barely loom at all."
 msgid ""
 "Making the most of Bolero's similarity with Earth, the bar here is an old-"
 "Earth style pub, with a low ceiling, warm beer and good food. The atmosphere "
@@ -10064,9 +10022,12 @@ msgid ""
 "in with the patrons, with the majority of people looking like temporary "
 "visitors, either arriving for vacations or business trips."
 msgstr ""
-"V místní bar je hospoda ve starozemském stylu s nízkým stropem, teplým pivem "
-"a dobrým jídlem. Atmosféra je vřelá a příjemná, klienti jsou zdvořilí a "
-"veselí a vyhazovači se zde téměř nevyskytují."
+"Zdejší bar, který maximálně využívá podobnosti Bolera se Zemí, je hospoda ve "
+"stylu staré Země s nízkým stropem, teplým pivem a dobrým jídlem. Atmosféra "
+"je vřelá a přívětivá, všichni zákazníci jsou zdvořilí a veselí a vyhazovači "
+"se tu skoro vůbec nevyskytují. Zdá se, že mezi návštěvníky se mísí poměrně "
+"málo místních, většina lidí vypadá jako dočasní návštěvníci, kteří dorazili "
+"buď na dovolenou, nebo na služební cestu."
 
 #: dat/spob/bon_sebb.xml:2
 msgid "Bon Sebb"
@@ -12410,10 +12371,8 @@ msgid "Gamma"
 msgstr ""
 
 #: dat/spob/gamma_station.xml:2
-#, fuzzy
-#| msgid "Akra Station"
 msgid "Gamma Station"
-msgstr "Stanice Akra"
+msgstr "Stanice Gamma"
 
 #: dat/spob/gamma_station.xml:28
 msgid ""
@@ -19282,10 +19241,8 @@ msgid ""
 msgstr ""
 
 #: dat/spob/tesla_station.xml:2
-#, fuzzy
-#| msgid "Akra Station"
 msgid "Tesla Station"
-msgstr "Stanice Akra"
+msgstr "Stanice Tesla"
 
 #: dat/spob/tesla_station.xml:27
 msgid ""
@@ -21450,16 +21407,12 @@ msgid ""
 msgstr ""
 
 #: dat/spob_virtual/dvaered_small.xml:2
-#, fuzzy
-#| msgid "Dvaered Patrol"
 msgid "Dvaered Small"
-msgstr "Dvaeredská Patrola"
+msgstr "Dvaered malý"
 
 #: dat/spob_virtual/dvaered_unpresence.xml:2
-#, fuzzy
-#| msgid "Dvaered"
 msgid "Dvaered Unpresence"
-msgstr "Dvaered"
+msgstr "Dvaered Nepřítomný"
 
 #: dat/spob_virtual/dvaered_unpresence_range1.xml:2
 msgid "Dvaered Unpresence (Range 1)"
@@ -21486,36 +21439,32 @@ msgid "FLF Unpresence"
 msgstr ""
 
 #: dat/spob_virtual/frontier_small.xml:2
-#, fuzzy
-#| msgid "Frontier War"
 msgid "Frontier Small"
-msgstr "Pohraniční válka"
+msgstr "Pohraniční Malý"
 
 #: dat/spob_virtual/frontier_unpresence.xml:2
-#, fuzzy
-#| msgid "Frontier War"
 msgid "Frontier Unpresence"
-msgstr "Pohraniční válka"
+msgstr "Pohraniční Nepřítomný"
 
 #: dat/spob_virtual/independent_all_unpresence.xml:2
 msgid "Independent All Unpresence"
-msgstr ""
+msgstr "Nezávislý Všichni Nepřítomní"
 
 #: dat/spob_virtual/independent_all_unpresence_range1.xml:2
 msgid "Independent All Unpresence (Range 1)"
-msgstr ""
+msgstr "Nezávislý Všichni Nepřítomní (rozsah 1)"
 
 #: dat/spob_virtual/independent_trader_area.xml:2
 msgid "Independent Trader Area"
-msgstr ""
+msgstr "Oblast Nezávislých Obchodníků"
 
 #: dat/spob_virtual/independent_trader_local.xml:2
 msgid "Independent Trader Local"
-msgstr ""
+msgstr "Místní Nezávislý Obchodník"
 
 #: dat/spob_virtual/independent_unpresence.xml:2
 msgid "Independent Unpresence"
-msgstr ""
+msgstr "Nezávislý Nepřítomný"
 
 #: dat/spob_virtual/miner_local.xml:2
 msgid "Miner Local"
@@ -21538,10 +21487,8 @@ msgid "Pirate Medium"
 msgstr ""
 
 #: dat/spob_virtual/pirate_small.xml:2
-#, fuzzy
-#| msgid "Brandt Station"
 msgid "Pirate Small"
-msgstr "Stanice Brandt"
+msgstr "Pirát Malý"
 
 #: dat/spob_virtual/pirate_unpresence.xml:2
 msgid "Pirate Unpresence"
@@ -21620,28 +21567,20 @@ msgid "Virtual Sindbad"
 msgstr ""
 
 #: dat/spob_virtual/zalek_medium.xml:2
-#, fuzzy
-#| msgid "Za'lek trash!"
 msgid "Za'lek Medium"
-msgstr "Za'lekský odpad!"
+msgstr "Za'lek Střední"
 
 #: dat/spob_virtual/zalek_small.xml:2
-#, fuzzy
-#| msgid "Za'lek trash!"
 msgid "Za'lek Small"
-msgstr "Za'lekský odpad!"
+msgstr "Za'lek Malý"
 
 #: dat/spob_virtual/zalek_unpresence.xml:2
-#, fuzzy
-#| msgid "Za'lek trash!"
 msgid "Za'lek Unpresence"
-msgstr "Za'lekský odpad!"
+msgstr "Za'lek Nepřítomný"
 
 #: dat/spob_virtual/zalek_unpresence_range1.xml:2
-#, fuzzy
-#| msgid "Za'lek trash!"
 msgid "Za'lek Unpresence (Range 1)"
-msgstr "Za'lekský odpad!"
+msgstr "Za'lek Nepřítomný (Rozsah 1)"
 
 #: dat/ssys/acheron.xml:2
 msgid "Acheron"
@@ -22061,10 +22000,8 @@ msgid "Dvaer"
 msgstr ""
 
 #: dat/ssys/dvaer.xml:4
-#, fuzzy
-#| msgid "Dvaered Hooligan"
 msgid "#pDvaered Homeworld#0"
-msgstr "Chuligán Dvaered"
+msgstr "#pDvaeredský Domovský svět#0"
 
 #: dat/ssys/effetey.xml:2
 msgid "Effetey"
@@ -22151,10 +22088,8 @@ msgid "Feye"
 msgstr ""
 
 #: dat/ssys/feye.xml:4
-#, fuzzy
-#| msgid "Dvaered Hooligan"
 msgid "#pSoromid Homeworld#0"
-msgstr "Chuligán Dvaered"
+msgstr "#pSoromidský domovský svět#0"
 
 #: dat/ssys/fidelis.xml:2
 msgid "Fidelis"
@@ -23117,10 +23052,8 @@ msgid "Ruadan"
 msgstr ""
 
 #: dat/ssys/ruadan.xml:4
-#, fuzzy
-#| msgid "Dvaered Hooligan"
 msgid "#pZa'lek Homeworld#0"
-msgstr "Chuligán Dvaered"
+msgstr "#pZa'lekský Domovský svět#0"
 
 #: dat/ssys/ruttwi.xml:2
 msgid "Ruttwi"
@@ -23791,10 +23724,9 @@ msgid "Together, we will beat the economic crisis!"
 msgstr "Společně porazíme hospodářskou krizi!"
 
 #: dat/ai/advertiser.lua:32
-#, fuzzy
-#| msgid "Bet on Totoran and win incredible sums thanks to the arena!"
 msgid "Bet on Totoran and win incredible sums thanks to the Crimson Gauntlet!"
-msgstr "Sázejte na Totoran a díky aréně vyhrajte neuvěřitelné částky!"
+msgstr ""
+"Vsaďte si na Totorana a vyhrajte neuvěřitelné částky díky Purpurové Rukavici!"
 
 #: dat/ai/advertiser.lua:33
 msgid ""
@@ -23851,24 +23783,17 @@ msgid ""
 msgstr ""
 
 #: dat/ai/advertiser.lua:47
-#, fuzzy
-#| msgid ""
-#| "Want to solve a large-dimensional stochastic PDE? the LMKSTD method is "
-#| "what you need!"
 msgid ""
 "Want to solve a large-dimensional stochastic PDE? The LMKSTD method is what "
 "you need!"
 msgstr ""
-"Chcete vyřešit velkoplošný stochastický PDE? metoda LMKSTD je to, co "
+"Chcete vyřešit stochastický PDE s velkým rozměrem? Metoda LMKSTD je to, co "
 "potřebujete!"
 
 #: dat/ai/advertiser.lua:48
-#, fuzzy
-#| msgid ""
-#| "You love non-convex minimization? Join Ruadan's Computation Science Lab!"
 msgid "Love non-convex minimization? Join Ruadan's Computation Science Lab!"
 msgstr ""
-"Máte rádi nekonvexní minimalizaci? Připojte se k Ruadanské výpočetní vědecké "
+"Milujete nekonvexní minimalizaci? Připojte se k Ruadanské výpočetní "
 "laboratoři!"
 
 #: dat/ai/advertiser.lua:49
@@ -24146,22 +24071,17 @@ msgstr ""
 #. Note that when running in the main menu background, player.name() might not exist (==nil), so
 #. we need to add a check for that.
 #: dat/ai/advertiser.lua:154
-#, fuzzy
-#| msgid ""
-#| "Dear Pr. %s, your recent work has left a deep impression on us. Due to "
-#| "the advance, novelty, and possible wide application of your innovation, "
-#| "we invite you to contribute other unpublished papers of relevant fields "
-#| "to the Interstellar Pay-to-win Journal for Mathematics and Applications."
 msgid ""
 "Dear Prof. {player}, your recent work has left a deep impression on us. Due "
 "to the advance, novelty, and possible wide application of your innovation, "
 "we invite you to contribute other unpublished papers of relevant fields to "
 "the Interstellar Pay-to-win Journal for Mathematics and Applications."
 msgstr ""
-"Vážený Pr. %s, vaše nedávná práce v nás zanechala hluboký dojem. Vzhledem k "
-"pokroku, novosti a možnému širokému uplatnění vaší inovace vás zveme k "
-"přispění dalších nepublikovaných příspěvků příslušných oborů do Žurnálu "
-"Interstellar Pay-to-win pro matematiku a aplikace."
+"Vážený pane profesore {player}, vaše nedávná práce na nás zanechala hluboký "
+"dojem. Vzhledem k pokrokovosti, novosti a možnému širokému uplatnění Vašich "
+"inovací Vás vyzýváme, abyste do mezihvězdného Pay-to-win časopisu pro "
+"matematiku a aplikace přispěl dalšími nepublikovanými články z příslušných "
+"oborů."
 
 #. Sirius messages
 #. Custom greeting
@@ -24907,10 +24827,8 @@ msgstr "Převod paliva hotov."
 #. --
 #. luacheck: globals attack_forced_kill (AI Task functions passed by name)
 #: dat/ai/core/control/generic.lua:180
-#, fuzzy
-#| msgid "Formation '%s' not found"
 msgid "Pilot '{plt}': formation '{formation}' not found!"
-msgstr "Formace '%s' nebyla nalezena"
+msgstr "Pilot '{plt}': formace '{formation}' nebyla nalezena!"
 
 #. Run instead of "control" when under manual control; use should be limited
 #. This is the case that the message is being sent from the environment, such as asteroids
@@ -25358,10 +25276,8 @@ msgstr "Mayday! {fct} {cls} byl napaden!"
 #. future position if they go in the same direction with the same velocity
 #. Send a message if applicable
 #: dat/ai/core/misc/scans.lua:52
-#, fuzzy
-#| msgid "Prepare to be boarded!"
 msgid "Prepare to be scanned."
-msgstr "Připravte se na nástup!"
+msgstr "Připravte se, že budete skenováni."
 
 #.
 #. -- Tries to get close to scan the enemy
@@ -25607,12 +25523,12 @@ msgstr "„Moje palivo je majetkem Impéria.“"
 
 #. Most likely no chance to refuel
 #: dat/ai/empire.lua:99
-#, fuzzy
-#| msgid "\"I suppose I could spare some fuel for %s.\""
 msgid ""
 "\"I suppose I could spare some fuel for {credits}, but you'll have to do the "
 "paperwork.\""
-msgstr "„Předpokládám, že bych mohl postrádat nějaké palivo pro %s.“"
+msgstr ""
+"\"Předpokládám, že bych mohl postrádat nějaké palivo za {kredity}, ale budeš "
+"muset vyřídit papírování.\""
 
 #. See if can be bribed
 #: dat/ai/empire.lua:107
@@ -25812,10 +25728,8 @@ msgstr "\"Vypadni!\""
 
 #. Communication stuff
 #: dat/ai/miner.lua:39
-#, fuzzy
-#| msgid "\"I don't want any problem.\""
 msgid "\"I don't want any problems.\""
-msgstr "„Nechci žádný problémy.“"
+msgstr "„Nechci žádné problémy.“"
 
 #. No idle function, ship won't react until it detects enemies
 #. luacheck: globals idle (AI Task functions passed by name)
@@ -25859,16 +25773,12 @@ msgid "\"This is a toll road, pay up {credits} or die.\""
 msgstr "„Toto je zpoplatněná trasa, zaplať {credits} nebo zemři.“"
 
 #: dat/ai/pirate.lua:31
-#, fuzzy
-#| msgid ""
-#| "\"So this is the part where you pay up or get shot up. Your choice. "
-#| "What'll be, {credits} or...\""
 msgid ""
 "\"So this is the part where you pay up or get shot up. Your choice. What'll "
 "be, {credits} or…\""
 msgstr ""
 "„Takže toto je chvíle, kdy zaplatíš nebo se necháš zastřelit. Tvoje volba. "
-"Bude to, {credits} nebo ...“"
+"Bude to, {credits} nebo...\""
 
 #: dat/ai/pirate.lua:34
 msgid "\"It'll cost you {credits} for me to ignore your pile of rubbish.\""
@@ -25906,57 +25816,41 @@ msgstr ""
 "vyzvednu zbytek.“"
 
 #: dat/ai/pirate.lua:43
-#, fuzzy
-#| msgid "\"It'll cost you {credits} for me to ignore your pile of rubbish.\""
 msgid "\"It'll cost you {credits} for us to ignore your pile of rubbish.\""
-msgstr "„Stálo by tě {credits}, kdybych ignoroval tvou hromadu odpadků.“"
+msgstr ""
+"\"Bude vás to stát {credits}, abychom ignorovali vaši hromadu odpadků.\""
 
 #: dat/ai/pirate.lua:44
-#, fuzzy
-#| msgid "\"I'm in a good mood so I'll let you go for {credits}.\""
 msgid "\"We're in a good mood so we'll let you go for {credits}.\""
-msgstr "„Mám dobrou náladu, takže tě nechám jít za {credits}.“"
+msgstr "\"Máme dobrou náladu, takže vás pustíme za {kredity}.\""
 
 #: dat/ai/pirate.lua:45
-#, fuzzy
-#| msgid "\"Send me {credits} or you're dead.\""
 msgid "\"Send us {credits} or you're dead.\""
-msgstr "„Pošli mi {credits}, nebo jsi mrtvý.“"
+msgstr "„Pošli nám {credits}, nebo jsi mrtvý.“"
 
 #: dat/ai/pirate.lua:46
-#, fuzzy
-#| msgid "\"Shut up and give me your money! {credits} now.\""
 msgid "\"Shut up and give us your money! {credits} now.\""
-msgstr "„Drž hubu a dej mi své peníze! {credits} teď.“"
+msgstr "„Drž hubu a dej nám své peníze! {credits} teď.“"
 
 #: dat/ai/pirate.lua:47
-#, fuzzy
-#| msgid "\"You give me {credits} and I'll act like I never saw you.\""
 msgid "\"You give us {credits} and we'll act like we never saw you.\""
-msgstr "„Dáš mi {credits} a budu se chovat, jako bych tě nikdy neviděl.“"
+msgstr "„Dáš nám {credits} a budeme se chovat, jako bychom tě nikdy neviděli.“"
 
 #: dat/ai/pirate.lua:48
-#, fuzzy
-#| msgid ""
-#| "\"If you're willing to negotiate I'll gladly take {credits} to not kill "
-#| "you.\""
 msgid ""
 "\"If you're willing to negotiate we'll gladly take {credits} to not kill you."
 "\""
 msgstr ""
-"„Pokud jsi ochoten vyjednávat, rád si vezmu {credits}, abych tě nezabil.“"
+"\"Pokud jste ochotni vyjednávat, rádi si vezmeme {credits}, abychom vás "
+"nezabili.\""
 
 #: dat/ai/pirate.lua:49
-#, fuzzy
-#| msgid ""
-#| "\"Pay up or don't. {credits} now just means I'll wait till later to "
-#| "collect the rest.\""
 msgid ""
 "\"Pay up or don't. {credits} now just means we'll wait till later to collect "
 "the rest.\""
 msgstr ""
-"„Zaplať nebo ne.{credits} teď jen znamená, že si počkám, až si později "
-"vyzvednu zbytek.“"
+"\"Zaplať, nebo nezaplať. {credits} teď znamená jen to, že s výběrem zbytku "
+"počkáme na později.\""
 
 #: dat/ai/pirate.lua:52
 msgid "\"You're lucky I'm so kind.\""
@@ -26087,9 +25981,8 @@ msgid "I can already taste the rum."
 msgstr "Už můžu ochutnat rum."
 
 #: dat/ai/pirate.lua:85
-#, fuzzy
 msgid "How else am I going to pay off my tab?"
-msgstr "Jak jinak zaplatím svou kartu?"
+msgstr "Jak jinak mám splatit svůj účet?"
 
 #: dat/ai/pirate.lua:86
 msgid "Seems you're being shot at."
@@ -26214,10 +26107,8 @@ msgstr "Rozpráším tě na kousky!"
 #. Clean up
 #. Deal with refueling
 #: dat/ai/pirate.lua:177
-#, fuzzy
-#| msgid "\"For you, only %s for a hundred units of fuel.\""
 msgid "\"For you, only {credits} for a jump of fuel.\""
-msgstr "„Pro vás, jen %s na sto jednotek paliva.“"
+msgstr "\"Pro vás pouze {credits} za nálož paliva.\""
 
 #. Deal with bribeability
 #: dat/ai/pirate.lua:186
@@ -26517,9 +26408,8 @@ msgid "Ready for a physics lesson, punk?"
 msgstr "Připraven na lekci fyziky, punkáči?"
 
 #: dat/ai/zalek.lua:28
-#, fuzzy
 msgid "After we wax you, we can return to our experiments!"
-msgstr "Poté, co tě navoskujeme, se můžeme vrátit k našim experimentům!"
+msgstr "Až vás navoskujeme, můžeme se vrátit k našim experimentům!"
 
 #: dat/ai/zalek.lua:31
 msgid "We're being attacked! Prepare defence protocols!"
@@ -28541,10 +28431,8 @@ msgstr ""
 #. Finish
 #. Create the vn scene
 #: dat/events/dvaered/poster.lua:53 dat/events/dvaered/poster.lua:87
-#, fuzzy
-#| msgid "Testers"
 msgid "Poster"
-msgstr "Testeři"
+msgstr "Plakát"
 
 #: dat/events/dvaered/poster.lua:53
 msgid "There is a poster on the wall."
@@ -28725,10 +28613,8 @@ msgstr ""
 #. Custom NPCs
 #. Just do random noise
 #: dat/events/dvaered/totoran.lua:130
-#, fuzzy
-#| msgid "You approach the chicken and thug and try to mediate."
 msgid "You approach the Crimson Gauntlet guide."
-msgstr "Přistoupíš ke kuřeti a násilníkovi a pokusíš se vyjednávat."
+msgstr "Přistupujete k průvodci Purpurovou Rukavicí."
 
 #: dat/events/dvaered/totoran.lua:132
 msgid ""
@@ -28784,10 +28670,8 @@ msgid "Totoran Emblems"
 msgstr ""
 
 #: dat/events/dvaered/totoran.lua:147
-#, fuzzy
-#| msgid "Nothing personal."
 msgid "Nothing."
-msgstr "Nic osobního."
+msgstr "Nic."
 
 #: dat/events/dvaered/totoran.lua:151
 msgid ""
@@ -29093,10 +28977,8 @@ msgstr ""
 
 #. Spawns a merchant ship that explains what happens
 #: dat/events/dvaered/warlords_battle.lua:83
-#, fuzzy
-#| msgid "Thug"
 msgid "Trader {ship}"
-msgstr "Rváč"
+msgstr "Obchodník {ship}"
 
 #: dat/events/dvaered/warlords_battle.lua:94
 msgid "A battle is about to begin"
@@ -29902,10 +29784,8 @@ msgid "{mineral}: {price}"
 msgstr ""
 
 #: dat/events/hypergate_construction.lua:194
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "What do you want to do?"
-msgstr "\"Co ode mě chceš!?\""
+msgstr "Co chcete dělat?"
 
 #. Wording is chosen to make it seem a it unnatural and robotic, as if
 #. someone studied how to interact with humans from some obsolete text books
@@ -29914,20 +29794,16 @@ msgstr "\"Co ode mě chceš!?\""
 #: dat/events/hypergate_construction.lua:197 dat/events/neutral/derelict.lua:81
 #: dat/events/taiomi/system.lua:112 dat/events/taiomi/system.lua:173
 #: dat/missions/neutral/poi_intro.lua:96
-#, fuzzy
-#| msgid "\"Just leave me alone!\""
 msgid "Leave."
-msgstr "\"Nech mě prostě na pokoji!\""
+msgstr "Odejděte."
 
 #: dat/events/hypergate_construction.lua:203
 msgid "Trade {mineral} for {value} (You have {amount})"
 msgstr ""
 
 #: dat/events/hypergate_construction.lua:207
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Ask about the construction."
-msgstr "Stanice Cantina"
+msgstr "Zeptejte se na konstrukci."
 
 #: dat/events/hypergate_construction.lua:212
 msgid ""
@@ -30050,28 +29926,20 @@ msgstr ""
 "Dvaeredských rváčů."
 
 #: dat/events/minerva/altercation1.lua:65
-#, fuzzy
-#| msgid ""
-#| "\"You were using a bloody computation drone to cheat your dirty Za'lek "
-#| "stink!\""
 msgid ""
 "\"You were using a bloody computation drone to cheat, you dirty Za'lek stink!"
 "\""
 msgstr ""
-"„K podvádění svého špinavého Za'leckého smradu jsi použil krvavý výpočetní "
-"dron!“"
+"\"Podváděl jsi pomocí zatraceného výpočetního dronu, ty špinavý za'lecký "
+"smrade!\""
 
 #: dat/events/minerva/altercation1.lua:66
-#, fuzzy
-#| msgid ""
-#| "\"Your logic makes no sense. Are you sure the excessive amounts of "
-#| "alcohol are making your rotten brain hallucinate?\""
 msgid ""
 "\"Your logic makes no sense. Are you sure the excessive amounts of alcohol "
 "aren't making your rotten brain hallucinate?\""
 msgstr ""
-"„Tvoje logika nedává smysl. Jsi si jistý, že díky nadměrnému množství "
-"alkoholu tvůj prohnilý mozek halucinuje?“"
+"\"Vaše logika nedává smysl. Jste si jistý, že nadměrné množství alkoholu "
+"nezpůsobuje halucinace vašeho shnilého mozku?\""
 
 #: dat/events/minerva/altercation1.lua:67
 msgid ""
@@ -30120,16 +29988,12 @@ msgstr ""
 #. Meta factions
 #. Clear
 #: dat/events/minerva/altercation1.lua:85 dat/missions/minerva/kex3.lua:246
-#, fuzzy
-#| msgid "Dvaered"
 msgid "Dvaered Thug"
-msgstr "Dvaered"
+msgstr "Dvaeredský zločinec"
 
 #: dat/events/minerva/altercation1.lua:86
-#, fuzzy
-#| msgid "Za'lek trash!"
 msgid "Za'lek Thug"
-msgstr "Za'lekský odpad!"
+msgstr "Za'lekský zločinec"
 
 #. Prepare hooks
 #. Set up hooks when it is over
@@ -32792,10 +32656,8 @@ msgid ""
 msgstr ""
 
 #: dat/events/neutral/travelling_merchant.lua:276
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "What do you wish to do?"
-msgstr "\"Co ode mě chceš!?\""
+msgstr "Co si přejete dělat?"
 
 #: dat/events/neutral/travelling_merchant.lua:280
 msgid "Shop"
@@ -33078,10 +32940,8 @@ msgid "Current Market Prices"
 msgstr ""
 
 #: dat/events/news/dvaered.lua:2
-#, fuzzy
-#| msgid "Welcome to the universe of Naev..."
 msgid "Welcome to the Dvaered News Centre."
-msgstr "Vítejte ve vesmíru Naev..."
+msgstr "Vítejte ve Dvaeredském zpravodajském centru."
 
 #: dat/events/news/dvaered.lua:5
 msgid "Short and to the point news."
@@ -33585,10 +33445,8 @@ msgid "Welcome to Goddard News Centre."
 msgstr ""
 
 #: dat/events/news/goddard.lua:5
-#, fuzzy
-#| msgid "\"Who do you take us for, the Empire?\""
 msgid "We bring you the news from around the Empire."
-msgstr "„Za koho nás máš, Impérium?“"
+msgstr "Přinášíme vám zprávy z celého impéria."
 
 #.
 #. Science and technology
@@ -33712,10 +33570,8 @@ msgid ""
 msgstr ""
 
 #: dat/events/news/independent.lua:2
-#, fuzzy
-#| msgid "Welcome to the universe of Naev..."
 msgid "Welcome to Universal News Feed."
-msgstr "Vítejte ve vesmíru Naev..."
+msgstr "Vítejte v univerzálním zpravodajském kanálu."
 
 #: dat/events/news/independent.lua:5
 msgid "Interesting events from around the universe."
@@ -33960,10 +33816,8 @@ msgstr ""
 #. Business
 #. --
 #: dat/events/news/soromid.lua:29
-#, fuzzy
-#| msgid "Just business."
 msgid "Fishy Business"
-msgstr "Jen byznys."
+msgstr "Rybí byznys"
 
 #: dat/events/news/soromid.lua:30
 msgid ""
@@ -34185,10 +34039,8 @@ msgid ""
 msgstr ""
 
 #: dat/events/news/zalek.lua:63
-#, fuzzy
-#| msgid "Za'lek trash!"
 msgid "Za'lek Citizen Arrested"
-msgstr "Za'lekský odpad!"
+msgstr "Občan Za'leku zatčen"
 
 #: dat/events/news/zalek.lua:64
 msgid ""
@@ -34789,10 +34641,8 @@ msgstr ""
 #. local fmt = require "format"
 #. State. Nothing persists.
 #: dat/events/npc/frontier.lua:10
-#, fuzzy
-#| msgid "For the Frontier!"
 msgid "A citizen of the Frontier."
-msgstr "Za Pohraničí!"
+msgstr "Občan pohraničí."
 
 #: dat/events/npc/frontier.lua:11
 msgid "An individual that has a solemn gaze."
@@ -36399,16 +36249,12 @@ msgstr ""
 #. Create a list of conditional messages
 #. Add tag-appropriate descriptions
 #: dat/events/npc/zalek.lua:145
-#, fuzzy
-#| msgid "Za'lek trash!"
 msgid "Za'lek Civilian"
-msgstr "Za'lekský odpad!"
+msgstr "Za'lekský Civilista"
 
 #: dat/events/npc/zalek.lua:148
-#, fuzzy
-#| msgid "Za'lek trash!"
 msgid "Za'lek Researcher"
-msgstr "Za'lekský odpad!"
+msgstr "Za'lekský vědec"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -36460,10 +36306,8 @@ msgstr ""
 #. Need at least some presence
 #. Larger ships can be there
 #: dat/events/pers/empire.lua:25
-#, fuzzy
-#| msgid "\"I shall especially enjoy your death.\""
 msgid "I shall particularly enjoy your execution."
-msgstr "„Tvoji smrt si obzvlášť užiji.“"
+msgstr "Obzvláště si užiji vaši popravu."
 
 #: dat/events/pers/empire.lua:35
 msgid "Executor Lee"
@@ -36657,10 +36501,8 @@ msgstr "\"Co ode mě chceš!?\""
 #: dat/events/pers/minerva.lua:35 dat/missions/minerva/kex3.lua:109
 #: dat/missions/minerva/kex3.lua:306 dat/missions/minerva/kex3.lua:375
 #: dat/missions/minerva/kex3.lua:453
-#, fuzzy
-#| msgid "Major Tam"
 msgid "Major Malik"
-msgstr "Major Tam"
+msgstr "Major Malik"
 
 #: dat/events/pers/minerva.lua:44
 msgid ""
@@ -36690,10 +36532,8 @@ msgstr ""
 
 #. More drones!
 #: dat/events/pers/minerva.lua:69
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "Why are you doing this to me!?"
-msgstr "\"Co ode mě chceš!?\""
+msgstr "Proč mi to děláte?"
 
 #: dat/events/pers/minerva.lua:70
 msgid "\"Shrimp are so fascinating. I can never get enough of them!\""
@@ -36797,10 +36637,8 @@ msgid "You shall make a good sacrifice to my bioship!"
 msgstr "Tvá hlava poslouží na mých lodích jako krásná trofej!"
 
 #: dat/events/pers/soromid.lua:26
-#, fuzzy
-#| msgid "\"We do not consort with vermin.\""
 msgid "We do not deal with the tainted."
-msgstr "\"Nespolčujeme se s havětí.\""
+msgstr "Nejednáme s poskvrněnými."
 
 #. Need at least some presence
 #. ZS stands for Za'lek ship
@@ -37477,20 +37315,16 @@ msgid "Travel Log"
 msgstr ""
 
 #: dat/events/shiplog.lua:37
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Hostility met in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Nepřátelství v systému {sys}"
 
 #: dat/events/shiplog.lua:45
 msgid "Jumped from the {1} system to the {2} system"
 msgstr ""
 
 #: dat/events/shiplog.lua:54
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Landed on {pnt} in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Přistání na {pnt} v systému {sys}"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -39542,10 +39376,8 @@ msgid "\"I wonder what Icarus is up to…\""
 msgstr ""
 
 #: dat/events/zalek/sigma13.lua:49
-#, fuzzy
-#| msgid "How dare you attack the Proteron?!"
 msgid "\"How are you liking the {outfit}?\""
-msgstr "Jak se opovažuješ zaútočit na Proterony?!"
+msgstr "\"Jak se ti líbí {outfit}?\""
 
 #. Probability of cargo by class.
 #.
@@ -41316,10 +41148,8 @@ msgid "A seemingly ancient artefact."
 msgstr ""
 
 #: dat/missions/baron/baron_prince.lua:209
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "Buy the artefact ({credits})"
-msgstr "Dlužíš mi 20 kreditů!"
+msgstr "Koupit artefakt ({credits})"
 
 #: dat/missions/baron/baron_prince.lua:210
 msgid "Don't buy the artefact"
@@ -41692,10 +41522,8 @@ msgstr ""
 #: dat/missions/empire/collective/ec04.lua:65
 #: dat/missions/neutral/race1.lua:199
 #: dat/missions/sirius/heretic/heretic2.lua:61
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Land on {pnt}"
-msgstr "Stanice Cantina"
+msgstr "Přistát na {pnt}"
 
 #: dat/missions/dvaered/championship.lua:122
 #: dat/missions/shark/sh00_ancestorkill.lua:81
@@ -41855,10 +41683,8 @@ msgid "Thanks for playing"
 msgstr ""
 
 #: dat/missions/dvaered/championship.lua:355
-#, fuzzy
-#| msgid "\"This is a toll road, pay up {credits} or die.\""
 msgid "The staff pays you {credits}."
-msgstr "„Toto je zpoplatněná trasa, zaplať {credits} nebo zemři.“"
+msgstr "Zaměstnanci vám platí {kredity}."
 
 #. Remove some hooks and begin a new battle
 #. The player killed his opponent
@@ -41935,10 +41761,8 @@ msgid "A chance to aid in the effort against the FLF"
 msgstr ""
 
 #: dat/missions/dvaered/dv_antiflf01.lua:42
-#, fuzzy
-#| msgid "Dvaered"
 msgid "Dvaered Ship Crew"
-msgstr "Dvaered"
+msgstr "Posádka Dvaeredské lodě"
 
 #: dat/missions/dvaered/dv_antiflf01.lua:42
 msgid "Dvaered crew from a ship that was disabled by the FLF."
@@ -42051,10 +41875,8 @@ msgstr ""
 #: dat/missions/dvaered/dv_antiflf02.lua:41
 #: dat/missions/dvaered/dv_antiflf03.lua:45
 #: dat/missions/dvaered/dv_diversion.lua:45
-#, fuzzy
-#| msgid "Dvaered Hooligan"
 msgid "Dvaered liaison"
-msgstr "Chuligán Dvaered"
+msgstr "Dvaeredská kontaktní osoba"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:41
 #: dat/missions/dvaered/dv_antiflf03.lua:45
@@ -42492,10 +42314,8 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:215
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:251
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:60
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to {pnt} in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Návrat do {pnt} v systému {sys}"
 
 #: dat/missions/dvaered/dv_antiflf03.lua:92
 msgid ""
@@ -45040,16 +44860,12 @@ msgstr ""
 #. Instructions
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:122
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:328
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "What do you want to ask Major Tam?"
-msgstr "\"Co ode mě chceš!?\""
+msgstr "Na co se chcete zeptat majora Tama?"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:122
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Ask about the assassins"
-msgstr "Stanice Cantina"
+msgstr "Zeptat se na vrahy"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:122
 msgid "Ask about Battleaddict's soldiers"
@@ -45309,10 +45125,8 @@ msgid "The target ran away again: continue the pursuit."
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:592
-#, fuzzy
-#| msgid "You can't bribe me!"
 msgid "You won't take me alive! Never!"
-msgstr "Nemůžeš mě podplatit!"
+msgstr "Živého mě nedostanete! Nikdy!"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:601
 msgid ""
@@ -46137,10 +45951,8 @@ msgstr ""
 
 #. Yep, I remember the puns I read on discord
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:61
-#, fuzzy
-#| msgid "You'll regret that!"
 msgid "Dodge that!"
-msgstr "Toho budeš litovat!"
+msgstr "Vyhněte se tomu!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:62
 msgid "I got one right in the a... Hem. The engine..."
@@ -46152,10 +45964,8 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:70
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:72
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "An invitation"
-msgstr "Stanice Cantina"
+msgstr "Pozvánka"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:70
 msgid ""
@@ -46199,16 +46009,12 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:411
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:459
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:492
-#, fuzzy
-#| msgid "Dvaered Patrol"
 msgid "Dvaered Ballet"
-msgstr "Dvaeredská Patrola"
+msgstr "Dvaeredský Ballet"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:80
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Fly to {pnt}"
-msgstr "Stanice Cantina"
+msgstr "Leťte na {pnt}"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:81
 msgid ""
@@ -46216,16 +46022,12 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:82
-#, fuzzy
-#| msgid "Lieutenant Strafer"
 msgid "Say goodbye to Lieutenant Strafer"
-msgstr "Poručík Strafer"
+msgstr "Rozlučte se s poručíkem Straferem"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:102
-#, fuzzy
-#| msgid "Lieutenant Strafer"
 msgid "Sergeant Strafer"
-msgstr "Poručík Strafer"
+msgstr "Seržant Strafer"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:103
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:138
@@ -46249,10 +46051,8 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:107
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:137
-#, fuzzy
-#| msgid "Lieutenant Strafer"
 msgid "Lieutenant Guo"
-msgstr "Poručík Strafer"
+msgstr "Poručík Guo"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:114
 msgid "Flowers"
@@ -46296,10 +46096,8 @@ msgid "Total Scores"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:199
-#, fuzzy
-#| msgid "Dvaered Patrol"
 msgid "Dvaered People"
-msgstr "Dvaeredská Patrola"
+msgstr "Dvaeredští lidé"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:199
 msgid ""
@@ -46375,10 +46173,8 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:251
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:254
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:257
-#, fuzzy
-#| msgid "Lieutenant Strafer"
 msgid "Goodbye, Lieutenant Strafer"
-msgstr "Poručík Strafer"
+msgstr "Sbohem, poručíku Strafere"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:251
 msgid ""
@@ -46782,10 +46578,8 @@ msgstr ""
 #. One of the competitors is Idle (Mace Stadion)
 #. A competitor is hit during Stadion (problematic if the player is the agressor)
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:691
-#, fuzzy
-#| msgid "Shooting back isn't allowed!"
 msgid "This is not allowed!"
-msgstr "Opětovaná střelba není povolena!"
+msgstr "Tohle není dovoleno!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:691
 msgid ""
@@ -47038,10 +46832,8 @@ msgstr ""
 
 #. Tournament Types
 #: dat/missions/dvaered/gauntlet/gui.lua:269
-#, fuzzy
-#| msgid "Burnan"
 msgid "Tournament"
-msgstr "Burnan"
+msgstr "Turnaj"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:269
 msgid "Challenge"
@@ -47281,10 +47073,8 @@ msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:120
 #: dat/missions/dvaered/recruitment/dv_goddard.lua:181
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Go to {sys} and land on {pnt}."
-msgstr "Stanice Cantina"
+msgstr "Přejděte na {sys} a přistaňte na {pnt}."
 
 #. hooks
 #. Player will perform the Hallway to Hell
@@ -47334,10 +47124,8 @@ msgstr ""
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:171
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:172
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:173
-#, fuzzy
-#| msgid "You'll regret that!"
 msgid "Dodge Me"
-msgstr "Toho budeš litovat!"
+msgstr "Vyhněte se mi"
 
 #. Difficulty can be tuned here (1<=nb<=6)
 #. Apparently, they do stack
@@ -47629,10 +47417,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:369
-#, fuzzy
-#| msgid "You are no match for the Empire!"
 msgid "You were supposed to defeat Blue Belly Billy, not to run away."
-msgstr "Pro impérium nejsi žádná výzva!"
+msgstr "Měl jsi porazit Blue Bellyho Billyho, ne utéct."
 
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:380
 msgid ""
@@ -47798,10 +47584,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:470
-#, fuzzy
-#| msgid "\"You disgust me.\""
 msgid "You insist."
-msgstr "\"Znechucuješ mne.\""
+msgstr "Trváte na svém."
 
 #. This is a bit too directive, any reorganization is welcome to get the player feel they can actually decide what they say.
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:474
@@ -47821,10 +47605,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:485
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "Destroy the 3 targets"
-msgstr "Dlužíš mi 20 kreditů!"
+msgstr "Zničte 3 cíle"
 
 #. Spawn the gangs for a fun scene
 #: dat/missions/dvaered/recruitment/dv_bikers.lua:499
@@ -48408,10 +48190,8 @@ msgid "I'm afraid I do not know this person."
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_goddard.lua:102
-#, fuzzy
-#| msgid "You can't bribe me!"
 msgid "I couldn't care less."
-msgstr "Nemůžeš mě podplatit!"
+msgstr "Je mi to jedno."
 
 #: dat/missions/dvaered/recruitment/dv_goddard.lua:106
 msgid ""
@@ -48637,10 +48417,8 @@ msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_goddard.lua:182
 #: dat/missions/dvaered/recruitment/dv_goddard.lua:273
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Deposit the commandos back on {pnt} in {sys}."
-msgstr "Stanice Cantina"
+msgstr "Vraťte komanda na {pnt} v {sys}."
 
 #: dat/missions/dvaered/recruitment/dv_goddard.lua:183
 #: dat/missions/dvaered/recruitment/dv_goddard.lua:274
@@ -48649,10 +48427,8 @@ msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_goddard.lua:184
 #: dat/missions/dvaered/recruitment/dv_goddard.lua:275
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Get your payment on {pnt} in {sys}."
-msgstr "Stanice Cantina"
+msgstr "Získejte svou platbu na {pnt} v {sys}."
 
 #. hooks
 #. Add the cargo
@@ -48796,10 +48572,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_goddard.lua:270
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Go to {sys}."
-msgstr "Stanice Cantina"
+msgstr "Přejděte na {sys}."
 
 #: dat/missions/dvaered/recruitment/dv_goddard.lua:271
 msgid "Ask the 'Siren of Halir' for fuel."
@@ -48833,10 +48607,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_goddard.lua:296
-#, fuzzy
-#| msgid "\"This is a toll road, pay up {credits} or die.\""
 msgid "Colonel Okran pays you {credits}."
-msgstr "„Toto je zpoplatněná trasa, zaplať {credits} nebo zemři.“"
+msgstr "Plukovník Okran vám vyplácí {kredity}."
 
 #. TODO once the whole recruitment campaign is stabilized: faction.get("Dvaered"):modPlayerRaw(someQuantity)
 #: dat/missions/dvaered/recruitment/dv_goddard.lua:303
@@ -48865,12 +48637,12 @@ msgstr ""
 
 #. Player should be killing Agrippina Grosjean
 #: dat/missions/dvaered/recruitment/dv_goddard.lua:323
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "You were supposed to kill Agrippina Grosjean!\n"
 "Your mission is a failure!"
-msgstr "Stanice Cantina"
+msgstr ""
+"Měl jsi zabít Agrippinu Grosjeanovou!\n"
+"Vaše mise selhala!"
 
 #. Spawn the Siren of Halir for the player to board it
 #: dat/missions/dvaered/recruitment/dv_goddard.lua:331
@@ -49370,10 +49142,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:246
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "Hopefully much more than {credits}"
-msgstr "Dlužíš mi 20 kreditů!"
+msgstr "Doufejme, že mnohem více než {credits}"
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:247
 msgid "When will it end?"
@@ -49635,10 +49405,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:394
-#, fuzzy
-#| msgid "You can't bribe me!"
 msgid "I couldn't care less"
-msgstr "Nemůžeš mě podplatit!"
+msgstr "Je mi to úplně jedno"
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:398
 msgid ""
@@ -49707,10 +49475,8 @@ msgid "Go back to {pnt} to get your reward."
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:423
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "Hopefully more than {credits}"
-msgstr "Dlužíš mi 20 kreditů!"
+msgstr "Doufejme, že více než {credits}"
 
 #: dat/missions/dvaered/recruitment/dv_lostagent.lua:424
 msgid ""
@@ -50043,17 +49809,13 @@ msgstr "Vítejte ve vesmíru Naev..."
 #: dat/missions/dvaered/recruitment/dv_shopping.lua:97
 #: dat/missions/dvaered/recruitment/dv_shopping.lua:132
 #: dat/missions/dvaered/recruitment/dv_shopping.lua:160
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Jump to {sys}."
-msgstr "Stanice Cantina"
+msgstr "Přejít na {sys}."
 
 #: dat/missions/dvaered/recruitment/dv_shopping.lua:98
 #: dat/missions/dvaered/recruitment/dv_shopping.lua:133
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Land on {pnt}."
-msgstr "Stanice Cantina"
+msgstr "Přistát na {pnt}."
 
 #. Increment system
 #. Player went to the wrong system
@@ -50221,10 +49983,8 @@ msgid "\"Yo, Okran! How are you, mate? Enyoyin' your new toy? Hewhewhew!\""
 msgstr ""
 
 #: dat/missions/dvaered/recruitment/dv_shopping.lua:312
-#, fuzzy
-#| msgid "I'm sorry, I just don't like you."
 msgid "\"I am sorry, but I do not know you, citizen.\""
-msgstr "Promiň, prostě tě nemám rád."
+msgstr "\"Je mi líto, ale neznám vás, občane.\""
 
 #: dat/missions/dvaered/recruitment/dv_shopping.lua:313
 msgid ""
@@ -50546,10 +50306,8 @@ msgid "Collective Scout"
 msgstr ""
 
 #: dat/missions/empire/collective/ec00.lua:67
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Find a scout last seen in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Vyhledání průzkumníka, který byl naposledy spatřen v systému {sys}"
 
 #. Flavour text and mini-briefing
 #: dat/missions/empire/collective/ec00.lua:70
@@ -50616,10 +50374,8 @@ msgstr ""
 #: dat/missions/empire/collective/ec00.lua:126
 #: dat/missions/empire/collective/ec01.lua:67
 #: dat/missions/empire/collective/ec02.lua:107
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Travel back to {pnt} in {sys}"
-msgstr "Stanice Cantina"
+msgstr "Cesta zpět na {pnt} v {sys}"
 
 #. You land on the planet, but you also immediately take off again.
 #. Initiate cutscene
@@ -50843,20 +50599,16 @@ msgid ""
 msgstr ""
 
 #: dat/missions/empire/collective/ec02.lua:66
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Land on {pnt} in the {sys} system to monitor Collective communications"
-msgstr "Stanice Cantina"
+msgstr "Přistání na {pnt} v systému {sys} pro sledování komunikace Kolektivu"
 
 #: dat/missions/empire/collective/ec02.lua:68
 msgid "Fly to {sys} and land on {pnt}"
 msgstr ""
 
 #: dat/missions/empire/collective/ec02.lua:69
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to {pnt} with your findings"
-msgstr "Stanice Cantina"
+msgstr "Vraťte se na {pnt} se svými zjištěními"
 
 #: dat/missions/empire/collective/ec02.lua:72
 msgid ""
@@ -50997,10 +50749,8 @@ msgid "Collective Distraction"
 msgstr ""
 
 #: dat/missions/empire/collective/ec03.lua:79
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Go to draw the Collective's attention in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Přejít na upozornění kolektivu v systému {sys}"
 
 #: dat/missions/empire/collective/ec03.lua:81
 msgid ""
@@ -51030,10 +50780,8 @@ msgstr ""
 #: dat/missions/sirius/heretic/heretic3.lua:59
 #: dat/missions/tutorial/nelly02.lua:316
 #: dat/missions/zalek/blackhole/zbh10.lua:318
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to {pnt}"
-msgstr "Stanice Cantina"
+msgstr "Návrat na {pnt}"
 
 #: dat/missions/empire/collective/ec03.lua:122
 msgid ""
@@ -51110,10 +50858,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/empire/collective/ec04.lua:61
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Check for survivors on {pnt} in {sys}"
-msgstr "Stanice Cantina"
+msgstr "Kontrola přeživších na {pnt} v {sys}"
 
 #: dat/missions/empire/collective/ec04.lua:62
 msgid ""
@@ -51124,10 +50870,8 @@ msgstr ""
 
 #: dat/missions/empire/collective/ec04.lua:64
 #: dat/missions/sirius/achack/achack01.lua:48
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Fly to {sys}"
-msgstr "Stanice Cantina"
+msgstr "Letět na {sys}"
 
 #. Handles the Collective encounters.
 #. This mission disables saving, which is dangerous. Should be turned back on ASAP.
@@ -51163,10 +50907,8 @@ msgstr ""
 #. This prevents the player from starting on Eiroik if he dies after taking off.
 #. Some flavour text
 #: dat/missions/empire/collective/ec04.lua:224
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Planet {pnt}"
-msgstr "Stanice Cantina"
+msgstr "Planeta {pnt}"
 
 #: dat/missions/empire/collective/ec04.lua:225
 msgid ""
@@ -51343,10 +51085,8 @@ msgid "Apprehend or kill Zakred"
 msgstr ""
 
 #: dat/missions/empire/collective/ec05.lua:98
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Report back to {pnt}"
-msgstr "Stanice Cantina"
+msgstr "Nahlásit zpět na {pnt}"
 
 #: dat/missions/empire/collective/ec05.lua:101
 msgid ""
@@ -51427,10 +51167,8 @@ msgstr ""
 #: dat/missions/empire/collective/ec05.lua:172
 #: dat/missions/empire/collective/ec05.lua:348
 #: dat/missions/empire/collective/ec05.lua:358
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to base at {pnt} in {sys}"
-msgstr "Stanice Cantina"
+msgstr "Návrat na základnu na {pnt} v {sys}"
 
 #. Little talk when ESS Trinity is encountered.
 #. Empire talks about arresting
@@ -52114,10 +51852,8 @@ msgid "Cargo transport to {pnt} in {sys} ({tonnes})"
 msgstr "Stanice Cantina"
 
 #: dat/missions/empire/es_cargo.lua:88
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Official Empire cargo transport to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Oficiální říšská nákladní doprava do {pnt} v systému {sys}."
 
 #. Mission is accepted
 #. Set up passenger details so player cannot keep trying to get a better outcome
@@ -52283,10 +52019,8 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:52
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:52
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:52
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Deliver a shipping diplomat for the Empire to {pnt} in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Doručení lodního diplomata pro Říši na {pnt} v systému {sys}"
 
 #. Set up the goal
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:57
@@ -52521,10 +52255,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:58
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Deliver Lieutenant Czesc to {pnt} in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Doručit poručíka Czesc do {pnt} v systému {sys}"
 
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:74
 msgid ""
@@ -52566,11 +52298,9 @@ msgid "Long distance cargo transport ({tonnes} of {cargo})"
 msgstr ""
 
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:89
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "Official Empire long distance cargo transport to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Oficiální říšská dálková nákladní doprava do {pnt} v systému {sys}."
 
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:149
 msgid "Long Distance Empire Shipping"
@@ -52697,10 +52427,8 @@ msgstr ""
 
 #: dat/missions/empire/shipping/es00.lua:94
 #: dat/missions/empire/shipping/es00.lua:96
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to {pnt} in the {sys} system to report what happened"
-msgstr "Stanice Cantina"
+msgstr "Vraťte se do {pnt} v systému {sys} a nahlaste, co se stalo"
 
 #. Prevent players from saving on the destination planet
 #. We'll take off right away again
@@ -52830,10 +52558,8 @@ msgstr ""
 
 #: dat/missions/empire/shipping/es01.lua:61
 #: dat/missions/empire/shipping/es01.lua:67
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Pick up a package at {pnt} in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Vyzvednutí balíčku na {pnt} v systému {sys}"
 
 #: dat/missions/empire/shipping/es01.lua:64
 msgid ""
@@ -52883,10 +52609,8 @@ msgstr ""
 
 #: dat/missions/empire/shipping/es01.lua:99
 #: dat/missions/empire/shipping/es01.lua:102
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Deliver the package to {pnt} in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Doručení balíčku na {pnt} v systému {sys}"
 
 #. Load message
 #: dat/missions/empire/shipping/es01.lua:106
@@ -53019,10 +52743,8 @@ msgstr ""
 
 #: dat/missions/empire/shipping/es02.lua:81
 #: dat/missions/empire/shipping/es02.lua:88
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Rescue the VIP from a transport ship in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Záchrana VIP z transportní lodi v systému {sys}"
 
 #: dat/missions/empire/shipping/es02.lua:84
 msgid ""
@@ -53118,10 +52840,8 @@ msgstr ""
 #. Update mission details
 #: dat/missions/empire/shipping/es02.lua:228
 #: dat/missions/empire/shipping/es02.lua:230
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to {pnt} in the {sys} system with the VIP"
-msgstr "Stanice Cantina"
+msgstr "Návrat na {pnt} v systému {sys} s VIP"
 
 #. Force unboard
 #. Notify of death
@@ -53446,10 +53166,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:138
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Bring {tonnes} of Ore to the Pirate Kestrel in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Přineste {tonnes} rudy na pirátskou loď Kestrel v systému {sys}"
 
 #: dat/missions/flf/dvk/flf_dvk02.lua:148
 msgid "Who are you calling a weakling?"
@@ -54169,16 +53887,12 @@ msgid ""
 msgstr ""
 
 #: dat/missions/flf/flf_diversion.lua:160
-#, fuzzy
-#| msgid "Dvaered Patrol"
 msgid "Dvaered Small Patrol"
-msgstr "Dvaeredská Patrola"
+msgstr "Malá Dvaeredská Patrola"
 
 #: dat/missions/flf/flf_diversion.lua:162
-#, fuzzy
-#| msgid "Dvaered Patrol"
 msgid "Dvaered Big Patrol"
-msgstr "Dvaeredská Patrola"
+msgstr "Velká Dvaeredská Patrola"
 
 #: dat/missions/flf/flf_diversion.lua:165
 msgid "{fleet} has warped in!"
@@ -54898,10 +54612,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/flf/flf_pre02.lua:189
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Fly to the {sys} system and land on {pnt}"
-msgstr "Stanice Cantina"
+msgstr "Leťte do systému {sys} a přistaňte na {pnt}"
 
 #: dat/missions/flf/flf_pre02.lua:199
 msgid "End of negotiations"
@@ -55410,10 +55122,8 @@ msgid "\"What's up kid?\""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:127
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Ask about the station"
-msgstr "Stanice Cantina"
+msgstr "Zeptejte se na stanici"
 
 #: dat/missions/minerva/kex1.lua:131
 msgid "Ask about the CEO"
@@ -55578,10 +55288,8 @@ msgstr ""
 #: dat/missions/minerva/kex3.lua:76 dat/missions/minerva/kex3.lua:105
 #: dat/missions/minerva/kex4.lua:72 dat/missions/minerva/kex4.lua:264
 #: dat/missions/minerva/kex5.lua:112
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to Kex at Minerva Station"
-msgstr "Stanice Cantina"
+msgstr "Navraťte se do Kexu na stanici Minerva"
 
 #: dat/missions/minerva/kex1.lua:214 dat/missions/minerva/kex2.lua:179
 #: dat/missions/minerva/kex3.lua:171 dat/missions/minerva/kex4.lua:168
@@ -55618,10 +55326,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:242
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "\"Well, what do you want?\""
-msgstr "\"Co ode mě chceš!?\""
+msgstr "\"Tak, co chcete?\""
 
 #: dat/missions/minerva/kex1.lua:243
 msgid "You ask about the cyborg chicken."
@@ -56176,10 +55882,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:191
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Ask about his past"
-msgstr "Stanice Cantina"
+msgstr "Zeptejte se na jeho minulost"
 
 #: dat/missions/minerva/kex3.lua:199
 msgid ""
@@ -56449,10 +56153,8 @@ msgid "You interrupt my leisure with blackmail…"
 msgstr ""
 
 #: dat/missions/minerva/kex3.lua:585
-#, fuzzy
-#| msgid "Did you really think you would get away with that?"
 msgid "You really think you would be getting out of here alive?…"
-msgstr "Vážně jsi si myslel, že bys mohl uniknout jen tak?"
+msgstr "Opravdu si myslíš, že se odsud dostaneš naživu?…"
 
 #: dat/missions/minerva/kex3.lua:586
 msgid "You are in my realm now, kid!"
@@ -56483,12 +56185,12 @@ msgid "What the hell?!"
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:54
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "You have been tasked with obtaining information from Jie de Luca at {pnt} in "
 "the {sys} system."
-msgstr "Stanice Cantina"
+msgstr ""
+"Dostali jste za úkol získat informace od Jie de Luca na adrese {pnt} v "
+"systému {sys}."
 
 #. If not accepted, mem.misn_state will still be nil
 #: dat/missions/minerva/kex4.lua:68
@@ -56580,10 +56282,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex4.lua:143
-#, fuzzy
-#| msgid "\"See you again, real soon.\""
 msgid "\"Nice to see you again too.\""
-msgstr "„Uvidíme se znovu, opravdu brzy.“"
+msgstr "\"Taky tě rád vidím.\""
 
 #: dat/missions/minerva/kex4.lua:144
 msgid "\"This?\""
@@ -56752,10 +56452,8 @@ msgid "Ask about Minerva Station"
 msgstr "Zeptat se na stanici Minerva"
 
 #: dat/missions/minerva/kex4.lua:240
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Ask about the Minerva CEO"
-msgstr "Stanice Cantina"
+msgstr "Zeptejte se na generálního ředitele společnosti Minerva"
 
 #: dat/missions/minerva/kex4.lua:243
 msgid ""
@@ -57389,10 +57087,8 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:514 dat/missions/minerva/kex5.lua:536
 #: dat/missions/minerva/kex5.lua:563 dat/missions/minerva/kex5.lua:606
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Ask about Kex"
-msgstr "Stanice Cantina"
+msgstr "Zeptejte se na Kex"
 
 #: dat/missions/minerva/kex5.lua:515
 msgid "Say you are sorry"
@@ -57424,10 +57120,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:528
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "\"Why did you have to do it?\""
-msgstr "\"Co ode mě chceš!?\""
+msgstr "\"Proč jsi to musel udělat?\""
 
 #: dat/missions/minerva/kex5.lua:532
 msgid "\"Do what?\""
@@ -57435,10 +57129,8 @@ msgstr ""
 
 #: dat/missions/minerva/kex5.lua:538 dat/missions/minerva/kex5.lua:565
 #: dat/missions/minerva/kex5.lua:608
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Ask about Kex again"
-msgstr "Stanice Cantina"
+msgstr "Zeptejte se znovu na Kex"
 
 #: dat/missions/minerva/kex5.lua:546
 msgid ""
@@ -57471,10 +57163,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:557
-#, fuzzy
-#| msgid "\"Sure thing.\""
 msgid "\"Everything.\""
-msgstr "\"Jasná věc.\""
+msgstr "\"Všechno.\""
 
 #: dat/missions/minerva/kex5.lua:558
 msgid "\"It is already connected.\""
@@ -57541,10 +57231,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex5.lua:601
-#, fuzzy
-#| msgid "\"Sure thing.\""
 msgid "\"You are dying.\""
-msgstr "\"Jasná věc.\""
+msgstr "\"Umíráš.\""
 
 #: dat/missions/minerva/kex5.lua:602
 msgid "\"It is over.\""
@@ -58137,10 +57825,8 @@ msgid "Ask about scavengers you saw"
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:280
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Ask about {sys}"
-msgstr "Stanice Cantina"
+msgstr "Zeptejte se na {sys}"
 
 #: dat/missions/minerva/maikki1.lua:283
 msgid "Show him the picture"
@@ -58691,10 +58377,8 @@ msgid "You found a wreck and bribed scavengers so that they left."
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:818
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "You wire them {credits}."
-msgstr "Dlužíš mi 20 kreditů!"
+msgstr "Pošlete jim {kredity}."
 
 #: dat/missions/minerva/maikki1.lua:819
 msgid ""
@@ -58745,10 +58429,8 @@ msgid "You found a wreck and were attacked by scavengers."
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:856
-#, fuzzy
-#| msgid "Mayday! We are under attack!"
 msgid "Scavenger attacked."
-msgstr "Mayday! Jsme pod útokem!"
+msgstr "Mrchožrout zaútočil."
 
 #: dat/missions/minerva/maikki1.lua:866
 msgid ""
@@ -59511,10 +59193,8 @@ msgid "\"Dr. Shrimp?\""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:491
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Ask about nebula artefacts"
-msgstr "Stanice Cantina"
+msgstr "Zeptejte se na artefakty z mlhovin"
 
 #: dat/missions/minerva/maikki2.lua:492
 msgid "Ask about other members."
@@ -59704,10 +59384,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:553
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "\tGo to {sys}"
-msgstr "Stanice Cantina"
+msgstr "\tPřejděte na {sys}"
 
 #: dat/missions/minerva/maikki2.lua:556
 msgid ""
@@ -60350,10 +60028,8 @@ msgid "Harass the thugs"
 msgstr ""
 
 #: dat/missions/minerva/pirate1.lua:98
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Jump to {sys}"
-msgstr "Stanice Cantina"
+msgstr "Přejít na {sys}"
 
 #: dat/missions/minerva/pirate1.lua:99 dat/missions/minerva/pirate2.lua:93
 msgid "Go back to Minerva Station"
@@ -60392,10 +60068,8 @@ msgid "You were supposed to harass the thugs with the drone."
 msgstr ""
 
 #: dat/missions/minerva/pirate1.lua:145
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "You were supposed to jump to the {sys} system!"
-msgstr "Stanice Cantina"
+msgstr "Měli jste přejít do systému {sys}!"
 
 #: dat/missions/minerva/pirate1.lua:176 dat/missions/minerva/pirate2.lua:182
 #: dat/missions/minerva/pirate2.lua:197
@@ -60484,10 +60158,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/pirate2.lua:75 dat/missions/minerva/pirate4.lua:105
-#, fuzzy
-#| msgid "Accept the offer"
 msgid "You decline her offer and take your leave."
-msgstr "Přijmi nabídku"
+msgstr "Odmítneš její nabídku a odejdeš."
 
 #: dat/missions/minerva/pirate2.lua:80
 msgid ""
@@ -60645,10 +60317,8 @@ msgstr ""
 #. Clear variable just in case
 #. If not accepted, mem.misn_state will still be nil
 #: dat/missions/minerva/pirate3.lua:87 dat/missions/minerva/pirate3.lua:252
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Minerva Station Spa"
-msgstr "Stanice Cantina"
+msgstr "Lázně stanice Minerva"
 
 #. Not accepted
 #: dat/missions/minerva/pirate3.lua:117
@@ -61084,10 +60754,8 @@ msgid "\"Give it to me. Now.\""
 msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:505
-#, fuzzy
-#| msgid "\"I would be able to refuel your ship for %s.\""
 msgid "\"I would like to take it off your hands.\""
-msgstr "„Byl bych schopen natankovat vaši loď za %s.“"
+msgstr "\"Rád bych si to od vás vzal.\""
 
 #: dat/missions/minerva/pirate3.lua:510
 msgid ""
@@ -61287,10 +60955,8 @@ msgstr ""
 
 #. Add illegal cargo
 #: dat/missions/minerva/pirate4.lua:161
-#, fuzzy
-#| msgid "Dvaered Patrol"
 msgid "Dvaered Mole"
-msgstr "Dvaeredská Patrola"
+msgstr "Dvaeredský Mole"
 
 #: dat/missions/minerva/pirate4.lua:161
 msgid ""
@@ -61403,10 +61069,8 @@ msgstr ""
 
 #. Unboard
 #: dat/missions/minerva/pirate4.lua:274
-#, fuzzy
-#| msgid "Mayday! We are under attack!"
 msgid "We are under attack!"
-msgstr "Mayday! Jsme pod útokem!"
+msgstr "Jsme pod útokem!"
 
 #: dat/missions/minerva/pirate4.lua:284
 msgid "We have been discovered!"
@@ -61430,10 +61094,8 @@ msgid "Support incoming! Hurrah!"
 msgstr ""
 
 #: dat/missions/minerva/pirate4.lua:320
-#, fuzzy
-#| msgid "Dvaered Patrol"
 msgid "Clean up the Dvaered patrols"
-msgstr "Dvaeredská Patrola"
+msgstr "Vyčistit Dvaeredské hlídky"
 
 #. Detect all Dvaered deaths
 #: dat/missions/minerva/pirate4.lua:328
@@ -61545,16 +61207,12 @@ msgid "Go to the {sys} system"
 msgstr ""
 
 #: dat/missions/minerva/pirate5.lua:68
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "Destroy the hacking centre"
-msgstr "Dlužíš mi 20 kreditů!"
+msgstr "Zničit hackerské centrum"
 
 #: dat/missions/minerva/pirate5.lua:69
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to Minerva Station"
-msgstr "Stanice Cantina"
+msgstr "Návrat do stanice Minerva"
 
 #: dat/missions/minerva/pirate5.lua:73
 msgid ""
@@ -62057,10 +61715,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant01.lua:50
-#, fuzzy
-#| msgid "\"I'll be around if you get generous again.\""
 msgid "\"That's a shame. I'll be here if you change your mind.\""
-msgstr "„Budu u tebe, pokud budeš opět tak velkorysý.“"
+msgstr "\"To je škoda. Pokud si to rozmyslíš, budu tady.\""
 
 #: dat/missions/neutral/antlejos/ant01.lua:54
 msgid ""
@@ -62090,16 +61746,12 @@ msgid "Verner's Request"
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant01.lua:81
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Verner asked you to take him to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Verner vás požádal, abyste ho vzali do {pnt} v systému {sys}."
 
 #: dat/missions/neutral/antlejos/ant01.lua:84
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Take Verner to {pnt} ({sys} system)"
-msgstr "Stanice Cantina"
+msgstr "Vezměte Vernera do systému {pnt} ({sys})"
 
 #. Land hook.
 #: dat/missions/neutral/antlejos/ant01.lua:101
@@ -62188,12 +61840,12 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant07.lua:54
 #: dat/missions/neutral/antlejos/ant08.lua:58
 #: dat/missions/neutral/antlejos/ant09.lua:60
-#, fuzzy
-#| msgid "\"I'll be around if you get generous again.\""
 msgid ""
 "\"OK… I'll keep on terraforming here. Come back if you change your mind "
 "about helping.\""
-msgstr "„Budu u tebe, pokud budeš opět tak velkorysý.“"
+msgstr ""
+"\"Dobře... budu tady pokračovat v terraformaci. Vrať se, jestli si to "
+"rozmyslíš.\""
 
 #: dat/missions/neutral/antlejos/ant02.lua:66
 msgid "\"Awesome. The {cargo} should be of great help.\""
@@ -62210,11 +61862,9 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant02.lua:78
 #: dat/missions/neutral/antlejos/ant03.lua:76
 #: dat/missions/neutral/antlejos/ant04.lua:82
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "Pick up the {cargo} at {pnt} in the {sys} system and deliver it to {retpnt}."
-msgstr "Stanice Cantina"
+msgstr "Vyzvedněte {náklad} na {pnt} v systému {sys} a doručte ho na {retpnt}."
 
 #: dat/missions/neutral/antlejos/ant02.lua:81
 #: dat/missions/neutral/antlejos/ant03.lua:79
@@ -62227,19 +61877,15 @@ msgstr ""
 #: dat/missions/neutral/antlejos/ant03.lua:80
 #: dat/missions/neutral/antlejos/ant04.lua:86
 #: dat/missions/neutral/antlejos/ant_supplies.lua:91
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Pick up the {cargo} at {pnt} ({sys} system)"
-msgstr "Stanice Cantina"
+msgstr "Vyzvednout {náklad} na {pnt} (systém {sys})"
 
 #: dat/missions/neutral/antlejos/ant02.lua:83
 #: dat/missions/neutral/antlejos/ant03.lua:81
 #: dat/missions/neutral/antlejos/ant04.lua:87
 #: dat/missions/neutral/antlejos/ant_supplies.lua:92
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Deliver the cargo to {pnt} ({sys} system)"
-msgstr "Stanice Cantina"
+msgstr "Doručit náklad na {pnt} do systému ({sys})"
 
 #. Land hook.
 #: dat/missions/neutral/antlejos/ant02.lua:97
@@ -62601,10 +62247,8 @@ msgid "Supply Ship"
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant05.lua:163
-#, fuzzy
-#| msgid "Vessel under attack! Requesting help!"
 msgid "Supply ship under attack! Help requested!"
-msgstr "Plavidlo pod útokem! Žádám o pomoc!"
+msgstr "Zásobovací loď pod útokem! Žádáme o pomoc!"
 
 #. Nothing to do here
 #. Wrong system
@@ -62725,10 +62369,8 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh09.lua:548
 #: dat/missions/zalek/blackhole/zbh10.lua:81
 #: dat/missions/zalek/blackhole/zbh11.lua:203
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to {pnt} ({sys} system)"
-msgstr "Stanice Cantina"
+msgstr "Návrat do systému {pnt} ({sys})"
 
 #. Land hook.
 #: dat/missions/neutral/antlejos/ant06.lua:103
@@ -62827,12 +62469,12 @@ msgid "Antlejos V Trade Deal"
 msgstr "Alteris IV"
 
 #: dat/missions/neutral/antlejos/ant07.lua:71
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "Go to {pnt} in the {sys} system to try to forge an alliance with the "
 "government at {pnt} to support {retpnt}."
-msgstr "Stanice Cantina"
+msgstr ""
+"Leťte na {pnt} v systému {sys} a pokuste se uzavřít spojenectví s vládou v "
+"{pnt} na podporu {retpnt}."
 
 #: dat/missions/neutral/antlejos/ant07.lua:74
 #: dat/missions/neutral/antlejos/ant08.lua:81
@@ -63267,10 +62909,8 @@ msgstr ""
 #. route0 and route1 can't be random or it might spawn directly on the player
 #. route0 in reverse
 #: dat/missions/neutral/antlejos/ant09.lua:317
-#, fuzzy
-#| msgid "Accept the offer"
 msgid "You eliminated the mothership!"
-msgstr "Přijmi nabídku"
+msgstr "Zlikvidovali jste mateřskou loď!"
 
 #: dat/missions/neutral/antlejos/ant09.lua:324
 #, fuzzy
@@ -63433,11 +63073,9 @@ msgid "Small"
 msgstr ""
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:62
-#, fuzzy
-#| msgid "Za'lek trash!"
 msgctxt "adj delivery"
 msgid "Medium"
-msgstr "Za'lekský odpad!"
+msgstr "Střední"
 
 #: dat/missions/neutral/antlejos/ant_supplies.lua:64
 msgctxt "adj delivery"
@@ -63812,18 +63450,16 @@ msgid "Find the Drink"
 msgstr ""
 
 #: dat/missions/neutral/aristodrink.lua:188
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return the drink to the Aristocrat at {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Vraťte nápoj aristokratovi na {pnt} v systému {sys}."
 
 #: dat/missions/neutral/aristodrink.lua:192
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "Go to {pnt} in the {sys} system and look for the special drink that the "
 "Aristocrat wants"
-msgstr "Stanice Cantina"
+msgstr ""
+"Přeleťe na {pnt} v systému {sys} a vyhledejte speciální nápoj, který chce "
+"Aristokrat"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -63854,34 +63490,24 @@ msgstr "Stanice Cantina"
 #. luacheck: globals land (Hook functions passed by name)
 #. Note: indexed from 0 to match mission tiers.
 #: dat/missions/neutral/cargo.lua:37
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Small shipment to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Malá zásilka do {pnt} v systému {sys}."
 
 #: dat/missions/neutral/cargo.lua:38
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Medium shipment to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Střední zásilka do {pnt} v systému {sys}."
 
 #: dat/missions/neutral/cargo.lua:39
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Sizable cargo delivery to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Dodávka značného nákladu do {pnt} v systému {sys}."
 
 #: dat/missions/neutral/cargo.lua:40
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Large cargo delivery to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Dodávka velkého nákladu do {pnt} v systému {sys}."
 
 #: dat/missions/neutral/cargo.lua:41
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Bulk freight delivery to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Hromadná dodávka nákladu do {pnt} v systému {sys}."
 
 #. =Landing=--
 #: dat/missions/neutral/cargo.lua:51 dat/missions/neutral/cargo_rush.lua:60
@@ -63919,10 +63545,8 @@ msgstr ""
 #. Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
 #. Note: Pay is independent from amount by design! Not all deals are equally attractive!
 #: dat/missions/neutral/cargo.lua:89
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Shipment to {pnt} in {sys} ({tonnes})"
-msgstr "Stanice Cantina"
+msgstr "Přeprava na {pnt} v {sys} ({tonnes})"
 
 #: dat/missions/neutral/cargo.lua:107
 msgid "Cargo mission"
@@ -63931,10 +63555,8 @@ msgstr ""
 #: dat/missions/neutral/cargo.lua:107
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:107
 #: dat/missions/zalek/zlk_test.lua:103
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Fly to {pnt} in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Leťte na {pnt} v systému {sys}"
 
 #. Land hook
 #. Semi-random message.
@@ -63972,10 +63594,8 @@ msgstr ""
 #. luacheck: globals land tick (Hook functions passed by name)
 #. Note: indexed from 0, to match mission tiers.
 #: dat/missions/neutral/cargo_rush.lua:37
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Courier transport to {pnt} in {sys} ({tonnes})"
-msgstr "Stanice Cantina"
+msgstr "Kurýrní přeprava na {pnt} v {sys} ({tonnes})"
 
 #: dat/missions/neutral/cargo_rush.lua:38
 msgid "Priority shipment to {pnt} in {sys} ({tonnes})"
@@ -63995,34 +63615,24 @@ msgstr ""
 
 #. Note: indexed from 0, to match mission tiers.
 #: dat/missions/neutral/cargo_rush.lua:45
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Courier transport to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Kurýrní doprava na {pnt} v systému {sys}."
 
 #: dat/missions/neutral/cargo_rush.lua:46
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Priority shipment to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Prioritní zásilka na {pnt} v systému {sys}."
 
 #: dat/missions/neutral/cargo_rush.lua:47
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Pressing cargo delivery to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Spěšné doručení nákladu na {pnt} v systému {sys}."
 
 #: dat/missions/neutral/cargo_rush.lua:48
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Urgent cargo delivery to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Naléhavé doručení nákladu na {pnt} v systému {sys}."
 
 #: dat/missions/neutral/cargo_rush.lua:49
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Emergency cargo delivery to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Nouzové doručení nákladu na {pnt} v systému {sys}."
 
 #: dat/missions/neutral/cargo_rush.lua:66
 msgid ""
@@ -64161,10 +63771,8 @@ msgid "Buy as much {cargo} as possible"
 msgstr ""
 
 #: dat/missions/neutral/commodity_run.lua:112
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Take the {cargo} to {pnt} in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Vezměte {cargo} na {pnt} v systému {sys}"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -64749,10 +64357,8 @@ msgid "Have the nerds not told you to pick them up at the bar? Mission failed!"
 msgstr ""
 
 #: dat/missions/neutral/diy-nerds.lua:271
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return the nerds to {pnt}"
-msgstr "Stanice Cantina"
+msgstr "Vraťte nerdy na {pnt}"
 
 #. hooked to 'land' in the final stage (returning the nerds)
 #: dat/missions/neutral/diy-nerds.lua:280
@@ -65678,17 +65284,13 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:53
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Deliver the recipes to Michal on {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Doručte recepty Michalovi na {pnt} v systému {sys}."
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:56
 #: dat/missions/neutral/foodbiz/deliverlove.lua:73
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Fly to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Leťte na {pnt} v systému {sys}."
 
 #. set up hooks
 #: dat/missions/neutral/foodbiz/delivercake.lua:67
@@ -65816,10 +65418,8 @@ msgid "Deliver Love"
 msgstr ""
 
 #: dat/missions/neutral/foodbiz/deliverlove.lua:70
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Deliver love letters to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Doručte milostné dopisy na {pnt} v systému {sys}."
 
 #. set up hooks
 #: dat/missions/neutral/foodbiz/deliverlove.lua:85
@@ -66191,20 +65791,16 @@ msgstr ""
 #: dat/missions/neutral/kidnapped/traffic_01.lua:75
 #: dat/missions/neutral/kidnapped/traffic_01.lua:79
 #: dat/missions/neutral/kidnapped/traffic_01.lua:139
-#, fuzzy
-#| msgid "The Frontier"
 msgid "The Lost Brother"
-msgstr "Pohraničí"
+msgstr "Ztracený bratr"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:76
 msgid "Some money and a happy sister."
 msgstr ""
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:77
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Locate the brother in the {1} system, the {2} system, or the {3} system"
-msgstr "Stanice Cantina"
+msgstr "Najděte bratra v systému {1}, v systému {2} nebo v systému {3}"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:81
 #: dat/missions/neutral/kidnapped/traffic_01.lua:141
@@ -66229,16 +65825,12 @@ msgstr ""
 #. we can break, we found what we were looking for
 #. if we visited a system without the brother: update OSD
 #: dat/missions/neutral/kidnapped/traffic_01.lua:135
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Locate the brother in the {1} system or the {2} system"
-msgstr "Stanice Cantina"
+msgstr "Najděte bratra v systému {1} nebo v systému {2}"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:137
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Locate the brother in the {1} system"
-msgstr "Stanice Cantina"
+msgstr "Najděte bratra v systému {1}"
 
 #. update OSD
 #: dat/missions/neutral/kidnapped/traffic_01.lua:149
@@ -66577,20 +66169,17 @@ msgid "The Old Woman"
 msgstr ""
 
 #: dat/missions/neutral/oldwoman.lua:75
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "An aging lady has asked you to ferry her to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr ""
+"Stárnoucí dáma vás požádala, abyste ji přepravili na {pnt} v systému {sys}."
 
 #: dat/missions/neutral/oldwoman.lua:76
 msgid "Fair monetary compensation"
 msgstr ""
 
 #: dat/missions/neutral/oldwoman.lua:78
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Take the old woman to {pnt} ({sys} system)"
-msgstr "Stanice Cantina"
+msgstr "Vezměte starou ženu na {pnt} do systému ({sys})"
 
 #. Date hook.
 #: dat/missions/neutral/oldwoman.lua:98
@@ -66721,10 +66310,8 @@ msgstr ""
 #: dat/missions/pirate/pir_hit.lua:180
 #: dat/missions/pirate/pir_hit_intro.lua:167
 #: dat/missions/proteron/dissbounty_dead.lua:68
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "You have left the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Opustili jste systém {sys}."
 
 #: dat/missions/neutral/patrol.lua:68
 msgid "Eliminate hostiles"
@@ -67349,12 +66936,12 @@ msgid "Encrypted Data Matrix"
 msgstr ""
 
 #: dat/missions/neutral/poi.lua:143
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "You found a pristine derelict with an Encrypted Data Matrix in the {sys} "
 "system.."
-msgstr "Stanice Cantina"
+msgstr ""
+"V systému {sys} jste našli nedotčenou opuštěnou loď se zašifrovanou datovou "
+"maticí."
 
 #: dat/missions/neutral/poi.lua:147
 msgid ""
@@ -67561,10 +67148,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/poi/data_intro.lua:43
-#, fuzzy
-#| msgid "Death awaits you!"
 msgid "Take the Data Matrix."
-msgstr "Čeká tě smrt!"
+msgstr "Vezměte si datovou matici."
 
 #: dat/missions/neutral/poi/data_intro.lua:48
 msgid ""
@@ -67588,12 +67173,12 @@ msgstr ""
 #. Must be locked
 #. Must be nebula or near nebula
 #: dat/missions/neutral/poi/nebula_crystals.lua:23
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "You found large amounts of {cargo} on a pristine derelict in the {sys} "
 "system."
-msgstr "Stanice Cantina"
+msgstr ""
+"Našli jste velké množství {nákladu} na nedotčené opuštěné lodi v systému "
+"{sys}."
 
 #: dat/missions/neutral/poi/nebula_crystals.lua:27
 msgid "You have received #g{amount} of {cargo}#0."
@@ -67793,10 +67378,8 @@ msgid "I think I have idea."
 msgstr ""
 
 #: dat/missions/neutral/poi/proteron_agent.lua:80
-#, fuzzy
-#| msgid "\"Beat it.\""
 msgid "Beats me."
-msgstr "\"Vypadni!\""
+msgstr "To mi hlava nebere."
 
 #: dat/missions/neutral/poi/proteron_agent.lua:84
 msgid ""
@@ -68650,10 +68233,8 @@ msgid "Board checkpoint 3"
 msgstr ""
 
 #: dat/missions/neutral/race1.lua:50 dat/missions/neutral/race2.lua:53
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Land at {pnt}"
-msgstr "Stanice Cantina"
+msgstr "Přistaňte na {pnt}"
 
 #: dat/missions/neutral/race1.lua:52
 msgid "Awesome"
@@ -68981,10 +68562,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/reynir.lua:103 dat/missions/neutral/reynir.lua:107
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Take Reynir home to {pnt}"
-msgstr "Stanice Cantina"
+msgstr "Vezměte Reynira domů na {pnt}"
 
 #: dat/missions/neutral/reynir.lua:106
 msgid ""
@@ -69093,10 +68672,8 @@ msgid "{credits} on delivery."
 msgstr ""
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:63
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Deliver Cynthia safely to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Doručte Cynthii bezpečně na {pnt} v systému {sys}."
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:66
 msgid "\"Thank you. But we must leave now, before anyone sees me.\""
@@ -69122,10 +68699,8 @@ msgstr ""
 
 #. Migrate an old mission in progress
 #: dat/missions/neutral/runaway/runaway_search.lua:63
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Search for Cynthia on {pnt} in {sys}"
-msgstr "Stanice Cantina"
+msgstr "Hledejte Cynthii na {pnt} v {sys}"
 
 #. This mission does not make any system claims
 #. luacheck: globals land (Hook functions passed by name)
@@ -69888,10 +69463,8 @@ msgstr ""
 
 #. Set mission details
 #: dat/missions/neutral/sightseeing.lua:114
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Sightseeing in the {sys} System"
-msgstr "Stanice Cantina"
+msgstr "Prohlídka v systému {sys}"
 
 #: dat/missions/neutral/sightseeing.lua:115
 msgid ""
@@ -69918,10 +69491,8 @@ msgid "Go to all indicated points"
 msgstr ""
 
 #: dat/missions/neutral/sightseeing.lua:136
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to {pnt} in the {sys} system and collect your pay"
-msgstr "Stanice Cantina"
+msgstr "Vraťte se na {pnt} v systému {sys} a vyzvedněte si výplatu"
 
 #: dat/missions/neutral/sightseeing.lua:138
 msgid "Sightseers"
@@ -70103,10 +69674,8 @@ msgstr ""
 
 #: dat/missions/neutral/spacefamily.lua:67
 #: dat/missions/neutral/spacefamily.lua:110
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Take the space family to {pnt} in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Vezměte vesmírnou rodinu do {pnt} v systému {sys}"
 
 #. Force unboard
 #. Given a system, return the first landable planet found, or nil if none are landable (shouldn't happen in this script)
@@ -70490,10 +70059,8 @@ msgstr ""
 #: dat/missions/pirate/blackcat.lua:47 dat/missions/pirate/blackcat.lua:94
 #: dat/missions/pirate/blackcat.lua:98 dat/missions/pirate/blackcat.lua:101
 #: dat/missions/pirate/blackcat.lua:296
-#, fuzzy
-#| msgid "Back so soon?"
 msgid "Black Cat"
-msgstr "Zpátky tak brzy?"
+msgstr "Černá kočka"
 
 #: dat/missions/pirate/blackcat.lua:49
 msgid ""
@@ -70538,10 +70105,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:62
-#, fuzzy
-#| msgid "Death awaits you!"
 msgid "Take the cat with you"
-msgstr "Čeká tě smrt!"
+msgstr "Vezměte kočku s sebou"
 
 #: dat/missions/pirate/blackcat.lua:63
 msgid "Let the cat be"
@@ -70916,10 +70481,8 @@ msgid "An assemblage of illegal weapons."
 msgstr ""
 
 #: dat/missions/pirate/contraband.lua:67
-#, fuzzy
-#| msgid "Contributions"
 msgid "Contraband"
-msgstr "Příspěvky"
+msgstr "Kontraband"
 
 #: dat/missions/pirate/contraband.lua:67
 msgid "A diverse assortment of illegal contraband goods."
@@ -71193,10 +70756,8 @@ msgstr ""
 
 #: dat/missions/pirate/contraband.lua:148
 #: dat/missions/pirate/contraband.lua:150
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Smuggling contraband goods to {pnt} in the {sys} system.{msg}"
-msgstr "Stanice Cantina"
+msgstr "Pašování ilegálního zboží na {pnt} v systému {sys}.{msg}"
 
 #: dat/missions/pirate/contraband.lua:150
 msgid ""
@@ -71312,10 +70873,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/pirate/contraband_cake.lua:77
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "You stare at them coldly."
-msgstr "Dlužíš mi 20 kreditů!"
+msgstr "Chladně se na ně podíváš."
 
 #: dat/missions/pirate/contraband_cake.lua:78
 msgid ""
@@ -71326,10 +70885,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/pirate/contraband_cake.lua:87
-#, fuzzy
-#| msgid "Accept the offer"
 msgid "You decline their offer."
-msgstr "Přijmi nabídku"
+msgstr "Jejich nabídku odmítneš."
 
 #: dat/missions/pirate/contraband_cake.lua:88
 msgid ""
@@ -71421,10 +70978,8 @@ msgid "Deliver Cake"
 msgstr ""
 
 #: dat/missions/pirate/contraband_cake.lua:128
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Fly to {pnt} in the {sys} system without getting scanned"
-msgstr "Stanice Cantina"
+msgstr "Leťte na {pnt} v systému {sys} a nenechte se skenovat"
 
 #: dat/missions/pirate/contraband_cake.lua:132
 msgid ""
@@ -71566,10 +71121,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/pirate/hitman.lua:60 dat/missions/pirate/hitman2.lua:59
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to {pnt} in the {sys} system for payment"
-msgstr "Stanice Cantina"
+msgstr "Návrat na {pnt} v systému {sys} pro platbu"
 
 #: dat/missions/pirate/hitman.lua:63
 msgid ""
@@ -71629,18 +71182,15 @@ msgid "Assassin"
 msgstr ""
 
 #: dat/missions/pirate/hitman2.lua:55
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "A shifty businessman has tasked you with killing merchant competition in the "
 "{sys} system."
-msgstr "Stanice Cantina"
+msgstr ""
+"Podvodný obchodník vás pověřil likvidací obchodní konkurence v systému {sys}."
 
 #: dat/missions/pirate/hitman2.lua:58
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Kill Trader pilots in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Zabít obchodní piloty v systému {sys}"
 
 #: dat/missions/pirate/hitman2.lua:62
 msgid ""
@@ -71805,10 +71355,8 @@ msgstr ""
 
 #: dat/missions/pirate/pir_clan_cargo.lua:72
 #: dat/missions/pirate/pir_clan_cargo.lua:77
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Doručte několik krabic pirátskému klanu {pnt} v systému {sys}."
 
 #: dat/missions/pirate/pir_clan_cargo.lua:75
 msgid "You roll up your sleeves and head off to your ship."
@@ -72041,10 +71589,8 @@ msgstr ""
 
 #. Nothing to do.
 #: dat/missions/pirate/pir_hit_intro.lua:202
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Target eliminated! Return to {pnt} ({sys} system)."
-msgstr "Stanice Cantina"
+msgstr "Cíl zničen! Návrat do systému {pnt} ({sys})."
 
 #. Use a dynamic faction so they don't get killed
 #: dat/missions/pirate/pir_hit_intro.lua:248
@@ -72162,10 +71708,8 @@ msgid "Stealing a {class}"
 msgstr ""
 
 #: dat/missions/pirate/pir_ship_stealing.lua:176
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Land on {pnt} in the {sys} system and escape with your new {class}"
-msgstr "Stanice Cantina"
+msgstr "Přistaňte na {pnt} v systému {sys} a unikněte se svou novou {class}"
 
 #: dat/missions/pirate/pir_ship_stealing.lua:179
 msgid "A brand new {class}"
@@ -72186,12 +71730,10 @@ msgstr ""
 #. Why would we care?
 #. Try to swap ships
 #: dat/missions/pirate/pir_ship_stealing.lua:206
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "You acquired the ship through illegitimate means at {pnt} in the {sys} "
 "system. Yarr!"
-msgstr "Stanice Cantina"
+msgstr "Loď jste získali nelegální cestou na {pnt} v systému {sys}. Yarr!"
 
 #. Failed to swap ship!
 #: dat/missions/pirate/pir_ship_stealing.lua:208
@@ -72558,11 +72100,9 @@ msgid "small"
 msgstr ""
 
 #: dat/missions/pirate/raid.lua:150
-#, fuzzy
-#| msgid "Za'lek trash!"
 msgctxt "raid"
 msgid "medium"
-msgstr "Za'lekský odpad!"
+msgstr "střední"
 
 #: dat/missions/pirate/raid.lua:153
 msgctxt "raid"
@@ -72589,10 +72129,8 @@ msgid "{rbase} and {rcargo} per ton of {cargo} recovered"
 msgstr ""
 
 #: dat/missions/pirate/raid.lua:172
-#, fuzzy
-#| msgid "Brandt Station"
 msgid "Pirate Raid"
-msgstr "Stanice Brandt"
+msgstr "Nájezd pirátů"
 
 #: dat/missions/pirate/raid.lua:174
 msgid "Plunder {cargo} from the convoy"
@@ -72925,10 +72463,8 @@ msgid "Dark Shadow"
 msgstr ""
 
 #: dat/missions/shadow/darkshadow.lua:37
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Look for Jorek on {pnt} in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Hledejte Joreka na {pnt} v systému {sys}"
 
 #: dat/missions/shadow/darkshadow.lua:49
 msgid "An urgent invitation"
@@ -73442,10 +72978,8 @@ msgid "Fetch the Four Winds informant from his ship"
 msgstr ""
 
 #: dat/missions/shadow/darkshadow.lua:434
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return Jorek and the informant to the Seiryuu in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Vraťte Joreka a informátora do Seiryuu v systému {sys}"
 
 #. Non-persistent state
 #. Forward-declared functions
@@ -73589,10 +73123,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/shadow/shadowrun.lua:79 dat/missions/shadow/shadowrun.lua:146
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Fly to planet {pnt} in the {sys} system and pick up Jorek"
-msgstr "Stanice Cantina"
+msgstr "Leťte na planetu {pnt} v soustavě {sys} a vyzvedněte Joreka"
 
 #: dat/missions/shadow/shadowrun.lua:90
 msgid ""
@@ -73877,10 +73409,8 @@ msgid "You are invited to a meeting in {sys}"
 msgstr ""
 
 #: dat/missions/shadow/shadowvigil.lua:60
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Fly to the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Přeleťte do systému {sys}."
 
 #. Delayed claim to let time for the event's claim to disappear
 #. Boarding the Seiryuu at the beginning of the mission
@@ -74673,10 +74203,8 @@ msgstr ""
 #. jumping out the system
 #. You were supposed to kill him, not to go away !
 #: dat/missions/shark/sh00_ancestorkill.lua:106
-#, fuzzy
-#| msgid "Accept the offer"
 msgid "You left the pirate."
-msgstr "Přijmi nabídku"
+msgstr "Opustil jsi piráta."
 
 #. Jumping in Toaxis for the battle
 #. Check if the player uses a Shark
@@ -74707,10 +74235,8 @@ msgstr ""
 
 #. he went away
 #: dat/missions/shark/sh00_ancestorkill.lua:152
-#, fuzzy
-#| msgid "The Proteron are watching you."
 msgid "The pirate ran away."
-msgstr "Proteronové tě sledují."
+msgstr "Pirát uprchl."
 
 #: dat/missions/shark/sh01_corvette.lua:50
 msgid ""
@@ -74792,10 +74318,8 @@ msgstr ""
 #. The shark becomes nice outfits
 #. you killed the shark
 #: dat/missions/shark/sh01_corvette.lua:140
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "You destroyed the Lancelot."
-msgstr "Dlužíš mi 20 kreditů!"
+msgstr "Zničil jsi Lancelot."
 
 #: dat/missions/shark/sh02_tapping.lua:48
 msgid "Arnold Smith is here. Perhaps he might have another job for you."
@@ -75316,8 +74840,6 @@ msgstr ""
 #. Initialization of dead pirate memory
 #. set the names of the pirates (and make sure they aren't duplicates)
 #: dat/missions/shark/sh07_pirates.lua:76
-#, fuzzy
-#| msgid "Andee III"
 msgid "{name} III"
 msgstr "Andee III"
 
@@ -75991,10 +75513,8 @@ msgid "Talk to Harja"
 msgstr ""
 
 #: dat/missions/sirius/achack/achack03.lua:61
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to Joanne on {pnt} ({sys})"
-msgstr "Stanice Cantina"
+msgstr "Navraťte se k Joanne on {pnt} ({sys})"
 
 #. Jump-out hook.
 #. Enter hook.
@@ -76384,10 +75904,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/sirius/achack/achack04.lua:114
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to {pnt} ({sys})"
-msgstr "Stanice Cantina"
+msgstr "Návrat na {pnt} ({sys})"
 
 #: dat/missions/sirius/achack/achack04.lua:116
 #: dat/missions/sirius/achack/achack04.lua:140
@@ -76579,10 +76097,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/sirius/heretic/heretic0.lua:54
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Deliver the shipment to {pnt} in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Doručení zásilky do {pnt} v systému {sys}"
 
 #: dat/missions/sirius/heretic/heretic0.lua:59
 msgid ""
@@ -76721,18 +76237,15 @@ msgid ""
 msgstr ""
 
 #: dat/missions/sirius/heretic/heretic1.lua:57
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "Shaman of Nasin has hired you to deliver the message to {pnt} in the {sys} "
 "system."
-msgstr "Stanice Cantina"
+msgstr ""
+"Šaman z Nasinu si tě najal, abys doručil zprávu do {pnt} v systému {sys}."
 
 #: dat/missions/sirius/heretic/heretic1.lua:60
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Fly to {pnt} in the {sys} system and deliver the message"
-msgstr "Stanice Cantina"
+msgstr "Leťte na {pnt} v systému {sys} a doručte zprávu"
 
 #: dat/missions/sirius/heretic/heretic1.lua:63
 msgid "Message"
@@ -77128,10 +76641,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/sirius/heretic/heretic4.lua:65
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Fly the refugees to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Odleťte s uprchlíky na {pnt} v systému {sys}."
 
 #: dat/missions/sirius/heretic/heretic4.lua:67
 msgid "Refugees"
@@ -77500,10 +77011,8 @@ msgstr ""
 
 #. Date hook
 #: dat/missions/sirius/srs_ferry.lua:346
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Fly to {pnt} in the {sys} system before {time}"
-msgstr "Stanice Cantina"
+msgstr "Letět na {pnt} v systému {sys} před {time}"
 
 #: dat/missions/sirius/srs_ferry.lua:350 dat/missions/sirius/srs_ferry.lua:361
 msgid "Pilgrimage transport"
@@ -78843,10 +78352,8 @@ msgid "Hail and bribe the pirates"
 msgstr ""
 
 #: dat/missions/tutorial/nelly02.lua:475
-#, fuzzy
-#| msgid "\"I would be able to refuel your ship for %s.\""
 msgid "Nelly: \"Now we should be able to get out of here safely.\""
-msgstr "„Byl bych schopen natankovat vaši loď za %s.“"
+msgstr "Nelly: \"Teď už bychom se odsud měli bezpečně dostat.\""
 
 #: dat/missions/tutorial/nelly02.lua:483
 msgid "Nelly: \"I guess that's another way of doing it.\""
@@ -79798,16 +79305,12 @@ msgid "Bring on the pain!"
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:391
-#, fuzzy
-#| msgid "You're no match for the Dvaered!"
 msgid "You're no match for the fearsome T. Practice!"
-msgstr "Pro Dvaered nejsi žádná výzva!"
+msgstr "S obávaným T se nemůžete měřit. Trénujte!"
 
 #: dat/missions/tutorial/tutorial.lua:392
-#, fuzzy
-#| msgid "I've destroyed ships twice the size of yours!"
 msgid "I've been shot by ships ten times your size!"
-msgstr "Zničil jsem lodě dvakrát větší než je ta tvá!"
+msgstr "Střílely na mě lodě desetkrát větší než je Vaše!"
 
 #: dat/missions/tutorial/tutorial.lua:393
 msgid "Let's get it on!"
@@ -79854,10 +79357,8 @@ msgid "I'm invincible, I cannot be vinced!"
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:404
-#, fuzzy
-#| msgid "You think that you can take me on?"
 msgid "You think you can take me?"
-msgstr "Myslíš si, že si mě můžeš vzít?"
+msgstr "Myslíš, že mě můžeš dostat?"
 
 #: dat/missions/tutorial/tutorial.lua:405
 msgid "When I'm done, you'll look like pastrami!"
@@ -79936,10 +79437,8 @@ msgid "Keep going, see what happens!"
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:424
-#, fuzzy
-#| msgid "You can't bribe me!"
 msgid "You don't scare me!"
-msgstr "Nemůžeš mě podplatit!"
+msgstr "Nemám z tebe strach!"
 
 #: dat/missions/tutorial/tutorial.lua:425
 msgid "What do you think this is, knitting hour?"
@@ -79962,10 +79461,8 @@ msgid "Go on, shoot me."
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:430
-#, fuzzy
-#| msgid "You wanna do this? Have it your way."
 msgid "You can do it! I believe in you."
-msgstr "Chceš to udělat? Ať je po tvém."
+msgstr "Zvládnete to! Věřím ve vás."
 
 #: dat/missions/tutorial/tutorial.lua:431
 msgid "Shoot me!"
@@ -79980,10 +79477,8 @@ msgid "But if you don't shoot me, I'll tell the galaxy your terrible secret."
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:436
-#, fuzzy
-#| msgid "Okay, that's enough of that!"
 msgid "Okay, that's about enough."
-msgstr "Dobře, už je toho dost!"
+msgstr "Dobře, to už by stačilo."
 
 #: dat/missions/tutorial/tutorial.lua:437
 msgid "You can stop now."
@@ -80002,10 +79497,8 @@ msgid "Let's be pals, I'll buy you an ale!"
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:441
-#, fuzzy
-#| msgid "Game over, you're dead!"
 msgid "Game over, you win."
-msgstr "Hra skončila, jsi mrtvý!"
+msgstr "Hra skončila, vyhrál jsi."
 
 #: dat/missions/tutorial/tutorial.lua:442
 msgid "I've got a wife and kids! And a cat!"
@@ -80024,20 +79517,16 @@ msgid "I'm sorry!"
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:446
-#, fuzzy
-#| msgid "\"Just leave me alone!\""
 msgid "Leave me alone!"
-msgstr "\"Nech mě prostě na pokoji!\""
+msgstr "Nechte mě na pokoji!"
 
 #: dat/missions/tutorial/tutorial.lua:447
 msgid "What did I ever do to you?"
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:448
-#, fuzzy
-#| msgid "This isn't what I signed up for!"
 msgid "I didn't sign up for this!"
-msgstr "To není to, k čemu jsem se upsal!"
+msgstr "k tomuhle jsem se neupsal!"
 
 #: dat/missions/tutorial/tutorial.lua:449
 msgid "Not my ship, anything but my ship!"
@@ -80206,12 +79695,12 @@ msgid "Black Hole Research"
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh01.lua:79
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "Take Zach to see what happened to his colleagues at {pnt} in the {sys} "
 "system."
-msgstr "Stanice Cantina"
+msgstr ""
+"Vezměte Zacha, aby se podíval, co se stalo jeho kolegům v {pnt} systému "
+"{sys}."
 
 #: dat/missions/zalek/blackhole/zbh01.lua:85
 #, fuzzy
@@ -80448,28 +79937,24 @@ msgid "Repairing Sigma-13"
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh02.lua:83
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "Pick up the necessary supplies at {pnt} in the {sys} system and bring them "
 "back to Zach at {retpnt}."
-msgstr "Stanice Cantina"
+msgstr ""
+"Vyzvedněte si potřebné zásoby na {pnt} v systému {sys} a přivezte je Zachovi "
+"na {retpnt}."
 
 #: dat/missions/zalek/blackhole/zbh02.lua:90
 #: dat/missions/zalek/blackhole/zbh05.lua:98
 #: dat/missions/zalek/blackhole/zbh08.lua:95
 #: dat/missions/zalek/particlephysics/zpp02.lua:87
 #: dat/missions/zalek/particlephysics/zpp04.lua:85
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Pick up cargo at {pnt} ({sys} system)"
-msgstr "Stanice Cantina"
+msgstr "Vyzvednout náklad na {pnt} (systém {sys})"
 
 #: dat/missions/zalek/blackhole/zbh02.lua:108
-#, fuzzy
-#| msgid "Za'lek trash!"
 msgid "Za'lek Individual"
-msgstr "Za'lekský odpad!"
+msgstr "Za'lekský jedinec"
 
 #: dat/missions/zalek/blackhole/zbh02.lua:112
 msgid ""
@@ -80708,10 +80193,8 @@ msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh03.lua:97
 #: dat/missions/zalek/blackhole/zbh04.lua:82
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Patrol the {sys} system and report your observations to Zach at {pnt}."
-msgstr "Stanice Cantina"
+msgstr "Hlídejte systém {sys} a nahlaste svá pozorování Zachovi na {pnt}."
 
 #: dat/missions/zalek/blackhole/zbh03.lua:103
 #: dat/missions/zalek/blackhole/zbh04.lua:88
@@ -80755,10 +80238,8 @@ msgstr ""
 #: dat/missions/zalek/blackhole/zbh06.lua:114
 #: dat/missions/zalek/blackhole/zbh10.lua:90
 #: dat/missions/zalek/blackhole/zbh10.lua:147
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "You were supposed to eliminate the hostiles!"
-msgstr "Stanice Cantina"
+msgstr "Měli jste zlikvidovat nepřátele!"
 
 #: dat/missions/zalek/blackhole/zbh03.lua:153
 msgid "Zach: I've detected some incoming ships from {sys}!"
@@ -80881,10 +80362,8 @@ msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh04.lua:98
 #: dat/missions/zalek/blackhole/zbh04.lua:168
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "You were supposed to follow the detected motion!"
-msgstr "Stanice Cantina"
+msgstr "Měli jste sledovat zjištěný pohyb!"
 
 #: dat/missions/zalek/blackhole/zbh04.lua:106
 msgid ""
@@ -81065,10 +80544,8 @@ msgstr ""
 #. Main boss gets hilighted
 #: dat/missions/zalek/blackhole/zbh04.lua:273
 #: dat/missions/zalek/blackhole/zbh06.lua:156
-#, fuzzy
-#| msgid "No response."
 msgid "No response"
-msgstr "Žádná odpověď."
+msgstr "Žádná odpověď"
 
 #: dat/missions/zalek/blackhole/zbh04.lua:285
 msgid ""
@@ -81259,12 +80736,12 @@ msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh05.lua:91
 #: dat/missions/zalek/blackhole/zbh08.lua:88
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "Pick up the necessary supplies at {pnt} ({sys} system) and bring them back "
 "to Zach at {retpnt} ({retsys} system)."
-msgstr "Stanice Cantina"
+msgstr ""
+"Vyzvedněte si potřebné zásoby na {pnt} (systém {sys}) a vraťte je Zachovi na "
+"{retpnt} (systém {retsys})."
 
 #: dat/missions/zalek/blackhole/zbh05.lua:115
 msgid ""
@@ -81659,16 +81136,12 @@ msgid "\"Next time warn me.\""
 msgstr ""
 
 #: dat/missions/zalek/blackhole/zbh07.lua:219
-#, fuzzy
-#| msgid "You are a parasite!"
 msgid "\"You're an asshole!\""
-msgstr "Jsi parazit!"
+msgstr "\"Ty jsi ale kretén!\""
 
 #: dat/missions/zalek/blackhole/zbh07.lua:220
-#, fuzzy
-#| msgid "You should have picked easier prey!"
 msgid "\"You could have killed Icarus!\""
-msgstr "Měli jsi si vybrat snadnější kořist!"
+msgstr "\"Mohl jsi Ikaruse zabít!\""
 
 #: dat/missions/zalek/blackhole/zbh07.lua:224
 msgid ""
@@ -83611,10 +83084,8 @@ msgid "Emergency of Immediate Inspiration"
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:98
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Take Dr. Mensing to {pnt} in the {sys} system as fast as possible!"
-msgstr "Stanice Cantina"
+msgstr "Vezměte doktora Mensinga na {pnt} v systému {sys} co nejrychleji!"
 
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:101
 msgid ""
@@ -83753,11 +83224,10 @@ msgid "a reputation as scientist (?)"
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:81
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "Fly to {pnt} in the {sys} system before {time} and give a scientific talk."
-msgstr "Stanice Cantina"
+msgstr ""
+"Odleťte do {pnt} v systému {sys} před {time} a předneste vědeckou přednášku."
 
 #. 100STU per tick
 #. set OSD
@@ -84028,10 +83498,8 @@ msgid "\"Too bad. Maybe you will change your mind.\""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:59
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "\"Great! Our first destination is {pnt} in the {sys} system.\""
-msgstr "Stanice Cantina"
+msgstr "\"Skvělé! Naším prvním cílem je {pnt} v systému {sys}.\""
 
 #. Set up mission information
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:72
@@ -84394,10 +83862,8 @@ msgid "Sigh."
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:143
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Ask about the payment."
-msgstr "Stanice Cantina"
+msgstr "Zeptejte se na platbu."
 
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:146
 msgid ""
@@ -84457,10 +83923,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:214
-#, fuzzy
-#| msgid "Wait"
 msgid "Wait..."
-msgstr "Počkáš"
+msgstr "Počkat..."
 
 #: dat/missions/zalek/neburesearch/neburesearch_05.lua:226
 msgid "Ghost Ship"
@@ -84776,16 +84240,12 @@ msgid "Particle Physics"
 msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:92
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Take Noona and some equipment to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Vezměte Noonu a nějaké vybavení na {pnt} v systému {sys}."
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:97
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Drop off Noona and the equipment at {pnt} ({sys} system)"
-msgstr "Stanice Cantina"
+msgstr "Vysaďte Noonu a vybavení na {pnt} (v systému {sys})"
 
 #: dat/missions/zalek/particlephysics/zpp01.lua:112
 msgid ""
@@ -84983,19 +84443,16 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:81
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "Pick up some {cargo} from {pnt} in the {sys} system and deliver them to "
 "{retpnt}."
-msgstr "Stanice Cantina"
+msgstr ""
+"Vyzvedněte nějaký {náklad} z {pnt} v systému {sys} a doručte ho na {retpnt}."
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:88
 #: dat/missions/zalek/particlephysics/zpp04.lua:86
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Deliver to {pnt} ({sys} system)"
-msgstr "Stanice Cantina"
+msgstr "Doručit na {pnt} v systému ({sys})"
 
 #: dat/missions/zalek/particlephysics/zpp02.lua:101
 #: dat/missions/zalek/particlephysics/zpp02.lua:133
@@ -85150,10 +84607,8 @@ msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:83
 #: dat/missions/zalek/particlephysics/zpp05.lua:81
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to Katar I"
-msgstr "Stanice Cantina"
+msgstr "Návrat na Katar I"
 
 #: dat/missions/zalek/particlephysics/zpp03.lua:102
 msgid "You land and find Noona waiting outside your ship expectantly."
@@ -85305,12 +84760,11 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:79
-#, fuzzy
-#| msgid "Cantina Station"
 msgid ""
 "Pick up some cargo from {pnt} in the {sys} system and deliver them to "
 "{retpnt}."
-msgstr "Stanice Cantina"
+msgstr ""
+"Vyzvedněte nějaký náklad z {pnt} v systému {sys} a doručte ho do {retpnt}."
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:100
 #: dat/missions/zalek/particlephysics/zpp04.lua:128
@@ -85392,10 +84846,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:163
-#, fuzzy
-#| msgid "Strange Happenings"
 msgid "Strange Container"
-msgstr "Zvláštní události"
+msgstr "Podivný kontejner"
 
 #: dat/missions/zalek/particlephysics/zpp04.lua:163
 msgid ""
@@ -85505,10 +84957,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:124
-#, fuzzy
-#| msgid "You are no match for the Empire!"
 msgid "You were supposed to perform the experiment!"
-msgstr "Pro impérium nejsi žádná výzva!"
+msgstr "Bylo nutné provést experiment!"
 
 #. Spawn the drones
 #. TODO better location once testing center object is created
@@ -85561,10 +85011,8 @@ msgid "Are you alright? Communication cut off for a bit."
 msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp05.lua:320
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Come back to Katar I."
-msgstr "Stanice Cantina"
+msgstr "Vraťte se na Katar I."
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:43
 msgid "You meet Noona who seems to be a bit more calm than usual."
@@ -85588,10 +85036,8 @@ msgstr ""
 
 #. Must be accepted beyond this point
 #: dat/missions/zalek/particlephysics/zpp06.lua:67
-#, fuzzy
-#| msgid "Za'lek Belligerent"
 msgid "Za'lek Report"
-msgstr "Útočný Za'lek"
+msgstr "Za'lekská zpráva"
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:67
 msgid ""
@@ -85600,16 +85046,12 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:73
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Deliver Noona's preliminary report to {pnt} in the {sys} system."
-msgstr "Stanice Cantina"
+msgstr "Předběžnou zprávu Noony doručte na {pnt} v systému {sys}."
 
 #: dat/missions/zalek/particlephysics/zpp06.lua:78
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Deliver a report to {pnt} ({sys} system)"
-msgstr "Stanice Cantina"
+msgstr "Doručení zprávy na {pnt} do systému ({sys})"
 
 #. Just for the letter
 #: dat/missions/zalek/particlephysics/zpp06.lua:95
@@ -85762,10 +85204,8 @@ msgid "The one with the Shopping"
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:61
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Go to the {sys} system and talk to the trader on {pnt}"
-msgstr "Stanice Cantina"
+msgstr "Přeleťte do systému {sys} a promluvte si s obchodníkem na {pnt}"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:63
 msgid ""
@@ -85839,10 +85279,8 @@ msgid "A colourless, flammable, poisonous gas."
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:123
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to the {sys} system to the trader on {pnt}"
-msgstr "Stanice Cantina"
+msgstr "Návrat do systému {sys} k obchodníkovi na {pnt}"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:134
 msgid ""
@@ -85852,10 +85290,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:140
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return to the {sys} system and deliver to Dr. Geller on {pnt}"
-msgstr "Stanice Cantina"
+msgstr "Vraťte se do systému {sys} a předejte to Dr. Gellerovi na {pnt}"
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:154
 msgid ""
@@ -86069,10 +85505,8 @@ msgid "The one with the Visit"
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:58
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Go to the {sys} system and find the {plt}"
-msgstr "Stanice Cantina"
+msgstr "Přejděte do systému {sys} a najděte {plt}"
 
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:59
 msgid "Board the {plt} and retrieve the secret technology"
@@ -86165,20 +85599,16 @@ msgid "The one with the Runaway"
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:61
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Go to the {sys} system and hail the prototype"
-msgstr "Stanice Cantina"
+msgstr "Přejděte do systému {sys} a kontaktujte prototyp"
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:62
 msgid "Disable the prototype"
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:63
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Return the prototype to {pnt} in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Vrátit prototyp na {pnt} v systému {sys}"
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:64
 msgid ""
@@ -86298,10 +85728,8 @@ msgstr ""
 
 #. last hook
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:299
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Back on {pnt}"
-msgstr "Stanice Cantina"
+msgstr "Zpět na {pnt}"
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:299
 msgid ""
@@ -86349,16 +85777,12 @@ msgid "Za'lek Cargo Jockey"
 msgstr ""
 
 #: dat/missions/zalek/zlk_cargorun.lua:68
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Go pick up some equipment at {pnt} in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Leťte si vyzvednout nějaké vybavení na {pnt} v systému {sys}"
 
 #: dat/missions/zalek/zlk_cargorun.lua:69
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Drop off the equipment at {pnt} in the {sys} system"
-msgstr "Stanice Cantina"
+msgstr "Předejte vybavení na {pnt} v systému {sys}"
 
 #: dat/missions/zalek/zlk_cargorun.lua:72
 msgid "A long haul through tough territory"
@@ -87016,10 +86440,8 @@ msgstr[1] ""
 msgstr[2] ""
 
 #: dat/outfits/unique/poi_data.lua:14
-#, fuzzy
-#| msgid "\"I do not have fuel to spare.\""
 msgid "You do not have enough {item} to purchase this item."
-msgstr "„Nemám palivo nazbyt.“"
+msgstr "Na nákup této položky nemáte dostatek {item}."
 
 #: dat/outfits/unique/poi_data.lua:14
 msgid "Encrypted Data Matrices"
@@ -87166,10 +86588,8 @@ msgstr ""
 
 #. Check if in range
 #: dat/outfits/utility/mining_drill.lua:44
-#, fuzzy
-#| msgid "You are no match for the Empire!"
 msgid "You are too far from the asteroid to mine"
-msgstr "Pro impérium nejsi žádná výzva!"
+msgstr "Jste příliš daleko od asteroidu, než abyste ho mohli těžit"
 
 #. Check relative velocity
 #: dat/outfits/utility/mining_drill.lua:52
@@ -88298,10 +87718,8 @@ msgid "No to terraforming!"
 msgstr ""
 
 #: dat/scripts/common/antlejos.lua:84
-#, fuzzy
-#| msgid "\"Just leave me alone!\""
 msgid "Leave the planets alone!"
-msgstr "\"Nech mě prostě na pokoji!\""
+msgstr "Nechte planety na pokoji!"
 
 #: dat/scripts/common/antlejos.lua:85
 msgid "The Universe is beautiful as it is!"
@@ -88495,10 +87913,8 @@ msgid "Minerva CEO"
 msgstr ""
 
 #: dat/scripts/common/minerva.lua:69
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "The CEO of Minerva Station."
-msgstr "Stanice Cantina"
+msgstr "Generální ředitel stanice Minerva."
 
 #: dat/scripts/common/minerva.lua:73
 msgid "Mole"
@@ -89181,10 +88597,8 @@ msgstr ""
 
 #. TODO change image to proper one when Nohinohi graphics are changed
 #: dat/scripts/common/zalek_blackhole.lua:32
-#, fuzzy
-#| msgid "Za'lek trash!"
 msgid "Za'lek PI"
-msgstr "Za'lekský odpad!"
+msgstr "Za'lekský PI"
 
 #: dat/scripts/common/zalek_blackhole.lua:61
 #: dat/scripts/pilotname/generic.lua:12 dat/scripts/pilotname/pirate.lua:246
@@ -89743,13 +89157,11 @@ msgid "You jumped before the convoy you were escorting."
 msgstr ""
 
 #: dat/scripts/escort.lua:304
-#, fuzzy
-#| msgid "You will pay for your treason!"
 msgid "You landed before your escort!"
 msgid_plural "You landed before your escorts!"
 msgstr[0] "Zaplatíš za svou zradu!"
-msgstr[1] "Zaplatíš za svou zradu!"
-msgstr[2] "Zaplatíš za svou zradu!"
+msgstr[1] "Zaplatíte za svou zradu!"
+msgstr[2] "Zaplatí za svou zradu!"
 
 #: dat/scripts/escort.lua:305
 msgid ""
@@ -90851,10 +90263,8 @@ msgstr ""
 
 #: dat/scripts/minigames/blackjack.lua:336
 #: dat/scripts/minigames/chuckaluck.lua:194
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "You bet {credits}."
-msgstr "Dlužíš mi 20 kreditů!"
+msgstr "Vsadil jsi {credits}."
 
 #. Start out betting
 #. Special secretcode being input chat
@@ -91202,10 +90612,8 @@ msgid "Claw"
 msgstr ""
 
 #: dat/scripts/pilotname/generic.lua:21
-#, fuzzy
-#| msgid "Testers"
 msgid "Cluster"
-msgstr "Testeři"
+msgstr "Klastr"
 
 #: dat/scripts/pilotname/generic.lua:22 dat/scripts/pilotname/pirate.lua:275
 msgid "Cougar"
@@ -91324,10 +90732,8 @@ msgid "Mammoth"
 msgstr ""
 
 #: dat/scripts/pilotname/generic.lua:53
-#, fuzzy
-#| msgid "Atlantis I"
 msgid "Mantis"
-msgstr "Atlantis I"
+msgstr "Mantis"
 
 #: dat/scripts/pilotname/generic.lua:54 dat/scripts/pilotname/pirate.lua:377
 msgid "Mech"
@@ -91512,10 +90918,8 @@ msgid "Das"
 msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:6
-#, fuzzy
-#| msgid "Dvaered"
 msgid "Der"
-msgstr "Dvaered"
+msgstr "Der"
 
 #: dat/scripts/pilotname/pirate.lua:7
 msgid "Kono"
@@ -91587,10 +90991,8 @@ msgid "Big"
 msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:26
-#, fuzzy
-#| msgid "Big Fred"
 msgid "Big Bad"
-msgstr "Big Fred"
+msgstr "Velký padouch"
 
 #: dat/scripts/pilotname/pirate.lua:27
 msgid "Bloody"
@@ -91689,10 +91091,8 @@ msgid "Escaped"
 msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:52
-#, fuzzy
-#| msgid "Aldernael"
 msgid "Eternal"
-msgstr "Aldernael"
+msgstr "Věčný"
 
 #: dat/scripts/pilotname/pirate.lua:53
 msgid "Evil"
@@ -91920,10 +91320,8 @@ msgid "Neutron-Accelerated"
 msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:109
-#, fuzzy
-#| msgid "NeD"
 msgid "New"
-msgstr "NeD"
+msgstr "Nový"
 
 #: dat/scripts/pilotname/pirate.lua:110
 msgid "Night's"
@@ -92235,10 +91633,8 @@ msgid "Akai"
 msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:189
-#, fuzzy
-#| msgid "Amaroq I"
 msgid "Amarillo"
-msgstr "Amaroq I"
+msgstr "Amarillo"
 
 #: dat/scripts/pilotname/pirate.lua:190
 msgid "Aoi"
@@ -92261,10 +91657,8 @@ msgid "Chairo No"
 msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:196
-#, fuzzy
-#| msgid "Brimstone I"
 msgid "Crimson"
-msgstr "Brimstone I"
+msgstr "Purpurový"
 
 #: dat/scripts/pilotname/pirate.lua:197
 msgid "Cyan"
@@ -94129,16 +93523,12 @@ msgid "\"Your rank is too low, citizen. Access denied.\""
 msgstr ""
 
 #: dat/spob/lua/empire_mil_emperors_wrath.lua:8
-#, fuzzy
-#| msgid "The Emperor sees all."
 msgid "\"The Emperor permits you to land.\""
-msgstr "Císař vidí vše."
+msgstr "\"Císař vám dovoluje přistát.\""
 
 #: dat/spob/lua/empire_mil_emperors_wrath.lua:11
-#, fuzzy
-#| msgid "You are no match for the Empire!"
 msgid "\"You may not approach the Emperor.\""
-msgstr "Pro impérium nejsi žádná výzva!"
+msgstr "\"K císaři se nesmíte přiblížit.\""
 
 #: dat/spob/lua/empire_mil_emperors_wrath.lua:14
 #: dat/spob/lua/empire_mil_omega_station.lua:13
@@ -94153,26 +93543,20 @@ msgstr ""
 
 #: dat/spob/lua/empire_mil_omega_station.lua:10
 #: dat/spob/lua/proteron_mil_restricted.lua:11
-#, fuzzy
-#| msgid "You are no match for the Empire!"
 msgid "\"You are not authorized to land here.\""
-msgstr "Pro impérium nejsi žádná výzva!"
+msgstr "\"Nemáte oprávnění zde přistát.\""
 
 #: dat/spob/lua/empire_mil_restricted.lua:8
 msgid "Military clearance approved."
 msgstr ""
 
 #: dat/spob/lua/empire_mil_restricted.lua:9
-#, fuzzy
-#| msgid "Belltower Station"
 msgid "Military authorization cleared."
-msgstr "Stanice Belltower"
+msgstr "Vojenská autorizace schválena."
 
 #: dat/spob/lua/empire_mil_restricted.lua:12
-#, fuzzy
-#| msgid "You are no match for the Empire!"
 msgid "\"You are not authorized to land here, citizen.\""
-msgstr "Pro impérium nejsi žádná výzva!"
+msgstr "\"Nemáte oprávnění zde přistát, občane.\""
 
 #: dat/spob/lua/empire_mil_restricted.lua:13
 msgid "\"Landing is only for approved personnel.\""
@@ -94309,16 +93693,12 @@ msgid ""
 msgstr ""
 
 #: dat/spob/lua/lib/hypergate.lua:297
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Jump to {sysname}?"
-msgstr "Stanice Cantina"
+msgstr "Přeskočit na {sysname}?"
 
 #: dat/spob/lua/lib/hypergate.lua:298
-#, fuzzy
-#| msgid "Are you sure you want to permanently delete '%s'?"
 msgid "Are you sure you want to jump to {sysname} for {credits}?{extramsg}"
-msgstr "Určitě chcete permanentně odstranit '%s'?"
+msgstr "Jste si jisti, že chcete skočit na {sysname} pro {credits}?{extramsg}"
 
 #: dat/spob/lua/lib/hypergate.lua:304
 msgid ""
@@ -94361,16 +93741,12 @@ msgid "\"Permission to land granted.\""
 msgstr ""
 
 #: dat/spob/lua/lib/spob.lua:40
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "\"You are clear to land.\""
-msgstr "Dlužíš mi 20 kreditů!"
+msgstr "\"Přistání je povoleno.\""
 
 #: dat/spob/lua/lib/spob.lua:41
-#, fuzzy
-#| msgid "Prepare to be boarded!"
 msgid "\"Proceed to land.\""
-msgstr "Připravte se na nástup!"
+msgstr "\"Pokračujte v přistání.\""
 
 #: dat/spob/lua/lib/spob.lua:44
 #, fuzzy
@@ -94404,10 +93780,8 @@ msgid "You establish a communication channel with the authorities at {spb}."
 msgstr ""
 
 #: dat/spob/lua/lib/spob.lua:141
-#, fuzzy
-#| msgid "You owe me 20 credits!"
 msgid "Pay {credits}"
-msgstr "Dlužíš mi 20 kreditů!"
+msgstr "Zaplatit {credits}"
 
 #: dat/spob/lua/lib/spob.lua:163
 msgid ""
@@ -94416,10 +93790,8 @@ msgid ""
 msgstr ""
 
 #: dat/spob/lua/lib/spob.lua:168
-#, fuzzy
-#| msgid "Accept the offer"
 msgid "You refuse to pay the bribe."
-msgstr "Přijmi nabídku"
+msgstr "Odmítnete zaplatit úplatek."
 
 #. forcess a refresh of condition
 #. Load shader
@@ -94433,10 +93805,8 @@ msgid "\"Permission to land granted. Welcome, mate.\""
 msgstr ""
 
 #: dat/spob/lua/pirate_clanworld.lua:15
-#, fuzzy
-#| msgid "I'm out of here."
 msgid "\"Get out of here!\""
-msgstr "Mizím odsud."
+msgstr "\"Vypadněte odsud!\""
 
 #: dat/spob/lua/pirate_clanworld.lua:16
 msgid "\"Scram before I blast you to pieces myself.\""
@@ -95733,9 +95103,9 @@ msgid "Pilot '%s' ai '%s' -> 'discovered': %s"
 msgstr ""
 
 #: src/ai.c:901
-#, fuzzy, c-format
+#, c-format
 msgid "Pilot '%s' ai '%s' -> 'hail': %s"
-msgstr "Pilot '%s' se pokusil přistát bez přistávacích aktiv!"
+msgstr "Pilot '%s' UI '%s' -> 'zdraví': %s"
 
 #: src/ai.c:917
 #, c-format
@@ -95782,15 +95152,14 @@ msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
 #: src/ai.c:2289 src/nlua_pilot.c:5020
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid "Spob '%s' not found in system '%s'"
-msgstr "Formace '%s' nebyla nalezena"
+msgstr "Spob '%s' nebyl nalezen v systému '%s'"
 
 #: src/ai.c:2297
-#, fuzzy, c-format
+#, c-format
 msgid "Pilot '%s' (ai '%s') has no land target"
-msgstr "Pilot '%s' se pokusil přistát bez přistávacích aktiv!"
+msgstr "Pilot '%s' (UI '%s') nemá pozemní cíl"
 
 #: src/ai.c:2344 src/comm.c:203 src/nlua_player.c:835 src/player.c:1670
 #: src/space.c:1878 src/space.c:1975 src/space.c:1992 src/space.c:2043
@@ -95840,10 +95209,9 @@ msgid "Asteroid Type '%s' has Commodity '%s' with no 'gfx_space'."
 msgstr ""
 
 #: src/asteroid.c:618 src/asteroid.c:627
-#, fuzzy, c-format
-#| msgid "Lua Var stack has unknown node '%s'!"
+#, c-format
 msgid "Asteroid Type '%s' has unknown node '%s'"
-msgstr "Neznámý node '%s' na Lua Var stacku!"
+msgstr "Typ asteroidu '%s' má neznámý uzel '%s'"
 
 #: src/asteroid.c:622
 #, c-format
@@ -95880,10 +95248,9 @@ msgid "Malformed '%s' file: missing root element 'asteroid_group'"
 msgstr ""
 
 #: src/asteroid.c:755
-#, fuzzy, c-format
-#| msgid "Lua Var stack has unknown node '%s'!"
+#, c-format
 msgid "Asteroid Type Group '%s' has unknown node '%s'"
-msgstr "Neznámý node '%s' na Lua Var stacku!"
+msgstr "Skupina typů asteroidů '%s' má neznámý uzel '%s'"
 
 #: src/asteroid.c:994
 #, fuzzy, c-format
@@ -95905,12 +95272,13 @@ msgid ""
 msgstr ""
 
 #: src/background.c:264
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid ""
 "Background script 'rendermg' error:\n"
 "%s"
-msgstr "Formace '%s' nebyla nalezena"
+msgstr ""
+"Chyba skriptu 'rendermg' na pozadí:\n"
+"%s"
 
 #: src/background.c:276
 #, c-format
@@ -95920,18 +95288,18 @@ msgid ""
 msgstr ""
 
 #: src/background.c:291
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid ""
 "Background script 'renderov' error:\n"
 "%s"
-msgstr "Formace '%s' nebyla nalezena"
+msgstr ""
+"Chyba skriptu 'renderov' na pozadí:\n"
+"%s"
 
 #: src/background.c:413
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid "Background script '%s' not found."
-msgstr "Formace '%s' nebyla nalezena"
+msgstr "Skript na pozadí '%s' nebyl nalezen."
 
 #: src/background.c:420
 #, c-format
@@ -95962,10 +95330,8 @@ msgid "You need a target to board first!"
 msgstr ""
 
 #: src/board.c:142
-#, fuzzy
-#| msgid "Prepare to be boarded!"
 msgid "Target ship can not be boarded."
-msgstr "Připravte se na nástup!"
+msgstr "Na cílovou loď se nelze nalodit."
 
 #: src/board.c:146
 msgid "Your target cannot be boarded again."
@@ -95976,16 +95342,12 @@ msgid "You cannot board a ship that isn't disabled!"
 msgstr ""
 
 #: src/board.c:156
-#, fuzzy
-#| msgid "You are no match for the Empire!"
 msgid "You are too far away to board your target."
-msgstr "Pro impérium nejsi žádná výzva!"
+msgstr "Jste příliš daleko na to, abyste se dostali na palubu svého cíle."
 
 #: src/board.c:161
-#, fuzzy
-#| msgid "You are no match for the Empire!"
 msgid "You are going too fast to board the ship."
-msgstr "Pro impérium nejsi žádná výzva!"
+msgstr "Letíte příliš rychle na to, abyste se nalodili na loď."
 
 #: src/board.c:168
 msgid "Unable to recover fighter."
@@ -96105,10 +95467,9 @@ msgid "Malformed %s file: missing root element '%s'"
 msgstr ""
 
 #: src/commodity.c:345
-#, fuzzy, c-format
-#| msgid "Lua Var stack has unknown node '%s'!"
+#, c-format
 msgid "Commodity '%s' has unknown node '%s'"
-msgstr "Neznámý node '%s' na Lua Var stacku!"
+msgstr "Komodita \"%s\" má neznámý uzel \"%s\""
 
 #: src/commodity.c:349
 #, c-format
@@ -96844,10 +96205,8 @@ msgid "New Spob Creation"
 msgstr ""
 
 #: src/dev_sysedit.c:376
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "What do you want to name the new spob?"
-msgstr "\"Co ode mě chceš!?\""
+msgstr "Jak chcete pojmenovat nový spob?"
 
 #: src/dev_sysedit.c:382 src/dev_sysedit.c:485
 #, c-format
@@ -96874,10 +96233,9 @@ msgid ""
 msgstr ""
 
 #: src/dev_sysedit.c:479
-#, fuzzy, c-format
-#| msgid "\"What do you want from me!?\""
+#, c-format
 msgid "What do you want to rename the spob #r%s#0?"
-msgstr "\"Co ode mě chceš!?\""
+msgstr "Jak chcete přejmenovat spob #r%s#0?"
 
 #: src/dev_sysedit.c:522
 msgid "Remove selected objects (excluding jumps)?"
@@ -97375,10 +96733,9 @@ msgid "Dialogue counter not in sync!"
 msgstr ""
 
 #: src/difficulty.c:78
-#, fuzzy, c-format
-#| msgid "Lua Var stack has unknown node '%s'!"
+#, c-format
 msgid "Difficulty '%s' has unknown node '%s'"
-msgstr "Neznámý node '%s' na Lua Var stacku!"
+msgstr "Obtížnost '%s' má neznámý uzel '%s'"
 
 #: src/difficulty.c:91
 msgid "More than one difficulty with default flag set!"
@@ -97898,10 +97255,9 @@ msgid "This action will recall your deployed fighters. Is that OK?"
 msgstr ""
 
 #: src/equipment.c:2230 src/land.c:1629
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid "File '%s' not found!"
-msgstr "Formace '%s' nebyla nalezena"
+msgstr "Soubor '%s' nebyl nalezen!"
 
 #: src/equipment.c:2238
 #, c-format
@@ -97951,10 +97307,9 @@ msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
 #: src/escort.c:248
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid "Pilot '%s' has escort '%s' docking error!"
-msgstr "Formace '%s' nebyla nalezena"
+msgstr "Pilot '%s' má problém při dokování doprovodu '%s'!"
 
 #: src/escort.c:305
 #, c-format
@@ -98217,10 +97572,9 @@ msgid "Faction '%s' has duplicate '%s' node!"
 msgstr ""
 
 #: src/faction.c:1355
-#, fuzzy, c-format
-#| msgid "Lua Var stack has unknown node '%s'!"
+#, c-format
 msgid "Faction '%s' has unknown node in tags '%s'."
-msgstr "Neznámý node '%s' na Lua Var stacku!"
+msgstr "Frakce '%s' má neznámý uzel ve značkách '%s'."
 
 #: src/faction.c:1366
 #, c-format
@@ -99716,11 +99070,13 @@ msgstr ""
 
 #.
 #: src/land_outfits.c:633 src/land_outfits.c:900 src/land_outfits.c:1008
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Outfit '%s' failed to run '%s':\n"
 "%s"
-msgstr "Pilot '%s' se pokusil přistát bez přistávacích aktiv!"
+msgstr ""
+"Výstroj '%s' se nepodařilo spustit '%s':\n"
+"%s"
 
 #: src/land_outfits.c:665
 msgid "#oUnique#0\n"
@@ -99854,10 +99210,9 @@ msgstr ""
 #. Player just got a new ship
 #. player just got a new ship
 #: src/land_shipyard.c:408 src/land_shipyard.c:570
-#, fuzzy, c-format
-#| msgid "Cantina Station"
+#, c-format
 msgid "Bought at %s in the %s system."
-msgstr "Stanice Cantina"
+msgstr "Zakoupeno na %s v systému %s."
 
 #: src/land_shipyard.c:433
 #, c-format
@@ -99907,10 +99262,8 @@ msgid "You have:"
 msgstr ""
 
 #: src/land_trade.c:89
-#, fuzzy
-#| msgid "Your task"
 msgid "Your fleet has:"
-msgstr "Tvůj úkol"
+msgstr "Vaše flotila disponuje:"
 
 #: src/land_trade.c:90
 msgid "Purchased for:"
@@ -99966,10 +99319,9 @@ msgid "No cargo space available!"
 msgstr ""
 
 #: src/land_trade.c:310
-#, fuzzy, c-format
-#| msgid "Shooting back isn't allowed!"
+#, c-format
 msgid "%s is not sold here!"
-msgstr "Opětovaná střelba není povolena!"
+msgstr "%s se zde neprodává!"
 
 #: src/load.c:134
 #, c-format
@@ -100071,10 +99423,9 @@ msgid ""
 msgstr ""
 
 #: src/load.c:579
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid "Player '%s' not found in list of saves!"
-msgstr "Formace '%s' nebyla nalezena"
+msgstr "Hráč '%s' nebyl nalezen v seznamu uložených!"
 
 #. window
 #: src/load.c:585
@@ -100086,10 +99437,8 @@ msgid "Save"
 msgstr ""
 
 #: src/load.c:665
-#, fuzzy
-#| msgid "Cave canem!"
 msgid "Save game"
-msgstr "Cave canem!"
+msgstr "Uložit hru"
 
 #: src/load.c:665
 msgid "Please give the new snapshot a name:"
@@ -100179,9 +99528,8 @@ msgid "#gWelcome to %s!"
 msgstr "#gVítejte v %s!"
 
 #: src/load.c:1126
-#, fuzzy
 msgid "Old version detected. Sanitizing ships for slots"
-msgstr "Rozpoznána stará verze. Čistím sloty lodí"
+msgstr "Zjištěna stará verze. Sanitace lodí pro sloty"
 
 #: src/log.c:124
 msgid "Unable to redirect stdout to file"
@@ -100507,9 +99855,9 @@ msgstr "Systém: %s\n"
 #, c-format
 msgid "%d-star system\n"
 msgid_plural "%d-star system\n"
-msgstr[0] "%d-hvězdný systém"
-msgstr[1] "%d-hvězdný systém"
-msgstr[2] "%d-hvězdný systém"
+msgstr[0] "%d-hvězdný systém\n"
+msgstr[1] "%d-hvězdné systémy\n"
+msgstr[2] "%d-hvězdných systémů\n"
 
 #: src/map_system.c:404
 msgid "Nebula: Volatile, "
@@ -100558,11 +99906,11 @@ msgstr "Hustota pásu asteroidů: %.2g\n"
 
 #: src/map_system.c:445
 msgid "Faction: Multiple\n"
-msgstr "Frakce: vícero"
+msgstr "Frakce: Vícero\n"
 
 #: src/map_system.c:451
 msgid "Faction: N/A\n"
-msgstr "Frakce: žádné"
+msgstr "Frakce: N/A\n"
 
 #. saw them all and all the same
 #: src/map_system.c:454
@@ -100596,7 +99944,7 @@ msgstr ""
 
 #: src/map_system.c:513
 msgid "No space port here\n"
-msgstr "Není tu žádná přistávací plocha"
+msgstr "Žádný vesmírný port zde není\n"
 
 #: src/map_system.c:515
 msgid "You can land here\n"
@@ -100683,9 +100031,9 @@ msgstr "V systému se nedají nakoupit lodě"
 #, c-format
 msgid "#nYou have:#0 %d tonne, purchased at %s/t\n"
 msgid_plural "#nYou have:#0 %d tonnes, purchased at %s/t\n"
-msgstr[0] "#nVlastníte:#0 %d tunu, nakoupenu za  %s/t\n"
-msgstr[1] "#nVlastníte:#0 %d tuny, nakoupeny za  %s/t\n"
-msgstr[2] "#nVlastníte:#0 %d tun, nakoupené za  %s/t\n"
+msgstr[0] "#nVlastníte:#0 %d tun, nakoupené za %s/t\n"
+msgstr[1] "#nVlastníte:#0 %d tuny, nakoupené za %s/t\n"
+msgstr[2] "#nVlastníte:#0 %d tun, zakoupené za %s/t\n"
 
 #: src/map_system.c:718
 #, c-format
@@ -101480,22 +100828,19 @@ msgid "package.loaders must be a table"
 msgstr ""
 
 #: src/nlua.c:684
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid "module '%s' not found:%s"
-msgstr "Formace '%s' nebyla nalezena"
+msgstr "modul '%s' nebyl nalezen:%s"
 
 #: src/nlua_asteroid.c:112
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid "Asteroid field '%d' is out of range!"
-msgstr "Formace '%s' nebyla nalezena"
+msgstr "Pole asteroidu '%d' je mimo rozsah!"
 
 #: src/nlua_asteroid.c:117
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid "Asteroid '%d' in field '%d' is out of range!"
-msgstr "Formace '%s' nebyla nalezena"
+msgstr "Asteroid '%d' v poli '%d' je mimo rozsah!"
 
 #: src/nlua_asteroid.c:127
 msgid "Asteroid is invalid"
@@ -101904,10 +101249,9 @@ msgid ""
 msgstr ""
 
 #: src/nlua_pilot.c:5170
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid "Pilot '%s' not found in followers of '%s'"
-msgstr "Formace '%s' nebyla nalezena"
+msgstr "Pilot '%s' nebyl nalezen v doprovodu '%s'"
 
 #: src/nlua_pilot.c:5183
 #, c-format
@@ -102171,9 +101515,9 @@ msgid "OpenAL error [%s:%d]: %s"
 msgstr ""
 
 #: src/npc.c:140
-#, fuzzy, c-format
+#, c-format
 msgid "Mission '%s' trying to create NPC with no name!"
-msgstr "Pilot '%s' se pokusil přistát bez přistávacích aktiv!"
+msgstr "Mise '%s' se pokouší vytvořit NPC bez jména!"
 
 #: src/npc.c:144
 #, c-format
@@ -103621,11 +102965,13 @@ msgstr ""
 #. f, p, p, x, v
 #.
 #: src/pilot.c:1585 src/pilot_outfit.c:1195
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Pilot '%s''s outfit '%s' -> '%s':\n"
 "%s"
-msgstr "Pilot '%s' se pokusil přistát bez přistávacích aktiv!"
+msgstr ""
+"Pilotní '%s' vybavení '%s' -> '%s':\n"
+"%s"
 
 #: src/pilot.c:1740
 #, c-format
@@ -103978,10 +103324,8 @@ msgid "Docking stabilizers malfunctioning, cannot land."
 msgstr ""
 
 #: src/player.c:1605 src/player.c:1613
-#, fuzzy
-#| msgid "You can't bribe me!"
 msgid "You can't land here."
-msgstr "Nemůžeš mě podplatit!"
+msgstr "Zde nemůžete přistát."
 
 #: src/player.c:1623
 msgid "Landing authorized."
@@ -104031,20 +103375,17 @@ msgid "Aborting hyperspace sequence."
 msgstr ""
 
 #: src/player.c:1944
-#, fuzzy
-#| msgid "You are no match for the Empire!"
 msgid "You are too far from a jump point to initiate hyperspace."
-msgstr "Pro impérium nejsi žádná výzva!"
+msgstr ""
+"Jste příliš daleko od bodu skoku, než abyste mohli vstoupit do hyperprostoru."
 
 #: src/player.c:1946
 msgid "Hyperspace drive is offline."
 msgstr ""
 
 #: src/player.c:1948
-#, fuzzy
-#| msgid "\"I do not have fuel to spare.\""
 msgid "You do not have enough fuel to hyperspace jump."
-msgstr "„Nemám palivo nazbyt.“"
+msgstr "Nemáte dostatek paliva pro hyperprostorový skok."
 
 #: src/player.c:1950
 msgid "Preparing for hyperspace."
@@ -104409,7 +103750,7 @@ msgstr "#oAutopilot: dorazili jste do cíle."
 #: src/player_autonav.c:410
 #, c-format
 msgid "#oAutonav: arrived at #%c%s#0."
-msgstr "#oAutopilot: přílet na #c%s#0."
+msgstr "#oAutopilot: přílet na #%c%s#0."
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
 #: src/player_autonav.c:459
@@ -104429,7 +103770,7 @@ msgstr ""
 
 #: src/player_autonav.c:768
 msgid "Not enough fuel for autonav to continue"
-msgstr "Autopilot nemůže pilotovat: nedostatek paliva."
+msgstr "Autopilot nemůže pilotovat: nedostatek paliva"
 
 #: src/player_fleet.c:58
 msgid "Not Enough Cargo Space"
@@ -104463,10 +103804,9 @@ msgid "Plugin '%s' has no name!"
 msgstr "Pilot '%s' se pokusil přistát bez přistávacích aktiv!"
 
 #: src/plugin.c:86
-#, fuzzy, c-format
-#| msgid "Lua Var stack has unknown node '%s'!"
+#, c-format
 msgid "Plugin '%s' has unknown metadata node '%s'!"
-msgstr "Neznámý node '%s' na Lua Var stacku!"
+msgstr "Zásuvný modul '%s' má neznámý uzel metadat '%s'!"
 
 #: src/plugin.c:134
 #, c-format
@@ -104649,10 +103989,9 @@ msgid "Ship '%s': gfx_comm element is NULL"
 msgstr ""
 
 #: src/ship.c:821
-#, fuzzy, c-format
-#| msgid "Lua Var stack has unknown node '%s'!"
+#, c-format
 msgid "Ship '%s' has unknown flags node '%s'."
-msgstr "Neznámý node '%s' na Lua Var stacku!"
+msgstr "Loď '%s' má neznámé příznaky uzlu '%s'."
 
 #. All the xmlr_ stuff have continue cases.
 #: src/ship.c:852
@@ -105288,28 +104627,20 @@ msgid "Blackmarket"
 msgstr ""
 
 #: src/space.c:216
-#, fuzzy
-#| msgid "Cantina Station"
 msgid "Civilian Station"
-msgstr "Stanice Cantina"
+msgstr "Civilní stanice"
 
 #: src/space.c:218
-#, fuzzy
-#| msgid "Belltower Station"
 msgid "Military Station"
-msgstr "Stanice Belltower"
+msgstr "Vojenská stanice"
 
 #: src/space.c:220
-#, fuzzy
-#| msgid "Brandt Station"
 msgid "Pirate Station"
-msgstr "Stanice Brandt"
+msgstr "Pirátská stanice"
 
 #: src/space.c:222
-#, fuzzy
-#| msgid "Bastion Station"
 msgid "Robotic Station"
-msgstr "Stanice Bastion"
+msgstr "Robotická stanice"
 
 #: src/space.c:224
 msgid "Geothermal"
@@ -105492,10 +104823,9 @@ msgid "Cannot reinit system if there is no system previously loaded"
 msgstr ""
 
 #: src/space.c:1507
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid "System '%s' not found, trying random system!"
-msgstr "Formace '%s' nebyla nalezena"
+msgstr "Systém '%s' nebyl nalezen, zkoušíme náhodný systém!"
 
 #: src/space.c:1512
 #, c-format
@@ -105566,10 +104896,9 @@ msgid "Unable to remove spob '%s' from NULL system."
 msgstr ""
 
 #: src/space.c:2391
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid "Spob '%s' not found in system '%s' for removal."
-msgstr "Formace '%s' nebyla nalezena"
+msgstr "Spob '%s' nebyl nalezen v systému '%s' k odstranění."
 
 #: src/space.c:2412
 #, c-format
@@ -105582,10 +104911,9 @@ msgid "Unable to remove virtual spob '%s' from NULL system."
 msgstr ""
 
 #: src/space.c:2468
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid "Virtual spob '%s' not found in system '%s' for removal."
-msgstr "Formace '%s' nebyla nalezena"
+msgstr "Virtuální spob '%s' nebyl nalezen v systému '%s' pro odstranění."
 
 #: src/space.c:2518
 #, c-format
@@ -105604,10 +104932,9 @@ msgid ""
 msgstr ""
 
 #: src/space.c:2716
-#, fuzzy, c-format
-#| msgid "Lua Var stack has unknown node '%s'!"
+#, c-format
 msgid "Asteroid Field in Star System '%s' has unknown node '%s'"
-msgstr "Neznámý node '%s' na Lua Var stacku!"
+msgstr "Pole asteroidů ve hvězdné soustavě '%s' má neznámý uzel '%s'"
 
 #: src/space.c:2723
 #, c-format
@@ -105792,10 +105119,9 @@ msgid "Trail '%s' missing '%s' element"
 msgstr ""
 
 #: src/spfx.c:1258
-#, fuzzy, c-format
-#| msgid "Formation '%s' not found"
+#, c-format
 msgid "Trail type '%s' not found in stack"
-msgstr "Formace '%s' nebyla nalezena"
+msgstr "Typ trasy '%s' nebyl v zásobníku nalezen"
 
 #: src/start.c:101
 #, c-format
@@ -106285,11 +105611,13 @@ msgstr ""
 
 #.
 #: src/weapon.c:1329
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Outfit '%s' -> '%s':\n"
 "%s"
-msgstr "Pilot '%s' se pokusil přistát bez přistávacích aktiv!"
+msgstr ""
+"Vybavení '%s' -> '%s':\n"
+"%s"
 
 #: src/weapon.c:1911
 #, c-format
