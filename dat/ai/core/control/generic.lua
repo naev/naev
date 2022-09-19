@@ -186,9 +186,13 @@ function lead_fleet( p )
    end
 end
 
+function init ()
+   mem.elapsed = 0 -- Restart elapsed timer
+end
+
 -- Run instead of "control" when under manual control; use should be limited
-function control_manual ()
-   mem.elapsed = mem.elapsed + control_rate
+function control_manual( dt )
+   mem.elapsed = mem.elapsed + dt
    local p = ai.pilot()
    local task = ai.taskname()
    local si = _stateinfo( task )
@@ -456,8 +460,8 @@ function control_funcs.generic_attack( si )
 end
 
 -- Required "control" function
-function control ()
-   mem.elapsed = mem.elapsed + control_rate
+function control( dt )
+   mem.elapsed = mem.elapsed + dt
    local p = ai.pilot()
    local enemy = ai.getenemy()
 

@@ -136,7 +136,7 @@ local function __needs_scan( target )
       return false
    end
    -- Don't scan immediately
-   if target:memory().elapsed < 15 then
+   if target:memory().elapsed < 20 then
       return false
    end
    -- See if have already been scanned

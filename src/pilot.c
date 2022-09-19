@@ -3554,9 +3554,9 @@ void pilots_clean( int persist )
           (persist && pilot_isFlag(p, PILOT_PERSIST)))
          continue;
       /* Stop all outfits. */
-      pilot_outfitOffAll(p);
+      pilot_outfitOffAll( p );
       /* Handle Lua outfits. */
-      pilot_outfitLCleanup(p);
+      pilot_outfitLCleanup( p );
    }
 
    /* Here we actually clean up stuff. */
@@ -3573,6 +3573,8 @@ void pilots_clean( int persist )
          p->lockons = 0; /* Clear lockons. */
          p->projectiles = 0; /* Clear projectiles. */
          pilot_clearTimers( p ); /* Reset timers. */
+         /* Initialize AI. */
+         ai_init( p );
          /* Reset trails */
          for (int g=0; g<array_size(p->trail); g++)
             spfx_trail_remove( p->trail[g] );

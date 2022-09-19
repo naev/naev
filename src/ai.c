@@ -659,11 +659,12 @@ static int ai_loadProfile( AI_Profile *prof, const char* filename )
    if (prof->ref_control == LUA_NOREF)
       WARN( str, filename, "control" );
    prof->ref_control_manual = nlua_refenvtype( env, "control_manual", LUA_TFUNCTION );
-   if (prof->ref_control == LUA_NOREF)
+   if (prof->ref_control_manual == LUA_NOREF)
       WARN( str, filename, "control_manual" );
    prof->ref_refuel = nlua_refenvtype( env, "refuel", LUA_TFUNCTION );
-   if (prof->ref_control == LUA_NOREF)
+   if (prof->ref_refuel == LUA_NOREF)
       WARN( str, filename, "refuel" );
+   prof->ref_init = nlua_refenvtype( env, "init", LUA_TFUNCTION );
 
    return 0;
 }
@@ -737,18 +738,21 @@ void ai_think( Pilot* pilot, const double dt )
 
    /* control function if pilot is idle or tick is up */
    if ((cur_pilot->tcontrol < 0.) || (t == NULL)) {
+      double crate;
+      nlua_getenv(naevL, env, "control_rate");
+      crate = lua_tonumber(naevL,-1);
+      lua_pop(naevL,1);
       if (pilot_isFlag(pilot,PILOT_PLAYER) ||
           pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL)) {
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, cur_pilot->ai->ref_control_manual );
-         ai_run(env, 0);
+         lua_pushnumber( naevL, crate-cur_pilot->tcontrol );
+         ai_run(env, 1);
       } else {
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, cur_pilot->ai->ref_control );
-         ai_run(env, 0); /* run control */
+         lua_pushnumber( naevL, crate-cur_pilot->tcontrol );
+         ai_run(env, 1); /* run control */
       }
-
-      nlua_getenv(naevL, env, "control_rate");
-      cur_pilot->tcontrol = lua_tonumber(naevL,-1);
-      lua_pop(naevL,1);
+      cur_pilot->tcontrol = crate;
 
       /* Task may have changed due to control tick. */
       t = ai_curTask( cur_pilot );
@@ -807,6 +811,21 @@ void ai_think( Pilot* pilot, const double dt )
 
    /* Clean up if necessary. */
    ai_taskGC( cur_pilot );
+}
+
+/**
+ * @brief Initializes the AI.
+ *
+ *    @param p Pilot to run initialization when jumping/entering.
+ */
+void ai_init( Pilot *p )
+{
+   if ((p->ai==NULL) || (cur_pilot->ai->ref_init==LUA_NOREF))
+      return;
+   ai_setPilot( p );
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ai->ref_init );
+   ai_run( p->ai->env, 0 ); /* run control */
+
 }
 
 /**
