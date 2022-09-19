@@ -68,6 +68,8 @@ mem.Kd             = 20 -- Second control coefficient (this value is overwritten
 
 mem.target_bias    = vec2.new(0,0) -- Initialize land bias, just in case
 
+mem.elapsed       = 0 -- Time elapsed since pilot was created
+
 -- Required control rate that represents the number of seconds between each
 -- control() call
 control_rate   = 2
@@ -186,6 +188,7 @@ end
 
 -- Run instead of "control" when under manual control; use should be limited
 function control_manual ()
+   mem.elapsed = mem.elapsed + control_rate
    local p = ai.pilot()
    local task = ai.taskname()
    local si = _stateinfo( task )
@@ -454,6 +457,7 @@ end
 
 -- Required "control" function
 function control ()
+   mem.elapsed = mem.elapsed + control_rate
    local p = ai.pilot()
    local enemy = ai.getenemy()
 

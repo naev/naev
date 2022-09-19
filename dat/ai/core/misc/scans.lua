@@ -135,6 +135,11 @@ local function __needs_scan( target )
    if not mem.scanned then
       return false
    end
+   -- Don't scan immediately
+   if target:memory().elapsed < 15 then
+      return false
+   end
+   -- See if have already been scanned
    for k,v in ipairs(mem.scanned) do
       if target==v then
          return false
