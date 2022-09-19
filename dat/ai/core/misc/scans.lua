@@ -153,8 +153,8 @@ end
 -- Whether or not we want to scan, ignore players for now
 --]]
 local function __wanttoscan( p, target )
-   -- Bribed pilots don't care about scanning
-   if p:flags("bribed") then
+   -- Bribed pilots don't care about scanning player ships
+   if p:flags("bribed") and target:withPlayer() then
       return false
    end
 
