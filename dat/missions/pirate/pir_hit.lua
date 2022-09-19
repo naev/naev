@@ -12,9 +12,6 @@
  <faction>Independent</faction>
  <faction>FLF</faction>
  <done>Pirate Hit Intro</done>
- <notes>
-  <tier>3</tier>
- </notes>
 </mission>
 --]]
 --[[
