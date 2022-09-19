@@ -211,9 +211,10 @@ function scavenger_broadcast( pos )
 
    if broadcast_timer > BROADCAST_LENGTH then
       scavenger:follow( player.pilot() )
-      pilot.toggleSpawn(true)
       if mem.state==2 then
          scavenger:comm(_("Nothing… Let us move on."))
+         pilot.toggleSpawn(true)
+         return
       --else
       end
       mem.state = mem.state + 1
