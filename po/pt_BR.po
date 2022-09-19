@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-09-19 19:16+0000\n"
+"PO-Revision-Date: 2022-09-20 00:10+0000\n"
 "Last-Translator: Bloody Kenshiro <redhokuto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev-0-9-x/pt_BR/>\n"
@@ -370,9 +370,8 @@ msgid "Rob Loach <http://robloach.net>"
 msgstr "Rob Loach <http://robloach.net>"
 
 #: dat/AUTHORS:79
-#, fuzzy
 msgid "   * SDL_collide"
-msgstr "   * SDL_collide"
+msgstr "...* SDL_collide"
 
 #: dat/AUTHORS:80
 msgid ""
@@ -1616,13 +1615,13 @@ msgstr ""
 #, fuzzy
 #| msgid "Allous II"
 msgid "Antlejos III"
-msgstr "Allous II"
+msgstr "Antlejos III"
 
 #: dat/assets/antlejos_iv.xml:2
 #, fuzzy
 #| msgid "Alteris IV"
 msgid "Antlejos IV"
-msgstr "Alteris IV"
+msgstr "Antlejos IV"
 
 #: dat/assets/antlejos_prime.xml:2
 msgid "Antlejos Prime"
@@ -4369,10 +4368,8 @@ msgid "Gamma"
 msgstr ""
 
 #: dat/assets/gamma_station.xml:2
-#, fuzzy
-#| msgid "Akra Station"
 msgid "Gamma Station"
-msgstr "Estação Akra"
+msgstr "Estação Gama"
 
 #: dat/assets/gamma_station.xml:30
 msgid ""
@@ -11069,10 +11066,8 @@ msgid ""
 msgstr ""
 
 #: dat/assets/tesla_station.xml:2
-#, fuzzy
-#| msgid "Akra Station"
 msgid "Tesla Station"
-msgstr "Estação Akra"
+msgstr "Estação Tesla"
 
 #: dat/assets/tesla_station.xml:29
 msgid ""
@@ -16772,10 +16767,16 @@ msgid ""
 "EM pulses rarely destroy the ship, leaving it floating disabled in space. "
 "These are favoured by traders for keeping pirates at bay."
 msgstr ""
+"Este lançador pode disparar granadas PEM em qualquer direcção utilizando um "
+"sistema único de orientação interna. As granadas liberam um impulso "
+"electromagnético, desativando rapidamente a electrónica dos naves inimigos. "
+"Útil para levar naves sem destrui-las; os impulsos EM raramente destroem a "
+"nave, deixando-a a flutuar desativada no espaço. Um favorito de comerciantes "
+"por manterem os piratas à distância."
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:2
 msgid "Enygma Systems Huntsman Launcher"
-msgstr ""
+msgstr "Lançador de Torpedos Caçador Sistemas Enygma"
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:10
 msgid ""
@@ -16784,10 +16785,15 @@ msgid ""
 "insufficient, they redisgned Unicorp's Caesar IV torpedo as a heavy EMP "
 "weapon, capable of rapidly frying the systems of even the largest warships."
 msgstr ""
+"A Sistemas Enygma descobriu que havia um nicho inexplorado em armas "
+"incapacitantes destinadas a naves de guerra maiores. Considerando os mísseis "
+"Medusa e o armamento ionico insuficientes, redesenharam o torpedo César IV "
+"da Unicorp como uma arma PEM pesada, capaz de fritar rapidamente os sistemas "
+"mesmo das maiores naves de guerra."
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:2
 msgid "Enygma Systems Spearhead Launcher"
-msgstr ""
+msgstr "Lançador de Mísseis Ponta de Lança Sistemas Enygma"
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:9
 #: dat/outfits/rockets/spearhead_missile.xml:7
@@ -16799,10 +16805,16 @@ msgid ""
 "The Spearhead's limited agility make it primarily suited to fighting "
 "corvette class ships or heavier."
 msgstr ""
+"O míssil destruidor de escudos do tipo Ponta de Lança é uma dos equipamentos "
+"mais especializadas da Sistemas Enygma. A sua única função é causar danos "
+"maciços à blindagem. Utiliza uma ogiva de descarga de energia especial que é "
+"bastante eficaz na quebra de escudos, mas tem pouco efeito sobre objetos "
+"sólidos. A agilidade limitada do Ponta de Lança torna-o principalmente "
+"adequado para combater naves de classe corveta ou mais pesados."
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:2
 msgid "Enygma Systems Turreted Fury Launcher"
-msgstr ""
+msgstr "Lançador Torretado de Mísseis Fúria Sistemas Enygma"
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:9
 msgid ""
@@ -16810,10 +16822,14 @@ msgid ""
 "steep price, but Fury missiles can be a powerful means of discouraging "
 "pirate fighters and an effective means of defending against hostile bombers."
 msgstr ""
+"A Sistemas Enygma desenvolveu um lançador Fúria montado numa torreta. Vem a "
+"um preço salgado, mas os mísseis Fúria podem ser um poderoso meio de "
+"desencorajar caças piratas e um meio eficaz de defesa contra bombardeiros "
+"hostis."
 
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:2
 msgid "Enygma Systems Turreted Headhunter Launcher"
-msgstr ""
+msgstr "Lançador Torretado de Mísseis Caçador de Cabeças Sistemas Enygma"
 
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:9
 msgid ""
@@ -16822,10 +16838,15 @@ msgid ""
 "bombers. The punch of the Headhunter missile combined with Enygma Systems' "
 "swivel mounted launcher can effectively compensate for any blind spots."
 msgstr ""
+"Estes lançadores torretados são por vezes utilizados por capitães de "
+"cruzadores cujos naves não são suficientemente manobráveis para combater "
+"eficazmente os caças e bombardeiros inimigos. O impacto do míssil Caçador de "
+"Cabeças combinado com o lançador giratório da Sistemas Enygma pode compensar "
+"efetivamente qualquer ponto cego."
 
 #: dat/outfits/launchers/shatterer_launcher.xml:2
 msgid "Shatterer Launcher"
-msgstr ""
+msgstr "Lançador Estilhaçador"
 
 #: dat/outfits/launchers/shatterer_launcher.xml:10
 msgid ""
@@ -16834,10 +16855,14 @@ msgid ""
 "sheer numbers that the Collective could bring to bear makes this weapon "
 "dangerous."
 msgstr ""
+"Esta arma, baseada num míssil de Fúria, é utilizada pelos drones pesados da "
+"Coletividade como uma ferramenta de bombardeamento contra grandes alvos. "
+"Embora fraca individualmente, os números que a Coletividade poderia "
+"apresentar tornam esta arma perigosa."
 
 #: dat/outfits/launchers/teracom_banshee_launcher.xml:2
 msgid "TeraCom Banshee Launcher"
-msgstr ""
+msgstr "Lançador Banshee TeraCom"
 
 #: dat/outfits/launchers/teracom_banshee_launcher.xml:10
 msgid ""
@@ -16846,10 +16871,14 @@ msgid ""
 "unguided rockets, while slow, can do quite respectable damage even to fairly "
 "large ships."
 msgstr ""
+"A TeraCom equipou o seu modelo de lançado Banshee com sistemas de recarga e "
+"refrigeração de tubos de alta qualidade, dando um aumento significativo à "
+"cadência de disparo. Estes foguetes não guiados, embora lentos, podem causar "
+"danos bastante respeitáveis mesmo a naves bastante grandes."
 
 #: dat/outfits/launchers/teracom_fury_launcher.xml:2
 msgid "TeraCom Fury Launcher"
-msgstr ""
+msgstr "Lançador Fúria TeraCom"
 
 #: dat/outfits/launchers/teracom_fury_launcher.xml:9
 msgid ""
@@ -16859,10 +16888,16 @@ msgid ""
 "power, the Fury missiles launched are nimble enough to easily strike even "
 "some of the fastest ships in the galaxy."
 msgstr ""
+"O lançador Fúria da TeraCom é um lançador de mísseis de alto desempenho "
+"equipado com tecnologia patenteada de rastreio e armamento de mísseis, "
+"permitindo aos pilotos obterem a mira nos alvos de forma rápida e fácil. "
+"Embora com pouca potência destrutiva, os mísseis Fúri lançados são "
+"suficientemente ágeis para atingir facilmente até algumas das naves mais "
+"rápidas da galáxia."
 
 #: dat/outfits/launchers/teracom_headhunter_launcher.xml:2
 msgid "TeraCom Headhunter Launcher"
-msgstr ""
+msgstr "Lançador de Mísseis Caçador de Cabeças TeraCom"
 
 #: dat/outfits/launchers/teracom_headhunter_launcher.xml:9
 msgid ""
@@ -16875,10 +16910,19 @@ msgid ""
 "demanding on the ship's resources, the patented tracking and missile arming "
 "technology allows pilots to fire their missiles before the competition does."
 msgstr ""
+"O míssil interceptor do tipo Caçador de Cabeças é um míssil de calibre médio "
+"que pode causar danos devastadores a alvos de pequeno e médio tamanho, ao "
+"mesmo tempo que se mantém razoavelmente rápido e ágil. Mais eficaz quando "
+"lançado contra inimigos distantes.\n"
+"\n"
+"Este é o lançador de mísseis Caçador de Cabeças da TeraCom. Embora caro e "
+"exigente com recursos da nave, a tecnologia patenteada de localização e "
+"armamento de mísseis permite aos pilotos disparar os seus mísseis antes que "
+"seus inimigos o façam."
 
 #: dat/outfits/launchers/teracom_imperator_launcher.xml:2
 msgid "TeraCom Imperator Launcher"
-msgstr ""
+msgstr "Lançador de Torpedos Imperador TeraCom"
 
 #: dat/outfits/launchers/teracom_imperator_launcher.xml:10
 #: dat/outfits/rockets/imperator_torpedo.xml:7
@@ -16890,10 +16934,16 @@ msgid ""
 "take a while for it to reach its target. Faster cruisers may be able to "
 "outrun it completely."
 msgstr ""
+"A TeraCom decidiu não desenvolver um lançador para o César IV, porque ficou "
+"aquém dos requisitos de desempenho da empresa. Em vez disso, a empresa "
+"lançou uma especificação de torpedo completamente nova. Atualmente, o "
+"torpedo pesado tipo Imperator fornece um poder destrutivo devastador, embora "
+"demore algum tempo para alcançar seu alvo. Os cruzadores mais rápidos podem "
+"ser capazes de evita-lo completamente."
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:2
 msgid "TeraCom Mace Launcher"
-msgstr ""
+msgstr "Lançador de Forguetes Maça TeraCom"
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:9
 msgid ""
@@ -16905,10 +16955,18 @@ msgid ""
 "TeraCom's Mace launcher uses an advanced reload mechanism that allows the "
 "launcher to fire more rockets in less time."
 msgstr ""
+"O foguete tipo Maça não-guiado é uma arma barata e descartável utilizada "
+"para aumentar o poder de fogo de pico em situações críticas. É muito melhor "
+"em causar danos à alvos rápidos que a maioria dos canhões de energia "
+"destinados a caças, mas vem com a desvantagem de ficar sem munições após "
+"apenas um curto ciclo de disparo.\n"
+"\n"
+"O lançador de Forguete Maça da TeraCom utiliza um mecanismo avançado de "
+"recarga que permite ao lançador disparar mais foguetes em menos tempo."
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:2
 msgid "TeraCom Medusa Launcher"
-msgstr ""
+msgstr "Lançador de Mísseis Medusa TeraCom"
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:9
 msgid ""
@@ -16922,10 +16980,19 @@ msgid ""
 "and firing faster than the standard specification, and holding a greater "
 "amount in the magazine as well."
 msgstr ""
+"O míssil de cruzeiro EMP tipo Medusa é uma arma não letal concebida para "
+"desabilitar os sistemas internos de uma nave, tornando-a inofensiva e pronto "
+"para ser abordada. A ogiva apenas causa danos limitados, então mesmo alvos "
+"levemente blindados podem ser efetivamente desativados com esta arma. No "
+"entanto, a Medusa não é o míssil mais ágil do mercado.\n"
+"\n"
+"A TeraCom construiu um lançador Medusa altamente eficiente, capaz de travar "
+"e disparar mais rapidamente do que a especificação padrão, e de ter também "
+"uma quantidade maior de munições."
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:2
 msgid "TeraCom Vengeance Launcher"
-msgstr ""
+msgstr "Lançador de Mísseis Vingança TeraCom"
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:9
 msgid ""
@@ -16941,7 +17008,7 @@ msgstr ""
 
 #: dat/outfits/launchers/turreted_convulsion_launcher.xml:2
 msgid "Turreted Convulsion Launcher"
-msgstr ""
+msgstr "Lançador de Mísseis Turretado Convulsão"
 
 #: dat/outfits/launchers/turreted_convulsion_launcher.xml:10
 msgid ""
@@ -16952,6 +17019,12 @@ msgid ""
 "This launcher is mounted on a turret and has more ammo capacity than the "
 "standard launcher."
 msgstr ""
+"O míssil Thurion do tipo interceptor concentra-se em alta agilidade em vez "
+"de poder destrutivo. Embora cause poucos danos a objetos fsólidos, é "
+"bastante eficaz em desestabilizar os escudos.\n"
+"\n"
+"Este lançador é montado numa torreta e tem mais capacidade de munições do "
+"que o lançador padrão."
 
 #: dat/outfits/launchers/unicorp_banshee_launcher.xml:2
 msgid "Unicorp Banshee Launcher"
@@ -16967,7 +17040,7 @@ msgstr ""
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:2
 msgid "Unicorp Caesar IV Launcher"
-msgstr ""
+msgstr "Lançador de Torpedos Cesar IV Unicorp"
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:10
 #: dat/outfits/rockets/caesar_iv_torpedo.xml:7
@@ -17044,7 +17117,7 @@ msgstr ""
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:2
 msgid "Za'lek Hunter Launcher"
-msgstr ""
+msgstr "Lançador de Drones Caçador Za'lek"
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:10
 msgid ""
@@ -17060,7 +17133,7 @@ msgstr ""
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:2
 msgid "Za'lek Reaper Launcher"
-msgstr ""
+msgstr "Lançador de Drones Ceifador Za'lek"
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:10
 msgid ""
@@ -17076,15 +17149,15 @@ msgstr ""
 
 #: dat/outfits/maps/localmap.xml:2
 msgid "Local System Map"
-msgstr ""
+msgstr "Mapa de sistema local"
 
 #: dat/outfits/maps/localmap.xml:6
 msgid "This map contains information about the local system."
-msgstr ""
+msgstr "Este mapa contém informações sobre o sistema estelar local."
 
 #: dat/outfits/maps/map_collective_space.xml:2
 msgid "Map: Collective Space"
-msgstr ""
+msgstr "Mapa: Território da Coletividade"
 
 #: dat/outfits/maps/map_collective_space.xml:7
 msgid ""
@@ -17092,16 +17165,21 @@ msgid ""
 "Collective. Sadly, the Empire has no accurate intel about Collective assets "
 "in the area."
 msgstr ""
+"Este mapa demarca os pontos de salto conhecidos que conectam os sistemas "
+"ocupados pela Coletividade. Infelizmente, o Império não tem informações "
+"precisas sobre as posses da Coletividade na área."
 
 #: dat/outfits/maps/map_dvaered_core.xml:2
 msgid "Map: Dvaered Core"
-msgstr ""
+msgstr "Mapa: Território Central Dvaered"
 
 #: dat/outfits/maps/map_dvaered_core.xml:6
 msgid ""
 "This map lists the locations of all Dvaered worlds and stations close to the "
 "Dvaered capital."
 msgstr ""
+"Este mapa lista os locais de todos os mundos e estações Dvaered próximos da "
+"capital deles."
 
 #: dat/outfits/maps/map_dvaeredsoromid_trade_route.xml:2
 msgid "Map: Dvaered-Soromid trade route"
@@ -17115,43 +17193,51 @@ msgstr ""
 
 #: dat/outfits/maps/map_empire_core.xml:2
 msgid "Map: Empire Core"
-msgstr ""
+msgstr "Mapa: Território Central Imperial"
 
 #: dat/outfits/maps/map_empire_core.xml:6
 msgid ""
 "This map lists the locations of all Imperial worlds and stations close to "
 "the Imperial capital."
 msgstr ""
+"Este mapa lista os locais de todos os mundos e estações Imperiais próximos "
+"da capital deles."
 
 #: dat/outfits/maps/map_flf.xml:2
 msgid "Map: FLF Hidden Jumps"
-msgstr ""
+msgstr "Mapa: Pontos de salto ocultos da FLF"
 
 #: dat/outfits/maps/map_flf.xml:7
 msgid ""
 "This map contains the location of hidden jump points between the FLF base "
 "and Frontier space."
 msgstr ""
+"Este mapa lista os locais de pontos de salto ocultos entre a base da FLF e "
+"território da Fronteira."
 
 #: dat/outfits/maps/map_flf_pirate_route.xml:2
 msgid "Map: FLF-Pirate Route"
-msgstr ""
+msgstr "Mapa: Rota FLF-Pirata"
 
 #: dat/outfits/maps/map_flf_pirate_route.xml:7
 msgid ""
 "This map contains the location of the two-way hidden jump point between the "
 "FLF base and the nearest Pirate stronghold."
 msgstr ""
+"Este mapa lista os locais de pontos de salto ocultos de ida e volta entre a "
+"base da FLF e a fortaleza Pirata mais próxima."
 
 #: dat/outfits/maps/map_inner_nebula_secret_jump.xml:2
 msgid "Map: Inner Nebula Secret Jump"
-msgstr ""
+msgstr "Mapa: Ponto de salto secreto para a Nebulosa Interior"
 
 #: dat/outfits/maps/map_inner_nebula_secret_jump.xml:7
 msgid ""
 "This map contains the location of a hidden jump point leading to the inner "
 "nebula."
 msgstr ""
+"Este mapa contém a localização de um ponto de salto oculto que leva à "
+"Nebulosa interior."
 
 #: dat/outfits/maps/map_kretogg_hidden_jumps.xml:2
 msgid "Map: Kretogg's hidden jump points"
@@ -17162,16 +17248,21 @@ msgid ""
 "This map contains the position of hidden jump points leading straight into "
 "Za'lek space."
 msgstr ""
+"Este mapa contém a posição de pontos de salto oculto que levam diretamente "
+"aos territórios Za'lek."
 
 #: dat/outfits/maps/map_nebula_edge.xml:2
 msgid "Map: Nebula Edge"
-msgstr ""
+msgstr "Mapa: O Limite da Nebulosa"
 
 #: dat/outfits/maps/map_nebula_edge.xml:6
 msgid ""
 "This map contains the route leading from Dvaered/Imperial space to the edge "
 "of the Nebula. It also lists the two Imperial stations along the route."
 msgstr ""
+"Este mapa contém a rota que vai dos territórios Dvaered-Imperial até o "
+"limite da Nebulosa. Também lista a posição de duas estações Imperiais ao "
+"longo da rota."
 
 #: dat/outfits/maps/map_new_haven_hidden_jumps.xml:2
 msgid "Map: New Haven's hidden jump points"
@@ -17192,10 +17283,13 @@ msgid ""
 "This map contains the locations of the pirate clan worlds, and a few "
 "stations that are known to offer opportunities for pirates in the vicinity."
 msgstr ""
+"Este mapa contém os locais de mundos sob influência de clãs piratas e "
+"algumas estações conhecidas por oferecer oportunidades a piratas nas "
+"imediações."
 
 #: dat/outfits/maps/map_qorel.xml:2
 msgid "Map: Qorel Expanse"
-msgstr ""
+msgstr "Mapa: Extensão Qorel"
 
 #: dat/outfits/maps/map_qorel.xml:7
 msgid ""
@@ -17204,6 +17298,10 @@ msgid ""
 "Getting the location of these very special jump points is usually very "
 "costly to reduce the number of people having access to it."
 msgstr ""
+"Este mapa contém a localização dos pontos de salto para dentro e para fora "
+"da Extensão Qorel, um conjunto de sistemas não acessíveis através de pontos "
+"de salto padrão. Obter a localização destes pontos de salto muito especiais "
+"é normalmente muito dispendioso para reduzir o número que podem usa-los."
 
 #: dat/outfits/maps/map_sirian_border_systems.xml:2
 msgid "Map: Sirian border systems"
@@ -17212,20 +17310,24 @@ msgstr ""
 #: dat/outfits/maps/map_sirian_border_systems.xml:6
 msgid "This map contains the systems that lead to Sirius controlled space."
 msgstr ""
+"Este mapa contém os sistemas que conduzem ao território controlado por "
+"Sirius."
 
 #: dat/outfits/maps/map_sirius_core.xml:2
 msgid "Map: Sirius Core"
-msgstr ""
+msgstr "Mapa: Território Central Sirius"
 
 #: dat/outfits/maps/map_sirius_core.xml:7
 msgid ""
 "This map contains the location of Mutris, home of Sirichana and capital to "
 "the Sirians, as well as the surrounding systems."
 msgstr ""
+"Este mapa contém a localização de Mutris, lar de Sirichana e capital dos "
+"Sirianos, assim como dos sistemas circundantes."
 
 #: dat/outfits/maps/map_sol.xml:2
 msgid "Map: Sol"
-msgstr ""
+msgstr "Mapa: Sol"
 
 #: dat/outfits/maps/map_sol.xml:6
 msgid ""
@@ -17234,6 +17336,10 @@ msgid ""
 "which no known ship in the galaxy can safely pass through. What lies beyond "
 "Sol, if anything, is unknown."
 msgstr ""
+"Este mapa contém a localização do sistema Sol. Considerado um sistema morto "
+"após o Incidente, ele está agora coberto por uma nebulosa altamente instável "
+"através da qual nenhuma nave conhecida na galáxia pode passar. O que existe "
+"além de Sol, se é que existe, é desconhecido."
 
 #: dat/outfits/maps/map_the_frontier.xml:2
 msgid "Map: The Frontier"
@@ -63742,10 +63848,8 @@ msgstr ""
 #. Initialization of dead pirate memory
 #. set the names of the pirates (and make sure they aren't duplicates)
 #: dat/missions/shark/sh07_pirates.lua:80
-#, fuzzy
-#| msgid "Andee III"
 msgid "{name} III"
-msgstr "Andee III"
+msgstr "{name} III"
 
 #: dat/missions/shark/sh07_pirates.lua:81
 msgid "{name} Jr."
@@ -75008,10 +75112,8 @@ msgid "Escaped"
 msgstr ""
 
 #: dat/scripts/pilotname/pirate.lua:52
-#, fuzzy
-#| msgid "Aldernael"
 msgid "Eternal"
-msgstr "Aldernael"
+msgstr "Eterno"
 
 #: dat/scripts/pilotname/pirate.lua:53
 msgid "Evil"
@@ -75553,7 +75655,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Amaroq I"
 msgid "Amarillo"
-msgstr "Amaroq I"
+msgstr "Amarillo"
 
 #: dat/scripts/pilotname/pirate.lua:190
 msgid "Aoi"
