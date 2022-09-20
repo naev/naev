@@ -35,7 +35,7 @@ function descextra( p )
    local dur = base_duration
    local cor = ""
 
-   if p then
+   if p and p:exists() then
       local map = {}
       for k,o in ipairs(p:outfitsList("intrinsic")) do
          local m = mapping[ o:nameRaw() ]
