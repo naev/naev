@@ -87,7 +87,6 @@ TK = "+_Tk+Col" .. GFX
 stds.AI.globals = {
    "attacked",
    "attacked_manual",
-   "init",
    "control",
    "control_manual",
    "control_rate",

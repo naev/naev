@@ -45,7 +45,7 @@ typedef struct AI_Profile_ {
    int ref_control;  /**< Profile control reference function. */
    int ref_control_manual; /**< Profile manual control reference function. */
    int ref_refuel;   /**< Profile refuel reference function. */
-   int ref_init;     /**< Run when pilot is initialized (case of persistent pilots). */
+   int ref_create;   /**< Run when pilot is created (or initialized in the case of persistent pilots). */
 } AI_Profile;
 
 /*

@@ -664,7 +664,7 @@ static int ai_loadProfile( AI_Profile *prof, const char* filename )
    prof->ref_refuel = nlua_refenvtype( env, "refuel", LUA_TFUNCTION );
    if (prof->ref_refuel == LUA_NOREF)
       WARN( str, filename, "refuel" );
-   prof->ref_init = nlua_refenvtype( env, "init", LUA_TFUNCTION );
+   prof->ref_create = nlua_refenvtype( env, "create", LUA_TFUNCTION );
 
    return 0;
 }
@@ -820,10 +820,10 @@ void ai_think( Pilot* pilot, const double dt )
  */
 void ai_init( Pilot *p )
 {
-   if ((p->ai==NULL) || (cur_pilot->ai->ref_init==LUA_NOREF))
+   if ((p->ai==NULL) || (p->ai->ref_create==LUA_NOREF))
       return;
    ai_setPilot( p );
-   lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ai->ref_init );
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, p->ai->ref_create );
    ai_run( p->ai->env, 0 ); /* run control */
 
 }
@@ -1035,17 +1035,8 @@ static void ai_create( Pilot* pilot )
    if (pilot->ai == NULL)
       return;
 
-   /* Prepare AI (this sets cur_pilot among others). */
-   ai_setPilot( pilot );
-
-   /* Prepare stack. */
-   nlua_getenv(naevL, cur_pilot->ai->env, "create");
-
-   /* Run function. */
-   if (nlua_pcall(cur_pilot->ai->env, 0, 0)) { /* error has occurred */
-      WARN( _("Pilot '%s' ai '%s' -> '%s': %s"), cur_pilot->name, cur_pilot->ai->name, "create", lua_tostring(naevL,-1));
-      lua_pop(naevL,1);
-   }
+   /* Set up. */
+   ai_init( pilot );
 
    /* Recover normal mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))

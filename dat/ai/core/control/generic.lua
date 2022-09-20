@@ -186,10 +186,6 @@ function lead_fleet( p )
    end
 end
 
-function init ()
-   mem.elapsed = 0 -- Restart elapsed timer
-end
-
 -- Run instead of "control" when under manual control; use should be limited
 function control_manual( dt )
    mem.elapsed = mem.elapsed + dt
@@ -861,6 +857,8 @@ function create_pre ()
          p:setFuel( f )
       end
    end
+
+   mem.elapsed = 0 -- Restart elapsed timer
 
    -- Choose attack algorithm
    atk.choose()
