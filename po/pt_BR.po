@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
-"PO-Revision-Date: 2022-09-20 12:18+0000\n"
+"PO-Revision-Date: 2022-09-21 07:17+0000\n"
 "Last-Translator: Bloody Kenshiro <redhokuto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev/pt_BR/>\n"
@@ -6100,13 +6100,13 @@ msgid ""
 "having a robotic repair crew. Due to the simplicity of the droid tools, they "
 "are unable to restore armour beyond 50%."
 msgstr ""
-"Esta tripulação de dróides de baixa manutenção irá vasculhar a sua nave para "
+"Esta tripulação de dróides de baixa manutenção irá vasculhar sua nave para "
 "reparar quaisquer danos causados por perigos espaciais. São muito pequenos e "
 "capazes de trabalhar tanto no interior como no exterior da nave. São "
-"alimentados pelo reator da nave, embora a carga seja geralmente muito baixa "
-"em comparação com os benefícios de ter uma tripulação de reparação robótica. "
+"alimentados pelo reator embora a carga seja geralmente muito baixa em "
+"comparação com os benefícios de ter uma tripulação de reparo robótica. "
 "Devido à simplicidade das ferramentas dos dróides, são incapazes de "
-"restaurar a blindagem para além dos 50%."
+"restaurar a blindagem acima de 50%."
 
 #: dat/outfits/utility/droid_repair_crew.xml:11
 msgid "Can only restore armour when below 50%."
@@ -6115,11 +6115,11 @@ msgstr "Apenas pode restaurar a blindagem quando abaixo de 50%."
 #: dat/outfits/utility/emergency_shield_booster.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:222
 msgid "Emergency Shield Booster"
-msgstr ""
+msgstr "Potenciador de Escudo Emergêncial"
 
 #: dat/outfits/utility/emergency_shield_booster.xml:4
 msgid "Shield Modification"
-msgstr ""
+msgstr "Modificador de Escudo"
 
 #: dat/outfits/utility/emergency_shield_booster.xml:9
 msgid ""
@@ -6130,16 +6130,26 @@ msgid ""
 "disproportionally high and the outfit can't be active for more than a "
 "certain period of time before needing entering a cooldown cycle."
 msgstr ""
+"Este equipamento fornece um roteamento alternativo de energia auxiliar entre "
+"o reator da nave e o sistema de escudos. Quando ativado, este dispositivo "
+"aumenta drasticamente a regeneração do escudo da nave ao transferir energia "
+"bruta diretamente para os capacitores do escudo. O processo é muito "
+"ineficiente, portanto a utilização de energia é desproporcionalmente elevada "
+"e o equipamento não pode estar ativo durante mais do que um determinado "
+"período de tempo antes de necessitar de entrar num ciclo de resfriamento."
 
 #: dat/outfits/utility/emergency_shield_booster.xml:10
 msgid ""
 "Increases shield regeneration by 500%. Active for 4 seconds with a cooldown "
 "of 8 seconds. Uses 3 MJ of energy for each MJ of shield recovered."
 msgstr ""
+"Aumenta a regeneração dos escudos em 500%. Ativo durante 4 segundos, com um "
+"resfriamento de 8 segundos. Utiliza 3 MJ de energia para cada MJ de escudo "
+"recuperado."
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:2
 msgid "Emergency Stasis Inducer"
-msgstr ""
+msgstr "Indutor de Estase Emergencial"
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:9
 msgid ""
@@ -6152,15 +6162,25 @@ msgid ""
 "how this effect is created, however, doctors do not recommend prolonged "
 "usage."
 msgstr ""
+"O Indutor de Estase Emergencial funciona criando um forte campo "
+"electromagnético ao redor da nave, fazendo com que o tempo pareça mover-se "
+"mais lentamente do que o normal para tudo que está do lado de fora, ao mesmo "
+"tempo que faz com que o nave e todo o seu equipamento e atividades acelerem. "
+"Isto permite mover-se mais rapidamente e causar muito mais danos do que o "
+"normal. O mecanismo é acionado automaticamente em caso de danos à blindagem, "
+"sem necessidade de intervenção manual. Não é inteiramente claro como é "
+"criado este efeito, no entanto, médicos não recomendam o uso prolongado."
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:10
 msgid "Triggered on armour damage. Lasts 3 seconds with 8 seconds cooldown."
 msgstr ""
+"Ativado por danos na blindagem. Dura 3 segundos com um resfriamento de 8 "
+"segundos."
 
 #: dat/outfits/utility/hellburner.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:236
 msgid "Hellburner"
-msgstr ""
+msgstr "Pós Combustor Infernal"
 
 #: dat/outfits/utility/hellburner.xml:8
 msgid ""
@@ -6170,10 +6190,16 @@ msgid ""
 "efficiency is significantly lower than common models, so it consumes energy "
 "more rapidly and overheats much more quickly."
 msgstr ""
+"O Pós-Combustor Infernal é um dos melhores pós-combustões levels de luz do "
+"mercado. Através de dutos de pressurização proprietários, o Hellburner é "
+"capaz de gerar muito mais empuxo do que as alternativas genéricas. "
+"Infelizmente, a sua eficiência de conversão energética é significativamente "
+"inferior aos modelos comuns, o que resulta em um consumo de energia mais "
+"rápido que resulta igualmente em um superacquecimento mais rápido."
 
 #: dat/outfits/utility/hidden_jump_scanner.xml:2
 msgid "Hidden Jump Scanner"
-msgstr ""
+msgstr "Escaneador de Salto Oculto"
 
 #: dat/outfits/utility/hidden_jump_scanner.xml:9
 msgid ""
@@ -6183,10 +6209,15 @@ msgid ""
 "needing to recharge, this scanner is capable of discovering jump points that "
 "regular sensors can't detect."
 msgstr ""
+"Um equipamento especializado de tecnologia de sensores que pode escanear o "
+"ambiente circundante em busca de anomalias incomuns no tecido do espaço. "
+"Embora de curto alcance e apenas capaz de escanear durante um período de "
+"tempo limitado antes de precisar de recarregar, este scanner é capaz de "
+"descobrir pontos de salto que os comuns regulares não conseguem detectar."
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:2
 msgid "Faraday Tempest Coating"
-msgstr ""
+msgstr "Revestimento Tempestade de Faraday"
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:4
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:4
@@ -6195,7 +6226,7 @@ msgstr ""
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:4
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:4
 msgid "Hull Coating"
-msgstr ""
+msgstr "Revestimento de Casco"
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:9
 msgid ""
@@ -6205,10 +6236,15 @@ msgid ""
 "harmless evanescent fields, greatly speeding up the recovery from system "
 "damage."
 msgstr ""
+"Armamentos iónicos modernos encontraram formas de atravessar a blindagem de "
+"uma nave e atacar diretamente os sistemas eletrónicos vulneráveis. O "
+"Revestimento Tempestade de Faraday é capaz de neutralizar armamentos "
+"incapacitantes, dissipando-os com o uso de campos evanescentes inofensivos, "
+"acelerando muito a recuperação de danos em sistemas eletrônicos."
 
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:2
 msgid "Lattice Thermal Coating"
-msgstr ""
+msgstr "Malha de Revestimento Térmico "
 
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:9
 msgid ""
@@ -6218,10 +6254,15 @@ msgid ""
 "a special nano-material that is able to radiate through itself, allowing for "
 "increased heat dissipation."
 msgstr ""
+"Dado que não há atmosfera no espaço, as naves dependem da radiação para se "
+"livrarem passivamente do excesso de calor. Tal radiação é geralmente "
+"limitada pelo tamanho da nave. A Malha de Revestimento Térmico supera esta "
+"limitação, utilizando um nano-material especial capaz de irradiar através de "
+"si mesmo, permitindo uma maior dissipação de calor."
 
 #: dat/outfits/utility/hullcoating/milspec_impactoplastic_coating.xml:2
 msgid "Milspec Impacto-Plastic Coating"
-msgstr ""
+msgstr "Revestimento Impacto-Plástico Milspec"
 
 #: dat/outfits/utility/hullcoating/milspec_impactoplastic_coating.xml:9
 msgid ""
@@ -6229,10 +6270,13 @@ msgid ""
 "resist both impact and damage, quickly restoring the protected surface to "
 "its original state."
 msgstr ""
+"O Revestimento Impacto-Plástico Milspec é baseado em nanoligas com memória "
+"que resistem a impactos e danos, rapidamente recuperando a superfície "
+"protegida de volta ao seu estado original."
 
 #: dat/outfits/utility/hullcoating/nebula_resistant_coating.xml:2
 msgid "Nebula Resistant Coating"
-msgstr ""
+msgstr "Revestimento Resistente à Nebulosa"
 
 #: dat/outfits/utility/hullcoating/nebula_resistant_coating.xml:10
 msgid ""
@@ -6243,10 +6287,16 @@ msgid ""
 "significantly more resistant, although prolonged exposure is still not "
 "recommended."
 msgstr ""
+"Proteger naves da radiação da nebulosa não é uma tarefa fácil dadas as "
+"flutuações e parâmetros dos diferentes tipos de radiação emitida, grande "
+"parte das quais não é totalmente compreendida. Embora não torne a nave imune "
+"aos efeitos da nebulosa, este revestimento de casco a torna "
+"significativamente mais resistente, ainda que a exposição prolongada nãe é "
+"recomendada."
 
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:2
 msgid "Nexus Stealth Coating"
-msgstr ""
+msgstr "Revestimento Furtivo Nexo"
 
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:9
 msgid ""
@@ -6255,10 +6305,15 @@ msgid ""
 "developed a breakthrough hull coating that uses quantum entangled self-"
 "projections that can confuse gravitational readings."
 msgstr ""
+"Sensores modernos de nave baseiam-se na detecção de anormalidades "
+"gravitacionais para revelar naves e são muito robustos na maioria das "
+"situações. Os Estaleiros Nexo desenvolveram um revestimento inovador de "
+"casco que utiliza auto-projeções quânticas emaranhadas que podem confundir "
+"as leituras gravitacionais."
 
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:2
 msgid "Photo-Voltaic Nanobot Coating"
-msgstr ""
+msgstr "Revestimento Fotovoltaico Nanorobótico"
 
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:9
 msgid ""
@@ -6267,10 +6322,14 @@ msgid ""
 "ship. The nanobots are self-regulating and self-repairing, requiring no "
 "maintenance once a colony has been established."
 msgstr ""
+"Um Revestimento Fotovoltaico Nanorobótico cobre todo o casco da nave e é "
+"capaz de utilizar a energia solar e redireccioná-la para o sistema elétrico "
+"da nave. Os nano Nanorobôs se mantém automaticamente sem necessitar de "
+"manutenção depois que a colônia se estabelece."
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:2
 msgid "Hyperbolic Blink Engine"
-msgstr ""
+msgstr "Motor de Piscada Hiperbólico"
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:10
 msgid ""
@@ -6282,6 +6341,13 @@ msgid ""
 "each space-time fold or \"blink\", it takes a while for the ship to be fully "
 "responsive again."
 msgstr ""
+"O Motor de Piscada Hiperbólico parece ter sido projetado em resposta à "
+"pergunta \"Quanta massa pode ser movida por uma dobra no espaço-tempo?\".\n"
+"Sem se preocupar em manter um controle cuidadoso da dobra, o equipamento "
+"concentrando-se, ao contrário, no máximo rendimento. Devido à grande "
+"quantidade de interferência na tripulação e sistemas da nave depois de uma "
+"dobra espaço-temporal ou \"piscada\", leva um tempo até que a nave responda "
+"aos controles novamente."
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:11
 msgid ""
@@ -6290,10 +6356,14 @@ msgid ""
 "and turn penalty during cooldown. Performance degrades over 6000 tonnes of "
 "mass."
 msgstr ""
+"Aquece por 2 segundos e \"pisca\" a nave 2000 unidades na direção aproximada "
+"apontada pelo nariz da nave. Só pode ser usado uma vez a cada 8 segundos e "
+"resulta em uma penalidade de 20% de empuxo e viragem durante o resfriamento. "
+"A performance decai quando a massa é maior que 600 toneladas."
 
 #: dat/outfits/utility/jump_scanner.xml:2
 msgid "Jump Scanner"
-msgstr ""
+msgstr "Escaneador de Salto"
 
 #: dat/outfits/utility/jump_scanner.xml:8
 msgid ""
@@ -6306,6 +6376,14 @@ msgid ""
 "scanner will not detect jump points whose signature differs from the "
 "standard type."
 msgstr ""
+"Este dispositivo instala uma matriz secundária de varredyra na nave. A "
+"matriz é programada com as características conhecidas das anomalias "
+"espaciais associadas aos saltos no hiperespaço. Como o scanner detecta um "
+"tipo muito específico de assinatura, o seu alcance pode ser facilmente "
+"aumentado sem sacrificar a precisão. Na prática, isto significa que uma nave "
+"com um ou mais destes scanners instalados pode detectar pontos de salto a um "
+"maior alcance. O scanner não detectará pontos de salto cuja assinatura "
+"difere do tipo padrão."
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:2
 msgid "Low Radiation Sensor Modulator"
@@ -6318,15 +6396,19 @@ msgid ""
 "ships while also giving more sensitivity to jump point signatures when "
 "stealthed."
 msgstr ""
+"Utilizando uma modulação especial altamente sintonizada para ambientes de "
+"baixa radiação, o Modulador de Sensor de Baixa Radiação é capaz de aumentar "
+"a deteção de naves próximas, ao mesmo tempo que dá mais sensibilidade às "
+"assinaturas de pontos de salto quando a nave está em modo furtivo."
 
 #: dat/outfits/utility/milspec_jammer.xml:2
 msgid "Milspec Jammer"
-msgstr ""
+msgstr "Bloqueador Milspec"
 
 #: dat/outfits/utility/milspec_jammer.xml:4
 #: dat/outfits/utility/unicorp_jammer.xml:4
 msgid "Electronic Warfare Jammer"
-msgstr ""
+msgstr "Bloqueador de Guerra Eletrônica"
 
 #: dat/outfits/utility/milspec_jammer.xml:9
 msgid ""
@@ -6337,15 +6419,21 @@ msgid ""
 "garbage they're getting on their sensors, you will have already made your "
 "escape! Fly safe, fly Milspec."
 msgstr ""
+"Seu trabalho exige que você se aventure em território perigoso? Enfrentando "
+"inimigos que são demais para seus escudos? O bloqueador U-9 \"Magus\" "
+"Milspec é o que você precisa! Faça os cães de caça perderem seu rastro "
+"pressionando um botão. Enquanto os seus inimigos estão ocupados tentando "
+"entender a confusão aparecendo nos sensores, você já terá escapado! Voe com "
+"seguro, voe Milspec."
 
 #: dat/outfits/utility/milspec_scrambler.xml:2
 msgid "Milspec Scrambler"
-msgstr ""
+msgstr "Embaralhador Milspec"
 
 #: dat/outfits/utility/milspec_scrambler.xml:4
 #: dat/outfits/utility/unicorp_scrambler.xml:4
 msgid "Electronic Warfare Scrambler"
-msgstr ""
+msgstr "Emaranhador de Combate Eletrônico"
 
 #: dat/outfits/utility/milspec_scrambler.xml:9
 msgid ""
@@ -6354,10 +6442,15 @@ msgid ""
 "Milspec RX 500-C scrambler will put the wool over your enemies' sensors, at "
 "a minimal cost to you or your ship's reactor! Fly safe, fly Milspec."
 msgstr ""
+"A Milspec sabe o que importa quando se está lá fora. O que importa é não ser "
+"atingido! E a melhor maneira de evitar isso é não se tornando um alvo. O "
+"Embaralhador RX 500-C Milspec encobre os sensores dos seus inimigos, a um "
+"custo mínimo para seu bolso ou para o reator da sua nave! Voe com seguro, "
+"voe Milspec."
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:2
 msgid "Neural Accelerator Interface"
-msgstr ""
+msgstr "Interface Aceleradora Neural"
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:11
 msgid ""
@@ -6367,6 +6460,11 @@ msgid ""
 "large amounts of ship energy to change the perception of time and accelerate "
 "the piloted ship."
 msgstr ""
+"O fluxo de tempo não é, em geral, visto como um valor constante, mas varia "
+"muito dependendo das circunstâncias. Utilizando a mais recente tecnologia de "
+"neuro-interface, a Interface Aceleradora Neural é capaz de aproveitar "
+"grandes quantidades de energia para alterar a percepção do tempo e acelerar "
+"a nave pilotada."
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:12
 msgid "Active for 5 seconds with a cooldown of 20 seconds."
