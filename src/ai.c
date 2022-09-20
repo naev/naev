@@ -665,6 +665,8 @@ static int ai_loadProfile( AI_Profile *prof, const char* filename )
    if (prof->ref_refuel == LUA_NOREF)
       WARN( str, filename, "refuel" );
    prof->ref_create = nlua_refenvtype( env, "create", LUA_TFUNCTION );
+   if (prof->ref_create == LUA_NOREF)
+      WARN( str, filename, "create" );
 
    return 0;
 }
