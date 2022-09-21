@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
-"PO-Revision-Date: 2022-09-21 15:19+0000\n"
+"PO-Revision-Date: 2022-09-22 01:26+0000\n"
 "Last-Translator: Bloody Kenshiro <redhokuto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev/pt_BR/>\n"
@@ -7087,27 +7087,31 @@ msgstr ""
 
 #: dat/outfits/weapons/particle_beam.xml:2
 msgid "Particle Beam"
-msgstr ""
+msgstr "Feixe de Partículas"
 
 #: dat/outfits/weapons/particle_beam.xml:9
 msgid ""
 "A turret-mounted particle beam. The smallest possible turreted beam weapon, "
 "used as a last-ditch weapon against light enemies."
 msgstr ""
+"Um Feixe de Partículas montado em torreta. A menor arma deste tipo, usado "
+"como última linha de defesa contra naves leves."
 
 #: dat/outfits/weapons/particle_lance.xml:2
 msgid "Particle Lance"
-msgstr ""
+msgstr "Lança de Partículas"
 
 #: dat/outfits/weapons/particle_lance.xml:9
 msgid ""
 "This is the smallest direct beam weapon built, purpose-built by the Za'lek "
 "for their drones."
 msgstr ""
+"Esta é a menor arma de feixe direto construída, projetada especialmente "
+"pelos Za'lek para os seus drones."
 
 #: dat/outfits/weapons/plasma_blaster_mk1.xml:2
 msgid "Plasma Blaster MK1"
-msgstr ""
+msgstr "Canhão de Plasma MK1"
 
 #: dat/outfits/weapons/plasma_blaster_mk1.xml:8
 msgid ""
@@ -7115,10 +7119,13 @@ msgid ""
 "damaging armour, but less effective against shields. This weapon is often "
 "used by bounty hunters and mercenaries for its high killing potential."
 msgstr ""
+"Dispara plasma superaquecido muito eficaz em danificar blindagem, mas nem "
+"tanto contra escudos. A arma é frequentemente usada por caçadores de "
+"recompensa e mercenários pelo seu grande potencial de abate."
 
 #: dat/outfits/weapons/plasma_blaster_mk2.xml:2
 msgid "Plasma Blaster MK2"
-msgstr ""
+msgstr "Disparador de Plasma MK2"
 
 #: dat/outfits/weapons/plasma_blaster_mk2.xml:9
 msgid ""
@@ -7127,6 +7134,10 @@ msgid ""
 "Its power is substantial enough that it even gets used by some militaries, "
 "typically in combination with anti-shield weaponry."
 msgstr ""
+"Uma versão de alta potência do Disparador de Plasma MK1, suficientemente "
+"potente para derrubar todos os naves piratas, exceto as mais pesadas. O seu "
+"poder é substancial o suficiente para ser utilizado por alguns militares, "
+"tipicamente em combinação com armamento anti-escudo."
 
 #: dat/outfits/weapons/plasma_cannon.xml:2
 msgid "Plasma Cannon"
