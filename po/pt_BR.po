@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-09-21 07:16+0000\n"
+"PO-Revision-Date: 2022-09-21 15:19+0000\n"
 "Last-Translator: Bloody Kenshiro <redhokuto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev-0-9-x/pt_BR/>\n"
@@ -18650,13 +18650,12 @@ msgid ""
 "each space-time fold or \"blink\", it takes a while for the ship to be fully "
 "responsive again."
 msgstr ""
-"O Motor de Piscada Hiperbólico parece ter sido projetado em resposta à "
-"pergunta \"Quanta massa pode ser movida por uma dobra no espaço-tempo?\".\n"
-"Sem se preocupar em manter um controle cuidadoso da dobra, o equipamento "
-"concentrando-se, ao contrário, no máximo rendimento. Devido à grande "
-"quantidade de interferência na tripulação e sistemas da nave depois de uma "
-"dobra espaço-temporal ou \"piscada\", leva um tempo até que a nave responda "
-"aos controles novamente."
+"O Motor de Piscada Hiperbólico for projetado para, aparentemente, responder "
+"a pegunta: Quanta massa pode ser movida por uma dobra espaço-temporal?\n"
+"Não há uma preocupação com um controle preciso das operações de dobra, sendo "
+"o foco o maior desempenho possível. Devido a forte interferência causada nos "
+"sistemas da nave, assim como na tripulação, após cada \"piscada\" a nave "
+"leva um tempo para responder novamente aos controles."
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:11
 msgid ""
@@ -18783,11 +18782,11 @@ msgstr ""
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:12
 msgid "Active for 5 seconds with a cooldown of 20 seconds."
-msgstr ""
+msgstr "Ativo durante 5 segundos com um resfriamento de 20 segundos."
 
 #: dat/outfits/utility/sensor_array.xml:2
 msgid "Sensor Array"
-msgstr ""
+msgstr "Conjunto de Sensores"
 
 #: dat/outfits/utility/sensor_array.xml:4 dat/shipai.lua:97
 msgid "Electronic Warfare"
@@ -18802,14 +18801,21 @@ msgid ""
 "increases the accuracy of short-range tracking information used by your "
 "ship's weapons system."
 msgstr ""
+"Este conjunto de sensores utiliza a modulação de fótons amplificada por "
+"quadralen para detectar mais facilmente os sinais fracos emitidos por uma "
+"nave distante, aumentando efetivamente a capacidade normal da sua nave de "
+"ver e identificar outras naves no espaço. Isto pode ser útil para rebater o "
+"efeito dos instrumentos de camuflagem e também aumenta a precisão da "
+"informação de localização de curto alcance utilizada pelo sistema de armas "
+"da sua nave."
 
 #: dat/outfits/utility/targeting_array.xml:2
 msgid "Targeting Array"
-msgstr ""
+msgstr "Conjunto de Mira"
 
 #: dat/outfits/utility/targeting_array.xml:4
 msgid "Weapon Modifier (Turret)"
-msgstr ""
+msgstr "Modificador de Arma (Torreta)"
 
 #: dat/outfits/utility/targeting_array.xml:9
 msgid ""
@@ -18817,10 +18823,14 @@ msgid ""
 "targets, and minimizes accuracy losses at range. It requires a short period "
 "to compute an ideal vector, slightly slowing firing rates."
 msgstr ""
+"Uma melhor matriz de alvos permite que as suas torretas adquiram alvos mais "
+"rapidamente, e minimiza perdas de precisão ao alcance. Requer um curto "
+"período de tempo para calcular um vetor ideal, diminuindo ligeiramente a "
+"cadência de tiro."
 
 #: dat/outfits/utility/targeting_conduit.xml:2
 msgid "Targeting Conduit"
-msgstr "tubo de destino"
+msgstr "Conduíte de Mira"
 
 #: dat/outfits/utility/targeting_conduit.xml:10
 msgid ""
@@ -18829,14 +18839,18 @@ msgid ""
 "the cost of reduced range due to the inherent instability caused by "
 "overloading the systems."
 msgstr ""
+"O conduíte de mira redireciona o excesso de energia do escudo para os "
+"sistemas de mira de um nave, permitindo uma trava de mira no alvo muito mais "
+"rápido, embora à custa de um alcance reduzido devido à instabilidade "
+"inerente causada pela sobrecarga dos sistemas."
 
 #: dat/outfits/utility/targeting_conduit.xml:11
 msgid "Only active when shield is above 70%."
-msgstr ""
+msgstr "Só ativo quando o escudo está acima dos 70%."
 
 #: dat/outfits/utility/unicorp_jammer.xml:2
 msgid "Unicorp Jammer"
-msgstr ""
+msgstr "Bloqueador Unicorp"
 
 #: dat/outfits/utility/unicorp_jammer.xml:9
 msgid ""
@@ -18847,10 +18861,17 @@ msgid ""
 "effective, but it also uses a lot more power. For this reason, jammer "
 "systems are inactive until needed, and must be activated manually."
 msgstr ""
+"Ao contrário dos sistemas de embaramento de uso geral, bloqueadores são "
+"equipamentos de utilização frequente para combate eletrônico no espaço. Um "
+"bloqueador funciona interferindo ativamente nos sistemas de sensores dos "
+"naves próximas, em vez de modular a assinatura do nave em que está "
+"instalado. Isto é muito mais eficaz, mas também utiliza muito mais energia. "
+"Por este motivo, os sistemas de interferência ficam inativos até serem "
+"necessários, e devem ser ativados manualmente."
 
 #: dat/outfits/utility/unicorp_light_afterburner.xml:2
 msgid "Unicorp Light Afterburner"
-msgstr ""
+msgstr "Pós-Combustor Leve Unicorp"
 
 #: dat/outfits/utility/unicorp_light_afterburner.xml:8
 #: dat/outfits/utility/unicorp_medium_afterburner.xml:8
@@ -18860,14 +18881,18 @@ msgid ""
 "drain the ship's energy and also generate heat. If the afterburner gets too "
 "hot its effect will diminish, and eventually it will shut off entirely."
 msgstr ""
+"Pós-Combustores dão a nave um aumento imediato de empuxo e velocidade quando "
+"ativados. Porém, enquanto ativo, o pós-combustor constantemente drena a "
+"energia da nave e também gera calor. Se ele esquentar demais, o efeito "
+"diminui, e eventualmente a turbina se desliga por completo."
 
 #: dat/outfits/utility/unicorp_medium_afterburner.xml:2
 msgid "Unicorp Medium Afterburner"
-msgstr ""
+msgstr "Pós-Combustor Médio Unicorp"
 
 #: dat/outfits/utility/unicorp_scrambler.xml:2
 msgid "Unicorp Scrambler"
-msgstr ""
+msgstr "Embaralhador Unicorp"
 
 #: dat/outfits/utility/unicorp_scrambler.xml:9
 msgid ""
@@ -18878,10 +18903,16 @@ msgid ""
 "scramblers put a minimal strain on the ship's resources, and are always "
 "active."
 msgstr ""
+"Embaralhadores distorcem a assinatura electromagnética de uma nave, tornando "
+"mais difícil para vários sensores detecta-la. Na prática, aumenta a "
+"distância a que a nave pode ser detectada e escaneada, e torna mais difícil "
+"que mísseis inimigos obtenham mira. O efeito é bastante limitado, mas, "
+"embaralhadores exigem muito pouco dos recursos da nave, e estão sempre "
+"ativos."
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:2
 msgid "Weakness Harmonizer AI"
-msgstr ""
+msgstr "IA de Harmonização de Fraqueza"
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:11
 msgid ""
@@ -18897,14 +18928,16 @@ msgid ""
 "10% additional damage for each hostile ship of same class or higher within "
 "2000 distance."
 msgstr ""
+"10% de dano adicionai para cada nave hostil do mesmo tipo ou maior dentro de "
+"um raio 2000 unidades de distância."
 
 #: dat/outfits/utility/weapons_ionizer.xml:2
 msgid "Weapons Ionizer"
-msgstr ""
+msgstr "Ionizador de Armas"
 
 #: dat/outfits/utility/weapons_ionizer.xml:4
 msgid "Weapon Modification"
-msgstr ""
+msgstr "Modificação de Armas"
 
 #: dat/outfits/utility/weapons_ionizer.xml:9
 msgid ""
@@ -18915,32 +18948,40 @@ msgid ""
 "automatically activate when the target's armour is below 50%, but can also "
 "be triggered manually."
 msgstr ""
+"O Ionizador de Armas funciona com base no princípio de redirecionar "
+"quantidades maciças de energia de armas para um gerador de campo de ions. "
+"Ainda que o consumo de energia aumenta e os danos causados diminuam "
+"significativamente, o campo de ions permite que as armas convencionais "
+"causem danos ionizantes enquanto o equipamento está ativo. É configurado "
+"para ativar automaticamente quando a blindagem do alvo está abaixo de 50%, "
+"mas também pode ser ativado manualmente."
 
 #: dat/outfits/utility/weapons_ionizer.xml:12
 msgid "Automatically triggers when target armour is below 50%."
 msgstr ""
+"Automaticamente ativado quando a blindagem do alvo estiver abaixo de 50%."
 
 #: dat/outfits/weapons/base_ripper_mk2.xml:2
 msgid "Base Ripper MK2"
-msgstr ""
+msgstr "Estripador de Base MK2"
 
 #: dat/outfits/weapons/base_ripper_mk2.xml:9
 #: dat/outfits/weapons/cheaters_laser_cannon.xml:8
 #: dat/outfits/weapons/cheaters_ragnarok_beam.xml:8
 msgid "This weapon is a cheat. It is not meant to be used by players."
-msgstr ""
+msgstr "Esta arma para trapaça. Não é para ser utilizada por jogadores."
 
 #: dat/outfits/weapons/cheaters_laser_cannon.xml:2
 msgid "Cheater's Laser Cannon"
-msgstr ""
+msgstr "Canhão Laser do Trapaceiro"
 
 #: dat/outfits/weapons/cheaters_ragnarok_beam.xml:2
 msgid "Cheater's Ragnarok Beam"
-msgstr ""
+msgstr "Raio Ragnarok do Trapaceiro"
 
 #: dat/outfits/weapons/gauss_gun.xml:2
 msgid "Gauss Gun"
-msgstr ""
+msgstr "Arma Gauss"
 
 #: dat/outfits/weapons/gauss_gun.xml:8
 msgid ""
@@ -18950,10 +18991,15 @@ msgid ""
 "impact. Gauss Guns are popular among small time pirates for being an easy to "
 "use, reliable weapon."
 msgstr ""
+"A Arma Gauss é um dos projetos de armas mais antigos da galáxia atual, "
+"datando dos tempos da Federação. Dispara um fluxo rápido de projéteis de "
+"alta velocidade contra o alvo, causando danos através de puro impacto "
+"cinético. Armas Gauss são populares entre piratas de pouca importância por "
+"ser uma arma fácil de usar e confiável."
 
 #: dat/outfits/weapons/grave_beam.xml:2
 msgid "Grave Beam"
-msgstr ""
+msgstr "Raio Túmulo"
 
 #: dat/outfits/weapons/grave_beam.xml:10
 msgid ""
@@ -18961,10 +19007,13 @@ msgid ""
 "not deal as much damage, but its lighter size and more forgiving CPU "
 "requirements makes it a competitive contender."
 msgstr ""
+"O Raio Túmulo é uma versão mais leve e rápida do Raio Ragnarok. Não causa "
+"tantos danos, mas o seu tamanho mais leve e menores exigências de CPU fazem "
+"dele um concorrente competitivo."
 
 #: dat/outfits/weapons/grave_lance.xml:2
 msgid "Grave Lance"
-msgstr ""
+msgstr "Lança Túmulo"
 
 #: dat/outfits/weapons/grave_lance.xml:10
 msgid ""
@@ -18972,10 +19021,13 @@ msgid ""
 "technology behind it is poorly understood by everyone except the Za'lek, who "
 "use it as a standard weapon."
 msgstr ""
+"A Lança Túmulo é uma das mais poderosas armas de lança que existe. A "
+"tecnologia por trás da arma é mal compreendida por todos, exceto pelos "
+"Za'lek, que a utilizam como arma padrão."
 
 #: dat/outfits/weapons/heavy_ion_cannon.xml:2
 msgid "Heavy Ion Cannon"
-msgstr ""
+msgstr "Canhão de Íons Pesado"
 
 #: dat/outfits/weapons/heavy_ion_cannon.xml:9
 msgid ""
@@ -18984,10 +19036,14 @@ msgid ""
 "weapons on specialized capture teams, but the design is licensed for public "
 "use as well."
 msgstr ""
+"O Canhão de Íons Pesado faz um trabalho muito melhor em desabilitar naves do "
+"que o modelo padrão, mas requer um espaço de monta médio. A maioria dos "
+"militares emprega essas armas em equipes especializadas de captura, mas o "
+"projeto é licenciado para uso público também."
 
 #: dat/outfits/weapons/heavy_ion_turret.xml:2
 msgid "Heavy Ion Turret"
-msgstr ""
+msgstr "Torreta de Íons Pesada"
 
 #: dat/outfits/weapons/heavy_ion_turret.xml:10
 msgid ""
@@ -18995,10 +19051,14 @@ msgid ""
 "its target's internal systems. When coupled with Razor weaponry, it is "
 "terribly efficient at reducing enemy warships to tumbling hunks of junk."
 msgstr ""
+"A Torreta de Íons Pesada é um projeto militar Srius, aplicando força bruta "
+"aos sistemas internos de seu alvo. Usada em conjunto com armas tipo Navalha, "
+"é assustadioramente eficiente em reduzir navies de guerra inimigos a montes "
+"de sucata flutuantes."
 
 #: dat/outfits/weapons/heavy_laser_turret.xml:2
 msgid "Heavy Laser Turret"
-msgstr ""
+msgstr "Torreta Laser Pesada"
 
 #: dat/outfits/weapons/heavy_laser_turret.xml:10
 msgid ""
@@ -19006,10 +19066,13 @@ msgid ""
 "Turret, though some fundamental mechanisms had to be redesigned to adapt to "
 "the increased energy throughput found in this weapon."
 msgstr ""
+"A Torreta Laser Pesada é mais ou menos uma versão maior da Torre Laser, "
+"embora alguns mecanismos fundamentais foram redesenhados para se adaptarem "
+"ao aumento do rendimento energético desta arma."
 
 #: dat/outfits/weapons/heavy_razor_turret.xml:2
 msgid "Heavy Razor Turret"
-msgstr ""
+msgstr "Torreta Navalha Pesada"
 
 #: dat/outfits/weapons/heavy_razor_turret.xml:10
 msgid ""
@@ -19017,10 +19080,13 @@ msgid ""
 "Where the standard razor turrets are ineffective, the heavy razor turret "
 "provides the necessary firepower to batter down virtually any shielding."
 msgstr ""
+"A Casa Sirius equipa normalmente suas naves mais pesadas com Torretas "
+"Navalha Pesadas. Quando as normais são ineficazes, Torretas Navalha Pesadas "
+"provê o poder de fogo necessário para solapar qualquer escudo."
 
 #: dat/outfits/weapons/heavy_ripper_cannon.xml:2
 msgid "Heavy Ripper Cannon"
-msgstr ""
+msgstr "Canhão Estripador Pesado"
 
 #: dat/outfits/weapons/heavy_ripper_cannon.xml:10
 msgid ""
@@ -19030,10 +19096,15 @@ msgid ""
 "Cannon. The main drawback to this model is its increased bulk, which makes "
 "it unsuitable for smaller ships."
 msgstr ""
+"Modulando a frequência do Canhão do Estripador básico, os militares do "
+"Império aumentaram o seu alcance, precisão e poder destrutivo. Depois de "
+"reformular os conduítes de energia, os seus esforços culminaram no "
+"devastador Canhão Estripador Pesado. O principal inconveniente deste modelo "
+"é o seu maior volume, o que o torna impróprio para naves menores."
 
 #: dat/outfits/weapons/heavy_ripper_turret.xml:2
 msgid "Heavy Ripper Turret"
-msgstr ""
+msgstr "Torreta Estripadora Pesada"
 
 #: dat/outfits/weapons/heavy_ripper_turret.xml:10
 msgid ""
@@ -19041,10 +19112,14 @@ msgid ""
 "conventionally available to civilians. It's bulk, high energy requirements, "
 "and high damage make it unsuitable for non-capital ships."
 msgstr ""
+"Construída com base no Canhão Estripador Pesado, a torreta estripadora é a "
+"torreta mais pesada normalmente disponível para os civis. A sua massa, "
+"exigências de energia e alto dano a tornam imprópria para naves que não são "
+"do tipo capital."
 
 #: dat/outfits/weapons/ion_cannon.xml:2
 msgid "Ion Cannon"
-msgstr ""
+msgstr "Canhão Iônico"
 
 #: dat/outfits/weapons/ion_cannon.xml:8
 msgid ""
@@ -19054,10 +19129,15 @@ msgid ""
 "allows it to be mounted on small craft. This makes the Ion Cannon one of the "
 "most popular weapons for weaker pirates."
 msgstr ""
+"Canhões Iônicos são primariamente armas não letais feitas para causar curtos "
+"nos sistemas internos de naves e desativá-los sem matar a tripulação no "
+"processo. O Canhão de Íons padrão é o projeto mais básico e compacto, o que "
+"permite a sua montagem em pequenas naves.Por isso, é uma das armas mais "
+"populares para os piratas mais fracos."
 
 #: dat/outfits/weapons/laser_cannon_mk1.xml:2
 msgid "Laser Cannon MK1"
-msgstr ""
+msgstr "Canhão Laser MK1"
 
 #: dat/outfits/weapons/laser_cannon_mk1.xml:8
 msgid ""
@@ -19065,10 +19145,14 @@ msgid ""
 "energy beams that do a decent amount of damage to both shield and armour, "
 "while remaining efficient enough to mount several even on small ships."
 msgstr ""
+"O Canhão Laser é uma arma padrão em muitas naves. Dispara feixes de energia "
+"carregados que fazem uma quantidade decente de danos tanto no escudo como na "
+"blindagem, sendo eficiente o bastante para que vários possam ser instalados "
+"mesmo em pequenas naves."
 
 #: dat/outfits/weapons/laser_cannon_mk2.xml:2
 msgid "Laser Cannon MK2"
-msgstr ""
+msgstr "Canhão Laser MK2"
 
 #: dat/outfits/weapons/laser_cannon_mk2.xml:9
 msgid ""
@@ -19077,10 +19161,14 @@ msgid ""
 "keep order among the civilian populace, and it is capable of dealing with "
 "larger Corvette vessels with some effort."
 msgstr ""
+"Uma versão de alta potência do Canhão Laser, o MK2 é normalmente encontrado "
+"em naves militares e de execução da lei Imperial. O seu poder de fogo "
+"superior ajuda a manter a ordem entre a população civil, e é capaz de lidar "
+"com naves maiores tipo corveta com alguma dificuldade."
 
 #: dat/outfits/weapons/laser_turret_mk1.xml:2
 msgid "Laser Turret MK1"
-msgstr ""
+msgstr "Torreta Laser MK1"
 
 #: dat/outfits/weapons/laser_turret_mk1.xml:9
 msgid ""
@@ -19091,7 +19179,7 @@ msgstr ""
 
 #: dat/outfits/weapons/laser_turret_mk2.xml:2
 msgid "Laser Turret MK2"
-msgstr ""
+msgstr "Torreta Laser MK2"
 
 #: dat/outfits/weapons/laser_turret_mk2.xml:9
 msgid ""
@@ -19099,10 +19187,13 @@ msgid ""
 "use against fleets of small to medium ships. This weapon is one of the "
 "mainstays in the Imperial space forces."
 msgstr ""
+"A Torreta Laser MK2 é frequentemente encontrada em frotas de resposta rápida "
+"Imperial, para uso contra frotas de naves de pequeno e médio porte. Esta "
+"arma é um dos principais pilares das forças espaciais Imperiais."
 
 #: dat/outfits/weapons/mass_driver.xml:2
 msgid "Mass Driver"
-msgstr ""
+msgstr "Impulsionador de Massa"
 
 #: dat/outfits/weapons/mass_driver.xml:9
 msgid ""
@@ -19110,10 +19201,13 @@ msgid ""
 "through kinetic impact and knocking the target back. One of the most "
 "economical heavy weapons in the galaxy."
 msgstr ""
+"Impulsionadores de Massa disparam balas maciças de matéria em naves "
+"inimigas, causando danos através de impacto cinético e forçando o alvo para "
+"trás. Uma das armas pesadas mais econômicas da galáxia."
 
 #: dat/outfits/weapons/neutron_disruptor.xml:2
 msgid "Neutron Disruptor"
-msgstr ""
+msgstr "Disruptor Neutrônico"
 
 #: dat/outfits/weapons/neutron_disruptor.xml:10
 msgid ""
@@ -19122,20 +19216,26 @@ msgid ""
 "popular with the Collective, whose drones were immune to early versions' "
 "lethal backscatter radiation."
 msgstr ""
+"O Disruptor Neutrônico usa pulsos de alta energia para alterar a composição "
+"molecular básica, causando grandes danos. A arma foi inicialmente popular "
+"com A Coletividade, que possuia Drones imunes a radiação retrodifusa letal "
+"das versões iniciais."
 
 #: dat/outfits/weapons/neutron_disruptor_heavy.xml:2
 msgid "Heavy Neutron Disruptor"
-msgstr ""
+msgstr "Disruptor Neutrônico Pesado"
 
 #: dat/outfits/weapons/neutron_disruptor_heavy.xml:10
 msgid ""
 "The Heavy Neutron Disruptor improves upon the processes behind the smaller "
 "Neutron Disruptor, giving this weapon greater damage and range."
 msgstr ""
+"O Disruptor Neutrônico Pesado melhora os processos de funcionamento do "
+"disruptor menor, dando a esta arma maior poder destrutivo e alcance."
 
 #: dat/outfits/weapons/orion_beam.xml:2
 msgid "Orion Beam"
-msgstr ""
+msgstr "Raio Orión"
 
 #: dat/outfits/weapons/orion_beam.xml:9
 msgid ""
@@ -19143,10 +19243,13 @@ msgid ""
 "exceptional short-duration firepower, a potent deterrent against lighter "
 "vessels."
 msgstr ""
+"A versão torretada do projeto Orión oferece às naves de tamanho médio um "
+"poder de fogo excepcional de curta duração, um potente deterente contra "
+"naves mais leves."
 
 #: dat/outfits/weapons/orion_lance.xml:2
 msgid "Orion Lance"
-msgstr ""
+msgstr "Lança Orión"
 
 #: dat/outfits/weapons/orion_lance.xml:9
 msgid ""
@@ -19154,6 +19257,10 @@ msgid ""
 "and up. Based on a heavily-modified, liquid-cooled laser, it's capable of "
 "bursts of continuous fire, resulting in a destructive beam."
 msgstr ""
+"A Lança Orión é uma arma de ponto fixo feita para ser instalada em naves "
+"tipo caça e maiores. Baseada em um laser altamente modificado com "
+"resfriamento líquido, a arma pode disparara rajadas contínuas na forma de um "
+"feixe destrutivo."
 
 #: dat/outfits/weapons/particle_beam.xml:2
 msgid "Particle Beam"
