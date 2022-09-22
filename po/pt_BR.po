@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
-"PO-Revision-Date: 2022-09-22 15:16+0000\n"
+"PO-Revision-Date: 2022-09-23 05:18+0000\n"
 "Last-Translator: Bloody Kenshiro <redhokuto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev/pt_BR/>\n"
@@ -8623,7 +8623,7 @@ msgstr "Xamã Sirius"
 
 #: dat/ships/sirius/sirius_shaman.xml:16
 msgid "You need at least 30 reputation with House Sirius."
-msgstr ""
+msgstr "Você precisa de pelo menos 30 pontos de reputação com a Casa Sirius."
 
 #: dat/ships/sirius/sirius_shaman.xml:17
 msgid ""
@@ -8631,18 +8631,22 @@ msgid ""
 "fighter from a distance, the Shaman is anything but. A purpose-built light "
 "missile platform, few enemies escape the reach of the Shaman."
 msgstr ""
+"Embora a sua forma perfil relativamente possa fazer o Xamã ser confundido "
+"com um caça leve, ele é tudo menos isso. Na verdade uma plataforma de "
+"mísseis leve constuída especialmente para este fim, poucos inimigos escapam "
+"ao alcance do Xamã."
 
 #: dat/ships/soromid/soromid_arx.xml:2
 msgid "Soromid Arx"
-msgstr ""
+msgstr "Arx Soromida"
 
 #: dat/ships/soromid/soromid_arx.xml:9
 msgid "Bio-Carrier"
-msgstr ""
+msgstr "Bio-Porta Naves"
 
 #: dat/ships/soromid/soromid_arx.xml:23 dat/ships/soromid/soromid_vox.xml:20
 msgid "You need at least 70 reputation with the Soromid."
-msgstr ""
+msgstr "Você precisa de pelo menos 70 pontos de reputação com o Soromidos."
 
 #: dat/ships/soromid/soromid_arx.xml:24
 msgid ""
@@ -8652,18 +8656,24 @@ msgid ""
 "Arx tends to be a more lightweight carrier than is typically found in non-"
 "Soromid fleets, without sacrificing carrying capacity."
 msgstr ""
+"O Arx Soromido está normalmente presente nas frotas de Soromidas como um "
+"nave de comando e porta-caças. As suas propriedades únicas permitem-lhe "
+"aumentar o poderio das naves transportadas, o que compensa facilmente o seu "
+"reduzido número de pontos fixos. O Arx tende a ser um porta-naves mais leve "
+"do que é tipicamente encontrado em frotas não-Soromidas, sem sacrificar a "
+"sua capacidade de transporte."
 
 #: dat/ships/soromid/soromid_brigand.xml:2
 msgid "Soromid Brigand"
-msgstr ""
+msgstr "Bandido Soromida"
 
 #: dat/ships/soromid/soromid_brigand.xml:9
 msgid "Bio-Interceptor"
-msgstr ""
+msgstr "Bio-Interceptor"
 
 #: dat/ships/soromid/soromid_brigand.xml:16
 msgid "You need at least 20 reputation with the Soromid."
-msgstr ""
+msgstr "Você precisa de pelo menos 20 pontos de reputação com o Soromidas."
 
 #: dat/ships/soromid/soromid_brigand.xml:17
 msgid ""
@@ -8672,18 +8682,22 @@ msgid ""
 "but it makes up for this by being fast to grow and therefore relatively "
 "expendable."
 msgstr ""
+"O Bandido é uma Bionave rápida e manobrável que os Soromidas usam para "
+"patrulhas intrasistema e funções policiais. A nave tem blindagem leve e é "
+"bastante frágil, mas compensa isto por ser rápida para cultivar e portanto "
+"relativamente descartável."
 
 #: dat/ships/soromid/soromid_copia.xml:2
 msgid "Soromid Copia"
-msgstr ""
+msgstr "Copia Soromida"
 
 #: dat/ships/soromid/soromid_copia.xml:9
 msgid "Bio-Freighter"
-msgstr ""
+msgstr "Bio-Cargueiro"
 
 #: dat/ships/soromid/soromid_copia.xml:23 dat/ships/soromid/soromid_ira.xml:21
 msgid "You need at least 60 reputation with the Soromid."
-msgstr ""
+msgstr "Você precisa de pelo menos 60 pontos de reputação com o Soromidas."
 
 #: dat/ships/soromid/soromid_copia.xml:24
 msgid ""
@@ -8692,14 +8706,19 @@ msgid ""
 "supplies. Unlike most cargo ships, the Copia is designed to not shy away "
 "from combat, and can be a very deadly ship in the right hands."
 msgstr ""
+"O Bio-Cargueiro Copia é a espinha dorsal dos comboios Soromidas e é "
+"frequentemente utilizado para abastecer as frotas ou as instalações "
+"militares com suprimentos críticos. Ao contrário da maioria dos cargueiros, "
+"o Copia foi projetado para não se afastar do combate, e pode ser muito "
+"mortífero nas mãos certas."
 
 #: dat/ships/soromid/soromid_ira.xml:2
 msgid "Soromid Ira"
-msgstr ""
+msgstr "Ira Soromida"
 
 #: dat/ships/soromid/soromid_ira.xml:9
 msgid "Bio-Cruiser"
-msgstr ""
+msgstr "Bio-Cruzador"
 
 #: dat/ships/soromid/soromid_ira.xml:22
 msgid ""
@@ -8707,19 +8726,22 @@ msgid ""
 "While its armour is somewhat weak, this rarely saves those met with its "
 "devastating barrage."
 msgstr ""
+"O Ira é um cruzador de cultivado com o propósito de liderar forças "
+"Soromidas. Embora a sua blindagem seja um pouco fraca, isto raramente poupa "
+"aqueles que se deparam com a sua devastadora barragem."
 
 #: dat/ships/soromid/soromid_marauder.xml:2
 msgid "Soromid Marauder"
-msgstr ""
+msgstr "Saqueador Soromida"
 
 #: dat/ships/soromid/soromid_marauder.xml:9
 msgid "Bio-Bomber"
-msgstr ""
+msgstr "Bio-Bombardeiro"
 
 #: dat/ships/soromid/soromid_marauder.xml:17
 #: dat/ships/soromid/soromid_reaver.xml:16
 msgid "You need at least 30 reputation with the Soromid."
-msgstr ""
+msgstr "Você precisa de pelo menos 30 pontos de reputação com o Soromidas."
 
 #: dat/ships/soromid/soromid_marauder.xml:18
 msgid ""
@@ -8728,6 +8750,10 @@ msgid ""
 "which calls for increased durability and ammunition chambers. This makes it "
 "quite a bit slower than its distant cousin."
 msgstr ""
+"A Saqueador foi desenvolvida à partir da mesma base que a Bandido mas as "
+"duas naves são muito diferentes. A saqueador foi desenvolvida para cumprir o "
+"papel de um bombardeiro, que demanda durabilidade e reservas de munição "
+"maiores. Isto a torna um tanto mais lenta que sua prima distante."
 
 #: dat/ships/soromid/soromid_nyx.xml:2
 msgid "Soromid Nyx"
