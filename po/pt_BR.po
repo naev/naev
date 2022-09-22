@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-07-20 00:21-0400\n"
-"PO-Revision-Date: 2022-09-22 15:15+0000\n"
+"PO-Revision-Date: 2022-09-23 05:17+0000\n"
 "Last-Translator: Bloody Kenshiro <redhokuto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev-0-9-x/pt_BR/>\n"
@@ -20396,10 +20396,14 @@ msgid ""
 "fighter from a distance, the Shaman is anything but. A purpose-built light "
 "missile platform, few enemies escape the reach of the Shaman."
 msgstr ""
+"Embora a sua forma perfil relativamente possa fazer o Xamã ser confundido "
+"com um caça leve, ele é tudo menos isso. Na verdade uma plataforma de "
+"mísseis leve constuída especialmente para este fim, poucos inimigos escapam "
+"ao alcance do Xamã."
 
 #: dat/ships/soromid_arx.xml:2
 msgid "Soromid Arx"
-msgstr ""
+msgstr "Arx Soromida"
 
 #: dat/ships/soromid_arx.xml:22
 msgid ""
@@ -20412,7 +20416,7 @@ msgstr ""
 
 #: dat/ships/soromid_brigand.xml:2
 msgid "Soromid Brigand"
-msgstr ""
+msgstr "Bandido Soromida"
 
 #: dat/ships/soromid_brigand.xml:15
 msgid ""
@@ -20421,10 +20425,14 @@ msgid ""
 "but it makes up for this by being fast to grow and therefore relatively "
 "expendable."
 msgstr ""
+"O Bandido é uma Bionave rápida e manobrável que os Soromidas usam para "
+"patrulhas intrasistema e funções policiais. A nave tem blindagem leve e é "
+"bastante frágil, mas compensa isto por ser rápida para cultivar e portanto "
+"relativamente descartável."
 
 #: dat/ships/soromid_ira.xml:2
 msgid "Soromid Ira"
-msgstr ""
+msgstr "Ira Soromida"
 
 #: dat/ships/soromid_ira.xml:20
 msgid ""
@@ -20435,7 +20443,7 @@ msgstr ""
 
 #: dat/ships/soromid_marauder.xml:2
 msgid "Soromid Marauder"
-msgstr ""
+msgstr "Saqueador Soromida"
 
 #: dat/ships/soromid_marauder.xml:16
 msgid ""
@@ -20444,6 +20452,10 @@ msgid ""
 "which calls for increased durability and ammunition chambers. This makes it "
 "quite a bit slower than its distant cousin."
 msgstr ""
+"A Saqueador foi desenvolvida à partir da mesma base que a Bandido mas as "
+"duas naves são muito diferentes. A saqueador foi desenvolvida para cumprir o "
+"papel de um bombardeiro, que demanda durabilidade e reservas de munição "
+"maiores. Isto a torna um tanto mais lenta que sua prima distante."
 
 #: dat/ships/soromid_nyx.xml:2
 msgid "Soromid Nyx"
