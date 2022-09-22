@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
-"PO-Revision-Date: 2022-09-22 01:26+0000\n"
+"PO-Revision-Date: 2022-09-22 15:16+0000\n"
 "Last-Translator: Bloody Kenshiro <redhokuto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev/pt_BR/>\n"
@@ -6806,7 +6806,7 @@ msgid ""
 "its target's internal systems. When coupled with Razor weaponry, it is "
 "terribly efficient at reducing enemy warships to tumbling hunks of junk."
 msgstr ""
-"A Torreta de Íons Pesada é um projeto militar Srius, aplicando força bruta "
+"A Torreta de Iônica Pesada é um projeto militar Srius, aplicando força bruta "
 "aos sistemas internos de seu alvo. Usada em conjunto com armas tipo Navalha, "
 "é assustadioramente eficiente em reduzir navies de guerra inimigos a montes "
 "de sucata flutuantes."
@@ -7150,10 +7150,15 @@ msgid ""
 "engineering complexities of fitting such a powerful weapon into a small slot "
 "lead to much higher dependence on guidance from the ship's central computer."
 msgstr ""
+"O Canhão de Plasma é uma versão em maior escala do projeto do Disparador de "
+"Plasma para uso em Corvetas. Consegue causar um impacto distintamente "
+"superior, mas as complexidades de engenharia envolvidas em colocar uma arma "
+"tão poderosa em um espaço tão pequeno levou a uma dependência muito maior do "
+"computador central da nave."
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:2
 msgid "Plasma Cluster Cannon"
-msgstr "Canhão Cluster de Plasma"
+msgstr "Canhão de Plasma Aninhado"
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:9
 msgid ""
@@ -7165,10 +7170,18 @@ msgid ""
 "medium mounts, but this also means biological Soromid ships are able to "
 "handle its computational load despite being a synthetic construct."
 msgstr ""
+"O Canhão de Plasma Aninhado é um refinamento Soromid para o desenho padrão "
+"do Canhão de Plasma. Ao confinar um aglomerado maciço de plasma "
+"sobreaquecido num pequeno espaço dentro de um \"escudo membranoso\" "
+"especializado, o impacto cria grandes explosões que rasgam até os cascos "
+"mais fortes. A desvantagem deste desenho é que é necessário muito espaço, o "
+"que limita a sua utilização a instalações médias, mas isto também significa "
+"que as naves Soromid biológicas são capazes de lidar com a sua carga "
+"computacional, apesar de ser uma construção sintética."
 
 #: dat/outfits/weapons/plasma_turret_mk1.xml:2
 msgid "Plasma Turret MK1"
-msgstr ""
+msgstr "Torreta de Plasma MK1"
 
 #: dat/outfits/weapons/plasma_turret_mk1.xml:9
 msgid ""
@@ -7178,10 +7191,14 @@ msgid ""
 "among inexperienced mercenaries who are not as well-practiced at aiming as "
 "the pros."
 msgstr ""
+"A Torreta de Plasma usa um Disparador de Plasma como base. O seu curto "
+"alcance torna-a inadequada para a defesa, razaõ que a torna impopular entre "
+"comerciantes e mercadores, mas encontrou um nicho entre mercenários "
+"inexperientes que não tem tão boa mira quanto profissionais."
 
 #: dat/outfits/weapons/plasma_turret_mk2.xml:2
 msgid "Plasma Turret MK2"
-msgstr ""
+msgstr "Torreta de Plasma MK2"
 
 #: dat/outfits/weapons/plasma_turret_mk2.xml:9
 msgid ""
@@ -7189,10 +7206,14 @@ msgid ""
 "medium-size turrets, but it is sometimes favoured by corvettes for its "
 "unusually low weight compared to its range and damage output."
 msgstr ""
+"A Torreta de Plasma Mark 2 não é especialmente impressionante em comparação "
+"com outras de tamanho médio, mas é por vezes favorecida por corvetas devido "
+"ao seu peso estranhamente baixo em comparação com o seu alcance e capacidade "
+"para dano."
 
 #: dat/outfits/weapons/ragnarok_beam.xml:2
 msgid "Ragnarok Beam"
-msgstr ""
+msgstr "Raio Ragnarok"
 
 #: dat/outfits/weapons/ragnarok_beam.xml:10
 msgid ""
@@ -7200,10 +7221,14 @@ msgid ""
 "market. It's designed for capital ship combat, although its extremely large "
 "payload makes it somewhat useful for clearing enemy fighters."
 msgstr ""
+"O Raio Ragnarok é uma das mais poderosas armas do tipo mercado. Foi "
+"projetada para combate entre nave capitais, embora sua descarga de energia "
+"extremamente grande a torne de certa forma útil para a destruír de caças "
+"inimigos."
 
 #: dat/outfits/weapons/railgun.xml:2
 msgid "Railgun"
-msgstr ""
+msgstr "Canhão Elétrico"
 
 #: dat/outfits/weapons/railgun.xml:10
 msgid ""
@@ -7211,10 +7236,13 @@ msgid ""
 "of debris to extremely high velocities. The impact caused by the pieces of "
 "debris can tear apart even the strongest ship hulls."
 msgstr ""
+"O Canhão Elétrico usa pulsos magnéticos fortes para acelerar pedaços de "
+"material a velocidades extremamente altas. O impacto causado pela material "
+"pode despedaçar até os cascos de nave mais fortes."
 
 #: dat/outfits/weapons/railgun_turret.xml:2
 msgid "Railgun Turret"
-msgstr ""
+msgstr "Torreta de Canhão Elétrico"
 
 #: dat/outfits/weapons/railgun_turret.xml:10
 msgid ""
@@ -7223,10 +7251,15 @@ msgid ""
 "a specialized turret housing, it manages to mitigate the recoil normally "
 "associated with railguns at a slight velocity cost."
 msgstr ""
+"Ainda que o Canhão Elétrico de 150mm seja uma arma formidável, a arma "
+"definitiva de força bruta para naves capitais é a Torreta de Canhão Elétrico "
+"de 150mm. Com dois canhões instalados em uma estrutura especializada, o "
+"coice nromalmente associado a estas armas é reduzido à custa de uma leve "
+"perda de velocidade."
 
 #: dat/outfits/weapons/razor_mk1.xml:2
 msgid "Razor MK1"
-msgstr ""
+msgstr "Navalha MK1"
 
 #: dat/outfits/weapons/razor_mk1.xml:8
 msgid ""
@@ -7235,10 +7268,15 @@ msgid ""
 "such, Razors are best used in the initial phase of an engagement, and "
 "swapped out for other weapons once the target's shields come down."
 msgstr ""
+"Navalhas disparam bolsões concentrados de ións altamente energizados que são "
+"eficazes em drenar escudos, mas tem apenas efeito limitado contra as "
+"blindagens de naves. Assim, Navalhas são melhor usadas na fase inicial de um "
+"combate, e trocadas por outras armas quando os escudos já estiverem "
+"desativados."
 
 #: dat/outfits/weapons/razor_mk2.xml:2
 msgid "Razor MK2"
-msgstr ""
+msgstr "Navalha MK2"
 
 #: dat/outfits/weapons/razor_mk2.xml:8
 msgid ""
@@ -7248,10 +7286,16 @@ msgid ""
 "drain a target's shields, paving the way for other weapons to deliver the "
 "finishing blow."
 msgstr ""
+"O Modelo Navalha civíl aperfeçoado traz maior eficácia comparado com seu "
+"antecessor, e tem menos dificuldade em sobrecaregar escudos de nível capital."
+"\n"
+"Assim como no caso do modelo básico, o Navalha MK2 é melhor aproveitado para "
+"drenar os escudos do alvo. abrindo caminho para que outras armas desfiram o "
+"golpe final."
 
 #: dat/outfits/weapons/razor_turret_mk1.xml:2
 msgid "Razor Turret MK1"
-msgstr ""
+msgstr "Torre Navalha MK1"
 
 #: dat/outfits/weapons/razor_turret_mk1.xml:9
 msgid ""
@@ -7259,10 +7303,14 @@ msgid ""
 "is a great deterrent against attackers because nothing puts a space pilot on "
 "edge like their shields rapidly coming down."
 msgstr ""
+"As Torres de Navalha são populares entre mercadores. Os seus elevados danos "
+"contra os escudos são um grande deterente contra agressores porque nada "
+"causa mais apreensão a um piloto espacial do que ver seus escudos cairem "
+"rapidamente."
 
 #: dat/outfits/weapons/razor_turret_mk2.xml:2
 msgid "Razor Turret MK2"
-msgstr ""
+msgstr "Torre Navalha MK2"
 
 #: dat/outfits/weapons/razor_turret_mk2.xml:9
 msgid ""
@@ -7270,10 +7318,14 @@ msgid ""
 "escort ships. They are often mounted alongside laser or gauss turrets to "
 "assist in de-shielding incoming attackers before they are ripped to shreds."
 msgstr ""
+"A versão turretada da Navalha MK2 é usada com muita frequência em naves "
+"médias de escolta. È comum instala-las junto com torretas laser ou gauss "
+"para ajudar a minar os escudos dos agressores antes de serem rasgadas em "
+"pedaços."
 
 #: dat/outfits/weapons/repeating_railgun.xml:2
 msgid "Repeating Railgun"
-msgstr ""
+msgstr "Canhão Elétrico de Repetição"
 
 #: dat/outfits/weapons/repeating_railgun.xml:10
 msgid ""
@@ -7282,10 +7334,14 @@ msgid ""
 "enhance the weapon into a heavier, faster firing variant that isn't so much "
 "a gun as it is a miniature meteor shower generator."
 msgstr ""
+"Ainda que o Canhão Elétrico tenha efeitos devastadores, não foi o bastante "
+"para o Alto Comando Dvaered. Eles fizeram com que seus engenheiros "
+"melhorassem a arma, tornando-a mais rápida e pesada, de forma que mais "
+"parecesse um gerador de chuva de meteóros em miniatura."
 
 #: dat/outfits/weapons/ripper_cannon.xml:2
 msgid "Ripper Cannon"
-msgstr ""
+msgstr "Canhão Estripador"
 
 #: dat/outfits/weapons/ripper_cannon.xml:9
 msgid ""
@@ -7295,10 +7351,16 @@ msgid ""
 "Ripper Cannon is mostly used by Corvettes which possess small weapon mounts, "
 "but need heavy firepower so they can take on heavier ships effectively."
 msgstr ""
+"O Canhão Estripador é uma variante do Canhão Laser que tem capacitores mais "
+"fortes e canos duplos simultâneos. O resultado é um aumento dos danos por "
+"acerto à custa de exigências CPU muito mais altas. O Canhão Estripador é "
+"principalmente utilizado por Corvetas que possuem suportes pequenos de "
+"armas, mas necessitam de grande poder de fogo para poderem enfrentar naves "
+"mais pesadas de forma eficaz."
 
 #: dat/outfits/weapons/shredder.xml:2
 msgid "Shredder"
-msgstr ""
+msgstr "Triturador"
 
 #: dat/outfits/weapons/shredder.xml:9
 msgid ""
@@ -7306,10 +7368,13 @@ msgid ""
 "The sheer damage dealing capacity of this weapon makes Dvaered Corvettes "
 "dangerous to engage by ships that aren't substantially larger than they are."
 msgstr ""
+"O Triturador merece muito o nome que seus fabricantes Dvaered the deram. A "
+"capacidade enorme de danos deste arma tornam Corvetas Dvaered perigosas de "
+"serem enfrentadas por naves que não são considerávelmente maiores que elas."
 
 #: dat/outfits/weapons/slicer.xml:2
 msgid "Slicer"
-msgstr ""
+msgstr "Fatiador"
 
 #: dat/outfits/weapons/slicer.xml:9
 msgid ""
@@ -7317,10 +7382,13 @@ msgid ""
 "the shields from those who would stand against House Sirius. It is commonly "
 "found on Sirius Preachers and other Corvettes."
 msgstr ""
+"O Fatiadoré uma versão de alta potência da Navalha, excelente para retirar "
+"escudos daqueles que se oponham à Casa Sirius. Encontra-se normalmente em "
+"Sermonistas Sirius e outras Corvetas."
 
 #: dat/outfits/weapons/tesla_cannon.xml:2
 msgid "Tesla Cannon"
-msgstr ""
+msgstr "Canhão Tesla"
 
 #: dat/outfits/weapons/tesla_cannon.xml:10
 msgid ""
@@ -7330,10 +7398,16 @@ msgid ""
 "does poor damage for its size, in extended engagements this weapon can leave "
 "enemy combatants functionally helpless."
 msgstr ""
+"A maior arma do território Sirius, o poderoso canhão Tesla utiliza "
+"princípios semelhantes aos dos canhões de ións mais comuns, mas tem como "
+"alvo de forma ainda mais específica os sistemas eléctricos de uma nave, "
+"particularmente os seus reatores. Embora faça poucos danos devido ao seu "
+"tamanho, em combates prolongados, esta arma pode deixar os inimigos "
+"funcionalmente indefesos."
 
 #: dat/outfits/weapons/turbolaser.xml:2
 msgid "Turbolaser"
-msgstr ""
+msgstr "Laser Turbo"
 
 #: dat/outfits/weapons/turbolaser.xml:10
 msgid ""
@@ -7341,10 +7415,13 @@ msgid ""
 "found in the galaxy. Imperial Capital ships use it to lay down devastating "
 "barrages against enemy vessels."
 msgstr ""
+"Este modelo especial da torreta Laser Pesada é uma das armas mais pesadas "
+"encontradas na galáxia. As naves capitais Imperiais utilizam-na para "
+"disparar barragens devastadoras contra naves inimigas."
 
 #: dat/outfits/weapons/turreted_gauss_gun.xml:2
 msgid "Turreted Gauss Gun"
-msgstr ""
+msgstr "Arma Gauss Turretada"
 
 #: dat/outfits/weapons/turreted_gauss_gun.xml:9
 msgid ""
@@ -7352,10 +7429,14 @@ msgid ""
 "ships, the turret version of the Gauss Gun provides basic defence against "
 "lone pirates. A more determined attacker is unlikely to be deterred, however."
 msgstr ""
+"Uma das contramedidas mais comuns utilizadas por naves mercadoras com baixo "
+"orçamento, a versão torretada da Arma Gauss proporciona uma defesa básica "
+"contra os piratas solitários. Um atacante mais determinado é, no entanto, "
+"pouco suscetível de ser dissuadido."
 
 #: dat/outfits/weapons/turreted_vulcan_gun.xml:2
 msgid "Turreted Vulcan Gun"
-msgstr ""
+msgstr "Arma Vulcão Turretada"
 
 #: dat/outfits/weapons/turreted_vulcan_gun.xml:10
 msgid ""
@@ -7363,10 +7444,14 @@ msgid ""
 "brethren. Ships not nimble enough to evade its relentless stream of "
 "projectiles might find themselves riddled with hull punctures before long."
 msgstr ""
+"Canhões Vulção Turretados carregam a mesma munição de calibre que as versões "
+"de montagem fixa. Naves que não sejam ágeis o suficiente para escapar de seu "
+"fluxo implacável de projéteis podem se ver crivados de perfurações no casco "
+"em pouco tempo."
 
 #: dat/outfits/weapons/vulcan_gun.xml:2
 msgid "Vulcan Gun"
-msgstr ""
+msgstr "Canhão Vulcão"
 
 #: dat/outfits/weapons/vulcan_gun.xml:9
 msgid ""
@@ -7375,6 +7460,10 @@ msgid ""
 "some serious havoc even to medium-sized vessels with a pair of Vulcan Guns "
 "installed on their ship."
 msgstr ""
+"O Canhão Vulcão melhora o Canhão Gauss com o aumento do alcance e dos danos, "
+"conseguido através da utilização de munições de calibre mais pesado. Um "
+"piloto experiente pode causar sérios danos mesmo a naves de tamanho médio "
+"com um par destas armas em sua nave."
 
 #: dat/ships/collective/drone.xml:2 dat/missions/minerva/pirate1.lua:171
 msgid "Drone"
@@ -7383,27 +7472,29 @@ msgstr ""
 #: dat/ships/collective/drone.xml:9 dat/ships/collective/drone_hyena.xml:12
 #: dat/ships/zalek/zalek_drone_light.xml:8
 msgid "Robotic Interceptor"
-msgstr ""
+msgstr "Iterceptor Robótico"
 
 #: dat/ships/collective/drone.xml:13 dat/ships/collective/drone_carrier.xml:16
 #: dat/ships/collective/drone_heavy.xml:13
 #: dat/ships/collective/drone_hyena.xml:18
 msgid "Robosys"
-msgstr ""
+msgstr "Sistema Robótico"
 
 #: dat/ships/collective/drone.xml:14
 msgid ""
 "This is a modified version of the Collective Drone that now includes a life "
 "support system for humans."
 msgstr ""
+"Esta é uma versão modificada do Drone da Coletividade que inclui agora um "
+"sistema de suporte de vida para humanos."
 
 #: dat/ships/collective/drone_carrier.xml:2
 msgid "Drone Carrier"
-msgstr ""
+msgstr "Porta Drones"
 
 #: dat/ships/collective/drone_carrier.xml:9
 msgid "Robotic Carrier"
-msgstr ""
+msgstr "Transportador Robótico"
 
 #: dat/ships/collective/drone_carrier.xml:18
 msgid ""
@@ -7413,39 +7504,49 @@ msgid ""
 "remotely controlled droids. Due to the lack of unnecessary crew facilities "
 "and heavy armor the Drone Carrier is an unusual lightweight and fast carrier."
 msgstr ""
+"Este transportador é altamente automatizado e foi projetado para comandar "
+"frotas de Drones da Coletividade. Pode ser operado por uma tripulação "
+"mínima, embora a maioria das seções do navio não sejam pressurizadas. A "
+"manutenção pode ser efetuada por dróides controlados remotamente. Devido à "
+"falta de instalações desnecessárias para tripulação da blindagem pesada, o "
+"Porta-Drones é uma nave leve e veloz."
 
 #: dat/ships/collective/drone_heavy.xml:2
 msgid "Heavy Drone"
-msgstr ""
+msgstr "Drone Pesado"
 
 #: dat/ships/collective/drone_heavy.xml:9
 msgid "Robotic Drone"
-msgstr ""
+msgstr "Drone Robótico"
 
 #: dat/ships/collective/drone_heavy.xml:14
 msgid ""
 "This Collective Heavy Drone has been modified by engineers to support a "
 "human pilot."
 msgstr ""
+"Este Drone Pesado da Coletividade foi modificado por engenheiros permitir um "
+"piloto humano."
 
 #: dat/ships/collective/drone_hyena.xml:2
 msgid "Drone (Hyena)"
-msgstr ""
+msgstr "Drone (Hiena)"
 
 #: dat/ships/collective/drone_hyena.xml:19
 msgid ""
 "This is a modified version of the Collective Drone that now includes a life "
 "support system for humans and is also disguised as a Hyena."
 msgstr ""
+"Uma versão modificada do Drone da Coletividade inclui um sistema de suporte "
+"de vida para humanos e que também está disfarçado como um interceptor Hiena."
 
 #: dat/ships/dvaered/dvaered_ancestor.xml:2
 msgid "Dvaered Ancestor"
-msgstr ""
+msgstr "Ancestral Dvaered"
 
 #: dat/ships/dvaered/dvaered_ancestor.xml:18
 #: dat/ships/dvaered/dvaered_vendetta.xml:19
 msgid "You need at least 30 reputation with House Dvaered."
-msgstr ""
+msgstr "Você precisa de pelo menos 30 pontos de reputação com a Casa Dvaered."
 
 #: dat/ships/dvaered/dvaered_ancestor.xml:19
 msgid ""
@@ -7453,15 +7554,17 @@ msgid ""
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
+"Nesta versão militarizada da Ancestral, a distribuição de peso na estrutura "
+"foi otimizada para permitir que mais carga útil fosse embarcada."
 
 #: dat/ships/dvaered/dvaered_arsenal.xml:2
 msgid "Dvaered Arsenal"
-msgstr ""
+msgstr "Arsenal Dvaered"
 
 #: dat/ships/dvaered/dvaered_arsenal.xml:21
 #: dat/ships/dvaered/dvaered_retribution.xml:19
 msgid "You need at least 60 reputation with House Dvaered."
-msgstr ""
+msgstr "Você precisa de pelo menos 60 pontos de reputação com a Casa Dvaered."
 
 #: dat/ships/dvaered/dvaered_arsenal.xml:22
 msgid ""
@@ -7473,14 +7576,21 @@ msgid ""
 "even basic necessities. Colloquially they have been also been known to be "
 "called \"Dvaered Gunboxes\"."
 msgstr ""
+"A Arsenal é um cargueiro fortemente armado utilizado pela Casa Dvaered para "
+"transportar uma grande quantidade de provisões e tropas sempre que essa "
+"missão fosse perigosa demais para cargueiros blindados mais leves. O nome "
+"deriva do fato de que as naves de transporte da Dvaered estão normalmente "
+"destinados à distribuição e no destacamento de armas e tropas ao invés de "
+"matérias-primas, mercadorias ou mesmo bens de primeira necessidade. "
+"Coloquialmente, também são conhecidas como \"Caixas de Armas Dvaered\"."
 
 #: dat/ships/dvaered/dvaered_goddard.xml:2
 msgid "Dvaered Goddard"
-msgstr ""
+msgstr "Goddard Dvaered"
 
 #: dat/ships/dvaered/dvaered_goddard.xml:21
 msgid "You need at least 70 reputation with House Dvaered."
-msgstr ""
+msgstr "Você precisa de pelo menos 70 pontos de reputação com a Casa Dvaered."
 
 #: dat/ships/dvaered/dvaered_goddard.xml:22
 msgid ""
@@ -7492,14 +7602,21 @@ msgid ""
 "grade version has been adapted to the needs of the Dvaered Warlords, which "
 "means better armour and forwards weapon damage at the cost of increased mass."
 msgstr ""
+"Uma vez, o Cruzador de Batalha Goddard foi encomendado pelo Império para o "
+"serviço militar. No entanto, durante os as Revoltas Dvaered a maioria dos "
+"capitães Goddard tomou o lado dos insurgentes e, após o estabelecimento da "
+"Casa Dvaered, o Império cedeu a licença para da nave ultrapassada para eles. "
+"Hoje, a Casa Dvaered é o maior cliente da Casa Goddard e esta versão militar "
+"foi adaptada às necessidades dos Chefes Guerreiros Dvaered, o que significa "
+"melhor blindagem maior dano das armas de proa às custas de uma maior massa."
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:2
 msgid "Dvaered Phalanx"
-msgstr ""
+msgstr "Falange Dvaered"
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:19
 msgid "You need at least 40 reputation with House Dvaered."
-msgstr ""
+msgstr "Você precisa de pelo menos 40 pontos de reputação com a Casa Dvaered."
 
 #: dat/ships/dvaered/dvaered_phalanx.xml:20
 msgid ""
@@ -7507,10 +7624,12 @@ msgid ""
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
+"Nesta versão militarizada da Falânge, a distribuição de peso na estrutura "
+"foi otimizada para permitir que mais carga útil fosse embarcada."
 
 #: dat/ships/dvaered/dvaered_retribution.xml:2
 msgid "Dvaered Retribution"
-msgstr ""
+msgstr "Retribuição Dvaered"
 
 #: dat/ships/dvaered/dvaered_retribution.xml:20
 msgid ""
@@ -7521,11 +7640,18 @@ msgid ""
 "points. Afterwards, the ship was renamed to Retribution. However, the "
 "electronics remained outdated."
 msgstr ""
+"Quando o Império substituiu os seus cruzadores ultrapassados com a nova "
+"classe Hawking, a Casa Dvaered aproveitou a oportunidade para adquirir a "
+"licença para o cruzador e para a maioria dos naves restantes. Os engenheiros "
+"Dvaered reforçaram a blindagem redesenharam a estrutura do nave, ao mesmo "
+"tempo instalaram mais pontos fixos para armas. Posteriormente, o navio foi "
+"rebatizado para Retribuição. No entanto, a eletrônica permaneceu "
+"desatualizada."
 
 #: dat/ships/dvaered/dvaered_vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:216
 msgid "Dvaered Vendetta"
-msgstr ""
+msgstr "Vingança Dvaered"
 
 #: dat/ships/dvaered/dvaered_vendetta.xml:20
 msgid ""
@@ -7533,24 +7659,28 @@ msgid ""
 "weight on the structure has been optimized in order to allow embarking more "
 "payload."
 msgstr ""
+"Nesta versão militarizada da Vingança, a distribuição de peso na estrutura "
+"foi otimizada para permitir que mais carga útil fosse embarcada."
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:2
 msgid "Dvaered Vigilance"
-msgstr ""
+msgstr "Vigilância Dvaered"
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:18
 msgid "You need at least 50 reputation with House Dvaered."
-msgstr ""
+msgstr "Você precisa de pelo menos 50 pontos de reputação com a Casa Dvaered."
 
 #: dat/ships/dvaered/dvaered_vigilance.xml:19
 msgid ""
 "This military grade version of the Vigilance has an optimized weight "
 "distribution allowing it to carry more payload."
 msgstr ""
+"Esta versão militar da Vigilância tem uma distribuição de peso otimizada que "
+"permite transportar mais carga útil."
 
 #: dat/ships/empire/empire_admonisher.xml:2
 msgid "Empire Admonisher"
-msgstr ""
+msgstr "Admoestador Imperial"
 
 #: dat/ships/empire/empire_admonisher.xml:18
 #: dat/ships/empire/empire_hawking.xml:19
@@ -7563,11 +7693,11 @@ msgstr ""
 #: dat/ships/neutral/lancelot.xml:15 dat/ships/neutral/pacifier.xml:15
 #: dat/ships/neutral/shark.xml:16 dat/scripts/common/shark.lua:14
 msgid "Nexus Shipyards"
-msgstr ""
+msgstr "Estaleiros Nexo"
 
 #: dat/ships/empire/empire_admonisher.xml:21
 msgid "You need at least 40 reputation with the Empire."
-msgstr ""
+msgstr "Você precisa de pelo menos 40 pontos de reputação com o Império."
 
 #: dat/ships/empire/empire_admonisher.xml:22
 msgid ""
@@ -7575,15 +7705,18 @@ msgid ""
 "function to a standard Admonisher, but with slightly better armour, shields, "
 "and heat dissipation."
 msgstr ""
+"Está versão militar do Admoestador é praticamente idêntica em função à "
+"versão padrão, mas possui blindagem, escudos e dissipação de calor "
+"ligeiramente melhores."
 
 #: dat/ships/empire/empire_hawking.xml:2
 msgid "Empire Hawking"
-msgstr ""
+msgstr "Hawking Imperial"
 
 #: dat/ships/empire/empire_hawking.xml:22
 #: dat/ships/empire/empire_rainmaker.xml:23
 msgid "You need at least 60 reputation with the Empire."
-msgstr ""
+msgstr "Você precisa de pelo menos 60 pontos de reputação com o Império."
 
 #: dat/ships/empire/empire_hawking.xml:23
 msgid ""
@@ -7591,14 +7724,17 @@ msgid ""
 "to a standard Hawking, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
+"Está versão militar do Hawking é praticamente idêntica em função à versão "
+"padrão, mas possui blindagem, escudos e dissipação de calor ligeiramente "
+"melhores."
 
 #: dat/ships/empire/empire_lancelot.xml:2
 msgid "Empire Lancelot"
-msgstr ""
+msgstr "Lancelot Imperial"
 
 #: dat/ships/empire/empire_lancelot.xml:19
 msgid "You need at least 30 reputation with the Empire."
-msgstr ""
+msgstr "Você precisa de pelo menos 30 pontos de reputação com o Império."
 
 #: dat/ships/empire/empire_lancelot.xml:20
 msgid ""
@@ -7606,10 +7742,13 @@ msgid ""
 "to a standard Lancelot, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
+"Está versão militar do Lancelot é praticamente idêntica em função à versão "
+"padrão, mas possui blindagem, escudos e dissipação de calor ligeiramente "
+"melhores."
 
 #: dat/ships/empire/empire_pacifier.xml:2
 msgid "Empire Pacifier"
-msgstr ""
+msgstr "Pacificador Imperial"
 
 #: dat/ships/empire/empire_pacifier.xml:20
 msgid ""
@@ -7617,14 +7756,17 @@ msgid ""
 "to a standard Pacifier, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
+"Está versão militar do Pacificador é praticamente idêntica em função à "
+"versão padrão, mas possui blindagem, escudos e dissipação de calor "
+"ligeiramente melhores."
 
 #: dat/ships/empire/empire_peacemaker.xml:2
 msgid "Empire Peacemaker"
-msgstr ""
+msgstr "Mediador Imperial"
 
 #: dat/ships/empire/empire_peacemaker.xml:21
 msgid "You need at least 70 reputation with the Empire."
-msgstr ""
+msgstr "Você precisa de pelo menos 70 pontos de reputação com o Império."
 
 #: dat/ships/empire/empire_peacemaker.xml:22
 msgid ""
@@ -7634,10 +7776,16 @@ msgid ""
 "provide the fighter and bomber squadrons with much needed resupplies. Like "
 "most capital ships, however, it is vulnerable to attack from enemy bombers."
 msgstr ""
+"Construído sob contrato para o Império pelo Estaleiro Nexo, o Pacificador é "
+"uma das maiores naves da galáxia, superando até o poderoso Goddard. Os "
+"Pacificadores funcionam tipicamente como naves de comando nas frotas "
+"Imperiais, e podem fornecer aos esquadrões de caças e bombardeiros os muito "
+"necessários reabastecimentos. Como a maioria das naves capitais, porém, é "
+"vulnerável a ataques de bombardeiros inimigos."
 
 #: dat/ships/empire/empire_rainmaker.xml:2
 msgid "Empire Rainmaker"
-msgstr ""
+msgstr "Criador de Chuva Imperial"
 
 #: dat/ships/empire/empire_rainmaker.xml:24
 msgid ""
@@ -7650,14 +7798,23 @@ msgid ""
 "supplies. After the events an EE-1891-392 official ship rename form was "
 "approved and Rainmaker became the ship's official name."
 msgstr ""
+"O Criador de Chuva é o maior cargueiro utilizado pelo Império. É capaz de "
+"transportar grandes quantidades de material através de território perigoso, "
+"uma vez que pequenos grupos de piratas não são uma ameaça devido à sua "
+"pesada blindagem. Seu nome surgiu quando, pouco depois do Incidente, foram "
+"utilizados para entregar mantimentos a mundos famintos e isolados, fazendo "
+"vôos baixos na atmosfera com os compartimentos de carga abertos, resultando "
+"numa chuva literal de mantimentos. Após os eventos, foi aprovado um "
+"formulário oficial de mudança de nome da nave EE-1891-392 e Criador de Chuva "
+"tornou-se o nome oficial da nave."
 
 #: dat/ships/empire/empire_shark.xml:2
 msgid "Empire Shark"
-msgstr ""
+msgstr "Tubarão Imperial"
 
 #: dat/ships/empire/empire_shark.xml:20
 msgid "You need at least 20 reputation with the Empire."
-msgstr ""
+msgstr "Você precisa de pelo menos 20 pontos de reputação com o Império."
 
 #: dat/ships/empire/empire_shark.xml:21
 msgid ""
@@ -7666,6 +7823,10 @@ msgid ""
 "heat dissipation. The military-grade materials used also result in the ship "
 "being slightly lighter than its generic counterpart."
 msgstr ""
+"Está versão militar do Tubarão é praticamente idêntica em função à versão "
+"padrão, mas possui blindagem, escudos e dissipação de calor ligeiramente "
+"melhores. Os materiais de nível militar também fazem com que seja mais leve "
+"que a versão genérica."
 
 #: dat/ships/feral_bioship/kauweke.xml:2
 msgid "Kauweke"
@@ -7673,12 +7834,12 @@ msgstr ""
 
 #: dat/ships/feral_bioship/kauweke.xml:12
 msgid "Elder Feral Bioship"
-msgstr ""
+msgstr "Bionave Anciã Selvagem"
 
 #: dat/ships/feral_bioship/kauweke.xml:24
 #: dat/ships/feral_bioship/taitamariki.xml:19
 msgid "Still to do..."
-msgstr ""
+msgstr "Ainda por fazer..."
 
 #: dat/ships/feral_bioship/nohinohi.xml:2
 msgid "Nohinohi"
@@ -7687,7 +7848,7 @@ msgstr ""
 #: dat/ships/feral_bioship/nohinohi.xml:12
 #: dat/ships/soromid/soromid_reaver.xml:9
 msgid "Bio-Fighter"
-msgstr ""
+msgstr "Bio-Caça"
 
 #: dat/ships/feral_bioship/nohinohi.xml:17
 msgid ""
@@ -7698,6 +7859,12 @@ msgid ""
 "the synthetic parts. These ships are commonly referred to as \"Feral Bioships"
 "\" and not much is known about them."
 msgstr ""
+"Nohinohi foram originalmente criados como Bio Caças Saqueador Soromid. "
+"Contudo, embora o processo não seja inteiramente claro, quando o caça "
+"original é abandonado ou perdido pode transformar-se de forma notável onde "
+"os componentes biológicos do nave acabam por dominar as partes sintéticas. "
+"Estes naves são geralmente referidos como \"Bionaves Selvagens\" e não se "
+"sabe muito sobre elas."
 
 #: dat/ships/feral_bioship/taitamariki.xml:2
 msgid "Taitamariki"
@@ -7706,16 +7873,16 @@ msgstr ""
 #: dat/ships/feral_bioship/taitamariki.xml:12
 #: dat/ships/soromid/soromid_odium.xml:9
 msgid "Bio-Corvette"
-msgstr ""
+msgstr "Bio-Corveta"
 
 #: dat/ships/misc/raelid_outpost.xml:2 dat/spob/raelid_outpost.xml:2
 msgid "Raelid Outpost"
-msgstr ""
+msgstr "Posto Avançado Raelid"
 
 #: dat/ships/misc/raelid_outpost.xml:9 dat/ships/misc/raglan_outpost.xml:9
 #: dat/ships/misc/sindbad.xml:9 dat/events/minerva/station.lua:228
 msgid "Station"
-msgstr ""
+msgstr "Estação"
 
 #: dat/ships/misc/raelid_outpost.xml:12 dat/ships/misc/raglan_outpost.xml:12
 #: dat/ships/misc/sindbad.xml:12 src/dev_uniedit.c:259 src/dev_uniedit.c:265
@@ -7725,16 +7892,16 @@ msgstr ""
 #: src/land_trade.c:209 src/map.c:625 src/map.c:626 src/outfit.c:293
 #: src/outfit.c:312
 msgid "N/A"
-msgstr ""
+msgstr "N/D"
 
 #: dat/ships/misc/raelid_outpost.xml:13 dat/ships/misc/raglan_outpost.xml:13
 #: dat/ships/misc/sindbad.xml:13
 msgid "This is a base. It's for AI use only. Don't buy it. Seriously."
-msgstr ""
+msgstr "Isto é uma base. Apenas para uso da IA. Não compre. Sério."
 
 #: dat/ships/misc/raglan_outpost.xml:2 dat/spob/raglan_outpost.xml:2
 msgid "Raglan Outpost"
-msgstr ""
+msgstr "Posto Avançado Raglan"
 
 #: dat/ships/misc/sindbad.xml:2 dat/spob/sindbad.xml:2
 msgid "Sindbad"
@@ -7742,7 +7909,7 @@ msgstr ""
 
 #: dat/ships/neutral/admonisher.xml:2
 msgid "Admonisher"
-msgstr ""
+msgstr "Admoestador"
 
 #: dat/ships/neutral/admonisher.xml:19
 msgid ""
@@ -7750,10 +7917,13 @@ msgid ""
 "between the ruggedness of the Pacifier and the agility of the Lancelot. "
 "Overall a very solid combat ship."
 msgstr ""
+"Uma nave de combate muito versátil. A Nexo define o Admoestador como um meio-"
+"termo entre a robustez do Pacificador e a agilidade do Lancelot. No geral, "
+"uma nave de combate muito sólida."
 
 #: dat/ships/neutral/ancestor.xml:2
 msgid "Ancestor"
-msgstr ""
+msgstr "Ancestral"
 
 #: dat/ships/neutral/ancestor.xml:16
 msgid ""
@@ -7762,6 +7932,10 @@ msgid ""
 "Goddard though, the electronics are manufactured by House Dvaered, making it "
 "considerably inferior in that area."
 msgstr ""
+"Normalmente apelidado de \"Pequeno Goddard\" o Ancestral tem suas raízes nas "
+"máquinas voadoras primitivas usadas pelos humans muitas eras atrás. Ao "
+"contrário da Goddard, porém, os sistemas eletrônicos são fabricados pela "
+"Casa Dvaered, tornando a nave considerávelmente inferior neste aspecto."
 
 #: dat/ships/neutral/gawain.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:181
 #: dat/missions/flf/dvk/flf_dvk06.lua:164
@@ -7770,7 +7944,7 @@ msgstr ""
 
 #: dat/ships/neutral/gawain.xml:8
 msgid "Luxury Yacht"
-msgstr ""
+msgstr "Nave Iate de Luxo"
 
 #: dat/ships/neutral/gawain.xml:15
 msgid ""
@@ -7780,6 +7954,11 @@ msgid ""
 "though they rarely survive combat due to their meagre weapons space and "
 "relative fragility."
 msgstr ""
+"A Gawain é uma nave muito moderna, superando quase todas as outras "
+"atualmente em produção. Altamente dependente de técnologias inicialmente "
+"implementadas no Lancelot e largamente usada como nave esportiva por ser "
+"extremamente manobrável, as Gawain raramente sobrevivem a situações de "
+"combate por ter mínimo espaço para armas e ser relativamente frágil."
 
 #: dat/ships/neutral/goddard.xml:19
 msgid ""
@@ -7789,6 +7968,11 @@ msgid ""
 "specialization and improvements on the original design have kept it very "
 "competitive in the market. It's a classic of space."
 msgstr ""
+"Projetada pelo gênio excêntrico Eduard Manuel Goddard, a Nave de Batalha "
+"Goddard lançou a Casa Goddard em direção a fama e fortuna. A fabricação é "
+"totalmente feita em Zhiru no sistema Goddard. Com o tempo, especializações e "
+"melhorias no projeto original mantiveram a nave muito competitiva no "
+"mercado. Um clássico do espaço."
 
 #: dat/ships/neutral/hawking.xml:2
 msgid "Hawking"
@@ -7802,14 +7986,19 @@ msgid ""
 "second only to the flagship of House Goddard, though its narrower frame "
 "allows it to present a smaller target to the enemy."
 msgstr ""
+"O Hawking é a nave principal dos Estaleiros Nexo. Um grande cruzador "
+"projetado para missões prolongadas, é amplamente utilizado pelo Império para "
+"exercer controle sobre os seus territórios. Em termos de poder de fogo "
+"bruto, o Hawking é apenas a segunda nave principal da Casa Goddard, embora o "
+"sua estrutura mais estreita lhe permita apresentar um alvo menor ao inimigo."
 
 #: dat/ships/neutral/hyena.xml:2
 msgid "Hyena"
-msgstr ""
+msgstr "Hiena"
 
 #: dat/ships/neutral/hyena.xml:15
 msgid "Aerosys"
-msgstr ""
+msgstr "Aerosistemas"
 
 #: dat/ships/neutral/hyena.xml:16
 msgid ""
@@ -7821,14 +8010,22 @@ msgid ""
 "as it seems there are countless Hyenas among the ranks of the more notorious "
 "and unruly pilots."
 msgstr ""
+"Produto chave da Aerosys, a Hiena tornou-se rapidamente também a favorita "
+"dos grupos guerrilheiros e paramilitares em todos os lugares. O seu empuxo "
+"excelente combinado com um tempo de reação rápido permite que as reservas de "
+"energia do oponente sejam desperdiçadas enquanto eles se desgastam. Embora a "
+"Aerosys afirme que os suas naves só são vendidas a pilotos respeitáveis, "
+"suspeita-se que vendem a qualquer pessoa disposta a pagar, pois parece que "
+"há inúmeras Hienas entre as fileiras dos pilotos mais notórios e "
+"indisciplinados."
 
 #: dat/ships/neutral/kestrel.xml:2
 msgid "Kestrel"
-msgstr ""
+msgstr "Francelho"
 
 #: dat/ships/neutral/kestrel.xml:15 dat/ships/neutral/starbridge.xml:15
 msgid "Krain Industries"
-msgstr ""
+msgstr "Indústrias Krain"
 
 #: dat/ships/neutral/kestrel.xml:17
 msgid ""
@@ -7838,16 +8035,21 @@ msgid ""
 "firepower with state-of-the-art electronics, making for a truly fearsome "
 "ship in the hands of an able captain."
 msgstr ""
+"A nave que, sozinha, colocou as Indústrias Krain no mapa, o Francelho foi "
+"projetado para ser um elegante cruzador de assalto pesado. Geralmente mais "
+"frágil do que outros cruzadores, consegue combinar excelente manobrabilidade "
+"e poder de fogo com eletrónica de última geração, resultando em uma nave "
+"verdadeiramente assustadora nas mãos de um capitão hábil."
 
 #: dat/ships/neutral/koala.xml:2
 msgid "Koala"
-msgstr ""
+msgstr "Coala"
 
 #: dat/ships/neutral/koala.xml:14 dat/ships/neutral/llama.xml:16
 #: dat/ships/neutral/mule.xml:15 dat/ships/neutral/quicksilver.xml:15
 #: dat/ships/neutral/rhino.xml:16 dat/ships/neutral/zebra.xml:19
 msgid "Melendez Corp."
-msgstr ""
+msgstr "Corp. Melendez"
 
 #: dat/ships/neutral/koala.xml:15
 msgid ""
@@ -7855,10 +8057,13 @@ msgid ""
 "weapon space but a decent amount of cargo space. Good for the entrepreneur "
 "working looking to turn a profit while making their way across the stars."
 msgstr ""
+"O Coala é o seu nave de carga padrão. É uma nave pequena com pouco espaço "
+"para armas, mas com um espaço de carga decente. Bom para o empresário que "
+"trabalha procurando lucrar enquanto viaja pelas estrelas."
 
 #: dat/ships/neutral/lancelot.xml:2
 msgid "Lancelot"
-msgstr ""
+msgstr "Lancelote"
 
 #: dat/ships/neutral/lancelot.xml:17
 msgid ""
@@ -7869,11 +8074,17 @@ msgid ""
 "is used by security agencies all over the galaxy for its reliability and "
 "availability."
 msgstr ""
+"Um dos premiados caças pesados dos Estaleiros Nexus. O Lancelote era "
+"originalmente um projeto secreto para o exército do Império, mas a sua "
+"existência foi revelada durante um voo de teste abortado. Agora, está "
+"disponível uma versão modificada para civis, embora não corresponda "
+"exatamente às especificações originais. É utilizada por agências de "
+"segurança em toda a galáxia pela sua confiabilidade disponibilidade."
 
 #: dat/ships/neutral/llama.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:181
 #: dat/missions/flf/dvk/flf_dvk06.lua:164
 msgid "Llama"
-msgstr "Llama"
+msgstr "Lhama"
 
 #: dat/ships/neutral/llama.xml:17
 msgid ""
@@ -7882,10 +8093,15 @@ msgid ""
 "many, many cycles ago. It was one of the first civilian use spacecrafts, "
 "first used by aristocracy and now used by everyone who cannot afford better."
 msgstr ""
+"Uma das naves mais utilizadas na galáxia. Famosa pela sua estabilidade e "
+"teimosia. O projeto não foi muito modificado desde a sua criação há muitos, "
+"muitos ciclos atrás. Foi uma das primeiras naves espaciais de uso civil, "
+"inicialmente utilizada pela aristocracia e agora utilizada por todos os que "
+"não se podem dar ao luxo de algo melhor."
 
 #: dat/ships/neutral/mule.xml:2
 msgid "Mule"
-msgstr ""
+msgstr "Mula"
 
 #: dat/ships/neutral/mule.xml:17
 msgid ""
@@ -7894,10 +8110,14 @@ msgid ""
 "allowing for enjoyable cruises. The Mule is a favourite target of pirates, "
 "so avoiding dangerous systems is strongly advised."
 msgstr ""
+"Um cargueiro pesado especializado no transporte de carga por toda a galáxia. "
+"Também tem alojamento suficiente para passageiros, dependendo do modelo, "
+"permitindo cruzeiros agradáveis. A Mula é um alvo favorito de piratas, então "
+"evitar teritórios perigosos é aconselhável."
 
 #: dat/ships/neutral/pacifier.xml:2
 msgid "Pacifier"
-msgstr ""
+msgstr "Pacificador"
 
 #: dat/ships/neutral/pacifier.xml:17
 msgid ""
@@ -7906,10 +8126,15 @@ msgid ""
 "withstand heavy punishment from raiding parties. The Pacifier features high "
 "fuel capacity to facilitate lengthy patrol routes."
 msgstr ""
+"O Pacifcador é um dos projetos mais antigos e confiáveis dos Estaleiros "
+"Nexo. Foi projetado principalmente como uma nave de patrulhamento de "
+"fronteira e, como tal, é capaz de suportar uma grande quantidade de punição "
+"vinda de grupos de saque.O Pacificador possui alta capacidade de combustível "
+"para facilitar longas rotas de patrulha."
 
 #: dat/ships/neutral/phalanx.xml:2
 msgid "Phalanx"
-msgstr ""
+msgstr "Falange"
 
 #: dat/ships/neutral/phalanx.xml:17
 msgid ""
@@ -7918,10 +8143,14 @@ msgid ""
 "construction. Its high armor makes it a capable corvette provided one equips "
 "it with turrets."
 msgstr ""
+"A Falange é, pelos padrões Dvaered, uma corveta rápida que pode ser usada "
+"como plataforma de mísseis; o fato que manobra mal também é construção "
+"padrão Dvaered. A sua alta blindagem torna-a uma corveta capaz, desde que "
+"seja equipada com torretas."
 
 #: dat/ships/neutral/quicksilver.xml:2
 msgid "Quicksilver"
-msgstr ""
+msgstr "Mercúrio"
 
 #: dat/ships/neutral/quicksilver.xml:16
 msgid ""
@@ -7929,10 +8158,13 @@ msgid ""
 "Melendez's other offerings. Featuring a streamlined frame and oversized "
 "engines, it's the prime choice for expedient shipping."
 msgstr ""
+"Embora seja um transportador de carga, o Mercúrio é bastante diferente das "
+"outras opções da Melendez. Apresentando uma estrutura aerodinâmica e motores "
+"superdimensionados, é a principal escolha para transporte rápido."
 
 #: dat/ships/neutral/rhino.xml:2
 msgid "Rhino"
-msgstr ""
+msgstr "Rinoceronte"
 
 #: dat/ships/neutral/rhino.xml:18
 msgid ""
@@ -7942,6 +8174,12 @@ msgid ""
 "Its modular bays allow it to function as a personnel transport, a fact not "
 "lost on modern militaries."
 msgstr ""
+"Um projeto Melendez particularmente durável, o Rinoceronte está bem adaptado "
+"ao transporte de mercadorias de alto valor e alto risco. Embora tenha uma "
+"densidade de carga muito inferior à dos cargueiros dedicados, protege-se de "
+"forma extremamente eficaz. Os seus compartimentos modulares permitem-lhe "
+"funcionar como transporte de tropas, um fato reconhecido por exércitos "
+"modernos."
 
 #: dat/ships/neutral/schroedinger.xml:2
 msgid "Schroedinger"
@@ -7954,7 +8192,7 @@ msgstr ""
 #: dat/ships/sirius/sirius_providence.xml:18
 #: dat/ships/sirius/sirius_shaman.xml:13
 msgid "Sirius Systems"
-msgstr ""
+msgstr "Sistemas Sirius"
 
 #: dat/ships/neutral/schroedinger.xml:16
 msgid ""
@@ -7965,10 +8203,18 @@ msgid ""
 "and low amount of weapons space. It is also equipped with a pair of Eraedon "
 "engines, making it highly manoeuvrable."
 msgstr ""
+"O Schroedinger é utilizado principalmente como nave de reconhecimento. "
+"Requer uma tripulação mínima devido aos seus avançados subsistemas de "
+"automação, e os seus tanques de combustível proprietários permitem-lhe ter "
+"um alcance muito maior do que a maioria das naves. A desvantagem é ser "
+"extremamente vulnerável a ataques devido à sua blindagem leve e ao pouco "
+"espaço de armas. Está também equipada com um par de motores Eraedon, o que a "
+"torna altamente manobrável."
 
 #: dat/ships/neutral/shark.xml:2 dat/scripts/pilotname/generic.lua:77
+#, fuzzy
 msgid "Shark"
-msgstr ""
+msgstr "Tubarão"
 
 #: dat/ships/neutral/shark.xml:18
 msgid ""
@@ -7976,6 +8222,10 @@ msgid ""
 "designed for in-system patrolling. While it's not as capable as its larger "
 "relative, the Lancelot, it's still an effective addition to any fleet."
 msgstr ""
+"Um novo projeto dos Estaleiros Nexo, o Tubarão é um caça ágil e leve, "
+"projetado para patrulhamento intrasistema. Embora não seja tão capaz como o "
+"seu parente maior, o Lancelote, o Tubarão é uma adição efetiva a qualquer "
+"frota."
 
 #: dat/ships/neutral/starbridge.xml:2
 msgid "Starbridge"
@@ -7988,11 +8238,15 @@ msgid ""
 "comparable maximum speed. It's low mass comes at the cost of reduced "
 "structural space."
 msgstr ""
+"A Ponte Estlar é a mais recente nave projetada pela Krain Industries. É um "
+"contratorpedeiro leve que alcança a mesma manobrabilidade que uma corveta e "
+"velocidade máxima comparável. A sua baixa massa vem às custas de um espaço "
+"estrutural reduzido."
 
 #: dat/ships/neutral/vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:219
 msgid "Vendetta"
-msgstr ""
+msgstr "Vingança"
 
 #: dat/ships/neutral/vendetta.xml:17
 msgid ""
@@ -8004,10 +8258,17 @@ msgid ""
 "other hand it has a  truly fearsome barrage it can unleash that has "
 "precisely the power to transform extended battles into short fights."
 msgstr ""
+"A Vingança exibe muito bem a filosofia da Casa Dvaered. Dê a uma nave muitas "
+"armas intimidantes, revista com blindagem pesada e negligencie a "
+"eletrónica.Por causa disso, esta nave é mais adequada para combates curtos "
+"do que para batalhas prolongadas, pois possui uma regeneração de energia "
+"inferior à de outros naves da sua categoria. Por outro lado, tem uma "
+"barragem verdadeiramente temível que pode desencadear e que tem precisamente "
+"o poder de transformar batalhas prolongadas em lutas curtas."
 
 #: dat/ships/neutral/vigilance.xml:2
 msgid "Vigilance"
-msgstr ""
+msgstr "Vigilância"
 
 #: dat/ships/neutral/vigilance.xml:16
 msgid ""
@@ -8016,10 +8277,14 @@ msgid ""
 "possible with forward weapons. Given its Dvaered origins, it possesses "
 "inferior technology relative to its counterparts."
 msgstr ""
+"A Vigilância é a encarnação da filosofia de Dvaered. Apresentando imensas "
+"reservas de energia e seis pontos fixos para armas, foi projetada para "
+"atingir o mais fortemente possível com armas de proa. Dadas as suas origens "
+"Dvaered, possui tecnologia inferior às naves equivalentes."
 
 #: dat/ships/neutral/zebra.xml:2
 msgid "Zebra"
-msgstr ""
+msgstr "Zebra"
 
 #: dat/ships/neutral/zebra.xml:21
 msgid ""
@@ -8028,10 +8293,14 @@ msgid ""
 "traders. The Zebra offers an unmatched cargo density with reasonable "
 "protection."
 msgstr ""
+"O cargueiro Zebra é o maior de todos os cargueiros produzidos pela Melendez, "
+"e uma das naves mais desejados por todos os comerciantes civis "
+"independentes. O Zebra oferece uma densidade de carga inigualável com uma "
+"proteção razoável."
 
 #: dat/ships/pirate/pirate_admonisher.xml:2
 msgid "Pirate Admonisher"
-msgstr ""
+msgstr "Admoestador Pirata"
 
 #: dat/ships/pirate/pirate_admonisher.xml:18
 #: dat/ships/pirate/pirate_ancestor.xml:15 dat/ships/pirate/pirate_hyena.xml:16
@@ -8041,7 +8310,7 @@ msgstr ""
 #: dat/ships/pirate/pirate_starbridge.xml:16
 #: dat/ships/pirate/pirate_vendetta.xml:16
 msgid "Skull and Bones"
-msgstr "Crânios e Ossos"
+msgstr "Crânio e Ossos"
 
 #: dat/ships/pirate/pirate_admonisher.xml:19
 msgid ""
@@ -8050,10 +8319,15 @@ msgid ""
 "manoeuvrability, more weapons space and slightly improved defences, at a "
 "cost of cargo capacity and armour regeneration rates."
 msgstr ""
+"O Admoestador de fábrica é uma nave poderosa para seu tamanho. Através da "
+"habitual modificação do Caveira e Ossos, o Admoestador Pirata apresenta "
+"melhor manobrabilidade, mais espaço para armas e defesas ligeiramente "
+"melhoradas, às custas de capacidade de carga e taxas de regeneração de "
+"escudo."
 
 #: dat/ships/pirate/pirate_ancestor.xml:2
 msgid "Pirate Ancestor"
-msgstr ""
+msgstr "Ancestral Pirata"
 
 #: dat/ships/pirate/pirate_ancestor.xml:16
 msgid ""
@@ -8062,10 +8336,15 @@ msgid ""
 "without firing a shot. As better ships came out in the market, their use has "
 "fallen due to their archaic electronics and targeting systems."
 msgstr ""
+"Ancestrais foram uma das primeiras naves a ser apreciada por piratas. As "
+"grandes asas intimidantes e boas velocidades máximas geralmente conseguiam "
+"que outras naves se rendessem sem ter que disparar um tiro. Conforme naves "
+"melhores surgiram no mercado, seu uso caiu devido a sua eletrônica  e "
+"sistemas de mira arcaicos."
 
 #: dat/ships/pirate/pirate_hyena.xml:2
 msgid "Pirate Hyena"
-msgstr ""
+msgstr "Hiena Pirata"
 
 #: dat/ships/pirate/pirate_hyena.xml:17
 msgid ""
@@ -8076,10 +8355,16 @@ msgid ""
 "them even more efficient as scavengers and harder to hit than their Aerosys "
 "counterparts."
 msgstr ""
+"A Hiena Pirata tornou-se rapidamente a favorita dos piratas em todos os "
+"lugares, não é um grande caça, nem causa muitos danos, mas em grupos "
+"conseguem vencer quase qualquer nave e é tão simples de pilotar que os "
+"tempos de reação são altamente melhorados. Caveira e Ossos acrescentou "
+"modificações para os tornar ainda mais eficientes como coletores e mais "
+"difíceis de atingir do que os seus equivalentes Aerosys."
 
 #: dat/ships/pirate/pirate_kestrel.xml:2
 msgid "Pirate Kestrel"
-msgstr ""
+msgstr "Francelho Pirata"
 
 #: dat/ships/pirate/pirate_kestrel.xml:17
 msgid ""
@@ -8088,10 +8373,14 @@ msgid ""
 "authority of the Empire. A very strong ship for those pirates who can afford "
 "it."
 msgstr ""
+"A Francelho é a melhor nave oferecida pela Caveira e Ossos. É extremamente "
+"ágil para um cruzador, mas não lhe falta o poder de fogo necessário para "
+"questionar a autoridade do Império. Um uma nave potente para os piratas que "
+"podem pagar."
 
 #: dat/ships/pirate/pirate_phalanx.xml:2
 msgid "Pirate Phalanx"
-msgstr ""
+msgstr "Falange Pirata"
 
 #: dat/ships/pirate/pirate_phalanx.xml:17
 msgid ""
@@ -8099,10 +8388,13 @@ msgid ""
 "engineers have substantially improved the ship's performance, while only "
 "minorly sacrificing protection."
 msgstr ""
+"Baseando-se no já capaz chassi Falange, os engenheiros da Caveira e Ossos "
+"melhoraram substancialmente o desempenho do nave, ao mesmo tempo que apenas "
+"sacrificaram ligeiramente a proteção."
 
 #: dat/ships/pirate/pirate_rhino.xml:2
 msgid "Pirate Rhino"
-msgstr ""
+msgstr "Rinoceronte Pirata"
 
 #: dat/ships/pirate/pirate_rhino.xml:18
 msgid ""
@@ -8110,10 +8402,14 @@ msgid ""
 "manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay "
 "and durability, the Rhino has become an excellent scavenger ship."
 msgstr ""
+"A tradicional modificação do Caveira e Ossos deixou o Rinoceronte "
+"substancialmente mais manobrável, embora um pouco menos blindado. "
+"Aproveitando seu grande compartimento de carga e durabilidade, o Rinoceronte "
+"tornou-se uma excelente nave de vasculhagem."
 
 #: dat/ships/pirate/pirate_shark.xml:2
 msgid "Pirate Shark"
-msgstr ""
+msgstr "Tubarão Pirata"
 
 #: dat/ships/pirate/pirate_shark.xml:18
 msgid ""
@@ -8122,10 +8418,14 @@ msgid ""
 "handling suffers minimally while it's able to bring substantially more "
 "firepower to bear."
 msgstr ""
+"O ágil Turbarão dos Estaleiros Nexo provou ser uma excelente tela para os "
+"técnicos da Caveira e Ossos. Equipado com um ponto fixo de arma adicional, o "
+"sua manobrabilidade sofre um mínimo para apresentar o máximo de poder de "
+"fogo."
 
 #: dat/ships/pirate/pirate_starbridge.xml:2
 msgid "Pirate Starbridge"
-msgstr ""
+msgstr "Ponte Estelar Pirata"
 
 #: dat/ships/pirate/pirate_starbridge.xml:17
 msgid ""
@@ -8134,10 +8434,14 @@ msgid ""
 "firepower and relatively high speed, for its ship class, the Starbridge is "
 "truly a fearsome sight."
 msgstr ""
+"Embora a Ponte Estelar já seja um destruidor leve e rápido, os engenheiros "
+"da Caveira e Ossos conseguiram melhorar ainda mais a sua velocidade. Devido "
+"ao seu grande poder de fogo e relativa alta velocidade para a sua classe, a "
+"Ponte Estelar é verdadeiramente uma visão assustadora."
 
 #: dat/ships/pirate/pirate_vendetta.xml:2
 msgid "Pirate Vendetta"
-msgstr ""
+msgstr "Vingança Pirata"
 
 #: dat/ships/pirate/pirate_vendetta.xml:17
 msgid ""
@@ -8149,20 +8453,29 @@ msgid ""
 "reactor goes nova, destroying the ship. You hope it won't happen to you if "
 "you get in one."
 msgstr ""
+"O Vingança Pirata é ainda mais intimidante do que o seu equivalente de "
+"fábrica. Foram feitos ajustes finos ao estilo pirata de voar. Parte da "
+"blindagem foi removidas para dar mais espaço para pilhagem, enquanto que o "
+"reator foi adulterado por um técnico naval duvidoso. A nave ficour "
+"substancialmente melhor que a original, mas de vez em quando o reator "
+"explode, destruindo o nave. Tomara que não aconteça se estiver pilotanto um."
 
 #: dat/ships/proteron/proteron_archimedes.xml:2
 msgid "Proteron Archimedes"
-msgstr ""
+msgstr "Arquimedes Proteron"
 
 #: dat/ships/proteron/proteron_archimedes.xml:22
 msgid ""
 "The Archimedes is the backbone of the Proteron fleet. Offering heavy "
 "firepower and high durability, it can always be found in the heat of battle."
 msgstr ""
+"O Arquimedes é a espinha dorsal da frota Proteron. Oferecendo grande poder "
+"de fogo e elevada durabilidade, pode sempre ser encontrado no calor da "
+"batalha."
 
 #: dat/ships/proteron/proteron_derivative.xml:2
 msgid "Proteron Derivative"
-msgstr ""
+msgstr "Derivativo Proteron"
 
 #: dat/ships/proteron/proteron_derivative.xml:18
 msgid ""
@@ -8173,10 +8486,16 @@ msgid ""
 "carrier group unleashing several squadrons has been known to turn the tide "
 "of battle on many occasions."
 msgstr ""
+"Embora menor e menos intimidante do que os seus irmãos maiores no arsenal "
+"Proteron, um bando de Derivados ainda é um inimigo que deve ser considerado. "
+"Fiel ao seu nome, é o mais recente de uma longa linhagem de caças largamente "
+"baseados em porta-naves. Contendo poder de fogo relativamente baixo, eles "
+"são inadequados para duelos, mas um grupo de porta-naves liberando vários "
+"esquadrões tem a reputação de virar a maré das batalhas em muitas ocasiões."
 
 #: dat/ships/proteron/proteron_kahan.xml:2
 msgid "Proteron Kahan"
-msgstr ""
+msgstr "Kahan Proteron"
 
 #: dat/ships/proteron/proteron_kahan.xml:18
 msgid ""
@@ -8185,10 +8504,14 @@ msgid ""
 "combat vessel. While possessing fewer weapon mounts than the Pacifier, it "
 "makes up for it with its lower mass and expanded structural space."
 msgstr ""
+"O Kahan é uma nave de vanguarda. O projeto foi concluído pouco antes do "
+"Incidente, e o plano era torna-la a principal nave de combate dos militares "
+"Proteron. Apesar de ter menos pontos fixos de armas que o Pacificador, isto "
+"é compensado por sua massa inferior e espaço estrutural expandido."
 
 #: dat/ships/proteron/proteron_watson.xml:2
 msgid "Proteron Watson"
-msgstr ""
+msgstr "Watson Proteron"
 
 #: dat/ships/proteron/proteron_watson.xml:18
 msgid ""
@@ -8196,14 +8519,18 @@ msgid ""
 "mobile launch base as well as a command and control unit, this vessel co-"
 "ordinates the rest of the fleet in the fight for dominance over the galaxy."
 msgstr ""
+"O coração da frota de batalha de Proteron é formado pelos Watson. Atuando "
+"como uma base de lançamento móvel, bem como uma unidade de comando e "
+"controle, esta nave coordena o resto da frota na luta pelo domínio da "
+"galáxia."
 
 #: dat/ships/sirius/sirius_divinity.xml:2
 msgid "Sirius Divinity"
-msgstr ""
+msgstr "Divinidade Sirius"
 
 #: dat/ships/sirius/sirius_divinity.xml:17 dat/ships/sirius/sirius_dogma.xml:17
 msgid "You need at least 70 reputation with House Sirius."
-msgstr ""
+msgstr "Você precisa de ao menos 70pontos de reputação com a Casa Sirius."
 
 #: dat/ships/sirius/sirius_divinity.xml:18
 msgid ""
@@ -8213,10 +8540,16 @@ msgid ""
 "multitude of fighters gives it unparalleled flexibility in combat, serving "
 "as a key logistical vessel in any sizable fleet."
 msgstr ""
+"Embora se diga que o Dogma constitui o núcleo de qualquer frota Siriana, "
+"poucos pilotos de combate descartariam o significado do Divindade. Embora "
+"não seja excepcionalmente formidável em combate direto, a capacidade da "
+"Divindade de colocar em no campo de batalha uma multidão de caças dá-lhe uma "
+"flexibilidade sem igual no combate, servindo como um navio logístico chave "
+"em qualquer frota de tamanho considerável."
 
 #: dat/ships/sirius/sirius_dogma.xml:2
 msgid "Sirius Dogma"
-msgstr ""
+msgstr "Dogma Sirius"
 
 #: dat/ships/sirius/sirius_dogma.xml:18
 msgid ""
@@ -8224,14 +8557,17 @@ msgid ""
 "Trimmed in gold and silver and fielding a large array of weapons, the Dogma "
 "is seldom surpassed in either prestige or military might."
 msgstr ""
+"A espinha dorsal da frota da Casa Sirius, o Dogma, é um espectáculo a "
+"contemplar. Decorado em ouro e prata e com uma grande variedade de armas, o "
+"Dogma raramente é superado, seja em prestígio seja em poderio militar."
 
 #: dat/ships/sirius/sirius_fidelity.xml:2
 msgid "Sirius Fidelity"
-msgstr ""
+msgstr "Fidelidade Sirius"
 
 #: dat/ships/sirius/sirius_fidelity.xml:16
 msgid "You need at least 20 reputation with House Sirius."
-msgstr ""
+msgstr "Você precisa de pelo menos 20 pontos de reputação com a Casa Sirius."
 
 #: dat/ships/sirius/sirius_fidelity.xml:17
 msgid ""
@@ -8239,14 +8575,17 @@ msgid ""
 "competent alone, it's often employed as a forward scout, bringing with it "
 "far deadlier allies."
 msgstr ""
+"O Fidelidade é o interceptor da Casa Sirius. Embora não seja particularmente "
+"competente por si só, é frequentemente empregado como um batedor avançado, "
+"trazendo consigo aliados muito mais mortíferos."
 
 #: dat/ships/sirius/sirius_preacher.xml:2
 msgid "Sirius Preacher"
-msgstr ""
+msgstr "Sermonista Sirius"
 
 #: dat/ships/sirius/sirius_preacher.xml:16
 msgid "You need at least 40 reputation with House Sirius."
-msgstr ""
+msgstr "Você precisa de pelo menos 40 pontos de reputação com a Casa Sirius."
 
 #: dat/ships/sirius/sirius_preacher.xml:17
 msgid ""
@@ -8254,14 +8593,17 @@ msgid ""
 "Sirius projects its message and will. Fielding a large array of weaponry, "
 "the Preacher is adept at making converts out of unbelievers."
 msgstr ""
+"O Sermonista, como o seu nome indica, é a principal nave pelo qual a Casa "
+"Sirius projeta a sua mensagem e vontade. Com uma grande variedade de "
+"armamentos, o Sermonista é hábil em transformar descrentes em devotos."
 
 #: dat/ships/sirius/sirius_providence.xml:2
 msgid "Sirius Providence"
-msgstr ""
+msgstr "Providência Sírius"
 
 #: dat/ships/sirius/sirius_providence.xml:21
 msgid "You need at least 60 reputation with House Sirius."
-msgstr ""
+msgstr "Você precisa de pelo menos 60 pontos de reputação com a Casa Sirius."
 
 #: dat/ships/sirius/sirius_providence.xml:22
 msgid ""
@@ -8270,10 +8612,14 @@ msgid ""
 "transport pilgrims, even though most Sirii dislike these overcrowded mass "
 "transports."
 msgstr ""
+"O Providence é o cargueiro da Casa Sirius e é utilizado principalmente para "
+"o transporte de grandes quantidades de suprimentos. Alguns também "
+"transportam peregrinos, embora a maioria dos Sirii não goste destes "
+"transportes de massa superlotados."
 
 #: dat/ships/sirius/sirius_shaman.xml:2
 msgid "Sirius Shaman"
-msgstr ""
+msgstr "Xamã Sirius"
 
 #: dat/ships/sirius/sirius_shaman.xml:16
 msgid "You need at least 30 reputation with House Sirius."
