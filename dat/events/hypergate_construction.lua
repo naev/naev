@@ -56,6 +56,7 @@ local boss_message_list = {
 
 local mineral_list = { "Therite", "Kermite", "Vixilium" } -- Only rares
 local markup = 1.2 -- Multiplier for amount being paid
+local standing = 0.1 -- Multiplier for standing increase
 
 local id, hypergate, boss, talked_check, traded_amount
 local traded_total = "hypconst_traded_total"
@@ -224,6 +225,8 @@ function boss_board ()
          local a = pp:cargoHas(m)
          pp:cargoRm( m, a )
          player.pay( a * markup * m:price() )
+         -- Add some faction too
+         hypergate:faction():modPlayer( a * standing )
          -- Store how much was traded
          local q = var.peek( traded_amount ) or 0
          var.push( traded_amount, q+a )
