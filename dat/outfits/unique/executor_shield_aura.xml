@@ -8,8 +8,8 @@
   <size>large</size>
   <mass>0</mass>
   <price>5000000</price>
-  <description>TODO</description>
-  <desc_extra>Gives +30% shield regen to all friendly ships within 3000 units.</desc_extra>
+  <description>Developed as part of a confidential Empire program to push the limits of shield technology, the Executor Shield Aura uses polarized electromagnetic fields to remotely overdrive nearby ships. Through careful modulation of the polarization, the effect can be restricted to a subset of ships. Given the advanced technical requirements such as calibration and rare resources necessary, few of such devices are available, and their usage is limited to the fearsome Imperial Executors.</description>
+  <desc_extra>Gives +30% shield regeneration to all friendly ships within 3000 units.</desc_extra>
   <gfx_store>placeholder.webp</gfx_store>
   <limit>aura</limit>
  </general>
