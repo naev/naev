@@ -23,16 +23,15 @@ uniform vec2 dimensions;
 in vec2 pos;
 out vec4 color_out;
 
-const vec4 colour_from = vec4( 1, 1, 1, 0 );
-const vec4 colour_to   = vec4( 1, 1, 1, 1 );
-
+const vec4 colour_from = vec4( 1.0, 1.0, 1.0, 0.0 );
+const vec4 colour_to   = vec4( 1.0, 1.0, 1.0, 1.0 );
 
 /**
  * Calculates the transform that the player is going through.
  */
 vec2 calculate_transform( float size, float smoothness )
 {
-   const vec2 center       = vec2( 0.5, 0.5 );
+   const vec2 center = vec2( 0.5, 0.5 );
 
    // Create rotation matrix
    float s = sin(direction);
@@ -54,7 +53,7 @@ vec2 calculate_transform( float size, float smoothness )
 vec4 smooth_interpolation( float smoothness, float noise )
 {
    // Magic!
-   float p = mix( -smoothness, 1. + smoothness, 1-progress );
+   float p = mix( -smoothness, 1.0 + smoothness, 1.0-progress );
    float lower = p - smoothness;
    float higher = p + smoothness;
    float q = smoothstep( lower, higher, noise );
@@ -72,15 +71,15 @@ vec4 jump_default (void)
 JUMP_FUNC_PROTOTYPE
 vec4 jump_organic (void)
 {
-   const float scale       = 20.;
+   const float scale       = 20.0;
    const float smoothness  = 0.1;
 
    float n = cellular2x2( pos * scale ).x;
-   float p = mix( -smoothness, 1. + smoothness, progress );
+   float p = mix( -smoothness, 1.0 + smoothness, progress );
    float lower = p - smoothness;
    float higher = p + smoothness;
    float q = smoothstep( lower, higher, n );
-   return mix( colour_from, colour_to, 1-q );
+   return mix( colour_from, colour_to, 1.0-q );
 }
 
 JUMP_FUNC_PROTOTYPE
@@ -89,7 +88,7 @@ vec4 jump_circular (void)
    const float smoothness  = 0.3;
    const vec2 center       = vec2( 0.5, 0.5 );
 
-   float m = smoothstep(-smoothness, 0.0, M_SQRT2 * distance(center, pos) - (1-progress)*(1.+smoothness));
+   float m = smoothstep(-smoothness, 0.0, M_SQRT2 * distance(center, pos) - (1.0-progress)*(1.0+smoothness));
    return mix( colour_from, colour_to, m );
 }
 
@@ -97,14 +96,14 @@ JUMP_FUNC_PROTOTYPE
 vec4 jump_nebula (void)
 {
    const float size        = 0.2;
-   const float scale       = 4.;
+   const float scale       = 4.0;
    const float smoothness  = 0.1;
 
    // Get the transformed smoothed coordinates.
    vec2 uv = calculate_transform( size, smoothness );
 
    // Compute noise
-   float n = uv.x + 2*size*abs( cnoise( pos * scale ) );
+   float n = uv.x + 2.0*size*abs( cnoise( pos * scale ) );
 
    // Interpolate and return
    return smooth_interpolation( smoothness, n );
@@ -115,14 +114,14 @@ vec4 jump_wind (void)
 {
    const float size        = 0.1;
    const float smoothness  = 0.1;
-   const float jaggedness  = 200.;
+   const float jaggedness  = 200.0;
    const vec2 center       = vec2( 0.5, 0.5 );
 
    // Get the transformed smoothed coordinates.
    vec2 uv = calculate_transform( size, smoothness );
 
    // Compute noise
-   float n = uv.x + 2*size*cnoise( jaggedness * vec2( 0, uv.y ) );
+   float n = uv.x + 2.0*size*cnoise( jaggedness * vec2( 0.0, uv.y ) );
 
    // Interpolate and return
    return smooth_interpolation( smoothness, n );
