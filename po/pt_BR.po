@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
-"PO-Revision-Date: 2022-09-23 05:18+0000\n"
+"PO-Revision-Date: 2022-09-26 14:15+0000\n"
 "Last-Translator: Bloody Kenshiro <redhokuto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev/pt_BR/>\n"
@@ -8757,11 +8757,11 @@ msgstr ""
 
 #: dat/ships/soromid/soromid_nyx.xml:2
 msgid "Soromid Nyx"
-msgstr ""
+msgstr "Nyx Soromida"
 
 #: dat/ships/soromid/soromid_nyx.xml:9
 msgid "Bio-Destroyer"
-msgstr ""
+msgstr "Bio-Contratorpedeiro"
 
 #: dat/ships/soromid/soromid_nyx.xml:18
 msgid ""
@@ -8769,14 +8769,18 @@ msgid ""
 "firepower in heated battles and agile enough to withdraw when needed, this "
 "ship usually forms the backbone of any sizable Soromid fleet."
 msgstr ""
+"O Nyx é o símbolo do poderio militar dso Soromidas. Capaz de fornecer um "
+"pesado poder de fogo em batalhas acaloradas e suficientemente ágil para se "
+"retirar quando necessário, esta nave forma geralmente a espinha dorsal de "
+"qualquer frota Soromidas de grande porte."
 
 #: dat/ships/soromid/soromid_odium.xml:2
 msgid "Soromid Odium"
-msgstr ""
+msgstr "Ódio Soromida"
 
 #: dat/ships/soromid/soromid_odium.xml:18
 msgid "You need at least 40 reputation with the Soromid."
-msgstr ""
+msgstr "Precisa de pelo menos 40 pontos de reputação com o Soromidas."
 
 #: dat/ships/soromid/soromid_odium.xml:19
 msgid ""
@@ -8784,10 +8788,13 @@ msgid ""
 "impressive amount of system hardpoints for a ship its size. It can often be "
 "found dominating smaller military engagements."
 msgstr ""
+"O Ódio oferece um bom equilíbrio entre escudos e blindagem, bem como uma "
+"quantidade impressionante de pontos fixos para uma nave do seu tamanho. Pode "
+"muitas vezes ser encontrado dominando conflitos militares de menor escala."
 
 #: dat/ships/soromid/soromid_reaver.xml:2
 msgid "Soromid Reaver"
-msgstr ""
+msgstr "Usurpador Soromida"
 
 #: dat/ships/soromid/soromid_reaver.xml:17
 msgid ""
@@ -8795,14 +8802,18 @@ msgid ""
 "Their good speed and maneuverability are compounded by their durability, "
 "making the Reaver one of the most effective heavy fighters in the galaxy."
 msgstr ""
+"Usurpadores são frequentemente encontrados na vanguarda dos conflitos "
+"militares de Soromidas. A sua boa velocidade e manobrabilidade são somadas à "
+"durabilidade, tornando o Usurpador um dos mais eficazes caças pesados da "
+"galáxia."
 
 #: dat/ships/soromid/soromid_vox.xml:2
 msgid "Soromid Vox"
-msgstr ""
+msgstr "Voz Soromida"
 
 #: dat/ships/soromid/soromid_vox.xml:9
 msgid "Bio-Battleship"
-msgstr ""
+msgstr "Bio-Nave de Batalha"
 
 #: dat/ships/soromid/soromid_vox.xml:21
 msgid ""
@@ -8810,10 +8821,13 @@ msgid ""
 "serves as the core of any given Soromid war fleet and is only called upon in "
 "notable engagements."
 msgstr ""
+"O Vox é a maior nave que os Soromidas empregam, absolutamente. Esta nave de "
+"Batalha o centro de qualquer frota de guerra Soromida e só é chamado em "
+"conflitos notórios."
 
 #: dat/ships/thurion/thurion_apprehension.xml:2
 msgid "Thurion Apprehension"
-msgstr ""
+msgstr "Apreensão Túrion"
 
 #: dat/ships/thurion/thurion_apprehension.xml:17
 #: dat/ships/thurion/thurion_certitude.xml:18
@@ -8823,7 +8837,7 @@ msgstr ""
 #: dat/ships/thurion/thurion_taciturnity.xml:16
 #: dat/ships/thurion/thurion_virtuosity.xml:18
 msgid "Thurion shipyards"
-msgstr ""
+msgstr "Estaleiros Túrion"
 
 #: dat/ships/thurion/thurion_apprehension.xml:21
 #: dat/ships/thurion/thurion_certitude.xml:22
@@ -8832,15 +8846,15 @@ msgstr ""
 
 #: dat/ships/thurion/thurion_certitude.xml:2
 msgid "Thurion Certitude"
-msgstr ""
+msgstr "Certeza Túrion"
 
 #: dat/ships/thurion/thurion_certitude.xml:21
 msgid "You need at least 70 reputation with the Thurion."
-msgstr ""
+msgstr "Você precisa de ao menos 70 pontos de reputação com os Thurion."
 
 #: dat/ships/thurion/thurion_ingenuity.xml:2
 msgid "Thurion Ingenuity"
-msgstr ""
+msgstr "Engenhosidade Túrion"
 
 #: dat/ships/thurion/thurion_ingenuity.xml:20
 msgid ""
@@ -8851,24 +8865,33 @@ msgid ""
 "hot, it can quickly retreat to recharge and regenerate. Also, like every "
 "Thurian ship, the electronics are well above average."
 msgstr ""
+"O Engenhosidade Túrion é um caça construído para sobrevivência. Como todas "
+"as naves Túrion, coloca as capacidades defensivas em primeiro lugar e as "
+"capacidades ofensivas em segundo lugar. Contudo, o Engenhosidade não é, de "
+"forma alguma, uma nave de combate ruím. É capaz de se manter em combate "
+"aggresivamente, e quando as coisas complicam demais, pode rapidamente recuar "
+"para se recarregar e regenerar. Além disso, como todas as naves Túrion, a "
+"eletrónica está bem acima da média."
 
 #: dat/ships/thurion/thurion_perspicacity.xml:2
 msgid "Thurion Perspicacity"
-msgstr ""
+msgstr "Perspicácia Túrion"
 
 #: dat/ships/thurion/thurion_perspicacity.xml:21
 msgid "You need at least 20 reputation with the Thurion."
-msgstr ""
+msgstr "Você precisa de ao menos 30 pontos de reputação com os Túrion."
 
 #: dat/ships/thurion/thurion_perspicacity.xml:22
 msgid ""
 "The Thurion Perspicacity is a fast, light fighter typically used for "
 "scouting or attacking in swarms."
 msgstr ""
+"O Túrion Perspicácia é um caça rápido e leve normalmente usado para explorar "
+"ou atacar em grande número."
 
 #: dat/ships/thurion/thurion_scintillation.xml:2
 msgid "Thurion Scintillation"
-msgstr ""
+msgstr "Cintilação Túrion"
 
 #: dat/ships/thurion/thurion_scintillation.xml:21
 msgid ""
@@ -8876,24 +8899,29 @@ msgid ""
 "distance. It is better armed than any other Thurion ship of comparable size, "
 "but still not as well as other non-Thurion bombers."
 msgstr ""
+"O Cintilacão Túrion é um bombardeiro projetado para atacar à partir de "
+"grandes distâncias. Possuí armamentos melhores que qualquer nave Túrion de "
+"tamanho similar, mas inferior a bombardeiros de outras facções."
 
 #: dat/ships/thurion/thurion_taciturnity.xml:2
 msgid "Thurion Taciturnity"
-msgstr ""
+msgstr "Taciturnidade Túrion"
 
 #: dat/ships/thurion/thurion_taciturnity.xml:20
 msgid ""
 "The Thurion Taciturnity is an armoured and stealthy transport capable both "
 "of surviving the harsh nebula and defending itself from attack."
 msgstr ""
+"O Taciturnidade Túrion é um transporte blindado furtivo capaz de sobreviver "
+"aos rigores da nebulosa e se defender de ataques."
 
 #: dat/ships/thurion/thurion_virtuosity.xml:2
 msgid "Thurion Virtuosity"
-msgstr ""
+msgstr "Virtuosidade Túrion"
 
 #: dat/ships/thurion/thurion_virtuosity.xml:21
 msgid "You need at least 40 reputation with the Thurion."
-msgstr ""
+msgstr "Você precisa de pelo menos 40 pontos de reputação com o Túrion."
 
 #: dat/ships/thurion/thurion_virtuosity.xml:22
 msgid ""
@@ -8902,16 +8930,20 @@ msgid ""
 "superior electronics and resistance to the harsh nebula more than make up "
 "for it."
 msgstr ""
+"O Virtuosidade é uma nave de tamanho médio utilizado pelos Túrion para "
+"ataques frontais. Embora o espaço de armas seja pouco impressionante, a "
+"eletrónica superior da nave e a sua resistência à nebulosa são mais do que "
+"compensam isto."
 
 #: dat/ships/zalek/zalek_demon.xml:2
 msgid "Za'lek Demon"
-msgstr ""
+msgstr "Demônio Za'lek"
 
 #: dat/ships/zalek/zalek_demon.xml:16 dat/ships/zalek/zalek_diablo.xml:16
 #: dat/ships/zalek/zalek_hephaestus.xml:16 dat/ships/zalek/zalek_mammon.xml:20
 #: dat/ships/zalek/zalek_mephisto.xml:14 dat/ships/zalek/zalek_sting.xml:16
 msgid "Za'lek Fabricators"
-msgstr ""
+msgstr "Fabricantes Za'lek"
 
 #: dat/ships/zalek/zalek_demon.xml:20
 msgid ""
@@ -8920,14 +8952,18 @@ msgid ""
 "Its handling suffers and it has poor armour, like all Za'lek ships, but this "
 "comes as little consolation to the Za'lek's enemies."
 msgstr ""
+"O contratorpedeiro de nome feroz da Casa Za'lek for batizado com escudos e "
+"gestão de energia desproporcionadamente poderosos, assim como o tamanho. A "
+"manobrabilidade é um ponto fraco, assim como a blindagem, padrão para todas "
+"as naves Za'lek, mas isto é apenas um pequeno consolo para o inimigo."
 
 #: dat/ships/zalek/zalek_diablo.xml:2
 msgid "Za'lek Diablo"
-msgstr ""
+msgstr "Diabo Za'Lek"
 
 #: dat/ships/zalek/zalek_diablo.xml:19 dat/ships/zalek/zalek_mephisto.xml:17
 msgid "You need at least 70 reputation with House Za'lek."
-msgstr ""
+msgstr "Você precisa de pelo menos 70 pontos de reputação com a Casa Za'lek."
 
 #: dat/ships/zalek/zalek_diablo.xml:20
 msgid ""
@@ -8935,69 +8971,80 @@ msgid ""
 "equipped with heavy shields, they are, however, meant to serve as a platform "
 "for devastating drone swarms, not frontline combat."
 msgstr ""
+"Este porta-naves é o arquétipo da nave de guerra Za'lek. Praticamente sem "
+"blindagem e equipado com escudos pesados, sua função é a deplataforma para "
+"enxames de drones devastadores, e não de combate na linha da frente."
 
 #: dat/ships/zalek/zalek_drone_bomber.xml:2
 msgid "Za'lek Bomber Drone"
-msgstr ""
+msgstr "Bombardeiro Drone Za'lek"
 
 #: dat/ships/zalek/zalek_drone_bomber.xml:8
 msgid "Robotic Bomber"
-msgstr ""
+msgstr "Bombardeiro Robótico"
 
 #: dat/ships/zalek/zalek_drone_bomber.xml:13
 #: dat/ships/zalek/zalek_drone_heavy.xml:13
 #: dat/ships/zalek/zalek_drone_light.xml:13
 #: dat/ships/zalek/zalek_drone_scout.xml:13
 msgid "Za'lek Robotics"
-msgstr ""
+msgstr "Za'lek Robótica"
 
 #: dat/ships/zalek/zalek_drone_bomber.xml:14
 msgid ""
 "This is the Za'lek Bomber Drone. Built for attacking heavy ships. Not to be "
 "flown by the player."
 msgstr ""
+"Este é o Bombardeiro Drone Za'lek. Construído para atacar a naves pesados. "
+"Não pode ser pilotado pelo jogador."
 
 #: dat/ships/zalek/zalek_drone_heavy.xml:2
 msgid "Za'lek Heavy Drone"
-msgstr ""
+msgstr "Drone Pesado Za'lek"
 
 #: dat/ships/zalek/zalek_drone_heavy.xml:8
 msgid "Robotic Fighter"
-msgstr ""
+msgstr "Caça Robótico"
 
 #: dat/ships/zalek/zalek_drone_heavy.xml:14
 msgid ""
 "This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by "
 "the player."
 msgstr ""
+"Este é o Drone Pesado Za'lek. Em menor número e não tão porcaria. Não pode "
+"ser pilotado pelo jogador."
 
 #: dat/ships/zalek/zalek_drone_light.xml:2
 msgid "Za'lek Light Drone"
-msgstr ""
+msgstr "Drone Leve Za'lek"
 
 #: dat/ships/zalek/zalek_drone_light.xml:14
 msgid ""
 "This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be "
 "flown by the player."
 msgstr ""
+"Este é o Drone Leve Za'lek . Muito fraco, barato e numeroso. Não pode ser "
+"pilotado pelo jogador."
 
 #: dat/ships/zalek/zalek_drone_scout.xml:2
 msgid "Za'lek Scout Drone"
-msgstr ""
+msgstr "Drone Batedor Za'lek"
 
 #: dat/ships/zalek/zalek_drone_scout.xml:8
 msgid "Robotic Scout"
-msgstr ""
+msgstr "Batedor Robótico"
 
 #: dat/ships/zalek/zalek_drone_scout.xml:14
 msgid ""
 "This is the Za'lek Scout Drone. Built for scouting, not for battle. Not to "
 "be flown by the player."
 msgstr ""
+"Este é o Drone Batedor Za'lek. Construído para reconhecimento, não para "
+"batalha. Não pode ser pilotado pelo jogador."
 
 #: dat/ships/zalek/zalek_hephaestus.xml:2
 msgid "Za'lek Hephaestus"
-msgstr ""
+msgstr "Hefesto Za'lek"
 
 #: dat/ships/zalek/zalek_hephaestus.xml:18
 msgid ""
@@ -9006,10 +9053,14 @@ msgid ""
 "fleet, thanks to their superior sensor suite. The Hephaestus is rarely-seen, "
 "but commands respect."
 msgstr ""
+"A coroa da Frota de Defesa da Casa Za'lek, estes orgulhosos contrafortes dos "
+"ideais Za'lek servem frequentemente como o centro nervoso de uma frota de "
+"batalha Za'lek, graças ao seu conjunto superior de sensores. O Hefesto é "
+"raramente visto, mas merece respeito."
 
 #: dat/ships/zalek/zalek_mammon.xml:2
 msgid "Za'lek Mammon"
-msgstr ""
+msgstr "Mammon Za'lek"
 
 #: dat/ships/zalek/zalek_mammon.xml:24
 msgid ""
@@ -9022,10 +9073,18 @@ msgid ""
 "However, the standard strategy is to rely on drones for fighting while "
 "making a getaway."
 msgstr ""
+"Enquanto House Za'lek depende de drones para quase tudo, o seu combustível "
+"limitado deles torna-os inadequados para realizar transportes de longa "
+"distância. Para superar esta limitação, foi desenvolvido o Cargueiro Mammon. "
+"Tem grandes quantidades de espaço de armazenamento, capaz de comportar "
+"centros de pesquisa móveis inteiros no seu interior. Como a maioria das "
+"naves Za'lek, a blindagem é bastante fraca, embora seja parcialmente "
+"compensada pela tecnologia avançada da mesma. No entanto, a estratégia "
+"padrão é confiar nos drones para combater enquanto se afasta."
 
 #: dat/ships/zalek/zalek_mephisto.xml:2
 msgid "Za'lek Mephisto"
-msgstr ""
+msgstr "Mefisto Za'lek"
 
 #: dat/ships/zalek/zalek_mephisto.xml:18
 msgid ""
@@ -9033,10 +9092,14 @@ msgid ""
 "its shields allow it to shrug off a lot of abuse. A core of these ships can "
 "reduce even powerful fleets to slag in short order."
 msgstr ""
+"Uma nave poderosa, o Mefisto tem uma excelente gestão de energia e "
+"blindagem, e os seus escudos permitem-lhe ignorar um grande nível de dano. "
+"Um grupo destas naves pode reduzir até mesmo frotas poderosas a sucata em "
+"curto espaço de tempo."
 
 #: dat/ships/zalek/zalek_sting.xml:2
 msgid "Za'lek Sting"
-msgstr ""
+msgstr "Ferrão Za'lek"
 
 #: dat/ships/zalek/zalek_sting.xml:20
 msgid ""
@@ -9046,6 +9109,12 @@ msgid ""
 "and high autonomy, due to the embedded carrier functionality, make it also "
 "an ideal ship for reconnaissance missions."
 msgstr ""
+"A Corveta Ferrão é bastante grande para a sua classe, mas o seu avançado "
+"conjunto de sensores, impressionante conjunto de armas, escudos resistentes, "
+"e flexibilidade geral torna-o uma parte central das frotas Za'lek. O seu "
+"baixo consumo de combustível e a sua elevada autonomia, devido à "
+"funcionalidade de porta-naves integrada, tornam-no também uma nave ideal "
+"para missões de reconhecimento."
 
 #: dat/slots/accessory.xml:4
 msgid ""
@@ -9053,20 +9122,25 @@ msgid ""
 "performance. Outfits that fit in these slots are not generally acquirable by "
 "normal means."
 msgstr ""
+"Este espaço é utilizado para equipar acessórios que podem melhorar o "
+"desempenho do nave. Os acessórios que cabem nestes espaços não são "
+"geralmente adquiridos por meios normais."
 
 #: dat/slots/bio_engines.xml:3
 msgid "Bioship Gene Drives"
-msgstr ""
+msgstr "Propulsores Genéticos de Bionave"
 
 #: dat/slots/bio_engines.xml:4
 msgid ""
 "This slot is used for the gene drives, the biological equivalent to Engines. "
 "Gene drives propel the organism through space."
 msgstr ""
+"Esta espaço é utilizado para propulsores genéticos, o equivalente biológico "
+"de Motores. Servem para impulsionar o organismo através do espaço."
 
 #: dat/slots/bio_hull.xml:3
 msgid "Bioship Shells"
-msgstr ""
+msgstr "Carapaças de Bionave"
 
 #: dat/slots/bio_hull.xml:4
 msgid ""
@@ -9075,10 +9149,14 @@ msgid ""
 "protecting critical organs from damage. It is also helps determine the "
 "organism's cargo space."
 msgstr ""
+"Este espaço é usado para a carapaça, o equivalente biológico a Modificações "
+"do Casco. A carapaça é a última linha de defesa para o organismo, protegendo "
+"órgãos críticos de danos. Também ajuda a determinar o espaço de carga do "
+"organismo."
 
 #: dat/slots/bio_organ.xml:3
 msgid "Bioship Organs"
-msgstr ""
+msgstr "Órgãos de Bionave"
 
 #: dat/slots/bio_organ.xml:4
 msgid ""
@@ -9086,10 +9164,13 @@ msgid ""
 "organs for many different purposes without the need of any external "
 "equipment."
 msgstr ""
+"Através da síntese biológica, as bionaves são capazes de modificar e adaptar "
+"os seus órgãos para muitos fins diferentes sem a necessidade de qualquer "
+"equipamento externo."
 
 #: dat/slots/bio_systems.xml:3
 msgid "Bioship Brains"
-msgstr ""
+msgstr "Cérebro de Bionave"
 
 #: dat/slots/bio_systems.xml:4
 msgid ""
@@ -9098,10 +9179,13 @@ msgid ""
 "rest of the organism and allocating energy reserves for the battery and "
 "shield."
 msgstr ""
+"Este espaço é usado para o cérebro, o equivalente biológico aos Sistemas "
+"Principais. O cérebro de um organismo é responsável por gerenciar a função "
+"do resto do organismo e alocar reservas de energia para a bateria e o escudo."
 
 #: dat/slots/bio_weapon.xml:3
 msgid "Bioship Weapons"
-msgstr ""
+msgstr "Armas de Bionave"
 
 #: dat/slots/bio_weapon.xml:4
 msgid ""
@@ -9110,28 +9194,34 @@ msgid ""
 "be more efficient to do the strong coupling with the ship in comparison to "
 "purely synthetic constructs."
 msgstr ""
+"Este espaço pode ser usado para cultivar armas orgânicas especiais em bio "
+"naves. Armas orgânicas são geralmente semelhantes às suas equivalentes "
+"sintéticas, mas tendem a ser mais eficientes para fazer o forte acoplamento "
+"com o nave em comparação com construtos puramente sintéticas."
 
 #: dat/slots/engines.xml:3
 msgid "Engines"
-msgstr ""
+msgstr "Motores"
 
 #: dat/slots/engines.xml:4
 msgid ""
 "This slot is used for engines. Engines propel the ship, which is kind of "
 "important. Engines require energy from the core system to function."
 msgstr ""
+"Este slot é usado para motores. Os motores impulsionam a nave, o que é "
+"importante. Os motores requerem energia do sistema central para funcionar."
 
 #: dat/slots/fighter_bay.xml:3
 msgid "Fighter Bays"
-msgstr ""
+msgstr "Baías de Caça"
 
 #: dat/slots/fighter_bay.xml:4
 msgid "This slot can be used for fighter bays."
-msgstr ""
+msgstr "Este espaço pode ser usado para baias de caça."
 
 #: dat/slots/hull.xml:3
 msgid "Hull Modifications"
-msgstr ""
+msgstr "Modificações de Casco"
 
 #: dat/slots/hull.xml:4
 msgid ""
@@ -9139,10 +9229,13 @@ msgid ""
 "represents the base layer of armour plating, and also greatly affects mass, "
 "cargo space and available weapon slots."
 msgstr ""
+"Este espaço é usado para modificações estruturais no casco da nave. "
+"Representa a camada base do revestimento de blindagem, e também afeta muito "
+"a massa, o espaço de carga e os pontos fixos de armas disponíveis."
 
 #: dat/slots/systems.xml:3
 msgid "Core Systems"
-msgstr ""
+msgstr "Sistemas Principais"
 
 #: dat/slots/systems.xml:4
 msgid ""
@@ -9150,10 +9243,13 @@ msgid ""
 "rely on this system to manage them, and the bulk of the ship's power and "
 "shield generation also happens here."
 msgstr ""
+"Este espaço é usado para sistemas centrais dedicados da nave. Outros "
+"subsistemas dependem deste sistema para gerenciá-los, e a maior parte da "
+"geração de energia e escudo da nave também acontece aqui."
 
 #: dat/spob/abacus.xml:2
 msgid "Abacus"
-msgstr "Abakus"
+msgstr "Ábaco"
 
 #: dat/spob/abacus.xml:16 dat/spob/adius.xml:9 dat/spob/aesir_iv.xml:9
 #: dat/spob/aldous_moon.xml:9 dat/spob/alteris_iv.xml:9 dat/spob/ammu.xml:15
@@ -9300,11 +9396,11 @@ msgid ""
 "researchers on site at any one time. Tourism is out of the question, so is a "
 "bar."
 msgstr ""
-"Abacus é um planeta muito grande, para os padrões dos planetas rochosos. Os "
-"Soromid estabeleceram um posto avançado de pesquisa aqui para descobrir mais "
-"sobre a estrutura do planeta. O posto avançado é muito pequeno, com apenas "
-"algumas dezenas de pesquisadores no local ao mesmo tempo. O turismo está "
-"fora de questão, assim como um bar."
+"Ábaco é um planeta muito grande, para os padrões de planetas rochosos. Os "
+"Soromidas estabeleceram um posto avançado de pesquisa aqui para descobrir "
+"mais sobre a estrutura do planeta. O posto avançado é bem pequeno, com "
+"apenas algumas dúzias de pesquisadores no local a qualquer momento. O "
+"turismo está fora de questão, assim como um bar."
 
 #: dat/spob/abacus.xml:28 dat/spob/astana.xml:49 dat/spob/curie.xml:48
 #: dat/spob/dono.xml:30 dat/spob/excelcior.xml:56 dat/spob/gastan.xml:32
@@ -9322,7 +9418,7 @@ msgstr ""
 #: dat/spob/vracha.xml:29 dat/spob/warnecke.xml:61 dat/spob/wigheta.xml:31
 #: dat/spob/wonclock.xml:48 dat/spob/zhiru.xml:46
 msgid "research"
-msgstr ""
+msgstr "pesquisa"
 
 #: dat/spob/abacus.xml:29 dat/spob/adrian.xml:29 dat/spob/ahmed.xml:43
 #: dat/spob/andors.xml:42 dat/spob/arrakis.xml:30 dat/spob/atalanta.xml:41
@@ -9343,7 +9439,7 @@ msgstr ""
 #: dat/spob/waldar.xml:47 dat/spob/waterholes_moon.xml:33 dat/spob/zesta.xml:28
 #: dat/spob/zhang_lu.xml:42 dat/spob/zuner.xml:32
 msgid "rural"
-msgstr ""
+msgstr "agrícola"
 
 #: dat/spob/adham.xml:2
 msgid "Adham"
@@ -9378,11 +9474,11 @@ msgid ""
 "destructive sport that is so popular among Totoran's visitors."
 msgstr ""
 "Adham é um planeta frio e sem vida. A única razão pela qual uma pista de "
-"pouso está aqui é que o planeta hospeda as três arenas temáticas do Ártico "
-"para os jogos de gladiadores de Totoran. Enquanto a zona de pouso e um "
-"pequeno buffer ao redor dela são considerados território neutro, a maior "
-"parte da superfície do planeta está sujeita ao esporte destrutivo que é "
-"muito popular entre os visitantes de Totoran."
+"pouso está aqui é que o planeta hospeda as três arenas temáticas para os "
+"jogos gladiatoriais de Totoran. Enquanto a zona de pouso e um pequeno buffer "
+"ao redor dela são considerados território neutro, a maior parte da "
+"superfície do planeta está sujeita ao esporte destrutivo que é muito popular "
+"entre os visitantes de Totoran."
 
 #: dat/spob/adius.xml:2
 msgid "Adius"
