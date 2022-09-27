@@ -32,6 +32,7 @@
 #include "map.h"
 #include "map_overlay.h"
 #include "mission.h"
+#include "ndata.h"
 #include "nlua_col.h"
 #include "nlua_commodity.h"
 #include "nlua_outfit.h"
@@ -134,6 +135,7 @@ static int playerL_infoButtonRegister( lua_State *L );
 static int playerL_infoButtonUnregister( lua_State *L );
 static int playerL_canDiscover( lua_State *L );
 static int playerL_save( lua_State *L );
+static int playerL_saveBackup( lua_State *L );
 static const luaL_Reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
@@ -205,6 +207,7 @@ static const luaL_Reg playerL_methods[] = {
    { "infoButtonUnregister", playerL_infoButtonUnregister },
    { "canDiscover", playerL_canDiscover },
    { "save", playerL_save },
+   { "saveBackup", playerL_saveBackup },
    {0,0}
 }; /**< Player Lua methods. */
 
@@ -1966,7 +1969,8 @@ static int playerL_canDiscover( lua_State *L )
 /**
  * @brief Saves the game.
  *
- *    @luatparam[opt="autosave"] What to name the save.
+ *    @luatparam[opt="autosave"] string name What to name the save.
+ *    @luatparam[opt=nil] Spob|string Spob or name of spob to save the player at.
  * @luafunc save
  */
 static int playerL_save( lua_State *L )
@@ -1990,5 +1994,22 @@ static int playerL_save( lua_State *L )
    if (savespob != NULL)
       land_spob = prevspob;
 
+   return 1;
+}
+
+/**
+ * @brief Backs up the player's last autosave with a custom name.
+ *
+ *    @luatparam string name Name to give the copy of the autosave.
+ *    @luatreturn boolean true on success.
+ * @luafunc saveBackup
+ */
+static int playerL_saveBackup( lua_State *L )
+{
+   char file[PATH_MAX], backup[PATH_MAX];
+   const char *filename = luaL_checkstring(L,1); /* TODO sanitize bath and such. */
+   snprintf( file, sizeof(file), "saves/%s/autosave.ns", player.name );
+   snprintf( backup, sizeof(backup), "saves/%s/%s.ns", player.name, filename );
+   lua_pushboolean( L, ndata_copyIfExists(file, backup) );
    return 1;
 }

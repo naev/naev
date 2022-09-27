@@ -104,7 +104,7 @@ int save_all (void)
  */
 int save_all_with_name( const char *name )
 {
-   char file[PATH_MAX], backup[PATH_MAX];
+   char file[PATH_MAX];
    const plugin_t *plugins = plugin_list();
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
@@ -170,10 +170,11 @@ int save_all_with_name( const char *name )
    /* Back up old saved game. */
    if (!strcmp(name, "autosave")) {
       if (!save_loaded) {
+         char backup[PATH_MAX];
          snprintf(file, sizeof(file), "saves/%s/autosave.ns", player.name);
          snprintf(backup, sizeof(backup), "saves/%s/backup.ns", player.name);
          if (ndata_copyIfExists(file, backup) < 0) {
-            WARN(_("Aborting save..."));
+            WARN(_("Aborting save…"));
             goto err_writer;
          }
       }
