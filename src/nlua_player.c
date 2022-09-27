@@ -2007,7 +2007,9 @@ static int playerL_save( lua_State *L )
 static int playerL_saveBackup( lua_State *L )
 {
    char file[PATH_MAX], backup[PATH_MAX];
-   const char *filename = luaL_checkstring(L,1); /* TODO sanitize bath and such. */
+   const char *filename = luaL_checkstring(L,1); /* TODO sanitize path and such. */
+   if (strcmp(filename,"autosave")==0)
+      NLUA_ERROR(L,_("Can not back up save to 'autosave'."));
    snprintf( file, sizeof(file), "saves/%s/autosave.ns", player.name );
    snprintf( backup, sizeof(backup), "saves/%s/%s.ns", player.name, filename );
    lua_pushboolean( L, ndata_copyIfExists(file, backup) );
