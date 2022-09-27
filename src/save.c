@@ -102,7 +102,7 @@ int save_all (void)
  *    @param name Name of custom snapshot.
  *    @return 0 on success.
  */
-int save_all_with_name ( char *name )
+int save_all_with_name( const char *name )
 {
    char file[PATH_MAX], backup[PATH_MAX];
    const plugin_t *plugins = plugin_list();
