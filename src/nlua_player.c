@@ -47,6 +47,7 @@
 #include "player.h"
 #include "player_fleet.h"
 #include "player_inventory.h"
+#include "save.h"
 
 #define PLAYER_CHECK() if (player.p == NULL) return 0
 
@@ -132,6 +133,7 @@ static int playerL_chapterSet( lua_State *L );
 static int playerL_infoButtonRegister( lua_State *L );
 static int playerL_infoButtonUnregister( lua_State *L );
 static int playerL_canDiscover( lua_State *L );
+static int playerL_save( lua_State *L );
 static const luaL_Reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
@@ -202,6 +204,7 @@ static const luaL_Reg playerL_methods[] = {
    { "infoButtonRegister", playerL_infoButtonRegister },
    { "infoButtonUnregister", playerL_infoButtonUnregister },
    { "canDiscover", playerL_canDiscover },
+   { "save", playerL_save },
    {0,0}
 }; /**< Player Lua methods. */
 
@@ -1958,4 +1961,34 @@ static int playerL_canDiscover( lua_State *L )
 {
    player.discover_off = !lua_toboolean(L,1);
    return 0;
+}
+
+/**
+ * @brief Saves the game.
+ *
+ *    @luatparam[opt="autosave"] What to name the save.
+ * @luafunc save
+ */
+static int playerL_save( lua_State *L )
+{
+   const char *savename = luaL_optstring( L, 1, "autosave" );
+   Spob *savespob = NULL;
+   Spob *prevspob;
+   if (!lua_isnoneornil(L,2))
+      savespob = luaL_validspob(L,2);
+
+   if (!landed && (savespob==NULL))
+      NLUA_ERROR(L,_("Unable to save when not landed and land spob is not specified!"));
+   else if (landed && (savespob!=land_spob))
+      NLUA_ERROR(L,_("Unable to save when landed and land_spob does not match landed spob!"));
+
+   if (savespob != NULL) {
+      prevspob = land_spob;
+      land_spob = savespob;
+   }
+   lua_pushboolean( L, save_all_with_name( savename ) );
+   if (savespob != NULL)
+      land_spob = prevspob;
+
+   return 1;
 }
