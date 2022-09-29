@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2022-08-23 20:07+0900\n"
-"PO-Revision-Date: 2022-09-27 15:21+0000\n"
+"PO-Revision-Date: 2022-09-29 13:19+0000\n"
 "Last-Translator: Bloody Kenshiro <redhokuto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
 "naev/pt_BR/>\n"
@@ -8339,7 +8339,7 @@ msgstr ""
 "Ancestrais foram uma das primeiras naves a ser apreciada por piratas. As "
 "grandes asas intimidantes e boas velocidades máximas geralmente conseguiam "
 "que outras naves se rendessem sem ter que disparar um tiro. Conforme naves "
-"melhores surgiram no mercado, seu uso caiu devido a sua eletrônica  e "
+"melhores surgiram no mercado, seu uso caiu devido a sua eletrônica e "
 "sistemas de mira arcaicos."
 
 #: dat/ships/pirate/pirate_hyena.xml:2
@@ -11029,10 +11029,16 @@ msgid ""
 "often irritates traders who come here to do business, only to find "
 "themselves in the middle of a Dvaered Turborave party."
 msgstr ""
+"O porto espacial em Arck está localizado bem no meio de um centro urbano "
+"densamente povoado em particular. O bar associado foi expandido e "
+"transformado em uma instalação geral de lazer para os habitantes locais, "
+"algo que muitas vezes irrita os comerciantes que vêm aqui para fazer "
+"negócios, apenas para encontrar-se no meio de uma festa Rave Turbo dos "
+"Dvaered ."
 
 #: dat/spob/arcturus_gamma.xml:2
 msgid "Arcturus Gamma"
-msgstr ""
+msgstr "Arcturus Gama"
 
 #: dat/spob/arcturus_gamma.xml:16 dat/spob/belltower_station.xml:16
 #: dat/spob/brandt_station.xml:16 dat/spob/cerberus.xml:15
@@ -11067,6 +11073,10 @@ msgid ""
 "constant routine patrols tries to make sure no undesirable ships make it "
 "into Empire space."
 msgstr ""
+"Arcturus Gama é a primeira linha de defesa do Império quando se trata de "
+"seus sistemas centrais a partir do leste. Uma força imponente estacionada "
+"aqui com patrulhas de rotina constantes tenta garantir que nenhuma nave "
+"indesejável chegue ao espaço do Império."
 
 #: dat/spob/arcturus_gamma.xml:30
 msgid ""
@@ -11074,6 +11084,9 @@ msgid ""
 "meticulously maintained and full of off-duty Empire soldiers - not a place "
 "to get into a fight."
 msgstr ""
+"Um lugar verdadeiramente utilitário, o bar em Arcturus Gama é cinza "
+"metálico, meticulosamente mantido e cheio de soldados do Império fora de "
+"serviço - não um lugar para entrar em uma briga."
 
 #: dat/spob/arcturus_i.xml:2
 msgid "Arcturus I"
@@ -11127,6 +11140,12 @@ msgid ""
 "buildings are almost completely hermetic. The locals are continuously "
 "discussing sandworms, though you're not sure what to make of it."
 msgstr ""
+"Arrakis é um planeta deserto sem precipitação natural e as tempestades de "
+"poeira podem durar por muitos períodos de cada vez. Devido à despesa de "
+"importar água constantemente, muitos cuidados são tomados para minimizar a "
+"evaporação com a maioria dos edifícios quase completamente herméticos. Os "
+"moradores estão continuamente discutindo minhocas de areia, embora seja "
+"incerto o que se pode concluir disso."
 
 #: dat/spob/arrakis.xml:27
 msgid ""
@@ -11135,6 +11154,10 @@ msgid ""
 "mercenaries can be found plying their trade. \"The spice must flow\", they "
 "say, it may not, but at least the rum does."
 msgstr ""
+"A cantina de Arrakeen é um dos bares mais sombrios do espaço Imperial. "
+"Colocada na fronteira do Império, poucas patrulhas passam e muitos patifes e "
+"mercenários podem ser encontrados exercendo seu comércio. \"A especiaria "
+"deve fluir\", dizem; mesmo que não flua,  pelo menos o rum flui."
 
 #: dat/spob/arrentil.xml:2
 msgid "Arrentil"
@@ -11149,6 +11172,12 @@ msgid ""
 "population is thriving and the industry-focused economy is stable. By all "
 "means, Arrentil is an example of Soromid persistence."
 msgstr ""
+"Como é típico dos mundos Soromídas, Arrentil seria considerado totalmente "
+"inóspito pelo resto da humanidade. A atmosfera é tóxica e a superfície "
+"instável, mas os Soromídas conseguiram domar este mundo. É claro que mesmo "
+"eles precisam viver em habitats protegidos, mas apesar disso a população "
+"está prosperando e a economia focada na indústria é estável. Seja como for, "
+"Arrentil é um exemplo de persistência Soromida."
 
 #: dat/spob/arrentil.xml:27
 msgid ""
@@ -11159,6 +11188,12 @@ msgid ""
 "but here in Soromid space it has given it a more organic feel, so much so "
 "that it almost feels like it is growing."
 msgstr ""
+"À medida que os habitats deste mundo inóspito estavam sendo construídos, "
+"pouco se pensava em comodidades menos essenciais. Este bar foi adicionado "
+"enxertando-o na lateral do espaçoporto. Qualquer outro lugar da galáxia "
+"sendo um plano secundário provavelmente teria resultado em um bar bastante "
+"apertada, degradada, mas aqui no espaço Soromída deu-lhe uma sensação mais "
+"orgânica, tanto que quase parece que está crescendo."
 
 #: dat/spob/astana.xml:2 dat/ssys/astana.xml:2
 msgid "Astana"
@@ -11172,6 +11207,12 @@ msgid ""
 "active service. This planet is an ideal spot for this as, besides the "
 "scientists who work here, no one else wants to land on the planet."
 msgstr ""
+"Astana é o lar da Instalação Imperial Experimental de Testes de Armas, "
+"comumente abreviada como IIETA. É aqui que a maioria das armas e "
+"equipamentos mais novos equipados pelos militares do Império são testados e "
+"qualificados para o serviço ativo. Este planeta é o local ideal para isso, "
+"pois, além dos cientistas que trabalham aqui, ninguém mais quer pousar no "
+"planeta."
 
 #: dat/spob/astana.xml:27
 msgid ""
@@ -11180,6 +11221,10 @@ msgid ""
 "than the IEWTF there is little reason to remain on the world for very long "
 "apart from the bar."
 msgstr ""
+"O bar é onde muitos dos trabalhadores do IIETA tiram um momento para "
+"relaxar, vários deles estão falando sobre um projeto que causa perplexidade. "
+"Além do IIETA, há poucas razões para permanecer no mundo por muito tempo "
+"além do bar."
 
 #: dat/spob/astana_iiv.xml:2
 msgid "Astana IIV"
@@ -11196,6 +11241,10 @@ msgid ""
 "making a decent enough living thanks to the caches of heavy elements trapped "
 "under the ice."
 msgstr ""
+"Atalanta recebeu seu nome à partir da nave colonizadora que o assentou, "
+"Atalanta. Embora o planeta seja muito frio para ter algum valor real, a "
+"população está vivendo decentemente graças aos bolsões de elementos pesados "
+"presos sob o gelo."
 
 #: dat/spob/atalanta.xml:28
 msgid ""
@@ -11205,6 +11254,11 @@ msgid ""
 "Atalanta's orbit makes this a rare occurrence but the bar's profits soar "
 "every cycle."
 msgstr ""
+"Como todas as estruturas do planeta, o bar de Atalanta é construída sob o "
+"gelo, mas é bem perto da superfície. Isso ocorre porque um efeito de "
+"iluminação espetacular pode ser observado em cima quando o sol brilha "
+"diretamente sobre o gelo. A órbita da Atalanta torna isso uma ocorrência "
+"rara, mas os lucros do bar sobem a cada ciclo."
 
 #: dat/spob/atalanta.xml:40 dat/spob/avoss.xml:28 dat/spob/cetrat.xml:38
 #: dat/spob/dawn.xml:31 dat/spob/jaegnhild.xml:35 dat/spob/jorlan.xml:40
@@ -11214,11 +11268,11 @@ msgstr ""
 #: dat/spob/waterholes_moon.xml:31 dat/spob/zabween.xml:44
 #: dat/spob/zalebus.xml:52 dat/spob/zuner.xml:35
 msgid "old"
-msgstr ""
+msgstr "antigo"
 
 #: dat/spob/atlantis_i.xml:2
 msgid "Atlantis I"
-msgstr ""
+msgstr "Atlântida I"
 
 #: dat/spob/atryssa.xml:2
 msgid "Atryssa"
@@ -11231,6 +11285,10 @@ msgid ""
 "Ruadan. Beyond these two things there is little to recommend it (though one "
 "of these may, at least, be plenty enough)."
 msgstr ""
+"Atryssa é um mundo economicamente rico graças à tecnologia Za'lek. É também "
+"o planeta Za'lek mais notável, onde forasteiros podem pousar, para Ruadan. "
+"Além dessas duas coisas há pouco para recomendá-lo (embora uma delas possa, "
+"pelo menos, ser suficiente)."
 
 #: dat/spob/atryssa.xml:29
 msgid ""
@@ -11239,6 +11297,10 @@ msgid ""
 "There are also one or two people wandering about with notepads, though "
 "everyone goes quiet when they approach."
 msgstr ""
+"O arquétipo de um bar Za'lek, embora muito lotado. A multidão parece estar "
+"dividida em grupos de pessoas discutindo coisas em tons silenciosos. Há "
+"também uma ou duas pessoas vagando por aí com blocos de notas, embora todos "
+"fiquem quietos quando se aproximam."
 
 #. Finish event (removes npc)
 #.
@@ -11264,7 +11326,7 @@ msgstr ""
 #: dat/spob/august.xml:2 dat/events/neutral/shipwreck.lua:24
 #: dat/missions/neutral/spacefamily.lua:53
 msgid "August"
-msgstr ""
+msgstr "Augusto"
 
 #: dat/spob/august.xml:26
 msgid ""
@@ -11273,12 +11335,20 @@ msgid ""
 "residential world, primarily for the scientists working on Warnecke who, "
 "after a hard week's work, don't want to see another lab for a while."
 msgstr ""
+"Augusto é um mundo bastante padrão, ainda que frio. Raramente para um "
+"planeta Za'lek, ele não tem tantas estações de pesquisa sobre ele. É quase "
+"puramente um mundo residencial, principalmente para os cientistas que "
+"trabalham em Warnecke que, depois de uma semana de trabalho duro, não querem "
+"ver outro laboratório por um tempo."
 
 #: dat/spob/august.xml:27
 msgid ""
 "This bar has the feel of an old-world pub, with plenty of wood furnishing on "
 "display, good food and better beer. A great place to relax and unwind."
 msgstr ""
+"Este bar tem a sensação de um pub do velho mundo, com muitos móveis de "
+"madeira em à mostra, boa comida e cerveja melhor ainda. Um ótimo lugar para "
+"relaxar e descontrair."
 
 #: dat/spob/avoss.xml:2
 msgid "Avoss"
@@ -11295,6 +11365,14 @@ msgid ""
 "devastated, a mere shadow of its former self. The colonists have managed to "
 "survive, however, and the hardy remain even today."
 msgstr ""
+"Avoss era originalmente um mundo medíocre, mas habitável. Quando a décima "
+"quarta nave colônia, Petrovsk, chegou, seus colonos consideraram-se bastante "
+"afortunados por terem encontrado um lugar que pudessem chamar de lar. No "
+"entanto, cerca de 50 anos após a expedição ter aterrissado, o mundo começou "
+"a mudar. A atividade sísmica em todo lugar começou a aumentar "
+"incalculávelmente, com terremotos e erupções vulcânicas em todo o mundo. "
+"Avoss está agora devastado, uma mera sombra do seu passado. Os colonos "
+"conseguiram sobreviver, no entanto, e os resistentes permanecem até hoje."
 
 #: dat/spob/awowa_iv.xml:2
 msgid "Awowa IV"
@@ -11310,15 +11388,15 @@ msgstr ""
 
 #: dat/spob/babylon_i.xml:2
 msgid "Babylon I"
-msgstr ""
+msgstr "Babilônia I"
 
 #: dat/spob/babylon_ii.xml:2
 msgid "Babylon II"
-msgstr ""
+msgstr "Babilônia II"
 
 #: dat/spob/babylon_iia.xml:2
 msgid "Babylon IIa"
-msgstr ""
+msgstr "Babilônia IIa"
 
 #: dat/spob/baf_i.xml:2
 msgid "Baf I"
@@ -11334,7 +11412,7 @@ msgstr ""
 
 #: dat/spob/bastion_station.xml:2
 msgid "Bastion Station"
-msgstr ""
+msgstr "Estação Bastião"
 
 #: dat/spob/bastion_station.xml:26
 msgid ""
@@ -11344,10 +11422,16 @@ msgid ""
 "Za'lek political scene. The House Za'lek Defence Force conducts most of "
 "their foreign contact here, where they can keep an eye on affairs."
 msgstr ""
+"A Estação Bastião é uma das duas principais estações de defesa, guarda de "
+"fronteira e patrulha que levam ao espaço Za'lek. Como tal, é um dos poucos "
+"gastos militares que é (em grande parte) incontestados até mesmo pela "
+"notória comunidade política Za'lek. A Força de Defesa da Casa Za'lek conduz "
+"a maior parte de seu contato estrangeiro aqui, onde eles podem ficar de olho "
+"nos em tudo."
 
 #: dat/spob/bedimann_shipyards.xml:2
 msgid "Bedimann Shipyards"
-msgstr ""
+msgstr "Estaleiros Bedimann"
 
 #: dat/spob/bedimann_shipyards.xml:26
 msgid ""
@@ -11355,6 +11439,9 @@ msgid ""
 "sent out to the defence forces. It also maintains a small contingent of "
 "Za'lek vessels at home to serve as a in-system guard."
 msgstr ""
+"Estes estaleiros são um dos lugares onde as naves Za'lek são construídos e "
+"enviadas para as forças de defesa. Também mantém um pequeno contingente de "
+"naves Za'lek localmente para servir como força de defesa intrasistema."
 
 #: dat/spob/beeklo_ii.xml:2
 msgid "Beeklo II"
@@ -11362,7 +11449,7 @@ msgstr ""
 
 #: dat/spob/beene.xml:2
 msgid "Beene"
-msgstr ""
+msgstr "Biine"
 
 #: dat/spob/beene.xml:29
 msgid ""
@@ -11372,6 +11459,12 @@ msgid ""
 "bioships. This supply of minerals means Beene is quite an important "
 "strategic location for Soromid fleets."
 msgstr ""
+"Biine é rico em todos os tipos de minerais comuns, então os Soromidas estão "
+"usando este mundo da mesma maneira que qualquer um faria: como fonte de "
+"matérias-primas. Os elementos extraídos aqui são transformados em pacotes "
+"padrão que são usados pelas Bionaves Soromídas. Este fornecimento de "
+"minerais significa que Biine é um local estratégico bastante importante para "
+"as frotas Soromidas."
 
 #: dat/spob/beene.xml:30
 msgid ""
@@ -11381,14 +11474,20 @@ msgid ""
 "population. As such, having a drink in Beene's bar is a bit of an ordeal. "
 "It's one of the less popular places among traders looking for a drink."
 msgstr ""
+"Os pilotos são aconselhados a usar trajes herméticos ao visitar o bar de "
+"Biine. A atmosfera do planeta pode causar sérios problemas para humanos "
+"normais e os Soromídas não se preocuparam em instalar filtros de "
+"descontaminação para a população local. Como tal, tomar uma bebida no bar do "
+"Biine é um teste. um dos lugares menos populares entre os comerciantes que "
+"procuram uma bebida."
 
 #: dat/spob/behemoth.xml:2
 msgid "Behemoth"
-msgstr ""
+msgstr "Bihimof"
 
 #: dat/spob/belltower_station.xml:2
 msgid "Belltower Station"
-msgstr ""
+msgstr "Estação Campanário"
 
 #: dat/spob/belltower_station.xml:27
 msgid ""
@@ -11398,6 +11497,11 @@ msgid ""
 "start to wonder if they're really part of the Soromid collective at all. "
 "Belltower is here to remind them that they are."
 msgstr ""
+"A Estação Canpanário é um pequeno posto militar Soromida cujo principal "
+"objetivo é manter o sistema Adiadus na linha. Estando tão longe dos mundos "
+"centrais, há pouco tráfego interestelar, alguns dos habitantes "
+"ocasionalmente começam a se perguntar se eles realmente fazem parte do "
+"coletivo Soromida. O Campanário está aqui para lembrá-los que sim."
 
 #: dat/spob/belltower_station.xml:28
 msgid ""
@@ -11407,16 +11511,21 @@ msgid ""
 "offenders are transferred to the penal facilities on Agino, in the Zintar "
 "system."
 msgstr ""
+"O bar tem uma porta que leva diretamente ao bloco de celas. Os prisioneiros "
+"aqui não costumam ficar muito tempo. O Campanário não tem a capacidade nem a "
+"autoridade para lidar com mais do que criminosos pouco importantes por conta "
+"própria. Criminosos mais perigosos são transferidos para as instalações "
+"penais em Agino, no sistema Zintar."
 
 #: dat/spob/belltower_station.xml:51 dat/spob/finn.xml:28
 #: dat/spob/tanulwa.xml:29 dat/spob/trinel.xml:27 dat/spob/vercingetorix.xml:44
 #: dat/spob/wakan.xml:28 dat/spob/wayline.xml:27 dat/spob/zaren.xml:43
 msgid "prison"
-msgstr ""
+msgstr "prisão"
 
 #: dat/spob/benedict.xml:2
 msgid "Benedict"
-msgstr ""
+msgstr "Benedito"
 
 #: dat/spob/benedict.xml:28
 msgid ""
@@ -11426,6 +11535,11 @@ msgid ""
 "elements used to produce them, this makes it an, almost literal, gold mine "
 "for Soromid building materials."
 msgstr ""
+"Outro gigante gasoso, outro posto avançado Soromida. Este em particular é um "
+"pouco maior do que alguns devido à grande quantidade de extração mineral e "
+"de elementos realizada aqui. O planeta é rico em matéria orgânica, bem como "
+"elementos usados para produzi-las, o que o torna uma mina de ouro, quase "
+"literal, para materiais de construção Soromida."
 
 #: dat/spob/benedict.xml:29
 msgid ""
@@ -11435,10 +11549,15 @@ msgid ""
 "with straws, which is a thoughtful touch for those traders who are forced to "
 "wear air-breathers."
 msgstr ""
+"Como é o caso de muitos bares Soromidas em lugares menos hospitaleiros, a "
+"atmosfera neste bar é bastante carregada com um elemento de perigo para não-"
+"Soromidas, o ar também não é grande coisa. A maioria das bebidas aqui são "
+"servidas com canudos, o que é um toque atencioso para aqueles comerciantes "
+"que são forçados a usar respiradores de ar."
 
 #: dat/spob/benteen.xml:2
 msgid "Benteen"
-msgstr ""
+msgstr "Bentin"
 
 #: dat/spob/benteen.xml:26
 msgid ""
@@ -11447,16 +11566,24 @@ msgid ""
 "little in the way of the bustle and fuss of other, more core, planets. It is "
 "not uncommon for people to migrate here looking for a calmer lifestyle."
 msgstr ""
+"Bentin é um dos principais mundos agrícolas do Império. Ele cultiva a "
+"maioria das culturas que estão destinadas aos sistemas ocidentais. É um "
+"mundo tranquilo, com pouco em se tratando de agitação e da agitação de "
+"outros planetas mais centrais. Não é incomum as pessoas migrarem para cá em "
+"busca de um estilo de vida mais calmo."
 
 #: dat/spob/benteen.xml:27
 msgid ""
 "The bar is a place to relax after a long trip or a hard day's work. The beer "
 "is fine and the locals seem friendly enough. Mostly harmless."
 msgstr ""
+"O bar é um lugar para relaxar após uma longa viagem ou um dia de trabalho "
+"duro. A cerveja é boa e os moradores parecem bastante amigáveis. Em grande "
+"parte inoftensivos."
 
 #: dat/spob/berkhere.xml:2
 msgid "Berkhere"
-msgstr ""
+msgstr "Berkhier"
 
 #: dat/spob/berkhere.xml:27
 msgid ""
@@ -11465,6 +11592,11 @@ msgid ""
 "mineral wealth for survival. Crops will not grow on this arid planet, so all "
 "food has to be imported."
 msgstr ""
+"A maior parte da superfície de Berkhier é rocha, poeira e areia. Mas sob "
+"essa superfície estão raras e valiosas pedras preciosas e minerais. A "
+"colônia aqui depende desta riqueza mineral para sobreviver. Plantações não "
+"crescerão neste planeta árido, então todos os alimentos têm que ser "
+"importados."
 
 #: dat/spob/berkhere.xml:28
 msgid ""
@@ -11475,10 +11607,16 @@ msgid ""
 "sold, the reasoning goes, Berkhere's future isn't in peril. Needless to say, "
 "the gem is heavily protected by security systems."
 msgstr ""
+"O bar do espaçoporto está disposto em torno de uma área central que serve "
+"como uma vitrine para a maior joia bruta já encontrada sob as areias de "
+"Berkhier. É um lembrete tanto para os visitantes quanto para a população "
+"local que o planeta ainda é rico. Enquanto a joia em exibição não tiver que "
+"ser vendida, se imagina, o futuro de Berkhier não está em perigo. Nem "
+"preciso dizer que a joia é fortemente protegida pelos sistemas de segurança."
 
 #: dat/spob/beth.xml:2
 msgid "Beth"
-msgstr ""
+msgstr "Bete"
 
 #: dat/spob/bgg1356.xml:2
 msgid "BGG-1356"
@@ -11486,19 +11624,19 @@ msgstr ""
 
 #: dat/spob/blackwell_i.xml:2
 msgid "Blackwell I"
-msgstr ""
+msgstr "Poçoescuro I"
 
 #: dat/spob/blackwell_iix.xml:2
 msgid "Blackwell IIX"
-msgstr ""
+msgstr "Poçoescuro IIX"
 
 #: dat/spob/blackwell_vii.xml:2
 msgid "Blackwell VII"
-msgstr ""
+msgstr "Poçoescuro VII"
 
 #: dat/spob/blunderbuss_ii.xml:2
 msgid "Blunderbuss II"
-msgstr ""
+msgstr "Bacamarte II"
 
 #: dat/spob/bolero.xml:2
 msgid "Bolero"
@@ -11514,6 +11652,14 @@ msgid ""
 "nostalgia to all those who were able to visit Earth before the Incident. "
 "However, some people avoid it for exactly the same reason…"
 msgstr ""
+"Bolero é um dos planetas mais bem sucedidos do Império. A população é "
+"próspera e bem sucedida, e as condições do planeta são suaves. Embora ainda "
+"seja tratado como uma espécie de remanso devido à sua localização, está se "
+"tornando cada vez mais importante na política imperial. Grande parte da "
+"popularidade de Bolero vem de seu clima semelhante à Terra, dando uma "
+"sensação reconfortante de nostalgia a todos aqueles que foram capazes de "
+"visitar a Terra antes do Incidente. No entanto, algumas pessoas evitam "
+"Bolero exatamente pela mesma razão…"
 
 #: dat/spob/bolero.xml:30
 msgid ""
@@ -11524,6 +11670,12 @@ msgid ""
 "in with the patrons, with the majority of people looking like temporary "
 "visitors, either arriving for vacations or business trips."
 msgstr ""
+"Aproveitando a semelhança de Bolero com a Terra, o bar aqui é um bar à moda "
+"antiga, com teto baixo, cerveja quente e boa comida. O ambiente é quente e "
+"acolhedor, os clientes são todos educados e alegres e os seguranças mal "
+"aparecem. Parece haver relativamente poucos moradores misturados com os "
+"clientes, com a maioria das pessoas parecendo visitantes temporários, "
+"chegando para férias ou viagens de negócios."
 
 #: dat/spob/bon_sebb.xml:2
 msgid "Bon Sebb"
@@ -11536,6 +11688,11 @@ msgid ""
 "gigantic junk yard, known as the \"Junkle\", where the locals \"hunt\" for "
 "useful equipment they can sell to each other, or to passing travellers."
 msgstr ""
+"Bon Sebb é um lugar misterioso. Objetos de toda a galáxia têm o hábito de "
+"aparecer aqui. Na verdade, uma grande área da superfície do planeta é um "
+"gigantesco ferro-velho, conhecido como \"Sucatilha\", onde os moradores "
+"\"caçam\" equipamentos úteis que podem vender uns aos outros, ou para "
+"viajantes que passam."
 
 #: dat/spob/bon_sebb.xml:30
 msgid ""
@@ -11544,18 +11701,22 @@ msgid ""
 "only somewhat symmetrical feature of the bar is a holoportrait of the "
 "Creator of the Universe, hanging over the lopsided bar."
 msgstr ""
+"O bar em Bon Sebb é construído a partir de coisas retiradas da Sucatilha. As "
+"paredes e móveis são todos remendos de vários projetos e materiais. A única "
+"característica um pouco simétrica do bar é um holoretráto do Criador do "
+"Universo, pairando sobre o bar desordenado."
 
 #: dat/spob/bonanza_i.xml:2
 msgid "Bonanza I"
-msgstr ""
+msgstr "Bonança I"
 
 #: dat/spob/bonanza_ii.xml:2
 msgid "Bonanza II"
-msgstr ""
+msgstr "Bonança II"
 
 #: dat/spob/boowoy.xml:2
 msgid "Boowoy"
-msgstr ""
+msgstr "Buói"
 
 #: dat/spob/boowoy.xml:28
 msgid ""
@@ -11565,6 +11726,12 @@ msgid ""
 "the planet's ecosystem has been terminally disrupted, causing most of the "
 "surface to erode into desert."
 msgstr ""
+"Buói nunca foi uma colônia muito respeitável. Foi colonizado na esperança de "
+"que o mundo pudesse ser terraformado em um bom planeta residencial de classe "
+"M, mas a corrupção e a má administração persistentes fizeram com que o "
+"esforço fracassase. Agora, o ecossistema do planeta foi desorganizado de "
+"forma terminal, fazendo com que a maior parte da superfície se transformasse "
+"em deserto."
 
 #: dat/spob/boowoy.xml:29
 msgid ""
@@ -11574,6 +11741,11 @@ msgid ""
 "local patrons makes it clear they'd prefer it if you weren't here for long, "
 "at all."
 msgstr ""
+"Os habitantes locais não gostam de forasteiros, mas mantêm o porto espacial "
+"em funcionamento porque isolar-se da galáxia seria fatal para um mundo tão "
+"dependente das importações. No entanto, os olhares dos funcionários e "
+"fregueses locais deixam claro que prefeririam que estranhos não estivessem "
+"aqui por muito tempo, de jeito nenhum."
 
 #: dat/spob/botarn_i.xml:2
 msgid "Botarn I"
@@ -11581,7 +11753,7 @@ msgstr ""
 
 #: dat/spob/brandt_station.xml:2
 msgid "Brandt Station"
-msgstr ""
+msgstr "Estação Brandt"
 
 #: dat/spob/brandt_station.xml:25
 msgid ""
@@ -11590,6 +11762,11 @@ msgid ""
 "and Anarbalis. The ships here, however, are not equipped to handle the "
 "stress of the border conflicts with the Dvaered at Eye of Night."
 msgstr ""
+"Servindo como um posto de controle de segurança local, Estação Brandt "
+"ostenta dois esquadrões de naves de resposta leves. A estação é responsável "
+"principalmente por Níger, Lazuli e Anarbalis. As naves aqui, no entanto, não "
+"estão equipados para lidar com o estresse dos conflitos fronteiriços com os "
+"Dvaered no Olho da Noite."
 
 #: dat/spob/brandt_station.xml:26
 msgid ""
@@ -11597,6 +11774,10 @@ msgid ""
 "Sirian echelons in any way. However, the soldiers and sailors stationed on "
 "Brandt Station all know their place and treat each other accordingly."
 msgstr ""
+"Curiosamente, este bar da doca espacial parece não fazer nenhuma distinção "
+"entre os três escalões de Sirianos. No entanto, todos os soldados e "
+"marinheiros estacionados na Estação Brandt conhecem seu lugar e se tratam de "
+"acordo."
 
 #: dat/spob/brendon_i.xml:2
 msgid "Brendon I"
@@ -11604,23 +11785,23 @@ msgstr ""
 
 #: dat/spob/brimstone_i.xml:2
 msgid "Brimstone I"
-msgstr ""
+msgstr "Enxofre I"
 
 #: dat/spob/brimstone_ia.xml:2
 msgid "Brimstone Ia"
-msgstr ""
+msgstr "Enxofre Ia"
 
 #: dat/spob/brimstone_ib.xml:2
 msgid "Brimstone Ib"
-msgstr ""
+msgstr "Enxofre Ib"
 
 #: dat/spob/brimstone_ii.xml:2
 msgid "Brimstone II"
-msgstr ""
+msgstr "Enxofre II"
 
 #: dat/spob/brimstone_iii.xml:2
 msgid "Brimstone III"
-msgstr ""
+msgstr "Enxofre III"
 
 #: dat/spob/brock.xml:2
 msgid "Brock"
@@ -11633,6 +11814,10 @@ msgid ""
 "for this purpose and no other, comfort was the last thing on the designers' "
 "minds."
 msgstr ""
+"Uma das operações de mineração de gás dos Dvaered está localizada aqui. O "
+"gás é refinado e transformado em combustível para naves Dvaered. As "
+"instalações aqui são construídas exclusivamente para este fim e nenhum "
+"outro, conforto era a última coisa na mente dos projetistas."
 
 #: dat/spob/brock.xml:28
 msgid ""
@@ -11641,6 +11826,10 @@ msgid ""
 "bars. Unlike most Dvaered bars, this one is small and rather clean. Rather "
 "shocking, especially for outsiders."
 msgstr ""
+"O bar está cheio de mineiros e tropas de guarnição, como a maioria dos bares "
+"Dvaered. Beber abundante também está certamente nas cartas, como a maioria "
+"dos bares Dvaered. Ao contrário da maioria dos bares Dvaered, este é pequeno "
+"e bastante limpo. Bastante chocante, especialmente para pessoas de fora."
 
 #: dat/spob/brooks.xml:2
 msgid "Brooks"
@@ -11654,6 +11843,11 @@ msgid ""
 "economic and political weight within the Empire, the Imperial Navy protects "
 "Arcturus for Brooks' sake, as much as for the Imperial core systems."
 msgstr ""
+"Brooks é um agitado e altamente povoado planeta civil imperial. Com o "
+"declínio do Império, ele se viu na fronteira do espaço perigoso, uma posição "
+"bastante desconfortável. Como Brooks é um planeta rico com muito peso "
+"econômico e político dentro do Império, a Marinha Imperial protege Arcturus "
+"pelo bem de Brooks, tanto quanto pelos sistemas centrais imperiais."
 
 #: dat/spob/brooks.xml:27
 msgid ""
@@ -11663,6 +11857,11 @@ msgid ""
 "all, is a boom world and where profit is to made, and nobody wants to miss "
 "out on such a chance."
 msgstr ""
+"Em Brooks tudo é caro, algo que vem com a maioria dos mundos economicamente "
+"em expansão. No entanto, a maioria dos comerciantes aturam os preços "
+"inflados de beberes e serviços no bar do espaceporto, Brooks, afinal, é um "
+"mundo em crescimento e onde o lucro é conseguido, e ninguém quer perder tal "
+"chance."
 
 #: dat/spob/buritt.xml:2
 msgid "Buritt"
@@ -11676,6 +11875,11 @@ msgid ""
 "natural environment but, with the Dvaered being Dvaered, no attempt is being "
 "made to address this."
 msgstr ""
+"Não tão agradável quanto Varia no sistema Pedrescura, Buritt é, no entanto, "
+"um mundo razoavelmente habitável. Você encontrará grande parte da classe "
+"média Dvaered aqui, tal como ela é. Você também encontrará uma poluição em "
+"grande escala do ambiente natural, mas, com os Dvaered sendo Dvaered, "
+"nenhuma tentativa está sendo feita para resolver isso."
 
 #: dat/spob/buritt.xml:28
 msgid ""
@@ -11683,6 +11887,9 @@ msgid ""
 "brain-melting music, it would be quite a comfortable place to be. But it "
 "does, so it isn't."
 msgstr ""
+"Se este espaçoporto não tocasse uma música produzida localmente, incessante, "
+"repetitiva, derretedora de cérebro, seria lugar bastante confortável para se "
+"estar. Mas a música toca, por isso não é."
 
 #: dat/spob/burnan.xml:2
 msgid "Burnan"
@@ -11695,6 +11902,11 @@ msgid ""
 "hyperspace jumps. Burnan has a large political district in its primary city, "
 "this also houses one of the largest Sirian temples in all of Sirius space."
 msgstr ""
+"Burnan conta como a capital local não oficial. Aesir está longe e muitos "
+"serviços governamentais são melhor prestados localmente do que a uma "
+"distância de muitos saltos hiperespaciais. Burnan tem um grande distrito "
+"político em sua cidade primária, este também abriga um dos maiores templos "
+"Sirianos em todo o espaço Sirius."
 
 #: dat/spob/burnan.xml:30
 msgid ""
@@ -11705,14 +11917,20 @@ msgid ""
 "elevated area that has tables for visitors to sit down at, where they won't "
 "get in the way of the bustle and traffic of the main floor."
 msgstr ""
+"Burnan não tem um bar de espaçoporto separado como muitos outros mundos têm. "
+"O bar e o salão principal do espaçoporto são, em vez disso, uma e a mesma "
+"coisa. Há saídas para terminais em todos os lados e a área central é "
+"dominada por uma ilha de interfaces de serviço e balcões. Há uma área "
+"elevada que tem mesas para os visitantes se sentarem, onde eles não vão "
+"atrapalhar a agitação e o tráfego do piso principal."
 
 #: dat/spob/burnans_moon.xml:2
 msgid "Burnan's moon"
-msgstr ""
+msgstr "Lua de Burnan"
 
 #: dat/spob/caladan.xml:2
 msgid "Caladan"
-msgstr ""
+msgstr "Cáladan"
 
 #: dat/spob/caladan.xml:28
 msgid ""
@@ -11726,6 +11944,15 @@ msgid ""
 "for its people. Other traditional products include wine and various "
 "livestock, most prominently cattle."
 msgstr ""
+"A superfície do planeta é predominantemente coberta de água e o clima "
+"planetário é caracterizado por precipitação abundante e ventos fortes, "
+"embora suficientemente toleráveis para tornar desnecessários equipamentos de "
+"modificação climática. Terras habitáveis são frequentemente caracterizadas "
+"por prados macios, pântanos e florestas densas. A base de recursos de "
+"Cáladan consiste principalmente na agricultura e biomassa, com o arroz pundi "
+"criado e cultivado localmente sendo sua principal exportação, e a pesca, uma "
+"fonte tradicional de sustento para seu povo. Outros produtos tradicionais "
+"incluem vinho e vários animais, principalmente gado."
 
 #: dat/spob/caladan.xml:29
 msgid ""
@@ -11734,14 +11961,18 @@ msgid ""
 "You could also tuck into some of the local cuisine which is rather refined, "
 "with most dishes containing meat."
 msgstr ""
+"O bar fica fora do porto estelar com uma ótima vista do porto. É possível "
+"ver os pescadores correrem freneticamente desempenhando suas tarefas por "
+"horas. Também se pode provar um pouco da culinária local que é bastante "
+"refinada, com a maioria dos pratos contendo carne."
 
 #: dat/spob/calvin.xml:2
 msgid "Calvin"
-msgstr ""
+msgstr "Calvino"
 
 #: dat/spob/cantina_station.xml:2
 msgid "Cantina Station"
-msgstr ""
+msgstr "Estação Cantina"
 
 #: dat/spob/cantina_station.xml:26
 msgid ""
@@ -11749,6 +11980,9 @@ msgid ""
 "deals are made here, and given the frequent and transitory foot traffic, it "
 "makes for a good place to meet someone."
 msgstr ""
+"Esta estação é principalmente um centro comercial para o espaço Za'lek "
+"ocidental. Muitos negócios são feitos aqui, e dado o tráfego frequente e "
+"transitório à pé, ela é um bom lugar para conhecer alguém."
 
 #: dat/spob/cantina_station.xml:27
 msgid ""
@@ -11759,30 +11993,36 @@ msgid ""
 "technology and the fact that at least half of the populace look like "
 "scientists, researchers, or engineers."
 msgstr ""
+"Este bar faz jus ao nome da própria estação. Na verdade, parece ser a "
+"principal atração, sendo uma enorme sala de cassino em forma de anel com "
+"muitos bartenders servido os clientes, música ao fundo e boa comida. O único "
+"sinal de ser Za'lek em origem é o uso casual de tecnologia "
+"desconcertantemente avançada e o fato de que pelo menos metade da população "
+"se parece com cientistas, pesquisadores ou engenheiros."
 
 #: dat/spob/capricorn_ii.xml:2
 msgid "Capricorn II"
-msgstr ""
+msgstr "Capricórnio II"
 
 #: dat/spob/capricorn_iii.xml:2
 msgid "Capricorn III"
-msgstr ""
+msgstr "Capricórnio III"
 
 #: dat/spob/capricorn_iiia.xml:2
 msgid "Capricorn IIIa"
-msgstr ""
+msgstr "Capricórnio IIIa"
 
 #: dat/spob/castellan_epsilon.xml:2
 msgid "Castellan Epsilon"
-msgstr ""
+msgstr "Castelão Épslon "
 
 #: dat/spob/castellan_i.xml:2
 msgid "Castellan I"
-msgstr ""
+msgstr "Castelão I"
 
 #: dat/spob/castellan_iii.xml:2
 msgid "Castellan III"
-msgstr ""
+msgstr "Castelão III"
 
 #: dat/spob/castellan_iii.xml:25
 msgid ""
@@ -11792,6 +12032,11 @@ msgid ""
 "support it. The majority of these are food and medical supplies for the "
 "miners."
 msgstr ""
+"Castellão III é, como a maioria dos planetas Dvaered, um mundo de mineração "
+"e, como a maioria dos mundos de mineração Dvaered, as condições são "
+"infernais. O planeta praticamente não tem como sustentar vida natural, então "
+"precisa de um fluxo constante de recursos para se manter. A maioria deles "
+"são alimentos e suprimentos médicos para os mineradores."
 
 #: dat/spob/castellan_iii.xml:26
 msgid ""
@@ -11801,14 +12046,19 @@ msgid ""
 "and recuperate was a good way to show off their philanthropy. Either way, "
 "it's appreciated."
 msgstr ""
+"O bar de Castelão III é surpreendentemente bom. Talvez tenha a ver com ser "
+"um paraíso favorecido para oficiais Dvaered. Talvez alguém em uma posição de "
+"algum poder ou influência decidiu que um bom lugar para os mineradores "
+"relaxarem e se recuperarem era uma boa maneira de mostrar sua filantropia. "
+"De qualquer forma, é apreciado."
 
 #: dat/spob/castellan_vi.xml:2
 msgid "Castellan VI"
-msgstr ""
+msgstr "Castelão VI"
 
 #: dat/spob/cerberus.xml:2 dat/ssys/cerberus.xml:2
 msgid "Cerberus"
-msgstr ""
+msgstr "Cérbero"
 
 #: dat/spob/cerberus.xml:26
 msgid ""
@@ -11821,6 +12071,15 @@ msgid ""
 "not offer any ships for sale and is mainly used to repair and maintain ships "
 "that have been damaged by forays into the depths of the nebula."
 msgstr ""
+"Nomeado em homenagem ao cão guardião do mundo inferior por seu papel no "
+"monitoramento e observação da imensa nebulosa Sol. Foi criado logo após a "
+"nebulosa estabilizar. Detalhes exatos são confidenciais e há influência "
+"militar suficiente para tornar o sigilo suspeito. Com todas as teorias "
+"conspiratórias em torno do Incidente, nunca se pode ter certeza de onde a "
+"realidade termina e a ficção começa. Embora um estaleiro esteja presente na "
+"estação, ele não oferece naves para venda e é usado principalmente para "
+"reparar e manter naves que foram danificadas por incursões nas profundezas "
+"da nebulosa."
 
 #: dat/spob/cerberus.xml:27
 msgid ""
@@ -11828,26 +12087,29 @@ msgid ""
 "and has a minuscule selection of beverages. There's little ambient noise; it "
 "seems as though boredom has gotten the best of most of the souls aboard."
 msgstr ""
+"O bar é mantido por cientistas e soldados de folga. É um pouco pequeno e tem "
+"uma seleção minúscula de bebidas. Há pouco barulho ambiente; parece que o "
+"tédio tomou o que havia de melhor da maioria das almas a bordo."
 
 #: dat/spob/cerberus_i.xml:2
 msgid "Cerberus I"
-msgstr ""
+msgstr "Cérbero I"
 
 #: dat/spob/cerberus_ii.xml:2
 msgid "Cerberus II"
-msgstr ""
+msgstr "Cérbero II"
 
 #: dat/spob/cerberus_iia.xml:2
 msgid "Cerberus IIa"
-msgstr ""
+msgstr "Cérbero IIa"
 
 #: dat/spob/cerberus_iv.xml:2
 msgid "Cerberus IV"
-msgstr ""
+msgstr "Cérbero IV"
 
 #: dat/spob/cetrat.xml:2
 msgid "Cetrat"
-msgstr ""
+msgstr "Cetrato"
 
 #: dat/spob/cetrat.xml:27
 msgid ""
@@ -11857,6 +12119,11 @@ msgid ""
 "that field. Cetrat was colonized by the eighth colony ship launched during "
 "the First Growth, Brooklyn."
 msgstr ""
+"Cetrato é um planeta aquático conhecido por suas algas médicas. Ninguém foi "
+"capaz de reproduzi-lo exatamente como na natureza, mas, com a abundância "
+"delas em todo o oceano maciço do planeta, houve pouco esforço nesse campo. "
+"Cetrato foi colonizado pela oitava navia colônia lançada durante o Primeiro "
+"Crescimento, Brooklyn."
 
 #: dat/spob/cetrat.xml:28
 msgid ""
@@ -11866,20 +12133,25 @@ msgid ""
 "but sometimes small cephalopods or more exotic beings. As exotic cultures "
 "go, Cetrat is among the stranger."
 msgstr ""
+"O bar é bem grande e ainda tem poucos clientes. Na lista de bebidas há um "
+"menu chamado \"vivo\". Quando você perguntado sobre eles, o garçom diz que "
+"eles se especializam em bebidas contendo criaturas vivas. Geralmente águas-"
+"vivas, mas às vezes pequenos cefalópodes ou seres mais exóticos. Entre "
+"culturas exóticas, Cetrato está entre as mais estranhas."
 
 #: dat/spob/cetrat.xml:41 dat/spob/soromid_databank.xml:32
 #: dat/spob/soromid_wards_alpha.xml:29 dat/spob/soromid_wards_beta.xml:32
 #: dat/spob/soromid_wards_gamma.xml:34 dat/spob/wonclock.xml:49
 msgid "medical"
-msgstr ""
+msgstr "médico"
 
 #: dat/spob/charcoal.xml:2
 msgid "Charcoal"
-msgstr ""
+msgstr "Carvão Vegetal"
 
 #: dat/spob/charred.xml:2
 msgid "Charred"
-msgstr ""
+msgstr "Carbonizado"
 
 #: dat/spob/chriik.xml:2
 msgid "Chriik"
@@ -11894,6 +12166,12 @@ msgid ""
 "planet for heavy industries to set up shop since they can pollute all they "
 "want without repercussions."
 msgstr ""
+"Chriik é um mundo morto. Como a maioria dos planetas desérticos, não tem "
+"corpos de água e um clima quente, mas, ao contrário da maioria dos planetas "
+"do tipo, não tem vida nativa de nenhum tipo. Na verdade, não há razão para "
+"que alguém ou alguma coisa queira viver aqui em para começar. Isso faz dele "
+"um planeta perfeito para as indústrias pesadas se instalarem, já que podem "
+"poluir tudo o que quiserem sem repercussões."
 
 #: dat/spob/chriik.xml:28
 msgid ""
@@ -11901,6 +12179,10 @@ msgid ""
 "complexes the air is so dry it will parch you out in record time. The large "
 "number of manual workers also contributes to the busy crowd."
 msgstr ""
+"O bar do espaçoporto é um lugar popular em Chriik, mesmo dentro dos "
+"complexos habitacionais, o ar é tão seco torna as pessoas sedentas em tempo "
+"recorde. O grande número de trabalhadores manuais também contribui para a "
+"multidão ocupada."
 
 #: dat/spob/churchill_i.xml:2
 msgid "Churchill I"
@@ -11920,7 +12202,7 @@ msgstr ""
 
 #: dat/spob/cole_station.xml:2
 msgid "Cole Station"
-msgstr ""
+msgstr "Estação Cole"
 
 #: dat/spob/cole_station.xml:24
 msgid ""
@@ -11929,6 +12211,10 @@ msgid ""
 "away from the brunt of the nebula radiation. It has relative few people "
 "living here, mainly to support the passing ships to and from the nebula."
 msgstr ""
+"A Estação Cole é a última estação civil na rota para Doeston. Muitas naves "
+"de transporte param para reabastecer e regenerar seus escudos aqui, em "
+"segurança e longe do peso da radiação da nebulosa. Há poucas pessoas vivendo "
+"aqui, principalmente para apoiar naves que passam em ambas direções."
 
 #: dat/spob/colley.xml:2
 msgid "Colley"
@@ -11940,6 +12226,9 @@ msgid ""
 "unassuming nature. The world has mild weather and is ideally closeted away "
 "from the cares and worries of the wider galaxy."
 msgstr ""
+"Colley é um local popular de aposentadoria e férias devido à sua natureza "
+"tranquila e despretensiosa. O mundo tem clima ameno e é idealmente fechado "
+"longe das preocupações da galáxia."
 
 #: dat/spob/colley.xml:28
 msgid ""
@@ -11947,10 +12236,13 @@ msgid ""
 "alert as they have ever been and you feel their eyes look you over as you "
 "sit down to order a drink."
 msgstr ""
+"A idade média dos clientes aqui parece ser muito alta, mas eles parecem tão "
+"alertas como sempre foram e olhos atentos observam forasteiros sentados para "
+"pedir uma bebida."
 
 #: dat/spob/coral_station.xml:2
 msgid "Coral Station"
-msgstr ""
+msgstr "Estação Coral"
 
 #: dat/spob/coral_station.xml:24
 msgid ""
@@ -11959,6 +12251,10 @@ msgid ""
 "station inspects all trade traffic entering Sirius space this way as well as "
 "keeping an eye on outbound traffic too."
 msgstr ""
+"A Estação Coral atua como guarda de fronteira. As forças estacionadas aqui "
+"são a primeira linha de defesa contra ameaças vindas de fora do espaço "
+"Siriano. A estação inspeciona todo o tráfego comercial que entra no espaço "
+"Sirius dessa maneira, além de ficar de olho no tráfego de saída."
 
 #: dat/spob/coran.xml:2
 msgid "Coran"
@@ -11976,6 +12272,11 @@ msgid ""
 "environmental discomfort has given them a head start on this world in terms "
 "of resource extraction. Other life, it seems, will have to wait its turn."
 msgstr ""
+"Embora o mundo de Corax possa, em um futuro distante, tornar-se um mundo "
+"semi-habitável, haverá poucos minérios(exceto ferro) quando este momento "
+"chegar.. A capacidade dos Soromidas de resistir a níveis incomuns de "
+"desconforto ambiental deu-lhes uma vantagem sobre este mundo em termos de "
+"extração de recursos. A vida futura, ao que parece, terá que esperar sua vez."
 
 #: dat/spob/corax.xml:28
 msgid ""
@@ -11986,18 +12287,24 @@ msgid ""
 "you ask for a cocktail though, you'll likely be directed to one of the local "
 "sulphurous hot-water geysers."
 msgstr ""
+"Dada a relativa estabilidade deste mundo, o bar parece um pouco mais com o "
+"padrão Imperial do que em muitos mundos Soromidas. Há mesas, cadeiras, "
+"dispensadores, um barman e, o mais importante, bebidas. Estes estão em "
+"profusão, porém, este sendo um mundo menor, não em grande variedade. Aqueles "
+"que pedirem um coquetel, porém, provavelmente serão direcionados a um dos "
+"gêiseres de água quente sulfurosos locais."
 
 #: dat/spob/corinth_1.xml:2
 msgid "Corinth 1"
-msgstr ""
+msgstr "Corinto 1"
 
 #: dat/spob/corinth_2.xml:2
 msgid "Corinth 2"
-msgstr ""
+msgstr "Corinto 2"
 
 #: dat/spob/corinth_foods.xml:2
 msgid "Corinth Foods"
-msgstr ""
+msgstr "Alimentos Corinto"
 
 #: dat/spob/corinth_foods.xml:25
 msgid ""
@@ -12007,10 +12314,16 @@ msgid ""
 "and maintenance. So far it seems to be working, as Corinth Foods produces "
 "enough food to be exported from Za'lek space entirely."
 msgstr ""
+"Este novo tipo de agroestação serve como o principal produtor de alimentos "
+"para o enclave Procyon e além. A estação foi projetada de forma multi-"
+"hierárquica para produzir mais alimentos em um ambiente mais controlado "
+"usando menos materiais e manutenção. Até agora parece estar funcionando, já "
+"que a estação produz alimentos suficientes para serem exportados à partir de "
+"todo o espaço Za'lek."
 
 #: dat/spob/cornwal_ordinance.xml:2
 msgid "Cornwal Ordinance"
-msgstr ""
+msgstr "Cornwal Munições"
 
 #: dat/spob/cornwal_ordinance.xml:25
 msgid ""
@@ -12022,6 +12335,13 @@ msgid ""
 "on the harsh worlds in Undergate and always makes sure they receive a "
 "generous price for their exports."
 msgstr ""
+"Esta é uma fábrica de armas dirigida por um empresário local chamado "
+"Frederick Cornwal. Cornwal ganha dinheiro produzindo munição em massa e "
+"armas licenciadas para civis. A Cornwal importa matérias-primas dos planetas "
+"próximos de Wagenni e Sollebor e vende os produtos finalizados fora do "
+"sistema para um lucro limpo. Cornwal é solidário com as pessoas que vivem "
+"nos mundos hostís em Sobpórtico e sempre garante que eles recebam um preço "
+"generoso por suas exportações."
 
 #: dat/spob/cornwal_ordinance.xml:26
 msgid ""
@@ -12030,6 +12350,11 @@ msgid ""
 "of his merchandise so widely throughout Sirius space. The regular shipments "
 "required to keep business going helps too, so it is with the bar too."
 msgstr ""
+"Para uma estação tão remota, a Cornwal Munições é notavelmente bem "
+"frequentada por comerciantes. Frederick Cornwal é um talentoso empresário "
+"que propagandeou sua mercadoria tão amplamente pelo espaço Sirius. Os "
+"carregamentos regulares necessários para manter o negócio também ajudam, e "
+"assim é com o bar também."
 
 #: dat/spob/corvus_i.xml:2
 msgid "Corvus I"
@@ -100081,7 +100406,7 @@ msgstr ""
 
 #: src/load.c:747
 msgid "Ship Model:"
-msgstr " * Modelos das naves"
+msgstr " Modelo de nave:"
 
 #: src/load.c:774 src/load.c:930
 #, c-format
