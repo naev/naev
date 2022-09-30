@@ -604,6 +604,11 @@ function cutscene_cleanup ()
    player.chapterSet("1")
    player.canDiscover( true )
 
+   -- Clear deployed ships just in case, so the player doesn't get stuck
+   for k,v in ipairs(player.ships()) do
+      player.shipDeploy( v.name, false )
+   end
+
    -- Set the hypergates as known, should make them appear by name on selection menu
    for k,v in ipairs(hypergate_list) do
       v:setKnown(true)
