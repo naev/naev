@@ -168,6 +168,11 @@ msgid ""
 "civilisation spread, as it always has, with exponential enthusiasm -- "
 "ripples in the dark sea of space."
 msgstr ""
+"The first wave of explorers crept from star to star at sublight speeds, "
+"until the invention of the hyperspace drive spurred a second growth. Then "
+"civilization spread, as it always has, with exponential enthusiasm -- "
+"ripples in the dark sea of space."
+
 
 #: dat/intro:12
 msgid ""
@@ -225,6 +230,10 @@ msgid ""
 "the mysterious nebula left behind. Now the great, galaxy-spanning "
 "civilisation survives as a shadow of its former glory."
 msgstr ""
+"From Earth, a cataclysmic explosion ripped through space, annihilating "
+"stars, vaporizing worlds. Billions died. Dozens of systems disappeared into "
+"the mysterious nebula left behind. Now the great, galaxy-spanning "
+"civilization survives as a shadow of its former glory."
 
 #: dat/intro:32
 msgid "What else remains? Questions."
@@ -2572,6 +2581,11 @@ msgid ""
 "of many captains, though its high power consumption limits it to ships with "
 "powerful reactors."
 msgstr ""
+"Development of the Typhoon engine was something of a prestige project for "
+"Tricon. Providing cruisers with superb handling and speed, it's a favorite "
+"of many captains, though its high power consumption limits it to ships with "
+"powerful reactors."
+
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:2
 msgid "Tricon Typhoon II Engine"
