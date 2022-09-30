@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trail name="pirate_bio" inherits="soromid">
+ <glow r="0.9" g="0.1" b="0.4" a="0.7" />
+</trail>

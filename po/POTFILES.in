@@ -510,6 +510,7 @@ dat/ships/pirate/pirate_ancestor.xml
 dat/ships/pirate/pirate_hyena.xml
 dat/ships/pirate/pirate_kestrel.xml
 dat/ships/pirate/pirate_phalanx.xml
+dat/ships/pirate/pirate_revenant.xml
 dat/ships/pirate/pirate_rhino.xml
 dat/ships/pirate/pirate_shark.xml
 dat/ships/pirate/pirate_starbridge.xml
@@ -2357,6 +2358,7 @@ dat/trails/fire_thin.xml
 dat/trails/nebula.xml
 dat/trails/pirate.xml
 dat/trails/pirateS.xml
+dat/trails/pirate_bio.xml
 dat/trails/sirius.xml
 dat/trails/soromid.xml
 dat/trails/soromidS.xml
