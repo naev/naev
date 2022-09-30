@@ -1038,6 +1038,9 @@ static int playerL_ships( lua_State *L )
       lua_pushship(L, ships[i].p->ship); /* t, k, t, s */
       lua_setfield(L, -2, "ship"); /* t, k, t */
 
+      lua_pushboolean(L, ships[i].deployed); /* t, k, t, s */
+      lua_setfield(L, -2, "deployed"); /* t, k, t */
+
       lua_rawseti(L, -2, i+1); /* t */
    }
    return 1;
