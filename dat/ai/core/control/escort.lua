@@ -4,6 +4,7 @@ mem.carried = true -- Is a carried fighter
 
 -- Simple create function
 function create ()
+   create_pre()
    create_post()
 
    -- Inherit some properties from the parent (leader)
