@@ -97,6 +97,7 @@ static int playerL_shipvarPop( lua_State *L );
 static int playerL_ships( lua_State *L );
 static int playerL_shipOutfits( lua_State *L );
 static int playerL_shipMetadata( lua_State *L );
+static int playerL_shipDeploy( lua_State *L );
 static int playerL_outfits( lua_State *L );
 static int playerL_numOutfit( lua_State *L );
 static int playerL_addOutfit( lua_State *L );
@@ -173,6 +174,7 @@ static const luaL_Reg playerL_methods[] = {
    { "ships", playerL_ships },
    { "shipOutfits", playerL_shipOutfits },
    { "shipMetadata", playerL_shipMetadata },
+   { "shipDeploy", playerL_shipDeploy },
    { "outfits", playerL_outfits },
    { "numOutfit", playerL_numOutfit },
    { "outfitAdd", playerL_addOutfit },
@@ -1176,6 +1178,22 @@ static int playerL_shipMetadata( lua_State *L )
    lua_setfield( L, -2, "ships_destroyed" );
 
    return 1;
+}
+
+/**
+ * @brief Sets the deployed status of a player's ship.
+ *
+ *    @luatparam string shipname Name of the ship to set deployed status of.
+ *    @luatparam[opt=false] boolean deploy Whether or not to set the deployed status of the ship.
+ * @luafunc shipDeploy
+ */
+static int playerL_shipDeploy( lua_State *L )
+{
+   const char *shipname = luaL_checkstring(L,1);
+   int deploy = lua_toboolean(L,2);
+   PlayerShip_t *ps = player_getPlayerShip( shipname );
+   ps->deployed = deploy;
+   return 0;
 }
 
 /**
