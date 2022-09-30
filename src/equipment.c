@@ -376,8 +376,10 @@ void equipment_open( unsigned int wid )
    x = -20-(128-cw)/2;
    y = -20-150-ch;
    window_addCheckbox( wid, x, y, cw, 30, "chkFav", _("Favourite"), equipment_toggleFav, 0 );
-   y -= 23;
-   window_addCheckbox( wid, x, y, cw, 30, "chkDeploy", _("Deployed"), equipment_toggleDeploy, 0 );
+   if (player.fleet_capacity > 0) {
+      y -= 23;
+      window_addCheckbox( wid, x, y, cw, 30, "chkDeploy", _("Deployed"), equipment_toggleDeploy, 0 );
+   }
    x = -16;
    y -= 23 + 10;
    window_addButtonKey( wid, x, y, 128+8, bh, "btnRenameShip",
@@ -1375,6 +1377,10 @@ static void equipment_toggleDeploy( unsigned int wid, const char *wgt )
    int state = window_checkboxState( wid, wgt );
    const char *shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
 
+   /* Can't deploy if no capacity. */
+   if (player.fleet_capacity <= 0)
+      return;
+
    /* Only if current ship isn't selected try to deploy. */
    if (strcmp(shipname,player.p->name)!=0) {
       PlayerShip_t *ps = player_getPlayerShip( shipname );
@@ -1885,7 +1891,8 @@ void equipment_updateShips( unsigned int wid, const char* str )
 
    /* Set checkboxes. */
    window_checkboxSet( wid, "chkFav", favourite );
-   window_checkboxSet( wid, "chkDeploy", deployed );
+   if (player.fleet_capacity > 0)
+      window_checkboxSet( wid, "chkDeploy", deployed );
 
    /* button disabling */
    if (onboard) {
@@ -2051,7 +2058,8 @@ static void equipment_rightClickShips( unsigned int wid, const char *str )
    if (pfleet_toggleDeploy( ps, !ps->deployed ))
       return;
 
-   window_checkboxSet( wid, "chkDeploy", ps->deployed );
+   if (player.fleet_capacity > 0)
+      window_checkboxSet( wid, "chkDeploy", ps->deployed );
 
    pfleet_update();
 
