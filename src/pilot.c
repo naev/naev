@@ -3144,43 +3144,42 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
       const double dir, const vec2* pos, const vec2* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
-   Pilot *dyn, **p;
+   Pilot *p;
 
    /* Allocate pilot memory. */
-   dyn = malloc(sizeof(Pilot));
-   if (dyn == NULL) {
+   p = malloc(sizeof(Pilot));
+   if (p == NULL) {
       WARN(_("Unable to allocate memory"));
       return 0;
    }
 
    /* Set the pilot in the stack -- must be there before initializing */
-   p = &array_grow( &pilot_stack );
-   *p = dyn;
+   array_push_back( &pilot_stack, p );
 
    /* Initialize the pilot. */
-   pilot_init( dyn, ship, name, faction, dir, pos, vel, flags, dockpilot, dockslot );
+   pilot_init( p, ship, name, faction, dir, pos, vel, flags, dockpilot, dockslot );
 
    /* Set the ID. */
    if (pilot_isFlagRaw(flags, PILOT_PLAYER)) { /* Set player ID. TODO should probably be fixed to something better someday. */
-      dyn->id = PLAYER_ID;
+      p->id = PLAYER_ID;
       qsort( pilot_stack, array_size(pilot_stack), sizeof(Pilot*), pilot_cmp );
    }
    else
-      dyn->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
+      p->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
 
    /* Initialize AI if applicable. */
    if (ai == NULL)
       ai = faction_default_ai( faction );
    if (ai != NULL)
-      ai_pinit( dyn, ai ); /* Must run before ai_create */
+      ai_pinit( p, ai ); /* Must run before ai_create */
 
    /* Animated trail. */
-   pilot_init_trails( dyn );
+   pilot_init_trails( p );
 
    /* Run Lua stuff. */
-   pilot_outfitLInitAll( dyn );
+   pilot_outfitLInitAll( p );
 
-   return dyn->id;
+   return p->id;
 }
 
 /**
