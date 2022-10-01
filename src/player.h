@@ -204,7 +204,6 @@ void player_warp( double x, double y );
 int player_hasCredits( credits_t amount );
 credits_t player_modCredits( credits_t amount );
 void player_hailStart (void);
-int player_canTakeoff (void);
 /* Sounds. */
 void player_soundPlay( int sound, int once );
 void player_soundPlayGUI( int sound, int once );

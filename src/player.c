@@ -1717,14 +1717,6 @@ void player_checkLandAck( void )
 }
 
 /**
- * @brief Checks whether the player's ship is able to takeoff.
- */
-int player_canTakeoff(void)
-{
-   return !pilot_checkSpaceworthy(player.p);
-}
-
-/**
  * @brief Sets the no land message.
  *
  *    @brief str Message to set when the player is not allowed to land temporarily.

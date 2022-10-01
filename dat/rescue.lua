@@ -35,9 +35,7 @@ local nrequired = 0
 local nequipped = 0
 local cancelled = false -- Whether the player opted to stop the script.
 
-
 --[[
-
    Determines whether the player is stranded.
 
    In the simplest case, a player is stranded if their ship isn't spaceworthy
@@ -49,8 +47,8 @@ local cancelled = false -- Whether the player opted to stop the script.
    The last simple case is: If the planet has a shipyard that sells ships the
    player can afford, the player is not considered stranded.
 
-   From there, it gets decidedly more complex. An outfit pool is created,
-   consisting of the player's inventory, plus:
+   From there, it gets more complex. An outfit pool is created, consisting of
+   the player's inventory, plus:
 
       a) If the planet has a shipyard, the player's other ships' outfits
       b) If the planet has an outfitter, the outfitter's stock
@@ -61,8 +59,10 @@ local cancelled = false -- Whether the player opted to stop the script.
       2) The ship is bare aside from core outfits, yet isn't spaceworthy
             and no other suitable core outfits are available.
 
+   In parallel, if the player can't modify their fleet and are over fleet
+   capacity, they are also considered stranded.
 --]]
-local function check_stranded()
+local function check_stranded ()
    local pp = player.pilot()
    local services = spob.cur():services()
 
@@ -316,6 +316,18 @@ local tasks = {
 }
 
 function rescue()
+   -- Mae sure fleet capacity is ok
+   local totalcap, curcap, capok = player.fleetCapacity()
+   if not capok then
+      if tk.yesno(string.format(_("You need {diff} more fleet capacity to take off with your current fleet. Reset all deploy ships to allow taing off with your current ship?"),{diff=curcap-totalcap})) then
+         for k,v in ipairs(player.ships()) do
+            if v.deployed then
+               player.shipDeploy( v.name, false )
+            end
+         end
+      end
+   end
+
    -- Do nothing if already spaceworthy.
    if player.pilot():spaceworthy() then
       return

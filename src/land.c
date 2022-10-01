@@ -1485,8 +1485,14 @@ void takeoff( int delay, int nosave )
       /* Only care if the player has a fleet deployed. */
       if (nships > 0) {
          if (player.fleet_used > player.fleet_capacity) {
-            dialogue_msgRaw( _("Fleet not fit for flight"), _("You lack the fleet capacity to take off with all selected ships.") );
-            return;
+            if (!spob_hasService(land_spob, SPOB_SERVICE_SHIPYARD)) {
+               land_stranded(); /* Needs rescuing. */
+               return;
+            }
+            else {
+               dialogue_msgRaw( _("Fleet not fit for flight"), _("You lack the fleet capacity to take off with all selected ships.") );
+               return;
+            }
          }
          if (badfleet) {
             if (!dialogue_YesNo( _("Fleet not fit for flight"), "%s\n%s", _("The following ships in your fleet are not space worthy, are you sure you want to take off without them?"), badfleet_ships ))
@@ -1496,7 +1502,7 @@ void takeoff( int delay, int nosave )
    }
 
    /* Player's ship is not able to fly. */
-   if (!player_canTakeoff()) {
+   if (pilot_checkSpaceworthy(player.p)==NULL) {
       char message[STRMAX_SHORT];
       pilot_reportSpaceworthy( player.p, message, sizeof(message) );
       dialogue_msgRaw( _("Ship not fit for flight"), message );
