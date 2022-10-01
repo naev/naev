@@ -1889,14 +1889,24 @@ static int playerL_dt_mod( lua_State *L )
  *
  *    @luatreturn number Total fleet capacity of the player.
  *    @luatreturn number Currently used fleet capacity of the player.
+ *    @luatreturn boolean Can take off.
  * @luafunc fleetCapacity
  */
 static int playerL_fleetCapacity( lua_State *L )
 {
+   int nships = 0;
+   const PlayerShip_t *pships;
    pfleet_update();
    lua_pushnumber(L,player.fleet_capacity);
    lua_pushnumber(L,player.fleet_used);
-   return 2;
+   pships = player_getShipStack();
+   for (int i=0; i<array_size(pships); i++) {
+      if (!pships[i].deployed)
+         continue;
+      nships++;
+   }
+   lua_pushboolean(L, (nships==0) || (player.fleet_used <= player.fleet_capacity));
+   return 3;
 }
 
 /**
