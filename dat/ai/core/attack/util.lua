@@ -481,7 +481,7 @@ function atk.preferred_enemy( pref_func )
    local r = math.pow( mem.lanedistance, 2 )
    local maxrange = mem.atk_pref_range
    local targets = {}
-   for k,h in ipairs( p:getHostiles( maxrange, nil, nil, false, true ) ) do
+   for k,h in ipairs( p:getHostiles( maxrange, nil, nil, true, false, true ) ) do
       local w = h:memory().vulnerability or 0
       local v, F, H = careful.checkVulnerable( p, h, mem.vulnattack, r )
       if not v then

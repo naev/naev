@@ -31,7 +31,6 @@ local function __tryengage( p )
    return true
 end
 
-
 -- Tries to loiter in roughly a straight line
 local function __loiter( p, taskname )
    local targetdir = mem.lastdirection
@@ -52,7 +51,6 @@ local function __loiter( p, taskname )
    end
    return false
 end
-
 
 local function idle_leave ()
    -- Get a goal
