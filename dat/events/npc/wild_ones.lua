@@ -1,6 +1,7 @@
 --local fmt = require "format"
 local portrait = require "portrait"
 local npc = require "common.npc"
+local pir = require "common.pirate"
 
 -- State. Nothing persists.
 local msg_combined
@@ -54,6 +55,10 @@ return function ()
    local cur, scur = spob.cur()
    local tags = cur:tags()
    local presence = scur:presences()["Wild Ones"] or 0
+
+   if not pir.factionIsPirate( cur:faction () ) then
+      return nil
+   end
 
    local w = 0
    if cur:faction() == faction.get("Wild Ones") then
