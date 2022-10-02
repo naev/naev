@@ -1272,8 +1272,9 @@ const char* pilot_outfitSummary( const Pilot *p, const Outfit *o )
    static char o_summary[STRMAX];
    const char *de = pilot_outfitLDescExtra( p, o );
    if (de == NULL)
-      return o->summary_raw; /* Should be already translated. */
-   snprintf( o_summary, sizeof(o_summary), "%s\n%s", o->summary_raw, de );
+      snprintf( o_summary, sizeof(o_summary), "%s\n%s", _(o->name), o->summary_raw );
+   else
+      snprintf( o_summary, sizeof(o_summary), "%s\n%s\n%s", _(o->name), o->summary_raw, de );
    return o_summary;
 }
 
