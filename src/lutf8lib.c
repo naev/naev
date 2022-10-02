@@ -1,6 +1,5 @@
 /*
- * Taken from https://github.com/starwing/luautf8
- * Revision: 4e15359829f8c911de3a78ea8d4c5b945260256a
+ * From: https://github.com/starwing/luautf8/releases/tag/0.1.4
 
 MIT License
 
