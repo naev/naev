@@ -187,7 +187,7 @@ SHADERS = [
       vs_path = "project_pos.vert",
       fs_path = "jump.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "progress", "direction", "dimensions"],
+      uniforms = ["projection", "progress", "direction", "dimensions", "brightness"],
       subroutines = {
         "jump_func" : [
             "jump_default",

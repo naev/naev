@@ -20,11 +20,9 @@ subroutine uniform jump_func_prototype jump_func;
 uniform float progress;
 uniform float direction;
 uniform vec2 dimensions;
+uniform float brightness = 1.0;
 in vec2 pos;
 out vec4 color_out;
-
-const vec4 colour_from = vec4( 1.0, 1.0, 1.0, 0.0 );
-const vec4 colour_to   = vec4( 1.0, 1.0, 1.0, 1.0 );
 
 /**
  * Calculates the transform that the player is going through.
@@ -52,6 +50,9 @@ vec2 calculate_transform( float size, float smoothness )
  */
 vec4 smooth_interpolation( float smoothness, float noise )
 {
+   vec4 colour_from  = vec4( brightness, brightness, brightness, 0.0 );
+   vec4 colour_to    = vec4( brightness, brightness, brightness, 1.0 );
+
    // Magic!
    float p = mix( -smoothness, 1.0 + smoothness, 1.0-progress );
    float lower = p - smoothness;
@@ -65,6 +66,8 @@ vec4 smooth_interpolation( float smoothness, float noise )
 JUMP_FUNC_PROTOTYPE
 vec4 jump_default (void)
 {
+   vec4 colour_from  = vec4( brightness, brightness, brightness, 0.0 );
+   vec4 colour_to    = vec4( brightness, brightness, brightness, 1.0 );
    return mix( colour_from, colour_to, progress );
 }
 
@@ -73,18 +76,15 @@ vec4 jump_organic (void)
 {
    const float scale       = 20.0;
    const float smoothness  = 0.1;
-
    float n = cellular2x2( pos * scale ).x;
-   float p = mix( -smoothness, 1.0 + smoothness, progress );
-   float lower = p - smoothness;
-   float higher = p + smoothness;
-   float q = smoothstep( lower, higher, n );
-   return mix( colour_from, colour_to, 1.0-q );
+   return smooth_interpolation( smoothness, n );
 }
 
 JUMP_FUNC_PROTOTYPE
 vec4 jump_circular (void)
 {
+   vec4 colour_from        = vec4( brightness, brightness, brightness, 0.0 );
+   vec4 colour_to          = vec4( brightness, brightness, brightness, 1.0 );
    const float smoothness  = 0.3;
    const vec2 center       = vec2( 0.5, 0.5 );
 

@@ -247,6 +247,7 @@ void conf_setVideoDefaults (void)
    conf.colorblind   = COLORBLIND_DEFAULT;
    conf.bg_brightness = BG_BRIGHTNESS_DEFAULT;
    conf.nebu_nonuniformity = NEBU_NONUNIFORMITY_DEFAULT;
+   conf.jump_brightness = JUMP_BRIGHTNESS_DEFAULT;
    conf.gamma_correction = GAMMA_CORRECTION_DEFAULT;
    conf.background_fancy = BACKGROUND_FANCY_DEFAULT;
 
@@ -340,9 +341,12 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "minimize", conf.minimize );
       conf_loadBool( lEnv, "colorblind", conf.colorblind );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
+      /* todo leave only nebu_nonuniformity sometime */
       conf_loadFloat( lEnv, "nebu_brightness", conf.nebu_nonuniformity ); /* Old conf name. */
       conf_loadFloat( lEnv, "nebu_uniformity", conf.nebu_nonuniformity );
       conf_loadFloat( lEnv, "nebu_nonuniformity", conf.nebu_nonuniformity );
+      /* end todo */
+      conf_loadFloat( lEnv, "jump_brightness", conf.jump_brightness );
       conf_loadFloat( lEnv, "gamma_correction", conf.gamma_correction );
       conf_loadBool( lEnv, "background_fancy", conf.background_fancy );
 
@@ -897,6 +901,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Nebula non-uniformity. 1 is normal nebula while setting it to 0 would make the nebula a solid colour."));
    conf_saveFloat("nebu_nonuniformity",conf.nebu_nonuniformity);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Controls the intensity to which the screen fades when jumping. 1.0 would be pure white, while 0.0 would be pure black."));
+   conf_saveFloat("jump_brightness",conf.jump_brightness);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Gamma correction parameter. A value of 1 disables it (no curve)."))
