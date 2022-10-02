@@ -94,6 +94,7 @@ static void opt_setZoomFar( unsigned int wid, const char *str );
 static void opt_setZoomNear( unsigned int wid, const char *str );
 static void opt_setBGBrightness( unsigned int wid, const char *str );
 static void opt_setNebuNonuniformity( unsigned int wid, const char *str );
+static void opt_setJumpBrightness( unsigned int wid, const char *str );
 static void opt_checkColorblind( unsigned int wid, const char *str );
 static void opt_checkBGFancy( unsigned int wid, const char *str );
 /* Audio. */
@@ -1410,6 +1411,13 @@ static void opt_video( unsigned int wid )
          conf.nebu_nonuniformity, opt_setNebuNonuniformity );
    opt_setNebuNonuniformity( wid, "fadNebuNonuniformity" );
    y -= 20;
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtJumpBrightness",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+20, y, cw-60, 20, "fadJumpBrightness", 0., 1.,
+         conf.jump_brightness, opt_setJumpBrightness );
+   opt_setJumpBrightness( wid, "fadJumpBrightness" );
+   y -= 20;
    window_addText( wid, x, y-3, cw-20, 20, 0, "txtMOpacity",
          NULL, NULL, NULL );
    y -= 20;
@@ -1739,7 +1747,7 @@ static void opt_setBGBrightness( unsigned int wid, const char *str )
 }
 
 /**
- * @brief Callback to set the background brightness.
+ * @brief Callback to set the nebula non-uniformity parameter.
  *
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
@@ -1751,6 +1759,21 @@ static void opt_setNebuNonuniformity( unsigned int wid, const char *str )
    conf.nebu_nonuniformity = fad;
    snprintf( buf, sizeof(buf), _("Nebula non-uniformity: %.0f%%"), 100.*fad );
    window_modifyText( wid, "txtNebuNonuniformity", buf );
+}
+
+/**
+ * @brief Callback to set the background brightness.
+ *
+ *    @param wid Window calling the callback.
+ *    @param str Name of the widget calling the callback.
+ */
+static void opt_setJumpBrightness( unsigned int wid, const char *str )
+{
+   char buf[STRMAX_SHORT];
+   double fad = window_getFaderValue(wid, str);
+   conf.jump_brightness = fad;
+   snprintf( buf, sizeof(buf), _("Jump Brightness: %.0f%%"), 100.*fad );
+   window_modifyText( wid, "txtJumpBrightness", buf );
 }
 
 /**
