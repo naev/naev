@@ -398,8 +398,6 @@ local function manage_cargo ()
    local clist, cnames = cargo_list ()
    if #cnames <= 0 then return end
 
-   luatk.setDefaultFont( lg.newFont(12) )
-
    local w, h = 300, 400
    local wdw = luatk.newWindow( nil, nil, w, h )
    cargo_wdw = wdw

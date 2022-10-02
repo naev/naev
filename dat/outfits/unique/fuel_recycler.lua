@@ -1,6 +1,6 @@
 local fmt = require "format"
 local luatk = require "luatk"
-local lg = require 'love.graphics'
+--local lg = require 'love.graphics'
 --local audio = require 'love.audio'
 
 local active = 10 -- active time in seconds
@@ -59,8 +59,6 @@ local function recycle_interface ()
    if #clist <= 0 then
       return -1
    end
-
-   luatk.setDefaultFont( lg.newFont(12) )
 
    local w, h = 450, 400
    local lstw = 250

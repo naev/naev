@@ -138,7 +138,6 @@ end
 function hypergate_window ()
    local w = 900
    local h = 600
-   luatk.setDefaultFont( lg.newFont(12) )
    local wdw = luatk.newWindow( nil, nil, w, h )
    luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Hypergate ({sysname})"), {sysname=mem.spob:system()}), nil, "center", lg.newFont(14) )
 
@@ -268,7 +267,7 @@ function hypergate_window ()
 #nFleet Mass:#0 {totalmass}
 #nUsage Cost:#0 {totalcost} ({flatcost} + {masscost} per tonne)
 
-#nAvailable Jump Target:#0]]), {
+#nAvailable Jump Targets:#0]]), {
       cursys = csys,
       fact = hgfact,
       standing = standing_col..standing.."#0",
