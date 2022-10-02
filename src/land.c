@@ -1502,7 +1502,7 @@ void takeoff( int delay, int nosave )
    }
 
    /* Player's ship is not able to fly. */
-   if (pilot_checkSpaceworthy(player.p)==NULL) {
+   if (pilot_checkSpaceworthy(player.p)!=NULL) {
       char message[STRMAX_SHORT];
       pilot_reportSpaceworthy( player.p, message, sizeof(message) );
       dialogue_msgRaw( _("Ship not fit for flight"), message );
