@@ -920,7 +920,7 @@ static void load_menu_delete( unsigned int wdw, const char *str )
       return;
 
    if (dialogue_YesNo( _("Permanently Delete?"),
-      _("Are you sure you want to permanently delete '%s'?"), load_saves[pos].name) == 0)
+      _("Are you sure you want to permanently delete the character '%s'?\n#rThis is an undoable action!#0"), load_saves[pos].name) == 0)
       return;
 
    /* Remove it. */
@@ -957,7 +957,7 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
    pos = toolkit_getListPos( wid, "lstSaves" );
 
    if (dialogue_YesNo( _("Permanently Delete?"),
-      _("Are you sure you want to permanently delete the snapshot '%s'?"), load_player->saves[pos].save_name) == 0)
+      _("Are you sure you want to permanently delete the snapshot '%s'?\n#rThis is an undoable action!#0"), load_player->saves[pos].save_name) == 0)
       return;
 
    /* Remove it. */
