@@ -624,7 +624,7 @@ void load_loadSnapshotMenu( const char *name, int disablesave )
    window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnBack", _("Back"), load_snapshot_menu_close, SDLK_b );
    window_addButtonKey( wid, -20-BUTTON_WIDTH-20, 20 + BUTTON_HEIGHT+15, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnSave", _("Save"), load_snapshot_menu_save, SDLK_s );
+         "btnSave", _("Save As"), load_snapshot_menu_save, SDLK_s );
    window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT+15, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnLoad", _("Load"), load_snapshot_menu_load, SDLK_l );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
