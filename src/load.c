@@ -954,12 +954,13 @@ static void load_snapshot_menu_delete( unsigned int wdw, const char *str )
    if (array_size(load_player->saves) <= 0)
       return;
 
+   pos = toolkit_getListPos( wid, "lstSaves" );
+
    if (dialogue_YesNo( _("Permanently Delete?"),
-      _("Are you sure you want to permanently delete '%s'?"), load_player->name) == 0)
+      _("Are you sure you want to permanently delete the snapshot '%s'?"), load_player->saves[pos].save_name) == 0)
       return;
 
    /* Remove it. */
-   pos = toolkit_getListPos( wid, "lstSaves" );
    PHYSFS_delete( load_player->saves[pos].path );
 
    load_refresh();
