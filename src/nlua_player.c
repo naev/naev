@@ -103,7 +103,7 @@ static int playerL_numOutfit( lua_State *L );
 static int playerL_addOutfit( lua_State *L );
 static int playerL_rmOutfit( lua_State *L );
 static int playerL_addShip( lua_State *L );
-static int playerL_swapShip( lua_State *L );
+static int playerL_shipSwap( lua_State *L );
 /* Mission/event management stuff. */
 static int playerL_missions( lua_State *L );
 static int playerL_misnActive( lua_State *L );
@@ -180,7 +180,7 @@ static const luaL_Reg playerL_methods[] = {
    { "outfitAdd", playerL_addOutfit },
    { "outfitRm", playerL_rmOutfit },
    { "shipAdd", playerL_addShip },
-   { "shipSwap", playerL_swapShip },
+   { "shipSwap", playerL_shipSwap },
    { "missions", playerL_missions },
    { "misnActive", playerL_misnActive },
    { "misnDone", playerL_misnDone },
@@ -1366,16 +1366,16 @@ static int playerL_addShip( lua_State *L )
  *    @luatparam string ship Name of the ship to swap to. (this is name given by the player, not ship name)
  *    @luatparam[opt=false] boolean ignore_cargo Whether or not to ignore cargo and not move it, or try to move it over.
  *    @luatparam[opt=false] boolean remove If true removes the player's current ship (so it replaces and doesn't swap).
- * @luafunc swapShip
+ * @luafunc shipSwap
  */
-static int playerL_swapShip( lua_State *L )
+static int playerL_shipSwap( lua_State *L )
 {
    PLAYER_CHECK();
 
    const char *str = luaL_checkstring(L,1);
    int ignore_cargo= lua_toboolean(L,2);
    const char *cur = player.p->name;
-   player_swapShip( str, !ignore_cargo );
+   player_shipSwap( str, !ignore_cargo );
    if (lua_toboolean(L,3))
       player_rmShip( cur );
 

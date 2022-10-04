@@ -365,7 +365,7 @@ function enter_the_ring ()
    -- Set up Player
    local player_vendetta = player.shipAdd( "Vendetta", _("Ketchup"), _("It's virtual reality!"), true )
    mem.player_prevship = player.pilot():name() -- Ship to go back to
-   player.swapShip( player_vendetta, true )
+   player.shipSwap( player_vendetta, true )
    equipopt.generic( player.pilot(), {type_range={Afterburner={min=1}}}, "elite" )
    hook.pilot( player.pilot(), "death", "player_death" )
 
@@ -390,7 +390,7 @@ function leave_the_ring ()
    gauntlet.leave_the_ring ()
 
    -- Give the player back their old ship
-   player.swapShip( mem.player_prevship, true, true )
+   player.shipSwap( mem.player_prevship, true, true )
    player.land( spob.get("Totoran") )
 end
 
