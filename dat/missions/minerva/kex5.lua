@@ -262,7 +262,7 @@ function enter ()
          local pos = targetplanet:pos()
          spawn_thugs( pos, false )
          hook.timer( 5, "thug_heartbeat" )
-         player.allowLand( false, _("#rYou are unable to land while the bounty hunters are still active.#0") )
+         player.allowLand( false, "#r".._("You are unable to land while the bounty hunters are still active.").."#0" )
 
          hook.timer( 3, "thug_check" )
 
