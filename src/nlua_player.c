@@ -1375,7 +1375,7 @@ static int playerL_shipSwap( lua_State *L )
    const char *str = luaL_checkstring(L,1);
    int ignore_cargo= lua_toboolean(L,2);
    const char *cur = player.p->name;
-   player_shipSwap( str, !ignore_cargo );
+   player_swapShip( str, !ignore_cargo );
    if (lua_toboolean(L,3))
       player_rmShip( cur );
 
