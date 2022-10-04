@@ -11,8 +11,8 @@ function create ()
 end
 
 -- No need for control
-function control () end
-function control_manual () end
+function control( _dt ) end
+function control_manual( _dt ) end
 
 -- No response
 function attacked ( _attacker ) end

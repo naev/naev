@@ -89,7 +89,7 @@ end
 
 -- Override the control function
 local control_generic = control
-function control ()
+function control( dt )
    if ai.dist(mem.guardpos) > mem.guardreturndist then
       -- Try to return
       ai.pushtask( "moveto", mem.guardpos )
@@ -97,5 +97,5 @@ function control ()
    end
 
    -- Then do normal control
-   control_generic()
+   control_generic( dt )
 end

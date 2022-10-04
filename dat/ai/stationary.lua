@@ -29,7 +29,8 @@ function create ()
 end
 
 
-function control ()
+function control( dt )
+   mem.elapsed = mem.elapsed + dt
    local task = ai.taskname()
    local enemy = ai.getenemy()
 
