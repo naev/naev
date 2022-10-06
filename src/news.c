@@ -225,16 +225,18 @@ int *generate_news( int faction )
    }
 
    /* Put all acceptable news into buf */
-   tags = faction_tags( faction );
+   tags = (faction >= 0) ? faction_tags( faction ) : NULL;
    for (int i=0; i<array_size(news_list); i++) {
       news_t *n = &news_list[i];
       int match_tag = 0;
 
       /* Check to see if matches tag. */
-      for (int j=0; j<array_size(tags); j++) {
-         if (strcasecmp( tags[j], n->faction)==0) {
-            match_tag = 1;
-            break;
+      if (tags != NULL) {
+         for (int j=0; j<array_size(tags); j++) {
+            if (strcasecmp( tags[j], n->faction)==0) {
+               match_tag = 1;
+               break;
+            }
          }
       }
 
