@@ -1,6 +1,6 @@
-[wrap-file]
+[wrap-git]
 url = https://github.com/icculus/physfs
-revision = eb3383b532c5f74bfeb42ec306ba2cf80eed988c
+revision = release-3.2.0
 depth = 1
 
 patch_directory = physfs
