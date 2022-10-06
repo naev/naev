@@ -374,6 +374,9 @@ int spob_addService( Spob *p, int service )
    p->services |= service;
 
    if (service & SPOB_SERVICE_COMMODITY) {
+      const char *sysname;
+      StarSystem *sys;
+
       /* Only try to add standard commodities if there aren't any. */
       if (p->commodities!=NULL)
          return 0;
@@ -383,6 +386,19 @@ int spob_addService( Spob *p, int service )
       for (int i=0; i<array_size(stdList); i++)
          spob_addCommodity( p, stdList[i] );
       array_free( stdList );
+
+      /* Clean up economy status. */
+      economy_addQueuedUpdate();
+      economy_clearSingleSpob(p);
+
+      /* Try to figure out the system. */
+      sysname = spob_getSystem( p->name );
+      if (sysname==NULL) {
+         DEBUG(_("Spob '%s' not in system. Not initializing economy."), p->name);
+         return 0;
+      }
+      sys = system_get( sysname );
+      economy_initialiseSingleSystem( sys, p );
    }
 
    return 0;
@@ -2359,6 +2375,10 @@ int system_addSpob( StarSystem *sys, const char *spobname )
    /* Reload graphics if necessary. */
    if (cur_system != NULL)
       space_gfxLoad( cur_system );
+
+   /* Initialize economy if applicable. */
+   if (spob_hasService( spob, SPOB_SERVICE_COMMODITY ))
+      economy_initialiseSingleSystem( sys, spob );
 
    return 0;
 }
