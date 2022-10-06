@@ -86,7 +86,7 @@ void commodity_exchange_open( unsigned int wid )
    window_addText( wid, 40 + iw, -40, dw, titleHeight, 0,
          "txtName", &gl_defFont, NULL, _("None") );
 
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", (player.fleet_capacity > 0) ? _("You have:") : _("Your fleet has:") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", (player.fleet_capacity <= 0) ? _("You have:") : _("Your fleet has:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Purchased for:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", _("Market Price:") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s", (player.fleet_capacity > 0) ? _("Free Space (fleet):") : _("Free Space:") );
