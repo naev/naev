@@ -36,6 +36,7 @@ physfs_sources += [
    'src/physfs_platform_windows.c',
    'src/physfs_platform_os2.c',
    'src/physfs_platform_qnx.c',
+   'src/physfs_platform_android.c',
    'src/physfs_archiver_dir.c',
    'src/physfs_archiver_unpacked.c',
    'src/physfs_archiver_grp.c',
