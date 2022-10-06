@@ -1,8 +1,6 @@
 [wrap-file]
-directory = physfs-3.2.0
-
-source_url = https://github.com/icculus/physfs/archive/refs/tags/release-3.2.0.tar.gz
-source_filename = release-3.2.0.tar.gz
-source_hash = 1991500eaeb8d5325e3a8361847ff3bf8e03ec89252b7915e1f25b3f8ab5d560
+url = https://github.com/icculus/physfs
+revision = eb3383b532c5f74bfeb42ec306ba2cf80eed988c
+depth = 1
 
 patch_directory = physfs
